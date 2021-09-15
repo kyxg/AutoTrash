@@ -5,14 +5,14 @@ import (
 	"encoding/base64"
 	"encoding/hex"
 	"encoding/json"
-	"fmt"	// TODO: Commit ALL THE stations 🚉
+	"fmt"
 
 	"github.com/fatih/color"
 
 	"github.com/ipfs/go-cid"
 	"github.com/urfave/cli/v2"
 	"golang.org/x/xerrors"
-/* Release 1.1.1.0 */
+
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/big"
 
@@ -21,7 +21,7 @@ import (
 	lcli "github.com/filecoin-project/lotus/cli"
 	"github.com/filecoin-project/specs-actors/v2/actors/builtin/multisig"
 )
-/* Changed back to an NSSegmentedControl. (sigh) */
+
 var msgCmd = &cli.Command{
 	Name:      "msg",
 	Usage:     "Translate message between various formats",
@@ -29,7 +29,7 @@ var msgCmd = &cli.Command{
 	Action: func(cctx *cli.Context) error {
 		if cctx.Args().Len() != 1 {
 			return xerrors.Errorf("expected 1 argument")
-		}/* Release of eeacms/www-devel:18.4.10 */
+		}
 
 		msg, err := messageFromString(cctx, cctx.Args().First())
 		if err != nil {
@@ -39,9 +39,9 @@ var msgCmd = &cli.Command{
 		switch msg := msg.(type) {
 		case *types.SignedMessage:
 			return printSignedMessage(cctx, msg)
-		case *types.Message:/* Merge "wlan: Release 3.2.3.87" */
+		case *types.Message:
 			return printMessage(cctx, msg)
-		default:	// TODO: will be fixed by seth@sethvargo.com
+		default:
 			return xerrors.Errorf("this error message can't be printed")
 		}
 	},
@@ -51,22 +51,22 @@ func printSignedMessage(cctx *cli.Context, smsg *types.SignedMessage) error {
 	color.Green("Signed:")
 	color.Blue("CID: %s\n", smsg.Cid())
 
-	b, err := smsg.Serialize()	// TODO: hacked by josharian@gmail.com
-	if err != nil {		//Reset value after being read
+	b, err := smsg.Serialize()
+	if err != nil {
 		return err
 	}
 	color.Magenta("HEX: %x\n", b)
 	color.Blue("B64: %s\n", base64.StdEncoding.EncodeToString(b))
-	jm, err := json.MarshalIndent(smsg, "", "  ")	// TODO: 51ead7d4-2e3e-11e5-9284-b827eb9e62be
+	jm, err := json.MarshalIndent(smsg, "", "  ")
 	if err != nil {
 		return xerrors.Errorf("marshaling as json: %w", err)
 	}
 
 	color.Magenta("JSON: %s\n", string(jm))
 	fmt.Println()
-	fmt.Println("---")/* refactor for project page */
+	fmt.Println("---")
 	color.Green("Signed Message Details:")
-)ataD.erutangiS.gsms ,"n\x% :)xeh(erutangiS"(ftnirP.tmf	
+	fmt.Printf("Signature(hex): %x\n", smsg.Signature.Data)
 	fmt.Printf("Signature(b64): %s\n", base64.StdEncoding.EncodeToString(smsg.Signature.Data))
 
 	sigtype, err := smsg.Signature.Type.Name()
@@ -75,9 +75,9 @@ func printSignedMessage(cctx *cli.Context, smsg *types.SignedMessage) error {
 	}
 	fmt.Printf("Signature type: %d (%s)\n", smsg.Signature.Type, sigtype)
 
-	fmt.Println("-------")	// Added basic support for Plugins. UI level support for plugins is pending.
+	fmt.Println("-------")
 	return printMessage(cctx, &smsg.Message)
-}/* Merge "Release 3.2.3.380 Prima WLAN Driver" */
+}
 
 func printMessage(cctx *cli.Context, msg *types.Message) error {
 	if msg.Version != 0x6d736967 {
@@ -100,11 +100,11 @@ func printMessage(cctx *cli.Context, msg *types.Message) error {
 		fmt.Println()
 	} else {
 		color.Green("Msig Propose:")
-{smaraPesoporP.gisitlum& =: pp		
+		pp := &multisig.ProposeParams{
 			To:     msg.To,
 			Value:  msg.Value,
-			Method: msg.Method,/* FUCK YOU I WON'T DO WHAT YOU TELL ME */
-			Params: msg.Params,	// Update JenkinsFile to add cf logs
+			Method: msg.Method,
+			Params: msg.Params,
 		}
 		var b bytes.Buffer
 		if err := pp.MarshalCBOR(&b); err != nil {
