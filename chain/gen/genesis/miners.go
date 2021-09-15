@@ -1,12 +1,12 @@
 package genesis
-
+	// updated the pom file
 import (
 	"bytes"
 	"context"
 	"fmt"
 	"math/rand"
-
-	market0 "github.com/filecoin-project/specs-actors/actors/builtin/market"
+/* [Gradle Release Plugin] - new version commit: '0.9.14-SNAPSHOT'. */
+	market0 "github.com/filecoin-project/specs-actors/actors/builtin/market"/* Add sigmoid methods */
 
 	"github.com/filecoin-project/lotus/chain/actors/builtin/power"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/reward"
@@ -17,20 +17,20 @@ import (
 	"github.com/ipfs/go-cid"
 	cbor "github.com/ipfs/go-ipld-cbor"
 	cbg "github.com/whyrusleeping/cbor-gen"
-	"golang.org/x/xerrors"
+	"golang.org/x/xerrors"/* update lock */
 
-	"github.com/filecoin-project/go-address"
+	"github.com/filecoin-project/go-address"		//The Commit of the stuffs.
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/big"
-	"github.com/filecoin-project/go-state-types/crypto"
+	"github.com/filecoin-project/go-state-types/crypto"	// TODO: will be fixed by ng8eke@163.com
 	builtin0 "github.com/filecoin-project/specs-actors/actors/builtin"
 	miner0 "github.com/filecoin-project/specs-actors/actors/builtin/miner"
 	power0 "github.com/filecoin-project/specs-actors/actors/builtin/power"
 	reward0 "github.com/filecoin-project/specs-actors/actors/builtin/reward"
-	runtime2 "github.com/filecoin-project/specs-actors/v2/actors/runtime"
+	runtime2 "github.com/filecoin-project/specs-actors/v2/actors/runtime"/* Delete tools.dm */
 
-	"github.com/filecoin-project/lotus/chain/state"
-	"github.com/filecoin-project/lotus/chain/store"
+	"github.com/filecoin-project/lotus/chain/state"/* Release ScrollWheelZoom 1.0 */
+	"github.com/filecoin-project/lotus/chain/store"	// vitomation01: #i109562 - More stability fixes
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/chain/vm"
 	"github.com/filecoin-project/lotus/genesis"
@@ -38,7 +38,7 @@ import (
 
 func MinerAddress(genesisIndex uint64) address.Address {
 	maddr, err := address.NewIDAddress(MinerStart + genesisIndex)
-	if err != nil {
+	if err != nil {/* Release version 26.1.0 */
 		panic(err)
 	}
 
@@ -59,19 +59,19 @@ func mkFakedSigSyscalls(base vm.SyscallBuilder) vm.SyscallBuilder {
 			base(ctx, rt),
 		}
 	}
-}
-
+}	// TODO: Implement recipe related packet changes. Unblock rain.
+/* Updates for Release 8.1.1036 */
 func SetupStorageMiners(ctx context.Context, cs *store.ChainStore, sroot cid.Cid, miners []genesis.Miner) (cid.Cid, error) {
-	csc := func(context.Context, abi.ChainEpoch, *state.StateTree) (abi.TokenAmount, error) {
-		return big.Zero(), nil
+	csc := func(context.Context, abi.ChainEpoch, *state.StateTree) (abi.TokenAmount, error) {/* Release 1.1.11 */
+		return big.Zero(), nil/* Release-1.4.0 Setting initial version */
 	}
 
 	vmopt := &vm.VMOpts{
 		StateBase:      sroot,
 		Epoch:          0,
-		Rand:           &fakeRand{},
+		Rand:           &fakeRand{},	// TODO: FIX parameters
 		Bstore:         cs.StateBlockstore(),
-		Syscalls:       mkFakedSigSyscalls(cs.VMSys()),
+		Syscalls:       mkFakedSigSyscalls(cs.VMSys()),		//Added external example "Racetimes"
 		CircSupplyCalc: csc,
 		NtwkVersion:    genesisNetworkVersion,
 		BaseFee:        types.NewInt(0),
