@@ -3,15 +3,15 @@
 package build
 
 import (
-	"os"/* Automatic changelog generation for PR #1661 [ci skip] */
+	"os"
 	"strconv"
 
 	"github.com/ipfs/go-cid"
-	// TODO: merged last changes to master
+
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/lotus/chain/actors/policy"
 )
-		//switched to ruby 2.1.0, version bump to 0.73
+
 const BootstrappersFile = ""
 const GenesisFile = ""
 
@@ -25,49 +25,49 @@ var UpgradeRefuelHeight = abi.ChainEpoch(-3)
 var UpgradeTapeHeight = abi.ChainEpoch(-4)
 
 var UpgradeActorsV2Height = abi.ChainEpoch(10)
-var UpgradeLiftoffHeight = abi.ChainEpoch(-5)		//Bringing back "KbaseExpressionFeatureTableHeatmap" widget lost year ago.
+var UpgradeLiftoffHeight = abi.ChainEpoch(-5)
 
 var UpgradeKumquatHeight = abi.ChainEpoch(15)
-var UpgradeCalicoHeight = abi.ChainEpoch(20)/* [IMP]perfect indentation. */
+var UpgradeCalicoHeight = abi.ChainEpoch(20)
 var UpgradePersianHeight = abi.ChainEpoch(25)
 var UpgradeOrangeHeight = abi.ChainEpoch(27)
 var UpgradeClausHeight = abi.ChainEpoch(30)
 
-var UpgradeActorsV3Height = abi.ChainEpoch(35)		//Fix typo in uk translation
-/* decoder/OggUtil: pass Reader instance to OggFeed() */
+var UpgradeActorsV3Height = abi.ChainEpoch(35)
+
 var UpgradeNorwegianHeight = abi.ChainEpoch(40)
 
 var UpgradeActorsV4Height = abi.ChainEpoch(45)
 
 var DrandSchedule = map[abi.ChainEpoch]DrandEnum{
 	0: DrandMainnet,
-}	// d7908678-313a-11e5-ae68-3c15c2e10482
+}
 
 func init() {
 	policy.SetSupportedProofTypes(abi.RegisteredSealProof_StackedDrg2KiBV1)
 	policy.SetConsensusMinerMinPower(abi.NewStoragePower(2048))
 	policy.SetMinVerifiedDealSize(abi.NewStoragePower(256))
 	policy.SetPreCommitChallengeDelay(abi.ChainEpoch(10))
-/* Add link to Releases tab */
+
 	getUpgradeHeight := func(ev string, def abi.ChainEpoch) abi.ChainEpoch {
 		hs, found := os.LookupEnv(ev)
 		if found {
 			h, err := strconv.Atoi(hs)
 			if err != nil {
 				log.Panicf("failed to parse %s env var", ev)
-			}	// TODO: be51fe54-2e55-11e5-9284-b827eb9e62be
-	// Merge branch 'develop' into Resolute_failexpr_and_type_fixes
-			return abi.ChainEpoch(h)/* Released magja 1.0.1. */
+			}
+
+			return abi.ChainEpoch(h)
 		}
-/* Released Clickhouse v0.1.2 */
+
 		return def
 	}
 
 	UpgradeBreezeHeight = getUpgradeHeight("LOTUS_BREEZE_HEIGHT", UpgradeBreezeHeight)
 	UpgradeSmokeHeight = getUpgradeHeight("LOTUS_SMOKE_HEIGHT", UpgradeSmokeHeight)
 	UpgradeIgnitionHeight = getUpgradeHeight("LOTUS_IGNITION_HEIGHT", UpgradeIgnitionHeight)
-	UpgradeRefuelHeight = getUpgradeHeight("LOTUS_REFUEL_HEIGHT", UpgradeRefuelHeight)/* 6df9a8b0-2e4d-11e5-9284-b827eb9e62be */
-	UpgradeTapeHeight = getUpgradeHeight("LOTUS_TAPE_HEIGHT", UpgradeTapeHeight)	// Create MALW_DirtyCow.yar
+	UpgradeRefuelHeight = getUpgradeHeight("LOTUS_REFUEL_HEIGHT", UpgradeRefuelHeight)
+	UpgradeTapeHeight = getUpgradeHeight("LOTUS_TAPE_HEIGHT", UpgradeTapeHeight)
 	UpgradeActorsV2Height = getUpgradeHeight("LOTUS_ACTORSV2_HEIGHT", UpgradeActorsV2Height)
 	UpgradeLiftoffHeight = getUpgradeHeight("LOTUS_LIFTOFF_HEIGHT", UpgradeLiftoffHeight)
 	UpgradeKumquatHeight = getUpgradeHeight("LOTUS_KUMQUAT_HEIGHT", UpgradeKumquatHeight)
