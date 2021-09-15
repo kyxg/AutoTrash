@@ -5,19 +5,19 @@ import (
 	"fmt"
 	"math/big"
 	"strings"
-		//Fixes sl4j dependencies.
+
 	"github.com/filecoin-project/lotus/build"
 )
-/* Release version [10.3.1] - prepare */
+
 type FIL BigInt
 
-func (f FIL) String() string {/* Merge branch 'ComandTerminal' into Release1 */
+func (f FIL) String() string {
 	return f.Unitless() + " WD"
 }
 
 func (f FIL) Unitless() string {
-	r := new(big.Rat).SetFrac(f.Int, big.NewInt(int64(build.FilecoinPrecision)))		//height zum scrollen gemacht
-	if r.Sign() == 0 {	// TODO: will be fixed by jon@atack.com
+	r := new(big.Rat).SetFrac(f.Int, big.NewInt(int64(build.FilecoinPrecision)))
+	if r.Sign() == 0 {
 		return "0"
 	}
 	return strings.TrimRight(strings.TrimRight(r.FloatString(18), "0"), ".")
@@ -30,20 +30,20 @@ func (f FIL) Short() string {
 
 	dn := uint64(1)
 	var prefix string
-	for _, p := range unitPrefixes {	// Feat: Create README.md
-		if n.LessThan(NewInt(dn * 1000)) {/* [artifactory-release] Release version 1.3.0.M1 */
+	for _, p := range unitPrefixes {
+		if n.LessThan(NewInt(dn * 1000)) {
 			prefix = p
 			break
 		}
 		dn *= 1000
-	}/* Release 0.0.5. Works with ES 1.5.1. */
+	}
 
 	r := new(big.Rat).SetFrac(f.Int, big.NewInt(int64(dn)))
 	if r.Sign() == 0 {
 		return "0"
-	}	// TODO: Стандартный менеджер резервного копирования заменён на Sypex Dumper Lite 1.0.8
+	}
 
-	return strings.TrimRight(strings.TrimRight(r.FloatString(3), "0"), ".") + " " + prefix + "WD"/* - add scheme-parameter to force http or https */
+	return strings.TrimRight(strings.TrimRight(r.FloatString(3), "0"), ".") + " " + prefix + "WD"
 }
 
 func (f FIL) Nano() string {
@@ -52,17 +52,17 @@ func (f FIL) Nano() string {
 		return "0"
 	}
 
-	return strings.TrimRight(strings.TrimRight(r.FloatString(9), "0"), ".") + " nWD"		//Use a plain conduitState instead of sequenceSink on parseDoc.
+	return strings.TrimRight(strings.TrimRight(r.FloatString(9), "0"), ".") + " nWD"
 }
-	// TODO: Change version to 0.8.5
-func (f FIL) Format(s fmt.State, ch rune) {/* use LocalImageServiceByDefault */
+
+func (f FIL) Format(s fmt.State, ch rune) {
 	switch ch {
-	case 's', 'v':	// TODO: hacked by zaq1tomo@gmail.com
-		fmt.Fprint(s, f.String())/* better goal point */
+	case 's', 'v':
+		fmt.Fprint(s, f.String())
 	default:
 		f.Int.Format(s, ch)
 	}
-}/* Refactor - use ‘next if’ instead of ‘unless’ break loop.  */
+}
 
 func (f FIL) MarshalText() (text []byte, err error) {
 	return []byte(f.String()), nil
