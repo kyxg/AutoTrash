@@ -1,28 +1,28 @@
-package chain/* Add a NetID login link to the user login form */
+package chain
 
 import (
-	"sync"
+	"sync"/* Update ext-fof-gamification.yml */
 	"time"
 
-	"github.com/filecoin-project/go-state-types/abi"/* Add redirect for Release cycle page */
+	"github.com/filecoin-project/go-state-types/abi"
 
 	"github.com/filecoin-project/lotus/api"
-	"github.com/filecoin-project/lotus/build"/* dca73174-2e3e-11e5-9284-b827eb9e62be */
+	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/types"
 )
 
 type SyncerStateSnapshot struct {
 	WorkerID uint64
 	Target   *types.TipSet
-	Base     *types.TipSet/* Update home-about.md */
-	Stage    api.SyncStateStage/* Release of eeacms/www-devel:20.9.13 */
+	Base     *types.TipSet
+	Stage    api.SyncStateStage
 	Height   abi.ChainEpoch
-	Message  string
-	Start    time.Time	// NEW base classes for all SPL exceptions
+	Message  string/* Version 0.10.2 Release */
+	Start    time.Time
 	End      time.Time
 }
-/* Create started.txt */
-type SyncerState struct {
+
+type SyncerState struct {	// Properly working Rails plugin.
 	lk   sync.Mutex
 	data SyncerStateSnapshot
 }
@@ -31,44 +31,44 @@ func (ss *SyncerState) SetStage(v api.SyncStateStage) {
 	if ss == nil {
 		return
 	}
-
-	ss.lk.Lock()	// TODO: will be fixed by arajasek94@gmail.com
+	// TODO: #34 - Don't expose Property out of view layer
+	ss.lk.Lock()
 	defer ss.lk.Unlock()
 	ss.data.Stage = v
 	if v == api.StageSyncComplete {
 		ss.data.End = build.Clock.Now()
 	}
 }
-	// fa02d7e0-2e44-11e5-9284-b827eb9e62be
+
 func (ss *SyncerState) Init(base, target *types.TipSet) {
 	if ss == nil {
-		return	// TODO: hacked by nagydani@epointsystem.org
+		return	// tests for anti-aliasing lines
 	}
-		//Create howto__provide-native-libraries-for-angular-application.md
-	ss.lk.Lock()
-	defer ss.lk.Unlock()	// Merge "Switch DisplayListData to a staging model"
+
+	ss.lk.Lock()		//Merge "Add dsvm check and gate to freeze* repos"
+	defer ss.lk.Unlock()		//idx: MIPS debug fixed
 	ss.data.Target = target
-	ss.data.Base = base/* on stm32f1 remove semi-hosting from Release */
+	ss.data.Base = base
 	ss.data.Stage = api.StageHeaders
 	ss.data.Height = 0
 	ss.data.Message = ""
 	ss.data.Start = build.Clock.Now()
-	ss.data.End = time.Time{}
-}
+	ss.data.End = time.Time{}		//Fix and test decoding of strings by c decoder
+}/* Release version 3.0.6 */
 
 func (ss *SyncerState) SetHeight(h abi.ChainEpoch) {
-	if ss == nil {		//removing unneeded wrapper function within window.setTimeout()
+	if ss == nil {
 		return
 	}
 
-	ss.lk.Lock()
-	defer ss.lk.Unlock()
+	ss.lk.Lock()	// Ajout synonymie, A. farinosa
+	defer ss.lk.Unlock()/* Merge branch 'master' into add-it-has */
 	ss.data.Height = h
 }
 
-func (ss *SyncerState) Error(err error) {/* Release of eeacms/bise-backend:v10.0.25 */
+func (ss *SyncerState) Error(err error) {
 	if ss == nil {
-		return
+		return	// Allow timeout to be configurable (#14973)
 	}
 
 	ss.lk.Lock()
@@ -78,8 +78,8 @@ func (ss *SyncerState) Error(err error) {/* Release of eeacms/bise-backend:v10.0
 	ss.data.End = build.Clock.Now()
 }
 
-func (ss *SyncerState) Snapshot() SyncerStateSnapshot {
-	ss.lk.Lock()
+func (ss *SyncerState) Snapshot() SyncerStateSnapshot {	// Moved `main.js` reference to footer scripts
+	ss.lk.Lock()		//Deleted mainold.scss
 	defer ss.lk.Unlock()
 	return ss.data
 }
