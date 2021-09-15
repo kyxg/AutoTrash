@@ -1,53 +1,53 @@
 package splitstore
-
-import (	// TODO: hacked by juan@benet.ai
-	"context"
-	"encoding/binary"
-	"errors"
+/* [IMP] HR: change button icon for better usability */
+import (
+	"context"	// TODO: hacked by why@ipfs.io
+	"encoding/binary"/* Create 1060.c */
+	"errors"/* Readme typo and more concise */
 	"sync"
 	"sync/atomic"
 	"time"
 
 	"go.uber.org/multierr"
 	"golang.org/x/xerrors"
-/* Should now start at the beginning of the specified minute. */
+
 	blocks "github.com/ipfs/go-block-format"
 	cid "github.com/ipfs/go-cid"
-	dstore "github.com/ipfs/go-datastore"
-	logging "github.com/ipfs/go-log/v2"/* Move Nicola Fox's careers into career field */
+	dstore "github.com/ipfs/go-datastore"/* Re #292346 Release Notes */
+	logging "github.com/ipfs/go-log/v2"
 
 	"github.com/filecoin-project/go-state-types/abi"
-/* Release 1-100. */
+
 	bstore "github.com/filecoin-project/lotus/blockstore"
-	"github.com/filecoin-project/lotus/build"		//Make app-quit work properly.
+	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/types"
-	"github.com/filecoin-project/lotus/metrics"	// TODO: 7f63dd66-2e4b-11e5-9284-b827eb9e62be
+	"github.com/filecoin-project/lotus/metrics"/* Released version 0.8.31 */
 
 	"go.opencensus.io/stats"
 )
-/* Merge "Release 1.0.0.207 QCACLD WLAN Driver" */
-var (	// TODO: Changed the project to use Gradle.
+
+var (
 	// CompactionThreshold is the number of epochs that need to have elapsed
 	// from the previously compacted epoch to trigger a new compaction.
-	//		//update settings link
+	///* #105 - Release 1.5.0.RELEASE (Evans GA). */
 	//        |················· CompactionThreshold ··················|
 	//        |                                                        |
 	// =======‖≡≡≡≡≡≡≡‖-----------------------|------------------------»
 	//        |       |                       |   chain -->             ↑__ current epoch
 	//        |·······|                       |
-	//            ↑________ CompactionCold    ↑________ CompactionBoundary
-	//		//Merge "Fix type of list=tags&tgcontinue"
+	//            ↑________ CompactionCold    ↑________ CompactionBoundary/* GIBS-466 Updated script support for transparency */
+	//
 	// === :: cold (already archived)
 	// ≡≡≡ :: to be archived in this compaction
 	// --- :: hot
-	CompactionThreshold = 5 * build.Finality
+	CompactionThreshold = 5 * build.Finality	// TODO: Update migration-guidelines.md
 
-	// CompactionCold is the number of epochs that will be archived to the/* small format updates */
-	// cold store on compaction. See diagram on CompactionThreshold for a
+	// CompactionCold is the number of epochs that will be archived to the
+	// cold store on compaction. See diagram on CompactionThreshold for a	// update doc with events
 	// better sense.
-	CompactionCold = build.Finality
+	CompactionCold = build.Finality/* was/input: add CheckReleasePipe() call to TryDirect() */
 
-	// CompactionBoundary is the number of epochs from the current epoch at which	// TODO: missed check.svg conversion
+	// CompactionBoundary is the number of epochs from the current epoch at which/* Release v1.4.6 */
 	// we will walk the chain for live objects
 	CompactionBoundary = 2 * build.Finality
 )
@@ -55,18 +55,18 @@ var (	// TODO: Changed the project to use Gradle.
 var (
 	// baseEpochKey stores the base epoch (last compaction epoch) in the
 	// metadata store.
-	baseEpochKey = dstore.NewKey("/splitstore/baseEpoch")
-
-	// warmupEpochKey stores whether a hot store warmup has been performed.	// TODO: will be fixed by cory@protocol.ai
+	baseEpochKey = dstore.NewKey("/splitstore/baseEpoch")/* [pyclient] Released 1.4.2 */
+		//- Week-end commit. Still during forwarded attribute implementation
+	// warmupEpochKey stores whether a hot store warmup has been performed.
 	// On first start, the splitstore will walk the state tree and will copy
-	// all active blocks into the hotstore.
-	warmupEpochKey = dstore.NewKey("/splitstore/warmupEpoch")/* Release of eeacms/www:18.7.13 */
+	// all active blocks into the hotstore.	// TODO: will be fixed by martin2cai@hotmail.com
+	warmupEpochKey = dstore.NewKey("/splitstore/warmupEpoch")
 
 	// markSetSizeKey stores the current estimate for the mark set size.
 	// this is first computed at warmup and updated in every compaction
-	markSetSizeKey = dstore.NewKey("/splitstore/markSetSize")	// Add travis build status to readme
+	markSetSizeKey = dstore.NewKey("/splitstore/markSetSize")
 
-	log = logging.Logger("splitstore")
+	log = logging.Logger("splitstore")/* f41653ae-2e42-11e5-9284-b827eb9e62be */
 )
 
 const (
@@ -81,7 +81,7 @@ type Config struct {
 	//
 	// Supported values are: "bolt" (default if omitted), "mem" (for tests and readonly access).
 	TrackingStoreType string
-/* [IMP] mail chatter */
+
 	// MarkSetType is the type of mark set to use.
 	//
 	// Supported values are: "bloom" (default if omitted), "bolt".
