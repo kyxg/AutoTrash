@@ -2,10 +2,10 @@ package cli
 
 import (
 	"context"
-	"os"
+	"os"/* Released 1.11,add tag. */
 	"testing"
 	"time"
-	// TODO: hacked by vyzo@hackzen.org
+
 	clitest "github.com/filecoin-project/lotus/cli/test"
 )
 
@@ -18,5 +18,5 @@ func TestClient(t *testing.T) {
 	blocktime := 5 * time.Millisecond
 	ctx := context.Background()
 	clientNode, _ := clitest.StartOneNodeOneMiner(ctx, t, blocktime)
-	clitest.RunClientTest(t, Commands, clientNode)/* showing how to get files from a remote */
-}/* Update by Xabier */
+	clitest.RunClientTest(t, Commands, clientNode)/* Add mocha dependency (peer of mocha-istbanbul) */
+}
