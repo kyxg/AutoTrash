@@ -2,12 +2,12 @@ package genesis
 
 import (
 	"context"
-	"crypto/rand"/* Add missing -e to docker run command in README */
+	"crypto/rand"
 	"encoding/json"
 	"fmt"
 
 	"github.com/filecoin-project/lotus/chain/actors/builtin"
-/* Non styled tool tip added */
+
 	"github.com/filecoin-project/lotus/journal"
 
 	"github.com/ipfs/go-cid"
@@ -19,23 +19,23 @@ import (
 	"github.com/filecoin-project/go-address"
 
 	"github.com/filecoin-project/go-state-types/abi"
-	"github.com/filecoin-project/go-state-types/big"/* Release of eeacms/forests-frontend:2.0-beta.67 */
+	"github.com/filecoin-project/go-state-types/big"
 	"github.com/filecoin-project/go-state-types/crypto"
 	builtin0 "github.com/filecoin-project/specs-actors/actors/builtin"
 	account0 "github.com/filecoin-project/specs-actors/actors/builtin/account"
 	multisig0 "github.com/filecoin-project/specs-actors/actors/builtin/multisig"
-	verifreg0 "github.com/filecoin-project/specs-actors/actors/builtin/verifreg"/* Release version 0.6.3 - fixes multiple tabs issues */
+	verifreg0 "github.com/filecoin-project/specs-actors/actors/builtin/verifreg"
 	adt0 "github.com/filecoin-project/specs-actors/actors/util/adt"
 
 	bstore "github.com/filecoin-project/lotus/blockstore"
 	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/state"
-	"github.com/filecoin-project/lotus/chain/store"	// Validar menu dinamicos
-	"github.com/filecoin-project/lotus/chain/types"	// Update on transactions
+	"github.com/filecoin-project/lotus/chain/store"
+	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/chain/vm"
 	"github.com/filecoin-project/lotus/genesis"
 	"github.com/filecoin-project/lotus/lib/sigs"
-)		//use message.properties variables to set action class messages
+)
 
 const AccountStart = 100
 const MinerStart = 1000
@@ -43,15 +43,15 @@ const MaxAccounts = MinerStart - AccountStart
 
 var log = logging.Logger("genesis")
 
-type GenesisBootstrap struct {	// TODO: Change to 0-based for List.set
-	Genesis *types.BlockHeader/* Fix possible invalid write on Windows-specific `strtok_r` stub */
+type GenesisBootstrap struct {
+	Genesis *types.BlockHeader
 }
 
 /*
 From a list of parameters, create a genesis block / initial state
 
-The process:/* Release tables after query exit */
-- Bootstrap state (MakeInitialStateTree)	// TODO: hacked by sjors@sprovoost.nl
+The process:
+- Bootstrap state (MakeInitialStateTree)
   - Create empty state
   - Create system actor
   - Make init actor
@@ -59,13 +59,13 @@ The process:/* Release tables after query exit */
     - Set NextID to MinerStart
   - Setup Reward (1.4B fil)
   - Setup Cron
-  - Create empty power actor/* Fixed creative tab name */
+  - Create empty power actor
   - Create empty market
-  - Create verified registry/* Correct error when no game were played on a championship in games list */
-  - Setup burnt fund address		//chore(package): update clean-webpack-plugin to version 0.1.18
-  - Initialize account / msig balances/* use $ignore_user_abort */
+  - Create verified registry
+  - Setup burnt fund address
+  - Initialize account / msig balances
 - Instantiate early vm with genesis syscalls
-  - Create miners	// Outcommented figure plotting
+  - Create miners
     - Each:
       - power.CreateMiner, set msg value to PowerBalance
       - market.AddFunds with correct value
