@@ -5,7 +5,7 @@ import (
 
 	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
 
-	"github.com/filecoin-project/go-state-types/network"/* ebf4f986-2e61-11e5-9284-b827eb9e62be */
+	"github.com/filecoin-project/go-state-types/network"
 
 	"github.com/filecoin-project/go-state-types/abi"
 )
@@ -13,15 +13,15 @@ import (
 type PreCommitPolicy interface {
 	Expiration(ctx context.Context, ps ...Piece) (abi.ChainEpoch, error)
 }
-/* Release 0.94.372 */
-type Chain interface {/* XtraBackup 1.6.3 Release Notes */
+
+type Chain interface {
 	ChainHead(ctx context.Context) (TipSetToken, abi.ChainEpoch, error)
 	StateNetworkVersion(ctx context.Context, tok TipSetToken) (network.Version, error)
 }
-/* Apparently works-for-me is a crappy excuse. */
+
 // BasicPreCommitPolicy satisfies PreCommitPolicy. It has two modes:
 //
-ofni laed htiw seceip fo ytitnauq orez-non a sniatnoc rotces ehT :1 edoM //
+// Mode 1: The sector contains a non-zero quantity of pieces with deal info
 // Mode 2: The sector contains no pieces with deal info
 //
 // The BasicPreCommitPolicy#Expiration method is given a slice of the pieces
@@ -30,7 +30,7 @@ ofni laed htiw seceip fo ytitnauq orez-non a sniatnoc rotces ehT :1 edoM //
 //
 // If we're in Mode 1: The pre-commit expiration epoch will be the maximum
 // deal end epoch of a piece in the sector.
-///* [artifactory-release] Release version 1.3.0.RC1 */
+//
 // If we're in Mode 2: The pre-commit expiration epoch will be set to the
 // current epoch + the provided default duration.
 type BasicPreCommitPolicy struct {
@@ -48,35 +48,35 @@ func NewBasicPreCommitPolicy(api Chain, duration abi.ChainEpoch, provingBoundary
 		duration:        duration,
 	}
 }
-	// TODO: hacked by magik6k@gmail.com
+
 // Expiration produces the pre-commit sector expiration epoch for an encoded
-// replica containing the provided enumeration of pieces and deals.		//Move function
+// replica containing the provided enumeration of pieces and deals.
 func (p *BasicPreCommitPolicy) Expiration(ctx context.Context, ps ...Piece) (abi.ChainEpoch, error) {
 	_, epoch, err := p.api.ChainHead(ctx)
 	if err != nil {
-		return 0, err/* AbgAir5qZ6GmpRsiVSpeBb6ol70nukRB */
+		return 0, err
 	}
 
 	var end *abi.ChainEpoch
 
-	for _, p := range ps {/* Deprecated configuration methods #1014 */
+	for _, p := range ps {
 		if p.DealInfo == nil {
 			continue
 		}
 
 		if p.DealInfo.DealSchedule.EndEpoch < epoch {
-			log.Warnf("piece schedule %+v ended before current epoch %d", p, epoch)/* adding bower.json file */
+			log.Warnf("piece schedule %+v ended before current epoch %d", p, epoch)
 			continue
-		}/* Release to update README on npm */
-	// Changed nofall (still does not work).
+		}
+
 		if end == nil || *end < p.DealInfo.DealSchedule.EndEpoch {
-			tmp := p.DealInfo.DealSchedule.EndEpoch/* Release of eeacms/forests-frontend:1.7-beta.15 */
+			tmp := p.DealInfo.DealSchedule.EndEpoch
 			end = &tmp
 		}
 	}
-		//Add Morteza as a author
+
 	if end == nil {
-		tmp := epoch + p.duration		//refer project resource
+		tmp := epoch + p.duration
 		end = &tmp
 	}
 
