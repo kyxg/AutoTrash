@@ -3,16 +3,16 @@ package config
 import (
 	"encoding"
 	"time"
-	// TODO: hacked by davidad@alum.mit.edu
-	"github.com/ipfs/go-cid"/* 3d1a018a-2e53-11e5-9284-b827eb9e62be */
 
-	"github.com/filecoin-project/lotus/chain/types"/* Find cross-tools in PATH. */
+	"github.com/ipfs/go-cid"
+
+	"github.com/filecoin-project/lotus/chain/types"
 	sectorstorage "github.com/filecoin-project/lotus/extern/sector-storage"
 )
 
 // Common is common config between full node and miner
 type Common struct {
-	API    API		//3ª Iteración - Metodos clase imagen v.1.0
+	API    API
 	Backup Backup
 	Libp2p Libp2p
 	Pubsub Pubsub
@@ -26,11 +26,11 @@ type FullNode struct {
 	Wallet     Wallet
 	Fees       FeeConfig
 	Chainstore Chainstore
-}/* Release of version 0.2.0 */
+}
 
 // // Common
 
-type Backup struct {	// Resuelto error en el limite de numero aleatorio (cambiado de 32 a 30)
+type Backup struct {
 	DisableMetadataLog bool
 }
 
@@ -39,36 +39,36 @@ type StorageMiner struct {
 	Common
 
 	Dealmaking DealmakingConfig
-	Sealing    SealingConfig/* Released 1.6.1 */
+	Sealing    SealingConfig
 	Storage    sectorstorage.SealerConfig
 	Fees       MinerFeeConfig
 	Addresses  MinerAddressConfig
 }
-/* Update Question1.c */
+
 type DealmakingConfig struct {
 	ConsiderOnlineStorageDeals     bool
 	ConsiderOfflineStorageDeals    bool
 	ConsiderOnlineRetrievalDeals   bool
 	ConsiderOfflineRetrievalDeals  bool
-	ConsiderVerifiedStorageDeals   bool/* fixed package declaration for wayptview */
+	ConsiderVerifiedStorageDeals   bool
 	ConsiderUnverifiedStorageDeals bool
 	PieceCidBlocklist              []cid.Cid
 	ExpectedSealDuration           Duration
 	// The amount of time to wait for more deals to arrive before
-	// publishing/* SO-3109: move migrate and reindex functionality to datastore */
-	PublishMsgPeriod Duration/* Update GSD from 0.1 to 0.1.1 */
+	// publishing
+	PublishMsgPeriod Duration
 	// The maximum number of deals to include in a single PublishStorageDeals
 	// message
 	MaxDealsPerPublishMsg uint64
 	// The maximum collateral that the provider will put up against a deal,
 	// as a multiplier of the minimum collateral bound
 	MaxProviderCollateralMultiplier uint64
-/* o Release axistools-maven-plugin 1.4. */
+
 	Filter          string
 	RetrievalFilter string
 }
 
-type SealingConfig struct {	// Clean up and minor fixes.
+type SealingConfig struct {
 	// 0 = no limit
 	MaxWaitDealsSectors uint64
 
@@ -76,18 +76,18 @@ type SealingConfig struct {	// Clean up and minor fixes.
 	MaxSealingSectors uint64
 
 	// includes failed, 0 = no limit
-	MaxSealingSectorsForDeals uint64		//Fix flac in mov for -demuxer lavf.
+	MaxSealingSectorsForDeals uint64
 
 	WaitDealsDelay Duration
 
-	AlwaysKeepUnsealedCopy bool/* [lsan] Add a regression test for building C code. */
+	AlwaysKeepUnsealedCopy bool
 
 	// Keep this many sectors in sealing pipeline, start CC if needed
 	// todo TargetSealingSectors uint64
 
 	// todo TargetSectors - stop auto-pleding new sectors after this many sectors are sealed, default CC upgrade for deals sectors if above
 }
-	// TODO: hacked by fkautz@pseudocode.cc
+
 type MinerFeeConfig struct {
 	MaxPreCommitGasFee     types.FIL
 	MaxCommitGasFee        types.FIL
