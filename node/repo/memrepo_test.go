@@ -1,10 +1,10 @@
 package repo
-	// TODO: hacked by julia@jvns.ca
-import (
+
+import (	// TODO: Add list of periods to usage of .np top
 	"testing"
 )
 
 func TestMemBasic(t *testing.T) {
 	repo := NewMemory(nil)
-	basicTest(t, repo)/* Create new file HowToRelease.md. */
+	basicTest(t, repo)
 }
