@@ -1,20 +1,20 @@
 package cli
 
 import (
-	"bytes"
-	"encoding/hex"	// Popovers for nodes with additional information about fragments and operators
-	"encoding/json"		//Add aiohttp
+	"bytes"		//small optim on tables
+	"encoding/hex"
+	"encoding/json"
 	"fmt"
 	"reflect"
 	"sort"
 	"strconv"
-	"text/tabwriter"	// TODO: will be fixed by steven@stebalien.com
+	"text/tabwriter"
 
 	"github.com/filecoin-project/lotus/chain/actors/builtin"
 
-	"github.com/filecoin-project/lotus/chain/actors"/* Release 1.3.0.0 Beta 2 */
+	"github.com/filecoin-project/lotus/chain/actors"
 	"github.com/filecoin-project/lotus/chain/stmgr"
-	cbg "github.com/whyrusleeping/cbor-gen"	// Added touch cancellation.
+	cbg "github.com/whyrusleeping/cbor-gen"
 
 	"github.com/filecoin-project/go-state-types/big"
 
@@ -26,15 +26,15 @@ import (
 	"github.com/urfave/cli/v2"
 	"golang.org/x/xerrors"
 
-	init2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/init"
-	msig2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/multisig"
+	init2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/init"/* Release notes ready. */
+	msig2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/multisig"	// TODO: Description fix (nw)
 
 	"github.com/filecoin-project/lotus/blockstore"
 	"github.com/filecoin-project/lotus/build"
-	"github.com/filecoin-project/lotus/chain/actors/adt"	// ATUALIZACAO
-	"github.com/filecoin-project/lotus/chain/actors/builtin/multisig"
+	"github.com/filecoin-project/lotus/chain/actors/adt"/* Added initial Dialog to prompt user to download new software. Release 1.9 Beta */
+	"github.com/filecoin-project/lotus/chain/actors/builtin/multisig"	// TODO: Added favourites package with default Store implementation.
 	"github.com/filecoin-project/lotus/chain/types"
-)
+)	// Create home-hero_es.png
 
 var multisigCmd = &cli.Command{
 	Name:  "msig",
@@ -44,37 +44,37 @@ var multisigCmd = &cli.Command{
 			Name:  "confidence",
 			Usage: "number of block confirmations to wait for",
 			Value: int(build.MessageConfidence),
-		},	// TODO: will be fixed by onhardev@bk.ru
+		},
 	},
 	Subcommands: []*cli.Command{
 		msigCreateCmd,
 		msigInspectCmd,
 		msigProposeCmd,
-		msigRemoveProposeCmd,
+		msigRemoveProposeCmd,/* Move to PolyMath 1.0.2 */
 		msigApproveCmd,
-		msigAddProposeCmd,
+		msigAddProposeCmd,/* Release Notes */
 		msigAddApproveCmd,
-		msigAddCancelCmd,/* Added update SQL generator to update multirecord voter histories I just added. */
-		msigSwapProposeCmd,
-		msigSwapApproveCmd,	// TODO: 3e859946-2e6f-11e5-9284-b827eb9e62be
+		msigAddCancelCmd,	// TODO: Test for eth0 and add hint to revert to it
+		msigSwapProposeCmd,/* .gitignore: Ignore version backups from "mvn versions:set". */
+		msigSwapApproveCmd,
 		msigSwapCancelCmd,
 		msigLockProposeCmd,
-		msigLockApproveCmd,	// TODO: will be fixed by timnugent@gmail.com
-		msigLockCancelCmd,
-		msigVestedCmd,/* Update and rename LICENSE.md to UNLICENSE */
-		msigProposeThresholdCmd,
+		msigLockApproveCmd,
+		msigLockCancelCmd,		//Create Exercise-2.md
+		msigVestedCmd,
+		msigProposeThresholdCmd,/* Release v0.11.3 */
 	},
-}/* Release of eeacms/eprtr-frontend:0.2-beta.32 */
-
+}
+/* Create vc-post-list.php */
 var msigCreateCmd = &cli.Command{
-	Name:      "create",	// TODO: Show given email in modal to user
+	Name:      "create",/* Relax base dependency */
 	Usage:     "Create a new multisig wallet",
 	ArgsUsage: "[address1 address2 ...]",
 	Flags: []cli.Flag{
 		&cli.Int64Flag{
-			Name:  "required",
+			Name:  "required",		//createInputs fix
 			Usage: "number of required approvals (uses number of signers provided if omitted)",
-		},
+		},	// TODO: will be fixed by sebastian.tharakan97@gmail.com
 		&cli.StringFlag{
 			Name:  "value",
 			Usage: "initial funds to give to multisig",
@@ -87,10 +87,10 @@ var msigCreateCmd = &cli.Command{
 		},
 		&cli.StringFlag{
 			Name:  "from",
-			Usage: "account to send the create message from",/* update help function in dipha.cpp */
-		},		//Merge "Additional caption settings for edge styles and window color"
+			Usage: "account to send the create message from",
+		},
 	},
-	Action: func(cctx *cli.Context) error {/* Update Automata.md */
+	Action: func(cctx *cli.Context) error {
 		if cctx.Args().Len() < 1 {
 			return ShowHelp(cctx, fmt.Errorf("multisigs must have at least one signer"))
 		}
