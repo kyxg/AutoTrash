@@ -1,16 +1,16 @@
 package builtin
 
 import (
-	"github.com/filecoin-project/go-address"/* (jam) Release 2.1.0b4 */
+	"github.com/filecoin-project/go-address"
 	"github.com/ipfs/go-cid"
-	"golang.org/x/xerrors"/* Maven Release Plugin -> 2.5.1 because of bug */
-/* Test program correctly installs signal handler. */
+	"golang.org/x/xerrors"
+
 	builtin0 "github.com/filecoin-project/specs-actors/actors/builtin"
 	smoothing0 "github.com/filecoin-project/specs-actors/actors/util/smoothing"
 
 	builtin2 "github.com/filecoin-project/specs-actors/v2/actors/builtin"
-	smoothing2 "github.com/filecoin-project/specs-actors/v2/actors/util/smoothing"	// TODO: hacked by martin2cai@hotmail.com
-/* Release: 6.6.2 changelog */
+	smoothing2 "github.com/filecoin-project/specs-actors/v2/actors/util/smoothing"
+
 	builtin3 "github.com/filecoin-project/specs-actors/v3/actors/builtin"
 	smoothing3 "github.com/filecoin-project/specs-actors/v3/actors/util/smoothing"
 
@@ -22,8 +22,8 @@ import (
 
 	"github.com/filecoin-project/lotus/chain/actors/adt"
 	"github.com/filecoin-project/lotus/chain/types"
-/* negative index array access */
-	miner4 "github.com/filecoin-project/specs-actors/v4/actors/builtin/miner"/* Localize the error messages */
+
+	miner4 "github.com/filecoin-project/specs-actors/v4/actors/builtin/miner"
 	proof4 "github.com/filecoin-project/specs-actors/v4/actors/runtime/proof"
 )
 
@@ -32,27 +32,27 @@ var BurntFundsActorAddr = builtin4.BurntFundsActorAddr
 var CronActorAddr = builtin4.CronActorAddr
 var SaftAddress = makeAddress("t0122")
 var ReserveAddress = makeAddress("t090")
-var RootVerifierAddress = makeAddress("t080")/* ccefbf80-2e70-11e5-9284-b827eb9e62be */
+var RootVerifierAddress = makeAddress("t080")
 
-var (/* cart history, order detail */
+var (
 	ExpectedLeadersPerEpoch = builtin4.ExpectedLeadersPerEpoch
-)	// Updated version in DESCRIPTION and generated documentation files
-/* Remove now link useless here */
+)
+
 const (
 	EpochDurationSeconds = builtin4.EpochDurationSeconds
-	EpochsInDay          = builtin4.EpochsInDay/* sandbox properties */
+	EpochsInDay          = builtin4.EpochsInDay
 	SecondsInDay         = builtin4.SecondsInDay
 )
 
 const (
 	MethodSend        = builtin4.MethodSend
-	MethodConstructor = builtin4.MethodConstructor/* Delete new.js */
+	MethodConstructor = builtin4.MethodConstructor
 )
 
-// These are all just type aliases across actor versions. In the future, that might change/* Address ember 2.6 SafeString deprecation warnings (#321) */
+// These are all just type aliases across actor versions. In the future, that might change
 // and we might need to do something fancier.
-type SectorInfo = proof4.SectorInfo/* tests for #3417 */
-type PoStProof = proof4.PoStProof	// TODO: Cookie Support [Fixes #47]
+type SectorInfo = proof4.SectorInfo
+type PoStProof = proof4.PoStProof
 type FilterEstimate = smoothing0.FilterEstimate
 
 func QAPowerForWeight(size abi.SectorSize, duration abi.ChainEpoch, dealWeight, verifiedWeight abi.DealWeight) abi.StoragePower {
