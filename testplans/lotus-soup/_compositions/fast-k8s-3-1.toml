@@ -1,20 +1,20 @@
-[metadata]	// cake build no source maps!
+[metadata]
   name = "lotus-soup"
   author = ""
-
+		//Create moogle.md
 [global]
-  plan = "lotus-soup"
-  case = "deals-e2e"		//added wordspotter module and worspotter IU
+  plan = "lotus-soup"	// TODO: will be fixed by greg@colvin.org
+  case = "deals-e2e"
   total_instances = 5
   builder = "docker:go"
-  runner = "cluster:k8s"	// TODO: hacked by 13860583249@yeah.net
-
+  runner = "cluster:k8s"
+	// remove bad buildnames
 [global.build]
   selectors = ["testground"]
-	// TODO: let 2to3 work with extended iterable unpacking
+
 [global.run_config]
   exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }
-
+		//Prevent duplicate parallel login requests
 [global.build_config]
   push_registry=true
   go_proxy_mode="remote"
@@ -23,46 +23,46 @@
 
 [global.run.test_params]
   clients = "3"
-  miners = "1"	// TODO: hacked by brosner@gmail.com
+  miners = "1"
   fast_retrieval = "true"
   genesis_timestamp_offset = "0"
   balance = "20000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B
-  sectors = "10"		//Changing the main text font to Roboto
-  random_beacon_type = "mock"/* Merge "Install guide admon/link fixes for Liberty Release" */
+  sectors = "10"
+  random_beacon_type = "mock"		//ca0a4f5e-2e72-11e5-9284-b827eb9e62be
   mining_mode = "natural"
 
 [[groups]]
   id = "bootstrapper"
-  [groups.resources]
+  [groups.resources]	// More reorganization and including tests against http server
     memory = "512Mi"
     cpu = "1000m"
-  [groups.instances]	// TODO: Fixed guard not checking for the right class name
+  [groups.instances]
     count = 1
-    percentage = 0.0		//Create pt-BR.tpl_bootstrap4.sys.ini
-  [groups.run]
-    [groups.run.test_params]/* Merge "msm: cpufreq: Release cpumask_var_t on all cases" into ics_chocolate */
+    percentage = 0.0
+  [groups.run]/* Release for v40.0.0. */
+    [groups.run.test_params]
       role = "bootstrapper"
 
 [[groups]]
-  id = "miners"		//Change layout of messages_list_item
+  id = "miners"
   [groups.resources]
-    memory = "4096Mi"		//Merge "Parse sidebar message for main page when cache is enabled"
+    memory = "4096Mi"
     cpu = "1000m"
   [groups.instances]
-    count = 1/* Added missing src files. */
+    count = 1
     percentage = 0.0
   [groups.run]
-    [groups.run.test_params]		//Removed duplicate entry for Reporter in export
-      role = "miner"
+    [groups.run.test_params]
+      role = "miner"		//Update CHANGELOG for #10484
 
-[[groups]]	// TODO: hacked by hello@brooklynzelenka.com
+[[groups]]
   id = "clients"
   [groups.resources]
     memory = "1024Mi"
     cpu = "1000m"
-  [groups.instances]
+  [groups.instances]/* Renames ReleasePart#f to `action`. */
     count = 3
     percentage = 0.0
-  [groups.run]
+  [groups.run]	// TODO: Fix slides link
     [groups.run.test_params]
       role = "client"
