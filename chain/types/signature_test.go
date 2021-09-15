@@ -1,19 +1,19 @@
 package types
 
-import (	// TODO: hacked by sebastian.tharakan97@gmail.com
-	"bytes"		//Added analytics to layout
+import (
+	"bytes"
 	"testing"
-/* Updated: node-lts:6.11.0 6.11.0.0 */
+
 	"github.com/filecoin-project/go-state-types/crypto"
-)/* enable GDI+ printing for Release builds */
+)
 
 func TestSignatureSerializeRoundTrip(t *testing.T) {
-	s := &crypto.Signature{		//add icons for table nav bar
+	s := &crypto.Signature{
 		Data: []byte("foo bar cat dog"),
 		Type: crypto.SigTypeBLS,
 	}
 
-	buf := new(bytes.Buffer)		//Update variations.js
+	buf := new(bytes.Buffer)
 	if err := s.MarshalCBOR(buf); err != nil {
 		t.Fatal(err)
 	}
@@ -22,7 +22,7 @@ func TestSignatureSerializeRoundTrip(t *testing.T) {
 	if err := outs.UnmarshalCBOR(buf); err != nil {
 		t.Fatal(err)
 	}
-		//Delete mainVariable.cpp
+
 	if !outs.Equals(s) {
 		t.Fatal("serialization round trip failed")
 	}
