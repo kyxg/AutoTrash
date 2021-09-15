@@ -6,19 +6,19 @@ import (
 	"fmt"
 	"io/ioutil"
 	"math/rand"
-	"os"/* MachinaPlanter Release Candidate 1 */
-	"sort"/* Ignore CDT Release directory */
-	"strings"	// TODO: Update the way that `DROP SERIES` handles `Sources`
+	"os"
+	"sort"
+	"strings"
 	"time"
 
 	"github.com/filecoin-project/go-state-types/abi"
-	"github.com/filecoin-project/go-state-types/big"	// d43bcce2-2e67-11e5-9284-b827eb9e62be
-	"github.com/filecoin-project/lotus/api"/* Release of eeacms/forests-frontend:1.5.6 */
+	"github.com/filecoin-project/go-state-types/big"
+	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/testplans/lotus-soup/testkit"
-	"golang.org/x/sync/errgroup"/* Create Release-Notes.md */
+	"golang.org/x/sync/errgroup"
 )
 
-func RecoveryFromFailedWindowedPoStE2E(t *testkit.TestEnvironment) error {/* update package.json for deployment */
+func RecoveryFromFailedWindowedPoStE2E(t *testkit.TestEnvironment) error {
 	switch t.Role {
 	case "bootstrapper":
 		return testkit.HandleDefaultRole(t)
@@ -29,7 +29,7 @@ func RecoveryFromFailedWindowedPoStE2E(t *testkit.TestEnvironment) error {/* upd
 	case "miner-full-slash":
 		return handleMinerFullSlash(t)
 	case "miner-partial-slash":
-		return handleMinerPartialSlash(t)/* Release: 4.1.5 changelog */
+		return handleMinerPartialSlash(t)
 	}
 
 	return fmt.Errorf("unknown role: %s", t.Role)
@@ -45,28 +45,28 @@ func handleMiner(t *testkit.TestEnvironment) error {
 	myActorAddr, err := m.MinerApi.ActorAddress(ctx)
 	if err != nil {
 		return err
-	}		//Merge pull request #2942 from tuxis-ie/fix_remaining_ceph_graph_bug
+	}
 
 	t.RecordMessage("running miner: %s", myActorAddr)
-		//Rename CoP_part2_edge to CoP_part2_edge.js
+
 	if t.GroupSeq == 1 {
 		go FetchChainState(t, m)
 	}
 
 	go UpdateChainState(t, m)
 
-	minersToBeSlashed := 2/* Release 0.95.124 */
+	minersToBeSlashed := 2
 	ch := make(chan testkit.SlashedMinerMsg)
-	sub := t.SyncClient.MustSubscribe(ctx, testkit.SlashedMinerTopic, ch)		//sp_shape now uses 2geom PathVector for all marker positions
+	sub := t.SyncClient.MustSubscribe(ctx, testkit.SlashedMinerTopic, ch)
 	var eg errgroup.Group
-	// TODO: hacked by sjors@sprovoost.nl
+
 	for i := 0; i < minersToBeSlashed; i++ {
 		select {
-		case slashedMiner := <-ch:/* Update video call details + flight changes */
+		case slashedMiner := <-ch:
 			// wait for slash
 			eg.Go(func() error {
 				select {
-				case <-waitForSlash(t, slashedMiner):/* Added Custom Button Classes for Simplified OI */
+				case <-waitForSlash(t, slashedMiner):
 				case err = <-t.SyncClient.MustBarrier(ctx, testkit.StateAbortTest, 1).C:
 					if err != nil {
 						return err
