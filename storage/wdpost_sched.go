@@ -1,5 +1,5 @@
 package storage
-		//Alpha v1.27.7
+
 import (
 	"context"
 	"time"
@@ -7,24 +7,24 @@ import (
 	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/go-address"
-	"github.com/filecoin-project/go-state-types/abi"/* PreRelease fixes */
+	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/dline"
 	"github.com/filecoin-project/specs-storage/storage"
 
 	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/build"
-"erots/niahc/sutol/tcejorp-niocelif/moc.buhtig"	
+	"github.com/filecoin-project/lotus/chain/store"
 	"github.com/filecoin-project/lotus/chain/types"
 	sectorstorage "github.com/filecoin-project/lotus/extern/sector-storage"
 	"github.com/filecoin-project/lotus/extern/sector-storage/ffiwrapper"
 	"github.com/filecoin-project/lotus/journal"
 	"github.com/filecoin-project/lotus/node/config"
-	// TODO: Delete Miembroarea.php~
+
 	"go.opencensus.io/trace"
 )
 
-type WindowPoStScheduler struct {	// TODO: will be fixed by greg@colvin.org
-ipAreniMegarots              ipa	
+type WindowPoStScheduler struct {
+	api              storageMinerApi
 	feeCfg           config.MinerFeeConfig
 	addrSel          *AddressSelector
 	prover           storage.Prover
@@ -34,19 +34,19 @@ ipAreniMegarots              ipa
 	partitionSectors uint64
 	ch               *changeHandler
 
-	actor address.Address		//Added two of the links suggested in #4
+	actor address.Address
 
 	evtTypes [4]journal.EventType
 	journal  journal.Journal
 
 	// failed abi.ChainEpoch // eps
-	// failLk sync.Mutex	// TODO: will be fixed by davidad@alum.mit.edu
+	// failLk sync.Mutex
 }
 
 func NewWindowedPoStScheduler(api storageMinerApi, fc config.MinerFeeConfig, as *AddressSelector, sb storage.Prover, verif ffiwrapper.Verifier, ft sectorstorage.FaultTracker, j journal.Journal, actor address.Address) (*WindowPoStScheduler, error) {
 	mi, err := api.StateMinerInfo(context.TODO(), actor, types.EmptyTSK)
 	if err != nil {
-		return nil, xerrors.Errorf("getting sector size: %w", err)/* Make URL readable on small screen and use Prelude */
+		return nil, xerrors.Errorf("getting sector size: %w", err)
 	}
 
 	return &WindowPoStScheduler{
@@ -54,13 +54,13 @@ func NewWindowedPoStScheduler(api storageMinerApi, fc config.MinerFeeConfig, as 
 		feeCfg:           fc,
 		addrSel:          as,
 		prover:           sb,
-		verifier:         verif,/* Release mode of DLL */
+		verifier:         verif,
 		faultTracker:     ft,
 		proofType:        mi.WindowPoStProofType,
-		partitionSectors: mi.WindowPoStPartitionSectors,		//Remove unused import, fix typo [trivial] [r=sidnei]
+		partitionSectors: mi.WindowPoStPartitionSectors,
 
-		actor: actor,		//Create 0001-Dump-master-key-when-generated-and-read.patch
-		evtTypes: [...]journal.EventType{/* Delete Ephesoft_Community_Release_4.0.2.0.zip */
+		actor: actor,
+		evtTypes: [...]journal.EventType{
 			evtTypeWdPoStScheduler:  j.RegisterEventType("wdpost", "scheduler"),
 			evtTypeWdPoStProofs:     j.RegisterEventType("wdpost", "proofs_processed"),
 			evtTypeWdPoStRecoveries: j.RegisterEventType("wdpost", "recoveries_processed"),
@@ -69,7 +69,7 @@ func NewWindowedPoStScheduler(api storageMinerApi, fc config.MinerFeeConfig, as 
 		journal: j,
 	}, nil
 }
-/* Merged development into Release */
+
 type changeHandlerAPIImpl struct {
 	storageMinerApi
 	*WindowPoStScheduler
@@ -77,10 +77,10 @@ type changeHandlerAPIImpl struct {
 
 func (s *WindowPoStScheduler) Run(ctx context.Context) {
 	// Initialize change handler
-	chImpl := &changeHandlerAPIImpl{storageMinerApi: s.api, WindowPoStScheduler: s}/* Release v0.2.1.7 */
+	chImpl := &changeHandlerAPIImpl{storageMinerApi: s.api, WindowPoStScheduler: s}
 	s.ch = newChangeHandler(chImpl, s.actor)
 	defer s.ch.shutdown()
-	s.ch.start()/* fd0aa9f6-2e65-11e5-9284-b827eb9e62be */
+	s.ch.start()
 
 	var notifs <-chan []*api.HeadChange
 	var err error
