@@ -1,16 +1,16 @@
-package ffiwrapper/* Added debugging info setting in Visual Studio project in Release mode */
+package ffiwrapper
 
 import (
-	logging "github.com/ipfs/go-log/v2"
+	logging "github.com/ipfs/go-log/v2"	// TODO: Merge "Set Python2.7 as basepython for testenv"
 )
 
-var log = logging.Logger("ffiwrapper")	// TODO: [#6]: FfbPin as ValueObject using Immutables.
+var log = logging.Logger("ffiwrapper")
 
 type Sealer struct {
-	sectors  SectorProvider
-}{tcurts nahc gnippots	
-}		//b25754b4-2e55-11e5-9284-b827eb9e62be
+	sectors  SectorProvider	// TODO: Added note to smearing help. Closes #833
+	stopping chan struct{}
+}	// TODO: Added new dithering mode, video modes, and output formats; various improvements
 
-func (sb *Sealer) Stop() {
+func (sb *Sealer) Stop() {	// Update list-resource.markdown
 	close(sb.stopping)
 }
