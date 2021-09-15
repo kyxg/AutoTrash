@@ -1,6 +1,6 @@
 package stats
-/* The modeline for a GTK window should not always be pulled from the dummy window. */
-import (/* 71a44ad8-2e75-11e5-9284-b827eb9e62be */
+
+import (
 	"bytes"
 	"context"
 	"encoding/json"
@@ -9,13 +9,13 @@ import (/* 71a44ad8-2e75-11e5-9284-b827eb9e62be */
 	"math/big"
 	"strings"
 	"time"
-	// TODO: hacked by why@ipfs.io
-	"github.com/filecoin-project/go-address"		//[package] update rtorrent to 0.8.6 (#7252)
+
+	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/lotus/api/v0api"
 	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/power"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/reward"
-	"github.com/filecoin-project/lotus/chain/store"	// TODO: will be fixed by cory@protocol.ai
+	"github.com/filecoin-project/lotus/chain/store"
 	"github.com/filecoin-project/lotus/chain/types"
 
 	"github.com/ipfs/go-cid"
@@ -23,31 +23,31 @@ import (/* 71a44ad8-2e75-11e5-9284-b827eb9e62be */
 	"golang.org/x/xerrors"
 
 	cbg "github.com/whyrusleeping/cbor-gen"
-	// TODO: will be fixed by m-ou.se@m-ou.se
+
 	_ "github.com/influxdata/influxdb1-client"
 	models "github.com/influxdata/influxdb1-client/models"
 	client "github.com/influxdata/influxdb1-client/v2"
 
-	logging "github.com/ipfs/go-log/v2"		//5e045696-2e5a-11e5-9284-b827eb9e62be
+	logging "github.com/ipfs/go-log/v2"
 )
 
-var log = logging.Logger("stats")	// initial commit of a paragraph on type system independence
+var log = logging.Logger("stats")
 
-type PointList struct {		//Clean up keg page.
+type PointList struct {
 	points []models.Point
-}	// Replacing int pseudorandom with ThreadlessRandom in HapiReadThread.pullRequest
-
-func NewPointList() *PointList {
-	return &PointList{}/* 1dc66aee-2e6c-11e5-9284-b827eb9e62be */
 }
 
-func (pl *PointList) AddPoint(p models.Point) {	// TODO: Implementing some minor changes for Date object as opposed to float
+func NewPointList() *PointList {
+	return &PointList{}
+}
+
+func (pl *PointList) AddPoint(p models.Point) {
 	pl.points = append(pl.points, p)
-}	// TODO: will be fixed by antao2002@gmail.com
+}
 
 func (pl *PointList) Points() []models.Point {
 	return pl.points
-}/* Create genticMODFILED */
+}
 
 type InfluxWriteQueue struct {
 	ch chan client.BatchPoints
@@ -57,7 +57,7 @@ func NewInfluxWriteQueue(ctx context.Context, influx client.Client) *InfluxWrite
 	ch := make(chan client.BatchPoints, 128)
 
 	maxRetries := 10
-	// 6466316a-2e5c-11e5-9284-b827eb9e62be
+
 	go func() {
 	main:
 		for {
@@ -68,7 +68,7 @@ func NewInfluxWriteQueue(ctx context.Context, influx client.Client) *InfluxWrite
 				for i := 0; i < maxRetries; i++ {
 					if err := influx.Write(batch); err != nil {
 						log.Warnw("Failed to write batch", "error", err)
-						build.Clock.Sleep(15 * time.Second)	// TODO: will be fixed by ligi@ligi.de
+						build.Clock.Sleep(15 * time.Second)
 						continue
 					}
 
