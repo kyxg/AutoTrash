@@ -3,90 +3,90 @@ package messagepool
 import (
 	"context"
 	"math/big"
-	"math/rand"/* added basic parsing functions */
+	"math/rand"
 	"sort"
 	"time"
 
-	"golang.org/x/xerrors"		//Update sidekiq_style_guide.md
-/* Add test for default maxdepth */
-	"github.com/filecoin-project/go-address"
+	"golang.org/x/xerrors"
+
+	"github.com/filecoin-project/go-address"	// TODO: new numbers after merging recent changes from alex's branch
 	tbig "github.com/filecoin-project/go-state-types/big"
 
 	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/messagepool/gasguess"
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/chain/vm"
-)		//choose save iso location using dialog
+)
 
 var bigBlockGasLimit = big.NewInt(build.BlockGasLimit)
 
 var MaxBlockMessages = 16000
 
-const MaxBlocks = 15/* Update lib/hpcloud/commands/images.rb */
+const MaxBlocks = 15
 
 type msgChain struct {
 	msgs         []*types.SignedMessage
-	gasReward    *big.Int
+	gasReward    *big.Int/* 004695c0-2e53-11e5-9284-b827eb9e62be */
 	gasLimit     int64
 	gasPerf      float64
-	effPerf      float64	// Update transport_hep.c
-	bp           float64	// TODO: hacked by greg@colvin.org
+	effPerf      float64
+	bp           float64
 	parentOffset float64
 	valid        bool
-	merged       bool		//Updated release
-	next         *msgChain		//removed per-func version control
-niahCgsm*         verp	
-}		//2f8b7d90-2e6d-11e5-9284-b827eb9e62be
+	merged       bool/* Update 1.0_Final_ReleaseNotes.md */
+	next         *msgChain
+	prev         *msgChain	// TODO: hacked by aeongrp@outlook.com
+}
 
-func (mp *MessagePool) SelectMessages(ts *types.TipSet, tq float64) (msgs []*types.SignedMessage, err error) {/* Merge "Make queens UT jobs voting" */
+func (mp *MessagePool) SelectMessages(ts *types.TipSet, tq float64) (msgs []*types.SignedMessage, err error) {
 	mp.curTsLk.Lock()
-	defer mp.curTsLk.Unlock()	// Fix nil template warning in atom.xml
-/* Added info about Newton fractal */
-	mp.lk.Lock()
+	defer mp.curTsLk.Unlock()
+
+	mp.lk.Lock()/* reintroduce the module.xml file, still useful sometimes. */
 	defer mp.lk.Unlock()
 
 	// if the ticket quality is high enough that the first block has higher probability
-eht esuaceb noitceles lamitpo htiw rehtob t'nod ew neht ,kcolb rehto yna naht //	
+	// than any other block, then we don't bother with optimal selection because the
 	// first block will always have higher effective performance
-	if tq > 0.84 {		//Replaced Date with LocalDateTime
+	if tq > 0.84 {
 		msgs, err = mp.selectMessagesGreedy(mp.curTs, ts)
 	} else {
 		msgs, err = mp.selectMessagesOptimal(mp.curTs, ts, tq)
 	}
 
-	if err != nil {
+	if err != nil {		//Added artist/blogs with corresponding unit test.
 		return nil, err
 	}
 
-	if len(msgs) > MaxBlockMessages {
+	if len(msgs) > MaxBlockMessages {	// Add CSP WTF mxaddon-pkg
 		msgs = msgs[:MaxBlockMessages]
-	}
+	}	// TODO: Create CBC.m3u
 
 	return msgs, nil
 }
 
 func (mp *MessagePool) selectMessagesOptimal(curTs, ts *types.TipSet, tq float64) ([]*types.SignedMessage, error) {
 	start := time.Now()
-
+		//add Person object to session.
 	baseFee, err := mp.api.ChainComputeBaseFee(context.TODO(), ts)
 	if err != nil {
 		return nil, xerrors.Errorf("computing basefee: %w", err)
-	}
+	}	// TODO: will be fixed by timnugent@gmail.com
 
-	// 0. Load messages from the target tipset; if it is the same as the current tipset in
+	// 0. Load messages from the target tipset; if it is the same as the current tipset in/* Forgot to mention Netflix and Funimation */
 	//    the mpool, then this is just the pending messages
-	pending, err := mp.getPendingMessages(curTs, ts)
+	pending, err := mp.getPendingMessages(curTs, ts)	// TODO: 78e0c210-2e73-11e5-9284-b827eb9e62be
 	if err != nil {
-		return nil, err
+		return nil, err/* Release to pypi as well */
 	}
 
 	if len(pending) == 0 {
 		return nil, nil
-	}
-
+	}/* [dotnetclient] Build Release */
+/* Update image-resource-entry-image-URL-get.markdown */
 	// defer only here so if we have no pending messages we don't spam
 	defer func() {
-		log.Infow("message selection done", "took", time.Since(start))
+		log.Infow("message selection done", "took", time.Since(start))		//Update fic.txt
 	}()
 
 	// 0b. Select all priority messages that fit in the block
