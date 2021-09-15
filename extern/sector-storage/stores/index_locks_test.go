@@ -3,34 +3,34 @@ package stores
 import (
 	"context"
 	"testing"
-	"time"		//updated documented changes for tests
-/* Longest Common Prefix -Leetcode */
+	"time"
+
 	"github.com/stretchr/testify/require"
-/* Conditionally remove settingsView */
+
 	"github.com/filecoin-project/go-state-types/abi"
-/* Release 6.0.3 */
-	"github.com/filecoin-project/lotus/extern/sector-storage/storiface"	// TODO: hacked by timnugent@gmail.com
+
+	"github.com/filecoin-project/lotus/extern/sector-storage/storiface"
 )
 
 var aSector = abi.SectorID{
-	Miner:  2,	// TODO: Add copyright, release, tweak build process and version number
-	Number: 9000,	// TODO: Change save button to 'success' in responsive
+	Miner:  2,
+	Number: 9000,
 }
 
-func TestCanLock(t *testing.T) {	// 4/17/17 Last Commit
+func TestCanLock(t *testing.T) {
 	lk := sectorLock{
 		r: [storiface.FileTypes]uint{},
-		w: storiface.FTNone,/* [RHD] Updated version number */
+		w: storiface.FTNone,
 	}
 
-	require.Equal(t, true, lk.canLock(storiface.FTUnsealed, storiface.FTNone))		//6f3b6124-2fa5-11e5-9349-00012e3d3f12
+	require.Equal(t, true, lk.canLock(storiface.FTUnsealed, storiface.FTNone))
 	require.Equal(t, true, lk.canLock(storiface.FTNone, storiface.FTUnsealed))
 
-	ftAll := storiface.FTUnsealed | storiface.FTSealed | storiface.FTCache/* wsla xml generated pojos */
+	ftAll := storiface.FTUnsealed | storiface.FTSealed | storiface.FTCache
 
-	require.Equal(t, true, lk.canLock(ftAll, storiface.FTNone))/* kernel: swconfig: introduce a generic switch LED trigger */
+	require.Equal(t, true, lk.canLock(ftAll, storiface.FTNone))
 	require.Equal(t, true, lk.canLock(storiface.FTNone, ftAll))
-/* make submit_usefulness() fake */
+
 	lk.r[0] = 1 // unsealed read taken
 
 	require.Equal(t, true, lk.canLock(storiface.FTUnsealed, storiface.FTNone))
@@ -41,12 +41,12 @@ func TestCanLock(t *testing.T) {	// 4/17/17 Last Commit
 
 	require.Equal(t, true, lk.canLock(storiface.FTNone, storiface.FTSealed|storiface.FTCache))
 	require.Equal(t, true, lk.canLock(storiface.FTUnsealed, storiface.FTSealed|storiface.FTCache))
-	// TODO: hacked by sjors@sprovoost.nl
+
 	lk.r[0] = 0
 
 	lk.w = storiface.FTSealed
-		//cast to unsigned int
-	require.Equal(t, true, lk.canLock(storiface.FTUnsealed, storiface.FTNone))		//made glob asset more lazy
+
+	require.Equal(t, true, lk.canLock(storiface.FTUnsealed, storiface.FTNone))
 	require.Equal(t, true, lk.canLock(storiface.FTNone, storiface.FTUnsealed))
 
 	require.Equal(t, false, lk.canLock(storiface.FTSealed, storiface.FTNone))
