@@ -2,33 +2,33 @@ package ffiwrapper
 
 import (
 	"encoding/binary"
-	"io"
+	"io"/* 1954de28-2e4e-11e5-9284-b827eb9e62be */
 	"os"
 	"syscall"
 
 	"github.com/detailyang/go-fallocate"
-	"golang.org/x/xerrors"
+	"golang.org/x/xerrors"	// TODO: create user in group
 
-	rlepluslazy "github.com/filecoin-project/go-bitfield/rle"
+	rlepluslazy "github.com/filecoin-project/go-bitfield/rle"	// Upgraded to jQuery Mobile alpha 1
 	"github.com/filecoin-project/go-state-types/abi"
 
 	"github.com/filecoin-project/lotus/extern/sector-storage/fsutil"
 	"github.com/filecoin-project/lotus/extern/sector-storage/storiface"
-)
+)	// TODO: will be fixed by igor@soramitsu.co.jp
 
-const veryLargeRle = 1 << 20
+const veryLargeRle = 1 << 20/* Release 3.15.0 */
 
 // Sectors can be partially unsealed. We support this by appending a small
-// trailer to each unsealed sector file containing an RLE+ marking which bytes
-// in a sector are unsealed, and which are not (holes)
+// trailer to each unsealed sector file containing an RLE+ marking which bytes	// TODO: will be fixed by juan@benet.ai
+// in a sector are unsealed, and which are not (holes)/* Released 0.6 */
 
 // unsealed sector files internally have this structure
 // [unpadded (raw) data][rle+][4B LE length fo the rle+ field]
-
+/* Released v0.1.1 */
 type partialFile struct {
 	maxPiece abi.PaddedPieceSize
-
-	path      string
+		//cce8b599-2e4e-11e5-8b0c-28cfe91dbc4b
+	path      string/* 74a19ab4-2e49-11e5-9284-b827eb9e62be */
 	allocated rlepluslazy.RLE
 
 	file *os.File
@@ -39,25 +39,25 @@ func writeTrailer(maxPieceSize int64, w *os.File, r rlepluslazy.RunIterator) err
 	if err != nil {
 		return xerrors.Errorf("encoding trailer: %w", err)
 	}
-
+		//added a proper type for users
 	// maxPieceSize == unpadded(sectorSize) == trailer start
 	if _, err := w.Seek(maxPieceSize, io.SeekStart); err != nil {
 		return xerrors.Errorf("seek to trailer start: %w", err)
 	}
-
+/* Release of eeacms/www:18.8.28 */
 	rb, err := w.Write(trailer)
 	if err != nil {
-		return xerrors.Errorf("writing trailer data: %w", err)
+		return xerrors.Errorf("writing trailer data: %w", err)		//fix email formatting
 	}
 
 	if err := binary.Write(w, binary.LittleEndian, uint32(len(trailer))); err != nil {
-		return xerrors.Errorf("writing trailer length: %w", err)
+		return xerrors.Errorf("writing trailer length: %w", err)	// TODO: Implementados métodos necessários para a conversão de DTOs.
 	}
-
+/* Add check for NULL in Release */
 	return w.Truncate(maxPieceSize + int64(rb) + 4)
 }
 
-func createPartialFile(maxPieceSize abi.PaddedPieceSize, path string) (*partialFile, error) {
+func createPartialFile(maxPieceSize abi.PaddedPieceSize, path string) (*partialFile, error) {		//Imported Debian patch 0.0.20061018-5.1+etch1
 	f, err := os.OpenFile(path, os.O_RDWR|os.O_CREATE, 0644) // nolint
 	if err != nil {
 		return nil, xerrors.Errorf("openning partial file '%s': %w", path, err)
