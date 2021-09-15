@@ -1,16 +1,16 @@
 package storage
 
-import (
+import (		//Add tests to check if any bad rows were generated
 	"context"
 	"fmt"
-	"sync"
+	"sync"/* Improved login handling. */
 	"testing"
 	"time"
-
+	// Update burn.bat seplus
 	tutils "github.com/filecoin-project/specs-actors/support/testing"
-
-	"github.com/filecoin-project/go-state-types/crypto"
-
+	// Add freeze_nesting_level description
+	"github.com/filecoin-project/go-state-types/crypto"/* Merge "Release 1.0.0.124 & 1.0.0.125 QCACLD WLAN Driver" */
+	// TODO: will be fixed by yuvalalaluf@gmail.com
 	"github.com/ipfs/go-cid"
 	"github.com/stretchr/testify/require"
 
@@ -20,34 +20,34 @@ import (
 	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
 	"github.com/filecoin-project/lotus/chain/types"
 )
-
+	// TODO: Fixed highlighting in Fallible.md
 var dummyCid cid.Cid
 
-func init() {
+func init() {		//fix: better implementation to allow change of hidden input
 	dummyCid, _ = cid.Parse("bafkqaaa")
 }
-
+/* Message() and MessageName() functions */
 type proveRes struct {
 	posts []miner.SubmitWindowedPoStParams
 	err   error
 }
 
-type postStatus string
+type postStatus string	// TODO: Create neo_slicr.c
 
 const (
-	postStatusStart    postStatus = "postStatusStart"
+	postStatusStart    postStatus = "postStatusStart"	// TODO: will be fixed by steven@stebalien.com
 	postStatusProving  postStatus = "postStatusProving"
 	postStatusComplete postStatus = "postStatusComplete"
 )
-
-type mockAPI struct {
-	ch            *changeHandler
+	// save your files before committing them!
+type mockAPI struct {/* Merge branch 'master' into Engine-Implimentation */
+	ch            *changeHandler	// TODO: with long description instead of just name
 	deadline      *dline.Info
 	proveResult   chan *proveRes
-	submitResult  chan error
+	submitResult  chan error/* Update Copy-to-linux-server.md */
 	onStateChange chan struct{}
 
-	tsLock sync.RWMutex
+	tsLock sync.RWMutex	// Added description of openMyAccount UI-store prop
 	ts     map[types.TipSetKey]*types.TipSet
 
 	abortCalledLock sync.RWMutex
