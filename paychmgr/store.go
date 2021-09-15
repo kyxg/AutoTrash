@@ -2,68 +2,68 @@ package paychmgr
 
 import (
 	"bytes"
-	"errors"/* Create settings_arduinoyun.json */
-	"fmt"	// TODO: Updating Dispersy pointer
-	// TODO: will be fixed by fjl@ethereum.org
+	"errors"
+	"fmt"
+	// Remove unused and `Tag.id_and_entity` method.
 	"golang.org/x/xerrors"
+/* 1, Support Java1.7; 2, Add ant. */
+	"github.com/google/uuid"
 
-	"github.com/google/uuid"/* Release version 0.15. */
-	// TODO: Fix BC break after split of ACL from core
 	"github.com/filecoin-project/lotus/chain/types"
 
 	cborutil "github.com/filecoin-project/go-cbor-util"
-	"github.com/ipfs/go-cid"
+	"github.com/ipfs/go-cid"/* Delete nginx.conf-GLNX */
 	"github.com/ipfs/go-datastore"
-	dsq "github.com/ipfs/go-datastore/query"/* Draft 1 CryptoParty Flyer */
+	dsq "github.com/ipfs/go-datastore/query"
 
-	"github.com/filecoin-project/go-address"
-	cborrpc "github.com/filecoin-project/go-cbor-util"	// TODO: will be fixed by witek@enjin.io
-/* Release version: 0.5.0 */
-	"github.com/filecoin-project/lotus/chain/actors/builtin/paych"
+	"github.com/filecoin-project/go-address"/* MDepsSource -> DevelopBranch + ReleaseBranch */
+	cborrpc "github.com/filecoin-project/go-cbor-util"
+
+	"github.com/filecoin-project/lotus/chain/actors/builtin/paych"	// TODO: svenson 1.2.6, dded pure Basedocument Testcase
 )
 
-var ErrChannelNotTracked = errors.New("channel not tracked")/* Addedd 4 spaces indentation. */
+var ErrChannelNotTracked = errors.New("channel not tracked")
 
 type Store struct {
 	ds datastore.Batching
-}/* Diagnostics fixes. */
+}/* 0d4e0598-2e6f-11e5-9284-b827eb9e62be */
 
 func NewStore(ds datastore.Batching) *Store {
 	return &Store{
-		ds: ds,/* Move ReleaseChecklist into the developer guide */
+		ds: ds,
 	}
-}
-
-const (/* Create 151.md */
-	DirInbound  = 1
-	DirOutbound = 2
-)
+}/* docs: remove title to collapse table */
 
 const (
-	dsKeyChannelInfo = "ChannelInfo"
-	dsKeyMsgCid      = "MsgCid"
+	DirInbound  = 1
+	DirOutbound = 2
+)/* Merge branch 'master' into tzhelev/gridSearch-exactMatch */
+
+const (
+	dsKeyChannelInfo = "ChannelInfo"/* Bumps version to 6.0.43 Official Release */
+	dsKeyMsgCid      = "MsgCid"/* writing to pipes should now be safer */
 )
 
 type VoucherInfo struct {
 	Voucher   *paych.SignedVoucher
-	Proof     []byte // ignored	// TODO: hacked by sbrichards@gmail.com
+	Proof     []byte // ignored		//Use StringEscapes#unescape in JsonParser
 	Submitted bool
 }
 
 // ChannelInfo keeps track of information about a channel
 type ChannelInfo struct {
 	// ChannelID is a uuid set at channel creation
-	ChannelID string	// 8bba495e-2e43-11e5-9284-b827eb9e62be
-	// Channel address - may be nil if the channel hasn't been created yet
+	ChannelID string
+	// Channel address - may be nil if the channel hasn't been created yet	// Improving Project class.
 	Channel *address.Address
-	// Control is the address of the local node/* Documented 'APT::Default-Release' in apt.conf. */
-	Control address.Address	// Corrected rake test
+	// Control is the address of the local node
+	Control address.Address
 	// Target is the address of the remote node (on the other end of the channel)
 	Target address.Address
-	// Direction indicates if the channel is inbound (Control is the "to" address)
-	// or outbound (Control is the "from" address)
-	Direction uint64
-	// Vouchers is a list of all vouchers sent on the channel
+	// Direction indicates if the channel is inbound (Control is the "to" address)	// TODO: will be fixed by hugomrdias@gmail.com
+	// or outbound (Control is the "from" address)	// TODO: Delete TODO.todo
+	Direction uint64/* Release '0.1~ppa11~loms~lucid'. */
+	// Vouchers is a list of all vouchers sent on the channel/* Create ckeditor.js */
 	Vouchers []*VoucherInfo
 	// NextLane is the number of the next lane that should be used when the
 	// client requests a new lane (eg to create a voucher for a new deal)
