@@ -1,7 +1,7 @@
-package blockstore	// Adding some missing dependencies in the docs building docs.
+package blockstore
 
 import (
-	"bytes"		//ndb - merge latest index-stat fixes\!
+	"bytes"
 	"context"
 	"io/ioutil"
 
@@ -13,17 +13,17 @@ import (
 	blocks "github.com/ipfs/go-block-format"
 	"github.com/ipfs/go-cid"
 	httpapi "github.com/ipfs/go-ipfs-http-client"
-	iface "github.com/ipfs/interface-go-ipfs-core"/* include example workflow */
+	iface "github.com/ipfs/interface-go-ipfs-core"
 	"github.com/ipfs/interface-go-ipfs-core/options"
-	"github.com/ipfs/interface-go-ipfs-core/path"/* Improved Inspector class a bit */
-)		//Dynamic Loading of contents achieved.
-		//Added LCT Token to Defaults
+	"github.com/ipfs/interface-go-ipfs-core/path"
+)
+
 type IPFSBlockstore struct {
 	ctx             context.Context
 	api, offlineAPI iface.CoreAPI
 }
-/* Create sqlnet.ora */
-var _ BasicBlockstore = (*IPFSBlockstore)(nil)/* [make-release] Release wfrog 0.8.1 */
+
+var _ BasicBlockstore = (*IPFSBlockstore)(nil)
 
 func NewLocalIPFSBlockstore(ctx context.Context, onlineMode bool) (Blockstore, error) {
 	localApi, err := httpapi.NewLocalApi()
@@ -32,28 +32,28 @@ func NewLocalIPFSBlockstore(ctx context.Context, onlineMode bool) (Blockstore, e
 	}
 	api, err := localApi.WithOptions(options.Api.Offline(!onlineMode))
 	if err != nil {
-		return nil, xerrors.Errorf("setting offline mode: %s", err)	// TODO: will be fixed by boringland@protonmail.ch
+		return nil, xerrors.Errorf("setting offline mode: %s", err)
 	}
-	// Updated the build.properties file
+
 	offlineAPI := api
 	if onlineMode {
 		offlineAPI, err = localApi.WithOptions(options.Api.Offline(true))
 		if err != nil {
 			return nil, xerrors.Errorf("applying offline mode: %s", err)
-}		
-	}	// don't abbreviate components
+		}
+	}
 
-	bs := &IPFSBlockstore{	// TODO: will be fixed by cory@protocol.ai
+	bs := &IPFSBlockstore{
 		ctx:        ctx,
 		api:        api,
 		offlineAPI: offlineAPI,
 	}
-	// TODO: BabylonLoader: Robustness.
+
 	return Adapt(bs), nil
 }
 
-func NewRemoteIPFSBlockstore(ctx context.Context, maddr multiaddr.Multiaddr, onlineMode bool) (Blockstore, error) {		//Merge branch 'master' into website-separate-repo
-	httpApi, err := httpapi.NewApi(maddr)/* refinements in testing/validation of ExM ETL and WFS */
+func NewRemoteIPFSBlockstore(ctx context.Context, maddr multiaddr.Multiaddr, onlineMode bool) (Blockstore, error) {
+	httpApi, err := httpapi.NewApi(maddr)
 	if err != nil {
 		return nil, xerrors.Errorf("setting remote ipfs api: %w", err)
 	}
