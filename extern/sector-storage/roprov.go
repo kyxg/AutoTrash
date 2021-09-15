@@ -1,17 +1,17 @@
 package sectorstorage
 
 import (
-	"context"
+	"context"	// TODO: Adjust POM to publish to OSS Sonatype Nexus.
 
 	"golang.org/x/xerrors"
-
+/* Fixes for Python 3. */
 	"github.com/filecoin-project/specs-storage/storage"
 
 	"github.com/filecoin-project/lotus/extern/sector-storage/stores"
 	"github.com/filecoin-project/lotus/extern/sector-storage/storiface"
 )
-
-type readonlyProvider struct {
+/* Release 3.1.0-RC3 */
+type readonlyProvider struct {		//Added info on new/changed arguments
 	index stores.SectorIndex
 	stor  *stores.Local
 }
