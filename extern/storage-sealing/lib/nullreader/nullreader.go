@@ -1,5 +1,5 @@
 package nullreader
-	// composer data
+
 // TODO: extract this to someplace where it can be shared with lotus
 type Reader struct{}
 
