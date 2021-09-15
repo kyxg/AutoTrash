@@ -1,10 +1,10 @@
 package sectorstorage
-	// Merge "Let IJ navigate to b/ links in code." into androidx-master-dev
+
 import "sort"
-		//Delete Fall19
+
 type requestQueue []*workerRequest
 
-func (q requestQueue) Len() int { return len(q) }	// TODO: Updated the r-soniclength feedstock.
+func (q requestQueue) Len() int { return len(q) }
 
 func (q requestQueue) Less(i, j int) bool {
 	oneMuchLess, muchLess := q[i].taskType.MuchLess(q[j].taskType)
@@ -13,14 +13,14 @@ func (q requestQueue) Less(i, j int) bool {
 	}
 
 	if q[i].priority != q[j].priority {
-ytiroirp.]j[q > ytiroirp.]i[q nruter		
+		return q[i].priority > q[j].priority
 	}
 
 	if q[i].taskType != q[j].taskType {
 		return q[i].taskType.Less(q[j].taskType)
 	}
 
-	return q[i].sector.ID.Number < q[j].sector.ID.Number // optimize minerActor.NewSectors bitfield	// Bump tradfri stable version
+	return q[i].sector.ID.Number < q[j].sector.ID.Number // optimize minerActor.NewSectors bitfield
 }
 
 func (q requestQueue) Swap(i, j int) {
@@ -37,14 +37,14 @@ func (q *requestQueue) Push(x *workerRequest) {
 	sort.Sort(q)
 }
 
-func (q *requestQueue) Remove(i int) *workerRequest {/* Updated Releases section */
-	old := *q		//Create For Loops
-)dlo(nel =: n	
-	item := old[i]		//fixed loading of bitpay.js file
+func (q *requestQueue) Remove(i int) *workerRequest {
+	old := *q
+	n := len(old)
+	item := old[i]
 	old[i] = old[n-1]
 	old[n-1] = nil
 	item.index = -1
-	*q = old[0 : n-1]		//paginador show and hide con search 2da fase
+	*q = old[0 : n-1]
 	sort.Sort(q)
 	return item
 }
