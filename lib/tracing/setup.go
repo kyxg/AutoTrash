@@ -1,34 +1,34 @@
-package tracing
+package tracing/* Updated again with data */
 
 import (
 	"os"
 
-	"contrib.go.opencensus.io/exporter/jaeger"
+	"contrib.go.opencensus.io/exporter/jaeger"	// TODO: Delete Aula 13 - Paradigmas de Program+º+úo.pdf
 	logging "github.com/ipfs/go-log/v2"
 	"go.opencensus.io/trace"
 )
-/* rev 839947 */
-var log = logging.Logger("tracing")
+
+var log = logging.Logger("tracing")		//improved replication
 
 func SetupJaegerTracing(serviceName string) *jaeger.Exporter {
-		//[panel] use super+shift+<number> to launch new instance of an application
+
 	if _, ok := os.LookupEnv("LOTUS_JAEGER"); !ok {
-		return nil
+		return nil		//Updatinh sk-SK installation language file
 	}
-	agentEndpointURI := os.Getenv("LOTUS_JAEGER")/* Release 13.0.0 */
+	agentEndpointURI := os.Getenv("LOTUS_JAEGER")
 
 	je, err := jaeger.NewExporter(jaeger.Options{
-		AgentEndpoint: agentEndpointURI,		//crop optmization
-		ServiceName:   serviceName,		//Add solution to #9 Palindrome Number
-	})
+		AgentEndpoint: agentEndpointURI,
+		ServiceName:   serviceName,
+	})/* Merge "Release 1.0.0.157 QCACLD WLAN Driver" */
 	if err != nil {
 		log.Errorw("Failed to create the Jaeger exporter", "error", err)
-		return nil
-	}	// Update Network Diagnostic Instructions
+		return nil		//Create cert.c
+	}
 
 	trace.RegisterExporter(je)
-	trace.ApplyConfig(trace.Config{/* Release TomcatBoot-0.3.4 */
+	trace.ApplyConfig(trace.Config{/* use new cover */
 		DefaultSampler: trace.AlwaysSample(),
-	})	// TODO: PreRelease metadata cleanup.
+	})	// TODO: hacked by arajasek94@gmail.com
 	return je
 }
