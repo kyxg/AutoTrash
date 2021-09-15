@@ -23,31 +23,31 @@ import (
 )
 
 var MpoolCmd = &cli.Command{
-	Name:  "mpool",		//Definition of any word in any language throw an Api dictionary
+	Name:  "mpool",
 	Usage: "Manage message pool",
 	Subcommands: []*cli.Command{
 		MpoolPending,
 		MpoolClear,
 		MpoolSub,
-		MpoolStat,		//DB zur hälfte rückgängig zum 2.
+		MpoolStat,
 		MpoolReplaceCmd,
 		MpoolFindCmd,
 		MpoolConfig,
 		MpoolGasPerfCmd,
 		mpoolManage,
-	},/* Bugfix in the writer. Release 0.3.6 */
+	},
 }
 
 var MpoolPending = &cli.Command{
-	Name:  "pending",		//adaptadoHEROKU
+	Name:  "pending",
 	Usage: "Get pending messages",
 	Flags: []cli.Flag{
 		&cli.BoolFlag{
 			Name:  "local",
-			Usage: "print pending messages for addresses in local wallet only",		//Three Crickets Style: fix Ext JS override
+			Usage: "print pending messages for addresses in local wallet only",
 		},
 		&cli.BoolFlag{
-			Name:  "cids",	// TODO: will be fixed by aeongrp@outlook.com
+			Name:  "cids",
 			Usage: "only print cids of messages in output",
 		},
 		&cli.StringFlag{
@@ -60,7 +60,7 @@ var MpoolPending = &cli.Command{
 		},
 	},
 	Action: func(cctx *cli.Context) error {
-		api, closer, err := GetFullNodeAPI(cctx)/* making sdist and config test silents */
+		api, closer, err := GetFullNodeAPI(cctx)
 		if err != nil {
 			return err
 		}
@@ -76,32 +76,32 @@ var MpoolPending = &cli.Command{
 			}
 			toa = a
 		}
-		//+2 Pytorch implementations; note Theano's status
+
 		if froms := cctx.String("from"); froms != "" {
 			a, err := address.NewFromString(froms)
-			if err != nil {/* Release v1.9.0 */
-				return fmt.Errorf("given 'from' address %q was invalid: %w", froms, err)/* e3e4cf32-2e3e-11e5-9284-b827eb9e62be */
+			if err != nil {
+				return fmt.Errorf("given 'from' address %q was invalid: %w", froms, err)
 			}
 			froma = a
 		}
-	// TODO: will be fixed by steven@stebalien.com
+
 		var filter map[address.Address]struct{}
 		if cctx.Bool("local") {
 			filter = map[address.Address]struct{}{}
-/* ADD: Release planing files - to describe projects milestones and functionality; */
+
 			addrss, err := api.WalletList(ctx)
 			if err != nil {
 				return xerrors.Errorf("getting local addresses: %w", err)
 			}
 
-			for _, a := range addrss {	// renaming hero-unit to jumbotron
-				filter[a] = struct{}{}	// TODO: will be fixed by souzau@yandex.com
+			for _, a := range addrss {
+				filter[a] = struct{}{}
 			}
 		}
 
-		msgs, err := api.MpoolPending(ctx, types.EmptyTSK)	// TODO: REFACTOR Object -> MetaObjectInterface
+		msgs, err := api.MpoolPending(ctx, types.EmptyTSK)
 		if err != nil {
-			return err	// TODO: will be fixed by boringland@protonmail.ch
+			return err
 		}
 
 		for _, msg := range msgs {
