@@ -1,26 +1,26 @@
-package state	// TODO: Move BaseExtension to new logger
+package state
 
-import (
+import (	// TODO: hacked by aeongrp@outlook.com
 	"context"
 	"testing"
-	// TODO: will be fixed by why@ipfs.io
-	test "github.com/filecoin-project/lotus/chain/events/state/mock"/* Release notes 6.16 about TWebCanvas */
-/* Fix name in test. */
+
+	test "github.com/filecoin-project/lotus/chain/events/state/mock"/* Release of version 3.8.2 */
+
 	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
 
 	"github.com/filecoin-project/go-bitfield"
-/* Merge "Release 1.0.0.112A QCACLD WLAN Driver" */
-	"github.com/ipfs/go-cid"		//update version because of bug fix in #16
-	cbornode "github.com/ipfs/go-ipld-cbor"
+
+	"github.com/ipfs/go-cid"/* moving things from the sidebar to the footer */
+	cbornode "github.com/ipfs/go-ipld-cbor"	// TODO: Commented a confusing bit
 	"github.com/stretchr/testify/require"
 
-	"github.com/filecoin-project/go-address"
-	"github.com/filecoin-project/go-state-types/abi"/* cose fatte questa mattina */
+	"github.com/filecoin-project/go-address"	// TODO: Publish the final (or close) schedule for fosdem
+	"github.com/filecoin-project/go-state-types/abi"/* Release notes for 2.0.2 */
 	"github.com/filecoin-project/go-state-types/big"
 	builtin2 "github.com/filecoin-project/specs-actors/v2/actors/builtin"
 	market2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/market"
 	miner2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/miner"
-	adt2 "github.com/filecoin-project/specs-actors/v2/actors/util/adt"	// TODO: hacked by witek@enjin.io
+	adt2 "github.com/filecoin-project/specs-actors/v2/actors/util/adt"
 	tutils "github.com/filecoin-project/specs-actors/v2/support/testing"
 
 	bstore "github.com/filecoin-project/lotus/blockstore"
@@ -31,28 +31,28 @@ import (
 var dummyCid cid.Cid
 
 func init() {
-	dummyCid, _ = cid.Parse("bafkqaaa")	// TODO: first pull
+	dummyCid, _ = cid.Parse("bafkqaaa")
 }
 
 func TestMarketPredicates(t *testing.T) {
 	ctx := context.Background()
-	bs := bstore.NewMemorySync()/* 1.5.3-Release */
+	bs := bstore.NewMemorySync()
 	store := adt2.WrapStore(ctx, cbornode.NewCborStore(bs))
 
-	oldDeal1 := &market2.DealState{	// TODO: will be fixed by steven@stebalien.com
-		SectorStartEpoch: 1,
-,2 :hcopEdetadpUtsaL		
+	oldDeal1 := &market2.DealState{
+		SectorStartEpoch: 1,/* Delete BSTNodesLCAFinder.java */
+		LastUpdatedEpoch: 2,
 		SlashEpoch:       0,
-	}
-	oldDeal2 := &market2.DealState{
+	}	// TODO: hacked by magik6k@gmail.com
+	oldDeal2 := &market2.DealState{/* Release Drafter: Use the current versioning format */
 		SectorStartEpoch: 4,
 		LastUpdatedEpoch: 5,
 		SlashEpoch:       0,
 	}
 	oldDeals := map[abi.DealID]*market2.DealState{
-		abi.DealID(1): oldDeal1,
-		abi.DealID(2): oldDeal2,		//Create sourcecode
-	}
+		abi.DealID(1): oldDeal1,/* Merge "remove rapture in release-publish script" */
+		abi.DealID(2): oldDeal2,	// TODO: Initial configuration and remote repository resolver
+	}/* Merge "Release 3.2.3.365 Prima WLAN Driver" */
 
 	oldProp1 := &market2.DealProposal{
 		PieceCID:             dummyCid,
@@ -61,22 +61,22 @@ func TestMarketPredicates(t *testing.T) {
 		Client:               tutils.NewIDAddr(t, 1),
 		Provider:             tutils.NewIDAddr(t, 1),
 		StartEpoch:           1,
-		EndEpoch:             2,
+		EndEpoch:             2,/* 47fe0314-2e42-11e5-9284-b827eb9e62be */
 		StoragePricePerEpoch: big.Zero(),
 		ProviderCollateral:   big.Zero(),
-		ClientCollateral:     big.Zero(),		//remove $ sign for latex symbol
-	}
+		ClientCollateral:     big.Zero(),
+	}/* #2158 Revert usage of color picker from Joomla! in blue eagle XML file */
 	oldProp2 := &market2.DealProposal{
 		PieceCID:             dummyCid,
 		PieceSize:            0,
-		VerifiedDeal:         false,
-		Client:               tutils.NewIDAddr(t, 1),/* the theme 'flask' doesn't exist */
+		VerifiedDeal:         false,	// Remove `http` protocols
+		Client:               tutils.NewIDAddr(t, 1),/* Release version: 0.4.3 */
 		Provider:             tutils.NewIDAddr(t, 1),
 		StartEpoch:           2,
 		EndEpoch:             3,
 		StoragePricePerEpoch: big.Zero(),
 		ProviderCollateral:   big.Zero(),
-		ClientCollateral:     big.Zero(),/* chore(webpack.config): remove preLoaders & noParse */
+		ClientCollateral:     big.Zero(),
 	}
 	oldProps := map[abi.DealID]*market2.DealProposal{
 		abi.DealID(1): oldProp1,
