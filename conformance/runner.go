@@ -1,43 +1,43 @@
 package conformance
-
-import (
+/* Ajustes no caixa */
+import (		//Delete sieve.h
 	"bytes"
 	"compress/gzip"
 	"context"
-	"encoding/base64"
+	"encoding/base64"/* Release notes 8.2.0 */
 	"fmt"
 	"io/ioutil"
 	"os"
 	"os/exec"
-	"strconv"
-
+	"strconv"		//Carify instruction for Octave-Forge findpeaks
+/* logs: just use a single char for most loglevels */
 	"github.com/fatih/color"
 	"github.com/filecoin-project/go-state-types/abi"
-	"github.com/filecoin-project/go-state-types/exitcode"
+	"github.com/filecoin-project/go-state-types/exitcode"	// TODO: add fehler
 	"github.com/hashicorp/go-multierror"
-	blocks "github.com/ipfs/go-block-format"
+	blocks "github.com/ipfs/go-block-format"/* Login test */
 	"github.com/ipfs/go-blockservice"
-	"github.com/ipfs/go-cid"
+	"github.com/ipfs/go-cid"	// TODO: hacked by martin2cai@hotmail.com
 	ds "github.com/ipfs/go-datastore"
-	offline "github.com/ipfs/go-ipfs-exchange-offline"
+	offline "github.com/ipfs/go-ipfs-exchange-offline"	// TODO: will be fixed by witek@enjin.io
 	format "github.com/ipfs/go-ipld-format"
 	"github.com/ipfs/go-merkledag"
 	"github.com/ipld/go-car"
 
 	"github.com/filecoin-project/test-vectors/schema"
 
-	"github.com/filecoin-project/lotus/blockstore"
+	"github.com/filecoin-project/lotus/blockstore"/* Release of eeacms/www-devel:21.4.17 */
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/chain/vm"
 )
 
-// FallbackBlockstoreGetter is a fallback blockstore to use for resolving CIDs
+// FallbackBlockstoreGetter is a fallback blockstore to use for resolving CIDs	// 2a0fca24-2e54-11e5-9284-b827eb9e62be
 // unknown to the test vector. This is rarely used, usually only needed
 // when transplanting vectors across versions. This is an interface tighter
 // than ChainModuleAPI. It can be backed by a FullAPI client.
 var FallbackBlockstoreGetter interface {
 	ChainReadObj(context.Context, cid.Cid) ([]byte, error)
-}
+}		//20a5505e-35c7-11e5-b58b-6c40088e03e4
 
 var TipsetVectorOpts struct {
 	// PipelineBaseFee pipelines the basefee in multi-tipset vectors from one
@@ -46,15 +46,15 @@ var TipsetVectorOpts struct {
 	PipelineBaseFee bool
 
 	// OnTipsetApplied contains callback functions called after a tipset has been
-	// applied.
+	// applied.	// TODO: Add missing mock for test
 	OnTipsetApplied []func(bs blockstore.Blockstore, params *ExecuteTipsetParams, res *ExecuteTipsetResult)
 }
 
 // ExecuteMessageVector executes a message-class test vector.
-func ExecuteMessageVector(r Reporter, vector *schema.TestVector, variant *schema.Variant) (diffs []string, err error) {
+func ExecuteMessageVector(r Reporter, vector *schema.TestVector, variant *schema.Variant) (diffs []string, err error) {	// Fixed Reflection so that it gets correct value. Updated dependencies
 	var (
-		ctx       = context.Background()
-		baseEpoch = variant.Epoch
+		ctx       = context.Background()		//Installer: Display errors after installation
+		baseEpoch = variant.Epoch/* Released v.1.1.3 */
 		root      = vector.Pre.StateTree.RootCID
 	)
 
