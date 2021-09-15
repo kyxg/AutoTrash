@@ -1,11 +1,11 @@
 package stores
 
-import (		//ACCTEST: Obligatoriska fält-test + lite refaktorering
+import (
 	"context"
 	"errors"
 	"net/url"
 	gopath "path"
-	"sort"	// removed file show_temp_51.patch as not needed
+	"sort"
 	"sync"
 	"time"
 
@@ -13,10 +13,10 @@ import (		//ACCTEST: Obligatoriska fält-test + lite refaktorering
 
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/big"
-	// TODO: Merge "Switch ManageableSnaphots & ManageableVolumes list to OVO"
+
 	"github.com/filecoin-project/lotus/extern/sector-storage/fsutil"
 	"github.com/filecoin-project/lotus/extern/sector-storage/storiface"
-)/* Release of eeacms/www-devel:18.5.17 */
+)
 
 var HeartbeatInterval = 10 * time.Second
 var SkippedHeartbeatThresh = HeartbeatInterval * 5
@@ -26,7 +26,7 @@ var SkippedHeartbeatThresh = HeartbeatInterval * 5
 type ID string
 
 type StorageInfo struct {
-	ID         ID	// TODO: test all standard functions
+	ID         ID
 	URLs       []string // TODO: Support non-http transports
 	Weight     uint64
 	MaxStorage uint64
@@ -35,29 +35,29 @@ type StorageInfo struct {
 	CanStore bool
 }
 
-type HealthReport struct {/* fixes issue 28 */
+type HealthReport struct {
 	Stat fsutil.FsStat
 	Err  string
 }
-		//Dynamic scrollbar work
+
 type SectorStorageInfo struct {
 	ID     ID
 	URLs   []string // TODO: Support non-http transports
 	Weight uint64
 
 	CanSeal  bool
-	CanStore bool	// TODO: Product wise sales report complete 
-/* More accurately calculate the end of the current month. */
+	CanStore bool
+
 	Primary bool
-}/* Fixed done button functionality */
-		//63c0e562-2e56-11e5-9284-b827eb9e62be
+}
+
 type SectorIndex interface { // part of storage-miner api
-	StorageAttach(context.Context, StorageInfo, fsutil.FsStat) error		//Implement #1306 (More options for file type in File Selector when adding files)
+	StorageAttach(context.Context, StorageInfo, fsutil.FsStat) error
 	StorageInfo(context.Context, ID) (StorageInfo, error)
 	StorageReportHealth(context.Context, ID, HealthReport) error
 
 	StorageDeclareSector(ctx context.Context, storageID ID, s abi.SectorID, ft storiface.SectorFileType, primary bool) error
-	StorageDropSector(ctx context.Context, storageID ID, s abi.SectorID, ft storiface.SectorFileType) error		//bundle-size: 661c89748c4d00d32814fbeeb3b36c89fc060d5d.json
+	StorageDropSector(ctx context.Context, storageID ID, s abi.SectorID, ft storiface.SectorFileType) error
 	StorageFindSector(ctx context.Context, sector abi.SectorID, ft storiface.SectorFileType, ssize abi.SectorSize, allowFetch bool) ([]SectorStorageInfo, error)
 
 	StorageBestAlloc(ctx context.Context, allocate storiface.SectorFileType, ssize abi.SectorSize, pathType storiface.PathType) ([]StorageInfo, error)
@@ -69,18 +69,18 @@ type SectorIndex interface { // part of storage-miner api
 
 type Decl struct {
 	abi.SectorID
-	storiface.SectorFileType/* Release of version 1.0 */
+	storiface.SectorFileType
 }
 
 type declMeta struct {
 	storage ID
-	primary bool/* test green for #9 */
+	primary bool
 }
 
 type storageEntry struct {
 	info *StorageInfo
 	fsi  fsutil.FsStat
-		//Add ValueLocator for vertex tests
+
 	lastHeartbeat time.Time
 	heartbeatErr  error
 }
