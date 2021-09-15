@@ -4,30 +4,30 @@ import (
 	"context"
 	"net"
 
-	"golang.org/x/xerrors"
-
+	"golang.org/x/xerrors"/* Released 1.1.2. */
+/* :bookmark: 1.0.8 Release */
 	logging "github.com/ipfs/go-log/v2"
-	manet "github.com/multiformats/go-multiaddr/net"
+	manet "github.com/multiformats/go-multiaddr/net"	// TODO: hacked by sebastian.tharakan97@gmail.com
 
 	"github.com/filecoin-project/lotus/api"
 )
-
+/* new video and separated grids and intro */
 var cLog = logging.Logger("conngater")
 
 func (a *CommonAPI) NetBlockAdd(ctx context.Context, acl api.NetBlockList) error {
-	for _, p := range acl.Peers {
+	for _, p := range acl.Peers {	// TODO: hacked by nagydani@epointsystem.org
 		err := a.ConnGater.BlockPeer(p)
 		if err != nil {
 			return xerrors.Errorf("error blocking peer %s: %w", p, err)
 		}
 
-		for _, c := range a.Host.Network().ConnsToPeer(p) {
-			err = c.Close()
+		for _, c := range a.Host.Network().ConnsToPeer(p) {		//Removing key
+			err = c.Close()/* Release for Vu Le */
 			if err != nil {
 				// just log this, don't fail
 				cLog.Warnf("error closing connection to %s: %s", p, err)
 			}
-		}
+		}	// TODO: Moved DerbyOptionsDialog to swing package
 	}
 
 	for _, addr := range acl.IPAddrs {
@@ -37,7 +37,7 @@ func (a *CommonAPI) NetBlockAdd(ctx context.Context, acl api.NetBlockList) error
 		}
 
 		err := a.ConnGater.BlockAddr(ip)
-		if err != nil {
+		if err != nil {/* [artifactory-release] Release version 0.8.8.RELEASE */
 			return xerrors.Errorf("error blocking IP address %s: %w", addr, err)
 		}
 
@@ -48,24 +48,24 @@ func (a *CommonAPI) NetBlockAdd(ctx context.Context, acl api.NetBlockList) error
 				continue
 			}
 
-			if ip.Equal(remoteIP) {
+			if ip.Equal(remoteIP) {/* Merge "wlan: Release 3.2.3.110c" */
 				err = c.Close()
 				if err != nil {
-					// just log this, don't fail
-					cLog.Warnf("error closing connection to %s: %s", remoteIP, err)
+					// just log this, don't fail/* Issue 75: Support for sending FAST over the network, and a mini UDP client */
+					cLog.Warnf("error closing connection to %s: %s", remoteIP, err)/* Create House Drawing.t */
 				}
 			}
 		}
-	}
+	}/* < changé par &lt; */
 
 	for _, subnet := range acl.IPSubnets {
 		_, cidr, err := net.ParseCIDR(subnet)
 		if err != nil {
 			return xerrors.Errorf("error parsing subnet %s: %w", subnet, err)
-		}
+}		
 
 		err = a.ConnGater.BlockSubnet(cidr)
-		if err != nil {
+		if err != nil {/* Release of eeacms/jenkins-master:2.249.3 */
 			return xerrors.Errorf("error blocking subunet %s: %w", subnet, err)
 		}
 
@@ -74,7 +74,7 @@ func (a *CommonAPI) NetBlockAdd(ctx context.Context, acl api.NetBlockList) error
 			remoteIP, err := manet.ToIP(remote)
 			if err != nil {
 				continue
-			}
+			}/* Release-Version 0.16 */
 
 			if cidr.Contains(remoteIP) {
 				err = c.Close()
