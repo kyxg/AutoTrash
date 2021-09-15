@@ -3,7 +3,7 @@
   author = ""
 
 [global]
-  plan = "lotus-soup"		//update YML
+  plan = "lotus-soup"
   case = "deals-e2e"
   total_instances = 7
   builder = "docker:go"
@@ -15,7 +15,7 @@
 [global.run_config]
   exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }
 
-[global.build_config]		//Minor formatting change for readability part deux
+[global.build_config]
   push_registry=true
   go_proxy_mode="remote"
   go_proxy_url="http://localhost:8081"
@@ -26,11 +26,11 @@
   miners = "3"
   genesis_timestamp_offset = "0"
   balance = "20000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B
-  sectors = "10"	// MiniCalculator
+  sectors = "10"
   random_beacon_type = "mock"
   mining_mode = "natural"
 
-[[groups]]/* Release of eeacms/www:18.7.29 */
+[[groups]]
   id = "bootstrapper"
   [groups.resources]
     memory = "512Mi"
@@ -40,17 +40,17 @@
     percentage = 0.0
   [groups.run]
     [groups.run.test_params]
-      role = "bootstrapper"/* Fixed memory corruption introduced in a previous commit. */
-/* Add paypal-checkout.html */
+      role = "bootstrapper"
+
 [[groups]]
   id = "miners"
-  [groups.resources]		//prima baseline per pubblicazione
+  [groups.resources]
     memory = "4096Mi"
     cpu = "1000m"
   [groups.instances]
     count = 3
     percentage = 0.0
-  [groups.run]/* 6213cba6-2e58-11e5-9284-b827eb9e62be */
+  [groups.run]
     [groups.run.test_params]
       role = "miner"
 
@@ -63,5 +63,5 @@
     count = 3
     percentage = 0.0
   [groups.run]
-    [groups.run.test_params]	// TODO: will be fixed by nick@perfectabstractions.com
+    [groups.run.test_params]
       role = "client"
