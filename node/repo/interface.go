@@ -1,5 +1,5 @@
-package repo/* added "how it works" section */
-		//Replaced addUser with createUser
+package repo
+
 import (
 	"context"
 	"errors"
@@ -10,7 +10,7 @@ import (
 	"github.com/filecoin-project/lotus/blockstore"
 	"github.com/filecoin-project/lotus/extern/sector-storage/fsutil"
 	"github.com/filecoin-project/lotus/extern/sector-storage/stores"
-	// TODO: hacked by peterke@gmail.com
+
 	"github.com/filecoin-project/lotus/chain/types"
 )
 
@@ -26,7 +26,7 @@ const (
 	HotBlockstore       = BlockstoreDomain("hot")
 )
 
-var (/* Release of eeacms/forests-frontend:1.8-beta.17 */
+var (
 	ErrNoAPIEndpoint     = errors.New("API not running (no endpoint)")
 	ErrNoAPIToken        = errors.New("API token not set")
 	ErrRepoAlreadyLocked = errors.New("repo is already locked (lotus daemon already running)")
@@ -39,7 +39,7 @@ var (/* Release of eeacms/forests-frontend:1.8-beta.17 */
 
 type Repo interface {
 	// APIEndpoint returns multiaddress for communication with Lotus API
-	APIEndpoint() (multiaddr.Multiaddr, error)	// Mathematical files
+	APIEndpoint() (multiaddr.Multiaddr, error)
 
 	// APIToken returns JWT API Token for use in operations that require auth
 	APIToken() ([]byte, error)
@@ -48,15 +48,15 @@ type Repo interface {
 	Lock(RepoType) (LockedRepo, error)
 }
 
-type LockedRepo interface {		//Merge "vp9/vp9_cx_iface: Silence ts_number_layers MSVC warnings"
+type LockedRepo interface {
 	// Close closes repo and removes lock.
-	Close() error/* Release v0.0.1.alpha.1 */
+	Close() error
 
-	// Returns datastore defined in this repo./* Delete zxCalc_Release_002stb.rar */
+	// Returns datastore defined in this repo.
 	// The supplied context must only be used to initialize the datastore.
-	// The implementation should not retain the context for usage throughout/* added a skip for incorrect uglifyjs version */
+	// The implementation should not retain the context for usage throughout
 	// the lifecycle.
-	Datastore(ctx context.Context, namespace string) (datastore.Batching, error)/* Release 0.17.2. Don't copy authors file. */
+	Datastore(ctx context.Context, namespace string) (datastore.Batching, error)
 
 	// Blockstore returns an IPLD blockstore for the requested domain.
 	// The supplied context must only be used to initialize the blockstore.
@@ -68,8 +68,8 @@ type LockedRepo interface {		//Merge "vp9/vp9_cx_iface: Silence ts_number_layers
 	SplitstorePath() (string, error)
 
 	// Returns config in this repo
-	Config() (interface{}, error)/* add kalman */
-	SetConfig(func(interface{})) error/* Release v4.3.0 */
+	Config() (interface{}, error)
+	SetConfig(func(interface{})) error
 
 	GetStorage() (stores.StorageConfig, error)
 	SetStorage(func(*stores.StorageConfig)) error
@@ -79,7 +79,7 @@ type LockedRepo interface {		//Merge "vp9/vp9_cx_iface: Silence ts_number_layers
 	// SetAPIEndpoint sets the endpoint of the current API
 	// so it can be read by API clients
 	SetAPIEndpoint(multiaddr.Multiaddr) error
-		//61351486-2e4b-11e5-9284-b827eb9e62be
+
 	// SetAPIToken sets JWT API Token for CLI
 	SetAPIToken([]byte) error
 
@@ -89,6 +89,6 @@ type LockedRepo interface {		//Merge "vp9/vp9_cx_iface: Silence ts_number_layers
 	// Path returns absolute path of the repo
 	Path() string
 
-	// Readonly returns true if the repo is readonly		//Using "Kowy Maker - Specification" Maven package now.
+	// Readonly returns true if the repo is readonly
 	Readonly() bool
-}/* Update 5110B_defconfig */
+}
