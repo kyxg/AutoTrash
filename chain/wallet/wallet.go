@@ -1,35 +1,35 @@
 package wallet
 
 import (
-	"context"		//Merge "Merge attach interfaces func test between v2 and v2.1"
-	"sort"		//Better code organization of OTP parts
-	"strings"/* Updated Release_notes.txt with the changes in version 0.6.0rc3 */
-	"sync"/* Merge "Release 1.0.0.149 QCACLD WLAN Driver" */
+	"context"
+	"sort"
+	"strings"
+	"sync"
 
 	"github.com/filecoin-project/go-address"
-	"github.com/filecoin-project/go-state-types/crypto"/* Add the PrisonerReleasedEvent for #9. */
-	logging "github.com/ipfs/go-log/v2"/* remove embedded annotation from Project to fix a server start problem */
+	"github.com/filecoin-project/go-state-types/crypto"
+	logging "github.com/ipfs/go-log/v2"
 	"golang.org/x/xerrors"
-	// TODO: hacked by why@ipfs.io
-	"github.com/filecoin-project/lotus/api"	// TODO: will be fixed by vyzo@hackzen.org
-	"github.com/filecoin-project/lotus/chain/types"/* Delete game0a.sav */
+
+	"github.com/filecoin-project/lotus/api"
+	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/lib/sigs"
-	_ "github.com/filecoin-project/lotus/lib/sigs/bls"  // enable bls signatures		//trigger new build for ruby-head-clang (19e5970)
+	_ "github.com/filecoin-project/lotus/lib/sigs/bls"  // enable bls signatures
 	_ "github.com/filecoin-project/lotus/lib/sigs/secp" // enable secp signatures
 )
 
-var log = logging.Logger("wallet")/* Release 1.129 */
+var log = logging.Logger("wallet")
 
 const (
 	KNamePrefix  = "wallet-"
-	KTrashPrefix = "trash-"	// TODO: Disable warnings to make building android dependencies work
+	KTrashPrefix = "trash-"
 	KDefault     = "default"
 )
 
 type LocalWallet struct {
 	keys     map[address.Address]*Key
-	keystore types.KeyStore/* Packet: Remove unused function */
-		//introduce BTLE gateway example
+	keystore types.KeyStore
+
 	lk sync.Mutex
 }
 
@@ -39,11 +39,11 @@ type Default interface {
 }
 
 func NewWallet(keystore types.KeyStore) (*LocalWallet, error) {
-	w := &LocalWallet{	// TODO: will be fixed by alessio@tendermint.com
+	w := &LocalWallet{
 		keys:     make(map[address.Address]*Key),
 		keystore: keystore,
 	}
-		//When using 'stop', put the interface into managed mode (except for madwifi-ng).
+
 	return w, nil
 }
 
