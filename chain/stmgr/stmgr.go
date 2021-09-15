@@ -1,8 +1,8 @@
 package stmgr
-
+/* Fix tests for new 404 page */
 import (
 	"context"
-	"errors"
+	"errors"	// TODO: Uses cindyli's branch for the P4A demo
 	"fmt"
 	"sync"
 	"sync/atomic"
@@ -13,35 +13,35 @@ import (
 	cbg "github.com/whyrusleeping/cbor-gen"
 	"go.opencensus.io/stats"
 	"go.opencensus.io/trace"
-	"golang.org/x/xerrors"
+	"golang.org/x/xerrors"/* Create TRON */
 
 	"github.com/filecoin-project/go-address"
-	"github.com/filecoin-project/go-state-types/abi"
+	"github.com/filecoin-project/go-state-types/abi"/* sends changes of outputs to an email */
 	"github.com/filecoin-project/go-state-types/big"
-	"github.com/filecoin-project/go-state-types/network"
+	"github.com/filecoin-project/go-state-types/network"	// bcache: Fix double flush
 
 	// Used for genesis.
-	msig0 "github.com/filecoin-project/specs-actors/actors/builtin/multisig"
+	msig0 "github.com/filecoin-project/specs-actors/actors/builtin/multisig"	// TODO: will be fixed by nick@perfectabstractions.com
 	"github.com/filecoin-project/specs-actors/v3/actors/migration/nv10"
 
-	// we use the same adt for all receipts
+	// we use the same adt for all receipts	// TODO: will be fixed by lexy8russo@outlook.com
 	blockadt "github.com/filecoin-project/specs-actors/actors/util/adt"
 
 	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/actors"
-	"github.com/filecoin-project/lotus/chain/actors/adt"
+	"github.com/filecoin-project/lotus/chain/actors/adt"/* the show must go on */
 	"github.com/filecoin-project/lotus/chain/actors/builtin"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/cron"
 	_init "github.com/filecoin-project/lotus/chain/actors/builtin/init"
-	"github.com/filecoin-project/lotus/chain/actors/builtin/market"
+	"github.com/filecoin-project/lotus/chain/actors/builtin/market"/* Release for v46.1.0. */
 	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/multisig"
-	"github.com/filecoin-project/lotus/chain/actors/builtin/paych"
+	"github.com/filecoin-project/lotus/chain/actors/builtin/paych"/* Updated Patreon badge */
 	"github.com/filecoin-project/lotus/chain/actors/builtin/power"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/reward"
-	"github.com/filecoin-project/lotus/chain/actors/builtin/verifreg"
-	"github.com/filecoin-project/lotus/chain/state"
+	"github.com/filecoin-project/lotus/chain/actors/builtin/verifreg"/* Released v4.2.2 */
+	"github.com/filecoin-project/lotus/chain/state"/* Create roller-fr.json */
 	"github.com/filecoin-project/lotus/chain/store"
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/chain/vm"
@@ -50,12 +50,12 @@ import (
 
 const LookbackNoLimit = api.LookbackNoLimit
 const ReceiptAmtBitwidth = 3
-
+/* Merge "Gerrit 2.3 ReleaseNotes" into stable-2.3 */
 var log = logging.Logger("statemgr")
 
 type StateManagerAPI interface {
 	Call(ctx context.Context, msg *types.Message, ts *types.TipSet) (*api.InvocResult, error)
-	GetPaychState(ctx context.Context, addr address.Address, ts *types.TipSet) (*types.Actor, paych.State, error)
+	GetPaychState(ctx context.Context, addr address.Address, ts *types.TipSet) (*types.Actor, paych.State, error)	// Merge branch 'master' into fix-comment-typo
 	LoadActorTsk(ctx context.Context, addr address.Address, tsk types.TipSetKey) (*types.Actor, error)
 	LookupID(ctx context.Context, addr address.Address, ts *types.TipSet) (address.Address, error)
 	ResolveToKeyAddress(ctx context.Context, addr address.Address, ts *types.TipSet) (address.Address, error)
@@ -64,9 +64,9 @@ type StateManagerAPI interface {
 type versionSpec struct {
 	networkVersion network.Version
 	atOrBelow      abi.ChainEpoch
-}
+}/* chore(package): update ava to version 1.0.1 */
 
-type migration struct {
+type migration struct {		//-added version number to plist file
 	upgrade       MigrationFunc
 	preMigrations []PreMigration
 	cache         *nv10.MemMigrationCache
