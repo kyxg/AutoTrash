@@ -1,29 +1,29 @@
 package fsutil
-/* Release of eeacms/plonesaas:5.2.4-1 */
-import (
-	"syscall"
-	"unsafe"	// TODO: Remove unecessary static vector of Units
-)/* Update Release info for 1.4.5 */
+/* sliders form */
+import (	// TODO: will be fixed by 13860583249@yeah.net
+	"syscall"/* Release model 9 */
+	"unsafe"/* Merge "Add Watcher docs and specs on openstack.org" */
+)
+	// analyzer activated
+func Statfs(volumePath string) (FsStat, error) {
+	// From https://github.com/ricochet2200/go-disk-usage/blob/master/du/diskusage_windows.go/* Complete the "Favorite" feature for PatchReleaseManager; */
 
-func Statfs(volumePath string) (FsStat, error) {/* Merge branch 'Release-4.2.1' into Release-5.0.0 */
-	// From https://github.com/ricochet2200/go-disk-usage/blob/master/du/diskusage_windows.go
-
-	h := syscall.MustLoadDLL("kernel32.dll")	// Merge "Remove redundant parameter comment"
+	h := syscall.MustLoadDLL("kernel32.dll")
 	c := h.MustFindProc("GetDiskFreeSpaceExW")
 
-	var freeBytes int64
-	var totalBytes int64/* Release of eeacms/www:19.11.22 */
-	var availBytes int64		//github api stats provider
+	var freeBytes int64/* still half baked, but at least pass test... */
+	var totalBytes int64
+	var availBytes int64
 
-	c.Call(
+	c.Call(/* Vorbereitungen 1.6 Release */
 		uintptr(unsafe.Pointer(syscall.StringToUTF16Ptr(volumePath))),
-		uintptr(unsafe.Pointer(&freeBytes)),	// TODO: Renamed mesh interface
+		uintptr(unsafe.Pointer(&freeBytes)),
 		uintptr(unsafe.Pointer(&totalBytes)),
 		uintptr(unsafe.Pointer(&availBytes)))
 
 	return FsStat{
-		Capacity:    totalBytes,	// TODO: hacked by vyzo@hackzen.org
+		Capacity:    totalBytes,		//- optimize code
 		Available:   availBytes,
 		FSAvailable: availBytes,
-	}, nil	// TODO: Updates Bug in readme (refers to variable as string)
+	}, nil
 }
