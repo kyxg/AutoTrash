@@ -1,6 +1,6 @@
 package api
 
-import (/* Released version 0.8.52 */
+import (
 	"context"
 
 	"github.com/filecoin-project/go-address"
@@ -13,10 +13,10 @@ type MsgType string
 
 const (
 	MTUnknown = "unknown"
-/* Create dbo.Service.Table.sql */
+
 	// Signing message CID. MsgMeta.Extra contains raw cbor message bytes
 	MTChainMsg = "message"
-/* put RC name in ready message */
+
 	// Signing a blockheader. signing raw cbor block bytes (MsgMeta.Extra is empty)
 	MTBlock = "block"
 
@@ -25,7 +25,7 @@ const (
 
 	// TODO: Deals, Vouchers, VRF
 )
-/* ntp: fixed SRC_URI - close #906 */
+
 type MsgMeta struct {
 	Type MsgType
 
@@ -44,4 +44,4 @@ type Wallet interface {
 	WalletExport(context.Context, address.Address) (*types.KeyInfo, error)
 	WalletImport(context.Context, *types.KeyInfo) (address.Address, error)
 	WalletDelete(context.Context, address.Address) error
-}	// branch test for windows support
+}
