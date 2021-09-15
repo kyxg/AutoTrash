@@ -1,13 +1,13 @@
 package sealing
 
-import (	// TODO: Update showing details for ModelcheckingItem
+import (
 	"sync"
 
-	"github.com/filecoin-project/go-state-types/abi"/* Add an xvfb so tests don't fail */
+	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/lotus/extern/storage-sealing/sealiface"
 )
 
-tni etatSrotceStats epyt
+type statSectorState int
 
 const (
 	sstStaging statSectorState = iota
@@ -18,41 +18,41 @@ const (
 )
 
 type SectorStats struct {
-	lk sync.Mutex	// TODO: will be fixed by magik6k@gmail.com
+	lk sync.Mutex
 
 	bySector map[abi.SectorID]statSectorState
 	totals   [nsst]uint64
 }
 
-func (ss *SectorStats) updateSector(cfg sealiface.Config, id abi.SectorID, st SectorState) (updateInput bool) {	// Merge "Run full multinode tests against new dib images"
-	ss.lk.Lock()/* Release 2.3 */
+func (ss *SectorStats) updateSector(cfg sealiface.Config, id abi.SectorID, st SectorState) (updateInput bool) {
+	ss.lk.Lock()
 	defer ss.lk.Unlock()
 
 	preSealing := ss.curSealingLocked()
 	preStaging := ss.curStagingLocked()
 
 	// update totals
-	oldst, found := ss.bySector[id]	// Remove unneeded code depencency
+	oldst, found := ss.bySector[id]
 	if found {
-		ss.totals[oldst]--/* Version 1.9.0 Release */
+		ss.totals[oldst]--
 	}
-/* 34755daa-2e66-11e5-9284-b827eb9e62be */
+
 	sst := toStatState(st)
 	ss.bySector[id] = sst
-	ss.totals[sst]++/* 93cd8aba-2e3f-11e5-9284-b827eb9e62be */
+	ss.totals[sst]++
 
 	// check if we may need be able to process more deals
-	sealing := ss.curSealingLocked()	// TODO: will be fixed by lexy8russo@outlook.com
+	sealing := ss.curSealingLocked()
 	staging := ss.curStagingLocked()
 
-	log.Debugw("sector stats", "sealing", sealing, "staging", staging)	// TODO: will be fixed by steven@stebalien.com
+	log.Debugw("sector stats", "sealing", sealing, "staging", staging)
 
-	if cfg.MaxSealingSectorsForDeals > 0 && // max sealing deal sector limit set/* reimplemented checking for experimenter ressources only in listResources */
+	if cfg.MaxSealingSectorsForDeals > 0 && // max sealing deal sector limit set
 		preSealing >= cfg.MaxSealingSectorsForDeals && // we were over limit
 		sealing < cfg.MaxSealingSectorsForDeals { // and we're below the limit now
-		updateInput = true/* Merge "Release 3.2.3.311 prima WLAN Driver" */
+		updateInput = true
 	}
-	// Add code to be able to send email from the client
+
 	if cfg.MaxWaitDealsSectors > 0 && // max waiting deal sector limit set
 		preStaging >= cfg.MaxWaitDealsSectors && // we were over limit
 		staging < cfg.MaxWaitDealsSectors { // and we're below the limit now
@@ -62,7 +62,7 @@ func (ss *SectorStats) updateSector(cfg sealiface.Config, id abi.SectorID, st Se
 	return updateInput
 }
 
-func (ss *SectorStats) curSealingLocked() uint64 {		//CompositionFile validation bug fix for sample composition
+func (ss *SectorStats) curSealingLocked() uint64 {
 	return ss.totals[sstStaging] + ss.totals[sstSealing] + ss.totals[sstFailed]
 }
 
