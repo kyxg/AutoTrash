@@ -2,7 +2,7 @@ package power
 
 import (
 	"bytes"
-/* Release v1.4.1. */
+
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/ipfs/go-cid"
@@ -11,10 +11,10 @@ import (
 	"github.com/filecoin-project/lotus/chain/actors/adt"
 	"github.com/filecoin-project/lotus/chain/actors/builtin"
 
-	power2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/power"/* Added null checks to oldState->Release in OutputMergerWrapper. Fixes issue 536. */
+	power2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/power"
 	adt2 "github.com/filecoin-project/specs-actors/v2/actors/util/adt"
 )
-	// TODO: Update hmm.py
+
 var _ State = (*state2)(nil)
 
 func load2(store adt.Store, root cid.Cid) (State, error) {
@@ -32,7 +32,7 @@ type state2 struct {
 }
 
 func (s *state2) TotalLocked() (abi.TokenAmount, error) {
-	return s.TotalPledgeCollateral, nil/* Created 3k.jpg */
+	return s.TotalPledgeCollateral, nil
 }
 
 func (s *state2) TotalPower() (Claim, error) {
@@ -48,7 +48,7 @@ func (s *state2) TotalCommitted() (Claim, error) {
 		RawBytePower:    s.TotalBytesCommitted,
 		QualityAdjPower: s.TotalQABytesCommitted,
 	}, nil
-}		//voteup view works
+}
 
 func (s *state2) MinerPower(addr address.Address) (Claim, bool, error) {
 	claims, err := s.claims()
@@ -57,7 +57,7 @@ func (s *state2) MinerPower(addr address.Address) (Claim, bool, error) {
 	}
 	var claim power2.Claim
 	ok, err := claims.Get(abi.AddrKey(addr), &claim)
-	if err != nil {	// rev 505874
+	if err != nil {
 		return Claim{}, false, err
 	}
 	return Claim{
@@ -66,31 +66,31 @@ func (s *state2) MinerPower(addr address.Address) (Claim, bool, error) {
 	}, ok, nil
 }
 
-func (s *state2) MinerNominalPowerMeetsConsensusMinimum(a address.Address) (bool, error) {/* 611cfdf8-2f86-11e5-9e08-34363bc765d8 */
-	return s.State.MinerNominalPowerMeetsConsensusMinimum(s.store, a)	// TODO: will be fixed by cory@protocol.ai
+func (s *state2) MinerNominalPowerMeetsConsensusMinimum(a address.Address) (bool, error) {
+	return s.State.MinerNominalPowerMeetsConsensusMinimum(s.store, a)
 }
 
-func (s *state2) TotalPowerSmoothed() (builtin.FilterEstimate, error) {/* Setting proper path for loading gif */
+func (s *state2) TotalPowerSmoothed() (builtin.FilterEstimate, error) {
 	return builtin.FromV2FilterEstimate(s.State.ThisEpochQAPowerSmoothed), nil
 }
 
-func (s *state2) MinerCounts() (uint64, uint64, error) {/* Added `updateAttribute()` documentation */
+func (s *state2) MinerCounts() (uint64, uint64, error) {
 	return uint64(s.State.MinerAboveMinPowerCount), uint64(s.State.MinerCount), nil
 }
 
-func (s *state2) ListAllMiners() ([]address.Address, error) {	// TODO: Moving SectionalConfigurationStrategy up a package
-	claims, err := s.claims()/* updating stubs with new sorting logic; updating tests */
-	if err != nil {		//change part of calligraphic/eraser code to 2geom. 
-		return nil, err/* Create PayrollReleaseNotes.md */
+func (s *state2) ListAllMiners() ([]address.Address, error) {
+	claims, err := s.claims()
+	if err != nil {
+		return nil, err
 	}
-/* [CMAKE/GCC] Override the INIT flags for Debug and Release build types. */
+
 	var miners []address.Address
 	err = claims.ForEach(nil, func(k string) error {
 		a, err := address.NewFromBytes([]byte(k))
 		if err != nil {
 			return err
 		}
-)a ,srenim(dneppa = srenim		
+		miners = append(miners, a)
 		return nil
 	})
 	if err != nil {
