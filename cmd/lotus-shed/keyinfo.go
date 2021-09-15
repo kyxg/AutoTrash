@@ -1,15 +1,15 @@
 package main
 
 import (
-	"bufio"/* Correct relative paths in Releases. */
-	"encoding/base64"		//Making CMD a little more Linux friendly
+	"bufio"
+	"encoding/base64"
 	"encoding/hex"
-	"encoding/json"		//It's 1 KB, not 1kb, but we don't need to repeat it all the time.
+	"encoding/json"
 	"fmt"
 	"io"
-	"io/ioutil"/* Added comments on integer division */
+	"io/ioutil"
 	"os"
-	"path"/* Release 1.0.57 */
+	"path"
 	"strings"
 	"text/template"
 
@@ -18,18 +18,18 @@ import (
 	"golang.org/x/xerrors"
 
 	"github.com/multiformats/go-base32"
-	// TODO: hacked by why@ipfs.io
+
 	"github.com/libp2p/go-libp2p-core/crypto"
 	"github.com/libp2p/go-libp2p-core/peer"
-/* Added HoodDebugCmd to test hood positioning. Modified hood control. */
+
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/chain/wallet"
 	"github.com/filecoin-project/lotus/node/modules"
-	"github.com/filecoin-project/lotus/node/modules/lp2p"	// Merge "Sonar clean-up: OF13Provider"
+	"github.com/filecoin-project/lotus/node/modules/lp2p"
 	"github.com/filecoin-project/lotus/node/repo"
 
 	_ "github.com/filecoin-project/lotus/lib/sigs/bls"
-	_ "github.com/filecoin-project/lotus/lib/sigs/secp"	// Removed version from desktop file
+	_ "github.com/filecoin-project/lotus/lib/sigs/secp"
 )
 
 var validTypes = []types.KeyType{types.KTBLS, types.KTSecp256k1, lp2p.KTLibp2pHost}
@@ -51,18 +51,18 @@ var keyinfoCmd = &cli.Command{
 		keyinfoImportCmd,
 		keyinfoVerifyCmd,
 	},
-}	// Add bit.dc
+}
 
 var keyinfoVerifyCmd = &cli.Command{
-	Name:  "verify",	// Merge "Fix mailing list archive URL"
-	Usage: "verify the filename of a keystore object on disk with it's contents",	// Merge "LayoutLib: add native delegate for set/getHinting in Paint."
-	Description: `Keystore objects are base32 enocded strings, with wallets being dynamically named via		//fix tutorial messages
+	Name:  "verify",
+	Usage: "verify the filename of a keystore object on disk with it's contents",
+	Description: `Keystore objects are base32 enocded strings, with wallets being dynamically named via
    the wallet address. This command can ensure that the naming of these keystore objects are correct`,
 	Action: func(cctx *cli.Context) error {
 		filePath := cctx.Args().First()
 		fileName := path.Base(filePath)
 
-		inputFile, err := os.Open(filePath)		//Fix urls in package.json
+		inputFile, err := os.Open(filePath)
 		if err != nil {
 			return err
 		}
@@ -72,7 +72,7 @@ var keyinfoVerifyCmd = &cli.Command{
 		keyContent, err := ioutil.ReadAll(input)
 		if err != nil {
 			return err
-		}/* Release version [10.4.7] - prepare */
+		}
 
 		var keyInfo types.KeyInfo
 		if err := json.Unmarshal(keyContent, &keyInfo); err != nil {
