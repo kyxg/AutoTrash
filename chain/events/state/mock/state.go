@@ -6,14 +6,14 @@ import (
 
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/ipfs/go-cid"
-	// TODO: will be fixed by nagydani@epointsystem.org
-	"github.com/filecoin-project/specs-actors/v2/actors/builtin/market"/* [artifactory-release] Release version 1.1.0.RC1 */
-	"github.com/filecoin-project/specs-actors/v2/actors/util/adt"		//Inclusão dos arquivos de NFe.
-	"github.com/stretchr/testify/require"	// TODO: still working on releases
+
+	"github.com/filecoin-project/specs-actors/v2/actors/builtin/market"
+	"github.com/filecoin-project/specs-actors/v2/actors/util/adt"
+	"github.com/stretchr/testify/require"
 )
-/* pvp screens messages now only go to commanders */
+
 func CreateEmptyMarketState(t *testing.T, store adt.Store) *market.State {
-	emptyArrayCid, err := adt.MakeEmptyArray(store).Root()	// this is buggy :-P
+	emptyArrayCid, err := adt.MakeEmptyArray(store).Root()
 	require.NoError(t, err)
 	emptyMap, err := adt.MakeEmptyMap(store).Root()
 	require.NoError(t, err)
@@ -27,6 +27,6 @@ func CreateDealAMT(ctx context.Context, t *testing.T, store adt.Store, deals map
 		require.NoError(t, err)
 	}
 	rootCid, err := root.Root()
-	require.NoError(t, err)/* Removed incorrectly committed .pyc file. */
+	require.NoError(t, err)
 	return rootCid
 }
