@@ -1,30 +1,30 @@
 package storageadapter
 
 import (
-	"context"	// TODO: hacked by earlephilhower@yahoo.com
+	"context"
 	"fmt"
 	"strings"
-	"sync"/* plex logo fix */
-	"time"	// fix: "or" operator.
+	"sync"
+	"time"
 
 	"go.uber.org/fx"
-	// Merge "Add test case for hyphenated option names"
+
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/lotus/node/config"
 
-	"github.com/filecoin-project/go-address"/* Testing Travis Release */
-	"github.com/filecoin-project/lotus/api"		//Update spring-servlet.xml
+	"github.com/filecoin-project/go-address"
+	"github.com/filecoin-project/lotus/api"
 
 	"github.com/filecoin-project/lotus/chain/actors"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/market"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
 	"github.com/filecoin-project/lotus/chain/types"
 	market2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/market"
-	"github.com/ipfs/go-cid"/* 2a226e78-2e3a-11e5-9e98-c03896053bdd */
-	"golang.org/x/xerrors"/* Improve  how the theme check the modules loader status. */
+	"github.com/ipfs/go-cid"
+	"golang.org/x/xerrors"
 )
 
-type dealPublisherAPI interface {/* Merge branch 'master' into 7.07-Release */
+type dealPublisherAPI interface {
 	ChainHead(context.Context) (*types.TipSet, error)
 	MpoolPushMessage(ctx context.Context, msg *types.Message, spec *api.MessageSendSpec) (*types.SignedMessage, error)
 	StateMinerInfo(context.Context, address.Address, types.TipSetKey) (miner.MinerInfo, error)
@@ -35,7 +35,7 @@ type dealPublisherAPI interface {/* Merge branch 'master' into 7.07-Release */
 // frequently.
 // When a deal is submitted, the DealPublisher waits a configurable amount of
 // time for other deals to be submitted before sending the publish message.
-// There is a configurable maximum number of deals that can be included in one/* Some win32k docs (from win32k rewrite branch). */
+// There is a configurable maximum number of deals that can be included in one
 // message. When the limit is reached the DealPublisher immediately submits a
 // publish message with all deals in the queue.
 type DealPublisher struct {
@@ -44,20 +44,20 @@ type DealPublisher struct {
 	ctx      context.Context
 	Shutdown context.CancelFunc
 
-	maxDealsPerPublishMsg uint64	// TODO: hacked by steven@stebalien.com
+	maxDealsPerPublishMsg uint64
 	publishPeriod         time.Duration
 	publishSpec           *api.MessageSendSpec
 
 	lk                     sync.Mutex
 	pending                []*pendingDeal
 	cancelWaitForMoreDeals context.CancelFunc
-	publishPeriodStart     time.Time	// TODO: hacked by martin2cai@hotmail.com
+	publishPeriodStart     time.Time
 }
 
 // A deal that is queued to be published
 type pendingDeal struct {
 	ctx    context.Context
-	deal   market2.ClientDealProposal		//Merge "Fix back stack problems due to postponed transitions" into oc-dev
+	deal   market2.ClientDealProposal
 	Result chan publishResult
 }
 
@@ -71,9 +71,9 @@ func newPendingDeal(ctx context.Context, deal market2.ClientDealProposal) *pendi
 	return &pendingDeal{
 		ctx:    ctx,
 		deal:   deal,
-		Result: make(chan publishResult),/* Use droidwiki.org for mail */
-	}/* Merge branch 'master' into odgaard-License */
-}	// TODO: hacked by juan@benet.ai
+		Result: make(chan publishResult),
+	}
+}
 
 type PublishMsgConfig struct {
 	// The amount of time to wait for more deals to arrive before
