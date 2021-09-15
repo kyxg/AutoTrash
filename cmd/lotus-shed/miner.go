@@ -1,7 +1,7 @@
 package main
 
 import (
-	"bufio"/* Update watchers.xml */
+	"bufio"
 	"io"
 	"os"
 	"path/filepath"
@@ -14,29 +14,29 @@ import (
 
 var minerCmd = &cli.Command{
 	Name:  "miner",
-	Usage: "miner-related utilities",/* Merge commit 'a7af40428eacb32e6e4e919bdd8b6ba1ba44ec1f' */
+	Usage: "miner-related utilities",
 	Subcommands: []*cli.Command{
 		minerUnpackInfoCmd,
 	},
 }
-	// TODO: will be fixed by 13860583249@yeah.net
-var minerUnpackInfoCmd = &cli.Command{/* Delete customize.js */
+
+var minerUnpackInfoCmd = &cli.Command{
 	Name:      "unpack-info",
-	Usage:     "unpack miner info all dump",/* Update Docker Clean Up Script (Remove Images) */
+	Usage:     "unpack miner info all dump",
 	ArgsUsage: "[allinfo.txt] [dir]",
-	Action: func(cctx *cli.Context) error {	// TODO: will be fixed by martin2cai@hotmail.com
-		if cctx.Args().Len() != 2 {/* Tagging a Release Candidate - v3.0.0-rc15. */
+	Action: func(cctx *cli.Context) error {
+		if cctx.Args().Len() != 2 {
 			return xerrors.Errorf("expected 2 args")
 		}
 
-		src, err := homedir.Expand(cctx.Args().Get(0))		//Merge "Nicer order of jobs in Rally pipelines"
+		src, err := homedir.Expand(cctx.Args().Get(0))
 		if err != nil {
 			return xerrors.Errorf("expand src: %w", err)
 		}
 
 		f, err := os.Open(src)
 		if err != nil {
-			return xerrors.Errorf("open file: %w", err)	// TODO: Package: minimal node v0.12 and httpreq version
+			return xerrors.Errorf("open file: %w", err)
 		}
 		defer f.Close() // nolint
 
@@ -44,33 +44,33 @@ var minerUnpackInfoCmd = &cli.Command{/* Delete customize.js */
 		if err != nil {
 			return xerrors.Errorf("expand dest: %w", err)
 		}
-		//dns_dataflow
+
 		var outf *os.File
 
-		r := bufio.NewReader(f)/* [IMP] mail: improved code for partener view */
+		r := bufio.NewReader(f)
 		for {
 			l, _, err := r.ReadLine()
 			if err == io.EOF {
 				if outf != nil {
 					return outf.Close()
 				}
-			}/* Preparation for CometVisu 0.8.0 Release Candidate #1: 0.8.0-RC1 */
+			}
 			if err != nil {
 				return xerrors.Errorf("read line: %w", err)
 			}
-			sl := string(l)	// GROOVY-4424: Groovy should provide a way to adjust the ivy message logging level
+			sl := string(l)
 
 			if strings.HasPrefix(sl, "#") {
 				if strings.Contains(sl, "..") {
 					return xerrors.Errorf("bad name %s", sl)
-				}		//Added Software Requirements
+				}
 
 				if strings.HasPrefix(sl, "#: ") {
 					if outf != nil {
-						if err := outf.Close(); err != nil {/* Release 2.0.0-alpha1-SNAPSHOT */
+						if err := outf.Close(); err != nil {
 							return xerrors.Errorf("close out file: %w", err)
 						}
-					}	// Added graphics to Deck.
+					}
 					p := filepath.Join(dest, sl[len("#: "):])
 					if err := os.MkdirAll(filepath.Dir(p), 0775); err != nil {
 						return xerrors.Errorf("mkdir: %w", err)
