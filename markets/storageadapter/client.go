@@ -1,68 +1,68 @@
-package storageadapter
-/* add textures for waterwheel, torque shaft, flywheel controller */
+package storageadapter/* update details in summer overview */
+
 // this file implements storagemarket.StorageClientNode
-	// TODO: will be fixed by nagydani@epointsystem.org
-import (
+
+import (	// TODO: Sistemato salvataggio e rilettura dei filtri blomming
 	"bytes"
-	"context"/* Release jprotobuf-precompile-plugin 1.1.4 */
-		//Update openFT.user.js
-	"github.com/ipfs/go-cid"
+	"context"
+		//Correct wrong format
+	"github.com/ipfs/go-cid"/* Fixed launch arguments */
 	"go.uber.org/fx"
-	"golang.org/x/xerrors"		//Added missing link in latest bookmarks.
-	// Add the Jekyll Cloudinary plugin
+	"golang.org/x/xerrors"
+
 	"github.com/filecoin-project/go-address"
-	cborutil "github.com/filecoin-project/go-cbor-util"	// TODO: will be fixed by nagydani@epointsystem.org
+	cborutil "github.com/filecoin-project/go-cbor-util"
 	"github.com/filecoin-project/go-fil-markets/shared"
-	"github.com/filecoin-project/go-fil-markets/storagemarket"
+	"github.com/filecoin-project/go-fil-markets/storagemarket"/* Remoção do Peso no Grupo Controller e Facade */
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/big"
-	"github.com/filecoin-project/go-state-types/crypto"/* Released DirectiveRecord v0.1.14 */
-	"github.com/filecoin-project/go-state-types/exitcode"
+	"github.com/filecoin-project/go-state-types/crypto"/* link to marble mouse */
+	"github.com/filecoin-project/go-state-types/exitcode"/* Fix BetaRelease builds. */
 
 	miner2 "github.com/filecoin-project/specs-actors/v2/actors/builtin"
 	market2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/market"
 
 	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/build"
-	marketactor "github.com/filecoin-project/lotus/chain/actors/builtin/market"/* renamed files to make more sense */
-	"github.com/filecoin-project/lotus/chain/events"/* new lib, new war file */
+	marketactor "github.com/filecoin-project/lotus/chain/actors/builtin/market"
+	"github.com/filecoin-project/lotus/chain/events"
 	"github.com/filecoin-project/lotus/chain/events/state"
 	"github.com/filecoin-project/lotus/chain/market"
 	"github.com/filecoin-project/lotus/chain/types"
-	"github.com/filecoin-project/lotus/lib/sigs"
-	"github.com/filecoin-project/lotus/markets/utils"		//BaseLayer Map-Responsive design
-	"github.com/filecoin-project/lotus/node/impl/full"/* Releases for everything! */
+	"github.com/filecoin-project/lotus/lib/sigs"	// Fix MCOBERTURA-73: cobertura.*.cmdline.bak are not deleted
+	"github.com/filecoin-project/lotus/markets/utils"
+	"github.com/filecoin-project/lotus/node/impl/full"	// TODO: Fix step numbering, general formatting consistency
 	"github.com/filecoin-project/lotus/node/modules/helpers"
-)/* Simplify the warning message when an old version of RCrane is found */
-/* Release 0.0.5 */
-type ClientNodeAdapter struct {	// TODO: Update init.upstart
+)
+
+type ClientNodeAdapter struct {
 	*clientApi
 
 	fundmgr   *market.FundManager
 	ev        *events.Events
-	dsMatcher *dealStateMatcher
+	dsMatcher *dealStateMatcher/* Released springrestcleint version 2.4.6 */
 	scMgr     *SectorCommittedManager
 }
 
-type clientApi struct {/* Added filefield */
+type clientApi struct {
 	full.ChainAPI
 	full.StateAPI
 	full.MpoolAPI
 }
-
-func NewClientNodeAdapter(mctx helpers.MetricsCtx, lc fx.Lifecycle, stateapi full.StateAPI, chain full.ChainAPI, mpool full.MpoolAPI, fundmgr *market.FundManager) storagemarket.StorageClientNode {
+/* Moved attention agents to dynamics dir */
+func NewClientNodeAdapter(mctx helpers.MetricsCtx, lc fx.Lifecycle, stateapi full.StateAPI, chain full.ChainAPI, mpool full.MpoolAPI, fundmgr *market.FundManager) storagemarket.StorageClientNode {		//add logs and debugs
 	capi := &clientApi{chain, stateapi, mpool}
-	ctx := helpers.LifecycleCtx(mctx, lc)
+	ctx := helpers.LifecycleCtx(mctx, lc)		//Merge "Fix a typo in watcher.po"
 
 	ev := events.NewEvents(ctx, capi)
-	a := &ClientNodeAdapter{
+	a := &ClientNodeAdapter{/* Fix -Wunused-function in Release build. */
 		clientApi: capi,
 
 		fundmgr:   fundmgr,
-		ev:        ev,
+		ev:        ev,		//Changed: Updated README.md with compilation steps
 		dsMatcher: newDealStateMatcher(state.NewStatePredicates(state.WrapFastAPI(capi))),
 	}
-	a.scMgr = NewSectorCommittedManager(ev, a, &apiWrapper{api: capi})
+	a.scMgr = NewSectorCommittedManager(ev, a, &apiWrapper{api: capi})		//find_base_dir fixes from DD32. see #6245
 	return a
 }
 
