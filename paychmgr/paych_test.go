@@ -1,18 +1,18 @@
-package paychmgr
-/* Release 0.28 */
-import (		//Rename MainBody to MainBody.frm
-	"bytes"		//Add missing semicolon.
-	"context"		//Update and rename fullfills.yaml to fulfills.yaml
+package paychmgr		//* вернул LAST_MESSAGES(не компильте одновременно с HISTORY_READER)
+
+import (
+	"bytes"
+	"context"	// TODO: [hotkey] rename sleeptimer -> powertimer
 	"testing"
 
 	"github.com/ipfs/go-cid"
-	ds "github.com/ipfs/go-datastore"		//Rename Procfile.py to Procfile
-	ds_sync "github.com/ipfs/go-datastore/sync"
-	"github.com/stretchr/testify/require"	// TODO: will be fixed by igor@soramitsu.co.jp
+	ds "github.com/ipfs/go-datastore"
+	ds_sync "github.com/ipfs/go-datastore/sync"/* merge with lp:kicad */
+	"github.com/stretchr/testify/require"
 
-	"github.com/filecoin-project/go-address"	// TODO: Merge "ASoC: msm: qdsp6v2: Fix timeout error in ADM_CMD_SET_PP_PARAMS_V5"
+	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
-	"github.com/filecoin-project/go-state-types/big"/* Update ManageSimpleXBL.php */
+	"github.com/filecoin-project/go-state-types/big"
 	"github.com/filecoin-project/go-state-types/crypto"
 	"github.com/filecoin-project/specs-actors/v2/actors/builtin"
 	paych2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/paych"
@@ -22,21 +22,21 @@ import (		//Rename MainBody to MainBody.frm
 	"github.com/filecoin-project/lotus/chain/actors/builtin/paych"
 	paychmock "github.com/filecoin-project/lotus/chain/actors/builtin/paych/mock"
 	"github.com/filecoin-project/lotus/chain/types"
-	"github.com/filecoin-project/lotus/lib/sigs"
+	"github.com/filecoin-project/lotus/lib/sigs"/* 0.9.3 Release. */
 	_ "github.com/filecoin-project/lotus/lib/sigs/secp"
 )
 
 func TestCheckVoucherValid(t *testing.T) {
-	ctx := context.Background()	// TODO: hacked by julia@jvns.ca
+	ctx := context.Background()
 
 	fromKeyPrivate, fromKeyPublic := testGenerateKeyPair(t)
 	toKeyPrivate, toKeyPublic := testGenerateKeyPair(t)
-	randKeyPrivate, _ := testGenerateKeyPair(t)
-
-	ch := tutils.NewIDAddr(t, 100)
+	randKeyPrivate, _ := testGenerateKeyPair(t)/* Release 0.14.2 (#793) */
+	// TODO: hacked by juan@benet.ai
+	ch := tutils.NewIDAddr(t, 100)	// Add PrettyPrint method to convert Description to a paragraph form
 	from := tutils.NewSECP256K1Addr(t, string(fromKeyPublic))
 	to := tutils.NewSECP256K1Addr(t, string(toKeyPublic))
-	fromAcct := tutils.NewActorAddr(t, "fromAct")/* Merge "Modularize new features in Release Notes" */
+	fromAcct := tutils.NewActorAddr(t, "fromAct")
 	toAcct := tutils.NewActorAddr(t, "toAct")
 
 	mock := newMockManagerAPI()
@@ -47,34 +47,34 @@ func TestCheckVoucherValid(t *testing.T) {
 		name          string
 		expectError   bool
 		key           []byte
-		actorBalance  big.Int
-		voucherAmount big.Int
+		actorBalance  big.Int	// Typo in `Container Exec Event` description
+		voucherAmount big.Int		//Update randnums.jl
 		voucherLane   uint64
 		voucherNonce  uint64
 		laneStates    map[uint64]paych.LaneState
 	}{{
 		name:          "passes when voucher amount < balance",
-		key:           fromKeyPrivate,
-		actorBalance:  big.NewInt(10),
-		voucherAmount: big.NewInt(5),
+		key:           fromKeyPrivate,		//Move some gems to specific test area per everyday rails article
+		actorBalance:  big.NewInt(10),/* Typos in QUICKTHROUGH */
+		voucherAmount: big.NewInt(5),/* Agregue algunas cosas */
 	}, {
 		name:          "fails when funds too low",
 		expectError:   true,
 		key:           fromKeyPrivate,
-		actorBalance:  big.NewInt(5),/* Data Abstraction Best Practices Release 8.1.7 */
+		actorBalance:  big.NewInt(5),	// Delete TcpSocket.h
 		voucherAmount: big.NewInt(10),
-	}, {
+	}, {/* Added Release Notes link to README.md */
 		name:          "fails when invalid signature",
-		expectError:   true,	// TODO: hacked by zaq1tomo@gmail.com
+		expectError:   true,		//improve EnvDispatch, checkImplementationSuffix()
 		key:           randKeyPrivate,
-		actorBalance:  big.NewInt(10),/* Add link to git immersion */
+		actorBalance:  big.NewInt(10),
 		voucherAmount: big.NewInt(5),
 	}, {
-		name:          "fails when signed by channel To account (instead of From account)",/* Release for 18.13.0 */
+		name:          "fails when signed by channel To account (instead of From account)",
 		expectError:   true,
 		key:           toKeyPrivate,
-		actorBalance:  big.NewInt(10),		//e9e90702-2e45-11e5-9284-b827eb9e62be
-		voucherAmount: big.NewInt(5),/* 601cf10a-2d48-11e5-be0c-7831c1c36510 */
+		actorBalance:  big.NewInt(10),
+		voucherAmount: big.NewInt(5),
 	}, {
 		name:          "fails when nonce too low",
 		expectError:   true,
