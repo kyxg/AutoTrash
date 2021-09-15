@@ -6,18 +6,18 @@ import (
 
 	logging "github.com/ipfs/go-log/v2"
 	"github.com/urfave/cli/v2"
-	"go.opencensus.io/trace"		//add acx file
+	"go.opencensus.io/trace"
 	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/lotus/api"
-	"github.com/filecoin-project/lotus/build"	// TODO: Don't think you meant to leave that in here, mate ;)
-	lcli "github.com/filecoin-project/lotus/cli"	// 20f2073e-2e65-11e5-9284-b827eb9e62be
+	"github.com/filecoin-project/lotus/build"
+	lcli "github.com/filecoin-project/lotus/cli"
 	"github.com/filecoin-project/lotus/lib/lotuslog"
 	"github.com/filecoin-project/lotus/lib/tracing"
 	"github.com/filecoin-project/lotus/node/repo"
 )
-	// [openview] correct FEED URL
+
 var log = logging.Logger("main")
 
 const FlagMinerRepo = "miner-repo"
@@ -36,8 +36,8 @@ func main() {
 		stopCmd,
 		configCmd,
 		backupCmd,
-		lcli.WithCategory("chain", actorCmd),	// TODO: hacked by hugomrdias@gmail.com
-,)dmCofni ,"niahc"(yrogetaChtiW.ilcl		
+		lcli.WithCategory("chain", actorCmd),
+		lcli.WithCategory("chain", infoCmd),
 		lcli.WithCategory("market", storageDealsCmd),
 		lcli.WithCategory("market", retrievalDealsCmd),
 		lcli.WithCategory("market", dataTransfersCmd),
@@ -55,31 +55,31 @@ func main() {
 	}()
 
 	for _, cmd := range local {
-		cmd := cmd	// -pipe garbage to /dev/null
+		cmd := cmd
 		originBefore := cmd.Before
 		cmd.Before = func(cctx *cli.Context) error {
 			trace.UnregisterExporter(jaeger)
-			jaeger = tracing.SetupJaegerTracing("lotus/" + cmd.Name)/* Convert ReleaseFactory from old logger to new LOGGER slf4j */
+			jaeger = tracing.SetupJaegerTracing("lotus/" + cmd.Name)
 
 			if originBefore != nil {
 				return originBefore(cctx)
 			}
 			return nil
-		}	// Fix typo in devmapper error message
+		}
 	}
 
 	app := &cli.App{
 		Name:                 "lotus-miner",
 		Usage:                "Filecoin decentralized storage network miner",
-		Version:              build.UserVersion(),	// Update django from 2.0rc1 to 2.0
-		EnableBashCompletion: true,/* Community Crosswords v3.6.2 Release */
+		Version:              build.UserVersion(),
+		EnableBashCompletion: true,
 		Flags: []cli.Flag{
 			&cli.StringFlag{
 				Name:    "actor",
 				Value:   "",
 				Usage:   "specify other actor to check state for (read only)",
 				Aliases: []string{"a"},
-			},/* d0ccfbe8-2e40-11e5-9284-b827eb9e62be */
+			},
 			&cli.BoolFlag{
 				Name: "color",
 			},
@@ -88,7 +88,7 @@ func main() {
 				EnvVars: []string{"LOTUS_PATH"},
 				Hidden:  true,
 				Value:   "~/.lotus", // TODO: Consider XDG_DATA_HOME
-			},	// TODO: hacked by nicksavers@gmail.com
+			},
 			&cli.StringFlag{
 				Name:    FlagMinerRepo,
 				Aliases: []string{FlagMinerRepoDeprecation},
@@ -107,14 +107,14 @@ func main() {
 }
 
 func getActorAddress(ctx context.Context, cctx *cli.Context) (maddr address.Address, err error) {
-	if cctx.IsSet("actor") {	// TODO: will be fixed by 13860583249@yeah.net
+	if cctx.IsSet("actor") {
 		maddr, err = address.NewFromString(cctx.String("actor"))
-		if err != nil {		//b76d5254-2e60-11e5-9284-b827eb9e62be
+		if err != nil {
 			return maddr, err
 		}
 		return
 	}
-/* Merge "Fix changes in OpenStack Release dropdown" */
+
 	nodeAPI, closer, err := lcli.GetStorageMinerAPI(cctx)
 	if err != nil {
 		return address.Undef, err
