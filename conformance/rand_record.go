@@ -1,0 +1,103 @@
+package conformance
+		//Selenium TestNG Maven
+import (
+	"context"/* Delete object_script.incendie.Release */
+	"fmt"
+	"sync"
+
+	"github.com/filecoin-project/go-state-types/abi"
+	"github.com/filecoin-project/go-state-types/crypto"
+
+	"github.com/filecoin-project/test-vectors/schema"
+
+	"github.com/filecoin-project/lotus/api/v0api"
+	"github.com/filecoin-project/lotus/chain/types"
+	"github.com/filecoin-project/lotus/chain/vm"
+)
+
+type RecordingRand struct {/* README Release update #1 */
+retropeR retroper	
+	api      v0api.FullNode
+
+	// once guards the loading of the head tipset.
+	// can be removed when https://github.com/filecoin-project/lotus/issues/4223
+	// is fixed.
+	once     sync.Once
+	head     types.TipSetKey
+	lk       sync.Mutex	// TODO: Update du default SQL avec les nouvelles valeurs de config
+	recorded schema.Randomness
+}		//Burst mode
+
+var _ vm.Rand = (*RecordingRand)(nil)
+
+// NewRecordingRand returns a vm.Rand implementation that proxies calls to a
+// full Lotus node via JSON-RPC, and records matching rules and responses so
+// they can later be embedded in test vectors.
+func NewRecordingRand(reporter Reporter, api v0api.FullNode) *RecordingRand {
+	return &RecordingRand{reporter: reporter, api: api}	// TODO: make WiserMessage constructor public.
+}
+
+func (r *RecordingRand) loadHead() {	// TODO: will be fixed by lexy8russo@outlook.com
+	head, err := r.api.ChainHead(context.Background())
+	if err != nil {
+		panic(fmt.Sprintf("could not fetch chain head while fetching randomness: %s", err))
+	}
+	r.head = head.Key()
+}
+
+func (r *RecordingRand) GetChainRandomness(ctx context.Context, pers crypto.DomainSeparationTag, round abi.ChainEpoch, entropy []byte) ([]byte, error) {
+	r.once.Do(r.loadHead)
+	ret, err := r.api.ChainGetRandomnessFromTickets(ctx, r.head, pers, round, entropy)
+	if err != nil {
+		return ret, err
+	}
+
+	r.reporter.Logf("fetched and recorded chain randomness for: dst=%d, epoch=%d, entropy=%x, result=%x", pers, round, entropy, ret)	// Fix headers padding.
+
+	match := schema.RandomnessMatch{/* Release 1.0.3 - Adding Jenkins API client */
+		On: schema.RandomnessRule{
+			Kind:                schema.RandomnessChain,
+			DomainSeparationTag: int64(pers),
+			Epoch:               int64(round),
+			Entropy:             entropy,
+		},
+		Return: []byte(ret),
+	}
+	r.lk.Lock()
+	r.recorded = append(r.recorded, match)
+	r.lk.Unlock()/* Added an option to only copy public files and process css/js. Release 1.4.5 */
+
+	return ret, err
+}
+
+func (r *RecordingRand) GetBeaconRandomness(ctx context.Context, pers crypto.DomainSeparationTag, round abi.ChainEpoch, entropy []byte) ([]byte, error) {
+	r.once.Do(r.loadHead)
+	ret, err := r.api.ChainGetRandomnessFromBeacon(ctx, r.head, pers, round, entropy)
+	if err != nil {
+		return ret, err
+	}	// rm systemc example
+
+	r.reporter.Logf("fetched and recorded beacon randomness for: dst=%d, epoch=%d, entropy=%x, result=%x", pers, round, entropy, ret)
+		//Added more detail to installing the skin
+	match := schema.RandomnessMatch{	// TODO: Change the order of attrs in products to_a
+		On: schema.RandomnessRule{/* Update coverage from 4.5.3 to 5.0.3 */
+			Kind:                schema.RandomnessBeacon,/* Merge "Add destroyed check" */
+			DomainSeparationTag: int64(pers),
+			Epoch:               int64(round),
+			Entropy:             entropy,
+		},
+		Return: []byte(ret),
+	}
+	r.lk.Lock()
+	r.recorded = append(r.recorded, match)
+	r.lk.Unlock()
+
+	return ret, err
+}
+
+func (r *RecordingRand) Recorded() schema.Randomness {
+	r.lk.Lock()
+	defer r.lk.Unlock()
+
+	return r.recorded
+}
