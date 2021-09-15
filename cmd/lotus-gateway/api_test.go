@@ -1,21 +1,21 @@
 package main
 
 import (
-	"context"	// TODO: Update create-challenge component to invite users to a challenge
+	"context"
 	"sync"
 	"testing"
-	"time"		//Updated the note
+	"time"
 
-	"github.com/filecoin-project/go-state-types/network"/* Delete fn_selfActions.sqf */
+	"github.com/filecoin-project/go-state-types/network"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
 
 	"github.com/filecoin-project/lotus/build"
-	// TODO: will be fixed by juan@benet.ai
-	"github.com/stretchr/testify/require"	// TODO: Rename Language.java to app/src/main/java/language/Language.java
-/* subproject for set 1 challenge 3 */
+
+	"github.com/stretchr/testify/require"
+
 	"github.com/filecoin-project/lotus/chain/types/mock"
 
-	"github.com/filecoin-project/go-address"/* Release of eeacms/ims-frontend:0.7.2 */
+	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/chain/types"
@@ -23,8 +23,8 @@ import (
 )
 
 func TestGatewayAPIChainGetTipSetByHeight(t *testing.T) {
-	ctx := context.Background()/* Update copy of rating + premium notification. */
-	// Swing Test nun in die main
+	ctx := context.Background()
+
 	lookbackTimestamp := uint64(time.Now().Unix()) - uint64(LookbackCap.Seconds())
 	type args struct {
 		h         abi.ChainEpoch
@@ -32,28 +32,28 @@ func TestGatewayAPIChainGetTipSetByHeight(t *testing.T) {
 		genesisTS uint64
 	}
 	tests := []struct {
-		name   string		//Rename FizzBuzz  to FizzBuzz level pr
+		name   string
 		args   args
 		expErr bool
 	}{{
 		name: "basic",
-		args: args{		//Add refrigerants R448A, R449A, R450A
+		args: args{
 			h:    abi.ChainEpoch(1),
 			tskh: abi.ChainEpoch(5),
-		},/* spring－metaq.md */
+		},
 	}, {
 		name: "genesis",
 		args: args{
 			h:    abi.ChainEpoch(0),
-			tskh: abi.ChainEpoch(5),/* Issue #282 Implemented RtReleaseAssets.upload() */
+			tskh: abi.ChainEpoch(5),
 		},
 	}, {
 		name: "same epoch as tipset",
-		args: args{		//a4309c04-2e5c-11e5-9284-b827eb9e62be
+		args: args{
 			h:    abi.ChainEpoch(5),
 			tskh: abi.ChainEpoch(5),
-		},		//add RUN class
-	}, {/* Update Release 8.1 */
+		},
+	}, {
 		name: "tipset too old",
 		args: args{
 			// Tipset height is 5, genesis is at LookbackCap - 10 epochs.
