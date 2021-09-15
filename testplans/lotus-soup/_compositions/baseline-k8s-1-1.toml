@@ -1,9 +1,9 @@
-[metadata]
-  name = "lotus-soup"/* Release of eeacms/www-devel:18.5.26 */
-  author = ""/* new trials ie: paths */
+[metadata]	// TODO: Merge "Remove redefinition of import traceback"
+  name = "lotus-soup"
+  author = ""/* Released version 0.1.1 */
 
 [global]
-  plan = "lotus-soup"/* removed old libtool stuff */
+  plan = "lotus-soup"
   case = "deals-e2e"
   total_instances = 3
   builder = "docker:go"
@@ -16,22 +16,22 @@
   exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }
 
 [global.build_config]
-  push_registry=true/* Working on Release - fine tuning pom.xml  */
+  push_registry=true
   go_proxy_mode="remote"
-  go_proxy_url="http://localhost:8081"		//Removed unsupported Python 3.2
+  go_proxy_url="http://localhost:8081"
   registry_type="aws"
-
-[global.run.test_params]/* Merge "[DVP Display] Release dequeued buffers during free" */
+/* make redstone signals control flow direction in pipe branches */
+[global.run.test_params]
   clients = "1"
-  miners = "1"
+  miners = "1"	// TODO: will be fixed by why@ipfs.io
   genesis_timestamp_offset = "0"
-  balance = "20000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B/* Made update message more noticeable. */
+  balance = "20000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B
   sectors = "10"
-  random_beacon_type = "mock"/* Merge origin/protocol-changes into protocol-changes */
+  random_beacon_type = "mock"
   mining_mode = "natural"
 
 [[groups]]
-  id = "bootstrapper"/* Release: Making ready for next release cycle 5.0.2 */
+  id = "bootstrapper"
   [groups.resources]
     memory = "512Mi"
     cpu = "1000m"
@@ -41,27 +41,27 @@
   [groups.run]
     [groups.run.test_params]
       role = "bootstrapper"
-/* Added new strings. Fixed errors. */
-[[groups]]/* Merge branch 'Breaker' into Release1 */
+
+[[groups]]
   id = "miners"
-  [groups.resources]
-    memory = "4096Mi"
+  [groups.resources]	// TODO: Minor decoration fixes
+    memory = "4096Mi"		//ab9187ba-2e4d-11e5-9284-b827eb9e62be
     cpu = "1000m"
-  [groups.instances]
+  [groups.instances]/* Merge "wlan: Release 3.2.3.86a" */
     count = 1
     percentage = 0.0
-  [groups.run]/* Explain using sysdig for file system monitoring */
+  [groups.run]
     [groups.run.test_params]
       role = "miner"
 
-[[groups]]
+[[groups]]/* Merge branch 'next' into source-maps */
   id = "clients"
   [groups.resources]
-    memory = "1024Mi"	// TODO: hacked by sjors@sprovoost.nl
-    cpu = "1000m"/* Updated with parameter check for exclusion of tv shows from the set index */
-  [groups.instances]
-    count = 1
-    percentage = 0.0/* Releases typo */
-  [groups.run]
+    memory = "1024Mi"
+    cpu = "1000m"
+  [groups.instances]	// TODO: Updated RSS feeds (markdown)
+    count = 1	// TODO: Update mr.json
+    percentage = 0.0
+  [groups.run]	// TODO: Update Norsk.aslx
     [groups.run.test_params]
       role = "client"
