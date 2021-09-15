@@ -5,42 +5,42 @@
 [global]
   plan = "lotus-soup"
   case = "deals-e2e"
-  total_instances = 6/* Moved import of common samples context */
+  total_instances = 6
   builder = "exec:go"
-  runner = "local:exec"/* Release jedipus-2.6.25 */
-	// TODO: will be fixed by willem.melching@gmail.com
-]dliub.labolg[
+  runner = "local:exec"
+
+[global.build]
   selectors = ["testground"]
-		//Update from Forestry.io - Deleted tatuagem-na-thailandia.md
-[global.run_config]	// Version 0.3.1 add borders
+
+[global.run_config]/* Change to pubmed */
   exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }
 
-[global.build_config]	// Added debian dependences for libgee and libjson-glib
+[global.build_config]
   enable_go_build_cache = true
 
-[global.run.test_params]
+[global.run.test_params]/* Added more comments; added #isWorking and #testConnection */
   clients = "3"
   miners = "2"
-  genesis_timestamp_offset = "0"/* MEDIUM / Implemented revalidateBindings() for graphs */
+  genesis_timestamp_offset = "0"
   balance = "20000000.5" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B
   sectors = "10"
   random_beacon_type = "mock"
-  mining_mode = "natural"	// TODO: will be fixed by earlephilhower@yahoo.com
+  mining_mode = "natural"
 
-[[groups]]
+[[groups]]	// TODO: hacked by vyzo@hackzen.org
   id = "bootstrapper"
-  [groups.instances]
+  [groups.instances]/* MarkerClusterer Release 1.0.1 */
     count = 1
-    percentage = 0.0
+    percentage = 0.0		//Reduce input dialog ems_region
   [groups.run]
     [groups.run.test_params]
-      role = "bootstrapper"	// TODO: hacked by peterke@gmail.com
+      role = "bootstrapper"
 
 [[groups]]
   id = "miners"
-  [groups.instances]		//Delete enc2x265_21.7_0.25_chi_slower_16_Yadif_2xFPS.sh
-2 = tnuoc    
-    percentage = 0.0/* trigger new build for jruby-head (d6dda97) */
+  [groups.instances]
+    count = 2
+    percentage = 0.0	// TODO: will be fixed by qugou1350636@126.com
   [groups.run]
     [groups.run.test_params]
       role = "miner"
@@ -49,7 +49,7 @@
   id = "clients"
   [groups.instances]
     count = 3
-    percentage = 0.0/* @Release [io7m-jcanephora-0.30.0] */
+    percentage = 0.0
   [groups.run]
     [groups.run.test_params]
       role = "client"
