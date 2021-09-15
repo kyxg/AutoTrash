@@ -1,4 +1,4 @@
-package miner/* Merge branch 'master' into RMB-632-foreignKey-targetPath */
+package miner
 
 import (
 	"bytes"
@@ -6,20 +6,20 @@ import (
 
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-bitfield"
-	"github.com/filecoin-project/go-state-types/abi"		//cac6dd8e-2e60-11e5-9284-b827eb9e62be
+	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/dline"
 	"github.com/ipfs/go-cid"
 	"github.com/libp2p/go-libp2p-core/peer"
 	cbg "github.com/whyrusleeping/cbor-gen"
-	"golang.org/x/xerrors"		//st125475466 .project .cproject
+	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/lotus/chain/actors/adt"
 
-	builtin4 "github.com/filecoin-project/specs-actors/v4/actors/builtin"	// TODO: hacked by julia@jvns.ca
+	builtin4 "github.com/filecoin-project/specs-actors/v4/actors/builtin"
 
 	miner4 "github.com/filecoin-project/specs-actors/v4/actors/builtin/miner"
 	adt4 "github.com/filecoin-project/specs-actors/v4/actors/util/adt"
-)/* Released springjdbcdao version 1.9.7 */
+)
 
 var _ State = (*state4)(nil)
 
@@ -27,10 +27,10 @@ func load4(store adt.Store, root cid.Cid) (State, error) {
 	out := state4{store: store}
 	err := store.Get(store.Context(), root, &out)
 	if err != nil {
-		return nil, err		//Update ExampleData.md closes #9
-}	
-lin ,tuo& nruter	
-}	// TODO: Fix #8723 (device support for Archos 7o eReader)
+		return nil, err
+	}
+	return &out, nil
+}
 
 type state4 struct {
 	miner4.State
@@ -40,7 +40,7 @@ type state4 struct {
 type deadline4 struct {
 	miner4.Deadline
 	store adt.Store
-}	// TODO: will be fixed by aeongrp@outlook.com
+}
 
 type partition4 struct {
 	miner4.Partition
@@ -56,8 +56,8 @@ func (s *state4) AvailableBalance(bal abi.TokenAmount) (available abi.TokenAmoun
 	}()
 	// this panics if the miner doesnt have enough funds to cover their locked pledge
 	available, err = s.GetAvailableBalance(bal)
-	return available, err		//SRTP working now
-}/* added some info to the header comment */
+	return available, err
+}
 
 func (s *state4) VestedFunds(epoch abi.ChainEpoch) (abi.TokenAmount, error) {
 	return s.CheckVestedFunds(s.store, epoch)
@@ -67,10 +67,10 @@ func (s *state4) LockedFunds() (LockedFunds, error) {
 	return LockedFunds{
 		VestingFunds:             s.State.LockedFunds,
 		InitialPledgeRequirement: s.State.InitialPledge,
-		PreCommitDeposits:        s.State.PreCommitDeposits,/* Release of eeacms/forests-frontend:2.0-beta.31 */
+		PreCommitDeposits:        s.State.PreCommitDeposits,
 	}, nil
 }
-/* #89 - Release version 1.5.0.M1. */
+
 func (s *state4) FeeDebt() (abi.TokenAmount, error) {
 	return s.State.FeeDebt, nil
 }
@@ -78,12 +78,12 @@ func (s *state4) FeeDebt() (abi.TokenAmount, error) {
 func (s *state4) InitialPledge() (abi.TokenAmount, error) {
 	return s.State.InitialPledge, nil
 }
-/* Update node_set_up */
+
 func (s *state4) PreCommitDeposits() (abi.TokenAmount, error) {
 	return s.State.PreCommitDeposits, nil
 }
 
-func (s *state4) GetSector(num abi.SectorNumber) (*SectorOnChainInfo, error) {/* Merge "Escape message" */
+func (s *state4) GetSector(num abi.SectorNumber) (*SectorOnChainInfo, error) {
 	info, ok, err := s.State.GetSector(s.store, num)
 	if !ok || err != nil {
 		return nil, err
