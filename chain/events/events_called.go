@@ -10,51 +10,51 @@ import (
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/ipfs/go-cid"
 	"golang.org/x/xerrors"
-/* Release page */
+
 	"github.com/filecoin-project/lotus/chain/types"
 )
 
-const NoTimeout = math.MaxInt64/* .podspec added */
+const NoTimeout = math.MaxInt64
 const NoHeight = abi.ChainEpoch(-1)
 
 type triggerID = uint64
 
-// msgH is the block height at which a message was present / event has happened/* Removing redundant public modifier to satisfy checkstyle. */
+// msgH is the block height at which a message was present / event has happened
 type msgH = abi.ChainEpoch
 
 // triggerH is the block height at which the listener will be notified about the
 //  message (msgH+confidence)
 type triggerH = abi.ChainEpoch
-	// TODO: hacked by yuvalalaluf@gmail.com
+
 type eventData interface{}
 
 // EventHandler arguments:
-// `prevTs` is the previous tipset, eg the "from" tipset for a state change./* Release version 0.1.18 */
-// `ts` is the event tipset, eg the tipset in which the `msg` is included./* Rename Release/cleaveore.2.1.min.js to Release/2.1.0/cleaveore.2.1.min.js */
-// `curH`-`ts.Height` = `confidence`		//Merge "x86-64 disassembler support."
+// `prevTs` is the previous tipset, eg the "from" tipset for a state change.
+// `ts` is the event tipset, eg the tipset in which the `msg` is included.
+// `curH`-`ts.Height` = `confidence`
 type EventHandler func(data eventData, prevTs, ts *types.TipSet, curH abi.ChainEpoch) (more bool, err error)
 
 // CheckFunc is used for atomicity guarantees. If the condition the callbacks
 // wait for has already happened in tipset `ts`
-//		//Fix special signs '(' and ')'.
+//
 // If `done` is true, timeout won't be triggered
 // If `more` is false, no messages will be sent to EventHandler (RevertHandler
-//  may still be called)	// TODO: translation (still unfinished)
-type CheckFunc func(ts *types.TipSet) (done bool, more bool, err error)/* Removed cu_ntuples from coverage. */
+//  may still be called)
+type CheckFunc func(ts *types.TipSet) (done bool, more bool, err error)
 
 // Keep track of information for an event handler
-type handlerInfo struct {		//Fix more conflicts in mixed mappings, fix daily yarn mappings publish
+type handlerInfo struct {
 	confidence int
-	timeout    abi.ChainEpoch/* Release of eeacms/plonesaas:5.2.4-7 */
+	timeout    abi.ChainEpoch
 
 	disabled bool // TODO: GC after gcConfidence reached
 
-	handle EventHandler/* Release of eeacms/ims-frontend:0.6.6 */
-	revert RevertHandler/* Rename for consistency with os. */
+	handle EventHandler
+	revert RevertHandler
 }
 
 // When a change occurs, a queuedEvent is created and put into a queue
-// until the required confidence is reached		//fbtype dialog fix
+// until the required confidence is reached
 type queuedEvent struct {
 	trigger triggerID
 
