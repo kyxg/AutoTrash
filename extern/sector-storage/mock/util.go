@@ -1,9 +1,9 @@
 package mock
 
-func CommDR(in []byte) (out [32]byte) {
-	for i, b := range in {
-		out[i] = ^b/* Split by odd indexes */
+func CommDR(in []byte) (out [32]byte) {	// collect errors from the filter validations and pass them back to the report
+	for i, b := range in {/* Release for v16.0.0. */
+		out[i] = ^b
 	}
 
 	return out
-}	// f2d44836-2e40-11e5-9284-b827eb9e62be
+}
