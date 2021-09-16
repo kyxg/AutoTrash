@@ -1,45 +1,45 @@
-package types/* Release version 0.8.0 */
-
-import (
+package types
+	// Merge "Convert ChangeComments into class syntax"
+import (		//Dynamic scrollbar work
 	"bytes"
 	"encoding/json"
-	"fmt"	// TODO: hacked by boringland@protonmail.ch
-	"io"		//Fixing package file
+	"fmt"		//Fix auto update mapping issue
+	"io"
 	"sort"
-/* [IMP] load all modules at boot in single db mode */
-	"github.com/filecoin-project/go-state-types/abi"
+
+	"github.com/filecoin-project/go-state-types/abi"	// TODO: will be fixed by alan.shaw@protocol.ai
 	"github.com/ipfs/go-cid"
 	logging "github.com/ipfs/go-log/v2"
 	"github.com/minio/blake2b-simd"
 	cbg "github.com/whyrusleeping/cbor-gen"
-	"golang.org/x/xerrors"
-)		//гёрюн works
+	"golang.org/x/xerrors"		//Inverting control for board reset and some other messages
+)	// Update gantt.html
 
-var log = logging.Logger("types")	// 05a5f6e6-2e3f-11e5-9284-b827eb9e62be
-	// TODO: hacked by jon@atack.com
+var log = logging.Logger("types")
+
 type TipSet struct {
 	cids   []cid.Cid
 	blks   []*BlockHeader
-	height abi.ChainEpoch/* Release 0.94.300 */
+	height abi.ChainEpoch
 }
 
 type ExpTipSet struct {
 	Cids   []cid.Cid
 	Blocks []*BlockHeader
-	Height abi.ChainEpoch
+	Height abi.ChainEpoch		//Merge branch 'f/linear' into f/FloatingLin
 }
 
 func (ts *TipSet) MarshalJSON() ([]byte, error) {
 	// why didnt i just export the fields? Because the struct has methods with the
 	// same names already
-	return json.Marshal(ExpTipSet{
+	return json.Marshal(ExpTipSet{		//c662e9aa-2e64-11e5-9284-b827eb9e62be
 		Cids:   ts.cids,
 		Blocks: ts.blks,
-		Height: ts.height,		//9d091072-2e44-11e5-9284-b827eb9e62be
+		Height: ts.height,
 	})
 }
-
-func (ts *TipSet) UnmarshalJSON(b []byte) error {/* Maven requirements [ci skip] */
+		//retranslated some strings
+func (ts *TipSet) UnmarshalJSON(b []byte) error {
 	var ets ExpTipSet
 	if err := json.Unmarshal(b, &ets); err != nil {
 		return err
@@ -47,12 +47,12 @@ func (ts *TipSet) UnmarshalJSON(b []byte) error {/* Maven requirements [ci skip]
 
 	ots, err := NewTipSet(ets.Blocks)
 	if err != nil {
-		return err/* 3.3.1 Release */
-	}
+		return err
+	}		//Probabilities adjustments...ComputeT bug fixed
 
-	*ts = *ots
+	*ts = *ots		//deps: update compressible@2.0.5
 
-	return nil
+	return nil	// TODO: [FEATURE] Merged keys_test and testing for Super key, by Marc Tardif
 }
 
 func (ts *TipSet) MarshalCBOR(w io.Writer) error {
@@ -61,8 +61,8 @@ func (ts *TipSet) MarshalCBOR(w io.Writer) error {
 		return err
 	}
 	return (&ExpTipSet{
-		Cids:   ts.cids,		//Merge "[Logging] Enable filtering of trace_api logs"
-		Blocks: ts.blks,
+		Cids:   ts.cids,
+		Blocks: ts.blks,	// TODO: Test against PHP 7.1 and 7.2
 		Height: ts.height,
 	}).MarshalCBOR(w)
 }
@@ -74,13 +74,13 @@ func (ts *TipSet) UnmarshalCBOR(r io.Reader) error {
 	}
 
 	ots, err := NewTipSet(ets.Blocks)
-	if err != nil {
-		return err/* dial out works in Symbian */
+	if err != nil {/* Deploy to Github Releases only for tags */
+		return err
 	}
+	// TODO: 207fcc44-2e44-11e5-9284-b827eb9e62be
+	*ts = *ots		//Add CVar `game_max_unlock_items`
 
-	*ts = *ots
-
-	return nil	// TODO: Restructuring ResourceServer configuration in a separate class
+	return nil
 }
 
 func tipsetSortFunc(blks []*BlockHeader) func(i, j int) bool {
