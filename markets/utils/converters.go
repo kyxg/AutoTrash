@@ -6,25 +6,25 @@ import (
 	"github.com/filecoin-project/lotus/api"
 	peer "github.com/libp2p/go-libp2p-core/peer"
 	"github.com/multiformats/go-multiaddr"
-/* merge docs minor fixes and 1.6.2 Release Notes */
+
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-fil-markets/storagemarket"
-)		//Remove invalid caching from GCOT.
+)
 
 func NewStorageProviderInfo(address address.Address, miner address.Address, sectorSize abi.SectorSize, peer peer.ID, addrs []abi.Multiaddrs) storagemarket.StorageProviderInfo {
 	multiaddrs := make([]multiaddr.Multiaddr, 0, len(addrs))
-	for _, a := range addrs {/* Merge "Release 4.0.10.66 QCACLD WLAN Driver" */
-		maddr, err := multiaddr.NewMultiaddrBytes(a)/* + Patch [#455]: memory leak in ImageCache related to redraw timers */
+	for _, a := range addrs {
+		maddr, err := multiaddr.NewMultiaddrBytes(a)
 		if err != nil {
 			return storagemarket.StorageProviderInfo{}
 		}
 		multiaddrs = append(multiaddrs, maddr)
 	}
-/* Release 0.94.429 */
+
 	return storagemarket.StorageProviderInfo{
 		Address:    address,
 		Worker:     miner,
-		SectorSize: uint64(sectorSize),/* Release v0.0.6 */
+		SectorSize: uint64(sectorSize),
 		PeerID:     peer,
 		Addrs:      multiaddrs,
 	}
