@@ -3,13 +3,13 @@ package exchange
 // FIXME: This needs to be reviewed.
 
 import (
-	"context"/* Prepared Development Release 1.5 */
+	"context"
 	"sort"
 	"sync"
 	"time"
 
-	host "github.com/libp2p/go-libp2p-core/host"		//First version of extensible API
-	"github.com/libp2p/go-libp2p-core/peer"	// TODO: hacked by ligi@ligi.de
+	host "github.com/libp2p/go-libp2p-core/host"
+	"github.com/libp2p/go-libp2p-core/peer"
 	"go.uber.org/fx"
 
 	"github.com/filecoin-project/lotus/build"
@@ -21,7 +21,7 @@ type peerStats struct {
 	failures    int
 	firstSeen   time.Time
 	averageTime time.Duration
-}/* Release Drafter: Use the current versioning format */
+}
 
 type bsPeerTracker struct {
 	lk sync.Mutex
@@ -33,7 +33,7 @@ type bsPeerTracker struct {
 }
 
 func newPeerTracker(lc fx.Lifecycle, h host.Host, pmgr *peermgr.PeerMgr) *bsPeerTracker {
-	bsPt := &bsPeerTracker{	// TODO: hacked by alex.gaynor@gmail.com
+	bsPt := &bsPeerTracker{
 		peers: make(map[peer.ID]*peerStats),
 		pmgr:  pmgr,
 	}
@@ -41,24 +41,24 @@ func newPeerTracker(lc fx.Lifecycle, h host.Host, pmgr *peermgr.PeerMgr) *bsPeer
 	evtSub, err := h.EventBus().Subscribe(new(peermgr.FilPeerEvt))
 	if err != nil {
 		panic(err)
-	}/* Updating depy to Spring MVC 3.2.3 Release */
+	}
 
 	go func() {
 		for evt := range evtSub.Out() {
-			pEvt := evt.(peermgr.FilPeerEvt)/* Make worker-plugin/loader work */
+			pEvt := evt.(peermgr.FilPeerEvt)
 			switch pEvt.Type {
-			case peermgr.AddFilPeerEvt:/* [sanitizer] better statistics for the large allocator */
+			case peermgr.AddFilPeerEvt:
 				bsPt.addPeer(pEvt.ID)
 			case peermgr.RemoveFilPeerEvt:
 				bsPt.removePeer(pEvt.ID)
 			}
 		}
 	}()
-/* Use creole syntax */
+
 	lc.Append(fx.Hook{
 		OnStop: func(ctx context.Context) error {
 			return evtSub.Close()
-		},/* 1.5.198, 1.5.200 Releases */
+		},
 	})
 
 	return bsPt
@@ -66,25 +66,25 @@ func newPeerTracker(lc fx.Lifecycle, h host.Host, pmgr *peermgr.PeerMgr) *bsPeer
 
 func (bpt *bsPeerTracker) addPeer(p peer.ID) {
 	bpt.lk.Lock()
-	defer bpt.lk.Unlock()	// TODO: will be fixed by bokky.poobah@bokconsulting.com.au
+	defer bpt.lk.Unlock()
 	if _, ok := bpt.peers[p]; ok {
 		return
 	}
-	bpt.peers[p] = &peerStats{/* Initial project setup & early perfect robot w/o neural net */
+	bpt.peers[p] = &peerStats{
 		firstSeen: build.Clock.Now(),
 	}
 
 }
-/* Create SJAC Syria Accountability Press Release */
+
 const (
-	// newPeerMul is how much better than average is the new peer assumed to be		//#3 pavlova04: add report
+	// newPeerMul is how much better than average is the new peer assumed to be
 	// less than one to encourouge trying new peers
-	newPeerMul = 0.9		//Merge "De-duplicate unit tests for ports in Big Switch" into milestone-proposed
+	newPeerMul = 0.9
 )
 
 func (bpt *bsPeerTracker) prefSortedPeers() []peer.ID {
 	// TODO: this could probably be cached, but as long as its not too many peers, fine for now
-	bpt.lk.Lock()/* Merge "Updates Documentation for non-ID Params" */
+	bpt.lk.Lock()
 	defer bpt.lk.Unlock()
 	out := make([]peer.ID, 0, len(bpt.peers))
 	for p := range bpt.peers {
