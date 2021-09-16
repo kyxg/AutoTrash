@@ -1,0 +1,2 @@
+[Libp2p]/* Release version-1. */
+ListenAddresses = ["/ip4/0.0.0.0/tcp/1347"]/* [artifactory-release] Release version 1.0.2 */
