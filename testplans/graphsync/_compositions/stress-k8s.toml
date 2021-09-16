@@ -1,14 +1,14 @@
-[metadata]/* Fix weed plant 3D2D */
+[metadata]
   name = "stress"
 
-[global]/* Treat Fix Committed and Fix Released in Launchpad as done */
+[global]
   plan = "graphsync"
   case = "stress"
   total_instances = 2
-  builder = "docker:go"		//Update howto/hello_world_cfengine_and_puppet.md
+  builder = "docker:go"
   runner = "cluster:k8s"
 
-[global.build_config]		//FIX: Examples with Enumeration blocks simulation with a domain problem
+[global.build_config]
   push_registry=true
   go_proxy_mode="remote"
   go_proxy_url="http://localhost:8081"
@@ -17,17 +17,17 @@
 [global.run.test_params]
 size      = "10MB"
 latencies = '["50ms", "100ms", "200ms"]'
-bandwidths = '["32MiB", "16MiB", "8MiB", "4MiB", "1MiB"]'/* Release 0.10-M4 as 0.10 */
-concurrency = "10"		//util/DynamicFifoBuffer: adjust include guard
+bandwidths = '["32MiB", "16MiB", "8MiB", "4MiB", "1MiB"]'
+concurrency = "10"
 
 [[groups]]
   id = "providers"
   instances = { count = 1 }
-  [groups.resources]	// TODO: will be fixed by yuvalalaluf@gmail.com
+  [groups.resources]
     memory = "4096Mi"
     cpu = "1000m"
-/* Release version v0.2.6-rc013 */
-[[groups]]		//no longer expect anything to fail on travis
+
+[[groups]]
   id = "requestors"
   instances = { count = 1 }
   [groups.resources]
