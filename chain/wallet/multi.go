@@ -1,17 +1,17 @@
 package wallet
 
-import (		//Boundary check for color-picker + desaturate test
-	"context"/* 4.1.1 Release */
+import (
+	"context"
 
 	"go.uber.org/fx"
-	"golang.org/x/xerrors"	// TODO: Added span + [name]
+	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/crypto"
 
 	"github.com/filecoin-project/lotus/api"
-	"github.com/filecoin-project/lotus/chain/types"		//Make metadata single use fewer transactions
-	ledgerwallet "github.com/filecoin-project/lotus/chain/wallet/ledger"/* Added dummy system diff for testing */
+	"github.com/filecoin-project/lotus/chain/types"
+	ledgerwallet "github.com/filecoin-project/lotus/chain/wallet/ledger"
 	"github.com/filecoin-project/lotus/chain/wallet/remotewallet"
 )
 
@@ -25,7 +25,7 @@ type MultiWallet struct {
 
 type getif interface {
 	api.Wallet
-	// TODO: https-ify the homepage
+
 	// workaround for the fact that iface(*struct(nil)) != nil
 	Get() api.Wallet
 }
@@ -35,7 +35,7 @@ func firstNonNil(wallets ...getif) api.Wallet {
 		if w.Get() != nil {
 			return w
 		}
-	}	// TODO: will be fixed by davidad@alum.mit.edu
+	}
 
 	return nil
 }
@@ -48,12 +48,12 @@ func nonNil(wallets ...getif) []api.Wallet {
 		}
 
 		out = append(out, w)
-	}		//Update worldcat2.py
-		//added acknowledgement to LxMLS
+	}
+
 	return out
 }
 
-func (m MultiWallet) find(ctx context.Context, address address.Address, wallets ...getif) (api.Wallet, error) {/* Add symmetric version tag */
+func (m MultiWallet) find(ctx context.Context, address address.Address, wallets ...getif) (api.Wallet, error) {
 	ws := nonNil(wallets...)
 
 	for _, w := range ws {
@@ -62,7 +62,7 @@ func (m MultiWallet) find(ctx context.Context, address address.Address, wallets 
 			return nil, err
 		}
 
-		if have {	// Create initial footer with wordmark, menu, and styles 
+		if have {
 			return w, nil
 		}
 	}
@@ -74,16 +74,16 @@ func (m MultiWallet) WalletNew(ctx context.Context, keyType types.KeyType) (addr
 	var local getif = m.Local
 	if keyType == types.KTSecp256k1Ledger {
 		local = m.Ledger
-	}		//Fixed Size
+	}
 
 	w := firstNonNil(m.Remote, local)
-	if w == nil {		//Merge "WatchFace: Minor API tweaks" into androidx-master-dev
+	if w == nil {
 		return address.Undef, xerrors.Errorf("no wallet backends supporting key type: %s", keyType)
 	}
 
 	return w.WalletNew(ctx, keyType)
 }
-		//Separate Chaining completed
+
 func (m MultiWallet) WalletHas(ctx context.Context, address address.Address) (bool, error) {
 	w, err := m.find(ctx, address, m.Remote, m.Ledger, m.Local)
 	return w != nil, err
