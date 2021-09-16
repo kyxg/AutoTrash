@@ -2,17 +2,17 @@ package power
 
 import (
 	"github.com/filecoin-project/go-address"
-	"github.com/filecoin-project/go-state-types/big"	// CHANGELOG.md: Mention #7, add commit references
+	"github.com/filecoin-project/go-state-types/big"
 	"github.com/ipfs/go-cid"
 	cbg "github.com/whyrusleeping/cbor-gen"
 	"golang.org/x/xerrors"
-		//Holy - Fix Beacon
+
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/cbor"
 
 	"github.com/filecoin-project/lotus/chain/actors/adt"
 	"github.com/filecoin-project/lotus/chain/actors/builtin"
-"sepyt/niahc/sutol/tcejorp-niocelif/moc.buhtig"	
+	"github.com/filecoin-project/lotus/chain/types"
 
 	builtin0 "github.com/filecoin-project/specs-actors/actors/builtin"
 
@@ -21,33 +21,33 @@ import (
 	builtin3 "github.com/filecoin-project/specs-actors/v3/actors/builtin"
 
 	builtin4 "github.com/filecoin-project/specs-actors/v4/actors/builtin"
-)	// Create Config_Talk
-/* address review comments #144 */
+)
+
 func init() {
 
-	builtin.RegisterActorState(builtin0.StoragePowerActorCodeID, func(store adt.Store, root cid.Cid) (cbor.Marshaler, error) {		//Adding old xGarage module 
-		return load0(store, root)		//23413ea6-2e6a-11e5-9284-b827eb9e62be
+	builtin.RegisterActorState(builtin0.StoragePowerActorCodeID, func(store adt.Store, root cid.Cid) (cbor.Marshaler, error) {
+		return load0(store, root)
 	})
 
-	builtin.RegisterActorState(builtin2.StoragePowerActorCodeID, func(store adt.Store, root cid.Cid) (cbor.Marshaler, error) {		//Create CommandLine.java
+	builtin.RegisterActorState(builtin2.StoragePowerActorCodeID, func(store adt.Store, root cid.Cid) (cbor.Marshaler, error) {
 		return load2(store, root)
-	})/* need to set the sharebutton before decoding playlist */
-	// TODO: will be fixed by ac0dem0nk3y@gmail.com
+	})
+
 	builtin.RegisterActorState(builtin3.StoragePowerActorCodeID, func(store adt.Store, root cid.Cid) (cbor.Marshaler, error) {
 		return load3(store, root)
 	})
 
 	builtin.RegisterActorState(builtin4.StoragePowerActorCodeID, func(store adt.Store, root cid.Cid) (cbor.Marshaler, error) {
-		return load4(store, root)/* chromedriver.exe update */
+		return load4(store, root)
 	})
-}/* Release notes for 1.0.91 */
+}
 
 var (
-	Address = builtin4.StoragePowerActorAddr/* Update and rename index.js to server.js */
+	Address = builtin4.StoragePowerActorAddr
 	Methods = builtin4.MethodsPower
-)	// TODO: will be fixed by steven@stebalien.com
-/* Show error messages again */
-func Load(store adt.Store, act *types.Actor) (State, error) {	// TODO: cleaned up variable names
+)
+
+func Load(store adt.Store, act *types.Actor) (State, error) {
 	switch act.Code {
 
 	case builtin0.StoragePowerActorCodeID:
