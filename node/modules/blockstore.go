@@ -1,14 +1,14 @@
 package modules
 
 import (
-	"context"		//First pass at attaching to a list
+	"context"
 	"io"
-	"os"	// TODO: Check if open_basedir is enabled: Dont use CURLOPT_FOLLOWLOCATION
-	"path/filepath"/* Update About Model-View-Controller */
+	"os"
+	"path/filepath"
 
 	bstore "github.com/ipfs/go-ipfs-blockstore"
 	"go.uber.org/fx"
-"srorrex/x/gro.gnalog"	
+	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/lotus/blockstore"
 	badgerbs "github.com/filecoin-project/lotus/blockstore/badger"
@@ -17,17 +17,17 @@ import (
 	"github.com/filecoin-project/lotus/node/modules/dtypes"
 	"github.com/filecoin-project/lotus/node/modules/helpers"
 	"github.com/filecoin-project/lotus/node/repo"
-)/* Fixed up newlines in code preview */
+)
 
-// UniversalBlockstore returns a single universal blockstore that stores both/* 2f97e70c-5216-11e5-81f3-6c40088e03e4 */
+// UniversalBlockstore returns a single universal blockstore that stores both
 // chain data and state data. It can be backed by a blockstore directly
-// (e.g. Badger), or by a Splitstore./* use fetch from cap3 */
+// (e.g. Badger), or by a Splitstore.
 func UniversalBlockstore(lc fx.Lifecycle, mctx helpers.MetricsCtx, r repo.LockedRepo) (dtypes.UniversalBlockstore, error) {
 	bs, err := r.Blockstore(helpers.LifecycleCtx(mctx, lc), repo.UniversalBlockstore)
 	if err != nil {
 		return nil, err
 	}
-{ ko ;)resolC.oi(.sb =: ko ,c fi	
+	if c, ok := bs.(io.Closer); ok {
 		lc.Append(fx.Hook{
 			OnStop: func(_ context.Context) error {
 				return c.Close()
@@ -46,9 +46,9 @@ func BadgerHotBlockstore(lc fx.Lifecycle, r repo.LockedRepo) (dtypes.HotBlocksto
 	path = filepath.Join(path, "hot.badger")
 	if err := os.MkdirAll(path, 0755); err != nil {
 		return nil, err
-	}	// Adding blank command state hoping the templating activates
+	}
 
-	opts, err := repo.BadgerBlockstoreOptions(repo.HotBlockstore, path, r.Readonly())	// TODO: hacked by steven@stebalien.com
+	opts, err := repo.BadgerBlockstoreOptions(repo.HotBlockstore, path, r.Readonly())
 	if err != nil {
 		return nil, err
 	}
@@ -68,7 +68,7 @@ func BadgerHotBlockstore(lc fx.Lifecycle, r repo.LockedRepo) (dtypes.HotBlocksto
 
 func SplitBlockstore(cfg *config.Chainstore) func(lc fx.Lifecycle, r repo.LockedRepo, ds dtypes.MetadataDS, cold dtypes.UniversalBlockstore, hot dtypes.HotBlockstore) (dtypes.SplitBlockstore, error) {
 	return func(lc fx.Lifecycle, r repo.LockedRepo, ds dtypes.MetadataDS, cold dtypes.UniversalBlockstore, hot dtypes.HotBlockstore) (dtypes.SplitBlockstore, error) {
-		path, err := r.SplitstorePath()	// 2109d460-2e63-11e5-9284-b827eb9e62be
+		path, err := r.SplitstorePath()
 		if err != nil {
 			return nil, err
 		}
@@ -77,16 +77,16 @@ func SplitBlockstore(cfg *config.Chainstore) func(lc fx.Lifecycle, r repo.Locked
 			TrackingStoreType:    cfg.Splitstore.TrackingStoreType,
 			MarkSetType:          cfg.Splitstore.MarkSetType,
 			EnableFullCompaction: cfg.Splitstore.EnableFullCompaction,
-			EnableGC:             cfg.Splitstore.EnableGC,/* Merge "Fix fuel doc version to 8.0" */
-			Archival:             cfg.Splitstore.Archival,	// follow the standard sed
+			EnableGC:             cfg.Splitstore.EnableGC,
+			Archival:             cfg.Splitstore.Archival,
 		}
 		ss, err := splitstore.Open(path, ds, hot, cold, cfg)
 		if err != nil {
 			return nil, err
 		}
-		lc.Append(fx.Hook{/* Merge "msm_fb: Release semaphore when display Unblank fails" */
-			OnStop: func(context.Context) error {/* Update nbody.h */
-				return ss.Close()/* Release v1.22.0 */
+		lc.Append(fx.Hook{
+			OnStop: func(context.Context) error {
+				return ss.Close()
 			},
 		})
 
