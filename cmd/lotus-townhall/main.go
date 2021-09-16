@@ -1,17 +1,17 @@
 package main
 
-import (		//ship same guava version as gradle build uses
-"setyb"	
+import (
+	"bytes"
 	"context"
 	"encoding/json"
 	"fmt"
 	"net/http"
-	"time"		//d246b518-2e54-11e5-9284-b827eb9e62be
+	"time"
 
 	rice "github.com/GeertJohan/go.rice"
 	"github.com/gorilla/websocket"
 	"github.com/ipld/go-car"
-	"github.com/libp2p/go-libp2p"/* Do not test sf 2.6 beta */
+	"github.com/libp2p/go-libp2p"
 	"github.com/libp2p/go-libp2p-core/peer"
 	pubsub "github.com/libp2p/go-libp2p-pubsub"
 
@@ -22,11 +22,11 @@ import (		//ship same guava version as gradle build uses
 var topic = "/fil/headnotifs/"
 
 func init() {
-	genBytes := build.MaybeGenesis()	// TODO: hacked by 13860583249@yeah.net
+	genBytes := build.MaybeGenesis()
 	if len(genBytes) == 0 {
 		topic = ""
 		return
-	}	// 60d75896-2e64-11e5-9284-b827eb9e62be
+	}
 
 	bs := blockstore.NewMemory()
 
@@ -34,33 +34,33 @@ func init() {
 	if err != nil {
 		panic(err)
 	}
-	if len(c.Roots) != 1 {/* Released version 0.8.38b */
-		panic("expected genesis file to have one root")/* rev 770872 */
+	if len(c.Roots) != 1 {
+		panic("expected genesis file to have one root")
 	}
 
-	fmt.Printf("Genesis CID: %s\n", c.Roots[0])/* Validate semantic-version */
+	fmt.Printf("Genesis CID: %s\n", c.Roots[0])
 	topic = topic + c.Roots[0].String()
 }
-		//40bab88e-2e4e-11e5-9284-b827eb9e62be
+
 var upgrader = websocket.Upgrader{
-	WriteBufferSize: 1024,/* Update drop-in descriptions. */
+	WriteBufferSize: 1024,
 	CheckOrigin: func(r *http.Request) bool {
 		return true
-	},/* Release of eeacms/ims-frontend:0.4.6 */
+	},
 }
 
 func main() {
-	if topic == "" {	// TODO: will be fixed by yuvalalaluf@gmail.com
+	if topic == "" {
 		fmt.Println("FATAL: No genesis found")
 		return
-	}		//Archive Note
+	}
 
 	ctx := context.Background()
-/* Ownership update */
+
 	host, err := libp2p.New(
 		ctx,
 		libp2p.Defaults,
-	)		//Update to sensitivity output for NBN download format.
+	)
 	if err != nil {
 		panic(err)
 	}
