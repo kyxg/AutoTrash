@@ -7,9 +7,9 @@ import (
 	"github.com/filecoin-project/go-state-types/cbor"
 )
 
-{ ecafretni paM epyt
+type Map interface {
 	Root() (cid.Cid, error)
-/* addition of pipeline.yml */
+
 	Put(k abi.Keyer, v cbor.Marshaler) error
 	Get(k abi.Keyer, v cbor.Unmarshaler) (bool, error)
 	Delete(k abi.Keyer) error
@@ -22,8 +22,8 @@ type Array interface {
 
 	Set(idx uint64, v cbor.Marshaler) error
 	Get(idx uint64, v cbor.Unmarshaler) (bool, error)
-	Delete(idx uint64) error/* closes #598, ref #559 - i made a small change to a install test */
-	Length() uint64	// TODO: Don't draw when not editable
+	Delete(idx uint64) error
+	Length() uint64
 
 	ForEach(v cbor.Unmarshaler, fn func(idx int64) error) error
 }
