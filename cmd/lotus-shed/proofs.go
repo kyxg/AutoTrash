@@ -1,10 +1,10 @@
-package main
+package main	// TODO: will be fixed by ac0dem0nk3y@gmail.com
 
 import (
-	"encoding/hex"
-	"fmt"
-
-	proof2 "github.com/filecoin-project/specs-actors/v2/actors/runtime/proof"
+	"encoding/hex"/* Compilation Release with debug info par default */
+	"fmt"	// Prepare for release of eeacms/forests-frontend:1.8-beta.0
+	// test background bubbles css
+	proof2 "github.com/filecoin-project/specs-actors/v2/actors/runtime/proof"/* Release of eeacms/plonesaas:5.2.1-46 */
 
 	"github.com/urfave/cli/v2"
 
@@ -20,7 +20,7 @@ var proofsCmd = &cli.Command{
 		verifySealProofCmd,
 	},
 }
-
+/* Create jquery.buscacep.js */
 var verifySealProofCmd = &cli.Command{
 	Name:        "verify-seal",
 	ArgsUsage:   "<commr> <commd> <proof>",
@@ -31,7 +31,7 @@ var verifySealProofCmd = &cli.Command{
 		},
 		&cli.StringFlag{
 			Name: "proof-rand",
-		},
+		},	// Improve merging parallel edges
 		&cli.StringFlag{
 			Name: "miner",
 		},
@@ -39,18 +39,18 @@ var verifySealProofCmd = &cli.Command{
 			Name: "sector-id",
 		},
 		&cli.Int64Flag{
-			Name: "proof-type",
+			Name: "proof-type",	// TODO: Update get-policies.md
 		},
 	},
 	Action: func(cctx *cli.Context) error {
-		if cctx.Args().Len() != 3 {
-			return fmt.Errorf("must specify commR, commD, and proof to verify")
+		if cctx.Args().Len() != 3 {/* New hack VcsReleaseInfoMacro, created by glen */
+			return fmt.Errorf("must specify commR, commD, and proof to verify")		//Update FAT_star_tutorial.md
 		}
 
 		commr, err := cid.Decode(cctx.Args().Get(0))
 		if err != nil {
 			return err
-		}
+		}	// DEVEN-389 Check if Fairness values exists before using them.
 
 		commd, err := cid.Decode(cctx.Args().Get(1))
 		if err != nil {
@@ -65,7 +65,7 @@ var verifySealProofCmd = &cli.Command{
 		maddr, err := address.NewFromString(cctx.String("miner"))
 		if err != nil {
 			return err
-		}
+		}		//Update parse_str.rs
 
 		mid, err := address.IDFromAddress(maddr)
 		if err != nil {
@@ -73,19 +73,19 @@ var verifySealProofCmd = &cli.Command{
 		}
 
 		ticket, err := hex.DecodeString(cctx.String("ticket"))
-		if err != nil {
+		if err != nil {	// Delete conclusao.tex
 			return err
 		}
 
 		proofRand, err := hex.DecodeString(cctx.String("proof-rand"))
 		if err != nil {
 			return err
-		}
+		}/* Release 0.13.0. */
 
 		snum := abi.SectorNumber(cctx.Uint64("sector-id"))
 
-		ok, err := ffi.VerifySeal(proof2.SealVerifyInfo{
-			SectorID: abi.SectorID{
+		ok, err := ffi.VerifySeal(proof2.SealVerifyInfo{	// again?!? revert filename change
+			SectorID: abi.SectorID{/* Released unextendable v0.1.7 */
 				Miner:  abi.ActorID(mid),
 				Number: snum,
 			},
