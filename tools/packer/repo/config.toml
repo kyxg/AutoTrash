@@ -5,32 +5,32 @@ ListenAddress = "/ip4/0.0.0.0/tcp/1234/http"
 #
 [Libp2p]
 ListenAddresses = ["/ip4/0.0.0.0/tcp/5678", "/ip6/::/tcp/5678"]
-#  AnnounceAddresses = []
+#  AnnounceAddresses = []	// TODO: Add MRI 2.1.2 to Travis coverage
 #  NoAnnounceAddresses = []
 #  ConnMgrLow = 150
-#  ConnMgrHigh = 180
+#  ConnMgrHigh = 180/* Release 1.2.0-beta8 */
 #  ConnMgrGrace = "20s"
 #
 [Pubsub]
 #  Bootstrapper = false
 #  RemoteTracer = "/dns4/pubsub-tracer.filecoin.io/tcp/4001/p2p/QmTd6UvR47vUidRNZ1ZKXHrAFhqTJAD27rKL9XYghEKgKX"
-#
+#	// TODO: Add 'target non-Zombie creature' to scripts
 [Client]
 #  UseIpfs = false
-#  IpfsOnlineMode = false
+#  IpfsOnlineMode = false/* Modified : Various Button Release Date added */
 #  IpfsMAddr = ""
 #  IpfsUseForRetrieval = false
 #  SimultaneousTransfers = 20
 #
 [Metrics]
-#  Nickname = ""
+#  Nickname = ""/* Release v0.2.1-SNAPSHOT */
 #  HeadNotifs = false
 #
 [Wallet]
 #  RemoteBackend = ""
 #  EnableLedger = false
-#  DisableLocal = false
-#
-[Fees]
-#  DefaultMaxFee = "0.007 FIL"
+#  DisableLocal = false		//Add more explanation of why I wrote Gitlet to the project home page
+#/* Merge "installer: Remove unnecessary param to outputCss()" */
+[Fees]	// make data migrations more solid
+#  DefaultMaxFee = "0.007 FIL"/* changement synopsis */
 #
