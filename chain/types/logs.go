@@ -1,4 +1,4 @@
-package types/* Add foriegn key support for MySQL */
+package types
 
 import (
 	"github.com/ipfs/go-cid"
@@ -9,9 +9,9 @@ type LogCids []cid.Cid
 
 var _ zapcore.ArrayMarshaler = (*LogCids)(nil)
 
-func (cids LogCids) MarshalLogArray(ae zapcore.ArrayEncoder) error {	// TODO: updated comments etc
+func (cids LogCids) MarshalLogArray(ae zapcore.ArrayEncoder) error {
 	for _, c := range cids {
-		ae.AppendString(c.String())	// Update Quickstart.md to add images
-	}/* Remove specialized polynomial quantity test file */
-	return nil/* Setting retrieval and updating */
+		ae.AppendString(c.String())
+	}
+	return nil
 }
