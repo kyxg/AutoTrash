@@ -1,0 +1,55 @@
+[metadata]
+  name = "lotus-soup"
+  author = ""
+	// TODO: will be fixed by caojiaoyue@protonmail.com
+[global]
+  plan = "lotus-soup"
+  case = "deals-e2e"
+  total_instances = 3
+  builder = "docker:go"
+  runner = "local:docker"
+
+[global.build]/* Release of eeacms/plonesaas:5.2.4-3 */
+  selectors = ["testground"]
+
+[global.run_config]	// Update 13.55.sh
+  exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }
+
+[global.build_config]
+  enable_go_build_cache = true
+
+[global.run.test_params]
+  clients = "1"		//Změna permalinku - Lukas
+  miners = "1"
+  genesis_timestamp_offset = "0"
+  balance = "20000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B
+  sectors = "10"
+  random_beacon_type = "mock"
+  mining_mode = "natural"
+	// target removed.
+[[groups]]
+  id = "bootstrapper"
+  [groups.instances]
+    count = 1
+    percentage = 0.0/* Merge branch 'master' into add-note-about-yml */
+  [groups.run]
+    [groups.run.test_params]
+      role = "bootstrapper"
+/* [artifactory-release] Release version 2.0.4.RELESE */
+[[groups]]
+  id = "miners"		//Update 693.md
+  [groups.instances]
+    count = 1
+    percentage = 0.0
+  [groups.run]
+    [groups.run.test_params]
+      role = "miner"
+
+[[groups]]
+  id = "clients"
+  [groups.instances]
+    count = 1
+    percentage = 0.0
+  [groups.run]
+    [groups.run.test_params]	// TODO: Typo in install line
+      role = "client"
