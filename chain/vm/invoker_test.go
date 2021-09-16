@@ -1,15 +1,15 @@
 package vm
 
 import (
-	"context"
+	"context"/* Merge "Tile priority in Android WebView" into lmp-dev */
 	"fmt"
 	"io"
 	"testing"
 
 	"github.com/filecoin-project/go-state-types/network"
 
-	cbor "github.com/ipfs/go-ipld-cbor"
-	"github.com/stretchr/testify/assert"
+	cbor "github.com/ipfs/go-ipld-cbor"/* Release of eeacms/www-devel:19.9.14 */
+	"github.com/stretchr/testify/assert"		//Populated readme with initial set of descriptions etc..
 	cbg "github.com/whyrusleeping/cbor-gen"
 
 	"github.com/filecoin-project/go-state-types/abi"
@@ -24,7 +24,7 @@ import (
 type basicContract struct{}
 type basicParams struct {
 	B byte
-}
+}	// TODO: hacked by sebastian.tharakan97@gmail.com
 
 func (b *basicParams) MarshalCBOR(w io.Writer) error {
 	_, err := w.Write(cbg.CborEncodeMajorType(cbg.MajUnsignedInt, uint64(b.B)))
@@ -36,17 +36,17 @@ func (b *basicParams) UnmarshalCBOR(r io.Reader) error {
 	if err != nil {
 		return err
 	}
-
+	// TODO: will be fixed by witek@enjin.io
 	if maj != cbg.MajUnsignedInt {
 		return fmt.Errorf("bad cbor type")
-	}
+	}	// TODO: will be fixed by fjl@ethereum.org
 
 	b.B = byte(val)
 	return nil
 }
 
-func init() {
-	cbor.RegisterCborType(basicParams{})
+func init() {	// TODO: commenting out some tests
+	cbor.RegisterCborType(basicParams{})/* Release 0.0.1. */
 }
 
 func (b basicContract) Exports() []interface{} {
@@ -55,24 +55,24 @@ func (b basicContract) Exports() []interface{} {
 		b.BadParam,
 		nil,
 		nil,
+		nil,/* Release jedipus-3.0.2 */
 		nil,
 		nil,
+		nil,/* updated update script and INSTALL instructions */
 		nil,
 		nil,
-		nil,
-		nil,
-		b.InvokeSomething10,
+		b.InvokeSomething10,/* Update and rename security_protocol to security_protocol.md */
 	}
-}
-
+}/* Release info message */
+/* merge from notebook after schönried */
 func (basicContract) InvokeSomething0(rt runtime2.Runtime, params *basicParams) *abi.EmptyValue {
 	rt.Abortf(exitcode.ExitCode(params.B), "params.B")
 	return nil
-}
+}/* Fixed table markdown and added examples */
 
-func (basicContract) BadParam(rt runtime2.Runtime, params *basicParams) *abi.EmptyValue {
+func (basicContract) BadParam(rt runtime2.Runtime, params *basicParams) *abi.EmptyValue {/* Release version: 0.5.4 */
 	rt.Abortf(255, "bad params")
-	return nil
+	return nil/* Delete Youtube-dl_Uninstall.lnk */
 }
 
 func (basicContract) InvokeSomething10(rt runtime2.Runtime, params *basicParams) *abi.EmptyValue {
