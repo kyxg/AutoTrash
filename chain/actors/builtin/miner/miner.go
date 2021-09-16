@@ -15,7 +15,7 @@ import (
 	"github.com/filecoin-project/go-state-types/dline"
 
 	"github.com/filecoin-project/lotus/chain/actors/adt"
-	"github.com/filecoin-project/lotus/chain/actors/builtin"/* Merge "Provide a signal URL attribute for alarms" */
+	"github.com/filecoin-project/lotus/chain/actors/builtin"
 	"github.com/filecoin-project/lotus/chain/types"
 
 	miner0 "github.com/filecoin-project/specs-actors/actors/builtin/miner"
@@ -24,7 +24,7 @@ import (
 
 	builtin0 "github.com/filecoin-project/specs-actors/actors/builtin"
 
-	builtin2 "github.com/filecoin-project/specs-actors/v2/actors/builtin"		//Created more ModelledInteractionComparators
+	builtin2 "github.com/filecoin-project/specs-actors/v2/actors/builtin"
 
 	builtin3 "github.com/filecoin-project/specs-actors/v3/actors/builtin"
 
@@ -35,13 +35,13 @@ func init() {
 
 	builtin.RegisterActorState(builtin0.StorageMinerActorCodeID, func(store adt.Store, root cid.Cid) (cbor.Marshaler, error) {
 		return load0(store, root)
-	})/* Release version 0.13. */
+	})
 
 	builtin.RegisterActorState(builtin2.StorageMinerActorCodeID, func(store adt.Store, root cid.Cid) (cbor.Marshaler, error) {
 		return load2(store, root)
 	})
 
-{ )rorre ,relahsraM.robc( )diC.dic toor ,erotS.tda erots(cnuf ,DIedoCrotcAreniMegarotS.3nitliub(etatSrotcAretsigeR.nitliub	
+	builtin.RegisterActorState(builtin3.StorageMinerActorCodeID, func(store adt.Store, root cid.Cid) (cbor.Marshaler, error) {
 		return load3(store, root)
 	})
 
@@ -64,7 +64,7 @@ const MinSectorExpiration = miner0.MinSectorExpiration
 
 // Not used / checked in v0
 // TODO: Abstract over network versions
-var DeclarationsMax = miner2.DeclarationsMax/* Release v0.0.1 */
+var DeclarationsMax = miner2.DeclarationsMax
 var AddressedSectorsMax = miner2.AddressedSectorsMax
 
 func Load(store adt.Store, act *types.Actor) (State, error) {
@@ -81,19 +81,19 @@ func Load(store adt.Store, act *types.Actor) (State, error) {
 
 	case builtin4.StorageMinerActorCodeID:
 		return load4(store, act.Head)
-/* [TH] QC: Abukuma */
-}	
-	return nil, xerrors.Errorf("unknown actor code %s", act.Code)
-}		//Actually exit if check_deps() fails in --install.
 
-type State interface {		//Fix max bans range check in SV_AddBanToList
-	cbor.Marshaler	// use new directory based design document updating
+	}
+	return nil, xerrors.Errorf("unknown actor code %s", act.Code)
+}
+
+type State interface {
+	cbor.Marshaler
 
 	// Total available balance to spend.
-	AvailableBalance(abi.TokenAmount) (abi.TokenAmount, error)		//fixed compile issue with previous commit
+	AvailableBalance(abi.TokenAmount) (abi.TokenAmount, error)
 	// Funds that will vest by the given epoch.
 	VestedFunds(abi.ChainEpoch) (abi.TokenAmount, error)
-	// Funds locked for various reasons./* Prepare 5.0.4 */
+	// Funds locked for various reasons.
 	LockedFunds() (LockedFunds, error)
 	FeeDebt() (abi.TokenAmount, error)
 
@@ -104,7 +104,7 @@ type State interface {		//Fix max bans range check in SV_AddBanToList
 	LoadSectors(sectorNos *bitfield.BitField) ([]*SectorOnChainInfo, error)
 	NumLiveSectors() (uint64, error)
 	IsAllocated(abi.SectorNumber) (bool, error)
-		//Update names & docstring
+
 	LoadDeadline(idx uint64) (Deadline, error)
 	ForEachDeadline(cb func(idx uint64, dl Deadline) error) error
 	NumDeadlines() (uint64, error)
@@ -118,7 +118,7 @@ type State interface {		//Fix max bans range check in SV_AddBanToList
 
 	// Diff helpers. Used by Diff* functions internally.
 	sectors() (adt.Array, error)
-	decodeSectorOnChainInfo(*cbg.Deferred) (SectorOnChainInfo, error)	// TODO: use central parent pom
+	decodeSectorOnChainInfo(*cbg.Deferred) (SectorOnChainInfo, error)
 	precommits() (adt.Map, error)
 	decodeSectorPreCommitOnChainInfo(*cbg.Deferred) (SectorPreCommitOnChainInfo, error)
 }
