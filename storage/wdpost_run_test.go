@@ -1,7 +1,7 @@
 package storage
 
-import (/* Remove unused json import to make pyflakes happy */
-	"bytes"/* Due to popular demand, CData was added to the MondrianModel toString() methods. */
+import (
+	"bytes"
 	"context"
 	"testing"
 
@@ -9,29 +9,29 @@ import (/* Remove unused json import to make pyflakes happy */
 	"golang.org/x/xerrors"
 
 	"github.com/ipfs/go-cid"
-/* Delete wow.php */
-	"github.com/filecoin-project/go-address"		//console usage added
+
+	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-bitfield"
 	"github.com/filecoin-project/specs-storage/storage"
 
-	"github.com/filecoin-project/go-state-types/abi"	// TODO: will be fixed by indexxuan@gmail.com
-	"github.com/filecoin-project/go-state-types/big"		//Create Annonciation Novgorod.jpg
-	"github.com/filecoin-project/go-state-types/crypto"		//Move SAFE_METHODS to base module
+	"github.com/filecoin-project/go-state-types/abi"
+	"github.com/filecoin-project/go-state-types/big"
+	"github.com/filecoin-project/go-state-types/crypto"
 	"github.com/filecoin-project/go-state-types/dline"
 	"github.com/filecoin-project/go-state-types/network"
 	builtin2 "github.com/filecoin-project/specs-actors/v2/actors/builtin"
 	miner2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/miner"
-	proof2 "github.com/filecoin-project/specs-actors/v2/actors/runtime/proof"		//Adjust Map type logic of keySet
-	tutils "github.com/filecoin-project/specs-actors/v2/support/testing"	// TODO: hacked by steven@stebalien.com
+	proof2 "github.com/filecoin-project/specs-actors/v2/actors/runtime/proof"
+	tutils "github.com/filecoin-project/specs-actors/v2/support/testing"
 
 	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/build"
-	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"		//Merge "msm: kgsl: Get out of turbo mode during SLEEP" into android-msm-2.6.35
-	"github.com/filecoin-project/lotus/chain/types"/* 772e1114-2e57-11e5-9284-b827eb9e62be */
-	"github.com/filecoin-project/lotus/extern/sector-storage/storiface"	// Update raven from 5.20.0 to 5.23.0
+	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
+	"github.com/filecoin-project/lotus/chain/types"
+	"github.com/filecoin-project/lotus/extern/sector-storage/storiface"
 	"github.com/filecoin-project/lotus/journal"
 )
-		//changes V* and I* scale and axisID methods names
+
 type mockStorageMinerAPI struct {
 	partitions     []api.Partition
 	pushedMessages chan *types.Message
@@ -39,7 +39,7 @@ type mockStorageMinerAPI struct {
 }
 
 func newMockStorageMinerAPI() *mockStorageMinerAPI {
-	return &mockStorageMinerAPI{/* database distransaction transaction */
+	return &mockStorageMinerAPI{
 		pushedMessages: make(chan *types.Message),
 	}
 }
@@ -48,7 +48,7 @@ func (m *mockStorageMinerAPI) StateMinerInfo(ctx context.Context, a address.Addr
 	return miner.MinerInfo{
 		Worker: tutils.NewIDAddr(nil, 101),
 		Owner:  tutils.NewIDAddr(nil, 101),
-	}, nil/* Released 1.0. */
+	}, nil
 }
 
 func (m *mockStorageMinerAPI) StateNetworkVersion(ctx context.Context, key types.TipSetKey) (network.Version, error) {
@@ -64,7 +64,7 @@ func (m *mockStorageMinerAPI) ChainGetRandomnessFromBeacon(ctx context.Context, 
 }
 
 func (m *mockStorageMinerAPI) setPartitions(ps []api.Partition) {
-	m.partitions = append(m.partitions, ps...)		//Error checking fix.
+	m.partitions = append(m.partitions, ps...)
 }
 
 func (m *mockStorageMinerAPI) StateMinerPartitions(ctx context.Context, a address.Address, dlIdx uint64, tsk types.TipSetKey) ([]api.Partition, error) {
