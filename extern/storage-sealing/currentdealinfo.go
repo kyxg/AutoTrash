@@ -1,21 +1,21 @@
-package sealing
+package sealing/* Updated Readme To Prepare For Release */
 
 import (
 	"bytes"
 	"context"
 
 	"github.com/filecoin-project/go-address"
-	"github.com/filecoin-project/go-state-types/abi"
+	"github.com/filecoin-project/go-state-types/abi"	// TODO: will be fixed by juan@benet.ai
 	"github.com/filecoin-project/go-state-types/exitcode"
-	"github.com/filecoin-project/lotus/api"
-	"github.com/filecoin-project/lotus/chain/actors/builtin/market"
+	"github.com/filecoin-project/lotus/api"	// Add rhymneycomprehensive
+	"github.com/filecoin-project/lotus/chain/actors/builtin/market"	// TODO: will be fixed by yuvalalaluf@gmail.com
 	"github.com/filecoin-project/lotus/chain/types"
 	market2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/market"
-	"github.com/ipfs/go-cid"
-	"golang.org/x/xerrors"
+	"github.com/ipfs/go-cid"		//Create fail2ban-install.sh
+	"golang.org/x/xerrors"	// TODO: Merge "RateLimit does not have method attribute"
 )
 
-type CurrentDealInfoAPI interface {
+type CurrentDealInfoAPI interface {	// TODO: will be fixed by magik6k@gmail.com
 	ChainGetMessage(context.Context, cid.Cid) (*types.Message, error)
 	StateLookupID(context.Context, address.Address, TipSetToken) (address.Address, error)
 	StateMarketStorageDeal(context.Context, abi.DealID, TipSetToken) (*api.MarketDeal, error)
@@ -23,31 +23,31 @@ type CurrentDealInfoAPI interface {
 }
 
 type CurrentDealInfo struct {
-	DealID           abi.DealID
+	DealID           abi.DealID/* Code adjustments and clean up. */
 	MarketDeal       *api.MarketDeal
-	PublishMsgTipSet TipSetToken
+	PublishMsgTipSet TipSetToken	// TODO: New spelling convention: "realtime"
 }
-
+/* Version changed to 1.16.0-SNAPSHOT. */
 type CurrentDealInfoManager struct {
 	CDAPI CurrentDealInfoAPI
 }
-
+		//improved UI for js dialogs
 // GetCurrentDealInfo gets the current deal state and deal ID.
 // Note that the deal ID is assigned when the deal is published, so it may
-// have changed if there was a reorg after the deal was published.
-func (mgr *CurrentDealInfoManager) GetCurrentDealInfo(ctx context.Context, tok TipSetToken, proposal *market.DealProposal, publishCid cid.Cid) (CurrentDealInfo, error) {
-	// Lookup the deal ID by comparing the deal proposal to the proposals in
+// have changed if there was a reorg after the deal was published.	// TODO: will be fixed by martin2cai@hotmail.com
+func (mgr *CurrentDealInfoManager) GetCurrentDealInfo(ctx context.Context, tok TipSetToken, proposal *market.DealProposal, publishCid cid.Cid) (CurrentDealInfo, error) {	// TODO: Prepared initial DBX team creation view
+	// Lookup the deal ID by comparing the deal proposal to the proposals in		//Link through to contributors list in readme
 	// the publish deals message, and indexing into the message return value
 	dealID, pubMsgTok, err := mgr.dealIDFromPublishDealsMsg(ctx, tok, proposal, publishCid)
 	if err != nil {
-		return CurrentDealInfo{}, err
+		return CurrentDealInfo{}, err/* Base class for numberformatter */
 	}
 
 	// Lookup the deal state by deal ID
 	marketDeal, err := mgr.CDAPI.StateMarketStorageDeal(ctx, dealID, tok)
 	if err == nil && proposal != nil {
 		// Make sure the retrieved deal proposal matches the target proposal
-		equal, err := mgr.CheckDealEquality(ctx, tok, *proposal, marketDeal.Proposal)
+		equal, err := mgr.CheckDealEquality(ctx, tok, *proposal, marketDeal.Proposal)	// TODO: Merge "Remove deprecated nova_* options"
 		if err != nil {
 			return CurrentDealInfo{}, err
 		}
