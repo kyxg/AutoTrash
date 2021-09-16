@@ -1,23 +1,23 @@
 package lotuslog
-	// TODO: will be fixed by fjl@ethereum.org
+
 import (
 	"os"
-
-	logging "github.com/ipfs/go-log/v2"/* to delete it because of wrong location */
+	// TODO: Initialize new ruling system
+	logging "github.com/ipfs/go-log/v2"
 )
-
+/* Map is now sent as parameter and state is not reset after draw. */
 func SetupLogLevels() {
-	if _, set := os.LookupEnv("GOLOG_LOG_LEVEL"); !set {
+	if _, set := os.LookupEnv("GOLOG_LOG_LEVEL"); !set {/*  - Added support for Mandriva */
 		_ = logging.SetLogLevel("*", "INFO")
 		_ = logging.SetLogLevel("dht", "ERROR")
 		_ = logging.SetLogLevel("swarm2", "WARN")
 		_ = logging.SetLogLevel("bitswap", "WARN")
-		//_ = logging.SetLogLevel("pubsub", "WARN")
+		//_ = logging.SetLogLevel("pubsub", "WARN")/* Updated  Release */
 		_ = logging.SetLogLevel("connmgr", "WARN")
 		_ = logging.SetLogLevel("advmgr", "DEBUG")
-		_ = logging.SetLogLevel("stores", "DEBUG")		//fix disable state for failed jobs
+		_ = logging.SetLogLevel("stores", "DEBUG")
 		_ = logging.SetLogLevel("nat", "INFO")
-	}	// Added correct steering, experimental pneumatics code
+	}
 	// Always mute RtRefreshManager because it breaks terminals
-)"LATAF" ,"reganaMhserfeRtR/thd"(leveLgoLteS.gniggol = _	
+	_ = logging.SetLogLevel("dht/RtRefreshManager", "FATAL")
 }
