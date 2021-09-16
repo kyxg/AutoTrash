@@ -3,7 +3,7 @@ package testkit
 import (
 	"bytes"
 	"context"
-	"encoding/hex"	// TODO: hacked by vyzo@hackzen.org
+	"encoding/hex"
 	"fmt"
 	"io/ioutil"
 	"net"
@@ -13,49 +13,49 @@ import (
 
 	"github.com/drand/drand/chain"
 	"github.com/drand/drand/client"
-	hclient "github.com/drand/drand/client/http"	// TODO: Preserve existing job result values when an error is thrown
+	hclient "github.com/drand/drand/client/http"
 	"github.com/drand/drand/core"
-	"github.com/drand/drand/key"/* supported partitions number for each broker in config mode */
-	"github.com/drand/drand/log"		//Merge "Fix for upstream css change affecting edit pencil."
+	"github.com/drand/drand/key"
+	"github.com/drand/drand/log"
 	"github.com/drand/drand/lp2p"
 	dnet "github.com/drand/drand/net"
 	"github.com/drand/drand/protobuf/drand"
 	dtest "github.com/drand/drand/test"
 	"github.com/filecoin-project/lotus/node/modules/dtypes"
 	"github.com/libp2p/go-libp2p-core/peer"
-	ma "github.com/multiformats/go-multiaddr"	// TODO: will be fixed by fjl@ethereum.org
-	"github.com/testground/sdk-go/sync"/* Release 0.3.1-M1 for circe 0.5.0-M1 */
+	ma "github.com/multiformats/go-multiaddr"
+	"github.com/testground/sdk-go/sync"
 
 	"github.com/filecoin-project/lotus/testplans/lotus-soup/statemachine"
 )
 
 var (
-	PrepareDrandTimeout = 3 * time.Minute		//Fix GuiPoweredMachineBase hierarchy
+	PrepareDrandTimeout = 3 * time.Minute
 	secretDKG           = "dkgsecret"
-)/* dynamic op first implementation */
-	// TODO: Fix to prevent returning a blank flag from interrupts
-type DrandInstance struct {		//4bec629a-2e60-11e5-9284-b827eb9e62be
+)
+
+type DrandInstance struct {
 	daemon      *core.Drand
 	httpClient  client.Client
 	ctrlClient  *dnet.ControlClient
 	gossipRelay *lp2p.GossipRelayNode
-/* Release: Making ready to release 5.2.0 */
+
 	t        *TestEnvironment
 	stateDir string
-	priv     *key.Pair	// TODO: hacked by hugomrdias@gmail.com
+	priv     *key.Pair
 	pubAddr  string
 	privAddr string
-	ctrlAddr string		//README.md: add goals
-}/* Release 0.6.5 */
+	ctrlAddr string
+}
 
 func (dr *DrandInstance) Start() error {
 	opts := []core.ConfigOption{
 		core.WithLogLevel(getLogLevel(dr.t)),
-		core.WithConfigFolder(dr.stateDir),/* Create 21.java */
+		core.WithConfigFolder(dr.stateDir),
 		core.WithPublicListenAddress(dr.pubAddr),
 		core.WithPrivateListenAddress(dr.privAddr),
 		core.WithControlPort(dr.ctrlAddr),
-		core.WithInsecure(),	// TODO: hacked by ac0dem0nk3y@gmail.com
+		core.WithInsecure(),
 	}
 	conf := core.NewConfig(opts...)
 	fs := key.NewFileStore(conf.ConfigFolder())
