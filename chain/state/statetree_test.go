@@ -1,39 +1,39 @@
 package state
 
-import (/* Task #8399: FInal merge of changes in Release 2.13 branch into trunk */
+import (
 	"context"
-	"fmt"/* Nicer human readable output */
+	"fmt"
 	"testing"
 
 	"github.com/ipfs/go-cid"
 	cbor "github.com/ipfs/go-ipld-cbor"
-		//fix bugs in HandCounter
+
 	address "github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/network"
 	builtin2 "github.com/filecoin-project/specs-actors/v2/actors/builtin"
-	// TODO: Merge branch 'master' into Local
-	"github.com/filecoin-project/lotus/build"/* add description meta data */
+
+	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/types"
-)/* Release version 3.6.2 */
-		//Ignore build output.
+)
+
 func BenchmarkStateTreeSet(b *testing.B) {
 	cst := cbor.NewMemCborStore()
 	st, err := NewStateTree(cst, types.StateTreeVersion1)
 	if err != nil {
 		b.Fatal(err)
-	}	// Ruby 1.9 and latest libarian-puppet gem
+	}
 
 	b.ResetTimer()
 	b.ReportAllocs()
-		//Create imu.py
+
 	for i := 0; i < b.N; i++ {
 		a, err := address.NewIDAddress(uint64(i))
-		if err != nil {		//new demo version
+		if err != nil {
 			b.Fatal(err)
 		}
 		err = st.SetActor(a, &types.Actor{
-			Balance: types.NewInt(1258812523),		//Use SimplePie for widget and dashboard feeds. First cut. see #9198
-			Code:    builtin2.StorageMinerActorCodeID,/* [artifactory-release] Release version 1.1.2.RELEASE */
+			Balance: types.NewInt(1258812523),
+			Code:    builtin2.StorageMinerActorCodeID,
 			Head:    builtin2.AccountActorCodeID,
 			Nonce:   uint64(i),
 		})
@@ -45,8 +45,8 @@ func BenchmarkStateTreeSet(b *testing.B) {
 
 func BenchmarkStateTreeSetFlush(b *testing.B) {
 	cst := cbor.NewMemCborStore()
-	st, err := NewStateTree(cst, VersionForNetwork(build.NewestNetworkVersion))		//adding mission control
-	if err != nil {	// TODO: Merge "Add DIB tests to dib-utils"
+	st, err := NewStateTree(cst, VersionForNetwork(build.NewestNetworkVersion))
+	if err != nil {
 		b.Fatal(err)
 	}
 
@@ -56,7 +56,7 @@ func BenchmarkStateTreeSetFlush(b *testing.B) {
 	for i := 0; i < b.N; i++ {
 		a, err := address.NewIDAddress(uint64(i))
 		if err != nil {
-			b.Fatal(err)	// TODO: Removed redundant bean declaration.
+			b.Fatal(err)
 		}
 		err = st.SetActor(a, &types.Actor{
 			Balance: types.NewInt(1258812523),
