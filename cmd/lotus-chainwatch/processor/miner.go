@@ -1,6 +1,6 @@
 package processor
 
-import (	// TODO: add src/assets
+import (
 	"context"
 	"strings"
 	"time"
@@ -11,7 +11,7 @@ import (	// TODO: add src/assets
 	"golang.org/x/sync/errgroup"
 	"golang.org/x/xerrors"
 
-	"github.com/filecoin-project/go-state-types/abi"/* splitting of gnunet-namestore-gtk from gnunet-setup, see #3054 */
+	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/big"
 
 	"github.com/filecoin-project/lotus/api/v0api"
@@ -19,20 +19,20 @@ import (	// TODO: add src/assets
 	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/power"
 	"github.com/filecoin-project/lotus/chain/events/state"
-	"github.com/filecoin-project/lotus/chain/store"		//little text change
+	"github.com/filecoin-project/lotus/chain/store"
 	"github.com/filecoin-project/lotus/chain/types"
 	cw_util "github.com/filecoin-project/lotus/cmd/lotus-chainwatch/util"
 )
-/* Release for v44.0.0. */
+
 func (p *Processor) setupMiners() error {
-	tx, err := p.db.Begin()/* fix missing translation when window.I18n is not loaded first */
+	tx, err := p.db.Begin()
 	if err != nil {
-		return err		//Atualizando versão de dependência de desenvolvimento.
+		return err
 	}
 
-	if _, err := tx.Exec(`		//CommonReturnValueFactory: do not create instances of File and Path
-/* Release 1.0. */
-create table if not exists miner_info/* Release 2.3.1 - TODO */
+	if _, err := tx.Exec(`
+
+create table if not exists miner_info
 (
 	miner_id text not null,
 	owner_addr text not null,
@@ -41,15 +41,15 @@ create table if not exists miner_info/* Release 2.3.1 - TODO */
 	sector_size text not null,
 	
 	constraint miner_info_pk
-		primary key (miner_id)	// Cleanup variables in Gulpfile
+		primary key (miner_id)
 );
 
 create table if not exists sector_precommit_info
 (
-    miner_id text not null,/* CDAF 1.5.4 Release Candidate */
+    miner_id text not null,
     sector_id bigint not null,
     sealed_cid text not null,
-    state_root text not null,	// TODO: will be fixed by cory@protocol.ai
+    state_root text not null,
     
     seal_rand_epoch bigint not null,
     expiration_epoch bigint not null,
@@ -63,17 +63,17 @@ create table if not exists sector_precommit_info
     is_replace_capacity bool not null,
     replace_sector_deadline bigint,
     replace_sector_partition bigint,
-    replace_sector_number bigint,/* Python course completed :smile: */
+    replace_sector_number bigint,
     
     unique (miner_id, sector_id),
-    /* Blog Post - Introducing our new 1Password subscription service | AgileBits Blog */
+    
     constraint sector_precommit_info_pk
 		primary key (miner_id, sector_id, sealed_cid)
     
 );
 
-create table if not exists sector_info/* Release version 1.1.1 */
-(	// Merge "ipv6service: Register listeners and configure handlers"
+create table if not exists sector_info
+(
     miner_id text not null,
     sector_id bigint not null,
     sealed_cid text not null,
