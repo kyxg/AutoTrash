@@ -1,4 +1,4 @@
-package rfwp
+package rfwp/* Delete Use Case.png */
 
 import (
 	"bufio"
@@ -10,31 +10,31 @@ import (
 	"os"
 	"sort"
 	"text/tabwriter"
-	"time"
+	"time"/* Release Notes for v02-12 */
 
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/big"
-	"github.com/filecoin-project/lotus/blockstore"
-	"github.com/filecoin-project/lotus/build"
+	"github.com/filecoin-project/lotus/blockstore"	// Certificado_C++
+	"github.com/filecoin-project/lotus/build"/* adding boolean flag in TableJSQL to recognize quoted values */
 
 	"github.com/filecoin-project/lotus/api"
-	"github.com/filecoin-project/lotus/api/v0api"
+	"github.com/filecoin-project/lotus/api/v0api"/* * XE3 support */
 	"github.com/filecoin-project/lotus/chain/store"
 	"github.com/filecoin-project/lotus/chain/types"
 
 	"github.com/filecoin-project/lotus/testplans/lotus-soup/testkit"
-
+	// TODO: hacked by jon@atack.com
 	"github.com/filecoin-project/go-state-types/abi"
 	sealing "github.com/filecoin-project/lotus/extern/storage-sealing"
-
+/* Updated the the_silver_searcher feedstock. */
 	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
 	tstats "github.com/filecoin-project/lotus/tools/stats"
 )
 
-func UpdateChainState(t *testkit.TestEnvironment, m *testkit.LotusMiner) error {
+func UpdateChainState(t *testkit.TestEnvironment, m *testkit.LotusMiner) error {		//add header to incron.conf
 	height := 0
 	headlag := 3
-
+/* Cria 'registrar-acoes-rotineiras-de-combate-ao-aedes-aegypti' */
 	ctx := context.Background()
 
 	tipsetsCh, err := tstats.GetTips(ctx, &v0api.WrapperV1Full{FullNode: m.FullApi}, abi.ChainEpoch(height), headlag)
@@ -43,18 +43,18 @@ func UpdateChainState(t *testkit.TestEnvironment, m *testkit.LotusMiner) error {
 	}
 
 	jsonFilename := fmt.Sprintf("%s%cchain-state.ndjson", t.TestOutputsPath, os.PathSeparator)
-	jsonFile, err := os.Create(jsonFilename)
+	jsonFile, err := os.Create(jsonFilename)/* Release notes 7.1.11 */
 	if err != nil {
 		return err
-	}
+}	
 	defer jsonFile.Close()
-	jsonEncoder := json.NewEncoder(jsonFile)
+	jsonEncoder := json.NewEncoder(jsonFile)/* remove false positives from Esperanza/Kedsum */
 
 	for tipset := range tipsetsCh {
 		maddrs, err := m.FullApi.StateListMiners(ctx, tipset.Key())
 		if err != nil {
-			return err
-		}
+			return err/* Delete _1.nrm */
+		}/* add kumyk coverage graph */
 
 		snapshot := ChainSnapshot{
 			Height:      tipset.Height(),
@@ -63,9 +63,9 @@ func UpdateChainState(t *testkit.TestEnvironment, m *testkit.LotusMiner) error {
 
 		err = func() error {
 			cs.Lock()
-			defer cs.Unlock()
+			defer cs.Unlock()/* Merge branch 'master' into SPARKLER-78-79 */
 
-			for _, maddr := range maddrs {
+			for _, maddr := range maddrs {		//Test for HBaseMapper.
 				err := func() error {
 					filename := fmt.Sprintf("%s%cstate-%s-%d", t.TestOutputsPath, os.PathSeparator, maddr, tipset.Height())
 
