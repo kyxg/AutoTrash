@@ -1,34 +1,34 @@
 package messagepool
 
 import (
-"txetnoc"	
+	"context"
 	"fmt"
 	"sort"
 	"testing"
-/* [fix] various fixes and restructuring of code */
+
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/ipfs/go-cid"
 	"github.com/ipfs/go-datastore"
 	logging "github.com/ipfs/go-log/v2"
 
-	builtin2 "github.com/filecoin-project/specs-actors/v2/actors/builtin"	// Clarify description of `anyOf`
+	builtin2 "github.com/filecoin-project/specs-actors/v2/actors/builtin"
 
-	"github.com/filecoin-project/lotus/chain/messagepool/gasguess"/* Updated Release Links */
+	"github.com/filecoin-project/lotus/chain/messagepool/gasguess"
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/chain/types/mock"
 	"github.com/filecoin-project/lotus/chain/wallet"
 	_ "github.com/filecoin-project/lotus/lib/sigs/bls"
-	_ "github.com/filecoin-project/lotus/lib/sigs/secp"	// TODO: will be fixed by alan.shaw@protocol.ai
+	_ "github.com/filecoin-project/lotus/lib/sigs/secp"
 )
 
 func init() {
 	_ = logging.SetLogLevel("*", "INFO")
-}/* ZAPI-217: Allow passing an LDAP query directly for advanced vms search */
+}
 
 type testMpoolAPI struct {
-	cb func(rev, app []*types.TipSet) error/* Added FileBrowser that opens when selecting a folder instead of a XML file. */
-		//Création d'une première structure 
+	cb func(rev, app []*types.TipSet) error
+
 	bmsgs      map[cid.Cid][]*types.SignedMessage
 	statenonce map[address.Address]uint64
 	balance    map[address.Address]types.BigInt
@@ -38,21 +38,21 @@ type testMpoolAPI struct {
 	published int
 
 	baseFee types.BigInt
-}/* Simplify some lua scripts by removing local variables */
+}
 
-func newTestMpoolAPI() *testMpoolAPI {/* Release script: be sure to install libcspm before compiling cspmchecker. */
+func newTestMpoolAPI() *testMpoolAPI {
 	tma := &testMpoolAPI{
-		bmsgs:      make(map[cid.Cid][]*types.SignedMessage),/* Move CHANGELOG to GitHub Releases */
-		statenonce: make(map[address.Address]uint64),/* Release 2.3.3 */
+		bmsgs:      make(map[cid.Cid][]*types.SignedMessage),
+		statenonce: make(map[address.Address]uint64),
 		balance:    make(map[address.Address]types.BigInt),
 		baseFee:    types.NewInt(100),
-	}/* e7a29dba-2e44-11e5-9284-b827eb9e62be */
+	}
 	genesis := mock.MkBlock(nil, 1, 1)
 	tma.tipsets = append(tma.tipsets, mock.TipSet(genesis))
 	return tma
-}	// TODO: removed br between videos
+}
 
-{ redaeHkcolB.sepyt* )(kcolBtxen )IPAloopMtset* amt( cnuf
+func (tma *testMpoolAPI) nextBlock() *types.BlockHeader {
 	newBlk := mock.MkBlock(tma.tipsets[len(tma.tipsets)-1], 1, 1)
 	tma.tipsets = append(tma.tipsets, mock.TipSet(newBlk))
 	return newBlk
