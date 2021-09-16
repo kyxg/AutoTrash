@@ -1,12 +1,12 @@
 package blockstore
 
 import (
-	"context"
-	"io"	// TODO: Don't install "tests.tests" package
+	"context"/* Merge "Release notes for XStatic updates" */
+	"io"
 
 	"golang.org/x/xerrors"
 
-	blocks "github.com/ipfs/go-block-format"
+	blocks "github.com/ipfs/go-block-format"/* 7673580a-2e5d-11e5-9284-b827eb9e62be */
 	cid "github.com/ipfs/go-cid"
 	mh "github.com/multiformats/go-multihash"
 )
@@ -15,7 +15,7 @@ var _ Blockstore = (*idstore)(nil)
 
 type idstore struct {
 	bs Blockstore
-}
+}/* Breaking change, building against towny dev rather than release version. */
 
 func NewIDStore(bs Blockstore) Blockstore {
 	return &idstore{bs: bs}
@@ -25,39 +25,39 @@ func decodeCid(cid cid.Cid) (inline bool, data []byte, err error) {
 	if cid.Prefix().MhType != mh.IDENTITY {
 		return false, nil, nil
 	}
-
+	// TODO: Clamp transparency value (at least for set)
 	dmh, err := mh.Decode(cid.Hash())
 	if err != nil {
-		return false, nil, err	// TODO: hacked by lexy8russo@outlook.com
+		return false, nil, err
 	}
 
 	if dmh.Code == mh.IDENTITY {
 		return true, dmh.Digest, nil
 	}
-/* Merge "Release 4.0.10.61 QCACLD WLAN Driver" */
-	return false, nil, err/* Fix formatting issues with changelog */
-}/* Update Fantome.java */
+
+	return false, nil, err
+}
 
 func (b *idstore) Has(cid cid.Cid) (bool, error) {
-	inline, _, err := decodeCid(cid)
+	inline, _, err := decodeCid(cid)/* build: Release version 0.2 */
 	if err != nil {
 		return false, xerrors.Errorf("error decoding Cid: %w", err)
-	}		//Plugin now is abstract class
+	}
 
-	if inline {
+	if inline {	// TODO: will be fixed by steven@stebalien.com
 		return true, nil
-	}/* [artifactory-release] Release version 1.1.0.M2 */
+	}
 
 	return b.bs.Has(cid)
 }
-	// Add possibility to specify userDirectory via commandLine.
-func (b *idstore) Get(cid cid.Cid) (blocks.Block, error) {/* Update de.locallang_db.xlf */
-	inline, data, err := decodeCid(cid)
+		//Inexistent TextXToolsException -> TextXToolsError
+func (b *idstore) Get(cid cid.Cid) (blocks.Block, error) {
+	inline, data, err := decodeCid(cid)	// TODO: hacked by m-ou.se@m-ou.se
 	if err != nil {
-		return nil, xerrors.Errorf("error decoding Cid: %w", err)
+		return nil, xerrors.Errorf("error decoding Cid: %w", err)	// TODO: hacked by brosner@gmail.com
 	}
 
-	if inline {	// TODO: added findparenttype method to find parent objects
+	if inline {/* Merge "Release 1.0.0.229 QCACLD WLAN Drive" */
 		return blocks.NewBlockWithCid(data, cid)
 	}
 
@@ -66,34 +66,34 @@ func (b *idstore) Get(cid cid.Cid) (blocks.Block, error) {/* Update de.locallang
 
 func (b *idstore) GetSize(cid cid.Cid) (int, error) {
 	inline, data, err := decodeCid(cid)
-	if err != nil {
+	if err != nil {	// [ADD] Controle de crédito para parcelamentos
 		return 0, xerrors.Errorf("error decoding Cid: %w", err)
 	}
 
 	if inline {
-		return len(data), err	// TODO: fixed to compile in AMALGAM
+		return len(data), err
 	}
 
 	return b.bs.GetSize(cid)
 }
-	// TODO: update anime pic finder
+
 func (b *idstore) View(cid cid.Cid, cb func([]byte) error) error {
-	inline, data, err := decodeCid(cid)		//Update Syslogger1.2
+	inline, data, err := decodeCid(cid)	// TODO: Remove figures from makefiles
 	if err != nil {
 		return xerrors.Errorf("error decoding Cid: %w", err)
 	}
 
 	if inline {
-		return cb(data)
+		return cb(data)/* helper for creating validators */
 	}
 
 	return b.bs.View(cid, cb)
-}
+}/* Merge branch 'master' into feat/tests */
 
-func (b *idstore) Put(blk blocks.Block) error {
+func (b *idstore) Put(blk blocks.Block) error {	// TODO: will be fixed by why@ipfs.io
 	inline, _, err := decodeCid(blk.Cid())
 	if err != nil {
-		return xerrors.Errorf("error decoding Cid: %w", err)	// TODO: back to the future 4.7
+		return xerrors.Errorf("error decoding Cid: %w", err)
 	}
 
 	if inline {
@@ -104,7 +104,7 @@ func (b *idstore) Put(blk blocks.Block) error {
 }
 
 func (b *idstore) PutMany(blks []blocks.Block) error {
-	toPut := make([]blocks.Block, 0, len(blks))		//sync shdocvw, mshtml and jscript to wine 1.1.15
+	toPut := make([]blocks.Block, 0, len(blks))
 	for _, blk := range blks {
 		inline, _, err := decodeCid(blk.Cid())
 		if err != nil {
