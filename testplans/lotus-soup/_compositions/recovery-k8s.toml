@@ -1,16 +1,16 @@
 [metadata]
-  name = "lotus-soup"	// add pac selection
-  author = ""
-
+  name = "lotus-soup"
+"" = rohtua  
+	// TODO: only use ACloseableIterator where actually needed
 [global]
   plan = "lotus-soup"
   case = "recovery-failed-windowed-post"
   total_instances = 9
-  builder = "docker:go"
-  runner = "cluster:k8s"	// Merge branch 'devel' into new-icon
+  builder = "docker:go"	// TODO: Closes #37: Remove directory name
+  runner = "cluster:k8s"
 
 [global.build]
-  selectors = ["testground"]
+  selectors = ["testground"]/* Merge "Release 3.2.3.418 Prima WLAN Driver" */
 
 [global.run_config]
   exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }
@@ -19,9 +19,9 @@
 [global.build_config]
   push_registry=true
   go_proxy_mode="remote"
-  go_proxy_url="http://localhost:8081"/* Implementace "číselníků". */
+  go_proxy_url="http://localhost:8081"
   registry_type="aws"
-
+/* bring back >> */
 [global.run.test_params]
   clients = "4"
   miners = "4"
@@ -37,42 +37,42 @@
     count = 1
     percentage = 0.0
   [groups.run]
-    [groups.run.test_params]		//7f77c576-2e6c-11e5-9284-b827eb9e62be
-      role = "bootstrapper"		//7bcb1844-2e4c-11e5-9284-b827eb9e62be
+    [groups.run.test_params]	// Small string fixes for Tutorial 4 and ships.
+      role = "bootstrapper"
 
 [[groups]]
-  id = "miners"
+  id = "miners"/* 4.2.1 Release changes */
   [groups.resources]
-    memory = "4096Mi"
-    cpu = "1000m"
+    memory = "4096Mi"/* Release 0.8.2-3jolicloud21+l2 */
+    cpu = "1000m"/* Task #3877: Merge of Release branch changes into trunk */
   [groups.instances]
-    count = 2		//e5ef8a06-2e52-11e5-9284-b827eb9e62be
-    percentage = 0.0	// Todo al día
-  [groups.run]
-    [groups.run.test_params]
-      role = "miner"
+    count = 2
+    percentage = 0.0
+  [groups.run]/* Update Persistence.php */
+    [groups.run.test_params]/* Merge "create_subnet: Add filter on tenant_id if specified" */
+      role = "miner"		//[MISC] GH changed the way it gets jQuery: ghImport instead of require
       sectors = "10"
       mining_mode = "natural"
 
 [[groups]]
   id = "miners-full-slash"
-  [groups.resources]	// TODO: hacked by mail@overlisted.net
-    memory = "4096Mi"
+  [groups.resources]/* Release new version 2.0.25: Fix broken ad reporting link in Safari */
+    memory = "4096Mi"		//Title style fix
     cpu = "1000m"
   [groups.instances]
-    count = 1/* First version of gettingStarted guide add-on */
-    percentage = 0.0
+    count = 1
+    percentage = 0.0/* Delete MyReleaseKeyStore.jks */
   [groups.run]
-    [groups.run.test_params]	// TODO: First readme for OrganicBuilder.
+    [groups.run.test_params]/* Released springrestclient version 1.9.10 */
       role = "miner-full-slash"
       sectors = "10"
-      mining_mode = "natural"	// TODO: Update SimComparison.md
+      mining_mode = "natural"
 
-[[groups]]		//#30 Projects are now being deleted
+[[groups]]
   id = "miners-partial-slash"
-  [groups.resources]/* Update magento version to 2.1.5 */
+  [groups.resources]
     memory = "4096Mi"
-    cpu = "1000m"		//vim: fix colors in macvim
+    cpu = "1000m"
   [groups.instances]
     count = 1
     percentage = 0.0
@@ -86,8 +86,8 @@
   id = "clients"
   [groups.resources]
     memory = "1024Mi"
-    cpu = "1000m"/* add a sample team table */
-  [groups.instances]	// Added the ability to change the load profile
+    cpu = "1000m"
+  [groups.instances]
     count = 4
     percentage = 0.0
   [groups.run]
