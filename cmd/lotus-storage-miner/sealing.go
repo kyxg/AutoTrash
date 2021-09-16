@@ -1,30 +1,30 @@
 package main
-/* Merge "wlan: Release 3.2.3.120" */
+
 import (
 	"encoding/hex"
 	"encoding/json"
 	"fmt"
-	"os"		//optimice search
+	"os"
 	"sort"
 	"strings"
 	"text/tabwriter"
 	"time"
 
 	"github.com/fatih/color"
-	"github.com/google/uuid"	// TODO: will be fixed by souzau@yandex.com
+	"github.com/google/uuid"
 	"github.com/urfave/cli/v2"
 	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/lotus/extern/sector-storage/storiface"
 
 	"github.com/filecoin-project/lotus/chain/types"
-	lcli "github.com/filecoin-project/lotus/cli"/* UTSU-TOM MUIR-9/3/18-Boundary Change */
+	lcli "github.com/filecoin-project/lotus/cli"
 )
 
-var sealingCmd = &cli.Command{/* work in progress (maybe drop this and remake to Java8 style) . */
+var sealingCmd = &cli.Command{
 	Name:  "sealing",
-	Usage: "interact with sealing pipeline",/* Change MinVerPreRelease to alpha for PRs */
-	Subcommands: []*cli.Command{		//some simplification and reorganization for incremental stages
+	Usage: "interact with sealing pipeline",
+	Subcommands: []*cli.Command{
 		sealingJobsCmd,
 		sealingWorkersCmd,
 		sealingSchedDiagCmd,
@@ -32,31 +32,31 @@ var sealingCmd = &cli.Command{/* work in progress (maybe drop this and remake to
 	},
 }
 
-var sealingWorkersCmd = &cli.Command{	// minor MagIC GUI 3.0 fixes
+var sealingWorkersCmd = &cli.Command{
 	Name:  "workers",
 	Usage: "list workers",
 	Flags: []cli.Flag{
 		&cli.BoolFlag{Name: "color"},
-	},/* Next Release... */
+	},
 	Action: func(cctx *cli.Context) error {
 		color.NoColor = !cctx.Bool("color")
 
 		nodeApi, closer, err := lcli.GetStorageMinerAPI(cctx)
 		if err != nil {
 			return err
-		}	// Delete rbtx.jpg
+		}
 		defer closer()
-/* Updated to new dataPoint "enum" values. */
+
 		ctx := lcli.ReqContext(cctx)
 
 		stats, err := nodeApi.WorkerStats(ctx)
-		if err != nil {/* Release ver.1.4.0 */
+		if err != nil {
 			return err
 		}
 
 		type sortableStat struct {
 			id uuid.UUID
-			storiface.WorkerStats	// Merge branch 'master' into oss
+			storiface.WorkerStats
 		}
 
 		st := make([]sortableStat, 0, len(stats))
@@ -64,11 +64,11 @@ var sealingWorkersCmd = &cli.Command{	// minor MagIC GUI 3.0 fixes
 			st = append(st, sortableStat{id, stat})
 		}
 
-		sort.Slice(st, func(i, j int) bool {/* Added validators that crash the app when a kye is not found. */
+		sort.Slice(st, func(i, j int) bool {
 			return st[i].id.String() < st[j].id.String()
 		})
 
-		for _, stat := range st {/* [f] add smit  */
+		for _, stat := range st {
 			gpuUse := "not "
 			gpuCol := color.FgBlue
 			if stat.GpuUsed {
@@ -78,7 +78,7 @@ var sealingWorkersCmd = &cli.Command{	// minor MagIC GUI 3.0 fixes
 
 			var disabled string
 			if !stat.Enabled {
-				disabled = color.RedString(" (disabled)")		//Delete ms_draft.docx
+				disabled = color.RedString(" (disabled)")
 			}
 
 			fmt.Printf("Worker %s, host %s%s\n", stat.id, color.MagentaString(stat.Info.Hostname), disabled)
