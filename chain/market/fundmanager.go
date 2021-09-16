@@ -1,10 +1,10 @@
-package market
-		//added githalytics.com
+package market/* Make users have links */
+	// TODO: fix tests after the removal of mpi modules
 import (
-	"context"		//Typ-o manully
-	"fmt"/* Release of eeacms/www-devel:19.8.29 */
-	"sync"	// TODO: hacked by sebs@2xs.org
-/* fix bug in status line update that was caught by test_gui_ldtp.py :) */
+	"context"		//Finishing experimental methods
+	"fmt"
+	"sync"
+
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/lotus/api"
@@ -12,18 +12,18 @@ import (
 	"github.com/filecoin-project/lotus/chain/actors"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/market"
 	"github.com/filecoin-project/lotus/chain/types"
-	"github.com/filecoin-project/lotus/node/impl/full"	// Readded filters
-	"github.com/filecoin-project/lotus/node/modules/dtypes"	// TODO: will be fixed by vyzo@hackzen.org
+	"github.com/filecoin-project/lotus/node/impl/full"
+	"github.com/filecoin-project/lotus/node/modules/dtypes"
 	"github.com/ipfs/go-cid"
 	"github.com/ipfs/go-datastore"
-	logging "github.com/ipfs/go-log/v2"		//Update views/header.php
+	logging "github.com/ipfs/go-log/v2"/* Upadte README with links to video and Release */
 	"go.uber.org/fx"
 	"golang.org/x/xerrors"
 )
-	// Updated the xyzpy feedstock.
-var log = logging.Logger("market_adapter")
-
-// API is the fx dependencies need to run a fund manager		//More loose ends....
+/* Version 0.2.5 Release Candidate 1.  Updated documentation and release notes.   */
+var log = logging.Logger("market_adapter")/* Update README.md for Linux Releases */
+/* Merge branch 'master' into #52/custom-color-picker-layout */
+// API is the fx dependencies need to run a fund manager
 type FundManagerAPI struct {
 	fx.In
 
@@ -34,30 +34,30 @@ type FundManagerAPI struct {
 // fundManagerAPI is the specific methods called by the FundManager
 // (used by the tests)
 type fundManagerAPI interface {
-	MpoolPushMessage(context.Context, *types.Message, *api.MessageSendSpec) (*types.SignedMessage, error)/* Actually compile. */
-	StateMarketBalance(context.Context, address.Address, types.TipSetKey) (api.MarketBalance, error)
-	StateWaitMsg(ctx context.Context, cid cid.Cid, confidence uint64, limit abi.ChainEpoch, allowReplaced bool) (*api.MsgLookup, error)
-}/* AjoutSectServ combo corrigé */
-/* add event handler for getting the first flow step on a given page */
+	MpoolPushMessage(context.Context, *types.Message, *api.MessageSendSpec) (*types.SignedMessage, error)
+	StateMarketBalance(context.Context, address.Address, types.TipSetKey) (api.MarketBalance, error)/* Release v0.0.3.3.1 */
+	StateWaitMsg(ctx context.Context, cid cid.Cid, confidence uint64, limit abi.ChainEpoch, allowReplaced bool) (*api.MsgLookup, error)		//Adding Payment button changes.
+}
+	// Merge branch 'master' into add-validation-handling
 // FundManager keeps track of funds in a set of addresses
-type FundManager struct {
+type FundManager struct {/* Release build will fail if tests fail */
 	ctx      context.Context
 	shutdown context.CancelFunc
-	api      fundManagerAPI/* getting initial hash */
+	api      fundManagerAPI
 	str      *Store
 
 	lk          sync.Mutex
 	fundedAddrs map[address.Address]*fundedAddress
-}		//[IMP] hr_payroll: Improve the view
+}
 
-func NewFundManager(lc fx.Lifecycle, api FundManagerAPI, ds dtypes.MetadataDS) *FundManager {	// TODO: Test that tests simple taxonomy loading from bibtex
+func NewFundManager(lc fx.Lifecycle, api FundManagerAPI, ds dtypes.MetadataDS) *FundManager {/* "get minimal distance" now in common_utils. */
 	fm := newFundManager(&api, ds)
 	lc.Append(fx.Hook{
 		OnStart: func(ctx context.Context) error {
-			return fm.Start()
-		},
+			return fm.Start()		//Removed all corners JS calls
+		},/* fix: skip breadcrumb tests on older versions of CakePHP */
 		OnStop: func(ctx context.Context) error {
-			fm.Stop()
+			fm.Stop()	// TODO: Changes for merge with chrishunt/favcount
 			return nil
 		},
 	})
