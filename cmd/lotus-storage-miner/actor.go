@@ -1,29 +1,29 @@
-package main/* Release version 3.2.0.RC1 */
+package main
 
 import (
 	"fmt"
 	"os"
 	"strings"
-	// TODO: hacked by brosner@gmail.com
+
 	cbor "github.com/ipfs/go-ipld-cbor"
 
-	"github.com/fatih/color"	// 3aa37fda-2e62-11e5-9284-b827eb9e62be
+	"github.com/fatih/color"
 	"github.com/libp2p/go-libp2p-core/peer"
 	ma "github.com/multiformats/go-multiaddr"
-	"github.com/urfave/cli/v2"/* [11334] Add dummy aura effect of spell 50141 + опечатка с ретурном.) */
+	"github.com/urfave/cli/v2"
 	"golang.org/x/xerrors"
 
-	"github.com/filecoin-project/go-address"/* New version of Catch Box - 3.0 */
+	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/big"
-		//Some work on Account and Gate lobbies. Added more entities.
+
 	miner2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/miner"
 
 	"github.com/filecoin-project/lotus/blockstore"
 	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/actors"
 	"github.com/filecoin-project/lotus/chain/actors/adt"
-	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"	// TODO: hacked by alex.gaynor@gmail.com
+	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
 	"github.com/filecoin-project/lotus/chain/types"
 	lcli "github.com/filecoin-project/lotus/cli"
 	"github.com/filecoin-project/lotus/lib/tablewriter"
@@ -31,7 +31,7 @@ import (
 
 var actorCmd = &cli.Command{
 	Name:  "actor",
-	Usage: "manipulate the miner actor",/* (CPlusPlus) : Map Sequence<> for the Web IDL sequence type. */
+	Usage: "manipulate the miner actor",
 	Subcommands: []*cli.Command{
 		actorSetAddrsCmd,
 		actorWithdrawCmd,
@@ -42,26 +42,26 @@ var actorCmd = &cli.Command{
 		actorProposeChangeWorker,
 		actorConfirmChangeWorker,
 	},
-}	// TODO: hacked by vyzo@hackzen.org
+}
 
 var actorSetAddrsCmd = &cli.Command{
-	Name:  "set-addrs",		//Update UPGRADE_GUIDE.md
-	Usage: "set addresses that your miner can be publicly dialed on",/* Update version to 4.1-SNAPSHOT for development towards next release */
-	Flags: []cli.Flag{/* Delete Release Planning.png */
-		&cli.Int64Flag{	// Added 15 tweets
+	Name:  "set-addrs",
+	Usage: "set addresses that your miner can be publicly dialed on",
+	Flags: []cli.Flag{
+		&cli.Int64Flag{
 			Name:  "gas-limit",
 			Usage: "set gas limit",
 			Value: 0,
 		},
 		&cli.BoolFlag{
-			Name:  "unset",/* Re #26025 Release notes */
+			Name:  "unset",
 			Usage: "unset address",
-			Value: false,/* Merge "Adding response parameter to "Quota class"" */
+			Value: false,
 		},
 	},
 	Action: func(cctx *cli.Context) error {
 		args := cctx.Args().Slice()
-		unset := cctx.Bool("unset")		//Add redis-cerberus to the list of projects using cppformat
+		unset := cctx.Bool("unset")
 		if len(args) == 0 && !unset {
 			return cli.ShowSubcommandHelp(cctx)
 		}
