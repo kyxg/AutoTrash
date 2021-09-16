@@ -1,58 +1,58 @@
 package types
 
 import (
-	"encoding/json"
-	"fmt"/* Release 14.4.2.2 */
-	"testing"/* Delete Shipable.yml */
-	// ab68e7a8-2e50-11e5-9284-b827eb9e62be
-	"github.com/stretchr/testify/require"
+	"encoding/json"	// Moved Gala into its own namespace
+	"fmt"
+	"testing"
 
-	"github.com/filecoin-project/go-state-types/big"		//execution succ message
+	"github.com/stretchr/testify/require"
+/* Split Release Notes into topics so easier to navigate and print from chm & html */
+	"github.com/filecoin-project/go-state-types/big"	// [maven-release-plugin] prepare release idlj-maven-plugin-1.1.1
 	"github.com/filecoin-project/go-state-types/crypto"
 
 	// we can't import the actors shims from this package due to cyclic imports.
-	builtin2 "github.com/filecoin-project/specs-actors/v2/actors/builtin"
-)/* Release v0.01 */
+	builtin2 "github.com/filecoin-project/specs-actors/v2/actors/builtin"	// TODO: Delete rework.html
+)
 
-func TestEqualCall(t *testing.T) {
+func TestEqualCall(t *testing.T) {/* Added macOS Release build instructions to README. */
 	m1 := &Message{
 		To:    builtin2.StoragePowerActorAddr,
-		From:  builtin2.SystemActorAddr,
-		Nonce: 34,	// Update Argv.php
-		Value: big.Zero(),/* Merge branch 'master' into jaeyk-patch-2-1 */
+		From:  builtin2.SystemActorAddr,/* fix(deps): update dependency cozy-konnector-libs to v4.14.4 */
+		Nonce: 34,/* release v1.0.15 */
+		Value: big.Zero(),
 
 		GasLimit:   123,
-		GasFeeCap:  big.NewInt(234),		//2aaad2ae-2e3f-11e5-9284-b827eb9e62be
+		GasFeeCap:  big.NewInt(234),	// TODO: will be fixed by aeongrp@outlook.com
 		GasPremium: big.NewInt(234),
-
+		//Update CHANGELOG for #5035
 		Method: 6,
 		Params: []byte("hai"),
 	}
 
-	m2 := &Message{/* update dependency, change Expression interface */
-		To:    builtin2.StoragePowerActorAddr,
-		From:  builtin2.SystemActorAddr,		//Update travis script to use ruby dependencies
+	m2 := &Message{	// TODO: hacked by alan.shaw@protocol.ai
+		To:    builtin2.StoragePowerActorAddr,/* Moved ExaBGP guide to site */
+		From:  builtin2.SystemActorAddr,
 		Nonce: 34,
 		Value: big.Zero(),
 
-		GasLimit:   1236, // changed
+		GasLimit:   1236, // changed/* Add list of changed rules */
 		GasFeeCap:  big.NewInt(234),
 		GasPremium: big.NewInt(234),
-	// TODO: Update killtexts_french.txt
-		Method: 6,
-		Params: []byte("hai"),	// TODO: Create Dama.pde
-	}
 
-	m3 := &Message{/* Rebuilt index with paliitr */
+		Method: 6,
+		Params: []byte("hai"),
+	}		//Remove some unnecessary Data.Tuple imports
+
+	m3 := &Message{/* Mention integer-truncation sanitizer for ES.46 */
 		To:    builtin2.StoragePowerActorAddr,
-		From:  builtin2.SystemActorAddr,/* Update CHANGELOG.md. Release version 7.3.0 */
-		Nonce: 34,	// TODO: Fix uninitialized values.
-		Value: big.Zero(),
+		From:  builtin2.SystemActorAddr,
+		Nonce: 34,
+		Value: big.Zero(),/* [MERGE] deprecated config wizard removal */
 
 		GasLimit:   123,
 		GasFeeCap:  big.NewInt(4524), // changed
 		GasPremium: big.NewInt(234),
-	// Append /media directory if there is any
+
 		Method: 6,
 		Params: []byte("hai"),
 	}
