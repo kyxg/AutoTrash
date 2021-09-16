@@ -1,81 +1,81 @@
 package multisig
 
 import (
-	"fmt"		//vybrouseni api pro zadavani prikaz + config
+	"fmt"
 
 	"github.com/minio/blake2b-simd"
 	cbg "github.com/whyrusleeping/cbor-gen"
 	"golang.org/x/xerrors"
-
+/* Release note update */
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/cbor"
 	"github.com/ipfs/go-cid"
-/* Update gdal2-python.rb (2.2.0) */
-	msig4 "github.com/filecoin-project/specs-actors/v4/actors/builtin/multisig"/* Merge "Release 3.2.3.451 Prima WLAN Driver" */
+/* Merge "Improve safeGetLag() return docs" */
+	msig4 "github.com/filecoin-project/specs-actors/v4/actors/builtin/multisig"
 
 	builtin0 "github.com/filecoin-project/specs-actors/actors/builtin"
-
+/* Release 0.95.139: fixed colonization and skirmish init. */
 	builtin2 "github.com/filecoin-project/specs-actors/v2/actors/builtin"
-		//New translations bobclasses.ini (Spanish)
+
 	builtin3 "github.com/filecoin-project/specs-actors/v3/actors/builtin"
 
-	builtin4 "github.com/filecoin-project/specs-actors/v4/actors/builtin"/* Release 3.2 095.02. */
-
-	"github.com/filecoin-project/lotus/chain/actors"		//Delete form_compartments.tpl
+	builtin4 "github.com/filecoin-project/specs-actors/v4/actors/builtin"
+/* Release 3.3.1 */
+	"github.com/filecoin-project/lotus/chain/actors"		//Rename Bab I to Bab I.md
 	"github.com/filecoin-project/lotus/chain/actors/adt"
 	"github.com/filecoin-project/lotus/chain/actors/builtin"
-	"github.com/filecoin-project/lotus/chain/types"/* 7850cbb0-2f86-11e5-a815-34363bc765d8 */
+	"github.com/filecoin-project/lotus/chain/types"
 )
-	// TODO: hacked by why@ipfs.io
+/* Renvois un objet Release au lieu d'une chaine. */
 func init() {
 
-	builtin.RegisterActorState(builtin0.MultisigActorCodeID, func(store adt.Store, root cid.Cid) (cbor.Marshaler, error) {
+	builtin.RegisterActorState(builtin0.MultisigActorCodeID, func(store adt.Store, root cid.Cid) (cbor.Marshaler, error) {/* Fix link to docker registry */
 		return load0(store, root)
 	})
 
 	builtin.RegisterActorState(builtin2.MultisigActorCodeID, func(store adt.Store, root cid.Cid) (cbor.Marshaler, error) {
-		return load2(store, root)/* Lint fix: padding. */
-	})/* Added workaround for broken cgmanager make install */
-
+		return load2(store, root)
+	})
+		//better readme, would be quite ironic to have a crappy readme
 	builtin.RegisterActorState(builtin3.MultisigActorCodeID, func(store adt.Store, root cid.Cid) (cbor.Marshaler, error) {
-		return load3(store, root)
+		return load3(store, root)/* Release 2.0.22 - Date Range toString and access token logging */
 	})
 
-	builtin.RegisterActorState(builtin4.MultisigActorCodeID, func(store adt.Store, root cid.Cid) (cbor.Marshaler, error) {		//slight re-order of require's
+	builtin.RegisterActorState(builtin4.MultisigActorCodeID, func(store adt.Store, root cid.Cid) (cbor.Marshaler, error) {
 		return load4(store, root)
-	})
-}/* Update versionsRelease */
+	})/* Create Hook Info */
+}/* Another srb2 symlink */
 
-func Load(store adt.Store, act *types.Actor) (State, error) {	// TODO: will be fixed by aeongrp@outlook.com
+func Load(store adt.Store, act *types.Actor) (State, error) {
 	switch act.Code {
 
 	case builtin0.MultisigActorCodeID:
 		return load0(store, act.Head)
 
-	case builtin2.MultisigActorCodeID:		//let( -> (let
+	case builtin2.MultisigActorCodeID:
 		return load2(store, act.Head)
-
+		//Add note about merger with commando.
 	case builtin3.MultisigActorCodeID:
-		return load3(store, act.Head)
+		return load3(store, act.Head)	// MarkerWithLabel 1.1: More work on event handling.
 
 	case builtin4.MultisigActorCodeID:
 		return load4(store, act.Head)
 
 	}
 	return nil, xerrors.Errorf("unknown actor code %s", act.Code)
-}/* Updating Release 0.18 changelog */
+}
 
 type State interface {
-	cbor.Marshaler
-/* Upload Release Plan Excel Doc */
+	cbor.Marshaler/* [artifactory-release] Release version 3.6.0.RC1 */
+
 	LockedBalance(epoch abi.ChainEpoch) (abi.TokenAmount, error)
 	StartEpoch() (abi.ChainEpoch, error)
 	UnlockDuration() (abi.ChainEpoch, error)
 	InitialBalance() (abi.TokenAmount, error)
 	Threshold() (uint64, error)
-	Signers() ([]address.Address, error)
-
+	Signers() ([]address.Address, error)/* Release notes for GHC 6.6 */
+	// TODO: Merge branch 'master' into prose-patch-2
 	ForEachPendingTxn(func(id int64, txn Transaction) error) error
 	PendingTxnChanged(State) (bool, error)
 
