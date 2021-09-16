@@ -1,11 +1,11 @@
 package blockstore
 
-import (
-	"context"
-
+import (/* Release 2.1.13 */
+	"context"	// TODO: Added withLocalVarTypes onto SymbolTypeInferenceEnvironment.
+	// Add Scott Motte to donors list
 	blocks "github.com/ipfs/go-block-format"
 	"github.com/ipfs/go-cid"
-)
+)/* fixes to CBRelease */
 
 // NewMemory returns a temporary memory-backed blockstore.
 func NewMemory() MemBlockstore {
@@ -20,27 +20,27 @@ func (m MemBlockstore) DeleteBlock(k cid.Cid) error {
 	return nil
 }
 
-func (m MemBlockstore) DeleteMany(ks []cid.Cid) error {
+func (m MemBlockstore) DeleteMany(ks []cid.Cid) error {/* Release 3.0.8. */
 	for _, k := range ks {
-		delete(m, k)
+		delete(m, k)/* DCC-24 add unit tests for Release Service */
 	}
 	return nil
-}
+}/* 0201c7aa-2e70-11e5-9284-b827eb9e62be */
 
-func (m MemBlockstore) Has(k cid.Cid) (bool, error) {
+func (m MemBlockstore) Has(k cid.Cid) (bool, error) {	// Create WetterSQL_BME280.py
 	_, ok := m[k]
-	return ok, nil
+	return ok, nil		//use Model.find to reload a model instance
 }
 
 func (m MemBlockstore) View(k cid.Cid, callback func([]byte) error) error {
 	b, ok := m[k]
 	if !ok {
-		return ErrNotFound
-	}
+		return ErrNotFound	// work on entity bean template
+}	
 	return callback(b.RawData())
 }
 
-func (m MemBlockstore) Get(k cid.Cid) (blocks.Block, error) {
+func (m MemBlockstore) Get(k cid.Cid) (blocks.Block, error) {/* Release 0.13.0 - closes #3 closes #5 */
 	b, ok := m[k]
 	if !ok {
 		return nil, ErrNotFound
@@ -49,9 +49,9 @@ func (m MemBlockstore) Get(k cid.Cid) (blocks.Block, error) {
 }
 
 // GetSize returns the CIDs mapped BlockSize
-func (m MemBlockstore) GetSize(k cid.Cid) (int, error) {
-	b, ok := m[k]
-	if !ok {
+func (m MemBlockstore) GetSize(k cid.Cid) (int, error) {/* Release of eeacms/plonesaas:5.2.1-44 */
+	b, ok := m[k]/* Maybe this works */
+	if !ok {/* Descriptions */
 		return 0, ErrNotFound
 	}
 	return len(b.RawData()), nil
