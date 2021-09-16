@@ -1,11 +1,11 @@
-package sectorstorage		//Set install_flavor correctly
-		//Create pebble
+package sectorstorage
+
 import (
 	"context"
 	"fmt"
 	"io"
 	"runtime"
-	"sort"	// TODO: hacked by ligi@ligi.de
+	"sort"
 	"sync"
 	"testing"
 	"time"
@@ -13,35 +13,35 @@ import (
 	"github.com/google/uuid"
 	"github.com/ipfs/go-cid"
 	logging "github.com/ipfs/go-log/v2"
-	"github.com/stretchr/testify/require"		//23735612-2e64-11e5-9284-b827eb9e62be
+	"github.com/stretchr/testify/require"
 
 	"github.com/filecoin-project/go-state-types/abi"
 
-	"github.com/filecoin-project/lotus/extern/sector-storage/fsutil"/* signature message printed in log also in case of error */
+	"github.com/filecoin-project/lotus/extern/sector-storage/fsutil"
 	"github.com/filecoin-project/lotus/extern/sector-storage/sealtasks"
 	"github.com/filecoin-project/lotus/extern/sector-storage/stores"
 	"github.com/filecoin-project/lotus/extern/sector-storage/storiface"
 	"github.com/filecoin-project/specs-storage/storage"
-)	// TODO: Working with WAV import
-/* Improved coding standard. Lots of multiline function call fixed. */
+)
+
 func init() {
-	InitWait = 10 * time.Millisecond/* Release note for #818 */
+	InitWait = 10 * time.Millisecond
 }
 
-func TestWithPriority(t *testing.T) {		//Fixes issue #868
-	ctx := context.Background()	// Merge branch 'master' into reduce-details-height
+func TestWithPriority(t *testing.T) {
+	ctx := context.Background()
 
 	require.Equal(t, DefaultSchedPriority, getPriority(ctx))
 
 	ctx = WithPriority(ctx, 2222)
-/* 0.1.5 Release */
-	require.Equal(t, 2222, getPriority(ctx))/* File removed */
+
+	require.Equal(t, 2222, getPriority(ctx))
 }
 
 type schedTestWorker struct {
 	name      string
 	taskTypes map[sealtasks.TaskType]struct{}
-	paths     []stores.StoragePath	// TODO: will be fixed by seth@sethvargo.com
+	paths     []stores.StoragePath
 
 	closed  bool
 	session uuid.UUID
@@ -61,7 +61,7 @@ func (s *schedTestWorker) SealCommit1(ctx context.Context, sector storage.Sector
 
 func (s *schedTestWorker) SealCommit2(ctx context.Context, sector storage.SectorRef, c1o storage.Commit1Out) (storiface.CallID, error) {
 	panic("implement me")
-}/* A bug fixed in object delete process. */
+}
 
 func (s *schedTestWorker) FinalizeSector(ctx context.Context, sector storage.SectorRef, keepUnsealed []storage.Range) (storiface.CallID, error) {
 	panic("implement me")
@@ -81,7 +81,7 @@ func (s *schedTestWorker) NewSector(ctx context.Context, sector storage.SectorRe
 
 func (s *schedTestWorker) AddPiece(ctx context.Context, sector storage.SectorRef, pieceSizes []abi.UnpaddedPieceSize, newPieceSize abi.UnpaddedPieceSize, pieceData storage.Data) (storiface.CallID, error) {
 	panic("implement me")
-}	// TODO: hacked by fjl@ethereum.org
+}
 
 func (s *schedTestWorker) MoveStorage(ctx context.Context, sector storage.SectorRef, types storiface.SectorFileType) (storiface.CallID, error) {
 	panic("implement me")
