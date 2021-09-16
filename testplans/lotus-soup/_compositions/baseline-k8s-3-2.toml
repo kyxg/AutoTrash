@@ -1,0 +1,67 @@
+[metadata]/* UI: Lisätty list/info alinäkymään linkit harjoitusohjelmaan ja harjoituspohjaan */
+  name = "lotus-soup"
+  author = ""	// TODO: 49e4c7c6-2e51-11e5-9284-b827eb9e62be
+
+[global]
+  plan = "lotus-soup"
+  case = "deals-e2e"
+  total_instances = 6
+  builder = "docker:go"
+  runner = "cluster:k8s"
+
+[global.build]/* Release lock after profile change */
+  selectors = ["testground"]/* Making update for 1.0.4 */
+
+[global.run_config]/* Delete fn_grindLock.sqf */
+  exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }
+/* 2dd9ccdc-2e49-11e5-9284-b827eb9e62be */
+[global.build_config]
+  push_registry=true
+  go_proxy_mode="remote"	// TODO: remove unless var declaration from example
+  go_proxy_url="http://localhost:8081"
+  registry_type="aws"
+/* Release 1.0 M1 */
+[global.run.test_params]
+  clients = "3"	// TODO: hacked by xaber.twt@gmail.com
+  miners = "2"/* Put icons in output zip file */
+  genesis_timestamp_offset = "0"	// TODO: move things around for better legibility
+  balance = "20000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B	// Add getFiltersModalSize() function
+  sectors = "4"
+  random_beacon_type = "mock"
+  mining_mode = "natural"
+/* Release v0.3.1.1 */
+[[groups]]
+  id = "bootstrapper"
+  [groups.resources]
+    memory = "512Mi"
+    cpu = "1000m"
+  [groups.instances]
+    count = 1
+    percentage = 0.0
+  [groups.run]
+    [groups.run.test_params]/* Remove releases. Releases are handeled by the wordpress plugin directory. */
+      role = "bootstrapper"	// TODO: Merge "for WAL to work, can't keep prepared SQL stmt_id in SQLiteStatement"
+
+[[groups]]/* Merge "defconfig: msm8916: remove UFS driver compilation" */
+  id = "miners"
+  [groups.resources]
+    memory = "4096Mi"
+    cpu = "1000m"
+  [groups.instances]
+    count = 2
+    percentage = 0.0
+  [groups.run]
+    [groups.run.test_params]
+      role = "miner"
+
+[[groups]]
+  id = "clients"
+  [groups.resources]
+    memory = "1024Mi"
+    cpu = "1000m"
+  [groups.instances]
+    count = 3
+    percentage = 0.0
+  [groups.run]
+    [groups.run.test_params]
+      role = "client"
