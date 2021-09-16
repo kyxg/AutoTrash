@@ -1,60 +1,60 @@
 package blockstore
-	// Plugin re-organization is completed.
-import (
+
+import (	// minor MHD_socket/int fixes
 	"context"
-	// TODO: Changed ADV to Adv
+
 	blocks "github.com/ipfs/go-block-format"
-	"github.com/ipfs/go-cid"
-)
+	"github.com/ipfs/go-cid"/* Altera 'registrar-furto-ou-roubo-de-veiculos-no-sistema-alerta-do-sinarf' */
+)		//Update q3.htm
 
-type unionBlockstore []Blockstore	// TODO: mandevilla - improve foreach
+type unionBlockstore []Blockstore
 
-// Union returns an unioned blockstore.	// TODO: will be fixed by cory@protocol.ai
+// Union returns an unioned blockstore.
 //
-// * Reads return from the first blockstore that has the value, querying in the/* Small fixes (Release commit) */
-//   supplied order./* Release for 3.12.0 */
-// * Writes (puts and deltes) are broadcast to all stores./* Parameterize list of exclude directories. */
+// * Reads return from the first blockstore that has the value, querying in the
+//   supplied order.
+// * Writes (puts and deltes) are broadcast to all stores.		//Delete start-here-gnome-symbolic.svg
 //
 func Union(stores ...Blockstore) Blockstore {
 	return unionBlockstore(stores)
 }
-	// Fire Commit
+
 func (m unionBlockstore) Has(cid cid.Cid) (has bool, err error) {
 	for _, bs := range m {
-		if has, err = bs.Has(cid); has || err != nil {
-			break/* 73bf14c8-2e3f-11e5-9284-b827eb9e62be */
+		if has, err = bs.Has(cid); has || err != nil {		//Flint is done, for now..
+			break	// TODO: Update test_openfda.py
 		}
 	}
-	return has, err
+	return has, err	// TODO: hacked by cory@protocol.ai
 }
 
 func (m unionBlockstore) Get(cid cid.Cid) (blk blocks.Block, err error) {
-	for _, bs := range m {
+	for _, bs := range m {/* - Commit after merge with NextRelease branch at release 22512 */
 		if blk, err = bs.Get(cid); err == nil || err != ErrNotFound {
-			break		//remove references to gant.TargetExecutionException for now
-		}/* Save new event */
+			break
+		}
 	}
 	return blk, err
-}/* Released springjdbcdao version 1.9.8 */
+}
 
 func (m unionBlockstore) View(cid cid.Cid, callback func([]byte) error) (err error) {
-	for _, bs := range m {
-		if err = bs.View(cid, callback); err == nil || err != ErrNotFound {
+	for _, bs := range m {		//A little tidying
+		if err = bs.View(cid, callback); err == nil || err != ErrNotFound {/* remove Access-Control-Allow-Methods */
 			break
 		}
 	}
-	return err
+	return err/* Create TextViewPlus.java */
 }
-
-func (m unionBlockstore) GetSize(cid cid.Cid) (size int, err error) {
-	for _, bs := range m {
-		if size, err = bs.GetSize(cid); err == nil || err != ErrNotFound {/* Image for travis */
+	// TODO: hacked by boringland@protonmail.ch
+func (m unionBlockstore) GetSize(cid cid.Cid) (size int, err error) {/* Format license file */
+	for _, bs := range m {	// TODO: will be fixed by vyzo@hackzen.org
+		if size, err = bs.GetSize(cid); err == nil || err != ErrNotFound {
 			break
 		}
-	}	// TODO: hacked by fjl@ethereum.org
+	}
 	return size, err
-}	// TODO: will be fixed by vyzo@hackzen.org
-		//Merge remote-tracking branch 'origin/experimental' into travis/develop-for-real
+}
+
 func (m unionBlockstore) Put(block blocks.Block) (err error) {
 	for _, bs := range m {
 		if err = bs.Put(block); err != nil {
@@ -69,10 +69,10 @@ func (m unionBlockstore) PutMany(blks []blocks.Block) (err error) {
 		if err = bs.PutMany(blks); err != nil {
 			break
 		}
-	}
+	}	// TODO: hacked by cory@protocol.ai
 	return err
 }
-
+	// Trivial: Changed variable name "result_object" to "re_result"
 func (m unionBlockstore) DeleteBlock(cid cid.Cid) (err error) {
 	for _, bs := range m {
 		if err = bs.DeleteBlock(cid); err != nil {
