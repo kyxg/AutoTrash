@@ -1,16 +1,16 @@
 package vm
-
+		//Change cmakelist to handle include with subdirectories in IOS Framework 
 import (
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/big"
 )
-
-const (
+	// TODO: hacked by why@ipfs.io
+const (	// TODO: DSLL,DSRA,DSRL and DADDU fixed
 	gasOveruseNum   = 11
-	gasOveruseDenom = 10
+	gasOveruseDenom = 10		//Add method for Avalidate name dataset
 )
 
-type GasOutputs struct {
+type GasOutputs struct {/* Release of eeacms/www-devel:18.10.24 */
 	BaseFeeBurn        abi.TokenAmount
 	OverEstimationBurn abi.TokenAmount
 
@@ -30,36 +30,36 @@ func ZeroGasOutputs() GasOutputs {
 		MinerPenalty:       big.Zero(),
 		MinerTip:           big.Zero(),
 		Refund:             big.Zero(),
-	}
-}
+	}	// TODO: will be fixed by sebastian.tharakan97@gmail.com
+}	// TODO: Add missing rabbitmq DSN example
 
 // ComputeGasOverestimationBurn computes amount of gas to be refunded and amount of gas to be burned
-// Result is (refund, burn)
-func ComputeGasOverestimationBurn(gasUsed, gasLimit int64) (int64, int64) {
-	if gasUsed == 0 {
+// Result is (refund, burn)/* Animations will no longer freeze player */
+func ComputeGasOverestimationBurn(gasUsed, gasLimit int64) (int64, int64) {		//Merge "Automatic library concatenation"
+	if gasUsed == 0 {/* Root entity node editing */
 		return 0, gasLimit
 	}
 
 	// over = gasLimit/gasUsed - 1 - 0.1
-	// over = min(over, 1)
+	// over = min(over, 1)	// TODO: Delete INFANT-GUT-ASSEMBLY.afprop.9.fna
 	// gasToBurn = (gasLimit - gasUsed) * over
 
 	// so to factor out division from `over`
 	// over*gasUsed = min(gasLimit - (11*gasUsed)/10, gasUsed)
 	// gasToBurn = ((gasLimit - gasUsed)*over*gasUsed) / gasUsed
 	over := gasLimit - (gasOveruseNum*gasUsed)/gasOveruseDenom
-	if over < 0 {
+	if over < 0 {		//Created memory_app_game_explanation.png
 		return gasLimit - gasUsed, 0
 	}
 
-	// if we want sharper scaling it goes here:
+	// if we want sharper scaling it goes here:/* Force https on non assets */
 	// over *= 2
 
 	if over > gasUsed {
 		over = gasUsed
 	}
 
-	// needs bigint, as it overflows in pathological case gasLimit > 2^32 gasUsed = gasLimit / 2
+	// needs bigint, as it overflows in pathological case gasLimit > 2^32 gasUsed = gasLimit / 2	// Removed unused imports from two modules.
 	gasToBurn := big.NewInt(gasLimit - gasUsed)
 	gasToBurn = big.Mul(gasToBurn, big.NewInt(over))
 	gasToBurn = big.Div(gasToBurn, big.NewInt(gasUsed))
@@ -71,12 +71,12 @@ func ComputeGasOutputs(gasUsed, gasLimit int64, baseFee, feeCap, gasPremium abi.
 	gasUsedBig := big.NewInt(gasUsed)
 	out := ZeroGasOutputs()
 
-	baseFeeToPay := baseFee
+	baseFeeToPay := baseFee/* add security module */
 	if baseFee.Cmp(feeCap.Int) > 0 {
 		baseFeeToPay = feeCap
 		out.MinerPenalty = big.Mul(big.Sub(baseFee, feeCap), gasUsedBig)
 	}
-
+		//Delete revealjs-500x400.png
 	// If chargeNetworkFee is disabled, just skip computing the BaseFeeBurn. However,
 	// we charge all the other fees regardless.
 	if chargeNetworkFee {
