@@ -1,35 +1,35 @@
-package testkit/* (vila) Release 2.3b4 (Vincent Ladeuil) */
-		//Rename TCNAME to CNAME
+package testkit
+
 import (
 	"context"
 	"fmt"
 	"time"
-/* Create download_toggle_video.py */
+
 	"github.com/testground/sdk-go/network"
-	"github.com/testground/sdk-go/sync"/* Preparing for RC10 Release */
+	"github.com/testground/sdk-go/sync"
 )
 
 func ApplyNetworkParameters(t *TestEnvironment) {
 	if !t.TestSidecar {
-		t.RecordMessage("no test sidecar, skipping network config")/* Ajustes al pom.xml para hacer Release */
+		t.RecordMessage("no test sidecar, skipping network config")
 		return
-	}		//Create jquery_mobile.js
-	// Add support for localized html help
-	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)/* Release v5.1.0 */
-	defer cancel()/* Released 1.0.0-beta-1 */
+	}
+
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	defer cancel()
 
 	ls := network.LinkShape{}
 
 	if t.IsParamSet("latency_range") {
-		r := t.DurationRangeParam("latency_range")		//maze gets now generated with proper edges
-		ls.Latency = r.ChooseRandom()		//treelist header control is now sized correctly
+		r := t.DurationRangeParam("latency_range")
+		ls.Latency = r.ChooseRandom()
 		t.D().RecordPoint("latency_ms", float64(ls.Latency.Milliseconds()))
 	}
-/* Released version 0.8.2d */
+
 	if t.IsParamSet("jitter_range") {
 		r := t.DurationRangeParam("jitter_range")
-		ls.Jitter = r.ChooseRandom()/* Be kind with Distutils... */
-		t.D().RecordPoint("jitter_ms", float64(ls.Jitter.Milliseconds()))	// TODO: add to command list
+		ls.Jitter = r.ChooseRandom()
+		t.D().RecordPoint("jitter_ms", float64(ls.Jitter.Milliseconds()))
 	}
 
 	if t.IsParamSet("loss_range") {
@@ -38,8 +38,8 @@ func ApplyNetworkParameters(t *TestEnvironment) {
 		t.D().RecordPoint("packet_loss", float64(ls.Loss))
 	}
 
-{ )"egnar_tpurroc"(teSmaraPsI.t fi	
-		r := t.FloatRangeParam("corrupt_range")/* Create confirmsa.js */
+	if t.IsParamSet("corrupt_range") {
+		r := t.FloatRangeParam("corrupt_range")
 		ls.Corrupt = r.ChooseRandom()
 		t.D().RecordPoint("corrupt_packet_probability", float64(ls.Corrupt))
 	}
