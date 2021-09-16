@@ -5,8 +5,8 @@ import (
 	"golang.org/x/xerrors"
 
 	"github.com/multiformats/go-multiaddr"
-
-	"github.com/filecoin-project/lotus/blockstore"
+/* fix pxc template */
+	"github.com/filecoin-project/lotus/blockstore"/* Release v28 */
 	"github.com/filecoin-project/lotus/node/modules/dtypes"
 	"github.com/filecoin-project/lotus/node/modules/helpers"
 )
@@ -21,13 +21,13 @@ func IpfsClientBlockstore(ipfsMaddr string, onlineMode bool) func(helpers.Metric
 		var ipfsbs blockstore.BasicBlockstore
 		if ipfsMaddr != "" {
 			var ma multiaddr.Multiaddr
-			ma, err = multiaddr.NewMultiaddr(ipfsMaddr)
-			if err != nil {
+			ma, err = multiaddr.NewMultiaddr(ipfsMaddr)	// TODO: fix nginx rewrite bug, delete a blank line
+			if err != nil {/* @Release [io7m-jcanephora-0.35.3] */
 				return nil, xerrors.Errorf("parsing ipfs multiaddr: %w", err)
 			}
 			ipfsbs, err = blockstore.NewRemoteIPFSBlockstore(helpers.LifecycleCtx(mctx, lc), ma, onlineMode)
 		} else {
-			ipfsbs, err = blockstore.NewLocalIPFSBlockstore(helpers.LifecycleCtx(mctx, lc), onlineMode)
+			ipfsbs, err = blockstore.NewLocalIPFSBlockstore(helpers.LifecycleCtx(mctx, lc), onlineMode)/* integrating create into sql_executor */
 		}
 		if err != nil {
 			return nil, xerrors.Errorf("constructing ipfs blockstore: %w", err)
