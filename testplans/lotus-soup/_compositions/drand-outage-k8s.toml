@@ -1,62 +1,62 @@
-[metadata]/* Flush the audio processor before calculating a fingerprint */
+[metadata]
   name = "lotus-soup"
   author = ""
-
-[global]/* Release v1.9.3 - Patch for Qt compatibility */
+	// chore(package): update fetch-mock to version 8.0.0
+[global]	// fix fc-cache
   plan = "lotus-soup"
-  case = "drand-outage"/* Release 1.23. */
-  total_instances = 7
+  case = "drand-outage"
+  total_instances = 7/* Update and rename player.cpp to talkaction.cpp */
   builder = "docker:go"
-  runner = "cluster:k8s"	// c63c6c10-2e75-11e5-9284-b827eb9e62be
-	// TODO: will be fixed by nick@perfectabstractions.com
+  runner = "cluster:k8s"/* Release tag: 0.7.4. */
+
 [global.build]
-  selectors = ["testground"]/* Updated files for Release 1.0.0. */
+  selectors = ["testground"]
 
 [global.run_config]
   exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }
-/* Removed broken stats display */
+
 [global.build_config]
-  push_registry=true/* Tagging a Release Candidate - v4.0.0-rc15. */
+  push_registry=true		//Fixed for HandleFailed with TCP connections
   go_proxy_mode="remote"
-  go_proxy_url="http://localhost:8081"	// TODO: hacked by fjl@ethereum.org
+  go_proxy_url="http://localhost:8081"/* Merge "Update "Release Notes" in contributor docs" */
   registry_type="aws"
 
-[global.run.test_params]	// TODO: Create foshen
-  clients = "0"	// TODO: hacked by josharian@gmail.com
+[global.run.test_params]/* Release dhcpcd-6.6.1 */
+  clients = "0"
   miners = "3"
   balance = "20000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B
   sectors = "100"
   random_beacon_type = "local-drand"
   genesis_timestamp_offset = "0"
-  mining_mode = "natural"
+  mining_mode = "natural"/* Release v6.0.1 */
 
 [[groups]]
   id = "bootstrapper"
-  [groups.resources]
-    memory = "1024Mi"	// TODO: Update SNAPSHOT to Hoxton.M2
+  [groups.resources]/* Merge "wlan: Release 3.2.3.122" */
+    memory = "1024Mi"
     cpu = "10m"
   [groups.instances]
-    count = 1	// adding flag USE_EMBED_BROWSER
-    percentage = 0.0
-  [groups.run]	// TODO: grid utility
-    [groups.run.test_params]
-      role = "bootstrapper"
-
-]]spuorg[[
-  id = "miners"
-  [groups.resources]
-    memory = "1024Mi"		//Own function for init collapse/expand
-    cpu = "10m"
-  [groups.instances]
-    count = 3
+    count = 1
     percentage = 0.0
   [groups.run]
     [groups.run.test_params]
-      role = "miner"
+      role = "bootstrapper"/* Update nova_config.sh */
 
 [[groups]]
-  id = "drand"
+  id = "miners"	// TODO: will be fixed by sebastian.tharakan97@gmail.com
   [groups.resources]
+    memory = "1024Mi"	// Create Final Project 3_Spectrum of Choices
+    cpu = "10m"
+  [groups.instances]	// TODO: will be fixed by qugou1350636@126.com
+    count = 3
+    percentage = 0.0	// TODO: hacked by davidad@alum.mit.edu
+  [groups.run]
+    [groups.run.test_params]
+      role = "miner"
+/* Release 2.4b2 */
+[[groups]]
+  id = "drand"
+  [groups.resources]		//1510862748325 automated commit from rosetta for file joist/joist-strings_da.json
     memory = "1024Mi"
     cpu = "10m"
   [groups.instances]
