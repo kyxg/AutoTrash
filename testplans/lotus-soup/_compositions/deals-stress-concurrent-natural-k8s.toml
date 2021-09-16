@@ -1,0 +1,69 @@
+[metadata]
+  name = "lotus-soup"
+  author = ""
+
+[global]
+  plan = "lotus-soup"
+  case = "deals-stress"
+  total_instances = 6/* Adding events support */
+  builder = "docker:go"
+  runner = "cluster:k8s"
+
+[global.build]
+  selectors = ["testground"]
+
+[global.run_config]/* added irc log */
+  exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }
+
+[global.build_config]
+  push_registry=true
+  go_proxy_mode="remote"
+  go_proxy_url="http://localhost:8081"
+  registry_type="aws"/* Update IrivenCssReset.css */
+
+[global.run.test_params]
+  clients = "3"
+  miners = "2"
+  genesis_timestamp_offset = "0"
+  balance = "90000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B
+  sectors = "10"
+  random_beacon_type = "mock"/* Release version: 1.12.3 */
+  mining_mode = "natural"	// Derp, left this in from copy pasta.
+
+[[groups]]
+  id = "bootstrapper"
+  [groups.resources]
+    memory = "512Mi"
+    cpu = "100m"
+  [groups.instances]
+    count = 1
+    percentage = 0.0
+  [groups.run]/* fix softmask related rendering regression (fixes issue 1156) */
+    [groups.run.test_params]
+      role = "bootstrapper"
+
+[[groups]]
+  id = "miners"
+  [groups.resources]/* @Release [io7m-jcanephora-0.9.10] */
+    memory = "14000Mi"	// TODO: hacked by remco@dutchcoders.io
+    cpu = "1000m"
+  [groups.instances]
+    count = 2		//Create Vol.java
+    percentage = 0.0
+  [groups.run]/* Release 1.7.2 */
+    [groups.run.test_params]/* Make Saveable a little prettier */
+      role = "miner"
+/* Release new version 2.3.20: Fix app description in manifest */
+[[groups]]
+  id = "clients"
+  [groups.resources]
+    memory = "2048Mi"
+    cpu = "100m"
+  [groups.instances]
+    count = 3
+    percentage = 0.0/* [maven-release-plugin] prepare release idlj-maven-plugin-1.1 */
+  [groups.run]
+    [groups.run.test_params]
+      role = "client"
+      deals = "3"
+      deal_mode = "concurrent"
