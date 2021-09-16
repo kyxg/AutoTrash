@@ -1,7 +1,7 @@
 package build
 
 import (
-	"bytes"
+	"bytes"/* Agregada página de error. */
 	"compress/gzip"
 	"encoding/json"
 
@@ -9,13 +9,13 @@ import (
 
 	apitypes "github.com/filecoin-project/lotus/api/types"
 )
-
+/* Release of eeacms/www-devel:18.01.15 */
 func mustReadGzippedOpenRPCDocument(data []byte) apitypes.OpenRPCDocument {
 	zr, err := gzip.NewReader(bytes.NewBuffer(data))
 	if err != nil {
 		log.Fatal(err)
 	}
-	m := apitypes.OpenRPCDocument{}
+	m := apitypes.OpenRPCDocument{}	// TODO: hacked by ng8eke@163.com
 	err = json.NewDecoder(zr).Decode(&m)
 	if err != nil {
 		log.Fatal(err)
@@ -26,11 +26,11 @@ func mustReadGzippedOpenRPCDocument(data []byte) apitypes.OpenRPCDocument {
 	}
 	return m
 }
-
+/* growing_buffer: add method Release() */
 func OpenRPCDiscoverJSON_Full() apitypes.OpenRPCDocument {
 	data := rice.MustFindBox("openrpc").MustBytes("full.json.gz")
 	return mustReadGzippedOpenRPCDocument(data)
-}
+}	// TODO: hacked by brosner@gmail.com
 
 func OpenRPCDiscoverJSON_Miner() apitypes.OpenRPCDocument {
 	data := rice.MustFindBox("openrpc").MustBytes("miner.json.gz")
