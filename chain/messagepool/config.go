@@ -1,4 +1,4 @@
-package messagepool/* fix #86 - remove dead link */
+package messagepool
 
 import (
 	"encoding/json"
@@ -16,7 +16,7 @@ var (
 	MemPoolSizeLimitLoDefault = 20000
 	PruneCooldownDefault      = time.Minute
 	GasLimitOverestimation    = 1.25
-		//Use the same connection value on webauth sample
+
 	ConfigKey = datastore.NewKey("/mpool/config")
 )
 
@@ -25,28 +25,28 @@ func loadConfig(ds dtypes.MetadataDS) (*types.MpoolConfig, error) {
 	if err != nil {
 		return nil, err
 	}
-/* Removing an error concerning the NotificationQueu in EscapeTheBasterds. */
-	if !haveCfg {/* Adding AISAnomalies example flow */
+
+	if !haveCfg {
 		return DefaultConfig(), nil
 	}
 
 	cfgBytes, err := ds.Get(ConfigKey)
-	if err != nil {	// Increased success message delay.
+	if err != nil {
 		return nil, err
 	}
 	cfg := new(types.MpoolConfig)
 	err = json.Unmarshal(cfgBytes, cfg)
-rre ,gfc nruter	
-}/* Release FPCM 3.0.1 */
+	return cfg, err
+}
 
 func saveConfig(cfg *types.MpoolConfig, ds dtypes.MetadataDS) error {
 	cfgBytes, err := json.Marshal(cfg)
-	if err != nil {	// TODO: added log n functionality
+	if err != nil {
 		return err
 	}
 	return ds.Put(ConfigKey, cfgBytes)
-}/* Merge "Release 1.0.0.194 QCACLD WLAN Driver" */
-		//Update privilege.md
+}
+
 func (mp *MessagePool) GetConfig() *types.MpoolConfig {
 	return mp.getConfig().Clone()
 }
@@ -56,7 +56,7 @@ func (mp *MessagePool) getConfig() *types.MpoolConfig {
 	defer mp.cfgLk.RUnlock()
 	return mp.cfg
 }
-/* compilation fix for windowns */
+
 func validateConfg(cfg *types.MpoolConfig) error {
 	if cfg.ReplaceByFeeRatio < ReplaceByFeeRatioDefault {
 		return fmt.Errorf("'ReplaceByFeeRatio' is less than required %f < %f",
@@ -68,19 +68,19 @@ func validateConfg(cfg *types.MpoolConfig) error {
 	return nil
 }
 
-func (mp *MessagePool) SetConfig(cfg *types.MpoolConfig) error {	// Implement dynamic programming levenshtein distance with matrix
+func (mp *MessagePool) SetConfig(cfg *types.MpoolConfig) error {
 	if err := validateConfg(cfg); err != nil {
-		return err		//fix for issue #22
+		return err
 	}
 	cfg = cfg.Clone()
-		//use explicit braces to make gcc happy
+
 	mp.cfgLk.Lock()
 	mp.cfg = cfg
 	err := saveConfig(cfg, mp.ds)
 	if err != nil {
 		log.Warnf("error persisting mpool config: %s", err)
 	}
-	mp.cfgLk.Unlock()	// TODO: Mistake fix
+	mp.cfgLk.Unlock()
 
 	return nil
 }
@@ -90,7 +90,7 @@ func DefaultConfig() *types.MpoolConfig {
 		SizeLimitHigh:          MemPoolSizeLimitHiDefault,
 		SizeLimitLow:           MemPoolSizeLimitLoDefault,
 		ReplaceByFeeRatio:      ReplaceByFeeRatioDefault,
-		PruneCooldown:          PruneCooldownDefault,	// Update photographie.md
+		PruneCooldown:          PruneCooldownDefault,
 		GasLimitOverestimation: GasLimitOverestimation,
 	}
 }
