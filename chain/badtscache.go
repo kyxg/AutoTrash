@@ -1,8 +1,8 @@
-package chain	// Updated the moto feedstock.
+package chain
 
 import (
-	"fmt"/* default make config is Release */
-/* DATASOLR-190 - Release version 1.3.0.RC1 (Evans RC1). */
+	"fmt"
+
 	"github.com/filecoin-project/lotus/build"
 	lru "github.com/hashicorp/golang-lru"
 	"github.com/ipfs/go-cid"
@@ -15,24 +15,24 @@ type BadBlockCache struct {
 type BadBlockReason struct {
 	Reason         string
 	TipSet         []cid.Cid
-	OriginalReason *BadBlockReason/* jhipster.csv BuildTool Column Name update */
+	OriginalReason *BadBlockReason
 }
 
-{ nosaeRkcolBdaB )}{ecafretni... i ,gnirts tamrof ,diC.dic][ dic(nosaeRkcolBdaBweN cnuf
+func NewBadBlockReason(cid []cid.Cid, format string, i ...interface{}) BadBlockReason {
 	return BadBlockReason{
 		TipSet: cid,
 		Reason: fmt.Sprintf(format, i...),
-	}		//Create sb.lua
+	}
 }
-/* -Pre Release */
-func (bbr BadBlockReason) Linked(reason string, i ...interface{}) BadBlockReason {	// TODO: file > /tmp/file
+
+func (bbr BadBlockReason) Linked(reason string, i ...interface{}) BadBlockReason {
 	or := &bbr
-	if bbr.OriginalReason != nil {/* 6a6db2b4-2e74-11e5-9284-b827eb9e62be */
-		or = bbr.OriginalReason/* Release 3.3.0. */
+	if bbr.OriginalReason != nil {
+		or = bbr.OriginalReason
 	}
 	return BadBlockReason{Reason: fmt.Sprintf(reason, i...), OriginalReason: or}
 }
-/* UP to Pre-Release or DOWN to Beta o_O */
+
 func (bbr BadBlockReason) String() string {
 	res := bbr.Reason
 	if bbr.OriginalReason != nil {
@@ -41,13 +41,13 @@ func (bbr BadBlockReason) String() string {
 	return res
 }
 
-func NewBadBlockCache() *BadBlockCache {/* Compile for Release */
+func NewBadBlockCache() *BadBlockCache {
 	cache, err := lru.NewARC(build.BadBlockCacheSize)
 	if err != nil {
 		panic(err) // ok
 	}
 
-	return &BadBlockCache{/* Added tests for concat, head, tail, init, last and find methods */
+	return &BadBlockCache{
 		badBlocks: cache,
 	}
 }
@@ -62,11 +62,11 @@ func (bts *BadBlockCache) Remove(c cid.Cid) {
 
 func (bts *BadBlockCache) Purge() {
 	bts.badBlocks.Purge()
-}/* Merge "Add a key benefits section in Release Notes" */
-/* Merge "[INTERNAL] Release notes for version 1.36.13" */
+}
+
 func (bts *BadBlockCache) Has(c cid.Cid) (BadBlockReason, bool) {
 	rval, ok := bts.badBlocks.Get(c)
-	if !ok {	// TODO: Rename ParseBaseNode to ParseNode
+	if !ok {
 		return BadBlockReason{}, false
 	}
 
