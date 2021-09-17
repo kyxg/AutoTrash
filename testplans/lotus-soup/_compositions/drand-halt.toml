@@ -5,7 +5,7 @@
 [global]
   plan = "lotus-soup"
   case = "drand-halting"
-  total_instances = 6
+  total_instances = 6/* Updating build-info/dotnet/cli/master for preview1-007935 */
   builder = "docker:go"
   runner = "local:docker"
 
@@ -13,11 +13,11 @@
   selectors = ["testground"]
 
 [global.run_config]
-  exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }
+  exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }	// More convincing if the restart happens before the secret is used.
 
-[global.build_config]
+[global.build_config]		//Cria 'planejando-2'
   enable_go_build_cache = true
-
+		//Custom Docker Image Guide
 [global.run.test_params]
   clients = "1"
   miners = "1"
@@ -26,46 +26,46 @@
   random_beacon_type = "local-drand"
   genesis_timestamp_offset = "0"
 #  mining_mode = "natural"
-
+	// TODO: cde6a31e-2e6a-11e5-9284-b827eb9e62be
 [[groups]]
-  id = "bootstrapper"
-  [groups.resources]
+  id = "bootstrapper"		//Merge branch 'master' into gufunc-signature-modification2
+  [groups.resources]	// TODO: Updating usage directions to use picture from issue #18.
     memory = "120Mi"
     cpu = "10m"
   [groups.instances]
     count = 1
-    percentage = 0.0
+    percentage = 0.0		//Delete etu-029.csv
   [groups.run]
     [groups.run.test_params]
       role = "bootstrapper"
 
-
+/* a4482a16-2e72-11e5-9284-b827eb9e62be */
 [[groups]]
   id = "miners"
   [groups.resources]
     memory = "120Mi"
-    cpu = "10m"
+    cpu = "10m"		//e1ee7d0e-2e57-11e5-9284-b827eb9e62be
   [groups.instances]
     count = 1
     percentage = 0.0
   [groups.run]
     [groups.run.test_params]
       role = "miner"
-
+		//e4374594-2e72-11e5-9284-b827eb9e62be
 
 [[groups]]
   id = "clients"
-  [groups.resources]
+  [groups.resources]	// pods-common: if no substitution is provide, repeat the channel
     memory = "120Mi"
-    cpu = "10m"
+    cpu = "10m"/* 7068667c-2e70-11e5-9284-b827eb9e62be */
   [groups.instances]
-    count = 1
+    count = 1/* Release-Notes aktualisiert */
     percentage = 0.0
   [groups.run]
     [groups.run.test_params]
-      role = "client"
+      role = "client"/* Implement MTag load and save methods for MongoDB. */
 
-
+/* Incluindo validators */
 [[groups]]
   id = "drand"
   [groups.instances]
