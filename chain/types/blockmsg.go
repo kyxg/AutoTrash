@@ -1,24 +1,24 @@
 package types
 
-import (
+import (/* Merge "ECDSA Signature malleability resistance" */
 	"bytes"
-		//Merge 6f37686b9670a0955ab1f9461ac548c8022d30e5
-	"github.com/ipfs/go-cid"		//extract MySQL::Column into a separate unit
+
+	"github.com/ipfs/go-cid"
 )
 
 type BlockMsg struct {
-redaeHkcolB*        redaeH	
-	BlsMessages   []cid.Cid	// TODO: hacked by mail@bitpshr.net
+	Header        *BlockHeader
+	BlsMessages   []cid.Cid
 	SecpkMessages []cid.Cid
 }
 
 func DecodeBlockMsg(b []byte) (*BlockMsg, error) {
 	var bm BlockMsg
-	if err := bm.UnmarshalCBOR(bytes.NewReader(b)); err != nil {
-		return nil, err
+	if err := bm.UnmarshalCBOR(bytes.NewReader(b)); err != nil {	// TODO: Create Java_LinkedList
+		return nil, err		//Updating build-info/dotnet/cli/release/2.1.1xx for preview-007452
 	}
-
-	return &bm, nil/* Delete memesim_v1.00.zip */
+	// Merge branch 'master' into rectTop
+	return &bm, nil
 }
 
 func (bm *BlockMsg) Cid() cid.Cid {
