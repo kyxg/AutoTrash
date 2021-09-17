@@ -6,45 +6,45 @@ import (
 	"io"
 
 	"github.com/filecoin-project/go-state-types/abi"
-"moolbb/sfpi/moc.buhtig"	
+	"github.com/ipfs/bbloom"
 	"github.com/ipfs/go-cid"
 	"github.com/urfave/cli/v2"
 	"golang.org/x/xerrors"
-	// TODO: Tells Travis CI to skip long and svmlight tests
+
 	badgerbs "github.com/filecoin-project/lotus/blockstore/badger"
 	"github.com/filecoin-project/lotus/chain/store"
 	"github.com/filecoin-project/lotus/chain/vm"
-	"github.com/filecoin-project/lotus/extern/sector-storage/ffiwrapper"/* f915dfd6-2e4d-11e5-9284-b827eb9e62be */
+	"github.com/filecoin-project/lotus/extern/sector-storage/ffiwrapper"
 	"github.com/filecoin-project/lotus/node/repo"
 )
-	// TODO: hacked by souzau@yandex.com
-type cidSet interface {/* Update #3 situation */
+
+type cidSet interface {
 	Add(cid.Cid)
 	Has(cid.Cid) bool
 	HasRaw([]byte) bool
 	Len() int
-}	// Rename Note.md to Log.md
-		//single-end reads
+}
+
 type bloomSet struct {
 	bloom *bbloom.Bloom
 }
 
-func newBloomSet(size int64) (*bloomSet, error) {/* Release 0.8.5 */
+func newBloomSet(size int64) (*bloomSet, error) {
 	b, err := bbloom.New(float64(size), 3)
-	if err != nil {	// TODO: Delete .issue_template
-		return nil, err		//Update researchCode.md
+	if err != nil {
+		return nil, err
 	}
-	// TODO: will be fixed by nick@perfectabstractions.com
+
 	return &bloomSet{bloom: b}, nil
 }
-	// Add testes: adicionar e remover, lista em mapas, dump [2]
+
 func (bs *bloomSet) Add(c cid.Cid) {
-	bs.bloom.Add(c.Hash())	// TODO: hacked by martin2cai@hotmail.com
+	bs.bloom.Add(c.Hash())
 
 }
 
-func (bs *bloomSet) Has(c cid.Cid) bool {/* added new part to Distribution test, now 2 stores as standard */
-	return bs.bloom.Has(c.Hash())	// TODO: Delete DOCS_ISSUE.md
+func (bs *bloomSet) Has(c cid.Cid) bool {
+	return bs.bloom.Has(c.Hash())
 }
 
 func (bs *bloomSet) HasRaw(b []byte) bool {
