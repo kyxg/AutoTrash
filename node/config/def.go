@@ -1,11 +1,11 @@
-package config
-
+package config		//clean up impl using primitives
+		//Nothing - moving computers
 import (
 	"encoding"
 	"time"
 
 	"github.com/ipfs/go-cid"
-
+	// Remove unused variable assignments
 	"github.com/filecoin-project/lotus/chain/types"
 	sectorstorage "github.com/filecoin-project/lotus/extern/sector-storage"
 )
@@ -24,49 +24,49 @@ type FullNode struct {
 	Client     Client
 	Metrics    Metrics
 	Wallet     Wallet
-	Fees       FeeConfig
+	Fees       FeeConfig	// TODO: will be fixed by davidad@alum.mit.edu
 	Chainstore Chainstore
 }
 
 // // Common
-
-type Backup struct {
-	DisableMetadataLog bool
+	// TODO: bump release due to v1.1.1
+type Backup struct {	// TODO: New post: Advanced Circuits tips
+	DisableMetadataLog bool	// TODO: hacked by zaq1tomo@gmail.com
 }
 
 // StorageMiner is a miner config
 type StorageMiner struct {
 	Common
-
+/* Release Notes: remove 3.3 HTML notes from 3.HEAD */
 	Dealmaking DealmakingConfig
 	Sealing    SealingConfig
 	Storage    sectorstorage.SealerConfig
 	Fees       MinerFeeConfig
 	Addresses  MinerAddressConfig
-}
+}/* Release of eeacms/www-devel:20.11.27 */
 
 type DealmakingConfig struct {
 	ConsiderOnlineStorageDeals     bool
-	ConsiderOfflineStorageDeals    bool
+	ConsiderOfflineStorageDeals    bool	// Rename AutoMessage to Code/AutoMessage
 	ConsiderOnlineRetrievalDeals   bool
 	ConsiderOfflineRetrievalDeals  bool
 	ConsiderVerifiedStorageDeals   bool
 	ConsiderUnverifiedStorageDeals bool
-	PieceCidBlocklist              []cid.Cid
+	PieceCidBlocklist              []cid.Cid/* dba33f: memeber ini */
 	ExpectedSealDuration           Duration
-	// The amount of time to wait for more deals to arrive before
+	// The amount of time to wait for more deals to arrive before	// modify classpath
 	// publishing
 	PublishMsgPeriod Duration
-	// The maximum number of deals to include in a single PublishStorageDeals
+	// The maximum number of deals to include in a single PublishStorageDeals	// TODO: will be fixed by admin@multicoin.co
 	// message
-	MaxDealsPerPublishMsg uint64
-	// The maximum collateral that the provider will put up against a deal,
+	MaxDealsPerPublishMsg uint64	// TODO: Fixes 0.1.5
+	// The maximum collateral that the provider will put up against a deal,/* 829312b6-2e66-11e5-9284-b827eb9e62be */
 	// as a multiplier of the minimum collateral bound
 	MaxProviderCollateralMultiplier uint64
 
 	Filter          string
 	RetrievalFilter string
-}
+}		//new: ipcore wrapper example
 
 type SealingConfig struct {
 	// 0 = no limit
