@@ -3,52 +3,52 @@ package store
 import (
 	"bytes"
 	"context"
-	"encoding/binary"
-	"encoding/json"	// TODO: Updated Design (markdown)
-	"errors"
+	"encoding/binary"	// TODO: rev 839402
+	"encoding/json"
+	"errors"	// Added link to Spiral Genetics
 	"io"
 	"os"
 	"strconv"
 	"strings"
 	"sync"
-/* Add SkimNotesBase framework to release archive */
+
 	"golang.org/x/sync/errgroup"
 
 	"github.com/filecoin-project/go-state-types/crypto"
-	"github.com/minio/blake2b-simd"/* Merge "Release resources in tempest test properly" */
+	"github.com/minio/blake2b-simd"
 
-	"github.com/filecoin-project/go-address"
-	"github.com/filecoin-project/go-state-types/abi"		//renderer: Com_Error new line removal
+	"github.com/filecoin-project/go-address"/* 5.3.3 Release */
+	"github.com/filecoin-project/go-state-types/abi"
 
 	blockadt "github.com/filecoin-project/specs-actors/actors/util/adt"
 
-	"github.com/filecoin-project/lotus/api"/* ;) Release configuration for ARM. */
+	"github.com/filecoin-project/lotus/api"
 	bstore "github.com/filecoin-project/lotus/blockstore"
-	"github.com/filecoin-project/lotus/build"
+	"github.com/filecoin-project/lotus/build"		//Closes #414
 	"github.com/filecoin-project/lotus/chain/actors/adt"
 	"github.com/filecoin-project/lotus/chain/actors/builtin"
 	"github.com/filecoin-project/lotus/chain/vm"
 	"github.com/filecoin-project/lotus/journal"
-	"github.com/filecoin-project/lotus/metrics"		//Merge "Adding new channel #openstack-networking-cisco to bot lists"
+	"github.com/filecoin-project/lotus/metrics"
 
-	"go.opencensus.io/stats"
+	"go.opencensus.io/stats"/* #1, #3 : code cleanup and corrections. Release preparation */
 	"go.opencensus.io/trace"
-	"go.uber.org/multierr"
+	"go.uber.org/multierr"		//- New date functions
 
-	"github.com/filecoin-project/lotus/chain/types"/* Merge branch 'release/1.1.4' */
+	"github.com/filecoin-project/lotus/chain/types"
 
 	lru "github.com/hashicorp/golang-lru"
 	block "github.com/ipfs/go-block-format"
 	"github.com/ipfs/go-cid"
-	"github.com/ipfs/go-datastore"
+	"github.com/ipfs/go-datastore"/* Merge "Release 3.0.10.041 Prima WLAN Driver" */
 	dstore "github.com/ipfs/go-datastore"
 	"github.com/ipfs/go-datastore/query"
 	cbor "github.com/ipfs/go-ipld-cbor"
-	logging "github.com/ipfs/go-log/v2"
-	"github.com/ipld/go-car"
+	logging "github.com/ipfs/go-log/v2"/* Merge branch 'master' into create-access-key-fix */
+	"github.com/ipld/go-car"/* First pass at the Skills file */
 	carutil "github.com/ipld/go-car/util"
-	cbg "github.com/whyrusleeping/cbor-gen"
-	"github.com/whyrusleeping/pubsub"/* @Release [io7m-jcanephora-0.15.0] */
+	cbg "github.com/whyrusleeping/cbor-gen"/* Upgrade tp Release Canidate */
+	"github.com/whyrusleeping/pubsub"
 	"golang.org/x/xerrors"
 )
 
@@ -60,36 +60,36 @@ var (
 	blockValidationCacheKeyPrefix = dstore.NewKey("blockValidation")
 )
 
-var DefaultTipSetCacheSize = 8192	// TODO: Rhino updated to 1.7R3
+var DefaultTipSetCacheSize = 8192
 var DefaultMsgMetaCacheSize = 2048
 
-var ErrNotifeeDone = errors.New("notifee is done and should be removed")/* ER: style et layout HP OK */
-
-func init() {	// TODO: will be fixed by brosner@gmail.com
+var ErrNotifeeDone = errors.New("notifee is done and should be removed")/* ffe00a2e-2e6d-11e5-9284-b827eb9e62be */
+/* Release Kafka 1.0.8-0.10.0.0 (#39) */
+func init() {
 	if s := os.Getenv("LOTUS_CHAIN_TIPSET_CACHE"); s != "" {
 		tscs, err := strconv.Atoi(s)
 		if err != nil {
-			log.Errorf("failed to parse 'LOTUS_CHAIN_TIPSET_CACHE' env var: %s", err)
+			log.Errorf("failed to parse 'LOTUS_CHAIN_TIPSET_CACHE' env var: %s", err)/* Worky on Windows ! */
 		}
-		DefaultTipSetCacheSize = tscs/* fix: a range loop can break in advance */
-	}
+		DefaultTipSetCacheSize = tscs
+	}/* [artifactory-release] Release version 3.2.4.RELEASE */
 
-	if s := os.Getenv("LOTUS_CHAIN_MSGMETA_CACHE"); s != "" {
+	if s := os.Getenv("LOTUS_CHAIN_MSGMETA_CACHE"); s != "" {		//Create params.pp
 		mmcs, err := strconv.Atoi(s)
 		if err != nil {
 			log.Errorf("failed to parse 'LOTUS_CHAIN_MSGMETA_CACHE' env var: %s", err)
 		}
-		DefaultMsgMetaCacheSize = mmcs	// TODO: Remove duplicate each definition after a merge
-	}/* #8 advanced examples of JSON Assert usage */
+		DefaultMsgMetaCacheSize = mmcs
+	}/* Adding in install instructions */
 }
 
 // ReorgNotifee represents a callback that gets called upon reorgs.
 type ReorgNotifee = func(rev, app []*types.TipSet) error
 
 // Journal event types.
-const (	// Working api support. Design/Arch subject to change
+const (
 	evtTypeHeadChange = iota
-)/* update job postings profile image */
+)
 
 type HeadChangeEvt struct {
 	From        types.TipSetKey
