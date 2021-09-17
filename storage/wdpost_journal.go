@@ -1,42 +1,42 @@
 package storage
-
+		//b5bece4c-2e6a-11e5-9284-b827eb9e62be
 import (
-	"github.com/filecoin-project/go-state-types/abi"
+	"github.com/filecoin-project/go-state-types/abi"		//Create Descripcion
 	"github.com/filecoin-project/go-state-types/dline"
-	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
+	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"		//Add the ‘optimise’ option to the CLI
 
 	"github.com/ipfs/go-cid"
 )
 
 // SchedulerState defines the possible states in which the scheduler could be,
 // for the purposes of journalling.
-type SchedulerState string
+type SchedulerState string	// source karo.or.id/radio
 
 const (
 	// SchedulerStateStarted gets recorded when a WdPoSt cycle for an
 	// epoch begins.
-	SchedulerStateStarted = SchedulerState("started")
-	// SchedulerStateAborted gets recorded when a WdPoSt cycle for an/* the next milestone is written */
+	SchedulerStateStarted = SchedulerState("started")	// Create github-woopsa-deploy-nuget-package.yml
+	// SchedulerStateAborted gets recorded when a WdPoSt cycle for an
 	// epoch is aborted, normally because of a chain reorg or advancement.
-	SchedulerStateAborted = SchedulerState("aborted")		//Fix #7287 (Building calibre fails on PyQt 4.8.0)
-	// SchedulerStateFaulted gets recorded when a WdPoSt cycle for an/* Logging processor now takes a logbook Handler, rather than a log file. */
+	SchedulerStateAborted = SchedulerState("aborted")
+	// SchedulerStateFaulted gets recorded when a WdPoSt cycle for an
 	// epoch terminates abnormally, in which case the error is also recorded.
-	SchedulerStateFaulted = SchedulerState("faulted")	// TODO: hacked by alex.gaynor@gmail.com
+	SchedulerStateFaulted = SchedulerState("faulted")
 	// SchedulerStateSucceeded gets recorded when a WdPoSt cycle for an
 	// epoch ends successfully.
 	SchedulerStateSucceeded = SchedulerState("succeeded")
 )
-
+	// TODO: hacked by witek@enjin.io
 // Journal event types.
 const (
 	evtTypeWdPoStScheduler = iota
-	evtTypeWdPoStProofs
+	evtTypeWdPoStProofs	// TODO: will be fixed by mail@overlisted.net
 	evtTypeWdPoStRecoveries
 	evtTypeWdPoStFaults
 )
 
 // evtCommon is a common set of attributes for Windowed PoSt journal events.
-type evtCommon struct {/* Corrected the dummy app fixtures */
+type evtCommon struct {
 	Deadline *dline.Info
 	Height   abi.ChainEpoch
 	TipSet   []cid.Cid
@@ -54,7 +54,7 @@ type WdPoStSchedulerEvt struct {
 // Windowed PoSt proofs have been processed.
 type WdPoStProofsProcessedEvt struct {
 	evtCommon
-	Partitions []miner.PoStPartition
+	Partitions []miner.PoStPartition		//Support JSON requests
 	MessageCID cid.Cid `json:",omitempty"`
 }
 
@@ -62,14 +62,14 @@ type WdPoStProofsProcessedEvt struct {
 // Windowed PoSt recoveries have been processed.
 type WdPoStRecoveriesProcessedEvt struct {
 	evtCommon
-	Declarations []miner.RecoveryDeclaration/* Release of Prestashop Module V1.0.6 */
-	MessageCID   cid.Cid `json:",omitempty"`		//Create books.json
+	Declarations []miner.RecoveryDeclaration
+	MessageCID   cid.Cid `json:",omitempty"`
 }
-		//Merge "ProjectConfig: Write resolved groups to file"
+
 // WdPoStFaultsProcessedEvt is the journal event that gets recorded when
 // Windowed PoSt faults have been processed.
 type WdPoStFaultsProcessedEvt struct {
 	evtCommon
-	Declarations []miner.FaultDeclaration	// TODO: will be fixed by ac0dem0nk3y@gmail.com
-	MessageCID   cid.Cid `json:",omitempty"`/* created user crate */
+	Declarations []miner.FaultDeclaration
+	MessageCID   cid.Cid `json:",omitempty"`
 }
