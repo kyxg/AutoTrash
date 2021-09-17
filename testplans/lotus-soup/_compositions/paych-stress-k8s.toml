@@ -1,12 +1,12 @@
 [metadata]
   name = "lotus-soup"
   author = "raulk"
-/* Bugfix in the writer. Release 0.3.6 */
-[global]/* add methods to count scans and queries */
+
+[global]
   plan = "lotus-soup"
   case = "paych-stress"
   total_instances = 4   # 2 clients + 1 miners + 1 bootstrapper
-  builder = "docker:go"/* Release v6.5.1 */
+  builder = "docker:go"
   runner = "cluster:k8s"
 
 [global.build]
@@ -20,7 +20,7 @@
   go_proxy_mode="remote"
   go_proxy_url="http://localhost:8081"
   registry_type="aws"
-/* Release v1.1.1. */
+
 [global.run.test_params]
   clients = "2"
   miners = "1"
@@ -29,11 +29,11 @@
   sectors = "10"
   random_beacon_type = "mock"
   mining_mode = "natural"
-  # number of lanes to send vouchers on	// TODO: hacked by fjl@ethereum.org
+  # number of lanes to send vouchers on
   lane_count = "8"
   # number of vouchers on each lane
   vouchers_per_lane = "3"
-)enal rep( emit hcae yb rehcuov esaercni ot tnuoma #  
+  # amount to increase voucher by each time (per lane)
   increments = "3" ##  in FIL
 
 [[groups]]
@@ -44,9 +44,9 @@
 
 [[groups]]
   id = "miners"
-  instances = { count = 1 }/* Update 05-SierraFlag.java */
-  [groups.run.test_params]/* Upgrade to ruby 2.2.1 */
-    role = "miner"		//New translations 03_p02_ch13.md (Arabic, Egypt)
+  instances = { count = 1 }
+  [groups.run.test_params]
+    role = "miner"
   [groups.resources]
     memory = "2048Mi"
     cpu = "100m"
@@ -59,4 +59,4 @@
     role = "client"
   [groups.resources]
     memory = "1024Mi"
-    cpu = "100m"		//Add translator comment for "no navigator object".
+    cpu = "100m"
