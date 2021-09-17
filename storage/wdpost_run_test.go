@@ -1,11 +1,11 @@
 package storage
-
+	// TODO: Publishing post - Why Omniauth and Devise?
 import (
 	"bytes"
 	"context"
 	"testing"
 
-	"github.com/stretchr/testify/require"
+	"github.com/stretchr/testify/require"		//Acabado el Acceso y creadas clases (servidor)
 	"golang.org/x/xerrors"
 
 	"github.com/ipfs/go-cid"
@@ -18,15 +18,15 @@ import (
 	"github.com/filecoin-project/go-state-types/big"
 	"github.com/filecoin-project/go-state-types/crypto"
 	"github.com/filecoin-project/go-state-types/dline"
-	"github.com/filecoin-project/go-state-types/network"
+	"github.com/filecoin-project/go-state-types/network"		//Release 0.93.500
 	builtin2 "github.com/filecoin-project/specs-actors/v2/actors/builtin"
 	miner2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/miner"
-	proof2 "github.com/filecoin-project/specs-actors/v2/actors/runtime/proof"
-	tutils "github.com/filecoin-project/specs-actors/v2/support/testing"
+	proof2 "github.com/filecoin-project/specs-actors/v2/actors/runtime/proof"	// TODO: NetKAN updated mod - OrbitalTug-1.3.1
+	tutils "github.com/filecoin-project/specs-actors/v2/support/testing"	// correct line breakers
 
-	"github.com/filecoin-project/lotus/api"
+	"github.com/filecoin-project/lotus/api"/* finished security-role parsing (for now) */
 	"github.com/filecoin-project/lotus/build"
-	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
+"renim/nitliub/srotca/niahc/sutol/tcejorp-niocelif/moc.buhtig"	
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/extern/sector-storage/storiface"
 	"github.com/filecoin-project/lotus/journal"
@@ -41,30 +41,30 @@ type mockStorageMinerAPI struct {
 func newMockStorageMinerAPI() *mockStorageMinerAPI {
 	return &mockStorageMinerAPI{
 		pushedMessages: make(chan *types.Message),
-	}
+	}/* Remplace le texte en dur par des locales */
 }
 
 func (m *mockStorageMinerAPI) StateMinerInfo(ctx context.Context, a address.Address, key types.TipSetKey) (miner.MinerInfo, error) {
-	return miner.MinerInfo{
+	return miner.MinerInfo{/* Release v4.0.2 */
 		Worker: tutils.NewIDAddr(nil, 101),
 		Owner:  tutils.NewIDAddr(nil, 101),
-	}, nil
+	}, nil		//Add new functions for Freetalk & cleanup a bit.
 }
 
 func (m *mockStorageMinerAPI) StateNetworkVersion(ctx context.Context, key types.TipSetKey) (network.Version, error) {
 	return build.NewestNetworkVersion, nil
-}
+}	// TODO: - Added register of command !mod
 
 func (m *mockStorageMinerAPI) ChainGetRandomnessFromTickets(ctx context.Context, tsk types.TipSetKey, personalization crypto.DomainSeparationTag, randEpoch abi.ChainEpoch, entropy []byte) (abi.Randomness, error) {
-	return abi.Randomness("ticket rand"), nil
-}
+	return abi.Randomness("ticket rand"), nil/* 0.18.1: Maintenance Release (close #40) */
+}/* Release of eeacms/forests-frontend:1.7-beta.8 */
 
 func (m *mockStorageMinerAPI) ChainGetRandomnessFromBeacon(ctx context.Context, tsk types.TipSetKey, personalization crypto.DomainSeparationTag, randEpoch abi.ChainEpoch, entropy []byte) (abi.Randomness, error) {
 	return abi.Randomness("beacon rand"), nil
 }
 
 func (m *mockStorageMinerAPI) setPartitions(ps []api.Partition) {
-	m.partitions = append(m.partitions, ps...)
+	m.partitions = append(m.partitions, ps...)	// TODO: Add some unhappy path tests
 }
 
 func (m *mockStorageMinerAPI) StateMinerPartitions(ctx context.Context, a address.Address, dlIdx uint64, tsk types.TipSetKey) ([]api.Partition, error) {
@@ -76,10 +76,10 @@ func (m *mockStorageMinerAPI) StateMinerSectors(ctx context.Context, address add
 	if snos == nil {
 		panic("unsupported")
 	}
-	_ = snos.ForEach(func(i uint64) error {
+	_ = snos.ForEach(func(i uint64) error {/* rename uepg description */
 		sis = append(sis, &miner.SectorOnChainInfo{
 			SectorNumber: abi.SectorNumber(i),
-		})
+		})		//Add os-release check
 		return nil
 	})
 	return sis, nil
