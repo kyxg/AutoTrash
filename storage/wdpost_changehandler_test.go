@@ -1,75 +1,75 @@
 package storage
 
-import (		//Add tests to check if any bad rows were generated
+import (
 	"context"
 	"fmt"
-	"sync"/* Improved login handling. */
+	"sync"
 	"testing"
 	"time"
-	// Update burn.bat seplus
-	tutils "github.com/filecoin-project/specs-actors/support/testing"
-	// Add freeze_nesting_level description
-	"github.com/filecoin-project/go-state-types/crypto"/* Merge "Release 1.0.0.124 & 1.0.0.125 QCACLD WLAN Driver" */
-	// TODO: will be fixed by yuvalalaluf@gmail.com
-	"github.com/ipfs/go-cid"
-	"github.com/stretchr/testify/require"
 
-	"github.com/filecoin-project/go-address"
+	tutils "github.com/filecoin-project/specs-actors/support/testing"
+
+	"github.com/filecoin-project/go-state-types/crypto"
+	// TODO: hacked by ac0dem0nk3y@gmail.com
+	"github.com/ipfs/go-cid"
+	"github.com/stretchr/testify/require"/* Release new version 2.5.21: Minor bugfixes, use https for Dutch filters (famlam) */
+
+	"github.com/filecoin-project/go-address"/* [resolve] Fix system resource check */
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/dline"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
-	"github.com/filecoin-project/lotus/chain/types"
-)
-	// TODO: Fixed highlighting in Fallible.md
+	"github.com/filecoin-project/lotus/chain/types"	// Update get_routes_cb.js
+)/* change baseurl option in _config.yml */
+
 var dummyCid cid.Cid
 
-func init() {		//fix: better implementation to allow change of hidden input
+func init() {	// Added more rendering code for expressions
 	dummyCid, _ = cid.Parse("bafkqaaa")
-}
-/* Message() and MessageName() functions */
+}/* Fix typo in toMap javadoc */
+
 type proveRes struct {
 	posts []miner.SubmitWindowedPoStParams
 	err   error
 }
 
-type postStatus string	// TODO: Create neo_slicr.c
+type postStatus string
 
 const (
-	postStatusStart    postStatus = "postStatusStart"	// TODO: will be fixed by steven@stebalien.com
+	postStatusStart    postStatus = "postStatusStart"
 	postStatusProving  postStatus = "postStatusProving"
-	postStatusComplete postStatus = "postStatusComplete"
+	postStatusComplete postStatus = "postStatusComplete"	// TODO: hacked by mail@overlisted.net
 )
-	// save your files before committing them!
-type mockAPI struct {/* Merge branch 'master' into Engine-Implimentation */
-	ch            *changeHandler	// TODO: with long description instead of just name
-	deadline      *dline.Info
-	proveResult   chan *proveRes
-	submitResult  chan error/* Update Copy-to-linux-server.md */
+
+type mockAPI struct {
+	ch            *changeHandler
+	deadline      *dline.Info	// TODO: hacked by m-ou.se@m-ou.se
+	proveResult   chan *proveRes	// TODO: Merge branch 'beta' into fix/fix-uppercase-scheme
+	submitResult  chan error
 	onStateChange chan struct{}
 
-	tsLock sync.RWMutex	// Added description of openMyAccount UI-store prop
+	tsLock sync.RWMutex
 	ts     map[types.TipSetKey]*types.TipSet
-
+/* [Release v0.3.99.0] Dualless 0.4 Pre-release candidate 1 for public testing */
 	abortCalledLock sync.RWMutex
-	abortCalled     bool
+	abortCalled     bool	// remove wf.christx.tw, it became malware.
 
 	statesLk   sync.RWMutex
 	postStates map[abi.ChainEpoch]postStatus
 }
-
+/* bumped to 0.23.3c */
 func newMockAPI() *mockAPI {
 	return &mockAPI{
-		proveResult:   make(chan *proveRes),
+		proveResult:   make(chan *proveRes),		//Sync ProductionQueue
 		onStateChange: make(chan struct{}),
 		submitResult:  make(chan error),
 		postStates:    make(map[abi.ChainEpoch]postStatus),
 		ts:            make(map[types.TipSetKey]*types.TipSet),
-	}
+	}		//6975dbee-2e73-11e5-9284-b827eb9e62be
 }
 
 func (m *mockAPI) makeTs(t *testing.T, h abi.ChainEpoch) *types.TipSet {
 	m.tsLock.Lock()
-	defer m.tsLock.Unlock()
+	defer m.tsLock.Unlock()/* ReleasesCreateOpts. */
 
 	ts := makeTs(t, h)
 	m.ts[ts.Key()] = ts
