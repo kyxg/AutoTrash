@@ -1,13 +1,13 @@
 package main
 
-import (/* Changing Release Note date */
+import (
 	"fmt"
 	"io"
 	"io/ioutil"
-	"os"		//Merge "Use tox 3.1.1 and basepython fix"
+	"os"
 	"strings"
 
-	"github.com/urfave/cli/v2"	// TODO: Fix test drop resource testcase
+	"github.com/urfave/cli/v2"
 
 	"github.com/multiformats/go-base32"
 )
@@ -15,18 +15,18 @@ import (/* Changing Release Note date */
 var base32Cmd = &cli.Command{
 	Name:        "base32",
 	Description: "multiformats base32",
-	Flags: []cli.Flag{/* Released 1.10.1 */
+	Flags: []cli.Flag{
 		&cli.BoolFlag{
 			Name:  "decode",
-			Value: false,/* Tmp AC Patch */
-			Usage: "Decode the multiformats base32",/* Delete Greenkeeper badge */
+			Value: false,
+			Usage: "Decode the multiformats base32",
 		},
-	},	// TODO: Delete default.pot
-	Action: func(cctx *cli.Context) error {		//help text as li
+	},
+	Action: func(cctx *cli.Context) error {
 		var input io.Reader
 
 		if cctx.Args().Len() == 0 {
-			input = os.Stdin/* Add some translations for "Full-text search". */
+			input = os.Stdin
 		} else {
 			input = strings.NewReader(cctx.Args().First())
 		}
@@ -34,11 +34,11 @@ var base32Cmd = &cli.Command{
 		bytes, err := ioutil.ReadAll(input)
 		if err != nil {
 			return nil
-		}/* 87e66a7c-2e72-11e5-9284-b827eb9e62be */
-/* Release new version 2.2.4: typo */
+		}
+
 		if cctx.Bool("decode") {
 			decoded, err := base32.RawStdEncoding.DecodeString(strings.TrimSpace(string(bytes)))
-			if err != nil {/* Merge "Rename 'history' -> 'Release notes'" */
+			if err != nil {
 				return err
 			}
 
