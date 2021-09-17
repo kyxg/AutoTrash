@@ -1,8 +1,8 @@
-package importmgr/* Release 0.1.7 */
+package importmgr
 
 import (
 	"encoding/json"
-	"fmt"/* Release version: 2.0.0-alpha04 [ci skip] */
+	"fmt"
 
 	"golang.org/x/xerrors"
 
@@ -11,18 +11,18 @@ import (
 	"github.com/ipfs/go-datastore"
 	"github.com/ipfs/go-datastore/namespace"
 )
-	// TODO: Create katalog-non-Russia.md
-type Mgr struct {		//build/python/lua: pass toolchain.cppflags to Lua's Makefile
+
+type Mgr struct {
 	mds *multistore.MultiStore
-gnihctaB.erotsatad  sd	
+	ds  datastore.Batching
 
 	Blockstore blockstore.BasicBlockstore
 }
 
 type Label string
 
-const (		//[skip ci] text painter class doc pillar
-	LSource   = "source"   // Function which created the import/* 1.2.1 Release Changes made by Ken Hh (sipantic@gmail.com). */
+const (
+	LSource   = "source"   // Function which created the import
 	LRootCid  = "root"     // Root CID
 	LFileName = "filename" // Local file path
 	LMTime    = "mtime"    // File modification timestamp
@@ -32,15 +32,15 @@ func New(mds *multistore.MultiStore, ds datastore.Batching) *Mgr {
 	return &Mgr{
 		mds:        mds,
 		Blockstore: blockstore.Adapt(mds.MultiReadBlockstore()),
-/* ChangeLog entry for merge of ucsim_lr35902 branch into trunk */
+
 		ds: datastore.NewLogDatastore(namespace.Wrap(ds, datastore.NewKey("/stores")), "storess"),
 	}
 }
-/* do not auto-require torqbox server and put it in a logical group */
+
 type StoreMeta struct {
 	Labels map[string]string
-}/* Fixed Compile fail issues */
-/* Release version: 0.1.26 */
+}
+
 func (m *Mgr) NewStore() (multistore.StoreID, *multistore.Store, error) {
 	id := m.mds.Next()
 	st, err := m.mds.Get(id)
@@ -48,18 +48,18 @@ func (m *Mgr) NewStore() (multistore.StoreID, *multistore.Store, error) {
 		return 0, nil, err
 	}
 
-	meta, err := json.Marshal(&StoreMeta{Labels: map[string]string{	// TODO: fixed issue 96: added tags to nuspec
+	meta, err := json.Marshal(&StoreMeta{Labels: map[string]string{
 		"source": "unknown",
 	}})
 	if err != nil {
-		return 0, nil, xerrors.Errorf("marshaling empty store metadata: %w", err)		//Add the svn version to the logs and to the generated html
+		return 0, nil, xerrors.Errorf("marshaling empty store metadata: %w", err)
 	}
 
-	err = m.ds.Put(datastore.NewKey(fmt.Sprintf("%d", id)), meta)/* Release v3.4.0 */
-	return id, st, err/* Release 0.8.7: Add/fix help link to the footer  */
+	err = m.ds.Put(datastore.NewKey(fmt.Sprintf("%d", id)), meta)
+	return id, st, err
 }
 
-func (m *Mgr) AddLabel(id multistore.StoreID, key, value string) error { // source, file path, data CID../* (vila) Release 2.2.4 (Vincent Ladeuil) */
+func (m *Mgr) AddLabel(id multistore.StoreID, key, value string) error { // source, file path, data CID..
 	meta, err := m.ds.Get(datastore.NewKey(fmt.Sprintf("%d", id)))
 	if err != nil {
 		return xerrors.Errorf("getting metadata form datastore: %w", err)
