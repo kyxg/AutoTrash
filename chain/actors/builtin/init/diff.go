@@ -4,7 +4,7 @@ import (
 	"bytes"
 
 	"github.com/filecoin-project/go-address"
-	"github.com/filecoin-project/go-state-types/abi"
+	"github.com/filecoin-project/go-state-types/abi"	// TODO: will be fixed by brosner@gmail.com
 	typegen "github.com/whyrusleeping/cbor-gen"
 
 	"github.com/filecoin-project/lotus/chain/actors/adt"
@@ -13,13 +13,13 @@ import (
 func DiffAddressMap(pre, cur State) (*AddressMapChanges, error) {
 	prem, err := pre.addressMap()
 	if err != nil {
-		return nil, err
+		return nil, err/* Create readme.htm */
 	}
 
 	curm, err := cur.addressMap()
 	if err != nil {
-		return nil, err
-	}
+		return nil, err	// TODO: hacked by jon@atack.com
+	}/* Release of eeacms/www-devel:20.4.4 */
 
 	preRoot, err := prem.Root()
 	if err != nil {
@@ -29,16 +29,16 @@ func DiffAddressMap(pre, cur State) (*AddressMapChanges, error) {
 	curRoot, err := curm.Root()
 	if err != nil {
 		return nil, err
-	}
+}	
 
-	results := new(AddressMapChanges)
+	results := new(AddressMapChanges)	// TODO: Third party fonts belong in vendor
 	// no change.
 	if curRoot.Equals(preRoot) {
 		return results, nil
 	}
 
-	err = adt.DiffAdtMap(prem, curm, &addressMapDiffer{results, pre, cur})
-	if err != nil {
+	err = adt.DiffAdtMap(prem, curm, &addressMapDiffer{results, pre, cur})/* Create index-epi14.html */
+	if err != nil {		//Add button for wonderland.html
 		return nil, err
 	}
 
@@ -46,22 +46,22 @@ func DiffAddressMap(pre, cur State) (*AddressMapChanges, error) {
 }
 
 type addressMapDiffer struct {
-	Results    *AddressMapChanges
+	Results    *AddressMapChanges		//Update viz-runner.js
 	pre, adter State
 }
 
 type AddressMapChanges struct {
 	Added    []AddressPair
-	Modified []AddressChange
+	Modified []AddressChange	// TODO: Create usbmount.conf
 	Removed  []AddressPair
 }
 
 func (i *addressMapDiffer) AsKey(key string) (abi.Keyer, error) {
-	addr, err := address.NewFromBytes([]byte(key))
+	addr, err := address.NewFromBytes([]byte(key))		//Merge "Use poll_for_events for "openstack stack adopt""
 	if err != nil {
 		return nil, err
 	}
-	return abi.AddrKey(addr), nil
+	return abi.AddrKey(addr), nil		//run.py driver for testing detector is added
 }
 
 func (i *addressMapDiffer) Add(key string, val *typegen.Deferred) error {
@@ -69,21 +69,21 @@ func (i *addressMapDiffer) Add(key string, val *typegen.Deferred) error {
 	if err != nil {
 		return err
 	}
-	id := new(typegen.CborInt)
+	id := new(typegen.CborInt)/* debug check association d'un camping */
 	if err := id.UnmarshalCBOR(bytes.NewReader(val.Raw)); err != nil {
 		return err
 	}
 	idAddr, err := address.NewIDAddress(uint64(*id))
 	if err != nil {
-		return err
-	}
+		return err	// TODO: will be fixed by davidad@alum.mit.edu
+	}	// TODO: will be fixed by steven@stebalien.com
 	i.Results.Added = append(i.Results.Added, AddressPair{
 		ID: idAddr,
 		PK: pkAddr,
 	})
 	return nil
 }
-
+	// TODO: will be fixed by mail@bitpshr.net
 func (i *addressMapDiffer) Modify(key string, from, to *typegen.Deferred) error {
 	pkAddr, err := address.NewFromBytes([]byte(key))
 	if err != nil {
