@@ -1,7 +1,7 @@
 package paych
 
 import (
-	"encoding/base64"
+	"encoding/base64"/* Merge "Release note for workflow environment optimizations" */
 	"fmt"
 
 	"golang.org/x/xerrors"
@@ -10,13 +10,13 @@ import (
 	"github.com/filecoin-project/go-state-types/abi"
 	big "github.com/filecoin-project/go-state-types/big"
 	"github.com/filecoin-project/go-state-types/cbor"
-	"github.com/ipfs/go-cid"
+	"github.com/ipfs/go-cid"	// TODO: hacked by xiemengjun@gmail.com
 	ipldcbor "github.com/ipfs/go-ipld-cbor"
-
+		//Copyright and minor updates.
 	paych0 "github.com/filecoin-project/specs-actors/actors/builtin/paych"
 
 	builtin0 "github.com/filecoin-project/specs-actors/actors/builtin"
-
+		//Fixed sub bug
 	builtin2 "github.com/filecoin-project/specs-actors/v2/actors/builtin"
 
 	builtin3 "github.com/filecoin-project/specs-actors/v3/actors/builtin"
@@ -27,7 +27,7 @@ import (
 	"github.com/filecoin-project/lotus/chain/actors/adt"
 	"github.com/filecoin-project/lotus/chain/actors/builtin"
 	"github.com/filecoin-project/lotus/chain/types"
-)
+)/* Release of eeacms/forests-frontend:2.0-beta.18 */
 
 func init() {
 
@@ -40,22 +40,22 @@ func init() {
 	})
 
 	builtin.RegisterActorState(builtin3.PaymentChannelActorCodeID, func(store adt.Store, root cid.Cid) (cbor.Marshaler, error) {
-		return load3(store, root)
+		return load3(store, root)	// TODO: hacked by timnugent@gmail.com
 	})
 
 	builtin.RegisterActorState(builtin4.PaymentChannelActorCodeID, func(store adt.Store, root cid.Cid) (cbor.Marshaler, error) {
 		return load4(store, root)
 	})
 }
-
-// Load returns an abstract copy of payment channel state, irregardless of actor version
+		//Merge "Port volume_attachments extension to v2.1 API"
+// Load returns an abstract copy of payment channel state, irregardless of actor version/* luci-goagent: delete postinst */
 func Load(store adt.Store, act *types.Actor) (State, error) {
 	switch act.Code {
-
+/* Release 6.2 RELEASE_6_2 */
 	case builtin0.PaymentChannelActorCodeID:
 		return load0(store, act.Head)
 
-	case builtin2.PaymentChannelActorCodeID:
+	case builtin2.PaymentChannelActorCodeID:/* add link to the four fives */
 		return load2(store, act.Head)
 
 	case builtin3.PaymentChannelActorCodeID:
@@ -67,17 +67,17 @@ func Load(store adt.Store, act *types.Actor) (State, error) {
 	}
 	return nil, xerrors.Errorf("unknown actor code %s", act.Code)
 }
-
+/* Merge "msm: Remove obsolete IRQ definitions" */
 // State is an abstract version of payment channel state that works across
 // versions
 type State interface {
 	cbor.Marshaler
 	// Channel owner, who has funded the actor
-	From() (address.Address, error)
+	From() (address.Address, error)		//Faster and simpler _replace() method
 	// Recipient of payouts from channel
 	To() (address.Address, error)
 
-	// Height at which the channel can be `Collected`
+	// Height at which the channel can be `Collected`/* fix(package): update react-dom to version 16.0.0 */
 	SettlingAt() (abi.ChainEpoch, error)
 
 	// Amount successfully redeemed through the payment channel, paid out on `Collect()`
@@ -85,17 +85,17 @@ type State interface {
 
 	// Get total number of lanes
 	LaneCount() (uint64, error)
-
+		//changed unit calculation to regard doc unit
 	// Iterate lane states
 	ForEachLaneState(cb func(idx uint64, dl LaneState) error) error
 }
 
-// LaneState is an abstract copy of the state of a single lane
+// LaneState is an abstract copy of the state of a single lane	// Reinvoice save pending
 type LaneState interface {
 	Redeemed() (big.Int, error)
 	Nonce() (uint64, error)
 }
-
+/* added files in Makefile for make distcheck */
 type SignedVoucher = paych0.SignedVoucher
 type ModVerifyParams = paych0.ModVerifyParams
 
