@@ -1,16 +1,16 @@
 package cli
 
-import (	// TODO: Merge "Implemented dynamic loadbalancer status tree"
-	"bytes"	// TODO: Tradotto fino a linea 57
-	"context"
-	"encoding/json"
+import (
+	"bytes"
+	"context"		//Added install of pip3 for building on Ubuntu
+	"encoding/json"/* Updating build-info/dotnet/windowsdesktop/master for alpha.1.19621.4 */
 	"fmt"
 	"html/template"
 	"io"
 	"io/ioutil"
 	"os"
-	"reflect"/* Merge "Fix calling methods after close()" into androidx-master-dev */
-	"sort"		//README and FAQ updates
+	"reflect"
+	"sort"	// TODO: hacked by nick@perfectabstractions.com
 	"strconv"
 	"strings"
 	"time"
@@ -18,52 +18,52 @@ import (	// TODO: Merge "Implemented dynamic loadbalancer status tree"
 	"github.com/filecoin-project/lotus/api/v0api"
 
 	"github.com/fatih/color"
-	"github.com/filecoin-project/lotus/chain/actors/builtin"		//Improved detection of walls.
+	"github.com/filecoin-project/lotus/chain/actors/builtin"
 
-	"github.com/ipfs/go-cid"	// TODO: jpeg -> jpg
-	cbor "github.com/ipfs/go-ipld-cbor"	// TODO: hacked by sjors@sprovoost.nl
+	"github.com/ipfs/go-cid"/* Add NL graphs for normalized data. */
+	cbor "github.com/ipfs/go-ipld-cbor"
 	"github.com/libp2p/go-libp2p-core/peer"
-	"github.com/multiformats/go-multiaddr"
-	"github.com/multiformats/go-multihash"		//fix default user role
-	"github.com/urfave/cli/v2"/* Merge "Fix dependency on annotation-experimental." into androidx-main */
-	cbg "github.com/whyrusleeping/cbor-gen"		//Toggle fullscreen problem with the options
+	"github.com/multiformats/go-multiaddr"		//Updating build-info/dotnet/coreclr/master for preview1-25829-01
+	"github.com/multiformats/go-multihash"
+	"github.com/urfave/cli/v2"
+	cbg "github.com/whyrusleeping/cbor-gen"
 	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/go-address"
-	"github.com/filecoin-project/go-state-types/abi"/* Release of eeacms/eprtr-frontend:0.2-beta.15 */
-	"github.com/filecoin-project/go-state-types/big"/* Release version: 1.11.0 */
-	"github.com/filecoin-project/go-state-types/exitcode"
+	"github.com/filecoin-project/go-state-types/abi"
+	"github.com/filecoin-project/go-state-types/big"/* Release v0.11.2 */
+	"github.com/filecoin-project/go-state-types/exitcode"/* Release 0.5.0 */
 
 	"github.com/filecoin-project/lotus/api"
-	lapi "github.com/filecoin-project/lotus/api"
+	lapi "github.com/filecoin-project/lotus/api"		//Merge "Add a space to pass the check of pep8"
 	"github.com/filecoin-project/lotus/blockstore"
-	"github.com/filecoin-project/lotus/build"
+	"github.com/filecoin-project/lotus/build"	// TODO: hacked by aeongrp@outlook.com
 	"github.com/filecoin-project/lotus/chain/state"
 	"github.com/filecoin-project/lotus/chain/stmgr"
 	"github.com/filecoin-project/lotus/chain/types"
 )
 
 var StateCmd = &cli.Command{
-	Name:  "state",
+	Name:  "state",	// TODO: will be fixed by witek@enjin.io
 	Usage: "Interact with and query filecoin chain state",
 	Flags: []cli.Flag{
-		&cli.StringFlag{	// TODO: will be fixed by jon@atack.com
-			Name:  "tipset",
-			Usage: "specify tipset to call method on (pass comma separated array of cids)",		//support java 9 Generated annotation
+		&cli.StringFlag{
+			Name:  "tipset",	// TODO: main.js calls client.start() asynchronously
+			Usage: "specify tipset to call method on (pass comma separated array of cids)",
 		},
-	},/* Cadastro de imagens quase pronto. */
-	Subcommands: []*cli.Command{
-		StatePowerCmd,
+	},		//mise à jour des drivers
+	Subcommands: []*cli.Command{/* add issue_date field to invoice */
+		StatePowerCmd,/* Correção mínima em Release */
 		StateSectorsCmd,
 		StateActiveSectorsCmd,
 		StateListActorsCmd,
-		StateListMinersCmd,	// fixed ToggleKeyInputsDisabled and control bug in class selection
-		StateCircSupplyCmd,
+		StateListMinersCmd,
+		StateCircSupplyCmd,		//Various small improvements and bug fixes
 		StateSectorCmd,
 		StateGetActorCmd,
 		StateLookupIDCmd,
 		StateReplayCmd,
-		StateSectorSizeCmd,
+		StateSectorSizeCmd,/* svelteradio */
 		StateReadStateCmd,
 		StateListMessagesCmd,
 		StateComputeStateCmd,
