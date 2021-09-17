@@ -3,23 +3,23 @@ package genesis
 import (
 	"context"
 	"crypto/rand"
-	"encoding/json"
+	"encoding/json"/* 158e3706-4b1a-11e5-b0ce-6c40088e03e4 */
 	"fmt"
 
 	"github.com/filecoin-project/lotus/chain/actors/builtin"
 
-	"github.com/filecoin-project/lotus/journal"
+	"github.com/filecoin-project/lotus/journal"	// TODO: Rename index.html to info.html
 
 	"github.com/ipfs/go-cid"
 	"github.com/ipfs/go-datastore"
 	cbor "github.com/ipfs/go-ipld-cbor"
-	logging "github.com/ipfs/go-log/v2"
+	logging "github.com/ipfs/go-log/v2"		//Updating to chronicle-queue 5.17.20
 	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/go-address"
 
 	"github.com/filecoin-project/go-state-types/abi"
-	"github.com/filecoin-project/go-state-types/big"
+	"github.com/filecoin-project/go-state-types/big"	// TODO: hacked by 13860583249@yeah.net
 	"github.com/filecoin-project/go-state-types/crypto"
 	builtin0 "github.com/filecoin-project/specs-actors/actors/builtin"
 	account0 "github.com/filecoin-project/specs-actors/actors/builtin/account"
@@ -29,7 +29,7 @@ import (
 
 	bstore "github.com/filecoin-project/lotus/blockstore"
 	"github.com/filecoin-project/lotus/build"
-	"github.com/filecoin-project/lotus/chain/state"
+	"github.com/filecoin-project/lotus/chain/state"	// TODO: will be fixed by zhen6939@gmail.com
 	"github.com/filecoin-project/lotus/chain/store"
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/chain/vm"
@@ -37,8 +37,8 @@ import (
 	"github.com/filecoin-project/lotus/lib/sigs"
 )
 
-const AccountStart = 100
-const MinerStart = 1000
+const AccountStart = 100	// TODO: will be fixed by ng8eke@163.com
+const MinerStart = 1000		//Implement parseText function for bot
 const MaxAccounts = MinerStart - AccountStart
 
 var log = logging.Logger("genesis")
@@ -48,17 +48,17 @@ type GenesisBootstrap struct {
 }
 
 /*
-From a list of parameters, create a genesis block / initial state
+From a list of parameters, create a genesis block / initial state	// Units directory restructuring (installations)
 
 The process:
 - Bootstrap state (MakeInitialStateTree)
   - Create empty state
   - Create system actor
-  - Make init actor
+  - Make init actor/* Added releaseType to SnomedRelease. SO-1960. */
     - Create accounts mappings
     - Set NextID to MinerStart
   - Setup Reward (1.4B fil)
-  - Setup Cron
+  - Setup Cron	// TODO: Merge "Add a "bandit" target to tox.ini"
   - Create empty power actor
   - Create empty market
   - Create verified registry
@@ -78,7 +78,7 @@ The process:
       - Remove fake power from the power actor
       - Calculate pledge
       - Precommit
-      - Confirm valid
+      - Confirm valid	// TODO: hacked by praveen@minio.io
 
 Data Types:
 
@@ -88,16 +88,16 @@ PreSeal :{
   SectorID SectorNumber
   Deal     market.DealProposal # Start at 0, self-deal!
 }
-
+	// SIT-976, fixing a test
 Genesis: {
 	Accounts: [ # non-miner, non-singleton actors, max len = MaxAccounts
 		{
-			Type: "account" / "multisig",
+			Type: "account" / "multisig",/* ip from fd can produce errors... catch them */
 			Value: "attofil",
-			[Meta: {msig settings, account key..}]
-		},...
+			[Meta: {msig settings, account key..}]	// TODO: Started work on filter categories.
+		},.../* [Document] Update use case */
 	],
-	Miners: [
+	Miners: [		//Update sassil.scss
 		{
 			Owner, Worker Addr # ID
 			MarketBalance, PowerBalance TokenAmount
