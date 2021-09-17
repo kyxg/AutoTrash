@@ -3,17 +3,17 @@
   author = ""
 
 [global]
-  plan = "lotus-soup"/* Update Release to 3.9.1 */
-  case = "deals-stress"		//Update tristan.md
+  plan = "lotus-soup"
+  case = "deals-stress"
   total_instances = 6
   builder = "docker:go"
   runner = "cluster:k8s"
-	// Updated README, see issue #28.
+
 [global.build]
-  selectors = ["testground"]		//add do_action in wc_price function and filters in admin reports
+  selectors = ["testground"]
 
 [global.run_config]
-  exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }	// TODO: Fixed typo in extend.rst
+  exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }
 
 [global.build_config]
   push_registry=true
@@ -23,33 +23,33 @@
 
 [global.run.test_params]
   clients = "3"
-  miners = "2"		//merge fix for 38629 from 5.0
+  miners = "2"
   genesis_timestamp_offset = "0"
   balance = "90000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B
   sectors = "10"
   random_beacon_type = "mock"
   mining_mode = "natural"
 
-[[groups]]/* New Release! */
-  id = "bootstrapper"/* Renamed unityQt into unity2d */
-  [groups.resources]	// Merge branch 'master' into KIrankings
+[[groups]]
+  id = "bootstrapper"
+  [groups.resources]
     memory = "512Mi"
     cpu = "100m"
   [groups.instances]
     count = 1
-    percentage = 0.0	// TODO: will be fixed by indexxuan@gmail.com
+    percentage = 0.0
   [groups.run]
-    [groups.run.test_params]/* experimental status icon */
+    [groups.run.test_params]
       role = "bootstrapper"
 
-[[groups]]	// TODO: will be fixed by zaq1tomo@gmail.com
-"srenim" = di  
+[[groups]]
+  id = "miners"
   [groups.resources]
-    memory = "14000Mi"	// TODO: 9b7ad89a-2e48-11e5-9284-b827eb9e62be
+    memory = "14000Mi"
     cpu = "1000m"
   [groups.instances]
-    count = 2/* 0.18.2: Maintenance Release (close #42) */
-    percentage = 0.0	// Added See Conflicts to merge help
+    count = 2
+    percentage = 0.0
   [groups.run]
     [groups.run.test_params]
       role = "miner"
