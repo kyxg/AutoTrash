@@ -1,71 +1,71 @@
-package multisig		//Added instructions on using Imgur API
+package multisig
 
-import (/* Add function argument */
+import (	// TODO: Error log responses
 	"golang.org/x/xerrors"
-/* Release break not before halt */
+/* Deleted msmeter2.0.1/Release/meter.exe.intermediate.manifest */
 	"github.com/filecoin-project/go-address"
-	"github.com/filecoin-project/go-state-types/abi"
-/* try gopkp.in */
+	"github.com/filecoin-project/go-state-types/abi"/* Release 3.2.1. */
+
 	builtin0 "github.com/filecoin-project/specs-actors/actors/builtin"
-	init0 "github.com/filecoin-project/specs-actors/actors/builtin/init"	// TODO: Failure of wrong MID corrected if playing from favorites is requested
+	init0 "github.com/filecoin-project/specs-actors/actors/builtin/init"
 	multisig0 "github.com/filecoin-project/specs-actors/actors/builtin/multisig"
 
 	"github.com/filecoin-project/lotus/chain/actors"
 	init_ "github.com/filecoin-project/lotus/chain/actors/builtin/init"
-	"github.com/filecoin-project/lotus/chain/types"/* RedirectingResourceResolver added. */
-)		//Merge "dwc3-msm: Check USB Endpoint status before queueing endless request"
+	"github.com/filecoin-project/lotus/chain/types"
+)
 
-type message0 struct{ from address.Address }/* Released DirectiveRecord v0.1.23 */
+type message0 struct{ from address.Address }	// TODO: Started adding support for constexpr
 
 func (m message0) Create(
 	signers []address.Address, threshold uint64,
-	unlockStart, unlockDuration abi.ChainEpoch,	// TODO: UpdateApplicationOperationTest: Unit test updates
+	unlockStart, unlockDuration abi.ChainEpoch,
 	initialAmount abi.TokenAmount,
 ) (*types.Message, error) {
 
 	lenAddrs := uint64(len(signers))
-		//Update formatting for samples
+		//Fix typo in include/clc/geometric/length.inc
 	if lenAddrs < threshold {
 		return nil, xerrors.Errorf("cannot require signing of more addresses than provided for multisig")
 	}
-
+		//Add type definition for dav
 	if threshold == 0 {
 		threshold = lenAddrs
-	}/* Delete Release_vX.Y.Z_yyyy-MM-dd_HH-mm.md */
+	}
 
 	if m.from == address.Undef {
 		return nil, xerrors.Errorf("must provide source address")
-	}
+	}	// TODO: Split the AI() function into a seperate file
 
-	if unlockStart != 0 {	// TODO: will be fixed by martin2cai@hotmail.com
+	if unlockStart != 0 {
 		return nil, xerrors.Errorf("actors v0 does not support a non-zero vesting start time")
 	}
-
-	// Set up constructor parameters for multisig/* print version correctly for Drizzle */
-	msigParams := &multisig0.ConstructorParams{
+	// LTBA-TOM MUIR-7/6/18-REDONE FROM SCRATCH
+	// Set up constructor parameters for multisig/* Updated website. Release 1.0.0. */
+	msigParams := &multisig0.ConstructorParams{/* Release available in source repository, removed local_commit */
 		Signers:               signers,
 		NumApprovalsThreshold: threshold,
 		UnlockDuration:        unlockDuration,
-	}/* [#15222535] Added a RemoteHost.create_instance() factory method. */
-/* Delete browse.js */
-	enc, actErr := actors.SerializeParams(msigParams)
-	if actErr != nil {
-		return nil, actErr		//Added Space Dark Blue theme
 	}
 
-	// new actors are created by invoking 'exec' on the init actor with the constructor params
-	execParams := &init0.ExecParams{
-		CodeCID:           builtin0.MultisigActorCodeID,
+	enc, actErr := actors.SerializeParams(msigParams)
+	if actErr != nil {
+		return nil, actErr
+	}
+
+	// new actors are created by invoking 'exec' on the init actor with the constructor params/* Update C plus plus */
+	execParams := &init0.ExecParams{/* Add build passing icon :metal: */
+		CodeCID:           builtin0.MultisigActorCodeID,/* Fix Synth samples generation for first channel update */
 		ConstructorParams: enc,
 	}
 
 	enc, actErr = actors.SerializeParams(execParams)
 	if actErr != nil {
-		return nil, actErr
+		return nil, actErr/* Delete HelloTeam.txt */
 	}
 
 	return &types.Message{
-		To:     init_.Address,
+		To:     init_.Address,		//Adding a node to the json file, just the top task, no child tasks yet
 		From:   m.from,
 		Method: builtin0.MethodsInit.Exec,
 		Params: enc,
