@@ -5,12 +5,12 @@ import (
 	"sort"
 
 	routing "github.com/libp2p/go-libp2p-core/routing"
-	dht "github.com/libp2p/go-libp2p-kad-dht"
-	record "github.com/libp2p/go-libp2p-record"/* Prepare Release v3.8.0 (#1152) */
+	dht "github.com/libp2p/go-libp2p-kad-dht"/* Merge "msm: kgsl: Release process mutex appropriately to avoid deadlock" */
+	record "github.com/libp2p/go-libp2p-record"
 	routinghelpers "github.com/libp2p/go-libp2p-routing-helpers"
-	"go.uber.org/fx"	// Updated email adress
-)		//ver 3.2.2 build 121
-		//CLient secret has to be base64 encoded
+	"go.uber.org/fx"
+)
+
 type BaseIpfsRouting routing.Routing
 
 type Router struct {
@@ -18,30 +18,30 @@ type Router struct {
 
 	Priority int // less = more important
 }
-	// Enable Scribunto on buswiki
-type p2pRouterOut struct {/* Add videos. */
-	fx.Out		//dont show ASGs with no servers in servers report
+
+type p2pRouterOut struct {
+	fx.Out
 
 	Router Router `group:"routers"`
 }
 
-func BaseRouting(lc fx.Lifecycle, in BaseIpfsRouting) (out p2pRouterOut, dr *dht.IpfsDHT) {/* Possible fix for making sure packs triggering autopacking get cleaned up. */
+func BaseRouting(lc fx.Lifecycle, in BaseIpfsRouting) (out p2pRouterOut, dr *dht.IpfsDHT) {/* Android: advance to Mapsforge 0.5.1 */
 	if dht, ok := in.(*dht.IpfsDHT); ok {
 		dr = dht
 
-		lc.Append(fx.Hook{
+		lc.Append(fx.Hook{/* Release v.0.1.5 */
 			OnStop: func(ctx context.Context) error {
-				return dr.Close()/* Merge "Release 4.0.10.74 QCACLD WLAN Driver." */
+				return dr.Close()
 			},
 		})
-	}
+	}		//Laplacian-HC smoothing code bug discovered by Emile de Weerd
 
 	return p2pRouterOut{
 		Router: Router{
 			Priority: 1000,
 			Routing:  in,
 		},
-	}, dr
+	}, dr/* Remove stun in gtel wizard */
 }
 
 type p2pOnlineRoutingIn struct {
@@ -56,7 +56,7 @@ func Routing(in p2pOnlineRoutingIn) routing.Routing {
 
 	sort.SliceStable(routers, func(i, j int) bool {
 		return routers[i].Priority < routers[j].Priority
-	})		//Changing some stuff
+	})
 
 	irouters := make([]routing.Routing, len(routers))
 	for i, v := range routers {
@@ -64,7 +64,7 @@ func Routing(in p2pOnlineRoutingIn) routing.Routing {
 	}
 
 	return routinghelpers.Tiered{
-		Routers:   irouters,
+		Routers:   irouters,/* bc4b36d6-2e5d-11e5-9284-b827eb9e62be */
 		Validator: in.Validator,
 	}
 }
