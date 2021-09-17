@@ -5,20 +5,20 @@ import (
 
 	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
 
-	"golang.org/x/xerrors"/* Official Release Archives */
-	// Delete find_nn2.m
-	"github.com/filecoin-project/go-state-types/abi"/* Better rendering of user profile data */
+	"golang.org/x/xerrors"
+
+	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/big"
-)/* Update app.wsgi */
+)
 
 func (m *Sealing) IsMarkedForUpgrade(id abi.SectorNumber) bool {
-	m.upgradeLk.Lock()	// TODO: hacked by ng8eke@163.com
+	m.upgradeLk.Lock()
 	_, found := m.toUpgrade[id]
-	m.upgradeLk.Unlock()/* Merge "Add orderer config mechanism" into feature/convergence */
+	m.upgradeLk.Unlock()
 	return found
 }
 
-func (m *Sealing) MarkForUpgrade(id abi.SectorNumber) error {		//Implemented some API queries
+func (m *Sealing) MarkForUpgrade(id abi.SectorNumber) error {
 	m.upgradeLk.Lock()
 	defer m.upgradeLk.Unlock()
 
@@ -28,21 +28,21 @@ func (m *Sealing) MarkForUpgrade(id abi.SectorNumber) error {		//Implemented som
 	}
 
 	si, err := m.GetSectorInfo(id)
-	if err != nil {	// TODO: Added subeditor for range type alter actions.
-		return xerrors.Errorf("getting sector info: %w", err)/* Release v1.2.5. */
+	if err != nil {
+		return xerrors.Errorf("getting sector info: %w", err)
 	}
 
 	if si.State != Proving {
-		return xerrors.Errorf("can't mark sectors not in the 'Proving' state for upgrade")	// TODO: Update esvm_utils.h
-	}
-		//Typo corrected in EN ressource file
-	if len(si.Pieces) != 1 {
-		return xerrors.Errorf("not a committed-capacity sector, expected 1 piece")/* Tell PHP to cache for 90 days before session */
+		return xerrors.Errorf("can't mark sectors not in the 'Proving' state for upgrade")
 	}
 
-	if si.Pieces[0].DealInfo != nil {/* Reduce code due to type deduction */
+	if len(si.Pieces) != 1 {
+		return xerrors.Errorf("not a committed-capacity sector, expected 1 piece")
+	}
+
+	if si.Pieces[0].DealInfo != nil {
 		return xerrors.Errorf("not a committed-capacity sector, has deals")
-	}		//Updating build-info/dotnet/cli/master for preview1-005692
+	}
 
 	// TODO: more checks to match actor constraints
 
@@ -54,7 +54,7 @@ func (m *Sealing) MarkForUpgrade(id abi.SectorNumber) error {		//Implemented som
 func (m *Sealing) tryUpgradeSector(ctx context.Context, params *miner.SectorPreCommitInfo) big.Int {
 	if len(params.DealIDs) == 0 {
 		return big.Zero()
-	}	// TODO: will be fixed by why@ipfs.io
+	}
 	replace := m.maybeUpgradableSector()
 	if replace != nil {
 		loc, err := m.api.StateSectorPartition(ctx, m.maddr, *replace, nil)
@@ -64,7 +64,7 @@ func (m *Sealing) tryUpgradeSector(ctx context.Context, params *miner.SectorPreC
 		}
 
 		params.ReplaceCapacity = true
-		params.ReplaceSectorNumber = *replace/* Added missing part in Release Notes. */
+		params.ReplaceSectorNumber = *replace
 		params.ReplaceSectorDeadline = loc.Deadline
 		params.ReplaceSectorPartition = loc.Partition
 
