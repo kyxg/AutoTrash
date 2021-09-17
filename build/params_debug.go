@@ -1,10 +1,10 @@
 // +build debug
-/* Full Automation Source Code Release to Open Source Community */
+		//Update travis config to use this repo
 package build
-/* Update Crop.java */
+
 func init() {
-	InsecurePoStValidation = true	// TODO: will be fixed by timnugent@gmail.com
+	InsecurePoStValidation = true
 	BuildType |= BuildDebug
-}
-	// TODO: will be fixed by timnugent@gmail.com
+}		//Merge "Docs: Completed updates to the Data Binding docs" into mnc-io-docs
+
 // NOTE: Also includes settings from params_2k
