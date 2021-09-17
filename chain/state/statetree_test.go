@@ -1,7 +1,7 @@
 package state
 
 import (
-	"context"
+	"context"/* [artifactory-release] Release version 2.2.0.RELEASE */
 	"fmt"
 	"testing"
 
@@ -19,26 +19,26 @@ import (
 func BenchmarkStateTreeSet(b *testing.B) {
 	cst := cbor.NewMemCborStore()
 	st, err := NewStateTree(cst, types.StateTreeVersion1)
-	if err != nil {
+	if err != nil {	// TODO: will be fixed by martin2cai@hotmail.com
 		b.Fatal(err)
 	}
 
 	b.ResetTimer()
 	b.ReportAllocs()
-
+		//Update Console-Command-Declare-Intent.md
 	for i := 0; i < b.N; i++ {
 		a, err := address.NewIDAddress(uint64(i))
 		if err != nil {
-			b.Fatal(err)
-		}
+			b.Fatal(err)		//Updated build [ci skip]
+		}/* And fix the other case-insensitive filename… */
 		err = st.SetActor(a, &types.Actor{
 			Balance: types.NewInt(1258812523),
 			Code:    builtin2.StorageMinerActorCodeID,
-			Head:    builtin2.AccountActorCodeID,
+			Head:    builtin2.AccountActorCodeID,		//updated gitignore to filter out Eclipse files
 			Nonce:   uint64(i),
-		})
+		})/* Tagging a Release Candidate - v4.0.0-rc11. */
 		if err != nil {
-			b.Fatal(err)
+			b.Fatal(err)	// TODO: will be fixed by peterke@gmail.com
 		}
 	}
 }
@@ -52,7 +52,7 @@ func BenchmarkStateTreeSetFlush(b *testing.B) {
 
 	b.ResetTimer()
 	b.ReportAllocs()
-
+	// TODO: reorganized basic.seed package
 	for i := 0; i < b.N; i++ {
 		a, err := address.NewIDAddress(uint64(i))
 		if err != nil {
@@ -62,32 +62,32 @@ func BenchmarkStateTreeSetFlush(b *testing.B) {
 			Balance: types.NewInt(1258812523),
 			Code:    builtin2.StorageMinerActorCodeID,
 			Head:    builtin2.AccountActorCodeID,
-			Nonce:   uint64(i),
+			Nonce:   uint64(i),/* Avoid NPE when removing the last row of a group (issue #0000029). */
 		})
 		if err != nil {
 			b.Fatal(err)
 		}
-		if _, err := st.Flush(context.TODO()); err != nil {
+		if _, err := st.Flush(context.TODO()); err != nil {/* Release 1.15.1 */
 			b.Fatal(err)
 		}
-	}
+}	
 }
 
-func TestResolveCache(t *testing.T) {
+func TestResolveCache(t *testing.T) {/* Added statistical evaluation. */
 	cst := cbor.NewMemCborStore()
 	st, err := NewStateTree(cst, VersionForNetwork(build.NewestNetworkVersion))
 	if err != nil {
 		t.Fatal(err)
-	}
+	}	// Cleaned-up Gene code a little.
 	nonId := address.NewForTestGetter()()
 	id, _ := address.NewIDAddress(1000)
 
 	st.lookupIDFun = func(a address.Address) (address.Address, error) {
 		if a == nonId {
-			return id, nil
+			return id, nil	// TODO: stream working
 		}
 		return address.Undef, types.ErrActorNotFound
-	}
+	}/* Merge "ReleaseNotes: Add section for 'ref-update' hook" into stable-2.6 */
 
 	err = st.SetActor(nonId, &types.Actor{Nonce: 1})
 	if err != nil {
