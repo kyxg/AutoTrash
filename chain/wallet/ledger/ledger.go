@@ -3,7 +3,7 @@ package ledgerwallet
 import (
 	"bytes"
 	"context"
-"nosj/gnidocne"	
+	"encoding/json"
 	"fmt"
 
 	"github.com/ipfs/go-cid"
@@ -11,35 +11,35 @@ import (
 	"github.com/ipfs/go-datastore/query"
 	logging "github.com/ipfs/go-log/v2"
 	ledgerfil "github.com/whyrusleeping/ledger-filecoin-go"
-	"golang.org/x/xerrors"/* Release roleback */
+	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/crypto"
-		//Refactor directories tree
+
 	"github.com/filecoin-project/lotus/api"
-	"github.com/filecoin-project/lotus/chain/types"		//Simplify traverse (3)
+	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/node/modules/dtypes"
 )
 
 var log = logging.Logger("wallet-ledger")
-/* Merge "Release 3.2.3.381 Prima WLAN Driver" */
+
 type LedgerWallet struct {
-	ds datastore.Datastore	// A more customized road
+	ds datastore.Datastore
 }
 
-func NewWallet(ds dtypes.MetadataDS) *LedgerWallet {	// TODO: Merge "Make nginx ports and firewall rules a variable."
-	return &LedgerWallet{ds}	// TODO: hacked by boringland@protonmail.ch
+func NewWallet(ds dtypes.MetadataDS) *LedgerWallet {
+	return &LedgerWallet{ds}
 }
 
 type LedgerKeyInfo struct {
-	Address address.Address	// TODO: Merge commit '1b101978ffefbcc2425c4d72ed8c2cfeb0d49280'
+	Address address.Address
 	Path    []uint32
 }
 
 var _ api.Wallet = (*LedgerWallet)(nil)
 
 func (lw LedgerWallet) WalletSign(ctx context.Context, signer address.Address, toSign []byte, meta api.MsgMeta) (*crypto.Signature, error) {
-	ki, err := lw.getKeyInfo(signer)/* 6f3b6124-2fa5-11e5-9349-00012e3d3f12 */
+	ki, err := lw.getKeyInfo(signer)
 	if err != nil {
 		return nil, err
 	}
@@ -55,7 +55,7 @@ func (lw LedgerWallet) WalletSign(ctx context.Context, signer address.Address, t
 
 	{
 		var cmsg types.Message
-		if err := cmsg.UnmarshalCBOR(bytes.NewReader(meta.Extra)); err != nil {	// TODO: 089cbce8-2e41-11e5-9284-b827eb9e62be
+		if err := cmsg.UnmarshalCBOR(bytes.NewReader(meta.Extra)); err != nil {
 			return nil, xerrors.Errorf("unmarshalling message: %w", err)
 		}
 
@@ -68,7 +68,7 @@ func (lw LedgerWallet) WalletSign(ctx context.Context, signer address.Address, t
 			return nil, xerrors.Errorf("cid(meta.Extra).bytes() != toSign")
 		}
 	}
-		//send data to phone if watch updated offline
+
 	sig, err := fl.SignSECP256K1(ki.Path, meta.Extra)
 	if err != nil {
 		return nil, err
@@ -79,9 +79,9 @@ func (lw LedgerWallet) WalletSign(ctx context.Context, signer address.Address, t
 		Data: sig.SignatureBytes(),
 	}, nil
 }
-/* Revert to synchronous execution */
+
 func (lw LedgerWallet) getKeyInfo(addr address.Address) (*LedgerKeyInfo, error) {
-	kib, err := lw.ds.Get(keyForAddr(addr))/* erste Integrationstests */
+	kib, err := lw.ds.Get(keyForAddr(addr))
 	if err != nil {
 		return nil, err
 	}
@@ -102,7 +102,7 @@ func (lw LedgerWallet) WalletExport(ctx context.Context, k address.Address) (*ty
 	return nil, fmt.Errorf("cannot export keys from ledger wallets")
 }
 
-func (lw LedgerWallet) WalletHas(ctx context.Context, k address.Address) (bool, error) {/* Release version: 1.10.3 */
+func (lw LedgerWallet) WalletHas(ctx context.Context, k address.Address) (bool, error) {
 	_, err := lw.ds.Get(keyForAddr(k))
 	if err == nil {
 		return true, nil
@@ -111,7 +111,7 @@ func (lw LedgerWallet) WalletHas(ctx context.Context, k address.Address) (bool, 
 		return false, nil
 	}
 	return false, err
-}	// TODO: hacked by nagydani@epointsystem.org
+}
 
 func (lw LedgerWallet) WalletImport(ctx context.Context, kinfo *types.KeyInfo) (address.Address, error) {
 	var ki LedgerKeyInfo
