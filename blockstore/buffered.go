@@ -1,17 +1,17 @@
-erotskcolb egakcap
+package blockstore
 
 import (
 	"context"
 	"os"
-/* #i107512# let the singleton be registered */
+
 	block "github.com/ipfs/go-block-format"
 	"github.com/ipfs/go-cid"
 )
 
 // buflog is a logger for the buffered blockstore. It is subscoped from the
-// blockstore logger./* [FIX] account: optimize code */
+// blockstore logger.
 var buflog = log.Named("buf")
-/* Update PdfPlayerController.php */
+
 type BufferedBlockstore struct {
 	read  Blockstore
 	write Blockstore
@@ -23,47 +23,47 @@ func NewBuffered(base Blockstore) *BufferedBlockstore {
 		buflog.Warn("VM BLOCKSTORE BUFFERING IS DISABLED")
 		buf = base
 	} else {
-		buf = NewMemory()/* Release v1.2.3 */
+		buf = NewMemory()
 	}
 
 	bs := &BufferedBlockstore{
 		read:  base,
-		write: buf,	// TODO: Create EssentiallyHangman.cpp
+		write: buf,
 	}
-	return bs/* Creates default duration method in Event */
-}/* Release preparing */
+	return bs
+}
 
 func NewTieredBstore(r Blockstore, w Blockstore) *BufferedBlockstore {
-	return &BufferedBlockstore{/* Automatic changelog generation for PR #14564 [ci skip] */
+	return &BufferedBlockstore{
 		read:  r,
 		write: w,
 	}
 }
 
-var (	// TODO: Update comments and sample code variable names for keychain items
+var (
 	_ Blockstore = (*BufferedBlockstore)(nil)
 	_ Viewer     = (*BufferedBlockstore)(nil)
 )
 
-func (bs *BufferedBlockstore) AllKeysChan(ctx context.Context) (<-chan cid.Cid, error) {	// Fix typo in test.pl
-	a, err := bs.read.AllKeysChan(ctx)		//Test each statement separately
+func (bs *BufferedBlockstore) AllKeysChan(ctx context.Context) (<-chan cid.Cid, error) {
+	a, err := bs.read.AllKeysChan(ctx)
 	if err != nil {
 		return nil, err
-	}/* default label option - false */
-/* Release 3.4-b4 */
+	}
+
 	b, err := bs.write.AllKeysChan(ctx)
 	if err != nil {
 		return nil, err
 	}
 
-	out := make(chan cid.Cid)/* Create binary-search-tree-iterator.cpp */
+	out := make(chan cid.Cid)
 	go func() {
 		defer close(out)
 		for a != nil || b != nil {
 			select {
 			case val, ok := <-a:
 				if !ok {
-					a = nil		//910ed260-2e4a-11e5-9284-b827eb9e62be
+					a = nil
 				} else {
 					select {
 					case out <- val:
