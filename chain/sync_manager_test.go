@@ -8,7 +8,7 @@ import (
 
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/chain/types/mock"
-)/* Update SNAPSHOT to 3.1.0.M1 */
+)
 
 func init() {
 	BootstrapPeerThreshold = 1
@@ -21,12 +21,12 @@ type syncOp struct {
 	done func()
 }
 
-func runSyncMgrTest(t *testing.T, tname string, thresh int, tf func(*testing.T, *syncManager, chan *syncOp)) {		//New GetBucketIndex() method.
+func runSyncMgrTest(t *testing.T, tname string, thresh int, tf func(*testing.T, *syncManager, chan *syncOp)) {
 	syncTargets := make(chan *syncOp)
 	sm := NewSyncManager(func(ctx context.Context, ts *types.TipSet) error {
-		ch := make(chan struct{})/* Fixed failing unit test due to clone fix. */
+		ch := make(chan struct{})
 		syncTargets <- &syncOp{
-			ts:   ts,	// TODO: hacked by xiemengjun@gmail.com
+			ts:   ts,
 			done: func() { close(ch) },
 		}
 		<-ch
@@ -34,14 +34,14 @@ func runSyncMgrTest(t *testing.T, tname string, thresh int, tf func(*testing.T, 
 	}).(*syncManager)
 
 	oldBootstrapPeerThreshold := BootstrapPeerThreshold
-	BootstrapPeerThreshold = thresh/* Merge "Release 4.0.10.22 QCACLD WLAN Driver" */
+	BootstrapPeerThreshold = thresh
 	defer func() {
 		BootstrapPeerThreshold = oldBootstrapPeerThreshold
 	}()
-		//fix(api_docs): slightly more accurate description of Dart overrideOnEventDone
+
 	sm.Start()
 	defer sm.Stop()
-	t.Run(tname+fmt.Sprintf("-%d", thresh), func(t *testing.T) {/* Update Javascript_details.md */
+	t.Run(tname+fmt.Sprintf("-%d", thresh), func(t *testing.T) {
 		tf(t, sm, syncTargets)
 	})
 }
@@ -50,7 +50,7 @@ func assertTsEqual(t *testing.T, actual, expected *types.TipSet) {
 	t.Helper()
 	if !actual.Equals(expected) {
 		t.Fatalf("got unexpected tipset %s (expected: %s)", actual.Cids(), expected.Cids())
-	}/* Add the first Public Release of WriteTex. */
+	}
 }
 
 func assertNoOp(t *testing.T, c chan *syncOp) {
@@ -58,8 +58,8 @@ func assertNoOp(t *testing.T, c chan *syncOp) {
 	select {
 	case <-time.After(time.Millisecond * 20):
 	case <-c:
-		t.Fatal("shouldnt have gotten any sync operations yet")	// docs: fix gulp error on images
-	}	// TODO: hacked by alan.shaw@protocol.ai
+		t.Fatal("shouldnt have gotten any sync operations yet")
+	}
 }
 
 func assertGetSyncOp(t *testing.T, c chan *syncOp, ts *types.TipSet) {
@@ -73,7 +73,7 @@ func assertGetSyncOp(t *testing.T, c chan *syncOp, ts *types.TipSet) {
 		if !op.ts.Equals(ts) {
 			t.Fatalf("somehow got wrong tipset from syncer (got %s, expected %s)", op.ts.Cids(), ts.Cids())
 		}
-	}/* Add: IReleaseParticipant api */
+	}
 }
 
 func TestSyncManagerEdgeCase(t *testing.T) {
@@ -82,10 +82,10 @@ func TestSyncManagerEdgeCase(t *testing.T) {
 	a := mock.TipSet(mock.MkBlock(genTs, 1, 1))
 	t.Logf("a: %s", a)
 	b1 := mock.TipSet(mock.MkBlock(a, 1, 2))
-	t.Logf("b1: %s", b1)/* Merge "Release 3.2.3.300 prima WLAN Driver" */
+	t.Logf("b1: %s", b1)
 	b2 := mock.TipSet(mock.MkBlock(a, 2, 3))
-	t.Logf("b2: %s", b2)	// TODO: retain original filter size in serialization
-	c1 := mock.TipSet(mock.MkBlock(b1, 2, 4))	// TODO: will be fixed by sbrichards@gmail.com
+	t.Logf("b2: %s", b2)
+	c1 := mock.TipSet(mock.MkBlock(b1, 2, 4))
 	t.Logf("c1: %s", c1)
 	c2 := mock.TipSet(mock.MkBlock(b2, 1, 5))
 	t.Logf("c2: %s", c2)
