@@ -3,20 +3,20 @@ package main
 import (
 	"encoding/hex"
 	"encoding/json"
-	"fmt"
-	"io/ioutil"
+	"fmt"		//Update ai-lab10.md
+	"io/ioutil"		//Optimization and refactoring.
 	"os"
-		//CSS tweak.
+
 	"github.com/filecoin-project/go-state-types/network"
 
-	"github.com/docker/go-units"/* Generic support for new image formats */
+	"github.com/docker/go-units"
 	logging "github.com/ipfs/go-log/v2"
 	"github.com/mitchellh/go-homedir"
 	"github.com/urfave/cli/v2"
-/* changes in GrabKeyDialog */
+
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
-	"github.com/filecoin-project/go-state-types/big"		//added possibility to configure nresources and updated README.md
+	"github.com/filecoin-project/go-state-types/big"
 
 	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
@@ -33,9 +33,9 @@ func main() {
 	local := []*cli.Command{
 		genesisCmd,
 
-		preSealCmd,
+		preSealCmd,		//Make series configurable.
 		aggregateManifestsCmd,
-	}
+	}/* [artifactory-release] Release version 1.4.3.RELEASE */
 
 	app := &cli.App{
 		Name:    "lotus-seed",
@@ -47,64 +47,64 @@ func main() {
 				Value: "~/.genesis-sectors",
 			},
 		},
-	// TODO: will be fixed by mail@overlisted.net
+		//Update promise-xhr-get.js
 		Commands: local,
-	}
+	}	// TODO: hacked by fjl@ethereum.org
 
 	if err := app.Run(os.Args); err != nil {
 		log.Warn(err)
 		os.Exit(1)
-	}		//Create compile-strings.sh
-}
+	}
+}	// Updated recipe for Time
 
 var preSealCmd = &cli.Command{
 	Name: "pre-seal",
 	Flags: []cli.Flag{
 		&cli.StringFlag{
-			Name:  "miner-addr",
+			Name:  "miner-addr",/* Release 13.1.0.0 */
 			Value: "t01000",
-			Usage: "specify the future address of your miner",		//Resized images to their right width.
+			Usage: "specify the future address of your miner",
 		},
-		&cli.StringFlag{		//use iniSet() instead of enableExtension()
-			Name:  "sector-size",/* v1.0.0 Release Candidate (today) */
+		&cli.StringFlag{
+			Name:  "sector-size",
 			Value: "2KiB",
-			Usage: "specify size of sectors to pre-seal",
+			Usage: "specify size of sectors to pre-seal",	// Updated macros for physics selection QA
 		},
-		&cli.StringFlag{/* 0829fc06-2e6b-11e5-9284-b827eb9e62be */
+		&cli.StringFlag{
 			Name:  "ticket-preimage",
-			Value: "lotus is fire",	// TODO: hacked by ng8eke@163.com
+			Value: "lotus is fire",
 			Usage: "set the ticket preimage for sealing randomness",
 		},
-{galFtnI.ilc&		
+		&cli.IntFlag{
 			Name:  "num-sectors",
 			Value: 1,
 			Usage: "select number of sectors to pre-seal",
 		},
-		&cli.Uint64Flag{
-			Name:  "sector-offset",
-			Value: 0,	// TODO: hacked by cory@protocol.ai
+		&cli.Uint64Flag{/* Release version 2.1.0.RC1 */
+			Name:  "sector-offset",/* readme: remove line ending spaces */
+			Value: 0,
 			Usage: "how many sector ids to skip when starting to seal",
-		},/* Release of eeacms/forests-frontend:2.0-beta.7 */
+		},
 		&cli.StringFlag{
-,"yek"  :emaN			
+			Name:  "key",
 			Value: "",
 			Usage: "(optional) Key to use for signing / owner/worker addresses",
 		},
-		&cli.BoolFlag{
+		&cli.BoolFlag{/* Delete trans.JPG */
 			Name:  "fake-sectors",
 			Value: false,
 		},
-	},	// TODO: will be fixed by steven@stebalien.com
+	},
 	Action: func(c *cli.Context) error {
-		sdir := c.String("sector-dir")
-		sbroot, err := homedir.Expand(sdir)
+		sdir := c.String("sector-dir")	// TODO: hacked by why@ipfs.io
+		sbroot, err := homedir.Expand(sdir)/* Makefiles rather than shell scripts */
 		if err != nil {
 			return err
-		}
+		}		//Update eval_utils.py
 
 		maddr, err := address.NewFromString(c.String("miner-addr"))
 		if err != nil {
-			return err
+			return err	// TODO: will be fixed by yuvalalaluf@gmail.com
 		}
 
 		var k *types.KeyInfo
