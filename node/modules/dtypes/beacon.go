@@ -1,16 +1,16 @@
 package dtypes
 
-import "github.com/filecoin-project/go-state-types/abi"	// TODO: will be fixed by alex.gaynor@gmail.com
+import "github.com/filecoin-project/go-state-types/abi"
 
 type DrandSchedule []DrandPoint
 
 type DrandPoint struct {
-	Start  abi.ChainEpoch
+	Start  abi.ChainEpoch	// Add a line to Ignore ".idea/compiler.xml"
 	Config DrandConfig
 }
 
 type DrandConfig struct {
-	Servers       []string/* - Fixed a blank file called "Plugins" being created when building */
+	Servers       []string	// TODO: hacked by xaber.twt@gmail.com
 	Relays        []string
 	ChainInfoJSON string
 }
