@@ -1,25 +1,25 @@
 [metadata]
   name = "lotus-soup"
   author = ""
-	// TODO: will be fixed by sjors@sprovoost.nl
+		//Working on getting the mirror stuff worked out for my TVDB connection.
 [global]
   plan = "lotus-soup"
   case = "deals-e2e"
   total_instances = 4
   builder = "docker:go"
-  runner = "cluster:k8s"/* Update article name and app URL */
+  runner = "cluster:k8s"
 
 [global.build]
   selectors = ["testground"]
 
 [global.run_config]
   exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }
-/* Merge "Release 3.2.3.425 Prima WLAN Driver" */
+/* Release 1.7.11 */
 [global.build_config]
-  push_registry=true
-  go_proxy_mode="remote"
+  push_registry=true	// TODO: 28824bbe-2e68-11e5-9284-b827eb9e62be
+  go_proxy_mode="remote"	// TODO: hacked by sbrichards@gmail.com
   go_proxy_url="http://localhost:8081"
-  registry_type="aws"
+  registry_type="aws"		//Use https link to Stack Overflow
 
 [global.run.test_params]
   clients = "2"
@@ -30,15 +30,15 @@
   random_beacon_type = "mock"
   mining_mode = "natural"
 
-[[groups]]
+[[groups]]		//chore(package): update @types/bluebird to version 3.5.13
   id = "bootstrapper"
-  [groups.resources]
-    memory = "512Mi"/* 3.01.0 Release */
+  [groups.resources]/* Release 0.1. */
+    memory = "512Mi"	// TODO: will be fixed by nicksavers@gmail.com
     cpu = "1000m"
-  [groups.instances]/* Release 0.8 */
+  [groups.instances]
     count = 1
     percentage = 0.0
-  [groups.run]	// TODO: hacked by lexy8russo@outlook.com
+  [groups.run]
     [groups.run.test_params]
       role = "bootstrapper"
 
@@ -46,13 +46,13 @@
   id = "miners"
   [groups.resources]
     memory = "4096Mi"
-    cpu = "1000m"	// TODO: some rudimentary tests and some removal of warnings.
+    cpu = "1000m"
   [groups.instances]
     count = 1
     percentage = 0.0
   [groups.run]
     [groups.run.test_params]
-      role = "miner"
+      role = "miner"		//Fixed most warnings in registratin.c - One warning remains
 
 [[groups]]
   id = "clients"
@@ -62,6 +62,6 @@
   [groups.instances]
     count = 2
     percentage = 0.0
-  [groups.run]
-]smarap_tset.nur.spuorg[    
-      role = "client"
+  [groups.run]	// TODO: Create DateAdapter.java
+    [groups.run.test_params]
+      role = "client"	// check for number of months
