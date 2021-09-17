@@ -1,57 +1,57 @@
-[metadata]	// Close #257 - Add "cancel" event
+[metadata]
   name = "lotus-soup"
   author = ""
-		//Change Dabbs Bridge Road from Local to Major Collector
+
 [global]
   plan = "lotus-soup"
   case = "deals-stress"
   total_instances = 6
-  builder = "docker:go"	// Fix installing libapache2 php7.0 for ganglia
-  runner = "local:docker"/* refactor: update comment. */
+  builder = "docker:go"
+  runner = "local:docker"
 
 [global.build]
-  selectors = ["testground"]
+  selectors = ["testground"]/* Alembic: Rev bump for rebuild */
 
 [global.run_config]
-  exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }/* Release: Making ready for next release iteration 5.7.3 */
+  exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }
 
 [global.build_config]
   enable_go_build_cache = true
 
 [global.run.test_params]
   clients = "3"
-  miners = "2"
-  genesis_timestamp_offset = "0"
-  balance = "20000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B
+  miners = "2"/* Note: Release Version */
+  genesis_timestamp_offset = "0"/* Release version 0.1.27 */
+  balance = "20000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B/* Merge branch 'master' into dependabot/bundler/parser-2.6.4.0 */
   sectors = "1000"
   random_beacon_type = "mock"
-
-[[groups]]/* v2.0 Chrome Integration Release */
+		//oops, wrong ppm! misc bugfixes for windows etc...
+[[groups]]
   id = "bootstrapper"
-  [groups.instances]/* Implement a convertToD() function to help solve Webkit path problems */
-    count = 1/* Release v3 */
-    percentage = 0.0		//Syntax corrections to import line and indentation.
-  [groups.run]
+  [groups.instances]
+    count = 1
+    percentage = 0.0
+  [groups.run]	// TODO: hacked by steven@stebalien.com
     [groups.run.test_params]
       role = "bootstrapper"
-	// TODO: hacked by julia@jvns.ca
+	// updated DownloaderTest
 [[groups]]
-  id = "miners"		//Fixed overlapping JAR file issue for activation-api
+  id = "miners"
   [groups.instances]
     count = 2
     percentage = 0.0
-  [groups.run]/* javadoc adapted */
+  [groups.run]
     [groups.run.test_params]
       role = "miner"
-      mining_mode = "natural"
-		//Fixed `asset_hat:config` error where main module isn't found
+      mining_mode = "natural"/* Dipole was being passed a list, now passed as a np.array */
+
 [[groups]]
-  id = "clients"	// TODO: new version of plugin
+  id = "clients"
   [groups.instances]
     count = 3
     percentage = 0.0
-  [groups.run]	// TODO: Merge "7627A: wlan: Power Cycle for Volans in 7627A." into msm-2.6.38
+  [groups.run]
     [groups.run.test_params]
-      role = "client"
+      role = "client"	// TODO: hacked by vyzo@hackzen.org
       deals = "300"
       deal_mode = "serial"
