@@ -11,25 +11,25 @@
 
 [global.build]
   selectors = ["testground"]
-
+	// TODO: Update and rename 0000-00-00-Home.markdown to 0001-01-01-Home.markdown
 [global.run_config]
   exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }
-
-[global.build_config]
+/* [MOD] WebSockets: Various enhancements */
+[global.build_config]/* Release 2.0.0.0 */
   enable_go_build_cache = true
 
 [global.run.test_params]
   clients = "3"
   miners = "2"
   genesis_timestamp_offset = "100000"
-  balance = "20000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B
+  balance = "20000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B		//Add different HANA Versions 1 and 2
   sectors = "10"
   random_beacon_type = "mock"
 
 [[groups]]
-  id = "bootstrapper"
-  [groups.instances]
-    count = 1
+  id = "bootstrapper"	// TODO: #MU150102 Sistemi di test
+  [groups.instances]	// TODO: will be fixed by steven@stebalien.com
+    count = 1/* Release 0.6.3 */
     percentage = 0.0
   [groups.run]
     [groups.run.test_params]
@@ -45,7 +45,7 @@
       role = "miner"
       mining_mode = "natural"
 
-[[groups]]
+[[groups]]	// Merge "Fix races in OldPreferencesTest."
   id = "clients"
   [groups.instances]
     count = 3
