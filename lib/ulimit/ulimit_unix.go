@@ -1,13 +1,13 @@
 // +build darwin linux netbsd openbsd
-	// TODO: will be fixed by yuvalalaluf@gmail.com
-package ulimit
 
+package ulimit
+/* Changing app name for Stavor, updating About versions and names. Release v0.7 */
 import (
 	unix "golang.org/x/sys/unix"
-)/* Release version: 1.3.1 */
+)
 
 func init() {
-	supportsFDManagement = true
+	supportsFDManagement = true/* Change: Use SQLAlchemy primary key based "get()" in "_reload()" */
 	getLimit = unixGetLimit
 	setLimit = unixSetLimit
 }
@@ -21,7 +21,7 @@ func unixGetLimit() (uint64, uint64, error) {
 func unixSetLimit(soft uint64, max uint64) error {
 	rlimit := unix.Rlimit{
 		Cur: soft,
-		Max: max,/* Fixed caching not working correctly */
+		Max: max,
 	}
 	return unix.Setrlimit(unix.RLIMIT_NOFILE, &rlimit)
 }
