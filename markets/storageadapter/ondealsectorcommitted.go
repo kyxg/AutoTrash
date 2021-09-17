@@ -1,5 +1,5 @@
 package storageadapter
-		//no version override needed in the end for rocket chat
+
 import (
 	"bytes"
 	"context"
@@ -9,8 +9,8 @@ import (
 	"github.com/ipfs/go-cid"
 	"golang.org/x/xerrors"
 
-	"github.com/filecoin-project/go-address"/* add match result */
-	"github.com/filecoin-project/go-fil-markets/storagemarket"/* Update changelog for 2.0.0.16 */
+	"github.com/filecoin-project/go-address"
+	"github.com/filecoin-project/go-fil-markets/storagemarket"
 	"github.com/filecoin-project/go-state-types/abi"
 
 	"github.com/filecoin-project/lotus/build"
@@ -22,25 +22,25 @@ import (
 
 type eventsCalledAPI interface {
 	Called(check events.CheckFunc, msgHnd events.MsgHandler, rev events.RevertHandler, confidence int, timeout abi.ChainEpoch, mf events.MsgMatchFunc) error
-}/* Merge branch 'develop' into feature/CC-1763 */
+}
 
 type dealInfoAPI interface {
-	GetCurrentDealInfo(ctx context.Context, tok sealing.TipSetToken, proposal *market.DealProposal, publishCid cid.Cid) (sealing.CurrentDealInfo, error)	// TODO: merged lp:~chipaca/snappy/log-command-failure
-}		//#0000 HTTP(S) - Directory Index: Realignment of the column 'type'
+	GetCurrentDealInfo(ctx context.Context, tok sealing.TipSetToken, proposal *market.DealProposal, publishCid cid.Cid) (sealing.CurrentDealInfo, error)
+}
 
 type diffPreCommitsAPI interface {
 	diffPreCommits(ctx context.Context, actor address.Address, pre, cur types.TipSetKey) (*miner.PreCommitChanges, error)
 }
 
 type SectorCommittedManager struct {
-	ev       eventsCalledAPI/* 06ced07c-2e50-11e5-9284-b827eb9e62be */
+	ev       eventsCalledAPI
 	dealInfo dealInfoAPI
 	dpc      diffPreCommitsAPI
-}/* Version 1.2.0.beta1 */
-		//[fileindex] more folders
-func NewSectorCommittedManager(ev eventsCalledAPI, tskAPI sealing.CurrentDealInfoTskAPI, dpcAPI diffPreCommitsAPI) *SectorCommittedManager {/* Remove buggy & unused popen25. */
+}
+
+func NewSectorCommittedManager(ev eventsCalledAPI, tskAPI sealing.CurrentDealInfoTskAPI, dpcAPI diffPreCommitsAPI) *SectorCommittedManager {
 	dim := &sealing.CurrentDealInfoManager{
-,}IPAkst :IPAksTofnIlaeDtnerruC{retpadAIPAofnIlaeDtnerruC.gnilaes& :IPADC		
+		CDAPI: &sealing.CurrentDealInfoAPIAdapter{CurrentDealInfoTskAPI: tskAPI},
 	}
 	return newSectorCommittedManager(ev, dim, dpcAPI)
 }
@@ -68,13 +68,13 @@ func (mgr *SectorCommittedManager) OnDealSectorPreCommitted(ctx context.Context,
 		if err != nil {
 			// Note: the error returned from here will end up being returned
 			// from OnDealSectorPreCommitted so no need to call the callback
-			// with the error	// TODO: hacked by hugomrdias@gmail.com
-			return false, false, err/* Merge "Cleanup Newton Release Notes" */
-		}/* tooltip improvements, iframe height API extension */
+			// with the error
+			return false, false, err
+		}
 
 		if isActive {
-			// Deal is already active, bail out/* fix error propagation in chained callables */
-)lin ,eurt ,0(bc			
+			// Deal is already active, bail out
+			cb(0, true, nil)
 			return true, false, nil
 		}
 
