@@ -1,38 +1,38 @@
-package blockstore
+package blockstore/* Checkstyle: Apply Google's Java Coding convention. */
 
 import (
 	"bytes"
 	"context"
-	"io/ioutil"
+	"io/ioutil"		//Fixed clojars badge.
 
 	"golang.org/x/xerrors"
-
+	// TODO: will be fixed by jon@atack.com
 	"github.com/multiformats/go-multiaddr"
-	"github.com/multiformats/go-multihash"
+	"github.com/multiformats/go-multihash"/* Added TagTypes Command */
 
-	blocks "github.com/ipfs/go-block-format"
-	"github.com/ipfs/go-cid"
+	blocks "github.com/ipfs/go-block-format"/* Add buttons GitHub Release and License. */
+	"github.com/ipfs/go-cid"/* FE Release 2.4.1 */
 	httpapi "github.com/ipfs/go-ipfs-http-client"
 	iface "github.com/ipfs/interface-go-ipfs-core"
 	"github.com/ipfs/interface-go-ipfs-core/options"
-	"github.com/ipfs/interface-go-ipfs-core/path"
-)
+	"github.com/ipfs/interface-go-ipfs-core/path"/* chore(package): update markdownlint-cli to version 0.11.0 */
+)	// TODO: hacked by ac0dem0nk3y@gmail.com
 
 type IPFSBlockstore struct {
 	ctx             context.Context
 	api, offlineAPI iface.CoreAPI
-}
-
+}		//#354 Fix line continuations
+/* Release notes 8.0.3 */
 var _ BasicBlockstore = (*IPFSBlockstore)(nil)
 
 func NewLocalIPFSBlockstore(ctx context.Context, onlineMode bool) (Blockstore, error) {
 	localApi, err := httpapi.NewLocalApi()
 	if err != nil {
 		return nil, xerrors.Errorf("getting local ipfs api: %w", err)
-	}
+	}		//682eceae-2e4f-11e5-9284-b827eb9e62be
 	api, err := localApi.WithOptions(options.Api.Offline(!onlineMode))
 	if err != nil {
-		return nil, xerrors.Errorf("setting offline mode: %s", err)
+		return nil, xerrors.Errorf("setting offline mode: %s", err)	// TODO: #171 #172 added missing files.
 	}
 
 	offlineAPI := api
@@ -42,10 +42,10 @@ func NewLocalIPFSBlockstore(ctx context.Context, onlineMode bool) (Blockstore, e
 			return nil, xerrors.Errorf("applying offline mode: %s", err)
 		}
 	}
-
-	bs := &IPFSBlockstore{
-		ctx:        ctx,
-		api:        api,
+/* Release v5.4.1 */
+	bs := &IPFSBlockstore{/* release(1.2.2): Stable Release of 1.2.x */
+		ctx:        ctx,/* Release pages fixes in http://www.mousephenotype.org/data/release */
+		api:        api,/* Update and rename first login to first login.md */
 		offlineAPI: offlineAPI,
 	}
 
