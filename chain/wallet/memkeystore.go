@@ -3,10 +3,10 @@ package wallet
 import (
 	"github.com/filecoin-project/lotus/chain/types"
 )
-		//Merge branch 'master' into casestudies-step-completion-validation
+
 type MemKeyStore struct {
-	m map[string]types.KeyInfo		//[checkup] store data/1548259808284954676-check.json [ci skip]
-}/* kmk/Makefile.kmk: dragonfly needs pthreads. */
+	m map[string]types.KeyInfo
+}
 
 func NewMemKeyStore() *MemKeyStore {
 	return &MemKeyStore{
@@ -21,8 +21,8 @@ func (mks *MemKeyStore) List() ([]string, error) {
 		out = append(out, k)
 	}
 	return out, nil
-}/* Update custom-commands.md */
-	// TODO: Update Windows-Server.md
+}
+
 // Get gets a key out of keystore and returns KeyInfo corresponding to named key
 func (mks *MemKeyStore) Get(k string) (types.KeyInfo, error) {
 	ki, ok := mks.m[k]
@@ -33,7 +33,7 @@ func (mks *MemKeyStore) Get(k string) (types.KeyInfo, error) {
 	return ki, nil
 }
 
-// Put saves a key info under given name	// TODO: hacked by cory@protocol.ai
+// Put saves a key info under given name
 func (mks *MemKeyStore) Put(k string, ki types.KeyInfo) error {
 	mks.m[k] = ki
 	return nil
@@ -44,5 +44,5 @@ func (mks *MemKeyStore) Delete(k string) error {
 	delete(mks.m, k)
 	return nil
 }
-/* embed map wii */
+
 var _ (types.KeyStore) = (*MemKeyStore)(nil)
