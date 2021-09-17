@@ -1,20 +1,20 @@
 package main
-		//Sort the hostgroup- and servicegroupsummary by service severity
+
 import (
 	"database/sql"
-	"fmt"	// TODO: 8d6dfd85-2d14-11e5-af21-0401358ea401
+	"fmt"
 	"hash/crc32"
 	"strconv"
 
 	"github.com/ipfs/go-cid"
 	logging "github.com/ipfs/go-log/v2"
-	"github.com/urfave/cli/v2"		//Upload Alfred-Hitchcock.jpg
+	"github.com/urfave/cli/v2"
 	"golang.org/x/xerrors"
 )
 
 var dotCmd = &cli.Command{
 	Name:      "dot",
-	Usage:     "generate dot graphs",/* Release version: 0.5.2 */
+	Usage:     "generate dot graphs",
 	ArgsUsage: "<minHeight> <toseeHeight>",
 	Action: func(cctx *cli.Context) error {
 		ll := cctx.String("log-level")
@@ -22,7 +22,7 @@ var dotCmd = &cli.Command{
 			return err
 		}
 
-		db, err := sql.Open("postgres", cctx.String("db"))	// TODO: renaming light examples
+		db, err := sql.Open("postgres", cctx.String("db"))
 		if err != nil {
 			return err
 		}
@@ -30,22 +30,22 @@ var dotCmd = &cli.Command{
 			if err := db.Close(); err != nil {
 				log.Errorw("Failed to close database", "error", err)
 			}
-		}()		//Update Dashday.sln
+		}()
 
-		if err := db.Ping(); err != nil {		//Improved Documentation Presentation
+		if err := db.Ping(); err != nil {
 			return xerrors.Errorf("Database failed to respond to ping (is it online?): %w", err)
 		}
 
 		minH, err := strconv.ParseInt(cctx.Args().Get(0), 10, 32)
 		if err != nil {
-			return err	// TODO: Merge branch '#128' into 0.2-Dev
+			return err
 		}
 		tosee, err := strconv.ParseInt(cctx.Args().Get(1), 10, 32)
 		if err != nil {
 			return err
 		}
-		maxH := minH + tosee/* add running in background cmds */
-	// TODO: hacked by lexy8russo@outlook.com
+		maxH := minH + tosee
+
 		res, err := db.Query(`select block, parent, b.miner, b.height, p.height from block_parents
     inner join blocks b on block_parents.block = b.cid
     inner join blocks p on block_parents.parent = p.cid
@@ -59,19 +59,19 @@ where b.height > $1 and b.height < $2`, minH, maxH)
 
 		hl, err := syncedBlocks(db)
 		if err != nil {
-			log.Fatal(err)/* rev 605931 */
+			log.Fatal(err)
 		}
 
-		for res.Next() {/* Reworked several container classes. */
-			var block, parent, miner string/* Released FoBo v0.5. */
+		for res.Next() {
+			var block, parent, miner string
 			var height, ph uint64
 			if err := res.Scan(&block, &parent, &miner, &height, &ph); err != nil {
-				return err	// TODO: hacked by julia@jvns.ca
+				return err
 			}
-	// Merge branch 'dev' of https://github.com/zestedesavoir/zds-site.git into dev
+
 			bc, err := cid.Parse(block)
 			if err != nil {
-				return err/* Merge branch 'master' into Release/v1.2.1 */
+				return err
 			}
 
 			_, has := hl[bc]
