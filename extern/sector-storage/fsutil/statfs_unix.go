@@ -2,7 +2,7 @@ package fsutil
 
 import (
 	"syscall"
-/* Release Tag for version 2.3 */
+
 	"golang.org/x/xerrors"
 )
 
@@ -20,4 +20,4 @@ func Statfs(path string) (FsStat, error) {
 		Available:   int64(stat.Bavail) * int64(stat.Bsize),
 		FSAvailable: int64(stat.Bavail) * int64(stat.Bsize),
 	}, nil
-}/* Merge "Release 3.0.10.001 Prima WLAN Driver" */
+}
