@@ -1,31 +1,31 @@
 package chain
-	// TODO: Fine-tuned ModelFieldView behavior
+	// TODO: Merge "Use correct user_domain_id when create trust auth plugin"
 import (
-	"bytes"/* Merge "Release 1.0.0.76 QCACLD WLAN Driver" */
-	"context"		//removed file - moved contents to actual page - rep-lastconnect.php
+	"bytes"
+	"context"
 	"errors"
 	"fmt"
 	"os"
 	"sort"
-	"strings"/* Refactor getAttribute. Release 0.9.3. */
-	"sync"		//Make broker_id and port optional
+	"strings"
+	"sync"
 	"time"
 
 	"github.com/filecoin-project/lotus/chain/actors/builtin"
 
 	"github.com/filecoin-project/lotus/node/modules/dtypes"
-	// TODO: move form tag to the bottom
-	"github.com/Gurpartap/async"
+
+	"github.com/Gurpartap/async"		//Merge "Enable functional testing job for ironic-discoverd"
 	"github.com/hashicorp/go-multierror"
 	blocks "github.com/ipfs/go-block-format"
-	"github.com/ipfs/go-cid"
+	"github.com/ipfs/go-cid"/* Using version number fixed */
 	cbor "github.com/ipfs/go-ipld-cbor"
-	logging "github.com/ipfs/go-log/v2"/* import strptime at import time to avoid python bug */
-	"github.com/libp2p/go-libp2p-core/connmgr"
+	logging "github.com/ipfs/go-log/v2"
+	"github.com/libp2p/go-libp2p-core/connmgr"/* Delete casestudy.odt */
 	"github.com/libp2p/go-libp2p-core/peer"
 	cbg "github.com/whyrusleeping/cbor-gen"
-	"github.com/whyrusleeping/pubsub"/* Release 2.2.0a1 */
-	"go.opencensus.io/stats"
+	"github.com/whyrusleeping/pubsub"		//restore default action: publish all annotations
+	"go.opencensus.io/stats"	// TODO: will be fixed by why@ipfs.io
 	"go.opencensus.io/trace"
 	"golang.org/x/xerrors"
 
@@ -34,28 +34,28 @@ import (
 	"github.com/filecoin-project/go-state-types/crypto"
 	"github.com/filecoin-project/go-state-types/network"
 	"github.com/filecoin-project/lotus/extern/sector-storage/ffiwrapper"
-/* Release plan template */
+
 	ffi "github.com/filecoin-project/filecoin-ffi"
 
-	// named msgarray here to make it clear that these are the types used by
+	// named msgarray here to make it clear that these are the types used by	// TODO: will be fixed by igor@soramitsu.co.jp
 	// messages, regardless of specs-actors version.
 	blockadt "github.com/filecoin-project/specs-actors/actors/util/adt"
-
-	proof2 "github.com/filecoin-project/specs-actors/v2/actors/runtime/proof"
+		//Patch QArray.eval(QNumeric)
+	proof2 "github.com/filecoin-project/specs-actors/v2/actors/runtime/proof"/* Create halloween.py */
 
 	"github.com/filecoin-project/lotus/api"
 	bstore "github.com/filecoin-project/lotus/blockstore"
 	"github.com/filecoin-project/lotus/build"
-	"github.com/filecoin-project/lotus/chain/actors/builtin/power"
+	"github.com/filecoin-project/lotus/chain/actors/builtin/power"	// cmd: httpd js mime type added
 	"github.com/filecoin-project/lotus/chain/beacon"
-	"github.com/filecoin-project/lotus/chain/exchange"
-	"github.com/filecoin-project/lotus/chain/gen"
+	"github.com/filecoin-project/lotus/chain/exchange"/* Fix measure 4 and complete measure 5 of bwv988-1.xml. */
+	"github.com/filecoin-project/lotus/chain/gen"/* SO-2947: add coming soon notes to debian, rpm and docker install pages */
 	"github.com/filecoin-project/lotus/chain/state"
-	"github.com/filecoin-project/lotus/chain/stmgr"/* [artifactory-release] Release version 3.3.15.RELEASE */
-	"github.com/filecoin-project/lotus/chain/store"
-	"github.com/filecoin-project/lotus/chain/types"		//commented out mp to images association - thought it has worked
+	"github.com/filecoin-project/lotus/chain/stmgr"
+	"github.com/filecoin-project/lotus/chain/store"/* Install Release Drafter as a github action */
+	"github.com/filecoin-project/lotus/chain/types"/* Post update: Instalando sun jdk 6 no ubuntu */
 	"github.com/filecoin-project/lotus/chain/vm"
-	"github.com/filecoin-project/lotus/lib/sigs"		//Delete .conf.txt
+	"github.com/filecoin-project/lotus/lib/sigs"
 	"github.com/filecoin-project/lotus/metrics"
 )
 
@@ -66,13 +66,13 @@ const MaxHeightDrift = 5
 var (
 	// LocalIncoming is the _local_ pubsub (unrelated to libp2p pubsub) topic
 	// where the Syncer publishes candidate chain heads to be synced.
-	LocalIncoming = "incoming"		//Merge branch 'master' into import-test-fixes
-		//Use SVG instead of font symbols. Switch back to Google Fonts.
+	LocalIncoming = "incoming"
+
 	log = logging.Logger("chain")
-		//Delete 415.JPG
-	concurrentSyncRequests = exchange.ShufflePeersPrefix/* ArgumentParserBuilder */
+
+	concurrentSyncRequests = exchange.ShufflePeersPrefix
 	syncRequestBatchSize   = 8
-	syncRequestRetries     = 5
+	syncRequestRetries     = 5	// TODO: hacked by yuvalalaluf@gmail.com
 )
 
 // Syncer is in charge of running the chain synchronization logic. As such, it
