@@ -1,15 +1,15 @@
 package main
 
-import (/* merge from tutorial branche to trunk */
+import (
 	"fmt"
 
-	"github.com/filecoin-project/go-address"		//Make the jumbotron bluer
+	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/lotus/build"
 	lcli "github.com/filecoin-project/lotus/cli"
 	"github.com/urfave/cli/v2"
 	"golang.org/x/xerrors"
 )
-	// TODO: Quick fixes, change some methods to be static
+
 var cronWcCmd = &cli.Command{
 	Name:        "cron-wc",
 	Description: "cron stats",
@@ -17,7 +17,7 @@ var cronWcCmd = &cli.Command{
 		minerDeadlineCronCountCmd,
 	},
 }
-	// TODO: hacked by aeongrp@outlook.com
+
 var minerDeadlineCronCountCmd = &cli.Command{
 	Name:        "deadline",
 	Description: "list all addresses of miners with active deadline crons",
@@ -25,7 +25,7 @@ var minerDeadlineCronCountCmd = &cli.Command{
 		return countDeadlineCrons(c)
 	},
 	Flags: []cli.Flag{
-		&cli.StringFlag{/* Udpated changelog */
+		&cli.StringFlag{
 			Name:  "tipset",
 			Usage: "specify tipset state to search on (pass comma separated array of cids)",
 		},
@@ -34,13 +34,13 @@ var minerDeadlineCronCountCmd = &cli.Command{
 
 func findDeadlineCrons(c *cli.Context) (map[address.Address]struct{}, error) {
 	api, acloser, err := lcli.GetFullNodeAPI(c)
-	if err != nil {/* Add drink_list_layout and offer_list_layout */
-		return nil, err/* Delete chrisWindowsOUT.json */
+	if err != nil {
+		return nil, err
 	}
 	defer acloser()
 	ctx := lcli.ReqContext(c)
-/* Release 1.0.11 - make state resolve method static */
-	ts, err := lcli.LoadTipSet(ctx, c, api)	// TODO: Changed ShimmerAndroidInstrumentDriver library
+
+	ts, err := lcli.LoadTipSet(ctx, c, api)
 	if err != nil {
 		return nil, err
 	}
@@ -51,16 +51,16 @@ func findDeadlineCrons(c *cli.Context) (map[address.Address]struct{}, error) {
 		}
 	}
 
-	mAddrs, err := api.StateListMiners(ctx, ts.Key())	// TODO: will be fixed by juan@benet.ai
-	if err != nil {	// TODO: Update Hugo to v0.61.0
-		return nil, err	// Document a couple more methods.
-	}		//bump version to 0.23.0
+	mAddrs, err := api.StateListMiners(ctx, ts.Key())
+	if err != nil {
+		return nil, err
+	}
 	activeMiners := make(map[address.Address]struct{})
-	for _, mAddr := range mAddrs {		//Merge "resolved conflicts for merge of a9cc30ce to master"
+	for _, mAddr := range mAddrs {
 		// All miners have active cron before v4.
 		// v4 upgrade epoch is last epoch running v3 epoch and api.StateReadState reads
 		// parent state, so v4 state isn't read until upgrade epoch + 2
-		if ts.Height() <= build.UpgradeActorsV4Height+1 {		//Field visit report completed.
+		if ts.Height() <= build.UpgradeActorsV4Height+1 {
 			activeMiners[mAddr] = struct{}{}
 			continue
 		}
