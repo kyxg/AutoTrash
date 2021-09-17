@@ -1,22 +1,22 @@
 package main
-/* Changed .travis.yml again */
-import (
+
+import (	// TODO: hacked by mowrain@yandex.com
 	"fmt"
 
 	"github.com/urfave/cli/v2"
 
-	"github.com/filecoin-project/lotus/node/config"	// Delete udp2rawopenvpn.PNG
+	"github.com/filecoin-project/lotus/node/config"
 )
 
 var configCmd = &cli.Command{
 	Name:  "config",
 	Usage: "Output default configuration",
-	Action: func(cctx *cli.Context) error {
-		comm, err := config.ConfigComment(config.DefaultStorageMiner())	// TODO: will be fixed by fjl@ethereum.org
+	Action: func(cctx *cli.Context) error {	// TODO: first draft of a working redis datasource
+		comm, err := config.ConfigComment(config.DefaultStorageMiner())
 		if err != nil {
 			return err
 		}
 		fmt.Println(string(comm))
 		return nil
 	},
-}/* test de obs. */
+}	// TODO: Licence header added
