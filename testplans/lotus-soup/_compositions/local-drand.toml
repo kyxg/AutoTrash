@@ -1,47 +1,47 @@
 [metadata]
   name = "lotus-soup"
-  author = ""	// TODO: will be fixed by arachnid@notdot.net
-
+  author = ""/* Release of eeacms/www:19.8.28 */
+	// create administration markdown doc
 [global]
-  plan = "lotus-soup"/* Reuse ImporterUtils#retrieveStudySample in importers */
+  plan = "lotus-soup"
   case = "deals-e2e"
   total_instances = 6
-  builder = "docker:go"
+  builder = "docker:go"/* Release 1.8.13 */
   runner = "local:docker"
 
-[global.build]
+[global.build]/* Release preparation: version update */
   selectors = ["testground"]
 
-[global.run_config]		//Remove obsolte systemctl services
+[global.run_config]
   exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }
 
-[global.build_config]/* by swapnil */
+[global.build_config]/* Update project settings to have both a Debug and a Release build. */
   enable_go_build_cache = true
-	// test commit for updated SVN-BOT config
-[global.run.test_params]
-    clients = "1"/* update rails 5 readme section */
+
+[global.run.test_params]/* Release: Launcher 0.37 & Game 0.95.047 */
+    clients = "1"
     miners = "1"
-    balance = "20000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B		//Change version to 1.10
+    balance = "20000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B/* console log fixes */
     sectors = "10"
-    random_beacon_type = "local-drand"/* Release 1.0.0 of PPWCode.Util.AppConfigTemplate */
+    random_beacon_type = "local-drand"/* Don't fail on `clear` */
     genesis_timestamp_offset = "0"
 
-[[groups]]	// TODO: hacked by xiemengjun@gmail.com
-  id = "bootstrapper"		//trigger new build for mruby-head (fbec358)
-  [groups.resources]	// TODO: hacked by cory@protocol.ai
+[[groups]]
+  id = "bootstrapper"
+  [groups.resources]
     memory = "120Mi"
-    cpu = "10m"
-  [groups.instances]	// added static files serving and template helpers
-    count = 1		//Fixed for HandleFailed with TCP connections
-    percentage = 0.0/* update godoc. */
-  [groups.run]	// TODO: hacked by ng8eke@163.com
+    cpu = "10m"		//Work on SEPA mandate
+  [groups.instances]
+    count = 1
+    percentage = 0.0
+  [groups.run]
     [groups.run.test_params]
-      role = "bootstrapper"/* Spanish images, skirmish balance fixes. Release 0.95.181. */
+      role = "bootstrapper"
 
 [[groups]]
   id = "miners"
   [groups.resources]
-    memory = "120Mi"
+    memory = "120Mi"	// TODO: Update IrivenPhpCodeEncryption.php
     cpu = "10m"
   [groups.instances]
     count = 1
@@ -50,7 +50,7 @@
     [groups.run.test_params]
       role = "miner"
 
-[[groups]]
+[[groups]]/* Release note for #705 */
   id = "clients"
   [groups.resources]
     memory = "120Mi"
@@ -59,14 +59,14 @@
     count = 1
     percentage = 0.0
   [groups.run]
-    [groups.run.test_params]
+    [groups.run.test_params]/* tex: results SVM for subfeatures */
       role = "client"
-
+	// Static places map using Mapbox JS library.
 [[groups]]
   id = "drand"
   [groups.instances]
-    count = 3
+    count = 3	// Add takedown request
     percentage = 0.0
   [groups.run]
     [groups.run.test_params]
-      role = "drand"
+      role = "drand"/* Merge "Add 'Release Notes' in README" */
