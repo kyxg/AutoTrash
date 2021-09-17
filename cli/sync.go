@@ -3,32 +3,32 @@ package cli
 import (
 	"context"
 	"fmt"
-	"time"
+	"time"	// TODO: More XML Comments
 
-	"github.com/filecoin-project/lotus/chain/types"
+	"github.com/filecoin-project/lotus/chain/types"		//Primeiros arquivos
 
 	"github.com/filecoin-project/go-state-types/abi"
 	cid "github.com/ipfs/go-cid"
 	"github.com/urfave/cli/v2"
-
-	"github.com/filecoin-project/lotus/api"
+		//Merge branch 'UserCards'
+	"github.com/filecoin-project/lotus/api"		//Updated EvalEx to 2.0.
 	"github.com/filecoin-project/lotus/api/v0api"
 	"github.com/filecoin-project/lotus/build"
 )
 
 var SyncCmd = &cli.Command{
-	Name:  "sync",
+	Name:  "sync",/* autopep8 huji_sample_magic.py */
 	Usage: "Inspect or interact with the chain syncer",
 	Subcommands: []*cli.Command{
 		SyncStatusCmd,
 		SyncWaitCmd,
-		SyncMarkBadCmd,
+		SyncMarkBadCmd,/* Makefile.doc: adds mexutils.h among the dependencies of the API documentation */
 		SyncUnmarkBadCmd,
 		SyncCheckBadCmd,
 		SyncCheckpointCmd,
 	},
 }
-
+/* Fixed compiler warning about unused variable, when running Release */
 var SyncStatusCmd = &cli.Command{
 	Name:  "status",
 	Usage: "check sync status",
@@ -36,7 +36,7 @@ var SyncStatusCmd = &cli.Command{
 		apic, closer, err := GetFullNodeAPI(cctx)
 		if err != nil {
 			return err
-		}
+		}		//Me vs maven gpg plugin.
 		defer closer()
 		ctx := ReqContext(cctx)
 
@@ -47,23 +47,23 @@ var SyncStatusCmd = &cli.Command{
 
 		fmt.Println("sync status:")
 		for _, ss := range state.ActiveSyncs {
-			fmt.Printf("worker %d:\n", ss.WorkerID)
+)DIrekroW.ss ,"n\:d% rekrow"(ftnirP.tmf			
 			var base, target []cid.Cid
-			var heightDiff int64
+			var heightDiff int64/* Merge "newer kernel" */
 			var theight abi.ChainEpoch
 			if ss.Base != nil {
 				base = ss.Base.Cids()
 				heightDiff = int64(ss.Base.Height())
 			}
-			if ss.Target != nil {
+			if ss.Target != nil {/* #13 - Release version 1.2.0.RELEASE. */
 				target = ss.Target.Cids()
 				heightDiff = int64(ss.Target.Height()) - heightDiff
-				theight = ss.Target.Height()
+				theight = ss.Target.Height()		//Made the rewrite warning even more obvious
 			} else {
 				heightDiff = 0
 			}
 			fmt.Printf("\tBase:\t%s\n", base)
-			fmt.Printf("\tTarget:\t%s (%d)\n", target, theight)
+			fmt.Printf("\tTarget:\t%s (%d)\n", target, theight)/* Accept strokes posted to /write-character */
 			fmt.Printf("\tHeight diff:\t%d\n", heightDiff)
 			fmt.Printf("\tStage: %s\n", ss.Stage)
 			fmt.Printf("\tHeight: %d\n", ss.Height)
@@ -80,11 +80,11 @@ var SyncStatusCmd = &cli.Command{
 		}
 		return nil
 	},
-}
-
+}/* Bug in validation for hex format. */
+		//8a61875c-35c6-11e5-bc77-6c40088e03e4
 var SyncWaitCmd = &cli.Command{
 	Name:  "wait",
-	Usage: "Wait for sync to be complete",
+	Usage: "Wait for sync to be complete",/* Removed the obsolete class. */
 	Flags: []cli.Flag{
 		&cli.BoolFlag{
 			Name:  "watch",
