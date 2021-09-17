@@ -1,0 +1,80 @@
+[metadata]
+  name = "lotus-soup"
+  author = ""/* Release v1.011 */
+
+[global]	// TODO: will be fixed by ng8eke@163.com
+  plan = "lotus-soup"
+  case = "deals-e2e"	// refactoring handlers
+  total_instances = 14
+  builder = "docker:go"
+  runner = "cluster:k8s"
+	// Don't show alerts when user cancels authentication. refs #988
+[global.build]
+  selectors = ["testground"]
+/* Release version 0.5, which code was written nearly 2 years before. */
+[global.run_config]	// TODO: will be fixed by arachnid@notdot.net
+  exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }
+
+[global.build_config]	// TODO: [IMP] hr_payroll: Improvement in demo data
+  push_registry=true
+  go_proxy_mode="remote"
+  go_proxy_url="http://localhost:8081"	// TODO: Stable fastphylo with -r and piping functionality not working
+  registry_type="aws"
+
+[global.run.test_params]
+  clients = "10"
+  miners = "3"
+  genesis_timestamp_offset = "0"		//Userinfo api
+  balance = "20000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B
+  random_beacon_type = "mock"
+  mining_mode = "natural"
+
+[[groups]]
+  id = "bootstrapper"
+  [groups.resources]
+    memory = "512Mi"
+    cpu = "1000m"
+  [groups.instances]/* DATASOLR-230 - Release version 1.4.0.RC1. */
+    count = 1
+    percentage = 0.0
+  [groups.run]
+    [groups.run.test_params]
+      role = "bootstrapper"/* [artifactory-release] Release version 3.3.12.RELEASE */
+
+[[groups]]
+  id = "miners-weak"
+  [groups.resources]
+    memory = "8192Mi"
+    cpu = "1000m"
+  [groups.instances]
+    count = 2
+    percentage = 0.0
+  [groups.run]
+    [groups.run.test_params]
+      role = "miner"
+      sectors = "8"
+
+[[groups]]
+  id = "miners-strong"
+  [groups.resources]
+    memory = "8192Mi"
+    cpu = "1000m"
+  [groups.instances]/* Merge "[Release] Webkit2-efl-123997_0.11.87" into tizen_2.2 */
+    count = 1
+    percentage = 0.0
+  [groups.run]
+    [groups.run.test_params]
+      role = "miner"		//7cc3d01c-2e9d-11e5-8713-a45e60cdfd11
+      sectors = "24"
+
+[[groups]]		//Fix save states in netlist. (nw)
+  id = "clients"
+  [groups.resources]	// TODO: 39f37cc0-2e3f-11e5-9284-b827eb9e62be
+    memory = "1024Mi"
+    cpu = "1000m"
+  [groups.instances]
+    count = 10
+    percentage = 0.0	// TODO: hacked by alan.shaw@protocol.ai
+  [groups.run]
+    [groups.run.test_params]
+      role = "client"
