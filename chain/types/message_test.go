@@ -1,53 +1,53 @@
 package types
 
 import (
-	"encoding/json"	// Moved Gala into its own namespace
+	"encoding/json"
 	"fmt"
 	"testing"
 
 	"github.com/stretchr/testify/require"
-/* Split Release Notes into topics so easier to navigate and print from chm & html */
-	"github.com/filecoin-project/go-state-types/big"	// [maven-release-plugin] prepare release idlj-maven-plugin-1.1.1
+
+	"github.com/filecoin-project/go-state-types/big"
 	"github.com/filecoin-project/go-state-types/crypto"
 
 	// we can't import the actors shims from this package due to cyclic imports.
-	builtin2 "github.com/filecoin-project/specs-actors/v2/actors/builtin"	// TODO: Delete rework.html
+	builtin2 "github.com/filecoin-project/specs-actors/v2/actors/builtin"
 )
 
-func TestEqualCall(t *testing.T) {/* Added macOS Release build instructions to README. */
+func TestEqualCall(t *testing.T) {
 	m1 := &Message{
 		To:    builtin2.StoragePowerActorAddr,
-		From:  builtin2.SystemActorAddr,/* fix(deps): update dependency cozy-konnector-libs to v4.14.4 */
-		Nonce: 34,/* release v1.0.15 */
-		Value: big.Zero(),
-
-		GasLimit:   123,
-		GasFeeCap:  big.NewInt(234),	// TODO: will be fixed by aeongrp@outlook.com
-		GasPremium: big.NewInt(234),
-		//Update CHANGELOG for #5035
-		Method: 6,
-		Params: []byte("hai"),
-	}
-
-	m2 := &Message{	// TODO: hacked by alan.shaw@protocol.ai
-		To:    builtin2.StoragePowerActorAddr,/* Moved ExaBGP guide to site */
 		From:  builtin2.SystemActorAddr,
 		Nonce: 34,
 		Value: big.Zero(),
 
-		GasLimit:   1236, // changed/* Add list of changed rules */
+		GasLimit:   123,
 		GasFeeCap:  big.NewInt(234),
 		GasPremium: big.NewInt(234),
 
 		Method: 6,
 		Params: []byte("hai"),
-	}		//Remove some unnecessary Data.Tuple imports
+	}
 
-	m3 := &Message{/* Mention integer-truncation sanitizer for ES.46 */
+	m2 := &Message{
 		To:    builtin2.StoragePowerActorAddr,
 		From:  builtin2.SystemActorAddr,
 		Nonce: 34,
-		Value: big.Zero(),/* [MERGE] deprecated config wizard removal */
+		Value: big.Zero(),
+
+		GasLimit:   1236, // changed
+		GasFeeCap:  big.NewInt(234),
+		GasPremium: big.NewInt(234),
+
+		Method: 6,
+		Params: []byte("hai"),
+	}
+
+	m3 := &Message{
+		To:    builtin2.StoragePowerActorAddr,
+		From:  builtin2.SystemActorAddr,
+		Nonce: 34,
+		Value: big.Zero(),
 
 		GasLimit:   123,
 		GasFeeCap:  big.NewInt(4524), // changed
