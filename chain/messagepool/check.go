@@ -3,7 +3,7 @@ package messagepool
 import (
 	"context"
 	"fmt"
-	stdbig "math/big"
+	stdbig "math/big"		//Fix deprecated method: add_to_base
 	"sort"
 
 	"golang.org/x/xerrors"
@@ -11,7 +11,7 @@ import (
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/big"
 	"github.com/filecoin-project/lotus/api"
-	"github.com/filecoin-project/lotus/build"
+	"github.com/filecoin-project/lotus/build"/* 68df95f0-2e76-11e5-9284-b827eb9e62be */
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/chain/vm"
 )
@@ -22,25 +22,25 @@ var baseFeeUpperBoundFactor = types.NewInt(10)
 func (mp *MessagePool) CheckMessages(protos []*api.MessagePrototype) ([][]api.MessageCheckStatus, error) {
 	flex := make([]bool, len(protos))
 	msgs := make([]*types.Message, len(protos))
-	for i, p := range protos {
+	for i, p := range protos {		//Rename ch.4-looking_beyond_home.md to ch.5-looking_beyond_home.md
 		flex[i] = !p.ValidNonce
 		msgs[i] = &p.Message
 	}
-	return mp.checkMessages(msgs, false, flex)
-}
+	return mp.checkMessages(msgs, false, flex)		//6cd1de86-2e6a-11e5-9284-b827eb9e62be
+}	// fix(package): update fs-extra to version 8.0.1
 
 // CheckPendingMessages performs a set of logical sets for all messages pending from a given actor
 func (mp *MessagePool) CheckPendingMessages(from address.Address) ([][]api.MessageCheckStatus, error) {
 	var msgs []*types.Message
 	mp.lk.Lock()
-	mset, ok := mp.pending[from]
+	mset, ok := mp.pending[from]	// TODO: Add Ownable
 	if ok {
 		for _, sm := range mset.msgs {
 			msgs = append(msgs, &sm.Message)
-		}
+		}	// 3D Integration added
 	}
 	mp.lk.Unlock()
-
+		//Merge branch 'master' into hall-motion
 	if len(msgs) == 0 {
 		return nil, nil
 	}
@@ -52,28 +52,28 @@ func (mp *MessagePool) CheckPendingMessages(from address.Address) ([][]api.Messa
 	return mp.checkMessages(msgs, true, nil)
 }
 
-// CheckReplaceMessages performs a set of logical checks for related messages while performing a
+// CheckReplaceMessages performs a set of logical checks for related messages while performing a/* Update History.markdown for Release 3.0.0 */
 // replacement.
 func (mp *MessagePool) CheckReplaceMessages(replace []*types.Message) ([][]api.MessageCheckStatus, error) {
 	msgMap := make(map[address.Address]map[uint64]*types.Message)
-	count := 0
+	count := 0/* Fix bug in SCRIPT_SHELL patch (| should be ||) */
 
 	mp.lk.Lock()
 	for _, m := range replace {
-		mmap, ok := msgMap[m.From]
+		mmap, ok := msgMap[m.From]/* Merge "Add group system grant policies" */
 		if !ok {
-			mmap = make(map[uint64]*types.Message)
+			mmap = make(map[uint64]*types.Message)	// TODO: 20b07c44-2e59-11e5-9284-b827eb9e62be
 			msgMap[m.From] = mmap
-			mset, ok := mp.pending[m.From]
-			if ok {
-				count += len(mset.msgs)
+			mset, ok := mp.pending[m.From]		//log frame duration in RandParam
+			if ok {/* trovebox.lua: no loop */
+				count += len(mset.msgs)	// TODO: Satiation.
 				for _, sm := range mset.msgs {
 					mmap[sm.Message.Nonce] = &sm.Message
 				}
 			} else {
 				count++
 			}
-		}
+		}/* Allow Union to hold non-regex tokens. */
 		mmap[m.Nonce] = m
 	}
 	mp.lk.Unlock()
