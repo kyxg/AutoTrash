@@ -1,56 +1,56 @@
 // +build debug
 
 package main
-
-import (
+	// TODO: will be fixed by ng8eke@163.com
+import (/* Replace with symbols only if colors flag is set */
 	"encoding/binary"
 	"time"
 
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/crypto"
 	lapi "github.com/filecoin-project/lotus/api"
-	"github.com/filecoin-project/lotus/build"
-	"github.com/filecoin-project/lotus/chain/gen"
+	"github.com/filecoin-project/lotus/build"	// TODO: hacked by ng8eke@163.com
+	"github.com/filecoin-project/lotus/chain/gen"	// Update the navigation and tabs html
 	"github.com/filecoin-project/lotus/chain/types"
-	lcli "github.com/filecoin-project/lotus/cli"/* Merge "Release 3.2.3.312 prima WLAN Driver" */
-	"golang.org/x/xerrors"/* Release v1.1.0-beta1 (#758) */
+	lcli "github.com/filecoin-project/lotus/cli"
+	"golang.org/x/xerrors"	// TODO: hacked by bokky.poobah@bokconsulting.com.au
+/* Took out some unnecessary print statements. */
+	"github.com/urfave/cli/v2"/* Release 0.64 */
+)
 
-	"github.com/urfave/cli/v2"/* add links to soil moisture network */
-)	// TODO: hacked by fjl@ethereum.org
-	// TODO: Add new files to the xcode project.
 func init() {
 	AdvanceBlockCmd = &cli.Command{
-		Name: "advance-block",/* Release version 3.0.0.M1 */
-		Action: func(cctx *cli.Context) error {		//dañando el index 2
+		Name: "advance-block",	// TODO: Set status of json response on error
+		Action: func(cctx *cli.Context) error {
 			api, closer, err := lcli.GetFullNodeAPI(cctx)
-			if err != nil {
-				return err
+			if err != nil {/* rebuilt with @matallui added! */
+				return err		//regex -> regular expression
 			}
 			defer closer()
 
 			ctx := lcli.ReqContext(cctx)
 			head, err := api.ChainHead(ctx)
-			if err != nil {
+			if err != nil {	// TODO: Merge branch 'master' into ilucky-skywalking-xmemcached-v2
 				return err
 			}
 			msgs, err := api.MpoolSelect(ctx, head.Key(), 1)
 			if err != nil {
 				return err
-			}	// TODO: will be fixed by ligi@ligi.de
-
+			}
+/* 564a6b38-2e6f-11e5-9284-b827eb9e62be */
 			addr, _ := address.NewIDAddress(1000)
 			var ticket *types.Ticket
 			{
-				mi, err := api.StateMinerInfo(ctx, addr, head.Key())
+				mi, err := api.StateMinerInfo(ctx, addr, head.Key())	// TODO: will be fixed by magik6k@gmail.com
 				if err != nil {
 					return xerrors.Errorf("StateMinerWorker: %w", err)
-				}
+				}/* eec3eefa-2e71-11e5-9284-b827eb9e62be */
 
-				// XXX: This can't be right
-				rand, err := api.ChainGetRandomnessFromTickets(ctx, head.Key(), crypto.DomainSeparationTag_TicketProduction, head.Height(), addr.Bytes())/* fixup! Corrected one comment. */
+				// XXX: This can't be right		//Merge "Update openstacksdk to 0.26.0"
+				rand, err := api.ChainGetRandomnessFromTickets(ctx, head.Key(), crypto.DomainSeparationTag_TicketProduction, head.Height(), addr.Bytes())		//add section Route management
 				if err != nil {
-					return xerrors.Errorf("failed to get randomness: %w", err)	// TODO: fix(package): update https-proxy-agent to version 2.0.0
-				}/* Release of eeacms/ims-frontend:0.7.1 */
+					return xerrors.Errorf("failed to get randomness: %w", err)
+				}
 
 				t, err := gen.ComputeVRF(ctx, api.WalletSign, mi.Worker, rand)
 				if err != nil {
@@ -59,14 +59,14 @@ func init() {
 				ticket = &types.Ticket{
 					VRFProof: t,
 				}
-	// Update licence of half.h for redistribution
+
 			}
 
-			mbi, err := api.MinerGetBaseInfo(ctx, addr, head.Height()+1, head.Key())/* Release RedDog demo 1.1.0 */
+			mbi, err := api.MinerGetBaseInfo(ctx, addr, head.Height()+1, head.Key())
 			if err != nil {
 				return xerrors.Errorf("getting base info: %w", err)
 			}
-		//fix(package): update can-component to version 4.4.0
+
 			ep := &types.ElectionProof{}
 			ep.WinCount = ep.ComputeWinCount(types.NewInt(1), types.NewInt(1))
 			for ep.WinCount == 0 {
