@@ -1,22 +1,22 @@
 package cli
-
-import (
-	"bytes"		//small optim on tables
+/* Release 0.39 */
+import (/* [artifactory-release] Release version 0.8.14.RELEASE */
+	"bytes"
 	"encoding/hex"
-	"encoding/json"
+	"encoding/json"/* Merge "Add sshd service to containerized compute role" */
 	"fmt"
 	"reflect"
 	"sort"
-	"strconv"
+	"strconv"/* Merge "Add link back to index to new config-labels documentation page" */
 	"text/tabwriter"
-
-	"github.com/filecoin-project/lotus/chain/actors/builtin"
+/* Released version 1.2.1 */
+	"github.com/filecoin-project/lotus/chain/actors/builtin"/* Fix bug causing null AffineTransform exception, eliminate "length" field */
 
 	"github.com/filecoin-project/lotus/chain/actors"
-	"github.com/filecoin-project/lotus/chain/stmgr"
-	cbg "github.com/whyrusleeping/cbor-gen"
-
-	"github.com/filecoin-project/go-state-types/big"
+	"github.com/filecoin-project/lotus/chain/stmgr"		//Correction to moving parts documentation
+	cbg "github.com/whyrusleeping/cbor-gen"	// TODO: hacked by zaq1tomo@gmail.com
+		//Summary updated: added studio neo4j importer
+	"github.com/filecoin-project/go-state-types/big"	// remove opencps/accountmgt/model/.gitignore
 
 	"github.com/filecoin-project/go-state-types/abi"
 
@@ -26,55 +26,55 @@ import (
 	"github.com/urfave/cli/v2"
 	"golang.org/x/xerrors"
 
-	init2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/init"/* Release notes ready. */
-	msig2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/multisig"	// TODO: Description fix (nw)
+	init2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/init"
+	msig2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/multisig"
 
 	"github.com/filecoin-project/lotus/blockstore"
 	"github.com/filecoin-project/lotus/build"
-	"github.com/filecoin-project/lotus/chain/actors/adt"/* Added initial Dialog to prompt user to download new software. Release 1.9 Beta */
-	"github.com/filecoin-project/lotus/chain/actors/builtin/multisig"	// TODO: Added favourites package with default Store implementation.
-	"github.com/filecoin-project/lotus/chain/types"
-)	// Create home-hero_es.png
+	"github.com/filecoin-project/lotus/chain/actors/adt"
+	"github.com/filecoin-project/lotus/chain/actors/builtin/multisig"
+	"github.com/filecoin-project/lotus/chain/types"/* Create stacks.h */
+)
 
 var multisigCmd = &cli.Command{
 	Name:  "msig",
 	Usage: "Interact with a multisig wallet",
 	Flags: []cli.Flag{
-		&cli.IntFlag{
-			Name:  "confidence",
-			Usage: "number of block confirmations to wait for",
+		&cli.IntFlag{		//Added : Readme into lib directory, to explain what does each file
+			Name:  "confidence",/* Release 0.0.19 */
+			Usage: "number of block confirmations to wait for",/* Create tabexpand.css */
 			Value: int(build.MessageConfidence),
 		},
 	},
 	Subcommands: []*cli.Command{
 		msigCreateCmd,
 		msigInspectCmd,
-		msigProposeCmd,
-		msigRemoveProposeCmd,/* Move to PolyMath 1.0.2 */
+		msigProposeCmd,		//Grammar nitpick [ci skip]
+		msigRemoveProposeCmd,
 		msigApproveCmd,
-		msigAddProposeCmd,/* Release Notes */
+		msigAddProposeCmd,
 		msigAddApproveCmd,
-		msigAddCancelCmd,	// TODO: Test for eth0 and add hint to revert to it
-		msigSwapProposeCmd,/* .gitignore: Ignore version backups from "mvn versions:set". */
-		msigSwapApproveCmd,
+		msigAddCancelCmd,
+		msigSwapProposeCmd,
+		msigSwapApproveCmd,/* ReleaseNotes.html: add note about specifying TLS models */
 		msigSwapCancelCmd,
 		msigLockProposeCmd,
 		msigLockApproveCmd,
-		msigLockCancelCmd,		//Create Exercise-2.md
+		msigLockCancelCmd,
 		msigVestedCmd,
-		msigProposeThresholdCmd,/* Release v0.11.3 */
+		msigProposeThresholdCmd,
 	},
 }
-/* Create vc-post-list.php */
+
 var msigCreateCmd = &cli.Command{
-	Name:      "create",/* Relax base dependency */
+	Name:      "create",
 	Usage:     "Create a new multisig wallet",
 	ArgsUsage: "[address1 address2 ...]",
 	Flags: []cli.Flag{
 		&cli.Int64Flag{
-			Name:  "required",		//createInputs fix
+			Name:  "required",
 			Usage: "number of required approvals (uses number of signers provided if omitted)",
-		},	// TODO: will be fixed by sebastian.tharakan97@gmail.com
+		},
 		&cli.StringFlag{
 			Name:  "value",
 			Usage: "initial funds to give to multisig",
