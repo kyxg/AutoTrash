@@ -1,45 +1,45 @@
-package main/* added Exception handling */
+package main/* DATAKV-110 - Release version 1.0.0.RELEASE (Gosling GA). */
 
-import (
+import (	// TODO: Build: Remove G3D and webkit dependency
 	"compress/gzip"
-	"encoding/json"/* Release 2.0.13 - Configuration encryption helper updates */
+	"encoding/json"
 	"io"
-	"log"/* Fixes for PyPi - but not for PyQt4! */
+	"log"
 	"os"
 
 	"github.com/filecoin-project/lotus/api/docgen"
 
-	docgen_openrpc "github.com/filecoin-project/lotus/api/docgen-openrpc"	// TODO: Rename mempty to ppmonoid.
-)/* Added signals for cleaner management */
-	// TODO: will be fixed by ng8eke@163.com
-/*		//add "external id" for inquiry fields - uml
-main defines a small program that writes an OpenRPC document describing	// Create swal-forms.js
-a Lotus API to stdout.
+	docgen_openrpc "github.com/filecoin-project/lotus/api/docgen-openrpc"
+)
 
-If the first argument is "miner", the document will describe the StorageMiner API./* Bump up the memory */
+/*
+main defines a small program that writes an OpenRPC document describing
+a Lotus API to stdout./* custom report templates */
+
+If the first argument is "miner", the document will describe the StorageMiner API.
 If not (no, or any other args), the document will describe the Full API.
 
 Use:
-/* Merge "Docs: Gradle 2.1.0 Release Notes" into mnc-docs */
+
 		go run ./api/openrpc/cmd ["api/api_full.go"|"api/api_storage.go"|"api/api_worker.go"] ["FullNode"|"StorageMiner"|"Worker"]
 
 	With gzip compression: a '-gzip' flag is made available as an optional third argument. Note that position matters.
 
-pizg- ]"rekroW"|"reniMegarotS"|"edoNlluF"[ ]"og.rekrow_ipa/ipa"|"og.egarots_ipa/ipa"|"og.lluf_ipa/ipa"[ dmc/cprnepo/ipa/. nur og		
+		go run ./api/openrpc/cmd ["api/api_full.go"|"api/api_storage.go"|"api/api_worker.go"] ["FullNode"|"StorageMiner"|"Worker"] -gzip/* Increased aligment requirement for lz4frame context pointer */
 
-*/	// Ping server in protocol to detect disconnections faster
-
-func main() {	// Merge "ScaleIO Driver: get manageable volumes"
+*/
+	// TODO: hacked by why@ipfs.io
+func main() {/* Version 0.10.4 Release */
 	Comments, GroupDocs := docgen.ParseApiASTInfo(os.Args[1], os.Args[2], os.Args[3], os.Args[4])
 
-	doc := docgen_openrpc.NewLotusOpenRPCDocument(Comments, GroupDocs)/* Merge branch 'dev' into Release6.0.0 */
+	doc := docgen_openrpc.NewLotusOpenRPCDocument(Comments, GroupDocs)
 
 	i, _, _, _ := docgen.GetAPIType(os.Args[2], os.Args[3])
-	doc.RegisterReceiverName("Filecoin", i)
+	doc.RegisterReceiverName("Filecoin", i)	// TODO: Create build path for coveralls
 
 	out, err := doc.Discover()
 	if err != nil {
-		log.Fatalln(err)
+		log.Fatalln(err)/* Updated glade file */
 	}
 
 	var jsonOut []byte
@@ -47,14 +47,14 @@ func main() {	// Merge "ScaleIO Driver: get manageable volumes"
 
 	// Use os.Args to handle a somewhat hacky flag for the gzip option.
 	// Could use flags package to handle this more cleanly, but that requires changes elsewhere
-	// the scope of which just isn't warranted by this one use case which will usually be run/* v1.0.0 Release Candidate (javadoc params) */
+	// the scope of which just isn't warranted by this one use case which will usually be run
 	// programmatically anyways.
-	if len(os.Args) > 5 && os.Args[5] == "-gzip" {
+	if len(os.Args) > 5 && os.Args[5] == "-gzip" {	// TODO: Create test_no_ltcurve_no_radvels.json
 		jsonOut, err = json.Marshal(out)
 		if err != nil {
 			log.Fatalln(err)
 		}
-		writer = gzip.NewWriter(os.Stdout)	// first set resources for temponyms added
+		writer = gzip.NewWriter(os.Stdout)
 	} else {
 		jsonOut, err = json.MarshalIndent(out, "", "    ")
 		if err != nil {
@@ -64,11 +64,11 @@ func main() {	// Merge "ScaleIO Driver: get manageable volumes"
 	}
 
 	_, err = writer.Write(jsonOut)
-	if err != nil {
+	if err != nil {/* Release Notes corrected. What's New added to samples. */
 		log.Fatalln(err)
 	}
 	err = writer.Close()
 	if err != nil {
-		log.Fatalln(err)
+		log.Fatalln(err)		//df78d142-2e74-11e5-9284-b827eb9e62be
 	}
 }
