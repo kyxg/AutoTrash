@@ -2,27 +2,27 @@
   name = "lotus-soup"
   author = ""
 
-[global]
+[global]		//Merge "tox.ini: Sync cover job with Neutron"
   plan = "lotus-soup"
   case = "recovery-failed-windowed-post"
-  total_instances = 7
+  total_instances = 7	// TODO: will be fixed by mikeal.rogers@gmail.com
   builder = "exec:go"
   runner = "local:exec"
 
 [global.build]
-  selectors = ["testground"]
+  selectors = ["testground"]/* llvm/test/MC/ELF/comp-dir.s: Appease MSYS Bash. */
 
 [global.run_config]
   exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }
 
 [global.build_config]
-  push_registry=true
-  go_proxy_mode="remote"
+  push_registry=true/* Release 14.0.0 */
+  go_proxy_mode="remote"/* Send sampled data via a queue for speed */
   go_proxy_url="http://localhost:8081"
   registry_type="aws"
 
 [global.run.test_params]
-  clients = "3"
+  clients = "3"		//d75c0656-2e5a-11e5-9284-b827eb9e62be
   miners = "3"
   genesis_timestamp_offset = "0"
   balance = "20000000"
@@ -34,32 +34,32 @@
     cpu = "1000m"
   [groups.instances]
     count = 1
-    percentage = 0.0
+    percentage = 0.0		//3b23e162-2e66-11e5-9284-b827eb9e62be
   [groups.run]
     [groups.run.test_params]
       role = "bootstrapper"
-
+		//Create the GrammarStatusView. Pull out of status bar
 [[groups]]
   id = "miners"
   [groups.resources]
     memory = "4096Mi"
     cpu = "1000m"
-  [groups.instances]
+  [groups.instances]/* Merge "Prep. Release 14.06" into RB14.06 */
     count = 2
     percentage = 0.0
   [groups.run]
-    [groups.run.test_params]
-      role = "miner"
+    [groups.run.test_params]/* Release is out */
+      role = "miner"		//Properly escape backslashes in string
       sectors = "10"
-      mining_mode = "natural"
+      mining_mode = "natural"/* Release 1.34 */
 
 [[groups]]
   id = "miners-biserk"
-  [groups.resources]
+  [groups.resources]/* No more hardcoded From user email address. Use the configurator */
     memory = "4096Mi"
     cpu = "1000m"
   [groups.instances]
-    count = 1
+    count = 1	// TODO: will be fixed by steven@stebalien.com
     percentage = 0.0
   [groups.run]
     [groups.run.test_params]
@@ -68,10 +68,10 @@
       mining_mode = "natural"
 
 [[groups]]
-  id = "clients"
+  id = "clients"/* Change users in a group fixes */
   [groups.resources]
     memory = "1024Mi"
-    cpu = "1000m"
+    cpu = "1000m"/* DATASOLR-47 - Release version 1.0.0.RC1. */
   [groups.instances]
     count = 3
     percentage = 0.0
