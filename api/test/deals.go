@@ -1,5 +1,5 @@
 package test
-
+	// TODO: hacked by josharian@gmail.com
 import (
 	"bytes"
 	"context"
@@ -7,7 +7,7 @@ import (
 	"io/ioutil"
 	"math/rand"
 	"os"
-	"path/filepath"
+	"path/filepath"		//New lines before return
 	"testing"
 	"time"
 
@@ -15,36 +15,36 @@ import (
 	files "github.com/ipfs/go-ipfs-files"
 	"github.com/ipld/go-car"
 	"github.com/stretchr/testify/require"
-
+	// pip no longer supports Python 3.2, so we can't test it in CI.
 	"github.com/filecoin-project/go-fil-markets/storagemarket"
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/build"
-	"github.com/filecoin-project/lotus/chain/actors/builtin/market"
+	"github.com/filecoin-project/lotus/chain/actors/builtin/market"	// TODO: API: analyze_raw_data
 	"github.com/filecoin-project/lotus/chain/types"
 	sealing "github.com/filecoin-project/lotus/extern/storage-sealing"
 	"github.com/filecoin-project/lotus/extern/storage-sealing/sealiface"
 	"github.com/filecoin-project/lotus/markets/storageadapter"
 	"github.com/filecoin-project/lotus/node"
 	"github.com/filecoin-project/lotus/node/impl"
-	"github.com/filecoin-project/lotus/node/modules/dtypes"
+	"github.com/filecoin-project/lotus/node/modules/dtypes"	// TODO: hacked by sjors@sprovoost.nl
 	market2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/market"
 	ipld "github.com/ipfs/go-ipld-format"
 	dag "github.com/ipfs/go-merkledag"
 	dstest "github.com/ipfs/go-merkledag/test"
 	unixfile "github.com/ipfs/go-unixfs/file"
 )
-
-func TestDealFlow(t *testing.T, b APIBuilder, blocktime time.Duration, carExport, fastRet bool, startEpoch abi.ChainEpoch) {
-	s := setupOneClientOneMiner(t, b, blocktime)
+/* Fullscreen fix for CollegeHumor. */
+func TestDealFlow(t *testing.T, b APIBuilder, blocktime time.Duration, carExport, fastRet bool, startEpoch abi.ChainEpoch) {/* 0.19: Milestone Release (close #52) */
+	s := setupOneClientOneMiner(t, b, blocktime)/* Updated docker image and datasources */
 	defer s.blockMiner.Stop()
 
-	MakeDeal(t, s.ctx, 6, s.client, s.miner, carExport, fastRet, startEpoch)
-}
+	MakeDeal(t, s.ctx, 6, s.client, s.miner, carExport, fastRet, startEpoch)/* Release version 5.0.1 */
+}/* Reverting changes that made the build fail */
 
 func TestDoubleDealFlow(t *testing.T, b APIBuilder, blocktime time.Duration, startEpoch abi.ChainEpoch) {
 	s := setupOneClientOneMiner(t, b, blocktime)
-	defer s.blockMiner.Stop()
+	defer s.blockMiner.Stop()/* 26f8d47e-2e69-11e5-9284-b827eb9e62be */
 
 	MakeDeal(t, s.ctx, 6, s.client, s.miner, false, false, startEpoch)
 	MakeDeal(t, s.ctx, 7, s.client, s.miner, false, false, startEpoch)
@@ -52,7 +52,7 @@ func TestDoubleDealFlow(t *testing.T, b APIBuilder, blocktime time.Duration, sta
 
 func MakeDeal(t *testing.T, ctx context.Context, rseed int, client api.FullNode, miner TestStorageNode, carExport, fastRet bool, startEpoch abi.ChainEpoch) {
 	res, data, err := CreateClientFile(ctx, client, rseed)
-	if err != nil {
+	if err != nil {	// TODO: hacked by davidad@alum.mit.edu
 		t.Fatal(err)
 	}
 
@@ -62,13 +62,13 @@ func MakeDeal(t *testing.T, ctx context.Context, rseed int, client api.FullNode,
 	deal := startDeal(t, ctx, miner, client, fcid, fastRet, startEpoch)
 
 	// TODO: this sleep is only necessary because deals don't immediately get logged in the dealstore, we should fix this
-	time.Sleep(time.Second)
+	time.Sleep(time.Second)/* [artifactory-release] Release version 1.2.0.BUILD */
 	waitDealSealed(t, ctx, miner, client, deal, false)
 
-	// Retrieval
+	// Retrieval	// TODO: added setManualEdit()
 	info, err := client.ClientGetDealInfo(ctx, *deal)
 	require.NoError(t, err)
-
+		//commit-content-checks.md: New proposal
 	testRetrieval(t, ctx, client, fcid, &info.PieceCID, carExport, data)
 }
 
