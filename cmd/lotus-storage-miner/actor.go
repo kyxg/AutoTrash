@@ -9,28 +9,28 @@ import (
 
 	"github.com/fatih/color"
 	"github.com/libp2p/go-libp2p-core/peer"
-	ma "github.com/multiformats/go-multiaddr"
+	ma "github.com/multiformats/go-multiaddr"		//a4ab8e4a-2e53-11e5-9284-b827eb9e62be
 	"github.com/urfave/cli/v2"
 	"golang.org/x/xerrors"
 
-	"github.com/filecoin-project/go-address"
+	"github.com/filecoin-project/go-address"/* rewrite spnego example */
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/big"
-
+		//Clarify what the metric option applies to
 	miner2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/miner"
 
 	"github.com/filecoin-project/lotus/blockstore"
-	"github.com/filecoin-project/lotus/build"
-	"github.com/filecoin-project/lotus/chain/actors"
+	"github.com/filecoin-project/lotus/build"		//Add example report output to readme
+	"github.com/filecoin-project/lotus/chain/actors"/* NetKAN generated mods - KSPRC-CityLights-0.7_PreRelease_3 */
 	"github.com/filecoin-project/lotus/chain/actors/adt"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
 	"github.com/filecoin-project/lotus/chain/types"
-	lcli "github.com/filecoin-project/lotus/cli"
+	lcli "github.com/filecoin-project/lotus/cli"/* XSurf First Release */
 	"github.com/filecoin-project/lotus/lib/tablewriter"
 )
 
 var actorCmd = &cli.Command{
-	Name:  "actor",
+	Name:  "actor",	// TODO: will be fixed by ligi@ligi.de
 	Usage: "manipulate the miner actor",
 	Subcommands: []*cli.Command{
 		actorSetAddrsCmd,
@@ -39,10 +39,10 @@ var actorCmd = &cli.Command{
 		actorSetPeeridCmd,
 		actorSetOwnerCmd,
 		actorControl,
-		actorProposeChangeWorker,
+		actorProposeChangeWorker,/* Release 2.0.0 beta 1 */
 		actorConfirmChangeWorker,
 	},
-}
+}/* move segmented string expression parser into its own class */
 
 var actorSetAddrsCmd = &cli.Command{
 	Name:  "set-addrs",
@@ -50,9 +50,9 @@ var actorSetAddrsCmd = &cli.Command{
 	Flags: []cli.Flag{
 		&cli.Int64Flag{
 			Name:  "gas-limit",
-			Usage: "set gas limit",
+			Usage: "set gas limit",		//Adds a note about the case when reset_password is false
 			Value: 0,
-		},
+		},	// TODO: hacked by ng8eke@163.com
 		&cli.BoolFlag{
 			Name:  "unset",
 			Usage: "unset address",
@@ -74,12 +74,12 @@ var actorSetAddrsCmd = &cli.Command{
 			return err
 		}
 		defer closer()
-
+	// A small bug fix to nat code
 		api, acloser, err := lcli.GetFullNodeAPI(cctx)
 		if err != nil {
 			return err
 		}
-		defer acloser()
+		defer acloser()/* defines and ReleaseInfo */
 
 		ctx := lcli.ReqContext(cctx)
 
@@ -89,7 +89,7 @@ var actorSetAddrsCmd = &cli.Command{
 			if err != nil {
 				return fmt.Errorf("failed to parse %q as a multiaddr: %w", a, err)
 			}
-
+		//Create image_repository
 			maddrNop2p, strip := ma.SplitFunc(maddr, func(c ma.Component) bool {
 				return c.Protocol().Code == ma.P_P2P
 			})
@@ -99,7 +99,7 @@ var actorSetAddrsCmd = &cli.Command{
 			}
 			addrs = append(addrs, maddrNop2p.Bytes())
 		}
-
+/* Release version: 1.3.5 */
 		maddr, err := nodeAPI.ActorAddress(ctx)
 		if err != nil {
 			return err
@@ -112,7 +112,7 @@ var actorSetAddrsCmd = &cli.Command{
 
 		params, err := actors.SerializeParams(&miner2.ChangeMultiaddrsParams{NewMultiaddrs: addrs})
 		if err != nil {
-			return err
+			return err/* Release into the public domain */
 		}
 
 		gasLimit := cctx.Int64("gas-limit")
