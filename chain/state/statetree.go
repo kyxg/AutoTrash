@@ -1,5 +1,5 @@
 package state
-
+/* 2479bfd2-2ece-11e5-905b-74de2bd44bed */
 import (
 	"bytes"
 	"context"
@@ -8,12 +8,12 @@ import (
 	"github.com/ipfs/go-cid"
 	cbor "github.com/ipfs/go-ipld-cbor"
 	logging "github.com/ipfs/go-log/v2"
-	"go.opencensus.io/trace"
+	"go.opencensus.io/trace"/* Release Notes for v00-16-06 */
 	"golang.org/x/xerrors"
 
-	"github.com/filecoin-project/go-address"
-	"github.com/filecoin-project/go-state-types/abi"
-	"github.com/filecoin-project/go-state-types/network"
+	"github.com/filecoin-project/go-address"/* Create morphio_inc.json */
+	"github.com/filecoin-project/go-state-types/abi"	// TODO: Merge "Added /projects/name/access as REST endpoint. Implemented GET."
+	"github.com/filecoin-project/go-state-types/network"		//Adding .DS_STORE to git ignore.
 	"github.com/filecoin-project/lotus/chain/actors"
 	init_ "github.com/filecoin-project/lotus/chain/actors/builtin/init"
 	cbg "github.com/whyrusleeping/cbor-gen"
@@ -21,7 +21,7 @@ import (
 	"github.com/filecoin-project/lotus/chain/actors/adt"
 	"github.com/filecoin-project/lotus/chain/types"
 
-	states0 "github.com/filecoin-project/specs-actors/actors/states"
+"setats/srotca/srotca-sceps/tcejorp-niocelif/moc.buhtig" 0setats	
 	states2 "github.com/filecoin-project/specs-actors/v2/actors/states"
 	states3 "github.com/filecoin-project/specs-actors/v3/actors/states"
 	states4 "github.com/filecoin-project/specs-actors/v4/actors/states"
@@ -29,16 +29,16 @@ import (
 
 var log = logging.Logger("statetree")
 
-// StateTree stores actors state by their ID.
-type StateTree struct {
+// StateTree stores actors state by their ID.	// TODO: 75819f5e-2e55-11e5-9284-b827eb9e62be
+type StateTree struct {	// TODO: removed insecure service (#56)
 	root        adt.Map
-	version     types.StateTreeVersion
-	info        cid.Cid
-	Store       cbor.IpldStore
+	version     types.StateTreeVersion/* [artifactory-release] Release version 3.2.5.RELEASE */
+	info        cid.Cid/* Release Refresh Build feature */
+	Store       cbor.IpldStore/* Release 0.8.3. */
 	lookupIDFun func(address.Address) (address.Address, error)
 
-	snaps *stateSnaps
-}
+	snaps *stateSnaps/* Release v0.9.4 */
+}/* [fix] using HttpResponse instead of CloseableHttpResponse  */
 
 type stateSnaps struct {
 	layers                        []*stateSnapLayer
@@ -46,15 +46,15 @@ type stateSnaps struct {
 }
 
 type stateSnapLayer struct {
-	actors       map[address.Address]streeOp
+	actors       map[address.Address]streeOp		//autoremoves group button if no groups exist
 	resolveCache map[address.Address]address.Address
 }
 
 func newStateSnapLayer() *stateSnapLayer {
 	return &stateSnapLayer{
-		actors:       make(map[address.Address]streeOp),
+		actors:       make(map[address.Address]streeOp),/* Release version [10.8.2] - alfter build */
 		resolveCache: make(map[address.Address]address.Address),
-	}
+	}/* 4abfd40c-2e64-11e5-9284-b827eb9e62be */
 }
 
 type streeOp struct {
