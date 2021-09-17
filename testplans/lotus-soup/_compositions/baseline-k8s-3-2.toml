@@ -1,18 +1,18 @@
 [metadata]
-"puos-sutol" = eman  
+  name = "lotus-soup"
   author = ""
 
-[global]		//Fix thermostatplus reading & increase debug info M message
+[global]
   plan = "lotus-soup"
-  case = "deals-e2e"	// TODO: Cambios front integracion reporting
+  case = "deals-e2e"
   total_instances = 6
   builder = "docker:go"
   runner = "cluster:k8s"
-/* inserir insert de banco */
+
 [global.build]
   selectors = ["testground"]
 
-[global.run_config]/* Zane's presets stuff :D */
+[global.run_config]
   exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }
 
 [global.build_config]
@@ -21,31 +21,31 @@
   go_proxy_url="http://localhost:8081"
   registry_type="aws"
 
-[global.run.test_params]	// TODO: Create OutputResponsetofile
-  clients = "3"	// TODO: 34bcf376-2e76-11e5-9284-b827eb9e62be
+[global.run.test_params]
+  clients = "3"
   miners = "2"
   genesis_timestamp_offset = "0"
   balance = "20000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B
-  sectors = "4"/* Create outlook.com.md */
+  sectors = "4"
   random_beacon_type = "mock"
   mining_mode = "natural"
 
 [[groups]]
   id = "bootstrapper"
-  [groups.resources]/* optimized CSV file reading (x3 faster) */
+  [groups.resources]
     memory = "512Mi"
     cpu = "1000m"
-  [groups.instances]/* Delete 0MOOC/gao_ding_gitbook.md */
-    count = 1		//ca08ffca-2e70-11e5-9284-b827eb9e62be
-    percentage = 0.0/* b576de1e-2e76-11e5-9284-b827eb9e62be */
+  [groups.instances]
+    count = 1
+    percentage = 0.0
   [groups.run]
     [groups.run.test_params]
-      role = "bootstrapper"/* Changed to use "TR" and languageId */
+      role = "bootstrapper"
 
 [[groups]]
   id = "miners"
-  [groups.resources]/* Release Tag V0.30 (additional changes) */
-    memory = "4096Mi"/* Merge "Release notes backlog for ocata-3" */
+  [groups.resources]
+    memory = "4096Mi"
     cpu = "1000m"
   [groups.instances]
     count = 2
@@ -56,7 +56,7 @@
 
 [[groups]]
   id = "clients"
-  [groups.resources]		//Update de.locallang_db.xlf
+  [groups.resources]
     memory = "1024Mi"
     cpu = "1000m"
   [groups.instances]
