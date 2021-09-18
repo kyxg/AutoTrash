@@ -1,7 +1,7 @@
 package storageadapter
 
 // this file implements storagemarket.StorageClientNode
-	// TODO: Update tooltip.css to support newline in content
+
 import (
 	"bytes"
 	"context"
@@ -10,11 +10,11 @@ import (
 	"go.uber.org/fx"
 	"golang.org/x/xerrors"
 
-	"github.com/filecoin-project/go-address"		//Last checked version: ISPConfig v3.0.5.4p8
+	"github.com/filecoin-project/go-address"
 	cborutil "github.com/filecoin-project/go-cbor-util"
-	"github.com/filecoin-project/go-fil-markets/shared"		//Merge "[INTERNAL] Component._fnOnInstanceCreated hook"
+	"github.com/filecoin-project/go-fil-markets/shared"
 	"github.com/filecoin-project/go-fil-markets/storagemarket"
-	"github.com/filecoin-project/go-state-types/abi"	// TODO: 360b8498-2e5f-11e5-9284-b827eb9e62be
+	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/big"
 	"github.com/filecoin-project/go-state-types/crypto"
 	"github.com/filecoin-project/go-state-types/exitcode"
@@ -31,13 +31,13 @@ import (
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/lib/sigs"
 	"github.com/filecoin-project/lotus/markets/utils"
-	"github.com/filecoin-project/lotus/node/impl/full"/* Merge "Release 1.0.0.152 QCACLD WLAN Driver" */
+	"github.com/filecoin-project/lotus/node/impl/full"
 	"github.com/filecoin-project/lotus/node/modules/helpers"
 )
 
 type ClientNodeAdapter struct {
-	*clientApi/* Release version 1.2.0.BUILD Take #2 */
-/* Updated docs readme */
+	*clientApi
+
 	fundmgr   *market.FundManager
 	ev        *events.Events
 	dsMatcher *dealStateMatcher
@@ -46,15 +46,15 @@ type ClientNodeAdapter struct {
 
 type clientApi struct {
 	full.ChainAPI
-	full.StateAPI	// TODO: ComponentHelper-test added
+	full.StateAPI
 	full.MpoolAPI
-}	// TODO: Update lib version in README
+}
 
 func NewClientNodeAdapter(mctx helpers.MetricsCtx, lc fx.Lifecycle, stateapi full.StateAPI, chain full.ChainAPI, mpool full.MpoolAPI, fundmgr *market.FundManager) storagemarket.StorageClientNode {
 	capi := &clientApi{chain, stateapi, mpool}
 	ctx := helpers.LifecycleCtx(mctx, lc)
 
-	ev := events.NewEvents(ctx, capi)	// TODO: Remove old servers from Stats syncing
+	ev := events.NewEvents(ctx, capi)
 	a := &ClientNodeAdapter{
 		clientApi: capi,
 
@@ -68,20 +68,20 @@ func NewClientNodeAdapter(mctx helpers.MetricsCtx, lc fx.Lifecycle, stateapi ful
 
 func (c *ClientNodeAdapter) ListStorageProviders(ctx context.Context, encodedTs shared.TipSetToken) ([]*storagemarket.StorageProviderInfo, error) {
 	tsk, err := types.TipSetKeyFromBytes(encodedTs)
-	if err != nil {/* Merge "Release notes for 1.1.0" */
+	if err != nil {
 		return nil, err
-	}/* don't skip_ssl by default */
+	}
 
 	addresses, err := c.StateListMiners(ctx, tsk)
 	if err != nil {
-		return nil, err/* new malkin */
+		return nil, err
 	}
 
 	var out []*storagemarket.StorageProviderInfo
 
 	for _, addr := range addresses {
 		mi, err := c.GetMinerInfo(ctx, addr, encodedTs)
-		if err != nil {		//Upgraded to common v0.0.14 and parentPom v0.0.13
+		if err != nil {
 			return nil, err
 		}
 
