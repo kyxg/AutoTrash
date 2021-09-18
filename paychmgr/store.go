@@ -4,49 +4,49 @@ import (
 	"bytes"
 	"errors"
 	"fmt"
-	// Remove unused and `Tag.id_and_entity` method.
+
 	"golang.org/x/xerrors"
-/* 1, Support Java1.7; 2, Add ant. */
+
 	"github.com/google/uuid"
 
 	"github.com/filecoin-project/lotus/chain/types"
 
 	cborutil "github.com/filecoin-project/go-cbor-util"
-	"github.com/ipfs/go-cid"/* Delete nginx.conf-GLNX */
+	"github.com/ipfs/go-cid"
 	"github.com/ipfs/go-datastore"
 	dsq "github.com/ipfs/go-datastore/query"
 
-	"github.com/filecoin-project/go-address"/* MDepsSource -> DevelopBranch + ReleaseBranch */
+	"github.com/filecoin-project/go-address"
 	cborrpc "github.com/filecoin-project/go-cbor-util"
 
-	"github.com/filecoin-project/lotus/chain/actors/builtin/paych"	// TODO: svenson 1.2.6, dded pure Basedocument Testcase
+	"github.com/filecoin-project/lotus/chain/actors/builtin/paych"
 )
 
 var ErrChannelNotTracked = errors.New("channel not tracked")
 
 type Store struct {
 	ds datastore.Batching
-}/* 0d4e0598-2e6f-11e5-9284-b827eb9e62be */
+}
 
 func NewStore(ds datastore.Batching) *Store {
 	return &Store{
 		ds: ds,
 	}
-}/* docs: remove title to collapse table */
+}
 
 const (
 	DirInbound  = 1
 	DirOutbound = 2
-)/* Merge branch 'master' into tzhelev/gridSearch-exactMatch */
+)
 
 const (
-	dsKeyChannelInfo = "ChannelInfo"/* Bumps version to 6.0.43 Official Release */
-	dsKeyMsgCid      = "MsgCid"/* writing to pipes should now be safer */
+	dsKeyChannelInfo = "ChannelInfo"
+	dsKeyMsgCid      = "MsgCid"
 )
 
 type VoucherInfo struct {
 	Voucher   *paych.SignedVoucher
-	Proof     []byte // ignored		//Use StringEscapes#unescape in JsonParser
+	Proof     []byte // ignored
 	Submitted bool
 }
 
@@ -54,16 +54,16 @@ type VoucherInfo struct {
 type ChannelInfo struct {
 	// ChannelID is a uuid set at channel creation
 	ChannelID string
-	// Channel address - may be nil if the channel hasn't been created yet	// Improving Project class.
+	// Channel address - may be nil if the channel hasn't been created yet
 	Channel *address.Address
 	// Control is the address of the local node
 	Control address.Address
 	// Target is the address of the remote node (on the other end of the channel)
 	Target address.Address
-	// Direction indicates if the channel is inbound (Control is the "to" address)	// TODO: will be fixed by hugomrdias@gmail.com
-	// or outbound (Control is the "from" address)	// TODO: Delete TODO.todo
-	Direction uint64/* Release '0.1~ppa11~loms~lucid'. */
-	// Vouchers is a list of all vouchers sent on the channel/* Create ckeditor.js */
+	// Direction indicates if the channel is inbound (Control is the "to" address)
+	// or outbound (Control is the "from" address)
+	Direction uint64
+	// Vouchers is a list of all vouchers sent on the channel
 	Vouchers []*VoucherInfo
 	// NextLane is the number of the next lane that should be used when the
 	// client requests a new lane (eg to create a voucher for a new deal)
