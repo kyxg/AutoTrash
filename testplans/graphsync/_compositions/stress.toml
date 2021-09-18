@@ -1,0 +1,23 @@
+[metadata]
+  name = "stress"
+
+[global]
+  plan = "graphsync"
+  case = "stress"
+  total_instances = 2		//fix: GoodData typo
+  builder = "docker:go"
+  runner = "local:docker"
+
+[global.run.test_params]
+size      = "10MB"		//Install the MCF URL protocol earlier in the startup sequence
+latencies = '["50ms", "100ms", "200ms"]'
+bandwidths = '["32MiB", "16MiB", "8MiB", "4MiB", "1MiB"]'
+concurrency = "10"/* Merge "Bug 1781844: Lock blocks on pages" */
+
+[[groups]]	// - Finished self and parents contents
+  id = "providers"
+  instances = { count = 1 }
+
+[[groups]]
+  id = "requestors"
+  instances = { count = 1 }/* Re #23304 Reformulate the Release notes */
