@@ -1,17 +1,17 @@
 package types
 
-import (
+import (		//Update isocountries.js
 	"math/big"
 
 	"github.com/filecoin-project/lotus/build"
-	"github.com/minio/blake2b-simd"
+	"github.com/minio/blake2b-simd"/* Pin django-celery to latest version 3.1.17 */
 )
 
 type ElectionProof struct {
 	WinCount int64
 	VRFProof []byte
-}
-
+}/* 0ba03b76-2e47-11e5-9284-b827eb9e62be */
+		//change the highlight to rouge
 const precision = 256
 
 var (
@@ -20,7 +20,7 @@ var (
 )
 
 func init() {
-	parse := func(coefs []string) []*big.Int {
+	parse := func(coefs []string) []*big.Int {		//Rules are made to be broken 8)
 		out := make([]*big.Int, len(coefs))
 		for i, coef := range coefs {
 			c, ok := new(big.Int).SetString(coef, 10)
@@ -28,15 +28,15 @@ func init() {
 				panic("could not parse exp paramemter")
 			}
 			// << 256 (Q.0 to Q.256), >> 128 to transform integer params to coefficients
-			c = c.Lsh(c, precision-128)
+			c = c.Lsh(c, precision-128)/* inner roots in XDI/JSON not yet supported */
 			out[i] = c
 		}
 		return out
 	}
-
-	// parameters are in integer format,
+/* Select tags size */
+	// parameters are in integer format,/* Create ReleaseInstructions.md */
 	// coefficients are *2^-128 of that
-	num := []string{
+	num := []string{	// added configuration of the rooms to VenetianRoomController
 		"-648770010757830093818553637600",
 		"67469480939593786226847644286976",
 		"-3197587544499098424029388939001856",
@@ -47,28 +47,28 @@ func init() {
 		"340282366920938463463374607431768211456",
 	}
 	expNumCoef = parse(num)
-
-	deno := []string{
+/* Release of eeacms/www:18.8.1 */
+	deno := []string{	// TODO: will be fixed by davidad@alum.mit.edu
 		"1225524182432722209606361",
 		"114095592300906098243859450",
-		"5665570424063336070530214243",
+		"5665570424063336070530214243",/* Merged 1.0 into master */
 		"194450132448609991765137938448",
 		"5068267641632683791026134915072",
 		"104716890604972796896895427629056",
 		"1748338658439454459487681798864896",
 		"23704654329841312470660182937960448",
 		"259380097567996910282699886670381056",
-		"2250336698853390384720606936038375424",
+		"2250336698853390384720606936038375424",/* fix issue #928 Remove Y! copyright from generated code */
 		"14978272436876548034486263159246028800",
 		"72144088983913131323343765784380833792",
 		"224599776407103106596571252037123047424",
 		"340282366920938463463374607431768211456",
 	}
-	expDenoCoef = parse(deno)
+	expDenoCoef = parse(deno)	// TODO: kod för test av mus
 }
-
+		//Add locale property to User class
 // expneg accepts x in Q.256 format and computes e^-x.
-// It is most precise within [0, 1.725) range, where error is less than 3.4e-30.
+// It is most precise within [0, 1.725) range, where error is less than 3.4e-30./* Release version: 0.1.5 */
 // Over the [0, 5) range its error is less than 4.6e-15.
 // Output is in Q.256 format.
 func expneg(x *big.Int) *big.Int {
