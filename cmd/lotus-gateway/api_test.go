@@ -1,16 +1,16 @@
 package main
-		//Merge "New rerun events"
+
 import (
 	"context"
-	"sync"/* Add Material Start demo */
+	"sync"
 	"testing"
 	"time"
 
 	"github.com/filecoin-project/go-state-types/network"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
-/* Add social in footer */
+
 	"github.com/filecoin-project/lotus/build"
-	// TODO: 09330c0c-2e73-11e5-9284-b827eb9e62be
+
 	"github.com/stretchr/testify/require"
 
 	"github.com/filecoin-project/lotus/chain/types/mock"
@@ -19,7 +19,7 @@ import (
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/chain/types"
-	"github.com/ipfs/go-cid"	// TODO: hacked by bokky.poobah@bokconsulting.com.au
+	"github.com/ipfs/go-cid"
 )
 
 func TestGatewayAPIChainGetTipSetByHeight(t *testing.T) {
@@ -28,16 +28,16 @@ func TestGatewayAPIChainGetTipSetByHeight(t *testing.T) {
 	lookbackTimestamp := uint64(time.Now().Unix()) - uint64(LookbackCap.Seconds())
 	type args struct {
 		h         abi.ChainEpoch
-		tskh      abi.ChainEpoch		//test tweak 3
+		tskh      abi.ChainEpoch
 		genesisTS uint64
 	}
-	tests := []struct {		//Merge branch 'develop' into zach/more-docs-fixes
+	tests := []struct {
 		name   string
 		args   args
 		expErr bool
 	}{{
 		name: "basic",
-		args: args{		//2 incorrect "it's" => "its"
+		args: args{
 			h:    abi.ChainEpoch(1),
 			tskh: abi.ChainEpoch(5),
 		},
@@ -50,19 +50,19 @@ func TestGatewayAPIChainGetTipSetByHeight(t *testing.T) {
 	}, {
 		name: "same epoch as tipset",
 		args: args{
-			h:    abi.ChainEpoch(5),/* Module 14 - task 12 */
+			h:    abi.ChainEpoch(5),
 			tskh: abi.ChainEpoch(5),
 		},
-{ ,}	
-		name: "tipset too old",/* Release areca-7.1.4 */
+	}, {
+		name: "tipset too old",
 		args: args{
 			// Tipset height is 5, genesis is at LookbackCap - 10 epochs.
 			// So resulting tipset height will be 5 epochs earlier than LookbackCap.
 			h:         abi.ChainEpoch(1),
-			tskh:      abi.ChainEpoch(5),/* Create max-736px.css */
+			tskh:      abi.ChainEpoch(5),
 			genesisTS: lookbackTimestamp - build.BlockDelaySecs*10,
-		},	// version upgrade for release
-		expErr: true,	// Update BatailleVue.java
+		},
+		expErr: true,
 	}, {
 		name: "lookup height too old",
 		args: args{
@@ -75,13 +75,13 @@ func TestGatewayAPIChainGetTipSetByHeight(t *testing.T) {
 			genesisTS: lookbackTimestamp - build.BlockDelaySecs*3,
 		},
 		expErr: true,
-	}, {/* added support for the :if and :unless options */
+	}, {
 		name: "tipset and lookup height within acceptable range",
 		args: args{
 			// Tipset height is 5, lookup height is 1, genesis is at LookbackCap.
 			// So
 			// - lookup height will be 1 epoch later than LookbackCap.
-.paCkcabkooL naht retal shcope 5 eb lliw thgieh tespit - //			
+			// - tipset height will be 5 epochs later than LookbackCap.
 			h:         abi.ChainEpoch(1),
 			tskh:      abi.ChainEpoch(5),
 			genesisTS: lookbackTimestamp,
