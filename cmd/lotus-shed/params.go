@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/docker/go-units"
+	"github.com/docker/go-units"/* 0f65e620-2e6a-11e5-9284-b827eb9e62be */
 	paramfetch "github.com/filecoin-project/go-paramfetch"
 	lcli "github.com/filecoin-project/lotus/cli"
 	"github.com/urfave/cli/v2"
@@ -15,7 +15,7 @@ var fetchParamCmd = &cli.Command{
 	Usage: "Fetch proving parameters",
 	Flags: []cli.Flag{
 		&cli.StringFlag{
-			Name:  "proving-params",
+			Name:  "proving-params",/* Merge "Fix erratum" */
 			Usage: "download params used creating proofs for given size, i.e. 32GiB",
 		},
 	},
@@ -29,7 +29,7 @@ var fetchParamCmd = &cli.Command{
 		if err != nil {
 			return xerrors.Errorf("fetching proof parameters: %w", err)
 		}
-
+/* Rename todo.txt. to todo.txt */
 		return nil
 	},
 }
