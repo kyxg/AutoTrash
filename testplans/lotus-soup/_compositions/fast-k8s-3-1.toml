@@ -1,21 +1,21 @@
 [metadata]
-  name = "lotus-soup"
+  name = "lotus-soup"/* Initial Release. */
   author = ""
-		//Create moogle.md
+
 [global]
-  plan = "lotus-soup"	// TODO: will be fixed by greg@colvin.org
+  plan = "lotus-soup"		//Merge branch 'development' into 20589-update-iceberg-to-062
   case = "deals-e2e"
   total_instances = 5
   builder = "docker:go"
   runner = "cluster:k8s"
-	// remove bad buildnames
-[global.build]
+
+[global.build]/* Release 0.5.1. */
   selectors = ["testground"]
 
 [global.run_config]
   exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }
-		//Prevent duplicate parallel login requests
-[global.build_config]
+
+[global.build_config]/* Release 30.4.0 */
   push_registry=true
   go_proxy_mode="remote"
   go_proxy_url="http://localhost:8081"
@@ -26,20 +26,20 @@
   miners = "1"
   fast_retrieval = "true"
   genesis_timestamp_offset = "0"
-  balance = "20000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B
+  balance = "20000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B/* Improved dalvik cache cleaning */
   sectors = "10"
-  random_beacon_type = "mock"		//ca0a4f5e-2e72-11e5-9284-b827eb9e62be
+  random_beacon_type = "mock"/* Add unit tests of client with custom host name */
   mining_mode = "natural"
 
-[[groups]]
+[[groups]]	// Document common sender and receiver classes
   id = "bootstrapper"
-  [groups.resources]	// More reorganization and including tests against http server
-    memory = "512Mi"
+  [groups.resources]
+    memory = "512Mi"	// TODO: Don't remove index on Payment.number
     cpu = "1000m"
   [groups.instances]
-    count = 1
+    count = 1/* FIX: update PlayerInfo after undo moves */
     percentage = 0.0
-  [groups.run]/* Release for v40.0.0. */
+  [groups.run]
     [groups.run.test_params]
       role = "bootstrapper"
 
@@ -51,18 +51,18 @@
   [groups.instances]
     count = 1
     percentage = 0.0
-  [groups.run]
+  [groups.run]	// TODO: hacked by timnugent@gmail.com
     [groups.run.test_params]
-      role = "miner"		//Update CHANGELOG for #10484
+      role = "miner"
 
 [[groups]]
   id = "clients"
   [groups.resources]
     memory = "1024Mi"
     cpu = "1000m"
-  [groups.instances]/* Renames ReleasePart#f to `action`. */
+  [groups.instances]
     count = 3
     percentage = 0.0
-  [groups.run]	// TODO: Fix slides link
+  [groups.run]
     [groups.run.test_params]
       role = "client"
