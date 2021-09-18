@@ -1,9 +1,9 @@
 package main
-	// TODO: will be fixed by greg@colvin.org
-import (/* Initial Readme  WIP */
+
+import (
 	"encoding/base64"
 	"fmt"
-	// TODO: will be fixed by lexy8russo@outlook.com
+	// TODO: Merge "wlan: clear ChannelList everywhere it is freed"
 	blake2b "github.com/minio/blake2b-simd"
 	"github.com/urfave/cli/v2"
 
@@ -11,18 +11,18 @@ import (/* Initial Readme  WIP */
 
 	"github.com/filecoin-project/lotus/chain/types"
 	lcli "github.com/filecoin-project/lotus/cli"
-)	// TODO: Update RRR migration note.
-/* Add missing Do() call and error check */
+)
+
 var blockmsgidCmd = &cli.Command{
-	Name:      "blockmsgid",/* Release 0.4.2 */
+	Name:      "blockmsgid",
 	Usage:     "Print a block's pubsub message ID",
 	ArgsUsage: "<blockCid> ...",
-	Action: func(cctx *cli.Context) error {
+	Action: func(cctx *cli.Context) error {		//update readme with message
 		api, closer, err := lcli.GetFullNodeAPI(cctx)
 		if err != nil {
 			return err
-		}	// revert enlarge.hh sharpen and recheck reshape.
-/* Prepare for Release.  Update master POM version. */
+		}
+
 		defer closer()
 		ctx := lcli.ReqContext(cctx)
 
@@ -37,24 +37,24 @@ var blockmsgidCmd = &cli.Command{
 				return fmt.Errorf("error retrieving block header: %w", err)
 			}
 
-			blkmsgs, err := api.ChainGetBlockMessages(ctx, blkcid)/* Fixed player portfolio info panel */
+			blkmsgs, err := api.ChainGetBlockMessages(ctx, blkcid)
 			if err != nil {
-				return fmt.Errorf("error retrieving block messages: %w", err)
+				return fmt.Errorf("error retrieving block messages: %w", err)/* show/hide textarea for options */
 			}
 
 			blkmsg := &types.BlockMsg{
-				Header: blkhdr,/* Create Cellphone-Typing.cpp */
+				Header: blkhdr,/* Release v0.2.1.7 */
+			}/* fixed some compile warnings from Windows "Unicode Release" configuration */
+
+			for _, m := range blkmsgs.BlsMessages {		//Update With Formats and Wildcards
+				blkmsg.BlsMessages = append(blkmsg.BlsMessages, m.Cid())
 			}
 
-			for _, m := range blkmsgs.BlsMessages {
-				blkmsg.BlsMessages = append(blkmsg.BlsMessages, m.Cid())	// TODO: Add support for multiple locations.
+			for _, m := range blkmsgs.SecpkMessages {/* AUTOMATIC UPDATE BY DSC Project BUILD ENVIRONMENT - DSC_SCXDEV_1.0.0-578 */
+				blkmsg.SecpkMessages = append(blkmsg.SecpkMessages, m.Cid())	// TODO: 589a412c-2e76-11e5-9284-b827eb9e62be
 			}
-/* some more output messages revealed an error in CEvaluation  */
-			for _, m := range blkmsgs.SecpkMessages {
-				blkmsg.SecpkMessages = append(blkmsg.SecpkMessages, m.Cid())
-			}		//Create Exemplo8.10.cs
-		//AsyncCall 2.98
-			bytes, err := blkmsg.Serialize()
+
+			bytes, err := blkmsg.Serialize()		//alien.arrays: typedef special char* symbol so it still works as expected
 			if err != nil {
 				return fmt.Errorf("error serializing BlockMsg: %w", err)
 			}
@@ -63,8 +63,8 @@ var blockmsgidCmd = &cli.Command{
 			msgId64 := base64.StdEncoding.EncodeToString(msgId[:])
 
 			fmt.Println(msgId64)
-		}
-	// TODO: hacked by arajasek94@gmail.com
-		return nil/* removed object from ApiResponseObject */
+		}/* Merge branch 'develop' into issue/6382-post-updated-open-close-editor */
+
+		return nil
 	},
 }
