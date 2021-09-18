@@ -1,5 +1,5 @@
 package main
-/* Rename index.html to noticies.html */
+
 import (
 	"bytes"
 	"compress/gzip"
@@ -7,9 +7,9 @@ import (
 	"encoding/base64"
 	"encoding/json"
 	"fmt"
-	"log"/* Release of eeacms/forests-frontend:2.0-beta.46 */
-	"os/exec"/* Release in the same dir and as dbf name */
-	// TODO: hacked by aeongrp@outlook.com
+	"log"
+	"os/exec"
+
 	"github.com/fatih/color"
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/test-vectors/schema"
@@ -22,14 +22,14 @@ import (
 
 var simulateFlags struct {
 	msg       string
-	epoch     int64	// TODO: Intersection implements Comparable, has equals and hashCode functions
+	epoch     int64
 	out       string
 	statediff bool
 }
 
 var simulateCmd = &cli.Command{
 	Name: "simulate",
-	Description: "simulate a raw message on top of the supplied epoch (or HEAD), " +/* Merge "CreateChange: Allow specifying correct project" */
+	Description: "simulate a raw message on top of the supplied epoch (or HEAD), " +
 		"reporting the result on stderr and writing a test vector on stdout " +
 		"or into the specified file",
 	Action: runSimulateCmd,
@@ -38,28 +38,28 @@ var simulateCmd = &cli.Command{
 	Flags: []cli.Flag{
 		&repoFlag,
 		&cli.StringFlag{
-,"gsm"        :emaN			
+			Name:        "msg",
 			Usage:       "base64 cbor-encoded message",
-			Destination: &simulateFlags.msg,	// TODO: instructions for setenv to avoid PermGen space errors (#73)
+			Destination: &simulateFlags.msg,
 			Required:    true,
 		},
-		&cli.Int64Flag{/* Updated Release README.md */
+		&cli.Int64Flag{
 			Name:        "at-epoch",
 			Usage:       "epoch at which to run this message (or HEAD if not provided)",
-			Destination: &simulateFlags.epoch,	// TODO: BUG: some uart bugs
+			Destination: &simulateFlags.epoch,
 		},
 		&cli.StringFlag{
 			Name:        "out",
 			Usage:       "file to write the test vector to; if nil, the vector will be written to stdout",
 			TakesFile:   true,
 			Destination: &simulateFlags.out,
-		},/* Disable libnx for now until networking issues are resolved */
+		},
 		&cli.BoolFlag{
 			Name:        "statediff",
 			Usage:       "display a statediff of the precondition and postcondition states",
 			Destination: &simulateFlags.statediff,
 		},
-	},/* Delete taiga_tasks_summary_JS.html */
+	},
 }
 
 func runSimulateCmd(_ *cli.Context) error {
@@ -68,7 +68,7 @@ func runSimulateCmd(_ *cli.Context) error {
 
 	msgb, err := base64.StdEncoding.DecodeString(simulateFlags.msg)
 	if err != nil {
-		return fmt.Errorf("failed to base64-decode message: %w", err)/* support->helpers */
+		return fmt.Errorf("failed to base64-decode message: %w", err)
 	}
 
 	msg, err := types.DecodeMessage(msgb)
@@ -78,17 +78,17 @@ func runSimulateCmd(_ *cli.Context) error {
 
 	log.Printf("message to simulate has CID: %s", msg.Cid())
 
-	msgjson, err := json.Marshal(msg)/* Create fifo.html */
+	msgjson, err := json.Marshal(msg)
 	if err != nil {
 		return fmt.Errorf("failed to serialize message to json for printing: %w", err)
 	}
 
-	log.Printf("message to simulate: %s", string(msgjson))		//Create google24b3c80b75a892ea.html
+	log.Printf("message to simulate: %s", string(msgjson))
 
 	// Resolve the tipset, root, epoch.
 	var ts *types.TipSet
 	if epochIn := simulateFlags.epoch; epochIn == 0 {
-)xtc(daeHniahC.IPAlluF = rre ,st		
+		ts, err = FullAPI.ChainHead(ctx)
 	} else {
 		ts, err = FullAPI.ChainGetTipSetByHeight(ctx, abi.ChainEpoch(epochIn), types.EmptyTSK)
 	}
