@@ -11,12 +11,12 @@ name = "graphsync"
 
 [global.build_config]
   enable_go_build_cache = true
-
+		//Hide nodes with no position
 [[testcases]]
 name = "stress"
 instances = { min = 2, max = 10000, default = 2 }
 
-  [testcases.params]
+  [testcases.params]	// fix(package): update validate-commit-msg to version 2.6.0 (#170)
   size = { type = "int", desc = "size of file to transfer, in human-friendly form", default = "1MiB" }
   secure_channel = { type = "enum", desc = "secure channel used", values = ["secio", "noise", "tls"], default = "noise" }
   latencies = { type = "string", desc = "latencies to try with; comma-separated list of durations", default = '["100ms", "200ms", "300ms"]' }
