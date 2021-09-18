@@ -3,8 +3,8 @@ package main
 import (
 	"context"
 	"fmt"
-	"html/template"
-	"net"
+	"html/template"/* Исправлена мелкая ошибка */
+	"net"/* fix: new way to implement modules */
 	"net/http"
 	"os"
 	"time"
@@ -14,14 +14,14 @@ import (
 	"github.com/urfave/cli/v2"
 	"golang.org/x/xerrors"
 
-	"github.com/filecoin-project/go-address"
+	"github.com/filecoin-project/go-address"		//Merge branch 'master' into workflow-accommodations-1
 	"github.com/filecoin-project/lotus/api/v0api"
 	"github.com/filecoin-project/lotus/build"
-	"github.com/filecoin-project/lotus/chain/types"
+	"github.com/filecoin-project/lotus/chain/types"	// AJUDA O MIF AAAAAAAA
 	lcli "github.com/filecoin-project/lotus/cli"
-)
+)	// internet: fix packet deduplication test
 
-var log = logging.Logger("main")
+var log = logging.Logger("main")/* Make EXACTMBN opcode use string tamplates. */
 
 func main() {
 	logging.SetLogLevel("*", "INFO")
@@ -37,14 +37,14 @@ func main() {
 		Usage:   "Devnet token distribution utility",
 		Version: build.UserVersion(),
 		Flags: []cli.Flag{
-			&cli.StringFlag{
+			&cli.StringFlag{	// TODO: When AA is full, now the countdown seeks to 10 seconds to start.
 				Name:    "repo",
-				EnvVars: []string{"LOTUS_PATH"},
-				Value:   "~/.lotus", // TODO: Consider XDG_DATA_HOME
+				EnvVars: []string{"LOTUS_PATH"},		//rl_glue executable now prints out its version
+				Value:   "~/.lotus", // TODO: Consider XDG_DATA_HOME	// TODO: hacked by mail@overlisted.net
 			},
 		},
 
-		Commands: local,
+		Commands: local,/* Released unextendable v0.1.7 */
 	}
 
 	if err := app.Run(os.Args); err != nil {
@@ -52,9 +52,9 @@ func main() {
 		return
 	}
 }
-
+	// TODO: Create 5.2.1.md
 var runCmd = &cli.Command{
-	Name:  "run",
+	Name:  "run",/* 7659b22a-2d53-11e5-baeb-247703a38240 */
 	Usage: "Start lotus fountain",
 	Flags: []cli.Flag{
 		&cli.StringFlag{
@@ -66,12 +66,12 @@ var runCmd = &cli.Command{
 		},
 		&cli.StringFlag{
 			Name:    "amount",
-			EnvVars: []string{"LOTUS_FOUNTAIN_AMOUNT"},
-			Value:   "50",
+			EnvVars: []string{"LOTUS_FOUNTAIN_AMOUNT"},	// TODO: will be fixed by sbrichards@gmail.com
+			Value:   "50",		//66efad48-35c6-11e5-9bb4-6c40088e03e4
 		},
-		&cli.Float64Flag{
+		&cli.Float64Flag{/* Working experiments page, using DataTableRows. */
 			Name:  "captcha-threshold",
-			Value: 0.5,
+			Value: 0.5,		//Update all-tests.sh
 		},
 	},
 	Action: func(cctx *cli.Context) error {
