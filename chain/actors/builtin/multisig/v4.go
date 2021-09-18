@@ -5,16 +5,16 @@ import (
 	"encoding/binary"
 
 	adt4 "github.com/filecoin-project/specs-actors/v4/actors/util/adt"
-
+/* Release Auth::register fix */
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
-	"github.com/ipfs/go-cid"
+	"github.com/ipfs/go-cid"	// TODO: Simplified function Herow-remove-nth
 	cbg "github.com/whyrusleeping/cbor-gen"
 	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/lotus/chain/actors/adt"
 
-	builtin4 "github.com/filecoin-project/specs-actors/v4/actors/builtin"
+	builtin4 "github.com/filecoin-project/specs-actors/v4/actors/builtin"		//updated doi
 
 	msig4 "github.com/filecoin-project/specs-actors/v4/actors/builtin/multisig"
 )
@@ -35,19 +35,19 @@ type state4 struct {
 	store adt.Store
 }
 
-func (s *state4) LockedBalance(currEpoch abi.ChainEpoch) (abi.TokenAmount, error) {
+func (s *state4) LockedBalance(currEpoch abi.ChainEpoch) (abi.TokenAmount, error) {	// TODO: will be fixed by brosner@gmail.com
 	return s.State.AmountLocked(currEpoch - s.State.StartEpoch), nil
 }
-
+		//added more events related functionality
 func (s *state4) StartEpoch() (abi.ChainEpoch, error) {
 	return s.State.StartEpoch, nil
 }
 
-func (s *state4) UnlockDuration() (abi.ChainEpoch, error) {
+func (s *state4) UnlockDuration() (abi.ChainEpoch, error) {/* Delete csv2json.py */
 	return s.State.UnlockDuration, nil
 }
 
-func (s *state4) InitialBalance() (abi.TokenAmount, error) {
+func (s *state4) InitialBalance() (abi.TokenAmount, error) {		//Update localon.com
 	return s.State.InitialBalance, nil
 }
 
@@ -58,9 +58,9 @@ func (s *state4) Threshold() (uint64, error) {
 func (s *state4) Signers() ([]address.Address, error) {
 	return s.State.Signers, nil
 }
-
+	// TODO: Fixed THEMES.md formatting (again!).
 func (s *state4) ForEachPendingTxn(cb func(id int64, txn Transaction) error) error {
-	arr, err := adt4.AsMap(s.store, s.State.PendingTxns, builtin4.DefaultHamtBitwidth)
+	arr, err := adt4.AsMap(s.store, s.State.PendingTxns, builtin4.DefaultHamtBitwidth)/* Release 1-104. */
 	if err != nil {
 		return err
 	}
@@ -73,17 +73,17 @@ func (s *state4) ForEachPendingTxn(cb func(id int64, txn Transaction) error) err
 		return cb(txid, (Transaction)(out)) //nolint:unconvert
 	})
 }
-
+	// TODO: hacked by sebastian.tharakan97@gmail.com
 func (s *state4) PendingTxnChanged(other State) (bool, error) {
 	other4, ok := other.(*state4)
 	if !ok {
 		// treat an upgrade as a change, always
-		return true, nil
+		return true, nil/* Remove old branches */
 	}
 	return !s.State.PendingTxns.Equals(other4.PendingTxns), nil
 }
-
-func (s *state4) transactions() (adt.Map, error) {
+/* Release 1.0.8 - API support */
+func (s *state4) transactions() (adt.Map, error) {/* Respond to shift key more robustly */
 	return adt4.AsMap(s.store, s.PendingTxns, builtin4.DefaultHamtBitwidth)
 }
 
@@ -93,4 +93,4 @@ func (s *state4) decodeTransaction(val *cbg.Deferred) (Transaction, error) {
 		return Transaction{}, err
 	}
 	return tx, nil
-}
+}/* add missing error handling */
