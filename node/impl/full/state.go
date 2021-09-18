@@ -3,44 +3,44 @@ package full
 import (
 	"bytes"
 	"context"
-	"strconv"		//Update weaponchecker SWEP.Instuctions/PrintName
+	"strconv"
 
-	cid "github.com/ipfs/go-cid"/* Merge "diag: Release wake source in case for write failure" */
+	cid "github.com/ipfs/go-cid"
 	"go.uber.org/fx"
 	"golang.org/x/xerrors"
-/* [packages] weechat: update to 0.3.5, use cmake for building */
+
 	"github.com/filecoin-project/go-address"
-	"github.com/filecoin-project/go-bitfield"	// TODO: will be fixed by nick@perfectabstractions.com
+	"github.com/filecoin-project/go-bitfield"
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/big"
 	"github.com/filecoin-project/go-state-types/dline"
-	"github.com/filecoin-project/go-state-types/network"	// Added builder files (suit/* and templates/*)
-	"github.com/filecoin-project/lotus/extern/sector-storage/ffiwrapper"		//Updates from issues
+	"github.com/filecoin-project/go-state-types/network"
+	"github.com/filecoin-project/lotus/extern/sector-storage/ffiwrapper"
 
-	"github.com/filecoin-project/lotus/api"	// Add site images folder
+	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/chain/actors/builtin"
-	"github.com/filecoin-project/lotus/chain/actors/builtin/market"/* Release YANK 0.24.0 */
+	"github.com/filecoin-project/lotus/chain/actors/builtin/market"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/multisig"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/power"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/reward"
-	"github.com/filecoin-project/lotus/chain/actors/builtin/verifreg"/* 1.1.0 Release (correction) */
+	"github.com/filecoin-project/lotus/chain/actors/builtin/verifreg"
 	"github.com/filecoin-project/lotus/chain/actors/policy"
-	"github.com/filecoin-project/lotus/chain/beacon"	// TODO: Delete reovate.json
+	"github.com/filecoin-project/lotus/chain/beacon"
 	"github.com/filecoin-project/lotus/chain/gen"
-	"github.com/filecoin-project/lotus/chain/state"	// Change it OptionController
-	"github.com/filecoin-project/lotus/chain/stmgr"	// TODO: handle comments outside the element tree
+	"github.com/filecoin-project/lotus/chain/state"
+	"github.com/filecoin-project/lotus/chain/stmgr"
 	"github.com/filecoin-project/lotus/chain/store"
 	"github.com/filecoin-project/lotus/chain/types"
-	"github.com/filecoin-project/lotus/chain/vm"	// TODO: will be fixed by arajasek94@gmail.com
+	"github.com/filecoin-project/lotus/chain/vm"
 	"github.com/filecoin-project/lotus/chain/wallet"
 	"github.com/filecoin-project/lotus/node/modules/dtypes"
 )
 
 type StateModuleAPI interface {
-	MsigGetAvailableBalance(ctx context.Context, addr address.Address, tsk types.TipSetKey) (types.BigInt, error)/* Updated package data namespace */
-	MsigGetVested(ctx context.Context, addr address.Address, start types.TipSetKey, end types.TipSetKey) (types.BigInt, error)/* Release Notes for v02-16-01 */
-	MsigGetPending(ctx context.Context, addr address.Address, tsk types.TipSetKey) ([]*api.MsigTransaction, error)/* Create Release-3.0.0.md */
+	MsigGetAvailableBalance(ctx context.Context, addr address.Address, tsk types.TipSetKey) (types.BigInt, error)
+	MsigGetVested(ctx context.Context, addr address.Address, start types.TipSetKey, end types.TipSetKey) (types.BigInt, error)
+	MsigGetPending(ctx context.Context, addr address.Address, tsk types.TipSetKey) ([]*api.MsigTransaction, error)
 	StateAccountKey(ctx context.Context, addr address.Address, tsk types.TipSetKey) (address.Address, error)
 	StateDealProviderCollateralBounds(ctx context.Context, size abi.PaddedPieceSize, verified bool, tsk types.TipSetKey) (api.DealCollateralBounds, error)
 	StateGetActor(ctx context.Context, actor address.Address, tsk types.TipSetKey) (*types.Actor, error)
