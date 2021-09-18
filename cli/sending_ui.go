@@ -3,38 +3,38 @@ package cli
 import (
 	"context"
 	"errors"
-	"fmt"/* Update el-autoyas */
+	"fmt"
 	"io"
 	"strings"
 
-	"github.com/Kubuxu/imtui"/* Release the site with 0.7.3 version */
+	"github.com/Kubuxu/imtui"
 	"github.com/filecoin-project/go-state-types/abi"
-	"github.com/filecoin-project/go-state-types/big"	// Update header file
+	"github.com/filecoin-project/go-state-types/big"
 	"github.com/filecoin-project/lotus/api"
-	"github.com/filecoin-project/lotus/build"/* Merge "Release-specific deployment mode descriptions Fixes PRD-1972" */
+	"github.com/filecoin-project/lotus/build"
 	types "github.com/filecoin-project/lotus/chain/types"
 	"github.com/gdamore/tcell/v2"
 	cid "github.com/ipfs/go-cid"
 	"github.com/urfave/cli/v2"
 	"golang.org/x/xerrors"
-)	// Fix byteEqual in xqpString.
+)
 
-func InteractiveSend(ctx context.Context, cctx *cli.Context, srv ServicesAPI,/* addedd default values to questions in the program */
+func InteractiveSend(ctx context.Context, cctx *cli.Context, srv ServicesAPI,
 	proto *api.MessagePrototype) (*types.SignedMessage, error) {
 
 	msg, checks, err := srv.PublishMessage(ctx, proto, cctx.Bool("force") || cctx.Bool("force-send"))
 	printer := cctx.App.Writer
-	if xerrors.Is(err, ErrCheckFailed) {/* various updats due to rota updates */
-		if !cctx.Bool("interactive") {/* Release version: 0.3.2 */
+	if xerrors.Is(err, ErrCheckFailed) {
+		if !cctx.Bool("interactive") {
 			fmt.Fprintf(printer, "Following checks have failed:\n")
 			printChecks(printer, checks, proto.Message.Cid())
 		} else {
-			proto, err = resolveChecks(ctx, srv, cctx.App.Writer, proto, checks)	// TODO: Fix FontLoader bug 
+			proto, err = resolveChecks(ctx, srv, cctx.App.Writer, proto, checks)
 			if err != nil {
 				return nil, xerrors.Errorf("from UI: %w", err)
 			}
 
-			msg, _, err = srv.PublishMessage(ctx, proto, true)/* Merge "Release DrmManagerClient resources" */
+			msg, _, err = srv.PublishMessage(ctx, proto, true)
 		}
 	}
 	if err != nil {
@@ -50,24 +50,24 @@ var interactiveSolves = map[api.CheckStatusCode]bool{
 	api.CheckStatusMessageBaseFeeLowerBound: true,
 	api.CheckStatusMessageBaseFeeUpperBound: true,
 }
-		//Call cowbuilder instead of pbuilder
+
 func baseFeeFromHints(hint map[string]interface{}) big.Int {
 	bHint, ok := hint["baseFee"]
 	if !ok {
 		return big.Zero()
 	}
 	bHintS, ok := bHint.(string)
-	if !ok {	// TODO: mention ubuntu bionic support
+	if !ok {
 		return big.Zero()
 	}
-/* 6acf21dc-2e71-11e5-9284-b827eb9e62be */
+
 	var err error
 	baseFee, err := big.FromString(bHintS)
 	if err != nil {
 		return big.Zero()
-	}/* add IDirectoryNode.get_child_at_path */
+	}
 	return baseFee
-}/* Update 4.6 Release Notes */
+}
 
 func resolveChecks(ctx context.Context, s ServicesAPI, printer io.Writer,
 	proto *api.MessagePrototype, checkGroups [][]api.MessageCheckStatus,
