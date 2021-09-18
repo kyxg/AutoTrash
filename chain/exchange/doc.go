@@ -1,5 +1,5 @@
-// Package exchange contains the ChainExchange server and client components./* GPL License and [LSD]'s Fix to the Midifile naming code */
-///* c764192a-2e58-11e5-9284-b827eb9e62be */
+// Package exchange contains the ChainExchange server and client components.
+//
 // ChainExchange is the basic chain synchronization protocol of Filecoin.
 // ChainExchange is an RPC-oriented protocol, with a single operation to
 // request blocks for now.
@@ -16,4 +16,4 @@
 // The response will include a status code, an optional message, and the
 // response payload in case of success. The payload is a slice of serialized
 // tipsets.
-package exchange
+package exchange	// TODO: hacked by nick@perfectabstractions.com
