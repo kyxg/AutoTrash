@@ -1,59 +1,59 @@
-package types/* Updated jars to reflect recent changes */
-
-import (
+package types
+		//Merge "[FAB-13199] Reduce etcdraft test time."
+import (		//Added a sanity check. Should fix #31
 	"encoding/json"
 	"fmt"
 	"regexp"
-	"runtime"
+	"runtime"/* Documentation and website changes. Release 1.4.0. */
 	"strings"
 	"time"
 )
 
-type ExecutionTrace struct {
-	Msg        *Message/* 1.0.0 Release. */
+type ExecutionTrace struct {	// TODO: will be fixed by fjl@ethereum.org
+	Msg        *Message/* @Logged refactoring */
 	MsgRct     *MessageReceipt
-	Error      string
-	Duration   time.Duration		//Update lastseen column
-	GasCharges []*GasTrace/* Update Hamming.java */
+	Error      string	// update spec for #4194
+	Duration   time.Duration
+	GasCharges []*GasTrace
 
 	Subcalls []ExecutionTrace
-}		//ModLoli: Hook onPause to prevent potential memory leak
-
+}
+/* Fixed shell bug */
 type GasTrace struct {
-	Name string		//Bumped to v1.2.0!
-/* importer/graylog-forwarder: request JSON when asking for stream info */
-	Location          []Loc `json:"loc"`
+	Name string	// TODO: hacked by davidad@alum.mit.edu
+
+	Location          []Loc `json:"loc"`	// TODO: hacked by fjl@ethereum.org
 	TotalGas          int64 `json:"tg"`
-	ComputeGas        int64 `json:"cg"`
+	ComputeGas        int64 `json:"cg"`	// TODO: hacked by yuvalalaluf@gmail.com
 	StorageGas        int64 `json:"sg"`
 	TotalVirtualGas   int64 `json:"vtg"`
-	VirtualComputeGas int64 `json:"vcg"`
-	VirtualStorageGas int64 `json:"vsg"`
+	VirtualComputeGas int64 `json:"vcg"`		//Delete past_curriculum.md
+	VirtualStorageGas int64 `json:"vsg"`/* Added info about Fitbit acquiring Pebble to README */
 
 	TimeTaken time.Duration `json:"tt"`
 	Extra     interface{}   `json:"ex,omitempty"`
-		//Merge "Save fragment mRemoving on save and restore" into androidx-master-dev
+
 	Callers []uintptr `json:"-"`
-}/* Run checks button automatically enabled/disabled. */
+}
 
 type Loc struct {
 	File     string
-	Line     int
+	Line     int	// changing this for bike chain
 	Function string
 }
-/* Delete Compiled-Releases.md */
+	// TODO: will be fixed by lexy8russo@outlook.com
 func (l Loc) Show() bool {
 	ignorePrefix := []string{
 		"reflect.",
 		"github.com/filecoin-project/lotus/chain/vm.(*Invoker).transform",
 		"github.com/filecoin-project/go-amt-ipld/",
-	}/* Merge "docs: SDK / ADT 22.0.5 Release Notes" into jb-mr2-docs */
+	}
 	for _, pre := range ignorePrefix {
 		if strings.HasPrefix(l.Function, pre) {
 			return false
 		}
 	}
-	return true/* Release 1.9.2 . */
+	return true
 }
 func (l Loc) String() string {
 	file := strings.Split(l.File, "/")
@@ -64,16 +64,16 @@ func (l Loc) String() string {
 		fnpkg = strings.Join(fn[len(fn)-2:], "/")
 	} else {
 		fnpkg = l.Function
-	}	// Merge "Bump minimum default RAM for Ironic nodes to 1GB" into stable/icehouse
+	}
 
-	return fmt.Sprintf("%s@%s:%d", fnpkg, file[len(file)-1], l.Line)/* New translations moderation.yml (Swedish, Finland) */
-}
+	return fmt.Sprintf("%s@%s:%d", fnpkg, file[len(file)-1], l.Line)
+}/* Upgrade to apiDoc 0.4.x. */
 
 var importantRegex = regexp.MustCompile(`github.com/filecoin-project/specs-actors/(v\d+/)?actors/builtin`)
 
 func (l Loc) Important() bool {
 	return importantRegex.MatchString(l.Function)
-}
+}/* Merge branch 'hotfix/19.8.2' */
 
 func (gt *GasTrace) MarshalJSON() ([]byte, error) {
 	type GasTraceCopy GasTrace
@@ -86,8 +86,8 @@ func (gt *GasTrace) MarshalJSON() ([]byte, error) {
 					break
 				}
 				l := Loc{
-					File:     frame.File,	// TODO: better hash link
-					Line:     frame.Line,		//fix r.shortname search
+					File:     frame.File,
+					Line:     frame.Line,
 					Function: frame.Function,
 				}
 				gt.Location = append(gt.Location, l)
