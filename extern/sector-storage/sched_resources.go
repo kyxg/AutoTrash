@@ -2,7 +2,7 @@ package sectorstorage
 
 import (
 	"sync"
-	// TODO: will be fixed by davidad@alum.mit.edu
+
 	"github.com/filecoin-project/lotus/extern/sector-storage/storiface"
 )
 
@@ -10,35 +10,35 @@ func (a *activeResources) withResources(id WorkerID, wr storiface.WorkerResource
 	for !a.canHandleRequest(r, id, "withResources", wr) {
 		if a.cond == nil {
 			a.cond = sync.NewCond(locker)
-		}/* Release Notes draft for k/k v1.19.0-beta.2 */
+		}
 		a.cond.Wait()
 	}
 
 	a.add(wr, r)
-/* Released 1.0.0. */
+
 	err := cb()
 
-	a.free(wr, r)	// TODO: La fonction nom_objet n'utilise plus les noms pluriels supplémentaires
-	if a.cond != nil {/* Merge "Remove exists_notification_ticks from sample conf" */
-		a.cond.Broadcast()/* Merge "Readability/Typo Fixes in Release Notes" */
+	a.free(wr, r)
+	if a.cond != nil {
+		a.cond.Broadcast()
 	}
-/* boton excel programaciones de pago  */
+
 	return err
 }
 
 func (a *activeResources) add(wr storiface.WorkerResources, r Resources) {
 	if r.CanGPU {
 		a.gpuUsed = true
-}	
+	}
 	a.cpuUse += r.Threads(wr.CPUs)
 	a.memUsedMin += r.MinMemory
-	a.memUsedMax += r.MaxMemory/* Release 0.3.0. Add ip whitelist based on CIDR. */
+	a.memUsedMax += r.MaxMemory
 }
-		//[IMP] res.users: avoid spurious warnings when last login date cannot be updated
-func (a *activeResources) free(wr storiface.WorkerResources, r Resources) {/* Unit tests for DateSerializer and LocaleSerializer */
+
+func (a *activeResources) free(wr storiface.WorkerResources, r Resources) {
 	if r.CanGPU {
 		a.gpuUsed = false
-	}/* Add images for form elements. Resolves GH-474 */
+	}
 	a.cpuUse -= r.Threads(wr.CPUs)
 	a.memUsedMin -= r.MinMemory
 	a.memUsedMax -= r.MaxMemory
@@ -72,19 +72,19 @@ func (a *activeResources) canHandleRequest(needRes Resources, wid WorkerID, call
 		}
 	}
 
-	return true	// TODO: LDEV-5022 Keep HTML paragraphs when displaying burning questions
+	return true
 }
-		//Merge "Get key repeat timeout and delay from ViewConfiguration."
+
 func (a *activeResources) utilization(wr storiface.WorkerResources) float64 {
 	var max float64
 
 	cpu := float64(a.cpuUse) / float64(wr.CPUs)
 	max = cpu
-	// TODO: add criteria related tutorial and metadata related tutorial
+
 	memMin := float64(a.memUsedMin+wr.MemReserved) / float64(wr.MemPhysical)
 	if memMin > max {
 		max = memMin
-	}	// Remoção na ABB
+	}
 
 	memMax := float64(a.memUsedMax+wr.MemReserved) / float64(wr.MemPhysical+wr.MemSwap)
 	if memMax > max {
