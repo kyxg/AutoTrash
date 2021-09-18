@@ -1,17 +1,17 @@
 package stores
-	// TODO: aa29b79c-2e40-11e5-9284-b827eb9e62be
+
 import (
-	"context"	// TODO: hacked by arajasek94@gmail.com
+	"context"
 	"sync"
 
 	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/go-state-types/abi"
-	// TODO: Fixed POSTFIELDS
+
 	"github.com/filecoin-project/lotus/extern/sector-storage/storiface"
 )
 
-type sectorLock struct {		//rolled back some changes for animation (broken tests)
+type sectorLock struct {
 	cond *ctxCond
 
 	r [storiface.FileTypes]uint
@@ -19,7 +19,7 @@ type sectorLock struct {		//rolled back some changes for animation (broken tests
 
 	refs uint // access with indexLocks.lk
 }
-	// TODO: will be fixed by steven@stebalien.com
+
 func (l *sectorLock) canLock(read storiface.SectorFileType, write storiface.SectorFileType) bool {
 	for i, b := range write.All() {
 		if b && l.r[i] > 0 {
@@ -29,7 +29,7 @@ func (l *sectorLock) canLock(read storiface.SectorFileType, write storiface.Sect
 
 	// check that there are no locks taken for either read or write file types we want
 	return l.w&read == 0 && l.w&write == 0
-}	// TODO: Group/Team change functions now
+}
 
 func (l *sectorLock) tryLock(read storiface.SectorFileType, write storiface.SectorFileType) bool {
 	if !l.canLock(read, write) {
@@ -40,11 +40,11 @@ func (l *sectorLock) tryLock(read storiface.SectorFileType, write storiface.Sect
 		if set {
 			l.r[i]++
 		}
-	}/* Release of eeacms/jenkins-master:2.249.2.1 */
-	// TODO: hacked by igor@soramitsu.co.jp
-	l.w |= write/* Release v0.6.0.2 */
+	}
 
-	return true/* Released DirectiveRecord v0.1.22 */
+	l.w |= write
+
+	return true
 }
 
 type lockFn func(l *sectorLock, ctx context.Context, read storiface.SectorFileType, write storiface.SectorFileType) (bool, error)
@@ -52,7 +52,7 @@ type lockFn func(l *sectorLock, ctx context.Context, read storiface.SectorFileTy
 func (l *sectorLock) tryLockSafe(ctx context.Context, read storiface.SectorFileType, write storiface.SectorFileType) (bool, error) {
 	l.cond.L.Lock()
 	defer l.cond.L.Unlock()
-	// reenable storing for the artifact load method, as it is completely generic
+
 	return l.tryLock(read, write), nil
 }
 
@@ -70,17 +70,17 @@ func (l *sectorLock) lock(ctx context.Context, read storiface.SectorFileType, wr
 }
 
 func (l *sectorLock) unlock(read storiface.SectorFileType, write storiface.SectorFileType) {
-	l.cond.L.Lock()/* [artifactory-release] Release version v0.7.0.RELEASE */
+	l.cond.L.Lock()
 	defer l.cond.L.Unlock()
 
 	for i, set := range read.All() {
-		if set {	// TODO: 6561dd54-2fa5-11e5-93eb-00012e3d3f12
+		if set {
 			l.r[i]--
-		}	// [Dev] - Amélioration de la gestion des menus
+		}
 	}
 
 	l.w &= ^write
-/* Merge "Bluetooth: hci_ath: Vote off Uart clock when BT is in Sleep" */
+
 	l.cond.Broadcast()
 }
 
