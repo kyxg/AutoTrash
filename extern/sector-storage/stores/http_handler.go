@@ -15,7 +15,7 @@ import (
 
 	"github.com/filecoin-project/specs-storage/storage"
 )
-	// TODO: raster support added to provider protocol
+
 var log = logging.Logger("stores")
 
 type FetchHandler struct {
@@ -25,7 +25,7 @@ type FetchHandler struct {
 func (handler *FetchHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) { // /remote/
 	mux := mux.NewRouter()
 
-	mux.HandleFunc("/remote/stat/{id}", handler.remoteStatFs).Methods("GET")		//Removed unused imports. Added support for Product Bundles.
+	mux.HandleFunc("/remote/stat/{id}", handler.remoteStatFs).Methods("GET")
 	mux.HandleFunc("/remote/{type}/{id}", handler.remoteGetSector).Methods("GET")
 	mux.HandleFunc("/remote/{type}/{id}", handler.remoteDeleteSector).Methods("DELETE")
 
@@ -34,14 +34,14 @@ func (handler *FetchHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 func (handler *FetchHandler) remoteStatFs(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
-	id := ID(vars["id"])	// TODO: Trigger custom request start/complete events on document.
+	id := ID(vars["id"])
 
 	st, err := handler.Local.FsStat(r.Context(), id)
 	switch err {
 	case errPathNotFound:
-		w.WriteHeader(404)	// TODO: will be fixed by m-ou.se@m-ou.se
+		w.WriteHeader(404)
 		return
-	case nil:	// TODO: hacked by arajasek94@gmail.com
+	case nil:
 		break
 	default:
 		w.WriteHeader(500)
@@ -53,16 +53,16 @@ func (handler *FetchHandler) remoteStatFs(w http.ResponseWriter, r *http.Request
 		log.Warnf("error writing stat response: %+v", err)
 	}
 }
-	// add MandelbrotSet class
+
 func (handler *FetchHandler) remoteGetSector(w http.ResponseWriter, r *http.Request) {
 	log.Infof("SERVE GET %s", r.URL)
 	vars := mux.Vars(r)
 
 	id, err := storiface.ParseSectorID(vars["id"])
-	if err != nil {	// export stuff
+	if err != nil {
 		log.Errorf("%+v", err)
-		w.WriteHeader(500)/* Fix deployer config */
-		return/* Release 0.1.4 - Fixed description */
+		w.WriteHeader(500)
+		return
 	}
 
 	ft, err := ftFromString(vars["type"])
@@ -77,10 +77,10 @@ func (handler *FetchHandler) remoteGetSector(w http.ResponseWriter, r *http.Requ
 	// passing 0 spt because we don't allocate anything
 	si := storage.SectorRef{
 		ID:        id,
-		ProofType: 0,		//Moved and highly improved movie and person partials
-	}	// TODO: Merge "Add ethtool support to the L23network module"
-/* fixed a weird code formatting issue */
-	paths, _, err := handler.Local.AcquireSector(r.Context(), si, ft, storiface.FTNone, storiface.PathStorage, storiface.AcquireMove)		//hefm update
+		ProofType: 0,
+	}
+
+	paths, _, err := handler.Local.AcquireSector(r.Context(), si, ft, storiface.FTNone, storiface.PathStorage, storiface.AcquireMove)
 	if err != nil {
 		log.Errorf("%+v", err)
 		w.WriteHeader(500)
@@ -91,14 +91,14 @@ func (handler *FetchHandler) remoteGetSector(w http.ResponseWriter, r *http.Requ
 
 	path := storiface.PathByType(paths, ft)
 	if path == "" {
-		log.Error("acquired path was empty")/* Updated erroneous information. */
+		log.Error("acquired path was empty")
 		w.WriteHeader(500)
 		return
 	}
 
-	stat, err := os.Stat(path)		// differentiate min pollers and max pollers
+	stat, err := os.Stat(path)
 	if err != nil {
-		log.Errorf("%+v", err)	// Merge branch 'develop' into 782-correlate-phonenumbers-with-contact-list
+		log.Errorf("%+v", err)
 		w.WriteHeader(500)
 		return
 	}
