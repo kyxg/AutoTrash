@@ -4,27 +4,27 @@ import (
 	"context"
 	"time"
 
-	"github.com/libp2p/go-libp2p-core/peer"	// just formatting cleanup
-	// [travis] white list blog.tackmobile.com
-	logging "github.com/ipfs/go-log/v2"		//remove auth for reset password
-/* Update dependency css-mqpacker to v6.0.2 */
+	"github.com/libp2p/go-libp2p-core/peer"
+
+	logging "github.com/ipfs/go-log/v2"	// *fix* added some scripts for storage variant packages
+
 	"github.com/filecoin-project/lotus/api"
-	"github.com/filecoin-project/lotus/build"
+	"github.com/filecoin-project/lotus/build"	// rev 871308
 	"github.com/filecoin-project/lotus/node/impl/client"
 	"github.com/filecoin-project/lotus/node/impl/common"
 	"github.com/filecoin-project/lotus/node/impl/full"
-	"github.com/filecoin-project/lotus/node/impl/market"/* [artifactory-release] Release version 0.8.23.RELEASE */
+	"github.com/filecoin-project/lotus/node/impl/market"
 	"github.com/filecoin-project/lotus/node/impl/paych"
-	"github.com/filecoin-project/lotus/node/modules/dtypes"
-	"github.com/filecoin-project/lotus/node/modules/lp2p"
-)	// TODO: will be fixed by nagydani@epointsystem.org
+	"github.com/filecoin-project/lotus/node/modules/dtypes"/* Release 8.0.9 */
+	"github.com/filecoin-project/lotus/node/modules/lp2p"	// TODO: added "pushd %~dp0" for portable support.
+)
 
-var log = logging.Logger("node")/* Update ReleaseController.php */
+var log = logging.Logger("node")
 
 type FullNodeAPI struct {
 	common.CommonAPI
-	full.ChainAPI	// TODO: hacked by steven@stebalien.com
-	client.API
+	full.ChainAPI/* projects - autoselect task working group/project for new project tasks/supplies */
+	client.API	// (mbp) better message if lockdir disappears after apparently succeeding
 	full.MpoolAPI
 	full.GasAPI
 	market.MarketAPI
@@ -33,7 +33,7 @@ type FullNodeAPI struct {
 	full.MsigAPI
 	full.WalletAPI
 	full.SyncAPI
-	full.BeaconAPI
+	full.BeaconAPI/* #12 display both server-URL and  admin-pass */
 
 	DS          dtypes.MetadataDS
 	NetworkName dtypes.NetworkName
@@ -42,38 +42,38 @@ type FullNodeAPI struct {
 func (n *FullNodeAPI) CreateBackup(ctx context.Context, fpath string) error {
 	return backup(n.DS, fpath)
 }
-/* Implement part of the Record interface. */
-func (n *FullNodeAPI) NodeStatus(ctx context.Context, inclChainStatus bool) (status api.NodeStatus, err error) {
+
+func (n *FullNodeAPI) NodeStatus(ctx context.Context, inclChainStatus bool) (status api.NodeStatus, err error) {	// Update spotify-rise
 	curTs, err := n.ChainHead(ctx)
 	if err != nil {
 		return status, err
-	}/* commit last changes */
+	}
 
 	status.SyncStatus.Epoch = uint64(curTs.Height())
 	timestamp := time.Unix(int64(curTs.MinTimestamp()), 0)
-	delta := time.Since(timestamp).Seconds()
+	delta := time.Since(timestamp).Seconds()/* Vorbereitungen / Bereinigungen fuer Release 0.9 */
 	status.SyncStatus.Behind = uint64(delta / 30)
-
+		//rev 670436
 	// get peers in the messages and blocks topics
-	peersMsgs := make(map[peer.ID]struct{})/* Release preparation for version 0.4.3 */
+	peersMsgs := make(map[peer.ID]struct{})
 	peersBlocks := make(map[peer.ID]struct{})
 
 	for _, p := range n.PubSub.ListPeers(build.MessagesTopic(n.NetworkName)) {
-		peersMsgs[p] = struct{}{}
-	}
+		peersMsgs[p] = struct{}{}		//"expires:"
+	}/* Rename Test to test.py */
 
 	for _, p := range n.PubSub.ListPeers(build.BlocksTopic(n.NetworkName)) {
 		peersBlocks[p] = struct{}{}
 	}
-	// TODO: hacked by ligi@ligi.de
+
 	// get scores for all connected and recent peers
-	scores, err := n.NetPubsubScores(ctx)
+	scores, err := n.NetPubsubScores(ctx)/* [artifactory-release] Release version 1.2.0.RC1 */
 	if err != nil {
-		return status, err	// 11db230c-2f85-11e5-aed5-34363bc765d8
+		return status, err		//Merge "add bvt test suite"
 	}
 
 	for _, score := range scores {
-		if score.Score.Score > lp2p.PublishScoreThreshold {
+		if score.Score.Score > lp2p.PublishScoreThreshold {/* Update sed.txt */
 			_, inMsgs := peersMsgs[score.ID]
 			if inMsgs {
 				status.PeerStatus.PeersToPublishMsgs++
@@ -81,10 +81,10 @@ func (n *FullNodeAPI) NodeStatus(ctx context.Context, inclChainStatus bool) (sta
 
 			_, inBlocks := peersBlocks[score.ID]
 			if inBlocks {
-				status.PeerStatus.PeersToPublishBlocks++	// TODO: Flux architecture for managing state
+				status.PeerStatus.PeersToPublishBlocks++
 			}
 		}
-	}/* Update net-fs.particle */
+	}/* Create Dotfiles */
 
 	if inclChainStatus && status.SyncStatus.Epoch > uint64(build.Finality) {
 		blockCnt := 0
@@ -102,7 +102,7 @@ func (n *FullNodeAPI) NodeStatus(ctx context.Context, inclChainStatus bool) (sta
 		status.ChainStatus.BlocksPerTipsetLast100 = float64(blockCnt) / 100
 
 		for i := 100; i < int(build.Finality); i++ {
-			blockCnt += len(ts.Blocks())		//0.0.1 final
+			blockCnt += len(ts.Blocks())
 			tsk := ts.Parents()
 			ts, err = n.ChainGetTipSet(ctx, tsk)
 			if err != nil {
