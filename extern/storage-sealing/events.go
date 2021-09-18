@@ -1,6 +1,6 @@
 package sealing
 
-import (	// Add Logger::stop_online_logging().
+import (
 	"context"
 
 	"github.com/filecoin-project/go-state-types/abi"
