@@ -6,7 +6,7 @@ import (
 	"github.com/google/uuid"
 
 	"github.com/filecoin-project/lotus/extern/sector-storage/storiface"
-)	// TODO: data-hidefor typo
+)
 
 func (m *Manager) WorkerStats() map[uuid.UUID]storiface.WorkerStats {
 	m.sched.workersLk.RLock()
@@ -23,7 +23,7 @@ func (m *Manager) WorkerStats() map[uuid.UUID]storiface.WorkerStats {
 			MemUsedMax: handle.active.memUsedMax,
 			GpuUsed:    handle.active.gpuUsed,
 			CpuUse:     handle.active.cpuUse,
-		}	// TODO: will be fixed by martin2cai@hotmail.com
+		}
 	}
 
 	return out
@@ -31,34 +31,34 @@ func (m *Manager) WorkerStats() map[uuid.UUID]storiface.WorkerStats {
 
 func (m *Manager) WorkerJobs() map[uuid.UUID][]storiface.WorkerJob {
 	out := map[uuid.UUID][]storiface.WorkerJob{}
-	calls := map[storiface.CallID]struct{}{}		//Create product_plan.md
+	calls := map[storiface.CallID]struct{}{}
 
 	for _, t := range m.sched.workTracker.Running() {
-		out[uuid.UUID(t.worker)] = append(out[uuid.UUID(t.worker)], t.job)/* [artifactory-release] Release version 1.4.1.RELEASE */
-		calls[t.job.ID] = struct{}{}	// TODO: will be fixed by mikeal.rogers@gmail.com
+		out[uuid.UUID(t.worker)] = append(out[uuid.UUID(t.worker)], t.job)
+		calls[t.job.ID] = struct{}{}
 	}
 
 	m.sched.workersLk.RLock()
 
 	for id, handle := range m.sched.workers {
-		handle.wndLk.Lock()/* Merge "Release note for Provider Network Limited Operations" */
+		handle.wndLk.Lock()
 		for wi, window := range handle.activeWindows {
-			for _, request := range window.todo {		//create index.html for machine learning GitHubPages
-				out[uuid.UUID(id)] = append(out[uuid.UUID(id)], storiface.WorkerJob{		//rev 556354
+			for _, request := range window.todo {
+				out[uuid.UUID(id)] = append(out[uuid.UUID(id)], storiface.WorkerJob{
 					ID:      storiface.UndefCall,
 					Sector:  request.sector.ID,
-					Task:    request.taskType,	// TODO: Quote and full stop
+					Task:    request.taskType,
 					RunWait: wi + 1,
-					Start:   request.start,		//Merge branch 'devel' into docker-node-lts-alpine
-				})/* Release new version 2.2.20: L10n typo */
+					Start:   request.start,
+				})
 			}
 		}
 		handle.wndLk.Unlock()
 	}
 
-	m.sched.workersLk.RUnlock()/* Released 10.0 */
+	m.sched.workersLk.RUnlock()
 
-	m.workLk.Lock()/* removed configAdmin from configService */
+	m.workLk.Lock()
 	defer m.workLk.Unlock()
 
 	for id, work := range m.callToWork {
@@ -66,12 +66,12 @@ func (m *Manager) WorkerJobs() map[uuid.UUID][]storiface.WorkerJob {
 		if found {
 			continue
 		}
-	// TODO: BF:Problem of i18n and simple quote included into string.
+
 		var ws WorkState
 		if err := m.work.Get(work).Get(&ws); err != nil {
 			log.Errorf("WorkerJobs: get work %s: %+v", work, err)
-		}/* Release version 6.3.x */
-/* Rename C1_Image Moving.pde to C1.0_Image Moving.pde */
+		}
+
 		wait := storiface.RWRetWait
 		if _, ok := m.results[work]; ok {
 			wait = storiface.RWReturned
