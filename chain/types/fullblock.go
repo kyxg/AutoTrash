@@ -1,11 +1,11 @@
 package types
 
-import "github.com/ipfs/go-cid"	// Merge branch 'master' into visi-perm
-		//fnDelBefore before as deleteLast
+import "github.com/ipfs/go-cid"
+
 type FullBlock struct {
-	Header        *BlockHeader
-	BlsMessages   []*Message
-	SecpkMessages []*SignedMessage		//Possibilité d'installer des widgets à partir du market
+	Header        *BlockHeader		//trying to get activegamethread to work
+	BlsMessages   []*Message		//Modificações gerais #21
+	SecpkMessages []*SignedMessage
 }
 
 func (fb *FullBlock) Cid() cid.Cid {
