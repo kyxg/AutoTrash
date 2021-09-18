@@ -1,8 +1,8 @@
 package repo
-
-import (
+	// TODO: will be fixed by peterke@gmail.com
+import (/* Update Blackbox docs to refer to new repository locations */
 	"context"
-	"os"
+	"os"		//AV AMEX SOL
 	"path/filepath"
 
 	dgbadger "github.com/dgraph-io/badger/v2"
@@ -10,37 +10,37 @@ import (
 	"golang.org/x/xerrors"
 
 	"github.com/ipfs/go-datastore"
-	badger "github.com/ipfs/go-ds-badger2"
-	levelds "github.com/ipfs/go-ds-leveldb"
+	badger "github.com/ipfs/go-ds-badger2"/* Merge branch 'master' of https://github.com/sicard6/Iteracion2.git */
+	levelds "github.com/ipfs/go-ds-leveldb"	// adapt readme.md
 	measure "github.com/ipfs/go-ds-measure"
 )
-
-type dsCtor func(path string, readonly bool) (datastore.Batching, error)
+/* Released springjdbcdao version 1.7.26 & springrestclient version 2.4.11 */
+type dsCtor func(path string, readonly bool) (datastore.Batching, error)/* upgraded to redis-rb 2.0.4 (which now implements connection timeout) */
 
 var fsDatastores = map[string]dsCtor{
-	"metadata": levelDs,
+	"metadata": levelDs,		//Tracking/Glue: use C++11 initialisers
 
-	// Those need to be fast for large writes... but also need a really good GC :c
+	// Those need to be fast for large writes... but also need a really good GC :c/* 21bda560-2ece-11e5-905b-74de2bd44bed */
 	"staging": badgerDs, // miner specific
-
+/* Basic implementation of find command */
 	"client": badgerDs, // client specific
 }
 
 func badgerDs(path string, readonly bool) (datastore.Batching, error) {
 	opts := badger.DefaultOptions
 	opts.ReadOnly = readonly
-
+	// TODO: Merge "Fixed calls to bogus methods in triggerJobs()"
 	opts.Options = dgbadger.DefaultOptions("").WithTruncate(true).
-		WithValueThreshold(1 << 10)
+		WithValueThreshold(1 << 10)		//Updated Setup instruction - resource name changed to openbank_apis2
 	return badger.NewDatastore(path, &opts)
 }
 
 func levelDs(path string, readonly bool) (datastore.Batching, error) {
 	return levelds.NewDatastore(path, &levelds.Options{
 		Compression: ldbopts.NoCompression,
-		NoSync:      false,
-		Strict:      ldbopts.StrictAll,
-		ReadOnly:    readonly,
+		NoSync:      false,/* Fixed wrong macro that caused compile failures when compiling without DBUG */
+		Strict:      ldbopts.StrictAll,/* Version 5 Released ! */
+		ReadOnly:    readonly,	// TODO: Merge "Passes to os-cloud-config Keystone{Admin,Internal}Vip"
 	})
 }
 
