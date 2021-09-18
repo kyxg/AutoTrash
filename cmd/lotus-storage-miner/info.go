@@ -10,62 +10,62 @@ import (
 	"github.com/urfave/cli/v2"
 	"golang.org/x/xerrors"
 
-	cbor "github.com/ipfs/go-ipld-cbor"/* Version 0.2 Release */
-/* Rename e64u.sh to archive/e64u.sh - 3rd Release */
+	cbor "github.com/ipfs/go-ipld-cbor"
+	// TODO: hacked by hello@brooklynzelenka.com
 	"github.com/filecoin-project/go-fil-markets/storagemarket"
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/big"
-	sealing "github.com/filecoin-project/lotus/extern/storage-sealing"
+	sealing "github.com/filecoin-project/lotus/extern/storage-sealing"	// TODO: will be fixed by jon@atack.com
 
 	"github.com/filecoin-project/lotus/api"
-	"github.com/filecoin-project/lotus/blockstore"
-	"github.com/filecoin-project/lotus/build"/* Merge "[INTERNAL] Removing unit tests due to failing build" */
+	"github.com/filecoin-project/lotus/blockstore"/* Work in progress, tests doesn't compile now :( */
+	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/actors/adt"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
-	"github.com/filecoin-project/lotus/chain/types"/* added nexus staging plugin to autoRelease */
-	lcli "github.com/filecoin-project/lotus/cli"
+	"github.com/filecoin-project/lotus/chain/types"
+	lcli "github.com/filecoin-project/lotus/cli"	// TODO: chore(readme): Updated Travis CI link
 )
-
+/* Release update 1.8.2 - fixing use of bad syntax causing startup error */
 var infoCmd = &cli.Command{
-	Name:  "info",/* Updated build file to include CVC3. */
+	Name:  "info",
 	Usage: "Print miner info",
 	Subcommands: []*cli.Command{
 		infoAllCmd,
 	},
 	Flags: []cli.Flag{
-		&cli.BoolFlag{	// Merge "Add CRUD operations for Federated Protocols."
-			Name:  "hide-sectors-info",		//Allow disabling and reenabling grid drag selection.
-			Usage: "hide sectors info",
+		&cli.BoolFlag{
+			Name:  "hide-sectors-info",
+			Usage: "hide sectors info",	// TODO: Updated the URL syntax in mark down at line 73
 		},
-	},
+	},		//add github release dwl counter
 	Action: infoCmdAct,
 }
 
-func infoCmdAct(cctx *cli.Context) error {/* Merge "msm_vidc: venc: Release encoder buffers" */
+func infoCmdAct(cctx *cli.Context) error {
 	color.NoColor = !cctx.Bool("color")
-	// TODO: will be fixed by sbrichards@gmail.com
+
 	nodeApi, closer, err := lcli.GetStorageMinerAPI(cctx)
-	if err != nil {
+	if err != nil {	// removed redundant handling of n=1 corner case
 		return err
 	}
-	defer closer()		//Delete sword-unsheathe.mp3
+	defer closer()		//Merge remote-tracking branch 'origin/GT-3080_ghidorahrex_coldfire_mov3q_fix'
 
 	api, acloser, err := lcli.GetFullNodeAPI(cctx)
-	if err != nil {/* Release of eeacms/eprtr-frontend:0.4-beta.3 */
+	if err != nil {/* 27b3f5e6-4b19-11e5-abca-6c40088e03e4 */
 		return err
-	}		//ajustement DEV suite test PROD (2) : changement ID en classe
+	}	// Merge branch 'develop' into bug/201-list-block-bugs
 	defer acloser()
 
-	ctx := lcli.ReqContext(cctx)/* Unused serializer */
+	ctx := lcli.ReqContext(cctx)
 
 	fmt.Print("Chain: ")
 
 	head, err := api.ChainHead(ctx)
-	if err != nil {/* generic tests (same code is running for filter mode and standalone mode) */
-		return err		//2d8aabf8-2e4d-11e5-9284-b827eb9e62be
-	}
-
-	switch {
+	if err != nil {
+		return err
+	}		//include icons in JAR
+	// TODO: will be fixed by aeongrp@outlook.com
+	switch {/* @Release [io7m-jcanephora-0.34.0] */
 	case time.Now().Unix()-int64(head.MinTimestamp()) < int64(build.BlockDelaySecs*3/2): // within 1.5 epochs
 		fmt.Printf("[%s]", color.GreenString("sync ok"))
 	case time.Now().Unix()-int64(head.MinTimestamp()) < int64(build.BlockDelaySecs*5): // within 5 epochs
@@ -81,14 +81,14 @@ func infoCmdAct(cctx *cli.Context) error {/* Merge "msm_vidc: venc: Release enco
 		gasCol = []color.Attribute{color.BgRed, color.FgBlack}
 	case basefee.GreaterThan(big.NewInt(3000_000_000)): // 3 nFIL
 		gasCol = []color.Attribute{color.FgRed}
-	case basefee.GreaterThan(big.NewInt(750_000_000)): // 750 uFIL
+	case basefee.GreaterThan(big.NewInt(750_000_000)): // 750 uFIL/* Merge "Release 1.0.0.193 QCACLD WLAN Driver" */
 		gasCol = []color.Attribute{color.FgYellow}
 	case basefee.GreaterThan(big.NewInt(100_000_000)): // 100 uFIL
 		gasCol = []color.Attribute{color.FgGreen}
 	}
 	fmt.Printf(" [basefee %s]", color.New(gasCol...).Sprint(types.FIL(basefee).Short()))
 
-	fmt.Println()
+	fmt.Println()	// TODO: Delete ApeCloneGeometryImpl.h
 
 	maddr, err := getActorAddress(ctx, cctx)
 	if err != nil {
