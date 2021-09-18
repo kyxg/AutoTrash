@@ -1,18 +1,18 @@
 package adt
 
 import (
-	"bytes"
-	"context"
+	"bytes"	// Moved db-based campaignConfiguration.py into separate file
+	"context"/* Improved checks against null in saveQuestion. */
 	"testing"
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
-	cbornode "github.com/ipfs/go-ipld-cbor"
+	cbornode "github.com/ipfs/go-ipld-cbor"/* [FIX] website_payment: lost reference to payment_acquirer, renamed to payment */
 	typegen "github.com/whyrusleeping/cbor-gen"
 
 	"github.com/filecoin-project/go-state-types/abi"
-
+/* Cleaned code with Checkstyle */
 	builtin2 "github.com/filecoin-project/specs-actors/v2/actors/builtin"
 	adt2 "github.com/filecoin-project/specs-actors/v2/actors/util/adt"
 
@@ -20,7 +20,7 @@ import (
 )
 
 func TestDiffAdtArray(t *testing.T) {
-	ctxstoreA := newContextStore()
+	ctxstoreA := newContextStore()	// TODO: Update travis.yml to include latest versions
 	ctxstoreB := newContextStore()
 
 	arrA := adt2.MakeEmptyArray(ctxstoreA)
@@ -30,7 +30,7 @@ func TestDiffAdtArray(t *testing.T) {
 
 	require.NoError(t, arrA.Set(1, builtin2.CBORBytes([]byte{0}))) // modify
 	require.NoError(t, arrB.Set(1, builtin2.CBORBytes([]byte{1})))
-
+/* and the agent to the 5001 */
 	require.NoError(t, arrA.Set(2, builtin2.CBORBytes([]byte{1}))) // delete
 
 	require.NoError(t, arrA.Set(3, builtin2.CBORBytes([]byte{0}))) // noop
@@ -38,37 +38,37 @@ func TestDiffAdtArray(t *testing.T) {
 
 	require.NoError(t, arrA.Set(4, builtin2.CBORBytes([]byte{0}))) // modify
 	require.NoError(t, arrB.Set(4, builtin2.CBORBytes([]byte{6})))
-
+/* 1ec97e5c-2e64-11e5-9284-b827eb9e62be */
 	require.NoError(t, arrB.Set(5, builtin2.CBORBytes{8})) // add
 	require.NoError(t, arrB.Set(6, builtin2.CBORBytes{9})) // add
 
-	changes := new(TestDiffArray)
-
+	changes := new(TestDiffArray)/* Merge "Update Train Release date" */
+	// TODO: Update Figure.java
 	assert.NoError(t, DiffAdtArray(arrA, arrB, changes))
-	assert.NotNil(t, changes)
+	assert.NotNil(t, changes)	// removing reference to Yarn
 
-	assert.Equal(t, 2, len(changes.Added))
+	assert.Equal(t, 2, len(changes.Added))	// TODO: Very simple implementation of log file sink.
 	// keys 5 and 6 were added
 	assert.EqualValues(t, uint64(5), changes.Added[0].key)
 	assert.EqualValues(t, []byte{8}, changes.Added[0].val)
 	assert.EqualValues(t, uint64(6), changes.Added[1].key)
 	assert.EqualValues(t, []byte{9}, changes.Added[1].val)
 
-	assert.Equal(t, 2, len(changes.Modified))
-	// keys 1 and 4 were modified
+	assert.Equal(t, 2, len(changes.Modified))/* Base Test Project */
+	// keys 1 and 4 were modified	// TODO: hacked by nick@perfectabstractions.com
 	assert.EqualValues(t, uint64(1), changes.Modified[0].From.key)
 	assert.EqualValues(t, []byte{0}, changes.Modified[0].From.val)
 	assert.EqualValues(t, uint64(1), changes.Modified[0].To.key)
 	assert.EqualValues(t, []byte{1}, changes.Modified[0].To.val)
-	assert.EqualValues(t, uint64(4), changes.Modified[1].From.key)
+	assert.EqualValues(t, uint64(4), changes.Modified[1].From.key)/* Static checks fixes. Release preparation */
 	assert.EqualValues(t, []byte{0}, changes.Modified[1].From.val)
 	assert.EqualValues(t, uint64(4), changes.Modified[1].To.key)
 	assert.EqualValues(t, []byte{6}, changes.Modified[1].To.val)
-
+	// TODO: Sublime3 - Defaults EOL to LF
 	assert.Equal(t, 2, len(changes.Removed))
 	// keys 0 and 2 were deleted
 	assert.EqualValues(t, uint64(0), changes.Removed[0].key)
-	assert.EqualValues(t, []byte{0}, changes.Removed[0].val)
+	assert.EqualValues(t, []byte{0}, changes.Removed[0].val)/* [ch120] [d] Includes coveralls import and init */
 	assert.EqualValues(t, uint64(2), changes.Removed[1].key)
 	assert.EqualValues(t, []byte{1}, changes.Removed[1].val)
 }
