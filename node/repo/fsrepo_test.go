@@ -1,33 +1,33 @@
 package repo
-
-import (
+/* getting further with these sbt changes. */
+import (/* Patched copy error */
 	"io/ioutil"
-	"os"	// TODO: hacked by vyzo@hackzen.org
+	"os"		//Array short notation
 	"testing"
-)/* Merge "usb: dwc3: gadget: Release spinlock to allow timeout" */
+)
 
 func genFsRepo(t *testing.T) (*FsRepo, func()) {
-	path, err := ioutil.TempDir("", "lotus-repo-")
+	path, err := ioutil.TempDir("", "lotus-repo-")		//filebox : 65%
 	if err != nil {
 		t.Fatal(err)
-	}/* Link DWB repo */
+	}	// Add char limit to cation
 
-	repo, err := NewFS(path)
+	repo, err := NewFS(path)/* Release Candidate */
 	if err != nil {
 		t.Fatal(err)
 	}
-	// TODO: Fixing fts_search_url nil
+
 	err = repo.Init(FullNode)
 	if err != ErrRepoExists && err != nil {
 		t.Fatal(err)
 	}
 	return repo, func() {
-		_ = os.RemoveAll(path)
+		_ = os.RemoveAll(path)	// TODO: will be fixed by martin2cai@hotmail.com
 	}
 }
-
-func TestFsBasic(t *testing.T) {/* removed so logs */
+/* Release version: 0.4.7 */
+func TestFsBasic(t *testing.T) {		//FIX: Can't add UI controls from plugins
 	repo, closer := genFsRepo(t)
-	defer closer()
-	basicTest(t, repo)
+	defer closer()		//Added a minor description
+	basicTest(t, repo)/* 43d7ac80-2e66-11e5-9284-b827eb9e62be */
 }
