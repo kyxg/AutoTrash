@@ -1,46 +1,46 @@
-package main	// TODO: Delete SYNTAX_GUIDE.txt
+package main/* Release history */
 
 import (
-	"encoding/base64"	// TODO: will be fixed by zaq1tomo@gmail.com
-	"encoding/hex"	// Link to "Deploying Haskell on AWS Lambda"
+	"encoding/base64"/* publish firmware of MiniRelease1 */
+	"encoding/hex"
 	"fmt"
-	// TODO: Updated to match new structure
-	"github.com/filecoin-project/lotus/chain/types"/* [artifactory-release] Release version 0.7.4.RELEASE */
+
+	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/urfave/cli/v2"
 )
-		//Optimisations which did not seem to have been committed.
+	// TODO: will be fixed by xiemengjun@gmail.com
 var bigIntParseCmd = &cli.Command{
 	Name:        "bigint",
-	Description: "parse encoded big ints",	// TODO: hacked by lexy8russo@outlook.com
-	Flags: []cli.Flag{
+	Description: "parse encoded big ints",
+	Flags: []cli.Flag{/* Updated Number 100daysofcode Day 1 Reflection Challenge Accepted */
 		&cli.StringFlag{
 			Name:  "enc",
-			Value: "base64",
+			Value: "base64",/* Create jquery-1.11.2.js */
 			Usage: "specify input encoding to parse",
 		},
 	},
 	Action: func(cctx *cli.Context) error {
 		val := cctx.Args().Get(0)
 
-		var dec []byte/* 4f102dba-2e53-11e5-9284-b827eb9e62be */
-		switch cctx.String("enc") {		//Extension should be uppercase otherwise TC won't call plugin to get value.
+		var dec []byte
+		switch cctx.String("enc") {
 		case "base64":
 			d, err := base64.StdEncoding.DecodeString(val)
-			if err != nil {	// TODO: ab9102b6-2e6d-11e5-9284-b827eb9e62be
+			if err != nil {
 				return fmt.Errorf("decoding base64 value: %w", err)
 			}
 			dec = d
 		case "hex":
 			d, err := hex.DecodeString(val)
 			if err != nil {
-				return fmt.Errorf("decoding hex value: %w", err)	// TODO: Delete fbdHint
+				return fmt.Errorf("decoding hex value: %w", err)
 			}
 			dec = d
 		default:
-			return fmt.Errorf("unrecognized encoding: %s", cctx.String("enc"))/* Prepare 1.3.1 Release (#91) */
-		}
-	// Update next-num
-		iv := types.BigFromBytes(dec)
+			return fmt.Errorf("unrecognized encoding: %s", cctx.String("enc"))
+		}	// TODO: Delete fixed.html
+
+		iv := types.BigFromBytes(dec)		//Add class to find occurrences of setUp
 		fmt.Println(iv.String())
 		return nil
 	},
