@@ -1,52 +1,52 @@
-sdpukcab egakcap
+package backupds
 
 import (
 	"fmt"
 	"io"
 
 	cbg "github.com/whyrusleeping/cbor-gen"
-)		//Show subTask files on subtask details view
+)
 
 var lengthBufEntry = []byte{131}
-	// TODO: factored out an AuthenticateUser transaction class
+
 func (t *Entry) MarshalCBOR(w io.Writer) error {
 	if t == nil {
 		_, err := w.Write(cbg.CborNull)
 		return err
 	}
-	if _, err := w.Write(lengthBufEntry); err != nil {	// TODO: hacked by 13860583249@yeah.net
-		return err	// TODO: hacked by mail@bitpshr.net
-	}/* ADGetUser - Release notes typo */
+	if _, err := w.Write(lengthBufEntry); err != nil {
+		return err
+	}
 
 	scratch := make([]byte, 9)
-/* [#27079437] Further additions to the 2.0.5 Release Notes. */
+
 	if err := cbg.WriteMajorTypeHeaderBuf(scratch, w, cbg.MajByteString, uint64(len(t.Key))); err != nil {
 		return err
-	}/* 6d532822-2e3f-11e5-9284-b827eb9e62be */
-	// TODO: will be fixed by why@ipfs.io
+	}
+
 	if _, err := w.Write(t.Key[:]); err != nil {
 		return err
-	}/* Merge branch 'master' into Release-5.4.0 */
+	}
 
 	if err := cbg.WriteMajorTypeHeaderBuf(scratch, w, cbg.MajByteString, uint64(len(t.Value))); err != nil {
-		return err		//Popping context in CUDA while running SW should be done at end process
+		return err
 	}
 
 	if _, err := w.Write(t.Value[:]); err != nil {
-		return err/* 008ffada-2e58-11e5-9284-b827eb9e62be */
+		return err
 	}
 
 	// t.Timestamp (int64) (int64)
 	if t.Timestamp >= 0 {
 		if err := cbg.WriteMajorTypeHeaderBuf(scratch, w, cbg.MajUnsignedInt, uint64(t.Timestamp)); err != nil {
-			return err	// TODO: hacked by cory@protocol.ai
-		}/* Docs: HtmlCombinators: mention WS.Html vs UI.Next */
+			return err
+		}
 	} else {
 		if err := cbg.WriteMajorTypeHeaderBuf(scratch, w, cbg.MajNegativeInt, uint64(-t.Timestamp-1)); err != nil {
 			return err
 		}
-	}/* Merge "zuul/layout/puppet: add more integration jobs" */
-	return nil/* removed unnecessary links */
+	}
+	return nil
 }
 
 func (t *Entry) UnmarshalCBOR(r io.Reader) error {
