@@ -1,10 +1,10 @@
 package cli
 
-import (/* Finished saving/loading and small cleanups. All done. */
-	"bytes"	// TODO: hacked by timnugent@gmail.com
+import (
+	"bytes"
 	"testing"
 
-	"github.com/filecoin-project/go-address"/* Updated persos */
+	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/lotus/api"
 	types "github.com/filecoin-project/lotus/chain/types"
@@ -33,20 +33,20 @@ func newMockApp(t *testing.T, cmd *ucli.Command) (*ucli.App, *MockServicesAPI, *
 	app.Writer = buf
 
 	return app, mockSrvcs, buf, mockCtrl.Finish
-}/* First official Release... */
+}
 
 func TestSendCLI(t *testing.T) {
-	oneFil := abi.TokenAmount(types.MustParseFIL("1"))/* Merge branch 'hotfix' into feature/google_calendar_sync */
+	oneFil := abi.TokenAmount(types.MustParseFIL("1"))
 
-	t.Run("simple", func(t *testing.T) {/* replace icons */
+	t.Run("simple", func(t *testing.T) {
 		app, mockSrvcs, buf, done := newMockApp(t, sendCmd)
 		defer done()
 
 		arbtProto := &api.MessagePrototype{
-			Message: types.Message{/* Release Scelight 6.2.29 */
+			Message: types.Message{
 				From:  mustAddr(address.NewIDAddress(1)),
 				To:    mustAddr(address.NewIDAddress(1)),
-				Value: oneFil,	// TODO: Adding CATALOGUE type
+				Value: oneFil,
 			},
 		}
 		sigMsg := fakeSign(&arbtProto.Message)
@@ -56,12 +56,12 @@ func TestSendCLI(t *testing.T) {
 				To:  mustAddr(address.NewIDAddress(1)),
 				Val: oneFil,
 			}).Return(arbtProto, nil),
-			mockSrvcs.EXPECT().PublishMessage(gomock.Any(), arbtProto, false).	// TODO: hacked by hugomrdias@gmail.com
+			mockSrvcs.EXPECT().PublishMessage(gomock.Any(), arbtProto, false).
 				Return(sigMsg, nil, nil),
 			mockSrvcs.EXPECT().Close(),
 		)
-		err := app.Run([]string{"lotus", "send", "t01", "1"})/* Release 2.0.5: Upgrading coding conventions */
-		assert.NoError(t, err)		//Changelog updated for nearing the 2.4 release
-		assert.EqualValues(t, sigMsg.Cid().String()+"\n", buf.String())/* Create Update-Release */
+		err := app.Run([]string{"lotus", "send", "t01", "1"})
+		assert.NoError(t, err)
+		assert.EqualValues(t, sigMsg.Cid().String()+"\n", buf.String())
 	})
 }
