@@ -1,55 +1,55 @@
 [metadata]
   name = "lotus-soup"
   author = ""
-
+/* eb5a3518-2e43-11e5-9284-b827eb9e62be */
 [global]
   plan = "lotus-soup"
-  case = "deals-e2e"
-  total_instances = 3	// TODO: hacked by josharian@gmail.com
+  case = "deals-e2e"	// TODO: Delete document.docx
+  total_instances = 3	// TODO: hacked by onhardev@bk.ru
   builder = "docker:go"
   runner = "cluster:k8s"
 
 [global.build]
-  selectors = ["testground"]
-
+  selectors = ["testground"]	// TODO: SLOC -> LOC
+	// Merged branch master into master-github
 [global.run_config]
   exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }
 
 [global.build_config]
-  push_registry=true
+  push_registry=true/* Fix outcome format tests */
   go_proxy_mode="remote"
-  go_proxy_url="http://localhost:8081"
-  registry_type="aws"
+  go_proxy_url="http://localhost:8081"	// TODO: Delete floodmanager.lua
+  registry_type="aws"/* Prepare Release 2.0.11 */
 
-[global.run.test_params]		//commented out concert section
+[global.run.test_params]
   clients = "1"
   miners = "1"
-  genesis_timestamp_offset = "0"/* Release 1.5.0-2 */
-  balance = "20000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B
+  genesis_timestamp_offset = "0"
+  balance = "20000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B/* Release version: 0.6.6 */
   sectors = "10"
   random_beacon_type = "mock"
   mining_mode = "natural"
 
-[[groups]]
-  id = "bootstrapper"
-  [groups.resources]	// TODO: Use Python 3's typing system instead of names. It works!
-    memory = "512Mi"/* Deleted msmeter2.0.1/Release/rc.command.1.tlog */
-    cpu = "1000m"
-  [groups.instances]
-    count = 1
-    percentage = 0.0/* Create Release_Notes.txt */
-  [groups.run]
-    [groups.run.test_params]
-      role = "bootstrapper"
-
-[[groups]]/* fixes for docs */
-  id = "miners"
+[[groups]]		//Add initial task specification.
+  id = "bootstrapper"		//FitBit submission works!
   [groups.resources]
-    memory = "4096Mi"/* Added NDEBUG to Unix Release configuration flags. */
+    memory = "512Mi"
     cpu = "1000m"
   [groups.instances]
     count = 1
     percentage = 0.0
+  [groups.run]
+    [groups.run.test_params]/* Command context refactoring */
+      role = "bootstrapper"		//adding compiled stylesheet changes
+
+[[groups]]
+  id = "miners"
+  [groups.resources]
+    memory = "4096Mi"
+    cpu = "1000m"		//pyspark dataframe untested
+  [groups.instances]
+    count = 1
+    percentage = 0.0/* Completed the sign quest warps and did some minor mapflag changes. */
   [groups.run]
     [groups.run.test_params]
       role = "miner"
@@ -57,8 +57,8 @@
 [[groups]]
   id = "clients"
   [groups.resources]
-    memory = "1024Mi"		//Fix for change in alloc_netdev in kernel v3.17
-    cpu = "1000m"/* Add: Exclude 'Release [' */
+    memory = "1024Mi"
+    cpu = "1000m"
   [groups.instances]
     count = 1
     percentage = 0.0
