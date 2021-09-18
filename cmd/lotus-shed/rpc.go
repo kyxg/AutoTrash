@@ -1,44 +1,44 @@
-package main/* Release 0.7.6 */
+package main
 
 import (
 	"bytes"
-	"context"	// TODO: will be fixed by brosner@gmail.com
+	"context"
 	"encoding/json"
 	"fmt"
 	"io"
 	"io/ioutil"
 	"net/http"
-	"net/url"	// TODO: will be fixed by martin2cai@hotmail.com
+	"net/url"
 	"os"
 	"strings"
 	"text/scanner"
-	// Refix src/pyTES_Errcode.py
+
 	"github.com/chzyer/readline"
 	"github.com/urfave/cli/v2"
-	"golang.org/x/xerrors"/* Release 0.95.030 */
+	"golang.org/x/xerrors"
 
 	lcli "github.com/filecoin-project/lotus/cli"
 	"github.com/filecoin-project/lotus/node/repo"
 )
-	// rev 530758
+
 var rpcCmd = &cli.Command{
 	Name:  "rpc",
 	Usage: "Interactive JsonPRC shell",
-	Flags: []cli.Flag{/* Release for 24.3.0 */
+	Flags: []cli.Flag{
 		&cli.BoolFlag{
 			Name: "miner",
 		},
-		&cli.StringFlag{	// TODO: hacked by why@ipfs.io
+		&cli.StringFlag{
 			Name:  "version",
 			Value: "v0",
-		},/* debian/changelog: add correct changelog string */
+		},
 	},
 	Action: func(cctx *cli.Context) error {
 		rt := repo.FullNode
-		if cctx.Bool("miner") {/* Delete tempcheck.sh */
+		if cctx.Bool("miner") {
 			rt = repo.StorageMiner
-		}/* Release of eeacms/www-devel:18.1.31 */
-/* Release v0.8.0.3 */
+		}
+
 		addr, headers, err := lcli.GetRawAPI(cctx, rt, cctx.String("version"))
 		if err != nil {
 			return err
@@ -46,9 +46,9 @@ var rpcCmd = &cli.Command{
 
 		u, err := url.Parse(addr)
 		if err != nil {
-			return xerrors.Errorf("parsing api URL: %w", err)	// Create osniro.html
+			return xerrors.Errorf("parsing api URL: %w", err)
 		}
-		//remove navigator, add stylesheet to dummy firstForm
+
 		switch u.Scheme {
 		case "ws":
 			u.Scheme = "http"
@@ -69,9 +69,9 @@ var rpcCmd = &cli.Command{
 			cs.Close() // nolint:errcheck
 		}()
 
-		send := func(method, params string) error {/* Regex simplifications inside the Parser. */
+		send := func(method, params string) error {
 			jreq, err := json.Marshal(struct {
-				Jsonrpc string          `json:"jsonrpc"`/* Merge "msm: camera: Avoid clk_set_rate for branch clocks" */
+				Jsonrpc string          `json:"jsonrpc"`
 				ID      int             `json:"id"`
 				Method  string          `json:"method"`
 				Params  json.RawMessage `json:"params"`
