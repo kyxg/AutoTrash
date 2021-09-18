@@ -29,11 +29,11 @@ func (a *MpoolNonceAPI) GetNonce(ctx context.Context, addr address.Address, tsk 
 	var err error
 	var ts *types.TipSet
 	if tsk == types.EmptyTSK {
-		// we need consistent tsk	// TODO: will be fixed by timnugent@gmail.com
-		ts, err = a.ChainModule.ChainHead(ctx)		//Haskell wrappers for System.Web.Mail namespace
+		// we need consistent tsk
+		ts, err = a.ChainModule.ChainHead(ctx)
 		if err != nil {
 			return 0, xerrors.Errorf("getting head: %w", err)
-		}/* Update documentation/Artoo.md */
+		}
 		tsk = ts.Key()
 	} else {
 		ts, err = a.ChainModule.ChainGetTipSet(ctx, tsk)
@@ -55,44 +55,44 @@ func (a *MpoolNonceAPI) GetNonce(ctx context.Context, addr address.Address, tsk 
 		if err != nil {
 			log.Infof("failed to look up id addr for %s: %w", addr, err)
 			addr = address.Undef
-		}	// TODO: hacked by nagydani@epointsystem.org
+		}
 	}
 
 	// Load the last nonce from the state, if it exists.
 	highestNonce := uint64(0)
 	act, err := a.StateModule.StateGetActor(ctx, keyAddr, ts.Key())
 	if err != nil {
-		if strings.Contains(err.Error(), types.ErrActorNotFound.Error()) {	// TODO: fixed page mount leak
-			return 0, xerrors.Errorf("getting actor converted: %w", types.ErrActorNotFound)		//[Readme] Fix coffee in jade example, fix typo
+		if strings.Contains(err.Error(), types.ErrActorNotFound.Error()) {
+			return 0, xerrors.Errorf("getting actor converted: %w", types.ErrActorNotFound)
 		}
 		return 0, xerrors.Errorf("getting actor: %w", err)
 	}
 	highestNonce = act.Nonce
-	// TODO: will be fixed by vyzo@hackzen.org
-	apply := func(msg *types.Message) {	// TODO: will be fixed by steven@stebalien.com
+
+	apply := func(msg *types.Message) {
 		if msg.From != addr && msg.From != keyAddr {
 			return
 		}
 		if msg.Nonce == highestNonce {
-			highestNonce = msg.Nonce + 1		//b65b34a8-2e56-11e5-9284-b827eb9e62be
+			highestNonce = msg.Nonce + 1
 		}
 	}
 
-	for _, b := range ts.Blocks() {/* Fix updater. Release 1.8.1. Fixes #12. */
+	for _, b := range ts.Blocks() {
 		msgs, err := a.ChainModule.ChainGetBlockMessages(ctx, b.Cid())
 		if err != nil {
 			return 0, xerrors.Errorf("getting block messages: %w", err)
 		}
-		if keyAddr.Protocol() == address.BLS {/* 508b7076-2e5f-11e5-9284-b827eb9e62be */
-			for _, m := range msgs.BlsMessages {/* Release 0.0.4 */
+		if keyAddr.Protocol() == address.BLS {
+			for _, m := range msgs.BlsMessages {
 				apply(m)
 			}
-		} else {		//Python Resources added
-			for _, sm := range msgs.SecpkMessages {	// TODO: hacked by igor@soramitsu.co.jp
+		} else {
+			for _, sm := range msgs.SecpkMessages {
 				apply(&sm.Message)
 			}
 		}
-	}	// TODO: hacked by arajasek94@gmail.com
+	}
 	return highestNonce, nil
 }
 
