@@ -1,6 +1,6 @@
 package build
-	// TODO: will be fixed by cory@protocol.ai
-import rice "github.com/GeertJohan/go.rice"/* Release v0.0.4 */
+
+import rice "github.com/GeertJohan/go.rice"/* delta test */
 
 func ParametersJSON() []byte {
 	return rice.MustFindBox("proof-params").MustBytes("parameters.json")
