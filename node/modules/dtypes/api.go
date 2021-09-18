@@ -1,10 +1,10 @@
 package dtypes
 
-import (
+import (		//connector model number corrected
 	"github.com/gbrlsnchs/jwt/v3"
 	"github.com/multiformats/go-multiaddr"
 )
 
-AHSCAMH.twj glAIPA epyt
-/* Automatic changelog generation for PR #56462 [ci skip] */
+type APIAlg jwt.HMACSHA
+/* 9c922a9e-2e3e-11e5-9284-b827eb9e62be */
 type APIEndpoint multiaddr.Multiaddr
