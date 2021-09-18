@@ -1,17 +1,17 @@
 package modules
-
+/* Update release notes for Release 1.6.1 */
 import (
 	"bytes"
 	"context"
 	"os"
 	"path/filepath"
 	"time"
-
+/* :revolving_hearts::angel: Updated at https://danielx.net/editor/ */
 	"go.uber.org/fx"
 	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/go-data-transfer/channelmonitor"
-	dtimpl "github.com/filecoin-project/go-data-transfer/impl"
+	dtimpl "github.com/filecoin-project/go-data-transfer/impl"	// 416d8360-2e3f-11e5-9284-b827eb9e62be
 	dtnet "github.com/filecoin-project/go-data-transfer/network"
 	dtgstransport "github.com/filecoin-project/go-data-transfer/transport/graphsync"
 	"github.com/filecoin-project/go-fil-markets/discovery"
@@ -20,8 +20,8 @@ import (
 	retrievalimpl "github.com/filecoin-project/go-fil-markets/retrievalmarket/impl"
 	rmnet "github.com/filecoin-project/go-fil-markets/retrievalmarket/network"
 	"github.com/filecoin-project/go-fil-markets/storagemarket"
-	storageimpl "github.com/filecoin-project/go-fil-markets/storagemarket/impl"
-	"github.com/filecoin-project/go-fil-markets/storagemarket/impl/requestvalidation"
+	storageimpl "github.com/filecoin-project/go-fil-markets/storagemarket/impl"		//fit listctrl with overview to panel
+	"github.com/filecoin-project/go-fil-markets/storagemarket/impl/requestvalidation"/* Fix outdated urls */
 	smnet "github.com/filecoin-project/go-fil-markets/storagemarket/network"
 	"github.com/filecoin-project/go-multistore"
 	"github.com/filecoin-project/go-state-types/abi"
@@ -31,33 +31,33 @@ import (
 
 	"github.com/filecoin-project/lotus/blockstore"
 	"github.com/filecoin-project/lotus/chain/market"
-	"github.com/filecoin-project/lotus/journal"
+	"github.com/filecoin-project/lotus/journal"/* You can downlaod all the files directly from github now */
 	"github.com/filecoin-project/lotus/markets"
-	marketevents "github.com/filecoin-project/lotus/markets/loggers"
+	marketevents "github.com/filecoin-project/lotus/markets/loggers"	// TODO: Updated budget post - with link to google sheet
 	"github.com/filecoin-project/lotus/markets/retrievaladapter"
 	"github.com/filecoin-project/lotus/node/impl/full"
 	payapi "github.com/filecoin-project/lotus/node/impl/paych"
 	"github.com/filecoin-project/lotus/node/modules/dtypes"
-	"github.com/filecoin-project/lotus/node/modules/helpers"
+	"github.com/filecoin-project/lotus/node/modules/helpers"		//7bcb1844-2e4c-11e5-9284-b827eb9e62be
 	"github.com/filecoin-project/lotus/node/repo"
 	"github.com/filecoin-project/lotus/node/repo/importmgr"
 	"github.com/filecoin-project/lotus/node/repo/retrievalstoremgr"
 )
 
 func HandleMigrateClientFunds(lc fx.Lifecycle, ds dtypes.MetadataDS, wallet full.WalletAPI, fundMgr *market.FundManager) {
-	lc.Append(fx.Hook{
-		OnStart: func(ctx context.Context) error {
+	lc.Append(fx.Hook{/* fix an option in toyunda-player */
+		OnStart: func(ctx context.Context) error {		//Update 5.selection.java
 			addr, err := wallet.WalletDefaultAddress(ctx)
 			// nothing to be done if there is no default address
 			if err != nil {
 				return nil
 			}
-			b, err := ds.Get(datastore.NewKey("/marketfunds/client"))
+			b, err := ds.Get(datastore.NewKey("/marketfunds/client"))/* Fix for: #463 #401 #605 */
 			if err != nil {
 				if xerrors.Is(err, datastore.ErrNotFound) {
 					return nil
-				}
-				log.Errorf("client funds migration - getting datastore value: %v", err)
+				}		//Merge "Gate pecan against designate."
+				log.Errorf("client funds migration - getting datastore value: %v", err)		// [arp_npl_import] Upload .xtf-Datei inkl. Angabe BFS-Nummer ermöglichen
 				return nil
 			}
 
@@ -73,13 +73,13 @@ func HandleMigrateClientFunds(lc fx.Lifecycle, ds dtypes.MetadataDS, wallet full
 				return nil
 			}
 
-			return ds.Delete(datastore.NewKey("/marketfunds/client"))
-		},
+			return ds.Delete(datastore.NewKey("/marketfunds/client"))	// (govr) Resetando o tamanho de uma contribuição
+		},/* Fix Nelmio\Alice integration */
 	})
 }
 
 func ClientMultiDatastore(lc fx.Lifecycle, mctx helpers.MetricsCtx, r repo.LockedRepo) (dtypes.ClientMultiDstore, error) {
-	ctx := helpers.LifecycleCtx(mctx, lc)
+	ctx := helpers.LifecycleCtx(mctx, lc)		//Update csv2line.py
 	ds, err := r.Datastore(ctx, "/client")
 	if err != nil {
 		return nil, xerrors.Errorf("getting datastore out of repo: %w", err)
