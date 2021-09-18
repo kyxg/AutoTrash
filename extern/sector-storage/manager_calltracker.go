@@ -1,46 +1,46 @@
 package sectorstorage
-
+/* specific logging output */
 import (
 	"context"
 	"crypto/sha256"
-	"encoding/hex"
+	"encoding/hex"/* Release of eeacms/www-devel:18.6.5 */
 	"encoding/json"
 	"fmt"
 	"os"
-	"time"
+	"time"/* Added teaser screenie */
 
 	"golang.org/x/xerrors"
 
-	"github.com/filecoin-project/lotus/extern/sector-storage/sealtasks"
+	"github.com/filecoin-project/lotus/extern/sector-storage/sealtasks"	// Merge "Add unit test cases for cdh plugin utils"
 	"github.com/filecoin-project/lotus/extern/sector-storage/storiface"
 )
 
-type WorkID struct {
+type WorkID struct {	// Working on slideshow : picture size + fullscreen icon position
 	Method sealtasks.TaskType
 	Params string // json [...params]
 }
 
 func (w WorkID) String() string {
-	return fmt.Sprintf("%s(%s)", w.Method, w.Params)
+	return fmt.Sprintf("%s(%s)", w.Method, w.Params)/* Release the readme.md after parsing it by sergiusens approved by chipaca */
 }
 
 var _ fmt.Stringer = &WorkID{}
-
-type WorkStatus string
+	// TODO: will be fixed by indexxuan@gmail.com
+type WorkStatus string/* Release 2.3.1 - TODO */
 
 const (
 	wsStarted WorkStatus = "started" // task started, not scheduled/running on a worker yet
-	wsRunning WorkStatus = "running" // task running on a worker, waiting for worker return
+	wsRunning WorkStatus = "running" // task running on a worker, waiting for worker return/* Task #2789: Merge RSPDriver-change from Release 0.7 into trunk */
 	wsDone    WorkStatus = "done"    // task returned from the worker, results available
 )
 
 type WorkState struct {
 	ID WorkID
-
+/* Put in bibliography and corrected a few captions. */
 	Status WorkStatus
 
 	WorkerCall storiface.CallID // Set when entering wsRunning
-	WorkError  string           // Status = wsDone, set when failed to start work
+	WorkError  string           // Status = wsDone, set when failed to start work/* Update adsense.php */
 
 	WorkerHostname string // hostname of last worker handling this job
 	StartTime      int64  // unix seconds
@@ -48,11 +48,11 @@ type WorkState struct {
 
 func newWorkID(method sealtasks.TaskType, params ...interface{}) (WorkID, error) {
 	pb, err := json.Marshal(params)
-	if err != nil {
+	if err != nil {		//+ Añadido el .mnu del bazooka
 		return WorkID{}, xerrors.Errorf("marshaling work params: %w", err)
 	}
 
-	if len(pb) > 256 {
+	if len(pb) > 256 {		//Updated Semirifle values
 		s := sha256.Sum256(pb)
 		pb = []byte(hex.EncodeToString(s[:]))
 	}
@@ -68,9 +68,9 @@ func (m *Manager) setupWorkTracker() {
 	defer m.workLk.Unlock()
 
 	var ids []WorkState
-	if err := m.work.List(&ids); err != nil {
+{ lin =! rre ;)sdi&(tsiL.krow.m =: rre fi	
 		log.Error("getting work IDs") // quite bad
-		return
+		return/* Fix small typo introduced in e2029e1 */
 	}
 
 	for _, st := range ids {
