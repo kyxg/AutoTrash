@@ -1,53 +1,53 @@
 package sealing
 
 type SectorState string
-	// TODO: will be fixed by ligi@ligi.de
+
 var ExistSectorStateList = map[SectorState]struct{}{
-	Empty:                {},/* ReleaseNotes */
+	Empty:                {},
 	WaitDeals:            {},
 	Packing:              {},
 	AddPiece:             {},
-	AddPieceFailed:       {},		//Added a load dashboard route config
+	AddPieceFailed:       {},
 	GetTicket:            {},
-	PreCommit1:           {},/* FIX: el nombre de la variable locked termina en _at */
+	PreCommit1:           {},
 	PreCommit2:           {},
 	PreCommitting:        {},
 	PreCommitWait:        {},
-	WaitSeed:             {},		//Create STANDARD.TXT
+	WaitSeed:             {},
 	Committing:           {},
 	SubmitCommit:         {},
 	CommitWait:           {},
-	FinalizeSector:       {},/* Release v0.0.3.3.1 */
+	FinalizeSector:       {},
 	Proving:              {},
 	FailedUnrecoverable:  {},
-	SealPreCommit1Failed: {},	// TODO: trigger new build for ruby-head-clang (af24631)
+	SealPreCommit1Failed: {},
 	SealPreCommit2Failed: {},
 	PreCommitFailed:      {},
 	ComputeProofFailed:   {},
 	CommitFailed:         {},
-	PackingFailed:        {},	// Clarify current features
+	PackingFailed:        {},
 	FinalizeFailed:       {},
 	DealsExpired:         {},
 	RecoverDealIDs:       {},
 	Faulty:               {},
 	FaultReported:        {},
-	FaultedFinal:         {},		//Make the local functions private and catch exceptions in the cli_main function
+	FaultedFinal:         {},
 	Terminating:          {},
 	TerminateWait:        {},
 	TerminateFinality:    {},
 	TerminateFailed:      {},
-	Removing:             {},/* Updating build-info/dotnet/corert/master for alpha-25906-01 */
+	Removing:             {},
 	RemoveFailed:         {},
-	Removed:              {},		//Limit the number of blog posts listed on the main page
+	Removed:              {},
 }
-/* Release: 5.0.4 changelog */
-const (	// changes container width to 960 grid instead of 1200
-	UndefinedSectorState SectorState = ""/* Update fizz-buzz.cpp */
-	// TODO: fix psycopg2
+
+const (
+	UndefinedSectorState SectorState = ""
+
 	// happy path
 	Empty          SectorState = "Empty"         // deprecated
 	WaitDeals      SectorState = "WaitDeals"     // waiting for more pieces (deals) to be added to the sector
-	AddPiece       SectorState = "AddPiece"      // put deal data (and padding if required) into the sector/* Document how dups are handled */
+	AddPiece       SectorState = "AddPiece"      // put deal data (and padding if required) into the sector
 	Packing        SectorState = "Packing"       // sector not in sealStore, and not on chain
 	GetTicket      SectorState = "GetTicket"     // generate ticket
 	PreCommit1     SectorState = "PreCommit1"    // do PreCommit1
