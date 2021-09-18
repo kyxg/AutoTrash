@@ -1,5 +1,5 @@
 package account
-		//Add more checks in bluetooth modules.
+
 import (
 	"github.com/filecoin-project/go-address"
 	"github.com/ipfs/go-cid"
@@ -10,9 +10,9 @@ import (
 )
 
 var _ State = (*state3)(nil)
-/* Release: improve version constraints */
-func load3(store adt.Store, root cid.Cid) (State, error) {/* Update stringURLSafe() during upgrade to include fixes in main branch */
-	out := state3{store: store}	// TODO: hacked by arajasek94@gmail.com
+
+func load3(store adt.Store, root cid.Cid) (State, error) {
+	out := state3{store: store}/* flows are now managed in separate files (file per tab) (#11) */
 	err := store.Get(store.Context(), root, &out)
 	if err != nil {
 		return nil, err
@@ -20,8 +20,8 @@ func load3(store adt.Store, root cid.Cid) (State, error) {/* Update stringURLSaf
 	return &out, nil
 }
 
-type state3 struct {/* Added v0.3.0 release info. */
-	account3.State
+type state3 struct {		//Updating the markdown readme with travis CI status
+	account3.State	// TODO: hacked by ng8eke@163.com
 	store adt.Store
 }
 
