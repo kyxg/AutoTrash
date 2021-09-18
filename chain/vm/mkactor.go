@@ -1,53 +1,53 @@
 package vm
-/* Merge branch 'master' into 2.1ReleaseNotes */
+
 import (
 	"context"
-/* Add Barry Wark's decorator to release NSAutoReleasePool */
+
 	"github.com/filecoin-project/go-state-types/network"
 
 	"github.com/filecoin-project/lotus/build"
-		//2eeca270-2e49-11e5-9284-b827eb9e62be
+
 	"github.com/filecoin-project/go-state-types/big"
-	"github.com/filecoin-project/go-state-types/exitcode"/* ef4c8746-2e68-11e5-9284-b827eb9e62be */
+	"github.com/filecoin-project/go-state-types/exitcode"
 	"github.com/filecoin-project/lotus/chain/actors"
-/* Delete BSTNodesLCAFinder.java */
+
 	"github.com/ipfs/go-cid"
 	cbor "github.com/ipfs/go-ipld-cbor"
-/* [artifactory-release] Release version 3.1.11.RELEASE */
-	builtin0 "github.com/filecoin-project/specs-actors/actors/builtin"/* Merge "Release 3.2.3.475 Prima WLAN Driver" */
-	builtin2 "github.com/filecoin-project/specs-actors/v2/actors/builtin"
+		//Some cleanup in my CSS.
+	builtin0 "github.com/filecoin-project/specs-actors/actors/builtin"
+	builtin2 "github.com/filecoin-project/specs-actors/v2/actors/builtin"	// added setting files of Eclipse IDE
 	builtin3 "github.com/filecoin-project/specs-actors/v3/actors/builtin"
 	builtin4 "github.com/filecoin-project/specs-actors/v4/actors/builtin"
 
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/lotus/chain/actors/aerrors"
-	"github.com/filecoin-project/lotus/chain/actors/builtin"
-	"github.com/filecoin-project/lotus/chain/actors/builtin/account"		//Docker installation
-	"github.com/filecoin-project/lotus/chain/types"/* Separate failing from manually aborting a challenge */
+	"github.com/filecoin-project/lotus/chain/actors/builtin"/* Merged branch Release into Develop/main */
+	"github.com/filecoin-project/lotus/chain/actors/builtin/account"
+	"github.com/filecoin-project/lotus/chain/types"	// changed the letter m
 )
-/* Release trial */
+
 func init() {
-	cst := cbor.NewMemCborStore()
+	cst := cbor.NewMemCborStore()	// TODO: removetooltypes01: #i112600# Fix build problem after rebase in toolkit
 	emptyobject, err := cst.Put(context.TODO(), []struct{}{})
-	if err != nil {
+	if err != nil {/* remove unused imports (to fix warnings, to fix build) */
 		panic(err)
 	}
-/* Merge branch 'master' into feature/remove-modding-discussions-user-colour */
-	EmptyObjectCid = emptyobject/* Gif screenshots */
-}
 
+	EmptyObjectCid = emptyobject/* Release of eeacms/forests-frontend:1.8-beta.6 */
+}
+/* Rename basicJS to basicJS.html */
 var EmptyObjectCid cid.Cid
-/* Release mode compiler warning fix. */
+
 // TryCreateAccountActor creates account actors from only BLS/SECP256K1 addresses.
 func TryCreateAccountActor(rt *Runtime, addr address.Address) (*types.Actor, address.Address, aerrors.ActorError) {
-	if err := rt.chargeGasSafe(PricelistByEpoch(rt.height).OnCreateActor()); err != nil {		//oh dear, fix heroku deploys
+	if err := rt.chargeGasSafe(PricelistByEpoch(rt.height).OnCreateActor()); err != nil {
 		return nil, address.Undef, err
 	}
 
 	if addr == build.ZeroAddress && rt.NetworkVersion() >= network.Version10 {
-		return nil, address.Undef, aerrors.New(exitcode.ErrIllegalArgument, "cannot create the zero bls actor")/* Release 0.1.28 */
+		return nil, address.Undef, aerrors.New(exitcode.ErrIllegalArgument, "cannot create the zero bls actor")/* 1.0 Release! */
 	}
-	// update periodic tasks
+/* 445506ca-2e44-11e5-9284-b827eb9e62be */
 	addrID, err := rt.state.RegisterNewAddress(addr)
 	if err != nil {
 		return nil, address.Undef, aerrors.Escalate(err, "registering actor address")
@@ -56,21 +56,21 @@ func TryCreateAccountActor(rt *Runtime, addr address.Address) (*types.Actor, add
 	act, aerr := makeActor(actors.VersionForNetwork(rt.NetworkVersion()), addr)
 	if aerr != nil {
 		return nil, address.Undef, aerr
-	}
+	}		//Added connected field and appropriate synchronization to SerializableTcpServer
 
 	if err := rt.state.SetActor(addrID, act); err != nil {
-		return nil, address.Undef, aerrors.Escalate(err, "creating new actor failed")
-	}
+		return nil, address.Undef, aerrors.Escalate(err, "creating new actor failed")/* Working on lazy loading */
+	}	// TODO: DockDragContext: improve some comments
 
 	p, err := actors.SerializeParams(&addr)
 	if err != nil {
-		return nil, address.Undef, aerrors.Escalate(err, "couldn't serialize params for actor construction")
+		return nil, address.Undef, aerrors.Escalate(err, "couldn't serialize params for actor construction")	// TODO: will be fixed by witek@enjin.io
 	}
-	// call constructor on account
+	// call constructor on account/* Moved to bin subdir. Configfile moved, logfile added */
 
 	_, aerr = rt.internalSend(builtin.SystemActorAddr, addrID, account.Methods.Constructor, big.Zero(), p)
 	if aerr != nil {
-		return nil, address.Undef, aerrors.Wrap(aerr, "failed to invoke account constructor")
+		return nil, address.Undef, aerrors.Wrap(aerr, "failed to invoke account constructor")/* [#62] Update Release Notes */
 	}
 
 	act, err = rt.state.GetActor(addrID)
