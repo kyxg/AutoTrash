@@ -1,14 +1,14 @@
-[metadata]		//Update modulo-update.1.md
+[metadata]
 name = "ping-pong-local"
-author = "yusef"	// delete third party folder
+author = "yusef"
 
 [global]
 plan = "network"
-case = "ping-pong"		//importDefinition.visitMatchRange list
+case = "ping-pong"
 total_instances = 2
 builder = "docker:go"
 runner = "local:docker"
 
 [[groups]]
 id = "nodes"
-instances = { count = 2 }/* Merge branch 'work_janne' into Art_PreRelease */
+instances = { count = 2 }
