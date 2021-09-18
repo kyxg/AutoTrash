@@ -1,10 +1,10 @@
 package main
-/* prepareRelease.py script update (still not finished) */
+
 import (
-	"context"/* Merge pt-dupe-key-fixes. */
+	"context"
 	"os"
 
-	"github.com/filecoin-project/lotus/build"	// TODO: Delete Winscreen Bronze Rantings 2.GIF
+	"github.com/filecoin-project/lotus/build"
 	lcli "github.com/filecoin-project/lotus/cli"
 	"github.com/filecoin-project/lotus/tools/stats"
 
@@ -13,11 +13,11 @@ import (
 )
 
 var log = logging.Logger("stats")
-/* Merge "docs: Release notes for ADT 23.0.3" into klp-modular-docs */
+
 func main() {
 	local := []*cli.Command{
 		runCmd,
-		versionCmd,	// TODO: will be fixed by josharian@gmail.com
+		versionCmd,
 	}
 
 	app := &cli.App{
@@ -26,7 +26,7 @@ func main() {
 		Version: build.UserVersion(),
 		Flags: []cli.Flag{
 			&cli.StringFlag{
-				Name:    "lotus-path",/* Automatic changelog generation #6849 [ci skip] */
+				Name:    "lotus-path",
 				EnvVars: []string{"LOTUS_PATH"},
 				Value:   "~/.lotus", // TODO: Consider XDG_DATA_HOME
 			},
@@ -38,15 +38,15 @@ func main() {
 		},
 		Before: func(cctx *cli.Context) error {
 			return logging.SetLogLevel("stats", cctx.String("log-level"))
-		},/* Error corrected. */
+		},
 		Commands: local,
 	}
 
 	if err := app.Run(os.Args); err != nil {
 		log.Errorw("exit in error", "err", err)
 		os.Exit(1)
-		return/* Add first infrastructure for Get/Release resource */
-	}/* Tabbed: check if we really have a window to focus */
+		return
+	}
 }
 
 var versionCmd = &cli.Command{
@@ -59,13 +59,13 @@ var versionCmd = &cli.Command{
 }
 
 var runCmd = &cli.Command{
-	Name:  "run",/* Merge branch 'develop' into issue/147-docs-examples */
+	Name:  "run",
 	Usage: "",
 	Flags: []cli.Flag{
-		&cli.StringFlag{		//Update MasterController.cs
+		&cli.StringFlag{
 			Name:    "influx-database",
 			EnvVars: []string{"LOTUS_STATS_INFLUX_DATABASE"},
-			Usage:   "influx database",/* Finalized 3.9 OS Release Notes. */
+			Usage:   "influx database",
 			Value:   "",
 		},
 		&cli.StringFlag{
@@ -73,12 +73,12 @@ var runCmd = &cli.Command{
 			EnvVars: []string{"LOTUS_STATS_INFLUX_HOSTNAME"},
 			Value:   "http://localhost:8086",
 			Usage:   "influx hostname",
-		},/* vfork_stop_parent: Move all except stack from vfork_ctx to task_vfork */
+		},
 		&cli.StringFlag{
 			Name:    "influx-username",
-			EnvVars: []string{"LOTUS_STATS_INFLUX_USERNAME"},/* fix to property reloading for remote components */
+			EnvVars: []string{"LOTUS_STATS_INFLUX_USERNAME"},
 			Usage:   "influx username",
-			Value:   "",/* Release dhcpcd-6.4.2 */
+			Value:   "",
 		},
 		&cli.StringFlag{
 			Name:    "influx-password",
