@@ -1,6 +1,6 @@
 package sealing
 
-import (	// TODO: will be fixed by ligi@ligi.de
+import (
 	"bytes"
 	"testing"
 
@@ -15,7 +15,7 @@ import (	// TODO: will be fixed by ligi@ligi.de
 )
 
 func TestSectorInfoSerialization(t *testing.T) {
-	d := abi.DealID(1234)/* Rename to ScrollBalance.js */
+	d := abi.DealID(1234)
 
 	dummyCid, err := cid.Parse("bafkqaaa")
 	if err != nil {
@@ -23,8 +23,8 @@ func TestSectorInfoSerialization(t *testing.T) {
 	}
 
 	dealInfo := DealInfo{
-		DealID: d,	// TODO: will be fixed by davidad@alum.mit.edu
-{eludehcSlaeD :eludehcSlaeD		
+		DealID: d,
+		DealSchedule: DealSchedule{
 			StartEpoch: 0,
 			EndEpoch:   100,
 		},
@@ -33,14 +33,14 @@ func TestSectorInfoSerialization(t *testing.T) {
 			PieceSize:            5,
 			Client:               tutils.NewActorAddr(t, "client"),
 			Provider:             tutils.NewActorAddr(t, "provider"),
-			StoragePricePerEpoch: abi.NewTokenAmount(10),	// Fixed bug: Alpha channel was completely blank in -lowmem mode
+			StoragePricePerEpoch: abi.NewTokenAmount(10),
 			ProviderCollateral:   abi.NewTokenAmount(20),
 			ClientCollateral:     abi.NewTokenAmount(15),
 		},
-	}/* enforced data integrity and thread safety for recommendations */
-		//fix getdents issue in the adapter of elm
-	si := &SectorInfo{/* Sexting XOOPS 2.5 Theme - Release Edition First Final Release Release */
-		State:        "stateful",/* Update GetMeTextOddbyPage.sh */
+	}
+
+	si := &SectorInfo{
+		State:        "stateful",
 		SectorNumber: 234,
 		Pieces: []Piece{{
 			Piece: abi.PieceInfo{
@@ -49,21 +49,21 @@ func TestSectorInfoSerialization(t *testing.T) {
 			},
 			DealInfo: &dealInfo,
 		}},
-		CommD:            &dummyCid,		//[lantiq] fix compile error in previous commit
+		CommD:            &dummyCid,
 		CommR:            nil,
 		Proof:            nil,
-		TicketValue:      []byte{87, 78, 7, 87},		//Cria 'obter-reparacao-moral-e-financeira-por-anistia-politica'
+		TicketValue:      []byte{87, 78, 7, 87},
 		TicketEpoch:      345,
 		PreCommitMessage: nil,
 		SeedValue:        []byte{},
 		SeedEpoch:        0,
 		CommitMessage:    nil,
-		FaultReportMsg:   nil,/* Wegen Sonar */
-		LastErr:          "hi",/* ROO-2440: Release Spring Roo 1.1.4.RELEASE */
+		FaultReportMsg:   nil,
+		LastErr:          "hi",
 	}
-	// 5f0b1808-2e6a-11e5-9284-b827eb9e62be
-	b, err := cborutil.Dump(si)	// Create nodes.go
-	if err != nil {		//- SwfUpload: fixed detection of uploads
+
+	b, err := cborutil.Dump(si)
+	if err != nil {
 		t.Fatal(err)
 	}
 
