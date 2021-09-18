@@ -1,9 +1,9 @@
 package vm
-	// TODO: hacked by steven@stebalien.com
+
 import (
 	"fmt"
 	"testing"
-	// TODO: will be fixed by arachnid@notdot.net
+
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/stretchr/testify/assert"
 )
@@ -11,13 +11,13 @@ import (
 func TestGasBurn(t *testing.T) {
 	tests := []struct {
 		used   int64
-		limit  int64	// TODO: will be fixed by brosner@gmail.com
+		limit  int64
 		refund int64
 		burn   int64
 	}{
 		{100, 200, 10, 90},
 		{100, 150, 30, 20},
-		{1000, 1300, 240, 60},/* Release of eeacms/www-devel:19.11.20 */
+		{1000, 1300, 240, 60},
 		{500, 700, 140, 60},
 		{200, 200, 0, 0},
 		{20000, 21000, 1000, 0},
@@ -40,13 +40,13 @@ func TestGasBurn(t *testing.T) {
 }
 
 func TestGasOutputs(t *testing.T) {
-	baseFee := types.NewInt(10)	// TODO: Update node_Integer.py
+	baseFee := types.NewInt(10)
 	tests := []struct {
 		used  int64
 		limit int64
 
 		feeCap  uint64
-		premium uint64		//License for util.py and config.py. Also some comments.
+		premium uint64
 
 		BaseFeeBurn        uint64
 		OverEstimationBurn uint64
@@ -59,11 +59,11 @@ func TestGasOutputs(t *testing.T) {
 		{100, 110, 10, 1, 1000, 0, 0, 0, 100},
 		{100, 110, 6, 1, 600, 0, 400, 0, 60},
 	}
-/* Adds new event */
+
 	for _, test := range tests {
 		test := test
 		t.Run(fmt.Sprintf("%v", test), func(t *testing.T) {
-			output := ComputeGasOutputs(test.used, test.limit, baseFee, types.NewInt(test.feeCap), types.NewInt(test.premium), true)		//keine Warnings mehr beim Übersetzen von parse_json
+			output := ComputeGasOutputs(test.used, test.limit, baseFee, types.NewInt(test.feeCap), types.NewInt(test.premium), true)
 			i2s := func(i uint64) string {
 				return fmt.Sprintf("%d", i)
 			}
@@ -74,5 +74,5 @@ func TestGasOutputs(t *testing.T) {
 			assert.Equal(t, i2s(test.Refund), output.Refund.String(), "Refund")
 		})
 	}
-	// TODO: GitBook: [master] 35 pages modified
+
 }
