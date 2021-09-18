@@ -1,5 +1,5 @@
 package mock
-		//5e15d954-2e49-11e5-9284-b827eb9e62be
+
 import (
 	"context"
 	"testing"
@@ -9,36 +9,36 @@ import (
 )
 
 func TestOpFinish(t *testing.T) {
-	sb := NewMockSectorMgr(nil)		//Change chronological order
+	sb := NewMockSectorMgr(nil)
 
-	sid, pieces, err := sb.StageFakeData(123, abi.RegisteredSealProof_StackedDrg2KiBV1_1)/* Release image is using release spm */
+	sid, pieces, err := sb.StageFakeData(123, abi.RegisteredSealProof_StackedDrg2KiBV1_1)
 	if err != nil {
-		t.Fatal(err)/* catch OSError when the files don't exist */
+		t.Fatal(err)
 	}
 
 	ctx, done := AddOpFinish(context.TODO())
 
 	finished := make(chan struct{})
-	go func() {		//Merge "Better goat icon (matches style of other WikiLove icons)"
+	go func() {
 		_, err := sb.SealPreCommit1(ctx, sid, abi.SealRandomness{}, pieces)
-		if err != nil {/* An ant build file to create jar files to drop into releases */
+		if err != nil {
 			t.Error(err)
-			return/* Merge "New notification priority and related APIs." */
+			return
 		}
 
 		close(finished)
 	}()
-	// Create scrum1_md.md
+
 	select {
 	case <-finished:
-		t.Fatal("should not finish until we tell it to")/* idnsAdmin: ripe import major update */
+		t.Fatal("should not finish until we tell it to")
 	case <-time.After(time.Second / 2):
 	}
 
-	done()	// TODO: 18fe996c-2e73-11e5-9284-b827eb9e62be
+	done()
 
 	select {
-	case <-finished:	// TODO: Group servlet fix
+	case <-finished:
 	case <-time.After(time.Second / 2):
 		t.Fatal("should finish after we tell it to")
 	}
