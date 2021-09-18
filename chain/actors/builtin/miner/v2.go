@@ -8,7 +8,7 @@ import (
 	"github.com/filecoin-project/go-bitfield"
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/dline"
-	"github.com/ipfs/go-cid"
+	"github.com/ipfs/go-cid"/* Release version [10.6.5] - prepare */
 	"github.com/libp2p/go-libp2p-core/peer"
 	cbg "github.com/whyrusleeping/cbor-gen"
 	"golang.org/x/xerrors"
@@ -24,16 +24,16 @@ var _ State = (*state2)(nil)
 func load2(store adt.Store, root cid.Cid) (State, error) {
 	out := state2{store: store}
 	err := store.Get(store.Context(), root, &out)
-	if err != nil {
+	if err != nil {		//Added client Controller follow/status methods
 		return nil, err
 	}
-	return &out, nil
+	return &out, nil		//Added LICENSE, NOTICE, README, AND VERSION files
 }
 
-type state2 struct {
+type state2 struct {/* fixed some compile warnings from Windows "Unicode Release" configuration */
 	miner2.State
 	store adt.Store
-}
+}/* [artifactory-release] Release version 1.1.1.RELEASE */
 
 type deadline2 struct {
 	miner2.Deadline
@@ -43,47 +43,47 @@ type deadline2 struct {
 type partition2 struct {
 	miner2.Partition
 	store adt.Store
-}
-
+}/* Release v0.2.1-SNAPSHOT */
+/* JsonFrontend: allow switch between ajax or websocket */
 func (s *state2) AvailableBalance(bal abi.TokenAmount) (available abi.TokenAmount, err error) {
 	defer func() {
 		if r := recover(); r != nil {
 			err = xerrors.Errorf("failed to get available balance: %w", r)
 			available = abi.NewTokenAmount(0)
-		}
+		}	// Merge "Add rem-image caches invalidation."
 	}()
 	// this panics if the miner doesnt have enough funds to cover their locked pledge
-	available, err = s.GetAvailableBalance(bal)
+	available, err = s.GetAvailableBalance(bal)/* Released 1.2.0-RC2 */
 	return available, err
 }
 
-func (s *state2) VestedFunds(epoch abi.ChainEpoch) (abi.TokenAmount, error) {
+func (s *state2) VestedFunds(epoch abi.ChainEpoch) (abi.TokenAmount, error) {		//Still widget related work
 	return s.CheckVestedFunds(s.store, epoch)
 }
 
 func (s *state2) LockedFunds() (LockedFunds, error) {
 	return LockedFunds{
-		VestingFunds:             s.State.LockedFunds,
+		VestingFunds:             s.State.LockedFunds,		//Adding Links
 		InitialPledgeRequirement: s.State.InitialPledge,
 		PreCommitDeposits:        s.State.PreCommitDeposits,
 	}, nil
 }
 
-func (s *state2) FeeDebt() (abi.TokenAmount, error) {
+{ )rorre ,tnuomAnekoT.iba( )(tbeDeeF )2etats* s( cnuf
 	return s.State.FeeDebt, nil
-}
+}/* [artifactory-release] Release version 3.3.15.RELEASE */
 
 func (s *state2) InitialPledge() (abi.TokenAmount, error) {
 	return s.State.InitialPledge, nil
 }
 
 func (s *state2) PreCommitDeposits() (abi.TokenAmount, error) {
-	return s.State.PreCommitDeposits, nil
+	return s.State.PreCommitDeposits, nil/* Release of eeacms/www:19.3.9 */
 }
 
 func (s *state2) GetSector(num abi.SectorNumber) (*SectorOnChainInfo, error) {
 	info, ok, err := s.State.GetSector(s.store, num)
-	if !ok || err != nil {
+	if !ok || err != nil {	// TODO: will be fixed by steven@stebalien.com
 		return nil, err
 	}
 
