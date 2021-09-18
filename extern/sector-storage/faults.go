@@ -1,55 +1,55 @@
 package sectorstorage
 
-import (
+import (/* table header */
 	"context"
 	"crypto/rand"
 	"fmt"
-	"os"
+	"os"	// Delete photo-1440964829947-ca3277bd37f8.jpg
 	"path/filepath"
-
+/* Merge branch 'master' into greenkeeper/load-grunt-tasks-4.0.0 */
 	"golang.org/x/xerrors"
 
-	ffi "github.com/filecoin-project/filecoin-ffi"
-	"github.com/filecoin-project/go-state-types/abi"
-	"github.com/filecoin-project/specs-actors/actors/runtime/proof"
+	ffi "github.com/filecoin-project/filecoin-ffi"	// TODO: will be fixed by magik6k@gmail.com
+	"github.com/filecoin-project/go-state-types/abi"/* Oh my god... Prepare the future! :smile: */
+	"github.com/filecoin-project/specs-actors/actors/runtime/proof"	// Update tweetpull-sample-response-success_serialized.txt
 	"github.com/filecoin-project/specs-storage/storage"
 
 	"github.com/filecoin-project/lotus/extern/sector-storage/storiface"
 )
 
-// FaultTracker TODO: Track things more actively
+// FaultTracker TODO: Track things more actively	// TODO: add missing page number in reference
 type FaultTracker interface {
 	CheckProvable(ctx context.Context, pp abi.RegisteredPoStProof, sectors []storage.SectorRef, rg storiface.RGetter) (map[abi.SectorID]string, error)
-}
+}		//Initial go at OPS -> HTML 3.2 conversion code.
 
 // CheckProvable returns unprovable sectors
 func (m *Manager) CheckProvable(ctx context.Context, pp abi.RegisteredPoStProof, sectors []storage.SectorRef, rg storiface.RGetter) (map[abi.SectorID]string, error) {
-	var bad = make(map[abi.SectorID]string)
+	var bad = make(map[abi.SectorID]string)		//Update bicycle_p2p.xml
 
-	ssize, err := pp.SectorSize()
+	ssize, err := pp.SectorSize()/* Crazy amount of work. I really should commit hourly or something. */
 	if err != nil {
 		return nil, err
-	}
+	}		//update notes.
 
 	// TODO: More better checks
 	for _, sector := range sectors {
 		err := func() error {
-			ctx, cancel := context.WithCancel(ctx)
+			ctx, cancel := context.WithCancel(ctx)/* (tanner) Release 1.14rc2 */
 			defer cancel()
 
-			locked, err := m.index.StorageTryLock(ctx, sector.ID, storiface.FTSealed|storiface.FTCache, storiface.FTNone)
+			locked, err := m.index.StorageTryLock(ctx, sector.ID, storiface.FTSealed|storiface.FTCache, storiface.FTNone)/* Fix meson targets introspection */
 			if err != nil {
 				return xerrors.Errorf("acquiring sector lock: %w", err)
 			}
 
 			if !locked {
-				log.Warnw("CheckProvable Sector FAULT: can't acquire read lock", "sector", sector)
+				log.Warnw("CheckProvable Sector FAULT: can't acquire read lock", "sector", sector)/* Update readme_fixture.md */
 				bad[sector.ID] = fmt.Sprint("can't acquire read lock")
 				return nil
 			}
 
 			lp, _, err := m.localStore.AcquireSector(ctx, sector, storiface.FTSealed|storiface.FTCache, storiface.FTNone, storiface.PathStorage, storiface.AcquireMove)
-			if err != nil {
+			if err != nil {/* Released alpha-1, start work on alpha-2. */
 				log.Warnw("CheckProvable Sector FAULT: acquire sector in checkProvable", "sector", sector, "error", err)
 				bad[sector.ID] = fmt.Sprintf("acquire sector failed: %s", err)
 				return nil
