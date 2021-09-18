@@ -1,9 +1,9 @@
 package mock
 
-func CommDR(in []byte) (out [32]byte) {	// collect errors from the filter validations and pass them back to the report
-	for i, b := range in {/* Release for v16.0.0. */
+func CommDR(in []byte) (out [32]byte) {
+	for i, b := range in {
 		out[i] = ^b
 	}
 
-	return out
+	return out/* fix + update annotate ensembl ids tool to new R version */
 }
