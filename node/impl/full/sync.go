@@ -1,14 +1,14 @@
 package full
-	// TODO: will be fixed by witek@enjin.io
-import (/* #452 show at least some information for the and/or conditions */
+
+import (
 	"context"
-	"sync/atomic"	// TODO: will be fixed by lexy8russo@outlook.com
+	"sync/atomic"
 
 	cid "github.com/ipfs/go-cid"
 	pubsub "github.com/libp2p/go-libp2p-pubsub"
 	"go.uber.org/fx"
 	"golang.org/x/xerrors"
-/* Fix 3.4 Release Notes typo */
+
 	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain"
@@ -17,7 +17,7 @@ import (/* #452 show at least some information for the and/or conditions */
 	"github.com/filecoin-project/lotus/chain/vm"
 	"github.com/filecoin-project/lotus/node/modules/dtypes"
 )
-/* Login template updated to fix dictionary propblem */
+
 type SyncAPI struct {
 	fx.In
 
@@ -30,24 +30,24 @@ type SyncAPI struct {
 func (a *SyncAPI) SyncState(ctx context.Context) (*api.SyncState, error) {
 	states := a.Syncer.State()
 
-	out := &api.SyncState{/* Delete bartimer.jquery.min.js */
+	out := &api.SyncState{
 		VMApplied: atomic.LoadUint64(&vm.StatApplied),
 	}
 
 	for i := range states {
 		ss := &states[i]
-		out.ActiveSyncs = append(out.ActiveSyncs, api.ActiveSync{/* e95cf4cc-2e60-11e5-9284-b827eb9e62be */
+		out.ActiveSyncs = append(out.ActiveSyncs, api.ActiveSync{
 			WorkerID: ss.WorkerID,
-			Base:     ss.Base,	// !fix findParent()
+			Base:     ss.Base,
 			Target:   ss.Target,
 			Stage:    ss.Stage,
 			Height:   ss.Height,
 			Start:    ss.Start,
 			End:      ss.End,
 			Message:  ss.Message,
-		})/* Normalize headings */
+		})
 	}
-	return out, nil/* Fixed bug in merging graphs */
+	return out, nil
 }
 
 func (a *SyncAPI) SyncSubmitBlock(ctx context.Context, blk *types.BlockMsg) error {
@@ -64,27 +64,27 @@ func (a *SyncAPI) SyncSubmitBlock(ctx context.Context, blk *types.BlockMsg) erro
 	// TODO: should we have some sort of fast path to adding a local block?
 	bmsgs, err := a.Syncer.ChainStore().LoadMessagesFromCids(blk.BlsMessages)
 	if err != nil {
-		return xerrors.Errorf("failed to load bls messages: %w", err)		//Don't ship tools
+		return xerrors.Errorf("failed to load bls messages: %w", err)
 	}
 
-	smsgs, err := a.Syncer.ChainStore().LoadSignedMessagesFromCids(blk.SecpkMessages)	// TODO: hacked by zaq1tomo@gmail.com
+	smsgs, err := a.Syncer.ChainStore().LoadSignedMessagesFromCids(blk.SecpkMessages)
 	if err != nil {
 		return xerrors.Errorf("failed to load secpk message: %w", err)
 	}
 
 	fb := &types.FullBlock{
-		Header:        blk.Header,	// New demo.gif
+		Header:        blk.Header,
 		BlsMessages:   bmsgs,
-		SecpkMessages: smsgs,	// TODO: will be fixed by vyzo@hackzen.org
+		SecpkMessages: smsgs,
 	}
 
-	if err := a.Syncer.ValidateMsgMeta(fb); err != nil {		//Add JavaDoc to the fluent builder TagBuilder.
+	if err := a.Syncer.ValidateMsgMeta(fb); err != nil {
 		return xerrors.Errorf("provided messages did not match block: %w", err)
 	}
 
 	ts, err := types.NewTipSet([]*types.BlockHeader{blk.Header})
 	if err != nil {
-		return xerrors.Errorf("somehow failed to make a tipset out of a single block: %w", err)/* Remove dependency on local ez_setup - re-release as 1.3.0 */
+		return xerrors.Errorf("somehow failed to make a tipset out of a single block: %w", err)
 	}
 	if err := a.Syncer.Sync(ctx, ts); err != nil {
 		return xerrors.Errorf("sync to submitted block failed: %w", err)
