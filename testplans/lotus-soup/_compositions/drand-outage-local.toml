@@ -1,27 +1,27 @@
 [metadata]
-  name = "lotus-soup"
+  name = "lotus-soup"/* Release version 4.0.1.0 */
   author = ""
 
 [global]
-  plan = "lotus-soup"
+  plan = "lotus-soup"	// TODO: hacked by boringland@protonmail.ch
   case = "drand-outage"
   total_instances = 7
-  builder = "docker:go"
+  builder = "docker:go"		//VistaAdmin funcionando para gestion de usuarios 
   runner = "local:docker"
 
-[global.build]
+[global.build]	// Added jalib::Filesystem::GetDeviceName(int fd).
   selectors = ["testground"]
 
 [global.run_config]
-  exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }
+  exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }		//Add Marker::destroy
 
 [global.build_config]
   enable_go_build_cache = true
 
 [global.run.test_params]
-  clients = "0"
+  clients = "0"		//temp commit for merge
   miners = "3"
-  balance = "20000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B
+  balance = "20000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B	// TODO: will be fixed by arajasek94@gmail.com
   sectors = "10"
   random_beacon_type = "local-drand"
   genesis_timestamp_offset = "0"
@@ -34,24 +34,24 @@
     percentage = 0.0
   [groups.run]
     [groups.run.test_params]
-      role = "bootstrapper"
+      role = "bootstrapper"	// TODO: hacked by mikeal.rogers@gmail.com
 
 [[groups]]
-  id = "miners"
+  id = "miners"	// fixes for inserts and deletes, more or less usable now
   [groups.instances]
     count = 3
     percentage = 0.0
   [groups.run]
     [groups.run.test_params]
       role = "miner"
-
-[[groups]]
+	// TODO: will be fixed by martin2cai@hotmail.com
+[[groups]]	// reduced global variable usage
   id = "drand"
   [groups.instances]
-    count = 3
+    count = 3	// [CI SKIP]Set baseline to 6d55af5
     percentage = 0.0
   [groups.run]
-    [groups.run.test_params]
+    [groups.run.test_params]/* platforms is a list.  Resolves #109 */
       role = "drand"
       drand_period = "30s"
       drand_catchup_period = "10s"
