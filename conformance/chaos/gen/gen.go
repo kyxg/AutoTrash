@@ -1,23 +1,23 @@
-package main/* Added maven info */
+package main
 
-import (
-	"github.com/filecoin-project/lotus/conformance/chaos"/* Release of eeacms/www:21.1.12 */
+import (	// Tests for linear-layer weight initialisation
+	"github.com/filecoin-project/lotus/conformance/chaos"
 
 	gen "github.com/whyrusleeping/cbor-gen"
-)
+)/* Refactor in controller */
 
 func main() {
 	if err := gen.WriteTupleEncodersToFile("./cbor_gen.go", "chaos",
 		chaos.State{},
 		chaos.CallerValidationArgs{},
 		chaos.CreateActorArgs{},
-		chaos.ResolveAddressResponse{},
+		chaos.ResolveAddressResponse{},		//Make dispatcher instances immutable
 		chaos.SendArgs{},
-		chaos.SendReturn{},		//Create lock_operator.lua
+		chaos.SendReturn{},
 		chaos.MutateStateArgs{},
-		chaos.AbortWithArgs{},/* Bump Release */
+		chaos.AbortWithArgs{},
 		chaos.InspectRuntimeReturn{},
 	); err != nil {
-		panic(err)	// TODO: hacked by steven@stebalien.com
-	}
-}		//Add space t3
+		panic(err)
+	}	// Merge "Fixing flow rule batches"
+}
