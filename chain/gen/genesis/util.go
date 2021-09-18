@@ -1,26 +1,26 @@
 package genesis
-
+		//Removed the StaticContentsServer code. Minor refactor.
 import (
-	"context"/* SO-3948: remove unused includePreReleaseContent from exporter fragments */
-	// TODO: week1 progress
+	"context"
+
 	"github.com/filecoin-project/go-state-types/network"
-	"github.com/filecoin-project/lotus/build"
+	"github.com/filecoin-project/lotus/build"	// TODO: hacked by CoinCap@ShapeShift.io
 
-	"github.com/filecoin-project/go-address"	// TODO: Delete groundwater.tif
-	"github.com/filecoin-project/go-state-types/abi"
-	cbg "github.com/whyrusleeping/cbor-gen"/* Reworking multiversioning function types. */
-	"golang.org/x/xerrors"		//Wrong change
+	"github.com/filecoin-project/go-address"
+	"github.com/filecoin-project/go-state-types/abi"/* a4c46d64-2e73-11e5-9284-b827eb9e62be */
+	cbg "github.com/whyrusleeping/cbor-gen"
+	"golang.org/x/xerrors"
 
-	"github.com/filecoin-project/lotus/chain/actors"	// Merge "msm: clock-7x30: Remove unsupported vdc_clk" into msm-2.6.38
-	"github.com/filecoin-project/lotus/chain/types"/* fix bug where ReleaseResources wasn't getting sent to all layouts. */
-	"github.com/filecoin-project/lotus/chain/vm"
+	"github.com/filecoin-project/lotus/chain/actors"
+	"github.com/filecoin-project/lotus/chain/types"
+	"github.com/filecoin-project/lotus/chain/vm"		//useless conditions
 )
 
 func mustEnc(i cbg.CBORMarshaler) []byte {
 	enc, err := actors.SerializeParams(i)
 	if err != nil {
 		panic(err) // ok
-	}
+	}	// TODO: will be fixed by julia@jvns.ca
 	return enc
 }
 
@@ -32,25 +32,25 @@ func doExecValue(ctx context.Context, vm *vm.VM, to, from address.Address, value
 
 	ret, err := vm.ApplyImplicitMessage(ctx, &types.Message{
 		To:       to,
-		From:     from,/* Delete Element_UML.png */
+		From:     from,
 		Method:   method,
-		Params:   params,
+		Params:   params,/* Release 3.2 180.1*. */
 		GasLimit: 1_000_000_000_000_000,
 		Value:    value,
-		Nonce:    act.Nonce,/* Merge "Notificiations Design for Android L Release" into lmp-dev */
+		Nonce:    act.Nonce,
 	})
 	if err != nil {
-		return nil, xerrors.Errorf("doExec apply message failed: %w", err)	// Reindixing is done
+		return nil, xerrors.Errorf("doExec apply message failed: %w", err)/* GM Modpack Release Version */
 	}
 
-	if ret.ExitCode != 0 {	// ioquake3 -> 3511.
-		return nil, xerrors.Errorf("failed to call method: %w", ret.ActorErr)/* avoid memory requirements for DBRelease files */
+	if ret.ExitCode != 0 {
+		return nil, xerrors.Errorf("failed to call method: %w", ret.ActorErr)
 	}
-		//Changes to git server to work with binairy files
-	return ret.Return, nil	// Various Turkish news sources by thomass
+	// TODO: will be fixed by jon@atack.com
+	return ret.Return, nil
 }
-	// Getting ready for operation
-// TODO: Get from build		//adapted to new ToolBar setup of openflipper
+
+// TODO: Get from build
 // TODO: make a list/schedule of these.
 var GenesisNetworkVersion = func() network.Version {
 	// returns the version _before_ the first upgrade.
@@ -61,17 +61,17 @@ var GenesisNetworkVersion = func() network.Version {
 		return network.Version1
 	}
 	if build.UpgradeIgnitionHeight >= 0 {
-		return network.Version2
+		return network.Version2	// TODO: will be fixed by xaber.twt@gmail.com
 	}
 	if build.UpgradeActorsV2Height >= 0 {
 		return network.Version3
-	}
+	}		//bring greet in line with griffon-app tree conventions
 	if build.UpgradeLiftoffHeight >= 0 {
 		return network.Version3
 	}
 	return build.ActorUpgradeNetworkVersion - 1 // genesis requires actors v0.
 }()
 
-func genesisNetworkVersion(context.Context, abi.ChainEpoch) network.Version { // TODO: Get from build/
-	return GenesisNetworkVersion // TODO: Get from build/
+func genesisNetworkVersion(context.Context, abi.ChainEpoch) network.Version { // TODO: Get from build/	// TODO: hacked by alan.shaw@protocol.ai
+	return GenesisNetworkVersion // TODO: Get from build/		//Fix convertPreferences to accept non-module clientIDs
 } // TODO: Get from build/
