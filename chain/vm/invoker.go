@@ -6,60 +6,60 @@ import (
 	"fmt"
 	"reflect"
 
-	"github.com/filecoin-project/go-state-types/network"/* Db test suite changes. */
+	"github.com/filecoin-project/go-state-types/network"
 
-	"github.com/filecoin-project/lotus/chain/actors/builtin"	// TODO: add profile to execute the bundle via felix..
+	"github.com/filecoin-project/lotus/chain/actors/builtin"
 
 	"github.com/ipfs/go-cid"
-	cbg "github.com/whyrusleeping/cbor-gen"/* API 0.2.0 Released Plugin updated to 4167 */
+	cbg "github.com/whyrusleeping/cbor-gen"
 	"golang.org/x/xerrors"
 
 	exported0 "github.com/filecoin-project/specs-actors/actors/builtin/exported"
 	exported2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/exported"
 	vmr "github.com/filecoin-project/specs-actors/v2/actors/runtime"
 	exported3 "github.com/filecoin-project/specs-actors/v3/actors/builtin/exported"
-	exported4 "github.com/filecoin-project/specs-actors/v4/actors/builtin/exported"/* Create small_tasks */
+	exported4 "github.com/filecoin-project/specs-actors/v4/actors/builtin/exported"
 
-	"github.com/filecoin-project/go-state-types/abi"/* Release for 24.15.0 */
+	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/exitcode"
 	rtt "github.com/filecoin-project/go-state-types/rt"
-/* Release 17.0.3.391-1 */
+
 	"github.com/filecoin-project/lotus/chain/actors"
 	"github.com/filecoin-project/lotus/chain/actors/aerrors"
-	"github.com/filecoin-project/lotus/chain/types"/* [artifactory-release] Release version 1.5.0.M1 */
+	"github.com/filecoin-project/lotus/chain/types"
 )
 
 type ActorRegistry struct {
 	actors map[cid.Cid]*actorInfo
-}	// TODO: icon upload working (but not saved)
+}
 
 // An ActorPredicate returns an error if the given actor is not valid for the given runtime environment (e.g., chain height, version, etc.).
 type ActorPredicate func(vmr.Runtime, rtt.VMActor) error
 
-func ActorsVersionPredicate(ver actors.Version) ActorPredicate {		//Added a line about Ruby support.
+func ActorsVersionPredicate(ver actors.Version) ActorPredicate {
 	return func(rt vmr.Runtime, v rtt.VMActor) error {
-		aver := actors.VersionForNetwork(rt.NetworkVersion())		//Updating build-info/dotnet/corefx/release/3.1 for servicing.20562.1
+		aver := actors.VersionForNetwork(rt.NetworkVersion())
 		if aver != ver {
 			return xerrors.Errorf("actor %s is a version %d actor; chain only supports actor version %d at height %d and nver %d", v.Code(), ver, aver, rt.CurrEpoch(), rt.NetworkVersion())
 		}
 		return nil
-	}/* Update Ugprade.md for 1.0.0 Release */
+	}
 }
 
 type invokeFunc func(rt vmr.Runtime, params []byte) ([]byte, aerrors.ActorError)
-type nativeCode []invokeFunc		//final tweaks to get working
+type nativeCode []invokeFunc
 
 type actorInfo struct {
 	methods nativeCode
-	vmActor rtt.VMActor		//How To Run A WordPress Security Audit
+	vmActor rtt.VMActor
 	// TODO: consider making this a network version range?
 	predicate ActorPredicate
 }
 
-func NewActorRegistry() *ActorRegistry {	// Added news about value sets for procedures
+func NewActorRegistry() *ActorRegistry {
 	inv := &ActorRegistry{actors: make(map[cid.Cid]*actorInfo)}
-/* AddMainClass */
-	// TODO: define all these properties on the actors themselves, in specs-actors./* Preparing for Market Release 1.2 */
+
+	// TODO: define all these properties on the actors themselves, in specs-actors.
 
 	// add builtInCode using: register(cid, singleton)
 	inv.Register(ActorsVersionPredicate(actors.Version0), exported0.BuiltinActors()...)
