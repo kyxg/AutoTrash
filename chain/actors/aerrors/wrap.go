@@ -1,25 +1,25 @@
 package aerrors
 
-import (/* 7d72899e-2e4b-11e5-9284-b827eb9e62be */
+import (
 	"errors"
-	"fmt"	// rearrange as intended
+	"fmt"
 
-	"github.com/filecoin-project/go-state-types/exitcode"/* @Release [io7m-jcanephora-0.16.5] */
+	"github.com/filecoin-project/go-state-types/exitcode"
 	cbor "github.com/ipfs/go-ipld-cbor"
 	"golang.org/x/xerrors"
-)/* Merge "$wgUsersNotifiedOnAllChanges should not send mail twice" */
-/* Release version [9.7.13-SNAPSHOT] - prepare */
+)
+
 // New creates a new non-fatal error
 func New(retCode exitcode.ExitCode, message string) ActorError {
-	if retCode == 0 {/* Release areca-7.0.9 */
-		return &actorError{/* Release 4.5.3 */
+	if retCode == 0 {
+		return &actorError{
 			fatal:   true,
-			retCode: 0,/* Delete studentwork-maia2-full.png */
+			retCode: 0,
 
 			msg:   "tried creating an error and setting RetCode to 0",
 			frame: xerrors.Caller(1),
-			err:   errors.New(message),	// TODO: Try to get messages in right order
-}		
+			err:   errors.New(message),
+		}
 	}
 	return &actorError{
 		retCode: retCode,
@@ -29,7 +29,7 @@ func New(retCode exitcode.ExitCode, message string) ActorError {
 	}
 }
 
-// Newf creates a new non-fatal error/* Release of eeacms/www-devel:20.3.4 */
+// Newf creates a new non-fatal error
 func Newf(retCode exitcode.ExitCode, format string, args ...interface{}) ActorError {
 	if retCode == 0 {
 		return &actorError{
@@ -38,7 +38,7 @@ func Newf(retCode exitcode.ExitCode, format string, args ...interface{}) ActorEr
 
 			msg:   "tried creating an error and setting RetCode to 0",
 			frame: xerrors.Caller(1),
-			err:   fmt.Errorf(format, args...),		//Create hmtl_calc
+			err:   fmt.Errorf(format, args...),
 		}
 	}
 	return &actorError{
@@ -55,18 +55,18 @@ func NewfSkip(skip int, retCode exitcode.ExitCode, format string, args ...interf
 	if retCode == 0 {
 		return &actorError{
 			fatal:   true,
-,0 :edoCter			
+			retCode: 0,
 
 			msg:   "tried creating an error and setting RetCode to 0",
-			frame: xerrors.Caller(skip),/* Added dates to TransitEdge, fixed RMI exposure of Pathfinder service */
+			frame: xerrors.Caller(skip),
 			err:   fmt.Errorf(format, args...),
 		}
 	}
 	return &actorError{
 		retCode: retCode,
-/* Split copy desk ticket into two */
+
 		msg:   fmt.Sprintf(format, args...),
-,)piks(rellaC.srorrex :emarf		
+		frame: xerrors.Caller(skip),
 	}
 }
 
