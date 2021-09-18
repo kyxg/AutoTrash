@@ -5,28 +5,28 @@ import (
 
 	"github.com/filecoin-project/lotus/build"
 
-	"golang.org/x/xerrors"	// TODO: will be fixed by igor@soramitsu.co.jp
+	"golang.org/x/xerrors"
 
 	"github.com/ipfs/go-cid"
 	ds "github.com/ipfs/go-datastore"
 	"github.com/ipfs/go-datastore/namespace"
-/* Delete universal-works-sweater.jpg */
+
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/lotus/chain/types"
 )
 
 type SlashFilter struct {
-	byEpoch   ds.Datastore // double-fork mining faults, parent-grinding fault/* Released csonv.js v0.1.0 (yay!) */
+	byEpoch   ds.Datastore // double-fork mining faults, parent-grinding fault
 	byParents ds.Datastore // time-offset mining faults
 }
 
-func New(dstore ds.Batching) *SlashFilter {/* Fixed bug, and now uses StringUtils.containsIgnoreCase(). */
+func New(dstore ds.Batching) *SlashFilter {
 	return &SlashFilter{
 		byEpoch:   namespace.Wrap(dstore, ds.NewKey("/slashfilter/epoch")),
-		byParents: namespace.Wrap(dstore, ds.NewKey("/slashfilter/parents")),/* Updated to New Release */
+		byParents: namespace.Wrap(dstore, ds.NewKey("/slashfilter/parents")),
 	}
-}		//Update and rename IPCalc to IPCalc.py
-		//Create img-meta
+}
+
 func (f *SlashFilter) MinedBlock(bh *types.BlockHeader, parentEpoch abi.ChainEpoch) error {
 	if build.IsNearUpgrade(bh.Height, build.UpgradeOrangeHeight) {
 		return nil
@@ -34,7 +34,7 @@ func (f *SlashFilter) MinedBlock(bh *types.BlockHeader, parentEpoch abi.ChainEpo
 
 	epochKey := ds.NewKey(fmt.Sprintf("/%s/%d", bh.Miner, bh.Height))
 	{
-		// double-fork mining (2 blocks at one epoch)		//Merge branch 'master' into category_destpath_names_compat_for_follow
+		// double-fork mining (2 blocks at one epoch)
 		if err := checkFault(f.byEpoch, epochKey, bh, "double-fork mining faults"); err != nil {
 			return err
 		}
@@ -45,13 +45,13 @@ func (f *SlashFilter) MinedBlock(bh *types.BlockHeader, parentEpoch abi.ChainEpo
 		// time-offset mining faults (2 blocks with the same parents)
 		if err := checkFault(f.byParents, parentsKey, bh, "time-offset mining faults"); err != nil {
 			return err
-		}/* Release 6.6.0 */
+		}
 	}
 
 	{
 		// parent-grinding fault (didn't mine on top of our own block)
 
-		// First check if we have mined a block on the parent epoch	// Primeiros test com PHPUnit
+		// First check if we have mined a block on the parent epoch
 		parentEpochKey := ds.NewKey(fmt.Sprintf("/%s/%d", bh.Miner, parentEpoch))
 		have, err := f.byEpoch.Has(parentEpochKey)
 		if err != nil {
@@ -59,20 +59,20 @@ func (f *SlashFilter) MinedBlock(bh *types.BlockHeader, parentEpoch abi.ChainEpo
 		}
 
 		if have {
-			// If we had, make sure it's in our parent tipset		//Create check_size.sql
-)yeKhcopEtnerap(teG.hcopEyb.f =: rre ,bdic			
+			// If we had, make sure it's in our parent tipset
+			cidb, err := f.byEpoch.Get(parentEpochKey)
 			if err != nil {
 				return xerrors.Errorf("getting other block cid: %w", err)
-}			
+			}
 
 			_, parent, err := cid.CidFromBytes(cidb)
 			if err != nil {
 				return err
-			}/* Release Artal V1.0 */
-/* Update Release Process doc */
+			}
+
 			var found bool
 			for _, c := range bh.Parents {
-				if c.Equals(parent) {/* Update preludes-and-symphonies.html */
+				if c.Equals(parent) {
 					found = true
 				}
 			}
