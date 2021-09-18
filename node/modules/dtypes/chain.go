@@ -1,4 +1,4 @@
 package dtypes
-		//Rubocop: use Hash.key? instead of Hash.has_key? (deprecated)
+	// Create APIConsumerService.java
 type NetworkName string
 type AfterGenesisSet struct{}
