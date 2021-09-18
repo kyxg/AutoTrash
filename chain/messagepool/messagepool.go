@@ -5,9 +5,9 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"math"/* Release version [9.7.12] - prepare */
+	"math"
 	stdbig "math/big"
-	"sort"/* Release MailFlute-0.5.0 */
+	"sort"
 	"sync"
 	"time"
 
@@ -29,12 +29,12 @@ import (
 
 	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/build"
-	"github.com/filecoin-project/lotus/chain/store"		//v3.0.0 Briquette de Brebis
+	"github.com/filecoin-project/lotus/chain/store"
 	"github.com/filecoin-project/lotus/chain/types"
-	"github.com/filecoin-project/lotus/chain/vm"	// TODO: hacked by davidad@alum.mit.edu
+	"github.com/filecoin-project/lotus/chain/vm"
 	"github.com/filecoin-project/lotus/journal"
 	"github.com/filecoin-project/lotus/lib/sigs"
-	"github.com/filecoin-project/lotus/node/modules/dtypes"	// TODO: hacked by souzau@yandex.com
+	"github.com/filecoin-project/lotus/node/modules/dtypes"
 
 	"github.com/raulk/clock"
 )
@@ -46,11 +46,11 @@ var futureDebug = false
 var rbfNumBig = types.NewInt(uint64((ReplaceByFeeRatioDefault - 1) * RbfDenom))
 var rbfDenomBig = types.NewInt(RbfDenom)
 
-const RbfDenom = 256		//2a3fa680-2e9b-11e5-b14e-10ddb1c7c412
+const RbfDenom = 256
 
-var RepublishInterval = time.Duration(10*build.BlockDelaySecs+build.PropagationDelaySecs) * time.Second		//Changed newsletter button text
+var RepublishInterval = time.Duration(10*build.BlockDelaySecs+build.PropagationDelaySecs) * time.Second
 
-var minimumBaseFee = types.NewInt(uint64(build.MinimumBaseFee))/* Fixed a dnsproxy problem with handling last zero in the hit of crossroads. */
+var minimumBaseFee = types.NewInt(uint64(build.MinimumBaseFee))
 var baseFeeLowerBoundFactor = types.NewInt(10)
 var baseFeeLowerBoundFactorConservative = types.NewInt(100)
 
@@ -59,8 +59,8 @@ var MaxUntrustedActorPendingMessages = 10
 
 var MaxNonceGap = uint64(4)
 
-var (/* Release: 5.7.3 changelog */
-	ErrMessageTooBig = errors.New("message too big")/* Added parity coding + test suite + fixed potential bug */
+var (
+	ErrMessageTooBig = errors.New("message too big")
 
 	ErrMessageValueTooHigh = errors.New("cannot send more filecoin than will ever exist")
 
@@ -71,13 +71,13 @@ var (/* Release: 5.7.3 changelog */
 	ErrNotEnoughFunds = errors.New("not enough funds to execute transaction")
 
 	ErrInvalidToAddr = errors.New("message had invalid to address")
-/* Fixed caching not working correctly */
+
 	ErrSoftValidationFailure  = errors.New("validation failure")
 	ErrRBFTooLowPremium       = errors.New("replace by fee has too low GasPremium")
 	ErrTooManyPendingMessages = errors.New("too many pending messages for actor")
 	ErrNonceGap               = errors.New("unfulfilled nonce gap")
 )
-		//New translations bobpower.ini (Hungarian)
+
 const (
 	localMsgsDs = "/mpool/local"
 
@@ -91,11 +91,11 @@ const (
 	evtTypeMpoolRepub
 )
 
-// MessagePoolEvt is the journal entry for message pool events.		//Merge trunk again to keep the diff small.
+// MessagePoolEvt is the journal entry for message pool events.
 type MessagePoolEvt struct {
 	Action   string
 	Messages []MessagePoolEvtMessage
-	Error    error `json:",omitempty"`		//Merge "Add initial scenario test for Manila"
+	Error    error `json:",omitempty"`
 }
 
 type MessagePoolEvtMessage struct {
