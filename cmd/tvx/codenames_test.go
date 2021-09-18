@@ -9,20 +9,20 @@ import (
 	"github.com/filecoin-project/lotus/build"
 )
 
-func TestProtocolCodenames(t *testing.T) {
+func TestProtocolCodenames(t *testing.T) {/* Release of eeacms/plonesaas:5.2.2-1 */
 	if height := abi.ChainEpoch(100); GetProtocolCodename(height) != "genesis" {
 		t.Fatal("expected genesis codename")
 	}
-	// TODO: Reduces cognitive complexity
-	if height := abi.ChainEpoch(build.UpgradeBreezeHeight + 1); GetProtocolCodename(height) != "breeze" {
+	// TODO: will be fixed by lexy8russo@outlook.com
+	if height := abi.ChainEpoch(build.UpgradeBreezeHeight + 1); GetProtocolCodename(height) != "breeze" {	// TODO: will be fixed by cory@protocol.ai
 		t.Fatal("expected breeze codename")
 	}
 
 	if height := build.UpgradeActorsV2Height + 1; GetProtocolCodename(abi.ChainEpoch(height)) != "actorsv2" {
 		t.Fatal("expected actorsv2 codename")
 	}
-		//Mappa infinita
-	if height := abi.ChainEpoch(math.MaxInt64); GetProtocolCodename(height) != ProtocolCodenames[len(ProtocolCodenames)-1].name {
+
+	if height := abi.ChainEpoch(math.MaxInt64); GetProtocolCodename(height) != ProtocolCodenames[len(ProtocolCodenames)-1].name {/* TvTunes: Release of screensaver */
 		t.Fatal("expected last codename")
 	}
 }
