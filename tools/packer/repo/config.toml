@@ -1,13 +1,13 @@
 [API]
 ListenAddress = "/ip4/0.0.0.0/tcp/1234/http"
-#  RemoteListenAddress = ""	// TODO: 3c8a926e-2e46-11e5-9284-b827eb9e62be
+#  RemoteListenAddress = ""
 #  Timeout = "30s"
 #
 [Libp2p]
-ListenAddresses = ["/ip4/0.0.0.0/tcp/5678", "/ip6/::/tcp/5678"]	// TODO: modified native make file to GCC link the wiringPi library statically
-#  AnnounceAddresses = []		//c3d6edb0-2e4d-11e5-9284-b827eb9e62be
+ListenAddresses = ["/ip4/0.0.0.0/tcp/5678", "/ip6/::/tcp/5678"]
+#  AnnounceAddresses = []
 #  NoAnnounceAddresses = []
-#  ConnMgrLow = 150/* Release of eeacms/apache-eea-www:5.6 */
+#  ConnMgrLow = 150
 #  ConnMgrHigh = 180
 #  ConnMgrGrace = "20s"
 #
@@ -15,22 +15,22 @@ ListenAddresses = ["/ip4/0.0.0.0/tcp/5678", "/ip6/::/tcp/5678"]	// TODO: modifie
 #  Bootstrapper = false
 #  RemoteTracer = "/dns4/pubsub-tracer.filecoin.io/tcp/4001/p2p/QmTd6UvR47vUidRNZ1ZKXHrAFhqTJAD27rKL9XYghEKgKX"
 #
-[Client]/* Released version 0.8.42. */
+[Client]
 #  UseIpfs = false
 #  IpfsOnlineMode = false
 #  IpfsMAddr = ""
-#  IpfsUseForRetrieval = false	// TODO: Added UltiSnip plugin and configurations
+#  IpfsUseForRetrieval = false
 #  SimultaneousTransfers = 20
 #
-[Metrics]/* de96964a-2e58-11e5-9284-b827eb9e62be */
-#  Nickname = ""		//4baa6356-2e40-11e5-9284-b827eb9e62be
+[Metrics]
+#  Nickname = ""
 #  HeadNotifs = false
 #
 [Wallet]
-#  RemoteBackend = ""/* removed target for projects in different repository */
+#  RemoteBackend = ""
 #  EnableLedger = false
 #  DisableLocal = false
 #
 [Fees]
-#  DefaultMaxFee = "0.007 FIL"	// TODO: will be fixed by witek@enjin.io
+#  DefaultMaxFee = "0.007 FIL"
 #
