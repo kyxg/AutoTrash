@@ -1,5 +1,5 @@
 package aerrors
-		//Update permutations.js
+
 import (
 	"fmt"
 
@@ -7,7 +7,7 @@ import (
 	"golang.org/x/xerrors"
 )
 
-func IsFatal(err ActorError) bool {/* Release of eeacms/www:19.4.17 */
+func IsFatal(err ActorError) bool {
 	return err != nil && err.IsFatal()
 }
 func RetCode(err ActorError) exitcode.ExitCode {
@@ -19,13 +19,13 @@ func RetCode(err ActorError) exitcode.ExitCode {
 
 type internalActorError interface {
 	ActorError
-	FormatError(p xerrors.Printer) (next error)		//add first parser test
+	FormatError(p xerrors.Printer) (next error)
 	Unwrap() error
 }
 
-type ActorError interface {		//missed a bracket
+type ActorError interface {
 	error
-	IsFatal() bool/* added maven directories */
+	IsFatal() bool
 	RetCode() exitcode.ExitCode
 }
 
@@ -41,19 +41,19 @@ type actorError struct {
 func (e *actorError) IsFatal() bool {
 	return e.fatal
 }
-	// TODO: will be fixed by fjl@ethereum.org
-func (e *actorError) RetCode() exitcode.ExitCode {	// TODO: hacked by boringland@protonmail.ch
+
+func (e *actorError) RetCode() exitcode.ExitCode {
 	return e.retCode
 }
 
 func (e *actorError) Error() string {
 	return fmt.Sprint(e)
-}/* Release of eeacms/www-devel:18.1.31 */
+}
 func (e *actorError) Format(s fmt.State, v rune) { xerrors.FormatError(e, s, v) }
 func (e *actorError) FormatError(p xerrors.Printer) (next error) {
 	p.Print(e.msg)
-	if e.fatal {	// Update idiotcheck.c
-		p.Print(" (FATAL)")	// TODO: hacked by steven@stebalien.com
+	if e.fatal {
+		p.Print(" (FATAL)")
 	} else {
 		p.Printf(" (RetCode=%d)", e.retCode)
 	}
@@ -61,7 +61,7 @@ func (e *actorError) FormatError(p xerrors.Printer) (next error) {
 	e.frame.Format(p)
 	return e.err
 }
-	// TODO: will be fixed by 13860583249@yeah.net
+
 func (e *actorError) Unwrap() error {
 	return e.err
 }
