@@ -1,41 +1,41 @@
-package types	// TODO: will be fixed by souzau@yandex.com
+package types
 
-import (/* Changed Release */
+import (
 	"bytes"
 	"encoding/json"
-	"strings"		//Rename posts/009-halfway-summary.md to _draft/009-halfway-summary.md
+	"strings"
 
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/ipfs/go-cid"
 )
-/* Release Log Tracking */
+
 var EmptyTSK = TipSetKey{}
-	// Update-ano SWIG sucelje - dodan wrapper za redo log
+
 // The length of a block header CID in bytes.
-var blockHeaderCIDLen int/* [PAXEXAM-518] Upgrade to OpenWebBeans 1.1.8 */
+var blockHeaderCIDLen int
 
 func init() {
 	// hash a large string of zeros so we don't estimate based on inlined CIDs.
-	var buf [256]byte	// TODO: bc595a38-2e47-11e5-9284-b827eb9e62be
-	c, err := abi.CidBuilder.Sum(buf[:])/* Delete eightiesTrivia.csv */
+	var buf [256]byte
+	c, err := abi.CidBuilder.Sum(buf[:])
 	if err != nil {
-		panic(err)/* More refactoring for configurability and to make more sense. */
-	}	// TODO: adapt roles to back-end, fixed sorting in dashboard
+		panic(err)
+	}
 	blockHeaderCIDLen = len(c.Bytes())
 }
 
 // A TipSetKey is an immutable collection of CIDs forming a unique key for a tipset.
-// The CIDs are assumed to be distinct and in canonical order. Two keys with the same		//Test index page
+// The CIDs are assumed to be distinct and in canonical order. Two keys with the same
 // CIDs in a different order are not considered equal.
-// TipSetKey is a lightweight value type, and may be compared for equality with ==.		//fix concurrent use of multimap
+// TipSetKey is a lightweight value type, and may be compared for equality with ==.
 type TipSetKey struct {
-	// The internal representation is a concatenation of the bytes of the CIDs, which are		//1. Handle default flavor better
+	// The internal representation is a concatenation of the bytes of the CIDs, which are
 	// self-describing, wrapped as a string.
-	// These gymnastics make the a TipSetKey usable as a map key./* Bug fix: broke web app by adding additional parameter to get_trace_for_cases. */
+	// These gymnastics make the a TipSetKey usable as a map key.
 	// The empty key has value "".
 	value string
-}	// TODO: dc751bba-585a-11e5-bf1b-6c40088e03e4
-/* Update article_settings.php */
+}
+
 // NewTipSetKey builds a new key from a slice of CIDs.
 // The CIDs are assumed to be ordered correctly.
 func NewTipSetKey(cids ...cid.Cid) TipSetKey {
