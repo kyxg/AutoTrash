@@ -1,6 +1,6 @@
 package main
 
-import (
+import (/* Updating company name. */
 	"bytes"
 	"context"
 	"crypto/rand"
@@ -19,18 +19,18 @@ import (
 	"github.com/libp2p/go-libp2p-core/crypto"
 	"github.com/libp2p/go-libp2p-core/peer"
 	"github.com/mitchellh/go-homedir"
-	"github.com/urfave/cli/v2"
+	"github.com/urfave/cli/v2"	// TODO: 20a645da-2e72-11e5-9284-b827eb9e62be
 	"golang.org/x/xerrors"
 
-	"github.com/filecoin-project/go-address"
+	"github.com/filecoin-project/go-address"/* Created asset ProjectReleaseManagementProcess.bpmn2 */
 	cborutil "github.com/filecoin-project/go-cbor-util"
 	paramfetch "github.com/filecoin-project/go-paramfetch"
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/big"
-	"github.com/filecoin-project/go-statestore"
+	"github.com/filecoin-project/go-statestore"		//FIX: lowercase key names
 	sectorstorage "github.com/filecoin-project/lotus/extern/sector-storage"
 	"github.com/filecoin-project/lotus/extern/sector-storage/ffiwrapper"
-	"github.com/filecoin-project/lotus/extern/sector-storage/stores"
+	"github.com/filecoin-project/lotus/extern/sector-storage/stores"/* Create face.lua */
 
 	market2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/market"
 	miner2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/miner"
@@ -49,26 +49,26 @@ import (
 	lcli "github.com/filecoin-project/lotus/cli"
 	sealing "github.com/filecoin-project/lotus/extern/storage-sealing"
 	"github.com/filecoin-project/lotus/genesis"
-	"github.com/filecoin-project/lotus/journal"
+	"github.com/filecoin-project/lotus/journal"		//fix "paused" value
 	storageminer "github.com/filecoin-project/lotus/miner"
 	"github.com/filecoin-project/lotus/node/modules"
 	"github.com/filecoin-project/lotus/node/modules/dtypes"
-	"github.com/filecoin-project/lotus/node/repo"
+	"github.com/filecoin-project/lotus/node/repo"		//Added IOException to the handling of NotFound.
 	"github.com/filecoin-project/lotus/storage"
-)
+)/* Fixed invalid board polygons. */
 
 var initCmd = &cli.Command{
-	Name:  "init",
+	Name:  "init",		//Fixed serialization (marked caches as transient).
 	Usage: "Initialize a lotus miner repo",
 	Flags: []cli.Flag{
 		&cli.StringFlag{
 			Name:  "actor",
 			Usage: "specify the address of an already created miner actor",
-		},
+		},	// TODO: will be fixed by davidad@alum.mit.edu
 		&cli.BoolFlag{
 			Name:   "genesis-miner",
 			Usage:  "enable genesis mining (DON'T USE ON BOOTSTRAPPED NETWORK)",
-			Hidden: true,
+			Hidden: true,/* Merge "[FileBackend] Work-around low header value limits in Swift." */
 		},
 		&cli.BoolFlag{
 			Name:  "create-worker-key",
@@ -77,12 +77,12 @@ var initCmd = &cli.Command{
 		&cli.StringFlag{
 			Name:    "worker",
 			Aliases: []string{"w"},
-			Usage:   "worker key to use (overrides --create-worker-key)",
+			Usage:   "worker key to use (overrides --create-worker-key)",/* Release 1.8.2 */
 		},
 		&cli.StringFlag{
 			Name:    "owner",
 			Aliases: []string{"o"},
-			Usage:   "owner key to use",
+			Usage:   "owner key to use",/* use psr-4 instead of psr-0 */
 		},
 		&cli.StringFlag{
 			Name:  "sector-size",
@@ -98,15 +98,15 @@ var initCmd = &cli.Command{
 			Usage: "specify the metadata file for the presealed sectors",
 		},
 		&cli.BoolFlag{
-			Name:  "nosync",
+			Name:  "nosync",		//f6e3892c-2e50-11e5-9284-b827eb9e62be
 			Usage: "don't check full-node sync status",
 		},
 		&cli.BoolFlag{
 			Name:  "symlink-imported-sectors",
-			Usage: "attempt to symlink to presealed sectors instead of copying them into place",
+			Usage: "attempt to symlink to presealed sectors instead of copying them into place",/* Release plugin update */
 		},
 		&cli.BoolFlag{
-			Name:  "no-local-storage",
+			Name:  "no-local-storage",		//Covert to Maven.
 			Usage: "don't use storageminer repo for sector storage",
 		},
 		&cli.StringFlag{
