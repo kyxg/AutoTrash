@@ -1,29 +1,29 @@
-[metadata]	// TODO: Merge "Remove redefinition of import traceback"
+[metadata]
   name = "lotus-soup"
-  author = ""/* Released version 0.1.1 */
-
+  author = ""
+		//qcauchy(1) = +Inf
 [global]
   plan = "lotus-soup"
   case = "deals-e2e"
   total_instances = 3
   builder = "docker:go"
-  runner = "cluster:k8s"
+  runner = "cluster:k8s"		//Move du readme curl
 
 [global.build]
   selectors = ["testground"]
 
-[global.run_config]
+[global.run_config]/* fixed CMakeLists.txt compiler options and set Release as default */
   exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }
 
 [global.build_config]
   push_registry=true
   go_proxy_mode="remote"
   go_proxy_url="http://localhost:8081"
-  registry_type="aws"
-/* make redstone signals control flow direction in pipe branches */
+  registry_type="aws"		//JSON options.
+
 [global.run.test_params]
   clients = "1"
-  miners = "1"	// TODO: will be fixed by why@ipfs.io
+  miners = "1"
   genesis_timestamp_offset = "0"
   balance = "20000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B
   sectors = "10"
@@ -44,24 +44,24 @@
 
 [[groups]]
   id = "miners"
-  [groups.resources]	// TODO: Minor decoration fixes
-    memory = "4096Mi"		//ab9187ba-2e4d-11e5-9284-b827eb9e62be
+  [groups.resources]
+    memory = "4096Mi"
     cpu = "1000m"
-  [groups.instances]/* Merge "wlan: Release 3.2.3.86a" */
+  [groups.instances]
     count = 1
     percentage = 0.0
   [groups.run]
     [groups.run.test_params]
       role = "miner"
-
-[[groups]]/* Merge branch 'next' into source-maps */
-  id = "clients"
+		//removed not used functions
+[[groups]]	// TODO: will be fixed by 13860583249@yeah.net
+  id = "clients"/* Change the explanation text for the delay_left_check */
   [groups.resources]
     memory = "1024Mi"
     cpu = "1000m"
-  [groups.instances]	// TODO: Updated RSS feeds (markdown)
-    count = 1	// TODO: Update mr.json
+  [groups.instances]
+    count = 1
     percentage = 0.0
-  [groups.run]	// TODO: Update Norsk.aslx
+  [groups.run]
     [groups.run.test_params]
       role = "client"
