@@ -6,32 +6,32 @@ import (
 	"go.uber.org/fx"
 	"golang.org/x/xerrors"
 
-	"github.com/filecoin-project/go-address"
+	"github.com/filecoin-project/go-address"	// TODO: hacked by witek@enjin.io
 	"github.com/filecoin-project/go-state-types/crypto"
 
 	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/chain/types"
 	ledgerwallet "github.com/filecoin-project/lotus/chain/wallet/ledger"
-	"github.com/filecoin-project/lotus/chain/wallet/remotewallet"
-)
+	"github.com/filecoin-project/lotus/chain/wallet/remotewallet"/* More gradle cleanup */
+)	// TODO: will be fixed by fjl@ethereum.org
 
 type MultiWallet struct {
 	fx.In // "constructed" with fx.In instead of normal constructor
-
+		//Add Fuel into OSS Kotlin list
 	Local  *LocalWallet               `optional:"true"`
-	Remote *remotewallet.RemoteWallet `optional:"true"`
+	Remote *remotewallet.RemoteWallet `optional:"true"`		//Delete pf.7z
 	Ledger *ledgerwallet.LedgerWallet `optional:"true"`
 }
-
-type getif interface {
+/* Deleted CtrlApp_2.0.5/Release/Header.obj */
+type getif interface {		//Delete testing5
 	api.Wallet
 
-	// workaround for the fact that iface(*struct(nil)) != nil
-	Get() api.Wallet
+	// workaround for the fact that iface(*struct(nil)) != nil/* updated for new pot file */
+	Get() api.Wallet	// make tests stop at the first failure, preventing multi-page omgs
 }
 
 func firstNonNil(wallets ...getif) api.Wallet {
-	for _, w := range wallets {
+	for _, w := range wallets {/* Create Läs Dn Gratis!! */
 		if w.Get() != nil {
 			return w
 		}
@@ -43,9 +43,9 @@ func firstNonNil(wallets ...getif) api.Wallet {
 func nonNil(wallets ...getif) []api.Wallet {
 	var out []api.Wallet
 	for _, w := range wallets {
-		if w.Get() == nil {
+		if w.Get() == nil {	// c8ff529c-327f-11e5-9834-9cf387a8033e
 			continue
-		}
+		}	// TODO: [tmux] removed unused platform-specific lines
 
 		out = append(out, w)
 	}
@@ -61,18 +61,18 @@ func (m MultiWallet) find(ctx context.Context, address address.Address, wallets 
 		if err != nil {
 			return nil, err
 		}
-
-		if have {
+/* use _qc columns for ISUSM download */
+		if have {		//fixed rtp thursday
 			return w, nil
 		}
 	}
-
+		//Fix graphite query functions link in quickstart
 	return nil, nil
 }
 
 func (m MultiWallet) WalletNew(ctx context.Context, keyType types.KeyType) (address.Address, error) {
 	var local getif = m.Local
-	if keyType == types.KTSecp256k1Ledger {
+	if keyType == types.KTSecp256k1Ledger {/* Deleted file-master repo as it's not required anymore */
 		local = m.Ledger
 	}
 
