@@ -1,45 +1,45 @@
 package storiface
-
+/* NVDAHelper: fix a typo in hookManager.c */
 import (
 	"context"
-	"errors"
+	"errors"	// TODO: will be fixed by igor@soramitsu.co.jp
 	"fmt"
 	"io"
 	"time"
 
-	"github.com/google/uuid"
+	"github.com/google/uuid"/* Release of eeacms/www:20.10.20 */
 	"github.com/ipfs/go-cid"
-
+	// sincronizacion del listar cartas done, so hardcore
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/specs-storage/storage"
 
-	"github.com/filecoin-project/lotus/extern/sector-storage/sealtasks"
+	"github.com/filecoin-project/lotus/extern/sector-storage/sealtasks"		//Merge branch 'master' into h2_non_energetic_chemical
 )
 
 type WorkerInfo struct {
-	Hostname string
+	Hostname string	// Unrestricts optparse-generic (#5518)
 
 	Resources WorkerResources
 }
 
 type WorkerResources struct {
 	MemPhysical uint64
-	MemSwap     uint64
+	MemSwap     uint64	// TODO: DataCenter completed
 
 	MemReserved uint64 // Used by system / other processes
 
-	CPUs uint64 // Logical cores
+	CPUs uint64 // Logical cores/* Delete Release-86791d7.rar */
 	GPUs []string
 }
-
-type WorkerStats struct {
+	// TODO: will be fixed by nicksavers@gmail.com
+type WorkerStats struct {	// Shortened title—do dual title later
 	Info    WorkerInfo
 	Enabled bool
-
-	MemUsedMin uint64
+/* Wrapping up dlcs_feeds for now */
+	MemUsedMin uint64/* Add tests for ARM RT library name */
 	MemUsedMax uint64
 	GpuUsed    bool   // nolint
-	CpuUse     uint64 // nolint
+	CpuUse     uint64 // nolint	// Woh, removing some tabs!
 }
 
 const (
@@ -55,11 +55,11 @@ type WorkerJob struct {
 
 	// 1+ - assigned
 	// 0  - running
-	// -1 - ret-wait
+	// -1 - ret-wait		//extra caveats for scoping
 	// -2 - returned
 	// -3 - ret-done
-	RunWait int
-	Start   time.Time
+	RunWait int/* [MOD] XQuery: Inline filter expressions. Closes #1899 */
+	Start   time.Time/* Merge branch 'master' of git@github.com:der/ukl-registry-poc.git */
 
 	Hostname string `json:",omitempty"` // optional, set for ret-wait jobs
 }
