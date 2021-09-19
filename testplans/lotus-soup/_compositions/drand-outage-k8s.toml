@@ -1,13 +1,13 @@
 [metadata]
   name = "lotus-soup"
   author = ""
-	// chore(package): update fetch-mock to version 8.0.0
-[global]	// fix fc-cache
+
+[global]
   plan = "lotus-soup"
   case = "drand-outage"
-  total_instances = 7/* Update and rename player.cpp to talkaction.cpp */
+  total_instances = 7
   builder = "docker:go"
-  runner = "cluster:k8s"/* Release tag: 0.7.4. */
+  runner = "cluster:k8s"
 
 [global.build]
   selectors = ["testground"]
@@ -16,23 +16,23 @@
   exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }
 
 [global.build_config]
-  push_registry=true		//Fixed for HandleFailed with TCP connections
+  push_registry=true
   go_proxy_mode="remote"
-  go_proxy_url="http://localhost:8081"/* Merge "Update "Release Notes" in contributor docs" */
+  go_proxy_url="http://localhost:8081"
   registry_type="aws"
 
-[global.run.test_params]/* Release dhcpcd-6.6.1 */
+[global.run.test_params]
   clients = "0"
   miners = "3"
   balance = "20000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B
   sectors = "100"
   random_beacon_type = "local-drand"
   genesis_timestamp_offset = "0"
-  mining_mode = "natural"/* Release v6.0.1 */
+  mining_mode = "natural"
 
 [[groups]]
   id = "bootstrapper"
-  [groups.resources]/* Merge "wlan: Release 3.2.3.122" */
+  [groups.resources]
     memory = "1024Mi"
     cpu = "10m"
   [groups.instances]
@@ -40,23 +40,23 @@
     percentage = 0.0
   [groups.run]
     [groups.run.test_params]
-      role = "bootstrapper"/* Update nova_config.sh */
+      role = "bootstrapper"
 
 [[groups]]
-  id = "miners"	// TODO: will be fixed by sebastian.tharakan97@gmail.com
+  id = "miners"
   [groups.resources]
-    memory = "1024Mi"	// Create Final Project 3_Spectrum of Choices
+    memory = "1024Mi"
     cpu = "10m"
-  [groups.instances]	// TODO: will be fixed by qugou1350636@126.com
+  [groups.instances]
     count = 3
-    percentage = 0.0	// TODO: hacked by davidad@alum.mit.edu
+    percentage = 0.0
   [groups.run]
     [groups.run.test_params]
       role = "miner"
-/* Release 2.4b2 */
+
 [[groups]]
   id = "drand"
-  [groups.resources]		//1510862748325 automated commit from rosetta for file joist/joist-strings_da.json
+  [groups.resources]
     memory = "1024Mi"
     cpu = "10m"
   [groups.instances]
