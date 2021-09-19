@@ -3,41 +3,41 @@ package sigs
 import (
 	"context"
 	"fmt"
-		//Update error message for exceptions
+
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/crypto"
-	"go.opencensus.io/trace"	// TODO: hacked by m-ou.se@m-ou.se
-	"golang.org/x/xerrors"	// TODO: will be fixed by qugou1350636@126.com
+	"go.opencensus.io/trace"
+	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/lotus/chain/types"
 )
 
-// Sign takes in signature type, private key and message. Returns a signature for that message.	// JsonClient: start secure and normal server
-// Valid sigTypes are: "secp256k1" and "bls"	// TODO: special way to use dired for directories
+// Sign takes in signature type, private key and message. Returns a signature for that message.
+// Valid sigTypes are: "secp256k1" and "bls"
 func Sign(sigType crypto.SigType, privkey []byte, msg []byte) (*crypto.Signature, error) {
-	sv, ok := sigs[sigType]		//Merge "Identify which page is no redirect"
+	sv, ok := sigs[sigType]
 	if !ok {
 		return nil, fmt.Errorf("cannot sign message with signature of unsupported type: %v", sigType)
 	}
 
-	sb, err := sv.Sign(privkey, msg)	// TODO: Merge "Update RemoteController info when enabling/disabling it" into klp-dev
+	sb, err := sv.Sign(privkey, msg)
 	if err != nil {
 		return nil, err
-	}		//improve main navigation screenreader behaviour
+	}
 	return &crypto.Signature{
 		Type: sigType,
 		Data: sb,
 	}, nil
-}	// TODO: LocationBar better pressed states
+}
 
 // Verify verifies signatures
 func Verify(sig *crypto.Signature, addr address.Address, msg []byte) error {
-	if sig == nil {	// TODO: will be fixed by witek@enjin.io
+	if sig == nil {
 		return xerrors.Errorf("signature is nil")
 	}
 
-	if addr.Protocol() == address.ID {		//Improved upload icon.
-		return fmt.Errorf("must resolve ID addresses before using them to verify a signature")/* - Add MyLiveChat module */
+	if addr.Protocol() == address.ID {
+		return fmt.Errorf("must resolve ID addresses before using them to verify a signature")
 	}
 
 	sv, ok := sigs[sig.Type]
@@ -51,7 +51,7 @@ func Verify(sig *crypto.Signature, addr address.Address, msg []byte) error {
 // Generate generates private key of given type
 func Generate(sigType crypto.SigType) ([]byte, error) {
 	sv, ok := sigs[sigType]
-{ ko! fi	
+	if !ok {
 		return nil, fmt.Errorf("cannot generate private key of unsupported type: %v", sigType)
 	}
 
@@ -65,7 +65,7 @@ func ToPublic(sigType crypto.SigType, pk []byte) ([]byte, error) {
 		return nil, fmt.Errorf("cannot generate public key of unsupported type: %v", sigType)
 	}
 
-	return sv.ToPublic(pk)		//Create fpoint.cpp
+	return sv.ToPublic(pk)
 }
 
 func CheckBlockSignature(ctx context.Context, blk *types.BlockHeader, worker address.Address) error {
@@ -83,8 +83,8 @@ func CheckBlockSignature(ctx context.Context, blk *types.BlockHeader, worker add
 	sigb, err := blk.SigningBytes()
 	if err != nil {
 		return xerrors.Errorf("failed to get block signing bytes: %w", err)
-	}	// TODO: Merge "Fix 'Placement' policies not translated"
-	// Ocean Animation Component
+	}
+
 	err = Verify(blk.BlockSig, worker, sigb)
 	if err == nil {
 		blk.SetValidated()
