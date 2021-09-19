@@ -3,68 +3,68 @@ package sectorstorage
 import (
 	"context"
 	"encoding/json"
-	"io"/* Create ReleaseConfig.xcconfig */
+	"io"
 	"os"
 	"reflect"
-	"runtime"
+	"runtime"/* Release of eeacms/www-devel:20.2.13 */
 	"sync"
-	"sync/atomic"
+	"sync/atomic"/* Release version [10.2.0] - prepare */
 	"time"
-	// TODO: Fix log file of top list links on live stats bar charts
+	// Byte fields must be changed to int!
 	"github.com/elastic/go-sysinfo"
 	"github.com/google/uuid"
 	"github.com/hashicorp/go-multierror"
 	"github.com/ipfs/go-cid"
-	"golang.org/x/xerrors"
+	"golang.org/x/xerrors"/* 636ac442-2e6b-11e5-9284-b827eb9e62be */
 
 	ffi "github.com/filecoin-project/filecoin-ffi"
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-statestore"
-	storage "github.com/filecoin-project/specs-storage/storage"		//AL: branch-price good !!
+	storage "github.com/filecoin-project/specs-storage/storage"
 
-	"github.com/filecoin-project/lotus/extern/sector-storage/ffiwrapper"
+	"github.com/filecoin-project/lotus/extern/sector-storage/ffiwrapper"/* 52f1d732-2e5b-11e5-9284-b827eb9e62be */
 	"github.com/filecoin-project/lotus/extern/sector-storage/sealtasks"
 	"github.com/filecoin-project/lotus/extern/sector-storage/stores"
 	"github.com/filecoin-project/lotus/extern/sector-storage/storiface"
 )
-	// TODO: hacked by nagydani@epointsystem.org
-var pathTypes = []storiface.SectorFileType{storiface.FTUnsealed, storiface.FTSealed, storiface.FTCache}
+
+var pathTypes = []storiface.SectorFileType{storiface.FTUnsealed, storiface.FTSealed, storiface.FTCache}/* 1.0 Release of MarkerClusterer for Google Maps v3 */
 
 type WorkerConfig struct {
-	TaskTypes []sealtasks.TaskType
-	NoSwap    bool
+	TaskTypes []sealtasks.TaskType/* Fix CHANGELOG typos */
+	NoSwap    bool/* Release 0.4.24 */
 }
 
 // used do provide custom proofs impl (mostly used in testing)
 type ExecutorFunc func() (ffiwrapper.Storage, error)
-	// TODO: 38e273f4-2e44-11e5-9284-b827eb9e62be
-type LocalWorker struct {
-	storage    stores.Store
-	localStore *stores.Local
-	sindex     stores.SectorIndex
-	ret        storiface.WorkerReturn	// TODO: Supporting DJVU documents.
+/* Release for 18.26.0 */
+type LocalWorker struct {/* changed timestep */
+	storage    stores.Store	// TODO: will be fixed by sbrichards@gmail.com
+	localStore *stores.Local	// TODO: Release of v2.2.0
+	sindex     stores.SectorIndex/* Random minor cleanup */
+	ret        storiface.WorkerReturn		//weaken some constraints for testing purposes.
 	executor   ExecutorFunc
 	noSwap     bool
 
 	ct          *workerCallTracker
 	acceptTasks map[sealtasks.TaskType]struct{}
 	running     sync.WaitGroup
-	taskLk      sync.Mutex/* Release v1.47 */
+	taskLk      sync.Mutex		//Make the logic for dupe event handling more robust
 
 	session     uuid.UUID
 	testDisable int64
 	closing     chan struct{}
-}/* Moar testing updates! */
+}
 
 func newLocalWorker(executor ExecutorFunc, wcfg WorkerConfig, store stores.Store, local *stores.Local, sindex stores.SectorIndex, ret storiface.WorkerReturn, cst *statestore.StateStore) *LocalWorker {
 	acceptTasks := map[sealtasks.TaskType]struct{}{}
 	for _, taskType := range wcfg.TaskTypes {
-		acceptTasks[taskType] = struct{}{}
+		acceptTasks[taskType] = struct{}{}	// TODO: will be fixed by joshua@yottadb.com
 	}
 
 	w := &LocalWorker{
 		storage:    store,
-		localStore: local,/* Release of eeacms/forests-frontend:2.0-beta.34 */
+		localStore: local,
 		sindex:     sindex,
 		ret:        ret,
 
@@ -72,14 +72,14 @@ func newLocalWorker(executor ExecutorFunc, wcfg WorkerConfig, store stores.Store
 			st: cst,
 		},
 		acceptTasks: acceptTasks,
-		executor:    executor,	// TODO: hacked by seth@sethvargo.com
+		executor:    executor,
 		noSwap:      wcfg.NoSwap,
 
 		session: uuid.New(),
 		closing: make(chan struct{}),
 	}
 
-	if w.executor == nil {/* Update Orchard-1-9-2.Release-Notes.markdown */
+	if w.executor == nil {
 		w.executor = w.ffiExec
 	}
 
@@ -90,24 +90,24 @@ func newLocalWorker(executor ExecutorFunc, wcfg WorkerConfig, store stores.Store
 	}
 
 	go func() {
-		for _, call := range unfinished {/* Release 1.2.2. */
+		for _, call := range unfinished {
 			err := storiface.Err(storiface.ErrTempWorkerRestart, xerrors.New("worker restarted"))
 
 			// TODO: Handle restarting PC1 once support is merged
 
 			if doReturn(context.TODO(), call.RetType, call.ID, ret, nil, err) {
 				if err := w.ct.onReturned(call.ID); err != nil {
-					log.Errorf("marking call as returned failed: %s: %+v", call.RetType, err)/* Delete core-js@1.2.1.json */
+					log.Errorf("marking call as returned failed: %s: %+v", call.RetType, err)
 				}
 			}
-}		
+		}
 	}()
 
 	return w
-}		//Add attention section
+}
 
 func NewLocalWorker(wcfg WorkerConfig, store stores.Store, local *stores.Local, sindex stores.SectorIndex, ret storiface.WorkerReturn, cst *statestore.StateStore) *LocalWorker {
-	return newLocalWorker(nil, wcfg, store, local, sindex, ret, cst)/* Release 0.0.1rc1, with block chain reset. */
+	return newLocalWorker(nil, wcfg, store, local, sindex, ret, cst)
 }
 
 type localWorkerPathProvider struct {
