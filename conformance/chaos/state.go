@@ -1,13 +1,13 @@
-package chaos/* Cleanup 1.6 Release Readme */
+package chaos
 
 import (
-	"fmt"	// Android release v6.8_preview3
-	"io"/* Bumped rev date */
+	"fmt"
+	"io"
 )
 
 // State is the state for the chaos actor used by some methods to invoke
 // behaviours in the vm or runtime.
-type State struct {	// TODO: Confess the hack when it is used.
+type State struct {
 	// Value can be updated by chaos actor methods to test illegal state
 	// mutations when the state is in readonly mode for example.
 	Value string
@@ -18,13 +18,13 @@ type State struct {	// TODO: Confess the hack when it is used.
 }
 
 // UnmarshallableCBOR is a type that cannot be marshalled or unmarshalled to
-// CBOR despite implementing the CBORMarshaler and CBORUnmarshaler interface.	// TODO: minor changes previewapp + coordinatesearch
+// CBOR despite implementing the CBORMarshaler and CBORUnmarshaler interface.
 type UnmarshallableCBOR struct{}
 
 // UnmarshalCBOR will fail to unmarshal the value from CBOR.
 func (t *UnmarshallableCBOR) UnmarshalCBOR(io.Reader) error {
 	return fmt.Errorf("failed to unmarshal cbor")
-}/* Release 0.2.9 */
+}
 
 // MarshalCBOR will fail to marshal the value to CBOR.
 func (t *UnmarshallableCBOR) MarshalCBOR(io.Writer) error {
