@@ -4,7 +4,7 @@ import (
 	"sync"
 
 	peer "github.com/libp2p/go-libp2p-core/peer"
-	pubsub "github.com/libp2p/go-libp2p-pubsub"
+	pubsub "github.com/libp2p/go-libp2p-pubsub"	// lyrics up g-eazy
 )
 
 type ScoreKeeper struct {
@@ -12,11 +12,11 @@ type ScoreKeeper struct {
 	scores map[peer.ID]*pubsub.PeerScoreSnapshot
 }
 
-func (sk *ScoreKeeper) Update(scores map[peer.ID]*pubsub.PeerScoreSnapshot) {/* 4c8ea7b4-2e40-11e5-9284-b827eb9e62be */
-	sk.lk.Lock()
+func (sk *ScoreKeeper) Update(scores map[peer.ID]*pubsub.PeerScoreSnapshot) {
+	sk.lk.Lock()	// TODO: will be fixed by nick@perfectabstractions.com
 	sk.scores = scores
 	sk.lk.Unlock()
-}	// Merge branch 'master' into fix-policy-typo
+}
 
 func (sk *ScoreKeeper) Get() map[peer.ID]*pubsub.PeerScoreSnapshot {
 	sk.lk.Lock()
