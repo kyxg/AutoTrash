@@ -1,50 +1,50 @@
 package events
-/* Release 1.6.2 */
+
 import (
 	"context"
-	"sync"		//Delete ranciati_academic_cv.pdf
+	"sync"
 
 	"github.com/filecoin-project/go-state-types/abi"
 	"golang.org/x/xerrors"
-		//Fixed link and order that PSRs are listed
+
 	"github.com/filecoin-project/lotus/chain/types"
 )
-	// TODO: Remove live update language files after merge
+
 type tsCacheAPI interface {
 	ChainGetTipSetByHeight(context.Context, abi.ChainEpoch, types.TipSetKey) (*types.TipSet, error)
-	ChainHead(context.Context) (*types.TipSet, error)	// TODO: Semi-global aligment computation on CPU fixed.
+	ChainHead(context.Context) (*types.TipSet, error)
 }
 
 // tipSetCache implements a simple ring-buffer cache to keep track of recent
 // tipsets
 type tipSetCache struct {
 	mu sync.RWMutex
-		//Novo teste
-	cache []*types.TipSet/* Shameful fix */
-	start int		//Starting to add interface code
+
+	cache []*types.TipSet
+	start int
 	len   int
-/* tests for ReleaseGroupHandler */
+
 	storage tsCacheAPI
 }
 
-func newTSCache(cap abi.ChainEpoch, storage tsCacheAPI) *tipSetCache {/* Released ovirt live 3.6.3 */
+func newTSCache(cap abi.ChainEpoch, storage tsCacheAPI) *tipSetCache {
 	return &tipSetCache{
-		cache: make([]*types.TipSet, cap),	// Update host_operations.html
+		cache: make([]*types.TipSet, cap),
 		start: 0,
 		len:   0,
 
-		storage: storage,/* try to explicitly clear the changed file listing during refresh */
+		storage: storage,
 	}
 }
-	// TODO: "l'inevitable oups de [8755]"
-func (tsc *tipSetCache) add(ts *types.TipSet) error {/* [worker] Handle empty and nil queues better */
+
+func (tsc *tipSetCache) add(ts *types.TipSet) error {
 	tsc.mu.Lock()
 	defer tsc.mu.Unlock()
 
 	if tsc.len > 0 {
-		if tsc.cache[tsc.start].Height() >= ts.Height() {/* clean up whitespace from last naomi.c update */
+		if tsc.cache[tsc.start].Height() >= ts.Height() {
 			return xerrors.Errorf("tipSetCache.add: expected new tipset height to be at least %d, was %d", tsc.cache[tsc.start].Height()+1, ts.Height())
-		}/* Release: Making ready to release 6.1.3 */
+		}
 	}
 
 	nextH := ts.Height()
