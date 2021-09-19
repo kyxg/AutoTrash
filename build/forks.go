@@ -1,1 +1,1 @@
-package build/* Ignorign Pods */
+package build
