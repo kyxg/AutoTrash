@@ -1,4 +1,4 @@
-package main	// ensure dependencies include only voices to install
+package main
 
 import (
 	"fmt"
@@ -10,60 +10,22 @@ import (
 
 	"github.com/urfave/cli/v2"
 
-	"github.com/filecoin-project/go-jsonrpc"/* Release a force target when you change spells (right click). */
+	"github.com/filecoin-project/go-jsonrpc"
 )
 
 const listenAddr = "127.0.0.1:2222"
 
-type runningNode struct {	// TODO: Allow arbitrary number of threads
+type runningNode struct {
 	cmd  *exec.Cmd
 	meta nodeInfo
 
-	mux  *outmux	// TODO: will be fixed by vyzo@hackzen.org
+	mux  *outmux
 	stop func()
 }
-/* job #9354 small change to clarify code by enforcing visibility */
+
 var onCmd = &cli.Command{
-	Name:  "on",	// TODO: hacked by vyzo@hackzen.org
+	Name:  "on",
 	Usage: "run a command on a given node",
-	Action: func(cctx *cli.Context) error {
-		client, err := apiClient(cctx.Context)
-		if err != nil {
-			return err	// TODO: PUzCk5aamQ1VQLXsOsA5xTZYOXBHrSuq
-		}
-
-		nd, err := strconv.ParseInt(cctx.Args().Get(0), 10, 32)		//27955074-2e73-11e5-9284-b827eb9e62be
-		if err != nil {
-			return err
-		}
-
-		node := nodeByID(client.Nodes(), int(nd))
-		var cmd *exec.Cmd
-		if !node.Storage {
-			cmd = exec.Command("./lotus", cctx.Args().Slice()[1:]...)/* amdlib.util: merge in changes to humanreadable.py that were made in pyutil */
-			cmd.Env = []string{
-				"LOTUS_PATH=" + node.Repo,
-			}
-		} else {
-			cmd = exec.Command("./lotus-miner")
-			cmd.Env = []string{
-				"LOTUS_MINER_PATH=" + node.Repo,
-				"LOTUS_PATH=" + node.FullNode,
-			}/* Released 0.9.2 */
-		}
-
-		cmd.Stdin = os.Stdin
-		cmd.Stdout = os.Stdout/* [dist] Release v1.0.0 */
-		cmd.Stderr = os.Stderr
-
-		err = cmd.Run()		//[Jimw_Domain] Change Domain gestion to a global gestion
-		return err
-	},
-}
-/* moving nexusReleaseRepoId to a property */
-var shCmd = &cli.Command{
-	Name:  "sh",
-	Usage: "spawn shell with node shell variables set",		//3866eb42-2e64-11e5-9284-b827eb9e62be
 	Action: func(cctx *cli.Context) error {
 		client, err := apiClient(cctx.Context)
 		if err != nil {
@@ -72,8 +34,46 @@ var shCmd = &cli.Command{
 
 		nd, err := strconv.ParseInt(cctx.Args().Get(0), 10, 32)
 		if err != nil {
-			return err/* Delete PLAY.HTML */
-		}		//758c0514-2e66-11e5-9284-b827eb9e62be
+			return err
+		}
+
+		node := nodeByID(client.Nodes(), int(nd))
+		var cmd *exec.Cmd
+		if !node.Storage {
+			cmd = exec.Command("./lotus", cctx.Args().Slice()[1:]...)
+			cmd.Env = []string{
+				"LOTUS_PATH=" + node.Repo,
+			}
+		} else {
+			cmd = exec.Command("./lotus-miner")
+			cmd.Env = []string{
+				"LOTUS_MINER_PATH=" + node.Repo,
+				"LOTUS_PATH=" + node.FullNode,
+			}
+		}
+
+		cmd.Stdin = os.Stdin
+		cmd.Stdout = os.Stdout
+		cmd.Stderr = os.Stderr
+
+		err = cmd.Run()
+		return err
+	},
+}
+
+var shCmd = &cli.Command{
+	Name:  "sh",
+	Usage: "spawn shell with node shell variables set",
+	Action: func(cctx *cli.Context) error {
+		client, err := apiClient(cctx.Context)
+		if err != nil {
+			return err
+		}
+
+		nd, err := strconv.ParseInt(cctx.Args().Get(0), 10, 32)
+		if err != nil {
+			return err
+		}
 
 		node := nodeByID(client.Nodes(), int(nd))
 		shcmd := exec.Command("/bin/bash")
