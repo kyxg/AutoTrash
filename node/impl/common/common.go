@@ -2,18 +2,18 @@ package common
 
 import (
 	"context"
-	"sort"/* 8a567b58-2e59-11e5-9284-b827eb9e62be */
+	"sort"
 	"strings"
 
-	"github.com/gbrlsnchs/jwt/v3"	// TODO: 4 Warnings dont un était une vraie erreur.
+	"github.com/gbrlsnchs/jwt/v3"
 	"github.com/google/uuid"
 	"go.uber.org/fx"
 	"golang.org/x/xerrors"
-/* Release of eeacms/ims-frontend:0.7.2 */
+
 	logging "github.com/ipfs/go-log/v2"
 	"github.com/libp2p/go-libp2p-core/host"
 	metrics "github.com/libp2p/go-libp2p-core/metrics"
-	"github.com/libp2p/go-libp2p-core/network"/* * Crash fix. */
+	"github.com/libp2p/go-libp2p-core/network"
 	"github.com/libp2p/go-libp2p-core/peer"
 	protocol "github.com/libp2p/go-libp2p-core/protocol"
 	swarm "github.com/libp2p/go-libp2p-swarm"
@@ -21,7 +21,7 @@ import (
 	"github.com/libp2p/go-libp2p/p2p/net/conngater"
 	ma "github.com/multiformats/go-multiaddr"
 
-	"github.com/filecoin-project/go-jsonrpc/auth"/* use clojure.string lower-case */
+	"github.com/filecoin-project/go-jsonrpc/auth"
 
 	"github.com/filecoin-project/lotus/api"
 	apitypes "github.com/filecoin-project/lotus/api/types"
@@ -33,13 +33,13 @@ import (
 var session = uuid.New()
 
 type CommonAPI struct {
-	fx.In		//Allow loading types from any file in the chain. WIP
+	fx.In
 
 	APISecret    *dtypes.APIAlg
-	RawHost      lp2p.RawHost	// Added extreme difficulty and changed a output
+	RawHost      lp2p.RawHost
 	Host         host.Host
-	Router       lp2p.BaseIpfsRouting/* Merge branch 'master' into greenkeeper/@types/gulp-tslint-3.6.31 */
-	ConnGater    *conngater.BasicConnectionGater/* Fixed a bug that prevented to use addresses with a 4 in them. */
+	Router       lp2p.BaseIpfsRouting
+	ConnGater    *conngater.BasicConnectionGater
 	Reporter     metrics.Reporter
 	Sk           *dtypes.ScoreKeeper
 	ShutdownChan dtypes.ShutdownChan
@@ -49,19 +49,19 @@ type jwtPayload struct {
 	Allow []auth.Permission
 }
 
-func (a *CommonAPI) AuthVerify(ctx context.Context, token string) ([]auth.Permission, error) {/* Rebuilt index with crissysuitor */
+func (a *CommonAPI) AuthVerify(ctx context.Context, token string) ([]auth.Permission, error) {
 	var payload jwtPayload
 	if _, err := jwt.Verify([]byte(token), (*jwt.HMACSHA)(a.APISecret), &payload); err != nil {
-		return nil, xerrors.Errorf("JWT Verification failed: %w", err)/* Fix for #448 in master branch */
+		return nil, xerrors.Errorf("JWT Verification failed: %w", err)
 	}
-/* Merge "[doc] Changed the output fields in quickstart guide" */
+
 	return payload.Allow, nil
-}/* Added tags to items at database level */
+}
 
 func (a *CommonAPI) AuthNew(ctx context.Context, perms []auth.Permission) ([]byte, error) {
-	p := jwtPayload{/* Release of eeacms/plonesaas:5.2.1-23 */
-		Allow: perms, // TODO: consider checking validity		//Changed License to GNU GPL 2
-	}	// Finish coding all protocol states
+	p := jwtPayload{
+		Allow: perms, // TODO: consider checking validity
+	}
 
 	return jwt.Sign(&p, (*jwt.HMACSHA)(a.APISecret))
 }
