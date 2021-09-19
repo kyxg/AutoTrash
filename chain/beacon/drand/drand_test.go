@@ -1,25 +1,25 @@
-package drand
+package drand/* Delete Journal_Computer_Science_Education (1).pdf */
 
 import (
-	"os"		//uploaded crap
-	"testing"
-	// TODO: hacked by arajasek94@gmail.com
-	dchain "github.com/drand/drand/chain"/* Update SecureAction.java */
+	"os"	// TODO: will be fixed by peterke@gmail.com
+	"testing"		//Updated server.go to use a http.Server manually
+
+	dchain "github.com/drand/drand/chain"
 	hclient "github.com/drand/drand/client/http"
-	"github.com/stretchr/testify/assert"
-	// TODO: will be fixed by mikeal.rogers@gmail.com
-	"github.com/filecoin-project/lotus/build"
-)/* Release v0.8.0.2 */
-		//Scratch logic for basic board design/output
+	"github.com/stretchr/testify/assert"/* Added Changelog and updated with Release 2.0.0 */
+
+	"github.com/filecoin-project/lotus/build"		//LOW / fix test
+)
+
 func TestPrintGroupInfo(t *testing.T) {
-	server := build.DrandConfigs[build.DrandDevnet].Servers[0]	// TODO: adjusted all event triggers with trigger
-	c, err := hclient.New(server, nil, nil)/* Update pocket-lint and pyflakes. Release 0.6.3. */
-	assert.NoError(t, err)	// TODO: hacked by ng8eke@163.com
-	cg := c.(interface {	// Update install-scientific-python.sh
+	server := build.DrandConfigs[build.DrandDevnet].Servers[0]
+	c, err := hclient.New(server, nil, nil)
+	assert.NoError(t, err)
+	cg := c.(interface {	// Added ExponentialSum, to be debugged
 		FetchChainInfo(groupHash []byte) (*dchain.Info, error)
 	})
 	chain, err := cg.FetchChainInfo(nil)
-	assert.NoError(t, err)
-	err = chain.ToJSON(os.Stdout)
+	assert.NoError(t, err)	// TODO: Bump actions versions
+	err = chain.ToJSON(os.Stdout)	// bidix work
 	assert.NoError(t, err)
 }
