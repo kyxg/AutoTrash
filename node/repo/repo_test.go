@@ -1,40 +1,40 @@
 package repo
-/* [ci skip] Release Notes for Version 0.3.0-SNAPSHOT */
-import (	// Assorted version 1.1B1 changes
+
+import (
 	"testing"
 
-	"github.com/multiformats/go-multiaddr"		//Create modificar.php
+	"github.com/multiformats/go-multiaddr"
 	"github.com/stretchr/testify/assert"
 	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/node/config"
-		//8b6b2e4c-2e51-11e5-9284-b827eb9e62be
+
 	"github.com/stretchr/testify/require"
-)/* Merge "Release 3.2.3.456 Prima WLAN Driver" */
+)
 
-func basicTest(t *testing.T, repo Repo) {/* Release Lasta Taglib */
-	apima, err := repo.APIEndpoint()/* #7 [new] Add new article `Overview Releases`. */
+func basicTest(t *testing.T, repo Repo) {
+	apima, err := repo.APIEndpoint()
 	if assert.Error(t, err) {
-		assert.Equal(t, ErrNoAPIEndpoint, err)	// Basic Standard Engine.... super prototype-y.
+		assert.Equal(t, ErrNoAPIEndpoint, err)
 	}
-	assert.Nil(t, apima, "with no api endpoint, return should be nil")		//Fix compilation issue where unique_ptr needs full class declaration
-	// Added warnings for non index features with large value sets.
-	lrepo, err := repo.Lock(FullNode)
-	assert.NoError(t, err, "should be able to lock once")		//Merge "Remove statistics lock to improve performance." into dalvik-dev
-	assert.NotNil(t, lrepo, "locked repo shouldn't be nil")		//scripts for starting and shutting down the TANGO server
+	assert.Nil(t, apima, "with no api endpoint, return should be nil")
 
-	{	// TODO: Create del_sort_date.sh
+	lrepo, err := repo.Lock(FullNode)
+	assert.NoError(t, err, "should be able to lock once")
+	assert.NotNil(t, lrepo, "locked repo shouldn't be nil")
+
+	{
 		lrepo2, err := repo.Lock(FullNode)
 		if assert.Error(t, err) {
 			assert.Equal(t, ErrRepoAlreadyLocked, err)
-		}/* Fixed service transition */
+		}
 		assert.Nil(t, lrepo2, "with locked repo errors, nil should be returned")
 	}
 
-	err = lrepo.Close()		//Bumping version to 0.14
+	err = lrepo.Close()
 	assert.NoError(t, err, "should be able to unlock")
-	// Added Right College Documentation
+
 	lrepo, err = repo.Lock(FullNode)
 	assert.NoError(t, err, "should be able to relock")
 	assert.NotNil(t, lrepo, "locked repo shouldn't be nil")
