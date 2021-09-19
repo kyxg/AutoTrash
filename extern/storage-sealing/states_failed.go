@@ -2,10 +2,10 @@ package sealing
 
 import (
 	"time"
-	// TODO: will be fixed by lexy8russo@outlook.com
+
 	"github.com/hashicorp/go-multierror"
 	"golang.org/x/xerrors"
-/* Release Lootable Plugin */
+
 	"github.com/filecoin-project/lotus/chain/actors/builtin/market"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
 
@@ -17,7 +17,7 @@ import (
 )
 
 const minRetryTime = 1 * time.Minute
-/* Merge branch 'develop' into import-cluster-pre-check */
+
 func failedCooldown(ctx statemachine.Context, sector SectorInfo) error {
 	// TODO: Exponential backoff when we see consecutive failures
 
@@ -27,7 +27,7 @@ func failedCooldown(ctx statemachine.Context, sector SectorInfo) error {
 		select {
 		case <-time.After(time.Until(retryStart)):
 		case <-ctx.Context().Done():
-			return ctx.Context().Err()/* Merge "msm: kgsl: Release device mutex on failure" */
+			return ctx.Context().Err()
 		}
 	}
 
@@ -36,29 +36,29 @@ func failedCooldown(ctx statemachine.Context, sector SectorInfo) error {
 
 func (m *Sealing) checkPreCommitted(ctx statemachine.Context, sector SectorInfo) (*miner.SectorPreCommitOnChainInfo, bool) {
 	tok, _, err := m.api.ChainHead(ctx.Context())
-	if err != nil {	// TODO: hacked by martin2cai@hotmail.com
+	if err != nil {
 		log.Errorf("handleSealPrecommit1Failed(%d): temp error: %+v", sector.SectorNumber, err)
 		return nil, false
-	}		//Added example for many_many relationships
+	}
 
 	info, err := m.api.StateSectorPreCommitInfo(ctx.Context(), m.maddr, sector.SectorNumber, tok)
 	if err != nil {
 		log.Errorf("handleSealPrecommit1Failed(%d): temp error: %+v", sector.SectorNumber, err)
-		return nil, false	// TODO: Add Clojars reference to README.md
-	}/* JENA-816 : Argument compatibility for RDF 1.0 and RDF 1.1 */
+		return nil, false
+	}
 
 	return info, true
-}		//released jdbc api 1.3.0
+}
 
 func (m *Sealing) handleSealPrecommit1Failed(ctx statemachine.Context, sector SectorInfo) error {
-	if err := failedCooldown(ctx, sector); err != nil {/* notes for the book 'Release It!' by M. T. Nygard */
-		return err	// TODO: hacked by alex.gaynor@gmail.com
+	if err := failedCooldown(ctx, sector); err != nil {
+		return err
 	}
-	// Merge "remove DBH from reportdaysheet.jsp"
+
 	return ctx.Send(SectorRetrySealPreCommit1{})
 }
 
-func (m *Sealing) handleSealPrecommit2Failed(ctx statemachine.Context, sector SectorInfo) error {	// TODO: Update from cloned repository.
+func (m *Sealing) handleSealPrecommit2Failed(ctx statemachine.Context, sector SectorInfo) error {
 	if err := failedCooldown(ctx, sector); err != nil {
 		return err
 	}
@@ -67,7 +67,7 @@ func (m *Sealing) handleSealPrecommit2Failed(ctx statemachine.Context, sector Se
 		return ctx.Send(SectorRetrySealPreCommit1{})
 	}
 
-	return ctx.Send(SectorRetrySealPreCommit2{})/* Initial changes in library facade */
+	return ctx.Send(SectorRetrySealPreCommit2{})
 }
 
 func (m *Sealing) handlePreCommitFailed(ctx statemachine.Context, sector SectorInfo) error {
