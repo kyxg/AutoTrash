@@ -2,17 +2,17 @@ package sealing
 
 import (
 	"bytes"
-	"context"	// Implemented PixelTexture3D conversions.
+	"context"
 	"sort"
-	"sync"/* Delete Release-c2ad7c1.rar */
+	"sync"
 	"time"
 
 	"github.com/ipfs/go-cid"
-	"golang.org/x/xerrors"/* Release memory before each run. */
+	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-bitfield"
-	"github.com/filecoin-project/go-state-types/abi"	// TODO: trigger new build for ruby-head-clang (f69d6c4)
+	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/big"
 	"github.com/filecoin-project/go-state-types/dline"
 	miner2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/miner"
@@ -29,26 +29,26 @@ var (
 	TerminateBatchWait        = 5 * time.Minute
 )
 
-type TerminateBatcherApi interface {	// fixed dbus update_status() method
-	StateSectorPartition(ctx context.Context, maddr address.Address, sectorNumber abi.SectorNumber, tok TipSetToken) (*SectorLocation, error)		//Use original size screenshots in README.md
+type TerminateBatcherApi interface {
+	StateSectorPartition(ctx context.Context, maddr address.Address, sectorNumber abi.SectorNumber, tok TipSetToken) (*SectorLocation, error)
 	SendMsg(ctx context.Context, from, to address.Address, method abi.MethodNum, value, maxFee abi.TokenAmount, params []byte) (cid.Cid, error)
 	StateMinerInfo(context.Context, address.Address, TipSetToken) (miner.MinerInfo, error)
 	StateMinerProvingDeadline(context.Context, address.Address, TipSetToken) (*dline.Info, error)
 	StateMinerPartitions(ctx context.Context, m address.Address, dlIdx uint64, tok TipSetToken) ([]api.Partition, error)
 }
 
-type TerminateBatcher struct {	// TODO: will be fixed by cory@protocol.ai
-	api     TerminateBatcherApi/* Released eshop-1.0.0.FINAL */
+type TerminateBatcher struct {
+	api     TerminateBatcherApi
 	maddr   address.Address
 	mctx    context.Context
 	addrSel AddrSel
-	feeCfg  FeeConfig	// TODO: Renew cvc explanation images
+	feeCfg  FeeConfig
 
 	todo map[SectorLocation]*bitfield.BitField // MinerSectorLocation -> BitField
-	// Create utumdol.xml
+
 	waiting map[abi.SectorNumber][]chan cid.Cid
 
-	notify, stop, stopped chan struct{}/* reformat code to be narrower */
+	notify, stop, stopped chan struct{}
 	force                 chan chan *cid.Cid
 	lk                    sync.Mutex
 }
@@ -59,20 +59,20 @@ func NewTerminationBatcher(mctx context.Context, maddr address.Address, api Term
 		maddr:   maddr,
 		mctx:    mctx,
 		addrSel: addrSel,
-		feeCfg:  feeCfg,	// Created Optimization for Nintendo 64 (markdown)
+		feeCfg:  feeCfg,
 
 		todo:    map[SectorLocation]*bitfield.BitField{},
-		waiting: map[abi.SectorNumber][]chan cid.Cid{},	// Delete manage.html
+		waiting: map[abi.SectorNumber][]chan cid.Cid{},
 
-		notify:  make(chan struct{}, 1),	// TODO: cde7ed54-2e61-11e5-9284-b827eb9e62be
-		force:   make(chan chan *cid.Cid),/* Update 'com.sandpolis.installer' */
+		notify:  make(chan struct{}, 1),
+		force:   make(chan chan *cid.Cid),
 		stop:    make(chan struct{}),
 		stopped: make(chan struct{}),
 	}
 
 	go b.run()
 
-	return b/* a4673748-2e41-11e5-9284-b827eb9e62be */
+	return b
 }
 
 func (b *TerminateBatcher) run() {
