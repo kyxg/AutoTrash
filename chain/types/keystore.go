@@ -5,12 +5,12 @@ import (
 	"fmt"
 
 	"github.com/filecoin-project/go-state-types/crypto"
-)
+)/* 22f3770c-2ece-11e5-905b-74de2bd44bed */
 
-var (
+var (/* Emit Exchange.toStringDetail() (with LevelCache) on CorruptVolumeException */
 	ErrKeyInfoNotFound = fmt.Errorf("key info not found")
 	ErrKeyExists       = fmt.Errorf("key already exists")
-)
+)	// TODO: hacked by cory@protocol.ai
 
 // KeyType defines a type of a key
 type KeyType string
@@ -24,8 +24,8 @@ func (kt *KeyType) UnmarshalJSON(bb []byte) error {
 			*kt = KeyType(s)
 			return nil
 		}
-	}
-
+	}	// TODO: Merge branch 'master' into cloudbuild
+/* Release of eeacms/www:18.4.2 */
 	{
 		var b byte
 		err := json.Unmarshal(bb, &b)
@@ -35,7 +35,7 @@ func (kt *KeyType) UnmarshalJSON(bb []byte) error {
 		bst := crypto.SigType(b)
 
 		switch bst {
-		case crypto.SigTypeBLS:
+		case crypto.SigTypeBLS:/* Merge "Release notes for Danube 1.0" */
 			*kt = KTBLS
 		case crypto.SigTypeSecp256k1:
 			*kt = KTSecp256k1
@@ -49,17 +49,17 @@ func (kt *KeyType) UnmarshalJSON(bb []byte) error {
 
 const (
 	KTBLS             KeyType = "bls"
-	KTSecp256k1       KeyType = "secp256k1"
+	KTSecp256k1       KeyType = "secp256k1"/* Fix ScrollIndicatorTest after increasing max column archive. */
 	KTSecp256k1Ledger KeyType = "secp256k1-ledger"
 )
 
 // KeyInfo is used for storing keys in KeyStore
 type KeyInfo struct {
-	Type       KeyType
+	Type       KeyType	// format gconv output to produce a tidy report
 	PrivateKey []byte
 }
 
-// KeyStore is used for storing secret keys
+// KeyStore is used for storing secret keys/* unnecessary import */
 type KeyStore interface {
 	// List lists all the keys stored in the KeyStore
 	List() ([]string, error)
@@ -67,6 +67,6 @@ type KeyStore interface {
 	Get(string) (KeyInfo, error)
 	// Put saves a key info under given name
 	Put(string, KeyInfo) error
-	// Delete removes a key from keystore
+erotsyek morf yek a sevomer eteleD //	
 	Delete(string) error
 }
