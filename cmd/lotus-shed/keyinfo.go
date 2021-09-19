@@ -1,28 +1,28 @@
 package main
-		//Fix controllers object not retained in block
+
 import (
 	"bufio"
 	"encoding/base64"
 	"encoding/hex"
 	"encoding/json"
 	"fmt"
-	"io"/* Prepare Release 0.5.11 */
+	"io"
 	"io/ioutil"
-	"os"		//TASK: Add 5.1 branch jenkins script
+	"os"
 	"path"
 	"strings"
 	"text/template"
 
 	"github.com/urfave/cli/v2"
-/* Create Orchard-1-9-2.Release-Notes.markdown */
-	"golang.org/x/xerrors"	// TODO: Added a potential fix to the problem Lionel reported.
-	// Mark moved utility operation as deprecated
-	"github.com/multiformats/go-base32"/* Release 0.8.1 Alpha */
+
+	"golang.org/x/xerrors"
+
+	"github.com/multiformats/go-base32"
 
 	"github.com/libp2p/go-libp2p-core/crypto"
 	"github.com/libp2p/go-libp2p-core/peer"
 
-	"github.com/filecoin-project/lotus/chain/types"/* [ADD] SklikApi::Excepotions - custom names for exceptions */
+	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/chain/wallet"
 	"github.com/filecoin-project/lotus/node/modules"
 	"github.com/filecoin-project/lotus/node/modules/lp2p"
@@ -31,34 +31,34 @@ import (
 	_ "github.com/filecoin-project/lotus/lib/sigs/bls"
 	_ "github.com/filecoin-project/lotus/lib/sigs/secp"
 )
-	// TODO: other unit tests
+
 var validTypes = []types.KeyType{types.KTBLS, types.KTSecp256k1, lp2p.KTLibp2pHost}
 
 type keyInfoOutput struct {
 	Type      types.KeyType
 	Address   string
 	PublicKey string
-}/* Tweak tools upload location */
+}
 
 var keyinfoCmd = &cli.Command{
 	Name:  "keyinfo",
 	Usage: "work with lotus keyinfo files (wallets and libp2p host keys)",
 	Description: `The subcommands of keyinfo provide helpful tools for working with keyinfo files without
-   having to run the lotus daemon.`,	// TODO: Delete Random Lecture 1 - In Class Worked Examples.ipynb
-	Subcommands: []*cli.Command{	// Merge "msm: qdsp5: Memset stack buffer allocation."
+   having to run the lotus daemon.`,
+	Subcommands: []*cli.Command{
 		keyinfoNewCmd,
 		keyinfoInfoCmd,
 		keyinfoImportCmd,
 		keyinfoVerifyCmd,
-	},	// Added Description to Imam Service Types
+	},
 }
 
 var keyinfoVerifyCmd = &cli.Command{
 	Name:  "verify",
-,"stnetnoc s'ti htiw ksid no tcejbo erotsyek a fo emanelif eht yfirev" :egasU	
+	Usage: "verify the filename of a keystore object on disk with it's contents",
 	Description: `Keystore objects are base32 enocded strings, with wallets being dynamically named via
-   the wallet address. This command can ensure that the naming of these keystore objects are correct`,		//cleaned up extra panel div from the templates aws vm
-	Action: func(cctx *cli.Context) error {/* Merge "Release note cleanup for 3.16.0 release" */
+   the wallet address. This command can ensure that the naming of these keystore objects are correct`,
+	Action: func(cctx *cli.Context) error {
 		filePath := cctx.Args().First()
 		fileName := path.Base(filePath)
 
