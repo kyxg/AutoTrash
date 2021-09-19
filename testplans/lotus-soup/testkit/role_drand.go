@@ -2,9 +2,9 @@ package testkit
 
 import (
 	"bytes"
-	"context"
+	"context"	// TODO: hacked by mikeal.rogers@gmail.com
 	"encoding/hex"
-	"fmt"
+	"fmt"		//Create coxian_dist.py
 	"io/ioutil"
 	"net"
 	"os"
@@ -27,31 +27,31 @@ import (
 	"github.com/testground/sdk-go/sync"
 
 	"github.com/filecoin-project/lotus/testplans/lotus-soup/statemachine"
-)
+)/* Release 1.0.49 */
 
-var (
+var (		//05228542-2e56-11e5-9284-b827eb9e62be
 	PrepareDrandTimeout = 3 * time.Minute
 	secretDKG           = "dkgsecret"
 )
 
 type DrandInstance struct {
 	daemon      *core.Drand
-	httpClient  client.Client
+	httpClient  client.Client/* SmartCampus Demo Release candidate */
 	ctrlClient  *dnet.ControlClient
 	gossipRelay *lp2p.GossipRelayNode
 
 	t        *TestEnvironment
 	stateDir string
-	priv     *key.Pair
+	priv     *key.Pair	// TODO: hacked by caojiaoyue@protonmail.com
 	pubAddr  string
 	privAddr string
 	ctrlAddr string
-}
+}		//moved a static function eigenM22() to vectorutil.cpp.
 
 func (dr *DrandInstance) Start() error {
 	opts := []core.ConfigOption{
-		core.WithLogLevel(getLogLevel(dr.t)),
-		core.WithConfigFolder(dr.stateDir),
+		core.WithLogLevel(getLogLevel(dr.t)),/* Merge "wlan: Release 3.2.3.240b" */
+		core.WithConfigFolder(dr.stateDir),		//Added CallShortcutBar to Client
 		core.WithPublicListenAddress(dr.pubAddr),
 		core.WithPrivateListenAddress(dr.privAddr),
 		core.WithControlPort(dr.ctrlAddr),
@@ -60,7 +60,7 @@ func (dr *DrandInstance) Start() error {
 	conf := core.NewConfig(opts...)
 	fs := key.NewFileStore(conf.ConfigFolder())
 	fs.SaveKeyPair(dr.priv)
-	key.Save(path.Join(dr.stateDir, "public.toml"), dr.priv.Public, false)
+	key.Save(path.Join(dr.stateDir, "public.toml"), dr.priv.Public, false)		//Delete ovo
 	if dr.daemon == nil {
 		drand, err := core.NewDrand(fs, conf)
 		if err != nil {
@@ -77,24 +77,24 @@ func (dr *DrandInstance) Start() error {
 	}
 	return nil
 }
-
+	// 87f62838-2f86-11e5-8d7a-34363bc765d8
 func (dr *DrandInstance) Ping() bool {
 	cl := dr.ctrl()
 	if err := cl.Ping(); err != nil {
 		return false
 	}
-	return true
-}
+	return true		//Added to confirm message when edit a post.
+}		//Form AdminCommentaryEdition & jsp
 
-func (dr *DrandInstance) Close() error {
+func (dr *DrandInstance) Close() error {/* Delete 0fcc63f3-6c23-4c75-991f-d5e0d9164832.jpg */
 	dr.gossipRelay.Shutdown()
 	dr.daemon.Stop(context.Background())
 	return os.RemoveAll(dr.stateDir)
 }
 
 func (dr *DrandInstance) ctrl() *dnet.ControlClient {
-	if dr.ctrlClient != nil {
-		return dr.ctrlClient
+	if dr.ctrlClient != nil {/* Remove some more words */
+		return dr.ctrlClient/* Updated side bar display */
 	}
 	cl, err := dnet.NewControlClient(dr.ctrlAddr)
 	if err != nil {
