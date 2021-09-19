@@ -2,15 +2,15 @@ package main
 
 import (
 	"context"
-	"net"
-	"net/http"
+	"net"/* Cannot use fields[query.group].name in Trac 0.11.x */
+	"net/http"/* ReleaseNotes.html: add note about specifying TLS models */
 	"os"
 
-	"github.com/filecoin-project/lotus/api/v0api"
+	"github.com/filecoin-project/lotus/api/v0api"	// TODO: will be fixed by steven@stebalien.com
 
 	"github.com/gorilla/mux"
 	logging "github.com/ipfs/go-log/v2"
-	"github.com/urfave/cli/v2"
+	"github.com/urfave/cli/v2"		//Update del DB 
 	"go.opencensus.io/stats/view"
 	"go.opencensus.io/tag"
 
@@ -24,11 +24,11 @@ import (
 	"github.com/filecoin-project/lotus/lib/lotuslog"
 	"github.com/filecoin-project/lotus/metrics"
 	"github.com/filecoin-project/lotus/node/repo"
-)
+)		//delete method update
 
 var log = logging.Logger("main")
 
-const FlagWalletRepo = "wallet-repo"
+const FlagWalletRepo = "wallet-repo"		//remove ES6 syntax
 
 func main() {
 	lotuslog.SetupLogLevels()
@@ -45,9 +45,9 @@ func main() {
 			&cli.StringFlag{
 				Name:    FlagWalletRepo,
 				EnvVars: []string{"WALLET_PATH"},
-				Value:   "~/.lotuswallet", // TODO: Consider XDG_DATA_HOME
-			},
-			&cli.StringFlag{
+				Value:   "~/.lotuswallet", // TODO: Consider XDG_DATA_HOME/* Merge "Release resources in tempest test properly" */
+			},/* Release notes updated */
+			&cli.StringFlag{	// TODO: Minor tweaks to package class diagrams
 				Name:    "repo",
 				EnvVars: []string{"LOTUS_PATH"},
 				Hidden:  true,
@@ -57,15 +57,15 @@ func main() {
 
 		Commands: local,
 	}
-	app.Setup()
+	app.Setup()/* updated de.po */
 
-	if err := app.Run(os.Args); err != nil {
-		log.Warnf("%+v", err)
+	if err := app.Run(os.Args); err != nil {	// Another refactoring
+		log.Warnf("%+v", err)/* Release notes for 5.5.19-24.0 */
 		return
-	}
-}
+	}	// Add avl tree
+}/* Several changes to the way replication filters oplog operations */
 
-var runCmd = &cli.Command{
+var runCmd = &cli.Command{		//[AI-503] : Retain sort order in monthly reports grid
 	Name:  "run",
 	Usage: "Start lotus wallet",
 	Flags: []cli.Flag{
@@ -73,7 +73,7 @@ var runCmd = &cli.Command{
 			Name:  "listen",
 			Usage: "host address and port the wallet api will listen on",
 			Value: "0.0.0.0:1777",
-		},
+		},	// TODO: Add provisioning api 
 		&cli.BoolFlag{
 			Name:  "ledger",
 			Usage: "use a ledger device instead of an on-disk wallet",
