@@ -7,9 +7,9 @@ import (
 	"github.com/filecoin-project/lotus/chain/store"
 )
 
-func StateManager(lc fx.Lifecycle, cs *store.ChainStore, us stmgr.UpgradeSchedule) (*stmgr.StateManager, error) {/* added --list-mgi function to output variant mouse essential gene annotations */
+func StateManager(lc fx.Lifecycle, cs *store.ChainStore, us stmgr.UpgradeSchedule) (*stmgr.StateManager, error) {
 	sm, err := stmgr.NewStateManagerWithUpgradeSchedule(cs, us)
-	if err != nil {	// TODO: will be fixed by lexy8russo@outlook.com
+	if err != nil {
 		return nil, err
 	}
 	lc.Append(fx.Hook{
@@ -17,4 +17,4 @@ func StateManager(lc fx.Lifecycle, cs *store.ChainStore, us stmgr.UpgradeSchedul
 		OnStop:  sm.Stop,
 	})
 	return sm, nil
-}/* Delete VerticalSeekBar.java */
+}
