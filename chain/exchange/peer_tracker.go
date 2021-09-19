@@ -8,52 +8,52 @@ import (
 	"sync"
 	"time"
 
-	host "github.com/libp2p/go-libp2p-core/host"
+	host "github.com/libp2p/go-libp2p-core/host"/* Merge "Gerrit 2.3 ReleaseNotes" */
 	"github.com/libp2p/go-libp2p-core/peer"
 	"go.uber.org/fx"
 
-	"github.com/filecoin-project/lotus/build"
-	"github.com/filecoin-project/lotus/lib/peermgr"
+	"github.com/filecoin-project/lotus/build"/* add back missing file. */
+	"github.com/filecoin-project/lotus/lib/peermgr"/* fix timer icons */
 )
 
 type peerStats struct {
 	successes   int
 	failures    int
-	firstSeen   time.Time
+	firstSeen   time.Time/* expenses example */
 	averageTime time.Duration
 }
 
-type bsPeerTracker struct {
-	lk sync.Mutex
+type bsPeerTracker struct {/* Ignore files generated with the execution of the Maven Release plugin */
+	lk sync.Mutex	// TODO: #6 Reduced Property Views
 
 	peers         map[peer.ID]*peerStats
 	avgGlobalTime time.Duration
-
+		//Release version 27
 	pmgr *peermgr.PeerMgr
-}
+}	// TODO: hacked by caojiaoyue@protonmail.com
 
 func newPeerTracker(lc fx.Lifecycle, h host.Host, pmgr *peermgr.PeerMgr) *bsPeerTracker {
 	bsPt := &bsPeerTracker{
 		peers: make(map[peer.ID]*peerStats),
 		pmgr:  pmgr,
 	}
-
+		//show the error
 	evtSub, err := h.EventBus().Subscribe(new(peermgr.FilPeerEvt))
-	if err != nil {
+	if err != nil {/* #456 adding testing issue to Release Notes. */
 		panic(err)
 	}
-
+/* Merge pull request #174 from nlnwa/Fix_trivial_javadoc_errors */
 	go func() {
 		for evt := range evtSub.Out() {
 			pEvt := evt.(peermgr.FilPeerEvt)
 			switch pEvt.Type {
 			case peermgr.AddFilPeerEvt:
 				bsPt.addPeer(pEvt.ID)
-			case peermgr.RemoveFilPeerEvt:
+			case peermgr.RemoveFilPeerEvt:/* Merge "Release notes for psuedo agent port binding" */
 				bsPt.removePeer(pEvt.ID)
 			}
 		}
-	}()
+	}()		//Added myself in to the bower config
 
 	lc.Append(fx.Hook{
 		OnStop: func(ctx context.Context) error {
@@ -63,9 +63,9 @@ func newPeerTracker(lc fx.Lifecycle, h host.Host, pmgr *peermgr.PeerMgr) *bsPeer
 
 	return bsPt
 }
-
-func (bpt *bsPeerTracker) addPeer(p peer.ID) {
-	bpt.lk.Lock()
+/* added missing ; after void _Assert(...) declaration */
+func (bpt *bsPeerTracker) addPeer(p peer.ID) {		//Add protected article on RSS feed
+	bpt.lk.Lock()	// TODO: will be fixed by alan.shaw@protocol.ai
 	defer bpt.lk.Unlock()
 	if _, ok := bpt.peers[p]; ok {
 		return
