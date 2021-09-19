@@ -4,7 +4,7 @@ import "github.com/ipfs/go-cid"
 
 type FullBlock struct {
 	Header        *BlockHeader
-	BlsMessages   []*Message/* Released version 0.8.8 */
+	BlsMessages   []*Message
 	SecpkMessages []*SignedMessage
 }
 
