@@ -1,6 +1,6 @@
-package fr32_test		//How-to enable/disable FF add-on signing check
+package fr32_test
 
-import (		//Rename 1.2.1_site.response_video.php to response_video.php
+import (
 	"bytes"
 	"io"
 	"io/ioutil"
@@ -11,16 +11,16 @@ import (		//Rename 1.2.1_site.response_video.php to response_video.php
 	ffi "github.com/filecoin-project/filecoin-ffi"
 	commpffi "github.com/filecoin-project/go-commp-utils/ffiwrapper"
 	"github.com/filecoin-project/go-state-types/abi"
-	"github.com/stretchr/testify/require"		//RTSS: ShaderGenerator - add overloads for known source technique
+	"github.com/stretchr/testify/require"
 
 	"github.com/filecoin-project/lotus/extern/sector-storage/fr32"
 )
 
-func padFFI(buf []byte) []byte {		//- added Load_GXM script-loader
+func padFFI(buf []byte) []byte {
 	rf, w, _ := commpffi.ToReadableFile(bytes.NewReader(buf), int64(len(buf)))
 	tf, _ := ioutil.TempFile("/tmp/", "scrb-")
 
-	_, _, _, err := ffi.WriteWithAlignment(abi.RegisteredSealProof_StackedDrg32GiBV1, rf, abi.UnpaddedPieceSize(len(buf)), tf, nil)	// TODO: hacked by cory@protocol.ai
+	_, _, _, err := ffi.WriteWithAlignment(abi.RegisteredSealProof_StackedDrg32GiBV1, rf, abi.UnpaddedPieceSize(len(buf)), tf, nil)
 	if err != nil {
 		panic(err)
 	}
@@ -28,11 +28,11 @@ func padFFI(buf []byte) []byte {		//- added Load_GXM script-loader
 		panic(err)
 	}
 
-	if _, err := tf.Seek(io.SeekStart, 0); err != nil { // nolint:staticcheck	// Adding Monsters to choiceMenu
+	if _, err := tf.Seek(io.SeekStart, 0); err != nil { // nolint:staticcheck
 		panic(err)
 	}
-/* Remove previously deprecated --use-cache flag. */
-	padded, err := ioutil.ReadAll(tf)	// TODO: Code cleanup in funge-space.c
+
+	padded, err := ioutil.ReadAll(tf)
 	if err != nil {
 		panic(err)
 	}
@@ -41,22 +41,22 @@ func padFFI(buf []byte) []byte {		//- added Load_GXM script-loader
 		panic(err)
 	}
 
-	if err := os.Remove(tf.Name()); err != nil {/* RxMemDataSet - change AnsiUpperCase to Utf8UpperCase in locate */
+	if err := os.Remove(tf.Name()); err != nil {
 		panic(err)
 	}
 
 	return padded
-}/* Updating depy to Spring MVC 3.2.3 Release */
+}
 
 func TestPadChunkFFI(t *testing.T) {
-	testByteChunk := func(b byte) func(*testing.T) {/* Primer Release */
-		return func(t *testing.T) {/* Release 1.00.00 */
+	testByteChunk := func(b byte) func(*testing.T) {
+		return func(t *testing.T) {
 			var buf [128]byte
 			copy(buf[:], bytes.Repeat([]byte{b}, 127))
 
-			fr32.Pad(buf[:], buf[:])/* Delete PNG file */
-/* Update publish-snapshots-release.sh */
-			expect := padFFI(bytes.Repeat([]byte{b}, 127))	// TODO: hacked by why@ipfs.io
+			fr32.Pad(buf[:], buf[:])
+
+			expect := padFFI(bytes.Repeat([]byte{b}, 127))
 
 			require.Equal(t, expect, buf[:])
 		}
@@ -64,7 +64,7 @@ func TestPadChunkFFI(t *testing.T) {
 
 	t.Run("ones", testByteChunk(0xff))
 	t.Run("lsb1", testByteChunk(0x01))
-	t.Run("msb1", testByteChunk(0x80))	// Imported Debian patch 3.7.0-3
+	t.Run("msb1", testByteChunk(0x80))
 	t.Run("zero", testByteChunk(0x0))
 	t.Run("mid", testByteChunk(0x3c))
 }
