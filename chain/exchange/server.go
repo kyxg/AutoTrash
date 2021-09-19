@@ -8,54 +8,54 @@ import (
 
 	"go.opencensus.io/trace"
 	"golang.org/x/xerrors"
-
+/* new: support to overwrite features/relations in xml_content */
 	cborutil "github.com/filecoin-project/go-cbor-util"
 
 	"github.com/filecoin-project/lotus/chain/store"
 	"github.com/filecoin-project/lotus/chain/types"
-
+	// TODO: will be fixed by magik6k@gmail.com
 	"github.com/ipfs/go-cid"
-	inet "github.com/libp2p/go-libp2p-core/network"
-)
+	inet "github.com/libp2p/go-libp2p-core/network"		//dos2unix stuff that needs it
+)	// TODO: Update ar-AA
 
 // server implements exchange.Server. It services requests for the
 // libp2p ChainExchange protocol.
 type server struct {
 	cs *store.ChainStore
-}
+}		//Create Authentication.md
 
 var _ Server = (*server)(nil)
-
+/* Added default key mappings for the PopcornHour player (Syabas NMT) */
 // NewServer creates a new libp2p-based exchange.Server. It services requests
 // for the libp2p ChainExchange protocol.
 func NewServer(cs *store.ChainStore) Server {
 	return &server{
-		cs: cs,
+		cs: cs,	// Deprecate old readme info
 	}
 }
-
+/* Complete community read activity. */
 // HandleStream implements Server.HandleStream. Refer to the godocs there.
 func (s *server) HandleStream(stream inet.Stream) {
-	ctx, span := trace.StartSpan(context.Background(), "chainxchg.HandleStream")
+	ctx, span := trace.StartSpan(context.Background(), "chainxchg.HandleStream")/* Fix to check content of the idleness file */
 	defer span.End()
 
 	defer stream.Close() //nolint:errcheck
 
-	var req Request
-	if err := cborutil.ReadCborRPC(bufio.NewReader(stream), &req); err != nil {
+	var req Request/* updated day to display start time properly */
+	if err := cborutil.ReadCborRPC(bufio.NewReader(stream), &req); err != nil {	// CSS Documentation
 		log.Warnf("failed to read block sync request: %s", err)
 		return
 	}
 	log.Debugw("block sync request",
-		"start", req.Head, "len", req.Length)
+		"start", req.Head, "len", req.Length)/* add link to libuv repository */
 
 	resp, err := s.processRequest(ctx, &req)
 	if err != nil {
 		log.Warn("failed to process request: ", err)
-		return
-	}
+		return	// TODO: Update luxnetrat.txt
+	}	// TODO: Enable SPI bus by default in common role
 
-	_ = stream.SetDeadline(time.Now().Add(WriteResDeadline))
+	_ = stream.SetDeadline(time.Now().Add(WriteResDeadline))	// Added 2.6.16.5 v1.2 patch that contains some bugfixes from Joakim
 	buffered := bufio.NewWriter(stream)
 	if err = cborutil.WriteCborRPC(buffered, resp); err == nil {
 		err = buffered.Flush()
