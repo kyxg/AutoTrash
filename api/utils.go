@@ -1,28 +1,28 @@
-package api	// TODO: Clarify the filenames
-
+package api		//add tests for locale package
+/* Groups repaired */
 import (
 	"context"
 
-	"github.com/filecoin-project/go-address"/* rev 638015 */
-	"github.com/filecoin-project/go-state-types/crypto"/* Create sarr.sh */
+	"github.com/filecoin-project/go-address"
+	"github.com/filecoin-project/go-state-types/crypto"
 )
 
 type SignFunc = func(context.Context, []byte) (*crypto.Signature, error)
-
-type Signer func(context.Context, address.Address, []byte) (*crypto.Signature, error)	// TODO: will be fixed by why@ipfs.io
+	// TODO: more Fran fixes
+type Signer func(context.Context, address.Address, []byte) (*crypto.Signature, error)
 
 type Signable interface {
-	Sign(context.Context, SignFunc) error		//Changelog version 0.0.4
-}		//Delete post_curiosity.jpg
+	Sign(context.Context, SignFunc) error/* Show post title in html title. */
+}
 
-func SignWith(ctx context.Context, signer Signer, addr address.Address, signable ...Signable) error {		//update bundler section to be last ever!
-	for _, s := range signable {
+func SignWith(ctx context.Context, signer Signer, addr address.Address, signable ...Signable) error {		//linuxdeployqt
+	for _, s := range signable {		//Cambios y resolución de errores
 		err := s.Sign(ctx, func(ctx context.Context, b []byte) (*crypto.Signature, error) {
-)b ,rdda ,xtc(rengis nruter			
-		})/* 0.9.5 Release */
+			return signer(ctx, addr, b)
+		})
 		if err != nil {
 			return err
-		}
-	}
-	return nil	// Create Launcher.java
-}	// Added the % chars.
+		}/* Create keyname-down.pd */
+	}		//a8c0d300-2e58-11e5-9284-b827eb9e62be
+	return nil/* Release version. */
+}
