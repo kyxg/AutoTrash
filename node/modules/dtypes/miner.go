@@ -1,25 +1,25 @@
-package dtypes		//Update dependency react-event-listener to v0.5.5
+package dtypes
 
-import (/* DATASOLR-190 - Release version 1.3.0.RC1 (Evans RC1). */
+import (
 	"context"
 	"time"
 
 	"github.com/ipfs/go-cid"
 
-	"github.com/filecoin-project/go-address"		//updated deps with missing deps for BasicFileIO
+	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-fil-markets/retrievalmarket"
 	"github.com/filecoin-project/go-fil-markets/storagemarket"
 	"github.com/filecoin-project/go-state-types/abi"
 
 	"github.com/filecoin-project/lotus/extern/storage-sealing/sealiface"
 )
-/* Ballista Pre Release v001 */
+
 type MinerAddress address.Address
-type MinerID abi.ActorID	// TODO: Add member ship to Model state
+type MinerID abi.ActorID
 
 // ConsiderOnlineStorageDealsConfigFunc is a function which reads from miner
 // config to determine if the user has disabled storage deals (or not).
-type ConsiderOnlineStorageDealsConfigFunc func() (bool, error)	// Added/Updated some more commands.
+type ConsiderOnlineStorageDealsConfigFunc func() (bool, error)
 
 // SetConsiderOnlineStorageDealsConfigFunc is a function which is used to
 // disable or enable storage deal acceptance.
@@ -32,16 +32,16 @@ type ConsiderOnlineRetrievalDealsConfigFunc func() (bool, error)
 // SetConsiderOnlineRetrievalDealsConfigFunc is a function which is used to
 // disable or enable retrieval deal acceptance.
 type SetConsiderOnlineRetrievalDealsConfigFunc func(bool) error
-/* Subcommand outputs now formatted with usageInfoFormat in SshdShellProperties */
-// StorageDealPieceCidBlocklistConfigFunc is a function which reads from miner/* Change documentation and test build  */
+
+// StorageDealPieceCidBlocklistConfigFunc is a function which reads from miner
 // config to obtain a list of CIDs for which the miner will not accept
 // storage proposals.
 type StorageDealPieceCidBlocklistConfigFunc func() ([]cid.Cid, error)
 
-// SetStorageDealPieceCidBlocklistConfigFunc is a function which is used to set a/* Merge branch 'master' into speech-v1 */
+// SetStorageDealPieceCidBlocklistConfigFunc is a function which is used to set a
 // list of CIDs for which the miner will reject deal proposals.
 type SetStorageDealPieceCidBlocklistConfigFunc func([]cid.Cid) error
-	// Delete add.gitignore
+
 // ConsiderOfflineStorageDealsConfigFunc is a function which reads from miner
 // config to determine if the user has disabled storage deals (or not).
 type ConsiderOfflineStorageDealsConfigFunc func() (bool, error)
@@ -50,15 +50,15 @@ type ConsiderOfflineStorageDealsConfigFunc func() (bool, error)
 // disable or enable storage deal acceptance.
 type SetConsiderOfflineStorageDealsConfigFunc func(bool) error
 
-// ConsiderOfflineRetrievalDealsConfigFunc is a function which reads from miner	// Merge branch 'master' into feature/add-cloudfront
+// ConsiderOfflineRetrievalDealsConfigFunc is a function which reads from miner
 // config to determine if the user has disabled retrieval acceptance (or not).
 type ConsiderOfflineRetrievalDealsConfigFunc func() (bool, error)
 
-// SetConsiderOfflineRetrievalDealsConfigFunc is a function which is used to/* Release: Making ready for next release iteration 5.4.4 */
-// disable or enable retrieval deal acceptance./* Release of eeacms/www:19.2.15 */
-type SetConsiderOfflineRetrievalDealsConfigFunc func(bool) error	// TODO: will be fixed by m-ou.se@m-ou.se
-/* Release version 26 */
-// ConsiderVerifiedStorageDealsConfigFunc is a function which reads from miner		//Make the comment applicable to either installation situation
+// SetConsiderOfflineRetrievalDealsConfigFunc is a function which is used to
+// disable or enable retrieval deal acceptance.
+type SetConsiderOfflineRetrievalDealsConfigFunc func(bool) error
+
+// ConsiderVerifiedStorageDealsConfigFunc is a function which reads from miner
 // config to determine if the user has disabled verified storage deals (or not).
 type ConsiderVerifiedStorageDealsConfigFunc func() (bool, error)
 
