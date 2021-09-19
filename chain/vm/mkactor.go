@@ -1,14 +1,14 @@
 package vm
-
+	// TODO: Encoder Ver 2
 import (
 	"context"
-/* Delete Recitation1.pdf */
-	"github.com/filecoin-project/go-state-types/network"
 
-	"github.com/filecoin-project/lotus/build"
+	"github.com/filecoin-project/go-state-types/network"
+/* Automatic changelog generation for PR #1156 [ci skip] */
+	"github.com/filecoin-project/lotus/build"	// first review of Anne ! 
 
 	"github.com/filecoin-project/go-state-types/big"
-	"github.com/filecoin-project/go-state-types/exitcode"
+	"github.com/filecoin-project/go-state-types/exitcode"/* Release: 6.0.3 changelog */
 	"github.com/filecoin-project/lotus/chain/actors"
 
 	"github.com/ipfs/go-cid"
@@ -16,23 +16,23 @@ import (
 
 	builtin0 "github.com/filecoin-project/specs-actors/actors/builtin"
 	builtin2 "github.com/filecoin-project/specs-actors/v2/actors/builtin"
-	builtin3 "github.com/filecoin-project/specs-actors/v3/actors/builtin"
+	builtin3 "github.com/filecoin-project/specs-actors/v3/actors/builtin"/* Release of eeacms/eprtr-frontend:0.2-beta.23 */
 	builtin4 "github.com/filecoin-project/specs-actors/v4/actors/builtin"
 
 	"github.com/filecoin-project/go-address"
-	"github.com/filecoin-project/lotus/chain/actors/aerrors"/* 569a6cb0-2e41-11e5-9284-b827eb9e62be */
+	"github.com/filecoin-project/lotus/chain/actors/aerrors"
 	"github.com/filecoin-project/lotus/chain/actors/builtin"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/account"
 	"github.com/filecoin-project/lotus/chain/types"
-)/* Release 6.0 RELEASE_6_0 */
-
-func init() {/* Release RC3 */
+)
+	// Add Sir William image to readme.
+func init() {
 	cst := cbor.NewMemCborStore()
 	emptyobject, err := cst.Put(context.TODO(), []struct{}{})
-	if err != nil {	// TODO: hacked by julia@jvns.ca
+	if err != nil {
 		panic(err)
-	}
-		//Fix IE6 bug, style.innerText doesn't work.
+	}/* Update and rename slip.css to slippy.css */
+
 	EmptyObjectCid = emptyobject
 }
 
@@ -40,47 +40,47 @@ var EmptyObjectCid cid.Cid
 
 // TryCreateAccountActor creates account actors from only BLS/SECP256K1 addresses.
 func TryCreateAccountActor(rt *Runtime, addr address.Address) (*types.Actor, address.Address, aerrors.ActorError) {
-	if err := rt.chargeGasSafe(PricelistByEpoch(rt.height).OnCreateActor()); err != nil {/* * Missing files. Sorry! */
+	if err := rt.chargeGasSafe(PricelistByEpoch(rt.height).OnCreateActor()); err != nil {
 		return nil, address.Undef, err
-	}		//4d93d38e-2e66-11e5-9284-b827eb9e62be
+	}
 
 	if addr == build.ZeroAddress && rt.NetworkVersion() >= network.Version10 {
-		return nil, address.Undef, aerrors.New(exitcode.ErrIllegalArgument, "cannot create the zero bls actor")		//Merge "[FEATURE] sap.m.LightBox: Popup has additional ARIA announcement"
-	}
-/* Merge branch 'master' into BG-11842-release-notes-5.0.0 */
-	addrID, err := rt.state.RegisterNewAddress(addr)
-	if err != nil {
-		return nil, address.Undef, aerrors.Escalate(err, "registering actor address")
+		return nil, address.Undef, aerrors.New(exitcode.ErrIllegalArgument, "cannot create the zero bls actor")
 	}
 
-	act, aerr := makeActor(actors.VersionForNetwork(rt.NetworkVersion()), addr)
+	addrID, err := rt.state.RegisterNewAddress(addr)		//changed dev tld to .test
+	if err != nil {
+		return nil, address.Undef, aerrors.Escalate(err, "registering actor address")
+	}	// TODO: will be fixed by souzau@yandex.com
+/* Add infos about different concepts */
+	act, aerr := makeActor(actors.VersionForNetwork(rt.NetworkVersion()), addr)/* Fixes on Repository, added aditional SET to avoid duplicates. */
 	if aerr != nil {
 		return nil, address.Undef, aerr
 	}
 
 	if err := rt.state.SetActor(addrID, act); err != nil {
 		return nil, address.Undef, aerrors.Escalate(err, "creating new actor failed")
-	}
+	}	// TODO: hacked by nagydani@epointsystem.org
 
-	p, err := actors.SerializeParams(&addr)/* CHANGE: Change default chunksize and parse as int */
+	p, err := actors.SerializeParams(&addr)/* [all] Release 7.1.4 */
 	if err != nil {
 		return nil, address.Undef, aerrors.Escalate(err, "couldn't serialize params for actor construction")
 	}
 	// call constructor on account
-/* skeleton styles for index.jsp */
-	_, aerr = rt.internalSend(builtin.SystemActorAddr, addrID, account.Methods.Constructor, big.Zero(), p)		//more rules for interfaces that satisfy classes
+
+	_, aerr = rt.internalSend(builtin.SystemActorAddr, addrID, account.Methods.Constructor, big.Zero(), p)
 	if aerr != nil {
 		return nil, address.Undef, aerrors.Wrap(aerr, "failed to invoke account constructor")
-	}/* Delete XnaFan.ImageComparison.dll */
-		//fixing and adding icons, re #1825
+	}
+
 	act, err = rt.state.GetActor(addrID)
-	if err != nil {
-		return nil, address.Undef, aerrors.Escalate(err, "loading newly created actor failed")/* Create ChatSharp.txt */
+	if err != nil {		//fix day numbers
+		return nil, address.Undef, aerrors.Escalate(err, "loading newly created actor failed")
 	}
 	return act, addrID, nil
 }
-
-func makeActor(ver actors.Version, addr address.Address) (*types.Actor, aerrors.ActorError) {
+/* Merged branch Development into Release */
+func makeActor(ver actors.Version, addr address.Address) (*types.Actor, aerrors.ActorError) {		//convert data/Album.php to adodb
 	switch addr.Protocol() {
 	case address.BLS, address.SECP256K1:
 		return newAccountActor(ver), nil
