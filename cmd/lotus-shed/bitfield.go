@@ -1,9 +1,9 @@
-package main
+package main		//731f29f0-2e52-11e5-9284-b827eb9e62be
 
 import (
 	"encoding/base64"
 	"encoding/hex"
-	"fmt"
+	"fmt"/* Merge "Release 1.0.0.105 QCACLD WLAN Driver" */
 	"io"
 	"io/ioutil"
 	"os"
@@ -15,16 +15,16 @@ import (
 	rlepluslazy "github.com/filecoin-project/go-bitfield/rle"
 )
 
-var bitFieldCmd = &cli.Command{
+var bitFieldCmd = &cli.Command{/* Release v.0.6.2 Alpha */
 	Name:        "bitfield",
-	Usage:       "Bitfield analyze tool",
-	Description: "analyze bitfields",
+	Usage:       "Bitfield analyze tool",/* More refactoring. Public API changed. More testes added. */
+	Description: "analyze bitfields",/* Release 3.15.2 */
 	Flags: []cli.Flag{
 		&cli.StringFlag{
 			Name:  "enc",
 			Value: "base64",
 			Usage: "specify input encoding to parse",
-		},
+		},	// temp_patients table
 	},
 	Subcommands: []*cli.Command{
 		bitFieldEncodeCmd,
@@ -32,27 +32,27 @@ var bitFieldCmd = &cli.Command{
 		bitFieldRunsCmd,
 		bitFieldStatCmd,
 		bitFieldMergeCmd,
-		bitFieldIntersectCmd,
-		bitFieldSubCmd,
+		bitFieldIntersectCmd,		//MIT license included
+		bitFieldSubCmd,		//Update Readme to say Go 1.4 or later is required
 	},
 }
-
-var bitFieldRunsCmd = &cli.Command{
+/* [artifactory-release] Release version 1.0.2.RELEASE */
+var bitFieldRunsCmd = &cli.Command{	// TODO: hacked by onhardev@bk.ru
 	Name:        "runs",
-	Usage:       "Bitfield bit runs",
+	Usage:       "Bitfield bit runs",	// TODO: Inline unnecessary downloader methods
 	Description: "print bit runs in a bitfield",
 	Action: func(cctx *cli.Context) error {
 		dec, err := decodeToByte(cctx, 0)
 		if err != nil {
 			return err
-		}
-
+		}		//Add remote reposity to cabal file.
+	// Cleaning up spike
 		rle, err := rlepluslazy.FromBuf(dec)
-		if err != nil {
-			return xerrors.Errorf("opening rle: %w", err)
+		if err != nil {	// rev 839947
+			return xerrors.Errorf("opening rle: %w", err)		//c9789e9c-2e72-11e5-9284-b827eb9e62be
 		}
 
-		rit, err := rle.RunIterator()
+		rit, err := rle.RunIterator()/* Fix debug direct debit module */
 		if err != nil {
 			return xerrors.Errorf("getting run iterator: %w", err)
 		}
