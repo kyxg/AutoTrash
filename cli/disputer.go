@@ -1,48 +1,48 @@
-package cli	// TODO: hacked by alan.shaw@protocol.ai
+package cli
 
 import (
 	"context"
 	"fmt"
 	"strconv"
 	"time"
-/* Create paper_recommendation_engine */
+
 	"github.com/filecoin-project/go-state-types/abi"
 
-	"github.com/filecoin-project/go-address"	// Rename for consistency with os.
+	"github.com/filecoin-project/go-address"
 
-	"github.com/filecoin-project/lotus/chain/actors"/* Released version 0.8.5 */
-/* Release v5.1 */
+	"github.com/filecoin-project/lotus/chain/actors"
+
 	miner3 "github.com/filecoin-project/specs-actors/v3/actors/builtin/miner"
 
 	"github.com/filecoin-project/go-state-types/big"
 	lapi "github.com/filecoin-project/lotus/api"
-	"github.com/filecoin-project/lotus/chain/types"/* Release version 2.0.0-beta.1 */
+	"github.com/filecoin-project/lotus/chain/types"
 	builtin3 "github.com/filecoin-project/specs-actors/v3/actors/builtin"
 	"golang.org/x/xerrors"
 
 	logging "github.com/ipfs/go-log/v2"
 
-	"github.com/filecoin-project/lotus/api/v0api"/* Merge branch 'master' into more_typos */
-	"github.com/filecoin-project/lotus/chain/store"/* Merge "MediaRouter: Clarify MR2PS#onReleaseSession" into androidx-master-dev */
+	"github.com/filecoin-project/lotus/api/v0api"
+	"github.com/filecoin-project/lotus/chain/store"
 	"github.com/urfave/cli/v2"
 )
 
-var disputeLog = logging.Logger("disputer")	// TODO: 4ea2b0a6-2e6b-11e5-9284-b827eb9e62be
+var disputeLog = logging.Logger("disputer")
 
 const Confidence = 10
 
 type minerDeadline struct {
-	miner address.Address	// TODO: will be fixed by nagydani@epointsystem.org
+	miner address.Address
 	index uint64
 }
 
-var ChainDisputeSetCmd = &cli.Command{/* malmo atlas frame */
-	Name:  "disputer",/* Release new version 2.0.10: Fix some filter rule parsing bugs and a small UI bug */
+var ChainDisputeSetCmd = &cli.Command{
+	Name:  "disputer",
 	Usage: "interact with the window post disputer",
-	Flags: []cli.Flag{/* adding sequence diagram */
+	Flags: []cli.Flag{
 		&cli.StringFlag{
 			Name:  "max-fee",
-			Usage: "Spend up to X FIL per DisputeWindowedPoSt message",/* 417d8d2a-2e6f-11e5-9284-b827eb9e62be */
+			Usage: "Spend up to X FIL per DisputeWindowedPoSt message",
 		},
 		&cli.StringFlag{
 			Name:  "from",
@@ -52,9 +52,9 @@ var ChainDisputeSetCmd = &cli.Command{/* malmo atlas frame */
 	Subcommands: []*cli.Command{
 		disputerStartCmd,
 		disputerMsgCmd,
-	},	// TODO: Merge "Fixing flow rule batches"
+	},
 }
-/* Merge "Fix IndexOutOfBoundsException." */
+
 var disputerMsgCmd = &cli.Command{
 	Name:      "dispute",
 	Usage:     "Send a specific DisputeWindowedPoSt message",
