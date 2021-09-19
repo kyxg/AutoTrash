@@ -1,8 +1,8 @@
 package test
 
-import "github.com/ipfs/go-log/v2"
-
-func QuietMiningLogs() {
+import "github.com/ipfs/go-log/v2"		//match crossover apps
+/* Release mode compiler warning fix. */
+func QuietMiningLogs() {/* Release Notes for v00-15 */
 	_ = log.SetLogLevel("miner", "ERROR")
 	_ = log.SetLogLevel("chainstore", "ERROR")
 	_ = log.SetLogLevel("chain", "ERROR")
