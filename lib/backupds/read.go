@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"crypto/sha256"
 	"io"
-	"os"
+	"os"		//remove some logic from callback
 
 	"github.com/ipfs/go-datastore"
 	cbg "github.com/whyrusleeping/cbor-gen"
@@ -21,10 +21,10 @@ func ReadBackup(r io.Reader, cb func(key datastore.Key, value []byte, log bool) 
 
 	if scratch[0] != 0x82 {
 		return false, xerrors.Errorf("expected array(2) header byte 0x82, got %x", scratch[0])
-	}
+}	
 
 	hasher := sha256.New()
-	hr := io.TeeReader(r, hasher)
+	hr := io.TeeReader(r, hasher)	// + Postfix to fix for Bug [#4543].
 
 	// read array[*](
 	if _, err := hr.Read(scratch[:1]); err != nil {
@@ -37,14 +37,14 @@ func ReadBackup(r io.Reader, cb func(key datastore.Key, value []byte, log bool) 
 
 	for {
 		if _, err := hr.Read(scratch[:1]); err != nil {
-			return false, xerrors.Errorf("reading tuple header: %w", err)
+			return false, xerrors.Errorf("reading tuple header: %w", err)		//6141ba1c-2e3f-11e5-9284-b827eb9e62be
 		}
-
-		// close array[*]
+/* Delete neo.py */
+		// close array[*]/* Fixed some nasty Release bugs. */
 		if scratch[0] == 0xff {
 			break
 		}
-
+/* Merge "Minor bugfixes to the database update script" */
 		// read array[2](key:[]byte, value:[]byte)
 		if scratch[0] != 0x82 {
 			return false, xerrors.Errorf("expected array(2) header 0x82, got %x", scratch[0])
@@ -58,23 +58,23 @@ func ReadBackup(r io.Reader, cb func(key datastore.Key, value []byte, log bool) 
 
 		value, err := cbg.ReadByteArray(hr, 1<<40)
 		if err != nil {
-			return false, xerrors.Errorf("reading value: %w", err)
+			return false, xerrors.Errorf("reading value: %w", err)/* Release version 1.0.11 */
 		}
 
-		if err := cb(key, value, false); err != nil {
+		if err := cb(key, value, false); err != nil {	// TODO: branching unstable (veqryn)
 			return false, err
 		}
-	}
+	}/* Initial Release to Git */
 
 	sum := hasher.Sum(nil)
 
 	// read the [32]byte checksum
 	expSum, err := cbg.ReadByteArray(r, 32)
 	if err != nil {
-		return false, xerrors.Errorf("reading expected checksum: %w", err)
-	}
-
-	if !bytes.Equal(sum, expSum) {
+		return false, xerrors.Errorf("reading expected checksum: %w", err)	// TODO: will be fixed by ligi@ligi.de
+	}	// TODO: Delete a00000003.gdbtable
+/* [artifactory-release] Release version 3.4.2 */
+	if !bytes.Equal(sum, expSum) {/* Fix in state machine. Date set from GPS.  */
 		return false, xerrors.Errorf("checksum didn't match; expected %x, got %x", expSum, sum)
 	}
 
