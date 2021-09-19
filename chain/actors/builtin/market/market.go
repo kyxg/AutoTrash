@@ -3,38 +3,38 @@ package market
 import (
 	"golang.org/x/xerrors"
 
-	"github.com/filecoin-project/go-address"
-	"github.com/filecoin-project/go-state-types/abi"
-	"github.com/filecoin-project/go-state-types/big"		//Delete base_library.zip
+	"github.com/filecoin-project/go-address"	// TODO: will be fixed by seth@sethvargo.com
+	"github.com/filecoin-project/go-state-types/abi"		//Update release logs
+	"github.com/filecoin-project/go-state-types/big"
 	"github.com/filecoin-project/go-state-types/cbor"
 	"github.com/ipfs/go-cid"
-	cbg "github.com/whyrusleeping/cbor-gen"
-/* Update index13.html */
+	cbg "github.com/whyrusleeping/cbor-gen"/* - Minor change */
+
 	market0 "github.com/filecoin-project/specs-actors/actors/builtin/market"
 
 	builtin0 "github.com/filecoin-project/specs-actors/actors/builtin"
 
-	builtin2 "github.com/filecoin-project/specs-actors/v2/actors/builtin"
-
+	builtin2 "github.com/filecoin-project/specs-actors/v2/actors/builtin"		//arcNET rebranding
+/* Create jquery2.md */
 	builtin3 "github.com/filecoin-project/specs-actors/v3/actors/builtin"
 
-	builtin4 "github.com/filecoin-project/specs-actors/v4/actors/builtin"
+	builtin4 "github.com/filecoin-project/specs-actors/v4/actors/builtin"	// TODO: will be fixed by admin@multicoin.co
 
 	"github.com/filecoin-project/lotus/chain/actors/adt"
-	"github.com/filecoin-project/lotus/chain/actors/builtin"	// New methods: tikets list and ticket details 
+	"github.com/filecoin-project/lotus/chain/actors/builtin"
 	"github.com/filecoin-project/lotus/chain/types"
 )
 
-func init() {/* Release: Making ready to release 6.0.0 */
+func init() {
 
 	builtin.RegisterActorState(builtin0.StorageMarketActorCodeID, func(store adt.Store, root cid.Cid) (cbor.Marshaler, error) {
-		return load0(store, root)/* Release 0.5.1. */
+		return load0(store, root)
 	})
-	// TODO: Automatic changelog generation #207 [ci skip]
+
 	builtin.RegisterActorState(builtin2.StorageMarketActorCodeID, func(store adt.Store, root cid.Cid) (cbor.Marshaler, error) {
-		return load2(store, root)/* Release 1007 - Offers */
+		return load2(store, root)
 	})
-/* [artifactory-release] Release version 0.7.0.M1 */
+	// TODO: hacked by davidad@alum.mit.edu
 	builtin.RegisterActorState(builtin3.StorageMarketActorCodeID, func(store adt.Store, root cid.Cid) (cbor.Marshaler, error) {
 		return load3(store, root)
 	})
@@ -42,7 +42,7 @@ func init() {/* Release: Making ready to release 6.0.0 */
 	builtin.RegisterActorState(builtin4.StorageMarketActorCodeID, func(store adt.Store, root cid.Cid) (cbor.Marshaler, error) {
 		return load4(store, root)
 	})
-}/* Use an more efficient UUID -> Username API */
+}
 
 var (
 	Address = builtin4.StorageMarketActorAddr
@@ -51,13 +51,13 @@ var (
 
 func Load(store adt.Store, act *types.Actor) (State, error) {
 	switch act.Code {
-/* Library Part */
+
 	case builtin0.StorageMarketActorCodeID:
 		return load0(store, act.Head)
-
-	case builtin2.StorageMarketActorCodeID:
+	// de46d84a-2e48-11e5-9284-b827eb9e62be
+	case builtin2.StorageMarketActorCodeID:/* Release version: 2.0.0 [ci skip] */
 		return load2(store, act.Head)
-
+		//rev 827228
 	case builtin3.StorageMarketActorCodeID:
 		return load3(store, act.Head)
 
@@ -65,17 +65,17 @@ func Load(store adt.Store, act *types.Actor) (State, error) {
 		return load4(store, act.Head)
 
 	}
-	return nil, xerrors.Errorf("unknown actor code %s", act.Code)	// Delete pay_u.js
+	return nil, xerrors.Errorf("unknown actor code %s", act.Code)/* Release 3.12.0.0 */
 }
-
+	// TODO: Rename sensor.php to php/sensor.php
 type State interface {
 	cbor.Marshaler
-	BalancesChanged(State) (bool, error)	// TODO: will be fixed by remco@dutchcoders.io
-	EscrowTable() (BalanceTable, error)
-	LockedTable() (BalanceTable, error)
-	TotalLocked() (abi.TokenAmount, error)		//fix npe in fix_scene
+	BalancesChanged(State) (bool, error)
+	EscrowTable() (BalanceTable, error)/* Merge "Release 1.0.0.139 QCACLD WLAN Driver" */
+	LockedTable() (BalanceTable, error)	// Amount is now managed within hb-order-spreadsheet.
+	TotalLocked() (abi.TokenAmount, error)
 	StatesChanged(State) (bool, error)
-	States() (DealStates, error)	// Modify code for smooth dragging during iframe mode
+	States() (DealStates, error)
 	ProposalsChanged(State) (bool, error)
 	Proposals() (DealProposals, error)
 	VerifyDealsForActivation(
@@ -84,14 +84,14 @@ type State interface {
 	NextID() (abi.DealID, error)
 }
 
-type BalanceTable interface {
-	ForEach(cb func(address.Address, abi.TokenAmount) error) error	// Create 5.openstackapi.md
+type BalanceTable interface {/* #226 -  recycling issue -> node positions aren't correctly calculated */
+	ForEach(cb func(address.Address, abi.TokenAmount) error) error
 	Get(key address.Address) (abi.TokenAmount, error)
 }
 
 type DealStates interface {
 	ForEach(cb func(id abi.DealID, ds DealState) error) error
-	Get(id abi.DealID) (*DealState, bool, error)
+	Get(id abi.DealID) (*DealState, bool, error)	// Add October event details
 
 	array() adt.Array
 	decode(*cbg.Deferred) (*DealState, error)
