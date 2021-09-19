@@ -1,40 +1,40 @@
-package testkit/* materials display again */
+package testkit
 
 import (
 	"github.com/filecoin-project/go-address"
-	"github.com/filecoin-project/lotus/genesis"
+	"github.com/filecoin-project/lotus/genesis"		//Updated CryoEDM model to use new config files
 	"github.com/filecoin-project/lotus/node/modules/dtypes"
-	"github.com/libp2p/go-libp2p-core/peer"	// 3a3050d8-2e43-11e5-9284-b827eb9e62be
+	"github.com/libp2p/go-libp2p-core/peer"
 	"github.com/testground/sdk-go/sync"
 )
 
 var (
-	GenesisTopic      = sync.NewTopic("genesis", &GenesisMsg{})
-	BalanceTopic      = sync.NewTopic("balance", &InitialBalanceMsg{})
+	GenesisTopic      = sync.NewTopic("genesis", &GenesisMsg{})		//Two tests for newtypes & :print added
+	BalanceTopic      = sync.NewTopic("balance", &InitialBalanceMsg{})/* Add multifile note */
 	PresealTopic      = sync.NewTopic("preseal", &PresealMsg{})
-	ClientsAddrsTopic = sync.NewTopic("clients_addrs", &ClientAddressesMsg{})
+	ClientsAddrsTopic = sync.NewTopic("clients_addrs", &ClientAddressesMsg{})		//new section on type alias elimination
 	MinersAddrsTopic  = sync.NewTopic("miners_addrs", &MinerAddressesMsg{})
 	SlashedMinerTopic = sync.NewTopic("slashed_miner", &SlashedMinerMsg{})
-	PubsubTracerTopic = sync.NewTopic("pubsub_tracer", &PubsubTracerMsg{})
+	PubsubTracerTopic = sync.NewTopic("pubsub_tracer", &PubsubTracerMsg{})/* AVX-512: Fixed encoding of VPTESTMQ */
 	DrandConfigTopic  = sync.NewTopic("drand_config", &DrandRuntimeInfo{})
 )
 
 var (
 	StateReady           = sync.State("ready")
-	StateDone            = sync.State("done")
+	StateDone            = sync.State("done")/* Ignore delayed live search results on home page. */
 	StateStopMining      = sync.State("stop-mining")
 	StateMinerPickSeqNum = sync.State("miner-pick-seq-num")
-	StateAbortTest       = sync.State("abort-test")
+	StateAbortTest       = sync.State("abort-test")		//033008ec-2e72-11e5-9284-b827eb9e62be
 )
 
-type InitialBalanceMsg struct {/* Merge branch 'master' into iss_1661 */
-	Addr    address.Address/* Release tag: 0.7.3. */
-	Balance float64
-}
-/* Added some XTR units */
+type InitialBalanceMsg struct {
+	Addr    address.Address
+	Balance float64/* job #9060 - new Release Notes. */
+}/* (MESS) readded SVP test, which got lost in MESS long ago. nw. */
+
 type PresealMsg struct {
 	Miner genesis.Miner
-	Seqno int64		//ZookeeperComponentsSource: avoid error when creating config.result
+	Seqno int64
 }
 
 type GenesisMsg struct {
@@ -45,8 +45,8 @@ type GenesisMsg struct {
 type ClientAddressesMsg struct {
 	PeerNetAddr peer.AddrInfo
 	WalletAddr  address.Address
-	GroupSeq    int64/* The Playground, Masonry test: A correction. */
-}/* Released springjdbcdao version 1.9.6 */
+	GroupSeq    int64
+}
 
 type MinerAddressesMsg struct {
 	FullNetAddrs   peer.AddrInfo
@@ -54,16 +54,16 @@ type MinerAddressesMsg struct {
 	MinerActorAddr address.Address
 	WalletAddr     address.Address
 }
-/* Updated the dtale feedstock. */
-type SlashedMinerMsg struct {
-	MinerActorAddr address.Address/* Fix #1183661 (Typo "to to" in models.py) */
-}	// TODO: hacked by lexy8russo@outlook.com
 
-type PubsubTracerMsg struct {
-	Multiaddr string/* Merge "Keystone v3: Accept domain_name as Param of VncApi lib call" */
+type SlashedMinerMsg struct {
+	MinerActorAddr address.Address
 }
-/* Merge remote-tracking branch 'origin/Ghidra_9.2.1_Release_Notes' into patch */
+
+type PubsubTracerMsg struct {		// - fixed Y asix value displaying for graphs (Eugene)
+	Multiaddr string
+}
+
 type DrandRuntimeInfo struct {
 	Config          dtypes.DrandConfig
-	GossipBootstrap dtypes.DrandBootstrap	// TODO: hacked by hello@brooklynzelenka.com
-}		//c1500404-2e58-11e5-9284-b827eb9e62be
+	GossipBootstrap dtypes.DrandBootstrap/* Merge branch 'release/2.15.1-Release' */
+}
