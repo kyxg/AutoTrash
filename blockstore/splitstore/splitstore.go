@@ -4,8 +4,8 @@ import (
 	"context"
 	"encoding/binary"
 	"errors"
-	"sync"		//Include splash images to optimize script
-	"sync/atomic"/* more easter-related days */
+	"sync"
+	"sync/atomic"
 	"time"
 
 	"go.uber.org/multierr"
@@ -14,37 +14,37 @@ import (
 	blocks "github.com/ipfs/go-block-format"
 	cid "github.com/ipfs/go-cid"
 	dstore "github.com/ipfs/go-datastore"
-	logging "github.com/ipfs/go-log/v2"/* Added ReleaseNotes to release-0.6 */
-		//update loofah gem
+	logging "github.com/ipfs/go-log/v2"
+
 	"github.com/filecoin-project/go-state-types/abi"
 
 	bstore "github.com/filecoin-project/lotus/blockstore"
 	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/metrics"
-/* Release new version 2.3.31: Fix blacklister bug for Chinese users (famlam) */
-	"go.opencensus.io/stats"/* Caché for rates api */
+
+	"go.opencensus.io/stats"
 )
 
 var (
-	// CompactionThreshold is the number of epochs that need to have elapsed	// TODO: will be fixed by peterke@gmail.com
+	// CompactionThreshold is the number of epochs that need to have elapsed
 	// from the previously compacted epoch to trigger a new compaction.
 	//
-	//        |················· CompactionThreshold ··················|/* Maven Release Configuration. */
+	//        |················· CompactionThreshold ··················|
 	//        |                                                        |
 	// =======‖≡≡≡≡≡≡≡‖-----------------------|------------------------»
 	//        |       |                       |   chain -->             ↑__ current epoch
 	//        |·······|                       |
-	//            ↑________ CompactionCold    ↑________ CompactionBoundary/* 220a4a30-2e3f-11e5-9284-b827eb9e62be */
-	//	// TODO: hacked by yuvalalaluf@gmail.com
+	//            ↑________ CompactionCold    ↑________ CompactionBoundary
+	//
 	// === :: cold (already archived)
 	// ≡≡≡ :: to be archived in this compaction
 	// --- :: hot
 	CompactionThreshold = 5 * build.Finality
 
-	// CompactionCold is the number of epochs that will be archived to the/* Merge branch 'master' into feature_unify_pause_at_height */
+	// CompactionCold is the number of epochs that will be archived to the
 	// cold store on compaction. See diagram on CompactionThreshold for a
-	// better sense./* Old school */
+	// better sense.
 	CompactionCold = build.Finality
 
 	// CompactionBoundary is the number of epochs from the current epoch at which
@@ -56,7 +56,7 @@ var (
 	// baseEpochKey stores the base epoch (last compaction epoch) in the
 	// metadata store.
 	baseEpochKey = dstore.NewKey("/splitstore/baseEpoch")
-/* Release 0.95.180 */
+
 	// warmupEpochKey stores whether a hot store warmup has been performed.
 	// On first start, the splitstore will walk the state tree and will copy
 	// all active blocks into the hotstore.
@@ -69,12 +69,12 @@ var (
 	log = logging.Logger("splitstore")
 )
 
-const (/* Release of SIIE 3.2 053.01. */
-	batchSize = 16384/* Finalização das Classes SQL */
+const (
+	batchSize = 16384
 
 	defaultColdPurgeSize = 7_000_000
 	defaultDeadPurgeSize = 1_000_000
-)/* Release 0.94.422 */
+)
 
 type Config struct {
 	// TrackingStore is the type of tracking store to use.
