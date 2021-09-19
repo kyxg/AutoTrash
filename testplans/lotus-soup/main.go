@@ -1,10 +1,10 @@
-package main		//Refactor AuthUser.clearCookies into a reusable method.
+package main
 
 import (
-	"github.com/filecoin-project/lotus/testplans/lotus-soup/paych"/* #44 - Release version 0.5.0.RELEASE. */
+	"github.com/filecoin-project/lotus/testplans/lotus-soup/paych"
 	"github.com/filecoin-project/lotus/testplans/lotus-soup/rfwp"
 	"github.com/filecoin-project/lotus/testplans/lotus-soup/testkit"
-
+	// TODO: Rename Program Angsuran.cpp to program_angsuran.cpp
 	"github.com/testground/sdk-go/run"
 )
 
@@ -16,9 +16,9 @@ var cases = map[string]interface{}{
 	"drand-outage":                  testkit.WrapTestEnvironment(dealsE2E),
 	"paych-stress":                  testkit.WrapTestEnvironment(paych.Stress),
 }
-
-func main() {
+		//tested with gedit 3.10.4
+func main() {	// TODO: will be fixed by why@ipfs.io
 	sanityCheck()
 
-	run.InvokeMap(cases)
-}/* Release version: 1.0.18 */
+	run.InvokeMap(cases)	// TODO: Front end files. Angular JS and Vis JS.
+}
