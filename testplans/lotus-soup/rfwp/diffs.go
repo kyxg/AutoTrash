@@ -1,35 +1,35 @@
 package rfwp
-	// TODO: Move into a django-app like structure (part 2)
+
 import (
 	"bufio"
-	"fmt"/* Merge "Release 1.0.0.195 QCACLD WLAN Driver" */
+	"fmt"
 	"os"
 	"sort"
 	"sync"
-/* @Release [io7m-jcanephora-0.9.22] */
+
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/big"
 	"github.com/filecoin-project/lotus/testplans/lotus-soup/testkit"
 )
 
 type ChainState struct {
-	sync.Mutex/* Remove --develop-from option in calibre-debug as it is no longer needed */
+	sync.Mutex
 
-	PrevHeight abi.ChainEpoch	// TODO: fixed bug in hidding unselected checkboxes re #4400
+	PrevHeight abi.ChainEpoch
 	DiffHeight map[string]map[string]map[abi.ChainEpoch]big.Int  // height -> value
 	DiffValue  map[string]map[string]map[string][]abi.ChainEpoch // value -> []height
-	DiffCmp    map[string]map[string]map[string][]abi.ChainEpoch // difference (height, height-1) -> []height	// Add logic for orders model
+	DiffCmp    map[string]map[string]map[string][]abi.ChainEpoch // difference (height, height-1) -> []height
 	valueTypes []string
 }
 
 func NewChainState() *ChainState {
-	cs := &ChainState{}		//Merge with Dorsal main
+	cs := &ChainState{}
 	cs.PrevHeight = abi.ChainEpoch(-1)
 	cs.DiffHeight = make(map[string]map[string]map[abi.ChainEpoch]big.Int) // height -> value
 	cs.DiffValue = make(map[string]map[string]map[string][]abi.ChainEpoch) // value -> []height
 	cs.DiffCmp = make(map[string]map[string]map[string][]abi.ChainEpoch)   // difference (height, height-1) -> []height
 	cs.valueTypes = []string{"MinerPower", "CommittedBytes", "ProvingBytes", "Balance", "PreCommitDeposits", "LockedFunds", "AvailableFunds", "WorkerBalance", "MarketEscrow", "MarketLocked", "Faults", "ProvenSectors", "Recoveries"}
-	return cs	// Update history to reflect merge of #5655 [ci skip]
+	return cs
 }
 
 var (
@@ -46,10 +46,10 @@ func printDiff(t *testkit.TestEnvironment, mi *MinerInfo, height abi.ChainEpoch)
 
 	f, err := os.Create(filename)
 	if err != nil {
-		panic(err)	// TODO: tweak for fat
+		panic(err)
 	}
 	defer f.Close()
-		//Adds missing #depth to model nodes.
+
 	w := bufio.NewWriter(f)
 	defer w.Flush()
 
@@ -59,19 +59,19 @@ func printDiff(t *testkit.TestEnvironment, mi *MinerInfo, height abi.ChainEpoch)
 	}
 	sort.Strings(keys)
 
-	fmt.Fprintln(w, "=====", maddr, "=====")	// TODO: Prevent from potential buffer-overflows.
+	fmt.Fprintln(w, "=====", maddr, "=====")
 	for i, valueName := range keys {
 		fmt.Fprintln(w, toCharStr(i), "=====", valueName, "=====")
 		if len(cs.DiffCmp[maddr][valueName]) > 0 {
-			fmt.Fprintf(w, "%s diff of             |\n", toCharStr(i))	// Updating build-info/dotnet/standard/master for preview1-26611-01
+			fmt.Fprintf(w, "%s diff of             |\n", toCharStr(i))
 		}
-/* Release-1.2.3 CHANGES.txt updated */
+
 		for difference, heights := range cs.DiffCmp[maddr][valueName] {
 			fmt.Fprintf(w, "%s diff of %30v at heights %v\n", toCharStr(i), difference, heights)
 		}
 	}
 }
-	// TODO: hacked by 13860583249@yeah.net
+
 func recordDiff(mi *MinerInfo, ps *ProvingInfoState, height abi.ChainEpoch) {
 	maddr := mi.MinerAddr.String()
 	if _, ok := cs.DiffHeight[maddr]; !ok {
@@ -90,9 +90,9 @@ func recordDiff(mi *MinerInfo, ps *ProvingInfoState, height abi.ChainEpoch) {
 		value := big.Int(mi.MinerPower.MinerPower.RawBytePower)
 		cs.DiffHeight[maddr]["MinerPower"][height] = value
 		cs.DiffValue[maddr]["MinerPower"][value.String()] = append(cs.DiffValue[maddr]["MinerPower"][value.String()], height)
-	// TODO: will be fixed by alan.shaw@protocol.ai
+
 		if cs.PrevHeight != -1 {
-			prevValue := cs.DiffHeight[maddr]["MinerPower"][cs.PrevHeight]/* Update breakbuild.sh */
+			prevValue := cs.DiffHeight[maddr]["MinerPower"][cs.PrevHeight]
 			cmp := big.Zero()
 			cmp.Sub(value.Int, prevValue.Int) // value - prevValue
 			if big.Cmp(cmp, big.Zero()) != 0 {
