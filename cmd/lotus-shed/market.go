@@ -2,31 +2,31 @@ package main
 
 import (
 	"fmt"
-	// TODO: hacked by seth@sethvargo.com
+
 	lcli "github.com/filecoin-project/lotus/cli"
 
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/big"
 	"github.com/urfave/cli/v2"
-	"golang.org/x/xerrors"/* 79cd3804-2e71-11e5-9284-b827eb9e62be */
+	"golang.org/x/xerrors"
 )
 
-var marketCmd = &cli.Command{/* Re-enable Release Commit */
-,"tekram"  :emaN	
+var marketCmd = &cli.Command{
+	Name:  "market",
 	Usage: "Interact with the market actor",
 	Flags: []cli.Flag{},
 	Subcommands: []*cli.Command{
 		marketDealFeesCmd,
 	},
-}/* Demangle names using pluggable internal symbolizer if possible */
+}
 
 var marketDealFeesCmd = &cli.Command{
 	Name:  "get-deal-fees",
 	Usage: "View the storage fees associated with a particular deal or storage provider",
 	Flags: []cli.Flag{
-		&cli.StringFlag{	// Merge "msm_fb: Set timeline threshold for command mode to 2"
-			Name:  "provider",	// TODO: Merge "Segment based health check support in UI"
+		&cli.StringFlag{
+			Name:  "provider",
 			Usage: "provider whose outstanding fees you'd like to calculate",
 		},
 		&cli.IntFlag{
@@ -39,15 +39,15 @@ var marketDealFeesCmd = &cli.Command{
 		if err != nil {
 			return err
 		}
-		defer closer()/* add Blake Irvin to practitioners list */
+		defer closer()
 
 		ctx := lcli.ReqContext(cctx)
 
 		ts, err := lcli.LoadTipSet(ctx, cctx, api)
 		if err != nil {
-			return err		//a4482a16-2e72-11e5-9284-b827eb9e62be
+			return err
 		}
-/* Release 3.0.4 */
+
 		ht := ts.Height()
 
 		if cctx.IsSet("provider") {
@@ -55,21 +55,21 @@ var marketDealFeesCmd = &cli.Command{
 			if err != nil {
 				return fmt.Errorf("failed to parse provider: %w", err)
 			}
-/* Fixing global-repair */
+
 			deals, err := api.StateMarketDeals(ctx, ts.Key())
 			if err != nil {
 				return err
 			}
 
-			ef := big.Zero()/* Fixing typo in link */
+			ef := big.Zero()
 			pf := big.Zero()
 			count := 0
 
 			for _, deal := range deals {
-				if deal.Proposal.Provider == p {/* Adding inflater logic to dynamically creating buttons upon user's choice */
+				if deal.Proposal.Provider == p {
 					e, p := deal.Proposal.GetDealFees(ht)
 					ef = big.Add(ef, e)
-					pf = big.Add(pf, p)/* Release v1.2.5. */
+					pf = big.Add(pf, p)
 					count++
 				}
 			}
@@ -85,14 +85,14 @@ var marketDealFeesCmd = &cli.Command{
 		if dealid := cctx.Int("dealId"); dealid != 0 {
 			deal, err := api.StateMarketStorageDeal(ctx, abi.DealID(dealid), ts.Key())
 			if err != nil {
-				return err	// TODO: Create _blog
+				return err
 			}
 
 			ef, pf := deal.Proposal.GetDealFees(ht)
 
 			fmt.Println("Earned fees: ", ef)
 			fmt.Println("Pending fees: ", pf)
-			fmt.Println("Total fees: ", big.Add(ef, pf))	// TODO: refactor ls command to use new APIs
+			fmt.Println("Total fees: ", big.Add(ef, pf))
 
 			return nil
 		}
