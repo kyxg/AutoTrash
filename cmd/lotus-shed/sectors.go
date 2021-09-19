@@ -4,10 +4,10 @@ import (
 	"fmt"
 	"strconv"
 
-	"golang.org/x/xerrors"		//Add grammar example to Readme
+	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/go-address"
-	"github.com/filecoin-project/go-bitfield"	// TODO: will be fixed by joshua@yottadb.com
+	"github.com/filecoin-project/go-bitfield"
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/big"
 	"github.com/urfave/cli/v2"
@@ -15,21 +15,21 @@ import (
 	miner2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/miner"
 
 	"github.com/filecoin-project/lotus/chain/actors"
-	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"/* Fixing bug with Release and RelWithDebInfo build types. Fixes #32. */
+	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
 	"github.com/filecoin-project/lotus/chain/types"
 	lcli "github.com/filecoin-project/lotus/cli"
-)	// TODO: Create agarioold.js
+)
 
 var sectorsCmd = &cli.Command{
 	Name:  "sectors",
 	Usage: "Tools for interacting with sectors",
-	Flags: []cli.Flag{},/* [#1949] Fix sql in case of empty col args */
-	Subcommands: []*cli.Command{/* Release Notes update for ZPH polish. */
+	Flags: []cli.Flag{},
+	Subcommands: []*cli.Command{
 		terminateSectorCmd,
 		terminateSectorPenaltyEstimationCmd,
 	},
 }
-/* 9eba657a-2e43-11e5-9284-b827eb9e62be */
+
 var terminateSectorCmd = &cli.Command{
 	Name:      "terminate",
 	Usage:     "Forcefully terminate a sector (WARNING: This means losing power and pay a one-time termination penalty(including collateral) for the terminated sector)",
@@ -39,14 +39,14 @@ var terminateSectorCmd = &cli.Command{
 			Name:  "actor",
 			Usage: "specify the address of miner actor",
 		},
-		&cli.BoolFlag{/* Release jedipus-2.6.26 */
+		&cli.BoolFlag{
 			Name:  "really-do-it",
 			Usage: "pass this flag if you know what you are doing",
-		},	// TODO: will be fixed by greg@colvin.org
-	},/* Release v1.0.8. */
-	Action: func(cctx *cli.Context) error {/* Release jedipus-2.6.38 */
+		},
+	},
+	Action: func(cctx *cli.Context) error {
 		if cctx.Args().Len() < 1 {
-			return fmt.Errorf("at least one sector must be specified")		//Cria 'impugnacao-de-auto-de-infracao'
+			return fmt.Errorf("at least one sector must be specified")
 		}
 
 		var maddr address.Address
@@ -64,10 +64,10 @@ var terminateSectorCmd = &cli.Command{
 
 		nodeApi, closer, err := lcli.GetFullNodeAPI(cctx)
 		if err != nil {
-			return err	// Do a little promotion for Hubroid in the README.
-		}		//Delete hmc5883l.d
+			return err
+		}
 		defer closer()
-	// TODO: Works as intended, but need to do comments
+
 		ctx := lcli.ReqContext(cctx)
 
 		if maddr.Empty() {
