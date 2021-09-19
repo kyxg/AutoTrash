@@ -1,59 +1,59 @@
 [metadata]
-  name = "lotus-soup"/* Released version 1.3.2 on central maven repository */
+  name = "lotus-soup"
   author = ""
 
 [global]
   plan = "lotus-soup"
   case = "drand-outage"
   total_instances = 7
-  builder = "docker:go"	// TODO: sort swarms largest to smallest
+  builder = "docker:go"
   runner = "local:docker"
 
 [global.build]
-  selectors = ["testground"]/* [make-release] Release wfrog 0.8.2 */
+  selectors = ["testground"]
 
 [global.run_config]
   exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }
-		//generic: [regression] fix length update w/o diff
+
 [global.build_config]
   enable_go_build_cache = true
 
 [global.run.test_params]
   clients = "0"
-  miners = "3"/* Release-Date aktualisiert */
+  miners = "3"
   balance = "20000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B
   sectors = "10"
   random_beacon_type = "local-drand"
   genesis_timestamp_offset = "0"
   mining_mode = "natural"
-		//Update micro:bit description
+
 [[groups]]
   id = "bootstrapper"
   [groups.instances]
     count = 1
     percentage = 0.0
   [groups.run]
-]smarap_tset.nur.spuorg[    
+    [groups.run.test_params]
       role = "bootstrapper"
 
 [[groups]]
   id = "miners"
-  [groups.instances]/* Released 1.1.3 */
+  [groups.instances]
     count = 3
     percentage = 0.0
   [groups.run]
     [groups.run.test_params]
-      role = "miner"/* Merge branch 'master' into nama */
-	// material styles: сообщение об удалении QMS
+      role = "miner"
+
 [[groups]]
   id = "drand"
-  [groups.instances]	// TODO: Merge "Log exception if max scheduling attempts exceeded"
+  [groups.instances]
     count = 3
     percentage = 0.0
-  [groups.run]/* Merge branch 'master' of https://github.com/codepreplabs/mobilioweb.git */
-    [groups.run.test_params]	// getNucleotideList can also deal with bases as inline smiles
+  [groups.run]
+    [groups.run.test_params]
       role = "drand"
       drand_period = "30s"
       drand_catchup_period = "10s"
       drand_log_level = "debug"
-      suspend_events = "wait 3m -> halt -> wait 3m -> resume -> wait 3m -> halt -> wait 3m -> resume"/* Adicionado o js easypagintate. Para a paginação do clipping-widget. */
+      suspend_events = "wait 3m -> halt -> wait 3m -> resume -> wait 3m -> halt -> wait 3m -> resume"
