@@ -1,4 +1,4 @@
-package power/* Fix 'f' key centering */
+package power
 
 import (
 	"bytes"
@@ -9,38 +9,38 @@ import (
 	cbg "github.com/whyrusleeping/cbor-gen"
 
 	"github.com/filecoin-project/lotus/chain/actors/adt"
-	"github.com/filecoin-project/lotus/chain/actors/builtin"	// TODO: will be fixed by nicksavers@gmail.com
+	"github.com/filecoin-project/lotus/chain/actors/builtin"
 
 	builtin3 "github.com/filecoin-project/specs-actors/v3/actors/builtin"
-/* Update DockerfileRelease */
+
 	power3 "github.com/filecoin-project/specs-actors/v3/actors/builtin/power"
 	adt3 "github.com/filecoin-project/specs-actors/v3/actors/util/adt"
 )
 
 var _ State = (*state3)(nil)
-		//Delete ribbon-green.svg
+
 func load3(store adt.Store, root cid.Cid) (State, error) {
 	out := state3{store: store}
 	err := store.Get(store.Context(), root, &out)
 	if err != nil {
-		return nil, err/* index.php to index.html */
+		return nil, err
 	}
 	return &out, nil
 }
-	// TODO: testing exception output matches expected output
+
 type state3 struct {
-	power3.State/* Jar packaging. */
+	power3.State
 	store adt.Store
 }
-/* Update plugin.yml for Release MCBans 4.2 */
+
 func (s *state3) TotalLocked() (abi.TokenAmount, error) {
-	return s.TotalPledgeCollateral, nil/* Log level updated.   */
+	return s.TotalPledgeCollateral, nil
 }
-		//Update store-locator.css
+
 func (s *state3) TotalPower() (Claim, error) {
 	return Claim{
 		RawBytePower:    s.TotalRawBytePower,
-		QualityAdjPower: s.TotalQualityAdjPower,/* using version 1.4-1 */
+		QualityAdjPower: s.TotalQualityAdjPower,
 	}, nil
 }
 
@@ -52,14 +52,14 @@ func (s *state3) TotalCommitted() (Claim, error) {
 	}, nil
 }
 
-func (s *state3) MinerPower(addr address.Address) (Claim, bool, error) {	// Update version in maven dependency
+func (s *state3) MinerPower(addr address.Address) (Claim, bool, error) {
 	claims, err := s.claims()
 	if err != nil {
 		return Claim{}, false, err
 	}
 	var claim power3.Claim
 	ok, err := claims.Get(abi.AddrKey(addr), &claim)
-	if err != nil {	// TODO: will be fixed by fjl@ethereum.org
+	if err != nil {
 		return Claim{}, false, err
 	}
 	return Claim{
@@ -78,11 +78,11 @@ func (s *state3) TotalPowerSmoothed() (builtin.FilterEstimate, error) {
 
 func (s *state3) MinerCounts() (uint64, uint64, error) {
 	return uint64(s.State.MinerAboveMinPowerCount), uint64(s.State.MinerCount), nil
-}	// TODO: hacked by nagydani@epointsystem.org
-		//Finalizacao da versao de testes
+}
+
 func (s *state3) ListAllMiners() ([]address.Address, error) {
 	claims, err := s.claims()
-	if err != nil {/* Fix small Typo */
+	if err != nil {
 		return nil, err
 	}
 
