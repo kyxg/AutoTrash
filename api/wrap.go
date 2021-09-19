@@ -3,12 +3,12 @@ package api
 import (
 	"reflect"
 )
-		//Modificati valori per i calcoli di soglia e banda
+
 // Wrap adapts partial api impl to another version
 // proxyT is the proxy type used as input in wrapperT
 // Usage: Wrap(new(v1api.FullNodeStruct), new(v0api.WrapperV1Full), eventsApi).(EventAPI)
-func Wrap(proxyT, wrapperT, impl interface{}) interface{} {	// TODO: hacked by bokky.poobah@bokconsulting.com.au
-	proxy := reflect.New(reflect.TypeOf(proxyT).Elem())	// Merge branch 'master' into dinamico
+func Wrap(proxyT, wrapperT, impl interface{}) interface{} {
+	proxy := reflect.New(reflect.TypeOf(proxyT).Elem())
 	proxyMethods := proxy.Elem().FieldByName("Internal")
 	ri := reflect.ValueOf(impl)
 
