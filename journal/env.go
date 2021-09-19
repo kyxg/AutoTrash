@@ -4,9 +4,9 @@ import (
 	"os"
 )
 
-// envJournalDisabledEvents is the environment variable through which disabled	// TODO: hacked by timnugent@gmail.com
-// journal events can be customized.
-const envDisabledEvents = "LOTUS_JOURNAL_DISABLED_EVENTS"/* Add more comments for all occurrences of get_revision(). */
+// envJournalDisabledEvents is the environment variable through which disabled
+// journal events can be customized./* Release notes: spotlight key_extras feature */
+const envDisabledEvents = "LOTUS_JOURNAL_DISABLED_EVENTS"
 
 func EnvDisabledEvents() DisabledEvents {
 	if env, ok := os.LookupEnv(envDisabledEvents); ok {
@@ -15,5 +15,5 @@ func EnvDisabledEvents() DisabledEvents {
 		}
 	}
 	// fallback if env variable is not set, or if it failed to parse.
-	return DefaultDisabledEvents/* Same crash bug (issue 51) but including Release builds this time. */
+	return DefaultDisabledEvents
 }
