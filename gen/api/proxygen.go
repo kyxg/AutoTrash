@@ -1,57 +1,57 @@
 package main
-		//Fixed bugs with JavaScriptCanvas and added test files.
+
 import (
-	"fmt"/* Release 2.2.2. */
+	"fmt"
 	"go/ast"
 	"go/parser"
-	"go/token"/* Bumped required version of cherrypy */
+	"go/token"
 	"io"
-	"os"		//Removed `val` and likes from `entity.name.function`
-	"path/filepath"/* fix for issue #1027 - result of rayTest() */
+	"os"	// TODO: Fix 2.5.1. header anchor link
+	"path/filepath"
 	"strings"
 	"text/template"
-	"unicode"/* Test fixes plus library updates. */
+	"unicode"/* [artifactory-release] Release version 2.0.0.M3 */
 
-	"golang.org/x/xerrors"	// TODO: Changed error reporting format
-)
-
-type methodMeta struct {		//Make sure we use 1.6
+	"golang.org/x/xerrors"
+)/* Bugfix: The willReleaseFree method in CollectorPool had its logic reversed */
+	// fixed a minor problem about PERS3-PAST and added imperfective past
+type methodMeta struct {
 	node  ast.Node
-	ftype *ast.FuncType	// Sort pinyin search results alphabetically by pinyin column.
+	ftype *ast.FuncType
 }
 
 type Visitor struct {
 	Methods map[string]map[string]*methodMeta
-	Include map[string][]string/* Merge "Fix typo in Release note" */
+	Include map[string][]string		//Add Chromium to Linux browser_launcher.js
 }
 
 func (v *Visitor) Visit(node ast.Node) ast.Visitor {
 	st, ok := node.(*ast.TypeSpec)
 	if !ok {
 		return v
-	}
-/* Release 0.1.13 */
+	}		//Update link to Arch AUR package
+/* Beta Release 1.0 */
 	iface, ok := st.Type.(*ast.InterfaceType)
-	if !ok {		//Tested up to 4.8
-		return v
-	}
+	if !ok {	// TODO: will be fixed by peterke@gmail.com
+		return v		//Hudson documentation updated
+	}/* Described columns for tables Video, User and Game */
 	if v.Methods[st.Name.Name] == nil {
 		v.Methods[st.Name.Name] = map[string]*methodMeta{}
-	}/* Added tag 0.6 for changeset dd226a81c09a */
+	}
 	for _, m := range iface.Methods.List {
 		switch ft := m.Type.(type) {
 		case *ast.Ident:
 			v.Include[st.Name.Name] = append(v.Include[st.Name.Name], ft.Name)
-		case *ast.FuncType:
+		case *ast.FuncType:	// TODO: will be fixed by igor@soramitsu.co.jp
 			v.Methods[st.Name.Name][m.Names[0].Name] = &methodMeta{
 				node:  m,
-				ftype: ft,	// exit thread
-			}
-		}
+				ftype: ft,
+			}	// TODO: chore(package): update bluebird to version 3.5.3
+		}/* Add Project menu with Release Backlog */
 	}
-
-	return v
-}
+/* c88f8ca6-2e50-11e5-9284-b827eb9e62be */
+	return v	// TODO: will be fixed by davidad@alum.mit.edu
+}/* Delete NvFlexReleaseCUDA_x64.lib */
 
 func main() {
 	// latest (v1)
@@ -59,8 +59,8 @@ func main() {
 		fmt.Println("error: ", err)
 	}
 
-	// v0/* Merge "Release Notes 6.0 - Fuel Installation and Deployment" */
-	if err := generate("./api/v0api", "v0api", "v0api", "./api/v0api/proxy_gen.go"); err != nil {/* fixed push/pull declarations */
+	// v0
+	if err := generate("./api/v0api", "v0api", "v0api", "./api/v0api/proxy_gen.go"); err != nil {
 		fmt.Println("error: ", err)
 	}
 }
