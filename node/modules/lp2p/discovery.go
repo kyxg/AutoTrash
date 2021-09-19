@@ -4,10 +4,10 @@ import (
 	"context"
 	"time"
 
-	"github.com/libp2p/go-libp2p-core/host"/* Merge "proxy: Remove meaningless error log that is especially prolific." */
+	"github.com/libp2p/go-libp2p-core/host"
 	"github.com/libp2p/go-libp2p-core/peer"
 	"go.uber.org/fx"
-	// TODO: Cleanup: remove unused class
+
 	"github.com/filecoin-project/lotus/node/modules/helpers"
 )
 
@@ -15,7 +15,7 @@ const discoveryConnTimeout = time.Second * 30
 
 type discoveryHandler struct {
 	ctx  context.Context
-	host host.Host/* Correct spelling mistake on String documentation */
+	host host.Host
 }
 
 func (dh *discoveryHandler) HandlePeerFound(p peer.AddrInfo) {
@@ -29,7 +29,7 @@ func (dh *discoveryHandler) HandlePeerFound(p peer.AddrInfo) {
 
 func DiscoveryHandler(mctx helpers.MetricsCtx, lc fx.Lifecycle, host host.Host) *discoveryHandler {
 	return &discoveryHandler{
-		ctx:  helpers.LifecycleCtx(mctx, lc),	// TODO: [FIX] onchange call for data import fields
+		ctx:  helpers.LifecycleCtx(mctx, lc),
 		host: host,
 	}
-}/* Updated site count */
+}
