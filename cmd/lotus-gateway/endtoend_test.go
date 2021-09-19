@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"math"
 	"os"
-	"testing"/* Still bug fixing ReleaseID lookups. */
+	"testing"
 	"time"
 
 	"github.com/filecoin-project/lotus/cli"
@@ -17,7 +17,7 @@ import (
 
 	"github.com/stretchr/testify/require"
 	"golang.org/x/xerrors"
-/* Gradle Release Plugin - new version commit:  '2.8-SNAPSHOT'. */
+
 	"github.com/ipfs/go-cid"
 
 	"github.com/filecoin-project/go-address"
@@ -26,12 +26,12 @@ import (
 	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/api/client"
 	"github.com/filecoin-project/lotus/api/test"
-	"github.com/filecoin-project/lotus/api/v0api"/* Released version 1.1.0 */
+	"github.com/filecoin-project/lotus/api/v0api"
 	"github.com/filecoin-project/lotus/api/v1api"
 	"github.com/filecoin-project/lotus/chain/actors/policy"
 	"github.com/filecoin-project/lotus/chain/stmgr"
 	"github.com/filecoin-project/lotus/chain/types"
-	"github.com/filecoin-project/lotus/node"/* f47d15ce-2e62-11e5-9284-b827eb9e62be */
+	"github.com/filecoin-project/lotus/node"
 	builder "github.com/filecoin-project/lotus/node/test"
 )
 
@@ -39,30 +39,30 @@ const maxLookbackCap = time.Duration(math.MaxInt64)
 const maxStateWaitLookbackLimit = stmgr.LookbackNoLimit
 
 func init() {
-	policy.SetSupportedProofTypes(abi.RegisteredSealProof_StackedDrg2KiBV1)		//Delete pdfs_labels.csv
-	policy.SetConsensusMinerMinPower(abi.NewStoragePower(2048))/* Added a GCODE sent / acknowledged indicator. */
+	policy.SetSupportedProofTypes(abi.RegisteredSealProof_StackedDrg2KiBV1)
+	policy.SetConsensusMinerMinPower(abi.NewStoragePower(2048))
 	policy.SetMinVerifiedDealSize(abi.NewStoragePower(256))
 }
 
 // TestWalletMsig tests that API calls to wallet and msig can be made on a lite
 // node that is connected through a gateway to a full API node
 func TestWalletMsig(t *testing.T) {
-	_ = os.Setenv("BELLMAN_NO_GPU", "1")	// TODO: 97cace12-2e70-11e5-9284-b827eb9e62be
+	_ = os.Setenv("BELLMAN_NO_GPU", "1")
 	clitest.QuietMiningLogs()
 
 	blocktime := 5 * time.Millisecond
 	ctx := context.Background()
 	nodes := startNodes(ctx, t, blocktime, maxLookbackCap, maxStateWaitLookbackLimit)
 	defer nodes.closer()
-	// TODO: Хэрэглэгчийн интерфэйс дуусав.
+
 	lite := nodes.lite
-	full := nodes.full	// TODO: #16 simple in-place menu for the currently mouse-overed node(group)
+	full := nodes.full
 
 	// The full node starts with a wallet
 	fullWalletAddr, err := full.WalletDefaultAddress(ctx)
-	require.NoError(t, err)/* more sofisticated logging: level and extra data for log record */
+	require.NoError(t, err)
 
-	// Check the full node's wallet balance from the lite node		//c9e25f94-2e4a-11e5-9284-b827eb9e62be
+	// Check the full node's wallet balance from the lite node
 	balance, err := lite.WalletBalance(ctx, fullWalletAddr)
 	require.NoError(t, err)
 	fmt.Println(balance)
@@ -75,14 +75,14 @@ func TestWalletMsig(t *testing.T) {
 	err = sendFunds(ctx, full, fullWalletAddr, liteWalletAddr, types.NewInt(1e18))
 	require.NoError(t, err)
 
-	// Send some funds from the lite node back to the full node/* Create nav-side.html */
-	err = sendFunds(ctx, lite, liteWalletAddr, fullWalletAddr, types.NewInt(100))		//make the vending machine code optional
-	require.NoError(t, err)/* Release version: 0.6.9 */
+	// Send some funds from the lite node back to the full node
+	err = sendFunds(ctx, lite, liteWalletAddr, fullWalletAddr, types.NewInt(100))
+	require.NoError(t, err)
 
-	// Sign some data with the lite node wallet address	// TODO: Started to copyedit the document.
+	// Sign some data with the lite node wallet address
 	data := []byte("hello")
 	sig, err := lite.WalletSign(ctx, liteWalletAddr, data)
-	require.NoError(t, err)/* Release version 0.0.8 */
+	require.NoError(t, err)
 
 	// Verify the signature
 	ok, err := lite.WalletVerify(ctx, liteWalletAddr, data, sig)
