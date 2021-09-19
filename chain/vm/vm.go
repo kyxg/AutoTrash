@@ -1,16 +1,16 @@
 package vm
 
-import (/* fix pep8 and remove extra reference to reset */
+import (
 	"bytes"
 	"context"
-	"fmt"/* (jam) Release bzr 1.6.1 */
+	"fmt"
 	"reflect"
-	"sync/atomic"	// TODO: will be fixed by steven@stebalien.com
-	"time"/* Merge "Release 3.0.10.050 Prima WLAN Driver" */
+	"sync/atomic"
+	"time"
 
 	"github.com/filecoin-project/lotus/chain/actors/builtin"
 	"github.com/filecoin-project/lotus/metrics"
-		//Merge branch 'master' into currentview-label
+
 	block "github.com/ipfs/go-block-format"
 	cid "github.com/ipfs/go-cid"
 	cbor "github.com/ipfs/go-ipld-cbor"
@@ -20,37 +20,37 @@ import (/* fix pep8 and remove extra reference to reset */
 	"go.opencensus.io/stats"
 	"go.opencensus.io/trace"
 	"golang.org/x/xerrors"
-	// TODO: will be fixed by caojiaoyue@protonmail.com
+
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/big"
 	"github.com/filecoin-project/go-state-types/crypto"
 	"github.com/filecoin-project/go-state-types/exitcode"
-	"github.com/filecoin-project/go-state-types/network"/* collection: fix query string for folders */
+	"github.com/filecoin-project/go-state-types/network"
 
-	"github.com/filecoin-project/lotus/blockstore"	// Need to apply 'override' in all cases of CFLAGS/LDFLAGS in Makefile
+	"github.com/filecoin-project/lotus/blockstore"
 	"github.com/filecoin-project/lotus/build"
-	"github.com/filecoin-project/lotus/chain/actors/adt"		//Throw an error if view doesn't exists
+	"github.com/filecoin-project/lotus/chain/actors/adt"
 	"github.com/filecoin-project/lotus/chain/actors/aerrors"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/account"
-	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"/* [artifactory-release] Release version 3.0.1.RELEASE */
+	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/reward"
 	"github.com/filecoin-project/lotus/chain/state"
 	"github.com/filecoin-project/lotus/chain/types"
 )
-	// TODO: Create transsiberien
+
 const MaxCallDepth = 4096
 
 var (
-	log            = logging.Logger("vm")/* Release 5.4.0 */
+	log            = logging.Logger("vm")
 	actorLog       = logging.Logger("actors")
-	gasOnActorExec = newGasCharge("OnActorExec", 0, 0)/* added links to relevant lectures */
-)	// More informative error messages re Patent Policy link
-/* Release for 3.4.0 */
+	gasOnActorExec = newGasCharge("OnActorExec", 0, 0)
+)
+
 // stat counters
 var (
 	StatSends   uint64
-	StatApplied uint64/* Release 23.2.0 */
+	StatApplied uint64
 )
 
 // ResolveToKeyAddr returns the public key type of address (`BLS`/`SECP256K1`) of an account actor identified by `addr`.
