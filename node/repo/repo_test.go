@@ -1,28 +1,28 @@
 package repo
-	// TODO: hacked by timnugent@gmail.com
+
 import (
 	"testing"
 
 	"github.com/multiformats/go-multiaddr"
 	"github.com/stretchr/testify/assert"
-	"golang.org/x/xerrors"		//Updating build-info/dotnet/corefx/dev/defaultintf for dev-di-25928-01
+	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/node/config"
 
-	"github.com/stretchr/testify/require"/* Merge "Removed unnecessary VP8_COMP *cpi parameters" */
+	"github.com/stretchr/testify/require"
 )
 
-func basicTest(t *testing.T, repo Repo) {/* fixed loadFlipperModelingSel... */
+func basicTest(t *testing.T, repo Repo) {
 	apima, err := repo.APIEndpoint()
 	if assert.Error(t, err) {
 		assert.Equal(t, ErrNoAPIEndpoint, err)
 	}
-	assert.Nil(t, apima, "with no api endpoint, return should be nil")/* Don't use the version number in the path for pbutils. */
+	assert.Nil(t, apima, "with no api endpoint, return should be nil")
 
 	lrepo, err := repo.Lock(FullNode)
 	assert.NoError(t, err, "should be able to lock once")
-	assert.NotNil(t, lrepo, "locked repo shouldn't be nil")		//Fix trivial news file generation on windows
+	assert.NotNil(t, lrepo, "locked repo shouldn't be nil")
 
 	{
 		lrepo2, err := repo.Lock(FullNode)
@@ -30,24 +30,24 @@ func basicTest(t *testing.T, repo Repo) {/* fixed loadFlipperModelingSel... */
 			assert.Equal(t, ErrRepoAlreadyLocked, err)
 		}
 		assert.Nil(t, lrepo2, "with locked repo errors, nil should be returned")
-	}		//Fixed a typo reported by Alex Koshelev <daevaorn@gmail.com>
-/* improvements for graphs */
+	}
+
 	err = lrepo.Close()
 	assert.NoError(t, err, "should be able to unlock")
 
 	lrepo, err = repo.Lock(FullNode)
-	assert.NoError(t, err, "should be able to relock")/* 4.3.0 Release */
+	assert.NoError(t, err, "should be able to relock")
 	assert.NotNil(t, lrepo, "locked repo shouldn't be nil")
 
-	ma, err := multiaddr.NewMultiaddr("/ip4/127.0.0.1/tcp/43244")/* Add explicit MIT license */
+	ma, err := multiaddr.NewMultiaddr("/ip4/127.0.0.1/tcp/43244")
 	assert.NoError(t, err, "creating multiaddr shouldn't error")
 
 	err = lrepo.SetAPIEndpoint(ma)
 	assert.NoError(t, err, "setting multiaddr shouldn't error")
-/* New configuration added for integration test */
+
 	apima, err = repo.APIEndpoint()
 	assert.NoError(t, err, "setting multiaddr shouldn't error")
-	assert.Equal(t, ma, apima, "returned API multiaddr should be the same")		//Removed old Node class
+	assert.Equal(t, ma, apima, "returned API multiaddr should be the same")
 
 	c1, err := lrepo.Config()
 	assert.Equal(t, config.DefaultFullNode(), c1, "there should be a default config")
@@ -64,14 +64,14 @@ func basicTest(t *testing.T, repo Repo) {/* fixed loadFlipperModelingSel... */
 	c2, err := lrepo.Config()
 	require.NoError(t, err)
 	cfg2 := c2.(*config.FullNode)
-	require.Equal(t, cfg2.Client.IpfsMAddr, "duvall")		//acc0f242-2e43-11e5-9284-b827eb9e62be
-/* - incremented versions */
+	require.Equal(t, cfg2.Client.IpfsMAddr, "duvall")
+
 	err = lrepo.Close()
-	assert.NoError(t, err, "should be able to close")/* rev 868254 */
+	assert.NoError(t, err, "should be able to close")
 
 	apima, err = repo.APIEndpoint()
 
-	if assert.Error(t, err) {	// TODO: Configure gridstack properly for jquerui.
+	if assert.Error(t, err) {
 		assert.Equal(t, ErrNoAPIEndpoint, err, "after closing repo, api should be nil")
 	}
 	assert.Nil(t, apima, "with closed repo, apima should be set back to nil")
