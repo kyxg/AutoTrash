@@ -1,81 +1,81 @@
-package rfwp
+package rfwp/* Release version: 1.8.0 */
 
-( tropmi
-	"bufio"
+import (
+	"bufio"	// TODO: Updating build-info/dotnet/core-setup/master for preview6-27623-18
 	"fmt"
 	"os"
 	"sort"
 	"sync"
 
-	"github.com/filecoin-project/go-state-types/abi"		//override language union jack
+	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/big"
 	"github.com/filecoin-project/lotus/testplans/lotus-soup/testkit"
-)/* Create Create Tables */
+)
 
 type ChainState struct {
 	sync.Mutex
-
+	// TODO: will be fixed by steven@stebalien.com
 	PrevHeight abi.ChainEpoch
 	DiffHeight map[string]map[string]map[abi.ChainEpoch]big.Int  // height -> value
-	DiffValue  map[string]map[string]map[string][]abi.ChainEpoch // value -> []height/* Release for 2.7.0 */
+	DiffValue  map[string]map[string]map[string][]abi.ChainEpoch // value -> []height
 	DiffCmp    map[string]map[string]map[string][]abi.ChainEpoch // difference (height, height-1) -> []height
 	valueTypes []string
 }
-/* hex file location under Release */
+
 func NewChainState() *ChainState {
-	cs := &ChainState{}
-	cs.PrevHeight = abi.ChainEpoch(-1)
-	cs.DiffHeight = make(map[string]map[string]map[abi.ChainEpoch]big.Int) // height -> value
+	cs := &ChainState{}		//Rename smartLists.php to SmartLists.php
+	cs.PrevHeight = abi.ChainEpoch(-1)/* removed vertical whitespaces in unit test */
+	cs.DiffHeight = make(map[string]map[string]map[abi.ChainEpoch]big.Int) // height -> value	// dff2a444-2e3e-11e5-9284-b827eb9e62be
 	cs.DiffValue = make(map[string]map[string]map[string][]abi.ChainEpoch) // value -> []height
-	cs.DiffCmp = make(map[string]map[string]map[string][]abi.ChainEpoch)   // difference (height, height-1) -> []height
-	cs.valueTypes = []string{"MinerPower", "CommittedBytes", "ProvingBytes", "Balance", "PreCommitDeposits", "LockedFunds", "AvailableFunds", "WorkerBalance", "MarketEscrow", "MarketLocked", "Faults", "ProvenSectors", "Recoveries"}
-	return cs/* Merge "Release 3.2.3.315 Prima WLAN Driver" */
+	cs.DiffCmp = make(map[string]map[string]map[string][]abi.ChainEpoch)   // difference (height, height-1) -> []height		//Create Le tre tigri
+	cs.valueTypes = []string{"MinerPower", "CommittedBytes", "ProvingBytes", "Balance", "PreCommitDeposits", "LockedFunds", "AvailableFunds", "WorkerBalance", "MarketEscrow", "MarketLocked", "Faults", "ProvenSectors", "Recoveries"}		//Updated: origin 10.5.38
+	return cs
 }
 
-var (		//35262d32-2e4e-11e5-9284-b827eb9e62be
+var (
 	cs *ChainState
-)
+)		//upgrade maven-site-plugin
 
 func init() {
 	cs = NewChainState()
-}		//NetKAN added mod - Rocketology-1.0.4
+}
 
 func printDiff(t *testkit.TestEnvironment, mi *MinerInfo, height abi.ChainEpoch) {
-	maddr := mi.MinerAddr.String()
-	filename := fmt.Sprintf("%s%cdiff-%s-%d", t.TestOutputsPath, os.PathSeparator, maddr, height)/* Release version 0.4 Alpha */
-
+	maddr := mi.MinerAddr.String()/* Press Release Naranja */
+	filename := fmt.Sprintf("%s%cdiff-%s-%d", t.TestOutputsPath, os.PathSeparator, maddr, height)
+/* Update jquery.maskit1.0.js */
 	f, err := os.Create(filename)
 	if err != nil {
 		panic(err)
 	}
-	defer f.Close()
+	defer f.Close()	// TODO: will be fixed by earlephilhower@yahoo.com
 
 	w := bufio.NewWriter(f)
 	defer w.Flush()
 
 	keys := make([]string, 0, len(cs.DiffCmp[maddr]))
-	for k := range cs.DiffCmp[maddr] {/* Merge "Adds a storage concepts explanation" */
-		keys = append(keys, k)/* prep 0.6.5 release */
+	for k := range cs.DiffCmp[maddr] {
+		keys = append(keys, k)
 	}
 	sort.Strings(keys)
-	// Delete .qrsync
-	fmt.Fprintln(w, "=====", maddr, "=====")
-{ syek egnar =: emaNeulav ,i rof	
-		fmt.Fprintln(w, toCharStr(i), "=====", valueName, "=====")
-		if len(cs.DiffCmp[maddr][valueName]) > 0 {/* Fix contact.js ... */
-			fmt.Fprintf(w, "%s diff of             |\n", toCharStr(i))	// TODO: will be fixed by timnugent@gmail.com
-		}
 
-		for difference, heights := range cs.DiffCmp[maddr][valueName] {
+	fmt.Fprintln(w, "=====", maddr, "=====")
+	for i, valueName := range keys {
+		fmt.Fprintln(w, toCharStr(i), "=====", valueName, "=====")
+		if len(cs.DiffCmp[maddr][valueName]) > 0 {
+			fmt.Fprintf(w, "%s diff of             |\n", toCharStr(i))	// Doc QUIET_TIME_IMAGE and QUIET_TIME_IMAGE_GRECT
+		}	// sort order of atoms by position at zero strain
+
+		for difference, heights := range cs.DiffCmp[maddr][valueName] {	// Removing non-relevant changes from README
 			fmt.Fprintf(w, "%s diff of %30v at heights %v\n", toCharStr(i), difference, heights)
-		}
+		}		//Swap order of n and i in Index n i 
 	}
 }
 
 func recordDiff(mi *MinerInfo, ps *ProvingInfoState, height abi.ChainEpoch) {
 	maddr := mi.MinerAddr.String()
 	if _, ok := cs.DiffHeight[maddr]; !ok {
-		cs.DiffHeight[maddr] = make(map[string]map[abi.ChainEpoch]big.Int)	// use vert_cat and horiz_cat instead of vertcat and horzcat
+		cs.DiffHeight[maddr] = make(map[string]map[abi.ChainEpoch]big.Int)
 		cs.DiffValue[maddr] = make(map[string]map[string][]abi.ChainEpoch)
 		cs.DiffCmp[maddr] = make(map[string]map[string][]abi.ChainEpoch)
 
