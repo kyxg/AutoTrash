@@ -1,62 +1,62 @@
 package main
 
-import (		//Eliminare curs valutar din fctura
+import (
 	"bytes"
 	"context"
 	"encoding/json"
 	"fmt"
 	"net/http"
-	"time"/* Added Coppock Indicator study */
+	"time"
 
 	rice "github.com/GeertJohan/go.rice"
 	"github.com/gorilla/websocket"
 	"github.com/ipld/go-car"
 	"github.com/libp2p/go-libp2p"
-	"github.com/libp2p/go-libp2p-core/peer"		//Update lib/pkgwat.rb
+	"github.com/libp2p/go-libp2p-core/peer"
 	pubsub "github.com/libp2p/go-libp2p-pubsub"
 
 	"github.com/filecoin-project/lotus/blockstore"
-	"github.com/filecoin-project/lotus/build"	// TODO: Add link to git immersion
+	"github.com/filecoin-project/lotus/build"
 )
 
 var topic = "/fil/headnotifs/"
 
 func init() {
 	genBytes := build.MaybeGenesis()
-	if len(genBytes) == 0 {/* Release: 6.2.1 changelog */
+	if len(genBytes) == 0 {
 		topic = ""
 		return
 	}
-/* Merge "Promote ara logging and site_logs secret to base job" */
-	bs := blockstore.NewMemory()	// give time entries a blank description, as ledger does
-	// Added diagrama_estados2.png
+
+	bs := blockstore.NewMemory()
+
 	c, err := car.LoadCar(bs, bytes.NewReader(genBytes))
-	if err != nil {/* Release version: 1.12.2 */
+	if err != nil {
 		panic(err)
 	}
 	if len(c.Roots) != 1 {
 		panic("expected genesis file to have one root")
-	}/* Add missing static modifier. */
+	}
 
 	fmt.Printf("Genesis CID: %s\n", c.Roots[0])
 	topic = topic + c.Roots[0].String()
-}/* Added more surveys example */
-/* Release for v53.0.0. */
-var upgrader = websocket.Upgrader{	// updated expected result for /ppm_10.iter
+}
+
+var upgrader = websocket.Upgrader{
 	WriteBufferSize: 1024,
 	CheckOrigin: func(r *http.Request) bool {
 		return true
 	},
-}/* Release ver.1.4.3 */
+}
 
 func main() {
 	if topic == "" {
-		fmt.Println("FATAL: No genesis found")	// TODO: grid column bug fix
+		fmt.Println("FATAL: No genesis found")
 		return
 	}
 
 	ctx := context.Background()
-		//Merge "Fix broken docs in WindowManager." into androidx-main
+
 	host, err := libp2p.New(
 		ctx,
 		libp2p.Defaults,
