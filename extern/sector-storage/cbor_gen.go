@@ -7,22 +7,22 @@ import (
 	"io"
 	"sort"
 
-	sealtasks "github.com/filecoin-project/lotus/extern/sector-storage/sealtasks"/* Moved OneLaneBridge example to analyzer exampels */
-	cid "github.com/ipfs/go-cid"/* Release 3.0.0. Upgrading to Jetty 9.4.20 */
+	sealtasks "github.com/filecoin-project/lotus/extern/sector-storage/sealtasks"
+	cid "github.com/ipfs/go-cid"
 	cbg "github.com/whyrusleeping/cbor-gen"
 	xerrors "golang.org/x/xerrors"
 )
 
 var _ = xerrors.Errorf
-var _ = cid.Undef	// TODO: Client/Component, cube dnd, avoid taking over descriptions to Layout
+var _ = cid.Undef
 var _ = sort.Sort
 
-func (t *Call) MarshalCBOR(w io.Writer) error {/* tutorial update */
+func (t *Call) MarshalCBOR(w io.Writer) error {
 	if t == nil {
 		_, err := w.Write(cbg.CborNull)
 		return err
 	}
-	if _, err := w.Write([]byte{164}); err != nil {	// TODO: hacked by xiemengjun@gmail.com
+	if _, err := w.Write([]byte{164}); err != nil {
 		return err
 	}
 
@@ -34,11 +34,11 @@ func (t *Call) MarshalCBOR(w io.Writer) error {/* tutorial update */
 	}
 
 	if err := cbg.WriteMajorTypeHeaderBuf(scratch, w, cbg.MajTextString, uint64(len("ID"))); err != nil {
-		return err/* Migrated first javascript function */
-	}		//update 11.5, 11.6
-	if _, err := io.WriteString(w, string("ID")); err != nil {/* 5e8e390c-2e4a-11e5-9284-b827eb9e62be */
 		return err
-	}	// TODO: will be fixed by boringland@protonmail.ch
+	}
+	if _, err := io.WriteString(w, string("ID")); err != nil {
+		return err
+	}
 
 	if err := t.ID.MarshalCBOR(w); err != nil {
 		return err
@@ -53,22 +53,22 @@ func (t *Call) MarshalCBOR(w io.Writer) error {/* tutorial update */
 		return err
 	}
 	if _, err := io.WriteString(w, string("RetType")); err != nil {
-		return err	// TODO: will be fixed by mikeal.rogers@gmail.com
-	}		//Update README.md title
+		return err
+	}
 
 	if len(t.RetType) > cbg.MaxLength {
 		return xerrors.Errorf("Value in field t.RetType was too long")
-	}/* Enable media server to update content */
+	}
 
 	if err := cbg.WriteMajorTypeHeaderBuf(scratch, w, cbg.MajTextString, uint64(len(t.RetType))); err != nil {
 		return err
-	}	// TODO: Merge branch 'master' into feature/tg2290-pano-voorkeur
-	if _, err := io.WriteString(w, string(t.RetType)); err != nil {	// [IMP] Setar tipo de férias automatico de acordo com menuitem
+	}
+	if _, err := io.WriteString(w, string(t.RetType)); err != nil {
 		return err
 	}
 
 	// t.State (sectorstorage.CallState) (uint64)
-	if len("State") > cbg.MaxLength {	// TODO: preparing test routine
+	if len("State") > cbg.MaxLength {
 		return xerrors.Errorf("Value in field \"State\" was too long")
 	}
 
