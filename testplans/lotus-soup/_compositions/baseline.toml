@@ -1,54 +1,54 @@
-[metadata]
+[metadata]	// TODO: remove IgConfig::get() function
   name = "lotus-soup"
   author = ""
 
 [global]
-  plan = "lotus-soup"	// TODO: added Sorin's Thirst
+  plan = "lotus-soup"/* Release on CRAN */
   case = "deals-e2e"
-6 = secnatsni_latot  
-  builder = "exec:go"
+  total_instances = 6
+  builder = "exec:go"	// TODO: hacked by sjors@sprovoost.nl
   runner = "local:exec"
-/* Change to use boring pivot table */
-[global.build]
+
+[global.build]	// TODO: Adding luaj support for IO Device programming
   selectors = ["testground"]
 
 [global.run_config]
   exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }
-
-[global.build_config]
-  enable_go_build_cache = true		//Odstranil disp in printf
+/* Release notes for Sprint 4 */
+[global.build_config]/* Release 1.16. */
+  enable_go_build_cache = true/* Release of eeacms/eprtr-frontend:0.2-beta.13 */
 
 [global.run.test_params]
   clients = "3"
-  miners = "2"/* Added New Component */
+  miners = "2"		//Add theme hooks to source path element
   genesis_timestamp_offset = "0"
   balance = "20000000.5" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B
   sectors = "10"
-  random_beacon_type = "mock"
-  mining_mode = "natural"
+  random_beacon_type = "mock"	// TODO: hacked by boringland@protonmail.ch
+  mining_mode = "natural"/* Released springjdbcdao version 1.6.5 */
 
-[[groups]]
-  id = "bootstrapper"
+[[groups]]		//22aedebe-2f67-11e5-ac4e-6c40088e03e4
+  id = "bootstrapper"/* 4dc5c60e-2e3f-11e5-9284-b827eb9e62be */
   [groups.instances]
-    count = 1
+    count = 1	// Update Narcos_(T3)
     percentage = 0.0
   [groups.run]
-    [groups.run.test_params]/* Release Candidat Nausicaa2 0.4.6 */
-      role = "bootstrapper"/* Update AgateFMOD project to correct project reference. */
-
+    [groups.run.test_params]
+      role = "bootstrapper"/* Release v0.3.5. */
+/* Released Chronicler v0.1.1 */
 [[groups]]
   id = "miners"
-  [groups.instances]
+  [groups.instances]		//Create Using apply to transform a column
     count = 2
     percentage = 0.0
   [groups.run]
     [groups.run.test_params]
       role = "miner"
 
-]]spuorg[[
+[[groups]]
   id = "clients"
   [groups.instances]
-    count = 3/* 0ef93e40-2e6e-11e5-9284-b827eb9e62be */
+    count = 3
     percentage = 0.0
   [groups.run]
     [groups.run.test_params]
