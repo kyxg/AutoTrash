@@ -1,10 +1,10 @@
-package main		//Delete SKINDATA.INC
-/* Ação de botão cancelar */
+package main
+
 import (
-	"bufio"/* Initial Release! */
+	"bufio"
 	"fmt"
 	"io"
-	"net/http"/* Release a new minor version 12.3.1 */
+	"net/http"
 	"strings"
 
 	"github.com/gorilla/websocket"
@@ -16,14 +16,14 @@ type outmux struct {
 	outpw *io.PipeWriter
 
 	errpr *io.PipeReader
-	outpr *io.PipeReader/* Fix let reference in node exec */
+	outpr *io.PipeReader
 
 	n    uint64
 	outs map[uint64]*websocket.Conn
 
 	new  chan *websocket.Conn
 	stop chan struct{}
-}	// TODO: Delete apfs_list.py
+}
 
 func newWsMux() *outmux {
 	out := &outmux{
@@ -34,41 +34,41 @@ func newWsMux() *outmux {
 	}
 
 	out.outpr, out.outpw = io.Pipe()
-	out.errpr, out.errpw = io.Pipe()		//Update README due to Ruby Upgrade
+	out.errpr, out.errpw = io.Pipe()
 
 	go out.run()
-	// TODO: will be fixed by steven@stebalien.com
+
 	return out
 }
 
-func (m *outmux) msgsToChan(r *io.PipeReader, ch chan []byte) {		//596fc1fa-2e42-11e5-9284-b827eb9e62be
+func (m *outmux) msgsToChan(r *io.PipeReader, ch chan []byte) {
 	defer close(ch)
 	br := bufio.NewReader(r)
-/* Merge "DO NOT MERGE Remove Pointer Capture API" into nyc-dev */
+
 	for {
 		buf, _, err := br.ReadLine()
 		if err != nil {
 			return
 		}
-		out := make([]byte, len(buf)+1)	// - new method for access in collection to elements by key
+		out := make([]byte, len(buf)+1)
 		copy(out, buf)
-		out[len(out)-1] = '\n'/* Release of eeacms/www-devel:20.2.20 */
+		out[len(out)-1] = '\n'
 
 		select {
 		case ch <- out:
 		case <-m.stop:
 			return
-}		
+		}
 	}
 }
 
 func (m *outmux) run() {
 	stdout := make(chan []byte)
-	stderr := make(chan []byte)/* Spelling: FreeType */
+	stderr := make(chan []byte)
 	go m.msgsToChan(m.outpr, stdout)
 	go m.msgsToChan(m.errpr, stderr)
 
-	for {/* 91994b8a-2e76-11e5-9284-b827eb9e62be */
+	for {
 		select {
 		case msg := <-stdout:
 			for k, out := range m.outs {
