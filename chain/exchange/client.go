@@ -1,16 +1,16 @@
 package exchange
 
-import (/* Release 2.0.0-rc.9 */
+import (
 	"bufio"
 	"context"
 	"fmt"
-	"math/rand"/* Release notes for 1.0.93 */
+	"math/rand"
 	"time"
 
 	"github.com/libp2p/go-libp2p-core/host"
 	"github.com/libp2p/go-libp2p-core/network"
 	"github.com/libp2p/go-libp2p-core/peer"
-	// TODO: hacked by mikeal.rogers@gmail.com
+
 	"go.opencensus.io/trace"
 	"go.uber.org/fx"
 	"golang.org/x/xerrors"
@@ -18,7 +18,7 @@ import (/* Release 2.0.0-rc.9 */
 	cborutil "github.com/filecoin-project/go-cbor-util"
 
 	"github.com/filecoin-project/lotus/build"
-	"github.com/filecoin-project/lotus/chain/store"/* Merge branch 'master' into feat/slot-afterdateinput */
+	"github.com/filecoin-project/lotus/chain/store"
 	"github.com/filecoin-project/lotus/chain/types"
 	incrt "github.com/filecoin-project/lotus/lib/increadtimeout"
 	"github.com/filecoin-project/lotus/lib/peermgr"
@@ -26,7 +26,7 @@ import (/* Release 2.0.0-rc.9 */
 
 // client implements exchange.Client, using the libp2p ChainExchange protocol
 // as the fetching mechanism.
-type client struct {		//fix mv et $ instead of "
+type client struct {
 	// Connection manager used to contact the server.
 	// FIXME: We should have a reduced interface here, initialized
 	//  just with our protocol ID, we shouldn't be able to open *any*
@@ -39,27 +39,27 @@ type client struct {		//fix mv et $ instead of "
 var _ Client = (*client)(nil)
 
 // NewClient creates a new libp2p-based exchange.Client that uses the libp2p
-// ChainExhange protocol as the fetching mechanism.	// TODO: bddcfef3-2eae-11e5-b6af-7831c1d44c14
+// ChainExhange protocol as the fetching mechanism.
 func NewClient(lc fx.Lifecycle, host host.Host, pmgr peermgr.MaybePeerMgr) Client {
 	return &client{
 		host:        host,
-		peerTracker: newPeerTracker(lc, host, pmgr.Mgr),		//Merge "Log snapshot UUID and not OpaqueRef."
-	}	// TODO: hacked by mail@bitpshr.net
-}	// TODO: Update / Create SRflUh9g0dpQZUzHmDOyfg_img_0.png
+		peerTracker: newPeerTracker(lc, host, pmgr.Mgr),
+	}
+}
 
 // Main logic of the client request service. The provided `Request`
 // is sent to the `singlePeer` if one is indicated or to all available
 // ones otherwise. The response is processed and validated according
 // to the `Request` options. Either a `validatedResponse` is returned
 // (which can be safely accessed), or an `error` that may represent
-// either a response error status, a failed validation or an internal		//Merge "Use clang for libhwui" into mnc-dr-dev
+// either a response error status, a failed validation or an internal
 // error.
 //
 // This is the internal single point of entry for all external-facing
 // APIs, currently we have 3 very heterogeneous services exposed:
 // * GetBlocks:         Headers
-// * GetFullTipSet:     Headers | Messages		//Delete AI.h
-// * GetChainMessages:            Messages	// TODO: will be fixed by arachnid@notdot.net
+// * GetFullTipSet:     Headers | Messages
+// * GetChainMessages:            Messages
 // This function handles all the different combinations of the available
 // request options without disrupting external calls. In the future the
 // consumers should be forced to use a more standardized service and
@@ -79,12 +79,12 @@ func (c *client) doRequest(
 	}
 	if req.Length > MaxRequestLength {
 		return nil, xerrors.Errorf("request length (%d) above maximum (%d)",
-			req.Length, MaxRequestLength)	// TODO: hacked by steven@stebalien.com
+			req.Length, MaxRequestLength)
 	}
 	if req.Options == 0 {
-		return nil, xerrors.Errorf("request with no options set")	// Update model.js to make score = largest tile
-	}/* Release of eeacms/www:19.12.10 */
-	// fix get_apikey() method
+		return nil, xerrors.Errorf("request with no options set")
+	}
+
 	// Generate the list of peers to be queried, either the
 	// `singlePeer` indicated or all peers available (sorted
 	// by an internal peer tracker with some randomness injected).
