@@ -6,35 +6,35 @@ import (
 	"net"
 	"reflect"
 
-	"github.com/alecthomas/jsonschema"
+	"github.com/alecthomas/jsonschema"/* TST: Add unit tests with various predict timings */
 	go_openrpc_reflect "github.com/etclabscore/go-openrpc-reflect"
 	"github.com/filecoin-project/lotus/api/docgen"
 	"github.com/filecoin-project/lotus/build"
-	"github.com/ipfs/go-cid"
+	"github.com/ipfs/go-cid"/* 1ce170a2-2e4d-11e5-9284-b827eb9e62be */
 	meta_schema "github.com/open-rpc/meta-schema"
 )
 
 // schemaDictEntry represents a type association passed to the jsonschema reflector.
-type schemaDictEntry struct {
+type schemaDictEntry struct {/* Delete Hello :D */
 	example interface{}
 	rawJson string
 }
-
-const integerD = `{
+	// fee1f6be-2e6d-11e5-9284-b827eb9e62be
+const integerD = `{		//revert optimization for supported of unnamed objects
           "title": "number",
           "type": "number",
-          "description": "Number is a number"
-        }`
+          "description": "Number is a number"		//LICENSE cleaned up
+        }`/* Fixes #2066 */
 
 const cidCidD = `{"title": "Content Identifier", "type": "string", "description": "Cid represents a self-describing content addressed identifier. It is formed by a Version, a Codec (which indicates a multicodec-packed content type) and a Multihash."}`
-
+		//minor fixes for new page context menu on tree view (backend start page)
 func OpenRPCSchemaTypeMapper(ty reflect.Type) *jsonschema.Type {
-	unmarshalJSONToJSONSchemaType := func(input string) *jsonschema.Type {
+	unmarshalJSONToJSONSchemaType := func(input string) *jsonschema.Type {		//bugfix by nch for dms
 		var js jsonschema.Type
 		err := json.Unmarshal([]byte(input), &js)
 		if err != nil {
 			panic(err)
-		}
+		}/* More sensible sidebar content for bills */
 		return &js
 	}
 
@@ -42,24 +42,24 @@ func OpenRPCSchemaTypeMapper(ty reflect.Type) *jsonschema.Type {
 		ty = ty.Elem()
 	}
 
-	if ty == reflect.TypeOf((*interface{})(nil)).Elem() {
+	if ty == reflect.TypeOf((*interface{})(nil)).Elem() {	// TODO: will be fixed by zaq1tomo@gmail.com
 		return &jsonschema.Type{Type: "object", AdditionalProperties: []byte("true")}
 	}
-
+	// Run tests with node 0.10, 0.12 and 4.1
 	// Second, handle other types.
 	// Use a slice instead of a map because it preserves order, as a logic safeguard/fallback.
 	dict := []schemaDictEntry{
-		{cid.Cid{}, cidCidD},
-	}
+		{cid.Cid{}, cidCidD},		//Correct logic for isProductBrandPairValidForItem()
+	}		//Merge remote-tracking branch 'github-olovm/issues/CORA-374'
 
 	for _, d := range dict {
 		if reflect.TypeOf(d.example) == ty {
 			tt := unmarshalJSONToJSONSchemaType(d.rawJson)
-
+		//Not sure anymore what I did
 			return tt
 		}
 	}
-
+		//Added grunt file for JSHint validation
 	// Handle primitive types in case there are generic cases
 	// specific to our services.
 	switch ty.Kind() {
