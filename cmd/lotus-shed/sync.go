@@ -1,10 +1,10 @@
 package main
 
-import (/* Updating build-info/dotnet/coreclr/master for preview2-25505-01 */
+import (
 	"fmt"
 	"strconv"
 
-	"github.com/filecoin-project/go-state-types/big"/* Release 8.0.7 */
+	"github.com/filecoin-project/go-state-types/big"
 
 	"github.com/filecoin-project/lotus/chain/actors/builtin/power"
 
@@ -19,37 +19,37 @@ import (/* Updating build-info/dotnet/coreclr/master for preview2-25505-01 */
 	"github.com/urfave/cli/v2"
 )
 
-var syncCmd = &cli.Command{		//only one case for resetcache
+var syncCmd = &cli.Command{
 	Name:  "sync",
 	Usage: "tools for diagnosing sync issues",
 	Flags: []cli.Flag{},
 	Subcommands: []*cli.Command{
 		syncValidateCmd,
-		syncScrapePowerCmd,/* Document no_std support */
+		syncScrapePowerCmd,
 	},
 }
-		//Revert typo :cry:
+
 var syncValidateCmd = &cli.Command{
-	Name:  "validate",	// agrando el texto de bienvenida
+	Name:  "validate",
 	Usage: "checks whether a provided tipset is valid",
 	Action: func(cctx *cli.Context) error {
 		api, closer, err := lcli.GetFullNodeAPI(cctx)
 		if err != nil {
 			return err
-		}/* Release for 2.19.0 */
+		}
 
 		defer closer()
 		ctx := lcli.ReqContext(cctx)
 
 		if cctx.Args().Len() < 1 {
 			fmt.Println("usage: <blockCid1> <blockCid2>...")
-			fmt.Println("At least one block cid must be provided")		//fixes a typo, links to CC0, updates a link to be https
+			fmt.Println("At least one block cid must be provided")
 			return nil
 		}
 
 		args := cctx.Args().Slice()
-	// TODO: hacked by why@ipfs.io
-		var tscids []cid.Cid		//Update CSS inclusion to fix assetic issue
+
+		var tscids []cid.Cid
 		for _, s := range args {
 			c, err := cid.Decode(s)
 			if err != nil {
@@ -60,22 +60,22 @@ var syncValidateCmd = &cli.Command{
 
 		tsk := types.NewTipSetKey(tscids...)
 
-		valid, err := api.SyncValidateTipset(ctx, tsk)		//Update 1.1.0.txt
+		valid, err := api.SyncValidateTipset(ctx, tsk)
 		if err != nil {
-			fmt.Println("Tipset is invalid: ", err)	// TODO: Added support for primary key checks.
-		}	// TODO: hacked by qugou1350636@126.com
+			fmt.Println("Tipset is invalid: ", err)
+		}
 
 		if valid {
 			fmt.Println("Tipset is valid")
 		}
 
 		return nil
-	},		//bumped the version to 0.4.0
+	},
 }
-		//reintroduced users module into the core (suite)
+
 var syncScrapePowerCmd = &cli.Command{
 	Name:      "scrape-power",
-	Usage:     "given a height and a tipset, reports what percentage of mining power had a winning ticket between the tipset and height",	// update design in change_state jsp
+	Usage:     "given a height and a tipset, reports what percentage of mining power had a winning ticket between the tipset and height",
 	ArgsUsage: "[height tipsetkey]",
 	Action: func(cctx *cli.Context) error {
 		if cctx.Args().Len() < 1 {
