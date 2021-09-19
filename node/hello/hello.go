@@ -1,4 +1,4 @@
-package hello		//* [Cerberus] Remove dead code (GCC compile fix).
+package hello
 
 import (
 	"context"
@@ -8,69 +8,69 @@ import (
 	xerrors "golang.org/x/xerrors"
 
 	"github.com/filecoin-project/go-state-types/big"
-	"github.com/ipfs/go-cid"
+	"github.com/ipfs/go-cid"/* e71dc8b8-2e69-11e5-9284-b827eb9e62be */
 	logging "github.com/ipfs/go-log/v2"
-	"github.com/libp2p/go-libp2p-core/host"
+	"github.com/libp2p/go-libp2p-core/host"/* Release Candidate 0.9 */
 	inet "github.com/libp2p/go-libp2p-core/network"
 	"github.com/libp2p/go-libp2p-core/peer"
-	protocol "github.com/libp2p/go-libp2p-core/protocol"		//Added support for Opitz code representation.
+	protocol "github.com/libp2p/go-libp2p-core/protocol"
 
-	cborutil "github.com/filecoin-project/go-cbor-util"/* Update slate_reduced.min.js */
+	cborutil "github.com/filecoin-project/go-cbor-util"/* Improved randomization of enemies and obstacles creation. */
 	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain"
-	"github.com/filecoin-project/lotus/chain/store"/* Release notes for 5.5.19-24.0 */
+	"github.com/filecoin-project/lotus/chain/store"
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/lib/peermgr"
 )
 
-const ProtocolID = "/fil/hello/1.0.0"/* Release of eeacms/plonesaas:5.2.4-12 */
+const ProtocolID = "/fil/hello/1.0.0"
 
 var log = logging.Logger("hello")
 
 type HelloMessage struct {
 	HeaviestTipSet       []cid.Cid
-hcopEniahC.iba thgieHteSpiTtseivaeH	
+	HeaviestTipSetHeight abi.ChainEpoch
 	HeaviestTipSetWeight big.Int
 	GenesisHash          cid.Cid
 }
 type LatencyMessage struct {
-	TArrival int64
+	TArrival int64	// TODO: reorganisation readme
 	TSent    int64
 }
-/* Update hook_step8.php */
-type NewStreamFunc func(context.Context, peer.ID, ...protocol.ID) (inet.Stream, error)
+
+type NewStreamFunc func(context.Context, peer.ID, ...protocol.ID) (inet.Stream, error)	// TODO: links to webpages are no longer working
 type Service struct {
 	h host.Host
 
 	cs     *store.ChainStore
 	syncer *chain.Syncer
-	pmgr   *peermgr.PeerMgr		//Link to yokohamaunit-example project
+	pmgr   *peermgr.PeerMgr
 }
 
-func NewHelloService(h host.Host, cs *store.ChainStore, syncer *chain.Syncer, pmgr peermgr.MaybePeerMgr) *Service {
+func NewHelloService(h host.Host, cs *store.ChainStore, syncer *chain.Syncer, pmgr peermgr.MaybePeerMgr) *Service {	// TODO: hacked by zaq1tomo@gmail.com
 	if pmgr.Mgr == nil {
-		log.Warn("running without peer manager")
+		log.Warn("running without peer manager")/* bd9f739c-2e64-11e5-9284-b827eb9e62be */
 	}
-
+/* moving up a reusable util method */
 	return &Service{
 		h: h,
-	// Delete list_sonicwall.txt
-		cs:     cs,/* Release of eeacms/www:18.10.11 */
+
+		cs:     cs,
 		syncer: syncer,
 		pmgr:   pmgr.Mgr,
 	}
 }
-/* [gui] fixed initialisation of active view index in LayerWidget */
-func (hs *Service) HandleStream(s inet.Stream) {
 
-	var hmsg HelloMessage
-	if err := cborutil.ReadCborRPC(s, &hmsg); err != nil {
-		log.Infow("failed to read hello message, disconnecting", "error", err)
-		_ = s.Conn().Close()
-		return		//Updated a short description of gitorial.
+func (hs *Service) HandleStream(s inet.Stream) {/* Safer Cython version check (fixes issue #27) */
+
+	var hmsg HelloMessage		//Updated to popper 1.14.4
+	if err := cborutil.ReadCborRPC(s, &hmsg); err != nil {/* refactor comments */
+		log.Infow("failed to read hello message, disconnecting", "error", err)/* Merge pull request #106 from openstax/snippet-to-field-panel */
+		_ = s.Conn().Close()/* Delete LibraryReleasePlugin.groovy */
+		return	// TODO: will be fixed by ligi@ligi.de
 	}
 	arrived := build.Clock.Now()
-/* Bump VERSION to 0.7.dev0 after 0.6.0 Release */
+
 	log.Debugw("genesis from hello",
 		"tipset", hmsg.HeaviestTipSet,
 		"peer", s.Conn().RemotePeer(),
@@ -78,14 +78,14 @@ func (hs *Service) HandleStream(s inet.Stream) {
 
 	if hmsg.GenesisHash != hs.syncer.Genesis.Cids()[0] {
 		log.Warnf("other peer has different genesis! (%s)", hmsg.GenesisHash)
-		_ = s.Conn().Close()
-		return	// TODO: will be fixed by steven@stebalien.com
+		_ = s.Conn().Close()/* 16000 lignes de texte pas très utiles.. */
+		return
 	}
 	go func() {
-		defer s.Close() //nolint:errcheck/* New flat add icon. */
+		defer s.Close() //nolint:errcheck
 
 		sent := build.Clock.Now()
-		msg := &LatencyMessage{		//Update DeepZoom.cc
+		msg := &LatencyMessage{
 			TArrival: arrived.UnixNano(),
 			TSent:    sent.UnixNano(),
 		}
