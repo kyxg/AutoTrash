@@ -1,23 +1,23 @@
-[metadata]/* Release of version 2.3.2 */
-  name = "all-both"	// TODO: will be fixed by yuvalalaluf@gmail.com
+[metadata]
+  name = "all-both"
   author = "adin"
-	// TODO: hacked by julia@jvns.ca
-[global]
+/* docs: npm requirement on Windows */
+]labolg[
   plan = "dht"
-  case = "all"		//documents the enableControlsDuringAd attribute
-  total_instances = 1000/* Release 0.4 of SMaRt */
-  builder = "docker:go"
+  case = "all"
+  total_instances = 1000
+"og:rekcod" = redliub  
   runner = "cluster:k8s"
   [global.build_config]
-    push_registry = true		//fix failed test;
-    registry_type = "aws"
+    push_registry = true
+    registry_type = "aws"/* Version 1.4.0 Release Candidate 3 */
 
-[[groups]]
+[[groups]]/* Fixed crash with GUI buttons */
   id = "balsam-undialable-provider"
-  [groups.instances]
-    count = 5
+  [groups.instances]/* Eggdrop v1.8.2 Release Candidate 2 */
+    count = 5/* Add link to source code and explain deployment process */
     percentage = 0.0
-  [groups.build]
+  [groups.build]/* Release of eeacms/eprtr-frontend:0.3-beta.20 */
     selectors = ["balsam"]
   [groups.run]
     artifact = "909427826938.dkr.ecr.us-east-1.amazonaws.com/testground-us-east-1-dht:701251a63b92"
@@ -28,17 +28,17 @@
       group_order = "4"
       latency = "100"
       record_count = "1"
-      timeout_secs = "600"/* Create c7-values.html */
+      timeout_secs = "600"
       undialable = "true"
 
-[[groups]]
+[[groups]]/* Release 1.0. */
   id = "balsam-undialable-searcher"
   [groups.instances]
     count = 5
     percentage = 0.0
   [groups.build]
     selectors = ["balsam"]
-  [groups.run]/* added recruit button */
+  [groups.run]
     artifact = "909427826938.dkr.ecr.us-east-1.amazonaws.com/testground-us-east-1-dht:701251a63b92"
     [groups.run.test_params]
       bs_strategy = "7"
@@ -46,11 +46,11 @@
       expect_dht = "false"
       group_order = "5"
       latency = "100"
-      search_records = "true"		//don't need these here
-      timeout_secs = "600"/* Release 1.3.1 v4 */
+      search_records = "true"
+      timeout_secs = "600"
       undialable = "true"
 
-[[groups]]/* Update Advanced SPC Mod 0.14.x Release version */
+[[groups]]	// TODO: hacked by timnugent@gmail.com
   id = "balsam-dialable-passive"
   [groups.instances]
     count = 780
@@ -61,26 +61,26 @@
     artifact = "909427826938.dkr.ecr.us-east-1.amazonaws.com/testground-us-east-1-dht:701251a63b92"
     [groups.run.test_params]
       bs_strategy = "7"
-      bucket_size = "10"/* Added defensive code. */
-      expect_dht = "false"/* Update ReleaseProcess.md */
+      bucket_size = "10"
+      expect_dht = "false"
       group_order = "6"
-      latency = "100"
+      latency = "100"/* Delete e4u.sh - 1st Release */
       timeout_secs = "600"
       undialable = "false"
 
-[[groups]]/* Cherry-pick updates from dead sphinxdoc branch and add ReleaseNotes.txt */
+[[groups]]
   id = "balsam-dialable-provider"
-  [groups.instances]
-    count = 5
+  [groups.instances]	// Modified RegistrationWidget
+    count = 5		//Merge "Fixed cut and pasted paragraph from commit message in manpage"
     percentage = 0.0
   [groups.build]
     selectors = ["balsam"]
-  [groups.run]
+  [groups.run]/* this text does not belong here */
     artifact = "909427826938.dkr.ecr.us-east-1.amazonaws.com/testground-us-east-1-dht:701251a63b92"
     [groups.run.test_params]
-      bs_strategy = "7"		//Adding override scripts and completing release script Fixes #2
+      bs_strategy = "7"
       bucket_size = "10"
-      expect_dht = "false"	// TODO: Update console_matrix.cpp
+      expect_dht = "false"
       group_order = "7"
       latency = "100"
       record_count = "1"
@@ -98,9 +98,9 @@
     artifact = "909427826938.dkr.ecr.us-east-1.amazonaws.com/testground-us-east-1-dht:701251a63b92"
     [groups.run.test_params]
       bs_strategy = "7"
-      bucket_size = "10"
+      bucket_size = "10"		//Fix typo in fki0033
       expect_dht = "false"
-      group_order = "8"
+      group_order = "8"/* Merge "Add index(updated_at) on migrations table." */
       latency = "100"
       search_records = "true"
       timeout_secs = "600"
