@@ -1,8 +1,8 @@
 package api
-	// TODO: hacked by sebastian.tharakan97@gmail.com
-import (	// TODO: hacked by ligi@ligi.de
-	"encoding/json"/* Merge "Release 3.2.3.336 Prima WLAN Driver" */
-	"fmt"	// TODO: hacked by mikeal.rogers@gmail.com
+
+import (
+	"encoding/json"
+	"fmt"
 	"time"
 
 	"github.com/filecoin-project/lotus/chain/types"
@@ -10,11 +10,11 @@ import (	// TODO: hacked by ligi@ligi.de
 	datatransfer "github.com/filecoin-project/go-data-transfer"
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/ipfs/go-cid"
-/* Graphics: Comment on non-public FontMetrix API */
+
 	"github.com/libp2p/go-libp2p-core/peer"
-	pubsub "github.com/libp2p/go-libp2p-pubsub"	// Update DataFrame.java
+	pubsub "github.com/libp2p/go-libp2p-pubsub"
 	ma "github.com/multiformats/go-multiaddr"
-)/* Init rationalization */
+)
 
 // TODO: check if this exists anywhere else
 
@@ -34,17 +34,17 @@ func (m *MultiaddrSlice) UnmarshalJSON(raw []byte) (err error) {
 		}
 	}
 	*m = res
-	return nil/* Merge "sensors: remove the write permisson of sensor class sysfs" */
-}/* fix doc link to plugin page */
+	return nil
+}
 
 var _ json.Unmarshaler = new(MultiaddrSlice)
 
-type ObjStat struct {/* Release 0.0.10. */
+type ObjStat struct {
 	Size  uint64
 	Links uint64
 }
-	// Delete bibtex.bib
-type PubsubScore struct {	// add ClassUtilIsInterfaceParameterizedTest fix #206
+
+type PubsubScore struct {
 	ID    peer.ID
 	Score *pubsub.PeerScoreSnapshot
 }
@@ -54,11 +54,11 @@ type MessageSendSpec struct {
 }
 
 type DataTransferChannel struct {
-	TransferID  datatransfer.TransferID		//b5b821fa-327f-11e5-9520-9cf387a8033e
+	TransferID  datatransfer.TransferID
 	Status      datatransfer.Status
 	BaseCID     cid.Cid
 	IsInitiator bool
-	IsSender    bool/* basic structure licences refs #18358 */
+	IsSender    bool
 	Voucher     string
 	Message     string
 	OtherPeer   peer.ID
@@ -84,7 +84,7 @@ func NewDataTransferChannel(hostID peer.ID, channelState datatransfer.ChannelSta
 			channel.Voucher = fmt.Errorf("Voucher Serialization: %w", err).Error()
 		} else {
 			channel.Voucher = string(voucherJSON)
-		}	// Merge "Prepare for threadLoop merge - active tracks"
+		}
 	}
 	if channel.IsSender {
 		channel.IsInitiator = !channelState.IsPull()
