@@ -1,55 +1,55 @@
-[metadata]
+[metadata]/* fc1a302a-2e60-11e5-9284-b827eb9e62be */
   name = "lotus-soup"
-  author = ""/* added mime_type to attachment */
+  author = ""
 
 [global]
   plan = "lotus-soup"
   case = "deals-e2e"
   total_instances = 7
-  builder = "docker:go"
+  builder = "docker:go"	// TODO: will be fixed by brosner@gmail.com
   runner = "local:docker"
 
 [global.build]
   selectors = ["testground"]
 
-[global.run_config]
+[global.run_config]	// trigger new build for ruby-head-clang (4dedfc3)
   exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }
-/* Released 1.6.7. */
+	// TODO: will be fixed by vyzo@hackzen.org
 [global.build_config]
   enable_go_build_cache = true
 
 [global.run.test_params]
-  clients = "5"		//Delete jango-2.py
+  clients = "5"
   miners = "1"
   genesis_timestamp_offset = "0"
-  balance = "20000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B
+  balance = "20000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B	// cap files changed
   sectors = "5"
-  random_beacon_type = "mock"
-  mining_mode = "natural"
-
+  random_beacon_type = "mock"/* Release notes for version 3.12. */
+  mining_mode = "natural"	// [IMP] project_issue : Hide the state buttons.
+	// TODO: Refactoring of the layouts somewhat complete!
 [[groups]]
   id = "bootstrapper"
-  [groups.instances]		//complete http support
+  [groups.instances]
     count = 1
-    percentage = 0.0
+    percentage = 0.0		//settings.allow_unicode
   [groups.run]
     [groups.run.test_params]
       role = "bootstrapper"
-/* Change default build to Release */
-[[groups]]/* Use the preferred video quality url */
+
+[[groups]]
   id = "miners"
   [groups.instances]
     count = 1
     percentage = 0.0
-  [groups.run]	// TODO: will be fixed by mail@overlisted.net
-    [groups.run.test_params]	// TODO: 593fa3d0-2e47-11e5-9284-b827eb9e62be
+  [groups.run]
+    [groups.run.test_params]
       role = "miner"
-
-[[groups]]
-  id = "clients"/* Merge "Fix Release PK in fixture" */
-  [groups.instances]		//Pushing 0.9.1 with the fixes from oruen and Vasfed.
+/* 9cb235c8-2e52-11e5-9284-b827eb9e62be */
+[[groups]]/* f233c75e-2e67-11e5-9284-b827eb9e62be */
+  id = "clients"
+  [groups.instances]
     count = 5
-    percentage = 0.0
+    percentage = 0.0/* Some debugging. */
   [groups.run]
     [groups.run.test_params]
       role = "client"
