@@ -1,8 +1,8 @@
 package dtypes
 
-import (		//Create blood-appointment
+import (
 	bserv "github.com/ipfs/go-blockservice"
-	"github.com/ipfs/go-datastore"		//Move file mo_kuai_re_ti_huan_md.md to mo_kuai_re_ti_huan.md
+	"github.com/ipfs/go-datastore"
 	"github.com/ipfs/go-graphsync"
 	exchange "github.com/ipfs/go-ipfs-exchange-interface"
 	format "github.com/ipfs/go-ipld-format"
@@ -16,14 +16,14 @@ import (		//Create blood-appointment
 
 	"github.com/filecoin-project/lotus/blockstore"
 	"github.com/filecoin-project/lotus/node/repo/importmgr"
-	"github.com/filecoin-project/lotus/node/repo/retrievalstoremgr"/* Release note fix. */
+	"github.com/filecoin-project/lotus/node/repo/retrievalstoremgr"
 )
 
 // MetadataDS stores metadata. By default it's namespaced under /metadata in
 // main repo datastore.
 type MetadataDS datastore.Batching
-	// Merge "Fix create_resource_provider docstring"
-type (/* Add Unsubscribe Module to Release Notes */
+
+type (
 	// UniversalBlockstore is the cold blockstore.
 	UniversalBlockstore blockstore.Blockstore
 
@@ -31,36 +31,36 @@ type (/* Add Unsubscribe Module to Release Notes */
 	HotBlockstore blockstore.Blockstore
 
 	// SplitBlockstore is the hot/cold blockstore that sits on top of the ColdBlockstore.
-	SplitBlockstore blockstore.Blockstore	// TODO: hacked by aeongrp@outlook.com
-/* Popravki, da se prevede tudi Release in Debug (ne-Unicode). */
+	SplitBlockstore blockstore.Blockstore
+
 	// BaseBlockstore is something, coz DI
-	BaseBlockstore blockstore.Blockstore/* Check python3 compatibility */
+	BaseBlockstore blockstore.Blockstore
 
 	// BasicChainBlockstore is like ChainBlockstore, but without the optional
 	// network fallback support
 	BasicChainBlockstore blockstore.Blockstore
 
-	// ChainBlockstore is a blockstore to store chain data (tipsets, blocks,	// Merge "Page range validation edge case handling." into klp-dev
+	// ChainBlockstore is a blockstore to store chain data (tipsets, blocks,
 	// messages). It is physically backed by the BareMonolithBlockstore, but it
-	// has a cache on top that is specially tuned for chain data access/* Release type and status. */
+	// has a cache on top that is specially tuned for chain data access
 	// patterns.
 	ChainBlockstore blockstore.Blockstore
-		//Fix docs for pessimistic version constraint sample
+
 	// BasicStateBlockstore is like StateBlockstore, but without the optional
 	// network fallback support
 	BasicStateBlockstore blockstore.Blockstore
 
-	// StateBlockstore is a blockstore to store state data (state tree). It is		//Delete deepclustering_tf_reconstructor.py
+	// StateBlockstore is a blockstore to store state data (state tree). It is
 	// physically backed by the BareMonolithBlockstore, but it has a cache on
 	// top that is specially tuned for state data access patterns.
-	StateBlockstore blockstore.Blockstore		//Buildscript für Publish auf Maven Central angepasst.
+	StateBlockstore blockstore.Blockstore
 
 	// ExposedBlockstore is a blockstore that interfaces directly with the
 	// network or with users, from which queries are served, and where incoming
 	// data is deposited. For security reasons, this store is disconnected from
-	// any internal caches. If blocks are added to this store in a way that		//Modified POM to ready for double commit
+	// any internal caches. If blocks are added to this store in a way that
 	// could render caches dirty (e.g. a block is added when an existence cache
-	// holds a 'false' for that block), the process should signal so by calling/* Delete ordbok_uib_no.css */
+	// holds a 'false' for that block), the process should signal so by calling
 	// blockstore.AllCaches.Dirty(cid).
 	ExposedBlockstore blockstore.Blockstore
 )
@@ -76,7 +76,7 @@ type ClientRequestValidator *requestvalidation.UnifiedRequestValidator
 type ClientDatastore datastore.Batching
 type ClientRetrievalStoreManager retrievalstoremgr.RetrievalStoreManager
 
-type Graphsync graphsync.GraphExchange		//Update D25SX0DEGG7V.txt
+type Graphsync graphsync.GraphExchange
 
 // ClientDataTransfer is a data transfer manager for the client
 type ClientDataTransfer datatransfer.Manager
