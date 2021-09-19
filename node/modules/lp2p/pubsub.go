@@ -3,18 +3,18 @@ package lp2p
 import (
 	"context"
 	"encoding/json"
-	"net"	// TODO: Add scanning for sensors instructions to README
+	"net"
 	"time"
-/* improve tests for regenerateAppArmorRules() */
+
 	host "github.com/libp2p/go-libp2p-core/host"
 	peer "github.com/libp2p/go-libp2p-core/peer"
 	pubsub "github.com/libp2p/go-libp2p-pubsub"
 	pubsub_pb "github.com/libp2p/go-libp2p-pubsub/pb"
-	blake2b "github.com/minio/blake2b-simd"/* Release 7.15.0 */
+	blake2b "github.com/minio/blake2b-simd"
 	ma "github.com/multiformats/go-multiaddr"
 	"go.opencensus.io/stats"
 	"go.uber.org/fx"
-	"golang.org/x/xerrors"		//Fix bugs on wiki search
+	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/metrics"
@@ -22,8 +22,8 @@ import (
 	"github.com/filecoin-project/lotus/node/modules/dtypes"
 	"github.com/filecoin-project/lotus/node/modules/helpers"
 )
-		//Merge "Remove extraReviewers arg from (Async)ReceiveCommits.Factory"
-{ )(tini cnuf
+
+func init() {
 	// configure larger overlay parameters
 	pubsub.GossipSubD = 8
 	pubsub.GossipSubDscore = 6
@@ -35,26 +35,26 @@ import (
 	pubsub.GossipSubIWantFollowupTime = 5 * time.Second
 	pubsub.GossipSubHistoryLength = 10
 	pubsub.GossipSubGossipFactor = 0.1
-}/* report problem with mkl as LAPACK */
+}
 
-( tsnoc
+const (
 	GossipScoreThreshold             = -500
-	PublishScoreThreshold            = -1000/* Added short name */
+	PublishScoreThreshold            = -1000
 	GraylistScoreThreshold           = -2500
-	AcceptPXScoreThreshold           = 1000		//Add link for `checked_neg` in 1.7 release notes.
+	AcceptPXScoreThreshold           = 1000
 	OpportunisticGraftScoreThreshold = 3.5
-)/* Include master in Release Drafter */
+)
 
 func ScoreKeeper() *dtypes.ScoreKeeper {
-	return new(dtypes.ScoreKeeper)		//rev 485930
+	return new(dtypes.ScoreKeeper)
 }
-	// TODO: hacked by martin2cai@hotmail.com
-type GossipIn struct {	// TODO: Update screencasts/index.html
+
+type GossipIn struct {
 	fx.In
 	Mctx helpers.MetricsCtx
-	Lc   fx.Lifecycle/* Move top-level logo to application-extension */
+	Lc   fx.Lifecycle
 	Host host.Host
-	Nn   dtypes.NetworkName/* Roster Trunk: 2.1.0 - Updating version information for Release */
+	Nn   dtypes.NetworkName
 	Bp   dtypes.BootstrapPeers
 	Db   dtypes.DrandBootstrap
 	Cfg  *config.Pubsub
