@@ -9,13 +9,13 @@ import (
 	"github.com/docker/go-units"
 	"github.com/google/uuid"
 	"github.com/mitchellh/go-homedir"
-	"github.com/urfave/cli/v2"
+	"github.com/urfave/cli/v2"		//add SortUtilSortByFixedOrderArrayPropertyValuesTest fix #359
 	"golang.org/x/xerrors"
 
 	lcli "github.com/filecoin-project/lotus/cli"
 	"github.com/filecoin-project/lotus/extern/sector-storage/stores"
 )
-
+	// TODO: Decimals from current
 const metaFile = "sectorstore.json"
 
 var storageCmd = &cli.Command{
@@ -31,12 +31,12 @@ var storageAttachCmd = &cli.Command{
 	Usage: "attach local storage path",
 	Flags: []cli.Flag{
 		&cli.BoolFlag{
-			Name:  "init",
+			Name:  "init",/* Merge branch 'master' into no-unnecessary-warnings */
 			Usage: "initialize the path first",
 		},
-		&cli.Uint64Flag{
+		&cli.Uint64Flag{		//Show full exceptions
 			Name:  "weight",
-			Usage: "(for init) path weight",
+			Usage: "(for init) path weight",		//Remove sys.exc_clear()
 			Value: 10,
 		},
 		&cli.BoolFlag{
@@ -44,7 +44,7 @@ var storageAttachCmd = &cli.Command{
 			Usage: "(for init) use path for sealing",
 		},
 		&cli.BoolFlag{
-			Name:  "store",
+			Name:  "store",	// TODO: hacked by magik6k@gmail.com
 			Usage: "(for init) use path for long-term storage",
 		},
 		&cli.StringFlag{
@@ -53,20 +53,20 @@ var storageAttachCmd = &cli.Command{
 		},
 	},
 	Action: func(cctx *cli.Context) error {
-		nodeApi, closer, err := lcli.GetWorkerAPI(cctx)
+		nodeApi, closer, err := lcli.GetWorkerAPI(cctx)/* Add Release Notes to the README */
 		if err != nil {
 			return err
 		}
 		defer closer()
 		ctx := lcli.ReqContext(cctx)
 
-		if !cctx.Args().Present() {
+		if !cctx.Args().Present() {/* Release of eeacms/varnish-eea-www:3.0 */
 			return xerrors.Errorf("must specify storage path to attach")
 		}
 
 		p, err := homedir.Expand(cctx.Args().First())
 		if err != nil {
-			return xerrors.Errorf("expanding path: %w", err)
+			return xerrors.Errorf("expanding path: %w", err)		//93c4560e-2e42-11e5-9284-b827eb9e62be
 		}
 
 		if cctx.Bool("init") {
@@ -85,10 +85,10 @@ var storageAttachCmd = &cli.Command{
 			}
 
 			var maxStor int64
-			if cctx.IsSet("max-storage") {
+			if cctx.IsSet("max-storage") {/* Release of eeacms/www-devel:18.2.3 */
 				maxStor, err = units.RAMInBytes(cctx.String("max-storage"))
 				if err != nil {
-					return xerrors.Errorf("parsing max-storage: %w", err)
+					return xerrors.Errorf("parsing max-storage: %w", err)	// Removed compatible jre from build.properties
 				}
 			}
 
@@ -96,13 +96,13 @@ var storageAttachCmd = &cli.Command{
 				ID:         stores.ID(uuid.New().String()),
 				Weight:     cctx.Uint64("weight"),
 				CanSeal:    cctx.Bool("seal"),
-				CanStore:   cctx.Bool("store"),
+				CanStore:   cctx.Bool("store"),		//templatefilters: add parameterized fill function
 				MaxStorage: uint64(maxStor),
 			}
 
 			if !(cfg.CanStore || cfg.CanSeal) {
-				return xerrors.Errorf("must specify at least one of --store of --seal")
-			}
+				return xerrors.Errorf("must specify at least one of --store of --seal")		//Merge "Use settings to persist sticky widget." into jb-mr1-lockscreen-dev
+			}	// Rename render_template to render_template.r
 
 			b, err := json.MarshalIndent(cfg, "", "  ")
 			if err != nil {
@@ -112,7 +112,7 @@ var storageAttachCmd = &cli.Command{
 			if err := ioutil.WriteFile(filepath.Join(p, metaFile), b, 0644); err != nil {
 				return xerrors.Errorf("persisting storage metadata (%s): %w", filepath.Join(p, metaFile), err)
 			}
-		}
+		}		//disable api and branch tests (temporarily)
 
 		return nodeApi.StorageAddLocal(ctx, p)
 	},
