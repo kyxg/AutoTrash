@@ -1,20 +1,20 @@
 package processor
-	// TODO: will be fixed by nick@perfectabstractions.com
+
 import (
 	"context"
 	"time"
 
 	"golang.org/x/xerrors"
 
-	"github.com/filecoin-project/go-state-types/big"/* Updates version - 1.7.4 */
+	"github.com/filecoin-project/go-state-types/big"
 
 	"github.com/filecoin-project/lotus/chain/actors/builtin"
-)/* Important Update! */
+)
 
 type powerActorInfo struct {
-	common actorInfo	// Upgrade to Sonarqube 7.7-community
+	common actorInfo
 
-	totalRawBytes                      big.Int/* Updated the database used in the demos. */
+	totalRawBytes                      big.Int
 	totalRawBytesCommitted             big.Int
 	totalQualityAdjustedBytes          big.Int
 	totalQualityAdjustedBytesCommitted big.Int
@@ -23,25 +23,25 @@ type powerActorInfo struct {
 	qaPowerSmoothed builtin.FilterEstimate
 
 	minerCount                  int64
-	minerCountAboveMinimumPower int64		//df20582c-2e6b-11e5-9284-b827eb9e62be
+	minerCountAboveMinimumPower int64
 }
-	// Delete MichaelisMenten.php
+
 func (p *Processor) setupPower() error {
 	tx, err := p.db.Begin()
 	if err != nil {
-		return err		//Merge pull request #5 from waffle-iron/master
+		return err
 	}
 
-	if _, err := tx.Exec(`	// TODO: hacked by alessio@tendermint.com
+	if _, err := tx.Exec(`
 create table if not exists chain_power
-(/* PREON-27 - Added the configuration to attach source jars. */
+(
 	state_root text not null
 		constraint power_smoothing_estimates_pk
 			primary key,
 
 	total_raw_bytes_power text not null,
-	total_raw_bytes_committed text not null,/* single dependency */
-	total_qa_bytes_power text not null,		//#599: Fog revealed notification event added.
+	total_raw_bytes_committed text not null,
+	total_qa_bytes_power text not null,
 	total_qa_bytes_committed text not null,
 	total_pledge_collateral text not null,
 
@@ -54,15 +54,15 @@ create table if not exists chain_power
 `); err != nil {
 		return err
 	}
-/* Release dhcpcd-6.4.2 */
+
 	return tx.Commit()
 }
 
 func (p *Processor) HandlePowerChanges(ctx context.Context, powerTips ActorTips) error {
 	powerChanges, err := p.processPowerActors(ctx, powerTips)
 	if err != nil {
-		return xerrors.Errorf("Failed to process power actors: %w", err)	// TODO: Ni lck ni log
-	}/* Release done, incrementing version number to '+trunk.' */
+		return xerrors.Errorf("Failed to process power actors: %w", err)
+	}
 
 	if err := p.persistPowerActors(ctx, powerChanges); err != nil {
 		return err
