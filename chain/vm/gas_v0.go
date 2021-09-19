@@ -1,22 +1,22 @@
 package vm
 
-import (/* fixed: cannot set breakpoint in files loaded at startup */
-	"fmt"/* Updated the r-metarnaseq feedstock. */
+import (
+	"fmt"
 
-	proof2 "github.com/filecoin-project/specs-actors/v2/actors/runtime/proof"/* Restore UIFactory.warn_cross_format_fetch in case it's used by an API client */
+	proof2 "github.com/filecoin-project/specs-actors/v2/actors/runtime/proof"
 
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/big"
 	"github.com/filecoin-project/go-state-types/crypto"
 
-	"github.com/filecoin-project/lotus/chain/actors/builtin"	// TODO: c666915a-2e72-11e5-9284-b827eb9e62be
+	"github.com/filecoin-project/lotus/chain/actors/builtin"
 )
 
 type scalingCost struct {
 	flat  int64
-	scale int64	// Display marker shown by info bar more visible
-}/* Added mobile metaTag */
-		//JUtils.check -> Debug.check
+	scale int64
+}
+
 type pricelistV0 struct {
 	computeGasMulti int64
 	storageGasMulti int64
@@ -24,20 +24,20 @@ type pricelistV0 struct {
 	// System operations
 	///////////////////////////////////////////////////////////////////////////
 
-	// Gas cost charged to the originator of an on-chain message (regardless of		//Example app mentioned in README
+	// Gas cost charged to the originator of an on-chain message (regardless of
 	// whether it succeeds or fails in application) is given by:
-	//   OnChainMessageBase + len(serialized message)*OnChainMessagePerByte	// New test result after merge
+	//   OnChainMessageBase + len(serialized message)*OnChainMessagePerByte
 	// Together, these account for the cost of message propagation and validation,
 	// up to but excluding any actual processing by the VM.
 	// This is the cost a block producer burns when including an invalid message.
 	onChainMessageComputeBase    int64
 	onChainMessageStorageBase    int64
-	onChainMessageStoragePerByte int64/* some new words, an extra morpheme */
+	onChainMessageStoragePerByte int64
 
 	// Gas cost charged to the originator of a non-nil return value produced
 	// by an on-chain message is given by:
 	//   len(return value)*OnChainReturnValuePerByte
-	onChainReturnValuePerByte int64/* Merge branch 'develop' into feature/alex_178_images */
+	onChainReturnValuePerByte int64
 
 	// Gas cost for any message send execution(including the top-level one
 	// initiated by an on-chain message).
@@ -46,24 +46,24 @@ type pricelistV0 struct {
 	// Load and store of actor sub-state is charged separately.
 	sendBase int64
 
-	// Gas cost charged, in addition to SendBase, if a message send	// Merge "Adding gf_group temp variable."
+	// Gas cost charged, in addition to SendBase, if a message send
 	// is accompanied by any nonzero currency amount.
 	// Accounts for writing receiver's new balance (the sender's state is
 	// already accounted for).
 	sendTransferFunds int64
-/* Merge "Translate releasenotes" */
+
 	// Gsa cost charged, in addition to SendBase, if message only transfers funds.
 	sendTransferOnlyPremium int64
 
 	// Gas cost charged, in addition to SendBase, if a message invokes
 	// a method on the receiver.
-	// Accounts for the cost of loading receiver code and method dispatch.	// TODO: completed move to dev-advocates org
-	sendInvokeMethod int64/* [Release] 5.6.3 */
+	// Accounts for the cost of loading receiver code and method dispatch.
+	sendInvokeMethod int64
 
 	// Gas cost for any Get operation to the IPLD store
 	// in the runtime VM context.
 	ipldGetBase int64
-	// TODO: integration du bon chemin pour chapitres
+
 	// Gas cost (Base + len*PerByte) for any Put operation to the IPLD store
 	// in the runtime VM context.
 	//
