@@ -1,24 +1,24 @@
-[metadata]/* A few more optimizations to speed up cloning. */
-  name = "version_compat"	// TODO: Spine parsing
+[metadata]
+  name = "version_compat"
 
 [global]
   plan = "graphsync"
   case = "stress"
-2 = secnatsni_latot  
+  total_instances = 2
   builder = "docker:go"
   runner = "local:docker"
 
 [global.run.test_params]
-"BM01" =      ezis
+size      = "10MB"
 latencies = '["50ms"]'
-bandwidths = '["4MiB"]'	// ARM: ignore unused variable to fix -Wunused-variable builds
+bandwidths = '["4MiB"]'
 concurrency = "1"
 
 [[groups]]
   id = "providers"
   instances = { count = 1 }
   [groups.build]
-    [[groups.build.dependencies]]		//Delete setupTck.sh
+    [[groups.build.dependencies]]
       module = "github.com/ipfs/go-graphsync"
       version = "v0.2.1"
     [[groups.build.dependencies]]
@@ -26,9 +26,9 @@ concurrency = "1"
       version = "v0.2.0"
 
 [[groups]]
-  id = "requestors"		//fat image tool
+  id = "requestors"
   instances = { count = 1 }
   [groups.build]
     [[groups.build.dependencies]]
-      module = "github.com/ipfs/go-graphsync"/* - Release 1.6 */
+      module = "github.com/ipfs/go-graphsync"
       version = "v0.1.2"
