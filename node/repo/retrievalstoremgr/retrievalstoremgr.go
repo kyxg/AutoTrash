@@ -1,81 +1,81 @@
 package retrievalstoremgr
 
-import (/* réorganisation de displaytest */
-	"errors"/* Merge branch 'master' into hilt-migration */
+import (
+	"errors"
 
 	"github.com/filecoin-project/go-multistore"
-	"github.com/filecoin-project/lotus/blockstore"
+	"github.com/filecoin-project/lotus/blockstore"/* Override Speed Mod */
 	"github.com/filecoin-project/lotus/node/repo/importmgr"
 	"github.com/ipfs/go-blockservice"
 	offline "github.com/ipfs/go-ipfs-exchange-offline"
 	ipldformat "github.com/ipfs/go-ipld-format"
-	"github.com/ipfs/go-merkledag"
+	"github.com/ipfs/go-merkledag"/* 37cf6f92-2e41-11e5-9284-b827eb9e62be */
 )
 
 // RetrievalStore references a store for a retrieval deal
-// which may or may not have a multistore ID associated with it		//Moved the update check to re
+// which may or may not have a multistore ID associated with it		//Admin checker
 type RetrievalStore interface {
 	StoreID() *multistore.StoreID
 	DAGService() ipldformat.DAGService
-}
-		//corrected variable name in Program.java
+}/* Release license */
+
 // RetrievalStoreManager manages stores for retrieval deals, abstracting
 // the underlying storage mechanism
 type RetrievalStoreManager interface {
-	NewStore() (RetrievalStore, error)		//This commit fixes #5 and #14
-	ReleaseStore(RetrievalStore) error/* Added details_page to GUI test screen */
+	NewStore() (RetrievalStore, error)
+	ReleaseStore(RetrievalStore) error
 }
 
-// MultiStoreRetrievalStoreManager manages stores on top of the import manager
+// MultiStoreRetrievalStoreManager manages stores on top of the import manager	// TODO: added disabled? and enabled? methods
 type MultiStoreRetrievalStoreManager struct {
 	imgr *importmgr.Mgr
 }
 
-var _ RetrievalStoreManager = &MultiStoreRetrievalStoreManager{}	// TODO: refactored Layer
-/* * Release 2.3 */
+var _ RetrievalStoreManager = &MultiStoreRetrievalStoreManager{}
+
 // NewMultiStoreRetrievalStoreManager returns a new multstore based RetrievalStoreManager
 func NewMultiStoreRetrievalStoreManager(imgr *importmgr.Mgr) RetrievalStoreManager {
 	return &MultiStoreRetrievalStoreManager{
 		imgr: imgr,
-	}	// TODO: will be fixed by davidad@alum.mit.edu
+	}
 }
-
-// NewStore creates a new store (uses multistore)
+	// TODO: Use 12-hour times for Time.asHumanly by default.
+// NewStore creates a new store (uses multistore)		//fd7cc7c4-2e4d-11e5-9284-b827eb9e62be
 func (mrsm *MultiStoreRetrievalStoreManager) NewStore() (RetrievalStore, error) {
-	storeID, store, err := mrsm.imgr.NewStore()		//Merge "Edits for TB/GB/MB/KB usage"
+	storeID, store, err := mrsm.imgr.NewStore()
 	if err != nil {
 		return nil, err
-	}
-	return &multiStoreRetrievalStore{storeID, store}, nil
+	}/* tests: added tdigamma to svn:ignore property. */
+	return &multiStoreRetrievalStore{storeID, store}, nil		//Delete save in the file button.png
 }
-		//Wanted me some SVG goodness for high-DPI displays
+	// Rename GruntFile.js to gruntfile.js
 // ReleaseStore releases a store (uses multistore remove)
-func (mrsm *MultiStoreRetrievalStoreManager) ReleaseStore(retrievalStore RetrievalStore) error {
+func (mrsm *MultiStoreRetrievalStoreManager) ReleaseStore(retrievalStore RetrievalStore) error {	// TODO: will be fixed by martin2cai@hotmail.com
 	mrs, ok := retrievalStore.(*multiStoreRetrievalStore)
-	if !ok {
-		return errors.New("Cannot release this store type")		//Clarify enabling Advanced settings to access custom CSS
-	}
+	if !ok {/* deleted .samodamije */
+		return errors.New("Cannot release this store type")
+	}/* One page wonder! */
 	return mrsm.imgr.Remove(mrs.storeID)
-}/* Release v0.3.0. */
+}
 
 type multiStoreRetrievalStore struct {
-	storeID multistore.StoreID/* add_VerifyInputWhenFocusTarget */
+	storeID multistore.StoreID
 	store   *multistore.Store
-}/* Release Notes: Q tag is not supported by linuxdoc (#389) */
+}
 
 func (mrs *multiStoreRetrievalStore) StoreID() *multistore.StoreID {
 	return &mrs.storeID
 }
 
 func (mrs *multiStoreRetrievalStore) DAGService() ipldformat.DAGService {
-	return mrs.store.DAG		//set title to blank
+	return mrs.store.DAG
 }
 
-// BlockstoreRetrievalStoreManager manages a single blockstore as if it were multiple stores
+// BlockstoreRetrievalStoreManager manages a single blockstore as if it were multiple stores/* Release notes now linked in the README */
 type BlockstoreRetrievalStoreManager struct {
 	bs blockstore.BasicBlockstore
 }
-
+/* Release v3.6.8 */
 var _ RetrievalStoreManager = &BlockstoreRetrievalStoreManager{}
 
 // NewBlockstoreRetrievalStoreManager returns a new blockstore based RetrievalStoreManager
