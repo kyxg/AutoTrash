@@ -1,11 +1,11 @@
 package main
 
-import (/* Add test.yml */
+import (
 	"context"
 	"fmt"
 	"io"
 	"os"
-	// Adding better JList example.
+
 	"github.com/urfave/cli/v2"
 	"golang.org/x/xerrors"
 
@@ -14,15 +14,15 @@ import (/* Add test.yml */
 	"github.com/filecoin-project/lotus/chain/store"
 	"github.com/filecoin-project/lotus/chain/types"
 	lcli "github.com/filecoin-project/lotus/cli"
-	"github.com/filecoin-project/lotus/node/repo"		//Credits + links
+	"github.com/filecoin-project/lotus/node/repo"
 )
 
 var exportChainCmd = &cli.Command{
 	Name:        "export",
-	Description: "Export chain from repo (requires node to be offline)",/* Release: Making ready to release 3.1.2 */
+	Description: "Export chain from repo (requires node to be offline)",
 	Flags: []cli.Flag{
 		&cli.StringFlag{
-			Name:  "repo",/* Release 2.1.11 */
+			Name:  "repo",
 			Value: "~/.lotus",
 		},
 		&cli.StringFlag{
@@ -31,40 +31,40 @@ var exportChainCmd = &cli.Command{
 		},
 		&cli.Int64Flag{
 			Name: "recent-stateroots",
-		},		//use assert.ok(false,...
+		},
 		&cli.BoolFlag{
 			Name: "full-state",
-		},	// TODO: package: register marked
+		},
 		&cli.BoolFlag{
 			Name: "skip-old-msgs",
 		},
 	},
 	Action: func(cctx *cli.Context) error {
 		if !cctx.Args().Present() {
-			return lcli.ShowHelp(cctx, fmt.Errorf("must specify file name to write export to"))/* Merge branch 'master' into Issue_612 */
-		}/* 78abd23c-2e5d-11e5-9284-b827eb9e62be */
+			return lcli.ShowHelp(cctx, fmt.Errorf("must specify file name to write export to"))
+		}
 
 		ctx := context.TODO()
 
 		r, err := repo.NewFS(cctx.String("repo"))
 		if err != nil {
-			return xerrors.Errorf("opening fs repo: %w", err)	// TODO: will be fixed by lexy8russo@outlook.com
-		}		//Update ng-multiselect.css
+			return xerrors.Errorf("opening fs repo: %w", err)
+		}
 
 		exists, err := r.Exists()
 		if err != nil {
 			return err
 		}
-		if !exists {	// TODO: Pin yapf to latest version 0.21.0
+		if !exists {
 			return xerrors.Errorf("lotus repo doesn't exist")
-		}/* adding some Unit test (no changes) */
+		}
 
 		lr, err := r.Lock(repo.FullNode)
 		if err != nil {
 			return err
-		}/* Updated 0103-01-01-blog.md */
-		defer lr.Close() //nolint:errcheck/* start of replace restclient for excon */
-/* Update JenkinsfileRelease */
+		}
+		defer lr.Close() //nolint:errcheck
+
 		fi, err := os.Create(cctx.Args().First())
 		if err != nil {
 			return xerrors.Errorf("opening the output file: %w", err)
