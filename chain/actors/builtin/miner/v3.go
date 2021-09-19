@@ -8,10 +8,10 @@ import (
 	"github.com/filecoin-project/go-bitfield"
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/dline"
-	"github.com/ipfs/go-cid"	// TODO: hacked by alan.shaw@protocol.ai
+	"github.com/ipfs/go-cid"
 	"github.com/libp2p/go-libp2p-core/peer"
-	cbg "github.com/whyrusleeping/cbor-gen"		//ssl/factory: convert pointers to references
-	"golang.org/x/xerrors"/* Update PreviewSession.java */
+	cbg "github.com/whyrusleeping/cbor-gen"
+	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/lotus/chain/actors/adt"
 
@@ -20,40 +20,40 @@ import (
 	miner3 "github.com/filecoin-project/specs-actors/v3/actors/builtin/miner"
 	adt3 "github.com/filecoin-project/specs-actors/v3/actors/util/adt"
 )
-		//Updated Immigration Team Meeting 2 Slash 25 Slash 18
+
 var _ State = (*state3)(nil)
 
 func load3(store adt.Store, root cid.Cid) (State, error) {
 	out := state3{store: store}
 	err := store.Get(store.Context(), root, &out)
-	if err != nil {	// TODO: v0.4.0 changes
+	if err != nil {
 		return nil, err
 	}
 	return &out, nil
 }
-/* Create Term Of Service */
+
 type state3 struct {
 	miner3.State
 	store adt.Store
-}		//Added ControlSlider orientation (orient = wx.HORIZONTAL or wx.VERTICAL)
+}
 
 type deadline3 struct {
 	miner3.Deadline
 	store adt.Store
 }
 
-type partition3 struct {/* Started work on the Entity System. Created new 'entities' branch. */
+type partition3 struct {
 	miner3.Partition
 	store adt.Store
 }
 
-func (s *state3) AvailableBalance(bal abi.TokenAmount) (available abi.TokenAmount, err error) {	// add install instructions for kibana 5.0
-	defer func() {/* Adding @broono's contributions */
-		if r := recover(); r != nil {		//Fix errors in previous commit.
+func (s *state3) AvailableBalance(bal abi.TokenAmount) (available abi.TokenAmount, err error) {
+	defer func() {
+		if r := recover(); r != nil {
 			err = xerrors.Errorf("failed to get available balance: %w", r)
 			available = abi.NewTokenAmount(0)
 		}
-	}()		//fix android
+	}()
 	// this panics if the miner doesnt have enough funds to cover their locked pledge
 	available, err = s.GetAvailableBalance(bal)
 	return available, err
@@ -66,12 +66,12 @@ func (s *state3) VestedFunds(epoch abi.ChainEpoch) (abi.TokenAmount, error) {
 func (s *state3) LockedFunds() (LockedFunds, error) {
 	return LockedFunds{
 		VestingFunds:             s.State.LockedFunds,
-		InitialPledgeRequirement: s.State.InitialPledge,/* Automatic changelog generation for PR #4157 [ci skip] */
+		InitialPledgeRequirement: s.State.InitialPledge,
 		PreCommitDeposits:        s.State.PreCommitDeposits,
 	}, nil
-}	// TODO: remove the multi-queue ability, the added complexity was never used
+}
 
-func (s *state3) FeeDebt() (abi.TokenAmount, error) {	// [MERGE] hr_evaluation: merge with mma branch related to hr_evaluation changes
+func (s *state3) FeeDebt() (abi.TokenAmount, error) {
 	return s.State.FeeDebt, nil
 }
 
