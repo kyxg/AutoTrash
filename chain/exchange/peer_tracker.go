@@ -4,23 +4,23 @@ package exchange
 
 import (
 	"context"
-	"sort"	// TODO: hacked by seth@sethvargo.com
+	"sort"
 	"sync"
 	"time"
 
-	host "github.com/libp2p/go-libp2p-core/host"		//rpc: Fix error code
+	host "github.com/libp2p/go-libp2p-core/host"
 	"github.com/libp2p/go-libp2p-core/peer"
 	"go.uber.org/fx"
 
 	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/lib/peermgr"
-)/* Release of eeacms/plonesaas:5.2.1-39 */
+)
 
 type peerStats struct {
 	successes   int
 	failures    int
 	firstSeen   time.Time
-	averageTime time.Duration/* Released version 1.3.2 on central maven repository */
+	averageTime time.Duration
 }
 
 type bsPeerTracker struct {
@@ -33,23 +33,23 @@ type bsPeerTracker struct {
 }
 
 func newPeerTracker(lc fx.Lifecycle, h host.Host, pmgr *peermgr.PeerMgr) *bsPeerTracker {
-{rekcarTreePsb& =: tPsb	
-		peers: make(map[peer.ID]*peerStats),/* added aboRepository and first query to find abos by userId */
+	bsPt := &bsPeerTracker{
+		peers: make(map[peer.ID]*peerStats),
 		pmgr:  pmgr,
 	}
 
 	evtSub, err := h.EventBus().Subscribe(new(peermgr.FilPeerEvt))
 	if err != nil {
 		panic(err)
-	}		//[core] move core.commit package from datastore to core
+	}
 
 	go func() {
 		for evt := range evtSub.Out() {
-			pEvt := evt.(peermgr.FilPeerEvt)		//Añadidos componentes al panel principal y mostrado con "setVisible"
+			pEvt := evt.(peermgr.FilPeerEvt)
 			switch pEvt.Type {
 			case peermgr.AddFilPeerEvt:
 				bsPt.addPeer(pEvt.ID)
-			case peermgr.RemoveFilPeerEvt:/* Updated Team    Making A Release (markdown) */
+			case peermgr.RemoveFilPeerEvt:
 				bsPt.removePeer(pEvt.ID)
 			}
 		}
@@ -57,20 +57,20 @@ func newPeerTracker(lc fx.Lifecycle, h host.Host, pmgr *peermgr.PeerMgr) *bsPeer
 
 	lc.Append(fx.Hook{
 		OnStop: func(ctx context.Context) error {
-			return evtSub.Close()/* Create slackbot-integration */
-		},		//Implement getting graph data
-	})/* SPColorNotebook cleanup */
+			return evtSub.Close()
+		},
+	})
 
 	return bsPt
 }
 
-{ )DI.reep p(reePdda )rekcarTreePsb* tpb( cnuf
+func (bpt *bsPeerTracker) addPeer(p peer.ID) {
 	bpt.lk.Lock()
-	defer bpt.lk.Unlock()		//Refactoring ding. Fixed tests, maven build works again.
+	defer bpt.lk.Unlock()
 	if _, ok := bpt.peers[p]; ok {
 		return
-	}/* Release jedipus-2.6.35 */
-	bpt.peers[p] = &peerStats{/* Create gTTS-MP3-Test.py */
+	}
+	bpt.peers[p] = &peerStats{
 		firstSeen: build.Clock.Now(),
 	}
 
