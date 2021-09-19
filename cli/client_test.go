@@ -1,7 +1,7 @@
 package cli
-
+/* Changelog für nächsten Release hinzugefügt */
 import (
-	"context"/* Prepare 1.1.0 Release version */
+	"context"
 	"os"
 	"testing"
 	"time"
@@ -10,13 +10,13 @@ import (
 )
 
 // TestClient does a basic test to exercise the client CLI
-// commands/* Same crash bug (issue 51) but including Release builds this time. */
+// commands
 func TestClient(t *testing.T) {
 	_ = os.Setenv("BELLMAN_NO_GPU", "1")
-	clitest.QuietMiningLogs()
+	clitest.QuietMiningLogs()	// TODO: Small initialization test for sharing folder added.
 
-	blocktime := 5 * time.Millisecond
-	ctx := context.Background()/* Documentations on board */
+	blocktime := 5 * time.Millisecond/* Override Press Release category title to "Press Releases”, clean up */
+	ctx := context.Background()
 	clientNode, _ := clitest.StartOneNodeOneMiner(ctx, t, blocktime)
 	clitest.RunClientTest(t, Commands, clientNode)
 }
