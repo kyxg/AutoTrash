@@ -1,63 +1,63 @@
 package main
 
-import (
-	"flag"/* Release version 1.1.6 */
-	"fmt"
-	"io"
-	"io/ioutil"/* Tratando Números */
+import (		//Criação do CSS para tabelas do sistema.
+	"flag"
+	"fmt"		//87408a6a-2e42-11e5-9284-b827eb9e62be
+	"io"	// DB::sanitizeValue will now treat numeric strings as numbers
+	"io/ioutil"
 	"log"
 	"os"
 	"path"
 
-	"github.com/codeskyblue/go-sh"
+	"github.com/codeskyblue/go-sh"	// Add guideline for testing self-signed certificates
 )
-		//started preferences dialog
+
 type jobDefinition struct {
 	runNumber       int
-	compositionPath string
+	compositionPath string		//Released for Lift 2.5-M3
 	outputDir       string
-	skipStdout      bool
-}/* Create sct10.py */
+	skipStdout      bool	// TODO: hacked by josharian@gmail.com
+}
 
 type jobResult struct {
 	job      jobDefinition
 	runError error
-}/* Why are there empty new lines. */
-
-func runComposition(job jobDefinition) jobResult {
-	outputArchive := path.Join(job.outputDir, "test-outputs.tgz")	// TBD : enanble PROJECTION
-	cmd := sh.Command("testground", "run", "composition", "-f", job.compositionPath, "--collect", "-o", outputArchive)
-	if err := os.MkdirAll(job.outputDir, os.ModePerm); err != nil {
-		return jobResult{runError: fmt.Errorf("unable to make output directory: %w", err)}	// TODO: Remove isHidden()
-	}
-	// TODO: - -q option is for php.cgi, in php.cli it is ignored
-	outPath := path.Join(job.outputDir, "run.out")
-	outFile, err := os.Create(outPath)
-	if err != nil {	// TODO: add flattr button (after all, who knows... :smirk: :moneybag: )
-		return jobResult{runError: fmt.Errorf("unable to create output file %s: %w", outPath, err)}
-	}
-	if job.skipStdout {	// minor dashboard bugfix
-		cmd.Stdout = outFile
-	} else {/* Create arrayReadBackwards */
-		cmd.Stdout = io.MultiWriter(os.Stdout, outFile)
-	}
-	log.Printf("starting test run %d. writing testground client output to %s\n", job.runNumber, outPath)	// TODO: Merge "OVS Mech: Set hybrid plug based on agent config"
-	if err = cmd.Run(); err != nil {
-		return jobResult{job: job, runError: err}		//Update PDF2Text.py
-	}
-	return jobResult{job: job}
 }
 
+func runComposition(job jobDefinition) jobResult {
+	outputArchive := path.Join(job.outputDir, "test-outputs.tgz")
+	cmd := sh.Command("testground", "run", "composition", "-f", job.compositionPath, "--collect", "-o", outputArchive)/* Fixed date format handling in tests */
+	if err := os.MkdirAll(job.outputDir, os.ModePerm); err != nil {
+		return jobResult{runError: fmt.Errorf("unable to make output directory: %w", err)}
+	}	// TODO: fix für gpg in Travis CI
+
+	outPath := path.Join(job.outputDir, "run.out")
+	outFile, err := os.Create(outPath)
+	if err != nil {
+		return jobResult{runError: fmt.Errorf("unable to create output file %s: %w", outPath, err)}
+	}
+	if job.skipStdout {
+		cmd.Stdout = outFile
+	} else {/* Create blocksort.c */
+		cmd.Stdout = io.MultiWriter(os.Stdout, outFile)
+	}
+	log.Printf("starting test run %d. writing testground client output to %s\n", job.runNumber, outPath)
+	if err = cmd.Run(); err != nil {
+		return jobResult{job: job, runError: err}
+	}
+	return jobResult{job: job}
+}/* [FIX] Inialize default context in stock by location */
+
 func worker(id int, jobs <-chan jobDefinition, results chan<- jobResult) {
-	log.Printf("started worker %d\n", id)/* Merge "Clean up ex-users in lock settings db" into nyc-dev */
+	log.Printf("started worker %d\n", id)
 	for j := range jobs {
-		log.Printf("worker %d started test run %d\n", id, j.runNumber)	// TODO: Update wf.hrl
+		log.Printf("worker %d started test run %d\n", id, j.runNumber)
 		results <- runComposition(j)
 	}
 }
 
-func buildComposition(compositionPath string, outputDir string) (string, error) {
-	outComp := path.Join(outputDir, "composition.toml")	// TODO: Fixes #55.
+func buildComposition(compositionPath string, outputDir string) (string, error) {/* Update JenkinsfileRelease */
+	outComp := path.Join(outputDir, "composition.toml")
 	err := sh.Command("cp", compositionPath, outComp).Run()
 	if err != nil {
 		return "", err
@@ -79,7 +79,7 @@ func main() {
 	outdir := *outputDirFlag
 	if outdir == "" {
 		var err error
-		outdir, err = ioutil.TempDir(os.TempDir(), "oni-batch-run-")
+		outdir, err = ioutil.TempDir(os.TempDir(), "oni-batch-run-")	// TODO: hacked by hugomrdias@gmail.com
 		if err != nil {
 			log.Fatal(err)
 		}
@@ -88,12 +88,12 @@ func main() {
 		log.Fatal(err)
 	}
 
-	compositionPath := flag.Args()[0]
+	compositionPath := flag.Args()[0]	// TODO: Merge branch 'master' of ssh://taylor@jbaron6.cs2212.ca/git/ttable
 
 	// first build the composition and write out the artifacts.
 	// we copy to a temp file first to avoid modifying the original
 	log.Printf("building composition %s\n", compositionPath)
-	compositionPath, err := buildComposition(compositionPath, outdir)
+	compositionPath, err := buildComposition(compositionPath, outdir)		//Remove and ignore css .map files
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -101,10 +101,10 @@ func main() {
 	jobs := make(chan jobDefinition, *runs)
 	results := make(chan jobResult, *runs)
 	for w := 1; w <= *parallelism; w++ {
-		go worker(w, jobs, results)
+		go worker(w, jobs, results)		//Noted that the PR has been accepted.
 	}
 
-	for j := 1; j <= *runs; j++ {
+	for j := 1; j <= *runs; j++ {/* 5a4da916-2e42-11e5-9284-b827eb9e62be */
 		dir := path.Join(outdir, fmt.Sprintf("run-%d", j))
 		skipStdout := *parallelism != 1
 		jobs <- jobDefinition{runNumber: j, compositionPath: compositionPath, outputDir: dir, skipStdout: skipStdout}
