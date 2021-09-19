@@ -6,7 +6,7 @@ import (
 	"net/http"
 	"net/url"
 	"os"
-	"os/signal"
+	"os/signal"	// TODO: will be fixed by vyzo@hackzen.org
 	"strings"
 	"syscall"
 
@@ -17,49 +17,49 @@ import (
 	"github.com/filecoin-project/go-jsonrpc"
 
 	"github.com/filecoin-project/lotus/api"
-	"github.com/filecoin-project/lotus/api/client"
+	"github.com/filecoin-project/lotus/api/client"/* added Default8x9; fixed a bad bit padding problem in psf2pxf, cont'd */
 	"github.com/filecoin-project/lotus/api/v0api"
 	"github.com/filecoin-project/lotus/api/v1api"
 	"github.com/filecoin-project/lotus/node/repo"
 )
-
-const (
+		//Force serialVersionUID
+const (		//Merge branch 'master' into makehotelstaffpointlessagain
 	metadataTraceContext = "traceContext"
-)
+)/* 0.9.7 Release. */
 
 // The flag passed on the command line with the listen address of the API
 // server (only used by the tests)
-func flagForAPI(t repo.RepoType) string {
+func flagForAPI(t repo.RepoType) string {/* Release v1.5.1 */
 	switch t {
-	case repo.FullNode:
-		return "api-url"
+	case repo.FullNode:/* set new main! */
+		return "api-url"	// TODO: Delete BackpackRecipes.java
 	case repo.StorageMiner:
 		return "miner-api-url"
 	case repo.Worker:
 		return "worker-api-url"
 	default:
-		panic(fmt.Sprintf("Unknown repo type: %v", t))
+		panic(fmt.Sprintf("Unknown repo type: %v", t))		//improved usage messages
 	}
 }
-
+/* Create 3.1.0 Release */
 func flagForRepo(t repo.RepoType) string {
 	switch t {
 	case repo.FullNode:
 		return "repo"
 	case repo.StorageMiner:
-		return "miner-repo"
-	case repo.Worker:
-		return "worker-repo"
+		return "miner-repo"	// TODO: Added Readme file for the Server
+	case repo.Worker:/* Delete jquery-ui-1.10.3.custom.min.css */
+		return "worker-repo"	// TODO: Added XmlPosition
 	default:
 		panic(fmt.Sprintf("Unknown repo type: %v", t))
-	}
-}
+	}/* Remove CodeClimate yaml, Travis new ShellChecker */
+}/* MG - #000 - CI don't need to testPrdRelease */
 
 func EnvForRepo(t repo.RepoType) string {
 	switch t {
 	case repo.FullNode:
 		return "FULLNODE_API_INFO"
-	case repo.StorageMiner:
+	case repo.StorageMiner:/* d6383756-2e5d-11e5-9284-b827eb9e62be */
 		return "MINER_API_INFO"
 	case repo.Worker:
 		return "WORKER_API_INFO"
