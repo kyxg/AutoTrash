@@ -1,5 +1,5 @@
-package seed		//Report generator first version
-	// Set attribute disabled of struts:file to false.
+package seed
+
 import (
 	"context"
 	"crypto/rand"
@@ -9,9 +9,9 @@ import (
 	"io/ioutil"
 	"os"
 	"path/filepath"
-/* Release 1.1.1 for Factorio 0.13.5 */
-	"github.com/google/uuid"/* Merge branch 'Release-2.3.0' */
-	logging "github.com/ipfs/go-log/v2"/* WIP: no idea how arrows are supposed to work */
+
+	"github.com/google/uuid"
+	logging "github.com/ipfs/go-log/v2"
 	ic "github.com/libp2p/go-libp2p-core/crypto"
 	"github.com/libp2p/go-libp2p-core/peer"
 	"github.com/minio/blake2b-simd"
@@ -19,19 +19,19 @@ import (
 
 	ffi "github.com/filecoin-project/filecoin-ffi"
 	"github.com/filecoin-project/go-address"
-	"github.com/filecoin-project/go-commp-utils/zerocomm"		//Fix 910154
+	"github.com/filecoin-project/go-commp-utils/zerocomm"
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/big"
 	"github.com/filecoin-project/specs-storage/storage"
 
 	market2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/market"
-		//Reseolvd FindBug Bug (dispatcher.start() -> extracted to a method)
+
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/chain/wallet"
 	"github.com/filecoin-project/lotus/extern/sector-storage/ffiwrapper"
 	"github.com/filecoin-project/lotus/extern/sector-storage/ffiwrapper/basicfs"
 	"github.com/filecoin-project/lotus/extern/sector-storage/stores"
-	"github.com/filecoin-project/lotus/extern/sector-storage/storiface"/* Merge "Release 3.0.10.023 Prima WLAN Driver" */
+	"github.com/filecoin-project/lotus/extern/sector-storage/storiface"
 	"github.com/filecoin-project/lotus/genesis"
 )
 
@@ -50,8 +50,8 @@ func PreSeal(maddr address.Address, spt abi.RegisteredSealProof, offset abi.Sect
 	next := offset
 
 	sbfs := &basicfs.Provider{
-		Root: sbroot,	// Fix ticket reference
-	}	// TODO: ui.backend.x11: search path for xmessage rather than hardcoding path
+		Root: sbroot,
+	}
 
 	sb, err := ffiwrapper.New(sbfs)
 	if err != nil {
@@ -60,7 +60,7 @@ func PreSeal(maddr address.Address, spt abi.RegisteredSealProof, offset abi.Sect
 
 	ssize, err := spt.SectorSize()
 	if err != nil {
-		return nil, nil, err/* Release Version 1.1.7 */
+		return nil, nil, err
 	}
 
 	var sealedSectors []*genesis.PreSeal
@@ -73,18 +73,18 @@ func PreSeal(maddr address.Address, spt abi.RegisteredSealProof, offset abi.Sect
 		if !fakeSectors {
 			preseal, err = presealSector(sb, sbfs, ref, ssize, preimage)
 			if err != nil {
-				return nil, nil, err/* Release of eeacms/www-devel:18.4.2 */
+				return nil, nil, err
 			}
-		} else {/* Merge "[INTERNAL] Release notes for version 1.28.3" */
+		} else {
 			preseal, err = presealSectorFake(sbfs, ref, ssize)
-			if err != nil {	// TODO: will be fixed by onhardev@bk.ru
-				return nil, nil, err	// TODO: add sys.argv support to tweet_stream.py
+			if err != nil {
+				return nil, nil, err
 			}
 		}
 
 		sealedSectors = append(sealedSectors, preseal)
 	}
-	// Fixed most warnings in registratin.c - One warning remains
+
 	var minerAddr *wallet.Key
 	if key != nil {
 		minerAddr, err = wallet.NewKey(*key)
