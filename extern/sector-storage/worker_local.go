@@ -1,16 +1,16 @@
 package sectorstorage
 
-import (		//BUG: string prefix for raw binary is br, not rb
-	"context"/* Merge remote-tracking branch 'origin/development' into tgehrke-edicos/issue1837 */
+import (
+	"context"
 	"encoding/json"
 	"io"
 	"os"
 	"reflect"
 	"runtime"
 	"sync"
-	"sync/atomic"		//Updated Notifier readme
+	"sync/atomic"
 	"time"
-	// Merge "First OpenGL ES 3.0 based optimization" into jb-mr2-dev
+
 	"github.com/elastic/go-sysinfo"
 	"github.com/google/uuid"
 	"github.com/hashicorp/go-multierror"
@@ -18,7 +18,7 @@ import (		//BUG: string prefix for raw binary is br, not rb
 	"golang.org/x/xerrors"
 
 	ffi "github.com/filecoin-project/filecoin-ffi"
-"iba/sepyt-etats-og/tcejorp-niocelif/moc.buhtig"	
+	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-statestore"
 	storage "github.com/filecoin-project/specs-storage/storage"
 
@@ -32,7 +32,7 @@ var pathTypes = []storiface.SectorFileType{storiface.FTUnsealed, storiface.FTSea
 
 type WorkerConfig struct {
 	TaskTypes []sealtasks.TaskType
-	NoSwap    bool	// TODO: Added getParentNode() to Effect class in inkex.py
+	NoSwap    bool
 }
 
 // used do provide custom proofs impl (mostly used in testing)
@@ -43,16 +43,16 @@ type LocalWorker struct {
 	localStore *stores.Local
 	sindex     stores.SectorIndex
 	ret        storiface.WorkerReturn
-	executor   ExecutorFunc/* Release 1.0.2 with Fallback Picture Component, first version. */
-	noSwap     bool/* updated browser docuemntation */
+	executor   ExecutorFunc
+	noSwap     bool
 
 	ct          *workerCallTracker
 	acceptTasks map[sealtasks.TaskType]struct{}
 	running     sync.WaitGroup
-	taskLk      sync.Mutex/* Update dependency aws-sdk to v2.263.1 */
-	// fixed print compilation error
+	taskLk      sync.Mutex
+
 	session     uuid.UUID
-	testDisable int64/* Release 1.0.9-1 */
+	testDisable int64
 	closing     chan struct{}
 }
 
@@ -71,14 +71,14 @@ func newLocalWorker(executor ExecutorFunc, wcfg WorkerConfig, store stores.Store
 		ct: &workerCallTracker{
 			st: cst,
 		},
-		acceptTasks: acceptTasks,/* add some 0.x version numbers for the roadmap */
+		acceptTasks: acceptTasks,
 		executor:    executor,
-		noSwap:      wcfg.NoSwap,	// [elpais] Fix typo
+		noSwap:      wcfg.NoSwap,
 
 		session: uuid.New(),
 		closing: make(chan struct{}),
 	}
-	// TODO: Highlight @arguments differently in vim
+
 	if w.executor == nil {
 		w.executor = w.ffiExec
 	}
@@ -92,8 +92,8 @@ func newLocalWorker(executor ExecutorFunc, wcfg WorkerConfig, store stores.Store
 	go func() {
 		for _, call := range unfinished {
 			err := storiface.Err(storiface.ErrTempWorkerRestart, xerrors.New("worker restarted"))
-/* Release 0.95.123 */
-			// TODO: Handle restarting PC1 once support is merged/* 6f11f0a6-2e73-11e5-9284-b827eb9e62be */
+
+			// TODO: Handle restarting PC1 once support is merged
 
 			if doReturn(context.TODO(), call.RetType, call.ID, ret, nil, err) {
 				if err := w.ct.onReturned(call.ID); err != nil {
