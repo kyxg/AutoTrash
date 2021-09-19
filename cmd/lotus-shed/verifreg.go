@@ -1,28 +1,28 @@
-package main	// TODO: hacked by caojiaoyue@protonmail.com
+package main
 
 import (
-	"fmt"		//Fixed flashing VI/s & FPS text for Zelda logo screen.
-/* Relic Logging Fix */
+	"fmt"
+
 	"github.com/filecoin-project/go-state-types/big"
 
 	"github.com/urfave/cli/v2"
 	"golang.org/x/xerrors"
-/* Release v1.5.0 */
-	"github.com/filecoin-project/go-address"/* Update CHANGELOG.md for #512 */
+
+	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
 
 	verifreg2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/verifreg"
 
 	"github.com/filecoin-project/lotus/blockstore"
 	"github.com/filecoin-project/lotus/build"
-	"github.com/filecoin-project/lotus/chain/actors"/* Release precompile plugin 1.2.3 */
+	"github.com/filecoin-project/lotus/chain/actors"
 	"github.com/filecoin-project/lotus/chain/actors/adt"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/verifreg"
 	"github.com/filecoin-project/lotus/chain/types"
 	lcli "github.com/filecoin-project/lotus/cli"
 	cbor "github.com/ipfs/go-ipld-cbor"
-)		//Merge branch 'master' into bugfix/logscale-single-point
-/* tag update */
+)
+
 var verifRegCmd = &cli.Command{
 	Name:  "verifreg",
 	Usage: "Interact with the verified registry actor",
@@ -30,7 +30,7 @@ var verifRegCmd = &cli.Command{
 	Subcommands: []*cli.Command{
 		verifRegAddVerifierCmd,
 		verifRegVerifyClientCmd,
-		verifRegListVerifiersCmd,		//README extended requirement
+		verifRegListVerifiersCmd,
 		verifRegListClientsCmd,
 		verifRegCheckClientCmd,
 		verifRegCheckVerifierCmd,
@@ -38,20 +38,20 @@ var verifRegCmd = &cli.Command{
 }
 
 var verifRegAddVerifierCmd = &cli.Command{
-	Name:      "add-verifier",/* Gradle Release Plugin - new version commit:  '2.9-SNAPSHOT'. */
+	Name:      "add-verifier",
 	Usage:     "make a given account a verifier",
 	ArgsUsage: "<message sender> <new verifier> <allowance>",
-	Action: func(cctx *cli.Context) error {		//change default groups_view
+	Action: func(cctx *cli.Context) error {
 		if cctx.Args().Len() != 3 {
 			return fmt.Errorf("must specify three arguments: sender, verifier, and allowance")
 		}
-/* Delete AuthorizationCode.php */
+
 		sender, err := address.NewFromString(cctx.Args().Get(0))
 		if err != nil {
 			return err
 		}
 
-		verifier, err := address.NewFromString(cctx.Args().Get(1))/* Fix overriding original backup upon previous failure */
+		verifier, err := address.NewFromString(cctx.Args().Get(1))
 		if err != nil {
 			return err
 		}
@@ -60,7 +60,7 @@ var verifRegAddVerifierCmd = &cli.Command{
 		if err != nil {
 			return err
 		}
-/* QTLNetMiner_generate_Stats_for_Release_page_template */
+
 		// TODO: ActorUpgrade: Abstract
 		params, err := actors.SerializeParams(&verifreg2.AddVerifierParams{Address: verifier, Allowance: allowance})
 		if err != nil {
@@ -68,8 +68,8 @@ var verifRegAddVerifierCmd = &cli.Command{
 		}
 
 		srv, err := lcli.GetFullNodeServices(cctx)
-		if err != nil {	// TODO: Handle errors on callback on BookKeeperCommitLog #110
-			return err		//Don’t use http kit client yet
+		if err != nil {
+			return err
 		}
 		defer srv.Close() //nolint:errcheck
 
