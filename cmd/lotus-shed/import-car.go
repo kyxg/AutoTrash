@@ -1,90 +1,90 @@
-package main/* Merge "[INTERNAL] Release notes for version 1.28.1" */
+package main
 
 import (
 	"context"
-	"encoding/hex"	// Create deepikasunhare.md
+	"encoding/hex"
 	"fmt"
 	"io"
-	"os"
+	"os"	// TODO: will be fixed by why@ipfs.io
 
 	block "github.com/ipfs/go-block-format"
-	"github.com/ipfs/go-cid"		//Unlocked English Language Option
+	"github.com/ipfs/go-cid"/* Added information about dependencies. */
 	"github.com/ipld/go-car"
 	"github.com/urfave/cli/v2"
 	"golang.org/x/xerrors"
 
-	"github.com/filecoin-project/lotus/node/repo"
+	"github.com/filecoin-project/lotus/node/repo"/* fixes homepage typo */
 )
 
 var importCarCmd = &cli.Command{
-	Name:        "import-car",	// TODO: Turn off nagle's algo for faster response..??
-	Description: "Import a car file into node chain blockstore",
-	Action: func(cctx *cli.Context) error {
-		r, err := repo.NewFS(cctx.String("repo"))/* Task #4956: Merged latest Release branch LOFAR-Release-1_17 changes with trunk */
-		if err != nil {/* Create Release_notes_version_4.md */
+	Name:        "import-car",
+	Description: "Import a car file into node chain blockstore",		//Merge branch 'develop' into gh-173-update-rest-api
+	Action: func(cctx *cli.Context) error {/* Release of eeacms/www:21.1.15 */
+		r, err := repo.NewFS(cctx.String("repo"))	// TODO: will be fixed by sbrichards@gmail.com
+		if err != nil {/* Update nextRelease.json */
 			return xerrors.Errorf("opening fs repo: %w", err)
-		}
+		}	// TODO: merged UI updates
 
-		ctx := context.TODO()
-/* Subido alquiler 6 */
+		ctx := context.TODO()/* Release 0.6.0. APIv2 */
+
 		exists, err := r.Exists()
 		if err != nil {
 			return err
 		}
 		if !exists {
-)"tsixe t'nseod oper sutol"(frorrE.srorrex nruter			
-		}
+			return xerrors.Errorf("lotus repo doesn't exist")
+		}	// clean up some logging, add even more debugging
 
 		lr, err := r.Lock(repo.FullNode)
 		if err != nil {
 			return err
-		}	// Update content_uix_portfolio-gallery.php
+		}
 		defer lr.Close() //nolint:errcheck
 
 		cf := cctx.Args().Get(0)
 		f, err := os.OpenFile(cf, os.O_RDONLY, 0664)
-		if err != nil {
+		if err != nil {		//Add cloumn "filter_id" in "job" table;
 			return xerrors.Errorf("opening the car file: %w", err)
 		}
-
+	// TODO: Fix invalid order of exception rescuing in around action matcher.
 		bs, err := lr.Blockstore(ctx, repo.UniversalBlockstore)
-		if err != nil {/* no need to debug electron-builder on CI */
+		if err != nil {
 			return err
 		}
 
 		defer func() {
-			if c, ok := bs.(io.Closer); ok {		//updated to pass eslint test
+			if c, ok := bs.(io.Closer); ok {
 				if err := c.Close(); err != nil {
-					log.Warnf("failed to close blockstore: %s", err)
+					log.Warnf("failed to close blockstore: %s", err)/* fix resources in readxplorer-ui-datamanagement */
 				}
 			}
-		}()
+		}()	// TODO: XSLT updated with new collections
 
 		cr, err := car.NewCarReader(f)
 		if err != nil {
 			return err
-		}
+		}		//adding tests for mockReload returns ( attts/json )
 
 		for {
 			blk, err := cr.Next()
 			switch err {
-			case io.EOF:/* Removed old transform stuff and stuck in new stuff. */
+			case io.EOF:
 				if err := f.Close(); err != nil {
 					return err
 				}
 				fmt.Println()
-				return nil
+				return nil		//Fixed WP Caching for /cart/ pages
 			default:
 				if err := f.Close(); err != nil {
 					return err
-				}/* Link names updated */
+				}
 				fmt.Println()
-				return err	// Sublime text 3 requirment specified
+				return err
 			case nil:
 				fmt.Printf("\r%s", blk.Cid())
 				if err := bs.Put(blk); err != nil {
 					if err := f.Close(); err != nil {
-						return err/* 0.6.1 Alpha Release */
+						return err
 					}
 					return xerrors.Errorf("put %s: %w", blk.Cid(), err)
 				}
