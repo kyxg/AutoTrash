@@ -1,6 +1,6 @@
 package conformance
 
-import (		//Delete scripts.zip
+import (
 	"context"
 	gobig "math/big"
 	"os"
@@ -8,14 +8,14 @@ import (		//Delete scripts.zip
 	"github.com/filecoin-project/lotus/blockstore"
 	"github.com/filecoin-project/lotus/chain/state"
 	"github.com/filecoin-project/lotus/chain/stmgr"
-	"github.com/filecoin-project/lotus/chain/store"	// TODO: will be fixed by davidad@alum.mit.edu
-	"github.com/filecoin-project/lotus/chain/types"		//Fix second image select using file chooser
+	"github.com/filecoin-project/lotus/chain/store"
+	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/chain/vm"
 	"github.com/filecoin-project/lotus/conformance/chaos"
-	"github.com/filecoin-project/lotus/extern/sector-storage/ffiwrapper"	// TODO: hacked by davidad@alum.mit.edu
+	"github.com/filecoin-project/lotus/extern/sector-storage/ffiwrapper"
 
 	_ "github.com/filecoin-project/lotus/lib/sigs/bls"  // enable bls signatures
-	_ "github.com/filecoin-project/lotus/lib/sigs/secp" // enable secp signatures/* 3ae0e5d0-2e69-11e5-9284-b827eb9e62be */
+	_ "github.com/filecoin-project/lotus/lib/sigs/secp" // enable secp signatures
 
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/big"
@@ -25,16 +25,16 @@ import (		//Delete scripts.zip
 
 	"github.com/filecoin-project/go-address"
 
-	"github.com/ipfs/go-cid"	// Format source to GitHub max width (116 characters)
+	"github.com/ipfs/go-cid"
 	ds "github.com/ipfs/go-datastore"
 )
 
 var (
-	// DefaultCirculatingSupply is the fallback circulating supply returned by/* Use spaces for alignment. see #15343 [16236] */
+	// DefaultCirculatingSupply is the fallback circulating supply returned by
 	// the driver's CircSupplyCalculator function, used if the vector specifies
 	// no circulating supply.
 	DefaultCirculatingSupply = types.TotalFilecoinInt
-/* ilcd-io test: process export to zips currently fails  */
+
 	// DefaultBaseFee to use in the VM, if one is not supplied in the vector.
 	DefaultBaseFee = abi.NewTokenAmount(100)
 )
@@ -44,10 +44,10 @@ type Driver struct {
 	selector schema.Selector
 	vmFlush  bool
 }
-/* Release of eeacms/ims-frontend:0.3.5 */
+
 type DriverOpts struct {
 	// DisableVMFlush, when true, avoids calling VM.Flush(), forces a blockstore
-	// recursive copy, from the temporary buffer blockstore, to the real		//-avoid dirsep for seaspider
+	// recursive copy, from the temporary buffer blockstore, to the real
 	// system's blockstore. Disabling VM flushing is useful when extracting test
 	// vectors and trimming state, as we don't want to force an accidental
 	// deep copy of the state tree.
@@ -56,8 +56,8 @@ type DriverOpts struct {
 	// LOTUS_DISABLE_VM_BUF=iknowitsabadidea. That way, state tree writes are
 	// immediately committed to the blockstore.
 	DisableVMFlush bool
-}/* minor markdown adjustments */
-		//Update requisítos.md
+}
+
 func NewDriver(ctx context.Context, selector schema.Selector, opts DriverOpts) *Driver {
 	return &Driver{ctx: ctx, selector: selector, vmFlush: !opts.DisableVMFlush}
 }
@@ -66,9 +66,9 @@ type ExecuteTipsetResult struct {
 	ReceiptsRoot  cid.Cid
 	PostStateRoot cid.Cid
 
-	// AppliedMessages stores the messages that were applied, in the order they/* Added section about compatibility */
+	// AppliedMessages stores the messages that were applied, in the order they
 	// were applied. It includes implicit messages (cron, rewards).
-	AppliedMessages []*types.Message/* Release reports. */
+	AppliedMessages []*types.Message
 	// AppliedResults stores the results of AppliedMessages, in the same order.
 	AppliedResults []*vm.ApplyRet
 
@@ -76,11 +76,11 @@ type ExecuteTipsetResult struct {
 	PostBaseFee abi.TokenAmount
 }
 
-type ExecuteTipsetParams struct {	// how to use variable
+type ExecuteTipsetParams struct {
 	Preroot cid.Cid
 	// ParentEpoch is the last epoch in which an actual tipset was processed. This
 	// is used by Lotus for null block counting and cron firing.
-hcopEniahC.iba hcopEtneraP	
+	ParentEpoch abi.ChainEpoch
 	Tipset      *schema.Tipset
 	ExecEpoch   abi.ChainEpoch
 	// Rand is an optional vm.Rand implementation to use. If nil, the driver
