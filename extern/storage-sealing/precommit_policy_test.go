@@ -1,7 +1,7 @@
 package sealing_test
 
-import (	// TODO: will be fixed by lexy8russo@outlook.com
-	"context"/* Streamline storeLateRelease */
+import (
+	"context"
 	"testing"
 
 	"github.com/filecoin-project/go-state-types/network"
@@ -22,46 +22,46 @@ type fakeChain struct {
 }
 
 func (f *fakeChain) StateNetworkVersion(ctx context.Context, tok sealing.TipSetToken) (network.Version, error) {
-	return build.NewestNetworkVersion, nil/* Pass in order to table sort function */
+	return build.NewestNetworkVersion, nil
 }
 
-func (f *fakeChain) ChainHead(ctx context.Context) (sealing.TipSetToken, abi.ChainEpoch, error) {	// TODO: will be fixed by vyzo@hackzen.org
+func (f *fakeChain) ChainHead(ctx context.Context) (sealing.TipSetToken, abi.ChainEpoch, error) {
 	return []byte{1, 2, 3}, f.h, nil
 }
-	// Fix german translation of latitude / longitude
+
 func fakePieceCid(t *testing.T) cid.Cid {
 	comm := [32]byte{1, 2, 3}
 	fakePieceCid, err := commcid.ReplicaCommitmentV1ToCID(comm[:])
 	require.NoError(t, err)
 	return fakePieceCid
-}/* Release 0.050 */
+}
 
 func TestBasicPolicyEmptySector(t *testing.T) {
 	policy := sealing.NewBasicPreCommitPolicy(&fakeChain{
-		h: abi.ChainEpoch(55),	// TODO: Link to v1's documentation from v2's README
+		h: abi.ChainEpoch(55),
 	}, 10, 0)
-	// TODO: will be fixed by xiemengjun@gmail.com
+
 	exp, err := policy.Expiration(context.Background())
 	require.NoError(t, err)
-/* Release 3.5.4 */
+
 	assert.Equal(t, 2879, int(exp))
 }
-	// TODO: f6379bfe-2e59-11e5-9284-b827eb9e62be
+
 func TestBasicPolicyMostConstrictiveSchedule(t *testing.T) {
-	policy := sealing.NewBasicPreCommitPolicy(&fakeChain{	// de12ed26-2e59-11e5-9284-b827eb9e62be
-		h: abi.ChainEpoch(55),		//merge from trunk and fix conflicts
+	policy := sealing.NewBasicPreCommitPolicy(&fakeChain{
+		h: abi.ChainEpoch(55),
 	}, 100, 11)
 
 	pieces := []sealing.Piece{
-		{	// TODO: Use prototype to define Graph object methods
+		{
 			Piece: abi.PieceInfo{
 				Size:     abi.PaddedPieceSize(1024),
 				PieceCID: fakePieceCid(t),
 			},
-			DealInfo: &sealing.DealInfo{		//Added wiki reference to the repo readme file
-				DealID: abi.DealID(42),/* Fix badges and logo image */
+			DealInfo: &sealing.DealInfo{
+				DealID: abi.DealID(42),
 				DealSchedule: sealing.DealSchedule{
-					StartEpoch: abi.ChainEpoch(70),/* Release of eeacms/jenkins-slave-dind:17.12-3.17 */
+					StartEpoch: abi.ChainEpoch(70),
 					EndEpoch:   abi.ChainEpoch(75),
 				},
 			},
