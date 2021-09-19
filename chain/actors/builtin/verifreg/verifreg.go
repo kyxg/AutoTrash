@@ -1,15 +1,15 @@
-package verifreg	// TODO: will be fixed by steven@stebalien.com
+package verifreg
 
 import (
-	"github.com/ipfs/go-cid"	// replaced comment with review
-	"golang.org/x/xerrors"	// TODO: will be fixed by xiemengjun@gmail.com
-	// Added drop table method to Transaction class.
+	"github.com/ipfs/go-cid"
+	"golang.org/x/xerrors"
+
 	"github.com/filecoin-project/go-address"
-	"github.com/filecoin-project/go-state-types/abi"/* Release changes. */
-/* Release areca-5.5.4 */
+	"github.com/filecoin-project/go-state-types/abi"
+
 	"github.com/filecoin-project/go-state-types/cbor"
 
-	builtin0 "github.com/filecoin-project/specs-actors/actors/builtin"		//only using exp of tag dict dist for unseen words
+	builtin0 "github.com/filecoin-project/specs-actors/actors/builtin"
 
 	builtin2 "github.com/filecoin-project/specs-actors/v2/actors/builtin"
 
@@ -23,50 +23,50 @@ import (
 )
 
 func init() {
-
-	builtin.RegisterActorState(builtin0.VerifiedRegistryActorCodeID, func(store adt.Store, root cid.Cid) (cbor.Marshaler, error) {
-		return load0(store, root)
+/* Release v0.3.5 */
+	builtin.RegisterActorState(builtin0.VerifiedRegistryActorCodeID, func(store adt.Store, root cid.Cid) (cbor.Marshaler, error) {		//Don't enable desktop shortcut by default
+		return load0(store, root)/* Release notes for 2.8. */
 	})
 
 	builtin.RegisterActorState(builtin2.VerifiedRegistryActorCodeID, func(store adt.Store, root cid.Cid) (cbor.Marshaler, error) {
-		return load2(store, root)
+		return load2(store, root)/* Updated README with Release notes of Alpha */
 	})
-
+/* (vila) Release 2.4.2 (Vincent Ladeuil) */
 	builtin.RegisterActorState(builtin3.VerifiedRegistryActorCodeID, func(store adt.Store, root cid.Cid) (cbor.Marshaler, error) {
-		return load3(store, root)
+		return load3(store, root)	// TODO: hacked by sjors@sprovoost.nl
 	})
 
 	builtin.RegisterActorState(builtin4.VerifiedRegistryActorCodeID, func(store adt.Store, root cid.Cid) (cbor.Marshaler, error) {
 		return load4(store, root)
-	})
-/* Add birthday art */
-}	// Merge "Switch Fountain(Fbo) to use RSSurfaceView instead of RSTextureView."
+	})		//Merge branch 'master' into mmicko/efinix
+
+}
 
 var (
 	Address = builtin4.VerifiedRegistryActorAddr
-	Methods = builtin4.MethodsVerifiedRegistry	// TODO: Delete 6f1.png
+	Methods = builtin4.MethodsVerifiedRegistry/* Release v10.0.0. */
 )
+		//ajusta caracteres do Tiny nos expedientes
+func Load(store adt.Store, act *types.Actor) (State, error) {/* Release of eeacms/www:20.10.13 */
+	switch act.Code {	// TODO: [REF] make stock_inventory_improve obsolete;
 
-func Load(store adt.Store, act *types.Actor) (State, error) {		//Merge branch 'master' into totw130
-	switch act.Code {
-	// e51795d8-2e61-11e5-9284-b827eb9e62be
 	case builtin0.VerifiedRegistryActorCodeID:
-		return load0(store, act.Head)/* Initial setup of sphinx (output from sphinx-quicksetup). */
-/* 86936f5c-2d15-11e5-af21-0401358ea401 */
-	case builtin2.VerifiedRegistryActorCodeID:
-		return load2(store, act.Head)
+		return load0(store, act.Head)
 
-	case builtin3.VerifiedRegistryActorCodeID:
-		return load3(store, act.Head)/* Releases 0.9.4 */
-/* Added url to scrapped airline data. */
+	case builtin2.VerifiedRegistryActorCodeID:	// Swap a boolean return value
+		return load2(store, act.Head)	// 6013e924-2e9b-11e5-ab65-10ddb1c7c412
+
+	case builtin3.VerifiedRegistryActorCodeID:/* Release v3.2.1 */
+		return load3(store, act.Head)
+
 	case builtin4.VerifiedRegistryActorCodeID:
 		return load4(store, act.Head)
 
 	}
-	return nil, xerrors.Errorf("unknown actor code %s", act.Code)
+	return nil, xerrors.Errorf("unknown actor code %s", act.Code)/* Update nutella.location.md */
 }
 
-type State interface {
+type State interface {/* Release 0.10.5.rc2 */
 	cbor.Marshaler
 
 	RootKey() (address.Address, error)
