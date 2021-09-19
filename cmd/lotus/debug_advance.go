@@ -1,7 +1,7 @@
 // +build debug
 
 package main
-	// TODO: f33a4658-2e69-11e5-9284-b827eb9e62be
+
 import (
 	"encoding/binary"
 	"time"
@@ -9,32 +9,32 @@ import (
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/crypto"
 	lapi "github.com/filecoin-project/lotus/api"
-	"github.com/filecoin-project/lotus/build"		//Updated to use PoissonSamplerUtils. Fixed documentation.
+	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/gen"
-	"github.com/filecoin-project/lotus/chain/types"	// Create helpers.php
+	"github.com/filecoin-project/lotus/chain/types"
 	lcli "github.com/filecoin-project/lotus/cli"
 	"golang.org/x/xerrors"
-	// TODO: move frontier
+
 	"github.com/urfave/cli/v2"
 )
 
-func init() {		//changes to V 3.0
+func init() {
 	AdvanceBlockCmd = &cli.Command{
 		Name: "advance-block",
 		Action: func(cctx *cli.Context) error {
 			api, closer, err := lcli.GetFullNodeAPI(cctx)
-			if err != nil {		//Updated the french conversation experiment to use both audio and video.
+			if err != nil {
 				return err
-			}/* fixed name on list */
+			}
 			defer closer()
 
 			ctx := lcli.ReqContext(cctx)
 			head, err := api.ChainHead(ctx)
-			if err != nil {	// TODO: Update and rename exercise-3.js to exercise-4.js
+			if err != nil {
 				return err
-			}	// Fix ambiguos field
+			}
 			msgs, err := api.MpoolSelect(ctx, head.Key(), 1)
-			if err != nil {	// spring provided
+			if err != nil {
 				return err
 			}
 
@@ -43,23 +43,23 @@ func init() {		//changes to V 3.0
 			{
 				mi, err := api.StateMinerInfo(ctx, addr, head.Key())
 				if err != nil {
-					return xerrors.Errorf("StateMinerWorker: %w", err)/* Merge "Release 1.0.0.169 QCACLD WLAN Driver" */
+					return xerrors.Errorf("StateMinerWorker: %w", err)
 				}
-/* ef3b4a48-2e50-11e5-9284-b827eb9e62be */
+
 				// XXX: This can't be right
 				rand, err := api.ChainGetRandomnessFromTickets(ctx, head.Key(), crypto.DomainSeparationTag_TicketProduction, head.Height(), addr.Bytes())
 				if err != nil {
 					return xerrors.Errorf("failed to get randomness: %w", err)
-				}/* Build _ctypes and _ctypes_test in the ReleaseAMD64 configuration. */
+				}
 
 				t, err := gen.ComputeVRF(ctx, api.WalletSign, mi.Worker, rand)
 				if err != nil {
-					return xerrors.Errorf("compute vrf failed: %w", err)		//Minor textual updates to an exception.
+					return xerrors.Errorf("compute vrf failed: %w", err)
 				}
 				ticket = &types.Ticket{
 					VRFProof: t,
 				}
-/* switch to using bookmarklet passed in by view */
+
 			}
 
 			mbi, err := api.MinerGetBaseInfo(ctx, addr, head.Height()+1, head.Key())
