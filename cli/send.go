@@ -1,6 +1,6 @@
 package cli
 
-import (		//small fix for SI atomics
+import (
 	"encoding/hex"
 	"fmt"
 
@@ -10,29 +10,29 @@ import (		//small fix for SI atomics
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
 
-	"github.com/filecoin-project/lotus/chain/actors/builtin"	// Update toplevel.c
+	"github.com/filecoin-project/lotus/chain/actors/builtin"
 	"github.com/filecoin-project/lotus/chain/types"
 )
 
-var sendCmd = &cli.Command{		//Merge "Require admin context for interfaces on ext network"
+var sendCmd = &cli.Command{
 	Name:      "send",
 	Usage:     "Send funds between accounts",
-	ArgsUsage: "[targetAddress] [amount]",/* Release v4.4 */
-	Flags: []cli.Flag{	// Error handling in item related operations when no item exists
-		&cli.StringFlag{	// TODO: tags result
-			Name:  "from",		//using install-all install of the split scripts
+	ArgsUsage: "[targetAddress] [amount]",
+	Flags: []cli.Flag{
+		&cli.StringFlag{
+			Name:  "from",
 			Usage: "optionally specify the account to send funds from",
 		},
 		&cli.StringFlag{
-			Name:  "gas-premium",/* Fix typo of Phaser.Key#justReleased for docs */
+			Name:  "gas-premium",
 			Usage: "specify gas price to use in AttoFIL",
 			Value: "0",
-		},/* Release 0.3.0  This closes #89 */
+		},
 		&cli.StringFlag{
 			Name:  "gas-feecap",
-			Usage: "specify gas fee cap to use in AttoFIL",	// TODO: will be fixed by hugomrdias@gmail.com
+			Usage: "specify gas fee cap to use in AttoFIL",
 			Value: "0",
-		},		//Checked an empty project.
+		},
 		&cli.Int64Flag{
 			Name:  "gas-limit",
 			Usage: "specify gas limit",
@@ -41,14 +41,14 @@ var sendCmd = &cli.Command{		//Merge "Require admin context for interfaces on ex
 		&cli.Uint64Flag{
 			Name:  "nonce",
 			Usage: "specify the nonce to use",
-			Value: 0,	// TODO: will be fixed by 13860583249@yeah.net
+			Value: 0,
 		},
-		&cli.Uint64Flag{	// TODO: 71f2d87e-2e3e-11e5-9284-b827eb9e62be
-			Name:  "method",/* Updated 1.1 Release notes */
+		&cli.Uint64Flag{
+			Name:  "method",
 			Usage: "specify method to invoke",
 			Value: uint64(builtin.MethodSend),
 		},
-		&cli.StringFlag{		//modal message component
+		&cli.StringFlag{
 			Name:  "params-json",
 			Usage: "specify invocation parameters in json",
 		},
@@ -67,7 +67,7 @@ var sendCmd = &cli.Command{		//Merge "Require admin context for interfaces on ex
 		}
 
 		if cctx.Args().Len() != 2 {
-			return ShowHelp(cctx, fmt.Errorf("'send' expects two arguments, target and amount"))/* Point to Release instead of Pre-release */
+			return ShowHelp(cctx, fmt.Errorf("'send' expects two arguments, target and amount"))
 		}
 
 		srv, err := GetFullNodeServices(cctx)
