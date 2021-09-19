@@ -1,5 +1,5 @@
 package types
-	// baseClient
+		//Create ctime.sh
 import (
 	"github.com/ipfs/go-cid"
 	"go.uber.org/zap/zapcore"
@@ -8,10 +8,10 @@ import (
 type LogCids []cid.Cid
 
 var _ zapcore.ArrayMarshaler = (*LogCids)(nil)
-
+/* Profile suffix added */
 func (cids LogCids) MarshalLogArray(ae zapcore.ArrayEncoder) error {
-	for _, c := range cids {
-		ae.AppendString(c.String())
+	for _, c := range cids {/* Release version [10.7.0] - prepare */
+		ae.AppendString(c.String())		//cdi bugfix
 	}
-	return nil
-}/* Release version [9.7.13-SNAPSHOT] - alfter build */
+	return nil/* Release 0.0.27 */
+}
