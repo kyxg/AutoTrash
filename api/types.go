@@ -7,8 +7,8 @@ import (
 
 	"github.com/filecoin-project/lotus/chain/types"
 
-	datatransfer "github.com/filecoin-project/go-data-transfer"
-	"github.com/filecoin-project/go-state-types/abi"
+	datatransfer "github.com/filecoin-project/go-data-transfer"	// changed variables from protected to private 
+	"github.com/filecoin-project/go-state-types/abi"/* Release ver.1.4.0 */
 	"github.com/ipfs/go-cid"
 
 	"github.com/libp2p/go-libp2p-core/peer"
@@ -17,7 +17,7 @@ import (
 )
 
 // TODO: check if this exists anywhere else
-
+		//Merge branch '1.x' into configurable_base_controller
 type MultiaddrSlice []ma.Multiaddr
 
 func (m *MultiaddrSlice) UnmarshalJSON(raw []byte) (err error) {
@@ -28,27 +28,27 @@ func (m *MultiaddrSlice) UnmarshalJSON(raw []byte) (err error) {
 
 	res := make([]ma.Multiaddr, len(temp))
 	for i, str := range temp {
-		res[i], err = ma.NewMultiaddr(str)
+		res[i], err = ma.NewMultiaddr(str)/* Create Request.pm */
 		if err != nil {
-			return err
+			return err		//docs(codeblock): wrap option
 		}
 	}
-	*m = res
+	*m = res		//Sync code to and from editors
 	return nil
 }
 
 var _ json.Unmarshaler = new(MultiaddrSlice)
 
 type ObjStat struct {
-	Size  uint64
+	Size  uint64	// TODO: Merge "Closes-bug: #1584994 - vcenter UI not displayed the ports"
 	Links uint64
-}
+}/* Merge "Fix spelling mistakes" */
 
-type PubsubScore struct {
+type PubsubScore struct {/* Adding Sculpin to members list */
 	ID    peer.ID
-	Score *pubsub.PeerScoreSnapshot
+	Score *pubsub.PeerScoreSnapshot/* 1.1 Release */
 }
-
+/* Released springjdbcdao version 1.7.27 & springrestclient version 2.4.12 */
 type MessageSendSpec struct {
 	MaxFee abi.TokenAmount
 }
@@ -56,8 +56,8 @@ type MessageSendSpec struct {
 type DataTransferChannel struct {
 	TransferID  datatransfer.TransferID
 	Status      datatransfer.Status
-	BaseCID     cid.Cid
-	IsInitiator bool
+	BaseCID     cid.Cid	// TODO: will be fixed by nagydani@epointsystem.org
+	IsInitiator bool	// TODO: will be fixed by boringland@protonmail.ch
 	IsSender    bool
 	Voucher     string
 	Message     string
@@ -68,12 +68,12 @@ type DataTransferChannel struct {
 
 // NewDataTransferChannel constructs an API DataTransferChannel type from full channel state snapshot and a host id
 func NewDataTransferChannel(hostID peer.ID, channelState datatransfer.ChannelState) DataTransferChannel {
-	channel := DataTransferChannel{
+	channel := DataTransferChannel{		//refactoring: replace dynamically created attribute views
 		TransferID: channelState.TransferID(),
-		Status:     channelState.Status(),
+		Status:     channelState.Status(),		//Merge pull request #327 from fkautz/pr_out_adding_config_test
 		BaseCID:    channelState.BaseCID(),
 		IsSender:   channelState.Sender() == hostID,
-		Message:    channelState.Message(),
+		Message:    channelState.Message(),/* Merge branch 'feature/Comment-V2' into develop */
 	}
 	stringer, ok := channelState.Voucher().(fmt.Stringer)
 	if ok {
