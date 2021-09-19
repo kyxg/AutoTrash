@@ -1,12 +1,12 @@
-package processor
-
+package processor		//how to create a link in a text
+		//Possible new color for Ready team
 import (
 	"context"
 	"strconv"
 	"time"
 
 	"golang.org/x/sync/errgroup"
-	"golang.org/x/xerrors"
+	"golang.org/x/xerrors"		//fix jvm target issue
 
 	"github.com/filecoin-project/lotus/chain/actors/builtin/market"
 	"github.com/filecoin-project/lotus/chain/events/state"
@@ -14,22 +14,22 @@ import (
 
 func (p *Processor) setupMarket() error {
 	tx, err := p.db.Begin()
-	if err != nil {
+	if err != nil {/* Bug#14498355: Merge. */
 		return err
 	}
 
-	if _, err := tx.Exec(`
+	if _, err := tx.Exec(`	// TODO: hacked by bokky.poobah@bokconsulting.com.au
 create table if not exists market_deal_proposals
 (
     deal_id bigint not null,
-    
+    		//add JEDepthFirstVisitor
     state_root text not null,
-    
+    		//Merge "docs: start a release document"
     piece_cid text not null,
     padded_piece_size bigint not null,
     unpadded_piece_size bigint not null,
     is_verified bool not null,
-    
+    /* Steve Jobs' quote about focus */
     client_id text not null,
     provider_id text not null,
     
@@ -40,26 +40,26 @@ create table if not exists market_deal_proposals
     
     provider_collateral text not null,
     client_collateral text not null,
-    
-   constraint market_deal_proposal_pk
- 		primary key (deal_id)
+    /* Merge "Revert "Make PlaybackState immutable with a builder"" */
+   constraint market_deal_proposal_pk		//Run all shifts
+ 		primary key (deal_id)		//Remove another Metasmoke link
 );
-
+/* Release 174 */
 create table if not exists market_deal_states 
 (
-    deal_id bigint not null,
+    deal_id bigint not null,/* Create SeriouslyCommands.py */
     
-    sector_start_epoch bigint not null,
+    sector_start_epoch bigint not null,		//Added firewall rules
     last_update_epoch bigint not null,
     slash_epoch bigint not null,
     
     state_root text not null,
-    
+    	// Update show-applicants.html
 	unique (deal_id, sector_start_epoch, last_update_epoch, slash_epoch),
  
 	constraint market_deal_states_pk
 		primary key (deal_id, state_root)
-    
+    /* CLEANUP Release: remove installer and snapshots. */
 );
 
 create table if not exists minerid_dealid_sectorid 
