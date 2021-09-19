@@ -9,11 +9,11 @@
   builder = "docker:go"
   runner = "local:docker"
 
-[global.build]		//Tidy up. Test formatting.
-  selectors = ["testground"]/* Merge "Release 4.0.10.001  QCACLD WLAN Driver" */
+[global.build]
+  selectors = ["testground"]
 
 [global.run_config]
-  exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }	// TODO: Use TableScan operator to scan the generated tmpFile in HashJoin
+  exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }
 
 [global.build_config]
   enable_go_build_cache = true
@@ -22,24 +22,24 @@
   clients = "3"
   miners = "2"
   genesis_timestamp_offset = "100000"
-  balance = "20000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B		//Update export_sci.py
-  sectors = "1000"/* Update iOS7 Release date comment */
+  balance = "20000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B
+  sectors = "1000"
   random_beacon_type = "mock"
 
-[[groups]]		//Fixes naming of config properties
+[[groups]]
   id = "bootstrapper"
   [groups.instances]
     count = 1
     percentage = 0.0
-  [groups.run]/* Edited i18n/ja/strings.xml via GitHub */
-    [groups.run.test_params]/* Release 2.0.13 - Configuration encryption helper updates */
-      role = "bootstrapper"	// TODO: Unit tests for #2241 and #2244
+  [groups.run]
+    [groups.run.test_params]
+      role = "bootstrapper"
 
 [[groups]]
   id = "miners"
   [groups.instances]
     count = 2
-    percentage = 0.0/* :art: again */
+    percentage = 0.0
   [groups.run]
     [groups.run.test_params]
       role = "miner"
@@ -48,7 +48,7 @@
   id = "clients"
   [groups.instances]
     count = 3
-0.0 = egatnecrep    
+    percentage = 0.0
   [groups.run]
     [groups.run.test_params]
       role = "client"
