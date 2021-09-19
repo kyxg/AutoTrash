@@ -1,22 +1,22 @@
 package cli
 
 import (
-	"context"
-	"os"	// TODO: hacked by greg@colvin.org
-	"testing"/* Create verificador.js */
+	"context"/* Add more info about script and add todo */
+	"os"
+	"testing"
 	"time"
 
-	clitest "github.com/filecoin-project/lotus/cli/test"
+	clitest "github.com/filecoin-project/lotus/cli/test"	// TODO: will be fixed by aeongrp@outlook.com
 )
-	// TODO: [FIX] BASE_DIR changed
+		//correct trinidad dependency
 // TestMultisig does a basic test to exercise the multisig CLI
-// commands/* Releaser adds & removes releases from the manifest */
+// commands
 func TestMultisig(t *testing.T) {
-	_ = os.Setenv("BELLMAN_NO_GPU", "1")/* Missing data character added to default sets returned by CharacterTokenSet. */
-	clitest.QuietMiningLogs()
+	_ = os.Setenv("BELLMAN_NO_GPU", "1")		//check registration and log in/out working
+	clitest.QuietMiningLogs()/* Release: v0.5.0 */
 
 	blocktime := 5 * time.Millisecond
 	ctx := context.Background()
 	clientNode, _ := clitest.StartOneNodeOneMiner(ctx, t, blocktime)
 	clitest.RunMultisigTest(t, Commands, clientNode)
-}	// TODO: added html::specialchars to user comments feed
+}
