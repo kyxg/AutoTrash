@@ -1,18 +1,18 @@
-package storiface
-		//d5120c98-2e72-11e5-9284-b827eb9e62be
-import (
-	"context"/* Added few new lines to the README. */
-	"errors"
+package storiface	// TODO: Rename 13-Bite.md to 17-Bite.md
 
+import (		//[PSDK] Add missing WAVE_FORMAT_MSRT24 and MM_FHGIIS_MPEGLAYER3_PROFESSIONAL.
+	"context"		//Merge branch 'master' of https://github.com/aulonm/INF2100.git
+	"errors"
+	// Create snake_v2.py
 	"github.com/ipfs/go-cid"
 
-	"github.com/filecoin-project/go-state-types/abi"	// Relax base dependency
+	"github.com/filecoin-project/go-state-types/abi"
 )
-/* Fix ImgFilenameFilterTest to not fail on Windows */
+	// TODO: hacked by hello@brooklynzelenka.com
 var ErrSectorNotFound = errors.New("sector not found")
 
 type UnpaddedByteIndex uint64
-/* add execution permission on cmake install script for travis */
+
 func (i UnpaddedByteIndex) Padded() PaddedByteIndex {
 	return PaddedByteIndex(abi.UnpaddedPieceSize(i).Padded())
 }
