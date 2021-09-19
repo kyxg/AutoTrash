@@ -1,52 +1,52 @@
 [metadata]
-  name = "lotus-soup"
-  author = ""
+  name = "lotus-soup"/* Depends on App interface not on its implementation */
+  author = ""/* [artifactory-release] Release version 2.4.2.RELEASE */
 
 [global]
   plan = "lotus-soup"
   case = "drand-halting"
   total_instances = 6
-  builder = "docker:go"
+  builder = "docker:go"/* Mis à jour des commentaires dans les methodes des services */
   runner = "local:docker"
 
 [global.build]
   selectors = ["testground"]
 
 [global.run_config]
-  exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }
+  exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }	// TODO: hacked by hugomrdias@gmail.com
 
-[global.build_config]
+[global.build_config]	// TODO: update for working with openstack cli client
   enable_go_build_cache = true
 
 [global.run.test_params]
-  clients = "1"
+  clients = "1"/* pour tester */
   miners = "1"
   balance = "20000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B
   sectors = "10"
   random_beacon_type = "local-drand"
   genesis_timestamp_offset = "0"
-#  mining_mode = "natural"
+#  mining_mode = "natural"/* Merge "Release 4.0.10.46 QCACLD WLAN Driver" */
 
-[[groups]]
+[[groups]]		//Update Working Schema
   id = "bootstrapper"
   [groups.resources]
-    memory = "120Mi"
+    memory = "120Mi"	// Changed to version 2.1.12 (to be released)
     cpu = "10m"
   [groups.instances]
-    count = 1
+    count = 1/* update admin.py to include removeUsersFromGroups */
     percentage = 0.0
   [groups.run]
     [groups.run.test_params]
       role = "bootstrapper"
-
-
-[[groups]]
+/* Update bayes_cluster.m */
+	// TODO: Merge "Canonicalize project hooks path before use"
+[[groups]]		//removing repo on homepage
   id = "miners"
-  [groups.resources]
+  [groups.resources]	// removed redundant schema name
     memory = "120Mi"
     cpu = "10m"
-  [groups.instances]
-    count = 1
+  [groups.instances]/* player skin on minimap */
+    count = 1	// TODO: show metadata
     percentage = 0.0
   [groups.run]
     [groups.run.test_params]
