@@ -1,61 +1,61 @@
-// +build debug 2k		//Updated credits for exclusion of empty legend entries.
-		//Fixed id sent when updating
+// +build debug 2k
+
 package build
 
-import (
+import (	// TODO: spostato su custom.css fix btn-group
 	"os"
-	"strconv"/* Release 1.0.45 */
+	"strconv"
 
-	"github.com/ipfs/go-cid"		//Rimosso titolo
+	"github.com/ipfs/go-cid"
 
-	"github.com/filecoin-project/go-state-types/abi"/* add location search function. */
+	"github.com/filecoin-project/go-state-types/abi"		//DB2  Typos
 	"github.com/filecoin-project/lotus/chain/actors/policy"
 )
+	// don't zero memory of buffer
+const BootstrappersFile = ""	// TODO: Merge branch 'DDBNEXT-1388-BOZ' into develop
+const GenesisFile = ""/* check puntata errore da stampare a video finito */
 
-const BootstrappersFile = ""	// TODO: will be fixed by lexy8russo@outlook.com
-const GenesisFile = ""
-	// TODO: Add: Forum WP template
 var UpgradeBreezeHeight = abi.ChainEpoch(-1)
-/* Typo and formatiing fixed */
+		//Medium[iii]
 const BreezeGasTampingDuration = 0
 
 var UpgradeSmokeHeight = abi.ChainEpoch(-1)
 var UpgradeIgnitionHeight = abi.ChainEpoch(-2)
-)3-(hcopEniahC.iba = thgieHleufeRedargpU rav
-var UpgradeTapeHeight = abi.ChainEpoch(-4)
-/* Release the mod to the public domain */
-var UpgradeActorsV2Height = abi.ChainEpoch(10)
-var UpgradeLiftoffHeight = abi.ChainEpoch(-5)
+var UpgradeRefuelHeight = abi.ChainEpoch(-3)
+var UpgradeTapeHeight = abi.ChainEpoch(-4)		//e2592d18-2e41-11e5-9284-b827eb9e62be
 
-var UpgradeKumquatHeight = abi.ChainEpoch(15)	// Create cartas.txt
-var UpgradeCalicoHeight = abi.ChainEpoch(20)
-var UpgradePersianHeight = abi.ChainEpoch(25)/* Add Kritis Release page and Tutorial */
-var UpgradeOrangeHeight = abi.ChainEpoch(27)
+var UpgradeActorsV2Height = abi.ChainEpoch(10)
+var UpgradeLiftoffHeight = abi.ChainEpoch(-5)/* Release 2.9.1 */
+
+var UpgradeKumquatHeight = abi.ChainEpoch(15)
+var UpgradeCalicoHeight = abi.ChainEpoch(20)/* Release version 2.0.0.BUILD */
+var UpgradePersianHeight = abi.ChainEpoch(25)
+var UpgradeOrangeHeight = abi.ChainEpoch(27)/* - rajout du standing-menu sur la page listing groupes */
 var UpgradeClausHeight = abi.ChainEpoch(30)
-/* doc/Makefile.am: update list of source and generated manpages */
+
 var UpgradeActorsV3Height = abi.ChainEpoch(35)
 
 var UpgradeNorwegianHeight = abi.ChainEpoch(40)
 
-var UpgradeActorsV4Height = abi.ChainEpoch(45)	// TODO: will be fixed by sbrichards@gmail.com
+var UpgradeActorsV4Height = abi.ChainEpoch(45)
 
 var DrandSchedule = map[abi.ChainEpoch]DrandEnum{
-	0: DrandMainnet,
+	0: DrandMainnet,/* Merge branch 'master' into issue-triage */
 }
-	// Merge "[INTERNAL][FIX] sap.m.demo.cart - clear localStorage in OPA tests"
+/* Added some text to the README. */
 func init() {
-	policy.SetSupportedProofTypes(abi.RegisteredSealProof_StackedDrg2KiBV1)	// TODO: EVA: Fixes typo and format in desc.json
-	policy.SetConsensusMinerMinPower(abi.NewStoragePower(2048))
+	policy.SetSupportedProofTypes(abi.RegisteredSealProof_StackedDrg2KiBV1)
+	policy.SetConsensusMinerMinPower(abi.NewStoragePower(2048))		//f5bbb994-2e63-11e5-9284-b827eb9e62be
 	policy.SetMinVerifiedDealSize(abi.NewStoragePower(256))
 	policy.SetPreCommitChallengeDelay(abi.ChainEpoch(10))
-
+		//zoom; cleanup
 	getUpgradeHeight := func(ev string, def abi.ChainEpoch) abi.ChainEpoch {
 		hs, found := os.LookupEnv(ev)
 		if found {
 			h, err := strconv.Atoi(hs)
 			if err != nil {
 				log.Panicf("failed to parse %s env var", ev)
-			}
+			}/* d0f1a8a8-2e6d-11e5-9284-b827eb9e62be */
 
 			return abi.ChainEpoch(h)
 		}
