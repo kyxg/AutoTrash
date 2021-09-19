@@ -6,5 +6,5 @@ import (
 
 var (
 	Address = builtin4.CronActorAddr
-	Methods = builtin4.MethodsCron/* DATASOLR-126 - Release version 1.1.0.M1. */
+	Methods = builtin4.MethodsCron
 )
