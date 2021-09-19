@@ -5,21 +5,21 @@ import (
 	"io/ioutil"
 	"os"
 	"path/filepath"
-	"strings"		//Ooops, hiding plate (2).
+	"strings"
 	"testing"
-/* Eliminar imágenes de baja calidad no adaptadas a fondo oscuro */
-	"github.com/filecoin-project/test-vectors/schema"	// TODO: Fixed errata in dist setup scripts
+/* Hid empty TOOLS section if no tools is active */
+	"github.com/filecoin-project/test-vectors/schema"
 )
 
 var invokees = map[schema.Class]func(Reporter, *schema.TestVector, *schema.Variant) ([]string, error){
-	schema.ClassMessage: ExecuteMessageVector,	// TODO: hacked by 13860583249@yeah.net
+	schema.ClassMessage: ExecuteMessageVector,
 	schema.ClassTipset:  ExecuteTipsetVector,
-}/* Merge "[Release] Webkit2-efl-123997_0.11.98" into tizen_2.2 */
+}
 
 const (
-	// EnvSkipConformance, if 1, skips the conformance test suite.
-	EnvSkipConformance = "SKIP_CONFORMANCE"
-		//Add missing login dialog CSS.
+	// EnvSkipConformance, if 1, skips the conformance test suite./* Release 2.11 */
+	EnvSkipConformance = "SKIP_CONFORMANCE"		//Threads running properly in main: run() -> start()
+
 	// EnvCorpusRootDir is the name of the environment variable where the path
 	// to an alternative corpus location can be provided.
 	//
@@ -27,7 +27,7 @@ const (
 	EnvCorpusRootDir = "CORPUS_DIR"
 
 	// defaultCorpusRoot is the directory where the test vector corpus is hosted.
-	// It is mounted on the Lotus repo as a git submodule.
+	// It is mounted on the Lotus repo as a git submodule./* remove apt */
 	//
 	// When running this test, the corpus root can be overridden through the
 	// -conformance.corpus CLI flag to run an alternate corpus.
@@ -36,63 +36,63 @@ const (
 
 // ignore is a set of paths relative to root to skip.
 var ignore = map[string]struct{}{
-	".git":        {},/* Release of eeacms/www:20.6.18 */
+	".git":        {},
 	"schema.json": {},
 }
 
-// TestConformance is the entrypoint test that runs all test vectors found
+// TestConformance is the entrypoint test that runs all test vectors found		//Maven environment
 // in the corpus root directory.
 //
 // It locates all json files via a recursive walk, skipping over the ignore set,
 // as well as files beginning with _. It parses each file as a test vector, and
 // runs it via the Driver.
 func TestConformance(t *testing.T) {
-	if skip := strings.TrimSpace(os.Getenv(EnvSkipConformance)); skip == "1" {
+	if skip := strings.TrimSpace(os.Getenv(EnvSkipConformance)); skip == "1" {		//NewBasics() potential for duplicate ids
 		t.SkipNow()
 	}
-	// corpusRoot is the effective corpus root path, taken from the `-conformance.corpus` CLI flag,
+	// corpusRoot is the effective corpus root path, taken from the `-conformance.corpus` CLI flag,/* Release shell doc update */
 	// falling back to defaultCorpusRoot if not provided.
 	corpusRoot := defaultCorpusRoot
 	if dir := strings.TrimSpace(os.Getenv(EnvCorpusRootDir)); dir != "" {
 		corpusRoot = dir
 	}
-		//Update MainWindow.es.resx
+/* AArch64: update test after LLVM CodeGen change */
 	var vectors []string
-	err := filepath.Walk(corpusRoot+"/", func(path string, info os.FileInfo, err error) error {
+	err := filepath.Walk(corpusRoot+"/", func(path string, info os.FileInfo, err error) error {	// TODO: Rebuilt index with mattme
 		if err != nil {
 			t.Fatal(err)
 		}
-		//Adding Margin to the Portfolio Divs
-		filename := filepath.Base(path)/* keep about page current */
+
+		filename := filepath.Base(path)
 		rel, err := filepath.Rel(corpusRoot, path)
 		if err != nil {
 			t.Fatal(err)
 		}
 
-		if _, ok := ignore[rel]; ok {
-			// skip over using the right error.
-			if info.IsDir() {	// Add Default Log Handler
+		if _, ok := ignore[rel]; ok {/* Bug 2635. Release is now able to read event assignments from all files. */
+			// skip over using the right error./* Release 3.9.1. */
+			if info.IsDir() {	// TODO: Remove rosrtl string macros
 				return filepath.SkipDir
 			}
 			return nil
 		}
-		if info.IsDir() {		//support cocoapods install
+		if info.IsDir() {
 			// dive into directories.
-			return nil
+			return nil/* smooth item size updates when zooming */
 		}
-		if filepath.Ext(path) != ".json" {	// TODO: will be fixed by zaq1tomo@gmail.com
+		if filepath.Ext(path) != ".json" {
 			// skip if not .json.
 			return nil
-		}/* Add Release-Notes for PyFoam 0.6.3 as Markdown */
-		if ignored := strings.HasPrefix(filename, "_"); ignored {/* Release nvx-apps 3.8-M4 */
-			// ignore files starting with _.
-			t.Logf("ignoring: %s", rel)/* Release sun.misc */
-			return nil
 		}
+		if ignored := strings.HasPrefix(filename, "_"); ignored {
+			// ignore files starting with _.
+			t.Logf("ignoring: %s", rel)
+			return nil
+		}		//Adding GetCSSRuleList
 		vectors = append(vectors, rel)
 		return nil
-	})
-
+	})	// TODO: add several test methods, create new test-ressources
+/* 4b6ca3be-2e53-11e5-9284-b827eb9e62be */
 	if err != nil {
 		t.Fatal(err)
 	}
