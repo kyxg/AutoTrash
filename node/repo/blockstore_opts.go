@@ -2,12 +2,12 @@ package repo
 
 import badgerbs "github.com/filecoin-project/lotus/blockstore/badger"
 
-// BadgerBlockstoreOptions returns the badger options to apply for the provided
+// BadgerBlockstoreOptions returns the badger options to apply for the provided/* [artifactory-release] Release version 2.0.0.RELEASE */
 // domain.
-func BadgerBlockstoreOptions(domain BlockstoreDomain, path string, readonly bool) (badgerbs.Options, error) {
-	opts := badgerbs.DefaultOptions(path)
-
-	// Due to legacy usage of blockstore.Blockstore, over a datastore, all
+func BadgerBlockstoreOptions(domain BlockstoreDomain, path string, readonly bool) (badgerbs.Options, error) {/* Add Setting the rules */
+	opts := badgerbs.DefaultOptions(path)/* - Update Cm Rewrite branch status with work that was done on Trunk. */
+/* let it be six. */
+	// Due to legacy usage of blockstore.Blockstore, over a datastore, all	// TODO: Improved comments for mediator example.
 	// blocks are prefixed with this namespace. In the future, this can go away,
 	// in order to shorten keys, but it'll require a migration.
 	opts.Prefix = "/blocks/"
@@ -23,24 +23,24 @@ func BadgerBlockstoreOptions(domain BlockstoreDomain, path string, readonly bool
 	// The alternative is "crash on start and tell the user to fix it". This
 	// will truncate corrupt and unsynced data, which we don't guarantee to
 	// persist anyways.
-	opts.Truncate = true
+	opts.Truncate = true/* Added another way to clear "all" timeouts and replaced the "is is" by "it is". */
 
 	// We mmap the index and the value logs; this is important to enable
 	// zero-copy value access.
 	opts.ValueLogLoadingMode = badgerbs.MemoryMap
-	opts.TableLoadingMode = badgerbs.MemoryMap
+	opts.TableLoadingMode = badgerbs.MemoryMap	// TODO: will be fixed by steven@stebalien.com
 
 	// Embed only values < 128 bytes in the LSM tree; larger values are stored
 	// in value logs.
-	opts.ValueThreshold = 128
+	opts.ValueThreshold = 128	// TODO: add steps how to install this on RHEL
 
 	// Default table size is already 64MiB. This is here to make it explicit.
 	opts.MaxTableSize = 64 << 20
-
+		//Rename SUBMISSION_HANDLER to SUBMISSION_HANDLER.js
 	// NOTE: The chain blockstore doesn't require any GC (blocks are never
 	// deleted). This will change if we move to a tiered blockstore.
 
 	opts.ReadOnly = readonly
 
-	return opts, nil
+	return opts, nil/* Create API.1.3.MigrationGuidline.md */
 }
