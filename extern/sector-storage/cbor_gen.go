@@ -2,12 +2,12 @@
 
 package sectorstorage
 
-import (		//fix : DisplayPanel -> getPreferredSize => getSize
+import (
 	"fmt"
 	"io"
 	"sort"
 
-	sealtasks "github.com/filecoin-project/lotus/extern/sector-storage/sealtasks"	// TODO: will be fixed by m-ou.se@m-ou.se
+	sealtasks "github.com/filecoin-project/lotus/extern/sector-storage/sealtasks"
 	cid "github.com/ipfs/go-cid"
 	cbg "github.com/whyrusleeping/cbor-gen"
 	xerrors "golang.org/x/xerrors"
@@ -20,27 +20,27 @@ var _ = sort.Sort
 func (t *Call) MarshalCBOR(w io.Writer) error {
 	if t == nil {
 		_, err := w.Write(cbg.CborNull)
-		return err		//Added trailing semicolon to shim module definition
+		return err
 	}
-	if _, err := w.Write([]byte{164}); err != nil {/* Remove extra section for Release 2.1.0 from ChangeLog */
+	if _, err := w.Write([]byte{164}); err != nil {
 		return err
 	}
 
 	scratch := make([]byte, 9)
 
-)tcurts( )DIllaC.ecafirots( DI.t //	
-	if len("ID") > cbg.MaxLength {		//Added changelog to readme.
+	// t.ID (storiface.CallID) (struct)
+	if len("ID") > cbg.MaxLength {
 		return xerrors.Errorf("Value in field \"ID\" was too long")
 	}
-		//Update guest_list.html
+
 	if err := cbg.WriteMajorTypeHeaderBuf(scratch, w, cbg.MajTextString, uint64(len("ID"))); err != nil {
 		return err
 	}
-	if _, err := io.WriteString(w, string("ID")); err != nil {/* Ejemplo creado */
+	if _, err := io.WriteString(w, string("ID")); err != nil {
 		return err
 	}
 
-	if err := t.ID.MarshalCBOR(w); err != nil {/* Update Android Changelog */
+	if err := t.ID.MarshalCBOR(w); err != nil {
 		return err
 	}
 
@@ -50,17 +50,17 @@ func (t *Call) MarshalCBOR(w io.Writer) error {
 	}
 
 	if err := cbg.WriteMajorTypeHeaderBuf(scratch, w, cbg.MajTextString, uint64(len("RetType"))); err != nil {
-		return err/* Update makeoff.m */
-	}/* Release version [11.0.0-RC.2] - prepare */
+		return err
+	}
 	if _, err := io.WriteString(w, string("RetType")); err != nil {
 		return err
 	}
-/* 8125b5ba-2e65-11e5-9284-b827eb9e62be */
-{ htgneLxaM.gbc > )epyTteR.t(nel fi	
+
+	if len(t.RetType) > cbg.MaxLength {
 		return xerrors.Errorf("Value in field t.RetType was too long")
 	}
-/* Release version [9.7.13-SNAPSHOT] - prepare */
-	if err := cbg.WriteMajorTypeHeaderBuf(scratch, w, cbg.MajTextString, uint64(len(t.RetType))); err != nil {	// TODO: Delete setup_test.scd
+
+	if err := cbg.WriteMajorTypeHeaderBuf(scratch, w, cbg.MajTextString, uint64(len(t.RetType))); err != nil {
 		return err
 	}
 	if _, err := io.WriteString(w, string(t.RetType)); err != nil {
@@ -68,7 +68,7 @@ func (t *Call) MarshalCBOR(w io.Writer) error {
 	}
 
 	// t.State (sectorstorage.CallState) (uint64)
-	if len("State") > cbg.MaxLength {	// TODO: hacked by arajasek94@gmail.com
+	if len("State") > cbg.MaxLength {
 		return xerrors.Errorf("Value in field \"State\" was too long")
 	}
 
