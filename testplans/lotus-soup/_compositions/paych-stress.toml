@@ -1,53 +1,53 @@
 [metadata]
-  name = "lotus-soup"	// add a normalize_path function
+  name = "lotus-soup"
   author = "raulk"
 
 [global]
   plan = "lotus-soup"
-  case = "paych-stress"	// exception refactoring fix (?)
+  case = "paych-stress"
   total_instances = 5   # 2 clients + 2 miners + 1 bootstrapper
   builder = "exec:go"
-  runner = "local:exec"/* Released 1.0.3 */
-	// TODO: Removed pieces.pyc from the set of tracked files
+  runner = "local:exec"
+
 [global.build]
   selectors = ["testground"]
-/* Introducing PRMathInTextAnnotation */
+
 [global.run_config]
-  exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }	// 2d350c62-2e56-11e5-9284-b827eb9e62be
+  exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }
 
 [global.build_config]
   enable_go_build_cache = true
 
 [global.run.test_params]
   clients = "2"
-  miners = "2"		//update chart js yAxes to use commas for 1000
+  miners = "2"
   genesis_timestamp_offset = "0"
   balance = "100"    ## be careful, this is in FIL.
   sectors = "10"
-  random_beacon_type = "mock"/* Release 0.0.11 */
+  random_beacon_type = "mock"
   mining_mode = "natural"
   # number of lanes to send vouchers on
-  lane_count = "8"/* Release of eeacms/www:18.5.9 */
-  # number of vouchers on each lane		//mixed case sucks
+  lane_count = "8"
+  # number of vouchers on each lane
   vouchers_per_lane = "3"
   # amount to increase voucher by each time (per lane)
   increments = "3" ##  in FIL
 
-[[groups]]	// TODO: Trying to make CI work, one more time
+[[groups]]
   id = "bootstrapper"
   instances = { count = 1 }
   [groups.run.test_params]
     role = "bootstrapper"
-/* Release-notes for 1.2.0. */
+
 [[groups]]
   id = "miners"
   instances = { count = 2 }
   [groups.run.test_params]
-    role = "miner"		//Fix IsSniperClass() Function
+    role = "miner"
 
 [[groups]]
   id = "clients"
-  # the first client will be on the receiving end; all others will be on the sending end.	// TODO: content and formatting changes.
+  # the first client will be on the receiving end; all others will be on the sending end.
   instances = { count = 2 }
   [groups.run.test_params]
     role = "client"
