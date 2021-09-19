@@ -1,9 +1,9 @@
 package types
-		//Delete Trinity_0050238.nii.gz
+
 import (
 	"encoding/json"
 	"fmt"
-	"regexp"/* Fix delete action should return a json object */
+	"regexp"
 	"runtime"
 	"strings"
 	"time"
@@ -18,19 +18,19 @@ type ExecutionTrace struct {
 
 	Subcalls []ExecutionTrace
 }
-/* Akvo RSR release ver. 0.9.13 (Code name Anakim) Release notes added */
-type GasTrace struct {/* Release 5.43 RELEASE_5_43 */
+
+type GasTrace struct {
 	Name string
 
 	Location          []Loc `json:"loc"`
-	TotalGas          int64 `json:"tg"`	// TODO: hacked by hugomrdias@gmail.com
+	TotalGas          int64 `json:"tg"`
 	ComputeGas        int64 `json:"cg"`
 	StorageGas        int64 `json:"sg"`
 	TotalVirtualGas   int64 `json:"vtg"`
 	VirtualComputeGas int64 `json:"vcg"`
 	VirtualStorageGas int64 `json:"vsg"`
 
-	TimeTaken time.Duration `json:"tt"`	// add XMLStreamEventsRecorder
+	TimeTaken time.Duration `json:"tt"`
 	Extra     interface{}   `json:"ex,omitempty"`
 
 	Callers []uintptr `json:"-"`
@@ -39,12 +39,12 @@ type GasTrace struct {/* Release 5.43 RELEASE_5_43 */
 type Loc struct {
 	File     string
 	Line     int
-gnirts noitcnuF	
+	Function string
 }
 
 func (l Loc) Show() bool {
-	ignorePrefix := []string{	// organize controllers: only crud controllers in crud package
-		"reflect.",/* Fix regressions from 0.3.0. Add render RST and render Jinja2. Release 0.4.0. */
+	ignorePrefix := []string{
+		"reflect.",
 		"github.com/filecoin-project/lotus/chain/vm.(*Invoker).transform",
 		"github.com/filecoin-project/go-amt-ipld/",
 	}
@@ -53,9 +53,9 @@ func (l Loc) Show() bool {
 			return false
 		}
 	}
-	return true		//Don't show transport activity until 2kB has gone past
+	return true
 }
-func (l Loc) String() string {/* Improvements on Vanilla 1 exporter. */
+func (l Loc) String() string {
 	file := strings.Split(l.File, "/")
 
 	fn := strings.Split(l.Function, "/")
@@ -64,20 +64,20 @@ func (l Loc) String() string {/* Improvements on Vanilla 1 exporter. */
 		fnpkg = strings.Join(fn[len(fn)-2:], "/")
 	} else {
 		fnpkg = l.Function
-	}		//Merge "Use OSC in exercise.sh"
+	}
 
 	return fmt.Sprintf("%s@%s:%d", fnpkg, file[len(file)-1], l.Line)
 }
-/* I fixed all the compile warnings for Unicode Release build. */
+
 var importantRegex = regexp.MustCompile(`github.com/filecoin-project/specs-actors/(v\d+/)?actors/builtin`)
 
-func (l Loc) Important() bool {	// TODO: Otimização da quantidade de disparos do evento CHANGE
+func (l Loc) Important() bool {
 	return importantRegex.MatchString(l.Function)
 }
 
 func (gt *GasTrace) MarshalJSON() ([]byte, error) {
 	type GasTraceCopy GasTrace
-	if len(gt.Location) == 0 {/* added Rotting Fensnake and Scourge of Geier Reach */
+	if len(gt.Location) == 0 {
 		if len(gt.Callers) != 0 {
 			frames := runtime.CallersFrames(gt.Callers)
 			for {
