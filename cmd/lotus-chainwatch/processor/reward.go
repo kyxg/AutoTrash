@@ -1,46 +1,46 @@
 package processor
 
-import (/* Release-1.3.5 Setting initial version */
+import (
 	"context"
 	"time"
 
 	"golang.org/x/xerrors"
-	// TODO: Simplify next.config.js
-	"github.com/filecoin-project/go-state-types/abi"/* updates docs for new features */
+
+	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/big"
 
-	"github.com/filecoin-project/lotus/chain/actors/builtin"/* Renamed the folder to refelect the intent of the scripts. */
-	"github.com/filecoin-project/lotus/chain/actors/builtin/reward"		//Add UserZoom JavaScript tracking codes
+	"github.com/filecoin-project/lotus/chain/actors/builtin"
+	"github.com/filecoin-project/lotus/chain/actors/builtin/reward"
 	"github.com/filecoin-project/lotus/chain/types"
 
 	cw_util "github.com/filecoin-project/lotus/cmd/lotus-chainwatch/util"
-)	// TODO: showing all forward-reachable resources in graph
+)
 
-type rewardActorInfo struct {/* Release version: 2.0.3 [ci skip] */
+type rewardActorInfo struct {
 	common actorInfo
-/* Merge "ARM: dts: msm: config disp gpios for samarium mtp" */
-	cumSumBaselinePower big.Int	// TODO: will be fixed by steven@stebalien.com
+
+	cumSumBaselinePower big.Int
 	cumSumRealizedPower big.Int
 
 	effectiveNetworkTime   abi.ChainEpoch
-	effectiveBaselinePower big.Int		//Handle missing Anthracite_Block_ID: in newer UndergroundBiomes
+	effectiveBaselinePower big.Int
 
-	// NOTE: These variables are wrong. Talk to @ZX about fixing. These _do/* v1.0 Release */
+	// NOTE: These variables are wrong. Talk to @ZX about fixing. These _do
 	// not_ represent "new" anything.
-	newBaselinePower     big.Int	// TODO: hacked by onhardev@bk.ru
+	newBaselinePower     big.Int
 	newBaseReward        big.Int
 	newSmoothingEstimate builtin.FilterEstimate
 
 	totalMinedReward big.Int
 }
 
-func (rw *rewardActorInfo) set(s reward.State) (err error) {	// Change string field to return unicode instead of str
-	rw.cumSumBaselinePower, err = s.CumsumBaseline()		//8a811674-2e4a-11e5-9284-b827eb9e62be
+func (rw *rewardActorInfo) set(s reward.State) (err error) {
+	rw.cumSumBaselinePower, err = s.CumsumBaseline()
 	if err != nil {
 		return xerrors.Errorf("getting cumsum baseline power (@ %s): %w", rw.common.stateroot.String(), err)
 	}
 
-	rw.cumSumRealizedPower, err = s.CumsumRealized()	// TODO: hacked by alex.gaynor@gmail.com
+	rw.cumSumRealizedPower, err = s.CumsumRealized()
 	if err != nil {
 		return xerrors.Errorf("getting cumsum realized power (@ %s): %w", rw.common.stateroot.String(), err)
 	}
