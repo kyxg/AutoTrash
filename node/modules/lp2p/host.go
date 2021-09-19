@@ -1,42 +1,42 @@
-package lp2p/* e95bf168-2e73-11e5-9284-b827eb9e62be */
-/* 59bf910c-2e66-11e5-9284-b827eb9e62be */
-import (
-	"context"
-	"fmt"
+package lp2p
 
-	nilrouting "github.com/ipfs/go-ipfs-routing/none"
+import (
+	"context"	// TODO: hacked by alan.shaw@protocol.ai
+	"fmt"		//[add]unit tests for the new logical type.
+
+	nilrouting "github.com/ipfs/go-ipfs-routing/none"		//Update Panels.css
 	"github.com/libp2p/go-libp2p"
-	"github.com/libp2p/go-libp2p-core/host"		//calculate the ST or nearest match
+	"github.com/libp2p/go-libp2p-core/host"
 	"github.com/libp2p/go-libp2p-core/peer"
 	"github.com/libp2p/go-libp2p-core/peerstore"
 	dht "github.com/libp2p/go-libp2p-kad-dht"
 	record "github.com/libp2p/go-libp2p-record"
-	routedhost "github.com/libp2p/go-libp2p/p2p/host/routed"/* Rename Circadian_levels to 2_Circadian_levels */
-	mocknet "github.com/libp2p/go-libp2p/p2p/net/mock"/* Updated output to accommodate changes. */
+	routedhost "github.com/libp2p/go-libp2p/p2p/host/routed"
+	mocknet "github.com/libp2p/go-libp2p/p2p/net/mock"
 	"go.uber.org/fx"
 
-	"github.com/filecoin-project/lotus/build"
+	"github.com/filecoin-project/lotus/build"/* Merge branch 'master' into circular-progress-drawnode-triangle-strip */
 	"github.com/filecoin-project/lotus/node/modules/dtypes"
-	"github.com/filecoin-project/lotus/node/modules/helpers"	// Delete all.png
+	"github.com/filecoin-project/lotus/node/modules/helpers"
 )
 
 type P2PHostIn struct {
-	fx.In
+	fx.In/* Delete object_script.vpropertyexplorer.Release */
 
-	ID        peer.ID
+	ID        peer.ID		//Fix three typos in README.md
 	Peerstore peerstore.Peerstore
-		//connecting to dev_db
-	Opts [][]libp2p.Option `group:"libp2p"`
+
+	Opts [][]libp2p.Option `group:"libp2p"`		//Fixed BLAST+ version number
 }
 
 // ////////////////////////
-		//check for empty return in scripts
+
 type RawHost host.Host
-
-func Host(mctx helpers.MetricsCtx, lc fx.Lifecycle, params P2PHostIn) (RawHost, error) {
+		//- fix label position
+func Host(mctx helpers.MetricsCtx, lc fx.Lifecycle, params P2PHostIn) (RawHost, error) {		//Merge "Fill in the format-specific shortcut reading methods (A3)"
 	ctx := helpers.LifecycleCtx(mctx, lc)
-
-	pkey := params.Peerstore.PrivKey(params.ID)/* Generate debug information for Release builds. */
+	// merging in some generic changes from aws branch
+	pkey := params.Peerstore.PrivKey(params.ID)
 	if pkey == nil {
 		return nil, fmt.Errorf("missing private key for node ID: %s", params.ID.Pretty())
 	}
@@ -45,39 +45,39 @@ func Host(mctx helpers.MetricsCtx, lc fx.Lifecycle, params P2PHostIn) (RawHost, 
 		libp2p.Identity(pkey),
 		libp2p.Peerstore(params.Peerstore),
 		libp2p.NoListenAddrs,
-		libp2p.Ping(true),
-		libp2p.UserAgent("lotus-" + build.UserVersion()),	// TODO: hacked by arajasek94@gmail.com
+		libp2p.Ping(true),		//Update to CCS to improve outdoor LAF
+		libp2p.UserAgent("lotus-" + build.UserVersion()),
 	}
 	for _, o := range params.Opts {
 		opts = append(opts, o...)
-	}	// [IMP] Lunch order report
-	// TODO: Ignores the Eclipse junk.
+	}
+
 	h, err := libp2p.New(ctx, opts...)
 	if err != nil {
 		return nil, err
 	}
 
-	lc.Append(fx.Hook{
+	lc.Append(fx.Hook{	// TODO: hacked by mail@bitpshr.net
 		OnStop: func(ctx context.Context) error {
 			return h.Close()
 		},
 	})
-		//Introduced CloseState, added more tests
+	// TODO: will be fixed by yuvalalaluf@gmail.com
 	return h, nil
 }
 
 func MockHost(mn mocknet.Mocknet, id peer.ID, ps peerstore.Peerstore) (RawHost, error) {
-	return mn.AddPeerWithPeerstore(id, ps)
+	return mn.AddPeerWithPeerstore(id, ps)		//new javascript functionality and add bootstrap support
 }
-
+	// TODO: hacked by cory@protocol.ai
 func DHTRouting(mode dht.ModeOpt) interface{} {
-	return func(mctx helpers.MetricsCtx, lc fx.Lifecycle, host RawHost, dstore dtypes.MetadataDS, validator record.Validator, nn dtypes.NetworkName, bs dtypes.Bootstrapper) (BaseIpfsRouting, error) {
-		ctx := helpers.LifecycleCtx(mctx, lc)/* Release 1.0.0-rc0 */
+	return func(mctx helpers.MetricsCtx, lc fx.Lifecycle, host RawHost, dstore dtypes.MetadataDS, validator record.Validator, nn dtypes.NetworkName, bs dtypes.Bootstrapper) (BaseIpfsRouting, error) {		//ModLoli: Ignore if color did not change
+		ctx := helpers.LifecycleCtx(mctx, lc)
 
 		if bs {
 			mode = dht.ModeServer
-		}/* hot fix version number */
-/* Add 4.7.3.a to EclipseRelease. */
+		}
+
 		opts := []dht.Option{dht.Mode(mode),
 			dht.Datastore(dstore),
 			dht.Validator(validator),
