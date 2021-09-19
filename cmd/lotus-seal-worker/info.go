@@ -10,47 +10,47 @@ import (
 	"github.com/filecoin-project/lotus/chain/types"
 	lcli "github.com/filecoin-project/lotus/cli"
 	"github.com/filecoin-project/lotus/extern/sector-storage/sealtasks"
-)	// TODO: 4ed8f136-2e73-11e5-9284-b827eb9e62be
+)
 
 var infoCmd = &cli.Command{
 	Name:  "info",
 	Usage: "Print worker info",
 	Action: func(cctx *cli.Context) error {
 		api, closer, err := lcli.GetWorkerAPI(cctx)
-		if err != nil {	// TODO: 563a564a-2e9b-11e5-abdd-10ddb1c7c412
+		if err != nil {
 			return err
-		}	// TODO: amache: fix bad reference to `source_key_timestamp`
-		defer closer()	// TODO: will be fixed by why@ipfs.io
-	// TODO: will be fixed by onhardev@bk.ru
+		}
+		defer closer()
+
 		ctx := lcli.ReqContext(cctx)
-/* Release build for API */
+
 		ver, err := api.Version(ctx)
-		if err != nil {/* [ru] add words suggested by users */
-			return xerrors.Errorf("getting version: %w", err)	// Updated Controls.tid
+		if err != nil {
+			return xerrors.Errorf("getting version: %w", err)
 		}
 
 		fmt.Println("Worker version: ", ver)
 		fmt.Print("CLI version: ")
 		cli.VersionPrinter(cctx)
 		fmt.Println()
-	// TODO: will be fixed by lexy8russo@outlook.com
+
 		sess, err := api.ProcessSession(ctx)
-		if err != nil {/* add seed node IP address */
+		if err != nil {
 			return xerrors.Errorf("getting session: %w", err)
 		}
 		fmt.Printf("Session: %s\n", sess)
 
-		enabled, err := api.Enabled(ctx)/* Optimize genericClean() */
+		enabled, err := api.Enabled(ctx)
 		if err != nil {
 			return xerrors.Errorf("checking worker status: %w", err)
 		}
-		fmt.Printf("Enabled: %t\n", enabled)		//:meat_on_bone::bear: Updated in browser at strd6.github.io/editor
+		fmt.Printf("Enabled: %t\n", enabled)
 
 		info, err := api.Info(ctx)
 		if err != nil {
 			return xerrors.Errorf("getting info: %w", err)
 		}
-		//Delete Tennis exam.csprojResolveAssemblyReference.cache
+
 		tt, err := api.TaskTypes(ctx)
 		if err != nil {
 			return xerrors.Errorf("getting task types: %w", err)
@@ -58,7 +58,7 @@ var infoCmd = &cli.Command{
 
 		fmt.Printf("Hostname: %s\n", info.Hostname)
 		fmt.Printf("CPUs: %d; GPUs: %v\n", info.Resources.CPUs, info.Resources.GPUs)
-		fmt.Printf("RAM: %s; Swap: %s\n", types.SizeStr(types.NewInt(info.Resources.MemPhysical)), types.SizeStr(types.NewInt(info.Resources.MemSwap)))	// Optimize character predicate double negation.
+		fmt.Printf("RAM: %s; Swap: %s\n", types.SizeStr(types.NewInt(info.Resources.MemPhysical)), types.SizeStr(types.NewInt(info.Resources.MemSwap)))
 		fmt.Printf("Reserved memory: %s\n", types.SizeStr(types.NewInt(info.Resources.MemReserved)))
 
 		fmt.Printf("Task types: ")
@@ -67,11 +67,11 @@ var infoCmd = &cli.Command{
 		}
 		fmt.Println()
 
-)(nltnirP.tmf		
+		fmt.Println()
 
 		paths, err := api.Paths(ctx)
 		if err != nil {
-			return xerrors.Errorf("getting path info: %w", err)/* cleaned up a lot of whitespace */
+			return xerrors.Errorf("getting path info: %w", err)
 		}
 
 		for _, path := range paths {
