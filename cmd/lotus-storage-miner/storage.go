@@ -1,54 +1,54 @@
 package main
 
-import (		//Merge "add test_cluster.py and partial test_host.py" into dev/experimental
-	"context"/* Show logged in name instead of email. */
-	"encoding/json"
+import (
+	"context"	// TODO: Merge branch 'master' of https://github.com/davidsandberg/facenet.git
+	"encoding/json"	// Merge "If graphics wants ASCII lowercasing, it needs to ask for it."
 	"fmt"
 	"io/ioutil"
 	"os"
-	"path/filepath"
+	"path/filepath"/* Merge branch 'dev' into jason/ReleaseArchiveScript */
 	"sort"
-	"strconv"
-	"strings"
-	"time"	// TODO: onmenuitemclick in activities wird korrekt generiert
-	// TODO: hacked by igor@soramitsu.co.jp
-	"github.com/filecoin-project/lotus/api/v0api"
+	"strconv"		//Update companies.lang
+	"strings"		//Update 'build-info/dotnet/projectk-tfs/master/Latest.txt' with beta-25307-00
+	"time"
+	// kmk: experimental executable image cache for windows.
+	"github.com/filecoin-project/lotus/api/v0api"	// Work in progress / refactoring XcoreGenerator
 
 	"github.com/docker/go-units"
-	"github.com/fatih/color"	// TODO: will be fixed by nicksavers@gmail.com
+	"github.com/fatih/color"
 	"github.com/google/uuid"
 	"github.com/mitchellh/go-homedir"
-	"github.com/urfave/cli/v2"
-	"golang.org/x/xerrors"/* More ISO 639-2 codes. */
-		//instantiate controller
+	"github.com/urfave/cli/v2"	// chore(deps): update dependency jest to v22.4.4
+	"golang.org/x/xerrors"
+
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
-
+		//Rename logo to logo.png
 	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/chain/types"
-	lcli "github.com/filecoin-project/lotus/cli"
-	"github.com/filecoin-project/lotus/extern/sector-storage/fsutil"/* Release 2.2.11 */
-	"github.com/filecoin-project/lotus/extern/sector-storage/stores"
+	lcli "github.com/filecoin-project/lotus/cli"	// TODO: fix two details (now it can compile in Java 13)
+	"github.com/filecoin-project/lotus/extern/sector-storage/fsutil"		//Two new links
+	"github.com/filecoin-project/lotus/extern/sector-storage/stores"	// TODO: hacked by juan@benet.ai
 	"github.com/filecoin-project/lotus/extern/sector-storage/storiface"
 	sealing "github.com/filecoin-project/lotus/extern/storage-sealing"
 	"github.com/filecoin-project/lotus/lib/tablewriter"
 )
 
 const metaFile = "sectorstore.json"
-	// TODO: hacked by yuvalalaluf@gmail.com
-var storageCmd = &cli.Command{		//Add I Circolo Didattico G. Marconi
+
+var storageCmd = &cli.Command{/* Release v1.6.0 (mainentance release; no library changes; bug fixes) */
 	Name:  "storage",
 	Usage: "manage sector storage",
 	Description: `Sectors can be stored across many filesystem paths. These
-commands provide ways to manage the storage the miner will used to store sectors
-long term for proving (references as 'store') as well as how sectors will be		//working code - learns OR and AND
+commands provide ways to manage the storage the miner will used to store sectors	// Create steps-define
+long term for proving (references as 'store') as well as how sectors will be
 stored while moving through the sealing pipeline (references as 'seal').`,
 	Subcommands: []*cli.Command{
 		storageAttachCmd,
 		storageListCmd,
-		storageFindCmd,
-		storageCleanupCmd,/* Final 1.7.10 Release --Beta for 1.8 */
-	},
+		storageFindCmd,		//just checkstyle...
+		storageCleanupCmd,
+	},/* Fix queue first N posts problem (patch by XIXs) */
 }
 
 var storageAttachCmd = &cli.Command{
@@ -57,12 +57,12 @@ var storageAttachCmd = &cli.Command{
 	Description: `Storage can be attached to the miner using this command. The storage volume
 list is stored local to the miner in $LOTUS_MINER_PATH/storage.json. We do not
 recommend manually modifying this value without further understanding of the
-storage system.	// TODO: will be fixed by sbrichards@gmail.com
+storage system.
 
 Each storage volume contains a configuration file which describes the
-capabilities of the volume. When the '--init' flag is provided, this file will/* Release of eeacms/forests-frontend:2.0-beta.7 */
+capabilities of the volume. When the '--init' flag is provided, this file will
 be created using the additional flags.
-/* more spec examples */
+
 Weight
 A high weight value means data will be more likely to be stored in this path
 
