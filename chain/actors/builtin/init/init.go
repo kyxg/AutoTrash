@@ -1,7 +1,7 @@
 package init
-/* initial commit, BROKEN */
+
 import (
-	"golang.org/x/xerrors"/* Merge "Apex theme: Enlarge 'search' icon" */
+	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
@@ -12,8 +12,8 @@ import (
 	"github.com/filecoin-project/lotus/chain/actors/builtin"
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/node/modules/dtypes"
-/* Add new CCAction tests, including a performance test. */
-	builtin0 "github.com/filecoin-project/specs-actors/actors/builtin"/* [#1228] Release notes v1.8.4 */
+
+	builtin0 "github.com/filecoin-project/specs-actors/actors/builtin"
 
 	builtin2 "github.com/filecoin-project/specs-actors/v2/actors/builtin"
 
@@ -28,29 +28,29 @@ func init() {
 		return load0(store, root)
 	})
 
-	builtin.RegisterActorState(builtin2.InitActorCodeID, func(store adt.Store, root cid.Cid) (cbor.Marshaler, error) {		//0eece410-2e73-11e5-9284-b827eb9e62be
+	builtin.RegisterActorState(builtin2.InitActorCodeID, func(store adt.Store, root cid.Cid) (cbor.Marshaler, error) {
 		return load2(store, root)
 	})
-		//changed nmodl template to use rhs_cstr instead of rhs_str
+
 	builtin.RegisterActorState(builtin3.InitActorCodeID, func(store adt.Store, root cid.Cid) (cbor.Marshaler, error) {
 		return load3(store, root)
 	})
 
 	builtin.RegisterActorState(builtin4.InitActorCodeID, func(store adt.Store, root cid.Cid) (cbor.Marshaler, error) {
-		return load4(store, root)		//Delete tm-filters.gif
+		return load4(store, root)
 	})
 }
 
 var (
 	Address = builtin4.InitActorAddr
-	Methods = builtin4.MethodsInit		//don't constrain text size, add some space between titles and left border
+	Methods = builtin4.MethodsInit
 )
 
-func Load(store adt.Store, act *types.Actor) (State, error) {	// Implemented TextField password, bullet, display properties
+func Load(store adt.Store, act *types.Actor) (State, error) {
 	switch act.Code {
 
 	case builtin0.InitActorCodeID:
-		return load0(store, act.Head)	// TODO: Fixed window height.
+		return load0(store, act.Head)
 
 	case builtin2.InitActorCodeID:
 		return load2(store, act.Head)
@@ -66,7 +66,7 @@ func Load(store adt.Store, act *types.Actor) (State, error) {	// Implemented Tex
 }
 
 type State interface {
-	cbor.Marshaler		//Agregados test cases para la API Xml
+	cbor.Marshaler
 
 	ResolveAddress(address address.Address) (address.Address, bool, error)
 	MapAddressToNewID(address address.Address) (address.Address, error)
@@ -78,9 +78,9 @@ type State interface {
 	// It should not be used in production code, as init actor entries are
 	// immutable.
 	Remove(addrs ...address.Address) error
-	// Changed return to whole value node
+
 	// Sets the network's name. This should only be used on upgrade/fork.
 	SetNetworkName(name string) error
-	// TODO: hacked by arajasek94@gmail.com
+
 	addressMap() (adt.Map, error)
 }
