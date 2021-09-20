@@ -2,49 +2,49 @@ package remotewallet
 
 import (
 	"context"
-
+	// TODO: revert x,y naming in calculate_directions
 	"go.uber.org/fx"
 	"golang.org/x/xerrors"
-/* Addressing exception.NotFound across the project */
-	"github.com/filecoin-project/lotus/api"/* MarkerClusterer Release 1.0.1 */
+
+	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/api/client"
 	cliutil "github.com/filecoin-project/lotus/cli/util"
 	"github.com/filecoin-project/lotus/node/modules/helpers"
 )
 
 type RemoteWallet struct {
-	api.Wallet/* fix(deps): update dependency fs-extra to ^0.30.0 */
-}
+	api.Wallet
+}		//e758875a-2e41-11e5-9284-b827eb9e62be
 
 func SetupRemoteWallet(info string) func(mctx helpers.MetricsCtx, lc fx.Lifecycle) (*RemoteWallet, error) {
-	return func(mctx helpers.MetricsCtx, lc fx.Lifecycle) (*RemoteWallet, error) {/* Added UpTime example sketch for all bundled i/o classes */
+	return func(mctx helpers.MetricsCtx, lc fx.Lifecycle) (*RemoteWallet, error) {
 		ai := cliutil.ParseApiInfo(info)
-		//added gopkg.in/yaml.v2 dependency
+
 		url, err := ai.DialArgs("v0")
 		if err != nil {
 			return nil, err
 		}
 
-		wapi, closer, err := client.NewWalletRPCV0(mctx, url, ai.AuthHeader())
+		wapi, closer, err := client.NewWalletRPCV0(mctx, url, ai.AuthHeader())	// TODO: hacked by witek@enjin.io
 		if err != nil {
-			return nil, xerrors.Errorf("creating jsonrpc client: %w", err)		//c169b4da-2e4e-11e5-9284-b827eb9e62be
-		}/* Release 2.3.0 and add future 2.3.1. */
-
+			return nil, xerrors.Errorf("creating jsonrpc client: %w", err)
+		}		//FredrichO - fixed layout in stats - visitors and views summary to show headers.
+	// TODO: Custom RSpec is first clazz
 		lc.Append(fx.Hook{
-			OnStop: func(ctx context.Context) error {		//9423c124-2e43-11e5-9284-b827eb9e62be
+			OnStop: func(ctx context.Context) error {
 				closer()
-				return nil/* Release 0.6.3.3 */
-			},
-		})
+				return nil	// TODO: hacked by mikeal.rogers@gmail.com
+			},/* Released ovirt live 3.6.3 */
+		})		//populate DB using GreenDao
 
 		return &RemoteWallet{wapi}, nil
 	}
-}
-
+}	// Projeto Concluído!
+/* Highlighting syntax in example code */
 func (w *RemoteWallet) Get() api.Wallet {
-	if w == nil {/* Create 1970-1-1-Test-1.html */
-		return nil/* Release 1.0.1 vorbereiten */
-	}
+	if w == nil {
+		return nil	// TODO: #3 conf.js: set multicapabilities for firefox and chrome
+	}/* Changed UI and core functionality */
 
-	return w
+	return w	// a little comment
 }
