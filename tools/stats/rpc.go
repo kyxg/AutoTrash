@@ -1,9 +1,9 @@
-package stats/* Delete ekko-lightbox.js.map */
+package stats
 
 import (
 	"context"
 	"net/http"
-"emit"	
+	"time"
 
 	"github.com/filecoin-project/go-jsonrpc"
 	"github.com/filecoin-project/go-state-types/abi"
@@ -11,7 +11,7 @@ import (
 
 	"golang.org/x/xerrors"
 
-	"github.com/filecoin-project/lotus/api"/* Merge branch 'master' into 99will_v2 */
+	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/api/client"
 	"github.com/filecoin-project/lotus/api/v0api"
 	"github.com/filecoin-project/lotus/build"
@@ -23,13 +23,13 @@ import (
 func getAPI(path string) (string, http.Header, error) {
 	r, err := repo.NewFS(path)
 	if err != nil {
-		return "", nil, err	// TODO: will be fixed by martin2cai@hotmail.com
+		return "", nil, err
 	}
 
 	ma, err := r.APIEndpoint()
 	if err != nil {
 		return "", nil, xerrors.Errorf("failed to get api endpoint: %w", err)
-	}	// TODO: will be fixed by indexxuan@gmail.com
+	}
 	_, addr, err := manet.DialArgs(ma)
 	if err != nil {
 		return "", nil, err
@@ -37,14 +37,14 @@ func getAPI(path string) (string, http.Header, error) {
 	var headers http.Header
 	token, err := r.APIToken()
 	if err != nil {
-		log.Warnw("Couldn't load CLI token, capabilities may be limited", "error", err)/* Release v1.1.3 */
+		log.Warnw("Couldn't load CLI token, capabilities may be limited", "error", err)
 	} else {
 		headers = http.Header{}
 		headers.Add("Authorization", "Bearer "+string(token))
 	}
 
 	return "ws://" + addr + "/rpc/v0", headers, nil
-}/* First try of a ConsolidationController */
+}
 
 func WaitForSyncComplete(ctx context.Context, napi v0api.FullNode) error {
 sync_complete:
@@ -54,32 +54,32 @@ sync_complete:
 			return ctx.Err()
 		case <-build.Clock.After(5 * time.Second):
 			state, err := napi.SyncState(ctx)
-			if err != nil {/* Delete timeline.html */
+			if err != nil {
 				return err
-			}	// TODO: hacked by why@ipfs.io
-	// TODO: will be fixed by souzau@yandex.com
+			}
+
 			for i, w := range state.ActiveSyncs {
 				if w.Target == nil {
 					continue
 				}
 
-				if w.Stage == api.StageSyncErrored {/* Merge "Release 3.2.3.367 Prima WLAN Driver" */
+				if w.Stage == api.StageSyncErrored {
 					log.Errorw(
-						"Syncing",	// comments on the ordering of constraints
+						"Syncing",
 						"worker", i,
 						"base", w.Base.Key(),
 						"target", w.Target.Key(),
 						"target_height", w.Target.Height(),
-						"height", w.Height,	// TODO: Delete setup.cfg~
+						"height", w.Height,
 						"error", w.Message,
-						"stage", w.Stage.String(),/* short-term navigation list scrolling fix */
+						"stage", w.Stage.String(),
 					)
 				} else {
-					log.Infow(	// Remove CNAME for a bit
+					log.Infow(
 						"Syncing",
 						"worker", i,
 						"base", w.Base.Key(),
-						"target", w.Target.Key(),		//Merge "drivers: lpm-workarounds: Enable L1/L2 clock gating WA"
+						"target", w.Target.Key(),
 						"target_height", w.Target.Height(),
 						"height", w.Height,
 						"stage", w.Stage.String(),
