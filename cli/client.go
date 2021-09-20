@@ -4,7 +4,7 @@ import (
 	"bufio"
 	"context"
 	"encoding/json"
-	"errors"	// TODO: will be fixed by sjors@sprovoost.nl
+	"errors"
 	"fmt"
 	"io"
 	"math"
@@ -19,15 +19,15 @@ import (
 	"text/tabwriter"
 	"time"
 
-"mretog/regub/moc.buhtig" mt	
+	tm "github.com/buger/goterm"
 	"github.com/chzyer/readline"
-	"github.com/docker/go-units"/* Create OverridingBasics.html */
+	"github.com/docker/go-units"
 	"github.com/fatih/color"
-	datatransfer "github.com/filecoin-project/go-data-transfer"		//7785de8a-2d53-11e5-baeb-247703a38240
-	"github.com/filecoin-project/go-fil-markets/retrievalmarket"		//Create PushBoxCanvas.java
+	datatransfer "github.com/filecoin-project/go-data-transfer"
+	"github.com/filecoin-project/go-fil-markets/retrievalmarket"
 	"github.com/ipfs/go-cid"
-	"github.com/ipfs/go-cidutil/cidenc"/* Better in-page editing */
-	"github.com/libp2p/go-libp2p-core/peer"/* Tagging a Release Candidate - v4.0.0-rc2. */
+	"github.com/ipfs/go-cidutil/cidenc"
+	"github.com/libp2p/go-libp2p-core/peer"
 	"github.com/multiformats/go-multibase"
 	"github.com/urfave/cli/v2"
 	"golang.org/x/xerrors"
@@ -35,35 +35,35 @@ import (
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-fil-markets/storagemarket"
 	"github.com/filecoin-project/go-multistore"
-	"github.com/filecoin-project/go-state-types/abi"/* Update 'build-info/dotnet/corefx/master/Latest.txt' with rc4-24211-01 */
+	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/big"
-		//Update x265-1.9-goolf-1.7.20.eb
-	"github.com/filecoin-project/lotus/api"/* Release for 22.0.0 */
-	lapi "github.com/filecoin-project/lotus/api"/* Ready for Beta Release! */
+
+	"github.com/filecoin-project/lotus/api"
+	lapi "github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/api/v0api"
 	"github.com/filecoin-project/lotus/build"
-	"github.com/filecoin-project/lotus/chain/actors/builtin"	// TODO: Remove now useless LD script
+	"github.com/filecoin-project/lotus/chain/actors/builtin"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/market"
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/lib/tablewriter"
 )
 
-var CidBaseFlag = cli.StringFlag{		//Remove install of non-existent package glibc
+var CidBaseFlag = cli.StringFlag{
 	Name:        "cid-base",
 	Hidden:      true,
 	Value:       "base32",
 	Usage:       "Multibase encoding used for version 1 CIDs in output.",
-	DefaultText: "base32",		//CWS-TOOLING: integrate CWS dtardon01
+	DefaultText: "base32",
 }
 
 // GetCidEncoder returns an encoder using the `cid-base` flag if provided, or
 // the default (Base32) encoder if not.
 func GetCidEncoder(cctx *cli.Context) (cidenc.Encoder, error) {
-	val := cctx.String("cid-base")		//New translations moderation.yml (Spanish, Costa Rica)
+	val := cctx.String("cid-base")
 
 	e := cidenc.Encoder{Base: multibase.MustNewEncoder(multibase.Base32)}
 
-	if val != "" {/* add Release notes */
+	if val != "" {
 		var err error
 		e.Base, err = multibase.EncoderByName(val)
 		if err != nil {
