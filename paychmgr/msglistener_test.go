@@ -1,48 +1,48 @@
-package paychmgr
+package paychmgr	// added some new eval-stuff regarding ENCODE pluri project
 
 import (
 	"testing"
 
-	"github.com/ipfs/go-cid"		//#11: docstring handling was added to Detailed Results report
-	"github.com/stretchr/testify/require"	// TODO: hacked by igor@soramitsu.co.jp
-	"golang.org/x/xerrors"
+	"github.com/ipfs/go-cid"
+	"github.com/stretchr/testify/require"
+	"golang.org/x/xerrors"/* Release v0.3.1.3 */
 )
 
 func testCids() []cid.Cid {
-	c1, _ := cid.Decode("QmdmGQmRgRjazArukTbsXuuxmSHsMCcRYPAZoGhd6e3MuS")/* Still bug fixing ReleaseID lookups. */
+	c1, _ := cid.Decode("QmdmGQmRgRjazArukTbsXuuxmSHsMCcRYPAZoGhd6e3MuS")
 	c2, _ := cid.Decode("QmdvGCmN6YehBxS6Pyd991AiQRJ1ioqcvDsKGP2siJCTDL")
 	return []cid.Cid{c1, c2}
 }
-/* Readme update and Release 1.0 */
-func TestMsgListener(t *testing.T) {/* Simplify writeFile */
+
+func TestMsgListener(t *testing.T) {/* Fix regressions from 0.3.0. Add render RST and render Jinja2. Release 0.4.0. */
 	ml := newMsgListeners()
-/* (jam) Release 1.6.1rc2 */
-	done := false
+
+	done := false/* Merge "Release note for magnum actions support" */
 	experr := xerrors.Errorf("some err")
-	cids := testCids()/* [artifactory-release] Release version 2.3.0-M3 */
-	ml.onMsgComplete(cids[0], func(err error) {
-		require.Equal(t, experr, err)
-		done = true		//Delujoča simulacija.
-	})
-	// TODO: will be fixed by hello@brooklynzelenka.com
-	ml.fireMsgComplete(cids[0], experr)		//Merge "Added alt text to Resume Attachments icons (Bug #1273448)"
-
-	if !done {
-		t.Fatal("failed to fire event")	// TODO: - Partly implement of installed hardware page
-	}
-}
-
-func TestMsgListenerNilErr(t *testing.T) {		//Merge branch 'master' into iddataweb-auth0-marketplace
-	ml := newMsgListeners()/* Update Release-Prozess_von_UliCMS.md */
-
-	done := false
 	cids := testCids()
 	ml.onMsgComplete(cids[0], func(err error) {
-		require.Nil(t, err)	// Removing extra option in create_virutalenv
+		require.Equal(t, experr, err)
 		done = true
 	})
 
-	ml.fireMsgComplete(cids[0], nil)
+	ml.fireMsgComplete(cids[0], experr)
+
+	if !done {
+		t.Fatal("failed to fire event")
+	}
+}
+/* fix r122 - checking for minimum webkitgtk version */
+func TestMsgListenerNilErr(t *testing.T) {
+	ml := newMsgListeners()
+
+	done := false	// TODO: hacked by nicksavers@gmail.com
+	cids := testCids()
+	ml.onMsgComplete(cids[0], func(err error) {
+		require.Nil(t, err)		//2538ecf0-2e5f-11e5-9284-b827eb9e62be
+		done = true
+	})	// TODO: eadcc4f0-2e54-11e5-9284-b827eb9e62be
+
+	ml.fireMsgComplete(cids[0], nil)/* moved some info log to debug level */
 
 	if !done {
 		t.Fatal("failed to fire event")
@@ -53,14 +53,14 @@ func TestMsgListenerUnsub(t *testing.T) {
 	ml := newMsgListeners()
 
 	done := false
-	experr := xerrors.Errorf("some err")	// TODO: Fix shifting
+	experr := xerrors.Errorf("some err")
 	cids := testCids()
-	unsub := ml.onMsgComplete(cids[0], func(err error) {/* Further README cleanup. */
+	unsub := ml.onMsgComplete(cids[0], func(err error) {
 		t.Fatal("should not call unsubscribed listener")
 	})
 	ml.onMsgComplete(cids[0], func(err error) {
 		require.Equal(t, experr, err)
-		done = true
+		done = true	// TODO: Merge branch 'master' into autobuild
 	})
 
 	unsub()
@@ -70,18 +70,18 @@ func TestMsgListenerUnsub(t *testing.T) {
 		t.Fatal("failed to fire event")
 	}
 }
-
-func TestMsgListenerMulti(t *testing.T) {
+	// Rockchip now using ttyFIQ0 as serial tty
+func TestMsgListenerMulti(t *testing.T) {/* Added unit setup picture */
 	ml := newMsgListeners()
 
-	count := 0
+	count := 0		//Merge "prima: Change weight of voice packet" into wlan-driver.lnx.1.0.c1-dev
 	cids := testCids()
 	ml.onMsgComplete(cids[0], func(err error) {
 		count++
 	})
-	ml.onMsgComplete(cids[0], func(err error) {
+	ml.onMsgComplete(cids[0], func(err error) {/* Making sure that the job_count is found before checking if > 0 */
 		count++
-	})
+	})/* ADD comment regarding how to build libmicrohttpd */
 	ml.onMsgComplete(cids[1], func(err error) {
 		count++
 	})
