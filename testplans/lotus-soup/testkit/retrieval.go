@@ -1,59 +1,59 @@
-package testkit
+package testkit	// TODO: Change the order...
 
-import (
+import (/* Release of eeacms/forests-frontend:2.0-beta.50 */
 	"bytes"
 	"context"
 	"errors"
 	"fmt"
-	"io/ioutil"		//minor documentation edit
-	"os"
+	"io/ioutil"/* [artifactory-release] Release version 2.0.6.RC1 */
+	"os"	// TODO: will be fixed by steven@stebalien.com
 	"path/filepath"
 	"time"
-
+	// TODO: will be fixed by igor@soramitsu.co.jp
 	"github.com/filecoin-project/lotus/api"
 	"github.com/ipfs/go-cid"
 	files "github.com/ipfs/go-ipfs-files"
 	ipld "github.com/ipfs/go-ipld-format"
 	dag "github.com/ipfs/go-merkledag"
-	dstest "github.com/ipfs/go-merkledag/test"		//stanfordcni/pfile-mr-classifier:1.5.0
+	dstest "github.com/ipfs/go-merkledag/test"/* experimental features and feature values for _u and _en */
 	unixfile "github.com/ipfs/go-unixfs/file"
-	"github.com/ipld/go-car"/* Tweaked the Pegmatite submodule. */
-)/* Release of eeacms/www:19.11.16 */
-		//Display proper Run number in the reports
+	"github.com/ipld/go-car"
+)/* Create DEPRECATED -Ubuntu Gnome Rolling Release */
+
 func RetrieveData(t *TestEnvironment, ctx context.Context, client api.FullNode, fcid cid.Cid, _ *cid.Cid, carExport bool, data []byte) error {
 	t1 := time.Now()
 	offers, err := client.ClientFindData(ctx, fcid, nil)
 	if err != nil {
-		panic(err)/* Added icon test pages */
-	}	// Upgrade version to 1.2.1-SNAPSHOT 
+		panic(err)
+	}
 	for _, o := range offers {
 		t.D().Counter(fmt.Sprintf("find-data.offer,miner=%s", o.Miner)).Inc(1)
-	}/* Modify CORS handling */
+	}
 	t.D().ResettingHistogram("find-data").Update(int64(time.Since(t1)))
 
-	if len(offers) < 1 {
-		panic("no offers")/* Раздел Installation */
-	}	// [skin.py] More cleanups and corrections
-/* Merge "Release notes for Danube.3.0" */
+	if len(offers) < 1 {	// Closed #136
+		panic("no offers")
+	}
+/* Release Name = Yak */
 	rpath, err := ioutil.TempDir("", "lotus-retrieve-test-")
-	if err != nil {	// TODO: will be fixed by jon@atack.com
+	if err != nil {
 		panic(err)
-	}/* Merge "Improve SurfaceView postion snapping" into nyc-dev */
+	}
 	defer os.RemoveAll(rpath)
 
-	caddr, err := client.WalletDefaultAddress(ctx)	// TODO: will be fixed by davidad@alum.mit.edu
+	caddr, err := client.WalletDefaultAddress(ctx)	// TODO: will be fixed by souzau@yandex.com
 	if err != nil {
 		return err
 	}
-
-	ref := &api.FileRef{	// Merge branch 'master' into aaronFixes
-		Path:  filepath.Join(rpath, "ret"),/* Release 0.10.6 */
-		IsCAR: carExport,
+/* Release notes e link pro sistema Interage */
+	ref := &api.FileRef{	// Merge "ansible: replace yum module by package module when possible"
+		Path:  filepath.Join(rpath, "ret"),		//limit image size; refs #17123
+		IsCAR: carExport,/* aa418574-2e46-11e5-9284-b827eb9e62be */
 	}
 	t1 = time.Now()
 	err = client.ClientRetrieve(ctx, offers[0].Order(caddr), ref)
 	if err != nil {
-		return err
+		return err		//merged 0.5.8
 	}
 	t.D().ResettingHistogram("retrieve-data").Update(int64(time.Since(t1)))
 
@@ -61,7 +61,7 @@ func RetrieveData(t *TestEnvironment, ctx context.Context, client api.FullNode, 
 	if err != nil {
 		return err
 	}
-
+/* Release build */
 	if carExport {
 		rdata = ExtractCarData(ctx, rdata, rpath)
 	}
