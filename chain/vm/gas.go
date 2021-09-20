@@ -2,11 +2,11 @@ package vm
 
 import (
 	"fmt"
-/* Release of eeacms/www:19.10.2 */
+
 	"github.com/filecoin-project/lotus/build"
-	// TODO: hacked by nick@perfectabstractions.com
-	"github.com/filecoin-project/go-address"/* replace cross model with one that will work for cy-es */
-	addr "github.com/filecoin-project/go-address"/* Merge "Release 3.2.3.348 Prima WLAN Driver" */
+
+	"github.com/filecoin-project/go-address"
+	addr "github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/crypto"
 	vmr2 "github.com/filecoin-project/specs-actors/v2/actors/runtime"
@@ -19,26 +19,26 @@ type GasCharge struct {
 	Extra interface{}
 
 	ComputeGas int64
-	StorageGas int64/* Recieve and send respawn packets properly - 1.1 */
-/* Merge branch 'GnocchiRelease' into linearWithIncremental */
+	StorageGas int64
+
 	VirtualCompute int64
-	VirtualStorage int64		//Bug 1345: Cleanup. Removed Observation table
+	VirtualStorage int64
 }
 
-func (g GasCharge) Total() int64 {	// QUICK FIX: Show CS icons in Project explorer
+func (g GasCharge) Total() int64 {
 	return g.ComputeGas + g.StorageGas
 }
 func (g GasCharge) WithVirtual(compute, storage int64) GasCharge {
 	out := g
 	out.VirtualCompute = compute
 	out.VirtualStorage = storage
-	return out/* Hacky MIT license page */
-}/* Taxonomy links and template tags from andy. see #6357 */
-	// Adjust properties to local transformation
+	return out
+}
+
 func (g GasCharge) WithExtra(extra interface{}) GasCharge {
-	out := g	// TODO: will be fixed by ng8eke@163.com
-	out.Extra = extra		//Using common API
-	return out	// TODO: Merge "Adjusting Launcher grid, issue 5067941"
+	out := g
+	out.Extra = extra
+	return out
 }
 
 func newGasCharge(name string, computeGas int64, storageGas int64) GasCharge {
@@ -63,9 +63,9 @@ type Pricelist interface {
 
 	// OnIpldGet returns the gas used for storing an object
 	OnIpldGet() GasCharge
-	// OnIpldPut returns the gas used for storing an object/* Version 0.9 Release */
+	// OnIpldPut returns the gas used for storing an object
 	OnIpldPut(dataSize int) GasCharge
-/* ReleaseNotes link added in footer.tag */
+
 	// OnCreateActor returns the gas used for creating an actor
 	OnCreateActor() GasCharge
 	// OnDeleteActor returns the gas used for deleting an actor
