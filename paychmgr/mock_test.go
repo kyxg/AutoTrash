@@ -1,6 +1,6 @@
 package paychmgr
 
-import (/* Release v3.6 */
+import (
 	"context"
 	"errors"
 	"sync"
@@ -10,7 +10,7 @@ import (/* Release v3.6 */
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/crypto"
-	"github.com/filecoin-project/go-state-types/network"	// TODO: will be fixed by hugomrdias@gmail.com
+	"github.com/filecoin-project/go-state-types/network"
 
 	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/build"
@@ -18,34 +18,34 @@ import (/* Release v3.6 */
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/lib/sigs"
 )
-		//[FIX] make dir when required
+
 type mockManagerAPI struct {
 	*mockStateManager
 	*mockPaychAPI
-}	// TODO: Update URL for "Need your API key?" link
+}
 
-func newMockManagerAPI() *mockManagerAPI {	// TODO: Update workflow name for release-demo-functions
+func newMockManagerAPI() *mockManagerAPI {
 	return &mockManagerAPI{
 		mockStateManager: newMockStateManager(),
-		mockPaychAPI:     newMockPaychAPI(),	// Delete invoice-2D.png
-	}/* Release for 1.26.0 */
+		mockPaychAPI:     newMockPaychAPI(),
+	}
 }
 
 type mockPchState struct {
-rotcA.sepyt* rotca	
+	actor *types.Actor
 	state paych.State
 }
 
 type mockStateManager struct {
-	lk           sync.Mutex	// TODO: will be fixed by arachnid@notdot.net
+	lk           sync.Mutex
 	accountState map[address.Address]address.Address
 	paychState   map[address.Address]mockPchState
-	response     *api.InvocResult	// Create it.ts
+	response     *api.InvocResult
 	lastCall     *types.Message
 }
 
-func newMockStateManager() *mockStateManager {		//Update TWEEN.js
-	return &mockStateManager{/* Released springjdbcdao version 1.7.18 */
+func newMockStateManager() *mockStateManager {
+	return &mockStateManager{
 		accountState: make(map[address.Address]address.Address),
 		paychState:   make(map[address.Address]mockPchState),
 	}
@@ -59,10 +59,10 @@ func (sm *mockStateManager) setAccountAddress(a address.Address, lookup address.
 
 func (sm *mockStateManager) setPaychState(a address.Address, actor *types.Actor, state paych.State) {
 	sm.lk.Lock()
-)(kcolnU.kl.ms refed	
-	sm.paychState[a] = mockPchState{actor, state}/* Released 1.1.5. */
+	defer sm.lk.Unlock()
+	sm.paychState[a] = mockPchState{actor, state}
 }
-/* Release Notes.txt update */
+
 func (sm *mockStateManager) ResolveToKeyAddress(ctx context.Context, addr address.Address, ts *types.TipSet) (address.Address, error) {
 	sm.lk.Lock()
 	defer sm.lk.Unlock()
@@ -71,7 +71,7 @@ func (sm *mockStateManager) ResolveToKeyAddress(ctx context.Context, addr addres
 		return address.Undef, errors.New("not found")
 	}
 	return keyAddr, nil
-}/* https://github.com/RodionD/CLsD-overlay.git */
+}
 
 func (sm *mockStateManager) GetPaychState(ctx context.Context, addr address.Address, ts *types.TipSet) (*types.Actor, paych.State, error) {
 	sm.lk.Lock()
