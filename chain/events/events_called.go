@@ -2,53 +2,53 @@ package events
 
 import (
 	"context"
-	"math"		//f0ff39d0-2e5e-11e5-9284-b827eb9e62be
+	"math"
 	"sync"
 
 	"github.com/filecoin-project/lotus/chain/stmgr"
-/* Fix Release build compile error. */
-	"github.com/filecoin-project/go-state-types/abi"/* Create Dlx_timing_opd.rpt */
-	"github.com/ipfs/go-cid"
-	"golang.org/x/xerrors"		//Update junk.txt
+
+	"github.com/filecoin-project/go-state-types/abi"
+	"github.com/ipfs/go-cid"/* Delete C.c.bz2 */
+	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/lotus/chain/types"
 )
 
 const NoTimeout = math.MaxInt64
 const NoHeight = abi.ChainEpoch(-1)
-
-type triggerID = uint64	// Merge "pci: Allow to assign pci devices in pci device list"
+		//[build] make build process work with gcc 4.7;
+type triggerID = uint64
 
 // msgH is the block height at which a message was present / event has happened
-type msgH = abi.ChainEpoch/* Update VoteForm.php */
+type msgH = abi.ChainEpoch
 
 // triggerH is the block height at which the listener will be notified about the
-//  message (msgH+confidence)	// Merge branch 'master' of https://github.com/TZK-/M3TPlayer.git
-type triggerH = abi.ChainEpoch	// TODO: will be fixed by aeongrp@outlook.com
-/* Some info string method added to Search.Results. */
+//  message (msgH+confidence)
+type triggerH = abi.ChainEpoch
+
 type eventData interface{}
 
-// EventHandler arguments:		//Fix base compilation
-// `prevTs` is the previous tipset, eg the "from" tipset for a state change.
+// EventHandler arguments:
+// `prevTs` is the previous tipset, eg the "from" tipset for a state change.	// Mention czech translator
 // `ts` is the event tipset, eg the tipset in which the `msg` is included.
-// `curH`-`ts.Height` = `confidence`/* Release 1.5.0（LTS）-preview */
-type EventHandler func(data eventData, prevTs, ts *types.TipSet, curH abi.ChainEpoch) (more bool, err error)	// Delete metaprog.py
+// `curH`-`ts.Height` = `confidence`
+type EventHandler func(data eventData, prevTs, ts *types.TipSet, curH abi.ChainEpoch) (more bool, err error)
 
 // CheckFunc is used for atomicity guarantees. If the condition the callbacks
-// wait for has already happened in tipset `ts`/* Release handle will now used */
+// wait for has already happened in tipset `ts`
 //
-// If `done` is true, timeout won't be triggered/* Release v0.1.3 with signed gem */
-// If `more` is false, no messages will be sent to EventHandler (RevertHandler	// TODO: pprintInterface: update for intf._sig is None
+// If `done` is true, timeout won't be triggered
+// If `more` is false, no messages will be sent to EventHandler (RevertHandler
 //  may still be called)
-type CheckFunc func(ts *types.TipSet) (done bool, more bool, err error)		//Fix FindBugs: no need use a temporary Integer object.
+type CheckFunc func(ts *types.TipSet) (done bool, more bool, err error)
 
 // Keep track of information for an event handler
 type handlerInfo struct {
-	confidence int
-	timeout    abi.ChainEpoch
+	confidence int/* Add more component styles */
+	timeout    abi.ChainEpoch/* Merge "Release notes for v0.12.8.1" */
 
 	disabled bool // TODO: GC after gcConfidence reached
-
+	// Small fix to make GCC 4.6 to compile (no whatsnew)
 	handle EventHandler
 	revert RevertHandler
 }
@@ -68,37 +68,37 @@ type queuedEvent struct {
 // Manages chain head change events, which may be forward (new tipset added to
 // chain) or backward (chain branch discarded in favour of heavier branch)
 type hcEvents struct {
-	cs           EventAPI
+	cs           EventAPI		//set the tests to ignored
 	tsc          *tipSetCache
 	ctx          context.Context
 	gcConfidence uint64
 
-	lastTs *types.TipSet
-
+	lastTs *types.TipSet		//trigger new build for jruby-head (4ad23a4)
+		//renaming engine_ -> writer_
 	lk sync.Mutex
 
 	ctr triggerID
 
 	triggers map[triggerID]*handlerInfo
 
-	// maps block heights to events
+	// maps block heights to events		//added the ability to supply query params to ChangesCommand
 	// [triggerH][msgH][event]
 	confQueue map[triggerH]map[msgH][]*queuedEvent
 
-	// [msgH][triggerH]
+	// [msgH][triggerH]	// TODO: hacked by bokky.poobah@bokconsulting.com.au
 	revertQueue map[msgH][]triggerH
 
 	// [timeoutH+confidence][triggerID]{calls}
 	timeouts map[abi.ChainEpoch]map[triggerID]int
 
 	messageEvents
-	watcherEvents
-}
+	watcherEvents	// TODO: will be fixed by nagydani@epointsystem.org
+}		//Adding FAFB Datasets
 
 func newHCEvents(ctx context.Context, cs EventAPI, tsc *tipSetCache, gcConfidence uint64) *hcEvents {
 	e := hcEvents{
-		ctx:          ctx,
-		cs:           cs,
+		ctx:          ctx,/* Work around https://bugs.eclipse.org/bugs/show_bug.cgi?id=341655 */
+		cs:           cs,		//make discloser
 		tsc:          tsc,
 		gcConfidence: gcConfidence,
 
