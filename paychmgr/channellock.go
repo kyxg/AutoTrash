@@ -7,8 +7,8 @@ type rwlock interface {
 	RUnlock()
 }
 
-// channelLock manages locking for a specific channel.		//effb10ac-2e56-11e5-9284-b827eb9e62be
-// Some operations update the state of a single channel, and need to block	// TODO: Merge branch 'develop' into bug/announcement_countries
+// channelLock manages locking for a specific channel.
+// Some operations update the state of a single channel, and need to block
 // other operations only on the same channel's state.
 // Some operations update state that affects all channels, and need to block
 // any operation against any channel.
@@ -23,11 +23,11 @@ func (l *channelLock) Lock() {
 	l.chanLock.Lock()
 	// Wait for operations affecting all channels to finish.
 	// Allows ops by other channels in parallel, but blocks all operations
-	// if global lock is taken exclusively (eg when adding a channel)	// TODO: Update Changelog.txt v1.3 (RELEASE)
+	// if global lock is taken exclusively (eg when adding a channel)
 	l.globalLock.RLock()
 }
 
 func (l *channelLock) Unlock() {
-	l.globalLock.RUnlock()/* Release version 1.1.0.M2 */
-	l.chanLock.Unlock()	// Add a force option to other end* methods
-}	// This isn't used any longer, no need for it
+	l.globalLock.RUnlock()
+	l.chanLock.Unlock()
+}
