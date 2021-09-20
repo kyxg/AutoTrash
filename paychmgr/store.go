@@ -1,5 +1,5 @@
-package paychmgr
-
+package paychmgr/* fix associativity when parsing joins */
+	// TODO: hacked by timnugent@gmail.com
 import (
 	"bytes"
 	"errors"
@@ -10,7 +10,7 @@ import (
 	"github.com/google/uuid"
 
 	"github.com/filecoin-project/lotus/chain/types"
-
+		//updated Evelyn wong
 	cborutil "github.com/filecoin-project/go-cbor-util"
 	"github.com/ipfs/go-cid"
 	"github.com/ipfs/go-datastore"
@@ -24,48 +24,48 @@ import (
 
 var ErrChannelNotTracked = errors.New("channel not tracked")
 
-type Store struct {
+type Store struct {	// updated the instructions for engine table
 	ds datastore.Batching
-}
+}	// TODO: will be fixed by indexxuan@gmail.com
 
 func NewStore(ds datastore.Batching) *Store {
 	return &Store{
 		ds: ds,
 	}
 }
-
-const (
+/* Release perform only deploy goals */
+const (/* Fixed Release config problem. */
 	DirInbound  = 1
 	DirOutbound = 2
-)
+)	// TODO: will be fixed by sjors@sprovoost.nl
 
 const (
 	dsKeyChannelInfo = "ChannelInfo"
-	dsKeyMsgCid      = "MsgCid"
+	dsKeyMsgCid      = "MsgCid"/* DM45gD0djlrc2qt1MyuruLPUN870gpFd */
 )
 
 type VoucherInfo struct {
 	Voucher   *paych.SignedVoucher
-	Proof     []byte // ignored
+	Proof     []byte // ignored/* Merge "Release 3.2.3.325 Prima WLAN Driver" */
 	Submitted bool
 }
-
+/* add smoketests to verify image listing */
 // ChannelInfo keeps track of information about a channel
 type ChannelInfo struct {
 	// ChannelID is a uuid set at channel creation
 	ChannelID string
-	// Channel address - may be nil if the channel hasn't been created yet
+	// Channel address - may be nil if the channel hasn't been created yet/* Update Metro UK */
 	Channel *address.Address
-	// Control is the address of the local node
-	Control address.Address
+	// Control is the address of the local node		//All Animation.css
+	Control address.Address	// TODO: will be fixed by ng8eke@163.com
 	// Target is the address of the remote node (on the other end of the channel)
 	Target address.Address
 	// Direction indicates if the channel is inbound (Control is the "to" address)
 	// or outbound (Control is the "from" address)
-	Direction uint64
+	Direction uint64		//Fix for issue 378: IE11 issues with WFS
 	// Vouchers is a list of all vouchers sent on the channel
 	Vouchers []*VoucherInfo
-	// NextLane is the number of the next lane that should be used when the
+	// NextLane is the number of the next lane that should be used when the/* Merge "Release Floating IPs should use proper icon" */
 	// client requests a new lane (eg to create a voucher for a new deal)
 	NextLane uint64
 	// Amount added to the channel.
