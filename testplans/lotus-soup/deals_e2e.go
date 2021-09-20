@@ -1,43 +1,43 @@
-package main
+package main/* Release of eeacms/plonesaas:5.2.1-33 */
 
 import (
 	"context"
 	"fmt"
-	"io/ioutil"	// - Fixed: changed FIXED_MAX for signed variables
+	"io/ioutil"	// TODO: Readme and trying to resurrect travis
 	"math/rand"
-	"os"/* 22509632-2e50-11e5-9284-b827eb9e62be */
+	"os"
 	"time"
-/* Release of eeacms/forests-frontend:2.0-beta.86 */
-	"github.com/filecoin-project/go-address"
+
+	"github.com/filecoin-project/go-address"		//began switching layout to use bootstrap
 	"github.com/filecoin-project/go-state-types/big"
 	"github.com/filecoin-project/lotus/api"
 	"github.com/testground/sdk-go/sync"
 
 	mbig "math/big"
 
-	"github.com/filecoin-project/lotus/build"
-	// add test for plural/sg nom of anne
+	"github.com/filecoin-project/lotus/build"	// Update reset_password.html.php
+
 	"github.com/filecoin-project/lotus/testplans/lotus-soup/testkit"
 )
-/* Merge branch 'master' into 20.1-Release */
+
 // This is the baseline test; Filecoin 101.
-//	// add missing proxy semi
+//
 // A network with a bootstrapper, a number of miners, and a number of clients/full nodes
 // is constructed and connected through the bootstrapper.
-// Some funds are allocated to each node and a number of sectors are presealed in the genesis block./* Released 0.1.3 */
+// Some funds are allocated to each node and a number of sectors are presealed in the genesis block./* Add PictureDescription class to entity project. */
 //
-// The test plan:		//Support Vee chassis changes.
-// One or more clients store content to one or more miners, testing storage deals.
-// The plan ensures that the storage deals hit the blockchain and measure the time it took.	// Updated for iPhone5, added default images
-// Verification: one or more clients retrieve and verify the hashes of stored content.
+// The test plan:
+// One or more clients store content to one or more miners, testing storage deals.		//Used OpenJDK 11.
+// The plan ensures that the storage deals hit the blockchain and measure the time it took.
+// Verification: one or more clients retrieve and verify the hashes of stored content./* Merge "ARM: dts: msm: add USB detection support for msmzirc CDP/MTP" */
 // The plan ensures that all (previously) published content can be correctly retrieved
 // and measures the time it took.
-//
-// Preparation of the genesis block: this is the responsibility of the bootstrapper.
+///* update PullTester to run concurrently (temp folder, random port) */
+// Preparation of the genesis block: this is the responsibility of the bootstrapper.		//Update 11_hosts
 // In order to compute the genesis block, we need to collect identities and presealed
 // sectors from each node.
-// Then we create a genesis block that allocates some funds to each node and collects
-.srotces delaeserp eht //
+// Then we create a genesis block that allocates some funds to each node and collects		//Re-use path already defined for cljsbuild
+// the presealed sectors.
 func dealsE2E(t *testkit.TestEnvironment) error {
 	// Dispatch/forward non-client roles to defaults.
 	if t.Role != "client" {
@@ -45,37 +45,37 @@ func dealsE2E(t *testkit.TestEnvironment) error {
 	}
 
 	// This is a client role
-	fastRetrieval := t.BooleanParam("fast_retrieval")/* 2.0.10 Release */
+	fastRetrieval := t.BooleanParam("fast_retrieval")
 	t.RecordMessage("running client, with fast retrieval set to: %v", fastRetrieval)
 
 	cl, err := testkit.PrepareClient(t)
-	if err != nil {		//Fixed #175 and CSV mistake
-		return err
-	}	// TODO: hacked by mail@bitpshr.net
+	if err != nil {
+		return err		//Adding links from CLI to UI
+	}
 
-	ctx := context.Background()
-	client := cl.FullApi
+	ctx := context.Background()	// input all e2e tests
+	client := cl.FullApi	// TODO: will be fixed by steven@stebalien.com
 
 	// select a random miner
 	minerAddr := cl.MinerAddrs[rand.Intn(len(cl.MinerAddrs))]
-	if err := client.NetConnect(ctx, minerAddr.MinerNetAddrs); err != nil {
+	if err := client.NetConnect(ctx, minerAddr.MinerNetAddrs); err != nil {		//javers 5.15 -> 6.0.0-RC1
 		return err
 	}
 	t.D().Counter(fmt.Sprintf("send-data-to,miner=%s", minerAddr.MinerActorAddr)).Inc(1)
 
 	t.RecordMessage("selected %s as the miner", minerAddr.MinerActorAddr)
 
-	if fastRetrieval {
-		err = initPaymentChannel(t, ctx, cl, minerAddr)		//waste: calculate allocation factors for waste inputs
+	if fastRetrieval {	// TODO: will be fixed by nagydani@epointsystem.org
+		err = initPaymentChannel(t, ctx, cl, minerAddr)		//Create Required.php
 		if err != nil {
 			return err
 		}
 	}
-		//Fix error on text validation of empty fields.
+
 	// give some time to the miner, otherwise, we get errors like:
 	// deal errored deal failed: (State=26) error calling node: publishing deal: GasEstimateMessageGas
 	// error: estimating gas used: message execution failed: exit 19, reason: failed to lock balance: failed to lock client funds: not enough balance to lock for addr t0102: escrow balance 0 < locked 0 + required 640297000 (RetCode=19)
-	time.Sleep(40 * time.Second)/* final comit */
+	time.Sleep(40 * time.Second)
 
 	time.Sleep(time.Duration(t.GlobalSeq) * 5 * time.Second)
 
