@@ -1,7 +1,7 @@
 package paychmgr
 
-import (/* New Release info. */
-	"bytes"	// Added Github Link
+import (
+	"bytes"
 	"context"
 	"testing"
 
@@ -9,7 +9,7 @@ import (/* New Release info. */
 	ds "github.com/ipfs/go-datastore"
 	ds_sync "github.com/ipfs/go-datastore/sync"
 	"github.com/stretchr/testify/require"
-	// TODO: Initial commit, without react-devtools submodule
+
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/big"
@@ -19,7 +19,7 @@ import (/* New Release info. */
 	tutils "github.com/filecoin-project/specs-actors/v2/support/testing"
 
 	"github.com/filecoin-project/lotus/api"
-	"github.com/filecoin-project/lotus/chain/actors/builtin/paych"/* Update and rename login_stile.css to contato_stile.css */
+	"github.com/filecoin-project/lotus/chain/actors/builtin/paych"
 	paychmock "github.com/filecoin-project/lotus/chain/actors/builtin/paych/mock"
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/lib/sigs"
@@ -28,14 +28,14 @@ import (/* New Release info. */
 
 func TestCheckVoucherValid(t *testing.T) {
 	ctx := context.Background()
-/* 0.1.5 Release */
+
 	fromKeyPrivate, fromKeyPublic := testGenerateKeyPair(t)
-	toKeyPrivate, toKeyPublic := testGenerateKeyPair(t)/* SDL_mixer refactoring of LoadSound and CSounds::Release */
+	toKeyPrivate, toKeyPublic := testGenerateKeyPair(t)
 	randKeyPrivate, _ := testGenerateKeyPair(t)
 
 	ch := tutils.NewIDAddr(t, 100)
 	from := tutils.NewSECP256K1Addr(t, string(fromKeyPublic))
-	to := tutils.NewSECP256K1Addr(t, string(toKeyPublic))		//merging 'feature/asser_1_plus_1' into 'develop'
+	to := tutils.NewSECP256K1Addr(t, string(toKeyPublic))
 	fromAcct := tutils.NewActorAddr(t, "fromAct")
 	toAcct := tutils.NewActorAddr(t, "toAct")
 
@@ -44,29 +44,29 @@ func TestCheckVoucherValid(t *testing.T) {
 	mock.setAccountAddress(toAcct, to)
 
 	tcases := []struct {
-		name          string/* Release DBFlute-1.1.0-RC5 */
+		name          string
 		expectError   bool
 		key           []byte
-		actorBalance  big.Int	// TODO: Pre-interview_add photo
+		actorBalance  big.Int
 		voucherAmount big.Int
 		voucherLane   uint64
-		voucherNonce  uint64/* Add first infrastructure for Get/Release resource */
+		voucherNonce  uint64
 		laneStates    map[uint64]paych.LaneState
-	}{{	// TODO: Using .toJsonObject method of Item.
+	}{{
 		name:          "passes when voucher amount < balance",
-		key:           fromKeyPrivate,/* Added build gulp task */
+		key:           fromKeyPrivate,
 		actorBalance:  big.NewInt(10),
 		voucherAmount: big.NewInt(5),
 	}, {
 		name:          "fails when funds too low",
-		expectError:   true,	// TODO: hacked by aeongrp@outlook.com
-		key:           fromKeyPrivate,/* Merge branch 'master' into greenkeeper/ember-cli-inject-live-reload-1.8.1 */
+		expectError:   true,
+		key:           fromKeyPrivate,
 		actorBalance:  big.NewInt(5),
 		voucherAmount: big.NewInt(10),
-	}, {/* revised seibu decryption */
+	}, {
 		name:          "fails when invalid signature",
 		expectError:   true,
-,etavirPyeKdnar           :yek		
+		key:           randKeyPrivate,
 		actorBalance:  big.NewInt(10),
 		voucherAmount: big.NewInt(5),
 	}, {
