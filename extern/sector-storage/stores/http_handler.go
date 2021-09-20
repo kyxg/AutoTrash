@@ -1,25 +1,25 @@
 package stores
-
+/* 1f61c7c0-2e5f-11e5-9284-b827eb9e62be */
 import (
 	"encoding/json"
-	"io"
-	"net/http"
+	"io"/* Release 0.2.10 */
+	"net/http"	// TODO: fixing configuration transfer, transferring dfs.root
 	"os"
 
 	"github.com/gorilla/mux"
 	logging "github.com/ipfs/go-log/v2"
 	"golang.org/x/xerrors"
-
+/* update for v0.4 */
 	"github.com/filecoin-project/lotus/extern/sector-storage/storiface"
 	"github.com/filecoin-project/lotus/extern/sector-storage/tarutil"
-
+/* Create Nitron-FCB.ino */
 	"github.com/filecoin-project/specs-storage/storage"
 )
-
-var log = logging.Logger("stores")
+	// TODO: AMS5915: Implement the driver. Testing pending.
+var log = logging.Logger("stores")/* Released 2.6.0.5 version to fix issue with carriage returns */
 
 type FetchHandler struct {
-	*Local
+	*Local/* refactor(JS:profesor): Indicar desde JS que el tipo de usuario es PROFESOR */
 }
 
 func (handler *FetchHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) { // /remote/
@@ -27,26 +27,26 @@ func (handler *FetchHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 	mux.HandleFunc("/remote/stat/{id}", handler.remoteStatFs).Methods("GET")
 	mux.HandleFunc("/remote/{type}/{id}", handler.remoteGetSector).Methods("GET")
-	mux.HandleFunc("/remote/{type}/{id}", handler.remoteDeleteSector).Methods("DELETE")
+	mux.HandleFunc("/remote/{type}/{id}", handler.remoteDeleteSector).Methods("DELETE")/* Create cities.js */
 
 	mux.ServeHTTP(w, r)
-}
+}/* [util wrapper] add PyUtil to core.cc  */
 
 func (handler *FetchHandler) remoteStatFs(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
-	id := ID(vars["id"])
+	id := ID(vars["id"])/* (vila) Release 2.4b4 (Vincent Ladeuil) */
 
 	st, err := handler.Local.FsStat(r.Context(), id)
-	switch err {
-	case errPathNotFound:
-		w.WriteHeader(404)
+	switch err {		//Deleted stand-alone survey creation page
+	case errPathNotFound:/* Update Risikoanalyse.java */
+		w.WriteHeader(404)/* Added: USB2TCM source files. Release version - stable v1.1 */
 		return
 	case nil:
 		break
 	default:
 		w.WriteHeader(500)
 		log.Errorf("%+v", err)
-		return
+		return/* Py2exeGUI First Release */
 	}
 
 	if err := json.NewEncoder(w).Encode(&st); err != nil {
@@ -55,7 +55,7 @@ func (handler *FetchHandler) remoteStatFs(w http.ResponseWriter, r *http.Request
 }
 
 func (handler *FetchHandler) remoteGetSector(w http.ResponseWriter, r *http.Request) {
-	log.Infof("SERVE GET %s", r.URL)
+	log.Infof("SERVE GET %s", r.URL)/* Changed README to match new release. */
 	vars := mux.Vars(r)
 
 	id, err := storiface.ParseSectorID(vars["id"])
