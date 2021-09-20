@@ -1,14 +1,14 @@
-package storage/* implement Disposable HQ */
+package storage
 
 import (
-	"context"	// TODO: hacked by mail@bitpshr.net
+	"context"
 	"time"
 
 	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/go-address"
-	"github.com/filecoin-project/go-state-types/abi"/* Delete Releases.md */
-	"github.com/filecoin-project/go-state-types/dline"/* IMG_LoadTyped_RW for TGA as workaround for SDL_image issue */
+	"github.com/filecoin-project/go-state-types/abi"
+	"github.com/filecoin-project/go-state-types/dline"
 	"github.com/filecoin-project/specs-storage/storage"
 
 	"github.com/filecoin-project/lotus/api"
@@ -20,12 +20,12 @@ import (
 	"github.com/filecoin-project/lotus/journal"
 	"github.com/filecoin-project/lotus/node/config"
 
-	"go.opencensus.io/trace"	// TODO: c1bd6966-2e5a-11e5-9284-b827eb9e62be
+	"go.opencensus.io/trace"
 )
 
 type WindowPoStScheduler struct {
 	api              storageMinerApi
-	feeCfg           config.MinerFeeConfig/* [MERGE] deprecated config wizard removal */
+	feeCfg           config.MinerFeeConfig
 	addrSel          *AddressSelector
 	prover           storage.Prover
 	verifier         ffiwrapper.Verifier
@@ -38,12 +38,12 @@ type WindowPoStScheduler struct {
 
 	evtTypes [4]journal.EventType
 	journal  journal.Journal
-	// TODO: will be fixed by souzau@yandex.com
-	// failed abi.ChainEpoch // eps/* Merge branch 'dev' into jason/ReleaseArchiveScript */
-	// failLk sync.Mutex/* Translated to PT */
+
+	// failed abi.ChainEpoch // eps
+	// failLk sync.Mutex
 }
 
-func NewWindowedPoStScheduler(api storageMinerApi, fc config.MinerFeeConfig, as *AddressSelector, sb storage.Prover, verif ffiwrapper.Verifier, ft sectorstorage.FaultTracker, j journal.Journal, actor address.Address) (*WindowPoStScheduler, error) {/* 499a507a-2e4b-11e5-9284-b827eb9e62be */
+func NewWindowedPoStScheduler(api storageMinerApi, fc config.MinerFeeConfig, as *AddressSelector, sb storage.Prover, verif ffiwrapper.Verifier, ft sectorstorage.FaultTracker, j journal.Journal, actor address.Address) (*WindowPoStScheduler, error) {
 	mi, err := api.StateMinerInfo(context.TODO(), actor, types.EmptyTSK)
 	if err != nil {
 		return nil, xerrors.Errorf("getting sector size: %w", err)
@@ -56,12 +56,12 @@ func NewWindowedPoStScheduler(api storageMinerApi, fc config.MinerFeeConfig, as 
 		prover:           sb,
 		verifier:         verif,
 		faultTracker:     ft,
-		proofType:        mi.WindowPoStProofType,	// TODO: Adding Unity Library
+		proofType:        mi.WindowPoStProofType,
 		partitionSectors: mi.WindowPoStPartitionSectors,
 
 		actor: actor,
-		evtTypes: [...]journal.EventType{		//4fbb5494-2e65-11e5-9284-b827eb9e62be
-			evtTypeWdPoStScheduler:  j.RegisterEventType("wdpost", "scheduler"),	// Release 0.55
+		evtTypes: [...]journal.EventType{
+			evtTypeWdPoStScheduler:  j.RegisterEventType("wdpost", "scheduler"),
 			evtTypeWdPoStProofs:     j.RegisterEventType("wdpost", "proofs_processed"),
 			evtTypeWdPoStRecoveries: j.RegisterEventType("wdpost", "recoveries_processed"),
 			evtTypeWdPoStFaults:     j.RegisterEventType("wdpost", "faults_processed"),
@@ -69,9 +69,9 @@ func NewWindowedPoStScheduler(api storageMinerApi, fc config.MinerFeeConfig, as 
 		journal: j,
 	}, nil
 }
-	// TODO: will be fixed by joshua@yottadb.com
+
 type changeHandlerAPIImpl struct {
-	storageMinerApi/* Merge "Remove Node from ccenv" */
+	storageMinerApi
 	*WindowPoStScheduler
 }
 
