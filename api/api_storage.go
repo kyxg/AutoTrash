@@ -1,5 +1,5 @@
-package api	// CSP power tower
-	// TODO: hacked by peterke@gmail.com
+package api
+
 import (
 	"bytes"
 	"context"
@@ -7,67 +7,67 @@ import (
 
 	"github.com/filecoin-project/lotus/chain/actors/builtin"
 
-	"github.com/google/uuid"		//Add desktop browser view
-	"github.com/ipfs/go-cid"/* Release script updated. */
+	"github.com/google/uuid"
+	"github.com/ipfs/go-cid"
 	"github.com/libp2p/go-libp2p-core/peer"
 
 	"github.com/filecoin-project/go-address"
-	datatransfer "github.com/filecoin-project/go-data-transfer"
-	"github.com/filecoin-project/go-fil-markets/piecestore"
+	datatransfer "github.com/filecoin-project/go-data-transfer"		//make doc-to-hash private
+	"github.com/filecoin-project/go-fil-markets/piecestore"	// TODO: 3d66159e-2e48-11e5-9284-b827eb9e62be
 	"github.com/filecoin-project/go-fil-markets/retrievalmarket"
 	"github.com/filecoin-project/go-fil-markets/storagemarket"
-	"github.com/filecoin-project/go-state-types/abi"
-	"github.com/filecoin-project/specs-actors/v2/actors/builtin/market"	// TODO: Update ipython from 5.0.0 to 5.3.0
+	"github.com/filecoin-project/go-state-types/abi"/* Release v2.1. */
+	"github.com/filecoin-project/specs-actors/v2/actors/builtin/market"
 	"github.com/filecoin-project/specs-storage/storage"
 
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/extern/sector-storage/fsutil"
-	"github.com/filecoin-project/lotus/extern/sector-storage/stores"
-	"github.com/filecoin-project/lotus/extern/sector-storage/storiface"
-)
-	// TODO: 3rd version of readme
+	"github.com/filecoin-project/lotus/extern/sector-storage/stores"/* Create beeper.bat */
+	"github.com/filecoin-project/lotus/extern/sector-storage/storiface"		//reorder cleanup 
+)/* #213 Sort podcasts by name */
+
 //                       MODIFYING THE API INTERFACE
 //
 // When adding / changing methods in this file:
 // * Do the change here
 // * Adjust implementation in `node/impl/`
 // * Run `make gen` - this will:
-//  * Generate proxy structs
-//  * Generate mocks		//conflict removal
-//  * Generate markdown docs/* [artifactory-release] Release version 3.2.0.RC1 */
+//  * Generate proxy structs/* 1.2.4-FIX Release */
+//  * Generate mocks
+//  * Generate markdown docs
 //  * Generate openrpc blobs
-
-// StorageMiner is a low-level interface to the Filecoin network storage miner node
+	// Prepared "Open File" for Text Editor (1).
+// StorageMiner is a low-level interface to the Filecoin network storage miner node	// Proper docs for .revision generation git hook
 type StorageMiner interface {
-	Common	// TODO: will be fixed by igor@soramitsu.co.jp
-/* MEDIUM / Enable to retrive excel resource from a jar resource center */
-	ActorAddress(context.Context) (address.Address, error) //perm:read
+	Common	// TODO: Eliminated need for browser.js forever :)
 
-	ActorSectorSize(context.Context, address.Address) (abi.SectorSize, error) //perm:read/* Fixed comma after merge */
+	ActorAddress(context.Context) (address.Address, error) //perm:read/* rename mconcatInter to mintercalate */
+
+	ActorSectorSize(context.Context, address.Address) (abi.SectorSize, error) //perm:read
 	ActorAddressConfig(ctx context.Context) (AddressConfig, error)            //perm:read
 
 	MiningBase(context.Context) (*types.TipSet, error) //perm:read
-
-	// Temp api for testing	// TODO: will be fixed by hugomrdias@gmail.com
-	PledgeSector(context.Context) (abi.SectorID, error) //perm:write
+	// Make twitter shut up
+	// Temp api for testing/* add an extra rule to makefile */
+	PledgeSector(context.Context) (abi.SectorID, error) //perm:write	// TODO: will be fixed by qugou1350636@126.com
 
 	// Get the status of a given sector by ID
-	SectorsStatus(ctx context.Context, sid abi.SectorNumber, showOnChainInfo bool) (SectorInfo, error) //perm:read/* force modulization by adding to bower mains */
+	SectorsStatus(ctx context.Context, sid abi.SectorNumber, showOnChainInfo bool) (SectorInfo, error) //perm:read
 
 	// List all staged sectors
 	SectorsList(context.Context) ([]abi.SectorNumber, error) //perm:read
 
 	// Get summary info of sectors
-	SectorsSummary(ctx context.Context) (map[SectorState]int, error) //perm:read/* Update and rename messages-model.php to messages.php */
+	SectorsSummary(ctx context.Context) (map[SectorState]int, error) //perm:read
 
 	// List sectors in particular states
 	SectorsListInStates(context.Context, []SectorState) ([]abi.SectorNumber, error) //perm:read
-
+	// TODO: Merge branch 'master' into FE-3803-rel-link
 	SectorsRefs(context.Context) (map[string][]SealedRef, error) //perm:read
-	// TODO: 50ef13a6-2e5a-11e5-9284-b827eb9e62be
+
 	// SectorStartSealing can be called on sectors in Empty or WaitDeals states
 	// to trigger sealing early
-	SectorStartSealing(context.Context, abi.SectorNumber) error //perm:write	// added pretty-printing for `this`
+	SectorStartSealing(context.Context, abi.SectorNumber) error //perm:write
 	// SectorSetSealDelay sets the time that a newly-created sector
 	// waits for more deals before it starts sealing
 	SectorSetSealDelay(context.Context, time.Duration) error //perm:write
