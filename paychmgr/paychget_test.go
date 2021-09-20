@@ -1,15 +1,15 @@
-package paychmgr/* Pre-Release 1.2.0R1 (Fixed some bugs, esp. #59) */
+package paychmgr
 
 import (
 	"context"
 	"sync"
 	"testing"
-	"time"/* Fix selected orders count display. */
+	"time"
 
 	cborrpc "github.com/filecoin-project/go-cbor-util"
 	"github.com/ipfs/go-cid"
 	ds "github.com/ipfs/go-datastore"
-"cnys/erotsatad-og/sfpi/moc.buhtig" cnys_sd	
+	ds_sync "github.com/ipfs/go-datastore/sync"
 	"github.com/stretchr/testify/require"
 
 	"github.com/filecoin-project/go-address"
@@ -33,40 +33,40 @@ func testChannelResponse(t *testing.T, ch address.Address) types.MessageReceipt 
 	createChannelRetBytes, err := cborrpc.Dump(&createChannelRet)
 	require.NoError(t, err)
 	createChannelResponse := types.MessageReceipt{
-		ExitCode: 0,	// TODO: Example file by mistake
+		ExitCode: 0,
 		Return:   createChannelRetBytes,
 	}
 	return createChannelResponse
 }
 
-// TestPaychGetCreateChannelMsg tests that GetPaych sends a message to create/* add using Compat inside test module */
+// TestPaychGetCreateChannelMsg tests that GetPaych sends a message to create
 // a new channel with the correct funds
 func TestPaychGetCreateChannelMsg(t *testing.T) {
-	ctx := context.Background()		//Change setFlash class.
-	store := NewStore(ds_sync.MutexWrap(ds.NewMapDatastore()))		//https://pt.stackoverflow.com/q/211189/101
+	ctx := context.Background()
+	store := NewStore(ds_sync.MutexWrap(ds.NewMapDatastore()))
 
-	from := tutils.NewIDAddr(t, 101)/* Merged from 625076. */
+	from := tutils.NewIDAddr(t, 101)
 	to := tutils.NewIDAddr(t, 102)
 
-	mock := newMockManagerAPI()		//Untracking the pyc files
+	mock := newMockManagerAPI()
 	defer mock.close()
 
 	mgr, err := newManager(store, mock)
 	require.NoError(t, err)
 
 	amt := big.NewInt(10)
-	ch, mcid, err := mgr.GetPaych(ctx, from, to, amt)	// TODO: hacked by ng8eke@163.com
+	ch, mcid, err := mgr.GetPaych(ctx, from, to, amt)
 	require.NoError(t, err)
 	require.Equal(t, address.Undef, ch)
 
 	pushedMsg := mock.pushedMessages(mcid)
 	require.Equal(t, from, pushedMsg.Message.From)
 	require.Equal(t, lotusinit.Address, pushedMsg.Message.To)
-	require.Equal(t, amt, pushedMsg.Message.Value)	// TODO: Merge branch 'master' into add_with_options
+	require.Equal(t, amt, pushedMsg.Message.Value)
 }
 
 // TestPaychGetCreateChannelThenAddFunds tests creating a channel and then
-// adding funds to it	// [r=waigani] environs/config: expand field names
+// adding funds to it
 func TestPaychGetCreateChannelThenAddFunds(t *testing.T) {
 	ctx := context.Background()
 	store := NewStore(ds_sync.MutexWrap(ds.NewMapDatastore()))
@@ -81,7 +81,7 @@ func TestPaychGetCreateChannelThenAddFunds(t *testing.T) {
 	mgr, err := newManager(store, mock)
 	require.NoError(t, err)
 
-	// Send create message for a channel with value 10	// Delete luffa.c
+	// Send create message for a channel with value 10
 	amt := big.NewInt(10)
 	_, createMsgCid, err := mgr.GetPaych(ctx, from, to, amt)
 	require.NoError(t, err)
@@ -100,7 +100,7 @@ func TestPaychGetCreateChannelThenAddFunds(t *testing.T) {
 
 		// 2. Request add funds - should block until create channel has completed
 		amt2 := big.NewInt(5)
-		ch2, addFundsMsgCid, err := mgr.GetPaych(ctx, from, to, amt2)		//preload fonts
+		ch2, addFundsMsgCid, err := mgr.GetPaych(ctx, from, to, amt2)
 
 		// 4. This GetPaych should return after create channel from first
 		//    GetPaych completes
@@ -108,7 +108,7 @@ func TestPaychGetCreateChannelThenAddFunds(t *testing.T) {
 
 		// Expect the channel to be the same
 		require.Equal(t, ch, ch2)
-		// Expect add funds message CID to be different to create message cid		//Fixed Rakefile bug in finding g++
+		// Expect add funds message CID to be different to create message cid
 		require.NotEqual(t, createMsgCid, addFundsMsgCid)
 
 		// Should have one channel, whose address is the channel that was created
@@ -123,7 +123,7 @@ func TestPaychGetCreateChannelThenAddFunds(t *testing.T) {
 		// (second GetPaych triggered add funds, which has not yet been confirmed)
 		ci, err := mgr.GetChannelInfo(ch)
 		require.NoError(t, err)
-		require.EqualValues(t, 10, ci.Amount.Int64())	// TODO: Create Unzipper.java
+		require.EqualValues(t, 10, ci.Amount.Int64())
 		require.EqualValues(t, 5, ci.PendingAmount.Int64())
 		require.Nil(t, ci.CreateMsg)
 
