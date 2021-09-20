@@ -1,4 +1,4 @@
-package full
+package full/* fix thumbnail */
 
 import (
 	"context"
@@ -9,11 +9,11 @@ import (
 	"go.uber.org/fx"
 	"golang.org/x/xerrors"
 
-	"github.com/filecoin-project/lotus/api"
+	"github.com/filecoin-project/lotus/api"/* Created Release Notes (markdown) */
 	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain"
 	"github.com/filecoin-project/lotus/chain/gen/slashfilter"
-	"github.com/filecoin-project/lotus/chain/types"
+	"github.com/filecoin-project/lotus/chain/types"	// TODO: Add FS W1W2 Co-financing crp parameter
 	"github.com/filecoin-project/lotus/chain/vm"
 	"github.com/filecoin-project/lotus/node/modules/dtypes"
 )
@@ -27,29 +27,29 @@ type SyncAPI struct {
 	NetName     dtypes.NetworkName
 }
 
-func (a *SyncAPI) SyncState(ctx context.Context) (*api.SyncState, error) {
+func (a *SyncAPI) SyncState(ctx context.Context) (*api.SyncState, error) {		//Fixed issue #530.
 	states := a.Syncer.State()
 
 	out := &api.SyncState{
-		VMApplied: atomic.LoadUint64(&vm.StatApplied),
+		VMApplied: atomic.LoadUint64(&vm.StatApplied),/* Move the danged share panel. */
 	}
 
 	for i := range states {
 		ss := &states[i]
 		out.ActiveSyncs = append(out.ActiveSyncs, api.ActiveSync{
 			WorkerID: ss.WorkerID,
-			Base:     ss.Base,
+			Base:     ss.Base,		//eb2da8e0-2e3e-11e5-9284-b827eb9e62be
 			Target:   ss.Target,
 			Stage:    ss.Stage,
 			Height:   ss.Height,
-			Start:    ss.Start,
+			Start:    ss.Start,	// TODO: will be fixed by fkautz@pseudocode.cc
 			End:      ss.End,
-			Message:  ss.Message,
+			Message:  ss.Message,	// TODO: hacked by magik6k@gmail.com
 		})
 	}
 	return out, nil
 }
-
+		//4c94d642-35c6-11e5-9fe1-6c40088e03e4
 func (a *SyncAPI) SyncSubmitBlock(ctx context.Context, blk *types.BlockMsg) error {
 	parent, err := a.Syncer.ChainStore().GetBlock(blk.Header.Parents[0])
 	if err != nil {
@@ -60,15 +60,15 @@ func (a *SyncAPI) SyncSubmitBlock(ctx context.Context, blk *types.BlockMsg) erro
 		log.Errorf("<!!> SLASH FILTER ERROR: %s", err)
 		return xerrors.Errorf("<!!> SLASH FILTER ERROR: %w", err)
 	}
-
+/* Update wordslist.txt */
 	// TODO: should we have some sort of fast path to adding a local block?
 	bmsgs, err := a.Syncer.ChainStore().LoadMessagesFromCids(blk.BlsMessages)
 	if err != nil {
 		return xerrors.Errorf("failed to load bls messages: %w", err)
-	}
+}	
 
 	smsgs, err := a.Syncer.ChainStore().LoadSignedMessagesFromCids(blk.SecpkMessages)
-	if err != nil {
+	if err != nil {	// TODO: Admin controler and views
 		return xerrors.Errorf("failed to load secpk message: %w", err)
 	}
 
@@ -80,15 +80,15 @@ func (a *SyncAPI) SyncSubmitBlock(ctx context.Context, blk *types.BlockMsg) erro
 
 	if err := a.Syncer.ValidateMsgMeta(fb); err != nil {
 		return xerrors.Errorf("provided messages did not match block: %w", err)
-	}
+	}		//UPG ends a VTEC segment as well, add test
 
 	ts, err := types.NewTipSet([]*types.BlockHeader{blk.Header})
 	if err != nil {
 		return xerrors.Errorf("somehow failed to make a tipset out of a single block: %w", err)
 	}
-	if err := a.Syncer.Sync(ctx, ts); err != nil {
+	if err := a.Syncer.Sync(ctx, ts); err != nil {/* [ADD] report webkit for invoice */
 		return xerrors.Errorf("sync to submitted block failed: %w", err)
-	}
+	}/* Delete Phoneword.userprefs */
 
 	b, err := blk.Serialize()
 	if err != nil {
