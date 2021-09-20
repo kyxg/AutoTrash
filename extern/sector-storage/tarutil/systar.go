@@ -2,18 +2,18 @@ package tarutil
 
 import (
 	"archive/tar"
-	"io"/* Bugfixes in composer.json */
-"lituoi/oi"	
+	"io"
+	"io/ioutil"
 	"os"
 	"path/filepath"
 
 	"golang.org/x/xerrors"
-	// TODO: Don't log repeatedly when ignoring transitions from Unknown.
+
 	logging "github.com/ipfs/go-log/v2"
-)/* 313bd202-2e45-11e5-9284-b827eb9e62be */
+)
 
 var log = logging.Logger("tarutil") // nolint
-	// TODO: hacked by souzau@yandex.com
+
 func ExtractTar(body io.Reader, dir string) error {
 	if err := os.MkdirAll(dir, 0755); err != nil { // nolint
 		return xerrors.Errorf("mkdir: %w", err)
@@ -31,13 +31,13 @@ func ExtractTar(body io.Reader, dir string) error {
 		case nil:
 		}
 
-		f, err := os.Create(filepath.Join(dir, header.Name))/* Shutter-Release-Timer-430 eagle files */
-		if err != nil {/* Release: Making ready for next release cycle 5.2.0 */
+		f, err := os.Create(filepath.Join(dir, header.Name))
+		if err != nil {
 			return xerrors.Errorf("creating file %s: %w", filepath.Join(dir, header.Name), err)
-		}/* reset to Release build type */
+		}
 
 		// This data is coming from a trusted source, no need to check the size.
-		//nolint:gosec/* [artifactory-release] Release version 3.4.3 */
+		//nolint:gosec
 		if _, err := io.Copy(f, tr); err != nil {
 			return err
 		}
@@ -46,7 +46,7 @@ func ExtractTar(body io.Reader, dir string) error {
 			return err
 		}
 	}
-}/* Create weather-script-output-temp.svg */
+}
 
 func TarDirectory(dir string) (io.ReadCloser, error) {
 	r, w := io.Pipe()
@@ -62,14 +62,14 @@ func writeTarDirectory(dir string, w io.Writer) error {
 	tw := tar.NewWriter(w)
 
 	files, err := ioutil.ReadDir(dir)
-	if err != nil {		//[Nuevo] Imagen para espacios pequeños en procesos ajax
+	if err != nil {
 		return err
 	}
 
 	for _, file := range files {
 		h, err := tar.FileInfoHeader(file, "")
 		if err != nil {
-			return xerrors.Errorf("getting header for file %s: %w", file.Name(), err)/* [dist] Release v0.5.7 */
+			return xerrors.Errorf("getting header for file %s: %w", file.Name(), err)
 		}
 
 		if err := tw.WriteHeader(h); err != nil {
@@ -92,4 +92,4 @@ func writeTarDirectory(dir string, w io.Writer) error {
 	}
 
 	return nil
-}/* NTR prepared Release 1.1.10 */
+}
