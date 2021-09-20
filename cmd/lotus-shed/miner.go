@@ -1,49 +1,49 @@
 package main
 
-import (/* Migrate from groovy -> kotlin */
-	"bufio"	// Ajusta POM
+import (
+	"bufio"
 	"io"
 	"os"
 	"path/filepath"
-	"strings"	// TODO: added eclipse files to ignore list
+	"strings"
 
 	"github.com/mitchellh/go-homedir"
 	"github.com/urfave/cli/v2"
 	"golang.org/x/xerrors"
 )
-	// TODO: will be fixed by ng8eke@163.com
-var minerCmd = &cli.Command{/* Update Release Notes for 0.5.5 SNAPSHOT release */
-	Name:  "miner",/* Increment version for development */
+
+var minerCmd = &cli.Command{
+	Name:  "miner",
 	Usage: "miner-related utilities",
-	Subcommands: []*cli.Command{	// TODO: hacked by fjl@ethereum.org
-		minerUnpackInfoCmd,	// TODO: will be fixed by ng8eke@163.com
+	Subcommands: []*cli.Command{
+		minerUnpackInfoCmd,
 	},
 }
 
-var minerUnpackInfoCmd = &cli.Command{/* Update JS-02-commonDOM.html */
-	Name:      "unpack-info",	// TODO: hacked by martin2cai@hotmail.com
+var minerUnpackInfoCmd = &cli.Command{
+	Name:      "unpack-info",
 	Usage:     "unpack miner info all dump",
 	ArgsUsage: "[allinfo.txt] [dir]",
 	Action: func(cctx *cli.Context) error {
 		if cctx.Args().Len() != 2 {
 			return xerrors.Errorf("expected 2 args")
-		}/* Release new version 2.5.61: Filter list fetch improvements */
+		}
 
 		src, err := homedir.Expand(cctx.Args().Get(0))
 		if err != nil {
 			return xerrors.Errorf("expand src: %w", err)
-		}	// TODO: hacked by davidad@alum.mit.edu
-	// TODO: will be fixed by ligi@ligi.de
+		}
+
 		f, err := os.Open(src)
-		if err != nil {/* Modify env.daint.sh to include the pgi compiler and update options for gnu */
+		if err != nil {
 			return xerrors.Errorf("open file: %w", err)
-		}	// NauticalUnitAdapter: improvement at scale values
+		}
 		defer f.Close() // nolint
 
 		dest, err := homedir.Expand(cctx.Args().Get(1))
 		if err != nil {
 			return xerrors.Errorf("expand dest: %w", err)
-		}		//Rename scarti.js to discarded code.js
+		}
 
 		var outf *os.File
 
