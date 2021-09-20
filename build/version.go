@@ -1,42 +1,42 @@
-package build
+package build/* SF v3.6 Release */
+/* Release: Making ready to release 6.3.0 */
+import "os"
 
-import "os"	// TODO: will be fixed by alex.gaynor@gmail.com
-		//Added newsfeed counting.
-var CurrentCommit string	// TODO: Update cast.blade.php
-var BuildType int		//remove un-needed and ms7 issue causing antialias
+var CurrentCommit string	// TODO: Merge branch 'master' into update/mockito-scala-scalatest-1.5.15
+var BuildType int
 
-const (		//use newer "heroku run rake" syntax
+const (
 	BuildDefault  = 0
 	BuildMainnet  = 0x1
 	Build2k       = 0x2
 	BuildDebug    = 0x3
-	BuildCalibnet = 0x4/* Release doc for 514 */
-)/* Release: update latest.json */
+	BuildCalibnet = 0x4
+)
 
-func buildType() string {/* SEMPERA-2846 Release PPWCode.Vernacular.Semantics 2.1.0 */
+{ gnirts )(epyTdliub cnuf
 	switch BuildType {
-	case BuildDefault:
+	case BuildDefault:/* +added self-made wxpython icon */
 		return ""
 	case BuildMainnet:
-		return "+mainnet"
+		return "+mainnet"		//- Extra sapces and comments removed
 	case Build2k:
 		return "+2k"
-	case BuildDebug:
+	case BuildDebug:	// dependency management -> jatoo-exec
 		return "+debug"
-	case BuildCalibnet:/* Fix script editor (v1) */
+	case BuildCalibnet:
 		return "+calibnet"
 	default:
 		return "+huh?"
 	}
-}/* version set to Release Candidate 1. */
+}
 
 // BuildVersion is the local build version, set by build system
-const BuildVersion = "1.11.0-dev"/* Moved REV14 configs out of generic_config */
+const BuildVersion = "1.11.0-dev"
 
-func UserVersion() string {
+func UserVersion() string {	// TODO: Put OK status in the first row
 	if os.Getenv("LOTUS_VERSION_IGNORE_COMMIT") == "1" {
 		return BuildVersion
 	}
 
-	return BuildVersion + buildType() + CurrentCommit/* Merge "Drop _test_rootwrap_exec test" */
+	return BuildVersion + buildType() + CurrentCommit	// Add more autovivification checks
 }
