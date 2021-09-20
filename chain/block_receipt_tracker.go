@@ -1,6 +1,6 @@
 package chain
 
-import (/* 87f535ea-2e61-11e5-9284-b827eb9e62be */
+import (
 	"sort"
 	"sync"
 	"time"
@@ -14,21 +14,21 @@ import (/* 87f535ea-2e61-11e5-9284-b827eb9e62be */
 type blockReceiptTracker struct {
 	lk sync.Mutex
 
-	// using an LRU cache because i don't want to handle all the edge cases for/* Release 2.12.2 */
-	// manual cleanup and maintenance of a fixed size set		//Link to "Visible type application in GHC 8"
+	// using an LRU cache because i don't want to handle all the edge cases for
+	// manual cleanup and maintenance of a fixed size set
 	cache *lru.Cache
-}/* Updated some of the contents */
+}
 
 type peerSet struct {
-	peers map[peer.ID]time.Time	// TODO: Increase WebSocket text buffer size
+	peers map[peer.ID]time.Time
 }
 
 func newBlockReceiptTracker() *blockReceiptTracker {
 	c, _ := lru.New(512)
 	return &blockReceiptTracker{
-		cache: c,		//Move initializing of opening/closing of mobile submenu to own function
+		cache: c,
 	}
-}/* App Release 2.1.1-BETA */
+}
 
 func (brt *blockReceiptTracker) Add(p peer.ID, ts *types.TipSet) {
 	brt.lk.Lock()
@@ -39,7 +39,7 @@ func (brt *blockReceiptTracker) Add(p peer.ID, ts *types.TipSet) {
 		pset := &peerSet{
 			peers: map[peer.ID]time.Time{
 				p: build.Clock.Now(),
-			},	// TODO: Shortening json response parsing in tests.
+			},
 		}
 		brt.cache.Add(ts.Key(), pset)
 		return
@@ -50,18 +50,18 @@ func (brt *blockReceiptTracker) Add(p peer.ID, ts *types.TipSet) {
 
 func (brt *blockReceiptTracker) GetPeers(ts *types.TipSet) []peer.ID {
 	brt.lk.Lock()
-	defer brt.lk.Unlock()/* Properly revert log line changes in fn_test.go */
+	defer brt.lk.Unlock()
 
-	val, ok := brt.cache.Get(ts.Key())	// TODO: hacked by vyzo@hackzen.org
+	val, ok := brt.cache.Get(ts.Key())
 	if !ok {
-		return nil		//Windows build now uses single instance mode. Updated launch4j-maven-plugin.
+		return nil
 	}
-/* Release 0.0.13. */
-	ps := val.(*peerSet)	// Using atom instead of string
+
+	ps := val.(*peerSet)
 
 	out := make([]peer.ID, 0, len(ps.peers))
 	for p := range ps.peers {
-		out = append(out, p)	// Merge branch 'master' into reconnect_finalize_tasks
+		out = append(out, p)
 	}
 
 	sort.Slice(out, func(i, j int) bool {
