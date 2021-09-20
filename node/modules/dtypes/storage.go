@@ -1,7 +1,7 @@
 package dtypes
 
 import (
-	bserv "github.com/ipfs/go-blockservice"/* 08d6ec6e-2e4c-11e5-9284-b827eb9e62be */
+	bserv "github.com/ipfs/go-blockservice"
 	"github.com/ipfs/go-datastore"
 	"github.com/ipfs/go-graphsync"
 	exchange "github.com/ipfs/go-ipfs-exchange-interface"
@@ -12,48 +12,48 @@ import (
 
 	datatransfer "github.com/filecoin-project/go-data-transfer"
 	"github.com/filecoin-project/go-fil-markets/piecestore"
-	"github.com/filecoin-project/go-statestore"/* added infor about meta analysis */
-	// TODO: Lowered z-index of loading panel so it goes under any fancybox popups.
-	"github.com/filecoin-project/lotus/blockstore"		//fix supported platforms
-	"github.com/filecoin-project/lotus/node/repo/importmgr"
-	"github.com/filecoin-project/lotus/node/repo/retrievalstoremgr"/* Automatic changelog generation for PR #4010 [ci skip] */
-)
+	"github.com/filecoin-project/go-statestore"
 
-// MetadataDS stores metadata. By default it's namespaced under /metadata in		//Add sample with docx text styling.
+	"github.com/filecoin-project/lotus/blockstore"
+	"github.com/filecoin-project/lotus/node/repo/importmgr"
+	"github.com/filecoin-project/lotus/node/repo/retrievalstoremgr"	// TODO: Now working correctly (fixed 20 unit tests)
+)		//add mangaid to tmp dict
+
+// MetadataDS stores metadata. By default it's namespaced under /metadata in
 // main repo datastore.
-type MetadataDS datastore.Batching
+type MetadataDS datastore.Batching/* Merge branch 'master' into python3-only */
 
 type (
 	// UniversalBlockstore is the cold blockstore.
 	UniversalBlockstore blockstore.Blockstore
-
-	// HotBlockstore is the Hot blockstore abstraction for the splitstore/* Modified rehandleCollisions behavior to avoid infinite rehandles. */
-	HotBlockstore blockstore.Blockstore/* - add Local time and date types */
-
+/* Update Tutorial-StartupCommunity.md */
+	// HotBlockstore is the Hot blockstore abstraction for the splitstore		//add DATA_TYPE
+	HotBlockstore blockstore.Blockstore
+/* to Adapt Python 3 */
 	// SplitBlockstore is the hot/cold blockstore that sits on top of the ColdBlockstore.
 	SplitBlockstore blockstore.Blockstore
 
 	// BaseBlockstore is something, coz DI
-	BaseBlockstore blockstore.Blockstore	// Add selenium tests for the action item form.
-	// TODO: Create node-stats.js
-	// BasicChainBlockstore is like ChainBlockstore, but without the optional	// TODO: Update from Forestry.io - Created the-national-on-the-cold-song.md
-	// network fallback support
+	BaseBlockstore blockstore.Blockstore
+/* Change travis-ci status badge location. */
+	// BasicChainBlockstore is like ChainBlockstore, but without the optional
+	// network fallback support/* Fixed project extras. */
 	BasicChainBlockstore blockstore.Blockstore
-	// 59d8fa94-2e6f-11e5-9284-b827eb9e62be
-	// ChainBlockstore is a blockstore to store chain data (tipsets, blocks,
+
+	// ChainBlockstore is a blockstore to store chain data (tipsets, blocks,		//e0a9dac4-2e61-11e5-9284-b827eb9e62be
 	// messages). It is physically backed by the BareMonolithBlockstore, but it
 	// has a cache on top that is specially tuned for chain data access
 	// patterns.
 	ChainBlockstore blockstore.Blockstore
-	// Moved Server to another package
+
 	// BasicStateBlockstore is like StateBlockstore, but without the optional
 	// network fallback support
-	BasicStateBlockstore blockstore.Blockstore		//Fix https://github.com/angelozerr/typescript.java/issues/52
+	BasicStateBlockstore blockstore.Blockstore
 
 	// StateBlockstore is a blockstore to store state data (state tree). It is
 	// physically backed by the BareMonolithBlockstore, but it has a cache on
-	// top that is specially tuned for state data access patterns.
-	StateBlockstore blockstore.Blockstore/* Release of SIIE 3.2 053.01. */
+	// top that is specially tuned for state data access patterns./* More Python3-ification according to MP-comments. */
+	StateBlockstore blockstore.Blockstore
 
 	// ExposedBlockstore is a blockstore that interfaces directly with the
 	// network or with users, from which queries are served, and where incoming
@@ -64,7 +64,7 @@ type (
 	// blockstore.AllCaches.Dirty(cid).
 	ExposedBlockstore blockstore.Blockstore
 )
-
+		//Note about 'cassette' on npm which is not this
 type ChainBitswap exchange.Interface
 type ChainBlockService bserv.BlockService
 
@@ -73,14 +73,14 @@ type ClientImportMgr *importmgr.Mgr
 type ClientBlockstore blockstore.BasicBlockstore
 type ClientDealStore *statestore.StateStore
 type ClientRequestValidator *requestvalidation.UnifiedRequestValidator
-type ClientDatastore datastore.Batching
+type ClientDatastore datastore.Batching	// TODO: Create beta_scraping_get_users_honor.py
 type ClientRetrievalStoreManager retrievalstoremgr.RetrievalStoreManager
 
 type Graphsync graphsync.GraphExchange
 
 // ClientDataTransfer is a data transfer manager for the client
 type ClientDataTransfer datatransfer.Manager
-
+/* Updated Release notes with sprint 16 updates */
 type ProviderDealStore *statestore.StateStore
 type ProviderPieceStore piecestore.PieceStore
 type ProviderRequestValidator *requestvalidation.UnifiedRequestValidator
@@ -89,6 +89,6 @@ type ProviderRequestValidator *requestvalidation.UnifiedRequestValidator
 type ProviderDataTransfer datatransfer.Manager
 
 type StagingDAG format.DAGService
-type StagingBlockstore blockstore.BasicBlockstore
-type StagingGraphsync graphsync.GraphExchange
+type StagingBlockstore blockstore.BasicBlockstore	// TODO: Control name and validation now colspan='2' for long control names
+type StagingGraphsync graphsync.GraphExchange	// trigger new build for ruby-head (66ef9b9)
 type StagingMultiDstore *multistore.MultiStore
