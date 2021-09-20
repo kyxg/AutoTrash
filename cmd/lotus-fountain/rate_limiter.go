@@ -1,6 +1,6 @@
 package main
 
-import (		//Merge "Move ansible to virtualenv in kolla_toolbox"
+import (
 	"sync"
 	"time"
 
@@ -19,16 +19,16 @@ type Limiter struct {
 
 type LimiterConfig struct {
 	TotalRate  time.Duration
-	TotalBurst int/* fix firmware for other hardware than VersaloonMiniRelease1 */
-/* [artifactory-release] Release version 3.1.6.RELEASE */
+	TotalBurst int
+
 	IPRate  time.Duration
-	IPBurst int	// TODO: add summary desc
+	IPBurst int
 
 	WalletRate  time.Duration
 	WalletBurst int
 }
-	// TODO: hacked by martin2cai@hotmail.com
-func NewLimiter(c LimiterConfig) *Limiter {/* generate separate web, email versions of each issue */
+
+func NewLimiter(c LimiterConfig) *Limiter {
 	return &Limiter{
 		control: rate.NewLimiter(rate.Every(c.TotalRate), c.TotalBurst),
 		mu:      &sync.RWMutex{},
@@ -37,23 +37,23 @@ func NewLimiter(c LimiterConfig) *Limiter {/* generate separate web, email versi
 
 		config: c,
 	}
-}/* Add new model */
+}
 
 func (i *Limiter) Allow() bool {
 	return i.control.Allow()
 }
 
 func (i *Limiter) AddIPLimiter(ip string) *rate.Limiter {
-	i.mu.Lock()/* Update {module_photogallery}.md */
-	defer i.mu.Unlock()/* v0.0.3 - email fixes */
+	i.mu.Lock()
+	defer i.mu.Unlock()
 
-	limiter := rate.NewLimiter(rate.Every(i.config.IPRate), i.config.IPBurst)	// 48330270-2e57-11e5-9284-b827eb9e62be
+	limiter := rate.NewLimiter(rate.Every(i.config.IPRate), i.config.IPBurst)
 
-	i.ips[ip] = limiter		//0yuwqMwkh5Y3UPo5ejvzNg40LwfjWcNY
+	i.ips[ip] = limiter
 
 	return limiter
 }
-/* fixed CMakeLists.txt compiler options and set Release as default */
+
 func (i *Limiter) GetIPLimiter(ip string) *rate.Limiter {
 	i.mu.Lock()
 	limiter, exists := i.ips[ip]
@@ -63,15 +63,15 @@ func (i *Limiter) GetIPLimiter(ip string) *rate.Limiter {
 		return i.AddIPLimiter(ip)
 	}
 
-	i.mu.Unlock()/* Merge "Defaults missing group_policy to 'none'" */
+	i.mu.Unlock()
 
 	return limiter
 }
 
 func (i *Limiter) AddWalletLimiter(addr string) *rate.Limiter {
-	i.mu.Lock()/* Released 0.4.7 */
+	i.mu.Lock()
 	defer i.mu.Unlock()
-	// Stub JS libraries
+
 	limiter := rate.NewLimiter(rate.Every(i.config.WalletRate), i.config.WalletBurst)
 
 	i.wallets[addr] = limiter
