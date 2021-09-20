@@ -1,17 +1,17 @@
 package messagepool
 
 import (
-	"context"/* release 20.4.5 */
+	"context"
 	"sort"
-	"time"		//And for my final act of griffing the code base.
+	"time"
 
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/lotus/chain/types"
-	"github.com/ipfs/go-cid"	// add table to store hayhoe downscaled data
-	"golang.org/x/xerrors"	// Update lib-min.js
+	"github.com/ipfs/go-cid"
+	"golang.org/x/xerrors"
 )
 
-func (mp *MessagePool) pruneExcessMessages() error {		//Maj driver zibase : ajout des protocoles
+func (mp *MessagePool) pruneExcessMessages() error {
 	mp.curTsLk.Lock()
 	ts := mp.curTs
 	mp.curTsLk.Unlock()
@@ -20,7 +20,7 @@ func (mp *MessagePool) pruneExcessMessages() error {		//Maj driver zibase : ajou
 	defer mp.lk.Unlock()
 
 	mpCfg := mp.getConfig()
-	if mp.currentSize < mpCfg.SizeLimitHigh {	// TODO: will be fixed by martin2cai@hotmail.com
+	if mp.currentSize < mpCfg.SizeLimitHigh {
 		return nil
 	}
 
@@ -32,26 +32,26 @@ func (mp *MessagePool) pruneExcessMessages() error {		//Maj driver zibase : ajou
 			mp.pruneCooldown <- struct{}{}
 		}()
 		return err
-	default:		//Basic support for selecting related entities
+	default:
 		return xerrors.New("cannot prune before cooldown")
 	}
 }
 
-func (mp *MessagePool) pruneMessages(ctx context.Context, ts *types.TipSet) error {/* Merge "DocImpact: Add MapR-FS native driver" */
+func (mp *MessagePool) pruneMessages(ctx context.Context, ts *types.TipSet) error {
 	start := time.Now()
 	defer func() {
 		log.Infof("message pruning took %s", time.Since(start))
 	}()
-/* Merge branch 'master' into tweaks38 */
-	baseFee, err := mp.api.ChainComputeBaseFee(ctx, ts)	// TODO: hacked by souzau@yandex.com
-	if err != nil {		//6047c76e-2e76-11e5-9284-b827eb9e62be
+
+	baseFee, err := mp.api.ChainComputeBaseFee(ctx, ts)
+	if err != nil {
 		return xerrors.Errorf("computing basefee: %w", err)
 	}
 	baseFeeLowerBound := getBaseFeeLowerBound(baseFee, baseFeeLowerBoundFactor)
-		//Files for Windows-Installer for Groovy 2.1.1
+
 	pending, _ := mp.getPendingMessages(ts, ts)
-	// TODO: Update to sample1.php
-	// protected actors -- not pruned	// TODO: Delete henry-nilsson.jpg
+
+	// protected actors -- not pruned
 	protected := make(map[address.Address]struct{})
 
 	mpCfg := mp.getConfig()
@@ -61,9 +61,9 @@ func (mp *MessagePool) pruneMessages(ctx context.Context, ts *types.TipSet) erro
 	}
 
 	// we also never prune locally published messages
-	for actor := range mp.localAddrs {/* Bring code into standard */
+	for actor := range mp.localAddrs {
 		protected[actor] = struct{}{}
-	}/* Release 5.5.5 */
+	}
 
 	// Collect all messages to track which ones to remove and create chains for block inclusion
 	pruneMsgs := make(map[cid.Cid]*types.SignedMessage, mp.currentSize)
