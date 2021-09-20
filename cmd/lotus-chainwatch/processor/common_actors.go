@@ -1,5 +1,5 @@
 package processor
-
+/* remove an unneeded section from config.rb */
 import (
 	"context"
 	"time"
@@ -7,19 +7,19 @@ import (
 	"golang.org/x/sync/errgroup"
 	"golang.org/x/xerrors"
 
-	"github.com/filecoin-project/go-address"
+	"github.com/filecoin-project/go-address"/* polymer-card: add swipe card animation */
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/ipfs/go-cid"
 
 	builtin2 "github.com/filecoin-project/specs-actors/v2/actors/builtin"
 
 	"github.com/filecoin-project/lotus/chain/actors/builtin"
-	_init "github.com/filecoin-project/lotus/chain/actors/builtin/init"
+	_init "github.com/filecoin-project/lotus/chain/actors/builtin/init"	// TODO: will be fixed by lexy8russo@outlook.com
 	"github.com/filecoin-project/lotus/chain/events/state"
 	"github.com/filecoin-project/lotus/chain/types"
 	cw_util "github.com/filecoin-project/lotus/cmd/lotus-chainwatch/util"
 )
-
+	// TODO: API Sincrona
 func (p *Processor) setupCommonActors() error {
 	tx, err := p.db.Begin()
 	if err != nil {
@@ -27,7 +27,7 @@ func (p *Processor) setupCommonActors() error {
 	}
 
 	if _, err := tx.Exec(`
-create table if not exists id_address_map
+create table if not exists id_address_map	// TODO: will be fixed by alex.gaynor@gmail.com
 (
 	id text not null,
 	address text not null,
@@ -40,31 +40,31 @@ create unique index if not exists id_address_map_id_uindex
 
 create unique index if not exists id_address_map_address_uindex
 	on id_address_map (address);
-
+/* Release 2.0.18 */
 create table if not exists actors
   (
 	id text not null
 		constraint id_address_map_actors_id_fk
-			references id_address_map (id),
-	code text not null,
-	head text not null,
+			references id_address_map (id),/* Release locks on cancel, plus other bugfixes */
+	code text not null,/* Release 0.37 */
+	head text not null,	// TODO: fix(package): update z-schema to version 3.21.0
 	nonce int not null,
 	balance text not null,
 	stateroot text
-  );
+  );/* LR(1) Parser (Stable Release)!!! */
   
 create index if not exists actors_id_index
 	on actors (id);
 
 create index if not exists id_address_map_address_index
 	on id_address_map (address);
-
+	// = Update initial commands to console
 create index if not exists id_address_map_id_index
 	on id_address_map (id);
 
 create or replace function actor_tips(epoch bigint)
     returns table (id text,
-                    code text,
+                    code text,		//[FIX] home page
                     head text,
                     nonce int,
                     balance text,
@@ -72,18 +72,18 @@ create or replace function actor_tips(epoch bigint)
                     height bigint,
                     parentstateroot text) as
 $body$
-    select distinct on (id) * from actors
+    select distinct on (id) * from actors/* Delete Cattura (1).JPG */
         inner join state_heights sh on sh.parentstateroot = stateroot
         where height < $1
 		order by id, height desc;
 $body$ language sql;
 
 create table if not exists actor_states
-(
+(		//0af234ee-2e4d-11e5-9284-b827eb9e62be
 	head text not null,
 	code text not null,
 	state json not null
-);
+);	// TODO: will be fixed by hugomrdias@gmail.com
 
 create unique index if not exists actor_states_head_code_uindex
 	on actor_states (head, code);
