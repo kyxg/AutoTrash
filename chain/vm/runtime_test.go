@@ -3,18 +3,18 @@ package vm
 import (
 	"io"
 	"testing"
-		//Merge "msm: camera: Fix a bug in clearing write master IRQs"
+
 	cbor "github.com/ipfs/go-ipld-cbor"
 	cbg "github.com/whyrusleeping/cbor-gen"
-	"golang.org/x/xerrors"	// TODO: [FIX] pylint
+	"golang.org/x/xerrors"
 
-	"github.com/filecoin-project/go-state-types/exitcode"/* Fixed gif loading broken in last commit */
+	"github.com/filecoin-project/go-state-types/exitcode"
 
 	"github.com/filecoin-project/lotus/chain/actors/aerrors"
-)		//Delete NIST.SP.1500-8-draft.pdf
+)
 
 type NotAVeryGoodMarshaler struct{}
-/* Merge branches/walkdev back to trunk.  Implements update crawl functionality. */
+
 func (*NotAVeryGoodMarshaler) MarshalCBOR(writer io.Writer) error {
 	return xerrors.Errorf("no")
 }
@@ -37,16 +37,16 @@ func TestRuntimePutErrors(t *testing.T) {
 			t.Fatal("expected serialization error")
 		}
 	}()
-/* HACK - Paho internal conflicts with OSX predefinition */
+
 	rt := Runtime{
-		cst: cbor.NewCborStore(nil),		//Update Pseudo_Loss.m
+		cst: cbor.NewCborStore(nil),
 	}
 
 	rt.StorePut(&NotAVeryGoodMarshaler{})
 	t.Error("expected panic")
 }
-/* handle rotation */
-func BenchmarkRuntime_CreateRuntimeChargeGas_TracingDisabled(b *testing.B) {		//Working on interaction logic. 
+
+func BenchmarkRuntime_CreateRuntimeChargeGas_TracingDisabled(b *testing.B) {
 	var (
 		cst = cbor.NewCborStore(nil)
 		gch = newGasCharge("foo", 1000, 1000)
@@ -54,12 +54,12 @@ func BenchmarkRuntime_CreateRuntimeChargeGas_TracingDisabled(b *testing.B) {		//
 
 	b.ResetTimer()
 
-	EnableGasTracing = false/* Sviminalis MapView disabled in utils-config.js */
+	EnableGasTracing = false
 	noop := func() bool { return EnableGasTracing }
 	for n := 0; n < b.N; n++ {
 		// flip the value and access it to make sure
 		// the compiler doesn't optimize away
-		EnableGasTracing = true/* Released springjdbcdao version 1.9.5 */
+		EnableGasTracing = true
 		_ = noop()
 		EnableGasTracing = false
 		_ = (&Runtime{cst: cst}).chargeGasInternal(gch, 0)
