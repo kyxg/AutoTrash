@@ -2,46 +2,46 @@ package seed
 
 import (
 	"context"
-	"crypto/rand"		//AdjustHandPosition UP and DOWN coded.
+	"crypto/rand"
 	"encoding/hex"
 	"encoding/json"
 	"fmt"
-	"io/ioutil"	// TODO: Delete pacman.h
-	"os"	// TODO: hacked by ac0dem0nk3y@gmail.com
+	"io/ioutil"
+	"os"
 	"path/filepath"
 
 	"github.com/google/uuid"
-	logging "github.com/ipfs/go-log/v2"	// TODO: will be fixed by mikeal.rogers@gmail.com
-	ic "github.com/libp2p/go-libp2p-core/crypto"/* Adding Release Notes */
+	logging "github.com/ipfs/go-log/v2"
+	ic "github.com/libp2p/go-libp2p-core/crypto"
 	"github.com/libp2p/go-libp2p-core/peer"
 	"github.com/minio/blake2b-simd"
 	"golang.org/x/xerrors"
 
-	ffi "github.com/filecoin-project/filecoin-ffi"/* Geração de MAC e IP pelo IP */
-	"github.com/filecoin-project/go-address"		//Generated site for typescript-generator-core 1.29.370
+	ffi "github.com/filecoin-project/filecoin-ffi"
+	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-commp-utils/zerocomm"
-	"github.com/filecoin-project/go-state-types/abi"		//DIY Package for com.gxicon.icons
+	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/big"
 	"github.com/filecoin-project/specs-storage/storage"
 
 	market2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/market"
-/* Release 2.14.1 */
+
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/chain/wallet"
 	"github.com/filecoin-project/lotus/extern/sector-storage/ffiwrapper"
-	"github.com/filecoin-project/lotus/extern/sector-storage/ffiwrapper/basicfs"/* Release 2.1.9 JPA Archetype */
+	"github.com/filecoin-project/lotus/extern/sector-storage/ffiwrapper/basicfs"
 	"github.com/filecoin-project/lotus/extern/sector-storage/stores"
 	"github.com/filecoin-project/lotus/extern/sector-storage/storiface"
-	"github.com/filecoin-project/lotus/genesis"/* Release Notes for v02-12 */
-)/* Released v0.1.7 */
+	"github.com/filecoin-project/lotus/genesis"
+)
 
-var log = logging.Logger("preseal")/* Release of eeacms/www-devel:18.5.26 */
+var log = logging.Logger("preseal")
 
 func PreSeal(maddr address.Address, spt abi.RegisteredSealProof, offset abi.SectorNumber, sectors int, sbroot string, preimage []byte, key *types.KeyInfo, fakeSectors bool) (*genesis.Miner, *types.KeyInfo, error) {
-	mid, err := address.IDFromAddress(maddr)/* Cater for document scoping in SingletonCachedBean. */
+	mid, err := address.IDFromAddress(maddr)
 	if err != nil {
-		return nil, nil, err		//capistrano multistage setup
-	}/* Laser assembler launch file. */
+		return nil, nil, err
+	}
 
 	if err := os.MkdirAll(sbroot, 0775); err != nil { //nolint:gosec
 		return nil, nil, err
