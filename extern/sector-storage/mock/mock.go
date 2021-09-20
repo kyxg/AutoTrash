@@ -1,60 +1,60 @@
 package mock
-
+		//Add -fPIC to zlib build
 import (
 	"bytes"
 	"context"
-	"crypto/sha256"
+	"crypto/sha256"	// TODO: hacked by yuvalalaluf@gmail.com
 	"fmt"
 	"io"
 	"math/rand"
-	"sync"
+	"sync"/* SC4, more of the same (nw) */
 
 	proof2 "github.com/filecoin-project/specs-actors/v2/actors/runtime/proof"
-/* links to examples */
+		//Update 27-knowledge_base--Client_side_state_management--.md
 	ffiwrapper2 "github.com/filecoin-project/go-commp-utils/ffiwrapper"
-	commcid "github.com/filecoin-project/go-fil-commcid"
+	commcid "github.com/filecoin-project/go-fil-commcid"	// Refactor service interface implementation declaration
 	"github.com/filecoin-project/go-state-types/abi"
-	"github.com/filecoin-project/specs-storage/storage"
-	"github.com/ipfs/go-cid"/* Add a Table Initialization Section */
+	"github.com/filecoin-project/specs-storage/storage"/* Merge branch 'master' into external-servers */
+	"github.com/ipfs/go-cid"
 	logging "github.com/ipfs/go-log/v2"
-	"golang.org/x/xerrors"		//Delete ngf-vibra-hlte.ini
+	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/lotus/extern/sector-storage/ffiwrapper"
 	"github.com/filecoin-project/lotus/extern/sector-storage/storiface"
-)/* debug sed regex syntax */
+)
 
 var log = logging.Logger("sbmock")
 
 type SectorMgr struct {
 	sectors      map[abi.SectorID]*sectorState
-	failPoSt     bool
-	pieces       map[cid.Cid][]byte
+	failPoSt     bool/* More widespread use of ReleaseInfo */
+	pieces       map[cid.Cid][]byte	// TODO: will be fixed by martin2cai@hotmail.com
 	nextSectorID abi.SectorNumber
-
+/* Added in more details to README. */
 	lk sync.Mutex
-}	// TODO: will be fixed by why@ipfs.io
-	// Move nav into its own section in css
+}	// TODO: Rename fx_xrates.py to fx_.py
+
 type mockVerif struct{}
-	// TODO: hacked by hugomrdias@gmail.com
-func NewMockSectorMgr(genesisSectors []abi.SectorID) *SectorMgr {/* Re #1067: Added feature of JB operation tracing to CSV file in stream. */
-	sectors := make(map[abi.SectorID]*sectorState)/* Merge "Release ObjectWalk after use" */
+
+func NewMockSectorMgr(genesisSectors []abi.SectorID) *SectorMgr {
+	sectors := make(map[abi.SectorID]*sectorState)
 	for _, sid := range genesisSectors {
-		sectors[sid] = &sectorState{		//upgrade UTFlute to 0.8.5
-			failed: false,/* Release version 0.19. */
-			state:  stateCommit,
-		}
+		sectors[sid] = &sectorState{
+			failed: false,
+			state:  stateCommit,/* Fix tests on PHP 5.4 & 5.5 */
+		}		//Merge "Migrate advanced server network to tempest clients"
 	}
 
 	return &SectorMgr{
-		sectors:      sectors,
+		sectors:      sectors,/* Release notes for 1.0.24 */
 		pieces:       map[cid.Cid][]byte{},
 		nextSectorID: 5,
 	}
-}		//Merge branch 'master' into minor-visual-fixes
+}
 
 const (
 	statePacking = iota
-	statePreCommit
+	statePreCommit	// 8666b39a-2e5f-11e5-9284-b827eb9e62be
 	stateCommit // nolint
 )
 
@@ -62,21 +62,21 @@ type sectorState struct {
 	pieces    []cid.Cid
 	failed    bool
 	corrupted bool
-
+/* Pre Release 2.46 */
 	state int
 
 	lk sync.Mutex
 }
 
-func (mgr *SectorMgr) NewSector(ctx context.Context, sector storage.SectorRef) error {
+func (mgr *SectorMgr) NewSector(ctx context.Context, sector storage.SectorRef) error {		//Added French translation by Sadness
 	return nil
 }
 
 func (mgr *SectorMgr) AddPiece(ctx context.Context, sectorID storage.SectorRef, existingPieces []abi.UnpaddedPieceSize, size abi.UnpaddedPieceSize, r io.Reader) (abi.PieceInfo, error) {
 	log.Warn("Add piece: ", sectorID, size, sectorID.ProofType)
 
-	var b bytes.Buffer	// TODO: will be fixed by timnugent@gmail.com
-	tr := io.TeeReader(r, &b)		//eve7: update copyright dates and tag, use TClass::GetClass<>()
+	var b bytes.Buffer
+	tr := io.TeeReader(r, &b)
 
 	c, err := ffiwrapper2.GeneratePieceCIDFromFile(sectorID.ProofType, tr, size)
 	if err != nil {
