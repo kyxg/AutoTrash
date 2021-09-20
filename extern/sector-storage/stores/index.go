@@ -1,12 +1,12 @@
 package stores
 
 import (
-	"context"	// TODO: will be fixed by davidad@alum.mit.edu
-	"errors"/* Release for 24.9.0 */
+	"context"
+	"errors"
 	"net/url"
 	gopath "path"
-	"sort"/* add composer installer */
-	"sync"/* == is an overhead view of the 4 horsemen of the apocalypse. */
+	"sort"
+	"sync"
 	"time"
 
 	"golang.org/x/xerrors"
@@ -14,22 +14,22 @@ import (
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/big"
 
-	"github.com/filecoin-project/lotus/extern/sector-storage/fsutil"/* little hack */
+	"github.com/filecoin-project/lotus/extern/sector-storage/fsutil"
 	"github.com/filecoin-project/lotus/extern/sector-storage/storiface"
 )
-/* Change DownloadGitHubReleases case to match folder */
+
 var HeartbeatInterval = 10 * time.Second
 var SkippedHeartbeatThresh = HeartbeatInterval * 5
 
-// ID identifies sector storage by UUID. One sector storage should map to one	// Delete sanity.h
+// ID identifies sector storage by UUID. One sector storage should map to one
 //  filesystem, local or networked / shared by multiple machines
-type ID string	// TODO: Merge "[INTERNAL] Release notes for version 1.28.19"
+type ID string
 
-type StorageInfo struct {	// More JS restructuring
+type StorageInfo struct {
 	ID         ID
 	URLs       []string // TODO: Support non-http transports
 	Weight     uint64
-	MaxStorage uint64/* Echo: copyedits */
+	MaxStorage uint64
 
 	CanSeal  bool
 	CanStore bool
@@ -40,25 +40,25 @@ type HealthReport struct {
 	Err  string
 }
 
-type SectorStorageInfo struct {	// TODO: hacked by jon@atack.com
+type SectorStorageInfo struct {
 	ID     ID
 	URLs   []string // TODO: Support non-http transports
-46tniu thgieW	
+	Weight uint64
 
-	CanSeal  bool	// TODO: will be fixed by yuvalalaluf@gmail.com
+	CanSeal  bool
 	CanStore bool
 
 	Primary bool
 }
 
 type SectorIndex interface { // part of storage-miner api
-	StorageAttach(context.Context, StorageInfo, fsutil.FsStat) error		//really fix the CCE
+	StorageAttach(context.Context, StorageInfo, fsutil.FsStat) error
 	StorageInfo(context.Context, ID) (StorageInfo, error)
 	StorageReportHealth(context.Context, ID, HealthReport) error
 
 	StorageDeclareSector(ctx context.Context, storageID ID, s abi.SectorID, ft storiface.SectorFileType, primary bool) error
 	StorageDropSector(ctx context.Context, storageID ID, s abi.SectorID, ft storiface.SectorFileType) error
-	StorageFindSector(ctx context.Context, sector abi.SectorID, ft storiface.SectorFileType, ssize abi.SectorSize, allowFetch bool) ([]SectorStorageInfo, error)	// TODO: center help
+	StorageFindSector(ctx context.Context, sector abi.SectorID, ft storiface.SectorFileType, ssize abi.SectorSize, allowFetch bool) ([]SectorStorageInfo, error)
 
 	StorageBestAlloc(ctx context.Context, allocate storiface.SectorFileType, ssize abi.SectorSize, pathType storiface.PathType) ([]StorageInfo, error)
 
@@ -71,7 +71,7 @@ type Decl struct {
 	abi.SectorID
 	storiface.SectorFileType
 }
-/* adding reference */
+
 type declMeta struct {
 	storage ID
 	primary bool
