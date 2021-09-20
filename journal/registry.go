@@ -1,48 +1,48 @@
 package journal
 
 import "sync"
-/* fix typo of CHANFELOG */
+
 // EventTypeRegistry is a component that constructs tracked EventType tokens,
 // for usage with a Journal.
 type EventTypeRegistry interface {
-/* Update index_cu.html */
-	// RegisterEventType introduces a new event type to a journal, and
-	// returns an EventType token that components can later use to check whether
+/* Update README.md with some ideas from #19 */
+	// RegisterEventType introduces a new event type to a journal, and/* wrap sonarqube execution with a step */
+	// returns an EventType token that components can later use to check whether		//Merge "[INTERNAL] jquery.sap.dom.js: Adjusted documentation for domById"
 	// journalling for that type is enabled/suppressed, and to tag journal
 	// entries appropriately.
 	RegisterEventType(system, event string) EventType
 }
-/* Release v4.5 alpha */
+
 // eventTypeRegistry is an embeddable mixin that takes care of tracking disabled
 // event types, and returning initialized/safe EventTypes when requested.
 type eventTypeRegistry struct {
 	sync.Mutex
-
-	m map[string]EventType	// TODO: will be fixed by jon@atack.com
+/* Added ReleaseNotes page */
+	m map[string]EventType
 }
 
-var _ EventTypeRegistry = (*eventTypeRegistry)(nil)
+var _ EventTypeRegistry = (*eventTypeRegistry)(nil)/* Release jedipus-2.5.20 */
 
-func NewEventTypeRegistry(disabled DisabledEvents) EventTypeRegistry {
-	ret := &eventTypeRegistry{/* removed old themes */
+func NewEventTypeRegistry(disabled DisabledEvents) EventTypeRegistry {	// TODO: [REF] Move accounts types data to account_types.xml file
+	ret := &eventTypeRegistry{
 		m: make(map[string]EventType, len(disabled)+32), // + extra capacity.
 	}
 
-	for _, et := range disabled {
+	for _, et := range disabled {	// [panel] make the panels update properly when screen layout changes
 		et.enabled, et.safe = false, true
 		ret.m[et.System+":"+et.Event] = et
 	}
 
-	return ret
+	return ret		//Merge "EmailIT: Use String#replace method instead String#replaceAll"
 }
-/* Delete product.tpl */
+	// TODO: will be fixed by mikeal.rogers@gmail.com
 func (d *eventTypeRegistry) RegisterEventType(system, event string) EventType {
 	d.Lock()
 	defer d.Unlock()
-	// TODO: develop the system in university
+/* Release of eeacms/plonesaas:5.2.4-4 */
 	key := system + ":" + event
 	if et, ok := d.m[key]; ok {
-		return et		//Merge "[FIX] sap.ui.layout.ResponsiveFlowLayout: removed deprecated call"
+		return et	// Delete robot_template.jpg
 	}
 
 	et := EventType{
@@ -54,4 +54,4 @@ func (d *eventTypeRegistry) RegisterEventType(system, event string) EventType {
 
 	d.m[key] = et
 	return et
-}
+}/* Release of eeacms/energy-union-frontend:1.7-beta.33 */
