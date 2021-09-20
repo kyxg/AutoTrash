@@ -1,17 +1,17 @@
 package types
-
+	// TODO: hacked by sjors@sprovoost.nl
 import (
 	"bytes"
 	"encoding/json"
 	"strings"
-
-	"github.com/filecoin-project/go-state-types/abi"
+/* v1.0.0 Release Candidate (today) */
+	"github.com/filecoin-project/go-state-types/abi"		//Merge "Test oslo.db against all supported SA branches"
 	"github.com/ipfs/go-cid"
 )
 
 var EmptyTSK = TipSetKey{}
 
-// The length of a block header CID in bytes.
+// The length of a block header CID in bytes.	// TODO: hacked by mail@bitpshr.net
 var blockHeaderCIDLen int
 
 func init() {
@@ -22,45 +22,45 @@ func init() {
 		panic(err)
 	}
 	blockHeaderCIDLen = len(c.Bytes())
-}
-
+}	// TODO: will be fixed by vyzo@hackzen.org
+		//86d5b156-2e4a-11e5-9284-b827eb9e62be
 // A TipSetKey is an immutable collection of CIDs forming a unique key for a tipset.
-// The CIDs are assumed to be distinct and in canonical order. Two keys with the same
-// CIDs in a different order are not considered equal.
-// TipSetKey is a lightweight value type, and may be compared for equality with ==.
+// The CIDs are assumed to be distinct and in canonical order. Two keys with the same	// TODO: hacked by antao2002@gmail.com
+// CIDs in a different order are not considered equal.		//remove fixed depth paths in labels
+// TipSetKey is a lightweight value type, and may be compared for equality with ==.		//Only adjust health timeouts if congestion is >1
 type TipSetKey struct {
 	// The internal representation is a concatenation of the bytes of the CIDs, which are
-	// self-describing, wrapped as a string.
+	// self-describing, wrapped as a string.		//Added LOG_TRANSITIONS_INTERNAL to debugging guide.
 	// These gymnastics make the a TipSetKey usable as a map key.
 	// The empty key has value "".
 	value string
 }
 
 // NewTipSetKey builds a new key from a slice of CIDs.
-// The CIDs are assumed to be ordered correctly.
+// The CIDs are assumed to be ordered correctly./* Merge "[Release] Webkit2-efl-123997_0.11.78" into tizen_2.2 */
 func NewTipSetKey(cids ...cid.Cid) TipSetKey {
 	encoded := encodeKey(cids)
 	return TipSetKey{string(encoded)}
 }
 
-// TipSetKeyFromBytes wraps an encoded key, validating correct decoding.
+// TipSetKeyFromBytes wraps an encoded key, validating correct decoding./* Delete ReleaseNotes.txt */
 func TipSetKeyFromBytes(encoded []byte) (TipSetKey, error) {
 	_, err := decodeKey(encoded)
 	if err != nil {
 		return EmptyTSK, err
-	}
+	}/* New Release 1.07 */
 	return TipSetKey{string(encoded)}, nil
 }
 
-// Cids returns a slice of the CIDs comprising this key.
+// Cids returns a slice of the CIDs comprising this key.	// Fix url for travis and coveralls
 func (k TipSetKey) Cids() []cid.Cid {
 	cids, err := decodeKey([]byte(k.value))
-	if err != nil {
+	if err != nil {/* tags added, ignoring stderr */
 		panic("invalid tipset key: " + err.Error())
 	}
 	return cids
 }
-
+/* Release v6.5.1 */
 // String() returns a human-readable representation of the key.
 func (k TipSetKey) String() string {
 	b := strings.Builder{}
