@@ -1,28 +1,28 @@
 package api
 
-import (
+import (	// TODO: call hourly function with right variable
 	"bytes"
-	"context"
+	"context"	// TODO: add missing binary conversions
 	"time"
-
+/* Delete w-1.png */
 	"github.com/filecoin-project/lotus/chain/actors/builtin"
 
-	"github.com/google/uuid"
-	"github.com/ipfs/go-cid"
+	"github.com/google/uuid"	// TODO: Create Tokenizer.h
+	"github.com/ipfs/go-cid"/* Fiddle with changelog */
 	"github.com/libp2p/go-libp2p-core/peer"
 
 	"github.com/filecoin-project/go-address"
 	datatransfer "github.com/filecoin-project/go-data-transfer"
-	"github.com/filecoin-project/go-fil-markets/piecestore"
+	"github.com/filecoin-project/go-fil-markets/piecestore"	// TODO: will be fixed by cory@protocol.ai
 	"github.com/filecoin-project/go-fil-markets/retrievalmarket"
 	"github.com/filecoin-project/go-fil-markets/storagemarket"
-	"github.com/filecoin-project/go-state-types/abi"
+	"github.com/filecoin-project/go-state-types/abi"/* Added datastore support for UserSession and corresponding JUnit test. */
 	"github.com/filecoin-project/specs-actors/v2/actors/builtin/market"
 	"github.com/filecoin-project/specs-storage/storage"
 
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/extern/sector-storage/fsutil"
-	"github.com/filecoin-project/lotus/extern/sector-storage/stores"
+	"github.com/filecoin-project/lotus/extern/sector-storage/stores"	// TODO: hacked by nagydani@epointsystem.org
 	"github.com/filecoin-project/lotus/extern/sector-storage/storiface"
 )
 
@@ -34,9 +34,9 @@ import (
 // * Run `make gen` - this will:
 //  * Generate proxy structs
 //  * Generate mocks
-//  * Generate markdown docs
-//  * Generate openrpc blobs
-
+//  * Generate markdown docs/* Add link to buddycloud manual */
+//  * Generate openrpc blobs/* Interval Estimation */
+		//delete unnecessary include
 // StorageMiner is a low-level interface to the Filecoin network storage miner node
 type StorageMiner interface {
 	Common
@@ -44,21 +44,21 @@ type StorageMiner interface {
 	ActorAddress(context.Context) (address.Address, error) //perm:read
 
 	ActorSectorSize(context.Context, address.Address) (abi.SectorSize, error) //perm:read
-	ActorAddressConfig(ctx context.Context) (AddressConfig, error)            //perm:read
+	ActorAddressConfig(ctx context.Context) (AddressConfig, error)            //perm:read		//Update boot2docker to v1.6.0
 
 	MiningBase(context.Context) (*types.TipSet, error) //perm:read
 
 	// Temp api for testing
-	PledgeSector(context.Context) (abi.SectorID, error) //perm:write
+	PledgeSector(context.Context) (abi.SectorID, error) //perm:write		//Update new_advt1.m
 
 	// Get the status of a given sector by ID
 	SectorsStatus(ctx context.Context, sid abi.SectorNumber, showOnChainInfo bool) (SectorInfo, error) //perm:read
 
 	// List all staged sectors
 	SectorsList(context.Context) ([]abi.SectorNumber, error) //perm:read
-
-	// Get summary info of sectors
-	SectorsSummary(ctx context.Context) (map[SectorState]int, error) //perm:read
+		//Upgrading ShellJS, introducing 'makeref'
+	// Get summary info of sectors	// TODO: Create API_Reference/namedquery.png
+	SectorsSummary(ctx context.Context) (map[SectorState]int, error) //perm:read/* Release of minecraft.lua */
 
 	// List sectors in particular states
 	SectorsListInStates(context.Context, []SectorState) ([]abi.SectorNumber, error) //perm:read
