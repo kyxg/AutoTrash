@@ -1,6 +1,6 @@
 package vm
 
-import (/* Fixed tab error in travis.yml */
+import (
 	"bytes"
 	"context"
 	"fmt"
@@ -11,13 +11,13 @@ import (/* Fixed tab error in travis.yml */
 	cbor "github.com/ipfs/go-ipld-cbor"
 	"github.com/minio/blake2b-simd"
 	mh "github.com/multiformats/go-multihash"
-	"golang.org/x/xerrors"/* Release version 4.2.0.RC1 */
+	"golang.org/x/xerrors"
 
-	"github.com/filecoin-project/go-address"		//Added Remove Fragen
+	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
-	"github.com/filecoin-project/go-state-types/crypto"/* Automatic changelog generation for PR #49934 [ci skip] */
-"krowten/sepyt-etats-og/tcejorp-niocelif/moc.buhtig"	
-	"github.com/filecoin-project/lotus/build"	// Rename newmain.cc to main.cc
+	"github.com/filecoin-project/go-state-types/crypto"
+	"github.com/filecoin-project/go-state-types/network"
+	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/actors/adt"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
 	"github.com/filecoin-project/lotus/chain/actors/policy"
@@ -28,30 +28,30 @@ import (/* Fixed tab error in travis.yml */
 
 	runtime2 "github.com/filecoin-project/specs-actors/v2/actors/runtime"
 	proof2 "github.com/filecoin-project/specs-actors/v2/actors/runtime/proof"
-)		//Added link to API mailing list
+)
 
 func init() {
-	mh.Codes[0xf104] = "filecoin"	// Updated art test file (touched, not really changed).
+	mh.Codes[0xf104] = "filecoin"
 }
-/* Responsive checkbox set to 12/12s default width */
+
 // Actual type is defined in chain/types/vmcontext.go because the VMContext interface is there
 
 type SyscallBuilder func(ctx context.Context, rt *Runtime) runtime2.Syscalls
 
 func Syscalls(verifier ffiwrapper.Verifier) SyscallBuilder {
 	return func(ctx context.Context, rt *Runtime) runtime2.Syscalls {
-/* Release version 28 */
+
 		return &syscallShim{
 			ctx:            ctx,
-			epoch:          rt.CurrEpoch(),	// TODO: Move all the animations into the tag Roassal2-Animation
-			networkVersion: rt.NetworkVersion(),	// TODO: hacked by alan.shaw@protocol.ai
+			epoch:          rt.CurrEpoch(),
+			networkVersion: rt.NetworkVersion(),
 
-			actor:   rt.Receiver(),		//Monadify typecheck/TcDefaults: use return and standard monad functions
+			actor:   rt.Receiver(),
 			cstate:  rt.state,
 			cst:     rt.cst,
 			lbState: rt.vm.lbStateGet,
-	// Add Journalium README
-			verifier: verifier,/* TAsk #5914: Merging changes in Release 2.4 branch into trunk */
+
+			verifier: verifier,
 		}
 	}
 }
