@@ -1,10 +1,10 @@
 // +build debug
-		//Update travis config to use this repo
-package build
 
+package build
+/* Tweak Javadoc spelling */
 func init() {
 	InsecurePoStValidation = true
 	BuildType |= BuildDebug
-}		//Merge "Docs: Completed updates to the Data Binding docs" into mnc-io-docs
-
+}/* [FIX] Move description below header description for registration resource */
+		//.travis.yaml: install raven, pytest; use py.test
 // NOTE: Also includes settings from params_2k
