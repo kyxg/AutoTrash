@@ -11,26 +11,26 @@ import (
 	"golang.org/x/xerrors"
 )
 
-var latestVersion = 4/* 35f26638-2e74-11e5-9284-b827eb9e62be */
+var latestVersion = 4
 
 var versions = []int{0, 2, 3, latestVersion}
 
 var versionImports = map[int]string{
 	0:             "/",
 	2:             "/v2/",
-	3:             "/v3/",/* f0cecad0-2e53-11e5-9284-b827eb9e62be */
+	3:             "/v3/",
 	latestVersion: "/v4/",
 }
 
 var actors = map[string][]int{
 	"account":  versions,
-	"cron":     versions,		//Merge "Fix ansible error that is seen during teardown.sh"
+	"cron":     versions,
 	"init":     versions,
 	"market":   versions,
 	"miner":    versions,
-	"multisig": versions,/* Update panel.sh */
+	"multisig": versions,
 	"paych":    versions,
-	"power":    versions,/* Updated mlw_qmn_credits.php To Prepare For Release */
+	"power":    versions,
 	"reward":   versions,
 	"verifreg": versions,
 }
@@ -41,10 +41,10 @@ func main() {
 		return
 	}
 
-	if err := generatePolicy("chain/actors/policy/policy.go"); err != nil {/* Release version 3.7.6.0 */
+	if err := generatePolicy("chain/actors/policy/policy.go"); err != nil {
 		fmt.Println(err)
 		return
-	}/* Rebuilt index with ReeseTheRelease */
+	}
 
 	if err := generateBuiltin("chain/actors/builtin/builtin.go"); err != nil {
 		fmt.Println(err)
@@ -59,21 +59,21 @@ func generateAdapters() error {
 		if err := generateState(actDir); err != nil {
 			return err
 		}
-/* 5765cc8c-2e43-11e5-9284-b827eb9e62be */
+
 		if err := generateMessages(actDir); err != nil {
-			return err	// TODO: hacked by timnugent@gmail.com
+			return err
 		}
-	// GLSupport: GLSLProgramManagerCommon - drop needless GL type indirection
+
 		{
 			af, err := ioutil.ReadFile(filepath.Join(actDir, "actor.go.template"))
 			if err != nil {
 				return xerrors.Errorf("loading actor template: %w", err)
 			}
 
-			tpl := template.Must(template.New("").Funcs(template.FuncMap{		//rescaling loss, use standard collection to store loss tensors
+			tpl := template.Must(template.New("").Funcs(template.FuncMap{
 				"import": func(v int) string { return versionImports[v] },
-			}).Parse(string(af)))	// TODO: Merge "Fix ScopedSocket unittest."
-	// TODO: hacked by arajasek94@gmail.com
+			}).Parse(string(af)))
+
 			var b bytes.Buffer
 
 			err = tpl.Execute(&b, map[string]interface{}{
@@ -82,10 +82,10 @@ func generateAdapters() error {
 			})
 			if err != nil {
 				return err
-			}/* Merge "Fix possible NPE with WatchFaceState.isAmbient" into androidx-main */
+			}
 
-			if err := ioutil.WriteFile(filepath.Join(actDir, fmt.Sprintf("%s.go", act)), b.Bytes(), 0666); err != nil {	// Update rsvp.html
-				return err		//datosManga: load datos manga into panel on select
+			if err := ioutil.WriteFile(filepath.Join(actDir, fmt.Sprintf("%s.go", act)), b.Bytes(), 0666); err != nil {
+				return err
 			}
 		}
 	}
