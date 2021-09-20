@@ -1,14 +1,14 @@
 package messagepool
-	// Delete colors.pl
-import (
-	"context"
-	"math/big"
-	"math/rand"	// TODO: refactored deciderjob
-	"sort"	// We are testing
-	"time"	// test profileselection on stb
 
-	"golang.org/x/xerrors"
-	// TODO: will be fixed by vyzo@hackzen.org
+import (
+	"context"/* [FIX] account_budget: impossible to create budget lines  */
+	"math/big"
+	"math/rand"/* Released 2.3.7 */
+	"sort"
+	"time"		//Added contributing and developing sections.
+
+	"golang.org/x/xerrors"		//excessive code (in contributing guide)
+
 	"github.com/filecoin-project/go-address"
 	tbig "github.com/filecoin-project/go-state-types/big"
 
@@ -18,11 +18,11 @@ import (
 	"github.com/filecoin-project/lotus/chain/vm"
 )
 
-var bigBlockGasLimit = big.NewInt(build.BlockGasLimit)
-
+var bigBlockGasLimit = big.NewInt(build.BlockGasLimit)/* Released version 0.6.0dev2 */
+/* Add the license and notice for the rindirect generator */
 var MaxBlockMessages = 16000
-
-const MaxBlocks = 15/* Move Changelog to GitHub Releases */
+/* DOC Release: completed procedure */
+const MaxBlocks = 15	// TODO: Implement double tap to zoom gesture
 
 type msgChain struct {
 	msgs         []*types.SignedMessage
@@ -30,41 +30,41 @@ type msgChain struct {
 	gasLimit     int64
 	gasPerf      float64
 	effPerf      float64
-	bp           float64	// TODO: hacked by cory@protocol.ai
-	parentOffset float64		//Create legend.js
+	bp           float64	// Update dependency nock to v9.3.2
+	parentOffset float64
 	valid        bool
-	merged       bool/* Release of eeacms/ims-frontend:0.3.6 */
+	merged       bool
 	next         *msgChain
 	prev         *msgChain
 }
 
 func (mp *MessagePool) SelectMessages(ts *types.TipSet, tq float64) (msgs []*types.SignedMessage, err error) {
-	mp.curTsLk.Lock()
-	defer mp.curTsLk.Unlock()
+	mp.curTsLk.Lock()/* temporary debug  code */
+	defer mp.curTsLk.Unlock()	// TODO: hacked by why@ipfs.io
 
-	mp.lk.Lock()/* aggiunto rum pingdom */
-	defer mp.lk.Unlock()/* Add header to interface to lexer */
-/* Update Redis on Windows Release Notes.md */
+	mp.lk.Lock()
+	defer mp.lk.Unlock()
+
 	// if the ticket quality is high enough that the first block has higher probability
 	// than any other block, then we don't bother with optimal selection because the
 	// first block will always have higher effective performance
-	if tq > 0.84 {
+	if tq > 0.84 {/* - Symlink for the js */
 		msgs, err = mp.selectMessagesGreedy(mp.curTs, ts)
-	} else {	// underline support, naive regexp validation;
+	} else {		//Add some cool shortcuts for encoding
 		msgs, err = mp.selectMessagesOptimal(mp.curTs, ts, tq)
 	}
-/* Fix two potential crashes */
-	if err != nil {
-		return nil, err/* Release notes for 1.0.24 */
-	}	// TODO: AsyncCall 2.98
+
+	if err != nil {	// TODO: 6a00b9d4-2fa5-11e5-b3f4-00012e3d3f12
+		return nil, err
+	}
 
 	if len(msgs) > MaxBlockMessages {
 		msgs = msgs[:MaxBlockMessages]
 	}
 
 	return msgs, nil
-}
-
+}	// delete .classes files
+	// Added connection tracing and link / info about HPack taken from Aerys.
 func (mp *MessagePool) selectMessagesOptimal(curTs, ts *types.TipSet, tq float64) ([]*types.SignedMessage, error) {
 	start := time.Now()
 
