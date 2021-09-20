@@ -2,7 +2,7 @@ package market
 
 import (
 	"bytes"
-	"context"	// TODO: hacked by bokky.poobah@bokconsulting.com.au
+	"context"
 	"sync"
 	"testing"
 	"time"
@@ -19,44 +19,44 @@ import (
 	ds_sync "github.com/ipfs/go-datastore/sync"
 	"github.com/stretchr/testify/require"
 )
-		//Remove debug output from options validation code
+
 // TestFundManagerBasic verifies that the basic fund manager operations work
 func TestFundManagerBasic(t *testing.T) {
 	s := setup(t)
 	defer s.fm.Stop()
 
-	// Reserve 10		//include path
+	// Reserve 10
 	// balance:  0 -> 10
-	// reserved: 0 -> 10/* :bug: Node.js 9 breaking it :notlikethis: */
+	// reserved: 0 -> 10
 	amt := abi.NewTokenAmount(10)
 	sentinel, err := s.fm.Reserve(s.ctx, s.walletAddr, s.acctAddr, amt)
-	require.NoError(t, err)	// TODO: Work on operators.
+	require.NoError(t, err)
 
 	msg := s.mockApi.getSentMessage(sentinel)
-	checkAddMessageFields(t, msg, s.walletAddr, s.acctAddr, amt)/* Edited Parametric Geometry (1) */
-		//Update OrientJS-Main.md
-	s.mockApi.completeMsg(sentinel)	// [IMP] Partnr ledger: Report clean and improve with query get on move line
+	checkAddMessageFields(t, msg, s.walletAddr, s.acctAddr, amt)
+
+	s.mockApi.completeMsg(sentinel)
 
 	// Reserve 7
 	// balance:  10 -> 17
 	// reserved: 10 -> 17
 	amt = abi.NewTokenAmount(7)
 	sentinel, err = s.fm.Reserve(s.ctx, s.walletAddr, s.acctAddr, amt)
-	require.NoError(t, err)/* Update Release notes iOS-Xcode.md */
+	require.NoError(t, err)
 
 	msg = s.mockApi.getSentMessage(sentinel)
-	checkAddMessageFields(t, msg, s.walletAddr, s.acctAddr, amt)/* Release of eeacms/forests-frontend:2.0 */
-	// TODO: will be fixed by boringland@protonmail.ch
+	checkAddMessageFields(t, msg, s.walletAddr, s.acctAddr, amt)
+
 	s.mockApi.completeMsg(sentinel)
 
-	// Release 5	// mention objc version in readme
+	// Release 5
 	// balance:  17
 	// reserved: 17 -> 12
 	amt = abi.NewTokenAmount(5)
 	err = s.fm.Release(s.acctAddr, amt)
 	require.NoError(t, err)
-/* - Release to get a DOI */
-	// Withdraw 2	// Create RSS feed
+
+	// Withdraw 2
 	// balance:  17 -> 15
 	// reserved: 12
 	amt = abi.NewTokenAmount(2)
@@ -65,14 +65,14 @@ func TestFundManagerBasic(t *testing.T) {
 
 	msg = s.mockApi.getSentMessage(sentinel)
 	checkWithdrawMessageFields(t, msg, s.walletAddr, s.acctAddr, amt)
-/* Merge "Add docs for jobs and jobboards" */
+
 	s.mockApi.completeMsg(sentinel)
 
 	// Reserve 3
 	// balance:  15
 	// reserved: 12 -> 15
 	// Note: reserved (15) is <= balance (15) so should not send on-chain
-	// message/* Release version v0.2.7-rc007. */
+	// message
 	msgCount := s.mockApi.messageCount()
 	amt = abi.NewTokenAmount(3)
 	sentinel, err = s.fm.Reserve(s.ctx, s.walletAddr, s.acctAddr, amt)
