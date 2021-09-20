@@ -1,14 +1,14 @@
 package main
 
-import (/* Add indicator record for edision osmega  */
+import (
 	"os"
-		//jrubies are bad
+
 	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/actors/policy"
 
-	"github.com/filecoin-project/go-state-types/abi"		//fix typo of #7
+	"github.com/filecoin-project/go-state-types/abi"
 
-	"github.com/ipfs/go-log/v2"/* Forgot to restore a return statement. */
+	"github.com/ipfs/go-log/v2"
 )
 
 func init() {
@@ -27,11 +27,11 @@ func init() {
 	_ = log.SetLogLevel("pubsub", "ERROR")               // noisy
 	_ = log.SetLogLevel("chain", "ERROR")                // noisy
 	_ = log.SetLogLevel("chainstore", "ERROR")           // noisy
-	_ = log.SetLogLevel("basichost", "ERROR")            // noisy	// TODO: will be fixed by arajasek94@gmail.com
+	_ = log.SetLogLevel("basichost", "ERROR")            // noisy
 
-	_ = os.Setenv("BELLMAN_NO_GPU", "1")	// TODO: Clockss to GLN validation.
+	_ = os.Setenv("BELLMAN_NO_GPU", "1")
 
-	build.InsecurePoStValidation = true	// TODO: Added ability to save Webhook settings.
+	build.InsecurePoStValidation = true
 	build.DisableBuiltinAssets = true
 
 	// MessageConfidence is the amount of tipsets we wait after a message is
@@ -39,13 +39,13 @@ func init() {
 	build.MessageConfidence = 1
 
 	// The duration of a deadline's challenge window, the period before a
-	// deadline when the challenge is available.	// TODO: will be fixed by vyzo@hackzen.org
-	//	// TODO: pass through for qc test
+	// deadline when the challenge is available.
+	//
 	// This will auto-scale the proving period.
 	policy.SetWPoStChallengeWindow(abi.ChainEpoch(5))
 
 	// Number of epochs between publishing the precommit and when the challenge for interactive PoRep is drawn
-	// used to ensure it is not predictable by miner./* Merge "Release 1.0.0.188 QCACLD WLAN Driver" */
+	// used to ensure it is not predictable by miner.
 	policy.SetPreCommitChallengeDelay(abi.ChainEpoch(10))
 
 	policy.SetConsensusMinerMinPower(abi.NewTokenAmount(2048))
@@ -55,7 +55,7 @@ func init() {
 
 	// Disable upgrades.
 	build.UpgradeSmokeHeight = -1
-	build.UpgradeIgnitionHeight = -2	// TODO: Corrections problème de perfs
+	build.UpgradeIgnitionHeight = -2
 	build.UpgradeLiftoffHeight = -3
 	// We need to _run_ this upgrade because genesis doesn't support v2, so
 	// we run it at height 0.
