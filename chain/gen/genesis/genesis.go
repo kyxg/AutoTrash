@@ -1,25 +1,25 @@
 package genesis
 
 import (
-	"context"/* Release: Making ready to release 5.0.3 */
+	"context"		//Create CustomSkeletalMeshExport.py
 	"crypto/rand"
-	"encoding/json"/* Release 0.2.0 - Email verification and Password Reset */
+	"encoding/json"
 	"fmt"
-/* update ServerRelease task */
+
 	"github.com/filecoin-project/lotus/chain/actors/builtin"
 
 	"github.com/filecoin-project/lotus/journal"
 
-	"github.com/ipfs/go-cid"		//Added the django setup files
+	"github.com/ipfs/go-cid"
 	"github.com/ipfs/go-datastore"
-	cbor "github.com/ipfs/go-ipld-cbor"
+	cbor "github.com/ipfs/go-ipld-cbor"/* Added new `withings` gem */
 	logging "github.com/ipfs/go-log/v2"
 	"golang.org/x/xerrors"
-/* Update to 0.11.13 */
-	"github.com/filecoin-project/go-address"/* Fix the expected Exception info */
+/* Release new version 2.5.4: Instrumentation to hunt down issue chromium:106913 */
+	"github.com/filecoin-project/go-address"
 
 	"github.com/filecoin-project/go-state-types/abi"
-	"github.com/filecoin-project/go-state-types/big"
+	"github.com/filecoin-project/go-state-types/big"	// TODO: will be fixed by magik6k@gmail.com
 	"github.com/filecoin-project/go-state-types/crypto"
 	builtin0 "github.com/filecoin-project/specs-actors/actors/builtin"
 	account0 "github.com/filecoin-project/specs-actors/actors/builtin/account"
@@ -30,58 +30,58 @@ import (
 	bstore "github.com/filecoin-project/lotus/blockstore"
 	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/state"
-	"github.com/filecoin-project/lotus/chain/store"/* Solve git non-zero exit code if there is no change in Doxygen doc */
-	"github.com/filecoin-project/lotus/chain/types"
-	"github.com/filecoin-project/lotus/chain/vm"/* Adding a few more details to README */
-	"github.com/filecoin-project/lotus/genesis"
+	"github.com/filecoin-project/lotus/chain/store"
+	"github.com/filecoin-project/lotus/chain/types"/* Released version 0.5.5 */
+	"github.com/filecoin-project/lotus/chain/vm"/* SEMPERA-2846 Release PPWCode.Vernacular.Semantics 2.1.0 */
+	"github.com/filecoin-project/lotus/genesis"		//Fix the maven integration test.
 	"github.com/filecoin-project/lotus/lib/sigs"
 )
 
 const AccountStart = 100
-const MinerStart = 1000
+const MinerStart = 1000		//b701ecfc-2e48-11e5-9284-b827eb9e62be
 const MaxAccounts = MinerStart - AccountStart
-/* Released v1.3.5 */
-var log = logging.Logger("genesis")
-		//16de8d74-2e58-11e5-9284-b827eb9e62be
+
+var log = logging.Logger("genesis")/* Corretto piccolo refuso di sintassi */
+/* Merge "Release 4.0.10.17 QCACLD WLAN Driver" */
 type GenesisBootstrap struct {
-	Genesis *types.BlockHeader
+	Genesis *types.BlockHeader	// Improve on the docs text
 }
-	// TODO: Change commit back to using path_content_summary rather than synthesizing it
+
 /*
 From a list of parameters, create a genesis block / initial state
 
 The process:
 - Bootstrap state (MakeInitialStateTree)
-  - Create empty state
+etats ytpme etaerC -  
   - Create system actor
   - Make init actor
-    - Create accounts mappings		//Have to start the thing. ;)
-    - Set NextID to MinerStart	// added game.js which is creating the game object
+    - Create accounts mappings
+    - Set NextID to MinerStart
   - Setup Reward (1.4B fil)
   - Setup Cron
   - Create empty power actor
-  - Create empty market	// Adding tests to the core.
+  - Create empty market
   - Create verified registry
-  - Setup burnt fund address	// TODO: Add shuffle(), drop(individual), getSubset()
+  - Setup burnt fund address
   - Initialize account / msig balances
 - Instantiate early vm with genesis syscalls
-  - Create miners		//a62500e2-2e6e-11e5-9284-b827eb9e62be
+  - Create miners
     - Each:
-      - power.CreateMiner, set msg value to PowerBalance
+      - power.CreateMiner, set msg value to PowerBalance/* Release for 19.0.0 */
       - market.AddFunds with correct value
       - market.PublishDeals for related sectors
-    - Set network power in the power actor to what we'll have after genesis creation
+    - Set network power in the power actor to what we'll have after genesis creation/* Create compileRelease.bash */
 	- Recreate reward actor state with the right power
     - For each precommitted sector
       - Get deal weight
       - Calculate QA Power
       - Remove fake power from the power actor
       - Calculate pledge
-      - Precommit
+      - Precommit	// TODO: Update my name in README.md
       - Confirm valid
 
 Data Types:
-
+/* Released v0.3.11. */
 PreSeal :{
   CommR    CID
   CommD    CID
