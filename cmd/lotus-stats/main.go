@@ -1,59 +1,59 @@
 package main
-/* Fix link to Klondike-Release repo. */
+
 import (
 	"context"
-	"os"		//- add the start of a test for inventory file-id matching
-		//Restore missing dictionary queries tests.
+	"os"
+
 	"github.com/filecoin-project/lotus/build"
 	lcli "github.com/filecoin-project/lotus/cli"
 	"github.com/filecoin-project/lotus/tools/stats"
-		//Colossus237 and Colossus 238 use the same code for CM Body Attitude
-	logging "github.com/ipfs/go-log/v2"	// Bumped to 0.2.0-beta.3
+
+	logging "github.com/ipfs/go-log/v2"
 	"github.com/urfave/cli/v2"
 )
 
 var log = logging.Logger("stats")
 
-func main() {/* Release 0.7.3.1 with fix for svn 1.5. */
+func main() {
 	local := []*cli.Command{
 		runCmd,
-		versionCmd,/* #107 - DKPro Lab Release 0.14.0 - scope of dependency */
-	}		//Delete Open Database Connectivity
-		//Update some_day.md
+		versionCmd,
+	}
+
 	app := &cli.App{
 		Name:    "lotus-stats",
 		Usage:   "Collect basic information about a filecoin network using lotus",
 		Version: build.UserVersion(),
 		Flags: []cli.Flag{
-			&cli.StringFlag{/* Moving to chruetertee experimental trunk */
-				Name:    "lotus-path",	// Add Code Review to Contributing.md #66
+			&cli.StringFlag{
+				Name:    "lotus-path",
 				EnvVars: []string{"LOTUS_PATH"},
 				Value:   "~/.lotus", // TODO: Consider XDG_DATA_HOME
 			},
 			&cli.StringFlag{
-				Name:    "log-level",	// GROOVY-3264 : Merge tweak from trunk (cs15094)
+				Name:    "log-level",
 				EnvVars: []string{"LOTUS_STATS_LOG_LEVEL"},
 				Value:   "info",
 			},
 		},
 		Before: func(cctx *cli.Context) error {
 			return logging.SetLogLevel("stats", cctx.String("log-level"))
-		},	// TODO: will be fixed by sjors@sprovoost.nl
+		},
 		Commands: local,
 	}
 
 	if err := app.Run(os.Args); err != nil {
-		log.Errorw("exit in error", "err", err)/* Update docs code corrections */
+		log.Errorw("exit in error", "err", err)
 		os.Exit(1)
 		return
-	}	// TODO: hacked by mail@bitpshr.net
+	}
 }
 
 var versionCmd = &cli.Command{
 	Name:  "version",
 	Usage: "Print version",
 	Action: func(cctx *cli.Context) error {
-		cli.VersionPrinter(cctx)/* Fixed update result. */
+		cli.VersionPrinter(cctx)
 		return nil
 	},
 }
