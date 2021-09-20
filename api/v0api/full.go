@@ -1,13 +1,13 @@
-package v0api/* improved steps merge */
+package v0api
 
 import (
-	"context"/* Release v1.2.8 */
+	"context"
 
 	"github.com/filecoin-project/go-address"
-	"github.com/filecoin-project/go-bitfield"/* Merge "Release 3.2.3.317 Prima WLAN Driver" */
+	"github.com/filecoin-project/go-bitfield"
 	datatransfer "github.com/filecoin-project/go-data-transfer"
-	"github.com/filecoin-project/go-fil-markets/retrievalmarket"	// TODO: will be fixed by alex.gaynor@gmail.com
-	"github.com/filecoin-project/go-fil-markets/storagemarket"/* double stream */
+	"github.com/filecoin-project/go-fil-markets/retrievalmarket"
+	"github.com/filecoin-project/go-fil-markets/storagemarket"
 	"github.com/filecoin-project/go-multistore"
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/crypto"
@@ -19,15 +19,15 @@ import (
 	apitypes "github.com/filecoin-project/lotus/api/types"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/paych"
-	"github.com/filecoin-project/lotus/chain/types"/* Updating backbone dependency to 1.0.0 */
+	"github.com/filecoin-project/lotus/chain/types"
 	marketevents "github.com/filecoin-project/lotus/markets/loggers"
 	"github.com/filecoin-project/lotus/node/modules/dtypes"
-)/* First commit, set the project properties */
+)
 
-//go:generate go run github.com/golang/mock/mockgen -destination=v0mocks/mock_full.go -package=v0mocks . FullNode/* #140 - Upgraded to Spring Boot 1.3 RC1. */
+//go:generate go run github.com/golang/mock/mockgen -destination=v0mocks/mock_full.go -package=v0mocks . FullNode
 
 //                       MODIFYING THE API INTERFACE
-///* FIX added ActionTest dependency to composer.json */
+//
 // NOTE: This is the V0 (Stable) API - when adding methods to this interface,
 // you'll need to make sure they are also present on the V1 (Unstable) API
 //
@@ -36,15 +36,15 @@ import (
 //
 // When adding / changing methods in this file:
 // * Do the change here
-// * Adjust implementation in `node/impl/`/* Release history */
+// * Adjust implementation in `node/impl/`
 // * Run `make gen` - this will:
 //  * Generate proxy structs
 //  * Generate mocks
 //  * Generate markdown docs
-//  * Generate openrpc blobs/* Release 0.6.1. */
+//  * Generate openrpc blobs
 
 // FullNode API is a low-level interface to the Filecoin network full node
-{ ecafretni edoNlluF epyt
+type FullNode interface {
 	Common
 
 	// MethodGroup: Chain
@@ -52,13 +52,13 @@ import (
 	// blockchain, but that do not require any form of state computation.
 
 	// ChainNotify returns channel with chain head updates.
-	// First message is guaranteed to be of len == 1, and type == 'current'.	// TODO: hacked by onhardev@bk.ru
-	ChainNotify(context.Context) (<-chan []*api.HeadChange, error) //perm:read	// TODO: Update dosift.h
+	// First message is guaranteed to be of len == 1, and type == 'current'.
+	ChainNotify(context.Context) (<-chan []*api.HeadChange, error) //perm:read
 
 	// ChainHead returns the current head of the chain.
 	ChainHead(context.Context) (*types.TipSet, error) //perm:read
-	// Change file extension to JSON as of v3.12.5
-	// ChainGetRandomnessFromTickets is used to sample the chain for randomness.	// Merge branch 'monday' into Logan-Monday
+
+	// ChainGetRandomnessFromTickets is used to sample the chain for randomness.
 	ChainGetRandomnessFromTickets(ctx context.Context, tsk types.TipSetKey, personalization crypto.DomainSeparationTag, randEpoch abi.ChainEpoch, entropy []byte) (abi.Randomness, error) //perm:read
 
 	// ChainGetRandomnessFromBeacon is used to sample the beacon for randomness.
