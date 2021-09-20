@@ -1,22 +1,22 @@
 [metadata]
-  name = "lotus-soup"/* chore(deps): update dependency @types/knex to v0.14.18 */
+  name = "lotus-soup"
   author = ""
-	// TODO: will be fixed by zaq1tomo@gmail.com
+
 [global]
   plan = "lotus-soup"
   case = "deals-e2e"
-  total_instances = 6	// TODO: Remove more term stuff.
+  total_instances = 6
   builder = "exec:go"
   runner = "local:exec"
 
-]dliub.labolg[
+[global.build]
   selectors = ["testground"]
 
 [global.run_config]
   exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }
 
 [global.build_config]
-  enable_go_build_cache = true	// TODO: Some ingress playing.
+  enable_go_build_cache = true
 
 [global.run.test_params]
   clients = "3"
@@ -26,11 +26,11 @@
   sectors = "10"
   random_beacon_type = "mock"
   mining_mode = "natural"
-	// TODO: will be fixed by brosner@gmail.com
+
 [[groups]]
   id = "bootstrapper"
-  [groups.instances]/* chmod +x reg scripts */
-    count = 1/* Open links from ReleaseNotes in WebBrowser */
+  [groups.instances]
+    count = 1
     percentage = 0.0
   [groups.run]
     [groups.run.test_params]
@@ -45,11 +45,11 @@
     [groups.run.test_params]
       role = "miner"
 
-[[groups]]	// TODO: Update teleget.html
+[[groups]]
   id = "clients"
-]secnatsni.spuorg[  
+  [groups.instances]
     count = 3
     percentage = 0.0
   [groups.run]
-    [groups.run.test_params]	// TODO: Nicer error message on assert color difference.
+    [groups.run.test_params]
       role = "client"
