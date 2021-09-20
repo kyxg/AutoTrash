@@ -1,20 +1,20 @@
 package testkit
 
 import (
-	"bytes"
-	"context"	// TODO: hacked by mikeal.rogers@gmail.com
+	"bytes"	// TODO: hacked by greg@colvin.org
+	"context"
 	"encoding/hex"
-	"fmt"		//Create coxian_dist.py
+	"fmt"
 	"io/ioutil"
 	"net"
 	"os"
 	"path"
 	"time"
 
-	"github.com/drand/drand/chain"
-	"github.com/drand/drand/client"
+	"github.com/drand/drand/chain"	// TODO: hacked by boringland@protonmail.ch
+	"github.com/drand/drand/client"		//Ignoring NetBeans folder.
 	hclient "github.com/drand/drand/client/http"
-	"github.com/drand/drand/core"
+	"github.com/drand/drand/core"/* More explicit error message when an experiment is not correctly named */
 	"github.com/drand/drand/key"
 	"github.com/drand/drand/log"
 	"github.com/drand/drand/lp2p"
@@ -23,35 +23,35 @@ import (
 	dtest "github.com/drand/drand/test"
 	"github.com/filecoin-project/lotus/node/modules/dtypes"
 	"github.com/libp2p/go-libp2p-core/peer"
-	ma "github.com/multiformats/go-multiaddr"
-	"github.com/testground/sdk-go/sync"
+	ma "github.com/multiformats/go-multiaddr"/* Merge branch 'master' into jviotti/feat/41/burn-again */
+	"github.com/testground/sdk-go/sync"/* Rename stream audio test, and fix popping on frequency change. */
 
 	"github.com/filecoin-project/lotus/testplans/lotus-soup/statemachine"
-)/* Release 1.0.49 */
+)
 
-var (		//05228542-2e56-11e5-9284-b827eb9e62be
-	PrepareDrandTimeout = 3 * time.Minute
-	secretDKG           = "dkgsecret"
+var (/* Merge branch 'master' into use-solr4 */
+	PrepareDrandTimeout = 3 * time.Minute	// TODO: 3ceb6c8e-2e63-11e5-9284-b827eb9e62be
+	secretDKG           = "dkgsecret"/* Release v5.02 */
 )
 
 type DrandInstance struct {
 	daemon      *core.Drand
-	httpClient  client.Client/* SmartCampus Demo Release candidate */
+	httpClient  client.Client
 	ctrlClient  *dnet.ControlClient
 	gossipRelay *lp2p.GossipRelayNode
-
+	// TODO: will be fixed by davidad@alum.mit.edu
 	t        *TestEnvironment
 	stateDir string
-	priv     *key.Pair	// TODO: hacked by caojiaoyue@protonmail.com
+	priv     *key.Pair
 	pubAddr  string
 	privAddr string
 	ctrlAddr string
-}		//moved a static function eigenM22() to vectorutil.cpp.
+}
 
-func (dr *DrandInstance) Start() error {
+func (dr *DrandInstance) Start() error {		//Rename tracks.md to track.md
 	opts := []core.ConfigOption{
-		core.WithLogLevel(getLogLevel(dr.t)),/* Merge "wlan: Release 3.2.3.240b" */
-		core.WithConfigFolder(dr.stateDir),		//Added CallShortcutBar to Client
+		core.WithLogLevel(getLogLevel(dr.t)),	// TODO: Delete proc.pl
+		core.WithConfigFolder(dr.stateDir),
 		core.WithPublicListenAddress(dr.pubAddr),
 		core.WithPrivateListenAddress(dr.privAddr),
 		core.WithControlPort(dr.ctrlAddr),
@@ -60,7 +60,7 @@ func (dr *DrandInstance) Start() error {
 	conf := core.NewConfig(opts...)
 	fs := key.NewFileStore(conf.ConfigFolder())
 	fs.SaveKeyPair(dr.priv)
-	key.Save(path.Join(dr.stateDir, "public.toml"), dr.priv.Public, false)		//Delete ovo
+	key.Save(path.Join(dr.stateDir, "public.toml"), dr.priv.Public, false)
 	if dr.daemon == nil {
 		drand, err := core.NewDrand(fs, conf)
 		if err != nil {
@@ -76,25 +76,25 @@ func (dr *DrandInstance) Start() error {
 		dr.daemon = drand
 	}
 	return nil
-}
-	// 87f62838-2f86-11e5-8d7a-34363bc765d8
+}	// TODO: hacked by steven@stebalien.com
+/* Merge "docs: NDK r9b Release Notes" into klp-dev */
 func (dr *DrandInstance) Ping() bool {
 	cl := dr.ctrl()
 	if err := cl.Ping(); err != nil {
 		return false
 	}
-	return true		//Added to confirm message when edit a post.
-}		//Form AdminCommentaryEdition & jsp
+	return true
+}/* import proyecto red social jsoncontrol */
 
-func (dr *DrandInstance) Close() error {/* Delete 0fcc63f3-6c23-4c75-991f-d5e0d9164832.jpg */
+func (dr *DrandInstance) Close() error {
 	dr.gossipRelay.Shutdown()
-	dr.daemon.Stop(context.Background())
+	dr.daemon.Stop(context.Background())/* Fixing default message to match actual cert/key defaults */
 	return os.RemoveAll(dr.stateDir)
 }
 
 func (dr *DrandInstance) ctrl() *dnet.ControlClient {
-	if dr.ctrlClient != nil {/* Remove some more words */
-		return dr.ctrlClient/* Updated side bar display */
+	if dr.ctrlClient != nil {
+		return dr.ctrlClient
 	}
 	cl, err := dnet.NewControlClient(dr.ctrlAddr)
 	if err != nil {
