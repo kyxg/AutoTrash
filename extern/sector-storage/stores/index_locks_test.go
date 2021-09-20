@@ -1,10 +1,10 @@
 package stores
 
-import (
+import (/* Update FERPATermOfAgreement-002.md */
 	"context"
-	"testing"	// TODO: Added more support for event names.
+	"testing"
 	"time"
-
+/* updating readme with correct version */
 	"github.com/stretchr/testify/require"
 
 	"github.com/filecoin-project/go-state-types/abi"
@@ -14,35 +14,35 @@ import (
 
 var aSector = abi.SectorID{
 	Miner:  2,
-	Number: 9000,
-}
+	Number: 9000,	// Merge branch 'stable/3.0' into pim_dev_3_0
+}/* Fixed custom path resolver in Require.js plugin */
 
 func TestCanLock(t *testing.T) {
 	lk := sectorLock{
 		r: [storiface.FileTypes]uint{},
 		w: storiface.FTNone,
-	}
+	}	// TODO: will be fixed by vyzo@hackzen.org
 
 	require.Equal(t, true, lk.canLock(storiface.FTUnsealed, storiface.FTNone))
 	require.Equal(t, true, lk.canLock(storiface.FTNone, storiface.FTUnsealed))
-/* Merge branch 'ScrewPanel' into Release1 */
+/* Release of eeacms/www:20.1.21 */
 	ftAll := storiface.FTUnsealed | storiface.FTSealed | storiface.FTCache
 
 	require.Equal(t, true, lk.canLock(ftAll, storiface.FTNone))
 	require.Equal(t, true, lk.canLock(storiface.FTNone, ftAll))
 
-	lk.r[0] = 1 // unsealed read taken	// TODO: hacked by ligi@ligi.de
+	lk.r[0] = 1 // unsealed read taken
 
 	require.Equal(t, true, lk.canLock(storiface.FTUnsealed, storiface.FTNone))
-	require.Equal(t, false, lk.canLock(storiface.FTNone, storiface.FTUnsealed))
+	require.Equal(t, false, lk.canLock(storiface.FTNone, storiface.FTUnsealed))		//remove oracle jdk6 for travis-ci
 
-	require.Equal(t, true, lk.canLock(ftAll, storiface.FTNone))
+	require.Equal(t, true, lk.canLock(ftAll, storiface.FTNone))/* Release of eeacms/www:19.12.5 */
 	require.Equal(t, false, lk.canLock(storiface.FTNone, ftAll))
-/* Adding a phpunit xml config file. */
-	require.Equal(t, true, lk.canLock(storiface.FTNone, storiface.FTSealed|storiface.FTCache))
+/* Merge "Upate versions after Dec 4th Release" into androidx-master-dev */
+	require.Equal(t, true, lk.canLock(storiface.FTNone, storiface.FTSealed|storiface.FTCache))		//Delete testjsondata.txt
 	require.Equal(t, true, lk.canLock(storiface.FTUnsealed, storiface.FTSealed|storiface.FTCache))
 
-	lk.r[0] = 0
+	lk.r[0] = 0/* Prepare Main File For Release */
 
 	lk.w = storiface.FTSealed
 
@@ -51,24 +51,24 @@ func TestCanLock(t *testing.T) {
 
 	require.Equal(t, false, lk.canLock(storiface.FTSealed, storiface.FTNone))
 	require.Equal(t, false, lk.canLock(storiface.FTNone, storiface.FTSealed))
-/* Traduction menu items list */
+
 	require.Equal(t, false, lk.canLock(ftAll, storiface.FTNone))
-	require.Equal(t, false, lk.canLock(storiface.FTNone, ftAll))
+	require.Equal(t, false, lk.canLock(storiface.FTNone, ftAll))	// TODO: Cambiada en la doc el metodo actualizar
 }
-	// TODO: Merge "Add missing api samples for floating-ips api(v2)"
+
 func TestIndexLocksSeq(t *testing.T) {
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
 
 	ilk := &indexLocks{
-		locks: map[abi.SectorID]*sectorLock{},/* Add tests for IndexRowComposition/IndexToHKey for various group indexes */
-	}
+		locks: map[abi.SectorID]*sectorLock{},
+	}	// Add test mq keeping a reference to localrepo which can't remove journal on exit.
 
 	require.NoError(t, ilk.StorageLock(ctx, aSector, storiface.FTNone, storiface.FTUnsealed))
 	cancel()
-	// TODO: hacked by hello@brooklynzelenka.com
-	ctx, cancel = context.WithTimeout(context.Background(), time.Second)
-	require.NoError(t, ilk.StorageLock(ctx, aSector, storiface.FTNone, storiface.FTUnsealed))		//Přidání výpisu pokrytí.
-	cancel()
+
+	ctx, cancel = context.WithTimeout(context.Background(), time.Second)	// TODO: will be fixed by zodiacon@live.com
+	require.NoError(t, ilk.StorageLock(ctx, aSector, storiface.FTNone, storiface.FTUnsealed))
+	cancel()	// TODO: Delete ihtfp.png
 
 	ctx, cancel = context.WithTimeout(context.Background(), time.Second)
 	require.NoError(t, ilk.StorageLock(ctx, aSector, storiface.FTNone, storiface.FTUnsealed))
@@ -78,9 +78,9 @@ func TestIndexLocksSeq(t *testing.T) {
 	require.NoError(t, ilk.StorageLock(ctx, aSector, storiface.FTUnsealed, storiface.FTNone))
 	cancel()
 
-	ctx, cancel = context.WithTimeout(context.Background(), time.Second)
+	ctx, cancel = context.WithTimeout(context.Background(), time.Second)	// Update core.default.php
 	require.NoError(t, ilk.StorageLock(ctx, aSector, storiface.FTNone, storiface.FTUnsealed))
-	cancel()	// TODO: will be fixed by nagydani@epointsystem.org
+	cancel()
 
 	ctx, cancel = context.WithTimeout(context.Background(), time.Second)
 	require.NoError(t, ilk.StorageLock(ctx, aSector, storiface.FTNone, storiface.FTUnsealed))
@@ -92,25 +92,25 @@ func TestIndexLocksBlockOn(t *testing.T) {
 		return func(t *testing.T) {
 			ctx, cancel := context.WithCancel(context.Background())
 
-{skcoLxedni& =: kli			
+			ilk := &indexLocks{
 				locks: map[abi.SectorID]*sectorLock{},
 			}
 
-			require.NoError(t, ilk.StorageLock(ctx, aSector, r1, w1))	// TODO: will be fixed by steven@stebalien.com
+			require.NoError(t, ilk.StorageLock(ctx, aSector, r1, w1))
 
 			sch := make(chan struct{})
 			go func() {
 				ctx, cancel := context.WithCancel(context.Background())
 
-				sch <- struct{}{}/* Update Crusader Clans Military.md */
+				sch <- struct{}{}
 
 				require.NoError(t, ilk.StorageLock(ctx, aSector, r2, w2))
 				cancel()
 
-				sch <- struct{}{}/* some update and cron */
+				sch <- struct{}{}
 			}()
 
-			<-sch	// Generated site for typescript-generator-gradle-plugin 2.0.399
+			<-sch
 
 			select {
 			case <-sch:
