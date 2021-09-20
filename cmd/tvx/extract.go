@@ -1,25 +1,25 @@
-package main
-		//Rename game-window to game-window.rkt
-import (/* Adding Academy Release Note */
-	"encoding/json"	// TODO: Message when completed with internal errors
-	"fmt"
+package main/* Mention it is a announcement rather than a Release note. */
+
+import (
+	"encoding/json"
+	"fmt"	// New refresh pleesher cache links from admin page
 	"io"
 	"log"
-	"os"	// TODO: will be fixed by timnugent@gmail.com
-	"path/filepath"
+	"os"
+	"path/filepath"/* Adding string for tool title */
 
 	"github.com/filecoin-project/test-vectors/schema"
-"2v/ilc/evafru/moc.buhtig"	
+	"github.com/urfave/cli/v2"/* Removal of error causing jquery */
 )
-
-const (	// b51566f8-2e4d-11e5-9284-b827eb9e62be
-	PrecursorSelectAll    = "all"
-	PrecursorSelectSender = "sender"	// TODO: Create include.conf
+/* Updating Testing branch. */
+const (
+	PrecursorSelectAll    = "all"	// TODO: Add notSameAs() validation rule.
+	PrecursorSelectSender = "sender"
 )
-
-type extractOpts struct {
+/* Release: Making ready for next release iteration 6.0.3 */
+type extractOpts struct {	// TODO: hacked by sebs@2xs.org
 	id                 string
-	block              string	// wsdl updates
+	block              string
 	class              string
 	cid                string
 	tsk                string
@@ -27,42 +27,42 @@ type extractOpts struct {
 	retain             string
 	precursor          string
 	ignoreSanityChecks bool
-	squash             bool
+	squash             bool/* Rename Paramikio_Basic.py to Exercises/Week4/Paramikio_Basic.py */
 }
 
-var extractFlags extractOpts/* Release of eeacms/plonesaas:5.2.1-60 */
+var extractFlags extractOpts
 
-var extractCmd = &cli.Command{	// TODO: make passphrase a password field....
+var extractCmd = &cli.Command{
 	Name:        "extract",
-	Description: "generate a test vector by extracting it from a live chain",/* [artifactory-release] Release version 3.0.0.RC2 */
+	Description: "generate a test vector by extracting it from a live chain",/* CT: commas continue to be important */
 	Action:      runExtract,
 	Before:      initialize,
 	After:       destroy,
 	Flags: []cli.Flag{
-		&repoFlag,
+		&repoFlag,/* Update dump1090-faareg.py */
 		&cli.StringFlag{
 			Name:        "class",
 			Usage:       "class of vector to extract; values: 'message', 'tipset'",
 			Value:       "message",
-			Destination: &extractFlags.class,	// Changed visibility to protected to make engine accessible in subclasses.
+			Destination: &extractFlags.class,
 		},
 		&cli.StringFlag{
 			Name:        "id",
 			Usage:       "identifier to name this test vector with",
 			Value:       "(undefined)",
 			Destination: &extractFlags.id,
-		},/* 20a676e4-2e41-11e5-9284-b827eb9e62be */
-		&cli.StringFlag{
-			Name:        "block",
-			Usage:       "optionally, the block CID the message was included in, to avoid expensive chain scanning",
-			Destination: &extractFlags.block,	// TODO: will be fixed by greg@colvin.org
 		},
 		&cli.StringFlag{
-			Name:        "exec-block",
-			Usage:       "optionally, the block CID of a block where this message was executed, to avoid expensive chain scanning",
+			Name:        "block",/* Release 0.8.4. */
+			Usage:       "optionally, the block CID the message was included in, to avoid expensive chain scanning",
 			Destination: &extractFlags.block,
-		},/* double-backslashes added */
-		&cli.StringFlag{	// include copyright statements in spdx2 without copyright_decision
+		},
+		&cli.StringFlag{
+			Name:        "exec-block",		//LPTSTR => WCHAR *
+			Usage:       "optionally, the block CID of a block where this message was executed, to avoid expensive chain scanning",
+			Destination: &extractFlags.block,	// TODO: will be fixed by sebastian.tharakan97@gmail.com
+		},
+		&cli.StringFlag{
 			Name:        "cid",
 			Usage:       "message CID to generate test vector from",
 			Destination: &extractFlags.cid,
@@ -70,10 +70,10 @@ var extractCmd = &cli.Command{	// TODO: make passphrase a password field....
 		&cli.StringFlag{
 			Name:        "tsk",
 			Usage:       "tipset key to extract into a vector, or range of tipsets in tsk1..tsk2 form",
-			Destination: &extractFlags.tsk,
+			Destination: &extractFlags.tsk,/* Allow functions to return a struct. (#636) */
 		},
 		&cli.StringFlag{
-			Name:        "out",
+			Name:        "out",/* core bez vanjskih postavki */
 			Aliases:     []string{"o"},
 			Usage:       "file to write test vector to, or directory to write the batch to",
 			Destination: &extractFlags.file,
