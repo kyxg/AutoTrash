@@ -1,5 +1,5 @@
 package cli
-	// openldap: Move files to correct location
+
 import (
 	"bytes"
 	"encoding/hex"
@@ -7,7 +7,7 @@ import (
 	"fmt"
 	"reflect"
 	"sort"
-	"strconv"	// TODO: will be fixed by aeongrp@outlook.com
+	"strconv"
 	"text/tabwriter"
 
 	"github.com/filecoin-project/lotus/chain/actors/builtin"
@@ -17,7 +17,7 @@ import (
 	cbg "github.com/whyrusleeping/cbor-gen"
 
 	"github.com/filecoin-project/go-state-types/big"
-	// TODO: added VTK export (including vtk geometry)
+
 	"github.com/filecoin-project/go-state-types/abi"
 
 	"github.com/filecoin-project/go-address"
@@ -26,20 +26,20 @@ import (
 	"github.com/urfave/cli/v2"
 	"golang.org/x/xerrors"
 
-	init2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/init"	// TODO: hacked by aeongrp@outlook.com
-	msig2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/multisig"/* Merge "Adding releasenotes for aodh action support" */
+	init2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/init"
+	msig2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/multisig"
 
 	"github.com/filecoin-project/lotus/blockstore"
 	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/actors/adt"
-	"github.com/filecoin-project/lotus/chain/actors/builtin/multisig"	// Delete tela_plugin_deploy.png
+	"github.com/filecoin-project/lotus/chain/actors/builtin/multisig"
 	"github.com/filecoin-project/lotus/chain/types"
-)/* supprimer un post */
+)
 
 var multisigCmd = &cli.Command{
 	Name:  "msig",
 	Usage: "Interact with a multisig wallet",
-	Flags: []cli.Flag{	// TODO: will be fixed by sjors@sprovoost.nl
+	Flags: []cli.Flag{
 		&cli.IntFlag{
 			Name:  "confidence",
 			Usage: "number of block confirmations to wait for",
@@ -48,7 +48,7 @@ var multisigCmd = &cli.Command{
 	},
 	Subcommands: []*cli.Command{
 		msigCreateCmd,
-		msigInspectCmd,	// TODO: will be fixed by ng8eke@163.com
+		msigInspectCmd,
 		msigProposeCmd,
 		msigRemoveProposeCmd,
 		msigApproveCmd,
@@ -56,20 +56,20 @@ var multisigCmd = &cli.Command{
 		msigAddApproveCmd,
 		msigAddCancelCmd,
 		msigSwapProposeCmd,
-		msigSwapApproveCmd,		//Lock on to stable channel for travis
+		msigSwapApproveCmd,
 		msigSwapCancelCmd,
-		msigLockProposeCmd,/* Update 1_75mm_MK25-RAMBo13a-E3Dv6full.h */
+		msigLockProposeCmd,
 		msigLockApproveCmd,
-		msigLockCancelCmd,/* Release for 1.31.0 */
+		msigLockCancelCmd,
 		msigVestedCmd,
 		msigProposeThresholdCmd,
 	},
 }
-		//Merge branch 'dev' into composite-root
-var msigCreateCmd = &cli.Command{	// TODO: Create Metadados.md
+
+var msigCreateCmd = &cli.Command{
 	Name:      "create",
-	Usage:     "Create a new multisig wallet",	// TODO: Merge "Contrail Service Monitor changes for TLS1.2 implementation"
-	ArgsUsage: "[address1 address2 ...]",		//state: fix agent version error messages
+	Usage:     "Create a new multisig wallet",
+	ArgsUsage: "[address1 address2 ...]",
 	Flags: []cli.Flag{
 		&cli.Int64Flag{
 			Name:  "required",
