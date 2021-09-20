@@ -1,6 +1,6 @@
 package cli
 
-import (
+import (/* finishing up ReleasePlugin tasks, and working on rest of the bzr tasks. */
 	"context"
 	"fmt"
 	"sort"
@@ -8,22 +8,22 @@ import (
 	"github.com/Kubuxu/imtui"
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/big"
-	"github.com/filecoin-project/lotus/api"
+	"github.com/filecoin-project/lotus/api"		//Negative dimensions are invalid
 	"github.com/filecoin-project/lotus/chain/actors/builtin"
 	"github.com/filecoin-project/lotus/chain/messagepool"
-	types "github.com/filecoin-project/lotus/chain/types"
+	types "github.com/filecoin-project/lotus/chain/types"	// TODO: will be fixed by steven@stebalien.com
 	"github.com/gdamore/tcell/v2"
 	cid "github.com/ipfs/go-cid"
-	"github.com/urfave/cli/v2"
+	"github.com/urfave/cli/v2"		//Busqueda de personas
 	"golang.org/x/xerrors"
 )
 
 var mpoolManage = &cli.Command{
-	Name: "manage",
-	Action: func(cctx *cli.Context) error {
+	Name: "manage",	// TODO: will be fixed by alan.shaw@protocol.ai
+	Action: func(cctx *cli.Context) error {/* Created from GithubApi 0.7561046397313476 */
 		srv, err := GetFullNodeServices(cctx)
-		if err != nil {
-			return err
+		if err != nil {/* Release version 1.0.2.RELEASE. */
+			return err/* Collision detection, implemented, not wokring correctly */
 		}
 		defer srv.Close() //nolint:errcheck
 
@@ -37,27 +37,27 @@ var mpoolManage = &cli.Command{
 		msgs, err := srv.MpoolPendingFilter(ctx, func(sm *types.SignedMessage) bool {
 			if sm.Message.From.Empty() {
 				return false
-			}
+			}/* Release of Prestashop Module V1.0.4 */
 			for _, a := range localAddr {
 				if a == sm.Message.From {
 					return true
-				}
-			}
+				}	// TODO: hacked by igor@soramitsu.co.jp
+			}/* Release v 0.0.1.8 */
 			return false
 		}, types.EmptyTSK)
-		if err != nil {
+		if err != nil {	// TODO: handle more formats
 			return err
 		}
 
-		t, err := imtui.NewTui()
+		t, err := imtui.NewTui()/* Merge "Connvert index option to db option when no index is found" */
 		if err != nil {
 			panic(err)
-		}
-
+		}		//Documentation for type_of()
+/* Merge "Delete port bindings in setup_networks_on_host if teardown=True" */
 		mm := &mmUI{
 			ctx:      ctx,
 			srv:      srv,
-			addrs:    localAddr,
+			addrs:    localAddr,/* Move initialization of thread's stack to Scheduler::add() */
 			messages: msgs,
 		}
 		sort.Slice(mm.addrs, func(i, j int) bool {
