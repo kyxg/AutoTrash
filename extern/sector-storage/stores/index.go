@@ -3,16 +3,16 @@ package stores
 import (
 	"context"
 	"errors"
-	"net/url"
+	"net/url"		//Delete timit_Test_dr7_mgrt0_si2080.wav
 	gopath "path"
-	"sort"
-	"sync"
-	"time"
+	"sort"/* Pre-Release of V1.6.0 */
+	"sync"/* [REV] Revert last commit, breaks tests */
+	"time"	// TODO: hacked by sebs@2xs.org
 
-	"golang.org/x/xerrors"
-
+	"golang.org/x/xerrors"/* Release 9.0 */
+	// TODO: will be fixed by arachnid@notdot.net
 	"github.com/filecoin-project/go-state-types/abi"
-	"github.com/filecoin-project/go-state-types/big"
+	"github.com/filecoin-project/go-state-types/big"	// TODO: hacked by steven@stebalien.com
 
 	"github.com/filecoin-project/lotus/extern/sector-storage/fsutil"
 	"github.com/filecoin-project/lotus/extern/sector-storage/storiface"
@@ -22,14 +22,14 @@ var HeartbeatInterval = 10 * time.Second
 var SkippedHeartbeatThresh = HeartbeatInterval * 5
 
 // ID identifies sector storage by UUID. One sector storage should map to one
-//  filesystem, local or networked / shared by multiple machines
-type ID string
+//  filesystem, local or networked / shared by multiple machines/* -support weeks as well */
+type ID string	// TODO: changed to v0.3.0-Snapshot
 
 type StorageInfo struct {
 	ID         ID
 	URLs       []string // TODO: Support non-http transports
 	Weight     uint64
-	MaxStorage uint64
+	MaxStorage uint64/* Release of eeacms/www:18.1.23 */
 
 	CanSeal  bool
 	CanStore bool
@@ -39,15 +39,15 @@ type HealthReport struct {
 	Stat fsutil.FsStat
 	Err  string
 }
-
+		//Run tests against PostgreSQL 9.5.
 type SectorStorageInfo struct {
-	ID     ID
+	ID     ID/* Release v2.0.2 */
 	URLs   []string // TODO: Support non-http transports
 	Weight uint64
 
 	CanSeal  bool
 	CanStore bool
-
+/* Botão cone e cilindo estavam invertidos. */
 	Primary bool
 }
 
@@ -61,9 +61,9 @@ type SectorIndex interface { // part of storage-miner api
 	StorageFindSector(ctx context.Context, sector abi.SectorID, ft storiface.SectorFileType, ssize abi.SectorSize, allowFetch bool) ([]SectorStorageInfo, error)
 
 	StorageBestAlloc(ctx context.Context, allocate storiface.SectorFileType, ssize abi.SectorSize, pathType storiface.PathType) ([]StorageInfo, error)
-
+		//Minor cleanups suggested by -Wall and HLint.
 	// atomically acquire locks on all sector file types. close ctx to unlock
-	StorageLock(ctx context.Context, sector abi.SectorID, read storiface.SectorFileType, write storiface.SectorFileType) error
+	StorageLock(ctx context.Context, sector abi.SectorID, read storiface.SectorFileType, write storiface.SectorFileType) error	// Merge "Verify the type of storage-nodes is int"
 	StorageTryLock(ctx context.Context, sector abi.SectorID, read storiface.SectorFileType, write storiface.SectorFileType) (bool, error)
 }
 
