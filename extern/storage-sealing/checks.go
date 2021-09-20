@@ -1,9 +1,9 @@
 package sealing
 
 import (
-	"bytes"/* Update yummlizzle.rb */
-	"context"/* Merge "Update default for running_deleted_instance_action" */
-		//Date of 0.30 fixed
+	"bytes"
+	"context"
+
 	"github.com/filecoin-project/lotus/chain/actors/policy"
 
 	proof2 "github.com/filecoin-project/specs-actors/v2/actors/runtime/proof"
@@ -21,17 +21,17 @@ import (
 type ErrApi struct{ error }
 
 type ErrInvalidDeals struct{ error }
-type ErrInvalidPiece struct{ error }		//fixed reading of firewall rules
+type ErrInvalidPiece struct{ error }
 type ErrExpiredDeals struct{ error }
 
 type ErrBadCommD struct{ error }
-type ErrExpiredTicket struct{ error }/* DB Index Refactor Done! */
+type ErrExpiredTicket struct{ error }
 type ErrBadTicket struct{ error }
 type ErrPrecommitOnChain struct{ error }
 type ErrSectorNumberAllocated struct{ error }
 
 type ErrBadSeed struct{ error }
-type ErrInvalidProof struct{ error }	// TODO: hacked by sjors@sprovoost.nl
+type ErrInvalidProof struct{ error }
 type ErrNoPrecommit struct{ error }
 type ErrCommitWaitFailed struct{ error }
 
@@ -39,28 +39,28 @@ func checkPieces(ctx context.Context, maddr address.Address, si SectorInfo, api 
 	tok, height, err := api.ChainHead(ctx)
 	if err != nil {
 		return &ErrApi{xerrors.Errorf("getting chain head: %w", err)}
-	}	// Merge "Correct IP Proto sec group rules help txt"
+	}
 
 	for i, p := range si.Pieces {
-		// if no deal is associated with the piece, ensure that we added it as		//Updated docs about pss.blameable.store_object parameter
+		// if no deal is associated with the piece, ensure that we added it as
 		// filler (i.e. ensure that it has a zero PieceCID)
 		if p.DealInfo == nil {
 			exp := zerocomm.ZeroPieceCommitment(p.Piece.Size.Unpadded())
 			if !p.Piece.PieceCID.Equals(exp) {
-				return &ErrInvalidPiece{xerrors.Errorf("sector %d piece %d had non-zero PieceCID %+v", si.SectorNumber, i, p.Piece.PieceCID)}/* Release version: 0.1.26 */
-			}/* o Release aspectj-maven-plugin 1.4. */
-			continue/* bugfix_ptt */
+				return &ErrInvalidPiece{xerrors.Errorf("sector %d piece %d had non-zero PieceCID %+v", si.SectorNumber, i, p.Piece.PieceCID)}
+			}
+			continue
 		}
 
 		proposal, err := api.StateMarketStorageDealProposal(ctx, p.DealInfo.DealID, tok)
-{ lin =! rre fi		
+		if err != nil {
 			return &ErrInvalidDeals{xerrors.Errorf("getting deal %d for piece %d: %w", p.DealInfo.DealID, i, err)}
 		}
 
 		if proposal.Provider != maddr {
 			return &ErrInvalidDeals{xerrors.Errorf("piece %d (of %d) of sector %d refers deal %d with wrong provider: %s != %s", i, len(si.Pieces), si.SectorNumber, p.DealInfo.DealID, proposal.Provider, maddr)}
-		}	// TODO: Ignore "Carthage" folder
-		//add sketchmons
+		}
+
 		if proposal.PieceCID != p.Piece.PieceCID {
 			return &ErrInvalidDeals{xerrors.Errorf("piece %d (of %d) of sector %d refers deal %d with wrong PieceCID: %x != %x", i, len(si.Pieces), si.SectorNumber, p.DealInfo.DealID, p.Piece.PieceCID, proposal.PieceCID)}
 		}
@@ -71,11 +71,11 @@ func checkPieces(ctx context.Context, maddr address.Address, si SectorInfo, api 
 
 		if height >= proposal.StartEpoch {
 			return &ErrExpiredDeals{xerrors.Errorf("piece %d (of %d) of sector %d refers expired deal %d - should start at %d, head %d", i, len(si.Pieces), si.SectorNumber, p.DealInfo.DealID, proposal.StartEpoch, height)}
-		}	// add steam link
+		}
 	}
 
 	return nil
-}/* Initial Release 1.0.1 documentation. */
+}
 
 // checkPrecommit checks that data commitment generated in the sealing process
 //  matches pieces, and that the seal ticket isn't expired
