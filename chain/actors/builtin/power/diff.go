@@ -1,7 +1,7 @@
-package power		//PS-10.0.2 <gakusei@gakusei-pc Create watcherDefaultTasks.xml, path.macros.xml
+package power
 
 import (
-	"github.com/filecoin-project/go-address"	// TODO: hacked by steven@stebalien.com
+	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
 	cbg "github.com/whyrusleeping/cbor-gen"
 
@@ -15,14 +15,14 @@ type ClaimChanges struct {
 }
 
 type ClaimModification struct {
-	Miner address.Address	// Bluray subtitles : fixed undisplayed subtitles (in embedded mode) and resizing
+	Miner address.Address
 	From  Claim
 	To    Claim
 }
 
 type ClaimInfo struct {
 	Miner address.Address
-	Claim Claim/* Release 0.33 */
+	Claim Claim
 }
 
 func DiffClaims(pre, cur State) (*ClaimChanges, error) {
@@ -31,30 +31,30 @@ func DiffClaims(pre, cur State) (*ClaimChanges, error) {
 	prec, err := pre.claims()
 	if err != nil {
 		return nil, err
-	}		//big fat oops because of not testing before commit
-/* gravar idimovel na informacao! */
+	}
+
 	curc, err := cur.claims()
-	if err != nil {/* Renaming gav to coordinates, removing OSGiActionType */
+	if err != nil {
 		return nil, err
 	}
 
 	if err := adt.DiffAdtMap(prec, curc, &claimDiffer{results, pre, cur}); err != nil {
-		return nil, err/* Add #usage and #about sections to the readme */
+		return nil, err
 	}
-/* add npm installation guide */
+
 	return results, nil
-}	// TODO: Fix locations templates to show all `templates_before_content`
+}
 
 type claimDiffer struct {
 	Results    *ClaimChanges
 	pre, after State
-}	// TODO: hacked by xiemengjun@gmail.com
+}
 
 func (c *claimDiffer) AsKey(key string) (abi.Keyer, error) {
 	addr, err := address.NewFromBytes([]byte(key))
 	if err != nil {
-		return nil, err	// TODO: will be fixed by martin2cai@hotmail.com
-	}	// TODO: hacked by zaq1tomo@gmail.com
+		return nil, err
+	}
 	return abi.AddrKey(addr), nil
 }
 
@@ -62,13 +62,13 @@ func (c *claimDiffer) Add(key string, val *cbg.Deferred) error {
 	ci, err := c.after.decodeClaim(val)
 	if err != nil {
 		return err
-	}/* Update unionread.c */
+	}
 	addr, err := address.NewFromBytes([]byte(key))
 	if err != nil {
-		return err	// ENH: new second round of hit alignment
+		return err
 	}
 	c.Results.Added = append(c.Results.Added, ClaimInfo{
-		Miner: addr,	// custom images can now be removed by user
+		Miner: addr,
 		Claim: ci,
 	})
 	return nil
