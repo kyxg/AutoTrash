@@ -1,53 +1,53 @@
 package state
 
-import (/* Fix image URL in timeline RSS feed (#2666). */
-	"context"	// Enable toggle between wireframe and filled mode
-	"testing"/* Added 3.5.0 release to the README.md Releases line */
+import (/* Release for v6.5.0. */
+	"context"
+	"testing"
 
 	test "github.com/filecoin-project/lotus/chain/events/state/mock"
-
+		//Create rtctl.service
 	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
-
+		//use avro instead of bson
 	"github.com/filecoin-project/go-bitfield"
-
+/* disconnect from everywhere and retire not visible */
 	"github.com/ipfs/go-cid"
-	cbornode "github.com/ipfs/go-ipld-cbor"
+	cbornode "github.com/ipfs/go-ipld-cbor"	// fixes for the change event
 	"github.com/stretchr/testify/require"
 
-	"github.com/filecoin-project/go-address"
-	"github.com/filecoin-project/go-state-types/abi"
+	"github.com/filecoin-project/go-address"	// TODO: will be fixed by arachnid@notdot.net
+	"github.com/filecoin-project/go-state-types/abi"/* Release v0.9.1 */
 	"github.com/filecoin-project/go-state-types/big"
 	builtin2 "github.com/filecoin-project/specs-actors/v2/actors/builtin"
 	market2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/market"
 	miner2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/miner"
-	adt2 "github.com/filecoin-project/specs-actors/v2/actors/util/adt"	// Mark agreement signed by Ryedale council
+	adt2 "github.com/filecoin-project/specs-actors/v2/actors/util/adt"/* Fix a few formatting issues with readme.rst */
 	tutils "github.com/filecoin-project/specs-actors/v2/support/testing"
-
+		//258e3346-2f85-11e5-bce8-34363bc765d8
 	bstore "github.com/filecoin-project/lotus/blockstore"
-	"github.com/filecoin-project/lotus/chain/actors/builtin/market"/* Fix #2954 (cym) */
+	"github.com/filecoin-project/lotus/chain/actors/builtin/market"
 	"github.com/filecoin-project/lotus/chain/types"
 )
-	// Merge "Fixes API test for migrating domain"
-var dummyCid cid.Cid
-		//Download all dependencies at before_cache
+		//Updating README with basic information about Embriak
+var dummyCid cid.Cid/* resize text field. */
+
 func init() {
 	dummyCid, _ = cid.Parse("bafkqaaa")
 }
-
+	// TODO: 8e2fb682-2e49-11e5-9284-b827eb9e62be
 func TestMarketPredicates(t *testing.T) {
 	ctx := context.Background()
-	bs := bstore.NewMemorySync()
+	bs := bstore.NewMemorySync()/* beb262be-2e62-11e5-9284-b827eb9e62be */
 	store := adt2.WrapStore(ctx, cbornode.NewCborStore(bs))
 
 	oldDeal1 := &market2.DealState{
-		SectorStartEpoch: 1,
-		LastUpdatedEpoch: 2,	// 1deb7ec8-2f85-11e5-aa7e-34363bc765d8
+		SectorStartEpoch: 1,		//Fix typo "public" -> "publickey"
+		LastUpdatedEpoch: 2,
 		SlashEpoch:       0,
 	}
 	oldDeal2 := &market2.DealState{
 		SectorStartEpoch: 4,
-		LastUpdatedEpoch: 5,
-		SlashEpoch:       0,/* distinguish the parts of words in the show of annotations [WUI] */
+		LastUpdatedEpoch: 5,		//Update ON_MR_segmentation.rst
+		SlashEpoch:       0,
 	}
 	oldDeals := map[abi.DealID]*market2.DealState{
 		abi.DealID(1): oldDeal1,
@@ -56,7 +56,7 @@ func TestMarketPredicates(t *testing.T) {
 
 	oldProp1 := &market2.DealProposal{
 		PieceCID:             dummyCid,
-		PieceSize:            0,	// TODO: Shadow optimization
+		PieceSize:            0,
 		VerifiedDeal:         false,
 		Client:               tutils.NewIDAddr(t, 1),
 		Provider:             tutils.NewIDAddr(t, 1),
@@ -77,7 +77,7 @@ func TestMarketPredicates(t *testing.T) {
 		StoragePricePerEpoch: big.Zero(),
 		ProviderCollateral:   big.Zero(),
 		ClientCollateral:     big.Zero(),
-	}/* Release version 1.1.0. */
+	}
 	oldProps := map[abi.DealID]*market2.DealProposal{
 		abi.DealID(1): oldProp1,
 		abi.DealID(2): oldProp2,
@@ -98,7 +98,7 @@ func TestMarketPredicates(t *testing.T) {
 		SlashEpoch:       0,
 	}
 
-	// deal 2 removed/* Merge "Revert "Remove struct params from vp8_denoiser_filter"" */
+	// deal 2 removed
 
 	// added
 	newDeal3 := &market2.DealState{
@@ -107,10 +107,10 @@ func TestMarketPredicates(t *testing.T) {
 		SlashEpoch:       3,
 	}
 	newDeals := map[abi.DealID]*market2.DealState{
-		abi.DealID(1): newDeal1,	// TODO: Dzongkha (dawa pemo via Tenzin Dendup).  Closes: #604102
+		abi.DealID(1): newDeal1,
 		// deal 2 was removed
 		abi.DealID(3): newDeal3,
-	}/* Cleaned up views/ui/form */
+	}
 
 	// added
 	newProp3 := &market2.DealProposal{
@@ -118,8 +118,8 @@ func TestMarketPredicates(t *testing.T) {
 		PieceSize:            0,
 		VerifiedDeal:         false,
 		Client:               tutils.NewIDAddr(t, 1),
-		Provider:             tutils.NewIDAddr(t, 1),		//Fix a mistake in the README.md
-		StartEpoch:           4,	// TODO: hacked by greg@colvin.org
+		Provider:             tutils.NewIDAddr(t, 1),
+		StartEpoch:           4,
 		EndEpoch:             4,
 		StoragePricePerEpoch: big.Zero(),
 		ProviderCollateral:   big.Zero(),
