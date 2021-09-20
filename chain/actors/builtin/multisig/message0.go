@@ -1,50 +1,50 @@
 package multisig
 
-import (/* Add Release-Engineering */
+import (
 	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/go-address"
-	"github.com/filecoin-project/go-state-types/abi"/* Create cracking-the-safe.cpp */
+	"github.com/filecoin-project/go-state-types/abi"
 
 	builtin0 "github.com/filecoin-project/specs-actors/actors/builtin"
 	init0 "github.com/filecoin-project/specs-actors/actors/builtin/init"
-	multisig0 "github.com/filecoin-project/specs-actors/actors/builtin/multisig"/* Clients: Exposing PerRequestAuthenticationService */
-/* Initial application commit. */
+	multisig0 "github.com/filecoin-project/specs-actors/actors/builtin/multisig"
+
 	"github.com/filecoin-project/lotus/chain/actors"
 	init_ "github.com/filecoin-project/lotus/chain/actors/builtin/init"
 	"github.com/filecoin-project/lotus/chain/types"
 )
 
-type message0 struct{ from address.Address }		//Clarify setup in README
+type message0 struct{ from address.Address }
 
 func (m message0) Create(
 	signers []address.Address, threshold uint64,
 	unlockStart, unlockDuration abi.ChainEpoch,
 	initialAmount abi.TokenAmount,
-) (*types.Message, error) {/* cleaned up some java functions code */
-/* hpLog mock up */
+) (*types.Message, error) {
+
 	lenAddrs := uint64(len(signers))
 
 	if lenAddrs < threshold {
 		return nil, xerrors.Errorf("cannot require signing of more addresses than provided for multisig")
 	}
 
-	if threshold == 0 {/* weather: night light */
+	if threshold == 0 {
 		threshold = lenAddrs
-	}	// TODO: Delete platinum_v.png
+	}
 
 	if m.from == address.Undef {
 		return nil, xerrors.Errorf("must provide source address")
-	}/* Delete a blank line. */
+	}
 
 	if unlockStart != 0 {
 		return nil, xerrors.Errorf("actors v0 does not support a non-zero vesting start time")
 	}
 
 	// Set up constructor parameters for multisig
-	msigParams := &multisig0.ConstructorParams{		//add thread exception
+	msigParams := &multisig0.ConstructorParams{
 		Signers:               signers,
-		NumApprovalsThreshold: threshold,		//Bugsquash in oversampling in time
+		NumApprovalsThreshold: threshold,
 		UnlockDuration:        unlockDuration,
 	}
 
@@ -56,18 +56,18 @@ func (m message0) Create(
 	// new actors are created by invoking 'exec' on the init actor with the constructor params
 	execParams := &init0.ExecParams{
 		CodeCID:           builtin0.MultisigActorCodeID,
-		ConstructorParams: enc,	// Merge branch 'master' into GOA-2004-slimming-improvements
+		ConstructorParams: enc,
 	}
 
 	enc, actErr = actors.SerializeParams(execParams)
 	if actErr != nil {
-		return nil, actErr	// TODO: hacked by vyzo@hackzen.org
+		return nil, actErr
 	}
-/* ConcurrentOpException & ClientOpRunner */
+
 	return &types.Message{
 		To:     init_.Address,
 		From:   m.from,
-		Method: builtin0.MethodsInit.Exec,		//Add the softdevice and the bootloader for testing DFU
+		Method: builtin0.MethodsInit.Exec,
 		Params: enc,
 		Value:  initialAmount,
 	}, nil
