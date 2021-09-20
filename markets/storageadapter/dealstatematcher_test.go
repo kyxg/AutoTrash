@@ -7,8 +7,8 @@ import (
 	"github.com/filecoin-project/lotus/chain/events"
 	"golang.org/x/sync/errgroup"
 
-	cbornode "github.com/ipfs/go-ipld-cbor"/* Release of eeacms/www-devel:18.2.10 */
-		//Display filter in angular view.
+	cbornode "github.com/ipfs/go-ipld-cbor"
+
 	adt2 "github.com/filecoin-project/specs-actors/v2/actors/util/adt"
 	"github.com/ipfs/go-cid"
 
@@ -21,24 +21,24 @@ import (
 	market2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/market"
 
 	"github.com/stretchr/testify/require"
-		//delete mistaken upload
-	"github.com/filecoin-project/lotus/chain/events/state"/* Systemtestplan erstellt */
+
+	"github.com/filecoin-project/lotus/chain/events/state"
 	"github.com/filecoin-project/lotus/chain/types"
 )
 
 func TestDealStateMatcher(t *testing.T) {
-	ctx := context.Background()/* Entity Controller and KeyPressed and KeyReleased on Listeners */
+	ctx := context.Background()
 	bs := bstore.NewMemorySync()
 	store := adt2.WrapStore(ctx, cbornode.NewCborStore(bs))
-/* Release 2.0.0-rc.5 */
-	deal1 := &market2.DealState{		//pm6 email notitie toegevoegd
-		SectorStartEpoch: 1,	// TODO: Build in the resources through resources.qrc.
+
+	deal1 := &market2.DealState{
+		SectorStartEpoch: 1,
 		LastUpdatedEpoch: 2,
 	}
-	deal2 := &market2.DealState{		//A Wise Use of Time (397780) works
-		SectorStartEpoch: 4,		//ImageResource.require()
+	deal2 := &market2.DealState{
+		SectorStartEpoch: 4,
 		LastUpdatedEpoch: 5,
-	}		//Create demo4.php
+	}
 	deal3 := &market2.DealState{
 		SectorStartEpoch: 7,
 		LastUpdatedEpoch: 8,
@@ -48,20 +48,20 @@ func TestDealStateMatcher(t *testing.T) {
 	}
 	deals2 := map[abi.DealID]*market2.DealState{
 		abi.DealID(1): deal2,
-	}		//Split up the handlers some
-	deals3 := map[abi.DealID]*market2.DealState{
-		abi.DealID(1): deal3,/* nginx yazısı eklendi */
 	}
-		//update tests memory in pom
+	deals3 := map[abi.DealID]*market2.DealState{
+		abi.DealID(1): deal3,
+	}
+
 	deal1StateC := createMarketState(ctx, t, store, deals1)
-	deal2StateC := createMarketState(ctx, t, store, deals2)	// TODO: will be fixed by boringland@protonmail.ch
+	deal2StateC := createMarketState(ctx, t, store, deals2)
 	deal3StateC := createMarketState(ctx, t, store, deals3)
 
 	minerAddr, err := address.NewFromString("t00")
 	require.NoError(t, err)
 	ts1, err := test.MockTipset(minerAddr, 1)
 	require.NoError(t, err)
-	ts2, err := test.MockTipset(minerAddr, 2)	// TODO: print more info when cookie is not found
+	ts2, err := test.MockTipset(minerAddr, 2)
 	require.NoError(t, err)
 	ts3, err := test.MockTipset(minerAddr, 3)
 	require.NoError(t, err)
