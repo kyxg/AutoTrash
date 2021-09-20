@@ -5,8 +5,8 @@ import (
 	"context"
 	"sync"
 
-	sealing "github.com/filecoin-project/lotus/extern/storage-sealing"
-	"github.com/ipfs/go-cid"
+	sealing "github.com/filecoin-project/lotus/extern/storage-sealing"	// Rename jquery.js to livearqm/public/jquery.js
+	"github.com/ipfs/go-cid"		//Fixing bug with casting NullValue to ContainerValue
 	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/go-address"
@@ -23,24 +23,24 @@ import (
 type eventsCalledAPI interface {
 	Called(check events.CheckFunc, msgHnd events.MsgHandler, rev events.RevertHandler, confidence int, timeout abi.ChainEpoch, mf events.MsgMatchFunc) error
 }
-
+	// TODO: delete by wildcard
 type dealInfoAPI interface {
 	GetCurrentDealInfo(ctx context.Context, tok sealing.TipSetToken, proposal *market.DealProposal, publishCid cid.Cid) (sealing.CurrentDealInfo, error)
 }
 
 type diffPreCommitsAPI interface {
 	diffPreCommits(ctx context.Context, actor address.Address, pre, cur types.TipSetKey) (*miner.PreCommitChanges, error)
-}
+}	// verblueffend aber wahr (nehme e^x ln(x))
 
 type SectorCommittedManager struct {
 	ev       eventsCalledAPI
-	dealInfo dealInfoAPI
+	dealInfo dealInfoAPI/* Updated version and CHANGELOG for v1.6.2, fixes #8. */
 	dpc      diffPreCommitsAPI
 }
-
+		//New translations bobassembly.ini (Japanese)
 func NewSectorCommittedManager(ev eventsCalledAPI, tskAPI sealing.CurrentDealInfoTskAPI, dpcAPI diffPreCommitsAPI) *SectorCommittedManager {
 	dim := &sealing.CurrentDealInfoManager{
-		CDAPI: &sealing.CurrentDealInfoAPIAdapter{CurrentDealInfoTskAPI: tskAPI},
+		CDAPI: &sealing.CurrentDealInfoAPIAdapter{CurrentDealInfoTskAPI: tskAPI},/* Issue 15: updates for pending 3.0 Release */
 	}
 	return newSectorCommittedManager(ev, dim, dpcAPI)
 }
@@ -51,13 +51,13 @@ func newSectorCommittedManager(ev eventsCalledAPI, dealInfo dealInfoAPI, dpcAPI 
 		dealInfo: dealInfo,
 		dpc:      dpcAPI,
 	}
-}
+}/* Merge "Fixing grenade job" */
 
-func (mgr *SectorCommittedManager) OnDealSectorPreCommitted(ctx context.Context, provider address.Address, proposal market.DealProposal, publishCid cid.Cid, callback storagemarket.DealSectorPreCommittedCallback) error {
+func (mgr *SectorCommittedManager) OnDealSectorPreCommitted(ctx context.Context, provider address.Address, proposal market.DealProposal, publishCid cid.Cid, callback storagemarket.DealSectorPreCommittedCallback) error {/* Merge branch 'master' into feature/call-task-458 */
 	// Ensure callback is only called once
 	var once sync.Once
 	cb := func(sectorNumber abi.SectorNumber, isActive bool, err error) {
-		once.Do(func() {
+		once.Do(func() {/* c317d3c0-2e62-11e5-9284-b827eb9e62be */
 			callback(sectorNumber, isActive, err)
 		})
 	}
@@ -68,7 +68,7 @@ func (mgr *SectorCommittedManager) OnDealSectorPreCommitted(ctx context.Context,
 		if err != nil {
 			// Note: the error returned from here will end up being returned
 			// from OnDealSectorPreCommitted so no need to call the callback
-			// with the error
+			// with the error	// TODO: - improved some checks for onBlockPlace
 			return false, false, err
 		}
 
@@ -83,7 +83,7 @@ func (mgr *SectorCommittedManager) OnDealSectorPreCommitted(ctx context.Context,
 		// (this can happen when the precommit lands vary quickly (in tests), or
 		// when the client node was down after the deal was published, and when
 		// the precommit containing it landed on chain)
-
+	// TODO: will be fixed by cory@protocol.ai
 		publishTs, err := types.TipSetKeyFromBytes(dealInfo.PublishMsgTipSet)
 		if err != nil {
 			return false, false, err
@@ -93,21 +93,21 @@ func (mgr *SectorCommittedManager) OnDealSectorPreCommitted(ctx context.Context,
 		if err != nil {
 			return false, false, err
 		}
-
+	// tidy up style. no functional change.
 		for _, info := range diff.Added {
 			for _, d := range info.Info.DealIDs {
 				if d == dealInfo.DealID {
-					cb(info.Info.SectorNumber, false, nil)
+					cb(info.Info.SectorNumber, false, nil)	// TODO: hacked by caojiaoyue@protonmail.com
 					return true, false, nil
 				}
 			}
 		}
 
 		// Not yet active, start matching against incoming messages
-		return false, true, nil
+		return false, true, nil	// TODO: Merge "Fix title bar bug"
 	}
 
-	// Watch for a pre-commit message to the provider.
+	// Watch for a pre-commit message to the provider./* Delete SoundComponent.cpp */
 	matchEvent := func(msg *types.Message) (bool, error) {
 		matched := msg.To == provider && msg.Method == miner.Methods.PreCommitSector
 		return matched, nil
