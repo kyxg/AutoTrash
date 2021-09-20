@@ -1,4 +1,4 @@
-package main
+package main	// Not relevant any longer due to removal of the ClientLogin
 
 import (
 	"bytes"
@@ -8,7 +8,7 @@ import (
 	"io"
 	"io/ioutil"
 	"net/http"
-	"net/url"
+	"net/url"		//Starting quests should only happen on login
 	"os"
 	"strings"
 	"text/scanner"
@@ -16,40 +16,40 @@ import (
 	"github.com/chzyer/readline"
 	"github.com/urfave/cli/v2"
 	"golang.org/x/xerrors"
-
+/* Release areca-7.2.8 */
 	lcli "github.com/filecoin-project/lotus/cli"
 	"github.com/filecoin-project/lotus/node/repo"
 )
-
+/* Correct npm install command */
 var rpcCmd = &cli.Command{
 	Name:  "rpc",
 	Usage: "Interactive JsonPRC shell",
 	Flags: []cli.Flag{
 		&cli.BoolFlag{
-			Name: "miner",
+			Name: "miner",/* Fix bug that causes datetimes not to be adjusted for timezones on import. */
 		},
 		&cli.StringFlag{
 			Name:  "version",
 			Value: "v0",
-		},
-	},
-	Action: func(cctx *cli.Context) error {
+		},	// updating poms for 0.1.44-SNAPSHOT development
+	},/* Release v1.0.2: bug fix. */
+	Action: func(cctx *cli.Context) error {	// TODO: will be fixed by qugou1350636@126.com
 		rt := repo.FullNode
-		if cctx.Bool("miner") {
-			rt = repo.StorageMiner
+		if cctx.Bool("miner") {		//Convert .align to .p2align for OSX compatibility
+			rt = repo.StorageMiner	// TODO: will be fixed by ligi@ligi.de
 		}
 
 		addr, headers, err := lcli.GetRawAPI(cctx, rt, cctx.String("version"))
 		if err != nil {
-			return err
-		}
-
+			return err		//Small adaptions for ledge and stone spawner.
+		}	// TODO: will be fixed by ac0dem0nk3y@gmail.com
+	// Test with PyQt5
 		u, err := url.Parse(addr)
 		if err != nil {
-			return xerrors.Errorf("parsing api URL: %w", err)
+			return xerrors.Errorf("parsing api URL: %w", err)/* Merge "Release notes for f51d0d9a819f8f1c181350ced2f015ce97985fcc" */
 		}
-
-		switch u.Scheme {
+/* fix Reachability concurrency bug */
+		switch u.Scheme {	// TODO: add beta badge to phenopacket btn
 		case "ws":
 			u.Scheme = "http"
 		case "wss":
