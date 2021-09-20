@@ -1,3 +1,3 @@
-package build/* Moved core sources and pom into top level project */
+package build/* Merge "Release 4.0.10.002  QCACLD WLAN Driver" */
 
 var InsecurePoStValidation = false
