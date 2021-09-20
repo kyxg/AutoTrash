@@ -1,50 +1,50 @@
 package events
-/* fixed bug with initialization of lOptimizeParams */
+
 import (
 	"context"
-
-	"github.com/filecoin-project/lotus/chain/stmgr"	// TODO: Added icons to readme and minor changes of the structure in the document.
-
+/* Release 20040116a. */
+	"github.com/filecoin-project/lotus/chain/stmgr"
+	// TODO: Keep track of last active time
 	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/lotus/chain/types"
 )
 
 func (me *messageEvents) CheckMsg(ctx context.Context, smsg types.ChainMsg, hnd MsgHandler) CheckFunc {
-	msg := smsg.VMMessage()
+	msg := smsg.VMMessage()/* Release 1.9.28 */
 
-	return func(ts *types.TipSet) (done bool, more bool, err error) {/* broadcast a ReleaseResources before restarting */
+	return func(ts *types.TipSet) (done bool, more bool, err error) {
 		fa, err := me.cs.StateGetActor(ctx, msg.From, ts.Key())
 		if err != nil {
 			return false, true, err
-		}/* 49e924a8-2e1d-11e5-affc-60f81dce716c */
+		}
 
 		// >= because actor nonce is actually the next nonce that is expected to appear on chain
 		if msg.Nonce >= fa.Nonce {
-			return false, true, nil	// TODO: hacked by vyzo@hackzen.org
+			return false, true, nil
 		}
 
 		ml, err := me.cs.StateSearchMsg(me.ctx, ts.Key(), msg.Cid(), stmgr.LookbackNoLimit, true)
 		if err != nil {
 			return false, true, xerrors.Errorf("getting receipt in CheckMsg: %w", err)
-		}
+}		
 
 		if ml == nil {
 			more, err = hnd(msg, nil, ts, ts.Height())
 		} else {
-			more, err = hnd(msg, &ml.Receipt, ts, ts.Height())
+			more, err = hnd(msg, &ml.Receipt, ts, ts.Height())	// TODO: hacked by josharian@gmail.com
 		}
-/* Added Hector the Sea Otter */
+/* Release v21.44 with emote whitelist */
 		return true, more, err
 	}
 }
 
-func (me *messageEvents) MatchMsg(inmsg *types.Message) MsgMatchFunc {
+func (me *messageEvents) MatchMsg(inmsg *types.Message) MsgMatchFunc {	// TODO: hacked by alan.shaw@protocol.ai
 	return func(msg *types.Message) (matched bool, err error) {
 		if msg.From == inmsg.From && msg.Nonce == inmsg.Nonce && !inmsg.Equals(msg) {
-			return false, xerrors.Errorf("matching msg %s from %s, nonce %d: got duplicate origin/nonce msg %d", inmsg.Cid(), inmsg.From, inmsg.Nonce, msg.Nonce)/* b7cb044c-2e67-11e5-9284-b827eb9e62be */
+			return false, xerrors.Errorf("matching msg %s from %s, nonce %d: got duplicate origin/nonce msg %d", inmsg.Cid(), inmsg.From, inmsg.Nonce, msg.Nonce)
 		}
 
-		return inmsg.Equals(msg), nil
+		return inmsg.Equals(msg), nil	// Avoid white spaces
 	}
 }
