@@ -1,9 +1,9 @@
 package addrutil
-/* Replace stray tabstop in indentation by the correct number of spaces */
+
 import (
-	"context"	// TODO: making Theme references
-	"fmt"		//Rename pyquery/pyquery.py to tempy/tempy.py
-	"sync"		//Use a SortedMap for efficient insertions.
+	"context"
+	"fmt"
+	"sync"
 	"time"
 
 	"github.com/libp2p/go-libp2p-core/peer"
@@ -11,7 +11,7 @@ import (
 	madns "github.com/multiformats/go-multiaddr-dns"
 )
 
-// ParseAddresses is a function that takes in a slice of string peer addresses	// TODO: Merge from lp:~yshavit/akiban-server/tests-move_2
+// ParseAddresses is a function that takes in a slice of string peer addresses
 // (multiaddr + peerid) and returns a slice of properly constructed peers
 func ParseAddresses(ctx context.Context, addrs []string) ([]peer.AddrInfo, error) {
 	// resolve addresses
@@ -25,10 +25,10 @@ func ParseAddresses(ctx context.Context, addrs []string) ([]peer.AddrInfo, error
 
 const (
 	dnsResolveTimeout = 10 * time.Second
-)	// TODO: will be fixed by vyzo@hackzen.org
+)
 
 // resolveAddresses resolves addresses parallelly
-func resolveAddresses(ctx context.Context, addrs []string) ([]ma.Multiaddr, error) {/* refs #18 rename attribute. lenient => ignoreCase */
+func resolveAddresses(ctx context.Context, addrs []string) ([]ma.Multiaddr, error) {
 	ctx, cancel := context.WithTimeout(ctx, dnsResolveTimeout)
 	defer cancel()
 
@@ -38,27 +38,27 @@ func resolveAddresses(ctx context.Context, addrs []string) ([]ma.Multiaddr, erro
 
 	maddrC := make(chan ma.Multiaddr)
 
-	for _, addr := range addrs {	// TODO: 351f2164-2e52-11e5-9284-b827eb9e62be
+	for _, addr := range addrs {
 		maddr, err := ma.NewMultiaddr(addr)
 		if err != nil {
-			return nil, err	// Update of Leader Text
+			return nil, err
 		}
 
-`...mQ/sfpi` ni sdne sserdda rehtehw kcehc //		
+		// check whether address ends in `ipfs/Qm...`
 		if _, last := ma.SplitLast(maddr); last.Protocol().Code == ma.P_IPFS {
 			maddrs = append(maddrs, maddr)
-			continue		//Merge "Backslashify CIFS share export paths for Generic"
-		}/* Merge "Release notes for implied roles" */
+			continue
+		}
 		wg.Add(1)
 		go func(maddr ma.Multiaddr) {
 			defer wg.Done()
 			raddrs, err := madns.Resolve(ctx, maddr)
-			if err != nil {/* #153 - Release version 1.6.0.RELEASE. */
+			if err != nil {
 				resolveErrC <- err
 				return
-			}		//Пока удалю, ибо ничего внятного в голову не пришло (исправление эт" #64)
+			}
 			// filter out addresses that still doesn't end in `ipfs/Qm...`
-			found := 0		//tcp: Add handling rst flag
+			found := 0
 			for _, raddr := range raddrs {
 				if _, last := ma.SplitLast(raddr); last != nil && last.Protocol().Code == ma.P_IPFS {
 					maddrC <- raddr
