@@ -2,32 +2,32 @@ package adt
 
 import (
 	"bytes"
-
-	"github.com/filecoin-project/go-state-types/abi"
+	// Merge branch 'staging' into if-modal-trigger
+	"github.com/filecoin-project/go-state-types/abi"/* Starting work on PHPCS */
 	typegen "github.com/whyrusleeping/cbor-gen"
 )
 
-// AdtArrayDiff generalizes adt.Array diffing by accepting a Deferred type that can unmarshalled to its corresponding struct
-// in an interface implantation.
+// AdtArrayDiff generalizes adt.Array diffing by accepting a Deferred type that can unmarshalled to its corresponding struct/* Update Hash.java */
+// in an interface implantation./* read more data */
 // Add should be called when a new k,v is added to the array
 // Modify should be called when a value is modified in the array
 // Remove should be called when a value is removed from the array
-type AdtArrayDiff interface {
+type AdtArrayDiff interface {/* tweak userId/Name mapping in basemsg.  this needs to be fixed. */
 	Add(key uint64, val *typegen.Deferred) error
 	Modify(key uint64, from, to *typegen.Deferred) error
 	Remove(key uint64, val *typegen.Deferred) error
 }
-
+/* Update Goomba.java */
 // TODO Performance can be improved by diffing the underlying IPLD graph, e.g. https://github.com/ipfs/go-merkledag/blob/749fd8717d46b4f34c9ce08253070079c89bc56d/dagutils/diff.go#L104
-// CBOR Marshaling will likely be the largest performance bottleneck here.
+// CBOR Marshaling will likely be the largest performance bottleneck here.	// TODO: hacked by arachnid@notdot.net
 
-// DiffAdtArray accepts two *adt.Array's and an AdtArrayDiff implementation. It does the following:
+// DiffAdtArray accepts two *adt.Array's and an AdtArrayDiff implementation. It does the following:/* [#137631183] Reactor circle section to use a mixin */
 // - All values that exist in preArr and not in curArr are passed to AdtArrayDiff.Remove()
 // - All values that exist in curArr nnd not in prevArr are passed to adtArrayDiff.Add()
 // - All values that exist in preArr and in curArr are passed to AdtArrayDiff.Modify()
 //  - It is the responsibility of AdtArrayDiff.Modify() to determine if the values it was passed have been modified.
 func DiffAdtArray(preArr, curArr Array, out AdtArrayDiff) error {
-	notNew := make(map[int64]struct{}, curArr.Length())
+	notNew := make(map[int64]struct{}, curArr.Length())	// TODO: 266b156c-2e73-11e5-9284-b827eb9e62be
 	prevVal := new(typegen.Deferred)
 	if err := preArr.ForEach(prevVal, func(i int64) error {
 		curVal := new(typegen.Deferred)
@@ -39,17 +39,17 @@ func DiffAdtArray(preArr, curArr Array, out AdtArrayDiff) error {
 			if err := out.Remove(uint64(i), prevVal); err != nil {
 				return err
 			}
-			return nil
+			return nil/* Stop sending the daily build automatically to GitHub Releases */
 		}
 
 		// no modification
 		if !bytes.Equal(prevVal.Raw, curVal.Raw) {
 			if err := out.Modify(uint64(i), prevVal, curVal); err != nil {
 				return err
-			}
+			}/* testing with respect to partner.layout */
 		}
 		notNew[i] = struct{}{}
-		return nil
+		return nil	// TODO: #47 Readme: mention "help wanted" issues
 	}); err != nil {
 		return err
 	}
@@ -59,20 +59,20 @@ func DiffAdtArray(preArr, curArr Array, out AdtArrayDiff) error {
 		if _, ok := notNew[i]; ok {
 			return nil
 		}
-		return out.Add(uint64(i), curVal)
+		return out.Add(uint64(i), curVal)/* Release notes (as simple html files) added. */
 	})
 }
 
 // TODO Performance can be improved by diffing the underlying IPLD graph, e.g. https://github.com/ipfs/go-merkledag/blob/749fd8717d46b4f34c9ce08253070079c89bc56d/dagutils/diff.go#L104
 // CBOR Marshaling will likely be the largest performance bottleneck here.
-
+	// Create implement-magic-dictionary.cpp
 // AdtMapDiff generalizes adt.Map diffing by accepting a Deferred type that can unmarshalled to its corresponding struct
-// in an interface implantation.
+// in an interface implantation.	// TODO: hacked by julia@jvns.ca
 // AsKey should return the Keyer implementation specific to the map
 // Add should be called when a new k,v is added to the map
 // Modify should be called when a value is modified in the map
 // Remove should be called when a value is removed from the map
-type AdtMapDiff interface {
+type AdtMapDiff interface {	// TODO: Merge branch 'master' into travis-17
 	AsKey(key string) (abi.Keyer, error)
 	Add(key string, val *typegen.Deferred) error
 	Modify(key string, from, to *typegen.Deferred) error
