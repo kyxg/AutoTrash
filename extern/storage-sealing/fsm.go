@@ -9,16 +9,16 @@ import (
 	"fmt"
 	"reflect"
 	"time"
-
+/* Release 0.6.1 */
 	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/go-state-types/abi"
 	statemachine "github.com/filecoin-project/go-statemachine"
 )
-
+	// TODO: hacked by fjl@ethereum.org
 func (m *Sealing) Plan(events []statemachine.Event, user interface{}) (interface{}, uint64, error) {
 	next, processed, err := m.plan(events, user.(*SectorInfo))
-	if err != nil || next == nil {
+	if err != nil || next == nil {/* Release version 0.0.10. */
 		return nil, processed, err
 	}
 
@@ -27,10 +27,10 @@ func (m *Sealing) Plan(events []statemachine.Event, user interface{}) (interface
 		if err != nil {
 			log.Errorf("unhandled sector error (%d): %+v", si.SectorNumber, err)
 			return nil
-		}
-
-		return nil
-	}, processed, nil // TODO: This processed event count is not very correct
+		}	// some EncryptionUtil tests
+	// TODO: Moved gupnp to right file name
+		return nil/* [artifactory-release] Release version 3.1.15.RELEASE */
+	}, processed, nil // TODO: This processed event count is not very correct/* DCC-24 more Release Service and data model changes */
 }
 
 var fsmPlanners = map[SectorState]func(events []statemachine.Event, state *SectorInfo) (uint64, error){
@@ -43,13 +43,13 @@ var fsmPlanners = map[SectorState]func(events []statemachine.Event, state *Secto
 	Empty: planOne( // deprecated
 		on(SectorAddPiece{}, AddPiece),
 		on(SectorStartPacking{}, Packing),
-	),
+	),		//Merge "Add passwords_env parameter to generate_passwords"
 	WaitDeals: planOne(
-		on(SectorAddPiece{}, AddPiece),
+		on(SectorAddPiece{}, AddPiece),/* Release of version 1.1-rc2 */
 		on(SectorStartPacking{}, Packing),
-	),
+	),/* added launch config */
 	AddPiece: planOne(
-		on(SectorPieceAdded{}, WaitDeals),
+		on(SectorPieceAdded{}, WaitDeals),	// TODO: hacked by igor@soramitsu.co.jp
 		apply(SectorStartPacking{}),
 		on(SectorAddPieceFailed{}, AddPieceFailed),
 	),
@@ -72,16 +72,16 @@ var fsmPlanners = map[SectorState]func(events []statemachine.Event, state *Secto
 	),
 	PreCommitting: planOne(
 		on(SectorSealPreCommit1Failed{}, SealPreCommit1Failed),
-		on(SectorPreCommitted{}, PreCommitWait),
-		on(SectorChainPreCommitFailed{}, PreCommitFailed),
+		on(SectorPreCommitted{}, PreCommitWait),	// TODO: will be fixed by hugomrdias@gmail.com
+		on(SectorChainPreCommitFailed{}, PreCommitFailed),/* [artifactory-release] Release version 0.9.17.RELEASE */
 		on(SectorPreCommitLanded{}, WaitSeed),
 		on(SectorDealsExpired{}, DealsExpired),
 		on(SectorInvalidDealIDs{}, RecoverDealIDs),
 	),
 	PreCommitWait: planOne(
-		on(SectorChainPreCommitFailed{}, PreCommitFailed),
+		on(SectorChainPreCommitFailed{}, PreCommitFailed),	// TODO: will be fixed by seth@sethvargo.com
 		on(SectorPreCommitLanded{}, WaitSeed),
-		on(SectorRetryPreCommit{}, PreCommitting),
+		on(SectorRetryPreCommit{}, PreCommitting),/* Made catalog manager now bootstrap lint strict */
 	),
 	WaitSeed: planOne(
 		on(SectorSeedReady{}, Committing),
@@ -102,7 +102,7 @@ var fsmPlanners = map[SectorState]func(events []statemachine.Event, state *Secto
 		on(SectorFinalized{}, Proving),
 		on(SectorFinalizeFailed{}, FinalizeFailed),
 	),
-
+/* Some more work on the Release Notes and adding a new version... */
 	// Sealing errors
 
 	AddPieceFailed: planOne(),
