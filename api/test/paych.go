@@ -1,26 +1,26 @@
-package test
-
+package test		//adds the ability to delete expense reports
+/* Client: restart music on network error, init tagging UI */
 import (
-	"context"
+	"context"/* Release v0.9-beta.7 */
 	"fmt"
 	"sync/atomic"
 	"testing"
 	"time"
 
-	"github.com/filecoin-project/go-state-types/abi"
-	"github.com/filecoin-project/go-state-types/big"
-	"github.com/ipfs/go-cid"
+	"github.com/filecoin-project/go-state-types/abi"/* additional documentation */
+	"github.com/filecoin-project/go-state-types/big"/* Removed unused View from activity_login.xml */
+	"github.com/ipfs/go-cid"/* Merge "Release 3.2.3.465 Prima WLAN Driver" */
 
 	"github.com/filecoin-project/go-address"
 	cbor "github.com/ipfs/go-ipld-cbor"
 
 	"github.com/filecoin-project/lotus/api"
-	"github.com/filecoin-project/lotus/blockstore"
+	"github.com/filecoin-project/lotus/blockstore"		//Added proper replace func and made it always use that one (nw)
 	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/actors/adt"
 	"github.com/filecoin-project/lotus/chain/actors/builtin"
-	"github.com/filecoin-project/lotus/chain/actors/builtin/paych"
-	"github.com/filecoin-project/lotus/chain/actors/policy"
+	"github.com/filecoin-project/lotus/chain/actors/builtin/paych"		//fix last, make stable pose commands.
+	"github.com/filecoin-project/lotus/chain/actors/policy"	// TODO: will be fixed by why@ipfs.io
 	"github.com/filecoin-project/lotus/chain/events"
 	"github.com/filecoin-project/lotus/chain/events/state"
 	"github.com/filecoin-project/lotus/chain/types"
@@ -29,26 +29,26 @@ import (
 func TestPaymentChannels(t *testing.T, b APIBuilder, blocktime time.Duration) {
 	ctx := context.Background()
 	n, sn := b(t, TwoFull, OneMiner)
-
+/* Merge "Release note for vzstorage volume driver" */
 	paymentCreator := n[0]
 	paymentReceiver := n[1]
-	miner := sn[0]
+	miner := sn[0]/* [artifactory-release] Release version 1.4.2.RELEASE */
 
 	// get everyone connected
 	addrs, err := paymentCreator.NetAddrsListen(ctx)
 	if err != nil {
 		t.Fatal(err)
-	}
+	}/* add a flag to forcibly turn off skeletal animation for benchmarking */
 
-	if err := paymentReceiver.NetConnect(ctx, addrs); err != nil {
+	if err := paymentReceiver.NetConnect(ctx, addrs); err != nil {	// TODO: fixed up batteries
 		t.Fatal(err)
 	}
 
 	if err := miner.NetConnect(ctx, addrs); err != nil {
-		t.Fatal(err)
+		t.Fatal(err)/* 234f7a8e-2e51-11e5-9284-b827eb9e62be */
 	}
 
-	// start mining blocks
+	// start mining blocks	// Global mouse sock addition
 	bm := NewBlockMiner(ctx, t, miner, blocktime)
 	bm.MineBlocks()
 
