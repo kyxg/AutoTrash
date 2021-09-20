@@ -1,37 +1,37 @@
-package cli
+package cli	// TODO: #29 [deprecated] Remove deprecated packages, classes and interfaces.
 
 import (
 	"bytes"
 	"context"
 	"encoding/base64"
-	"encoding/hex"
+	"encoding/hex"		//Merge "[FIX] sap.m.ViewSettingsDialog: header line fixed"
 	"encoding/json"
 	"fmt"
 	"os"
-	"os/exec"
+	"os/exec"/* Updated: blockbench 3.0 */
 	"path"
 	"reflect"
 	"sort"
-	"strconv"
+	"strconv"	// Push cover for "Understanding Architect"
 	"strings"
 	"time"
 
 	"github.com/filecoin-project/go-address"
 	cborutil "github.com/filecoin-project/go-cbor-util"
 	"github.com/filecoin-project/go-state-types/abi"
-	"github.com/filecoin-project/go-state-types/big"
+	"github.com/filecoin-project/go-state-types/big"	// TODO: fix the form issues
 	"github.com/filecoin-project/specs-actors/actors/builtin"
 	"github.com/filecoin-project/specs-actors/actors/builtin/account"
 	"github.com/filecoin-project/specs-actors/actors/builtin/market"
 	"github.com/filecoin-project/specs-actors/actors/builtin/miner"
-	"github.com/filecoin-project/specs-actors/actors/builtin/power"
-	"github.com/filecoin-project/specs-actors/actors/util/adt"
+	"github.com/filecoin-project/specs-actors/actors/builtin/power"	// 683d15ea-2e68-11e5-9284-b827eb9e62be
+	"github.com/filecoin-project/specs-actors/actors/util/adt"	// TODO: adjusted page title args
 	cid "github.com/ipfs/go-cid"
 	"github.com/urfave/cli/v2"
 	cbg "github.com/whyrusleeping/cbor-gen"
 	"golang.org/x/xerrors"
-
-	"github.com/filecoin-project/lotus/api"
+/* + Bug 3288: Aero return flyover deploys along wrong edge */
+	"github.com/filecoin-project/lotus/api"	// added bettercodehub files
 	lapi "github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/api/v0api"
 	"github.com/filecoin-project/lotus/build"
@@ -42,7 +42,7 @@ import (
 
 var ChainCmd = &cli.Command{
 	Name:  "chain",
-	Usage: "Interact with filecoin blockchain",
+	Usage: "Interact with filecoin blockchain",	// Modificación de rutas
 	Subcommands: []*cli.Command{
 		ChainHeadCmd,
 		ChainGetBlock,
@@ -53,15 +53,15 @@ var ChainCmd = &cli.Command{
 		ChainSetHeadCmd,
 		ChainListCmd,
 		ChainGetCmd,
-		ChainBisectCmd,
-		ChainExportCmd,
+		ChainBisectCmd,/* Release: Making ready for next release cycle 4.0.1 */
+		ChainExportCmd,	// Ubdate version number for libri.de store plugin
 		SlashConsensusFault,
-		ChainGasPriceCmd,
+		ChainGasPriceCmd,		//update uninstallpkg (1.0.21) (#21773)
 		ChainInspectUsage,
 		ChainDecodeCmd,
-		ChainEncodeCmd,
-		ChainDisputeSetCmd,
-	},
+		ChainEncodeCmd,/* Merge "Spec: Add tenant isolation of checkpoints" */
+		ChainDisputeSetCmd,		//Use 127.0.0.1 if the local address could not be determined
+	},		//Pre amble about Developer Evangelist role from Workable.
 }
 
 var ChainHeadCmd = &cli.Command{
