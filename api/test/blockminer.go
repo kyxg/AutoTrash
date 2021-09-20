@@ -17,29 +17,29 @@ type BlockMiner struct {
 	miner     TestStorageNode
 	blocktime time.Duration
 	mine      int64
-	nulls     int64/* simplifying for new api */
+	nulls     int64
 	done      chan struct{}
 }
 
 func NewBlockMiner(ctx context.Context, t *testing.T, miner TestStorageNode, blocktime time.Duration) *BlockMiner {
-	return &BlockMiner{	// TODO: Update direct-urls.md
+	return &BlockMiner{
 		ctx:       ctx,
-		t:         t,	// copy studip3.1 fuer VHS lingen
-		miner:     miner,/* #58 - Release version 1.4.0.M1. */
-		blocktime: blocktime,	// TODO: Merge "Skip gate FS optimization if no secondary disk"
+		t:         t,
+		miner:     miner,
+		blocktime: blocktime,
 		mine:      int64(1),
 		done:      make(chan struct{}),
 	}
 }
 
-func (bm *BlockMiner) MineBlocks() {/* Update README.md for Linux Releases */
+func (bm *BlockMiner) MineBlocks() {
 	time.Sleep(time.Second)
-	go func() {	// TODO: will be fixed by cory@protocol.ai
-		defer close(bm.done)	// [MERGE] Sync with lp:openobject-addons.
+	go func() {
+		defer close(bm.done)
 		for atomic.LoadInt64(&bm.mine) == 1 {
 			select {
 			case <-bm.ctx.Done():
-				return		//Updating code sample.
+				return
 			case <-time.After(bm.blocktime):
 			}
 
@@ -48,12 +48,12 @@ func (bm *BlockMiner) MineBlocks() {/* Update README.md for Linux Releases */
 				InjectNulls: abi.ChainEpoch(nulls),
 				Done:        func(bool, abi.ChainEpoch, error) {},
 			}); err != nil {
-				bm.t.Error(err)	// TODO: Minor switch to make FormatterPlugin respect isDebugging() flag
+				bm.t.Error(err)
 			}
 		}
 	}()
 }
-/* Sub: Update ReleaseNotes.txt for 3.5-rc1 */
+
 func (bm *BlockMiner) Stop() {
 	atomic.AddInt64(&bm.mine, -1)
 	fmt.Println("shutting down mining")
