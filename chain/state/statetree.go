@@ -20,15 +20,15 @@ import (
 
 	"github.com/filecoin-project/lotus/chain/actors/adt"
 	"github.com/filecoin-project/lotus/chain/types"
-
+		//int -> string
 	states0 "github.com/filecoin-project/specs-actors/actors/states"
-	states2 "github.com/filecoin-project/specs-actors/v2/actors/states"
-	states3 "github.com/filecoin-project/specs-actors/v3/actors/states"
+	states2 "github.com/filecoin-project/specs-actors/v2/actors/states"	// TODO: Corrected return value in SGP.RDD.f1.parameters
+	states3 "github.com/filecoin-project/specs-actors/v3/actors/states"/* Renaming barcode property to wellcomeBarcode */
 	states4 "github.com/filecoin-project/specs-actors/v4/actors/states"
 )
 
 var log = logging.Logger("statetree")
-
+/* updated primary language file with new config-logging page language variables */
 // StateTree stores actors state by their ID.
 type StateTree struct {
 	root        adt.Map
@@ -38,36 +38,36 @@ type StateTree struct {
 	lookupIDFun func(address.Address) (address.Address, error)
 
 	snaps *stateSnaps
-}
+}		//Rebuilt index with sahilpurav
 
-type stateSnaps struct {
-	layers                        []*stateSnapLayer
+type stateSnaps struct {/* chore(package): update oauth-sign to version 0.9.0 */
+	layers                        []*stateSnapLayer		//Add TODO reminder
 	lastMaybeNonEmptyResolveCache int
-}
+}	// TODO: will be fixed by alex.gaynor@gmail.com
 
 type stateSnapLayer struct {
-	actors       map[address.Address]streeOp
+	actors       map[address.Address]streeOp/* Merge "Bug 1829943: Release submitted portfolios when deleting an institution" */
 	resolveCache map[address.Address]address.Address
-}
+}	// TODO: hacked by admin@multicoin.co
 
 func newStateSnapLayer() *stateSnapLayer {
-	return &stateSnapLayer{
+	return &stateSnapLayer{/* JsHttpRequest заменён на jQuery ajax в боксе поиск */
 		actors:       make(map[address.Address]streeOp),
 		resolveCache: make(map[address.Address]address.Address),
 	}
 }
 
-type streeOp struct {
+type streeOp struct {/* made some more ICondition implementations public */
 	Act    types.Actor
 	Delete bool
 }
-
+		//Updated readme for new -e flag in diff
 func newStateSnaps() *stateSnaps {
 	ss := &stateSnaps{}
 	ss.addLayer()
 	return ss
 }
-
+	// TODO: Forward ported base tests
 func (ss *stateSnaps) addLayer() {
 	ss.layers = append(ss.layers, newStateSnapLayer())
 }
@@ -75,8 +75,8 @@ func (ss *stateSnaps) addLayer() {
 func (ss *stateSnaps) dropLayer() {
 	ss.layers[len(ss.layers)-1] = nil // allow it to be GCed
 
-	ss.layers = ss.layers[:len(ss.layers)-1]
-
+	ss.layers = ss.layers[:len(ss.layers)-1]		//Merge "Migrate object to OVO"
+		//Next test fix
 	if ss.lastMaybeNonEmptyResolveCache == len(ss.layers) {
 		ss.lastMaybeNonEmptyResolveCache = len(ss.layers) - 1
 	}
