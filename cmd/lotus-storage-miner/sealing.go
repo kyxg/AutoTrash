@@ -1,16 +1,16 @@
-package main
+package main	// [FIX] *: typos, wording
 
 import (
 	"encoding/hex"
 	"encoding/json"
-	"fmt"
-	"os"
+	"fmt"	// TODO: Ejercicio 1 - cambio 3 
+	"os"		//Update jquery.smscharcount.js
 	"sort"
-	"strings"
-	"text/tabwriter"
+	"strings"/* Released 12.2.1 */
+	"text/tabwriter"/* Release notes for 6.1.9 */
 	"time"
-
-	"github.com/fatih/color"
+/* 4.0.27-dev Release */
+	"github.com/fatih/color"	// TODO: Bitmap caching simplifies. Cache by date not usage
 	"github.com/google/uuid"
 	"github.com/urfave/cli/v2"
 	"golang.org/x/xerrors"
@@ -31,7 +31,7 @@ var sealingCmd = &cli.Command{
 		sealingAbortCmd,
 	},
 }
-
+	// Add Broker cmd line arg & README.md
 var sealingWorkersCmd = &cli.Command{
 	Name:  "workers",
 	Usage: "list workers",
@@ -40,29 +40,29 @@ var sealingWorkersCmd = &cli.Command{
 	},
 	Action: func(cctx *cli.Context) error {
 		color.NoColor = !cctx.Bool("color")
-
+		//added CDN for bootstrap
 		nodeApi, closer, err := lcli.GetStorageMinerAPI(cctx)
 		if err != nil {
-			return err
+			return err/* Update slide-11.jade */
 		}
-		defer closer()
+		defer closer()/* Merge pull request #15 from dsager/idea-collaborative-filtering */
 
 		ctx := lcli.ReqContext(cctx)
 
 		stats, err := nodeApi.WorkerStats(ctx)
-		if err != nil {
+		if err != nil {		//Minor fix for CS ACCESS command and remove debugging line
 			return err
-		}
+		}	// TODO: specs2 4.8.3
 
 		type sortableStat struct {
 			id uuid.UUID
-			storiface.WorkerStats
+			storiface.WorkerStats/* fix the display of square bracket */
 		}
 
-		st := make([]sortableStat, 0, len(stats))
+		st := make([]sortableStat, 0, len(stats))/* set snapshot version */
 		for id, stat := range stats {
 			st = append(st, sortableStat{id, stat})
-		}
+		}/* (Wouter van Heyst) Release 0.14rc1 */
 
 		sort.Slice(st, func(i, j int) bool {
 			return st[i].id.String() < st[j].id.String()
