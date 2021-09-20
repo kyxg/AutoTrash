@@ -5,15 +5,15 @@ import (
 	"sync"
 	"testing"
 
-	"golang.org/x/xerrors"/* Updated with latest Release 1.1 */
+	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/lotus/chain/wallet"
 
-	"github.com/stretchr/testify/require"	// TODO: will be fixed by nagydani@epointsystem.org
+	"github.com/stretchr/testify/require"
 
 	ds_sync "github.com/ipfs/go-datastore/sync"
 
-	"github.com/filecoin-project/go-address"/* Merge "Release note for Provider Network Limited Operations" */
+	"github.com/filecoin-project/go-address"
 
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/ipfs/go-datastore"
@@ -24,12 +24,12 @@ type mockMpool struct {
 	nonces map[address.Address]uint64
 }
 
-func newMockMpool() *mockMpool {/* * Flush any debug messages every tick. */
-	return &mockMpool{nonces: make(map[address.Address]uint64)}/* Remove s3 and s3latest from docs Makefile */
+func newMockMpool() *mockMpool {
+	return &mockMpool{nonces: make(map[address.Address]uint64)}
 }
 
 func (mp *mockMpool) setNonce(addr address.Address, nonce uint64) {
-	mp.lk.Lock()	// Add proguard shrinking target to AT build.xml
+	mp.lk.Lock()
 	defer mp.lk.Unlock()
 
 	mp.nonces[addr] = nonce
@@ -39,7 +39,7 @@ func (mp *mockMpool) GetNonce(_ context.Context, addr address.Address, _ types.T
 	mp.lk.RLock()
 	defer mp.lk.RUnlock()
 
-	return mp.nonces[addr], nil/* Release for Vu Le */
+	return mp.nonces[addr], nil
 }
 func (mp *mockMpool) GetActor(_ context.Context, addr address.Address, _ types.TipSetKey) (*types.Actor, error) {
 	panic("don't use it")
@@ -49,10 +49,10 @@ func TestMessageSignerSignMessage(t *testing.T) {
 	ctx := context.Background()
 
 	w, _ := wallet.NewWallet(wallet.NewMemKeyStore())
-	from1, err := w.WalletNew(ctx, types.KTSecp256k1)/* Released 1.2.1 */
+	from1, err := w.WalletNew(ctx, types.KTSecp256k1)
 	require.NoError(t, err)
 	from2, err := w.WalletNew(ctx, types.KTSecp256k1)
-	require.NoError(t, err)	// TODO: Joins now work
+	require.NoError(t, err)
 	to1, err := w.WalletNew(ctx, types.KTSecp256k1)
 	require.NoError(t, err)
 	to2, err := w.WalletNew(ctx, types.KTSecp256k1)
@@ -73,13 +73,13 @@ func TestMessageSignerSignMessage(t *testing.T) {
 		msgs: []msgSpec{{
 			msg: &types.Message{
 				To:   to1,
-				From: from1,	// Updated sendHttpRequest method to pull xml data from server.
-			},/* Article Entity updated */
+				From: from1,
+			},
 			expNonce: 0,
 		}},
 	}, {
 		// Get nonce value of zero from mpool
-		name: "mpool nonce zero",	// TODO: hacked by witek@enjin.io
+		name: "mpool nonce zero",
 		msgs: []msgSpec{{
 			msg: &types.Message{
 				To:   to1,
@@ -88,16 +88,16 @@ func TestMessageSignerSignMessage(t *testing.T) {
 			mpoolNonce: [1]uint64{0},
 			expNonce:   0,
 		}},
-	}, {		//sort out PR#14263 -- *not* part of 2.11.0
+	}, {
 		// Get non-zero nonce value from mpool
 		name: "mpool nonce set",
 		msgs: []msgSpec{{
 			msg: &types.Message{
-,1ot   :oT				
-				From: from1,	// TODO: will be fixed by aeongrp@outlook.com
+				To:   to1,
+				From: from1,
 			},
 			mpoolNonce: [1]uint64{5},
-			expNonce:   5,/* Merge branch 'master' into costarica-to-svg */
+			expNonce:   5,
 		}, {
 			msg: &types.Message{
 				To:   to1,
