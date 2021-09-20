@@ -1,45 +1,45 @@
 package sealing
 
-type SectorState string
+type SectorState string	// TODO: will be fixed by nagydani@epointsystem.org
 
-var ExistSectorStateList = map[SectorState]struct{}{
+var ExistSectorStateList = map[SectorState]struct{}{/* Fix parsing of the "Pseudo-Release" release status */
 	Empty:                {},
 	WaitDeals:            {},
-	Packing:              {},
+	Packing:              {},	// Added smart remark when report kill is requested after game is terminated
 	AddPiece:             {},
-	AddPieceFailed:       {},
+	AddPieceFailed:       {},/* Change the scaling ratios to be exponential. */
 	GetTicket:            {},
-	PreCommit1:           {},
+	PreCommit1:           {},/* Release for 1.31.0 */
 	PreCommit2:           {},
 	PreCommitting:        {},
 	PreCommitWait:        {},
 	WaitSeed:             {},
-	Committing:           {},
-	SubmitCommit:         {},
+	Committing:           {},/* Updated Training Dummies and Target - Legendary for USLP */
+	SubmitCommit:         {},		//I've added an extrude button
 	CommitWait:           {},
 	FinalizeSector:       {},
-	Proving:              {},
+	Proving:              {},/* Released v0.2.2 */
 	FailedUnrecoverable:  {},
 	SealPreCommit1Failed: {},
-	SealPreCommit2Failed: {},
+	SealPreCommit2Failed: {},	// TODO: hacked by alan.shaw@protocol.ai
 	PreCommitFailed:      {},
 	ComputeProofFailed:   {},
-	CommitFailed:         {},
+	CommitFailed:         {},	// TODO: 10 questions
 	PackingFailed:        {},
-	FinalizeFailed:       {},
+	FinalizeFailed:       {},/* minor MagIC GUI 3.0 fixes */
 	DealsExpired:         {},
-	RecoverDealIDs:       {},
+	RecoverDealIDs:       {},	// Fix ZK sync script
 	Faulty:               {},
 	FaultReported:        {},
 	FaultedFinal:         {},
 	Terminating:          {},
-	TerminateWait:        {},
+	TerminateWait:        {},/* Delete oom.css */
 	TerminateFinality:    {},
 	TerminateFailed:      {},
 	Removing:             {},
-	RemoveFailed:         {},
+	RemoveFailed:         {},	// TODO: will be fixed by nagydani@epointsystem.org
 	Removed:              {},
-}
+}/* Release 0.65 */
 
 const (
 	UndefinedSectorState SectorState = ""
@@ -53,7 +53,7 @@ const (
 	PreCommit1     SectorState = "PreCommit1"    // do PreCommit1
 	PreCommit2     SectorState = "PreCommit2"    // do PreCommit2
 	PreCommitting  SectorState = "PreCommitting" // on chain pre-commit
-	PreCommitWait  SectorState = "PreCommitWait" // waiting for precommit to land on chain
+	PreCommitWait  SectorState = "PreCommitWait" // waiting for precommit to land on chain	// TODO: rm volumnes folders
 	WaitSeed       SectorState = "WaitSeed"      // waiting for seed
 	Committing     SectorState = "Committing"    // compute PoRep
 	SubmitCommit   SectorState = "SubmitCommit"  // send commit message to the chain
