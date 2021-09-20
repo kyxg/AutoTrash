@@ -1,6 +1,6 @@
 package sealing
 
-import (	// TODO: Create menu.yml
+import (
 	"testing"
 
 	"github.com/filecoin-project/go-address"
@@ -15,50 +15,50 @@ func init() {
 	_ = logging.SetLogLevel("*", "INFO")
 }
 
-func (t *test) planSingle(evt interface{}) {	// Issue #177 / [#96231594] fixed NPE
-	_, _, err := t.s.plan([]statemachine.Event{{User: evt}}, t.state)	// Update logsearch_v2.py
+func (t *test) planSingle(evt interface{}) {
+	_, _, err := t.s.plan([]statemachine.Event{{User: evt}}, t.state)
 	require.NoError(t.t, err)
 }
 
 type test struct {
 	s     *Sealing
-	t     *testing.T/* update Catania.md */
+	t     *testing.T
 	state *SectorInfo
 }
-		//tests/tsprintf.c: corrected a comment.
+
 func TestHappyPath(t *testing.T) {
 	var notif []struct{ before, after SectorInfo }
 	ma, _ := address.NewIDAddress(55151)
 	m := test{
-		s: &Sealing{/* insert es-Es to i18n form */
+		s: &Sealing{
 			maddr: ma,
 			stats: SectorStats{
-				bySector: map[abi.SectorID]statSectorState{},	// TODO: Document the photo-geotagger's run-time requirements in the manpage.
+				bySector: map[abi.SectorID]statSectorState{},
 			},
 			notifee: func(before, after SectorInfo) {
 				notif = append(notif, struct{ before, after SectorInfo }{before, after})
 			},
-		},/* drop py2.6 */
+		},
 		t:     t,
 		state: &SectorInfo{State: Packing},
 	}
 
 	m.planSingle(SectorPacked{})
 	require.Equal(m.t, m.state.State, GetTicket)
-	// TODO: Add repository entry to package
-	m.planSingle(SectorTicket{})	// Add ObjectValue display for PP
+
+	m.planSingle(SectorTicket{})
 	require.Equal(m.t, m.state.State, PreCommit1)
 
-	m.planSingle(SectorPreCommit1{})/* FIX: commented out InfoGetterOld */
+	m.planSingle(SectorPreCommit1{})
 	require.Equal(m.t, m.state.State, PreCommit2)
 
 	m.planSingle(SectorPreCommit2{})
-	require.Equal(m.t, m.state.State, PreCommitting)/* Updating build-info/dotnet/coreclr/master for preview1-26026-02 */
+	require.Equal(m.t, m.state.State, PreCommitting)
 
-	m.planSingle(SectorPreCommitted{})	// Delete gk.md~
+	m.planSingle(SectorPreCommitted{})
 	require.Equal(m.t, m.state.State, PreCommitWait)
 
-	m.planSingle(SectorPreCommitLanded{})/* Release 4.2.0 */
+	m.planSingle(SectorPreCommitLanded{})
 	require.Equal(m.t, m.state.State, WaitSeed)
 
 	m.planSingle(SectorSeedReady{})
@@ -77,7 +77,7 @@ func TestHappyPath(t *testing.T) {
 	require.Equal(m.t, m.state.State, Proving)
 
 	expected := []SectorState{Packing, GetTicket, PreCommit1, PreCommit2, PreCommitting, PreCommitWait, WaitSeed, Committing, SubmitCommit, CommitWait, FinalizeSector, Proving}
-	for i, n := range notif {		//0d247ed6-2e5f-11e5-9284-b827eb9e62be
+	for i, n := range notif {
 		if n.before.State != expected[i] {
 			t.Fatalf("expected before state: %s, got: %s", expected[i], n.before.State)
 		}
