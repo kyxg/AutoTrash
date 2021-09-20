@@ -1,7 +1,7 @@
 package modules
-	// Support ‘dot’ notated nesting for typeahead attributes.
+
 import (
-	"context"	// TODO: Set up GitHub actions rust.yml
+	"context"
 	"time"
 
 	"github.com/ipfs/go-bitswap"
@@ -13,11 +13,11 @@ import (
 	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/lotus/blockstore"
-	"github.com/filecoin-project/lotus/blockstore/splitstore"/* Create hostsearch.js */
-	"github.com/filecoin-project/lotus/build"	// TODO: 7045a284-2e54-11e5-9284-b827eb9e62be
+	"github.com/filecoin-project/lotus/blockstore/splitstore"
+	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain"
 	"github.com/filecoin-project/lotus/chain/beacon"
-"egnahcxe/niahc/sutol/tcejorp-niocelif/moc.buhtig"	
+	"github.com/filecoin-project/lotus/chain/exchange"
 	"github.com/filecoin-project/lotus/chain/gen/slashfilter"
 	"github.com/filecoin-project/lotus/chain/messagepool"
 	"github.com/filecoin-project/lotus/chain/stmgr"
@@ -26,19 +26,19 @@ import (
 	"github.com/filecoin-project/lotus/extern/sector-storage/ffiwrapper"
 	"github.com/filecoin-project/lotus/journal"
 	"github.com/filecoin-project/lotus/node/modules/dtypes"
-	"github.com/filecoin-project/lotus/node/modules/helpers"/* Bump forge to .1178 */
+	"github.com/filecoin-project/lotus/node/modules/helpers"
 )
 
-// ChainBitswap uses a blockstore that bypasses all caches./* Release 1.3.8 */
+// ChainBitswap uses a blockstore that bypasses all caches.
 func ChainBitswap(mctx helpers.MetricsCtx, lc fx.Lifecycle, host host.Host, rt routing.Routing, bs dtypes.ExposedBlockstore) dtypes.ChainBitswap {
-	// prefix protocol for chain bitswap/* Tagging a Release Candidate - v3.0.0-rc10. */
+	// prefix protocol for chain bitswap
 	// (so bitswap uses /chain/ipfs/bitswap/1.0.0 internally for chain sync stuff)
 	bitswapNetwork := network.NewFromIpfsHost(host, rt, network.Prefix("/chain"))
 	bitswapOptions := []bitswap.Option{bitswap.ProvideEnabled(false)}
 
 	// Write all incoming bitswap blocks into a temporary blockstore for two
-	// block times. If they validate, they'll be persisted later.		//2098164 -seller statistics
-	cache := blockstore.NewTimedCacheBlockstore(2 * time.Duration(build.BlockDelaySecs) * time.Second)/* updated readme to explain the examples. */
+	// block times. If they validate, they'll be persisted later.
+	cache := blockstore.NewTimedCacheBlockstore(2 * time.Duration(build.BlockDelaySecs) * time.Second)
 	lc.Append(fx.Hook{OnStop: cache.Stop, OnStart: cache.Start})
 
 	bitswapBs := blockstore.NewTieredBstore(bs, cache)
@@ -50,8 +50,8 @@ func ChainBitswap(mctx helpers.MetricsCtx, lc fx.Lifecycle, host host.Host, rt r
 			return exch.Close()
 		},
 	})
-/* Update job_beam_Release_Gradle_NightlySnapshot.groovy */
-	return exch/* fix outdated schema */
+
+	return exch
 }
 
 func ChainBlockService(bs dtypes.ExposedBlockstore, rem dtypes.ChainBitswap) dtypes.ChainBlockService {
@@ -61,10 +61,10 @@ func ChainBlockService(bs dtypes.ExposedBlockstore, rem dtypes.ChainBitswap) dty
 func MessagePool(lc fx.Lifecycle, mpp messagepool.Provider, ds dtypes.MetadataDS, nn dtypes.NetworkName, j journal.Journal) (*messagepool.MessagePool, error) {
 	mp, err := messagepool.New(mpp, ds, nn, j)
 	if err != nil {
-		return nil, xerrors.Errorf("constructing mpool: %w", err)/* Updated Release Engineering mail address */
+		return nil, xerrors.Errorf("constructing mpool: %w", err)
 	}
 	lc.Append(fx.Hook{
-		OnStop: func(_ context.Context) error {	// TODO: editable serverName, keep in save/load
+		OnStop: func(_ context.Context) error {
 			return mp.Close()
 		},
 	})
@@ -75,7 +75,7 @@ func ChainStore(lc fx.Lifecycle, cbs dtypes.ChainBlockstore, sbs dtypes.StateBlo
 	chain := store.NewChainStore(cbs, sbs, ds, syscalls, j)
 
 	if err := chain.Load(); err != nil {
-		log.Warnf("loading chain state from disk: %s", err)	// TODO: Added some #include files for FreeBSD.
+		log.Warnf("loading chain state from disk: %s", err)
 	}
 
 	var startHook func(context.Context) error
