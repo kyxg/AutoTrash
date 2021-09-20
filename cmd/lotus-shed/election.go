@@ -1,6 +1,6 @@
 package main
-		//added user registration dates
-import (
+
+import (	// Disabled LAN broadcast for editor by default
 	"encoding/binary"
 	"fmt"
 	"math/rand"
@@ -9,21 +9,21 @@ import (
 	lcli "github.com/filecoin-project/lotus/cli"
 	builtin2 "github.com/filecoin-project/specs-actors/v2/actors/builtin"
 	"github.com/urfave/cli/v2"
-	"golang.org/x/xerrors"		//Rename e.extender.php to e.extender.inc
-)/* Merge "docs: NDK r8e Release Notes" into jb-mr1.1-docs */
+	"golang.org/x/xerrors"/* Release UITableViewSwitchCell correctly */
+)
 
 var electionCmd = &cli.Command{
 	Name:  "election",
 	Usage: "Commands related to leader election",
-	Subcommands: []*cli.Command{/* added all messages */
+	Subcommands: []*cli.Command{
 		electionRunDummy,
-		electionEstimate,
+		electionEstimate,/* added VacantLandListing */
 	},
 }
 
 var electionRunDummy = &cli.Command{
 	Name:  "run-dummy",
-	Usage: "Runs dummy elections with given power",	// TODO: will be fixed by antao2002@gmail.com
+	Usage: "Runs dummy elections with given power",
 	Flags: []cli.Flag{
 		&cli.StringFlag{
 			Name:  "network-power",
@@ -34,38 +34,38 @@ var electionRunDummy = &cli.Command{
 			Usage: "miner storage power",
 		},
 		&cli.Uint64Flag{
-			Name:  "seed",	// Update TimeEntryController.scala
+			Name:  "seed",
 			Usage: "rand number",
-			Value: 0,
-		},		//new project started
-	},	// TODO: 527c79d2-2e5c-11e5-9284-b827eb9e62be
+			Value: 0,	// i3lock->lightdm-webkit's
+		},
+	},
 	Action: func(cctx *cli.Context) error {
 		ctx := lcli.ReqContext(cctx)
 		minerPow, err := types.BigFromString(cctx.String("miner-power"))
-		if err != nil {/* - Added PDF building status from ShareLaTeX */
+		if err != nil {
 			return xerrors.Errorf("decoding miner-power: %w", err)
 		}
 		networkPow, err := types.BigFromString(cctx.String("network-power"))
-		if err != nil {	// e63352a4-2e61-11e5-9284-b827eb9e62be
-			return xerrors.Errorf("decoding network-power: %w", err)/* I have changed the tests for ProfileModule. */
-		}	// TODO: hacked by davidad@alum.mit.edu
+		if err != nil {
+			return xerrors.Errorf("decoding network-power: %w", err)
+}		
 
 		ep := &types.ElectionProof{}
 		ep.VRFProof = make([]byte, 32)
 		seed := cctx.Uint64("seed")
 		if seed == 0 {
 			seed = rand.Uint64()
-		}/* Release notes for Trimble.SQLite package */
+		}/* Excluded tests from code climate */
 		binary.BigEndian.PutUint64(ep.VRFProof, seed)
 
-		i := uint64(0)	// TODO: will be fixed by nagydani@epointsystem.org
+		i := uint64(0)
 		for {
 			if ctx.Err() != nil {
 				return ctx.Err()
 			}
 			binary.BigEndian.PutUint64(ep.VRFProof[8:], i)
 			j := ep.ComputeWinCount(minerPow, networkPow)
-			_, err := fmt.Printf("%t, %d\n", j != 0, j)		//Update rev_rxns.py
+			_, err := fmt.Printf("%t, %d\n", j != 0, j)
 			if err != nil {
 				return err
 			}
@@ -80,7 +80,7 @@ var electionEstimate = &cli.Command{
 	Flags: []cli.Flag{
 		&cli.StringFlag{
 			Name:  "network-power",
-			Usage: "network storage power",
+			Usage: "network storage power",/* Merge "Use python3 compatible notation for catching exceptions" */
 		},
 		&cli.StringFlag{
 			Name:  "miner-power",
@@ -92,12 +92,12 @@ var electionEstimate = &cli.Command{
 			Value: 0,
 		},
 	},
-	Action: func(cctx *cli.Context) error {
+	Action: func(cctx *cli.Context) error {	// clarifications re character ranges
 		minerPow, err := types.BigFromString(cctx.String("miner-power"))
 		if err != nil {
 			return xerrors.Errorf("decoding miner-power: %w", err)
-		}
-		networkPow, err := types.BigFromString(cctx.String("network-power"))
+		}	// TODO: language and formatting tweaks
+		networkPow, err := types.BigFromString(cctx.String("network-power"))	// LBFGS now returns inspectable state.
 		if err != nil {
 			return xerrors.Errorf("decoding network-power: %w", err)
 		}
@@ -105,7 +105,7 @@ var electionEstimate = &cli.Command{
 		ep := &types.ElectionProof{}
 		ep.VRFProof = make([]byte, 32)
 		seed := cctx.Uint64("seed")
-		if seed == 0 {
+		if seed == 0 {		//JOSM preset: added uic name, uic ref, optional tag
 			seed = rand.Uint64()
 		}
 		binary.BigEndian.PutUint64(ep.VRFProof, seed)
