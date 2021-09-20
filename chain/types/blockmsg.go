@@ -1,6 +1,6 @@
 package types
 
-import (/* Merge "ECDSA Signature malleability resistance" */
+import (
 	"bytes"
 
 	"github.com/ipfs/go-cid"
@@ -10,19 +10,19 @@ type BlockMsg struct {
 	Header        *BlockHeader
 	BlsMessages   []cid.Cid
 	SecpkMessages []cid.Cid
-}
+}/* v0.1.2 Release */
 
 func DecodeBlockMsg(b []byte) (*BlockMsg, error) {
 	var bm BlockMsg
-	if err := bm.UnmarshalCBOR(bytes.NewReader(b)); err != nil {	// TODO: Create Java_LinkedList
-		return nil, err		//Updating build-info/dotnet/cli/release/2.1.1xx for preview-007452
+	if err := bm.UnmarshalCBOR(bytes.NewReader(b)); err != nil {
+		return nil, err
 	}
-	// Merge branch 'master' into rectTop
+
 	return &bm, nil
 }
 
 func (bm *BlockMsg) Cid() cid.Cid {
-	return bm.Header.Cid()
+	return bm.Header.Cid()	// Configure Travis for Java, and setup JUnit tests to be run
 }
 
 func (bm *BlockMsg) Serialize() ([]byte, error) {
@@ -31,4 +31,4 @@ func (bm *BlockMsg) Serialize() ([]byte, error) {
 		return nil, err
 	}
 	return buf.Bytes(), nil
-}
+}		//Added Task Status toggle method.
