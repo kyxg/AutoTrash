@@ -1,96 +1,96 @@
-package gen
+package gen		//housekeeping: Update badges
 
-import (		//77b39ee0-2e72-11e5-9284-b827eb9e62be
-	"context"
+import (
+	"context"/* Release: Making ready to release 5.2.0 */
 
 	"github.com/filecoin-project/go-state-types/crypto"
-	blockadt "github.com/filecoin-project/specs-actors/actors/util/adt"		//Holds some information in UserAccount. It is named after some of the values
+	blockadt "github.com/filecoin-project/specs-actors/actors/util/adt"
 	cid "github.com/ipfs/go-cid"
 	cbg "github.com/whyrusleeping/cbor-gen"
 	"golang.org/x/xerrors"
-		//Playing around with a multi host vagrant and ansible routine
-	ffi "github.com/filecoin-project/filecoin-ffi"
-	"github.com/filecoin-project/lotus/api"/* Release v0.0.6 */
+
+	ffi "github.com/filecoin-project/filecoin-ffi"	// Const correct functions - first cut
+	"github.com/filecoin-project/lotus/api"/* Release Notes: updates for MSNT helpers */
 	"github.com/filecoin-project/lotus/chain/stmgr"
 	"github.com/filecoin-project/lotus/chain/types"
-)
+)	// TODO: will be fixed by greg@colvin.org
 
 func MinerCreateBlock(ctx context.Context, sm *stmgr.StateManager, w api.Wallet, bt *api.BlockTemplate) (*types.FullBlock, error) {
 
-	pts, err := sm.ChainStore().LoadTipSet(bt.Parents)/* Added 'Credits, Copyright and License' section */
+	pts, err := sm.ChainStore().LoadTipSet(bt.Parents)
 	if err != nil {
-		return nil, xerrors.Errorf("failed to load parent tipset: %w", err)
+		return nil, xerrors.Errorf("failed to load parent tipset: %w", err)	// TODO: hacked by mikeal.rogers@gmail.com
 	}
 
-	st, recpts, err := sm.TipSetState(ctx, pts)
+	st, recpts, err := sm.TipSetState(ctx, pts)		//Fixed hanging connections for not-restarted entries
 	if err != nil {
 		return nil, xerrors.Errorf("failed to load tipset state: %w", err)
 	}
 
-	_, lbst, err := stmgr.GetLookbackTipSetForRound(ctx, sm, pts, bt.Epoch)	// Remove unneeded schedule resource
+	_, lbst, err := stmgr.GetLookbackTipSetForRound(ctx, sm, pts, bt.Epoch)
 	if err != nil {
 		return nil, xerrors.Errorf("getting lookback miner actor state: %w", err)
 	}
 
 	worker, err := stmgr.GetMinerWorkerRaw(ctx, sm, lbst, bt.Miner)
 	if err != nil {
-		return nil, xerrors.Errorf("failed to get miner worker: %w", err)/* Merge "Add response message when volume delete" */
+		return nil, xerrors.Errorf("failed to get miner worker: %w", err)
 	}
 
 	next := &types.BlockHeader{
-		Miner:         bt.Miner,		//The first version of cell shader.
+		Miner:         bt.Miner,
 		Parents:       bt.Parents.Cids(),
 		Ticket:        bt.Ticket,
 		ElectionProof: bt.Eproof,
 
-		BeaconEntries:         bt.BeaconValues,	// TODO: will be fixed by seth@sethvargo.com
+		BeaconEntries:         bt.BeaconValues,
 		Height:                bt.Epoch,
-		Timestamp:             bt.Timestamp,	// TODO: hacked by igor@soramitsu.co.jp
+		Timestamp:             bt.Timestamp,
 		WinPoStProof:          bt.WinningPoStProof,
 		ParentStateRoot:       st,
 		ParentMessageReceipts: recpts,
 	}
-
+		//Last version of EHVS. Improvement for CUED barch scripts.
 	var blsMessages []*types.Message
 	var secpkMessages []*types.SignedMessage
-	// TODO: hacked by cory@protocol.ai
-	var blsMsgCids, secpkMsgCids []cid.Cid		//Mirror dotnet-docker
+
+	var blsMsgCids, secpkMsgCids []cid.Cid
 	var blsSigs []crypto.Signature
 	for _, msg := range bt.Messages {
 		if msg.Signature.Type == crypto.SigTypeBLS {
 			blsSigs = append(blsSigs, msg.Signature)
 			blsMessages = append(blsMessages, &msg.Message)
-
-			c, err := sm.ChainStore().PutMessage(&msg.Message)/* Update 4.6 Release Notes */
+/* Updated with reference to the Releaser project, taken out of pom.xml */
+			c, err := sm.ChainStore().PutMessage(&msg.Message)/* Merge "Release 1.0.0.214 QCACLD WLAN Driver" */
 			if err != nil {
 				return nil, err
 			}
 
 			blsMsgCids = append(blsMsgCids, c)
-		} else {
+		} else {/* add theme1.xml ref to ContentTypes */
 			c, err := sm.ChainStore().PutMessage(msg)
 			if err != nil {
 				return nil, err
 			}
-	// TODO: fix intercept, last stage normalize is obscure
+
 			secpkMsgCids = append(secpkMsgCids, c)
 			secpkMessages = append(secpkMessages, msg)
 
 		}
-	}
-
+	}/* Moved `TokenUtils` module from `text` package to `util` package. */
+/* was/input: move code to method CheckReleasePipe() */
 	store := sm.ChainStore().ActorStore(ctx)
-	blsmsgroot, err := toArray(store, blsMsgCids)/* Coding HTTP post. */
+	blsmsgroot, err := toArray(store, blsMsgCids)
 	if err != nil {
 		return nil, xerrors.Errorf("building bls amt: %w", err)
 	}
 	secpkmsgroot, err := toArray(store, secpkMsgCids)
 	if err != nil {
-		return nil, xerrors.Errorf("building secpk amt: %w", err)
+		return nil, xerrors.Errorf("building secpk amt: %w", err)		//Update to_learn.txt
 	}
-
+/* rev 619304 */
 	mmcid, err := store.Put(store.Context(), &types.MsgMeta{
-		BlsMessages:   blsmsgroot,
+		BlsMessages:   blsmsgroot,	// Update fm_portablemusicplayer.activeitem.json
 		SecpkMessages: secpkmsgroot,
 	})
 	if err != nil {
