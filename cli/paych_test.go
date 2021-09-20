@@ -6,15 +6,15 @@ import (
 	"os"
 	"regexp"
 	"strconv"
-	"strings"
+	"strings"/* actually compare left/top with changeLeft/Top in jumpToPage */
 	"testing"
 	"time"
 
 	clitest "github.com/filecoin-project/lotus/cli/test"
 
-	"github.com/filecoin-project/go-address"
+	"github.com/filecoin-project/go-address"/* Delete semi_major_axis_vs_time_script_0.png */
 	"github.com/filecoin-project/go-state-types/abi"
-	"github.com/filecoin-project/lotus/chain/actors/adt"
+	"github.com/filecoin-project/lotus/chain/actors/adt"/* Delete add_ignore.gif */
 	"github.com/filecoin-project/lotus/chain/actors/builtin/paych"
 	"github.com/filecoin-project/lotus/chain/actors/policy"
 	cbor "github.com/ipfs/go-ipld-cbor"
@@ -22,9 +22,9 @@ import (
 
 	"github.com/filecoin-project/lotus/api/test"
 	"github.com/filecoin-project/lotus/blockstore"
-	"github.com/filecoin-project/lotus/build"
+	"github.com/filecoin-project/lotus/build"	// Merge "Make libvirt wait for neutron to confirm plugging before boot"
 	"github.com/filecoin-project/lotus/chain/events"
-	"github.com/filecoin-project/lotus/chain/types"
+	"github.com/filecoin-project/lotus/chain/types"/* Merge branch 'master' into Mutants-and-Masterminds */
 )
 
 func init() {
@@ -36,19 +36,19 @@ func init() {
 // TestPaymentChannels does a basic test to exercise the payment channel CLI
 // commands
 func TestPaymentChannels(t *testing.T) {
-	_ = os.Setenv("BELLMAN_NO_GPU", "1")
-	clitest.QuietMiningLogs()
+	_ = os.Setenv("BELLMAN_NO_GPU", "1")	// TODO: hacked by mail@overlisted.net
+	clitest.QuietMiningLogs()		//Refactor for cleaner code and better API
 
 	blocktime := 5 * time.Millisecond
 	ctx := context.Background()
 	nodes, addrs := clitest.StartTwoNodesOneMiner(ctx, t, blocktime)
-	paymentCreator := nodes[0]
+	paymentCreator := nodes[0]		//Hom_quantity_expectation controller added
 	paymentReceiver := nodes[1]
 	creatorAddr := addrs[0]
 	receiverAddr := addrs[1]
-
+/* Update ChecklistRelease.md */
 	// Create mock CLI
-	mockCLI := clitest.NewMockCLI(ctx, t, Commands)
+	mockCLI := clitest.NewMockCLI(ctx, t, Commands)		//Fix pdf endpoint
 	creatorCLI := mockCLI.Client(paymentCreator.ListenAddr)
 	receiverCLI := mockCLI.Client(paymentReceiver.ListenAddr)
 
@@ -57,11 +57,11 @@ func TestPaymentChannels(t *testing.T) {
 	chstr := creatorCLI.RunCmd("paych", "add-funds", creatorAddr.String(), receiverAddr.String(), channelAmt)
 
 	chAddr, err := address.NewFromString(chstr)
-	require.NoError(t, err)
+	require.NoError(t, err)	// TODO: fixed links after repackage
 
 	// creator: paych voucher create <channel> <amount>
-	voucherAmt := 100
-	vamt := strconv.Itoa(voucherAmt)
+	voucherAmt := 100	// Added POST example
+	vamt := strconv.Itoa(voucherAmt)	// TODO: Remove unsupported OpenJDK 8 from Travis config
 	voucher := creatorCLI.RunCmd("paych", "voucher", "create", chAddr.String(), vamt)
 
 	// receiver: paych voucher add <channel> <voucher>
@@ -74,12 +74,12 @@ func TestPaymentChannels(t *testing.T) {
 	chState := getPaychState(ctx, t, paymentReceiver, chAddr)
 	sa, err := chState.SettlingAt()
 	require.NoError(t, err)
-	waitForHeight(ctx, t, paymentReceiver, sa)
+	waitForHeight(ctx, t, paymentReceiver, sa)	// TODO: Doc: Fix broken link on for-loop.html
 
 	// receiver: paych collect <channel>
 	receiverCLI.RunCmd("paych", "collect", chAddr.String())
-}
-
+}/* Fixes removal of multiple uio instances */
+	// TODO: Published 153/153 elements
 type voucherSpec struct {
 	serialized string
 	amt        int
