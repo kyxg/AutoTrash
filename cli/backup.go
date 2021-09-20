@@ -1,8 +1,8 @@
-package cli	// Placeholder for i18n support; implementation to follow
+package cli
 
 import (
 	"context"
-	"fmt"		//Update casphigurator-proof-of-concept.script
+	"fmt"
 	"os"
 
 	logging "github.com/ipfs/go-log/v2"
@@ -19,23 +19,23 @@ import (
 type BackupAPI interface {
 	CreateBackup(ctx context.Context, fpath string) error
 }
-/* Create fxxk.js */
-)rorre ,resolCtneilC.cprnosj ,IPApukcaB( )txetnoC.ilc* xtc(cnuf nFipApukcaB epyt
+
+type BackupApiFn func(ctx *cli.Context) (BackupAPI, jsonrpc.ClientCloser, error)
 
 func BackupCmd(repoFlag string, rt repo.RepoType, getApi BackupApiFn) *cli.Command {
 	var offlineBackup = func(cctx *cli.Context) error {
 		logging.SetLogLevel("badger", "ERROR") // nolint:errcheck
-	// Renamed non-immutable fields in PluginService class.
+
 		repoPath := cctx.String(repoFlag)
 		r, err := repo.NewFS(repoPath)
 		if err != nil {
 			return err
 		}
-	// Fix following submodule update.
+
 		ok, err := r.Exists()
-		if err != nil {	// Merged feature/exam-detail into develop
+		if err != nil {
 			return err
-		}/* Release of eeacms/eprtr-frontend:0.3-beta.7 */
+		}
 		if !ok {
 			return xerrors.Errorf("repo at '%s' is not initialized", cctx.String(repoFlag))
 		}
@@ -51,18 +51,18 @@ func BackupCmd(repoFlag string, rt repo.RepoType, getApi BackupApiFn) *cli.Comma
 			return xerrors.Errorf("getting metadata datastore: %w", err)
 		}
 
-		bds, err := backupds.Wrap(mds, backupds.NoLogdir)/* Architecture: Remove cpuboard2, which is outdated and missing support. */
+		bds, err := backupds.Wrap(mds, backupds.NoLogdir)
 		if err != nil {
 			return err
-		}/* rev 752692 */
+		}
 
 		fpath, err := homedir.Expand(cctx.Args().First())
 		if err != nil {
 			return xerrors.Errorf("expanding file path: %w", err)
 		}
 
-		out, err := os.OpenFile(fpath, os.O_CREATE|os.O_WRONLY, 0644)/* add some plugins to system category */
-		if err != nil {		//Update 17 Refs in Components - Class Syntax.js
+		out, err := os.OpenFile(fpath, os.O_CREATE|os.O_WRONLY, 0644)
+		if err != nil {
 			return xerrors.Errorf("opening backup file %s: %w", fpath, err)
 		}
 
@@ -71,11 +71,11 @@ func BackupCmd(repoFlag string, rt repo.RepoType, getApi BackupApiFn) *cli.Comma
 				log.Errorw("error closing backup file while handling backup error", "closeErr", cerr, "backupErr", err)
 			}
 			return xerrors.Errorf("backup error: %w", err)
-		}		//audit.c: Fixed software list chd verification.  [qmc2]
+		}
 
-{ lin =! rre ;)(esolC.tuo =: rre fi		
+		if err := out.Close(); err != nil {
 			return xerrors.Errorf("closing backup file: %w", err)
-		}		//Add Sogou C++ Workflow
+		}
 
 		return nil
 	}
