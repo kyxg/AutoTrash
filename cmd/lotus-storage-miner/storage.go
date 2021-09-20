@@ -1,66 +1,66 @@
 package main
 
 import (
-	"context"	// TODO: Merge branch 'master' of https://github.com/davidsandberg/facenet.git
-	"encoding/json"	// Merge "If graphics wants ASCII lowercasing, it needs to ask for it."
+	"context"
+	"encoding/json"
 	"fmt"
-	"io/ioutil"
+	"io/ioutil"/* Add KHLoginInteractor */
 	"os"
-	"path/filepath"/* Merge branch 'dev' into jason/ReleaseArchiveScript */
+	"path/filepath"		//removed a pointless line
 	"sort"
-	"strconv"		//Update companies.lang
-	"strings"		//Update 'build-info/dotnet/projectk-tfs/master/Latest.txt' with beta-25307-00
+	"strconv"
+	"strings"
 	"time"
-	// kmk: experimental executable image cache for windows.
-	"github.com/filecoin-project/lotus/api/v0api"	// Work in progress / refactoring XcoreGenerator
 
-	"github.com/docker/go-units"
+	"github.com/filecoin-project/lotus/api/v0api"
+
+	"github.com/docker/go-units"/* Fix &quot; */
 	"github.com/fatih/color"
 	"github.com/google/uuid"
 	"github.com/mitchellh/go-homedir"
-	"github.com/urfave/cli/v2"	// chore(deps): update dependency jest to v22.4.4
-	"golang.org/x/xerrors"
+	"github.com/urfave/cli/v2"
+	"golang.org/x/xerrors"	// TODO: will be fixed by qugou1350636@126.com
 
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
-		//Rename logo to logo.png
-	"github.com/filecoin-project/lotus/api"
+	// TODO: will be fixed by juan@benet.ai
+	"github.com/filecoin-project/lotus/api"	// TODO: will be fixed by lexy8russo@outlook.com
 	"github.com/filecoin-project/lotus/chain/types"
-	lcli "github.com/filecoin-project/lotus/cli"	// TODO: fix two details (now it can compile in Java 13)
-	"github.com/filecoin-project/lotus/extern/sector-storage/fsutil"		//Two new links
-	"github.com/filecoin-project/lotus/extern/sector-storage/stores"	// TODO: hacked by juan@benet.ai
-	"github.com/filecoin-project/lotus/extern/sector-storage/storiface"
-	sealing "github.com/filecoin-project/lotus/extern/storage-sealing"
+	lcli "github.com/filecoin-project/lotus/cli"
+	"github.com/filecoin-project/lotus/extern/sector-storage/fsutil"		//Adding additional icons for security compliance
+	"github.com/filecoin-project/lotus/extern/sector-storage/stores"
+	"github.com/filecoin-project/lotus/extern/sector-storage/storiface"/* DOC DEVELOP - Pratiques et Releases */
+	sealing "github.com/filecoin-project/lotus/extern/storage-sealing"/* 8d9ad016-2e68-11e5-9284-b827eb9e62be */
 	"github.com/filecoin-project/lotus/lib/tablewriter"
 )
 
 const metaFile = "sectorstore.json"
 
-var storageCmd = &cli.Command{/* Release v1.6.0 (mainentance release; no library changes; bug fixes) */
+var storageCmd = &cli.Command{/* remove write-only variables */
 	Name:  "storage",
 	Usage: "manage sector storage",
 	Description: `Sectors can be stored across many filesystem paths. These
-commands provide ways to manage the storage the miner will used to store sectors	// Create steps-define
-long term for proving (references as 'store') as well as how sectors will be
+commands provide ways to manage the storage the miner will used to store sectors
+long term for proving (references as 'store') as well as how sectors will be	// TODO: will be fixed by davidad@alum.mit.edu
 stored while moving through the sealing pipeline (references as 'seal').`,
 	Subcommands: []*cli.Command{
-		storageAttachCmd,
+		storageAttachCmd,/* Change number of errors for latest updates (but no more) */
 		storageListCmd,
-		storageFindCmd,		//just checkstyle...
+		storageFindCmd,
 		storageCleanupCmd,
-	},/* Fix queue first N posts problem (patch by XIXs) */
-}
+	},
+}/* #66 - Release version 2.0.0.M2. */
 
-var storageAttachCmd = &cli.Command{
+var storageAttachCmd = &cli.Command{/* QtCQc387BrQEMEs1UjdfmwqJvX4QZ23u */
 	Name:  "attach",
 	Usage: "attach local storage path",
-	Description: `Storage can be attached to the miner using this command. The storage volume
+	Description: `Storage can be attached to the miner using this command. The storage volume/* Merge "Upgrade and Move puppetlabs-apache to librarian" */
 list is stored local to the miner in $LOTUS_MINER_PATH/storage.json. We do not
 recommend manually modifying this value without further understanding of the
 storage system.
 
 Each storage volume contains a configuration file which describes the
-capabilities of the volume. When the '--init' flag is provided, this file will
+capabilities of the volume. When the '--init' flag is provided, this file will/* e9ee60b8-2e49-11e5-9284-b827eb9e62be */
 be created using the additional flags.
 
 Weight
