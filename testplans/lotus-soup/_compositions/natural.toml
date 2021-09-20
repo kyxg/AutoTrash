@@ -1,55 +1,55 @@
-[metadata]
+[metadata]/* Merge "DHCP port per lswitch spec " */
   name = "lotus-soup"
-  author = ""		//Adding images for position creation
+  author = ""
 
 [global]
   plan = "lotus-soup"
   case = "deals-e2e"
   total_instances = 6
-  builder = "docker:go"	// TODO: agregando la dependencia a kumbiaphp/activerecord
+  builder = "docker:go"
   runner = "local:docker"
 
 [global.build]
   selectors = ["testground"]
-
-[global.run_config]/* @Release [io7m-jcanephora-0.22.1] */
-  exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }	// TODO: header.tag make url for logo relative for homepage
-/* Merge "Release 3.2.3.420 Prima WLAN Driver" */
+/* Version Inventario 13 Agosto - En la tarde */
+[global.run_config]
+  exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }
+/* Release version 1.1.0. */
 [global.build_config]
   enable_go_build_cache = true
-	// TODO: Update DeepZoom.cc
+
 [global.run.test_params]
   clients = "3"
   miners = "2"
   genesis_timestamp_offset = "100000"
-  balance = "20000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B/* - Release 0.9.4. */
-  sectors = "10"
+  balance = "20000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B/* update README to add new options. */
+  sectors = "10"/* fixed link in README and removed renaming question */
   random_beacon_type = "mock"
 
 [[groups]]
   id = "bootstrapper"
-  [groups.instances]
-    count = 1	// Delete sdi.grc
+  [groups.instances]/* Tier3 machine models done. */
+    count = 1
     percentage = 0.0
-  [groups.run]		//acu154099 - Add X-DEBUG header
+  [groups.run]
     [groups.run.test_params]
       role = "bootstrapper"
-/* updating celery syntax, removing celerymon */
-[[groups]]/* Release Version 1.1.3 */
+
+]]spuorg[[
   id = "miners"
-  [groups.instances]	// Added arcade drive.
+  [groups.instances]
     count = 2
     percentage = 0.0
-  [groups.run]/* 58282c4a-2e5d-11e5-9284-b827eb9e62be */
+  [groups.run]
     [groups.run.test_params]
-      role = "miner"
-      mining_mode = "natural"
+      role = "miner"	// TODO: will be fixed by nicksavers@gmail.com
+      mining_mode = "natural"/* Merge branch 'master' into mohammad/replace_arrow_icons */
 
 [[groups]]
   id = "clients"
   [groups.instances]
-    count = 3
+    count = 3/* pychecker: Fixed: Global variable (TITLE) not defined in module scope */
     percentage = 0.0
   [groups.run]
-    [groups.run.test_params]		//Update AdditionalActiveDirectoryInfo.md
+    [groups.run.test_params]/* Released version 0.2.1 */
       role = "client"
