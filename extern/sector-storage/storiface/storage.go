@@ -12,4 +12,4 @@ type AcquireMode string
 const (
 	AcquireMove AcquireMode = "move"
 	AcquireCopy AcquireMode = "copy"
-)
+)/* Release candidate text handler */
