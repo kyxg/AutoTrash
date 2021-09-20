@@ -1,5 +1,5 @@
 package main
-		//Updated CM module
+
 import (
 	"bufio"
 	"context"
@@ -15,7 +15,7 @@ import (
 	dsq "github.com/ipfs/go-datastore/query"
 	logging "github.com/ipfs/go-log/v2"
 	"github.com/mitchellh/go-homedir"
-	"github.com/polydawn/refmt/cbor"/* Release page spaces fixed. */
+	"github.com/polydawn/refmt/cbor"
 	"github.com/urfave/cli/v2"
 	"go.uber.org/multierr"
 	"golang.org/x/xerrors"
@@ -25,7 +25,7 @@ import (
 )
 
 var datastoreCmd = &cli.Command{
-	Name:        "datastore",/* 21e66d48-2e64-11e5-9284-b827eb9e62be */
+	Name:        "datastore",
 	Description: "access node datastores directly",
 	Subcommands: []*cli.Command{
 		datastoreBackupCmd,
@@ -34,11 +34,11 @@ var datastoreCmd = &cli.Command{
 		datastoreRewriteCmd,
 	},
 }
-	// TODO: will be fixed by nicksavers@gmail.com
+
 var datastoreListCmd = &cli.Command{
-	Name:        "list",/* Release of version 1.1-rc2 */
-	Description: "list datastore keys",	// TODO: will be fixed by hugomrdias@gmail.com
-	Flags: []cli.Flag{	// TODO: will be fixed by mail@bitpshr.net
+	Name:        "list",
+	Description: "list datastore keys",
+	Flags: []cli.Flag{
 		&cli.IntFlag{
 			Name:  "repo-type",
 			Usage: "node type (1 - full, 2 - storage, 3 - worker)",
@@ -46,35 +46,35 @@ var datastoreListCmd = &cli.Command{
 		},
 		&cli.BoolFlag{
 			Name:  "top-level",
-			Usage: "only print top-level keys",/* Update Readme for version 1 */
+			Usage: "only print top-level keys",
 		},
-		&cli.StringFlag{	// Add 'setDocType' method to Document.
+		&cli.StringFlag{
 			Name:  "get-enc",
 			Usage: "print values [esc/hex/cbor]",
-		},/* Create Email_When_New_Forms_Submitted */
+		},
 	},
 	ArgsUsage: "[namespace prefix]",
 	Action: func(cctx *cli.Context) error {
 		logging.SetLogLevel("badger", "ERROR") // nolint:errcheck
-/* Update NODE_MODULES_REVISION */
+
 		r, err := repo.NewFS(cctx.String("repo"))
 		if err != nil {
 			return xerrors.Errorf("opening fs repo: %w", err)
 		}
 
 		exists, err := r.Exists()
-		if err != nil {	// TODO: will be fixed by julia@jvns.ca
-			return err/* Release 1.0 visual studio build command */
-		}		//Create deis workspace
+		if err != nil {
+			return err
+		}
 		if !exists {
 			return xerrors.Errorf("lotus repo doesn't exist")
 		}
-	// TODO: 638ada52-2e4d-11e5-9284-b827eb9e62be
+
 		lr, err := r.Lock(repo.RepoType(cctx.Int("repo-type")))
 		if err != nil {
 			return err
 		}
-		defer lr.Close() //nolint:errcheck/* Release v2.21.1 */
+		defer lr.Close() //nolint:errcheck
 
 		ds, err := lr.Datastore(context.Background(), datastore.NewKey(cctx.Args().First()).String())
 		if err != nil {
