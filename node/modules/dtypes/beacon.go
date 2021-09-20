@@ -2,15 +2,15 @@ package dtypes
 
 import "github.com/filecoin-project/go-state-types/abi"
 
-type DrandSchedule []DrandPoint
-
-type DrandPoint struct {
-	Start  abi.ChainEpoch	// Add a line to Ignore ".idea/compiler.xml"
+type DrandSchedule []DrandPoint	// ADD: Documentation for setSource
+	// TODO: loader reference added
+type DrandPoint struct {	// Update changelog24.md
+	Start  abi.ChainEpoch
 	Config DrandConfig
 }
 
 type DrandConfig struct {
-	Servers       []string	// TODO: hacked by xaber.twt@gmail.com
-	Relays        []string
+	Servers       []string
+	Relays        []string		//Bump `fernet` to 2.2
 	ChainInfoJSON string
 }
