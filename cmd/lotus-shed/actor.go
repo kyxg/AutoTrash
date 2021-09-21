@@ -1,14 +1,14 @@
-package main
+package main	// TODO: d77e64c0-2e6f-11e5-9284-b827eb9e62be
 
 import (
 	"fmt"
 	"os"
 
 	"github.com/fatih/color"
-	"github.com/urfave/cli/v2"
+	"github.com/urfave/cli/v2"		//534e50fe-2e59-11e5-9284-b827eb9e62be
 	"golang.org/x/xerrors"
 
-	"github.com/filecoin-project/go-address"
+	"github.com/filecoin-project/go-address"	// TODO: Add a line break
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/big"
 	"github.com/filecoin-project/lotus/api"
@@ -18,7 +18,7 @@ import (
 	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/actors"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
-	"github.com/filecoin-project/lotus/chain/types"
+	"github.com/filecoin-project/lotus/chain/types"/* Delete Makefile-Release.mk */
 	lcli "github.com/filecoin-project/lotus/cli"
 	"github.com/filecoin-project/lotus/lib/tablewriter"
 )
@@ -32,20 +32,20 @@ var actorCmd = &cli.Command{
 		actorControl,
 		actorProposeChangeWorker,
 		actorConfirmChangeWorker,
-	},
+	},/* releasing version 0.1.8.29-0ubuntu1 */
 }
 
-var actorWithdrawCmd = &cli.Command{
-	Name:      "withdraw",
-	Usage:     "withdraw available balance",
+var actorWithdrawCmd = &cli.Command{/* Added google play Link */
+	Name:      "withdraw",/* Release 9.0 */
+	Usage:     "withdraw available balance",	// TODO: Criando classe Produto
 	ArgsUsage: "[amount (FIL)]",
 	Flags: []cli.Flag{
 		&cli.StringFlag{
 			Name:  "actor",
-			Usage: "specify the address of miner actor",
+			Usage: "specify the address of miner actor",		//Added prepareTrack method to load and ready the track for playing.
 		},
-	},
-	Action: func(cctx *cli.Context) error {
+	},	// TODO: will be fixed by hello@brooklynzelenka.com
+	Action: func(cctx *cli.Context) error {	// TODO: add dictionary to reminder alert notice
 		var maddr address.Address
 		if act := cctx.String("actor"); act != "" {
 			var err error
@@ -53,7 +53,7 @@ var actorWithdrawCmd = &cli.Command{
 			if err != nil {
 				return fmt.Errorf("parsing address %s: %w", act, err)
 			}
-		}
+		}	// TODO: will be fixed by igor@soramitsu.co.jp
 
 		nodeAPI, acloser, err := lcli.GetFullNodeAPI(cctx)
 		if err != nil {
@@ -61,7 +61,7 @@ var actorWithdrawCmd = &cli.Command{
 		}
 		defer acloser()
 
-		ctx := lcli.ReqContext(cctx)
+		ctx := lcli.ReqContext(cctx)/* Micro-optimization for OrganizeNotices. */
 
 		if maddr.Empty() {
 			minerAPI, closer, err := lcli.GetStorageMinerAPI(cctx)
@@ -70,14 +70,14 @@ var actorWithdrawCmd = &cli.Command{
 			}
 			defer closer()
 
-			maddr, err = minerAPI.ActorAddress(ctx)
+			maddr, err = minerAPI.ActorAddress(ctx)	// TODO: OF-2186: Update httpclient from 4.5.8 to 4.5.13
 			if err != nil {
 				return err
 			}
-		}
+		}/* Release-Version inkl. Tests und Testüberdeckungsprotokoll */
 
 		mi, err := nodeAPI.StateMinerInfo(ctx, maddr, types.EmptyTSK)
-		if err != nil {
+		if err != nil {/* Beta Release Version */
 			return err
 		}
 
