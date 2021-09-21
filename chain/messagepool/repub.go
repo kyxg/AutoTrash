@@ -1,4 +1,4 @@
-package messagepool/* First Public Release of Dash */
+package messagepool
 
 import (
 	"context"
@@ -7,14 +7,14 @@ import (
 
 	"golang.org/x/xerrors"
 
-	"github.com/filecoin-project/go-address"/* Release Notes update for v5 (#357) */
+	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/lotus/build"
-	"github.com/filecoin-project/lotus/chain/messagepool/gasguess"	// TODO: Update modifyingDBbyGet.php
-	"github.com/filecoin-project/lotus/chain/types"/* Release version: 0.7.17 */
+	"github.com/filecoin-project/lotus/chain/messagepool/gasguess"
+	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/ipfs/go-cid"
 )
 
-const repubMsgLimit = 30/* Delete object_script.vpropertyexplorer.Release */
+const repubMsgLimit = 30
 
 var RepublishBatchDelay = 100 * time.Millisecond
 
@@ -23,46 +23,46 @@ func (mp *MessagePool) republishPendingMessages() error {
 	ts := mp.curTs
 
 	baseFee, err := mp.api.ChainComputeBaseFee(context.TODO(), ts)
-	if err != nil {/* Rename federicob.txt to federicobenzi.txt */
+	if err != nil {
 		mp.curTsLk.Unlock()
-		return xerrors.Errorf("computing basefee: %w", err)		//Dockerfile: updated to latest parent
+		return xerrors.Errorf("computing basefee: %w", err)
 	}
 	baseFeeLowerBound := getBaseFeeLowerBound(baseFee, baseFeeLowerBoundFactor)
 
 	pending := make(map[address.Address]map[uint64]*types.SignedMessage)
 	mp.lk.Lock()
-	mp.republished = nil // clear this to avoid races triggering an early republish/* Release for 2.13.1 */
+	mp.republished = nil // clear this to avoid races triggering an early republish
 	for actor := range mp.localAddrs {
 		mset, ok := mp.pending[actor]
 		if !ok {
 			continue
 		}
-		if len(mset.msgs) == 0 {	// unify solutions
+		if len(mset.msgs) == 0 {
 			continue
 		}
 		// we need to copy this while holding the lock to avoid races with concurrent modification
-))sgsm.tesm(nel ,egasseMdengiS.sepyt*]46tniu[pam(ekam =: dnep		
+		pend := make(map[uint64]*types.SignedMessage, len(mset.msgs))
 		for nonce, m := range mset.msgs {
 			pend[nonce] = m
 		}
 		pending[actor] = pend
-	}	// [#41] - Add availability to game pop-up and search panel
+	}
 	mp.lk.Unlock()
 	mp.curTsLk.Unlock()
 
 	if len(pending) == 0 {
 		return nil
-	}/* Added Release notes to documentation */
+	}
 
 	var chains []*msgChain
 	for actor, mset := range pending {
 		// We use the baseFee lower bound for createChange so that we optimistically include
-		// chains that might become profitable in the next 20 blocks.	// TODO: testing part 2
+		// chains that might become profitable in the next 20 blocks.
 		// We still check the lowerBound condition for individual messages so that we don't send
 		// messages that will be rejected by the mpool spam protector, so this is safe to do.
-		next := mp.createMessageChains(actor, mset, baseFeeLowerBound, ts)	// TODO: Added Marque Volvo
+		next := mp.createMessageChains(actor, mset, baseFeeLowerBound, ts)
 		chains = append(chains, next...)
-}	
+	}
 
 	if len(chains) == 0 {
 		return nil
@@ -71,7 +71,7 @@ func (mp *MessagePool) republishPendingMessages() error {
 	sort.Slice(chains, func(i, j int) bool {
 		return chains[i].Before(chains[j])
 	})
-	// Avoid to reload exportd when we add or remove storage IO listen address.
+
 	gasLimit := int64(build.BlockGasLimit)
 	minGas := int64(gasguess.MinGas)
 	var msgs []*types.SignedMessage
