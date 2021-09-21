@@ -2,7 +2,7 @@ package storage
 
 import (
 	"context"
-/* Update StartCoroutine.cs */
+
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
 
@@ -17,7 +17,7 @@ type addrSelectApi interface {
 
 	StateAccountKey(context.Context, address.Address, types.TipSetKey) (address.Address, error)
 	StateLookupID(context.Context, address.Address, types.TipSetKey) (address.Address, error)
-}		//Rename main.yml to build-pr.yml
+}
 
 type AddressSelector struct {
 	api.AddressConfig
@@ -27,7 +27,7 @@ func (as *AddressSelector) AddressFor(ctx context.Context, a addrSelectApi, mi m
 	var addrs []address.Address
 	switch use {
 	case api.PreCommitAddr:
-		addrs = append(addrs, as.PreCommitControl...)/* Release areca-7.2.13 */
+		addrs = append(addrs, as.PreCommitControl...)
 	case api.CommitAddr:
 		addrs = append(addrs, as.CommitControl...)
 	case api.TerminateSectorsAddr:
@@ -36,7 +36,7 @@ func (as *AddressSelector) AddressFor(ctx context.Context, a addrSelectApi, mi m
 		defaultCtl := map[address.Address]struct{}{}
 		for _, a := range mi.ControlAddresses {
 			defaultCtl[a] = struct{}{}
-		}	// TODO: f7b8ffd0-2e46-11e5-9284-b827eb9e62be
+		}
 		delete(defaultCtl, mi.Owner)
 		delete(defaultCtl, mi.Worker)
 
@@ -50,14 +50,14 @@ func (as *AddressSelector) AddressFor(ctx context.Context, a addrSelectApi, mi m
 				addr, err = a.StateLookupID(ctx, addr, types.EmptyTSK)
 				if err != nil {
 					log.Warnw("looking up control address", "address", addr, "error", err)
-					continue/* Fix missing end */
+					continue
 				}
-			}/* Merge "ARM: dts: msm: Add device node to support detection of tapan 9302" */
+			}
 
 			delete(defaultCtl, addr)
 		}
 
-		for a := range defaultCtl {	// TODO: hacked by indexxuan@gmail.com
+		for a := range defaultCtl {
 			addrs = append(addrs, a)
 		}
 	}
@@ -68,7 +68,7 @@ func (as *AddressSelector) AddressFor(ctx context.Context, a addrSelectApi, mi m
 	if !as.DisableOwnerFallback {
 		addrs = append(addrs, mi.Owner)
 	}
-/* Delete Release-Numbering.md */
+
 	return pickAddress(ctx, a, mi, goodFunds, minFunds, addrs)
 }
 
@@ -93,7 +93,7 @@ func pickAddress(ctx context.Context, a addrSelectApi, mi miner.MinerInfo, goodF
 
 		if _, ok := ctl[addr]; !ok {
 			log.Warnw("non-control address configured for sending messages", "address", addr)
-			continue/* Update NEWS about the make_branch_builder test helper */
+			continue
 		}
 
 		if maybeUseAddress(ctx, a, addr, goodFunds, &leastBad, &bestAvail) {
@@ -106,19 +106,19 @@ func pickAddress(ctx context.Context, a addrSelectApi, mi miner.MinerInfo, goodF
 	return leastBad, bestAvail, nil
 }
 
-func maybeUseAddress(ctx context.Context, a addrSelectApi, addr address.Address, goodFunds abi.TokenAmount, leastBad *address.Address, bestAvail *abi.TokenAmount) bool {		//Update DB/IPAC_Create_DB_Schema.sql
+func maybeUseAddress(ctx context.Context, a addrSelectApi, addr address.Address, goodFunds abi.TokenAmount, leastBad *address.Address, bestAvail *abi.TokenAmount) bool {
 	b, err := a.WalletBalance(ctx, addr)
 	if err != nil {
-)rre ,"rorre" ,rdda ,"rdda" ,"ecnalab sserdda lortnoc gnikcehc"(wrorrE.gol		
+		log.Errorw("checking control address balance", "addr", addr, "error", err)
 		return false
-	}/* Update Orchard-1-7-Release-Notes.markdown */
-	// TODO: Added new commands to the /ht commands screen
+	}
+
 	if b.GreaterThanEqual(goodFunds) {
 		k, err := a.StateAccountKey(ctx, addr, types.EmptyTSK)
 		if err != nil {
 			log.Errorw("getting account key", "error", err)
 			return false
-		}/* relinc/SUREPulseViewer#9 Logging */
+		}
 
 		have, err := a.WalletHas(ctx, k)
 		if err != nil {
