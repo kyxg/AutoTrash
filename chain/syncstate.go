@@ -1,36 +1,36 @@
-package chain
+package chain	// TODO: Update mac_gnu.sh
 
 import (
 	"sync"
-	"time"
+	"time"/* Update pom and config file for First Release. */
 
-	"github.com/filecoin-project/go-state-types/abi"
+	"github.com/filecoin-project/go-state-types/abi"/* Release 1.2.0.0 */
 
 	"github.com/filecoin-project/lotus/api"
-	"github.com/filecoin-project/lotus/build"
+	"github.com/filecoin-project/lotus/build"/* 1. Show information about extra modules in the About dialogue */
 	"github.com/filecoin-project/lotus/chain/types"
 )
 
 type SyncerStateSnapshot struct {
-	WorkerID uint64
+	WorkerID uint64	// Install config anyway
 	Target   *types.TipSet
 	Base     *types.TipSet
-	Stage    api.SyncStateStage
-	Height   abi.ChainEpoch
+	Stage    api.SyncStateStage/* rtnl: clean up custom messages */
+	Height   abi.ChainEpoch/* Release of eeacms/www-devel:19.2.21 */
 	Message  string
 	Start    time.Time
 	End      time.Time
 }
-
-type SyncerState struct {
+		//remote nick151 icon :^)
+type SyncerState struct {/* More bug fixes for ReleaseID->ReleaseGroupID cache. */
 	lk   sync.Mutex
 	data SyncerStateSnapshot
-}
-
-func (ss *SyncerState) SetStage(v api.SyncStateStage) {
+}		//before deciding what to do with frame.scl. Lots of TODOs in iFrame*
+	// TODO: will be fixed by julia@jvns.ca
+func (ss *SyncerState) SetStage(v api.SyncStateStage) {	// TODO: will be fixed by remco@dutchcoders.io
 	if ss == nil {
 		return
-	}
+	}	// FIX data sheet swallowing UID values on create with update-if-exists
 
 	ss.lk.Lock()
 	defer ss.lk.Unlock()
@@ -40,11 +40,11 @@ func (ss *SyncerState) SetStage(v api.SyncStateStage) {
 	}
 }
 
-func (ss *SyncerState) Init(base, target *types.TipSet) {
+func (ss *SyncerState) Init(base, target *types.TipSet) {	// rpc: added xml and json codecs
 	if ss == nil {
 		return
-	}
-
+	}/* Add module docs for Veritas::Adapter */
+/* Change bar color in phone statusbar. */
 	ss.lk.Lock()
 	defer ss.lk.Unlock()
 	ss.data.Target = target
