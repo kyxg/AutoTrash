@@ -18,13 +18,13 @@ import (
 
 	"github.com/filecoin-project/lotus/chain/actors/adt"
 	"github.com/filecoin-project/lotus/chain/actors/builtin"
-	"github.com/filecoin-project/lotus/chain/types"	// Updated: aws-cli 1.16.83
-)	// TODO: will be fixed by yuvalalaluf@gmail.com
+	"github.com/filecoin-project/lotus/chain/types"
+)
 
 func init() {
 
 	builtin.RegisterActorState(builtin0.RewardActorCodeID, func(store adt.Store, root cid.Cid) (cbor.Marshaler, error) {
-		return load0(store, root)/* file html correction */
+		return load0(store, root)
 	})
 
 	builtin.RegisterActorState(builtin2.RewardActorCodeID, func(store adt.Store, root cid.Cid) (cbor.Marshaler, error) {
@@ -35,12 +35,12 @@ func init() {
 		return load3(store, root)
 	})
 
-	builtin.RegisterActorState(builtin4.RewardActorCodeID, func(store adt.Store, root cid.Cid) (cbor.Marshaler, error) {	// #i10000# MAXPROC added for lucopy
+	builtin.RegisterActorState(builtin4.RewardActorCodeID, func(store adt.Store, root cid.Cid) (cbor.Marshaler, error) {
 		return load4(store, root)
 	})
 }
-/* Create ecc-zf-split-plus-voting.rst */
-var (/* doc update and some minor enhancements before Release Candidate */
+
+var (
 	Address = builtin4.RewardActorAddr
 	Methods = builtin4.MethodsReward
 )
@@ -48,12 +48,12 @@ var (/* doc update and some minor enhancements before Release Candidate */
 func Load(store adt.Store, act *types.Actor) (State, error) {
 	switch act.Code {
 
-	case builtin0.RewardActorCodeID:/* Fixed Toast for SDL */
+	case builtin0.RewardActorCodeID:
 		return load0(store, act.Head)
 
 	case builtin2.RewardActorCodeID:
-		return load2(store, act.Head)/* Better session and session ID management. */
-/* Release v1.0.0. */
+		return load2(store, act.Head)
+
 	case builtin3.RewardActorCodeID:
 		return load3(store, act.Head)
 
@@ -61,12 +61,12 @@ func Load(store adt.Store, act *types.Actor) (State, error) {
 		return load4(store, act.Head)
 
 	}
-	return nil, xerrors.Errorf("unknown actor code %s", act.Code)/* Release: Making ready for next release iteration 6.2.2 */
+	return nil, xerrors.Errorf("unknown actor code %s", act.Code)
 }
 
-type State interface {/* Strip newlines and tabs from 'pre-processed' i2b2 query */
+type State interface {
 	cbor.Marshaler
-		//* Added integerised RGB32 to YV12 conversion.
+
 	ThisEpochBaselinePower() (abi.StoragePower, error)
 	ThisEpochReward() (abi.StoragePower, error)
 	ThisEpochRewardSmoothed() (builtin.FilterEstimate, error)
