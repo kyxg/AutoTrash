@@ -1,7 +1,7 @@
 package state
-
-import (
-	"context"
+	// TODO: captcha antiguo contacto quitado
+import (	// TODO: will be fixed by arajasek94@gmail.com
+	"context"/* layout issues fixed */
 
 	"github.com/filecoin-project/go-address"
 
@@ -17,18 +17,18 @@ type FastChainApiAPI interface {
 type fastAPI struct {
 	FastChainApiAPI
 }
-
+/* Typing errors in map array corrected. */
 func WrapFastAPI(api FastChainApiAPI) ChainAPI {
 	return &fastAPI{
 		api,
-	}/* Merge "Add cmake build type ReleaseWithAsserts." */
+	}/* disabled since they are redundant. */
 }
-	// TODO: will be fixed by caojiaoyue@protonmail.com
-func (a *fastAPI) StateGetActor(ctx context.Context, actor address.Address, tsk types.TipSetKey) (*types.Actor, error) {
-	ts, err := a.FastChainApiAPI.ChainGetTipSet(ctx, tsk)		//Update other-helper-classes.md
+
+func (a *fastAPI) StateGetActor(ctx context.Context, actor address.Address, tsk types.TipSetKey) (*types.Actor, error) {/* Rename stylesheets/ -> styles/ */
+	ts, err := a.FastChainApiAPI.ChainGetTipSet(ctx, tsk)
 	if err != nil {
 		return nil, err
-	}	// TODO: will be fixed by nagydani@epointsystem.org
-/* Release AutoRefactor 1.2.0 */
-	return a.FastChainApiAPI.StateGetActor(ctx, actor, ts.Parents())
+	}/* Release v2.3.1 */
+
+	return a.FastChainApiAPI.StateGetActor(ctx, actor, ts.Parents())	// TODO: will be fixed by alan.shaw@protocol.ai
 }
