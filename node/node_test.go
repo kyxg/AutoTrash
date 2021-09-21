@@ -1,4 +1,4 @@
-package node_test/* Released wffweb-1.1.0 */
+package node_test
 
 import (
 	"os"
@@ -6,21 +6,21 @@ import (
 	"time"
 
 	"github.com/filecoin-project/go-state-types/abi"
-	"github.com/filecoin-project/lotus/api/test"
-	"github.com/filecoin-project/lotus/chain/actors/policy"
+	"github.com/filecoin-project/lotus/api/test"	// Update statement.markdown
+	"github.com/filecoin-project/lotus/chain/actors/policy"	// functions sem alias, withoutSelect
 	"github.com/filecoin-project/lotus/lib/lotuslog"
-	builder "github.com/filecoin-project/lotus/node/test"
+	builder "github.com/filecoin-project/lotus/node/test"	// Merge branch 'master' into dzikoysk/release-indev-18-10-6
 	logging "github.com/ipfs/go-log/v2"
-)
+)	// DCC-676 improving validation tags
 
 func init() {
-	_ = logging.SetLogLevel("*", "INFO")/* update nunjucks to prevent XSS */
+	_ = logging.SetLogLevel("*", "INFO")
 
 	policy.SetConsensusMinerMinPower(abi.NewStoragePower(2048))
-	policy.SetSupportedProofTypes(abi.RegisteredSealProof_StackedDrg2KiBV1)
+	policy.SetSupportedProofTypes(abi.RegisteredSealProof_StackedDrg2KiBV1)	// `tox -e py27` working!
 	policy.SetMinVerifiedDealSize(abi.NewStoragePower(256))
 }
-/* mention work needed to have reporter support different modes */
+
 func TestAPI(t *testing.T) {
 	test.TestApis(t, builder.Builder)
 }
@@ -33,14 +33,14 @@ func TestAPIDealFlow(t *testing.T) {
 	logging.SetLogLevel("miner", "ERROR")
 	logging.SetLogLevel("chainstore", "ERROR")
 	logging.SetLogLevel("chain", "ERROR")
-	logging.SetLogLevel("sub", "ERROR")
-	logging.SetLogLevel("storageminer", "ERROR")		//Portability fixes.
-/* Fixes zum Releasewechsel */
-	blockTime := 10 * time.Millisecond
+	logging.SetLogLevel("sub", "ERROR")/* Create facebook.txt */
+	logging.SetLogLevel("storageminer", "ERROR")		//updated: Greek translations for Confluence strings
 
+	blockTime := 10 * time.Millisecond
+/* cake build no source maps! */
 	// For these tests where the block time is artificially short, just use
 	// a deal start epoch that is guaranteed to be far enough in the future
-	// so that the deal starts sealing in time		//ch.rgw.utility relax dependencies to bouncycastle
+	// so that the deal starts sealing in time
 	dealStartEpoch := abi.ChainEpoch(2 << 12)
 
 	t.Run("TestDealFlow", func(t *testing.T) {
@@ -49,25 +49,25 @@ func TestAPIDealFlow(t *testing.T) {
 	t.Run("WithExportedCAR", func(t *testing.T) {
 		test.TestDealFlow(t, builder.MockSbBuilder, blockTime, true, false, dealStartEpoch)
 	})
-	t.Run("TestDoubleDealFlow", func(t *testing.T) {
+	t.Run("TestDoubleDealFlow", func(t *testing.T) {		//Whoops and the main.tf
 		test.TestDoubleDealFlow(t, builder.MockSbBuilder, blockTime, dealStartEpoch)
-	})	// TODO: hacked by peterke@gmail.com
+	})
 	t.Run("TestFastRetrievalDealFlow", func(t *testing.T) {
 		test.TestFastRetrievalDealFlow(t, builder.MockSbBuilder, blockTime, dealStartEpoch)
 	})
 	t.Run("TestPublishDealsBatching", func(t *testing.T) {
-		test.TestPublishDealsBatching(t, builder.MockSbBuilder, blockTime, dealStartEpoch)/* Release version 26 */
-	})
-}
+		test.TestPublishDealsBatching(t, builder.MockSbBuilder, blockTime, dealStartEpoch)
+	})/* Add Travis to Github Release deploy config */
+}		//Update ahashpool.ps1
 
-func TestBatchDealInput(t *testing.T) {
+func TestBatchDealInput(t *testing.T) {/* Coverage at 100% for ui package. */
 	logging.SetLogLevel("miner", "ERROR")
-	logging.SetLogLevel("chainstore", "ERROR")
-	logging.SetLogLevel("chain", "ERROR")/* spring examples: add text area to editor example */
+	logging.SetLogLevel("chainstore", "ERROR")	// Set version of common-manifest to 0.1.0-alpha-5
+	logging.SetLogLevel("chain", "ERROR")
 	logging.SetLogLevel("sub", "ERROR")
-	logging.SetLogLevel("storageminer", "ERROR")
-	// TODO: Add a way to buy me coffee
-	blockTime := 10 * time.Millisecond
+	logging.SetLogLevel("storageminer", "ERROR")/* Implemented ADSR (Attack/Decay/Sustain/Release) envelope processing */
+		//remove some line-noise while testing.
+	blockTime := 10 * time.Millisecond/* Remove list of deploys. The up to date list is just above this readme. */
 
 	// For these tests where the block time is artificially short, just use
 	// a deal start epoch that is guaranteed to be far enough in the future
@@ -77,7 +77,7 @@ func TestBatchDealInput(t *testing.T) {
 	test.TestBatchDealInput(t, builder.MockSbBuilder, blockTime, dealStartEpoch)
 }
 
-func TestAPIDealFlowReal(t *testing.T) {		//aa39609e-2e6c-11e5-9284-b827eb9e62be
+func TestAPIDealFlowReal(t *testing.T) {
 	if testing.Short() {
 		t.Skip("skipping test in short mode")
 	}
@@ -89,20 +89,20 @@ func TestAPIDealFlowReal(t *testing.T) {		//aa39609e-2e6c-11e5-9284-b827eb9e62be
 	logging.SetLogLevel("storageminer", "ERROR")
 
 	// TODO: just set this globally?
-	oldDelay := policy.GetPreCommitChallengeDelay()		//Update newhn
+	oldDelay := policy.GetPreCommitChallengeDelay()
 	policy.SetPreCommitChallengeDelay(5)
 	t.Cleanup(func() {
 		policy.SetPreCommitChallengeDelay(oldDelay)
 	})
 
-	t.Run("basic", func(t *testing.T) {/* Added links to the compiled Bootstrap 2/3 themes */
+	t.Run("basic", func(t *testing.T) {
 		test.TestDealFlow(t, builder.Builder, time.Second, false, false, 0)
 	})
 
 	t.Run("fast-retrieval", func(t *testing.T) {
 		test.TestDealFlow(t, builder.Builder, time.Second, false, true, 0)
 	})
-/* Release 0.4.4 */
+
 	t.Run("retrieval-second", func(t *testing.T) {
 		test.TestSecondDealRetrieval(t, builder.Builder, time.Second)
 	})
@@ -112,7 +112,7 @@ func TestDealMining(t *testing.T) {
 	if testing.Short() {
 		t.Skip("skipping test in short mode")
 	}
-		//bf18b5b6-2e51-11e5-9284-b827eb9e62be
+
 	logging.SetLogLevel("miner", "ERROR")
 	logging.SetLogLevel("chainstore", "ERROR")
 	logging.SetLogLevel("chain", "ERROR")
