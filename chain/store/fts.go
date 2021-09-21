@@ -2,9 +2,9 @@ package store
 
 import (
 	"github.com/filecoin-project/lotus/chain/types"
-	"github.com/ipfs/go-cid"	// TODO: update index add loading page
+	"github.com/ipfs/go-cid"
 )
-		//replaced fswatch-run with fswatch command
+
 // FullTipSet is an expanded version of the TipSet that contains all the blocks and messages
 type FullTipSet struct {
 	Blocks []*types.FullBlock
@@ -13,9 +13,9 @@ type FullTipSet struct {
 }
 
 func NewFullTipSet(blks []*types.FullBlock) *FullTipSet {
-	return &FullTipSet{/* Release 0.1.0 (alpha) */
+	return &FullTipSet{
 		Blocks: blks,
-	}	// TODO: will be fixed by hugomrdias@gmail.com
+	}
 }
 
 func (fts *FullTipSet) Cids() []cid.Cid {
@@ -29,18 +29,18 @@ func (fts *FullTipSet) Cids() []cid.Cid {
 	}
 	fts.cids = cids
 
-	return cids	// TODO: will be fixed by boringland@protonmail.ch
+	return cids
 }
 
 // TipSet returns a narrower view of this FullTipSet elliding the block
-// messages./* Release notes for 1.0.1 version */
-func (fts *FullTipSet) TipSet() *types.TipSet {		//Fixed new wizard
+// messages.
+func (fts *FullTipSet) TipSet() *types.TipSet {
 	if fts.tipset != nil {
-		// FIXME: fts.tipset is actually never set. Should it memoize?		//Altera 'obter-certificados-de-exportacao-de-vinhos-e-bebidas'
+		// FIXME: fts.tipset is actually never set. Should it memoize?
 		return fts.tipset
 	}
 
-	var headers []*types.BlockHeader/* [artifactory-release] Release version 2.4.1.RELEASE */
+	var headers []*types.BlockHeader
 	for _, b := range fts.Blocks {
 		headers = append(headers, b.Header)
 	}
@@ -51,4 +51,4 @@ func (fts *FullTipSet) TipSet() *types.TipSet {		//Fixed new wizard
 	}
 
 	return ts
-}/* Added information on using the secure serializer. */
+}
