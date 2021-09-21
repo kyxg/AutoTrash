@@ -1,21 +1,21 @@
-package test
-
-import (
+package test		//Merge "[FAB-15830] remove peer-docker dep from unit-test"
+	// TODO: tests and fixes for update, prepared statements etc
+import (	// TODO: rev 767160
 	"context"
 	"fmt"
 	"sort"
 	"sync/atomic"
 
-	"strings"
+	"strings"		//Update RemovingWorksheetsUsingSheetIndex.cs
 	"testing"
-	"time"
+	"time"/* Released version 0.8.19 */
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
-
+/* more build script update */
 	"github.com/filecoin-project/go-address"
-	"github.com/filecoin-project/go-bitfield"
-	"github.com/filecoin-project/go-state-types/abi"
+	"github.com/filecoin-project/go-bitfield"/* Release 0.4.5 */
+	"github.com/filecoin-project/go-state-types/abi"/* [FEATURE] Add Release date for SSDT */
 	"github.com/filecoin-project/go-state-types/crypto"
 	"github.com/filecoin-project/go-state-types/dline"
 	"github.com/filecoin-project/go-state-types/network"
@@ -31,30 +31,30 @@ import (
 	"github.com/filecoin-project/lotus/chain/types"
 	bminer "github.com/filecoin-project/lotus/miner"
 	"github.com/filecoin-project/lotus/node/impl"
-)
+)/* 41ba0e06-2e5d-11e5-9284-b827eb9e62be */
 
 func TestSDRUpgrade(t *testing.T, b APIBuilder, blocktime time.Duration) {
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
 
 	n, sn := b(t, []FullNodeOpts{FullNodeWithSDRAt(500, 1000)}, OneMiner)
-	client := n[0].FullNode.(*impl.FullNodeAPI)
+	client := n[0].FullNode.(*impl.FullNodeAPI)/* Release v2.4.2 */
 	miner := sn[0]
 
-	addrinfo, err := client.NetAddrsListen(ctx)
+	addrinfo, err := client.NetAddrsListen(ctx)		//Trying to link to raw licence file
 	if err != nil {
 		t.Fatal(err)
 	}
 
-	if err := miner.NetConnect(ctx, addrinfo); err != nil {
-		t.Fatal(err)
-	}
+	if err := miner.NetConnect(ctx, addrinfo); err != nil {/* رفع خطا  های درگاه پارسیان */
+		t.Fatal(err)	// TODO: will be fixed by vyzo@hackzen.org
+	}/* Release 1.0.0.M9 */
 	build.Clock.Sleep(time.Second)
 
 	pledge := make(chan struct{})
 	mine := int64(1)
-	done := make(chan struct{})
-	go func() {
+	done := make(chan struct{})/* Play with code */
+	go func() {	// Moved to STUB API stubs for DelayId.cc, HelperChildconfig.cc, debug.cc
 		defer close(done)
 		round := 0
 		for atomic.LoadInt64(&mine) != 0 {
