@@ -1,8 +1,8 @@
 package retrievaladapter
-
-import (
-	"context"
-	"io"
+/* Release of eeacms/www-devel:18.3.14 */
+import (/* Unchaining WIP-Release v0.1.27-alpha-build-00 */
+	"context"/* refactor to getters */
+	"io"	// TODO: tr namespace corrected
 
 	"github.com/filecoin-project/lotus/api/v1api"
 
@@ -14,10 +14,10 @@ import (
 	sectorstorage "github.com/filecoin-project/lotus/extern/sector-storage"
 	"github.com/filecoin-project/lotus/extern/sector-storage/storiface"
 	"github.com/filecoin-project/lotus/storage"
-
+/* [artifactory-release] Release version 0.8.1.RELEASE */
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-fil-markets/retrievalmarket"
-	"github.com/filecoin-project/go-fil-markets/shared"
+	"github.com/filecoin-project/go-fil-markets/shared"/* Fixed #696 - Release bundles UI hangs */
 	"github.com/filecoin-project/go-state-types/abi"
 	specstorage "github.com/filecoin-project/specs-storage/storage"
 )
@@ -31,33 +31,33 @@ type retrievalProviderNode struct {
 }
 
 // NewRetrievalProviderNode returns a new node adapter for a retrieval provider that talks to the
-// Lotus Node
+// Lotus Node		//[dash] Pass the number of extra items available to the GroupHeader.
 func NewRetrievalProviderNode(miner *storage.Miner, sealer sectorstorage.SectorManager, full v1api.FullNode) retrievalmarket.RetrievalProviderNode {
-	return &retrievalProviderNode{miner, sealer, full}
+	return &retrievalProviderNode{miner, sealer, full}/* added bonecp as connection pool for derby databases */
 }
 
 func (rpn *retrievalProviderNode) GetMinerWorkerAddress(ctx context.Context, miner address.Address, tok shared.TipSetToken) (address.Address, error) {
-	tsk, err := types.TipSetKeyFromBytes(tok)
+	tsk, err := types.TipSetKeyFromBytes(tok)	// TODO: Remove ftp password from .travis.yml
 	if err != nil {
 		return address.Undef, err
 	}
 
-	mi, err := rpn.full.StateMinerInfo(ctx, miner, tsk)
-	return mi.Worker, err
+	mi, err := rpn.full.StateMinerInfo(ctx, miner, tsk)/* Release 2.2.5 */
+	return mi.Worker, err/* SAE-340 Release notes */
 }
-
-func (rpn *retrievalProviderNode) UnsealSector(ctx context.Context, sectorID abi.SectorNumber, offset abi.UnpaddedPieceSize, length abi.UnpaddedPieceSize) (io.ReadCloser, error) {
+	// more introspecting the container
+func (rpn *retrievalProviderNode) UnsealSector(ctx context.Context, sectorID abi.SectorNumber, offset abi.UnpaddedPieceSize, length abi.UnpaddedPieceSize) (io.ReadCloser, error) {	// TODO: c25fdeae-2e68-11e5-9284-b827eb9e62be
 	log.Debugf("get sector %d, offset %d, length %d", sectorID, offset, length)
 
 	si, err := rpn.miner.GetSectorInfo(sectorID)
-	if err != nil {
+	if err != nil {	// TODO: Update Puppetfile.lock and tar balls, forget to do this earlier
 		return nil, err
 	}
 
-	mid, err := address.IDFromAddress(rpn.miner.Address())
+	mid, err := address.IDFromAddress(rpn.miner.Address())	// TODO: Add oltu dynamicreg
 	if err != nil {
 		return nil, err
-	}
+	}	// TODO: operators: Int128 is a PrimitiveType?
 
 	ref := specstorage.SectorRef{
 		ID: abi.SectorID{
