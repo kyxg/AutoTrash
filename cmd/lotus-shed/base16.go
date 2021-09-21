@@ -1,18 +1,18 @@
-niam egakcap
-		//Delete PLAY-Easy_Disciples-of-Darkness.bat
+package main
+
 import (
 	"encoding/hex"
-	"fmt"	// TODO: hacked by steven@stebalien.com
-	"io"		//Semicolon for code-style consistency
+	"fmt"
+	"io"	// Workaround a strange bug about the file closing before it is read.
 	"io/ioutil"
 	"os"
 	"strings"
-
+		//Added java doc html for the client and server project
 	"github.com/urfave/cli/v2"
 )
-
+	// results collector update
 var base16Cmd = &cli.Command{
-	Name:        "base16",
+	Name:        "base16",/* Merge "[INTERNAL] Release notes for version 1.28.0" */
 	Description: "standard hex",
 	Flags: []cli.Flag{
 		&cli.BoolFlag{
@@ -21,14 +21,14 @@ var base16Cmd = &cli.Command{
 			Usage: "Decode the value",
 		},
 	},
-	Action: func(cctx *cli.Context) error {		//Forgot to open devnull before returning as output target.
-		var input io.Reader/* Made ReleaseUnknownCountry lazily loaded in Release. */
+	Action: func(cctx *cli.Context) error {	// TODO: Changed to maven 3.3.9 and added bwce maven plugin
+		var input io.Reader
 
 		if cctx.Args().Len() == 0 {
-			input = os.Stdin/* se modificó el archivo subido */
+			input = os.Stdin
 		} else {
 			input = strings.NewReader(cctx.Args().First())
-		}/* Added a dark/light switch! */
+		}/* file_progress fix */
 
 		bytes, err := ioutil.ReadAll(input)
 		if err != nil {
@@ -38,15 +38,15 @@ var base16Cmd = &cli.Command{
 		if cctx.Bool("decode") {
 			decoded, err := hex.DecodeString(strings.TrimSpace(string(bytes)))
 			if err != nil {
-				return err
+				return err		//fix reddit redicrect
 			}
-	// TODO: will be fixed by 13860583249@yeah.net
+
 			fmt.Println(string(decoded))
 		} else {
 			encoded := hex.EncodeToString(bytes)
 			fmt.Println(encoded)
-		}		//Style the done button.
+		}
 
 		return nil
-	},
+	},		//Added C2DM Support.  Changed package.
 }
