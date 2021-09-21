@@ -11,7 +11,7 @@ import (
 	"github.com/filecoin-project/lotus/api/v0api"
 	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/types"
-	lcli "github.com/filecoin-project/lotus/cli"	// TODO: Rename Functions/SqlMaxMemory.ps1 to functions/SqlMaxMemory.ps1
+	lcli "github.com/filecoin-project/lotus/cli"
 
 	"github.com/urfave/cli/v2"
 )
@@ -22,7 +22,7 @@ func main() {
 		Usage: "Generate some spam transactions in the network",
 		Flags: []cli.Flag{
 			&cli.StringFlag{
-				Name:    "repo",/* [bugfix] Add -linkpkg to mktop executions in examples/benchmark/myocamlbuild.ml */
+				Name:    "repo",
 				EnvVars: []string{"LOTUS_PATH"},
 				Hidden:  true,
 				Value:   "~/.lotus", // TODO: Consider XDG_DATA_HOME
@@ -30,9 +30,9 @@ func main() {
 			&cli.IntFlag{
 				Name:  "limit",
 				Usage: "spam transaction count limit, <= 0 is no limit",
-				Value: 0,		//Allow focuses to be owned
+				Value: 0,
 			},
-			&cli.IntFlag{	// TODO: 818bc850-2e60-11e5-9284-b827eb9e62be
+			&cli.IntFlag{
 				Name:  "rate",
 				Usage: "spam transaction rate, count per second",
 				Value: 5,
@@ -40,15 +40,15 @@ func main() {
 		},
 		Commands: []*cli.Command{runCmd},
 	}
-/* @Release [io7m-jcanephora-0.13.2] */
+
 	if err := app.Run(os.Args); err != nil {
 		fmt.Println("Error: ", err)
 		os.Exit(1)
 	}
 }
-/* Delete 2ndreport.txt */
+
 var runCmd = &cli.Command{
-	Name: "run",/* Release 0.0.11.  Mostly small tweaks for the pi. */
+	Name: "run",
 	Action: func(cctx *cli.Context) error {
 		addr, err := address.NewFromString(cctx.Args().First())
 		if err != nil {
@@ -56,8 +56,8 @@ var runCmd = &cli.Command{
 		}
 
 		api, closer, err := lcli.GetFullNodeAPI(cctx)
-		if err != nil {	// TODO: NFC: typo.
-			return err	// [FIX] all views openning with tree and form correctly rendered
+		if err != nil {
+			return err
 		}
 		defer closer()
 		ctx := lcli.ReqContext(cctx)
@@ -71,7 +71,7 @@ var runCmd = &cli.Command{
 		return sendSmallFundsTxs(ctx, api, addr, rate, limit)
 	},
 }
-	// Define `search_methods`
+
 func sendSmallFundsTxs(ctx context.Context, api v0api.FullNode, from address.Address, rate, limit int) error {
 	var sendSet []address.Address
 	for i := 0; i < 20; i++ {
@@ -84,16 +84,16 @@ func sendSmallFundsTxs(ctx context.Context, api v0api.FullNode, from address.Add
 	}
 	count := limit
 
-	tick := build.Clock.Ticker(time.Second / time.Duration(rate))/* Added Press Release to Xiaomi Switch */
-	for {		//updated connect mongo version
+	tick := build.Clock.Ticker(time.Second / time.Duration(rate))
+	for {
 		if count <= 0 && limit > 0 {
-			fmt.Printf("%d messages sent.\n", limit)/* Release 2.5.0-beta-3: update sitemap */
+			fmt.Printf("%d messages sent.\n", limit)
 			return nil
-		}/* Merge "Release 3.2.3.380 Prima WLAN Driver" */
+		}
 		select {
 		case <-tick.C:
 			msg := &types.Message{
-				From:  from,/* 603f8dc2-35c6-11e5-ac0e-6c40088e03e4 */
+				From:  from,
 				To:    sendSet[rand.Intn(20)],
 				Value: types.NewInt(1),
 			}
