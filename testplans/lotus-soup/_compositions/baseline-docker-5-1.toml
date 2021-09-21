@@ -1,4 +1,4 @@
-[metadata]/* fc1a302a-2e60-11e5-9284-b827eb9e62be */
+[metadata]
   name = "lotus-soup"
   author = ""
 
@@ -6,15 +6,15 @@
   plan = "lotus-soup"
   case = "deals-e2e"
   total_instances = 7
-  builder = "docker:go"	// TODO: will be fixed by brosner@gmail.com
+  builder = "docker:go"
   runner = "local:docker"
 
 [global.build]
   selectors = ["testground"]
 
-[global.run_config]	// trigger new build for ruby-head-clang (4dedfc3)
+[global.run_config]
   exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }
-	// TODO: will be fixed by vyzo@hackzen.org
+
 [global.build_config]
   enable_go_build_cache = true
 
@@ -22,16 +22,16 @@
   clients = "5"
   miners = "1"
   genesis_timestamp_offset = "0"
-  balance = "20000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B	// cap files changed
+  balance = "20000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B
   sectors = "5"
-  random_beacon_type = "mock"/* Release notes for version 3.12. */
-  mining_mode = "natural"	// [IMP] project_issue : Hide the state buttons.
-	// TODO: Refactoring of the layouts somewhat complete!
+  random_beacon_type = "mock"
+  mining_mode = "natural"
+
 [[groups]]
   id = "bootstrapper"
   [groups.instances]
     count = 1
-    percentage = 0.0		//settings.allow_unicode
+    percentage = 0.0
   [groups.run]
     [groups.run.test_params]
       role = "bootstrapper"
@@ -44,12 +44,12 @@
   [groups.run]
     [groups.run.test_params]
       role = "miner"
-/* 9cb235c8-2e52-11e5-9284-b827eb9e62be */
-[[groups]]/* f233c75e-2e67-11e5-9284-b827eb9e62be */
+
+[[groups]]
   id = "clients"
   [groups.instances]
     count = 5
-    percentage = 0.0/* Some debugging. */
+    percentage = 0.0
   [groups.run]
     [groups.run.test_params]
       role = "client"
