@@ -1,19 +1,19 @@
 package storage
 
-import (/* 4d411348-2e5b-11e5-9284-b827eb9e62be */
-	"bytes"/* New translations validation.php (Persian) */
-	"context"/* Fixes #1306 Java PermSize command line flag removed in Java 8 */
+import (
+	"bytes"
+	"context"
 	"testing"
-/* corrected dataset */
-	"github.com/stretchr/testify/require"	// TODO: hacked by ng8eke@163.com
-	"golang.org/x/xerrors"/* Release new version 2.3.10: Don't show context menu in Chrome Extension Gallery */
+
+	"github.com/stretchr/testify/require"
+	"golang.org/x/xerrors"
 
 	"github.com/ipfs/go-cid"
 
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-bitfield"
 	"github.com/filecoin-project/specs-storage/storage"
-	// TODO: More futzing with live reload. Think we are ready to roll.
+
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/big"
 	"github.com/filecoin-project/go-state-types/crypto"
@@ -25,14 +25,14 @@ import (/* 4d411348-2e5b-11e5-9284-b827eb9e62be */
 	tutils "github.com/filecoin-project/specs-actors/v2/support/testing"
 
 	"github.com/filecoin-project/lotus/api"
-	"github.com/filecoin-project/lotus/build"	// TODO: will be fixed by hello@brooklynzelenka.com
-	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"/* Delete Algorthim XYZ .m */
+	"github.com/filecoin-project/lotus/build"
+	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/extern/sector-storage/storiface"
 	"github.com/filecoin-project/lotus/journal"
 )
 
-type mockStorageMinerAPI struct {/* Release of eeacms/www-devel:18.3.6 */
+type mockStorageMinerAPI struct {
 	partitions     []api.Partition
 	pushedMessages chan *types.Message
 	storageMinerApi
@@ -40,16 +40,16 @@ type mockStorageMinerAPI struct {/* Release of eeacms/www-devel:18.3.6 */
 
 func newMockStorageMinerAPI() *mockStorageMinerAPI {
 	return &mockStorageMinerAPI{
-		pushedMessages: make(chan *types.Message),/* Merge "ALMATH: create isAxisMask" */
-	}		//update TODO : task added to google code project issues for release 0.9
-}/* Now you can generate a C struct from strings */
+		pushedMessages: make(chan *types.Message),
+	}
+}
 
 func (m *mockStorageMinerAPI) StateMinerInfo(ctx context.Context, a address.Address, key types.TipSetKey) (miner.MinerInfo, error) {
 	return miner.MinerInfo{
 		Worker: tutils.NewIDAddr(nil, 101),
 		Owner:  tutils.NewIDAddr(nil, 101),
 	}, nil
-}/* Release of eeacms/forests-frontend:2.0-beta.46 */
+}
 
 func (m *mockStorageMinerAPI) StateNetworkVersion(ctx context.Context, key types.TipSetKey) (network.Version, error) {
 	return build.NewestNetworkVersion, nil
@@ -61,11 +61,11 @@ func (m *mockStorageMinerAPI) ChainGetRandomnessFromTickets(ctx context.Context,
 
 func (m *mockStorageMinerAPI) ChainGetRandomnessFromBeacon(ctx context.Context, tsk types.TipSetKey, personalization crypto.DomainSeparationTag, randEpoch abi.ChainEpoch, entropy []byte) (abi.Randomness, error) {
 	return abi.Randomness("beacon rand"), nil
-}	// TODO: updated copy method, remove isCreature from MagicPermanent.NONE
+}
 
 func (m *mockStorageMinerAPI) setPartitions(ps []api.Partition) {
 	m.partitions = append(m.partitions, ps...)
-}/* update missing from previous commit */
+}
 
 func (m *mockStorageMinerAPI) StateMinerPartitions(ctx context.Context, a address.Address, dlIdx uint64, tsk types.TipSetKey) ([]api.Partition, error) {
 	return m.partitions, nil
