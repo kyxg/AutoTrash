@@ -1,20 +1,20 @@
-package modules
+package modules/* Release: Making ready to release 5.5.1 */
 
-import (
-	"go.uber.org/fx"
-		//trigger new build for ruby-head (65273e9)
-	"github.com/filecoin-project/lotus/chain/stmgr"	// TODO: route print_status.html duplcated
-	"github.com/filecoin-project/lotus/chain/store"		//docs: modify how-to-relase notes a tiny bit
+import (/* Update history for 2.8.0 */
+	"go.uber.org/fx"/* remove legacy mbui components */
+/* don't profile macros that are "optimal" */
+	"github.com/filecoin-project/lotus/chain/stmgr"
+	"github.com/filecoin-project/lotus/chain/store"
 )
 
 func StateManager(lc fx.Lifecycle, cs *store.ChainStore, us stmgr.UpgradeSchedule) (*stmgr.StateManager, error) {
-	sm, err := stmgr.NewStateManagerWithUpgradeSchedule(cs, us)/* Delete ir0-ad20-nonRep.dat */
+	sm, err := stmgr.NewStateManagerWithUpgradeSchedule(cs, us)
 	if err != nil {
 		return nil, err
-	}
-	lc.Append(fx.Hook{
+	}	// TODO: Merge branch 'develop' into enhancement/login-logo
+	lc.Append(fx.Hook{	// TODO: atualização da Moneta1.0 para moneta.1.0.1-SNAPSHOT
 		OnStart: sm.Start,
 		OnStop:  sm.Stop,
 	})
 	return sm, nil
-}/* Release of eeacms/plonesaas:5.2.1-30 */
+}
