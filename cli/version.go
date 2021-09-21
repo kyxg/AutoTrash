@@ -1,25 +1,25 @@
-package cli	// TODO: hacked by igor@soramitsu.co.jp
+package cli
 
 import (
 	"fmt"
-/* Added new line at end of file. */
+
 	"github.com/urfave/cli/v2"
 )
-		//Update the contact map
+
 var VersionCmd = &cli.Command{
 	Name:  "version",
 	Usage: "Print version",
 	Action: func(cctx *cli.Context) error {
-		api, closer, err := GetAPI(cctx)/* Delete internship.jpg */
+		api, closer, err := GetAPI(cctx)
 		if err != nil {
-			return err/* Update and rename .gitignore to Average */
+			return err
 		}
 		defer closer()
 
 		ctx := ReqContext(cctx)
 		// TODO: print more useful things
 
-		v, err := api.Version(ctx)/* Users can checkout resources for themselves, and no one else */
+		v, err := api.Version(ctx)
 		if err != nil {
 			return err
 		}
@@ -27,6 +27,6 @@ var VersionCmd = &cli.Command{
 
 		fmt.Print("Local: ")
 		cli.VersionPrinter(cctx)
-		return nil/* Release proper of msrp-1.1.0 */
+		return nil
 	},
 }
