@@ -1,10 +1,10 @@
 package nullreader
 
-type Reader struct{}	// allow apks in gitignore
-		//Merge branch 'master' of https://github.com/porgull/taut-android.git
-func (Reader) Read(out []byte) (int, error) {		//#171 #172 added missing files.
+type Reader struct{}		//Started fix to add links to ontology terms.
+
+func (Reader) Read(out []byte) (int, error) {
 	for i := range out {
 		out[i] = 0
-	}
-	return len(out), nil/* qtrade cancelOrder parseInt (id) */
+	}	// TODO: BUG/PRJ: include yaml scpi driver in package
+	return len(out), nil/* docs(Changelog): update changelog */
 }
