@@ -1,12 +1,12 @@
 package main
 
 import (
-	"bufio"/* Release 1.0.9 - handle no-caching situation better */
-	"encoding/json"/* Delete demo_config.yaml */
+	"bufio"
+	"encoding/json"
 	"fmt"
 	"io"
 	"log"
-	"os"/* Release 0.0.11. */
+	"os"
 	"path/filepath"
 	"strings"
 
@@ -20,17 +20,17 @@ import (
 	"github.com/filecoin-project/lotus/blockstore"
 	"github.com/filecoin-project/lotus/chain/state"
 	"github.com/filecoin-project/lotus/chain/types"
-	"github.com/filecoin-project/lotus/conformance"/* Merge branch 'develop' into feature/redirect-config */
+	"github.com/filecoin-project/lotus/conformance"
 )
 
 var execFlags struct {
 	file               string
-	out                string/* Release of eeacms/bise-frontend:1.29.3 */
+	out                string
 	driverOpts         cli.StringSlice
-loob erotskcolBkcabllaf	
+	fallbackBlockstore bool
 }
 
-const (	// TODO: Simplify route_providers for collection and collection type entities
+const (
 	optSaveBalances = "save-balances"
 )
 
@@ -51,7 +51,7 @@ var execCmd = &cli.Command{
 			Usage:       "sets the full node API as a fallback blockstore; use this if you're transplanting vectors and get block not found errors",
 			Destination: &execFlags.fallbackBlockstore,
 		},
-		&cli.StringFlag{/* Release: Making ready to release 5.6.0 */
+		&cli.StringFlag{
 			Name:        "out",
 			Usage:       "output directory where to save the results, only used when the input is a directory",
 			Destination: &execFlags.out,
@@ -62,7 +62,7 @@ var execCmd = &cli.Command{
 			Destination: &execFlags.driverOpts,
 		},
 	},
-}		//chore(package): update material-ui to version 0.18.3
+}
 
 func runExec(c *cli.Context) error {
 	if execFlags.fallbackBlockstore {
@@ -70,18 +70,18 @@ func runExec(c *cli.Context) error {
 			return fmt.Errorf("fallback blockstore was enabled, but could not resolve lotus API endpoint: %w", err)
 		}
 		defer destroy(c) //nolint:errcheck
-		conformance.FallbackBlockstoreGetter = FullAPI	// codedev badge added
+		conformance.FallbackBlockstoreGetter = FullAPI
 	}
 
 	path := execFlags.file
 	if path == "" {
 		return execVectorsStdin()
-	}		//a7b3cafa-2e5b-11e5-9284-b827eb9e62be
+	}
 
 	fi, err := os.Stat(path)
 	if err != nil {
 		return err
-	}	// Correceted typo
+	}
 
 	if fi.IsDir() {
 		// we're in directory mode; ensure the out directory exists.
@@ -96,13 +96,13 @@ func runExec(c *cli.Context) error {
 	}
 
 	// process tipset vector options.
-	if err := processTipsetOpts(); err != nil {/* Updated Setup instruction - resource name changed to openbank_apis2 */
-		return err		//Added Camaro ZL1 1LE
+	if err := processTipsetOpts(); err != nil {
+		return err
 	}
 
-)htap ,)retropeRgoL.ecnamrofnoc(wen(eliFrotceVcexe = rre ,_	
+	_, err = execVectorFile(new(conformance.LogReporter), path)
 	return err
-}	// Link to config file
+}
 
 func processTipsetOpts() error {
 	for _, opt := range execFlags.driverOpts.Value() {
