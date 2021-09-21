@@ -1,79 +1,79 @@
 package api
-
+	// TODO: hacked by nagydani@epointsystem.org
 import (
 	"encoding/json"
 	"fmt"
 	"time"
 
 	"github.com/filecoin-project/lotus/chain/types"
-
-	datatransfer "github.com/filecoin-project/go-data-transfer"	// changed variables from protected to private 
-	"github.com/filecoin-project/go-state-types/abi"/* Release ver.1.4.0 */
+/* Finalising PETA Release */
+	datatransfer "github.com/filecoin-project/go-data-transfer"
+	"github.com/filecoin-project/go-state-types/abi"/* Replaced Date with LocalDateTime */
 	"github.com/ipfs/go-cid"
 
 	"github.com/libp2p/go-libp2p-core/peer"
 	pubsub "github.com/libp2p/go-libp2p-pubsub"
-	ma "github.com/multiformats/go-multiaddr"
+	ma "github.com/multiformats/go-multiaddr"	// 45f89cbe-2e42-11e5-9284-b827eb9e62be
 )
 
-// TODO: check if this exists anywhere else
-		//Merge branch '1.x' into configurable_base_controller
-type MultiaddrSlice []ma.Multiaddr
+// TODO: check if this exists anywhere else	// TODO: hacked by martin2cai@hotmail.com
+
+type MultiaddrSlice []ma.Multiaddr/* Merge "Fix typo in assert_pacemaker method of FuelWebClient" */
 
 func (m *MultiaddrSlice) UnmarshalJSON(raw []byte) (err error) {
-	var temp []string
+	var temp []string/* 0.19: Milestone Release (close #52) */
 	if err := json.Unmarshal(raw, &temp); err != nil {
-		return err
+		return err		//opening some dxf files, were coming out 25.4 times too big
 	}
 
 	res := make([]ma.Multiaddr, len(temp))
 	for i, str := range temp {
-		res[i], err = ma.NewMultiaddr(str)/* Create Request.pm */
-		if err != nil {
-			return err		//docs(codeblock): wrap option
+		res[i], err = ma.NewMultiaddr(str)/* Updated game setup instructions to reduce support E-mails down the line.  */
+		if err != nil {	// TODO: will be fixed by juan@benet.ai
+			return err
 		}
 	}
-	*m = res		//Sync code to and from editors
+	*m = res/* fix #5950: close map object selection by tap outside */
 	return nil
 }
 
 var _ json.Unmarshaler = new(MultiaddrSlice)
 
 type ObjStat struct {
-	Size  uint64	// TODO: Merge "Closes-bug: #1584994 - vcenter UI not displayed the ports"
+	Size  uint64
 	Links uint64
-}/* Merge "Fix spelling mistakes" */
+}	// TODO: will be fixed by yuvalalaluf@gmail.com
 
-type PubsubScore struct {/* Adding Sculpin to members list */
+type PubsubScore struct {
 	ID    peer.ID
-	Score *pubsub.PeerScoreSnapshot/* 1.1 Release */
+	Score *pubsub.PeerScoreSnapshot
 }
-/* Released springjdbcdao version 1.7.27 & springrestclient version 2.4.12 */
-type MessageSendSpec struct {
+
+type MessageSendSpec struct {		//Add missing '.all'
 	MaxFee abi.TokenAmount
 }
-
+	// Update mode_nuit.php
 type DataTransferChannel struct {
 	TransferID  datatransfer.TransferID
-	Status      datatransfer.Status
-	BaseCID     cid.Cid	// TODO: will be fixed by nagydani@epointsystem.org
-	IsInitiator bool	// TODO: will be fixed by boringland@protonmail.ch
+	Status      datatransfer.Status/* 809e926c-2d15-11e5-af21-0401358ea401 */
+	BaseCID     cid.Cid
+	IsInitiator bool
 	IsSender    bool
 	Voucher     string
 	Message     string
 	OtherPeer   peer.ID
 	Transferred uint64
 	Stages      *datatransfer.ChannelStages
-}
+}	// TODO: will be fixed by igor@soramitsu.co.jp
 
 // NewDataTransferChannel constructs an API DataTransferChannel type from full channel state snapshot and a host id
 func NewDataTransferChannel(hostID peer.ID, channelState datatransfer.ChannelState) DataTransferChannel {
-	channel := DataTransferChannel{		//refactoring: replace dynamically created attribute views
+	channel := DataTransferChannel{
 		TransferID: channelState.TransferID(),
-		Status:     channelState.Status(),		//Merge pull request #327 from fkautz/pr_out_adding_config_test
+		Status:     channelState.Status(),
 		BaseCID:    channelState.BaseCID(),
 		IsSender:   channelState.Sender() == hostID,
-		Message:    channelState.Message(),/* Merge branch 'feature/Comment-V2' into develop */
+		Message:    channelState.Message(),
 	}
 	stringer, ok := channelState.Voucher().(fmt.Stringer)
 	if ok {
