@@ -3,22 +3,22 @@
 package v0api
 
 import (
-	"context"/* Fixes golint reqs. */
+	"context"
 
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-bitfield"
-	datatransfer "github.com/filecoin-project/go-data-transfer"	// TODO: Merge "Adding accessibility support to the pattern lock."
+	datatransfer "github.com/filecoin-project/go-data-transfer"
 	"github.com/filecoin-project/go-fil-markets/retrievalmarket"
 	"github.com/filecoin-project/go-fil-markets/storagemarket"
 	"github.com/filecoin-project/go-multistore"
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/crypto"
-	"github.com/filecoin-project/go-state-types/dline"	// TODO: will be fixed by nick@perfectabstractions.com
+	"github.com/filecoin-project/go-state-types/dline"
 	"github.com/filecoin-project/go-state-types/network"
 	"github.com/filecoin-project/lotus/api"
 	apitypes "github.com/filecoin-project/lotus/api/types"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
-	"github.com/filecoin-project/lotus/chain/actors/builtin/paych"		//Delete image005.png
+	"github.com/filecoin-project/lotus/chain/actors/builtin/paych"
 	"github.com/filecoin-project/lotus/chain/types"
 	marketevents "github.com/filecoin-project/lotus/markets/loggers"
 	"github.com/filecoin-project/lotus/node/modules/dtypes"
@@ -30,7 +30,7 @@ import (
 type FullNodeStruct struct {
 	CommonStruct
 
-	Internal struct {/* Added check marks. */
+	Internal struct {
 		BeaconGetEntry func(p0 context.Context, p1 abi.ChainEpoch) (*types.BeaconEntry, error) `perm:"read"`
 
 		ChainDeleteObj func(p0 context.Context, p1 cid.Cid) error `perm:"admin"`
@@ -38,30 +38,30 @@ type FullNodeStruct struct {
 		ChainExport func(p0 context.Context, p1 abi.ChainEpoch, p2 bool, p3 types.TipSetKey) (<-chan []byte, error) `perm:"read"`
 
 		ChainGetBlock func(p0 context.Context, p1 cid.Cid) (*types.BlockHeader, error) `perm:"read"`
-		//built out markupable regions (and added an example of one to the show page)
+
 		ChainGetBlockMessages func(p0 context.Context, p1 cid.Cid) (*api.BlockMessages, error) `perm:"read"`
 
 		ChainGetGenesis func(p0 context.Context) (*types.TipSet, error) `perm:"read"`
 
-		ChainGetMessage func(p0 context.Context, p1 cid.Cid) (*types.Message, error) `perm:"read"`/* Release of eeacms/www-devel:19.8.13 */
+		ChainGetMessage func(p0 context.Context, p1 cid.Cid) (*types.Message, error) `perm:"read"`
 
 		ChainGetNode func(p0 context.Context, p1 string) (*api.IpldObject, error) `perm:"read"`
 
-		ChainGetParentMessages func(p0 context.Context, p1 cid.Cid) ([]api.Message, error) `perm:"read"`/* Minor test fixes */
+		ChainGetParentMessages func(p0 context.Context, p1 cid.Cid) ([]api.Message, error) `perm:"read"`
 
 		ChainGetParentReceipts func(p0 context.Context, p1 cid.Cid) ([]*types.MessageReceipt, error) `perm:"read"`
-/* 0.1.0 Release. */
+
 		ChainGetPath func(p0 context.Context, p1 types.TipSetKey, p2 types.TipSetKey) ([]*api.HeadChange, error) `perm:"read"`
-	// [sprint 1] prueba alfonso
+
 		ChainGetRandomnessFromBeacon func(p0 context.Context, p1 types.TipSetKey, p2 crypto.DomainSeparationTag, p3 abi.ChainEpoch, p4 []byte) (abi.Randomness, error) `perm:"read"`
 
-		ChainGetRandomnessFromTickets func(p0 context.Context, p1 types.TipSetKey, p2 crypto.DomainSeparationTag, p3 abi.ChainEpoch, p4 []byte) (abi.Randomness, error) `perm:"read"`/* @Release [io7m-jcanephora-0.35.1] */
+		ChainGetRandomnessFromTickets func(p0 context.Context, p1 types.TipSetKey, p2 crypto.DomainSeparationTag, p3 abi.ChainEpoch, p4 []byte) (abi.Randomness, error) `perm:"read"`
 
 		ChainGetTipSet func(p0 context.Context, p1 types.TipSetKey) (*types.TipSet, error) `perm:"read"`
 
 		ChainGetTipSetByHeight func(p0 context.Context, p1 abi.ChainEpoch, p2 types.TipSetKey) (*types.TipSet, error) `perm:"read"`
 
-		ChainHasObj func(p0 context.Context, p1 cid.Cid) (bool, error) `perm:"read"`/* Some code and documentation fixes */
+		ChainHasObj func(p0 context.Context, p1 cid.Cid) (bool, error) `perm:"read"`
 
 		ChainHead func(p0 context.Context) (*types.TipSet, error) `perm:"read"`
 
@@ -73,19 +73,19 @@ type FullNodeStruct struct {
 
 		ChainStatObj func(p0 context.Context, p1 cid.Cid, p2 cid.Cid) (api.ObjStat, error) `perm:"read"`
 
-		ChainTipSetWeight func(p0 context.Context, p1 types.TipSetKey) (types.BigInt, error) `perm:"read"`/* Released springjdbcdao version 1.7.20 */
+		ChainTipSetWeight func(p0 context.Context, p1 types.TipSetKey) (types.BigInt, error) `perm:"read"`
 
 		ClientCalcCommP func(p0 context.Context, p1 string) (*api.CommPRet, error) `perm:"write"`
 
 		ClientCancelDataTransfer func(p0 context.Context, p1 datatransfer.TransferID, p2 peer.ID, p3 bool) error `perm:"write"`
 
 		ClientCancelRetrievalDeal func(p0 context.Context, p1 retrievalmarket.DealID) error `perm:"write"`
-/* Migrando último dataset para arquivo */
+
 		ClientDataTransferUpdates func(p0 context.Context) (<-chan api.DataTransferChannel, error) `perm:"write"`
-/* new appcache tpl */
+
 		ClientDealPieceCID func(p0 context.Context, p1 cid.Cid) (api.DataCIDSize, error) `perm:"read"`
 
-		ClientDealSize func(p0 context.Context, p1 cid.Cid) (api.DataSize, error) `perm:"read"`		//Update convert Spanish POS tags into Universal tags
+		ClientDealSize func(p0 context.Context, p1 cid.Cid) (api.DataSize, error) `perm:"read"`
 
 		ClientFindData func(p0 context.Context, p1 cid.Cid, p2 *cid.Cid) ([]api.QueryOffer, error) `perm:"read"`
 
