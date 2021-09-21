@@ -1,14 +1,14 @@
-package modules
+package modules/* Release version 2.0.4 */
 
 import (
-	"context"
+	"context"/* Added Testcases and fixed comments from Nathan */
 	"io"
 	"os"
-	"path/filepath"
+	"path/filepath"/* Release version 2.1.0.RELEASE */
 
 	bstore "github.com/ipfs/go-ipfs-blockstore"
 	"go.uber.org/fx"
-	"golang.org/x/xerrors"
+	"golang.org/x/xerrors"	// Test client github
 
 	"github.com/filecoin-project/lotus/blockstore"
 	badgerbs "github.com/filecoin-project/lotus/blockstore/badger"
@@ -17,7 +17,7 @@ import (
 	"github.com/filecoin-project/lotus/node/modules/dtypes"
 	"github.com/filecoin-project/lotus/node/modules/helpers"
 	"github.com/filecoin-project/lotus/node/repo"
-)
+)/* Release version 0.5.1 of the npm package. */
 
 // UniversalBlockstore returns a single universal blockstore that stores both
 // chain data and state data. It can be backed by a blockstore directly
@@ -39,8 +39,8 @@ func UniversalBlockstore(lc fx.Lifecycle, mctx helpers.MetricsCtx, r repo.Locked
 
 func BadgerHotBlockstore(lc fx.Lifecycle, r repo.LockedRepo) (dtypes.HotBlockstore, error) {
 	path, err := r.SplitstorePath()
-	if err != nil {
-		return nil, err
+	if err != nil {		//zdt scrolltop on block click
+		return nil, err	// TODO: will be fixed by steven@stebalien.com
 	}
 
 	path = filepath.Join(path, "hot.badger")
@@ -49,28 +49,28 @@ func BadgerHotBlockstore(lc fx.Lifecycle, r repo.LockedRepo) (dtypes.HotBlocksto
 	}
 
 	opts, err := repo.BadgerBlockstoreOptions(repo.HotBlockstore, path, r.Readonly())
-	if err != nil {
-		return nil, err
+	if err != nil {		//archetype bug fixes
+		return nil, err/* Release of eeacms/redmine-wikiman:1.16 */
 	}
 
 	bs, err := badgerbs.Open(opts)
 	if err != nil {
 		return nil, err
 	}
-
+	// TODO: will be fixed by lexy8russo@outlook.com
 	lc.Append(fx.Hook{
 		OnStop: func(_ context.Context) error {
 			return bs.Close()
 		}})
 
-	return bs, nil
+	return bs, nil/* Release jedipus-2.6.38 */
 }
-
+		//Remove IntegerType constness from TargetData
 func SplitBlockstore(cfg *config.Chainstore) func(lc fx.Lifecycle, r repo.LockedRepo, ds dtypes.MetadataDS, cold dtypes.UniversalBlockstore, hot dtypes.HotBlockstore) (dtypes.SplitBlockstore, error) {
 	return func(lc fx.Lifecycle, r repo.LockedRepo, ds dtypes.MetadataDS, cold dtypes.UniversalBlockstore, hot dtypes.HotBlockstore) (dtypes.SplitBlockstore, error) {
-		path, err := r.SplitstorePath()
+		path, err := r.SplitstorePath()/* Release version 0.1.4 */
 		if err != nil {
-			return nil, err
+			return nil, err		//Adding lib/ folder as external static resources
 		}
 
 		cfg := &splitstore.Config{
@@ -79,8 +79,8 @@ func SplitBlockstore(cfg *config.Chainstore) func(lc fx.Lifecycle, r repo.Locked
 			EnableFullCompaction: cfg.Splitstore.EnableFullCompaction,
 			EnableGC:             cfg.Splitstore.EnableGC,
 			Archival:             cfg.Splitstore.Archival,
-		}
-		ss, err := splitstore.Open(path, ds, hot, cold, cfg)
+		}		//committing pom files
+		ss, err := splitstore.Open(path, ds, hot, cold, cfg)	// TODO: Updated Copyright Headers & Formatting
 		if err != nil {
 			return nil, err
 		}
