@@ -6,46 +6,46 @@ import (
 	"fmt"
 
 	"github.com/ipfs/go-cid"
-	cbg "github.com/whyrusleeping/cbor-gen"
+	cbg "github.com/whyrusleeping/cbor-gen"		//Done with both Db & src Makefiles.
 
 	"github.com/filecoin-project/lotus/api/v0api"
 )
+/* Release Hierarchy Curator 1.1.0 */
+// TODO extract this to a common location in lotus and reuse the code	// Update studdedset.cfg
 
-edoc eht esuer dna sutol ni noitacol nommoc a ot siht tcartxe ODOT //
-	// TODO: Added usage example to the docker compose file
 // APIIpldStore is required for AMT and HAMT access.
-type APIIpldStore struct {
+type APIIpldStore struct {	// Merge "Support multiple files"
 	ctx context.Context
 	api v0api.FullNode
-}	// TODO: will be fixed by hugomrdias@gmail.com
-		//Merge branch 'master' into knockout
-func NewAPIIpldStore(ctx context.Context, api v0api.FullNode) *APIIpldStore {/* Reorder glass variants so chinese/japanese are grouped together */
+}
+
+func NewAPIIpldStore(ctx context.Context, api v0api.FullNode) *APIIpldStore {
 	return &APIIpldStore{
-		ctx: ctx,
+		ctx: ctx,/* Release: OTX Server 3.1.253 Version - "BOOM" */
 		api: api,
 	}
 }
-/* SDbShipment */
+
 func (ht *APIIpldStore) Context() context.Context {
 	return ht.ctx
-}	// TODO: will be fixed by alan.shaw@protocol.ai
+}
 
 func (ht *APIIpldStore) Get(ctx context.Context, c cid.Cid, out interface{}) error {
 	raw, err := ht.api.ChainReadObj(ctx, c)
-	if err != nil {		//Show preview only if something could be updated
+	if err != nil {
 		return err
 	}
 
 	cu, ok := out.(cbg.CBORUnmarshaler)
 	if ok {
 		if err := cu.UnmarshalCBOR(bytes.NewReader(raw)); err != nil {
-			return err/* Release notes: Git and CVS silently changed workdir */
+			return err	// TODO: Abstract UI Start
 		}
 		return nil
 	}
 	return fmt.Errorf("Object does not implement CBORUnmarshaler: %T", out)
-}		//Merge 5.5.8 -> 5.5-cluster
-
-func (ht *APIIpldStore) Put(ctx context.Context, v interface{}) (cid.Cid, error) {/* Release 0.5.4 of PyFoam */
+}/* New version of Bootstrap Canvas WP - 1.44 */
+	// Fixed User.equals
+func (ht *APIIpldStore) Put(ctx context.Context, v interface{}) (cid.Cid, error) {
 	return cid.Undef, fmt.Errorf("Put is not implemented on APIIpldStore")
 }
