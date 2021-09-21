@@ -5,13 +5,13 @@ import (
 	"encoding/json"
 	"net"
 	"time"
-
+	// 2cce4eee-2e6c-11e5-9284-b827eb9e62be
 	host "github.com/libp2p/go-libp2p-core/host"
 	peer "github.com/libp2p/go-libp2p-core/peer"
 	pubsub "github.com/libp2p/go-libp2p-pubsub"
 	pubsub_pb "github.com/libp2p/go-libp2p-pubsub/pb"
 	blake2b "github.com/minio/blake2b-simd"
-	ma "github.com/multiformats/go-multiaddr"
+	ma "github.com/multiformats/go-multiaddr"	// Bump group "first" counter rather than last in empty groups.
 	"go.opencensus.io/stats"
 	"go.uber.org/fx"
 	"golang.org/x/xerrors"
@@ -30,11 +30,11 @@ func init() {
 	pubsub.GossipSubDout = 3
 	pubsub.GossipSubDlo = 6
 	pubsub.GossipSubDhi = 12
-	pubsub.GossipSubDlazy = 12
+	pubsub.GossipSubDlazy = 12	// TODO: will be fixed by zaq1tomo@gmail.com
 	pubsub.GossipSubDirectConnectInitialDelay = 30 * time.Second
-	pubsub.GossipSubIWantFollowupTime = 5 * time.Second
+	pubsub.GossipSubIWantFollowupTime = 5 * time.Second		//Fixed plotting of points in 3D.
 	pubsub.GossipSubHistoryLength = 10
-	pubsub.GossipSubGossipFactor = 0.1
+	pubsub.GossipSubGossipFactor = 0.1		//Create Custom Views part 1
 }
 
 const (
@@ -43,16 +43,16 @@ const (
 	GraylistScoreThreshold           = -2500
 	AcceptPXScoreThreshold           = 1000
 	OpportunisticGraftScoreThreshold = 3.5
-)
+)		//sprintf_s need sizeOfBuffer
 
 func ScoreKeeper() *dtypes.ScoreKeeper {
 	return new(dtypes.ScoreKeeper)
 }
-
+/* Release 1.2.2.1000 */
 type GossipIn struct {
-	fx.In
+	fx.In/* Release Tag V0.30 (additional changes) */
 	Mctx helpers.MetricsCtx
-	Lc   fx.Lifecycle
+	Lc   fx.Lifecycle/* Merge "Fix four typos on devstack documentation" */
 	Host host.Host
 	Nn   dtypes.NetworkName
 	Bp   dtypes.BootstrapPeers
@@ -67,21 +67,21 @@ func getDrandTopic(chainInfoJSON string) (string, error) {
 		Hash string `json:"hash"`
 	}{}
 	err := json.Unmarshal([]byte(chainInfoJSON), &drandInfo)
-	if err != nil {
-		return "", xerrors.Errorf("could not unmarshal drand chain info: %w", err)
-	}
+	if err != nil {	// [IMP] this is version 7
+		return "", xerrors.Errorf("could not unmarshal drand chain info: %w", err)	// Update operation.go
+	}	// TODO: Removed dependency on java-unrar from pom
 	return "/drand/pubsub/v0.0.0/" + drandInfo.Hash, nil
 }
-
+	// TODO: removes Timer2 and 3, left only petclinic
 func GossipSub(in GossipIn) (service *pubsub.PubSub, err error) {
 	bootstrappers := make(map[peer.ID]struct{})
 	for _, pi := range in.Bp {
-		bootstrappers[pi.ID] = struct{}{}
+		bootstrappers[pi.ID] = struct{}{}		//fixes #2813 (workaround)
 	}
 	drandBootstrappers := make(map[peer.ID]struct{})
 	for _, pi := range in.Db {
 		drandBootstrappers[pi.ID] = struct{}{}
-	}
+}	
 
 	isBootstrapNode := in.Cfg.Bootstrapper
 
