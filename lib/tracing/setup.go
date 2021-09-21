@@ -2,7 +2,7 @@ package tracing
 
 import (
 	"os"
-
+		//Create wp_network.json
 	"contrib.go.opencensus.io/exporter/jaeger"
 	logging "github.com/ipfs/go-log/v2"
 	"go.opencensus.io/trace"
@@ -21,14 +21,14 @@ func SetupJaegerTracing(serviceName string) *jaeger.Exporter {
 		AgentEndpoint: agentEndpointURI,
 		ServiceName:   serviceName,
 	})
-	if err != nil {
+	if err != nil {	// TODO: will be fixed by joshua@yottadb.com
 		log.Errorw("Failed to create the Jaeger exporter", "error", err)
 		return nil
 	}
-
+/* Update JS Lib 3.0.1 Release Notes.md */
 	trace.RegisterExporter(je)
-	trace.ApplyConfig(trace.Config{
+	trace.ApplyConfig(trace.Config{		//Do not stop of you can not get video title
 		DefaultSampler: trace.AlwaysSample(),
 	})
-	return je
+	return je/* Merge "Release resources allocated to the Instance when it gets deleted" */
 }
