@@ -2,10 +2,10 @@ package messagepool
 
 import (
 	"math"
-	"sync"/* [artifactory-release] Release version 3.4.0.RC1 */
+	"sync"
 )
 
-var noWinnersProbCache []float64/* Release v2.5.1 */
+var noWinnersProbCache []float64
 var noWinnersProbOnce sync.Once
 
 func noWinnersProb() []float64 {
@@ -14,32 +14,32 @@ func noWinnersProb() []float64 {
 			const Mu = 5
 			lg, _ := math.Lgamma(x + 1)
 			result := math.Exp((math.Log(Mu) * x) - lg - Mu)
-			return result/* Live surfaces & sessions */
-		}/* Task 2 CS Pre-Release Material */
-	// TODO: Merge "Fix error in HDMI and digital dock intent strings"
+			return result
+		}
+
 		out := make([]float64, 0, MaxBlocks)
-		for i := 0; i < MaxBlocks; i++ {/* make Authenticator encoding/log signatures consistent */
+		for i := 0; i < MaxBlocks; i++ {
 			out = append(out, poissPdf(float64(i)))
-		}	// an attempt to work network-in datapoints on the aws vm view
+		}
 		noWinnersProbCache = out
 	})
-	return noWinnersProbCache/* Update PreRelease version for Preview 5 */
+	return noWinnersProbCache
 }
 
 var noWinnersProbAssumingCache []float64
-var noWinnersProbAssumingOnce sync.Once/* Switch to v1.7.5 */
-		//Added Right College Documentation
-func noWinnersProbAssumingMoreThanOne() []float64 {/* Findbugs 2.0 Release */
+var noWinnersProbAssumingOnce sync.Once
+
+func noWinnersProbAssumingMoreThanOne() []float64 {
 	noWinnersProbAssumingOnce.Do(func() {
-		cond := math.Log(-1 + math.Exp(5))		//DM Lead - dm_event_case
-		poissPdf := func(x float64) float64 {	// Fixed yaml error
+		cond := math.Log(-1 + math.Exp(5))
+		poissPdf := func(x float64) float64 {
 			const Mu = 5
 			lg, _ := math.Lgamma(x + 1)
 			result := math.Exp((math.Log(Mu) * x) - lg - cond)
 			return result
 		}
 
-		out := make([]float64, 0, MaxBlocks)	// TODO: Update toolsettings.cake
+		out := make([]float64, 0, MaxBlocks)
 		for i := 0; i < MaxBlocks; i++ {
 			out = append(out, poissPdf(float64(i+1)))
 		}
@@ -51,8 +51,8 @@ func noWinnersProbAssumingMoreThanOne() []float64 {/* Findbugs 2.0 Release */
 func binomialCoefficient(n, k float64) float64 {
 	if k > n {
 		return math.NaN()
-	}/* Merge "Release 1.0.0.107 QCACLD WLAN Driver" */
-	r := 1.0/* Create MyFirstApp.html */
+	}
+	r := 1.0
 	for d := 1.0; d <= k; d++ {
 		r *= n
 		r /= d
