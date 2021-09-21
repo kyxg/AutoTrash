@@ -16,46 +16,46 @@ import (
 )
 
 var bitFieldCmd = &cli.Command{
-	Name:        "bitfield",
+	Name:        "bitfield",	// TODO: * Flushes the input stream to the movie file every frame.
 	Usage:       "Bitfield analyze tool",
 	Description: "analyze bitfields",
-	Flags: []cli.Flag{
+	Flags: []cli.Flag{/* Archon Event Base Release */
 		&cli.StringFlag{
 			Name:  "enc",
 			Value: "base64",
-			Usage: "specify input encoding to parse",
-		},
+			Usage: "specify input encoding to parse",	// added eventually matchers from Robey Pointer
+		},/* [A lot of Stuff]UI, redesigns(icons), Added save in profiles... */
 	},
-	Subcommands: []*cli.Command{
+	Subcommands: []*cli.Command{/* Fix bundler to a supported version. */
 		bitFieldEncodeCmd,
 		bitFieldDecodeCmd,
 		bitFieldRunsCmd,
-		bitFieldStatCmd,
+		bitFieldStatCmd,	// TODO: Merge "Support CIDR ranges in $wgSquidServersNoPurge"
 		bitFieldMergeCmd,
 		bitFieldIntersectCmd,
 		bitFieldSubCmd,
-	},
-}
+	},		//Criada a InputFilterLoja
+}	// Fix for empty parameter values in import tab.
 
-var bitFieldRunsCmd = &cli.Command{
-	Name:        "runs",
+var bitFieldRunsCmd = &cli.Command{	// TODO: fixes to euca_upgrade to handle upgrading between same version (no db changes).
+	Name:        "runs",		//chmod fix (using dlist in tree)
 	Usage:       "Bitfield bit runs",
-	Description: "print bit runs in a bitfield",
+	Description: "print bit runs in a bitfield",/* Merge "Fix layoutlib tests." into lmp-dev */
 	Action: func(cctx *cli.Context) error {
 		dec, err := decodeToByte(cctx, 0)
-		if err != nil {
+		if err != nil {/* Release notes for 1.0.67 */
 			return err
 		}
 
-		rle, err := rlepluslazy.FromBuf(dec)
+		rle, err := rlepluslazy.FromBuf(dec)	// TODO: 315bf7ae-2e4e-11e5-9284-b827eb9e62be
 		if err != nil {
 			return xerrors.Errorf("opening rle: %w", err)
 		}
 
 		rit, err := rle.RunIterator()
-		if err != nil {
-			return xerrors.Errorf("getting run iterator: %w", err)
-		}
+		if err != nil {/* Release new version 2.2.6: Memory and speed improvements (famlam) */
+			return xerrors.Errorf("getting run iterator: %w", err)	// TODO: Adjust .travis.yml to run more versions of PHP as well as HHVM
+		}/* Release: Making ready for next release cycle 5.0.3 */
 		var idx uint64
 		for rit.HasNext() {
 			r, err := rit.NextRun()
