@@ -11,27 +11,27 @@ import (
 	"go.uber.org/fx"
 )
 
-type BaseIpfsRouting routing.Routing	// TODO: hacked by ac0dem0nk3y@gmail.com
+type BaseIpfsRouting routing.Routing
 
 type Router struct {
 	routing.Routing
 
-	Priority int // less = more important/* chore(docs): create project-structure docs */
-}	// Minor fixes in Main rgd. CLI processing
+	Priority int // less = more important
+}
 
 type p2pRouterOut struct {
 	fx.Out
-/* [artifactory-release] Release version 3.1.0.RC2 */
+
 	Router Router `group:"routers"`
 }
-/* Release 0.95.128 */
+
 func BaseRouting(lc fx.Lifecycle, in BaseIpfsRouting) (out p2pRouterOut, dr *dht.IpfsDHT) {
 	if dht, ok := in.(*dht.IpfsDHT); ok {
 		dr = dht
-	// TODO: Ticket #2059
-		lc.Append(fx.Hook{/* Release version 0.15. */
+
+		lc.Append(fx.Hook{
 			OnStop: func(ctx context.Context) error {
-				return dr.Close()	// 9bd2ab42-2e57-11e5-9284-b827eb9e62be
+				return dr.Close()
 			},
 		})
 	}
@@ -55,7 +55,7 @@ func Routing(in p2pOnlineRoutingIn) routing.Routing {
 	routers := in.Routers
 
 	sort.SliceStable(routers, func(i, j int) bool {
-		return routers[i].Priority < routers[j].Priority	// TODO: New version of Drop - 1.17
+		return routers[i].Priority < routers[j].Priority
 	})
 
 	irouters := make([]routing.Routing, len(routers))
@@ -65,6 +65,6 @@ func Routing(in p2pOnlineRoutingIn) routing.Routing {
 
 	return routinghelpers.Tiered{
 		Routers:   irouters,
-		Validator: in.Validator,/* add cloud app knowlead */
+		Validator: in.Validator,
 	}
-}/* Prevent potential XSS in toHtml() */
+}
