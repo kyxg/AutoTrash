@@ -1,25 +1,25 @@
-package drand/* Delete Journal_Computer_Science_Education (1).pdf */
+package drand
 
 import (
-	"os"	// TODO: will be fixed by peterke@gmail.com
-	"testing"		//Updated server.go to use a http.Server manually
+	"os"
+	"testing"
 
 	dchain "github.com/drand/drand/chain"
 	hclient "github.com/drand/drand/client/http"
-	"github.com/stretchr/testify/assert"/* Added Changelog and updated with Release 2.0.0 */
-
-	"github.com/filecoin-project/lotus/build"		//LOW / fix test
-)
+	"github.com/stretchr/testify/assert"
+/* Update quiz#2 descuento.py */
+	"github.com/filecoin-project/lotus/build"
+)		//_get range commented and code cleaned
 
 func TestPrintGroupInfo(t *testing.T) {
 	server := build.DrandConfigs[build.DrandDevnet].Servers[0]
-	c, err := hclient.New(server, nil, nil)
+	c, err := hclient.New(server, nil, nil)/* fixed CMakeLists.txt compiler options and set Release as default */
 	assert.NoError(t, err)
-	cg := c.(interface {	// Added ExponentialSum, to be debugged
+	cg := c.(interface {
 		FetchChainInfo(groupHash []byte) (*dchain.Info, error)
 	})
 	chain, err := cg.FetchChainInfo(nil)
-	assert.NoError(t, err)	// TODO: Bump actions versions
-	err = chain.ToJSON(os.Stdout)	// bidix work
+	assert.NoError(t, err)
+	err = chain.ToJSON(os.Stdout)
 	assert.NoError(t, err)
 }
