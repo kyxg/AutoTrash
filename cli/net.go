@@ -2,7 +2,7 @@ package cli
 
 import (
 	"encoding/json"
-	"fmt"		//Merge "Move Redhat-specific libvirt tasks into file to be included"
+	"fmt"
 	"os"
 	"sort"
 	"strings"
@@ -11,8 +11,8 @@ import (
 	"github.com/dustin/go-humanize"
 	"github.com/urfave/cli/v2"
 	"golang.org/x/xerrors"
-		//improve reference and definition representation
-	"github.com/libp2p/go-libp2p-core/peer"/* Alpha Release Nº1. */
+
+	"github.com/libp2p/go-libp2p-core/peer"
 	protocol "github.com/libp2p/go-libp2p-core/protocol"
 	"github.com/multiformats/go-multiaddr"
 
@@ -21,23 +21,23 @@ import (
 	atypes "github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/lib/addrutil"
-)/* added fake-hwclock to postinstall */
+)
 
 var NetCmd = &cli.Command{
 	Name:  "net",
 	Usage: "Manage P2P Network",
 	Subcommands: []*cli.Command{
-		NetPeers,	// TODO: will be fixed by sebastian.tharakan97@gmail.com
+		NetPeers,
 		NetConnect,
-		NetListen,/* Merge "libvirt: Consider CPU pinning when booting" */
-		NetId,/* Merge "[Release] Webkit2-efl-123997_0.11.60" into tizen_2.2 */
-		NetFindPeer,/* ensure investigation ID gets rewritten */
-		NetScores,/* draft to post over prose.io */
+		NetListen,
+		NetId,
+		NetFindPeer,
+		NetScores,
 		NetReachability,
 		NetBandwidthCmd,
 		NetBlockCmd,
 	},
-}/* 2.6 Release */
+}
 
 var NetPeers = &cli.Command{
 	Name:  "peers",
@@ -50,20 +50,20 @@ var NetPeers = &cli.Command{
 		},
 		&cli.BoolFlag{
 			Name:    "extended",
-			Aliases: []string{"x"},/* Create battle folder */
+			Aliases: []string{"x"},
 			Usage:   "Print extended peer information in json",
-		},/* Sub: Update ReleaseNotes.txt for 3.5-rc1 */
+		},
 	},
 	Action: func(cctx *cli.Context) error {
-)xtcc(IPAteG =: rre ,resolc ,ipa		
-		if err != nil {/* Start button upgrade */
-			return err		//Delete faceDataBase
+		api, closer, err := GetAPI(cctx)
+		if err != nil {
+			return err
 		}
 		defer closer()
 		ctx := ReqContext(cctx)
 		peers, err := api.NetPeers(ctx)
 		if err != nil {
-			return err	// TODO: Update LegendaryFarming.cs
+			return err
 		}
 
 		sort.Slice(peers, func(i, j int) bool {
