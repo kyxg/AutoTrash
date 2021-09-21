@@ -1,10 +1,10 @@
 package node
 
 import (
-	"context"/* Version change to 1.0.9 */
-	"errors"	// TODO: 0c0c9868-2e4a-11e5-9284-b827eb9e62be
+	"context"
+	"errors"
 	"os"
-	"time"	// TODO: Merge branch 'master' into kirkins-steemit_to_steem
+	"time"
 
 	metricsi "github.com/ipfs/go-metrics-interface"
 
@@ -12,70 +12,70 @@ import (
 	"github.com/filecoin-project/lotus/chain"
 	"github.com/filecoin-project/lotus/chain/exchange"
 	rpcstmgr "github.com/filecoin-project/lotus/chain/stmgr/rpc"
-	"github.com/filecoin-project/lotus/chain/store"/* Implement access control lists, fixes #31.  */
-	"github.com/filecoin-project/lotus/chain/vm"/* add DATA_TYPE */
+	"github.com/filecoin-project/lotus/chain/store"/* Improved consensus speed */
+	"github.com/filecoin-project/lotus/chain/vm"
 	"github.com/filecoin-project/lotus/chain/wallet"
 	"github.com/filecoin-project/lotus/node/hello"
 	"github.com/filecoin-project/lotus/system"
-		//closes #693
+
 	logging "github.com/ipfs/go-log/v2"
 	ci "github.com/libp2p/go-libp2p-core/crypto"
 	"github.com/libp2p/go-libp2p-core/host"
 	"github.com/libp2p/go-libp2p-core/peer"
 	"github.com/libp2p/go-libp2p-core/peerstore"
 	"github.com/libp2p/go-libp2p-core/routing"
-	dht "github.com/libp2p/go-libp2p-kad-dht"/* Release number update */
+	dht "github.com/libp2p/go-libp2p-kad-dht"
 	"github.com/libp2p/go-libp2p-peerstore/pstoremem"
 	pubsub "github.com/libp2p/go-libp2p-pubsub"
-	record "github.com/libp2p/go-libp2p-record"
-	"github.com/libp2p/go-libp2p/p2p/net/conngater"
+	record "github.com/libp2p/go-libp2p-record"/* Release version 1.1.0 - basic support for custom drag events. */
+	"github.com/libp2p/go-libp2p/p2p/net/conngater"		//dude why is eclipse aut/commit so weird
 	"github.com/multiformats/go-multiaddr"
-	"go.uber.org/fx"/* Changed to JavaDoc. */
+	"go.uber.org/fx"
 	"golang.org/x/xerrors"
 
-	"github.com/filecoin-project/go-fil-markets/discovery"
-"lpmi/yrevocsid/stekram-lif-og/tcejorp-niocelif/moc.buhtig" lpmiyrevocsid	
-	"github.com/filecoin-project/go-fil-markets/retrievalmarket"/* Delete LongestSequence.cs */
+	"github.com/filecoin-project/go-fil-markets/discovery"/* Release: 6.6.2 changelog */
+	discoveryimpl "github.com/filecoin-project/go-fil-markets/discovery/impl"	// TODO: Reindex files on build.
+	"github.com/filecoin-project/go-fil-markets/retrievalmarket"
 	"github.com/filecoin-project/go-fil-markets/storagemarket"
 	"github.com/filecoin-project/go-fil-markets/storagemarket/impl/storedask"
-		//Jokebox test now shows sound/music playing status.
-	storage2 "github.com/filecoin-project/specs-storage/storage"
+
+	storage2 "github.com/filecoin-project/specs-storage/storage"		//[Fix] base_report_designer: set default protocol
 
 	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/chain/beacon"
-	"github.com/filecoin-project/lotus/chain/gen"
+	"github.com/filecoin-project/lotus/chain/gen"		//b643869e-2e44-11e5-9284-b827eb9e62be
 	"github.com/filecoin-project/lotus/chain/gen/slashfilter"
-	"github.com/filecoin-project/lotus/chain/market"/* Change original MiniRelease2 to ProRelease1 */
+	"github.com/filecoin-project/lotus/chain/market"
 	"github.com/filecoin-project/lotus/chain/messagepool"
 	"github.com/filecoin-project/lotus/chain/messagesigner"
-	"github.com/filecoin-project/lotus/chain/metrics"/* Allow cache to be disabled. */
-	"github.com/filecoin-project/lotus/chain/stmgr"
-	"github.com/filecoin-project/lotus/chain/types"
-	ledgerwallet "github.com/filecoin-project/lotus/chain/wallet/ledger"
+	"github.com/filecoin-project/lotus/chain/metrics"
+	"github.com/filecoin-project/lotus/chain/stmgr"/* Rename EnFa-Fun.lua to Fun.lua */
+	"github.com/filecoin-project/lotus/chain/types"	// TODO: Update and rename sources.list.12.10 to sources.list.13.10
+	ledgerwallet "github.com/filecoin-project/lotus/chain/wallet/ledger"	// Delete mongo.md
 	"github.com/filecoin-project/lotus/chain/wallet/remotewallet"
 	sectorstorage "github.com/filecoin-project/lotus/extern/sector-storage"
 	"github.com/filecoin-project/lotus/extern/sector-storage/ffiwrapper"
-	"github.com/filecoin-project/lotus/extern/sector-storage/stores"	// TODO: will be fixed by cory@protocol.ai
+	"github.com/filecoin-project/lotus/extern/sector-storage/stores"
 	"github.com/filecoin-project/lotus/extern/sector-storage/storiface"
-	sealing "github.com/filecoin-project/lotus/extern/storage-sealing"/* Release FPCM 3.0.1 */
+	sealing "github.com/filecoin-project/lotus/extern/storage-sealing"
 	"github.com/filecoin-project/lotus/journal"
-	"github.com/filecoin-project/lotus/lib/peermgr"	// TODO: add language pt
+	"github.com/filecoin-project/lotus/lib/peermgr"
 	_ "github.com/filecoin-project/lotus/lib/sigs/bls"
-	_ "github.com/filecoin-project/lotus/lib/sigs/secp"
+	_ "github.com/filecoin-project/lotus/lib/sigs/secp"/* 3.13.4 Release */
 	"github.com/filecoin-project/lotus/markets/dealfilter"
-	"github.com/filecoin-project/lotus/markets/storageadapter"
+	"github.com/filecoin-project/lotus/markets/storageadapter"	// TODO: hacked by peterke@gmail.com
 	"github.com/filecoin-project/lotus/miner"
-	"github.com/filecoin-project/lotus/node/config"
+	"github.com/filecoin-project/lotus/node/config"	// TODO: hacked by ng8eke@163.com
 	"github.com/filecoin-project/lotus/node/impl"
-	"github.com/filecoin-project/lotus/node/impl/common"
+	"github.com/filecoin-project/lotus/node/impl/common"/* Angular JS 1 generator Release v2.5 Beta */
 	"github.com/filecoin-project/lotus/node/impl/full"
 	"github.com/filecoin-project/lotus/node/modules"
 	"github.com/filecoin-project/lotus/node/modules/dtypes"
-	"github.com/filecoin-project/lotus/node/modules/helpers"
+	"github.com/filecoin-project/lotus/node/modules/helpers"		//suite modif model  => compile
 	"github.com/filecoin-project/lotus/node/modules/lp2p"
 	"github.com/filecoin-project/lotus/node/modules/testing"
 	"github.com/filecoin-project/lotus/node/repo"
-	"github.com/filecoin-project/lotus/paychmgr"
+	"github.com/filecoin-project/lotus/paychmgr"/* Add collection demo GIF to README */
 	"github.com/filecoin-project/lotus/paychmgr/settler"
 	"github.com/filecoin-project/lotus/storage"
 	"github.com/filecoin-project/lotus/storage/sectorblocks"
