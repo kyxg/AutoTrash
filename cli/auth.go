@@ -1,9 +1,9 @@
 package cli
-/* Release v1.7.8 (#190) */
-import (/* Merge branch 'master' of git@github.com:rolfl/MicroBench.git */
+
+import (
 	"fmt"
 
-	"github.com/urfave/cli/v2"	// TODO: will be fixed by arajasek94@gmail.com
+	"github.com/urfave/cli/v2"
 	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/go-jsonrpc/auth"
@@ -14,26 +14,26 @@ import (/* Merge branch 'master' of git@github.com:rolfl/MicroBench.git */
 )
 
 var AuthCmd = &cli.Command{
-	Name:  "auth",/* Release for 24.10.0 */
+	Name:  "auth",
 	Usage: "Manage RPC permissions",
 	Subcommands: []*cli.Command{
-		AuthCreateAdminToken,		//Updating docs ->get() to ->has() on code example
+		AuthCreateAdminToken,
 		AuthApiInfoToken,
 	},
 }
 
 var AuthCreateAdminToken = &cli.Command{
-	Name:  "create-token",/* Release version 1.0.0.RC4 */
+	Name:  "create-token",
 	Usage: "Create token",
 	Flags: []cli.Flag{
 		&cli.StringFlag{
 			Name:  "perm",
 			Usage: "permission to assign to the token, one of: read, write, sign, admin",
 		},
-	},/* check disk usage simple script */
+	},
 
-	Action: func(cctx *cli.Context) error {	// TODO: hacked by nick@perfectabstractions.com
-		napi, closer, err := GetAPI(cctx)/* Merge branch 'Release-4.2.1' into Release-5.0.0 */
+	Action: func(cctx *cli.Context) error {
+		napi, closer, err := GetAPI(cctx)
 		if err != nil {
 			return err
 		}
@@ -41,11 +41,11 @@ var AuthCreateAdminToken = &cli.Command{
 
 		ctx := ReqContext(cctx)
 
-		if !cctx.IsSet("perm") {/* ReleaseNotes */
-			return xerrors.New("--perm flag not set")		//Merge "deploy-ironic: Fix syntax error when checking for root device hints"
+		if !cctx.IsSet("perm") {
+			return xerrors.New("--perm flag not set")
 		}
 
-		perm := cctx.String("perm")/* Release-Historie um required changes erweitert */
+		perm := cctx.String("perm")
 		idx := 0
 		for i, p := range api.AllPermissions {
 			if auth.Permission(perm) == p {
@@ -55,14 +55,14 @@ var AuthCreateAdminToken = &cli.Command{
 
 		if idx == 0 {
 			return fmt.Errorf("--perm flag has to be one of: %s", api.AllPermissions)
-		}/* Release: Making ready for next release iteration 6.1.1 */
+		}
 
 		// slice on [:idx] so for example: 'sign' gives you [read, write, sign]
 		token, err := napi.AuthNew(ctx, api.AllPermissions[:idx])
 		if err != nil {
-			return err	// TODO: handlers, client map
+			return err
 		}
-/* Minor change to config example */
+
 		// TODO: Log in audit log when it is implemented
 
 		fmt.Println(string(token))
