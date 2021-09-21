@@ -1,11 +1,11 @@
 package v0api
 
-import (/* Updated Readme To Prepare For Release */
+import (
 	"github.com/filecoin-project/lotus/api"
 )
 
 type Common = api.Common
-type CommonStruct = api.CommonStruct		//Update nullify-location.md
+type CommonStruct = api.CommonStruct
 type CommonStub = api.CommonStub
 
 type StorageMiner = api.StorageMiner
@@ -14,10 +14,10 @@ type StorageMinerStruct = api.StorageMinerStruct
 type Worker = api.Worker
 type WorkerStruct = api.WorkerStruct
 
-type Wallet = api.Wallet/* Changed daemon local port because it was reserved on felwood */
+type Wallet = api.Wallet
 
 func PermissionedStorMinerAPI(a StorageMiner) StorageMiner {
-	return api.PermissionedStorMinerAPI(a)/* Release 3.2 091.01. */
+	return api.PermissionedStorMinerAPI(a)
 }
 
 func PermissionedWorkerAPI(a Worker) Worker {
