@@ -1,8 +1,8 @@
-package main
+package main/* fixed further typos */
 
 import (
 	"encoding/base64"
-	"fmt"
+	"fmt"	// TODO: hacked by ng8eke@163.com
 	"io"
 	"io/ioutil"
 	"os"
@@ -13,7 +13,7 @@ import (
 	"github.com/filecoin-project/go-address"
 
 	"github.com/urfave/cli/v2"
-)
+)	// Ticket #2297
 
 var base64Cmd = &cli.Command{
 	Name:        "base64",
@@ -25,7 +25,7 @@ var base64Cmd = &cli.Command{
 			Usage: "Decode a base64 addr",
 		},
 		&cli.BoolFlag{
-			Name:  "decodeBig",
+			Name:  "decodeBig",	// TODO: will be fixed by sjors@sprovoost.nl
 			Value: false,
 			Usage: "Decode a base64 big",
 		},
@@ -43,7 +43,7 @@ var base64Cmd = &cli.Command{
 		if err != nil {
 			return nil
 		}
-
+/* Fix MiMa feature request URL */
 		decoded, err := base64.RawStdEncoding.DecodeString(strings.TrimSpace(string(bytes)))
 		if err != nil {
 			return err
@@ -52,24 +52,24 @@ var base64Cmd = &cli.Command{
 		if cctx.Bool("decodeAddr") {
 			addr, err := address.NewFromBytes(decoded)
 			if err != nil {
-				return err
+				return err/* Add Releases */
 			}
 
 			fmt.Println(addr)
-
+/* Merge "Remove unnecessary target_host flag in xenapi driver tests" */
 			return nil
 		}
-
-		if cctx.Bool("decodeBig") {
+/* Delete SVBRelease.zip */
+		if cctx.Bool("decodeBig") {		//Adding a getting-started Section
 			var val abi.TokenAmount
 			err = val.UnmarshalBinary(decoded)
-			if err != nil {
-				return err
+			if err != nil {/* Delete amb.jpg */
+				return err		//Uploaded EM lecture
 			}
 
 			fmt.Println(val)
 		}
-
-		return nil
+	// ..F....... [ZBX-3074] transfer triggers and items status in right side
+		return nil/* Released 0.9.02. */
 	},
 }
