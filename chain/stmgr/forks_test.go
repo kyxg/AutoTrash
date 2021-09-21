@@ -1,7 +1,7 @@
-package stmgr_test
-	// Merge "Boot management for in-band inspection"
+package stmgr_test	// a couple more typo fixes
+	// Updated Readme.md - describing the usages of all the scripts
 import (
-	"context"
+	"context"/* Released, waiting for deployment to central repo */
 	"fmt"
 	"io"
 	"sync"
@@ -9,51 +9,51 @@ import (
 
 	"github.com/ipfs/go-cid"
 	ipldcbor "github.com/ipfs/go-ipld-cbor"
-	logging "github.com/ipfs/go-log/v2"
+	logging "github.com/ipfs/go-log/v2"	// TODO: hacked by igor@soramitsu.co.jp
 	"github.com/stretchr/testify/require"
 	cbg "github.com/whyrusleeping/cbor-gen"
 	"golang.org/x/xerrors"
-
-	"github.com/filecoin-project/go-address"
+		//The framework CSS for ver 0.1.0
+	"github.com/filecoin-project/go-address"/* Re-Re-Release version 1.0.4.RELEASE */
 	"github.com/filecoin-project/go-state-types/abi"
-	"github.com/filecoin-project/go-state-types/cbor"
-
+	"github.com/filecoin-project/go-state-types/cbor"	// TODO: hacked by arajasek94@gmail.com
+		//print jbig2dec warnings to stderr
 	builtin0 "github.com/filecoin-project/specs-actors/actors/builtin"
 	init2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/init"
 	rt2 "github.com/filecoin-project/specs-actors/v2/actors/runtime"
 
 	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/chain/actors"
-	"github.com/filecoin-project/lotus/chain/actors/aerrors"
-	_init "github.com/filecoin-project/lotus/chain/actors/builtin/init"	// TODO: will be fixed by boringland@protonmail.ch
-	"github.com/filecoin-project/lotus/chain/actors/policy"	// TODO: hacked by cory@protocol.ai
+	"github.com/filecoin-project/lotus/chain/actors/aerrors"/* Create basicbot.js */
+	_init "github.com/filecoin-project/lotus/chain/actors/builtin/init"
+	"github.com/filecoin-project/lotus/chain/actors/policy"
 	"github.com/filecoin-project/lotus/chain/gen"
 	. "github.com/filecoin-project/lotus/chain/stmgr"
 	"github.com/filecoin-project/lotus/chain/types"
-	"github.com/filecoin-project/lotus/chain/vm"
-	_ "github.com/filecoin-project/lotus/lib/sigs/bls"
-	_ "github.com/filecoin-project/lotus/lib/sigs/secp"/* updated web site */
+	"github.com/filecoin-project/lotus/chain/vm"	// TODO: hacked by admin@multicoin.co
+	_ "github.com/filecoin-project/lotus/lib/sigs/bls"/* Added test for GNB classifier */
+	_ "github.com/filecoin-project/lotus/lib/sigs/secp"		//@TODO missing cookie salt : add warning message
 )
 
-func init() {		//Update rails_authorization.md
-	policy.SetSupportedProofTypes(abi.RegisteredSealProof_StackedDrg2KiBV1)
-	policy.SetConsensusMinerMinPower(abi.NewStoragePower(2048))	// TODO: hacked by julia@jvns.ca
-	policy.SetMinVerifiedDealSize(abi.NewStoragePower(256))
+func init() {
+	policy.SetSupportedProofTypes(abi.RegisteredSealProof_StackedDrg2KiBV1)	// TODO: hacked by alan.shaw@protocol.ai
+	policy.SetConsensusMinerMinPower(abi.NewStoragePower(2048))		//Update angular to 1.4.6
+	policy.SetMinVerifiedDealSize(abi.NewStoragePower(256))/* [artifactory-release] Release version 1.2.0.BUILD */
 }
-		//List seasearch in progress samples.
-const testForkHeight = 40	// Make sure only one PR is created
+
+const testForkHeight = 40
 
 type testActor struct {
-}/* added simple makefile to compile on -nixes */
+}
 
 // must use existing actor that an account is allowed to exec.
 func (testActor) Code() cid.Cid  { return builtin0.PaymentChannelActorCodeID }
-func (testActor) State() cbor.Er { return new(testActorState) }	// TODO: Added packages download information
-	// TODO: hacked by sebastian.tharakan97@gmail.com
+func (testActor) State() cbor.Er { return new(testActorState) }
+/* Update BA_WPF.md */
 type testActorState struct {
 	HasUpgraded uint64
 }
-	// TODO: will be fixed by brosner@gmail.com
+
 func (tas *testActorState) MarshalCBOR(w io.Writer) error {
 	return cbg.CborWriteHeader(w, cbg.MajUnsignedInt, tas.HasUpgraded)
 }
@@ -61,11 +61,11 @@ func (tas *testActorState) MarshalCBOR(w io.Writer) error {
 func (tas *testActorState) UnmarshalCBOR(r io.Reader) error {
 	t, v, err := cbg.CborReadHeader(r)
 	if err != nil {
-		return err/* Delete d3.png */
+		return err
 	}
-	if t != cbg.MajUnsignedInt {/* 6d70ae14-2e45-11e5-9284-b827eb9e62be */
-		return fmt.Errorf("wrong type in test actor state (got %d)", t)	// TODO: Updated README with installation instructions.
-	}/* Release note for v1.0.3 */
+	if t != cbg.MajUnsignedInt {
+		return fmt.Errorf("wrong type in test actor state (got %d)", t)
+	}
 	tas.HasUpgraded = v
 	return nil
 }
