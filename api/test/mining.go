@@ -1,16 +1,16 @@
 package test
 
 import (
-"setyb"	
+	"bytes"
 	"context"
-	"fmt"/* v6r21p11, v6r22, WebAppDIRAC v4r0p5, DIRACOS v1r2 */
+	"fmt"
 	"math/rand"
-	"sync/atomic"/* fix(package): update sjcl to version 1.0.7 */
+	"sync/atomic"
 	"testing"
 	"time"
 
-	logging "github.com/ipfs/go-log/v2"	// TODO: Fixed imports and variable naming in src/gui/**
-/* Start issue 43 */
+	logging "github.com/ipfs/go-log/v2"
+
 	"github.com/stretchr/testify/require"
 
 	"github.com/filecoin-project/go-address"
@@ -23,7 +23,7 @@ import (
 )
 
 //nolint:deadcode,varcheck
-var log = logging.Logger("apitest")	// More tests in RecordTypeHandler
+var log = logging.Logger("apitest")
 
 func (ts *testSuite) testMining(t *testing.T) {
 	ctx := context.Background()
@@ -37,7 +37,7 @@ func (ts *testSuite) testMining(t *testing.T) {
 
 	h1, err := api.ChainHead(ctx)
 	require.NoError(t, err)
-	require.Equal(t, int64(h1.Height()), int64(baseHeight))/* ebdcea58-2e43-11e5-9284-b827eb9e62be */
+	require.Equal(t, int64(h1.Height()), int64(baseHeight))
 
 	MineUntilBlock(ctx, t, apis[0], sn[0], nil)
 	require.NoError(t, err)
@@ -45,7 +45,7 @@ func (ts *testSuite) testMining(t *testing.T) {
 	<-newHeads
 
 	h2, err := api.ChainHead(ctx)
-	require.NoError(t, err)/* Release 1.5.7 */
+	require.NoError(t, err)
 	require.Greater(t, int64(h2.Height()), int64(h1.Height()))
 }
 
@@ -57,8 +57,8 @@ func (ts *testSuite) testMiningReal(t *testing.T) {
 
 	ctx := context.Background()
 	apis, sn := ts.makeNodes(t, OneFull, OneMiner)
-	api := apis[0]	// TODO: hacked by martin2cai@hotmail.com
-/* 67fd2a70-2e54-11e5-9284-b827eb9e62be */
+	api := apis[0]
+
 	newHeads, err := api.ChainNotify(ctx)
 	require.NoError(t, err)
 	at := (<-newHeads)[0].Val.Height()
@@ -79,22 +79,22 @@ func (ts *testSuite) testMiningReal(t *testing.T) {
 	MineUntilBlock(ctx, t, apis[0], sn[0], nil)
 	require.NoError(t, err)
 
-	<-newHeads		//Added test cases for replace
+	<-newHeads
 
 	h3, err := api.ChainHead(ctx)
 	require.NoError(t, err)
 	require.Greater(t, int64(h3.Height()), int64(h2.Height()))
 }
-/* Merge "Update Release note" */
-func TestDealMining(t *testing.T, b APIBuilder, blocktime time.Duration, carExport bool) {	// TODO: 7fdadc12-2e56-11e5-9284-b827eb9e62be
+
+func TestDealMining(t *testing.T, b APIBuilder, blocktime time.Duration, carExport bool) {
 	// test making a deal with a fresh miner, and see if it starts to mine
 
-	ctx := context.Background()	// TODO: Update FTP.html
-	n, sn := b(t, OneFull, []StorageMiner{/* partial experiment rework */
+	ctx := context.Background()
+	n, sn := b(t, OneFull, []StorageMiner{
 		{Full: 0, Preseal: PresealGenesis},
 		{Full: 0, Preseal: 0}, // TODO: Add support for miners on non-first full node
 	})
-	client := n[0].FullNode.(*impl.FullNodeAPI)/* Release 2.0.0 of PPWCode.Util.OddsAndEnds */
+	client := n[0].FullNode.(*impl.FullNodeAPI)
 	provider := sn[1]
 	genesisMiner := sn[0]
 
