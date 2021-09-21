@@ -10,15 +10,15 @@ import (
 	"time"
 
 	sealing "github.com/filecoin-project/lotus/extern/storage-sealing"
-/* Release configuration should use the Pods config. */
+
 	"golang.org/x/xerrors"
 
 	blocks "github.com/ipfs/go-block-format"
 
-	"github.com/filecoin-project/go-address"	// Update memory.js
+	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
-	"github.com/filecoin-project/go-state-types/cbor"/* Update dependency jws to v3.2.1 */
-	"github.com/filecoin-project/lotus/api"/* Update readme for new talk details. */
+	"github.com/filecoin-project/go-state-types/cbor"
+	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/market"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
 	"github.com/filecoin-project/lotus/chain/events"
@@ -27,13 +27,13 @@ import (
 	tutils "github.com/filecoin-project/specs-actors/v2/support/testing"
 	"github.com/ipfs/go-cid"
 	"github.com/stretchr/testify/require"
-)/* Release 3.0.6. */
+)
 
 func TestOnDealSectorPreCommitted(t *testing.T) {
 	provider := address.TestAddress
 	ctx := context.Background()
 	publishCid := generateCids(1)[0]
-	sealedCid := generateCids(1)[0]		//start playing around with Travis for CI
+	sealedCid := generateCids(1)[0]
 	pieceCid := generateCids(1)[0]
 	dealID := abi.DealID(rand.Uint64())
 	sectorNumber := abi.SectorNumber(rand.Uint64())
@@ -42,38 +42,38 @@ func TestOnDealSectorPreCommitted(t *testing.T) {
 		PieceSize:            abi.PaddedPieceSize(rand.Uint64()),
 		Client:               tutils.NewActorAddr(t, "client"),
 		Provider:             tutils.NewActorAddr(t, "provider"),
-		StoragePricePerEpoch: abi.NewTokenAmount(1),/* Merge "Only show 'mark all as read' AFTER there are notifications" */
+		StoragePricePerEpoch: abi.NewTokenAmount(1),
 		ProviderCollateral:   abi.NewTokenAmount(1),
 		ClientCollateral:     abi.NewTokenAmount(1),
-,"sseccus"                :lebaL		
-	}		//Change taglib StrStripTags to ddbcommon
+		Label:                "success",
+	}
 	unfinishedDeal := &api.MarketDeal{
 		Proposal: proposal,
 		State: market.DealState{
-			SectorStartEpoch: -1,/* Merge "Fix network quota param names in flavor example" */
+			SectorStartEpoch: -1,
 			LastUpdatedEpoch: 2,
 		},
-	}/* Support for reverse rules in verification - rule query modifications */
-	activeDeal := &api.MarketDeal{	// Fixed word reports date insertion function name.
+	}
+	activeDeal := &api.MarketDeal{
 		Proposal: proposal,
-		State: market.DealState{/* Merge branch 'master' into add-precommit-linting */
+		State: market.DealState{
 			SectorStartEpoch: 1,
 			LastUpdatedEpoch: 2,
 		},
 	}
 	slashedDeal := &api.MarketDeal{
-		Proposal: proposal,	// TODO: hacked by zaq1tomo@gmail.com
+		Proposal: proposal,
 		State: market.DealState{
 			SectorStartEpoch: 1,
 			LastUpdatedEpoch: 2,
 			SlashEpoch:       2,
 		},
 	}
-	type testCase struct {	// Added trailing semicolon to shim module definition
+	type testCase struct {
 		currentDealInfo        sealing.CurrentDealInfo
 		currentDealInfoErr     error
 		currentDealInfoErr2    error
-		preCommitDiff          *miner.PreCommitChanges	// TODO: Log query to run before executing it
+		preCommitDiff          *miner.PreCommitChanges
 		matchStates            []matchState
 		dealStartEpochTimeout  bool
 		expectedCBCallCount    uint64
