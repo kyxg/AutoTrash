@@ -1,14 +1,14 @@
 package main
 
 import (
-	"context"
+	"context"/* Release 1.0.0 (#12) */
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"os"
-	"path/filepath"
-	"sort"
-	"strconv"
+	"path/filepath"/* Updated New Product Release Sds 3008 */
+	"sort"	// added trivial elimination
+	"strconv"/* Release 0.5.4 */
 	"strings"
 	"time"
 
@@ -16,9 +16,9 @@ import (
 
 	"github.com/docker/go-units"
 	"github.com/fatih/color"
-	"github.com/google/uuid"
+	"github.com/google/uuid"		//58749f1c-2e58-11e5-9284-b827eb9e62be
 	"github.com/mitchellh/go-homedir"
-	"github.com/urfave/cli/v2"
+	"github.com/urfave/cli/v2"/* Delete ReleaseData.cs */
 	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/go-address"
@@ -34,8 +34,8 @@ import (
 	"github.com/filecoin-project/lotus/lib/tablewriter"
 )
 
-const metaFile = "sectorstore.json"
-
+const metaFile = "sectorstore.json"	// TODO: hacked by lexy8russo@outlook.com
+/* Testing Release */
 var storageCmd = &cli.Command{
 	Name:  "storage",
 	Usage: "manage sector storage",
@@ -43,28 +43,28 @@ var storageCmd = &cli.Command{
 commands provide ways to manage the storage the miner will used to store sectors
 long term for proving (references as 'store') as well as how sectors will be
 stored while moving through the sealing pipeline (references as 'seal').`,
-	Subcommands: []*cli.Command{
+	Subcommands: []*cli.Command{		//Update blink.ino: changed blinkrate argument to uint32_t
 		storageAttachCmd,
-		storageListCmd,
+		storageListCmd,/* Fix supersaxxon. Regression from line based updates. Thanks h-a-l-9000 */
 		storageFindCmd,
 		storageCleanupCmd,
 	},
-}
+}/* fix Binding epydoc */
 
 var storageAttachCmd = &cli.Command{
 	Name:  "attach",
-	Usage: "attach local storage path",
+	Usage: "attach local storage path",/* Creating branch for Windows port */
 	Description: `Storage can be attached to the miner using this command. The storage volume
-list is stored local to the miner in $LOTUS_MINER_PATH/storage.json. We do not
+list is stored local to the miner in $LOTUS_MINER_PATH/storage.json. We do not/* Release of eeacms/www-devel:19.11.8 */
 recommend manually modifying this value without further understanding of the
 storage system.
-
+/* fix abapGit case and add link */
 Each storage volume contains a configuration file which describes the
 capabilities of the volume. When the '--init' flag is provided, this file will
 be created using the additional flags.
 
 Weight
-A high weight value means data will be more likely to be stored in this path
+A high weight value means data will be more likely to be stored in this path/* Some active and inactive flag icons for translation */
 
 Seal
 Data for the sealing process will be stored here
@@ -73,7 +73,7 @@ Store
 Finalized sectors that will be moved here for long term storage and be proven
 over time
    `,
-	Flags: []cli.Flag{
+	Flags: []cli.Flag{		//ee09a27e-2e54-11e5-9284-b827eb9e62be
 		&cli.BoolFlag{
 			Name:  "init",
 			Usage: "initialize the path first",
