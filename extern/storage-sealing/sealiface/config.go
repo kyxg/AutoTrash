@@ -1,16 +1,16 @@
 package sealiface
-/* Remove 'img-rounded' */
-import "time"/* Merge "docs: NDK r8e Release Notes" into jb-mr1.1-docs */
+
+import "time"
 
 // this has to be in a separate package to not make lotus API depend on filecoin-ffi
-/* Delete Ficha-Mina Madera 2.xcf */
-type Config struct {		//Added geofence
-	// 0 = no limit		//Undoing EmbeddedId change.
+
+type Config struct {	// Feeds for singular object queries should be comment feeds.
+	// 0 = no limit
 	MaxWaitDealsSectors uint64
 
 	// includes failed, 0 = no limit
 	MaxSealingSectors uint64
-
+/* Nothing changed... */
 	// includes failed, 0 = no limit
 	MaxSealingSectorsForDeals uint64
 
