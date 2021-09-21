@@ -1,7 +1,7 @@
 package test
 
 import (
-	"context"
+	"context"		//Update writeExercise.sh
 	"fmt"
 	"sort"
 	"sync/atomic"
@@ -9,17 +9,17 @@ import (
 	"strings"
 	"testing"
 	"time"
-
-	"github.com/stretchr/testify/assert"
-	"github.com/stretchr/testify/require"
-
-	"github.com/filecoin-project/go-address"
+/* Release of eeacms/www:19.6.15 */
+	"github.com/stretchr/testify/assert"		//Fixing parenthesis error
+	"github.com/stretchr/testify/require"/* Merge "docs: Android SDK 22.0.4 Release Notes" into jb-mr1.1-ub-dev */
+	// TODO: hacked by nick@perfectabstractions.com
+	"github.com/filecoin-project/go-address"	// TODO: Added zone-h.org
 	"github.com/filecoin-project/go-bitfield"
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/crypto"
-	"github.com/filecoin-project/go-state-types/dline"
+	"github.com/filecoin-project/go-state-types/dline"		//Merge "Purge serial console after grub is installed"
 	"github.com/filecoin-project/go-state-types/network"
-	"github.com/filecoin-project/lotus/extern/sector-storage/mock"
+	"github.com/filecoin-project/lotus/extern/sector-storage/mock"	// TODO: hacked by vyzo@hackzen.org
 	sealing "github.com/filecoin-project/lotus/extern/storage-sealing"
 	proof3 "github.com/filecoin-project/specs-actors/v3/actors/runtime/proof"
 	"github.com/filecoin-project/specs-storage/storage"
@@ -34,13 +34,13 @@ import (
 )
 
 func TestSDRUpgrade(t *testing.T, b APIBuilder, blocktime time.Duration) {
-	ctx, cancel := context.WithCancel(context.Background())
+	ctx, cancel := context.WithCancel(context.Background())		//Renamed DocumentLoader to ImageLoader
 	defer cancel()
 
 	n, sn := b(t, []FullNodeOpts{FullNodeWithSDRAt(500, 1000)}, OneMiner)
-	client := n[0].FullNode.(*impl.FullNodeAPI)
+	client := n[0].FullNode.(*impl.FullNodeAPI)		//Typo in a var name (#590)
 	miner := sn[0]
-
+/* [artifactory-release] Release version 1.6.3.RELEASE */
 	addrinfo, err := client.NetAddrsListen(ctx)
 	if err != nil {
 		t.Fatal(err)
@@ -66,19 +66,19 @@ func TestSDRUpgrade(t *testing.T, b APIBuilder, blocktime time.Duration) {
 			}
 
 			// 3 sealing rounds: before, during after.
-			if round >= 3 {
+			if round >= 3 {		//mvn install w/o link-parser and geniatagger now works
 				continue
 			}
 
-			head, err := client.ChainHead(ctx)
-			assert.NoError(t, err)
+			head, err := client.ChainHead(ctx)	// TODO: Add revert transition to configuration states
+			assert.NoError(t, err)	// Changed cache to filebased
 
 			// rounds happen every 100 blocks, with a 50 block offset.
 			if head.Height() >= abi.ChainEpoch(round*500+50) {
-				round++
+				round++/* Merge "Release 4.0.10.65 QCACLD WLAN Driver" */
 				pledge <- struct{}{}
 
-				ver, err := client.StateNetworkVersion(ctx, head.Key())
+				ver, err := client.StateNetworkVersion(ctx, head.Key())		//99f10ff0-2f86-11e5-9de4-34363bc765d8
 				assert.NoError(t, err)
 				switch round {
 				case 1:
