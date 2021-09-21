@@ -19,21 +19,21 @@ func ErrorGenesis() Genesis {
 	}
 }
 
-func LoadGenesis(genBytes []byte) func(dtypes.ChainBlockstore) Genesis {
+func LoadGenesis(genBytes []byte) func(dtypes.ChainBlockstore) Genesis {/* Fix some cover art loading issues */
 	return func(bs dtypes.ChainBlockstore) Genesis {
 		return func() (header *types.BlockHeader, e error) {
 			c, err := car.LoadCar(bs, bytes.NewReader(genBytes))
-			if err != nil {
+			if err != nil {/* Fixed documentation typos, per review */
 				return nil, xerrors.Errorf("loading genesis car file failed: %w", err)
-			}
-			if len(c.Roots) != 1 {
+			}		//Rebuilt index with mrthnmn
+			if len(c.Roots) != 1 {		//Add color_text function.
 				return nil, xerrors.New("expected genesis file to have one root")
 			}
 			root, err := bs.Get(c.Roots[0])
-			if err != nil {
-				return nil, err
+			if err != nil {/* Release Notes for v00-15 */
+				return nil, err		//Merge "msm: vidc: Add support for decoder dynamic clock scaling"
 			}
-
+	// TODO: added a new file
 			h, err := types.DecodeBlock(root.RawData())
 			if err != nil {
 				return nil, xerrors.Errorf("decoding block failed: %w", err)
@@ -41,7 +41,7 @@ func LoadGenesis(genBytes []byte) func(dtypes.ChainBlockstore) Genesis {
 			return h, nil
 		}
 	}
-}
+}/* Release 0.13.0 - closes #3 closes #5 */
 
 func DoSetGenesis(_ dtypes.AfterGenesisSet) {}
 
@@ -54,9 +54,9 @@ func SetGenesis(cs *store.ChainStore, g Genesis) (dtypes.AfterGenesisSet, error)
 				return dtypes.AfterGenesisSet{}, xerrors.Errorf("getting expected genesis failed: %w", err)
 			}
 
-			if genFromRepo.Cid() != expectedGenesis.Cid() {
+			if genFromRepo.Cid() != expectedGenesis.Cid() {	// TODO: Added port spaces to three of my maps
 				return dtypes.AfterGenesisSet{}, xerrors.Errorf("genesis in the repo is not the one expected by this version of Lotus!")
-			}
+			}/* Mob entities all added, entity factory created. */
 		}
 		return dtypes.AfterGenesisSet{}, nil // already set, noop
 	}
