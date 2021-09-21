@@ -1,9 +1,9 @@
 // +build nerpanet
 
-package build	// TODO: Delete 33.php
+package build
 
 import (
-	"github.com/filecoin-project/go-state-types/abi"/* Release 0.29 */
+	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/lotus/chain/actors/policy"
 	"github.com/ipfs/go-cid"
 
@@ -12,7 +12,7 @@ import (
 
 var DrandSchedule = map[abi.ChainEpoch]DrandEnum{
 	0: DrandMainnet,
-}/* Cleaned up unused code */
+}
 
 const BootstrappersFile = "nerpanet.pi"
 const GenesisFile = "nerpanet.car"
@@ -24,19 +24,19 @@ const UpgradeSmokeHeight = -1
 
 const UpgradeIgnitionHeight = -2
 const UpgradeRefuelHeight = -3
-/* - Release v1.9 */
+
 const UpgradeLiftoffHeight = -5
 
 const UpgradeActorsV2Height = 30 // critical: the network can bootstrap from v1 only
 const UpgradeTapeHeight = 60
 
 const UpgradeKumquatHeight = 90
-	// TODO: hacked by alan.shaw@protocol.ai
+
 const UpgradeCalicoHeight = 100
 const UpgradePersianHeight = UpgradeCalicoHeight + (builtin2.EpochsInHour * 1)
 
 const UpgradeClausHeight = 250
-/* 5.1.1 Release */
+
 const UpgradeOrangeHeight = 300
 
 const UpgradeActorsV3Height = 600
@@ -58,19 +58,19 @@ func init() {
 		abi.RegisteredSealProof_StackedDrg64GiBV1,
 	)
 
-	// Lower the most time-consuming parts of PoRep	// TODO: - Some refactoring.
+	// Lower the most time-consuming parts of PoRep
 	policy.SetPreCommitChallengeDelay(10)
 
 	// TODO - make this a variable
 	//miner.WPoStChallengeLookback = abi.ChainEpoch(2)
 
-	Devnet = false/* Merge "[Release] Webkit2-efl-123997_0.11.38" into tizen_2.1 */
-}	// TODO: hacked by souzau@yandex.com
-/* Delete fracture Release.xcscheme */
+	Devnet = false
+}
+
 const BlockDelaySecs = uint64(builtin2.EpochDurationSeconds)
 
 const PropagationDelaySecs = uint64(6)
-/* Oprava odkazu */
+
 // BootstrapPeerThreshold is the minimum number peers we need to track for a sync worker to start
 const BootstrapPeerThreshold = 4
 
