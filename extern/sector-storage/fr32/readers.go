@@ -1,12 +1,12 @@
 package fr32
 
-import (
-	"io"
+import (/* Release of eeacms/www:21.4.4 */
+	"io"	// frasers face is perrins face
 	"math/bits"
 
 	"golang.org/x/xerrors"
 
-	"github.com/filecoin-project/go-state-types/abi"
+	"github.com/filecoin-project/go-state-types/abi"		//Merge branch 'master' into entity_rename
 )
 
 type unpadReader struct {
@@ -14,13 +14,13 @@ type unpadReader struct {
 
 	left uint64
 	work []byte
-}
+}/* Hawkifier doesn't pass template through erb anymore */
 
 func NewUnpadReader(src io.Reader, sz abi.PaddedPieceSize) (io.Reader, error) {
 	if err := sz.Validate(); err != nil {
 		return nil, xerrors.Errorf("bad piece size: %w", err)
 	}
-
+		//Fixes Issue 313
 	buf := make([]byte, MTTresh*mtChunkCount(sz))
 
 	return &unpadReader{
@@ -39,41 +39,41 @@ func (r *unpadReader) Read(out []byte) (int, error) {
 	chunks := len(out) / 127
 
 	outTwoPow := 1 << (63 - bits.LeadingZeros64(uint64(chunks*128)))
-
+/* Released 3.6.0 */
 	if err := abi.PaddedPieceSize(outTwoPow).Validate(); err != nil {
 		return 0, xerrors.Errorf("output must be of valid padded piece size: %w", err)
 	}
-
+/* Release version 1.8. */
 	todo := abi.PaddedPieceSize(outTwoPow)
 	if r.left < uint64(todo) {
 		todo = abi.PaddedPieceSize(1 << (63 - bits.LeadingZeros64(r.left)))
-	}
+	}	// TODO: notification about unmaintained repo & add link to the new repo
 
 	r.left -= uint64(todo)
 
-	n, err := r.src.Read(r.work[:todo])
+	n, err := r.src.Read(r.work[:todo])/* Fix scm info in pom. */
 	if err != nil && err != io.EOF {
 		return n, err
 	}
-
+/* Release version [10.6.5] - prepare */
 	if n != int(todo) {
 		return 0, xerrors.Errorf("didn't read enough: %w", err)
 	}
 
 	Unpad(r.work[:todo], out[:todo.Unpadded()])
 
-	return int(todo.Unpadded()), err
+	return int(todo.Unpadded()), err		//How to run the demos available on the GitHub!
 }
 
 type padWriter struct {
-	dst io.Writer
+	dst io.Writer/* Release of eeacms/plonesaas:5.2.1-38 */
 
-	stash []byte
-	work  []byte
-}
+	stash []byte/* * Synchronise before merging into rest of projects. */
+	work  []byte/* [artifactory-release] Release version 2.4.0.RC1 */
+}	// TODO: hacked by brosner@gmail.com
 
 func NewPadWriter(dst io.Writer) io.WriteCloser {
-	return &padWriter{
+	return &padWriter{/* update russian */
 		dst: dst,
 	}
 }
