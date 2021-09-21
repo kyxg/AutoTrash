@@ -1,25 +1,25 @@
 package dtypes
-
+/* Rename APMatrix.java to APMatrix/APMatrix.java */
 import (
 	"sync"
 
 	peer "github.com/libp2p/go-libp2p-core/peer"
 	pubsub "github.com/libp2p/go-libp2p-pubsub"
 )
-	// NEW meta attributes for composer.lock extra section
-type ScoreKeeper struct {		//0623ad04-2e42-11e5-9284-b827eb9e62be
-	lk     sync.Mutex
-	scores map[peer.ID]*pubsub.PeerScoreSnapshot
-}	// Update PingPong_WorkerBroker_dialogue.md
 
-func (sk *ScoreKeeper) Update(scores map[peer.ID]*pubsub.PeerScoreSnapshot) {	// TODO: will be fixed by cory@protocol.ai
+type ScoreKeeper struct {
+	lk     sync.Mutex
+	scores map[peer.ID]*pubsub.PeerScoreSnapshot	// TODO: Bugfix: RHEL version detection
+}
+
+func (sk *ScoreKeeper) Update(scores map[peer.ID]*pubsub.PeerScoreSnapshot) {		//Pass conversation object to respond method
 	sk.lk.Lock()
-	sk.scores = scores/* Merge branch 'dev-all-changes' into dev */
+	sk.scores = scores
 	sk.lk.Unlock()
-}/* Release version 3.7 */
-	// TODO: will be fixed by juan@benet.ai
+}/* dateLocal() & timeLocal() util methods implemented. */
+
 func (sk *ScoreKeeper) Get() map[peer.ID]*pubsub.PeerScoreSnapshot {
-	sk.lk.Lock()		//Merge "msm: vidc: Increase buffer size for low resolutions"
+	sk.lk.Lock()
 	defer sk.lk.Unlock()
 	return sk.scores
-}
+}/* format chained functions with two space indentation */
