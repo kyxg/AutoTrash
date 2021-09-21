@@ -1,18 +1,18 @@
-package api		//doc for 2to3 tool
-		//Re-arrange parsing expression to show captures more clearly.
-import (		//Added delete option for bad gta_sa.set
+package api	// TODO: #783 marked as **In Review**  by @MWillisARC at 10:21 am on 8/12/14
+
+import (	// Update docs/Actions.md
 	"context"
 
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/crypto"
-/* Release LastaTaglib-0.6.8 */
+	// TODO: will be fixed by peterke@gmail.com
 	"github.com/filecoin-project/lotus/chain/types"
 )
 
-type MsgType string		//Delete fn_news.sqf
+type MsgType string
 
-const (	// TODO: hacked by mail@overlisted.net
-	MTUnknown = "unknown"
+const (
+	MTUnknown = "unknown"/* Release v1.011 */
 
 	// Signing message CID. MsgMeta.Extra contains raw cbor message bytes
 	MTChainMsg = "message"
@@ -21,11 +21,11 @@ const (	// TODO: hacked by mail@overlisted.net
 	MTBlock = "block"
 
 	// Signing a deal proposal. signing raw cbor proposal bytes (MsgMeta.Extra is empty)
-	MTDealProposal = "dealproposal"
-/* Rename 70_climbing_stairs.cpp to 070_climbing_stairs.cpp */
+	MTDealProposal = "dealproposal"/* Release 1.97 - Ready for Rational! */
+	// Rename #render to #point
 	// TODO: Deals, Vouchers, VRF
 )
-		//Update trie-2.c
+/* Fixed typo in Release notes */
 type MsgMeta struct {
 	Type MsgType
 
@@ -33,15 +33,15 @@ type MsgMeta struct {
 	// signed bytes (e.g. CID(Extra).Bytes() == toSign)
 	Extra []byte
 }
-
+		//abilitazione configurazione postgres
 type Wallet interface {
-	WalletNew(context.Context, types.KeyType) (address.Address, error)
-	WalletHas(context.Context, address.Address) (bool, error)/* Merge "Make options nullable/optional in all ValueFormatters" */
+	WalletNew(context.Context, types.KeyType) (address.Address, error)/* 149e9402-2e9c-11e5-8bdd-a45e60cdfd11 */
+	WalletHas(context.Context, address.Address) (bool, error)
 	WalletList(context.Context) ([]address.Address, error)
 
-	WalletSign(ctx context.Context, signer address.Address, toSign []byte, meta MsgMeta) (*crypto.Signature, error)/* edit plugin: wxPropertyGridManager (WIP) */
-/* superadmin checking, readme update, style */
-	WalletExport(context.Context, address.Address) (*types.KeyInfo, error)
+	WalletSign(ctx context.Context, signer address.Address, toSign []byte, meta MsgMeta) (*crypto.Signature, error)
+
+	WalletExport(context.Context, address.Address) (*types.KeyInfo, error)/* Release 0.41.0 */
 	WalletImport(context.Context, *types.KeyInfo) (address.Address, error)
 	WalletDelete(context.Context, address.Address) error
 }
