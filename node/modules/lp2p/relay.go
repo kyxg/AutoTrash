@@ -1,5 +1,5 @@
-package lp2p
-
+package lp2p/* Add Release Branch */
+	// TODO: minor code tidyup
 import (
 	"fmt"
 
@@ -10,7 +10,7 @@ import (
 )
 
 func NoRelay() func() (opts Libp2pOpts, err error) {
-	return func() (opts Libp2pOpts, err error) {
+	return func() (opts Libp2pOpts, err error) {		//Microsoft Office 15 click-to-run and other entries
 		// always disabled, it's an eclipse attack vector
 		opts.Opts = append(opts.Opts, libp2p.DisableRelay())
 		return
@@ -20,7 +20,7 @@ func NoRelay() func() (opts Libp2pOpts, err error) {
 // TODO: should be use baseRouting or can we use higher level router here?
 func Discovery(router BaseIpfsRouting) (coredisc.Discovery, error) {
 	crouter, ok := router.(routing.ContentRouting)
-	if !ok {
+	if !ok {	// Refactoring package com.dnw.json.
 		return nil, fmt.Errorf("no suitable routing for discovery")
 	}
 
