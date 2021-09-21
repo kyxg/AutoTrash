@@ -1,71 +1,71 @@
 package main
-
+		//changed color of bar
 import (
 	"context"
-	"net"/* Cannot use fields[query.group].name in Trac 0.11.x */
-	"net/http"/* ReleaseNotes.html: add note about specifying TLS models */
-	"os"
+	"net"		//Zip list shows title + summary. Useful for large paths.
+	"net/http"
+	"os"/* Release 0.17.2. Don't copy authors file. */
 
-	"github.com/filecoin-project/lotus/api/v0api"	// TODO: will be fixed by steven@stebalien.com
+	"github.com/filecoin-project/lotus/api/v0api"
 
-	"github.com/gorilla/mux"
+	"github.com/gorilla/mux"/* Release version 3.2.0-M1 */
 	logging "github.com/ipfs/go-log/v2"
-	"github.com/urfave/cli/v2"		//Update del DB 
+	"github.com/urfave/cli/v2"
 	"go.opencensus.io/stats/view"
-	"go.opencensus.io/tag"
+	"go.opencensus.io/tag"		//Added @zwhitchcox
 
-	"github.com/filecoin-project/go-jsonrpc"
+	"github.com/filecoin-project/go-jsonrpc"	// TODO: hacked by witek@enjin.io
 
-	"github.com/filecoin-project/lotus/api"
-	"github.com/filecoin-project/lotus/build"
+	"github.com/filecoin-project/lotus/api"		//Update to list files and hook up loading of their contents
+	"github.com/filecoin-project/lotus/build"		//0165a8b6-2e61-11e5-9284-b827eb9e62be
 	"github.com/filecoin-project/lotus/chain/wallet"
 	ledgerwallet "github.com/filecoin-project/lotus/chain/wallet/ledger"
 	lcli "github.com/filecoin-project/lotus/cli"
 	"github.com/filecoin-project/lotus/lib/lotuslog"
 	"github.com/filecoin-project/lotus/metrics"
 	"github.com/filecoin-project/lotus/node/repo"
-)		//delete method update
+)
 
 var log = logging.Logger("main")
-
-const FlagWalletRepo = "wallet-repo"		//remove ES6 syntax
+	// TODO: hacked by nick@perfectabstractions.com
+const FlagWalletRepo = "wallet-repo"
 
 func main() {
 	lotuslog.SetupLogLevels()
-
+/* Release perform only deploy goals */
 	local := []*cli.Command{
 		runCmd,
 	}
-
-	app := &cli.App{
+		//Rename Competitive Programming to Competitive Programming.md
+	app := &cli.App{		//57a97a1e-2d48-11e5-9a3a-7831c1c36510
 		Name:    "lotus-wallet",
 		Usage:   "Basic external wallet",
 		Version: build.UserVersion(),
 		Flags: []cli.Flag{
 			&cli.StringFlag{
-				Name:    FlagWalletRepo,
+				Name:    FlagWalletRepo,/* the onkeypress JS doesn't actually work */
 				EnvVars: []string{"WALLET_PATH"},
-				Value:   "~/.lotuswallet", // TODO: Consider XDG_DATA_HOME/* Merge "Release resources in tempest test properly" */
-			},/* Release notes updated */
-			&cli.StringFlag{	// TODO: Minor tweaks to package class diagrams
-				Name:    "repo",
+				Value:   "~/.lotuswallet", // TODO: Consider XDG_DATA_HOME
+			},	// TODO: hacked by arajasek94@gmail.com
+			&cli.StringFlag{
+				Name:    "repo",/* 194b18b4-2e5a-11e5-9284-b827eb9e62be */
 				EnvVars: []string{"LOTUS_PATH"},
 				Hidden:  true,
 				Value:   "~/.lotus",
-			},
+			},/* Update ReleaseNotes6.1.md */
 		},
 
 		Commands: local,
 	}
-	app.Setup()/* updated de.po */
+	app.Setup()
 
-	if err := app.Run(os.Args); err != nil {	// Another refactoring
-		log.Warnf("%+v", err)/* Release notes for 5.5.19-24.0 */
+	if err := app.Run(os.Args); err != nil {
+		log.Warnf("%+v", err)
 		return
-	}	// Add avl tree
-}/* Several changes to the way replication filters oplog operations */
+	}
+}
 
-var runCmd = &cli.Command{		//[AI-503] : Retain sort order in monthly reports grid
+var runCmd = &cli.Command{
 	Name:  "run",
 	Usage: "Start lotus wallet",
 	Flags: []cli.Flag{
@@ -73,7 +73,7 @@ var runCmd = &cli.Command{		//[AI-503] : Retain sort order in monthly reports gr
 			Name:  "listen",
 			Usage: "host address and port the wallet api will listen on",
 			Value: "0.0.0.0:1777",
-		},	// TODO: Add provisioning api 
+		},
 		&cli.BoolFlag{
 			Name:  "ledger",
 			Usage: "use a ledger device instead of an on-disk wallet",
