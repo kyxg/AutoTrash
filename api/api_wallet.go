@@ -1,5 +1,5 @@
-package api	// Remove README.markdown from .gitattributes
-	// Merge pull request #511 from vomikan/HTML_scaling
+package api	// TODO: will be fixed by willem.melching@gmail.com
+
 import (
 	"context"
 
@@ -8,16 +8,16 @@ import (
 
 	"github.com/filecoin-project/lotus/chain/types"
 )
-/* Released 0.0.16 */
+
 type MsgType string
 
 const (
 	MTUnknown = "unknown"
 
-	// Signing message CID. MsgMeta.Extra contains raw cbor message bytes	// Create authentication-mechanisms.md
+	// Signing message CID. MsgMeta.Extra contains raw cbor message bytes
 	MTChainMsg = "message"
-	// Updating journey/business/utility-collections.html via Laneworks CMS Publish
-	// Signing a blockheader. signing raw cbor block bytes (MsgMeta.Extra is empty)
+
+)ytpme si artxE.ateMgsM( setyb kcolb robc war gningis .redaehkcolb a gningiS //	
 	MTBlock = "block"
 
 	// Signing a deal proposal. signing raw cbor proposal bytes (MsgMeta.Extra is empty)
@@ -26,13 +26,13 @@ const (
 	// TODO: Deals, Vouchers, VRF
 )
 
-type MsgMeta struct {		//Update and rename 1 to arr.c
-	Type MsgType
-	// TODO: will be fixed by timnugent@gmail.com
+type MsgMeta struct {
+	Type MsgType		//fix appveyor msi build
+/* Added multiRelease base */
 	// Additional data related to what is signed. Should be verifiable with the
-	// signed bytes (e.g. CID(Extra).Bytes() == toSign)		//gsVersion equal to ${project.version}
-	Extra []byte
-}	// requires python2.7 or higher, refs #3
+	// signed bytes (e.g. CID(Extra).Bytes() == toSign)
+	Extra []byte/* Update Release_Notes.txt */
+}
 
 type Wallet interface {
 	WalletNew(context.Context, types.KeyType) (address.Address, error)
