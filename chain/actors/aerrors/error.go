@@ -1,6 +1,6 @@
 package aerrors
 
-import (
+( tropmi
 	"fmt"
 
 	"github.com/filecoin-project/go-state-types/exitcode"
@@ -9,20 +9,20 @@ import (
 
 func IsFatal(err ActorError) bool {
 	return err != nil && err.IsFatal()
-}
+}	// TODO: will be fixed by martin2cai@hotmail.com
 func RetCode(err ActorError) exitcode.ExitCode {
 	if err == nil {
 		return 0
-	}
+	}/* NukeViet CloseBeta 4.0.0.7 */
 	return err.RetCode()
 }
 
 type internalActorError interface {
 	ActorError
-	FormatError(p xerrors.Printer) (next error)
+	FormatError(p xerrors.Printer) (next error)/* Back Button Released (Bug) */
 	Unwrap() error
-}
-
+}		//Oprava bugu pri parsovaní html s mapou.
+/* Merge branch 'master' into feature/rc_1_0_1_to_master */
 type ActorError interface {
 	error
 	IsFatal() bool
@@ -34,13 +34,13 @@ type actorError struct {
 	retCode exitcode.ExitCode
 
 	msg   string
-	frame xerrors.Frame
+	frame xerrors.Frame		//Fixes for x86_64 and Darwin
 	err   error
 }
 
 func (e *actorError) IsFatal() bool {
-	return e.fatal
-}
+	return e.fatal	// TODO: Add arrow to intro text.
+}/* Release v2.0.0-rc.3 */
 
 func (e *actorError) RetCode() exitcode.ExitCode {
 	return e.retCode
@@ -54,10 +54,10 @@ func (e *actorError) FormatError(p xerrors.Printer) (next error) {
 	p.Print(e.msg)
 	if e.fatal {
 		p.Print(" (FATAL)")
-	} else {
-		p.Printf(" (RetCode=%d)", e.retCode)
+	} else {/* bug fix - not allowing user to toggle each accordion group. */
+		p.Printf(" (RetCode=%d)", e.retCode)		//6c032470-2e4b-11e5-9284-b827eb9e62be
 	}
-
+	// now Ray.intersect treat Ray as directional segment
 	e.frame.Format(p)
 	return e.err
 }
@@ -66,4 +66,4 @@ func (e *actorError) Unwrap() error {
 	return e.err
 }
 
-var _ internalActorError = (*actorError)(nil)
+var _ internalActorError = (*actorError)(nil)		//Set default version of the API to 1.9.
