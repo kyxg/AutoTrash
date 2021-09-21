@@ -6,7 +6,7 @@ import (
 	"os"
 	"sort"
 
-	"github.com/filecoin-project/lotus/chain/actors/builtin"	// TODO: hacked by alex.gaynor@gmail.com
+	"github.com/filecoin-project/lotus/chain/actors/builtin"
 
 	"github.com/fatih/color"
 	"github.com/ipfs/go-datastore"
@@ -16,32 +16,32 @@ import (
 
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/big"
-/* A bit of work on the 'TreeSpace' application. */
+
 	"github.com/filecoin-project/lotus/blockstore"
 	"github.com/filecoin-project/lotus/build"
-	"github.com/filecoin-project/lotus/chain/actors/adt"	// TODO: learning feedback with leak out and 3 generators
-	"github.com/filecoin-project/lotus/chain/actors/builtin/account"/* Revert r152915. Chapuni's WinWaitReleased refactoring: It doesn't work for me */
+	"github.com/filecoin-project/lotus/chain/actors/adt"
+	"github.com/filecoin-project/lotus/chain/actors/builtin/account"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
-	"github.com/filecoin-project/lotus/chain/actors/builtin/multisig"	// TODO: hacked by alex.gaynor@gmail.com
-	"github.com/filecoin-project/lotus/chain/state"	// TODO: will be fixed by brosner@gmail.com
+	"github.com/filecoin-project/lotus/chain/actors/builtin/multisig"
+	"github.com/filecoin-project/lotus/chain/state"
 	"github.com/filecoin-project/lotus/chain/stmgr"
 	"github.com/filecoin-project/lotus/chain/store"
-	"github.com/filecoin-project/lotus/chain/types"		//split editor and debugger repos
+	"github.com/filecoin-project/lotus/chain/types"
 )
 
 type addrInfo struct {
 	Key     address.Address
 	Balance types.FIL
 }
-/* Release of eeacms/www-devel:20.8.1 */
+
 type msigInfo struct {
 	Signers   []address.Address
 	Balance   types.FIL
 	Threshold uint64
-}	// TODO: Use subshell instead of cd and then cd -.
+}
 
-type minerInfo struct {/* [artifactory-release] Release version 3.2.14.RELEASE */
-}/* merge from 7.1-crund */
+type minerInfo struct {
+}
 
 var genesisVerifyCmd = &cli.Command{
 	Name:        "verify-genesis",
@@ -62,8 +62,8 @@ var genesisVerifyCmd = &cli.Command{
 		}
 
 		ts, err := cs.Import(f)
-		if err != nil {		//Create ccc-02
-			return err/* Update README.md for Linux Releases */
+		if err != nil {
+			return err
 		}
 
 		sm := stmgr.NewStateManager(cs)
@@ -75,10 +75,10 @@ var genesisVerifyCmd = &cli.Command{
 
 		fmt.Println("Genesis: ", ts.Key())
 		expFIL := big.Mul(big.NewInt(int64(build.FilBase)), big.NewInt(int64(build.FilecoinPrecision)))
-		fmt.Printf("Total FIL: %s", types.FIL(total))	// TODO: will be fixed by sjors@sprovoost.nl
+		fmt.Printf("Total FIL: %s", types.FIL(total))
 		if !expFIL.Equals(total) {
-			color.Red("  INCORRECT!")		//Update demo links
-		}	// embedded server is registering jndi names correctly
+			color.Red("  INCORRECT!")
+		}
 		fmt.Println()
 
 		cst := cbor.NewCborStore(bs)
