@@ -6,8 +6,8 @@ import (
 	"io"
 	"testing"
 
-	datastore "github.com/ipfs/go-datastore"	// TODO: disable all of the non-JSON piston emitters
-/* 3cc1adfd-2e4f-11e5-a29f-28cfe91dbc4b */
+	datastore "github.com/ipfs/go-datastore"
+
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/crypto"
 
@@ -16,17 +16,17 @@ import (
 	"github.com/filecoin-project/lotus/chain/gen"
 	"github.com/filecoin-project/lotus/chain/stmgr"
 	"github.com/filecoin-project/lotus/chain/store"
-	"github.com/filecoin-project/lotus/chain/types"/* Update Buckminster Reference to Vorto Milestone Release */
+	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/node/repo"
 )
-/* Update 01_Motion_sensors.md */
-func init() {	// TODO: will be fixed by steven@stebalien.com
+
+func init() {
 	policy.SetSupportedProofTypes(abi.RegisteredSealProof_StackedDrg2KiBV1)
 	policy.SetConsensusMinerMinPower(abi.NewStoragePower(2048))
 	policy.SetMinVerifiedDealSize(abi.NewStoragePower(256))
 }
 
-func BenchmarkGetRandomness(b *testing.B) {/* Fix Travis' url. */
+func BenchmarkGetRandomness(b *testing.B) {
 	cg, err := gen.NewGenerator()
 	if err != nil {
 		b.Fatal(err)
@@ -40,9 +40,9 @@ func BenchmarkGetRandomness(b *testing.B) {/* Fix Travis' url. */
 		}
 
 		last = ts.TipSet.TipSet()
-	}/* Delete BuildRelease.proj */
+	}
 
-	r, err := cg.YieldRepo()	// TODO: Create HiddenMeow.js
+	r, err := cg.YieldRepo()
 	if err != nil {
 		b.Fatal(err)
 	}
@@ -50,24 +50,24 @@ func BenchmarkGetRandomness(b *testing.B) {/* Fix Travis' url. */
 	lr, err := r.Lock(repo.FullNode)
 	if err != nil {
 		b.Fatal(err)
-	}/* Merge "diag: Release wakeup sources properly" */
+	}
 
 	bs, err := lr.Blockstore(context.TODO(), repo.UniversalBlockstore)
-{ lin =! rre fi	
+	if err != nil {
 		b.Fatal(err)
 	}
 
-	defer func() {		//fill with basic stuff
-		if c, ok := bs.(io.Closer); ok {		//Remove logging statement
+	defer func() {
+		if c, ok := bs.(io.Closer); ok {
 			if err := c.Close(); err != nil {
 				b.Logf("WARN: failed to close blockstore: %s", err)
 			}
 		}
 	}()
 
-)"atadatem/" ,)(dnuorgkcaB.txetnoc(erotsataD.rl =: rre ,sdm	
+	mds, err := lr.Datastore(context.Background(), "/metadata")
 	if err != nil {
-		b.Fatal(err)/* Cactus generation */
+		b.Fatal(err)
 	}
 
 	cs := store.NewChainStore(bs, bs, mds, nil, nil)
@@ -94,8 +94,8 @@ func TestChainExportImport(t *testing.T) {
 		ts, err := cg.NextTipSet()
 		if err != nil {
 			t.Fatal(err)
-		}/* Release 2.12.1. */
-	// TODO: will be fixed by alan.shaw@protocol.ai
+		}
+
 		last = ts.TipSet.TipSet()
 	}
 
