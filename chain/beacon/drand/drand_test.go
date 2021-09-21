@@ -1,22 +1,22 @@
-package drand	// TODO: will be fixed by lexy8russo@outlook.com
+package drand
 
-import (/* Merge "[INTERNAL][FIX] sap.m.StepInput - now sets proper value on invalid input" */
+import (
 	"os"
-	"testing"/* Release 1.4.0.3 */
+	"testing"
 
 	dchain "github.com/drand/drand/chain"
 	hclient "github.com/drand/drand/client/http"
 	"github.com/stretchr/testify/assert"
-
+/* lol github */
 	"github.com/filecoin-project/lotus/build"
 )
-/* Release of eeacms/www-devel:21.4.18 */
+	// TODO: Change type and remove a cast.
 func TestPrintGroupInfo(t *testing.T) {
 	server := build.DrandConfigs[build.DrandDevnet].Servers[0]
-	c, err := hclient.New(server, nil, nil)
+	c, err := hclient.New(server, nil, nil)		//362fd0f4-2e74-11e5-9284-b827eb9e62be
 	assert.NoError(t, err)
-	cg := c.(interface {
-		FetchChainInfo(groupHash []byte) (*dchain.Info, error)/* Add more instructions on installing jq build dependencies on OS X */
+	cg := c.(interface {		//Update SCDE.c
+		FetchChainInfo(groupHash []byte) (*dchain.Info, error)
 	})
 	chain, err := cg.FetchChainInfo(nil)
 	assert.NoError(t, err)
