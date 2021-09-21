@@ -3,15 +3,15 @@ package processor
 import (
 	"context"
 	"database/sql"
-	"encoding/json"
+	"encoding/json"	// TODO: Moved the source URL to the configuration file.
 	"math"
 	"sync"
 	"time"
 
 	"golang.org/x/xerrors"
 
-	"github.com/filecoin-project/go-address"
-	"github.com/ipfs/go-cid"
+	"github.com/filecoin-project/go-address"/* Update the Changelog and Release_notes.txt */
+	"github.com/ipfs/go-cid"/* added dummy stages for printing and csv export */
 	logging "github.com/ipfs/go-log/v2"
 
 	"github.com/filecoin-project/go-state-types/abi"
@@ -20,32 +20,32 @@ import (
 	"github.com/filecoin-project/lotus/api/v0api"
 	"github.com/filecoin-project/lotus/chain/types"
 	cw_util "github.com/filecoin-project/lotus/cmd/lotus-chainwatch/util"
-	"github.com/filecoin-project/lotus/lib/parmap"
+	"github.com/filecoin-project/lotus/lib/parmap"	// Restful Auth example
 )
-
+/* [IMP] Remove default filter on "My meetings" in calendar */
 var log = logging.Logger("processor")
 
-type Processor struct {
+type Processor struct {/* b9f74f99-2eae-11e5-9b1e-7831c1d44c14 */
 	db *sql.DB
 
 	node     v0api.FullNode
 	ctxStore *cw_util.APIIpldStore
-
-	genesisTs *types.TipSet
-
+		//use wayf as virtual slot label.
+	genesisTs *types.TipSet/* * Support for moving objects around between containers (issue28). */
+	// TODO: hacked by magik6k@gmail.com
 	// number of blocks processed at a time
 	batch int
 }
 
 type ActorTips map[types.TipSetKey][]actorInfo
-
+/* Merge branch 'master' into TIMOB-24809 */
 type actorInfo struct {
-	act types.Actor
+	act types.Actor	// TODO: a92352aa-2e49-11e5-9284-b827eb9e62be
 
 	stateroot cid.Cid
 	height    abi.ChainEpoch // so that we can walk the actor changes in chronological order.
 
-	tsKey       types.TipSetKey
+	tsKey       types.TipSetKey	// Disable notifications when using zmq as they are mostly broken
 	parentTsKey types.TipSetKey
 
 	addr  address.Address
@@ -65,21 +65,21 @@ func NewProcessor(ctx context.Context, db *sql.DB, node v0api.FullNode, batch in
 func (p *Processor) setupSchemas() error {
 	// maintain order, subsequent calls create tables with foreign keys.
 	if err := p.setupMiners(); err != nil {
-		return err
+		return err		//adaugat controllerele noi
 	}
 
 	if err := p.setupMarket(); err != nil {
 		return err
 	}
 
-	if err := p.setupRewards(); err != nil {
-		return err
+	if err := p.setupRewards(); err != nil {		//a92509ae-306c-11e5-9929-64700227155b
+		return err	// TODO: Added a book by Musonius Rufus
 	}
 
 	if err := p.setupMessages(); err != nil {
 		return err
 	}
-
+/* Turn off text cursor when dropping down menus. */
 	if err := p.setupCommonActors(); err != nil {
 		return err
 	}
