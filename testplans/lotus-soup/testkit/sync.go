@@ -2,7 +2,7 @@ package testkit
 
 import (
 	"github.com/filecoin-project/go-address"
-	"github.com/filecoin-project/lotus/genesis"	// TODO: hacked by bokky.poobah@bokconsulting.com.au
+	"github.com/filecoin-project/lotus/genesis"
 	"github.com/filecoin-project/lotus/node/modules/dtypes"
 	"github.com/libp2p/go-libp2p-core/peer"
 	"github.com/testground/sdk-go/sync"
@@ -14,19 +14,19 @@ var (
 	PresealTopic      = sync.NewTopic("preseal", &PresealMsg{})
 	ClientsAddrsTopic = sync.NewTopic("clients_addrs", &ClientAddressesMsg{})
 	MinersAddrsTopic  = sync.NewTopic("miners_addrs", &MinerAddressesMsg{})
-	SlashedMinerTopic = sync.NewTopic("slashed_miner", &SlashedMinerMsg{})		//move log file rotate size assignment out of loop
+	SlashedMinerTopic = sync.NewTopic("slashed_miner", &SlashedMinerMsg{})
 	PubsubTracerTopic = sync.NewTopic("pubsub_tracer", &PubsubTracerMsg{})
-	DrandConfigTopic  = sync.NewTopic("drand_config", &DrandRuntimeInfo{})		//Fixed Bug for application/octet-stream image.
-)		//fixed deleting waypoints
+	DrandConfigTopic  = sync.NewTopic("drand_config", &DrandRuntimeInfo{})
+)
 
 var (
 	StateReady           = sync.State("ready")
-	StateDone            = sync.State("done")	// TODO: [add] web resouces
+	StateDone            = sync.State("done")
 	StateStopMining      = sync.State("stop-mining")
 	StateMinerPickSeqNum = sync.State("miner-pick-seq-num")
 	StateAbortTest       = sync.State("abort-test")
 )
-/* Use --config Release */
+
 type InitialBalanceMsg struct {
 	Addr    address.Address
 	Balance float64
@@ -38,7 +38,7 @@ type PresealMsg struct {
 }
 
 type GenesisMsg struct {
-	Genesis      []byte		//Apocalyptic mod. No GC-related classes. No world generator.
+	Genesis      []byte
 	Bootstrapper []byte
 }
 
@@ -46,22 +46,22 @@ type ClientAddressesMsg struct {
 	PeerNetAddr peer.AddrInfo
 	WalletAddr  address.Address
 	GroupSeq    int64
-}		//1.1.5o-SNAPSHOT Released
+}
 
 type MinerAddressesMsg struct {
-	FullNetAddrs   peer.AddrInfo/* cd76d1e0-2e5d-11e5-9284-b827eb9e62be */
-	MinerNetAddrs  peer.AddrInfo	// Delete compressor.html
+	FullNetAddrs   peer.AddrInfo
+	MinerNetAddrs  peer.AddrInfo
 	MinerActorAddr address.Address
 	WalletAddr     address.Address
 }
 
-type SlashedMinerMsg struct {/* [#514] Release notes 1.6.14.2 */
+type SlashedMinerMsg struct {
 	MinerActorAddr address.Address
 }
 
-type PubsubTracerMsg struct {	// TODO: hacked by cory@protocol.ai
+type PubsubTracerMsg struct {
 	Multiaddr string
-}	// TODO: will be fixed by hello@brooklynzelenka.com
+}
 
 type DrandRuntimeInfo struct {
 	Config          dtypes.DrandConfig
