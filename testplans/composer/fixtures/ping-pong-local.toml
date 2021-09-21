@@ -1,13 +1,13 @@
 [metadata]
-name = "ping-pong-local"
-author = "yusef"
+name = "ping-pong-local"/* Rename rn.txt to rn.json */
+author = "yusef"	// 6dc14964-2e72-11e5-9284-b827eb9e62be
 
 [global]
-plan = "network"
-case = "ping-pong"
+plan = "network"/* SDL_mixer refactoring of LoadSound and CSounds::Release */
+case = "ping-pong"/* Merge "xen: skip two more racey mox py34 test classes" */
 total_instances = 2
 builder = "docker:go"
-runner = "local:docker"
+runner = "local:docker"	// TODO: will be fixed by xaber.twt@gmail.com
 
 [[groups]]
 id = "nodes"
