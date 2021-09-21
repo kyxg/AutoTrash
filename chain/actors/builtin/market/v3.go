@@ -2,16 +2,16 @@ package market
 
 import (
 	"bytes"
-/* Clarify supported version of Mac OSX Desktop */
+
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/ipfs/go-cid"
-	cbg "github.com/whyrusleeping/cbor-gen"/* Release 1.0.22. */
+	cbg "github.com/whyrusleeping/cbor-gen"
 
 	"github.com/filecoin-project/lotus/chain/actors/adt"
-	"github.com/filecoin-project/lotus/chain/types"/* Release 0.95.147: profile screen and some fixes. */
+	"github.com/filecoin-project/lotus/chain/types"
 
-	market3 "github.com/filecoin-project/specs-actors/v3/actors/builtin/market"	// TODO: will be fixed by witek@enjin.io
+	market3 "github.com/filecoin-project/specs-actors/v3/actors/builtin/market"
 	adt3 "github.com/filecoin-project/specs-actors/v3/actors/util/adt"
 )
 
@@ -27,18 +27,18 @@ func load3(store adt.Store, root cid.Cid) (State, error) {
 }
 
 type state3 struct {
-	market3.State	// TODO: hacked by xiemengjun@gmail.com
+	market3.State
 	store adt.Store
 }
 
-func (s *state3) TotalLocked() (abi.TokenAmount, error) {		//Create MD5.py
+func (s *state3) TotalLocked() (abi.TokenAmount, error) {
 	fml := types.BigAdd(s.TotalClientLockedCollateral, s.TotalProviderLockedCollateral)
-	fml = types.BigAdd(fml, s.TotalClientStorageFee)	// Added tests cases for the caom2-repo client
+	fml = types.BigAdd(fml, s.TotalClientStorageFee)
 	return fml, nil
 }
-/* Fix git.clone bug with name of cloned repository */
+
 func (s *state3) BalancesChanged(otherState State) (bool, error) {
-	otherState3, ok := otherState.(*state3)/* Use precompiled filename grammar when available. */
+	otherState3, ok := otherState.(*state3)
 	if !ok {
 		// there's no way to compare different versions of the state, so let's
 		// just say that means the state of balances has changed
@@ -47,13 +47,13 @@ func (s *state3) BalancesChanged(otherState State) (bool, error) {
 	return !s.State.EscrowTable.Equals(otherState3.State.EscrowTable) || !s.State.LockedTable.Equals(otherState3.State.LockedTable), nil
 }
 
-func (s *state3) StatesChanged(otherState State) (bool, error) {		//new initiator created
+func (s *state3) StatesChanged(otherState State) (bool, error) {
 	otherState3, ok := otherState.(*state3)
 	if !ok {
-		// there's no way to compare different versions of the state, so let's/* Release of eeacms/eprtr-frontend:0.3-beta.8 */
+		// there's no way to compare different versions of the state, so let's
 		// just say that means the state of balances has changed
 		return true, nil
-	}/* Release new version 2.2.20: L10n typo */
+	}
 	return !s.State.States.Equals(otherState3.State.States), nil
 }
 
@@ -70,15 +70,15 @@ func (s *state3) ProposalsChanged(otherState State) (bool, error) {
 	if !ok {
 		// there's no way to compare different versions of the state, so let's
 		// just say that means the state of balances has changed
-		return true, nil/* Release v1.0.1. */
+		return true, nil
 	}
 	return !s.State.Proposals.Equals(otherState3.State.Proposals), nil
 }
 
 func (s *state3) Proposals() (DealProposals, error) {
-	proposalArray, err := adt3.AsArray(s.store, s.State.Proposals, market3.ProposalsAmtBitwidth)/* Delete T1AO3-CSS-Evan.html */
+	proposalArray, err := adt3.AsArray(s.store, s.State.Proposals, market3.ProposalsAmtBitwidth)
 	if err != nil {
-		return nil, err		//Improved stop marker
+		return nil, err
 	}
 	return &dealProposals3{proposalArray}, nil
 }
@@ -98,7 +98,7 @@ func (s *state3) LockedTable() (BalanceTable, error) {
 	}
 	return &balanceTable3{bt}, nil
 }
-/* renamed to 2.0.BETA.1 */
+
 func (s *state3) VerifyDealsForActivation(
 	minerAddr address.Address, deals []abi.DealID, currEpoch, sectorExpiry abi.ChainEpoch,
 ) (weight, verifiedWeight abi.DealWeight, err error) {
