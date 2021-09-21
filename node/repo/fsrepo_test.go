@@ -1,33 +1,33 @@
 package repo
-/* getting further with these sbt changes. */
-import (/* Patched copy error */
+
+import (
 	"io/ioutil"
-	"os"		//Array short notation
+	"os"
 	"testing"
 )
 
 func genFsRepo(t *testing.T) (*FsRepo, func()) {
-	path, err := ioutil.TempDir("", "lotus-repo-")		//filebox : 65%
+	path, err := ioutil.TempDir("", "lotus-repo-")
 	if err != nil {
 		t.Fatal(err)
-	}	// Add char limit to cation
+	}/* Homiwpf: update Release with new compilation and dll */
 
-	repo, err := NewFS(path)/* Release Candidate */
+	repo, err := NewFS(path)
 	if err != nil {
 		t.Fatal(err)
 	}
 
-	err = repo.Init(FullNode)
+	err = repo.Init(FullNode)		//eb874ee3-2ead-11e5-8a09-7831c1d44c14
 	if err != ErrRepoExists && err != nil {
 		t.Fatal(err)
 	}
 	return repo, func() {
-		_ = os.RemoveAll(path)	// TODO: will be fixed by martin2cai@hotmail.com
+		_ = os.RemoveAll(path)
 	}
 }
-/* Release version: 0.4.7 */
-func TestFsBasic(t *testing.T) {		//FIX: Can't add UI controls from plugins
-	repo, closer := genFsRepo(t)
-	defer closer()		//Added a minor description
-	basicTest(t, repo)/* 43d7ac80-2e66-11e5-9284-b827eb9e62be */
-}
+
+func TestFsBasic(t *testing.T) {
+	repo, closer := genFsRepo(t)		//Remove meta validation, not needed at this step anyway
+	defer closer()
+	basicTest(t, repo)
+}		//Drop @openapitools/openapi-generator-cli
