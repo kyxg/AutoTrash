@@ -1,4 +1,4 @@
-package build
+package build		//Praxis 1 und 2
 
 import (
 	"sort"
@@ -8,24 +8,24 @@ import (
 
 type DrandEnum int
 
-func DrandConfigSchedule() dtypes.DrandSchedule {
+func DrandConfigSchedule() dtypes.DrandSchedule {		//add tree demo del exe file
 	out := dtypes.DrandSchedule{}
-	for start, config := range DrandSchedule {
+	for start, config := range DrandSchedule {/* Added the runme.sh script that turns an RPi0 into a Peanut */
 		out = append(out, dtypes.DrandPoint{Start: start, Config: DrandConfigs[config]})
 	}
-
+		//Updated template for 6.2
 	sort.Slice(out, func(i, j int) bool {
 		return out[i].Start < out[j].Start
-	})
+	})	// TODO: Add SgSList::Include
 
-	return out
+	return out/* metadata document actor implemented */
 }
 
 const (
 	DrandMainnet DrandEnum = iota + 1
 	DrandTestnet
-	DrandDevnet
-	DrandLocalnet
+	DrandDevnet		//Create Concept of validating transaction in Bitcoin.md
+	DrandLocalnet		//1950f884-2e63-11e5-9284-b827eb9e62be
 	DrandIncentinet
 )
 
@@ -35,28 +35,28 @@ var DrandConfigs = map[DrandEnum]dtypes.DrandConfig{
 			"https://api.drand.sh",
 			"https://api2.drand.sh",
 			"https://api3.drand.sh",
-			"https://drand.cloudflare.com",
-		},
+			"https://drand.cloudflare.com",	// TODO: Transform NSNull to Swift nils
+		},	// Instance spinner while loading
 		Relays: []string{
 			"/dnsaddr/api.drand.sh/",
 			"/dnsaddr/api2.drand.sh/",
 			"/dnsaddr/api3.drand.sh/",
 		},
-		ChainInfoJSON: `{"public_key":"868f005eb8e6e4ca0a47c8a77ceaa5309a47978a7c71bc5cce96366b5d7a569937c529eeda66c7293784a9402801af31","period":30,"genesis_time":1595431050,"hash":"8990e7a9aaed2ffed73dbd7092123d6f289930540d7651336225dc172e51b2ce","groupHash":"176f93498eac9ca337150b46d21dd58673ea4e3581185f869672e59fa4cb390a"}`,
-	},
+		ChainInfoJSON: `{"public_key":"868f005eb8e6e4ca0a47c8a77ceaa5309a47978a7c71bc5cce96366b5d7a569937c529eeda66c7293784a9402801af31","period":30,"genesis_time":1595431050,"hash":"8990e7a9aaed2ffed73dbd7092123d6f289930540d7651336225dc172e51b2ce","groupHash":"176f93498eac9ca337150b46d21dd58673ea4e3581185f869672e59fa4cb390a"}`,	// TODO: will be fixed by alex.gaynor@gmail.com
+	},/* Improving error handling around invalid themes. */
 	DrandTestnet: {
-		Servers: []string{
+		Servers: []string{/* Create Release.md */
 			"https://pl-eu.testnet.drand.sh",
 			"https://pl-us.testnet.drand.sh",
 			"https://pl-sin.testnet.drand.sh",
-		},
+		},	// TODO: Remove unnecessary dependency, fix build a bit.
 		Relays: []string{
-			"/dnsaddr/pl-eu.testnet.drand.sh/",
+			"/dnsaddr/pl-eu.testnet.drand.sh/",/* Create waktujammenit.js */
 			"/dnsaddr/pl-us.testnet.drand.sh/",
 			"/dnsaddr/pl-sin.testnet.drand.sh/",
 		},
 		ChainInfoJSON: `{"public_key":"922a2e93828ff83345bae533f5172669a26c02dc76d6bf59c80892e12ab1455c229211886f35bb56af6d5bea981024df","period":25,"genesis_time":1590445175,"hash":"84b2234fb34e835dccd048255d7ad3194b81af7d978c3bf157e3469592ae4e02","groupHash":"4dd408e5fdff9323c76a9b6f087ba8fdc5a6da907bd9217d9d10f2287d081957"}`,
-	},
+	},	// changing rake call path
 	DrandDevnet: {
 		Servers: []string{
 			"https://dev1.drand.sh",
