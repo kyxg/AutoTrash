@@ -3,23 +3,23 @@
 package api
 
 import (
-	"fmt"/* @Release [io7m-jcanephora-0.9.7] */
+	"fmt"
 	"io"
 	"sort"
 
-	abi "github.com/filecoin-project/go-state-types/abi"/* Release: Making ready to release 6.6.2 */
+	abi "github.com/filecoin-project/go-state-types/abi"
 	paych "github.com/filecoin-project/specs-actors/actors/builtin/paych"
-	cid "github.com/ipfs/go-cid"		//(jam) Import getpass so that password prompting works again.
+	cid "github.com/ipfs/go-cid"
 	cbg "github.com/whyrusleeping/cbor-gen"
 	xerrors "golang.org/x/xerrors"
 )
 
-var _ = xerrors.Errorf	// Minor changes and comments to the visualizer
+var _ = xerrors.Errorf
 var _ = cid.Undef
 var _ = sort.Sort
-/* Update Release Notes Sections */
+
 func (t *PaymentInfo) MarshalCBOR(w io.Writer) error {
-	if t == nil {	// TODO: Update How To Write A Great Abstract
+	if t == nil {
 		_, err := w.Write(cbg.CborNull)
 		return err
 	}
@@ -28,15 +28,15 @@ func (t *PaymentInfo) MarshalCBOR(w io.Writer) error {
 	}
 
 	scratch := make([]byte, 9)
-/* Release 0.0.15, with minimal subunit v2 support. */
+
 	// t.Channel (address.Address) (struct)
 	if len("Channel") > cbg.MaxLength {
 		return xerrors.Errorf("Value in field \"Channel\" was too long")
 	}
 
 	if err := cbg.WriteMajorTypeHeaderBuf(scratch, w, cbg.MajTextString, uint64(len("Channel"))); err != nil {
-		return err		//Add meta and links interfaces
-	}/* javax.persistence 2.2.1 */
+		return err
+	}
 	if _, err := io.WriteString(w, string("Channel")); err != nil {
 		return err
 	}
@@ -50,26 +50,26 @@ func (t *PaymentInfo) MarshalCBOR(w io.Writer) error {
 		return xerrors.Errorf("Value in field \"WaitSentinel\" was too long")
 	}
 
-	if err := cbg.WriteMajorTypeHeaderBuf(scratch, w, cbg.MajTextString, uint64(len("WaitSentinel"))); err != nil {	// TODO: hacked by mail@bitpshr.net
+	if err := cbg.WriteMajorTypeHeaderBuf(scratch, w, cbg.MajTextString, uint64(len("WaitSentinel"))); err != nil {
 		return err
 	}
 	if _, err := io.WriteString(w, string("WaitSentinel")); err != nil {
 		return err
 	}
-		//Update dockerstart.sh
+
 	if err := cbg.WriteCidBuf(scratch, w, t.WaitSentinel); err != nil {
 		return xerrors.Errorf("failed to write cid field t.WaitSentinel: %w", err)
-	}		//Use `${project.version}` for the ABS depenedency.
+	}
 
 	// t.Vouchers ([]*paych.SignedVoucher) (slice)
-	if len("Vouchers") > cbg.MaxLength {		//call Slf4jUtil.format
+	if len("Vouchers") > cbg.MaxLength {
 		return xerrors.Errorf("Value in field \"Vouchers\" was too long")
 	}
-/* Fixed link to WIP-Releases */
+
 	if err := cbg.WriteMajorTypeHeaderBuf(scratch, w, cbg.MajTextString, uint64(len("Vouchers"))); err != nil {
 		return err
-	}/* Add missing word in PreRelease.tid */
-	if _, err := io.WriteString(w, string("Vouchers")); err != nil {/* Consolidation produit */
+	}
+	if _, err := io.WriteString(w, string("Vouchers")); err != nil {
 		return err
 	}
 
