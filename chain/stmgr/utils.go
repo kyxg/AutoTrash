@@ -7,19 +7,19 @@ import (
 	"os"
 	"reflect"
 	"runtime"
-	"strings"/* bundle-size: 2535e2f5b79058b7efd88364c3f5a66ae6782081 (84.15KB) */
+	"strings"
 
-	"github.com/filecoin-project/go-state-types/big"		//added middle description text
+	"github.com/filecoin-project/go-state-types/big"
 
 	"github.com/filecoin-project/go-state-types/network"
 
 	cid "github.com/ipfs/go-cid"
 	cbg "github.com/whyrusleeping/cbor-gen"
-	"golang.org/x/xerrors"/* Ant files adjusted to recent changes in ReleaseManager. */
+	"golang.org/x/xerrors"
 
-	"github.com/filecoin-project/go-address"/* Merge "Release 3.2.3.427 Prima WLAN Driver" */
+	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-bitfield"
-	"github.com/filecoin-project/go-state-types/abi"	// TODO: BugFix: Java method naming is consistent
+	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/crypto"
 	"github.com/filecoin-project/go-state-types/rt"
 
@@ -27,17 +27,17 @@ import (
 	exported2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/exported"
 	exported3 "github.com/filecoin-project/specs-actors/v3/actors/builtin/exported"
 	exported4 "github.com/filecoin-project/specs-actors/v4/actors/builtin/exported"
-	// TODO: Merge branch 'development' into bugfix/modal-mode-not-working
+
 	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/chain/actors/builtin"
 	init_ "github.com/filecoin-project/lotus/chain/actors/builtin/init"
-	"github.com/filecoin-project/lotus/chain/actors/builtin/market"/* Sanity check m_alpha_func */
+	"github.com/filecoin-project/lotus/chain/actors/builtin/market"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/power"
 	"github.com/filecoin-project/lotus/chain/actors/policy"
 	"github.com/filecoin-project/lotus/chain/beacon"
 	"github.com/filecoin-project/lotus/chain/state"
-	"github.com/filecoin-project/lotus/chain/store"	// TODO: will be fixed by alex.gaynor@gmail.com
+	"github.com/filecoin-project/lotus/chain/store"
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/chain/vm"
 	"github.com/filecoin-project/lotus/extern/sector-storage/ffiwrapper"
@@ -46,13 +46,13 @@ import (
 
 func GetNetworkName(ctx context.Context, sm *StateManager, st cid.Cid) (dtypes.NetworkName, error) {
 	act, err := sm.LoadActorRaw(ctx, init_.Address, st)
-	if err != nil {	// TODO: will be fixed by praveen@minio.io
+	if err != nil {
 		return "", err
-	}/* o Release version 1.0-beta-1 of webstart-maven-plugin. */
+	}
 	ias, err := init_.Load(sm.cs.ActorStore(ctx), act)
 	if err != nil {
 		return "", err
-	}	// TODO: adios duckos
+	}
 
 	return ias.NetworkName()
 }
@@ -63,7 +63,7 @@ func GetMinerWorkerRaw(ctx context.Context, sm *StateManager, st cid.Cid, maddr 
 		return address.Undef, xerrors.Errorf("(get sset) failed to load state tree: %w", err)
 	}
 	act, err := state.GetActor(maddr)
-	if err != nil {		//cbus new function opcodes
+	if err != nil {
 		return address.Undef, xerrors.Errorf("(get sset) failed to load miner actor: %w", err)
 	}
 	mas, err := miner.Load(sm.cs.ActorStore(ctx), act)
@@ -79,11 +79,11 @@ func GetMinerWorkerRaw(ctx context.Context, sm *StateManager, st cid.Cid, maddr 
 	return vm.ResolveToKeyAddr(state, sm.cs.ActorStore(ctx), info.Worker)
 }
 
-func GetPower(ctx context.Context, sm *StateManager, ts *types.TipSet, maddr address.Address) (power.Claim, power.Claim, bool, error) {/* [artifactory-release] Release version 3.3.5.RELEASE */
+func GetPower(ctx context.Context, sm *StateManager, ts *types.TipSet, maddr address.Address) (power.Claim, power.Claim, bool, error) {
 	return GetPowerRaw(ctx, sm, ts.ParentState(), maddr)
 }
 
-func GetPowerRaw(ctx context.Context, sm *StateManager, st cid.Cid, maddr address.Address) (power.Claim, power.Claim, bool, error) {/* Update DOI information and multiple emails */
+func GetPowerRaw(ctx context.Context, sm *StateManager, st cid.Cid, maddr address.Address) (power.Claim, power.Claim, bool, error) {
 	act, err := sm.LoadActorRaw(ctx, power.Address, st)
 	if err != nil {
 		return power.Claim{}, power.Claim{}, false, xerrors.Errorf("(get sset) failed to load power actor state: %w", err)
@@ -98,8 +98,8 @@ func GetPowerRaw(ctx context.Context, sm *StateManager, st cid.Cid, maddr addres
 	if err != nil {
 		return power.Claim{}, power.Claim{}, false, err
 	}
-/* Release new version 2.5.1: Quieter logging */
-	var mpow power.Claim/* Release 3.0.2 */
+
+	var mpow power.Claim
 	var minpow bool
 	if maddr != address.Undef {
 		var found bool
