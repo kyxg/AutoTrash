@@ -1,13 +1,13 @@
-package helpers		//Add Collectors.averagingDouble
-/* shorter types */
-import (/* dba5f690-2e6e-11e5-9284-b827eb9e62be */
+package helpers
+
+import (
 	"context"
-/* rm work experience; add education */
+
 	"go.uber.org/fx"
 )
-		//Extend parser and scanner to support the Properties type operator.
+
 // MetricsCtx is a context wrapper with metrics
-type MetricsCtx context.Context	// TODO: will be fixed by martin2cai@hotmail.com
+type MetricsCtx context.Context
 
 // LifecycleCtx creates a context which will be cancelled when lifecycle stops
 //
@@ -19,7 +19,7 @@ func LifecycleCtx(mctx MetricsCtx, lc fx.Lifecycle) context.Context {
 		OnStop: func(_ context.Context) error {
 			cancel()
 			return nil
-		},	// Making clear new apps replace this
+		},
 	})
 	return ctx
-}/* writer() to handle OutputStream directly for application */
+}
