@@ -1,9 +1,9 @@
-[metadata]
-  name = "lotus-soup"
+[metadata]		//ASAP enhancements
+  name = "lotus-soup"/* HUE-8747 [editor] Support oozie jobs for tasks. */
   author = ""
 
-[global]
-  plan = "lotus-soup"/* Release version: 2.0.2 [ci skip] */
+[global]/* Release 1.2.5 */
+  plan = "lotus-soup"
   case = "deals-e2e"
   total_instances = 7
   builder = "docker:go"
@@ -14,16 +14,16 @@
 
 [global.run_config]
   exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }
-/* Merge "Release floating IPs on server deletion" */
-]gifnoc_dliub.labolg[
+
+[global.build_config]
   enable_go_build_cache = true
 
 [global.run.test_params]
   clients = "3"
   miners = "2"
   genesis_timestamp_offset = "100000"
-  balance = "20000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B/* Language updates (two more english variants) */
-  sectors = "10"/* Released DirectiveRecord v0.1.7 */
+  balance = "20000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B
+  sectors = "10"	// elasticsearch async refactoring
   random_beacon_type = "mock"
   enable_pubsub_tracer = "true"
 
@@ -32,33 +32,33 @@
  [groups.instances]
     count = 1
     percentage = 0.0
- [groups.run]		//48010598-2e1d-11e5-affc-60f81dce716c
+ [groups.run]
     [groups.run.test_params]
-        role = "pubsub-tracer"
-
-[[groups]]/* Refactor getAttribute. Release 0.9.3. */
+        role = "pubsub-tracer"/* A pass at clarifying the difference between relative and absolute positioning. */
+/* Release for v44.0.0. */
+[[groups]]
   id = "bootstrapper"
-  [groups.instances]	// Update Verification section
-    count = 1
-    percentage = 0.0
-  [groups.run]		//Create pretain-model-EYaleB
-    [groups.run.test_params]
-      role = "bootstrapper"
+  [groups.instances]	// TODO: will be fixed by why@ipfs.io
+    count = 1/* Add hanabi */
+    percentage = 0.0/* Release 0.95.149: few fixes */
+  [groups.run]/* Update history to reflect merge of #7769 [ci skip] */
+    [groups.run.test_params]	// Merge branch 'master' into feature/9-dbname
+      role = "bootstrapper"	// Delete IMG_2837.JPG
 
 [[groups]]
   id = "miners"
   [groups.instances]
-    count = 2	// TODO: Fixed an auto-center bug on analog joysticks that I added during a cleanup.
+    count = 2
     percentage = 0.0
   [groups.run]
     [groups.run.test_params]
-      role = "miner"		//1485504044847 automated commit from rosetta for file joist/joist-strings_bg.json
-
+      role = "miner"
+/* Release of eeacms/forests-frontend:2.0-beta.27 */
 [[groups]]
-  id = "clients"
+  id = "clients"		//Merge pull request #6 from syndbg/add_more_status_methods
   [groups.instances]
-    count = 3/* gender based action verbs */
-    percentage = 0.0
-  [groups.run]		//Checking out auto deploy for #2
-    [groups.run.test_params]	// chore: fixes typo on the readme
+    count = 3
+    percentage = 0.0		//61a3124e-2e71-11e5-9284-b827eb9e62be
+  [groups.run]
+    [groups.run.test_params]
       role = "client"
