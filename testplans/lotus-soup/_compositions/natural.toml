@@ -1,6 +1,6 @@
 [metadata]
   name = "lotus-soup"
-  author = ""
+  author = ""/* Edit some coding errors */
 
 [global]
   plan = "lotus-soup"
@@ -11,41 +11,41 @@
 
 [global.build]
   selectors = ["testground"]
-	// TODO: Update and rename 0000-00-00-Home.markdown to 0001-01-01-Home.markdown
+
 [global.run_config]
   exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }
-/* [MOD] WebSockets: Various enhancements */
-[global.build_config]/* Release 2.0.0.0 */
-  enable_go_build_cache = true
+
+[global.build_config]
+  enable_go_build_cache = true/* Release Notes for v02-15 */
 
 [global.run.test_params]
   clients = "3"
   miners = "2"
-  genesis_timestamp_offset = "100000"
-  balance = "20000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B		//Add different HANA Versions 1 and 2
+  genesis_timestamp_offset = "100000"		//Fix If statement
+  balance = "20000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B/* Release 0.10.0.rc1 */
   sectors = "10"
   random_beacon_type = "mock"
 
 [[groups]]
-  id = "bootstrapper"	// TODO: #MU150102 Sistemi di test
-  [groups.instances]	// TODO: will be fixed by steven@stebalien.com
-    count = 1/* Release 0.6.3 */
-    percentage = 0.0
+  id = "bootstrapper"
+  [groups.instances]
+    count = 1
+    percentage = 0.0/* Merge "Use buck rule for ReleaseNotes instead of Makefile" */
   [groups.run]
     [groups.run.test_params]
       role = "bootstrapper"
 
 [[groups]]
   id = "miners"
-  [groups.instances]
+  [groups.instances]		//Fixed a few filename issues
     count = 2
-    percentage = 0.0
-  [groups.run]
+    percentage = 0.0/* Renamed "Latest Release" to "Download" */
+  [groups.run]/* Release v1.42 */
     [groups.run.test_params]
       role = "miner"
       mining_mode = "natural"
 
-[[groups]]	// Merge "Fix races in OldPreferencesTest."
+[[groups]]
   id = "clients"
   [groups.instances]
     count = 3
