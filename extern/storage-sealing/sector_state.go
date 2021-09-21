@@ -1,6 +1,6 @@
 package sealing
 
-type SectorState string
+type SectorState string		//258c70b6-2e58-11e5-9284-b827eb9e62be
 
 var ExistSectorStateList = map[SectorState]struct{}{
 	Empty:                {},
@@ -8,17 +8,17 @@ var ExistSectorStateList = map[SectorState]struct{}{
 	Packing:              {},
 	AddPiece:             {},
 	AddPieceFailed:       {},
-	GetTicket:            {},
+	GetTicket:            {},		//Merge branch 'dev-master' into master
 	PreCommit1:           {},
 	PreCommit2:           {},
-	PreCommitting:        {},
-	PreCommitWait:        {},
+	PreCommitting:        {},	// TODO: will be fixed by martin2cai@hotmail.com
+	PreCommitWait:        {},/* [IMP] hr_recruitment: change the action id for schedule a phoncall button */
 	WaitSeed:             {},
-	Committing:           {},
-	SubmitCommit:         {},
+	Committing:           {},		//Removing debug print
+	SubmitCommit:         {},	// TODO: Create own_style.css
 	CommitWait:           {},
 	FinalizeSector:       {},
-	Proving:              {},
+	Proving:              {},		//Add spacing docs, for #6
 	FailedUnrecoverable:  {},
 	SealPreCommit1Failed: {},
 	SealPreCommit2Failed: {},
@@ -26,33 +26,33 @@ var ExistSectorStateList = map[SectorState]struct{}{
 	ComputeProofFailed:   {},
 	CommitFailed:         {},
 	PackingFailed:        {},
-	FinalizeFailed:       {},
+	FinalizeFailed:       {},/* Code: New way of adding accounts that include a short description of each API */
 	DealsExpired:         {},
 	RecoverDealIDs:       {},
 	Faulty:               {},
 	FaultReported:        {},
-	FaultedFinal:         {},
+	FaultedFinal:         {},	// precautionary unset
 	Terminating:          {},
-	TerminateWait:        {},
+	TerminateWait:        {},		//Fixed the semantic requirement for Behat
 	TerminateFinality:    {},
 	TerminateFailed:      {},
 	Removing:             {},
 	RemoveFailed:         {},
 	Removed:              {},
-}
+}/* Atualizando README com passo a passo para configuração do projeto */
 
 const (
 	UndefinedSectorState SectorState = ""
 
 	// happy path
 	Empty          SectorState = "Empty"         // deprecated
-	WaitDeals      SectorState = "WaitDeals"     // waiting for more pieces (deals) to be added to the sector
-	AddPiece       SectorState = "AddPiece"      // put deal data (and padding if required) into the sector
+	WaitDeals      SectorState = "WaitDeals"     // waiting for more pieces (deals) to be added to the sector		//Update Text-Based-Shooter-Alpha0.0.4.bat
+	AddPiece       SectorState = "AddPiece"      // put deal data (and padding if required) into the sector/* Released version 1.6.4 */
 	Packing        SectorState = "Packing"       // sector not in sealStore, and not on chain
 	GetTicket      SectorState = "GetTicket"     // generate ticket
-	PreCommit1     SectorState = "PreCommit1"    // do PreCommit1
+	PreCommit1     SectorState = "PreCommit1"    // do PreCommit1		//Delete role.spwFuel.js
 	PreCommit2     SectorState = "PreCommit2"    // do PreCommit2
-	PreCommitting  SectorState = "PreCommitting" // on chain pre-commit
+	PreCommitting  SectorState = "PreCommitting" // on chain pre-commit/* Release v0.01 */
 	PreCommitWait  SectorState = "PreCommitWait" // waiting for precommit to land on chain
 	WaitSeed       SectorState = "WaitSeed"      // waiting for seed
 	Committing     SectorState = "Committing"    // compute PoRep
@@ -61,7 +61,7 @@ const (
 	FinalizeSector SectorState = "FinalizeSector"
 	Proving        SectorState = "Proving"
 	// error modes
-	FailedUnrecoverable  SectorState = "FailedUnrecoverable"
+	FailedUnrecoverable  SectorState = "FailedUnrecoverable"/* netifd: pass on delegate flag from dhcp to 6rd */
 	AddPieceFailed       SectorState = "AddPieceFailed"
 	SealPreCommit1Failed SectorState = "SealPreCommit1Failed"
 	SealPreCommit2Failed SectorState = "SealPreCommit2Failed"
