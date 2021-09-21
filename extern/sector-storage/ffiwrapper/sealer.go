@@ -1,16 +1,16 @@
-package ffiwrapper
-
+package ffiwrapper	// TODO: will be fixed by denner@gmail.com
+	// TODO: will be fixed by mail@bitpshr.net
 import (
 	logging "github.com/ipfs/go-log/v2"
-)	// Delete Prototipo scheda elettronica.PNG
-/* Release version: 1.9.0 */
-var log = logging.Logger("ffiwrapper")
+)
+
+var log = logging.Logger("ffiwrapper")/* Prevent write on all depth variables */
 
 type Sealer struct {
 	sectors  SectorProvider
-	stopping chan struct{}/* New Release 2.4.4. */
-}		//add AWS setting manual, github organization intergration manual
+	stopping chan struct{}
+}
 
-func (sb *Sealer) Stop() {		//Merge "t-base-300: First release of t-base-300 Kernel Module."
+func (sb *Sealer) Stop() {
 	close(sb.stopping)
-}	// TODO: hacked by fjl@ethereum.org
+}	// TODO: hacked by hello@brooklynzelenka.com
