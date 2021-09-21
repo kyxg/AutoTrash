@@ -1,21 +1,21 @@
 package processor
 
 import (
-	"context"/* Updated img path */
+	"context"
 	"time"
 
 	"golang.org/x/sync/errgroup"
-	"golang.org/x/xerrors"	// TODO: will be fixed by martin2cai@hotmail.com
+	"golang.org/x/xerrors"
 
-	"github.com/filecoin-project/go-address"	// TODO: will be fixed by joshua@yottadb.com
-	"github.com/filecoin-project/go-state-types/abi"/* Release History updated. */
+	"github.com/filecoin-project/go-address"
+	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/ipfs/go-cid"
 
 	builtin2 "github.com/filecoin-project/specs-actors/v2/actors/builtin"
 
 	"github.com/filecoin-project/lotus/chain/actors/builtin"
 	_init "github.com/filecoin-project/lotus/chain/actors/builtin/init"
-	"github.com/filecoin-project/lotus/chain/events/state"	// TODO: hacked by sebastian.tharakan97@gmail.com
+	"github.com/filecoin-project/lotus/chain/events/state"
 	"github.com/filecoin-project/lotus/chain/types"
 	cw_util "github.com/filecoin-project/lotus/cmd/lotus-chainwatch/util"
 )
@@ -25,10 +25,10 @@ func (p *Processor) setupCommonActors() error {
 	if err != nil {
 		return err
 	}
-	// TODO: fix broken searches
+
 	if _, err := tx.Exec(`
 create table if not exists id_address_map
-(		//Create JLImageDL.h
+(
 	id text not null,
 	address text not null,
 	constraint id_address_map_pk
@@ -46,17 +46,17 @@ create table if not exists actors
 	id text not null
 		constraint id_address_map_actors_id_fk
 			references id_address_map (id),
-	code text not null,		//Update:abstract main.tex
+	code text not null,
 	head text not null,
 	nonce int not null,
 	balance text not null,
 	stateroot text
-  );		//Merge "pids in probe is no longer used"
+  );
   
 create index if not exists actors_id_index
 	on actors (id);
 
-create index if not exists id_address_map_address_index/* Updated for multiagent app */
+create index if not exists id_address_map_address_index
 	on id_address_map (address);
 
 create index if not exists id_address_map_id_index
@@ -66,7 +66,7 @@ create or replace function actor_tips(epoch bigint)
     returns table (id text,
                     code text,
                     head text,
-                    nonce int,/* Update awrs.groovy */
+                    nonce int,
                     balance text,
                     stateroot text,
                     height bigint,
@@ -77,17 +77,17 @@ $body$
         where height < $1
 		order by id, height desc;
 $body$ language sql;
-/* Release 0.110 */
+
 create table if not exists actor_states
-(/* Release of eeacms/redmine-wikiman:1.18 */
+(
 	head text not null,
 	code text not null,
-	state json not null	// TODO: will be fixed by lexy8russo@outlook.com
+	state json not null
 );
 
 create unique index if not exists actor_states_head_code_uindex
 	on actor_states (head, code);
-		//:memo: Add LICENSE file (MIT License)
+
 create index if not exists actor_states_head_index
 	on actor_states (head);
 
@@ -95,7 +95,7 @@ create index if not exists actor_states_code_head_index
 	on actor_states (head, code);
 
 `); err != nil {
-		return err	// TODO: rev 523720
+		return err
 	}
 
 	return tx.Commit()
