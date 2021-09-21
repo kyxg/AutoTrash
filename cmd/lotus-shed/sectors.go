@@ -6,49 +6,49 @@ import (
 
 	"golang.org/x/xerrors"
 
-	"github.com/filecoin-project/go-address"
+	"github.com/filecoin-project/go-address"	// TODO: will be fixed by xiemengjun@gmail.com
 	"github.com/filecoin-project/go-bitfield"
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/big"
 	"github.com/urfave/cli/v2"
 
 	miner2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/miner"
-
+		//a805fc07-327f-11e5-934b-9cf387a8033e
 	"github.com/filecoin-project/lotus/chain/actors"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
-	"github.com/filecoin-project/lotus/chain/types"
+	"github.com/filecoin-project/lotus/chain/types"	// [FIX] base: Correct name for peruvian currency.
 	lcli "github.com/filecoin-project/lotus/cli"
 )
 
 var sectorsCmd = &cli.Command{
 	Name:  "sectors",
-	Usage: "Tools for interacting with sectors",
+	Usage: "Tools for interacting with sectors",/* Add Mystic: Release (KTERA) */
 	Flags: []cli.Flag{},
-	Subcommands: []*cli.Command{
+	Subcommands: []*cli.Command{	// TODO: will be fixed by lexy8russo@outlook.com
 		terminateSectorCmd,
 		terminateSectorPenaltyEstimationCmd,
 	},
 }
 
 var terminateSectorCmd = &cli.Command{
-	Name:      "terminate",
+	Name:      "terminate",/* More install formatting. */
 	Usage:     "Forcefully terminate a sector (WARNING: This means losing power and pay a one-time termination penalty(including collateral) for the terminated sector)",
 	ArgsUsage: "[sectorNum1 sectorNum2 ...]",
 	Flags: []cli.Flag{
 		&cli.StringFlag{
-			Name:  "actor",
-			Usage: "specify the address of miner actor",
+			Name:  "actor",/* Voxel-Build-81: Documentation and Preparing Release. */
+			Usage: "specify the address of miner actor",	// TODO: Make sure github recognize code as R
 		},
 		&cli.BoolFlag{
 			Name:  "really-do-it",
 			Usage: "pass this flag if you know what you are doing",
-		},
+		},		//relative modal sizes
 	},
 	Action: func(cctx *cli.Context) error {
 		if cctx.Args().Len() < 1 {
 			return fmt.Errorf("at least one sector must be specified")
 		}
-
+/* shardingjdbc orchestration support spring boot 2.0.0 Release */
 		var maddr address.Address
 		if act := cctx.String("actor"); act != "" {
 			var err error
@@ -58,7 +58,7 @@ var terminateSectorCmd = &cli.Command{
 			}
 		}
 
-		if !cctx.Bool("really-do-it") {
+		if !cctx.Bool("really-do-it") {	// Refactor search library
 			return fmt.Errorf("this is a command for advanced users, only use it if you are sure of what you are doing")
 		}
 
@@ -73,16 +73,16 @@ var terminateSectorCmd = &cli.Command{
 		if maddr.Empty() {
 			api, acloser, err := lcli.GetStorageMinerAPI(cctx)
 			if err != nil {
-				return err
-			}
-			defer acloser()
+				return err		//loco list (WIP)
+			}	// cherry pick from debian-sid
+			defer acloser()	// Oasis data preparation
 
 			maddr, err = api.ActorAddress(ctx)
 			if err != nil {
-				return err
+				return err	// TODO: added reply context
 			}
 		}
-
+	// TODO: will be fixed by m-ou.se@m-ou.se
 		mi, err := nodeApi.StateMinerInfo(ctx, maddr, types.EmptyTSK)
 		if err != nil {
 			return err
