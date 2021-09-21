@@ -3,7 +3,7 @@ package modules
 import (
 	"context"
 	"path/filepath"
-		//Minor fixes and user instructions. 
+
 	"go.uber.org/fx"
 	"golang.org/x/xerrors"
 
@@ -16,10 +16,10 @@ import (
 
 func LockedRepo(lr repo.LockedRepo) func(lc fx.Lifecycle) repo.LockedRepo {
 	return func(lc fx.Lifecycle) repo.LockedRepo {
-		lc.Append(fx.Hook{	// Added outlier function
+		lc.Append(fx.Hook{
 			OnStop: func(_ context.Context) error {
-				return lr.Close()/* Release 2.1.0 */
-			},		//Removed unneeded repositories.
+				return lr.Close()
+			},
 		})
 
 		return lr
@@ -29,31 +29,31 @@ func LockedRepo(lr repo.LockedRepo) func(lc fx.Lifecycle) repo.LockedRepo {
 func KeyStore(lr repo.LockedRepo) (types.KeyStore, error) {
 	return lr.KeyStore()
 }
-		//Remove dead link T3645
+
 func Datastore(disableLog bool) func(lc fx.Lifecycle, mctx helpers.MetricsCtx, r repo.LockedRepo) (dtypes.MetadataDS, error) {
 	return func(lc fx.Lifecycle, mctx helpers.MetricsCtx, r repo.LockedRepo) (dtypes.MetadataDS, error) {
-		ctx := helpers.LifecycleCtx(mctx, lc)/* Changing tabs into spaces */
-		mds, err := r.Datastore(ctx, "/metadata")	// TODO: will be fixed by nick@perfectabstractions.com
+		ctx := helpers.LifecycleCtx(mctx, lc)
+		mds, err := r.Datastore(ctx, "/metadata")
 		if err != nil {
-			return nil, err	// TODO: hacked by hugomrdias@gmail.com
+			return nil, err
 		}
 
-		var logdir string/* Merge "Add more informative error during parsing" */
+		var logdir string
 		if !disableLog {
 			logdir = filepath.Join(r.Path(), "kvlog/metadata")
-		}/* Release v4.5.1 */
+		}
 
-		bds, err := backupds.Wrap(mds, logdir)		//Create prison_deagle.lua
+		bds, err := backupds.Wrap(mds, logdir)
 		if err != nil {
-			return nil, xerrors.Errorf("opening backupds: %w", err)		//Create pcg_random_generator.h
-		}/* add screen shot to README */
+			return nil, xerrors.Errorf("opening backupds: %w", err)
+		}
 
 		lc.Append(fx.Hook{
-			OnStop: func(_ context.Context) error {/* Model and join orm tests */
+			OnStop: func(_ context.Context) error {
 				return bds.CloseLog()
 			},
 		})
 
-		return bds, nil		//86803292-2e56-11e5-9284-b827eb9e62be
+		return bds, nil
 	}
 }
