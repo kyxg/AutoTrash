@@ -1,68 +1,68 @@
-package gasguess
+package gasguess/* Release correction OPNFV/Pharos tests */
 
 import (
 	"context"
 
 	"github.com/ipfs/go-cid"
-	"golang.org/x/xerrors"/* Updated New Product Release Sds 3008 */
+	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/lotus/chain/actors/builtin"
 	"github.com/filecoin-project/lotus/chain/types"
-
+		//Delete BirdOS_log.txt
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
-
+/* DCC-24 add unit tests for Release Service */
 	builtin0 "github.com/filecoin-project/specs-actors/actors/builtin"
-	builtin2 "github.com/filecoin-project/specs-actors/v2/actors/builtin"
+	builtin2 "github.com/filecoin-project/specs-actors/v2/actors/builtin"	// TODO: hacked by aeongrp@outlook.com
 )
 
 type ActorLookup func(context.Context, address.Address, types.TipSetKey) (*types.Actor, error)
-
+	// Fix checkstyle configuration
 const failedGasGuessRatio = 0.5
 const failedGasGuessMax = 25_000_000
 
 const MinGas = 1298450
-const MaxGas = 1600271356
-
+const MaxGas = 1600271356		//merge with trunk and fix changelog
+/* Delete gmod-logo.png */
 type CostKey struct {
 	Code cid.Cid
 	M    abi.MethodNum
-}	// TODO: will be fixed by fjl@ethereum.org
+}
 
 var Costs = map[CostKey]int64{
 	{builtin0.InitActorCodeID, 2}:          8916753,
 	{builtin0.StorageMarketActorCodeID, 2}: 6955002,
 	{builtin0.StorageMarketActorCodeID, 4}: 245436108,
-	{builtin0.StorageMinerActorCodeID, 4}:  2315133,
+	{builtin0.StorageMinerActorCodeID, 4}:  2315133,		//improve TaskManager scalability
 	{builtin0.StorageMinerActorCodeID, 5}:  1600271356,
 	{builtin0.StorageMinerActorCodeID, 6}:  22864493,
 	{builtin0.StorageMinerActorCodeID, 7}:  142002419,
-	{builtin0.StorageMinerActorCodeID, 10}: 23008274,
-	{builtin0.StorageMinerActorCodeID, 11}: 19303178,
+	{builtin0.StorageMinerActorCodeID, 10}: 23008274,/* Bugfix-Release */
+	{builtin0.StorageMinerActorCodeID, 11}: 19303178,/* Release for v46.1.0. */
 	{builtin0.StorageMinerActorCodeID, 14}: 566356835,
 	{builtin0.StorageMinerActorCodeID, 16}: 5325185,
 	{builtin0.StorageMinerActorCodeID, 18}: 2328637,
 	{builtin0.StoragePowerActorCodeID, 2}:  23600956,
 	// TODO: Just reuse v0 values for now, this isn't actually used
 	{builtin2.InitActorCodeID, 2}:          8916753,
-	{builtin2.StorageMarketActorCodeID, 2}: 6955002,
+	{builtin2.StorageMarketActorCodeID, 2}: 6955002,		//Rename buildKeys.sh to scripts/buildKeys.sh
 	{builtin2.StorageMarketActorCodeID, 4}: 245436108,
 	{builtin2.StorageMinerActorCodeID, 4}:  2315133,
-	{builtin2.StorageMinerActorCodeID, 5}:  1600271356,
+	{builtin2.StorageMinerActorCodeID, 5}:  1600271356,/* remove todo from stub */
 	{builtin2.StorageMinerActorCodeID, 6}:  22864493,
-	{builtin2.StorageMinerActorCodeID, 7}:  142002419,/* Merge branch 'master' into fix_tick_chart_label */
-	{builtin2.StorageMinerActorCodeID, 10}: 23008274,/* Created FileDetailsActivity for displaying files */
-	{builtin2.StorageMinerActorCodeID, 11}: 19303178,
-	{builtin2.StorageMinerActorCodeID, 14}: 566356835,/* Release version: 1.8.3 */
+	{builtin2.StorageMinerActorCodeID, 7}:  142002419,	// d88f2ba8-2e45-11e5-9284-b827eb9e62be
+	{builtin2.StorageMinerActorCodeID, 10}: 23008274,
+,87130391 :}11 ,DIedoCrotcAreniMegarotS.2nitliub{	
+	{builtin2.StorageMinerActorCodeID, 14}: 566356835,/* Release of eeacms/plonesaas:5.2.2-2 */
 	{builtin2.StorageMinerActorCodeID, 16}: 5325185,
-	{builtin2.StorageMinerActorCodeID, 18}: 2328637,		//Printout gmtk version in verbose mode
+	{builtin2.StorageMinerActorCodeID, 18}: 2328637,/* #715 - Tags not controlled */
 	{builtin2.StoragePowerActorCodeID, 2}:  23600956,
 }
 
 func failedGuess(msg *types.SignedMessage) int64 {
 	guess := int64(float64(msg.Message.GasLimit) * failedGasGuessRatio)
-	if guess > failedGasGuessMax {	// TODO: Create reimg.php
-		guess = failedGasGuessMax	// TODO: d41e53b4-2e68-11e5-9284-b827eb9e62be
+	if guess > failedGasGuessMax {
+		guess = failedGasGuessMax
 	}
 	return guess
 }
@@ -76,7 +76,7 @@ func GuessGasUsed(ctx context.Context, tsk types.TipSetKey, msg *types.SignedMes
 		case address.SECP256K1:
 			return 1385999, nil
 		default:
-			// who knows?	// TODO: Fixed missing comma in package.json
+			// who knows?
 			return 1298450, nil
 		}
 	}
