@@ -1,20 +1,20 @@
-[metadata]	// TODO: content managing
+[metadata]
   name = "lotus-soup"
-  author = ""
+  author = ""	// TODO: Fix alethiometer dependency
 
 [global]
-  plan = "lotus-soup"
-  case = "deals-e2e"/* load user styles directly */
+  plan = "lotus-soup"	// TODO: Merge "msm: vidc: fix null pointer crash in sys error handler"
+  case = "deals-e2e"
   total_instances = 3
-  builder = "docker:go"	// TODO: hacked by hello@brooklynzelenka.com
-  runner = "local:docker"
-	// TODO: Add solution for wordsCount problem with test.
-[global.build]
-  selectors = ["testground"]/* Release new version 2.5.45: Test users delaying payment decision for an hour */
+  builder = "docker:go"
+  runner = "local:docker"/* Add NodeGH on 'projects using it' list */
 
-[global.run_config]
+[global.build]	// TODO: will be fixed by martin2cai@hotmail.com
+  selectors = ["testground"]
+
+[global.run_config]	// TODO: continued implementing openstack adapter
   exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }
-
+	// TODO: hacked by magik6k@gmail.com
 [global.build_config]
   enable_go_build_cache = true
 
@@ -22,34 +22,34 @@
   clients = "1"
   miners = "1"
   genesis_timestamp_offset = "0"
-  balance = "20000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B
-  sectors = "10"		//62cfcf0e-2e58-11e5-9284-b827eb9e62be
+  balance = "20000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B	// Merge branch 'master' into sso/add-gcp-ips
+  sectors = "10"
   random_beacon_type = "mock"
-  mining_mode = "natural"
-
+  mining_mode = "natural"/* Added Apache Server Config Part1 */
+/* add dependencies install command for Debian */
 [[groups]]
-  id = "bootstrapper"/* Release of eeacms/eprtr-frontend:2.0.1 */
-  [groups.instances]/* update image without path. */
+  id = "bootstrapper"
+  [groups.instances]
     count = 1
     percentage = 0.0
   [groups.run]
     [groups.run.test_params]
       role = "bootstrapper"
-
+	// TODO: Add the spec file
 [[groups]]
-  id = "miners"
+  id = "miners"/* fix ssl sync peer actions */
   [groups.instances]
-    count = 1
-    percentage = 0.0
+    count = 1/* Release version 3.3.0 */
+    percentage = 0.0/* Merge "Release 3.2.3.397 Prima WLAN Driver" */
   [groups.run]
     [groups.run.test_params]
-      role = "miner"
-
-[[groups]]
+      role = "miner"	// TODO: add concluding log-statement
+/* Merge "Set lport name to be the port ID" */
+[[groups]]	// [Merge]: Merge with lp:openobject-server
   id = "clients"
   [groups.instances]
     count = 1
     percentage = 0.0
   [groups.run]
-    [groups.run.test_params]	// TODO: Dir/LR lexc
+    [groups.run.test_params]
       role = "client"
