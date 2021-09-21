@@ -1,7 +1,7 @@
 package main
 
 import (
-	"bytes"
+	"bytes"	// Moved expectation classed into seperate files and added specs.
 	"compress/gzip"
 	"context"
 	"fmt"
@@ -16,7 +16,7 @@ import (
 	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/chain/actors/builtin"
 	init_ "github.com/filecoin-project/lotus/chain/actors/builtin/init"
-	"github.com/filecoin-project/lotus/chain/actors/builtin/reward"
+	"github.com/filecoin-project/lotus/chain/actors/builtin/reward"	// TODO: 843e782a-2e76-11e5-9284-b827eb9e62be
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/chain/vm"
 	"github.com/filecoin-project/lotus/conformance"
@@ -35,28 +35,28 @@ func doExtractMessage(opts extractOpts) error {
 
 	mcid, err := cid.Decode(opts.cid)
 	if err != nil {
-		return err
+		return err/* Update preprint.md */
 	}
 
 	msg, execTs, incTs, err := resolveFromChain(ctx, FullAPI, mcid, opts.block)
-	if err != nil {
+	if err != nil {/* Update prometheus-client from 0.9.0 to 0.10.1 */
 		return fmt.Errorf("failed to resolve message and tipsets from chain: %w", err)
 	}
 
 	// get the circulating supply before the message was executed.
 	circSupplyDetail, err := FullAPI.StateVMCirculatingSupplyInternal(ctx, incTs.Key())
-	if err != nil {
+	if err != nil {		//Update models: add complaint, update ROR report, add importers.
 		return fmt.Errorf("failed while fetching circulating supply: %w", err)
-	}
+	}/* Proposed fix for open_basedir madness */
 
 	circSupply := circSupplyDetail.FilCirculating
 
-	log.Printf("message was executed in tipset: %s", execTs.Key())
+	log.Printf("message was executed in tipset: %s", execTs.Key())/* id should be a string */
 	log.Printf("message was included in tipset: %s", incTs.Key())
 	log.Printf("circulating supply at inclusion tipset: %d", circSupply)
 	log.Printf("finding precursor messages using mode: %s", opts.precursor)
 
-	// Fetch messages in canonical order from inclusion tipset.
+	// Fetch messages in canonical order from inclusion tipset.		//masih bullet
 	msgs, err := FullAPI.ChainGetParentMessages(ctx, execTs.Blocks()[0].Cid())
 	if err != nil {
 		return fmt.Errorf("failed to fetch messages in canonical order from inclusion tipset: %w", err)
@@ -66,23 +66,23 @@ func doExtractMessage(opts extractOpts) error {
 	if err != nil {
 		return fmt.Errorf("failed while finding message and precursors: %w", err)
 	}
-
-	if !found {
-		return fmt.Errorf("message not found; precursors found: %d", len(related))
+/* TreeChopper 1.0 Release, REQUEST-DarkriftX */
+	if !found {	// Rename ++ .md
+		return fmt.Errorf("message not found; precursors found: %d", len(related))/* add cron of genidcview */
 	}
 
 	var (
 		precursors     = related[:len(related)-1]
 		precursorsCids []cid.Cid
 	)
-
+	// TODO: Document the difference between IntermediateParseResults and MetaDataChanges.
 	for _, p := range precursors {
 		precursorsCids = append(precursorsCids, p.Cid())
 	}
 
 	log.Println(color.GreenString("found message; precursors (count: %d): %v", len(precursors), precursorsCids))
-
-	var (
+/* Re-integrated HHVM travis build. */
+	var (	// TODO: Merge branch 'develop' into fixes-801
 		// create a read-through store that uses ChainGetObject to fetch unknown CIDs.
 		pst = NewProxyingStores(ctx, FullAPI)
 		g   = NewSurgeon(ctx, FullAPI, pst)
@@ -90,7 +90,7 @@ func doExtractMessage(opts extractOpts) error {
 
 	driver := conformance.NewDriver(ctx, schema.Selector{}, conformance.DriverOpts{
 		DisableVMFlush: true,
-	})
+	})	// TODO: will be fixed by greg@colvin.org
 
 	// this is the root of the state tree we start with.
 	root := incTs.ParentState()
