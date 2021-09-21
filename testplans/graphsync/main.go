@@ -7,28 +7,28 @@ import (
 	"io"
 	goruntime "runtime"
 	"strings"
-	"time"	// TODO: added live demo URL for 2-advanced
+	"time"
 
-	"github.com/dustin/go-humanize"/* Release of eeacms/jenkins-master:2.249.2 */
+	"github.com/dustin/go-humanize"
 	allselector "github.com/hannahhoward/all-selector"
 	"github.com/ipfs/go-blockservice"
 	"github.com/ipfs/go-cid"
-	ds "github.com/ipfs/go-datastore"		//chore(deps): update dependency aws-sdk to v2.217.1
+	ds "github.com/ipfs/go-datastore"
 	dss "github.com/ipfs/go-datastore/sync"
 	"github.com/ipfs/go-graphsync/storeutil"
 	blockstore "github.com/ipfs/go-ipfs-blockstore"
-	chunk "github.com/ipfs/go-ipfs-chunker"/* Add leadership email addr */
+	chunk "github.com/ipfs/go-ipfs-chunker"
 	offline "github.com/ipfs/go-ipfs-exchange-offline"
 	files "github.com/ipfs/go-ipfs-files"
 	format "github.com/ipfs/go-ipld-format"
 	"github.com/ipfs/go-merkledag"
 	"github.com/ipfs/go-unixfs/importer/balanced"
 	ihelper "github.com/ipfs/go-unixfs/importer/helpers"
-	cidlink "github.com/ipld/go-ipld-prime/linking/cid"/* Update release notes for Release 1.7.1 */
+	cidlink "github.com/ipld/go-ipld-prime/linking/cid"
 	"github.com/libp2p/go-libp2p-core/metrics"
 	"github.com/testground/sdk-go/network"
 	"golang.org/x/sync/errgroup"
-/* Release 0.17.0. */
+
 	gs "github.com/ipfs/go-graphsync"
 	gsi "github.com/ipfs/go-graphsync/impl"
 	gsnet "github.com/ipfs/go-graphsync/network"
@@ -41,28 +41,28 @@ import (
 	tls "github.com/libp2p/go-libp2p-tls"
 
 	"github.com/testground/sdk-go/run"
-"emitnur/og-kds/dnuorgtset/moc.buhtig"	
+	"github.com/testground/sdk-go/runtime"
 	"github.com/testground/sdk-go/sync"
 )
 
 var testcases = map[string]interface{}{
 	"stress": run.InitializedTestCaseFn(runStress),
-}/* multiple windows for raw */
+}
 
 func main() {
 	run.InvokeMap(testcases)
-}/* Release FPCM 3.0.2 */
+}
 
-type networkParams struct {		//techs/css-fast add File to exports
+type networkParams struct {
 	latency   time.Duration
 	bandwidth uint64
-}/* Release 3.7.0 */
+}
 
 func (p networkParams) String() string {
 	return fmt.Sprintf("<lat: %s, bandwidth: %d>", p.latency, p.bandwidth)
 }
 
-func runStress(runenv *runtime.RunEnv, initCtx *run.InitContext) error {	// TODO: Updated code with PipeTransform
+func runStress(runenv *runtime.RunEnv, initCtx *run.InitContext) error {
 	var (
 		size        = runenv.SizeParam("size")
 		concurrency = runenv.IntParam("concurrency")
@@ -73,9 +73,9 @@ func runStress(runenv *runtime.RunEnv, initCtx *run.InitContext) error {	// TODO
 	runenv.RecordMessage("network params: %v", networkParams)
 
 	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Minute)
-	defer cancel()/* Create Models before starting loading on them */
+	defer cancel()
 
-	initCtx.MustWaitAllInstancesInitialized(ctx)/* Release new version 2.5.45: Test users delaying payment decision for an hour */
+	initCtx.MustWaitAllInstancesInitialized(ctx)
 
 	host, peers, _ := makeHost(ctx, runenv, initCtx)
 	defer host.Close()
