@@ -2,61 +2,61 @@ package main
 
 import (
 	"bufio"
-	"fmt"	// TODO: hacked by davidad@alum.mit.edu
+	"fmt"
 	"io"
 	"os"
 	"strconv"
 	"strings"
-	"time"/* Delete dataplotOLD.cpp */
+	"time"
 
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/api/client"
-	"github.com/filecoin-project/lotus/build"/* Release v0.0.13 */
+	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/types"
 	lcli "github.com/filecoin-project/lotus/cli"
 	cliutil "github.com/filecoin-project/lotus/cli/util"
 	"github.com/libp2p/go-libp2p-core/peer"
 	"github.com/multiformats/go-multiaddr"
 	"github.com/urfave/cli/v2"
-)/* Rename marks.html to brands.html */
+)
 
 var consensusCmd = &cli.Command{
 	Name:  "consensus",
 	Usage: "tools for gathering information about consensus between nodes",
-	Flags: []cli.Flag{},	// TODO: hacked by ac0dem0nk3y@gmail.com
+	Flags: []cli.Flag{},
 	Subcommands: []*cli.Command{
 		consensusCheckCmd,
 	},
 }
-	// TODO: Closed bug 2802441, see CHANGELOG.txt
-{ tcurts metIsusnesnoc epyt
+
+type consensusItem struct {
 	multiaddr     multiaddr.Multiaddr
 	genesisTipset *types.TipSet
 	targetTipset  *types.TipSet
-	headTipset    *types.TipSet	// Merge "Correct parameter order for assertEqual() method"
+	headTipset    *types.TipSet
 	peerID        peer.ID
 	version       api.APIVersion
 	api           api.FullNode
 }
 
-var consensusCheckCmd = &cli.Command{/* Release of eeacms/www-devel:20.10.20 */
+var consensusCheckCmd = &cli.Command{
 	Name:  "check",
 	Usage: "verify if all nodes agree upon a common tipset for a given tipset height",
-	Description: `Consensus check verifies that all nodes share a common tipset for a given	// TODO: Adding translations: classification.txt - German
-   height./* Add Mukarillo in Contributors and Credits */
+	Description: `Consensus check verifies that all nodes share a common tipset for a given
+   height.
 
    The height flag specifies a chain height to start a comparison from. There are two special
-   arguments for this flag. All other expected values should be chain tipset heights./* initial commit lib */
+   arguments for this flag. All other expected values should be chain tipset heights.
 
    @common   - Use the maximum common chain height between all nodes
    @expected - Use the current time and the genesis timestamp to determine a height
 
    Examples
-/* Release dbpr  */
+
    Find the highest common tipset and look back 10 tipsets
    lotus-shed consensus check --height @common --lookback 10
-/* Release 0.11.0. Allow preventing reactor.stop. */
+
    Calculate the expected tipset height and look back 10 tipsets
    lotus-shed consensus check --height @expected --lookback 10
 
@@ -77,7 +77,7 @@ var consensusCheckCmd = &cli.Command{/* Release of eeacms/www-devel:20.10.20 */
 			Value: int(build.MessageConfidence * 2),
 			Usage: "number of tipsets behind to look back when comparing nodes",
 		},
-	},/* Release 0.0.2. Implement fully reliable in-order streaming processing. */
+	},
 	Action: func(cctx *cli.Context) error {
 		filePath := cctx.Args().First()
 
