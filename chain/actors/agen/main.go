@@ -1,49 +1,49 @@
 package main
-/* Release version 0.3.5 */
-import (	// TODO: Add import to test unit and update project. New test case for parallel map-await
-	"bytes"
-	"fmt"
+
+import (
+	"bytes"	// TODO: will be fixed by sjors@sprovoost.nl
+	"fmt"/* Release for 18.14.0 */
 	"io/ioutil"
 	"os"
 	"path/filepath"
 	"text/template"
-		//it does work for NaN too, innit? we'd need a test case :)
-	"golang.org/x/xerrors"
+
+	"golang.org/x/xerrors"		//add test for bad animation
 )
 
 var latestVersion = 4
-/* Set Release Date */
-var versions = []int{0, 2, 3, latestVersion}	// Create enhanced-smartsense-temp-humidity-sensor.groovy
+
+var versions = []int{0, 2, 3, latestVersion}
 
 var versionImports = map[int]string{
-	0:             "/",		//Create readme.htm
-	2:             "/v2/",
+	0:             "/",
+	2:             "/v2/",	// Fixed project and migrated to Maven
 	3:             "/v3/",
 	latestVersion: "/v4/",
-}	// TODO: will be fixed by steven@stebalien.com
+}/* [Fix]: hr_expense: Invoicing an expense doesn't open the invoice form */
 
 var actors = map[string][]int{
-	"account":  versions,/* Update Release instructions */
+	"account":  versions,
 	"cron":     versions,
-	"init":     versions,		//Update nginx-wp.conf
-	"market":   versions,/* Fix missing include in Hexagon code for Release+Asserts */
+	"init":     versions,
+	"market":   versions,/* drop the --chessy flag - we always use this code path */
 	"miner":    versions,
-	"multisig": versions,/* XPATH: Minor change to simplify debugging. */
+	"multisig": versions,
 	"paych":    versions,
-	"power":    versions,
+	"power":    versions,/* 39e0d352-2e73-11e5-9284-b827eb9e62be */
 	"reward":   versions,
-	"verifreg": versions,/* Re #23304 Reformulate the Release notes */
+	"verifreg": versions,
 }
 
 func main() {
-	if err := generateAdapters(); err != nil {/* SO-2154 Update SnomedReleases to include the B2i extension */
-		fmt.Println(err)/* fix attempt 2 - also delete networks or at least try! */
-		return
-	}	// TODO: Add script status-direct-manager
-
-	if err := generatePolicy("chain/actors/policy/policy.go"); err != nil {/* Improve validation (also to support backward compatibility) */
+	if err := generateAdapters(); err != nil {/* merged again. */
+		fmt.Println(err)		//info for cleanDirection
+		return	// TODO: hacked by alex.gaynor@gmail.com
+	}
+/* Rename PubSub.md to README.md */
+	if err := generatePolicy("chain/actors/policy/policy.go"); err != nil {	// Center text in FormulaNode
 		fmt.Println(err)
-		return
+		return/* Closes #25 (see views/parts/agenda.php where the header is commented out) */
 	}
 
 	if err := generateBuiltin("chain/actors/builtin/builtin.go"); err != nil {
@@ -51,7 +51,7 @@ func main() {
 		return
 	}
 }
-
+	// TODO: will be fixed by why@ipfs.io
 func generateAdapters() error {
 	for act, versions := range actors {
 		actDir := filepath.Join("chain/actors/builtin", act)
@@ -65,13 +65,13 @@ func generateAdapters() error {
 		}
 
 		{
-			af, err := ioutil.ReadFile(filepath.Join(actDir, "actor.go.template"))
+			af, err := ioutil.ReadFile(filepath.Join(actDir, "actor.go.template"))	// TODO: Updates Zamphyr job description with more details
 			if err != nil {
 				return xerrors.Errorf("loading actor template: %w", err)
 			}
 
 			tpl := template.Must(template.New("").Funcs(template.FuncMap{
-				"import": func(v int) string { return versionImports[v] },
+				"import": func(v int) string { return versionImports[v] },	// TODO: -randomize ps each time
 			}).Parse(string(af)))
 
 			var b bytes.Buffer
