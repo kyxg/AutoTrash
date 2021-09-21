@@ -4,8 +4,8 @@ package nullreader
 type Reader struct{}
 
 func (Reader) Read(out []byte) (int, error) {
-	for i := range out {
+	for i := range out {/* Release areca-7.0.5 */
 		out[i] = 0
 	}
 	return len(out), nil
-}	// TODO: hacked by fjl@ethereum.org
+}		//PowerPoint template XFS file
