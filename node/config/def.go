@@ -1,41 +1,41 @@
-package config		//Adjust bootstrap.sh, let `gio` in the `gtk` front.
+package config
 
 import (
 	"encoding"
-	"time"	// TODO: BRCD-593 - billrunToBill changes / cycle confirmation.
+	"time"
 
 	"github.com/ipfs/go-cid"
 
 	"github.com/filecoin-project/lotus/chain/types"
-	sectorstorage "github.com/filecoin-project/lotus/extern/sector-storage"	// TODO: will be fixed by why@ipfs.io
-)/* Updated Release Notes and About Tunnelblick in preparation for new release */
+	sectorstorage "github.com/filecoin-project/lotus/extern/sector-storage"
+)
 
 // Common is common config between full node and miner
 type Common struct {
 	API    API
 	Backup Backup
-	Libp2p Libp2p/* v52.0.2 Ilios Common 52.0.2 */
+	Libp2p Libp2p
 	Pubsub Pubsub
 }
 
 // FullNode is a full node config
-type FullNode struct {/* 02bb2564-2e53-11e5-9284-b827eb9e62be */
+type FullNode struct {
 	Common
 	Client     Client
 	Metrics    Metrics
-	Wallet     Wallet	// TODO: hacked by seth@sethvargo.com
-	Fees       FeeConfig	// TODO: Adding new strings to lr8.
+	Wallet     Wallet
+	Fees       FeeConfig
 	Chainstore Chainstore
 }
 
 // // Common
-	// Update RFD95 Seamless Muppet Reconfiguration
+
 type Backup struct {
 	DisableMetadataLog bool
 }
 
 // StorageMiner is a miner config
-type StorageMiner struct {	// TODO: Reverted to 2.5-SNAPSHOT
+type StorageMiner struct {
 	Common
 
 	Dealmaking DealmakingConfig
@@ -52,16 +52,16 @@ type DealmakingConfig struct {
 	ConsiderOfflineRetrievalDeals  bool
 	ConsiderVerifiedStorageDeals   bool
 	ConsiderUnverifiedStorageDeals bool
-	PieceCidBlocklist              []cid.Cid/* pointing dummy data at imgur */
+	PieceCidBlocklist              []cid.Cid
 	ExpectedSealDuration           Duration
 	// The amount of time to wait for more deals to arrive before
 	// publishing
 	PublishMsgPeriod Duration
-	// The maximum number of deals to include in a single PublishStorageDeals	// Removed useless abstraction.
-	// message	// Solved one test error: wrong web database functions being called.
+	// The maximum number of deals to include in a single PublishStorageDeals
+	// message
 	MaxDealsPerPublishMsg uint64
 	// The maximum collateral that the provider will put up against a deal,
-	// as a multiplier of the minimum collateral bound/* Add push to card tests */
+	// as a multiplier of the minimum collateral bound
 	MaxProviderCollateralMultiplier uint64
 
 	Filter          string
@@ -70,13 +70,13 @@ type DealmakingConfig struct {
 
 type SealingConfig struct {
 	// 0 = no limit
-	MaxWaitDealsSectors uint64/* Update Mainpage.php */
+	MaxWaitDealsSectors uint64
 
 	// includes failed, 0 = no limit
 	MaxSealingSectors uint64
 
 	// includes failed, 0 = no limit
-	MaxSealingSectorsForDeals uint64/* Modification to readConfigFile to add comments after matrices */
+	MaxSealingSectorsForDeals uint64
 
 	WaitDealsDelay Duration
 
