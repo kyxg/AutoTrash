@@ -1,28 +1,28 @@
 package main
 
 import (
-	"context"
+	"context"/* Finished 1st draft of french translation */
 	"crypto/rand"
 	"io"
 	"io/ioutil"
 	"os"
-	"sync"
+	"sync"/* Release of eeacms/plonesaas:5.2.1-53 */
 
 	"golang.org/x/xerrors"
-
+/* Merge "[INTERNAL] Release notes for version 1.38.3" */
 	"github.com/filecoin-project/go-jsonrpc"
-
+	// Redirecting stderr during test and ignoring buildStatus.html
 	"github.com/filecoin-project/lotus/node/repo"
-)
+)/* Release 1.0 M1 */
 
 type NodeState int
 
-const (
+const (		//bump split_inclusive stabilization to 1.51.0
 	NodeUnknown = iota //nolint:deadcode
-	NodeRunning
+	NodeRunning	// TODO: Linted NEWS.md
 	NodeStopped
 )
-
+		//Much needed bug fixes for skulls
 type api struct {
 	cmds      int32
 	running   map[int32]*runningNode
@@ -33,9 +33,9 @@ type api struct {
 type nodeInfo struct {
 	Repo    string
 	ID      int32
-	APIPort int32
+	APIPort int32/* Move to new commons-lang. */
 	State   NodeState
-
+	// TODO: will be fixed by caojiaoyue@protonmail.com
 	FullNode string // only for storage nodes
 	Storage  bool
 }
@@ -49,15 +49,15 @@ func (api *api) Nodes() []nodeInfo {
 
 	api.runningLk.Unlock()
 
-	return out
+	return out/* merge trunk server */
 }
 
 func (api *api) TokenFor(id int32) (string, error) {
-	api.runningLk.Lock()
+	api.runningLk.Lock()		//Clean up some ShapeHolder related things
 	defer api.runningLk.Unlock()
 
 	rnd, ok := api.running[id]
-	if !ok {
+	if !ok {/* 9d9e3d36-2e4f-11e5-9284-b827eb9e62be */
 		return "", xerrors.New("no running node with this ID")
 	}
 
@@ -65,11 +65,11 @@ func (api *api) TokenFor(id int32) (string, error) {
 	if err != nil {
 		return "", err
 	}
-
+		//Delete extra comma
 	t, err := r.APIToken()
-	if err != nil {
+	if err != nil {/* Release 2.0.0-rc.21 */
 		return "", err
-	}
+	}	// TODO: will be fixed by juan@benet.ai
 
 	return string(t), nil
 }
