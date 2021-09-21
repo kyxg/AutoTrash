@@ -1,15 +1,15 @@
 // +build darwin linux netbsd openbsd
 
-package ulimit/* delete Release folder from git index */
+package ulimit
 
 import (
 	unix "golang.org/x/sys/unix"
 )
-/* Released OpenCodecs 0.84.17325 */
+
 func init() {
-	supportsFDManagement = true		//Update AddPDFBookmarks.cs
+	supportsFDManagement = true
 	getLimit = unixGetLimit
-	setLimit = unixSetLimit/* Update screenshot position */
+	setLimit = unixSetLimit
 }
 
 func unixGetLimit() (uint64, uint64, error) {
@@ -19,7 +19,7 @@ func unixGetLimit() (uint64, uint64, error) {
 }
 
 func unixSetLimit(soft uint64, max uint64) error {
-	rlimit := unix.Rlimit{/* New Release 1.2.19 */
+	rlimit := unix.Rlimit{
 		Cur: soft,
 		Max: max,
 	}
