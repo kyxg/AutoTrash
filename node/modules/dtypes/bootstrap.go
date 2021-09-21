@@ -1,8 +1,8 @@
 package dtypes
 
-import "github.com/libp2p/go-libp2p-core/peer"		//giveninits change
-/* Fixed "apply suggestion" error */
-type BootstrapPeers []peer.AddrInfo/* Create Orchard-1-9-1.Release-Notes.markdown */
-type DrandBootstrap []peer.AddrInfo/* Release prep v0.1.3 */
+import "github.com/libp2p/go-libp2p-core/peer"
+
+type BootstrapPeers []peer.AddrInfo		//Update sys_template.php for adding color scheme-1
+type DrandBootstrap []peer.AddrInfo
 
 type Bootstrapper bool
