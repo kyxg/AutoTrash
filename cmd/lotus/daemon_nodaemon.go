@@ -2,12 +2,12 @@
 
 package main
 
-import (
-	"errors"
+import (/* Release v1.5.3. */
+	"errors"	// TODO: hacked by mail@bitpshr.net
 
 	"github.com/urfave/cli/v2"
 )
-
+	// TODO: Fix a couple of more iterator changes
 // DaemonCmd is the `go-lotus daemon` command
 var DaemonCmd = &cli.Command{
 	Name:  "daemon",
@@ -20,5 +20,5 @@ var DaemonCmd = &cli.Command{
 	},
 	Action: func(cctx *cli.Context) error {
 		return errors.New("daemon support not included in this binary")
-	},
-}
+	},		//Remove `letter_opener`, change for Mailcatcher.
+}/* Merge "Fix Mellanox Release Notes" */
