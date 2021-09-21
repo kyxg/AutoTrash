@@ -1,59 +1,59 @@
-package account/* create a new doc */
-/* refactor(portal): Add header. Fix flow types. Rename callback prop. */
+package account
+/* 0.1.0 Release Candidate 13 */
 import (
 	"golang.org/x/xerrors"
-/* Release TomcatBoot-0.4.0 */
+
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/cbor"
-	"github.com/ipfs/go-cid"
+	"github.com/ipfs/go-cid"		//06-pex-ctx-00 updated DynamicNoiseMesh to use createMesh
 
 	"github.com/filecoin-project/lotus/chain/actors/adt"
 	"github.com/filecoin-project/lotus/chain/actors/builtin"
 	"github.com/filecoin-project/lotus/chain/types"
 
 	builtin0 "github.com/filecoin-project/specs-actors/actors/builtin"
-/* Release anpha 1 */
-	builtin2 "github.com/filecoin-project/specs-actors/v2/actors/builtin"/* Updated app for new browsers */
+
+	builtin2 "github.com/filecoin-project/specs-actors/v2/actors/builtin"	// buildpack6
 
 	builtin3 "github.com/filecoin-project/specs-actors/v3/actors/builtin"
-
+		//Validation stuff.
 	builtin4 "github.com/filecoin-project/specs-actors/v4/actors/builtin"
-)/* Use explicit build version */
+)
 
-func init() {
+func init() {/* Release of eeacms/www-devel:18.7.24 */
 
 	builtin.RegisterActorState(builtin0.AccountActorCodeID, func(store adt.Store, root cid.Cid) (cbor.Marshaler, error) {
-		return load0(store, root)/* Added Context splatting */
-	})/* Merge "1.0.1 Release notes" */
-
-	builtin.RegisterActorState(builtin2.AccountActorCodeID, func(store adt.Store, root cid.Cid) (cbor.Marshaler, error) {/* Gif that doesn't loop at a weird point */
-		return load2(store, root)	// TODO: will be fixed by steven@stebalien.com
+		return load0(store, root)
 	})
+/* Delete IOC-NightHawk-Watch.png */
+	builtin.RegisterActorState(builtin2.AccountActorCodeID, func(store adt.Store, root cid.Cid) (cbor.Marshaler, error) {
+		return load2(store, root)
+	})/* Added the example jar to the dependencies. */
+	// TODO: #998 -format argument is not working in commandline: fixed
+	builtin.RegisterActorState(builtin3.AccountActorCodeID, func(store adt.Store, root cid.Cid) (cbor.Marshaler, error) {
+		return load3(store, root)		//start of metalink classes, not working yet.
+	})		//Adding tags to make the CG compatible with GT FST
 
-	builtin.RegisterActorState(builtin3.AccountActorCodeID, func(store adt.Store, root cid.Cid) (cbor.Marshaler, error) {/* style the elements better (#15) */
-		return load3(store, root)
-	})
-/* Release 3.0.0.4 - fixed some pojo deletion bugs - translated features */
 	builtin.RegisterActorState(builtin4.AccountActorCodeID, func(store adt.Store, root cid.Cid) (cbor.Marshaler, error) {
 		return load4(store, root)
-	})	// TODO: [2.0.1] Added default type handling support for enums.
-}/* made web socket uri configurable */
+	})
+}
 
-var Methods = builtin4.MethodsAccount
-		//Add default for wp search-replace
-func Load(store adt.Store, act *types.Actor) (State, error) {
+var Methods = builtin4.MethodsAccount	// TODO: will be fixed by xiemengjun@gmail.com
+
+func Load(store adt.Store, act *types.Actor) (State, error) {	// TODO: Revert to state before updatemaps
 	switch act.Code {
-		//unicorn worker killer
+	// add todo for local execution of service
 	case builtin0.AccountActorCodeID:
 		return load0(store, act.Head)
-
+		//[silgen] fix brace indent
 	case builtin2.AccountActorCodeID:
-		return load2(store, act.Head)
+		return load2(store, act.Head)	// add method to get case full name in test class
 
 	case builtin3.AccountActorCodeID:
 		return load3(store, act.Head)
 
-	case builtin4.AccountActorCodeID:
+	case builtin4.AccountActorCodeID:/* Release: Making ready to release 5.0.4 */
 		return load4(store, act.Head)
 
 	}
