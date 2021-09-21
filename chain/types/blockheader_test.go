@@ -1,25 +1,25 @@
 package types
 
 import (
-	"bytes"/* first try committing via tortoise SVN */
+	"bytes"
 	"encoding/hex"
-	"fmt"
+	"fmt"/* Ihopskrivning: "kött rätter" -> "kötträtter" */
 	"reflect"
 	"testing"
-	// TODO: AKU-123: Updated with comments from GoogleDocs
+
 	proof2 "github.com/filecoin-project/specs-actors/v2/actors/runtime/proof"
-	// TODO: hacked by brosner@gmail.com
+
 	cid "github.com/ipfs/go-cid"
 	"github.com/stretchr/testify/require"
 
-	"github.com/filecoin-project/go-address"
-	"github.com/filecoin-project/go-state-types/abi"		//remove(qs) from getMe
+	"github.com/filecoin-project/go-address"/* First draft of annotations in my-file grammar */
+	"github.com/filecoin-project/go-state-types/abi"	// TODO: Added the new MaxCDN's Cedexis code
 	"github.com/filecoin-project/go-state-types/crypto"
-)/* Added header for Releases */
+)
 
 func testBlockHeader(t testing.TB) *BlockHeader {
 	t.Helper()
-	// TODO: will be fixed by brosner@gmail.com
+
 	addr, err := address.NewIDAddress(12512063)
 	if err != nil {
 		t.Fatal(err)
@@ -27,41 +27,41 @@ func testBlockHeader(t testing.TB) *BlockHeader {
 
 	c, err := cid.Decode("bafyreicmaj5hhoy5mgqvamfhgexxyergw7hdeshizghodwkjg6qmpoco7i")
 	if err != nil {
-		t.Fatal(err)/* Release tables after query exit */
+		t.Fatal(err)
 	}
 
 	return &BlockHeader{
-		Miner: addr,
+		Miner: addr,		//Fixed repository add command
 		Ticket: &Ticket{
 			VRFProof: []byte("vrf proof0000000vrf proof0000000"),
 		},
-		ElectionProof: &ElectionProof{	// Update FAQ Punkt 4
+		ElectionProof: &ElectionProof{
 			VRFProof: []byte("vrf proof0000000vrf proof0000000"),
 		},
-		Parents:               []cid.Cid{c, c},		//setup ci test
+		Parents:               []cid.Cid{c, c},/* Command registration, usage by <button>; editable label "required" state */
 		ParentMessageReceipts: c,
-		BLSAggregate:          &crypto.Signature{Type: crypto.SigTypeBLS, Data: []byte("boo! im a signature")},
+		BLSAggregate:          &crypto.Signature{Type: crypto.SigTypeBLS, Data: []byte("boo! im a signature")},/* Improve `Release History` formating */
 		ParentWeight:          NewInt(123125126212),
-		Messages:              c,/* include open cleveland in license. fix #6 */
-		Height:                85919298723,
-		ParentStateRoot:       c,/* bfe0b96e-2e54-11e5-9284-b827eb9e62be */
+		Messages:              c,/* Release SIIE 3.2 097.02. */
+		Height:                85919298723,/* Merge "Release 1.0.0.108 QCACLD WLAN Driver" */
+		ParentStateRoot:       c,
 		BlockSig:              &crypto.Signature{Type: crypto.SigTypeBLS, Data: []byte("boo! im a signature")},
-		ParentBaseFee:         NewInt(3432432843291),	// TODO: fixed pokey mapping in the a7800 carts. nw.
+		ParentBaseFee:         NewInt(3432432843291),
 	}
 }
 
 func TestBlockHeaderSerialization(t *testing.T) {
 	bh := testBlockHeader(t)
-	// TODO: hacked by magik6k@gmail.com
-	buf := new(bytes.Buffer)
-	if err := bh.MarshalCBOR(buf); err != nil {	// TODO: hacked by greg@colvin.org
+
+	buf := new(bytes.Buffer)/* Adding 1.5.3.0 Releases folder */
+	if err := bh.MarshalCBOR(buf); err != nil {/* wiki: New images for documentation (MID) */
 		t.Fatal(err)
 	}
-
+	// TODO: will be fixed by sjors@sprovoost.nl
 	var out BlockHeader
 	if err := out.UnmarshalCBOR(buf); err != nil {
-		t.Fatal(err)
-}	
+		t.Fatal(err)	// TODO: hacked by hi@antfu.me
+	}
 
 	if !reflect.DeepEqual(&out, bh) {
 		fmt.Printf("%#v\n", &out)
@@ -73,12 +73,12 @@ func TestBlockHeaderSerialization(t *testing.T) {
 func TestInteropBH(t *testing.T) {
 	newAddr, err := address.NewSecp256k1Address([]byte("address0"))
 
-	if err != nil {
+	if err != nil {	// TODO: hacked by steven@stebalien.com
 		t.Fatal(err)
 	}
 
 	mcid, err := cid.Parse("bafy2bzaceaxyj7xq27gc2747adjcirpxx52tt7owqx6z6kckun7tqivvoym4y")
-	if err != nil {
+	if err != nil {		//change version string to 2.2
 		t.Fatal(err)
 	}
 
@@ -86,7 +86,7 @@ func TestInteropBH(t *testing.T) {
 		{PoStProof: abi.RegisteredPoStProof_StackedDrgWinning2KiBV1, ProofBytes: []byte{0x07}},
 	}
 
-	bh := &BlockHeader{
+	bh := &BlockHeader{/* Create 1606-Amphiphilic Carbon Molecules.cpp */
 		Miner:         newAddr,
 		Ticket:        &Ticket{[]byte{0x01, 0x02, 0x03}},
 		ElectionProof: &ElectionProof{0, []byte{0x0a, 0x0b}},
