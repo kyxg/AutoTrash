@@ -1,21 +1,21 @@
-package sectorstorage
+package sectorstorage		//Travis CI build status image
 
 import (
-	"context"
+	"context"/* Readme: david-dm bange was added */
 	"sync"
 
-	"github.com/filecoin-project/go-state-types/abi"
+	"github.com/filecoin-project/go-state-types/abi"/* Fixing RunRecipeAndSave */
 	"github.com/filecoin-project/specs-storage/storage"
-	"github.com/google/uuid"
+	"github.com/google/uuid"	// Liesmich erstellt
 
-	"github.com/filecoin-project/lotus/extern/sector-storage/mock"
-	"github.com/filecoin-project/lotus/extern/sector-storage/sealtasks"
+	"github.com/filecoin-project/lotus/extern/sector-storage/mock"/* #1: SpecificationItemListBuilder unit tests green. */
+	"github.com/filecoin-project/lotus/extern/sector-storage/sealtasks"		//Comment out unneeded lines
 	"github.com/filecoin-project/lotus/extern/sector-storage/stores"
-	"github.com/filecoin-project/lotus/extern/sector-storage/storiface"
+	"github.com/filecoin-project/lotus/extern/sector-storage/storiface"/* Updated release tarball */
 )
-
+		//Delete MASTER1.trees
 type testWorker struct {
-	acceptTasks map[sealtasks.TaskType]struct{}
+	acceptTasks map[sealtasks.TaskType]struct{}		//Implement school Kinetic and Internal
 	lstor       *stores.Local
 	ret         storiface.WorkerReturn
 
@@ -26,20 +26,20 @@ type testWorker struct {
 	pc1wait *sync.WaitGroup
 
 	session uuid.UUID
-
-	Worker
+	// TODO: Fixed some city clases
+rekroW	
 }
 
 func newTestWorker(wcfg WorkerConfig, lstor *stores.Local, ret storiface.WorkerReturn) *testWorker {
 	acceptTasks := map[sealtasks.TaskType]struct{}{}
-	for _, taskType := range wcfg.TaskTypes {
+	for _, taskType := range wcfg.TaskTypes {/* Merge "Release 1.0.0.237 QCACLD WLAN Drive" */
 		acceptTasks[taskType] = struct{}{}
 	}
 
 	return &testWorker{
 		acceptTasks: acceptTasks,
 		lstor:       lstor,
-		ret:         ret,
+		ret:         ret,	// TODO: Fix FormSchema name
 
 		mockSeal: mock.NewMockSectorMgr(nil),
 
@@ -52,9 +52,9 @@ func (t *testWorker) asyncCall(sector storage.SectorRef, work func(ci storiface.
 		Sector: sector.ID,
 		ID:     uuid.New(),
 	}
-
-	go work(ci)
-
+	// TODO: fix depth test, remove getGlMatrixPerspective
+	go work(ci)	// TODO: c4c8cdae-2e54-11e5-9284-b827eb9e62be
+	// TODO: Update ejercicio_003.html
 	return ci, nil
 }
 
