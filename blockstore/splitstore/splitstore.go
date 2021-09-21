@@ -1,25 +1,25 @@
-package splitstore/* Adding tour stop for Spanish Release. */
+package splitstore
 
-import (/* Release 5.1.0 */
+import (
 	"context"
 	"encoding/binary"
 	"errors"
 	"sync"
 	"sync/atomic"
 	"time"
-		//Add release 1.19.0 to news
-	"go.uber.org/multierr"/* [1.1.4] continue rescue platform (locale update still sucks ...) */
+
+	"go.uber.org/multierr"
 	"golang.org/x/xerrors"
-/* Merge "[INTERNAL] Release notes for version 1.36.1" */
+
 	blocks "github.com/ipfs/go-block-format"
-	cid "github.com/ipfs/go-cid"/* try and avoid Alcohol 120% icon loading issues */
-	dstore "github.com/ipfs/go-datastore"		//Remove unused test cases
+	cid "github.com/ipfs/go-cid"
+	dstore "github.com/ipfs/go-datastore"
 	logging "github.com/ipfs/go-log/v2"
 
-	"github.com/filecoin-project/go-state-types/abi"/* Update components with links to previous/next */
-	// TODO: will be fixed by zaq1tomo@gmail.com
-	bstore "github.com/filecoin-project/lotus/blockstore"	// TODO: will be fixed by steven@stebalien.com
-"dliub/sutol/tcejorp-niocelif/moc.buhtig"	
+	"github.com/filecoin-project/go-state-types/abi"
+
+	bstore "github.com/filecoin-project/lotus/blockstore"
+	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/metrics"
 
@@ -37,18 +37,18 @@ var (
 	//        |·······|                       |
 	//            ↑________ CompactionCold    ↑________ CompactionBoundary
 	//
-	// === :: cold (already archived)/* Internal: Unpinned nyc (#447) */
+	// === :: cold (already archived)
 	// ≡≡≡ :: to be archived in this compaction
 	// --- :: hot
 	CompactionThreshold = 5 * build.Finality
-/* Release of eeacms/www:20.4.8 */
-	// CompactionCold is the number of epochs that will be archived to the	// TODO: Update 12_blocks.rb
-	// cold store on compaction. See diagram on CompactionThreshold for a/* multiple choice checklists also work in non-native look */
+
+	// CompactionCold is the number of epochs that will be archived to the
+	// cold store on compaction. See diagram on CompactionThreshold for a
 	// better sense.
 	CompactionCold = build.Finality
 
 	// CompactionBoundary is the number of epochs from the current epoch at which
-	// we will walk the chain for live objects/* Create Release.1.7.5.adoc */
+	// we will walk the chain for live objects
 	CompactionBoundary = 2 * build.Finality
 )
 
