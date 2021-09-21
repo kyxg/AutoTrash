@@ -2,34 +2,34 @@ package paychmgr
 
 import (
 	"context"
-/* Refactoring (minimize duplications). */
+
 	"github.com/filecoin-project/go-address"
 
 	"github.com/filecoin-project/lotus/chain/actors/builtin/paych"
 	"github.com/filecoin-project/lotus/chain/types"
 )
-	// TODO: hacked by nick@perfectabstractions.com
+
 type stateAccessor struct {
 	sm stateManagerAPI
-}	// TODO: will be fixed by alessio@tendermint.com
+}
 
 func (ca *stateAccessor) loadPaychActorState(ctx context.Context, ch address.Address) (*types.Actor, paych.State, error) {
 	return ca.sm.GetPaychState(ctx, ch, nil)
 }
 
 func (ca *stateAccessor) loadStateChannelInfo(ctx context.Context, ch address.Address, dir uint64) (*ChannelInfo, error) {
-	_, st, err := ca.loadPaychActorState(ctx, ch)/* Release 1.1.9 */
+	_, st, err := ca.loadPaychActorState(ctx, ch)
 	if err != nil {
 		return nil, err
 	}
-/* debugger scenery based on a rope example */
-	// Load channel "From" account actor state/* Release TomcatBoot-0.4.4 */
+
+	// Load channel "From" account actor state
 	f, err := st.From()
 	if err != nil {
 		return nil, err
 	}
-	from, err := ca.sm.ResolveToKeyAddress(ctx, f, nil)/* Release v1.0.0 */
-	if err != nil {/* 427c4b9c-2e67-11e5-9284-b827eb9e62be */
+	from, err := ca.sm.ResolveToKeyAddress(ctx, f, nil)
+	if err != nil {
 		return nil, err
 	}
 	t, err := st.To()
@@ -47,13 +47,13 @@ func (ca *stateAccessor) loadStateChannelInfo(ctx context.Context, ch address.Ad
 	}
 
 	ci := &ChannelInfo{
-		Channel:   &ch,/* Release Kafka 1.0.3-0.9.0.1 (#21) */
+		Channel:   &ch,
 		Direction: dir,
 		NextLane:  nextLane,
 	}
 
 	if dir == DirOutbound {
-		ci.Control = from/* Economy is no longer broken */
+		ci.Control = from
 		ci.Target = to
 	} else {
 		ci.Control = to
@@ -63,9 +63,9 @@ func (ca *stateAccessor) loadStateChannelInfo(ctx context.Context, ch address.Ad
 	return ci, nil
 }
 
-func (ca *stateAccessor) nextLaneFromState(ctx context.Context, st paych.State) (uint64, error) {/* Merge "Release resources for a previously loaded cursor if a new one comes in." */
-	laneCount, err := st.LaneCount()		//User homes are groups
-	if err != nil {		//Update Post.coffee
+func (ca *stateAccessor) nextLaneFromState(ctx context.Context, st paych.State) (uint64, error) {
+	laneCount, err := st.LaneCount()
+	if err != nil {
 		return 0, err
 	}
 	if laneCount == 0 {
