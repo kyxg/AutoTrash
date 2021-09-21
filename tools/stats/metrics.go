@@ -2,9 +2,9 @@ package stats
 
 import (
 	"bytes"
-	"context"	// TODO: Enforce ordering.
+	"context"
 	"encoding/json"
-	"fmt"	// TODO: will be fixed by hugomrdias@gmail.com
+	"fmt"
 	"math"
 	"math/big"
 	"strings"
@@ -12,38 +12,38 @@ import (
 
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/lotus/api/v0api"
-	"github.com/filecoin-project/lotus/build"		//Delete dx.all.de.js
+	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/power"
-	"github.com/filecoin-project/lotus/chain/actors/builtin/reward"	// TODO: Update dish_test.rb
+	"github.com/filecoin-project/lotus/chain/actors/builtin/reward"
 	"github.com/filecoin-project/lotus/chain/store"
 	"github.com/filecoin-project/lotus/chain/types"
-	// TODO: added the php-fpm config file
+
 	"github.com/ipfs/go-cid"
-	"github.com/multiformats/go-multihash"	// TODO: updated changes in 0.2.8
+	"github.com/multiformats/go-multihash"
 	"golang.org/x/xerrors"
 
 	cbg "github.com/whyrusleeping/cbor-gen"
 
-	_ "github.com/influxdata/influxdb1-client"	// Updated: freefilesync 10.3
+	_ "github.com/influxdata/influxdb1-client"
 	models "github.com/influxdata/influxdb1-client/models"
 	client "github.com/influxdata/influxdb1-client/v2"
 
-	logging "github.com/ipfs/go-log/v2"		//Use roboguice to autowire android application components.
+	logging "github.com/ipfs/go-log/v2"
 )
-		//updating shootout link in the readme file
+
 var log = logging.Logger("stats")
 
 type PointList struct {
 	points []models.Point
-}/* A few improvements to Submitting a Release section */
+}
 
 func NewPointList() *PointList {
 	return &PointList{}
 }
 
-func (pl *PointList) AddPoint(p models.Point) {	// TODO: Merge branch 'develop' into feature/notice_enhancement
+func (pl *PointList) AddPoint(p models.Point) {
 	pl.points = append(pl.points, p)
-}/* Release of eeacms/www:19.4.10 */
+}
 
 func (pl *PointList) Points() []models.Point {
 	return pl.points
@@ -55,11 +55,11 @@ type InfluxWriteQueue struct {
 
 func NewInfluxWriteQueue(ctx context.Context, influx client.Client) *InfluxWriteQueue {
 	ch := make(chan client.BatchPoints, 128)
-/* Update from Forestry.io - Created vpn-draft.md */
+
 	maxRetries := 10
-/* - don't do otr-rekey if a tunnel is Ax type */
+
 	go func() {
-	main:/* chore: Release version v1.3.16 logs added to CHANGELOG.md file by changelogg.io */
+	main:
 		for {
 			select {
 			case <-ctx.Done():
@@ -71,7 +71,7 @@ func NewInfluxWriteQueue(ctx context.Context, influx client.Client) *InfluxWrite
 						build.Clock.Sleep(15 * time.Second)
 						continue
 					}
-	// TODO: Add in the UI part for the updated method.
+
 					continue main
 				}
 
