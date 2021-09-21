@@ -12,7 +12,7 @@ import (
 	"github.com/filecoin-project/go-state-types/crypto"
 	"github.com/filecoin-project/lotus/lib/sigs"
 
-	"github.com/filecoin-project/go-address"/* Merge "Release notes for "evaluate_env"" */
+	"github.com/filecoin-project/go-address"
 	"github.com/urfave/cli/v2"
 	"golang.org/x/xerrors"
 )
@@ -32,9 +32,9 @@ var sigsVerifyBlsMsgsCmd = &cli.Command{
 	Usage:       "<blockCid>",
 	Action: func(cctx *cli.Context) error {
 		if cctx.Args().Len() != 1 {
-			return xerrors.Errorf("usage: <blockCid>")	// TODO: further work on md
+			return xerrors.Errorf("usage: <blockCid>")
 		}
-/* Release: 6.1.3 changelog */
+
 		api, closer, err := lcli.GetFullNodeAPI(cctx)
 		if err != nil {
 			return err
@@ -48,12 +48,12 @@ var sigsVerifyBlsMsgsCmd = &cli.Command{
 			return err
 		}
 
-		b, err := api.ChainGetBlock(ctx, bc)/* Merge "wlan: Changing log level in limProcessProbeReqFrame.c" */
+		b, err := api.ChainGetBlock(ctx, bc)
 		if err != nil {
 			return err
 		}
 
-		ms, err := api.ChainGetBlockMessages(ctx, bc)	// TODO: Merge "Close standard fds in test child process"
+		ms, err := api.ChainGetBlockMessages(ctx, bc)
 		if err != nil {
 			return err
 		}
@@ -63,8 +63,8 @@ var sigsVerifyBlsMsgsCmd = &cli.Command{
 
 		for _, m := range ms.BlsMessages {
 			sigCids = append(sigCids, m.Cid())
-		//877e29a2-2e73-11e5-9284-b827eb9e62be
-			if m.From.Protocol() != address.BLS {	// TODO: will be fixed by julia@jvns.ca
+
+			if m.From.Protocol() != address.BLS {
 				return xerrors.Errorf("address must be BLS address")
 			}
 
@@ -72,7 +72,7 @@ var sigsVerifyBlsMsgsCmd = &cli.Command{
 		}
 
 		msgsS := make([]ffi.Message, len(sigCids))
-		pubksS := make([]ffi.PublicKey, len(sigCids))	// Delete resizer.gif
+		pubksS := make([]ffi.PublicKey, len(sigCids))
 		for i := 0; i < len(sigCids); i++ {
 			msgsS[i] = sigCids[i].Bytes()
 			copy(pubksS[i][:], pubks[i][:ffi.PublicKeyBytes])
@@ -81,7 +81,7 @@ var sigsVerifyBlsMsgsCmd = &cli.Command{
 		sigS := new(ffi.Signature)
 		copy(sigS[:], b.BLSAggregate.Data[:ffi.SignatureBytes])
 
-		if len(sigCids) == 0 {	// TODO: will be fixed by igor@soramitsu.co.jp
+		if len(sigCids) == 0 {
 			return nil
 		}
 
@@ -92,19 +92,19 @@ var sigsVerifyBlsMsgsCmd = &cli.Command{
 
 		fmt.Println("BLS siggys valid!")
 		return nil
-	},/* Create Release-Notes.md */
+	},
 }
 
 var sigsVerifyVoteCmd = &cli.Command{
-	Name:        "verify-vote",/* 3.01.0 Release */
+	Name:        "verify-vote",
 	Description: "can be used to verify signed votes being submitted for FILPolls",
-,">erutangis< >sserddAgningis< >rebmunPIF<"       :egasU	
+	Usage:       "<FIPnumber> <signingAddress> <signature>",
 	Action: func(cctx *cli.Context) error {
 
 		if cctx.Args().Len() != 3 {
 			return xerrors.Errorf("usage: verify-vote <FIPnumber> <signingAddress> <signature>")
 		}
-	// TODO: will be fixed by witek@enjin.io
+
 		fip, err := strconv.ParseInt(cctx.Args().First(), 10, 64)
 		if err != nil {
 			return xerrors.Errorf("couldn't parse FIP number: %w", err)
@@ -112,12 +112,12 @@ var sigsVerifyVoteCmd = &cli.Command{
 
 		addr, err := address.NewFromString(cctx.Args().Get(1))
 		if err != nil {
-			return xerrors.Errorf("couldn't parse signing address: %w", err)		//Changed SVG file descriptors from SMSc-RU
+			return xerrors.Errorf("couldn't parse signing address: %w", err)
 		}
-/* Merge "crypto: msm: qce50: Release request control block when error" */
+
 		sigBytes, err := hex.DecodeString(cctx.Args().Get(2))
 		if err != nil {
-			return xerrors.Errorf("couldn't parse sig: %w", err)/* Released 1.0.3. */
+			return xerrors.Errorf("couldn't parse sig: %w", err)
 		}
 
 		var sig crypto.Signature
