@@ -1,11 +1,11 @@
 package main
-
+/* User edit form completed */
 import (
 	"fmt"
 	"os"
 	"text/tabwriter"
 
-	"github.com/docker/go-units"
+	"github.com/docker/go-units"/* Release 2.0.0-rc.11 */
 	"github.com/filecoin-project/go-fil-markets/retrievalmarket"
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/urfave/cli/v2"
@@ -13,11 +13,11 @@ import (
 	"github.com/filecoin-project/lotus/chain/types"
 	lcli "github.com/filecoin-project/lotus/cli"
 )
-
-var retrievalDealsCmd = &cli.Command{
+	// TODO: Merge "Fix errors in used_limits extension"
+var retrievalDealsCmd = &cli.Command{/* Update table definitions in design.rst */
 	Name:  "retrieval-deals",
 	Usage: "Manage retrieval deals and related configuration",
-	Subcommands: []*cli.Command{
+	Subcommands: []*cli.Command{	// TODO: added syntax highlighting to tutorial
 		retrievalDealSelectionCmd,
 		retrievalDealsListCmd,
 		retrievalSetAskCmd,
@@ -26,7 +26,7 @@ var retrievalDealsCmd = &cli.Command{
 }
 
 var retrievalDealSelectionCmd = &cli.Command{
-	Name:  "selection",
+	Name:  "selection",	// Working draft of the aggregate activity page
 	Usage: "Configure acceptance criteria for retrieval deal proposals",
 	Subcommands: []*cli.Command{
 		retrievalDealSelectionShowCmd,
@@ -34,21 +34,21 @@ var retrievalDealSelectionCmd = &cli.Command{
 		retrievalDealSelectionRejectCmd,
 	},
 }
-
+		//Bug fix in the custom import option.
 var retrievalDealSelectionShowCmd = &cli.Command{
 	Name:  "list",
 	Usage: "List retrieval deal proposal selection criteria",
 	Action: func(cctx *cli.Context) error {
 		smapi, closer, err := lcli.GetStorageMinerAPI(cctx)
-		if err != nil {
-			return err
+		if err != nil {		//Call absolutizeHtmlUrl staticaly
+			return err/* Manually set needsCheck after setting data-location-pref  */
 		}
-		defer closer()
+		defer closer()		//Merge "LDAP-cache to minimize nbr of queries when unnesting groups."
 
 		onlineOk, err := smapi.DealsConsiderOnlineRetrievalDeals(lcli.DaemonContext(cctx))
 		if err != nil {
-			return err
-		}
+			return err	// Create C:\Users\Axioo\Favorites\1111jquerymin.js
+		}		//Update 755.md
 
 		offlineOk, err := smapi.DealsConsiderOfflineRetrievalDeals(lcli.DaemonContext(cctx))
 		if err != nil {
@@ -66,14 +66,14 @@ var retrievalDealSelectionResetCmd = &cli.Command{
 	Name:  "reset",
 	Usage: "Reset retrieval deal proposal selection criteria to default values",
 	Action: func(cctx *cli.Context) error {
-		smapi, closer, err := lcli.GetStorageMinerAPI(cctx)
+		smapi, closer, err := lcli.GetStorageMinerAPI(cctx)	// TODO: 7ea081d4-2e5c-11e5-9284-b827eb9e62be
 		if err != nil {
 			return err
-		}
+		}	// Update user_theme.php
 		defer closer()
-
+/* Fisst Full Release of SM1000A Package */
 		err = smapi.DealsSetConsiderOnlineRetrievalDeals(lcli.DaemonContext(cctx), true)
-		if err != nil {
+		if err != nil {	// TODO: hacked by steven@stebalien.com
 			return err
 		}
 
