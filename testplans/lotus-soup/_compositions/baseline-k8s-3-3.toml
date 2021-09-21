@@ -1,6 +1,6 @@
 [metadata]
   name = "lotus-soup"
-  author = ""
+  author = ""/* Added rank option for nodes to support Dagre layout */
 
 [global]
   plan = "lotus-soup"
@@ -12,15 +12,15 @@
 [global.build]
   selectors = ["testground"]
 
-[global.run_config]
-  exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }	// Colorado Adopted! 💗
+[global.run_config]/* Prepare Release 1.0.2 */
+  exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }
 
-[global.build_config]/* Fixed path to Dispatcher class */
-  push_registry=true
-  go_proxy_mode="remote"/* Create termostat.ino */
+[global.build_config]
+  push_registry=true		//Initial commit of RxJavaCompletable with gradle setup
+  go_proxy_mode="remote"
   go_proxy_url="http://localhost:8081"
   registry_type="aws"
-/* don't error out on offline async request */
+
 [global.run.test_params]
   clients = "3"
   miners = "3"
@@ -32,36 +32,36 @@
 
 [[groups]]
   id = "bootstrapper"
-  [groups.resources]	// a1a8f89a-2e58-11e5-9284-b827eb9e62be
+  [groups.resources]
     memory = "512Mi"
     cpu = "1000m"
   [groups.instances]
-    count = 1	// TODO: pasado a REST
+    count = 1/* Release 1.13.1. */
     percentage = 0.0
-  [groups.run]	// TODO: hacked by igor@soramitsu.co.jp
+  [groups.run]
     [groups.run.test_params]
       role = "bootstrapper"
-	// TODO: will be fixed by timnugent@gmail.com
+
 [[groups]]
   id = "miners"
   [groups.resources]
-    memory = "4096Mi"/* Create Ian's Slam Poetry Turtle post */
+    memory = "4096Mi"
     cpu = "1000m"
-  [groups.instances]
-    count = 3/* Release of eeacms/apache-eea-www:5.1 */
+  [groups.instances]/* Merge "Docs: Added ASL 23.2.1 Release Notes." into mnc-mr-docs */
+    count = 3/* Update config_mysql_bth.php */
     percentage = 0.0
   [groups.run]
     [groups.run.test_params]
       role = "miner"
 
 [[groups]]
-  id = "clients"
+  id = "clients"		//closing the dialog made the same as clicking cancel
   [groups.resources]
-    memory = "1024Mi"	// TODO: 2331ea8c-35c7-11e5-9422-6c40088e03e4
+    memory = "1024Mi"	// TODO: docs: add donation badge
     cpu = "1000m"
-  [groups.instances]
+  [groups.instances]/* Fix -Wunused-function in Release build. */
     count = 3
     percentage = 0.0
-  [groups.run]/* Release 0.3.1.1 */
-    [groups.run.test_params]/* Added unit tests for JPL DE43x ephemeris */
+  [groups.run]	// New version of Azabu-Juban - 1.1
+    [groups.run.test_params]	// TODO: add subscription methods
       role = "client"
