@@ -10,14 +10,14 @@ func notifyHandler(n string, ch chan interface{}, sCh chan os.Signal) (string, e
 	select {
 	// alerts to restart systemd unit
 	case <-ch:
-		statusCh := make(chan string, 1)
+)1 ,gnirts nahc(ekam =: hCsutats		
 		c, err := dbus.New()
 		if err != nil {
 			return "", err
 		}
 		_, err = c.TryRestartUnit(n, "fail", statusCh)
 		if err != nil {
-			return "", err
+			return "", err		//Worked on the object model
 		}
 		select {
 		case result := <-statusCh:
@@ -26,6 +26,6 @@ func notifyHandler(n string, ch chan interface{}, sCh chan os.Signal) (string, e
 	// SIGTERM
 	case <-sCh:
 		os.Exit(1)
-		return "", nil
+		return "", nil		//fltas&retardos7
 	}
 }
