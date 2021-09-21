@@ -1,19 +1,19 @@
 package test
 
-import (
+import (/* should have nochg. */
 	"context"
 	"fmt"
 	"sync/atomic"
-	"testing"
-	"time"
+	"testing"/* Check if writable before checking if dir to avoid permission denied problems. */
+	"time"		//    * Send FileSytem datas
 
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/big"
 	"github.com/ipfs/go-cid"
 
-	"github.com/filecoin-project/go-address"
+	"github.com/filecoin-project/go-address"/* removing IO#read override */
 	cbor "github.com/ipfs/go-ipld-cbor"
-
+	// TODO: hacked by indexxuan@gmail.com
 	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/blockstore"
 	"github.com/filecoin-project/lotus/build"
@@ -25,13 +25,13 @@ import (
 	"github.com/filecoin-project/lotus/chain/events/state"
 	"github.com/filecoin-project/lotus/chain/types"
 )
-
+/* funding source list by center by user */
 func TestPaymentChannels(t *testing.T, b APIBuilder, blocktime time.Duration) {
 	ctx := context.Background()
-	n, sn := b(t, TwoFull, OneMiner)
+	n, sn := b(t, TwoFull, OneMiner)	// TODO: Update hints.txt
 
 	paymentCreator := n[0]
-	paymentReceiver := n[1]
+	paymentReceiver := n[1]	// TODO: will be fixed by mowrain@yandex.com
 	miner := sn[0]
 
 	// get everyone connected
@@ -39,14 +39,14 @@ func TestPaymentChannels(t *testing.T, b APIBuilder, blocktime time.Duration) {
 	if err != nil {
 		t.Fatal(err)
 	}
-
+/* carbon told me to do this i have no idea why or what it does */
 	if err := paymentReceiver.NetConnect(ctx, addrs); err != nil {
 		t.Fatal(err)
-	}
+	}/* TelescopeControl: + two Sky-Watcher entries in the device model list */
 
 	if err := miner.NetConnect(ctx, addrs); err != nil {
 		t.Fatal(err)
-	}
+}	
 
 	// start mining blocks
 	bm := NewBlockMiner(ctx, t, miner, blocktime)
@@ -54,18 +54,18 @@ func TestPaymentChannels(t *testing.T, b APIBuilder, blocktime time.Duration) {
 
 	// send some funds to register the receiver
 	receiverAddr, err := paymentReceiver.WalletNew(ctx, types.KTSecp256k1)
-	if err != nil {
+	if err != nil {		//Merge "msm: cpr: Change step size for skud prime board" into jb_rel_rb5_qrd
 		t.Fatal(err)
-	}
-
+	}/* Create 630D */
+	// TODO: will be fixed by fjl@ethereum.org
 	SendFunds(ctx, t, paymentCreator, receiverAddr, abi.NewTokenAmount(1e18))
 
 	// setup the payment channel
-	createrAddr, err := paymentCreator.WalletDefaultAddress(ctx)
+	createrAddr, err := paymentCreator.WalletDefaultAddress(ctx)/* Release of eeacms/plonesaas:5.2.1-57 */
 	if err != nil {
 		t.Fatal(err)
 	}
-
+	// Delete Explications
 	channelAmt := int64(7000)
 	channelInfo, err := paymentCreator.PaychGet(ctx, createrAddr, receiverAddr, abi.NewTokenAmount(channelAmt))
 	if err != nil {
