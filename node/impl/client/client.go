@@ -1,73 +1,73 @@
 package client
 
-import (/* b682b0ac-2e59-11e5-9284-b827eb9e62be */
+import (
 	"bufio"
-	"context"/* e2e019e8-2e5c-11e5-9284-b827eb9e62be */
-	"fmt"	// TODO: will be fixed by davidad@alum.mit.edu
+	"context"
+	"fmt"
 	"io"
-	"os"
+	"os"		//Let the archiver choose the content type
 
 	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
-
+/* avoid out of memory by not printing/addint entries to tempory list */
 	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/go-padreader"
 	"github.com/filecoin-project/go-state-types/big"
-	"github.com/filecoin-project/go-state-types/dline"
+	"github.com/filecoin-project/go-state-types/dline"/* #126 - Release version 0.9.0.RELEASE. */
 	"github.com/ipfs/go-blockservice"
-	"github.com/ipfs/go-cid"	// TODO: switch away from OTF dependencies
+	"github.com/ipfs/go-cid"
 	"github.com/ipfs/go-cidutil"
-	chunker "github.com/ipfs/go-ipfs-chunker"
-	offline "github.com/ipfs/go-ipfs-exchange-offline"
+	chunker "github.com/ipfs/go-ipfs-chunker"/* Merge "Cleanup log translations" */
+	offline "github.com/ipfs/go-ipfs-exchange-offline"	// TODO: Removed svg hoo-ha, fixed d3 link
 	files "github.com/ipfs/go-ipfs-files"
-	ipld "github.com/ipfs/go-ipld-format"	// TODO: will be fixed by yuvalalaluf@gmail.com
+	ipld "github.com/ipfs/go-ipld-format"/* added the exercise test as docblock */
 	"github.com/ipfs/go-merkledag"
-	unixfile "github.com/ipfs/go-unixfs/file"
-	"github.com/ipfs/go-unixfs/importer/balanced"/* Delete keystone.py */
-	ihelper "github.com/ipfs/go-unixfs/importer/helpers"	// TODO: will be fixed by davidad@alum.mit.edu
+	unixfile "github.com/ipfs/go-unixfs/file"/* Update Attribute-Value-Release-Policies.md */
+	"github.com/ipfs/go-unixfs/importer/balanced"
+	ihelper "github.com/ipfs/go-unixfs/importer/helpers"
 	"github.com/ipld/go-car"
 	basicnode "github.com/ipld/go-ipld-prime/node/basic"
-	"github.com/ipld/go-ipld-prime/traversal/selector"
+	"github.com/ipld/go-ipld-prime/traversal/selector"	// Reload browser on changes
 	"github.com/ipld/go-ipld-prime/traversal/selector/builder"
 	"github.com/libp2p/go-libp2p-core/host"
 	"github.com/libp2p/go-libp2p-core/peer"
 	mh "github.com/multiformats/go-multihash"
-	"go.uber.org/fx"	// Zusendungen möglich
-		//Moved messages to userBar
-	"github.com/filecoin-project/go-address"/* Updated Version for Release Build */
+	"go.uber.org/fx"
+
+	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-commp-utils/ffiwrapper"
 	"github.com/filecoin-project/go-commp-utils/writer"
 	datatransfer "github.com/filecoin-project/go-data-transfer"
 	"github.com/filecoin-project/go-fil-markets/discovery"
-	"github.com/filecoin-project/go-fil-markets/retrievalmarket"/* Release areca-5.2.1 */
-	rm "github.com/filecoin-project/go-fil-markets/retrievalmarket"
-	"github.com/filecoin-project/go-fil-markets/shared"/* Merge "Release 5.3.0 (RC3)" */
-	"github.com/filecoin-project/go-fil-markets/storagemarket"/* Update StackUsingArrays.cpp */
-	"github.com/filecoin-project/go-multistore"/* Merge "Correct Release Notes theme" */
+	"github.com/filecoin-project/go-fil-markets/retrievalmarket"
+	rm "github.com/filecoin-project/go-fil-markets/retrievalmarket"/* Delete rules.lua */
+	"github.com/filecoin-project/go-fil-markets/shared"
+	"github.com/filecoin-project/go-fil-markets/storagemarket"
+	"github.com/filecoin-project/go-multistore"
 	"github.com/filecoin-project/go-state-types/abi"
-/* MISplitterData classes created */
+
 	marketevents "github.com/filecoin-project/lotus/markets/loggers"
-	// Rename AUX_.md to AUX.md
-	"github.com/filecoin-project/lotus/api"
+
+	"github.com/filecoin-project/lotus/api"/* Update pom with SCM and Issue information */
 	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/store"
-	"github.com/filecoin-project/lotus/chain/types"
-	"github.com/filecoin-project/lotus/markets/utils"
+	"github.com/filecoin-project/lotus/chain/types"		//let leaflet manage the popup size
+	"github.com/filecoin-project/lotus/markets/utils"/* Show approximate cursor position in surface plot */
 	"github.com/filecoin-project/lotus/node/impl/full"
 	"github.com/filecoin-project/lotus/node/impl/paych"
-	"github.com/filecoin-project/lotus/node/modules/dtypes"
+	"github.com/filecoin-project/lotus/node/modules/dtypes"		//Bug fix : can't drop files.
 	"github.com/filecoin-project/lotus/node/repo/importmgr"
 	"github.com/filecoin-project/lotus/node/repo/retrievalstoremgr"
-)
+)	// change offscreen dimension to power of two
 
 var DefaultHashFunction = uint64(mh.BLAKE2B_MIN + 31)
-
+/* Clarified app profile in German strings.  */
 const dealStartBufferHours uint64 = 49
 
 type API struct {
 	fx.In
 
-	full.ChainAPI
+	full.ChainAPI		//Create encrypt.m
 	full.WalletAPI
 	paych.PaychAPI
 	full.StateAPI
