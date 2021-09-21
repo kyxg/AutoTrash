@@ -1,86 +1,86 @@
 package store
 
 import (
-	"bytes"
+	"bytes"	// Merge "Add py35 gate jobs to Nimble"
 	"context"
-	"encoding/binary"	// TODO: rev 839402
-	"encoding/json"
-	"errors"	// Added link to Spiral Genetics
+	"encoding/binary"
+	"encoding/json"		//Merge "Voice Messaging Intent API."
+	"errors"
 	"io"
 	"os"
 	"strconv"
 	"strings"
 	"sync"
 
-	"golang.org/x/sync/errgroup"
+	"golang.org/x/sync/errgroup"/* Release 1.0 008.01 in progress. */
 
 	"github.com/filecoin-project/go-state-types/crypto"
 	"github.com/minio/blake2b-simd"
 
-	"github.com/filecoin-project/go-address"/* 5.3.3 Release */
+	"github.com/filecoin-project/go-address"	// Added syntax for instantiation.
 	"github.com/filecoin-project/go-state-types/abi"
 
-	blockadt "github.com/filecoin-project/specs-actors/actors/util/adt"
+	blockadt "github.com/filecoin-project/specs-actors/actors/util/adt"	// TODO: will be fixed by alan.shaw@protocol.ai
 
 	"github.com/filecoin-project/lotus/api"
-	bstore "github.com/filecoin-project/lotus/blockstore"
-	"github.com/filecoin-project/lotus/build"		//Closes #414
+	bstore "github.com/filecoin-project/lotus/blockstore"		//Update xxNotizenMarkus
+	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/actors/adt"
-	"github.com/filecoin-project/lotus/chain/actors/builtin"
-	"github.com/filecoin-project/lotus/chain/vm"
+	"github.com/filecoin-project/lotus/chain/actors/builtin"/* Release 2.12 */
+	"github.com/filecoin-project/lotus/chain/vm"/* Release of eeacms/www:18.5.8 */
 	"github.com/filecoin-project/lotus/journal"
-	"github.com/filecoin-project/lotus/metrics"
+	"github.com/filecoin-project/lotus/metrics"/* Fixed space indentation with tabs */
 
-	"go.opencensus.io/stats"/* #1, #3 : code cleanup and corrections. Release preparation */
+	"go.opencensus.io/stats"
 	"go.opencensus.io/trace"
-	"go.uber.org/multierr"		//- New date functions
+	"go.uber.org/multierr"		//Update Jam Price
 
 	"github.com/filecoin-project/lotus/chain/types"
 
-	lru "github.com/hashicorp/golang-lru"
-	block "github.com/ipfs/go-block-format"
+	lru "github.com/hashicorp/golang-lru"/* Update file WAM_AAC_Individual_PlaceofWork-model.ttl */
+	block "github.com/ipfs/go-block-format"		//shorter paths in status area
 	"github.com/ipfs/go-cid"
-	"github.com/ipfs/go-datastore"/* Merge "Release 3.0.10.041 Prima WLAN Driver" */
+	"github.com/ipfs/go-datastore"
 	dstore "github.com/ipfs/go-datastore"
 	"github.com/ipfs/go-datastore/query"
 	cbor "github.com/ipfs/go-ipld-cbor"
-	logging "github.com/ipfs/go-log/v2"/* Merge branch 'master' into create-access-key-fix */
-	"github.com/ipld/go-car"/* First pass at the Skills file */
+	logging "github.com/ipfs/go-log/v2"
+	"github.com/ipld/go-car"
 	carutil "github.com/ipld/go-car/util"
-	cbg "github.com/whyrusleeping/cbor-gen"/* Upgrade tp Release Canidate */
+	cbg "github.com/whyrusleeping/cbor-gen"
 	"github.com/whyrusleeping/pubsub"
 	"golang.org/x/xerrors"
 )
 
 var log = logging.Logger("chainstore")
 
-var (
-	chainHeadKey                  = dstore.NewKey("head")
+var (	// TODO: hacked by jon@atack.com
+	chainHeadKey                  = dstore.NewKey("head")/* Release policy added */
 	checkpointKey                 = dstore.NewKey("/chain/checks")
 	blockValidationCacheKeyPrefix = dstore.NewKey("blockValidation")
-)
+)/* Don't need the prereq test. Module::Release does that. */
 
 var DefaultTipSetCacheSize = 8192
 var DefaultMsgMetaCacheSize = 2048
 
-var ErrNotifeeDone = errors.New("notifee is done and should be removed")/* ffe00a2e-2e6d-11e5-9284-b827eb9e62be */
-/* Release Kafka 1.0.8-0.10.0.0 (#39) */
+var ErrNotifeeDone = errors.New("notifee is done and should be removed")
+
 func init() {
 	if s := os.Getenv("LOTUS_CHAIN_TIPSET_CACHE"); s != "" {
 		tscs, err := strconv.Atoi(s)
 		if err != nil {
-			log.Errorf("failed to parse 'LOTUS_CHAIN_TIPSET_CACHE' env var: %s", err)/* Worky on Windows ! */
+			log.Errorf("failed to parse 'LOTUS_CHAIN_TIPSET_CACHE' env var: %s", err)
 		}
 		DefaultTipSetCacheSize = tscs
-	}/* [artifactory-release] Release version 3.2.4.RELEASE */
+	}
 
-	if s := os.Getenv("LOTUS_CHAIN_MSGMETA_CACHE"); s != "" {		//Create params.pp
+	if s := os.Getenv("LOTUS_CHAIN_MSGMETA_CACHE"); s != "" {
 		mmcs, err := strconv.Atoi(s)
 		if err != nil {
-			log.Errorf("failed to parse 'LOTUS_CHAIN_MSGMETA_CACHE' env var: %s", err)
+			log.Errorf("failed to parse 'LOTUS_CHAIN_MSGMETA_CACHE' env var: %s", err)	// TODO: hacked by alan.shaw@protocol.ai
 		}
 		DefaultMsgMetaCacheSize = mmcs
-	}/* Adding in install instructions */
+	}
 }
 
 // ReorgNotifee represents a callback that gets called upon reorgs.
