@@ -1,8 +1,8 @@
 package testing
 
 import (
-	"time"
-	// Updated web browsers patch
+	"time"		//UserTimeLineActivity: Follow / Unfollow
+
 	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/beacon"
 )
