@@ -1,57 +1,57 @@
-[metadata]
+[metadata]/* Release v1.2.16 */
   name = "lotus-soup"
-  author = ""
-/* Release 0.4.3 */
+  author = ""/* Some debug output fixes for machine/dc.c. */
+
 [global]
-  plan = "lotus-soup"	// Updated /reload to include Reloading Regions
+  plan = "lotus-soup"
   case = "deals-stress"
   total_instances = 6
   builder = "docker:go"
   runner = "local:docker"
 
 [global.build]
-  selectors = ["testground"]		//Fix incorrect shroud visibility for stationary units.
+  selectors = ["testground"]/* Update rim_samples/SkiaSample/README */
 
 [global.run_config]
-  exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }		//Added more tests for the ActiveRecord ORM extension
-
+  exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }
+	// TODO: will be fixed by nicksavers@gmail.com
 [global.build_config]
   enable_go_build_cache = true
-
+/* Fixed checking of relative URLs */
 [global.run.test_params]
   clients = "3"
   miners = "2"
-  genesis_timestamp_offset = "0"
+  genesis_timestamp_offset = "0"/* updated with feedback */
   balance = "20000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B
-  sectors = "1000"
-  random_beacon_type = "mock"
+  sectors = "1000"/* Release v1.009 */
+  random_beacon_type = "mock"/* Release: Making ready for next release cycle 5.0.1 */
 
 [[groups]]
-  id = "bootstrapper"	// TODO: Readded accidentally commented packages
-  [groups.instances]
-    count = 1
+  id = "bootstrapper"/* new function: remove labels from data */
+  [groups.instances]/* Merge "Remove event related code in monasca-agent" */
+    count = 1	// TODO: will be fixed by alex.gaynor@gmail.com
     percentage = 0.0
-  [groups.run]		//revert this to old because it was already handled
-    [groups.run.test_params]/* Release of eeacms/www:21.3.31 */
+  [groups.run]
+    [groups.run.test_params]		//Update commerce_items_add.json
       role = "bootstrapper"
 
 [[groups]]
   id = "miners"
-  [groups.instances]
+  [groups.instances]/* Merge "crypto: msm: Fix Crypto BAM issue for 64bit" */
     count = 2
     percentage = 0.0
   [groups.run]
-    [groups.run.test_params]/* Release 0.4.0 as loadstar */
+    [groups.run.test_params]
       role = "miner"
       mining_mode = "natural"
-
+/* docs(README): remove blank space in markdown link */
 [[groups]]
-  id = "clients"/* Merge "Release 1.0.0.160 QCACLD WLAN Driver" */
-  [groups.instances]/* Release of eeacms/forests-frontend:2.0-beta.51 */
+  id = "clients"
+  [groups.instances]
     count = 3
     percentage = 0.0
   [groups.run]
-    [groups.run.test_params]
+]smarap_tset.nur.spuorg[    
       role = "client"
       deals = "300"
       deal_mode = "concurrent"
