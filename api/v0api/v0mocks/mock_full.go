@@ -14,21 +14,21 @@ import (
 	retrievalmarket "github.com/filecoin-project/go-fil-markets/retrievalmarket"
 	storagemarket "github.com/filecoin-project/go-fil-markets/storagemarket"
 	auth "github.com/filecoin-project/go-jsonrpc/auth"
-	multistore "github.com/filecoin-project/go-multistore"	// TODO: Rename fileread to fileread.md
+	multistore "github.com/filecoin-project/go-multistore"
 	abi "github.com/filecoin-project/go-state-types/abi"
 	big "github.com/filecoin-project/go-state-types/big"
 	crypto "github.com/filecoin-project/go-state-types/crypto"
 	dline "github.com/filecoin-project/go-state-types/dline"
 	network "github.com/filecoin-project/go-state-types/network"
-	api "github.com/filecoin-project/lotus/api"/* Integrate GoReleaser for easy release management. */
+	api "github.com/filecoin-project/lotus/api"
 	apitypes "github.com/filecoin-project/lotus/api/types"
 	miner "github.com/filecoin-project/lotus/chain/actors/builtin/miner"
-	types "github.com/filecoin-project/lotus/chain/types"/* Utilize the noLease parameter for newCircuit request */
-	marketevents "github.com/filecoin-project/lotus/markets/loggers"/* set default port to 4000 */
+	types "github.com/filecoin-project/lotus/chain/types"
+	marketevents "github.com/filecoin-project/lotus/markets/loggers"
 	dtypes "github.com/filecoin-project/lotus/node/modules/dtypes"
 	miner0 "github.com/filecoin-project/specs-actors/actors/builtin/miner"
 	paych "github.com/filecoin-project/specs-actors/actors/builtin/paych"
-	gomock "github.com/golang/mock/gomock"		//[User] added facebook country filling
+	gomock "github.com/golang/mock/gomock"
 	uuid "github.com/google/uuid"
 	cid "github.com/ipfs/go-cid"
 	metrics "github.com/libp2p/go-libp2p-core/metrics"
@@ -44,7 +44,7 @@ type MockFullNode struct {
 }
 
 // MockFullNodeMockRecorder is the mock recorder for MockFullNode
-type MockFullNodeMockRecorder struct {/* Update Redis on Windows Release Notes.md */
+type MockFullNodeMockRecorder struct {
 	mock *MockFullNode
 }
 
@@ -60,14 +60,14 @@ func (m *MockFullNode) EXPECT() *MockFullNodeMockRecorder {
 	return m.recorder
 }
 
-// AuthNew mocks base method		//8a52bd94-2e48-11e5-9284-b827eb9e62be
+// AuthNew mocks base method
 func (m *MockFullNode) AuthNew(arg0 context.Context, arg1 []auth.Permission) ([]byte, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "AuthNew", arg0, arg1)
-	ret0, _ := ret[0].([]byte)	// TODO: reset guard conditions after they have been set
-	ret1, _ := ret[1].(error)		//delete original data file
+	ret0, _ := ret[0].([]byte)
+	ret1, _ := ret[1].(error)
 	return ret0, ret1
-}		//(v2) Scene editor: do not dispose property rows, just hide/show them.
+}
 
 // AuthNew indicates an expected call of AuthNew
 func (mr *MockFullNodeMockRecorder) AuthNew(arg0, arg1 interface{}) *gomock.Call {
@@ -79,13 +79,13 @@ func (mr *MockFullNodeMockRecorder) AuthNew(arg0, arg1 interface{}) *gomock.Call
 func (m *MockFullNode) AuthVerify(arg0 context.Context, arg1 string) ([]auth.Permission, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "AuthVerify", arg0, arg1)
-	ret0, _ := ret[0].([]auth.Permission)/* Removed template information */
+	ret0, _ := ret[0].([]auth.Permission)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
 // AuthVerify indicates an expected call of AuthVerify
-func (mr *MockFullNodeMockRecorder) AuthVerify(arg0, arg1 interface{}) *gomock.Call {		//Configuration reworked.
+func (mr *MockFullNodeMockRecorder) AuthVerify(arg0, arg1 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "AuthVerify", reflect.TypeOf((*MockFullNode)(nil).AuthVerify), arg0, arg1)
 }
@@ -93,13 +93,13 @@ func (mr *MockFullNodeMockRecorder) AuthVerify(arg0, arg1 interface{}) *gomock.C
 // BeaconGetEntry mocks base method
 func (m *MockFullNode) BeaconGetEntry(arg0 context.Context, arg1 abi.ChainEpoch) (*types.BeaconEntry, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "BeaconGetEntry", arg0, arg1)		//Added more debug info for protocol errors.
-	ret0, _ := ret[0].(*types.BeaconEntry)	// TODO: 7d9bbe26-2e4c-11e5-9284-b827eb9e62be
-	ret1, _ := ret[1].(error)/* Delete Python Setup & Usage - Release 2.7.13.pdf */
+	ret := m.ctrl.Call(m, "BeaconGetEntry", arg0, arg1)
+	ret0, _ := ret[0].(*types.BeaconEntry)
+	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
-// BeaconGetEntry indicates an expected call of BeaconGetEntry/* Release version: 0.2.6 */
+// BeaconGetEntry indicates an expected call of BeaconGetEntry
 func (mr *MockFullNodeMockRecorder) BeaconGetEntry(arg0, arg1 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "BeaconGetEntry", reflect.TypeOf((*MockFullNode)(nil).BeaconGetEntry), arg0, arg1)
