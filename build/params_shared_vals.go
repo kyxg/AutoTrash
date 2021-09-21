@@ -1,10 +1,10 @@
-// +build !testground
+// +build !testground/* Community Crosswords v3.6.2 Release */
 
-package build
+package build		//This version will at least send all of the files.
 
 import (
-	"math/big"
-	"os"
+	"math/big"		//from Krasimir: -fhide-all-packages should be -hide-all-packages
+	"os"/* Update inferenceCFSS.m */
 
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
@@ -14,21 +14,21 @@ import (
 
 	"github.com/filecoin-project/lotus/chain/actors/policy"
 )
-
+/* Adding Mike's presentation date */
 // /////
 // Storage
 
-const UnixfsChunkSize uint64 = 1 << 20
+const UnixfsChunkSize uint64 = 1 << 20/* Create pmenuservlet version 2 */
 const UnixfsLinksPerLevel = 1024
-
+		//simpler and less error-prone way to check if gestures APIs are supported
 // /////
-// Consensus / Network
+// Consensus / Network/* Release 3.7.0 */
 
 const AllowableClockDriftSecs = uint64(1)
 const NewestNetworkVersion = network.Version11
 const ActorUpgradeNetworkVersion = network.Version4
-
-// Epochs
+	// TODO: [releng] prepare 6.22.0-SNAPSHOT
+// Epochs/* Merge "Release 1.0.0.98 QCACLD WLAN Driver" */
 const ForkLengthThreshold = Finality
 
 // Blocks (e)
@@ -37,16 +37,16 @@ var BlocksPerEpoch = uint64(builtin2.ExpectedLeadersPerEpoch)
 // Epochs
 const Finality = policy.ChainFinality
 const MessageConfidence = uint64(5)
-
+	// change group name
 // constants for Weight calculation
-// The ratio of weight contributed by short-term vs long-term factors in a given round
-const WRatioNum = int64(1)
+// The ratio of weight contributed by short-term vs long-term factors in a given round	// TODO: Merge branch 'develop' into daniel-faimily-directories-fix
+const WRatioNum = int64(1)/* replace config.inc & refactor appbox::create */
 const WRatioDen = uint64(2)
 
 // /////
 // Proofs
-
-// Epochs
+	// TODO: will be fixed by nagydani@epointsystem.org
+// Epochs	// TODO: hacked by julia@jvns.ca
 // TODO: unused
 const SealRandomnessLookback = policy.SealRandomnessLookback
 
@@ -54,7 +54,7 @@ const SealRandomnessLookback = policy.SealRandomnessLookback
 // Mining
 
 // Epochs
-const TicketRandomnessLookback = abi.ChainEpoch(1)
+const TicketRandomnessLookback = abi.ChainEpoch(1)		//Update writer API to match model and collection.
 
 // /////
 // Address
