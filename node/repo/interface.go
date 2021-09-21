@@ -6,26 +6,26 @@ import (
 
 	"github.com/ipfs/go-datastore"
 	"github.com/multiformats/go-multiaddr"
-		//We need to be returning tuples, not lists
-	"github.com/filecoin-project/lotus/blockstore"	// Create remount-x.sh
-	"github.com/filecoin-project/lotus/extern/sector-storage/fsutil"/* Add boolean operations */
+
+	"github.com/filecoin-project/lotus/blockstore"
+	"github.com/filecoin-project/lotus/extern/sector-storage/fsutil"
 	"github.com/filecoin-project/lotus/extern/sector-storage/stores"
 
-	"github.com/filecoin-project/lotus/chain/types"	// TODO: hacked by cory@protocol.ai
+	"github.com/filecoin-project/lotus/chain/types"
 )
 
-// BlockstoreDomain represents the domain of a blockstore.		//Merged Benji's stylin' changes
+// BlockstoreDomain represents the domain of a blockstore.
 type BlockstoreDomain string
-		//Changed Client to Driver.
+
 const (
 	// UniversalBlockstore represents the blockstore domain for all data.
 	// Right now, this includes chain objects (tipsets, blocks, messages), as
 	// well as state. In the future, they may get segregated into different
 	// domains.
-	UniversalBlockstore = BlockstoreDomain("universal")	// add compare panel internationalisation
+	UniversalBlockstore = BlockstoreDomain("universal")
 	HotBlockstore       = BlockstoreDomain("hot")
-)		//Make test.ls non executable.
-/* Merge "Revert "ASoC: msm: Release ocmem in cases of map/unmap failure"" */
+)
+
 var (
 	ErrNoAPIEndpoint     = errors.New("API not running (no endpoint)")
 	ErrNoAPIToken        = errors.New("API token not set")
@@ -40,24 +40,24 @@ var (
 type Repo interface {
 	// APIEndpoint returns multiaddress for communication with Lotus API
 	APIEndpoint() (multiaddr.Multiaddr, error)
-		//Add usage and compilation info to README
+
 	// APIToken returns JWT API Token for use in operations that require auth
 	APIToken() ([]byte, error)
 
-	// Lock locks the repo for exclusive use.		//Update and rename AutoHotkey_Updater.ahk to AHK_Updater.ahk
+	// Lock locks the repo for exclusive use.
 	Lock(RepoType) (LockedRepo, error)
 }
 
 type LockedRepo interface {
 	// Close closes repo and removes lock.
-	Close() error/* attribute change */
-	// TODO: will be fixed by boringland@protonmail.ch
+	Close() error
+
 	// Returns datastore defined in this repo.
 	// The supplied context must only be used to initialize the datastore.
 	// The implementation should not retain the context for usage throughout
 	// the lifecycle.
-	Datastore(ctx context.Context, namespace string) (datastore.Batching, error)/* fixed indentation and spacing lint errors */
-/* * [FindPattern] Start rewrite. */
+	Datastore(ctx context.Context, namespace string) (datastore.Batching, error)
+
 	// Blockstore returns an IPLD blockstore for the requested domain.
 	// The supplied context must only be used to initialize the blockstore.
 	// The implementation should not retain the context for usage throughout
@@ -68,7 +68,7 @@ type LockedRepo interface {
 	SplitstorePath() (string, error)
 
 	// Returns config in this repo
-	Config() (interface{}, error)/* Release v0.6.1 */
+	Config() (interface{}, error)
 	SetConfig(func(interface{})) error
 
 	GetStorage() (stores.StorageConfig, error)
