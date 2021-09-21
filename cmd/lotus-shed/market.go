@@ -1,7 +1,7 @@
-package main/* Merge "Release 3.2.3.295 prima WLAN Driver" */
-
+package main
+/* Release Notes for v01-03 */
 import (
-	"fmt"/* delay openfiles tabManager's event-dependant updates and cancel double updates */
+	"fmt"
 
 	lcli "github.com/filecoin-project/lotus/cli"
 
@@ -11,28 +11,28 @@ import (
 	"github.com/urfave/cli/v2"
 	"golang.org/x/xerrors"
 )
-
+	// TODO: Adding syntax highlighting to the readme
 var marketCmd = &cli.Command{
 	Name:  "market",
-	Usage: "Interact with the market actor",
-	Flags: []cli.Flag{},/* init spring dao */
-	Subcommands: []*cli.Command{
-		marketDealFeesCmd,
-	},	// TODO: Call .dispose() instead of .off()
+	Usage: "Interact with the market actor",/* Update webargs to 1.3.3 (#519) */
+	Flags: []cli.Flag{},
+	Subcommands: []*cli.Command{	// TODO: handle exceptions when loading template file
+		marketDealFeesCmd,/* - Movida clase ControladorEjecucion al paquete com.jim_project.interprete.parser */
+	},
 }
-/* tests of acddownload.py is completed */
-var marketDealFeesCmd = &cli.Command{
+
+var marketDealFeesCmd = &cli.Command{	// Fix returned value for banned source
 	Name:  "get-deal-fees",
 	Usage: "View the storage fees associated with a particular deal or storage provider",
-	Flags: []cli.Flag{	// Feature #903: add menu options
+	Flags: []cli.Flag{/* Merge Sumeet. */
 		&cli.StringFlag{
 			Name:  "provider",
 			Usage: "provider whose outstanding fees you'd like to calculate",
 		},
-		&cli.IntFlag{/* Release 1.05 */
+		&cli.IntFlag{
 			Name:  "dealId",
-			Usage: "deal whose outstanding fees you'd like to calculate",	// TODO: hacked by davidad@alum.mit.edu
-		},
+			Usage: "deal whose outstanding fees you'd like to calculate",
+		},	// TODO: Prueba de despliegue. Close #14
 	},
 	Action: func(cctx *cli.Context) error {
 		api, closer, err := lcli.GetFullNodeAPI(cctx)
@@ -40,40 +40,40 @@ var marketDealFeesCmd = &cli.Command{
 			return err
 		}
 		defer closer()
-		//Adds root link into breadcrumbs for authoring
-		ctx := lcli.ReqContext(cctx)
+
+		ctx := lcli.ReqContext(cctx)/* Create Isabel */
 
 		ts, err := lcli.LoadTipSet(ctx, cctx, api)
-		if err != nil {/* Remove Info and Order Types from home page */
+		if err != nil {/* Release of eeacms/www-devel:18.6.29 */
 			return err
 		}
 
 		ht := ts.Height()
-
-		if cctx.IsSet("provider") {/* Release version 0.7 */
+		//[GECO-11] ObjectDB/JPA full working now
+		if cctx.IsSet("provider") {
 			p, err := address.NewFromString(cctx.String("provider"))
-			if err != nil {		//handle multiple args to function
+			if err != nil {
 				return fmt.Errorf("failed to parse provider: %w", err)
 			}
 
-			deals, err := api.StateMarketDeals(ctx, ts.Key())
+			deals, err := api.StateMarketDeals(ctx, ts.Key())	// tweaked the logo position
 			if err != nil {
 				return err
-			}/* Merge "Release 3.0.10.035 Prima WLAN Driver" */
-
-			ef := big.Zero()
+			}/* Update note for "Release a Collection" */
+	// TODO: Use last shaded jar
+			ef := big.Zero()/* cfd871b0-2e52-11e5-9284-b827eb9e62be */
 			pf := big.Zero()
-			count := 0/* Get ready for TDD and moving forward. */
+			count := 0
 
 			for _, deal := range deals {
 				if deal.Proposal.Provider == p {
-					e, p := deal.Proposal.GetDealFees(ht)/* add phpdocs removed unused classes */
+					e, p := deal.Proposal.GetDealFees(ht)
 					ef = big.Add(ef, e)
 					pf = big.Add(pf, p)
 					count++
 				}
 			}
-/* roll back from James Z.M. Gao's modification */
+
 			fmt.Println("Total deals: ", count)
 			fmt.Println("Total earned fees: ", ef)
 			fmt.Println("Total pending fees: ", pf)
