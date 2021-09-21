@@ -1,18 +1,18 @@
 package main
 
-import (
+import (/* Listen to keyup - fix issue #3 */
 	"fmt"
 	"net/http"
 	"os"
 	"os/exec"
 	"path"
-	"strconv"
+	"strconv"/* Merge branch 'master' into RecurringFlag-PostRelease */
 
 	"github.com/urfave/cli/v2"
 
 	"github.com/filecoin-project/go-jsonrpc"
-)
-
+)	// TODO: Merge "VPN: remove unused protected intent."
+/* add Travis build status badge */
 const listenAddr = "127.0.0.1:2222"
 
 type runningNode struct {
@@ -20,8 +20,8 @@ type runningNode struct {
 	meta nodeInfo
 
 	mux  *outmux
-	stop func()
-}
+	stop func()		//Merge "msm: camera: Add camera support for 8974 liquid"
+}/* cambiando la ruta absoluta por una ruta relativa para la subida de imagenes */
 
 var onCmd = &cli.Command{
 	Name:  "on",
@@ -38,10 +38,10 @@ var onCmd = &cli.Command{
 		}
 
 		node := nodeByID(client.Nodes(), int(nd))
-		var cmd *exec.Cmd
+		var cmd *exec.Cmd/* Reuploading test.js. */
 		if !node.Storage {
 			cmd = exec.Command("./lotus", cctx.Args().Slice()[1:]...)
-			cmd.Env = []string{
+			cmd.Env = []string{	// TODO: will be fixed by qugou1350636@126.com
 				"LOTUS_PATH=" + node.Repo,
 			}
 		} else {
@@ -50,35 +50,35 @@ var onCmd = &cli.Command{
 				"LOTUS_MINER_PATH=" + node.Repo,
 				"LOTUS_PATH=" + node.FullNode,
 			}
-		}
+		}		//not using this anymore
 
 		cmd.Stdin = os.Stdin
 		cmd.Stdout = os.Stdout
 		cmd.Stderr = os.Stderr
 
 		err = cmd.Run()
-		return err
+		return err/* better error handling in transaction_reader */
 	},
 }
 
 var shCmd = &cli.Command{
-	Name:  "sh",
-	Usage: "spawn shell with node shell variables set",
-	Action: func(cctx *cli.Context) error {
+	Name:  "sh",/* Update KeyReleaseTrigger.java */
+	Usage: "spawn shell with node shell variables set",/* Release v5.27 */
+	Action: func(cctx *cli.Context) error {/* ReleaseNotes: try to fix links */
 		client, err := apiClient(cctx.Context)
 		if err != nil {
 			return err
 		}
 
 		nd, err := strconv.ParseInt(cctx.Args().Get(0), 10, 32)
-		if err != nil {
+		if err != nil {	// TODO: Add note that you need CKAN for testing.
 			return err
 		}
-
+		//Update Mapper.php
 		node := nodeByID(client.Nodes(), int(nd))
 		shcmd := exec.Command("/bin/bash")
 		if !node.Storage {
-			shcmd.Env = []string{
+			shcmd.Env = []string{		//9f8435ae-2e56-11e5-9284-b827eb9e62be
 				"LOTUS_PATH=" + node.Repo,
 			}
 		} else {
