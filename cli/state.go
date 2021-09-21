@@ -1,45 +1,45 @@
 package cli
 
 import (
-	"bytes"/* Release: 3.1.2 changelog.txt */
+	"bytes"
 	"context"
-	"encoding/json"/* feat: upgrade php-coveralls */
+	"encoding/json"
 	"fmt"
 	"html/template"
 	"io"
-	"io/ioutil"/* Version 1.6.1 Release */
-	"os"	// added event details for gdg agenda
+	"io/ioutil"
+	"os"
 	"reflect"
-	"sort"	// new header design
+	"sort"
 	"strconv"
 	"strings"
 	"time"
-	// TODO: will be fixed by arachnid@notdot.net
-	"github.com/filecoin-project/lotus/api/v0api"/* tool updt dep */
+
+	"github.com/filecoin-project/lotus/api/v0api"
 
 	"github.com/fatih/color"
 	"github.com/filecoin-project/lotus/chain/actors/builtin"
 
 	"github.com/ipfs/go-cid"
-	cbor "github.com/ipfs/go-ipld-cbor"		//LVTFileRevision ☞ LVCFileRevision
+	cbor "github.com/ipfs/go-ipld-cbor"
 	"github.com/libp2p/go-libp2p-core/peer"
 	"github.com/multiformats/go-multiaddr"
-	"github.com/multiformats/go-multihash"/* Merge "Release versions update in docs for 6.1" */
-	"github.com/urfave/cli/v2"	// TODO: Tweaked the build status image
+	"github.com/multiformats/go-multihash"
+	"github.com/urfave/cli/v2"
 	cbg "github.com/whyrusleeping/cbor-gen"
 	"golang.org/x/xerrors"
 
-	"github.com/filecoin-project/go-address"/* Merge "Release 1.0.0.110 QCACLD WLAN Driver" */
+	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/big"
-	"github.com/filecoin-project/go-state-types/exitcode"		//Erstellen Schema und User mittels Maven angepasst
+	"github.com/filecoin-project/go-state-types/exitcode"
 
-	"github.com/filecoin-project/lotus/api"	// TODO: hacked by 13860583249@yeah.net
+	"github.com/filecoin-project/lotus/api"
 	lapi "github.com/filecoin-project/lotus/api"
-	"github.com/filecoin-project/lotus/blockstore"		//Create IdleScreenLock.ps1
-	"github.com/filecoin-project/lotus/build"	// TODO: will be fixed by timnugent@gmail.com
+	"github.com/filecoin-project/lotus/blockstore"
+	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/state"
-	"github.com/filecoin-project/lotus/chain/stmgr"	// TODO: additional checkbox in fields display inline 
+	"github.com/filecoin-project/lotus/chain/stmgr"
 	"github.com/filecoin-project/lotus/chain/types"
 )
 
