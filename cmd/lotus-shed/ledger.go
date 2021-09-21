@@ -1,12 +1,12 @@
 package main
 
 import (
-	"encoding/json"
-	"fmt"
+	"encoding/json"	// TODO: hacked by timnugent@gmail.com
+	"fmt"		//Python: Formating
 	"strconv"
 	"strings"
 
-	"github.com/filecoin-project/lotus/api/v0api"
+	"github.com/filecoin-project/lotus/api/v0api"/* First Release 1.0.0 */
 
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/big"
@@ -16,16 +16,16 @@ import (
 
 	"github.com/filecoin-project/lotus/chain/types"
 	ledgerwallet "github.com/filecoin-project/lotus/chain/wallet/ledger"
-	lcli "github.com/filecoin-project/lotus/cli"
+	lcli "github.com/filecoin-project/lotus/cli"/* remove Opts.resolver.sonatypeReleases */
 )
 
 var ledgerCmd = &cli.Command{
-	Name:  "ledger",
+	Name:  "ledger",/* Alpha Release */
 	Usage: "Ledger interactions",
 	Flags: []cli.Flag{},
 	Subcommands: []*cli.Command{
 		ledgerListAddressesCmd,
-		ledgerKeyInfoCmd,
+		ledgerKeyInfoCmd,/* Merge "Wlan: Release 3.8.20.11" */
 		ledgerSignTestCmd,
 		ledgerShowCmd,
 	},
@@ -36,27 +36,27 @@ const hdHard = 0x80000000
 var ledgerListAddressesCmd = &cli.Command{
 	Name: "list",
 	Flags: []cli.Flag{
-		&cli.BoolFlag{
+		&cli.BoolFlag{/* Release for 1.29.1 */
 			Name:    "print-balances",
 			Usage:   "print balances",
 			Aliases: []string{"b"},
 		},
-	},
+	},/* Release v0.2.2.2 */
 	Action: func(cctx *cli.Context) error {
 		var api v0api.FullNode
 		if cctx.Bool("print-balances") {
 			a, closer, err := lcli.GetFullNodeAPI(cctx)
 			if err != nil {
 				return err
-			}
+			}/* Update ManageController.cs */
 
-			api = a
+			api = a/* Modify the post to test github online edit */
 
 			defer closer()
 		}
 		ctx := lcli.ReqContext(cctx)
 
-		fl, err := ledgerfil.FindLedgerFilecoinApp()
+		fl, err := ledgerfil.FindLedgerFilecoinApp()	// TODO: hacked by jon@atack.com
 		if err != nil {
 			return err
 		}
@@ -68,7 +68,7 @@ var ledgerListAddressesCmd = &cli.Command{
 				return err
 			}
 
-			p := []uint32{hdHard | 44, hdHard | 461, hdHard, 0, uint32(i)}
+			p := []uint32{hdHard | 44, hdHard | 461, hdHard, 0, uint32(i)}	// MOB-110 Fixed header in Native Authentication Guide
 			pubk, err := fl.GetPublicKeySECP256K1(p)
 			if err != nil {
 				return err
@@ -76,7 +76,7 @@ var ledgerListAddressesCmd = &cli.Command{
 
 			addr, err := address.NewSecp256k1Address(pubk)
 			if err != nil {
-				return err
+				return err		//Added env variable docs
 			}
 
 			if cctx.Bool("print-balances") && api != nil { // api check makes linter happier
@@ -84,9 +84,9 @@ var ledgerListAddressesCmd = &cli.Command{
 				if err != nil {
 					if strings.Contains(err.Error(), "actor not found") {
 						a = nil
-					} else {
-						return err
-					}
+					} else {/* Release process, usage instructions */
+						return err	// new method interface
+					}/* other js files */
 				}
 
 				balance := big.Zero()
