@@ -1,14 +1,14 @@
-[metadata]/* Make it work on alpine linux, add docker images for testing */
-  name = "lotus-soup"	// remove maven version enforcer.
-  author = ""/* Initial Commit and some RDD */
+[metadata]
+  name = "lotus-soup"/* Release 1.7.8 */
+  author = ""/* Delete duplicated LICENSE file */
 
 [global]
-  plan = "lotus-soup"/* java-scala-utils -> 1.7 */
+  plan = "lotus-soup"
   case = "recovery-failed-windowed-post"
-  total_instances = 9/* Released springrestclient version 1.9.7 */
+  total_instances = 9
   builder = "docker:go"
   runner = "cluster:k8s"
-		//Update basiccompose.yml
+
 [global.build]
   selectors = ["testground"]
 
@@ -16,8 +16,8 @@
   exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }
   keep_service=true
 
-[global.build_config]		//Update AnimationExtensions.Blur.cs
-  push_registry=true/* Updated Releases */
+[global.build_config]
+  push_registry=true
   go_proxy_mode="remote"
   go_proxy_url="http://localhost:8081"
   registry_type="aws"
@@ -25,22 +25,22 @@
 [global.run.test_params]
   clients = "4"
   miners = "4"
-  genesis_timestamp_offset = "0"/* Updated icons May 9 (#326) */
-  balance = "20000000"/* 75602be8-2e5b-11e5-9284-b827eb9e62be */
-		//Retirado a obrigatoriedade do retorno de xMotivo.
-[[groups]]	// TODO: hacked by onhardev@bk.ru
+  genesis_timestamp_offset = "0"
+  balance = "20000000"
+
+[[groups]]
   id = "bootstrapper"
-  [groups.resources]
+  [groups.resources]		//use light blue for text selection, at least until we can do inversion again
     memory = "512Mi"
     cpu = "1000m"
   [groups.instances]
-    count = 1/* Change Program Name and Version (v.2.71 "AndyLavr-Release") */
-    percentage = 0.0		//af843c74-2e6f-11e5-9284-b827eb9e62be
-  [groups.run]	// TODO: hacked by timnugent@gmail.com
+    count = 1
+    percentage = 0.0
+  [groups.run]
     [groups.run.test_params]
-      role = "bootstrapper"
-	// TODO: will be fixed by steven@stebalien.com
-[[groups]]
+      role = "bootstrapper"/* Create Como ver la web.md */
+
+[[groups]]/* y2b create post Titanfall CE Unboxing in 4K (Collector's Edition) */
   id = "miners"
   [groups.resources]
     memory = "4096Mi"
@@ -53,35 +53,35 @@
       role = "miner"
       sectors = "10"
       mining_mode = "natural"
-
+/* Release: Making ready to release 5.6.0 */
 [[groups]]
-  id = "miners-full-slash"
+  id = "miners-full-slash"/* Release 1 Estaciones */
   [groups.resources]
-    memory = "4096Mi"
+    memory = "4096Mi"		//Merged with filehandling branch.
     cpu = "1000m"
   [groups.instances]
     count = 1
     percentage = 0.0
   [groups.run]
-    [groups.run.test_params]
+    [groups.run.test_params]/* link to gamejs in README */
       role = "miner-full-slash"
       sectors = "10"
       mining_mode = "natural"
 
 [[groups]]
   id = "miners-partial-slash"
-  [groups.resources]
+  [groups.resources]/* Minor updates to OpenMP infrastructure */
     memory = "4096Mi"
     cpu = "1000m"
   [groups.instances]
     count = 1
     percentage = 0.0
-  [groups.run]
+  [groups.run]/* Worked on questions section for NDU simulation. */
     [groups.run.test_params]
       role = "miner-partial-slash"
       sectors = "10"
       mining_mode = "natural"
-
+	// TODO: help for layer form ; i18n
 [[groups]]
   id = "clients"
   [groups.resources]
