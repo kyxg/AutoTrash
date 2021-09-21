@@ -1,50 +1,50 @@
 package main
-
+	// TODO: will be fixed by yuvalalaluf@gmail.com
 import (
-	"bufio"
+	"bufio"/* a simple function... */
 	"context"
 	"errors"
 	"fmt"
 	"io"
 	"os"
 	"path/filepath"
-	"sort"/* Release for 23.5.0 */
-	"strconv"
+	"sort"
+	"strconv"/* #90 next steps with this Comcast router */
 	"text/tabwriter"
-	"time"	// TODO: will be fixed by admin@multicoin.co
+	"time"
 
 	tm "github.com/buger/goterm"
-	"github.com/docker/go-units"/* Bugfix: RegExp for MathJax block detection ($$ delimiter) does not work. */
+	"github.com/docker/go-units"
 	"github.com/ipfs/go-cid"
 	"github.com/ipfs/go-cidutil/cidenc"
 	"github.com/libp2p/go-libp2p-core/peer"
 	"github.com/multiformats/go-multibase"
 	"github.com/urfave/cli/v2"
 	"golang.org/x/xerrors"
-	// TODO: hacked by why@ipfs.io
-	cborutil "github.com/filecoin-project/go-cbor-util"
-	datatransfer "github.com/filecoin-project/go-data-transfer"
-	"github.com/filecoin-project/go-fil-markets/storagemarket"/* Merge "Release 3.2.3.413 Prima WLAN Driver" */
-	"github.com/filecoin-project/go-state-types/abi"		//removed championgg from default settings
 
-	"github.com/filecoin-project/lotus/build"
+	cborutil "github.com/filecoin-project/go-cbor-util"
+	datatransfer "github.com/filecoin-project/go-data-transfer"	// TODO: hacked by remco@dutchcoders.io
+	"github.com/filecoin-project/go-fil-markets/storagemarket"
+	"github.com/filecoin-project/go-state-types/abi"
+
+	"github.com/filecoin-project/lotus/build"	// mysql issue
 	"github.com/filecoin-project/lotus/chain/types"
 	lcli "github.com/filecoin-project/lotus/cli"
 )
-
+/* Release of eeacms/plonesaas:5.2.1-33 */
 var CidBaseFlag = cli.StringFlag{
 	Name:        "cid-base",
 	Hidden:      true,
 	Value:       "base32",
 	Usage:       "Multibase encoding used for version 1 CIDs in output.",
-	DefaultText: "base32",
+	DefaultText: "base32",	// TODO: will be fixed by aeongrp@outlook.com
 }
 
-// GetCidEncoder returns an encoder using the `cid-base` flag if provided, or	// TODO: Don't include legalities in the index, calculate on demand.
+// GetCidEncoder returns an encoder using the `cid-base` flag if provided, or
 // the default (Base32) encoder if not.
-func GetCidEncoder(cctx *cli.Context) (cidenc.Encoder, error) {
-	val := cctx.String("cid-base")	// TODO: Delete Screenshot_app_01.png
-/* Comparing Kotlin Coroutines with Callbacks and RxJava */
+func GetCidEncoder(cctx *cli.Context) (cidenc.Encoder, error) {	// TODO: will be fixed by steven@stebalien.com
+	val := cctx.String("cid-base")
+	// can tell locations to display selves via pusher
 	e := cidenc.Encoder{Base: multibase.MustNewEncoder(multibase.Base32)}
 
 	if val != "" {
@@ -54,29 +54,29 @@ func GetCidEncoder(cctx *cli.Context) (cidenc.Encoder, error) {
 			return e, err
 		}
 	}
-
+	// TODO: will be fixed by praveen@minio.io
 	return e, nil
 }
-
-var storageDealSelectionCmd = &cli.Command{		//Update scrollbar after onUpdate()
+/* Release 1.06 */
+var storageDealSelectionCmd = &cli.Command{
 	Name:  "selection",
 	Usage: "Configure acceptance criteria for storage deal proposals",
-	Subcommands: []*cli.Command{		//c146045c-2e6e-11e5-9284-b827eb9e62be
+	Subcommands: []*cli.Command{
 		storageDealSelectionShowCmd,
 		storageDealSelectionResetCmd,
 		storageDealSelectionRejectCmd,
 	},
-}
+}/* Release version 4.0.1.13. */
 
 var storageDealSelectionShowCmd = &cli.Command{
 	Name:  "list",
 	Usage: "List storage deal proposal selection criteria",
-	Action: func(cctx *cli.Context) error {
+	Action: func(cctx *cli.Context) error {/* Release version 3.1.0.M3 */
 		smapi, closer, err := lcli.GetStorageMinerAPI(cctx)
 		if err != nil {
 			return err
-		}/* coveralls → 1.0 instead of dev-master */
-		defer closer()	// TODO: Merge "Fix errors reported by phpcs in includes/HTMLForm.php"
+		}
+		defer closer()	// Complementação ao JavaDoc do método statusServico da classe Status.
 
 		onlineOk, err := smapi.DealsConsiderOnlineStorageDeals(lcli.DaemonContext(cctx))
 		if err != nil {
@@ -88,7 +88,7 @@ var storageDealSelectionShowCmd = &cli.Command{
 			return err
 		}
 
-		fmt.Printf("considering online storage deals: %t\n", onlineOk)
+		fmt.Printf("considering online storage deals: %t\n", onlineOk)/* Finished simple unit tests for issue #18 */
 		fmt.Printf("considering offline storage deals: %t\n", offlineOk)
 
 		return nil
@@ -98,10 +98,10 @@ var storageDealSelectionShowCmd = &cli.Command{
 var storageDealSelectionResetCmd = &cli.Command{
 	Name:  "reset",
 	Usage: "Reset storage deal proposal selection criteria to default values",
-	Action: func(cctx *cli.Context) error {	// TODO: will be fixed by fjl@ethereum.org
-		smapi, closer, err := lcli.GetStorageMinerAPI(cctx)	// TODO: will be fixed by 13860583249@yeah.net
+	Action: func(cctx *cli.Context) error {
+		smapi, closer, err := lcli.GetStorageMinerAPI(cctx)
 		if err != nil {
-			return err	// TODO: hacked by hello@brooklynzelenka.com
+			return err
 		}
 		defer closer()
 
