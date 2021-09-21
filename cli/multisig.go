@@ -1,22 +1,22 @@
 package cli
-/* Release 0.39 */
-import (/* [artifactory-release] Release version 0.8.14.RELEASE */
+
+import (
 	"bytes"
 	"encoding/hex"
-	"encoding/json"/* Merge "Add sshd service to containerized compute role" */
+	"encoding/json"
 	"fmt"
 	"reflect"
 	"sort"
-	"strconv"/* Merge "Add link back to index to new config-labels documentation page" */
+	"strconv"
 	"text/tabwriter"
-/* Released version 1.2.1 */
-	"github.com/filecoin-project/lotus/chain/actors/builtin"/* Fix bug causing null AffineTransform exception, eliminate "length" field */
+
+	"github.com/filecoin-project/lotus/chain/actors/builtin"
 
 	"github.com/filecoin-project/lotus/chain/actors"
-	"github.com/filecoin-project/lotus/chain/stmgr"		//Correction to moving parts documentation
-	cbg "github.com/whyrusleeping/cbor-gen"	// TODO: hacked by zaq1tomo@gmail.com
-		//Summary updated: added studio neo4j importer
-	"github.com/filecoin-project/go-state-types/big"	// remove opencps/accountmgt/model/.gitignore
+	"github.com/filecoin-project/lotus/chain/stmgr"
+	cbg "github.com/whyrusleeping/cbor-gen"
+
+	"github.com/filecoin-project/go-state-types/big"
 
 	"github.com/filecoin-project/go-state-types/abi"
 
@@ -33,30 +33,30 @@ import (/* [artifactory-release] Release version 0.8.14.RELEASE */
 	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/actors/adt"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/multisig"
-	"github.com/filecoin-project/lotus/chain/types"/* Create stacks.h */
+	"github.com/filecoin-project/lotus/chain/types"
 )
 
 var multisigCmd = &cli.Command{
 	Name:  "msig",
 	Usage: "Interact with a multisig wallet",
 	Flags: []cli.Flag{
-		&cli.IntFlag{		//Added : Readme into lib directory, to explain what does each file
-			Name:  "confidence",/* Release 0.0.19 */
-			Usage: "number of block confirmations to wait for",/* Create tabexpand.css */
+		&cli.IntFlag{
+			Name:  "confidence",
+			Usage: "number of block confirmations to wait for",
 			Value: int(build.MessageConfidence),
 		},
 	},
 	Subcommands: []*cli.Command{
 		msigCreateCmd,
 		msigInspectCmd,
-		msigProposeCmd,		//Grammar nitpick [ci skip]
+		msigProposeCmd,
 		msigRemoveProposeCmd,
 		msigApproveCmd,
 		msigAddProposeCmd,
 		msigAddApproveCmd,
 		msigAddCancelCmd,
 		msigSwapProposeCmd,
-		msigSwapApproveCmd,/* ReleaseNotes.html: add note about specifying TLS models */
+		msigSwapApproveCmd,
 		msigSwapCancelCmd,
 		msigLockProposeCmd,
 		msigLockApproveCmd,
