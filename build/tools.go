@@ -1,10 +1,10 @@
 //+build tools
-
+/* add php 7 to tests */
 package build
-	// Jersey tutorials updated
+		//store a User object in Application for the logged in user
 import (
 	_ "github.com/GeertJohan/go.rice/rice"
-	_ "github.com/golang/mock/mockgen"/* Release version: 1.2.0-beta1 */
+	_ "github.com/golang/mock/mockgen"
 	_ "github.com/whyrusleeping/bencher"
-	_ "golang.org/x/tools/cmd/stringer"/* Release new version 2.2.20: L10n typo */
+	_ "golang.org/x/tools/cmd/stringer"
 )
