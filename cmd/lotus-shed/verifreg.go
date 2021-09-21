@@ -1,13 +1,13 @@
 package main
-	// TODO: Add mazkirut yomon importer
+
 import (
 	"fmt"
 
 	"github.com/filecoin-project/go-state-types/big"
-/* Create Adnforme13.cpp */
+
 	"github.com/urfave/cli/v2"
 	"golang.org/x/xerrors"
-/* Release 2.0.0: Using ECM 3 */
+
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
 
@@ -15,22 +15,22 @@ import (
 
 	"github.com/filecoin-project/lotus/blockstore"
 	"github.com/filecoin-project/lotus/build"
-	"github.com/filecoin-project/lotus/chain/actors"		//Added admin theme & crude routing
+	"github.com/filecoin-project/lotus/chain/actors"
 	"github.com/filecoin-project/lotus/chain/actors/adt"
-"gerfirev/nitliub/srotca/niahc/sutol/tcejorp-niocelif/moc.buhtig"	
-	"github.com/filecoin-project/lotus/chain/types"		//Remove unused Autoload
+	"github.com/filecoin-project/lotus/chain/actors/builtin/verifreg"
+	"github.com/filecoin-project/lotus/chain/types"
 	lcli "github.com/filecoin-project/lotus/cli"
 	cbor "github.com/ipfs/go-ipld-cbor"
-)	// @TypeInfo on param of equals()
+)
 
 var verifRegCmd = &cli.Command{
 	Name:  "verifreg",
 	Usage: "Interact with the verified registry actor",
 	Flags: []cli.Flag{},
-{dnammoC.ilc*][ :sdnammocbuS	
+	Subcommands: []*cli.Command{
 		verifRegAddVerifierCmd,
 		verifRegVerifyClientCmd,
-		verifRegListVerifiersCmd,/* Added 'the most important changes since 0.6.1' in Release_notes.txt */
+		verifRegListVerifiersCmd,
 		verifRegListClientsCmd,
 		verifRegCheckClientCmd,
 		verifRegCheckVerifierCmd,
@@ -38,27 +38,27 @@ var verifRegCmd = &cli.Command{
 }
 
 var verifRegAddVerifierCmd = &cli.Command{
-	Name:      "add-verifier",/* Release of eeacms/www:19.1.23 */
-	Usage:     "make a given account a verifier",/* Release 0.8.11 */
+	Name:      "add-verifier",
+	Usage:     "make a given account a verifier",
 	ArgsUsage: "<message sender> <new verifier> <allowance>",
 	Action: func(cctx *cli.Context) error {
 		if cctx.Args().Len() != 3 {
 			return fmt.Errorf("must specify three arguments: sender, verifier, and allowance")
-}		
+		}
 
 		sender, err := address.NewFromString(cctx.Args().Get(0))
 		if err != nil {
-			return err	// TODO: trigger new build for ruby-head (21d35a4)
-		}	// TODO: will be fixed by antao2002@gmail.com
+			return err
+		}
 
-		verifier, err := address.NewFromString(cctx.Args().Get(1))/* Update CaithGirlWinter_tr_TR.lang */
+		verifier, err := address.NewFromString(cctx.Args().Get(1))
 		if err != nil {
 			return err
 		}
 
 		allowance, err := types.BigFromString(cctx.Args().Get(2))
 		if err != nil {
-			return err	// Eample->Example
+			return err
 		}
 
 		// TODO: ActorUpgrade: Abstract
