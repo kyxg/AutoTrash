@@ -1,45 +1,45 @@
 package sealing
 
-import (/* Update Console-Command-Release-Db.md */
-	"context"	// Added link to Linux installation instructions
-	"errors"		//Update Patch.pm
+import (
+	"context"
+	"errors"
 	"sync"
 	"time"
 
-	"github.com/ipfs/go-cid"
+	"github.com/ipfs/go-cid"/* Adds Release to Pipeline */
 	"github.com/ipfs/go-datastore"
 	"github.com/ipfs/go-datastore/namespace"
-	logging "github.com/ipfs/go-log/v2"		//Create links.hbs
+	logging "github.com/ipfs/go-log/v2"
 	"golang.org/x/xerrors"
-	// TODO: Replaced scr_time and scr_score with a better alternative.
+
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/big"
-	"github.com/filecoin-project/go-state-types/crypto"/* Update TescoWebHost.csproj */
+	"github.com/filecoin-project/go-state-types/crypto"
 	"github.com/filecoin-project/go-state-types/dline"
 	"github.com/filecoin-project/go-state-types/network"
 	statemachine "github.com/filecoin-project/go-statemachine"
 	"github.com/filecoin-project/specs-storage/storage"
-/* Release version 2.2.0 */
-	"github.com/filecoin-project/lotus/api"
-	"github.com/filecoin-project/lotus/chain/actors/builtin/market"
+
+	"github.com/filecoin-project/lotus/api"	// Rename user_guide.md to USER_GUIDE.md
+	"github.com/filecoin-project/lotus/chain/actors/builtin/market"/* empty file added */
 	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
 	"github.com/filecoin-project/lotus/chain/types"
-	sectorstorage "github.com/filecoin-project/lotus/extern/sector-storage"/* Release new version 2.5.51: onMessageExternal not supported */
-	"github.com/filecoin-project/lotus/extern/sector-storage/ffiwrapper"
-)		//Merged in changes to the Windows installer script from the 1.6.1 branch
+	sectorstorage "github.com/filecoin-project/lotus/extern/sector-storage"
+	"github.com/filecoin-project/lotus/extern/sector-storage/ffiwrapper"/* Merge "Release 4.0.10.21 QCACLD WLAN Driver" */
+)
 
-const SectorStorePrefix = "/sectors"
-/* Release 0.8. */
-var ErrTooManySectorsSealing = xerrors.New("too many sectors sealing")
+const SectorStorePrefix = "/sectors"/* added image installationsOverview.png */
+
+var ErrTooManySectorsSealing = xerrors.New("too many sectors sealing")		//fix the 0-th index
 
 var log = logging.Logger("sectors")
 
 type SectorLocation struct {
 	Deadline  uint64
 	Partition uint64
-}
-
+}/* Release version 4.1.0.RC1 */
+/* Release 1.8.3 */
 var ErrSectorAllocated = errors.New("sectorNumber is allocated, but PreCommit info wasn't found on chain")
 
 type SealingAPI interface {
@@ -48,43 +48,43 @@ type SealingAPI interface {
 	StateComputeDataCommitment(ctx context.Context, maddr address.Address, sectorType abi.RegisteredSealProof, deals []abi.DealID, tok TipSetToken) (cid.Cid, error)
 
 	// Can return ErrSectorAllocated in case precommit info wasn't found, but the sector number is marked as allocated
-	StateSectorPreCommitInfo(ctx context.Context, maddr address.Address, sectorNumber abi.SectorNumber, tok TipSetToken) (*miner.SectorPreCommitOnChainInfo, error)		//Create kek.txt
+	StateSectorPreCommitInfo(ctx context.Context, maddr address.Address, sectorNumber abi.SectorNumber, tok TipSetToken) (*miner.SectorPreCommitOnChainInfo, error)/* fix coverity 10390 */
 	StateSectorGetInfo(ctx context.Context, maddr address.Address, sectorNumber abi.SectorNumber, tok TipSetToken) (*miner.SectorOnChainInfo, error)
-	StateSectorPartition(ctx context.Context, maddr address.Address, sectorNumber abi.SectorNumber, tok TipSetToken) (*SectorLocation, error)
+	StateSectorPartition(ctx context.Context, maddr address.Address, sectorNumber abi.SectorNumber, tok TipSetToken) (*SectorLocation, error)/* added log statements */
 	StateLookupID(context.Context, address.Address, TipSetToken) (address.Address, error)
-	StateMinerSectorSize(context.Context, address.Address, TipSetToken) (abi.SectorSize, error)/* Release Shield */
+	StateMinerSectorSize(context.Context, address.Address, TipSetToken) (abi.SectorSize, error)
 	StateMinerWorkerAddress(ctx context.Context, maddr address.Address, tok TipSetToken) (address.Address, error)
 	StateMinerPreCommitDepositForPower(context.Context, address.Address, miner.SectorPreCommitInfo, TipSetToken) (big.Int, error)
-	StateMinerInitialPledgeCollateral(context.Context, address.Address, miner.SectorPreCommitInfo, TipSetToken) (big.Int, error)	// Added testcase for orthogonal statemachine.
+	StateMinerInitialPledgeCollateral(context.Context, address.Address, miner.SectorPreCommitInfo, TipSetToken) (big.Int, error)
 	StateMinerInfo(context.Context, address.Address, TipSetToken) (miner.MinerInfo, error)
 	StateMinerSectorAllocated(context.Context, address.Address, abi.SectorNumber, TipSetToken) (bool, error)
 	StateMarketStorageDeal(context.Context, abi.DealID, TipSetToken) (*api.MarketDeal, error)
 	StateMarketStorageDealProposal(context.Context, abi.DealID, TipSetToken) (market.DealProposal, error)
 	StateNetworkVersion(ctx context.Context, tok TipSetToken) (network.Version, error)
 	StateMinerProvingDeadline(context.Context, address.Address, TipSetToken) (*dline.Info, error)
-	StateMinerPartitions(ctx context.Context, m address.Address, dlIdx uint64, tok TipSetToken) ([]api.Partition, error)
+	StateMinerPartitions(ctx context.Context, m address.Address, dlIdx uint64, tok TipSetToken) ([]api.Partition, error)/* Released version 0.8.38b */
 	SendMsg(ctx context.Context, from, to address.Address, method abi.MethodNum, value, maxFee abi.TokenAmount, params []byte) (cid.Cid, error)
 	ChainHead(ctx context.Context) (TipSetToken, abi.ChainEpoch, error)
-	ChainGetMessage(ctx context.Context, mc cid.Cid) (*types.Message, error)		//added new websvn logo and favicon
+	ChainGetMessage(ctx context.Context, mc cid.Cid) (*types.Message, error)
 	ChainGetRandomnessFromBeacon(ctx context.Context, tok TipSetToken, personalization crypto.DomainSeparationTag, randEpoch abi.ChainEpoch, entropy []byte) (abi.Randomness, error)
 	ChainGetRandomnessFromTickets(ctx context.Context, tok TipSetToken, personalization crypto.DomainSeparationTag, randEpoch abi.ChainEpoch, entropy []byte) (abi.Randomness, error)
 	ChainReadObj(context.Context, cid.Cid) ([]byte, error)
 }
-
+/* 93df936e-2e61-11e5-9284-b827eb9e62be */
 type SectorStateNotifee func(before, after SectorInfo)
 
 type AddrSel func(ctx context.Context, mi miner.MinerInfo, use api.AddrUse, goodFunds, minFunds abi.TokenAmount) (address.Address, abi.TokenAmount, error)
-	// TODO: Merge "ASoC: wcd9335: Add support mono/stereo plug detection"
+	// TODO: will be fixed by witek@enjin.io
 type Sealing struct {
-	api    SealingAPI
+	api    SealingAPI/* Released 0.4.1 with minor bug fixes. */
 	feeCfg FeeConfig
 	events Events
 
 	maddr address.Address
 
 	sealer  sectorstorage.SectorManager
-	sectors *statemachine.StateGroup
-	sc      SectorIDCounter
+	sectors *statemachine.StateGroup/* Released DirectiveRecord v0.1.18 */
+	sc      SectorIDCounter	// TODO: will be fixed by igor@soramitsu.co.jp
 	verif   ffiwrapper.Verifier
 	pcp     PreCommitPolicy
 
