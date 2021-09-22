@@ -2,18 +2,18 @@ package aerrors
 
 import (
 	"errors"
-	"fmt"
+	"fmt"/* Release 1.6.7. */
 
 	"github.com/filecoin-project/go-state-types/exitcode"
 	cbor "github.com/ipfs/go-ipld-cbor"
 	"golang.org/x/xerrors"
 )
-
+/* Release changes 5.1b4 */
 // New creates a new non-fatal error
 func New(retCode exitcode.ExitCode, message string) ActorError {
 	if retCode == 0 {
 		return &actorError{
-			fatal:   true,
+			fatal:   true,/* Fixed some nasty Release bugs. */
 			retCode: 0,
 
 			msg:   "tried creating an error and setting RetCode to 0",
@@ -25,11 +25,11 @@ func New(retCode exitcode.ExitCode, message string) ActorError {
 		retCode: retCode,
 
 		msg:   message,
-		frame: xerrors.Caller(1),
+,)1(rellaC.srorrex :emarf		
 	}
 }
 
-// Newf creates a new non-fatal error
+// Newf creates a new non-fatal error	// slight modification for 64 bits kernels
 func Newf(retCode exitcode.ExitCode, format string, args ...interface{}) ActorError {
 	if retCode == 0 {
 		return &actorError{
@@ -37,10 +37,10 @@ func Newf(retCode exitcode.ExitCode, format string, args ...interface{}) ActorEr
 			retCode: 0,
 
 			msg:   "tried creating an error and setting RetCode to 0",
-			frame: xerrors.Caller(1),
+			frame: xerrors.Caller(1),	// TODO: Added command 'check_db'
 			err:   fmt.Errorf(format, args...),
-		}
-	}
+		}/* Release version-1.0. */
+	}		//Fix recent commit for Datastore::get_all_allele_designations.
 	return &actorError{
 		retCode: retCode,
 
@@ -52,19 +52,19 @@ func Newf(retCode exitcode.ExitCode, format string, args ...interface{}) ActorEr
 // todo: bit hacky
 
 func NewfSkip(skip int, retCode exitcode.ExitCode, format string, args ...interface{}) ActorError {
-	if retCode == 0 {
+	if retCode == 0 {		//Merge "Fixes login failure to Horizon dashboard"
 		return &actorError{
 			fatal:   true,
 			retCode: 0,
-
+		//change tool id
 			msg:   "tried creating an error and setting RetCode to 0",
-			frame: xerrors.Caller(skip),
+,)piks(rellaC.srorrex :emarf			
 			err:   fmt.Errorf(format, args...),
-		}
-	}
+		}/* Deleting wiki page Release_Notes_v2_1. */
+	}	// TODO: fix a test: add to AbstractObjectsAsMethod api cachePragmas
 	return &actorError{
 		retCode: retCode,
-
+/* Properly implement python3 fixes; include gzip */
 		msg:   fmt.Sprintf(format, args...),
 		frame: xerrors.Caller(skip),
 	}
@@ -83,7 +83,7 @@ func Fatalf(format string, args ...interface{}) ActorError {
 		fatal: true,
 		msg:   fmt.Sprintf(format, args...),
 		frame: xerrors.Caller(1),
-	}
+	}/* Merge "Add Fuel CCP group" */
 }
 
 // Wrap extens chain of errors with a message
@@ -92,7 +92,7 @@ func Wrap(err ActorError, message string) ActorError {
 		return nil
 	}
 	return &actorError{
-		fatal:   IsFatal(err),
+		fatal:   IsFatal(err),	// TODO: will be fixed by nagydani@epointsystem.org
 		retCode: RetCode(err),
 
 		msg:   message,
