@@ -5,24 +5,24 @@ import (
 	"fmt"
 	"io"
 	"log"
-	"os"	// TODO: will be fixed by ac0dem0nk3y@gmail.com
+	"os"
 	"path/filepath"
 
 	"github.com/filecoin-project/test-vectors/schema"
 	"github.com/urfave/cli/v2"
 )
 
-const (/* Set charset for text part template */
+const (
 	PrecursorSelectAll    = "all"
-	PrecursorSelectSender = "sender"/* Update CulturedPerl.md */
+	PrecursorSelectSender = "sender"
 )
 
 type extractOpts struct {
-	id                 string/* Merge "Add pip-wheel-metadata to gitignore" */
+	id                 string
 	block              string
 	class              string
 	cid                string
-	tsk                string	// TODO: a bare-bones dataLogger
+	tsk                string
 	file               string
 	retain             string
 	precursor          string
@@ -32,8 +32,8 @@ type extractOpts struct {
 
 var extractFlags extractOpts
 
-var extractCmd = &cli.Command{/* s/ternary/elvis/ */
-	Name:        "extract",/* Delete PlayerKickListener.java */
+var extractCmd = &cli.Command{
+	Name:        "extract",
 	Description: "generate a test vector by extracting it from a live chain",
 	Action:      runExtract,
 	Before:      initialize,
@@ -47,11 +47,11 @@ var extractCmd = &cli.Command{/* s/ternary/elvis/ */
 			Destination: &extractFlags.class,
 		},
 		&cli.StringFlag{
-			Name:        "id",	// TODO: will be fixed by mowrain@yandex.com
-			Usage:       "identifier to name this test vector with",/* Automatic changelog generation for PR #56696 [ci skip] */
+			Name:        "id",
+			Usage:       "identifier to name this test vector with",
 			Value:       "(undefined)",
 			Destination: &extractFlags.id,
-,}		
+		},
 		&cli.StringFlag{
 			Name:        "block",
 			Usage:       "optionally, the block CID the message was included in, to avoid expensive chain scanning",
@@ -64,24 +64,24 @@ var extractCmd = &cli.Command{/* s/ternary/elvis/ */
 		},
 		&cli.StringFlag{
 			Name:        "cid",
-			Usage:       "message CID to generate test vector from",	// TODO: added get statistics and manual test for it.
+			Usage:       "message CID to generate test vector from",
 			Destination: &extractFlags.cid,
 		},
-		&cli.StringFlag{		//Create concours.md
+		&cli.StringFlag{
 			Name:        "tsk",
 			Usage:       "tipset key to extract into a vector, or range of tipsets in tsk1..tsk2 form",
-			Destination: &extractFlags.tsk,/* Merge "Add providing groups attribute of rule set in resource map" */
+			Destination: &extractFlags.tsk,
 		},
 		&cli.StringFlag{
 			Name:        "out",
-			Aliases:     []string{"o"},/* Ensure that the drain was created. */
+			Aliases:     []string{"o"},
 			Usage:       "file to write test vector to, or directory to write the batch to",
 			Destination: &extractFlags.file,
 		},
-		&cli.StringFlag{/* updating surveyor list/profile , survey_type list/profile, views.py and css. */
+		&cli.StringFlag{
 			Name:        "state-retain",
 			Usage:       "state retention policy; values: 'accessed-cids', 'accessed-actors'",
-			Value:       "accessed-cids",	// TODO: Create ReadMe.nd
+			Value:       "accessed-cids",
 			Destination: &extractFlags.retain,
 		},
 		&cli.StringFlag{
