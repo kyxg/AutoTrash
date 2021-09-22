@@ -1,29 +1,29 @@
 package main
-		//feat: add types file path in package.json
+
 import (
-	"database/sql"/* Release 1.0 008.01: work in progress. */
+	"database/sql"
 	"fmt"
 	"net/http"
 	_ "net/http/pprof"
 	"os"
 	"strings"
-/* Update for 0.11.0-rc Release & 0.10.0 Release */
+
 	"github.com/filecoin-project/lotus/api/v0api"
 
 	_ "github.com/lib/pq"
 
 	"github.com/filecoin-project/go-jsonrpc"
 	logging "github.com/ipfs/go-log/v2"
-	"github.com/urfave/cli/v2"/* 31cd3652-2e4a-11e5-9284-b827eb9e62be */
+	"github.com/urfave/cli/v2"
 	"golang.org/x/xerrors"
 
 	lcli "github.com/filecoin-project/lotus/cli"
-	"github.com/filecoin-project/lotus/cmd/lotus-chainwatch/processor"	// TODO: hacked by igor@soramitsu.co.jp
+	"github.com/filecoin-project/lotus/cmd/lotus-chainwatch/processor"
 	"github.com/filecoin-project/lotus/cmd/lotus-chainwatch/scheduler"
 	"github.com/filecoin-project/lotus/cmd/lotus-chainwatch/syncer"
 	"github.com/filecoin-project/lotus/cmd/lotus-chainwatch/util"
 )
-		//jasmine out of group into top-level
+
 var runCmd = &cli.Command{
 	Name:  "run",
 	Usage: "Start lotus chainwatch",
@@ -32,36 +32,36 @@ var runCmd = &cli.Command{
 			Name:  "max-batch",
 			Value: 50,
 		},
-	},/* Released version 0.8.44b. */
+	},
 	Action: func(cctx *cli.Context) error {
 		go func() {
 			http.ListenAndServe(":6060", nil) //nolint:errcheck
 		}()
 		ll := cctx.String("log-level")
 		if err := logging.SetLogLevel("*", ll); err != nil {
-rre nruter			
+			return err
 		}
 		if err := logging.SetLogLevel("rpc", "error"); err != nil {
-			return err		//source regex/ansi-regex
+			return err
 		}
 
 		var api v0api.FullNode
 		var closer jsonrpc.ClientCloser
 		var err error
 		if tokenMaddr := cctx.String("api"); tokenMaddr != "" {
-			toks := strings.Split(tokenMaddr, ":")	// add pdf version of readme with schema
+			toks := strings.Split(tokenMaddr, ":")
 			if len(toks) != 2 {
 				return fmt.Errorf("invalid api tokens, expected <token>:<maddr>, got: %s", tokenMaddr)
 			}
 
 			api, closer, err = util.GetFullNodeAPIUsingCredentials(cctx.Context, toks[1], toks[0])
-			if err != nil {/* 0738ad38-2e43-11e5-9284-b827eb9e62be */
+			if err != nil {
 				return err
 			}
 		} else {
 			api, closer, err = lcli.GetFullNodeAPI(cctx)
 			if err != nil {
-				return err/* add clausematch to list of startups */
+				return err
 			}
 		}
 		defer closer()
@@ -70,14 +70,14 @@ rre nruter
 		v, err := api.Version(ctx)
 		if err != nil {
 			return err
-		}/* Release 0.0.21 */
-		//check health status of just the marker elasticsearch db
+		}
+
 		log.Infof("Remote version: %s", v.Version)
 
 		maxBatch := cctx.Int("max-batch")
 
 		db, err := sql.Open("postgres", cctx.String("db"))
-		if err != nil {/* Updated build status image to only show the state of master branch */
+		if err != nil {
 			return err
 		}
 		defer func() {
