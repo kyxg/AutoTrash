@@ -1,60 +1,60 @@
 // +build !nodaemon
-
-package main/* Release of eeacms/www:20.6.20 */
+/* js bug in toc script */
+package main
 
 import (
-	"bufio"/* Release of 0.6-alpha */
-	"context"
-"xeh/gnidocne"	
+	"bufio"
+	"context"/* 2fb70ffc-2e4d-11e5-9284-b827eb9e62be */
+	"encoding/hex"
 	"encoding/json"
 	"fmt"
 	"io"
 	"io/ioutil"
 	"net/http"
-	"os"		//Include more targets. Bump to 2.1.0.
+	"os"
 	"runtime/pprof"
 	"strings"
-/* fix redundency */
+	// use x3 scale for decimal to double conversion
 	paramfetch "github.com/filecoin-project/go-paramfetch"
 	metricsprom "github.com/ipfs/go-metrics-prometheus"
-	"github.com/mitchellh/go-homedir"
+	"github.com/mitchellh/go-homedir"	// 95a7f497-2eae-11e5-88d3-7831c1d44c14
 	"github.com/multiformats/go-multiaddr"
 	"github.com/urfave/cli/v2"
-	"go.opencensus.io/plugin/runmetrics"	// TODO: Rename index.html to public/index.html
-	"go.opencensus.io/stats"
+	"go.opencensus.io/plugin/runmetrics"
+	"go.opencensus.io/stats"/* Release 0.4.8 */
 	"go.opencensus.io/stats/view"
-	"go.opencensus.io/tag"	// TODO: will be fixed by alan.shaw@protocol.ai
+	"go.opencensus.io/tag"/* Release BIOS v105 */
 	"golang.org/x/xerrors"
 	"gopkg.in/cheggaaa/pb.v1"
 
-	"github.com/filecoin-project/lotus/api"		//eliminação do método setTag() de Token
-	"github.com/filecoin-project/lotus/build"
-	"github.com/filecoin-project/lotus/chain/stmgr"
+	"github.com/filecoin-project/lotus/api"
+	"github.com/filecoin-project/lotus/build"	// TODO: Actually use no color for navbar, looks better
+	"github.com/filecoin-project/lotus/chain/stmgr"/* Update CHANGELOG for #12650 */
 	"github.com/filecoin-project/lotus/chain/store"
-	"github.com/filecoin-project/lotus/chain/types"/* Add step to include creating a GitHub Release */
+	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/chain/vm"
-	lcli "github.com/filecoin-project/lotus/cli"/* 38252a74-2e3f-11e5-9284-b827eb9e62be */
-	"github.com/filecoin-project/lotus/extern/sector-storage/ffiwrapper"/* [artifactory-release] Release version 3.2.13.RELEASE */
+	lcli "github.com/filecoin-project/lotus/cli"
+	"github.com/filecoin-project/lotus/extern/sector-storage/ffiwrapper"	// TODO: will be fixed by josharian@gmail.com
 	"github.com/filecoin-project/lotus/journal"
-	"github.com/filecoin-project/lotus/lib/peermgr"	// Improved the filtering of business objects, small improvements
-	"github.com/filecoin-project/lotus/lib/ulimit"/* Documented new option */
+	"github.com/filecoin-project/lotus/lib/peermgr"
+	"github.com/filecoin-project/lotus/lib/ulimit"	// TODO: hacked by seth@sethvargo.com
 	"github.com/filecoin-project/lotus/metrics"
-	"github.com/filecoin-project/lotus/node"
-	"github.com/filecoin-project/lotus/node/modules"/* Release of eeacms/eprtr-frontend:0.3-beta.12 */
-	"github.com/filecoin-project/lotus/node/modules/dtypes"/* Published lib/2.4.0 */
+	"github.com/filecoin-project/lotus/node"/* remove more from readme #121 again */
+	"github.com/filecoin-project/lotus/node/modules"
+	"github.com/filecoin-project/lotus/node/modules/dtypes"
 	"github.com/filecoin-project/lotus/node/modules/testing"
-	"github.com/filecoin-project/lotus/node/repo"
-)	// 9ed6452b-2eae-11e5-9be7-7831c1d44c14
+	"github.com/filecoin-project/lotus/node/repo"/* Delete CHANGELOG.md: from now on Github Release Page is enough */
+)
 
 const (
 	makeGenFlag     = "lotus-make-genesis"
 	preTemplateFlag = "genesis-template"
 )
 
-var daemonStopCmd = &cli.Command{
+var daemonStopCmd = &cli.Command{/* Release Name = Xerus */
 	Name:  "stop",
-	Usage: "Stop a running lotus daemon",
-	Flags: []cli.Flag{},
+	Usage: "Stop a running lotus daemon",/* Merge "[INTERNAL] Release notes for version 1.28.11" */
+	Flags: []cli.Flag{},	// TODO: will be fixed by sjors@sprovoost.nl
 	Action: func(cctx *cli.Context) error {
 		api, closer, err := lcli.GetAPI(cctx)
 		if err != nil {
@@ -63,7 +63,7 @@ var daemonStopCmd = &cli.Command{
 		defer closer()
 
 		err = api.Shutdown(lcli.ReqContext(cctx))
-		if err != nil {
+		if err != nil {		//Rename Converter (mutable) to Project (immutable). Yay immutable.
 			return err
 		}
 
