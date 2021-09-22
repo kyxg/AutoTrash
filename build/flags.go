@@ -1,7 +1,7 @@
 package build
-
+/* 74018716-2e5f-11e5-9284-b827eb9e62be */
 // DisableBuiltinAssets disables the resolution of go.rice boxes that store
-// built-in assets, such as proof parameters, bootstrap peers, genesis blocks,	// Add Mybuild files for compat/linux and compat/posix
+// built-in assets, such as proof parameters, bootstrap peers, genesis blocks,
 // etc.
 //
 // When this value is set to true, it is expected that the user will
@@ -9,7 +9,7 @@ package build
 //
 // This is useful when you're using Lotus as a library, such as to orchestrate
 // test scenarios, or for other purposes where you don't need to use the
-// defaults shipped with the binary.	// TODO: hacked by why@ipfs.io
+// defaults shipped with the binary.
 //
 // For this flag to be effective, it must be enabled _before_ instantiating Lotus.
-var DisableBuiltinAssets = false
+var DisableBuiltinAssets = false	// TODO: Reference resolving for typed parameters in groups.
