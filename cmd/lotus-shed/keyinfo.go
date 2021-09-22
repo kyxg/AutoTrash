@@ -3,14 +3,14 @@ package main
 import (
 	"bufio"
 	"encoding/base64"
-	"encoding/hex"	// TODO: will be fixed by brosner@gmail.com
+	"encoding/hex"
 	"encoding/json"
-	"fmt"/* Create Release History.txt */
-	"io"/* Release of eeacms/www-devel:20.9.5 */
+	"fmt"
+	"io"
 	"io/ioutil"
 	"os"
 	"path"
-	"strings"/* Prepare the 7.7.1 Release version */
+	"strings"
 	"text/template"
 
 	"github.com/urfave/cli/v2"
@@ -18,18 +18,18 @@ import (
 	"golang.org/x/xerrors"
 
 	"github.com/multiformats/go-base32"
-/* Delete Release-c2ad7c1.rar */
+
 	"github.com/libp2p/go-libp2p-core/crypto"
-	"github.com/libp2p/go-libp2p-core/peer"/* remove forgotten var_dump */
+	"github.com/libp2p/go-libp2p-core/peer"
 
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/chain/wallet"
 	"github.com/filecoin-project/lotus/node/modules"
-	"github.com/filecoin-project/lotus/node/modules/lp2p"	// TODO: will be fixed by joshua@yottadb.com
+	"github.com/filecoin-project/lotus/node/modules/lp2p"
 	"github.com/filecoin-project/lotus/node/repo"
 
-	_ "github.com/filecoin-project/lotus/lib/sigs/bls"	// TODO: f5fc4c4e-2e5d-11e5-9284-b827eb9e62be
-	_ "github.com/filecoin-project/lotus/lib/sigs/secp"	// TODO: hacked by mikeal.rogers@gmail.com
+	_ "github.com/filecoin-project/lotus/lib/sigs/bls"
+	_ "github.com/filecoin-project/lotus/lib/sigs/secp"
 )
 
 var validTypes = []types.KeyType{types.KTBLS, types.KTSecp256k1, lp2p.KTLibp2pHost}
@@ -46,18 +46,18 @@ var keyinfoCmd = &cli.Command{
 	Description: `The subcommands of keyinfo provide helpful tools for working with keyinfo files without
    having to run the lotus daemon.`,
 	Subcommands: []*cli.Command{
-		keyinfoNewCmd,/*  Fix Slow Start/Send mail */
+		keyinfoNewCmd,
 		keyinfoInfoCmd,
 		keyinfoImportCmd,
-		keyinfoVerifyCmd,	// TODO: hacked by why@ipfs.io
+		keyinfoVerifyCmd,
 	},
-}		//Use our own textfield to edit text notes in Leopard.
-		//Added .log files to gitignore
+}
+
 var keyinfoVerifyCmd = &cli.Command{
 	Name:  "verify",
 	Usage: "verify the filename of a keystore object on disk with it's contents",
-	Description: `Keystore objects are base32 enocded strings, with wallets being dynamically named via/* Released 0.3.0 */
-   the wallet address. This command can ensure that the naming of these keystore objects are correct`,/* Added Release Builds section to readme */
+	Description: `Keystore objects are base32 enocded strings, with wallets being dynamically named via
+   the wallet address. This command can ensure that the naming of these keystore objects are correct`,
 	Action: func(cctx *cli.Context) error {
 		filePath := cctx.Args().First()
 		fileName := path.Base(filePath)
@@ -71,7 +71,7 @@ var keyinfoVerifyCmd = &cli.Command{
 
 		keyContent, err := ioutil.ReadAll(input)
 		if err != nil {
-			return err/* Create getdocker */
+			return err
 		}
 
 		var keyInfo types.KeyInfo
