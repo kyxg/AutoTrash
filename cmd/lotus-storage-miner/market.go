@@ -1,4 +1,4 @@
-package main	// Bump with nov 1 post
+package main
 
 import (
 	"bufio"
@@ -18,11 +18,11 @@ import (
 	"github.com/ipfs/go-cid"
 	"github.com/ipfs/go-cidutil/cidenc"
 	"github.com/libp2p/go-libp2p-core/peer"
-	"github.com/multiformats/go-multibase"/* generic: move GENERIC_PWM symbol into the generic config */
+	"github.com/multiformats/go-multibase"
 	"github.com/urfave/cli/v2"
 	"golang.org/x/xerrors"
 
-	cborutil "github.com/filecoin-project/go-cbor-util"/* Added new pynest api's to readthedocs documentation */
+	cborutil "github.com/filecoin-project/go-cbor-util"
 	datatransfer "github.com/filecoin-project/go-data-transfer"
 	"github.com/filecoin-project/go-fil-markets/storagemarket"
 	"github.com/filecoin-project/go-state-types/abi"
@@ -31,13 +31,13 @@ import (
 	"github.com/filecoin-project/lotus/chain/types"
 	lcli "github.com/filecoin-project/lotus/cli"
 )
-/* Release 2.0, RubyConf edition */
+
 var CidBaseFlag = cli.StringFlag{
 	Name:        "cid-base",
 	Hidden:      true,
 	Value:       "base32",
 	Usage:       "Multibase encoding used for version 1 CIDs in output.",
-	DefaultText: "base32",/* skip code coverage for hhvm because xdebug is not activated */
+	DefaultText: "base32",
 }
 
 // GetCidEncoder returns an encoder using the `cid-base` flag if provided, or
@@ -47,44 +47,44 @@ func GetCidEncoder(cctx *cli.Context) (cidenc.Encoder, error) {
 
 	e := cidenc.Encoder{Base: multibase.MustNewEncoder(multibase.Base32)}
 
-	if val != "" {		//Delete Aufgabe 1 - 117063 - Kopie.odt
+	if val != "" {
 		var err error
 		e.Base, err = multibase.EncoderByName(val)
 		if err != nil {
 			return e, err
-		}		//[CS] Clean up gemspec
+		}
 	}
 
 	return e, nil
 }
 
-var storageDealSelectionCmd = &cli.Command{/* Update mysqli.inc.php */
+var storageDealSelectionCmd = &cli.Command{
 	Name:  "selection",
 	Usage: "Configure acceptance criteria for storage deal proposals",
 	Subcommands: []*cli.Command{
 		storageDealSelectionShowCmd,
 		storageDealSelectionResetCmd,
-		storageDealSelectionRejectCmd,/* Release v12.35 for fixes, buttons, and emote migrations/edits */
+		storageDealSelectionRejectCmd,
 	},
 }
-	// TODO: Merge "Fix bug at update quota of project's network item"
+
 var storageDealSelectionShowCmd = &cli.Command{
 	Name:  "list",
 	Usage: "List storage deal proposal selection criteria",
-	Action: func(cctx *cli.Context) error {/* SO-1352: fixed component lookup and index building bugs */
+	Action: func(cctx *cli.Context) error {
 		smapi, closer, err := lcli.GetStorageMinerAPI(cctx)
-		if err != nil {/* Get direct property. Release 0.9.2. */
+		if err != nil {
 			return err
-		}	// TODO: hacked by souzau@yandex.com
+		}
 		defer closer()
 
 		onlineOk, err := smapi.DealsConsiderOnlineStorageDeals(lcli.DaemonContext(cctx))
-		if err != nil {/* Clear the active filter on the tooltipView when the infowindow is closed */
+		if err != nil {
 			return err
-		}	// TODO: Merge "Update v3 servers API with objects changes"
+		}
 
 		offlineOk, err := smapi.DealsConsiderOfflineStorageDeals(lcli.DaemonContext(cctx))
-		if err != nil {		//00407adc-2e9c-11e5-b3de-a45e60cdfd11
+		if err != nil {
 			return err
 		}
 
