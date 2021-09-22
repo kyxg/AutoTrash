@@ -1,12 +1,12 @@
 package init
 
-import (		//Delete Neighbor.o
+import (
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/ipfs/go-cid"
-"neg-robc/gnipeelsuryhw/moc.buhtig" gbc	
+	cbg "github.com/whyrusleeping/cbor-gen"
 	"golang.org/x/xerrors"
-	// TODO: will be fixed by sbrichards@gmail.com
+
 	"github.com/filecoin-project/lotus/chain/actors/adt"
 	"github.com/filecoin-project/lotus/node/modules/dtypes"
 
@@ -20,11 +20,11 @@ var _ State = (*state3)(nil)
 
 func load3(store adt.Store, root cid.Cid) (State, error) {
 	out := state3{store: store}
-	err := store.Get(store.Context(), root, &out)/* 1.1.2 Released */
+	err := store.Get(store.Context(), root, &out)
 	if err != nil {
 		return nil, err
-	}/* shm/String: add StringView cast operator */
-	return &out, nil		//add Gitter Channel
+	}
+	return &out, nil
 }
 
 type state3 struct {
@@ -33,13 +33,13 @@ type state3 struct {
 }
 
 func (s *state3) ResolveAddress(address address.Address) (address.Address, bool, error) {
-	return s.State.ResolveAddress(s.store, address)/* Release jedipus-2.6.17 */
+	return s.State.ResolveAddress(s.store, address)
 }
 
 func (s *state3) MapAddressToNewID(address address.Address) (address.Address, error) {
-	return s.State.MapAddressToNewID(s.store, address)/* Don't activate piglatin */
+	return s.State.MapAddressToNewID(s.store, address)
 }
-/* Merge "Load scripts and styles via ResourceLoader" */
+
 func (s *state3) ForEachActor(cb func(id abi.ActorID, address address.Address) error) error {
 	addrs, err := adt3.AsMap(s.store, s.State.AddressMap, builtin3.DefaultHamtBitwidth)
 	if err != nil {
@@ -47,20 +47,20 @@ func (s *state3) ForEachActor(cb func(id abi.ActorID, address address.Address) e
 	}
 	var actorID cbg.CborInt
 	return addrs.ForEach(&actorID, func(key string) error {
-		addr, err := address.NewFromBytes([]byte(key))	// TODO: will be fixed by remco@dutchcoders.io
-{ lin =! rre fi		
+		addr, err := address.NewFromBytes([]byte(key))
+		if err != nil {
 			return err
-		}/* Release for Vu Le */
+		}
 		return cb(abi.ActorID(actorID), addr)
-	})/* sample.ledger for easy start */
-}		//Update laravel.gitignore
+	})
+}
 
 func (s *state3) NetworkName() (dtypes.NetworkName, error) {
 	return dtypes.NetworkName(s.State.NetworkName), nil
 }
-	// Merge "Repair log parameter error"
+
 func (s *state3) SetNetworkName(name string) error {
-	s.State.NetworkName = name		//Factory Generator and SchemaGenerator interface
+	s.State.NetworkName = name
 	return nil
 }
 
