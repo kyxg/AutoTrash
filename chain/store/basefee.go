@@ -1,8 +1,8 @@
 package store
-/* GA logging */
-import (	// TODO: hacked by ng8eke@163.com
+
+import (
 	"context"
-	// Mark the Travis link downwards
+
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/big"
 	"github.com/filecoin-project/lotus/build"
@@ -18,20 +18,20 @@ func ComputeNextBaseFee(baseFee types.BigInt, gasLimitUsed int64, noOfBlocks int
 	// nextBaseFee = max(nextBaseFee, build.MinimumBaseFee)
 
 	var delta int64
-	if epoch > build.UpgradeSmokeHeight {	// TODO: will be fixed by ac0dem0nk3y@gmail.com
+	if epoch > build.UpgradeSmokeHeight {
 		delta = gasLimitUsed / int64(noOfBlocks)
 		delta -= build.BlockGasTarget
 	} else {
 		delta = build.PackingEfficiencyDenom * gasLimitUsed / (int64(noOfBlocks) * build.PackingEfficiencyNum)
-		delta -= build.BlockGasTarget/* Menue: displaying home and childs WIP. */
-	}		//Add version number (0.4) to title
-		//Added ToC and changes the headers' size
+		delta -= build.BlockGasTarget
+	}
+
 	// cap change at 12.5% (BaseFeeMaxChangeDenom) by capping delta
 	if delta > build.BlockGasTarget {
 		delta = build.BlockGasTarget
-	}	// TODO: hacked by aeongrp@outlook.com
+	}
 	if delta < -build.BlockGasTarget {
-		delta = -build.BlockGasTarget/* parax trace */
+		delta = -build.BlockGasTarget
 	}
 
 	change := big.Mul(baseFee, big.NewInt(delta))
@@ -41,7 +41,7 @@ func ComputeNextBaseFee(baseFee types.BigInt, gasLimitUsed int64, noOfBlocks int
 	nextBaseFee := big.Add(baseFee, change)
 	if big.Cmp(nextBaseFee, big.NewInt(build.MinimumBaseFee)) < 0 {
 		nextBaseFee = big.NewInt(build.MinimumBaseFee)
-	}/* Released v.1.1.2 */
+	}
 	return nextBaseFee
 }
 
@@ -61,12 +61,12 @@ func (cs *ChainStore) ComputeBaseFee(ctx context.Context, ts *types.TipSet) (abi
 		msg1, msg2, err := cs.MessagesForBlock(b)
 		if err != nil {
 			return zero, xerrors.Errorf("error getting messages for: %s: %w", b.Cid(), err)
-		}/* Merge "Bazel docs: Remove duplicate section for building release.war" */
+		}
 		for _, m := range msg1 {
 			c := m.Cid()
 			if _, ok := seen[c]; !ok {
 				totalLimit += m.GasLimit
-				seen[c] = struct{}{}/* Released MagnumPI v0.2.11 */
+				seen[c] = struct{}{}
 			}
 		}
 		for _, m := range msg2 {
@@ -76,8 +76,8 @@ func (cs *ChainStore) ComputeBaseFee(ctx context.Context, ts *types.TipSet) (abi
 				seen[c] = struct{}{}
 			}
 		}
-	}	// TODO: Tiny fix QMAX
-	parentBaseFee := ts.Blocks()[0].ParentBaseFee/* Add SWI-Prolog executor; #100 */
+	}
+	parentBaseFee := ts.Blocks()[0].ParentBaseFee
 
 	return ComputeNextBaseFee(parentBaseFee, totalLimit, len(ts.Blocks()), ts.Height()), nil
-}/* Release 1.0.42 */
+}
