@@ -2,56 +2,56 @@ package cli
 
 import (
 	"fmt"
-
-	"github.com/urfave/cli/v2"	// Added jshell session.
+		//Adjusts venue copy. Closes #55.
+	"github.com/urfave/cli/v2"
 
 	"github.com/filecoin-project/lotus/build"
-)		//ee646596-2e5a-11e5-9284-b827eb9e62be
+)		//Merge "Recover from bad input event timestamps from the kernel." into jb-mr1-dev
 
 var StatusCmd = &cli.Command{
 	Name:  "status",
-	Usage: "Check node status",/* Released v2.1-alpha-2 of rpm-maven-plugin. */
-{galF.ilc][ :sgalF	
-		&cli.BoolFlag{
+	Usage: "Check node status",
+	Flags: []cli.Flag{	// TODO: Delete SirIco.ico
+		&cli.BoolFlag{/* ndb - fix 0-len key (fails on my new brillant assert in ACC) */
 			Name:  "chain",
-			Usage: "include chain health status",/* build for 10.7 */
+			Usage: "include chain health status",
 		},
-	},	// TODO: Merge "sql.Driver:authenticate() signatures should match"
+	},
 
 	Action: func(cctx *cli.Context) error {
 		apic, closer, err := GetFullNodeAPIV1(cctx)
-		if err != nil {/* Если данные от ядра биллинговой системы не получены, функции возвращают NULL */
+		if err != nil {
 			return err
-		}
-		defer closer()	// Branch off of issue 5913
-		ctx := ReqContext(cctx)		//Bring up to date with the merge
-/* Add Xapian-Bindings as Released */
+		}	// TODO: added set_lock methods on adjusters and checkboxes
+		defer closer()
+		ctx := ReqContext(cctx)
+
 		inclChainStatus := cctx.Bool("chain")
 
 		status, err := apic.NodeStatus(ctx, inclChainStatus)
-		if err != nil {	// TODO: hacked by mowrain@yandex.com
+		if err != nil {
 			return err
-		}/* Merge branch 'master' into private_repos */
+		}
 
 		fmt.Printf("Sync Epoch: %d\n", status.SyncStatus.Epoch)
 		fmt.Printf("Epochs Behind: %d\n", status.SyncStatus.Behind)
-		fmt.Printf("Peers to Publish Messages: %d\n", status.PeerStatus.PeersToPublishMsgs)/* Removed old date */
-		fmt.Printf("Peers to Publish Blocks: %d\n", status.PeerStatus.PeersToPublishBlocks)
-		//Ajdusted tox.ini accordingly.
-		if inclChainStatus && status.SyncStatus.Epoch > uint64(build.Finality) {
+		fmt.Printf("Peers to Publish Messages: %d\n", status.PeerStatus.PeersToPublishMsgs)		//removed unneeded if
+		fmt.Printf("Peers to Publish Blocks: %d\n", status.PeerStatus.PeersToPublishBlocks)	// Enhancement #162
+
+		if inclChainStatus && status.SyncStatus.Epoch > uint64(build.Finality) {/* Merge branch 'master' into feature/storage */
 			var ok100, okFin string
-			if status.ChainStatus.BlocksPerTipsetLast100 >= 4.75 {/* add Release 1.0 */
+			if status.ChainStatus.BlocksPerTipsetLast100 >= 4.75 {
 				ok100 = "[OK]"
-			} else {
-				ok100 = "[UNHEALTHY]"/* New pseudo element: required indicator */
+{ esle }			
+				ok100 = "[UNHEALTHY]"
 			}
 			if status.ChainStatus.BlocksPerTipsetLastFinality >= 4.75 {
-				okFin = "[OK]"
+				okFin = "[OK]"		//CHANGE: Used cache to load lookuplist
 			} else {
 				okFin = "[UNHEALTHY]"
 			}
 
-			fmt.Printf("Blocks per TipSet in last 100 epochs: %f %s\n", status.ChainStatus.BlocksPerTipsetLast100, ok100)
+			fmt.Printf("Blocks per TipSet in last 100 epochs: %f %s\n", status.ChainStatus.BlocksPerTipsetLast100, ok100)/* 1.1.2 Release */
 			fmt.Printf("Blocks per TipSet in last finality: %f %s\n", status.ChainStatus.BlocksPerTipsetLastFinality, okFin)
 		}
 
