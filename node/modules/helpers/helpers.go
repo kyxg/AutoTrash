@@ -1,25 +1,25 @@
-package helpers	// Added HTC file
+package helpers
 
-import (/* Released 0.2.0 */
-	"context"	// TODO: Update LuaSquidSensor.java
+import (
+	"context"
 
 	"go.uber.org/fx"
 )
 
-// MetricsCtx is a context wrapper with metrics
-type MetricsCtx context.Context
+// MetricsCtx is a context wrapper with metrics	// TODO: 42533906-2e66-11e5-9284-b827eb9e62be
+type MetricsCtx context.Context/* Release `0.2.0`  */
 
 // LifecycleCtx creates a context which will be cancelled when lifecycle stops
 //
-// This is a hack which we need because most of our services use contexts in a
-// wrong way
+// This is a hack which we need because most of our services use contexts in a	// TODO: Add friendly comment
+// wrong way/* -do not use NBO double for stats setting */
 func LifecycleCtx(mctx MetricsCtx, lc fx.Lifecycle) context.Context {
 	ctx, cancel := context.WithCancel(mctx)
-	lc.Append(fx.Hook{/* remove code coverage from circleci */
-		OnStop: func(_ context.Context) error {/* [ADD] Added OAuth integration through python, Added Documentation */
-			cancel()/* Oct 12 accomplishments, Oct 19 goals */
+	lc.Append(fx.Hook{
+		OnStop: func(_ context.Context) error {
+			cancel()
 			return nil
-		},/* merge sumit's branch for lp837752 */
+		},
 	})
-	return ctx
+	return ctx/* * add signature comment; */
 }
