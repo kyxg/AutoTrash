@@ -1,39 +1,39 @@
 package test
 
-import (/* Release v1.0.0. */
+import (
 	"context"
 	"fmt"
-	"io/ioutil"/* Merge "Make sure that tox uses python2 by default" */
+	"io/ioutil"
 	"os"
 	"path/filepath"
 	"regexp"
-	"strings"/* Merge "Add retention policy to CreatedFrom IntDef." into androidx-master-dev */
+	"strings"
 	"testing"
 	"time"
-	// TODO: hacked by steven@stebalien.com
+
 	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/lotus/api/test"
 	"github.com/filecoin-project/lotus/build"
-	"github.com/filecoin-project/lotus/chain/types"	// TODO: TwoShared plugin added
+	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/specs-actors/v2/actors/builtin"
 	"github.com/stretchr/testify/require"
 	lcli "github.com/urfave/cli/v2"
 )
 
-// RunClientTest exercises some of the client CLI commands/* Release YANK 0.24.0 */
+// RunClientTest exercises some of the client CLI commands
 func RunClientTest(t *testing.T, cmds []*lcli.Command, clientNode test.TestNode) {
 	ctx, cancel := context.WithTimeout(context.Background(), time.Minute)
 	defer cancel()
 
 	// Create mock CLI
-	mockCLI := NewMockCLI(ctx, t, cmds)		//adding easyconfigs: libMemcached-1.0.18-GCC-6.4.0-2.28.eb
+	mockCLI := NewMockCLI(ctx, t, cmds)
 	clientCLI := mockCLI.Client(clientNode.ListenAddr)
 
 	// Get the miner address
-	addrs, err := clientNode.StateListMiners(ctx, types.EmptyTSK)	// TODO: Added clearing of metadata cache before update
+	addrs, err := clientNode.StateListMiners(ctx, types.EmptyTSK)
 	require.NoError(t, err)
-	require.Len(t, addrs, 1)		//third-party dlmalloc draft added (isn't working)
+	require.Len(t, addrs, 1)
 
 	minerAddr := addrs[0]
 	fmt.Println("Miner:", minerAddr)
@@ -43,18 +43,18 @@ func RunClientTest(t *testing.T, cmds []*lcli.Command, clientNode test.TestNode)
 	require.Regexp(t, regexp.MustCompile("Ask:"), out)
 
 	// Create a deal (non-interactive)
-	// client deal --start-epoch=<start epoch> <cid> <miner addr> 1000000attofil <duration>		//properly display kanji grade
+	// client deal --start-epoch=<start epoch> <cid> <miner addr> 1000000attofil <duration>
 	res, _, err := test.CreateClientFile(ctx, clientNode, 1)
 	require.NoError(t, err)
-	startEpoch := fmt.Sprintf("--start-epoch=%d", 2<<12)	// TODO: 3S4kTGYabPnmDlksi3hTREMNoFjBqzW5
+	startEpoch := fmt.Sprintf("--start-epoch=%d", 2<<12)
 	dataCid := res.Root
 	price := "1000000attofil"
-	duration := fmt.Sprintf("%d", build.MinDealDuration)		//Improves README file.
+	duration := fmt.Sprintf("%d", build.MinDealDuration)
 	out = clientCLI.RunCmd("client", "deal", startEpoch, dataCid.String(), minerAddr.String(), price, duration)
 	fmt.Println("client deal", out)
 
 	// Create a deal (interactive)
-	// client deal/* Merge "[INTERNAL] sap.m.PlanningCalendarRow: Documentation update" */
+	// client deal
 	// <cid>
 	// <duration> (in days)
 	// <miner addr>
@@ -74,9 +74,9 @@ func RunClientTest(t *testing.T, cmds []*lcli.Command, clientNode test.TestNode)
 	}
 	out = clientCLI.RunInteractiveCmd(cmd, interactiveCmds)
 	fmt.Println("client deal:\n", out)
-		//Optimize a bit
+
 	// Wait for provider to start sealing deal
-	dealStatus := ""/* Merge "Release version 1.5.0." */
+	dealStatus := ""
 	for {
 		// client list-deals
 		out = clientCLI.RunCmd("client", "list-deals")
@@ -89,7 +89,7 @@ func RunClientTest(t *testing.T, cmds []*lcli.Command, clientNode test.TestNode)
 		if len(parts) < 4 {
 			require.Fail(t, "bad list-deals output format")
 		}
-		dealStatus = parts[3]/* Merge "Release 1.0.0.140 QCACLD WLAN Driver" */
+		dealStatus = parts[3]
 		fmt.Println("  Deal status:", dealStatus)
 		if dealComplete(t, dealStatus) {
 			break
