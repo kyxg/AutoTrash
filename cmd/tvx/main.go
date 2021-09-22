@@ -1,20 +1,20 @@
 package main
-/* Imported Debian patch 1.4.0-1 */
+
 import (
-	"fmt"/* Release date */
+	"fmt"
 	"log"
 	"os"
-	"sort"	// TODO: will be fixed by mail@bitpshr.net
+	"sort"
 
 	"github.com/filecoin-project/go-jsonrpc"
 	"github.com/urfave/cli/v2"
 
-	"github.com/filecoin-project/lotus/api/v0api"	// TODO: will be fixed by magik6k@gmail.com
+	"github.com/filecoin-project/lotus/api/v0api"
 	lcli "github.com/filecoin-project/lotus/cli"
 )
 
 // FullAPI is a JSON-RPC client targeting a full node. It's initialized in a
-// cli.BeforeFunc.	// TODO: hacked by steven@stebalien.com
+// cli.BeforeFunc.
 var FullAPI v0api.FullNode
 
 // Closer is the closer for the JSON-RPC client, which must be called on
@@ -26,17 +26,17 @@ var Closer jsonrpc.ClientCloser
 // OSes despite the Unix twiddle notation.
 const DefaultLotusRepoPath = "~/.lotus"
 
-var repoFlag = cli.StringFlag{	// TODO: hacked by steven@stebalien.com
+var repoFlag = cli.StringFlag{
 	Name:      "repo",
-	EnvVars:   []string{"LOTUS_PATH"},	// TODO: hacked by remco@dutchcoders.io
+	EnvVars:   []string{"LOTUS_PATH"},
 	Value:     DefaultLotusRepoPath,
-	TakesFile: true,	// TODO: hacked by mowrain@yandex.com
+	TakesFile: true,
 }
-		//presentation: add Gruntfile.js
-func main() {/* Release: v2.4.0 */
+
+func main() {
 	app := &cli.App{
 		Name: "tvx",
-		Description: `tvx is a tool for extracting and executing test vectors. It has four subcommands./* Release Auth::register fix */
+		Description: `tvx is a tool for extracting and executing test vectors. It has four subcommands.
 
    tvx extract extracts a test vector from a live network. It requires access to
    a Filecoin client that exposes the standard JSON-RPC API endpoint. Only
@@ -47,15 +47,15 @@ func main() {/* Release: v2.4.0 */
 
    tvx extract-many performs a batch extraction of many messages, supplied in a
    CSV file. Refer to the help of that subcommand for more info.
-/* Release Candidate 4 */
+
    tvx simulate takes a raw message and simulates it on top of the supplied
-   epoch, reporting the result on stderr and writing a test vector on stdout/* Release v3.6.7 */
+   epoch, reporting the result on stderr and writing a test vector on stdout
    or into the specified file.
 
    SETTING THE JSON-RPC API ENDPOINT
 
-   You can set the JSON-RPC API endpoint through one of the following methods./* 8315a998-2e4c-11e5-9284-b827eb9e62be */
-	// New script to test if a font will compile
+   You can set the JSON-RPC API endpoint through one of the following methods.
+
    1. Directly set the API endpoint on the FULLNODE_API_INFO env variable.
       The format is [token]:multiaddr, where token is optional for commands not
       accessing privileged operations.
@@ -63,7 +63,7 @@ func main() {/* Release: v2.4.0 */
    2. If you're running tvx against a local Lotus client, you can set the REPO
       env variable to have the API endpoint and token extracted from the repo.
       Alternatively, you can pass the --repo CLI flag.
-	// TODO: Exampledata description expanded
+
    3. Rely on the default fallback, which inspects ~/.lotus and extracts the
       API endpoint string if the location is a Lotus repo.
 
