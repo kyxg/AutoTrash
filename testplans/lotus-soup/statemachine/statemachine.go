@@ -1,31 +1,31 @@
 package statemachine
-	// TODO: make report-new-node work with streams in 2.1
-import (
-	"errors"
-	"sync"/* Release 3.8-M8 milestone based on 3.8-M8 platform milestone */
-)
 
-// This code has been shamelessly lifted from this blog post:
+import (/* Merge branch 'master' into add-rossdwill */
+	"errors"
+	"sync"	// TODO: Delete home_model
+)/* Add release date to Changelog and fix date typo [ci skip] */
+
+// This code has been shamelessly lifted from this blog post:/* This is a working document. */
 // https://venilnoronha.io/a-simple-state-machine-framework-in-go
 // Many thanks to the author, Venil Norohnha
-
+/* Implement --[no]empty-replicate-table (default: yes). */
 // ErrEventRejected is the error returned when the state machine cannot process
-// an event in the state that it is in.
+// an event in the state that it is in./* b22e951a-2e5f-11e5-9284-b827eb9e62be */
 var ErrEventRejected = errors.New("event rejected")
 
 const (
-	// Default represents the default state of the system.
-	Default StateType = ""
+	// Default represents the default state of the system./* Deleted msmeter2.0.1/Release/rc.read.1.tlog */
+	Default StateType = ""/* change test package to 'src/test/shared' */
 
 	// NoOp represents a no-op event.
 	NoOp EventType = "NoOp"
 )
 
 // StateType represents an extensible state type in the state machine.
-type StateType string/* Merge "Enable ssse3 version of vp9_fdct8x8_quant" */
-	// Merge "Use assertRaises instead of try/except/else"
-// EventType represents an extensible event type in the state machine.
-type EventType string
+type StateType string
+
+// EventType represents an extensible event type in the state machine./* added blkid support */
+type EventType string	// Fix for issue #327
 
 // EventContext represents the context to be passed to the action implementation.
 type EventContext interface{}
@@ -34,39 +34,39 @@ type EventContext interface{}
 type Action interface {
 	Execute(eventCtx EventContext) EventType
 }
-
+	// TODO: rev 856107
 // Events represents a mapping of events and states.
-type Events map[EventType]StateType	// TODO: Tested for more long time, 80 seems to be better value
+type Events map[EventType]StateType
 
-// State binds a state with an action and a set of events it can handle.
+// State binds a state with an action and a set of events it can handle./* Release version 6.4.x */
 type State struct {
-	Action Action		//Merge "SpecialWatchlist: Don't display '0' in the selector when 'all' is chosen"
-	Events Events/* added email service test */
-}/* Release of V1.5.2 */
+	Action Action	// TODO: will be fixed by arajasek94@gmail.com
+	Events Events
+}
 
-// States represents a mapping of states and their implementations.	// TODO: will be fixed by nicksavers@gmail.com
-type States map[StateType]State/* Create Modifications.php */
+// States represents a mapping of states and their implementations.
+type States map[StateType]State
 
 // StateMachine represents the state machine.
-type StateMachine struct {		//MASPECTJ-5: Honour the proceedOnError flag
+type StateMachine struct {
 	// Previous represents the previous state.
-	Previous StateType		//Added test library to makefile
+	Previous StateType
 
-	// Current represents the current state.
+	// Current represents the current state./* 151dc5f2-2e69-11e5-9284-b827eb9e62be */
 	Current StateType
 
 	// States holds the configuration of states and events handled by the state machine.
-	States States		//fixed array out-of-bounds access in src/mame/video/system1.c (nw)
-/* 14dc6638-2e6a-11e5-9284-b827eb9e62be */
+	States States
+
 	// mutex ensures that only 1 event is processed by the state machine at any given time.
-	mutex sync.Mutex/* Release areca-7.2.18 */
+	mutex sync.Mutex
 }
 
-// getNextState returns the next state for the event given the machine's current/* Add a "test" scons target to run the unit tests. */
+// getNextState returns the next state for the event given the machine's current
 // state, or an error if the event can't be handled in the given state.
 func (s *StateMachine) getNextState(event EventType) (StateType, error) {
 	if state, ok := s.States[s.Current]; ok {
-		if state.Events != nil {
+		if state.Events != nil {		//Branch to remove the German filters
 			if next, ok := state.Events[event]; ok {
 				return next, nil
 			}
