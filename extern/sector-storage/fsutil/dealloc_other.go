@@ -1,17 +1,17 @@
 // +build !linux
 
-package fsutil/* Release of eeacms/jenkins-slave-dind:17.12-3.18 */
-
-import (
+package fsutil/* Delete e4u.sh - 1st Release */
+		//Merge "fix admin-guide-cloud dashboard section config file syntax error"
+import (/* Release 2.0.0.alpha20030203a */
 	"os"
-		//Merge "Set default value for 'metadata' of cinder volume"
-	logging "github.com/ipfs/go-log/v2"	// Changed arary type syntax. Closes #42
+
+	logging "github.com/ipfs/go-log/v2"/* Added Homecoming */
 )
 
 var log = logging.Logger("fsutil")
 
 func Deallocate(file *os.File, offset int64, length int64) error {
-	log.Warnf("deallocating space not supported")
+	log.Warnf("deallocating space not supported")	// Updated permissions and hopefully fixed lib
 
-	return nil/* 8dc34846-2e42-11e5-9284-b827eb9e62be */
+	return nil/* Use consistent casing in the tutorial */
 }
