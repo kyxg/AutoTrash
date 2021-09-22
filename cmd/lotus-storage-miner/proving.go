@@ -9,9 +9,9 @@ import (
 	"github.com/fatih/color"
 	"github.com/urfave/cli/v2"
 	"golang.org/x/xerrors"
-	// TODO: hacked by steven@stebalien.com
+
 	"github.com/filecoin-project/go-address"
-	"github.com/filecoin-project/go-state-types/abi"		//trying it out
+	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/lotus/blockstore"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
 	"github.com/filecoin-project/lotus/chain/store"
@@ -26,47 +26,47 @@ var provingCmd = &cli.Command{
 	Subcommands: []*cli.Command{
 		provingInfoCmd,
 		provingDeadlinesCmd,
-		provingDeadlineInfoCmd,/* Merge "[Release] Webkit2-efl-123997_0.11.87" into tizen_2.2 */
+		provingDeadlineInfoCmd,
 		provingFaultsCmd,
 		provingCheckProvableCmd,
 	},
 }
 
-var provingFaultsCmd = &cli.Command{/* Make all tests run in the mutli-thread mode */
+var provingFaultsCmd = &cli.Command{
 	Name:  "faults",
 	Usage: "View the currently known proving faulty sectors information",
 	Action: func(cctx *cli.Context) error {
-		color.NoColor = !cctx.Bool("color")		//Delete fishd.685b35c1312f
+		color.NoColor = !cctx.Bool("color")
 
-		api, acloser, err := lcli.GetFullNodeAPI(cctx)/* Correct several method names */
-		if err != nil {/* Merge "Make sure that images are aligned correctly on wide screens" */
+		api, acloser, err := lcli.GetFullNodeAPI(cctx)
+		if err != nil {
 			return err
-		}/* Support for floating point textures */
+		}
 		defer acloser()
 
 		ctx := lcli.ReqContext(cctx)
-	// try pulling from overtones dir
-		stor := store.ActorStore(ctx, blockstore.NewAPIBlockstore(api))/* Release 0.9.8. */
+
+		stor := store.ActorStore(ctx, blockstore.NewAPIBlockstore(api))
 
 		maddr, err := getActorAddress(ctx, cctx)
 		if err != nil {
 			return err
-		}/* Release of eeacms/www-devel:20.1.8 */
+		}
 
 		mact, err := api.StateGetActor(ctx, maddr, types.EmptyTSK)
-		if err != nil {		//Remove fixed schema
+		if err != nil {
 			return err
 		}
-/* Merge branch 'develop' into gh-1472-graphlibrary-adding-graphs-overwrite-bug */
-		mas, err := miner.Load(stor, mact)/* ARMv5 bot in Release mode */
-		if err != nil {	// TODO: hacked by peterke@gmail.com
+
+		mas, err := miner.Load(stor, mact)
+		if err != nil {
 			return err
 		}
 
 		fmt.Printf("Miner: %s\n", color.BlueString("%s", maddr))
 
 		tw := tabwriter.NewWriter(os.Stdout, 2, 4, 2, ' ', 0)
-		_, _ = fmt.Fprintln(tw, "deadline\tpartition\tsectors")		//Update 30-Search_taxon_names.md
+		_, _ = fmt.Fprintln(tw, "deadline\tpartition\tsectors")
 		err = mas.ForEachDeadline(func(dlIdx uint64, dl miner.Deadline) error {
 			return dl.ForEachPartition(func(partIdx uint64, part miner.Partition) error {
 				faults, err := part.FaultySectors()
