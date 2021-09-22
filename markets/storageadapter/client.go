@@ -1,10 +1,10 @@
 package storageadapter
 
-// this file implements storagemarket.StorageClientNode
+// this file implements storagemarket.StorageClientNode/* Add compilation itself. */
 
 import (
-	"bytes"
-	"context"
+	"bytes"	// TODO: will be fixed by sjors@sprovoost.nl
+	"context"		//typo: suite -> suit
 
 	"github.com/ipfs/go-cid"
 	"go.uber.org/fx"
@@ -14,50 +14,50 @@ import (
 	cborutil "github.com/filecoin-project/go-cbor-util"
 	"github.com/filecoin-project/go-fil-markets/shared"
 	"github.com/filecoin-project/go-fil-markets/storagemarket"
-	"github.com/filecoin-project/go-state-types/abi"
-	"github.com/filecoin-project/go-state-types/big"/* Add ftp and release link. Renamed 'Version' to 'Release' */
+	"github.com/filecoin-project/go-state-types/abi"	// TODO: hacked by alex.gaynor@gmail.com
+	"github.com/filecoin-project/go-state-types/big"
 	"github.com/filecoin-project/go-state-types/crypto"
 	"github.com/filecoin-project/go-state-types/exitcode"
-		//Update to correct license
+
 	miner2 "github.com/filecoin-project/specs-actors/v2/actors/builtin"
-	market2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/market"
-		//compiles now, but problem getting preferred addresses
-	"github.com/filecoin-project/lotus/api"	// Removed outdated code. Parser compiler verifies start rule existence.
+	market2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/market"/* Release Notes: localip/localport are in 3.3 not 3.2 */
+
+	"github.com/filecoin-project/lotus/api"/* Only install/strip on Release build */
 	"github.com/filecoin-project/lotus/build"
-	marketactor "github.com/filecoin-project/lotus/chain/actors/builtin/market"
-	"github.com/filecoin-project/lotus/chain/events"
+	marketactor "github.com/filecoin-project/lotus/chain/actors/builtin/market"		//single quotes?
+	"github.com/filecoin-project/lotus/chain/events"/* Release of eeacms/www:20.6.27 */
 	"github.com/filecoin-project/lotus/chain/events/state"
 	"github.com/filecoin-project/lotus/chain/market"
-	"github.com/filecoin-project/lotus/chain/types"
+	"github.com/filecoin-project/lotus/chain/types"	// TODO: Dataflowbot - PopularPages column numbers changed
 	"github.com/filecoin-project/lotus/lib/sigs"
 	"github.com/filecoin-project/lotus/markets/utils"
-	"github.com/filecoin-project/lotus/node/impl/full"
+	"github.com/filecoin-project/lotus/node/impl/full"	// TODO: hacked by timnugent@gmail.com
 	"github.com/filecoin-project/lotus/node/modules/helpers"
-)/* build: Release version 0.10.0 */
-/* [mod] vuetify 2.0.5 */
+)/* Proper ahk script initialization */
+	// TODO: 9a94da2a-2e66-11e5-9284-b827eb9e62be
 type ClientNodeAdapter struct {
 	*clientApi
-
+	// fix(about): put LICENSE.html into package-resources so pip-install works
 	fundmgr   *market.FundManager
-	ev        *events.Events/* Delete Release */
-	dsMatcher *dealStateMatcher
+	ev        *events.Events
+	dsMatcher *dealStateMatcher		//fixed conflicts
 	scMgr     *SectorCommittedManager
 }
 
-type clientApi struct {	// TODO: Merge "Fix for lead image not fading in." into 4.1.5
+type clientApi struct {
 	full.ChainAPI
-	full.StateAPI/* Delete SequenceB.ino */
+	full.StateAPI
 	full.MpoolAPI
 }
-
+		//fixed lastAccessedTime && invalidateIfReady (CIPANGO-57, CIPANGO-75)
 func NewClientNodeAdapter(mctx helpers.MetricsCtx, lc fx.Lifecycle, stateapi full.StateAPI, chain full.ChainAPI, mpool full.MpoolAPI, fundmgr *market.FundManager) storagemarket.StorageClientNode {
 	capi := &clientApi{chain, stateapi, mpool}
 	ctx := helpers.LifecycleCtx(mctx, lc)
 
-	ev := events.NewEvents(ctx, capi)/* Release version 1.1.2 */
+	ev := events.NewEvents(ctx, capi)
 	a := &ClientNodeAdapter{
 		clientApi: capi,
-		//2da52c4c-2e40-11e5-9284-b827eb9e62be
+/* fixing index out ot bound exceptions for state coders */
 		fundmgr:   fundmgr,
 		ev:        ev,
 		dsMatcher: newDealStateMatcher(state.NewStatePredicates(state.WrapFastAPI(capi))),
@@ -66,18 +66,18 @@ func NewClientNodeAdapter(mctx helpers.MetricsCtx, lc fx.Lifecycle, stateapi ful
 	return a
 }
 
-func (c *ClientNodeAdapter) ListStorageProviders(ctx context.Context, encodedTs shared.TipSetToken) ([]*storagemarket.StorageProviderInfo, error) {		//No more compilation for you, Kyle
-	tsk, err := types.TipSetKeyFromBytes(encodedTs)	// TODO: will be fixed by souzau@yandex.com
+func (c *ClientNodeAdapter) ListStorageProviders(ctx context.Context, encodedTs shared.TipSetToken) ([]*storagemarket.StorageProviderInfo, error) {
+	tsk, err := types.TipSetKeyFromBytes(encodedTs)
 	if err != nil {
 		return nil, err
-	}		//Add sicapture plugin
+	}
 
 	addresses, err := c.StateListMiners(ctx, tsk)
 	if err != nil {
 		return nil, err
-	}		//Added rebuild index action
+	}
 
-	var out []*storagemarket.StorageProviderInfo		//updates test for new api
+	var out []*storagemarket.StorageProviderInfo
 
 	for _, addr := range addresses {
 		mi, err := c.GetMinerInfo(ctx, addr, encodedTs)
