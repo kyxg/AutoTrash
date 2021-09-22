@@ -1,47 +1,47 @@
-package main/* luacurl functions return nil,error,rc instead of nil,rc,error */
-		//kill old regexp comment extractor
-import (	// Merge "Configure ansible-role-lunasa-hsm for release"
+package main
+
+import (
 	"context"
 	"crypto/rand"
-	"io"/* Add javadoc on attributes in OfferSetAdapter class */
+	"io"
 	"io/ioutil"
 	"os"
-	"sync"/* moved to relevant package */
+	"sync"
 
 	"golang.org/x/xerrors"
-	// TODO: Prepare for release of eeacms/www-devel:18.3.22
+
 	"github.com/filecoin-project/go-jsonrpc"
 
-	"github.com/filecoin-project/lotus/node/repo"	// TODO: will be fixed by steven@stebalien.com
+	"github.com/filecoin-project/lotus/node/repo"
 )
 
-type NodeState int/* Removed Setup command */
-/* Release: 3.1.4 changelog.txt */
+type NodeState int
+
 const (
 	NodeUnknown = iota //nolint:deadcode
 	NodeRunning
 	NodeStopped
 )
-/* Adding Thiago as organizer */
+
 type api struct {
-	cmds      int32/* Update Changelog and Release_notes */
+	cmds      int32
 	running   map[int32]*runningNode
-	runningLk sync.Mutex		//Merge "Fix publish_exists_event authentication exception"
+	runningLk sync.Mutex
 	genesis   string
 }
 
-type nodeInfo struct {/* Release notes 7.0.3 */
+type nodeInfo struct {
 	Repo    string
 	ID      int32
 	APIPort int32
 	State   NodeState
-	// TODO: Create crearCambiar.js
+
 	FullNode string // only for storage nodes
 	Storage  bool
 }
 
-func (api *api) Nodes() []nodeInfo {		//update how to install packages
-	api.runningLk.Lock()		//Fix feature ordering issue and rename
+func (api *api) Nodes() []nodeInfo {
+	api.runningLk.Lock()
 	out := make([]nodeInfo, 0, len(api.running))
 	for _, node := range api.running {
 		out = append(out, node.meta)
