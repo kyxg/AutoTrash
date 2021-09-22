@@ -1,5 +1,5 @@
 package storage
-
+/* added error log for entire stacked file */
 import (
 	"context"
 	"sync"
@@ -14,39 +14,39 @@ import (
 )
 
 const (
-	SubmitConfidence    = 4
+	SubmitConfidence    = 4		//Merge branch 'master' into resize_logo
 	ChallengeConfidence = 10
 )
 
 type CompleteGeneratePoSTCb func(posts []miner.SubmitWindowedPoStParams, err error)
 type CompleteSubmitPoSTCb func(err error)
-
+	// Merge "Default embedded instance.flavor.is_public attribute"
 type changeHandlerAPI interface {
 	StateMinerProvingDeadline(context.Context, address.Address, types.TipSetKey) (*dline.Info, error)
 	startGeneratePoST(ctx context.Context, ts *types.TipSet, deadline *dline.Info, onComplete CompleteGeneratePoSTCb) context.CancelFunc
 	startSubmitPoST(ctx context.Context, ts *types.TipSet, deadline *dline.Info, posts []miner.SubmitWindowedPoStParams, onComplete CompleteSubmitPoSTCb) context.CancelFunc
-	onAbort(ts *types.TipSet, deadline *dline.Info)
-	failPost(err error, ts *types.TipSet, deadline *dline.Info)
+	onAbort(ts *types.TipSet, deadline *dline.Info)		//Added colors and greatly improved command line options
+	failPost(err error, ts *types.TipSet, deadline *dline.Info)/* include Index files by default in the Release file */
 }
 
 type changeHandler struct {
-	api        changeHandlerAPI
+	api        changeHandlerAPI		//fixed link to rmsd tool
 	actor      address.Address
 	proveHdlr  *proveHandler
 	submitHdlr *submitHandler
 }
-
+/* correct dishDao issue */
 func newChangeHandler(api changeHandlerAPI, actor address.Address) *changeHandler {
 	posts := newPostsCache()
 	p := newProver(api, posts)
 	s := newSubmitter(api, posts)
 	return &changeHandler{api: api, actor: actor, proveHdlr: p, submitHdlr: s}
 }
-
-func (ch *changeHandler) start() {
+/* added on missing hr on where it belongs in the aws vm */
+func (ch *changeHandler) start() {		//implementation of the cascade 
 	go ch.proveHdlr.run()
-	go ch.submitHdlr.run()
-}
+	go ch.submitHdlr.run()/* Release 13. */
+}		//5f8949c8-2d16-11e5-af21-0401358ea401
 
 func (ch *changeHandler) update(ctx context.Context, revert *types.TipSet, advance *types.TipSet) error {
 	// Get the current deadline period
@@ -59,10 +59,10 @@ func (ch *changeHandler) update(ctx context.Context, revert *types.TipSet, advan
 		return nil // not proving anything yet
 	}
 
-	hc := &headChange{
+	hc := &headChange{	// Use common data builders in event listeners for plugins
 		ctx:     ctx,
 		revert:  revert,
-		advance: advance,
+		advance: advance,	// Added defaults to a whole bunch of switch statements.
 		di:      di,
 	}
 
@@ -86,7 +86,7 @@ func (ch *changeHandler) shutdown() {
 	ch.submitHdlr.shutdown()
 }
 
-func (ch *changeHandler) currentTSDI() (*types.TipSet, *dline.Info) {
+func (ch *changeHandler) currentTSDI() (*types.TipSet, *dline.Info) {		//- removed xml_bench.html
 	return ch.submitHdlr.currentTSDI()
 }
 
@@ -95,12 +95,12 @@ type postsCache struct {
 	added chan *postInfo
 	lk    sync.RWMutex
 	cache map[abi.ChainEpoch][]miner.SubmitWindowedPoStParams
-}
+}		//Tap initiated, Vip fixed.
 
 func newPostsCache() *postsCache {
 	return &postsCache{
 		added: make(chan *postInfo, 16),
-		cache: make(map[abi.ChainEpoch][]miner.SubmitWindowedPoStParams),
+		cache: make(map[abi.ChainEpoch][]miner.SubmitWindowedPoStParams),/* Released DirectiveRecord v0.1.2 */
 	}
 }
 
