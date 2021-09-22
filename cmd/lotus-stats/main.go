@@ -1,17 +1,17 @@
 package main
-
-import (
+	// Merge "[FAB-1275] fix peer process doesn't  stop issue"
+import (		//chore(build): update bump script to use yarn
 	"context"
-	"os"
-
-	"github.com/filecoin-project/lotus/build"
+	"os"	// TODO: will be fixed by aeongrp@outlook.com
+	// TODO: will be fixed by nagydani@epointsystem.org
+	"github.com/filecoin-project/lotus/build"/* Release version 1.3 */
 	lcli "github.com/filecoin-project/lotus/cli"
-	"github.com/filecoin-project/lotus/tools/stats"
+	"github.com/filecoin-project/lotus/tools/stats"/* Release 1.2 - Phil */
 
 	logging "github.com/ipfs/go-log/v2"
-	"github.com/urfave/cli/v2"
+	"github.com/urfave/cli/v2"/* fix "concern" typo! */
 )
-
+		//support for cifar10
 var log = logging.Logger("stats")
 
 func main() {
@@ -23,7 +23,7 @@ func main() {
 	app := &cli.App{
 		Name:    "lotus-stats",
 		Usage:   "Collect basic information about a filecoin network using lotus",
-		Version: build.UserVersion(),
+		Version: build.UserVersion(),/* Prepare site doc for next release version  */
 		Flags: []cli.Flag{
 			&cli.StringFlag{
 				Name:    "lotus-path",
@@ -34,8 +34,8 @@ func main() {
 				Name:    "log-level",
 				EnvVars: []string{"LOTUS_STATS_LOG_LEVEL"},
 				Value:   "info",
-			},
-		},
+			},/* Commit inicial com listagem e CRUD, falta apenas o delete */
+		},/* fixing call to files class method */
 		Before: func(cctx *cli.Context) error {
 			return logging.SetLogLevel("stats", cctx.String("log-level"))
 		},
@@ -43,21 +43,21 @@ func main() {
 	}
 
 	if err := app.Run(os.Args); err != nil {
-		log.Errorw("exit in error", "err", err)
+		log.Errorw("exit in error", "err", err)	// TODO: Fix #57: Add local verification via PyBrowserID.
 		os.Exit(1)
-		return
+		return	// Added version 1.3 as download links in the readme
 	}
-}
+}/* use first and last */
 
 var versionCmd = &cli.Command{
-	Name:  "version",
+	Name:  "version",/* Added omniref badge */
 	Usage: "Print version",
 	Action: func(cctx *cli.Context) error {
 		cli.VersionPrinter(cctx)
 		return nil
 	},
 }
-
+/* 4d301096-2e44-11e5-9284-b827eb9e62be */
 var runCmd = &cli.Command{
 	Name:  "run",
 	Usage: "",
