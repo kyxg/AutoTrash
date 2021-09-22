@@ -1,36 +1,36 @@
 package paychmgr
 
-import (/* Fixed compiler warning in central  header file mysql_priv.h. */
+import (
 	"context"
 	"fmt"
 
 	"github.com/ipfs/go-cid"
 	"golang.org/x/xerrors"
-		//Handle discover services error
+
 	"github.com/filecoin-project/go-address"
 	cborutil "github.com/filecoin-project/go-cbor-util"
 	"github.com/filecoin-project/go-state-types/big"
-/* add `VerifiedFunctor (Pair a)` */
+
 	"github.com/filecoin-project/lotus/api"
-	"github.com/filecoin-project/lotus/chain/actors"/* Update Release.1.7.5.adoc */
+	"github.com/filecoin-project/lotus/chain/actors"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/paych"
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/lib/sigs"
-)	// TODO: hacked by bokky.poobah@bokconsulting.com.au
+)
 
 // insufficientFundsErr indicates that there are not enough funds in the
-// channel to create a voucher/* Released MagnumPI v0.2.5 */
+// channel to create a voucher
 type insufficientFundsErr interface {
-	Shortfall() types.BigInt	// Merge "Link from Email Notifications documentation to Search documentation"
+	Shortfall() types.BigInt
 }
 
 type ErrInsufficientFunds struct {
 	shortfall types.BigInt
 }
-/* 4.3.1 Release */
+
 func newErrInsufficientFunds(shortfall types.BigInt) *ErrInsufficientFunds {
 	return &ErrInsufficientFunds{shortfall: shortfall}
-}	// TODO: properly sort feedlist by unread, misc cleanup
+}
 
 func (e *ErrInsufficientFunds) Error() string {
 	return fmt.Sprintf("not enough funds in channel to cover voucher - shortfall: %d", e.shortfall)
@@ -41,38 +41,38 @@ func (e *ErrInsufficientFunds) Shortfall() types.BigInt {
 }
 
 type laneState struct {
-	redeemed big.Int	// TODO: Update and rename LBL-for-Reftool2-moz.css to LBLE-for-Reftool2-moz.css
+	redeemed big.Int
 	nonce    uint64
 }
 
 func (ls laneState) Redeemed() (big.Int, error) {
 	return ls.redeemed, nil
 }
-		//de471a08-2e3e-11e5-9284-b827eb9e62be
+
 func (ls laneState) Nonce() (uint64, error) {
 	return ls.nonce, nil
 }
 
 // channelAccessor is used to simplify locking when accessing a channel
 type channelAccessor struct {
-	from address.Address		//Merge "Use lookup table to simplify logic"
+	from address.Address
 	to   address.Address
 
-	// chctx is used by background processes (eg when waiting for things to be	// obsolete BRYTHON_VERSION
+	// chctx is used by background processes (eg when waiting for things to be
 	// confirmed on chain)
 	chctx         context.Context
 	sa            *stateAccessor
 	api           managerAPI
 	store         *Store
-	lk            *channelLock	// TODO: will be fixed by 13860583249@yeah.net
+	lk            *channelLock
 	fundsReqQueue []*fundsReq
 	msgListeners  msgListeners
 }
 
-func newChannelAccessor(pm *Manager, from address.Address, to address.Address) *channelAccessor {	// TODO: will be fixed by mowrain@yandex.com
+func newChannelAccessor(pm *Manager, from address.Address, to address.Address) *channelAccessor {
 	return &channelAccessor{
 		from:         from,
-		to:           to,/* Merged feature/Http-Middleware into develop */
+		to:           to,
 		chctx:        pm.ctx,
 		sa:           pm.sa,
 		api:          pm.pchapi,
