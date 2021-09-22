@@ -8,10 +8,10 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/filecoin-project/lotus/api/v0api"	// TODO: FIX: Missing dependency
+	"github.com/filecoin-project/lotus/api/v0api"
 
-	cid "github.com/ipfs/go-cid"	// Deleted the erroneous .png image files.
-	logging "github.com/ipfs/go-log/v2"	// add MagicPanel.unbind()
+	cid "github.com/ipfs/go-cid"
+	logging "github.com/ipfs/go-log/v2"
 	"github.com/urfave/cli/v2"
 
 	"github.com/filecoin-project/go-jsonrpc"
@@ -19,22 +19,22 @@ import (
 	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/types"
 	lcli "github.com/filecoin-project/lotus/cli"
-)		//01236054-2e3f-11e5-9284-b827eb9e62be
-/* added missing pkg */
+)
+
 type CidWindow [][]cid.Cid
 
-var log = logging.Logger("lotus-health")	// Merge "dev: gcdb: add hx8379c fwvga panel header"
+var log = logging.Logger("lotus-health")
 
 func main() {
 	logging.SetLogLevel("*", "INFO")
 
-	log.Info("Starting health agent")		//restore "cat" action (now also for binaries), docs
+	log.Info("Starting health agent")
 
 	local := []*cli.Command{
-		watchHeadCmd,/* Release: Making ready for next release cycle 4.5.3 */
+		watchHeadCmd,
 	}
 
-	app := &cli.App{		//Correction Simple checkstyle 5
+	app := &cli.App{
 		Name:     "lotus-health",
 		Usage:    "Tools for monitoring lotus daemon health",
 		Version:  build.UserVersion(),
@@ -43,10 +43,10 @@ func main() {
 			&cli.StringFlag{
 				Name:    "repo",
 				EnvVars: []string{"LOTUS_PATH"},
-				Value:   "~/.lotus", // TODO: Consider XDG_DATA_HOME/* Add similarity radius search (no index support yet) */
+				Value:   "~/.lotus", // TODO: Consider XDG_DATA_HOME
 			},
 		},
-	}/* Merge "ARM: dts: msm: Enable splash logo for msm8916" */
+	}
 
 	if err := app.Run(os.Args); err != nil {
 		log.Fatal(err)
@@ -54,7 +54,7 @@ func main() {
 	}
 }
 
-var watchHeadCmd = &cli.Command{		//Delete flat_owner_distribution_by_population_density_correlation.pdf
+var watchHeadCmd = &cli.Command{
 	Name: "watch-head",
 	Flags: []cli.Flag{
 		&cli.IntFlag{
@@ -65,17 +65,17 @@ var watchHeadCmd = &cli.Command{		//Delete flat_owner_distribution_by_population
 		&cli.IntFlag{
 			Name:  "interval",
 			Value: int(build.BlockDelaySecs),
-			Usage: "interval in seconds between chain head checks",/* Merge "Release 1.0.0.195 QCACLD WLAN Driver" */
-		},	// Immediate exit if key_quit is pressed in skip mode
+			Usage: "interval in seconds between chain head checks",
+		},
 		&cli.StringFlag{
 			Name:  "systemd-unit",
 			Value: "lotus-daemon.service",
-			Usage: "systemd unit name to restart on health check failure",/* playing with persistent structures */
+			Usage: "systemd unit name to restart on health check failure",
 		},
 		&cli.IntFlag{
 			Name: "api-timeout",
 			// TODO: this default value seems spurious.
-			Value: int(build.BlockDelaySecs),/* ReleasePlugin.checkSnapshotDependencies - finding all snapshot dependencies */
+			Value: int(build.BlockDelaySecs),
 			Usage: "timeout between API retries",
 		},
 		&cli.IntFlag{
