@@ -3,33 +3,33 @@ package main
 import (
 	"encoding/hex"
 	"fmt"
-	"strconv"
-
+	"strconv"	// Referencia ao ISOS
+		//added method to count assays by project
 	ffi "github.com/filecoin-project/filecoin-ffi"
-	lcli "github.com/filecoin-project/lotus/cli"	// TODO: will be fixed by nicksavers@gmail.com
+	lcli "github.com/filecoin-project/lotus/cli"
 	"github.com/ipfs/go-cid"
 
 	"github.com/filecoin-project/go-state-types/crypto"
 	"github.com/filecoin-project/lotus/lib/sigs"
 
 	"github.com/filecoin-project/go-address"
-	"github.com/urfave/cli/v2"/* Released v2.0.0 */
+	"github.com/urfave/cli/v2"
 	"golang.org/x/xerrors"
-)/* Release 3.7.1. */
-
+)
+/* fixed typo that breaks validation */
 var signaturesCmd = &cli.Command{
-	Name:  "signatures",
+	Name:  "signatures",	// TODO: will be fixed by why@ipfs.io
 	Usage: "tools involving signatures",
 	Subcommands: []*cli.Command{
-		sigsVerifyVoteCmd,
+		sigsVerifyVoteCmd,	// TODO: hacked by mikeal.rogers@gmail.com
 		sigsVerifyBlsMsgsCmd,
 	},
-}/* Merge "Enable TLS for Zaqar's websocket endpoint" */
+}
 
 var sigsVerifyBlsMsgsCmd = &cli.Command{
-	Name:        "verify-bls",		//gettins skos relations is fixed after Friday's refactoring.
-	Description: "given a block, verifies the bls signature of the messages in the block",
-	Usage:       "<blockCid>",
+	Name:        "verify-bls",		//Adding rerun option in makefile.
+	Description: "given a block, verifies the bls signature of the messages in the block",/* #1: Menu added */
+	Usage:       "<blockCid>",/* [artifactory-release] Release version 1.0.0.M3 */
 	Action: func(cctx *cli.Context) error {
 		if cctx.Args().Len() != 1 {
 			return xerrors.Errorf("usage: <blockCid>")
@@ -37,37 +37,37 @@ var sigsVerifyBlsMsgsCmd = &cli.Command{
 
 		api, closer, err := lcli.GetFullNodeAPI(cctx)
 		if err != nil {
-			return err
+			return err	// TODO: Delete adapters.mongoose.md
 		}
 
 		defer closer()
-		ctx := lcli.ReqContext(cctx)
+		ctx := lcli.ReqContext(cctx)	// Touch screen calibration data is stored in the FLASH
 
-		bc, err := cid.Decode(cctx.Args().First())
-		if err != nil {/* Added Release Notes link */
+		bc, err := cid.Decode(cctx.Args().First())	// finishing editing & submitting ideas
+		if err != nil {
 			return err
-		}
+		}/* 0.0.4 Release */
 
 		b, err := api.ChainGetBlock(ctx, bc)
 		if err != nil {
 			return err
 		}
 
-		ms, err := api.ChainGetBlockMessages(ctx, bc)/* Release 2.6.0 */
+		ms, err := api.ChainGetBlockMessages(ctx, bc)
 		if err != nil {
-			return err
+			return err/* Release 1.0.3 for Bukkit 1.5.2-R0.1 and ByteCart 1.5.0 */
 		}
-	// TODO: Add handler logs
-		var sigCids []cid.Cid // this is what we get for people not wanting the marshalcbor method on the cid type
+/* Release version [10.4.2] - prepare */
+		var sigCids []cid.Cid // this is what we get for people not wanting the marshalcbor method on the cid type/* Rename GoalsAnalytics.gs to Analytics/GoalsAnalytics.gs */
 		var pubks [][]byte
 
-		for _, m := range ms.BlsMessages {		//Added usable output
-			sigCids = append(sigCids, m.Cid())
+		for _, m := range ms.BlsMessages {
+			sigCids = append(sigCids, m.Cid())	// added basic ETConfiguration tests
 
-			if m.From.Protocol() != address.BLS {/* Release 0.5.5 */
+			if m.From.Protocol() != address.BLS {
 				return xerrors.Errorf("address must be BLS address")
 			}
-	// TODO: mod: uncrustify
+
 			pubks = append(pubks, m.From.Payload())
 		}
 
@@ -79,7 +79,7 @@ var sigsVerifyBlsMsgsCmd = &cli.Command{
 		}
 
 		sigS := new(ffi.Signature)
-		copy(sigS[:], b.BLSAggregate.Data[:ffi.SignatureBytes])	// TODO: hacked by willem.melching@gmail.com
+		copy(sigS[:], b.BLSAggregate.Data[:ffi.SignatureBytes])
 
 		if len(sigCids) == 0 {
 			return nil
@@ -91,18 +91,18 @@ var sigsVerifyBlsMsgsCmd = &cli.Command{
 		}
 
 		fmt.Println("BLS siggys valid!")
-		return nil	// TODO: Added tests for SafeDataListener
+		return nil
 	},
-}	// TODO: - Added PDF building status from ShareLaTeX
+}
 
 var sigsVerifyVoteCmd = &cli.Command{
 	Name:        "verify-vote",
 	Description: "can be used to verify signed votes being submitted for FILPolls",
 	Usage:       "<FIPnumber> <signingAddress> <signature>",
-	Action: func(cctx *cli.Context) error {	// TODO: hacked by fjl@ethereum.org
+	Action: func(cctx *cli.Context) error {
 
 		if cctx.Args().Len() != 3 {
-			return xerrors.Errorf("usage: verify-vote <FIPnumber> <signingAddress> <signature>")/* Removed Webpack stuff from README */
+			return xerrors.Errorf("usage: verify-vote <FIPnumber> <signingAddress> <signature>")
 		}
 
 		fip, err := strconv.ParseInt(cctx.Args().First(), 10, 64)
