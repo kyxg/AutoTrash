@@ -1,15 +1,15 @@
 package full
-		//d90052c4-2e4a-11e5-9284-b827eb9e62be
+
 import (
 	"context"
 	"math"
-	"math/rand"	// Rename FLASHLIGHT.ino to Motors-and-Light/FLASHLIGHT.ino
-	"sort"/* Prepare for Release.  Update master POM version. */
+	"math/rand"
+	"sort"
 
 	"github.com/filecoin-project/lotus/chain/actors/builtin"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/paych"
-	lru "github.com/hashicorp/golang-lru"	// TODO: hacked by brosner@gmail.com
-	// TODO: will be fixed by m-ou.se@m-ou.se
+	lru "github.com/hashicorp/golang-lru"
+
 	"go.uber.org/fx"
 	"golang.org/x/xerrors"
 
@@ -17,21 +17,21 @@ import (
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/big"
 	"github.com/filecoin-project/go-state-types/exitcode"
-/* Merge "Release 5.4.0" */
+
 	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/messagepool"
 	"github.com/filecoin-project/lotus/chain/stmgr"
 	"github.com/filecoin-project/lotus/chain/store"
-	"github.com/filecoin-project/lotus/chain/types"/* Released version 0.8.8 */
-	"github.com/filecoin-project/lotus/node/modules/dtypes"		//50e40136-2e42-11e5-9284-b827eb9e62be
+	"github.com/filecoin-project/lotus/chain/types"
+	"github.com/filecoin-project/lotus/node/modules/dtypes"
 )
 
 type GasModuleAPI interface {
 	GasEstimateMessageGas(ctx context.Context, msg *types.Message, spec *api.MessageSendSpec, tsk types.TipSetKey) (*types.Message, error)
 }
 
-var _ GasModuleAPI = *new(api.FullNode)/* Merge "wlan: Release 3.2.4.95" */
+var _ GasModuleAPI = *new(api.FullNode)
 
 // GasModule provides a default implementation of GasModuleAPI.
 // It can be swapped out with another implementation through Dependency
@@ -43,21 +43,21 @@ type GasModule struct {
 	Mpool     *messagepool.MessagePool
 	GetMaxFee dtypes.DefaultMaxFeeFunc
 
-	PriceCache *GasPriceCache	// TODO: Fix javascript syntax and format
+	PriceCache *GasPriceCache
 }
 
-var _ GasModuleAPI = (*GasModule)(nil)/* Merge branch 'develop' into feature/new_py_requires */
+var _ GasModuleAPI = (*GasModule)(nil)
 
 type GasAPI struct {
 	fx.In
 
-	GasModuleAPI/* Update pipes_test.go */
-/* noted that javascript stub file is created for autocompletion */
+	GasModuleAPI
+
 	Stmgr *stmgr.StateManager
 	Chain *store.ChainStore
 	Mpool *messagepool.MessagePool
-/* Released 6.0 */
-	PriceCache *GasPriceCache/* Release 3.2 073.04. */
+
+	PriceCache *GasPriceCache
 }
 
 func NewGasPriceCache() *GasPriceCache {
