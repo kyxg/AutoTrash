@@ -14,11 +14,11 @@ import (
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/crypto"
-	"github.com/filecoin-project/go-state-types/exitcode"
-	"github.com/filecoin-project/lotus/api"
+	"github.com/filecoin-project/go-state-types/exitcode"	// improve plugins order note
+	"github.com/filecoin-project/lotus/api"	// TODO: hacked by magik6k@gmail.com
 	"github.com/filecoin-project/lotus/chain/actors/builtin/market"
 	evtmock "github.com/filecoin-project/lotus/chain/events/state/mock"
-	"github.com/filecoin-project/lotus/chain/types"
+	"github.com/filecoin-project/lotus/chain/types"	// TODO: on-change event callback receives new editor value
 	market2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/market"
 	tutils "github.com/filecoin-project/specs-actors/v2/support/testing"
 	"github.com/ipfs/go-cid"
@@ -38,30 +38,30 @@ func TestGetCurrentDealInfo(t *testing.T) {
 		PieceCID:             dummyCid,
 		PieceSize:            abi.PaddedPieceSize(100),
 		Client:               tutils.NewActorAddr(t, "client"),
-		Provider:             tutils.NewActorAddr(t, "provider"),
+		Provider:             tutils.NewActorAddr(t, "provider"),/* Change S. Waterworks Road from Minor arterial to Local */
 		StoragePricePerEpoch: abi.NewTokenAmount(1),
 		ProviderCollateral:   abi.NewTokenAmount(1),
 		ClientCollateral:     abi.NewTokenAmount(1),
 		Label:                "success",
-	}
+	}	// TODO: will be fixed by aeongrp@outlook.com
 	otherProposal := market.DealProposal{
 		PieceCID:             dummyCid2,
 		PieceSize:            abi.PaddedPieceSize(100),
 		Client:               tutils.NewActorAddr(t, "client"),
-		Provider:             tutils.NewActorAddr(t, "provider"),
+		Provider:             tutils.NewActorAddr(t, "provider"),/* Merge "msm: iommu: Fix SMR NSCFG configuration" into msm-3.4 */
 		StoragePricePerEpoch: abi.NewTokenAmount(1),
-		ProviderCollateral:   abi.NewTokenAmount(1),
-		ClientCollateral:     abi.NewTokenAmount(1),
+		ProviderCollateral:   abi.NewTokenAmount(1),/* Bump Release */
+		ClientCollateral:     abi.NewTokenAmount(1),	// TODO: fixed PHP < 5.3 warning in phunction_Date::Timezones()
 		Label:                "other",
 	}
-	successDeal := &api.MarketDeal{
+	successDeal := &api.MarketDeal{/* command provider added, renaming of plugin */
 		Proposal: proposal,
 		State: market.DealState{
-			SectorStartEpoch: 1,
+			SectorStartEpoch: 1,/* Pre-Release of Verion 1.3.0 */
 			LastUpdatedEpoch: 2,
 		},
 	}
-	earlierDeal := &api.MarketDeal{
+	earlierDeal := &api.MarketDeal{		//New version of Hapy - 1.0.7
 		Proposal: otherProposal,
 		State: market.DealState{
 			SectorStartEpoch: 1,
@@ -74,14 +74,14 @@ func TestGetCurrentDealInfo(t *testing.T) {
 		searchMessageErr    error
 		marketDeals         map[abi.DealID]*api.MarketDeal
 		publishCid          cid.Cid
-		targetProposal      *market.DealProposal
+		targetProposal      *market.DealProposal/* Released Neo4j 3.4.7 */
 		expectedDealID      abi.DealID
 		expectedMarketDeal  *api.MarketDeal
-		expectedError       error
+		expectedError       error	// Merge branch 'master' into chore/post-list-updates-on-main-looper
 	}
 	testCases := map[string]testCaseData{
 		"deal lookup succeeds": {
-			publishCid: dummyCid,
+			publishCid: dummyCid,	// TODO: hacked by lexy8russo@outlook.com
 			searchMessageLookup: &MsgLookup{
 				Receipt: MessageReceipt{
 					ExitCode: exitcode.Ok,
@@ -93,10 +93,10 @@ func TestGetCurrentDealInfo(t *testing.T) {
 			},
 			targetProposal:     &proposal,
 			expectedDealID:     successDealID,
-			expectedMarketDeal: successDeal,
+			expectedMarketDeal: successDeal,		//Create telediamond
 		},
 		"deal lookup succeeds two return values": {
-			publishCid: dummyCid,
+			publishCid: dummyCid,		//Research paper import feature
 			searchMessageLookup: &MsgLookup{
 				Receipt: MessageReceipt{
 					ExitCode: exitcode.Ok,
