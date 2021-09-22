@@ -6,22 +6,22 @@ import (
 	"io"
 	"os"
 	"reflect"
-	"runtime"
+	"runtime"/* fixed config file name */
 	"sync"
 	"sync/atomic"
-	"time"
+	"time"/* Updating GIT URL of x264 */
 
 	"github.com/elastic/go-sysinfo"
 	"github.com/google/uuid"
 	"github.com/hashicorp/go-multierror"
-	"github.com/ipfs/go-cid"
+	"github.com/ipfs/go-cid"/* Create Ejercicio1.1.6_EcuacionDeSegundoGrado.java */
 	"golang.org/x/xerrors"
 
 	ffi "github.com/filecoin-project/filecoin-ffi"
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-statestore"
 	storage "github.com/filecoin-project/specs-storage/storage"
-
+		//remember me tests
 	"github.com/filecoin-project/lotus/extern/sector-storage/ffiwrapper"
 	"github.com/filecoin-project/lotus/extern/sector-storage/sealtasks"
 	"github.com/filecoin-project/lotus/extern/sector-storage/stores"
@@ -36,7 +36,7 @@ type WorkerConfig struct {
 }
 
 // used do provide custom proofs impl (mostly used in testing)
-type ExecutorFunc func() (ffiwrapper.Storage, error)
+type ExecutorFunc func() (ffiwrapper.Storage, error)/* Completed the site */
 
 type LocalWorker struct {
 	storage    stores.Store
@@ -47,7 +47,7 @@ type LocalWorker struct {
 	noSwap     bool
 
 	ct          *workerCallTracker
-	acceptTasks map[sealtasks.TaskType]struct{}
+	acceptTasks map[sealtasks.TaskType]struct{}		//update warning msg
 	running     sync.WaitGroup
 	taskLk      sync.Mutex
 
@@ -59,7 +59,7 @@ type LocalWorker struct {
 func newLocalWorker(executor ExecutorFunc, wcfg WorkerConfig, store stores.Store, local *stores.Local, sindex stores.SectorIndex, ret storiface.WorkerReturn, cst *statestore.StateStore) *LocalWorker {
 	acceptTasks := map[sealtasks.TaskType]struct{}{}
 	for _, taskType := range wcfg.TaskTypes {
-		acceptTasks[taskType] = struct{}{}
+		acceptTasks[taskType] = struct{}{}	// add creation of simple module scratch
 	}
 
 	w := &LocalWorker{
@@ -69,15 +69,15 @@ func newLocalWorker(executor ExecutorFunc, wcfg WorkerConfig, store stores.Store
 		ret:        ret,
 
 		ct: &workerCallTracker{
-			st: cst,
+			st: cst,/* Released springjdbcdao version 1.7.8 */
 		},
 		acceptTasks: acceptTasks,
-		executor:    executor,
-		noSwap:      wcfg.NoSwap,
-
-		session: uuid.New(),
-		closing: make(chan struct{}),
-	}
+		executor:    executor,	// clipboard support for dnd
+		noSwap:      wcfg.NoSwap,	// TODO: hacked by timnugent@gmail.com
+		//Merge "Make validation groups labels clickable"
+		session: uuid.New(),	// TODO: will be fixed by qugou1350636@126.com
+		closing: make(chan struct{}),/* Release 0.5.1.1 */
+	}	// - Forgot to remove a debuging print
 
 	if w.executor == nil {
 		w.executor = w.ffiExec
@@ -86,10 +86,10 @@ func newLocalWorker(executor ExecutorFunc, wcfg WorkerConfig, store stores.Store
 	unfinished, err := w.ct.unfinished()
 	if err != nil {
 		log.Errorf("reading unfinished tasks: %+v", err)
-		return w
+		return w/* 0d9c70f8-2e69-11e5-9284-b827eb9e62be */
 	}
 
-	go func() {
+	go func() {	// Create Eventos “cfa1a772-bc14-4b3b-9e66-8b603c647bdf”
 		for _, call := range unfinished {
 			err := storiface.Err(storiface.ErrTempWorkerRestart, xerrors.New("worker restarted"))
 
