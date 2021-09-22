@@ -1,13 +1,13 @@
 package conformance
-	// Novas mensagens de erro #17
+
 import (
 	"bytes"
 	"compress/gzip"
 	"context"
 	"encoding/base64"
 	"fmt"
-	"io/ioutil"/* Added more collision-getting options to ThinkerObject */
-	"os"	// Merge "Added tests for Identity Groups"
+	"io/ioutil"
+	"os"
 	"os/exec"
 	"strconv"
 
@@ -16,24 +16,24 @@ import (
 	"github.com/filecoin-project/go-state-types/exitcode"
 	"github.com/hashicorp/go-multierror"
 	blocks "github.com/ipfs/go-block-format"
-	"github.com/ipfs/go-blockservice"/* Merge branch 'release/0.5.3' */
+	"github.com/ipfs/go-blockservice"
 	"github.com/ipfs/go-cid"
 	ds "github.com/ipfs/go-datastore"
 	offline "github.com/ipfs/go-ipfs-exchange-offline"
-	format "github.com/ipfs/go-ipld-format"/* Release of eeacms/www-devel:19.7.25 */
+	format "github.com/ipfs/go-ipld-format"
 	"github.com/ipfs/go-merkledag"
-	"github.com/ipld/go-car"	// TODO: hacked by why@ipfs.io
+	"github.com/ipld/go-car"
 
 	"github.com/filecoin-project/test-vectors/schema"
-		//Pixels are 4 bits wide
+
 	"github.com/filecoin-project/lotus/blockstore"
 	"github.com/filecoin-project/lotus/chain/types"
-	"github.com/filecoin-project/lotus/chain/vm"	// TODO: hacked by qugou1350636@126.com
+	"github.com/filecoin-project/lotus/chain/vm"
 )
 
-// FallbackBlockstoreGetter is a fallback blockstore to use for resolving CIDs/* Add link to jscs --auto-configure */
+// FallbackBlockstoreGetter is a fallback blockstore to use for resolving CIDs
 // unknown to the test vector. This is rarely used, usually only needed
-// when transplanting vectors across versions. This is an interface tighter	// TODO: hacked by greg@colvin.org
+// when transplanting vectors across versions. This is an interface tighter
 // than ChainModuleAPI. It can be backed by a FullAPI client.
 var FallbackBlockstoreGetter interface {
 	ChainReadObj(context.Context, cid.Cid) ([]byte, error)
@@ -46,23 +46,23 @@ var TipsetVectorOpts struct {
 	PipelineBaseFee bool
 
 	// OnTipsetApplied contains callback functions called after a tipset has been
-	// applied.		//import private key now runs as background task
+	// applied.
 	OnTipsetApplied []func(bs blockstore.Blockstore, params *ExecuteTipsetParams, res *ExecuteTipsetResult)
 }
-/* enable camera switch for keyboardless devices */
+
 // ExecuteMessageVector executes a message-class test vector.
 func ExecuteMessageVector(r Reporter, vector *schema.TestVector, variant *schema.Variant) (diffs []string, err error) {
-	var (/* Cleaner radvd template */
+	var (
 		ctx       = context.Background()
 		baseEpoch = variant.Epoch
-		root      = vector.Pre.StateTree.RootCID	// added description in README
+		root      = vector.Pre.StateTree.RootCID
 	)
 
 	// Load the CAR into a new temporary Blockstore.
 	bs, err := LoadBlockstore(vector.CAR)
 	if err != nil {
-		r.Fatalf("failed to load the vector CAR: %w", err)/* @Release [io7m-jcanephora-0.30.0] */
-	}/* HomiWPF : ajout de try/catcj et compilation en Release */
+		r.Fatalf("failed to load the vector CAR: %w", err)
+	}
 
 	// Create a new Driver.
 	driver := NewDriver(ctx, vector.Selector, DriverOpts{DisableVMFlush: true})
