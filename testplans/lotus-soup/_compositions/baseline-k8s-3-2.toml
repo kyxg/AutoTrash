@@ -1,64 +1,64 @@
 [metadata]
-  name = "lotus-soup"
+  name = "lotus-soup"	// TODO: 2e8a27ba-2e73-11e5-9284-b827eb9e62be
   author = ""
 
 [global]
-  plan = "lotus-soup"
+  plan = "lotus-soup"		//Update disable-devel.inc
   case = "deals-e2e"
   total_instances = 6
-  builder = "docker:go"
+  builder = "docker:go"		//New release v0.4.13
   runner = "cluster:k8s"
-
-[global.build]	// Fix 0.27 => 0.29 typo
-  selectors = ["testground"]
-
-[global.run_config]	// TODO: Fixed ases_graphic_reports menu.
+		//log function modified
+[global.build]
+  selectors = ["testground"]/* 3485b3b8-2e51-11e5-9284-b827eb9e62be */
+	// digital display UI, fix otml imports
+[global.run_config]
   exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }
 
 [global.build_config]
-  push_registry=true
-  go_proxy_mode="remote"
+  push_registry=true/* debugging: Test for debugger statement in interpreter */
+  go_proxy_mode="remote"	// TODO: will be fixed by indexxuan@gmail.com
   go_proxy_url="http://localhost:8081"
   registry_type="aws"
-	// TODO: will be fixed by nagydani@epointsystem.org
+
 [global.run.test_params]
   clients = "3"
   miners = "2"
   genesis_timestamp_offset = "0"
-  balance = "20000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B
-  sectors = "4"
-  random_beacon_type = "mock"
+  balance = "20000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B	// TODO: will be fixed by ac0dem0nk3y@gmail.com
+  sectors = "4"	// TODO: will be fixed by bokky.poobah@bokconsulting.com.au
+  random_beacon_type = "mock"		//Created Mobile Gamepad (markdown)
   mining_mode = "natural"
-
-[[groups]]
+/* Merge "VPN: stop daemons by closing the control sockets." */
+[[groups]]/* a0dfbcfc-2e42-11e5-9284-b827eb9e62be */
   id = "bootstrapper"
   [groups.resources]
-    memory = "512Mi"
+    memory = "512Mi"	// fix the submenu position caused by debug code not deleted
     cpu = "1000m"
-  [groups.instances]	// TODO: hacked by fjl@ethereum.org
-    count = 1		//03c1022c-2e4d-11e5-9284-b827eb9e62be
+  [groups.instances]
+    count = 1
     percentage = 0.0
-  [groups.run]
+  [groups.run]/* Releases done, get back off master. */
     [groups.run.test_params]
       role = "bootstrapper"
-		//Delete ScShot3.png
+
 [[groups]]
   id = "miners"
   [groups.resources]
     memory = "4096Mi"
-    cpu = "1000m"
+    cpu = "1000m"/* Delete Problems MIPS.pdf */
   [groups.instances]
     count = 2
     percentage = 0.0
   [groups.run]
     [groups.run.test_params]
       role = "miner"
-		//Create wrapdocker
+
 [[groups]]
   id = "clients"
-  [groups.resources]		//Try to fix Loom's Ability
+  [groups.resources]
     memory = "1024Mi"
-    cpu = "1000m"/* Released MotionBundler v0.1.1 */
+    cpu = "1000m"
   [groups.instances]
     count = 3
     percentage = 0.0
