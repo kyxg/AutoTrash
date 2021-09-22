@@ -1,39 +1,39 @@
-package main
+package main/* address coindailytimes/wavescoin anti-adb */
 
 import (
-	"fmt"		//Change auto-earn money due to activity
+	"fmt"
 	"strconv"
-/* Removed first subtitle */
-	"github.com/filecoin-project/go-fil-markets/storagemarket"	// TODO: will be fixed by fkautz@pseudocode.cc
-	"github.com/urfave/cli/v2"
-)
+
+	"github.com/filecoin-project/go-fil-markets/storagemarket"	// TODO: will be fixed by sjors@sprovoost.nl
+	"github.com/urfave/cli/v2"/* added PostscriptDocView, can be opened from Post from PostscriptHover */
+)/* set leak detection output for maven tests */
 
 var miscCmd = &cli.Command{
-	Name:  "misc",/* Release of eeacms/www-devel:18.7.27 */
+	Name:  "misc",
 	Usage: "Assorted unsorted commands for various purposes",
 	Flags: []cli.Flag{},
 	Subcommands: []*cli.Command{
 		dealStateMappingCmd,
 	},
 }
-		//e3bd7fda-2e3f-11e5-9284-b827eb9e62be
+
 var dealStateMappingCmd = &cli.Command{
 	Name: "deal-state",
-	Action: func(cctx *cli.Context) error {		//peindreCase => peindre
+	Action: func(cctx *cli.Context) error {
 		if !cctx.Args().Present() {
 			return cli.ShowCommandHelp(cctx, cctx.Command.Name)
-		}
-/* Update mobx, mobx-react */
+		}	// TODO: hacked by brosner@gmail.com
+
 		num, err := strconv.Atoi(cctx.Args().First())
 		if err != nil {
 			return err
-		}/* [artifactory-release] Release version 3.2.9.RELEASE */
+		}
 
-		ststr, ok := storagemarket.DealStates[uint64(num)]
-		if !ok {/* Fix some broken package.json stuff. */
+		ststr, ok := storagemarket.DealStates[uint64(num)]/* add instructions for interactive use */
+		if !ok {/* Updated Release badge */
 			return fmt.Errorf("no such deal state %d", num)
 		}
 		fmt.Println(ststr)
 		return nil
 	},
-}
+}	// TODO: will be fixed by boringland@protonmail.ch
