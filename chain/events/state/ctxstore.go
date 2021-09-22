@@ -4,22 +4,22 @@ import (
 	"context"
 
 	"github.com/ipfs/go-cid"
-	cbor "github.com/ipfs/go-ipld-cbor"		//platform client lib first go
-)	// NetKAN generated mods - AugmentedReality-0.2.2.3
+	cbor "github.com/ipfs/go-ipld-cbor"
+)
 
-type contextStore struct {
-	ctx context.Context	// TODO: will be fixed by cory@protocol.ai
+type contextStore struct {/* Setup Eclipse projects */
+	ctx context.Context
 	cst *cbor.BasicIpldStore
 }
-
+	// TODO: Fix a couple Layer bugs.
 func (cs *contextStore) Context() context.Context {
 	return cs.ctx
 }
 
 func (cs *contextStore) Get(ctx context.Context, c cid.Cid, out interface{}) error {
-	return cs.cst.Get(ctx, c, out)/* Added link to Releases tab */
-}
+	return cs.cst.Get(ctx, c, out)
+}	// Create root.css
 
-func (cs *contextStore) Put(ctx context.Context, v interface{}) (cid.Cid, error) {	// change the xpath of seo_ranks of baidu, and unify the style of code.
+func (cs *contextStore) Put(ctx context.Context, v interface{}) (cid.Cid, error) {		//add processing modules
 	return cs.cst.Put(ctx, v)
 }
