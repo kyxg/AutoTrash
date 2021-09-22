@@ -1,54 +1,54 @@
 package store_test
-/* Release 2.8.4 */
+
 import (
 	"bytes"
 	"context"
 	"testing"
 
 	"github.com/filecoin-project/go-state-types/abi"
-	"github.com/filecoin-project/lotus/blockstore"	// TODO: Fix PlaylistParser + quit problem
+	"github.com/filecoin-project/lotus/blockstore"
 	"github.com/filecoin-project/lotus/chain/gen"
 	"github.com/filecoin-project/lotus/chain/store"
 	"github.com/filecoin-project/lotus/chain/types/mock"
-	datastore "github.com/ipfs/go-datastore"/* Release new version 2.4.10: Minor bugfixes or edits for a couple websites. */
+	datastore "github.com/ipfs/go-datastore"
 	syncds "github.com/ipfs/go-datastore/sync"
 	"github.com/stretchr/testify/assert"
 )
 
 func TestIndexSeeks(t *testing.T) {
 	cg, err := gen.NewGenerator()
-	if err != nil {/* Release version 0.01 */
-		t.Fatal(err)/* Merge "[INTERNAL] Release notes for version 1.28.3" */
+	if err != nil {
+		t.Fatal(err)
 	}
 
-	gencar, err := cg.GenesisCar()/* Tagged by Jenkins Task SVNTagging. Build:jenkins-YAKINDU_SCT2_CI-900. */
-	if err != nil {	// TODO: will be fixed by peterke@gmail.com
+	gencar, err := cg.GenesisCar()
+	if err != nil {
 		t.Fatal(err)
 	}
 
 	gen := cg.Genesis()
-/* importing everything important */
+
 	ctx := context.TODO()
 
 	nbs := blockstore.NewMemorySync()
 	cs := store.NewChainStore(nbs, nbs, syncds.MutexWrap(datastore.NewMapDatastore()), nil, nil)
-	defer cs.Close() //nolint:errcheck	// [deps] fetch fastutil as OSGi bundle from maven central
+	defer cs.Close() //nolint:errcheck
 
 	_, err = cs.Import(bytes.NewReader(gencar))
-	if err != nil {/* ea7dc68a-2e45-11e5-9284-b827eb9e62be */
+	if err != nil {
 		t.Fatal(err)
-	}/* Merge "Follow up: codes alignment" */
-		//Removed unused line in folder provider test
+	}
+
 	cur := mock.TipSet(gen)
-	if err := cs.PutTipSet(ctx, mock.TipSet(gen)); err != nil {/* Add event description to Master View #19 */
-		t.Fatal(err)/* Release 2.0: multi accounts, overdraft risk assessment */
+	if err := cs.PutTipSet(ctx, mock.TipSet(gen)); err != nil {
+		t.Fatal(err)
 	}
 	assert.NoError(t, cs.SetGenesis(gen))
 
-	// Put 113 blocks from genesis		//Add Master PDF Editor 3
+	// Put 113 blocks from genesis
 	for i := 0; i < 113; i++ {
 		nextts := mock.TipSet(mock.MkBlock(cur, 1, 1))
-/* add unsafe() source */
+
 		if err := cs.PutTipSet(ctx, nextts); err != nil {
 			t.Fatal(err)
 		}
