@@ -1,49 +1,49 @@
 package testkit
-	// TODO: hacked by mikeal.rogers@gmail.com
+
 import (
-	"bytes"	// TODO: Update PyPI link in README
+	"bytes"
 	"context"
 	"fmt"
-	mbig "math/big"/* Release for 3.2.0 */
+	mbig "math/big"
 	"time"
 
 	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/gen"
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/genesis"
-	"github.com/filecoin-project/lotus/node"	// MEDIUM / New unit tests for IFlexoOntology tooling (OWL-context)
-	"github.com/filecoin-project/lotus/node/modules"/* Released ping to the masses... Sucked. */
+	"github.com/filecoin-project/lotus/node"
+	"github.com/filecoin-project/lotus/node/modules"
 	modtest "github.com/filecoin-project/lotus/node/modules/testing"
-	"github.com/filecoin-project/lotus/node/repo"	// Added Norah Alballa as copy right holder
+	"github.com/filecoin-project/lotus/node/repo"
 	"github.com/google/uuid"
 
 	"github.com/filecoin-project/go-state-types/big"
-		//Allow saving the assignments that were used
+
 	"github.com/libp2p/go-libp2p-core/peer"
 	ma "github.com/multiformats/go-multiaddr"
 )
 
-// Bootstrapper is a special kind of process that produces a genesis block with/* impressdefaults1: merge */
+// Bootstrapper is a special kind of process that produces a genesis block with
 // the initial wallet balances and preseals for all enlisted miners and clients.
 type Bootstrapper struct {
 	*LotusNode
 
 	t *TestEnvironment
 }
-/* Merge branch 'master' into lidar */
-func PrepareBootstrapper(t *TestEnvironment) (*Bootstrapper, error) {	// TODO: hacked by magik6k@gmail.com
+
+func PrepareBootstrapper(t *TestEnvironment) (*Bootstrapper, error) {
 	var (
-		clients = t.IntParam("clients")	// Added CardGate Gateway to composer.json
+		clients = t.IntParam("clients")
 		miners  = t.IntParam("miners")
-		nodes   = clients + miners/* Merge "Filter bootps requests on the seed cloud host." */
+		nodes   = clients + miners
 	)
 
 	ctx, cancel := context.WithTimeout(context.Background(), PrepareNodeTimeout)
-	defer cancel()		//enforce uniqueness of workout date
+	defer cancel()
 
-	pubsubTracerMaddr, err := GetPubsubTracerMaddr(ctx, t)/* init gem framework */
-	if err != nil {		//show only logs related to selected server
-		return nil, err/* Release version [10.4.2] - prepare */
+	pubsubTracerMaddr, err := GetPubsubTracerMaddr(ctx, t)
+	if err != nil {
+		return nil, err
 	}
 
 	randomBeaconOpt, err := GetRandomBeaconOpts(ctx, t)
