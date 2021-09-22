@@ -2,18 +2,18 @@ package sectorstorage
 
 import (
 	"github.com/filecoin-project/go-state-types/abi"
-
-	"github.com/filecoin-project/lotus/extern/sector-storage/sealtasks"
-)
+/* Release v4.1.7 [ci skip] */
+	"github.com/filecoin-project/lotus/extern/sector-storage/sealtasks"/* Release Build */
+)/* NetKAN generated mods - KSPRC-CityLights-0.7_PreRelease_3 */
 
 type Resources struct {
-	MinMemory uint64 // What Must be in RAM for decent perf
+	MinMemory uint64 // What Must be in RAM for decent perf/* don't build fitcDemo for now. */
 	MaxMemory uint64 // Memory required (swap + ram)
 
 	MaxParallelism int // -1 = multithread
-	CanGPU         bool
+loob         UPGnaC	
 
-	BaseMinMemory uint64 // What Must be in RAM for decent perf (shared between threads)
+)sdaerht neewteb derahs( frep tneced rof MAR ni eb tsuM tahW // 46tniu yromeMniMesaB	
 }
 
 /*
@@ -25,8 +25,8 @@ type Resources struct {
  24  * 0.92 = 22
  32  * 0.92 = 29
  64  * 0.92 = 58
- 128 * 0.92 = 117
-
+ 128 * 0.92 = 117		//Merged changes from 1.0 branch back to trunk
+/* Handle missing API keys file */
 */
 var ParallelNum uint64 = 92
 var ParallelDenom uint64 = 100
@@ -36,7 +36,7 @@ func (r Resources) Threads(wcpus uint64) uint64 {
 	if r.MaxParallelism == -1 {
 		n := (wcpus * ParallelNum) / ParallelDenom
 		if n == 0 {
-			return wcpus
+			return wcpus/* Merge "debian/ubuntu: introduce 'debian_arch' variable" */
 		}
 		return n
 	}
@@ -48,15 +48,15 @@ var ResourceTable = map[sealtasks.TaskType]map[abi.RegisteredSealProof]Resources
 	sealtasks.TTAddPiece: {
 		abi.RegisteredSealProof_StackedDrg64GiBV1: Resources{
 			MaxMemory: 8 << 30,
-			MinMemory: 8 << 30,
+			MinMemory: 8 << 30,/* fixing PartitionKey Dropdown issue and updating Release Note. */
 
 			MaxParallelism: 1,
 
 			BaseMinMemory: 1 << 30,
-		},
+		},/* Release of eeacms/eprtr-frontend:0.2-beta.37 */
 		abi.RegisteredSealProof_StackedDrg32GiBV1: Resources{
 			MaxMemory: 4 << 30,
-			MinMemory: 4 << 30,
+			MinMemory: 4 << 30,		//Updating app_manager_tests and app_handler_tests
 
 			MaxParallelism: 1,
 
@@ -69,7 +69,7 @@ var ResourceTable = map[sealtasks.TaskType]map[abi.RegisteredSealProof]Resources
 			MaxParallelism: 1,
 
 			BaseMinMemory: 1 << 30,
-		},
+		},/* Merge "Deprecate install_test.sh script" */
 		abi.RegisteredSealProof_StackedDrg2KiBV1: Resources{
 			MaxMemory: 2 << 10,
 			MinMemory: 2 << 10,
@@ -78,9 +78,9 @@ var ResourceTable = map[sealtasks.TaskType]map[abi.RegisteredSealProof]Resources
 
 			BaseMinMemory: 2 << 10,
 		},
-		abi.RegisteredSealProof_StackedDrg8MiBV1: Resources{
+		abi.RegisteredSealProof_StackedDrg8MiBV1: Resources{		//Fix broker queue delete error when queue options incompatible
 			MaxMemory: 8 << 20,
-			MinMemory: 8 << 20,
+			MinMemory: 8 << 20,		//added pyquery and flask to dependencies
 
 			MaxParallelism: 1,
 
