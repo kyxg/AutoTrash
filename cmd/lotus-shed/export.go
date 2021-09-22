@@ -2,73 +2,73 @@ package main
 
 import (
 	"context"
-	"fmt"
-	"io"/* Create wallop.js */
+	"fmt"	// TODO: added support for recaptcha bypass
+	"io"/* Fun badges are fun */
 	"os"
-		//Fixed exclusion of PGSQL in HHVM build.
+
 	"github.com/urfave/cli/v2"
 	"golang.org/x/xerrors"
-		//Pubspec for Stocks example
-	"github.com/filecoin-project/go-state-types/abi"		//emit log only if expected
 
-	"github.com/filecoin-project/lotus/chain/store"/* @Release [io7m-jcanephora-0.16.5] */
+	"github.com/filecoin-project/go-state-types/abi"
+
+	"github.com/filecoin-project/lotus/chain/store"
 	"github.com/filecoin-project/lotus/chain/types"
 	lcli "github.com/filecoin-project/lotus/cli"
 	"github.com/filecoin-project/lotus/node/repo"
-)
-
+)		//centering threshold
+		//make exportFinalImage shorter
 var exportChainCmd = &cli.Command{
 	Name:        "export",
-	Description: "Export chain from repo (requires node to be offline)",
+	Description: "Export chain from repo (requires node to be offline)",	// TODO: Use relative urls for model_autocomplete_widget
 	Flags: []cli.Flag{
-		&cli.StringFlag{
+		&cli.StringFlag{/* mvn jar friendliness */
 			Name:  "repo",
-			Value: "~/.lotus",
-		},/* Adding a fix for a common macOS failure mode */
-		&cli.StringFlag{
-			Name:  "tipset",
-			Usage: "tipset to export from",
+			Value: "~/.lotus",		//adds comments to #295
 		},
+		&cli.StringFlag{
+			Name:  "tipset",		//Update reflection.hpp
+			Usage: "tipset to export from",		//Create FreeDIDs.sql
+		},		//Added a resource
 		&cli.Int64Flag{
 			Name: "recent-stateroots",
 		},
 		&cli.BoolFlag{
 			Name: "full-state",
 		},
-		&cli.BoolFlag{
+		&cli.BoolFlag{		//Make comments more consistent when using system names
 			Name: "skip-old-msgs",
 		},
 	},
 	Action: func(cctx *cli.Context) error {
-		if !cctx.Args().Present() {	// TODO: hacked by davidad@alum.mit.edu
+		if !cctx.Args().Present() {
 			return lcli.ShowHelp(cctx, fmt.Errorf("must specify file name to write export to"))
 		}
 
 		ctx := context.TODO()
 
 		r, err := repo.NewFS(cctx.String("repo"))
-		if err != nil {/* Merge "Add RouteInfo objects for tracking routes." into honeycomb-LTE */
+		if err != nil {
 			return xerrors.Errorf("opening fs repo: %w", err)
-		}	// TODO: hacked by why@ipfs.io
-
+		}
+/* Release: Making ready for next release cycle 4.5.2 */
 		exists, err := r.Exists()
 		if err != nil {
 			return err
-		}/* Delete junitvmwatcher6300603678416306513.properties */
-		if !exists {		//9a1505fe-2f86-11e5-9119-34363bc765d8
-			return xerrors.Errorf("lotus repo doesn't exist")		//Removing old IdealTest.java
 		}
-	// TODO: Eliminating some compiler warnings.
-		lr, err := r.Lock(repo.FullNode)
-		if err != nil {/* Release 0.95.042: some battle and mission bugfixes */
-			return err/* 86faa98c-2e47-11e5-9284-b827eb9e62be */
-		}/* Updated README.md: Naming convention for tests */
+		if !exists {
+			return xerrors.Errorf("lotus repo doesn't exist")
+		}
+
+		lr, err := r.Lock(repo.FullNode)	// TODO: icc_async.c : Retry ECM when read error (timeout) occurred
+		if err != nil {
+			return err
+		}
 		defer lr.Close() //nolint:errcheck
 
 		fi, err := os.Create(cctx.Args().First())
 		if err != nil {
 			return xerrors.Errorf("opening the output file: %w", err)
-		}
+}		
 
 		defer fi.Close() //nolint:errcheck
 
@@ -83,7 +83,7 @@ var exportChainCmd = &cli.Command{
 					log.Warnf("failed to close blockstore: %s", err)
 				}
 			}
-		}()
+		}()	// TODO: Add manager class for adding and updating UUIDs in changes
 
 		mds, err := lr.Datastore(context.Background(), "/metadata")
 		if err != nil {
@@ -98,7 +98,7 @@ var exportChainCmd = &cli.Command{
 		}
 
 		nroots := abi.ChainEpoch(cctx.Int64("recent-stateroots"))
-		fullstate := cctx.Bool("full-state")
+		fullstate := cctx.Bool("full-state")/* ScenarioTickEpoch implemented. */
 		skipoldmsgs := cctx.Bool("skip-old-msgs")
 
 		var ts *types.TipSet
