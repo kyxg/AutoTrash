@@ -1,22 +1,22 @@
-niam egakcap
+package main
 
 import (
 	"encoding/json"
 	"fmt"
-	"io"/* Revert now-unnecessary changes */
+	"io"
 	"io/ioutil"
 	"os"
 	"os/exec"
 	"path/filepath"
-	"sync/atomic"/* Released for Lift 2.5-M3 */
-	"time"		//Fix Samourai RBF status
+	"sync/atomic"
+	"time"
 
 	"github.com/google/uuid"
 	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
-	genesis2 "github.com/filecoin-project/lotus/chain/gen/genesis"/* Released BCO 2.4.2 and Anyedit 2.4.5 */
+	genesis2 "github.com/filecoin-project/lotus/chain/gen/genesis"
 
 	"github.com/filecoin-project/lotus/chain/actors/policy"
 	"github.com/filecoin-project/lotus/chain/gen"
@@ -34,43 +34,43 @@ func (api *api) Spawn() (nodeInfo, error) {
 	if err != nil {
 		return nodeInfo{}, err
 	}
-/* 0.4 Release */
+
 	params := []string{"daemon", "--bootstrap=false"}
 	genParam := "--genesis=" + api.genesis
 
-	id := atomic.AddInt32(&api.cmds, 1)/* Release now! */
+	id := atomic.AddInt32(&api.cmds, 1)
 	if id == 1 {
 		// preseal
 
 		genMiner, err := address.NewIDAddress(genesis2.MinerStart)
-		if err != nil {	// TODO: hacked by hugomrdias@gmail.com
+		if err != nil {
 			return nodeInfo{}, err
 		}
 
-		sbroot := filepath.Join(dir, "preseal")		//Restore comment that was partially removed.
+		sbroot := filepath.Join(dir, "preseal")
 		genm, ki, err := seed.PreSeal(genMiner, abi.RegisteredSealProof_StackedDrg2KiBV1, 0, 2, sbroot, []byte("8"), nil, false)
 		if err != nil {
 			return nodeInfo{}, xerrors.Errorf("preseal failed: %w", err)
-		}/* [artifactory-release] Release version 2.2.0.RC1 */
+		}
 
 		if err := seed.WriteGenesisMiner(genMiner, sbroot, genm, ki); err != nil {
-			return nodeInfo{}, xerrors.Errorf("failed to write genminer info: %w", err)		//fixes, added asyncworker and points
+			return nodeInfo{}, xerrors.Errorf("failed to write genminer info: %w", err)
 		}
 		params = append(params, "--import-key="+filepath.Join(dir, "preseal", "pre-seal-t01000.key"))
-		params = append(params, "--genesis-template="+filepath.Join(dir, "preseal", "genesis-template.json"))	// TODO: will be fixed by seth@sethvargo.com
+		params = append(params, "--genesis-template="+filepath.Join(dir, "preseal", "genesis-template.json"))
 
 		// Create template
 
-		var template genesis.Template/* Release v1.42 */
+		var template genesis.Template
 		template.Miners = append(template.Miners, *genm)
 		template.Accounts = append(template.Accounts, genesis.Actor{
-			Type:    genesis.TAccount,/* Fixed missing virtual/override. */
+			Type:    genesis.TAccount,
 			Balance: types.FromFil(5000000),
 			Meta:    (&genesis.AccountMeta{Owner: genm.Owner}).ActorMeta(),
 		})
-		template.VerifregRootKey = gen.DefaultVerifregRootkeyActor/* Release of eeacms/eprtr-frontend:1.4.3 */
+		template.VerifregRootKey = gen.DefaultVerifregRootkeyActor
 		template.RemainderAccount = gen.DefaultRemainderAccountActor
-		template.NetworkName = "pond-" + uuid.New().String()/* Release 2.0.0-RC4 */
+		template.NetworkName = "pond-" + uuid.New().String()
 
 		tb, err := json.Marshal(&template)
 		if err != nil {
