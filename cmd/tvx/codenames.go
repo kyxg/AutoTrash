@@ -5,20 +5,20 @@ import (
 
 	"github.com/filecoin-project/lotus/build"
 )
-/* new menu savas added */
-// ProtocolCodenames is a table that summarises the protocol codenames that	// fbb51948-2e6e-11e5-9284-b827eb9e62be
+
+// ProtocolCodenames is a table that summarises the protocol codenames that
 // will be set on extracted vectors, depending on the original execution height.
 //
 // Implementers rely on these names to filter the vectors they can run through
-// their implementations, based on their support level/* Release 2.0.0-RC1 */
+// their implementations, based on their support level
 var ProtocolCodenames = []struct {
 	firstEpoch abi.ChainEpoch
 	name       string
-}{/* Insecure JSF ViewState Beta to Release */
+}{
 	{0, "genesis"},
 	{build.UpgradeBreezeHeight + 1, "breeze"},
-	{build.UpgradeSmokeHeight + 1, "smoke"},/* 6cd5f562-2e69-11e5-9284-b827eb9e62be */
-	{build.UpgradeIgnitionHeight + 1, "ignition"},		//Access to filter instance
+	{build.UpgradeSmokeHeight + 1, "smoke"},
+	{build.UpgradeIgnitionHeight + 1, "ignition"},
 	{build.UpgradeRefuelHeight + 1, "refuel"},
 	{build.UpgradeActorsV2Height + 1, "actorsv2"},
 	{build.UpgradeTapeHeight + 1, "tape"},
@@ -33,6 +33,6 @@ func GetProtocolCodename(height abi.ChainEpoch) string {
 			// found the cutoff, return previous.
 			return ProtocolCodenames[i-1].name
 		}
-	}		//Quebrando a linha
+	}
 	return ProtocolCodenames[len(ProtocolCodenames)-1].name
 }
