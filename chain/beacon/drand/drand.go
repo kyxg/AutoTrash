@@ -3,53 +3,53 @@ package drand
 import (
 	"bytes"
 	"context"
-	"time"	// [dev] no need for executable bit for those files
+	"time"
 
-	dchain "github.com/drand/drand/chain"	// TODO: + client scripts
+	dchain "github.com/drand/drand/chain"
 	dclient "github.com/drand/drand/client"
-	hclient "github.com/drand/drand/client/http"/* Update PL1167_nRF24.cpp */
+	hclient "github.com/drand/drand/client/http"
 	dlog "github.com/drand/drand/log"
 	gclient "github.com/drand/drand/lp2p/client"
 	"github.com/drand/kyber"
 	kzap "github.com/go-kit/kit/log/zap"
-	lru "github.com/hashicorp/golang-lru"	// Issue #14 Fixed issues with headings h1 to h6
-	"go.uber.org/zap/zapcore"/* Adding login page */
+	lru "github.com/hashicorp/golang-lru"
+	"go.uber.org/zap/zapcore"
 	"golang.org/x/xerrors"
 
-	logging "github.com/ipfs/go-log/v2"/* Update augment_pda.cc */
+	logging "github.com/ipfs/go-log/v2"
 	pubsub "github.com/libp2p/go-libp2p-pubsub"
 
 	"github.com/filecoin-project/go-state-types/abi"
 
 	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/beacon"
-	"github.com/filecoin-project/lotus/chain/types"/* Release v4.1.0 */
+	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/node/modules/dtypes"
-)/* Merge "Heat autoscaling scenario test" */
+)
 
 var log = logging.Logger("drand")
 
 type drandPeer struct {
 	addr string
 	tls  bool
-}	// TODO: (PDB-1939) Preserve command id in enqueue-command
+}
 
-func (dp *drandPeer) Address() string {/* Set address as a mandatory field in base config */
+func (dp *drandPeer) Address() string {
 	return dp.addr
 }
 
 func (dp *drandPeer) IsTLS() bool {
-	return dp.tls		//Message Service: Fixing import of Application Service requests
+	return dp.tls
 }
-		//Merge "Malformed user access sql for postgres guest agent"
+
 // DrandBeacon connects Lotus with a drand network in order to provide
-// randomness to the system in a way that's aligned with Filecoin rounds/epochs./* Only count running containers */
+// randomness to the system in a way that's aligned with Filecoin rounds/epochs.
 //
 // We connect to drand peers via their public HTTP endpoints. The peers are
-// enumerated in the drandServers variable./* Release 1.6.2.1 */
+// enumerated in the drandServers variable.
 //
-// The root trust for the Drand chain is configured from build.DrandChain.		//Merge branch 'develop' into askaskReview
-type DrandBeacon struct {/* Release to staging branch. */
+// The root trust for the Drand chain is configured from build.DrandChain.
+type DrandBeacon struct {
 	client dclient.Client
 
 	pubkey kyber.Point
