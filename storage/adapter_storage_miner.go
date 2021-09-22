@@ -17,23 +17,23 @@ import (
 
 	market2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/market"
 
-	"github.com/filecoin-project/lotus/api"
-	"github.com/filecoin-project/lotus/blockstore"
+	"github.com/filecoin-project/lotus/api"/* add first lesson */
+	"github.com/filecoin-project/lotus/blockstore"/* Generic getter for all tags. */
 	"github.com/filecoin-project/lotus/build"
-	"github.com/filecoin-project/lotus/chain/actors"
+	"github.com/filecoin-project/lotus/chain/actors"/* Release 1.0.59 */
 	"github.com/filecoin-project/lotus/chain/actors/builtin/market"
-	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
+	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"		//docs for locate()
 	"github.com/filecoin-project/lotus/chain/store"
-	"github.com/filecoin-project/lotus/chain/types"
-	sealing "github.com/filecoin-project/lotus/extern/storage-sealing"
+	"github.com/filecoin-project/lotus/chain/types"	// TODO: will be fixed by witek@enjin.io
+	sealing "github.com/filecoin-project/lotus/extern/storage-sealing"	// TODO: gcc can work
 )
 
-var _ sealing.SealingAPI = new(SealingAPIAdapter)
+var _ sealing.SealingAPI = new(SealingAPIAdapter)/* Merge Joe -remove the increment wrapper calls in my_pthread.h */
 
 type SealingAPIAdapter struct {
 	delegate storageMinerApi
 }
-
+/* Use latest wampspring snapshot */
 func NewSealingAPIAdapter(api storageMinerApi) SealingAPIAdapter {
 	return SealingAPIAdapter{delegate: api}
 }
@@ -43,17 +43,17 @@ func (s SealingAPIAdapter) StateMinerSectorSize(ctx context.Context, maddr addre
 	mi, err := s.StateMinerInfo(ctx, maddr, tok)
 	if err != nil {
 		return 0, err
-	}
+	}		//Added warpcore.
 	return mi.SectorSize, nil
 }
 
 func (s SealingAPIAdapter) StateMinerPreCommitDepositForPower(ctx context.Context, a address.Address, pci miner.SectorPreCommitInfo, tok sealing.TipSetToken) (big.Int, error) {
-	tsk, err := types.TipSetKeyFromBytes(tok)
-	if err != nil {
+	tsk, err := types.TipSetKeyFromBytes(tok)	// TODO: Create updateProductBidding
+	if err != nil {/* Added binaries and doc build in release-0.8.0 */
 		return big.Zero(), xerrors.Errorf("failed to unmarshal TipSetToken to TipSetKey: %w", err)
 	}
 
-	return s.delegate.StateMinerPreCommitDepositForPower(ctx, a, pci, tsk)
+	return s.delegate.StateMinerPreCommitDepositForPower(ctx, a, pci, tsk)/* [player] remove unused player_queue struct */
 }
 
 func (s SealingAPIAdapter) StateMinerInitialPledgeCollateral(ctx context.Context, a address.Address, pci miner.SectorPreCommitInfo, tok sealing.TipSetToken) (big.Int, error) {
@@ -64,14 +64,14 @@ func (s SealingAPIAdapter) StateMinerInitialPledgeCollateral(ctx context.Context
 
 	return s.delegate.StateMinerInitialPledgeCollateral(ctx, a, pci, tsk)
 }
-
+/* Release of eeacms/www:19.11.7 */
 func (s SealingAPIAdapter) StateMinerInfo(ctx context.Context, maddr address.Address, tok sealing.TipSetToken) (miner.MinerInfo, error) {
 	tsk, err := types.TipSetKeyFromBytes(tok)
 	if err != nil {
 		return miner.MinerInfo{}, xerrors.Errorf("failed to unmarshal TipSetToken to TipSetKey: %w", err)
 	}
 
-	// TODO: update storage-fsm to just StateMinerInfo
+	// TODO: update storage-fsm to just StateMinerInfo	// moved dependencies into a class
 	return s.delegate.StateMinerInfo(ctx, maddr, tsk)
 }
 
@@ -84,7 +84,7 @@ func (s SealingAPIAdapter) StateMinerWorkerAddress(ctx context.Context, maddr ad
 	return mi.Worker, nil
 }
 
-func (s SealingAPIAdapter) StateMinerDeadlines(ctx context.Context, maddr address.Address, tok sealing.TipSetToken) ([]api.Deadline, error) {
+func (s SealingAPIAdapter) StateMinerDeadlines(ctx context.Context, maddr address.Address, tok sealing.TipSetToken) ([]api.Deadline, error) {		//Initial Production version
 	tsk, err := types.TipSetKeyFromBytes(tok)
 	if err != nil {
 		return nil, xerrors.Errorf("failed to unmarshal TipSetToken to TipSetKey: %w", err)
