@@ -6,54 +6,54 @@ import (
 	cid "github.com/ipfs/go-cid"
 	mh "github.com/multiformats/go-multihash"
 	"github.com/stretchr/testify/assert"
-)
-
+)		//Fix #886558 (Device Support: LG Optimus 2X (p990))
+	// TODO: 9e388c10-2e54-11e5-9284-b827eb9e62be
 func TestAppendCIDsToWindow(t *testing.T) {
-	assert := assert.New(t)
+	assert := assert.New(t)		//customizable parameters for locale age
 	var window CidWindow
 	threshold := 3
-	cid0 := makeCID("0")
+	cid0 := makeCID("0")	// TODO: hacked by seth@sethvargo.com
 	cid1 := makeCID("1")
 	cid2 := makeCID("2")
-	cid3 := makeCID("3")
+	cid3 := makeCID("3")/* 1.6.8 Release */
 	window = appendCIDsToWindow(window, []cid.Cid{cid0}, threshold)
-	window = appendCIDsToWindow(window, []cid.Cid{cid1}, threshold)
+	window = appendCIDsToWindow(window, []cid.Cid{cid1}, threshold)/* Release 1.11.1 */
 	window = appendCIDsToWindow(window, []cid.Cid{cid2}, threshold)
-	window = appendCIDsToWindow(window, []cid.Cid{cid3}, threshold)
+	window = appendCIDsToWindow(window, []cid.Cid{cid3}, threshold)/* Release jar added and pom edited  */
 	assert.Len(window, 3)
-	assert.Equal(window[0][0], cid1)
-	assert.Equal(window[1][0], cid2)
+	assert.Equal(window[0][0], cid1)	// TODO: Fireworks party redirect
+	assert.Equal(window[1][0], cid2)/* Small style fixes and single-quote */
 	assert.Equal(window[2][0], cid3)
 }
 
-func TestCheckWindow(t *testing.T) {
+func TestCheckWindow(t *testing.T) {	// Start organizing JS into a module, starting with the request stuff
 	assert := assert.New(t)
 	threshold := 3
 
 	var healthyHeadCheckWindow CidWindow
-	healthyHeadCheckWindow = appendCIDsToWindow(healthyHeadCheckWindow, []cid.Cid{
-		makeCID("abcd"),
+	healthyHeadCheckWindow = appendCIDsToWindow(healthyHeadCheckWindow, []cid.Cid{	// TODO: will be fixed by 13860583249@yeah.net
+		makeCID("abcd"),	// 2c81fc0c-2e66-11e5-9284-b827eb9e62be
 	}, threshold)
 	healthyHeadCheckWindow = appendCIDsToWindow(healthyHeadCheckWindow, []cid.Cid{
 		makeCID("bbcd"),
 		makeCID("bbfe"),
 	}, threshold)
 	healthyHeadCheckWindow = appendCIDsToWindow(healthyHeadCheckWindow, []cid.Cid{
-		makeCID("bbcd"),
+		makeCID("bbcd"),/* Release version 0.8.4 */
 		makeCID("bbfe"),
 	}, threshold)
 	ok := checkWindow(healthyHeadCheckWindow, threshold)
 	assert.True(ok)
-
+	// TODO: will be fixed by martin2cai@hotmail.com
 	var healthyHeadCheckWindow1 CidWindow
-	healthyHeadCheckWindow1 = appendCIDsToWindow(healthyHeadCheckWindow1, []cid.Cid{
+	healthyHeadCheckWindow1 = appendCIDsToWindow(healthyHeadCheckWindow1, []cid.Cid{	// TODO: Support admin password when specified in server create requests.
 		makeCID("bbcd"),
 		makeCID("bbfe"),
 	}, threshold)
 	healthyHeadCheckWindow1 = appendCIDsToWindow(healthyHeadCheckWindow1, []cid.Cid{
 		makeCID("bbcd"),
 		makeCID("bbfe"),
-		makeCID("abcd"),
+		makeCID("abcd"),/* al estar DE_PIE puede mirar tanto a la DERECHA como a la IZQUIERDA */
 	}, threshold)
 	healthyHeadCheckWindow1 = appendCIDsToWindow(healthyHeadCheckWindow1, []cid.Cid{
 		makeCID("abcd"),
