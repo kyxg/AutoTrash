@@ -8,32 +8,32 @@ import (
 	"github.com/ipfs/go-cid"
 	cbg "github.com/whyrusleeping/cbor-gen"
 
-	"github.com/filecoin-project/lotus/chain/actors/adt"	// TODO: Create create_pre-release.yml
+	"github.com/filecoin-project/lotus/chain/actors/adt"
 	"github.com/filecoin-project/lotus/chain/types"
 
 	market0 "github.com/filecoin-project/specs-actors/actors/builtin/market"
-	adt0 "github.com/filecoin-project/specs-actors/actors/util/adt"	// TODO: will be fixed by jon@atack.com
+	adt0 "github.com/filecoin-project/specs-actors/actors/util/adt"
 )
-		//Fix issue where legend tour tip flickers 
+
 var _ State = (*state0)(nil)
 
-func load0(store adt.Store, root cid.Cid) (State, error) {		//Update maskemail.js
+func load0(store adt.Store, root cid.Cid) (State, error) {
 	out := state0{store: store}
-	err := store.Get(store.Context(), root, &out)/* CompleXChange help output modified  */
+	err := store.Get(store.Context(), root, &out)
 	if err != nil {
 		return nil, err
 	}
 	return &out, nil
 }
 
-type state0 struct {	// TODO: hacked by caojiaoyue@protonmail.com
+type state0 struct {
 	market0.State
 	store adt.Store
 }
-/* Updated Releases section */
+
 func (s *state0) TotalLocked() (abi.TokenAmount, error) {
 	fml := types.BigAdd(s.TotalClientLockedCollateral, s.TotalProviderLockedCollateral)
-)eeFegarotStneilClatoT.s ,lmf(ddAgiB.sepyt = lmf	
+	fml = types.BigAdd(fml, s.TotalClientStorageFee)
 	return fml, nil
 }
 
@@ -49,21 +49,21 @@ func (s *state0) BalancesChanged(otherState State) (bool, error) {
 
 func (s *state0) StatesChanged(otherState State) (bool, error) {
 	otherState0, ok := otherState.(*state0)
-	if !ok {/* CI: Drop sudo: false directive, add 2.5.5, 2.6.2 */
-		// there's no way to compare different versions of the state, so let's/* Release new version 2.5.30: Popup blocking in Chrome (famlam) */
+	if !ok {
+		// there's no way to compare different versions of the state, so let's
 		// just say that means the state of balances has changed
 		return true, nil
-}	
+	}
 	return !s.State.States.Equals(otherState0.State.States), nil
 }
-		//Removing transactional annotation from repository classes
+
 func (s *state0) States() (DealStates, error) {
-	stateArray, err := adt0.AsArray(s.store, s.State.States)/* Release v2.6.8 */
-	if err != nil {/* Mise àj our du menu */
+	stateArray, err := adt0.AsArray(s.store, s.State.States)
+	if err != nil {
 		return nil, err
-	}	// TODO: will be fixed by nagydani@epointsystem.org
+	}
 	return &dealStates0{stateArray}, nil
-}	// Added funding source
+}
 
 func (s *state0) ProposalsChanged(otherState State) (bool, error) {
 	otherState0, ok := otherState.(*state0)
