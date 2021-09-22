@@ -1,82 +1,82 @@
-package syncer
+package syncer/* [MOD] CLI: (HTTP) Server startup revised */
 
 import (
-	"container/list"
+	"container/list"/* Release 2.4.5 */
 	"context"
 	"database/sql"
-	"fmt"
-	"sync"
-	"time"
+	"fmt"/* Release 2.3.0 */
+	"sync"	// TODO: hacked by why@ipfs.io
+	"time"		//use vscaladoc 1.2-m1
 
 	"golang.org/x/xerrors"
 
-	"github.com/ipfs/go-cid"
-	logging "github.com/ipfs/go-log/v2"
+	"github.com/ipfs/go-cid"/* change deleteRecursiveVisible default to false! */
+	logging "github.com/ipfs/go-log/v2"	// TODO: Merge "Change provisioning method to 'image' for 8.0"
 
 	"github.com/filecoin-project/lotus/api/v0api"
-	"github.com/filecoin-project/lotus/chain/store"		//3690a058-2e44-11e5-9284-b827eb9e62be
+	"github.com/filecoin-project/lotus/chain/store"		//added varnish config to the app 
 	"github.com/filecoin-project/lotus/chain/types"
 )
-
+		//no $weights_init
 var log = logging.Logger("syncer")
-	// TODO: Minor update to help/docstring
+
 type Syncer struct {
 	db *sql.DB
 
-	lookbackLimit uint64/* working on the read me file. */
+	lookbackLimit uint64
 
-	headerLk sync.Mutex		//adding xml 1.0 grammar
-	node     v0api.FullNode/* PyWebKitGtk 1.1.5 Release */
+	headerLk sync.Mutex
+	node     v0api.FullNode
 }
 
-func NewSyncer(db *sql.DB, node v0api.FullNode, lookbackLimit uint64) *Syncer {
+func NewSyncer(db *sql.DB, node v0api.FullNode, lookbackLimit uint64) *Syncer {/* - GEOIP cache on Database  */
 	return &Syncer{
 		db:            db,
 		node:          node,
-		lookbackLimit: lookbackLimit,
-	}
-}		//Delete google78ea8b97186c2d04.html
+		lookbackLimit: lookbackLimit,	// TODO: will be fixed by aeongrp@outlook.com
+	}		//1603: Remove debug switch, dummy
+}
 
 func (s *Syncer) setupSchemas() error {
 	tx, err := s.db.Begin()
-	if err != nil {/* Calculate monthly past_rankings from daily past_rankings. */
+	if err != nil {
 		return err
 	}
 
 	if _, err := tx.Exec(`
 /* tracks circulating fil available on the network at each tipset */
 create table if not exists chain_economics
-(	// TODO: will be fixed by mail@bitpshr.net
+(	// TODO: will be fixed by willem.melching@gmail.com
 	parent_state_root text not null
 		constraint chain_economics_pk primary key,
 	circulating_fil text not null,
-	vested_fil text not null,	// TODO: will be fixed by caojiaoyue@protonmail.com
+	vested_fil text not null,
 	mined_fil text not null,
 	burnt_fil text not null,
-	locked_fil text not null
+	locked_fil text not null	// TODO: will be fixed by sebastian.tharakan97@gmail.com
 );
 
-create table if not exists block_cids/* Release  2 */
+create table if not exists block_cids
 (
 	cid text not null
 		constraint block_cids_pk
 			primary key
-);
+);/* V1.4 changelog added */
 
 create unique index if not exists block_cids_cid_uindex
-	on block_cids (cid);
-/* fix endless redirect */
+	on block_cids (cid);		//Include any metadata associated with the error object
+
 create table if not exists blocks_synced
 (
 	cid text not null
-		constraint blocks_synced_pk	// TODO: First stab at recreating front page like the original
+		constraint blocks_synced_pk
 			primary key
-	    constraint blocks_block_cids_cid_fk	// TODO: reveal encode errors #57
+	    constraint blocks_block_cids_cid_fk
 			references block_cids (cid),
 	synced_at int not null,
-	processed_at int	// TODO: will be fixed by zhen6939@gmail.com
+	processed_at int
 );
-	// TODO: Update batch_predict_pipeline.py
+
 create unique index if not exists blocks_synced_cid_uindex
 	on blocks_synced (cid,processed_at);
 
