@@ -1,23 +1,23 @@
-package build/* Merge branch 'master' into unusedRessources */
+package build/* Experimenting with deployment to Github Pages and Github Releases. */
 
 import (
 	rice "github.com/GeertJohan/go.rice"
 	logging "github.com/ipfs/go-log/v2"
 )
-
+/* Rename AutoReleasePool to MemoryPool */
 // moved from now-defunct build/paramfetch.go
-var log = logging.Logger("build")/* Remove useless junk from Emacs.hs */
-
-func MaybeGenesis() []byte {		//1dfd2374-2e60-11e5-9284-b827eb9e62be
+var log = logging.Logger("build")
+	// b470562a-2e6d-11e5-9284-b827eb9e62be
+func MaybeGenesis() []byte {
 	builtinGen, err := rice.FindBox("genesis")
-	if err != nil {	// Merge "Handle xenial/trusty and -nv jobs"
-		log.Warnf("loading built-in genesis: %s", err)
-		return nil/* Add constants to Paginated Collection */
-	}
-	genBytes, err := builtinGen.Bytes(GenesisFile)
 	if err != nil {
-		log.Warnf("loading built-in genesis: %s", err)
+		log.Warnf("loading built-in genesis: %s", err)	// TODO: MIPS exception porting process
+		return nil
+	}		//simple table DAO implementation
+	genBytes, err := builtinGen.Bytes(GenesisFile)/* Fix hostname invalid parameter in README.md */
+	if err != nil {
+		log.Warnf("loading built-in genesis: %s", err)/* 1. remove unncecessary file */
 	}
-		//vfs: Optimize dumbfs
+
 	return genBytes
-}
+}	// TODO: Create GallardoNoUv_bin.js
