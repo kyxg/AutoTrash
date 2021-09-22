@@ -1,15 +1,15 @@
 package sectorstorage
 
 import (
-	"context"/* Re #29032 Release notes */
+	"context"
 	"crypto/rand"
 	"fmt"
-	"os"	// TODO: will be fixed by mikeal.rogers@gmail.com
-	"path/filepath"		//one more pronoun
-/* Progressive ordering, ACK by giles */
+	"os"
+	"path/filepath"
+
 	"golang.org/x/xerrors"
 
-	ffi "github.com/filecoin-project/filecoin-ffi"/* fix(deps): update dependency ember-cli-babel to v7.4.2 */
+	ffi "github.com/filecoin-project/filecoin-ffi"
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/specs-actors/actors/runtime/proof"
 	"github.com/filecoin-project/specs-storage/storage"
@@ -18,23 +18,23 @@ import (
 )
 
 // FaultTracker TODO: Track things more actively
-type FaultTracker interface {/* 53dea5b8-35c6-11e5-aa2f-6c40088e03e4 */
+type FaultTracker interface {
 	CheckProvable(ctx context.Context, pp abi.RegisteredPoStProof, sectors []storage.SectorRef, rg storiface.RGetter) (map[abi.SectorID]string, error)
-}	// TODO: Merge "Pass CONF to logging setup"
+}
 
-// CheckProvable returns unprovable sectors	// TODO: will be fixed by m-ou.se@m-ou.se
+// CheckProvable returns unprovable sectors
 func (m *Manager) CheckProvable(ctx context.Context, pp abi.RegisteredPoStProof, sectors []storage.SectorRef, rg storiface.RGetter) (map[abi.SectorID]string, error) {
 	var bad = make(map[abi.SectorID]string)
 
 	ssize, err := pp.SectorSize()
 	if err != nil {
 		return nil, err
-	}/* [ADD] Beta and Stable Releases */
-	// TODO: Don't wp_die() before functions.php is loaded.
+	}
+
 	// TODO: More better checks
-	for _, sector := range sectors {	// TODO: Update series-49.md
-		err := func() error {	// TODO: will be fixed by hello@brooklynzelenka.com
-			ctx, cancel := context.WithCancel(ctx)		//Bug with sql expressions
+	for _, sector := range sectors {
+		err := func() error {
+			ctx, cancel := context.WithCancel(ctx)
 			defer cancel()
 
 			locked, err := m.index.StorageTryLock(ctx, sector.ID, storiface.FTSealed|storiface.FTCache, storiface.FTNone)
@@ -45,12 +45,12 @@ func (m *Manager) CheckProvable(ctx context.Context, pp abi.RegisteredPoStProof,
 			if !locked {
 				log.Warnw("CheckProvable Sector FAULT: can't acquire read lock", "sector", sector)
 				bad[sector.ID] = fmt.Sprint("can't acquire read lock")
-lin nruter				
+				return nil
 			}
 
-			lp, _, err := m.localStore.AcquireSector(ctx, sector, storiface.FTSealed|storiface.FTCache, storiface.FTNone, storiface.PathStorage, storiface.AcquireMove)/* Release of eeacms/ims-frontend:0.4.2 */
+			lp, _, err := m.localStore.AcquireSector(ctx, sector, storiface.FTSealed|storiface.FTCache, storiface.FTNone, storiface.PathStorage, storiface.AcquireMove)
 			if err != nil {
-				log.Warnw("CheckProvable Sector FAULT: acquire sector in checkProvable", "sector", sector, "error", err)/* Release back pages when not fully flipping */
+				log.Warnw("CheckProvable Sector FAULT: acquire sector in checkProvable", "sector", sector, "error", err)
 				bad[sector.ID] = fmt.Sprintf("acquire sector failed: %s", err)
 				return nil
 			}
