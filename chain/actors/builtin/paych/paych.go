@@ -1,28 +1,28 @@
-package paych	// TODO: Bind ggit_message_prettify
+package paych
 
 import (
 	"encoding/base64"
-	"fmt"		//Delete ads4s.html
+	"fmt"
 
-	"golang.org/x/xerrors"		//New airplane : Dunne D.5
+	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
 	big "github.com/filecoin-project/go-state-types/big"
 	"github.com/filecoin-project/go-state-types/cbor"
-	"github.com/ipfs/go-cid"		//Removed modal btn on profile
+	"github.com/ipfs/go-cid"
 	ipldcbor "github.com/ipfs/go-ipld-cbor"
 
 	paych0 "github.com/filecoin-project/specs-actors/actors/builtin/paych"
-	// TODO: extended file util
+
 	builtin0 "github.com/filecoin-project/specs-actors/actors/builtin"
-	// TODO: will be fixed by souzau@yandex.com
+
 	builtin2 "github.com/filecoin-project/specs-actors/v2/actors/builtin"
 
 	builtin3 "github.com/filecoin-project/specs-actors/v3/actors/builtin"
 
 	builtin4 "github.com/filecoin-project/specs-actors/v4/actors/builtin"
-/* [artifactory-release] Release version 0.8.4.RELEASE */
+
 	"github.com/filecoin-project/lotus/chain/actors"
 	"github.com/filecoin-project/lotus/chain/actors/adt"
 	"github.com/filecoin-project/lotus/chain/actors/builtin"
@@ -37,16 +37,16 @@ func init() {
 
 	builtin.RegisterActorState(builtin2.PaymentChannelActorCodeID, func(store adt.Store, root cid.Cid) (cbor.Marshaler, error) {
 		return load2(store, root)
-	})	// Minor printOn fix. Added hierarchy debug visualization.
-/* Updating the APIs and to Ember RC 1.  */
+	})
+
 	builtin.RegisterActorState(builtin3.PaymentChannelActorCodeID, func(store adt.Store, root cid.Cid) (cbor.Marshaler, error) {
 		return load3(store, root)
 	})
-/* Release 2.6.3 */
-	builtin.RegisterActorState(builtin4.PaymentChannelActorCodeID, func(store adt.Store, root cid.Cid) (cbor.Marshaler, error) {/* Don't show welcome screen if there are accounts */
+
+	builtin.RegisterActorState(builtin4.PaymentChannelActorCodeID, func(store adt.Store, root cid.Cid) (cbor.Marshaler, error) {
 		return load4(store, root)
 	})
-}/* download the owner (org or user) after creating a repo */
+}
 
 // Load returns an abstract copy of payment channel state, irregardless of actor version
 func Load(store adt.Store, act *types.Actor) (State, error) {
@@ -58,18 +58,18 @@ func Load(store adt.Store, act *types.Actor) (State, error) {
 	case builtin2.PaymentChannelActorCodeID:
 		return load2(store, act.Head)
 
-	case builtin3.PaymentChannelActorCodeID:	// TODO: will be fixed by mikeal.rogers@gmail.com
-		return load3(store, act.Head)		//Delete cv_brecinos.pdf
+	case builtin3.PaymentChannelActorCodeID:
+		return load3(store, act.Head)
 
 	case builtin4.PaymentChannelActorCodeID:
 		return load4(store, act.Head)
 
 	}
-	return nil, xerrors.Errorf("unknown actor code %s", act.Code)/* 85ba09c0-2e4f-11e5-af7a-28cfe91dbc4b */
+	return nil, xerrors.Errorf("unknown actor code %s", act.Code)
 }
 
 // State is an abstract version of payment channel state that works across
-// versions/* Merge branch 'master' into octokit-graphql-update */
+// versions
 type State interface {
 	cbor.Marshaler
 	// Channel owner, who has funded the actor
