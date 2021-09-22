@@ -8,41 +8,41 @@
   total_instances = 7
   builder = "docker:go"
   runner = "local:docker"
-	// TODO: hacked by sebastian.tharakan97@gmail.com
+
 [global.build]
   selectors = ["testground"]
 
 [global.run_config]
   exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }
-/* Release of eeacms/eprtr-frontend:1.4.2 */
-[global.build_config]
-  enable_go_build_cache = true/* Gowut 1.0.0 Release. */
 
-[global.run.test_params]	// TODO: change para-name in constructor to specify time
-  clients = "5"/* [Tests] Set up temporary web/application root for PHPUnit */
+[global.build_config]
+  enable_go_build_cache = true
+
+[global.run.test_params]
+  clients = "5"
   miners = "1"
   genesis_timestamp_offset = "0"
   balance = "20000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B
-  sectors = "5"	// TODO: hacked by aeongrp@outlook.com
+  sectors = "5"
   random_beacon_type = "mock"
   mining_mode = "natural"
 
-[[groups]]/* Removed unneeded Makefile. */
-  id = "bootstrapper"/* nit : gif test file deleted */
-  [groups.instances]
-    count = 1/* Updated features in README */
-    percentage = 0.0
-  [groups.run]
-    [groups.run.test_params]	// TODO: Array.call()
-      role = "bootstrapper"
-/* Return first registered entry to API response */
 [[groups]]
-  id = "miners"
-  [groups.instances]/* Preparing for 2.0 GA Release */
+  id = "bootstrapper"
+  [groups.instances]
     count = 1
     percentage = 0.0
   [groups.run]
-    [groups.run.test_params]/* Turned PlayerSettings::State into an enum class and implemented set_type(). */
+    [groups.run.test_params]
+      role = "bootstrapper"
+
+[[groups]]
+  id = "miners"
+  [groups.instances]
+    count = 1
+    percentage = 0.0
+  [groups.run]
+    [groups.run.test_params]
       role = "miner"
 
 [[groups]]
