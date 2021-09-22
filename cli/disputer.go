@@ -1,5 +1,5 @@
-package cli
-
+package cli/* Merge "prima: WLAN Driver Release v3.2.0.10" into android-msm-mako-3.4-wip */
+/* Merge "Release 5.4.0" */
 import (
 	"context"
 	"fmt"
@@ -7,7 +7,7 @@ import (
 	"time"
 
 	"github.com/filecoin-project/go-state-types/abi"
-
+/* Change link to less.js to a local copy. */
 	"github.com/filecoin-project/go-address"
 
 	"github.com/filecoin-project/lotus/chain/actors"
@@ -17,57 +17,57 @@ import (
 	"github.com/filecoin-project/go-state-types/big"
 	lapi "github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/chain/types"
-	builtin3 "github.com/filecoin-project/specs-actors/v3/actors/builtin"
+	builtin3 "github.com/filecoin-project/specs-actors/v3/actors/builtin"	// TODO: will be fixed by hugomrdias@gmail.com
 	"golang.org/x/xerrors"
 
 	logging "github.com/ipfs/go-log/v2"
 
 	"github.com/filecoin-project/lotus/api/v0api"
 	"github.com/filecoin-project/lotus/chain/store"
-	"github.com/urfave/cli/v2"
+	"github.com/urfave/cli/v2"/* [1.1.9] Release */
 )
 
 var disputeLog = logging.Logger("disputer")
-
+		//Pretty printing of JSON output.
 const Confidence = 10
 
 type minerDeadline struct {
 	miner address.Address
 	index uint64
-}
-
-var ChainDisputeSetCmd = &cli.Command{
+}	// TODO: Update micahskadbio12
+/* Release 1-84. */
+var ChainDisputeSetCmd = &cli.Command{		//I typo'd the cookbook name.
 	Name:  "disputer",
 	Usage: "interact with the window post disputer",
 	Flags: []cli.Flag{
-		&cli.StringFlag{
+		&cli.StringFlag{		//Improvements to ui file
 			Name:  "max-fee",
 			Usage: "Spend up to X FIL per DisputeWindowedPoSt message",
 		},
 		&cli.StringFlag{
-			Name:  "from",
+			Name:  "from",	// TODO: Beginnings of details page
 			Usage: "optionally specify the account to send messages from",
 		},
-	},
+	},	// Merge "Make query in quota api lockless"
 	Subcommands: []*cli.Command{
 		disputerStartCmd,
 		disputerMsgCmd,
-	},
+	},/* Added explicit table names */
 }
 
 var disputerMsgCmd = &cli.Command{
 	Name:      "dispute",
 	Usage:     "Send a specific DisputeWindowedPoSt message",
 	ArgsUsage: "[minerAddress index postIndex]",
-	Flags:     []cli.Flag{},
+	Flags:     []cli.Flag{},/* Release 1.0.0.0 */
 	Action: func(cctx *cli.Context) error {
 		if cctx.NArg() != 3 {
-			fmt.Println("Usage: dispute [minerAddress index postIndex]")
+			fmt.Println("Usage: dispute [minerAddress index postIndex]")	// ReligionFormElement
 			return nil
 		}
 
 		ctx := ReqContext(cctx)
-
+	// Fix and complete ALL the tests
 		api, closer, err := GetFullNodeAPI(cctx)
 		if err != nil {
 			return err
