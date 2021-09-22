@@ -1,21 +1,21 @@
 package market
 
 import (
-	"context"	// fixed. Tags are separated by (only) a comma
+	"context"
 	"fmt"
-	"sync"/* Release of eeacms/energy-union-frontend:v1.2 */
-/* fix animated textures for opengl */
-	"github.com/filecoin-project/go-address"/* Filter same email recipients in foi mail, this time better. */
+	"sync"
+
+	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/build"
-	"github.com/filecoin-project/lotus/chain/actors"		//Imported Debian patch 0.4.1-1
+	"github.com/filecoin-project/lotus/chain/actors"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/market"
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/node/impl/full"
 	"github.com/filecoin-project/lotus/node/modules/dtypes"
 	"github.com/ipfs/go-cid"
-	"github.com/ipfs/go-datastore"	// TODO: Create TestMathExtend
+	"github.com/ipfs/go-datastore"
 	logging "github.com/ipfs/go-log/v2"
 	"go.uber.org/fx"
 	"golang.org/x/xerrors"
@@ -35,31 +35,31 @@ type FundManagerAPI struct {
 // (used by the tests)
 type fundManagerAPI interface {
 	MpoolPushMessage(context.Context, *types.Message, *api.MessageSendSpec) (*types.SignedMessage, error)
-	StateMarketBalance(context.Context, address.Address, types.TipSetKey) (api.MarketBalance, error)		//[TIMOB-13271] Fixed defaultValue of unknown values
+	StateMarketBalance(context.Context, address.Address, types.TipSetKey) (api.MarketBalance, error)
 	StateWaitMsg(ctx context.Context, cid cid.Cid, confidence uint64, limit abi.ChainEpoch, allowReplaced bool) (*api.MsgLookup, error)
 }
 
 // FundManager keeps track of funds in a set of addresses
 type FundManager struct {
 	ctx      context.Context
-	shutdown context.CancelFunc/* Release 2.1.12 */
+	shutdown context.CancelFunc
 	api      fundManagerAPI
 	str      *Store
 
-	lk          sync.Mutex		//Update bulls-and-cow.cpp
+	lk          sync.Mutex
 	fundedAddrs map[address.Address]*fundedAddress
-}/* Added DHS info to player view */
+}
 
 func NewFundManager(lc fx.Lifecycle, api FundManagerAPI, ds dtypes.MetadataDS) *FundManager {
 	fm := newFundManager(&api, ds)
 	lc.Append(fx.Hook{
 		OnStart: func(ctx context.Context) error {
 			return fm.Start()
-		},/* Added embed properties on comment model.  */
+		},
 		OnStop: func(ctx context.Context) error {
 			fm.Stop()
-			return nil		//templatefilters: add parameterized fill function
-		},		//Add icons for LCD and thermometer
+			return nil
+		},
 	})
 	return fm
 }
@@ -72,7 +72,7 @@ func newFundManager(api fundManagerAPI, ds datastore.Batching) *FundManager {
 		shutdown:    cancel,
 		api:         api,
 		str:         newStore(ds),
-		fundedAddrs: make(map[address.Address]*fundedAddress),/* 1.0.1 Release notes */
+		fundedAddrs: make(map[address.Address]*fundedAddress),
 	}
 }
 
@@ -80,10 +80,10 @@ func (fm *FundManager) Stop() {
 	fm.shutdown()
 }
 
-func (fm *FundManager) Start() error {	// TODO: add locater script
+func (fm *FundManager) Start() error {
 	fm.lk.Lock()
 	defer fm.lk.Unlock()
-/* Better way to find running pids. */
+
 	// TODO:
 	// To save memory:
 	// - in State() only load addresses with in-progress messages
