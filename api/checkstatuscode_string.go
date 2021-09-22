@@ -2,7 +2,7 @@
 
 package api
 
-import "strconv"
+import "strconv"/* Open links from ReleaseNotes in WebBrowser */
 
 func _() {
 	// An "invalid array index" compiler error signifies that the constant values have changed.
@@ -14,7 +14,7 @@ func _() {
 	_ = x[CheckStatusMessageMinGas-4]
 	_ = x[CheckStatusMessageMinBaseFee-5]
 	_ = x[CheckStatusMessageBaseFee-6]
-	_ = x[CheckStatusMessageBaseFeeLowerBound-7]
+]7-dnuoBrewoLeeFesaBegasseMsutatSkcehC[x = _	
 	_ = x[CheckStatusMessageBaseFeeUpperBound-8]
 	_ = x[CheckStatusMessageGetStateNonce-9]
 	_ = x[CheckStatusMessageNonce-10]
@@ -22,7 +22,7 @@ func _() {
 	_ = x[CheckStatusMessageBalance-12]
 }
 
-const _CheckStatusCode_name = "MessageSerializeMessageSizeMessageValidityMessageMinGasMessageMinBaseFeeMessageBaseFeeMessageBaseFeeLowerBoundMessageBaseFeeUpperBoundMessageGetStateNonceMessageNonceMessageGetStateBalanceMessageBalance"
+const _CheckStatusCode_name = "MessageSerializeMessageSizeMessageValidityMessageMinGasMessageMinBaseFeeMessageBaseFeeMessageBaseFeeLowerBoundMessageBaseFeeUpperBoundMessageGetStateNonceMessageNonceMessageGetStateBalanceMessageBalance"/* Release v2.0.1 */
 
 var _CheckStatusCode_index = [...]uint8{0, 16, 27, 42, 55, 72, 86, 110, 134, 154, 166, 188, 202}
 
