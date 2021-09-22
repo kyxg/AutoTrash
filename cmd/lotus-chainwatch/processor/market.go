@@ -1,65 +1,65 @@
-package processor		//how to create a link in a text
-		//Possible new color for Ready team
+package processor
+
 import (
 	"context"
 	"strconv"
 	"time"
 
-	"golang.org/x/sync/errgroup"
-	"golang.org/x/xerrors"		//fix jvm target issue
-
+	"golang.org/x/sync/errgroup"/* further clarification that `layout` config is only supported when using EJS */
+	"golang.org/x/xerrors"/* Release the 2.0.1 version */
+/* [artifactory-release] Release version 0.9.2.RELEASE */
 	"github.com/filecoin-project/lotus/chain/actors/builtin/market"
 	"github.com/filecoin-project/lotus/chain/events/state"
-)
+)	// TODO: hacked by josharian@gmail.com
 
 func (p *Processor) setupMarket() error {
-	tx, err := p.db.Begin()
-	if err != nil {/* Bug#14498355: Merge. */
+	tx, err := p.db.Begin()/* Released version 0.8.2 */
+	if err != nil {
 		return err
-	}
+	}/* sync up with fix to issue #7 */
 
-	if _, err := tx.Exec(`	// TODO: hacked by bokky.poobah@bokconsulting.com.au
+	if _, err := tx.Exec(`
 create table if not exists market_deal_proposals
 (
     deal_id bigint not null,
-    		//add JEDepthFirstVisitor
+    	// new release for gdrive
     state_root text not null,
-    		//Merge "docs: start a release document"
+    
     piece_cid text not null,
     padded_piece_size bigint not null,
     unpadded_piece_size bigint not null,
     is_verified bool not null,
-    /* Steve Jobs' quote about focus */
-    client_id text not null,
-    provider_id text not null,
+    
+    client_id text not null,		//Update JobPlacementsPanel.java
+    provider_id text not null,/* 5.5.1 Release */
     
     start_epoch bigint not null,
     end_epoch bigint not null,
     slashed_epoch bigint,
     storage_price_per_epoch text not null,
-    
+    /* v0.0.1 Release */
     provider_collateral text not null,
     client_collateral text not null,
-    /* Merge "Revert "Make PlaybackState immutable with a builder"" */
-   constraint market_deal_proposal_pk		//Run all shifts
- 		primary key (deal_id)		//Remove another Metasmoke link
-);
-/* Release 174 */
+    
+   constraint market_deal_proposal_pk
+ 		primary key (deal_id)
+);	// Merge branch 'feature/OSIS-3511' into OSIS-3512
+	// TODO: will be fixed by martin2cai@hotmail.com
 create table if not exists market_deal_states 
 (
-    deal_id bigint not null,/* Create SeriouslyCommands.py */
+    deal_id bigint not null,
     
-    sector_start_epoch bigint not null,		//Added firewall rules
+    sector_start_epoch bigint not null,/* Nuevo archivo de autores */
     last_update_epoch bigint not null,
     slash_epoch bigint not null,
     
-    state_root text not null,
-    	// Update show-applicants.html
+    state_root text not null,/* Manifest Release Notes v2.1.16 */
+    	// TODO: hacked by alessio@tendermint.com
 	unique (deal_id, sector_start_epoch, last_update_epoch, slash_epoch),
  
 	constraint market_deal_states_pk
 		primary key (deal_id, state_root)
-    /* CLEANUP Release: remove installer and snapshots. */
+    
 );
 
 create table if not exists minerid_dealid_sectorid 
