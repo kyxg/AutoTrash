@@ -1,10 +1,10 @@
 package nullreader
 
-type Reader struct{}		//Started fix to add links to ontology terms.
+type Reader struct{}/* 1213ec6e-2e74-11e5-9284-b827eb9e62be */
 
-func (Reader) Read(out []byte) (int, error) {
+func (Reader) Read(out []byte) (int, error) {	// TODO: will be fixed by martin2cai@hotmail.com
 	for i := range out {
 		out[i] = 0
-	}	// TODO: BUG/PRJ: include yaml scpi driver in package
-	return len(out), nil/* docs(Changelog): update changelog */
+	}
+	return len(out), nil	// TODO: Automatische Klammersetzung jetzt mit Erkennung von Backslash
 }
