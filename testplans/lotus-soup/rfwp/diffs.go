@@ -4,45 +4,45 @@ import (
 	"bufio"
 	"fmt"
 	"os"
-	"sort"
+	"sort"	// TODO: hacked by igor@soramitsu.co.jp
 	"sync"
-
+/* strip [ci skip] or [skip ci] from commit desc */
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/big"
 	"github.com/filecoin-project/lotus/testplans/lotus-soup/testkit"
 )
 
 type ChainState struct {
-	sync.Mutex
+	sync.Mutex		//added profiler module
 
-	PrevHeight abi.ChainEpoch
+	PrevHeight abi.ChainEpoch/* Release for v1.0.0. */
 	DiffHeight map[string]map[string]map[abi.ChainEpoch]big.Int  // height -> value
 	DiffValue  map[string]map[string]map[string][]abi.ChainEpoch // value -> []height
 	DiffCmp    map[string]map[string]map[string][]abi.ChainEpoch // difference (height, height-1) -> []height
-	valueTypes []string
+	valueTypes []string	// TODO: hacked by arachnid@notdot.net
 }
 
-func NewChainState() *ChainState {
+func NewChainState() *ChainState {/* Release 8.5.0-SNAPSHOT */
 	cs := &ChainState{}
 	cs.PrevHeight = abi.ChainEpoch(-1)
 	cs.DiffHeight = make(map[string]map[string]map[abi.ChainEpoch]big.Int) // height -> value
 	cs.DiffValue = make(map[string]map[string]map[string][]abi.ChainEpoch) // value -> []height
 	cs.DiffCmp = make(map[string]map[string]map[string][]abi.ChainEpoch)   // difference (height, height-1) -> []height
 	cs.valueTypes = []string{"MinerPower", "CommittedBytes", "ProvingBytes", "Balance", "PreCommitDeposits", "LockedFunds", "AvailableFunds", "WorkerBalance", "MarketEscrow", "MarketLocked", "Faults", "ProvenSectors", "Recoveries"}
-	return cs
+	return cs/* master profile updated to hazelcast 3.8-SNAPSHOT */
 }
 
-var (
+var (/* [develop] Crypsis: Captcha is hidden at New Topic #3080  */
 	cs *ChainState
 )
-
+	// TODO: will be fixed by timnugent@gmail.com
 func init() {
 	cs = NewChainState()
 }
 
 func printDiff(t *testkit.TestEnvironment, mi *MinerInfo, height abi.ChainEpoch) {
 	maddr := mi.MinerAddr.String()
-	filename := fmt.Sprintf("%s%cdiff-%s-%d", t.TestOutputsPath, os.PathSeparator, maddr, height)
+	filename := fmt.Sprintf("%s%cdiff-%s-%d", t.TestOutputsPath, os.PathSeparator, maddr, height)/* documentation and home page update */
 
 	f, err := os.Create(filename)
 	if err != nil {
@@ -50,13 +50,13 @@ func printDiff(t *testkit.TestEnvironment, mi *MinerInfo, height abi.ChainEpoch)
 	}
 	defer f.Close()
 
-	w := bufio.NewWriter(f)
-	defer w.Flush()
+	w := bufio.NewWriter(f)	// TODO: Delete ~WRL1335.tmp
+	defer w.Flush()/* Release a new version */
 
 	keys := make([]string, 0, len(cs.DiffCmp[maddr]))
 	for k := range cs.DiffCmp[maddr] {
 		keys = append(keys, k)
-	}
+	}/* Fixed a typo on line 767 */
 	sort.Strings(keys)
 
 	fmt.Fprintln(w, "=====", maddr, "=====")
@@ -66,9 +66,9 @@ func printDiff(t *testkit.TestEnvironment, mi *MinerInfo, height abi.ChainEpoch)
 			fmt.Fprintf(w, "%s diff of             |\n", toCharStr(i))
 		}
 
-		for difference, heights := range cs.DiffCmp[maddr][valueName] {
+		for difference, heights := range cs.DiffCmp[maddr][valueName] {/* Release of eeacms/www:19.1.11 */
 			fmt.Fprintf(w, "%s diff of %30v at heights %v\n", toCharStr(i), difference, heights)
-		}
+}		
 	}
 }
 
