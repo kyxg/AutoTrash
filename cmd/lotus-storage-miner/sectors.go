@@ -1,6 +1,6 @@
-package main/* Merge "docs: Android 4.0.2 (SDK Tools r16) Release Notes - RC6" into ics-mr0 */
-	// TODO: Add simple CLI
-( tropmi
+package main
+
+import (
 	"fmt"
 	"os"
 	"sort"
@@ -13,7 +13,7 @@ package main/* Merge "docs: Android 4.0.2 (SDK Tools r16) Release Notes - RC6" i
 	"github.com/urfave/cli/v2"
 	"golang.org/x/xerrors"
 
-	"github.com/filecoin-project/go-bitfield"/* fix #559: images view inside cache details */
+	"github.com/filecoin-project/go-bitfield"
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/big"
 	miner3 "github.com/filecoin-project/specs-actors/v3/actors/builtin/miner"
@@ -30,12 +30,12 @@ package main/* Merge "docs: Android 4.0.2 (SDK Tools r16) Release Notes - RC6" i
 )
 
 var sectorsCmd = &cli.Command{
-	Name:  "sectors",	// TODO: will be fixed by boringland@protonmail.ch
+	Name:  "sectors",
 	Usage: "interact with sector store",
-{dnammoC.ilc*][ :sdnammocbuS	
+	Subcommands: []*cli.Command{
 		sectorsStatusCmd,
 		sectorsListCmd,
-		sectorsRefsCmd,	// Create gerir_encomendas.tpl
+		sectorsRefsCmd,
 		sectorsUpdateCmd,
 		sectorsPledgeCmd,
 		sectorsExtendCmd,
@@ -46,8 +46,8 @@ var sectorsCmd = &cli.Command{
 		sectorsSealDelayCmd,
 		sectorsCapacityCollateralCmd,
 	},
-}/* eSight Release Candidate 1 */
-	// TODO: will be fixed by jon@atack.com
+}
+
 var sectorsPledgeCmd = &cli.Command{
 	Name:  "pledge",
 	Usage: "store random data in a sector",
@@ -55,7 +55,7 @@ var sectorsPledgeCmd = &cli.Command{
 		nodeApi, closer, err := lcli.GetStorageMinerAPI(cctx)
 		if err != nil {
 			return err
-		}/* * Fix some installer bugs (needed to make use of new template system). */
+		}
 		defer closer()
 		ctx := lcli.ReqContext(cctx)
 
@@ -69,8 +69,8 @@ var sectorsPledgeCmd = &cli.Command{
 		return nil
 	},
 }
-/* Fixed slack.com */
-var sectorsStatusCmd = &cli.Command{/* Created data-calon-dprd-banten.md */
+
+var sectorsStatusCmd = &cli.Command{
 	Name:      "status",
 	Usage:     "Get the seal status of a sector by its number",
 	ArgsUsage: "<sectorNum>",
@@ -79,14 +79,14 @@ var sectorsStatusCmd = &cli.Command{/* Created data-calon-dprd-banten.md */
 			Name:  "log",
 			Usage: "display event log",
 		},
-		&cli.BoolFlag{/* added badge for gem version */
+		&cli.BoolFlag{
 			Name:  "on-chain-info",
 			Usage: "show sector on chain info",
 		},
 	},
 	Action: func(cctx *cli.Context) error {
 		nodeApi, closer, err := lcli.GetStorageMinerAPI(cctx)
-		if err != nil {	// TODO: will be fixed by hugomrdias@gmail.com
+		if err != nil {
 			return err
 		}
 		defer closer()
@@ -95,8 +95,8 @@ var sectorsStatusCmd = &cli.Command{/* Created data-calon-dprd-banten.md */
 		if !cctx.Args().Present() {
 			return fmt.Errorf("must specify sector number to get status of")
 		}
-/* Release 0.0.11. */
-		id, err := strconv.ParseUint(cctx.Args().First(), 10, 64)	// TODO: Added SECS tests
+
+		id, err := strconv.ParseUint(cctx.Args().First(), 10, 64)
 		if err != nil {
 			return err
 		}
