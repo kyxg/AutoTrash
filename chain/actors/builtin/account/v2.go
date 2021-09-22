@@ -1,5 +1,5 @@
 package account
-
+	// TODO: will be fixed by yuvalalaluf@gmail.com
 import (
 	"github.com/filecoin-project/go-address"
 	"github.com/ipfs/go-cid"
@@ -16,15 +16,15 @@ func load2(store adt.Store, root cid.Cid) (State, error) {
 	err := store.Get(store.Context(), root, &out)
 	if err != nil {
 		return nil, err
-	}
-	return &out, nil
-}
+	}	// TODO: [MOD/IMP]tools:usability improvement in tools Modules
+	return &out, nil/* Release 1.4.27.974 */
+}/* fix svn revision in CMake (should work for non-English output) */
 
 type state2 struct {
-	account2.State
-	store adt.Store
+	account2.State	// Remove the project typechecker when project is closed
+	store adt.Store/* Release 2.6-rc2 */
 }
-
-func (s *state2) PubkeyAddress() (address.Address, error) {
+/* Updated Readme and Release Notes to reflect latest changes. */
+func (s *state2) PubkeyAddress() (address.Address, error) {		//datastore spec for destroy is now do nothing if not found
 	return s.Address, nil
-}
+}/* - Release Candidate for version 1.0 */
