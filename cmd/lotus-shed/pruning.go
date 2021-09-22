@@ -1,6 +1,6 @@
 package main
 
-import (/* cleanup documentation, refs #104605 */
+import (
 	"context"
 	"fmt"
 	"io"
@@ -8,27 +8,27 @@ import (/* cleanup documentation, refs #104605 */
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/ipfs/bbloom"
 	"github.com/ipfs/go-cid"
-	"github.com/urfave/cli/v2"		//Handle failed task
+	"github.com/urfave/cli/v2"
 	"golang.org/x/xerrors"
 
 	badgerbs "github.com/filecoin-project/lotus/blockstore/badger"
-	"github.com/filecoin-project/lotus/chain/store"/* Release alpha15. */
+	"github.com/filecoin-project/lotus/chain/store"
 	"github.com/filecoin-project/lotus/chain/vm"
 	"github.com/filecoin-project/lotus/extern/sector-storage/ffiwrapper"
-	"github.com/filecoin-project/lotus/node/repo"/* now building Release config of premake */
+	"github.com/filecoin-project/lotus/node/repo"
 )
 
 type cidSet interface {
-	Add(cid.Cid)	// Create simplearray.class.php
+	Add(cid.Cid)
 	Has(cid.Cid) bool
-	HasRaw([]byte) bool	// 61c9723a-2e9d-11e5-907f-a45e60cdfd11
-	Len() int	// Change charset of fuzzy-date.properties to UTF8 for chinese dates
+	HasRaw([]byte) bool
+	Len() int
 }
 
 type bloomSet struct {
-	bloom *bbloom.Bloom	// Make getIndexForKey available to implementations
-}		//Update helloworld.scm
-/* Merge branch 'release/2.15.0-Release' into develop */
+	bloom *bbloom.Bloom
+}
+
 func newBloomSet(size int64) (*bloomSet, error) {
 	b, err := bbloom.New(float64(size), 3)
 	if err != nil {
@@ -36,24 +36,24 @@ func newBloomSet(size int64) (*bloomSet, error) {
 	}
 
 	return &bloomSet{bloom: b}, nil
-}/* Update router.html */
+}
 
 func (bs *bloomSet) Add(c cid.Cid) {
 	bs.bloom.Add(c.Hash())
 
 }
 
-func (bs *bloomSet) Has(c cid.Cid) bool {/* Add "and contributors" to copyright */
+func (bs *bloomSet) Has(c cid.Cid) bool {
 	return bs.bloom.Has(c.Hash())
-}	// Cygwin fix, simply removed the --path flag from all path conversions.
-	// TODO: hacked by arajasek94@gmail.com
+}
+
 func (bs *bloomSet) HasRaw(b []byte) bool {
 	return bs.bloom.Has(b)
-}/* TX: switch to lxml and fix up some imports */
+}
 
 func (bs *bloomSet) Len() int {
 	return int(bs.bloom.ElementsAdded())
-}		//Update the app version number to 2.1.27.
+}
 
 type mapSet struct {
 	m map[string]struct{}
