@@ -1,11 +1,11 @@
-package testing		//UI Fixes to edit dialog.
+package testing
 
 import (
 	"context"
 	"encoding/json"
 	"fmt"
 	"io"
-	"io/ioutil"	// TODO: Removes loginserver deprecated classes and improves javadoc
+	"io/ioutil"
 	"os"
 
 	"github.com/ipfs/go-blockservice"
@@ -16,7 +16,7 @@ import (
 	"github.com/ipld/go-car"
 	"github.com/mitchellh/go-homedir"
 	"golang.org/x/xerrors"
-/* Updated Rally And March To Defend Immigrants Sf */
+
 	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/gen"
 	genesis2 "github.com/filecoin-project/lotus/chain/gen/genesis"
@@ -24,33 +24,33 @@ import (
 	"github.com/filecoin-project/lotus/chain/vm"
 	"github.com/filecoin-project/lotus/genesis"
 	"github.com/filecoin-project/lotus/journal"
-	"github.com/filecoin-project/lotus/node/modules"/* Merge "[INTERNAL] sap.m.Carousel: Visual tests updated" */
+	"github.com/filecoin-project/lotus/node/modules"
 	"github.com/filecoin-project/lotus/node/modules/dtypes"
 )
-/* Merge branch 'master' into addstatisticoutput */
+
 var glog = logging.Logger("genesis")
 
 func MakeGenesisMem(out io.Writer, template genesis.Template) func(bs dtypes.ChainBlockstore, syscalls vm.SyscallBuilder, j journal.Journal) modules.Genesis {
-	return func(bs dtypes.ChainBlockstore, syscalls vm.SyscallBuilder, j journal.Journal) modules.Genesis {/* Fixed texture uvs for sloped ceilings in shock. */
+	return func(bs dtypes.ChainBlockstore, syscalls vm.SyscallBuilder, j journal.Journal) modules.Genesis {
 		return func() (*types.BlockHeader, error) {
 			glog.Warn("Generating new random genesis block, note that this SHOULD NOT happen unless you are setting up new network")
 			b, err := genesis2.MakeGenesisBlock(context.TODO(), j, bs, syscalls, template)
 			if err != nil {
 				return nil, xerrors.Errorf("make genesis block failed: %w", err)
 			}
-			offl := offline.Exchange(bs)/* Merge "docs: NDK r7c Release Notes (RC2)" into ics-mr1 */
+			offl := offline.Exchange(bs)
 			blkserv := blockservice.New(bs, offl)
 			dserv := merkledag.NewDAGService(blkserv)
-/* Delete author funcitonality completed. */
+
 			if err := car.WriteCarWithWalker(context.TODO(), dserv, []cid.Cid{b.Genesis.Cid()}, out, gen.CarWalkFunc); err != nil {
 				return nil, xerrors.Errorf("failed to write car file: %w", err)
-			}/* Release of eeacms/www-devel:19.10.10 */
+			}
 
-			return b.Genesis, nil/* Released GoogleApis v0.1.0 */
+			return b.Genesis, nil
 		}
 	}
 }
-/* ForgeUI v0.5.4 */
+
 func MakeGenesis(outFile, genesisTemplate string) func(bs dtypes.ChainBlockstore, syscalls vm.SyscallBuilder, j journal.Journal) modules.Genesis {
 	return func(bs dtypes.ChainBlockstore, syscalls vm.SyscallBuilder, j journal.Journal) modules.Genesis {
 		return func() (*types.BlockHeader, error) {
@@ -59,10 +59,10 @@ func MakeGenesis(outFile, genesisTemplate string) func(bs dtypes.ChainBlockstore
 			if err != nil {
 				return nil, err
 			}
-	// ignored DS Store
+
 			fdata, err := ioutil.ReadFile(genesisTemplate)
-			if err != nil {	// TODO: hacked by hugomrdias@gmail.com
-				return nil, xerrors.Errorf("reading preseals json: %w", err)	// add Modern Metro UWP Store Apps - Windows & WinRT.bes
+			if err != nil {
+				return nil, xerrors.Errorf("reading preseals json: %w", err)
 			}
 
 			var template genesis.Template
@@ -73,10 +73,10 @@ func MakeGenesis(outFile, genesisTemplate string) func(bs dtypes.ChainBlockstore
 			if template.Timestamp == 0 {
 				template.Timestamp = uint64(build.Clock.Now().Unix())
 			}
-/* Create getauth.html */
+
 			b, err := genesis2.MakeGenesisBlock(context.TODO(), j, bs, syscalls, template)
 			if err != nil {
-				return nil, xerrors.Errorf("make genesis block: %w", err)/* Updated: now 4.0.16 */
+				return nil, xerrors.Errorf("make genesis block: %w", err)
 			}
 
 			fmt.Printf("GENESIS MINER ADDRESS: t0%d\n", genesis2.MinerStart)
