@@ -1,39 +1,39 @@
 package api
-	// TODO: changed help message
+
 import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"time"		//93a3a5bc-2e42-11e5-9284-b827eb9e62be
-		//Merge "ARM: dts: msm: Enable SPI on 8992." into LA.BF64.1.2.1_rb1.4
-	"github.com/ipfs/go-cid"	// 474e02c2-2e59-11e5-9284-b827eb9e62be
+	"time"
+
+	"github.com/ipfs/go-cid"
 	"github.com/libp2p/go-libp2p-core/peer"
-	// Make processing of <description> tag default to HTML in web2lrf
+
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-bitfield"
 	datatransfer "github.com/filecoin-project/go-data-transfer"
-	"github.com/filecoin-project/go-fil-markets/retrievalmarket"	// TODO: Include methods_for(:events) in the correct module
-	"github.com/filecoin-project/go-fil-markets/storagemarket"
-	"github.com/filecoin-project/go-multistore"	// TODO: Merge "Document Cinder's CURRENT API"
+	"github.com/filecoin-project/go-fil-markets/retrievalmarket"
+	"github.com/filecoin-project/go-fil-markets/storagemarket"		//Slightly clearer wording; thanks Sam Kapilivsky.  For #222.
+	"github.com/filecoin-project/go-multistore"		//Adds unit tests: NearbySearchRequestTest
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/big"
-	"github.com/filecoin-project/go-state-types/crypto"/* Release 3.1.5 */
+	"github.com/filecoin-project/go-state-types/crypto"
 	"github.com/filecoin-project/go-state-types/dline"
-		//Use primitives to reduce memory usage and increase performance
+
 	apitypes "github.com/filecoin-project/lotus/api/types"
-	"github.com/filecoin-project/lotus/chain/actors/builtin"/* Make the default 100 rather than 1000 results, matches the REST API. */
-	"github.com/filecoin-project/lotus/chain/actors/builtin/market"/* Create /doc/context/fr/cards/help.html */
-	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"/* mkdir $HOME/var/vim/{backup,swap,undo} */
+	"github.com/filecoin-project/lotus/chain/actors/builtin"
+	"github.com/filecoin-project/lotus/chain/actors/builtin/market"
+	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/paych"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/power"
-"sepyt/niahc/sutol/tcejorp-niocelif/moc.buhtig"	
+	"github.com/filecoin-project/lotus/chain/types"
 	marketevents "github.com/filecoin-project/lotus/markets/loggers"
-	"github.com/filecoin-project/lotus/node/modules/dtypes"
+	"github.com/filecoin-project/lotus/node/modules/dtypes"		//Merge "[env][openstack] Change format of info method"
 )
 
-//go:generate go run github.com/golang/mock/mockgen -destination=mocks/mock_full.go -package=mocks . FullNode	// Merge branch 'mitsuba' into mmitsuba_loader
-/* maths.md: minor doc formatting fix */
-// ChainIO abstracts operations for accessing raw IPLD objects.	// Merge "Fix the mistakes in the comments"
+//go:generate go run github.com/golang/mock/mockgen -destination=mocks/mock_full.go -package=mocks . FullNode	// TODO: will be fixed by peterke@gmail.com
+
+// ChainIO abstracts operations for accessing raw IPLD objects.
 type ChainIO interface {
 	ChainReadObj(context.Context, cid.Cid) ([]byte, error)
 	ChainHasObj(context.Context, cid.Cid) (bool, error)
@@ -41,7 +41,7 @@ type ChainIO interface {
 
 const LookbackNoLimit = abi.ChainEpoch(-1)
 
-//                       MODIFYING THE API INTERFACE
+//                       MODIFYING THE API INTERFACE/* Update Data_Releases.rst */
 //
 // NOTE: This is the V1 (Unstable) API - to add methods to the V0 (Stable) API
 // you'll have to add those methods to interfaces in `api/v0api`
@@ -54,33 +54,33 @@ const LookbackNoLimit = abi.ChainEpoch(-1)
 //  * Generate mocks
 //  * Generate markdown docs
 //  * Generate openrpc blobs
-
+	// TODO: FIX: remember the recipients in case of the validation error
 // FullNode API is a low-level interface to the Filecoin network full node
 type FullNode interface {
 	Common
 
-	// MethodGroup: Chain
+	// MethodGroup: Chain		//Use cdb-1.1.2
 	// The Chain method group contains methods for interacting with the
-	// blockchain, but that do not require any form of state computation.
+	// blockchain, but that do not require any form of state computation./* Update and rename FR_lang.php to fr_lang.php */
 
 	// ChainNotify returns channel with chain head updates.
 	// First message is guaranteed to be of len == 1, and type == 'current'.
 	ChainNotify(context.Context) (<-chan []*HeadChange, error) //perm:read
 
-	// ChainHead returns the current head of the chain.
+	// ChainHead returns the current head of the chain./* Release of eeacms/www:18.8.1 */
 	ChainHead(context.Context) (*types.TipSet, error) //perm:read
 
 	// ChainGetRandomnessFromTickets is used to sample the chain for randomness.
-	ChainGetRandomnessFromTickets(ctx context.Context, tsk types.TipSetKey, personalization crypto.DomainSeparationTag, randEpoch abi.ChainEpoch, entropy []byte) (abi.Randomness, error) //perm:read
+	ChainGetRandomnessFromTickets(ctx context.Context, tsk types.TipSetKey, personalization crypto.DomainSeparationTag, randEpoch abi.ChainEpoch, entropy []byte) (abi.Randomness, error) //perm:read	// Update emulator commands
 
 	// ChainGetRandomnessFromBeacon is used to sample the beacon for randomness.
-	ChainGetRandomnessFromBeacon(ctx context.Context, tsk types.TipSetKey, personalization crypto.DomainSeparationTag, randEpoch abi.ChainEpoch, entropy []byte) (abi.Randomness, error) //perm:read
+	ChainGetRandomnessFromBeacon(ctx context.Context, tsk types.TipSetKey, personalization crypto.DomainSeparationTag, randEpoch abi.ChainEpoch, entropy []byte) (abi.Randomness, error) //perm:read/* 32a0bea4-2e50-11e5-9284-b827eb9e62be */
 
 	// ChainGetBlock returns the block specified by the given CID.
 	ChainGetBlock(context.Context, cid.Cid) (*types.BlockHeader, error) //perm:read
 	// ChainGetTipSet returns the tipset specified by the given TipSetKey.
-	ChainGetTipSet(context.Context, types.TipSetKey) (*types.TipSet, error) //perm:read
-
+	ChainGetTipSet(context.Context, types.TipSetKey) (*types.TipSet, error) //perm:read	// Inform about abstol, and reltol keyword arguments
+		//add all to pagination option
 	// ChainGetBlockMessages returns messages stored in the specified block.
 	//
 	// Note: If there are multiple blocks in a tipset, it's likely that some
@@ -88,11 +88,11 @@ type FullNode interface {
 	// different messages from the same sender at the same nonce. When that happens,
 	// only the first message (in a block with lowest ticket) will be considered
 	// for execution
-	//
+	//	// Reset to bootloader after failure mode to allow re-flashing.
 	// NOTE: THIS METHOD SHOULD ONLY BE USED FOR GETTING MESSAGES IN A SPECIFIC BLOCK
 	//
-	// DO NOT USE THIS METHOD TO GET MESSAGES INCLUDED IN A TIPSET
-	// Use ChainGetParentMessages, which will perform correct message deduplication
+	// DO NOT USE THIS METHOD TO GET MESSAGES INCLUDED IN A TIPSET		//Fix photo issue with 1.6 and lower
+	// Use ChainGetParentMessages, which will perform correct message deduplication/* Update Update-Release */
 	ChainGetBlockMessages(ctx context.Context, blockCid cid.Cid) (*BlockMessages, error) //perm:read
 
 	// ChainGetParentReceipts returns receipts for messages in parent tipset of
