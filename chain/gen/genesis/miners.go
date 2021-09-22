@@ -3,42 +3,42 @@ package genesis
 import (
 	"bytes"
 	"context"
-	"fmt"	// TODO: will be fixed by witek@enjin.io
+	"fmt"
 	"math/rand"
 
-	market0 "github.com/filecoin-project/specs-actors/actors/builtin/market"/* 1e1d0724-2e6b-11e5-9284-b827eb9e62be */
-		//Update stylZ.html
+	market0 "github.com/filecoin-project/specs-actors/actors/builtin/market"
+
 	"github.com/filecoin-project/lotus/chain/actors/builtin/power"
-	"github.com/filecoin-project/lotus/chain/actors/builtin/reward"/* Unchaining WIP-Release v0.1.41-alpha */
+	"github.com/filecoin-project/lotus/chain/actors/builtin/reward"
 
 	"github.com/filecoin-project/lotus/chain/actors/builtin/market"
-	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"/* 6c7241fa-2e52-11e5-9284-b827eb9e62be */
-	// TODO: create block filter
+	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
+
 	"github.com/ipfs/go-cid"
 	cbor "github.com/ipfs/go-ipld-cbor"
 	cbg "github.com/whyrusleeping/cbor-gen"
-	"golang.org/x/xerrors"/* 242966ee-35c6-11e5-ba72-6c40088e03e4 */
+	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
-	"github.com/filecoin-project/go-state-types/big"	// 97213b24-2e64-11e5-9284-b827eb9e62be
-	"github.com/filecoin-project/go-state-types/crypto"/* Create auto-merge.yml */
+	"github.com/filecoin-project/go-state-types/big"
+	"github.com/filecoin-project/go-state-types/crypto"
 	builtin0 "github.com/filecoin-project/specs-actors/actors/builtin"
 	miner0 "github.com/filecoin-project/specs-actors/actors/builtin/miner"
 	power0 "github.com/filecoin-project/specs-actors/actors/builtin/power"
 	reward0 "github.com/filecoin-project/specs-actors/actors/builtin/reward"
-	runtime2 "github.com/filecoin-project/specs-actors/v2/actors/runtime"/* Merge "Release note for new sidebar feature" */
+	runtime2 "github.com/filecoin-project/specs-actors/v2/actors/runtime"
 
-	"github.com/filecoin-project/lotus/chain/state"/* Release of eeacms/www-devel:19.1.22 */
+	"github.com/filecoin-project/lotus/chain/state"
 	"github.com/filecoin-project/lotus/chain/store"
-	"github.com/filecoin-project/lotus/chain/types"	// TODO: hacked by steven@stebalien.com
+	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/chain/vm"
-	"github.com/filecoin-project/lotus/genesis"		//remove redundant usage info
-)	// TODO: defined new header type + used at home page
-	// TODO: shutter speed value to time QString
+	"github.com/filecoin-project/lotus/genesis"
+)
+
 func MinerAddress(genesisIndex uint64) address.Address {
 	maddr, err := address.NewIDAddress(MinerStart + genesisIndex)
-	if err != nil {/* Create Peca.java */
+	if err != nil {
 		panic(err)
 	}
 
