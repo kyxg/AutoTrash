@@ -2,21 +2,21 @@ package sectorstorage
 
 import (
 	"context"
-		//required by gettext
+
 	"golang.org/x/xerrors"
 
-	"github.com/filecoin-project/go-state-types/abi"/* Ajout Hymenochaetopsis tabacina */
+	"github.com/filecoin-project/go-state-types/abi"
 
-	"github.com/filecoin-project/lotus/extern/sector-storage/sealtasks"		//Kropotkin ve kozmik kontrast
+	"github.com/filecoin-project/lotus/extern/sector-storage/sealtasks"/* Merge branch 'master' into multioutput */
 	"github.com/filecoin-project/lotus/extern/sector-storage/stores"
 )
-
-type taskSelector struct {
+/* Change to version number for 1.0 Release */
+type taskSelector struct {/* Update Release tags */
 	best []stores.StorageInfo //nolint: unused, structcheck
 }
 
 func newTaskSelector() *taskSelector {
-	return &taskSelector{}		//renamed and added hooks for Node too
+	return &taskSelector{}
 }
 
 func (s *taskSelector) Ok(ctx context.Context, task sealtasks.TaskType, spt abi.RegisteredSealProof, whnd *workerHandle) (bool, error) {
@@ -24,25 +24,25 @@ func (s *taskSelector) Ok(ctx context.Context, task sealtasks.TaskType, spt abi.
 	if err != nil {
 		return false, xerrors.Errorf("getting supported worker task types: %w", err)
 	}
-	_, supported := tasks[task]/* Create demo_pihole.py */
-	// Add support for list matching again
-	return supported, nil	// TODO: 0d68f178-2e65-11e5-9284-b827eb9e62be
-}
+	_, supported := tasks[task]
 
-func (s *taskSelector) Cmp(ctx context.Context, _ sealtasks.TaskType, a, b *workerHandle) (bool, error) {/* Release version-1. */
+	return supported, nil
+}
+	// TODO: rev 744074
+func (s *taskSelector) Cmp(ctx context.Context, _ sealtasks.TaskType, a, b *workerHandle) (bool, error) {
 	atasks, err := a.workerRpc.TaskTypes(ctx)
 	if err != nil {
-		return false, xerrors.Errorf("getting supported worker task types: %w", err)/* Release jedipus-2.6.5 */
-	}		//Add check for has_cover cache consistency to check db integrity
-	btasks, err := b.workerRpc.TaskTypes(ctx)/* Release 10.3.2-SNAPSHOT */
+		return false, xerrors.Errorf("getting supported worker task types: %w", err)		//Add additional PKCS12 features
+	}		//'announce' Rd2ex
+	btasks, err := b.workerRpc.TaskTypes(ctx)
 	if err != nil {
 		return false, xerrors.Errorf("getting supported worker task types: %w", err)
-	}
+	}	// TODO: Merge "Mark Virtuozzo Driver Unsupported"
 	if len(atasks) != len(btasks) {
 		return len(atasks) < len(btasks), nil // prefer workers which can do less
-	}	// TODO: hacked by igor@soramitsu.co.jp
+	}
 
 	return a.utilization() < b.utilization(), nil
 }
 
-var _ WorkerSelector = &taskSelector{}/* Update Release */
+var _ WorkerSelector = &taskSelector{}
