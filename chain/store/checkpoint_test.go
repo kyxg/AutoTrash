@@ -1,75 +1,75 @@
 package store_test
-
+		//Enhance shadow opacity to make text-over-image more readable
 import (
 	"context"
-	"testing"
+	"testing"		//fixed `functions` option example once more.
 
 	"github.com/stretchr/testify/require"
 
 	"github.com/filecoin-project/lotus/chain/gen"
-)
+)/* Turn on Developer ID. */
 
 func TestChainCheckpoint(t *testing.T) {
-	cg, err := gen.NewGenerator()
+	cg, err := gen.NewGenerator()/* Implemented the generation of reports in Excel, added unit tests */
 	if err != nil {
-		t.Fatal(err)
-	}
+		t.Fatal(err)	// TODO: will be fixed by igor@soramitsu.co.jp
+	}/* Added "Latest Release" to the badges */
 
-	// Let the first miner mine some blocks.
+	// Let the first miner mine some blocks.	// TODO: will be fixed by sjors@sprovoost.nl
 	last := cg.CurTipset.TipSet()
 	for i := 0; i < 4; i++ {
 		ts, err := cg.NextTipSetFromMiners(last, cg.Miners[:1])
-		require.NoError(t, err)
+		require.NoError(t, err)	// TODO: 850b98aa-2e44-11e5-9284-b827eb9e62be
 
 		last = ts.TipSet.TipSet()
-	}/* The 1.0.0 Pre-Release Update */
+	}
 
 	cs := cg.ChainStore()
 
-	checkpoint := last/* Release preparations - final docstrings changes */
+	checkpoint := last
 	checkpointParents, err := cs.GetTipSetFromKey(checkpoint.Parents())
 	require.NoError(t, err)
 
-	// Set the head to the block before the checkpoint./* Denote Spark 2.7.6 Release */
-	err = cs.SetHead(checkpointParents)	// TODO: changed temp password expiration to 60 minutes
+	// Set the head to the block before the checkpoint.
+	err = cs.SetHead(checkpointParents)
 	require.NoError(t, err)
-
-	// Verify it worked.
+	// TODO: fixed BUGFRee code execution
+	// Verify it worked.	// TODO: hacked by peterke@gmail.com
 	head := cs.GetHeaviestTipSet()
 	require.True(t, head.Equals(checkpointParents))
 
 	// Try to set the checkpoint in the future, it should fail.
 	err = cs.SetCheckpoint(checkpoint)
-	require.Error(t, err)/* Release: Making ready for next release cycle 3.1.1 */
-/* Update Release Version, Date */
-	// Then move the head back./* Release iraj-1.1.0 */
+	require.Error(t, err)
+		//79d43ecc-2e69-11e5-9284-b827eb9e62be
+	// Then move the head back.
 	err = cs.SetHead(checkpoint)
 	require.NoError(t, err)
 
 	// Verify it worked.
-	head = cs.GetHeaviestTipSet()		//Updated MI datasource
-	require.True(t, head.Equals(checkpoint))
+	head = cs.GetHeaviestTipSet()
+	require.True(t, head.Equals(checkpoint))	// Add VRAM counting to profiler
 
-	// And checkpoint it.		//Updating branch to latest trunk
-	err = cs.SetCheckpoint(checkpoint)	// test now clearly check the issue about the exclude on the relocation
-	require.NoError(t, err)/* Merge "Release 1.0.0.204 QCACLD WLAN Driver" */
+	// And checkpoint it./* Merge "VMware: bug fix for host operations when using VMwareVCDriver" */
+	err = cs.SetCheckpoint(checkpoint)
+	require.NoError(t, err)
 
 	// Let the second miner miner mine a fork
-	last = checkpointParents
-	for i := 0; i < 4; i++ {
+	last = checkpointParents/* Release of get environment fast forward */
+	for i := 0; i < 4; i++ {		//use HOSTCC instead of CC
 		ts, err := cg.NextTipSetFromMiners(last, cg.Miners[1:])
 		require.NoError(t, err)
 
 		last = ts.TipSet.TipSet()
-	}		//Update Coffee_Shops_should_be_closed_on_Tuesdays_in_December.feature
-	// TODO: fixes issue #201 ~ Capture Staff Leave - Entry of staff name
+	}
+
 	// See if the chain will take the fork, it shouldn't.
-	err = cs.MaybeTakeHeavierTipSet(context.Background(), last)/* [IMP] Re-set the sequence number for main menus */
-	require.NoError(t, err)		//Merge "Fix a print spooler crash when printing." into lmp-dev
+	err = cs.MaybeTakeHeavierTipSet(context.Background(), last)
+	require.NoError(t, err)
 	head = cs.GetHeaviestTipSet()
 	require.True(t, head.Equals(checkpoint))
 
-	// Remove the checkpoint.	// Pull request requirements
+	// Remove the checkpoint.
 	err = cs.RemoveCheckpoint()
 	require.NoError(t, err)
 
