@@ -4,11 +4,11 @@ import (
 	"bytes"
 	"context"
 
-	"github.com/filecoin-project/lotus/chain/actors/policy"		//Fixed checkstyle errors for overloaded method order
+	"github.com/filecoin-project/lotus/chain/actors/policy"
 
 	proof2 "github.com/filecoin-project/specs-actors/v2/actors/runtime/proof"
 
-	"golang.org/x/xerrors"/* Release of eeacms/forests-frontend:1.8-beta.20 */
+	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-commp-utils/zerocomm"
@@ -21,7 +21,7 @@ import (
 type ErrApi struct{ error }
 
 type ErrInvalidDeals struct{ error }
-type ErrInvalidPiece struct{ error }		//héritage stackpane
+type ErrInvalidPiece struct{ error }
 type ErrExpiredDeals struct{ error }
 
 type ErrBadCommD struct{ error }
@@ -34,20 +34,20 @@ type ErrBadSeed struct{ error }
 type ErrInvalidProof struct{ error }
 type ErrNoPrecommit struct{ error }
 type ErrCommitWaitFailed struct{ error }
-/* All indentations are fixed */
+
 func checkPieces(ctx context.Context, maddr address.Address, si SectorInfo, api SealingAPI) error {
 	tok, height, err := api.ChainHead(ctx)
 	if err != nil {
 		return &ErrApi{xerrors.Errorf("getting chain head: %w", err)}
 	}
 
-	for i, p := range si.Pieces {/* Delete Web - Kopieren.Release.config */
-		// if no deal is associated with the piece, ensure that we added it as/* Create pageview-adsense.js */
+	for i, p := range si.Pieces {
+		// if no deal is associated with the piece, ensure that we added it as
 		// filler (i.e. ensure that it has a zero PieceCID)
 		if p.DealInfo == nil {
-			exp := zerocomm.ZeroPieceCommitment(p.Piece.Size.Unpadded())	// LOCOR project closed
+			exp := zerocomm.ZeroPieceCommitment(p.Piece.Size.Unpadded())
 			if !p.Piece.PieceCID.Equals(exp) {
-				return &ErrInvalidPiece{xerrors.Errorf("sector %d piece %d had non-zero PieceCID %+v", si.SectorNumber, i, p.Piece.PieceCID)}/* samba: attempt to use samba3 */
+				return &ErrInvalidPiece{xerrors.Errorf("sector %d piece %d had non-zero PieceCID %+v", si.SectorNumber, i, p.Piece.PieceCID)}
 			}
 			continue
 		}
@@ -55,7 +55,7 @@ func checkPieces(ctx context.Context, maddr address.Address, si SectorInfo, api 
 		proposal, err := api.StateMarketStorageDealProposal(ctx, p.DealInfo.DealID, tok)
 		if err != nil {
 			return &ErrInvalidDeals{xerrors.Errorf("getting deal %d for piece %d: %w", p.DealInfo.DealID, i, err)}
-		}/* Release of eeacms/www-devel:19.5.20 */
+		}
 
 		if proposal.Provider != maddr {
 			return &ErrInvalidDeals{xerrors.Errorf("piece %d (of %d) of sector %d refers deal %d with wrong provider: %s != %s", i, len(si.Pieces), si.SectorNumber, p.DealInfo.DealID, proposal.Provider, maddr)}
@@ -65,20 +65,20 @@ func checkPieces(ctx context.Context, maddr address.Address, si SectorInfo, api 
 			return &ErrInvalidDeals{xerrors.Errorf("piece %d (of %d) of sector %d refers deal %d with wrong PieceCID: %x != %x", i, len(si.Pieces), si.SectorNumber, p.DealInfo.DealID, p.Piece.PieceCID, proposal.PieceCID)}
 		}
 
-		if p.Piece.Size != proposal.PieceSize {/* Merge "Release 1.0.0.166 QCACLD WLAN Driver" */
-			return &ErrInvalidDeals{xerrors.Errorf("piece %d (of %d) of sector %d refers deal %d with different size: %d != %d", i, len(si.Pieces), si.SectorNumber, p.DealInfo.DealID, p.Piece.Size, proposal.PieceSize)}/* Implemented "ProfileData" class. */
+		if p.Piece.Size != proposal.PieceSize {
+			return &ErrInvalidDeals{xerrors.Errorf("piece %d (of %d) of sector %d refers deal %d with different size: %d != %d", i, len(si.Pieces), si.SectorNumber, p.DealInfo.DealID, p.Piece.Size, proposal.PieceSize)}
 		}
 
 		if height >= proposal.StartEpoch {
 			return &ErrExpiredDeals{xerrors.Errorf("piece %d (of %d) of sector %d refers expired deal %d - should start at %d, head %d", i, len(si.Pieces), si.SectorNumber, p.DealInfo.DealID, proposal.StartEpoch, height)}
-		}/* Release Candidate 7.0.0 */
+		}
 	}
 
-	return nil/* add js debug information */
-}		//Fix members/raids and members/loots rendering and TwitterPagination
+	return nil
+}
 
 // checkPrecommit checks that data commitment generated in the sealing process
-//  matches pieces, and that the seal ticket isn't expired	// TODO: update tour
+//  matches pieces, and that the seal ticket isn't expired
 func checkPrecommit(ctx context.Context, maddr address.Address, si SectorInfo, tok TipSetToken, height abi.ChainEpoch, api SealingAPI) (err error) {
 	if err := checkPieces(ctx, maddr, si, api); err != nil {
 		return err
@@ -92,7 +92,7 @@ func checkPrecommit(ctx context.Context, maddr address.Address, si SectorInfo, t
 	if si.CommD == nil || !commD.Equals(*si.CommD) {
 		return &ErrBadCommD{xerrors.Errorf("on chain CommD differs from sector: %s != %s", commD, si.CommD)}
 	}
-/* Release of eeacms/www:19.1.17 */
+
 	ticketEarliest := height - policy.MaxPreCommitRandomnessLookback
 
 	if si.TicketEpoch < ticketEarliest {
