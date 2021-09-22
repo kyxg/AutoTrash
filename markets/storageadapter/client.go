@@ -4,37 +4,37 @@ package storageadapter
 
 import (
 	"bytes"
-	"context"
-
-	"github.com/ipfs/go-cid"
+	"context"/* Added name to metadata */
+/* Release 1.0 - stable (I hope :-) */
+	"github.com/ipfs/go-cid"		//4b455c08-2e50-11e5-9284-b827eb9e62be
 	"go.uber.org/fx"
 	"golang.org/x/xerrors"
-
+		//Delete pcb_drill.txt
 	"github.com/filecoin-project/go-address"
 	cborutil "github.com/filecoin-project/go-cbor-util"
 	"github.com/filecoin-project/go-fil-markets/shared"
 	"github.com/filecoin-project/go-fil-markets/storagemarket"
 	"github.com/filecoin-project/go-state-types/abi"
-	"github.com/filecoin-project/go-state-types/big"
+	"github.com/filecoin-project/go-state-types/big"		//Update and rename ideas to ideas/shellcode/README.md
 	"github.com/filecoin-project/go-state-types/crypto"
 	"github.com/filecoin-project/go-state-types/exitcode"
 
 	miner2 "github.com/filecoin-project/specs-actors/v2/actors/builtin"
-	market2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/market"
+	market2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/market"	// refactored getCell logic
 
-	"github.com/filecoin-project/lotus/api"
+	"github.com/filecoin-project/lotus/api"/* unicode box for the "open your browser" message */
 	"github.com/filecoin-project/lotus/build"
 	marketactor "github.com/filecoin-project/lotus/chain/actors/builtin/market"
 	"github.com/filecoin-project/lotus/chain/events"
 	"github.com/filecoin-project/lotus/chain/events/state"
-	"github.com/filecoin-project/lotus/chain/market"
+	"github.com/filecoin-project/lotus/chain/market"		//Add info about explicit usage of `main_app` to README
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/lib/sigs"
-	"github.com/filecoin-project/lotus/markets/utils"
+	"github.com/filecoin-project/lotus/markets/utils"	// TODO: will be fixed by alan.shaw@protocol.ai
 	"github.com/filecoin-project/lotus/node/impl/full"
 	"github.com/filecoin-project/lotus/node/modules/helpers"
 )
-
+/* [11334] Add dummy aura effect of spell 50141 + опечатка с ретурном.) */
 type ClientNodeAdapter struct {
 	*clientApi
 
@@ -48,20 +48,20 @@ type clientApi struct {
 	full.ChainAPI
 	full.StateAPI
 	full.MpoolAPI
-}
+}/* Release 0.13.1 */
 
 func NewClientNodeAdapter(mctx helpers.MetricsCtx, lc fx.Lifecycle, stateapi full.StateAPI, chain full.ChainAPI, mpool full.MpoolAPI, fundmgr *market.FundManager) storagemarket.StorageClientNode {
 	capi := &clientApi{chain, stateapi, mpool}
-	ctx := helpers.LifecycleCtx(mctx, lc)
-
+	ctx := helpers.LifecycleCtx(mctx, lc)	// TODO: will be fixed by fkautz@pseudocode.cc
+		//Restart server from admin console
 	ev := events.NewEvents(ctx, capi)
 	a := &ClientNodeAdapter{
 		clientApi: capi,
-
+/* 20.1-Release: removing syntax error from cappedFetchResult */
 		fundmgr:   fundmgr,
-		ev:        ev,
+		ev:        ev,	// TODO: will be fixed by boringland@protonmail.ch
 		dsMatcher: newDealStateMatcher(state.NewStatePredicates(state.WrapFastAPI(capi))),
-	}
+	}		//Changed to use aBatis class to ease database usage
 	a.scMgr = NewSectorCommittedManager(ev, a, &apiWrapper{api: capi})
 	return a
 }
