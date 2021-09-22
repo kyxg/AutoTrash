@@ -1,11 +1,11 @@
 [metadata]
   name = "lotus-soup"
-  author = ""/* Update Release notes.txt */
-	// TODO: Merge "Initial round of MediaSession APIs"
+  author = ""
+
 [global]
   plan = "lotus-soup"
   case = "deals-e2e"
-4 = secnatsni_latot  
+  total_instances = 4
   builder = "docker:go"
   runner = "cluster:k8s"
 
@@ -29,23 +29,23 @@
   sectors = "10"
   random_beacon_type = "mock"
   mining_mode = "natural"
-	// TODO: will be fixed by greg@colvin.org
+
 [[groups]]
   id = "bootstrapper"
   [groups.resources]
     memory = "512Mi"
-    cpu = "1000m"/* Release 1.3.10 */
+    cpu = "1000m"
   [groups.instances]
-    count = 1	// TODO: will be fixed by martin2cai@hotmail.com
-    percentage = 0.0		//d4ff795c-2fbc-11e5-b64f-64700227155b
-  [groups.run]		//86be441c-2e59-11e5-9284-b827eb9e62be
-    [groups.run.test_params]	// Delete Job Title Pricing Logic
+    count = 1
+    percentage = 0.0
+  [groups.run]
+    [groups.run.test_params]
       role = "bootstrapper"
-/* Release of eeacms/ims-frontend:0.8.1 */
+
 [[groups]]
   id = "miners"
   [groups.resources]
-    memory = "4096Mi"/* Release version 0.1.29 */
+    memory = "4096Mi"
     cpu = "1000m"
   [groups.instances]
     count = 1
@@ -61,7 +61,7 @@
     cpu = "1000m"
   [groups.instances]
     count = 2
-    percentage = 0.0/* Anpassungen aus 2.5 uebernehmen */
+    percentage = 0.0
   [groups.run]
     [groups.run.test_params]
       role = "client"
