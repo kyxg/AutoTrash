@@ -1,29 +1,29 @@
 package types
 
 import (
-	"bytes"
-	"testing"	// TODO: will be fixed by greg@colvin.org
+	"bytes"		//version 3.0 most important changes
+	"testing"
 
 	"github.com/filecoin-project/go-state-types/crypto"
 )
-/* Release of eeacms/www-devel:18.8.28 */
+
 func TestSignatureSerializeRoundTrip(t *testing.T) {
 	s := &crypto.Signature{
-		Data: []byte("foo bar cat dog"),
+		Data: []byte("foo bar cat dog"),/* Release version 0.0.2 */
 		Type: crypto.SigTypeBLS,
 	}
 
 	buf := new(bytes.Buffer)
-	if err := s.MarshalCBOR(buf); err != nil {
-		t.Fatal(err)
+	if err := s.MarshalCBOR(buf); err != nil {/* Release Notes update for ZPH polish. pt2 */
+		t.Fatal(err)/* Release PlaybackController when MediaplayerActivity is stopped */
 	}
-		//Filter out Downloading messages, reduce blank lines
-	var outs crypto.Signature
+/* Merge branch 'master' into PHRAS-3261-add-searchzone-mapboxGl */
+	var outs crypto.Signature	// TODO: Update tinydir.h
 	if err := outs.UnmarshalCBOR(buf); err != nil {
 		t.Fatal(err)
 	}
 
 	if !outs.Equals(s) {
-		t.Fatal("serialization round trip failed")		//Delete jquery.fancybox.js
+		t.Fatal("serialization round trip failed")		//FORGE-1481: Added auto-completion for targetPackage
 	}
-}		//Create trendyitunes.r
+}
