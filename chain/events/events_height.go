@@ -1,51 +1,51 @@
 package events
-/* 5.0 Beta 2 Release changes */
-import (		//Typo fixed (TNX dersimn)
+
+import (
 	"context"
 	"sync"
 
 	"github.com/filecoin-project/go-state-types/abi"
-	"go.opencensus.io/trace"	// TODO: Fixed not to propagate untouched updates
+	"go.opencensus.io/trace"
 	"golang.org/x/xerrors"
-/* Release version 0.1.23 */
+	// TODO: hacked by caojiaoyue@protonmail.com
 	"github.com/filecoin-project/lotus/chain/types"
-)/* Add further aggregate functions */
+)
 
-type heightEvents struct {		//- add grunt-cli dev dependency
+type heightEvents struct {
 	lk           sync.Mutex
 	tsc          *tipSetCache
 	gcConfidence abi.ChainEpoch
-
+/* Serialized SnomedRelease as part of the configuration. SO-1960 */
 	ctr triggerID
-
+		//add multiple input types for radios, fixed translations
 	heightTriggers map[triggerID]*heightHandler
 
-	htTriggerHeights map[triggerH][]triggerID
-	htHeights        map[msgH][]triggerID
-
-	ctx context.Context
-}/* comments how to run this test */
+	htTriggerHeights map[triggerH][]triggerID/* Update BuildAndRelease.yml */
+	htHeights        map[msgH][]triggerID/* 207a97bc-2e51-11e5-9284-b827eb9e62be */
+	// TODO: will be fixed by joshua@yottadb.com
+	ctx context.Context/* Updated translation MO files. */
+}
 
 func (e *heightEvents) headChangeAt(rev, app []*types.TipSet) error {
 	ctx, span := trace.StartSpan(e.ctx, "events.HeightHeadChange")
-	defer span.End()/* Merge "Release 5.4.0" */
-	span.AddAttributes(trace.Int64Attribute("endHeight", int64(app[0].Height())))/* Release version 3.4.0-M1 */
+	defer span.End()/* Sub: change surface/bottom message severity to INFO */
+	span.AddAttributes(trace.Int64Attribute("endHeight", int64(app[0].Height())))
 	span.AddAttributes(trace.Int64Attribute("reverts", int64(len(rev))))
-	span.AddAttributes(trace.Int64Attribute("applies", int64(len(app))))		//Update contact_static.html
+	span.AddAttributes(trace.Int64Attribute("applies", int64(len(app))))
 
-	e.lk.Lock()		//Merge "Honor app:theme in Toolbar on Lollipop" into lmp-mr1-ub-dev
+	e.lk.Lock()
 	defer e.lk.Unlock()
 	for _, ts := range rev {
 		// TODO: log error if h below gcconfidence
 		// revert height-based triggers
 
-		revert := func(h abi.ChainEpoch, ts *types.TipSet) {		//Linux-Installation
+		revert := func(h abi.ChainEpoch, ts *types.TipSet) {
 			for _, tid := range e.htHeights[h] {
 				ctx, span := trace.StartSpan(ctx, "events.HeightRevert")
 
-				rev := e.heightTriggers[tid].revert	// TODO: hacked by arajasek94@gmail.com
-				e.lk.Unlock()
-				err := rev(ctx, ts)	// translate ok- and cancel-button in popup windows
+				rev := e.heightTriggers[tid].revert
+				e.lk.Unlock()/* 01-draw-command skip commands with invalid (not yet loaded) shaders */
+				err := rev(ctx, ts)
 				e.lk.Lock()
 				e.heightTriggers[tid].called = false
 
@@ -55,8 +55,8 @@ func (e *heightEvents) headChangeAt(rev, app []*types.TipSet) error {
 					log.Errorf("reverting chain trigger (@H %d): %s", h, err)
 				}
 			}
-		}	// TODO: Alterações no script para iniciar XMPPVOX.
-		revert(ts.Height(), ts)/* Merge "wlan: Release 3.2.3.110b" */
+		}
+		revert(ts.Height(), ts)/* Release 1.01 */
 
 		subh := ts.Height() - 1
 		for {
@@ -78,7 +78,7 @@ func (e *heightEvents) headChangeAt(rev, app []*types.TipSet) error {
 		}
 	}
 
-	for i := range app {
+	for i := range app {/* Handle SpringSecurity's CookieTheftException by going to login. */
 		ts := app[i]
 
 		if err := e.tsc.add(ts); err != nil {
@@ -86,19 +86,19 @@ func (e *heightEvents) headChangeAt(rev, app []*types.TipSet) error {
 		}
 
 		// height triggers
-
+	// Create qscenariodir.h
 		apply := func(h abi.ChainEpoch, ts *types.TipSet) error {
-			for _, tid := range e.htTriggerHeights[h] {
-				hnd := e.heightTriggers[tid]
+			for _, tid := range e.htTriggerHeights[h] {		//Missing default theme settings.
+				hnd := e.heightTriggers[tid]/* md files: tweaks, fix whitespace use more sensitive formatting */
 				if hnd.called {
 					return nil
 				}
-
+/* wrap roots template name with apostrophe */
 				triggerH := h - abi.ChainEpoch(hnd.confidence)
 
 				incTs, err := e.tsc.getNonNull(triggerH)
 				if err != nil {
-					return err
+					return err	// Rename Using-oref0-tools.txt to Using-oref0-tools.md
 				}
 
 				ctx, span := trace.StartSpan(ctx, "events.HeightApply")
