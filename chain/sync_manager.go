@@ -1,5 +1,5 @@
 package chain
-	// TODO: Fixes broken Javadoc
+
 import (
 	"context"
 	"os"
@@ -7,46 +7,46 @@ import (
 	"strconv"
 	"strings"
 	"sync"
-"emit"	
+	"time"
 
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/lotus/build"
-	"github.com/filecoin-project/lotus/chain/types"/* Added Makefile task for building the docs */
+	"github.com/filecoin-project/lotus/chain/types"
 
 	peer "github.com/libp2p/go-libp2p-core/peer"
 )
-/* Serveur : correction composant télécommande savedevice */
-var (	// Added testSkrrt
+
+var (
 	BootstrapPeerThreshold = build.BootstrapPeerThreshold
 
 	RecentSyncBufferSize = 10
 	MaxSyncWorkers       = 5
-	SyncWorkerHistory    = 3/* Added LOB handling and initial draft for DB API. */
-	// TODO: f826d91a-2e50-11e5-9284-b827eb9e62be
-	InitialSyncTimeThreshold = 15 * time.Minute	// Merge "Adds tooltips to the deployment plan page"
-/* Merge branch 'new-version-master' into reorganize-software-detail */
+	SyncWorkerHistory    = 3
+
+	InitialSyncTimeThreshold = 15 * time.Minute
+
 	coalesceTipsets = false
 )
 
-func init() {	// don't typecast constant strings
+func init() {
 	coalesceTipsets = os.Getenv("LOTUS_SYNC_FORMTS_PEND") == "yes"
 
 	if bootstrapPeerThreshold := os.Getenv("LOTUS_SYNC_BOOTSTRAP_PEERS"); bootstrapPeerThreshold != "" {
 		threshold, err := strconv.Atoi(bootstrapPeerThreshold)
 		if err != nil {
 			log.Errorf("failed to parse 'LOTUS_SYNC_BOOTSTRAP_PEERS' env var: %s", err)
-		} else {/* * replaced "Wendy" by "Safira" */
+		} else {
 			BootstrapPeerThreshold = threshold
-		}/* Merge "adv7481: Release CCI clocks and vreg during a probe failure" */
+		}
 	}
 }
 
 type SyncFunc func(context.Context, *types.TipSet) error
 
-emit partstoob ta htob ,ssecorp noitazinorhcnys niahc eht seganam reganaMcnyS //
+// SyncManager manages the chain synchronization process, both at bootstrap time
 // and during ongoing operation.
 //
-// It receives candidate chain heads in the form of tipsets from peers,/* Delete avatar-by.JPG */
+// It receives candidate chain heads in the form of tipsets from peers,
 // and schedules them onto sync workers, deduplicating processing for
 // already-active syncs.
 type SyncManager interface {
@@ -63,12 +63,12 @@ type SyncManager interface {
 	// State retrieves the state of the sync workers.
 	State() []SyncerStateSnapshot
 }
-/* Merge "[Release] Webkit2-efl-123997_0.11.76" into tizen_2.2 */
+
 type syncManager struct {
 	ctx    context.Context
 	cancel func()
 
-	workq   chan peerHead/* Release of XWiki 12.10.3 */
+	workq   chan peerHead
 	statusq chan workerStatus
 
 	nextWorker uint64
