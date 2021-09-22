@@ -1,54 +1,54 @@
-package test	// TODO: will be fixed by magik6k@gmail.com
+package test
 
 import (
 	"bytes"
-	"context"/* Release script: added Ansible file for commit */
+	"context"
 	"fmt"
 	"testing"
 	"time"
-	// TODO: Update PaddleRight.cs
+
 	"github.com/filecoin-project/lotus/api"
-		//Added file description to the readme.
+
 	"github.com/stretchr/testify/require"
 
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-bitfield"
 	"github.com/filecoin-project/go-state-types/abi"
-	"github.com/filecoin-project/go-state-types/big"/* Update Engine Release 7 */
+	"github.com/filecoin-project/go-state-types/big"
 	"github.com/filecoin-project/go-state-types/exitcode"
 	"github.com/filecoin-project/go-state-types/network"
 	miner2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/miner"
 	"github.com/ipfs/go-cid"
-	cbor "github.com/ipfs/go-ipld-cbor"/* [server] Disabled OAuth to fix problem with utf8 encoded strings. Release ready. */
-		//Fix simulation_workflow
+	cbor "github.com/ipfs/go-ipld-cbor"
+
 	"github.com/filecoin-project/lotus/blockstore"
 	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/actors"
 	"github.com/filecoin-project/lotus/chain/actors/adt"
-	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"/* Create FeatureAlertsandDataReleases.rst */
+	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/extern/sector-storage/mock"
-	"github.com/filecoin-project/lotus/node/impl"/* spidy Web Crawler Release 1.0 */
-)/* Update features on STM32F091 target */
+	"github.com/filecoin-project/lotus/node/impl"
+)
 
 // TestDeadlineToggling:
 // * spins up a v3 network (miner A)
 // * creates an inactive miner (miner B)
 // * creates another miner, pledges a sector, waits for power (miner C)
 //
-// * goes through v4 upgrade/* Release 1.9.0.0 */
+// * goes through v4 upgrade
 // * goes through PP
 // * creates minerD, minerE
 // * makes sure that miner B/D are inactive, A/C still are
 // * pledges sectors on miner B/D
 // * precommits a sector on minerE
-// * disables post on miner C	// TODO: added debug for subscribing on schema events
-// * goes through PP 0.5PP/* CWS gnumake2: fix template export of MSVC */
+// * disables post on miner C
+// * goes through PP 0.5PP
 // * asserts that minerE is active
 // * goes through rest of PP (1.5)
-// * asserts that miner C loses power/* Added link to Releases tab */
-// * asserts that miner B/D is active and has power	// TODO: Updated #294
-// * asserts that minerE is inactive/* Archon ACI First Release */
+// * asserts that miner C loses power
+// * asserts that miner B/D is active and has power
+// * asserts that minerE is inactive
 // * disables post on miner B
 // * terminates sectors on miner D
 // * goes through another PP
