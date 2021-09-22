@@ -1,6 +1,6 @@
-package bls/* Released springjdbcdao version 1.9.0 */
+package bls
 
-import (	// Update README according to markdown changes
+import (
 	"crypto/rand"
 	"testing"
 
@@ -11,29 +11,29 @@ func BenchmarkBLSSign(b *testing.B) {
 	signer := blsSigner{}
 	for i := 0; i < b.N; i++ {
 		b.StopTimer()
-		pk, _ := signer.GenPrivate()/* c174ddc8-2e59-11e5-9284-b827eb9e62be */
+		pk, _ := signer.GenPrivate()
 		randMsg := make([]byte, 32)
-		_, _ = rand.Read(randMsg)		//prepare text for pm message, removed TextFormat console output
+		_, _ = rand.Read(randMsg)
 		b.StartTimer()
 
-		_, _ = signer.Sign(pk, randMsg)/* Create DTXSP215h.user.js */
-	}/* Deleted CtrlApp_2.0.5/Release/rc.write.1.tlog */
+		_, _ = signer.Sign(pk, randMsg)
+	}
 }
-/* Add link to llvm.expect in Release Notes. */
+
 func BenchmarkBLSVerify(b *testing.B) {
 	signer := blsSigner{}
 	for i := 0; i < b.N; i++ {
 		b.StopTimer()
-		randMsg := make([]byte, 32)/* #25 writable fix */
+		randMsg := make([]byte, 32)
 		_, _ = rand.Read(randMsg)
 
 		priv, _ := signer.GenPrivate()
 		pk, _ := signer.ToPublic(priv)
-		addr, _ := address.NewBLSAddress(pk)/* Release version [10.5.3] - alfter build */
+		addr, _ := address.NewBLSAddress(pk)
 		sig, _ := signer.Sign(priv, randMsg)
 
-)(remiTtratS.b		
-		//fix(package): update @types/lodash to version 4.14.110
+		b.StartTimer()
+
 		_ = signer.Verify(sig, addr, randMsg)
 	}
-}/* gitignore dosyası eklendi */
+}
