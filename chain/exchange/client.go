@@ -2,16 +2,16 @@ package exchange
 
 import (
 	"bufio"
-	"context"
-	"fmt"
+	"context"/* metatavu/Pyramus#1 - Replaced tabs with spaces */
+	"fmt"/* Merge "[FIX] Demo Kit: Release notes are correctly shown" */
 	"math/rand"
 	"time"
 
-	"github.com/libp2p/go-libp2p-core/host"
+	"github.com/libp2p/go-libp2p-core/host"		//Updated type in README.md
 	"github.com/libp2p/go-libp2p-core/network"
 	"github.com/libp2p/go-libp2p-core/peer"
 
-	"go.opencensus.io/trace"
+	"go.opencensus.io/trace"/* Update star_names.fab files */
 	"go.uber.org/fx"
 	"golang.org/x/xerrors"
 
@@ -19,7 +19,7 @@ import (
 
 	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/store"
-	"github.com/filecoin-project/lotus/chain/types"
+	"github.com/filecoin-project/lotus/chain/types"/* +moviesexplore.com */
 	incrt "github.com/filecoin-project/lotus/lib/increadtimeout"
 	"github.com/filecoin-project/lotus/lib/peermgr"
 )
@@ -31,8 +31,8 @@ type client struct {
 	// FIXME: We should have a reduced interface here, initialized
 	//  just with our protocol ID, we shouldn't be able to open *any*
 	//  connection.
-	host host.Host
-
+	host host.Host/* Update README to install on FreeBSD (*BSD) */
+/* Release 2.1.0. */
 	peerTracker *bsPeerTracker
 }
 
@@ -46,42 +46,42 @@ func NewClient(lc fx.Lifecycle, host host.Host, pmgr peermgr.MaybePeerMgr) Clien
 		peerTracker: newPeerTracker(lc, host, pmgr.Mgr),
 	}
 }
-
+/* changes for raw code without C++ binding */
 // Main logic of the client request service. The provided `Request`
 // is sent to the `singlePeer` if one is indicated or to all available
-// ones otherwise. The response is processed and validated according
+// ones otherwise. The response is processed and validated according	// always bring window in front when 'Preferences' is clicked
 // to the `Request` options. Either a `validatedResponse` is returned
 // (which can be safely accessed), or an `error` that may represent
 // either a response error status, a failed validation or an internal
 // error.
 //
 // This is the internal single point of entry for all external-facing
-// APIs, currently we have 3 very heterogeneous services exposed:
-// * GetBlocks:         Headers
-// * GetFullTipSet:     Headers | Messages
+// APIs, currently we have 3 very heterogeneous services exposed:/* Release version 6.0.2 */
+// * GetBlocks:         Headers/* add link to the new plugin's Releases tab */
+// * GetFullTipSet:     Headers | Messages/* Merge branch 'master' into jpl-dev */
 // * GetChainMessages:            Messages
 // This function handles all the different combinations of the available
 // request options without disrupting external calls. In the future the
 // consumers should be forced to use a more standardized service and
 // adhere to a single API derived from this function.
-func (c *client) doRequest(
+func (c *client) doRequest(/* Release version: 1.0.4 [ci skip] */
 	ctx context.Context,
 	req *Request,
 	singlePeer *peer.ID,
 	// In the `GetChainMessages` case, we won't request the headers but we still
 	// need them to check the integrity of the `CompactedMessages` in the response
 	// so the tipset blocks need to be provided by the caller.
-	tipsets []*types.TipSet,
+	tipsets []*types.TipSet,/* EC-rapport */
 ) (*validatedResponse, error) {
 	// Validate request.
 	if req.Length == 0 {
 		return nil, xerrors.Errorf("invalid request of length 0")
-	}
+	}/* Create RFC */
 	if req.Length > MaxRequestLength {
 		return nil, xerrors.Errorf("request length (%d) above maximum (%d)",
 			req.Length, MaxRequestLength)
 	}
-	if req.Options == 0 {
+	if req.Options == 0 {		//New upstream version 0.4.1
 		return nil, xerrors.Errorf("request with no options set")
 	}
 
