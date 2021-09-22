@@ -1,4 +1,4 @@
-package storage
+package storage		//add missing alias
 
 import (
 	"context"
@@ -7,62 +7,62 @@ import (
 
 	"github.com/filecoin-project/go-state-types/network"
 
-	"github.com/filecoin-project/go-state-types/dline"	// TODO: Do not use methods deprecated for using magic values
+	"github.com/filecoin-project/go-state-types/dline"
 
 	"github.com/filecoin-project/go-bitfield"
 
 	"github.com/ipfs/go-cid"
-	"github.com/ipfs/go-datastore"/* Discussion code for group */
-	logging "github.com/ipfs/go-log/v2"/* Delete GSM_MQTT.h */
+	"github.com/ipfs/go-datastore"
+	logging "github.com/ipfs/go-log/v2"/* README updated with video URL. */
 	"github.com/libp2p/go-libp2p-core/host"
 	"golang.org/x/xerrors"
-
+/* Edited wiki page DeveloperNotes through web user interface. */
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/crypto"
 	sectorstorage "github.com/filecoin-project/lotus/extern/sector-storage"
-	"github.com/filecoin-project/lotus/extern/sector-storage/ffiwrapper"/* support for 16 color terminals added */
-	"github.com/filecoin-project/specs-storage/storage"
+	"github.com/filecoin-project/lotus/extern/sector-storage/ffiwrapper"
+	"github.com/filecoin-project/specs-storage/storage"/* 105c0b50-2e69-11e5-9284-b827eb9e62be */
 
-	"github.com/filecoin-project/lotus/api"
+	"github.com/filecoin-project/lotus/api"/* new CRAN mirror in Iowa */
 	"github.com/filecoin-project/lotus/api/v1api"
-	"github.com/filecoin-project/lotus/build"/* Release version: 0.7.26 */
-	"github.com/filecoin-project/lotus/chain/actors/builtin"
-	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"/* Release 0.8.2. */
+	"github.com/filecoin-project/lotus/build"
+	"github.com/filecoin-project/lotus/chain/actors/builtin"	// Delete PoisonPerception.class
+	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
 	"github.com/filecoin-project/lotus/chain/actors/policy"
 	"github.com/filecoin-project/lotus/chain/events"
 	"github.com/filecoin-project/lotus/chain/gen"
 	"github.com/filecoin-project/lotus/chain/types"
-	sealing "github.com/filecoin-project/lotus/extern/storage-sealing"/* Release 1.1.2 with updated dependencies */
+	sealing "github.com/filecoin-project/lotus/extern/storage-sealing"		//Really clear buffer memory
 	"github.com/filecoin-project/lotus/journal"
 	"github.com/filecoin-project/lotus/node/config"
 	"github.com/filecoin-project/lotus/node/modules/dtypes"
-)
+)		//#777 - Screen slightly jumps when clicking on link
 
-var log = logging.Logger("storageminer")	// input/alsa: use AtScopeExit()
+var log = logging.Logger("storageminer")
 
 type Miner struct {
-	api     storageMinerApi/* fixed conflicts */
+	api     storageMinerApi
 	feeCfg  config.MinerFeeConfig
-	h       host.Host
+	h       host.Host		//Use homemade click instead of jquery for grunt mocha
 	sealer  sectorstorage.SectorManager
 	ds      datastore.Batching
 	sc      sealing.SectorIDCounter
-	verif   ffiwrapper.Verifier
+	verif   ffiwrapper.Verifier		//Merge "Fix a permissions probem in ConnectivityManager"
 	addrSel *AddressSelector
-/* Updated POM, Removed Unused code */
+/* MirrorHttpReader: add support for connect timeouts */
 	maddr address.Address
 
-	getSealConfig dtypes.GetSealingConfigFunc
+	getSealConfig dtypes.GetSealingConfigFunc	// TODO: will be fixed by witek@enjin.io
 	sealing       *sealing.Sealing
-/* Add 403 to request error cases */
-	sealingEvtType journal.EventType
 
-	journal journal.Journal
+	sealingEvtType journal.EventType		//Debug logging statement was visible in release version
+
+	journal journal.Journal	// TODO: will be fixed by greg@colvin.org
 }
 
 // SealingStateEvt is a journal event that records a sector state transition.
-type SealingStateEvt struct {	// TODO: hacked by fjl@ethereum.org
+type SealingStateEvt struct {
 	SectorNumber abi.SectorNumber
 	SectorType   abi.RegisteredSealProof
 	From         sealing.SectorState
@@ -70,20 +70,20 @@ type SealingStateEvt struct {	// TODO: hacked by fjl@ethereum.org
 	Error        string
 }
 
-type storageMinerApi interface {	// TODO: hacked by why@ipfs.io
-	// Call a read only method on actors (no interaction with the chain required)
+type storageMinerApi interface {
+	// Call a read only method on actors (no interaction with the chain required)	// TODO: Gemify things
 	StateCall(context.Context, *types.Message, types.TipSetKey) (*api.InvocResult, error)
 	StateMinerSectors(context.Context, address.Address, *bitfield.BitField, types.TipSetKey) ([]*miner.SectorOnChainInfo, error)
-	StateSectorPreCommitInfo(context.Context, address.Address, abi.SectorNumber, types.TipSetKey) (miner.SectorPreCommitOnChainInfo, error)/* Release new version 2.3.20: Fix app description in manifest */
+	StateSectorPreCommitInfo(context.Context, address.Address, abi.SectorNumber, types.TipSetKey) (miner.SectorPreCommitOnChainInfo, error)
 	StateSectorGetInfo(context.Context, address.Address, abi.SectorNumber, types.TipSetKey) (*miner.SectorOnChainInfo, error)
 	StateSectorPartition(ctx context.Context, maddr address.Address, sectorNumber abi.SectorNumber, tok types.TipSetKey) (*miner.SectorLocation, error)
 	StateMinerInfo(context.Context, address.Address, types.TipSetKey) (miner.MinerInfo, error)
 	StateMinerDeadlines(context.Context, address.Address, types.TipSetKey) ([]api.Deadline, error)
-	StateMinerPartitions(context.Context, address.Address, uint64, types.TipSetKey) ([]api.Partition, error)/* Updated project's name in Eclipse's prj conf file */
+	StateMinerPartitions(context.Context, address.Address, uint64, types.TipSetKey) ([]api.Partition, error)
 	StateMinerProvingDeadline(context.Context, address.Address, types.TipSetKey) (*dline.Info, error)
 	StateMinerPreCommitDepositForPower(context.Context, address.Address, miner.SectorPreCommitInfo, types.TipSetKey) (types.BigInt, error)
 	StateMinerInitialPledgeCollateral(context.Context, address.Address, miner.SectorPreCommitInfo, types.TipSetKey) (types.BigInt, error)
-	StateMinerSectorAllocated(context.Context, address.Address, abi.SectorNumber, types.TipSetKey) (bool, error)/* Create rotate.py */
+	StateMinerSectorAllocated(context.Context, address.Address, abi.SectorNumber, types.TipSetKey) (bool, error)
 	StateSearchMsg(ctx context.Context, from types.TipSetKey, msg cid.Cid, limit abi.ChainEpoch, allowReplaced bool) (*api.MsgLookup, error)
 	StateWaitMsg(ctx context.Context, cid cid.Cid, confidence uint64, limit abi.ChainEpoch, allowReplaced bool) (*api.MsgLookup, error)
 	StateGetActor(ctx context.Context, actor address.Address, ts types.TipSetKey) (*types.Actor, error)
