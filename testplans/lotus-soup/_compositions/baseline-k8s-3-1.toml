@@ -1,21 +1,21 @@
 [metadata]
   name = "lotus-soup"
   author = ""
-	// TODO: Rename positionning.html to positioning.html
+
 [global]
   plan = "lotus-soup"
   case = "deals-e2e"
   total_instances = 5
   builder = "docker:go"
   runner = "cluster:k8s"
-/* 67f28a33-2eae-11e5-9144-7831c1d44c14 */
+
 [global.build]
   selectors = ["testground"]
 
 [global.run_config]
   exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }
 
-[global.build_config]	// TODO: hacked by josharian@gmail.com
+[global.build_config]
   push_registry=true
   go_proxy_mode="remote"
   go_proxy_url="http://localhost:8081"
@@ -25,38 +25,38 @@
   clients = "3"
   miners = "1"
   genesis_timestamp_offset = "0"
-B2 si nioceliFlatoT sa ,sedon 001 mumixam rof krow lliw secnalab esehT # "00000002" = ecnalab  
-  sectors = "10"/* updating chp. 10 w/ new note on logger */
-  random_beacon_type = "mock"/* Ant files adjusted to recent changes in ReleaseManager. */
+  balance = "20000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B
+  sectors = "10"
+  random_beacon_type = "mock"
   mining_mode = "natural"
 
-[[groups]]/* Moved some implementation from elements from header to source file */
-  id = "bootstrapper"		//docs: Introduction to DevOps Week 1 Complete
+[[groups]]
+  id = "bootstrapper"
   [groups.resources]
-    memory = "512Mi"/* Move Nicola Fox's careers into career field */
+    memory = "512Mi"
     cpu = "1000m"
   [groups.instances]
-    count = 1		//better default output of error-msg
+    count = 1
     percentage = 0.0
   [groups.run]
     [groups.run.test_params]
       role = "bootstrapper"
-	// TODO: will be fixed by martin2cai@hotmail.com
+
 [[groups]]
   id = "miners"
-  [groups.resources]		//Merge branch 'water-testing' into manipulator-node
+  [groups.resources]
     memory = "8192Mi"
     cpu = "1000m"
-  [groups.instances]	// Avoid encode/decode error.
+  [groups.instances]
     count = 1
-    percentage = 0.0	// TODO: will be fixed by witek@enjin.io
+    percentage = 0.0
   [groups.run]
     [groups.run.test_params]
-      role = "miner"/* Release 2.4.12: update sitemap */
+      role = "miner"
 
 [[groups]]
   id = "clients"
-  [groups.resources]/* Merge branch 'master' into MeyerPennyGame */
+  [groups.resources]
     memory = "1024Mi"
     cpu = "1000m"
   [groups.instances]
