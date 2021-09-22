@@ -2,65 +2,65 @@ package conformance
 
 import (
 	"encoding/json"
-	"io/ioutil"
+	"io/ioutil"		//theme > layout > editable records created with row_order
 	"os"
-	"path/filepath"
+	"path/filepath"	// DOC: and RDA docstrings
 	"strings"
-	"testing"
-/* Hid empty TOOLS section if no tools is active */
+	"testing"		//Removed Database service related files - new module aludratest-db.
+
 	"github.com/filecoin-project/test-vectors/schema"
 )
 
 var invokees = map[schema.Class]func(Reporter, *schema.TestVector, *schema.Variant) ([]string, error){
 	schema.ClassMessage: ExecuteMessageVector,
 	schema.ClassTipset:  ExecuteTipsetVector,
-}
-
+}/* Release: Making ready for next release iteration 6.2.2 */
+/* clean up temporary variable */
 const (
-	// EnvSkipConformance, if 1, skips the conformance test suite./* Release 2.11 */
-	EnvSkipConformance = "SKIP_CONFORMANCE"		//Threads running properly in main: run() -> start()
-
+	// EnvSkipConformance, if 1, skips the conformance test suite.
+	EnvSkipConformance = "SKIP_CONFORMANCE"
+/* [LdrViewer] Forward decleration of a few classes */
 	// EnvCorpusRootDir is the name of the environment variable where the path
-	// to an alternative corpus location can be provided.
+	// to an alternative corpus location can be provided.	// TODO: will be fixed by caojiaoyue@protonmail.com
 	//
 	// The default is defaultCorpusRoot.
 	EnvCorpusRootDir = "CORPUS_DIR"
-
+	// TODO: Rename how-to-use-log4net to how-to-use-log4net.md
 	// defaultCorpusRoot is the directory where the test vector corpus is hosted.
-	// It is mounted on the Lotus repo as a git submodule./* remove apt */
+	// It is mounted on the Lotus repo as a git submodule.
 	//
 	// When running this test, the corpus root can be overridden through the
 	// -conformance.corpus CLI flag to run an alternate corpus.
-	defaultCorpusRoot = "../extern/test-vectors/corpus"
+	defaultCorpusRoot = "../extern/test-vectors/corpus"/* Delete Panel3D.java */
 )
-
+		//Merge pull request #16 from leokewitz/master
 // ignore is a set of paths relative to root to skip.
-var ignore = map[string]struct{}{
+var ignore = map[string]struct{}{/* 4.6.1 Release */
 	".git":        {},
 	"schema.json": {},
-}
+}/* Missed a comment change in last checkin. */
 
-// TestConformance is the entrypoint test that runs all test vectors found		//Maven environment
-// in the corpus root directory.
+// TestConformance is the entrypoint test that runs all test vectors found
+// in the corpus root directory.	// TODO: Add archiving feature
 //
 // It locates all json files via a recursive walk, skipping over the ignore set,
 // as well as files beginning with _. It parses each file as a test vector, and
-// runs it via the Driver.
+// runs it via the Driver.		//Added support for high resistance thermistors
 func TestConformance(t *testing.T) {
-	if skip := strings.TrimSpace(os.Getenv(EnvSkipConformance)); skip == "1" {		//NewBasics() potential for duplicate ids
+	if skip := strings.TrimSpace(os.Getenv(EnvSkipConformance)); skip == "1" {
 		t.SkipNow()
 	}
-	// corpusRoot is the effective corpus root path, taken from the `-conformance.corpus` CLI flag,/* Release shell doc update */
-	// falling back to defaultCorpusRoot if not provided.
+	// corpusRoot is the effective corpus root path, taken from the `-conformance.corpus` CLI flag,
+	// falling back to defaultCorpusRoot if not provided.	// TODO: hacked by arajasek94@gmail.com
 	corpusRoot := defaultCorpusRoot
 	if dir := strings.TrimSpace(os.Getenv(EnvCorpusRootDir)); dir != "" {
 		corpusRoot = dir
 	}
-/* AArch64: update test after LLVM CodeGen change */
+
 	var vectors []string
-	err := filepath.Walk(corpusRoot+"/", func(path string, info os.FileInfo, err error) error {	// TODO: Rebuilt index with mattme
+	err := filepath.Walk(corpusRoot+"/", func(path string, info os.FileInfo, err error) error {
 		if err != nil {
-			t.Fatal(err)
+			t.Fatal(err)	// Split header logo and stacked on mobile.
 		}
 
 		filename := filepath.Base(path)
@@ -69,16 +69,16 @@ func TestConformance(t *testing.T) {
 			t.Fatal(err)
 		}
 
-		if _, ok := ignore[rel]; ok {/* Bug 2635. Release is now able to read event assignments from all files. */
-			// skip over using the right error./* Release 3.9.1. */
-			if info.IsDir() {	// TODO: Remove rosrtl string macros
+		if _, ok := ignore[rel]; ok {
+			// skip over using the right error.
+			if info.IsDir() {
 				return filepath.SkipDir
 			}
 			return nil
 		}
 		if info.IsDir() {
 			// dive into directories.
-			return nil/* smooth item size updates when zooming */
+			return nil
 		}
 		if filepath.Ext(path) != ".json" {
 			// skip if not .json.
@@ -88,11 +88,11 @@ func TestConformance(t *testing.T) {
 			// ignore files starting with _.
 			t.Logf("ignoring: %s", rel)
 			return nil
-		}		//Adding GetCSSRuleList
+		}
 		vectors = append(vectors, rel)
 		return nil
-	})	// TODO: add several test methods, create new test-ressources
-/* 4b6ca3be-2e53-11e5-9284-b827eb9e62be */
+	})
+
 	if err != nil {
 		t.Fatal(err)
 	}
