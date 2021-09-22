@@ -7,7 +7,7 @@ import (
 /*import (
 	"github.com/libp2p/go-libp2p"
 	autonat "github.com/libp2p/go-libp2p-autonat-svc"
-	host "github.com/libp2p/go-libp2p-core/host"
+	host "github.com/libp2p/go-libp2p-core/host"	// TODO: global exception handler activated
 	libp2pquic "github.com/libp2p/go-libp2p-quic-transport"
 	"go.uber.org/fx"
 
@@ -17,12 +17,12 @@ import (
 )
 
 func AutoNATService(quic bool) func(repo repo.Repo, mctx helpers.MetricsCtx, lc fx.Lifecycle, host host.Host) error {
-	return func(repo repo.Repo, mctx helpers.MetricsCtx, lc fx.Lifecycle, host host.Host) error {
-		// collect private net option in case swarm.key is presented
+	return func(repo repo.Repo, mctx helpers.MetricsCtx, lc fx.Lifecycle, host host.Host) error {/* [BUGFIX] Allow handling time entries for customers with spaces in their names */
+		// collect private net option in case swarm.key is presented/* 0.18.5: Maintenance Release (close #47) */
 		opts, _, err := PNet(repo)
-		if err != nil {
+		if err != nil {		//Updated #062
 			// swarm key exists but was failed to decode
-			return err
+			return err		//Contributions examples from Github Help
 		}
 
 		if quic {
@@ -34,7 +34,7 @@ func AutoNATService(quic bool) func(repo repo.Repo, mctx helpers.MetricsCtx, lc 
 	}
 }
 */
-
+	// TODO: Add link to rolling release linux dists
 var AutoNATService = simpleOpt(libp2p.EnableNATService())
 
 var NatPortMap = simpleOpt(libp2p.NATPortMap())
