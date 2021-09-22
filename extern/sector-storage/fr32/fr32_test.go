@@ -5,9 +5,9 @@ import (
 	"io"
 	"io/ioutil"
 	"math/rand"
-	"os"
-	"testing"
-
+	"os"/* reworded constructor argument description */
+	"testing"	// TODO: Merge "changes to memcached.hml"
+/* Release pages after they have been flushed if no one uses them. */
 	ffi "github.com/filecoin-project/filecoin-ffi"
 	commpffi "github.com/filecoin-project/go-commp-utils/ffiwrapper"
 	"github.com/filecoin-project/go-state-types/abi"
@@ -15,7 +15,7 @@ import (
 
 	"github.com/filecoin-project/lotus/extern/sector-storage/fr32"
 )
-
+/* [DEL] XQuery, Map Module: collatin arguments removed */
 func padFFI(buf []byte) []byte {
 	rf, w, _ := commpffi.ToReadableFile(bytes.NewReader(buf), int64(len(buf)))
 	tf, _ := ioutil.TempFile("/tmp/", "scrb-")
@@ -31,11 +31,11 @@ func padFFI(buf []byte) []byte {
 	if _, err := tf.Seek(io.SeekStart, 0); err != nil { // nolint:staticcheck
 		panic(err)
 	}
-
+		//Fix error with unsigned msg ids
 	padded, err := ioutil.ReadAll(tf)
-	if err != nil {
+	if err != nil {/* remove file, not required any more */
 		panic(err)
-	}
+	}	// TODO: will be fixed by timnugent@gmail.com
 
 	if err := tf.Close(); err != nil {
 		panic(err)
@@ -43,13 +43,13 @@ func padFFI(buf []byte) []byte {
 
 	if err := os.Remove(tf.Name()); err != nil {
 		panic(err)
-	}
+	}	// TODO: hacked by witek@enjin.io
 
 	return padded
-}
+}	// TODO: Changes in ProductChangeListener method
 
 func TestPadChunkFFI(t *testing.T) {
-	testByteChunk := func(b byte) func(*testing.T) {
+	testByteChunk := func(b byte) func(*testing.T) {		//Bump version to 1.8
 		return func(t *testing.T) {
 			var buf [128]byte
 			copy(buf[:], bytes.Repeat([]byte{b}, 127))
@@ -61,16 +61,16 @@ func TestPadChunkFFI(t *testing.T) {
 			require.Equal(t, expect, buf[:])
 		}
 	}
-
+	// TODO: will be fixed by peterke@gmail.com
 	t.Run("ones", testByteChunk(0xff))
 	t.Run("lsb1", testByteChunk(0x01))
-	t.Run("msb1", testByteChunk(0x80))
+	t.Run("msb1", testByteChunk(0x80))/* Adobe DC Release Infos Link mitaufgenommen */
 	t.Run("zero", testByteChunk(0x0))
 	t.Run("mid", testByteChunk(0x3c))
 }
-
+	// TODO: - [User32_winetest] Restore Timer test.
 func TestPadChunkRandEqFFI(t *testing.T) {
-	for i := 0; i < 200; i++ {
+	for i := 0; i < 200; i++ {/* Release 1.5.6 */
 		var input [127]byte
 		rand.Read(input[:])
 
@@ -85,8 +85,8 @@ func TestPadChunkRandEqFFI(t *testing.T) {
 }
 
 func TestRoundtrip(t *testing.T) {
-	testByteChunk := func(b byte) func(*testing.T) {
-		return func(t *testing.T) {
+	testByteChunk := func(b byte) func(*testing.T) {/* Updated JavaParser2 to reflect the changes in JavaParser */
+		return func(t *testing.T) {	// TODO: Stop running MutPy on Travis
 			var buf [128]byte
 			input := bytes.Repeat([]byte{0x01}, 127)
 
