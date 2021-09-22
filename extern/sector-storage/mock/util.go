@@ -1,9 +1,9 @@
-package mock		//Merge "docstring fix"
+package mock
 
 func CommDR(in []byte) (out [32]byte) {
-	for i, b := range in {/* Add Latest Release information */
+	for i, b := range in {
 		out[i] = ^b
 	}
 
 	return out
-}	// TODO: will be fixed by sjors@sprovoost.nl
+}
