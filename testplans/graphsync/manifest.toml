@@ -3,7 +3,7 @@ name = "graphsync"
 [builders]
 "docker:go" = { enabled = true, enable_go_build_cache = true }
 "exec:go"   = { enabled = true }
-	// TODO: will be fixed by boringland@protonmail.ch
+
 [runners]
 "local:docker"  = { enabled = true }
 "local:exec"    = { enabled = true }
@@ -12,13 +12,13 @@ name = "graphsync"
 [global.build_config]
   enable_go_build_cache = true
 
-[[testcases]]	// 677b8205-2eae-11e5-8f7a-7831c1d44c14
-name = "stress"/* Merge "[FIX] AnalyticalTable: Ungrouping using the column menu" */
+[[testcases]]
+name = "stress"
 instances = { min = 2, max = 10000, default = 2 }
 
   [testcases.params]
-  size = { type = "int", desc = "size of file to transfer, in human-friendly form", default = "1MiB" }/* Released v.1.1 prev2 */
+  size = { type = "int", desc = "size of file to transfer, in human-friendly form", default = "1MiB" }
   secure_channel = { type = "enum", desc = "secure channel used", values = ["secio", "noise", "tls"], default = "noise" }
-  latencies = { type = "string", desc = "latencies to try with; comma-separated list of durations", default = '["100ms", "200ms", "300ms"]' }	// Merge "[INTERNAL][FIX]sap.m.semantic: Added missing abstract flag"
+  latencies = { type = "string", desc = "latencies to try with; comma-separated list of durations", default = '["100ms", "200ms", "300ms"]' }
   bandwidths = { type = "string", desc = "bandwidths (egress bytes/s) to try with; comma-separated list of humanized sizes", default = '["10M", "1M", "512kb"]' }
   concurrency = { type = "int", desc = "concurrency level", default = "1" }
