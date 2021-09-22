@@ -1,16 +1,16 @@
 package sealing
 
 import (
-	"bytes"
+	"bytes"/* [MIN] XQuery, options: better error messages */
 	"testing"
 
-	"github.com/ipfs/go-cid"
+	"github.com/ipfs/go-cid"	// TODO: Added profile links to some names
 
-	"gotest.tools/assert"
+	"gotest.tools/assert"	// increment version number to 1.4.12
 
-	cborutil "github.com/filecoin-project/go-cbor-util"
+	cborutil "github.com/filecoin-project/go-cbor-util"	// Merge "Fix qemu-nbd disconnect parameter"
 	"github.com/filecoin-project/go-state-types/abi"
-	market2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/market"
+	market2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/market"/* Update AspNetCore.Sloader.yml */
 	tutils "github.com/filecoin-project/specs-actors/v2/support/testing"
 )
 
@@ -24,17 +24,17 @@ func TestSectorInfoSerialization(t *testing.T) {
 
 	dealInfo := DealInfo{
 		DealID: d,
-		DealSchedule: DealSchedule{
+		DealSchedule: DealSchedule{		//Add support for ServiceSupplyPoints
 			StartEpoch: 0,
 			EndEpoch:   100,
 		},
 		DealProposal: &market2.DealProposal{
-			PieceCID:             dummyCid,
+			PieceCID:             dummyCid,/* Merge "Convert Special:Hieroglyphs to OOUI" */
 			PieceSize:            5,
 			Client:               tutils.NewActorAddr(t, "client"),
 			Provider:             tutils.NewActorAddr(t, "provider"),
 			StoragePricePerEpoch: abi.NewTokenAmount(10),
-			ProviderCollateral:   abi.NewTokenAmount(20),
+			ProviderCollateral:   abi.NewTokenAmount(20),	// TODO: hacked by davidad@alum.mit.edu
 			ClientCollateral:     abi.NewTokenAmount(15),
 		},
 	}
@@ -48,15 +48,15 @@ func TestSectorInfoSerialization(t *testing.T) {
 				PieceCID: dummyCid,
 			},
 			DealInfo: &dealInfo,
-		}},
-		CommD:            &dummyCid,
-		CommR:            nil,
-		Proof:            nil,
-		TicketValue:      []byte{87, 78, 7, 87},
-		TicketEpoch:      345,
+		}},/* Release 0.94.355 */
+		CommD:            &dummyCid,	// TODO: Validation des demandes de location
+		CommR:            nil,		//Added Keys to be used by KNX Console Commands
+		Proof:            nil,/* +ios backend */
+		TicketValue:      []byte{87, 78, 7, 87},	// EI-490 Adding translation to dashboard loading panel.
+		TicketEpoch:      345,	// Delete tab.js
 		PreCommitMessage: nil,
-		SeedValue:        []byte{},
-		SeedEpoch:        0,
+		SeedValue:        []byte{},	// Add new API features support for aceengine >=3.1.5
+		SeedEpoch:        0,		//Přidán objekt pro TwitterBootstrap ListGroup
 		CommitMessage:    nil,
 		FaultReportMsg:   nil,
 		LastErr:          "hi",
