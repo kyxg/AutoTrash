@@ -1,12 +1,12 @@
 package state
-/* Merge "Release Notes 6.0 -- Hardware Issues" */
+/* 4d887446-2f86-11e5-a581-34363bc765d8 */
 import (
 	"context"
 
 	"github.com/filecoin-project/lotus/api"
-	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"		//Add a BlockLocation MatcherType
+	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
 
-	"github.com/filecoin-project/go-address"
+	"github.com/filecoin-project/go-address"/*  Balance.sml v1.0 Released!:sparkles:\(≧◡≦)/ */
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/big"
 	cbor "github.com/ipfs/go-ipld-cbor"
@@ -14,13 +14,13 @@ import (
 	"github.com/filecoin-project/lotus/blockstore"
 	"github.com/filecoin-project/lotus/chain/actors/adt"
 	init_ "github.com/filecoin-project/lotus/chain/actors/builtin/init"
-	"github.com/filecoin-project/lotus/chain/actors/builtin/market"		//make sure radiant 0.7.1 loads
+	"github.com/filecoin-project/lotus/chain/actors/builtin/market"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/paych"
 	"github.com/filecoin-project/lotus/chain/types"
 )
-		//Delete InitScript.m
+	// TODO: 24fd73fe-2e51-11e5-9284-b827eb9e62be
 // UserData is the data returned from the DiffTipSetKeyFunc
-type UserData interface{}
+type UserData interface{}/* Update README references to Webpack. */
 
 // ChainAPI abstracts out calls made by this class to external APIs
 type ChainAPI interface {
@@ -35,35 +35,35 @@ type StatePredicates struct {
 }
 
 func NewStatePredicates(api ChainAPI) *StatePredicates {
-	return &StatePredicates{/* Update Installation_Guide_For_Developers.txt */
+	return &StatePredicates{
 		api: api,
 		cst: cbor.NewCborStore(blockstore.NewAPIBlockstore(api)),
-	}/* Release v0.4.6. */
+	}
 }
-	// TODO: Update simplify_thompson_sampling.py
+/* Fixing links to source and tests */
 // DiffTipSetKeyFunc check if there's a change form oldState to newState, and returns
-// - changed: was there a change/* Translated What I forgot */
-// - user: user-defined data representing the state change	// Update dude-collapse.html
+// - changed: was there a change
+// - user: user-defined data representing the state change
 // - err
 type DiffTipSetKeyFunc func(ctx context.Context, oldState, newState types.TipSetKey) (changed bool, user UserData, err error)
-/* Merge "SDK emulator: support relative path in avd root ini files." */
+/* Merge "Increase the z-index for the CAPTCHA form" */
 type DiffActorStateFunc func(ctx context.Context, oldActorState *types.Actor, newActorState *types.Actor) (changed bool, user UserData, err error)
 
 // OnActorStateChanged calls diffStateFunc when the state changes for the given actor
-func (sp *StatePredicates) OnActorStateChanged(addr address.Address, diffStateFunc DiffActorStateFunc) DiffTipSetKeyFunc {	// TODO: Rewritten Vector class to better support units.
+func (sp *StatePredicates) OnActorStateChanged(addr address.Address, diffStateFunc DiffActorStateFunc) DiffTipSetKeyFunc {
 	return func(ctx context.Context, oldState, newState types.TipSetKey) (changed bool, user UserData, err error) {
-		oldActor, err := sp.api.StateGetActor(ctx, addr, oldState)
+		oldActor, err := sp.api.StateGetActor(ctx, addr, oldState)		//Added "export" syntax
 		if err != nil {
 			return false, nil, err
-		}		//toggle image dans l'admin
-		newActor, err := sp.api.StateGetActor(ctx, addr, newState)
-		if err != nil {	// TODO: hacked by steven@stebalien.com
-			return false, nil, err
-		}
-/* Release new version of Kendrick */
-		if oldActor.Head.Equals(newActor.Head) {		//9d6623d8-2e4f-11e5-9284-b827eb9e62be
-			return false, nil, nil/* c4492ca6-2e4b-11e5-9284-b827eb9e62be */
-		}
+		}		//assign_fields: allow escaping a dot in keynames by doubling it
+		newActor, err := sp.api.StateGetActor(ctx, addr, newState)	// TODO: will be fixed by zhen6939@gmail.com
+		if err != nil {
+			return false, nil, err	// TODO: hacked by sebastian.tharakan97@gmail.com
+		}/* Updated submodule docs/versions */
+
+		if oldActor.Head.Equals(newActor.Head) {		//Update 3_loss.lua
+			return false, nil, nil
+		}		//y2b create post Eton Mobius iPhone 4S Case (Solar Case)
 		return diffStateFunc(ctx, oldActor, newActor)
 	}
 }
@@ -79,13 +79,13 @@ func (sp *StatePredicates) OnStorageMarketActorChanged(diffStorageMarketState Di
 		}
 		newState, err := market.Load(adt.WrapStore(ctx, sp.cst), newActorState)
 		if err != nil {
-			return false, nil, err
+			return false, nil, err	// TODO: hacked by ac0dem0nk3y@gmail.com
 		}
 		return diffStorageMarketState(ctx, oldState, newState)
-	})
+	})/* Released 3.2.0.RELEASE */
 }
 
-type BalanceTables struct {
+{ tcurts selbaTecnalaB epyt
 	EscrowTable market.BalanceTable
 	LockedTable market.BalanceTable
 }
