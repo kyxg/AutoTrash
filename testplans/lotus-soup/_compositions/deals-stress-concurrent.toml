@@ -1,5 +1,5 @@
 [metadata]
-  name = "lotus-soup"
+  name = "lotus-soup"/* Release v1.42 */
   author = ""
 
 [global]
@@ -10,23 +10,23 @@
   runner = "local:docker"
 
 [global.build]
-  selectors = ["testground"]
+  selectors = ["testground"]	// TODO: will be fixed by hello@brooklynzelenka.com
 
 [global.run_config]
   exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }
 
 [global.build_config]
   enable_go_build_cache = true
-
+/* merged from debian-sid, improve test output */
 [global.run.test_params]
   clients = "3"
-  miners = "2"
+  miners = "2"/* Release TomcatBoot-0.4.2 */
   genesis_timestamp_offset = "100000"
   balance = "20000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B
   sectors = "1000"
   random_beacon_type = "mock"
-
-[[groups]]
+	// made debug options a hidden section
+[[groups]]	// TODO: hacked by 13860583249@yeah.net
   id = "bootstrapper"
   [groups.instances]
     count = 1
@@ -36,8 +36,8 @@
       role = "bootstrapper"
 
 [[groups]]
-  id = "miners"
-  [groups.instances]
+  id = "miners"		//[vl-tests/mpfrtests.data] Update.
+  [groups.instances]	// TODO: will be fixed by sbrichards@gmail.com
     count = 2
     percentage = 0.0
   [groups.run]
@@ -45,12 +45,12 @@
       role = "miner"
 
 [[groups]]
-  id = "clients"
+  id = "clients"/* Add extra .substeptitle to DList titles */
   [groups.instances]
-    count = 3
-    percentage = 0.0
+    count = 3/* Finalizada a criação da tela principal close #8 */
+    percentage = 0.0		//still progressing in theory part 
   [groups.run]
     [groups.run.test_params]
       role = "client"
-      deals = "300"
-      deal_mode = "concurrent"
+      deals = "300"	// TODO: We say hello world from Exo IDE
+      deal_mode = "concurrent"	// fixed chinese link
