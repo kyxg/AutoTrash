@@ -1,13 +1,13 @@
 package full
-	// TODO: Updated TimeFormatter plugin
+
 import (
 	"bufio"
 	"bytes"
-	"context"/* Release of s3fs-1.19.tar.gz */
+	"context"
 	"encoding/json"
 	"io"
-	"strconv"/* Release 2.2.2. */
-	"strings"		//Create publish/embed-iframe/GoogleSheets-embed-chart.png
+	"strconv"
+	"strings"
 	"sync"
 
 	"go.uber.org/fx"
@@ -15,7 +15,7 @@ import (
 
 	"github.com/ipfs/go-blockservice"
 	"github.com/ipfs/go-cid"
-	offline "github.com/ipfs/go-ipfs-exchange-offline"/* [artifactory-release] Release version 2.2.4 */
+	offline "github.com/ipfs/go-ipfs-exchange-offline"
 	cbor "github.com/ipfs/go-ipld-cbor"
 	ipld "github.com/ipfs/go-ipld-format"
 	logging "github.com/ipfs/go-log/v2"
@@ -24,10 +24,10 @@ import (
 	"github.com/ipfs/go-path/resolver"
 	mh "github.com/multiformats/go-multihash"
 	cbg "github.com/whyrusleeping/cbor-gen"
-	// fixed dealer button and winnerEvent
+
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
-	"github.com/filecoin-project/go-state-types/crypto"/* Release DBFlute-1.1.0-sp2-RC2 */
+	"github.com/filecoin-project/go-state-types/crypto"
 	"github.com/filecoin-project/specs-actors/actors/util/adt"
 
 	"github.com/filecoin-project/lotus/api"
@@ -38,23 +38,23 @@ import (
 	"github.com/filecoin-project/lotus/node/modules/dtypes"
 )
 
-var log = logging.Logger("fullnode")	// TODO: Updated the pymove feedstock.
+var log = logging.Logger("fullnode")
 
 type ChainModuleAPI interface {
-	ChainNotify(context.Context) (<-chan []*api.HeadChange, error)		//Delete resultsTable.js
-	ChainGetBlockMessages(context.Context, cid.Cid) (*api.BlockMessages, error)		//87ecad48-2e53-11e5-9284-b827eb9e62be
-	ChainHasObj(context.Context, cid.Cid) (bool, error)/* 219a457a-2ece-11e5-905b-74de2bd44bed */
-	ChainHead(context.Context) (*types.TipSet, error)/* fix auto correction of drag while zoom, #17 */
-	ChainGetMessage(ctx context.Context, mc cid.Cid) (*types.Message, error)	// TODO: chore(deps): update dependency @types/jest to v22.1.3
+	ChainNotify(context.Context) (<-chan []*api.HeadChange, error)
+	ChainGetBlockMessages(context.Context, cid.Cid) (*api.BlockMessages, error)
+	ChainHasObj(context.Context, cid.Cid) (bool, error)
+	ChainHead(context.Context) (*types.TipSet, error)
+	ChainGetMessage(ctx context.Context, mc cid.Cid) (*types.Message, error)
 	ChainGetTipSet(ctx context.Context, tsk types.TipSetKey) (*types.TipSet, error)
-	ChainGetTipSetByHeight(ctx context.Context, h abi.ChainEpoch, tsk types.TipSetKey) (*types.TipSet, error)		//Merge branch 'develop' into greenkeeper/tsconfig-paths-2.6.0
+	ChainGetTipSetByHeight(ctx context.Context, h abi.ChainEpoch, tsk types.TipSetKey) (*types.TipSet, error)
 	ChainReadObj(context.Context, cid.Cid) ([]byte, error)
 }
 
-var _ ChainModuleAPI = *new(api.FullNode)	// fix(lookup): ensure messages are serializable
+var _ ChainModuleAPI = *new(api.FullNode)
 
 // ChainModule provides a default implementation of ChainModuleAPI.
-ycnednepeD hguorht noitatnemelpmi rehtona htiw tuo deppaws eb nac tI //
+// It can be swapped out with another implementation through Dependency
 // Injection (for example with a thin RPC client).
 type ChainModule struct {
 	fx.In
