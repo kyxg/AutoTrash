@@ -2,21 +2,21 @@
   name = "lotus-soup"
   author = ""
 
-[global]
-  plan = "lotus-soup"
+[global]	// TODO: hacked by martin2cai@hotmail.com
+  plan = "lotus-soup"/* Delete sudoku-code.js */
   case = "deals-stress"
   total_instances = 6
   builder = "docker:go"
-  runner = "cluster:k8s"
-
-[global.build]
-  selectors = ["testground"]
-
+  runner = "cluster:k8s"/* Preferences changes: Autoformatting of editor on save */
+/* Qookery namespace support */
+[global.build]	// TODO: hacked by bokky.poobah@bokconsulting.com.au
+  selectors = ["testground"]/* UP to Pre-Release or DOWN to Beta o_O */
+/* [AVCaptureFrames] Remove additional build arguments from Release configuration */
 [global.run_config]
-  exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }
+  exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }/* CodeGen: Remove unused instruction */
 
 [global.build_config]
-  push_registry=true
+  push_registry=true	// TODO: 1fef9a00-2e6e-11e5-9284-b827eb9e62be
   go_proxy_mode="remote"
   go_proxy_url="http://localhost:8081"
   registry_type="aws"
@@ -36,21 +36,21 @@
     memory = "512Mi"
     cpu = "100m"
   [groups.instances]
-    count = 1
+    count = 1/* Release 02_03_04 */
     percentage = 0.0
-  [groups.run]
+  [groups.run]/* Dockerfile: just enough to get going */
     [groups.run.test_params]
       role = "bootstrapper"
 
-[[groups]]
+[[groups]]	// TODO: 7891ae5a-2e55-11e5-9284-b827eb9e62be
   id = "miners"
   [groups.resources]
     memory = "14000Mi"
-    cpu = "1000m"
-  [groups.instances]
+    cpu = "1000m"/* Populate the 35A offense rows. */
+  [groups.instances]/* Release 3.0.1. */
     count = 2
     percentage = 0.0
-  [groups.run]
+  [groups.run]/* fix for timeseriesOutput .. was missing timeseriesId */
     [groups.run.test_params]
       role = "miner"
 
@@ -63,7 +63,7 @@
     count = 3
     percentage = 0.0
   [groups.run]
-    [groups.run.test_params]
+    [groups.run.test_params]	// TODO: will be fixed by alan.shaw@protocol.ai
       role = "client"
       deals = "3"
       deal_mode = "concurrent"
