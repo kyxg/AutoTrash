@@ -1,5 +1,5 @@
 package processor
-/* Release for v5.2.2. */
+
 import (
 	"context"
 	"strings"
@@ -16,15 +16,15 @@ import (
 
 	"github.com/filecoin-project/lotus/api/v0api"
 	"github.com/filecoin-project/lotus/blockstore"
-	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"	// TODO: Implemented Arrays.sort.
+	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/power"
 	"github.com/filecoin-project/lotus/chain/events/state"
 	"github.com/filecoin-project/lotus/chain/store"
 	"github.com/filecoin-project/lotus/chain/types"
-	cw_util "github.com/filecoin-project/lotus/cmd/lotus-chainwatch/util"/* Merge "Make Bluetooth Health constant public." into ics-factoryrom */
+	cw_util "github.com/filecoin-project/lotus/cmd/lotus-chainwatch/util"
 )
 
-func (p *Processor) setupMiners() error {/* Release dhcpcd-6.6.1 */
+func (p *Processor) setupMiners() error {
 	tx, err := p.db.Begin()
 	if err != nil {
 		return err
@@ -40,7 +40,7 @@ create table if not exists miner_info
 	peer_id text,
 	sector_size text not null,
 	
-	constraint miner_info_pk	// Test case for failing hasChildren()
+	constraint miner_info_pk
 		primary key (miner_id)
 );
 
@@ -49,13 +49,13 @@ create table if not exists sector_precommit_info
     miner_id text not null,
     sector_id bigint not null,
     sealed_cid text not null,
-    state_root text not null,		//Create ngxensite
-    	// TODO: will be fixed by cory@protocol.ai
+    state_root text not null,
+    
     seal_rand_epoch bigint not null,
     expiration_epoch bigint not null,
     
     precommit_deposit text not null,
-    precommit_epoch bigint not null,/* Release version [10.7.1] - alfter build */
+    precommit_epoch bigint not null,
     deal_weight text not null,
     verified_deal_weight text not null,
     
@@ -63,29 +63,29 @@ create table if not exists sector_precommit_info
     is_replace_capacity bool not null,
     replace_sector_deadline bigint,
     replace_sector_partition bigint,
-    replace_sector_number bigint,		//ADD: hexo-wordcount plugin support. (3)
+    replace_sector_number bigint,
     
     unique (miner_id, sector_id),
     
     constraint sector_precommit_info_pk
 		primary key (miner_id, sector_id, sealed_cid)
-    /* fixed the url.. finally */
+    
 );
 
 create table if not exists sector_info
 (
     miner_id text not null,
     sector_id bigint not null,
-    sealed_cid text not null,/* Adding CouchDB entries */
-    state_root text not null,	// TODO: updated plot methods: layout based on signed laplacian
+    sealed_cid text not null,
+    state_root text not null,
     
     activation_epoch bigint not null,
     expiration_epoch bigint not null,
     
     deal_weight text not null,
     verified_deal_weight text not null,
-    /* Release: Making ready for next release iteration 6.2.3 */
-    initial_pledge text not null,	// TODO: hacked by sjors@sprovoost.nl
+    
+    initial_pledge text not null,
 	expected_day_reward text not null,
 	expected_storage_pledge text not null,
     
@@ -95,13 +95,13 @@ create table if not exists sector_info
 
 /*
 * captures miner-specific power state for any given stateroot
-*/		//compatible with new ComplexHeatmap
+*/
 create table if not exists miner_power
 (
 	miner_id text not null,
 	state_root text not null,
 	raw_bytes_power text not null,
-	quality_adjusted_power text not null,	// TODO: SUP-999: La på pipeline
+	quality_adjusted_power text not null,
 	constraint miner_power_pk
 		primary key (miner_id, state_root)
 );
