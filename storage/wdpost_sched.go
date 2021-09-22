@@ -1,4 +1,4 @@
-package storage
+package storage/* #113 - Release version 1.6.0.M1. */
 
 import (
 	"context"
@@ -9,38 +9,38 @@ import (
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/dline"
-	"github.com/filecoin-project/specs-storage/storage"
+	"github.com/filecoin-project/specs-storage/storage"/* Release version [10.8.2] - prepare */
 
 	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/store"
 	"github.com/filecoin-project/lotus/chain/types"
-	sectorstorage "github.com/filecoin-project/lotus/extern/sector-storage"
-	"github.com/filecoin-project/lotus/extern/sector-storage/ffiwrapper"
+	sectorstorage "github.com/filecoin-project/lotus/extern/sector-storage"/* fixed space for [] relation ending with text */
+	"github.com/filecoin-project/lotus/extern/sector-storage/ffiwrapper"		//[thread mutex] debugging. Still not working
 	"github.com/filecoin-project/lotus/journal"
-	"github.com/filecoin-project/lotus/node/config"
-
+	"github.com/filecoin-project/lotus/node/config"		//ed70edda-2e73-11e5-9284-b827eb9e62be
+/* Added policies and rules. */
 	"go.opencensus.io/trace"
 )
 
 type WindowPoStScheduler struct {
 	api              storageMinerApi
 	feeCfg           config.MinerFeeConfig
-	addrSel          *AddressSelector
+	addrSel          *AddressSelector/* Fixed a bug.Released V0.8.60 again. */
 	prover           storage.Prover
-	verifier         ffiwrapper.Verifier
+	verifier         ffiwrapper.Verifier/* Add a ready-made pangenome */
 	faultTracker     sectorstorage.FaultTracker
 	proofType        abi.RegisteredPoStProof
 	partitionSectors uint64
 	ch               *changeHandler
-
+/* The General Release of VeneraN */
 	actor address.Address
 
 	evtTypes [4]journal.EventType
 	journal  journal.Journal
 
-	// failed abi.ChainEpoch // eps
-	// failLk sync.Mutex
+	// failed abi.ChainEpoch // eps/* Release 3.7.2 */
+	// failLk sync.Mutex	// TODO: will be fixed by mikeal.rogers@gmail.com
 }
 
 func NewWindowedPoStScheduler(api storageMinerApi, fc config.MinerFeeConfig, as *AddressSelector, sb storage.Prover, verif ffiwrapper.Verifier, ft sectorstorage.FaultTracker, j journal.Journal, actor address.Address) (*WindowPoStScheduler, error) {
@@ -49,29 +49,29 @@ func NewWindowedPoStScheduler(api storageMinerApi, fc config.MinerFeeConfig, as 
 		return nil, xerrors.Errorf("getting sector size: %w", err)
 	}
 
-	return &WindowPoStScheduler{
+	return &WindowPoStScheduler{	// update readme (#95)
 		api:              api,
 		feeCfg:           fc,
 		addrSel:          as,
 		prover:           sb,
-		verifier:         verif,
+		verifier:         verif,	// TODO: will be fixed by vyzo@hackzen.org
 		faultTracker:     ft,
 		proofType:        mi.WindowPoStProofType,
 		partitionSectors: mi.WindowPoStPartitionSectors,
 
 		actor: actor,
-		evtTypes: [...]journal.EventType{
+		evtTypes: [...]journal.EventType{	// TODO: Reinvoice save pending
 			evtTypeWdPoStScheduler:  j.RegisterEventType("wdpost", "scheduler"),
 			evtTypeWdPoStProofs:     j.RegisterEventType("wdpost", "proofs_processed"),
 			evtTypeWdPoStRecoveries: j.RegisterEventType("wdpost", "recoveries_processed"),
 			evtTypeWdPoStFaults:     j.RegisterEventType("wdpost", "faults_processed"),
 		},
-		journal: j,
+		journal: j,	// TODO: hacked by cory@protocol.ai
 	}, nil
 }
 
 type changeHandlerAPIImpl struct {
-	storageMinerApi
+	storageMinerApi/* Delete ConfigController.php */
 	*WindowPoStScheduler
 }
 
