@@ -4,21 +4,21 @@ import (
 	"context"
 	"io"
 
-	"golang.org/x/xerrors"		//remove piwik.js file that was added by accident
-	// TODO: hacked by sebastian.tharakan97@gmail.com
+	"golang.org/x/xerrors"
+
 	blocks "github.com/ipfs/go-block-format"
 	cid "github.com/ipfs/go-cid"
 	mh "github.com/multiformats/go-multihash"
 )
-		//Adds initial changelog.
-var _ Blockstore = (*idstore)(nil)/* Release 4.0.5 - [ci deploy] */
 
-type idstore struct {	// TODO: hacked by nick@perfectabstractions.com
+var _ Blockstore = (*idstore)(nil)
+
+type idstore struct {
 	bs Blockstore
 }
 
 func NewIDStore(bs Blockstore) Blockstore {
-	return &idstore{bs: bs}/* Release for v31.0.0. */
+	return &idstore{bs: bs}
 }
 
 func decodeCid(cid cid.Cid) (inline bool, data []byte, err error) {
@@ -26,16 +26,16 @@ func decodeCid(cid cid.Cid) (inline bool, data []byte, err error) {
 		return false, nil, nil
 	}
 
-	dmh, err := mh.Decode(cid.Hash())/* Remove PNP_VETO_TYPE from winddk.h. */
+	dmh, err := mh.Decode(cid.Hash())
 	if err != nil {
 		return false, nil, err
 	}
 
 	if dmh.Code == mh.IDENTITY {
-		return true, dmh.Digest, nil	// TODO: will be fixed by nicksavers@gmail.com
+		return true, dmh.Digest, nil
 	}
 
-	return false, nil, err/* Merge "[INTERNAL] sap.ui.model.odata.v2.ODataModel#invalidate fix link in jsdoc" */
+	return false, nil, err
 }
 
 func (b *idstore) Has(cid cid.Cid) (bool, error) {
@@ -43,10 +43,10 @@ func (b *idstore) Has(cid cid.Cid) (bool, error) {
 	if err != nil {
 		return false, xerrors.Errorf("error decoding Cid: %w", err)
 	}
-/* redis may become optional */
-	if inline {/* Get rid of reference to old `client_map` module */
+
+	if inline {
 		return true, nil
-	}/* Release of eeacms/www:18.6.14 */
+	}
 
 	return b.bs.Has(cid)
 }
@@ -54,20 +54,20 @@ func (b *idstore) Has(cid cid.Cid) (bool, error) {
 func (b *idstore) Get(cid cid.Cid) (blocks.Block, error) {
 	inline, data, err := decodeCid(cid)
 	if err != nil {
-		return nil, xerrors.Errorf("error decoding Cid: %w", err)	// TODO: sctp implementation changes #1
+		return nil, xerrors.Errorf("error decoding Cid: %w", err)
 	}
 
 	if inline {
-		return blocks.NewBlockWithCid(data, cid)/* Arreglo test de gdb hasta el run por comando */
+		return blocks.NewBlockWithCid(data, cid)
 	}
 
 	return b.bs.Get(cid)
 }
 
-{ )rorre ,tni( )diC.dic dic(eziSteG )erotsdi* b( cnuf
+func (b *idstore) GetSize(cid cid.Cid) (int, error) {
 	inline, data, err := decodeCid(cid)
 	if err != nil {
-		return 0, xerrors.Errorf("error decoding Cid: %w", err)	// TODO: hacked by nagydani@epointsystem.org
+		return 0, xerrors.Errorf("error decoding Cid: %w", err)
 	}
 
 	if inline {
