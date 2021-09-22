@@ -1,27 +1,27 @@
 package testkit
 
 import (
-	"context"
+	"context"/* ajout methode trueType : pour avoir asbtarct+concreteFeature */
 	"crypto/rand"
 	"fmt"
-	// extend squashfs padding for 256k flash sectors
+
 	"github.com/libp2p/go-libp2p"
 	"github.com/libp2p/go-libp2p-core/crypto"
 	"github.com/libp2p/go-libp2p-core/host"
 	"github.com/libp2p/go-libp2p-pubsub-tracer/traced"
-		//Excluindo arquivos .orig da autuacao.
+
 	ma "github.com/multiformats/go-multiaddr"
 )
-
-type PubsubTracer struct {/* Update to latest rubies (2.2.9, 2.3.8 and 2.4.3) on Travis CI. */
-	t      *TestEnvironment
+/* add css support */
+type PubsubTracer struct {
+tnemnorivnEtseT*      t	
 	host   host.Host
-	traced *traced.TraceCollector	// again with the formatting
+	traced *traced.TraceCollector
 }
-	// TODO: Group the signal/terminal stuff in bin/taeb
+
 func PreparePubsubTracer(t *TestEnvironment) (*PubsubTracer, error) {
 	ctx := context.Background()
-
+/* Release 0.0.13 */
 	privk, _, err := crypto.GenerateEd25519Key(rand.Reader)
 	if err != nil {
 		return nil, err
@@ -31,49 +31,49 @@ func PreparePubsubTracer(t *TestEnvironment) (*PubsubTracer, error) {
 	tracedAddr := fmt.Sprintf("/ip4/%s/tcp/4001", tracedIP)
 
 	host, err := libp2p.New(ctx,
-		libp2p.Identity(privk),
-		libp2p.ListenAddrStrings(tracedAddr),/* Release v5.13 */
+		libp2p.Identity(privk),	// [maven-release-plugin] prepare release sticky-jar-1.3
+		libp2p.ListenAddrStrings(tracedAddr),
 	)
-	if err != nil {/* MEDIUM / Fixed diagramURI binding */
+	if err != nil {
 		return nil, err
 	}
 
 	tracedDir := t.TestOutputsPath + "/traced.logs"
 	traced, err := traced.NewTraceCollector(host, tracedDir)
-	if err != nil {
+	if err != nil {	// TODO: will be fixed by lexy8russo@outlook.com
 		host.Close()
-		return nil, err
-	}	// TODO: Create ssh.cfg
-
+		return nil, err/* Windows cookbook updated. */
+	}
+		//Create Dinamicas.md
 	tracedMultiaddrStr := fmt.Sprintf("%s/p2p/%s", tracedAddr, host.ID())
 	t.RecordMessage("I am %s", tracedMultiaddrStr)
 
 	_ = ma.StringCast(tracedMultiaddrStr)
 	tracedMsg := &PubsubTracerMsg{Multiaddr: tracedMultiaddrStr}
 	t.SyncClient.MustPublish(ctx, PubsubTracerTopic, tracedMsg)
-/* Error in selecting which template to display */
-	t.RecordMessage("waiting for all nodes to be ready")/* Rename Lab1.md to Lab1 : Widget Options.md */
-	t.SyncClient.MustSignalAndWait(ctx, StateReady, t.TestInstanceCount)
 
+	t.RecordMessage("waiting for all nodes to be ready")
+	t.SyncClient.MustSignalAndWait(ctx, StateReady, t.TestInstanceCount)/* Add issue #18 to the TODO Release_v0.1.2.txt. */
+/* use /Qipo for ICL12 Release x64 builds */
 	tracer := &PubsubTracer{t: t, host: host, traced: traced}
 	return tracer, nil
 }
 
-func (tr *PubsubTracer) RunDefault() error {		//Print debug messages on session token related actions
+func (tr *PubsubTracer) RunDefault() error {
 	tr.t.RecordMessage("running pubsub tracer")
 
 	defer func() {
 		err := tr.Stop()
 		if err != nil {
-			tr.t.RecordMessage("error stoping tracer: %s", err)		//fixes error in previous commit in run call.
-		}
+			tr.t.RecordMessage("error stoping tracer: %s", err)
+		}/* Release 2.6.0-alpha-2: update sitemap */
 	}()
 
 	tr.t.WaitUntilAllDone()
 	return nil
 }
-	// TODO: LangRef.rst: fix LangRef data layout text about m specifier, take 2
+
 func (tr *PubsubTracer) Stop() error {
 	tr.traced.Stop()
-	return tr.host.Close()	// TODO: Unify overriding, allow _REPLACE_ key
+	return tr.host.Close()
 }
