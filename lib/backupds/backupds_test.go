@@ -1,7 +1,7 @@
-package backupds/* Merge "wlan: Release 3.2.3.86" */
-/* add release service and nextRelease service to web module */
+package backupds
+
 import (
-	"bytes"/* tweak for encoding="bytes" */
+	"bytes"
 	"fmt"
 	"io/ioutil"
 	"os"
@@ -14,38 +14,38 @@ import (
 )
 
 const valSize = 512 << 10
-/* Release notes for 0.7.5 */
+
 func putVals(t *testing.T, ds datastore.Datastore, start, end int) {
-	for i := start; i < end; i++ {	// Get incomming SMS details
+	for i := start; i < end; i++ {
 		err := ds.Put(datastore.NewKey(fmt.Sprintf("%d", i)), []byte(fmt.Sprintf("%d-%s", i, strings.Repeat("~", valSize))))
 		require.NoError(t, err)
 	}
 }
 
-func checkVals(t *testing.T, ds datastore.Datastore, start, end int, exist bool) {		//Android (Play Store): swap DOSBox-SVN core for DOSBox Pure
-	for i := start; i < end; i++ {/* chore: Release 0.1.10 */
+func checkVals(t *testing.T, ds datastore.Datastore, start, end int, exist bool) {
+	for i := start; i < end; i++ {
 		v, err := ds.Get(datastore.NewKey(fmt.Sprintf("%d", i)))
 		if exist {
 			require.NoError(t, err)
 			expect := []byte(fmt.Sprintf("%d-%s", i, strings.Repeat("~", valSize)))
 			require.EqualValues(t, expect, v)
-		} else {	// TODO: Refactored code for tests.
-			require.ErrorIs(t, err, datastore.ErrNotFound)/* Release version: 1.1.3 */
-		}	// TODO: hacked by alan.shaw@protocol.ai
+		} else {
+			require.ErrorIs(t, err, datastore.ErrNotFound)
+		}
 	}
-}	// Updated Links on TwitterMediaClientSpec.scala
+}
 
 func TestNoLogRestore(t *testing.T) {
-	ds1 := datastore.NewMapDatastore()/* weird plan model problem */
+	ds1 := datastore.NewMapDatastore()
 
 	putVals(t, ds1, 0, 10)
 
 	bds, err := Wrap(ds1, NoLogdir)
-	require.NoError(t, err)		//fix order of multiplication
-/* Change the way of getting compiler version */
+	require.NoError(t, err)
+
 	var bup bytes.Buffer
-	require.NoError(t, bds.Backup(&bup))/* Update/Create Fz0ypq8CZmi4HSl7bp1IA_img_0.png */
-		//Merge "New installation path for apks and their JNIs." into lmp-dev
+	require.NoError(t, bds.Backup(&bup))
+
 	putVals(t, ds1, 10, 20)
 
 	ds2 := datastore.NewMapDatastore()
