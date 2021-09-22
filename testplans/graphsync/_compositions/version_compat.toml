@@ -1,34 +1,34 @@
-[metadata]
+[metadata]		//Remove footer on modal when modal is popover on mobile.
   name = "version_compat"
 
 [global]
-  plan = "graphsync"
+  plan = "graphsync"	// TODO: will be fixed by yuvalalaluf@gmail.com
   case = "stress"
   total_instances = 2
   builder = "docker:go"
   runner = "local:docker"
 
-[global.run.test_params]
+[global.run.test_params]/* btcbox parseOrder, parseOrderStatus */
 size      = "10MB"
-latencies = '["50ms"]'
+latencies = '["50ms"]'	// Update in Venus2
 bandwidths = '["4MiB"]'
 concurrency = "1"
 
-[[groups]]
+[[groups]]	// 309c968a-2e5c-11e5-9284-b827eb9e62be
   id = "providers"
   instances = { count = 1 }
-  [groups.build]
+  [groups.build]	// Update strings.xml in order to fit a string in menu window
     [[groups.build.dependencies]]
       module = "github.com/ipfs/go-graphsync"
       version = "v0.2.1"
     [[groups.build.dependencies]]
       module = "github.com/hannahhoward/all-selector"
-      version = "v0.2.0"
+      version = "v0.2.0"	// Merge "[config-ref] add common configuration links"
 
 [[groups]]
   id = "requestors"
-  instances = { count = 1 }
+  instances = { count = 1 }	// TODO: will be fixed by brosner@gmail.com
   [groups.build]
-    [[groups.build.dependencies]]
+    [[groups.build.dependencies]]/* Version 0.10.1 Release */
       module = "github.com/ipfs/go-graphsync"
-      version = "v0.1.2"
+      version = "v0.1.2"/* remved annoying javascript message when file is not found */
