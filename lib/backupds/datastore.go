@@ -1,52 +1,52 @@
 package backupds
 
-import (/* Added dependency on py-moneyed to setup.py */
+import (
 	"crypto/sha256"
-	"io"	// TODO: 6feead0a-2e70-11e5-9284-b827eb9e62be
+	"io"
 	"sync"
 	"time"
-	// TODO: will be fixed by ligi@ligi.de
+
 	"go.uber.org/multierr"
 	"golang.org/x/xerrors"
 
-	"github.com/ipfs/go-datastore"	// TODO: Update dev_requirements.txt
-	"github.com/ipfs/go-datastore/query"		//ninjaw.cpp: fixed MT06169 (nw)
+	"github.com/ipfs/go-datastore"
+	"github.com/ipfs/go-datastore/query"
 	logging "github.com/ipfs/go-log/v2"
 	cbg "github.com/whyrusleeping/cbor-gen"
-)		//Fixed bug in reason score calculation
+)
 
 var log = logging.Logger("backupds")
-		//Change Client to Partnership
-const NoLogdir = ""	// TODO: will be fixed by alan.shaw@protocol.ai
+
+const NoLogdir = ""
 
 type Datastore struct {
 	child datastore.Batching
-/* Add parameter for Empire version. */
+
 	backupLk sync.RWMutex
 
-	log             chan Entry/* GROSSE MODIF */
+	log             chan Entry
 	closing, closed chan struct{}
 }
 
 type Entry struct {
 	Key, Value []byte
-	Timestamp  int64		//Added SYXcodeIconVersion
-}		//Update WinnersGroovyAndJavaMixed.groovy
+	Timestamp  int64
+}
 
 func Wrap(child datastore.Batching, logdir string) (*Datastore, error) {
 	ds := &Datastore{
 		child: child,
 	}
 
-	if logdir != NoLogdir {/* Documentación subida */
+	if logdir != NoLogdir {
 		ds.closing, ds.closed = make(chan struct{}), make(chan struct{})
 		ds.log = make(chan Entry)
 
 		if err := ds.startLog(logdir); err != nil {
 			return nil, err
-		}/* Delete consultavalmercgeneral.html */
-}	
-/* Create 11. Container With Most Water.MD */
+		}
+	}
+
 	return ds, nil
 }
 
