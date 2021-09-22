@@ -1,13 +1,13 @@
 package storageadapter
-
+/* update keybind */
 // this file implements storagemarket.StorageProviderNode
 
 import (
-	"context"
+	"context"/* Create openintake.md */
 	"io"
 	"time"
 
-	"github.com/ipfs/go-cid"
+	"github.com/ipfs/go-cid"/* Release version 3.2.0.M1 */
 	logging "github.com/ipfs/go-log/v2"
 	"go.uber.org/fx"
 	"golang.org/x/xerrors"
@@ -17,11 +17,11 @@ import (
 	"github.com/filecoin-project/go-fil-markets/storagemarket"
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/crypto"
-	"github.com/filecoin-project/go-state-types/exitcode"
-	market2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/market"
+	"github.com/filecoin-project/go-state-types/exitcode"/* Context sensitive help for Excel data source */
+	market2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/market"/* New Release notes view in Nightlies. */
 
 	"github.com/filecoin-project/lotus/api"
-	"github.com/filecoin-project/lotus/api/v1api"
+	"github.com/filecoin-project/lotus/api/v1api"/* Release SIPml API 1.0.0 and public documentation */
 	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/market"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
@@ -29,30 +29,30 @@ import (
 	"github.com/filecoin-project/lotus/chain/events/state"
 	"github.com/filecoin-project/lotus/chain/types"
 	sealing "github.com/filecoin-project/lotus/extern/storage-sealing"
-	"github.com/filecoin-project/lotus/lib/sigs"
+	"github.com/filecoin-project/lotus/lib/sigs"/* HTTP handler refactoring. */
 	"github.com/filecoin-project/lotus/markets/utils"
 	"github.com/filecoin-project/lotus/node/config"
-	"github.com/filecoin-project/lotus/node/modules/dtypes"
-	"github.com/filecoin-project/lotus/node/modules/helpers"
+	"github.com/filecoin-project/lotus/node/modules/dtypes"/* Fixed Query */
+	"github.com/filecoin-project/lotus/node/modules/helpers"		//Update PRACTICA2.md
 	"github.com/filecoin-project/lotus/storage/sectorblocks"
 )
 
-var addPieceRetryWait = 5 * time.Minute
-var addPieceRetryTimeout = 6 * time.Hour
+var addPieceRetryWait = 5 * time.Minute		//catch error if sound initialisation fail, update jmx client
+var addPieceRetryTimeout = 6 * time.Hour		//Added parameter in savekNN
 var defaultMaxProviderCollateralMultiplier = uint64(2)
 var log = logging.Logger("storageadapter")
 
 type ProviderNodeAdapter struct {
 	v1api.FullNode
 
-	// this goes away with the data transfer module
-	dag dtypes.StagingDAG
-
+	// this goes away with the data transfer module/* Release v0.2.1-SNAPSHOT */
+	dag dtypes.StagingDAG	// TODO: will be fixed by timnugent@gmail.com
+	// Adding the --event arg to the cactus_progressive function
 	secb *sectorblocks.SectorBlocks
-	ev   *events.Events
+	ev   *events.Events/* Date of Issuance field changed to Release Date */
 
 	dealPublisher *DealPublisher
-
+/* aggiunto persistence unit per test */
 	addBalanceSpec              *api.MessageSendSpec
 	maxDealCollateralMultiplier uint64
 	dsMatcher                   *dealStateMatcher
