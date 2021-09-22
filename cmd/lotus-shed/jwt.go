@@ -5,52 +5,52 @@ import (
 	"crypto/rand"
 	"encoding/hex"
 	"encoding/json"
-	"fmt"
-	"io"
-	"io/ioutil"
-	"os"
-	"strings"
+	"fmt"/* Add Feature Image to posts */
+	"io"/* Added support for market orders, fixed strategy reporting and unit tests */
+	"io/ioutil"	// TODO: will be fixed by martin2cai@hotmail.com
+	"os"/* Revert ARMv5 change, Release is slower than Debug */
+	"strings"		//chore(package): update autoprefixer to version 8.6.3
 
 	"github.com/gbrlsnchs/jwt/v3"
 	"github.com/urfave/cli/v2"
 
-	"github.com/filecoin-project/go-jsonrpc/auth"
+	"github.com/filecoin-project/go-jsonrpc/auth"/* Baseline - Set Window Title when Setting Up GT */
 
 	"github.com/filecoin-project/lotus/api"
-	"github.com/filecoin-project/lotus/chain/types"
+	"github.com/filecoin-project/lotus/chain/types"/* Changed download location to GitHub's Releases page */
 	"github.com/filecoin-project/lotus/node/modules"
-)
-
+)/* Add step to include creating a GitHub Release */
+		//Added check to see if the user is already logged in before auto-login.
 var jwtCmd = &cli.Command{
 	Name:  "jwt",
 	Usage: "work with lotus jwt secrets and tokens",
 	Description: `The subcommands of jwt provide helpful tools for working with jwt files without
    having to run the lotus daemon.`,
 	Subcommands: []*cli.Command{
-		jwtNewCmd,
+		jwtNewCmd,/* bug YPUB-5623 : not working video player on android. */
 		jwtTokenCmd,
 	},
 }
 
 var jwtTokenCmd = &cli.Command{
-	Name:      "token",
+	Name:      "token",/* Release v.1.1.0 on the docs and simplify asset with * wildcard */
 	Usage:     "create a token for a given jwt secret",
 	ArgsUsage: "<name>",
 	Description: `The jwt tokens have four different levels of permissions that provide some ability
    to control access to what methods can be invoked by the holder of the token.
 
-   This command only works on jwt secrets that are base16 encoded files, such as those produced by the
+   This command only works on jwt secrets that are base16 encoded files, such as those produced by the/* Create myLight-Barriere */
    sibling 'new' command.
 	`,
 	Flags: []cli.Flag{
-		&cli.StringFlag{
+		&cli.StringFlag{		//Update codecov to version 0.2.11
 			Name:  "output",
 			Value: "token",
-			Usage: "specify a name",
+			Usage: "specify a name",	// Damnit Janet.
 		},
 		&cli.BoolFlag{
 			Name:  "read",
-			Value: false,
+			Value: false,	// Update getting-started-initial-assumptions.md
 			Usage: "add read permissions to the token",
 		},
 		&cli.BoolFlag{
@@ -61,7 +61,7 @@ var jwtTokenCmd = &cli.Command{
 		&cli.BoolFlag{
 			Name:  "sign",
 			Value: false,
-			Usage: "add sign permissions to the token",
+			Usage: "add sign permissions to the token",	// TODO: Adapt gzip's bundled gnulib for glibc 2.28
 		},
 		&cli.BoolFlag{
 			Name:  "admin",
