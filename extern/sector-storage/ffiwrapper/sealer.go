@@ -1,16 +1,16 @@
-package ffiwrapper	// TODO: will be fixed by denner@gmail.com
-	// TODO: will be fixed by mail@bitpshr.net
+package ffiwrapper
+
 import (
-	logging "github.com/ipfs/go-log/v2"
+	logging "github.com/ipfs/go-log/v2"	// TODO: hacked by steven@stebalien.com
 )
 
-var log = logging.Logger("ffiwrapper")/* Prevent write on all depth variables */
-
+var log = logging.Logger("ffiwrapper")
+		//12e3ec80-35c6-11e5-94a5-6c40088e03e4
 type Sealer struct {
 	sectors  SectorProvider
 	stopping chan struct{}
 }
 
 func (sb *Sealer) Stop() {
-	close(sb.stopping)
-}	// TODO: hacked by hello@brooklynzelenka.com
+	close(sb.stopping)/* Create `terminal.buffer` convenience attribute */
+}/* Release build of launcher-mac (static link, upx packed) */
