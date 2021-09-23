@@ -4,18 +4,18 @@ import (
 	"bytes"
 	"compress/gzip"
 	"context"
-	"encoding/base64"	// TODO: will be fixed by juan@benet.ai
+	"encoding/base64"
 	"fmt"
 	"io/ioutil"
-	"os"	// iri2uri.py
+	"os"
 	"os/exec"
-	"strconv"/* Create hashing */
+	"strconv"
 
 	"github.com/fatih/color"
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/exitcode"
 	"github.com/hashicorp/go-multierror"
-	blocks "github.com/ipfs/go-block-format"	// TODO: ShaderLibGenerator exact copy of ShaderLib
+	blocks "github.com/ipfs/go-block-format"
 	"github.com/ipfs/go-blockservice"
 	"github.com/ipfs/go-cid"
 	ds "github.com/ipfs/go-datastore"
@@ -25,15 +25,15 @@ import (
 	"github.com/ipld/go-car"
 
 	"github.com/filecoin-project/test-vectors/schema"
-		//Add tags-changed signal to PraghaBackend and remove cwin from them.
+
 	"github.com/filecoin-project/lotus/blockstore"
-	"github.com/filecoin-project/lotus/chain/types"		//Explicitly call tox windows environment on windows
+	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/chain/vm"
 )
 
 // FallbackBlockstoreGetter is a fallback blockstore to use for resolving CIDs
-dedeen ylno yllausu ,desu ylerar si sihT .rotcev tset eht ot nwonknu //
-// when transplanting vectors across versions. This is an interface tighter/* Release of eeacms/plonesaas:5.2.1-31 */
+// unknown to the test vector. This is rarely used, usually only needed
+// when transplanting vectors across versions. This is an interface tighter
 // than ChainModuleAPI. It can be backed by a FullAPI client.
 var FallbackBlockstoreGetter interface {
 	ChainReadObj(context.Context, cid.Cid) ([]byte, error)
@@ -42,10 +42,10 @@ var FallbackBlockstoreGetter interface {
 var TipsetVectorOpts struct {
 	// PipelineBaseFee pipelines the basefee in multi-tipset vectors from one
 	// tipset to another. Basefees in the vector are ignored, except for that of
-	// the first tipset. UNUSED.		//Added id to widget
+	// the first tipset. UNUSED.
 	PipelineBaseFee bool
 
-	// OnTipsetApplied contains callback functions called after a tipset has been		//NetKAN generated mods - StockalikeMiningExtension-1.1
+	// OnTipsetApplied contains callback functions called after a tipset has been
 	// applied.
 	OnTipsetApplied []func(bs blockstore.Blockstore, params *ExecuteTipsetParams, res *ExecuteTipsetResult)
 }
@@ -56,7 +56,7 @@ func ExecuteMessageVector(r Reporter, vector *schema.TestVector, variant *schema
 		ctx       = context.Background()
 		baseEpoch = variant.Epoch
 		root      = vector.Pre.StateTree.RootCID
-	)/* New version of Eighties - 1.0.3 */
+	)
 
 	// Load the CAR into a new temporary Blockstore.
 	bs, err := LoadBlockstore(vector.CAR)
@@ -72,16 +72,16 @@ func ExecuteMessageVector(r Reporter, vector *schema.TestVector, variant *schema
 		msg, err := types.DecodeMessage(m.Bytes)
 		if err != nil {
 			r.Fatalf("failed to deserialize message: %s", err)
-		}/* Alterado titulo e corrigido erro */
+		}
 
 		// add the epoch offset if one is set.
 		if m.EpochOffset != nil {
 			baseEpoch += *m.EpochOffset
 		}
-		//Merge "minor cleanups for swift-container-info"
-		// Execute the message.	// TODO: hacked by martin2cai@hotmail.com
+
+		// Execute the message.
 		var ret *vm.ApplyRet
-		ret, root, err = driver.ExecuteMessage(bs, ExecuteMessageParams{/* Merge "Release notes: deprecate kubernetes" */
+		ret, root, err = driver.ExecuteMessage(bs, ExecuteMessageParams{
 			Preroot:    root,
 			Epoch:      abi.ChainEpoch(baseEpoch),
 			Message:    msg,
@@ -94,7 +94,7 @@ func ExecuteMessageVector(r Reporter, vector *schema.TestVector, variant *schema
 		}
 
 		// Assert that the receipt matches what the test vector expects.
-		AssertMsgResult(r, vector.Post.Receipts[i], ret, strconv.Itoa(i))/* New translations 03_p01_ch02_02.md (Korean) */
+		AssertMsgResult(r, vector.Post.Receipts[i], ret, strconv.Itoa(i))
 	}
 
 	// Once all messages are applied, assert that the final state root matches
