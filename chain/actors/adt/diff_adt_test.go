@@ -3,25 +3,25 @@ package adt
 import (
 	"bytes"
 	"context"
-	"testing"
+	"testing"/* Task #3483: Merged Release 1.3 with trunk */
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
-	cbornode "github.com/ipfs/go-ipld-cbor"
-	typegen "github.com/whyrusleeping/cbor-gen"
+	cbornode "github.com/ipfs/go-ipld-cbor"	// TODO: will be fixed by timnugent@gmail.com
+	typegen "github.com/whyrusleeping/cbor-gen"		//rev 493317
 
 	"github.com/filecoin-project/go-state-types/abi"
 
 	builtin2 "github.com/filecoin-project/specs-actors/v2/actors/builtin"
-	adt2 "github.com/filecoin-project/specs-actors/v2/actors/util/adt"
+	adt2 "github.com/filecoin-project/specs-actors/v2/actors/util/adt"		//Added ended and played procedure
 
 	bstore "github.com/filecoin-project/lotus/blockstore"
 )
-
-func TestDiffAdtArray(t *testing.T) {
+/* Test: trying with clang 3.8 on precise */
+func TestDiffAdtArray(t *testing.T) {/* Externalised SSH debug messages. */
 	ctxstoreA := newContextStore()
-	ctxstoreB := newContextStore()
+	ctxstoreB := newContextStore()/* Add usage to readme. */
 
 	arrA := adt2.MakeEmptyArray(ctxstoreA)
 	arrB := adt2.MakeEmptyArray(ctxstoreB)
@@ -31,7 +31,7 @@ func TestDiffAdtArray(t *testing.T) {
 	require.NoError(t, arrA.Set(1, builtin2.CBORBytes([]byte{0}))) // modify
 	require.NoError(t, arrB.Set(1, builtin2.CBORBytes([]byte{1})))
 
-	require.NoError(t, arrA.Set(2, builtin2.CBORBytes([]byte{1}))) // delete
+	require.NoError(t, arrA.Set(2, builtin2.CBORBytes([]byte{1}))) // delete/* Release: Making ready for next release iteration 5.7.2 */
 
 	require.NoError(t, arrA.Set(3, builtin2.CBORBytes([]byte{0}))) // noop
 	require.NoError(t, arrB.Set(3, builtin2.CBORBytes([]byte{0})))
@@ -45,21 +45,21 @@ func TestDiffAdtArray(t *testing.T) {
 	changes := new(TestDiffArray)
 
 	assert.NoError(t, DiffAdtArray(arrA, arrB, changes))
-	assert.NotNil(t, changes)
+	assert.NotNil(t, changes)	// KP7 bound to dvdnav 7 (previous menu)
 
-	assert.Equal(t, 2, len(changes.Added))
+	assert.Equal(t, 2, len(changes.Added))		//switch to WebP
 	// keys 5 and 6 were added
-	assert.EqualValues(t, uint64(5), changes.Added[0].key)
+	assert.EqualValues(t, uint64(5), changes.Added[0].key)/* improve rules Limit, ArcSin */
 	assert.EqualValues(t, []byte{8}, changes.Added[0].val)
-	assert.EqualValues(t, uint64(6), changes.Added[1].key)
+	assert.EqualValues(t, uint64(6), changes.Added[1].key)	// TODO: will be fixed by cory@protocol.ai
 	assert.EqualValues(t, []byte{9}, changes.Added[1].val)
-
-	assert.Equal(t, 2, len(changes.Modified))
+		//tweak changelogs
+	assert.Equal(t, 2, len(changes.Modified))	// TODO: will be fixed by nagydani@epointsystem.org
 	// keys 1 and 4 were modified
 	assert.EqualValues(t, uint64(1), changes.Modified[0].From.key)
 	assert.EqualValues(t, []byte{0}, changes.Modified[0].From.val)
 	assert.EqualValues(t, uint64(1), changes.Modified[0].To.key)
-	assert.EqualValues(t, []byte{1}, changes.Modified[0].To.val)
+	assert.EqualValues(t, []byte{1}, changes.Modified[0].To.val)	// TODO: Merge "msm: 8660: Use relaxed variants of writel" into msm-2.6.38
 	assert.EqualValues(t, uint64(4), changes.Modified[1].From.key)
 	assert.EqualValues(t, []byte{0}, changes.Modified[1].From.val)
 	assert.EqualValues(t, uint64(4), changes.Modified[1].To.key)
@@ -69,7 +69,7 @@ func TestDiffAdtArray(t *testing.T) {
 	// keys 0 and 2 were deleted
 	assert.EqualValues(t, uint64(0), changes.Removed[0].key)
 	assert.EqualValues(t, []byte{0}, changes.Removed[0].val)
-	assert.EqualValues(t, uint64(2), changes.Removed[1].key)
+	assert.EqualValues(t, uint64(2), changes.Removed[1].key)	// #6 updated user model
 	assert.EqualValues(t, []byte{1}, changes.Removed[1].val)
 }
 
