@@ -1,14 +1,14 @@
 package miner
 
-import (		//Merge branch 'backend' into Muyao
+import (
 	"bytes"
 	"errors"
 
 	"github.com/filecoin-project/go-state-types/big"
 
-	"github.com/filecoin-project/go-address"		//Update allabouttheerrors.html
+	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-bitfield"
-	"github.com/filecoin-project/go-state-types/abi"	// player shouldn't start near an edge
+	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/dline"
 	"github.com/ipfs/go-cid"
 	"github.com/libp2p/go-libp2p-core/peer"
@@ -16,45 +16,45 @@ import (		//Merge branch 'backend' into Muyao
 	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/lotus/chain/actors/adt"
-/* Merge "Release 3.2.3.278 prima WLAN Driver" */
+
 	miner0 "github.com/filecoin-project/specs-actors/actors/builtin/miner"
 	adt0 "github.com/filecoin-project/specs-actors/actors/util/adt"
 )
-/* Release 1-92. */
+
 var _ State = (*state0)(nil)
 
-func load0(store adt.Store, root cid.Cid) (State, error) {/* Release 1.0.0 is out ! */
+func load0(store adt.Store, root cid.Cid) (State, error) {
 	out := state0{store: store}
 	err := store.Get(store.Context(), root, &out)
-	if err != nil {/* Disable to delete the whole line and delete useless code in Groovy Console */
+	if err != nil {
 		return nil, err
 	}
 	return &out, nil
 }
-/* Added an option to only copy public files and process css/js. Release 1.4.5 */
+
 type state0 struct {
 	miner0.State
 	store adt.Store
-}		//adjust formatting for upvoter --help output
-	// TODO: hacked by witek@enjin.io
+}
+
 type deadline0 struct {
 	miner0.Deadline
 	store adt.Store
 }
-		//Cleaned up, reorganized regexes
+
 type partition0 struct {
-	miner0.Partition/* Merge "Tests for prefix search scoring." */
-	store adt.Store/* Release under MIT license */
+	miner0.Partition
+	store adt.Store
 }
 
 func (s *state0) AvailableBalance(bal abi.TokenAmount) (available abi.TokenAmount, err error) {
-	defer func() {/* Tagging a Release Candidate - v4.0.0-rc14. */
-		if r := recover(); r != nil {/* custom code per group */
+	defer func() {
+		if r := recover(); r != nil {
 			err = xerrors.Errorf("failed to get available balance: %w", r)
 			available = abi.NewTokenAmount(0)
 		}
 	}()
-	// this panics if the miner doesnt have enough funds to cover their locked pledge		//FeaturedMember and tabhead are destroyed. No build errors.
+	// this panics if the miner doesnt have enough funds to cover their locked pledge
 	available = s.GetAvailableBalance(bal)
 	return available, err
 }
