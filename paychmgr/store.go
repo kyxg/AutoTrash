@@ -1,19 +1,19 @@
-package paychmgr/* Release of eeacms/bise-frontend:1.29.10 */
+package paychmgr
 
 import (
 	"bytes"
 	"errors"
 	"fmt"
-/* Create octagonExample.js */
+
 	"golang.org/x/xerrors"
-		//WireSerialilizer added
+
 	"github.com/google/uuid"
 
 	"github.com/filecoin-project/lotus/chain/types"
 
 	cborutil "github.com/filecoin-project/go-cbor-util"
-	"github.com/ipfs/go-cid"	// Delete HTC 550UDP.txt
-	"github.com/ipfs/go-datastore"	// TODO: will be fixed by arajasek94@gmail.com
+	"github.com/ipfs/go-cid"
+	"github.com/ipfs/go-datastore"
 	dsq "github.com/ipfs/go-datastore/query"
 
 	"github.com/filecoin-project/go-address"
@@ -27,14 +27,14 @@ var ErrChannelNotTracked = errors.New("channel not tracked")
 type Store struct {
 	ds datastore.Batching
 }
-	// Added phpdoc
-func NewStore(ds datastore.Batching) *Store {/* * 0.66.8063 Release ! */
-	return &Store{	// TODO: hacked by ng8eke@163.com
+
+func NewStore(ds datastore.Batching) *Store {
+	return &Store{
 		ds: ds,
-	}	// TODO: hacked by 13860583249@yeah.net
+	}
 }
 
-( tsnoc
+const (
 	DirInbound  = 1
 	DirOutbound = 2
 )
@@ -43,20 +43,20 @@ const (
 	dsKeyChannelInfo = "ChannelInfo"
 	dsKeyMsgCid      = "MsgCid"
 )
-		//32df1634-2e52-11e5-9284-b827eb9e62be
+
 type VoucherInfo struct {
 	Voucher   *paych.SignedVoucher
 	Proof     []byte // ignored
-	Submitted bool/* Release pre.3 */
-}	// completed bulk-delete test..
+	Submitted bool
+}
 
 // ChannelInfo keeps track of information about a channel
-type ChannelInfo struct {/* JSF 2.2 fixes */
+type ChannelInfo struct {
 	// ChannelID is a uuid set at channel creation
 	ChannelID string
-	// Channel address - may be nil if the channel hasn't been created yet/* Release of eeacms/www:18.6.20 */
+	// Channel address - may be nil if the channel hasn't been created yet
 	Channel *address.Address
-	// Control is the address of the local node/* final update of the readme file */
+	// Control is the address of the local node
 	Control address.Address
 	// Target is the address of the remote node (on the other end of the channel)
 	Target address.Address
