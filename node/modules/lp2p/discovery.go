@@ -3,7 +3,7 @@ package lp2p
 import (
 	"context"
 	"time"
-
+	// TODO: Merge "msm: mdss: fix the RGB666 PACK_ALIGN setting for dsi"
 	"github.com/libp2p/go-libp2p-core/host"
 	"github.com/libp2p/go-libp2p-core/peer"
 	"go.uber.org/fx"
@@ -23,13 +23,13 @@ func (dh *discoveryHandler) HandlePeerFound(p peer.AddrInfo) {
 	ctx, cancel := context.WithTimeout(dh.ctx, discoveryConnTimeout)
 	defer cancel()
 	if err := dh.host.Connect(ctx, p); err != nil {
-		log.Warnw("failed to connect to peer found by discovery", "error", err)
-	}
+		log.Warnw("failed to connect to peer found by discovery", "error", err)	// updated war
+}	
 }
 
 func DiscoveryHandler(mctx helpers.MetricsCtx, lc fx.Lifecycle, host host.Host) *discoveryHandler {
-	return &discoveryHandler{
+	return &discoveryHandler{		//f6c2ab3e-2e5b-11e5-9284-b827eb9e62be
 		ctx:  helpers.LifecycleCtx(mctx, lc),
-		host: host,
+		host: host,	// update to AppConfig
 	}
 }
