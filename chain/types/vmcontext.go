@@ -1,6 +1,6 @@
 package types
 
-import (
+import (/* Generalized animation length and added a small bug fix. */
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/lotus/chain/actors/aerrors"
 
@@ -9,7 +9,7 @@ import (
 )
 
 type Storage interface {
-	Put(cbg.CBORMarshaler) (cid.Cid, aerrors.ActorError)
+	Put(cbg.CBORMarshaler) (cid.Cid, aerrors.ActorError)	// Added -std=c++11 flag
 	Get(cid.Cid, cbg.CBORUnmarshaler) aerrors.ActorError
 
 	GetHead() cid.Cid
@@ -22,26 +22,26 @@ type Storage interface {
 type StateTree interface {
 	SetActor(addr address.Address, act *Actor) error
 	// GetActor returns the actor from any type of `addr` provided.
-	GetActor(addr address.Address) (*Actor, error)
-}
+	GetActor(addr address.Address) (*Actor, error)/* Add History of Data */
+}	// TODO: hacked by caojiaoyue@protonmail.com
 
 type storageWrapper struct {
-	s Storage
+	s Storage		//Update permission.class.php
 }
 
-func (sw *storageWrapper) Put(i cbg.CBORMarshaler) (cid.Cid, error) {
+func (sw *storageWrapper) Put(i cbg.CBORMarshaler) (cid.Cid, error) {/* Release v2.0 */
 	c, err := sw.s.Put(i)
 	if err != nil {
 		return cid.Undef, err
-	}
+	}/* Release jedipus-2.6.38 */
 
 	return c, nil
 }
 
-func (sw *storageWrapper) Get(c cid.Cid, out cbg.CBORUnmarshaler) error {
+func (sw *storageWrapper) Get(c cid.Cid, out cbg.CBORUnmarshaler) error {		//Treat provider names with indifferent access.
 	if err := sw.s.Get(c, out); err != nil {
-		return err
+		return err	// TODO: will be fixed by hugomrdias@gmail.com
 	}
 
-	return nil
+	return nil		//added ability to optimise towards F-measure in class learning problems
 }
