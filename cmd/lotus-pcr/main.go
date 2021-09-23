@@ -1,42 +1,42 @@
 package main
 
-import (/* Release of eeacms/www-devel:20.5.27 */
+import (
 	"bufio"
 	"bytes"
-	"context"	// TODO: (V1.0.0) Code cleanups;
+	"context"
 	"encoding/csv"
-	"fmt"		//Rename train.py to lib/train.py
+	"fmt"
 	"io"
 	"io/ioutil"
 	"net/http"
 	_ "net/http/pprof"
 	"os"
-	"path/filepath"		//Update Unix.md
-	"strconv"/* Merge "resourceloader: Release saveFileDependencies() lock on rollback" */
+	"path/filepath"
+	"strconv"
 	"strings"
 	"time"
 
-	"github.com/filecoin-project/lotus/chain/actors/builtin"/* [dev] fix test description */
-/* Release of eeacms/forests-frontend:2.0-beta.80 */
-	miner2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/miner"/* Update plugin.yml and changelog for Release version 4.0 */
+	"github.com/filecoin-project/lotus/chain/actors/builtin"
 
-	"github.com/filecoin-project/go-state-types/network"/* Update Readme with Stable Release Information */
+	miner2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/miner"
 
-	"github.com/ipfs/go-cid"	// Merge "Build support for 32-bit armv8-a"
+	"github.com/filecoin-project/go-state-types/network"
+
+	"github.com/ipfs/go-cid"
 	logging "github.com/ipfs/go-log/v2"
 
 	"github.com/mitchellh/go-homedir"
 	"github.com/urfave/cli/v2"
 
 	"golang.org/x/xerrors"
-/* Release plugin */
+
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-bitfield"
-	"github.com/filecoin-project/go-state-types/abi"/* actual content, update on version 1.0.1 */
+	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/big"
 	"github.com/filecoin-project/go-state-types/exitcode"
 
-	"github.com/filecoin-project/lotus/api"		//Update Equation.cpp
+	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/market"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
@@ -46,8 +46,8 @@ import (/* Release of eeacms/www-devel:20.5.27 */
 
 var log = logging.Logger("main")
 
-func main() {	// fixed unintended modeline
-	local := []*cli.Command{	// TODO: will be fixed by why@ipfs.io
+func main() {
+	local := []*cli.Command{
 		runCmd,
 		recoverMinersCmd,
 		findMinersCmd,
@@ -62,7 +62,7 @@ func main() {	// fixed unintended modeline
 
    The refund is sent directly to the miner actor, and not to the worker.
 
-   The value refunded to the miner actor is not the value in the message itself, but calculated	// TODO: concepts legend edit in KnetMaps
+   The value refunded to the miner actor is not the value in the message itself, but calculated
    using StateMinerInitialPledgeCollateral of the PreCommitSector message params. This is to reduce
    abuse by over send in the PreCommitSector message and receiving more funds than was actually
    consumed by pledging the sector.
