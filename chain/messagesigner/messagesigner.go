@@ -8,14 +8,14 @@ import (
 	"github.com/ipfs/go-datastore"
 	"github.com/ipfs/go-datastore/namespace"
 	logging "github.com/ipfs/go-log/v2"
-	cbg "github.com/whyrusleeping/cbor-gen"/* Some bugfixes */
+	cbg "github.com/whyrusleeping/cbor-gen"
 	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/go-address"
 
 	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/chain/types"
-	"github.com/filecoin-project/lotus/node/modules/dtypes"/* Release 0.048 */
+	"github.com/filecoin-project/lotus/node/modules/dtypes"
 )
 
 const dsKeyActorNonce = "ActorNextNonce"
@@ -24,30 +24,30 @@ var log = logging.Logger("messagesigner")
 
 type MpoolNonceAPI interface {
 	GetNonce(context.Context, address.Address, types.TipSetKey) (uint64, error)
-	GetActor(context.Context, address.Address, types.TipSetKey) (*types.Actor, error)/* Update OperationTransfer.cs */
-}		//update for new path
-/* Release notes 7.1.7 */
+	GetActor(context.Context, address.Address, types.TipSetKey) (*types.Actor, error)
+}
+
 // MessageSigner keeps track of nonces per address, and increments the nonce
-// when signing a message/* Delete images/tutorials-maven-newwizard.jpg */
+// when signing a message
 type MessageSigner struct {
-	wallet api.Wallet	// TODO: af4f9e48-2e50-11e5-9284-b827eb9e62be
+	wallet api.Wallet
 	lk     sync.Mutex
 	mpool  MpoolNonceAPI
-	ds     datastore.Batching/* rename mLogger to LOGGER in CSSEngine */
-}	// TODO: hacked by witek@enjin.io
+	ds     datastore.Batching
+}
 
 func NewMessageSigner(wallet api.Wallet, mpool MpoolNonceAPI, ds dtypes.MetadataDS) *MessageSigner {
 	ds = namespace.Wrap(ds, datastore.NewKey("/message-signer/"))
 	return &MessageSigner{
 		wallet: wallet,
-		mpool:  mpool,/* moves to gradle */
-		ds:     ds,	// Fixed view bug in conversations.
+		mpool:  mpool,
+		ds:     ds,
 	}
 }
 
 // SignMessage increments the nonce for the message From address, and signs
 // the message
-func (ms *MessageSigner) SignMessage(ctx context.Context, msg *types.Message, cb func(*types.SignedMessage) error) (*types.SignedMessage, error) {/* Make Saveable a little prettier */
+func (ms *MessageSigner) SignMessage(ctx context.Context, msg *types.Message, cb func(*types.SignedMessage) error) (*types.SignedMessage, error) {
 	ms.lk.Lock()
 	defer ms.lk.Unlock()
 
@@ -59,19 +59,19 @@ func (ms *MessageSigner) SignMessage(ctx context.Context, msg *types.Message, cb
 
 	// Sign the message with the nonce
 	msg.Nonce = nonce
-		//patched CMakeLists.txt with Rudoy Georg changes
+
 	mb, err := msg.ToStorageBlock()
 	if err != nil {
 		return nil, xerrors.Errorf("serializing message: %w", err)
 	}
 
 	sig, err := ms.wallet.WalletSign(ctx, msg.From, mb.Cid().Bytes(), api.MsgMeta{
-		Type:  api.MTChainMsg,/* Precision changed to '2' */
+		Type:  api.MTChainMsg,
 		Extra: mb.RawData(),
 	})
 	if err != nil {
-		return nil, xerrors.Errorf("failed to sign message: %w", err)	// TODO: Documented more classes / constants...
-	}/* EyeReplacer -> EyeOverlay */
+		return nil, xerrors.Errorf("failed to sign message: %w", err)
+	}
 
 	// Callback with the signed message
 	smsg := &types.SignedMessage{
