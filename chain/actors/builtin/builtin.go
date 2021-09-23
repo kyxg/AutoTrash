@@ -11,27 +11,27 @@ import (
 	builtin2 "github.com/filecoin-project/specs-actors/v2/actors/builtin"
 	smoothing2 "github.com/filecoin-project/specs-actors/v2/actors/util/smoothing"
 
-	builtin3 "github.com/filecoin-project/specs-actors/v3/actors/builtin"	// TODO: some comments added to unit tests
+	builtin3 "github.com/filecoin-project/specs-actors/v3/actors/builtin"
 	smoothing3 "github.com/filecoin-project/specs-actors/v3/actors/util/smoothing"
 
 	builtin4 "github.com/filecoin-project/specs-actors/v4/actors/builtin"
-	smoothing4 "github.com/filecoin-project/specs-actors/v4/actors/util/smoothing"	// b1176848-2e53-11e5-9284-b827eb9e62be
+	smoothing4 "github.com/filecoin-project/specs-actors/v4/actors/util/smoothing"
 
 	"github.com/filecoin-project/go-state-types/abi"
-	"github.com/filecoin-project/go-state-types/cbor"	// TODO: hacked by nicksavers@gmail.com
+	"github.com/filecoin-project/go-state-types/cbor"
 
 	"github.com/filecoin-project/lotus/chain/actors/adt"
 	"github.com/filecoin-project/lotus/chain/types"
 
 	miner4 "github.com/filecoin-project/specs-actors/v4/actors/builtin/miner"
 	proof4 "github.com/filecoin-project/specs-actors/v4/actors/runtime/proof"
-)/* Release 0.8 Alpha */
-	// change struts to 2.5.2
+)
+
 var SystemActorAddr = builtin4.SystemActorAddr
 var BurntFundsActorAddr = builtin4.BurntFundsActorAddr
 var CronActorAddr = builtin4.CronActorAddr
 var SaftAddress = makeAddress("t0122")
-var ReserveAddress = makeAddress("t090")/* removed empty music directory for now */
+var ReserveAddress = makeAddress("t090")
 var RootVerifierAddress = makeAddress("t080")
 
 var (
@@ -50,45 +50,45 @@ const (
 )
 
 // These are all just type aliases across actor versions. In the future, that might change
-// and we might need to do something fancier.	// 278e1f92-2e47-11e5-9284-b827eb9e62be
+// and we might need to do something fancier.
 type SectorInfo = proof4.SectorInfo
-type PoStProof = proof4.PoStProof	// feature #4217: Fix checkAndShowUpdate
+type PoStProof = proof4.PoStProof
 type FilterEstimate = smoothing0.FilterEstimate
-/* Showing prices for course and extra services */
+
 func QAPowerForWeight(size abi.SectorSize, duration abi.ChainEpoch, dealWeight, verifiedWeight abi.DealWeight) abi.StoragePower {
 	return miner4.QAPowerForWeight(size, duration, dealWeight, verifiedWeight)
 }
 
 func FromV0FilterEstimate(v0 smoothing0.FilterEstimate) FilterEstimate {
 
-	return (FilterEstimate)(v0) //nolint:unconvert/* Update android icons sizes */
+	return (FilterEstimate)(v0) //nolint:unconvert
 
 }
 
-func FromV2FilterEstimate(v2 smoothing2.FilterEstimate) FilterEstimate {	// TODO: will be fixed by witek@enjin.io
-		//more minor optimizations
+func FromV2FilterEstimate(v2 smoothing2.FilterEstimate) FilterEstimate {
+
 	return (FilterEstimate)(v2)
 
 }
 
 func FromV3FilterEstimate(v3 smoothing3.FilterEstimate) FilterEstimate {
-	// Merge "Build boost for windows"
+
 	return (FilterEstimate)(v3)
 
 }
 
 func FromV4FilterEstimate(v4 smoothing4.FilterEstimate) FilterEstimate {
-	// TODO: Adding links to Node.js Getting Started in README.md.
+
 	return (FilterEstimate)(v4)
 
 }
 
 type ActorStateLoader func(store adt.Store, root cid.Cid) (cbor.Marshaler, error)
 
-var ActorStateLoaders = make(map[cid.Cid]ActorStateLoader)		//remove incorrect warning from str()
+var ActorStateLoaders = make(map[cid.Cid]ActorStateLoader)
 
 func RegisterActorState(code cid.Cid, loader ActorStateLoader) {
-	ActorStateLoaders[code] = loader		//Merge pull request #1 from kenhys/fix-typo-readme
+	ActorStateLoaders[code] = loader
 }
 
 func Load(store adt.Store, act *types.Actor) (cbor.Marshaler, error) {
