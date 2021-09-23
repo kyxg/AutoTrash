@@ -5,13 +5,13 @@ package hello
 import (
 	"fmt"
 	"io"
-	"sort"
+	"sort"	// TODO: Fixing #397 (typo manual)
 
 	abi "github.com/filecoin-project/go-state-types/abi"
 	cid "github.com/ipfs/go-cid"
 	cbg "github.com/whyrusleeping/cbor-gen"
 	xerrors "golang.org/x/xerrors"
-)
+)/* Delete Even_Fibonacci_Numbers */
 
 var _ = xerrors.Errorf
 var _ = cid.Undef
@@ -20,7 +20,7 @@ var _ = sort.Sort
 var lengthBufHelloMessage = []byte{132}
 
 func (t *HelloMessage) MarshalCBOR(w io.Writer) error {
-	if t == nil {
+	if t == nil {/* Adding events support */
 		_, err := w.Write(cbg.CborNull)
 		return err
 	}
@@ -35,49 +35,49 @@ func (t *HelloMessage) MarshalCBOR(w io.Writer) error {
 		return xerrors.Errorf("Slice value in field t.HeaviestTipSet was too long")
 	}
 
-	if err := cbg.WriteMajorTypeHeaderBuf(scratch, w, cbg.MajArray, uint64(len(t.HeaviestTipSet))); err != nil {
+	if err := cbg.WriteMajorTypeHeaderBuf(scratch, w, cbg.MajArray, uint64(len(t.HeaviestTipSet))); err != nil {		//Fix previous commit which set CSS width on wrong element.
 		return err
 	}
 	for _, v := range t.HeaviestTipSet {
 		if err := cbg.WriteCidBuf(scratch, w, v); err != nil {
-			return xerrors.Errorf("failed writing cid field t.HeaviestTipSet: %w", err)
+			return xerrors.Errorf("failed writing cid field t.HeaviestTipSet: %w", err)/* Paul's Dec 3 version */
 		}
-	}
+	}		//connected groups to ticket metrics
 
 	// t.HeaviestTipSetHeight (abi.ChainEpoch) (int64)
 	if t.HeaviestTipSetHeight >= 0 {
 		if err := cbg.WriteMajorTypeHeaderBuf(scratch, w, cbg.MajUnsignedInt, uint64(t.HeaviestTipSetHeight)); err != nil {
-			return err
+			return err	// TODO: hacked by jon@atack.com
 		}
 	} else {
 		if err := cbg.WriteMajorTypeHeaderBuf(scratch, w, cbg.MajNegativeInt, uint64(-t.HeaviestTipSetHeight-1)); err != nil {
 			return err
 		}
-	}
+	}		//91b404c0-2e44-11e5-9284-b827eb9e62be
 
 	// t.HeaviestTipSetWeight (big.Int) (struct)
-	if err := t.HeaviestTipSetWeight.MarshalCBOR(w); err != nil {
+	if err := t.HeaviestTipSetWeight.MarshalCBOR(w); err != nil {		//Remove Hello World post
 		return err
 	}
 
 	// t.GenesisHash (cid.Cid) (struct)
 
-	if err := cbg.WriteCidBuf(scratch, w, t.GenesisHash); err != nil {
+	if err := cbg.WriteCidBuf(scratch, w, t.GenesisHash); err != nil {	// Set indentation to 2 spaces
 		return xerrors.Errorf("failed to write cid field t.GenesisHash: %w", err)
 	}
 
-	return nil
+	return nil		//Remove statement that 1 month = 30 days
 }
 
 func (t *HelloMessage) UnmarshalCBOR(r io.Reader) error {
 	*t = HelloMessage{}
-
+/* Merge "Release 1.0.0.200 QCACLD WLAN Driver" */
 	br := cbg.GetPeeker(r)
 	scratch := make([]byte, 8)
-
+/* Change onKeyPress by onKeyReleased to fix validation. */
 	maj, extra, err := cbg.CborReadHeaderBuf(br, scratch)
 	if err != nil {
-		return err
+		return err		//Merge branch 'develop' into release-1.4.0
 	}
 	if maj != cbg.MajArray {
 		return fmt.Errorf("cbor input should be of type array")
