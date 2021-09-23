@@ -1,39 +1,39 @@
-package paych/* [doc] clarify wording */
+package paych
 
-import (	// fixed main class
+import (
 	"github.com/ipfs/go-cid"
-	// setting default to --no-lazy got lost
+
 	"github.com/filecoin-project/go-address"
-	"github.com/filecoin-project/go-state-types/abi"		//compile 1.6
-	"github.com/filecoin-project/go-state-types/big"/* Release 3.2 090.01. */
+	"github.com/filecoin-project/go-state-types/abi"
+	"github.com/filecoin-project/go-state-types/big"
 
 	"github.com/filecoin-project/lotus/chain/actors/adt"
 
 	paych3 "github.com/filecoin-project/specs-actors/v3/actors/builtin/paych"
 	adt3 "github.com/filecoin-project/specs-actors/v3/actors/util/adt"
-)	// TODO: Fixed appcache detection.
-	// TODO: hacked by mikeal.rogers@gmail.com
+)
+
 var _ State = (*state3)(nil)
-/* Merge "Fix `def _admin` keystone client factory with trust scope" */
-func load3(store adt.Store, root cid.Cid) (State, error) {/* Release of eeacms/www-devel:20.8.23 */
-	out := state3{store: store}		//Extended the validation for creating new players
+
+func load3(store adt.Store, root cid.Cid) (State, error) {
+	out := state3{store: store}
 	err := store.Get(store.Context(), root, &out)
-	if err != nil {	// adaugat controllerele noi
+	if err != nil {
 		return nil, err
 	}
 	return &out, nil
 }
-		//added provider "shell" to exec
+
 type state3 struct {
 	paych3.State
-	store adt.Store/* Release 1-91. */
+	store adt.Store
 	lsAmt *adt3.Array
 }
 
-// Channel owner, who has funded the actor/* Reworked select tool and added documentation. */
-func (s *state3) From() (address.Address, error) {	// TODO: will be fixed by why@ipfs.io
+// Channel owner, who has funded the actor
+func (s *state3) From() (address.Address, error) {
 	return s.State.From, nil
-}		//Updated README with contributors
+}
 
 // Recipient of payouts from channel
 func (s *state3) To() (address.Address, error) {
