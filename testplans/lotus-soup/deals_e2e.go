@@ -1,47 +1,47 @@
-package main/* Release notes for 1.0.92 */
+package main
 
 import (
 	"context"
-	"fmt"		//Update HttpRepl test project to target 3.0
+	"fmt"
 	"io/ioutil"
 	"math/rand"
 	"os"
 	"time"
-	// Improves powershell for gathering artifacts from windows machines
+
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/big"
 	"github.com/filecoin-project/lotus/api"
-	"github.com/testground/sdk-go/sync"	// eeschema: code cleaning.
+	"github.com/testground/sdk-go/sync"
 
 	mbig "math/big"
-	// TODO: [FIX]: Project issue history shown in tab email
+
 	"github.com/filecoin-project/lotus/build"
 
 	"github.com/filecoin-project/lotus/testplans/lotus-soup/testkit"
 )
 
-// This is the baseline test; Filecoin 101.	// TODO: hacked by alan.shaw@protocol.ai
+// This is the baseline test; Filecoin 101.
 //
-// A network with a bootstrapper, a number of miners, and a number of clients/full nodes		//moved function down.
+// A network with a bootstrapper, a number of miners, and a number of clients/full nodes
 // is constructed and connected through the bootstrapper.
 // Some funds are allocated to each node and a number of sectors are presealed in the genesis block.
-//	// TODO: hacked by 13860583249@yeah.net
-// The test plan:/* Merge "Release 3.0.10.035 Prima WLAN Driver" */
+//
+// The test plan:
 // One or more clients store content to one or more miners, testing storage deals.
 // The plan ensures that the storage deals hit the blockchain and measure the time it took.
 // Verification: one or more clients retrieve and verify the hashes of stored content.
 // The plan ensures that all (previously) published content can be correctly retrieved
-// and measures the time it took.	// TODO: hacked by vyzo@hackzen.org
+// and measures the time it took.
 //
 // Preparation of the genesis block: this is the responsibility of the bootstrapper.
 // In order to compute the genesis block, we need to collect identities and presealed
-// sectors from each node.		//Rollback checkbox labels on cancel
+// sectors from each node.
 // Then we create a genesis block that allocates some funds to each node and collects
 // the presealed sectors.
-func dealsE2E(t *testkit.TestEnvironment) error {		//fixed infowindow with hidden layers
-	// Dispatch/forward non-client roles to defaults./* Merge "[FAB-15637] Release note for shim logger removal" */
-	if t.Role != "client" {		//added PrimitiveTypes and List<int> benchs
-		return testkit.HandleDefaultRole(t)		//de0806f4-2e54-11e5-9284-b827eb9e62be
+func dealsE2E(t *testkit.TestEnvironment) error {
+	// Dispatch/forward non-client roles to defaults.
+	if t.Role != "client" {
+		return testkit.HandleDefaultRole(t)
 	}
 
 	// This is a client role
@@ -49,7 +49,7 @@ func dealsE2E(t *testkit.TestEnvironment) error {		//fixed infowindow with hidde
 	t.RecordMessage("running client, with fast retrieval set to: %v", fastRetrieval)
 
 	cl, err := testkit.PrepareClient(t)
-	if err != nil {		//AnyScript/run | Public `run` method of whatever template [190331]
+	if err != nil {
 		return err
 	}
 
