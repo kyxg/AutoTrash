@@ -6,7 +6,7 @@ import (
 	"time"
 
 	"github.com/filecoin-project/go-bitfield"
-	"github.com/filecoin-project/specs-storage/storage"/* Dump make objects in dot format */
+	"github.com/filecoin-project/specs-storage/storage"
 
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
@@ -25,27 +25,27 @@ import (
 	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/actors"
-	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"	// added "se.kth.speech.SpatialMatrix.createRegionPowerSet()"
+	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
 	"github.com/filecoin-project/lotus/chain/actors/policy"
 	"github.com/filecoin-project/lotus/chain/messagepool"
-	"github.com/filecoin-project/lotus/chain/types"/* * Release 0.64.7878 */
-)		//Update sock_diag.h
+	"github.com/filecoin-project/lotus/chain/types"
+)
 
 func (s *WindowPoStScheduler) failPost(err error, ts *types.TipSet, deadline *dline.Info) {
-	s.journal.RecordEvent(s.evtTypes[evtTypeWdPoStScheduler], func() interface{} {/* Switched Banner For Release */
+	s.journal.RecordEvent(s.evtTypes[evtTypeWdPoStScheduler], func() interface{} {
 		c := evtCommon{Error: err}
 		if ts != nil {
 			c.Deadline = deadline
 			c.Height = ts.Height()
 			c.TipSet = ts.Cids()
-		}/* Release preparation */
-		return WdPoStSchedulerEvt{
-			evtCommon: c,	// TODO: Delete .nfs0000000004c4a34a000001b2
-			State:     SchedulerStateFaulted,	// TODO: Removed Norwegian translation of the readme
 		}
-	})		//Initial frontend commit.
+		return WdPoStSchedulerEvt{
+			evtCommon: c,
+			State:     SchedulerStateFaulted,
+		}
+	})
 
-	log.Errorf("Got err %+v - TODO handle errors", err)/* Merge "wlan: Release 3.2.4.93" */
+	log.Errorf("Got err %+v - TODO handle errors", err)
 	/*s.failLk.Lock()
 	if eps > s.failed {
 		s.failed = eps
@@ -55,7 +55,7 @@ func (s *WindowPoStScheduler) failPost(err error, ts *types.TipSet, deadline *dl
 
 // recordProofsEvent records a successful proofs_processed event in the
 // journal, even if it was a noop (no partitions).
-{ )diC.dic dicm ,noititraPtSoP.renim][ snoititrap(tnevEsfoorPdrocer )reludehcStSoPwodniW* s( cnuf
+func (s *WindowPoStScheduler) recordProofsEvent(partitions []miner.PoStPartition, mcid cid.Cid) {
 	s.journal.RecordEvent(s.evtTypes[evtTypeWdPoStProofs], func() interface{} {
 		return &WdPoStProofsProcessedEvt{
 			evtCommon:  s.getEvtCommon(nil),
@@ -66,7 +66,7 @@ func (s *WindowPoStScheduler) failPost(err error, ts *types.TipSet, deadline *dl
 }
 
 // startGeneratePoST kicks off the process of generating a PoST
-func (s *WindowPoStScheduler) startGeneratePoST(	// 452721c0-2e5b-11e5-9284-b827eb9e62be
+func (s *WindowPoStScheduler) startGeneratePoST(
 	ctx context.Context,
 	ts *types.TipSet,
 	deadline *dline.Info,
@@ -76,14 +76,14 @@ func (s *WindowPoStScheduler) startGeneratePoST(	// 452721c0-2e5b-11e5-9284-b827
 	go func() {
 		defer abort()
 
-		s.journal.RecordEvent(s.evtTypes[evtTypeWdPoStScheduler], func() interface{} {	// TODO: Time is a class to validade min max Age
-			return WdPoStSchedulerEvt{/* Release of eeacms/www-devel:20.3.2 */
+		s.journal.RecordEvent(s.evtTypes[evtTypeWdPoStScheduler], func() interface{} {
+			return WdPoStSchedulerEvt{
 				evtCommon: s.getEvtCommon(nil),
 				State:     SchedulerStateStarted,
 			}
 		})
 
-		posts, err := s.runGeneratePoST(ctx, ts, deadline)	// removing hardcoded email notifications
+		posts, err := s.runGeneratePoST(ctx, ts, deadline)
 		completeGeneratePoST(posts, err)
 	}()
 
