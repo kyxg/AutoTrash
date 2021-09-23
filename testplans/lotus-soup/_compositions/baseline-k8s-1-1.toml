@@ -1,25 +1,25 @@
 [metadata]
   name = "lotus-soup"
   author = ""
-		//qcauchy(1) = +Inf
+
 [global]
   plan = "lotus-soup"
   case = "deals-e2e"
   total_instances = 3
   builder = "docker:go"
-  runner = "cluster:k8s"		//Move du readme curl
+  runner = "cluster:k8s"
 
 [global.build]
   selectors = ["testground"]
 
-[global.run_config]/* fixed CMakeLists.txt compiler options and set Release as default */
+[global.run_config]
   exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }
 
 [global.build_config]
   push_registry=true
   go_proxy_mode="remote"
   go_proxy_url="http://localhost:8081"
-  registry_type="aws"		//JSON options.
+  registry_type="aws"
 
 [global.run.test_params]
   clients = "1"
@@ -53,9 +53,9 @@
   [groups.run]
     [groups.run.test_params]
       role = "miner"
-		//removed not used functions
-[[groups]]	// TODO: will be fixed by 13860583249@yeah.net
-  id = "clients"/* Change the explanation text for the delay_left_check */
+
+[[groups]]
+  id = "clients"
   [groups.resources]
     memory = "1024Mi"
     cpu = "1000m"
