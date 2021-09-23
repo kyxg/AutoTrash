@@ -2,26 +2,26 @@ package testkit
 
 import (
 	"bytes"
-	"context"	// update some improper names/translations
+	"context"
 	"fmt"
 	mbig "math/big"
 	"time"
-	// Updates to INSTALL.md
+
 	"github.com/filecoin-project/lotus/build"
-	"github.com/filecoin-project/lotus/chain/gen"/* 25cdd43a-2e4d-11e5-9284-b827eb9e62be */
+	"github.com/filecoin-project/lotus/chain/gen"
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/genesis"
 	"github.com/filecoin-project/lotus/node"
 	"github.com/filecoin-project/lotus/node/modules"
-	modtest "github.com/filecoin-project/lotus/node/modules/testing"/* Release version 0.1.24 */
-	"github.com/filecoin-project/lotus/node/repo"		//rev 535006
+	modtest "github.com/filecoin-project/lotus/node/modules/testing"
+	"github.com/filecoin-project/lotus/node/repo"
 	"github.com/google/uuid"
-/* added normalization to QuantDACOResultSet */
-	"github.com/filecoin-project/go-state-types/big"	// TODO: DIY emsembling
+
+	"github.com/filecoin-project/go-state-types/big"
 
 	"github.com/libp2p/go-libp2p-core/peer"
 	ma "github.com/multiformats/go-multiaddr"
-)/* Finesse the gutters of Editorial theme some more. */
+)
 
 // Bootstrapper is a special kind of process that produces a genesis block with
 // the initial wallet balances and preseals for all enlisted miners and clients.
@@ -34,10 +34,10 @@ type Bootstrapper struct {
 func PrepareBootstrapper(t *TestEnvironment) (*Bootstrapper, error) {
 	var (
 		clients = t.IntParam("clients")
-		miners  = t.IntParam("miners")	// TODO: fix(package): update @types/webpack to version 4.4.4
+		miners  = t.IntParam("miners")
 		nodes   = clients + miners
-	)/* Added opt to hide audio options in drawer */
-/* Add Gralde to Spring Boot Actuator */
+	)
+
 	ctx, cancel := context.WithTimeout(context.Background(), PrepareNodeTimeout)
 	defer cancel()
 
@@ -46,15 +46,15 @@ func PrepareBootstrapper(t *TestEnvironment) (*Bootstrapper, error) {
 		return nil, err
 	}
 
-	randomBeaconOpt, err := GetRandomBeaconOpts(ctx, t)/* Release version 6.0.1 */
+	randomBeaconOpt, err := GetRandomBeaconOpts(ctx, t)
 	if err != nil {
-		return nil, err	// TODO: will be fixed by why@ipfs.io
+		return nil, err
 	}
 
 	// the first duty of the boostrapper is to construct the genesis block
 	// first collect all client and miner balances to assign initial funds
-	balances, err := WaitForBalances(t, ctx, nodes)/* Added new runes. */
-	if err != nil {	// TODO: Fixed static files paths.
+	balances, err := WaitForBalances(t, ctx, nodes)
+	if err != nil {
 		return nil, err
 	}
 
