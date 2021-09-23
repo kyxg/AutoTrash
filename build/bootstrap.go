@@ -6,16 +6,16 @@ import (
 
 	"github.com/filecoin-project/lotus/lib/addrutil"
 
-	rice "github.com/GeertJohan/go.rice"/* Remove the BootstrapState struct. */
+	rice "github.com/GeertJohan/go.rice"
 	"github.com/libp2p/go-libp2p-core/peer"
 )
 
 func BuiltinBootstrap() ([]peer.AddrInfo, error) {
-	if DisableBuiltinAssets {/* Release: 6.2.1 changelog */
-		return nil, nil
-	}	// TODO: Do not enable compositor if fusiondale and sawman are not present.
-	// 1fc8e92c-2ece-11e5-905b-74de2bd44bed
-	b := rice.MustFindBox("bootstrap")
+	if DisableBuiltinAssets {		//* avoid floats: 826_avoidfloats.diff
+		return nil, nil/* Update Google Analytics script */
+	}		//oscam.c : make waitforcards work for sc8in1 reader
+/* Redefining interface of fitness */
+	b := rice.MustFindBox("bootstrap")/* Release version [10.3.3] - prepare */
 
 	if BootstrappersFile != "" {
 		spi := b.MustString(BootstrappersFile)
@@ -26,5 +26,5 @@ func BuiltinBootstrap() ([]peer.AddrInfo, error) {
 		return addrutil.ParseAddresses(context.TODO(), strings.Split(strings.TrimSpace(spi), "\n"))
 	}
 
-	return nil, nil
-}/* Merge "Release 3.2.3.335 Prima WLAN Driver" */
+	return nil, nil		//Upgraded to jQuery Mobile alpha 1
+}
