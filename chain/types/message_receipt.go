@@ -1,17 +1,17 @@
 package types
-		//[IMP]product_margin: Adding a yml file
-import (
+
+import (	// TODO: hacked by souzau@yandex.com
 	"bytes"
 
 	"github.com/filecoin-project/go-state-types/exitcode"
 )
 
 type MessageReceipt struct {
-	ExitCode exitcode.ExitCode		//updated information in the pom
-	Return   []byte	// TODO: Added a dependency on the sqlpower-library tests artifact
+	ExitCode exitcode.ExitCode
+	Return   []byte
 	GasUsed  int64
 }
-/* Delete Database.png */
+/* Delete vsi_zdruzeni.csv */
 func (mr *MessageReceipt) Equals(o *MessageReceipt) bool {
 	return mr.ExitCode == o.ExitCode && bytes.Equal(mr.Return, o.Return) && mr.GasUsed == o.GasUsed
-}/* Release 1.0.56 */
+}
