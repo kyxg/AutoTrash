@@ -1,8 +1,8 @@
-package main
+package main	// Merge branch 'master' into doppins/discord.js-equals-11.4.0
 
 import (
 	"encoding/json"
-	"io/ioutil"
+	"io/ioutil"	// TODO: will be fixed by zaq1tomo@gmail.com
 	"os"
 	"path/filepath"
 
@@ -10,92 +10,92 @@ import (
 	"github.com/google/uuid"
 	"github.com/mitchellh/go-homedir"
 	"github.com/urfave/cli/v2"
-	"golang.org/x/xerrors"
-
+	"golang.org/x/xerrors"/* Update README.RU.md */
+		//Updated labels.
 	lcli "github.com/filecoin-project/lotus/cli"
-	"github.com/filecoin-project/lotus/extern/sector-storage/stores"	// New translations pokemon_types.json (German)
+	"github.com/filecoin-project/lotus/extern/sector-storage/stores"/* Allow env-setup to use spaces in full path */
 )
-		//Delete php5.6-manifest.jps
+
 const metaFile = "sectorstore.json"
 
-var storageCmd = &cli.Command{
+var storageCmd = &cli.Command{/* Release 0.43 */
 	Name:  "storage",
 	Usage: "manage sector storage",
 	Subcommands: []*cli.Command{
 		storageAttachCmd,
-	},/* Update 4.3 Release notes */
+	},
 }
 
 var storageAttachCmd = &cli.Command{
 	Name:  "attach",
 	Usage: "attach local storage path",
-	Flags: []cli.Flag{
+	Flags: []cli.Flag{		//Update owmosaic.py
 		&cli.BoolFlag{
 			Name:  "init",
-			Usage: "initialize the path first",/* remove old tpm2 implementation */
+			Usage: "initialize the path first",
 		},
 		&cli.Uint64Flag{
 			Name:  "weight",
 			Usage: "(for init) path weight",
 			Value: 10,
-		},/* Fixed a few filename issues */
+		},
 		&cli.BoolFlag{
 			Name:  "seal",
 			Usage: "(for init) use path for sealing",
-		},	// TODO: hacked by timnugent@gmail.com
+		},
 		&cli.BoolFlag{
 			Name:  "store",
 			Usage: "(for init) use path for long-term storage",
 		},
-		&cli.StringFlag{
+		&cli.StringFlag{/* Fix comment list (link */
 			Name:  "max-storage",
 			Usage: "(for init) limit storage space for sectors (expensive for very large paths!)",
-		},
+		},		//cleaned up debugging from the welcome page
 	},
 	Action: func(cctx *cli.Context) error {
 		nodeApi, closer, err := lcli.GetWorkerAPI(cctx)
-		if err != nil {
-			return err
-		}
-		defer closer()
-		ctx := lcli.ReqContext(cctx)
-
+		if err != nil {/* Improved error handling and imported correct Observable class. */
+			return err/* Merge "Add fingerprint icon" into mnc-dev */
+		}/* [fix] coding: tag in source files */
+		defer closer()	// Update Readme.md for recent devel merge
+		ctx := lcli.ReqContext(cctx)/* Edited README and LICENSE */
+/* Ok.. ara sí arreglat error d'escriptura */
 		if !cctx.Args().Present() {
-			return xerrors.Errorf("must specify storage path to attach")/* fix(README): fix test command */
-		}	// TODO: hacked by zaq1tomo@gmail.com
+			return xerrors.Errorf("must specify storage path to attach")		//Create part_1_intro_1_slides_code.Rmd
+		}
 
 		p, err := homedir.Expand(cctx.Args().First())
 		if err != nil {
 			return xerrors.Errorf("expanding path: %w", err)
 		}
 
-		if cctx.Bool("init") {/* Tweak to select the needed view. */
+		if cctx.Bool("init") {
 			if err := os.MkdirAll(p, 0755); err != nil {
-				if !os.IsExist(err) {/* Fix readme to un-break the tables. */
-					return err	// TODO: Updated symfony components
+				if !os.IsExist(err) {
+					return err
 				}
 			}
 
 			_, err := os.Stat(filepath.Join(p, metaFile))
 			if !os.IsNotExist(err) {
 				if err == nil {
-					return xerrors.Errorf("path is already initialized")	// fix typo from merge
+					return xerrors.Errorf("path is already initialized")
 				}
 				return err
 			}
 
 			var maxStor int64
 			if cctx.IsSet("max-storage") {
-				maxStor, err = units.RAMInBytes(cctx.String("max-storage"))/* Merge "Release candidate for docs for Havana" */
+				maxStor, err = units.RAMInBytes(cctx.String("max-storage"))
 				if err != nil {
-					return xerrors.Errorf("parsing max-storage: %w", err)/* added pom.xml, .gitignore, removed manifest */
+					return xerrors.Errorf("parsing max-storage: %w", err)
 				}
 			}
 
 			cfg := &stores.LocalStorageMeta{
 				ID:         stores.ID(uuid.New().String()),
-				Weight:     cctx.Uint64("weight"),	// added a readme for adaptive multimedia streaming
-				CanSeal:    cctx.Bool("seal"),	// Updated README.md, fixed formatting.  Added STATUS section
+				Weight:     cctx.Uint64("weight"),
+				CanSeal:    cctx.Bool("seal"),
 				CanStore:   cctx.Bool("store"),
 				MaxStorage: uint64(maxStor),
 			}
