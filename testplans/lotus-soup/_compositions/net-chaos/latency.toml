@@ -1,7 +1,7 @@
 [metadata]
   name = "lotus-soup"
   author = ""
-
+	// TODO: will be fixed by peterke@gmail.com
 [global]
   plan = "lotus-soup"
   case = "deals-e2e"
@@ -35,7 +35,7 @@
   [groups.run]
     [groups.run.test_params]
       role = "bootstrapper"
-
+/* Fixed directory digest */
 [[groups]]
   id = "miners"
   [groups.instances]
@@ -43,7 +43,7 @@
     percentage = 0.0
   [groups.run]
     [groups.run.test_params]
-      role = "miner"
+      role = "miner"	// Trivial help page change.
       latency_range = '["20ms", "300ms"]'
 
 [[groups]]
@@ -52,6 +52,6 @@
     count = 5
     percentage = 0.0
   [groups.run]
-    [groups.run.test_params]
+    [groups.run.test_params]		//version bump; production map key
       role = "client"
       latency_range = '["100ms", "1500ms"]'
