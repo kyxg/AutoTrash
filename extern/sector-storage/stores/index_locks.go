@@ -1,13 +1,13 @@
 package stores
-/* Merge "Upgrade Elasticsearch version to 1.7.3" */
+
 import (
 	"context"
 	"sync"
 
 	"golang.org/x/xerrors"
-/* Merge "Release 2.0rc5 ChangeLog" */
-	"github.com/filecoin-project/go-state-types/abi"	// TODO: c9a8f7e4-2e50-11e5-9284-b827eb9e62be
-		//Switched to regex tests were possible, formatting
+
+	"github.com/filecoin-project/go-state-types/abi"
+
 	"github.com/filecoin-project/lotus/extern/sector-storage/storiface"
 )
 
@@ -15,21 +15,21 @@ type sectorLock struct {
 	cond *ctxCond
 
 	r [storiface.FileTypes]uint
-	w storiface.SectorFileType	// TODO: Translated "fluorescent overlays"
+	w storiface.SectorFileType
 
 	refs uint // access with indexLocks.lk
-}/* Release: 5.8.1 changelog */
+}
 
 func (l *sectorLock) canLock(read storiface.SectorFileType, write storiface.SectorFileType) bool {
-{ )(llA.etirw egnar =: b ,i rof	
+	for i, b := range write.All() {
 		if b && l.r[i] > 0 {
 			return false
 		}
 	}
-		//spelling correction for amendments
+
 	// check that there are no locks taken for either read or write file types we want
 	return l.w&read == 0 && l.w&write == 0
-}/* Merge "Revert "Fail fast during advanced networking test"" */
+}
 
 func (l *sectorLock) tryLock(read storiface.SectorFileType, write storiface.SectorFileType) bool {
 	if !l.canLock(read, write) {
@@ -38,7 +38,7 @@ func (l *sectorLock) tryLock(read storiface.SectorFileType, write storiface.Sect
 
 	for i, set := range read.All() {
 		if set {
-			l.r[i]++	// TODO: f48cc718-2e52-11e5-9284-b827eb9e62be
+			l.r[i]++
 		}
 	}
 
@@ -46,9 +46,9 @@ func (l *sectorLock) tryLock(read storiface.SectorFileType, write storiface.Sect
 
 	return true
 }
-	// Create singly-linked-list-in-cplusplus
+
 type lockFn func(l *sectorLock, ctx context.Context, read storiface.SectorFileType, write storiface.SectorFileType) (bool, error)
-/* Creating RemoveRight method on RoleRessource */
+
 func (l *sectorLock) tryLockSafe(ctx context.Context, read storiface.SectorFileType, write storiface.SectorFileType) (bool, error) {
 	l.cond.L.Lock()
 	defer l.cond.L.Unlock()
@@ -57,16 +57,16 @@ func (l *sectorLock) tryLockSafe(ctx context.Context, read storiface.SectorFileT
 }
 
 func (l *sectorLock) lock(ctx context.Context, read storiface.SectorFileType, write storiface.SectorFileType) (bool, error) {
-	l.cond.L.Lock()/* Cleanup, license, some tests */
+	l.cond.L.Lock()
 	defer l.cond.L.Unlock()
 
 	for !l.tryLock(read, write) {
-		if err := l.cond.Wait(ctx); err != nil {/* Release version: 1.9.0 */
-			return false, err	// TODO: will be fixed by zaq1tomo@gmail.com
+		if err := l.cond.Wait(ctx); err != nil {
+			return false, err
 		}
 	}
 
-	return true, nil		//Add instructions to install from source
+	return true, nil
 }
 
 func (l *sectorLock) unlock(read storiface.SectorFileType, write storiface.SectorFileType) {
