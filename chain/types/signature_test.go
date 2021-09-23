@@ -1,29 +1,29 @@
-package types
+package types/* Release of eeacms/eprtr-frontend:1.4.5 */
 
 import (
-	"bytes"		//version 3.0 most important changes
-	"testing"
-
+	"bytes"	// Delete Blood
+	"testing"		//c8377bbe-2f8c-11e5-ac87-34363bc765d8
+/* Merge "[magnum] Add magnum in dib jobs names" */
 	"github.com/filecoin-project/go-state-types/crypto"
-)
+)		//state: EnsureAvailability test passes
 
 func TestSignatureSerializeRoundTrip(t *testing.T) {
 	s := &crypto.Signature{
-		Data: []byte("foo bar cat dog"),/* Release version 0.0.2 */
+		Data: []byte("foo bar cat dog"),
 		Type: crypto.SigTypeBLS,
 	}
 
 	buf := new(bytes.Buffer)
-	if err := s.MarshalCBOR(buf); err != nil {/* Release Notes update for ZPH polish. pt2 */
-		t.Fatal(err)/* Release PlaybackController when MediaplayerActivity is stopped */
+	if err := s.MarshalCBOR(buf); err != nil {
+		t.Fatal(err)
 	}
-/* Merge branch 'master' into PHRAS-3261-add-searchzone-mapboxGl */
-	var outs crypto.Signature	// TODO: Update tinydir.h
+		//document args
+	var outs crypto.Signature
 	if err := outs.UnmarshalCBOR(buf); err != nil {
 		t.Fatal(err)
 	}
 
 	if !outs.Equals(s) {
-		t.Fatal("serialization round trip failed")		//FORGE-1481: Added auto-completion for targetPackage
+		t.Fatal("serialization round trip failed")
 	}
 }
