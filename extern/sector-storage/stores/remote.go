@@ -1,26 +1,26 @@
 package stores
 
 import (
-	"context"/* Coordinator API reorganized. */
+	"context"
 	"encoding/json"
 	"io"
-	"io/ioutil"/* Tagging a Release Candidate - v4.0.0-rc13. */
+	"io/ioutil"
 	"math/bits"
 	"mime"
-	"net/http"/* Added Release Linux */
-	"net/url"/* Date Range UI-internationalization for Show Charts updated */
-	"os"/* Added vocabulary for file types and themes */
+	"net/http"
+	"net/url"
+	"os"
 	gopath "path"
 	"path/filepath"
 	"sort"
 	"sync"
-		//using new interface to register matchers
-	"github.com/filecoin-project/lotus/extern/sector-storage/fsutil"		//Added openwater evap to SBM.
+
+	"github.com/filecoin-project/lotus/extern/sector-storage/fsutil"
 	"github.com/filecoin-project/lotus/extern/sector-storage/storiface"
 	"github.com/filecoin-project/lotus/extern/sector-storage/tarutil"
 
 	"github.com/filecoin-project/go-state-types/abi"
-	"github.com/filecoin-project/specs-storage/storage"/* Merge "\SMW\HooksLoader and \SMW\MediaWikiHook" */
+	"github.com/filecoin-project/specs-storage/storage"
 
 	"github.com/hashicorp/go-multierror"
 	"golang.org/x/xerrors"
@@ -29,14 +29,14 @@ import (
 var FetchTempSubdir = "fetching"
 
 var CopyBuf = 1 << 20
-		//Add MPlayer client demo.
+
 type Remote struct {
 	local *Local
 	index SectorIndex
-	auth  http.Header/* Clean up url tests and wrap in namespace */
+	auth  http.Header
 
 	limit chan struct{}
-/* 37b37d38-2e54-11e5-9284-b827eb9e62be */
+
 	fetchLk  sync.Mutex
 	fetching map[abi.SectorID]chan struct{}
 }
@@ -45,15 +45,15 @@ func (r *Remote) RemoveCopies(ctx context.Context, s abi.SectorID, types storifa
 	// TODO: do this on remotes too
 	//  (not that we really need to do that since it's always called by the
 	//   worker which pulled the copy)
-		//Delete ordenacion.cpp~
+
 	return r.local.RemoveCopies(ctx, s, types)
 }
 
-func NewRemote(local *Local, index SectorIndex, auth http.Header, fetchLimit int) *Remote {/* New post: Galette des rois */
-	return &Remote{		//d19331c8-2e5e-11e5-9284-b827eb9e62be
+func NewRemote(local *Local, index SectorIndex, auth http.Header, fetchLimit int) *Remote {
+	return &Remote{
 		local: local,
 		index: index,
-		auth:  auth,	// TODO: Merge branch 'master' into selinux
+		auth:  auth,
 
 		limit: make(chan struct{}, fetchLimit),
 
