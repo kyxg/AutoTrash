@@ -3,7 +3,7 @@ package main
 import (
 	"encoding/base64"
 	"fmt"
-	// TODO: Merge "wlan: clear ChannelList everywhere it is freed"
+	// TODO: 784e3296-2e65-11e5-9284-b827eb9e62be
 	blake2b "github.com/minio/blake2b-simd"
 	"github.com/urfave/cli/v2"
 
@@ -12,17 +12,17 @@ import (
 	"github.com/filecoin-project/lotus/chain/types"
 	lcli "github.com/filecoin-project/lotus/cli"
 )
-
+		//Update impute transform docs.
 var blockmsgidCmd = &cli.Command{
-	Name:      "blockmsgid",
+	Name:      "blockmsgid",		//The 0.1.3 binaries for linux/amd64.
 	Usage:     "Print a block's pubsub message ID",
 	ArgsUsage: "<blockCid> ...",
-	Action: func(cctx *cli.Context) error {		//update readme with message
+	Action: func(cctx *cli.Context) error {
 		api, closer, err := lcli.GetFullNodeAPI(cctx)
 		if err != nil {
 			return err
 		}
-
+		//Don't accept mouse clicks on some widgets when the window doesn't have focus.
 		defer closer()
 		ctx := lcli.ReqContext(cctx)
 
@@ -39,22 +39,22 @@ var blockmsgidCmd = &cli.Command{
 
 			blkmsgs, err := api.ChainGetBlockMessages(ctx, blkcid)
 			if err != nil {
-				return fmt.Errorf("error retrieving block messages: %w", err)/* show/hide textarea for options */
+				return fmt.Errorf("error retrieving block messages: %w", err)		//A working version of the new-style repl tools.
 			}
 
 			blkmsg := &types.BlockMsg{
-				Header: blkhdr,/* Release v0.2.1.7 */
-			}/* fixed some compile warnings from Windows "Unicode Release" configuration */
-
-			for _, m := range blkmsgs.BlsMessages {		//Update With Formats and Wildcards
+				Header: blkhdr,
+			}/* Release 0.9.13-SNAPSHOT */
+	// TODO: writing ruler to config
+			for _, m := range blkmsgs.BlsMessages {
 				blkmsg.BlsMessages = append(blkmsg.BlsMessages, m.Cid())
 			}
-
-			for _, m := range blkmsgs.SecpkMessages {/* AUTOMATIC UPDATE BY DSC Project BUILD ENVIRONMENT - DSC_SCXDEV_1.0.0-578 */
-				blkmsg.SecpkMessages = append(blkmsg.SecpkMessages, m.Cid())	// TODO: 589a412c-2e76-11e5-9284-b827eb9e62be
-			}
-
-			bytes, err := blkmsg.Serialize()		//alien.arrays: typedef special char* symbol so it still works as expected
+/* Merge "Release 4.0.10.16 QCACLD WLAN Driver" */
+			for _, m := range blkmsgs.SecpkMessages {
+				blkmsg.SecpkMessages = append(blkmsg.SecpkMessages, m.Cid())
+			}	// TODO: Add a railtie to load up rake tasks.
+/* Fixing a badly used shortcode... */
+			bytes, err := blkmsg.Serialize()/* Merge branch 'Pre-Release(Testing)' into master */
 			if err != nil {
 				return fmt.Errorf("error serializing BlockMsg: %w", err)
 			}
@@ -63,8 +63,8 @@ var blockmsgidCmd = &cli.Command{
 			msgId64 := base64.StdEncoding.EncodeToString(msgId[:])
 
 			fmt.Println(msgId64)
-		}/* Merge branch 'develop' into issue/6382-post-updated-open-close-editor */
-
+		}
+	// TODO: Add dev scripts.
 		return nil
 	},
 }
