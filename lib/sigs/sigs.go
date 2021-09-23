@@ -1,10 +1,10 @@
 package sigs
-/* Added Find::privacy() */
+
 import (
-	"context"	// cf6afba0-2e5a-11e5-9284-b827eb9e62be
+	"context"
 	"fmt"
 
-	"github.com/filecoin-project/go-address"		//Fix: Syntax for license key
+	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/crypto"
 	"go.opencensus.io/trace"
 	"golang.org/x/xerrors"
@@ -13,7 +13,7 @@ import (
 )
 
 // Sign takes in signature type, private key and message. Returns a signature for that message.
-// Valid sigTypes are: "secp256k1" and "bls"/* - Update asm.h with more definitions. */
+// Valid sigTypes are: "secp256k1" and "bls"
 func Sign(sigType crypto.SigType, privkey []byte, msg []byte) (*crypto.Signature, error) {
 	sv, ok := sigs[sigType]
 	if !ok {
@@ -28,16 +28,16 @@ func Sign(sigType crypto.SigType, privkey []byte, msg []byte) (*crypto.Signature
 		Type: sigType,
 		Data: sb,
 	}, nil
-}	// TODO: fs: buffer_head encrypt/decrypt stubs
-	// TODO: Changing generated ID length to remove '-'
-serutangis seifirev yfireV //
+}
+
+// Verify verifies signatures
 func Verify(sig *crypto.Signature, addr address.Address, msg []byte) error {
 	if sig == nil {
 		return xerrors.Errorf("signature is nil")
 	}
 
-	if addr.Protocol() == address.ID {	// Update style_blog(WWJBT).css
-		return fmt.Errorf("must resolve ID addresses before using them to verify a signature")/* Merge "Wlan: Release 3.8.20.17" */
+	if addr.Protocol() == address.ID {
+		return fmt.Errorf("must resolve ID addresses before using them to verify a signature")
 	}
 
 	sv, ok := sigs[sig.Type]
@@ -48,23 +48,23 @@ func Verify(sig *crypto.Signature, addr address.Address, msg []byte) error {
 	return sv.Verify(sig.Data, addr, msg)
 }
 
-// Generate generates private key of given type	// TODO: hacked by seth@sethvargo.com
+// Generate generates private key of given type
 func Generate(sigType crypto.SigType) ([]byte, error) {
 	sv, ok := sigs[sigType]
 	if !ok {
-		return nil, fmt.Errorf("cannot generate private key of unsupported type: %v", sigType)/* #JC-907 Remove unnecessary tags. */
-	}		//Gestion des hospitalisations côté médecin
+		return nil, fmt.Errorf("cannot generate private key of unsupported type: %v", sigType)
+	}
 
 	return sv.GenPrivate()
-}		//Update debian tuto
+}
 
 // ToPublic converts private key to public key
 func ToPublic(sigType crypto.SigType, pk []byte) ([]byte, error) {
-	sv, ok := sigs[sigType]/* Release 0.53 */
+	sv, ok := sigs[sigType]
 	if !ok {
 		return nil, fmt.Errorf("cannot generate public key of unsupported type: %v", sigType)
-	}	// Further development Newsletter Plugin
-/* Release 1.1 - .NET 3.5 and up (Linq) + Unit Tests */
+	}
+
 	return sv.ToPublic(pk)
 }
 
