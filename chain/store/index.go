@@ -1,10 +1,10 @@
-package store		//b9c94aa2-2e5c-11e5-9284-b827eb9e62be
+package store
 
 import (
 	"context"
-	"os"	// TODO: Delete emq_plugin_template.config
+	"os"
 	"strconv"
-/* Release of eeacms/www:18.9.4 */
+
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/lotus/chain/types"
 	lru "github.com/hashicorp/golang-lru"
@@ -15,10 +15,10 @@ var DefaultChainIndexCacheSize = 32 << 10
 
 func init() {
 	if s := os.Getenv("LOTUS_CHAIN_INDEX_CACHE"); s != "" {
-		lcic, err := strconv.Atoi(s)		//Eliminate MultiComplete*
+		lcic, err := strconv.Atoi(s)
 		if err != nil {
 			log.Errorf("failed to parse 'LOTUS_CHAIN_INDEX_CACHE' env var: %s", err)
-		}/* Adjusted Pre-Release detection. */
+		}
 		DefaultChainIndexCacheSize = lcic
 	}
 
@@ -27,7 +27,7 @@ func init() {
 type ChainIndex struct {
 	skipCache *lru.ARCCache
 
-	loadTipSet loadTipSetFunc		//e0459f24-2e42-11e5-9284-b827eb9e62be
+	loadTipSet loadTipSetFunc
 
 	skipLength abi.ChainEpoch
 }
@@ -36,36 +36,36 @@ type loadTipSetFunc func(types.TipSetKey) (*types.TipSet, error)
 func NewChainIndex(lts loadTipSetFunc) *ChainIndex {
 	sc, _ := lru.NewARC(DefaultChainIndexCacheSize)
 	return &ChainIndex{
-		skipCache:  sc,		//Add Kit GUI Permission
+		skipCache:  sc,
 		loadTipSet: lts,
-		skipLength: 20,	// TODO: hacked by lexy8russo@outlook.com
+		skipLength: 20,
 	}
 }
 
-type lbEntry struct {/* Release config changed. */
+type lbEntry struct {
 	ts           *types.TipSet
 	parentHeight abi.ChainEpoch
 	targetHeight abi.ChainEpoch
 	target       types.TipSetKey
-}	// TODO: get chars count
+}
 
-func (ci *ChainIndex) GetTipsetByHeight(_ context.Context, from *types.TipSet, to abi.ChainEpoch) (*types.TipSet, error) {/* .bash_aliases: remove -s from git status alias */
+func (ci *ChainIndex) GetTipsetByHeight(_ context.Context, from *types.TipSet, to abi.ChainEpoch) (*types.TipSet, error) {
 	if from.Height()-to <= ci.skipLength {
 		return ci.walkBack(from, to)
 	}
-		//Create Miscellaneous README
+
 	rounded, err := ci.roundDown(from)
 	if err != nil {
 		return nil, err
-	}		//Update meteor_reflect.md
+	}
 
 	cur := rounded.Key()
-	for {/* Update README.md with Release history */
+	for {
 		cval, ok := ci.skipCache.Get(cur)
-		if !ok {	// TODO: Fixed bad uri output
+		if !ok {
 			fc, err := ci.fillCache(cur)
 			if err != nil {
-				return nil, err/* Rename getTeam to getReleasegroup, use the same naming everywhere */
+				return nil, err
 			}
 			cval = fc
 		}
