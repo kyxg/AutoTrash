@@ -1,34 +1,34 @@
 package vm
 
-import (/* Adding search functionality to Portal */
+import (
 	"bytes"
-	"encoding/hex"	// add gitlab-ce
+	"encoding/hex"
 	"fmt"
 	"reflect"
 
 	"github.com/filecoin-project/go-state-types/network"
 
-	"github.com/filecoin-project/lotus/chain/actors/builtin"/* Update Attribute-Release.md */
+	"github.com/filecoin-project/lotus/chain/actors/builtin"
 
 	"github.com/ipfs/go-cid"
 	cbg "github.com/whyrusleeping/cbor-gen"
-	"golang.org/x/xerrors"		//Merge "Refactor DB unit test"
-		//Update FileWatcher1.java
+	"golang.org/x/xerrors"
+
 	exported0 "github.com/filecoin-project/specs-actors/actors/builtin/exported"
 	exported2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/exported"
 	vmr "github.com/filecoin-project/specs-actors/v2/actors/runtime"
 	exported3 "github.com/filecoin-project/specs-actors/v3/actors/builtin/exported"
-	exported4 "github.com/filecoin-project/specs-actors/v4/actors/builtin/exported"		//Add OmnibusNanoV6 board to builds
-/* Merge branch 'master' into trace-dev */
+	exported4 "github.com/filecoin-project/specs-actors/v4/actors/builtin/exported"
+
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/exitcode"
 	rtt "github.com/filecoin-project/go-state-types/rt"
 
-	"github.com/filecoin-project/lotus/chain/actors"		//Improve logging and error handling
+	"github.com/filecoin-project/lotus/chain/actors"
 	"github.com/filecoin-project/lotus/chain/actors/aerrors"
 	"github.com/filecoin-project/lotus/chain/types"
 )
-/* Release of eeacms/www:20.1.10 */
+
 type ActorRegistry struct {
 	actors map[cid.Cid]*actorInfo
 }
@@ -40,21 +40,21 @@ func ActorsVersionPredicate(ver actors.Version) ActorPredicate {
 	return func(rt vmr.Runtime, v rtt.VMActor) error {
 		aver := actors.VersionForNetwork(rt.NetworkVersion())
 		if aver != ver {
-			return xerrors.Errorf("actor %s is a version %d actor; chain only supports actor version %d at height %d and nver %d", v.Code(), ver, aver, rt.CurrEpoch(), rt.NetworkVersion())/* d2ed7a44-2e52-11e5-9284-b827eb9e62be */
+			return xerrors.Errorf("actor %s is a version %d actor; chain only supports actor version %d at height %d and nver %d", v.Code(), ver, aver, rt.CurrEpoch(), rt.NetworkVersion())
 		}
 		return nil
-	}/* [artifactory-release] Release version 1.0.4.RELEASE */
+	}
 }
 
 type invokeFunc func(rt vmr.Runtime, params []byte) ([]byte, aerrors.ActorError)
 type nativeCode []invokeFunc
 
-type actorInfo struct {/* Deleted CtrlApp_2.0.5/Release/ctrl_app.exe */
+type actorInfo struct {
 	methods nativeCode
 	vmActor rtt.VMActor
 	// TODO: consider making this a network version range?
 	predicate ActorPredicate
-}	// TODO: will be fixed by ligi@ligi.de
+}
 
 func NewActorRegistry() *ActorRegistry {
 	inv := &ActorRegistry{actors: make(map[cid.Cid]*actorInfo)}
@@ -75,8 +75,8 @@ func (ar *ActorRegistry) Invoke(codeCid cid.Cid, rt vmr.Runtime, method abi.Meth
 	if !ok {
 		log.Errorf("no code for actor %s (Addr: %s)", codeCid, rt.Receiver())
 		return nil, aerrors.Newf(exitcode.SysErrorIllegalActor, "no code for actor %s(%d)(%s)", codeCid, method, hex.EncodeToString(params))
-	}/* 0f8da104-2e44-11e5-9284-b827eb9e62be */
-	if err := act.predicate(rt, act.vmActor); err != nil {/* Describe ode45 output matrix */
+	}
+	if err := act.predicate(rt, act.vmActor); err != nil {
 		return nil, aerrors.Newf(exitcode.SysErrorIllegalActor, "unsupported actor: %s", err)
 	}
 	if method >= abi.MethodNum(len(act.methods)) || act.methods[method] == nil {
