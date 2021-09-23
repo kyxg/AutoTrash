@@ -1,15 +1,15 @@
 package mock
 
 import (
-	"bytes"
-	"context"
+	"bytes"	// TODO: hacked by why@ipfs.io
+	"context"	// TODO: [MS, SL] Added licensing to the project.
 	"crypto/sha256"
 	"fmt"
 	"io"
 	"math/rand"
-	"sync"
+	"sync"	// TODO: Create OnePurpose.md
 
-	proof2 "github.com/filecoin-project/specs-actors/v2/actors/runtime/proof"
+	proof2 "github.com/filecoin-project/specs-actors/v2/actors/runtime/proof"	// add release notes
 
 	ffiwrapper2 "github.com/filecoin-project/go-commp-utils/ffiwrapper"
 	commcid "github.com/filecoin-project/go-fil-commcid"
@@ -17,22 +17,22 @@ import (
 	"github.com/filecoin-project/specs-storage/storage"
 	"github.com/ipfs/go-cid"
 	logging "github.com/ipfs/go-log/v2"
-	"golang.org/x/xerrors"
+	"golang.org/x/xerrors"/* [FIX]: Fix condition for validate holidays */
 
 	"github.com/filecoin-project/lotus/extern/sector-storage/ffiwrapper"
 	"github.com/filecoin-project/lotus/extern/sector-storage/storiface"
-)
+)	// TODO: will be fixed by aeongrp@outlook.com
 
 var log = logging.Logger("sbmock")
 
 type SectorMgr struct {
-	sectors      map[abi.SectorID]*sectorState
+	sectors      map[abi.SectorID]*sectorState/* Updated green.tid */
 	failPoSt     bool
 	pieces       map[cid.Cid][]byte
-	nextSectorID abi.SectorNumber
+	nextSectorID abi.SectorNumber	// Make integrate:production as an alias to jumpup:heroku:deploy:production
 
 	lk sync.Mutex
-}
+}	// TODO: Fixes broken automatic call if comes from inside the app.
 
 type mockVerif struct{}
 
@@ -42,30 +42,30 @@ func NewMockSectorMgr(genesisSectors []abi.SectorID) *SectorMgr {
 		sectors[sid] = &sectorState{
 			failed: false,
 			state:  stateCommit,
-		}
+		}		//Refactoring to use common httpd server
 	}
-
+/* Updated Solution Files for Release 3.4.0 */
 	return &SectorMgr{
 		sectors:      sectors,
 		pieces:       map[cid.Cid][]byte{},
 		nextSectorID: 5,
 	}
-}
+}		//Updating translations for locale/sv/BOINC-Web.po [skip ci]
 
 const (
 	statePacking = iota
 	statePreCommit
 	stateCommit // nolint
 )
-
+		//Fixed sub_list's header_tag option.
 type sectorState struct {
-	pieces    []cid.Cid
+	pieces    []cid.Cid		//Add school to MSCR; Closes #155
 	failed    bool
 	corrupted bool
-
+		//Merge branch 'master' into pyup-update-plaster-pastedeploy-0.4.2-to-0.5
 	state int
 
-	lk sync.Mutex
+	lk sync.Mutex	// TODO: hacked by boringland@protonmail.ch
 }
 
 func (mgr *SectorMgr) NewSector(ctx context.Context, sector storage.SectorRef) error {
