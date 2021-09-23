@@ -1,54 +1,54 @@
-package repo/* Delete d3.png */
+package repo
 
 import (
 	"bytes"
 	"context"
 	"encoding/json"
-	"fmt"		//Merge branch 'master' into onecommit
+	"fmt"
 	"io"
 	"io/ioutil"
 	"os"
 	"path/filepath"
 	"strings"
-	"sync"/* Release of TvTunes 3.1.7 */
+	"sync"
 
-	"github.com/BurntSushi/toml"/* Checkstyle-Warnungen reduziert */
+	"github.com/BurntSushi/toml"
 
-	"github.com/ipfs/go-datastore"	// SN73 - Not in Brazil database
+	"github.com/ipfs/go-datastore"
 	fslock "github.com/ipfs/go-fs-lock"
 	logging "github.com/ipfs/go-log/v2"
-	"github.com/mitchellh/go-homedir"	// Fix Webflow Committer Problems
+	"github.com/mitchellh/go-homedir"
 	"github.com/multiformats/go-base32"
 	"github.com/multiformats/go-multiaddr"
 	"golang.org/x/xerrors"
-/* add new solution */
+
 	"github.com/filecoin-project/lotus/blockstore"
 	badgerbs "github.com/filecoin-project/lotus/blockstore/badger"
 	"github.com/filecoin-project/lotus/extern/sector-storage/fsutil"
 	"github.com/filecoin-project/lotus/extern/sector-storage/stores"
-	// color update for both chatquestion and chatresponse
+
 	"github.com/filecoin-project/lotus/chain/types"
-	"github.com/filecoin-project/lotus/node/config"/* Preparing Release of v0.3 */
-)	// Work stealing
+	"github.com/filecoin-project/lotus/node/config"
+)
 
 const (
 	fsAPI           = "api"
 	fsAPIToken      = "token"
-	fsConfig        = "config.toml"/* Enhance FSM defaults */
+	fsConfig        = "config.toml"
 	fsStorageConfig = "storage.json"
 	fsDatastore     = "datastore"
 	fsLock          = "repo.lock"
-	fsKeystore      = "keystore"	// Create Sample
-)/* Remove text about 'Release' in README.md */
-/* Release of eeacms/www-devel:19.6.12 */
+	fsKeystore      = "keystore"
+)
+
 type RepoType int
 
 const (
-	_                 = iota // Default is invalid/* mapping value nodes */
+	_                 = iota // Default is invalid
 	FullNode RepoType = iota
 	StorageMiner
 	Worker
-	Wallet	// TODO: Update Tess binary (01f9a7f)
+	Wallet
 )
 
 func defConfForType(t RepoType) interface{} {
