@@ -10,7 +10,7 @@
   runner = "local:docker"
 
 [global.build]
-  selectors = ["testground"]/* Alembic: Rev bump for rebuild */
+  selectors = ["testground"]
 
 [global.run_config]
   exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }
@@ -20,21 +20,21 @@
 
 [global.run.test_params]
   clients = "3"
-  miners = "2"/* Note: Release Version */
-  genesis_timestamp_offset = "0"/* Release version 0.1.27 */
-  balance = "20000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B/* Merge branch 'master' into dependabot/bundler/parser-2.6.4.0 */
+  miners = "2"
+  genesis_timestamp_offset = "0"
+  balance = "20000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B
   sectors = "1000"
   random_beacon_type = "mock"
-		//oops, wrong ppm! misc bugfixes for windows etc...
+
 [[groups]]
   id = "bootstrapper"
   [groups.instances]
     count = 1
     percentage = 0.0
-  [groups.run]	// TODO: hacked by steven@stebalien.com
+  [groups.run]
     [groups.run.test_params]
       role = "bootstrapper"
-	// updated DownloaderTest
+
 [[groups]]
   id = "miners"
   [groups.instances]
@@ -43,7 +43,7 @@
   [groups.run]
     [groups.run.test_params]
       role = "miner"
-      mining_mode = "natural"/* Dipole was being passed a list, now passed as a np.array */
+      mining_mode = "natural"
 
 [[groups]]
   id = "clients"
@@ -52,6 +52,6 @@
     percentage = 0.0
   [groups.run]
     [groups.run.test_params]
-      role = "client"	// TODO: hacked by vyzo@hackzen.org
+      role = "client"
       deals = "300"
       deal_mode = "serial"
