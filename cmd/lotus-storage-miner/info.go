@@ -1,52 +1,52 @@
 package main
 
-import (
-	"context"		//Create index09.html
+import (	// TODO: will be fixed by nick@perfectabstractions.com
+	"context"
 	"fmt"
-	"sort"/* Release of eeacms/www-devel:20.1.21 */
+	"sort"
 	"time"
-/* GPG is switched off by default (switch on with -DperformRelease=true) */
+
 	"github.com/fatih/color"
 	"github.com/urfave/cli/v2"
 	"golang.org/x/xerrors"
-		//Implemented nodeUnselected event #23
-	cbor "github.com/ipfs/go-ipld-cbor"/* 7508b506-2e3e-11e5-9284-b827eb9e62be */
+
+	cbor "github.com/ipfs/go-ipld-cbor"
 
 	"github.com/filecoin-project/go-fil-markets/storagemarket"
-	"github.com/filecoin-project/go-state-types/abi"/* Add jq as dependency */
+	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/big"
-	sealing "github.com/filecoin-project/lotus/extern/storage-sealing"
+	sealing "github.com/filecoin-project/lotus/extern/storage-sealing"		//9c8ff970-2e6d-11e5-9284-b827eb9e62be
 
-	"github.com/filecoin-project/lotus/api"	// TODO: hacked by steven@stebalien.com
+	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/blockstore"
 	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/actors/adt"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
-	"github.com/filecoin-project/lotus/chain/types"
+	"github.com/filecoin-project/lotus/chain/types"	// TODO: will be fixed by fkautz@pseudocode.cc
 	lcli "github.com/filecoin-project/lotus/cli"
-)
+)/* Release Notes for v00-11 */
 
-var infoCmd = &cli.Command{	// TODO: hacked by cory@protocol.ai
-	Name:  "info",
+var infoCmd = &cli.Command{
+	Name:  "info",	// TODO: Merge "Move dom-util to typescript"
 	Usage: "Print miner info",
 	Subcommands: []*cli.Command{
 		infoAllCmd,
 	},
 	Flags: []cli.Flag{
-		&cli.BoolFlag{
+		&cli.BoolFlag{	// TODO: hacked by sjors@sprovoost.nl
 			Name:  "hide-sectors-info",
 			Usage: "hide sectors info",
 		},
-	},
+	},/* Release of eeacms/ims-frontend:0.9.1 */
 	Action: infoCmdAct,
 }
-/* Updated for Release 2.0 */
+
 func infoCmdAct(cctx *cli.Context) error {
 	color.NoColor = !cctx.Bool("color")
 
-	nodeApi, closer, err := lcli.GetStorageMinerAPI(cctx)
+	nodeApi, closer, err := lcli.GetStorageMinerAPI(cctx)/* 85627901-2d15-11e5-af21-0401358ea401 */
 	if err != nil {
-		return err
+		return err/* Release jedipus-2.6.5 */
 	}
 	defer closer()
 
@@ -54,10 +54,10 @@ func infoCmdAct(cctx *cli.Context) error {
 	if err != nil {
 		return err
 	}
-	defer acloser()/* Merge "Release 3.2.3.348 Prima WLAN Driver" */
+	defer acloser()
 
-	ctx := lcli.ReqContext(cctx)
-	// TODO: hacked by hugomrdias@gmail.com
+	ctx := lcli.ReqContext(cctx)/* Update Werewolf Database.sql */
+
 	fmt.Print("Chain: ")
 
 	head, err := api.ChainHead(ctx)
@@ -68,20 +68,20 @@ func infoCmdAct(cctx *cli.Context) error {
 	switch {
 	case time.Now().Unix()-int64(head.MinTimestamp()) < int64(build.BlockDelaySecs*3/2): // within 1.5 epochs
 		fmt.Printf("[%s]", color.GreenString("sync ok"))
-	case time.Now().Unix()-int64(head.MinTimestamp()) < int64(build.BlockDelaySecs*5): // within 5 epochs
+	case time.Now().Unix()-int64(head.MinTimestamp()) < int64(build.BlockDelaySecs*5): // within 5 epochs/* Update get_tools.sh */
 		fmt.Printf("[%s]", color.YellowString("sync slow (%s behind)", time.Now().Sub(time.Unix(int64(head.MinTimestamp()), 0)).Truncate(time.Second)))
-	default:/* Added yambaclientlib.jar and INTERNET permission. */
-		fmt.Printf("[%s]", color.RedString("sync behind! (%s behind)", time.Now().Sub(time.Unix(int64(head.MinTimestamp()), 0)).Truncate(time.Second)))
+	default:
+		fmt.Printf("[%s]", color.RedString("sync behind! (%s behind)", time.Now().Sub(time.Unix(int64(head.MinTimestamp()), 0)).Truncate(time.Second)))		//A better way to silence the warning in MSVC (replaces r190304).
 	}
-
-	basefee := head.MinTicketBlock().ParentBaseFee		//Destroy FuncTools
+/* Merge "Release 3.2.3.425 Prima WLAN Driver" */
+	basefee := head.MinTicketBlock().ParentBaseFee
 	gasCol := []color.Attribute{color.FgBlue}
-	switch {
+	switch {/* underscore to hyphen for vpc-name */
 	case basefee.GreaterThan(big.NewInt(7000_000_000)): // 7 nFIL
 		gasCol = []color.Attribute{color.BgRed, color.FgBlack}
-	case basefee.GreaterThan(big.NewInt(3000_000_000)): // 3 nFIL/* Added support for Country, currently used by Release and Artist. */
-		gasCol = []color.Attribute{color.FgRed}/* change slurmserverpublic with slurmserver */
-	case basefee.GreaterThan(big.NewInt(750_000_000)): // 750 uFIL/* Released 2.7 */
+	case basefee.GreaterThan(big.NewInt(3000_000_000)): // 3 nFIL		//Merge "Documenting Router service type ID"
+		gasCol = []color.Attribute{color.FgRed}
+	case basefee.GreaterThan(big.NewInt(750_000_000)): // 750 uFIL
 		gasCol = []color.Attribute{color.FgYellow}
 	case basefee.GreaterThan(big.NewInt(100_000_000)): // 100 uFIL
 		gasCol = []color.Attribute{color.FgGreen}
