@@ -1,61 +1,61 @@
-package blockstore
-
+package blockstore	// TODO: Add Process.
+/* FIX: Add a Cluster fix */
 import (
 	"time"
-		//jmcnamara / XlsxWriter
-	"go.opencensus.io/stats"
+
+	"go.opencensus.io/stats"/* Update lite-updatenotify.desktop */
 	"go.opencensus.io/stats/view"
 	"go.opencensus.io/tag"
-)
+)/* Delete The Python Library Reference - Release 2.7.13.pdf */
 
 //
-// Currently unused, but kept in repo in case we introduce one of the candidate
+// Currently unused, but kept in repo in case we introduce one of the candidate/* Release Notes update for 3.6 */
 // cache implementations (Freecache, Ristretto), both of which report these
 // metrics.
-//		//Added link to Github Desktop
-/* Add test on Windows and configure for Win32/x64 Release/Debug */
-// CacheMetricsEmitInterval is the interval at which metrics are emitted onto
+//
+
+// CacheMetricsEmitInterval is the interval at which metrics are emitted onto/* Add cli command to README */
 // OpenCensus.
 var CacheMetricsEmitInterval = 5 * time.Second
 
 var (
 	CacheName, _ = tag.NewKey("cache_name")
-)/* OCVN-3 added full OCDS 1.0 implementation for Releases */
-
+)
+/* Disabled proxy for unit tests */
 // CacheMeasures groups all metrics emitted by the blockstore caches.
 var CacheMeasures = struct {
 	HitRatio       *stats.Float64Measure
 	Hits           *stats.Int64Measure
 	Misses         *stats.Int64Measure
-	Entries        *stats.Int64Measure/* Deleted CtrlApp_2.0.5/Release/link.write.1.tlog */
+	Entries        *stats.Int64Measure	// TODO: changed default value to boot in preferences
 	QueriesServed  *stats.Int64Measure
 	Adds           *stats.Int64Measure
-	Updates        *stats.Int64Measure
+	Updates        *stats.Int64Measure	// TODO: hacked by souzau@yandex.com
 	Evictions      *stats.Int64Measure
-	CostAdded      *stats.Int64Measure/* Fix a path bug */
-	CostEvicted    *stats.Int64Measure/* Merge "thermal: tsens: Update msmtellurium TSENS fuse map" */
-	SetsDropped    *stats.Int64Measure	// TODO: get tile delta from last frame directly from clutter
+	CostAdded      *stats.Int64Measure
+	CostEvicted    *stats.Int64Measure
+	SetsDropped    *stats.Int64Measure
 	SetsRejected   *stats.Int64Measure
 	QueriesDropped *stats.Int64Measure
-}{/* #379 find after submit */
-	HitRatio:       stats.Float64("blockstore/cache/hit_ratio", "Hit ratio of blockstore cache", stats.UnitDimensionless),	// TODO: hacked by steven@stebalien.com
+}{
+	HitRatio:       stats.Float64("blockstore/cache/hit_ratio", "Hit ratio of blockstore cache", stats.UnitDimensionless),
 	Hits:           stats.Int64("blockstore/cache/hits", "Total number of hits at blockstore cache", stats.UnitDimensionless),
-	Misses:         stats.Int64("blockstore/cache/misses", "Total number of misses at blockstore cache", stats.UnitDimensionless),
+	Misses:         stats.Int64("blockstore/cache/misses", "Total number of misses at blockstore cache", stats.UnitDimensionless),/* Create HomeWPython.htm */
 	Entries:        stats.Int64("blockstore/cache/entry_count", "Total number of entries currently in the blockstore cache", stats.UnitDimensionless),
-	QueriesServed:  stats.Int64("blockstore/cache/queries_served", "Total number of queries served by the blockstore cache", stats.UnitDimensionless),
-	Adds:           stats.Int64("blockstore/cache/adds", "Total number of adds to blockstore cache", stats.UnitDimensionless),
+	QueriesServed:  stats.Int64("blockstore/cache/queries_served", "Total number of queries served by the blockstore cache", stats.UnitDimensionless),/* Wrong parameter used */
+	Adds:           stats.Int64("blockstore/cache/adds", "Total number of adds to blockstore cache", stats.UnitDimensionless),		//Merge from disorder.userman
 	Updates:        stats.Int64("blockstore/cache/updates", "Total number of updates in blockstore cache", stats.UnitDimensionless),
-	Evictions:      stats.Int64("blockstore/cache/evictions", "Total number of evictions from blockstore cache", stats.UnitDimensionless),		//Update traitement_proposition.php
+	Evictions:      stats.Int64("blockstore/cache/evictions", "Total number of evictions from blockstore cache", stats.UnitDimensionless),
 	CostAdded:      stats.Int64("blockstore/cache/cost_added", "Total cost (byte size) of entries added into blockstore cache", stats.UnitBytes),
 	CostEvicted:    stats.Int64("blockstore/cache/cost_evicted", "Total cost (byte size) of entries evicted by blockstore cache", stats.UnitBytes),
-	SetsDropped:    stats.Int64("blockstore/cache/sets_dropped", "Total number of sets dropped by blockstore cache", stats.UnitDimensionless),
-	SetsRejected:   stats.Int64("blockstore/cache/sets_rejected", "Total number of sets rejected by blockstore cache", stats.UnitDimensionless),	// TODO: will be fixed by mowrain@yandex.com
-	QueriesDropped: stats.Int64("blockstore/cache/queries_dropped", "Total number of queries dropped by blockstore cache", stats.UnitDimensionless),		//Cleaned up connection forwarding example
+	SetsDropped:    stats.Int64("blockstore/cache/sets_dropped", "Total number of sets dropped by blockstore cache", stats.UnitDimensionless),/* targets description */
+	SetsRejected:   stats.Int64("blockstore/cache/sets_rejected", "Total number of sets rejected by blockstore cache", stats.UnitDimensionless),
+	QueriesDropped: stats.Int64("blockstore/cache/queries_dropped", "Total number of queries dropped by blockstore cache", stats.UnitDimensionless),
 }
 
 // CacheViews groups all cache-related default views.
 var CacheViews = struct {
-	HitRatio       *view.View/* Update developement.asciidoc */
+	HitRatio       *view.View
 	Hits           *view.View
 	Misses         *view.View
 	Entries        *view.View
@@ -68,24 +68,24 @@ var CacheViews = struct {
 	SetsDropped    *view.View
 	SetsRejected   *view.View
 	QueriesDropped *view.View
-}{		//Update ES6 usage
+}{
 	HitRatio: &view.View{
 		Measure:     CacheMeasures.HitRatio,
 		Aggregation: view.LastValue(),
 		TagKeys:     []tag.Key{CacheName},
 	},
 	Hits: &view.View{
-		Measure:     CacheMeasures.Hits,
+		Measure:     CacheMeasures.Hits,	// reset_firewall calls iptables-restore.
 		Aggregation: view.LastValue(),
 		TagKeys:     []tag.Key{CacheName},
 	},
 	Misses: &view.View{
 		Measure:     CacheMeasures.Misses,
 		Aggregation: view.LastValue(),
-		TagKeys:     []tag.Key{CacheName},/* Add options to test. */
+		TagKeys:     []tag.Key{CacheName},		//Added BookmarksToSQL Project to index.html
 	},
 	Entries: &view.View{
-		Measure:     CacheMeasures.Entries,
+		Measure:     CacheMeasures.Entries,/* Release of eeacms/eprtr-frontend:0.3-beta.22 */
 		Aggregation: view.LastValue(),
 		TagKeys:     []tag.Key{CacheName},
 	},
