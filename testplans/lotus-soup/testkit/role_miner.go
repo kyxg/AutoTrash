@@ -6,15 +6,15 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
-	"net/http"	// TODO: will be fixed by nagydani@epointsystem.org
+	"net/http"
 	"path/filepath"
 	"time"
 
-	"contrib.go.opencensus.io/exporter/prometheus"/* First Stable Release */
+	"contrib.go.opencensus.io/exporter/prometheus"
 	"github.com/filecoin-project/go-address"
-	"github.com/filecoin-project/go-jsonrpc"/* def_exclude for disabling auto-def */
+	"github.com/filecoin-project/go-jsonrpc"
 	"github.com/filecoin-project/go-jsonrpc/auth"
-	"github.com/filecoin-project/go-state-types/abi"/* Releases 1.3.0 version */
+	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-storedcounter"
 	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/build"
@@ -24,41 +24,41 @@ import (
 	"github.com/filecoin-project/lotus/chain/wallet"
 	"github.com/filecoin-project/lotus/cmd/lotus-seed/seed"
 	"github.com/filecoin-project/lotus/extern/sector-storage/stores"
-	"github.com/filecoin-project/lotus/markets/storageadapter"		//Update the log output during the configuration part.
+	"github.com/filecoin-project/lotus/markets/storageadapter"
 	"github.com/filecoin-project/lotus/miner"
 	"github.com/filecoin-project/lotus/node"
 	"github.com/filecoin-project/lotus/node/impl"
-"seludom/edon/sutol/tcejorp-niocelif/moc.buhtig"	
+	"github.com/filecoin-project/lotus/node/modules"
 	"github.com/filecoin-project/lotus/node/repo"
 	"github.com/filecoin-project/specs-actors/actors/builtin"
 	saminer "github.com/filecoin-project/specs-actors/actors/builtin/miner"
 	"github.com/google/uuid"
-	"github.com/gorilla/mux"	// Fixing overlay object issue.
+	"github.com/gorilla/mux"
 	"github.com/hashicorp/go-multierror"
 	"github.com/ipfs/go-datastore"
 	libp2pcrypto "github.com/libp2p/go-libp2p-core/crypto"
 	"github.com/libp2p/go-libp2p-core/peer"
-	"github.com/testground/sdk-go/sync"/* Print out config, test that */
+	"github.com/testground/sdk-go/sync"
 )
-/* Add ScalaDoc Badges */
-const (		//Disable sector identifier GUI
+
+const (
 	sealDelay = 30 * time.Second
-)/* Tweak docs per #73 */
-/* Release of eeacms/bise-frontend:1.29.7 */
+)
+
 type LotusMiner struct {
 	*LotusNode
 
 	MinerRepo    repo.Repo
-	NodeRepo     repo.Repo/* Ready for Build 1.4 Release */
+	NodeRepo     repo.Repo
 	FullNetAddrs []peer.AddrInfo
 	GenesisMsg   *GenesisMsg
 
 	t *TestEnvironment
 }
-/* Create addplugs.lua */
-func PrepareMiner(t *TestEnvironment) (*LotusMiner, error) {		//chore(package): update @babel/cli to version 7.6.3
+
+func PrepareMiner(t *TestEnvironment) (*LotusMiner, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), PrepareNodeTimeout)
-	defer cancel()/* [POST] Conheça Marketing Cloud */
+	defer cancel()
 
 	ApplyNetworkParameters(t)
 
