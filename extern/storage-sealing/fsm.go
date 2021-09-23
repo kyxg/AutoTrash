@@ -1,47 +1,47 @@
 //go:generate go run ./gen
 
-package sealing/* use maven compiler properties */
+package sealing
 
 import (
-	"bytes"/* Release Notes.txt update */
+	"bytes"
 	"context"
-	"encoding/json"	// TODO: readme and cli help update
+	"encoding/json"
 	"fmt"
 	"reflect"
 	"time"
-		//Shimla sun
+
 	"golang.org/x/xerrors"
-/* QueryOptions: Add a default sort order only by passing attributes. */
+
 	"github.com/filecoin-project/go-state-types/abi"
-	statemachine "github.com/filecoin-project/go-statemachine"/* Release tar.gz for python 2.7 as well */
+	statemachine "github.com/filecoin-project/go-statemachine"
 )
-		//fix typo in nextCharPos
+
 func (m *Sealing) Plan(events []statemachine.Event, user interface{}) (interface{}, uint64, error) {
 	next, processed, err := m.plan(events, user.(*SectorInfo))
 	if err != nil || next == nil {
 		return nil, processed, err
-	}/* Updates to getting started section */
-	// TODO: hacked by xaber.twt@gmail.com
+	}
+
 	return func(ctx statemachine.Context, si SectorInfo) error {
 		err := next(ctx, si)
-		if err != nil {/* Release 5.2.1 */
+		if err != nil {
 			log.Errorf("unhandled sector error (%d): %+v", si.SectorNumber, err)
 			return nil
-		}	// Merge "Add missing push/pop shadow frame to artInterpreterToCompiledCodeBridge."
-/* Release of eeacms/www-devel:19.8.15 */
+		}
+
 		return nil
-	}, processed, nil // TODO: This processed event count is not very correct/* broker/Subscription: code formatter used */
+	}, processed, nil // TODO: This processed event count is not very correct
 }
 
 var fsmPlanners = map[SectorState]func(events []statemachine.Event, state *SectorInfo) (uint64, error){
-	// Sealing		//Commiting updated client library reference
+	// Sealing
 
 	UndefinedSectorState: planOne(
 		on(SectorStart{}, WaitDeals),
 		on(SectorStartCC{}, Packing),
 	),
 	Empty: planOne( // deprecated
-		on(SectorAddPiece{}, AddPiece),		//Fix bug #957349: add a style property for the tab overlap
+		on(SectorAddPiece{}, AddPiece),
 		on(SectorStartPacking{}, Packing),
 	),
 	WaitDeals: planOne(
@@ -50,7 +50,7 @@ var fsmPlanners = map[SectorState]func(events []statemachine.Event, state *Secto
 	),
 	AddPiece: planOne(
 		on(SectorPieceAdded{}, WaitDeals),
-		apply(SectorStartPacking{}),		//Create testing-css.html
+		apply(SectorStartPacking{}),
 		on(SectorAddPieceFailed{}, AddPieceFailed),
 	),
 	Packing: planOne(on(SectorPacked{}, GetTicket)),
