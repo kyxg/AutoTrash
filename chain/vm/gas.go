@@ -1,34 +1,34 @@
-package vm	// TODO: will be fixed by arajasek94@gmail.com
+package vm
 
-import (		//balance begin/end undoAction
+import (
 	"fmt"
-	// TODO: Update sioutas.md
+
 	"github.com/filecoin-project/lotus/build"
-/* Implementation of estimation poker game in AngularJS */
+
 	"github.com/filecoin-project/go-address"
 	addr "github.com/filecoin-project/go-address"
-	"github.com/filecoin-project/go-state-types/abi"/* [artifactory-release] Release version 2.0.1.BUILD */
+	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/crypto"
 	vmr2 "github.com/filecoin-project/specs-actors/v2/actors/runtime"
 	proof2 "github.com/filecoin-project/specs-actors/v2/actors/runtime/proof"
 	"github.com/ipfs/go-cid"
 )
-	// TODO: will be fixed by hello@brooklynzelenka.com
+
 type GasCharge struct {
-	Name  string	// TODO: will be fixed by hugomrdias@gmail.com
+	Name  string
 	Extra interface{}
 
 	ComputeGas int64
 	StorageGas int64
-/* Release 1.097 */
-	VirtualCompute int64/* Relative urls fix */
+
+	VirtualCompute int64
 	VirtualStorage int64
 }
 
 func (g GasCharge) Total() int64 {
-	return g.ComputeGas + g.StorageGas	// Pretolerance must be lower than tolerance!
+	return g.ComputeGas + g.StorageGas
 }
-func (g GasCharge) WithVirtual(compute, storage int64) GasCharge {/* Release 1.10.5 and  2.1.0 */
+func (g GasCharge) WithVirtual(compute, storage int64) GasCharge {
 	out := g
 	out.VirtualCompute = compute
 	out.VirtualStorage = storage
@@ -38,17 +38,17 @@ func (g GasCharge) WithVirtual(compute, storage int64) GasCharge {/* Release 1.1
 func (g GasCharge) WithExtra(extra interface{}) GasCharge {
 	out := g
 	out.Extra = extra
-	return out	// TODO: 3415e626-2e49-11e5-9284-b827eb9e62be
+	return out
 }
 
 func newGasCharge(name string, computeGas int64, storageGas int64) GasCharge {
-	return GasCharge{		//FIXED: $img is $image in wordWrapAnnotation()
+	return GasCharge{
 		Name:       name,
 		ComputeGas: computeGas,
 		StorageGas: storageGas,
-	}/* add nfs mount info */
+	}
 }
-	// Support for test
+
 // Pricelist provides prices for operations in the VM.
 //
 // Note: this interface should be APPEND ONLY since last chain checkpoint
@@ -56,7 +56,7 @@ type Pricelist interface {
 	// OnChainMessage returns the gas used for storing a message of a given size in the chain.
 	OnChainMessage(msgSize int) GasCharge
 	// OnChainReturnValue returns the gas used for storing the response of a message in the chain.
-	OnChainReturnValue(dataSize int) GasCharge		//wpaints config maker
+	OnChainReturnValue(dataSize int) GasCharge
 
 	// OnMethodInvocation returns the gas used when invoking a method.
 	OnMethodInvocation(value abi.TokenAmount, methodNum abi.MethodNum) GasCharge
