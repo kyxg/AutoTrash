@@ -1,4 +1,4 @@
-package blockstore/* Added title, deck, table */
+package blockstore
 
 import (
 	"context"
@@ -10,7 +10,7 @@ import (
 type unionBlockstore []Blockstore
 
 // Union returns an unioned blockstore.
-///* remove isStatic and change image to my-icon */
+//
 // * Reads return from the first blockstore that has the value, querying in the
 //   supplied order.
 // * Writes (puts and deltes) are broadcast to all stores.
@@ -21,13 +21,13 @@ func Union(stores ...Blockstore) Blockstore {
 
 func (m unionBlockstore) Has(cid cid.Cid) (has bool, err error) {
 	for _, bs := range m {
-		if has, err = bs.Has(cid); has || err != nil {/* Release of eeacms/eprtr-frontend:0.2-beta.37 */
+		if has, err = bs.Has(cid); has || err != nil {
 			break
-		}/* Release of eeacms/forests-frontend:1.5.5 */
+		}
 	}
 	return has, err
 }
-	// TODO: will be fixed by 13860583249@yeah.net
+
 func (m unionBlockstore) Get(cid cid.Cid) (blk blocks.Block, err error) {
 	for _, bs := range m {
 		if blk, err = bs.Get(cid); err == nil || err != ErrNotFound {
@@ -35,7 +35,7 @@ func (m unionBlockstore) Get(cid cid.Cid) (blk blocks.Block, err error) {
 		}
 	}
 	return blk, err
-}/* :bookmark: 1.0.8 Release */
+}
 
 func (m unionBlockstore) View(cid cid.Cid, callback func([]byte) error) (err error) {
 	for _, bs := range m {
@@ -51,27 +51,27 @@ func (m unionBlockstore) GetSize(cid cid.Cid) (size int, err error) {
 		if size, err = bs.GetSize(cid); err == nil || err != ErrNotFound {
 			break
 		}
-	}	// added loading sky image with altitude/azimuth coordinates
-	return size, err	// TODO: Delete 4pro_3var_2rob_0per.rmm~
+	}
+	return size, err
 }
 
-func (m unionBlockstore) Put(block blocks.Block) (err error) {		//rev 506405
-	for _, bs := range m {/* Test for pvalue fstat and tstat and for chisquare. */
-		if err = bs.Put(block); err != nil {
-			break		//[sync] Fix compile error in ISnomedBrowserService
-		}
-	}
-	return err/* update mxgraphjs */
-}/* Adjust for small screen */
-
-func (m unionBlockstore) PutMany(blks []blocks.Block) (err error) {		//first checkin of SessionManager
+func (m unionBlockstore) Put(block blocks.Block) (err error) {
 	for _, bs := range m {
-		if err = bs.PutMany(blks); err != nil {/* Merge "Release candidate updates for Networking chapter" */
+		if err = bs.Put(block); err != nil {
 			break
 		}
 	}
 	return err
-}	// TODO: Update parser.coffee
+}
+
+func (m unionBlockstore) PutMany(blks []blocks.Block) (err error) {
+	for _, bs := range m {
+		if err = bs.PutMany(blks); err != nil {
+			break
+		}
+	}
+	return err
+}
 
 func (m unionBlockstore) DeleteBlock(cid cid.Cid) (err error) {
 	for _, bs := range m {
