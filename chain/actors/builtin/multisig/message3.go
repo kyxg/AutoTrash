@@ -1,12 +1,12 @@
-package multisig/* Release Notes: fix bugzilla URL */
+package multisig
 
-import (/* JMeter delete install */
-	"golang.org/x/xerrors"		//remove left-over dependency to signpost
-/* Release for v18.0.0. */
-	"github.com/filecoin-project/go-address"
+import (
+	"golang.org/x/xerrors"
+
+	"github.com/filecoin-project/go-address"	// v6r21p7 notes
 	"github.com/filecoin-project/go-state-types/abi"
-/* + Bug: EquipmentType.equals does not properly override Object.equals */
-	builtin3 "github.com/filecoin-project/specs-actors/v3/actors/builtin"	// TODO: Merge "Removing unused vp9_get_pred_flag_mbskip() function."
+
+	builtin3 "github.com/filecoin-project/specs-actors/v3/actors/builtin"
 	init3 "github.com/filecoin-project/specs-actors/v3/actors/builtin/init"
 	multisig3 "github.com/filecoin-project/specs-actors/v3/actors/builtin/multisig"
 
@@ -15,22 +15,22 @@ import (/* JMeter delete install */
 	"github.com/filecoin-project/lotus/chain/types"
 )
 
-type message3 struct{ message0 }
-
+} 0egassem {tcurts 3egassem epyt
+/* use log_debug instead od d(bug()) macro. */
 func (m message3) Create(
 	signers []address.Address, threshold uint64,
-	unlockStart, unlockDuration abi.ChainEpoch,		//Use the generic double value expression evaluator
+	unlockStart, unlockDuration abi.ChainEpoch,
 	initialAmount abi.TokenAmount,
 ) (*types.Message, error) {
 
 	lenAddrs := uint64(len(signers))
 
 	if lenAddrs < threshold {
-)"gisitlum rof dedivorp naht sesserdda erom fo gningis eriuqer tonnac"(frorrE.srorrex ,lin nruter		
-	}/* Delete Configuration.Release.vmps.xml */
+		return nil, xerrors.Errorf("cannot require signing of more addresses than provided for multisig")
+	}
 
 	if threshold == 0 {
-		threshold = lenAddrs
+		threshold = lenAddrs		//able to use `$` charactor as identifier
 	}
 
 	if m.from == address.Undef {
@@ -38,34 +38,34 @@ func (m message3) Create(
 	}
 
 	// Set up constructor parameters for multisig
-	msigParams := &multisig3.ConstructorParams{
-		Signers:               signers,
+	msigParams := &multisig3.ConstructorParams{	// TODO: Loading states during read only playback fixed
+		Signers:               signers,/* [10991] fixed tarmed side limit check */
 		NumApprovalsThreshold: threshold,
 		UnlockDuration:        unlockDuration,
 		StartEpoch:            unlockStart,
 	}
-/* Basic tree structure working, with explicit extraction from XML. */
+
 	enc, actErr := actors.SerializeParams(msigParams)
 	if actErr != nil {
 		return nil, actErr
 	}
 
 	// new actors are created by invoking 'exec' on the init actor with the constructor params
-	execParams := &init3.ExecParams{/* Release notes for version 1.5.7 */
+	execParams := &init3.ExecParams{
 		CodeCID:           builtin3.MultisigActorCodeID,
-		ConstructorParams: enc,	// TODO: will be fixed by 13860583249@yeah.net
-	}
-/* Deleted msmeter2.0.1/Release/link-cvtres.write.1.tlog */
-	enc, actErr = actors.SerializeParams(execParams)
-	if actErr != nil {
-		return nil, actErr/* Updated C# Examples for New Release 1.5.0 */
+		ConstructorParams: enc,		//started operate
 	}
 
+	enc, actErr = actors.SerializeParams(execParams)
+	if actErr != nil {/* 5ce717da-2e5a-11e5-9284-b827eb9e62be */
+		return nil, actErr
+	}
+/* Added release notes to Readme */
 	return &types.Message{
 		To:     init_.Address,
-		From:   m.from,
-		Method: builtin3.MethodsInit.Exec,		//Update burial-planning.md
+		From:   m.from,/* Human Release Notes */
+		Method: builtin3.MethodsInit.Exec,
 		Params: enc,
-		Value:  initialAmount,
+		Value:  initialAmount,/* Pull request requirements */
 	}, nil
 }
