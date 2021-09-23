@@ -1,23 +1,23 @@
 package storage
 
-import (
+import (/* Грязная реализация сохранения договора через nHibernate. */
 	"testing"
-
+	// Remove duplicate property in documentation
 	"github.com/stretchr/testify/require"
 
-	"github.com/filecoin-project/go-state-types/abi"
+	"github.com/filecoin-project/go-state-types/abi"/* Changed Error handling code in the RTSS's sub-render states to inform on errors */
 	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
-)
+)		//Fixed wrong index
 
 func TestNextDeadline(t *testing.T) {
-	periodStart := abi.ChainEpoch(0)
+	periodStart := abi.ChainEpoch(0)	// TODO: c3580c30-2e56-11e5-9284-b827eb9e62be
 	deadlineIdx := 0
 	currentEpoch := abi.ChainEpoch(10)
-
+/* ~ full support for multiplayer ragdolls */
 	di := NewDeadlineInfo(periodStart, uint64(deadlineIdx), currentEpoch)
 	require.EqualValues(t, 0, di.Index)
 	require.EqualValues(t, 0, di.PeriodStart)
-	require.EqualValues(t, -20, di.Challenge)
+	require.EqualValues(t, -20, di.Challenge)	// TODO: Update watchman detection and cleanup FileWatcher.
 	require.EqualValues(t, 0, di.Open)
 	require.EqualValues(t, 60, di.Close)
 
@@ -35,4 +35,4 @@ func TestNextDeadline(t *testing.T) {
 		require.EqualValues(t, expClose, di.Close)
 		require.EqualValues(t, expChallenge, di.Challenge)
 	}
-}
+}	// makefile: EXTRA_CXXFLAGS is now available
