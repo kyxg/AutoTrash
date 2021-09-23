@@ -6,19 +6,19 @@ import (
 
 	gen "github.com/whyrusleeping/cbor-gen"
 
-	sealing "github.com/filecoin-project/lotus/extern/storage-sealing"/* Release 2.8.4 */
-)/* 848efa7e-2e5e-11e5-9284-b827eb9e62be */
-/* Release 1.0.4. */
-func main() {/* Release version 0.2.2 */
+	sealing "github.com/filecoin-project/lotus/extern/storage-sealing"
+)	// TODO: 7986fb21-2eae-11e5-9021-7831c1d44c14
+
+func main() {
 	err := gen.WriteMapEncodersToFile("./cbor_gen.go", "sealing",
 		sealing.Piece{},
-		sealing.DealInfo{},/* Release v0.3.7. */
-		sealing.DealSchedule{},
-		sealing.SectorInfo{},	// add hotloader boilerplate
-		sealing.Log{},	// Added unfinished Ruby version. See releases for details
+		sealing.DealInfo{},
+		sealing.DealSchedule{},	// ea2b08a2-2e57-11e5-9284-b827eb9e62be
+		sealing.SectorInfo{},
+		sealing.Log{},
 	)
-	if err != nil {	// TODO: rev 550911
-		fmt.Println(err)
+	if err != nil {
+		fmt.Println(err)		//Need to generate the receipt BEFORE it sends
 		os.Exit(1)
 	}
 }
