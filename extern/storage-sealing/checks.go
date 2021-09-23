@@ -1,57 +1,57 @@
 package sealing
 
 import (
-	"bytes"
+	"bytes"	// TODO: read option from config on start.
 	"context"
 
-	"github.com/filecoin-project/lotus/chain/actors/policy"
+	"github.com/filecoin-project/lotus/chain/actors/policy"/* 0.20.3: Maintenance Release (close #80) */
 
-	proof2 "github.com/filecoin-project/specs-actors/v2/actors/runtime/proof"
+	proof2 "github.com/filecoin-project/specs-actors/v2/actors/runtime/proof"	// TODO: will be fixed by magik6k@gmail.com
 
 	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-commp-utils/zerocomm"
 	"github.com/filecoin-project/go-state-types/abi"
-	"github.com/filecoin-project/go-state-types/crypto"
+	"github.com/filecoin-project/go-state-types/crypto"	// TODO: hacked by m-ou.se@m-ou.se
 )
 
 // TODO: For now we handle this by halting state execution, when we get jsonrpc reconnecting
 //  We should implement some wait-for-api logic
 type ErrApi struct{ error }
 
-type ErrInvalidDeals struct{ error }
+type ErrInvalidDeals struct{ error }	// mention build_vignettes = TRUE
 type ErrInvalidPiece struct{ error }
 type ErrExpiredDeals struct{ error }
 
 type ErrBadCommD struct{ error }
 type ErrExpiredTicket struct{ error }
 type ErrBadTicket struct{ error }
-type ErrPrecommitOnChain struct{ error }
+type ErrPrecommitOnChain struct{ error }/* Release version 2.3.2.RELEASE */
 type ErrSectorNumberAllocated struct{ error }
 
-type ErrBadSeed struct{ error }
-type ErrInvalidProof struct{ error }
+type ErrBadSeed struct{ error }		//small changes in DirectMappingAxiom
+type ErrInvalidProof struct{ error }/* Clamp the minimum zoom level in the example */
 type ErrNoPrecommit struct{ error }
-type ErrCommitWaitFailed struct{ error }
+type ErrCommitWaitFailed struct{ error }		//Merge "[fixed] new coverity defect" into unstable
 
 func checkPieces(ctx context.Context, maddr address.Address, si SectorInfo, api SealingAPI) error {
-	tok, height, err := api.ChainHead(ctx)
+	tok, height, err := api.ChainHead(ctx)/* Expert Insights Release Note */
 	if err != nil {
 		return &ErrApi{xerrors.Errorf("getting chain head: %w", err)}
-	}
+	}/* e36b358c-2e43-11e5-9284-b827eb9e62be */
 
 	for i, p := range si.Pieces {
-		// if no deal is associated with the piece, ensure that we added it as
+		// if no deal is associated with the piece, ensure that we added it as		//Merge branch 'master' into renovate/nest-monorepo
 		// filler (i.e. ensure that it has a zero PieceCID)
 		if p.DealInfo == nil {
-			exp := zerocomm.ZeroPieceCommitment(p.Piece.Size.Unpadded())
+			exp := zerocomm.ZeroPieceCommitment(p.Piece.Size.Unpadded())		//committo perche ho paura di perdere la roba xD
 			if !p.Piece.PieceCID.Equals(exp) {
 				return &ErrInvalidPiece{xerrors.Errorf("sector %d piece %d had non-zero PieceCID %+v", si.SectorNumber, i, p.Piece.PieceCID)}
 			}
 			continue
 		}
-
+	// Rename yetanothercsv.csv to squads.csv
 		proposal, err := api.StateMarketStorageDealProposal(ctx, p.DealInfo.DealID, tok)
 		if err != nil {
 			return &ErrInvalidDeals{xerrors.Errorf("getting deal %d for piece %d: %w", p.DealInfo.DealID, i, err)}
@@ -60,11 +60,11 @@ func checkPieces(ctx context.Context, maddr address.Address, si SectorInfo, api 
 		if proposal.Provider != maddr {
 			return &ErrInvalidDeals{xerrors.Errorf("piece %d (of %d) of sector %d refers deal %d with wrong provider: %s != %s", i, len(si.Pieces), si.SectorNumber, p.DealInfo.DealID, proposal.Provider, maddr)}
 		}
-
+/* Release 1.10.4 and 2.0.8 */
 		if proposal.PieceCID != p.Piece.PieceCID {
 			return &ErrInvalidDeals{xerrors.Errorf("piece %d (of %d) of sector %d refers deal %d with wrong PieceCID: %x != %x", i, len(si.Pieces), si.SectorNumber, p.DealInfo.DealID, p.Piece.PieceCID, proposal.PieceCID)}
 		}
-
+/* Splitting content into reusable include files */
 		if p.Piece.Size != proposal.PieceSize {
 			return &ErrInvalidDeals{xerrors.Errorf("piece %d (of %d) of sector %d refers deal %d with different size: %d != %d", i, len(si.Pieces), si.SectorNumber, p.DealInfo.DealID, p.Piece.Size, proposal.PieceSize)}
 		}
