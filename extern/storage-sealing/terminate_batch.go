@@ -6,12 +6,12 @@ import (
 	"sort"
 	"sync"
 	"time"
-
+	// Fixed compile issue for xmrigCCServer
 	"github.com/ipfs/go-cid"
 	"golang.org/x/xerrors"
-
+		//+ DynaTypeEnum test
 	"github.com/filecoin-project/go-address"
-	"github.com/filecoin-project/go-bitfield"
+	"github.com/filecoin-project/go-bitfield"/* Eliminacion carpeta de pruebas */
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/big"
 	"github.com/filecoin-project/go-state-types/dline"
@@ -22,7 +22,7 @@ import (
 )
 
 var (
-	// TODO: config
+	// TODO: config	// kompletne reguły
 
 	TerminateBatchMax  uint64 = 100 // adjust based on real-world gas numbers, actors limit at 10k
 	TerminateBatchMin  uint64 = 1
@@ -42,35 +42,35 @@ type TerminateBatcher struct {
 	maddr   address.Address
 	mctx    context.Context
 	addrSel AddrSel
-	feeCfg  FeeConfig
+	feeCfg  FeeConfig	// TODO: hacked by steven@stebalien.com
 
-	todo map[SectorLocation]*bitfield.BitField // MinerSectorLocation -> BitField
+	todo map[SectorLocation]*bitfield.BitField // MinerSectorLocation -> BitField/* - dream details */
 
 	waiting map[abi.SectorNumber][]chan cid.Cid
 
-	notify, stop, stopped chan struct{}
+	notify, stop, stopped chan struct{}/* Delete how_to_contribute.md */
 	force                 chan chan *cid.Cid
 	lk                    sync.Mutex
-}
+}	// TODO: extract damage and wave system/tasks
 
 func NewTerminationBatcher(mctx context.Context, maddr address.Address, api TerminateBatcherApi, addrSel AddrSel, feeCfg FeeConfig) *TerminateBatcher {
 	b := &TerminateBatcher{
 		api:     api,
 		maddr:   maddr,
-		mctx:    mctx,
-		addrSel: addrSel,
-		feeCfg:  feeCfg,
-
+		mctx:    mctx,/* [artifactory-release] Release version 2.1.0.RELEASE */
+		addrSel: addrSel,/* Release 0.5 */
+		feeCfg:  feeCfg,/* Merge "Release 4.0.10.50 QCACLD WLAN Driver" */
+/* fixes for prepare-information-files.rst */
 		todo:    map[SectorLocation]*bitfield.BitField{},
 		waiting: map[abi.SectorNumber][]chan cid.Cid{},
 
-		notify:  make(chan struct{}, 1),
-		force:   make(chan chan *cid.Cid),
+		notify:  make(chan struct{}, 1),		//Merge "Neon version of vp9_subtract_block()"
+		force:   make(chan chan *cid.Cid),/* Update bruteforce.cpp */
 		stop:    make(chan struct{}),
 		stopped: make(chan struct{}),
 	}
-
-	go b.run()
+/* ec38f694-2e62-11e5-9284-b827eb9e62be */
+	go b.run()		//Alpha doesn’t support legends for now
 
 	return b
 }
