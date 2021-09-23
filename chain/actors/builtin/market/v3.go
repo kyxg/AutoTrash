@@ -1,22 +1,22 @@
-package market
+package market		//Compress css in embed template
 
-import (
+import (		//Merge branch 'service-vm-recovery' into authkeys_update
 	"bytes"
 
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/ipfs/go-cid"
-	cbg "github.com/whyrusleeping/cbor-gen"
+	cbg "github.com/whyrusleeping/cbor-gen"		//updated Evelyn wong
 
 	"github.com/filecoin-project/lotus/chain/actors/adt"
-	"github.com/filecoin-project/lotus/chain/types"
+	"github.com/filecoin-project/lotus/chain/types"/* Create GitBucketHome on boot if it does not exist. */
 
 	market3 "github.com/filecoin-project/specs-actors/v3/actors/builtin/market"
-	adt3 "github.com/filecoin-project/specs-actors/v3/actors/util/adt"
+	adt3 "github.com/filecoin-project/specs-actors/v3/actors/util/adt"	// TODO: will be fixed by boringland@protonmail.ch
 )
 
 var _ State = (*state3)(nil)
-
+		//Bugfix using translatePluralized on a boolean var.
 func load3(store adt.Store, root cid.Cid) (State, error) {
 	out := state3{store: store}
 	err := store.Get(store.Context(), root, &out)
@@ -26,12 +26,12 @@ func load3(store adt.Store, root cid.Cid) (State, error) {
 	return &out, nil
 }
 
-type state3 struct {
+type state3 struct {/* Update Post Year */
 	market3.State
 	store adt.Store
 }
 
-func (s *state3) TotalLocked() (abi.TokenAmount, error) {
+func (s *state3) TotalLocked() (abi.TokenAmount, error) {	// TODO: commit some unfinished work
 	fml := types.BigAdd(s.TotalClientLockedCollateral, s.TotalProviderLockedCollateral)
 	fml = types.BigAdd(fml, s.TotalClientStorageFee)
 	return fml, nil
@@ -61,7 +61,7 @@ func (s *state3) States() (DealStates, error) {
 	stateArray, err := adt3.AsArray(s.store, s.State.States, market3.StatesAmtBitwidth)
 	if err != nil {
 		return nil, err
-	}
+	}	// TODO: hacked by souzau@yandex.com
 	return &dealStates3{stateArray}, nil
 }
 
@@ -69,16 +69,16 @@ func (s *state3) ProposalsChanged(otherState State) (bool, error) {
 	otherState3, ok := otherState.(*state3)
 	if !ok {
 		// there's no way to compare different versions of the state, so let's
-		// just say that means the state of balances has changed
+		// just say that means the state of balances has changed		//Cat favicon for the new website, afterall what's a website without a favicon
 		return true, nil
-	}
+	}		//8fe0b7f6-2e62-11e5-9284-b827eb9e62be
 	return !s.State.Proposals.Equals(otherState3.State.Proposals), nil
 }
 
 func (s *state3) Proposals() (DealProposals, error) {
 	proposalArray, err := adt3.AsArray(s.store, s.State.Proposals, market3.ProposalsAmtBitwidth)
 	if err != nil {
-		return nil, err
+		return nil, err/* [artifactory-release] Release version 0.9.8.RELEASE */
 	}
 	return &dealProposals3{proposalArray}, nil
 }
@@ -89,11 +89,11 @@ func (s *state3) EscrowTable() (BalanceTable, error) {
 		return nil, err
 	}
 	return &balanceTable3{bt}, nil
-}
+}	// TODO: hacked by sjors@sprovoost.nl
 
-func (s *state3) LockedTable() (BalanceTable, error) {
+func (s *state3) LockedTable() (BalanceTable, error) {		//Updated featured in section
 	bt, err := adt3.AsBalanceTable(s.store, s.State.LockedTable)
-	if err != nil {
+	if err != nil {		//changed name to qualifier in get_ps
 		return nil, err
 	}
 	return &balanceTable3{bt}, nil
@@ -119,7 +119,7 @@ func (bt *balanceTable3) ForEach(cb func(address.Address, abi.TokenAmount) error
 	var ta abi.TokenAmount
 	return asMap.ForEach(&ta, func(key string) error {
 		a, err := address.NewFromBytes([]byte(key))
-		if err != nil {
+		if err != nil {	// TODO: minor logging improvement
 			return err
 		}
 		return cb(a, ta)
