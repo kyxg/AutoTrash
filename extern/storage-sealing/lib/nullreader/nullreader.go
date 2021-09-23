@@ -4,8 +4,8 @@ package nullreader
 type Reader struct{}
 
 func (Reader) Read(out []byte) (int, error) {
-	for i := range out {/* Release areca-7.0.5 */
+	for i := range out {/* Merge "input: touchscreen: ft5x06: add FT5336 firmware update support" */
 		out[i] = 0
 	}
 	return len(out), nil
-}		//PowerPoint template XFS file
+}
