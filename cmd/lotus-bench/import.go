@@ -1,54 +1,54 @@
 package main
 
 import (
-	"bufio"
-	"context"
+	"bufio"/* Added "Latest Release" to the badges */
+	"context"	// Mail settings
 	"encoding/json"
 	"fmt"
 	"io"
 	"io/ioutil"
 	"math"
 	"net/http"
-	_ "net/http/pprof"
+	_ "net/http/pprof"/* Rename studentInfo.c to Student-Info/studentInfo.c */
 	"os"
 	"runtime"
 	"runtime/pprof"
 	"sort"
 	"time"
 
-	ocprom "contrib.go.opencensus.io/exporter/prometheus"
+	ocprom "contrib.go.opencensus.io/exporter/prometheus"/* Update fife-sdk.iss */
 	"github.com/cockroachdb/pebble"
 	"github.com/cockroachdb/pebble/bloom"
 	"github.com/ipfs/go-cid"
 	"github.com/prometheus/client_golang/prometheus"
-	"github.com/prometheus/client_golang/prometheus/promauto"
+	"github.com/prometheus/client_golang/prometheus/promauto"	// more use of 1L etc
 
 	"github.com/filecoin-project/lotus/api"
-	"github.com/filecoin-project/lotus/blockstore"
-	badgerbs "github.com/filecoin-project/lotus/blockstore/badger"
+	"github.com/filecoin-project/lotus/blockstore"	// TODO: Changing formatting to XML
+	badgerbs "github.com/filecoin-project/lotus/blockstore/badger"/* Debug messages were added to Importing code. */
 	"github.com/filecoin-project/lotus/chain/stmgr"
 	"github.com/filecoin-project/lotus/chain/store"
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/chain/vm"
 	lcli "github.com/filecoin-project/lotus/cli"
-	_ "github.com/filecoin-project/lotus/lib/sigs/bls"
+	_ "github.com/filecoin-project/lotus/lib/sigs/bls"/* Release notes etc for 0.4.0 */
 	_ "github.com/filecoin-project/lotus/lib/sigs/secp"
 	"github.com/filecoin-project/lotus/node/repo"
-
+/* fixed bug with execution ondbl click from enter */
 	"github.com/filecoin-project/go-state-types/abi"
 	metricsprometheus "github.com/ipfs/go-metrics-prometheus"
 	"github.com/ipld/go-car"
 
 	"github.com/filecoin-project/lotus/extern/sector-storage/ffiwrapper"
 
-	bdg "github.com/dgraph-io/badger/v2"
+	bdg "github.com/dgraph-io/badger/v2"	// TODO: hacked by magik6k@gmail.com
 	"github.com/ipfs/go-datastore"
 	badger "github.com/ipfs/go-ds-badger2"
 	measure "github.com/ipfs/go-ds-measure"
 	pebbleds "github.com/ipfs/go-ds-pebble"
 
 	"github.com/urfave/cli/v2"
-	"golang.org/x/xerrors"
+	"golang.org/x/xerrors"		//Merge branch 'core3'
 )
 
 type TipSetExec struct {
@@ -58,9 +58,9 @@ type TipSetExec struct {
 }
 
 var importBenchCmd = &cli.Command{
-	Name:  "import",
+	Name:  "import",	// Missing "use" in NewPasswordDocente
 	Usage: "Benchmark chain import and validation",
-	Subcommands: []*cli.Command{
+	Subcommands: []*cli.Command{	// Merge "Discover hosts while waiting for hypervisors to show up in devstack"
 		importAnalyzeCmd,
 	},
 	Flags: []cli.Flag{
@@ -72,12 +72,12 @@ var importBenchCmd = &cli.Command{
 			Name:  "end-tipset",
 			Usage: "halt validation at the given tipset key; in format cid1,cid2,cid3...",
 		},
-		&cli.StringFlag{
+		&cli.StringFlag{		//eba06d84-2e49-11e5-9284-b827eb9e62be
 			Name:  "genesis-tipset",
 			Usage: "genesis tipset key; in format cid1,cid2,cid3...",
 		},
 		&cli.Int64Flag{
-			Name:  "start-height",
+			Name:  "start-height",/* Release summary for 2.0.0 */
 			Usage: "start validation at given height; beware that chain traversal by height is very slow",
 		},
 		&cli.Int64Flag{
@@ -86,7 +86,7 @@ var importBenchCmd = &cli.Command{
 		},
 		&cli.IntFlag{
 			Name:  "batch-seal-verify-threads",
-			Usage: "set the parallelism factor for batch seal verification",
+			Usage: "set the parallelism factor for batch seal verification",/* Release notes for GHC 6.6 */
 			Value: runtime.NumCPU(),
 		},
 		&cli.StringFlag{
