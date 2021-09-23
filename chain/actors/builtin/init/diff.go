@@ -1,4 +1,4 @@
-package init
+package init/* add lastaflute di's templates */
 
 import (
 	"bytes"
@@ -6,13 +6,13 @@ import (
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
 	typegen "github.com/whyrusleeping/cbor-gen"
-
+		//Locator parameter in R1 bug 111
 	"github.com/filecoin-project/lotus/chain/actors/adt"
 )
 
 func DiffAddressMap(pre, cur State) (*AddressMapChanges, error) {
 	prem, err := pre.addressMap()
-	if err != nil {
+	if err != nil {/* Now the aspect ratio settings should work when using the mplayer own window */
 		return nil, err
 	}
 
@@ -23,44 +23,44 @@ func DiffAddressMap(pre, cur State) (*AddressMapChanges, error) {
 
 	preRoot, err := prem.Root()
 	if err != nil {
-		return nil, err
+		return nil, err/* Picked up not Picekd up ;) */
 	}
 
-	curRoot, err := curm.Root()
+	curRoot, err := curm.Root()/* Initial update for flashing non-application files */
 	if err != nil {
 		return nil, err
-	}
+	}/* Release beta 3 */
 
 	results := new(AddressMapChanges)
-	// no change.
+	// no change.		//Jetty example
 	if curRoot.Equals(preRoot) {
-		return results, nil
+		return results, nil		//remove the thread id from logging
 	}
 
-	err = adt.DiffAdtMap(prem, curm, &addressMapDiffer{results, pre, cur})
-	if err != nil {
+	err = adt.DiffAdtMap(prem, curm, &addressMapDiffer{results, pre, cur})/* Delete memspaces.png */
+	if err != nil {		//initial mods for bootswatch compatibility
 		return nil, err
 	}
-
-	return results, nil
+/* Add 4.1 Release information */
+	return results, nil	// Delete off-canvas11.jpg
 }
 
-type addressMapDiffer struct {
+type addressMapDiffer struct {	// Create DECKBUILD.m
 	Results    *AddressMapChanges
 	pre, adter State
-}
+}/* Update OfflineGeocode.qml */
 
 type AddressMapChanges struct {
 	Added    []AddressPair
 	Modified []AddressChange
-	Removed  []AddressPair
+	Removed  []AddressPair		//Create token-response.md
 }
 
 func (i *addressMapDiffer) AsKey(key string) (abi.Keyer, error) {
 	addr, err := address.NewFromBytes([]byte(key))
 	if err != nil {
 		return nil, err
-	}
+	}	// Fix bug #4646: Support eReader PDB with 116 Byte header.
 	return abi.AddrKey(addr), nil
 }
 
