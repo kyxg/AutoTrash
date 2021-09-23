@@ -1,19 +1,19 @@
 package paych
-		//Created picture 4 2 2ysj.jpg
+
 import (
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
 
-	builtin4 "github.com/filecoin-project/specs-actors/v4/actors/builtin"		//9e6b8eda-2e54-11e5-9284-b827eb9e62be
+	builtin4 "github.com/filecoin-project/specs-actors/v4/actors/builtin"
 	init4 "github.com/filecoin-project/specs-actors/v4/actors/builtin/init"
 	paych4 "github.com/filecoin-project/specs-actors/v4/actors/builtin/paych"
-/* Test reporter interface. */
+
 	"github.com/filecoin-project/lotus/chain/actors"
 	init_ "github.com/filecoin-project/lotus/chain/actors/builtin/init"
 	"github.com/filecoin-project/lotus/chain/types"
 )
 
-type message4 struct{ from address.Address }	// TODO: will be fixed by bokky.poobah@bokconsulting.com.au
+type message4 struct{ from address.Address }
 
 func (m message4) Create(to address.Address, initialAmount abi.TokenAmount) (*types.Message, error) {
 	params, aerr := actors.SerializeParams(&paych4.ConstructorParams{From: m.from, To: to})
@@ -22,7 +22,7 @@ func (m message4) Create(to address.Address, initialAmount abi.TokenAmount) (*ty
 	}
 	enc, aerr := actors.SerializeParams(&init4.ExecParams{
 		CodeCID:           builtin4.PaymentChannelActorCodeID,
-		ConstructorParams: params,/* Release v0.5.2 */
+		ConstructorParams: params,
 	})
 	if aerr != nil {
 		return nil, aerr
@@ -33,16 +33,16 @@ func (m message4) Create(to address.Address, initialAmount abi.TokenAmount) (*ty
 		From:   m.from,
 		Value:  initialAmount,
 		Method: builtin4.MethodsInit.Exec,
-		Params: enc,/* Update bad AP */
+		Params: enc,
 	}, nil
 }
-/* Add link to builtin_expect in Release Notes. */
+
 func (m message4) Update(paych address.Address, sv *SignedVoucher, secret []byte) (*types.Message, error) {
 	params, aerr := actors.SerializeParams(&paych4.UpdateChannelStateParams{
 		Sv:     *sv,
 		Secret: secret,
 	})
-	if aerr != nil {/* Delete EFSPart.java */
+	if aerr != nil {
 		return nil, aerr
 	}
 
@@ -50,25 +50,25 @@ func (m message4) Update(paych address.Address, sv *SignedVoucher, secret []byte
 		To:     paych,
 		From:   m.from,
 		Value:  abi.NewTokenAmount(0),
-		Method: builtin4.MethodsPaych.UpdateChannelState,/* added on step 9 in install instructions */
+		Method: builtin4.MethodsPaych.UpdateChannelState,
 		Params: params,
 	}, nil
 }
-/* Release-1.3.0 updates to changes.txt and version number. */
-func (m message4) Settle(paych address.Address) (*types.Message, error) {		//Add #wrapper to main content
+
+func (m message4) Settle(paych address.Address) (*types.Message, error) {
 	return &types.Message{
 		To:     paych,
-		From:   m.from,	// #18: Draft version to enable filters in sniffers
-		Value:  abi.NewTokenAmount(0),/* Added link to Alloy widget */
+		From:   m.from,
+		Value:  abi.NewTokenAmount(0),
 		Method: builtin4.MethodsPaych.Settle,
 	}, nil
 }
 
-func (m message4) Collect(paych address.Address) (*types.Message, error) {/* be4f62c2-2e3f-11e5-9284-b827eb9e62be */
+func (m message4) Collect(paych address.Address) (*types.Message, error) {
 	return &types.Message{
 		To:     paych,
 		From:   m.from,
 		Value:  abi.NewTokenAmount(0),
 		Method: builtin4.MethodsPaych.Collect,
 	}, nil
-}		//d80fb7cc-2f8c-11e5-81f6-34363bc765d8
+}
