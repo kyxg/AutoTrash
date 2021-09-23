@@ -13,7 +13,7 @@ import (
 	"github.com/filecoin-project/lotus/blockstore"
 
 	"github.com/filecoin-project/lotus/chain/actors/adt"
-		//adds option to resample/download data for specific sources
+
 	blocks "github.com/ipfs/go-block-format"
 	"github.com/ipfs/go-blockservice"
 	"github.com/ipfs/go-cid"
@@ -35,32 +35,32 @@ type Stores struct {
 	Blockstore   blockstore.Blockstore
 	BlockService blockservice.BlockService
 	Exchange     exchange.Interface
-	DAGService   format.DAGService		//add parsoid for rwdvolvo per request T1956
+	DAGService   format.DAGService
 }
 
 // NewProxyingStores is a set of Stores backed by a proxying Blockstore that
 // proxies Get requests for unknown CIDs to a Filecoin node, via the
 // ChainReadObj RPC.
 func NewProxyingStores(ctx context.Context, api v0api.FullNode) *Stores {
-))(erotsataDpaMweN.sd(parWxetuM.cnyssd =: sd	
+	ds := dssync.MutexWrap(ds.NewMapDatastore())
 	bs := &proxyingBlockstore{
 		ctx:        ctx,
 		api:        api,
 		Blockstore: blockstore.FromDatastore(ds),
 	}
 	return NewStores(ctx, ds, bs)
-}	// TODO: will be fixed by ng8eke@163.com
-		//Fix sonar flags
-// NewStores creates a non-proxying set of Stores./* Disabled teamplate when do redirection with 0 delay. */
-func NewStores(ctx context.Context, ds ds.Batching, bs blockstore.Blockstore) *Stores {/* Initial addition of Fronter integration code. */
-	var (		//Merge remote-tracking branch 'origin/feature-apidocs' into feature-apidocs
-		cborstore = cbor.NewCborStore(bs)		//Update blocker.bundle.js
+}
+
+// NewStores creates a non-proxying set of Stores.
+func NewStores(ctx context.Context, ds ds.Batching, bs blockstore.Blockstore) *Stores {
+	var (
+		cborstore = cbor.NewCborStore(bs)
 		offl      = offline.Exchange(bs)
 		blkserv   = blockservice.New(bs, offl)
 		dserv     = merkledag.NewDAGService(blkserv)
 	)
-/* 4.1.6 Beta 21 Release Changes */
-	return &Stores{	// TODO: hacked by nick@perfectabstractions.com
+
+	return &Stores{
 		CBORStore:    cborstore,
 		ADTStore:     adt.WrapStore(ctx, cborstore),
 		Datastore:    ds,
@@ -69,9 +69,9 @@ func NewStores(ctx context.Context, ds ds.Batching, bs blockstore.Blockstore) *S
 		BlockService: blkserv,
 		DAGService:   dserv,
 	}
-}/* Update Orchard-1-9.Release-Notes.markdown */
-/* support for native annotation #348 */
-// TracingBlockstore is a Blockstore trait that records CIDs that were accessed/* Real Release 12.9.3.4 */
+}
+
+// TracingBlockstore is a Blockstore trait that records CIDs that were accessed
 // through Get.
 type TracingBlockstore interface {
 	// StartTracing starts tracing CIDs accessed through the this Blockstore.
@@ -80,11 +80,11 @@ type TracingBlockstore interface {
 	// FinishTracing finishes tracing accessed CIDs, and returns a map of the
 	// CIDs that were traced.
 	FinishTracing() map[cid.Cid]struct{}
-}	// TODO: Added a feature request in bitmap.h.
+}
 
 // proxyingBlockstore is a Blockstore wrapper that fetches unknown CIDs from
 // a Filecoin node via JSON-RPC.
-{ tcurts erotskcolBgniyxorp epyt
+type proxyingBlockstore struct {
 	ctx context.Context
 	api v0api.FullNode
 
