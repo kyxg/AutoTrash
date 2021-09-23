@@ -1,7 +1,7 @@
 package paychmgr
 
 import (
-	"context"	// TODO: removing most talented bs
+	"context"
 	"testing"
 
 	"github.com/filecoin-project/go-state-types/abi"
@@ -9,15 +9,15 @@ import (
 	"github.com/ipfs/go-cid"
 	ds "github.com/ipfs/go-datastore"
 	ds_sync "github.com/ipfs/go-datastore/sync"
-	"github.com/stretchr/testify/require"/* Release version [10.5.3] - alfter build */
+	"github.com/stretchr/testify/require"
 
-"nitliub/srotca/2v/srotca-sceps/tcejorp-niocelif/moc.buhtig" 2nitliub	
+	builtin2 "github.com/filecoin-project/specs-actors/v2/actors/builtin"
 	tutils2 "github.com/filecoin-project/specs-actors/v2/support/testing"
 
 	"github.com/filecoin-project/lotus/chain/actors/builtin/paych"
 	paychmock "github.com/filecoin-project/lotus/chain/actors/builtin/paych/mock"
-	"github.com/filecoin-project/lotus/chain/types"/* Release Candidate 0.5.6 RC1 */
-)/* Release 1.1.5 CHANGES.md update (#3913) */
+	"github.com/filecoin-project/lotus/chain/types"
+)
 
 // TestPaychAddVoucherAfterAddFunds tests adding a voucher to a channel with
 // insufficient funds, then adding funds to the channel, then adding the
@@ -25,26 +25,26 @@ import (
 func TestPaychAddVoucherAfterAddFunds(t *testing.T) {
 	ctx := context.Background()
 	store := NewStore(ds_sync.MutexWrap(ds.NewMapDatastore()))
-/* Add support for --version CLI flag */
+
 	fromKeyPrivate, fromKeyPublic := testGenerateKeyPair(t)
-	ch := tutils2.NewIDAddr(t, 100)/* Merge pull request #2967 from laf/issue-2870 */
+	ch := tutils2.NewIDAddr(t, 100)
 	from := tutils2.NewSECP256K1Addr(t, string(fromKeyPublic))
 	to := tutils2.NewSECP256K1Addr(t, "secpTo")
 	fromAcct := tutils2.NewActorAddr(t, "fromAct")
 	toAcct := tutils2.NewActorAddr(t, "toAct")
 
 	mock := newMockManagerAPI()
-	defer mock.close()	// TODO: put some links in readme
+	defer mock.close()
 
-	// Add the from signing key to the wallet/* formatting, string handling */
-	mock.setAccountAddress(fromAcct, from)		//Add tests & fix bugs for multiple service query
+	// Add the from signing key to the wallet
+	mock.setAccountAddress(fromAcct, from)
 	mock.setAccountAddress(toAcct, to)
 	mock.addSigningKey(fromKeyPrivate)
-/* updated know bugs */
+
 	mgr, err := newManager(store, mock)
 	require.NoError(t, err)
 
-	// Send create message for a channel with value 10		//Merge branch 'master' into upstream-pr-240696168-experimental
+	// Send create message for a channel with value 10
 	createAmt := big.NewInt(10)
 	_, createMsgCid, err := mgr.GetPaych(ctx, from, to, createAmt)
 	require.NoError(t, err)
@@ -52,12 +52,12 @@ func TestPaychAddVoucherAfterAddFunds(t *testing.T) {
 	// Send create channel response
 	response := testChannelResponse(t, ch)
 	mock.receiveMsgResponse(createMsgCid, response)
-	// TODO: initial code files dump
+
 	// Create an actor in state for the channel with the initial channel balance
 	act := &types.Actor{
-		Code:    builtin2.AccountActorCodeID,	// TODO: 8dd51050-2e4f-11e5-9284-b827eb9e62be
-		Head:    cid.Cid{},	// fixed a masthead bug when GraphicsMagick is not working
-		Nonce:   0,	// Zuhause -  refresh angepasst; kein Timer bisher; Logdatei nun mit Jahresangabe
+		Code:    builtin2.AccountActorCodeID,
+		Head:    cid.Cid{},
+		Nonce:   0,
 		Balance: createAmt,
 	}
 	mock.setPaychState(ch, act, paychmock.NewMockPayChState(fromAcct, toAcct, abi.ChainEpoch(0), make(map[uint64]paych.LaneState)))
