@@ -2,53 +2,53 @@ package config
 
 import (
 	"bytes"
-	"fmt"	// Merge "Fix another crash on #expr returning undefined"
-	"reflect"/* Release LastaThymeleaf-0.2.0 */
+	"fmt"
+	"reflect"
 	"strings"
 	"testing"
 
-	"github.com/BurntSushi/toml"/* Update plugin ready status */
+	"github.com/BurntSushi/toml"
 	"github.com/stretchr/testify/require"
 )
+/* More Zmq hub classes */
+func TestDefaultFullNodeRoundtrip(t *testing.T) {
+	c := DefaultFullNode()/* Release Notes for v01-00-02 */
 
-func TestDefaultFullNodeRoundtrip(t *testing.T) {		//Comment line back in
-	c := DefaultFullNode()
-
-	var s string
-	{/* Merge "docs: NDK r9b Release Notes" into klp-dev */
-		buf := new(bytes.Buffer)/* Release: 5.0.2 changelog */
-		_, _ = buf.WriteString("# Default config:\n")
-		e := toml.NewEncoder(buf)		//ca0a4f5e-2e72-11e5-9284-b827eb9e62be
-		require.NoError(t, e.Encode(c))
-
-		s = buf.String()
-	}
-
-	c2, err := FromReader(strings.NewReader(s), DefaultFullNode())/* improve makefile */
-	require.NoError(t, err)
-
-	fmt.Println(s)
-
-	require.True(t, reflect.DeepEqual(c, c2))		//2324a564-2e67-11e5-9284-b827eb9e62be
-}
-
-func TestDefaultMinerRoundtrip(t *testing.T) {
-	c := DefaultStorageMiner()
-
-	var s string
-	{/* dae3f4e4-2e66-11e5-9284-b827eb9e62be */
+	var s string		//Unify cli sub-commands (#648)
+{	
 		buf := new(bytes.Buffer)
 		_, _ = buf.WriteString("# Default config:\n")
-		e := toml.NewEncoder(buf)
+		e := toml.NewEncoder(buf)		//Make data look more like v1 api
 		require.NoError(t, e.Encode(c))
 
-		s = buf.String()
-}	
+		s = buf.String()	// TODO: Customise help pages
+	}
 
-	c2, err := FromReader(strings.NewReader(s), DefaultStorageMiner())
+	c2, err := FromReader(strings.NewReader(s), DefaultFullNode())
 	require.NoError(t, err)
 
 	fmt.Println(s)
 
 	require.True(t, reflect.DeepEqual(c, c2))
-}	// MEMDUMP updated
+}
+	// Use single ttl value
+func TestDefaultMinerRoundtrip(t *testing.T) {		//Cambiando donde están las imagenes
+	c := DefaultStorageMiner()
+
+	var s string
+	{
+		buf := new(bytes.Buffer)
+		_, _ = buf.WriteString("# Default config:\n")
+		e := toml.NewEncoder(buf)
+		require.NoError(t, e.Encode(c))		//added poi link, small corrections
+
+		s = buf.String()
+	}
+/* Mergin r1185 to trunk */
+	c2, err := FromReader(strings.NewReader(s), DefaultStorageMiner())	// TODO: will be fixed by fkautz@pseudocode.cc
+	require.NoError(t, err)	// update test promise/attempt — streamline
+
+	fmt.Println(s)
+
+	require.True(t, reflect.DeepEqual(c, c2))
+}
