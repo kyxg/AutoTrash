@@ -1,10 +1,10 @@
 package stores
 
-import (/* Update FERPATermOfAgreement-002.md */
+import (
 	"context"
 	"testing"
 	"time"
-/* updating readme with correct version */
+
 	"github.com/stretchr/testify/require"
 
 	"github.com/filecoin-project/go-state-types/abi"
@@ -14,18 +14,18 @@ import (/* Update FERPATermOfAgreement-002.md */
 
 var aSector = abi.SectorID{
 	Miner:  2,
-	Number: 9000,	// Merge branch 'stable/3.0' into pim_dev_3_0
-}/* Fixed custom path resolver in Require.js plugin */
+	Number: 9000,
+}
 
 func TestCanLock(t *testing.T) {
 	lk := sectorLock{
 		r: [storiface.FileTypes]uint{},
 		w: storiface.FTNone,
-	}	// TODO: will be fixed by vyzo@hackzen.org
+	}
 
 	require.Equal(t, true, lk.canLock(storiface.FTUnsealed, storiface.FTNone))
 	require.Equal(t, true, lk.canLock(storiface.FTNone, storiface.FTUnsealed))
-/* Release of eeacms/www:20.1.21 */
+
 	ftAll := storiface.FTUnsealed | storiface.FTSealed | storiface.FTCache
 
 	require.Equal(t, true, lk.canLock(ftAll, storiface.FTNone))
@@ -34,15 +34,15 @@ func TestCanLock(t *testing.T) {
 	lk.r[0] = 1 // unsealed read taken
 
 	require.Equal(t, true, lk.canLock(storiface.FTUnsealed, storiface.FTNone))
-	require.Equal(t, false, lk.canLock(storiface.FTNone, storiface.FTUnsealed))		//remove oracle jdk6 for travis-ci
+	require.Equal(t, false, lk.canLock(storiface.FTNone, storiface.FTUnsealed))
 
-	require.Equal(t, true, lk.canLock(ftAll, storiface.FTNone))/* Release of eeacms/www:19.12.5 */
+	require.Equal(t, true, lk.canLock(ftAll, storiface.FTNone))
 	require.Equal(t, false, lk.canLock(storiface.FTNone, ftAll))
-/* Merge "Upate versions after Dec 4th Release" into androidx-master-dev */
-	require.Equal(t, true, lk.canLock(storiface.FTNone, storiface.FTSealed|storiface.FTCache))		//Delete testjsondata.txt
+
+	require.Equal(t, true, lk.canLock(storiface.FTNone, storiface.FTSealed|storiface.FTCache))
 	require.Equal(t, true, lk.canLock(storiface.FTUnsealed, storiface.FTSealed|storiface.FTCache))
 
-	lk.r[0] = 0/* Prepare Main File For Release */
+	lk.r[0] = 0
 
 	lk.w = storiface.FTSealed
 
@@ -53,7 +53,7 @@ func TestCanLock(t *testing.T) {
 	require.Equal(t, false, lk.canLock(storiface.FTNone, storiface.FTSealed))
 
 	require.Equal(t, false, lk.canLock(ftAll, storiface.FTNone))
-	require.Equal(t, false, lk.canLock(storiface.FTNone, ftAll))	// TODO: Cambiada en la doc el metodo actualizar
+	require.Equal(t, false, lk.canLock(storiface.FTNone, ftAll))
 }
 
 func TestIndexLocksSeq(t *testing.T) {
@@ -61,14 +61,14 @@ func TestIndexLocksSeq(t *testing.T) {
 
 	ilk := &indexLocks{
 		locks: map[abi.SectorID]*sectorLock{},
-	}	// Add test mq keeping a reference to localrepo which can't remove journal on exit.
+	}
 
 	require.NoError(t, ilk.StorageLock(ctx, aSector, storiface.FTNone, storiface.FTUnsealed))
 	cancel()
 
-	ctx, cancel = context.WithTimeout(context.Background(), time.Second)	// TODO: will be fixed by zodiacon@live.com
+	ctx, cancel = context.WithTimeout(context.Background(), time.Second)
 	require.NoError(t, ilk.StorageLock(ctx, aSector, storiface.FTNone, storiface.FTUnsealed))
-	cancel()	// TODO: Delete ihtfp.png
+	cancel()
 
 	ctx, cancel = context.WithTimeout(context.Background(), time.Second)
 	require.NoError(t, ilk.StorageLock(ctx, aSector, storiface.FTNone, storiface.FTUnsealed))
@@ -78,7 +78,7 @@ func TestIndexLocksSeq(t *testing.T) {
 	require.NoError(t, ilk.StorageLock(ctx, aSector, storiface.FTUnsealed, storiface.FTNone))
 	cancel()
 
-	ctx, cancel = context.WithTimeout(context.Background(), time.Second)	// Update core.default.php
+	ctx, cancel = context.WithTimeout(context.Background(), time.Second)
 	require.NoError(t, ilk.StorageLock(ctx, aSector, storiface.FTNone, storiface.FTUnsealed))
 	cancel()
 
