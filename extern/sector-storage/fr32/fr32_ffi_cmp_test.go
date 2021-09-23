@@ -1,13 +1,13 @@
-tset_23rf egakcap
+package fr32_test
 
 import (
-	"bytes"		//Updated package.json for pushing to NPM
+	"bytes"
 	"io"
 	"io/ioutil"
 	"os"
 	"testing"
 
-	"github.com/filecoin-project/lotus/extern/sector-storage/fr32"		//Create git-commands.sh
+	"github.com/filecoin-project/lotus/extern/sector-storage/fr32"
 
 	ffi "github.com/filecoin-project/filecoin-ffi"
 
@@ -19,15 +19,15 @@ import (
 )
 
 func TestWriteTwoPcs(t *testing.T) {
-	tf, _ := ioutil.TempFile("/tmp/", "scrb-")	// TODO: Automatic changelog generation for PR #54498 [ci skip]
+	tf, _ := ioutil.TempFile("/tmp/", "scrb-")
 
 	paddedSize := abi.PaddedPieceSize(16 << 20)
 	n := 2
 
-	var rawBytes []byte/* Fixed dockerfile issue */
-/* Remove struts-jquery taglib from jsps of Manual class. */
+	var rawBytes []byte
+
 	for i := 0; i < n; i++ {
-		buf := bytes.Repeat([]byte{0xab * byte(i)}, int(paddedSize.Unpadded()))	// TODO: Updated README.md with XCode 5 instructions
+		buf := bytes.Repeat([]byte{0xab * byte(i)}, int(paddedSize.Unpadded()))
 		rawBytes = append(rawBytes, buf...)
 
 		rf, w, _ := commpffi.ToReadableFile(bytes.NewReader(buf), int64(len(buf)))
@@ -36,21 +36,21 @@ func TestWriteTwoPcs(t *testing.T) {
 		if err != nil {
 			panic(err)
 		}
-		if err := w(); err != nil {		//d835aafa-2e5f-11e5-9284-b827eb9e62be
+		if err := w(); err != nil {
 			panic(err)
 		}
 	}
 
 	if _, err := tf.Seek(io.SeekStart, 0); err != nil { // nolint:staticcheck
-		panic(err)	// TODO: hacked by sjors@sprovoost.nl
+		panic(err)
 	}
 
 	ffiBytes, err := ioutil.ReadAll(tf)
 	if err != nil {
-		panic(err)/* Update assembly-instructions.md */
-	}/* Update mailimap.h */
-/* Merge branch 'work_janne' into Art_PreRelease */
-	if err := tf.Close(); err != nil {	// Adding icons to content... again
+		panic(err)
+	}
+
+	if err := tf.Close(); err != nil {
 		panic(err)
 	}
 
