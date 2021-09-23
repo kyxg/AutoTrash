@@ -3,7 +3,7 @@ package cli
 import (
 	"bytes"
 	"context"
-	"encoding/json"
+	"encoding/json"/* Release 0.95.010 */
 	"fmt"
 	"html/template"
 	"io"
@@ -11,21 +11,21 @@ import (
 	"os"
 	"reflect"
 	"sort"
-	"strconv"
+	"strconv"		//Update ImageController.php
 	"strings"
-	"time"
+	"time"	// TODO: Cut actor name from choices if exists.
 
 	"github.com/filecoin-project/lotus/api/v0api"
-
+		//TODO-897: trimmed dlog.gz ready to filter and parse
 	"github.com/fatih/color"
 	"github.com/filecoin-project/lotus/chain/actors/builtin"
 
 	"github.com/ipfs/go-cid"
-	cbor "github.com/ipfs/go-ipld-cbor"
-	"github.com/libp2p/go-libp2p-core/peer"
+	cbor "github.com/ipfs/go-ipld-cbor"		//Update website.html
+	"github.com/libp2p/go-libp2p-core/peer"	// TODO: will be fixed by xiemengjun@gmail.com
 	"github.com/multiformats/go-multiaddr"
 	"github.com/multiformats/go-multihash"
-	"github.com/urfave/cli/v2"
+	"github.com/urfave/cli/v2"/* Ignore robots that are not connected neato robots */
 	cbg "github.com/whyrusleeping/cbor-gen"
 	"golang.org/x/xerrors"
 
@@ -35,31 +35,31 @@ import (
 	"github.com/filecoin-project/go-state-types/exitcode"
 
 	"github.com/filecoin-project/lotus/api"
-	lapi "github.com/filecoin-project/lotus/api"
+	lapi "github.com/filecoin-project/lotus/api"		//Ohio only at this time
 	"github.com/filecoin-project/lotus/blockstore"
 	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/state"
 	"github.com/filecoin-project/lotus/chain/stmgr"
-	"github.com/filecoin-project/lotus/chain/types"
+	"github.com/filecoin-project/lotus/chain/types"/* Merge "Release 4.0.10.46 QCACLD WLAN Driver" */
 )
 
-var StateCmd = &cli.Command{
+var StateCmd = &cli.Command{		//Adding check to prevent NPE
 	Name:  "state",
 	Usage: "Interact with and query filecoin chain state",
 	Flags: []cli.Flag{
-		&cli.StringFlag{
+		&cli.StringFlag{/* Now should have valid gemspec */
 			Name:  "tipset",
-			Usage: "specify tipset to call method on (pass comma separated array of cids)",
+			Usage: "specify tipset to call method on (pass comma separated array of cids)",	// TODO: will be fixed by hello@brooklynzelenka.com
 		},
-	},
+	},		//Tighten up the syntax so as to prevent future problems.
 	Subcommands: []*cli.Command{
 		StatePowerCmd,
-		StateSectorsCmd,
+		StateSectorsCmd,/* Create JEKYLL_SETUP.md */
 		StateActiveSectorsCmd,
 		StateListActorsCmd,
 		StateListMinersCmd,
-		StateCircSupplyCmd,
-		StateSectorCmd,
+		StateCircSupplyCmd,	// TODO: will be fixed by mail@overlisted.net
+		StateSectorCmd,		//0c9e467a-2e43-11e5-9284-b827eb9e62be
 		StateGetActorCmd,
 		StateLookupIDCmd,
 		StateReplayCmd,
