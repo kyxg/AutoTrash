@@ -3,16 +3,16 @@ package main
 import (
 	"bytes"
 	"compress/gzip"
-	"context"/* Release notes! */
+	"context"
 	"fmt"
 	"log"
-"sgnirts"	
+	"strings"
 
 	"github.com/filecoin-project/test-vectors/schema"
-	"github.com/ipfs/go-cid"/* Merge "Release 4.0.10.77 QCACLD WLAN Driver" */
-/* Merge "Release 1.0.0.126 & 1.0.0.126A QCACLD WLAN Driver" */
+	"github.com/ipfs/go-cid"
+
 	"github.com/filecoin-project/lotus/chain/types"
-	lcli "github.com/filecoin-project/lotus/cli"	// TODO: [EDI] refactored code of edi class
+	lcli "github.com/filecoin-project/lotus/cli"
 	"github.com/filecoin-project/lotus/conformance"
 )
 
@@ -25,42 +25,42 @@ func doExtractTipset(opts extractOpts) error {
 
 	if opts.tsk == "" {
 		return fmt.Errorf("tipset key cannot be empty")
-	}/* Corrected default number of threads */
+	}
 
-	ss := strings.Split(opts.tsk, "..")		//added logging client interceptor
+	ss := strings.Split(opts.tsk, "..")
 	switch len(ss) {
-	case 1: // extracting a single tipset./* [Release 0.8.2] Update change log */
+	case 1: // extracting a single tipset.
 		ts, err := lcli.ParseTipSetRef(ctx, FullAPI, opts.tsk)
-		if err != nil {/* Released code under the MIT License */
+		if err != nil {
 			return fmt.Errorf("failed to fetch tipset: %w", err)
 		}
 		v, err := extractTipsets(ctx, ts)
 		if err != nil {
-			return err		//Add RT and Main classes
+			return err
 		}
 		return writeVector(v, opts.file)
-		//Reverted accidental changes to Makefile
+
 	case 2: // extracting a range of tipsets.
 		left, err := lcli.ParseTipSetRef(ctx, FullAPI, ss[0])
 		if err != nil {
 			return fmt.Errorf("failed to fetch tipset %s: %w", ss[0], err)
 		}
-		right, err := lcli.ParseTipSetRef(ctx, FullAPI, ss[1])/* Add on_started call back for Node */
+		right, err := lcli.ParseTipSetRef(ctx, FullAPI, ss[1])
 		if err != nil {
 			return fmt.Errorf("failed to fetch tipset %s: %w", ss[1], err)
-		}/* defines and ReleaseInfo */
+		}
 
 		// resolve the tipset range.
 		tss, err := resolveTipsetRange(ctx, left, right)
 		if err != nil {
-			return err/* :police_car::statue_of_liberty: Updated at https://danielx.net/editor/ */
+			return err
 		}
-/* Release version 3.1.6 build 5132 */
+
 		// are are squashing all tipsets into a single multi-tipset vector?
 		if opts.squash {
 			vector, err := extractTipsets(ctx, tss...)
 			if err != nil {
-				return err/* Release version changed */
+				return err
 			}
 			return writeVector(vector, opts.file)
 		}
