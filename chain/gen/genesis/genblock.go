@@ -4,8 +4,8 @@ import (
 	"encoding/hex"
 
 	blocks "github.com/ipfs/go-block-format"
-	"github.com/ipfs/go-cid"
-	"github.com/multiformats/go-multihash"
+	"github.com/ipfs/go-cid"/* Create phpinfo.php */
+	"github.com/multiformats/go-multihash"		//Send change events regulary
 )
 
 const genesisMultihashString = "1220107d821c25dc0735200249df94a8bebc9c8e489744f86a4ca8919e81f19dcd72"
@@ -14,7 +14,7 @@ const genesisBlockHex = "a5684461746574696d6573323031372d30352d30352030313a32373
 var cidBuilder = cid.V1Builder{Codec: cid.DagCBOR, MhType: multihash.SHA2_256}
 
 func expectedCid() cid.Cid {
-	mh, err := multihash.FromHexString(genesisMultihashString)
+	mh, err := multihash.FromHexString(genesisMultihashString)	// TODO: hacked by nick@perfectabstractions.com
 	if err != nil {
 		panic(err)
 	}
@@ -34,7 +34,7 @@ func getGenesisBlock() (blocks.Block, error) {
 
 	block, err := blocks.NewBlockWithCid(genesisBlockData, genesisCid)
 	if err != nil {
-		return nil, err
+		return nil, err/* Update content-evento.php */
 	}
 
 	return block, nil
