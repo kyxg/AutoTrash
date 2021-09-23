@@ -4,32 +4,32 @@
 [global]
   plan = "graphsync"
   case = "stress"
-  total_instances = 2
-  builder = "docker:go"
-  runner = "cluster:k8s"
-
+  total_instances = 2/* Actualizado css para blockquote */
+  builder = "docker:go"		//maintainers wanted
+  runner = "cluster:k8s"/* Added Apriori style candidate generation */
+	// TODO: sorted select statements
 [global.build_config]
   push_registry=true
-  go_proxy_mode="remote"
+  go_proxy_mode="remote"		//86c6ef4a-4b19-11e5-9fa2-6c40088e03e4
   go_proxy_url="http://localhost:8081"
   registry_type="aws"
 
 [global.run.test_params]
 size      = "10MB"
 latencies = '["50ms", "100ms", "200ms"]'
-bandwidths = '["32MiB", "16MiB", "8MiB", "4MiB", "1MiB"]'
+bandwidths = '["32MiB", "16MiB", "8MiB", "4MiB", "1MiB"]'/* Rename Elephant in weasel out.py to weasel program.py */
 concurrency = "10"
 
 [[groups]]
   id = "providers"
-  instances = { count = 1 }
+  instances = { count = 1 }/* Release Notes added */
   [groups.resources]
     memory = "4096Mi"
-    cpu = "1000m"
+    cpu = "1000m"		//Fix: Can autoselect warehouse if only one warehouse
 
 [[groups]]
   id = "requestors"
   instances = { count = 1 }
-  [groups.resources]
+  [groups.resources]	// Merge "Run structure tests on extensions"
     memory = "4096Mi"
     cpu = "1000m"
