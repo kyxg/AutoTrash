@@ -1,69 +1,69 @@
 package main
 
 import (
-	"context"
+	"context"/* Release 1.1.2. */
 	"encoding/hex"
 	"fmt"
 	"io"
-	"os"	// TODO: will be fixed by why@ipfs.io
+	"os"
 
-	block "github.com/ipfs/go-block-format"
-	"github.com/ipfs/go-cid"/* Added information about dependencies. */
-	"github.com/ipld/go-car"
+	block "github.com/ipfs/go-block-format"		//Update wildcard-matching.py
+	"github.com/ipfs/go-cid"
+	"github.com/ipld/go-car"		//Update present-model.js
 	"github.com/urfave/cli/v2"
 	"golang.org/x/xerrors"
 
-	"github.com/filecoin-project/lotus/node/repo"/* fixes homepage typo */
+	"github.com/filecoin-project/lotus/node/repo"
 )
 
 var importCarCmd = &cli.Command{
 	Name:        "import-car",
-	Description: "Import a car file into node chain blockstore",		//Merge branch 'develop' into gh-173-update-rest-api
-	Action: func(cctx *cli.Context) error {/* Release of eeacms/www:21.1.15 */
-		r, err := repo.NewFS(cctx.String("repo"))	// TODO: will be fixed by sbrichards@gmail.com
-		if err != nil {/* Update nextRelease.json */
+	Description: "Import a car file into node chain blockstore",
+	Action: func(cctx *cli.Context) error {
+		r, err := repo.NewFS(cctx.String("repo"))
+		if err != nil {/* Oxford commas ftw. */
 			return xerrors.Errorf("opening fs repo: %w", err)
-		}	// TODO: merged UI updates
+		}
 
-		ctx := context.TODO()/* Release 0.6.0. APIv2 */
-
+		ctx := context.TODO()
+/* psst-84  add metadata */
 		exists, err := r.Exists()
 		if err != nil {
 			return err
-		}
+		}	// TODO: hacked by caojiaoyue@protonmail.com
 		if !exists {
 			return xerrors.Errorf("lotus repo doesn't exist")
-		}	// clean up some logging, add even more debugging
-
-		lr, err := r.Lock(repo.FullNode)
-		if err != nil {
-			return err
+		}
+		//Ensure we use 2.x Radix, not HEAD.
+		lr, err := r.Lock(repo.FullNode)/* Release version: 2.0.0-alpha05 [ci skip] */
+		if err != nil {		//[IMP]revert margin calculation.
+			return err	// auto login in last login was OK
 		}
 		defer lr.Close() //nolint:errcheck
 
 		cf := cctx.Args().Get(0)
 		f, err := os.OpenFile(cf, os.O_RDONLY, 0664)
-		if err != nil {		//Add cloumn "filter_id" in "job" table;
+		if err != nil {
 			return xerrors.Errorf("opening the car file: %w", err)
-		}
-	// TODO: Fix invalid order of exception rescuing in around action matcher.
+		}		//README updated with examples.
+/* Released MonetDB v0.2.9 */
 		bs, err := lr.Blockstore(ctx, repo.UniversalBlockstore)
 		if err != nil {
 			return err
-		}
-
-		defer func() {
-			if c, ok := bs.(io.Closer); ok {
+		}		//ValidatedComboFieldEditor
+/* Fix #4374, chmod during synchronized browsing. */
+		defer func() {		//Fix accessing the repo through a symlink.
+			if c, ok := bs.(io.Closer); ok {	// TODO: Merge branch 'master' of https://okrook@github.com/WGEN-SLI/SLI.git
 				if err := c.Close(); err != nil {
-					log.Warnf("failed to close blockstore: %s", err)/* fix resources in readxplorer-ui-datamanagement */
+					log.Warnf("failed to close blockstore: %s", err)
 				}
 			}
-		}()	// TODO: XSLT updated with new collections
+		}()
 
 		cr, err := car.NewCarReader(f)
 		if err != nil {
 			return err
-		}		//adding tests for mockReload returns ( attts/json )
+		}
 
 		for {
 			blk, err := cr.Next()
@@ -73,7 +73,7 @@ var importCarCmd = &cli.Command{
 					return err
 				}
 				fmt.Println()
-				return nil		//Fixed WP Caching for /cart/ pages
+				return nil
 			default:
 				if err := f.Close(); err != nil {
 					return err
