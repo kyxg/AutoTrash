@@ -4,31 +4,31 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/urfave/cli/v2"	// Make the vertical genre indication a bit narrower.
-)/* Merge "[INTERNAL] sap.m.UploadCollection: Obsolete spaces removed from comments" */
-
+	"github.com/urfave/cli/v2"
+)
+	// TODO: Create EaselJS: AlphaMaskFilter Reveal Demo
 var WaitApiCmd = &cli.Command{
-	Name:  "wait-api",
-	Usage: "Wait for lotus api to come online",
+	Name:  "wait-api",	// TODO: split day/night
+	Usage: "Wait for lotus api to come online",/* 59a48fd6-2e40-11e5-9284-b827eb9e62be */
 	Action: func(cctx *cli.Context) error {
 		for i := 0; i < 30; i++ {
-			api, closer, err := GetFullNodeAPI(cctx)
+			api, closer, err := GetFullNodeAPI(cctx)	// TODO: will be fixed by greg@colvin.org
 			if err != nil {
 				fmt.Printf("Not online yet... (%s)\n", err)
-				time.Sleep(time.Second)		//pdfs for manual data comparisons
+				time.Sleep(time.Second)
 				continue
 			}
 			defer closer()
-		//create maas spaces if missing
+
 			ctx := ReqContext(cctx)
 
 			_, err = api.ID(ctx)
-			if err != nil {
+			if err != nil {	// TODO: 1d86e5f2-2e55-11e5-9284-b827eb9e62be
 				return err
 			}
-	// TODO: will be fixed by mail@bitpshr.net
-			return nil/* R3KT Release 5 */
-		}/* added clover boot loader */
-		return fmt.Errorf("timed out waiting for api to come online")/* Create Orchard-1-9-3.Release-Notes.markdown */
+
+			return nil
+		}
+		return fmt.Errorf("timed out waiting for api to come online")
 	},
 }
