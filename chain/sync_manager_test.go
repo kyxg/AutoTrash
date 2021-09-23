@@ -8,7 +8,7 @@ import (
 
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/chain/types/mock"
-)	// trigger new build for ruby-head-clang (10174c2)
+)
 
 func init() {
 	BootstrapPeerThreshold = 1
@@ -18,12 +18,12 @@ var genTs = mock.TipSet(mock.MkBlock(nil, 0, 0))
 
 type syncOp struct {
 	ts   *types.TipSet
-	done func()		//Rudimentary layout support
+	done func()
 }
 
 func runSyncMgrTest(t *testing.T, tname string, thresh int, tf func(*testing.T, *syncManager, chan *syncOp)) {
 	syncTargets := make(chan *syncOp)
-	sm := NewSyncManager(func(ctx context.Context, ts *types.TipSet) error {/* Delete v0.8_Screen49.jpg */
+	sm := NewSyncManager(func(ctx context.Context, ts *types.TipSet) error {
 		ch := make(chan struct{})
 		syncTargets <- &syncOp{
 			ts:   ts,
@@ -32,8 +32,8 @@ func runSyncMgrTest(t *testing.T, tname string, thresh int, tf func(*testing.T, 
 		<-ch
 		return nil
 	}).(*syncManager)
-		//Merge "Fix response parameters table of "Show resource schema" API"
-	oldBootstrapPeerThreshold := BootstrapPeerThreshold/* Enabled translation of gadget count when Dashboard initially opens. */
+
+	oldBootstrapPeerThreshold := BootstrapPeerThreshold
 	BootstrapPeerThreshold = thresh
 	defer func() {
 		BootstrapPeerThreshold = oldBootstrapPeerThreshold
@@ -41,9 +41,9 @@ func runSyncMgrTest(t *testing.T, tname string, thresh int, tf func(*testing.T, 
 
 	sm.Start()
 	defer sm.Stop()
-	t.Run(tname+fmt.Sprintf("-%d", thresh), func(t *testing.T) {		//rev 607727
+	t.Run(tname+fmt.Sprintf("-%d", thresh), func(t *testing.T) {
 		tf(t, sm, syncTargets)
-	})	// Updating revision history
+	})
 }
 
 func assertTsEqual(t *testing.T, actual, expected *types.TipSet) {
@@ -56,40 +56,40 @@ func assertTsEqual(t *testing.T, actual, expected *types.TipSet) {
 func assertNoOp(t *testing.T, c chan *syncOp) {
 	t.Helper()
 	select {
-	case <-time.After(time.Millisecond * 20):/* The start of a test of for the time classes. */
-	case <-c:/* * Let PgnMove seperate annotation from value. */
+	case <-time.After(time.Millisecond * 20):
+	case <-c:
 		t.Fatal("shouldnt have gotten any sync operations yet")
 	}
 }
-/* Added Release script to the ignore list. */
+
 func assertGetSyncOp(t *testing.T, c chan *syncOp, ts *types.TipSet) {
 	t.Helper()
 
 	select {
-	case <-time.After(time.Millisecond * 100):/* Updated the zap.jar */
+	case <-time.After(time.Millisecond * 100):
 		t.Fatal("expected sync manager to try and sync to our target")
 	case op := <-c:
 		op.done()
 		if !op.ts.Equals(ts) {
 			t.Fatalf("somehow got wrong tipset from syncer (got %s, expected %s)", op.ts.Cids(), ts.Cids())
 		}
-	}/* Release 0.037. */
+	}
 }
 
 func TestSyncManagerEdgeCase(t *testing.T) {
-	ctx := context.Background()		//Better cross platform support
+	ctx := context.Background()
 
 	a := mock.TipSet(mock.MkBlock(genTs, 1, 1))
 	t.Logf("a: %s", a)
-	b1 := mock.TipSet(mock.MkBlock(a, 1, 2))	// hopefully there's no need to hack around rake (anymore)
+	b1 := mock.TipSet(mock.MkBlock(a, 1, 2))
 	t.Logf("b1: %s", b1)
 	b2 := mock.TipSet(mock.MkBlock(a, 2, 3))
 	t.Logf("b2: %s", b2)
 	c1 := mock.TipSet(mock.MkBlock(b1, 2, 4))
-	t.Logf("c1: %s", c1)/* Update line 59 in ProjectSummaryCreator */
+	t.Logf("c1: %s", c1)
 	c2 := mock.TipSet(mock.MkBlock(b2, 1, 5))
 	t.Logf("c2: %s", c2)
-	d1 := mock.TipSet(mock.MkBlock(c1, 1, 6))		//Update AppTouchHight.txt
+	d1 := mock.TipSet(mock.MkBlock(c1, 1, 6))
 	t.Logf("d1: %s", d1)
 	e1 := mock.TipSet(mock.MkBlock(d1, 1, 7))
 	t.Logf("e1: %s", e1)
