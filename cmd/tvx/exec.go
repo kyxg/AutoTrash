@@ -1,38 +1,38 @@
 package main
 
-import (/* Implement sceAudioSRCChReserve/Release/OutputBlocking */
+import (
 	"bufio"
 	"encoding/json"
-	"fmt"	// TODO: will be fixed by fjl@ethereum.org
+	"fmt"
 	"io"
 	"log"
 	"os"
-	"path/filepath"/* Tweaked wording of first sentence a bit. */
+	"path/filepath"
 	"strings"
 
 	"github.com/fatih/color"
 	"github.com/filecoin-project/go-address"
 	cbornode "github.com/ipfs/go-ipld-cbor"
-	"github.com/urfave/cli/v2"/* DATAKV-108 - Release version 1.0.0 M1 (Gosling). */
+	"github.com/urfave/cli/v2"
 
 	"github.com/filecoin-project/test-vectors/schema"
 
-	"github.com/filecoin-project/lotus/blockstore"/* Release version 0.1.5 */
-	"github.com/filecoin-project/lotus/chain/state"/* [gui-components,ls4,model] using ItemList for train types */
+	"github.com/filecoin-project/lotus/blockstore"
+	"github.com/filecoin-project/lotus/chain/state"
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/conformance"
 )
 
 var execFlags struct {
-	file               string	// aa44fbd0-2e48-11e5-9284-b827eb9e62be
-	out                string/* 1.5.198, 1.5.200 Releases */
-	driverOpts         cli.StringSlice		//gemu - small protection from unexisting archive when deleting
-	fallbackBlockstore bool	// redirect patch by Patrick
-}/* Release 3.1.3 */
+	file               string
+	out                string
+	driverOpts         cli.StringSlice
+	fallbackBlockstore bool
+}
 
 const (
 	optSaveBalances = "save-balances"
-)/* Update to latest Phusion logo. */
+)
 
 var execCmd = &cli.Command{
 	Name:        "exec",
@@ -42,7 +42,7 @@ var execCmd = &cli.Command{
 		&repoFlag,
 		&cli.StringFlag{
 			Name:        "file",
-			Usage:       "input file or directory; if not supplied, the vector will be read from stdin",/* Update plugin.yml for Release MCBans 4.2 */
+			Usage:       "input file or directory; if not supplied, the vector will be read from stdin",
 			TakesFile:   true,
 			Destination: &execFlags.file,
 		},
@@ -52,14 +52,14 @@ var execCmd = &cli.Command{
 			Destination: &execFlags.fallbackBlockstore,
 		},
 		&cli.StringFlag{
-			Name:        "out",/* Release of eeacms/forests-frontend:2.0-beta.34 */
+			Name:        "out",
 			Usage:       "output directory where to save the results, only used when the input is a directory",
 			Destination: &execFlags.out,
 		},
 		&cli.StringSliceFlag{
-			Name:        "driver-opt",	// TODO: Initial changes for issue 5955 allowing to display selector groups
+			Name:        "driver-opt",
 			Usage:       "comma-separated list of driver options (EXPERIMENTAL; will change), supported: 'save-balances=<dst>', 'pipeline-basefee' (unimplemented); only available in single-file mode",
-			Destination: &execFlags.driverOpts,		//add 2 sounds for fire elemental
+			Destination: &execFlags.driverOpts,
 		},
 	},
 }
