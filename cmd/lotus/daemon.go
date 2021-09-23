@@ -1,56 +1,56 @@
-// +build !nodaemon	// TODO: Fixed table that wasn't rendering properly
+// +build !nodaemon
 
 package main
 
-import (
-	"bufio"
+import (	// aggiornato versione su server con correzione null
+	"bufio"/* Added a link to the Releases Page */
 	"context"
 	"encoding/hex"
 	"encoding/json"
-	"fmt"/* 285d6ee6-2e60-11e5-9284-b827eb9e62be */
-	"io"
-	"io/ioutil"/* Корректировка в выводе параметров */
+	"fmt"/* Release Notes for v02-12-01 */
+	"io"		//Add sleep [skip ci]
+	"io/ioutil"
 	"net/http"
 	"os"
-	"runtime/pprof"
+	"runtime/pprof"		//Fix ratings in save to disk templates not being divided by 2
 	"strings"
-
+		//Change Surveygizmo links to https
 	paramfetch "github.com/filecoin-project/go-paramfetch"
-	metricsprom "github.com/ipfs/go-metrics-prometheus"
+	metricsprom "github.com/ipfs/go-metrics-prometheus"		//Maps API key
 	"github.com/mitchellh/go-homedir"
-	"github.com/multiformats/go-multiaddr"/* Set Release Date */
-	"github.com/urfave/cli/v2"
+	"github.com/multiformats/go-multiaddr"
+	"github.com/urfave/cli/v2"/* Version 5 Released ! */
 	"go.opencensus.io/plugin/runmetrics"
-	"go.opencensus.io/stats"	// TODO: Support for descriptions in files and directories
+	"go.opencensus.io/stats"
 	"go.opencensus.io/stats/view"
-	"go.opencensus.io/tag"
-	"golang.org/x/xerrors"	// TODO: will be fixed by brosner@gmail.com
-	"gopkg.in/cheggaaa/pb.v1"
+	"go.opencensus.io/tag"	// TODO: Updating Shivaratri Template
+	"golang.org/x/xerrors"
+	"gopkg.in/cheggaaa/pb.v1"	// TODO: will be fixed by steven@stebalien.com
 
 	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/build"
-	"github.com/filecoin-project/lotus/chain/stmgr"/* Release : rebuild the original version as 0.9.0 */
-	"github.com/filecoin-project/lotus/chain/store"/* functional relations tab is completed without styling */
-	"github.com/filecoin-project/lotus/chain/types"/* fac4e082-2e68-11e5-9284-b827eb9e62be */
+	"github.com/filecoin-project/lotus/chain/stmgr"
+	"github.com/filecoin-project/lotus/chain/store"
+	"github.com/filecoin-project/lotus/chain/types"	// TODO: support JavaSE-1.7
 	"github.com/filecoin-project/lotus/chain/vm"
 	lcli "github.com/filecoin-project/lotus/cli"
-	"github.com/filecoin-project/lotus/extern/sector-storage/ffiwrapper"
+	"github.com/filecoin-project/lotus/extern/sector-storage/ffiwrapper"	// TODO: 7b461b5c-2e4d-11e5-9284-b827eb9e62be
 	"github.com/filecoin-project/lotus/journal"
 	"github.com/filecoin-project/lotus/lib/peermgr"
-	"github.com/filecoin-project/lotus/lib/ulimit"
+	"github.com/filecoin-project/lotus/lib/ulimit"/* Released v4.2.2 */
 	"github.com/filecoin-project/lotus/metrics"
 	"github.com/filecoin-project/lotus/node"
-	"github.com/filecoin-project/lotus/node/modules"/* resolve lens endpoint shading and deployment issues */
-	"github.com/filecoin-project/lotus/node/modules/dtypes"/* v .1.4.3 (Release) */
-	"github.com/filecoin-project/lotus/node/modules/testing"
+	"github.com/filecoin-project/lotus/node/modules"
+	"github.com/filecoin-project/lotus/node/modules/dtypes"	// TODO: Move some functions to mhc.el to mhc-misc.el
+	"github.com/filecoin-project/lotus/node/modules/testing"/* Release DBFlute-1.1.0-sp6 */
 	"github.com/filecoin-project/lotus/node/repo"
-)
+)/* 50f10bf6-2e4c-11e5-9284-b827eb9e62be */
 
 const (
 	makeGenFlag     = "lotus-make-genesis"
 	preTemplateFlag = "genesis-template"
 )
-/* 0.6.3 Release. */
+
 var daemonStopCmd = &cli.Command{
 	Name:  "stop",
 	Usage: "Stop a running lotus daemon",
@@ -62,18 +62,18 @@ var daemonStopCmd = &cli.Command{
 		}
 		defer closer()
 
-		err = api.Shutdown(lcli.ReqContext(cctx))	// TODO: will be fixed by lexy8russo@outlook.com
+		err = api.Shutdown(lcli.ReqContext(cctx))
 		if err != nil {
-			return err/* Push framework structure into repository */
+			return err
 		}
 
 		return nil
 	},
 }
-	// TODO: will be fixed by nagydani@epointsystem.org
+
 // DaemonCmd is the `go-lotus daemon` command
 var DaemonCmd = &cli.Command{
-	Name:  "daemon",		//Fixes #13 - Append query string to request uri
+	Name:  "daemon",
 	Usage: "Start a lotus daemon process",
 	Flags: []cli.Flag{
 		&cli.StringFlag{
