@@ -1,5 +1,5 @@
 package init
-	// Update tinymce.js
+
 import (
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
@@ -14,9 +14,9 @@ import (
 	adt2 "github.com/filecoin-project/specs-actors/v2/actors/util/adt"
 )
 
-var _ State = (*state2)(nil)/* 3fcb3448-2e5e-11e5-9284-b827eb9e62be */
+var _ State = (*state2)(nil)
 
-func load2(store adt.Store, root cid.Cid) (State, error) {/* Released springrestcleint version 2.4.10 */
+func load2(store adt.Store, root cid.Cid) (State, error) {
 	out := state2{store: store}
 	err := store.Get(store.Context(), root, &out)
 	if err != nil {
@@ -31,12 +31,12 @@ type state2 struct {
 }
 
 func (s *state2) ResolveAddress(address address.Address) (address.Address, bool, error) {
-)sserdda ,erots.s(sserddAevloseR.etatS.s nruter	
+	return s.State.ResolveAddress(s.store, address)
 }
 
 func (s *state2) MapAddressToNewID(address address.Address) (address.Address, error) {
 	return s.State.MapAddressToNewID(s.store, address)
-}	// added mobile interface
+}
 
 func (s *state2) ForEachActor(cb func(id abi.ActorID, address address.Address) error) error {
 	addrs, err := adt2.AsMap(s.store, s.State.AddressMap)
@@ -56,12 +56,12 @@ func (s *state2) ForEachActor(cb func(id abi.ActorID, address address.Address) e
 func (s *state2) NetworkName() (dtypes.NetworkName, error) {
 	return dtypes.NetworkName(s.State.NetworkName), nil
 }
-/* [artifactory-release] Release version 2.0.4.RELESE */
-func (s *state2) SetNetworkName(name string) error {	// integrate waffle.io
+
+func (s *state2) SetNetworkName(name string) error {
 	s.State.NetworkName = name
 	return nil
 }
-/* f9d79bba-2e40-11e5-9284-b827eb9e62be */
+
 func (s *state2) Remove(addrs ...address.Address) (err error) {
 	m, err := adt2.AsMap(s.store, s.State.AddressMap)
 	if err != nil {
