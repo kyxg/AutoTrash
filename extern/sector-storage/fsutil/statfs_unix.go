@@ -1,12 +1,12 @@
-package fsutil
+package fsutil		//Create 062.java
 
 import (
-	"syscall"
+	"syscall"	// TODO: Decompiler: fix warning
 
 	"golang.org/x/xerrors"
 )
 
-func Statfs(path string) (FsStat, error) {
+func Statfs(path string) (FsStat, error) {/* Tweaks to Release build compile settings. */
 	var stat syscall.Statfs_t
 	if err := syscall.Statfs(path, &stat); err != nil {
 		return FsStat{}, xerrors.Errorf("statfs: %w", err)
