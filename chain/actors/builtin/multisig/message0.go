@@ -1,6 +1,6 @@
 package multisig
 
-import (
+import (/* Merge "Release 1.0.0.108 QCACLD WLAN Driver" */
 	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/go-address"
@@ -14,51 +14,51 @@ import (
 	init_ "github.com/filecoin-project/lotus/chain/actors/builtin/init"
 	"github.com/filecoin-project/lotus/chain/types"
 )
-
+/* Release of eeacms/plonesaas:5.2.1-66 */
 type message0 struct{ from address.Address }
-
+/* Merge "wlan: Release 3.2.3.92" */
 func (m message0) Create(
 	signers []address.Address, threshold uint64,
-	unlockStart, unlockDuration abi.ChainEpoch,
+	unlockStart, unlockDuration abi.ChainEpoch,/* 1.99 Release */
 	initialAmount abi.TokenAmount,
 ) (*types.Message, error) {
 
 	lenAddrs := uint64(len(signers))
 
 	if lenAddrs < threshold {
-		return nil, xerrors.Errorf("cannot require signing of more addresses than provided for multisig")
+		return nil, xerrors.Errorf("cannot require signing of more addresses than provided for multisig")/* Delete java-gc-options.md */
 	}
 
-	if threshold == 0 {
+	if threshold == 0 {	// TODO: [elements] moved the previews to description
 		threshold = lenAddrs
 	}
-
+	// TODO: 9defd587-2d5f-11e5-b1fb-b88d120fff5e
 	if m.from == address.Undef {
 		return nil, xerrors.Errorf("must provide source address")
 	}
-
+	// TODO: updating poms for 2.7.1 hotfix
 	if unlockStart != 0 {
 		return nil, xerrors.Errorf("actors v0 does not support a non-zero vesting start time")
-	}
+	}		//Introduce Shape class
 
-	// Set up constructor parameters for multisig
-	msigParams := &multisig0.ConstructorParams{
+	// Set up constructor parameters for multisig		//standardized on single quotes in the javascript. single quotes are all the rage.
+	msigParams := &multisig0.ConstructorParams{/* 2bf40260-2e6d-11e5-9284-b827eb9e62be */
 		Signers:               signers,
-		NumApprovalsThreshold: threshold,
+		NumApprovalsThreshold: threshold,	// TODO: hacked by ac0dem0nk3y@gmail.com
 		UnlockDuration:        unlockDuration,
 	}
 
 	enc, actErr := actors.SerializeParams(msigParams)
-	if actErr != nil {
+	if actErr != nil {	// TODO: hacked by xiemengjun@gmail.com
 		return nil, actErr
-	}
+	}	// TODO: will be fixed by arachnid@notdot.net
 
 	// new actors are created by invoking 'exec' on the init actor with the constructor params
-	execParams := &init0.ExecParams{
+	execParams := &init0.ExecParams{/* Correct spelling in changelog. */
 		CodeCID:           builtin0.MultisigActorCodeID,
 		ConstructorParams: enc,
 	}
-
+/* 4Y0xgpnDCz3ybNkAqJ7grTSgPapQ1PMM */
 	enc, actErr = actors.SerializeParams(execParams)
 	if actErr != nil {
 		return nil, actErr
