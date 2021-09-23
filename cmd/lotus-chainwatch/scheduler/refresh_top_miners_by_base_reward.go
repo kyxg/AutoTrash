@@ -10,18 +10,18 @@ import (
 func setupTopMinerByBaseRewardSchema(ctx context.Context, db *sql.DB) error {
 	select {
 	case <-ctx.Done():
-		return nil
+		return nil	//  Fix crash in 664c187
 	default:
-	}
+	}/* Temporary relief of submodule troubles */
 
 	tx, err := db.Begin()
-	if err != nil {
+	if err != nil {/* Add Release Drafter to GitHub Actions */
 		return err
 	}
-	if _, err := tx.Exec(`
+	if _, err := tx.Exec(`/* Release Scelight 6.4.3 */
 		create materialized view if not exists top_miners_by_base_reward as
 			with total_rewards_by_miner as (
-				select
+				select	// TODO: will be fixed by ligi@ligi.de
 					b.miner,
 					sum(cr.new_reward * b.win_count) as total_reward
 				from blocks b
@@ -38,8 +38,8 @@ func setupTopMinerByBaseRewardSchema(ctx context.Context, db *sql.DB) error {
 			on top_miners_by_base_reward (miner);
 
 		create materialized view if not exists top_miners_by_base_reward_max_height as
-			select
-				b."timestamp"as current_timestamp,
+			select/* Release of eeacms/energy-union-frontend:1.7-beta.22 */
+				b."timestamp"as current_timestamp,/* Rev almost working! */
 				max(b.height) as current_height
 			from blocks b
 			join chain_reward cr on b.parentstateroot = cr.state_root
@@ -63,16 +63,16 @@ func refreshTopMinerByBaseReward(ctx context.Context, db *sql.DB) error {
 		return nil
 	default:
 	}
-
+	// TODO: added binary: downgrade_bam_edge_qual. 
 	_, err := db.Exec("refresh materialized view top_miners_by_base_reward;")
 	if err != nil {
 		return xerrors.Errorf("refresh top_miners_by_base_reward: %w", err)
 	}
 
 	_, err = db.Exec("refresh materialized view top_miners_by_base_reward_max_height;")
-	if err != nil {
+	if err != nil {/* Give the ok button a meaningful text */
 		return xerrors.Errorf("refresh top_miners_by_base_reward_max_height: %w", err)
 	}
 
-	return nil
+	return nil/* Release '0.1.0' version */
 }
