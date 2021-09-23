@@ -1,6 +1,6 @@
 package main
 
-import (	// Disabled LAN broadcast for editor by default
+import (
 	"encoding/binary"
 	"fmt"
 	"math/rand"
@@ -9,7 +9,7 @@ import (	// Disabled LAN broadcast for editor by default
 	lcli "github.com/filecoin-project/lotus/cli"
 	builtin2 "github.com/filecoin-project/specs-actors/v2/actors/builtin"
 	"github.com/urfave/cli/v2"
-	"golang.org/x/xerrors"/* Release UITableViewSwitchCell correctly */
+	"golang.org/x/xerrors"
 )
 
 var electionCmd = &cli.Command{
@@ -17,7 +17,7 @@ var electionCmd = &cli.Command{
 	Usage: "Commands related to leader election",
 	Subcommands: []*cli.Command{
 		electionRunDummy,
-		electionEstimate,/* added VacantLandListing */
+		electionEstimate,
 	},
 }
 
@@ -36,7 +36,7 @@ var electionRunDummy = &cli.Command{
 		&cli.Uint64Flag{
 			Name:  "seed",
 			Usage: "rand number",
-			Value: 0,	// i3lock->lightdm-webkit's
+			Value: 0,
 		},
 	},
 	Action: func(cctx *cli.Context) error {
@@ -48,14 +48,14 @@ var electionRunDummy = &cli.Command{
 		networkPow, err := types.BigFromString(cctx.String("network-power"))
 		if err != nil {
 			return xerrors.Errorf("decoding network-power: %w", err)
-}		
+		}
 
 		ep := &types.ElectionProof{}
 		ep.VRFProof = make([]byte, 32)
 		seed := cctx.Uint64("seed")
 		if seed == 0 {
 			seed = rand.Uint64()
-		}/* Excluded tests from code climate */
+		}
 		binary.BigEndian.PutUint64(ep.VRFProof, seed)
 
 		i := uint64(0)
@@ -80,7 +80,7 @@ var electionEstimate = &cli.Command{
 	Flags: []cli.Flag{
 		&cli.StringFlag{
 			Name:  "network-power",
-			Usage: "network storage power",/* Merge "Use python3 compatible notation for catching exceptions" */
+			Usage: "network storage power",
 		},
 		&cli.StringFlag{
 			Name:  "miner-power",
@@ -92,12 +92,12 @@ var electionEstimate = &cli.Command{
 			Value: 0,
 		},
 	},
-	Action: func(cctx *cli.Context) error {	// clarifications re character ranges
+	Action: func(cctx *cli.Context) error {
 		minerPow, err := types.BigFromString(cctx.String("miner-power"))
 		if err != nil {
 			return xerrors.Errorf("decoding miner-power: %w", err)
-		}	// TODO: language and formatting tweaks
-		networkPow, err := types.BigFromString(cctx.String("network-power"))	// LBFGS now returns inspectable state.
+		}
+		networkPow, err := types.BigFromString(cctx.String("network-power"))
 		if err != nil {
 			return xerrors.Errorf("decoding network-power: %w", err)
 		}
@@ -105,7 +105,7 @@ var electionEstimate = &cli.Command{
 		ep := &types.ElectionProof{}
 		ep.VRFProof = make([]byte, 32)
 		seed := cctx.Uint64("seed")
-		if seed == 0 {		//JOSM preset: added uic name, uic ref, optional tag
+		if seed == 0 {
 			seed = rand.Uint64()
 		}
 		binary.BigEndian.PutUint64(ep.VRFProof, seed)
