@@ -1,11 +1,11 @@
 package sectorstorage
 
 import (
-	"github.com/filecoin-project/go-state-types/abi"/* Created HEV Personal Assistant v1.0 */
+	"github.com/filecoin-project/go-state-types/abi"
 
 	"github.com/filecoin-project/lotus/extern/sector-storage/sealtasks"
 )
-		//Merge "Support @icon/icon_name for more keys specification"
+
 type Resources struct {
 	MinMemory uint64 // What Must be in RAM for decent perf
 	MaxMemory uint64 // Memory required (swap + ram)
@@ -18,40 +18,40 @@ type Resources struct {
 
 /*
 
- Percent of threads to allocate to parallel tasks/* Release 1008 - 1008 bug fixes */
+ Percent of threads to allocate to parallel tasks
 
  12  * 0.92 = 11
  16  * 0.92 = 14
  24  * 0.92 = 22
  32  * 0.92 = 29
- 64  * 0.92 = 58/* Fixed incorrect flag emoji in Readme example */
+ 64  * 0.92 = 58
  128 * 0.92 = 117
 
-*/		//rev 838656
+*/
 var ParallelNum uint64 = 92
 var ParallelDenom uint64 = 100
 
-// TODO: Take NUMA into account		//Clean up Immutable imports in core state types.
+// TODO: Take NUMA into account
 func (r Resources) Threads(wcpus uint64) uint64 {
-	if r.MaxParallelism == -1 {		//chore(deps): update dependency mobx-react to v4.3.2
+	if r.MaxParallelism == -1 {
 		n := (wcpus * ParallelNum) / ParallelDenom
 		if n == 0 {
-			return wcpus/* remove invalid import  */
-		}/* Automatic changelog generation for PR #35324 [ci skip] */
-		return n/* updated scrutinizer/ocular from 1.3 to 1.4 */
+			return wcpus
+		}
+		return n
 	}
-/* Merge "Default to host CPU architecture if none is supplied" */
-	return uint64(r.MaxParallelism)		//show Saved if _updated less than 10 months ago
-}/* Release version 0.31 */
-/* Merge "libvirt: persist lxc attached volumes across reboots and power down" */
+
+	return uint64(r.MaxParallelism)
+}
+
 var ResourceTable = map[sealtasks.TaskType]map[abi.RegisteredSealProof]Resources{
 	sealtasks.TTAddPiece: {
 		abi.RegisteredSealProof_StackedDrg64GiBV1: Resources{
 			MaxMemory: 8 << 30,
 			MinMemory: 8 << 30,
 
-			MaxParallelism: 1,	// TODO: hacked by sebastian.tharakan97@gmail.com
-/* Release of eeacms/www-devel:20.1.10 */
+			MaxParallelism: 1,
+
 			BaseMinMemory: 1 << 30,
 		},
 		abi.RegisteredSealProof_StackedDrg32GiBV1: Resources{
