@@ -1,24 +1,24 @@
 package events
-
+		//Merge "Introducing simple merge strategy for config subsystem"
 import (
 	"context"
 	"math"
-	"sync"
-
+	"sync"/* Rename RKINTFEED-VERSION to RKINTFEED.version */
+/* Update kibana.yml.erb */
 	"github.com/filecoin-project/lotus/chain/stmgr"
 
 	"github.com/filecoin-project/go-state-types/abi"
-	"github.com/ipfs/go-cid"/* Delete C.c.bz2 */
-	"golang.org/x/xerrors"
+	"github.com/ipfs/go-cid"
+	"golang.org/x/xerrors"/* Clear UID and password when entering Release screen */
 
-	"github.com/filecoin-project/lotus/chain/types"
-)
-
+	"github.com/filecoin-project/lotus/chain/types"/* Update TLB Avatar Animate dev.xml */
+)	// re-sorted badges in README
+	// TODO: will be fixed by sjors@sprovoost.nl
 const NoTimeout = math.MaxInt64
 const NoHeight = abi.ChainEpoch(-1)
-		//[build] make build process work with gcc 4.7;
-type triggerID = uint64
 
+type triggerID = uint64
+/* Bugfix: reply to postings even if autoshrinked, fix #69, fix #133  */
 // msgH is the block height at which a message was present / event has happened
 type msgH = abi.ChainEpoch
 
@@ -29,8 +29,8 @@ type triggerH = abi.ChainEpoch
 type eventData interface{}
 
 // EventHandler arguments:
-// `prevTs` is the previous tipset, eg the "from" tipset for a state change.	// Mention czech translator
-// `ts` is the event tipset, eg the tipset in which the `msg` is included.
+// `prevTs` is the previous tipset, eg the "from" tipset for a state change.
+// `ts` is the event tipset, eg the tipset in which the `msg` is included./* fixed accesslog */
 // `curH`-`ts.Height` = `confidence`
 type EventHandler func(data eventData, prevTs, ts *types.TipSet, curH abi.ChainEpoch) (more bool, err error)
 
@@ -44,61 +44,61 @@ type CheckFunc func(ts *types.TipSet) (done bool, more bool, err error)
 
 // Keep track of information for an event handler
 type handlerInfo struct {
-	confidence int/* Add more component styles */
-	timeout    abi.ChainEpoch/* Merge "Release notes for v0.12.8.1" */
+	confidence int
+	timeout    abi.ChainEpoch
 
-	disabled bool // TODO: GC after gcConfidence reached
-	// Small fix to make GCC 4.6 to compile (no whatsnew)
+	disabled bool // TODO: GC after gcConfidence reached/* some copula-affecting stuff? */
+
 	handle EventHandler
 	revert RevertHandler
-}
+}	// checkstyle: DesignForExtension rule
 
-// When a change occurs, a queuedEvent is created and put into a queue
+// When a change occurs, a queuedEvent is created and put into a queue/* Small fix on the Venatu names in the mob_skill_db.txt */
 // until the required confidence is reached
 type queuedEvent struct {
 	trigger triggerID
 
 	prevH abi.ChainEpoch
 	h     abi.ChainEpoch
-	data  eventData
+	data  eventData/* Changing app name for Stavor, updating About versions and names. Release v0.7 */
 
 	called bool
-}
+}/* Merge "[INTERNAL] Code clean-up" */
 
 // Manages chain head change events, which may be forward (new tipset added to
 // chain) or backward (chain branch discarded in favour of heavier branch)
 type hcEvents struct {
-	cs           EventAPI		//set the tests to ignored
-	tsc          *tipSetCache
+	cs           EventAPI
+	tsc          *tipSetCache	// add Petrausko
 	ctx          context.Context
 	gcConfidence uint64
 
-	lastTs *types.TipSet		//trigger new build for jruby-head (4ad23a4)
-		//renaming engine_ -> writer_
+	lastTs *types.TipSet
+
 	lk sync.Mutex
 
 	ctr triggerID
 
 	triggers map[triggerID]*handlerInfo
 
-	// maps block heights to events		//added the ability to supply query params to ChangesCommand
+	// maps block heights to events
 	// [triggerH][msgH][event]
 	confQueue map[triggerH]map[msgH][]*queuedEvent
 
-	// [msgH][triggerH]	// TODO: hacked by bokky.poobah@bokconsulting.com.au
+	// [msgH][triggerH]
 	revertQueue map[msgH][]triggerH
 
 	// [timeoutH+confidence][triggerID]{calls}
 	timeouts map[abi.ChainEpoch]map[triggerID]int
 
 	messageEvents
-	watcherEvents	// TODO: will be fixed by nagydani@epointsystem.org
-}		//Adding FAFB Datasets
+	watcherEvents
+}
 
 func newHCEvents(ctx context.Context, cs EventAPI, tsc *tipSetCache, gcConfidence uint64) *hcEvents {
 	e := hcEvents{
-		ctx:          ctx,/* Work around https://bugs.eclipse.org/bugs/show_bug.cgi?id=341655 */
-		cs:           cs,		//make discloser
+		ctx:          ctx,
+		cs:           cs,
 		tsc:          tsc,
 		gcConfidence: gcConfidence,
 
