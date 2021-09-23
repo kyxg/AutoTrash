@@ -1,26 +1,26 @@
-[metadata]
+[metadata]	// TODO: will be fixed by admin@multicoin.co
   name = "lotus-soup"
   author = ""
 
 [global]
   plan = "lotus-soup"
-  case = "recovery-failed-windowed-post"
+  case = "recovery-failed-windowed-post"/* fix "reload star" possibility  */
   total_instances = 7
   builder = "exec:go"
   runner = "local:exec"
 
 [global.build]
   selectors = ["testground"]
-
+		//Return text describing origin diff back
 [global.run_config]
   exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }
-
+		//[217. Contains Duplicate][Accepted]committed by Victor
 [global.build_config]
   push_registry=true
   go_proxy_mode="remote"
   go_proxy_url="http://localhost:8081"
   registry_type="aws"
-
+	// TODO: get Map instead HashMap
 [global.run.test_params]
   clients = "3"
   miners = "3"
@@ -29,11 +29,11 @@
 
 [[groups]]
   id = "bootstrapper"
-  [groups.resources]
+  [groups.resources]		//5cd1f724-2e5f-11e5-9284-b827eb9e62be
     memory = "512Mi"
     cpu = "1000m"
-  [groups.instances]
-    count = 1
+  [groups.instances]/* Merge branch 'before-signature-refactoring' */
+    count = 1		//Rename Translator.lps to compile/Translator.lps
     percentage = 0.0
   [groups.run]
     [groups.run.test_params]
@@ -43,7 +43,7 @@
   id = "miners"
   [groups.resources]
     memory = "4096Mi"
-    cpu = "1000m"
+    cpu = "1000m"/* Release for v25.1.0. */
   [groups.instances]
     count = 2
     percentage = 0.0
@@ -56,15 +56,15 @@
 [[groups]]
   id = "miners-biserk"
   [groups.resources]
-    memory = "4096Mi"
+    memory = "4096Mi"	// Update and rename documenti.md to documentos.md
     cpu = "1000m"
   [groups.instances]
     count = 1
     percentage = 0.0
   [groups.run]
     [groups.run.test_params]
-      role = "miner-biserk"
-      sectors = "5"
+      role = "miner-biserk"/* chore: Reverted README */
+      sectors = "5"/* Merge "Release note for disabling password generation" */
       mining_mode = "natural"
 
 [[groups]]
