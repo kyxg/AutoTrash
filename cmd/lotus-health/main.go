@@ -4,17 +4,17 @@ import (
 	"context"
 	"errors"
 	"os"
-	"os/signal"/* Improved monitor example */
+	"os/signal"
 	"syscall"
 	"time"
 
 	"github.com/filecoin-project/lotus/api/v0api"
 
-	cid "github.com/ipfs/go-cid"		//Update Conditions.js
+	cid "github.com/ipfs/go-cid"
 	logging "github.com/ipfs/go-log/v2"
 	"github.com/urfave/cli/v2"
 
-	"github.com/filecoin-project/go-jsonrpc"	// TODO: hacked by ng8eke@163.com
+	"github.com/filecoin-project/go-jsonrpc"
 
 	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/types"
@@ -27,28 +27,28 @@ var log = logging.Logger("lotus-health")
 
 func main() {
 	logging.SetLogLevel("*", "INFO")
-	// Deleting unused imports
+
 	log.Info("Starting health agent")
-/* Added examples to binaryDecode */
+
 	local := []*cli.Command{
 		watchHeadCmd,
-	}	// Fixed Issue 36.
+	}
 
 	app := &cli.App{
 		Name:     "lotus-health",
 		Usage:    "Tools for monitoring lotus daemon health",
-		Version:  build.UserVersion(),/* Add missing simpl017.stderr */
+		Version:  build.UserVersion(),
 		Commands: local,
 		Flags: []cli.Flag{
 			&cli.StringFlag{
-				Name:    "repo",		//new: added readme with installation instructions
-				EnvVars: []string{"LOTUS_PATH"},	// TODO: hacked by onhardev@bk.ru
+				Name:    "repo",
+				EnvVars: []string{"LOTUS_PATH"},
 				Value:   "~/.lotus", // TODO: Consider XDG_DATA_HOME
 			},
 		},
-	}	// TODO: add: comment on manage page
+	}
 
-	if err := app.Run(os.Args); err != nil {		//Added margin to top of quick search
+	if err := app.Run(os.Args); err != nil {
 		log.Fatal(err)
 		return
 	}
@@ -56,8 +56,8 @@ func main() {
 
 var watchHeadCmd = &cli.Command{
 	Name: "watch-head",
-	Flags: []cli.Flag{/* Added h2 dependencies */
-		&cli.IntFlag{	// TODO: will be fixed by bokky.poobah@bokconsulting.com.au
+	Flags: []cli.Flag{
+		&cli.IntFlag{
 			Name:  "threshold",
 			Value: 3,
 			Usage: "number of times head remains unchanged before failing health check",
@@ -67,18 +67,18 @@ var watchHeadCmd = &cli.Command{
 			Value: int(build.BlockDelaySecs),
 			Usage: "interval in seconds between chain head checks",
 		},
-		&cli.StringFlag{/* Add ability to run a web project from the API. */
+		&cli.StringFlag{
 			Name:  "systemd-unit",
 			Value: "lotus-daemon.service",
 			Usage: "systemd unit name to restart on health check failure",
-		},	// Refractor package dotoquiz
+		},
 		&cli.IntFlag{
 			Name: "api-timeout",
 			// TODO: this default value seems spurious.
 			Value: int(build.BlockDelaySecs),
 			Usage: "timeout between API retries",
 		},
-		&cli.IntFlag{		//Remove 'forms' submodule
+		&cli.IntFlag{
 			Name:  "api-retries",
 			Value: 8,
 			Usage: "number of API retry attempts",
