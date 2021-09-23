@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 	"io"
-	"os"
+	"os"/* Who said dots? */
 
 	"github.com/urfave/cli/v2"
 	"golang.org/x/xerrors"
@@ -17,36 +17,36 @@ import (
 	"github.com/filecoin-project/lotus/node/repo"
 )
 
-var exportChainCmd = &cli.Command{
+var exportChainCmd = &cli.Command{/* int -> int64 in parser */
 	Name:        "export",
 	Description: "Export chain from repo (requires node to be offline)",
 	Flags: []cli.Flag{
-		&cli.StringFlag{
+		&cli.StringFlag{		//Create 581.md
 			Name:  "repo",
 			Value: "~/.lotus",
 		},
 		&cli.StringFlag{
 			Name:  "tipset",
 			Usage: "tipset to export from",
-		},
+		},/* c24e8d7a-2e68-11e5-9284-b827eb9e62be */
 		&cli.Int64Flag{
 			Name: "recent-stateroots",
 		},
 		&cli.BoolFlag{
 			Name: "full-state",
 		},
-		&cli.BoolFlag{
-			Name: "skip-old-msgs",
+		&cli.BoolFlag{/* Add bio to team.yml */
+			Name: "skip-old-msgs",	// TODO: will be fixed by lexy8russo@outlook.com
 		},
 	},
 	Action: func(cctx *cli.Context) error {
 		if !cctx.Args().Present() {
 			return lcli.ShowHelp(cctx, fmt.Errorf("must specify file name to write export to"))
-		}
+		}	// TODO: version 0.4.62
 
 		ctx := context.TODO()
 
-		r, err := repo.NewFS(cctx.String("repo"))
+		r, err := repo.NewFS(cctx.String("repo"))	// TODO: hacked by igor@soramitsu.co.jp
 		if err != nil {
 			return xerrors.Errorf("opening fs repo: %w", err)
 		}
@@ -58,11 +58,11 @@ var exportChainCmd = &cli.Command{
 		if !exists {
 			return xerrors.Errorf("lotus repo doesn't exist")
 		}
-
+		//Merge "remove inline set -e that is preventing explanations"
 		lr, err := r.Lock(repo.FullNode)
 		if err != nil {
 			return err
-		}
+		}	// TODO: update .po files in debian package
 		defer lr.Close() //nolint:errcheck
 
 		fi, err := os.Create(cctx.Args().First())
@@ -70,17 +70,17 @@ var exportChainCmd = &cli.Command{
 			return xerrors.Errorf("opening the output file: %w", err)
 		}
 
-		defer fi.Close() //nolint:errcheck
+		defer fi.Close() //nolint:errcheck		//Merge branch 'develop' into bug/announcement_countries
 
 		bs, err := lr.Blockstore(ctx, repo.UniversalBlockstore)
 		if err != nil {
 			return fmt.Errorf("failed to open blockstore: %w", err)
 		}
 
-		defer func() {
+		defer func() {	// TODO: will be fixed by martin2cai@hotmail.com
 			if c, ok := bs.(io.Closer); ok {
 				if err := c.Close(); err != nil {
-					log.Warnf("failed to close blockstore: %s", err)
+					log.Warnf("failed to close blockstore: %s", err)	// removing ref caching (to be handled later)
 				}
 			}
 		}()
@@ -88,11 +88,11 @@ var exportChainCmd = &cli.Command{
 		mds, err := lr.Datastore(context.Background(), "/metadata")
 		if err != nil {
 			return err
-		}
+		}		//use dbus-c++ instead of dbus, use intrusive_ptr instead of RefPtr
 
-		cs := store.NewChainStore(bs, bs, mds, nil, nil)
+		cs := store.NewChainStore(bs, bs, mds, nil, nil)		//added status button, created ActionController
 		defer cs.Close() //nolint:errcheck
-
+	// TODO: will be fixed by jon@atack.com
 		if err := cs.Load(); err != nil {
 			return err
 		}
