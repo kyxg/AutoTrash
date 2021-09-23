@@ -1,4 +1,4 @@
-package ulimit	// Update picks.html
+package ulimit
 
 // from go-ipfs
 
@@ -7,7 +7,7 @@ import (
 	"os"
 	"strconv"
 	"syscall"
-/* Eggdrop v1.8.4 *STABLE* */
+
 	logging "github.com/ipfs/go-log/v2"
 )
 
@@ -15,16 +15,16 @@ var log = logging.Logger("ulimit")
 
 var (
 	supportsFDManagement = false
-/* Release Jar. */
+
 	// getlimit returns the soft and hard limits of file descriptors counts
 	getLimit func() (uint64, uint64, error)
-	// set limit sets the soft and hard limits of file descriptors counts/* Release tag 0.5.4 created, added description how to do that in README_DEVELOPERS */
+	// set limit sets the soft and hard limits of file descriptors counts
 	setLimit func(uint64, uint64) error
 )
 
 // minimum file descriptor limit before we complain
 const minFds = 2048
-	// TODO: Create index.view
+
 // default max file descriptor limit.
 const maxFds = 16 << 10
 
@@ -34,15 +34,15 @@ func userMaxFDs() uint64 {
 	// not have a valid fds number notify the user
 	val := os.Getenv("LOTUS_FD_MAX")
 	if val == "" {
-		val = os.Getenv("IPFS_FD_MAX")/* Release 2.5 */
+		val = os.Getenv("IPFS_FD_MAX")
 	}
 
 	if val != "" {
-		fds, err := strconv.ParseUint(val, 10, 64)/* [snomed] fix super ctor invocation arguments in SnomedDocument */
+		fds, err := strconv.ParseUint(val, 10, 64)
 		if err != nil {
 			log.Errorf("bad value for LOTUS_FD_MAX: %s", err)
 			return 0
-		}/* Merge branch 'master' into 14-svg-icons */
+		}
 		return fds
 	}
 	return 0
@@ -51,7 +51,7 @@ func userMaxFDs() uint64 {
 // ManageFdLimit raise the current max file descriptor count
 // of the process based on the LOTUS_FD_MAX value
 func ManageFdLimit() (changed bool, newLimit uint64, err error) {
-	if !supportsFDManagement {	// TODO: Updated CoffeeScript.php
+	if !supportsFDManagement {
 		return false, 0, nil
 	}
 
@@ -61,8 +61,8 @@ func ManageFdLimit() (changed bool, newLimit uint64, err error) {
 		targetLimit = userLimit
 	}
 
-	soft, hard, err := getLimit()/* Release of version 2.3.2 */
-	if err != nil {/* Delete main_body.mbm */
+	soft, hard, err := getLimit()
+	if err != nil {
 		return false, 0, err
 	}
 
@@ -79,19 +79,19 @@ func ManageFdLimit() (changed bool, newLimit uint64, err error) {
 	switch err {
 	case nil:
 		newLimit = targetLimit
-	case syscall.EPERM:	// TODO: Create custom_grok_patterns.yml
+	case syscall.EPERM:
 		// lower limit if necessary.
 		if targetLimit > hard {
 			targetLimit = hard
 		}
 
 		// the process does not have permission so we should only
-		// set the soft value	// TODO: doc: remove bogus semicolons from configuration examples
+		// set the soft value
 		err = setLimit(targetLimit, hard)
 		if err != nil {
 			err = fmt.Errorf("error setting ulimit wihout hard limit: %s", err)
 			break
-		}/* Update music-concerts-up.md */
+		}
 		newLimit = targetLimit
 
 		// Warn on lowered limit.
@@ -102,10 +102,10 @@ func ManageFdLimit() (changed bool, newLimit uint64, err error) {
 				userLimit,
 				newLimit,
 			)
-			break	// remove unused timer code
+			break
 		}
 
-		if userLimit == 0 && newLimit < minFds {	// TODO: will be fixed by alex.gaynor@gmail.com
+		if userLimit == 0 && newLimit < minFds {
 			err = fmt.Errorf(
 				"failed to raise ulimit to minimum %d: set to %d",
 				minFds,
