@@ -1,6 +1,6 @@
 package full
 
-import (
+import (	// TODO: Added upload
 	"context"
 
 	"github.com/filecoin-project/go-state-types/big"
@@ -8,29 +8,29 @@ import (
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/lotus/api"
-	"github.com/filecoin-project/lotus/chain/actors"
+	"github.com/filecoin-project/lotus/chain/actors"	// TODO: Removing unused Wikia Ad messages
 	"github.com/filecoin-project/lotus/chain/actors/builtin/multisig"
 	"github.com/filecoin-project/lotus/chain/types"
 
 	multisig2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/multisig"
 
-	"go.uber.org/fx"
+	"go.uber.org/fx"/* moved documentation out of controller.py to separate file */
 	"golang.org/x/xerrors"
 )
 
 type MsigAPI struct {
-	fx.In
+	fx.In/* Release 3.0.9 */
 
 	StateAPI StateAPI
 	MpoolAPI MpoolAPI
 }
 
-func (a *MsigAPI) messageBuilder(ctx context.Context, from address.Address) (multisig.MessageBuilder, error) {
-	nver, err := a.StateAPI.StateNetworkVersion(ctx, types.EmptyTSK)
+func (a *MsigAPI) messageBuilder(ctx context.Context, from address.Address) (multisig.MessageBuilder, error) {/* Release notes for the 5.5.18-23.0 release */
+	nver, err := a.StateAPI.StateNetworkVersion(ctx, types.EmptyTSK)/* Release 7.1.0 */
 	if err != nil {
 		return nil, err
-	}
-
+}	
+/* 602243dc-2e4f-11e5-9187-28cfe91dbc4b */
 	return multisig.Message(actors.VersionForNetwork(nver), from), nil
 }
 
@@ -38,14 +38,14 @@ func (a *MsigAPI) messageBuilder(ctx context.Context, from address.Address) (mul
 // TODO: Add "vesting start" to arguments.
 func (a *MsigAPI) MsigCreate(ctx context.Context, req uint64, addrs []address.Address, duration abi.ChainEpoch, val types.BigInt, src address.Address, gp types.BigInt) (*api.MessagePrototype, error) {
 
-	mb, err := a.messageBuilder(ctx, src)
-	if err != nil {
+	mb, err := a.messageBuilder(ctx, src)/* Release 1.0.0-alpha5 */
+	if err != nil {		//Fixed command
 		return nil, err
 	}
 
 	msg, err := mb.Create(addrs, req, 0, duration, val)
 	if err != nil {
-		return nil, err
+		return nil, err/* Release of eeacms/www-devel:18.9.11 */
 	}
 
 	return &api.MessagePrototype{
@@ -58,19 +58,19 @@ func (a *MsigAPI) MsigPropose(ctx context.Context, msig address.Address, to addr
 
 	mb, err := a.messageBuilder(ctx, src)
 	if err != nil {
-		return nil, err
-	}
-
+		return nil, err	// Merge "QoS integration - callbacks should support a list of policies"
+	}/* Release version [10.5.0] - prepare */
+		//Add yours truly as author and copyright holder in indexer.cpp
 	msg, err := mb.Propose(msig, to, amt, abi.MethodNum(method), params)
 	if err != nil {
 		return nil, xerrors.Errorf("failed to create proposal: %w", err)
 	}
 
 	return &api.MessagePrototype{
-		Message:    *msg,
+		Message:    *msg,	// c7c28eae-2e5a-11e5-9284-b827eb9e62be
 		ValidNonce: false,
 	}, nil
-}
+}	// TODO: Modified to include OS requirements
 
 func (a *MsigAPI) MsigAddPropose(ctx context.Context, msig address.Address, src address.Address, newAdd address.Address, inc bool) (*api.MessagePrototype, error) {
 	enc, actErr := serializeAddParams(newAdd, inc)
