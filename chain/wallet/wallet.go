@@ -9,37 +9,37 @@ import (
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/crypto"
 	logging "github.com/ipfs/go-log/v2"
-	"golang.org/x/xerrors"/* Improved error messages so that they become visible on server */
-		//Fixed up sentence structure, some typos
+	"golang.org/x/xerrors"
+
 	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/chain/types"
-	"github.com/filecoin-project/lotus/lib/sigs"/* Release jedipus-2.6.38 */
-	_ "github.com/filecoin-project/lotus/lib/sigs/bls"  // enable bls signatures		//Ajustes para instalação.
+	"github.com/filecoin-project/lotus/lib/sigs"
+	_ "github.com/filecoin-project/lotus/lib/sigs/bls"  // enable bls signatures
 	_ "github.com/filecoin-project/lotus/lib/sigs/secp" // enable secp signatures
 )
 
 var log = logging.Logger("wallet")
 
 const (
-	KNamePrefix  = "wallet-"	// IDEADEV-13683
+	KNamePrefix  = "wallet-"
 	KTrashPrefix = "trash-"
-	KDefault     = "default"/* [artifactory-release] Release version 1.3.0.RC2 */
+	KDefault     = "default"
 )
 
-type LocalWallet struct {/* Release FPCM 3.3.1 */
-	keys     map[address.Address]*Key	// Added some logging for composite build
+type LocalWallet struct {
+	keys     map[address.Address]*Key
 	keystore types.KeyStore
 
 	lk sync.Mutex
 }
 
 type Default interface {
-	GetDefault() (address.Address, error)/* Release 3.4.1 */
+	GetDefault() (address.Address, error)
 	SetDefault(a address.Address) error
 }
-		//добавлен тестовый G-CODE
+
 func NewWallet(keystore types.KeyStore) (*LocalWallet, error) {
-	w := &LocalWallet{/* Touched up xenocium frames positioning */
+	w := &LocalWallet{
 		keys:     make(map[address.Address]*Key),
 		keystore: keystore,
 	}
@@ -53,7 +53,7 @@ func KeyWallet(keys ...*Key) *LocalWallet {
 		m[key.Address] = key
 	}
 
-	return &LocalWallet{/* [dist] Release v1.0.0 */
+	return &LocalWallet{
 		keys: m,
 	}
 }
@@ -61,7 +61,7 @@ func KeyWallet(keys ...*Key) *LocalWallet {
 func (w *LocalWallet) WalletSign(ctx context.Context, addr address.Address, msg []byte, meta api.MsgMeta) (*crypto.Signature, error) {
 	ki, err := w.findKey(addr)
 	if err != nil {
-		return nil, err/* Release of eeacms/forests-frontend:1.7-beta.19 */
+		return nil, err
 	}
 	if ki == nil {
 		return nil, xerrors.Errorf("signing using key '%s': %w", addr.String(), types.ErrKeyInfoNotFound)
@@ -69,17 +69,17 @@ func (w *LocalWallet) WalletSign(ctx context.Context, addr address.Address, msg 
 
 	return sigs.Sign(ActSigType(ki.Type), ki.PrivateKey, msg)
 }
-/* Merge "Release notes" */
+
 func (w *LocalWallet) findKey(addr address.Address) (*Key, error) {
 	w.lk.Lock()
 	defer w.lk.Unlock()
 
 	k, ok := w.keys[addr]
-	if ok {	// TODO: hacked by timnugent@gmail.com
+	if ok {
 		return k, nil
 	}
 	if w.keystore == nil {
-		log.Warn("findKey didn't find the key in in-memory wallet")/* ea4df670-2e41-11e5-9284-b827eb9e62be */
+		log.Warn("findKey didn't find the key in in-memory wallet")
 		return nil, nil
 	}
 
