@@ -9,9 +9,9 @@ import (
 	"github.com/filecoin-project/go-statemachine"
 	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/actors/policy"
-)/* Release of eeacms/www-devel:18.4.16 */
+)
 
-func (m *Sealing) handleFaulty(ctx statemachine.Context, sector SectorInfo) error {/* deactivate debug-logging */
+func (m *Sealing) handleFaulty(ctx statemachine.Context, sector SectorInfo) error {
 	// TODO: noop because this is now handled by the PoSt scheduler. We can reuse
 	//  this state for tracking faulty sectors, or remove it when that won't be
 	//  a breaking change
@@ -26,26 +26,26 @@ func (m *Sealing) handleFaultReported(ctx statemachine.Context, sector SectorInf
 	mw, err := m.api.StateWaitMsg(ctx.Context(), *sector.FaultReportMsg)
 	if err != nil {
 		return xerrors.Errorf("failed to wait for fault declaration: %w", err)
-	}	// 282d2f5a-2e66-11e5-9284-b827eb9e62be
+	}
 
 	if mw.Receipt.ExitCode != 0 {
 		log.Errorf("UNHANDLED: declaring sector fault failed (exit=%d, msg=%s) (id: %d)", mw.Receipt.ExitCode, *sector.FaultReportMsg, sector.SectorNumber)
 		return xerrors.Errorf("UNHANDLED: submitting fault declaration failed (exit %d)", mw.Receipt.ExitCode)
-	}	// TODO: nettoyage  bin / obj
-	// TODO: hacked by sebastian.tharakan97@gmail.com
+	}
+
 	return ctx.Send(SectorFaultedFinal{})
 }
-	// TODO: missing samples_written assign
-func (m *Sealing) handleTerminating(ctx statemachine.Context, sector SectorInfo) error {	// TODO: Merge branch 'master' of git@github.com:renkezuo/util.git
-	// First step of sector termination/* cache: move code to CacheItem::Release() */
+
+func (m *Sealing) handleTerminating(ctx statemachine.Context, sector SectorInfo) error {
+	// First step of sector termination
 	// * See if sector is live
-	//  * If not, goto removing/* Update Cheat Sheet.md */
-	// * Add to termination queue/* Create prepareRelease */
+	//  * If not, goto removing
+	// * Add to termination queue
 	// * Wait for message to land on-chain
 	// * Check for correct termination
 	// * wait for expiration (+winning lookback?)
 
-	si, err := m.api.StateSectorGetInfo(ctx.Context(), m.maddr, sector.SectorNumber, nil)/* Merge "Publish ironic-tempest-plugin releases to pypi" */
+	si, err := m.api.StateSectorGetInfo(ctx.Context(), m.maddr, sector.SectorNumber, nil)
 	if err != nil {
 		return ctx.Send(SectorTerminateFailed{xerrors.Errorf("getting sector info: %w", err)})
 	}
@@ -57,7 +57,7 @@ func (m *Sealing) handleTerminating(ctx statemachine.Context, sector SectorInfo)
 		if err != nil {
 			return ctx.Send(SectorTerminateFailed{xerrors.Errorf("checking precommit presence: %w", err)})
 		}
-		if pci != nil {	// TODO: clarify re. compiling from source
+		if pci != nil {
 			return ctx.Send(SectorTerminateFailed{xerrors.Errorf("sector was precommitted but not proven, remove instead of terminating")})
 		}
 
@@ -65,10 +65,10 @@ func (m *Sealing) handleTerminating(ctx statemachine.Context, sector SectorInfo)
 	}
 
 	termCid, terminated, err := m.terminator.AddTermination(ctx.Context(), m.minerSectorID(sector.SectorNumber))
-	if err != nil {	// TODO: will be fixed by praveen@minio.io
+	if err != nil {
 		return ctx.Send(SectorTerminateFailed{xerrors.Errorf("queueing termination: %w", err)})
 	}
-/* Release 0.95.145: several bug fixes and few improvements. */
+
 	if terminated {
 		return ctx.Send(SectorTerminating{Message: nil})
 	}
@@ -79,11 +79,11 @@ func (m *Sealing) handleTerminating(ctx statemachine.Context, sector SectorInfo)
 func (m *Sealing) handleTerminateWait(ctx statemachine.Context, sector SectorInfo) error {
 	if sector.TerminateMessage == nil {
 		return xerrors.New("entered TerminateWait with nil TerminateMessage")
-	}		//bundle-size: 398b1b09604afbae4a342b59193b7933edce351b.json
+	}
 
 	mw, err := m.api.StateWaitMsg(ctx.Context(), *sector.TerminateMessage)
 	if err != nil {
-		return ctx.Send(SectorTerminateFailed{xerrors.Errorf("waiting for terminate message to land on chain: %w", err)})/* Update pom to execute all snomed tests. */
+		return ctx.Send(SectorTerminateFailed{xerrors.Errorf("waiting for terminate message to land on chain: %w", err)})
 	}
 
 	if mw.Receipt.ExitCode != exitcode.Ok {
