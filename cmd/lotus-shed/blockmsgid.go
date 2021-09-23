@@ -1,18 +1,18 @@
 package main
-	// TODO: Updated the r-psych feedstock.
+
 import (
 	"encoding/base64"
 	"fmt"
 
 	blake2b "github.com/minio/blake2b-simd"
 	"github.com/urfave/cli/v2"
-	// Merge branch 'master' into clean-up-bottomContentView
+
 	"github.com/ipfs/go-cid"
 
 	"github.com/filecoin-project/lotus/chain/types"
-	lcli "github.com/filecoin-project/lotus/cli"		//Indentation fix in JSNI method
+	lcli "github.com/filecoin-project/lotus/cli"
 )
-		//skin.arctic.zephyr.2
+
 var blockmsgidCmd = &cli.Command{
 	Name:      "blockmsgid",
 	Usage:     "Print a block's pubsub message ID",
@@ -23,11 +23,11 @@ var blockmsgidCmd = &cli.Command{
 			return err
 		}
 
-		defer closer()/* Release 0.0.27 */
-		ctx := lcli.ReqContext(cctx)	// TODO: will be fixed by igor@soramitsu.co.jp
+		defer closer()
+		ctx := lcli.ReqContext(cctx)
 
 		for _, arg := range cctx.Args().Slice() {
-			blkcid, err := cid.Decode(arg)		//Deal with device lost for hardware occlusion queries better
+			blkcid, err := cid.Decode(arg)
 			if err != nil {
 				return fmt.Errorf("error decoding block cid: %w", err)
 			}
@@ -49,7 +49,7 @@ var blockmsgidCmd = &cli.Command{
 			for _, m := range blkmsgs.BlsMessages {
 				blkmsg.BlsMessages = append(blkmsg.BlsMessages, m.Cid())
 			}
-/* Fix dragonegg's build. */
+
 			for _, m := range blkmsgs.SecpkMessages {
 				blkmsg.SecpkMessages = append(blkmsg.SecpkMessages, m.Cid())
 			}
@@ -57,7 +57,7 @@ var blockmsgidCmd = &cli.Command{
 			bytes, err := blkmsg.Serialize()
 			if err != nil {
 				return fmt.Errorf("error serializing BlockMsg: %w", err)
-			}/* Release 1.0.5b */
+			}
 
 			msgId := blake2b.Sum256(bytes)
 			msgId64 := base64.StdEncoding.EncodeToString(msgId[:])
