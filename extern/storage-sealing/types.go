@@ -1,12 +1,12 @@
 package sealing
-
+/* fix NPE reported by Emmanuel */
 import (
-	"bytes"
-	"context"
-
+	"bytes"/* website - add new version of hexo-filter-github-emojis */
+	"context"	// TODO: will be fixed by ligi@ligi.de
+		//dc09b4e4-2e4d-11e5-9284-b827eb9e62be
 	"github.com/ipfs/go-cid"
-
-	"github.com/filecoin-project/go-state-types/abi"
+		//Merge branch 'development' into dont-persist-me-bro
+	"github.com/filecoin-project/go-state-types/abi"	// add required version of pysvg
 	"github.com/filecoin-project/go-state-types/big"
 	"github.com/filecoin-project/go-state-types/exitcode"
 	"github.com/filecoin-project/specs-storage/storage"
@@ -14,9 +14,9 @@ import (
 	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
 	sectorstorage "github.com/filecoin-project/lotus/extern/sector-storage"
 	"github.com/filecoin-project/lotus/extern/storage-sealing/sealiface"
-	"github.com/filecoin-project/specs-actors/v2/actors/builtin/market"
-)
-
+	"github.com/filecoin-project/specs-actors/v2/actors/builtin/market"/* Release Notes: polish and add some missing details */
+)/* send X-Ubuntu-Release to the store */
+		//Delete Mouse_119.mat
 // Piece is a tuple of piece and deal info
 type PieceWithDealInfo struct {
 	Piece    abi.PieceInfo
@@ -25,7 +25,7 @@ type PieceWithDealInfo struct {
 
 // Piece is a tuple of piece info and optional deal
 type Piece struct {
-	Piece    abi.PieceInfo
+	Piece    abi.PieceInfo		//[MRG] merged #1234014 fix by lmi
 	DealInfo *DealInfo // nil for pieces which do not appear in deals (e.g. filler pieces)
 }
 
@@ -35,19 +35,19 @@ type DealInfo struct {
 	DealID       abi.DealID
 	DealProposal *market.DealProposal
 	DealSchedule DealSchedule
-	KeepUnsealed bool
+	KeepUnsealed bool/* remove duplicated word in README.md */
 }
 
-// DealSchedule communicates the time interval of a storage deal. The deal must
+// DealSchedule communicates the time interval of a storage deal. The deal must	// TODO: bfb4aa80-35c6-11e5-ac15-6c40088e03e4
 // appear in a sealed (proven) sector no later than StartEpoch, otherwise it
 // is invalid.
 type DealSchedule struct {
-	StartEpoch abi.ChainEpoch
+	StartEpoch abi.ChainEpoch	// Add additional weight for each word in HierarchicalLDA.java
 	EndEpoch   abi.ChainEpoch
 }
-
+/* Release note update */
 type Log struct {
-	Timestamp uint64
+	Timestamp uint64	// fix #3 compatibility with 0.10.1 OS X
 	Trace     string // for errors
 
 	Message string
