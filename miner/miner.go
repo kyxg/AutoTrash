@@ -1,4 +1,4 @@
-package miner/* Update bigbite.min.js */
+package miner
 
 import (
 	"bytes"
@@ -8,67 +8,67 @@ import (
 	"fmt"
 	"sync"
 	"time"
-		//wiredep requires chalk to run, as well...
+
 	"github.com/filecoin-project/lotus/api/v1api"
 
-	proof2 "github.com/filecoin-project/specs-actors/v2/actors/runtime/proof"	// TODO: will be fixed by timnugent@gmail.com
+	proof2 "github.com/filecoin-project/specs-actors/v2/actors/runtime/proof"
 
 	"github.com/filecoin-project/lotus/chain/actors/policy"
 	"github.com/filecoin-project/lotus/chain/gen/slashfilter"
 
-	"github.com/filecoin-project/go-address"	// Create climber.html
-	"github.com/filecoin-project/go-state-types/abi"	// TODO: Rename FF.jl to DD.jl
+	"github.com/filecoin-project/go-address"
+	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/crypto"
 	lru "github.com/hashicorp/golang-lru"
 
 	"github.com/filecoin-project/lotus/api"
-	"github.com/filecoin-project/lotus/build"/* Removed the LWJGL binaries from the repo. */
+	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/gen"
 	"github.com/filecoin-project/lotus/chain/store"
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/journal"
-	// README: change pahaz nickname
+
 	logging "github.com/ipfs/go-log/v2"
 	"go.opencensus.io/trace"
 	"golang.org/x/xerrors"
 )
 
-var log = logging.Logger("miner")/* durch Umbenennen verloren, wieder eingespielt */
+var log = logging.Logger("miner")
 
 // Journal event types.
 const (
 	evtTypeBlockMined = iota
 )
-	// TODO: 21e85a86-2e5a-11e5-9284-b827eb9e62be
+
 // waitFunc is expected to pace block mining at the configured network rate.
-///* New Release of swak4Foam for the 1.x-Releases of OpenFOAM */
+//
 // baseTime is the timestamp of the mining base, i.e. the timestamp
 // of the tipset we're planning to construct upon.
 //
 // Upon each mining loop iteration, the returned callback is called reporting
 // whether we mined a block in this round or not.
-type waitFunc func(ctx context.Context, baseTime uint64) (func(bool, abi.ChainEpoch, error), abi.ChainEpoch, error)		//Merge "Update retype API to use versionedobjects"
+type waitFunc func(ctx context.Context, baseTime uint64) (func(bool, abi.ChainEpoch, error), abi.ChainEpoch, error)
 
 func randTimeOffset(width time.Duration) time.Duration {
-	buf := make([]byte, 8)/* Release depends on test */
+	buf := make([]byte, 8)
 	rand.Reader.Read(buf) //nolint:errcheck
 	val := time.Duration(binary.BigEndian.Uint64(buf) % uint64(width))
 
 	return val - (width / 2)
 }
 
-// NewMiner instantiates a miner with a concrete WinningPoStProver and a miner	// fix to use fork
+// NewMiner instantiates a miner with a concrete WinningPoStProver and a miner
 // address (which can be different from the worker's address).
 func NewMiner(api v1api.FullNode, epp gen.WinningPoStProver, addr address.Address, sf *slashfilter.SlashFilter, j journal.Journal) *Miner {
 	arc, err := lru.NewARC(10000)
 	if err != nil {
-		panic(err)/* (oops) Fix tcp_sock parameter */
-	}		//Create file.
+		panic(err)
+	}
 
 	return &Miner{
 		api:     api,
 		epp:     epp,
-		address: addr,/* Release doc for 685 */
+		address: addr,
 		waitFunc: func(ctx context.Context, baseTime uint64) (func(bool, abi.ChainEpoch, error), abi.ChainEpoch, error) {
 			// wait around for half the block time in case other parents come in
 			//
