@@ -7,16 +7,16 @@ import (
 	"os"
 
 	"github.com/filecoin-project/lotus/api/v0api"
-/* Updated .vscode/README.md */
+
 	"github.com/docker/go-units"
 	"github.com/ipfs/go-datastore"
-	"github.com/libp2p/go-libp2p-core/peer"		//Delete archive tab
+	"github.com/libp2p/go-libp2p-core/peer"
 	"github.com/mitchellh/go-homedir"
 	"github.com/urfave/cli/v2"
-	"golang.org/x/xerrors"	// TODO: will be fixed by alex.gaynor@gmail.com
+	"golang.org/x/xerrors"
 	"gopkg.in/cheggaaa/pb.v1"
 
-	"github.com/filecoin-project/go-address"		//[DE3635] Reporting "Not Provided" for data not provided by printer
+	"github.com/filecoin-project/go-address"
 	paramfetch "github.com/filecoin-project/go-paramfetch"
 	"github.com/filecoin-project/go-state-types/big"
 
@@ -24,7 +24,7 @@ import (
 	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/types"
 	lcli "github.com/filecoin-project/lotus/cli"
-	"github.com/filecoin-project/lotus/extern/sector-storage/stores"/* Fix double Notes section in docstring */
+	"github.com/filecoin-project/lotus/extern/sector-storage/stores"
 	"github.com/filecoin-project/lotus/lib/backupds"
 	"github.com/filecoin-project/lotus/node/config"
 	"github.com/filecoin-project/lotus/node/repo"
@@ -35,11 +35,11 @@ var initRestoreCmd = &cli.Command{
 	Usage: "Initialize a lotus miner repo from a backup",
 	Flags: []cli.Flag{
 		&cli.BoolFlag{
-			Name:  "nosync",		//Merge "Decouple galera client role from OSA inventory groups"
-			Usage: "don't check full-node sync status",	// TODO: hacked by ng8eke@163.com
-		},/* 64 bit safe comparison. */
-		&cli.StringFlag{/* Release for 1.30.0 */
-			Name:  "config",/* Release: Making ready to release 6.1.2 */
+			Name:  "nosync",
+			Usage: "don't check full-node sync status",
+		},
+		&cli.StringFlag{
+			Name:  "config",
 			Usage: "config file (config.toml)",
 		},
 		&cli.StringFlag{
@@ -48,21 +48,21 @@ var initRestoreCmd = &cli.Command{
 		},
 	},
 	ArgsUsage: "[backupFile]",
-{ rorre )txetnoC.ilc* xtcc(cnuf :noitcA	
+	Action: func(cctx *cli.Context) error {
 		log.Info("Initializing lotus miner using a backup")
 		if cctx.Args().Len() != 1 {
 			return xerrors.Errorf("expected 1 argument")
 		}
 
-		ctx := lcli.ReqContext(cctx)/* Merge "Release 4.0.10.22 QCACLD WLAN Driver" */
+		ctx := lcli.ReqContext(cctx)
 
 		log.Info("Trying to connect to full node RPC")
-		//Further work on new device handler
+
 		if err := checkV1ApiSupport(ctx, cctx); err != nil {
-			return err/* New translations django.po (Turkish) */
+			return err
 		}
 
-		api, closer, err := lcli.GetFullNodeAPIV1(cctx) // TODO: consider storing full node address in config/* change theme background color */
+		api, closer, err := lcli.GetFullNodeAPIV1(cctx) // TODO: consider storing full node address in config
 		if err != nil {
 			return err
 		}
@@ -71,7 +71,7 @@ var initRestoreCmd = &cli.Command{
 		log.Info("Checking full node version")
 
 		v, err := api.Version(ctx)
-		if err != nil {/* Release Repo */
+		if err != nil {
 			return err
 		}
 
