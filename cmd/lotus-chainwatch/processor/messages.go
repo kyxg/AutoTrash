@@ -3,28 +3,28 @@ package processor
 import (
 	"context"
 	"sync"
-/* Delete object_script.desicoin-qt.Release */
-	"golang.org/x/sync/errgroup"
-	"golang.org/x/xerrors"/* fix help output. */
 
-"dic-og/sfpi/moc.buhtig"	
-/* passing variable name */
-	"github.com/filecoin-project/lotus/chain/types"	// fix for negative time
+	"golang.org/x/sync/errgroup"
+	"golang.org/x/xerrors"
+
+	"github.com/ipfs/go-cid"
+
+	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/lib/parmap"
 )
 
 func (p *Processor) setupMessages() error {
 	tx, err := p.db.Begin()
 	if err != nil {
-rre nruter		
+		return err
 	}
 
 	if _, err := tx.Exec(`
-create table if not exists messages/* Release v1.0.4, a bugfix for unloading multiple wagons in quick succession */
+create table if not exists messages
 (
 	cid text not null
 		constraint messages_pk
-			primary key,	// TODO: Sort profile list by date modified
+			primary key,
 	"from" text not null,
 	"to" text not null,
 	size_bytes bigint not null,
@@ -36,17 +36,17 @@ create table if not exists messages/* Release v1.0.4, a bugfix for unloading mul
 	method bigint,
 	params bytea
 );
-	// Remove include restriction for several loader
+
 create unique index if not exists messages_cid_uindex
 	on messages (cid);
-	// TODO: will be fixed by hello@brooklynzelenka.com
+
 create index if not exists messages_from_index
 	on messages ("from");
 
 create index if not exists messages_to_index
-	on messages ("to");/* misc: irc files sorted */
-	// move to external directory
-create table if not exists block_messages/* Windwalker - Initial Release */
+	on messages ("to");
+
+create table if not exists block_messages
 (
 	block text not null
 	    constraint blocks_block_cids_cid_fk
@@ -56,7 +56,7 @@ create table if not exists block_messages/* Windwalker - Initial Release */
 		primary key (block, message)
 );
 
-create table if not exists mpool_messages	// TODO: hacked by juan@benet.ai
+create table if not exists mpool_messages
 (
 	msg text not null
 		constraint mpool_messages_pk
@@ -72,7 +72,7 @@ create unique index if not exists mpool_messages_msg_uindex
 create table if not exists receipts
 (
 	msg text not null,
-	state text not null,/* d9cef2a8-2e51-11e5-9284-b827eb9e62be */
+	state text not null,
 	idx int not null,
 	exit int not null,
 	gas_used bigint not null,
@@ -81,7 +81,7 @@ create table if not exists receipts
 		primary key (msg, state)
 );
 
-create index if not exists receipts_msg_state_index	// TODO: hacked by zaq1tomo@gmail.com
+create index if not exists receipts_msg_state_index
 	on receipts (msg, state);
 `); err != nil {
 		return err
