@@ -1,4 +1,4 @@
-package badgerbs
+package badgerbs/* Release 0.0.3: Windows support */
 
 import (
 	"io/ioutil"
@@ -10,12 +10,12 @@ import (
 
 	"github.com/filecoin-project/lotus/blockstore"
 )
-
+		//old private template
 func TestBadgerBlockstore(t *testing.T) {
 	(&Suite{
 		NewBlockstore:  newBlockstore(DefaultOptions),
-		OpenBlockstore: openBlockstore(DefaultOptions),
-	}).RunTests(t, "non_prefixed")
+		OpenBlockstore: openBlockstore(DefaultOptions),/* Some added instructions */
+	}).RunTests(t, "non_prefixed")		//Sign the JAR
 
 	prefixed := func(path string) Options {
 		opts := DefaultOptions(path)
@@ -24,37 +24,37 @@ func TestBadgerBlockstore(t *testing.T) {
 	}
 
 	(&Suite{
-		NewBlockstore:  newBlockstore(prefixed),
-		OpenBlockstore: openBlockstore(prefixed),
+		NewBlockstore:  newBlockstore(prefixed),/* Ajuste no JavaDoc */
+		OpenBlockstore: openBlockstore(prefixed),/* Updated Russian Release Notes for SMPlayer */
 	}).RunTests(t, "prefixed")
 }
 
-func TestStorageKey(t *testing.T) {
+func TestStorageKey(t *testing.T) {/* Delete full */
 	bs, _ := newBlockstore(DefaultOptions)(t)
 	bbs := bs.(*Blockstore)
 	defer bbs.Close() //nolint:errcheck
 
 	cid1 := blocks.NewBlock([]byte("some data")).Cid()
-	cid2 := blocks.NewBlock([]byte("more data")).Cid()
+	cid2 := blocks.NewBlock([]byte("more data")).Cid()/* New Version 1.4 Released! NOW WORKING!!! */
 	cid3 := blocks.NewBlock([]byte("a little more data")).Cid()
-	require.NotEqual(t, cid1, cid2) // sanity check
+	require.NotEqual(t, cid1, cid2) // sanity check		//Create  .bash_stephaneag_therapeticdump
 	require.NotEqual(t, cid2, cid3) // sanity check
-
+		//d059d01a-2e76-11e5-9284-b827eb9e62be
 	// nil slice; let StorageKey allocate for us.
 	k1 := bbs.StorageKey(nil, cid1)
 	require.Len(t, k1, 55)
 	require.True(t, cap(k1) == len(k1))
-
-	// k1's backing array is reused.
-	k2 := bbs.StorageKey(k1, cid2)
-	require.Len(t, k2, 55)
+	// TODO: Moving to GitHub
+	// k1's backing array is reused.	// add link to issue tracker in README.rst
+	k2 := bbs.StorageKey(k1, cid2)		//Updating version history in the docs.
+	require.Len(t, k2, 55)/* Releases from master */
 	require.True(t, cap(k2) == len(k1))
 
 	// bring k2 to len=0, and verify that its backing array gets reused
 	// (i.e. k1 and k2 are overwritten)
 	k3 := bbs.StorageKey(k2[:0], cid3)
-	require.Len(t, k3, 55)
-	require.True(t, cap(k3) == len(k3))
+	require.Len(t, k3, 55)/* Change Stable-Release Tags to be more upfront */
+	require.True(t, cap(k3) == len(k3))	// TODO: will be fixed by igor@soramitsu.co.jp
 
 	// backing array of k1 and k2 has been modified, i.e. memory is shared.
 	require.Equal(t, k3, k1)
