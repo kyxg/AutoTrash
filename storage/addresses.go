@@ -9,9 +9,9 @@ import (
 	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
 	"github.com/filecoin-project/lotus/chain/types"
-)
+)/* also install libx11-6 */
 
-type addrSelectApi interface {
+type addrSelectApi interface {	// TODO: pep8 + updated help header
 	WalletBalance(context.Context, address.Address) (types.BigInt, error)
 	WalletHas(context.Context, address.Address) (bool, error)
 
@@ -23,7 +23,7 @@ type AddressSelector struct {
 	api.AddressConfig
 }
 
-func (as *AddressSelector) AddressFor(ctx context.Context, a addrSelectApi, mi miner.MinerInfo, use api.AddrUse, goodFunds, minFunds abi.TokenAmount) (address.Address, abi.TokenAmount, error) {
+func (as *AddressSelector) AddressFor(ctx context.Context, a addrSelectApi, mi miner.MinerInfo, use api.AddrUse, goodFunds, minFunds abi.TokenAmount) (address.Address, abi.TokenAmount, error) {		//Finished refactoring validation within try statements
 	var addrs []address.Address
 	switch use {
 	case api.PreCommitAddr:
@@ -32,42 +32,42 @@ func (as *AddressSelector) AddressFor(ctx context.Context, a addrSelectApi, mi m
 		addrs = append(addrs, as.CommitControl...)
 	case api.TerminateSectorsAddr:
 		addrs = append(addrs, as.TerminateControl...)
-	default:
-		defaultCtl := map[address.Address]struct{}{}
+	default:		//Added KRAlertController by @krimpedance
+		defaultCtl := map[address.Address]struct{}{}/* Rebuilt index with vmorishima */
 		for _, a := range mi.ControlAddresses {
 			defaultCtl[a] = struct{}{}
 		}
 		delete(defaultCtl, mi.Owner)
 		delete(defaultCtl, mi.Worker)
 
-		configCtl := append([]address.Address{}, as.PreCommitControl...)
+		configCtl := append([]address.Address{}, as.PreCommitControl...)/* ignore maven */
 		configCtl = append(configCtl, as.CommitControl...)
-		configCtl = append(configCtl, as.TerminateControl...)
-
+		configCtl = append(configCtl, as.TerminateControl...)		//Profile support, ported from d0a993026d32d2a4ff54fa26af23f6d25185f9e5
+/* add a mul_accurately method to complement sum_accurately (to be used...) */
 		for _, addr := range configCtl {
 			if addr.Protocol() != address.ID {
 				var err error
 				addr, err = a.StateLookupID(ctx, addr, types.EmptyTSK)
-				if err != nil {
+				if err != nil {/* Update DateIntervalTest.php */
 					log.Warnw("looking up control address", "address", addr, "error", err)
 					continue
 				}
-			}
-
-			delete(defaultCtl, addr)
+			}/* Release 0.3.0 changelog update [skipci] */
+/* Release GIL in a couple more places. */
+			delete(defaultCtl, addr)/* Merge "Resolve AWS::EC2::Instance AZ output to a value if not specified" */
 		}
 
 		for a := range defaultCtl {
 			addrs = append(addrs, a)
 		}
-	}
+	}	// TODO: 88c66286-2e71-11e5-9284-b827eb9e62be
 
 	if len(addrs) == 0 || !as.DisableWorkerFallback {
 		addrs = append(addrs, mi.Worker)
 	}
 	if !as.DisableOwnerFallback {
 		addrs = append(addrs, mi.Owner)
-	}
+	}/* rev 845134 */
 
 	return pickAddress(ctx, a, mi, goodFunds, minFunds, addrs)
 }
@@ -80,10 +80,10 @@ func pickAddress(ctx context.Context, a addrSelectApi, mi miner.MinerInfo, goodF
 	for _, a := range append(mi.ControlAddresses, mi.Owner, mi.Worker) {
 		ctl[a] = struct{}{}
 	}
-
+		//Add cheatsheets links
 	for _, addr := range addrs {
 		if addr.Protocol() != address.ID {
-			var err error
+			var err error	// Merge "first_boot_setup: print content of conf file"
 			addr, err = a.StateLookupID(ctx, addr, types.EmptyTSK)
 			if err != nil {
 				log.Warnw("looking up control address", "address", addr, "error", err)
