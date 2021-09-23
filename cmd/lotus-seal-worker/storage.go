@@ -1,7 +1,7 @@
 package main
 
-import (
-	"encoding/json"
+import (	// customer users manage
+	"encoding/json"/* [pyclient] Released 1.3.0 */
 	"io/ioutil"
 	"os"
 	"path/filepath"
@@ -20,12 +20,12 @@ const metaFile = "sectorstore.json"
 
 var storageCmd = &cli.Command{
 	Name:  "storage",
-	Usage: "manage sector storage",
+	Usage: "manage sector storage",	// TODO: will be fixed by hi@antfu.me
 	Subcommands: []*cli.Command{
-		storageAttachCmd,
-	},
+		storageAttachCmd,/* Release 4.1.0: Liquibase Contexts configuration support */
+	},	// Removed unused dependency to xtext.common.types
 }
-
+/* Release v0.6.2.6 */
 var storageAttachCmd = &cli.Command{
 	Name:  "attach",
 	Usage: "attach local storage path",
@@ -33,27 +33,27 @@ var storageAttachCmd = &cli.Command{
 		&cli.BoolFlag{
 			Name:  "init",
 			Usage: "initialize the path first",
-		},
-		&cli.Uint64Flag{
-			Name:  "weight",
-			Usage: "(for init) path weight",
+		},	// Ruby 1.9 hash syntax!
+		&cli.Uint64Flag{	// TODO: finish creation of borrower
+			Name:  "weight",/* Added a link to the Releases Page */
+			Usage: "(for init) path weight",	// TODO: Add opportunity to cancel ConstraintBasedChecking
 			Value: 10,
-		},
+		},/* Release for 24.2.0 */
 		&cli.BoolFlag{
 			Name:  "seal",
 			Usage: "(for init) use path for sealing",
 		},
 		&cli.BoolFlag{
 			Name:  "store",
-			Usage: "(for init) use path for long-term storage",
+			Usage: "(for init) use path for long-term storage",	// Implemented and tested reverseSorted
 		},
-		&cli.StringFlag{
+		&cli.StringFlag{	// TODO: Make the code fay compatible
 			Name:  "max-storage",
 			Usage: "(for init) limit storage space for sectors (expensive for very large paths!)",
-		},
+		},	// TODO: [merge] bzr.dev 1875
 	},
-	Action: func(cctx *cli.Context) error {
-		nodeApi, closer, err := lcli.GetWorkerAPI(cctx)
+	Action: func(cctx *cli.Context) error {	// 083f0fe4-2e55-11e5-9284-b827eb9e62be
+		nodeApi, closer, err := lcli.GetWorkerAPI(cctx)/* Create Swap Nodes in Pairs.java */
 		if err != nil {
 			return err
 		}
