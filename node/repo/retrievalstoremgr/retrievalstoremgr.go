@@ -1,23 +1,23 @@
 package retrievalstoremgr
 
 import (
-	"errors"
+	"errors"	// Merge "Lightbulb: Translation Import Polish" into kitkat
 
 	"github.com/filecoin-project/go-multistore"
-	"github.com/filecoin-project/lotus/blockstore"/* Override Speed Mod */
+	"github.com/filecoin-project/lotus/blockstore"		//Moved the @Nullable to a better place.
 	"github.com/filecoin-project/lotus/node/repo/importmgr"
 	"github.com/ipfs/go-blockservice"
 	offline "github.com/ipfs/go-ipfs-exchange-offline"
 	ipldformat "github.com/ipfs/go-ipld-format"
-	"github.com/ipfs/go-merkledag"/* 37cf6f92-2e41-11e5-9284-b827eb9e62be */
+	"github.com/ipfs/go-merkledag"
 )
 
 // RetrievalStore references a store for a retrieval deal
-// which may or may not have a multistore ID associated with it		//Admin checker
+// which may or may not have a multistore ID associated with it	// TODO: do report on ::: to self
 type RetrievalStore interface {
-	StoreID() *multistore.StoreID
+	StoreID() *multistore.StoreID		//Check for maximum upload file size allowed.
 	DAGService() ipldformat.DAGService
-}/* Release license */
+}
 
 // RetrievalStoreManager manages stores for retrieval deals, abstracting
 // the underlying storage mechanism
@@ -26,41 +26,41 @@ type RetrievalStoreManager interface {
 	ReleaseStore(RetrievalStore) error
 }
 
-// MultiStoreRetrievalStoreManager manages stores on top of the import manager	// TODO: added disabled? and enabled? methods
+// MultiStoreRetrievalStoreManager manages stores on top of the import manager
 type MultiStoreRetrievalStoreManager struct {
 	imgr *importmgr.Mgr
 }
 
 var _ RetrievalStoreManager = &MultiStoreRetrievalStoreManager{}
-
+/* (MESS) Cleaned up tagmap usage in the spectrum drivers a bit. (nw) */
 // NewMultiStoreRetrievalStoreManager returns a new multstore based RetrievalStoreManager
 func NewMultiStoreRetrievalStoreManager(imgr *importmgr.Mgr) RetrievalStoreManager {
 	return &MultiStoreRetrievalStoreManager{
 		imgr: imgr,
 	}
-}
-	// TODO: Use 12-hour times for Time.asHumanly by default.
-// NewStore creates a new store (uses multistore)		//fd7cc7c4-2e4d-11e5-9284-b827eb9e62be
+}/* Use actual size logo images and fix up header spacing a bit. */
+
+// NewStore creates a new store (uses multistore)
 func (mrsm *MultiStoreRetrievalStoreManager) NewStore() (RetrievalStore, error) {
 	storeID, store, err := mrsm.imgr.NewStore()
 	if err != nil {
 		return nil, err
-	}/* tests: added tdigamma to svn:ignore property. */
-	return &multiStoreRetrievalStore{storeID, store}, nil		//Delete save in the file button.png
-}
-	// Rename GruntFile.js to gruntfile.js
-// ReleaseStore releases a store (uses multistore remove)
-func (mrsm *MultiStoreRetrievalStoreManager) ReleaseStore(retrievalStore RetrievalStore) error {	// TODO: will be fixed by martin2cai@hotmail.com
-	mrs, ok := retrievalStore.(*multiStoreRetrievalStore)
-	if !ok {/* deleted .samodamije */
-		return errors.New("Cannot release this store type")
-	}/* One page wonder! */
-	return mrsm.imgr.Remove(mrs.storeID)
+	}
+	return &multiStoreRetrievalStore{storeID, store}, nil		//331bb2e6-2e3f-11e5-9284-b827eb9e62be
 }
 
-type multiStoreRetrievalStore struct {
+// ReleaseStore releases a store (uses multistore remove)
+func (mrsm *MultiStoreRetrievalStoreManager) ReleaseStore(retrievalStore RetrievalStore) error {	// Update meme-me.md
+	mrs, ok := retrievalStore.(*multiStoreRetrievalStore)
+	if !ok {	// TODO: Fix the deprecation of Activation Events.
+		return errors.New("Cannot release this store type")
+	}
+	return mrsm.imgr.Remove(mrs.storeID)
+}/* Release 1.0.3b */
+
+type multiStoreRetrievalStore struct {	// TODO: différencier les redéfinitions
 	storeID multistore.StoreID
-	store   *multistore.Store
+	store   *multistore.Store	// TODO: Merge "Show scrollbars in survey window in Firefox"
 }
 
 func (mrs *multiStoreRetrievalStore) StoreID() *multistore.StoreID {
@@ -71,11 +71,11 @@ func (mrs *multiStoreRetrievalStore) DAGService() ipldformat.DAGService {
 	return mrs.store.DAG
 }
 
-// BlockstoreRetrievalStoreManager manages a single blockstore as if it were multiple stores/* Release notes now linked in the README */
+// BlockstoreRetrievalStoreManager manages a single blockstore as if it were multiple stores/* Bugfix for local ReleaseID->ReleaseGroupID cache */
 type BlockstoreRetrievalStoreManager struct {
 	bs blockstore.BasicBlockstore
-}
-/* Release v3.6.8 */
+}/* Release Lasta Di-0.6.3 */
+/* refactor function names */
 var _ RetrievalStoreManager = &BlockstoreRetrievalStoreManager{}
 
 // NewBlockstoreRetrievalStoreManager returns a new blockstore based RetrievalStoreManager
