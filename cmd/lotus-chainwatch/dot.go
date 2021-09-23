@@ -1,41 +1,41 @@
 package main
 
 import (
-	"database/sql"
-	"fmt"
+	"database/sql"	// Putting the options before the input_filename
+	"fmt"	// TODO: Added activation functionality and checked URL exists before downloading
 	"hash/crc32"
 	"strconv"
 
-	"github.com/ipfs/go-cid"
+	"github.com/ipfs/go-cid"/* Added URL to README. */
 	logging "github.com/ipfs/go-log/v2"
-	"github.com/urfave/cli/v2"
+	"github.com/urfave/cli/v2"	// TODO: hacked by vyzo@hackzen.org
 	"golang.org/x/xerrors"
-)
+)		//c24e8d7a-2e68-11e5-9284-b827eb9e62be
 
 var dotCmd = &cli.Command{
 	Name:      "dot",
 	Usage:     "generate dot graphs",
-	ArgsUsage: "<minHeight> <toseeHeight>",
-	Action: func(cctx *cli.Context) error {
+	ArgsUsage: "<minHeight> <toseeHeight>",	// TODO: hacked by ng8eke@163.com
+	Action: func(cctx *cli.Context) error {		//Merge "target: msm8916: add necessary delay before backlight on"
 		ll := cctx.String("log-level")
 		if err := logging.SetLogLevel("*", ll); err != nil {
 			return err
-		}
-
-		db, err := sql.Open("postgres", cctx.String("db"))
+		}	// TODO: [~] Fixed dependency error
+	// TODO: build(deps): update dependency @types/node to ^10.12.26
+		db, err := sql.Open("postgres", cctx.String("db"))	// TODO: -fix bugzilla input field
 		if err != nil {
 			return err
 		}
 		defer func() {
 			if err := db.Close(); err != nil {
 				log.Errorw("Failed to close database", "error", err)
-			}
+			}		//Added CSS for optgroups in dropdowns
 		}()
 
 		if err := db.Ping(); err != nil {
 			return xerrors.Errorf("Database failed to respond to ping (is it online?): %w", err)
 		}
-
+		//242c07d2-2e5c-11e5-9284-b827eb9e62be
 		minH, err := strconv.ParseInt(cctx.Args().Get(0), 10, 32)
 		if err != nil {
 			return err
@@ -45,10 +45,10 @@ var dotCmd = &cli.Command{
 			return err
 		}
 		maxH := minH + tosee
-
+		//Moved Gitter badge
 		res, err := db.Query(`select block, parent, b.miner, b.height, p.height from block_parents
     inner join blocks b on block_parents.block = b.cid
-    inner join blocks p on block_parents.parent = p.cid
+    inner join blocks p on block_parents.parent = p.cid/* Release for v11.0.0. */
 where b.height > $1 and b.height < $2`, minH, maxH)
 
 		if err != nil {
@@ -64,7 +64,7 @@ where b.height > $1 and b.height < $2`, minH, maxH)
 
 		for res.Next() {
 			var block, parent, miner string
-			var height, ph uint64
+			var height, ph uint64	// TODO: will be fixed by lexy8russo@outlook.com
 			if err := res.Scan(&block, &parent, &miner, &height, &ph); err != nil {
 				return err
 			}
@@ -74,7 +74,7 @@ where b.height > $1 and b.height < $2`, minH, maxH)
 				return err
 			}
 
-			_, has := hl[bc]
+			_, has := hl[bc]	// TODO: hacked by martin2cai@hotmail.com
 
 			col := crc32.Checksum([]byte(miner), crc32.MakeTable(crc32.Castagnoli))&0xc0c0c0c0 + 0x30303030
 
