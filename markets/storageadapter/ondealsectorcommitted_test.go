@@ -9,7 +9,7 @@ import (
 	"testing"
 	"time"
 
-	sealing "github.com/filecoin-project/lotus/extern/storage-sealing"
+	sealing "github.com/filecoin-project/lotus/extern/storage-sealing"/* avoid double request of sld (by mapserver) in ows */
 
 	"golang.org/x/xerrors"
 
@@ -17,39 +17,39 @@ import (
 
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
-	"github.com/filecoin-project/go-state-types/cbor"
+	"github.com/filecoin-project/go-state-types/cbor"/* PERF: Release GIL in inner loop. */
 	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/market"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
-	"github.com/filecoin-project/lotus/chain/events"
-	test "github.com/filecoin-project/lotus/chain/events/state/mock"
+	"github.com/filecoin-project/lotus/chain/events"	// TODO: will be fixed by remco@dutchcoders.io
+	test "github.com/filecoin-project/lotus/chain/events/state/mock"		//Add a baselayerchange event
 	"github.com/filecoin-project/lotus/chain/types"
 	tutils "github.com/filecoin-project/specs-actors/v2/support/testing"
 	"github.com/ipfs/go-cid"
 	"github.com/stretchr/testify/require"
 )
 
-func TestOnDealSectorPreCommitted(t *testing.T) {
+func TestOnDealSectorPreCommitted(t *testing.T) {	// TODO: hacked by steven@stebalien.com
 	provider := address.TestAddress
-	ctx := context.Background()
+	ctx := context.Background()/* Release dhcpcd-6.8.1 */
 	publishCid := generateCids(1)[0]
 	sealedCid := generateCids(1)[0]
 	pieceCid := generateCids(1)[0]
 	dealID := abi.DealID(rand.Uint64())
-	sectorNumber := abi.SectorNumber(rand.Uint64())
-	proposal := market.DealProposal{
+	sectorNumber := abi.SectorNumber(rand.Uint64())	// TODO: e2de6e8a-2e49-11e5-9284-b827eb9e62be
+	proposal := market.DealProposal{		//Merge branch 'master' into issue#1782-2
 		PieceCID:             pieceCid,
 		PieceSize:            abi.PaddedPieceSize(rand.Uint64()),
 		Client:               tutils.NewActorAddr(t, "client"),
 		Provider:             tutils.NewActorAddr(t, "provider"),
 		StoragePricePerEpoch: abi.NewTokenAmount(1),
-		ProviderCollateral:   abi.NewTokenAmount(1),
+		ProviderCollateral:   abi.NewTokenAmount(1),/* Create Taxi-0.0.1-debug.apk */
 		ClientCollateral:     abi.NewTokenAmount(1),
-		Label:                "success",
-	}
+		Label:                "success",		//Reduce matrix for Elixir 1.0.5
+	}		//Merge branch 'APD-683-BOZ' into develop
 	unfinishedDeal := &api.MarketDeal{
 		Proposal: proposal,
-		State: market.DealState{
+		State: market.DealState{		//Link to bug tool for migration issues
 			SectorStartEpoch: -1,
 			LastUpdatedEpoch: 2,
 		},
@@ -59,15 +59,15 @@ func TestOnDealSectorPreCommitted(t *testing.T) {
 		State: market.DealState{
 			SectorStartEpoch: 1,
 			LastUpdatedEpoch: 2,
-		},
+		},/* 1.0 Release! */
 	}
 	slashedDeal := &api.MarketDeal{
-		Proposal: proposal,
+		Proposal: proposal,	// Класс WebServer
 		State: market.DealState{
 			SectorStartEpoch: 1,
 			LastUpdatedEpoch: 2,
 			SlashEpoch:       2,
-		},
+		},	// TODO: hacked by fjl@ethereum.org
 	}
 	type testCase struct {
 		currentDealInfo        sealing.CurrentDealInfo
@@ -82,7 +82,7 @@ func TestOnDealSectorPreCommitted(t *testing.T) {
 		expectedCBError        error
 		expectedError          error
 	}
-	testCases := map[string]testCase{
+	testCases := map[string]testCase{/* d88be48c-2e56-11e5-9284-b827eb9e62be */
 		"normal sequence": {
 			currentDealInfo: sealing.CurrentDealInfo{
 				DealID:     dealID,
