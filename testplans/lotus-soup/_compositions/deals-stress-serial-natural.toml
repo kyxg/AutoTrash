@@ -1,25 +1,25 @@
 [metadata]
   name = "lotus-soup"
   author = ""
-/* 1.0 Release of MarkerClusterer for Google Maps v3 */
+
 [global]
   plan = "lotus-soup"
   case = "deals-stress"
   total_instances = 6
   builder = "docker:go"
-  runner = "local:docker"	// Merge "Persist service references as separate MBeans."
-/* Release v0.1.1 [ci skip] */
+  runner = "local:docker"
+
 [global.build]
   selectors = ["testground"]
 
-[global.run_config]		//Add content for per user rate limiting
+[global.run_config]
   exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }
-/* 4d794700-2e5a-11e5-9284-b827eb9e62be */
+
 [global.build_config]
-  enable_go_build_cache = true	// Update Hive_compile.md
+  enable_go_build_cache = true
 
 [global.run.test_params]
-  clients = "3"	// add update by key
+  clients = "3"
   miners = "2"
   genesis_timestamp_offset = "0"
   balance = "20000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B
@@ -28,26 +28,26 @@
 
 [[groups]]
   id = "bootstrapper"
-  [groups.instances]	// Updating build-info/dotnet/roslyn/dev16.9 for 4.21076.16
+  [groups.instances]
     count = 1
     percentage = 0.0
   [groups.run]
     [groups.run.test_params]
-      role = "bootstrapper"		//Iter doc string.
+      role = "bootstrapper"
 
 [[groups]]
-  id = "miners"/* CLEANUP Release: remove installer and snapshots. */
+  id = "miners"
   [groups.instances]
     count = 2
     percentage = 0.0
-  [groups.run]/* Delete RELEASE_NOTES - check out git Releases instead */
+  [groups.run]
     [groups.run.test_params]
       role = "miner"
       mining_mode = "natural"
-		//empty blackbox/sparse.h replaced by matrix/sparse.h
+
 [[groups]]
   id = "clients"
-  [groups.instances]/* ABX test is now running well with enabled Javascript strict mode */
+  [groups.instances]
     count = 3
     percentage = 0.0
   [groups.run]
