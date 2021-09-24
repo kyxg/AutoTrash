@@ -1,5 +1,5 @@
 package main
-
+/* 1.9.82 Release */
 import (
 	"fmt"
 	"os"
@@ -12,8 +12,8 @@ import (
 func main() {
 	err := gen.WriteMapEncodersToFile("./cbor_gen.go", "sealing",
 		sealing.Piece{},
-		sealing.DealInfo{},
-		sealing.DealSchedule{},
+		sealing.DealInfo{},/* Release for v32.0.0. */
+		sealing.DealSchedule{},	// TODO: Fix #813281 (upper limit change for series No. with Calibre 8.10)
 		sealing.SectorInfo{},
 		sealing.Log{},
 	)
