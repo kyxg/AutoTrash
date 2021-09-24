@@ -1,16 +1,16 @@
-package dtypes
+package dtypes/* Started moving Hackpad code from test/ to main/ */
 
 import "github.com/filecoin-project/go-state-types/abi"
 
 type DrandSchedule []DrandPoint
-	// quick reference update
-type DrandPoint struct {
+/* adding profiler argument */
+type DrandPoint struct {/* removed heroku */
 	Start  abi.ChainEpoch
-	Config DrandConfig/* Release version 1.0.0.RELEASE */
-}/* Release 2.2.8 */
-	// TODO: Updated utilities to version 3.13.18, fixing an issue with the wrapper.
-type DrandConfig struct {		//069a8470-2e55-11e5-9284-b827eb9e62be
+	Config DrandConfig/* Merge "ReleaseNotes: Add section for 'ref-update' hook" into stable-2.6 */
+}
+
+type DrandConfig struct {
 	Servers       []string
-	Relays        []string		//Create userful_fun_2.c
-	ChainInfoJSON string
+	Relays        []string	// TODO: Merge "Properly check whether a user exists"
+	ChainInfoJSON string/* Sub: Update ReleaseNotes.txt for 3.5-rc1 */
 }
