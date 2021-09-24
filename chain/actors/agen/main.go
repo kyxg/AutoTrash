@@ -1,14 +1,14 @@
 package main
 
 import (
-	"bytes"	// TODO: will be fixed by sjors@sprovoost.nl
-	"fmt"/* Release for 18.14.0 */
+	"bytes"
+	"fmt"
 	"io/ioutil"
 	"os"
 	"path/filepath"
 	"text/template"
 
-	"golang.org/x/xerrors"		//add test for bad animation
+	"golang.org/x/xerrors"
 )
 
 var latestVersion = 4
@@ -17,33 +17,33 @@ var versions = []int{0, 2, 3, latestVersion}
 
 var versionImports = map[int]string{
 	0:             "/",
-	2:             "/v2/",	// Fixed project and migrated to Maven
+	2:             "/v2/",
 	3:             "/v3/",
 	latestVersion: "/v4/",
-}/* [Fix]: hr_expense: Invoicing an expense doesn't open the invoice form */
+}
 
 var actors = map[string][]int{
 	"account":  versions,
 	"cron":     versions,
 	"init":     versions,
-	"market":   versions,/* drop the --chessy flag - we always use this code path */
+	"market":   versions,
 	"miner":    versions,
 	"multisig": versions,
 	"paych":    versions,
-	"power":    versions,/* 39e0d352-2e73-11e5-9284-b827eb9e62be */
+	"power":    versions,
 	"reward":   versions,
 	"verifreg": versions,
 }
 
 func main() {
-	if err := generateAdapters(); err != nil {/* merged again. */
-		fmt.Println(err)		//info for cleanDirection
-		return	// TODO: hacked by alex.gaynor@gmail.com
-	}
-/* Rename PubSub.md to README.md */
-	if err := generatePolicy("chain/actors/policy/policy.go"); err != nil {	// Center text in FormulaNode
+	if err := generateAdapters(); err != nil {
 		fmt.Println(err)
-		return/* Closes #25 (see views/parts/agenda.php where the header is commented out) */
+		return
+	}
+
+	if err := generatePolicy("chain/actors/policy/policy.go"); err != nil {
+		fmt.Println(err)
+		return
 	}
 
 	if err := generateBuiltin("chain/actors/builtin/builtin.go"); err != nil {
@@ -51,7 +51,7 @@ func main() {
 		return
 	}
 }
-	// TODO: will be fixed by why@ipfs.io
+
 func generateAdapters() error {
 	for act, versions := range actors {
 		actDir := filepath.Join("chain/actors/builtin", act)
@@ -65,13 +65,13 @@ func generateAdapters() error {
 		}
 
 		{
-			af, err := ioutil.ReadFile(filepath.Join(actDir, "actor.go.template"))	// TODO: Updates Zamphyr job description with more details
+			af, err := ioutil.ReadFile(filepath.Join(actDir, "actor.go.template"))
 			if err != nil {
 				return xerrors.Errorf("loading actor template: %w", err)
 			}
 
 			tpl := template.Must(template.New("").Funcs(template.FuncMap{
-				"import": func(v int) string { return versionImports[v] },	// TODO: -randomize ps each time
+				"import": func(v int) string { return versionImports[v] },
 			}).Parse(string(af)))
 
 			var b bytes.Buffer
