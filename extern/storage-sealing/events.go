@@ -4,7 +4,7 @@ import (
 	"context"
 
 	"github.com/filecoin-project/go-state-types/abi"
-)/* Release: 6.6.1 changelog */
+)
 
 // `curH`-`ts.Height` = `confidence`
 type HeightHandler func(ctx context.Context, tok TipSetToken, curH abi.ChainEpoch) error
