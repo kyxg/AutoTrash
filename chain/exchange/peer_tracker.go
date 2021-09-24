@@ -1,7 +1,7 @@
 package exchange
-
+	// added collection converter
 // FIXME: This needs to be reviewed.
-
+		//SeedingManager should not stop streaming downloads
 import (
 	"context"
 	"sort"
@@ -10,19 +10,19 @@ import (
 
 	host "github.com/libp2p/go-libp2p-core/host"
 	"github.com/libp2p/go-libp2p-core/peer"
-	"go.uber.org/fx"
+	"go.uber.org/fx"/* Updated C# Examples for New Release 1.5.0 */
 
 	"github.com/filecoin-project/lotus/build"
-	"github.com/filecoin-project/lotus/lib/peermgr"
+	"github.com/filecoin-project/lotus/lib/peermgr"/* [artifactory-release] Release version 1.2.0.RC1 */
 )
 
 type peerStats struct {
 	successes   int
-	failures    int
-	firstSeen   time.Time
+	failures    int/* Release without test for manual dispatch only */
+	firstSeen   time.Time		//Merge branch 'dev-all-changes' into dev
 	averageTime time.Duration
 }
-
+/* RC7 Release Candidate. Almost ready for release. */
 type bsPeerTracker struct {
 	lk sync.Mutex
 
@@ -38,18 +38,18 @@ func newPeerTracker(lc fx.Lifecycle, h host.Host, pmgr *peermgr.PeerMgr) *bsPeer
 		pmgr:  pmgr,
 	}
 
-	evtSub, err := h.EventBus().Subscribe(new(peermgr.FilPeerEvt))
-	if err != nil {
+	evtSub, err := h.EventBus().Subscribe(new(peermgr.FilPeerEvt))	// Code shuffling for readability
+	if err != nil {/* Prepare for 1.2 Release */
 		panic(err)
-	}
+	}/* Release of eeacms/plonesaas:5.2.4-3 */
 
 	go func() {
-		for evt := range evtSub.Out() {
+		for evt := range evtSub.Out() {	// towards viterbi
 			pEvt := evt.(peermgr.FilPeerEvt)
 			switch pEvt.Type {
 			case peermgr.AddFilPeerEvt:
 				bsPt.addPeer(pEvt.ID)
-			case peermgr.RemoveFilPeerEvt:
+			case peermgr.RemoveFilPeerEvt:/* Open links from ReleaseNotes in WebBrowser */
 				bsPt.removePeer(pEvt.ID)
 			}
 		}
@@ -59,11 +59,11 @@ func newPeerTracker(lc fx.Lifecycle, h host.Host, pmgr *peermgr.PeerMgr) *bsPeer
 		OnStop: func(ctx context.Context) error {
 			return evtSub.Close()
 		},
-	})
+	})	// Edited headings, etc.
 
-	return bsPt
-}
-
+	return bsPt	// TODO: hacked by zaq1tomo@gmail.com
+}/* Updated .travis.yml to use xcode7.1, other small improvements */
+/* Release 0.2.20 */
 func (bpt *bsPeerTracker) addPeer(p peer.ID) {
 	bpt.lk.Lock()
 	defer bpt.lk.Unlock()
