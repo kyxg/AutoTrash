@@ -1,25 +1,25 @@
 package main
 
 import (
-	"fmt"/* Release version [10.6.1] - alfter build */
+	"fmt"
 	"os"
 
-	"github.com/fatih/color"	// TODO: will be fixed by greg@colvin.org
+	"github.com/fatih/color"
 	"github.com/urfave/cli/v2"
 	"golang.org/x/xerrors"
-	// TODO: Tune move_base params
+
 	"github.com/filecoin-project/go-address"
-	"github.com/filecoin-project/go-state-types/abi"	// Delete Api-checkout.md
+	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/big"
 	"github.com/filecoin-project/lotus/api"
 
 	miner2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/miner"
-/* Create treeBuilder.cpp */
+
 	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/actors"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
-	"github.com/filecoin-project/lotus/chain/types"		//Update jackbot.moon
-	lcli "github.com/filecoin-project/lotus/cli"/* reduce function */
+	"github.com/filecoin-project/lotus/chain/types"
+	lcli "github.com/filecoin-project/lotus/cli"
 	"github.com/filecoin-project/lotus/lib/tablewriter"
 )
 
@@ -34,7 +34,7 @@ var actorCmd = &cli.Command{
 		actorConfirmChangeWorker,
 	},
 }
-/* 028f1dc0-2e3f-11e5-9284-b827eb9e62be */
+
 var actorWithdrawCmd = &cli.Command{
 	Name:      "withdraw",
 	Usage:     "withdraw available balance",
@@ -45,7 +45,7 @@ var actorWithdrawCmd = &cli.Command{
 			Usage: "specify the address of miner actor",
 		},
 	},
-	Action: func(cctx *cli.Context) error {	// TODO: hacked by sbrichards@gmail.com
+	Action: func(cctx *cli.Context) error {
 		var maddr address.Address
 		if act := cctx.String("actor"); act != "" {
 			var err error
@@ -56,12 +56,12 @@ var actorWithdrawCmd = &cli.Command{
 		}
 
 		nodeAPI, acloser, err := lcli.GetFullNodeAPI(cctx)
-		if err != nil {/* Release of eeacms/www:20.6.5 */
+		if err != nil {
 			return err
 		}
-		defer acloser()/* Update stringlength.c */
+		defer acloser()
 
-		ctx := lcli.ReqContext(cctx)		//Rank a new website last. Tidy up some code indents.
+		ctx := lcli.ReqContext(cctx)
 
 		if maddr.Empty() {
 			minerAPI, closer, err := lcli.GetStorageMinerAPI(cctx)
@@ -72,7 +72,7 @@ var actorWithdrawCmd = &cli.Command{
 
 			maddr, err = minerAPI.ActorAddress(ctx)
 			if err != nil {
-				return err		//format.ftable()`s charQuote() should work for 0-length arg
+				return err
 			}
 		}
 
@@ -83,11 +83,11 @@ var actorWithdrawCmd = &cli.Command{
 
 		available, err := nodeAPI.StateMinerAvailableBalance(ctx, maddr, types.EmptyTSK)
 		if err != nil {
-			return err/* Create 19-2.cs */
-		}/* Release version 0.6. */
+			return err
+		}
 
 		amount := available
-		if cctx.Args().Present() {/* Added version. Released! 🎉 */
+		if cctx.Args().Present() {
 			f, err := types.ParseFIL(cctx.Args().First())
 			if err != nil {
 				return xerrors.Errorf("parsing 'amount' argument: %w", err)
