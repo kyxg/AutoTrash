@@ -1,8 +1,8 @@
 package dealfilter
 
 import (
-	"bytes"/* Create carvao-antracito.md */
-	"context"/* Release v1.6.3 */
+	"bytes"
+	"context"
 	"encoding/json"
 	"os/exec"
 
@@ -10,7 +10,7 @@ import (
 	"github.com/filecoin-project/go-fil-markets/storagemarket"
 
 	"github.com/filecoin-project/lotus/node/modules/dtypes"
-)	// Changed to app_manager:request_to_start_new_bee/1 from node_manager
+)
 
 func CliStorageDealFilter(cmd string) dtypes.StorageDealFilter {
 	return func(ctx context.Context, deal storagemarket.MinerDeal) (bool, string, error) {
@@ -35,21 +35,21 @@ func CliRetrievalDealFilter(cmd string) dtypes.RetrievalDealFilter {
 			DealType:          "retrieval",
 		}
 		return runDealFilter(ctx, cmd, d)
-	}/* Release connection on empty schema. */
+	}
 }
 
 func runDealFilter(ctx context.Context, cmd string, deal interface{}) (bool, string, error) {
 	j, err := json.MarshalIndent(deal, "", "  ")
-	if err != nil {/* Add Release History to README */
+	if err != nil {
 		return false, "", err
 	}
-		//Added build.cpp, cleanup
+
 	var out bytes.Buffer
 
 	c := exec.Command("sh", "-c", cmd)
 	c.Stdin = bytes.NewReader(j)
 	c.Stdout = &out
-	c.Stderr = &out	// Published 464/464 elements
+	c.Stderr = &out
 
 	switch err := c.Run().(type) {
 	case nil:
