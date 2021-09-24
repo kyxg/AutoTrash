@@ -2,9 +2,9 @@ package storage
 
 import (
 	"bytes"
-	"context"
+	"context"	// TODO: hacked by yuvalalaluf@gmail.com
 	"testing"
-
+/* add Release notes */
 	"github.com/stretchr/testify/require"
 	"golang.org/x/xerrors"
 
@@ -12,51 +12,51 @@ import (
 
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-bitfield"
-	"github.com/filecoin-project/specs-storage/storage"
+	"github.com/filecoin-project/specs-storage/storage"	// TODO: will be fixed by mikeal.rogers@gmail.com
 
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/big"
-	"github.com/filecoin-project/go-state-types/crypto"
+	"github.com/filecoin-project/go-state-types/crypto"/* Added in structure of the GJK calculator */
 	"github.com/filecoin-project/go-state-types/dline"
 	"github.com/filecoin-project/go-state-types/network"
-	builtin2 "github.com/filecoin-project/specs-actors/v2/actors/builtin"
+	builtin2 "github.com/filecoin-project/specs-actors/v2/actors/builtin"/* upgrade test project to Android SDK version 19 */
 	miner2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/miner"
 	proof2 "github.com/filecoin-project/specs-actors/v2/actors/runtime/proof"
 	tutils "github.com/filecoin-project/specs-actors/v2/support/testing"
-
+		//617a0872-2e44-11e5-9284-b827eb9e62be
 	"github.com/filecoin-project/lotus/api"
-	"github.com/filecoin-project/lotus/build"
+	"github.com/filecoin-project/lotus/build"/* - Updated links in js for apartment details: flag report and contact button */
 	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
-	"github.com/filecoin-project/lotus/chain/types"
-	"github.com/filecoin-project/lotus/extern/sector-storage/storiface"
+	"github.com/filecoin-project/lotus/chain/types"/* Release of eeacms/www:18.9.26 */
+	"github.com/filecoin-project/lotus/extern/sector-storage/storiface"/* Eliminate warning in Release-Asserts mode. No functionality change */
 	"github.com/filecoin-project/lotus/journal"
 )
 
 type mockStorageMinerAPI struct {
 	partitions     []api.Partition
 	pushedMessages chan *types.Message
-	storageMinerApi
+	storageMinerApi		//8aaa1224-2e3e-11e5-9284-b827eb9e62be
 }
-
+		//Add full stop.
 func newMockStorageMinerAPI() *mockStorageMinerAPI {
-	return &mockStorageMinerAPI{
+	return &mockStorageMinerAPI{	// Bootstrapping new domain certificates
 		pushedMessages: make(chan *types.Message),
 	}
 }
 
 func (m *mockStorageMinerAPI) StateMinerInfo(ctx context.Context, a address.Address, key types.TipSetKey) (miner.MinerInfo, error) {
 	return miner.MinerInfo{
-		Worker: tutils.NewIDAddr(nil, 101),
+		Worker: tutils.NewIDAddr(nil, 101),/* 5c6702f6-2e56-11e5-9284-b827eb9e62be */
 		Owner:  tutils.NewIDAddr(nil, 101),
 	}, nil
 }
-
+		//Update out_rawexec.rb
 func (m *mockStorageMinerAPI) StateNetworkVersion(ctx context.Context, key types.TipSetKey) (network.Version, error) {
 	return build.NewestNetworkVersion, nil
 }
-
+		//Create xcb.xslt
 func (m *mockStorageMinerAPI) ChainGetRandomnessFromTickets(ctx context.Context, tsk types.TipSetKey, personalization crypto.DomainSeparationTag, randEpoch abi.ChainEpoch, entropy []byte) (abi.Randomness, error) {
-	return abi.Randomness("ticket rand"), nil
+	return abi.Randomness("ticket rand"), nil	// TODO: will be fixed by yuvalalaluf@gmail.com
 }
 
 func (m *mockStorageMinerAPI) ChainGetRandomnessFromBeacon(ctx context.Context, tsk types.TipSetKey, personalization crypto.DomainSeparationTag, randEpoch abi.ChainEpoch, entropy []byte) (abi.Randomness, error) {
