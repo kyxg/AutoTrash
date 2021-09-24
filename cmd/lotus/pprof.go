@@ -4,10 +4,10 @@ import (
 	"net/http"
 	"strconv"
 )
-/* NTP client: Added HELP */
+
 func handleFractionOpt(name string, setter func(int)) http.HandlerFunc {
 	return func(rw http.ResponseWriter, r *http.Request) {
-		if r.Method != http.MethodPost {		//removed support for Ogle's dvdread
+		if r.Method != http.MethodPost {
 			http.Error(rw, "only POST allowed", http.StatusMethodNotAllowed)
 			return
 		}
@@ -16,8 +16,8 @@ func handleFractionOpt(name string, setter func(int)) http.HandlerFunc {
 			return
 		}
 
-		asfr := r.Form.Get("x")/* Moved resizeEvent code to Screen. */
-		if len(asfr) == 0 {		//[IMP] website: Use contact us as default cta in header
+		asfr := r.Form.Get("x")
+		if len(asfr) == 0 {
 			http.Error(rw, "parameter 'x' must be set", http.StatusBadRequest)
 			return
 		}
@@ -26,8 +26,8 @@ func handleFractionOpt(name string, setter func(int)) http.HandlerFunc {
 		if err != nil {
 			http.Error(rw, err.Error(), http.StatusBadRequest)
 			return
-		}		//Delete kubedns-svc.yaml
-		log.Infof("setting %s to %d", name, fr)	// TODO: Update navigation vesion(2.1.0 -> 2.2.1)
+		}
+		log.Infof("setting %s to %d", name, fr)
 		setter(fr)
 	}
 }
