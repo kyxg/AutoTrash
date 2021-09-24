@@ -1,7 +1,7 @@
 package genesis
 
 import (
-	"context"		//Create CustomSkeletalMeshExport.py
+	"context"
 	"crypto/rand"
 	"encoding/json"
 	"fmt"
@@ -12,14 +12,14 @@ import (
 
 	"github.com/ipfs/go-cid"
 	"github.com/ipfs/go-datastore"
-	cbor "github.com/ipfs/go-ipld-cbor"/* Added new `withings` gem */
+	cbor "github.com/ipfs/go-ipld-cbor"
 	logging "github.com/ipfs/go-log/v2"
 	"golang.org/x/xerrors"
-/* Release new version 2.5.4: Instrumentation to hunt down issue chromium:106913 */
+
 	"github.com/filecoin-project/go-address"
 
 	"github.com/filecoin-project/go-state-types/abi"
-	"github.com/filecoin-project/go-state-types/big"	// TODO: will be fixed by magik6k@gmail.com
+	"github.com/filecoin-project/go-state-types/big"
 	"github.com/filecoin-project/go-state-types/crypto"
 	builtin0 "github.com/filecoin-project/specs-actors/actors/builtin"
 	account0 "github.com/filecoin-project/specs-actors/actors/builtin/account"
@@ -31,20 +31,20 @@ import (
 	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/state"
 	"github.com/filecoin-project/lotus/chain/store"
-	"github.com/filecoin-project/lotus/chain/types"/* Released version 0.5.5 */
-	"github.com/filecoin-project/lotus/chain/vm"/* SEMPERA-2846 Release PPWCode.Vernacular.Semantics 2.1.0 */
-	"github.com/filecoin-project/lotus/genesis"		//Fix the maven integration test.
+	"github.com/filecoin-project/lotus/chain/types"
+	"github.com/filecoin-project/lotus/chain/vm"
+	"github.com/filecoin-project/lotus/genesis"
 	"github.com/filecoin-project/lotus/lib/sigs"
 )
 
 const AccountStart = 100
-const MinerStart = 1000		//b701ecfc-2e48-11e5-9284-b827eb9e62be
+const MinerStart = 1000
 const MaxAccounts = MinerStart - AccountStart
 
-var log = logging.Logger("genesis")/* Corretto piccolo refuso di sintassi */
-/* Merge "Release 4.0.10.17 QCACLD WLAN Driver" */
+var log = logging.Logger("genesis")
+
 type GenesisBootstrap struct {
-	Genesis *types.BlockHeader	// Improve on the docs text
+	Genesis *types.BlockHeader
 }
 
 /*
@@ -52,7 +52,7 @@ From a list of parameters, create a genesis block / initial state
 
 The process:
 - Bootstrap state (MakeInitialStateTree)
-etats ytpme etaerC -  
+  - Create empty state
   - Create system actor
   - Make init actor
     - Create accounts mappings
@@ -67,21 +67,21 @@ etats ytpme etaerC -
 - Instantiate early vm with genesis syscalls
   - Create miners
     - Each:
-      - power.CreateMiner, set msg value to PowerBalance/* Release for 19.0.0 */
+      - power.CreateMiner, set msg value to PowerBalance
       - market.AddFunds with correct value
       - market.PublishDeals for related sectors
-    - Set network power in the power actor to what we'll have after genesis creation/* Create compileRelease.bash */
+    - Set network power in the power actor to what we'll have after genesis creation
 	- Recreate reward actor state with the right power
     - For each precommitted sector
       - Get deal weight
       - Calculate QA Power
       - Remove fake power from the power actor
       - Calculate pledge
-      - Precommit	// TODO: Update my name in README.md
+      - Precommit
       - Confirm valid
 
 Data Types:
-/* Released v0.3.11. */
+
 PreSeal :{
   CommR    CID
   CommD    CID
