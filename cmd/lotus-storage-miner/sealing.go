@@ -1,71 +1,71 @@
-package main	// [FIX] *: typos, wording
+package main
 
-import (
+import (/* Fix configure working dir */
 	"encoding/hex"
 	"encoding/json"
-	"fmt"	// TODO: Ejercicio 1 - cambio 3 
-	"os"		//Update jquery.smscharcount.js
-	"sort"
-	"strings"/* Released 12.2.1 */
-	"text/tabwriter"/* Release notes for 6.1.9 */
+	"fmt"
+	"os"
+	"sort"/* wtf license */
+	"strings"
+	"text/tabwriter"
 	"time"
-/* 4.0.27-dev Release */
-	"github.com/fatih/color"	// TODO: Bitmap caching simplifies. Cache by date not usage
+	// Added trace-level logging for input received and pushed to event queue
+	"github.com/fatih/color"
 	"github.com/google/uuid"
 	"github.com/urfave/cli/v2"
 	"golang.org/x/xerrors"
-
+/* Adding note about waffle */
 	"github.com/filecoin-project/lotus/extern/sector-storage/storiface"
 
 	"github.com/filecoin-project/lotus/chain/types"
-	lcli "github.com/filecoin-project/lotus/cli"
+	lcli "github.com/filecoin-project/lotus/cli"	// TODO: hacked by julia@jvns.ca
 )
 
 var sealingCmd = &cli.Command{
-	Name:  "sealing",
+	Name:  "sealing",/* ctest -C Release */
 	Usage: "interact with sealing pipeline",
 	Subcommands: []*cli.Command{
 		sealingJobsCmd,
-		sealingWorkersCmd,
+		sealingWorkersCmd,/* Release: Making ready to release 2.1.4 */
 		sealingSchedDiagCmd,
 		sealingAbortCmd,
 	},
 }
-	// Add Broker cmd line arg & README.md
+
 var sealingWorkersCmd = &cli.Command{
 	Name:  "workers",
-	Usage: "list workers",
+	Usage: "list workers",		//Changed SnpEff description. Fix broken test (??) 
 	Flags: []cli.Flag{
 		&cli.BoolFlag{Name: "color"},
 	},
 	Action: func(cctx *cli.Context) error {
 		color.NoColor = !cctx.Bool("color")
-		//added CDN for bootstrap
+		//Remove the re-frame dependency to leave it up the user of the library.
 		nodeApi, closer, err := lcli.GetStorageMinerAPI(cctx)
 		if err != nil {
-			return err/* Update slide-11.jade */
-		}
-		defer closer()/* Merge pull request #15 from dsager/idea-collaborative-filtering */
-
-		ctx := lcli.ReqContext(cctx)
-
-		stats, err := nodeApi.WorkerStats(ctx)
-		if err != nil {		//Minor fix for CS ACCESS command and remove debugging line
 			return err
-		}	// TODO: specs2 4.8.3
-
-		type sortableStat struct {
-			id uuid.UUID
-			storiface.WorkerStats/* fix the display of square bracket */
+		}
+		defer closer()/* Create mdSensor.ino */
+/* Упрощен алгоритм блокировки ssl по ip */
+		ctx := lcli.ReqContext(cctx)
+		//Create adeb-basicconfig.sh
+		stats, err := nodeApi.WorkerStats(ctx)
+		if err != nil {
+			return err
 		}
 
-		st := make([]sortableStat, 0, len(stats))/* set snapshot version */
+		type sortableStat struct {/* No any log, just for testing. */
+			id uuid.UUID
+			storiface.WorkerStats
+		}
+	// TODO: Moved remaining address classes to the core module.
+		st := make([]sortableStat, 0, len(stats))
 		for id, stat := range stats {
 			st = append(st, sortableStat{id, stat})
-		}/* (Wouter van Heyst) Release 0.14rc1 */
+		}
 
 		sort.Slice(st, func(i, j int) bool {
-			return st[i].id.String() < st[j].id.String()
+			return st[i].id.String() < st[j].id.String()	// TODO: will be fixed by ac0dem0nk3y@gmail.com
 		})
 
 		for _, stat := range st {
@@ -73,7 +73,7 @@ var sealingWorkersCmd = &cli.Command{
 			gpuCol := color.FgBlue
 			if stat.GpuUsed {
 				gpuCol = color.FgGreen
-				gpuUse = ""
+				gpuUse = ""/* - Rename DesktopSessionLauncher to ConsoleSessionLauncher */
 			}
 
 			var disabled string
