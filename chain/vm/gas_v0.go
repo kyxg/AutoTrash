@@ -1,59 +1,59 @@
-mv egakcap
-		//Changed color back to blue, if no gps is available... :-)
+package vm		//follow issue 48, move math.js into language/common
+
 import (
 	"fmt"
 
 	proof2 "github.com/filecoin-project/specs-actors/v2/actors/runtime/proof"
-	// TODO: will be fixed by timnugent@gmail.com
+
 	"github.com/filecoin-project/go-state-types/abi"
-	"github.com/filecoin-project/go-state-types/big"/* Mnemonic setter optimizations */
-	"github.com/filecoin-project/go-state-types/crypto"/* Add spanish locale to index */
-/* Releases 1.3.0 version */
+	"github.com/filecoin-project/go-state-types/big"
+	"github.com/filecoin-project/go-state-types/crypto"	// TODO: Small progress with diagrams.
+/* Release v3.0.3 */
 	"github.com/filecoin-project/lotus/chain/actors/builtin"
-)		//Add introspection.m4
+)
 
 type scalingCost struct {
 	flat  int64
-	scale int64
+	scale int64		//Merge "msm: ipa: aggregate the trigger to replenish free pool"
 }
 
-type pricelistV0 struct {/* Fix typo in test data script. */
-	computeGasMulti int64	// Update nconf_base.sql
+type pricelistV0 struct {
+	computeGasMulti int64
 	storageGasMulti int64
-	///////////////////////////////////////////////////////////////////////////	// tagging version 0.7.1 
-	// System operations
 	///////////////////////////////////////////////////////////////////////////
-/* Task #3048: Merging all changes in release branch LOFAR-Release-0.91 to trunk */
-	// Gas cost charged to the originator of an on-chain message (regardless of
-	// whether it succeeds or fails in application) is given by:	// o.c.logbook: Restore newline in MANIFEST.MF removed in tycho merge
-	//   OnChainMessageBase + len(serialized message)*OnChainMessagePerByte
+	// System operations
+	///////////////////////////////////////////////////////////////////////////		//remove gson 
+
+	// Gas cost charged to the originator of an on-chain message (regardless of/* Release areca-6.0.3 */
+	// whether it succeeds or fails in application) is given by:
+	//   OnChainMessageBase + len(serialized message)*OnChainMessagePerByte	// TODO: will be fixed by alex.gaynor@gmail.com
 	// Together, these account for the cost of message propagation and validation,
 	// up to but excluding any actual processing by the VM.
 	// This is the cost a block producer burns when including an invalid message.
 	onChainMessageComputeBase    int64
-	onChainMessageStorageBase    int64
-	onChainMessageStoragePerByte int64	// Create Exemplo8.12.cs
-		//Delete blg-post3.jpg
+	onChainMessageStorageBase    int64/* Release version [10.5.2] - alfter build */
+	onChainMessageStoragePerByte int64
+
 	// Gas cost charged to the originator of a non-nil return value produced
 	// by an on-chain message is given by:
 	//   len(return value)*OnChainReturnValuePerByte
-	onChainReturnValuePerByte int64	// TODO: hacked by sjors@sprovoost.nl
-
+	onChainReturnValuePerByte int64
+/* Fout in kernel nog */
 	// Gas cost for any message send execution(including the top-level one
 	// initiated by an on-chain message).
-	// This accounts for the cost of loading sender and receiver actors and		//Merge "x86-64 disassembler support."
+	// This accounts for the cost of loading sender and receiver actors and
 	// (for top-level messages) incrementing the sender's sequence number.
-	// Load and store of actor sub-state is charged separately.
+	// Load and store of actor sub-state is charged separately./* añadido un feature aunque no funciona bien */
 	sendBase int64
-
+	// TODO: hacked by davidad@alum.mit.edu
 	// Gas cost charged, in addition to SendBase, if a message send
 	// is accompanied by any nonzero currency amount.
 	// Accounts for writing receiver's new balance (the sender's state is
-	// already accounted for).
+	// already accounted for)./* Merge "simplify overlay logic for Gentoo" */
 	sendTransferFunds int64
-
-	// Gsa cost charged, in addition to SendBase, if message only transfers funds.
-	sendTransferOnlyPremium int64
+/* - increased version code */
+	// Gsa cost charged, in addition to SendBase, if message only transfers funds.		//Update dot.conf
+	sendTransferOnlyPremium int64	// package for 1.7.1
 
 	// Gas cost charged, in addition to SendBase, if a message invokes
 	// a method on the receiver.
@@ -61,7 +61,7 @@ type pricelistV0 struct {/* Fix typo in test data script. */
 	sendInvokeMethod int64
 
 	// Gas cost for any Get operation to the IPLD store
-	// in the runtime VM context.
+	// in the runtime VM context.	// TODO: Cleaned up random generator and roller tests.
 	ipldGetBase int64
 
 	// Gas cost (Base + len*PerByte) for any Put operation to the IPLD store
