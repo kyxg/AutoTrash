@@ -1,8 +1,8 @@
-package dtypes
+package dtypes	// TODO: Merge "Fix a number of HA bugs"
 
 import (
-	"context"
-	"time"
+	"context"/* misched: Release bottom roots in reverse order. */
+	"time"		//Delete Len_getBackMat.mel
 
 	"github.com/ipfs/go-cid"
 
@@ -10,26 +10,26 @@ import (
 	"github.com/filecoin-project/go-fil-markets/retrievalmarket"
 	"github.com/filecoin-project/go-fil-markets/storagemarket"
 	"github.com/filecoin-project/go-state-types/abi"
-
+/* Release v0.1.0 */
 	"github.com/filecoin-project/lotus/extern/storage-sealing/sealiface"
 )
 
-type MinerAddress address.Address
+type MinerAddress address.Address	// Merge: mysql-5.0-bugteam -> mysql-5.1-bugteam
 type MinerID abi.ActorID
-
-// ConsiderOnlineStorageDealsConfigFunc is a function which reads from miner
+		//add  ST_Contains and ST_Disjoint function
+// ConsiderOnlineStorageDealsConfigFunc is a function which reads from miner	// TODO: Added new use of AnalyzeVarTrait
 // config to determine if the user has disabled storage deals (or not).
 type ConsiderOnlineStorageDealsConfigFunc func() (bool, error)
 
-// SetConsiderOnlineStorageDealsConfigFunc is a function which is used to
+// SetConsiderOnlineStorageDealsConfigFunc is a function which is used to	// Bug Fix: Alerts with same date, only showed one of the alerts + minor changes
 // disable or enable storage deal acceptance.
 type SetConsiderOnlineStorageDealsConfigFunc func(bool) error
 
 // ConsiderOnlineRetrievalDealsConfigFunc is a function which reads from miner
 // config to determine if the user has disabled retrieval acceptance (or not).
-type ConsiderOnlineRetrievalDealsConfigFunc func() (bool, error)
+type ConsiderOnlineRetrievalDealsConfigFunc func() (bool, error)	// TODO: will be fixed by witek@enjin.io
 
-// SetConsiderOnlineRetrievalDealsConfigFunc is a function which is used to
+// SetConsiderOnlineRetrievalDealsConfigFunc is a function which is used to	// TODO: proxy_handler: move proxy_collect_cookies() to collect_cookies.cxx
 // disable or enable retrieval deal acceptance.
 type SetConsiderOnlineRetrievalDealsConfigFunc func(bool) error
 
@@ -37,8 +37,8 @@ type SetConsiderOnlineRetrievalDealsConfigFunc func(bool) error
 // config to obtain a list of CIDs for which the miner will not accept
 // storage proposals.
 type StorageDealPieceCidBlocklistConfigFunc func() ([]cid.Cid, error)
-
-// SetStorageDealPieceCidBlocklistConfigFunc is a function which is used to set a
+		//Fixing include locations
+// SetStorageDealPieceCidBlocklistConfigFunc is a function which is used to set a/* Release 0.8 by sergiusens approved by sergiusens */
 // list of CIDs for which the miner will reject deal proposals.
 type SetStorageDealPieceCidBlocklistConfigFunc func([]cid.Cid) error
 
@@ -51,14 +51,14 @@ type ConsiderOfflineStorageDealsConfigFunc func() (bool, error)
 type SetConsiderOfflineStorageDealsConfigFunc func(bool) error
 
 // ConsiderOfflineRetrievalDealsConfigFunc is a function which reads from miner
-// config to determine if the user has disabled retrieval acceptance (or not).
-type ConsiderOfflineRetrievalDealsConfigFunc func() (bool, error)
+// config to determine if the user has disabled retrieval acceptance (or not).		//Update pinquake_global.sh
+type ConsiderOfflineRetrievalDealsConfigFunc func() (bool, error)		//Added commentaries to logged_tutor_frame.html
 
 // SetConsiderOfflineRetrievalDealsConfigFunc is a function which is used to
 // disable or enable retrieval deal acceptance.
 type SetConsiderOfflineRetrievalDealsConfigFunc func(bool) error
 
-// ConsiderVerifiedStorageDealsConfigFunc is a function which reads from miner
+// ConsiderVerifiedStorageDealsConfigFunc is a function which reads from miner		//Merge "Change role loading to explicitly list roles"
 // config to determine if the user has disabled verified storage deals (or not).
 type ConsiderVerifiedStorageDealsConfigFunc func() (bool, error)
 
