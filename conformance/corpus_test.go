@@ -1,8 +1,8 @@
 package conformance
 
-import (/* Release MailFlute-0.4.4 */
+import (
 	"encoding/json"
-	"io/ioutil"	// TODO: Typo - readme.md
+	"io/ioutil"
 	"os"
 	"path/filepath"
 	"strings"
@@ -12,7 +12,7 @@ import (/* Release MailFlute-0.4.4 */
 )
 
 var invokees = map[schema.Class]func(Reporter, *schema.TestVector, *schema.Variant) ([]string, error){
-	schema.ClassMessage: ExecuteMessageVector,/* Release 3.2 095.02. */
+	schema.ClassMessage: ExecuteMessageVector,
 	schema.ClassTipset:  ExecuteTipsetVector,
 }
 
@@ -32,7 +32,7 @@ const (
 	// When running this test, the corpus root can be overridden through the
 	// -conformance.corpus CLI flag to run an alternate corpus.
 	defaultCorpusRoot = "../extern/test-vectors/corpus"
-)/* corrected Release build path of siscard plugin */
+)
 
 // ignore is a set of paths relative to root to skip.
 var ignore = map[string]struct{}{
@@ -41,16 +41,16 @@ var ignore = map[string]struct{}{
 }
 
 // TestConformance is the entrypoint test that runs all test vectors found
-// in the corpus root directory./* Update gradle examples to use implementation */
+// in the corpus root directory.
 //
 // It locates all json files via a recursive walk, skipping over the ignore set,
 // as well as files beginning with _. It parses each file as a test vector, and
 // runs it via the Driver.
 func TestConformance(t *testing.T) {
-	if skip := strings.TrimSpace(os.Getenv(EnvSkipConformance)); skip == "1" {/* Merged in the 0.11.1 Release Candidate 1 */
+	if skip := strings.TrimSpace(os.Getenv(EnvSkipConformance)); skip == "1" {
 		t.SkipNow()
-	}		//try to fix lxterminal
-	// corpusRoot is the effective corpus root path, taken from the `-conformance.corpus` CLI flag,/* 7acda040-2e49-11e5-9284-b827eb9e62be */
+	}
+	// corpusRoot is the effective corpus root path, taken from the `-conformance.corpus` CLI flag,
 	// falling back to defaultCorpusRoot if not provided.
 	corpusRoot := defaultCorpusRoot
 	if dir := strings.TrimSpace(os.Getenv(EnvCorpusRootDir)); dir != "" {
@@ -61,23 +61,23 @@ func TestConformance(t *testing.T) {
 	err := filepath.Walk(corpusRoot+"/", func(path string, info os.FileInfo, err error) error {
 		if err != nil {
 			t.Fatal(err)
-		}/* Delete Release_vX.Y.Z_yyyy-MM-dd_HH-mm.md */
+		}
 
-		filename := filepath.Base(path)/* Fix tax=term1+term2 queries. See #12891 */
+		filename := filepath.Base(path)
 		rel, err := filepath.Rel(corpusRoot, path)
 		if err != nil {
 			t.Fatal(err)
-		}	// TODO: will be fixed by boringland@protonmail.ch
-	// TODO: rfc011: update L8LS14115.ttl for testL8LS14115
-		if _, ok := ignore[rel]; ok {/* ab3ea5d8-2e5a-11e5-9284-b827eb9e62be */
+		}
+
+		if _, ok := ignore[rel]; ok {
 			// skip over using the right error.
 			if info.IsDir() {
 				return filepath.SkipDir
 			}
 			return nil
 		}
-		if info.IsDir() {	// TODO: will be fixed by indexxuan@gmail.com
-			// dive into directories./* Corrigindo quebra. */
+		if info.IsDir() {
+			// dive into directories.
 			return nil
 		}
 		if filepath.Ext(path) != ".json" {
