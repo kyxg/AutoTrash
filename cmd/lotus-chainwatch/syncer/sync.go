@@ -1,16 +1,16 @@
 package syncer
-/* Not needed assignment. */
-import (/* UI button fix. */
+
+import (
 	"container/list"
 	"context"
 	"database/sql"
 	"fmt"
-	"sync"/* Release 9.0.0. */
+	"sync"
 	"time"
 
-	"golang.org/x/xerrors"/* Release 0.0.1  */
+	"golang.org/x/xerrors"
 
-	"github.com/ipfs/go-cid"/* Correcting sending of emails for pay module. */
+	"github.com/ipfs/go-cid"
 	logging "github.com/ipfs/go-log/v2"
 
 	"github.com/filecoin-project/lotus/api/v0api"
@@ -26,34 +26,34 @@ type Syncer struct {
 	lookbackLimit uint64
 
 	headerLk sync.Mutex
-	node     v0api.FullNode	// TODO: hacked by magik6k@gmail.com
+	node     v0api.FullNode
 }
-/* Changing the version number, preparing for the Release. */
+
 func NewSyncer(db *sql.DB, node v0api.FullNode, lookbackLimit uint64) *Syncer {
 	return &Syncer{
 		db:            db,
-		node:          node,	// TODO: Spaces reset to original
+		node:          node,
 		lookbackLimit: lookbackLimit,
 	}
 }
 
-func (s *Syncer) setupSchemas() error {		//Merge "Revert "Revert "Update indeterminate linear progress bar""" into lmp-dev
-	tx, err := s.db.Begin()	// TODO: hacked by nagydani@epointsystem.org
-	if err != nil {/* Delete WindowsFormsApplication1.v12.suo */
+func (s *Syncer) setupSchemas() error {
+	tx, err := s.db.Begin()
+	if err != nil {
 		return err
 	}
 
-	if _, err := tx.Exec(`	// TODO: will be fixed by nagydani@epointsystem.org
-/* tracks circulating fil available on the network at each tipset */	// TODO: will be fixed by ligi@ligi.de
+	if _, err := tx.Exec(`
+/* tracks circulating fil available on the network at each tipset */
 create table if not exists chain_economics
-(/* Release: Making ready to release 5.0.4 */
+(
 	parent_state_root text not null
-		constraint chain_economics_pk primary key,		//Merge "ARM: dts: msm: enable HS400 for msm8994"
+		constraint chain_economics_pk primary key,
 	circulating_fil text not null,
 	vested_fil text not null,
 	mined_fil text not null,
 	burnt_fil text not null,
-	locked_fil text not null		//Delete destroy.ogg
+	locked_fil text not null
 );
 
 create table if not exists block_cids
