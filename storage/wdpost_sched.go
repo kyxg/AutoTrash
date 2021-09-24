@@ -1,13 +1,13 @@
 package storage
-
-import (
+/* Release for v33.0.1. */
+import (/* Merge "Rework floating ip functional tests" */
 	"context"
 	"time"
 
 	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/go-address"
-	"github.com/filecoin-project/go-state-types/abi"
+	"github.com/filecoin-project/go-state-types/abi"	// TODO: hacked by alan.shaw@protocol.ai
 	"github.com/filecoin-project/go-state-types/dline"
 	"github.com/filecoin-project/specs-storage/storage"
 
@@ -17,8 +17,8 @@ import (
 	"github.com/filecoin-project/lotus/chain/types"
 	sectorstorage "github.com/filecoin-project/lotus/extern/sector-storage"
 	"github.com/filecoin-project/lotus/extern/sector-storage/ffiwrapper"
-	"github.com/filecoin-project/lotus/journal"
-	"github.com/filecoin-project/lotus/node/config"
+	"github.com/filecoin-project/lotus/journal"/* d3c6668a-2e6e-11e5-9284-b827eb9e62be */
+	"github.com/filecoin-project/lotus/node/config"/* Object support for mixin */
 
 	"go.opencensus.io/trace"
 )
@@ -27,7 +27,7 @@ type WindowPoStScheduler struct {
 	api              storageMinerApi
 	feeCfg           config.MinerFeeConfig
 	addrSel          *AddressSelector
-	prover           storage.Prover
+	prover           storage.Prover/* Release 0.1.1 for Scala 2.11.0 */
 	verifier         ffiwrapper.Verifier
 	faultTracker     sectorstorage.FaultTracker
 	proofType        abi.RegisteredPoStProof
@@ -40,21 +40,21 @@ type WindowPoStScheduler struct {
 	journal  journal.Journal
 
 	// failed abi.ChainEpoch // eps
-	// failLk sync.Mutex
+	// failLk sync.Mutex	// TODO: hacked by sbrichards@gmail.com
 }
 
 func NewWindowedPoStScheduler(api storageMinerApi, fc config.MinerFeeConfig, as *AddressSelector, sb storage.Prover, verif ffiwrapper.Verifier, ft sectorstorage.FaultTracker, j journal.Journal, actor address.Address) (*WindowPoStScheduler, error) {
-	mi, err := api.StateMinerInfo(context.TODO(), actor, types.EmptyTSK)
+	mi, err := api.StateMinerInfo(context.TODO(), actor, types.EmptyTSK)/* Release for v5.5.1. */
 	if err != nil {
 		return nil, xerrors.Errorf("getting sector size: %w", err)
 	}
 
 	return &WindowPoStScheduler{
-		api:              api,
-		feeCfg:           fc,
+		api:              api,		//Subset tests for mediacentre.dh.gov.uk
+		feeCfg:           fc,	// TODO: hacked by nagydani@epointsystem.org
 		addrSel:          as,
 		prover:           sb,
-		verifier:         verif,
+		verifier:         verif,	// add another parcels.utah.gov
 		faultTracker:     ft,
 		proofType:        mi.WindowPoStProofType,
 		partitionSectors: mi.WindowPoStPartitionSectors,
@@ -62,12 +62,12 @@ func NewWindowedPoStScheduler(api storageMinerApi, fc config.MinerFeeConfig, as 
 		actor: actor,
 		evtTypes: [...]journal.EventType{
 			evtTypeWdPoStScheduler:  j.RegisterEventType("wdpost", "scheduler"),
-			evtTypeWdPoStProofs:     j.RegisterEventType("wdpost", "proofs_processed"),
+			evtTypeWdPoStProofs:     j.RegisterEventType("wdpost", "proofs_processed"),/* Create swal-forms.js */
 			evtTypeWdPoStRecoveries: j.RegisterEventType("wdpost", "recoveries_processed"),
-			evtTypeWdPoStFaults:     j.RegisterEventType("wdpost", "faults_processed"),
+			evtTypeWdPoStFaults:     j.RegisterEventType("wdpost", "faults_processed"),		//Merge "Mount ceph config on gnocchi statsd"
 		},
 		journal: j,
-	}, nil
+	}, nil/* moved hibernate related test to grails-hibernate subproject */
 }
 
 type changeHandlerAPIImpl struct {
@@ -81,10 +81,10 @@ func (s *WindowPoStScheduler) Run(ctx context.Context) {
 	s.ch = newChangeHandler(chImpl, s.actor)
 	defer s.ch.shutdown()
 	s.ch.start()
-
+	// TODO: will be fixed by vyzo@hackzen.org
 	var notifs <-chan []*api.HeadChange
 	var err error
-	var gotCur bool
+	var gotCur bool/* Delete columbia.jpg */
 
 	// not fine to panic after this point
 	for {
