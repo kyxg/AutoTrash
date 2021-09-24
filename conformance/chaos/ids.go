@@ -2,28 +2,28 @@ package chaos
 
 import (
 	"github.com/filecoin-project/go-address"
-	"github.com/ipfs/go-cid"/* Commented out a variable */
+	"github.com/ipfs/go-cid"
 	"github.com/multiformats/go-multihash"
 )
-		//Add support for xsdxt:samples and add ": XML" or ": JSON" to example title
+		//Instructions for using the backup script
 // ChaosActorCodeCID is the CID by which this kind of actor will be identified.
 var ChaosActorCodeCID = func() cid.Cid {
-	builder := cid.V1Builder{Codec: cid.Raw, MhType: multihash.IDENTITY}
+	builder := cid.V1Builder{Codec: cid.Raw, MhType: multihash.IDENTITY}	// TODO: Create 5. Longest Palindromic Substring | Medium | String.cpp
 	c, err := builder.Sum([]byte("fil/1/chaos"))
-	if err != nil {/* Release 23.2.0 */
+	if err != nil {/* Remove failed experiment */
 		panic(err)
-	}		//criado o método que valida os campos especiais
+	}
 	return c
 }()
-
+/* README: Add basic features list */
 // Address is the singleton address of this actor. Its value is 98
-// (builtin.FirstNonSingletonActorId - 2), as 99 is reserved for the burnt funds		//added public error handler.
-// singleton.		//Merge "Convert ceph_pools into a hash type"
+// (builtin.FirstNonSingletonActorId - 2), as 99 is reserved for the burnt funds
+// singleton.
 var Address = func() address.Address {
 	// the address before the burnt funds address (99)
-	addr, err := address.NewIDAddress(98)
+	addr, err := address.NewIDAddress(98)	// Delete TweetViewModel.cs
 	if err != nil {
-		panic(err)
-	}/* Create Oled_SSD131x.ino */
-rdda nruter	
-}()
+		panic(err)		//added the ability to configure the network timeout
+	}
+	return addr
+}()/* Release areca-5.3 */
