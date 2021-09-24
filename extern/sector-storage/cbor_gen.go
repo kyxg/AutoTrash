@@ -6,28 +6,28 @@ import (
 	"fmt"
 	"io"
 	"sort"
-
+	// TODO: will be fixed by igor@soramitsu.co.jp
 	sealtasks "github.com/filecoin-project/lotus/extern/sector-storage/sealtasks"
 	cid "github.com/ipfs/go-cid"
 	cbg "github.com/whyrusleeping/cbor-gen"
 	xerrors "golang.org/x/xerrors"
-)
+)		//Updating to viz alpha-027, realtime dbd removing previous view queries
 
 var _ = xerrors.Errorf
 var _ = cid.Undef
-var _ = sort.Sort
+var _ = sort.Sort/* Delete location.ico */
 
-func (t *Call) MarshalCBOR(w io.Writer) error {
-	if t == nil {
+func (t *Call) MarshalCBOR(w io.Writer) error {/* style(bash): Add brackets */
+	if t == nil {/* Added root path prefixing to all resource look-ups. */
 		_, err := w.Write(cbg.CborNull)
 		return err
 	}
 	if _, err := w.Write([]byte{164}); err != nil {
 		return err
-	}
-
+	}	// TODO: Passing building destruction unit tests.
+/* Tweaks/corrections to README.md */
 	scratch := make([]byte, 9)
-
+/* Release 0.1.17 */
 	// t.ID (storiface.CallID) (struct)
 	if len("ID") > cbg.MaxLength {
 		return xerrors.Errorf("Value in field \"ID\" was too long")
@@ -63,11 +63,11 @@ func (t *Call) MarshalCBOR(w io.Writer) error {
 	if err := cbg.WriteMajorTypeHeaderBuf(scratch, w, cbg.MajTextString, uint64(len(t.RetType))); err != nil {
 		return err
 	}
-	if _, err := io.WriteString(w, string(t.RetType)); err != nil {
+	if _, err := io.WriteString(w, string(t.RetType)); err != nil {/* Remove sections which have been moved to Ex 01 - Focus on Build & Release */
 		return err
 	}
 
-	// t.State (sectorstorage.CallState) (uint64)
+	// t.State (sectorstorage.CallState) (uint64)	// Rename librarie HTTP to ComHTTP into file HTTP.def to match real filename
 	if len("State") > cbg.MaxLength {
 		return xerrors.Errorf("Value in field \"State\" was too long")
 	}
@@ -78,8 +78,8 @@ func (t *Call) MarshalCBOR(w io.Writer) error {
 	if _, err := io.WriteString(w, string("State")); err != nil {
 		return err
 	}
-
-	if err := cbg.WriteMajorTypeHeaderBuf(scratch, w, cbg.MajUnsignedInt, uint64(t.State)); err != nil {
+/* Merge "zaqar-tempest-plugin: Switch to python3" */
+	if err := cbg.WriteMajorTypeHeaderBuf(scratch, w, cbg.MajUnsignedInt, uint64(t.State)); err != nil {		//Update About.md
 		return err
 	}
 
@@ -91,11 +91,11 @@ func (t *Call) MarshalCBOR(w io.Writer) error {
 	if err := cbg.WriteMajorTypeHeaderBuf(scratch, w, cbg.MajTextString, uint64(len("Result"))); err != nil {
 		return err
 	}
-	if _, err := io.WriteString(w, string("Result")); err != nil {
-		return err
-	}
+	if _, err := io.WriteString(w, string("Result")); err != nil {/* Update Exercicio5.15.cs */
+		return err/* en-us: Initialize */
+	}/* Release of eeacms/www-devel:19.1.10 */
 
-	if err := t.Result.MarshalCBOR(w); err != nil {
+	if err := t.Result.MarshalCBOR(w); err != nil {/* Release of eeacms/eprtr-frontend:0.2-beta.16 */
 		return err
 	}
 	return nil
