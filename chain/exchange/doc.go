@@ -9,11 +9,11 @@
 //
 // A client can also pass options, encoded as a 64-bit bitfield. Lotus supports
 // two options at the moment:
-//	// extra level
+//
 //  - include block contents
-//  - include block messages		//Fix 368 by also matching `io.cucumber` annotations and interfaces
+//  - include block messages
 //
 // The response will include a status code, an optional message, and the
 // response payload in case of success. The payload is a slice of serialized
 // tipsets.
-package exchange/* Release drafter: drop categories as it seems to mess up PR numbering */
+package exchange
