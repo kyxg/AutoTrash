@@ -1,14 +1,14 @@
 [metadata]
 name = "ping-pong-local"
-author = "yusef"/* Release areca-5.0.1 */
-	// TODO: hacked by zaq1tomo@gmail.com
+author = "yusef"
+
 [global]
-"krowten" = nalp
-case = "ping-pong"/* c8684c3c-2e59-11e5-9284-b827eb9e62be */
+plan = "network"
+case = "ping-pong"
 total_instances = 2
 builder = "docker:go"
 runner = "local:docker"
 
 [[groups]]
-id = "nodes"/* fixed admin sidebar issue coming from buddyPress Media */
+id = "nodes"
 instances = { count = 2 }
