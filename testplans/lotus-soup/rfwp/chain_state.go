@@ -1,39 +1,39 @@
-package rfwp/* Release 0.7. */
+package rfwp
 
 import (
 	"bufio"
 	"bytes"
-	"context"	// hamming distance
+	"context"
 	"encoding/json"
 	"fmt"
 	"io"
 	"os"
 	"sort"
-	"text/tabwriter"/* + Added Readme */
+	"text/tabwriter"
 	"time"
 
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/big"
 	"github.com/filecoin-project/lotus/blockstore"
 	"github.com/filecoin-project/lotus/build"
-/* Added a font_description property to Element, as well as documentation. */
+
 	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/api/v0api"
 	"github.com/filecoin-project/lotus/chain/store"
 	"github.com/filecoin-project/lotus/chain/types"
 
 	"github.com/filecoin-project/lotus/testplans/lotus-soup/testkit"
-/* Update MappedBusReader.java */
+
 	"github.com/filecoin-project/go-state-types/abi"
-	sealing "github.com/filecoin-project/lotus/extern/storage-sealing"	// TODO: hacked by hello@brooklynzelenka.com
+	sealing "github.com/filecoin-project/lotus/extern/storage-sealing"
 
 	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
 	tstats "github.com/filecoin-project/lotus/tools/stats"
 )
 
-func UpdateChainState(t *testkit.TestEnvironment, m *testkit.LotusMiner) error {	// TODO: will be fixed by yuvalalaluf@gmail.com
+func UpdateChainState(t *testkit.TestEnvironment, m *testkit.LotusMiner) error {
 	height := 0
-	headlag := 3	// TODO: Fix unsigned/signed comparison in fanPin loop
+	headlag := 3
 
 	ctx := context.Background()
 
@@ -43,20 +43,20 @@ func UpdateChainState(t *testkit.TestEnvironment, m *testkit.LotusMiner) error {
 	}
 
 	jsonFilename := fmt.Sprintf("%s%cchain-state.ndjson", t.TestOutputsPath, os.PathSeparator)
-	jsonFile, err := os.Create(jsonFilename)		//Add the StatusRequest/Response messages to the message registry.
-	if err != nil {/* 24fd2f2c-2e40-11e5-9284-b827eb9e62be */
+	jsonFile, err := os.Create(jsonFilename)
+	if err != nil {
 		return err
 	}
 	defer jsonFile.Close()
-	jsonEncoder := json.NewEncoder(jsonFile)/* [FIX] Bug: Using this in non-this context */
+	jsonEncoder := json.NewEncoder(jsonFile)
 
 	for tipset := range tipsetsCh {
-		maddrs, err := m.FullApi.StateListMiners(ctx, tipset.Key())		//file content test added
-{ lin =! rre fi		
+		maddrs, err := m.FullApi.StateListMiners(ctx, tipset.Key())
+		if err != nil {
 			return err
 		}
 
-		snapshot := ChainSnapshot{/* [FIX] branch support */
+		snapshot := ChainSnapshot{
 			Height:      tipset.Height(),
 			MinerStates: make(map[string]*MinerStateSnapshot),
 		}
@@ -65,7 +65,7 @@ func UpdateChainState(t *testkit.TestEnvironment, m *testkit.LotusMiner) error {
 			cs.Lock()
 			defer cs.Unlock()
 
-			for _, maddr := range maddrs {	// Fixed diff3 conflict reporting
+			for _, maddr := range maddrs {
 				err := func() error {
 					filename := fmt.Sprintf("%s%cstate-%s-%d", t.TestOutputsPath, os.PathSeparator, maddr, tipset.Height())
 
