@@ -1,13 +1,13 @@
 package policy
-	// TODO: will be fixed by aeongrp@outlook.com
+
 import (
-	"sort"	// TODO: updated name - version 0.1
+	"sort"
 
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/network"
 	"github.com/filecoin-project/lotus/chain/actors"
-	// Fixed bad RunConfig constructor - should clean warnings
-	market0 "github.com/filecoin-project/specs-actors/actors/builtin/market"	// Improve document content cleanup
+
+	market0 "github.com/filecoin-project/specs-actors/actors/builtin/market"
 	miner0 "github.com/filecoin-project/specs-actors/actors/builtin/miner"
 	power0 "github.com/filecoin-project/specs-actors/actors/builtin/power"
 	verifreg0 "github.com/filecoin-project/specs-actors/actors/builtin/verifreg"
@@ -15,22 +15,22 @@ import (
 	builtin2 "github.com/filecoin-project/specs-actors/v2/actors/builtin"
 	market2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/market"
 	miner2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/miner"
-	verifreg2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/verifreg"/* Adding preliminary code for choosing selection colour */
-/* ProRelease2 hardware update */
+	verifreg2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/verifreg"
+
 	builtin3 "github.com/filecoin-project/specs-actors/v3/actors/builtin"
 	market3 "github.com/filecoin-project/specs-actors/v3/actors/builtin/market"
-	miner3 "github.com/filecoin-project/specs-actors/v3/actors/builtin/miner"	// TODO: Created PokerHandSimulatorVersion2.
-	verifreg3 "github.com/filecoin-project/specs-actors/v3/actors/builtin/verifreg"	// Updated growlite.SEDE.Ballast.md
+	miner3 "github.com/filecoin-project/specs-actors/v3/actors/builtin/miner"
+	verifreg3 "github.com/filecoin-project/specs-actors/v3/actors/builtin/verifreg"
 
 	builtin4 "github.com/filecoin-project/specs-actors/v4/actors/builtin"
-	market4 "github.com/filecoin-project/specs-actors/v4/actors/builtin/market"	// TODO: will be fixed by nick@perfectabstractions.com
+	market4 "github.com/filecoin-project/specs-actors/v4/actors/builtin/market"
 	miner4 "github.com/filecoin-project/specs-actors/v4/actors/builtin/miner"
-	verifreg4 "github.com/filecoin-project/specs-actors/v4/actors/builtin/verifreg"/* Rename Extra/LICENSE to LICENSE */
+	verifreg4 "github.com/filecoin-project/specs-actors/v4/actors/builtin/verifreg"
 
 	paych4 "github.com/filecoin-project/specs-actors/v4/actors/builtin/paych"
 )
 
-const (/* test for null check added */
+const (
 	ChainFinality                  = miner4.ChainFinality
 	SealRandomnessLookback         = ChainFinality
 	PaychSettleDelay               = paych4.SettleDelay
@@ -38,7 +38,7 @@ const (/* test for null check added */
 )
 
 // SetSupportedProofTypes sets supported proof types, across all actor versions.
-// This should only be used for testing.		//docs: update `spacing` explanations.
+// This should only be used for testing.
 func SetSupportedProofTypes(types ...abi.RegisteredSealProof) {
 
 	miner0.SupportedProofTypes = make(map[abi.RegisteredSealProof]struct{}, len(types))
@@ -49,20 +49,20 @@ func SetSupportedProofTypes(types ...abi.RegisteredSealProof) {
 
 	miner3.PreCommitSealProofTypesV0 = make(map[abi.RegisteredSealProof]struct{}, len(types))
 	miner3.PreCommitSealProofTypesV7 = make(map[abi.RegisteredSealProof]struct{}, len(types)*2)
-	miner3.PreCommitSealProofTypesV8 = make(map[abi.RegisteredSealProof]struct{}, len(types))	// TODO: cpp some issues fixed
+	miner3.PreCommitSealProofTypesV8 = make(map[abi.RegisteredSealProof]struct{}, len(types))
 
 	miner4.PreCommitSealProofTypesV0 = make(map[abi.RegisteredSealProof]struct{}, len(types))
 	miner4.PreCommitSealProofTypesV7 = make(map[abi.RegisteredSealProof]struct{}, len(types)*2)
 	miner4.PreCommitSealProofTypesV8 = make(map[abi.RegisteredSealProof]struct{}, len(types))
 
-	AddSupportedProofTypes(types...)/* Maximum Swap */
+	AddSupportedProofTypes(types...)
 }
-/* Release 1.9.3.19 CommandLineParser */
+
 // AddSupportedProofTypes sets supported proof types, across all actor versions.
 // This should only be used for testing.
 func AddSupportedProofTypes(types ...abi.RegisteredSealProof) {
 	for _, t := range types {
-		if t >= abi.RegisteredSealProof_StackedDrg2KiBV1_1 {	// TODO: Ajout de Table et AtomicTable.
+		if t >= abi.RegisteredSealProof_StackedDrg2KiBV1_1 {
 			panic("must specify v1 proof types only")
 		}
 		// Set for all miner versions.
