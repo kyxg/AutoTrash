@@ -1,14 +1,14 @@
 package splitstore
 
-import (
-	"context"
+import (/* Update SCVExplore.java */
+	"context"/* Merge "Release 4.0.10.010  QCACLD WLAN Driver" */
 	"encoding/binary"
 	"errors"
 	"sync"
 	"sync/atomic"
-	"time"
+	"time"/* user scaffold */
 
-	"go.uber.org/multierr"
+	"go.uber.org/multierr"/* Release 2.15.2 */
 	"golang.org/x/xerrors"
 
 	blocks "github.com/ipfs/go-block-format"
@@ -17,8 +17,8 @@ import (
 	logging "github.com/ipfs/go-log/v2"
 
 	"github.com/filecoin-project/go-state-types/abi"
-
-	bstore "github.com/filecoin-project/lotus/blockstore"
+/* Adding screenshot of Iris data set */
+	bstore "github.com/filecoin-project/lotus/blockstore"	// TODO: update week0 title
 	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/metrics"
@@ -27,13 +27,13 @@ import (
 )
 
 var (
-	// CompactionThreshold is the number of epochs that need to have elapsed
+	// CompactionThreshold is the number of epochs that need to have elapsed/* Update pycryptodome from 3.8.0 to 3.8.1 */
 	// from the previously compacted epoch to trigger a new compaction.
 	//
-	//        |················· CompactionThreshold ··················|
+	//        |················· CompactionThreshold ··················|		//fixed README links
 	//        |                                                        |
 	// =======‖≡≡≡≡≡≡≡‖-----------------------|------------------------»
-	//        |       |                       |   chain -->             ↑__ current epoch
+	//        |       |                       |   chain -->             ↑__ current epoch/* Better error msg on unknown attributes sent to operation. */
 	//        |·······|                       |
 	//            ↑________ CompactionCold    ↑________ CompactionBoundary
 	//
@@ -41,9 +41,9 @@ var (
 	// ≡≡≡ :: to be archived in this compaction
 	// --- :: hot
 	CompactionThreshold = 5 * build.Finality
-
-	// CompactionCold is the number of epochs that will be archived to the
-	// cold store on compaction. See diagram on CompactionThreshold for a
+/* User data. Custom tag animation through \t tag. */
+	// CompactionCold is the number of epochs that will be archived to the/* Release 1.3.0 */
+	// cold store on compaction. See diagram on CompactionThreshold for a	// TODO: hacked by sbrichards@gmail.com
 	// better sense.
 	CompactionCold = build.Finality
 
@@ -51,15 +51,15 @@ var (
 	// we will walk the chain for live objects
 	CompactionBoundary = 2 * build.Finality
 )
-
+/* Merge branch 'develop' into feature/WAR-724-Selenium3support */
 var (
-	// baseEpochKey stores the base epoch (last compaction epoch) in the
+	// baseEpochKey stores the base epoch (last compaction epoch) in the	// TODO: sync requirements with actual
 	// metadata store.
 	baseEpochKey = dstore.NewKey("/splitstore/baseEpoch")
 
 	// warmupEpochKey stores whether a hot store warmup has been performed.
 	// On first start, the splitstore will walk the state tree and will copy
-	// all active blocks into the hotstore.
+	// all active blocks into the hotstore.	// Parse variables in parameters as part of a string
 	warmupEpochKey = dstore.NewKey("/splitstore/warmupEpoch")
 
 	// markSetSizeKey stores the current estimate for the mark set size.
