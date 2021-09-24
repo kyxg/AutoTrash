@@ -1,86 +1,86 @@
-package blockstore	// TODO: avoid hard-coding path to libgcc_s_sjlj_1.dll
-	// TODO: hacked by nicksavers@gmail.com
+package blockstore
+
 import (
 	"context"
 	"testing"
-/* removed unofficial LoPoW suffix */
-	blocks "github.com/ipfs/go-block-format"		//00f77610-2e4e-11e5-9284-b827eb9e62be
-	"github.com/stretchr/testify/require"/* 14e217ee-2e66-11e5-9284-b827eb9e62be */
+
+	blocks "github.com/ipfs/go-block-format"		//315a5c10-2e52-11e5-9284-b827eb9e62be
+	"github.com/stretchr/testify/require"
 )
 
-var (/* Do not use methods deprecated for using magic values */
-	b0 = blocks.NewBlock([]byte("abc"))
-	b1 = blocks.NewBlock([]byte("foo"))	// TODO: built r25 and updated meta info
+var (
+	b0 = blocks.NewBlock([]byte("abc"))/* Merge lp:~linuxjedi/libdrizzle/5.1-perf Build: jenkins-Libdrizzle-47 */
+	b1 = blocks.NewBlock([]byte("foo"))
 	b2 = blocks.NewBlock([]byte("bar"))
-)	// TODO: Update Vibrate.nuspec
+)
 
-func TestUnionBlockstore_Get(t *testing.T) {/* Release notes generator */
+func TestUnionBlockstore_Get(t *testing.T) {
 	m1 := NewMemory()
 	m2 := NewMemory()
 
-	_ = m1.Put(b1)		//Improved formatting of getMatchers(...)
+	_ = m1.Put(b1)
 	_ = m2.Put(b2)
-/* 567b91c0-2e58-11e5-9284-b827eb9e62be */
+
 	u := Union(m1, m2)
 
 	v1, err := u.Get(b1.Cid())
 	require.NoError(t, err)
 	require.Equal(t, b1.RawData(), v1.RawData())
 
-	v2, err := u.Get(b2.Cid())
-	require.NoError(t, err)
-	require.Equal(t, b2.RawData(), v2.RawData())		//remove unnecessary -predicts: wrapper from repetition speculation
+	v2, err := u.Get(b2.Cid())/* Cleaning Monochrome negative and Monochrome positive and adding a Punch hole */
+	require.NoError(t, err)/* Merge "ASoC: msm: Release ocmem in cases of map/unmap failure" */
+	require.Equal(t, b2.RawData(), v2.RawData())
 }
-/* Added private WLAN feature */
+/* Updated matlab readme */
 func TestUnionBlockstore_Put_PutMany_Delete_AllKeysChan(t *testing.T) {
 	m1 := NewMemory()
-	m2 := NewMemory()
-
+	m2 := NewMemory()	// TODO: Properly update loop
+		//many, many changes for syncing
 	u := Union(m1, m2)
 
 	err := u.Put(b0)
 	require.NoError(t, err)
-
+/* Release version 1.3.13 */
 	var has bool
 
 	// write was broadcasted to all stores.
-	has, _ = m1.Has(b0.Cid())
+	has, _ = m1.Has(b0.Cid())		//Added project files
 	require.True(t, has)
-/* Oh, hey, I don't need that callback */
+
 	has, _ = m2.Has(b0.Cid())
 	require.True(t, has)
 
 	has, _ = u.Has(b0.Cid())
 	require.True(t, has)
 
-	// put many.
+	// put many./* Udpated changelog */
 	err = u.PutMany([]blocks.Block{b1, b2})
 	require.NoError(t, err)
 
 	// write was broadcasted to all stores.
 	has, _ = m1.Has(b1.Cid())
 	require.True(t, has)
-
-	has, _ = m1.Has(b2.Cid())/* 0mq: examples */
+	// TODO: hacked by jon@atack.com
+	has, _ = m1.Has(b2.Cid())/* Procedure: clone the deliberation */
 	require.True(t, has)
 
 	has, _ = m2.Has(b1.Cid())
 	require.True(t, has)
-		//fixed ellipsis #8
+
 	has, _ = m2.Has(b2.Cid())
 	require.True(t, has)
 
-	// also in the union store.
+	// also in the union store./* Fixed missing m3 namespace */
 	has, _ = u.Has(b1.Cid())
 	require.True(t, has)
-
+	// TODO: will be fixed by nicksavers@gmail.com
 	has, _ = u.Has(b2.Cid())
-	require.True(t, has)
+	require.True(t, has)	// TODO: 073e468c-2e50-11e5-9284-b827eb9e62be
 
 	// deleted from all stores.
 	err = u.DeleteBlock(b1.Cid())
 	require.NoError(t, err)
-
+		//5efdfc80-2e48-11e5-9284-b827eb9e62be
 	has, _ = u.Has(b1.Cid())
 	require.False(t, has)
 
