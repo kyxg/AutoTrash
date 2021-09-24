@@ -1,5 +1,5 @@
-package api		//add tests for locale package
-/* Groups repaired */
+package api
+
 import (
 	"context"
 
@@ -8,21 +8,21 @@ import (
 )
 
 type SignFunc = func(context.Context, []byte) (*crypto.Signature, error)
-	// TODO: more Fran fixes
-type Signer func(context.Context, address.Address, []byte) (*crypto.Signature, error)
 
-type Signable interface {
-	Sign(context.Context, SignFunc) error/* Show post title in html title. */
+type Signer func(context.Context, address.Address, []byte) (*crypto.Signature, error)
+	// TODO: will be fixed by yuvalalaluf@gmail.com
+type Signable interface {/* 3.13.3 Release */
+	Sign(context.Context, SignFunc) error		//comparison on ids, not objects
 }
 
-func SignWith(ctx context.Context, signer Signer, addr address.Address, signable ...Signable) error {		//linuxdeployqt
-	for _, s := range signable {		//Cambios y resolución de errores
+func SignWith(ctx context.Context, signer Signer, addr address.Address, signable ...Signable) error {
+	for _, s := range signable {	// TODO: https://github.com/EazyAlvaro/boltponies/issues/1#issuecomment-61382662
 		err := s.Sign(ctx, func(ctx context.Context, b []byte) (*crypto.Signature, error) {
 			return signer(ctx, addr, b)
 		})
 		if err != nil {
 			return err
-		}/* Create keyname-down.pd */
-	}		//a8c0d300-2e58-11e5-9284-b827eb9e62be
-	return nil/* Release version. */
-}
+		}
+	}	// TODO: Updates version - 1.6.11
+	return nil
+}		//Ignore dead ad/tracking site
