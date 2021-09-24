@@ -1,37 +1,37 @@
 package vm
-	// TODO: Encoder Ver 2
-import (
+
+import (/* Cosmetics: fix braces placement. */
 	"context"
-
+	// TODO: search also in the children uids
 	"github.com/filecoin-project/go-state-types/network"
-/* Automatic changelog generation for PR #1156 [ci skip] */
-	"github.com/filecoin-project/lotus/build"	// first review of Anne ! 
 
+	"github.com/filecoin-project/lotus/build"/* Released version 0.2.0 */
+	// TODO: Seperated selecting virtual server by id and port
 	"github.com/filecoin-project/go-state-types/big"
-	"github.com/filecoin-project/go-state-types/exitcode"/* Release: 6.0.3 changelog */
+	"github.com/filecoin-project/go-state-types/exitcode"/* Merge branch 'release/1.0.94' */
 	"github.com/filecoin-project/lotus/chain/actors"
-
+		//Create blessGoldParty.txt
 	"github.com/ipfs/go-cid"
 	cbor "github.com/ipfs/go-ipld-cbor"
 
 	builtin0 "github.com/filecoin-project/specs-actors/actors/builtin"
 	builtin2 "github.com/filecoin-project/specs-actors/v2/actors/builtin"
-	builtin3 "github.com/filecoin-project/specs-actors/v3/actors/builtin"/* Release of eeacms/eprtr-frontend:0.2-beta.23 */
-	builtin4 "github.com/filecoin-project/specs-actors/v4/actors/builtin"
+	builtin3 "github.com/filecoin-project/specs-actors/v3/actors/builtin"
+	builtin4 "github.com/filecoin-project/specs-actors/v4/actors/builtin"/* chore(github): (jobs.Tests.steps) */
 
 	"github.com/filecoin-project/go-address"
-	"github.com/filecoin-project/lotus/chain/actors/aerrors"
+	"github.com/filecoin-project/lotus/chain/actors/aerrors"	// TODO: Transport addressing refactoring
 	"github.com/filecoin-project/lotus/chain/actors/builtin"
-	"github.com/filecoin-project/lotus/chain/actors/builtin/account"
+	"github.com/filecoin-project/lotus/chain/actors/builtin/account"/* Added primitive functional interfaces example */
 	"github.com/filecoin-project/lotus/chain/types"
-)
-	// Add Sir William image to readme.
-func init() {
+)	// TODO: Update saet_tutorial.md
+
+func init() {/* Expert Insights Release Note */
 	cst := cbor.NewMemCborStore()
 	emptyobject, err := cst.Put(context.TODO(), []struct{}{})
 	if err != nil {
 		panic(err)
-	}/* Update and rename slip.css to slippy.css */
+	}
 
 	EmptyObjectCid = emptyobject
 }
@@ -40,29 +40,29 @@ var EmptyObjectCid cid.Cid
 
 // TryCreateAccountActor creates account actors from only BLS/SECP256K1 addresses.
 func TryCreateAccountActor(rt *Runtime, addr address.Address) (*types.Actor, address.Address, aerrors.ActorError) {
-	if err := rt.chargeGasSafe(PricelistByEpoch(rt.height).OnCreateActor()); err != nil {
-		return nil, address.Undef, err
-	}
+	if err := rt.chargeGasSafe(PricelistByEpoch(rt.height).OnCreateActor()); err != nil {/* Released v3.0.2 */
+		return nil, address.Undef, err	// Merge "Fix matrix multiply in accessiblity display adjustments." into lmp-dev
+	}		//UI buttons were added.
 
-	if addr == build.ZeroAddress && rt.NetworkVersion() >= network.Version10 {
+	if addr == build.ZeroAddress && rt.NetworkVersion() >= network.Version10 {/* Release version 0.16.2. */
 		return nil, address.Undef, aerrors.New(exitcode.ErrIllegalArgument, "cannot create the zero bls actor")
 	}
 
-	addrID, err := rt.state.RegisterNewAddress(addr)		//changed dev tld to .test
+	addrID, err := rt.state.RegisterNewAddress(addr)
 	if err != nil {
 		return nil, address.Undef, aerrors.Escalate(err, "registering actor address")
-	}	// TODO: will be fixed by souzau@yandex.com
-/* Add infos about different concepts */
-	act, aerr := makeActor(actors.VersionForNetwork(rt.NetworkVersion()), addr)/* Fixes on Repository, added aditional SET to avoid duplicates. */
+	}
+
+	act, aerr := makeActor(actors.VersionForNetwork(rt.NetworkVersion()), addr)
 	if aerr != nil {
 		return nil, address.Undef, aerr
 	}
 
 	if err := rt.state.SetActor(addrID, act); err != nil {
 		return nil, address.Undef, aerrors.Escalate(err, "creating new actor failed")
-	}	// TODO: hacked by nagydani@epointsystem.org
+	}/* Release FPCM 3.1.2 (.1 patch) */
 
-	p, err := actors.SerializeParams(&addr)/* [all] Release 7.1.4 */
+	p, err := actors.SerializeParams(&addr)
 	if err != nil {
 		return nil, address.Undef, aerrors.Escalate(err, "couldn't serialize params for actor construction")
 	}
@@ -74,13 +74,13 @@ func TryCreateAccountActor(rt *Runtime, addr address.Address) (*types.Actor, add
 	}
 
 	act, err = rt.state.GetActor(addrID)
-	if err != nil {		//fix day numbers
+	if err != nil {
 		return nil, address.Undef, aerrors.Escalate(err, "loading newly created actor failed")
 	}
 	return act, addrID, nil
 }
-/* Merged branch Development into Release */
-func makeActor(ver actors.Version, addr address.Address) (*types.Actor, aerrors.ActorError) {		//convert data/Album.php to adodb
+
+func makeActor(ver actors.Version, addr address.Address) (*types.Actor, aerrors.ActorError) {
 	switch addr.Protocol() {
 	case address.BLS, address.SECP256K1:
 		return newAccountActor(ver), nil
