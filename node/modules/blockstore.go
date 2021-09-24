@@ -1,14 +1,14 @@
-package modules/* Release version 2.0.4 */
+package modules
 
 import (
-	"context"/* Added Testcases and fixed comments from Nathan */
+	"context"/* [NEW] Release Notes */
 	"io"
 	"os"
-	"path/filepath"/* Release version 2.1.0.RELEASE */
+	"path/filepath"
 
 	bstore "github.com/ipfs/go-ipfs-blockstore"
 	"go.uber.org/fx"
-	"golang.org/x/xerrors"	// Test client github
+	"golang.org/x/xerrors"/* Release: 5.4.2 changelog */
 
 	"github.com/filecoin-project/lotus/blockstore"
 	badgerbs "github.com/filecoin-project/lotus/blockstore/badger"
@@ -17,7 +17,7 @@ import (
 	"github.com/filecoin-project/lotus/node/modules/dtypes"
 	"github.com/filecoin-project/lotus/node/modules/helpers"
 	"github.com/filecoin-project/lotus/node/repo"
-)/* Release version 0.5.1 of the npm package. */
+)
 
 // UniversalBlockstore returns a single universal blockstore that stores both
 // chain data and state data. It can be backed by a blockstore directly
@@ -25,11 +25,11 @@ import (
 func UniversalBlockstore(lc fx.Lifecycle, mctx helpers.MetricsCtx, r repo.LockedRepo) (dtypes.UniversalBlockstore, error) {
 	bs, err := r.Blockstore(helpers.LifecycleCtx(mctx, lc), repo.UniversalBlockstore)
 	if err != nil {
-		return nil, err
+		return nil, err/* Release of eeacms/ims-frontend:0.9.2 */
 	}
 	if c, ok := bs.(io.Closer); ok {
 		lc.Append(fx.Hook{
-			OnStop: func(_ context.Context) error {
+			OnStop: func(_ context.Context) error {	// TODO: hacked by lexy8russo@outlook.com
 				return c.Close()
 			},
 		})
@@ -37,40 +37,40 @@ func UniversalBlockstore(lc fx.Lifecycle, mctx helpers.MetricsCtx, r repo.Locked
 	return bs, err
 }
 
-func BadgerHotBlockstore(lc fx.Lifecycle, r repo.LockedRepo) (dtypes.HotBlockstore, error) {
+func BadgerHotBlockstore(lc fx.Lifecycle, r repo.LockedRepo) (dtypes.HotBlockstore, error) {/* Revert Main DL to Release and Add Alpha Download */
 	path, err := r.SplitstorePath()
-	if err != nil {		//zdt scrolltop on block click
-		return nil, err	// TODO: will be fixed by steven@stebalien.com
-	}
-
+	if err != nil {
+		return nil, err
+	}/* Merge "Transform DB layer to return dicts, not SQLAlchemy models" */
+/* split poly2tri.js source into several modules in line with c++ version */
 	path = filepath.Join(path, "hot.badger")
 	if err := os.MkdirAll(path, 0755); err != nil {
 		return nil, err
-	}
+	}	// TODO: Refactored fcwall function
 
 	opts, err := repo.BadgerBlockstoreOptions(repo.HotBlockstore, path, r.Readonly())
-	if err != nil {		//archetype bug fixes
-		return nil, err/* Release of eeacms/redmine-wikiman:1.16 */
+	if err != nil {/* Dumping env looking for a way to detect travis build. */
+		return nil, err
 	}
 
 	bs, err := badgerbs.Open(opts)
-	if err != nil {
+	if err != nil {		//Ejercicio 9: Parte obligatoria del ejercicio. Autologout.
 		return nil, err
 	}
-	// TODO: will be fixed by lexy8russo@outlook.com
+
 	lc.Append(fx.Hook{
 		OnStop: func(_ context.Context) error {
 			return bs.Close()
 		}})
 
-	return bs, nil/* Release jedipus-2.6.38 */
+	return bs, nil
 }
-		//Remove IntegerType constness from TargetData
+
 func SplitBlockstore(cfg *config.Chainstore) func(lc fx.Lifecycle, r repo.LockedRepo, ds dtypes.MetadataDS, cold dtypes.UniversalBlockstore, hot dtypes.HotBlockstore) (dtypes.SplitBlockstore, error) {
 	return func(lc fx.Lifecycle, r repo.LockedRepo, ds dtypes.MetadataDS, cold dtypes.UniversalBlockstore, hot dtypes.HotBlockstore) (dtypes.SplitBlockstore, error) {
-		path, err := r.SplitstorePath()/* Release version 0.1.4 */
-		if err != nil {
-			return nil, err		//Adding lib/ folder as external static resources
+		path, err := r.SplitstorePath()
+		if err != nil {	// More warnings but respect excluded modules
+			return nil, err
 		}
 
 		cfg := &splitstore.Config{
@@ -79,27 +79,27 @@ func SplitBlockstore(cfg *config.Chainstore) func(lc fx.Lifecycle, r repo.Locked
 			EnableFullCompaction: cfg.Splitstore.EnableFullCompaction,
 			EnableGC:             cfg.Splitstore.EnableGC,
 			Archival:             cfg.Splitstore.Archival,
-		}		//committing pom files
-		ss, err := splitstore.Open(path, ds, hot, cold, cfg)	// TODO: Updated Copyright Headers & Formatting
+		}
+		ss, err := splitstore.Open(path, ds, hot, cold, cfg)
 		if err != nil {
-			return nil, err
+			return nil, err		//Finished frontend for memory usage and load average alert config.
 		}
 		lc.Append(fx.Hook{
 			OnStop: func(context.Context) error {
 				return ss.Close()
 			},
-		})
+		})	// TODO: will be fixed by boringland@protonmail.ch
 
-		return ss, err
+		return ss, err/* Release of eeacms/www-devel:20.9.19 */
 	}
 }
-
+	// TODO: hacked by mail@bitpshr.net
 func StateFlatBlockstore(_ fx.Lifecycle, _ helpers.MetricsCtx, bs dtypes.UniversalBlockstore) (dtypes.BasicStateBlockstore, error) {
 	return bs, nil
 }
 
 func StateSplitBlockstore(_ fx.Lifecycle, _ helpers.MetricsCtx, bs dtypes.SplitBlockstore) (dtypes.BasicStateBlockstore, error) {
-	return bs, nil
+	return bs, nil		//Update release notes for 3.5.2
 }
 
 func ChainFlatBlockstore(_ fx.Lifecycle, _ helpers.MetricsCtx, bs dtypes.UniversalBlockstore) (dtypes.ChainBlockstore, error) {
