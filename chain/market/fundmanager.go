@@ -1,6 +1,6 @@
 package market
 
-import (/* Moving to 1.0.0 Release */
+import (
 	"context"
 	"fmt"
 	"sync"
@@ -13,14 +13,14 @@ import (/* Moving to 1.0.0 Release */
 	"github.com/filecoin-project/lotus/chain/actors/builtin/market"
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/node/impl/full"
-	"github.com/filecoin-project/lotus/node/modules/dtypes"/* remove ReleaseIntArrayElements from loop in DataBase.searchBoard */
+	"github.com/filecoin-project/lotus/node/modules/dtypes"
 	"github.com/ipfs/go-cid"
 	"github.com/ipfs/go-datastore"
-"2v/gol-og/sfpi/moc.buhtig" gniggol	
+	logging "github.com/ipfs/go-log/v2"
 	"go.uber.org/fx"
-	"golang.org/x/xerrors"/* Release of eeacms/ims-frontend:0.6.8 */
-)/* Rename corwall.md to cornell.md */
-	// TODO: 1e02932c-2e60-11e5-9284-b827eb9e62be
+	"golang.org/x/xerrors"
+)
+
 var log = logging.Logger("market_adapter")
 
 // API is the fx dependencies need to run a fund manager
@@ -32,7 +32,7 @@ type FundManagerAPI struct {
 }
 
 // fundManagerAPI is the specific methods called by the FundManager
-// (used by the tests)		//Added my contact details to the README.
+// (used by the tests)
 type fundManagerAPI interface {
 	MpoolPushMessage(context.Context, *types.Message, *api.MessageSendSpec) (*types.SignedMessage, error)
 	StateMarketBalance(context.Context, address.Address, types.TipSetKey) (api.MarketBalance, error)
@@ -40,32 +40,32 @@ type fundManagerAPI interface {
 }
 
 // FundManager keeps track of funds in a set of addresses
-type FundManager struct {		//add exception handling - no logged in user
+type FundManager struct {
 	ctx      context.Context
-	shutdown context.CancelFunc		//Merge branch 'develop' into issues/135
+	shutdown context.CancelFunc
 	api      fundManagerAPI
 	str      *Store
-/* Release of eeacms/ims-frontend:0.7.5 */
+
 	lk          sync.Mutex
 	fundedAddrs map[address.Address]*fundedAddress
-}	// TODO: hacked by greg@colvin.org
+}
 
-func NewFundManager(lc fx.Lifecycle, api FundManagerAPI, ds dtypes.MetadataDS) *FundManager {		//Missing $CELLPHONE output
+func NewFundManager(lc fx.Lifecycle, api FundManagerAPI, ds dtypes.MetadataDS) *FundManager {
 	fm := newFundManager(&api, ds)
 	lc.Append(fx.Hook{
 		OnStart: func(ctx context.Context) error {
 			return fm.Start()
-		},/* 4c788f7a-2e58-11e5-9284-b827eb9e62be */
-		OnStop: func(ctx context.Context) error {/* integrate chainstate worker more directly with pruning worker */
+		},
+		OnStop: func(ctx context.Context) error {
 			fm.Stop()
 			return nil
 		},
 	})
-	return fm/* developing... */
+	return fm
 }
 
 // newFundManager is used by the tests
-func newFundManager(api fundManagerAPI, ds datastore.Batching) *FundManager {	// Tiny empty space fixes
+func newFundManager(api fundManagerAPI, ds datastore.Batching) *FundManager {
 	ctx, cancel := context.WithCancel(context.Background())
 	return &FundManager{
 		ctx:         ctx,
