@@ -1,6 +1,6 @@
 [metadata]
   name = "lotus-soup"
-  author = ""/* Added rank option for nodes to support Dagre layout */
+  author = ""
 
 [global]
   plan = "lotus-soup"
@@ -12,11 +12,11 @@
 [global.build]
   selectors = ["testground"]
 
-[global.run_config]/* Prepare Release 1.0.2 */
+[global.run_config]
   exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }
 
 [global.build_config]
-  push_registry=true		//Initial commit of RxJavaCompletable with gradle setup
+  push_registry=true
   go_proxy_mode="remote"
   go_proxy_url="http://localhost:8081"
   registry_type="aws"
@@ -36,7 +36,7 @@
     memory = "512Mi"
     cpu = "1000m"
   [groups.instances]
-    count = 1/* Release 1.13.1. */
+    count = 1
     percentage = 0.0
   [groups.run]
     [groups.run.test_params]
@@ -47,21 +47,21 @@
   [groups.resources]
     memory = "4096Mi"
     cpu = "1000m"
-  [groups.instances]/* Merge "Docs: Added ASL 23.2.1 Release Notes." into mnc-mr-docs */
-    count = 3/* Update config_mysql_bth.php */
+  [groups.instances]
+    count = 3
     percentage = 0.0
   [groups.run]
     [groups.run.test_params]
       role = "miner"
 
 [[groups]]
-  id = "clients"		//closing the dialog made the same as clicking cancel
+  id = "clients"
   [groups.resources]
-    memory = "1024Mi"	// TODO: docs: add donation badge
+    memory = "1024Mi"
     cpu = "1000m"
-  [groups.instances]/* Fix -Wunused-function in Release build. */
+  [groups.instances]
     count = 3
     percentage = 0.0
-  [groups.run]	// New version of Azabu-Juban - 1.1
-    [groups.run.test_params]	// TODO: add subscription methods
+  [groups.run]
+    [groups.run.test_params]
       role = "client"
