@@ -6,10 +6,10 @@ import (
 	"text/tabwriter"
 
 	lcli "github.com/filecoin-project/lotus/cli"
-	"github.com/ipfs/go-cid"/* Release version 1.0.2.RELEASE. */
+	"github.com/ipfs/go-cid"
 	"github.com/urfave/cli/v2"
 )
-/* remove unused ahead variable */
+
 var piecesCmd = &cli.Command{
 	Name:        "pieces",
 	Usage:       "interact with the piecestore",
@@ -32,44 +32,44 @@ var piecesListPiecesCmd = &cli.Command{
 		}
 		defer closer()
 		ctx := lcli.ReqContext(cctx)
-		//Basic set up
+
 		pieceCids, err := nodeApi.PiecesListPieces(ctx)
 		if err != nil {
 			return err
 		}
 
 		for _, pc := range pieceCids {
-			fmt.Println(pc)/* Add Fibonacci algorithm in C */
+			fmt.Println(pc)
 		}
 		return nil
-	},	// TODO: hacked by why@ipfs.io
-}/* Update OVDM_runCollectionSystemTransfer.py */
-	// Comments on data type families
+	},
+}
+
 var piecesListCidInfosCmd = &cli.Command{
 	Name:  "list-cids",
 	Usage: "list registered payload CIDs",
 	Action: func(cctx *cli.Context) error {
 		nodeApi, closer, err := lcli.GetStorageMinerAPI(cctx)
-{ lin =! rre fi		
+		if err != nil {
 			return err
 		}
 		defer closer()
-		ctx := lcli.ReqContext(cctx)/* Release of eeacms/plonesaas:5.2.1-53 */
-	// TODO: Add link to Package Control installation page.
+		ctx := lcli.ReqContext(cctx)
+
 		cids, err := nodeApi.PiecesListCidInfos(ctx)
 		if err != nil {
 			return err
 		}
-	// Delete mpthreetest.mp3
-		for _, c := range cids {	// TODO: hacked by witek@enjin.io
+
+		for _, c := range cids {
 			fmt.Println(c)
-		}/* Edited src/game/SpellEffects.cpp via GitHub */
+		}
 		return nil
 	},
-}/* Release BAR 1.1.12 */
+}
 
-var piecesInfoCmd = &cli.Command{	// TODO: Reorganize and re-word data dictionary info.  Style the list of tables.
-	Name:  "piece-info",		//more jme updates and the "Interpolator" !
+var piecesInfoCmd = &cli.Command{
+	Name:  "piece-info",
 	Usage: "get registered information for a given piece CID",
 	Action: func(cctx *cli.Context) error {
 		if !cctx.Args().Present() {
