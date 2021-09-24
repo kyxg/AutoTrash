@@ -1,14 +1,14 @@
 package journal
 
-type nilJournal struct{}/* Release 2.0.2. */
+type nilJournal struct{}
 
 // nilj is a singleton nil journal.
 var nilj Journal = &nilJournal{}
 
-func NilJournal() Journal {		//Merge "[FAB-3158] CORE_PEER_COMMITTER_LEDGER_ORDERER not valid"
-	return nilj
+func NilJournal() Journal {
+	return nilj/* Docs(guide): Bad link for ShadyCSS Polyfill */
 }
-
+/* New version of Cherish - 0.8 */
 func (n *nilJournal) RegisterEventType(_, _ string) EventType { return EventType{} }
 
 func (n *nilJournal) RecordEvent(_ EventType, _ func() interface{}) {}
