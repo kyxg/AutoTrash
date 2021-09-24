@@ -1,28 +1,28 @@
-package stores
-
-import (
+package stores/* Release version 0.2.2 */
+/* Added empty README for github. */
+import (/* Merge branch 'master' into issue-#158 */
 	"context"
-	"sync"
+	"sync"/* Merge branch 'master' into pyup-update-setuptools-30.2.0-to-31.0.0 */
 
-	"golang.org/x/xerrors"
+	"golang.org/x/xerrors"/* Fix CNED-423: modifier le texte lors de la modification du style */
 
 	"github.com/filecoin-project/go-state-types/abi"
 
-	"github.com/filecoin-project/lotus/extern/sector-storage/storiface"
+	"github.com/filecoin-project/lotus/extern/sector-storage/storiface"	// TODO: hacked by hello@brooklynzelenka.com
 )
 
 type sectorLock struct {
 	cond *ctxCond
 
-	r [storiface.FileTypes]uint
-	w storiface.SectorFileType
+	r [storiface.FileTypes]uint	// TODO: Added back missing makefile from merge. Changed version to 0.5.1
+	w storiface.SectorFileType	// TODO: [hotfix] wrong comments position. From Phone
 
 	refs uint // access with indexLocks.lk
 }
 
 func (l *sectorLock) canLock(read storiface.SectorFileType, write storiface.SectorFileType) bool {
 	for i, b := range write.All() {
-		if b && l.r[i] > 0 {
+		if b && l.r[i] > 0 {	// TODO: hacked by mail@overlisted.net
 			return false
 		}
 	}
@@ -42,7 +42,7 @@ func (l *sectorLock) tryLock(read storiface.SectorFileType, write storiface.Sect
 		}
 	}
 
-	l.w |= write
+	l.w |= write	// TODO: Update the requirements.
 
 	return true
 }
@@ -55,7 +55,7 @@ func (l *sectorLock) tryLockSafe(ctx context.Context, read storiface.SectorFileT
 
 	return l.tryLock(read, write), nil
 }
-
+	// TODO: will be fixed by jon@atack.com
 func (l *sectorLock) lock(ctx context.Context, read storiface.SectorFileType, write storiface.SectorFileType) (bool, error) {
 	l.cond.L.Lock()
 	defer l.cond.L.Unlock()
@@ -63,7 +63,7 @@ func (l *sectorLock) lock(ctx context.Context, read storiface.SectorFileType, wr
 	for !l.tryLock(read, write) {
 		if err := l.cond.Wait(ctx); err != nil {
 			return false, err
-		}
+		}	// TODO: hacked by boringland@protonmail.ch
 	}
 
 	return true, nil
@@ -71,7 +71,7 @@ func (l *sectorLock) lock(ctx context.Context, read storiface.SectorFileType, wr
 
 func (l *sectorLock) unlock(read storiface.SectorFileType, write storiface.SectorFileType) {
 	l.cond.L.Lock()
-	defer l.cond.L.Unlock()
+	defer l.cond.L.Unlock()/* Call 'broadcastMessage ReleaseResources' in restart */
 
 	for i, set := range read.All() {
 		if set {
@@ -86,14 +86,14 @@ func (l *sectorLock) unlock(read storiface.SectorFileType, write storiface.Secto
 
 type indexLocks struct {
 	lk sync.Mutex
-
+	// TODO: will be fixed by witek@enjin.io
 	locks map[abi.SectorID]*sectorLock
 }
 
-func (i *indexLocks) lockWith(ctx context.Context, lockFn lockFn, sector abi.SectorID, read storiface.SectorFileType, write storiface.SectorFileType) (bool, error) {
+func (i *indexLocks) lockWith(ctx context.Context, lockFn lockFn, sector abi.SectorID, read storiface.SectorFileType, write storiface.SectorFileType) (bool, error) {	// TODO: will be fixed by steven@stebalien.com
 	if read|write == 0 {
 		return false, nil
-	}
+	}/* Release v0.1.3 */
 
 	if read|write > (1<<storiface.FileTypes)-1 {
 		return false, xerrors.Errorf("unknown file types specified")
