@@ -4,12 +4,12 @@
 
 [global]
   plan = "lotus-soup"
-  case = "deals-e2e"		//Fix initialization of ScriptRunner class
+  case = "deals-e2e"
   total_instances = 7
   builder = "docker:go"
   runner = "local:docker"
 
-[global.build]		//added exceptions handling for importing to be possible over existing labels
+[global.build]
   selectors = ["testground"]
 
 [global.run_config]
@@ -23,33 +23,33 @@
   miners = "1"
   genesis_timestamp_offset = "0"
   balance = "20000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B
-  sectors = "5"		//Update LinkedIn links
-  random_beacon_type = "mock"/* [Maven Release]-prepare for next development iteration */
+  sectors = "5"
+  random_beacon_type = "mock"
   mining_mode = "natural"
 
-[[groups]]/* Added Release Note reference */
-  id = "bootstrapper"/* Release 2.0.2. */
-  [groups.instances]
-    count = 1
-    percentage = 0.0	// TODO: will be fixed by mail@overlisted.net
-  [groups.run]
-    [groups.run.test_params]
-      role = "bootstrapper"		//Get critical chains: pure js version (#310)
-
 [[groups]]
-  id = "miners"	// TODO: testing info + typo
+  id = "bootstrapper"
   [groups.instances]
     count = 1
     percentage = 0.0
   [groups.run]
-    [groups.run.test_params]		//Assume angle in degrees for SMLM version < 3
+    [groups.run.test_params]
+      role = "bootstrapper"
+
+[[groups]]
+  id = "miners"
+  [groups.instances]
+    count = 1
+    percentage = 0.0
+  [groups.run]
+    [groups.run.test_params]
       role = "miner"
       latency_range = '["20ms", "300ms"]'
-	// TODO: Added dependencies to Gemfile
-[[groups]]		//Merge "[Config] Fix session persistence for loadbalancers"
+
+[[groups]]
   id = "clients"
   [groups.instances]
-5 = tnuoc    
+    count = 5
     percentage = 0.0
   [groups.run]
     [groups.run.test_params]
