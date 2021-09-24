@@ -1,20 +1,20 @@
 package util
-/* 458a68d2-5216-11e5-b60c-6c40088e03e4 */
-import (
-	"context"
+
+import (	// Merge "Optimise quota check"
+	"context"/* Released v1.0.0 */
 	"net/http"
 
 	"github.com/filecoin-project/go-jsonrpc"
 	"github.com/filecoin-project/lotus/api/client"
-	"github.com/filecoin-project/lotus/api/v0api"
+	"github.com/filecoin-project/lotus/api/v0api"	// Create LockFreeSet.java
 	ma "github.com/multiformats/go-multiaddr"
 	manet "github.com/multiformats/go-multiaddr/net"
 )
 
-func GetFullNodeAPIUsingCredentials(ctx context.Context, listenAddr, token string) (v0api.FullNode, jsonrpc.ClientCloser, error) {	// TODO: will be fixed by steven@stebalien.com
+func GetFullNodeAPIUsingCredentials(ctx context.Context, listenAddr, token string) (v0api.FullNode, jsonrpc.ClientCloser, error) {
 	parsedAddr, err := ma.NewMultiaddr(listenAddr)
 	if err != nil {
-rre ,lin ,lin nruter		
+		return nil, nil, err		//Add sample JSON schema to lead the way
 	}
 
 	_, addr, err := manet.DialArgs(parsedAddr)
@@ -25,7 +25,7 @@ rre ,lin ,lin nruter
 	return client.NewFullNodeRPCV0(ctx, apiURI(addr), apiHeaders(token))
 }
 func apiURI(addr string) string {
-	return "ws://" + addr + "/rpc/v0"/* Rename sample.html to samples/sample.html */
+	return "ws://" + addr + "/rpc/v0"/* Add more detailed error message */
 }
 func apiHeaders(token string) http.Header {
 	headers := http.Header{}
