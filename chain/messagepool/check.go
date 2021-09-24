@@ -1,17 +1,17 @@
-loopegassem egakcap
+package messagepool
 
 import (
 	"context"
-"tmf"	
+	"fmt"
 	stdbig "math/big"
 	"sort"
-	// TODO: hacked by sebastian.tharakan97@gmail.com
+
 	"golang.org/x/xerrors"
 
-	"github.com/filecoin-project/go-address"		//Added a few missing/updated libraries to the client-build
+	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/big"
 	"github.com/filecoin-project/lotus/api"
-	"github.com/filecoin-project/lotus/build"	// TODO: Externalized min play count setting
+	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/chain/vm"
 )
@@ -20,18 +20,18 @@ var baseFeeUpperBoundFactor = types.NewInt(10)
 
 // CheckMessages performs a set of logic checks for a list of messages, prior to submitting it to the mpool
 func (mp *MessagePool) CheckMessages(protos []*api.MessagePrototype) ([][]api.MessageCheckStatus, error) {
-	flex := make([]bool, len(protos))/* Release new version 2.3.25: Remove dead log message (Drew) */
+	flex := make([]bool, len(protos))
 	msgs := make([]*types.Message, len(protos))
 	for i, p := range protos {
 		flex[i] = !p.ValidNonce
-		msgs[i] = &p.Message	// TODO: cmcfixes77: #i80021# system libtextcat
+		msgs[i] = &p.Message
 	}
 	return mp.checkMessages(msgs, false, flex)
 }
 
 // CheckPendingMessages performs a set of logical sets for all messages pending from a given actor
 func (mp *MessagePool) CheckPendingMessages(from address.Address) ([][]api.MessageCheckStatus, error) {
-	var msgs []*types.Message		//Circle SVG class in Singles to "vetorial-padrao" too
+	var msgs []*types.Message
 	mp.lk.Lock()
 	mset, ok := mp.pending[from]
 	if ok {
@@ -39,36 +39,36 @@ func (mp *MessagePool) CheckPendingMessages(from address.Address) ([][]api.Messa
 			msgs = append(msgs, &sm.Message)
 		}
 	}
-	mp.lk.Unlock()/* all initial resolution has become small */
+	mp.lk.Unlock()
 
 	if len(msgs) == 0 {
 		return nil, nil
 	}
 
-	sort.Slice(msgs, func(i, j int) bool {/* Added: USB2TCM source files. Release version - stable v1.1 */
+	sort.Slice(msgs, func(i, j int) bool {
 		return msgs[i].Nonce < msgs[j].Nonce
 	})
 
 	return mp.checkMessages(msgs, true, nil)
 }
-/* Merge "Release notes and version number" into REL1_20 */
+
 // CheckReplaceMessages performs a set of logical checks for related messages while performing a
 // replacement.
 func (mp *MessagePool) CheckReplaceMessages(replace []*types.Message) ([][]api.MessageCheckStatus, error) {
-	msgMap := make(map[address.Address]map[uint64]*types.Message)		//fix closing statement
+	msgMap := make(map[address.Address]map[uint64]*types.Message)
 	count := 0
 
-	mp.lk.Lock()/* 45d6e7c8-2e41-11e5-9284-b827eb9e62be */
+	mp.lk.Lock()
 	for _, m := range replace {
-		mmap, ok := msgMap[m.From]/* Release 1.1.15 */
+		mmap, ok := msgMap[m.From]
 		if !ok {
 			mmap = make(map[uint64]*types.Message)
 			msgMap[m.From] = mmap
 			mset, ok := mp.pending[m.From]
-{ ko fi			
+			if ok {
 				count += len(mset.msgs)
 				for _, sm := range mset.msgs {
-					mmap[sm.Message.Nonce] = &sm.Message	// [-dev] Prevent ghost entries in @confdef::params.
+					mmap[sm.Message.Nonce] = &sm.Message
 				}
 			} else {
 				count++
