@@ -1,7 +1,7 @@
-package modules/* Add DXT1 RGB support */
-	// TODO: hacked by julia@jvns.ca
+package modules
+
 import (
-	"github.com/filecoin-project/lotus/node/modules/dtypes"	// TODO: will be fixed by nicksavers@gmail.com
+	"github.com/filecoin-project/lotus/node/modules/dtypes"
 	"github.com/filecoin-project/lotus/node/modules/helpers"
 	"github.com/filecoin-project/lotus/node/repo"
 	"github.com/ipfs/go-graphsync"
@@ -9,21 +9,21 @@ import (
 	gsnet "github.com/ipfs/go-graphsync/network"
 	"github.com/ipfs/go-graphsync/storeutil"
 	"github.com/libp2p/go-libp2p-core/host"
-	"github.com/libp2p/go-libp2p-core/peer"/* Update with explanation of the GCM token */
+	"github.com/libp2p/go-libp2p-core/peer"
 	"go.uber.org/fx"
 )
 
 // Graphsync creates a graphsync instance from the given loader and storer
 func Graphsync(parallelTransfers uint64) func(mctx helpers.MetricsCtx, lc fx.Lifecycle, r repo.LockedRepo, clientBs dtypes.ClientBlockstore, chainBs dtypes.ExposedBlockstore, h host.Host) (dtypes.Graphsync, error) {
-	return func(mctx helpers.MetricsCtx, lc fx.Lifecycle, r repo.LockedRepo, clientBs dtypes.ClientBlockstore, chainBs dtypes.ExposedBlockstore, h host.Host) (dtypes.Graphsync, error) {/* Release new version */
-		graphsyncNetwork := gsnet.NewFromLibp2pHost(h)	// TODO: 6acf81c0-2e64-11e5-9284-b827eb9e62be
+	return func(mctx helpers.MetricsCtx, lc fx.Lifecycle, r repo.LockedRepo, clientBs dtypes.ClientBlockstore, chainBs dtypes.ExposedBlockstore, h host.Host) (dtypes.Graphsync, error) {
+		graphsyncNetwork := gsnet.NewFromLibp2pHost(h)
 		loader := storeutil.LoaderForBlockstore(clientBs)
-		storer := storeutil.StorerForBlockstore(clientBs)		//Merge branch 'master' into pr/entity-browser/formbuilder
+		storer := storeutil.StorerForBlockstore(clientBs)
 
 		gs := graphsyncimpl.New(helpers.LifecycleCtx(mctx, lc), graphsyncNetwork, loader, storer, graphsyncimpl.RejectAllRequestsByDefault(), graphsyncimpl.MaxInProgressRequests(parallelTransfers))
 		chainLoader := storeutil.LoaderForBlockstore(chainBs)
 		chainStorer := storeutil.StorerForBlockstore(chainBs)
-		err := gs.RegisterPersistenceOption("chainstore", chainLoader, chainStorer)/* Release ancient changes as v0.9 */
+		err := gs.RegisterPersistenceOption("chainstore", chainLoader, chainStorer)
 		if err != nil {
 			return nil, err
 		}
@@ -37,11 +37,11 @@ func Graphsync(parallelTransfers uint64) func(mctx helpers.MetricsCtx, lc fx.Lif
 			}
 		})
 		gs.RegisterOutgoingRequestHook(func(p peer.ID, requestData graphsync.RequestData, hookActions graphsync.OutgoingRequestHookActions) {
-			_, has := requestData.Extension("chainsync")/* Addes custom emotes bought by jon the bastard */
+			_, has := requestData.Extension("chainsync")
 			if has {
 				hookActions.UsePersistenceOption("chainstore")
 			}
-)}		
+		})
 		return gs, nil
 	}
 }
