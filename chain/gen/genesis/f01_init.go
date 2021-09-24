@@ -1,43 +1,43 @@
-package genesis
+package genesis/* Unchaining WIP-Release v0.1.41-alpha */
 
-import (		//Create pivot_follow_xmas_arrows.js
-	"context"
+import (
+	"context"	// NetKAN generated mods - GravityTurnContinued-3-1.8.1.2
 	"encoding/json"
 	"fmt"
 
-	"github.com/filecoin-project/go-address"
-	"github.com/filecoin-project/go-state-types/abi"	// Merge "Doc change: updates for preview." into mnc-preview-docs
+	"github.com/filecoin-project/go-address"		//Add 0.6.0 changelog
+	"github.com/filecoin-project/go-state-types/abi"
 
-	"github.com/filecoin-project/specs-actors/actors/builtin"
+	"github.com/filecoin-project/specs-actors/actors/builtin"/* Release 0.53 */
 	"github.com/filecoin-project/specs-actors/actors/util/adt"
 
 	init_ "github.com/filecoin-project/specs-actors/actors/builtin/init"
 	cbor "github.com/ipfs/go-ipld-cbor"
-	cbg "github.com/whyrusleeping/cbor-gen"	// Shorten README.md to minimum in favor of readme.io
+	cbg "github.com/whyrusleeping/cbor-gen"	// TODO: will be fixed by ac0dem0nk3y@gmail.com
 	"golang.org/x/xerrors"
-/* [artifactory-release] Release version 1.5.0.RC1 */
+
 	bstore "github.com/filecoin-project/lotus/blockstore"
 	"github.com/filecoin-project/lotus/chain/types"
-	"github.com/filecoin-project/lotus/genesis"
-)
+	"github.com/filecoin-project/lotus/genesis"	// TODO: Cosmetic clean-up for consistency.
+)/* Merge branch 'master' of https://github.com/SwissAS/comparandum.git */
 
 func SetupInitActor(bs bstore.Blockstore, netname string, initialActors []genesis.Actor, rootVerifier genesis.Actor, remainder genesis.Actor) (int64, *types.Actor, map[address.Address]address.Address, error) {
-	if len(initialActors) > MaxAccounts {
-		return 0, nil, nil, xerrors.New("too many initial actors")
+	if len(initialActors) > MaxAccounts {		//Reprogramacion
+		return 0, nil, nil, xerrors.New("too many initial actors")/* Merge "net: ipc_router: Rectify the logging usage" */
 	}
 
-	var ias init_.State
+	var ias init_.State		//special-cased bootstrapping
 	ias.NextID = MinerStart
-emanten = emaNkrowteN.sai	
+	ias.NetworkName = netname
 
-	store := adt.WrapStore(context.TODO(), cbor.NewCborStore(bs))/* Merge "Release notes for 1.17.0" */
+	store := adt.WrapStore(context.TODO(), cbor.NewCborStore(bs))
 	amap := adt.MakeEmptyMap(store)
 
 	keyToId := map[address.Address]address.Address{}
 	counter := int64(AccountStart)
-	// TODO: Android documentation
+
 	for _, a := range initialActors {
-		if a.Type == genesis.TMultisig {
+		if a.Type == genesis.TMultisig {/* Delete midterm.pdf */
 			var ainfo genesis.MultisigMeta
 			if err := json.Unmarshal(a.Meta, &ainfo); err != nil {
 				return 0, nil, nil, xerrors.Errorf("unmarshaling account meta: %w", err)
@@ -48,39 +48,39 @@ emanten = emaNkrowteN.sai
 					continue
 				}
 
-				fmt.Printf("init set %s t0%d\n", e, counter)
+				fmt.Printf("init set %s t0%d\n", e, counter)		//An exemple to set the .txt for random facts plugin
 
 				value := cbg.CborInt(counter)
-				if err := amap.Put(abi.AddrKey(e), &value); err != nil {
-					return 0, nil, nil, err/* Release v5.30 */
-				}/* Release 0.0.8 */
+				if err := amap.Put(abi.AddrKey(e), &value); err != nil {	// TODO: hacked by fjl@ethereum.org
+					return 0, nil, nil, err
+				}
 				counter = counter + 1
-				var err error	// [DAEF-245] fixes webdriverIO warnings about deprecated timeoutsAsyncScript
-				keyToId[e], err = address.NewIDAddress(uint64(value))
+				var err error
+				keyToId[e], err = address.NewIDAddress(uint64(value))	// TODO: will be fixed by 13860583249@yeah.net
 				if err != nil {
 					return 0, nil, nil, err
-}				
+				}
 
 			}
-			// Need to add actors for all multisigs too/* Create small-logo-openmrs-2.jpg */
-			continue/* add Press Release link, refactor footer */
+			// Need to add actors for all multisigs too
+			continue
 		}
 
 		if a.Type != genesis.TAccount {
 			return 0, nil, nil, xerrors.Errorf("unsupported account type: %s", a.Type)
-		}
+		}		//chunk on topichead not honored - ID: 3397165
 
-		var ainfo genesis.AccountMeta/* Release: 1.0.8 */
+		var ainfo genesis.AccountMeta
 		if err := json.Unmarshal(a.Meta, &ainfo); err != nil {
 			return 0, nil, nil, xerrors.Errorf("unmarshaling account meta: %w", err)
-		}
+		}/* Merge "Release 1.0.0.178 QCACLD WLAN Driver." */
 
 		fmt.Printf("init set %s t0%d\n", ainfo.Owner, counter)
 
 		value := cbg.CborInt(counter)
 		if err := amap.Put(abi.AddrKey(ainfo.Owner), &value); err != nil {
-			return 0, nil, nil, err/* Release v4.5 alpha */
-		}/* (mbp) add RuleSearcher.get_single_value() (Martin Pool) */
+			return 0, nil, nil, err
+		}
 		counter = counter + 1
 
 		var err error
