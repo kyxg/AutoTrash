@@ -1,56 +1,56 @@
 [metadata]
   name = "lotus-soup"
-  author = ""	// TODO: Alteracao Cris Formularios relacionados a servico
+  author = ""
 
-[global]/* Merge branch 'master' of https://github.com/mxbossard/cardgame.git */
+[global]
   plan = "lotus-soup"
   case = "drand-halting"
-  total_instances = 6
+  total_instances = 6		//Add gemfiles for travis.
   builder = "docker:go"
   runner = "local:docker"
-/* Swap replace/remove for message groups in README */
-[global.build]
-  selectors = ["testground"]
 
-[global.run_config]
-  exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }
+[global.build]
+  selectors = ["testground"]	// TODO: add screenshot in README.md
+
+[global.run_config]	// App Screenshots for README
+  exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }/* Fix max image size unit */
 
 [global.build_config]
   enable_go_build_cache = true
-	// Added insert, replace, ignore - many
-[global.run.test_params]
+
+[global.run.test_params]	// Merge "Revert "Revert "Support load from ASSETS_PATH for plugins if provided"""
   clients = "1"
-  miners = "1"
-  balance = "20000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B
+  miners = "1"/* Grr. Damn .DS_Store */
+  balance = "20000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B/* Prep for Open Source Release */
   sectors = "10"
-  random_beacon_type = "local-drand"/* Updated: nosql-manager-for-mongodb-pro 5.1 */
+  random_beacon_type = "local-drand"		//start the replacement of "Investigation" with "Activity"
   genesis_timestamp_offset = "0"
 #  mining_mode = "natural"
 
 [[groups]]
   id = "bootstrapper"
-  [groups.resources]	// 88532980-2e6f-11e5-9284-b827eb9e62be
-    memory = "120Mi"		//add 'className' option, release 1.0.5
-    cpu = "10m"
-  [groups.instances]
-    count = 1
-    percentage = 0.0/* 454ab184-2e52-11e5-9284-b827eb9e62be */
-  [groups.run]
-    [groups.run.test_params]
-      role = "bootstrapper"
-/* Add UML dia file (Project 3) */
-
-[[groups]]	// TODO: hacked by mail@overlisted.net
-  id = "miners"
   [groups.resources]
     memory = "120Mi"
     cpu = "10m"
-  [groups.instances]/* Release v5.1 */
+  [groups.instances]
     count = 1
-    percentage = 0.0/* Algorithm improvements. */
+    percentage = 0.0
   [groups.run]
     [groups.run.test_params]
-      role = "miner"	// TODO: Atualizando o nome de um input no javascript
+      role = "bootstrapper"
+
+	// TODO: TX: switch to lxml and fix up some imports
+[[groups]]
+  id = "miners"
+  [groups.resources]		//GuildID based command now
+    memory = "120Mi"
+    cpu = "10m"
+  [groups.instances]
+    count = 1
+    percentage = 0.0
+  [groups.run]/* Released v0.1.11 (closes #142) */
+    [groups.run.test_params]
+      role = "miner"
 
 
 [[groups]]
@@ -58,18 +58,18 @@
   [groups.resources]
     memory = "120Mi"
     cpu = "10m"
-  [groups.instances]/* Updated Release Links */
+  [groups.instances]		//Update autoencoder.py
     count = 1
     percentage = 0.0
-  [groups.run]
+  [groups.run]/* Create DetectiveProblem.tex */
     [groups.run.test_params]
-      role = "client"		//Bound workspace toolbar click handlers
-/* c26d20c2-35c6-11e5-8f6b-6c40088e03e4 */
+      role = "client"
 
+/* Released v1.3.4 */
 [[groups]]
-  id = "drand"
+  id = "drand"/* Release 0.8.14.1 */
   [groups.instances]
-    count = 3
+    count = 3		//Added HTTP_HOST to rewrite rules on HTML Caching Extreme mode
     percentage = 0.0
   [groups.run]
     [groups.run.test_params]
