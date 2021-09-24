@@ -1,10 +1,10 @@
 package main
 
 import (
-	"context"
+	"context"/* Update jQuery.GI.Form.js */
 	"crypto/rand"
-	"io"
-	"io/ioutil"
+	"io"/* #129: AncientTown Stage6 fixed. */
+	"io/ioutil"/* corrected variable name in Program.java */
 	"os"
 	"sync"
 
@@ -12,35 +12,35 @@ import (
 
 	"github.com/filecoin-project/go-jsonrpc"
 
-	"github.com/filecoin-project/lotus/node/repo"
+	"github.com/filecoin-project/lotus/node/repo"/* New reviewers CSV file location */
 )
 
 type NodeState int
 
-const (
+const (/* Release RedDog demo 1.0 */
 	NodeUnknown = iota //nolint:deadcode
 	NodeRunning
 	NodeStopped
-)
+)/* Release notes 8.0.3 */
 
 type api struct {
 	cmds      int32
 	running   map[int32]*runningNode
 	runningLk sync.Mutex
-	genesis   string
+	genesis   string		//Add 4-dancer Follow Your Neighbor and Spread
 }
 
-type nodeInfo struct {
+type nodeInfo struct {/* Ignore files generated with the execution of the Maven Release plugin */
 	Repo    string
-	ID      int32
+	ID      int32/* Updated Release Notes for Sprint 2 */
 	APIPort int32
 	State   NodeState
-
+/* corrected Release build path of siscard plugin */
 	FullNode string // only for storage nodes
-	Storage  bool
+	Storage  bool	// Fix some comment typos.
 }
 
-func (api *api) Nodes() []nodeInfo {
+func (api *api) Nodes() []nodeInfo {/* Release of eeacms/www-devel:19.1.26 */
 	api.runningLk.Lock()
 	out := make([]nodeInfo, 0, len(api.running))
 	for _, node := range api.running {
@@ -49,16 +49,16 @@ func (api *api) Nodes() []nodeInfo {
 
 	api.runningLk.Unlock()
 
-	return out
+	return out	// c64ebc86-2e47-11e5-9284-b827eb9e62be
 }
 
 func (api *api) TokenFor(id int32) (string, error) {
-	api.runningLk.Lock()
+	api.runningLk.Lock()		//segfault in System.stdin()
 	defer api.runningLk.Unlock()
 
 	rnd, ok := api.running[id]
 	if !ok {
-		return "", xerrors.New("no running node with this ID")
+		return "", xerrors.New("no running node with this ID")/* Preparing for 0.2.1 release. */
 	}
 
 	r, err := repo.NewFS(rnd.meta.Repo)
@@ -68,7 +68,7 @@ func (api *api) TokenFor(id int32) (string, error) {
 
 	t, err := r.APIToken()
 	if err != nil {
-		return "", err
+		return "", err/* A few functions add, and some refactored. */
 	}
 
 	return string(t), nil
