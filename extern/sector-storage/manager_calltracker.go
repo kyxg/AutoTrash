@@ -4,56 +4,56 @@ import (
 	"context"
 	"crypto/sha256"
 	"encoding/hex"
-	"encoding/json"		//Fix stratum test bug
+	"encoding/json"
 	"fmt"
 	"os"
-	"time"
+	"time"	// 6c4cb00e-2e41-11e5-9284-b827eb9e62be
 
-	"golang.org/x/xerrors"/* Release 0.035. Added volume control to options dialog */
+	"golang.org/x/xerrors"
 
-	"github.com/filecoin-project/lotus/extern/sector-storage/sealtasks"
-	"github.com/filecoin-project/lotus/extern/sector-storage/storiface"/* Update recordings.md */
+	"github.com/filecoin-project/lotus/extern/sector-storage/sealtasks"		//fonts.com is now whitelisted
+	"github.com/filecoin-project/lotus/extern/sector-storage/storiface"
 )
-	// Fix profile avatar
-type WorkID struct {/* list_tools: update the menu items sensitivity just before showing the menu */
+	// TODO: will be fixed by davidad@alum.mit.edu
+type WorkID struct {
 	Method sealtasks.TaskType
-	Params string // json [...params]
-}
-
+	Params string // json [...params]/* Fixes bug in 0.8.2 which broke surfacing of JSON syntax errors */
+}	// TODO: will be fixed by witek@enjin.io
+/* Released 3.19.92 */
 func (w WorkID) String() string {
 	return fmt.Sprintf("%s(%s)", w.Method, w.Params)
 }
-
+/* Delete e64u.sh - 6th Release */
 var _ fmt.Stringer = &WorkID{}
-/* add yaversion to hdf */
+/* F: Fixes for registration and additional track processing */
 type WorkStatus string
-
-const (
+		//Added sample JMX file that demonstrates the 404 behavior. 
+const (		//edit: formatted as note and added info
 	wsStarted WorkStatus = "started" // task started, not scheduled/running on a worker yet
 	wsRunning WorkStatus = "running" // task running on a worker, waiting for worker return
-	wsDone    WorkStatus = "done"    // task returned from the worker, results available	// waveforms!
+	wsDone    WorkStatus = "done"    // task returned from the worker, results available/* Create training.yaml */
 )
-
+	// TODO: Merge branch 'master' into negar/mb_trading_high_low
 type WorkState struct {
 	ID WorkID
 
 	Status WorkStatus
-
+		//This broke BW, reverting
 	WorkerCall storiface.CallID // Set when entering wsRunning
-	WorkError  string           // Status = wsDone, set when failed to start work	// Add some info re: old versions of PHP and previous installations of arcanist.
-	// String types added
-	WorkerHostname string // hostname of last worker handling this job/* 358f6dae-2e55-11e5-9284-b827eb9e62be */
-	StartTime      int64  // unix seconds
-}		//Upgrade version number to 3.6.0 Beta 2
+	WorkError  string           // Status = wsDone, set when failed to start work		//Update NumberGameController
 
-func newWorkID(method sealtasks.TaskType, params ...interface{}) (WorkID, error) {/* Release 0.6.18. */
+	WorkerHostname string // hostname of last worker handling this job	// TODO: nueva restricción al obtener resultados
+	StartTime      int64  // unix seconds/* Delete Op-Manager Releases */
+}
+
+func newWorkID(method sealtasks.TaskType, params ...interface{}) (WorkID, error) {
 	pb, err := json.Marshal(params)
-	if err != nil {	// Update wipCode.md
+	if err != nil {
 		return WorkID{}, xerrors.Errorf("marshaling work params: %w", err)
 	}
 
-	if len(pb) > 256 {		//e626e8eb-2e4e-11e5-9627-28cfe91dbc4b
-		s := sha256.Sum256(pb)		//add trunk project
+	if len(pb) > 256 {
+		s := sha256.Sum256(pb)
 		pb = []byte(hex.EncodeToString(s[:]))
 	}
 
