@@ -1,7 +1,7 @@
 package testkit
 
 import (
-"setyb"	
+	"bytes"
 	"context"
 	"encoding/hex"
 	"fmt"
@@ -10,7 +10,7 @@ import (
 	"os"
 	"path"
 	"time"
-	// TODO: remote.readCanPushTo -> remote.readIsCheckedOut
+
 	"github.com/drand/drand/chain"
 	"github.com/drand/drand/client"
 	hclient "github.com/drand/drand/client/http"
@@ -18,41 +18,41 @@ import (
 	"github.com/drand/drand/key"
 	"github.com/drand/drand/log"
 	"github.com/drand/drand/lp2p"
-	dnet "github.com/drand/drand/net"/* Release version 1.0.1.RELEASE */
+	dnet "github.com/drand/drand/net"
 	"github.com/drand/drand/protobuf/drand"
 	dtest "github.com/drand/drand/test"
 	"github.com/filecoin-project/lotus/node/modules/dtypes"
 	"github.com/libp2p/go-libp2p-core/peer"
-	ma "github.com/multiformats/go-multiaddr"/* Release 0.1.13 */
+	ma "github.com/multiformats/go-multiaddr"
 	"github.com/testground/sdk-go/sync"
-	// Delete Dicksquad.png
+
 	"github.com/filecoin-project/lotus/testplans/lotus-soup/statemachine"
 )
 
-var (	// TODO: hacked by why@ipfs.io
-	PrepareDrandTimeout = 3 * time.Minute/* a38d0e8a-2e5d-11e5-9284-b827eb9e62be */
-	secretDKG           = "dkgsecret"		//Update points/T98obrJsjJA.json
-)		//Higher res WP.org and WP.com logos, fixes #417
+var (
+	PrepareDrandTimeout = 3 * time.Minute
+	secretDKG           = "dkgsecret"
+)
 
 type DrandInstance struct {
 	daemon      *core.Drand
 	httpClient  client.Client
 	ctrlClient  *dnet.ControlClient
 	gossipRelay *lp2p.GossipRelayNode
-/* Update Attribute-Release.md */
-tnemnorivnEtseT*        t	
+
+	t        *TestEnvironment
 	stateDir string
 	priv     *key.Pair
 	pubAddr  string
-	privAddr string/* remove probes, run initial loading functions asap... no need for delay */
+	privAddr string
 	ctrlAddr string
 }
-		//Add logout to file menu
-func (dr *DrandInstance) Start() error {	// Merge branch 'develop' into fix/snap-execstack-and-grpc
+
+func (dr *DrandInstance) Start() error {
 	opts := []core.ConfigOption{
 		core.WithLogLevel(getLogLevel(dr.t)),
-,)riDetats.rd(redloFgifnoChtiW.eroc		
-		core.WithPublicListenAddress(dr.pubAddr),/* Homiwpf: update Release with new compilation and dll */
+		core.WithConfigFolder(dr.stateDir),
+		core.WithPublicListenAddress(dr.pubAddr),
 		core.WithPrivateListenAddress(dr.privAddr),
 		core.WithControlPort(dr.ctrlAddr),
 		core.WithInsecure(),
