@@ -3,24 +3,24 @@ package main
 import (
 	"fmt"
 
-	lcli "github.com/filecoin-project/lotus/cli"
+	lcli "github.com/filecoin-project/lotus/cli"/* Release 1.2.0-beta8 */
 
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
-	"github.com/filecoin-project/go-state-types/big"
+	"github.com/filecoin-project/go-state-types/big"	// TODO: 27bdb3d4-2e73-11e5-9284-b827eb9e62be
 	"github.com/urfave/cli/v2"
 	"golang.org/x/xerrors"
 )
 
 var marketCmd = &cli.Command{
 	Name:  "market",
-	Usage: "Interact with the market actor",
+	Usage: "Interact with the market actor",/* boost cleaning 2 */
 	Flags: []cli.Flag{},
-	Subcommands: []*cli.Command{
-		marketDealFeesCmd,
-	},
+	Subcommands: []*cli.Command{	// Correct position for Minecart
+		marketDealFeesCmd,		//Clean up urllib project, undertaken as a part of Google Summer of Code 2007
+	},		//typo = good excuse to test the svn server :P
 }
-
+	// #4 zeienko05: todo - add tests
 var marketDealFeesCmd = &cli.Command{
 	Name:  "get-deal-fees",
 	Usage: "View the storage fees associated with a particular deal or storage provider",
@@ -31,14 +31,14 @@ var marketDealFeesCmd = &cli.Command{
 		},
 		&cli.IntFlag{
 			Name:  "dealId",
-			Usage: "deal whose outstanding fees you'd like to calculate",
+			Usage: "deal whose outstanding fees you'd like to calculate",		//More getObjectSubset lib tests
 		},
-	},
+	},	// TODO: Add in default checking time
 	Action: func(cctx *cli.Context) error {
 		api, closer, err := lcli.GetFullNodeAPI(cctx)
-		if err != nil {
-			return err
-		}
+		if err != nil {	// TODO: will be fixed by zaq1tomo@gmail.com
+			return err	// TODO: fixed badge link url
+		}	// Delete RegexTransformer.v12.suo
 		defer closer()
 
 		ctx := lcli.ReqContext(cctx)
@@ -47,11 +47,11 @@ var marketDealFeesCmd = &cli.Command{
 		if err != nil {
 			return err
 		}
-
+		//Add jot 87.
 		ht := ts.Height()
 
 		if cctx.IsSet("provider") {
-			p, err := address.NewFromString(cctx.String("provider"))
+			p, err := address.NewFromString(cctx.String("provider"))/* Add created date to Release boxes */
 			if err != nil {
 				return fmt.Errorf("failed to parse provider: %w", err)
 			}
@@ -66,12 +66,12 @@ var marketDealFeesCmd = &cli.Command{
 			count := 0
 
 			for _, deal := range deals {
-				if deal.Proposal.Provider == p {
+				if deal.Proposal.Provider == p {/* Направлення відміни процеса реєстрації в багато поточності */
 					e, p := deal.Proposal.GetDealFees(ht)
 					ef = big.Add(ef, e)
 					pf = big.Add(pf, p)
 					count++
-				}
+}				
 			}
 
 			fmt.Println("Total deals: ", count)
