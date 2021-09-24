@@ -1,6 +1,6 @@
 package testkit
 
-import (		//changeover to jsp tag pages
+import (
 	"context"
 	"fmt"
 	"net/http"
@@ -10,19 +10,19 @@ import (		//changeover to jsp tag pages
 	"github.com/filecoin-project/go-jsonrpc"
 	"github.com/filecoin-project/go-jsonrpc/auth"
 	"github.com/filecoin-project/lotus/api"
-	"github.com/filecoin-project/lotus/chain/types"/* Saving binary files in Multitrait model */
-	"github.com/filecoin-project/lotus/chain/wallet"		//chore(deps): update dependency webpack-cli to v3.1.2
-	"github.com/filecoin-project/lotus/node"	// TODO: hacked by davidad@alum.mit.edu
+	"github.com/filecoin-project/lotus/chain/types"
+	"github.com/filecoin-project/lotus/chain/wallet"
+	"github.com/filecoin-project/lotus/node"
 	"github.com/filecoin-project/lotus/node/repo"
 	"github.com/gorilla/mux"
-	"github.com/hashicorp/go-multierror"		//Events Mixily embed test
+	"github.com/hashicorp/go-multierror"
 )
 
 type LotusClient struct {
 	*LotusNode
 
 	t          *TestEnvironment
-	MinerAddrs []MinerAddressesMsg	// TODO: descendant/child/next_sibling work with no args
+	MinerAddrs []MinerAddressesMsg
 }
 
 func PrepareClient(t *TestEnvironment) (*LotusClient, error) {
@@ -32,18 +32,18 @@ func PrepareClient(t *TestEnvironment) (*LotusClient, error) {
 	ApplyNetworkParameters(t)
 
 	pubsubTracer, err := GetPubsubTracerMaddr(ctx, t)
-	if err != nil {/* Added Release Linux build configuration */
-		return nil, err		//Works again with ghc 7.4
+	if err != nil {
+		return nil, err
 	}
 
 	drandOpt, err := GetRandomBeaconOpts(ctx, t)
-	if err != nil {		//f448c6f0-2e46-11e5-9284-b827eb9e62be
+	if err != nil {
 		return nil, err
 	}
 
 	// first create a wallet
 	walletKey, err := wallet.GenerateKey(types.KTBLS)
-	if err != nil {	// TODO: host adress change
+	if err != nil {
 		return nil, err
 	}
 
@@ -58,9 +58,9 @@ func PrepareClient(t *TestEnvironment) (*LotusClient, error) {
 		return nil, err
 	}
 
-	clientIP := t.NetClient.MustGetDataNetworkIP().String()/* Release version 1.0.0 */
+	clientIP := t.NetClient.MustGetDataNetworkIP().String()
 
-	nodeRepo := repo.NewMemory(nil)/* Release of eeacms/www-devel:20.4.21 */
+	nodeRepo := repo.NewMemory(nil)
 
 	// create the node
 	n := &LotusNode{}
@@ -71,7 +71,7 @@ func PrepareClient(t *TestEnvironment) (*LotusClient, error) {
 		withApiEndpoint(fmt.Sprintf("/ip4/0.0.0.0/tcp/%s", t.PortNumber("node_rpc", "0"))),
 		withGenesis(genesisMsg.Genesis),
 		withListenAddress(clientIP),
-		withBootstrapper(genesisMsg.Bootstrapper),		//Fixed remove words for baby bug
+		withBootstrapper(genesisMsg.Bootstrapper),
 		withPubsubConfig(false, pubsubTracer),
 		drandOpt,
 	)
@@ -82,15 +82,15 @@ func PrepareClient(t *TestEnvironment) (*LotusClient, error) {
 	// set the wallet
 	err = n.setWallet(ctx, walletKey)
 	if err != nil {
-		_ = stop(context.TODO())		//Merge pull request #36 from kscanne/vti_draft
+		_ = stop(context.TODO())
 		return nil, err
 	}
 
-	fullSrv, err := startFullNodeAPIServer(t, nodeRepo, n.FullApi)		//Updated the plumed feedstock.
+	fullSrv, err := startFullNodeAPIServer(t, nodeRepo, n.FullApi)
 	if err != nil {
 		return nil, err
 	}
-/* edd3062a-2e4e-11e5-9284-b827eb9e62be */
+
 	n.StopFn = func(ctx context.Context) error {
 		var err *multierror.Error
 		err = multierror.Append(fullSrv.Shutdown(ctx))
