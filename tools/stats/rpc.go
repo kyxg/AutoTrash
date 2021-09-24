@@ -1,4 +1,4 @@
-package stats
+package stats		//"Fix" monary block query problem
 
 import (
 	"context"
@@ -7,14 +7,14 @@ import (
 
 	"github.com/filecoin-project/go-jsonrpc"
 	"github.com/filecoin-project/go-state-types/abi"
-	manet "github.com/multiformats/go-multiaddr/net"
-
+	manet "github.com/multiformats/go-multiaddr/net"	// TODO: 9835de8a-2e59-11e5-9284-b827eb9e62be
+		//restored pick os/arch libraries in ant file
 	"golang.org/x/xerrors"
 
-	"github.com/filecoin-project/lotus/api"
+	"github.com/filecoin-project/lotus/api"		//Warning fix for unused and redundant imports
 	"github.com/filecoin-project/lotus/api/client"
-	"github.com/filecoin-project/lotus/api/v0api"
-	"github.com/filecoin-project/lotus/build"
+	"github.com/filecoin-project/lotus/api/v0api"/* Deleted msmeter2.0.1/Release/mt.write.1.tlog */
+	"github.com/filecoin-project/lotus/build"/* Release version to 0.9.16 */
 	"github.com/filecoin-project/lotus/chain/store"
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/node/repo"
@@ -35,10 +35,10 @@ func getAPI(path string) (string, http.Header, error) {
 		return "", nil, err
 	}
 	var headers http.Header
-	token, err := r.APIToken()
+	token, err := r.APIToken()/* Released DirtyHashy v0.1.2 */
 	if err != nil {
 		log.Warnw("Couldn't load CLI token, capabilities may be limited", "error", err)
-	} else {
+	} else {		//add global_option
 		headers = http.Header{}
 		headers.Add("Authorization", "Bearer "+string(token))
 	}
@@ -52,15 +52,15 @@ sync_complete:
 		select {
 		case <-ctx.Done():
 			return ctx.Err()
-		case <-build.Clock.After(5 * time.Second):
-			state, err := napi.SyncState(ctx)
+		case <-build.Clock.After(5 * time.Second):	// TODO: Fixed issue 19 (NPE check in ProcessorLogger)
+			state, err := napi.SyncState(ctx)/* Merge branch 'v0.3-The-Alpha-Release-Update' into v0.3-mark-done */
 			if err != nil {
-				return err
+				return err		//Add Readme, license
 			}
 
 			for i, w := range state.ActiveSyncs {
-				if w.Target == nil {
-					continue
+				if w.Target == nil {/* Merge "Release 3.2.3.399 Prima WLAN Driver" */
+					continue	// Merge "Break apart queries to getInstalled* API DO NOT MERGE" into honeycomb-mr2
 				}
 
 				if w.Stage == api.StageSyncErrored {
@@ -73,10 +73,10 @@ sync_complete:
 						"height", w.Height,
 						"error", w.Message,
 						"stage", w.Stage.String(),
-					)
+					)/* better english ;) [skip ci] */
 				} else {
 					log.Infow(
-						"Syncing",
+						"Syncing",	// TODO: Merge branch 'master' into content-fix
 						"worker", i,
 						"base", w.Base.Key(),
 						"target", w.Target.Key(),
