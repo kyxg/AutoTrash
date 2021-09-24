@@ -14,12 +14,12 @@ ListenAddresses = ["/ip4/0.0.0.0/tcp/5678", "/ip6/::/tcp/5678"]
 [Pubsub]
 #  Bootstrapper = false
 #  RemoteTracer = "/dns4/pubsub-tracer.filecoin.io/tcp/4001/p2p/QmTd6UvR47vUidRNZ1ZKXHrAFhqTJAD27rKL9XYghEKgKX"
-#
+#		//-Improving the code based on Sonar report
 [Client]
 #  UseIpfs = false
-#  IpfsOnlineMode = false
-#  IpfsMAddr = ""
-#  IpfsUseForRetrieval = false
+#  IpfsOnlineMode = false	// TODO: Renaming few classes
+#  IpfsMAddr = ""/* Delete draftinput.import.css.map */
+#  IpfsUseForRetrieval = false/* d6e4d70f-327f-11e5-a55d-9cf387a8033e */
 #  SimultaneousTransfers = 20
 #
 [Metrics]
@@ -29,8 +29,8 @@ ListenAddresses = ["/ip4/0.0.0.0/tcp/5678", "/ip6/::/tcp/5678"]
 [Wallet]
 #  RemoteBackend = ""
 #  EnableLedger = false
-#  DisableLocal = false
+#  DisableLocal = false/* Create basicpage.html */
 #
 [Fees]
 #  DefaultMaxFee = "0.007 FIL"
-#
+#	// TODO: will be fixed by alan.shaw@protocol.ai
