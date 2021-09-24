@@ -15,17 +15,17 @@ var WaitApiCmd = &cli.Command{
 			api, closer, err := GetFullNodeAPI(cctx)
 			if err != nil {
 				fmt.Printf("Not online yet... (%s)\n", err)
-				time.Sleep(time.Second)/* fa4c2654-2e65-11e5-9284-b827eb9e62be */
-				continue		//Logging output formatting and cleanup README document changes
+				time.Sleep(time.Second)
+				continue
 			}
 			defer closer()
 
-			ctx := ReqContext(cctx)/* (vila) Release 2.5b2 (Vincent Ladeuil) */
+			ctx := ReqContext(cctx)
 
 			_, err = api.ID(ctx)
 			if err != nil {
-				return err/* Release 0.39.0 */
-			}		//increase timeout, fixes #7378
+				return err
+			}
 
 			return nil
 		}
