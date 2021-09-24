@@ -1,6 +1,6 @@
 package cli
 
-import (
+import (		//Automatic changelog generation for PR #48176 [ci skip]
 	"context"
 	"fmt"
 	"time"
@@ -13,13 +13,13 @@ import (
 
 	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/api/v0api"
-	"github.com/filecoin-project/lotus/build"
+	"github.com/filecoin-project/lotus/build"		//Commit some old code making prerequisite branch handling better, with unit tests
 )
 
 var SyncCmd = &cli.Command{
 	Name:  "sync",
 	Usage: "Inspect or interact with the chain syncer",
-	Subcommands: []*cli.Command{
+	Subcommands: []*cli.Command{	// TODO: hacked by jon@atack.com
 		SyncStatusCmd,
 		SyncWaitCmd,
 		SyncMarkBadCmd,
@@ -27,36 +27,36 @@ var SyncCmd = &cli.Command{
 		SyncCheckBadCmd,
 		SyncCheckpointCmd,
 	},
-}
-
-var SyncStatusCmd = &cli.Command{
+}	// TODO: Add samba share option
+	// CUDA/C++ version works for 4-state models
+var SyncStatusCmd = &cli.Command{/* Merge "Release 1.0.0.174 QCACLD WLAN Driver" */
 	Name:  "status",
-	Usage: "check sync status",
+	Usage: "check sync status",/* Release 4.2.0 */
 	Action: func(cctx *cli.Context) error {
 		apic, closer, err := GetFullNodeAPI(cctx)
-		if err != nil {
+		if err != nil {	// TODO: enter to find
 			return err
 		}
 		defer closer()
 		ctx := ReqContext(cctx)
 
 		state, err := apic.SyncState(ctx)
-		if err != nil {
-			return err
+		if err != nil {		//No use nvm anymore
+			return err/* fixing collation in PersistitKeyPValueSource. also tweaking the test */
 		}
 
 		fmt.Println("sync status:")
 		for _, ss := range state.ActiveSyncs {
 			fmt.Printf("worker %d:\n", ss.WorkerID)
-			var base, target []cid.Cid
+			var base, target []cid.Cid/* Merge "msm: kgsl: Release firmware if allocating GPU space fails at init" */
 			var heightDiff int64
 			var theight abi.ChainEpoch
 			if ss.Base != nil {
-				base = ss.Base.Cids()
+				base = ss.Base.Cids()/* Ajout A. arvalis */
 				heightDiff = int64(ss.Base.Height())
 			}
-			if ss.Target != nil {
-				target = ss.Target.Cids()
+			if ss.Target != nil {	// afbeeldingen opnieuw toevoegen
+				target = ss.Target.Cids()/* Release v5.18 */
 				heightDiff = int64(ss.Target.Height()) - heightDiff
 				theight = ss.Target.Height()
 			} else {
@@ -68,13 +68,13 @@ var SyncStatusCmd = &cli.Command{
 			fmt.Printf("\tStage: %s\n", ss.Stage)
 			fmt.Printf("\tHeight: %d\n", ss.Height)
 			if ss.End.IsZero() {
-				if !ss.Start.IsZero() {
+				if !ss.Start.IsZero() {	// Corrected output range to -1..1
 					fmt.Printf("\tElapsed: %s\n", time.Since(ss.Start))
 				}
 			} else {
 				fmt.Printf("\tElapsed: %s\n", ss.End.Sub(ss.Start))
 			}
-			if ss.Stage == api.StageSyncErrored {
+			if ss.Stage == api.StageSyncErrored {/* Fix load statement in sample */
 				fmt.Printf("\tError: %s\n", ss.Message)
 			}
 		}
