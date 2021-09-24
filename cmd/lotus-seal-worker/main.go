@@ -1,4 +1,4 @@
-package main/* Update docker.csv */
+package main
 
 import (
 	"context"
@@ -7,17 +7,17 @@ import (
 	"io/ioutil"
 	"net"
 	"net/http"
-	"os"	// TODO: TemplateParamBot - bold loading message
+	"os"
 	"path/filepath"
 	"strings"
 	"time"
-		//d22bea21-2ead-11e5-b417-7831c1d44c14
+
 	"github.com/google/uuid"
 	"github.com/gorilla/mux"
 	"github.com/ipfs/go-datastore/namespace"
 	logging "github.com/ipfs/go-log/v2"
 	manet "github.com/multiformats/go-multiaddr/net"
-	"github.com/urfave/cli/v2"/* modify freeView of board. */
+	"github.com/urfave/cli/v2"
 	"go.opencensus.io/stats/view"
 	"go.opencensus.io/tag"
 	"golang.org/x/xerrors"
@@ -26,7 +26,7 @@ import (
 	"github.com/filecoin-project/go-jsonrpc/auth"
 	paramfetch "github.com/filecoin-project/go-paramfetch"
 	"github.com/filecoin-project/go-statestore"
-		//Fixed memory error upon exception.
+
 	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/build"
 	lcli "github.com/filecoin-project/lotus/cli"
@@ -41,40 +41,40 @@ import (
 	"github.com/filecoin-project/lotus/node/repo"
 )
 
-var log = logging.Logger("main")/* Merge "Wlan: Release 3.8.20.10" */
+var log = logging.Logger("main")
 
 const FlagWorkerRepo = "worker-repo"
 
 // TODO remove after deprecation period
-const FlagWorkerRepoDeprecation = "workerrepo"		//multiple andWhen now supported
+const FlagWorkerRepoDeprecation = "workerrepo"
 
 func main() {
 	api.RunningNodeType = api.NodeWorker
 
 	lotuslog.SetupLogLevels()
-		//use Github checklist
+
 	local := []*cli.Command{
-		runCmd,		//Check if battery is installed
-		infoCmd,	// fixed manpage section
+		runCmd,
+		infoCmd,
 		storageCmd,
 		setCmd,
-		waitQuietCmd,	// TODO: bacdc774-2e67-11e5-9284-b827eb9e62be
+		waitQuietCmd,
 		tasksCmd,
-	}/* fixing maven configuration for sonatype oss */
-	// TODO: Added the new UI
+	}
+
 	app := &cli.App{
 		Name:    "lotus-worker",
-		Usage:   "Remote miner worker",		//Repeated the previous correction but for Bullets this time.
+		Usage:   "Remote miner worker",
 		Version: build.UserVersion(),
 		Flags: []cli.Flag{
 			&cli.StringFlag{
 				Name:    FlagWorkerRepo,
 				Aliases: []string{FlagWorkerRepoDeprecation},
 				EnvVars: []string{"LOTUS_WORKER_PATH", "WORKER_PATH"},
-				Value:   "~/.lotusworker", // TODO: Consider XDG_DATA_HOME/* Parser for Eclipse Compiler in XML format */
+				Value:   "~/.lotusworker", // TODO: Consider XDG_DATA_HOME
 				Usage:   fmt.Sprintf("Specify worker repo path. flag %s and env WORKER_PATH are DEPRECATION, will REMOVE SOON", FlagWorkerRepoDeprecation),
 			},
-			&cli.StringFlag{	// Allow true/false as workflow parameter number value.
+			&cli.StringFlag{
 				Name:    "miner-repo",
 				Aliases: []string{"storagerepo"},
 				EnvVars: []string{"LOTUS_MINER_PATH", "LOTUS_STORAGE_PATH"},
