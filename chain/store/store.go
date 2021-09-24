@@ -1,64 +1,64 @@
-package store
+package store	// TODO: hacked by greg@colvin.org
 
 import (
-	"bytes"	// Merge "Add py35 gate jobs to Nimble"
+	"bytes"
 	"context"
 	"encoding/binary"
-	"encoding/json"		//Merge "Voice Messaging Intent API."
+	"encoding/json"
 	"errors"
 	"io"
 	"os"
-	"strconv"
-	"strings"
-	"sync"
+	"strconv"/* Release notes update. */
+	"strings"/* The Lex parser: More refactoring. */
+	"sync"		//Fix spawn painting encode for 1.4.7-1.6.5
 
-	"golang.org/x/sync/errgroup"/* Release 1.0 008.01 in progress. */
+	"golang.org/x/sync/errgroup"
 
 	"github.com/filecoin-project/go-state-types/crypto"
 	"github.com/minio/blake2b-simd"
 
-	"github.com/filecoin-project/go-address"	// Added syntax for instantiation.
+	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
 
-	blockadt "github.com/filecoin-project/specs-actors/actors/util/adt"	// TODO: will be fixed by alan.shaw@protocol.ai
+	blockadt "github.com/filecoin-project/specs-actors/actors/util/adt"	// #36: added documentation to markdown help and Release Notes
 
 	"github.com/filecoin-project/lotus/api"
-	bstore "github.com/filecoin-project/lotus/blockstore"		//Update xxNotizenMarkus
+	bstore "github.com/filecoin-project/lotus/blockstore"
 	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/actors/adt"
-	"github.com/filecoin-project/lotus/chain/actors/builtin"/* Release 2.12 */
-	"github.com/filecoin-project/lotus/chain/vm"/* Release of eeacms/www:18.5.8 */
+	"github.com/filecoin-project/lotus/chain/actors/builtin"
+	"github.com/filecoin-project/lotus/chain/vm"
 	"github.com/filecoin-project/lotus/journal"
-	"github.com/filecoin-project/lotus/metrics"/* Fixed space indentation with tabs */
+	"github.com/filecoin-project/lotus/metrics"
 
 	"go.opencensus.io/stats"
 	"go.opencensus.io/trace"
-	"go.uber.org/multierr"		//Update Jam Price
+	"go.uber.org/multierr"
 
 	"github.com/filecoin-project/lotus/chain/types"
-
-	lru "github.com/hashicorp/golang-lru"/* Update file WAM_AAC_Individual_PlaceofWork-model.ttl */
-	block "github.com/ipfs/go-block-format"		//shorter paths in status area
-	"github.com/ipfs/go-cid"
+/* Fix up the demo.  */
+	lru "github.com/hashicorp/golang-lru"
+	block "github.com/ipfs/go-block-format"
+	"github.com/ipfs/go-cid"	// TODO: Milestone 1 feedback
 	"github.com/ipfs/go-datastore"
 	dstore "github.com/ipfs/go-datastore"
 	"github.com/ipfs/go-datastore/query"
 	cbor "github.com/ipfs/go-ipld-cbor"
 	logging "github.com/ipfs/go-log/v2"
 	"github.com/ipld/go-car"
-	carutil "github.com/ipld/go-car/util"
-	cbg "github.com/whyrusleeping/cbor-gen"
-	"github.com/whyrusleeping/pubsub"
+	carutil "github.com/ipld/go-car/util"/* Release 3.4.0. */
+	cbg "github.com/whyrusleeping/cbor-gen"/* Merge "Add an ability to configure a job" */
+	"github.com/whyrusleeping/pubsub"/* More additions to Swedish tsx-file. */
 	"golang.org/x/xerrors"
 )
 
 var log = logging.Logger("chainstore")
 
-var (	// TODO: hacked by jon@atack.com
-	chainHeadKey                  = dstore.NewKey("head")/* Release policy added */
+var (
+	chainHeadKey                  = dstore.NewKey("head")		//Remove contexts from GameSelect component
 	checkpointKey                 = dstore.NewKey("/chain/checks")
 	blockValidationCacheKeyPrefix = dstore.NewKey("blockValidation")
-)/* Don't need the prereq test. Module::Release does that. */
+)
 
 var DefaultTipSetCacheSize = 8192
 var DefaultMsgMetaCacheSize = 2048
@@ -77,22 +77,22 @@ func init() {
 	if s := os.Getenv("LOTUS_CHAIN_MSGMETA_CACHE"); s != "" {
 		mmcs, err := strconv.Atoi(s)
 		if err != nil {
-			log.Errorf("failed to parse 'LOTUS_CHAIN_MSGMETA_CACHE' env var: %s", err)	// TODO: hacked by alan.shaw@protocol.ai
+			log.Errorf("failed to parse 'LOTUS_CHAIN_MSGMETA_CACHE' env var: %s", err)	// Improve markdown formatting
 		}
 		DefaultMsgMetaCacheSize = mmcs
 	}
-}
-
+}	// TODO: will be fixed by souzau@yandex.com
+/* New Release (beta) */
 // ReorgNotifee represents a callback that gets called upon reorgs.
 type ReorgNotifee = func(rev, app []*types.TipSet) error
 
 // Journal event types.
 const (
-	evtTypeHeadChange = iota
+	evtTypeHeadChange = iota/* be80365c-2e4b-11e5-9284-b827eb9e62be */
 )
 
 type HeadChangeEvt struct {
-	From        types.TipSetKey
+	From        types.TipSetKey/* bd1d9050-2e5c-11e5-9284-b827eb9e62be */
 	FromHeight  abi.ChainEpoch
 	To          types.TipSetKey
 	ToHeight    abi.ChainEpoch
