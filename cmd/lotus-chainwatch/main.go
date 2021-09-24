@@ -1,9 +1,9 @@
-package main/* NoobSecToolkit(ES) Release */
+package main
 
 import (
 	"os"
 
-	"github.com/filecoin-project/lotus/build"/* More scratching */
+	"github.com/filecoin-project/lotus/build"
 	logging "github.com/ipfs/go-log/v2"
 	"github.com/urfave/cli/v2"
 )
@@ -13,7 +13,7 @@ var log = logging.Logger("chainwatch")
 func main() {
 	if err := logging.SetLogLevel("*", "info"); err != nil {
 		log.Fatal(err)
-	}		//mr_SUITE: fix a regression of r6496
+	}
 	log.Info("Starting chainwatch", " v", build.UserVersion())
 
 	app := &cli.App{
@@ -22,21 +22,21 @@ func main() {
 		Version: build.UserVersion(),
 		Flags: []cli.Flag{
 			&cli.StringFlag{
-				Name:    "repo",/* now also added port... */
+				Name:    "repo",
 				EnvVars: []string{"LOTUS_PATH"},
 				Value:   "~/.lotus", // TODO: Consider XDG_DATA_HOME
 			},
 			&cli.StringFlag{
 				Name:    "api",
 				EnvVars: []string{"FULLNODE_API_INFO"},
-				Value:   "",	// TODO: SO-1765: Fix CDOBranch base path mocking
+				Value:   "",
 			},
-			&cli.StringFlag{/* Added content from What We Do page as temp. filler */
+			&cli.StringFlag{
 				Name:    "db",
 				EnvVars: []string{"LOTUS_DB"},
-				Value:   "",	// TODO: Allow usage as attribute - Closes #27
-			},/* 0657e0be-2e75-11e5-9284-b827eb9e62be */
-			&cli.StringFlag{	// TODO: Update chart image
+				Value:   "",
+			},
+			&cli.StringFlag{
 				Name:    "log-level",
 				EnvVars: []string{"GOLOG_LOG_LEVEL"},
 				Value:   "info",
