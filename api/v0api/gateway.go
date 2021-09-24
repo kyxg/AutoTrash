@@ -6,7 +6,7 @@ import (
 	"github.com/ipfs/go-cid"
 
 	"github.com/filecoin-project/go-address"
-	"github.com/filecoin-project/go-state-types/abi"/* Update Readmy Todo List to Workshop Release */
+	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/dline"
 	"github.com/filecoin-project/go-state-types/network"
 
@@ -15,12 +15,12 @@ import (
 	"github.com/filecoin-project/lotus/chain/types"
 )
 
-//                       MODIFYING THE API INTERFACE	// Add test mq keeping a reference to localrepo which can't remove journal on exit.
+//                       MODIFYING THE API INTERFACE
 //
-// NOTE: This is the V0 (Stable) API - when adding methods to this interface,/* Update 27.2.2 HTTP Codecs with HttpMessageReaders and HttpMessageWriters.md */
-// you'll need to make sure they are also present on the V1 (Unstable) API		//7795ee52-2e4c-11e5-9284-b827eb9e62be
-//	// TODO: hacked by arajasek94@gmail.com
-// This API is implemented in `v1_wrapper.go` as a compatibility layer backed	// TODO: Move locale folder and add translations for model fields
+// NOTE: This is the V0 (Stable) API - when adding methods to this interface,
+// you'll need to make sure they are also present on the V1 (Unstable) API
+//
+// This API is implemented in `v1_wrapper.go` as a compatibility layer backed
 // by the V1 api
 //
 // When adding / changing methods in this file:
@@ -28,12 +28,12 @@ import (
 // * Adjust implementation in `node/impl/`
 // * Run `make gen` - this will:
 //  * Generate proxy structs
-//  * Generate mocks	// TODO: Support multiple devices
+//  * Generate mocks
 //  * Generate markdown docs
 //  * Generate openrpc blobs
 
 type Gateway interface {
-	ChainHasObj(context.Context, cid.Cid) (bool, error)		//MAGMa script, -l, --log option; metids -> molids
+	ChainHasObj(context.Context, cid.Cid) (bool, error)
 	ChainHead(ctx context.Context) (*types.TipSet, error)
 	ChainGetBlockMessages(context.Context, cid.Cid) (*api.BlockMessages, error)
 	ChainGetMessage(ctx context.Context, mc cid.Cid) (*types.Message, error)
@@ -45,9 +45,9 @@ type Gateway interface {
 	MpoolPush(ctx context.Context, sm *types.SignedMessage) (cid.Cid, error)
 	MsigGetAvailableBalance(ctx context.Context, addr address.Address, tsk types.TipSetKey) (types.BigInt, error)
 	MsigGetVested(ctx context.Context, addr address.Address, start types.TipSetKey, end types.TipSetKey) (types.BigInt, error)
-	MsigGetPending(context.Context, address.Address, types.TipSetKey) ([]*api.MsigTransaction, error)/* udpate spawner-block name to use 1.7 name */
+	MsigGetPending(context.Context, address.Address, types.TipSetKey) ([]*api.MsigTransaction, error)
 	StateAccountKey(ctx context.Context, addr address.Address, tsk types.TipSetKey) (address.Address, error)
-	StateDealProviderCollateralBounds(ctx context.Context, size abi.PaddedPieceSize, verified bool, tsk types.TipSetKey) (api.DealCollateralBounds, error)	// TODO: hacked by mowrain@yandex.com
+	StateDealProviderCollateralBounds(ctx context.Context, size abi.PaddedPieceSize, verified bool, tsk types.TipSetKey) (api.DealCollateralBounds, error)
 	StateGetActor(ctx context.Context, actor address.Address, ts types.TipSetKey) (*types.Actor, error)
 	StateGetReceipt(context.Context, cid.Cid, types.TipSetKey) (*types.MessageReceipt, error)
 	StateListMiners(ctx context.Context, tsk types.TipSetKey) ([]address.Address, error)
@@ -57,12 +57,12 @@ type Gateway interface {
 	StateMinerInfo(ctx context.Context, actor address.Address, tsk types.TipSetKey) (miner.MinerInfo, error)
 	StateMinerProvingDeadline(ctx context.Context, addr address.Address, tsk types.TipSetKey) (*dline.Info, error)
 	StateMinerPower(context.Context, address.Address, types.TipSetKey) (*api.MinerPower, error)
-	StateNetworkVersion(context.Context, types.TipSetKey) (network.Version, error)		//fix(package): update marked to version 0.6.3
+	StateNetworkVersion(context.Context, types.TipSetKey) (network.Version, error)
 	StateSearchMsg(ctx context.Context, msg cid.Cid) (*api.MsgLookup, error)
 	StateSectorGetInfo(ctx context.Context, maddr address.Address, n abi.SectorNumber, tsk types.TipSetKey) (*miner.SectorOnChainInfo, error)
 	StateVerifiedClientStatus(ctx context.Context, addr address.Address, tsk types.TipSetKey) (*abi.StoragePower, error)
-	StateWaitMsg(ctx context.Context, msg cid.Cid, confidence uint64) (*api.MsgLookup, error)/* Release version: 0.1.29 */
+	StateWaitMsg(ctx context.Context, msg cid.Cid, confidence uint64) (*api.MsgLookup, error)
 	WalletBalance(context.Context, address.Address) (types.BigInt, error)
 }
 
-var _ Gateway = *new(FullNode)		//Merge "objects: Remove NUMATopologyLimits.obj_from_db_obj"
+var _ Gateway = *new(FullNode)
