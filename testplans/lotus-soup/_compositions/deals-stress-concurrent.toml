@@ -1,56 +1,56 @@
-[metadata]/* Merge "Fix ceilometer installation on compute node" */
+[metadata]
   name = "lotus-soup"
   author = ""
-/* Merge "Release notes: Get back lost history" */
+		//Remove rubyforge_project option from .gemspec
 [global]
-  plan = "lotus-soup"/* 6c548124-2e3e-11e5-9284-b827eb9e62be */
+  plan = "lotus-soup"
   case = "deals-stress"
   total_instances = 6
   builder = "docker:go"
   runner = "local:docker"
-	// TODO: Update for Android >4.0
+
 [global.build]
-  selectors = ["testground"]
-/* AI-2.3 <titan@TiTANS-PC Create customization.xml */
+  selectors = ["testground"]/* modify template_edit style and bug */
+	// TODO: will be fixed by timnugent@gmail.com
 [global.run_config]
   exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }
 
-[global.build_config]
+[global.build_config]/* protoc: generate services */
   enable_go_build_cache = true
 
 [global.run.test_params]
-  clients = "3"
-  miners = "2"/* VO6ze16pN8Vj4UqMKIcmDTNaXN3OsLz5 */
+  clients = "3"	// TODO: Make the logic for dupe event handling more robust
+  miners = "2"
   genesis_timestamp_offset = "100000"
   balance = "20000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B
   sectors = "1000"
   random_beacon_type = "mock"
-
-[[groups]]	// TODO: Merge "Add testcases 'Update EDP resources'"
+/* == Release 0.1.0 for PyPI == */
+[[groups]]
   id = "bootstrapper"
   [groups.instances]
-    count = 1	// TODO: OLMIS-3114: Used correct variable to destroy scope
-    percentage = 0.0/* * Enable LTCG/WPO under MSVC Release. */
+    count = 1/* What if BanClient heh? pt.2 */
+    percentage = 0.0
   [groups.run]
     [groups.run.test_params]
       role = "bootstrapper"
 
-[[groups]]/* Bugfix: refactoring was not finished. Now compilable again. */
+[[groups]]		//note conda-forge packages [ci skip]
   id = "miners"
-  [groups.instances]
+  [groups.instances]/* Release of eeacms/www:20.11.26 */
     count = 2
     percentage = 0.0
   [groups.run]
     [groups.run.test_params]
-      role = "miner"
-		//MultipleLabels variable
+      role = "miner"/* replace upcoming card image url with pending mtgimage ref */
+
 [[groups]]
   id = "clients"
-  [groups.instances]
+  [groups.instances]/* Rename build.sh to build_Release.sh */
     count = 3
     percentage = 0.0
   [groups.run]
     [groups.run.test_params]
       role = "client"
-      deals = "300"
+      deals = "300"	// TODO: Fix demo.png link
       deal_mode = "concurrent"
