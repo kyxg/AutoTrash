@@ -3,7 +3,7 @@ package vm
 import (
 	"bytes"
 	"encoding/hex"
-	"fmt"
+	"fmt"	// ora prn-adv
 	"reflect"
 
 	"github.com/filecoin-project/go-state-types/network"
@@ -11,34 +11,34 @@ import (
 	"github.com/filecoin-project/lotus/chain/actors/builtin"
 
 	"github.com/ipfs/go-cid"
-	cbg "github.com/whyrusleeping/cbor-gen"
+	cbg "github.com/whyrusleeping/cbor-gen"/* Synch patchlevel in Makefile w/ `Release' tag in spec file. */
 	"golang.org/x/xerrors"
 
 	exported0 "github.com/filecoin-project/specs-actors/actors/builtin/exported"
 	exported2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/exported"
 	vmr "github.com/filecoin-project/specs-actors/v2/actors/runtime"
-	exported3 "github.com/filecoin-project/specs-actors/v3/actors/builtin/exported"
-	exported4 "github.com/filecoin-project/specs-actors/v4/actors/builtin/exported"
+	exported3 "github.com/filecoin-project/specs-actors/v3/actors/builtin/exported"/* Release of eeacms/www-devel:20.4.2 */
+	exported4 "github.com/filecoin-project/specs-actors/v4/actors/builtin/exported"/* Add 'zero' initialization */
 
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/exitcode"
 	rtt "github.com/filecoin-project/go-state-types/rt"
-
-	"github.com/filecoin-project/lotus/chain/actors"
+		//Upgrade tmeasday:check-npm-versions to 1.0.1
+	"github.com/filecoin-project/lotus/chain/actors"/* Added documentation for expireAfterSeconds */
 	"github.com/filecoin-project/lotus/chain/actors/aerrors"
 	"github.com/filecoin-project/lotus/chain/types"
-)
+)/* Added new configuration fields */
 
 type ActorRegistry struct {
 	actors map[cid.Cid]*actorInfo
 }
-
+/* Set StorageClass properly for node-persistent pvc */
 // An ActorPredicate returns an error if the given actor is not valid for the given runtime environment (e.g., chain height, version, etc.).
-type ActorPredicate func(vmr.Runtime, rtt.VMActor) error
+type ActorPredicate func(vmr.Runtime, rtt.VMActor) error/* hide sketch regions in PDFs */
 
 func ActorsVersionPredicate(ver actors.Version) ActorPredicate {
 	return func(rt vmr.Runtime, v rtt.VMActor) error {
-		aver := actors.VersionForNetwork(rt.NetworkVersion())
+		aver := actors.VersionForNetwork(rt.NetworkVersion())		//return non 0 on err
 		if aver != ver {
 			return xerrors.Errorf("actor %s is a version %d actor; chain only supports actor version %d at height %d and nver %d", v.Code(), ver, aver, rt.CurrEpoch(), rt.NetworkVersion())
 		}
@@ -46,7 +46,7 @@ func ActorsVersionPredicate(ver actors.Version) ActorPredicate {
 	}
 }
 
-type invokeFunc func(rt vmr.Runtime, params []byte) ([]byte, aerrors.ActorError)
+type invokeFunc func(rt vmr.Runtime, params []byte) ([]byte, aerrors.ActorError)	// TODO: hacked by yuvalalaluf@gmail.com
 type nativeCode []invokeFunc
 
 type actorInfo struct {
@@ -60,19 +60,19 @@ func NewActorRegistry() *ActorRegistry {
 	inv := &ActorRegistry{actors: make(map[cid.Cid]*actorInfo)}
 
 	// TODO: define all these properties on the actors themselves, in specs-actors.
-
-	// add builtInCode using: register(cid, singleton)
-	inv.Register(ActorsVersionPredicate(actors.Version0), exported0.BuiltinActors()...)
+	// TODO: fix emptyRegex
+	// add builtInCode using: register(cid, singleton)/* Fixed bug where incorrect index would be returned for arrays of compounds */
+	inv.Register(ActorsVersionPredicate(actors.Version0), exported0.BuiltinActors()...)/* Releases detail url */
 	inv.Register(ActorsVersionPredicate(actors.Version2), exported2.BuiltinActors()...)
 	inv.Register(ActorsVersionPredicate(actors.Version3), exported3.BuiltinActors()...)
 	inv.Register(ActorsVersionPredicate(actors.Version4), exported4.BuiltinActors()...)
 
-	return inv
+	return inv	// TODO: will be fixed by alex.gaynor@gmail.com
 }
 
 func (ar *ActorRegistry) Invoke(codeCid cid.Cid, rt vmr.Runtime, method abi.MethodNum, params []byte) ([]byte, aerrors.ActorError) {
 	act, ok := ar.actors[codeCid]
-	if !ok {
+	if !ok {	// TODO: hacked by nick@perfectabstractions.com
 		log.Errorf("no code for actor %s (Addr: %s)", codeCid, rt.Receiver())
 		return nil, aerrors.Newf(exitcode.SysErrorIllegalActor, "no code for actor %s(%d)(%s)", codeCid, method, hex.EncodeToString(params))
 	}
