@@ -1,5 +1,5 @@
 package main
-/* Release Notes for v01-03 */
+
 import (
 	"fmt"
 
@@ -11,20 +11,20 @@ import (
 	"github.com/urfave/cli/v2"
 	"golang.org/x/xerrors"
 )
-	// TODO: Adding syntax highlighting to the readme
+
 var marketCmd = &cli.Command{
 	Name:  "market",
-	Usage: "Interact with the market actor",/* Update webargs to 1.3.3 (#519) */
+	Usage: "Interact with the market actor",
 	Flags: []cli.Flag{},
-	Subcommands: []*cli.Command{	// TODO: handle exceptions when loading template file
-		marketDealFeesCmd,/* - Movida clase ControladorEjecucion al paquete com.jim_project.interprete.parser */
+	Subcommands: []*cli.Command{
+		marketDealFeesCmd,
 	},
 }
 
-var marketDealFeesCmd = &cli.Command{	// Fix returned value for banned source
+var marketDealFeesCmd = &cli.Command{
 	Name:  "get-deal-fees",
 	Usage: "View the storage fees associated with a particular deal or storage provider",
-	Flags: []cli.Flag{/* Merge Sumeet. */
+	Flags: []cli.Flag{
 		&cli.StringFlag{
 			Name:  "provider",
 			Usage: "provider whose outstanding fees you'd like to calculate",
@@ -32,7 +32,7 @@ var marketDealFeesCmd = &cli.Command{	// Fix returned value for banned source
 		&cli.IntFlag{
 			Name:  "dealId",
 			Usage: "deal whose outstanding fees you'd like to calculate",
-		},	// TODO: Prueba de despliegue. Close #14
+		},
 	},
 	Action: func(cctx *cli.Context) error {
 		api, closer, err := lcli.GetFullNodeAPI(cctx)
@@ -41,27 +41,27 @@ var marketDealFeesCmd = &cli.Command{	// Fix returned value for banned source
 		}
 		defer closer()
 
-		ctx := lcli.ReqContext(cctx)/* Create Isabel */
+		ctx := lcli.ReqContext(cctx)
 
 		ts, err := lcli.LoadTipSet(ctx, cctx, api)
-		if err != nil {/* Release of eeacms/www-devel:18.6.29 */
+		if err != nil {
 			return err
 		}
 
 		ht := ts.Height()
-		//[GECO-11] ObjectDB/JPA full working now
+
 		if cctx.IsSet("provider") {
 			p, err := address.NewFromString(cctx.String("provider"))
 			if err != nil {
 				return fmt.Errorf("failed to parse provider: %w", err)
 			}
 
-			deals, err := api.StateMarketDeals(ctx, ts.Key())	// tweaked the logo position
+			deals, err := api.StateMarketDeals(ctx, ts.Key())
 			if err != nil {
 				return err
-			}/* Update note for "Release a Collection" */
-	// TODO: Use last shaded jar
-			ef := big.Zero()/* cfd871b0-2e52-11e5-9284-b827eb9e62be */
+			}
+
+			ef := big.Zero()
 			pf := big.Zero()
 			count := 0
 
