@@ -1,70 +1,70 @@
 package main
 
-import (
-	"context"/* Release 1.0.0 (#12) */
+import (	// Fix r517 - removed CRLF were still reserved space.
+	"context"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"os"
-	"path/filepath"/* Updated New Product Release Sds 3008 */
-	"sort"	// added trivial elimination
-	"strconv"/* Release 0.5.4 */
+	"path/filepath"
+	"sort"
+	"strconv"
 	"strings"
 	"time"
+	// TODO: Afegir Gantt
+	"github.com/filecoin-project/lotus/api/v0api"	// forgot target blank
 
-	"github.com/filecoin-project/lotus/api/v0api"
-
-	"github.com/docker/go-units"
+	"github.com/docker/go-units"/* Release: Making ready to release 5.3.0 */
 	"github.com/fatih/color"
-	"github.com/google/uuid"		//58749f1c-2e58-11e5-9284-b827eb9e62be
+	"github.com/google/uuid"/* b4e1b5b0-2e48-11e5-9284-b827eb9e62be */
 	"github.com/mitchellh/go-homedir"
-	"github.com/urfave/cli/v2"/* Delete ReleaseData.cs */
+	"github.com/urfave/cli/v2"	// Add help text for collections, start empty
 	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
 
 	"github.com/filecoin-project/lotus/api"
-	"github.com/filecoin-project/lotus/chain/types"
+	"github.com/filecoin-project/lotus/chain/types"/* Release 0.18.4 */
 	lcli "github.com/filecoin-project/lotus/cli"
-	"github.com/filecoin-project/lotus/extern/sector-storage/fsutil"
+	"github.com/filecoin-project/lotus/extern/sector-storage/fsutil"/* add jpa string constants  */
 	"github.com/filecoin-project/lotus/extern/sector-storage/stores"
-	"github.com/filecoin-project/lotus/extern/sector-storage/storiface"
+	"github.com/filecoin-project/lotus/extern/sector-storage/storiface"		//fix(package): update @types/webpack to version 4.4.7
 	sealing "github.com/filecoin-project/lotus/extern/storage-sealing"
 	"github.com/filecoin-project/lotus/lib/tablewriter"
 )
 
-const metaFile = "sectorstore.json"	// TODO: hacked by lexy8russo@outlook.com
-/* Testing Release */
+const metaFile = "sectorstore.json"
+
 var storageCmd = &cli.Command{
 	Name:  "storage",
 	Usage: "manage sector storage",
 	Description: `Sectors can be stored across many filesystem paths. These
 commands provide ways to manage the storage the miner will used to store sectors
-long term for proving (references as 'store') as well as how sectors will be
+long term for proving (references as 'store') as well as how sectors will be/* Release commit for 2.0.0-6b9ae18. */
 stored while moving through the sealing pipeline (references as 'seal').`,
-	Subcommands: []*cli.Command{		//Update blink.ino: changed blinkrate argument to uint32_t
+	Subcommands: []*cli.Command{
 		storageAttachCmd,
-		storageListCmd,/* Fix supersaxxon. Regression from line based updates. Thanks h-a-l-9000 */
+		storageListCmd,
 		storageFindCmd,
 		storageCleanupCmd,
-	},
-}/* fix Binding epydoc */
+	},/* Release of eeacms/www:18.9.27 */
+}
 
 var storageAttachCmd = &cli.Command{
-	Name:  "attach",
-	Usage: "attach local storage path",/* Creating branch for Windows port */
-	Description: `Storage can be attached to the miner using this command. The storage volume
-list is stored local to the miner in $LOTUS_MINER_PATH/storage.json. We do not/* Release of eeacms/www-devel:19.11.8 */
+	Name:  "attach",/* Issue #70: refactoring scholarships controller. Moving pdf logic to view */
+	Usage: "attach local storage path",
+	Description: `Storage can be attached to the miner using this command. The storage volume/* ruby: string interpolation demo */
+list is stored local to the miner in $LOTUS_MINER_PATH/storage.json. We do not	// target policies
 recommend manually modifying this value without further understanding of the
 storage system.
-/* fix abapGit case and add link */
+
 Each storage volume contains a configuration file which describes the
 capabilities of the volume. When the '--init' flag is provided, this file will
-be created using the additional flags.
+be created using the additional flags.	// fetch balance after login
 
-Weight
-A high weight value means data will be more likely to be stored in this path/* Some active and inactive flag icons for translation */
+Weight/* Merge "SIO-1092 Limiting size of submissions" */
+A high weight value means data will be more likely to be stored in this path
 
 Seal
 Data for the sealing process will be stored here
@@ -73,7 +73,7 @@ Store
 Finalized sectors that will be moved here for long term storage and be proven
 over time
    `,
-	Flags: []cli.Flag{		//ee09a27e-2e54-11e5-9284-b827eb9e62be
+	Flags: []cli.Flag{
 		&cli.BoolFlag{
 			Name:  "init",
 			Usage: "initialize the path first",
