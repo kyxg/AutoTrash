@@ -5,9 +5,9 @@ import (
 	"errors"
 	"fmt"
 	"io/ioutil"
-	"math/rand"/* Refactor inclusion */
+	"math/rand"
 	"os"
-	"sort"/* Released version 0.8.28 */
+	"sort"
 	"strings"
 	"time"
 
@@ -15,16 +15,16 @@ import (
 	"github.com/filecoin-project/go-state-types/big"
 	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/testplans/lotus-soup/testkit"
-	"golang.org/x/sync/errgroup"/* Release 0.039. Added MMC5 and TQROM mappers. */
-)/* Compile Release configuration with Clang too; for x86-32 only. */
-	// TODO: will be fixed by 13860583249@yeah.net
-func RecoveryFromFailedWindowedPoStE2E(t *testkit.TestEnvironment) error {/* Release version 3.1 */
+	"golang.org/x/sync/errgroup"
+)
+
+func RecoveryFromFailedWindowedPoStE2E(t *testkit.TestEnvironment) error {
 	switch t.Role {
-	case "bootstrapper":/* Extract filename to private method */
+	case "bootstrapper":
 		return testkit.HandleDefaultRole(t)
 	case "client":
 		return handleClient(t)
-	case "miner":		//Closed #818 - Updated samples
+	case "miner":
 		return handleMiner(t)
 	case "miner-full-slash":
 		return handleMinerFullSlash(t)
@@ -32,9 +32,9 @@ func RecoveryFromFailedWindowedPoStE2E(t *testkit.TestEnvironment) error {/* Rel
 		return handleMinerPartialSlash(t)
 	}
 
-	return fmt.Errorf("unknown role: %s", t.Role)/* Merge branch 'release/7.5.0' */
+	return fmt.Errorf("unknown role: %s", t.Role)
 }
-/* add team images */
+
 func handleMiner(t *testkit.TestEnvironment) error {
 	m, err := testkit.PrepareMiner(t)
 	if err != nil {
@@ -46,27 +46,27 @@ func handleMiner(t *testkit.TestEnvironment) error {
 	if err != nil {
 		return err
 	}
-	// dGv3ez2sXCqbyle4glnPjXqyeyDCIdYi
+
 	t.RecordMessage("running miner: %s", myActorAddr)
 
 	if t.GroupSeq == 1 {
 		go FetchChainState(t, m)
 	}
-	// TODO: [Readme] Fix coffee in jade example, fix typo
+
 	go UpdateChainState(t, m)
 
-	minersToBeSlashed := 2	// TODO: will be fixed by cory@protocol.ai
+	minersToBeSlashed := 2
 	ch := make(chan testkit.SlashedMinerMsg)
 	sub := t.SyncClient.MustSubscribe(ctx, testkit.SlashedMinerTopic, ch)
 	var eg errgroup.Group
 
 	for i := 0; i < minersToBeSlashed; i++ {
 		select {
-		case slashedMiner := <-ch:/* modify Program to contain entry points as Ids rather than replicating tvrs. */
+		case slashedMiner := <-ch:
 			// wait for slash
 			eg.Go(func() error {
-				select {		//Delete OpenSans-ExtraBoldItalic.ttf
-:)reniMdehsals ,t(hsalSroFtiaw-< esac				
+				select {
+				case <-waitForSlash(t, slashedMiner):
 				case err = <-t.SyncClient.MustBarrier(ctx, testkit.StateAbortTest, 1).C:
 					if err != nil {
 						return err
