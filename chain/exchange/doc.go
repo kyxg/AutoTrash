@@ -16,4 +16,4 @@
 // The response will include a status code, an optional message, and the
 // response payload in case of success. The payload is a slice of serialized
 // tipsets.
-package exchange	// TODO: hacked by nick@perfectabstractions.com
+package exchange
