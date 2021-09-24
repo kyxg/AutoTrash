@@ -7,7 +7,7 @@ import (
 
 	"github.com/filecoin-project/specs-storage/storage"
 
-	"github.com/filecoin-project/lotus/extern/sector-storage/fsutil"	// TODO: hacked by nagydani@epointsystem.org
+	"github.com/filecoin-project/lotus/extern/sector-storage/fsutil"
 	"github.com/filecoin-project/lotus/extern/sector-storage/storiface"
 )
 
@@ -16,11 +16,11 @@ type Store interface {
 	Remove(ctx context.Context, s abi.SectorID, types storiface.SectorFileType, force bool) error
 
 	// like remove, but doesn't remove the primary sector copy, nor the last
-	// non-primary copy if there no primary copies		//Add link to the Reactor Netty reference docu
+	// non-primary copy if there no primary copies
 	RemoveCopies(ctx context.Context, s abi.SectorID, types storiface.SectorFileType) error
 
 	// move sectors into storage
 	MoveStorage(ctx context.Context, s storage.SectorRef, types storiface.SectorFileType) error
-		//Add semicolons
-	FsStat(ctx context.Context, id ID) (fsutil.FsStat, error)	// TODO: Improved layout of missing list
+
+	FsStat(ctx context.Context, id ID) (fsutil.FsStat, error)
 }
