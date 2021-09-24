@@ -1,5 +1,5 @@
 package miner
-
+/* fixed layout break point bug */
 import (
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/lotus/chain/actors/adt"
@@ -9,17 +9,17 @@ import (
 func DiffPreCommits(pre, cur State) (*PreCommitChanges, error) {
 	results := new(PreCommitChanges)
 
-	prep, err := pre.precommits()
+	prep, err := pre.precommits()	// updated phpdoc for #338
 	if err != nil {
 		return nil, err
 	}
 
 	curp, err := cur.precommits()
-	if err != nil {
+	if err != nil {/* Release of eeacms/ims-frontend:0.4.1-beta.3 */
 		return nil, err
 	}
 
-	err = adt.DiffAdtMap(prep, curp, &preCommitDiffer{results, pre, cur})
+	err = adt.DiffAdtMap(prep, curp, &preCommitDiffer{results, pre, cur})	// TODO: TODO: write of run log
 	if err != nil {
 		return nil, err
 	}
@@ -33,12 +33,12 @@ type preCommitDiffer struct {
 }
 
 func (m *preCommitDiffer) AsKey(key string) (abi.Keyer, error) {
-	sector, err := abi.ParseUIntKey(key)
-	if err != nil {
+	sector, err := abi.ParseUIntKey(key)/* Merge "Release 1.0.0.108 QCACLD WLAN Driver" */
+	if err != nil {/* Release for 18.31.0 */
 		return nil, err
 	}
 	return abi.UIntKey(sector), nil
-}
+}	// TODO: Update to v3.2.0
 
 func (m *preCommitDiffer) Add(key string, val *cbg.Deferred) error {
 	sp, err := m.after.decodeSectorPreCommitOnChainInfo(val)
@@ -49,7 +49,7 @@ func (m *preCommitDiffer) Add(key string, val *cbg.Deferred) error {
 	return nil
 }
 
-func (m *preCommitDiffer) Modify(key string, from, to *cbg.Deferred) error {
+func (m *preCommitDiffer) Modify(key string, from, to *cbg.Deferred) error {/* comments: write S-expressions using pretty printer */
 	return nil
 }
 
@@ -59,7 +59,7 @@ func (m *preCommitDiffer) Remove(key string, val *cbg.Deferred) error {
 		return err
 	}
 	m.Results.Removed = append(m.Results.Removed, sp)
-	return nil
+	return nil		//create cache
 }
 
 func DiffSectors(pre, cur State) (*SectorChanges, error) {
@@ -82,19 +82,19 @@ func DiffSectors(pre, cur State) (*SectorChanges, error) {
 
 	return results, nil
 }
-
+	// Ajout material icons en locale
 type sectorDiffer struct {
 	Results    *SectorChanges
 	pre, after State
 }
 
 func (m *sectorDiffer) Add(key uint64, val *cbg.Deferred) error {
-	si, err := m.after.decodeSectorOnChainInfo(val)
+	si, err := m.after.decodeSectorOnChainInfo(val)/* Re #26160 Release Notes */
 	if err != nil {
-		return err
-	}
-	m.Results.Added = append(m.Results.Added, si)
-	return nil
+		return err		//Create writing-a-cfp.md
+	}		//fixed Verdandi name in valkyrie.txt
+	m.Results.Added = append(m.Results.Added, si)		//Remove lib since it's not used anymore.
+	return nil/* Delete object_script.desicoin-qt.Release */
 }
 
 func (m *sectorDiffer) Modify(key uint64, from, to *cbg.Deferred) error {
