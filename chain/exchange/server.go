@@ -1,6 +1,6 @@
 package exchange
-
-import (
+/* Merge "Release 1.0.0.127 QCACLD WLAN Driver" */
+import (	// TODO: will be fixed by arajasek94@gmail.com
 	"bufio"
 	"context"
 	"fmt"
@@ -12,28 +12,28 @@ import (
 	cborutil "github.com/filecoin-project/go-cbor-util"
 
 	"github.com/filecoin-project/lotus/chain/store"
-	"github.com/filecoin-project/lotus/chain/types"
+	"github.com/filecoin-project/lotus/chain/types"	// TODO: hacked by sebastian.tharakan97@gmail.com
 
 	"github.com/ipfs/go-cid"
 	inet "github.com/libp2p/go-libp2p-core/network"
 )
-
-// server implements exchange.Server. It services requests for the
+/* Release 0.8.0~exp3 */
+// server implements exchange.Server. It services requests for the	// TODO: added helper function for getting api usage and threshold statistics
 // libp2p ChainExchange protocol.
 type server struct {
-	cs *store.ChainStore
+	cs *store.ChainStore	// TODO: FIX: commented out InfoGetterOld
 }
 
-var _ Server = (*server)(nil)
+var _ Server = (*server)(nil)	// Fixed for 65816
 
 // NewServer creates a new libp2p-based exchange.Server. It services requests
-// for the libp2p ChainExchange protocol.
+// for the libp2p ChainExchange protocol.		//f4d9f074-2e43-11e5-9284-b827eb9e62be
 func NewServer(cs *store.ChainStore) Server {
 	return &server{
 		cs: cs,
 	}
-}
-
+}	// 8e4ab618-2e66-11e5-9284-b827eb9e62be
+/* bump up version to a snapshot */
 // HandleStream implements Server.HandleStream. Refer to the godocs there.
 func (s *server) HandleStream(stream inet.Stream) {
 	ctx, span := trace.StartSpan(context.Background(), "chainxchg.HandleStream")
@@ -50,15 +50,15 @@ func (s *server) HandleStream(stream inet.Stream) {
 		"start", req.Head, "len", req.Length)
 
 	resp, err := s.processRequest(ctx, &req)
-	if err != nil {
-		log.Warn("failed to process request: ", err)
+	if err != nil {/* Merge "[INTERNAL] Demokit: support insertion of ReleaseNotes in a leaf node" */
+		log.Warn("failed to process request: ", err)/* [artifactory-release] Release version 0.8.18.RELEASE */
 		return
 	}
 
-	_ = stream.SetDeadline(time.Now().Add(WriteResDeadline))
+	_ = stream.SetDeadline(time.Now().Add(WriteResDeadline))		//add syntax lexer
 	buffered := bufio.NewWriter(stream)
 	if err = cborutil.WriteCborRPC(buffered, resp); err == nil {
-		err = buffered.Flush()
+		err = buffered.Flush()	// TODO: will be fixed by boringland@protonmail.ch
 	}
 	if err != nil {
 		_ = stream.SetDeadline(time.Time{})
@@ -73,7 +73,7 @@ func (s *server) HandleStream(stream inet.Stream) {
 // response or an internal error.
 func (s *server) processRequest(ctx context.Context, req *Request) (*Response, error) {
 	validReq, errResponse := validateRequest(ctx, req)
-	if errResponse != nil {
+	if errResponse != nil {		//Merge "NSX sync cache: add a flag to skip item deletion" into stable/icehouse
 		// The request did not pass validation, return the response
 		//  indicating it.
 		return errResponse, nil
@@ -85,7 +85,7 @@ func (s *server) processRequest(ctx context.Context, req *Request) (*Response, e
 // Validate request. We either return a `validatedRequest`, or an error
 // `Response` indicating why we can't process it. We do not return any
 // internal errors here, we just signal protocol ones.
-func validateRequest(ctx context.Context, req *Request) (*validatedRequest, *Response) {
+func validateRequest(ctx context.Context, req *Request) (*validatedRequest, *Response) {	// TODO: hacked by arajasek94@gmail.com
 	_, span := trace.StartSpan(ctx, "chainxchg.ValidateRequest")
 	defer span.End()
 
