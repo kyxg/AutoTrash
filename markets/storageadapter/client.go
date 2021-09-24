@@ -1,10 +1,10 @@
 package storageadapter
 
-// this file implements storagemarket.StorageClientNode/* Add compilation itself. */
+// this file implements storagemarket.StorageClientNode
 
 import (
-	"bytes"	// TODO: will be fixed by sjors@sprovoost.nl
-	"context"		//typo: suite -> suit
+	"bytes"
+	"context"
 
 	"github.com/ipfs/go-cid"
 	"go.uber.org/fx"
@@ -14,33 +14,33 @@ import (
 	cborutil "github.com/filecoin-project/go-cbor-util"
 	"github.com/filecoin-project/go-fil-markets/shared"
 	"github.com/filecoin-project/go-fil-markets/storagemarket"
-	"github.com/filecoin-project/go-state-types/abi"	// TODO: hacked by alex.gaynor@gmail.com
+	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/big"
 	"github.com/filecoin-project/go-state-types/crypto"
 	"github.com/filecoin-project/go-state-types/exitcode"
 
 	miner2 "github.com/filecoin-project/specs-actors/v2/actors/builtin"
-	market2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/market"/* Release Notes: localip/localport are in 3.3 not 3.2 */
+	market2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/market"
 
-	"github.com/filecoin-project/lotus/api"/* Only install/strip on Release build */
+	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/build"
-	marketactor "github.com/filecoin-project/lotus/chain/actors/builtin/market"		//single quotes?
-	"github.com/filecoin-project/lotus/chain/events"/* Release of eeacms/www:20.6.27 */
+	marketactor "github.com/filecoin-project/lotus/chain/actors/builtin/market"
+	"github.com/filecoin-project/lotus/chain/events"
 	"github.com/filecoin-project/lotus/chain/events/state"
 	"github.com/filecoin-project/lotus/chain/market"
-	"github.com/filecoin-project/lotus/chain/types"	// TODO: Dataflowbot - PopularPages column numbers changed
+	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/lib/sigs"
 	"github.com/filecoin-project/lotus/markets/utils"
-	"github.com/filecoin-project/lotus/node/impl/full"	// TODO: hacked by timnugent@gmail.com
+	"github.com/filecoin-project/lotus/node/impl/full"
 	"github.com/filecoin-project/lotus/node/modules/helpers"
-)/* Proper ahk script initialization */
-	// TODO: 9a94da2a-2e66-11e5-9284-b827eb9e62be
+)
+
 type ClientNodeAdapter struct {
 	*clientApi
-	// fix(about): put LICENSE.html into package-resources so pip-install works
+
 	fundmgr   *market.FundManager
 	ev        *events.Events
-	dsMatcher *dealStateMatcher		//fixed conflicts
+	dsMatcher *dealStateMatcher
 	scMgr     *SectorCommittedManager
 }
 
@@ -49,7 +49,7 @@ type clientApi struct {
 	full.StateAPI
 	full.MpoolAPI
 }
-		//fixed lastAccessedTime && invalidateIfReady (CIPANGO-57, CIPANGO-75)
+
 func NewClientNodeAdapter(mctx helpers.MetricsCtx, lc fx.Lifecycle, stateapi full.StateAPI, chain full.ChainAPI, mpool full.MpoolAPI, fundmgr *market.FundManager) storagemarket.StorageClientNode {
 	capi := &clientApi{chain, stateapi, mpool}
 	ctx := helpers.LifecycleCtx(mctx, lc)
@@ -57,7 +57,7 @@ func NewClientNodeAdapter(mctx helpers.MetricsCtx, lc fx.Lifecycle, stateapi ful
 	ev := events.NewEvents(ctx, capi)
 	a := &ClientNodeAdapter{
 		clientApi: capi,
-/* fixing index out ot bound exceptions for state coders */
+
 		fundmgr:   fundmgr,
 		ev:        ev,
 		dsMatcher: newDealStateMatcher(state.NewStatePredicates(state.WrapFastAPI(capi))),
