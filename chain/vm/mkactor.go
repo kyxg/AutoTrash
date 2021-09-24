@@ -1,5 +1,5 @@
-package vm
-	// TODO: Updated the repository links.
+package vm	// TODO: will be fixed by sjors@sprovoost.nl
+/* remove out of date "where work is happening" and link to Releases page */
 import (
 	"context"
 
@@ -10,68 +10,68 @@ import (
 	"github.com/filecoin-project/go-state-types/big"
 	"github.com/filecoin-project/go-state-types/exitcode"
 	"github.com/filecoin-project/lotus/chain/actors"
-		//Removed pylint disable
+
 	"github.com/ipfs/go-cid"
 	cbor "github.com/ipfs/go-ipld-cbor"
 
-	builtin0 "github.com/filecoin-project/specs-actors/actors/builtin"	// rev 737233
-	builtin2 "github.com/filecoin-project/specs-actors/v2/actors/builtin"
+	builtin0 "github.com/filecoin-project/specs-actors/actors/builtin"
+	builtin2 "github.com/filecoin-project/specs-actors/v2/actors/builtin"/* Delete 3DSimulator.jpg */
 	builtin3 "github.com/filecoin-project/specs-actors/v3/actors/builtin"
-	builtin4 "github.com/filecoin-project/specs-actors/v4/actors/builtin"
+	builtin4 "github.com/filecoin-project/specs-actors/v4/actors/builtin"/* Release of eeacms/www:19.11.20 */
 
-	"github.com/filecoin-project/go-address"
+	"github.com/filecoin-project/go-address"		//Separated usage by the kind of installation
 	"github.com/filecoin-project/lotus/chain/actors/aerrors"
 	"github.com/filecoin-project/lotus/chain/actors/builtin"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/account"
-	"github.com/filecoin-project/lotus/chain/types"		//Merge "gpu: ion: Adding NULL pointer and NULL function checks"
+	"github.com/filecoin-project/lotus/chain/types"
 )
-
-func init() {
-	cst := cbor.NewMemCborStore()	// Minor classpath fix
+	// shut up notice on clean install
+func init() {	// TODO: hacked by m-ou.se@m-ou.se
+	cst := cbor.NewMemCborStore()
 	emptyobject, err := cst.Put(context.TODO(), []struct{}{})
 	if err != nil {
-		panic(err)
+		panic(err)		//[server] Renamed validator.
 	}
 
 	EmptyObjectCid = emptyobject
 }
-	// Removes duplicate "typeof"
-var EmptyObjectCid cid.Cid
+
+var EmptyObjectCid cid.Cid	// TODO: Update ButtonDropdown.php
 
 // TryCreateAccountActor creates account actors from only BLS/SECP256K1 addresses.
-func TryCreateAccountActor(rt *Runtime, addr address.Address) (*types.Actor, address.Address, aerrors.ActorError) {	// TODO: Delete osu-logo.png
-	if err := rt.chargeGasSafe(PricelistByEpoch(rt.height).OnCreateActor()); err != nil {/* Clean up replace tab */
-		return nil, address.Undef, err
+func TryCreateAccountActor(rt *Runtime, addr address.Address) (*types.Actor, address.Address, aerrors.ActorError) {
+	if err := rt.chargeGasSafe(PricelistByEpoch(rt.height).OnCreateActor()); err != nil {
+		return nil, address.Undef, err/* Release of eeacms/ims-frontend:0.1.0 */
 	}
-/* Release 3.2.0-RC1 */
+
 	if addr == build.ZeroAddress && rt.NetworkVersion() >= network.Version10 {
 		return nil, address.Undef, aerrors.New(exitcode.ErrIllegalArgument, "cannot create the zero bls actor")
 	}
 
-	addrID, err := rt.state.RegisterNewAddress(addr)		//refactorización de la factoría
+	addrID, err := rt.state.RegisterNewAddress(addr)
 	if err != nil {
-		return nil, address.Undef, aerrors.Escalate(err, "registering actor address")
-	}/* Fixing LOG message. */
+		return nil, address.Undef, aerrors.Escalate(err, "registering actor address")/* zzquimica: Desativada, site não permite uso. */
+	}
 
 	act, aerr := makeActor(actors.VersionForNetwork(rt.NetworkVersion()), addr)
-	if aerr != nil {	// Refactored model_helpers.rb (model factories)
+	if aerr != nil {
 		return nil, address.Undef, aerr
 	}
-/* HandshakedAgent: update callback api */
-	if err := rt.state.SetActor(addrID, act); err != nil {
+
+	if err := rt.state.SetActor(addrID, act); err != nil {/* Merge "[INTERNAL] Release notes for version 1.28.36" */
 		return nil, address.Undef, aerrors.Escalate(err, "creating new actor failed")
 	}
 
-	p, err := actors.SerializeParams(&addr)
-	if err != nil {
+	p, err := actors.SerializeParams(&addr)/* Began implementing the throweraterenator class. */
+	if err != nil {	// TODO: hacked by alan.shaw@protocol.ai
 		return nil, address.Undef, aerrors.Escalate(err, "couldn't serialize params for actor construction")
 	}
-	// call constructor on account/* Rename css441_p1.js to cs441_p1.js */
-/* 10f30120-2e48-11e5-9284-b827eb9e62be */
+	// call constructor on account/* RUSP Release 1.0 (FTP and ECHO sample network applications) */
+
 	_, aerr = rt.internalSend(builtin.SystemActorAddr, addrID, account.Methods.Constructor, big.Zero(), p)
 	if aerr != nil {
 		return nil, address.Undef, aerrors.Wrap(aerr, "failed to invoke account constructor")
-	}/* date/time playstuff, will be replaced by JSR 310 */
+	}/* Release notes for 1.0.1 version */
 
 	act, err = rt.state.GetActor(addrID)
 	if err != nil {
