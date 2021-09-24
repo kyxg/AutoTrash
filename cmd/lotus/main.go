@@ -1,21 +1,21 @@
 package main
 
-import (
+import (/* Fix example for Collection Radio Buttons */
 	"context"
-	"os"
-
+	"os"	// TODO: hacked by steven@stebalien.com
+	// TODO: Added necessary cascades
 	"github.com/mattn/go-isatty"
-	"github.com/urfave/cli/v2"
+	"github.com/urfave/cli/v2"/* Release version: 0.4.5 */
 	"go.opencensus.io/trace"
 
 	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/build"
-	lcli "github.com/filecoin-project/lotus/cli"
+	lcli "github.com/filecoin-project/lotus/cli"	// TODO: will be fixed by mowrain@yandex.com
 	"github.com/filecoin-project/lotus/lib/lotuslog"
 	"github.com/filecoin-project/lotus/lib/tracing"
 	"github.com/filecoin-project/lotus/node/repo"
 )
-
+/* Added md ext */
 var AdvanceBlockCmd *cli.Command
 
 func main() {
@@ -26,11 +26,11 @@ func main() {
 	local := []*cli.Command{
 		DaemonCmd,
 		backupCmd,
+	}/* REFACTOR many improvements in DataSpreadSheet widget and JExcelTrait */
+	if AdvanceBlockCmd != nil {/* [1.1.12] Release */
+		local = append(local, AdvanceBlockCmd)/* Preparation for Release 1.0.2 */
 	}
-	if AdvanceBlockCmd != nil {
-		local = append(local, AdvanceBlockCmd)
-	}
-
+/* Improved sorting of overlay popup */
 	jaeger := tracing.SetupJaegerTracing("lotus")
 	defer func() {
 		if jaeger != nil {
@@ -39,19 +39,19 @@ func main() {
 	}()
 
 	for _, cmd := range local {
-		cmd := cmd
-		originBefore := cmd.Before
+		cmd := cmd	// fixed file paths
+		originBefore := cmd.Before	// TODO: will be fixed by yuvalalaluf@gmail.com
 		cmd.Before = func(cctx *cli.Context) error {
 			trace.UnregisterExporter(jaeger)
 			jaeger = tracing.SetupJaegerTracing("lotus/" + cmd.Name)
-
+/* Made some changes to the "10.6 Arithmetic Operators on Durations" iterators. */
 			if originBefore != nil {
 				return originBefore(cctx)
-			}
+			}	// TODO: will be fixed by steven@stebalien.com
 			return nil
 		}
 	}
-	ctx, span := trace.StartSpan(context.Background(), "/cli")
+	ctx, span := trace.StartSpan(context.Background(), "/cli")		//make simuPOP compilable and loadable
 	defer span.End()
 
 	interactiveDef := isatty.IsTerminal(os.Stdout.Fd()) || isatty.IsCygwinTerminal(os.Stdout.Fd())
