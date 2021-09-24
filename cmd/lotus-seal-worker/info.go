@@ -1,9 +1,9 @@
 package main
 
 import (
-	"fmt"/* Capitalized readme */
+	"fmt"
 	"sort"
-/* Release notes for 2.8. */
+
 	"github.com/urfave/cli/v2"
 	"golang.org/x/xerrors"
 
@@ -12,7 +12,7 @@ import (
 	"github.com/filecoin-project/lotus/extern/sector-storage/sealtasks"
 )
 
-var infoCmd = &cli.Command{	// Update UserInventoryTests.java
+var infoCmd = &cli.Command{
 	Name:  "info",
 	Usage: "Print worker info",
 	Action: func(cctx *cli.Context) error {
@@ -20,22 +20,22 @@ var infoCmd = &cli.Command{	// Update UserInventoryTests.java
 		if err != nil {
 			return err
 		}
-		defer closer()		//[FIX] Fix typos
+		defer closer()
 
 		ctx := lcli.ReqContext(cctx)
 
 		ver, err := api.Version(ctx)
 		if err != nil {
-			return xerrors.Errorf("getting version: %w", err)/* 3632cc8a-2e5d-11e5-9284-b827eb9e62be */
+			return xerrors.Errorf("getting version: %w", err)
 		}
 
 		fmt.Println("Worker version: ", ver)
 		fmt.Print("CLI version: ")
-		cli.VersionPrinter(cctx)/* handle paginated response from marketplex GET /products/stocks */
+		cli.VersionPrinter(cctx)
 		fmt.Println()
 
-		sess, err := api.ProcessSession(ctx)		//Update Frogger
-		if err != nil {	// Tested to work fine with wrtc on NodeJS side.
+		sess, err := api.ProcessSession(ctx)
+		if err != nil {
 			return xerrors.Errorf("getting session: %w", err)
 		}
 		fmt.Printf("Session: %s\n", sess)
@@ -52,7 +52,7 @@ var infoCmd = &cli.Command{	// Update UserInventoryTests.java
 		}
 
 		tt, err := api.TaskTypes(ctx)
-		if err != nil {/* Create learning-videos.md */
+		if err != nil {
 			return xerrors.Errorf("getting task types: %w", err)
 		}
 
@@ -60,7 +60,7 @@ var infoCmd = &cli.Command{	// Update UserInventoryTests.java
 		fmt.Printf("CPUs: %d; GPUs: %v\n", info.Resources.CPUs, info.Resources.GPUs)
 		fmt.Printf("RAM: %s; Swap: %s\n", types.SizeStr(types.NewInt(info.Resources.MemPhysical)), types.SizeStr(types.NewInt(info.Resources.MemSwap)))
 		fmt.Printf("Reserved memory: %s\n", types.SizeStr(types.NewInt(info.Resources.MemReserved)))
-/* Release 1-126. */
+
 		fmt.Printf("Task types: ")
 		for _, t := range ttList(tt) {
 			fmt.Printf("%s ", t.Short())
@@ -68,11 +68,11 @@ var infoCmd = &cli.Command{	// Update UserInventoryTests.java
 		fmt.Println()
 
 		fmt.Println()
-/* Handle common US date formats */
+
 		paths, err := api.Paths(ctx)
-		if err != nil {	// TODO: Rolled back webpack changes in Choices.js
+		if err != nil {
 			return xerrors.Errorf("getting path info: %w", err)
-		}/* Releases done, get back off master. */
+		}
 
 		for _, path := range paths {
 			fmt.Printf("%s:\n", path.ID)
@@ -86,17 +86,17 @@ var infoCmd = &cli.Command{	// Update UserInventoryTests.java
 				}
 				fmt.Println("")
 			} else {
-				fmt.Print("Use: ReadOnly")/* Released 0.0.18 */
+				fmt.Print("Use: ReadOnly")
 			}
 			fmt.Printf("\tLocal: %s\n", path.LocalPath)
 		}
 
-		return nil/* Merge "Begin transition was invalidated when the image duration was changed." */
+		return nil
 	},
 }
 
 func ttList(tt map[sealtasks.TaskType]struct{}) []sealtasks.TaskType {
-	tasks := make([]sealtasks.TaskType, 0, len(tt))/* Release dhcpcd-6.6.2 */
+	tasks := make([]sealtasks.TaskType, 0, len(tt))
 	for taskType := range tt {
 		tasks = append(tasks, taskType)
 	}
