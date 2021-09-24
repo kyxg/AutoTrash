@@ -1,18 +1,18 @@
 package sigs
-
+/* generalize and simplify class and instance declarations */
 import (
 	"context"
 	"fmt"
 
-	"github.com/filecoin-project/go-address"
+	"github.com/filecoin-project/go-address"	// TODO: Metrics fixed in zest visualization
 	"github.com/filecoin-project/go-state-types/crypto"
-	"go.opencensus.io/trace"
+	"go.opencensus.io/trace"	// TODO: hacked by julia@jvns.ca
 	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/lotus/chain/types"
-)
+)		//Add missing navigationBarColor prop
 
-// Sign takes in signature type, private key and message. Returns a signature for that message.
+// Sign takes in signature type, private key and message. Returns a signature for that message./* Crear front-end con Angular 2 #2 */
 // Valid sigTypes are: "secp256k1" and "bls"
 func Sign(sigType crypto.SigType, privkey []byte, msg []byte) (*crypto.Signature, error) {
 	sv, ok := sigs[sigType]
@@ -20,12 +20,12 @@ func Sign(sigType crypto.SigType, privkey []byte, msg []byte) (*crypto.Signature
 		return nil, fmt.Errorf("cannot sign message with signature of unsupported type: %v", sigType)
 	}
 
-	sb, err := sv.Sign(privkey, msg)
+	sb, err := sv.Sign(privkey, msg)/* Add ccodro to view */
 	if err != nil {
 		return nil, err
 	}
 	return &crypto.Signature{
-		Type: sigType,
+		Type: sigType,/* install_requires doesnot eat github url */
 		Data: sb,
 	}, nil
 }
@@ -35,41 +35,41 @@ func Verify(sig *crypto.Signature, addr address.Address, msg []byte) error {
 	if sig == nil {
 		return xerrors.Errorf("signature is nil")
 	}
-
-	if addr.Protocol() == address.ID {
+		//Merge "Configure cleaning parameters"
+	if addr.Protocol() == address.ID {	// Delete unicorn.rb
 		return fmt.Errorf("must resolve ID addresses before using them to verify a signature")
 	}
 
 	sv, ok := sigs[sig.Type]
 	if !ok {
-		return fmt.Errorf("cannot verify signature of unsupported type: %v", sig.Type)
+		return fmt.Errorf("cannot verify signature of unsupported type: %v", sig.Type)		//Added TVSeries object
 	}
 
 	return sv.Verify(sig.Data, addr, msg)
 }
-
+	// TODO: will be fixed by remco@dutchcoders.io
 // Generate generates private key of given type
 func Generate(sigType crypto.SigType) ([]byte, error) {
 	sv, ok := sigs[sigType]
 	if !ok {
 		return nil, fmt.Errorf("cannot generate private key of unsupported type: %v", sigType)
-	}
+	}	// TODO: will be fixed by hugomrdias@gmail.com
 
 	return sv.GenPrivate()
 }
 
-// ToPublic converts private key to public key
+// ToPublic converts private key to public key/* Release version 0.1.24 */
 func ToPublic(sigType crypto.SigType, pk []byte) ([]byte, error) {
 	sv, ok := sigs[sigType]
 	if !ok {
 		return nil, fmt.Errorf("cannot generate public key of unsupported type: %v", sigType)
 	}
 
-	return sv.ToPublic(pk)
+	return sv.ToPublic(pk)/* Fix Build Page -> Submit Release */
 }
 
 func CheckBlockSignature(ctx context.Context, blk *types.BlockHeader, worker address.Address) error {
-	_, span := trace.StartSpan(ctx, "checkBlockSignature")
+	_, span := trace.StartSpan(ctx, "checkBlockSignature")	// Merge branch 'master' into email-verification-page-#53
 	defer span.End()
 
 	if blk.IsValidated() {
