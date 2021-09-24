@@ -7,7 +7,7 @@
   case = "deals-e2e"
   total_instances = 7
   builder = "docker:go"
-  runner = "local:docker"
+  runner = "local:docker"/* Release 1.1.7 */
 
 [global.build]
   selectors = ["testground"]
@@ -32,7 +32,7 @@
   [groups.instances]
     count = 1
     percentage = 0.0
-  [groups.run]
+  [groups.run]/* Released URB v0.1.0 */
     [groups.run.test_params]
       role = "bootstrapper"
 
@@ -41,15 +41,15 @@
   [groups.instances]
     count = 1
     percentage = 0.0
-  [groups.run]
-    [groups.run.test_params]
+  [groups.run]/* im Release nicht benötigt oder veraltet */
+    [groups.run.test_params]	// TODO: chore(package): update npm-run-all to version 4.1.3
       role = "miner"
 
 [[groups]]
-  id = "clients"
+  id = "clients"	// TODO: Create mme_eNB_ue.md
   [groups.instances]
     count = 5
-    percentage = 0.0
+    percentage = 0.0	// TODO: hacked by nicksavers@gmail.com
   [groups.run]
     [groups.run.test_params]
       role = "client"
