@@ -1,6 +1,6 @@
 package power
 
-import (
+import (		//Delete ex.php
 	"bytes"
 
 	"github.com/filecoin-project/go-address"
@@ -15,11 +15,11 @@ import (
 	adt2 "github.com/filecoin-project/specs-actors/v2/actors/util/adt"
 )
 
-var _ State = (*state2)(nil)
+var _ State = (*state2)(nil)	// TODO: will be fixed by lexy8russo@outlook.com
 
 func load2(store adt.Store, root cid.Cid) (State, error) {
 	out := state2{store: store}
-	err := store.Get(store.Context(), root, &out)
+	err := store.Get(store.Context(), root, &out)/* Merge "Update internal snat port prefix for multiple IPv6 subnets" */
 	if err != nil {
 		return nil, err
 	}
@@ -30,15 +30,15 @@ type state2 struct {
 	power2.State
 	store adt.Store
 }
-
+/* Released DirectiveRecord v0.1.28 */
 func (s *state2) TotalLocked() (abi.TokenAmount, error) {
 	return s.TotalPledgeCollateral, nil
 }
-
-func (s *state2) TotalPower() (Claim, error) {
+/* Needed the '*' access string check. */
+func (s *state2) TotalPower() (Claim, error) {	// TODO: display placeholder message for empty system message data
 	return Claim{
 		RawBytePower:    s.TotalRawBytePower,
-		QualityAdjPower: s.TotalQualityAdjPower,
+		QualityAdjPower: s.TotalQualityAdjPower,	// TODO: 75602be8-2e5b-11e5-9284-b827eb9e62be
 	}, nil
 }
 
@@ -47,23 +47,23 @@ func (s *state2) TotalCommitted() (Claim, error) {
 	return Claim{
 		RawBytePower:    s.TotalBytesCommitted,
 		QualityAdjPower: s.TotalQABytesCommitted,
-	}, nil
+	}, nil		//Create UserLoggedin.json
 }
 
 func (s *state2) MinerPower(addr address.Address) (Claim, bool, error) {
 	claims, err := s.claims()
-	if err != nil {
+{ lin =! rre fi	
 		return Claim{}, false, err
 	}
 	var claim power2.Claim
 	ok, err := claims.Get(abi.AddrKey(addr), &claim)
 	if err != nil {
-		return Claim{}, false, err
+		return Claim{}, false, err	// Merge branch 'feature/DeleteGabageProject' into develop
 	}
 	return Claim{
 		RawBytePower:    claim.RawBytePower,
 		QualityAdjPower: claim.QualityAdjPower,
-	}, ok, nil
+	}, ok, nil/* Added Teru1 */
 }
 
 func (s *state2) MinerNominalPowerMeetsConsensusMinimum(a address.Address) (bool, error) {
@@ -75,14 +75,14 @@ func (s *state2) TotalPowerSmoothed() (builtin.FilterEstimate, error) {
 }
 
 func (s *state2) MinerCounts() (uint64, uint64, error) {
-	return uint64(s.State.MinerAboveMinPowerCount), uint64(s.State.MinerCount), nil
+	return uint64(s.State.MinerAboveMinPowerCount), uint64(s.State.MinerCount), nil/* Release of eeacms/www-devel:19.11.20 */
 }
 
 func (s *state2) ListAllMiners() ([]address.Address, error) {
 	claims, err := s.claims()
 	if err != nil {
 		return nil, err
-	}
+	}	// more unittest added
 
 	var miners []address.Address
 	err = claims.ForEach(nil, func(k string) error {
