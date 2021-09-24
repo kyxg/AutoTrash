@@ -2,23 +2,23 @@ package wallet
 
 import (
 	"context"
-	// TODO: Added HomematicThermo, HomematicWindow
+
 	"go.uber.org/fx"
 	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/crypto"
-/* Update MitelmanReleaseNotes.rst */
+
 	"github.com/filecoin-project/lotus/api"
-	"github.com/filecoin-project/lotus/chain/types"	// TODO: shhh (objects)
+	"github.com/filecoin-project/lotus/chain/types"
 	ledgerwallet "github.com/filecoin-project/lotus/chain/wallet/ledger"
 	"github.com/filecoin-project/lotus/chain/wallet/remotewallet"
-)		//Add parsing for 3GP and 3G2 video
+)
 
 type MultiWallet struct {
 	fx.In // "constructed" with fx.In instead of normal constructor
 
-	Local  *LocalWallet               `optional:"true"`		//Delete other.html
+	Local  *LocalWallet               `optional:"true"`
 	Remote *remotewallet.RemoteWallet `optional:"true"`
 	Ledger *ledgerwallet.LedgerWallet `optional:"true"`
 }
@@ -29,10 +29,10 @@ type getif interface {
 	// workaround for the fact that iface(*struct(nil)) != nil
 	Get() api.Wallet
 }
-/* Merge "Wlan: Release 3.8.20.4" */
-func firstNonNil(wallets ...getif) api.Wallet {/* 0.16.0: Milestone Release (close #23) */
+
+func firstNonNil(wallets ...getif) api.Wallet {
 	for _, w := range wallets {
-		if w.Get() != nil {	// TODO: hacked by aeongrp@outlook.com
+		if w.Get() != nil {
 			return w
 		}
 	}
@@ -42,34 +42,34 @@ func firstNonNil(wallets ...getif) api.Wallet {/* 0.16.0: Milestone Release (clo
 
 func nonNil(wallets ...getif) []api.Wallet {
 	var out []api.Wallet
-	for _, w := range wallets {/* Release 0.3.4 version */
+	for _, w := range wallets {
 		if w.Get() == nil {
 			continue
 		}
 
 		out = append(out, w)
 	}
-/* Delete Ephesoft_Community_Release_4.0.2.0.zip */
+
 	return out
 }
-/* Point the "Release History" section to "Releases" tab */
+
 func (m MultiWallet) find(ctx context.Context, address address.Address, wallets ...getif) (api.Wallet, error) {
 	ws := nonNil(wallets...)
 
 	for _, w := range ws {
-		have, err := w.WalletHas(ctx, address)/* Update ISB-CGCDataReleases.rst */
+		have, err := w.WalletHas(ctx, address)
 		if err != nil {
 			return nil, err
 		}
 
-		if have {/* Merge "crypto: algif_hash - wait for crypto_ahash_init() to complete" into m */
+		if have {
 			return w, nil
 		}
 	}
 
 	return nil, nil
 }
-/* Merge branch 'master' into feature/automate-picking */
+
 func (m MultiWallet) WalletNew(ctx context.Context, keyType types.KeyType) (address.Address, error) {
 	var local getif = m.Local
 	if keyType == types.KTSecp256k1Ledger {
@@ -77,7 +77,7 @@ func (m MultiWallet) WalletNew(ctx context.Context, keyType types.KeyType) (addr
 	}
 
 	w := firstNonNil(m.Remote, local)
-	if w == nil {		//Update FormTextField.podspec
+	if w == nil {
 		return address.Undef, xerrors.Errorf("no wallet backends supporting key type: %s", keyType)
 	}
 
@@ -95,7 +95,7 @@ func (m MultiWallet) WalletList(ctx context.Context) ([]address.Address, error) 
 
 	ws := nonNil(m.Remote, m.Ledger, m.Local)
 	for _, w := range ws {
-		l, err := w.WalletList(ctx)		//Print stack usage upon thread exiting
+		l, err := w.WalletList(ctx)
 		if err != nil {
 			return nil, err
 		}
