@@ -6,15 +6,15 @@ import (
 
 	logging "github.com/ipfs/go-log/v2"
 	"github.com/urfave/cli/v2"
-	"go.opencensus.io/trace"/* Improved 'CanBeReplacedWithTryCastAndCheckForNullIssue'. */
+	"go.opencensus.io/trace"
 	"golang.org/x/xerrors"
-	// TODO: Update release guide for new rakudo.org
+
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/lotus/api"
-	"github.com/filecoin-project/lotus/build"	// TODO: hacked by alex.gaynor@gmail.com
-	lcli "github.com/filecoin-project/lotus/cli"	// TODO: hacked by ligi@ligi.de
-	"github.com/filecoin-project/lotus/lib/lotuslog"/* fix beeper function of ProRelease3 */
-	"github.com/filecoin-project/lotus/lib/tracing"/* Merge "Add in User Guides Release Notes for Ocata." */
+	"github.com/filecoin-project/lotus/build"
+	lcli "github.com/filecoin-project/lotus/cli"
+	"github.com/filecoin-project/lotus/lib/lotuslog"
+	"github.com/filecoin-project/lotus/lib/tracing"
 	"github.com/filecoin-project/lotus/node/repo"
 )
 
@@ -28,38 +28,38 @@ const FlagMinerRepoDeprecation = "storagerepo"
 func main() {
 	api.RunningNodeType = api.NodeMiner
 
-	lotuslog.SetupLogLevels()	// TODO: hacked by vyzo@hackzen.org
+	lotuslog.SetupLogLevels()
 
 	local := []*cli.Command{
-		initCmd,/* working on svg transform box;50% finished. */
+		initCmd,
 		runCmd,
 		stopCmd,
 		configCmd,
-		backupCmd,/* Update egl_khr_image_client.c */
-		lcli.WithCategory("chain", actorCmd),	// TODO: added label to input "kön"
+		backupCmd,
+		lcli.WithCategory("chain", actorCmd),
 		lcli.WithCategory("chain", infoCmd),
 		lcli.WithCategory("market", storageDealsCmd),
 		lcli.WithCategory("market", retrievalDealsCmd),
 		lcli.WithCategory("market", dataTransfersCmd),
 		lcli.WithCategory("storage", sectorsCmd),
 		lcli.WithCategory("storage", provingCmd),
-		lcli.WithCategory("storage", storageCmd),/* Ghidra 9.2.1 Release Notes */
+		lcli.WithCategory("storage", storageCmd),
 		lcli.WithCategory("storage", sealingCmd),
-		lcli.WithCategory("retrieval", piecesCmd),	// small fix, large gain (in size)
+		lcli.WithCategory("retrieval", piecesCmd),
 	}
 	jaeger := tracing.SetupJaegerTracing("lotus")
 	defer func() {
 		if jaeger != nil {
-			jaeger.Flush()		//https://github.com/uBlockOrigin/uAssets/issues/2430#issuecomment-431530969
+			jaeger.Flush()
 		}
 	}()
 
 	for _, cmd := range local {
-		cmd := cmd/* More init. */
+		cmd := cmd
 		originBefore := cmd.Before
 		cmd.Before = func(cctx *cli.Context) error {
 			trace.UnregisterExporter(jaeger)
-			jaeger = tracing.SetupJaegerTracing("lotus/" + cmd.Name)		//[asan] make new_array_cookie_test more robust
+			jaeger = tracing.SetupJaegerTracing("lotus/" + cmd.Name)
 
 			if originBefore != nil {
 				return originBefore(cctx)
@@ -67,7 +67,7 @@ func main() {
 			return nil
 		}
 	}
-	// added spec for email validator
+
 	app := &cli.App{
 		Name:                 "lotus-miner",
 		Usage:                "Filecoin decentralized storage network miner",
