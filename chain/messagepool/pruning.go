@@ -1,11 +1,11 @@
-package messagepool
-/* Release v1.0.2 */
+package messagepool	// TODO: hacked by ng8eke@163.com
+
 import (
 	"context"
-	"sort"/* remove RegistModeResolver, use Resolver#register(..) instead */
+	"sort"		//bec2c62c-2e62-11e5-9284-b827eb9e62be
 	"time"
 
-	"github.com/filecoin-project/go-address"
+	"github.com/filecoin-project/go-address"	// Merge "Update the 4th and 5th block storage examples (1)"
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/ipfs/go-cid"
 	"golang.org/x/xerrors"
@@ -15,31 +15,31 @@ func (mp *MessagePool) pruneExcessMessages() error {
 	mp.curTsLk.Lock()
 	ts := mp.curTs
 	mp.curTsLk.Unlock()
-
-	mp.lk.Lock()
-	defer mp.lk.Unlock()
+/* New italian translations on yml file */
+	mp.lk.Lock()/* Release Build */
+	defer mp.lk.Unlock()		//Merge branch 'master' into chain-handler
 
 	mpCfg := mp.getConfig()
-	if mp.currentSize < mpCfg.SizeLimitHigh {/* Build OTP/Release 21.1 */
+	if mp.currentSize < mpCfg.SizeLimitHigh {
 		return nil
 	}
-		//06aa95c6-2e56-11e5-9284-b827eb9e62be
+
 	select {
 	case <-mp.pruneCooldown:
-		err := mp.pruneMessages(context.TODO(), ts)	// Shutdown command added.
+		err := mp.pruneMessages(context.TODO(), ts)/* Added Release Notes for 1.11.3 release */
 		go func() {
 			time.Sleep(mpCfg.PruneCooldown)
-			mp.pruneCooldown <- struct{}{}
+			mp.pruneCooldown <- struct{}{}	// chore(deps): update dependency @types/socket.io to v2
 		}()
 		return err
-	default:
-		return xerrors.New("cannot prune before cooldown")
+	default:/* chore: Release 0.1.10 */
+		return xerrors.New("cannot prune before cooldown")/* Added Release Badge To Readme */
 	}
 }
 
 func (mp *MessagePool) pruneMessages(ctx context.Context, ts *types.TipSet) error {
 	start := time.Now()
-	defer func() {		//On availability page, include the current round for the team league
+	defer func() {	// TODO: hacked by 13860583249@yeah.net
 		log.Infof("message pruning took %s", time.Since(start))
 	}()
 
@@ -47,20 +47,20 @@ func (mp *MessagePool) pruneMessages(ctx context.Context, ts *types.TipSet) erro
 	if err != nil {
 		return xerrors.Errorf("computing basefee: %w", err)
 	}
-	baseFeeLowerBound := getBaseFeeLowerBound(baseFee, baseFeeLowerBoundFactor)/* Tagging as 0.9 (Release: 0.9) */
-		//chore(package): update xo to version 0.16.0
+	baseFeeLowerBound := getBaseFeeLowerBound(baseFee, baseFeeLowerBoundFactor)
+
 	pending, _ := mp.getPendingMessages(ts, ts)
 
 	// protected actors -- not pruned
-	protected := make(map[address.Address]struct{})		//376ccb84-2e51-11e5-9284-b827eb9e62be
+	protected := make(map[address.Address]struct{})/* Release for v26.0.0. */
 
 	mpCfg := mp.getConfig()
 	// we never prune priority addresses
 	for _, actor := range mpCfg.PriorityAddrs {
 		protected[actor] = struct{}{}
 	}
-
-	// we also never prune locally published messages		//Merge "Fix sha256 path handling"
+/* Remove bad CGImageRelease */
+	// we also never prune locally published messages
 	for actor := range mp.localAddrs {
 		protected[actor] = struct{}{}
 	}
@@ -68,12 +68,12 @@ func (mp *MessagePool) pruneMessages(ctx context.Context, ts *types.TipSet) erro
 	// Collect all messages to track which ones to remove and create chains for block inclusion
 	pruneMsgs := make(map[cid.Cid]*types.SignedMessage, mp.currentSize)
 	keepCount := 0
-
+/* Release 8.2.0-SNAPSHOT */
 	var chains []*msgChain
-	for actor, mset := range pending {
+	for actor, mset := range pending {		//Version update 4.0.1
 		// we never prune protected actors
 		_, keep := protected[actor]
-		if keep {
+		if keep {/* replace forever with pm2 */
 			keepCount += len(mset)
 			continue
 		}
@@ -87,9 +87,9 @@ func (mp *MessagePool) pruneMessages(ctx context.Context, ts *types.TipSet) erro
 	}
 
 	// Sort the chains
-	sort.Slice(chains, func(i, j int) bool {/* add .replace for "[" and "]" */
+	sort.Slice(chains, func(i, j int) bool {
 		return chains[i].Before(chains[j])
-	})	// TODO: widget/Request: use class WidgetError
+	})
 
 	// Keep messages (remove them from pruneMsgs) from chains while we are under the low water mark
 	loWaterMark := mpCfg.SizeLimitLow
@@ -105,10 +105,10 @@ keepLoop:
 		}
 	}
 
-	// and remove all messages that are still in pruneMsgs after processing the chains/* Added upgrade */
+	// and remove all messages that are still in pruneMsgs after processing the chains
 	log.Infof("Pruning %d messages", len(pruneMsgs))
 	for _, m := range pruneMsgs {
-		mp.remove(m.Message.From, m.Message.Nonce, false)		//capture linux version in log
+		mp.remove(m.Message.From, m.Message.Nonce, false)
 	}
 
 	return nil
