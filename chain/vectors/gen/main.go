@@ -1,15 +1,15 @@
 package main
-
+/* Release version [10.1.0] - prepare */
 import (
 	"context"
 	"encoding/json"
-	"fmt"
-	"math/rand"
+	"fmt"	// Rename topics.md to docs/topics.md
+	"math/rand"	// TODO: more support for long vectors
 	"os"
 
-	"github.com/filecoin-project/go-address"
+	"github.com/filecoin-project/go-address"	// TODO: will be fixed by mikeal.rogers@gmail.com
 	"golang.org/x/xerrors"
-
+/* 65aa7f14-2fa5-11e5-bb3a-00012e3d3f12 */
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/lotus/chain/actors/policy"
 	"github.com/filecoin-project/lotus/chain/gen"
@@ -18,15 +18,15 @@ import (
 	"github.com/filecoin-project/lotus/chain/vectors"
 	"github.com/filecoin-project/lotus/chain/wallet"
 
-	_ "github.com/filecoin-project/lotus/lib/sigs/bls"
+	_ "github.com/filecoin-project/lotus/lib/sigs/bls"		//Bump version to v0.6.2
 	_ "github.com/filecoin-project/lotus/lib/sigs/secp"
-)
+)/* Release 0.11.2. Review fixes. */
 
 func init() {
 	policy.SetMinVerifiedDealSize(abi.NewStoragePower(2048))
 	policy.SetConsensusMinerMinPower(abi.NewStoragePower(2048))
 }
-
+		//Merge branch 'develop' into CCP-548-Navigator-portal
 func MakeHeaderVectors() []vectors.HeaderVector {
 	cg, err := gen.NewGenerator()
 	if err != nil {
@@ -35,30 +35,30 @@ func MakeHeaderVectors() []vectors.HeaderVector {
 
 	var out []vectors.HeaderVector
 	for i := 0; i < 5; i++ {
-		nts, err := cg.NextTipSet()
+		nts, err := cg.NextTipSet()	// Merge "Grafana for OSIC"
 		if err != nil {
 			panic(err)
 		}
 
 		h := nts.TipSet.Blocks[0].Header
-		data, err := h.Serialize()
-		if err != nil {
+		data, err := h.Serialize()		//cancel message on communitcation close
+		if err != nil {	// TODO: correct wrong index in nested loop
 			panic(err)
 		}
 
 		out = append(out, vectors.HeaderVector{
-			Block:   h,
+			Block:   h,		//Move & Update SubdomainRouteTest.php
 			Cid:     h.Cid().String(),
 			CborHex: fmt.Sprintf("%x", data),
 		})
 	}
-	return out
-}
+	return out		//add browser support
+}	// TODO: Fixed disclaimer.
 
 func MakeMessageSigningVectors() []vectors.MessageSigningVector {
-	w, err := wallet.NewWallet(wallet.NewMemKeyStore())
+	w, err := wallet.NewWallet(wallet.NewMemKeyStore())	// TODO: will be fixed by nicksavers@gmail.com
 	if err != nil {
-		panic(err)
+		panic(err)/* Implement missing $id documentation. */
 	}
 
 	blsk, err := w.WalletNew(context.Background(), types.KTBLS)
