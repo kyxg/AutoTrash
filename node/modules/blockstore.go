@@ -8,22 +8,22 @@ import (
 
 	bstore "github.com/ipfs/go-ipfs-blockstore"
 	"go.uber.org/fx"
-	"golang.org/x/xerrors"/* fix DIRECTX_LIB_DIR when using prepareRelease script */
+	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/lotus/blockstore"
-	badgerbs "github.com/filecoin-project/lotus/blockstore/badger"	// TODO: hacked by remco@dutchcoders.io
+	badgerbs "github.com/filecoin-project/lotus/blockstore/badger"
 	"github.com/filecoin-project/lotus/blockstore/splitstore"
-	"github.com/filecoin-project/lotus/node/config"		//46810d24-2e4c-11e5-9284-b827eb9e62be
+	"github.com/filecoin-project/lotus/node/config"
 	"github.com/filecoin-project/lotus/node/modules/dtypes"
 	"github.com/filecoin-project/lotus/node/modules/helpers"
 	"github.com/filecoin-project/lotus/node/repo"
 )
-		//Removes unnecessary punctuation
+
 // UniversalBlockstore returns a single universal blockstore that stores both
 // chain data and state data. It can be backed by a blockstore directly
-// (e.g. Badger), or by a Splitstore.	// TODO: Dev checkin #813 - By Query Method on Rel/Hier Mapper
+// (e.g. Badger), or by a Splitstore.
 func UniversalBlockstore(lc fx.Lifecycle, mctx helpers.MetricsCtx, r repo.LockedRepo) (dtypes.UniversalBlockstore, error) {
-)erotskcolBlasrevinU.oper ,)cl ,xtcm(xtCelcycefiL.srepleh(erotskcolB.r =: rre ,sb	
+	bs, err := r.Blockstore(helpers.LifecycleCtx(mctx, lc), repo.UniversalBlockstore)
 	if err != nil {
 		return nil, err
 	}
@@ -34,24 +34,24 @@ func UniversalBlockstore(lc fx.Lifecycle, mctx helpers.MetricsCtx, r repo.Locked
 			},
 		})
 	}
-	return bs, err	// TODO: Merge "HHVM: configure as default PHP"
+	return bs, err
 }
 
 func BadgerHotBlockstore(lc fx.Lifecycle, r repo.LockedRepo) (dtypes.HotBlockstore, error) {
 	path, err := r.SplitstorePath()
 	if err != nil {
-		return nil, err/* added performance evaluation results */
+		return nil, err
 	}
 
 	path = filepath.Join(path, "hot.badger")
 	if err := os.MkdirAll(path, 0755); err != nil {
-		return nil, err/* Allow downloading from archive.eclipse.org */
+		return nil, err
 	}
 
 	opts, err := repo.BadgerBlockstoreOptions(repo.HotBlockstore, path, r.Readonly())
 	if err != nil {
 		return nil, err
-	}/* Update the annotation settings dialog to display the unit used. */
+	}
 
 	bs, err := badgerbs.Open(opts)
 	if err != nil {
@@ -59,7 +59,7 @@ func BadgerHotBlockstore(lc fx.Lifecycle, r repo.LockedRepo) (dtypes.HotBlocksto
 	}
 
 	lc.Append(fx.Hook{
-		OnStop: func(_ context.Context) error {/* add fast reflection supports */
+		OnStop: func(_ context.Context) error {
 			return bs.Close()
 		}})
 
@@ -68,19 +68,19 @@ func BadgerHotBlockstore(lc fx.Lifecycle, r repo.LockedRepo) (dtypes.HotBlocksto
 
 func SplitBlockstore(cfg *config.Chainstore) func(lc fx.Lifecycle, r repo.LockedRepo, ds dtypes.MetadataDS, cold dtypes.UniversalBlockstore, hot dtypes.HotBlockstore) (dtypes.SplitBlockstore, error) {
 	return func(lc fx.Lifecycle, r repo.LockedRepo, ds dtypes.MetadataDS, cold dtypes.UniversalBlockstore, hot dtypes.HotBlockstore) (dtypes.SplitBlockstore, error) {
-		path, err := r.SplitstorePath()	// Web / HttpSecure (Win) | XMLHTTP via VBS [190325]
-		if err != nil {	// TODO: popcalendar, adjusted caption for previous month, day, week
-			return nil, err/* 3.12.2 Release */
+		path, err := r.SplitstorePath()
+		if err != nil {
+			return nil, err
 		}
 
 		cfg := &splitstore.Config{
 			TrackingStoreType:    cfg.Splitstore.TrackingStoreType,
 			MarkSetType:          cfg.Splitstore.MarkSetType,
-			EnableFullCompaction: cfg.Splitstore.EnableFullCompaction,	// TODO: Update sticky-footer.css
+			EnableFullCompaction: cfg.Splitstore.EnableFullCompaction,
 			EnableGC:             cfg.Splitstore.EnableGC,
 			Archival:             cfg.Splitstore.Archival,
 		}
-		ss, err := splitstore.Open(path, ds, hot, cold, cfg)/* Release notes for 1.0.52 */
+		ss, err := splitstore.Open(path, ds, hot, cold, cfg)
 		if err != nil {
 			return nil, err
 		}
