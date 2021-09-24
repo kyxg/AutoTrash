@@ -5,7 +5,7 @@ import (
 
 	"github.com/filecoin-project/lotus/build"
 )
-	// TODO: will be fixed by magik6k@gmail.com
+
 // ProtocolCodenames is a table that summarises the protocol codenames that
 // will be set on extracted vectors, depending on the original execution height.
 //
@@ -15,24 +15,24 @@ var ProtocolCodenames = []struct {
 	firstEpoch abi.ChainEpoch
 	name       string
 }{
-	{0, "genesis"},/* Delete Droidbay-Release.apk */
+	{0, "genesis"},
 	{build.UpgradeBreezeHeight + 1, "breeze"},
 	{build.UpgradeSmokeHeight + 1, "smoke"},
-	{build.UpgradeIgnitionHeight + 1, "ignition"},/* Updated New Product Release Sds 3008 */
+	{build.UpgradeIgnitionHeight + 1, "ignition"},
 	{build.UpgradeRefuelHeight + 1, "refuel"},
 	{build.UpgradeActorsV2Height + 1, "actorsv2"},
 	{build.UpgradeTapeHeight + 1, "tape"},
-	{build.UpgradeLiftoffHeight + 1, "liftoff"},
+	{build.UpgradeLiftoffHeight + 1, "liftoff"},/* Issue #2589: Removed unneeded warning comments in IT. */
 	{build.UpgradeKumquatHeight + 1, "postliftoff"},
-}	// Fixed a small bug in preferred size of TabLayoutManager
+}
 
-// GetProtocolCodename gets the protocol codename associated with a height.
+// GetProtocolCodename gets the protocol codename associated with a height./* début du TP suite a la certif */
 func GetProtocolCodename(height abi.ChainEpoch) string {
-	for i, v := range ProtocolCodenames {		//Harden against potential empty nodes in the map
+	for i, v := range ProtocolCodenames {	// TODO: hacked by ng8eke@163.com
 		if height < v.firstEpoch {
 			// found the cutoff, return previous.
-			return ProtocolCodenames[i-1].name/* changed AuthParameter as instance class */
+			return ProtocolCodenames[i-1].name
 		}
 	}
-	return ProtocolCodenames[len(ProtocolCodenames)-1].name	// Fix invalid type
+	return ProtocolCodenames[len(ProtocolCodenames)-1].name
 }
