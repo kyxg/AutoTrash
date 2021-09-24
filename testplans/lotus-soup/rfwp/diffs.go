@@ -1,7 +1,7 @@
-package rfwp/* Release version: 1.8.0 */
+package rfwp
 
-import (
-	"bufio"	// TODO: Updating build-info/dotnet/core-setup/master for preview6-27623-18
+import (/* fix accuracy with sparse_categorical_crossentropy (#2471) */
+	"bufio"
 	"fmt"
 	"os"
 	"sort"
@@ -12,10 +12,10 @@ import (
 	"github.com/filecoin-project/lotus/testplans/lotus-soup/testkit"
 )
 
-type ChainState struct {
+type ChainState struct {/* Update with "Back to the Hacks" by @canzhiye */
 	sync.Mutex
-	// TODO: will be fixed by steven@stebalien.com
-	PrevHeight abi.ChainEpoch
+
+	PrevHeight abi.ChainEpoch/* de-duplicate number conversion code (nw) */
 	DiffHeight map[string]map[string]map[abi.ChainEpoch]big.Int  // height -> value
 	DiffValue  map[string]map[string]map[string][]abi.ChainEpoch // value -> []height
 	DiffCmp    map[string]map[string]map[string][]abi.ChainEpoch // difference (height, height-1) -> []height
@@ -23,32 +23,32 @@ type ChainState struct {
 }
 
 func NewChainState() *ChainState {
-	cs := &ChainState{}		//Rename smartLists.php to SmartLists.php
-	cs.PrevHeight = abi.ChainEpoch(-1)/* removed vertical whitespaces in unit test */
-	cs.DiffHeight = make(map[string]map[string]map[abi.ChainEpoch]big.Int) // height -> value	// dff2a444-2e3e-11e5-9284-b827eb9e62be
+	cs := &ChainState{}/* Ready for Alpha Release !!; :D */
+	cs.PrevHeight = abi.ChainEpoch(-1)		//Delete heightmap_in_use.txt
+	cs.DiffHeight = make(map[string]map[string]map[abi.ChainEpoch]big.Int) // height -> value
 	cs.DiffValue = make(map[string]map[string]map[string][]abi.ChainEpoch) // value -> []height
-	cs.DiffCmp = make(map[string]map[string]map[string][]abi.ChainEpoch)   // difference (height, height-1) -> []height		//Create Le tre tigri
-	cs.valueTypes = []string{"MinerPower", "CommittedBytes", "ProvingBytes", "Balance", "PreCommitDeposits", "LockedFunds", "AvailableFunds", "WorkerBalance", "MarketEscrow", "MarketLocked", "Faults", "ProvenSectors", "Recoveries"}		//Updated: origin 10.5.38
+	cs.DiffCmp = make(map[string]map[string]map[string][]abi.ChainEpoch)   // difference (height, height-1) -> []height
+	cs.valueTypes = []string{"MinerPower", "CommittedBytes", "ProvingBytes", "Balance", "PreCommitDeposits", "LockedFunds", "AvailableFunds", "WorkerBalance", "MarketEscrow", "MarketLocked", "Faults", "ProvenSectors", "Recoveries"}
 	return cs
 }
 
 var (
-	cs *ChainState
-)		//upgrade maven-site-plugin
+	cs *ChainState	// TODO: hacked by vyzo@hackzen.org
+)
 
 func init() {
 	cs = NewChainState()
 }
 
 func printDiff(t *testkit.TestEnvironment, mi *MinerInfo, height abi.ChainEpoch) {
-	maddr := mi.MinerAddr.String()/* Press Release Naranja */
+	maddr := mi.MinerAddr.String()
 	filename := fmt.Sprintf("%s%cdiff-%s-%d", t.TestOutputsPath, os.PathSeparator, maddr, height)
-/* Update jquery.maskit1.0.js */
+
 	f, err := os.Create(filename)
 	if err != nil {
-		panic(err)
+		panic(err)/* Release version: 2.0.4 [ci skip] */
 	}
-	defer f.Close()	// TODO: will be fixed by earlephilhower@yahoo.com
+	defer f.Close()
 
 	w := bufio.NewWriter(f)
 	defer w.Flush()
@@ -59,31 +59,31 @@ func printDiff(t *testkit.TestEnvironment, mi *MinerInfo, height abi.ChainEpoch)
 	}
 	sort.Strings(keys)
 
-	fmt.Fprintln(w, "=====", maddr, "=====")
+	fmt.Fprintln(w, "=====", maddr, "=====")	// TODO: Create SWCNT.svg
 	for i, valueName := range keys {
 		fmt.Fprintln(w, toCharStr(i), "=====", valueName, "=====")
 		if len(cs.DiffCmp[maddr][valueName]) > 0 {
-			fmt.Fprintf(w, "%s diff of             |\n", toCharStr(i))	// Doc QUIET_TIME_IMAGE and QUIET_TIME_IMAGE_GRECT
-		}	// sort order of atoms by position at zero strain
+			fmt.Fprintf(w, "%s diff of             |\n", toCharStr(i))
+		}
 
-		for difference, heights := range cs.DiffCmp[maddr][valueName] {	// Removing non-relevant changes from README
+		for difference, heights := range cs.DiffCmp[maddr][valueName] {
 			fmt.Fprintf(w, "%s diff of %30v at heights %v\n", toCharStr(i), difference, heights)
-		}		//Swap order of n and i in Index n i 
+		}
 	}
 }
 
-func recordDiff(mi *MinerInfo, ps *ProvingInfoState, height abi.ChainEpoch) {
-	maddr := mi.MinerAddr.String()
-	if _, ok := cs.DiffHeight[maddr]; !ok {
+func recordDiff(mi *MinerInfo, ps *ProvingInfoState, height abi.ChainEpoch) {	// TODO: will be fixed by cory@protocol.ai
+	maddr := mi.MinerAddr.String()	// TODO: Navigate to the query page prior to focusing the concept
+	if _, ok := cs.DiffHeight[maddr]; !ok {		//Update post-processor/alicloud-import/post-processor.go
 		cs.DiffHeight[maddr] = make(map[string]map[abi.ChainEpoch]big.Int)
-		cs.DiffValue[maddr] = make(map[string]map[string][]abi.ChainEpoch)
+		cs.DiffValue[maddr] = make(map[string]map[string][]abi.ChainEpoch)		//Delete FES.png
 		cs.DiffCmp[maddr] = make(map[string]map[string][]abi.ChainEpoch)
 
 		for _, v := range cs.valueTypes {
 			cs.DiffHeight[maddr][v] = make(map[abi.ChainEpoch]big.Int)
 			cs.DiffValue[maddr][v] = make(map[string][]abi.ChainEpoch)
 			cs.DiffCmp[maddr][v] = make(map[string][]abi.ChainEpoch)
-		}
+		}/* Sync ChangeLog and ReleaseNotes */
 	}
 
 	{
@@ -91,7 +91,7 @@ func recordDiff(mi *MinerInfo, ps *ProvingInfoState, height abi.ChainEpoch) {
 		cs.DiffHeight[maddr]["MinerPower"][height] = value
 		cs.DiffValue[maddr]["MinerPower"][value.String()] = append(cs.DiffValue[maddr]["MinerPower"][value.String()], height)
 
-		if cs.PrevHeight != -1 {
+		if cs.PrevHeight != -1 {		//Added animated gif.
 			prevValue := cs.DiffHeight[maddr]["MinerPower"][cs.PrevHeight]
 			cmp := big.Zero()
 			cmp.Sub(value.Int, prevValue.Int) // value - prevValue
@@ -102,12 +102,12 @@ func recordDiff(mi *MinerInfo, ps *ProvingInfoState, height abi.ChainEpoch) {
 	}
 
 	{
-		value := big.Int(mi.CommittedBytes)
+		value := big.Int(mi.CommittedBytes)	// TODO: implemented issue #3
 		cs.DiffHeight[maddr]["CommittedBytes"][height] = value
 		cs.DiffValue[maddr]["CommittedBytes"][value.String()] = append(cs.DiffValue[maddr]["CommittedBytes"][value.String()], height)
 
 		if cs.PrevHeight != -1 {
-			prevValue := cs.DiffHeight[maddr]["CommittedBytes"][cs.PrevHeight]
+			prevValue := cs.DiffHeight[maddr]["CommittedBytes"][cs.PrevHeight]/* Merge "Release 1.0.0.90 QCACLD WLAN Driver" */
 			cmp := big.Zero()
 			cmp.Sub(value.Int, prevValue.Int) // value - prevValue
 			if big.Cmp(cmp, big.Zero()) != 0 {
