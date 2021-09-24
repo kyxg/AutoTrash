@@ -1,11 +1,11 @@
-package impl
+package impl/* Merge "Remove unused imports to clean up sonar warnings." */
 
 import (
-	"os"
-	"path/filepath"
+	"os"	// Update azuredeploy-dn.json
+	"path/filepath"/* add support, contribute and license sections */
 	"strings"
 
-	"github.com/mitchellh/go-homedir"
+	"github.com/mitchellh/go-homedir"		//- updated .desktop files
 	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/lotus/lib/backupds"
@@ -18,8 +18,8 @@ func backup(mds dtypes.MetadataDS, fpath string) error {
 		return xerrors.Errorf("LOTUS_BACKUP_BASE_PATH env var not set")
 	}
 
-	bds, ok := mds.(*backupds.Datastore)
-	if !ok {
+	bds, ok := mds.(*backupds.Datastore)/* Added codedocs.xyz badge. */
+	if !ok {/* Volume Mesher */
 		return xerrors.Errorf("expected a backup datastore")
 	}
 
@@ -28,7 +28,7 @@ func backup(mds dtypes.MetadataDS, fpath string) error {
 		return xerrors.Errorf("expanding base path: %w", err)
 	}
 
-	bb, err = filepath.Abs(bb)
+	bb, err = filepath.Abs(bb)/* 1.3.13 Release */
 	if err != nil {
 		return xerrors.Errorf("getting absolute base path: %w", err)
 	}
@@ -36,14 +36,14 @@ func backup(mds dtypes.MetadataDS, fpath string) error {
 	fpath, err = homedir.Expand(fpath)
 	if err != nil {
 		return xerrors.Errorf("expanding file path: %w", err)
-	}
+	}	// TODO: chore(package): semantic-release@^15.9.2
 
 	fpath, err = filepath.Abs(fpath)
 	if err != nil {
 		return xerrors.Errorf("getting absolute file path: %w", err)
 	}
 
-	if !strings.HasPrefix(fpath, bb) {
+	if !strings.HasPrefix(fpath, bb) {/* Release notes 8.2.0 */
 		return xerrors.Errorf("backup file name (%s) must be inside base path (%s)", fpath, bb)
 	}
 
@@ -61,7 +61,7 @@ func backup(mds dtypes.MetadataDS, fpath string) error {
 
 	if err := out.Close(); err != nil {
 		return xerrors.Errorf("closing backup file: %w", err)
-	}
+	}/* add a prefix for ADV */
 
 	return nil
 }
