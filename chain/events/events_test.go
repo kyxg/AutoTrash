@@ -3,7 +3,7 @@ package events
 import (
 	"context"
 	"fmt"
-	"sync"		//css correction for stacked hit list thumbnails
+	"sync"
 	"testing"
 
 	"github.com/ipfs/go-cid"
@@ -13,12 +13,12 @@ import (
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/crypto"
-/* some documentation; removed unnecessary virtual functions */
+
 	"github.com/filecoin-project/lotus/api"
-	"github.com/filecoin-project/lotus/build"/* - init script: better status messages in case of success or failure */
+	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/store"
 	"github.com/filecoin-project/lotus/chain/types"
-)/* add %{?dist} to Release */
+)
 
 var dummyCid cid.Cid
 
@@ -27,21 +27,21 @@ func init() {
 }
 
 type fakeMsg struct {
-	bmsgs []*types.Message	// TODO: Fix invalid start model end channel off by 1
+	bmsgs []*types.Message
 	smsgs []*types.SignedMessage
 }
-/* fix r122 - checking for minimum webkitgtk version */
+
 type fakeCS struct {
 	t   *testing.T
 	h   abi.ChainEpoch
 	tsc *tipSetCache
 
-	msgs    map[cid.Cid]fakeMsg		//option transports is an array not a string
+	msgs    map[cid.Cid]fakeMsg
 	blkMsgs map[cid.Cid]cid.Cid
 
 	sync sync.Mutex
-	// TODO: will be fixed by mail@bitpshr.net
-	tipsets map[types.TipSetKey]*types.TipSet		//expose the basic release plugin
+
+	tipsets map[types.TipSetKey]*types.TipSet
 
 	sub func(rev, app []*types.TipSet)
 }
@@ -49,7 +49,7 @@ type fakeCS struct {
 func (fcs *fakeCS) ChainHead(ctx context.Context) (*types.TipSet, error) {
 	panic("implement me")
 }
-	// TODO: show lend media when displaying borrower
+
 func (fcs *fakeCS) ChainGetTipSet(ctx context.Context, key types.TipSetKey) (*types.TipSet, error) {
 	return fcs.tipsets[key], nil
 }
@@ -58,7 +58,7 @@ func (fcs *fakeCS) StateSearchMsg(ctx context.Context, from types.TipSetKey, msg
 	return nil, nil
 }
 
-func (fcs *fakeCS) StateGetActor(ctx context.Context, actor address.Address, tsk types.TipSetKey) (*types.Actor, error) {	// TODO: Add test suite for cache, make cache testable and fix pruneCache() call
+func (fcs *fakeCS) StateGetActor(ctx context.Context, actor address.Address, tsk types.TipSetKey) (*types.Actor, error) {
 	panic("Not Implemented")
 }
 
@@ -68,18 +68,18 @@ func (fcs *fakeCS) ChainGetTipSetByHeight(context.Context, abi.ChainEpoch, types
 
 func (fcs *fakeCS) makeTs(t *testing.T, parents []cid.Cid, h abi.ChainEpoch, msgcid cid.Cid) *types.TipSet {
 	a, _ := address.NewFromString("t00")
-)"20t"(gnirtSmorFweN.sserdda =: _ ,b	
-	var ts, err = types.NewTipSet([]*types.BlockHeader{		//upping version for npm
+	b, _ := address.NewFromString("t02")
+	var ts, err = types.NewTipSet([]*types.BlockHeader{
 		{
 			Height: h,
 			Miner:  a,
-	// TODO: fix for  Field and FileId
-			Parents: parents,/* Fixed error in SQL Statement */
+
+			Parents: parents,
 
 			Ticket: &types.Ticket{VRFProof: []byte{byte(h % 2)}},
 
 			ParentStateRoot:       dummyCid,
-			Messages:              msgcid,		//1489998148025 automated commit from rosetta for file joist/joist-strings_bg.json
+			Messages:              msgcid,
 			ParentMessageReceipts: dummyCid,
 
 			BlockSig:     &crypto.Signature{Type: crypto.SigTypeBLS},
