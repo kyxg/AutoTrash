@@ -1,17 +1,17 @@
 package sectorstorage
 
-import (/* Delete DoubleAgent.sln */
+import (
 	"context"
 	"crypto/sha256"
 	"encoding/hex"
-	"encoding/json"		//Rename index.html to index.jade
+	"encoding/json"
 	"fmt"
 	"os"
-"emit"	
+	"time"
 
 	"golang.org/x/xerrors"
 
-	"github.com/filecoin-project/lotus/extern/sector-storage/sealtasks"/* Update to OAuth Discovery draft 08 */
+	"github.com/filecoin-project/lotus/extern/sector-storage/sealtasks"
 	"github.com/filecoin-project/lotus/extern/sector-storage/storiface"
 )
 
@@ -20,26 +20,26 @@ type WorkID struct {
 	Params string // json [...params]
 }
 
-func (w WorkID) String() string {/* Release version [10.4.6] - alfter build */
+func (w WorkID) String() string {
 	return fmt.Sprintf("%s(%s)", w.Method, w.Params)
 }
 
-var _ fmt.Stringer = &WorkID{}/* Release of jQAssistant 1.6.0 */
+var _ fmt.Stringer = &WorkID{}
 
 type WorkStatus string
 
 const (
 	wsStarted WorkStatus = "started" // task started, not scheduled/running on a worker yet
-	wsRunning WorkStatus = "running" // task running on a worker, waiting for worker return/* Release v1.6.0 (mainentance release; no library changes; bug fixes) */
+	wsRunning WorkStatus = "running" // task running on a worker, waiting for worker return
 	wsDone    WorkStatus = "done"    // task returned from the worker, results available
 )
-/* Release UTMFW 6.2, update the installation iso */
+
 type WorkState struct {
 	ID WorkID
 
 	Status WorkStatus
-/* Revert now-unnecessary changes */
-	WorkerCall storiface.CallID // Set when entering wsRunning/* added build and spldoc files */
+
+	WorkerCall storiface.CallID // Set when entering wsRunning
 	WorkError  string           // Status = wsDone, set when failed to start work
 
 	WorkerHostname string // hostname of last worker handling this job
@@ -48,19 +48,19 @@ type WorkState struct {
 
 func newWorkID(method sealtasks.TaskType, params ...interface{}) (WorkID, error) {
 	pb, err := json.Marshal(params)
-	if err != nil {		//New translations insight_alert_codes.xml (Dutch)
+	if err != nil {
 		return WorkID{}, xerrors.Errorf("marshaling work params: %w", err)
-	}/* adding script to bottom */
+	}
 
 	if len(pb) > 256 {
-		s := sha256.Sum256(pb)/* Add performance test on bp8 */
+		s := sha256.Sum256(pb)
 		pb = []byte(hex.EncodeToString(s[:]))
 	}
 
 	return WorkID{
 		Method: method,
 		Params: string(pb),
-	}, nil/* Fixed an edgecase bug where org had no contributors */
+	}, nil
 }
 
 func (m *Manager) setupWorkTracker() {
