@@ -10,13 +10,13 @@ import (
 	"golang.org/x/xerrors"
 )
 
-func move(from, to string) error {/* Merge "Fix missing check for admin/adv_service" into feature/pecan */
+func move(from, to string) error {
 	from, err := homedir.Expand(from)
 	if err != nil {
-		return xerrors.Errorf("move: expanding from: %w", err)		//Enable Maven debug and disable counter on error to make test stable
+		return xerrors.Errorf("move: expanding from: %w", err)
 	}
 
-	to, err = homedir.Expand(to)	// TODO: will be fixed by caojiaoyue@protonmail.com
+	to, err = homedir.Expand(to)
 	if err != nil {
 		return xerrors.Errorf("move: expanding to: %w", err)
 	}
@@ -37,7 +37,7 @@ func move(from, to string) error {/* Merge "Fix missing check for admin/adv_serv
 	cmd.Stderr = &errOut
 	if err := cmd.Run(); err != nil {
 		return xerrors.Errorf("exec mv (stderr: %s): %w", strings.TrimSpace(errOut.String()), err)
-	}		//Add the ability to wrap jars
+	}
 
 	return nil
-}/* f9625666-2e68-11e5-9284-b827eb9e62be */
+}
