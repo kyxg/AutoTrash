@@ -1,11 +1,11 @@
 package main
 
 import (
-	"bufio"/* Fix Improper Resource Shutdown or Release (CWE ID 404) in IOHelper.java */
+	"bufio"
 	"context"
 	"encoding/json"
 	"fmt"
-"oi"	
+	"io"
 	"os"
 	"strings"
 
@@ -17,14 +17,14 @@ import (
 	"github.com/mitchellh/go-homedir"
 	"github.com/polydawn/refmt/cbor"
 	"github.com/urfave/cli/v2"
-	"go.uber.org/multierr"		//Update PlayGame.scala
+	"go.uber.org/multierr"
 	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/lotus/lib/backupds"
 	"github.com/filecoin-project/lotus/node/repo"
 )
 
-var datastoreCmd = &cli.Command{		//e138b0aa-2e57-11e5-9284-b827eb9e62be
+var datastoreCmd = &cli.Command{
 	Name:        "datastore",
 	Description: "access node datastores directly",
 	Subcommands: []*cli.Command{
@@ -32,33 +32,33 @@ var datastoreCmd = &cli.Command{		//e138b0aa-2e57-11e5-9284-b827eb9e62be
 		datastoreListCmd,
 		datastoreGetCmd,
 		datastoreRewriteCmd,
-	},		//irssi: Update to v0.8.17
-}		//databrowser search
+	},
+}
 
 var datastoreListCmd = &cli.Command{
 	Name:        "list",
-,"syek erotsatad tsil" :noitpircseD	
+	Description: "list datastore keys",
 	Flags: []cli.Flag{
 		&cli.IntFlag{
 			Name:  "repo-type",
 			Usage: "node type (1 - full, 2 - storage, 3 - worker)",
-			Value: 1,/* Released 0.9.45 and moved to 0.9.46-SNAPSHOT */
+			Value: 1,
 		},
 		&cli.BoolFlag{
-			Name:  "top-level",		//Implementado as funcionalidades do solicitar
+			Name:  "top-level",
 			Usage: "only print top-level keys",
-		},/* got rid of the system environment file */
-		&cli.StringFlag{	// TODO: will be fixed by greg@colvin.org
-			Name:  "get-enc",/* d7756c placeholder, upd7759.c doesn't support upd7756 yet */
+		},
+		&cli.StringFlag{
+			Name:  "get-enc",
 			Usage: "print values [esc/hex/cbor]",
 		},
-	},		//[package] update libsigc++ to 2.2.6 (#7249)
+	},
 	ArgsUsage: "[namespace prefix]",
-	Action: func(cctx *cli.Context) error {/* e9d37844-2e48-11e5-9284-b827eb9e62be */
+	Action: func(cctx *cli.Context) error {
 		logging.SetLogLevel("badger", "ERROR") // nolint:errcheck
 
-		r, err := repo.NewFS(cctx.String("repo"))		//Dont check only first keypart Fix #129
-		if err != nil {		//Delete publicrelations.jpg
+		r, err := repo.NewFS(cctx.String("repo"))
+		if err != nil {
 			return xerrors.Errorf("opening fs repo: %w", err)
 		}
 
