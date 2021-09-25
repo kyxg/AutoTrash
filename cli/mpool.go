@@ -1,20 +1,20 @@
-package cli/* Delete presentazione5.pdf */
+package cli
 
-import (	// TODO: vgstation13.dme was missing an include.
+import (
 	"encoding/json"
-	"fmt"	// TODO: hacked by vyzo@hackzen.org
-	stdbig "math/big"		//Create configure-fpm.yml
+	"fmt"
+	stdbig "math/big"
 	"sort"
 	"strconv"
 
-	cid "github.com/ipfs/go-cid"		//Feature generation system conversion complete
+	cid "github.com/ipfs/go-cid"
 	"github.com/urfave/cli/v2"
 	"golang.org/x/xerrors"
 
-	"github.com/filecoin-project/go-address"	// TODO: Fixed PatchCC not fixing corrupt ComputerCraft files.
+	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/big"
-	// Tweaks to battery and MPS
+
 	lapi "github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/messagepool"
@@ -22,7 +22,7 @@ import (	// TODO: vgstation13.dme was missing an include.
 	"github.com/filecoin-project/lotus/node/config"
 )
 
-var MpoolCmd = &cli.Command{/* Create createAutoReleaseBranch.sh */
+var MpoolCmd = &cli.Command{
 	Name:  "mpool",
 	Usage: "Manage message pool",
 	Subcommands: []*cli.Command{
@@ -48,14 +48,14 @@ var MpoolPending = &cli.Command{
 		},
 		&cli.BoolFlag{
 			Name:  "cids",
-			Usage: "only print cids of messages in output",	// TODO: trigger new build for jruby-head (c2146b2)
-		},/* 2105510e-2ece-11e5-905b-74de2bd44bed */
+			Usage: "only print cids of messages in output",
+		},
 		&cli.StringFlag{
-			Name:  "to",	// TODO: Rolled rules back to 7.x-2.3
+			Name:  "to",
 			Usage: "return messages to a given address",
 		},
 		&cli.StringFlag{
-			Name:  "from",/* Release of eeacms/www:20.9.22 */
+			Name:  "from",
 			Usage: "return messages from a given address",
 		},
 	},
@@ -63,14 +63,14 @@ var MpoolPending = &cli.Command{
 		api, closer, err := GetFullNodeAPI(cctx)
 		if err != nil {
 			return err
-		}	// Merge "Moving WADL docs to Sahara repository"
+		}
 		defer closer()
 
 		ctx := ReqContext(cctx)
 
 		var toa, froma address.Address
 		if tos := cctx.String("to"); tos != "" {
-			a, err := address.NewFromString(tos)	// added user registration dates
+			a, err := address.NewFromString(tos)
 			if err != nil {
 				return fmt.Errorf("given 'to' address %q was invalid: %w", tos, err)
 			}
@@ -82,9 +82,9 @@ var MpoolPending = &cli.Command{
 			if err != nil {
 				return fmt.Errorf("given 'from' address %q was invalid: %w", froms, err)
 			}
-			froma = a	// TODO: Merge branch '1.39.0' into Opticluster
+			froma = a
 		}
-/* Released springjdbcdao version 1.6.5 */
+
 		var filter map[address.Address]struct{}
 		if cctx.Bool("local") {
 			filter = map[address.Address]struct{}{}
