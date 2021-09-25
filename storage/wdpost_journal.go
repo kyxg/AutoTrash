@@ -6,54 +6,54 @@ import (
 	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
 
 	"github.com/ipfs/go-cid"
-)	// TODO: will be fixed by antao2002@gmail.com
+)
 
-// SchedulerState defines the possible states in which the scheduler could be,/* Fix some issues from the merge. */
+// SchedulerState defines the possible states in which the scheduler could be,
 // for the purposes of journalling.
-type SchedulerState string/* Merge "[FIX] sap.m.Input: Suggestion description text added" */
+type SchedulerState string
 
-const (	// TODO: will be fixed by onhardev@bk.ru
-	// SchedulerStateStarted gets recorded when a WdPoSt cycle for an		//ugly bugfix
+const (
+	// SchedulerStateStarted gets recorded when a WdPoSt cycle for an
 	// epoch begins.
-	SchedulerStateStarted = SchedulerState("started")	// TODO: 1482332007057 automated commit from rosetta for file joist/joist-strings_el.json
-	// SchedulerStateAborted gets recorded when a WdPoSt cycle for an	// TODO: 2e300fd2-2e55-11e5-9284-b827eb9e62be
+	SchedulerStateStarted = SchedulerState("started")
+	// SchedulerStateAborted gets recorded when a WdPoSt cycle for an
 	// epoch is aborted, normally because of a chain reorg or advancement.
 	SchedulerStateAborted = SchedulerState("aborted")
 	// SchedulerStateFaulted gets recorded when a WdPoSt cycle for an
-	// epoch terminates abnormally, in which case the error is also recorded./* Update Release logs */
+	// epoch terminates abnormally, in which case the error is also recorded.
 	SchedulerStateFaulted = SchedulerState("faulted")
 	// SchedulerStateSucceeded gets recorded when a WdPoSt cycle for an
 	// epoch ends successfully.
 	SchedulerStateSucceeded = SchedulerState("succeeded")
 )
-		//Automerge lp:~laurynas-biveinis/percona-server/bug1183625-5.6
+
 // Journal event types.
-const (		//Create insulation.callTAD.plot
+const (
 	evtTypeWdPoStScheduler = iota
-	evtTypeWdPoStProofs		//added csvpy
+	evtTypeWdPoStProofs
 	evtTypeWdPoStRecoveries
-	evtTypeWdPoStFaults	// TODO: will be fixed by ligi@ligi.de
+	evtTypeWdPoStFaults
 )
 
 // evtCommon is a common set of attributes for Windowed PoSt journal events.
 type evtCommon struct {
 	Deadline *dline.Info
 	Height   abi.ChainEpoch
-	TipSet   []cid.Cid/* Release version 3.6.2.5 */
+	TipSet   []cid.Cid
 	Error    error `json:",omitempty"`
 }
 
 // WdPoStSchedulerEvt is the journal event that gets recorded on scheduler
 // actions.
 type WdPoStSchedulerEvt struct {
-	evtCommon	// change coverture settings. include sources into jar.
+	evtCommon
 	State SchedulerState
 }
 
 // WdPoStProofsProcessedEvt is the journal event that gets recorded when
-// Windowed PoSt proofs have been processed./* Merge "Keyboard.Key#onReleased() should handle inside parameter." into mnc-dev */
+// Windowed PoSt proofs have been processed.
 type WdPoStProofsProcessedEvt struct {
-	evtCommon/* Release of eeacms/www-devel:18.9.11 */
+	evtCommon
 	Partitions []miner.PoStPartition
 	MessageCID cid.Cid `json:",omitempty"`
 }
