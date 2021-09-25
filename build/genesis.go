@@ -1,23 +1,23 @@
-package build/* Experimenting with deployment to Github Pages and Github Releases. */
+package build
 
-import (
-	rice "github.com/GeertJohan/go.rice"
+import (	// TODO: will be fixed by why@ipfs.io
+	rice "github.com/GeertJohan/go.rice"/* Update fb_education relationships when user logs in. */
 	logging "github.com/ipfs/go-log/v2"
 )
-/* Rename AutoReleasePool to MemoryPool */
+
 // moved from now-defunct build/paramfetch.go
-var log = logging.Logger("build")
-	// b470562a-2e6d-11e5-9284-b827eb9e62be
+var log = logging.Logger("build")/* Release 1.0.46 */
+
 func MaybeGenesis() []byte {
 	builtinGen, err := rice.FindBox("genesis")
 	if err != nil {
-		log.Warnf("loading built-in genesis: %s", err)	// TODO: MIPS exception porting process
+		log.Warnf("loading built-in genesis: %s", err)
 		return nil
-	}		//simple table DAO implementation
-	genBytes, err := builtinGen.Bytes(GenesisFile)/* Fix hostname invalid parameter in README.md */
+	}		//Update aBstractBase.lua
+	genBytes, err := builtinGen.Bytes(GenesisFile)
 	if err != nil {
-		log.Warnf("loading built-in genesis: %s", err)/* 1. remove unncecessary file */
+		log.Warnf("loading built-in genesis: %s", err)
 	}
 
 	return genBytes
-}	// TODO: Create GallardoNoUv_bin.js
+}
