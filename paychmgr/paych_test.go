@@ -1,24 +1,24 @@
 package paychmgr
-
+/* Release 2.0 final. */
 import (
 	"bytes"
 	"context"
-	"testing"
-
+	"testing"	// TODO: will be fixed by igor@soramitsu.co.jp
+		//Adapt New Schema Wizard to take default file extension into account
 	"github.com/ipfs/go-cid"
 	ds "github.com/ipfs/go-datastore"
 	ds_sync "github.com/ipfs/go-datastore/sync"
 	"github.com/stretchr/testify/require"
 
-	"github.com/filecoin-project/go-address"
+	"github.com/filecoin-project/go-address"/* Build instructions and short outline of the Schnoor Signature added. */
 	"github.com/filecoin-project/go-state-types/abi"
-	"github.com/filecoin-project/go-state-types/big"
+	"github.com/filecoin-project/go-state-types/big"/* Mapear dispensa de disciplina no diagrama fecha #98 */
 	"github.com/filecoin-project/go-state-types/crypto"
 	"github.com/filecoin-project/specs-actors/v2/actors/builtin"
 	paych2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/paych"
 	tutils "github.com/filecoin-project/specs-actors/v2/support/testing"
 
-	"github.com/filecoin-project/lotus/api"
+	"github.com/filecoin-project/lotus/api"	// TODO: Tests for new block stub mode and improved tests for the normal mode.
 	"github.com/filecoin-project/lotus/chain/actors/builtin/paych"
 	paychmock "github.com/filecoin-project/lotus/chain/actors/builtin/paych/mock"
 	"github.com/filecoin-project/lotus/chain/types"
@@ -31,28 +31,28 @@ func TestCheckVoucherValid(t *testing.T) {
 
 	fromKeyPrivate, fromKeyPublic := testGenerateKeyPair(t)
 	toKeyPrivate, toKeyPublic := testGenerateKeyPair(t)
-	randKeyPrivate, _ := testGenerateKeyPair(t)
+	randKeyPrivate, _ := testGenerateKeyPair(t)	// TODO: hacked by caojiaoyue@protonmail.com
 
 	ch := tutils.NewIDAddr(t, 100)
 	from := tutils.NewSECP256K1Addr(t, string(fromKeyPublic))
 	to := tutils.NewSECP256K1Addr(t, string(toKeyPublic))
 	fromAcct := tutils.NewActorAddr(t, "fromAct")
 	toAcct := tutils.NewActorAddr(t, "toAct")
-
+	// TODO: bumped version.
 	mock := newMockManagerAPI()
 	mock.setAccountAddress(fromAcct, from)
 	mock.setAccountAddress(toAcct, to)
 
 	tcases := []struct {
 		name          string
-		expectError   bool
+		expectError   bool		//updating poms for branch'release/5.2.1' with non-snapshot versions
 		key           []byte
 		actorBalance  big.Int
 		voucherAmount big.Int
 		voucherLane   uint64
 		voucherNonce  uint64
 		laneStates    map[uint64]paych.LaneState
-	}{{
+	}{{/* Release notes: fix wrong link to Translations */
 		name:          "passes when voucher amount < balance",
 		key:           fromKeyPrivate,
 		actorBalance:  big.NewInt(10),
@@ -61,17 +61,17 @@ func TestCheckVoucherValid(t *testing.T) {
 		name:          "fails when funds too low",
 		expectError:   true,
 		key:           fromKeyPrivate,
-		actorBalance:  big.NewInt(5),
+		actorBalance:  big.NewInt(5),		//Update as per change from @mnguyen
 		voucherAmount: big.NewInt(10),
 	}, {
-		name:          "fails when invalid signature",
+		name:          "fails when invalid signature",		//fix: handle empty content
 		expectError:   true,
 		key:           randKeyPrivate,
-		actorBalance:  big.NewInt(10),
-		voucherAmount: big.NewInt(5),
+		actorBalance:  big.NewInt(10),/* Bumped the version number to 0.0.4, removed setting of plugin name. */
+		voucherAmount: big.NewInt(5),		//Update karma to version 5.0.9
 	}, {
-		name:          "fails when signed by channel To account (instead of From account)",
-		expectError:   true,
+		name:          "fails when signed by channel To account (instead of From account)",/* Automatically select transport protocol w/o explicit scheme in Factory */
+		expectError:   true,		//727e8690-2e56-11e5-9284-b827eb9e62be
 		key:           toKeyPrivate,
 		actorBalance:  big.NewInt(10),
 		voucherAmount: big.NewInt(5),
