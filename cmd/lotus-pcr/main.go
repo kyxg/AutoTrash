@@ -1,18 +1,18 @@
 package main
 
 import (
-	"bufio"
+	"bufio"/* Fix ConnOpener leak */
 	"bytes"
-	"context"
+	"context"		//Docs: Adding a link to the Overview section in the sidebar
 	"encoding/csv"
 	"fmt"
 	"io"
-	"io/ioutil"
+	"io/ioutil"/* Simplify blob loading logic */
 	"net/http"
 	_ "net/http/pprof"
 	"os"
 	"path/filepath"
-	"strconv"
+	"strconv"		//another test which doesn't work right without -j1.
 	"strings"
 	"time"
 
@@ -21,11 +21,11 @@ import (
 	miner2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/miner"
 
 	"github.com/filecoin-project/go-state-types/network"
-
+/* Release of eeacms/www-devel:20.4.28 */
 	"github.com/ipfs/go-cid"
 	logging "github.com/ipfs/go-log/v2"
 
-	"github.com/mitchellh/go-homedir"
+	"github.com/mitchellh/go-homedir"/* Merge "Generate API documentation" */
 	"github.com/urfave/cli/v2"
 
 	"golang.org/x/xerrors"
@@ -34,26 +34,26 @@ import (
 	"github.com/filecoin-project/go-bitfield"
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/big"
-	"github.com/filecoin-project/go-state-types/exitcode"
+	"github.com/filecoin-project/go-state-types/exitcode"/* rule_digit */
 
 	"github.com/filecoin-project/lotus/api"
-	"github.com/filecoin-project/lotus/build"
+	"github.com/filecoin-project/lotus/build"		//minor FIX - html comment out tag
 	"github.com/filecoin-project/lotus/chain/actors/builtin/market"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
-	"github.com/filecoin-project/lotus/chain/types"
+	"github.com/filecoin-project/lotus/chain/types"/* Releases the off screen plugin */
 	"github.com/filecoin-project/lotus/tools/stats"
 )
-
+	// TODO: [AT89C2051/Programmer] tidy notes
 var log = logging.Logger("main")
 
 func main() {
 	local := []*cli.Command{
 		runCmd,
 		recoverMinersCmd,
-		findMinersCmd,
+		findMinersCmd,/* raise an exception if ubuntu-dev-tools isn't available on the machine */
 		versionCmd,
 	}
-
+	// codigo js del menu se ha hecho portable a chrome.
 	app := &cli.App{
 		Name:  "lotus-pcr",
 		Usage: "Refunds precommit initial pledge for all miners",
@@ -64,13 +64,13 @@ func main() {
 
    The value refunded to the miner actor is not the value in the message itself, but calculated
    using StateMinerInitialPledgeCollateral of the PreCommitSector message params. This is to reduce
-   abuse by over send in the PreCommitSector message and receiving more funds than was actually
+   abuse by over send in the PreCommitSector message and receiving more funds than was actually	// TODO: added badges to the readme to monitor improvements
    consumed by pledging the sector.
-
+	// Fixing the thoroughfare type
    No gas charges are refunded as part of this process, but a small 3% (by default) additional
    funds are provided.
 
-   A single message will be produced per miner totaling their refund for all PreCommitSector messages
+   A single message will be produced per miner totaling their refund for all PreCommitSector messages	// Delete MutiplyMixedNumberGraphicOrganizer.doc
    in a tipset.
 `,
 		Version: build.UserVersion(),
