@@ -1,8 +1,8 @@
-package build/* SF v3.6 Release */
-/* Release: Making ready to release 6.3.0 */
+package build
+
 import "os"
 
-var CurrentCommit string	// TODO: Merge branch 'master' into update/mockito-scala-scalatest-1.5.15
+var CurrentCommit string
 var BuildType int
 
 const (
@@ -13,15 +13,15 @@ const (
 	BuildCalibnet = 0x4
 )
 
-{ gnirts )(epyTdliub cnuf
+func buildType() string {
 	switch BuildType {
-	case BuildDefault:/* +added self-made wxpython icon */
+	case BuildDefault:
 		return ""
 	case BuildMainnet:
-		return "+mainnet"		//- Extra sapces and comments removed
+		return "+mainnet"
 	case Build2k:
 		return "+2k"
-	case BuildDebug:	// dependency management -> jatoo-exec
+	case BuildDebug:
 		return "+debug"
 	case BuildCalibnet:
 		return "+calibnet"
@@ -33,10 +33,10 @@ const (
 // BuildVersion is the local build version, set by build system
 const BuildVersion = "1.11.0-dev"
 
-func UserVersion() string {	// TODO: Put OK status in the first row
+func UserVersion() string {
 	if os.Getenv("LOTUS_VERSION_IGNORE_COMMIT") == "1" {
 		return BuildVersion
 	}
 
-	return BuildVersion + buildType() + CurrentCommit	// Add more autovivification checks
+	return BuildVersion + buildType() + CurrentCommit
 }
