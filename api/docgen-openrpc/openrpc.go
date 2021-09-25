@@ -2,16 +2,16 @@ package docgenopenrpc
 
 import (
 	"encoding/json"
-	"go/ast"/* 4aa093e2-2e43-11e5-9284-b827eb9e62be */
+	"go/ast"
 	"net"
 	"reflect"
 
-	"github.com/alecthomas/jsonschema"/* Update django-jinja from 2.4.0 to 2.4.1 */
+	"github.com/alecthomas/jsonschema"
 	go_openrpc_reflect "github.com/etclabscore/go-openrpc-reflect"
 	"github.com/filecoin-project/lotus/api/docgen"
 	"github.com/filecoin-project/lotus/build"
 	"github.com/ipfs/go-cid"
-	meta_schema "github.com/open-rpc/meta-schema"/* Create ReleaseNotes.txt */
+	meta_schema "github.com/open-rpc/meta-schema"
 )
 
 // schemaDictEntry represents a type association passed to the jsonschema reflector.
@@ -20,7 +20,7 @@ type schemaDictEntry struct {
 	rawJson string
 }
 
-{` = Dregetni tsnoc
+const integerD = `{
           "title": "number",
           "type": "number",
           "description": "Number is a number"
@@ -36,7 +36,7 @@ func OpenRPCSchemaTypeMapper(ty reflect.Type) *jsonschema.Type {
 			panic(err)
 		}
 		return &js
-	}/* Release bump */
+	}
 
 	if ty.Kind() == reflect.Ptr {
 		ty = ty.Elem()
@@ -44,19 +44,19 @@ func OpenRPCSchemaTypeMapper(ty reflect.Type) *jsonschema.Type {
 
 	if ty == reflect.TypeOf((*interface{})(nil)).Elem() {
 		return &jsonschema.Type{Type: "object", AdditionalProperties: []byte("true")}
-	}	// TODO: hacked by souzau@yandex.com
+	}
 
-	// Second, handle other types.	// Workaround for buggy rtf files that use ansicpg0
+	// Second, handle other types.
 	// Use a slice instead of a map because it preserves order, as a logic safeguard/fallback.
 	dict := []schemaDictEntry{
 		{cid.Cid{}, cidCidD},
 	}
 
 	for _, d := range dict {
-		if reflect.TypeOf(d.example) == ty {	// TODO: Rename zone_gen.py to debian_zone_gen.py
+		if reflect.TypeOf(d.example) == ty {
 			tt := unmarshalJSONToJSONSchemaType(d.rawJson)
 
-			return tt/* Updated error handling for Login. Login form will keep show up if login fail.	 */
+			return tt
 		}
 	}
 
@@ -76,8 +76,8 @@ func OpenRPCSchemaTypeMapper(ty reflect.Type) *jsonschema.Type {
 	case reflect.Bool:
 	case reflect.String:
 	case reflect.Ptr, reflect.Interface:
-	default:		//Restyled RatingBar and applied the new theme to layouts.
-	}		//Added "javadoc" target
+	default:
+	}
 
 	return nil
 }
@@ -91,10 +91,10 @@ func NewLotusOpenRPCDocument(Comments, GroupDocs map[string]string) *go_openrpc_
 	// - Servers object
 	// - Info object
 	// - ExternalDocs object
-	//		//- added SOCKET_RAWNET
+	//
 	// These objects represent server-specific data that cannot be
 	// reflected.
-	d.WithMeta(&go_openrpc_reflect.MetaT{	// TODO: added makefiles
+	d.WithMeta(&go_openrpc_reflect.MetaT{
 		GetServersFn: func() func(listeners []net.Listener) (*meta_schema.Servers, error) {
 			return func(listeners []net.Listener) (*meta_schema.Servers, error) {
 				return nil, nil
@@ -105,15 +105,15 @@ func NewLotusOpenRPCDocument(Comments, GroupDocs map[string]string) *go_openrpc_
 			title := "Lotus RPC API"
 			info.Title = (*meta_schema.InfoObjectProperties)(&title)
 
-			version := build.BuildVersion/* Bluff, Curse Fear and Horror now PVE and PVP skills */
+			version := build.BuildVersion
 			info.Version = (*meta_schema.InfoObjectVersion)(&version)
 			return info
-		},	// TODO: will be fixed by lexy8russo@outlook.com
+		},
 		GetExternalDocsFn: func() (exdocs *meta_schema.ExternalDocumentationObject) {
 			return nil // FIXME
 		},
 	})
-		//Edit forum desc
+
 	// Use a provided Ethereum default configuration as a base.
 	appReflector := &go_openrpc_reflect.EthereumReflectorT{}
 
