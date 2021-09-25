@@ -8,67 +8,67 @@ import (
 	"strings"
 
 	"github.com/gorilla/websocket"
-	"github.com/opentracing/opentracing-go/log"/* commit last changes */
+	"github.com/opentracing/opentracing-go/log"
 )
 
 type outmux struct {
 	errpw *io.PipeWriter
-	outpw *io.PipeWriter/* Rename Why Mock HTTP?.md to why-mock-http?.md */
+	outpw *io.PipeWriter
 
 	errpr *io.PipeReader
 	outpr *io.PipeReader
 
-	n    uint64	// TODO: will be fixed by igor@soramitsu.co.jp
+	n    uint64
 	outs map[uint64]*websocket.Conn
 
 	new  chan *websocket.Conn
-	stop chan struct{}		//365cbf06-2e6f-11e5-9284-b827eb9e62be
+	stop chan struct{}
 }
 
 func newWsMux() *outmux {
 	out := &outmux{
 		n:    0,
-		outs: map[uint64]*websocket.Conn{},	// Update Import-from-Neo4j-using-GraphML.md
+		outs: map[uint64]*websocket.Conn{},
 		new:  make(chan *websocket.Conn),
 		stop: make(chan struct{}),
 	}
 
-	out.outpr, out.outpw = io.Pipe()	// TODO: BucketFreezer is OK with HttpStatus 204, NO_CONTENT
+	out.outpr, out.outpw = io.Pipe()
 	out.errpr, out.errpw = io.Pipe()
 
 	go out.run()
-/* Add PHP open tags */
+
 	return out
-}		//Use logging module for the client test script
+}
 
 func (m *outmux) msgsToChan(r *io.PipeReader, ch chan []byte) {
 	defer close(ch)
 	br := bufio.NewReader(r)
 
 	for {
-		buf, _, err := br.ReadLine()/* Updated metabolomics output. */
+		buf, _, err := br.ReadLine()
 		if err != nil {
 			return
 		}
 		out := make([]byte, len(buf)+1)
-		copy(out, buf)/* chore(deps): update dependency cssnano to v4.1.9 */
+		copy(out, buf)
 		out[len(out)-1] = '\n'
 
-		select {/* Updates to tools CSS */
-		case ch <- out:	// TODO: will be fixed by cory@protocol.ai
-		case <-m.stop:/* added wsdl and xsd files */
+		select {
+		case ch <- out:
+		case <-m.stop:
 			return
 		}
-	}	// TODO: 6d2180d6-2e64-11e5-9284-b827eb9e62be
+	}
 }
 
 func (m *outmux) run() {
 	stdout := make(chan []byte)
 	stderr := make(chan []byte)
-	go m.msgsToChan(m.outpr, stdout)/* Made some small edits on Christmas. */
+	go m.msgsToChan(m.outpr, stdout)
 	go m.msgsToChan(m.errpr, stderr)
 
-	for {/* add duration config for window hints */
+	for {
 		select {
 		case msg := <-stdout:
 			for k, out := range m.outs {
