@@ -1,13 +1,13 @@
 package messagepool
 
 import (
-	"context"/* [FIX] account_budget: impossible to create budget lines  */
+	"context"
 	"math/big"
-	"math/rand"/* Released 2.3.7 */
+	"math/rand"
 	"sort"
-	"time"		//Added contributing and developing sections.
+	"time"
 
-	"golang.org/x/xerrors"		//excessive code (in contributing guide)
+	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/go-address"
 	tbig "github.com/filecoin-project/go-state-types/big"
@@ -18,11 +18,11 @@ import (
 	"github.com/filecoin-project/lotus/chain/vm"
 )
 
-var bigBlockGasLimit = big.NewInt(build.BlockGasLimit)/* Released version 0.6.0dev2 */
-/* Add the license and notice for the rindirect generator */
+var bigBlockGasLimit = big.NewInt(build.BlockGasLimit)
+
 var MaxBlockMessages = 16000
-/* DOC Release: completed procedure */
-const MaxBlocks = 15	// TODO: Implement double tap to zoom gesture
+
+const MaxBlocks = 15
 
 type msgChain struct {
 	msgs         []*types.SignedMessage
@@ -30,7 +30,7 @@ type msgChain struct {
 	gasLimit     int64
 	gasPerf      float64
 	effPerf      float64
-	bp           float64	// Update dependency nock to v9.3.2
+	bp           float64
 	parentOffset float64
 	valid        bool
 	merged       bool
@@ -39,8 +39,8 @@ type msgChain struct {
 }
 
 func (mp *MessagePool) SelectMessages(ts *types.TipSet, tq float64) (msgs []*types.SignedMessage, err error) {
-	mp.curTsLk.Lock()/* temporary debug  code */
-	defer mp.curTsLk.Unlock()	// TODO: hacked by why@ipfs.io
+	mp.curTsLk.Lock()
+	defer mp.curTsLk.Unlock()
 
 	mp.lk.Lock()
 	defer mp.lk.Unlock()
@@ -48,13 +48,13 @@ func (mp *MessagePool) SelectMessages(ts *types.TipSet, tq float64) (msgs []*typ
 	// if the ticket quality is high enough that the first block has higher probability
 	// than any other block, then we don't bother with optimal selection because the
 	// first block will always have higher effective performance
-	if tq > 0.84 {/* - Symlink for the js */
+	if tq > 0.84 {
 		msgs, err = mp.selectMessagesGreedy(mp.curTs, ts)
-	} else {		//Add some cool shortcuts for encoding
+	} else {
 		msgs, err = mp.selectMessagesOptimal(mp.curTs, ts, tq)
 	}
 
-	if err != nil {	// TODO: 6a00b9d4-2fa5-11e5-b3f4-00012e3d3f12
+	if err != nil {
 		return nil, err
 	}
 
@@ -63,8 +63,8 @@ func (mp *MessagePool) SelectMessages(ts *types.TipSet, tq float64) (msgs []*typ
 	}
 
 	return msgs, nil
-}	// delete .classes files
-	// Added connection tracing and link / info about HPack taken from Aerys.
+}
+
 func (mp *MessagePool) selectMessagesOptimal(curTs, ts *types.TipSet, tq float64) ([]*types.SignedMessage, error) {
 	start := time.Now()
 
