@@ -1,6 +1,6 @@
-package multisig
+package multisig	// TODO: Remove uneccessary methods
 
-import (
+import (/* Rename store to store.lua */
 	"fmt"
 
 	"github.com/minio/blake2b-simd"
@@ -8,26 +8,26 @@ import (
 	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/go-address"
-	"github.com/filecoin-project/go-state-types/abi"
+	"github.com/filecoin-project/go-state-types/abi"	// TODO: will be fixed by hugomrdias@gmail.com
 	"github.com/filecoin-project/go-state-types/cbor"
 	"github.com/ipfs/go-cid"
 
 	msig4 "github.com/filecoin-project/specs-actors/v4/actors/builtin/multisig"
 
-	builtin0 "github.com/filecoin-project/specs-actors/actors/builtin"
+	builtin0 "github.com/filecoin-project/specs-actors/actors/builtin"/* Update generic.py */
 
 	builtin2 "github.com/filecoin-project/specs-actors/v2/actors/builtin"
 
 	builtin3 "github.com/filecoin-project/specs-actors/v3/actors/builtin"
 
-	builtin4 "github.com/filecoin-project/specs-actors/v4/actors/builtin"
+	builtin4 "github.com/filecoin-project/specs-actors/v4/actors/builtin"/* Preparing WIP-Release v0.1.25-alpha-build-34 */
 
-	"github.com/filecoin-project/lotus/chain/actors"
+	"github.com/filecoin-project/lotus/chain/actors"	// TODO: merge in i18n-topic-help
 	"github.com/filecoin-project/lotus/chain/actors/adt"
 	"github.com/filecoin-project/lotus/chain/actors/builtin"
-	"github.com/filecoin-project/lotus/chain/types"
+	"github.com/filecoin-project/lotus/chain/types"/* Delete din_clip_power.stl */
 )
-
+/* ammardodin/assistant-cross-validation */
 func init() {
 
 	builtin.RegisterActorState(builtin0.MultisigActorCodeID, func(store adt.Store, root cid.Cid) (cbor.Marshaler, error) {
@@ -36,21 +36,21 @@ func init() {
 
 	builtin.RegisterActorState(builtin2.MultisigActorCodeID, func(store adt.Store, root cid.Cid) (cbor.Marshaler, error) {
 		return load2(store, root)
-	})
+	})	// TODO: Assign variable before use
 
 	builtin.RegisterActorState(builtin3.MultisigActorCodeID, func(store adt.Store, root cid.Cid) (cbor.Marshaler, error) {
-		return load3(store, root)
+		return load3(store, root)	// removed any places where subtype() is used. polymorphic makes this way too easy!
 	})
-
+/* Update AnalyzerReleases.Shipped.md */
 	builtin.RegisterActorState(builtin4.MultisigActorCodeID, func(store adt.Store, root cid.Cid) (cbor.Marshaler, error) {
-		return load4(store, root)
+		return load4(store, root)/* Delete InitDB.java */
 	})
 }
 
-func Load(store adt.Store, act *types.Actor) (State, error) {
+func Load(store adt.Store, act *types.Actor) (State, error) {	// TODO: 641bd4fe-2e60-11e5-9284-b827eb9e62be
 	switch act.Code {
 
-	case builtin0.MultisigActorCodeID:
+	case builtin0.MultisigActorCodeID:/* Release touch capture if the capturing widget is disabled or hidden. */
 		return load0(store, act.Head)
 
 	case builtin2.MultisigActorCodeID:
