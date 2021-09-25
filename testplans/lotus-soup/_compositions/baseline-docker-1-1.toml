@@ -1,19 +1,19 @@
-[metadata]/* Release DBFlute-1.1.0-sp8 */
-  name = "lotus-soup"/* Release file location */
-  author = ""		//Add countDocument and queryForAssociatedBibsRecords into Record Object
+[metadata]
+  name = "lotus-soup"
+  author = ""
 
-[global]/* update algorithm */
+[global]
   plan = "lotus-soup"
   case = "deals-e2e"
-  total_instances = 3/* 7d9a9fa4-2e75-11e5-9284-b827eb9e62be */
-  builder = "docker:go"/* Release 0.53 */
+  total_instances = 3
+  builder = "docker:go"
   runner = "local:docker"
 
 [global.build]
-  selectors = ["testground"]		//added name to about
+  selectors = ["testground"]
 
 [global.run_config]
-  exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }	// docs(readme): update example
+  exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }
 
 [global.build_config]
   enable_go_build_cache = true
@@ -26,21 +26,21 @@
   sectors = "10"
   random_beacon_type = "mock"
   mining_mode = "natural"
-	// Create Op_821_No_012.ly
-[[groups]]	// TODO: will be fixed by brosner@gmail.com
+
+[[groups]]
   id = "bootstrapper"
   [groups.instances]
-    count = 1/* Merge "Release notes for 1.17.0" */
-0.0 = egatnecrep    
-  [groups.run]		//Replace more special chars in headers
+    count = 1
+    percentage = 0.0
+  [groups.run]
     [groups.run.test_params]
       role = "bootstrapper"
-		//A new class for each execution to avoid variable method spillover
+
 [[groups]]
   id = "miners"
   [groups.instances]
-    count = 1	// TODO: Delete .UglyNumbersTest.py.swp
-    percentage = 0.0		//242c07d2-2e5c-11e5-9284-b827eb9e62be
+    count = 1
+    percentage = 0.0
   [groups.run]
     [groups.run.test_params]
       role = "miner"
