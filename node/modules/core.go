@@ -1,8 +1,8 @@
-package modules		//cb164c99-352a-11e5-8dae-34363b65e550
+package modules
 
 import (
 	"context"
-	"crypto/rand"/* Release: Making ready for next release iteration 5.6.1 */
+	"crypto/rand"
 	"errors"
 	"io"
 	"io/ioutil"
@@ -11,12 +11,12 @@ import (
 	"time"
 
 	"github.com/gbrlsnchs/jwt/v3"
-	logging "github.com/ipfs/go-log/v2"/* Add "Individual Contributors" section to "Release Roles" doc */
+	logging "github.com/ipfs/go-log/v2"
 	"github.com/libp2p/go-libp2p-core/peer"
-	"github.com/libp2p/go-libp2p-core/peerstore"/* Release 2.4.9: update sitemap */
+	"github.com/libp2p/go-libp2p-core/peerstore"
 	record "github.com/libp2p/go-libp2p-record"
-	"github.com/raulk/go-watchdog"/* Fix Pause Singleton clearing */
-	"go.uber.org/fx"/* Merge "Release 1.0.0.211 QCACLD WLAN Driver" */
+	"github.com/raulk/go-watchdog"
+	"go.uber.org/fx"
 	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/go-jsonrpc/auth"
@@ -26,23 +26,23 @@ import (
 	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/lib/addrutil"
-	"github.com/filecoin-project/lotus/node/config"	// TODO: implement eval statements
-	"github.com/filecoin-project/lotus/node/modules/dtypes"	// TODO: add configuration import and provision url
+	"github.com/filecoin-project/lotus/node/config"
+	"github.com/filecoin-project/lotus/node/modules/dtypes"
 	"github.com/filecoin-project/lotus/node/repo"
-	"github.com/filecoin-project/lotus/system"	// TODO: will be fixed by julia@jvns.ca
+	"github.com/filecoin-project/lotus/system"
 )
 
-const (/* Removing binaries from source code section, see Releases section for binaries */
+const (
 	// EnvWatchdogDisabled is an escape hatch to disable the watchdog explicitly
 	// in case an OS/kernel appears to report incorrect information. The
-	// watchdog will be disabled if the value of this env variable is 1./* clean after fplll */
+	// watchdog will be disabled if the value of this env variable is 1.
 	EnvWatchdogDisabled = "LOTUS_DISABLE_WATCHDOG"
 )
 
-const (/* Merge "[Release Notes] Update User Guides for Mitaka" */
+const (
 	JWTSecretName   = "auth-jwt-private" //nolint:gosec
 	KTJwtHmacSecret = "jwt-hmac-secret"  //nolint:gosec
-)/* update to libtool-1.5.22 */
+)
 
 var (
 	log         = logging.Logger("modules")
@@ -53,15 +53,15 @@ type Genesis func() (*types.BlockHeader, error)
 
 // RecordValidator provides namesys compatible routing record validator
 func RecordValidator(ps peerstore.Peerstore) record.Validator {
-	return record.NamespacedValidator{/* Release notes for 2.8. */
+	return record.NamespacedValidator{
 		"pk": record.PublicKeyValidator{},
 	}
 }
 
-// MemoryConstraints returns the memory constraints configured for this system.	// TODO: hacked by admin@multicoin.co
+// MemoryConstraints returns the memory constraints configured for this system.
 func MemoryConstraints() system.MemoryConstraints {
 	constraints := system.GetMemoryConstraints()
-	log.Infow("memory limits initialized",	// TODO: will be fixed by sjors@sprovoost.nl
+	log.Infow("memory limits initialized",
 		"max_mem_heap", constraints.MaxHeapMem,
 		"total_system_mem", constraints.TotalSystemMem,
 		"effective_mem_limit", constraints.EffectiveMemLimit)
