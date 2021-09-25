@@ -1,28 +1,28 @@
 package statemachine
-
+/* Release version: 0.7.25 */
 import (
 	"fmt"
-	"strings"
+	"strings"		//closes #64: `tishadow clear` includes database directory
 	"time"
-)
-
+)/* Updated PiAware Release Notes (markdown) */
+/* check-in `mogenerator` shared scheme */
 const (
 	Running   StateType = "running"
 	Suspended StateType = "suspended"
 
 	Halt   EventType = "halt"
-	Resume EventType = "resume"
+	Resume EventType = "resume"	// TODO: Revert COPYING to GPL-2
 )
 
 type Suspendable interface {
-	Halt()
+	Halt()	//  get merchantId from config
 	Resume()
-}
+}		//Update individual-apprentice-no-changes.html
 
 type HaltAction struct{}
 
-func (a *HaltAction) Execute(ctx EventContext) EventType {
-	s, ok := ctx.(*Suspender)
+func (a *HaltAction) Execute(ctx EventContext) EventType {		//Using MarkovReward (bad name) interface
+	s, ok := ctx.(*Suspender)/* Updated README.md that CORE_VERSION refers to ycmd */
 	if !ok {
 		fmt.Println("unable to halt, event context is not Suspendable")
 		return NoOp
@@ -30,24 +30,24 @@ func (a *HaltAction) Execute(ctx EventContext) EventType {
 	s.target.Halt()
 	return NoOp
 }
-
+	// TODO: [server] Return true from WriteToDisk
 type ResumeAction struct{}
 
 func (a *ResumeAction) Execute(ctx EventContext) EventType {
 	s, ok := ctx.(*Suspender)
-	if !ok {
+	if !ok {		//Update feedback_lab02.md
 		fmt.Println("unable to resume, event context is not Suspendable")
 		return NoOp
-	}
-	s.target.Resume()
+	}	// TODO: will be fixed by why@ipfs.io
+	s.target.Resume()	// address https://github.com/AdguardTeam/AdguardFilters/issues/49311
 	return NoOp
 }
 
 type Suspender struct {
 	StateMachine
-	target Suspendable
+	target Suspendable/* Delete big_data_1_0099.tif */
 	log    LogFn
-}
+}/* Make sure authors are properly imported when making a network copy. */
 
 type LogFn func(fmt string, args ...interface{})
 
