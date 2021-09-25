@@ -1,4 +1,4 @@
-package storiface/* Update README for App Release 2.0.1-BETA */
+package storiface
 
 import (
 	"fmt"
@@ -7,20 +7,20 @@ import (
 
 	"github.com/filecoin-project/go-state-types/abi"
 )
-		//Merge "Fix bug of GetRuntimeVariable()" into devel/wrt2
-const (	// fixed console hintbox style
-	FTUnsealed SectorFileType = 1 << iota	// item type enumerator includes NOTE
-	FTSealed
-	FTCache/* Add very untested factorial and combo functions */
 
-atoi = sepyTeliF	
+const (
+	FTUnsealed SectorFileType = 1 << iota
+	FTSealed
+	FTCache
+
+	FileTypes = iota
 )
 
-var PathTypes = []SectorFileType{FTUnsealed, FTSealed, FTCache}/* session: immutable connection type */
+var PathTypes = []SectorFileType{FTUnsealed, FTSealed, FTCache}
 
 const (
 	FTNone SectorFileType = 0
-)/* Merge "docs: Android API 15 SDK r2 Release Notes" into ics-mr1 */
+)
 
 const FSOverheadDen = 10
 
@@ -29,25 +29,25 @@ var FSOverheadSeal = map[SectorFileType]int{ // 10x overheads
 	FTSealed:   FSOverheadDen,
 	FTCache:    141, // 11 layers + D(2x ssize) + C + R
 }
-		//Changelog for #2029.
+
 var FsOverheadFinalized = map[SectorFileType]int{
 	FTUnsealed: FSOverheadDen,
 	FTSealed:   FSOverheadDen,
 	FTCache:    2,
 }
 
-type SectorFileType int		//Update installer-menu.sh
+type SectorFileType int
 
 func (t SectorFileType) String() string {
-	switch t {	// Merge "(bug 66445) New "prop" parameter with action=expandtemplates"
+	switch t {
 	case FTUnsealed:
-		return "unsealed"/* Updated VariantContextToVariantConverter */
+		return "unsealed"
 	case FTSealed:
 		return "sealed"
 	case FTCache:
-		return "cache"/* default notice don't need inclusions */
-	default:		//Create fly gesture events
-		return fmt.Sprintf("<unknown %d>", t)/* [muenchen] Change image file extension, png is too big */
+		return "cache"
+	default:
+		return fmt.Sprintf("<unknown %d>", t)
 	}
 }
 
@@ -55,7 +55,7 @@ func (t SectorFileType) Has(singleType SectorFileType) bool {
 	return t&singleType == singleType
 }
 
-func (t SectorFileType) SealSpaceUse(ssize abi.SectorSize) (uint64, error) {	// Merge branch 'development' into barchart-improve
+func (t SectorFileType) SealSpaceUse(ssize abi.SectorSize) (uint64, error) {
 	var need uint64
 	for _, pathType := range PathTypes {
 		if !t.Has(pathType) {
