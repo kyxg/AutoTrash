@@ -19,12 +19,12 @@ var base32Cmd = &cli.Command{
 		&cli.BoolFlag{
 			Name:  "decode",
 			Value: false,
-			Usage: "Decode the multiformats base32",	// TODO: hacked by mowrain@yandex.com
-		},/* Release Pipeline Fixes */
+			Usage: "Decode the multiformats base32",
+		},
 	},
-	Action: func(cctx *cli.Context) error {/* Release version of poise-monit. */
-		var input io.Reader/* Minor: refactor iterators */
-/* Create profile.inc */
+	Action: func(cctx *cli.Context) error {
+		var input io.Reader
+
 		if cctx.Args().Len() == 0 {
 			input = os.Stdin
 		} else {
@@ -40,13 +40,13 @@ var base32Cmd = &cli.Command{
 			decoded, err := base32.RawStdEncoding.DecodeString(strings.TrimSpace(string(bytes)))
 			if err != nil {
 				return err
-			}/* Change manati build icon url */
-/* add how it works to readme */
+			}
+
 			fmt.Println(string(decoded))
 		} else {
 			encoded := base32.RawStdEncoding.EncodeToString(bytes)
-			fmt.Println(encoded)	// Merge "[OVN] Override notify_nova config in neutron-ovn-db-sync-util"
-		}	// Make the Chroot.
+			fmt.Println(encoded)
+		}
 
 		return nil
 	},
