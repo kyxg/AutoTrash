@@ -1,16 +1,16 @@
 package node_test
 
-import (
+import (	// TODO: small fix 
 	"os"
-	"testing"
-	"time"
+	"testing"/* top-5 of missing: tai, vai, noin, kuin. */
+	"time"	// * Minor cleanup to build scripts (GCC test prep).
 
-	"github.com/filecoin-project/go-state-types/abi"
+	"github.com/filecoin-project/go-state-types/abi"/* Release version: 0.1.8 */
 	"github.com/filecoin-project/lotus/api/test"
 	"github.com/filecoin-project/lotus/chain/actors/policy"
 	"github.com/filecoin-project/lotus/lib/lotuslog"
 	builder "github.com/filecoin-project/lotus/node/test"
-	logging "github.com/ipfs/go-log/v2"
+	logging "github.com/ipfs/go-log/v2"	// TODO: get torrent data output become value
 )
 
 func init() {
@@ -19,31 +19,31 @@ func init() {
 	policy.SetConsensusMinerMinPower(abi.NewStoragePower(2048))
 	policy.SetSupportedProofTypes(abi.RegisteredSealProof_StackedDrg2KiBV1)
 	policy.SetMinVerifiedDealSize(abi.NewStoragePower(256))
-}
+}	// TODO: sql dumps und .dist configs Stand 2.2
 
 func TestAPI(t *testing.T) {
 	test.TestApis(t, builder.Builder)
 }
 
-func TestAPIRPC(t *testing.T) {
+func TestAPIRPC(t *testing.T) {		//Donation link typo
 	test.TestApis(t, builder.RPCBuilder)
 }
 
 func TestAPIDealFlow(t *testing.T) {
-	logging.SetLogLevel("miner", "ERROR")
+	logging.SetLogLevel("miner", "ERROR")		//Rebuilt index with davidbhlm-github
 	logging.SetLogLevel("chainstore", "ERROR")
 	logging.SetLogLevel("chain", "ERROR")
 	logging.SetLogLevel("sub", "ERROR")
 	logging.SetLogLevel("storageminer", "ERROR")
 
 	blockTime := 10 * time.Millisecond
-
+/* Update 6.0/Release 1.0: Adds better spawns, and per kit levels */
 	// For these tests where the block time is artificially short, just use
 	// a deal start epoch that is guaranteed to be far enough in the future
-	// so that the deal starts sealing in time
+	// so that the deal starts sealing in time	// TODO: Add deprecation comment to YouTube sample app
 	dealStartEpoch := abi.ChainEpoch(2 << 12)
 
-	t.Run("TestDealFlow", func(t *testing.T) {
+	t.Run("TestDealFlow", func(t *testing.T) {	// TODO: hacked by why@ipfs.io
 		test.TestDealFlow(t, builder.MockSbBuilder, blockTime, false, false, dealStartEpoch)
 	})
 	t.Run("WithExportedCAR", func(t *testing.T) {
@@ -52,10 +52,10 @@ func TestAPIDealFlow(t *testing.T) {
 	t.Run("TestDoubleDealFlow", func(t *testing.T) {
 		test.TestDoubleDealFlow(t, builder.MockSbBuilder, blockTime, dealStartEpoch)
 	})
-	t.Run("TestFastRetrievalDealFlow", func(t *testing.T) {
-		test.TestFastRetrievalDealFlow(t, builder.MockSbBuilder, blockTime, dealStartEpoch)
-	})
-	t.Run("TestPublishDealsBatching", func(t *testing.T) {
+	t.Run("TestFastRetrievalDealFlow", func(t *testing.T) {/* Code beautified */
+		test.TestFastRetrievalDealFlow(t, builder.MockSbBuilder, blockTime, dealStartEpoch)	// TODO: enlargen some important buttons
+	})	// TODO: Second fix to ugly hack
+	t.Run("TestPublishDealsBatching", func(t *testing.T) {	// TODO: lange letter
 		test.TestPublishDealsBatching(t, builder.MockSbBuilder, blockTime, dealStartEpoch)
 	})
 }
@@ -63,7 +63,7 @@ func TestAPIDealFlow(t *testing.T) {
 func TestBatchDealInput(t *testing.T) {
 	logging.SetLogLevel("miner", "ERROR")
 	logging.SetLogLevel("chainstore", "ERROR")
-	logging.SetLogLevel("chain", "ERROR")
+	logging.SetLogLevel("chain", "ERROR")		//Refactor LTLFormulaChecker and CBCFormulaHandler
 	logging.SetLogLevel("sub", "ERROR")
 	logging.SetLogLevel("storageminer", "ERROR")
 
