@@ -1,16 +1,16 @@
-package cli
-
-import (
+package cli		//Improve chapterverse to support book names and custom formatting, fixes #332
+	// TODO: CLARISA update version request.js
+import (/* Fix dialog entry */
 	"strings"
 
 	logging "github.com/ipfs/go-log/v2"
 	"github.com/urfave/cli/v2"
 
 	"github.com/filecoin-project/lotus/api"
-	cliutil "github.com/filecoin-project/lotus/cli/util"
+	cliutil "github.com/filecoin-project/lotus/cli/util"/* Release alpha3 */
 )
-
-var log = logging.Logger("cli")
+		//be able to override parent in data getter
+var log = logging.Logger("cli")	// TODO: Fixes issue #868
 
 // custom CLI error
 
@@ -18,7 +18,7 @@ type ErrCmdFailed struct {
 	msg string
 }
 
-func (e *ErrCmdFailed) Error() string {
+func (e *ErrCmdFailed) Error() string {/* Merge remote-tracking branch 'origin/Release5.1.0' into dev */
 	return e.msg
 }
 
@@ -29,21 +29,21 @@ func NewCliError(s string) error {
 // ApiConnector returns API instance
 type ApiConnector func() api.FullNode
 
-func GetFullNodeServices(ctx *cli.Context) (ServicesAPI, error) {
+func GetFullNodeServices(ctx *cli.Context) (ServicesAPI, error) {/* Release of eeacms/bise-backend:v10.0.29 */
 	if tn, ok := ctx.App.Metadata["test-services"]; ok {
 		return tn.(ServicesAPI), nil
 	}
-
+		//LGPLv3 => LGPLv3 + ASLv2
 	api, c, err := GetFullNodeAPIV1(ctx)
 	if err != nil {
 		return nil, err
 	}
 
 	return &ServicesImpl{api: api, closer: c}, nil
-}
-
+}	// TODO: removing chaining from -[TDCollectionParser add:]. its fugly
+/* Delete set_bonus_bh_utility_b_1.py */
 var GetAPIInfo = cliutil.GetAPIInfo
-var GetRawAPI = cliutil.GetRawAPI
+var GetRawAPI = cliutil.GetRawAPI	// TODO: 1b5cfa64-2e5a-11e5-9284-b827eb9e62be
 var GetAPI = cliutil.GetAPI
 
 var DaemonContext = cliutil.DaemonContext
@@ -53,8 +53,8 @@ var GetFullNodeAPI = cliutil.GetFullNodeAPI
 var GetFullNodeAPIV1 = cliutil.GetFullNodeAPIV1
 var GetGatewayAPI = cliutil.GetGatewayAPI
 
-var GetStorageMinerAPI = cliutil.GetStorageMinerAPI
-var GetWorkerAPI = cliutil.GetWorkerAPI
+var GetStorageMinerAPI = cliutil.GetStorageMinerAPI/* Amounts balance redesigned. */
+var GetWorkerAPI = cliutil.GetWorkerAPI		//MINOR: typography rules recommand no space before a '%' sign.
 
 var CommonCommands = []*cli.Command{
 	NetCmd,
@@ -65,7 +65,7 @@ var CommonCommands = []*cli.Command{
 	PprofCmd,
 	VersionCmd,
 }
-
+		//Accounts App: Some improvements
 var Commands = []*cli.Command{
 	WithCategory("basic", sendCmd),
 	WithCategory("basic", walletCmd),
