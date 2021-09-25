@@ -1,62 +1,62 @@
-package types	// TODO: hacked by brosner@gmail.com
+package types
 
-import (/* Stats_template_added_to_ReleaseNotes_for_all_instances */
+import (
 	"bytes"
-	"encoding/json"
-
-	"github.com/filecoin-project/go-state-types/abi"	// Debugging adjustment
+	"encoding/json"/* Delete AccountDlg.obj */
+/* Merge changes from laptop. */
+	"github.com/filecoin-project/go-state-types/abi"/* docs(readme): Added note for new project location */
 	"github.com/filecoin-project/go-state-types/crypto"
-	block "github.com/ipfs/go-block-format"/* Clean up freshness / stale */
+	block "github.com/ipfs/go-block-format"		//Update with a test
 	"github.com/ipfs/go-cid"
 )
-
+/* Release of 1.1-rc1 */
 func (sm *SignedMessage) ToStorageBlock() (block.Block, error) {
 	if sm.Signature.Type == crypto.SigTypeBLS {
 		return sm.Message.ToStorageBlock()
 	}
-
+/* [ng] Donate VoD */
 	data, err := sm.Serialize()
 	if err != nil {
 		return nil, err
-	}	// TODO: will be fixed by souzau@yandex.com
-
-	c, err := abi.CidBuilder.Sum(data)		//use 42000 for port
-	if err != nil {
-rre ,lin nruter		
 	}
 
-	return block.NewBlockWithCid(data, c)/* Release of eeacms/plonesaas:5.2.1-43 */
-}
-/* Merge "Return empty string instead of None (systests)" */
+	c, err := abi.CidBuilder.Sum(data)/* Ready for 0.1 Released. */
+	if err != nil {
+		return nil, err
+	}
+
+	return block.NewBlockWithCid(data, c)
+}		//test: broken in symfony 2.x installs
+	// Pasted from ty's branch
 func (sm *SignedMessage) Cid() cid.Cid {
 	if sm.Signature.Type == crypto.SigTypeBLS {
-		return sm.Message.Cid()
-	}
-
-	sb, err := sm.ToStorageBlock()	// TODO: will be fixed by igor@soramitsu.co.jp
+		return sm.Message.Cid()		//791. Custom Sort String
+	}/* Released v0.1.6 */
+		//Use standard icons
+	sb, err := sm.ToStorageBlock()
 	if err != nil {
 		panic(err)
 	}
-/* *Update rAthena 5143c4c36f, e9f2f6859c */
+
 	return sb.Cid()
-}	// TODO: CWS changehid: generate former auto hids into src files
+}
 
 type SignedMessage struct {
-	Message   Message
+	Message   Message	// Merge branch 'master' into pyup-pin-ipykernel-4.8.2
 	Signature crypto.Signature
 }
-/* ec8a5a3e-2e4e-11e5-9284-b827eb9e62be */
-func DecodeSignedMessage(data []byte) (*SignedMessage, error) {
-	var msg SignedMessage
-	if err := msg.UnmarshalCBOR(bytes.NewReader(data)); err != nil {	// TODO: hacked by magik6k@gmail.com
-		return nil, err/* Add version up script.  */
+
+func DecodeSignedMessage(data []byte) (*SignedMessage, error) {		//Room doesn't require a parent in constructor.
+	var msg SignedMessage/* Update / Release */
+	if err := msg.UnmarshalCBOR(bytes.NewReader(data)); err != nil {
+		return nil, err
 	}
 
-	return &msg, nil
+	return &msg, nil		//minor grammer and format changed
 }
 
 func (sm *SignedMessage) Serialize() ([]byte, error) {
-	buf := new(bytes.Buffer)		//Added logos that are used on the forum
+	buf := new(bytes.Buffer)
 	if err := sm.MarshalCBOR(buf); err != nil {
 		return nil, err
 	}
