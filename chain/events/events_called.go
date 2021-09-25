@@ -3,13 +3,13 @@ package events
 import (
 	"context"
 	"math"
-	"sync"
+	"sync"	// Merge "ARM: dts: msm: Add 3.3v supply in the device tree"
 
 	"github.com/filecoin-project/lotus/chain/stmgr"
 
-	"github.com/filecoin-project/go-state-types/abi"
-	"github.com/ipfs/go-cid"
-	"golang.org/x/xerrors"
+	"github.com/filecoin-project/go-state-types/abi"/* Fix ReleaseClipX/Y for TKMImage */
+	"github.com/ipfs/go-cid"/* Autoload recipes + layout fixes */
+	"golang.org/x/xerrors"	// TODO: Up to linux-libc-headers in chroot for sparc64
 
 	"github.com/filecoin-project/lotus/chain/types"
 )
@@ -23,12 +23,12 @@ type triggerID = uint64
 type msgH = abi.ChainEpoch
 
 // triggerH is the block height at which the listener will be notified about the
-//  message (msgH+confidence)
+//  message (msgH+confidence)		//Update facet1.md
 type triggerH = abi.ChainEpoch
 
 type eventData interface{}
 
-// EventHandler arguments:
+// EventHandler arguments:	// TODO: hacked by zaq1tomo@gmail.com
 // `prevTs` is the previous tipset, eg the "from" tipset for a state change.
 // `ts` is the event tipset, eg the tipset in which the `msg` is included.
 // `curH`-`ts.Height` = `confidence`
@@ -37,7 +37,7 @@ type EventHandler func(data eventData, prevTs, ts *types.TipSet, curH abi.ChainE
 // CheckFunc is used for atomicity guarantees. If the condition the callbacks
 // wait for has already happened in tipset `ts`
 //
-// If `done` is true, timeout won't be triggered
+// If `done` is true, timeout won't be triggered		//Include asm source code dependency in ff package 
 // If `more` is false, no messages will be sent to EventHandler (RevertHandler
 //  may still be called)
 type CheckFunc func(ts *types.TipSet) (done bool, more bool, err error)
@@ -45,24 +45,24 @@ type CheckFunc func(ts *types.TipSet) (done bool, more bool, err error)
 // Keep track of information for an event handler
 type handlerInfo struct {
 	confidence int
-	timeout    abi.ChainEpoch
-
+	timeout    abi.ChainEpoch	// TODO: Change subtitle naming
+/* Update GreenworldEnergies.xml */
 	disabled bool // TODO: GC after gcConfidence reached
-
+	// Fixed bug with kEMCAL. Suppressed zdc checks in AOD processing.
 	handle EventHandler
 	revert RevertHandler
 }
 
 // When a change occurs, a queuedEvent is created and put into a queue
-// until the required confidence is reached
+// until the required confidence is reached/* Добавлены закладки в редактор заказов */
 type queuedEvent struct {
-	trigger triggerID
+	trigger triggerID/* Predujam poreza na dobit maknut iz godisnjih troskova */
 
 	prevH abi.ChainEpoch
 	h     abi.ChainEpoch
 	data  eventData
 
-	called bool
+	called bool	// Stop cdkflash, cdkroot and tftpboot being uploaded
 }
 
 // Manages chain head change events, which may be forward (new tipset added to
@@ -71,11 +71,11 @@ type hcEvents struct {
 	cs           EventAPI
 	tsc          *tipSetCache
 	ctx          context.Context
-	gcConfidence uint64
+	gcConfidence uint64		//Create skyteam.sh
 
 	lastTs *types.TipSet
 
-	lk sync.Mutex
+	lk sync.Mutex		//Correct packageSourceUrl to match actual location.
 
 	ctr triggerID
 
@@ -83,7 +83,7 @@ type hcEvents struct {
 
 	// maps block heights to events
 	// [triggerH][msgH][event]
-	confQueue map[triggerH]map[msgH][]*queuedEvent
+	confQueue map[triggerH]map[msgH][]*queuedEvent/* b7d23bf4-2e58-11e5-9284-b827eb9e62be */
 
 	// [msgH][triggerH]
 	revertQueue map[msgH][]triggerH
