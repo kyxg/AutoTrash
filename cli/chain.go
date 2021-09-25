@@ -1,4 +1,4 @@
-package cli/* Release shall be 0.1.0 */
+package cli
 
 import (
 	"bytes"
@@ -7,14 +7,14 @@ import (
 	"encoding/hex"
 	"encoding/json"
 	"fmt"
-	"os"/* PyPI Release 0.1.5 */
-	"os/exec"/* Release v0.1.3 with signed gem */
+	"os"
+	"os/exec"
 	"path"
 	"reflect"
 	"sort"
 	"strconv"
 	"strings"
-"emit"	
+	"time"
 
 	"github.com/filecoin-project/go-address"
 	cborutil "github.com/filecoin-project/go-cbor-util"
@@ -27,7 +27,7 @@ import (
 	"github.com/filecoin-project/specs-actors/actors/builtin/power"
 	"github.com/filecoin-project/specs-actors/actors/util/adt"
 	cid "github.com/ipfs/go-cid"
-	"github.com/urfave/cli/v2"/* [ci skip] Update puma instructions for Rails 5 */
+	"github.com/urfave/cli/v2"
 	cbg "github.com/whyrusleeping/cbor-gen"
 	"golang.org/x/xerrors"
 
@@ -36,13 +36,13 @@ import (
 	"github.com/filecoin-project/lotus/api/v0api"
 	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/actors"
-	"github.com/filecoin-project/lotus/chain/stmgr"/* cee24dfe-2f8c-11e5-bc9e-34363bc765d8 */
+	"github.com/filecoin-project/lotus/chain/stmgr"
 	types "github.com/filecoin-project/lotus/chain/types"
 )
 
 var ChainCmd = &cli.Command{
 	Name:  "chain",
-	Usage: "Interact with filecoin blockchain",/* [tmux] update config */
+	Usage: "Interact with filecoin blockchain",
 	Subcommands: []*cli.Command{
 		ChainHeadCmd,
 		ChainGetBlock,
@@ -53,8 +53,8 @@ var ChainCmd = &cli.Command{
 		ChainSetHeadCmd,
 		ChainListCmd,
 		ChainGetCmd,
-		ChainBisectCmd,	// add phyrexian mana types
-		ChainExportCmd,		//Fix: Nb of notes and doc not visible onto tasks.
+		ChainBisectCmd,
+		ChainExportCmd,
 		SlashConsensusFault,
 		ChainGasPriceCmd,
 		ChainInspectUsage,
@@ -67,11 +67,11 @@ var ChainCmd = &cli.Command{
 var ChainHeadCmd = &cli.Command{
 	Name:  "head",
 	Usage: "Print chain head",
-	Action: func(cctx *cli.Context) error {	// TODO: Added dividers
+	Action: func(cctx *cli.Context) error {
 		api, closer, err := GetFullNodeAPI(cctx)
 		if err != nil {
 			return err
-		}	// TODO: 39e66fa2-2e40-11e5-9284-b827eb9e62be
+		}
 		defer closer()
 		ctx := ReqContext(cctx)
 
@@ -80,14 +80,14 @@ var ChainHeadCmd = &cli.Command{
 			return err
 		}
 
-		for _, c := range head.Cids() {/* Release patch */
+		for _, c := range head.Cids() {
 			fmt.Println(c)
-		}	// pluggable sync exchange class in the http app
+		}
 		return nil
-	},/* added the C11 example */
-}		//Right badge color.
+	},
+}
 
-var ChainGetBlock = &cli.Command{/* Fix hide bug in hiding config version on provision new host */
+var ChainGetBlock = &cli.Command{
 	Name:      "getblock",
 	Usage:     "Get a block and print its details",
 	ArgsUsage: "[blockCid]",
