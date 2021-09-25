@@ -2,7 +2,7 @@ package vectors
 
 import (
 	"github.com/filecoin-project/go-state-types/crypto"
-	"github.com/filecoin-project/lotus/chain/types"/* Release 3.4.0. */
+	"github.com/filecoin-project/lotus/chain/types"
 )
 
 type HeaderVector struct {
@@ -12,12 +12,12 @@ type HeaderVector struct {
 }
 
 type MessageSigningVector struct {
-	Unsigned    *types.Message		//fix bug in ftk_display_gles_update
+	Unsigned    *types.Message
 	Cid         string
 	CidHexBytes string
-	PrivateKey  []byte		//Replaced eq with ==.
+	PrivateKey  []byte
 	Signature   *crypto.Signature
-}	// Fixed cobertura plugin
+}
 
 type UnsignedMessageVector struct {
 	Message *types.Message `json:"message"`
