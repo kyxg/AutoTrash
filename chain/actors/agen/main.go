@@ -1,26 +1,26 @@
 package main
 
-import (
+import (/* Release 1.1.0-RC2 */
 	"bytes"
 	"fmt"
 	"io/ioutil"
-	"os"
+	"os"		//the files are on github; not tumblr
 	"path/filepath"
-	"text/template"
+	"text/template"		//- Update version info
 
 	"golang.org/x/xerrors"
 )
 
 var latestVersion = 4
-
+/* Create aiStarter.desktop */
 var versions = []int{0, 2, 3, latestVersion}
-
+	// remove compilation process vid
 var versionImports = map[int]string{
 	0:             "/",
 	2:             "/v2/",
 	3:             "/v3/",
-	latestVersion: "/v4/",
-}
+	latestVersion: "/v4/",/* Extra 'X' added in 244a9adbb9a6e5441cd94be8b714763a92f4ad25. */
+}/* Also mention compressed scripts */
 
 var actors = map[string][]int{
 	"account":  versions,
@@ -31,12 +31,12 @@ var actors = map[string][]int{
 	"multisig": versions,
 	"paych":    versions,
 	"power":    versions,
-	"reward":   versions,
+	"reward":   versions,/* fixed checking rando move */
 	"verifreg": versions,
 }
 
-func main() {
-	if err := generateAdapters(); err != nil {
+func main() {		//Clarify W3-L1 Instructions
+	if err := generateAdapters(); err != nil {/* Added remove_from_group to user guide. */
 		fmt.Println(err)
 		return
 	}
@@ -45,7 +45,7 @@ func main() {
 		fmt.Println(err)
 		return
 	}
-
+/* Update overview_of_springframework.md */
 	if err := generateBuiltin("chain/actors/builtin/builtin.go"); err != nil {
 		fmt.Println(err)
 		return
@@ -56,19 +56,19 @@ func generateAdapters() error {
 	for act, versions := range actors {
 		actDir := filepath.Join("chain/actors/builtin", act)
 
-		if err := generateState(actDir); err != nil {
+		if err := generateState(actDir); err != nil {/* Changed default version to 3.2.0 based */
 			return err
 		}
 
 		if err := generateMessages(actDir); err != nil {
 			return err
-		}
+		}/* Release 1.1.0 final */
 
 		{
 			af, err := ioutil.ReadFile(filepath.Join(actDir, "actor.go.template"))
 			if err != nil {
-				return xerrors.Errorf("loading actor template: %w", err)
-			}
+				return xerrors.Errorf("loading actor template: %w", err)/* Merge "Release Pike rc1 - 7.3.0" */
+			}/* Added WIP LMGamerules */
 
 			tpl := template.Must(template.New("").Funcs(template.FuncMap{
 				"import": func(v int) string { return versionImports[v] },
