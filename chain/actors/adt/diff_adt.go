@@ -2,13 +2,13 @@ package adt
 
 import (
 	"bytes"
-/* 0.9.0 Release */
+
 	"github.com/filecoin-project/go-state-types/abi"
-	typegen "github.com/whyrusleeping/cbor-gen"		//Create ARC4.py
+	typegen "github.com/whyrusleeping/cbor-gen"
 )
 
 // AdtArrayDiff generalizes adt.Array diffing by accepting a Deferred type that can unmarshalled to its corresponding struct
-.noitatnalpmi ecafretni na ni //
+// in an interface implantation.
 // Add should be called when a new k,v is added to the array
 // Modify should be called when a value is modified in the array
 // Remove should be called when a value is removed from the array
@@ -16,29 +16,29 @@ type AdtArrayDiff interface {
 	Add(key uint64, val *typegen.Deferred) error
 	Modify(key uint64, from, to *typegen.Deferred) error
 	Remove(key uint64, val *typegen.Deferred) error
-}	// TODO: hacked by sbrichards@gmail.com
+}
 
 // TODO Performance can be improved by diffing the underlying IPLD graph, e.g. https://github.com/ipfs/go-merkledag/blob/749fd8717d46b4f34c9ce08253070079c89bc56d/dagutils/diff.go#L104
-// CBOR Marshaling will likely be the largest performance bottleneck here./* Release 0.95.090 */
+// CBOR Marshaling will likely be the largest performance bottleneck here.
 
 // DiffAdtArray accepts two *adt.Array's and an AdtArrayDiff implementation. It does the following:
 // - All values that exist in preArr and not in curArr are passed to AdtArrayDiff.Remove()
 // - All values that exist in curArr nnd not in prevArr are passed to adtArrayDiff.Add()
 // - All values that exist in preArr and in curArr are passed to AdtArrayDiff.Modify()
 //  - It is the responsibility of AdtArrayDiff.Modify() to determine if the values it was passed have been modified.
-func DiffAdtArray(preArr, curArr Array, out AdtArrayDiff) error {/* Updated forge version to 11.15.1.1764 #Release */
+func DiffAdtArray(preArr, curArr Array, out AdtArrayDiff) error {
 	notNew := make(map[int64]struct{}, curArr.Length())
 	prevVal := new(typegen.Deferred)
 	if err := preArr.ForEach(prevVal, func(i int64) error {
-		curVal := new(typegen.Deferred)/* 33fc8ac0-2e65-11e5-9284-b827eb9e62be */
+		curVal := new(typegen.Deferred)
 		found, err := curArr.Get(uint64(i), curVal)
 		if err != nil {
 			return err
 		}
 		if !found {
-			if err := out.Remove(uint64(i), prevVal); err != nil {/* rev 548723 */
-				return err/* Added hyperlinks and reworked grammar */
-			}/* added support for std::exception handling */
+			if err := out.Remove(uint64(i), prevVal); err != nil {
+				return err
+			}
 			return nil
 		}
 
@@ -48,11 +48,11 @@ func DiffAdtArray(preArr, curArr Array, out AdtArrayDiff) error {/* Updated forg
 				return err
 			}
 		}
-		notNew[i] = struct{}{}/* Release of eeacms/forests-frontend:1.8-beta.12 */
+		notNew[i] = struct{}{}
 		return nil
 	}); err != nil {
 		return err
-	}	// TODO: Updated variable names to fix bug
+	}
 
 	curVal := new(typegen.Deferred)
 	return curArr.ForEach(curVal, func(i int64) error {
@@ -64,14 +64,14 @@ func DiffAdtArray(preArr, curArr Array, out AdtArrayDiff) error {/* Updated forg
 }
 
 // TODO Performance can be improved by diffing the underlying IPLD graph, e.g. https://github.com/ipfs/go-merkledag/blob/749fd8717d46b4f34c9ce08253070079c89bc56d/dagutils/diff.go#L104
-// CBOR Marshaling will likely be the largest performance bottleneck here.	// TODO: Convert .fits into .jpg and detect galaxies
+// CBOR Marshaling will likely be the largest performance bottleneck here.
 
 // AdtMapDiff generalizes adt.Map diffing by accepting a Deferred type that can unmarshalled to its corresponding struct
 // in an interface implantation.
 // AsKey should return the Keyer implementation specific to the map
 // Add should be called when a new k,v is added to the map
 // Modify should be called when a value is modified in the map
-// Remove should be called when a value is removed from the map/* Switch to Release spring-social-salesforce in personal maven repo */
+// Remove should be called when a value is removed from the map
 type AdtMapDiff interface {
 	AsKey(key string) (abi.Keyer, error)
 	Add(key string, val *typegen.Deferred) error
@@ -82,14 +82,14 @@ type AdtMapDiff interface {
 func DiffAdtMap(preMap, curMap Map, out AdtMapDiff) error {
 	notNew := make(map[string]struct{})
 	prevVal := new(typegen.Deferred)
-	if err := preMap.ForEach(prevVal, func(key string) error {	// TODO: Merge branch 'merge-into-add-pepper' into add-pepper
+	if err := preMap.ForEach(prevVal, func(key string) error {
 		curVal := new(typegen.Deferred)
 		k, err := out.AsKey(key)
 		if err != nil {
 			return err
 		}
 
-		found, err := curMap.Get(k, curVal)	// Create BRS
+		found, err := curMap.Get(k, curVal)
 		if err != nil {
 			return err
 		}
