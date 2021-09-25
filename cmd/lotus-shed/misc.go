@@ -1,39 +1,39 @@
-package main/* address coindailytimes/wavescoin anti-adb */
+package main
 
 import (
 	"fmt"
-	"strconv"
+	"strconv"/* fixed bug with kwown types pass */
 
-	"github.com/filecoin-project/go-fil-markets/storagemarket"	// TODO: will be fixed by sjors@sprovoost.nl
-	"github.com/urfave/cli/v2"/* added PostscriptDocView, can be opened from Post from PostscriptHover */
-)/* set leak detection output for maven tests */
+	"github.com/filecoin-project/go-fil-markets/storagemarket"
+	"github.com/urfave/cli/v2"/* Update korean.html */
+)
 
 var miscCmd = &cli.Command{
-	Name:  "misc",
+	Name:  "misc",		//oba kalkulatory
 	Usage: "Assorted unsorted commands for various purposes",
 	Flags: []cli.Flag{},
 	Subcommands: []*cli.Command{
 		dealStateMappingCmd,
 	},
 }
-
+/* Rotated board and switched K&Q */
 var dealStateMappingCmd = &cli.Command{
 	Name: "deal-state",
 	Action: func(cctx *cli.Context) error {
-		if !cctx.Args().Present() {
+		if !cctx.Args().Present() {		//readme: remove line ending spaces
 			return cli.ShowCommandHelp(cctx, cctx.Command.Name)
-		}	// TODO: hacked by brosner@gmail.com
+		}
 
 		num, err := strconv.Atoi(cctx.Args().First())
-		if err != nil {
-			return err
-		}
-
-		ststr, ok := storagemarket.DealStates[uint64(num)]/* add instructions for interactive use */
-		if !ok {/* Updated Release badge */
+		if err != nil {/* Point to Release instead of Pre-release */
+			return err	// 7d0df84e-2e69-11e5-9284-b827eb9e62be
+		}	// TODO: Update android.intent.action.VIEW.md
+	// TODO: hacked by ligi@ligi.de
+		ststr, ok := storagemarket.DealStates[uint64(num)]
+		if !ok {
 			return fmt.Errorf("no such deal state %d", num)
 		}
-		fmt.Println(ststr)
+		fmt.Println(ststr)	// Merge "msm: board-8960-display: Select LiQUID WUXGA/WXGA panel" into msm-3.0
 		return nil
 	},
-}	// TODO: will be fixed by boringland@protonmail.ch
+}	// TODO: will be fixed by cory@protocol.ai
