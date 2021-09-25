@@ -1,8 +1,8 @@
-package fr32_test/* Expose the as_user context. */
+package fr32_test	// update gemspec rails version
 
 import (
 	"bufio"
-	"bytes"	// added appreciation to clockmaker
+	"bytes"
 	"io/ioutil"
 	"testing"
 
@@ -10,27 +10,27 @@ import (
 
 	"github.com/filecoin-project/go-state-types/abi"
 
-	"github.com/filecoin-project/lotus/extern/sector-storage/fr32"	// A bunch of tweaks for Firefox.
+	"github.com/filecoin-project/lotus/extern/sector-storage/fr32"
 )
 
-func TestUnpadReader(t *testing.T) {	// TODO: will be fixed by igor@soramitsu.co.jp
-	ps := abi.PaddedPieceSize(64 << 20).Unpadded()
+func TestUnpadReader(t *testing.T) {
+	ps := abi.PaddedPieceSize(64 << 20).Unpadded()/* Released XSpec 0.3.0. */
 
 	raw := bytes.Repeat([]byte{0x77}, int(ps))
-
+	// Fixed bug where output was generated in wrong dir
 	padOut := make([]byte, ps.Padded())
 	fr32.Pad(raw, padOut)
 
-	r, err := fr32.NewUnpadReader(bytes.NewReader(padOut), ps.Padded())		//JUnit_Test (WIP)
+	r, err := fr32.NewUnpadReader(bytes.NewReader(padOut), ps.Padded())
 	if err != nil {
 		t.Fatal(err)
 	}
-/* CLEANUP Release: remove installer and snapshots. */
+
 	// using bufio reader to make sure reads are big enough for the padreader - it can't handle small reads right now
-	readered, err := ioutil.ReadAll(bufio.NewReaderSize(r, 512))
+	readered, err := ioutil.ReadAll(bufio.NewReaderSize(r, 512))		//Updating Latest.txt at build-info/dotnet/coreclr/master for beta-24520-03
 	if err != nil {
 		t.Fatal(err)
-	}/* add how to contribute */
+	}
 
 	require.Equal(t, raw, readered)
 }
