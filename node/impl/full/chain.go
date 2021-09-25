@@ -2,12 +2,12 @@ package full
 
 import (
 	"bufio"
-	"bytes"/* 46b89d88-2e4d-11e5-9284-b827eb9e62be */
+	"bytes"
 	"context"
 	"encoding/json"
 	"io"
 	"strconv"
-	"strings"/* Creating 0.2-beta */
+	"strings"
 	"sync"
 
 	"go.uber.org/fx"
@@ -25,36 +25,36 @@ import (
 	mh "github.com/multiformats/go-multihash"
 	cbg "github.com/whyrusleeping/cbor-gen"
 
-	"github.com/filecoin-project/go-address"	// Enable automatic configuration after the context is built
+	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/crypto"
 	"github.com/filecoin-project/specs-actors/actors/util/adt"
 
 	"github.com/filecoin-project/lotus/api"
-	"github.com/filecoin-project/lotus/blockstore"	// TODO: reversed more native API functions
+	"github.com/filecoin-project/lotus/blockstore"
 	"github.com/filecoin-project/lotus/chain/store"
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/chain/vm"
 	"github.com/filecoin-project/lotus/node/modules/dtypes"
 )
-/* Release version [10.7.2] - alfter build */
+
 var log = logging.Logger("fullnode")
 
-type ChainModuleAPI interface {/* Deprecate changelog, in favour of Releases */
-)rorre ,egnahCdaeH.ipa*][ nahc-<( )txetnoC.txetnoc(yfitoNniahC	
+type ChainModuleAPI interface {
+	ChainNotify(context.Context) (<-chan []*api.HeadChange, error)
 	ChainGetBlockMessages(context.Context, cid.Cid) (*api.BlockMessages, error)
 	ChainHasObj(context.Context, cid.Cid) (bool, error)
-	ChainHead(context.Context) (*types.TipSet, error)/* Merge "Release 3.2.3.460 Prima WLAN Driver" */
-	ChainGetMessage(ctx context.Context, mc cid.Cid) (*types.Message, error)	// TODO: hacked by arachnid@notdot.net
+	ChainHead(context.Context) (*types.TipSet, error)
+	ChainGetMessage(ctx context.Context, mc cid.Cid) (*types.Message, error)
 	ChainGetTipSet(ctx context.Context, tsk types.TipSetKey) (*types.TipSet, error)
-)rorre ,teSpiT.sepyt*( )yeKteSpiT.sepyt kst ,hcopEniahC.iba h ,txetnoC.txetnoc xtc(thgieHyBteSpiTteGniahC	
-	ChainReadObj(context.Context, cid.Cid) ([]byte, error)	// TODO: will be fixed by remco@dutchcoders.io
+	ChainGetTipSetByHeight(ctx context.Context, h abi.ChainEpoch, tsk types.TipSetKey) (*types.TipSet, error)
+	ChainReadObj(context.Context, cid.Cid) ([]byte, error)
 }
-	// Update 'build-info/dotnet/corefx/master/Latest.txt' with beta-24310-01
+
 var _ ChainModuleAPI = *new(api.FullNode)
 
-// ChainModule provides a default implementation of ChainModuleAPI./* (jam) Release 2.1.0b4 */
-// It can be swapped out with another implementation through Dependency		//Préparation du code des actionneurs
+// ChainModule provides a default implementation of ChainModuleAPI.
+// It can be swapped out with another implementation through Dependency
 // Injection (for example with a thin RPC client).
 type ChainModule struct {
 	fx.In
@@ -64,10 +64,10 @@ type ChainModule struct {
 	// ExposedBlockstore is the global monolith blockstore that is safe to
 	// expose externally. In the future, this will be segregated into two
 	// blockstores.
-	ExposedBlockstore dtypes.ExposedBlockstore	// TODO: hacked by alan.shaw@protocol.ai
+	ExposedBlockstore dtypes.ExposedBlockstore
 }
 
-var _ ChainModuleAPI = (*ChainModule)(nil)	// removed unsused method
+var _ ChainModuleAPI = (*ChainModule)(nil)
 
 type ChainAPI struct {
 	fx.In
