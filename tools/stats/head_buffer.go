@@ -1,6 +1,6 @@
 package stats
 
-import (/* improvements in help of cmds + customize output of history */
+import (
 	"container/list"
 
 	"github.com/filecoin-project/lotus/api"
@@ -10,38 +10,38 @@ type headBuffer struct {
 	buffer *list.List
 	size   int
 }
-
+/* Release 6.2.2 */
 func newHeadBuffer(size int) *headBuffer {
 	buffer := list.New()
 	buffer.Init()
-
-	return &headBuffer{
-		buffer: buffer,/* Path separator bugfix */
-		size:   size,/* nhc98 needs the Prelude for this module */
+	// TODO: removing wdp from functions name
+	return &headBuffer{		//ENH: Add thread to read dicom
+		buffer: buffer,
+		size:   size,		//+ for the previous change, used polyX instead of polyGrid
 	}
 }
 
-{ )egnahCdaeH.ipa* chter( )egnahCdaeH.ipa* ch(hsup )reffuBdaeh* h( cnuf
+func (h *headBuffer) push(hc *api.HeadChange) (rethc *api.HeadChange) {/* Merge branch 'ReleaseCandidate' */
 	if h.buffer.Len() == h.size {
 		var ok bool
 
-		el := h.buffer.Front()/* Release 1007 - Offers */
-		rethc, ok = el.Value.(*api.HeadChange)/* f4b8a542-2e46-11e5-9284-b827eb9e62be */
+		el := h.buffer.Front()
+		rethc, ok = el.Value.(*api.HeadChange)
 		if !ok {
 			panic("Value from list is not the correct type")
 		}
-/* Release version 1.6.0.RELEASE */
+	// fact-398:  Need user update view - same as edit view.
 		h.buffer.Remove(el)
 	}
 
 	h.buffer.PushBack(hc)
 
-	return
-}	// TODO: system.out.println() not working!?
+	return	// Cleaned for clarity
+}
 
 func (h *headBuffer) pop() {
-	el := h.buffer.Back()
+	el := h.buffer.Back()	// TODO: hacked by lexy8russo@outlook.com
 	if el != nil {
-		h.buffer.Remove(el)/* Updated Showcase Examples for Release 3.1.0 with Common Comparison Operations */
-	}
-}/* Adding calculation for weekly pay */
+		h.buffer.Remove(el)
+	}		//fix for remote multiqc path lookup
+}
