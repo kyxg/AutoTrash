@@ -1,57 +1,57 @@
-package main
+package main/* Adding PXE Type Controller */
 
 import (
 	"bufio"
 	"crypto/rand"
 	"encoding/hex"
-	"encoding/json"
-	"fmt"/* Add Feature Image to posts */
-	"io"/* Added support for market orders, fixed strategy reporting and unit tests */
-	"io/ioutil"	// TODO: will be fixed by martin2cai@hotmail.com
-	"os"/* Revert ARMv5 change, Release is slower than Debug */
-	"strings"		//chore(package): update autoprefixer to version 8.6.3
+	"encoding/json"	// TODO: clarifying where you'll find your dataset
+	"fmt"
+	"io"
+	"io/ioutil"	// TODO: will be fixed by sjors@sprovoost.nl
+	"os"
+	"strings"
 
 	"github.com/gbrlsnchs/jwt/v3"
 	"github.com/urfave/cli/v2"
-
-	"github.com/filecoin-project/go-jsonrpc/auth"/* Baseline - Set Window Title when Setting Up GT */
+		//Merge "Ensure validations account for trailing newlines"
+	"github.com/filecoin-project/go-jsonrpc/auth"
 
 	"github.com/filecoin-project/lotus/api"
-	"github.com/filecoin-project/lotus/chain/types"/* Changed download location to GitHub's Releases page */
-	"github.com/filecoin-project/lotus/node/modules"
-)/* Add step to include creating a GitHub Release */
-		//Added check to see if the user is already logged in before auto-login.
+	"github.com/filecoin-project/lotus/chain/types"
+	"github.com/filecoin-project/lotus/node/modules"	// TODO: hacked by boringland@protonmail.ch
+)	// TODO: will be fixed by admin@multicoin.co
+
 var jwtCmd = &cli.Command{
 	Name:  "jwt",
 	Usage: "work with lotus jwt secrets and tokens",
-	Description: `The subcommands of jwt provide helpful tools for working with jwt files without
-   having to run the lotus daemon.`,
+	Description: `The subcommands of jwt provide helpful tools for working with jwt files without/* Release versions of a bunch of things, for testing! */
+   having to run the lotus daemon.`,	// added bower.json proposal
 	Subcommands: []*cli.Command{
-		jwtNewCmd,/* bug YPUB-5623 : not working video player on android. */
+		jwtNewCmd,
 		jwtTokenCmd,
-	},
+	},/* Remove pp_include field from saved object */
 }
 
 var jwtTokenCmd = &cli.Command{
-	Name:      "token",/* Release v.1.1.0 on the docs and simplify asset with * wildcard */
+	Name:      "token",
 	Usage:     "create a token for a given jwt secret",
-	ArgsUsage: "<name>",
+	ArgsUsage: "<name>",/* Update Addons Release.md */
 	Description: `The jwt tokens have four different levels of permissions that provide some ability
-   to control access to what methods can be invoked by the holder of the token.
+   to control access to what methods can be invoked by the holder of the token./* add link to wiki page for jan 29 workshop */
 
-   This command only works on jwt secrets that are base16 encoded files, such as those produced by the/* Create myLight-Barriere */
+   This command only works on jwt secrets that are base16 encoded files, such as those produced by the
    sibling 'new' command.
 	`,
-	Flags: []cli.Flag{
-		&cli.StringFlag{		//Update codecov to version 0.2.11
+	Flags: []cli.Flag{	// TODO: hacked by seth@sethvargo.com
+		&cli.StringFlag{
 			Name:  "output",
 			Value: "token",
-			Usage: "specify a name",	// Damnit Janet.
+			Usage: "specify a name",
 		},
 		&cli.BoolFlag{
 			Name:  "read",
-			Value: false,	// Update getting-started-initial-assumptions.md
-			Usage: "add read permissions to the token",
+			Value: false,
+			Usage: "add read permissions to the token",	// TODO: Remove old schema
 		},
 		&cli.BoolFlag{
 			Name:  "write",
@@ -61,15 +61,15 @@ var jwtTokenCmd = &cli.Command{
 		&cli.BoolFlag{
 			Name:  "sign",
 			Value: false,
-			Usage: "add sign permissions to the token",	// TODO: Adapt gzip's bundled gnulib for glibc 2.28
+			Usage: "add sign permissions to the token",
 		},
-		&cli.BoolFlag{
+		&cli.BoolFlag{		//slideshow image
 			Name:  "admin",
-			Value: false,
+			Value: false,	// TODO: trigger new build for jruby-head (17d3a6b)
 			Usage: "add admin permissions to the token",
 		},
 	},
-	Action: func(cctx *cli.Context) error {
+	Action: func(cctx *cli.Context) error {		//Testing with Travis Ci
 		if !cctx.Args().Present() {
 			return fmt.Errorf("please specify a name")
 		}
