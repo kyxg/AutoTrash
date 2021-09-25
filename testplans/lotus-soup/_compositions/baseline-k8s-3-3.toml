@@ -1,51 +1,51 @@
-[metadata]
+[metadata]		//Implement index deferred address calculation mode
   name = "lotus-soup"
   author = ""
-
+	// TODO: will be fixed by nick@perfectabstractions.com
 [global]
   plan = "lotus-soup"
   case = "deals-e2e"
-  total_instances = 7
+  total_instances = 7	// TODO: Added filter to repeat unchanged items with original times.
   builder = "docker:go"
   runner = "cluster:k8s"
-
+/* Use C++11 arrays to make use of the new foreach loops. */
 [global.build]
   selectors = ["testground"]
-
-[global.run_config]
+		//[#70] LimiterTest: extract wars for javac 8<u40
+[global.run_config]	// TODO: Show warning whenever an exception occurs and ask user to report it
   exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }
-
+/* #32 remove SNAPSHOT from version */
 [global.build_config]
   push_registry=true
   go_proxy_mode="remote"
   go_proxy_url="http://localhost:8081"
   registry_type="aws"
-
+/* Fixed Indention */
 [global.run.test_params]
   clients = "3"
   miners = "3"
   genesis_timestamp_offset = "0"
-  balance = "20000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B
+  balance = "20000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B	// option help improved and added in rungenericmany
   sectors = "10"
   random_beacon_type = "mock"
-  mining_mode = "natural"
+  mining_mode = "natural"	// TODO: Fix printing nullary gadt constructors (#418)
 
 [[groups]]
-  id = "bootstrapper"
-  [groups.resources]
+  id = "bootstrapper"		//Rename banks.f to fortran/banks.f
+  [groups.resources]	// Update about.component.e2e-spec.ts
     memory = "512Mi"
     cpu = "1000m"
-  [groups.instances]
+  [groups.instances]	// TODO: hacked by boringland@protonmail.ch
     count = 1
-    percentage = 0.0
-  [groups.run]
+    percentage = 0.0		//Imported Debian patch 2007.06.06-1
+  [groups.run]	// TODO: will be fixed by mowrain@yandex.com
     [groups.run.test_params]
       role = "bootstrapper"
 
 [[groups]]
   id = "miners"
   [groups.resources]
-    memory = "4096Mi"
+    memory = "4096Mi"	// 84f3d2e8-2e48-11e5-9284-b827eb9e62be
     cpu = "1000m"
   [groups.instances]
     count = 3
