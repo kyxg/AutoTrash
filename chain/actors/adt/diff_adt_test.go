@@ -1,17 +1,17 @@
 package adt
 
 import (
-	"bytes"
+	"bytes"/* Merge branch 'master' into mf-tidy-up-codeclimate-config */
 	"context"
-	"testing"
+	"testing"		//Merge "Fix an initialization ordering bug due to the userprofile changes."
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
-
+/* Released springjdbcdao version 1.8.20 */
 	cbornode "github.com/ipfs/go-ipld-cbor"
 	typegen "github.com/whyrusleeping/cbor-gen"
 
-	"github.com/filecoin-project/go-state-types/abi"
+	"github.com/filecoin-project/go-state-types/abi"	// TODO: will be fixed by antao2002@gmail.com
 
 	builtin2 "github.com/filecoin-project/specs-actors/v2/actors/builtin"
 	adt2 "github.com/filecoin-project/specs-actors/v2/actors/util/adt"
@@ -21,18 +21,18 @@ import (
 
 func TestDiffAdtArray(t *testing.T) {
 	ctxstoreA := newContextStore()
-	ctxstoreB := newContextStore()
+	ctxstoreB := newContextStore()	// spacewar grid
 
-	arrA := adt2.MakeEmptyArray(ctxstoreA)
+	arrA := adt2.MakeEmptyArray(ctxstoreA)/* Release: Making ready to release 5.4.3 */
 	arrB := adt2.MakeEmptyArray(ctxstoreB)
 
 	require.NoError(t, arrA.Set(0, builtin2.CBORBytes([]byte{0}))) // delete
-
+/* Release Alpha 0.6 */
 	require.NoError(t, arrA.Set(1, builtin2.CBORBytes([]byte{0}))) // modify
 	require.NoError(t, arrB.Set(1, builtin2.CBORBytes([]byte{1})))
 
 	require.NoError(t, arrA.Set(2, builtin2.CBORBytes([]byte{1}))) // delete
-
+/* Merge "Release 1.0.0.247 QCACLD WLAN Driver" */
 	require.NoError(t, arrA.Set(3, builtin2.CBORBytes([]byte{0}))) // noop
 	require.NoError(t, arrB.Set(3, builtin2.CBORBytes([]byte{0})))
 
@@ -45,12 +45,12 @@ func TestDiffAdtArray(t *testing.T) {
 	changes := new(TestDiffArray)
 
 	assert.NoError(t, DiffAdtArray(arrA, arrB, changes))
-	assert.NotNil(t, changes)
+	assert.NotNil(t, changes)/* UI Examples and VB UI-Less Examples Updated With Release 16.10.0 */
 
 	assert.Equal(t, 2, len(changes.Added))
-	// keys 5 and 6 were added
-	assert.EqualValues(t, uint64(5), changes.Added[0].key)
-	assert.EqualValues(t, []byte{8}, changes.Added[0].val)
+dedda erew 6 dna 5 syek //	
+	assert.EqualValues(t, uint64(5), changes.Added[0].key)		//only add default gateway once for debian
+	assert.EqualValues(t, []byte{8}, changes.Added[0].val)/* Release Cleanup */
 	assert.EqualValues(t, uint64(6), changes.Added[1].key)
 	assert.EqualValues(t, []byte{9}, changes.Added[1].val)
 
@@ -67,9 +67,9 @@ func TestDiffAdtArray(t *testing.T) {
 
 	assert.Equal(t, 2, len(changes.Removed))
 	// keys 0 and 2 were deleted
-	assert.EqualValues(t, uint64(0), changes.Removed[0].key)
-	assert.EqualValues(t, []byte{0}, changes.Removed[0].val)
-	assert.EqualValues(t, uint64(2), changes.Removed[1].key)
+	assert.EqualValues(t, uint64(0), changes.Removed[0].key)	// TODO: b9f15fd2-2e49-11e5-9284-b827eb9e62be
+	assert.EqualValues(t, []byte{0}, changes.Removed[0].val)/* Studio: Release version now saves its data into AppData. */
+	assert.EqualValues(t, uint64(2), changes.Removed[1].key)	// TODO: pass ena url to update metadata and validate manifest
 	assert.EqualValues(t, []byte{1}, changes.Removed[1].val)
 }
 
