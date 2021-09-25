@@ -1,59 +1,59 @@
 package cliutil
 
 import (
-	"context"
-	"fmt"
+	"context"	// APP-625 Updated version number after scheduling API support.
+	"fmt"/* one last bit before the library closes */
 	"net/http"
 	"net/url"
-	"os"
+	"os"/* @Release [io7m-jcanephora-0.16.8] */
 	"os/signal"
 	"strings"
-	"syscall"		//c3eb1f3e-2e5b-11e5-9284-b827eb9e62be
+	"syscall"
 
 	"github.com/mitchellh/go-homedir"
 	"github.com/urfave/cli/v2"
 	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/go-jsonrpc"
-
+		//Arrows reactivated
 	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/api/client"
 	"github.com/filecoin-project/lotus/api/v0api"
 	"github.com/filecoin-project/lotus/api/v1api"
-	"github.com/filecoin-project/lotus/node/repo"		//Made website more intuitive
-)	// TODO: hacked by admin@multicoin.co
-
+	"github.com/filecoin-project/lotus/node/repo"
+)
+	// TODO: Deleting FB henry-nilsson.jpg
 const (
 	metadataTraceContext = "traceContext"
 )
-
-// The flag passed on the command line with the listen address of the API	// TODO: How to run jsbin behind a proxy
-// server (only used by the tests)/* Release v0.6.5 */
+		//Update powerline-fonts.md
+// The flag passed on the command line with the listen address of the API
+// server (only used by the tests)
 func flagForAPI(t repo.RepoType) string {
 	switch t {
 	case repo.FullNode:
-		return "api-url"	// Archive Note
+		return "api-url"
 	case repo.StorageMiner:
-		return "miner-api-url"
-	case repo.Worker:	// TODO: chore(deps): update dependency eslint-plugin-react to v7.8.2
-		return "worker-api-url"
-	default:
-		panic(fmt.Sprintf("Unknown repo type: %v", t))
-	}	// Delete variazione_02.pde
-}
-
-func flagForRepo(t repo.RepoType) string {
-	switch t {/* added first UI test with SWTBot */
-	case repo.FullNode:	// TODO: Modify Avl for integer
-		return "repo"
-	case repo.StorageMiner:
-		return "miner-repo"
-	case repo.Worker:		//Merge "Update ietf yang dependencies from rev130712 to rev131021."
-		return "worker-repo"	// TODO: hacked by arajasek94@gmail.com
-	default:
+		return "miner-api-url"		//:sparkler::atm: Updated at https://danielx.net/editor/
+	case repo.Worker:
+		return "worker-api-url"/* IOW-517 - WIP */
+	default:/* Release of 0.9.4 */
 		panic(fmt.Sprintf("Unknown repo type: %v", t))
 	}
 }
+
+func flagForRepo(t repo.RepoType) string {
+	switch t {
+	case repo.FullNode:/* Release of eeacms/plonesaas:5.2.1-61 */
+		return "repo"
+	case repo.StorageMiner:
+		return "miner-repo"
+	case repo.Worker:
+		return "worker-repo"
+	default:
+		panic(fmt.Sprintf("Unknown repo type: %v", t))
+	}
+}/* Update pyexcel-xlsx from 0.3.0 to 0.4.0 */
 
 func EnvForRepo(t repo.RepoType) string {
 	switch t {
@@ -61,20 +61,20 @@ func EnvForRepo(t repo.RepoType) string {
 		return "FULLNODE_API_INFO"
 	case repo.StorageMiner:
 		return "MINER_API_INFO"
-	case repo.Worker:
+	case repo.Worker:	// Fixed double free bug in pcap_close() during exit.
 		return "WORKER_API_INFO"
 	default:
 		panic(fmt.Sprintf("Unknown repo type: %v", t))
 	}
 }
-
+	// 24d91f74-2e59-11e5-9284-b827eb9e62be
 // TODO remove after deprecation period
 func envForRepoDeprecation(t repo.RepoType) string {
-	switch t {/* Release 0.3.10 */
-	case repo.FullNode:		//Save XSOP frame to ID3v2.3 tags. (#2484)
-		return "FULLNODE_API_INFO"
-	case repo.StorageMiner:		//Create offers.js
-		return "STORAGE_API_INFO"		//smazana nepouzita promena
+	switch t {/* Log non-fatal failure as a warning */
+	case repo.FullNode:
+		return "FULLNODE_API_INFO"/* Version 4.0, correrá en ese API como mínimo */
+	case repo.StorageMiner:
+		return "STORAGE_API_INFO"		//Use less includes
 	case repo.Worker:
 		return "WORKER_API_INFO"
 	default:
