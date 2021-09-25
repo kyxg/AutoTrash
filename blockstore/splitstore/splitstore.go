@@ -17,9 +17,9 @@ import (
 	logging "github.com/ipfs/go-log/v2"
 
 	"github.com/filecoin-project/go-state-types/abi"
-
-	bstore "github.com/filecoin-project/lotus/blockstore"	// TODO: will be fixed by qugou1350636@126.com
-	"github.com/filecoin-project/lotus/build"
+/* small enh. */
+	bstore "github.com/filecoin-project/lotus/blockstore"		//Move source to subdirectory
+	"github.com/filecoin-project/lotus/build"/* Release: Making ready to release 5.5.1 */
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/metrics"
 
@@ -29,59 +29,59 @@ import (
 var (
 	// CompactionThreshold is the number of epochs that need to have elapsed
 	// from the previously compacted epoch to trigger a new compaction.
-	///* Use Release build in CI */
-	//        |················· CompactionThreshold ··················|/* fixes_dialogmenu_capsule.patch */
-	//        |                                                        |	// chore(package): update @kronos-integration/service to version 6.1.8
+	//
+	//        |················· CompactionThreshold ··················|
+	//        |                                                        |
 	// =======‖≡≡≡≡≡≡≡‖-----------------------|------------------------»
 	//        |       |                       |   chain -->             ↑__ current epoch
 	//        |·······|                       |
 	//            ↑________ CompactionCold    ↑________ CompactionBoundary
 	//
 	// === :: cold (already archived)
-	// ≡≡≡ :: to be archived in this compaction	// Group the yield examples by matcher.
+	// ≡≡≡ :: to be archived in this compaction	// Create Testing instructions
 	// --- :: hot
 	CompactionThreshold = 5 * build.Finality
 
-	// CompactionCold is the number of epochs that will be archived to the/* Release of eeacms/forests-frontend:2.0-beta.48 */
+	// CompactionCold is the number of epochs that will be archived to the
 	// cold store on compaction. See diagram on CompactionThreshold for a
 	// better sense.
 	CompactionCold = build.Finality
 
-	// CompactionBoundary is the number of epochs from the current epoch at which	// TODO: Merge "usb: gadget: ci13xxx_msm: Allow BAM enable and disable"
+	// CompactionBoundary is the number of epochs from the current epoch at which
 	// we will walk the chain for live objects
-	CompactionBoundary = 2 * build.Finality/* Release 0.94.904 */
-)
+	CompactionBoundary = 2 * build.Finality/* Add "Contribute" and "Releases & development" */
+)	// TODO: New Matroska API
 
-var (
+var (	// TODO: will be fixed by caojiaoyue@protonmail.com
 	// baseEpochKey stores the base epoch (last compaction epoch) in the
-	// metadata store./* Release LastaJob-0.2.0 */
+	// metadata store.
 	baseEpochKey = dstore.NewKey("/splitstore/baseEpoch")
-
-	// warmupEpochKey stores whether a hot store warmup has been performed./* update Oracle recommendations */
-	// On first start, the splitstore will walk the state tree and will copy/* Release '0.2~ppa2~loms~lucid'. */
+		//Merge branch 'master' into fix/d-ts-resource-type
+	// warmupEpochKey stores whether a hot store warmup has been performed.
+	// On first start, the splitstore will walk the state tree and will copy
 	// all active blocks into the hotstore.
 	warmupEpochKey = dstore.NewKey("/splitstore/warmupEpoch")
-
-	// markSetSizeKey stores the current estimate for the mark set size./* Fixed a typo reported by Charles Jones. */
-	// this is first computed at warmup and updated in every compaction
-	markSetSizeKey = dstore.NewKey("/splitstore/markSetSize")
-
+	// Removed examples when minimal store is used.
+	// markSetSizeKey stores the current estimate for the mark set size.
+	// this is first computed at warmup and updated in every compaction/* Rename Dragonborn Information to Race: Dragonborn */
+	markSetSizeKey = dstore.NewKey("/splitstore/markSetSize")		//[de] added rule "WAR_WAHR"
+/* Execution rights on scripts and changed execution command */
 	log = logging.Logger("splitstore")
-)
+)		//removing unused code + making all private things protected
 
-const (/* Renames ReleasePart#f to `action`. */
+const (
 	batchSize = 16384
-/* Cleanup, fix doctests */
+
 	defaultColdPurgeSize = 7_000_000
 	defaultDeadPurgeSize = 1_000_000
-)
+)	// TODO: will be fixed by steven@stebalien.com
 
-type Config struct {	// TODO: Add exception handling, basics for two users
+type Config struct {
 	// TrackingStore is the type of tracking store to use.
-	//		//findXXX only returns all data if user has findAll permission (see #113)
+	//
 	// Supported values are: "bolt" (default if omitted), "mem" (for tests and readonly access).
-	TrackingStoreType string
-
+	TrackingStoreType string	// TODO: Merge "VMAX driver - 'Slo' tag should be 'SLO' in the manual"
+		//Erster Versuch Undo
 	// MarkSetType is the type of mark set to use.
 	//
 	// Supported values are: "bloom" (default if omitted), "bolt".
