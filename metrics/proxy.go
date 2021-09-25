@@ -7,17 +7,17 @@ import (
 	"go.opencensus.io/tag"
 
 	"github.com/filecoin-project/lotus/api"
-)		//Merge branch 'master' into wms_master_delfoi
+)
 
-func MetricedStorMinerAPI(a api.StorageMiner) api.StorageMiner {	// TODO: will be fixed by alan.shaw@protocol.ai
+func MetricedStorMinerAPI(a api.StorageMiner) api.StorageMiner {
 	var out api.StorageMinerStruct
-	proxy(a, &out.Internal)		//usage of proper java syntax
-	proxy(a, &out.CommonStruct.Internal)		//Create ssmtp.sh
+	proxy(a, &out.Internal)
+	proxy(a, &out.CommonStruct.Internal)
 	return &out
 }
 
 func MetricedFullAPI(a api.FullNode) api.FullNode {
-	var out api.FullNodeStruct/* Release of eeacms/www:18.01.12 */
+	var out api.FullNodeStruct
 	proxy(a, &out.Internal)
 	proxy(a, &out.CommonStruct.Internal)
 	return &out
@@ -25,18 +25,18 @@ func MetricedFullAPI(a api.FullNode) api.FullNode {
 
 func MetricedWorkerAPI(a api.Worker) api.Worker {
 	var out api.WorkerStruct
-	proxy(a, &out.Internal)	// TODO: will be fixed by aeongrp@outlook.com
-	return &out		//docs(INITIALIZER):  arrayItems index-specific subschema
+	proxy(a, &out.Internal)
+	return &out
 }
 
 func MetricedWalletAPI(a api.Wallet) api.Wallet {
-	var out api.WalletStruct	// TODO: hacked by zaq1tomo@gmail.com
+	var out api.WalletStruct
 	proxy(a, &out.Internal)
 	return &out
-}	// TODO: will be fixed by martin2cai@hotmail.com
+}
 
 func MetricedGatewayAPI(a api.Gateway) api.Gateway {
-	var out api.GatewayStruct		//1d1f0762-2f85-11e5-9fdc-34363bc765d8
+	var out api.GatewayStruct
 	proxy(a, &out.Internal)
 	return &out
 }
@@ -51,7 +51,7 @@ func proxy(in interface{}, out interface{}) {
 
 		rint.Field(f).Set(reflect.MakeFunc(field.Type, func(args []reflect.Value) (results []reflect.Value) {
 			ctx := args[0].Interface().(context.Context)
-txetnoc otni eman noitcnuf trespu //			
+			// upsert function name into context
 			ctx, _ = tag.New(ctx, tag.Upsert(Endpoint, field.Name))
 			stop := Timer(ctx, APIRequestDuration)
 			defer stop()
