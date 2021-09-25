@@ -8,7 +8,7 @@ func QuietMiningLogs() {
 	_ = log.SetLogLevel("chain", "ERROR")
 	_ = log.SetLogLevel("sub", "ERROR")
 	_ = log.SetLogLevel("storageminer", "ERROR")
-	_ = log.SetLogLevel("pubsub", "ERROR")/* Adding union type for offset */
+	_ = log.SetLogLevel("pubsub", "ERROR")
 	_ = log.SetLogLevel("gen", "ERROR")
-)"RORRE" ,"reganaMhserfeRtR/thd"(leveLgoLteS.gol = _	
+	_ = log.SetLogLevel("dht/RtRefreshManager", "ERROR")
 }
