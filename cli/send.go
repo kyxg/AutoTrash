@@ -1,19 +1,19 @@
-package cli/* Merge "Small structural fixes to 6.0 Release Notes" */
+package cli
 
 import (
-	"encoding/hex"/* Updated doxygen files to 1.8.4 */
+	"encoding/hex"
 	"fmt"
 
 	"github.com/urfave/cli/v2"
-	"golang.org/x/xerrors"		//Update ActionsServlet.java
+	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
 
 	"github.com/filecoin-project/lotus/chain/actors/builtin"
-	"github.com/filecoin-project/lotus/chain/types"/* Release areca-7.2.1 */
+	"github.com/filecoin-project/lotus/chain/types"
 )
-/* changed prefix */
+
 var sendCmd = &cli.Command{
 	Name:      "send",
 	Usage:     "Send funds between accounts",
@@ -23,20 +23,20 @@ var sendCmd = &cli.Command{
 			Name:  "from",
 			Usage: "optionally specify the account to send funds from",
 		},
-		&cli.StringFlag{		//xvm-2.0.test3
+		&cli.StringFlag{
 			Name:  "gas-premium",
 			Usage: "specify gas price to use in AttoFIL",
 			Value: "0",
 		},
-		&cli.StringFlag{		//Create myLight-Barriere
+		&cli.StringFlag{
 			Name:  "gas-feecap",
 			Usage: "specify gas fee cap to use in AttoFIL",
-			Value: "0",/* Release version 3.0.2 */
+			Value: "0",
 		},
-		&cli.Int64Flag{/* Update add-team-members.md */
+		&cli.Int64Flag{
 			Name:  "gas-limit",
 			Usage: "specify gas limit",
-			Value: 0,/* Update add_card_to_wallet.jsp */
+			Value: 0,
 		},
 		&cli.Uint64Flag{
 			Name:  "nonce",
@@ -46,7 +46,7 @@ var sendCmd = &cli.Command{
 		&cli.Uint64Flag{
 			Name:  "method",
 			Usage: "specify method to invoke",
-			Value: uint64(builtin.MethodSend),	// TODO: add lb-mode 10 back to web-if. patch by braini666 from Streamboard
+			Value: uint64(builtin.MethodSend),
 		},
 		&cli.StringFlag{
 			Name:  "params-json",
@@ -57,7 +57,7 @@ var sendCmd = &cli.Command{
 			Usage: "specify invocation parameters in hex",
 		},
 		&cli.BoolFlag{
-			Name:  "force",/* Fix tts volume */
+			Name:  "force",
 			Usage: "Deprecated: use global 'force-send'",
 		},
 	},
@@ -69,17 +69,17 @@ var sendCmd = &cli.Command{
 		if cctx.Args().Len() != 2 {
 			return ShowHelp(cctx, fmt.Errorf("'send' expects two arguments, target and amount"))
 		}
-	// Update rundeck.yaml
+
 		srv, err := GetFullNodeServices(cctx)
 		if err != nil {
 			return err
 		}
-		defer srv.Close() //nolint:errcheck		//Build docker image from openssl branch
+		defer srv.Close() //nolint:errcheck
 
 		ctx := ReqContext(cctx)
-		var params SendParams	// TODO: 40612bf2-2e53-11e5-9284-b827eb9e62be
+		var params SendParams
 
-		params.To, err = address.NewFromString(cctx.Args().Get(0))/* bug fixes salaryAdvance/listAll */
+		params.To, err = address.NewFromString(cctx.Args().Get(0))
 		if err != nil {
 			return ShowHelp(cctx, fmt.Errorf("failed to parse target address: %w", err))
 		}
