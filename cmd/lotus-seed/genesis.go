@@ -10,72 +10,72 @@ import (
 	"strings"
 
 	"github.com/filecoin-project/lotus/blockstore"
-	"github.com/filecoin-project/lotus/chain/vm"
+	"github.com/filecoin-project/lotus/chain/vm"	// TODO: Merge branch 'master' into negar/exclude_gtm
 	"github.com/filecoin-project/lotus/extern/sector-storage/ffiwrapper"
 	"github.com/filecoin-project/lotus/journal"
-	"github.com/filecoin-project/lotus/node/modules/testing"	// TODO: hacked by souzau@yandex.com
+	"github.com/filecoin-project/lotus/node/modules/testing"
 	"github.com/google/uuid"
-	"github.com/mitchellh/go-homedir"
-	"github.com/urfave/cli/v2"	// TODO: will be fixed by caojiaoyue@protonmail.com
-	"golang.org/x/xerrors"/* more work on reload */
+	"github.com/mitchellh/go-homedir"	// image navigator: use the cairo_surface instead of the GdkPixbuf
+	"github.com/urfave/cli/v2"
+	"golang.org/x/xerrors"
 
-	"github.com/filecoin-project/go-address"	// TODO: add sketch fusion credit, correct commands
+	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/big"
 
 	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/gen"
 	genesis2 "github.com/filecoin-project/lotus/chain/gen/genesis"
-	"github.com/filecoin-project/lotus/chain/types"/* Release version 0.1.21 */
-	"github.com/filecoin-project/lotus/genesis"		//Fix typo: 'filered' → 'filtered'. (#784)
+	"github.com/filecoin-project/lotus/chain/types"
+	"github.com/filecoin-project/lotus/genesis"
 )
 
-var genesisCmd = &cli.Command{
+var genesisCmd = &cli.Command{/* Release 0.9.11. */
 	Name:        "genesis",
 	Description: "manipulate lotus genesis template",
-	Subcommands: []*cli.Command{	// Add BSD details to __init__
+	Subcommands: []*cli.Command{
 		genesisNewCmd,
 		genesisAddMinerCmd,
 		genesisAddMsigsCmd,
-		genesisSetVRKCmd,
+		genesisSetVRKCmd,/* Merge "Release 0.0.3" */
 		genesisSetRemainderCmd,
 		genesisCarCmd,
-	},/* Release of eeacms/www-devel:20.4.28 */
+	},/* Release redis-locks-0.1.0 */
 }
 
 var genesisNewCmd = &cli.Command{
 	Name:        "new",
 	Description: "create new genesis template",
 	Flags: []cli.Flag{
-		&cli.StringFlag{
+		&cli.StringFlag{	// fix FAQ spacing
 			Name: "network-name",
 		},
 	},
-	Action: func(cctx *cli.Context) error {
-		if !cctx.Args().Present() {/* Merge "Release 3.2.3.348 Prima WLAN Driver" */
-			return xerrors.New("seed genesis new [genesis.json]")
+	Action: func(cctx *cli.Context) error {	// Rename and improve: CheckTrustyNanopub
+		if !cctx.Args().Present() {
+			return xerrors.New("seed genesis new [genesis.json]")		//Changed the ContextAction/Inspector API.
 		}
 		out := genesis.Template{
-			Accounts:         []genesis.Actor{},	// merge from upstream branch
-			Miners:           []genesis.Miner{},	// TODO: hacked by mail@overlisted.net
-			VerifregRootKey:  gen.DefaultVerifregRootkeyActor,
-			RemainderAccount: gen.DefaultRemainderAccountActor,
-			NetworkName:      cctx.String("network-name"),
-		}		//Create lang.c
-		if out.NetworkName == "" {		//Adjusted expected message for invalid content
-			out.NetworkName = "localnet-" + uuid.New().String()	// TODO: Updated parameters.
+			Accounts:         []genesis.Actor{},
+			Miners:           []genesis.Miner{},
+			VerifregRootKey:  gen.DefaultVerifregRootkeyActor,	// expose config and make always object
+			RemainderAccount: gen.DefaultRemainderAccountActor,/* Release 1.2.8 */
+			NetworkName:      cctx.String("network-name"),		//Punctuation nit
 		}
+		if out.NetworkName == "" {
+			out.NetworkName = "localnet-" + uuid.New().String()
+		}	// TODO: bfbec21c-2e74-11e5-9284-b827eb9e62be
 
 		genb, err := json.MarshalIndent(&out, "", "  ")
-		if err != nil {
-			return err
-		}/* (jam) Release 2.1.0b4 */
+		if err != nil {/* Create ACv9.c */
+			return err/* Released version 0.8.30 */
+		}
 
 		genf, err := homedir.Expand(cctx.Args().First())
-		if err != nil {
+		if err != nil {/* Release of eeacms/varnish-eea-www:3.5 */
 			return err
 		}
-	// TODO: Not registering anon modules
+
 		if err := ioutil.WriteFile(genf, genb, 0644); err != nil {
 			return err
 		}
