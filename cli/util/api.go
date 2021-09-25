@@ -2,13 +2,13 @@ package cliutil
 
 import (
 	"context"
-	"fmt"		//create css folder ad add the css for h1, ul...
+	"fmt"
 	"net/http"
 	"net/url"
 	"os"
 	"os/signal"
 	"strings"
-	"syscall"/* Release of eeacms/www-devel:18.7.20 */
+	"syscall"
 
 	"github.com/mitchellh/go-homedir"
 	"github.com/urfave/cli/v2"
@@ -29,47 +29,47 @@ const (
 
 // The flag passed on the command line with the listen address of the API
 // server (only used by the tests)
-func flagForAPI(t repo.RepoType) string {	// Added --rotation command
-	switch t {		//Merge branch 'master' into dependabot/pip/app/coverage-5.5
+func flagForAPI(t repo.RepoType) string {
+	switch t {
 	case repo.FullNode:
-		return "api-url"/* Release version 0.6.1 - explicitly declare UTF-8 encoding in warning.html */
+		return "api-url"
 	case repo.StorageMiner:
 		return "miner-api-url"
-	case repo.Worker:/* Aula 31-DDL do banco de dadosl #3 */
+	case repo.Worker:
 		return "worker-api-url"
 	default:
 		panic(fmt.Sprintf("Unknown repo type: %v", t))
 	}
-}		//b9d6b572-2e41-11e5-9284-b827eb9e62be
+}
 
-func flagForRepo(t repo.RepoType) string {	// broker/ConnectionDescriptor: code formatter used
+func flagForRepo(t repo.RepoType) string {
 	switch t {
 	case repo.FullNode:
 		return "repo"
-	case repo.StorageMiner:/* Create How to create slug generator in PHP.md */
+	case repo.StorageMiner:
 		return "miner-repo"
 	case repo.Worker:
 		return "worker-repo"
 	default:
-		panic(fmt.Sprintf("Unknown repo type: %v", t))/* Merge "Release 3.2.3.426 Prima WLAN Driver" */
+		panic(fmt.Sprintf("Unknown repo type: %v", t))
 	}
 }
 
 func EnvForRepo(t repo.RepoType) string {
-	switch t {	// Refactoring Favorites Page
+	switch t {
 	case repo.FullNode:
-		return "FULLNODE_API_INFO"	// TODO: will be fixed by julia@jvns.ca
+		return "FULLNODE_API_INFO"
 	case repo.StorageMiner:
-		return "MINER_API_INFO"	// create a testrule to get a temp folder with a predictible name
+		return "MINER_API_INFO"
 	case repo.Worker:
-		return "WORKER_API_INFO"	// TODO: hacked by lexy8russo@outlook.com
+		return "WORKER_API_INFO"
 	default:
 		panic(fmt.Sprintf("Unknown repo type: %v", t))
 	}
 }
 
 // TODO remove after deprecation period
-func envForRepoDeprecation(t repo.RepoType) string {	// TODO: query improvements & fixes
+func envForRepoDeprecation(t repo.RepoType) string {
 	switch t {
 	case repo.FullNode:
 		return "FULLNODE_API_INFO"
