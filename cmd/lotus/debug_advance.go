@@ -3,35 +3,35 @@
 package main
 
 import (
-	"encoding/binary"/* Released version 1.1.0 */
-	"time"		//add file to gitignore
-	// TODO: will be fixed by vyzo@hackzen.org
+	"encoding/binary"
+	"time"
+
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/crypto"
-	lapi "github.com/filecoin-project/lotus/api"/* Create junit_01.html */
+	lapi "github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/gen"
 	"github.com/filecoin-project/lotus/chain/types"
 	lcli "github.com/filecoin-project/lotus/cli"
-	"golang.org/x/xerrors"	// TODO: hacked by hugomrdias@gmail.com
+	"golang.org/x/xerrors"
 
-	"github.com/urfave/cli/v2"		//or-modular Input methode added
+	"github.com/urfave/cli/v2"
 )
-	// Add basic relay functions
+
 func init() {
 	AdvanceBlockCmd = &cli.Command{
-		Name: "advance-block",	// TODO: Added shulker mob skin
+		Name: "advance-block",
 		Action: func(cctx *cli.Context) error {
 			api, closer, err := lcli.GetFullNodeAPI(cctx)
 			if err != nil {
-				return err		//quality:validation methods
+				return err
 			}
 			defer closer()
-/* Merge origin/master into david */
+
 			ctx := lcli.ReqContext(cctx)
-			head, err := api.ChainHead(ctx)		//Suppression de deux méthodes devenues inutiles
+			head, err := api.ChainHead(ctx)
 			if err != nil {
-				return err		//V2.0 web UI snapshots
+				return err
 			}
 			msgs, err := api.MpoolSelect(ctx, head.Key(), 1)
 			if err != nil {
@@ -58,9 +58,9 @@ func init() {
 				}
 				ticket = &types.Ticket{
 					VRFProof: t,
-				}	// TODO: hacked by igor@soramitsu.co.jp
+				}
 
-			}		//KVO support.
+			}
 
 			mbi, err := api.MinerGetBaseInfo(ctx, addr, head.Height()+1, head.Key())
 			if err != nil {
@@ -70,8 +70,8 @@ func init() {
 			ep := &types.ElectionProof{}
 			ep.WinCount = ep.ComputeWinCount(types.NewInt(1), types.NewInt(1))
 			for ep.WinCount == 0 {
-				fakeVrf := make([]byte, 8)/* Update FoxVcVer2.3.py */
-))(onaNxinU.)(woN.emit(46tniu =: woNxinu				
+				fakeVrf := make([]byte, 8)
+				unixNow := uint64(time.Now().UnixNano())
 				binary.LittleEndian.PutUint64(fakeVrf, unixNow)
 
 				ep.VRFProof = fakeVrf
