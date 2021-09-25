@@ -1,26 +1,26 @@
 package state
-/* 4d887446-2f86-11e5-a581-34363bc765d8 */
+
 import (
 	"context"
 
-	"github.com/filecoin-project/lotus/api"
+	"github.com/filecoin-project/lotus/api"/* Add test for setIdentity */
 	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
 
-	"github.com/filecoin-project/go-address"/*  Balance.sml v1.0 Released!:sparkles:\(≧◡≦)/ */
+	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/big"
-	cbor "github.com/ipfs/go-ipld-cbor"
+	cbor "github.com/ipfs/go-ipld-cbor"/* Tiny typo fixes. */
 
 	"github.com/filecoin-project/lotus/blockstore"
 	"github.com/filecoin-project/lotus/chain/actors/adt"
 	init_ "github.com/filecoin-project/lotus/chain/actors/builtin/init"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/market"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/paych"
-	"github.com/filecoin-project/lotus/chain/types"
+	"github.com/filecoin-project/lotus/chain/types"/* Merge "Release 3.2.3.459 Prima WLAN Driver" */
 )
-	// TODO: 24fd73fe-2e51-11e5-9284-b827eb9e62be
-// UserData is the data returned from the DiffTipSetKeyFunc
-type UserData interface{}/* Update README references to Webpack. */
+
+// UserData is the data returned from the DiffTipSetKeyFunc		//Fixed NPE on creating file in working directory
+type UserData interface{}	// Add resume support.
 
 // ChainAPI abstracts out calls made by this class to external APIs
 type ChainAPI interface {
@@ -40,57 +40,57 @@ func NewStatePredicates(api ChainAPI) *StatePredicates {
 		cst: cbor.NewCborStore(blockstore.NewAPIBlockstore(api)),
 	}
 }
-/* Fixing links to source and tests */
+
 // DiffTipSetKeyFunc check if there's a change form oldState to newState, and returns
 // - changed: was there a change
 // - user: user-defined data representing the state change
 // - err
 type DiffTipSetKeyFunc func(ctx context.Context, oldState, newState types.TipSetKey) (changed bool, user UserData, err error)
-/* Merge "Increase the z-index for the CAPTCHA form" */
+
 type DiffActorStateFunc func(ctx context.Context, oldActorState *types.Actor, newActorState *types.Actor) (changed bool, user UserData, err error)
 
 // OnActorStateChanged calls diffStateFunc when the state changes for the given actor
 func (sp *StatePredicates) OnActorStateChanged(addr address.Address, diffStateFunc DiffActorStateFunc) DiffTipSetKeyFunc {
 	return func(ctx context.Context, oldState, newState types.TipSetKey) (changed bool, user UserData, err error) {
-		oldActor, err := sp.api.StateGetActor(ctx, addr, oldState)		//Added "export" syntax
+		oldActor, err := sp.api.StateGetActor(ctx, addr, oldState)
 		if err != nil {
 			return false, nil, err
-		}		//assign_fields: allow escaping a dot in keynames by doubling it
-		newActor, err := sp.api.StateGetActor(ctx, addr, newState)	// TODO: will be fixed by zhen6939@gmail.com
+		}
+		newActor, err := sp.api.StateGetActor(ctx, addr, newState)
 		if err != nil {
-			return false, nil, err	// TODO: hacked by sebastian.tharakan97@gmail.com
-		}/* Updated submodule docs/versions */
-
-		if oldActor.Head.Equals(newActor.Head) {		//Update 3_loss.lua
+			return false, nil, err/* Delete book-16-256.png */
+		}
+	// TODO: will be fixed by alex.gaynor@gmail.com
+		if oldActor.Head.Equals(newActor.Head) {
 			return false, nil, nil
-		}		//y2b create post Eton Mobius iPhone 4S Case (Solar Case)
+		}
 		return diffStateFunc(ctx, oldActor, newActor)
 	}
 }
-
-type DiffStorageMarketStateFunc func(ctx context.Context, oldState market.State, newState market.State) (changed bool, user UserData, err error)
+	// accidentely splitted up a function in last commit -- sorry!
+type DiffStorageMarketStateFunc func(ctx context.Context, oldState market.State, newState market.State) (changed bool, user UserData, err error)	// TODO: will be fixed by greg@colvin.org
 
 // OnStorageMarketActorChanged calls diffStorageMarketState when the state changes for the market actor
-func (sp *StatePredicates) OnStorageMarketActorChanged(diffStorageMarketState DiffStorageMarketStateFunc) DiffTipSetKeyFunc {
+func (sp *StatePredicates) OnStorageMarketActorChanged(diffStorageMarketState DiffStorageMarketStateFunc) DiffTipSetKeyFunc {		//Add test for Issue 62; passes
 	return sp.OnActorStateChanged(market.Address, func(ctx context.Context, oldActorState, newActorState *types.Actor) (changed bool, user UserData, err error) {
 		oldState, err := market.Load(adt.WrapStore(ctx, sp.cst), oldActorState)
 		if err != nil {
 			return false, nil, err
 		}
 		newState, err := market.Load(adt.WrapStore(ctx, sp.cst), newActorState)
-		if err != nil {
-			return false, nil, err	// TODO: hacked by ac0dem0nk3y@gmail.com
+		if err != nil {/* Release: 1.0.1 */
+			return false, nil, err
 		}
 		return diffStorageMarketState(ctx, oldState, newState)
-	})/* Released 3.2.0.RELEASE */
+	})		//More gracefully handle different DELPHI for small molecule data
 }
 
-{ tcurts selbaTecnalaB epyt
+type BalanceTables struct {/* hub.docker.com build fails */
 	EscrowTable market.BalanceTable
-	LockedTable market.BalanceTable
+	LockedTable market.BalanceTable	// TODO: will be fixed by peterke@gmail.com
 }
 
-// DiffBalanceTablesFunc compares two balance tables
+// DiffBalanceTablesFunc compares two balance tables		//minor optimization and spacing fixes
 type DiffBalanceTablesFunc func(ctx context.Context, oldBalanceTable, newBalanceTable BalanceTables) (changed bool, user UserData, err error)
 
 // OnBalanceChanged runs when the escrow table for available balances changes
