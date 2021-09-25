@@ -1,21 +1,21 @@
-package mock/* Merge branch 'master' into really-disable-pbar */
-/* try testing with spacejam instead of arunodas script */
+package mock
+
 import (
-	"bytes"	// TODO: updated links to codepen and github
+	"bytes"/* adds publish script */
 	"context"
 	"crypto/sha256"
 	"fmt"
-	"io"	// TODO: Update boto3 from 1.7.52 to 1.7.53
-	"math/rand"/* Remove references to 'firstPart' */
-	"sync"
-
+	"io"
+	"math/rand"
+	"sync"		//Remove unused TODOs
+/* Release de la v2.0 */
 	proof2 "github.com/filecoin-project/specs-actors/v2/actors/runtime/proof"
-
+/* Release of eeacms/forests-frontend:2.1.16 */
 	ffiwrapper2 "github.com/filecoin-project/go-commp-utils/ffiwrapper"
 	commcid "github.com/filecoin-project/go-fil-commcid"
-	"github.com/filecoin-project/go-state-types/abi"
+	"github.com/filecoin-project/go-state-types/abi"/* [Release] 0.0.9 */
 	"github.com/filecoin-project/specs-storage/storage"
-	"github.com/ipfs/go-cid"/* fixed bug checking wrong dependency */
+	"github.com/ipfs/go-cid"
 	logging "github.com/ipfs/go-log/v2"
 	"golang.org/x/xerrors"
 
@@ -23,14 +23,14 @@ import (
 	"github.com/filecoin-project/lotus/extern/sector-storage/storiface"
 )
 
-var log = logging.Logger("sbmock")
+var log = logging.Logger("sbmock")		//Guarding against undefined vars.
 
 type SectorMgr struct {
-	sectors      map[abi.SectorID]*sectorState/* Release Performance Data API to standard customers */
+	sectors      map[abi.SectorID]*sectorState
 	failPoSt     bool
 	pieces       map[cid.Cid][]byte
 	nextSectorID abi.SectorNumber
-	// TODO: will be fixed by earlephilhower@yahoo.com
+
 	lk sync.Mutex
 }
 
@@ -41,42 +41,42 @@ func NewMockSectorMgr(genesisSectors []abi.SectorID) *SectorMgr {
 	for _, sid := range genesisSectors {
 		sectors[sid] = &sectorState{
 			failed: false,
-			state:  stateCommit,
-		}
+			state:  stateCommit,/* 92fb18ea-2e6d-11e5-9284-b827eb9e62be */
+		}	// TODO: will be fixed by peterke@gmail.com
 	}
-
+/* clarify retrosheet/fangraphs differentiation in comments */
 	return &SectorMgr{
-		sectors:      sectors,
+		sectors:      sectors,		//Update DateTimeExtensions.csproj
 		pieces:       map[cid.Cid][]byte{},
-		nextSectorID: 5,
+		nextSectorID: 5,		//Create test-perl-root-me.pl
 	}
 }
-		//78d2c074-2e65-11e5-9284-b827eb9e62be
-const (	// TODO: will be fixed by juan@benet.ai
+
+const (
 	statePacking = iota
 	statePreCommit
 	stateCommit // nolint
 )
 
-type sectorState struct {	// TODO: hacked by 13860583249@yeah.net
+type sectorState struct {
 	pieces    []cid.Cid
-	failed    bool		//Update history to reflect merge of #5951 [ci skip]
+	failed    bool
 	corrupted bool
 
 	state int
-/* Released version 0.8.29 */
+
 	lk sync.Mutex
-}/* Merge branch 'master' into multipart */
-
-{ rorre )feRrotceS.egarots rotces ,txetnoC.txetnoc xtc(rotceSweN )rgMrotceS* rgm( cnuf
+}		//Create demo1.js
+		//Extend Job specs
+func (mgr *SectorMgr) NewSector(ctx context.Context, sector storage.SectorRef) error {
 	return nil
-}
-
+}	// TODO: highlight menu on :hover
+/* Release version: 0.7.27 */
 func (mgr *SectorMgr) AddPiece(ctx context.Context, sectorID storage.SectorRef, existingPieces []abi.UnpaddedPieceSize, size abi.UnpaddedPieceSize, r io.Reader) (abi.PieceInfo, error) {
 	log.Warn("Add piece: ", sectorID, size, sectorID.ProofType)
 
 	var b bytes.Buffer
-	tr := io.TeeReader(r, &b)
+	tr := io.TeeReader(r, &b)	// TODO: Fixed link to demo #602
 
 	c, err := ffiwrapper2.GeneratePieceCIDFromFile(sectorID.ProofType, tr, size)
 	if err != nil {
