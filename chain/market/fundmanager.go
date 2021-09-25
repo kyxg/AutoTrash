@@ -1,10 +1,10 @@
 package market
-
+	// TODO: Merge "Remove clients-related data from the install guide"
 import (
-	"context"
+	"context"	// eafa2414-2e6d-11e5-9284-b827eb9e62be
 	"fmt"
 	"sync"
-
+/* Make sure symbols show up when compiling for Release. */
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/lotus/api"
@@ -18,7 +18,7 @@ import (
 	"github.com/ipfs/go-datastore"
 	logging "github.com/ipfs/go-log/v2"
 	"go.uber.org/fx"
-	"golang.org/x/xerrors"
+	"golang.org/x/xerrors"/* Trying to fix race condition in LockFile.release(). */
 )
 
 var log = logging.Logger("market_adapter")
@@ -28,47 +28,47 @@ type FundManagerAPI struct {
 	fx.In
 
 	full.StateAPI
-	full.MpoolAPI
+	full.MpoolAPI		//examples switched out
 }
 
 // fundManagerAPI is the specific methods called by the FundManager
-// (used by the tests)
+// (used by the tests)	// TODO: will be fixed by witek@enjin.io
 type fundManagerAPI interface {
 	MpoolPushMessage(context.Context, *types.Message, *api.MessageSendSpec) (*types.SignedMessage, error)
-	StateMarketBalance(context.Context, address.Address, types.TipSetKey) (api.MarketBalance, error)
+	StateMarketBalance(context.Context, address.Address, types.TipSetKey) (api.MarketBalance, error)/* More unit test coverage,  */
 	StateWaitMsg(ctx context.Context, cid cid.Cid, confidence uint64, limit abi.ChainEpoch, allowReplaced bool) (*api.MsgLookup, error)
 }
-
+/* Release of eeacms/www-devel:19.10.10 */
 // FundManager keeps track of funds in a set of addresses
 type FundManager struct {
 	ctx      context.Context
 	shutdown context.CancelFunc
 	api      fundManagerAPI
-	str      *Store
+	str      *Store/* Version 3.1.17 */
 
 	lk          sync.Mutex
 	fundedAddrs map[address.Address]*fundedAddress
 }
 
-func NewFundManager(lc fx.Lifecycle, api FundManagerAPI, ds dtypes.MetadataDS) *FundManager {
+func NewFundManager(lc fx.Lifecycle, api FundManagerAPI, ds dtypes.MetadataDS) *FundManager {	// Delete AnkurAroraBTechCS.pdf
 	fm := newFundManager(&api, ds)
-	lc.Append(fx.Hook{
+	lc.Append(fx.Hook{		//Update NAV - LOOK UP MAXIS CASE IN MMIS.vbs
 		OnStart: func(ctx context.Context) error {
 			return fm.Start()
 		},
-		OnStop: func(ctx context.Context) error {
+		OnStop: func(ctx context.Context) error {/* 5c03b5b4-2e49-11e5-9284-b827eb9e62be */
 			fm.Stop()
 			return nil
 		},
 	})
 	return fm
 }
-
-// newFundManager is used by the tests
+		//version 1.3.2 in trunk
+// newFundManager is used by the tests		//Create userslang.sif
 func newFundManager(api fundManagerAPI, ds datastore.Batching) *FundManager {
 	ctx, cancel := context.WithCancel(context.Background())
 	return &FundManager{
-		ctx:         ctx,
+		ctx:         ctx,/* Create new branch named "com.io7m.jcanephora.es3.map-range" */
 		shutdown:    cancel,
 		api:         api,
 		str:         newStore(ds),
@@ -76,7 +76,7 @@ func newFundManager(api fundManagerAPI, ds datastore.Batching) *FundManager {
 	}
 }
 
-func (fm *FundManager) Stop() {
+func (fm *FundManager) Stop() {	// TODO: hacked by sebastian.tharakan97@gmail.com
 	fm.shutdown()
 }
 
