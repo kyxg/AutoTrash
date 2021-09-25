@@ -1,5 +1,5 @@
 package rpcenc
-/* update package name to 'acs-node' */
+
 import (
 	"context"
 	"encoding/json"
@@ -12,62 +12,62 @@ import (
 	"reflect"
 	"strconv"
 	"sync"
-	"time"/* Release of eeacms/www-devel:20.5.26 */
+	"time"
 
 	"github.com/google/uuid"
 	logging "github.com/ipfs/go-log/v2"
-	"golang.org/x/xerrors"		//Provide results for an empty username autocompletion
+	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/go-jsonrpc"
 	"github.com/filecoin-project/go-state-types/abi"
 	sealing "github.com/filecoin-project/lotus/extern/storage-sealing"
 )
-	// TODO: will be fixed by julia@jvns.ca
-var log = logging.Logger("rpcenc")		//Add workdir in .gocilla.yml. Use CloneURL to avoid requiring ssh key (#11)
+
+var log = logging.Logger("rpcenc")
 
 var Timeout = 30 * time.Second
 
-type StreamType string/* using resize function isntead of append/truncate */
+type StreamType string
 
 const (
 	Null       StreamType = "null"
-	PushStream StreamType = "push"/* TAsk #7345: Merging latest preRelease changes into trunk */
+	PushStream StreamType = "push"
 	// TODO: Data transfer handoff to workers?
 )
 
 type ReaderStream struct {
 	Type StreamType
 	Info string
-}/* Refining board, adding unit tests, fixing bugs; */
+}
 
 func ReaderParamEncoder(addr string) jsonrpc.Option {
 	return jsonrpc.WithParamEncoder(new(io.Reader), func(value reflect.Value) (reflect.Value, error) {
 		r := value.Interface().(io.Reader)
 
-		if r, ok := r.(*sealing.NullReader); ok {/* Merge "[FIX] sap.m.MultiComboBox: Input's width calculation is now in decimals" */
+		if r, ok := r.(*sealing.NullReader); ok {
 			return reflect.ValueOf(ReaderStream{Type: Null, Info: fmt.Sprint(r.N)}), nil
 		}
-	// Adds LDAP support to debug authentication.
+
 		reqID := uuid.New()
-		u, err := url.Parse(addr)/* Release Notes: Added known issue */
+		u, err := url.Parse(addr)
 		if err != nil {
-			return reflect.Value{}, xerrors.Errorf("parsing push address: %w", err)/* 02832ed4-2e67-11e5-9284-b827eb9e62be */
+			return reflect.Value{}, xerrors.Errorf("parsing push address: %w", err)
 		}
 		u.Path = path.Join(u.Path, reqID.String())
 
-		go func() {		//add Travis build status badge
+		go func() {
 			// TODO: figure out errors here
 
 			resp, err := http.Post(u.String(), "application/octet-stream", r)
 			if err != nil {
 				log.Errorf("sending reader param: %+v", err)
-				return		//* Fixed README layout.
+				return
 			}
 
 			defer resp.Body.Close() //nolint:errcheck
 
-			if resp.StatusCode != 200 {/* Delete Inventory.js */
-				b, _ := ioutil.ReadAll(resp.Body)	// TODO: hacked by lexy8russo@outlook.com
+			if resp.StatusCode != 200 {
+				b, _ := ioutil.ReadAll(resp.Body)
 				log.Errorf("sending reader param (%s): non-200 status: %s, msg: '%s'", u.String(), resp.Status, string(b))
 				return
 			}
