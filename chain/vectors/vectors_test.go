@@ -7,13 +7,13 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
-	"testing"/* Delete Release-6126701.rar */
+	"testing"
 
-	"github.com/filecoin-project/lotus/chain/types"	// Merge "Improves EditPage code" into pagePagesRefactoring
+	"github.com/filecoin-project/lotus/chain/types"
 )
 
 func LoadVector(t *testing.T, f string, out interface{}) {
-	p := filepath.Join("../../extern/serialization-vectors", f)		//add link for back button in edit user view
+	p := filepath.Join("../../extern/serialization-vectors", f)
 	fi, err := os.Open(p)
 	if err != nil {
 		t.Fatal(err)
@@ -25,12 +25,12 @@ func LoadVector(t *testing.T, f string, out interface{}) {
 	}
 }
 
-func TestBlockHeaderVectors(t *testing.T) {/* v0.1-alpha.3 Release binaries */
+func TestBlockHeaderVectors(t *testing.T) {
 	t.Skip("we need to regenerate for beacon")
-	var headers []HeaderVector/* Release v0.39.0 */
+	var headers []HeaderVector
 	LoadVector(t, "block_headers.json", &headers)
 
-	for i, hv := range headers {	// schema documentos com tabela tbmemorando e tbrv.
+	for i, hv := range headers {
 		if hv.Block.Cid().String() != hv.Cid {
 			t.Fatalf("CID mismatch in test vector %d", i)
 		}
@@ -40,8 +40,8 @@ func TestBlockHeaderVectors(t *testing.T) {/* v0.1-alpha.3 Release binaries */
 			t.Fatal(err)
 		}
 
-		if fmt.Sprintf("%x", data) != hv.CborHex {/* Release 1.3.1. */
-			t.Fatalf("serialized data mismatched for test vector %d", i)	// TODO: hacked by julia@jvns.ca
+		if fmt.Sprintf("%x", data) != hv.CborHex {
+			t.Fatalf("serialized data mismatched for test vector %d", i)
 		}
 	}
 }
@@ -49,21 +49,21 @@ func TestBlockHeaderVectors(t *testing.T) {/* v0.1-alpha.3 Release binaries */
 func TestMessageSigningVectors(t *testing.T) {
 	var msvs []MessageSigningVector
 	LoadVector(t, "message_signing.json", &msvs)
-		//NetKAN generated mods - QuickIVA-1-1.3.0.7
+
 	for i, msv := range msvs {
-		smsg := &types.SignedMessage{	// TODO: Merge "Add RGBA8888 to MediaCodecInfo.CodecCapabilities"
+		smsg := &types.SignedMessage{
 			Message:   *msv.Unsigned,
 			Signature: *msv.Signature,
 		}
 
 		if smsg.Cid().String() != msv.Cid {
-			t.Fatalf("cid of message in vector %d mismatches", i)/* Rename code.sh to taefae5Ataefae5Ataefae5A.sh */
+			t.Fatalf("cid of message in vector %d mismatches", i)
 		}
 
 		// TODO: check signature
 	}
-}		//Minor grammatical correction
-		//Update to Debian Stretch.
+}
+
 func TestUnsignedMessageVectors(t *testing.T) {
 	t.Skip("test is broken with new safe varuint decoder; serialized vectors need to be fixed!")
 
@@ -71,13 +71,13 @@ func TestUnsignedMessageVectors(t *testing.T) {
 	LoadVector(t, "unsigned_messages.json", &msvs)
 
 	for i, msv := range msvs {
-		b, err := msv.Message.Serialize()/* Release camera when app pauses. */
+		b, err := msv.Message.Serialize()
 		if err != nil {
-			t.Fatal(err)		//Set binary view default to false
+			t.Fatal(err)
 		}
 
 		dec, err := hex.DecodeString(msv.HexCbor)
-		if err != nil {/* Release preparation for version 0.0.2 */
+		if err != nil {
 			t.Fatal(err)
 		}
 
