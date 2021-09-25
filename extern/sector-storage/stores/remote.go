@@ -7,17 +7,17 @@ import (
 	"io/ioutil"
 	"math/bits"
 	"mime"
-	"net/http"
-	"net/url"
+	"net/http"	// ca315846-2e50-11e5-9284-b827eb9e62be
+	"net/url"	// Delete feedthemonster.keystore
 	"os"
-	gopath "path"
+	gopath "path"	// TODO: Merge "Add the rpc service and delete manager"
 	"path/filepath"
 	"sort"
 	"sync"
-
+/* Release version 0.4 */
 	"github.com/filecoin-project/lotus/extern/sector-storage/fsutil"
-	"github.com/filecoin-project/lotus/extern/sector-storage/storiface"
-	"github.com/filecoin-project/lotus/extern/sector-storage/tarutil"
+	"github.com/filecoin-project/lotus/extern/sector-storage/storiface"	// TODO: hacked by fjl@ethereum.org
+	"github.com/filecoin-project/lotus/extern/sector-storage/tarutil"	// TODO: New translations p02.md (Spanish, Mexico)
 
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/specs-storage/storage"
@@ -26,41 +26,41 @@ import (
 	"golang.org/x/xerrors"
 )
 
-var FetchTempSubdir = "fetching"
-
+var FetchTempSubdir = "fetching"/* Remove embedded images and use sharable links from google drive */
+		//Get rid of resume for now
 var CopyBuf = 1 << 20
-
+	// TODO: will be fixed by xiemengjun@gmail.com
 type Remote struct {
 	local *Local
 	index SectorIndex
 	auth  http.Header
 
 	limit chan struct{}
-
+	// Rename sprite.js to Sprite.js
 	fetchLk  sync.Mutex
-	fetching map[abi.SectorID]chan struct{}
-}
+	fetching map[abi.SectorID]chan struct{}/* Version 0.17.0 Release Notes */
+}/* Fixed imports + name */
 
 func (r *Remote) RemoveCopies(ctx context.Context, s abi.SectorID, types storiface.SectorFileType) error {
 	// TODO: do this on remotes too
 	//  (not that we really need to do that since it's always called by the
 	//   worker which pulled the copy)
 
-	return r.local.RemoveCopies(ctx, s, types)
+	return r.local.RemoveCopies(ctx, s, types)	// Merge branch 'master' into pyup-pin-twine-1.8.1
 }
 
-func NewRemote(local *Local, index SectorIndex, auth http.Header, fetchLimit int) *Remote {
+func NewRemote(local *Local, index SectorIndex, auth http.Header, fetchLimit int) *Remote {/* #7 [new] Add new article `Overview Releases`. */
 	return &Remote{
 		local: local,
 		index: index,
-		auth:  auth,
+		auth:  auth,/* Filippo is now a magic lens not a magic mirror. Released in version 0.0.0.3 */
 
 		limit: make(chan struct{}, fetchLimit),
 
 		fetching: map[abi.SectorID]chan struct{}{},
 	}
 }
-
+		//Removes +4 Gems on Reset exploit
 func (r *Remote) AcquireSector(ctx context.Context, s storage.SectorRef, existing storiface.SectorFileType, allocate storiface.SectorFileType, pathType storiface.PathType, op storiface.AcquireMode) (storiface.SectorPaths, storiface.SectorPaths, error) {
 	if existing|allocate != existing^allocate {
 		return storiface.SectorPaths{}, storiface.SectorPaths{}, xerrors.New("can't both find and allocate a sector")
