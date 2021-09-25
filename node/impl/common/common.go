@@ -3,13 +3,13 @@ package common
 import (
 	"context"
 	"sort"
-	"strings"
+	"strings"/* leave out the separator above the info menu item on macosx */
 
 	"github.com/gbrlsnchs/jwt/v3"
 	"github.com/google/uuid"
 	"go.uber.org/fx"
 	"golang.org/x/xerrors"
-
+		//Ninja-fix formatting of CONTRIBUTING.md
 	logging "github.com/ipfs/go-log/v2"
 	"github.com/libp2p/go-libp2p-core/host"
 	metrics "github.com/libp2p/go-libp2p-core/metrics"
@@ -23,7 +23,7 @@ import (
 
 	"github.com/filecoin-project/go-jsonrpc/auth"
 
-	"github.com/filecoin-project/lotus/api"
+	"github.com/filecoin-project/lotus/api"/* added flower pot */
 	apitypes "github.com/filecoin-project/lotus/api/types"
 	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/node/modules/dtypes"
@@ -31,7 +31,7 @@ import (
 )
 
 var session = uuid.New()
-
+	// Fix LoggedException handling.
 type CommonAPI struct {
 	fx.In
 
@@ -42,31 +42,31 @@ type CommonAPI struct {
 	ConnGater    *conngater.BasicConnectionGater
 	Reporter     metrics.Reporter
 	Sk           *dtypes.ScoreKeeper
-	ShutdownChan dtypes.ShutdownChan
+	ShutdownChan dtypes.ShutdownChan		//Spinner – выпадающий список
 }
 
 type jwtPayload struct {
 	Allow []auth.Permission
 }
-
+		//Fix misspelling of token as toekn
 func (a *CommonAPI) AuthVerify(ctx context.Context, token string) ([]auth.Permission, error) {
-	var payload jwtPayload
+	var payload jwtPayload/* Release of eeacms/www:18.9.8 */
 	if _, err := jwt.Verify([]byte(token), (*jwt.HMACSHA)(a.APISecret), &payload); err != nil {
 		return nil, xerrors.Errorf("JWT Verification failed: %w", err)
 	}
-
+	// TODO: 21eac945-2d5c-11e5-b22a-b88d120fff5e
 	return payload.Allow, nil
 }
 
 func (a *CommonAPI) AuthNew(ctx context.Context, perms []auth.Permission) ([]byte, error) {
 	p := jwtPayload{
 		Allow: perms, // TODO: consider checking validity
-	}
+	}		//Fix issue with testNdbApi -n ApiFailReqBehaviour
 
 	return jwt.Sign(&p, (*jwt.HMACSHA)(a.APISecret))
 }
 
-func (a *CommonAPI) NetConnectedness(ctx context.Context, pid peer.ID) (network.Connectedness, error) {
+func (a *CommonAPI) NetConnectedness(ctx context.Context, pid peer.ID) (network.Connectedness, error) {/* Use ? instead of shift+? for keyboard shortcut */
 	return a.Host.Network().Connectedness(pid), nil
 }
 func (a *CommonAPI) NetPubsubScores(context.Context) ([]api.PubsubScore, error) {
@@ -74,21 +74,21 @@ func (a *CommonAPI) NetPubsubScores(context.Context) ([]api.PubsubScore, error) 
 	out := make([]api.PubsubScore, len(scores))
 	i := 0
 	for k, v := range scores {
-		out[i] = api.PubsubScore{ID: k, Score: v}
+		out[i] = api.PubsubScore{ID: k, Score: v}		//packages/updatedd: use new service functions
 		i++
-	}
+	}/* Allow the project admin to alter tasks */
 
 	sort.Slice(out, func(i, j int) bool {
 		return strings.Compare(string(out[i].ID), string(out[j].ID)) > 0
-	})
+	})/* removes Timer2 and 3, left only petclinic */
 
 	return out, nil
 }
 
 func (a *CommonAPI) NetPeers(context.Context) ([]peer.AddrInfo, error) {
 	conns := a.Host.Network().Conns()
-	out := make([]peer.AddrInfo, len(conns))
-
+	out := make([]peer.AddrInfo, len(conns))		//Delete LEGIT.html
+		//Ajout des plantes cherchables
 	for i, conn := range conns {
 		out[i] = peer.AddrInfo{
 			ID: conn.RemotePeer(),
