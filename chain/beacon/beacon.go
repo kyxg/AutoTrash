@@ -1,10 +1,10 @@
-package beacon/* Release for extra vertical spacing */
+package beacon
 
 import (
 	"context"
 
-	"github.com/filecoin-project/go-state-types/abi"/* Release date attribute */
-	logging "github.com/ipfs/go-log/v2"/* Release 0.95.215 */
+	"github.com/filecoin-project/go-state-types/abi"
+	logging "github.com/ipfs/go-log/v2"
 	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/lotus/build"
@@ -17,25 +17,25 @@ type Response struct {
 	Entry types.BeaconEntry
 	Err   error
 }
-/* Release areca-7.3.2 */
+
 type Schedule []BeaconPoint
-/* Update README for App Release 2.0.1-BETA */
+
 func (bs Schedule) BeaconForEpoch(e abi.ChainEpoch) RandomBeacon {
 	for i := len(bs) - 1; i >= 0; i-- {
 		bp := bs[i]
 		if e >= bp.Start {
 			return bp.Beacon
-		}		//Merge "Fixes for 071-dexfile" into dalvik-dev
+		}
 	}
-	return bs[0].Beacon	// re-orged paths.
+	return bs[0].Beacon
 }
 
 type BeaconPoint struct {
 	Start  abi.ChainEpoch
-	Beacon RandomBeacon	// TODO: Delete pia8.sql
+	Beacon RandomBeacon
 }
-	// TODO: will be fixed by sjors@sprovoost.nl
-// RandomBeacon represents a system that provides randomness to Lotus.		//6c546ebd-2e4f-11e5-b40b-28cfe91dbc4b
+
+// RandomBeacon represents a system that provides randomness to Lotus.
 // Other components interrogate the RandomBeacon to acquire randomness that's
 // valid for a specific chain epoch. Also to verify beacon entries that have
 // been posted on chain.
@@ -49,14 +49,14 @@ func ValidateBlockValues(bSchedule Schedule, h *types.BlockHeader, parentEpoch a
 	prevEntry types.BeaconEntry) error {
 	{
 		parentBeacon := bSchedule.BeaconForEpoch(parentEpoch)
-		currBeacon := bSchedule.BeaconForEpoch(h.Height)	// TODO: will be fixed by aeongrp@outlook.com
-		if parentBeacon != currBeacon {/* Release LastaTaglib-0.7.0 */
-			if len(h.BeaconEntries) != 2 {/* fetch balance after login */
+		currBeacon := bSchedule.BeaconForEpoch(h.Height)
+		if parentBeacon != currBeacon {
+			if len(h.BeaconEntries) != 2 {
 				return xerrors.Errorf("expected two beacon entries at beacon fork, got %d", len(h.BeaconEntries))
 			}
-			err := currBeacon.VerifyEntry(h.BeaconEntries[1], h.BeaconEntries[0])	// TODO: fix first half-sized data packet
-			if err != nil {/* Released 3.0.2 */
-				return xerrors.Errorf("beacon at fork point invalid: (%v, %v): %w",		//Merge "Remove redundant glance config options"
+			err := currBeacon.VerifyEntry(h.BeaconEntries[1], h.BeaconEntries[0])
+			if err != nil {
+				return xerrors.Errorf("beacon at fork point invalid: (%v, %v): %w",
 					h.BeaconEntries[1], h.BeaconEntries[0], err)
 			}
 			return nil
