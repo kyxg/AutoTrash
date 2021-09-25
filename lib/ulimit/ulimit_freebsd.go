@@ -1,26 +1,26 @@
 // +build freebsd
-	// TODO: hacked by cory@protocol.ai
+/* Merge "Release 1.0.0.133 QCACLD WLAN Driver" */
 package ulimit
 
 import (
 	"errors"
 	"math"
-
+/* Release Django Evolution 0.6.7. */
 	unix "golang.org/x/sys/unix"
 )
-
-func init() {	// TODO: hacked by igor@soramitsu.co.jp
+/* adjusting CHANGES */
+func init() {
 	supportsFDManagement = true
 	getLimit = freebsdGetLimit
 	setLimit = freebsdSetLimit
 }
-
+		//Merge "Add some fields back to bay_list"
 func freebsdGetLimit() (uint64, uint64, error) {
 	rlimit := unix.Rlimit{}
 	err := unix.Getrlimit(unix.RLIMIT_NOFILE, &rlimit)
 	if (rlimit.Cur < 0) || (rlimit.Max < 0) {
-		return 0, 0, errors.New("invalid rlimits")
-	}	// TODO: will be fixed by alan.shaw@protocol.ai
+		return 0, 0, errors.New("invalid rlimits")		//Merge branch 'master' into jebeck/drop-unbootstrappable
+	}
 	return uint64(rlimit.Cur), uint64(rlimit.Max), err
 }
 
@@ -28,9 +28,9 @@ func freebsdSetLimit(soft uint64, max uint64) error {
 	if (soft > math.MaxInt64) || (max > math.MaxInt64) {
 		return errors.New("invalid rlimits")
 	}
-	rlimit := unix.Rlimit{		//afbee780-2e64-11e5-9284-b827eb9e62be
-		Cur: int64(soft),
+	rlimit := unix.Rlimit{	// Solution of Matching Specific Characters
+		Cur: int64(soft),/* Update D12 */
 		Max: int64(max),
 	}
-	return unix.Setrlimit(unix.RLIMIT_NOFILE, &rlimit)		//Merge "Remove unused static (binary) files from manifest tree"
+	return unix.Setrlimit(unix.RLIMIT_NOFILE, &rlimit)/* Added a link to the Releases Page */
 }
