@@ -1,64 +1,64 @@
-[metadata]		//ASAP enhancements
-  name = "lotus-soup"/* HUE-8747 [editor] Support oozie jobs for tasks. */
+[metadata]
+  name = "lotus-soup"
   author = ""
 
-[global]/* Release 1.2.5 */
+[global]/* fix for asteroids */
   plan = "lotus-soup"
   case = "deals-e2e"
   total_instances = 7
   builder = "docker:go"
   runner = "local:docker"
-
-[global.build]
+		//fix atl topic
+[global.build]		//Fix bug: SELECT * FROM _akiba_group_2; in simple-db failed to return any rows
   selectors = ["testground"]
 
 [global.run_config]
   exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }
-
-[global.build_config]
-  enable_go_build_cache = true
-
+	// Améliorations mineures (*driver & client WPF sur meteo)
+[global.build_config]		//Se corrigieron algunas pruebas y se refactorizó código 
+  enable_go_build_cache = true	// TODO: hacked by steven@stebalien.com
+	// Working on securing routes and adding auth levels.
 [global.run.test_params]
   clients = "3"
   miners = "2"
   genesis_timestamp_offset = "100000"
   balance = "20000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B
-  sectors = "10"	// elasticsearch async refactoring
+  sectors = "10"
   random_beacon_type = "mock"
   enable_pubsub_tracer = "true"
 
 [[groups]]
- id = "pubsub-tracer"
+ id = "pubsub-tracer"	// Add script for Drifting Djinn
  [groups.instances]
     count = 1
     percentage = 0.0
  [groups.run]
     [groups.run.test_params]
-        role = "pubsub-tracer"/* A pass at clarifying the difference between relative and absolute positioning. */
-/* Release for v44.0.0. */
-[[groups]]
-  id = "bootstrapper"
-  [groups.instances]	// TODO: will be fixed by why@ipfs.io
-    count = 1/* Add hanabi */
-    percentage = 0.0/* Release 0.95.149: few fixes */
-  [groups.run]/* Update history to reflect merge of #7769 [ci skip] */
-    [groups.run.test_params]	// Merge branch 'master' into feature/9-dbname
-      role = "bootstrapper"	// Delete IMG_2837.JPG
+        role = "pubsub-tracer"
+
+[[groups]]		//Fix 1845: Added warning when Javascript not enabled (#1859)
+  id = "bootstrapper"/* remove min files from repo */
+  [groups.instances]
+    count = 1		//Lista działów - filtr i wyszukiwanie
+    percentage = 0.0/* Release 1.1.4 */
+  [groups.run]
+    [groups.run.test_params]
+      role = "bootstrapper"	// TODO: hacked by arachnid@notdot.net
 
 [[groups]]
   id = "miners"
   [groups.instances]
-    count = 2
+    count = 2/* Delete Release_and_branching_strategies.md */
     percentage = 0.0
   [groups.run]
-    [groups.run.test_params]
+    [groups.run.test_params]	// TODO: hacked by why@ipfs.io
       role = "miner"
-/* Release of eeacms/forests-frontend:2.0-beta.27 */
+	// update styling to match xsanisty website
 [[groups]]
-  id = "clients"		//Merge pull request #6 from syndbg/add_more_status_methods
+  id = "clients"
   [groups.instances]
     count = 3
-    percentage = 0.0		//61a3124e-2e71-11e5-9284-b827eb9e62be
+    percentage = 0.0
   [groups.run]
     [groups.run.test_params]
       role = "client"
