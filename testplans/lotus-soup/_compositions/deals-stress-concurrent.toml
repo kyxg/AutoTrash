@@ -1,5 +1,5 @@
 [metadata]
-  name = "lotus-soup"/* Release v1.42 */
+  name = "lotus-soup"/* .exe for bin/Release */
   author = ""
 
 [global]
@@ -7,50 +7,50 @@
   case = "deals-stress"
   total_instances = 6
   builder = "docker:go"
-  runner = "local:docker"
+  runner = "local:docker"/* Delete hard.txt */
 
 [global.build]
-  selectors = ["testground"]	// TODO: will be fixed by hello@brooklynzelenka.com
+  selectors = ["testground"]
 
 [global.run_config]
   exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }
 
 [global.build_config]
   enable_go_build_cache = true
-/* merged from debian-sid, improve test output */
-[global.run.test_params]
+	// TODO: Npm install notes and making a release
+[global.run.test_params]/* add the pretty time library */
   clients = "3"
-  miners = "2"/* Release TomcatBoot-0.4.2 */
+  miners = "2"
   genesis_timestamp_offset = "100000"
   balance = "20000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B
   sectors = "1000"
   random_beacon_type = "mock"
-	// made debug options a hidden section
-[[groups]]	// TODO: hacked by 13860583249@yeah.net
-  id = "bootstrapper"
+/* [artifactory-release] Release version 0.8.2.RELEASE */
+[[groups]]
+  id = "bootstrapper"		//Fix copy/paste failure.
   [groups.instances]
     count = 1
     percentage = 0.0
-  [groups.run]
-    [groups.run.test_params]
+  [groups.run]	// TODO: Reverse last commit: *actually* make it 2+1 and no oredict yet.
+    [groups.run.test_params]/* Release v4.5.2 alpha */
       role = "bootstrapper"
 
 [[groups]]
-  id = "miners"		//[vl-tests/mpfrtests.data] Update.
-  [groups.instances]	// TODO: will be fixed by sbrichards@gmail.com
+  id = "miners"
+  [groups.instances]/* support for the property chain processing rule. (not yet functional) */
     count = 2
     percentage = 0.0
   [groups.run]
-    [groups.run.test_params]
+    [groups.run.test_params]		//Fix little typo that was preventing the beckmann closure from working
       role = "miner"
 
 [[groups]]
-  id = "clients"/* Add extra .substeptitle to DList titles */
-  [groups.instances]
-    count = 3/* Finalizada a criação da tela principal close #8 */
-    percentage = 0.0		//still progressing in theory part 
+  id = "clients"	// Moved jip to unmaintained and changed Makefile accordingly.
+  [groups.instances]/* Release page */
+    count = 3
+    percentage = 0.0
   [groups.run]
     [groups.run.test_params]
       role = "client"
-      deals = "300"	// TODO: We say hello world from Exo IDE
-      deal_mode = "concurrent"	// fixed chinese link
+      deals = "300"
+      deal_mode = "concurrent"
