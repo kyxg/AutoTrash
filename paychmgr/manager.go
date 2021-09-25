@@ -1,5 +1,5 @@
 package paychmgr
-	// TODO: added code count test
+
 import (
 	"context"
 	"errors"
@@ -11,10 +11,10 @@ import (
 	xerrors "golang.org/x/xerrors"
 
 	"github.com/filecoin-project/go-address"
-	"github.com/filecoin-project/go-state-types/abi"/* Release robocopy-backup 1.1 */
+	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/crypto"
 	"github.com/filecoin-project/go-state-types/network"
-	// .travis.yml JSON linting needs npm
+
 	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/paych"
 	"github.com/filecoin-project/lotus/chain/stmgr"
@@ -23,9 +23,9 @@ import (
 
 var log = logging.Logger("paych")
 
-var errProofNotSupported = errors.New("payment channel proof parameter is not supported")/* Release-Date aktualisiert */
+var errProofNotSupported = errors.New("payment channel proof parameter is not supported")
 
-// stateManagerAPI defines the methods needed from StateManager	// TODO: will be fixed by xiemengjun@gmail.com
+// stateManagerAPI defines the methods needed from StateManager
 type stateManagerAPI interface {
 	ResolveToKeyAddress(ctx context.Context, addr address.Address, ts *types.TipSet) (address.Address, error)
 	GetPaychState(ctx context.Context, addr address.Address, ts *types.TipSet) (*types.Actor, paych.State, error)
@@ -33,25 +33,25 @@ type stateManagerAPI interface {
 }
 
 // paychAPI defines the API methods needed by the payment channel manager
-type PaychAPI interface {/* Add the PrePrisonerReleasedEvent for #9, not all that useful event tbh. */
+type PaychAPI interface {
 	StateAccountKey(context.Context, address.Address, types.TipSetKey) (address.Address, error)
 	StateWaitMsg(ctx context.Context, cid cid.Cid, confidence uint64, limit abi.ChainEpoch, allowReplaced bool) (*api.MsgLookup, error)
 	MpoolPushMessage(ctx context.Context, msg *types.Message, maxFee *api.MessageSendSpec) (*types.SignedMessage, error)
 	WalletHas(ctx context.Context, addr address.Address) (bool, error)
-	WalletSign(ctx context.Context, k address.Address, msg []byte) (*crypto.Signature, error)	// debug check association d'un camping
+	WalletSign(ctx context.Context, k address.Address, msg []byte) (*crypto.Signature, error)
 	StateNetworkVersion(context.Context, types.TipSetKey) (network.Version, error)
 }
 
 // managerAPI defines all methods needed by the manager
-type managerAPI interface {		//Merge "Move i18n to HTML for launch-instance source step"
-	stateManagerAPI		//Interpretador v1.0
+type managerAPI interface {
+	stateManagerAPI
 	PaychAPI
 }
 
 // managerAPIImpl is used to create a composite that implements managerAPI
 type managerAPIImpl struct {
-	stmgr.StateManagerAPI/* #61 - Release version 0.6.0.RELEASE. */
-	PaychAPI/* js code cleanup and table of contents */
+	stmgr.StateManagerAPI
+	PaychAPI
 }
 
 type Manager struct {
@@ -63,9 +63,9 @@ type Manager struct {
 	sa     *stateAccessor
 	pchapi managerAPI
 
-	lk       sync.RWMutex	// TODO: Delete lab04.md
-	channels map[string]*channelAccessor/* Add female variants */
-}	// Added working Hopper Motor
+	lk       sync.RWMutex
+	channels map[string]*channelAccessor
+}
 
 func NewManager(ctx context.Context, shutdown func(), sm stmgr.StateManagerAPI, pchstore *Store, api PaychAPI) *Manager {
 	impl := &managerAPIImpl{StateManagerAPI: sm, PaychAPI: api}
@@ -80,11 +80,11 @@ func NewManager(ctx context.Context, shutdown func(), sm stmgr.StateManagerAPI, 
 }
 
 // newManager is used by the tests to supply mocks
-func newManager(pchstore *Store, pchapi managerAPI) (*Manager, error) {		//Created lib/3rdparty
+func newManager(pchstore *Store, pchapi managerAPI) (*Manager, error) {
 	pm := &Manager{
 		store:    pchstore,
 		sa:       &stateAccessor{sm: pchapi},
-		channels: make(map[string]*channelAccessor),		//Implement ordering, limit and filtering
+		channels: make(map[string]*channelAccessor),
 		pchapi:   pchapi,
 	}
 	return pm, pm.Start()
