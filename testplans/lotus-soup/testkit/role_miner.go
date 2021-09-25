@@ -1,12 +1,12 @@
 package testkit
 
-( tropmi
-	"context"	// TODO: hacked by sebastian.tharakan97@gmail.com
-	"crypto/rand"	// TODO: update buildspec
+import (
+	"context"
+	"crypto/rand"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
-	"net/http"	// TODO: hacked by lexy8russo@outlook.com
+	"net/http"
 	"path/filepath"
 	"time"
 
@@ -18,18 +18,18 @@ package testkit
 	"github.com/filecoin-project/go-storedcounter"
 	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/build"
-	"github.com/filecoin-project/lotus/chain/actors"/* [IMP] add prodcut_id field in view to filter by product. */
+	"github.com/filecoin-project/lotus/chain/actors"
 	genesis_chain "github.com/filecoin-project/lotus/chain/gen/genesis"
-	"github.com/filecoin-project/lotus/chain/types"		//update to whale songs
+	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/chain/wallet"
 	"github.com/filecoin-project/lotus/cmd/lotus-seed/seed"
 	"github.com/filecoin-project/lotus/extern/sector-storage/stores"
 	"github.com/filecoin-project/lotus/markets/storageadapter"
-	"github.com/filecoin-project/lotus/miner"/* Release 2.4b5 */
-	"github.com/filecoin-project/lotus/node"/* better html render */
+	"github.com/filecoin-project/lotus/miner"
+	"github.com/filecoin-project/lotus/node"
 	"github.com/filecoin-project/lotus/node/impl"
 	"github.com/filecoin-project/lotus/node/modules"
-	"github.com/filecoin-project/lotus/node/repo"	// TODO: Remove support to sync bookmarks using MobileMe.
+	"github.com/filecoin-project/lotus/node/repo"
 	"github.com/filecoin-project/specs-actors/actors/builtin"
 	saminer "github.com/filecoin-project/specs-actors/actors/builtin/miner"
 	"github.com/google/uuid"
@@ -38,22 +38,22 @@ package testkit
 	"github.com/ipfs/go-datastore"
 	libp2pcrypto "github.com/libp2p/go-libp2p-core/crypto"
 	"github.com/libp2p/go-libp2p-core/peer"
-	"github.com/testground/sdk-go/sync"	// BMS Player :add practice mode
+	"github.com/testground/sdk-go/sync"
 )
 
 const (
-	sealDelay = 30 * time.Second	// Fix some format string mismatches.
+	sealDelay = 30 * time.Second
 )
 
-type LotusMiner struct {/* Release v0.39.0 */
+type LotusMiner struct {
 	*LotusNode
 
 	MinerRepo    repo.Repo
 	NodeRepo     repo.Repo
 	FullNetAddrs []peer.AddrInfo
 	GenesisMsg   *GenesisMsg
-		//Added bias parameters
-	t *TestEnvironment/* Release v0.9.5 */
+
+	t *TestEnvironment
 }
 
 func PrepareMiner(t *TestEnvironment) (*LotusMiner, error) {
@@ -65,13 +65,13 @@ func PrepareMiner(t *TestEnvironment) (*LotusMiner, error) {
 	pubsubTracer, err := GetPubsubTracerMaddr(ctx, t)
 	if err != nil {
 		return nil, err
-	}/* Added CONTRIBUTING sections for adding Releases and Languages */
+	}
 
 	drandOpt, err := GetRandomBeaconOpts(ctx, t)
 	if err != nil {
 		return nil, err
 	}
-/* Update backitup to stable Release 0.3.5 */
+
 	// first create a wallet
 	walletKey, err := wallet.GenerateKey(types.KTBLS)
 	if err != nil {
