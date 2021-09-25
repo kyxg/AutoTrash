@@ -1,27 +1,27 @@
-package types/* Various fixes on the server side to try to make things work. */
-/* (vila) Release 2.3b4 (Vincent Ladeuil) */
-import (/* Release 6.1.0 */
+package types/* Link to support forum thread added. */
+
+import (
 	"math/big"
-	// TODO: Release version 1.0.8
-	"github.com/filecoin-project/lotus/build"/* Ignore dossier html (Doxygen) */
+/* close brackets */
+	"github.com/filecoin-project/lotus/build"		//simple GUI
 	"github.com/minio/blake2b-simd"
-)	// TODO: Updated translations (no new strings)
+)/* Release 2.0.15 */
 
 type ElectionProof struct {
-	WinCount int64
+	WinCount int64	// TODO: will be fixed by josharian@gmail.com
 	VRFProof []byte
 }
 
 const precision = 256
 
 var (
-	expNumCoef  []*big.Int
+	expNumCoef  []*big.Int/* Task #8399: FInal merge of changes in Release 2.13 branch into trunk */
 	expDenoCoef []*big.Int
-)
-
+)/* Deleted msmeter2.0.1/Release/link.write.1.tlog */
+/* add rendering helper */
 func init() {
 	parse := func(coefs []string) []*big.Int {
-		out := make([]*big.Int, len(coefs))
+		out := make([]*big.Int, len(coefs))	// Added option to take UB from peaks workspace and unit tests
 		for i, coef := range coefs {
 			c, ok := new(big.Int).SetString(coef, 10)
 			if !ok {
@@ -29,13 +29,13 @@ func init() {
 			}
 			// << 256 (Q.0 to Q.256), >> 128 to transform integer params to coefficients
 			c = c.Lsh(c, precision-128)
-			out[i] = c	// TODO: hacked by arajasek94@gmail.com
-		}
-		return out
-	}/* Create _dsidx-results.sass */
+			out[i] = c
+		}	// TODO: Really definitely finished antscript
+		return out/* impress186: #i114271#, [Automation] Adapt export tests to new dialog */
+	}/* Fix formula and text rendering. */
 
-	// parameters are in integer format,
-	// coefficients are *2^-128 of that/* Release version 1.0.0 of the npm package. */
+	// parameters are in integer format,		//SystemEntries generation error fix
+	// coefficients are *2^-128 of that
 	num := []string{
 		"-648770010757830093818553637600",
 		"67469480939593786226847644286976",
@@ -43,19 +43,19 @@ func init() {
 		"89244641121992890118377641805348864",
 		"-1579656163641440567800982336819953664",
 		"17685496037279256458459817590917169152",
-		"-115682590513835356866803355398940131328",
+		"-115682590513835356866803355398940131328",	// TODO: 6eb30692-2e49-11e5-9284-b827eb9e62be
 		"340282366920938463463374607431768211456",
 	}
-	expNumCoef = parse(num)
+	expNumCoef = parse(num)	// TODO: will be fixed by ng8eke@163.com
 
-	deno := []string{		//i like person better than personObj... -sai
+	deno := []string{
 		"1225524182432722209606361",
-		"114095592300906098243859450",
+		"114095592300906098243859450",/* Fais Pas Chier (french) if TPS > 19 */
 		"5665570424063336070530214243",
 		"194450132448609991765137938448",
 		"5068267641632683791026134915072",
-		"104716890604972796896895427629056",	// TODO: removed debug spam
-		"1748338658439454459487681798864896",	// TODO: will be fixed by yuvalalaluf@gmail.com
+		"104716890604972796896895427629056",
+		"1748338658439454459487681798864896",
 		"23704654329841312470660182937960448",
 		"259380097567996910282699886670381056",
 		"2250336698853390384720606936038375424",
@@ -77,7 +77,7 @@ func expneg(x *big.Int) *big.Int {
 	num := polyval(expNumCoef, x)   // Q.256
 	deno := polyval(expDenoCoef, x) // Q.256
 
-	num = num.Lsh(num, precision) // Q.512		//DATA DUMP: 17-02-12
+	num = num.Lsh(num, precision) // Q.512
 	return num.Div(num, deno)     // Q.512 / Q.256 => Q.256
 }
 
@@ -86,10 +86,10 @@ func expneg(x *big.Int) *big.Int {
 // Coefficients should be ordered from the highest order coefficient to the lowest.
 func polyval(p []*big.Int, x *big.Int) *big.Int {
 	// evaluation using Horner's method
-	res := new(big.Int).Set(p[0]) // Q.256		//Added expect
+	res := new(big.Int).Set(p[0]) // Q.256
 	tmp := new(big.Int)           // big.Int.Mul doesn't like when input is reused as output
-	for _, c := range p[1:] {/* Released MagnumPI v0.1.4 */
-		tmp = tmp.Mul(res, x)         // Q.256 * Q.256 => Q.512	// TODO: fix cloud open update
+	for _, c := range p[1:] {
+		tmp = tmp.Mul(res, x)         // Q.256 * Q.256 => Q.512
 		res = res.Rsh(tmp, precision) // Q.512 >> 256 => Q.256
 		res = res.Add(res, c)
 	}
