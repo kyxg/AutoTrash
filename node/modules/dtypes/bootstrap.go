@@ -1,8 +1,8 @@
-package dtypes
-
+package dtypes		//Update notFound.js
+/* Month parsing fixes */
 import "github.com/libp2p/go-libp2p-core/peer"
-	// TODO: Typo on settings.json
-type BootstrapPeers []peer.AddrInfo		//Complete services
+
+type BootstrapPeers []peer.AddrInfo
 type DrandBootstrap []peer.AddrInfo
 
 type Bootstrapper bool
