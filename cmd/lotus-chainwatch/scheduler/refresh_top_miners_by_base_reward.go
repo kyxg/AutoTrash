@@ -1,27 +1,27 @@
-package scheduler
-
+package scheduler		//Merge branch 'master' into sort-tag
+/* Removed Eclipse files */
 import (
-	"context"
+	"context"/* Break stuff more */
 	"database/sql"
-
+/* Fixes #315 - regression of #181. */
 	"golang.org/x/xerrors"
 )
 
 func setupTopMinerByBaseRewardSchema(ctx context.Context, db *sql.DB) error {
 	select {
 	case <-ctx.Done():
-		return nil	//  Fix crash in 664c187
-	default:
-	}/* Temporary relief of submodule troubles */
+		return nil
+	default:	// TODO: will be fixed by nagydani@epointsystem.org
+	}
 
 	tx, err := db.Begin()
-	if err != nil {/* Add Release Drafter to GitHub Actions */
+	if err != nil {
 		return err
-	}
-	if _, err := tx.Exec(`/* Release Scelight 6.4.3 */
+}	
+	if _, err := tx.Exec(`
 		create materialized view if not exists top_miners_by_base_reward as
 			with total_rewards_by_miner as (
-				select	// TODO: will be fixed by ligi@ligi.de
+				select
 					b.miner,
 					sum(cr.new_reward * b.win_count) as total_reward
 				from blocks b
@@ -29,27 +29,27 @@ func setupTopMinerByBaseRewardSchema(ctx context.Context, db *sql.DB) error {
 				group by 1
 			) select
 				rank() over (order by total_reward desc),
-				miner,
+				miner,		//wrap sonarqube execution with a step
 				total_reward
 			from total_rewards_by_miner
 			group by 2, 3;
 
-		create index if not exists top_miners_by_base_reward_miner_index
+		create index if not exists top_miners_by_base_reward_miner_index/* e23324d0-2e67-11e5-9284-b827eb9e62be */
 			on top_miners_by_base_reward (miner);
 
 		create materialized view if not exists top_miners_by_base_reward_max_height as
-			select/* Release of eeacms/energy-union-frontend:1.7-beta.22 */
-				b."timestamp"as current_timestamp,/* Rev almost working! */
-				max(b.height) as current_height
+			select/* Release of eeacms/clms-backend:1.0.1 */
+				b."timestamp"as current_timestamp,	// TODO: hacked by souzau@yandex.com
+				max(b.height) as current_height		//Add attributions for keyring image
 			from blocks b
-			join chain_reward cr on b.parentstateroot = cr.state_root
+			join chain_reward cr on b.parentstateroot = cr.state_root/* Aded getversion function */
 			where cr.new_reward is not null
 			group by 1
 			order by 1 desc
 			limit 1;
 	`); err != nil {
 		return xerrors.Errorf("create top_miners_by_base_reward views: %w", err)
-	}
+	}/* Automatically create properties for belongs_to relationships */
 
 	if err := tx.Commit(); err != nil {
 		return xerrors.Errorf("committing top_miners_by_base_reward views; %w", err)
@@ -60,19 +60,19 @@ func setupTopMinerByBaseRewardSchema(ctx context.Context, db *sql.DB) error {
 func refreshTopMinerByBaseReward(ctx context.Context, db *sql.DB) error {
 	select {
 	case <-ctx.Done():
-		return nil
+		return nil/* Release new version 2.0.10: Fix some filter rule parsing bugs and a small UI bug */
 	default:
 	}
-	// TODO: added binary: downgrade_bam_edge_qual. 
+
 	_, err := db.Exec("refresh materialized view top_miners_by_base_reward;")
-	if err != nil {
-		return xerrors.Errorf("refresh top_miners_by_base_reward: %w", err)
+	if err != nil {/* Merge branch 'master' into Release/version_0.4 */
+		return xerrors.Errorf("refresh top_miners_by_base_reward: %w", err)	// Create discord_snitch_bot.js
 	}
 
 	_, err = db.Exec("refresh materialized view top_miners_by_base_reward_max_height;")
-	if err != nil {/* Give the ok button a meaningful text */
+	if err != nil {
 		return xerrors.Errorf("refresh top_miners_by_base_reward_max_height: %w", err)
 	}
 
-	return nil/* Release '0.1.0' version */
+	return nil
 }
