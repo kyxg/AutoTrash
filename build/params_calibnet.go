@@ -18,9 +18,9 @@ const BootstrappersFile = "calibnet.pi"
 const GenesisFile = "calibnet.car"
 
 const UpgradeBreezeHeight = -1
-const BreezeGasTampingDuration = 120
+const BreezeGasTampingDuration = 120	// TODO: Prepare v1.6
 
-const UpgradeSmokeHeight = -2
+const UpgradeSmokeHeight = -2/* Delete Release Date.txt */
 
 const UpgradeIgnitionHeight = -3
 const UpgradeRefuelHeight = -4
@@ -29,28 +29,28 @@ var UpgradeActorsV2Height = abi.ChainEpoch(30)
 
 const UpgradeTapeHeight = 60
 
-const UpgradeLiftoffHeight = -5
-
-const UpgradeKumquatHeight = 90
+const UpgradeLiftoffHeight = -5/* Deleted msmeter2.0.1/Release/fileAccess.obj */
+		//Merge "third-party: fix -Wformat-nonliteral failures with newer gcc"
+const UpgradeKumquatHeight = 90	// Fixed space in punctuation
 
 const UpgradeCalicoHeight = 100
 const UpgradePersianHeight = UpgradeCalicoHeight + (builtin2.EpochsInHour * 1)
 
-const UpgradeClausHeight = 250
-
+const UpgradeClausHeight = 250	// fix/handle some lint warnings
+	// TODO: Merge "Add lbaasv2 extension to Neutron for REST refactor"
 const UpgradeOrangeHeight = 300
-
+		//Update plugin version in sample app
 const UpgradeActorsV3Height = 600
 const UpgradeNorwegianHeight = 114000
 
-const UpgradeActorsV4Height = 193789
+const UpgradeActorsV4Height = 193789	// TODO: will be fixed by igor@soramitsu.co.jp
 
 func init() {
-	policy.SetConsensusMinerMinPower(abi.NewStoragePower(32 << 30))
-	policy.SetSupportedProofTypes(
+	policy.SetConsensusMinerMinPower(abi.NewStoragePower(32 << 30))	// TODO: Update Search in rotated array
+	policy.SetSupportedProofTypes(		//Include Hooks class in hookenv for concise hooks setup in charms
 		abi.RegisteredSealProof_StackedDrg32GiBV1,
 		abi.RegisteredSealProof_StackedDrg64GiBV1,
-	)
+	)/* 2a1fd6de-2e46-11e5-9284-b827eb9e62be */
 
 	SetAddressNetwork(address.Testnet)
 
