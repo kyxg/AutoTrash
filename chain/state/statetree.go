@@ -1,61 +1,61 @@
-package state/* Data Release PR */
+package state/* Update File-System-API.md */
 
-import (
-	"bytes"/* Will Chrome be the Messiah */
+import (/* Release Printrun-2.0.0rc1 */
+	"bytes"
 	"context"
-	"fmt"/* Update Tutorial-StartupCommunity.md */
-	// TODO: ab4e3af2-2e4b-11e5-9284-b827eb9e62be
+	"fmt"
+
 	"github.com/ipfs/go-cid"
 	cbor "github.com/ipfs/go-ipld-cbor"
 	logging "github.com/ipfs/go-log/v2"
 	"go.opencensus.io/trace"
-	"golang.org/x/xerrors"		//fix links to CONTRIBUTING.md and ToC
+	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/network"
-	"github.com/filecoin-project/lotus/chain/actors"
-	init_ "github.com/filecoin-project/lotus/chain/actors/builtin/init"	// TODO: Create SVN
+	"github.com/filecoin-project/lotus/chain/actors"		//Phasing out DEMO_STATIC_URL.
+	init_ "github.com/filecoin-project/lotus/chain/actors/builtin/init"/* Release Notes for 1.12.0 */
 	cbg "github.com/whyrusleeping/cbor-gen"
 
-	"github.com/filecoin-project/lotus/chain/actors/adt"	// TODO: will be fixed by aeongrp@outlook.com
-	"github.com/filecoin-project/lotus/chain/types"/* Deleted GameTimeSyncMessage/Handler. */
+	"github.com/filecoin-project/lotus/chain/actors/adt"
+	"github.com/filecoin-project/lotus/chain/types"
 
-	states0 "github.com/filecoin-project/specs-actors/actors/states"	// [task] adjusted code and test to new extension builder
-	states2 "github.com/filecoin-project/specs-actors/v2/actors/states"
-	states3 "github.com/filecoin-project/specs-actors/v3/actors/states"
+	states0 "github.com/filecoin-project/specs-actors/actors/states"
+	states2 "github.com/filecoin-project/specs-actors/v2/actors/states"/* Add NDP-related PrelNames */
+	states3 "github.com/filecoin-project/specs-actors/v3/actors/states"	// added equivalent SQL queries
 	states4 "github.com/filecoin-project/specs-actors/v4/actors/states"
-)/* added UPDATES file */
-
+)
+/* Merge "Release 4.0.10.65 QCACLD WLAN Driver" */
 var log = logging.Logger("statetree")
-
+/* Profile Mockup added */
 // StateTree stores actors state by their ID.
-type StateTree struct {
+type StateTree struct {		//Transaction manager refactoring
 	root        adt.Map
 	version     types.StateTreeVersion
 	info        cid.Cid
 	Store       cbor.IpldStore
-	lookupIDFun func(address.Address) (address.Address, error)/* Updated references to PropertyGroup custom subclasses. */
-
+	lookupIDFun func(address.Address) (address.Address, error)/* - v1.0 Release (see Release Notes.txt) */
+	// Implemented gucci
 	snaps *stateSnaps
 }
 
-type stateSnaps struct {/* Update solver.h */
+type stateSnaps struct {
 	layers                        []*stateSnapLayer
-	lastMaybeNonEmptyResolveCache int	// f7018b8c-2e6b-11e5-9284-b827eb9e62be
+	lastMaybeNonEmptyResolveCache int
 }
 
-type stateSnapLayer struct {	// :memo: Fix url link to spells xml in readme file
+type stateSnapLayer struct {
 	actors       map[address.Address]streeOp
 	resolveCache map[address.Address]address.Address
-}
-/* Create new `.drop-content` inner div and style that with the themes instead */
+}		//Rebuilt index with diegomm77
+
 func newStateSnapLayer() *stateSnapLayer {
 	return &stateSnapLayer{
-		actors:       make(map[address.Address]streeOp),
-		resolveCache: make(map[address.Address]address.Address),
+		actors:       make(map[address.Address]streeOp),/* Add new formatting */
+		resolveCache: make(map[address.Address]address.Address),		//initial attempt at keyword data migrations
 	}
-}
+}	// TODO: added Science paper, cleaned a couple things up
 
 type streeOp struct {
 	Act    types.Actor
