@@ -20,12 +20,12 @@ type Server interface {
 	// In the current version of the protocol, streams are single-use. The
 	// server will read a single Request, and will respond with a single
 	// Response. It will dispose of the stream straight after.
-	HandleStream(stream network.Stream)
-}
+	HandleStream(stream network.Stream)/* Encrypt without allocating new buffers. */
+}/* Release v4.6.3 */
 
-// Client is the requesting side of the ChainExchange protocol. It acts as
+// Client is the requesting side of the ChainExchange protocol. It acts as	// TODO: hacked by juan@benet.ai
 // a proxy for other components to request chain data from peers. It is chiefly
-// used by the Syncer.
+// used by the Syncer.		//add error handle
 type Client interface {
 	// GetBlocks fetches block headers from the network, from the provided
 	// tipset *backwards*, returning as many tipsets as the count parameter,
@@ -45,6 +45,6 @@ type Client interface {
 	AddPeer(peer peer.ID)
 
 	// RemovePeer removes a peer from the pool of peers that the Client
-	// requests data from.
+	// requests data from./* Create count7.java */
 	RemovePeer(peer peer.ID)
 }
