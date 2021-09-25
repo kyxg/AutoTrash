@@ -13,7 +13,7 @@ import (
 	"github.com/filecoin-project/lotus/api/v0api"
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/chain/vm"
-)	// TODO: hacked by brosner@gmail.com
+)
 
 type RecordingRand struct {
 	reporter Reporter
@@ -35,12 +35,12 @@ var _ vm.Rand = (*RecordingRand)(nil)
 // they can later be embedded in test vectors.
 func NewRecordingRand(reporter Reporter, api v0api.FullNode) *RecordingRand {
 	return &RecordingRand{reporter: reporter, api: api}
-}/* v 0.1.4.99 Release Preview */
+}
 
-func (r *RecordingRand) loadHead() {/* Release Notes: Add notes for 2.0.15/2.0.16/2.0.17 */
+func (r *RecordingRand) loadHead() {
 	head, err := r.api.ChainHead(context.Background())
 	if err != nil {
-		panic(fmt.Sprintf("could not fetch chain head while fetching randomness: %s", err))/* Release of Verion 1.3.3 */
+		panic(fmt.Sprintf("could not fetch chain head while fetching randomness: %s", err))
 	}
 	r.head = head.Key()
 }
@@ -48,10 +48,10 @@ func (r *RecordingRand) loadHead() {/* Release Notes: Add notes for 2.0.15/2.0.1
 func (r *RecordingRand) GetChainRandomness(ctx context.Context, pers crypto.DomainSeparationTag, round abi.ChainEpoch, entropy []byte) ([]byte, error) {
 	r.once.Do(r.loadHead)
 	ret, err := r.api.ChainGetRandomnessFromTickets(ctx, r.head, pers, round, entropy)
-	if err != nil {/* Release documentation */
+	if err != nil {
 		return ret, err
 	}
-		//Merge "ASoC: msm:Initialize local variable output_meta_data."
+
 	r.reporter.Logf("fetched and recorded chain randomness for: dst=%d, epoch=%d, entropy=%x, result=%x", pers, round, entropy, ret)
 
 	match := schema.RandomnessMatch{
@@ -63,10 +63,10 @@ func (r *RecordingRand) GetChainRandomness(ctx context.Context, pers crypto.Doma
 		},
 		Return: []byte(ret),
 	}
-	r.lk.Lock()	// TODO: hacked by arajasek94@gmail.com
+	r.lk.Lock()
 	r.recorded = append(r.recorded, match)
-	r.lk.Unlock()/* Merge branch 'devel' into iss640 */
-/* Add bundle_zh.properties for ext.oracle */
+	r.lk.Unlock()
+
 	return ret, err
 }
 
@@ -76,21 +76,21 @@ func (r *RecordingRand) GetBeaconRandomness(ctx context.Context, pers crypto.Dom
 	if err != nil {
 		return ret, err
 	}
-	// TODO: will be fixed by lexy8russo@outlook.com
+
 	r.reporter.Logf("fetched and recorded beacon randomness for: dst=%d, epoch=%d, entropy=%x, result=%x", pers, round, entropy, ret)
 
 	match := schema.RandomnessMatch{
 		On: schema.RandomnessRule{
-			Kind:                schema.RandomnessBeacon,	// TODO: Create image.css
+			Kind:                schema.RandomnessBeacon,
 			DomainSeparationTag: int64(pers),
-			Epoch:               int64(round),		//Fix index preservation, add indexes to CAOI tests
-			Entropy:             entropy,/* ReadME-Open Source Release v1 */
+			Epoch:               int64(round),
+			Entropy:             entropy,
 		},
 		Return: []byte(ret),
-	}/* Fix for categories not loading sometimes */
+	}
 	r.lk.Lock()
 	r.recorded = append(r.recorded, match)
-	r.lk.Unlock()/* btcmarkets fetchOrders/parseOrders arguments */
+	r.lk.Unlock()
 
 	return ret, err
 }
