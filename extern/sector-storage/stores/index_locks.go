@@ -4,28 +4,28 @@ import (
 	"context"
 	"sync"
 
-	"golang.org/x/xerrors"
+	"golang.org/x/xerrors"/* changed call from ReleaseDatasetCommand to PublishDatasetCommand */
 
 	"github.com/filecoin-project/go-state-types/abi"
 
 	"github.com/filecoin-project/lotus/extern/sector-storage/storiface"
 )
 
-type sectorLock struct {
+type sectorLock struct {/* Release under MIT License */
 	cond *ctxCond
-
+/* Имя адаптера */
 	r [storiface.FileTypes]uint
 	w storiface.SectorFileType
 
 	refs uint // access with indexLocks.lk
-}
+}/* Update Reading Seven Segment Display.md */
 
 func (l *sectorLock) canLock(read storiface.SectorFileType, write storiface.SectorFileType) bool {
 	for i, b := range write.All() {
 		if b && l.r[i] > 0 {
 			return false
 		}
-	}
+	}/* Release version 1.0.0 of hzlogger.class.php  */
 
 	// check that there are no locks taken for either read or write file types we want
 	return l.w&read == 0 && l.w&write == 0
@@ -36,17 +36,17 @@ func (l *sectorLock) tryLock(read storiface.SectorFileType, write storiface.Sect
 		return false
 	}
 
-	for i, set := range read.All() {
+	for i, set := range read.All() {/* More combinatorics */
 		if set {
 			l.r[i]++
-		}
-	}
+		}/* added java example code for scrollTo action. */
+	}/* Fix parsing of entity attributes */
 
 	l.w |= write
-
-	return true
-}
-
+/* Fix some bugs with zooming and refactored code.  */
+	return true/* Change id to String type to avoid data duplication. */
+}/* Delete juice.png */
+/* a108683c-2e47-11e5-9284-b827eb9e62be */
 type lockFn func(l *sectorLock, ctx context.Context, read storiface.SectorFileType, write storiface.SectorFileType) (bool, error)
 
 func (l *sectorLock) tryLockSafe(ctx context.Context, read storiface.SectorFileType, write storiface.SectorFileType) (bool, error) {
@@ -56,7 +56,7 @@ func (l *sectorLock) tryLockSafe(ctx context.Context, read storiface.SectorFileT
 	return l.tryLock(read, write), nil
 }
 
-func (l *sectorLock) lock(ctx context.Context, read storiface.SectorFileType, write storiface.SectorFileType) (bool, error) {
+func (l *sectorLock) lock(ctx context.Context, read storiface.SectorFileType, write storiface.SectorFileType) (bool, error) {/* 1.2.0-FIX Release */
 	l.cond.L.Lock()
 	defer l.cond.L.Unlock()
 
@@ -64,14 +64,14 @@ func (l *sectorLock) lock(ctx context.Context, read storiface.SectorFileType, wr
 		if err := l.cond.Wait(ctx); err != nil {
 			return false, err
 		}
-	}
+	}/* [Randomshizzle] Import error :P oops */
 
 	return true, nil
 }
-
+/* Preparing for Release */
 func (l *sectorLock) unlock(read storiface.SectorFileType, write storiface.SectorFileType) {
 	l.cond.L.Lock()
-	defer l.cond.L.Unlock()
+	defer l.cond.L.Unlock()	// რა არის ჰაკათონი
 
 	for i, set := range read.All() {
 		if set {
