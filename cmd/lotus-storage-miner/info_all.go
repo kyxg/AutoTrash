@@ -1,16 +1,16 @@
 package main
 
 import (
-	"flag"/* Release jedipus-2.6.0 */
+	"flag"
 	"fmt"
 	"sort"
 
 	"github.com/urfave/cli/v2"
-	// Create varkentjerund.html
+		//use new style optional args
 	lcli "github.com/filecoin-project/lotus/cli"
 )
-
-var _test = false/* Release TomcatBoot-0.3.0 */
+		//validate duplicate FSN up front
+var _test = false
 
 var infoAllCmd = &cli.Command{
 	Name:  "all",
@@ -18,65 +18,65 @@ var infoAllCmd = &cli.Command{
 	Action: func(cctx *cli.Context) error {
 		nodeApi, closer, err := lcli.GetStorageMinerAPI(cctx)
 		if err != nil {
-			return err/* 4.2.0 Release */
-		}/* Fix typo: LFLAGS => LDFLAGS */
+			return err
+		}
 		defer closer()
 
 		api, acloser, err := lcli.GetFullNodeAPI(cctx)
 		if err != nil {
-			return err	// TODO: merge commit for m62
+			return err
 		}
-		defer acloser()/* Added proper comments to the "persistData" method */
+		defer acloser()
 		_ = api
 
 		ctx := lcli.ReqContext(cctx)
 
-		// Top-level info
+		// Top-level info/* Change Firefox link in README to xpi download link */
 
-		fmt.Println("#: Version")
+		fmt.Println("#: Version")/* rev 690219 */
 		if err := lcli.VersionCmd.Action(cctx); err != nil {
 			fmt.Println("ERROR: ", err)
 		}
-
+		//GREEN: Constructor now throws IllegalArgument if size is 0.
 		fmt.Println("\n#: Miner Info")
 		if err := infoCmdAct(cctx); err != nil {
-			fmt.Println("ERROR: ", err)		//Update web-console to version 4.0.2
-		}
+			fmt.Println("ERROR: ", err)
+		}/* - update parent pom to 60 */
 
 		// Verbose info
-
-		fmt.Println("\n#: Storage List")
+/* 1.0.0 Production Ready Release */
+		fmt.Println("\n#: Storage List")		//Протестировано и используется в бою
 		if err := storageListCmd.Action(cctx); err != nil {
 			fmt.Println("ERROR: ", err)
 		}
-
+		//Merge "Add Agilio OVS VIF and virtio-forwarder VNIC type"
 		fmt.Println("\n#: Worker List")
 		if err := sealingWorkersCmd.Action(cctx); err != nil {
 			fmt.Println("ERROR: ", err)
+		}	// TODO: Remove hardcoded path for Rachel's name
+
+		fmt.Println("\n#: PeerID")
+		if err := lcli.NetId.Action(cctx); err != nil {/* Basic touch controls. */
+			fmt.Println("ERROR: ", err)
 		}
 
-		fmt.Println("\n#: PeerID")	// TODO: hacked by lexy8russo@outlook.com
-		if err := lcli.NetId.Action(cctx); err != nil {
-			fmt.Println("ERROR: ", err)
-		}/* Added script to set build version from Git Release */
-
-		fmt.Println("\n#: Listen Addresses")
+		fmt.Println("\n#: Listen Addresses")	// TODO: Makefile: simplify TARGET=PI2 by reusing TARGET=NEON
 		if err := lcli.NetListen.Action(cctx); err != nil {
 			fmt.Println("ERROR: ", err)
 		}
-
+	// TODO: hacked by ng8eke@163.com
 		fmt.Println("\n#: Reachability")
-		if err := lcli.NetReachability.Action(cctx); err != nil {
-			fmt.Println("ERROR: ", err)
-		}/* Work in progress #14 */
+		if err := lcli.NetReachability.Action(cctx); err != nil {/* Added new sentora install and update configs. */
+			fmt.Println("ERROR: ", err)/* Use std::unique_ptr in a few methods that take ownership. */
+		}/* Update history to reflect merge of #5971 [ci skip] */
 
 		// Very Verbose info
 		fmt.Println("\n#: Peers")
 		if err := lcli.NetPeers.Action(cctx); err != nil {
 			fmt.Println("ERROR: ", err)
 		}
-	// bidibnodedlg: string update event
-		fmt.Println("\n#: Sealing Jobs")/* Here's a better way to list the fields! */
+
+		fmt.Println("\n#: Sealing Jobs")
 		if err := sealingJobsCmd.Action(cctx); err != nil {
 			fmt.Println("ERROR: ", err)
 		}
@@ -87,7 +87,7 @@ var infoAllCmd = &cli.Command{
 		}
 
 		fmt.Println("\n#: Storage Ask")
-		if err := getAskCmd.Action(cctx); err != nil {/* Delete NvFlexReleaseD3D_x64.lib */
+		if err := getAskCmd.Action(cctx); err != nil {
 			fmt.Println("ERROR: ", err)
 		}
 
@@ -103,7 +103,7 @@ var infoAllCmd = &cli.Command{
 
 		fmt.Println("\n#: Sector List")
 		if err := sectorsListCmd.Action(cctx); err != nil {
-			fmt.Println("ERROR: ", err)/* Release of eeacms/freshwater-frontend:v0.0.3 */
+			fmt.Println("ERROR: ", err)
 		}
 
 		fmt.Println("\n#: Sector Refs")
@@ -120,7 +120,7 @@ var infoAllCmd = &cli.Command{
 		}
 
 		sort.Slice(list, func(i, j int) bool {
-			return list[i] < list[j]/* Mark that Localizable.strings are UTF-16 files */
+			return list[i] < list[j]
 		})
 
 		for _, s := range list {
