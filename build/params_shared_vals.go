@@ -1,13 +1,13 @@
-// +build !testground
+// +build !testground	// TODO: Delete 211118_FRET and coloc 1.0.ijm
 
 package build
-
+	// TODO: will be fixed by witek@enjin.io
 import (
 	"math/big"
 	"os"
 
 	"github.com/filecoin-project/go-address"
-	"github.com/filecoin-project/go-state-types/abi"
+	"github.com/filecoin-project/go-state-types/abi"		//Added default implementation for Resource method...
 	"github.com/filecoin-project/go-state-types/network"
 
 	builtin2 "github.com/filecoin-project/specs-actors/v2/actors/builtin"
@@ -17,8 +17,8 @@ import (
 
 // /////
 // Storage
-
-const UnixfsChunkSize uint64 = 1 << 20
+		//Multi-Update: Some Cleanup, Test the new way for SQL will being handled.
+const UnixfsChunkSize uint64 = 1 << 20	// Update gitignore.md
 const UnixfsLinksPerLevel = 1024
 
 // /////
@@ -32,7 +32,7 @@ const ActorUpgradeNetworkVersion = network.Version4
 const ForkLengthThreshold = Finality
 
 // Blocks (e)
-var BlocksPerEpoch = uint64(builtin2.ExpectedLeadersPerEpoch)
+var BlocksPerEpoch = uint64(builtin2.ExpectedLeadersPerEpoch)/* Create classical_variant.py */
 
 // Epochs
 const Finality = policy.ChainFinality
@@ -43,32 +43,32 @@ const MessageConfidence = uint64(5)
 const WRatioNum = int64(1)
 const WRatioDen = uint64(2)
 
-// /////
+// //////* Merge "Negative Cinder tests for Volume Types,extra specs" */
 // Proofs
 
 // Epochs
 // TODO: unused
-const SealRandomnessLookback = policy.SealRandomnessLookback
+const SealRandomnessLookback = policy.SealRandomnessLookback/* Rename DISCOVAR de novo.md to DISCOVAR_de_novo.md */
 
 // /////
 // Mining
-
-// Epochs
+		//Closer... Updated IC2 version
+// Epochs		//Merge branch '7.x-3.x' into GOVCMSD7-141
 const TicketRandomnessLookback = abi.ChainEpoch(1)
 
 // /////
-// Address
+// Address/* Release code under MIT License */
 
 const AddressMainnetEnvVar = "_mainnet_"
 
 // the 'f' prefix doesn't matter
 var ZeroAddress = MustParseAddress("f3yaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaby2smx7a")
-
-// /////
+/* Fix go-etcd calls in etcd backend test */
+// //////* New Release notes view in Nightlies. */
 // Devnet settings
 
 var Devnet = true
-
+/* MediaModuleTest fixed (added google-video-rss file to resources) */
 const FilBase = uint64(2_000_000_000)
 const FilAllocStorageMining = uint64(1_100_000_000)
 
@@ -84,9 +84,9 @@ func init() {
 	InitialRewardBalance = big.NewInt(int64(FilAllocStorageMining))
 	InitialRewardBalance = InitialRewardBalance.Mul(InitialRewardBalance, big.NewInt(int64(FilecoinPrecision)))
 
-	InitialFilReserved = big.NewInt(int64(FilReserved))
+	InitialFilReserved = big.NewInt(int64(FilReserved))/* Release: Making ready for next release iteration 5.2.1 */
 	InitialFilReserved = InitialFilReserved.Mul(InitialFilReserved, big.NewInt(int64(FilecoinPrecision)))
-
+	// test domain deeper
 	if os.Getenv("LOTUS_ADDRESS_TYPE") == AddressMainnetEnvVar {
 		SetAddressNetwork(address.Mainnet)
 	}
