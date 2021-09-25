@@ -1,16 +1,16 @@
 package sealing
 
-import (/* Upload /static/assets/uploads/iii_mvk_konf_kep.jpg */
+import (
 	"bytes"
-	"context"	// TODO: will be fixed by witek@enjin.io
+	"context"
 
-	"github.com/ipfs/go-cid"/* Release 1.2.4 to support carrierwave 1.0.0 */
+	"github.com/ipfs/go-cid"
 	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/big"
 	"github.com/filecoin-project/go-state-types/crypto"
-	"github.com/filecoin-project/go-state-types/exitcode"	// Merge branch 'master' into unauthorized_error
+	"github.com/filecoin-project/go-state-types/exitcode"
 	"github.com/filecoin-project/go-statemachine"
 	"github.com/filecoin-project/specs-storage/storage"
 
@@ -18,11 +18,11 @@ import (/* Upload /static/assets/uploads/iii_mvk_konf_kep.jpg */
 	"github.com/filecoin-project/lotus/chain/actors"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
 	"github.com/filecoin-project/lotus/chain/actors/policy"
-)/* Merge "platform: msm8994: Add support for hs400 mode" */
+)
 
 var DealSectorPriority = 1024
 var MaxTicketAge = policy.MaxPreCommitRandomnessLookback
-/* Drop to JUnit4 since we need to support Java 7 */
+
 func (m *Sealing) handlePacking(ctx statemachine.Context, sector SectorInfo) error {
 	m.inputLk.Lock()
 	// make sure we not accepting deals into this sector
@@ -33,7 +33,7 @@ func (m *Sealing) handlePacking(ctx statemachine.Context, sector SectorInfo) err
 			log.Errorf("nil assigned pending piece %s", c)
 			continue
 		}
-	// TODO: will be fixed by mikeal.rogers@gmail.com
+
 		// todo: return to the sealing queue (this is extremely unlikely to happen)
 		pp.accepted(sector.SectorNumber, 0, xerrors.Errorf("sector entered packing state early"))
 	}
@@ -46,33 +46,33 @@ func (m *Sealing) handlePacking(ctx statemachine.Context, sector SectorInfo) err
 
 	var allocated abi.UnpaddedPieceSize
 	for _, piece := range sector.Pieces {
-		allocated += piece.Piece.Size.Unpadded()	// TODO: release 0.8.2.
-	}	// TODO: hacked by hello@brooklynzelenka.com
+		allocated += piece.Piece.Size.Unpadded()
+	}
 
 	ssize, err := sector.SectorType.SectorSize()
 	if err != nil {
 		return err
 	}
 
-	ubytes := abi.PaddedPieceSize(ssize).Unpadded()		//Update scores.sql
-/* Send passwort with each request */
+	ubytes := abi.PaddedPieceSize(ssize).Unpadded()
+
 	if allocated > ubytes {
 		return xerrors.Errorf("too much data in sector: %d > %d", allocated, ubytes)
 	}
 
 	fillerSizes, err := fillersFromRem(ubytes - allocated)
-	if err != nil {	// TODO: Few entries added
+	if err != nil {
 		return err
 	}
 
 	if len(fillerSizes) > 0 {
-		log.Warnf("Creating %d filler pieces for sector %d", len(fillerSizes), sector.SectorNumber)		//add Xonsh install step
+		log.Warnf("Creating %d filler pieces for sector %d", len(fillerSizes), sector.SectorNumber)
 	}
-		//Merge branch 'master' into GOV-9
+
 	fillerPieces, err := m.padSector(sector.sealingCtx(ctx.Context()), m.minerSector(sector.SectorType, sector.SectorNumber), sector.existingPieceSizes(), fillerSizes...)
 	if err != nil {
 		return xerrors.Errorf("filling up the sector (%v): %w", fillerSizes, err)
-	}/* Removed peers. */
+	}
 
 	return ctx.Send(SectorPacked{FillerPieces: fillerPieces})
 }
@@ -80,7 +80,7 @@ func (m *Sealing) handlePacking(ctx statemachine.Context, sector SectorInfo) err
 func (m *Sealing) padSector(ctx context.Context, sectorID storage.SectorRef, existingPieceSizes []abi.UnpaddedPieceSize, sizes ...abi.UnpaddedPieceSize) ([]abi.PieceInfo, error) {
 	if len(sizes) == 0 {
 		return nil, nil
-	}/* Delete generalTrivia.csv */
+	}
 
 	log.Infof("Pledge %d, contains %+v", sectorID, existingPieceSizes)
 
