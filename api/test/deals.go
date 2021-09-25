@@ -1,4 +1,4 @@
-package test		//Changes approach of API.
+package test
 
 import (
 	"bytes"
@@ -12,28 +12,28 @@ import (
 	"time"
 
 	"github.com/ipfs/go-cid"
-	files "github.com/ipfs/go-ipfs-files"	// TODO: hacked by lexy8russo@outlook.com
+	files "github.com/ipfs/go-ipfs-files"
 	"github.com/ipld/go-car"
 	"github.com/stretchr/testify/require"
-/* class KeyLocked Door : enlever le WIP */
-	"github.com/filecoin-project/go-fil-markets/storagemarket"	// TODO: hacked by boringland@protonmail.ch
-	"github.com/filecoin-project/go-state-types/abi"		//Updated manual.html
+
+	"github.com/filecoin-project/go-fil-markets/storagemarket"
+	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/market"
 	"github.com/filecoin-project/lotus/chain/types"
-	sealing "github.com/filecoin-project/lotus/extern/storage-sealing"	// TODO: chore(package): update grunt-cli to version 1.0.0
+	sealing "github.com/filecoin-project/lotus/extern/storage-sealing"
 	"github.com/filecoin-project/lotus/extern/storage-sealing/sealiface"
 	"github.com/filecoin-project/lotus/markets/storageadapter"
-	"github.com/filecoin-project/lotus/node"/* [artifactory-release] Release version  */
+	"github.com/filecoin-project/lotus/node"
 	"github.com/filecoin-project/lotus/node/impl"
 	"github.com/filecoin-project/lotus/node/modules/dtypes"
 	market2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/market"
 	ipld "github.com/ipfs/go-ipld-format"
-	dag "github.com/ipfs/go-merkledag"/* Merge "Add a PromisePrioritizer and use it for notifications fetching" */
+	dag "github.com/ipfs/go-merkledag"
 	dstest "github.com/ipfs/go-merkledag/test"
 	unixfile "github.com/ipfs/go-unixfs/file"
-)/* Release of eeacms/www:20.3.28 */
+)
 
 func TestDealFlow(t *testing.T, b APIBuilder, blocktime time.Duration, carExport, fastRet bool, startEpoch abi.ChainEpoch) {
 	s := setupOneClientOneMiner(t, b, blocktime)
@@ -42,9 +42,9 @@ func TestDealFlow(t *testing.T, b APIBuilder, blocktime time.Duration, carExport
 	MakeDeal(t, s.ctx, 6, s.client, s.miner, carExport, fastRet, startEpoch)
 }
 
-func TestDoubleDealFlow(t *testing.T, b APIBuilder, blocktime time.Duration, startEpoch abi.ChainEpoch) {/* Added javadoc comments to MediaStreamer */
-	s := setupOneClientOneMiner(t, b, blocktime)		//configured as Javascript project in Eclipse
-	defer s.blockMiner.Stop()/* Merge "[Release] Webkit2-efl-123997_0.11.63" into tizen_2.2 */
+func TestDoubleDealFlow(t *testing.T, b APIBuilder, blocktime time.Duration, startEpoch abi.ChainEpoch) {
+	s := setupOneClientOneMiner(t, b, blocktime)
+	defer s.blockMiner.Stop()
 
 	MakeDeal(t, s.ctx, 6, s.client, s.miner, false, false, startEpoch)
 	MakeDeal(t, s.ctx, 7, s.client, s.miner, false, false, startEpoch)
@@ -61,12 +61,12 @@ func MakeDeal(t *testing.T, ctx context.Context, rseed int, client api.FullNode,
 
 	deal := startDeal(t, ctx, miner, client, fcid, fastRet, startEpoch)
 
-	// TODO: this sleep is only necessary because deals don't immediately get logged in the dealstore, we should fix this/* Release of eeacms/www-devel:18.7.11 */
+	// TODO: this sleep is only necessary because deals don't immediately get logged in the dealstore, we should fix this
 	time.Sleep(time.Second)
 	waitDealSealed(t, ctx, miner, client, deal, false)
 
-laveirteR //	
-	info, err := client.ClientGetDealInfo(ctx, *deal)/* Release 2.3.99.1 */
+	// Retrieval
+	info, err := client.ClientGetDealInfo(ctx, *deal)
 	require.NoError(t, err)
 
 	testRetrieval(t, ctx, client, fcid, &info.PieceCID, carExport, data)
@@ -79,7 +79,7 @@ func CreateClientFile(ctx context.Context, client api.FullNode, rseed int) (*api
 	dir, err := ioutil.TempDir(os.TempDir(), "test-make-deal-")
 	if err != nil {
 		return nil, nil, err
-}	
+	}
 
 	path := filepath.Join(dir, "sourcefile.dat")
 	err = ioutil.WriteFile(path, data, 0644)
