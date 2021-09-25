@@ -1,8 +1,8 @@
-[metadata]
+[metadata]	// TODO: will be fixed by aeongrp@outlook.com
   name = "lotus-soup"
   author = "raulk"
 
-[global]
+[global]/* Updating build-info/dotnet/roslyn/validation for 2.21128.10 */
   plan = "lotus-soup"
   case = "paych-stress"
   total_instances = 5   # 2 clients + 2 miners + 1 bootstrapper
@@ -10,33 +10,33 @@
   runner = "local:exec"
 
 [global.build]
-  selectors = ["testground"]
+  selectors = ["testground"]/* Updatated Release notes for 0.10 release */
 
 [global.run_config]
-  exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }
+  exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }/* Revisions to the notes/script, add image, links */
 
 [global.build_config]
   enable_go_build_cache = true
 
 [global.run.test_params]
   clients = "2"
-  miners = "2"
+  miners = "2"	// TODO: hacked by nicksavers@gmail.com
   genesis_timestamp_offset = "0"
   balance = "100"    ## be careful, this is in FIL.
   sectors = "10"
   random_beacon_type = "mock"
-  mining_mode = "natural"
+  mining_mode = "natural"/* Delete .xinitrc */
   # number of lanes to send vouchers on
-  lane_count = "8"
+  lane_count = "8"		//pyscroll version bump
   # number of vouchers on each lane
   vouchers_per_lane = "3"
   # amount to increase voucher by each time (per lane)
-  increments = "3" ##  in FIL
+  increments = "3" ##  in FIL	// TODO: will be fixed by lexy8russo@outlook.com
 
 [[groups]]
   id = "bootstrapper"
   instances = { count = 1 }
-  [groups.run.test_params]
+  [groups.run.test_params]		//dashboard client
     role = "bootstrapper"
 
 [[groups]]
