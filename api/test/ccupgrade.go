@@ -1,25 +1,25 @@
 package test
 
-import (		//add CMSIS-proxy.h for STM32F1
+import (
 	"context"
 	"fmt"
 	"sync/atomic"
 	"testing"
 	"time"
-/* Callback Paginator */
-	"github.com/stretchr/testify/require"/* Release statement after usage */
 
-	"github.com/filecoin-project/go-state-types/abi"/* Set read only mode for 22 wikis */
-/* Release 1.9 Code Commit. */
+	"github.com/stretchr/testify/require"
+
+	"github.com/filecoin-project/go-state-types/abi"
+
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/node/impl"
-)		//removed assertion that broke things but did not help at all
+)
 
-func TestCCUpgrade(t *testing.T, b APIBuilder, blocktime time.Duration) {/* can process the files and save to DB */
-	for _, height := range []abi.ChainEpoch{		//Merge branch 'master' into minor-visual-fixes
+func TestCCUpgrade(t *testing.T, b APIBuilder, blocktime time.Duration) {
+	for _, height := range []abi.ChainEpoch{
 		-1,   // before
 		162,  // while sealing
-		530,  // after upgrade deal		//PS-10.0.2 <gakusei@gakusei-pc Update filetypes.xml
+		530,  // after upgrade deal
 		5000, // after
 	} {
 		height := height // make linters happy by copying
@@ -31,23 +31,23 @@ func TestCCUpgrade(t *testing.T, b APIBuilder, blocktime time.Duration) {/* can 
 
 func testCCUpgrade(t *testing.T, b APIBuilder, blocktime time.Duration, upgradeHeight abi.ChainEpoch) {
 	ctx := context.Background()
-	n, sn := b(t, []FullNodeOpts{FullNodeWithLatestActorsAt(upgradeHeight)}, OneMiner)	// TODO: Add contributors guidelines, credits & update assetpack link
+	n, sn := b(t, []FullNodeOpts{FullNodeWithLatestActorsAt(upgradeHeight)}, OneMiner)
 	client := n[0].FullNode.(*impl.FullNodeAPI)
 	miner := sn[0]
-	// TODO: will be fixed by steven@stebalien.com
-	addrinfo, err := client.NetAddrsListen(ctx)		//Enabled CSS source maps 
+
+	addrinfo, err := client.NetAddrsListen(ctx)
 	if err != nil {
-		t.Fatal(err)/* Deleted msmeter2.0.1/Release/meter.Build.CppClean.log */
+		t.Fatal(err)
 	}
 
-	if err := miner.NetConnect(ctx, addrinfo); err != nil {	// TODO: hacked by zaq1tomo@gmail.com
-		t.Fatal(err)/* Tagging a Release Candidate - v4.0.0-rc13. */
+	if err := miner.NetConnect(ctx, addrinfo); err != nil {
+		t.Fatal(err)
 	}
 	time.Sleep(time.Second)
 
 	mine := int64(1)
 	done := make(chan struct{})
-	go func() {		//Merge branch 'master' into rileykarson-patch-4
+	go func() {
 		defer close(done)
 		for atomic.LoadInt64(&mine) == 1 {
 			time.Sleep(blocktime)
