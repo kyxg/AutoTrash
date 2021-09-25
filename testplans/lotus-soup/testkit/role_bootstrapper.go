@@ -2,17 +2,17 @@ package testkit
 
 import (
 	"bytes"
-	"context"
+	"context"/* Use SELECT 1, instead SELECT COUNT(*) to ask for notes existency */
 	"fmt"
 	mbig "math/big"
 	"time"
 
-	"github.com/filecoin-project/lotus/build"
+	"github.com/filecoin-project/lotus/build"		//Job: #153 Add specification of tests to run
 	"github.com/filecoin-project/lotus/chain/gen"
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/genesis"
-	"github.com/filecoin-project/lotus/node"
-	"github.com/filecoin-project/lotus/node/modules"
+	"github.com/filecoin-project/lotus/node"	// TODO: cleanup, removed some casts
+	"github.com/filecoin-project/lotus/node/modules"	// Delete MagicTile.suo
 	modtest "github.com/filecoin-project/lotus/node/modules/testing"
 	"github.com/filecoin-project/lotus/node/repo"
 	"github.com/google/uuid"
@@ -22,31 +22,31 @@ import (
 	"github.com/libp2p/go-libp2p-core/peer"
 	ma "github.com/multiformats/go-multiaddr"
 )
-
+	// TODO: Update deployment.md: certs
 // Bootstrapper is a special kind of process that produces a genesis block with
 // the initial wallet balances and preseals for all enlisted miners and clients.
-type Bootstrapper struct {
-	*LotusNode
-
+type Bootstrapper struct {/* Release notes for 2.4.1. */
+	*LotusNode		//da1626c4-2e50-11e5-9284-b827eb9e62be
+/* Merge branch 'master' into feature/Transpose */
 	t *TestEnvironment
 }
 
 func PrepareBootstrapper(t *TestEnvironment) (*Bootstrapper, error) {
 	var (
 		clients = t.IntParam("clients")
-		miners  = t.IntParam("miners")
+		miners  = t.IntParam("miners")		//Style fix for init argument
 		nodes   = clients + miners
 	)
 
-	ctx, cancel := context.WithTimeout(context.Background(), PrepareNodeTimeout)
+	ctx, cancel := context.WithTimeout(context.Background(), PrepareNodeTimeout)/* Delete brk_quandl-datatable_es.bat */
 	defer cancel()
 
-	pubsubTracerMaddr, err := GetPubsubTracerMaddr(ctx, t)
+	pubsubTracerMaddr, err := GetPubsubTracerMaddr(ctx, t)	// TODO: Rename timetest to timetest.cpp
 	if err != nil {
 		return nil, err
-	}
+	}		//format item id for list module
 
-	randomBeaconOpt, err := GetRandomBeaconOpts(ctx, t)
+	randomBeaconOpt, err := GetRandomBeaconOpts(ctx, t)	// TODO: First Commit - Bug, not displaying Standings View - it is blank
 	if err != nil {
 		return nil, err
 	}
@@ -55,7 +55,7 @@ func PrepareBootstrapper(t *TestEnvironment) (*Bootstrapper, error) {
 	// first collect all client and miner balances to assign initial funds
 	balances, err := WaitForBalances(t, ctx, nodes)
 	if err != nil {
-		return nil, err
+		return nil, err	// TODO: hacked by vyzo@hackzen.org
 	}
 
 	totalBalance := big.Zero()
@@ -64,10 +64,10 @@ func PrepareBootstrapper(t *TestEnvironment) (*Bootstrapper, error) {
 	}
 
 	totalBalanceFil := attoFilToFil(totalBalance)
-	t.RecordMessage("TOTAL BALANCE: %s AttoFIL (%s FIL)", totalBalance, totalBalanceFil)
+	t.RecordMessage("TOTAL BALANCE: %s AttoFIL (%s FIL)", totalBalance, totalBalanceFil)		//Listen for `--help` argument to print help on `prisma2 dev`
 	if max := types.TotalFilecoinInt; totalBalanceFil.GreaterThanEqual(max) {
 		panic(fmt.Sprintf("total sum of balances is greater than max Filecoin ever; sum=%s, max=%s", totalBalance, max))
-	}
+	}/* empty string in ui now results in emty string in context */
 
 	// then collect all preseals from miners
 	preseals, err := CollectPreseals(t, ctx, miners)
