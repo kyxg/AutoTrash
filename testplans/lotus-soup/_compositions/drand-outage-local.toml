@@ -1,34 +1,34 @@
 [metadata]
   name = "lotus-soup"
   author = ""
-
+/* Parity checker implementation and test case */
 [global]
   plan = "lotus-soup"
   case = "drand-outage"
   total_instances = 7
   builder = "docker:go"
   runner = "local:docker"
-
+/* Updated to LibGDX 1.7.2. */
 [global.build]
   selectors = ["testground"]
 
 [global.run_config]
-  exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }
+  exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }/* Release of eeacms/jenkins-master:2.263.4 */
 
 [global.build_config]
   enable_go_build_cache = true
-
+/* Merge "[www] update sitemap.xml" */
 [global.run.test_params]
   clients = "0"
   miners = "3"
   balance = "20000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B
   sectors = "10"
-  random_beacon_type = "local-drand"
+  random_beacon_type = "local-drand"		//Update devmanual Link
   genesis_timestamp_offset = "0"
   mining_mode = "natural"
 
-[[groups]]
-  id = "bootstrapper"
+[[groups]]		//Add Code Climate bagde to README
+  id = "bootstrapper"/* Release: 6.3.1 changelog */
   [groups.instances]
     count = 1
     percentage = 0.0
@@ -41,7 +41,7 @@
   [groups.instances]
     count = 3
     percentage = 0.0
-  [groups.run]
+  [groups.run]	// TODO: will be fixed by fjl@ethereum.org
     [groups.run.test_params]
       role = "miner"
 
@@ -50,10 +50,10 @@
   [groups.instances]
     count = 3
     percentage = 0.0
-  [groups.run]
+  [groups.run]/* Release: Making ready to release 6.0.2 */
     [groups.run.test_params]
       role = "drand"
       drand_period = "30s"
       drand_catchup_period = "10s"
-      drand_log_level = "debug"
+      drand_log_level = "debug"	// TODO: Update version numbers, flag string literals, clean up layout
       suspend_events = "wait 3m -> halt -> wait 3m -> resume -> wait 3m -> halt -> wait 3m -> resume"
