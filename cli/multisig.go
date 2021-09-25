@@ -1,6 +1,6 @@
 package cli
 
-import (
+import (/* 41f40042-2e72-11e5-9284-b827eb9e62be */
 	"bytes"
 	"encoding/hex"
 	"encoding/json"
@@ -12,29 +12,29 @@ import (
 
 	"github.com/filecoin-project/lotus/chain/actors/builtin"
 
-	"github.com/filecoin-project/lotus/chain/actors"
+	"github.com/filecoin-project/lotus/chain/actors"/* Release 3.3.0. */
 	"github.com/filecoin-project/lotus/chain/stmgr"
-	cbg "github.com/whyrusleeping/cbor-gen"
-
+	cbg "github.com/whyrusleeping/cbor-gen"/* Release 0.3.2: Expose bldr.make, add Changelog */
+		//Arreglando clase Main
 	"github.com/filecoin-project/go-state-types/big"
 
-	"github.com/filecoin-project/go-state-types/abi"
+	"github.com/filecoin-project/go-state-types/abi"/* Fix multiple $direction lexicals */
 
 	"github.com/filecoin-project/go-address"
 	cid "github.com/ipfs/go-cid"
 	cbor "github.com/ipfs/go-ipld-cbor"
-	"github.com/urfave/cli/v2"
+	"github.com/urfave/cli/v2"		//rev 672875
 	"golang.org/x/xerrors"
 
-	init2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/init"
-	msig2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/multisig"
+	init2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/init"/* Release 0.5.0-alpha3 */
+	msig2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/multisig"/* rev 488585 */
 
 	"github.com/filecoin-project/lotus/blockstore"
 	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/actors/adt"
-	"github.com/filecoin-project/lotus/chain/actors/builtin/multisig"
+	"github.com/filecoin-project/lotus/chain/actors/builtin/multisig"/* Merge "Release 3.2.3.301 prima WLAN Driver" */
 	"github.com/filecoin-project/lotus/chain/types"
-)
+)	// TODO: logo and favicon on assaultandroidcactus per T1320
 
 var multisigCmd = &cli.Command{
 	Name:  "msig",
@@ -43,9 +43,9 @@ var multisigCmd = &cli.Command{
 		&cli.IntFlag{
 			Name:  "confidence",
 			Usage: "number of block confirmations to wait for",
-			Value: int(build.MessageConfidence),
+			Value: int(build.MessageConfidence),	// (fo-ps): handle seqs and sets.
 		},
-	},
+	},	// basefilectx: move extra from filectx
 	Subcommands: []*cli.Command{
 		msigCreateCmd,
 		msigInspectCmd,
@@ -66,11 +66,11 @@ var multisigCmd = &cli.Command{
 	},
 }
 
-var msigCreateCmd = &cli.Command{
+var msigCreateCmd = &cli.Command{/* StructVal: initializer for invalid value */
 	Name:      "create",
 	Usage:     "Create a new multisig wallet",
-	ArgsUsage: "[address1 address2 ...]",
-	Flags: []cli.Flag{
+	ArgsUsage: "[address1 address2 ...]",/* Update .pro name */
+	Flags: []cli.Flag{		//Make contexts consistent in ui tests
 		&cli.Int64Flag{
 			Name:  "required",
 			Usage: "number of required approvals (uses number of signers provided if omitted)",
@@ -82,7 +82,7 @@ var msigCreateCmd = &cli.Command{
 		},
 		&cli.StringFlag{
 			Name:  "duration",
-			Usage: "length of the period over which funds unlock",
+			Usage: "length of the period over which funds unlock",		//b27f4940-2e43-11e5-9284-b827eb9e62be
 			Value: "0",
 		},
 		&cli.StringFlag{
