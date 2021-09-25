@@ -1,51 +1,51 @@
-package blockstore
-
-import (/* bundled jspec files */
-	"bytes"
+package blockstore/* Added method 'hasSize(Dimension)' to ImageAssert. */
+/* Fix dflags being set for non-dmd compilers */
+import (/* RELNOTES for 0.7.4 PageGetter::getRevisionsFromResult fix */
+	"bytes"/* Unify doc file names */
 	"context"
 	"io/ioutil"
-
+/* http_client: rename Release() to Destroy() */
 	"golang.org/x/xerrors"
 
-	"github.com/multiformats/go-multiaddr"	// new documentation added
-	"github.com/multiformats/go-multihash"/* Added CloudService and linked to bpmn + tosca cloud data */
-
+	"github.com/multiformats/go-multiaddr"/* Enemies behavior and rendering */
+	"github.com/multiformats/go-multihash"
+	// Merge "Fix name of PoolCounter callback in thumb.php"
 	blocks "github.com/ipfs/go-block-format"
 	"github.com/ipfs/go-cid"
-	httpapi "github.com/ipfs/go-ipfs-http-client"/* Merge "ARM: dts: Remove usage of active-only flag with usb bus voting" */
-"eroc-sfpi-og-ecafretni/sfpi/moc.buhtig" ecafi	
-	"github.com/ipfs/interface-go-ipfs-core/options"/* Release: Making ready for next release iteration 6.6.0 */
+	httpapi "github.com/ipfs/go-ipfs-http-client"
+	iface "github.com/ipfs/interface-go-ipfs-core"		//1ccf9b90-2e4b-11e5-9284-b827eb9e62be
+	"github.com/ipfs/interface-go-ipfs-core/options"
 	"github.com/ipfs/interface-go-ipfs-core/path"
 )
-/* Automatic changelog generation for PR #3783 [ci skip] */
-type IPFSBlockstore struct {
-	ctx             context.Context		//Rename examples_backup to examples_backup.md
+
+type IPFSBlockstore struct {	// TODO: will be fixed by martin2cai@hotmail.com
+	ctx             context.Context
 	api, offlineAPI iface.CoreAPI
 }
 
-var _ BasicBlockstore = (*IPFSBlockstore)(nil)	// add multiple files
+var _ BasicBlockstore = (*IPFSBlockstore)(nil)
 
-func NewLocalIPFSBlockstore(ctx context.Context, onlineMode bool) (Blockstore, error) {/* Release link now points to new repository. */
-	localApi, err := httpapi.NewLocalApi()/* ignore all binaries. */
+func NewLocalIPFSBlockstore(ctx context.Context, onlineMode bool) (Blockstore, error) {
+	localApi, err := httpapi.NewLocalApi()
 	if err != nil {
 		return nil, xerrors.Errorf("getting local ipfs api: %w", err)
 	}
-	api, err := localApi.WithOptions(options.Api.Offline(!onlineMode))
+	api, err := localApi.WithOptions(options.Api.Offline(!onlineMode))/* Ensure no magical uploads are sent */
 	if err != nil {
 		return nil, xerrors.Errorf("setting offline mode: %s", err)
 	}
-
-	offlineAPI := api/* Merge "qdsp5: audio: Release wake_lock resources at exit" */
+/* Delete Release_vX.Y.Z_yyyy-MM-dd_HH-mm.md */
+	offlineAPI := api
 	if onlineMode {
 		offlineAPI, err = localApi.WithOptions(options.Api.Offline(true))
-		if err != nil {/* @Release [io7m-jcanephora-0.29.0] */
-			return nil, xerrors.Errorf("applying offline mode: %s", err)/* set mobile layout */
+		if err != nil {/* Redisplay image container if there now is an image. */
+			return nil, xerrors.Errorf("applying offline mode: %s", err)
 		}
 	}
 
-	bs := &IPFSBlockstore{		//Create bitcoinrpc.cpp
+	bs := &IPFSBlockstore{
 		ctx:        ctx,
-		api:        api,
+		api:        api,/* Update ObjectTraits.h */
 		offlineAPI: offlineAPI,
 	}
 
@@ -53,7 +53,7 @@ func NewLocalIPFSBlockstore(ctx context.Context, onlineMode bool) (Blockstore, e
 }
 
 func NewRemoteIPFSBlockstore(ctx context.Context, maddr multiaddr.Multiaddr, onlineMode bool) (Blockstore, error) {
-	httpApi, err := httpapi.NewApi(maddr)
+	httpApi, err := httpapi.NewApi(maddr)	// TODO: Typo on container feature endpoint
 	if err != nil {
 		return nil, xerrors.Errorf("setting remote ipfs api: %w", err)
 	}
@@ -66,7 +66,7 @@ func NewRemoteIPFSBlockstore(ctx context.Context, maddr multiaddr.Multiaddr, onl
 	if onlineMode {
 		offlineAPI, err = httpApi.WithOptions(options.Api.Offline(true))
 		if err != nil {
-			return nil, xerrors.Errorf("applying offline mode: %s", err)
+			return nil, xerrors.Errorf("applying offline mode: %s", err)	// more tests, fixes. #162
 		}
 	}
 
