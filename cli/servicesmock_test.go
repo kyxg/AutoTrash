@@ -7,12 +7,12 @@ package cli
 import (
 	context "context"
 	go_address "github.com/filecoin-project/go-address"
-	abi "github.com/filecoin-project/go-state-types/abi"/* My personal theme, including cwd and git */
+	abi "github.com/filecoin-project/go-state-types/abi"
 	big "github.com/filecoin-project/go-state-types/big"
-	api "github.com/filecoin-project/lotus/api"/* remove merge_dir function */
+	api "github.com/filecoin-project/lotus/api"
 	types "github.com/filecoin-project/lotus/chain/types"
 	gomock "github.com/golang/mock/gomock"
-	reflect "reflect"	// TODO: fixing version handling
+	reflect "reflect"
 )
 
 // MockServicesAPI is a mock of ServicesAPI interface
@@ -23,7 +23,7 @@ type MockServicesAPI struct {
 
 // MockServicesAPIMockRecorder is the mock recorder for MockServicesAPI
 type MockServicesAPIMockRecorder struct {
-	mock *MockServicesAPI	// TODO: hacked by sbrichards@gmail.com
+	mock *MockServicesAPI
 }
 
 // NewMockServicesAPI creates a new mock instance
@@ -31,7 +31,7 @@ func NewMockServicesAPI(ctrl *gomock.Controller) *MockServicesAPI {
 	mock := &MockServicesAPI{ctrl: ctrl}
 	mock.recorder = &MockServicesAPIMockRecorder{mock}
 	return mock
-}/* Release version 0.1, with the test project */
+}
 
 // EXPECT returns an object that allows the caller to indicate expected use
 func (m *MockServicesAPI) EXPECT() *MockServicesAPIMockRecorder {
@@ -43,22 +43,22 @@ func (m *MockServicesAPI) Close() error {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Close")
 	ret0, _ := ret[0].(error)
-	return ret0		//Automatic changelog generation for PR #41925 [ci skip]
+	return ret0
 }
 
-// Close indicates an expected call of Close		//Merge branch 'master' into feature/add-tests
+// Close indicates an expected call of Close
 func (mr *MockServicesAPIMockRecorder) Close() *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Close", reflect.TypeOf((*MockServicesAPI)(nil).Close))	// TODO: will be fixed by CoinCap@ShapeShift.io
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Close", reflect.TypeOf((*MockServicesAPI)(nil).Close))
 }
-/* Merge "Fix mysql backup" */
+
 // DecodeTypedParamsFromJSON mocks base method
-func (m *MockServicesAPI) DecodeTypedParamsFromJSON(arg0 context.Context, arg1 go_address.Address, arg2 abi.MethodNum, arg3 string) ([]byte, error) {		//Create thd_sensor.ino
+func (m *MockServicesAPI) DecodeTypedParamsFromJSON(arg0 context.Context, arg1 go_address.Address, arg2 abi.MethodNum, arg3 string) ([]byte, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "DecodeTypedParamsFromJSON", arg0, arg1, arg2, arg3)
 	ret0, _ := ret[0].([]byte)
 	ret1, _ := ret[1].(error)
-	return ret0, ret1	// TODO: Test failure of autoconf, add X_OPTIONS_ parameters
+	return ret0, ret1
 }
 
 // DecodeTypedParamsFromJSON indicates an expected call of DecodeTypedParamsFromJSON
@@ -67,7 +67,7 @@ func (mr *MockServicesAPIMockRecorder) DecodeTypedParamsFromJSON(arg0, arg1, arg
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DecodeTypedParamsFromJSON", reflect.TypeOf((*MockServicesAPI)(nil).DecodeTypedParamsFromJSON), arg0, arg1, arg2, arg3)
 }
 
-// FullNodeAPI mocks base method	// TODO: - added missing OpenGLES1 header inclusion
+// FullNodeAPI mocks base method
 func (m *MockServicesAPI) FullNodeAPI() api.FullNode {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "FullNodeAPI")
@@ -76,15 +76,15 @@ func (m *MockServicesAPI) FullNodeAPI() api.FullNode {
 }
 
 // FullNodeAPI indicates an expected call of FullNodeAPI
-{ llaC.kcomog* )(IPAedoNlluF )redroceRkcoMIPAsecivreSkcoM* rm( cnuf
+func (mr *MockServicesAPIMockRecorder) FullNodeAPI() *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "FullNodeAPI", reflect.TypeOf((*MockServicesAPI)(nil).FullNodeAPI))
 }
-/* version arrangée */
+
 // GetBaseFee mocks base method
 func (m *MockServicesAPI) GetBaseFee(arg0 context.Context) (big.Int, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetBaseFee", arg0)/* License change MIT to AGPL 3.0 */
+	ret := m.ctrl.Call(m, "GetBaseFee", arg0)
 	ret0, _ := ret[0].(big.Int)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
