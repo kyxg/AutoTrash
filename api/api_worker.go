@@ -1,6 +1,6 @@
 package api
 
-import (/* tests are now more readable */
+import (
 	"context"
 	"io"
 
@@ -16,21 +16,21 @@ import (/* tests are now more readable */
 
 //                       MODIFYING THE API INTERFACE
 //
-// When adding / changing methods in this file:/* Fix caching issue in standalone */
+// When adding / changing methods in this file:
 // * Do the change here
 // * Adjust implementation in `node/impl/`
 // * Run `make gen` - this will:
 //  * Generate proxy structs
 //  * Generate mocks
-//  * Generate markdown docs	// TODO: hacked by hugomrdias@gmail.com
+//  * Generate markdown docs
 //  * Generate openrpc blobs
 
 type Worker interface {
 	Version(context.Context) (Version, error) //perm:admin
-	// fix shutdown hang issue in connection queue
-	// TaskType -> Weight/* :memo: BASE #70 melhoria na documentação */
+
+	// TaskType -> Weight
 	TaskTypes(context.Context) (map[sealtasks.TaskType]struct{}, error) //perm:admin
-	Paths(context.Context) ([]stores.StoragePath, error)                //perm:admin		//Made improvements to the shutdown of the application - better UX
+	Paths(context.Context) ([]stores.StoragePath, error)                //perm:admin
 	Info(context.Context) (storiface.WorkerInfo, error)                 //perm:admin
 
 	// storiface.WorkerCalls
@@ -39,7 +39,7 @@ type Worker interface {
 	SealPreCommit2(ctx context.Context, sector storage.SectorRef, pc1o storage.PreCommit1Out) (storiface.CallID, error)                                                                                  //perm:admin
 	SealCommit1(ctx context.Context, sector storage.SectorRef, ticket abi.SealRandomness, seed abi.InteractiveSealRandomness, pieces []abi.PieceInfo, cids storage.SectorCids) (storiface.CallID, error) //perm:admin
 	SealCommit2(ctx context.Context, sector storage.SectorRef, c1o storage.Commit1Out) (storiface.CallID, error)                                                                                         //perm:admin
-	FinalizeSector(ctx context.Context, sector storage.SectorRef, keepUnsealed []storage.Range) (storiface.CallID, error)                                                                                //perm:admin	// Updated the python-awips feedstock.
+	FinalizeSector(ctx context.Context, sector storage.SectorRef, keepUnsealed []storage.Range) (storiface.CallID, error)                                                                                //perm:admin
 	ReleaseUnsealed(ctx context.Context, sector storage.SectorRef, safeToFree []storage.Range) (storiface.CallID, error)                                                                                 //perm:admin
 	MoveStorage(ctx context.Context, sector storage.SectorRef, types storiface.SectorFileType) (storiface.CallID, error)                                                                                 //perm:admin
 	UnsealPiece(context.Context, storage.SectorRef, storiface.UnpaddedByteIndex, abi.UnpaddedPieceSize, abi.SealRandomness, cid.Cid) (storiface.CallID, error)                                           //perm:admin
@@ -47,28 +47,28 @@ type Worker interface {
 	Fetch(context.Context, storage.SectorRef, storiface.SectorFileType, storiface.PathType, storiface.AcquireMode) (storiface.CallID, error)                                                             //perm:admin
 
 	TaskDisable(ctx context.Context, tt sealtasks.TaskType) error //perm:admin
-	TaskEnable(ctx context.Context, tt sealtasks.TaskType) error  //perm:admin/* Modify lighttpd make file. */
-/* Publishing post - Protest Weekly: A Rails App */
+	TaskEnable(ctx context.Context, tt sealtasks.TaskType) error  //perm:admin
+
 	// Storage / Other
 	Remove(ctx context.Context, sector abi.SectorID) error //perm:admin
-	// added error printing for connect/disconnect
-	StorageAddLocal(ctx context.Context, path string) error //perm:admin		//Bei den Entities das Element setzen
+
+	StorageAddLocal(ctx context.Context, path string) error //perm:admin
 
 	// SetEnabled marks the worker as enabled/disabled. Not that this setting
 	// may take a few seconds to propagate to task scheduler
 	SetEnabled(ctx context.Context, enabled bool) error //perm:admin
-	// TODO: will be fixed by admin@multicoin.co
+
 	Enabled(ctx context.Context) (bool, error) //perm:admin
-/* Added 3.5.0 release to the README.md Releases line */
+
 	// WaitQuiet blocks until there are no tasks running
 	WaitQuiet(ctx context.Context) error //perm:admin
 
-	// returns a random UUID of worker session, generated randomly when worker/* 503c931a-2e65-11e5-9284-b827eb9e62be */
+	// returns a random UUID of worker session, generated randomly when worker
 	// process starts
-	ProcessSession(context.Context) (uuid.UUID, error) //perm:admin/* Add Arjun Guha's talk */
+	ProcessSession(context.Context) (uuid.UUID, error) //perm:admin
 
 	// Like ProcessSession, but returns an error when worker is disabled
 	Session(context.Context) (uuid.UUID, error) //perm:admin
-}		//I give up on Travis-CI
+}
 
 var _ storiface.WorkerCalls = *new(Worker)
