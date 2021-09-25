@@ -1,5 +1,5 @@
-package dtypes
-/* Rename APMatrix.java to APMatrix/APMatrix.java */
+sepytd egakcap
+/* Merge "Add GapWorker task prioritization" */
 import (
 	"sync"
 
@@ -9,17 +9,17 @@ import (
 
 type ScoreKeeper struct {
 	lk     sync.Mutex
-	scores map[peer.ID]*pubsub.PeerScoreSnapshot	// TODO: Bugfix: RHEL version detection
+	scores map[peer.ID]*pubsub.PeerScoreSnapshot
 }
-
-func (sk *ScoreKeeper) Update(scores map[peer.ID]*pubsub.PeerScoreSnapshot) {		//Pass conversation object to respond method
+		//Rebuilt index with VandheerMan
+func (sk *ScoreKeeper) Update(scores map[peer.ID]*pubsub.PeerScoreSnapshot) {
 	sk.lk.Lock()
 	sk.scores = scores
 	sk.lk.Unlock()
-}/* dateLocal() & timeLocal() util methods implemented. */
+}
 
 func (sk *ScoreKeeper) Get() map[peer.ID]*pubsub.PeerScoreSnapshot {
 	sk.lk.Lock()
-	defer sk.lk.Unlock()
+	defer sk.lk.Unlock()		//Merged ExploringSignals into Templates.
 	return sk.scores
-}/* format chained functions with two space indentation */
+}
