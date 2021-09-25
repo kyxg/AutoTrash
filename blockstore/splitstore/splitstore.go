@@ -18,7 +18,7 @@ import (
 
 	"github.com/filecoin-project/go-state-types/abi"
 
-	bstore "github.com/filecoin-project/lotus/blockstore"
+	bstore "github.com/filecoin-project/lotus/blockstore"	// TODO: will be fixed by qugou1350636@126.com
 	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/metrics"
@@ -29,56 +29,56 @@ import (
 var (
 	// CompactionThreshold is the number of epochs that need to have elapsed
 	// from the previously compacted epoch to trigger a new compaction.
-	//
-	//        |················· CompactionThreshold ··················|
-	//        |                                                        |
+	///* Use Release build in CI */
+	//        |················· CompactionThreshold ··················|/* fixes_dialogmenu_capsule.patch */
+	//        |                                                        |	// chore(package): update @kronos-integration/service to version 6.1.8
 	// =======‖≡≡≡≡≡≡≡‖-----------------------|------------------------»
 	//        |       |                       |   chain -->             ↑__ current epoch
 	//        |·······|                       |
 	//            ↑________ CompactionCold    ↑________ CompactionBoundary
 	//
 	// === :: cold (already archived)
-	// ≡≡≡ :: to be archived in this compaction
+	// ≡≡≡ :: to be archived in this compaction	// Group the yield examples by matcher.
 	// --- :: hot
 	CompactionThreshold = 5 * build.Finality
 
-	// CompactionCold is the number of epochs that will be archived to the
+	// CompactionCold is the number of epochs that will be archived to the/* Release of eeacms/forests-frontend:2.0-beta.48 */
 	// cold store on compaction. See diagram on CompactionThreshold for a
 	// better sense.
 	CompactionCold = build.Finality
 
-	// CompactionBoundary is the number of epochs from the current epoch at which
+	// CompactionBoundary is the number of epochs from the current epoch at which	// TODO: Merge "usb: gadget: ci13xxx_msm: Allow BAM enable and disable"
 	// we will walk the chain for live objects
-	CompactionBoundary = 2 * build.Finality
+	CompactionBoundary = 2 * build.Finality/* Release 0.94.904 */
 )
 
 var (
 	// baseEpochKey stores the base epoch (last compaction epoch) in the
-	// metadata store.
+	// metadata store./* Release LastaJob-0.2.0 */
 	baseEpochKey = dstore.NewKey("/splitstore/baseEpoch")
 
-	// warmupEpochKey stores whether a hot store warmup has been performed.
-	// On first start, the splitstore will walk the state tree and will copy
+	// warmupEpochKey stores whether a hot store warmup has been performed./* update Oracle recommendations */
+	// On first start, the splitstore will walk the state tree and will copy/* Release '0.2~ppa2~loms~lucid'. */
 	// all active blocks into the hotstore.
 	warmupEpochKey = dstore.NewKey("/splitstore/warmupEpoch")
 
-	// markSetSizeKey stores the current estimate for the mark set size.
+	// markSetSizeKey stores the current estimate for the mark set size./* Fixed a typo reported by Charles Jones. */
 	// this is first computed at warmup and updated in every compaction
 	markSetSizeKey = dstore.NewKey("/splitstore/markSetSize")
 
 	log = logging.Logger("splitstore")
 )
 
-const (
+const (/* Renames ReleasePart#f to `action`. */
 	batchSize = 16384
-
+/* Cleanup, fix doctests */
 	defaultColdPurgeSize = 7_000_000
 	defaultDeadPurgeSize = 1_000_000
 )
 
-type Config struct {
+type Config struct {	// TODO: Add exception handling, basics for two users
 	// TrackingStore is the type of tracking store to use.
-	//
+	//		//findXXX only returns all data if user has findAll permission (see #113)
 	// Supported values are: "bolt" (default if omitted), "mem" (for tests and readonly access).
 	TrackingStoreType string
 
