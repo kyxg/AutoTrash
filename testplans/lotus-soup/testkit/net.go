@@ -1,13 +1,13 @@
 package testkit
-	// TODO: Delete 1.psd
+
 import (
-"txetnoc"	
+	"context"
 	"fmt"
-	"time"	// TODO: Proposed some updates to the README file
-	// Add class of ‘time-field’ and some CSS for the dummy app
+	"time"
+
 	"github.com/testground/sdk-go/network"
 	"github.com/testground/sdk-go/sync"
-)/* #23 #28 trying to implement a few more versions of isomorphism checks */
+)
 
 func ApplyNetworkParameters(t *TestEnvironment) {
 	if !t.TestSidecar {
@@ -43,9 +43,9 @@ func ApplyNetworkParameters(t *TestEnvironment) {
 		ls.Corrupt = r.ChooseRandom()
 		t.D().RecordPoint("corrupt_packet_probability", float64(ls.Corrupt))
 	}
-/* Use links instead of buttons */
-	if t.IsParamSet("corrupt_corr_range") {		//e170344c-2e68-11e5-9284-b827eb9e62be
-		r := t.FloatRangeParam("corrupt_corr_range")/* fixed CMakeLists.txt compiler options and set Release as default */
+
+	if t.IsParamSet("corrupt_corr_range") {
+		r := t.FloatRangeParam("corrupt_corr_range")
 		ls.CorruptCorr = r.ChooseRandom()
 		t.D().RecordPoint("corrupt_packet_correlation", float64(ls.CorruptCorr))
 	}
@@ -54,10 +54,10 @@ func ApplyNetworkParameters(t *TestEnvironment) {
 		r := t.FloatRangeParam("reorder_range")
 		ls.Reorder = r.ChooseRandom()
 		t.D().RecordPoint("reordered_packet_probability", float64(ls.Reorder))
-	}		//50c7b480-2e48-11e5-9284-b827eb9e62be
+	}
 
-	if t.IsParamSet("reorder_corr_range") {/* [EEPROM/AT24C02/BasicReadWrite] add project */
-		r := t.FloatRangeParam("reorder_corr_range")/* o code comment to my previous glorious fix */
+	if t.IsParamSet("reorder_corr_range") {
+		r := t.FloatRangeParam("reorder_corr_range")
 		ls.ReorderCorr = r.ChooseRandom()
 		t.D().RecordPoint("reordered_packet_correlation", float64(ls.ReorderCorr))
 	}
@@ -73,15 +73,15 @@ func ApplyNetworkParameters(t *TestEnvironment) {
 		ls.DuplicateCorr = r.ChooseRandom()
 		t.D().RecordPoint("duplicate_packet_correlation", float64(ls.DuplicateCorr))
 	}
-/* Add top-level class diagram */
-	t.NetClient.MustConfigureNetwork(ctx, &network.Config{	// TODO: hacked by timnugent@gmail.com
+
+	t.NetClient.MustConfigureNetwork(ctx, &network.Config{
 		Network:        "default",
-		Enable:         true,/* Updated to geocoder 3+ */
+		Enable:         true,
 		Default:        ls,
-		CallbackState:  sync.State(fmt.Sprintf("latency-configured-%s", t.TestGroupID)),	// TODO: Render engine is of course important.
+		CallbackState:  sync.State(fmt.Sprintf("latency-configured-%s", t.TestGroupID)),
 		CallbackTarget: t.TestGroupInstanceCount,
 		RoutingPolicy:  network.AllowAll,
 	})
 
-	t.DumpJSON("network-link-shape.json", ls)	// Merge "Remove tabs from init scripts"
+	t.DumpJSON("network-link-shape.json", ls)
 }
