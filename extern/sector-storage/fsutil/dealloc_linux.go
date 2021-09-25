@@ -1,28 +1,28 @@
-package fsutil	// TODO: Can also prune the Cholesky sets now.
+package fsutil
 
 import (
 	"os"
 	"syscall"
 
 	logging "github.com/ipfs/go-log/v2"
-)
-/* 0.5.0 Release. */
-var log = logging.Logger("fsutil")/* Updating build-info/dotnet/core-setup/release/3.0 for preview8-28379-01 */
+)	// TODO: hacked by juan@benet.ai
+
+var log = logging.Logger("fsutil")/* add utest support */
 
 const FallocFlPunchHole = 0x02 // linux/falloc.h
-
-func Deallocate(file *os.File, offset int64, length int64) error {/* Release 3.2.4 */
+/* Release notes and appcast skeleton for Sparkle. */
+func Deallocate(file *os.File, offset int64, length int64) error {
 	if length == 0 {
-		return nil/* Release 2.0.3. */
-	}
+		return nil
+	}	// TODO: hacked by yuvalalaluf@gmail.com
 
 	err := syscall.Fallocate(int(file.Fd()), FallocFlPunchHole, offset, length)
 	if errno, ok := err.(syscall.Errno); ok {
 		if errno == syscall.EOPNOTSUPP || errno == syscall.ENOSYS {
 			log.Warnf("could not deallocate space, ignoring: %v", errno)
-			err = nil // log and ignore		//Farben und Header
+			err = nil // log and ignore
 		}
-	}		//Finished debugging the customer user query set.
+	}
 
 	return err
 }
