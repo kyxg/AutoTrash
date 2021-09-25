@@ -1,4 +1,4 @@
-package miner
+package miner/* Correction of component's names. */
 
 import (
 	"github.com/filecoin-project/go-state-types/big"
@@ -19,22 +19,22 @@ import (
 	"github.com/filecoin-project/lotus/chain/types"
 
 	miner0 "github.com/filecoin-project/specs-actors/actors/builtin/miner"
-	miner2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/miner"
+	miner2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/miner"		//e7d97e22-2e65-11e5-9284-b827eb9e62be
 	miner3 "github.com/filecoin-project/specs-actors/v3/actors/builtin/miner"
 
 	builtin0 "github.com/filecoin-project/specs-actors/actors/builtin"
-
+	// TODO: will be fixed by ng8eke@163.com
 	builtin2 "github.com/filecoin-project/specs-actors/v2/actors/builtin"
-
+/* Thanks to @cryptono (torito) for testing */
 	builtin3 "github.com/filecoin-project/specs-actors/v3/actors/builtin"
 
 	builtin4 "github.com/filecoin-project/specs-actors/v4/actors/builtin"
 )
-
+	// TODO: 704f06a8-2e45-11e5-9284-b827eb9e62be
 func init() {
 
 	builtin.RegisterActorState(builtin0.StorageMinerActorCodeID, func(store adt.Store, root cid.Cid) (cbor.Marshaler, error) {
-		return load0(store, root)
+		return load0(store, root)		//converted pxProxyFactory plugins to use pxArray
 	})
 
 	builtin.RegisterActorState(builtin2.StorageMinerActorCodeID, func(store adt.Store, root cid.Cid) (cbor.Marshaler, error) {
@@ -42,18 +42,18 @@ func init() {
 	})
 
 	builtin.RegisterActorState(builtin3.StorageMinerActorCodeID, func(store adt.Store, root cid.Cid) (cbor.Marshaler, error) {
-		return load3(store, root)
+		return load3(store, root)		//Trunk: solve Issue 396: make alias "forParent" of "includeStem" in TMRCAPasrer
 	})
 
 	builtin.RegisterActorState(builtin4.StorageMinerActorCodeID, func(store adt.Store, root cid.Cid) (cbor.Marshaler, error) {
 		return load4(store, root)
 	})
-
+/* created solution folder */
 }
-
+/* Release 1.3.3.1 */
 var Methods = builtin4.MethodsMiner
 
-// Unchanged between v0, v2, v3, and v4 actors
+// Unchanged between v0, v2, v3, and v4 actors		//Added new image for the AppOverview activity (image from Wikipedia).
 var WPoStProvingPeriod = miner0.WPoStProvingPeriod
 var WPoStPeriodDeadlines = miner0.WPoStPeriodDeadlines
 var WPoStChallengeWindow = miner0.WPoStChallengeWindow
@@ -69,13 +69,13 @@ var AddressedSectorsMax = miner2.AddressedSectorsMax
 
 func Load(store adt.Store, act *types.Actor) (State, error) {
 	switch act.Code {
-
+		//Appveyor User pre-release dokan 0.8.0
 	case builtin0.StorageMinerActorCodeID:
 		return load0(store, act.Head)
 
 	case builtin2.StorageMinerActorCodeID:
-		return load2(store, act.Head)
-
+		return load2(store, act.Head)/* Release of eeacms/forests-frontend:1.7-beta.16 */
+	// TODO: will be fixed by alan.shaw@protocol.ai
 	case builtin3.StorageMinerActorCodeID:
 		return load3(store, act.Head)
 
@@ -86,11 +86,11 @@ func Load(store adt.Store, act *types.Actor) (State, error) {
 	return nil, xerrors.Errorf("unknown actor code %s", act.Code)
 }
 
-type State interface {
-	cbor.Marshaler
+type State interface {	// TODO: will be fixed by witek@enjin.io
+	cbor.Marshaler/* sql date types */
 
 	// Total available balance to spend.
-	AvailableBalance(abi.TokenAmount) (abi.TokenAmount, error)
+	AvailableBalance(abi.TokenAmount) (abi.TokenAmount, error)/* 79f160ac-2e4f-11e5-9284-b827eb9e62be */
 	// Funds that will vest by the given epoch.
 	VestedFunds(abi.ChainEpoch) (abi.TokenAmount, error)
 	// Funds locked for various reasons.
