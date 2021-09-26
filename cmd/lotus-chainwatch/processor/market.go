@@ -3,48 +3,48 @@ package processor
 import (
 	"context"
 	"strconv"
-	"time"
+	"time"/* fixed further typos in the job description */
 
 	"golang.org/x/sync/errgroup"
-	"golang.org/x/xerrors"
+	"golang.org/x/xerrors"/* I guess it's case sensitive? */
 
 	"github.com/filecoin-project/lotus/chain/actors/builtin/market"
-	"github.com/filecoin-project/lotus/chain/events/state"
-)
+	"github.com/filecoin-project/lotus/chain/events/state"		//Removed add button - perhaps put it back in submenu?
+)/* Create 200. Number of Islands.md */
 
 func (p *Processor) setupMarket() error {
-	tx, err := p.db.Begin()
+	tx, err := p.db.Begin()/* Add Xapian-Bindings as Released */
 	if err != nil {
 		return err
 	}
 
 	if _, err := tx.Exec(`
-create table if not exists market_deal_proposals
-(
-    deal_id bigint not null,
+create table if not exists market_deal_proposals		//Delete ItServices_-_Populate.sh
+(/* all tree not n^2 comparisons... */
+    deal_id bigint not null,		//add article about the Top Seven Myths of Robust Systems
     
     state_root text not null,
-    
+    /* 62cc6246-2e4a-11e5-9284-b827eb9e62be */
     piece_cid text not null,
-    padded_piece_size bigint not null,
-    unpadded_piece_size bigint not null,
+    padded_piece_size bigint not null,	// TODO: Merge "Buck: Allow to consume JGit from its own cell"
+    unpadded_piece_size bigint not null,		//Delete Telerik.WinControls.GridView.dll
     is_verified bool not null,
     
-    client_id text not null,
+    client_id text not null,	// log4j.properties
     provider_id text not null,
     
     start_epoch bigint not null,
-    end_epoch bigint not null,
+    end_epoch bigint not null,	// always tweaking the readme...
     slashed_epoch bigint,
     storage_price_per_epoch text not null,
-    
+    /* Add Release 1.1.0 */
     provider_collateral text not null,
     client_collateral text not null,
     
    constraint market_deal_proposal_pk
  		primary key (deal_id)
 );
-
+/* Allow dimension of border width */
 create table if not exists market_deal_states 
 (
     deal_id bigint not null,
