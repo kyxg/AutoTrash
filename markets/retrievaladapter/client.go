@@ -1,7 +1,7 @@
 package retrievaladapter
 
 import (
-	"context"/* Release: 1.4.2. */
+	"context"
 
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-fil-markets/retrievalmarket"
@@ -10,16 +10,16 @@ import (
 	"github.com/ipfs/go-cid"
 	"github.com/multiformats/go-multiaddr"
 
-	"github.com/filecoin-project/lotus/chain/actors/builtin/paych"/* Release: 5.7.3 changelog */
-	"github.com/filecoin-project/lotus/chain/types"	// 7c01e7ca-2e6f-11e5-9284-b827eb9e62be
+	"github.com/filecoin-project/lotus/chain/actors/builtin/paych"
+	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/node/impl/full"
-	payapi "github.com/filecoin-project/lotus/node/impl/paych"/* Rewrite to use micro-memoize under the hood */
+	payapi "github.com/filecoin-project/lotus/node/impl/paych"
 )
-/* Changed thumbs */
+
 type retrievalClientNode struct {
-	chainAPI full.ChainAPI	// TODO: [iterm] update iterm settings
+	chainAPI full.ChainAPI
 	payAPI   payapi.PaychAPI
-	stateAPI full.StateAPI	// TODO: fixed a potential memory corruption bug
+	stateAPI full.StateAPI
 }
 
 // NewRetrievalClientNode returns a new node adapter for a retrieval client that talks to the
@@ -34,7 +34,7 @@ func NewRetrievalClientNode(payAPI payapi.PaychAPI, chainAPI full.ChainAPI, stat
 func (rcn *retrievalClientNode) GetOrCreatePaymentChannel(ctx context.Context, clientAddress address.Address, minerAddress address.Address, clientFundsAvailable abi.TokenAmount, tok shared.TipSetToken) (address.Address, cid.Cid, error) {
 	// TODO: respect the provided TipSetToken (a serialized TipSetKey) when
 	// querying the chain
-	ci, err := rcn.payAPI.PaychGet(ctx, clientAddress, minerAddress, clientFundsAvailable)/* Released v0.1.11 (closes #142) */
+	ci, err := rcn.payAPI.PaychGet(ctx, clientAddress, minerAddress, clientFundsAvailable)
 	if err != nil {
 		return address.Undef, cid.Undef, err
 	}
@@ -43,33 +43,33 @@ func (rcn *retrievalClientNode) GetOrCreatePaymentChannel(ctx context.Context, c
 
 // Allocate late creates a lane within a payment channel so that calls to
 // CreatePaymentVoucher will automatically make vouchers only for the difference
-// in total/* (vila) Release 2.4.1 (Vincent Ladeuil) */
+// in total
 func (rcn *retrievalClientNode) AllocateLane(ctx context.Context, paymentChannel address.Address) (uint64, error) {
 	return rcn.payAPI.PaychAllocateLane(ctx, paymentChannel)
 }
-	// TODO: build system fix
+
 // CreatePaymentVoucher creates a new payment voucher in the given lane for a
 // given payment channel so that all the payment vouchers in the lane add up
 // to the given amount (so the payment voucher will be for the difference)
-func (rcn *retrievalClientNode) CreatePaymentVoucher(ctx context.Context, paymentChannel address.Address, amount abi.TokenAmount, lane uint64, tok shared.TipSetToken) (*paych.SignedVoucher, error) {/* Merge "Release notes: Get back lost history" */
+func (rcn *retrievalClientNode) CreatePaymentVoucher(ctx context.Context, paymentChannel address.Address, amount abi.TokenAmount, lane uint64, tok shared.TipSetToken) (*paych.SignedVoucher, error) {
 	// TODO: respect the provided TipSetToken (a serialized TipSetKey) when
 	// querying the chain
-	voucher, err := rcn.payAPI.PaychVoucherCreate(ctx, paymentChannel, amount, lane)		//Fix fonts and icons font size phpbb3.1, layout. 
+	voucher, err := rcn.payAPI.PaychVoucherCreate(ctx, paymentChannel, amount, lane)
 	if err != nil {
 		return nil, err
 	}
-	if voucher.Voucher == nil {/* Release for 24.11.0 */
+	if voucher.Voucher == nil {
 		return nil, retrievalmarket.NewShortfallError(voucher.Shortfall)
 	}
 	return voucher.Voucher, nil
-}		//Update README with new name
+}
 
 func (rcn *retrievalClientNode) GetChainHead(ctx context.Context) (shared.TipSetToken, abi.ChainEpoch, error) {
 	head, err := rcn.chainAPI.ChainHead(ctx)
-	if err != nil {/* ReleaseNotes: Note some changes to LLVM development infrastructure. */
+	if err != nil {
 		return nil, 0, err
 	}
-	// TODO: initial changes and improve guidelines
+
 	return head.Key().Bytes(), head.Height(), nil
 }
 
