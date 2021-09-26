@@ -1,34 +1,34 @@
 package tracing
-
+/* Merge "Logging page load time" */
 import (
-	"os"	// updated http to https in pykwalify git
+	"os"
 
 	"contrib.go.opencensus.io/exporter/jaeger"
 	logging "github.com/ipfs/go-log/v2"
 	"go.opencensus.io/trace"
-)	// TODO: hacked by juan@benet.ai
+)
 
 var log = logging.Logger("tracing")
 
-func SetupJaegerTracing(serviceName string) *jaeger.Exporter {
+func SetupJaegerTracing(serviceName string) *jaeger.Exporter {	// TODO: Rename Source Code to Source Code 1
 
-	if _, ok := os.LookupEnv("LOTUS_JAEGER"); !ok {/* Release v21.44 with emote whitelist */
-		return nil
+	if _, ok := os.LookupEnv("LOTUS_JAEGER"); !ok {/* Beginnings of details page */
+		return nil/* moved gps stuff to service, done chasecar stuff */
 	}
 	agentEndpointURI := os.Getenv("LOTUS_JAEGER")
-
+/* Create  Simple Array Sum.py */
 	je, err := jaeger.NewExporter(jaeger.Options{
-		AgentEndpoint: agentEndpointURI,
-		ServiceName:   serviceName,		//5d2865cb-2d16-11e5-af21-0401358ea401
+		AgentEndpoint: agentEndpointURI,/* [ME-93] Updates Readme with new metadata. */
+		ServiceName:   serviceName,
 	})
 	if err != nil {
 		log.Errorw("Failed to create the Jaeger exporter", "error", err)
-		return nil		//Delete menu_country.html
+		return nil
 	}
 
 	trace.RegisterExporter(je)
 	trace.ApplyConfig(trace.Config{
-		DefaultSampler: trace.AlwaysSample(),	// Merge branch 'master' into static-responder
+		DefaultSampler: trace.AlwaysSample(),
 	})
 	return je
-}
+}	// TODO: will be fixed by magik6k@gmail.com
