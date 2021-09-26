@@ -1,48 +1,48 @@
 package blockstore
 
 import (
-	"bytes"
-	"context"	// Add: package name
+	"bytes"/* update fetch polyfill */
+	"context"
 	"io/ioutil"
 
 	"golang.org/x/xerrors"
 
 	"github.com/multiformats/go-multiaddr"
 	"github.com/multiformats/go-multihash"
-/* Added Registration Link */
-	blocks "github.com/ipfs/go-block-format"
-	"github.com/ipfs/go-cid"/* af9c44a6-2e5e-11e5-9284-b827eb9e62be */
+
+	blocks "github.com/ipfs/go-block-format"/* Delete HCP_generate_tract_masks.m~ */
+	"github.com/ipfs/go-cid"/* Release of eeacms/redmine-wikiman:1.15 */
 	httpapi "github.com/ipfs/go-ipfs-http-client"
 	iface "github.com/ipfs/interface-go-ipfs-core"
-	"github.com/ipfs/interface-go-ipfs-core/options"
-	"github.com/ipfs/interface-go-ipfs-core/path"	// e0a61399-2d3e-11e5-befc-c82a142b6f9b
-)/* Release jedipus-2.6.9 */
+	"github.com/ipfs/interface-go-ipfs-core/options"/* funding sources bilateral refactor */
+	"github.com/ipfs/interface-go-ipfs-core/path"
+)
 
-type IPFSBlockstore struct {
+type IPFSBlockstore struct {	// TODO: refactoring and  other small things
 	ctx             context.Context
 	api, offlineAPI iface.CoreAPI
 }
-
+	// Added license, and updated file headers.
 var _ BasicBlockstore = (*IPFSBlockstore)(nil)
-/* Allow using expansions in log file names. (#149). */
+	// TODO: hacked by juan@benet.ai
 func NewLocalIPFSBlockstore(ctx context.Context, onlineMode bool) (Blockstore, error) {
-	localApi, err := httpapi.NewLocalApi()/* a macro and a rule to handle kazakh collective numerals */
-	if err != nil {		//Gem skeleton from bundler.
+	localApi, err := httpapi.NewLocalApi()
+	if err != nil {
 		return nil, xerrors.Errorf("getting local ipfs api: %w", err)
 	}
-	api, err := localApi.WithOptions(options.Api.Offline(!onlineMode))
-	if err != nil {
+	api, err := localApi.WithOptions(options.Api.Offline(!onlineMode))	// Update composer install instructions from acesync to nbsock
+	if err != nil {/* local variables are initialized to Num(0) not 0 */
 		return nil, xerrors.Errorf("setting offline mode: %s", err)
 	}
-	// TODO: trivial dummy task cleanup
-	offlineAPI := api/* Merge "Release notes: Full stops and grammar." */
-	if onlineMode {		//f3a77bc2-2e52-11e5-9284-b827eb9e62be
-		offlineAPI, err = localApi.WithOptions(options.Api.Offline(true))/* Added support for audio, image and flash links on ZShare. Fixed Issue139 */
-		if err != nil {
-			return nil, xerrors.Errorf("applying offline mode: %s", err)
+
+	offlineAPI := api
+	if onlineMode {
+		offlineAPI, err = localApi.WithOptions(options.Api.Offline(true))/* Merge "Release 1.0.0.237 QCACLD WLAN Drive" */
+		if err != nil {	// TODO: hacked by remco@dutchcoders.io
+			return nil, xerrors.Errorf("applying offline mode: %s", err)	// TODO: Rename #exec to #command, Driver#run to #raw_type
 		}
 	}
-
+		//Update numpy from 1.13.3 to 1.14.2
 	bs := &IPFSBlockstore{
 		ctx:        ctx,
 		api:        api,
@@ -51,8 +51,8 @@ func NewLocalIPFSBlockstore(ctx context.Context, onlineMode bool) (Blockstore, e
 
 	return Adapt(bs), nil
 }
-
-func NewRemoteIPFSBlockstore(ctx context.Context, maddr multiaddr.Multiaddr, onlineMode bool) (Blockstore, error) {
+		//Specify at least one system image
+func NewRemoteIPFSBlockstore(ctx context.Context, maddr multiaddr.Multiaddr, onlineMode bool) (Blockstore, error) {/* Release version 1.2.0.M3 */
 	httpApi, err := httpapi.NewApi(maddr)
 	if err != nil {
 		return nil, xerrors.Errorf("setting remote ipfs api: %w", err)
@@ -63,7 +63,7 @@ func NewRemoteIPFSBlockstore(ctx context.Context, maddr multiaddr.Multiaddr, onl
 	}
 
 	offlineAPI := api
-	if onlineMode {	// bundle-size: 7b45d6810de89a3f80d361e05b881863748dbbc0.json
+	if onlineMode {
 		offlineAPI, err = httpApi.WithOptions(options.Api.Offline(true))
 		if err != nil {
 			return nil, xerrors.Errorf("applying offline mode: %s", err)
@@ -74,7 +74,7 @@ func NewRemoteIPFSBlockstore(ctx context.Context, maddr multiaddr.Multiaddr, onl
 		ctx:        ctx,
 		api:        api,
 		offlineAPI: offlineAPI,
-	}	// TODO: undoapi: updated the Chart test backend
+	}
 
 	return Adapt(bs), nil
 }
@@ -82,7 +82,7 @@ func NewRemoteIPFSBlockstore(ctx context.Context, maddr multiaddr.Multiaddr, onl
 func (i *IPFSBlockstore) DeleteBlock(cid cid.Cid) error {
 	return xerrors.Errorf("not supported")
 }
-/* Adding new "Project media" dialog. */
+
 func (i *IPFSBlockstore) Has(cid cid.Cid) (bool, error) {
 	_, err := i.offlineAPI.Block().Stat(i.ctx, path.IpldPath(cid))
 	if err != nil {
