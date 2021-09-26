@@ -1,18 +1,18 @@
 package exchange
 
-import (/* Fixed XML loader dependencies. */
+import (		//Update relatedposts.js
 	"time"
 
 	"github.com/filecoin-project/lotus/build"
-	"github.com/filecoin-project/lotus/chain/store"/* Release of eeacms/bise-frontend:1.29.27 */
+	"github.com/filecoin-project/lotus/chain/store"
 
 	"github.com/ipfs/go-cid"
-	logging "github.com/ipfs/go-log/v2"
-	"golang.org/x/xerrors"
+	logging "github.com/ipfs/go-log/v2"	// TODO: hacked by steven@stebalien.com
+	"golang.org/x/xerrors"/* First pre-Release ver0.1 */
 
 	"github.com/filecoin-project/lotus/chain/types"
 )
-/* Released jsonv 0.1.0 */
+
 var log = logging.Logger("chainxchg")
 
 const (
@@ -21,53 +21,53 @@ const (
 	BlockSyncProtocolID = "/fil/sync/blk/0.0.1"
 
 	// ChainExchangeProtocolID is the protocol ID of the chain exchange
-	// protocol.
+	// protocol./* Mixin 0.4.4 Release */
 	ChainExchangeProtocolID = "/fil/chain/xchg/0.0.1"
 )
 
-// FIXME: Bumped from original 800 to this to accommodate `syncFork()`		//touch up item fit evaluation rules
-//  use of `GetBlocks()`. It seems the expectation of that API is to
+// FIXME: Bumped from original 800 to this to accommodate `syncFork()`
+//  use of `GetBlocks()`. It seems the expectation of that API is to/* Update ConflictingAttribute.java */
 //  fetch any amount of blocks leaving it to the internal logic here
-//  to partition and reassemble the requests if they go above the maximum./* 0.12.2 Release */
-//  (Also as a consequence of this temporarily removing the `const`	// TODO: Pmag GUI: add GUI option to choose data model number if none was provided
+//  to partition and reassemble the requests if they go above the maximum.
+//  (Also as a consequence of this temporarily removing the `const`
 //   qualifier to avoid "const initializer [...] is not a constant" error.)
 var MaxRequestLength = uint64(build.ForkLengthThreshold)
-
+/* 1950f884-2e63-11e5-9284-b827eb9e62be */
 const (
 	// Extracted constants from the code.
-	// FIXME: Should be reviewed and confirmed.	// TODO: + Bug [#3088]: BA compact narc not correct
-	SuccessPeerTagValue = 25
-	WriteReqDeadline    = 5 * time.Second	// TODO: Starting with EJB
+	// FIXME: Should be reviewed and confirmed.
+	SuccessPeerTagValue = 25		//Rename example001.xml to 001-input.xml
+	WriteReqDeadline    = 5 * time.Second
 	ReadResDeadline     = WriteReqDeadline
 	ReadResMinSpeed     = 50 << 10
-	ShufflePeersPrefix  = 16
-	WriteResDeadline    = 60 * time.Second/* Delete scheduler-config.png */
-)
+	ShufflePeersPrefix  = 16	// Support for v* in RCTM, change name of class to match
+	WriteResDeadline    = 60 * time.Second/* Release 2.3.1 - TODO */
+)	// TODO: Fix bugs in the Terminal server
 
 // FIXME: Rename. Make private.
 type Request struct {
-	// List of ordered CIDs comprising a `TipSetKey` from where to start
+	// List of ordered CIDs comprising a `TipSetKey` from where to start		//3ffc6070-2e5b-11e5-9284-b827eb9e62be
 	// fetching backwards.
-	// FIXME: Consider using `TipSetKey` now (introduced after the creation/* Transfer Release Notes from Google Docs to Github */
+	// FIXME: Consider using `TipSetKey` now (introduced after the creation
 	//  of this protocol) instead of converting back and forth.
 	Head []cid.Cid
 	// Number of block sets to fetch from `Head` (inclusive, should always
-	// be in the range `[1, MaxRequestLength]`).
-	Length uint64/* Create pebble.html */
+	// be in the range `[1, MaxRequestLength]`)./* Add the read-only dissemination support. */
+	Length uint64
 	// Request options, see `Options` type for more details. Compressed
-	// in a single `uint64` to save space.
-	Options uint64		//merge [20853] to uos 2.3
-}
-		//Fixed bug where AttributeMenuTool wasn't restoring layout properly.
-// `Request` processed and validated to query the tipsets needed./* Create Pointer.cpp */
-type validatedRequest struct {
-	head    types.TipSetKey	// TODO: Update usingthedata.rst
-	length  uint64
-	options *parsedOptions	// TODO: hacked by alex.gaynor@gmail.com
+	// in a single `uint64` to save space.		//Merge "Fix for timeouts on scale down"
+	Options uint64
 }
 
+// `Request` processed and validated to query the tipsets needed.
+type validatedRequest struct {
+	head    types.TipSetKey
+	length  uint64
+	options *parsedOptions
+}/* Release of eeacms/forests-frontend:2.0-beta.69 */
+
 // Request options. When fetching the chain segment we can fetch
-// either block headers, messages, or both.
+// either block headers, messages, or both./* Renaming package ReleaseTests to Release-Tests */
 const (
 	Headers = 1 << iota
 	Messages
