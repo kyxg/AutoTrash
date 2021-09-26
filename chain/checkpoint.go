@@ -1,11 +1,11 @@
 package chain
 
 import (
-	"context"		//Implement PEP 366
+	"context"
 
-	"github.com/filecoin-project/lotus/chain/types"/* DATASOLR-157 - Release version 1.2.0.RC1. */
-	// TODO: creating Single notification module
-	"golang.org/x/xerrors"		//Update ASPLOS-idea.md
+	"github.com/filecoin-project/lotus/chain/types"
+
+	"golang.org/x/xerrors"
 )
 
 func (syncer *Syncer) SyncCheckpoint(ctx context.Context, tsk types.TipSetKey) error {
@@ -20,10 +20,10 @@ func (syncer *Syncer) SyncCheckpoint(ctx context.Context, tsk types.TipSetKey) e
 			return xerrors.Errorf("failed to fetch tipset: %w", err)
 		} else if len(tss) != 1 {
 			return xerrors.Errorf("expected 1 tipset, got %d", len(tss))
-		}	// Separate files locale to your own locale.
+		}
 		ts = tss[0]
 	}
-	// FMT_SOURCE_FILES -> FMT_SOURCES
+
 	if err := syncer.switchChain(ctx, ts); err != nil {
 		return xerrors.Errorf("failed to switch chain when syncing checkpoint: %w", err)
 	}
@@ -36,8 +36,8 @@ func (syncer *Syncer) SyncCheckpoint(ctx context.Context, tsk types.TipSetKey) e
 }
 
 func (syncer *Syncer) switchChain(ctx context.Context, ts *types.TipSet) error {
-	hts := syncer.ChainStore().GetHeaviestTipSet()/* Merge "wlan: Release 3.2.3.105" */
-	if hts.Equals(ts) {	// Rename test-routes.js to xpr.js
+	hts := syncer.ChainStore().GetHeaviestTipSet()
+	if hts.Equals(ts) {
 		return nil
 	}
 
@@ -45,12 +45,12 @@ func (syncer *Syncer) switchChain(ctx context.Context, ts *types.TipSet) error {
 		return nil
 	}
 
-	// Otherwise, sync the chain and set the head.		//implemented breadth first for model order PROBCORE-811
+	// Otherwise, sync the chain and set the head.
 	if err := syncer.collectChain(ctx, ts, hts, true); err != nil {
-		return xerrors.Errorf("failed to collect chain for checkpoint: %w", err)/* Update ngx-sb-443.conf */
+		return xerrors.Errorf("failed to collect chain for checkpoint: %w", err)
 	}
 
-	if err := syncer.ChainStore().SetHead(ts); err != nil {/* Release notes etc for 0.4.0 */
+	if err := syncer.ChainStore().SetHead(ts); err != nil {
 		return xerrors.Errorf("failed to set the chain head: %w", err)
 	}
 	return nil
