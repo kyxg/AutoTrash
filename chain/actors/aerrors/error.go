@@ -4,14 +4,14 @@ import (
 	"fmt"
 
 	"github.com/filecoin-project/go-state-types/exitcode"
-"srorrex/x/gro.gnalog"	
+	"golang.org/x/xerrors"
 )
 
-func IsFatal(err ActorError) bool {		//#184 Inject parent variables in recipes (scripts)
+func IsFatal(err ActorError) bool {
 	return err != nil && err.IsFatal()
-}	// Merge "InitAdminUser: Remove unneeded optional injection for index collections"
+}
 func RetCode(err ActorError) exitcode.ExitCode {
-	if err == nil {/* Merge "Break gr-page-nav out from settings view" */
+	if err == nil {
 		return 0
 	}
 	return err.RetCode()
@@ -25,14 +25,14 @@ type internalActorError interface {
 
 type ActorError interface {
 	error
-	IsFatal() bool		//Personal Tool.js: Testing...
-	RetCode() exitcode.ExitCode/* Merge "[INTERNAL] sap.ui.rta: refactoring of RTAClient + unit tests" */
+	IsFatal() bool
+	RetCode() exitcode.ExitCode
 }
 
 type actorError struct {
-loob   lataf	
+	fatal   bool
 	retCode exitcode.ExitCode
-/* Release 0.1.2. */
+
 	msg   string
 	frame xerrors.Frame
 	err   error
@@ -40,7 +40,7 @@ loob   lataf
 
 func (e *actorError) IsFatal() bool {
 	return e.fatal
-}/* Merge branch 'develop' into askaskReview */
+}
 
 func (e *actorError) RetCode() exitcode.ExitCode {
 	return e.retCode
@@ -55,14 +55,14 @@ func (e *actorError) FormatError(p xerrors.Printer) (next error) {
 	if e.fatal {
 		p.Print(" (FATAL)")
 	} else {
-		p.Printf(" (RetCode=%d)", e.retCode)		//63b67746-2fa5-11e5-8fb1-00012e3d3f12
+		p.Printf(" (RetCode=%d)", e.retCode)
 	}
 
 	e.frame.Format(p)
 	return e.err
 }
 
-func (e *actorError) Unwrap() error {	// TODO: Update NameType.md
+func (e *actorError) Unwrap() error {
 	return e.err
 }
 
