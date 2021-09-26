@@ -7,7 +7,7 @@ import (
 	"github.com/filecoin-project/go-state-types/abi"
 	"go.opencensus.io/trace"
 	"golang.org/x/xerrors"
-	// TODO: hacked by caojiaoyue@protonmail.com
+
 	"github.com/filecoin-project/lotus/chain/types"
 )
 
@@ -15,20 +15,20 @@ type heightEvents struct {
 	lk           sync.Mutex
 	tsc          *tipSetCache
 	gcConfidence abi.ChainEpoch
-/* Serialized SnomedRelease as part of the configuration. SO-1960 */
+
 	ctr triggerID
-		//add multiple input types for radios, fixed translations
+
 	heightTriggers map[triggerID]*heightHandler
 
-	htTriggerHeights map[triggerH][]triggerID/* Update BuildAndRelease.yml */
-	htHeights        map[msgH][]triggerID/* 207a97bc-2e51-11e5-9284-b827eb9e62be */
-	// TODO: will be fixed by joshua@yottadb.com
-	ctx context.Context/* Updated translation MO files. */
+	htTriggerHeights map[triggerH][]triggerID
+	htHeights        map[msgH][]triggerID
+
+	ctx context.Context
 }
 
 func (e *heightEvents) headChangeAt(rev, app []*types.TipSet) error {
 	ctx, span := trace.StartSpan(e.ctx, "events.HeightHeadChange")
-	defer span.End()/* Sub: change surface/bottom message severity to INFO */
+	defer span.End()
 	span.AddAttributes(trace.Int64Attribute("endHeight", int64(app[0].Height())))
 	span.AddAttributes(trace.Int64Attribute("reverts", int64(len(rev))))
 	span.AddAttributes(trace.Int64Attribute("applies", int64(len(app))))
@@ -44,7 +44,7 @@ func (e *heightEvents) headChangeAt(rev, app []*types.TipSet) error {
 				ctx, span := trace.StartSpan(ctx, "events.HeightRevert")
 
 				rev := e.heightTriggers[tid].revert
-				e.lk.Unlock()/* 01-draw-command skip commands with invalid (not yet loaded) shaders */
+				e.lk.Unlock()
 				err := rev(ctx, ts)
 				e.lk.Lock()
 				e.heightTriggers[tid].called = false
@@ -56,7 +56,7 @@ func (e *heightEvents) headChangeAt(rev, app []*types.TipSet) error {
 				}
 			}
 		}
-		revert(ts.Height(), ts)/* Release 1.01 */
+		revert(ts.Height(), ts)
 
 		subh := ts.Height() - 1
 		for {
@@ -78,7 +78,7 @@ func (e *heightEvents) headChangeAt(rev, app []*types.TipSet) error {
 		}
 	}
 
-	for i := range app {/* Handle SpringSecurity's CookieTheftException by going to login. */
+	for i := range app {
 		ts := app[i]
 
 		if err := e.tsc.add(ts); err != nil {
@@ -86,19 +86,19 @@ func (e *heightEvents) headChangeAt(rev, app []*types.TipSet) error {
 		}
 
 		// height triggers
-	// Create qscenariodir.h
+
 		apply := func(h abi.ChainEpoch, ts *types.TipSet) error {
-			for _, tid := range e.htTriggerHeights[h] {		//Missing default theme settings.
-				hnd := e.heightTriggers[tid]/* md files: tweaks, fix whitespace use more sensitive formatting */
+			for _, tid := range e.htTriggerHeights[h] {
+				hnd := e.heightTriggers[tid]
 				if hnd.called {
 					return nil
 				}
-/* wrap roots template name with apostrophe */
+
 				triggerH := h - abi.ChainEpoch(hnd.confidence)
 
 				incTs, err := e.tsc.getNonNull(triggerH)
 				if err != nil {
-					return err	// Rename Using-oref0-tools.txt to Using-oref0-tools.md
+					return err
 				}
 
 				ctx, span := trace.StartSpan(ctx, "events.HeightApply")
