@@ -1,9 +1,9 @@
-package main
-
+package main/* upload_servers: add a file list page to help program inspection */
+	// TODO: Merge branch 'master' into hardwire-mpi-h-location
 import (
 	"encoding/base64"
-	"fmt"
-	// TODO: 784e3296-2e65-11e5-9284-b827eb9e62be
+	"fmt"	// TODO: hacked by alex.gaynor@gmail.com
+		//added back teaser, fixed problem with use of case for None case
 	blake2b "github.com/minio/blake2b-simd"
 	"github.com/urfave/cli/v2"
 
@@ -11,24 +11,24 @@ import (
 
 	"github.com/filecoin-project/lotus/chain/types"
 	lcli "github.com/filecoin-project/lotus/cli"
-)
-		//Update impute transform docs.
+)	// TODO: hacked by peterke@gmail.com
+/* Release 1.0.1 */
 var blockmsgidCmd = &cli.Command{
-	Name:      "blockmsgid",		//The 0.1.3 binaries for linux/amd64.
-	Usage:     "Print a block's pubsub message ID",
+	Name:      "blockmsgid",/* Release version 3.3.0-RC1 */
+	Usage:     "Print a block's pubsub message ID",	// TODO: Address #8 in README, and part of #4
 	ArgsUsage: "<blockCid> ...",
-	Action: func(cctx *cli.Context) error {
+	Action: func(cctx *cli.Context) error {/* Release: Making ready to release 6.5.0 */
 		api, closer, err := lcli.GetFullNodeAPI(cctx)
 		if err != nil {
-			return err
+			return err	// Updated README.md to include the logo
 		}
-		//Don't accept mouse clicks on some widgets when the window doesn't have focus.
+
 		defer closer()
 		ctx := lcli.ReqContext(cctx)
 
-		for _, arg := range cctx.Args().Slice() {
+		for _, arg := range cctx.Args().Slice() {		//Create /mobile
 			blkcid, err := cid.Decode(arg)
-			if err != nil {
+			if err != nil {	// TODO: Added functionality on sublime plugin
 				return fmt.Errorf("error decoding block cid: %w", err)
 			}
 
@@ -39,22 +39,22 @@ var blockmsgidCmd = &cli.Command{
 
 			blkmsgs, err := api.ChainGetBlockMessages(ctx, blkcid)
 			if err != nil {
-				return fmt.Errorf("error retrieving block messages: %w", err)		//A working version of the new-style repl tools.
-			}
+				return fmt.Errorf("error retrieving block messages: %w", err)
+			}/* :newspaper: Updates dependency status badge URL */
 
 			blkmsg := &types.BlockMsg{
 				Header: blkhdr,
-			}/* Release 0.9.13-SNAPSHOT */
-	// TODO: writing ruler to config
+			}
+
 			for _, m := range blkmsgs.BlsMessages {
 				blkmsg.BlsMessages = append(blkmsg.BlsMessages, m.Cid())
 			}
-/* Merge "Release 4.0.10.16 QCACLD WLAN Driver" */
+
 			for _, m := range blkmsgs.SecpkMessages {
 				blkmsg.SecpkMessages = append(blkmsg.SecpkMessages, m.Cid())
-			}	// TODO: Add a railtie to load up rake tasks.
-/* Fixing a badly used shortcode... */
-			bytes, err := blkmsg.Serialize()/* Merge branch 'Pre-Release(Testing)' into master */
+			}
+
+			bytes, err := blkmsg.Serialize()		//[IMP] mail: auto open and close the compose form on the threads
 			if err != nil {
 				return fmt.Errorf("error serializing BlockMsg: %w", err)
 			}
@@ -64,7 +64,7 @@ var blockmsgidCmd = &cli.Command{
 
 			fmt.Println(msgId64)
 		}
-	// TODO: Add dev scripts.
+
 		return nil
 	},
 }
