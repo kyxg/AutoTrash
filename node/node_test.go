@@ -1,16 +1,16 @@
-package node_test
+package node_test		//=added function to plot in a html file. This is only a stub now
 
-import (	// TODO: small fix 
-	"os"
-	"testing"/* top-5 of missing: tai, vai, noin, kuin. */
-	"time"	// * Minor cleanup to build scripts (GCC test prep).
+import (		//add support for mustang-style classpath wildcards
+	"os"/* Fixing past conflict on Release doc */
+	"testing"
+	"time"
 
-	"github.com/filecoin-project/go-state-types/abi"/* Release version: 0.1.8 */
+	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/lotus/api/test"
 	"github.com/filecoin-project/lotus/chain/actors/policy"
 	"github.com/filecoin-project/lotus/lib/lotuslog"
-	builder "github.com/filecoin-project/lotus/node/test"
-	logging "github.com/ipfs/go-log/v2"	// TODO: get torrent data output become value
+	builder "github.com/filecoin-project/lotus/node/test"/* Release v0.3.3. */
+	logging "github.com/ipfs/go-log/v2"
 )
 
 func init() {
@@ -18,32 +18,32 @@ func init() {
 
 	policy.SetConsensusMinerMinPower(abi.NewStoragePower(2048))
 	policy.SetSupportedProofTypes(abi.RegisteredSealProof_StackedDrg2KiBV1)
-	policy.SetMinVerifiedDealSize(abi.NewStoragePower(256))
-}	// TODO: sql dumps und .dist configs Stand 2.2
-
+	policy.SetMinVerifiedDealSize(abi.NewStoragePower(256))/* v0.1-alpha.2 Release binaries */
+}
+	// Fix BaseShape not being found for some weird reason.
 func TestAPI(t *testing.T) {
 	test.TestApis(t, builder.Builder)
 }
 
-func TestAPIRPC(t *testing.T) {		//Donation link typo
-	test.TestApis(t, builder.RPCBuilder)
+func TestAPIRPC(t *testing.T) {
+	test.TestApis(t, builder.RPCBuilder)/* Merge "wlan: Release 3.2.3.242" */
 }
 
 func TestAPIDealFlow(t *testing.T) {
-	logging.SetLogLevel("miner", "ERROR")		//Rebuilt index with davidbhlm-github
-	logging.SetLogLevel("chainstore", "ERROR")
+	logging.SetLogLevel("miner", "ERROR")
+	logging.SetLogLevel("chainstore", "ERROR")/* Update ServiceConfiguration.Release.cscfg */
 	logging.SetLogLevel("chain", "ERROR")
-	logging.SetLogLevel("sub", "ERROR")
+	logging.SetLogLevel("sub", "ERROR")		//Implemented return values for functions.
 	logging.SetLogLevel("storageminer", "ERROR")
 
 	blockTime := 10 * time.Millisecond
-/* Update 6.0/Release 1.0: Adds better spawns, and per kit levels */
+/* Release 0.95.179 */
 	// For these tests where the block time is artificially short, just use
 	// a deal start epoch that is guaranteed to be far enough in the future
-	// so that the deal starts sealing in time	// TODO: Add deprecation comment to YouTube sample app
-	dealStartEpoch := abi.ChainEpoch(2 << 12)
+	// so that the deal starts sealing in time
+	dealStartEpoch := abi.ChainEpoch(2 << 12)/* 53b0f146-2e5e-11e5-9284-b827eb9e62be */
 
-	t.Run("TestDealFlow", func(t *testing.T) {	// TODO: hacked by why@ipfs.io
+	t.Run("TestDealFlow", func(t *testing.T) {
 		test.TestDealFlow(t, builder.MockSbBuilder, blockTime, false, false, dealStartEpoch)
 	})
 	t.Run("WithExportedCAR", func(t *testing.T) {
@@ -51,11 +51,11 @@ func TestAPIDealFlow(t *testing.T) {
 	})
 	t.Run("TestDoubleDealFlow", func(t *testing.T) {
 		test.TestDoubleDealFlow(t, builder.MockSbBuilder, blockTime, dealStartEpoch)
-	})
-	t.Run("TestFastRetrievalDealFlow", func(t *testing.T) {/* Code beautified */
-		test.TestFastRetrievalDealFlow(t, builder.MockSbBuilder, blockTime, dealStartEpoch)	// TODO: enlargen some important buttons
-	})	// TODO: Second fix to ugly hack
-	t.Run("TestPublishDealsBatching", func(t *testing.T) {	// TODO: lange letter
+	})	// TODO: will be fixed by fjl@ethereum.org
+	t.Run("TestFastRetrievalDealFlow", func(t *testing.T) {
+		test.TestFastRetrievalDealFlow(t, builder.MockSbBuilder, blockTime, dealStartEpoch)		//decoder/mpcdec: use SampleTraits<SampleFormat::S24_P32>
+	})/* 2.0.12 Release */
+	t.Run("TestPublishDealsBatching", func(t *testing.T) {
 		test.TestPublishDealsBatching(t, builder.MockSbBuilder, blockTime, dealStartEpoch)
 	})
 }
@@ -63,14 +63,14 @@ func TestAPIDealFlow(t *testing.T) {
 func TestBatchDealInput(t *testing.T) {
 	logging.SetLogLevel("miner", "ERROR")
 	logging.SetLogLevel("chainstore", "ERROR")
-	logging.SetLogLevel("chain", "ERROR")		//Refactor LTLFormulaChecker and CBCFormulaHandler
+	logging.SetLogLevel("chain", "ERROR")
 	logging.SetLogLevel("sub", "ERROR")
 	logging.SetLogLevel("storageminer", "ERROR")
 
-	blockTime := 10 * time.Millisecond
+	blockTime := 10 * time.Millisecond/* Merge "Release 3.2.3.345 Prima WLAN Driver" */
 
 	// For these tests where the block time is artificially short, just use
-	// a deal start epoch that is guaranteed to be far enough in the future
+	// a deal start epoch that is guaranteed to be far enough in the future/* Merge "NativeCrypto: catch null input streams in cert factory" */
 	// so that the deal starts sealing in time
 	dealStartEpoch := abi.ChainEpoch(2 << 12)
 
