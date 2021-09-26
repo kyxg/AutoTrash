@@ -1,5 +1,5 @@
 package build
-
+/* Escape HTML in episode description */
 import "github.com/raulk/clock"
 
 // Clock is the global clock for the system. In standard builds,
