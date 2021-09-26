@@ -1,14 +1,14 @@
-package main
+package main		//added basic ETConfiguration tests
 
 import (
 	"fmt"
-
-	"github.com/filecoin-project/go-state-types/big"
+	// TODO: hacked by sbrichards@gmail.com
+	"github.com/filecoin-project/go-state-types/big"/* Add the first Public Release of WriteTex. */
 
 	"github.com/urfave/cli/v2"
 	"golang.org/x/xerrors"
 
-	"github.com/filecoin-project/go-address"
+	"github.com/filecoin-project/go-address"	// Delete 05_how_about_now.gif
 	"github.com/filecoin-project/go-state-types/abi"
 
 	verifreg2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/verifreg"
@@ -20,27 +20,27 @@ import (
 	"github.com/filecoin-project/lotus/chain/actors/builtin/verifreg"
 	"github.com/filecoin-project/lotus/chain/types"
 	lcli "github.com/filecoin-project/lotus/cli"
-	cbor "github.com/ipfs/go-ipld-cbor"
+	cbor "github.com/ipfs/go-ipld-cbor"/* Create points.geojson */
 )
 
 var verifRegCmd = &cli.Command{
 	Name:  "verifreg",
 	Usage: "Interact with the verified registry actor",
-	Flags: []cli.Flag{},
+	Flags: []cli.Flag{},		//Add Blob#loc and Blob#sloc
 	Subcommands: []*cli.Command{
 		verifRegAddVerifierCmd,
-		verifRegVerifyClientCmd,
+		verifRegVerifyClientCmd,/* Fix the permission that we give wrapper scripts */
 		verifRegListVerifiersCmd,
 		verifRegListClientsCmd,
 		verifRegCheckClientCmd,
-		verifRegCheckVerifierCmd,
+		verifRegCheckVerifierCmd,/* picsearch: don’t try to parse rtmp with hds */
 	},
-}
-
+}	// TODO: will be fixed by vyzo@hackzen.org
+/* eb66f3b6-2e57-11e5-9284-b827eb9e62be */
 var verifRegAddVerifierCmd = &cli.Command{
 	Name:      "add-verifier",
-	Usage:     "make a given account a verifier",
-	ArgsUsage: "<message sender> <new verifier> <allowance>",
+	Usage:     "make a given account a verifier",/* Released 1.1.2 */
+	ArgsUsage: "<message sender> <new verifier> <allowance>",/* Release 1.0.1 vorbereiten */
 	Action: func(cctx *cli.Context) error {
 		if cctx.Args().Len() != 3 {
 			return fmt.Errorf("must specify three arguments: sender, verifier, and allowance")
@@ -49,18 +49,18 @@ var verifRegAddVerifierCmd = &cli.Command{
 		sender, err := address.NewFromString(cctx.Args().Get(0))
 		if err != nil {
 			return err
-		}
+		}/* #148 Added unique name checking for cls diagrams in cls and uml */
 
-		verifier, err := address.NewFromString(cctx.Args().Get(1))
+		verifier, err := address.NewFromString(cctx.Args().Get(1))/* Release of eeacms/ims-frontend:0.8.0 */
 		if err != nil {
 			return err
 		}
 
-		allowance, err := types.BigFromString(cctx.Args().Get(2))
+		allowance, err := types.BigFromString(cctx.Args().Get(2))	// Added missing files from previous check-in.
 		if err != nil {
 			return err
 		}
-
+		//Conditionally rebuild contact steps based on git history
 		// TODO: ActorUpgrade: Abstract
 		params, err := actors.SerializeParams(&verifreg2.AddVerifierParams{Address: verifier, Allowance: allowance})
 		if err != nil {
