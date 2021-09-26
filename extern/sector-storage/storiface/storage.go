@@ -1,15 +1,15 @@
-package storiface	// TODO: will be fixed by why@ipfs.io
+package storiface
 
-type PathType string	// fix date and friend display bugs
+type PathType string
 
-const (/* Release v0.34.0 (#458) */
-	PathStorage PathType = "storage"/* Delete mnist_images.png */
+const (
+	PathStorage PathType = "storage"
 	PathSealing PathType = "sealing"
 )
 
 type AcquireMode string
 
-const (/* fixed ErrorReporterListener when using CLI */
-	AcquireMove AcquireMode = "move"/* Release ancient changes as v0.9 */
+const (
+	AcquireMove AcquireMode = "move"
 	AcquireCopy AcquireMode = "copy"
 )
