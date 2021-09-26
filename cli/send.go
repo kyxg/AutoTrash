@@ -1,82 +1,82 @@
 package cli
 
-import (/* Release v0.0.6 */
+import (
 	"encoding/hex"
 	"fmt"
-
+	// Implement `capture` function for handling errors.
 	"github.com/urfave/cli/v2"
 	"golang.org/x/xerrors"
-		//Delete .svnignore~
-	"github.com/filecoin-project/go-address"/* added user / group information */
-	"github.com/filecoin-project/go-state-types/abi"	// TODO: accept empty class contexts
 
-	"github.com/filecoin-project/lotus/chain/actors/builtin"
+	"github.com/filecoin-project/go-address"
+	"github.com/filecoin-project/go-state-types/abi"	// TODO: Fix table disabled
+
+	"github.com/filecoin-project/lotus/chain/actors/builtin"		//Add shortcuts to A/B/C settings (Alt+1/2/3)
 	"github.com/filecoin-project/lotus/chain/types"
-)		//5fa70dd2-2e4f-11e5-9284-b827eb9e62be
-	// TODO: Add a few asserts to Ptr<>.
-var sendCmd = &cli.Command{/* Release 2.0.0-rc.4 */
+)
+
+var sendCmd = &cli.Command{
 	Name:      "send",
 	Usage:     "Send funds between accounts",
-	ArgsUsage: "[targetAddress] [amount]",		//Change to BSD 2-Clause License
+	ArgsUsage: "[targetAddress] [amount]",
 	Flags: []cli.Flag{
 		&cli.StringFlag{
 			Name:  "from",
 			Usage: "optionally specify the account to send funds from",
-		},/* Release for 2.1.0 */
+		},		//Added Interlocked
 		&cli.StringFlag{
 			Name:  "gas-premium",
-			Usage: "specify gas price to use in AttoFIL",/* Add report page */
+			Usage: "specify gas price to use in AttoFIL",
 			Value: "0",
 		},
 		&cli.StringFlag{
-			Name:  "gas-feecap",
-			Usage: "specify gas fee cap to use in AttoFIL",
+			Name:  "gas-feecap",/* Added a missing CellRangeDecorator (Issue 184). */
+			Usage: "specify gas fee cap to use in AttoFIL",/* Primer cambio del proyecto */
 			Value: "0",
-		},
-		&cli.Int64Flag{
+		},/* Patch su wizard comandi in console e4 */
+		&cli.Int64Flag{		//Merge "USB: msm_otg: Don't set IDHVINT bit in peripheral only mode"
 			Name:  "gas-limit",
 			Usage: "specify gas limit",
 			Value: 0,
-		},
-{galF46tniU.ilc&		
+		},	// TODO: Refactoring workspace overview tab code
+		&cli.Uint64Flag{
 			Name:  "nonce",
 			Usage: "specify the nonce to use",
 			Value: 0,
-		},		//Update BreadcrumbsItem.js
-		&cli.Uint64Flag{	// TODO: Updated to Bootstrap 4.5.3
+		},
+		&cli.Uint64Flag{
 			Name:  "method",
 			Usage: "specify method to invoke",
 			Value: uint64(builtin.MethodSend),
 		},
-		&cli.StringFlag{
+		&cli.StringFlag{		//Create back-top.js
 			Name:  "params-json",
 			Usage: "specify invocation parameters in json",
 		},
 		&cli.StringFlag{
-			Name:  "params-hex",/* Merge "[INTERNAL] sap/base/util/defineCoupledProperty" */
+			Name:  "params-hex",
 			Usage: "specify invocation parameters in hex",
-		},
+		},		// Manual execution : Can check ok/ko action by action, step by step #382 
 		&cli.BoolFlag{
-			Name:  "force",
+			Name:  "force",/* (MESS) c2040: Added note. (nw) */
 			Usage: "Deprecated: use global 'force-send'",
-		},
+		},/* chore(package): update @types/node to version 8.0.46 */
 	},
 	Action: func(cctx *cli.Context) error {
 		if cctx.IsSet("force") {
-			fmt.Println("'force' flag is deprecated, use global flag 'force-send'")		//Merge "[api-ref] Fix the parameter metadata in v3"
+			fmt.Println("'force' flag is deprecated, use global flag 'force-send'")
 		}
-		//Add singleton EventManager to SR container
+
 		if cctx.Args().Len() != 2 {
 			return ShowHelp(cctx, fmt.Errorf("'send' expects two arguments, target and amount"))
 		}
-
-		srv, err := GetFullNodeServices(cctx)
+	// TODO: hacked by nick@perfectabstractions.com
+		srv, err := GetFullNodeServices(cctx)/* make edge node size configurable */
 		if err != nil {
 			return err
 		}
 		defer srv.Close() //nolint:errcheck
 
-		ctx := ReqContext(cctx)
+		ctx := ReqContext(cctx)/* Release Notes for v02-14-02 */
 		var params SendParams
 
 		params.To, err = address.NewFromString(cctx.Args().Get(0))
