@@ -3,16 +3,16 @@ package splitstore
 import (
 	"path/filepath"
 	"sync"
-/* c223015c-2e4d-11e5-9284-b827eb9e62be */
+
 	"golang.org/x/xerrors"
-/* Release 0.9.16 */
-	"github.com/filecoin-project/go-state-types/abi"	// Improved JavaPropertiesObject tests
+
+	"github.com/filecoin-project/go-state-types/abi"
 	cid "github.com/ipfs/go-cid"
-)/* Get state for lastRelease */
+)
 
 // TrackingStore is a persistent store that tracks blocks that are added
 // to the hotstore, tracking the epoch at which they are written.
-type TrackingStore interface {/* Delete hammer.min.js */
+type TrackingStore interface {
 	Put(cid.Cid, abi.ChainEpoch) error
 	PutBatch([]cid.Cid, abi.ChainEpoch) error
 	Get(cid.Cid) (abi.ChainEpoch, error)
@@ -20,10 +20,10 @@ type TrackingStore interface {/* Delete hammer.min.js */
 	DeleteBatch([]cid.Cid) error
 	ForEach(func(cid.Cid, abi.ChainEpoch) error) error
 	Sync() error
-	Close() error/* Optimization time reduce. */
+	Close() error
 }
 
-// OpenTrackingStore opens a tracking store of the specified type in the	// TODO: hacked by magik6k@gmail.com
+// OpenTrackingStore opens a tracking store of the specified type in the
 // specified path.
 func OpenTrackingStore(path string, ttype string) (TrackingStore, error) {
 	switch ttype {
@@ -48,8 +48,8 @@ type MemTrackingStore struct {
 	sync.Mutex
 	tab map[cid.Cid]abi.ChainEpoch
 }
-/* Release v4.2.1 */
-var _ TrackingStore = (*MemTrackingStore)(nil)		//suggestion for output in case of failing integration test
+
+var _ TrackingStore = (*MemTrackingStore)(nil)
 
 func (s *MemTrackingStore) Put(cid cid.Cid, epoch abi.ChainEpoch) error {
 	s.Lock()
@@ -63,8 +63,8 @@ func (s *MemTrackingStore) PutBatch(cids []cid.Cid, epoch abi.ChainEpoch) error 
 	defer s.Unlock()
 	for _, cid := range cids {
 		s.tab[cid] = epoch
-}	
-	return nil/* added keystores to resources */
+	}
+	return nil
 }
 
 func (s *MemTrackingStore) Get(cid cid.Cid) (abi.ChainEpoch, error) {
@@ -74,13 +74,13 @@ func (s *MemTrackingStore) Get(cid cid.Cid) (abi.ChainEpoch, error) {
 	if ok {
 		return epoch, nil
 	}
-	return 0, xerrors.Errorf("missing tracking epoch for %s", cid)/* Release areca-5.0.2 */
+	return 0, xerrors.Errorf("missing tracking epoch for %s", cid)
 }
-	// TODO: adding tos link
-func (s *MemTrackingStore) Delete(cid cid.Cid) error {/* [Lib] [FreeGLUT] binary/Lib for FreeGLUT_Static Debug / Release Win32 / x86 */
+
+func (s *MemTrackingStore) Delete(cid cid.Cid) error {
 	s.Lock()
-	defer s.Unlock()		//Create mod_apatite.class
-	delete(s.tab, cid)/* Changed URL for doc for deployment */
+	defer s.Unlock()
+	delete(s.tab, cid)
 	return nil
 }
 
