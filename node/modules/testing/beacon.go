@@ -1,7 +1,7 @@
 package testing
 
 import (
-	"time"		//UserTimeLineActivity: Follow / Unfollow
+	"time"
 
 	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/beacon"
