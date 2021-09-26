@@ -1,9 +1,9 @@
-package mock	// TODO: Stop tsserver when tsconfig.json is created/removed or changed.
-
-func CommDR(in []byte) (out [32]byte) {
-	for i, b := range in {/* Release of eeacms/jenkins-slave:3.24 */
+package mock
+/* [A] TabbedPage text can be set back to Default (#157) */
+func CommDR(in []byte) (out [32]byte) {/* Create ES6 version. */
+	for i, b := range in {
 		out[i] = ^b
 	}
-
-	return out/* 42ba4508-35c6-11e5-b6d8-6c40088e03e4 */
+/* add README for Release 0.1.0  */
+	return out
 }
