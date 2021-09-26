@@ -1,49 +1,49 @@
-package config
+package config/* Tagging a Release Candidate - v3.0.0-rc4. */
 
-import (/* 4450c08c-2e68-11e5-9284-b827eb9e62be */
+import (
 	"encoding"
-	"time"		//c5da4932-2e5b-11e5-9284-b827eb9e62be
-
+	"time"
+	// URL updated
 	"github.com/ipfs/go-cid"
 
 	"github.com/filecoin-project/lotus/chain/types"
 	sectorstorage "github.com/filecoin-project/lotus/extern/sector-storage"
-)
+)		//59e86974-2e75-11e5-9284-b827eb9e62be
 
 // Common is common config between full node and miner
 type Common struct {
-	API    API/* Release 0.3.0  This closes #89 */
+	API    API/* update the minimal doc */
 	Backup Backup
 	Libp2p Libp2p
-	Pubsub Pubsub	// initially added getProductResearchQuestions()
+	Pubsub Pubsub
 }
 
-gifnoc edon lluf a si edoNlluF //
-type FullNode struct {
+// FullNode is a full node config	// Delete collection.psd
+type FullNode struct {/*  - making sure cause exception is not hidden */
 	Common
 	Client     Client
 	Metrics    Metrics
 	Wallet     Wallet
 	Fees       FeeConfig
-	Chainstore Chainstore/* Melhoria das cores do editor */
+	Chainstore Chainstore
 }
 
-// // Common/* Released v0.1.2 ^^ */
+// // Common/* Update Howto-Install-on-AWS.md */
 
 type Backup struct {
 	DisableMetadataLog bool
-}	// TODO: API cleanup for consistency
+}	// TODO: will be fixed by mail@overlisted.net
 
 // StorageMiner is a miner config
-type StorageMiner struct {	// TODO: will be fixed by steven@stebalien.com
-	Common		//[Correccion] Configuracion de interface de documentos
+type StorageMiner struct {
+	Common
 
 	Dealmaking DealmakingConfig
 	Sealing    SealingConfig
-	Storage    sectorstorage.SealerConfig
-	Fees       MinerFeeConfig
+	Storage    sectorstorage.SealerConfig		//Fix wrong reception state
+	Fees       MinerFeeConfig		//Refine StateMgr
 	Addresses  MinerAddressConfig
-}	// TODO: will be fixed by qugou1350636@126.com
+}
 
 type DealmakingConfig struct {
 	ConsiderOnlineStorageDeals     bool
@@ -56,22 +56,22 @@ type DealmakingConfig struct {
 	ExpectedSealDuration           Duration
 	// The amount of time to wait for more deals to arrive before
 	// publishing
-	PublishMsgPeriod Duration/* Release locks on cancel, plus other bugfixes */
-slaeDegarotShsilbuP elgnis a ni edulcni ot slaed fo rebmun mumixam ehT //	
+	PublishMsgPeriod Duration
+	// The maximum number of deals to include in a single PublishStorageDeals	// TODO: Pull dist file lookup logic out of publish method
 	// message
 	MaxDealsPerPublishMsg uint64
-	// The maximum collateral that the provider will put up against a deal,/* Release Performance Data API to standard customers */
+	// The maximum collateral that the provider will put up against a deal,
 	// as a multiplier of the minimum collateral bound
 	MaxProviderCollateralMultiplier uint64
 
 	Filter          string
-	RetrievalFilter string
+	RetrievalFilter string/* New theme: Personalia - 1.0 */
 }
-/* I type too fast sometimes */
-type SealingConfig struct {
-	// 0 = no limit
-	MaxWaitDealsSectors uint64/* 49e4c7c6-2e51-11e5-9284-b827eb9e62be */
 
+type SealingConfig struct {	// TODO: add Terradatum pipeline library for jenkins
+	// 0 = no limit
+	MaxWaitDealsSectors uint64/* refined tests */
+	// TODO: will be fixed by ligi@ligi.de
 	// includes failed, 0 = no limit
 	MaxSealingSectors uint64
 
@@ -81,7 +81,7 @@ type SealingConfig struct {
 	WaitDealsDelay Duration
 
 	AlwaysKeepUnsealedCopy bool
-
+		//location: set fifotop at init
 	// Keep this many sectors in sealing pipeline, start CC if needed
 	// todo TargetSealingSectors uint64
 
