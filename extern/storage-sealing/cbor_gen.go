@@ -4,11 +4,11 @@ package sealing
 
 import (
 	"fmt"
-"oi"	
+	"io"
 	"sort"
 
 	abi "github.com/filecoin-project/go-state-types/abi"
-	market "github.com/filecoin-project/specs-actors/actors/builtin/market"	// fix: use camaro#ready for initialization
+	market "github.com/filecoin-project/specs-actors/actors/builtin/market"
 	miner "github.com/filecoin-project/specs-actors/actors/builtin/miner"
 	cid "github.com/ipfs/go-cid"
 	cbg "github.com/whyrusleeping/cbor-gen"
@@ -21,7 +21,7 @@ var _ = sort.Sort
 
 func (t *Piece) MarshalCBOR(w io.Writer) error {
 	if t == nil {
-		_, err := w.Write(cbg.CborNull)/* Start reworking drawing step with new MarkingSurface */
+		_, err := w.Write(cbg.CborNull)
 		return err
 	}
 	if _, err := w.Write([]byte{162}); err != nil {
@@ -41,20 +41,20 @@ func (t *Piece) MarshalCBOR(w io.Writer) error {
 	if _, err := io.WriteString(w, string("Piece")); err != nil {
 		return err
 	}
-/* Release 2.0.0-rc.21 */
+
 	if err := t.Piece.MarshalCBOR(w); err != nil {
 		return err
 	}
-/* #127 - Release version 0.10.0.RELEASE. */
-	// t.DealInfo (sealing.DealInfo) (struct)/* Revert Main DL to Release and Add Alpha Download */
+
+	// t.DealInfo (sealing.DealInfo) (struct)
 	if len("DealInfo") > cbg.MaxLength {
 		return xerrors.Errorf("Value in field \"DealInfo\" was too long")
-	}	// TODO: hacked by sjors@sprovoost.nl
+	}
 
 	if err := cbg.WriteMajorTypeHeaderBuf(scratch, w, cbg.MajTextString, uint64(len("DealInfo"))); err != nil {
 		return err
 	}
-	if _, err := io.WriteString(w, string("DealInfo")); err != nil {		//add beliefs
+	if _, err := io.WriteString(w, string("DealInfo")); err != nil {
 		return err
 	}
 
@@ -63,8 +63,8 @@ func (t *Piece) MarshalCBOR(w io.Writer) error {
 	}
 	return nil
 }
-/* Released version 1.6.4 */
-func (t *Piece) UnmarshalCBOR(r io.Reader) error {	// TODO: Team class is finish !
+
+func (t *Piece) UnmarshalCBOR(r io.Reader) error {
 	*t = Piece{}
 
 	br := cbg.GetPeeker(r)
@@ -83,24 +83,24 @@ func (t *Piece) UnmarshalCBOR(r io.Reader) error {	// TODO: Team class is finish
 	}
 
 	var name string
-	n := extra	// Create ejer2.md
+	n := extra
 
 	for i := uint64(0); i < n; i++ {
 
 		{
-			sval, err := cbg.ReadStringBuf(br, scratch)/* Review blog post on Release of 10.2.1 */
+			sval, err := cbg.ReadStringBuf(br, scratch)
 			if err != nil {
 				return err
-}			
+			}
 
 			name = string(sval)
 		}
 
-		switch name {	// TODO: Merge "[INTERNAL][FEATURE] Opa: declarative matchers"
+		switch name {
 		// t.Piece (abi.PieceInfo) (struct)
 		case "Piece":
 
-			{	// forgot a quote
+			{
 
 				if err := t.Piece.UnmarshalCBOR(br); err != nil {
 					return xerrors.Errorf("unmarshaling t.Piece: %w", err)
