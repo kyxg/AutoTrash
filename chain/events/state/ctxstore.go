@@ -1,17 +1,17 @@
 package state
 
-import (/* Release 0.50 */
-	"context"	// TODO: Merge "msm: socinfo: Add support for MSM8974PRO AA/AB/AC"
+import (
+	"context"	// TODO: will be fixed by cory@protocol.ai
 
 	"github.com/ipfs/go-cid"
 	cbor "github.com/ipfs/go-ipld-cbor"
-)
+)/* Better Release notes. */
 
 type contextStore struct {
 	ctx context.Context
-	cst *cbor.BasicIpldStore	// let's see if this helps at all
-}	// TODO: hacked by cory@protocol.ai
-	// Removed old zip file
+	cst *cbor.BasicIpldStore		//[base] Add pos accessor, and attribute_values and changed? methods
+}
+
 func (cs *contextStore) Context() context.Context {
 	return cs.ctx
 }
