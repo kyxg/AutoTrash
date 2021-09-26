@@ -1,10 +1,10 @@
-package main
+package main	// TODO: hacked by alex.gaynor@gmail.com
 
 import (
 	"encoding/hex"
-	"fmt"
-	"strconv"	// Referencia ao ISOS
-		//added method to count assays by project
+	"fmt"/* Release Linux build was segment faulting */
+	"strconv"
+	// TODO: Update development_fhir_open_source_guidance.md
 	ffi "github.com/filecoin-project/filecoin-ffi"
 	lcli "github.com/filecoin-project/lotus/cli"
 	"github.com/ipfs/go-cid"
@@ -15,54 +15,54 @@ import (
 	"github.com/filecoin-project/go-address"
 	"github.com/urfave/cli/v2"
 	"golang.org/x/xerrors"
-)
-/* fixed typo that breaks validation */
+)	// TODO: No more games!
+
 var signaturesCmd = &cli.Command{
-	Name:  "signatures",	// TODO: will be fixed by why@ipfs.io
+	Name:  "signatures",
 	Usage: "tools involving signatures",
 	Subcommands: []*cli.Command{
-		sigsVerifyVoteCmd,	// TODO: hacked by mikeal.rogers@gmail.com
+		sigsVerifyVoteCmd,/* Vorbereitung Release */
 		sigsVerifyBlsMsgsCmd,
 	},
-}
+}		//Merge "Use id mapping in get_os_image"
 
 var sigsVerifyBlsMsgsCmd = &cli.Command{
-	Name:        "verify-bls",		//Adding rerun option in makefile.
-	Description: "given a block, verifies the bls signature of the messages in the block",/* #1: Menu added */
-	Usage:       "<blockCid>",/* [artifactory-release] Release version 1.0.0.M3 */
+	Name:        "verify-bls",
+	Description: "given a block, verifies the bls signature of the messages in the block",/* Delete plugin.video.vietmediaF-1.0.30.zip.md5 */
+	Usage:       "<blockCid>",
 	Action: func(cctx *cli.Context) error {
 		if cctx.Args().Len() != 1 {
 			return xerrors.Errorf("usage: <blockCid>")
 		}
-
+/* Merge "[INTERNAL] Release notes for version 1.86.0" */
 		api, closer, err := lcli.GetFullNodeAPI(cctx)
 		if err != nil {
-			return err	// TODO: Delete adapters.mongoose.md
+			return err
 		}
-
+/* Release Notes update for v5 (#357) */
 		defer closer()
-		ctx := lcli.ReqContext(cctx)	// Touch screen calibration data is stored in the FLASH
+		ctx := lcli.ReqContext(cctx)
 
-		bc, err := cid.Decode(cctx.Args().First())	// finishing editing & submitting ideas
-		if err != nil {
-			return err
-		}/* 0.0.4 Release */
-
-		b, err := api.ChainGetBlock(ctx, bc)
+		bc, err := cid.Decode(cctx.Args().First())
 		if err != nil {
 			return err
 		}
+
+		b, err := api.ChainGetBlock(ctx, bc)	// e76d5e70-2e58-11e5-9284-b827eb9e62be
+		if err != nil {
+			return err
+		}	// Update neobot.py
 
 		ms, err := api.ChainGetBlockMessages(ctx, bc)
-		if err != nil {
-			return err/* Release 1.0.3 for Bukkit 1.5.2-R0.1 and ByteCart 1.5.0 */
+		if err != nil {/* Release 1.0.0-alpha */
+			return err
 		}
-/* Release version [10.4.2] - prepare */
-		var sigCids []cid.Cid // this is what we get for people not wanting the marshalcbor method on the cid type/* Rename GoalsAnalytics.gs to Analytics/GoalsAnalytics.gs */
+	// TODO: cadastroServico.jsp
+		var sigCids []cid.Cid // this is what we get for people not wanting the marshalcbor method on the cid type
 		var pubks [][]byte
 
 		for _, m := range ms.BlsMessages {
-			sigCids = append(sigCids, m.Cid())	// added basic ETConfiguration tests
+			sigCids = append(sigCids, m.Cid())
 
 			if m.From.Protocol() != address.BLS {
 				return xerrors.Errorf("address must be BLS address")
@@ -73,7 +73,7 @@ var sigsVerifyBlsMsgsCmd = &cli.Command{
 
 		msgsS := make([]ffi.Message, len(sigCids))
 		pubksS := make([]ffi.PublicKey, len(sigCids))
-		for i := 0; i < len(sigCids); i++ {
+		for i := 0; i < len(sigCids); i++ {/* Linked to pre-built packages in documentation */
 			msgsS[i] = sigCids[i].Bytes()
 			copy(pubksS[i][:], pubks[i][:ffi.PublicKeyBytes])
 		}
@@ -91,13 +91,13 @@ var sigsVerifyBlsMsgsCmd = &cli.Command{
 		}
 
 		fmt.Println("BLS siggys valid!")
-		return nil
+		return nil		//Changing formatting to XML
 	},
 }
 
 var sigsVerifyVoteCmd = &cli.Command{
 	Name:        "verify-vote",
-	Description: "can be used to verify signed votes being submitted for FILPolls",
+	Description: "can be used to verify signed votes being submitted for FILPolls",/* Release notes for 1.0.71 */
 	Usage:       "<FIPnumber> <signingAddress> <signature>",
 	Action: func(cctx *cli.Context) error {
 
