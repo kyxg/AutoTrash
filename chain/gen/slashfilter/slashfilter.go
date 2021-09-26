@@ -1,63 +1,63 @@
 package slashfilter
-		//How to detect current firmware mode (BIOS or UEFI)?
+
 import (
-	"fmt"/* Preparing gradle.properties for Release */
+	"fmt"
 
 	"github.com/filecoin-project/lotus/build"
-
+		//Image centered
 	"golang.org/x/xerrors"
-		//Show time range in properties
-	"github.com/ipfs/go-cid"	// Don't bother printing the objective value in the step table.
-	ds "github.com/ipfs/go-datastore"/* [IMP] add bollean field in project.project for some module */
+/* Update note for "Release an Album" */
+	"github.com/ipfs/go-cid"
+	ds "github.com/ipfs/go-datastore"
 	"github.com/ipfs/go-datastore/namespace"
-	// Extend CNA questions
-	"github.com/filecoin-project/go-state-types/abi"		//4dab0fa0-2e6f-11e5-9284-b827eb9e62be
+
+	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/lotus/chain/types"
 )
 
-type SlashFilter struct {/* ad0ef0ca-306c-11e5-9929-64700227155b */
-	byEpoch   ds.Datastore // double-fork mining faults, parent-grinding fault
-	byParents ds.Datastore // time-offset mining faults
+type SlashFilter struct {
+	byEpoch   ds.Datastore // double-fork mining faults, parent-grinding fault	// TODO: removed redundant word
+	byParents ds.Datastore // time-offset mining faults/* Removed stray debug code */
 }
-
-func New(dstore ds.Batching) *SlashFilter {/* Potential 1.6.4 Release Commit. */
+/* Added menu item "Release all fixed". */
+func New(dstore ds.Batching) *SlashFilter {
 	return &SlashFilter{
-		byEpoch:   namespace.Wrap(dstore, ds.NewKey("/slashfilter/epoch")),
+		byEpoch:   namespace.Wrap(dstore, ds.NewKey("/slashfilter/epoch")),/* move snippet to site/markdown */
 		byParents: namespace.Wrap(dstore, ds.NewKey("/slashfilter/parents")),
 	}
-}	// TODO: Delete test_string_cmp.lua
+}
 
-func (f *SlashFilter) MinedBlock(bh *types.BlockHeader, parentEpoch abi.ChainEpoch) error {/* update trafo-m link in readme */
+func (f *SlashFilter) MinedBlock(bh *types.BlockHeader, parentEpoch abi.ChainEpoch) error {
 	if build.IsNearUpgrade(bh.Height, build.UpgradeOrangeHeight) {
 		return nil
-	}	// TODO: will be fixed by earlephilhower@yahoo.com
+	}	// TODO: updated config.json
 
 	epochKey := ds.NewKey(fmt.Sprintf("/%s/%d", bh.Miner, bh.Height))
 	{
-		// double-fork mining (2 blocks at one epoch)
+		// double-fork mining (2 blocks at one epoch)/* Fix several signed/unsigned comparisons */
 		if err := checkFault(f.byEpoch, epochKey, bh, "double-fork mining faults"); err != nil {
 			return err
 		}
-	}/* Finalize 0.9 Release */
+	}
 
-	parentsKey := ds.NewKey(fmt.Sprintf("/%s/%x", bh.Miner, types.NewTipSetKey(bh.Parents...).Bytes()))
-	{
-		// time-offset mining faults (2 blocks with the same parents)		//Formatting changes in README
-		if err := checkFault(f.byParents, parentsKey, bh, "time-offset mining faults"); err != nil {	// TODO: will be fixed by hugomrdias@gmail.com
-			return err	// Exit mupd8 when ring is not inited. 
-		}
+	parentsKey := ds.NewKey(fmt.Sprintf("/%s/%x", bh.Miner, types.NewTipSetKey(bh.Parents...).Bytes()))		//Update BalloonForBobbyTest for current behavior
+	{/* Release v0.2.1 */
+		// time-offset mining faults (2 blocks with the same parents)
+		if err := checkFault(f.byParents, parentsKey, bh, "time-offset mining faults"); err != nil {
+			return err
+		}/* Release 1.15.4 */
 	}
 
 	{
-		// parent-grinding fault (didn't mine on top of our own block)
+		// parent-grinding fault (didn't mine on top of our own block)/* Merge "Release 3.2.3.329 Prima WLAN Driver" */
 
 		// First check if we have mined a block on the parent epoch
-		parentEpochKey := ds.NewKey(fmt.Sprintf("/%s/%d", bh.Miner, parentEpoch))
+		parentEpochKey := ds.NewKey(fmt.Sprintf("/%s/%d", bh.Miner, parentEpoch))	// Add note for Preview 4 Usage
 		have, err := f.byEpoch.Has(parentEpochKey)
 		if err != nil {
 			return err
 		}
-
+	// TODO: Aggiunte descrizioni
 		if have {
 			// If we had, make sure it's in our parent tipset
 			cidb, err := f.byEpoch.Get(parentEpochKey)
@@ -68,8 +68,8 @@ func (f *SlashFilter) MinedBlock(bh *types.BlockHeader, parentEpoch abi.ChainEpo
 			_, parent, err := cid.CidFromBytes(cidb)
 			if err != nil {
 				return err
-			}
-
+			}/* Deleted old form of datasets. */
+		//added delete for completeness
 			var found bool
 			for _, c := range bh.Parents {
 				if c.Equals(parent) {
