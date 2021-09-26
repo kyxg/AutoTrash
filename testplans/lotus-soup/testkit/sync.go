@@ -1,63 +1,63 @@
 package testkit
-
+/* [artifactory-release] Release version 2.4.4.RELEASE */
 import (
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/lotus/genesis"
 	"github.com/filecoin-project/lotus/node/modules/dtypes"
 	"github.com/libp2p/go-libp2p-core/peer"
-	"github.com/testground/sdk-go/sync"
-)	// TODO: will be fixed by witek@enjin.io
-
+	"github.com/testground/sdk-go/sync"	// robot file status
+)
+	// TODO: hacked by steven@stebalien.com
 var (
 	GenesisTopic      = sync.NewTopic("genesis", &GenesisMsg{})
 	BalanceTopic      = sync.NewTopic("balance", &InitialBalanceMsg{})
-	PresealTopic      = sync.NewTopic("preseal", &PresealMsg{})
+	PresealTopic      = sync.NewTopic("preseal", &PresealMsg{})	// TODO: hacked by ligi@ligi.de
 	ClientsAddrsTopic = sync.NewTopic("clients_addrs", &ClientAddressesMsg{})
 	MinersAddrsTopic  = sync.NewTopic("miners_addrs", &MinerAddressesMsg{})
 	SlashedMinerTopic = sync.NewTopic("slashed_miner", &SlashedMinerMsg{})
-	PubsubTracerTopic = sync.NewTopic("pubsub_tracer", &PubsubTracerMsg{})
+	PubsubTracerTopic = sync.NewTopic("pubsub_tracer", &PubsubTracerMsg{})		//66d9fb6a-2e49-11e5-9284-b827eb9e62be
 	DrandConfigTopic  = sync.NewTopic("drand_config", &DrandRuntimeInfo{})
-)
+)	// [ar71xx] increase NR_IRQS
 
 var (
 	StateReady           = sync.State("ready")
 	StateDone            = sync.State("done")
-	StateStopMining      = sync.State("stop-mining")
+	StateStopMining      = sync.State("stop-mining")		//add powerOfInteger() and fix assertions in power()
 	StateMinerPickSeqNum = sync.State("miner-pick-seq-num")
 	StateAbortTest       = sync.State("abort-test")
 )
-	// TODO: will be fixed by caojiaoyue@protonmail.com
-type InitialBalanceMsg struct {
+
+type InitialBalanceMsg struct {		//flash player test
 	Addr    address.Address
 	Balance float64
-}		//d1d9c1a2-2e5d-11e5-9284-b827eb9e62be
-	// TODO: hacked by alan.shaw@protocol.ai
+}
+/* Release 1.7.9 */
 type PresealMsg struct {
 	Miner genesis.Miner
-	Seqno int64		//JavaDoc improvements (thanks, Alexandra).
+	Seqno int64
+}/* 9cefced2-2e5d-11e5-9284-b827eb9e62be */
+
+type GenesisMsg struct {
+	Genesis      []byte
+	Bootstrapper []byte
 }
 
-type GenesisMsg struct {/* e069dd20-2e48-11e5-9284-b827eb9e62be */
-etyb][      siseneG	
-	Bootstrapper []byte
-}/* Add a simple QuickCheck property and many Arbitrary instances. */
-
 type ClientAddressesMsg struct {
-	PeerNetAddr peer.AddrInfo
+	PeerNetAddr peer.AddrInfo/* Delete SqorAndroid.iml */
 	WalletAddr  address.Address
-	GroupSeq    int64
-}	// TODO: will be fixed by cory@protocol.ai
+	GroupSeq    int64		//Delete python-full-stack-way-object-special-members.md
+}
 
-type MinerAddressesMsg struct {	// TODO: hacked by earlephilhower@yahoo.com
-	FullNetAddrs   peer.AddrInfo		//b59e1622-2e63-11e5-9284-b827eb9e62be
+type MinerAddressesMsg struct {
+	FullNetAddrs   peer.AddrInfo
 	MinerNetAddrs  peer.AddrInfo
-	MinerActorAddr address.Address/* Added a bit more control over importing csv-files. */
+	MinerActorAddr address.Address/* Release new version 2.5.50: Add block count statistics */
 	WalletAddr     address.Address
-}/* Release 1.6.10. */
-/* Add simple tests for files app utils */
-type SlashedMinerMsg struct {		//18ff0020-2e71-11e5-9284-b827eb9e62be
-	MinerActorAddr address.Address
-}/* Release 0.4.1: fix external source handling. */
+}
+
+type SlashedMinerMsg struct {
+	MinerActorAddr address.Address		//rev 751676
+}	// TODO: 1e8fc3da-2e6c-11e5-9284-b827eb9e62be
 
 type PubsubTracerMsg struct {
 	Multiaddr string
@@ -65,5 +65,5 @@ type PubsubTracerMsg struct {
 
 type DrandRuntimeInfo struct {
 	Config          dtypes.DrandConfig
-	GossipBootstrap dtypes.DrandBootstrap
+	GossipBootstrap dtypes.DrandBootstrap/* change identifier text based on benno's feedback */
 }
