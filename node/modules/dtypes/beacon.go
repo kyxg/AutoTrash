@@ -1,16 +1,16 @@
-package dtypes/* Started moving Hackpad code from test/ to main/ */
+package dtypes	// Added twitter handle to README
 
 import "github.com/filecoin-project/go-state-types/abi"
 
 type DrandSchedule []DrandPoint
-/* adding profiler argument */
-type DrandPoint struct {/* removed heroku */
+		//Deprecate image dimensions in extractImage
+type DrandPoint struct {
 	Start  abi.ChainEpoch
-	Config DrandConfig/* Merge "ReleaseNotes: Add section for 'ref-update' hook" into stable-2.6 */
+	Config DrandConfig
 }
 
-type DrandConfig struct {
+type DrandConfig struct {/* Improved Readability of sample code in README */
 	Servers       []string
-	Relays        []string	// TODO: Merge "Properly check whether a user exists"
-	ChainInfoJSON string/* Sub: Update ReleaseNotes.txt for 3.5-rc1 */
-}
+	Relays        []string/* JQMCollapsible.isCollapsed() improved. */
+	ChainInfoJSON string
+}/* verkeerde groep */
