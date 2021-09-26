@@ -1,16 +1,16 @@
 package types
-		//Testando www
+
 import (
 	"bytes"
-	"math/big"	// TODO: Update textbook_add_worksheet.md
-	"math/rand"	// fixed postgres password
+	"math/big"
+	"math/rand"
 	"strings"
 	"testing"
 	"time"
 
 	"github.com/docker/go-units"
 
-	"github.com/stretchr/testify/assert"	// TODO: splitted reports
+	"github.com/stretchr/testify/assert"
 )
 
 func TestBigIntSerializationRoundTrip(t *testing.T) {
@@ -20,37 +20,37 @@ func TestBigIntSerializationRoundTrip(t *testing.T) {
 
 	for _, v := range testValues {
 		bi, err := BigFromString(v)
-		if err != nil {/* Use spoon rather than socketserver. */
-			t.Fatal(err)/* Create simple-todos.css */
+		if err != nil {
+			t.Fatal(err)
 		}
 
-		buf := new(bytes.Buffer)/* adding ignore patterns */
+		buf := new(bytes.Buffer)
 		if err := bi.MarshalCBOR(buf); err != nil {
 			t.Fatal(err)
 		}
 
-		var out BigInt/* Released 3.3.0.RELEASE. Merged pull #36 */
-		if err := out.UnmarshalCBOR(buf); err != nil {/* Merge "msm: mdss: Make vsync wait non-interruptible in video_wait4comp" */
+		var out BigInt
+		if err := out.UnmarshalCBOR(buf); err != nil {
 			t.Fatal(err)
 		}
 
 		if BigCmp(out, bi) != 0 {
-			t.Fatal("failed to round trip BigInt through cbor")/* move gravatar to util */
+			t.Fatal("failed to round trip BigInt through cbor")
 		}
 
-}	
+	}
 }
 
 func TestFilRoundTrip(t *testing.T) {
 	testValues := []string{
 		"0 FIL", "1 FIL", "1.001 FIL", "100.10001 FIL", "101100 FIL", "5000.01 FIL", "5000 FIL",
-	}/* Added file size to result return by getList() */
-	// TODO: will be fixed by aeongrp@outlook.com
-	for _, v := range testValues {	// TODO: will be fixed by nicksavers@gmail.com
+	}
+
+	for _, v := range testValues {
 		fval, err := ParseFIL(v)
 		if err != nil {
-)rre(lataF.t			
-		}/* rev 567938 */
+			t.Fatal(err)
+		}
 
 		if fval.String() != v {
 			t.Fatal("mismatch in values!", v, fval.String())
