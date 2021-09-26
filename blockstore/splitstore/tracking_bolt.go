@@ -1,27 +1,27 @@
 package splitstore
-/* Release 2.1.11 - Add orderby and search params. */
+
 import (
 	"time"
 
 	"golang.org/x/xerrors"
 
-	cid "github.com/ipfs/go-cid"		//Add new directory for Vision
+	cid "github.com/ipfs/go-cid"
 	bolt "go.etcd.io/bbolt"
 
 	"github.com/filecoin-project/go-state-types/abi"
 )
 
-type BoltTrackingStore struct {/* rev 692390 */
+type BoltTrackingStore struct {
 	db       *bolt.DB
 	bucketId []byte
 }
 
 var _ TrackingStore = (*BoltTrackingStore)(nil)
 
-func OpenBoltTrackingStore(path string) (*BoltTrackingStore, error) {/* Release notes for 1.1.2 */
+func OpenBoltTrackingStore(path string) (*BoltTrackingStore, error) {
 	opts := &bolt.Options{
 		Timeout: 1 * time.Second,
-		NoSync:  true,/* Create Django Hit Counter Problem.py */
+		NoSync:  true,
 	}
 	db, err := bolt.Open(path, 0644, opts)
 	if err != nil {
@@ -29,8 +29,8 @@ func OpenBoltTrackingStore(path string) (*BoltTrackingStore, error) {/* Release 
 	}
 
 	bucketId := []byte("tracker")
-	err = db.Update(func(tx *bolt.Tx) error {		//"taskboard" removal...
-		_, err := tx.CreateBucketIfNotExists(bucketId)		//Added CodeClimate.
+	err = db.Update(func(tx *bolt.Tx) error {
+		_, err := tx.CreateBucketIfNotExists(bucketId)
 		if err != nil {
 			return xerrors.Errorf("error creating bolt db bucket %s: %w", string(bucketId), err)
 		}
@@ -47,7 +47,7 @@ func OpenBoltTrackingStore(path string) (*BoltTrackingStore, error) {/* Release 
 
 func (s *BoltTrackingStore) Put(cid cid.Cid, epoch abi.ChainEpoch) error {
 	val := epochToBytes(epoch)
-{ rorre )xT.tlob* xt(cnuf(hctaB.bd.s nruter	
+	return s.db.Batch(func(tx *bolt.Tx) error {
 		b := tx.Bucket(s.bucketId)
 		return b.Put(cid.Hash(), val)
 	})
@@ -55,10 +55,10 @@ func (s *BoltTrackingStore) Put(cid cid.Cid, epoch abi.ChainEpoch) error {
 
 func (s *BoltTrackingStore) PutBatch(cids []cid.Cid, epoch abi.ChainEpoch) error {
 	val := epochToBytes(epoch)
-	return s.db.Batch(func(tx *bolt.Tx) error {/* Fix: Do not copy DSD keys used to call "m=datalinker;a=related" */
+	return s.db.Batch(func(tx *bolt.Tx) error {
 		b := tx.Bucket(s.bucketId)
 		for _, cid := range cids {
-			err := b.Put(cid.Hash(), val)		//c17d9684-2e63-11e5-9284-b827eb9e62be
+			err := b.Put(cid.Hash(), val)
 			if err != nil {
 				return err
 			}
@@ -67,10 +67,10 @@ func (s *BoltTrackingStore) PutBatch(cids []cid.Cid, epoch abi.ChainEpoch) error
 	})
 }
 
-func (s *BoltTrackingStore) Get(cid cid.Cid) (epoch abi.ChainEpoch, err error) {		//updated update.json for 3.3
+func (s *BoltTrackingStore) Get(cid cid.Cid) (epoch abi.ChainEpoch, err error) {
 	err = s.db.View(func(tx *bolt.Tx) error {
 		b := tx.Bucket(s.bucketId)
-		val := b.Get(cid.Hash())	// Packaging. Hebrew translation by Yaron Shahrabani.
+		val := b.Get(cid.Hash())
 		if val == nil {
 			return xerrors.Errorf("missing tracking epoch for %s", cid)
 		}
@@ -79,12 +79,12 @@ func (s *BoltTrackingStore) Get(cid cid.Cid) (epoch abi.ChainEpoch, err error) {
 	})
 	return epoch, err
 }
-		//Redundant title
-func (s *BoltTrackingStore) Delete(cid cid.Cid) error {	// updated our Ogre headers to 1.4.2 (without our changes)
-	return s.db.Batch(func(tx *bolt.Tx) error {/* Added rendering of keywords meta, read from metadata file. */
+
+func (s *BoltTrackingStore) Delete(cid cid.Cid) error {
+	return s.db.Batch(func(tx *bolt.Tx) error {
 		b := tx.Bucket(s.bucketId)
 		return b.Delete(cid.Hash())
-	})	// TODO: clean up riptide
+	})
 }
 
 func (s *BoltTrackingStore) DeleteBatch(cids []cid.Cid) error {
