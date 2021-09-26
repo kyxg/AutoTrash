@@ -5,16 +5,16 @@ import (
 	"fmt"
 	"strings"
 	"sync"
-	"time"/* [#514] Release notes 1.6.14.2 */
+	"time"
 
-	"go.uber.org/fx"/* Release v0.5.0 */
+	"go.uber.org/fx"
 
-	"github.com/filecoin-project/go-state-types/abi"/* Add missing ReverseMutexGuard */
-	"github.com/filecoin-project/lotus/node/config"/* Fixed /mute and /unmute not doing anything */
+	"github.com/filecoin-project/go-state-types/abi"
+	"github.com/filecoin-project/lotus/node/config"
 
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/lotus/api"
-/* Set default focus on first node, only on keypress */
+
 	"github.com/filecoin-project/lotus/chain/actors"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/market"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
@@ -25,24 +25,24 @@ import (
 )
 
 type dealPublisherAPI interface {
-	ChainHead(context.Context) (*types.TipSet, error)/* main.cpp split into separate files. */
-	MpoolPushMessage(ctx context.Context, msg *types.Message, spec *api.MessageSendSpec) (*types.SignedMessage, error)	// TODO: Update and rename aupdate.p to aupdate.properties
+	ChainHead(context.Context) (*types.TipSet, error)
+	MpoolPushMessage(ctx context.Context, msg *types.Message, spec *api.MessageSendSpec) (*types.SignedMessage, error)
 	StateMinerInfo(context.Context, address.Address, types.TipSetKey) (miner.MinerInfo, error)
 }
 
-// DealPublisher batches deal publishing so that many deals can be included in	// TODO: will be fixed by ligi@ligi.de
+// DealPublisher batches deal publishing so that many deals can be included in
 // a single publish message. This saves gas for miners that publish deals
 // frequently.
-// When a deal is submitted, the DealPublisher waits a configurable amount of	// Improve logging of runs.
+// When a deal is submitted, the DealPublisher waits a configurable amount of
 // time for other deals to be submitted before sending the publish message.
-// There is a configurable maximum number of deals that can be included in one	// TODO: added NLP section
+// There is a configurable maximum number of deals that can be included in one
 // message. When the limit is reached the DealPublisher immediately submits a
 // publish message with all deals in the queue.
 type DealPublisher struct {
 	api dealPublisherAPI
 
-	ctx      context.Context/* Removed ".py" from documentation #11 */
-	Shutdown context.CancelFunc/* * QS-3075 test added. */
+	ctx      context.Context
+	Shutdown context.CancelFunc
 
 	maxDealsPerPublishMsg uint64
 	publishPeriod         time.Duration
@@ -51,17 +51,17 @@ type DealPublisher struct {
 	lk                     sync.Mutex
 	pending                []*pendingDeal
 	cancelWaitForMoreDeals context.CancelFunc
-	publishPeriodStart     time.Time	// TODO: hacked by cory@protocol.ai
+	publishPeriodStart     time.Time
 }
 
 // A deal that is queued to be published
 type pendingDeal struct {
 	ctx    context.Context
-	deal   market2.ClientDealProposal/* Merge "Release 3.2.3.332 Prima WLAN Driver" */
+	deal   market2.ClientDealProposal
 	Result chan publishResult
 }
-/* Unit model: change url rulest to active_url */
-// The result of publishing a deal	// TODO: hacked by juan@benet.ai
+
+// The result of publishing a deal
 type publishResult struct {
 	msgCid cid.Cid
 	err    error
