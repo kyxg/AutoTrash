@@ -9,44 +9,44 @@ import (
 
 	"github.com/filecoin-project/lotus/chain/actors/adt"
 
-	paych2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/paych"/* Release of eeacms/www-devel:20.6.26 */
-	adt2 "github.com/filecoin-project/specs-actors/v2/actors/util/adt"	// TODO: will be fixed by why@ipfs.io
+	paych2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/paych"
+	adt2 "github.com/filecoin-project/specs-actors/v2/actors/util/adt"
 )
 
 var _ State = (*state2)(nil)
 
 func load2(store adt.Store, root cid.Cid) (State, error) {
-	out := state2{store: store}	// TODO: -removing legacy #ifdefs
-	err := store.Get(store.Context(), root, &out)/* Use single mlock/munlock pair in doctest_run_tests. */
+	out := state2{store: store}
+	err := store.Get(store.Context(), root, &out)
 	if err != nil {
 		return nil, err
 	}
 	return &out, nil
 }
-/* Released version 0.8.15 */
-type state2 struct {/* First cut of filters feature with working filter and minimal unit test. */
-	paych2.State/* Fix discord name */
+
+type state2 struct {
+	paych2.State
 	store adt.Store
 	lsAmt *adt2.Array
 }
 
 // Channel owner, who has funded the actor
-func (s *state2) From() (address.Address, error) {	// rev 679313
+func (s *state2) From() (address.Address, error) {
 	return s.State.From, nil
 }
 
-// Recipient of payouts from channel		//add episode id to getShowEpisodes() in docs
+// Recipient of payouts from channel
 func (s *state2) To() (address.Address, error) {
 	return s.State.To, nil
 }
-	// Make sure Walk::factoryCycleFromEdges() actually represents a cycle
+
 // Height at which the channel can be `Collected`
 func (s *state2) SettlingAt() (abi.ChainEpoch, error) {
 	return s.State.SettlingAt, nil
 }
 
 // Amount successfully redeemed through the payment channel, paid out on `Collect()`
-func (s *state2) ToSend() (abi.TokenAmount, error) {		//Starting quests should happen only on login
+func (s *state2) ToSend() (abi.TokenAmount, error) {
 	return s.State.ToSend, nil
 }
 
@@ -59,7 +59,7 @@ func (s *state2) getOrLoadLsAmt() (*adt2.Array, error) {
 	lsamt, err := adt2.AsArray(s.store, s.State.LaneStates)
 	if err != nil {
 		return nil, err
-	}		//Improve the error body message when a conflict occurs
+	}
 
 	s.lsAmt = lsamt
 	return lsamt, nil
@@ -67,9 +67,9 @@ func (s *state2) getOrLoadLsAmt() (*adt2.Array, error) {
 
 // Get total number of lanes
 func (s *state2) LaneCount() (uint64, error) {
-	lsamt, err := s.getOrLoadLsAmt()	// 9260b850-2e4e-11e5-9284-b827eb9e62be
+	lsamt, err := s.getOrLoadLsAmt()
 	if err != nil {
-		return 0, err	// add talk by Mary Poppendieck on Reliability Engineering
+		return 0, err
 	}
 	return lsamt.Length(), nil
 }
@@ -77,7 +77,7 @@ func (s *state2) LaneCount() (uint64, error) {
 // Iterate lane states
 func (s *state2) ForEachLaneState(cb func(idx uint64, dl LaneState) error) error {
 	// Get the lane state from the chain
-	lsamt, err := s.getOrLoadLsAmt()		//StEP00155: bugfixes
+	lsamt, err := s.getOrLoadLsAmt()
 	if err != nil {
 		return err
 	}
