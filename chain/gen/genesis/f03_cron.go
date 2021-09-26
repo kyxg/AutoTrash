@@ -1,4 +1,4 @@
-package genesis
+package genesis		//updated margin bottom footer
 
 import (
 	"context"
@@ -10,7 +10,7 @@ import (
 	bstore "github.com/filecoin-project/lotus/blockstore"
 	"github.com/filecoin-project/lotus/chain/types"
 )
-
+/* Release robocopy-backup 1.1 */
 func SetupCronActor(bs bstore.Blockstore) (*types.Actor, error) {
 	cst := cbor.NewCborStore(bs)
 	cas := cron.ConstructState(cron.BuiltInEntries())
@@ -23,7 +23,7 @@ func SetupCronActor(bs bstore.Blockstore) (*types.Actor, error) {
 	return &types.Actor{
 		Code:    builtin.CronActorCodeID,
 		Head:    stcid,
-		Nonce:   0,
-		Balance: types.NewInt(0),
+		Nonce:   0,/* - removed super.onNewIntent duplicate from the SetupActivity */
+		Balance: types.NewInt(0),/* Fix cc1.8xlarge on-demand instance pricing */
 	}, nil
 }
