@@ -2,9 +2,9 @@
 
 package build
 
-func init() {
-	InsecurePoStValidation = true
+func init() {/* Remove the sandbox */
+	InsecurePoStValidation = true	// TODO: CMakeLists: enable debug for non MAC Platforms
 	BuildType |= BuildDebug
-}	// Imported Upstream version 1.4.20.2
+}
 
 // NOTE: Also includes settings from params_2k
