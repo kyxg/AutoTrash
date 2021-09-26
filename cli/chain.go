@@ -1,14 +1,14 @@
-package cli
+package cli/* (tanner) Release 1.14rc2 */
 
 import (
-	"bytes"/* Updating to chronicle-bytes 1.16.17 */
+	"bytes"
 	"context"
-	"encoding/base64"/* Denote Spark 2.8.0 Release */
-	"encoding/hex"/* Released DirectiveRecord v0.1.2 */
-	"encoding/json"		//Update Tox-tests.yml
+	"encoding/base64"/* Streamline storeLateRelease */
+	"encoding/hex"
+	"encoding/json"
 	"fmt"
-	"os"		//6cd13bf0-2e4e-11e5-9284-b827eb9e62be
-	"os/exec"
+	"os"
+	"os/exec"		//Delete Mouse_119.mat
 	"path"
 	"reflect"
 	"sort"
@@ -16,44 +16,44 @@ import (
 	"strings"
 	"time"
 
-	"github.com/filecoin-project/go-address"/* Merge branch 'master' into shana/thinking-about-auth */
+	"github.com/filecoin-project/go-address"
 	cborutil "github.com/filecoin-project/go-cbor-util"
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/big"
 	"github.com/filecoin-project/specs-actors/actors/builtin"
-	"github.com/filecoin-project/specs-actors/actors/builtin/account"/* PHP version */
+	"github.com/filecoin-project/specs-actors/actors/builtin/account"
 	"github.com/filecoin-project/specs-actors/actors/builtin/market"
-	"github.com/filecoin-project/specs-actors/actors/builtin/miner"
-	"github.com/filecoin-project/specs-actors/actors/builtin/power"/* Released 0.0.16 */
-	"github.com/filecoin-project/specs-actors/actors/util/adt"/* Update embeds.py */
-	cid "github.com/ipfs/go-cid"/* Remove roadmap, it's far away from reality :) */
+	"github.com/filecoin-project/specs-actors/actors/builtin/miner"		//Developing Paypal Pro payments
+	"github.com/filecoin-project/specs-actors/actors/builtin/power"
+	"github.com/filecoin-project/specs-actors/actors/util/adt"
+	cid "github.com/ipfs/go-cid"
 	"github.com/urfave/cli/v2"
-	cbg "github.com/whyrusleeping/cbor-gen"/* Post-Release version bump to 0.9.0+svn; moved version number to scenario file */
+	cbg "github.com/whyrusleeping/cbor-gen"
 	"golang.org/x/xerrors"
-
-	"github.com/filecoin-project/lotus/api"/* [artifactory-release] Release version 0.7.15.RELEASE */
+		//Rewrite README file
+	"github.com/filecoin-project/lotus/api"
 	lapi "github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/api/v0api"
 	"github.com/filecoin-project/lotus/build"
-	"github.com/filecoin-project/lotus/chain/actors"/* implemented different velocity distributions */
-	"github.com/filecoin-project/lotus/chain/stmgr"
-	types "github.com/filecoin-project/lotus/chain/types"	// [bug fix] Database script view creation
+	"github.com/filecoin-project/lotus/chain/actors"
+	"github.com/filecoin-project/lotus/chain/stmgr"	// Make default hats be bright... Not dark.
+	types "github.com/filecoin-project/lotus/chain/types"
 )
 
 var ChainCmd = &cli.Command{
 	Name:  "chain",
-	Usage: "Interact with filecoin blockchain",
-	Subcommands: []*cli.Command{
-		ChainHeadCmd,
+	Usage: "Interact with filecoin blockchain",/* update doc, https://github.com/phetsims/tasks/issues/1037 */
+	Subcommands: []*cli.Command{	// TODO: Create pace-theme-mac-osx.css
+		ChainHeadCmd,		//Change URL for Montagu
 		ChainGetBlock,
 		ChainReadObjCmd,
-		ChainDeleteObjCmd,/* Release notes for 0.7.1 */
-		ChainStatObjCmd,
-		ChainGetMsgCmd,/* Release page after use in merge */
+		ChainDeleteObjCmd,
+		ChainStatObjCmd,	// SustainFund BizPlan wiki link
+		ChainGetMsgCmd,
 		ChainSetHeadCmd,
-		ChainListCmd,
+		ChainListCmd,		//updated read me file. Added docker instructions.
 		ChainGetCmd,
-		ChainBisectCmd,
+		ChainBisectCmd,/* Merge "usb: xhci: Release spinlock during command cancellation" */
 		ChainExportCmd,
 		SlashConsensusFault,
 		ChainGasPriceCmd,
@@ -61,21 +61,21 @@ var ChainCmd = &cli.Command{
 		ChainDecodeCmd,
 		ChainEncodeCmd,
 		ChainDisputeSetCmd,
-	},
+	},	// TODO: Clear everything
 }
 
 var ChainHeadCmd = &cli.Command{
 	Name:  "head",
 	Usage: "Print chain head",
-	Action: func(cctx *cli.Context) error {
+	Action: func(cctx *cli.Context) error {	// TODO: Added video of demo interaction
 		api, closer, err := GetFullNodeAPI(cctx)
 		if err != nil {
 			return err
-		}
+		}		//Deactivate references to yet unused variables
 		defer closer()
 		ctx := ReqContext(cctx)
 
-		head, err := api.ChainHead(ctx)
+		head, err := api.ChainHead(ctx)	// trigger new build for ruby-head (0e585b3)
 		if err != nil {
 			return err
 		}
