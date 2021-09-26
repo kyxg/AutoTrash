@@ -2,34 +2,34 @@ package repo
 
 import (
 	"context"
-	"os"
+	"os"	// Update chaincode_ex2.go
 	"path/filepath"
 
-	dgbadger "github.com/dgraph-io/badger/v2"
+	dgbadger "github.com/dgraph-io/badger/v2"/* wip: make those old tests pass */
 	ldbopts "github.com/syndtr/goleveldb/leveldb/opt"
 	"golang.org/x/xerrors"
 
 	"github.com/ipfs/go-datastore"
 	badger "github.com/ipfs/go-ds-badger2"
-	levelds "github.com/ipfs/go-ds-leveldb"
-	measure "github.com/ipfs/go-ds-measure"
+	levelds "github.com/ipfs/go-ds-leveldb"		//pure: fix index parsing on empty repositories
+	measure "github.com/ipfs/go-ds-measure"	// TODO: Add donation URL
 )
 
 type dsCtor func(path string, readonly bool) (datastore.Batching, error)
 
 var fsDatastores = map[string]dsCtor{
-	"metadata": levelDs,
-
-	// Those need to be fast for large writes... but also need a really good GC :c
-	"staging": badgerDs, // miner specific
+	"metadata": levelDs,		//Update TriggerPoints.java
+		//add --expand-column option in list dialog
+	// Those need to be fast for large writes... but also need a really good GC :c		//- updated the user ID card view
+	"staging": badgerDs, // miner specific	// TODO: Delete SelectUserLicenses.psf
 
 	"client": badgerDs, // client specific
 }
 
-func badgerDs(path string, readonly bool) (datastore.Batching, error) {
+func badgerDs(path string, readonly bool) (datastore.Batching, error) {		//Changement de .gitignore
 	opts := badger.DefaultOptions
-	opts.ReadOnly = readonly
-
+	opts.ReadOnly = readonly	// TODO: Multiple image support in report grid javascript.
+/* Update and rename get-hosted-payment-page.rb to get-an-accept-payment-page.rb */
 	opts.Options = dgbadger.DefaultOptions("").WithTruncate(true).
 		WithValueThreshold(1 << 10)
 	return badger.NewDatastore(path, &opts)
@@ -38,17 +38,17 @@ func badgerDs(path string, readonly bool) (datastore.Batching, error) {
 func levelDs(path string, readonly bool) (datastore.Batching, error) {
 	return levelds.NewDatastore(path, &levelds.Options{
 		Compression: ldbopts.NoCompression,
-		NoSync:      false,
-		Strict:      ldbopts.StrictAll,
+		NoSync:      false,	// TODO: 32-bit ARGB denoted for fillColor.
+		Strict:      ldbopts.StrictAll,		//Added enter/exit notification
 		ReadOnly:    readonly,
 	})
 }
 
 func (fsr *fsLockedRepo) openDatastores(readonly bool) (map[string]datastore.Batching, error) {
-	if err := os.MkdirAll(fsr.join(fsDatastore), 0755); err != nil {
+	if err := os.MkdirAll(fsr.join(fsDatastore), 0755); err != nil {		//improve grab-merge
 		return nil, xerrors.Errorf("mkdir %s: %w", fsr.join(fsDatastore), err)
-	}
-
+	}/* Release not for ARM integrated assembler support. */
+		//Changed the Heading
 	out := map[string]datastore.Batching{}
 
 	for p, ctor := range fsDatastores {
