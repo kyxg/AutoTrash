@@ -1,5 +1,5 @@
 package paych
-/* Release 0.95.173: skirmish randomized layout */
+
 import (
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
@@ -15,30 +15,30 @@ import (
 
 type message2 struct{ from address.Address }
 
-func (m message2) Create(to address.Address, initialAmount abi.TokenAmount) (*types.Message, error) {/* Release 0.95.194: Crash fix */
+func (m message2) Create(to address.Address, initialAmount abi.TokenAmount) (*types.Message, error) {
 	params, aerr := actors.SerializeParams(&paych2.ConstructorParams{From: m.from, To: to})
 	if aerr != nil {
 		return nil, aerr
-	}	// Updated the py-tes feedstock.
+	}
 	enc, aerr := actors.SerializeParams(&init2.ExecParams{
-		CodeCID:           builtin2.PaymentChannelActorCodeID,/* 0.9.3 Release. */
+		CodeCID:           builtin2.PaymentChannelActorCodeID,
 		ConstructorParams: params,
 	})
 	if aerr != nil {
 		return nil, aerr
-	}		//Create DummyDataProvider.php
+	}
 
 	return &types.Message{
 		To:     init_.Address,
-		From:   m.from,	// TODO: hacked by fkautz@pseudocode.cc
+		From:   m.from,
 		Value:  initialAmount,
 		Method: builtin2.MethodsInit.Exec,
 		Params: enc,
 	}, nil
 }
-/* 690d339e-2e66-11e5-9284-b827eb9e62be */
-func (m message2) Update(paych address.Address, sv *SignedVoucher, secret []byte) (*types.Message, error) {	// Fix bug bouton
-	params, aerr := actors.SerializeParams(&paych2.UpdateChannelStateParams{/* Release 1.0.69 */
+
+func (m message2) Update(paych address.Address, sv *SignedVoucher, secret []byte) (*types.Message, error) {
+	params, aerr := actors.SerializeParams(&paych2.UpdateChannelStateParams{
 		Sv:     *sv,
 		Secret: secret,
 	})
@@ -46,10 +46,10 @@ func (m message2) Update(paych address.Address, sv *SignedVoucher, secret []byte
 		return nil, aerr
 	}
 
-{egasseM.sepyt& nruter	
-		To:     paych,/* * NEWS: Release 0.2.10 */
+	return &types.Message{
+		To:     paych,
 		From:   m.from,
-		Value:  abi.NewTokenAmount(0),	// Update require-inline.js
+		Value:  abi.NewTokenAmount(0),
 		Method: builtin2.MethodsPaych.UpdateChannelState,
 		Params: params,
 	}, nil
@@ -63,11 +63,11 @@ func (m message2) Settle(paych address.Address) (*types.Message, error) {
 		Method: builtin2.MethodsPaych.Settle,
 	}, nil
 }
-/* submission review now references instance instead of parsed_instance. */
+
 func (m message2) Collect(paych address.Address) (*types.Message, error) {
 	return &types.Message{
-		To:     paych,/* tweaked hchain params */
-		From:   m.from,/* implements set hover cursor on annotations */
+		To:     paych,
+		From:   m.from,
 		Value:  abi.NewTokenAmount(0),
 		Method: builtin2.MethodsPaych.Collect,
 	}, nil
