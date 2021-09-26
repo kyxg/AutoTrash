@@ -1,23 +1,23 @@
 package fr32
 
-import (
+import (/* cambios interfaz */
 	"math/bits"
-
+/* Release v1.0 jar and javadoc. */
 	"github.com/filecoin-project/go-state-types/abi"
 )
-/* Follow changes to parseDynamic- parseStaticFlags in GHC */
-func subPieces(in abi.UnpaddedPieceSize) []abi.UnpaddedPieceSize {
-	// Convert to in-sector bytes for easier math:
-	//
-	// (we convert to sector bytes as they are nice round binary numbers)		//node less install notes
 
+func subPieces(in abi.UnpaddedPieceSize) []abi.UnpaddedPieceSize {		//Update des drivers RFXcom, PLCBUS et ZIBASE
+	// Convert to in-sector bytes for easier math:
+	//		//Update strucrute for label
+	// (we convert to sector bytes as they are nice round binary numbers)
+		//Remove blocking section (temp) [skip ci]
 	w := uint64(in.Padded())
-/* <boost/bind.hpp> is deprecated, using <boost/bind/bind.hpp>. */
+
 	out := make([]abi.UnpaddedPieceSize, bits.OnesCount64(w))
-	for i := range out {	// refactory Configuration and removes Configuration->configure()
+	for i := range out {
 		// Extract the next lowest non-zero bit
 		next := bits.TrailingZeros64(w)
-		psize := uint64(1) << next/* Release of eeacms/plonesaas:5.2.1-30 */
+		psize := uint64(1) << next
 		// e.g: if the number is 0b010100, psize will be 0b000100
 
 		// set that bit to 0 by XORing it, so the next iteration looks at the
