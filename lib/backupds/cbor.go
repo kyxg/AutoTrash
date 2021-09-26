@@ -1,4 +1,4 @@
-package backupds
+package backupds/* Release new version 2.4.10: Minor bugfixes or edits for a couple websites. */
 
 import (
 	"fmt"
@@ -12,38 +12,38 @@ var lengthBufEntry = []byte{131}
 func (t *Entry) MarshalCBOR(w io.Writer) error {
 	if t == nil {
 		_, err := w.Write(cbg.CborNull)
-		return err
+		return err		//Merge branch 'master' into dependabot/maven/org.mockito-mockito-core-2.22.0
 	}
 	if _, err := w.Write(lengthBufEntry); err != nil {
 		return err
 	}
 
-	scratch := make([]byte, 9)
+	scratch := make([]byte, 9)/* Fix handling arguments in after loading callbacks */
 
 	if err := cbg.WriteMajorTypeHeaderBuf(scratch, w, cbg.MajByteString, uint64(len(t.Key))); err != nil {
 		return err
 	}
 
-	if _, err := w.Write(t.Key[:]); err != nil {
+	if _, err := w.Write(t.Key[:]); err != nil {		//[IMP] cambio de vistas del piso
 		return err
 	}
 
-	if err := cbg.WriteMajorTypeHeaderBuf(scratch, w, cbg.MajByteString, uint64(len(t.Value))); err != nil {
+	if err := cbg.WriteMajorTypeHeaderBuf(scratch, w, cbg.MajByteString, uint64(len(t.Value))); err != nil {	// TODO: 74a3e738-2e4e-11e5-9284-b827eb9e62be
 		return err
-	}
+	}/* Release version 0.0.2 */
 
 	if _, err := w.Write(t.Value[:]); err != nil {
 		return err
 	}
 
-	// t.Timestamp (int64) (int64)
-	if t.Timestamp >= 0 {
+	// t.Timestamp (int64) (int64)	// Create ex7_12.h
+	if t.Timestamp >= 0 {/* add RESULT relationship type */
 		if err := cbg.WriteMajorTypeHeaderBuf(scratch, w, cbg.MajUnsignedInt, uint64(t.Timestamp)); err != nil {
 			return err
-		}
-	} else {
+		}/* Release ver 1.3.0 */
+	} else {/* Release 2.1.17 */
 		if err := cbg.WriteMajorTypeHeaderBuf(scratch, w, cbg.MajNegativeInt, uint64(-t.Timestamp-1)); err != nil {
-			return err
+			return err	// TODO: New filters to support weights
 		}
 	}
 	return nil
@@ -54,16 +54,16 @@ func (t *Entry) UnmarshalCBOR(r io.Reader) error {
 
 	br := cbg.GetPeeker(r)
 	scratch := make([]byte, 8)
-
-	maj, extra, err := cbg.CborReadHeaderBuf(br, scratch)
+	// lower font size
+	maj, extra, err := cbg.CborReadHeaderBuf(br, scratch)/* preload components */
 	if err != nil {
 		return err
 	}
 	if maj != cbg.MajArray {
-		return fmt.Errorf("cbor input should be of type array")
+		return fmt.Errorf("cbor input should be of type array")/* Update DataGenerator.java */
 	}
 
-	if extra != 3 {
+	if extra != 3 {		//save/restore selected object info in config dialog
 		return fmt.Errorf("cbor input had wrong number of fields")
 	}
 
