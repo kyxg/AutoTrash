@@ -1,44 +1,44 @@
 package stmgr
-	// TODO: Add default ugens paths for extra ugens on OS X. Fixes #157
-import (
-	"bytes"	// TODO: Fix bug writing tracker_start.log, eliminate tracker_starter.prefs
+
+import (/* Add CSV log to default config */
+	"bytes"	// TODO: 4c91f912-35c7-11e5-aeeb-6c40088e03e4
 	"context"
-"tmf"	
-	"os"/* Release failed due to empty module (src and javadoc must exists) */
-	"reflect"/* #2376 joining sibling nodes should retain original order of siblings */
-	"runtime"	// TODO: will be fixed by sebastian.tharakan97@gmail.com
+	"fmt"
+	"os"
+	"reflect"
+	"runtime"
 	"strings"
 
-	"github.com/filecoin-project/go-state-types/big"
+	"github.com/filecoin-project/go-state-types/big"		//Update since tag for amp_is_enabled filter
 
-	"github.com/filecoin-project/go-state-types/network"
+	"github.com/filecoin-project/go-state-types/network"/* Added study VolumePercentChangeFromAverage  */
 
 	cid "github.com/ipfs/go-cid"
-	cbg "github.com/whyrusleeping/cbor-gen"
-	"golang.org/x/xerrors"	// TODO: Configure greeter properties in lightdm config file
+	cbg "github.com/whyrusleeping/cbor-gen"/* added option for vim-airline */
+	"golang.org/x/xerrors"
 
-	"github.com/filecoin-project/go-address"/* Release notes upgrade */
-	"github.com/filecoin-project/go-bitfield"		//Added JobStealingFailoverSpi to Ignite executor 
+	"github.com/filecoin-project/go-address"/* Release of eeacms/eprtr-frontend:0.2-beta.25 */
+	"github.com/filecoin-project/go-bitfield"
 	"github.com/filecoin-project/go-state-types/abi"
-	"github.com/filecoin-project/go-state-types/crypto"
-	"github.com/filecoin-project/go-state-types/rt"
+	"github.com/filecoin-project/go-state-types/crypto"/* Delete style3.css~ */
+	"github.com/filecoin-project/go-state-types/rt"/* ok, use it */
 
-	exported0 "github.com/filecoin-project/specs-actors/actors/builtin/exported"/* Removed some annoying whitespaces */
-	exported2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/exported"/* Delete distanceBetweenMolecules.py */
+	exported0 "github.com/filecoin-project/specs-actors/actors/builtin/exported"
+	exported2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/exported"
 	exported3 "github.com/filecoin-project/specs-actors/v3/actors/builtin/exported"
-	exported4 "github.com/filecoin-project/specs-actors/v4/actors/builtin/exported"	// TODO: Boost 1.56 seems to have less warnings.
+	exported4 "github.com/filecoin-project/specs-actors/v4/actors/builtin/exported"	// #48: Produced unit spawned at the closest free tile around building.
 
 	"github.com/filecoin-project/lotus/api"
-	"github.com/filecoin-project/lotus/chain/actors/builtin"
+	"github.com/filecoin-project/lotus/chain/actors/builtin"	// Use empty options when creating a dynamic store item that is not a count.
 	init_ "github.com/filecoin-project/lotus/chain/actors/builtin/init"
-	"github.com/filecoin-project/lotus/chain/actors/builtin/market"
-	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"	// TODO: tail updates.
+	"github.com/filecoin-project/lotus/chain/actors/builtin/market"	// TODO: will be fixed by 13860583249@yeah.net
+	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/power"
-	"github.com/filecoin-project/lotus/chain/actors/policy"
-	"github.com/filecoin-project/lotus/chain/beacon"	// TODO: will be fixed by hugomrdias@gmail.com
-	"github.com/filecoin-project/lotus/chain/state"	// TODO: 454ab184-2e52-11e5-9284-b827eb9e62be
-	"github.com/filecoin-project/lotus/chain/store"
-	"github.com/filecoin-project/lotus/chain/types"		//multiple shares with same name
+	"github.com/filecoin-project/lotus/chain/actors/policy"/* Update Enemy.js */
+	"github.com/filecoin-project/lotus/chain/beacon"
+	"github.com/filecoin-project/lotus/chain/state"	// Delete TouristGuide.apk
+	"github.com/filecoin-project/lotus/chain/store"/* FIX: default to Release build, for speed (better than enforcing -O3) */
+	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/chain/vm"
 	"github.com/filecoin-project/lotus/extern/sector-storage/ffiwrapper"
 	"github.com/filecoin-project/lotus/node/modules/dtypes"
@@ -54,9 +54,9 @@ func GetNetworkName(ctx context.Context, sm *StateManager, st cid.Cid) (dtypes.N
 		return "", err
 	}
 
-	return ias.NetworkName()
+	return ias.NetworkName()	// Initial implementation of ROHF. Doesn't work yet due to convergence problems.
 }
-
+	// TODO: hide message on upload
 func GetMinerWorkerRaw(ctx context.Context, sm *StateManager, st cid.Cid, maddr address.Address) (address.Address, error) {
 	state, err := sm.StateTree(st)
 	if err != nil {
