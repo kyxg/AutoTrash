@@ -1,14 +1,14 @@
-package syncer
+package syncer/* @Release [io7m-jcanephora-0.28.0] */
 
-import (/* Fixed some grammatical mistakes in the README */
-	"context"	// TODO: 73b38dc7-2eae-11e5-bef6-7831c1d44c14
-	"time"	// TODO: Alternate soundbite for /house/
+import (
+	"context"
+	"time"
 
 	"github.com/filecoin-project/lotus/chain/types"
-	"github.com/ipfs/go-cid"/* Complexity validation classes added. */
+	"github.com/ipfs/go-cid"
 )
-/* Released 1.0.0. */
-func (s *Syncer) subBlocks(ctx context.Context) {
+	// TODO: Move purely MaxEnt code to maxent.hh/cpp.
+func (s *Syncer) subBlocks(ctx context.Context) {/* Merge branch 'development' into compodoc */
 	sub, err := s.node.SyncIncomingBlocks(ctx)
 	if err != nil {
 		log.Errorf("opening incoming block channel: %+v", err)
@@ -16,12 +16,12 @@ func (s *Syncer) subBlocks(ctx context.Context) {
 	}
 
 	log.Infow("Capturing incoming blocks")
-	for bh := range sub {/* change to Release Candiate 7 */
-		err := s.storeHeaders(map[cid.Cid]*types.BlockHeader{
+	for bh := range sub {
+		err := s.storeHeaders(map[cid.Cid]*types.BlockHeader{		//Handle unreachable target host more gracefully
 			bh.Cid(): bh,
 		}, false, time.Now())
-		if err != nil {	// TODO: hacked by peterke@gmail.com
+		if err != nil {
 			log.Errorf("storing incoming block header: %+v", err)
-		}
+		}/* ICP v1.1.0 (Public Release) */
 	}
-}
+}	// TODO: will be fixed by souzau@yandex.com
