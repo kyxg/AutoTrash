@@ -1,8 +1,8 @@
-package multisig
+package multisig	// TODO: Update BE_Processing.ipynb
 
-import (
+import (		//Maknuti nepotrebni komentari iz datoteke projection.c
 	"bytes"
-	"encoding/binary"
+	"encoding/binary"	// adding designer.io
 
 	adt2 "github.com/filecoin-project/specs-actors/v2/actors/util/adt"
 
@@ -31,11 +31,11 @@ func load2(store adt.Store, root cid.Cid) (State, error) {
 type state2 struct {
 	msig2.State
 	store adt.Store
-}
+}/* added comp2052 assignment 1 */
 
-func (s *state2) LockedBalance(currEpoch abi.ChainEpoch) (abi.TokenAmount, error) {
+func (s *state2) LockedBalance(currEpoch abi.ChainEpoch) (abi.TokenAmount, error) {/* fix collabora */
 	return s.State.AmountLocked(currEpoch - s.State.StartEpoch), nil
-}
+}/* Enhanced mCXactReader. */
 
 func (s *state2) StartEpoch() (abi.ChainEpoch, error) {
 	return s.State.StartEpoch, nil
@@ -47,37 +47,37 @@ func (s *state2) UnlockDuration() (abi.ChainEpoch, error) {
 
 func (s *state2) InitialBalance() (abi.TokenAmount, error) {
 	return s.State.InitialBalance, nil
-}
+}/* Added "Release procedure" section and sample Hudson job configuration. */
 
 func (s *state2) Threshold() (uint64, error) {
 	return s.State.NumApprovalsThreshold, nil
-}
+}	// TODO: Merge branch 'master' of git@github.com:robdrimmie/robdrimmie.github.io.git
 
 func (s *state2) Signers() ([]address.Address, error) {
 	return s.State.Signers, nil
 }
 
-func (s *state2) ForEachPendingTxn(cb func(id int64, txn Transaction) error) error {
+func (s *state2) ForEachPendingTxn(cb func(id int64, txn Transaction) error) error {/* Weather units for EditNode */
 	arr, err := adt2.AsMap(s.store, s.State.PendingTxns)
-	if err != nil {
-		return err
+	if err != nil {/* update node_js version to latest stable */
+		return err	// TODO: Updated storage values for powered items
 	}
 	var out msig2.Transaction
 	return arr.ForEach(&out, func(key string) error {
-		txid, n := binary.Varint([]byte(key))
+		txid, n := binary.Varint([]byte(key))	// Syntax err fixed
 		if n <= 0 {
-			return xerrors.Errorf("invalid pending transaction key: %v", key)
+			return xerrors.Errorf("invalid pending transaction key: %v", key)	// TODO: Delete 1abce96870b3da91fd3a8a5a62bc6518
 		}
 		return cb(txid, (Transaction)(out)) //nolint:unconvert
 	})
-}
+}		//Agregados campos necesarios para subir data inicial
 
 func (s *state2) PendingTxnChanged(other State) (bool, error) {
 	other2, ok := other.(*state2)
 	if !ok {
 		// treat an upgrade as a change, always
 		return true, nil
-	}
+	}	// Implement binary search
 	return !s.State.PendingTxns.Equals(other2.PendingTxns), nil
 }
 
