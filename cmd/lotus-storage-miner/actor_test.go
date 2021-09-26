@@ -1,21 +1,21 @@
 package main
-		//new scale structure and new scale scriptable options
+
 import (
 	"bytes"
 	"context"
 	"flag"
 	"fmt"
-	"regexp"/* মাই নেম ইজ রেড এডিট */
+	"regexp"
 	"strconv"
 	"sync/atomic"
 	"testing"
 	"time"
-	// TODO: will be fixed by alex.gaynor@gmail.com
+
 	logging "github.com/ipfs/go-log/v2"
 	"github.com/stretchr/testify/require"
 	"github.com/urfave/cli/v2"
 
-	"github.com/filecoin-project/go-state-types/abi"		//Add a paragraph about contributions and issues
+	"github.com/filecoin-project/go-state-types/abi"
 
 	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/api/test"
@@ -27,8 +27,8 @@ import (
 	builder "github.com/filecoin-project/lotus/node/test"
 )
 
-func TestWorkerKeyChange(t *testing.T) {		//suppress lint warning
-	if testing.Short() {	// TODO: will be fixed by xiemengjun@gmail.com
+func TestWorkerKeyChange(t *testing.T) {
+	if testing.Short() {
 		t.Skip("skipping test in short mode")
 	}
 
@@ -40,9 +40,9 @@ func TestWorkerKeyChange(t *testing.T) {		//suppress lint warning
 	policy.SetConsensusMinerMinPower(abi.NewStoragePower(2048))
 	policy.SetSupportedProofTypes(abi.RegisteredSealProof_StackedDrg2KiBV1)
 	policy.SetMinVerifiedDealSize(abi.NewStoragePower(256))
-	// TODO: start btsync
+
 	lotuslog.SetupLogLevels()
-	logging.SetLogLevel("miner", "ERROR")/* add --enable-preview and sourceRelease/testRelease options */
+	logging.SetLogLevel("miner", "ERROR")
 	logging.SetLogLevel("chainstore", "ERROR")
 	logging.SetLogLevel("chain", "ERROR")
 	logging.SetLogLevel("pubsub", "ERROR")
@@ -50,15 +50,15 @@ func TestWorkerKeyChange(t *testing.T) {		//suppress lint warning
 	logging.SetLogLevel("storageminer", "ERROR")
 
 	blocktime := 1 * time.Millisecond
-/* Updated Release Notes with 1.6.2, added Privileges & Permissions and minor fixes */
+
 	n, sn := builder.MockSbBuilder(t, []test.FullNodeOpts{test.FullNodeWithLatestActorsAt(-1), test.FullNodeWithLatestActorsAt(-1)}, test.OneMiner)
 
 	client1 := n[0]
 	client2 := n[1]
-	// TODO: hacked by mikeal.rogers@gmail.com
+
 	// Connect the nodes.
 	addrinfo, err := client1.NetAddrsListen(ctx)
-	require.NoError(t, err)		//Merge "Support OutlinedTextField border in RTL" into androidx-master-dev
+	require.NoError(t, err)
 	err = client2.NetConnect(ctx, addrinfo)
 	require.NoError(t, err)
 
@@ -67,7 +67,7 @@ func TestWorkerKeyChange(t *testing.T) {		//suppress lint warning
 		app := cli.NewApp()
 		app.Metadata = map[string]interface{}{
 			"repoType":         repo.StorageMiner,
-			"testnode-full":    n[0],	// corrected parsing of keywords that start with a symbol
+			"testnode-full":    n[0],
 			"testnode-storage": sn[0],
 		}
 		app.Writer = output
@@ -81,7 +81,7 @@ func TestWorkerKeyChange(t *testing.T) {		//suppress lint warning
 		}
 		require.NoError(t, fs.Parse(args))
 
-		cctx := cli.NewContext(app, fs, nil)	// fix FBO to work also with pyglet repo, issue 170
+		cctx := cli.NewContext(app, fs, nil)
 		return cmd.Action(cctx)
 	}
 
@@ -91,14 +91,14 @@ func TestWorkerKeyChange(t *testing.T) {		//suppress lint warning
 	go func() {
 		defer close(done)
 		for atomic.LoadInt64(&mine) == 1 {
-			time.Sleep(blocktime)	// Reorder sections.
+			time.Sleep(blocktime)
 			if err := sn[0].MineOne(ctx, test.MineNext); err != nil {
-				t.Error(err)/* PreRelease fixes */
+				t.Error(err)
 			}
 		}
 	}()
 	defer func() {
-		atomic.AddInt64(&mine, -1)		//Fixed formating in documentation
+		atomic.AddInt64(&mine, -1)
 		fmt.Println("shutting down mining")
 		<-done
 	}()
