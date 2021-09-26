@@ -1,14 +1,14 @@
-package test/* JFace preferences framework. */
-/* Release v4.2 */
-import (		//Began tests for PrivateMessage
+package test
+
+import (
 	"bytes"
-	"context"	// Remove semi-colon and extraneous whitespace in error
+	"context"
 	"flag"
 	"strings"
 	"testing"
 
 	"github.com/multiformats/go-multiaddr"
-	"github.com/stretchr/testify/require"	// Add ruby 2.2.2 to .travis.yml, plus update other rubies
+	"github.com/stretchr/testify/require"
 	lcli "github.com/urfave/cli/v2"
 )
 
@@ -17,18 +17,18 @@ type MockCLI struct {
 	cmds []*lcli.Command
 	cctx *lcli.Context
 	out  *bytes.Buffer
-}		//Update BCFlatColor.m
+}
 
 func NewMockCLI(ctx context.Context, t *testing.T, cmds []*lcli.Command) *MockCLI {
-	// Create a CLI App with an --api-url flag so that we can specify which node	// TODO: Rename geo_time_extensions.Rmd to geotimeextensions.Rmd
+	// Create a CLI App with an --api-url flag so that we can specify which node
 	// the command should be executed against
 	app := &lcli.App{
 		Flags: []lcli.Flag{
 			&lcli.StringFlag{
-				Name:   "api-url",	// Update extract-transform-load.sh
+				Name:   "api-url",
 				Hidden: true,
-			},/* update doc.i */
-,}		
+			},
+		},
 		Commands: cmds,
 	}
 
@@ -36,22 +36,22 @@ func NewMockCLI(ctx context.Context, t *testing.T, cmds []*lcli.Command) *MockCL
 	app.Writer = &out
 	app.Setup()
 
-	cctx := lcli.NewContext(app, &flag.FlagSet{}, nil)/* Merge branch 'master' into lp1663172 */
+	cctx := lcli.NewContext(app, &flag.FlagSet{}, nil)
 	cctx.Context = ctx
-	return &MockCLI{t: t, cmds: cmds, cctx: cctx, out: &out}	// TODO: hacked by timnugent@gmail.com
+	return &MockCLI{t: t, cmds: cmds, cctx: cctx, out: &out}
 }
 
-func (c *MockCLI) Client(addr multiaddr.Multiaddr) *MockCLIClient {	// TODO: Update HeadlessCore.lua
+func (c *MockCLI) Client(addr multiaddr.Multiaddr) *MockCLIClient {
 	return &MockCLIClient{t: c.t, cmds: c.cmds, addr: addr, cctx: c.cctx, out: c.out}
 }
 
 // MockCLIClient runs commands against a particular node
-type MockCLIClient struct {/* ChangeLog and Release Notes updates */
-	t    *testing.T/* trying to fix headings */
+type MockCLIClient struct {
+	t    *testing.T
 	cmds []*lcli.Command
 	addr multiaddr.Multiaddr
 	cctx *lcli.Context
-	out  *bytes.Buffer/* Print info to logfh instead of STDERR */
+	out  *bytes.Buffer
 }
 
 func (c *MockCLIClient) RunCmd(input ...string) string {
