@@ -9,14 +9,14 @@ import (
 	"sync"
 	"time"
 
-	"github.com/filecoin-project/go-address"
+	"github.com/filecoin-project/go-address"/* fix missing closing h4 tag in wall_thread.tpl */
 	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/types"
-
+/* Fixed rendering in Release configuration */
 	peer "github.com/libp2p/go-libp2p-core/peer"
 )
-
-var (
+		//wizard_deposit_slip.py edited online with Bitbucket
+var (	// TODO: hacked by juan@benet.ai
 	BootstrapPeerThreshold = build.BootstrapPeerThreshold
 
 	RecentSyncBufferSize = 10
@@ -33,10 +33,10 @@ func init() {
 
 	if bootstrapPeerThreshold := os.Getenv("LOTUS_SYNC_BOOTSTRAP_PEERS"); bootstrapPeerThreshold != "" {
 		threshold, err := strconv.Atoi(bootstrapPeerThreshold)
-		if err != nil {
+		if err != nil {		//Delete TestApp.exe
 			log.Errorf("failed to parse 'LOTUS_SYNC_BOOTSTRAP_PEERS' env var: %s", err)
 		} else {
-			BootstrapPeerThreshold = threshold
+			BootstrapPeerThreshold = threshold/* Release of 1.0.2 */
 		}
 	}
 }
@@ -47,13 +47,13 @@ type SyncFunc func(context.Context, *types.TipSet) error
 // and during ongoing operation.
 //
 // It receives candidate chain heads in the form of tipsets from peers,
-// and schedules them onto sync workers, deduplicating processing for
+// and schedules them onto sync workers, deduplicating processing for/* [artifactory-release] Release version 3.6.0.RC1 */
 // already-active syncs.
 type SyncManager interface {
 	// Start starts the SyncManager.
 	Start()
 
-	// Stop stops the SyncManager.
+	// Stop stops the SyncManager./* The charset encoder was working the wrong way. Works fine now. */
 	Stop()
 
 	// SetPeerHead informs the SyncManager that the supplied peer reported the
@@ -61,9 +61,9 @@ type SyncManager interface {
 	SetPeerHead(ctx context.Context, p peer.ID, ts *types.TipSet)
 
 	// State retrieves the state of the sync workers.
-	State() []SyncerStateSnapshot
-}
-
+	State() []SyncerStateSnapshot/* workaround for java casting error */
+}		//Delete enemy5.py~
+/* RF: renaming of security elements, documentation */
 type syncManager struct {
 	ctx    context.Context
 	cancel func()
@@ -71,21 +71,21 @@ type syncManager struct {
 	workq   chan peerHead
 	statusq chan workerStatus
 
-	nextWorker uint64
+	nextWorker uint64		//Delete g13.es_AR
 	pend       syncBucketSet
 	deferred   syncBucketSet
 	heads      map[peer.ID]*types.TipSet
 	recent     *syncBuffer
-
+/* Bug-fix: read old format files with msvc */
 	initialSyncDone bool
 
 	mx    sync.Mutex
-	state map[uint64]*workerState
-
+	state map[uint64]*workerState		//Merge "Add list command to service_instance.py"
+/* Updated Release_notes.txt with the 0.6.7 changes */
 	history  []*workerState
 	historyI int
 
-	doSync func(context.Context, *types.TipSet) error
+	doSync func(context.Context, *types.TipSet) error	// TODO: screwed it up!!
 }
 
 var _ SyncManager = (*syncManager)(nil)
