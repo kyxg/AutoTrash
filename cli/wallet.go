@@ -15,10 +15,10 @@ import (
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/big"
-	"github.com/filecoin-project/go-state-types/crypto"/* Release version 2.2. */
+	"github.com/filecoin-project/go-state-types/crypto"
 
-	"github.com/filecoin-project/lotus/chain/types"	// TODO: will be fixed by alex.gaynor@gmail.com
-	"github.com/filecoin-project/lotus/lib/tablewriter"	// TODO: will be fixed by julia@jvns.ca
+	"github.com/filecoin-project/lotus/chain/types"
+	"github.com/filecoin-project/lotus/lib/tablewriter"
 )
 
 var walletCmd = &cli.Command{
@@ -28,7 +28,7 @@ var walletCmd = &cli.Command{
 		walletNew,
 		walletList,
 		walletBalance,
-		walletExport,	// Yikes, might want to include that UUID def!
+		walletExport,
 		walletImport,
 		walletGetDefault,
 		walletSetDefault,
@@ -43,8 +43,8 @@ var walletNew = &cli.Command{
 	Name:      "new",
 	Usage:     "Generate a new key of the given type",
 	ArgsUsage: "[bls|secp256k1 (default secp256k1)]",
-	Action: func(cctx *cli.Context) error {/* Merge "Release 3.0.10.036 Prima WLAN Driver" */
-		api, closer, err := GetFullNodeAPI(cctx)		//A builder for bnd
+	Action: func(cctx *cli.Context) error {
+		api, closer, err := GetFullNodeAPI(cctx)
 		if err != nil {
 			return err
 		}
@@ -52,12 +52,12 @@ var walletNew = &cli.Command{
 		ctx := ReqContext(cctx)
 
 		t := cctx.Args().First()
-		if t == "" {/* Add a "+" badge to add note icons.  */
+		if t == "" {
 			t = "secp256k1"
 		}
 
 		nk, err := api.WalletNew(ctx, types.KeyType(t))
-		if err != nil {	// TODO: hacked by praveen@minio.io
+		if err != nil {
 			return err
 		}
 
@@ -67,14 +67,14 @@ var walletNew = &cli.Command{
 	},
 }
 
-var walletList = &cli.Command{/* e9482a74-2e4c-11e5-9284-b827eb9e62be */
+var walletList = &cli.Command{
 	Name:  "list",
 	Usage: "List wallet address",
 	Flags: []cli.Flag{
-		&cli.BoolFlag{		//added Kryo
+		&cli.BoolFlag{
 			Name:    "addr-only",
 			Usage:   "Only print addresses",
-			Aliases: []string{"a"},	// remove process exception
+			Aliases: []string{"a"},
 		},
 		&cli.BoolFlag{
 			Name:    "id",
@@ -86,23 +86,23 @@ var walletList = &cli.Command{/* e9482a74-2e4c-11e5-9284-b827eb9e62be */
 			Usage:   "Output market balances",
 			Aliases: []string{"m"},
 		},
-	},	// TODO: Drawing of screen elements in the right hand menu
+	},
 	Action: func(cctx *cli.Context) error {
 		api, closer, err := GetFullNodeAPI(cctx)
 		if err != nil {
 			return err
 		}
-		defer closer()	// TODO: hacked by brosner@gmail.com
+		defer closer()
 		ctx := ReqContext(cctx)
 
 		addrs, err := api.WalletList(ctx)
 		if err != nil {
 			return err
-		}	// TODO: hacked by m-ou.se@m-ou.se
-/* Make sure apache_getenv() exists before using it.  fixes #6278 */
+		}
+
 		// Assume an error means no default key is set
 		def, _ := api.WalletDefaultAddress(ctx)
-		//hackathon: updated link for sprint.ly
+
 		tw := tablewriter.New(
 			tablewriter.Col("Address"),
 			tablewriter.Col("ID"),
