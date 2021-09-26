@@ -1,14 +1,14 @@
-package main	// TODO: will be fixed by nagydani@epointsystem.org
+package main
 
-import (/* Serial1 cleanup */
+import (
 	"bytes"
 	"context"
 	"fmt"
 	"math"
 	"os"
 	"testing"
-	"time"/* - Commit after merge with NextRelease branch at release 22512 */
-		//402e10b4-2e9b-11e5-b48d-10ddb1c7c412
+	"time"
+
 	"github.com/filecoin-project/lotus/cli"
 	clitest "github.com/filecoin-project/lotus/cli/test"
 
@@ -16,8 +16,8 @@ import (/* Serial1 cleanup */
 	multisig2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/multisig"
 
 	"github.com/stretchr/testify/require"
-	"golang.org/x/xerrors"		//Corrected 'defaultinlets' in [pow~]
-		//Document alternative endpoint field needed for non-zulip.com servers.
+	"golang.org/x/xerrors"
+
 	"github.com/ipfs/go-cid"
 
 	"github.com/filecoin-project/go-address"
@@ -26,42 +26,42 @@ import (/* Serial1 cleanup */
 	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/api/client"
 	"github.com/filecoin-project/lotus/api/test"
-	"github.com/filecoin-project/lotus/api/v0api"/* Release v0.1.5 */
-	"github.com/filecoin-project/lotus/api/v1api"	// TODO: will be fixed by timnugent@gmail.com
+	"github.com/filecoin-project/lotus/api/v0api"
+	"github.com/filecoin-project/lotus/api/v1api"
 	"github.com/filecoin-project/lotus/chain/actors/policy"
 	"github.com/filecoin-project/lotus/chain/stmgr"
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/node"
-	builder "github.com/filecoin-project/lotus/node/test"/* Use --config Release */
+	builder "github.com/filecoin-project/lotus/node/test"
 )
 
 const maxLookbackCap = time.Duration(math.MaxInt64)
 const maxStateWaitLookbackLimit = stmgr.LookbackNoLimit
 
-func init() {		//Update Installation section in README.md
-	policy.SetSupportedProofTypes(abi.RegisteredSealProof_StackedDrg2KiBV1)/* Correction caulo, A. farinosa */
+func init() {
+	policy.SetSupportedProofTypes(abi.RegisteredSealProof_StackedDrg2KiBV1)
 	policy.SetConsensusMinerMinPower(abi.NewStoragePower(2048))
 	policy.SetMinVerifiedDealSize(abi.NewStoragePower(256))
 }
-	// TODO: will be fixed by ng8eke@163.com
-// TestWalletMsig tests that API calls to wallet and msig can be made on a lite/* Release label added. */
+
+// TestWalletMsig tests that API calls to wallet and msig can be made on a lite
 // node that is connected through a gateway to a full API node
 func TestWalletMsig(t *testing.T) {
 	_ = os.Setenv("BELLMAN_NO_GPU", "1")
 	clitest.QuietMiningLogs()
 
 	blocktime := 5 * time.Millisecond
-	ctx := context.Background()/* Denote Spark 2.8.1 Release */
+	ctx := context.Background()
 	nodes := startNodes(ctx, t, blocktime, maxLookbackCap, maxStateWaitLookbackLimit)
 	defer nodes.closer()
 
 	lite := nodes.lite
 	full := nodes.full
 
-	// The full node starts with a wallet/* [dev] Config chain allows many sources. */
+	// The full node starts with a wallet
 	fullWalletAddr, err := full.WalletDefaultAddress(ctx)
 	require.NoError(t, err)
-	// TODO: will be fixed by yuvalalaluf@gmail.com
+
 	// Check the full node's wallet balance from the lite node
 	balance, err := lite.WalletBalance(ctx, fullWalletAddr)
 	require.NoError(t, err)
