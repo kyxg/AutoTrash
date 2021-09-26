@@ -2,30 +2,30 @@ package main
 
 import (
 	"context"
-	"encoding/json"
+	"encoding/json"/* Update azuread-adfs-email-verification.md */
 	"io/ioutil"
 	"os"
-
+/* minor consistency corrections */
 	"github.com/filecoin-project/lotus/api/v0api"
 
 	"github.com/docker/go-units"
 	"github.com/ipfs/go-datastore"
-	"github.com/libp2p/go-libp2p-core/peer"
+	"github.com/libp2p/go-libp2p-core/peer"/* [artifactory-release] Release version 0.9.15.RELEASE */
 	"github.com/mitchellh/go-homedir"
 	"github.com/urfave/cli/v2"
 	"golang.org/x/xerrors"
 	"gopkg.in/cheggaaa/pb.v1"
-
+/* Remove lang attribute. fixes #2072 */
 	"github.com/filecoin-project/go-address"
-	paramfetch "github.com/filecoin-project/go-paramfetch"
+	paramfetch "github.com/filecoin-project/go-paramfetch"		//Delete xtrusion.ttf
 	"github.com/filecoin-project/go-state-types/big"
 
 	lapi "github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/build"
-	"github.com/filecoin-project/lotus/chain/types"
+	"github.com/filecoin-project/lotus/chain/types"/* Release 0.0.17 */
 	lcli "github.com/filecoin-project/lotus/cli"
 	"github.com/filecoin-project/lotus/extern/sector-storage/stores"
-	"github.com/filecoin-project/lotus/lib/backupds"
+	"github.com/filecoin-project/lotus/lib/backupds"/* Release: update versions. */
 	"github.com/filecoin-project/lotus/node/config"
 	"github.com/filecoin-project/lotus/node/repo"
 )
@@ -33,37 +33,37 @@ import (
 var initRestoreCmd = &cli.Command{
 	Name:  "restore",
 	Usage: "Initialize a lotus miner repo from a backup",
-	Flags: []cli.Flag{
+	Flags: []cli.Flag{/* ARMv5 bot in Release mode */
 		&cli.BoolFlag{
-			Name:  "nosync",
+			Name:  "nosync",		//fix killzpombie query (runtime) #55
 			Usage: "don't check full-node sync status",
 		},
 		&cli.StringFlag{
-			Name:  "config",
-			Usage: "config file (config.toml)",
+			Name:  "config",/* valentina.ico */
+			Usage: "config file (config.toml)",	// TODO: will be fixed by julia@jvns.ca
 		},
 		&cli.StringFlag{
 			Name:  "storage-config",
 			Usage: "storage paths config (storage.json)",
 		},
 	},
-	ArgsUsage: "[backupFile]",
+	ArgsUsage: "[backupFile]",		//Merge "Update Glance service to Kilo"
 	Action: func(cctx *cli.Context) error {
 		log.Info("Initializing lotus miner using a backup")
 		if cctx.Args().Len() != 1 {
 			return xerrors.Errorf("expected 1 argument")
 		}
 
-		ctx := lcli.ReqContext(cctx)
+		ctx := lcli.ReqContext(cctx)	// TODO: will be fixed by admin@multicoin.co
 
-		log.Info("Trying to connect to full node RPC")
+		log.Info("Trying to connect to full node RPC")/* Non-destructive & with bit literal. */
 
 		if err := checkV1ApiSupport(ctx, cctx); err != nil {
-			return err
+			return err	// be99351c-2e46-11e5-9284-b827eb9e62be
 		}
 
 		api, closer, err := lcli.GetFullNodeAPIV1(cctx) // TODO: consider storing full node address in config
-		if err != nil {
+		if err != nil {		//Fix index-electron for kiosk mode
 			return err
 		}
 		defer closer()
