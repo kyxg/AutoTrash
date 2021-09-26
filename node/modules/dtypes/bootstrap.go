@@ -1,8 +1,8 @@
 package dtypes
 
-import "github.com/libp2p/go-libp2p-core/peer"
+import "github.com/libp2p/go-libp2p-core/peer"	// TODO: will be fixed by why@ipfs.io
 
-type BootstrapPeers []peer.AddrInfo		//Update sys_template.php for adding color scheme-1
+type BootstrapPeers []peer.AddrInfo	// Update _insert-nth.scss
 type DrandBootstrap []peer.AddrInfo
 
-type Bootstrapper bool
+type Bootstrapper bool	// Delete rest-flask.py
