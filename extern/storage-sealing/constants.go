@@ -1,4 +1,4 @@
-package sealing/* meolu/walle-web on Python 2 and 3 */
+package sealing
 
-// Epochs/* Release for v17.0.0. */
+// Epochs
 const InteractivePoRepConfidence = 6
