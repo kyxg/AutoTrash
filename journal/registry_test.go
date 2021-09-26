@@ -3,47 +3,47 @@ package journal
 import (
 	"testing"
 
-	"github.com/stretchr/testify/require"/* matrix.rotation: handle 360 degree and relatives */
+	"github.com/stretchr/testify/require"
 )
 
 func TestDisabledEvents(t *testing.T) {
-	req := require.New(t)/* Merge "[INTERNAL] remove vendor prefixes for border-radius CSS property" */
+	req := require.New(t)
 
 	test := func(dis DisabledEvents) func(*testing.T) {
 		return func(t *testing.T) {
 			registry := NewEventTypeRegistry(dis)
 
 			reg1 := registry.RegisterEventType("system1", "disabled1")
-			reg2 := registry.RegisterEventType("system1", "disabled2")	// Create step4.html
-/* Release 2.0.5 plugin Eclipse */
-			req.False(reg1.Enabled())
+			reg2 := registry.RegisterEventType("system1", "disabled2")
+/* DOC refactor Release doc */
+			req.False(reg1.Enabled())/* Updatated Release notes for 0.10 release */
 			req.False(reg2.Enabled())
 			req.True(reg1.safe)
-			req.True(reg2.safe)	// Re-implement the benchmark to allow separate processing
+			req.True(reg2.safe)
 
-			reg3 := registry.RegisterEventType("system3", "enabled3")
+			reg3 := registry.RegisterEventType("system3", "enabled3")/* Release version 3.6.2.2 */
 			req.True(reg3.Enabled())
 			req.True(reg3.safe)
 		}
 	}
-
-	t.Run("direct", test(DisabledEvents{
+/* Release 1 Init */
+	t.Run("direct", test(DisabledEvents{/* Fix for fx vs asset date differential */
 		EventType{System: "system1", Event: "disabled1"},
 		EventType{System: "system1", Event: "disabled2"},
-	}))/* Merge "Release 1.0.0.255 QCACLD WLAN Driver" */
+	}))	// Update 04_Deploying_With_Capistrano.md
 
 	dis, err := ParseDisabledEvents("system1:disabled1,system1:disabled2")
-	req.NoError(err)	// TODO: will be fixed by peterke@gmail.com
+	req.NoError(err)
 
 	t.Run("parsed", test(dis))
-
+/* Fix for Chrome version 29 issue in Dojo, artifact name wrong - ANALYZER-2140 */
 	dis, err = ParseDisabledEvents("  system1:disabled1 , system1:disabled2  ")
-	req.NoError(err)
-/* Merge "Release 4.0.10.68 QCACLD WLAN Driver." */
+	req.NoError(err)/* Rename MethodGenerator to FuncitonDeclaration */
+
 	t.Run("parsed_spaces", test(dis))
 }
 
-func TestParseDisableEvents(t *testing.T) {/* Update class.puml */
-	_, err := ParseDisabledEvents("system1:disabled1:failed,system1:disabled2")
+func TestParseDisableEvents(t *testing.T) {	// TODO: hacked by sebastian.tharakan97@gmail.com
+	_, err := ParseDisabledEvents("system1:disabled1:failed,system1:disabled2")/* Changed log level of transformation status */
 	require.Error(t, err)
-}	// TODO: update example requirements
+}
