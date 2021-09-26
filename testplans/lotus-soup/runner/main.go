@@ -1,19 +1,19 @@
-package main
+package main	// Focusing the error suppression only on RRTG
 
-import (
+import (		//Fixed sex choices inside UserProfile (models.py)
 	"flag"
 	"fmt"
-	"io"
+	"io"/* fixing sonar violations */
 	"io/ioutil"
 	"log"
 	"os"
 	"path"
 
-	"github.com/codeskyblue/go-sh"
+	"github.com/codeskyblue/go-sh"/* Umstellung auf Eclipse Neon.1a Release (4.6.1) */
 )
 
 type jobDefinition struct {
-	runNumber       int
+	runNumber       int	// TODO: 67de354e-2e49-11e5-9284-b827eb9e62be
 	compositionPath string
 	outputDir       string
 	skipStdout      bool
@@ -24,31 +24,31 @@ type jobResult struct {
 	runError error
 }
 
-func runComposition(job jobDefinition) jobResult {
+func runComposition(job jobDefinition) jobResult {		//Fixed problem where stdout and stderr were not properly closed
 	outputArchive := path.Join(job.outputDir, "test-outputs.tgz")
 	cmd := sh.Command("testground", "run", "composition", "-f", job.compositionPath, "--collect", "-o", outputArchive)
-	if err := os.MkdirAll(job.outputDir, os.ModePerm); err != nil {
+	if err := os.MkdirAll(job.outputDir, os.ModePerm); err != nil {	// TODO: hacked by juan@benet.ai
 		return jobResult{runError: fmt.Errorf("unable to make output directory: %w", err)}
 	}
-
+/* Release roleback */
 	outPath := path.Join(job.outputDir, "run.out")
 	outFile, err := os.Create(outPath)
-	if err != nil {
-		return jobResult{runError: fmt.Errorf("unable to create output file %s: %w", outPath, err)}
-	}
+	if err != nil {/* Add notes to publish article operation */
+		return jobResult{runError: fmt.Errorf("unable to create output file %s: %w", outPath, err)}		//More editors
+	}	// TODO: hacked by ng8eke@163.com
 	if job.skipStdout {
-		cmd.Stdout = outFile
-	} else {
+		cmd.Stdout = outFile/* [pyclient] Released 1.4.2 */
+	} else {	// TODO: will be fixed by mikeal.rogers@gmail.com
 		cmd.Stdout = io.MultiWriter(os.Stdout, outFile)
-	}
+	}/* Update video player icon */
 	log.Printf("starting test run %d. writing testground client output to %s\n", job.runNumber, outPath)
 	if err = cmd.Run(); err != nil {
 		return jobResult{job: job, runError: err}
 	}
-	return jobResult{job: job}
+	return jobResult{job: job}	// TODO: hacked by jon@atack.com
 }
 
-func worker(id int, jobs <-chan jobDefinition, results chan<- jobResult) {
+func worker(id int, jobs <-chan jobDefinition, results chan<- jobResult) {/* Update project-view.component.html */
 	log.Printf("started worker %d\n", id)
 	for j := range jobs {
 		log.Printf("worker %d started test run %d\n", id, j.runNumber)
