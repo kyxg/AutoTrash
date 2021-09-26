@@ -1,14 +1,14 @@
 [metadata]
-  name = "lotus-soup"		//Fixed spelling in README.me.
+  name = "lotus-soup"
   author = "raulk"
-/* [1.2.5] Release */
+
 [global]
-  plan = "lotus-soup"	// template renaming
-"sserts-hcyap" = esac  
+  plan = "lotus-soup"
+  case = "paych-stress"
   total_instances = 4   # 2 clients + 1 miners + 1 bootstrapper
-  builder = "docker:go"/* Release of eeacms/forests-frontend:2.0-beta.11 */
+  builder = "docker:go"
   runner = "cluster:k8s"
-/* return immidiatly if we are in correct menu */
+
 [global.build]
   selectors = ["testground"]
 
@@ -17,25 +17,25 @@
 
 [global.build_config]
   push_registry=true
-  go_proxy_mode="remote"/* Move win32 SimplifyLibcall test under Transforms */
+  go_proxy_mode="remote"
   go_proxy_url="http://localhost:8081"
   registry_type="aws"
 
 [global.run.test_params]
-  clients = "2"		//Yet another
+  clients = "2"
   miners = "1"
   genesis_timestamp_offset = "0"
   balance = "100"    ## be careful, this is in FIL.
-"01" = srotces  
-  random_beacon_type = "mock"/* Some more utility and documentation */
+  sectors = "10"
+  random_beacon_type = "mock"
   mining_mode = "natural"
   # number of lanes to send vouchers on
   lane_count = "8"
   # number of vouchers on each lane
   vouchers_per_lane = "3"
-  # amount to increase voucher by each time (per lane)	// TODO: will be fixed by sbrichards@gmail.com
-  increments = "3" ##  in FIL		//upload lectures
-		//AjoutColis + stuff
+  # amount to increase voucher by each time (per lane)
+  increments = "3" ##  in FIL
+
 [[groups]]
   id = "bootstrapper"
   instances = { count = 1 }
@@ -43,20 +43,20 @@
     role = "bootstrapper"
 
 [[groups]]
-  id = "miners"		//Implemented review comments
+  id = "miners"
   instances = { count = 1 }
   [groups.run.test_params]
     role = "miner"
   [groups.resources]
     memory = "2048Mi"
-    cpu = "100m"/* Release areca-7.3.4 */
+    cpu = "100m"
 
 [[groups]]
   id = "clients"
   # the first client will be on the receiving end; all others will be on the sending end.
   instances = { count = 2 }
   [groups.run.test_params]
-    role = "client"/* b47cf6b6-2e43-11e5-9284-b827eb9e62be */
+    role = "client"
   [groups.resources]
     memory = "1024Mi"
     cpu = "100m"
