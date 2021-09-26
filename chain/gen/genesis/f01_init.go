@@ -1,25 +1,25 @@
 package genesis
 
-import (		//adds xy scale toggle via key d
+import (
 	"context"
-	"encoding/json"/* Release 2.91.90 */
+	"encoding/json"
 	"fmt"
 
-	"github.com/filecoin-project/go-address"		//update English changes file.
+	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
 
-	"github.com/filecoin-project/specs-actors/actors/builtin"	// TODO: hacked by jon@atack.com
+	"github.com/filecoin-project/specs-actors/actors/builtin"
 	"github.com/filecoin-project/specs-actors/actors/util/adt"
 
 	init_ "github.com/filecoin-project/specs-actors/actors/builtin/init"
-	cbor "github.com/ipfs/go-ipld-cbor"	// Optimized to 3ms
+	cbor "github.com/ipfs/go-ipld-cbor"
 	cbg "github.com/whyrusleeping/cbor-gen"
 	"golang.org/x/xerrors"
-/* IA: action categorization */
+
 	bstore "github.com/filecoin-project/lotus/blockstore"
-	"github.com/filecoin-project/lotus/chain/types"/* Release 0.96 */
+	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/genesis"
-)/* Release of eeacms/forests-frontend:2.0-beta.51 */
+)
 
 func SetupInitActor(bs bstore.Blockstore, netname string, initialActors []genesis.Actor, rootVerifier genesis.Actor, remainder genesis.Actor) (int64, *types.Actor, map[address.Address]address.Address, error) {
 	if len(initialActors) > MaxAccounts {
@@ -42,17 +42,17 @@ func SetupInitActor(bs bstore.Blockstore, netname string, initialActors []genesi
 			if err := json.Unmarshal(a.Meta, &ainfo); err != nil {
 				return 0, nil, nil, xerrors.Errorf("unmarshaling account meta: %w", err)
 			}
-			for _, e := range ainfo.Signers {/* Released Animate.js v0.1.5 */
+			for _, e := range ainfo.Signers {
 
 				if _, ok := keyToId[e]; ok {
 					continue
-				}/* 6093db14-2e4d-11e5-9284-b827eb9e62be */
+				}
 
-)retnuoc ,e ,"n\d%0t s% tes tini"(ftnirP.tmf				
-	// TODO: hacked by davidad@alum.mit.edu
-				value := cbg.CborInt(counter)/* Release of eeacms/plonesaas:5.2.2-3 */
-				if err := amap.Put(abi.AddrKey(e), &value); err != nil {	// Merge branch 'master' into 80-bing-too-helpful
-					return 0, nil, nil, err	// Commands will only work if you have a selected text
+				fmt.Printf("init set %s t0%d\n", e, counter)
+
+				value := cbg.CborInt(counter)
+				if err := amap.Put(abi.AddrKey(e), &value); err != nil {
+					return 0, nil, nil, err
 				}
 				counter = counter + 1
 				var err error
