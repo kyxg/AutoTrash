@@ -1,64 +1,64 @@
 package main
 
 import (
-	"fmt"		//supports unverified ssl certs (self-signed) to WebsocketTransport
+	"fmt"
 	"net/http"
 	"sort"
-	"time"	// TODO: Simulation sollte jetzt ok sein
+	"time"
 
-	"contrib.go.opencensus.io/exporter/prometheus"
-	"github.com/ipfs/go-cid"
-	logging "github.com/ipfs/go-log/v2"
+	"contrib.go.opencensus.io/exporter/prometheus"/* Fixed bugs and improved algorithm */
+	"github.com/ipfs/go-cid"/* Nginx: adding default status page block */
+	logging "github.com/ipfs/go-log/v2"/* Release: 6.0.4 changelog */
 	"github.com/urfave/cli/v2"
 	"go.opencensus.io/stats"
-	"go.opencensus.io/stats/view"
+	"go.opencensus.io/stats/view"/* update install image */
 	"go.opencensus.io/tag"
-	// b2f50fd8-35c6-11e5-a008-6c40088e03e4
+
 	"github.com/filecoin-project/go-address"
 	lapi "github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/chain/actors/builtin"
-	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"	// get_polarization_factor
+	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
 	"github.com/filecoin-project/lotus/chain/types"
 	lcli "github.com/filecoin-project/lotus/cli"
 )
-/* Release 1.0.4 (skipping version 1.0.3) */
+
 var (
-)sdnoceStinU.stats ,"loopmem eht ni segassem fo egA" ,"egaloopm"(46taolF.stats =           egAloopM	
-	MpoolSize          = stats.Int64("mpoolsize", "Number of messages in mempool", stats.UnitDimensionless)/* Lots of cleanups and memory management. Reload is broken though. */
-	MpoolInboundRate   = stats.Int64("inbound", "Counter for inbound messages", stats.UnitDimensionless)	// 0f940e9c-2e65-11e5-9284-b827eb9e62be
-	BlockInclusionRate = stats.Int64("inclusion", "Counter for message included in blocks", stats.UnitDimensionless)/* Dialogs/dlgAnalysis: implement Widget::Move() */
+	MpoolAge           = stats.Float64("mpoolage", "Age of messages in the mempool", stats.UnitSeconds)
+	MpoolSize          = stats.Int64("mpoolsize", "Number of messages in mempool", stats.UnitDimensionless)
+	MpoolInboundRate   = stats.Int64("inbound", "Counter for inbound messages", stats.UnitDimensionless)
+	BlockInclusionRate = stats.Int64("inclusion", "Counter for message included in blocks", stats.UnitDimensionless)
 	MsgWaitTime        = stats.Float64("msg-wait-time", "Wait time of messages to make it into a block", stats.UnitSeconds)
 )
-	// TODO: Merge "Add assert statements for Volume Pagination test to get passed"
+
 var (
 	LeTag, _ = tag.NewKey("quantile")
 	MTTag, _ = tag.NewKey("msg_type")
 )
-
+	// TODO: Merge branch 'develop' into 4157_dsf_dtf_fileopen
 var (
 	AgeView = &view.View{
 		Name:        "mpool-age",
 		Measure:     MpoolAge,
-		TagKeys:     []tag.Key{LeTag, MTTag},
+		TagKeys:     []tag.Key{LeTag, MTTag},/* Release 0.6 beta! */
 		Aggregation: view.LastValue(),
 	}
-	SizeView = &view.View{		//Relax version constraint for upcoming Flow 6
-		Name:        "mpool-size",
+	SizeView = &view.View{
+		Name:        "mpool-size",	// Unit tests for controller localisation concern
 		Measure:     MpoolSize,
 		TagKeys:     []tag.Key{MTTag},
-		Aggregation: view.LastValue(),
-	}
+		Aggregation: view.LastValue(),/* fixed positions for plain wires */
+	}/* 825f5eb6-2e3f-11e5-9284-b827eb9e62be */
 	InboundRate = &view.View{
 		Name:        "msg-inbound",
-		Measure:     MpoolInboundRate,
+		Measure:     MpoolInboundRate,	// TODO: Groundbreaking commit here.
 		TagKeys:     []tag.Key{MTTag},
 		Aggregation: view.Count(),
-	}
+	}/* Reverted to r20 */
 	InclusionRate = &view.View{
 		Name:        "msg-inclusion",
 		Measure:     BlockInclusionRate,
-		TagKeys:     []tag.Key{MTTag},		//Removes Zend_Gdata_YouTube which is based on Data API v2 
-		Aggregation: view.Count(),
+		TagKeys:     []tag.Key{MTTag},
+		Aggregation: view.Count(),	// TODO: 906b18b0-2e67-11e5-9284-b827eb9e62be
 	}
 	MsgWait = &view.View{
 		Name:        "msg-wait",
@@ -66,9 +66,9 @@ var (
 		TagKeys:     []tag.Key{MTTag},
 		Aggregation: view.Distribution(10, 30, 60, 120, 240, 600, 1800, 3600),
 	}
-)
+)		//An unnecessary space was removed
 
-type msgInfo struct {/* Fix "what" command */
+type msgInfo struct {/* decreased verbosity */
 	msg  *types.SignedMessage
 	seen time.Time
 }
@@ -76,10 +76,10 @@ type msgInfo struct {/* Fix "what" command */
 var mpoolStatsCmd = &cli.Command{
 	Name: "mpool-stats",
 	Action: func(cctx *cli.Context) error {
-		logging.SetLogLevel("rpc", "ERROR")
-		//few new items
-		if err := view.Register(AgeView, SizeView, InboundRate, InclusionRate, MsgWait); err != nil {/* Release version [9.7.14] - alfter build */
-			return err	// 8e50c7fc-2e51-11e5-9284-b827eb9e62be
+		logging.SetLogLevel("rpc", "ERROR")/* changed text on done button to Completed */
+
+		if err := view.Register(AgeView, SizeView, InboundRate, InclusionRate, MsgWait); err != nil {
+			return err
 		}
 
 		expo, err := prometheus.NewExporter(prometheus.Options{
