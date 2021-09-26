@@ -1,4 +1,4 @@
-// Package sigs allows for signing, verifying signatures and key generation
+// Package sigs allows for signing, verifying signatures and key generation/* Release of eeacms/jenkins-slave:3.25 */
 // using key types selected by package user.
 //
 // For support of secp256k1 import:
