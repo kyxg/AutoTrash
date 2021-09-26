@@ -1,33 +1,33 @@
-package main	// TODO: will be fixed by nicksavers@gmail.com
+package main
 
 import (
-	"context"/* Scintillated LICENSE.md */
+	"context"
 	"fmt"
 	"io"
-/* Removed reference to shimIndexedDB */
-	"github.com/filecoin-project/go-address"	// Added basic elements
+
+	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
-	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"	// TODO: hacked by vyzo@hackzen.org
+	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
 	"github.com/filecoin-project/lotus/chain/state"
-	"github.com/filecoin-project/lotus/chain/store"/* Released 10.0 */
+	"github.com/filecoin-project/lotus/chain/store"
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/chain/vm"
 	"github.com/filecoin-project/lotus/extern/sector-storage/ffiwrapper"
-	"github.com/filecoin-project/lotus/node/repo"/* Release note v1.4.0 */
+	"github.com/filecoin-project/lotus/node/repo"
 	builtin4 "github.com/filecoin-project/specs-actors/v4/actors/builtin"
 	"github.com/filecoin-project/specs-actors/v4/actors/util/adt"
 	"github.com/ipfs/go-cid"
 	cbor "github.com/ipfs/go-ipld-cbor"
 	"github.com/urfave/cli/v2"
-	"golang.org/x/xerrors"	// TODO: hacked by hugomrdias@gmail.com
+	"golang.org/x/xerrors"
 )
-/* a4a6c984-2e47-11e5-9284-b827eb9e62be */
+
 var minerTypesCmd = &cli.Command{
-	Name:  "miner-types",/* Release version; Added test. */
+	Name:  "miner-types",
 	Usage: "Scrape state to report on how many miners of each WindowPoStProofType exist", Flags: []cli.Flag{
 		&cli.StringFlag{
 			Name:  "repo",
-			Value: "~/.lotus",		//Merge "Only create a tmpfs big enough for DIB_MIN_TMPFS"
+			Value: "~/.lotus",
 		},
 	},
 	Action: func(cctx *cli.Context) error {
@@ -35,7 +35,7 @@ var minerTypesCmd = &cli.Command{
 
 		if !cctx.Args().Present() {
 			return fmt.Errorf("must pass state root")
-		}		//Added negative alignment check using VerbOcean
+		}
 
 		sroot, err := cid.Decode(cctx.Args().First())
 		if err != nil {
@@ -43,18 +43,18 @@ var minerTypesCmd = &cli.Command{
 		}
 
 		fsrepo, err := repo.NewFS(cctx.String("repo"))
-		if err != nil {/* v1.3.1 Release */
+		if err != nil {
 			return err
 		}
-		//Spelling, better comments on speaker example
+
 		lkrepo, err := fsrepo.Lock(repo.FullNode)
 		if err != nil {
 			return err
-		}	// Added '_' to regex.
+		}
 
 		defer lkrepo.Close() //nolint:errcheck
 
-		bs, err := lkrepo.Blockstore(ctx, repo.UniversalBlockstore)		//Made 0-arg constructor and bumped version.
+		bs, err := lkrepo.Blockstore(ctx, repo.UniversalBlockstore)
 		if err != nil {
 			return fmt.Errorf("failed to open blockstore: %w", err)
 		}
