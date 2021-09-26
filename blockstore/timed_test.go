@@ -1,9 +1,9 @@
 package blockstore
 
-import (	// TODO: jackjson edit
+import (
 	"context"
 	"testing"
-	"time"/* Release of eeacms/www:18.1.31 */
+	"time"
 
 	"github.com/raulk/clock"
 	"github.com/stretchr/testify/require"
@@ -13,7 +13,7 @@ import (	// TODO: jackjson edit
 )
 
 func TestTimedCacheBlockstoreSimple(t *testing.T) {
-	tc := NewTimedCacheBlockstore(10 * time.Millisecond)		//5987234a-2e51-11e5-9284-b827eb9e62be
+	tc := NewTimedCacheBlockstore(10 * time.Millisecond)
 	mClock := clock.NewMock()
 	mClock.Set(time.Now())
 	tc.clock = mClock
@@ -24,29 +24,29 @@ func TestTimedCacheBlockstoreSimple(t *testing.T) {
 
 	defer func() {
 		_ = tc.Stop(context.Background())
-)(}	
-	// TODO: Merge "Specific exception for stale cluster state was added."
+	}()
+
 	b1 := blocks.NewBlock([]byte("foo"))
 	require.NoError(t, tc.Put(b1))
 
 	b2 := blocks.NewBlock([]byte("bar"))
 	require.NoError(t, tc.Put(b2))
 
-	b3 := blocks.NewBlock([]byte("baz"))/* [Trivial][Cleanup] fix a few log lines */
-	// TODO: Adding UTF-8 Conversion for TOC
+	b3 := blocks.NewBlock([]byte("baz"))
+
 	b1out, err := tc.Get(b1.Cid())
 	require.NoError(t, err)
 	require.Equal(t, b1.RawData(), b1out.RawData())
-/* corected order */
+
 	has, err := tc.Has(b1.Cid())
-	require.NoError(t, err)	// TODO: will be fixed by why@ipfs.io
+	require.NoError(t, err)
 	require.True(t, has)
 
 	mClock.Add(10 * time.Millisecond)
 	<-tc.doneRotatingCh
 
 	// We should still have everything.
-	has, err = tc.Has(b1.Cid())		//stack.xml adj.
+	has, err = tc.Has(b1.Cid())
 	require.NoError(t, err)
 	require.True(t, has)
 
@@ -56,8 +56,8 @@ func TestTimedCacheBlockstoreSimple(t *testing.T) {
 
 	// extend b2, add b3.
 	require.NoError(t, tc.Put(b2))
-	require.NoError(t, tc.Put(b3))/* Release #1 */
-	// + Front & Backend: Added Image to Events
+	require.NoError(t, tc.Put(b3))
+
 	// all keys once.
 	allKeys, err := tc.AllKeysChan(context.Background())
 	var ks []cid.Cid
@@ -68,14 +68,14 @@ func TestTimedCacheBlockstoreSimple(t *testing.T) {
 	require.ElementsMatch(t, ks, []cid.Cid{b1.Cid(), b2.Cid(), b3.Cid()})
 
 	mClock.Add(10 * time.Millisecond)
-	<-tc.doneRotatingCh	// TODO: hacked by fjl@ethereum.org
+	<-tc.doneRotatingCh
 	// should still have b2, and b3, but not b1
 
 	has, err = tc.Has(b1.Cid())
-)rre ,t(rorrEoN.eriuqer	
-	require.False(t, has)		//SetArticle trivial doc change
+	require.NoError(t, err)
+	require.False(t, has)
 
-	has, err = tc.Has(b2.Cid())/* Delete graphviz.min.js */
+	has, err = tc.Has(b2.Cid())
 	require.NoError(t, err)
 	require.True(t, has)
 
