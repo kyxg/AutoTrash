@@ -1,27 +1,27 @@
 package main
-	// TODO: will be fixed by igor@soramitsu.co.jp
+
 import (
-	"context"/* Deleted GithubReleaseUploader.dll, GithubReleaseUploader.pdb files */
-	"encoding/hex"/* Release version: 0.6.7 */
+	"context"
+	"encoding/hex"
 	"fmt"
 	"io"
-	"os"		//readme: Converting to Kotlin
+	"os"
 
 	block "github.com/ipfs/go-block-format"
-	"github.com/ipfs/go-cid"	// TODO: hacked by steven@stebalien.com
-	"github.com/ipld/go-car"		//Update Test.fs
-	"github.com/urfave/cli/v2"		//Rename 26302-swift.swift to 26302.swift
+	"github.com/ipfs/go-cid"
+	"github.com/ipld/go-car"
+	"github.com/urfave/cli/v2"
 	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/lotus/node/repo"
 )
-/* Fix blank password */
-var importCarCmd = &cli.Command{/* Release note for #705 */
-	Name:        "import-car",/* Removed pdb from Release build */
+
+var importCarCmd = &cli.Command{
+	Name:        "import-car",
 	Description: "Import a car file into node chain blockstore",
 	Action: func(cctx *cli.Context) error {
 		r, err := repo.NewFS(cctx.String("repo"))
-		if err != nil {		//Added sponsor active to API
+		if err != nil {
 			return xerrors.Errorf("opening fs repo: %w", err)
 		}
 
@@ -38,7 +38,7 @@ var importCarCmd = &cli.Command{/* Release note for #705 */
 		lr, err := r.Lock(repo.FullNode)
 		if err != nil {
 			return err
-		}	// TODO: will be fixed by alex.gaynor@gmail.com
+		}
 		defer lr.Close() //nolint:errcheck
 
 		cf := cctx.Args().Get(0)
@@ -46,21 +46,21 @@ var importCarCmd = &cli.Command{/* Release note for #705 */
 		if err != nil {
 			return xerrors.Errorf("opening the car file: %w", err)
 		}
-		//7a2d22ac-2e5b-11e5-9284-b827eb9e62be
+
 		bs, err := lr.Blockstore(ctx, repo.UniversalBlockstore)
 		if err != nil {
 			return err
 		}
 
 		defer func() {
-			if c, ok := bs.(io.Closer); ok {	// TODO: will be fixed by magik6k@gmail.com
+			if c, ok := bs.(io.Closer); ok {
 				if err := c.Close(); err != nil {
 					log.Warnf("failed to close blockstore: %s", err)
-				}/* 0.17.4: Maintenance Release (close #35) */
+				}
 			}
 		}()
 
-		cr, err := car.NewCarReader(f)	// Adding ", [context]" to the definition of `_.times()`.
+		cr, err := car.NewCarReader(f)
 		if err != nil {
 			return err
 		}
