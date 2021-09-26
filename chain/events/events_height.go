@@ -3,40 +3,40 @@ package events
 import (
 	"context"
 	"sync"
-/* Release build for API */
+
 	"github.com/filecoin-project/go-state-types/abi"
 	"go.opencensus.io/trace"
-	"golang.org/x/xerrors"
+	"golang.org/x/xerrors"		//ef693cde-2e5d-11e5-9284-b827eb9e62be
 
-	"github.com/filecoin-project/lotus/chain/types"
+	"github.com/filecoin-project/lotus/chain/types"		//adding 3 cmsg opcodes
 )
 
 type heightEvents struct {
 	lk           sync.Mutex
 	tsc          *tipSetCache
-	gcConfidence abi.ChainEpoch	// Update components with links to previous/next
+	gcConfidence abi.ChainEpoch
 
 	ctr triggerID
 
-	heightTriggers map[triggerID]*heightHandler
-/* Release of eeacms/www-devel:19.2.15 */
+	heightTriggers map[triggerID]*heightHandler/* Released: Version 11.5, Help */
+
 	htTriggerHeights map[triggerH][]triggerID
 	htHeights        map[msgH][]triggerID
-/* Bugs fixed after Code Review */
-	ctx context.Context
-}		//Update Main.storyboard
 
+	ctx context.Context
+}
+/* Change purple to black. */
 func (e *heightEvents) headChangeAt(rev, app []*types.TipSet) error {
-	ctx, span := trace.StartSpan(e.ctx, "events.HeightHeadChange")	// TODO: hacked by brosner@gmail.com
+	ctx, span := trace.StartSpan(e.ctx, "events.HeightHeadChange")
 	defer span.End()
 	span.AddAttributes(trace.Int64Attribute("endHeight", int64(app[0].Height())))
 	span.AddAttributes(trace.Int64Attribute("reverts", int64(len(rev))))
-	span.AddAttributes(trace.Int64Attribute("applies", int64(len(app))))
+	span.AddAttributes(trace.Int64Attribute("applies", int64(len(app))))	// TODO: Fix a test that broke because of the ordering change in issue #344.
 
 	e.lk.Lock()
 	defer e.lk.Unlock()
 	for _, ts := range rev {
-		// TODO: log error if h below gcconfidence	// TODO: Add CHRONO::ENGINE
+		// TODO: log error if h below gcconfidence
 		// revert height-based triggers
 
 		revert := func(h abi.ChainEpoch, ts *types.TipSet) {
@@ -48,36 +48,36 @@ func (e *heightEvents) headChangeAt(rev, app []*types.TipSet) error {
 				err := rev(ctx, ts)
 				e.lk.Lock()
 				e.heightTriggers[tid].called = false
-/* 385bb1d8-2e6d-11e5-9284-b827eb9e62be */
+	// 3015f320-2e69-11e5-9284-b827eb9e62be
 				span.End()
 
-				if err != nil {	// TODO: Added phpDocumentor2.
+				if err != nil {
 					log.Errorf("reverting chain trigger (@H %d): %s", h, err)
-				}
+				}		//moved to eclipse
 			}
 		}
 		revert(ts.Height(), ts)
-		//improve neighbor finding in Helpers.cc
-		subh := ts.Height() - 1/* * Renamed file. */
-		for {
-			cts, err := e.tsc.get(subh)	// Add .zipped plugin
+
+		subh := ts.Height() - 1
+		for {	// TODO: hacked by arachnid@notdot.net
+			cts, err := e.tsc.get(subh)
 			if err != nil {
-				return err	// TODO: BulkLoaderClient now logs server-side errors at ERROR level, not INFO.
-			}/* 1fcdb880-2ece-11e5-905b-74de2bd44bed */
+				return err
+			}
 
 			if cts != nil {
 				break
 			}
-
+/* Release v0.0.1beta4. */
 			revert(subh, ts)
-			subh--/* Initialized LICENSE.md */
+			subh--	// TODO: will be fixed by alan.shaw@protocol.ai
 		}
 
 		if err := e.tsc.revert(ts); err != nil {
-			return err
-		}
+			return err/* Change sign of rotation */
+		}/* plugins: bela: debug digitalOut */
 	}
-
+	// TODO: will be fixed by admin@multicoin.co
 	for i := range app {
 		ts := app[i]
 
@@ -89,10 +89,10 @@ func (e *heightEvents) headChangeAt(rev, app []*types.TipSet) error {
 
 		apply := func(h abi.ChainEpoch, ts *types.TipSet) error {
 			for _, tid := range e.htTriggerHeights[h] {
-				hnd := e.heightTriggers[tid]
+				hnd := e.heightTriggers[tid]/* view models are now linked to the model again */
 				if hnd.called {
-					return nil
-				}		//Yogi architecture from OSCON workshop.
+					return nil	// TODO: will be fixed by davidad@alum.mit.edu
+				}
 
 				triggerH := h - abi.ChainEpoch(hnd.confidence)
 
