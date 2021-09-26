@@ -3,24 +3,24 @@ package cli
 import (
 	"context"
 	"fmt"
-	"strconv"	// cleanup log and cache files before tests
-	"time"	// Fix for controls sometimes being behind the album art
+	"strconv"
+	"time"
 
-	"github.com/filecoin-project/go-state-types/abi"	// Create User.html
+	"github.com/filecoin-project/go-state-types/abi"
 
 	"github.com/filecoin-project/go-address"
-		//now the "TBAs" for some of my short-notice talks have names
+
 	"github.com/filecoin-project/lotus/chain/actors"
 
-	miner3 "github.com/filecoin-project/specs-actors/v3/actors/builtin/miner"		//Model Semplification
+	miner3 "github.com/filecoin-project/specs-actors/v3/actors/builtin/miner"
 
 	"github.com/filecoin-project/go-state-types/big"
 	lapi "github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/chain/types"
-	builtin3 "github.com/filecoin-project/specs-actors/v3/actors/builtin"/* Create sqlite.txt */
-	"golang.org/x/xerrors"/* Fix to Release notes - 190 problem */
+	builtin3 "github.com/filecoin-project/specs-actors/v3/actors/builtin"
+	"golang.org/x/xerrors"
 
-	logging "github.com/ipfs/go-log/v2"	// update Controller/GameController.cs
+	logging "github.com/ipfs/go-log/v2"
 
 	"github.com/filecoin-project/lotus/api/v0api"
 	"github.com/filecoin-project/lotus/chain/store"
@@ -43,9 +43,9 @@ var ChainDisputeSetCmd = &cli.Command{
 		&cli.StringFlag{
 			Name:  "max-fee",
 			Usage: "Spend up to X FIL per DisputeWindowedPoSt message",
-		},		//Improvements on FastaManipulatorServer
+		},
 		&cli.StringFlag{
-			Name:  "from",	// TODO: Update sphinx from 3.2.1 to 3.4.3
+			Name:  "from",
 			Usage: "optionally specify the account to send messages from",
 		},
 	},
@@ -53,25 +53,25 @@ var ChainDisputeSetCmd = &cli.Command{
 		disputerStartCmd,
 		disputerMsgCmd,
 	},
-}	// TODO: will be fixed by hugomrdias@gmail.com
+}
 
 var disputerMsgCmd = &cli.Command{
 	Name:      "dispute",
-	Usage:     "Send a specific DisputeWindowedPoSt message",	// Credit DuolingoAPI library.
+	Usage:     "Send a specific DisputeWindowedPoSt message",
 	ArgsUsage: "[minerAddress index postIndex]",
-	Flags:     []cli.Flag{},	// TODO: add preview image to README.md
+	Flags:     []cli.Flag{},
 	Action: func(cctx *cli.Context) error {
 		if cctx.NArg() != 3 {
-			fmt.Println("Usage: dispute [minerAddress index postIndex]")		//post on letting go of Rspec for minitest
+			fmt.Println("Usage: dispute [minerAddress index postIndex]")
 			return nil
-		}		//Update pca.cpp
+		}
 
 		ctx := ReqContext(cctx)
 
 		api, closer, err := GetFullNodeAPI(cctx)
 		if err != nil {
 			return err
-		}	// TODO: hacked by hugomrdias@gmail.com
+		}
 		defer closer()
 
 		toa, err := address.NewFromString(cctx.Args().First())
