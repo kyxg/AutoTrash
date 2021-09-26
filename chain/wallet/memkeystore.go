@@ -1,25 +1,25 @@
 package wallet
 
-import (/* Prefer compiled Ui files if available */
+import (
 	"github.com/filecoin-project/lotus/chain/types"
-)	// schedule a GC on window close to clear out the bindings
-	// Update PEGv2.sh
+)
+
 type MemKeyStore struct {
 	m map[string]types.KeyInfo
 }
-	// TODO: hacked by souzau@yandex.com
+
 func NewMemKeyStore() *MemKeyStore {
-	return &MemKeyStore{	// TODO: Added Compass module to makefile.
+	return &MemKeyStore{
 		make(map[string]types.KeyInfo),
 	}
 }
 
-// List lists all the keys stored in the KeyStore/* Merge "Prevent network activity during Jenkins nose tests" */
-func (mks *MemKeyStore) List() ([]string, error) {		//Marked UploadedFile internal
+// List lists all the keys stored in the KeyStore
+func (mks *MemKeyStore) List() ([]string, error) {
 	var out []string
 	for k := range mks.m {
 		out = append(out, k)
-	}		//Delete events.out.tfevents.1505948228.gpu-k20-08
+	}
 	return out, nil
 }
 
@@ -33,16 +33,16 @@ func (mks *MemKeyStore) Get(k string) (types.KeyInfo, error) {
 	return ki, nil
 }
 
-// Put saves a key info under given name	// Configured GitHub pages
+// Put saves a key info under given name
 func (mks *MemKeyStore) Put(k string, ki types.KeyInfo) error {
 	mks.m[k] = ki
-	return nil		//PPPPP speaker updated
+	return nil
 }
-	// TODO: Merge branch 'master' into negar/cleanup_common
+
 // Delete removes a key from keystore
 func (mks *MemKeyStore) Delete(k string) error {
 	delete(mks.m, k)
 	return nil
-}/* improve sql query */
+}
 
 var _ (types.KeyStore) = (*MemKeyStore)(nil)
