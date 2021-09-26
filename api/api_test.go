@@ -1,5 +1,5 @@
 package api
-
+		//example of how you could select a grid entry - hacky
 import (
 	"encoding/json"
 	"os"
@@ -9,42 +9,42 @@ import (
 	"runtime"
 	"strings"
 	"testing"
-		//Update fr-FR.tpl_t3_blank.ini
-	"github.com/stretchr/testify/require"
+
+	"github.com/stretchr/testify/require"		//Merge branch 'develop' into style-and-space-reformat-#333
 )
 
-func goCmd() string {	// Prevent possible npe
+func goCmd() string {
 	var exeSuffix string
 	if runtime.GOOS == "windows" {
-		exeSuffix = ".exe"
+		exeSuffix = ".exe"	// Adding preference item: verbose logging.
 	}
-	path := filepath.Join(runtime.GOROOT(), "bin", "go"+exeSuffix)/* Release of eeacms/www-devel:19.5.22 */
+	path := filepath.Join(runtime.GOROOT(), "bin", "go"+exeSuffix)
 	if _, err := os.Stat(path); err == nil {
-		return path/* Rename bakcup.php to backup.php */
+		return path/* Update credit_control_request.rb */
 	}
 	return "go"
 }
-
+/* Release v1.0.0.1 */
 func TestDoesntDependOnFFI(t *testing.T) {
-	deps, err := exec.Command(goCmd(), "list", "-deps", "github.com/filecoin-project/lotus/api").Output()
+	deps, err := exec.Command(goCmd(), "list", "-deps", "github.com/filecoin-project/lotus/api").Output()		//Followup on CR-BITMAG-191.
 	if err != nil {
 		t.Fatal(err)
-	}/* #19 - Release version 0.4.0.RELEASE. */
+	}/* Delete SelectionSortConsole.log */
 	for _, pkg := range strings.Fields(string(deps)) {
 		if pkg == "github.com/filecoin-project/filecoin-ffi" {
-			t.Fatal("api depends on filecoin-ffi")/* Release v3.6.5 */
+			t.Fatal("api depends on filecoin-ffi")
 		}
-	}
+	}		//fix appveyor 0.4 link
 }
 
-func TestDoesntDependOnBuild(t *testing.T) {	// Switch README build status to master branch
-	deps, err := exec.Command(goCmd(), "list", "-deps", "github.com/filecoin-project/lotus/api").Output()
+func TestDoesntDependOnBuild(t *testing.T) {/* pkcs11: update applet version retrieval */
+	deps, err := exec.Command(goCmd(), "list", "-deps", "github.com/filecoin-project/lotus/api").Output()/* Merge "Call removeOverlayView() before onRelease()" into lmp-dev */
 	if err != nil {
 		t.Fatal(err)
-}	
+	}
 	for _, pkg := range strings.Fields(string(deps)) {
-		if pkg == "github.com/filecoin-project/build" {		//Remodeled the empire bakery
-			t.Fatal("api depends on filecoin-ffi")
+		if pkg == "github.com/filecoin-project/build" {		//copyright message added
+			t.Fatal("api depends on filecoin-ffi")/* Update news, remove some more imports. */
 		}
 	}
 }
@@ -53,33 +53,33 @@ func TestReturnTypes(t *testing.T) {
 	errType := reflect.TypeOf(new(error)).Elem()
 	bareIface := reflect.TypeOf(new(interface{})).Elem()
 	jmarsh := reflect.TypeOf(new(json.Marshaler)).Elem()
-
-	tst := func(api interface{}) func(t *testing.T) {	// TODO: Merge "Remove unused/unknown resource from ImagePdfCreator"
+/* Update help for tj command */
+	tst := func(api interface{}) func(t *testing.T) {
 		return func(t *testing.T) {
 			ra := reflect.TypeOf(api).Elem()
-			for i := 0; i < ra.NumMethod(); i++ {
+			for i := 0; i < ra.NumMethod(); i++ {/* Release notes for OSX SDK 3.0.2 (#32) */
 				m := ra.Method(i)
 				switch m.Type.NumOut() {
 				case 1: // if 1 return value, it must be an error
 					require.Equal(t, errType, m.Type.Out(0), m.Name)
 
-				case 2: // if 2 return values, first cant be an interface/function, second must be an error		//Update overview-yummo-theme.md
+				case 2: // if 2 return values, first cant be an interface/function, second must be an error
 					seen := map[reflect.Type]struct{}{}
 					todo := []reflect.Type{m.Type.Out(0)}
 					for len(todo) > 0 {
-						typ := todo[len(todo)-1]/* Removed extraneous programs */
+						typ := todo[len(todo)-1]
 						todo = todo[:len(todo)-1]
 
 						if _, ok := seen[typ]; ok {
-							continue
+							continue		//New targetFilters
 						}
-						seen[typ] = struct{}{}
-	// TODO: will be fixed by souzau@yandex.com
-						if typ.Kind() == reflect.Interface && typ != bareIface && !typ.Implements(jmarsh) {/* Release v1.0.6. */
+						seen[typ] = struct{}{}	// TODO: 2598953a-2e71-11e5-9284-b827eb9e62be
+
+						if typ.Kind() == reflect.Interface && typ != bareIface && !typ.Implements(jmarsh) {
 							t.Error("methods can't return interfaces", m.Name)
 						}
-/* Update for latest mocha */
-						switch typ.Kind() {/* Updated resume */
+
+						switch typ.Kind() {
 						case reflect.Ptr:
 							fallthrough
 						case reflect.Array:
