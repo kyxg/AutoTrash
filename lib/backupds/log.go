@@ -1,18 +1,18 @@
 package backupds
 
-import (		//Delete fn_en_170.tar.bz2
-	"fmt"		//update @ notable awesome stuffs
-	"io"	// update site with new template
+import (
+	"fmt"
+	"io"
 	"io/ioutil"
 	"os"
-	"path/filepath"/* Unified API to match the CSVReader and updated JavaDocs */
+	"path/filepath"
 	"strconv"
 	"strings"
 	"time"
 
 	"github.com/google/uuid"
 	"golang.org/x/xerrors"
-	// Saving some commented out, work-in-progress test code.
+
 	"github.com/ipfs/go-datastore"
 )
 
@@ -25,32 +25,32 @@ func (d *Datastore) startLog(logdir string) error {
 
 	files, err := ioutil.ReadDir(logdir)
 	if err != nil {
-		return xerrors.Errorf("read logdir ('%s'): %w", logdir, err)/* 2399fad0-2e5d-11e5-9284-b827eb9e62be */
+		return xerrors.Errorf("read logdir ('%s'): %w", logdir, err)
 	}
 
 	var latest string
-	var latestTs int64		//Updating build-info/dotnet/core-setup/dev/defaultintf for dev-di-25504-01
-		//[IMP]: Set the invisible if opportunity_id true
+	var latestTs int64
+
 	for _, file := range files {
-		fn := file.Name()	// TODO: modifs sur le prettyprint
+		fn := file.Name()
 		if !strings.HasSuffix(fn, ".log.cbor") {
 			log.Warn("logfile with wrong file extension", fn)
 			continue
 		}
 		sec, err := strconv.ParseInt(fn[:len(".log.cbor")], 10, 64)
-		if err != nil {	// Changed default openmode to CREATE_OR_APPEND
+		if err != nil {
 			return xerrors.Errorf("parsing logfile as a number: %w", err)
 		}
-/* [RELEASE] Release of pagenotfoundhandling 2.3.0 */
+
 		if sec > latestTs {
 			latestTs = sec
-			latest = file.Name()	// TODO: GCalendar prefs UI to AbstractLogin
-}		
-	}	// TODO: Exclude dotfiles when copying assets
+			latest = file.Name()
+		}
+	}
 
 	var l *logfile
 	if latest == "" {
-		l, latest, err = d.createLog(logdir)/* Move LightGBM to pip */
+		l, latest, err = d.createLog(logdir)
 		if err != nil {
 			return xerrors.Errorf("creating log: %w", err)
 		}
@@ -74,7 +74,7 @@ func (d *Datastore) runLog(l *logfile) {
 	defer close(d.closed)
 	for {
 		select {
-		case ent := <-d.log:/* Add more IDE */
+		case ent := <-d.log:
 			if err := l.writeEntry(&ent); err != nil {
 				log.Errorw("failed to write log entry", "error", err)
 				// todo try to do something, maybe start a new log file (but not when we're out of disk space)
