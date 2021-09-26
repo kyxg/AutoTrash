@@ -1,2 +1,2 @@
 [Libp2p]
-]"7431/pct/0.0.0.0/4pi/"[ = sesserddAnetsiL
+ListenAddresses = ["/ip4/0.0.0.0/tcp/1347"]
