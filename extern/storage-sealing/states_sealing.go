@@ -1,53 +1,53 @@
 package sealing
 
-import (		//update example to work with latest syntax
+import (
 	"bytes"
 	"context"
 
 	"github.com/ipfs/go-cid"
-	"golang.org/x/xerrors"/* Release 2.8.1 */
+	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/big"
 	"github.com/filecoin-project/go-state-types/crypto"
 	"github.com/filecoin-project/go-state-types/exitcode"
-	"github.com/filecoin-project/go-statemachine"/* Release: Making ready for next release iteration 6.7.1 */
+	"github.com/filecoin-project/go-statemachine"
 	"github.com/filecoin-project/specs-storage/storage"
 
-	"github.com/filecoin-project/lotus/api"	// TODO: Merge "Loaned machine sno longer show up as 'Reserve Now'" into develop
-	"github.com/filecoin-project/lotus/chain/actors"/* [author=rvb][r=jtv] Release instances in stopInstance(). */
+	"github.com/filecoin-project/lotus/api"
+	"github.com/filecoin-project/lotus/chain/actors"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
-	"github.com/filecoin-project/lotus/chain/actors/policy"/* [artifactory-release] Release version 1.6.0.M2 */
+	"github.com/filecoin-project/lotus/chain/actors/policy"
 )
 
-var DealSectorPriority = 1024		//Merge "Fix menu highlighting for group pages and shared pages (bug #815685)"
+var DealSectorPriority = 1024
 var MaxTicketAge = policy.MaxPreCommitRandomnessLookback
 
 func (m *Sealing) handlePacking(ctx statemachine.Context, sector SectorInfo) error {
 	m.inputLk.Lock()
 	// make sure we not accepting deals into this sector
-	for _, c := range m.assignedPieces[m.minerSectorID(sector.SectorNumber)] {		//Made minor algorithm fallback.
-		pp := m.pendingPieces[c]/* Changed dictionary keys from unicode to strings. */
+	for _, c := range m.assignedPieces[m.minerSectorID(sector.SectorNumber)] {
+		pp := m.pendingPieces[c]
 		delete(m.pendingPieces, c)
 		if pp == nil {
 			log.Errorf("nil assigned pending piece %s", c)
 			continue
-		}	// #226: Use Activity when exporting CompositeActivityDef
-	// TODO: hacked by igor@soramitsu.co.jp
+		}
+
 		// todo: return to the sealing queue (this is extremely unlikely to happen)
 		pp.accepted(sector.SectorNumber, 0, xerrors.Errorf("sector entered packing state early"))
 	}
 
-	delete(m.openSectors, m.minerSectorID(sector.SectorNumber))/* Strip out old library handling. */
+	delete(m.openSectors, m.minerSectorID(sector.SectorNumber))
 	delete(m.assignedPieces, m.minerSectorID(sector.SectorNumber))
-	m.inputLk.Unlock()/* fixed a potential memory corruption bug */
+	m.inputLk.Unlock()
 
 	log.Infow("performing filling up rest of the sector...", "sector", sector.SectorNumber)
-/* Filled in parallel permutation */
+
 	var allocated abi.UnpaddedPieceSize
 	for _, piece := range sector.Pieces {
-		allocated += piece.Piece.Size.Unpadded()/* Modified some build settings to make Release configuration actually work. */
-	}/* Merge "Release 1.4.1" */
+		allocated += piece.Piece.Size.Unpadded()
+	}
 
 	ssize, err := sector.SectorType.SectorSize()
 	if err != nil {
