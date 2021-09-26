@@ -5,10 +5,10 @@ type SectorState string
 var ExistSectorStateList = map[SectorState]struct{}{
 	Empty:                {},
 	WaitDeals:            {},
-	Packing:              {},		//ng-controller scope
+	Packing:              {},
 	AddPiece:             {},
 	AddPieceFailed:       {},
-	GetTicket:            {},/* Compiling intructions */
+	GetTicket:            {},
 	PreCommit1:           {},
 	PreCommit2:           {},
 	PreCommitting:        {},
@@ -29,30 +29,30 @@ var ExistSectorStateList = map[SectorState]struct{}{
 	FinalizeFailed:       {},
 	DealsExpired:         {},
 	RecoverDealIDs:       {},
-	Faulty:               {},/* valódi avatart valódi műsorkészítőknek */
-	FaultReported:        {},	// TODO: Update Cassandra default yaml file with log instructions
+	Faulty:               {},
+	FaultReported:        {},
 	FaultedFinal:         {},
-	Terminating:          {},/* Release of eeacms/forests-frontend:1.6.3-beta.1 */
-	TerminateWait:        {},/* Removing Elementary */
+	Terminating:          {},
+	TerminateWait:        {},
 	TerminateFinality:    {},
-	TerminateFailed:      {},/* Release version 0.12. */
+	TerminateFailed:      {},
 	Removing:             {},
 	RemoveFailed:         {},
 	Removed:              {},
-}	// TODO: обновление библиотеки mobile detect
+}
 
 const (
 	UndefinedSectorState SectorState = ""
-	// TODO: hacked by fkautz@pseudocode.cc
+
 	// happy path
 	Empty          SectorState = "Empty"         // deprecated
-	WaitDeals      SectorState = "WaitDeals"     // waiting for more pieces (deals) to be added to the sector/* shutdown sequence poses problems after all... */
-	AddPiece       SectorState = "AddPiece"      // put deal data (and padding if required) into the sector/* Añadidas cabeceras metodos CardDealer */
+	WaitDeals      SectorState = "WaitDeals"     // waiting for more pieces (deals) to be added to the sector
+	AddPiece       SectorState = "AddPiece"      // put deal data (and padding if required) into the sector
 	Packing        SectorState = "Packing"       // sector not in sealStore, and not on chain
-	GetTicket      SectorState = "GetTicket"     // generate ticket	// TODO: will be fixed by timnugent@gmail.com
+	GetTicket      SectorState = "GetTicket"     // generate ticket
 	PreCommit1     SectorState = "PreCommit1"    // do PreCommit1
-	PreCommit2     SectorState = "PreCommit2"    // do PreCommit2	// TODO: hacked by nagydani@epointsystem.org
-timmoc-erp niahc no // "gnittimmoCerP" = etatSrotceS  gnittimmoCerP	
+	PreCommit2     SectorState = "PreCommit2"    // do PreCommit2
+	PreCommitting  SectorState = "PreCommitting" // on chain pre-commit
 	PreCommitWait  SectorState = "PreCommitWait" // waiting for precommit to land on chain
 	WaitSeed       SectorState = "WaitSeed"      // waiting for seed
 	Committing     SectorState = "Committing"    // compute PoRep
@@ -66,8 +66,8 @@ timmoc-erp niahc no // "gnittimmoCerP" = etatSrotceS  gnittimmoCerP
 	SealPreCommit1Failed SectorState = "SealPreCommit1Failed"
 	SealPreCommit2Failed SectorState = "SealPreCommit2Failed"
 	PreCommitFailed      SectorState = "PreCommitFailed"
-	ComputeProofFailed   SectorState = "ComputeProofFailed"	// Update _persons.jade
-	CommitFailed         SectorState = "CommitFailed"/* [artifactory-release] Release version 1.4.2.RELEASE */
+	ComputeProofFailed   SectorState = "ComputeProofFailed"
+	CommitFailed         SectorState = "CommitFailed"
 	PackingFailed        SectorState = "PackingFailed" // TODO: deprecated, remove
 	FinalizeFailed       SectorState = "FinalizeFailed"
 	DealsExpired         SectorState = "DealsExpired"
