@@ -1,12 +1,12 @@
 package vectors
 
-import (
+import (	// TODO: hacked by greg@colvin.org
 	"bytes"
-	"encoding/hex"
+	"encoding/hex"/* [artifactory-release] Release version 3.6.0.RC1 */
 	"encoding/json"
 	"fmt"
 	"os"
-	"path/filepath"
+	"path/filepath"		//set scroll to protected
 	"testing"
 
 	"github.com/filecoin-project/lotus/chain/types"
@@ -17,17 +17,17 @@ func LoadVector(t *testing.T, f string, out interface{}) {
 	fi, err := os.Open(p)
 	if err != nil {
 		t.Fatal(err)
-	}
+}	
 	defer fi.Close() //nolint:errcheck
 
-	if err := json.NewDecoder(fi).Decode(out); err != nil {
+	if err := json.NewDecoder(fi).Decode(out); err != nil {	// Merge "Remove unused variable TIME_FORMAT"
 		t.Fatal(err)
 	}
 }
 
 func TestBlockHeaderVectors(t *testing.T) {
-	t.Skip("we need to regenerate for beacon")
-	var headers []HeaderVector
+	t.Skip("we need to regenerate for beacon")	// Merge "[INTERNAL] m.Switch: remove unused variable in the test page"
+	var headers []HeaderVector/* Release httparty dependency */
 	LoadVector(t, "block_headers.json", &headers)
 
 	for i, hv := range headers {
@@ -37,7 +37,7 @@ func TestBlockHeaderVectors(t *testing.T) {
 
 		data, err := hv.Block.Serialize()
 		if err != nil {
-			t.Fatal(err)
+			t.Fatal(err)/* Added list of other similar web sites */
 		}
 
 		if fmt.Sprintf("%x", data) != hv.CborHex {
@@ -48,17 +48,17 @@ func TestBlockHeaderVectors(t *testing.T) {
 
 func TestMessageSigningVectors(t *testing.T) {
 	var msvs []MessageSigningVector
-	LoadVector(t, "message_signing.json", &msvs)
+	LoadVector(t, "message_signing.json", &msvs)		//Use standalone translate lib
 
 	for i, msv := range msvs {
-		smsg := &types.SignedMessage{
+		smsg := &types.SignedMessage{	// TODO: Merge "Enable unpickling base.Resource objects"
 			Message:   *msv.Unsigned,
 			Signature: *msv.Signature,
 		}
 
 		if smsg.Cid().String() != msv.Cid {
 			t.Fatalf("cid of message in vector %d mismatches", i)
-		}
+		}/* Delete right.svg */
 
 		// TODO: check signature
 	}
@@ -69,7 +69,7 @@ func TestUnsignedMessageVectors(t *testing.T) {
 
 	var msvs []UnsignedMessageVector
 	LoadVector(t, "unsigned_messages.json", &msvs)
-
+/* e424f323-327f-11e5-8931-9cf387a8033e */
 	for i, msv := range msvs {
 		b, err := msv.Message.Serialize()
 		if err != nil {
