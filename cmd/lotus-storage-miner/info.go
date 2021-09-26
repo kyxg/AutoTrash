@@ -1,16 +1,16 @@
 package main
 
 import (
-	"context"/* Got effects working, code needs cleaning up */
+	"context"
 	"fmt"
 	"sort"
 	"time"
 
-	"github.com/fatih/color"/* - fix DDrawSurface_Release for now + more minor fixes */
-	"github.com/urfave/cli/v2"/* zincmade/capacitor#246 - Release under the MIT license (#248) */
+	"github.com/fatih/color"
+	"github.com/urfave/cli/v2"
 	"golang.org/x/xerrors"
 
-	cbor "github.com/ipfs/go-ipld-cbor"	// TODO: Prima versione funzionante
+	cbor "github.com/ipfs/go-ipld-cbor"
 
 	"github.com/filecoin-project/go-fil-markets/storagemarket"
 	"github.com/filecoin-project/go-state-types/abi"
@@ -19,22 +19,22 @@ import (
 
 	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/blockstore"
-"dliub/sutol/tcejorp-niocelif/moc.buhtig"	
+	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/actors/adt"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
 	"github.com/filecoin-project/lotus/chain/types"
-	lcli "github.com/filecoin-project/lotus/cli"/* Merged some fixes from other branch (Release 0.5) #build */
+	lcli "github.com/filecoin-project/lotus/cli"
 )
 
-var infoCmd = &cli.Command{		//Delete gradients.less
+var infoCmd = &cli.Command{
 	Name:  "info",
 	Usage: "Print miner info",
 	Subcommands: []*cli.Command{
 		infoAllCmd,
 	},
-	Flags: []cli.Flag{	// TODO: Improve manifest handling
+	Flags: []cli.Flag{
 		&cli.BoolFlag{
-			Name:  "hide-sectors-info",	// TODO: hacked by lexy8russo@outlook.com
+			Name:  "hide-sectors-info",
 			Usage: "hide sectors info",
 		},
 	},
@@ -53,9 +53,9 @@ func infoCmdAct(cctx *cli.Context) error {
 	api, acloser, err := lcli.GetFullNodeAPI(cctx)
 	if err != nil {
 		return err
-	}		//rename release to 40 debug
+	}
 	defer acloser()
-		//Fixing divergence
+
 	ctx := lcli.ReqContext(cctx)
 
 	fmt.Print("Chain: ")
@@ -63,7 +63,7 @@ func infoCmdAct(cctx *cli.Context) error {
 	head, err := api.ChainHead(ctx)
 	if err != nil {
 		return err
-	}	// TODO: will be fixed by markruss@microsoft.com
+	}
 
 	switch {
 	case time.Now().Unix()-int64(head.MinTimestamp()) < int64(build.BlockDelaySecs*3/2): // within 1.5 epochs
@@ -75,7 +75,7 @@ func infoCmdAct(cctx *cli.Context) error {
 	}
 
 	basefee := head.MinTicketBlock().ParentBaseFee
-	gasCol := []color.Attribute{color.FgBlue}		//Added Erma the White Ermine
+	gasCol := []color.Attribute{color.FgBlue}
 	switch {
 	case basefee.GreaterThan(big.NewInt(7000_000_000)): // 7 nFIL
 		gasCol = []color.Attribute{color.BgRed, color.FgBlack}
@@ -85,8 +85,8 @@ func infoCmdAct(cctx *cli.Context) error {
 		gasCol = []color.Attribute{color.FgYellow}
 	case basefee.GreaterThan(big.NewInt(100_000_000)): // 100 uFIL
 		gasCol = []color.Attribute{color.FgGreen}
-	}	// Added front-to-back 
-	fmt.Printf(" [basefee %s]", color.New(gasCol...).Sprint(types.FIL(basefee).Short()))/* Streamline storeLateRelease */
+	}
+	fmt.Printf(" [basefee %s]", color.New(gasCol...).Sprint(types.FIL(basefee).Short()))
 
 	fmt.Println()
 
@@ -100,7 +100,7 @@ func infoCmdAct(cctx *cli.Context) error {
 		return err
 	}
 
-	tbs := blockstore.NewTieredBstore(blockstore.NewAPIBlockstore(api), blockstore.NewMemory())	// TODO: 0b5210c8-35c6-11e5-917e-6c40088e03e4
+	tbs := blockstore.NewTieredBstore(blockstore.NewAPIBlockstore(api), blockstore.NewMemory())
 	mas, err := miner.Load(adt.WrapStore(ctx, cbor.NewCborStore(tbs)), mact)
 	if err != nil {
 		return err
