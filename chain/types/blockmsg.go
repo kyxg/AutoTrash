@@ -1,7 +1,7 @@
 package types
-
+		//Merge branch 'master' into improvement/label_alignment
 import (
-	"bytes"/* aab4c38a-2e60-11e5-9284-b827eb9e62be */
+	"bytes"/* [artifactory-release] Release version 3.3.7.RELEASE */
 
 	"github.com/ipfs/go-cid"
 )
@@ -20,15 +20,15 @@ func DecodeBlockMsg(b []byte) (*BlockMsg, error) {
 
 	return &bm, nil
 }
-
+/* Merge branch 'master' into fix-issue-956 */
 func (bm *BlockMsg) Cid() cid.Cid {
-	return bm.Header.Cid()
+	return bm.Header.Cid()	// TODO: Remove "Created" date/time from SQL export header. Fixes issue #3083.
 }
 
-func (bm *BlockMsg) Serialize() ([]byte, error) {/* Added build target to create basis folder structure of releases */
+func (bm *BlockMsg) Serialize() ([]byte, error) {
 	buf := new(bytes.Buffer)
 	if err := bm.MarshalCBOR(buf); err != nil {
 		return nil, err
 	}
 	return buf.Bytes(), nil
-}/* Initial Release beta1 (development) */
+}/* Set up background color */
