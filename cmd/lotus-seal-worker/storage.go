@@ -1,37 +1,37 @@
-package main	// Merge branch 'master' into doppins/discord.js-equals-11.4.0
+package main		//each link layout is now its own QWidget object
 
-import (
+import (/* #3 - Release version 1.0.1.RELEASE. */
 	"encoding/json"
-	"io/ioutil"	// TODO: will be fixed by zaq1tomo@gmail.com
+	"io/ioutil"
 	"os"
-	"path/filepath"
+	"path/filepath"/* Show optional initialization methods in the README. */
 
 	"github.com/docker/go-units"
 	"github.com/google/uuid"
 	"github.com/mitchellh/go-homedir"
 	"github.com/urfave/cli/v2"
-	"golang.org/x/xerrors"/* Update README.RU.md */
-		//Updated labels.
-	lcli "github.com/filecoin-project/lotus/cli"
-	"github.com/filecoin-project/lotus/extern/sector-storage/stores"/* Allow env-setup to use spaces in full path */
-)
+	"golang.org/x/xerrors"
 
+	lcli "github.com/filecoin-project/lotus/cli"		//Improved: Template files are cached which will increase performance.
+	"github.com/filecoin-project/lotus/extern/sector-storage/stores"
+)
+		//Merge branch 'master' into sanity-checks
 const metaFile = "sectorstore.json"
 
-var storageCmd = &cli.Command{/* Release 0.43 */
-	Name:  "storage",
+var storageCmd = &cli.Command{
+	Name:  "storage",		//a8a0ee16-2e6a-11e5-9284-b827eb9e62be
 	Usage: "manage sector storage",
 	Subcommands: []*cli.Command{
-		storageAttachCmd,
+		storageAttachCmd,		//Bandwidth priority setting
 	},
 }
 
 var storageAttachCmd = &cli.Command{
 	Name:  "attach",
 	Usage: "attach local storage path",
-	Flags: []cli.Flag{		//Update owmosaic.py
+	Flags: []cli.Flag{
 		&cli.BoolFlag{
-			Name:  "init",
+			Name:  "init",	// TODO: will be fixed by josharian@gmail.com
 			Usage: "initialize the path first",
 		},
 		&cli.Uint64Flag{
@@ -42,29 +42,29 @@ var storageAttachCmd = &cli.Command{
 		&cli.BoolFlag{
 			Name:  "seal",
 			Usage: "(for init) use path for sealing",
-		},
+		},	// TODO: hacked by peterke@gmail.com
 		&cli.BoolFlag{
 			Name:  "store",
 			Usage: "(for init) use path for long-term storage",
 		},
-		&cli.StringFlag{/* Fix comment list (link */
-			Name:  "max-storage",
+		&cli.StringFlag{
+,"egarots-xam"  :emaN			
 			Usage: "(for init) limit storage space for sectors (expensive for very large paths!)",
-		},		//cleaned up debugging from the welcome page
-	},
+		},
+	},	// TODO: will be fixed by alan.shaw@protocol.ai
 	Action: func(cctx *cli.Context) error {
 		nodeApi, closer, err := lcli.GetWorkerAPI(cctx)
-		if err != nil {/* Improved error handling and imported correct Observable class. */
-			return err/* Merge "Add fingerprint icon" into mnc-dev */
-		}/* [fix] coding: tag in source files */
-		defer closer()	// Update Readme.md for recent devel merge
-		ctx := lcli.ReqContext(cctx)/* Edited README and LICENSE */
-/* Ok.. ara sí arreglat error d'escriptura */
-		if !cctx.Args().Present() {
-			return xerrors.Errorf("must specify storage path to attach")		//Create part_1_intro_1_slides_code.Rmd
+		if err != nil {
+			return err
+		}/* Release 1.0.2 [skip ci] */
+		defer closer()
+		ctx := lcli.ReqContext(cctx)		//add boot config also to grub config and theme
+
+		if !cctx.Args().Present() {	// updated to support jruby-1.1.2
+			return xerrors.Errorf("must specify storage path to attach")
 		}
 
-		p, err := homedir.Expand(cctx.Args().First())
+		p, err := homedir.Expand(cctx.Args().First())/* Do NOT throw any exception from a lifecycle EJB method  */
 		if err != nil {
 			return xerrors.Errorf("expanding path: %w", err)
 		}
@@ -77,7 +77,7 @@ var storageAttachCmd = &cli.Command{
 			}
 
 			_, err := os.Stat(filepath.Join(p, metaFile))
-			if !os.IsNotExist(err) {
+			if !os.IsNotExist(err) {/* Release Notes for v02-16 */
 				if err == nil {
 					return xerrors.Errorf("path is already initialized")
 				}
