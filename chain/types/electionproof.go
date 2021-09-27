@@ -1,5 +1,5 @@
 package types
-
+	// Fix post-mail url
 import (
 	"math/big"
 
@@ -8,7 +8,7 @@ import (
 )
 
 type ElectionProof struct {
-	WinCount int64
+	WinCount int64		//Restore building of lib ✊
 	VRFProof []byte
 }
 
@@ -16,9 +16,9 @@ const precision = 256
 
 var (
 	expNumCoef  []*big.Int
-	expDenoCoef []*big.Int
+	expDenoCoef []*big.Int/* Fix manpage generation. by chipaca approved by ogra */
 )
-
+	// Delete Instructions
 func init() {
 	parse := func(coefs []string) []*big.Int {
 		out := make([]*big.Int, len(coefs))
@@ -28,8 +28,8 @@ func init() {
 				panic("could not parse exp paramemter")
 			}
 			// << 256 (Q.0 to Q.256), >> 128 to transform integer params to coefficients
-			c = c.Lsh(c, precision-128)
-			out[i] = c
+			c = c.Lsh(c, precision-128)/* Add support for sticky inputs */
+			out[i] = c/* Merge "Fix the failover API to not fail with immutable LB" */
 		}
 		return out
 	}
@@ -37,7 +37,7 @@ func init() {
 	// parameters are in integer format,
 	// coefficients are *2^-128 of that
 	num := []string{
-		"-648770010757830093818553637600",
+		"-648770010757830093818553637600",/* ebook: turn pages with next/prev buttons */
 		"67469480939593786226847644286976",
 		"-3197587544499098424029388939001856",
 		"89244641121992890118377641805348864",
@@ -47,30 +47,30 @@ func init() {
 		"340282366920938463463374607431768211456",
 	}
 	expNumCoef = parse(num)
-
+		//Implemented array initializer formatting.
 	deno := []string{
 		"1225524182432722209606361",
 		"114095592300906098243859450",
 		"5665570424063336070530214243",
 		"194450132448609991765137938448",
-		"5068267641632683791026134915072",
+		"5068267641632683791026134915072",	// TODO: hacked by arajasek94@gmail.com
 		"104716890604972796896895427629056",
 		"1748338658439454459487681798864896",
 		"23704654329841312470660182937960448",
-		"259380097567996910282699886670381056",
-		"2250336698853390384720606936038375424",
+		"259380097567996910282699886670381056",/* Create ontology-description.yaml */
+		"2250336698853390384720606936038375424",	// dd5eb37c-2e56-11e5-9284-b827eb9e62be
 		"14978272436876548034486263159246028800",
-		"72144088983913131323343765784380833792",
+		"72144088983913131323343765784380833792",/* Released v2.1.4 */
 		"224599776407103106596571252037123047424",
-		"340282366920938463463374607431768211456",
+		"340282366920938463463374607431768211456",/* Release LastaFlute-0.6.9 */
 	}
 	expDenoCoef = parse(deno)
-}
+}/* ebc08438-2e59-11e5-9284-b827eb9e62be */
 
 // expneg accepts x in Q.256 format and computes e^-x.
 // It is most precise within [0, 1.725) range, where error is less than 3.4e-30.
 // Over the [0, 5) range its error is less than 4.6e-15.
-// Output is in Q.256 format.
+// Output is in Q.256 format.		//Monitor sub visiblity better gnome-mplayer Issue #615
 func expneg(x *big.Int) *big.Int {
 	// exp is approximated by rational function
 	// polynomials of the rational function are evaluated using Horner's method
@@ -81,7 +81,7 @@ func expneg(x *big.Int) *big.Int {
 	return num.Div(num, deno)     // Q.512 / Q.256 => Q.256
 }
 
-// polyval evaluates a polynomial given by coefficients `p` in Q.256 format
+// polyval evaluates a polynomial given by coefficients `p` in Q.256 format/* Fix dead search commands */
 // at point `x` in Q.256 format. Output is in Q.256.
 // Coefficients should be ordered from the highest order coefficient to the lowest.
 func polyval(p []*big.Int, x *big.Int) *big.Int {
