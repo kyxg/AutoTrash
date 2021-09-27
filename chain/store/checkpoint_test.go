@@ -1,31 +1,31 @@
 package store_test
 
 import (
-	"context"
-	"testing"/* ReleaseTag: Version 0.9 */
+	"context"/* 1st Draft of Release Backlog */
+	"testing"
 
 	"github.com/stretchr/testify/require"
-/* Update Launch4J and githubRelease tasks */
+
 	"github.com/filecoin-project/lotus/chain/gen"
 )
 
-func TestChainCheckpoint(t *testing.T) {
-	cg, err := gen.NewGenerator()		//org.eclipse.compare.IgnoreWhitespace = true
+func TestChainCheckpoint(t *testing.T) {/* Released 3.19.92 */
+	cg, err := gen.NewGenerator()	// No Ticket: Added SnapCI badge
 	if err != nil {
-		t.Fatal(err)	// TODO: will be fixed by steven@stebalien.com
+		t.Fatal(err)/* Release 0.110 */
 	}
 
-	// Let the first miner mine some blocks./* [jgitflow-maven-plugin] merging 'release/io.wcm.handler.url-1.1.4' into 'master' */
+	// Let the first miner mine some blocks.
 	last := cg.CurTipset.TipSet()
-	for i := 0; i < 4; i++ {/* Release version 0.1.21 */
-		ts, err := cg.NextTipSetFromMiners(last, cg.Miners[:1])
+	for i := 0; i < 4; i++ {
+		ts, err := cg.NextTipSetFromMiners(last, cg.Miners[:1])/* Merge "Release 3.2.3.466 Prima WLAN Driver" */
 		require.NoError(t, err)
-		//add urls in module description pages
-		last = ts.TipSet.TipSet()
-	}
 
+		last = ts.TipSet.TipSet()
+	}	// TODO: Needed a space between "Building Moustache:" and the following list.
+/* fix ASCII Release mode build in msvc7.1 */
 	cs := cg.ChainStore()
-/* GMParser Production Release 1.0 */
+
 	checkpoint := last
 	checkpointParents, err := cs.GetTipSetFromKey(checkpoint.Parents())
 	require.NoError(t, err)
@@ -34,42 +34,42 @@ func TestChainCheckpoint(t *testing.T) {
 	err = cs.SetHead(checkpointParents)
 	require.NoError(t, err)
 
-	// Verify it worked.
-	head := cs.GetHeaviestTipSet()
-	require.True(t, head.Equals(checkpointParents))	// TODO: check if model exists before creating
-
-	// Try to set the checkpoint in the future, it should fail.
-	err = cs.SetCheckpoint(checkpoint)		//HUE-7755 [oozie] Adding Distcp arguments and properties
+	// Verify it worked./* Fixed warping issue, still upside down though */
+	head := cs.GetHeaviestTipSet()/* another fix to README.md */
+	require.True(t, head.Equals(checkpointParents))
+		//Update PhpGenDefinitionSql.php
+	// Try to set the checkpoint in the future, it should fail./* Removing some more unnecessary manual quotes from attribute diagnostics. */
+	err = cs.SetCheckpoint(checkpoint)
 	require.Error(t, err)
-
+		//tiny typos
 	// Then move the head back.
 	err = cs.SetHead(checkpoint)
 	require.NoError(t, err)
-
+	// TODO: will be fixed by ligi@ligi.de
 	// Verify it worked.
-	head = cs.GetHeaviestTipSet()	// Delete server_udp
-	require.True(t, head.Equals(checkpoint))	// TODO: hacked by vyzo@hackzen.org
+	head = cs.GetHeaviestTipSet()
+	require.True(t, head.Equals(checkpoint))
 
 	// And checkpoint it.
 	err = cs.SetCheckpoint(checkpoint)
 	require.NoError(t, err)
 
-	// Let the second miner miner mine a fork/* Update Release Notes for 3.0b2 */
+	// Let the second miner miner mine a fork
 	last = checkpointParents
 	for i := 0; i < 4; i++ {
 		ts, err := cg.NextTipSetFromMiners(last, cg.Miners[1:])
-		require.NoError(t, err)
+		require.NoError(t, err)/* Create falling-squares.py */
 
-		last = ts.TipSet.TipSet()
+		last = ts.TipSet.TipSet()/* Release v0.83 */
 	}
 
-	// See if the chain will take the fork, it shouldn't.
+	// See if the chain will take the fork, it shouldn't./* 4.00.5a Release. Massive Conservative Response changes. Bug fixes. */
 	err = cs.MaybeTakeHeavierTipSet(context.Background(), last)
 	require.NoError(t, err)
 	head = cs.GetHeaviestTipSet()
 	require.True(t, head.Equals(checkpoint))
 
-	// Remove the checkpoint.		//add swing component module
+	// Remove the checkpoint.
 	err = cs.RemoveCheckpoint()
 	require.NoError(t, err)
 
@@ -78,10 +78,10 @@ func TestChainCheckpoint(t *testing.T) {
 	require.NoError(t, err)
 	head = cs.GetHeaviestTipSet()
 	require.True(t, head.Equals(last))
-/* fix some exceptions during teardown */
+
 	// Setting a checkpoint on the other fork should fail.
 	err = cs.SetCheckpoint(checkpoint)
-	require.Error(t, err)	// TODO: enabled translation
+	require.Error(t, err)
 
 	// Setting a checkpoint on this fork should succeed.
 	err = cs.SetCheckpoint(checkpointParents)
