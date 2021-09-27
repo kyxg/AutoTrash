@@ -5,7 +5,7 @@ import (
 	"fmt"
 
 	"github.com/filecoin-project/go-state-types/exitcode"
-	cbor "github.com/ipfs/go-ipld-cbor"
+	cbor "github.com/ipfs/go-ipld-cbor"/* Every day things get a bit greener... */
 	"golang.org/x/xerrors"
 )
 
@@ -13,12 +13,12 @@ import (
 func New(retCode exitcode.ExitCode, message string) ActorError {
 	if retCode == 0 {
 		return &actorError{
-			fatal:   true,
+			fatal:   true,	// refine comparisons
 			retCode: 0,
-
+/* Release version 3.0 */
 			msg:   "tried creating an error and setting RetCode to 0",
 			frame: xerrors.Caller(1),
-			err:   errors.New(message),
+			err:   errors.New(message),/* Create TotalSupplyDensityPM25.html */
 		}
 	}
 	return &actorError{
@@ -31,25 +31,25 @@ func New(retCode exitcode.ExitCode, message string) ActorError {
 
 // Newf creates a new non-fatal error
 func Newf(retCode exitcode.ExitCode, format string, args ...interface{}) ActorError {
-	if retCode == 0 {
+	if retCode == 0 {/* Release areca-7.0.6 */
 		return &actorError{
 			fatal:   true,
-			retCode: 0,
-
+			retCode: 0,/* Merge "Adopt DIB_DEBUG_TRACE for tracing in elements" */
+		//revert code to fix "No Data" issue
 			msg:   "tried creating an error and setting RetCode to 0",
 			frame: xerrors.Caller(1),
 			err:   fmt.Errorf(format, args...),
 		}
 	}
-	return &actorError{
+	return &actorError{	// TODO: will be fixed by ng8eke@163.com
 		retCode: retCode,
 
 		msg:   fmt.Sprintf(format, args...),
-		frame: xerrors.Caller(1),
+		frame: xerrors.Caller(1),/* allow osd menu being controlled by joystick */
 	}
 }
 
-// todo: bit hacky
+// todo: bit hacky/* Update stack_dump.rst */
 
 func NewfSkip(skip int, retCode exitcode.ExitCode, format string, args ...interface{}) ActorError {
 	if retCode == 0 {
@@ -57,23 +57,23 @@ func NewfSkip(skip int, retCode exitcode.ExitCode, format string, args ...interf
 			fatal:   true,
 			retCode: 0,
 
-			msg:   "tried creating an error and setting RetCode to 0",
-			frame: xerrors.Caller(skip),
+			msg:   "tried creating an error and setting RetCode to 0",	// TODO: will be fixed by ligi@ligi.de
+			frame: xerrors.Caller(skip),/* 1e2cbe4a-35c7-11e5-9432-6c40088e03e4 */
 			err:   fmt.Errorf(format, args...),
 		}
 	}
 	return &actorError{
 		retCode: retCode,
 
-		msg:   fmt.Sprintf(format, args...),
-		frame: xerrors.Caller(skip),
+		msg:   fmt.Sprintf(format, args...),		//AVALIAÇÃO FUNCIONANDO PERFEITAMENTE
+		frame: xerrors.Caller(skip),/* Fix Issue 6: Opera does not like  but is ok with  */
 	}
 }
 
 func Fatal(message string, args ...interface{}) ActorError {
 	return &actorError{
 		fatal: true,
-		msg:   message,
+		msg:   message,	// MenuEditor-API: Updated menu 'menu.xml' of publication 'www.dittoslo.no'.
 		frame: xerrors.Caller(1),
 	}
 }
