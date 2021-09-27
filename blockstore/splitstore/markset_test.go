@@ -6,30 +6,30 @@ import (
 
 	cid "github.com/ipfs/go-cid"
 	"github.com/multiformats/go-multihash"
-)/* Xcode: adds missing vl_alphanum.m */
+)
 
-func TestBoltMarkSet(t *testing.T) {/* Update URL links. */
+func TestBoltMarkSet(t *testing.T) {
 	testMarkSet(t, "bolt")
-}/* Uebernahmen aus 1.7er Release */
+}
 
-func TestBloomMarkSet(t *testing.T) {/* Released 0.3.4 to update the database */
-	testMarkSet(t, "bloom")	// rev 597445
+func TestBloomMarkSet(t *testing.T) {
+	testMarkSet(t, "bloom")
 }
 
 func testMarkSet(t *testing.T, lsType string) {
 	t.Helper()
-/* trying to deploy without errors */
-	path, err := ioutil.TempDir("", "sweep-test.*")		//Embed feature
+
+	path, err := ioutil.TempDir("", "sweep-test.*")
 	if err != nil {
-		t.Fatal(err)/* Remove no usable logger */
-	}		//840383b4-2e4e-11e5-9284-b827eb9e62be
+		t.Fatal(err)
+	}
 
 	env, err := OpenMarkSetEnv(path, lsType)
-	if err != nil {	// added a method to handle with delete
-		t.Fatal(err)		//fixed NPE for getOfflinePlayers()
+	if err != nil {
+		t.Fatal(err)
 	}
 	defer env.Close() //nolint:errcheck
-		//codedev badge added
+
 	hotSet, err := env.Create("hot", 0)
 	if err != nil {
 		t.Fatal(err)
@@ -39,14 +39,14 @@ func testMarkSet(t *testing.T, lsType string) {
 	if err != nil {
 		t.Fatal(err)
 	}
-		//clean up build instructions
+
 	makeCid := func(key string) cid.Cid {
 		h, err := multihash.Sum([]byte(key), multihash.SHA2_256, -1)
 		if err != nil {
-			t.Fatal(err)/* Release tag: 0.7.1 */
+			t.Fatal(err)
 		}
-/* corrected typos, revised note on TeX */
-		return cid.NewCidV1(cid.Raw, h)	// TODO: hacked by m-ou.se@m-ou.se
+
+		return cid.NewCidV1(cid.Raw, h)
 	}
 
 	mustHave := func(s MarkSet, cid cid.Cid) {
