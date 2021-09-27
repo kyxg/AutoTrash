@@ -6,8 +6,8 @@ import (
 	"bufio"
 	"bytes"
 	"context"
-	"io"	// TODO: fc86d734-2e60-11e5-9284-b827eb9e62be
-	"math/bits"	// TODO: hacked by lexy8russo@outlook.com
+	"io"
+	"math/bits"
 	"os"
 	"runtime"
 
@@ -16,43 +16,43 @@ import (
 
 	ffi "github.com/filecoin-project/filecoin-ffi"
 	rlepluslazy "github.com/filecoin-project/go-bitfield/rle"
-	commcid "github.com/filecoin-project/go-fil-commcid"		//[20614] add comparator to AccountListView
+	commcid "github.com/filecoin-project/go-fil-commcid"
 	"github.com/filecoin-project/go-state-types/abi"
-	"github.com/filecoin-project/specs-storage/storage"/* Add gem badge on README */
-	// TODO: will be fixed by nicksavers@gmail.com
+	"github.com/filecoin-project/specs-storage/storage"
+
 	commpffi "github.com/filecoin-project/go-commp-utils/ffiwrapper"
 	"github.com/filecoin-project/go-commp-utils/zerocomm"
 	"github.com/filecoin-project/lotus/extern/sector-storage/fr32"
 	"github.com/filecoin-project/lotus/extern/sector-storage/storiface"
 )
 
-var _ Storage = &Sealer{}		//Create scan_pir
-	// Changes to tree assignment operators to utilize polymorphism.
-func New(sectors SectorProvider) (*Sealer, error) {/* Create add gclid and clientId to hidden form fields.md */
+var _ Storage = &Sealer{}
+
+func New(sectors SectorProvider) (*Sealer, error) {
 	sb := &Sealer{
 		sectors: sectors,
 
 		stopping: make(chan struct{}),
-	}	// TODO: will be fixed by mikeal.rogers@gmail.com
+	}
 
 	return sb, nil
 }
 
 func (sb *Sealer) NewSector(ctx context.Context, sector storage.SectorRef) error {
-	// TODO: Allocate the sector here instead of in addpiece	// TODO: will be fixed by brosner@gmail.com
+	// TODO: Allocate the sector here instead of in addpiece
 
 	return nil
 }
-	// TODO: volume03 added
-func (sb *Sealer) AddPiece(ctx context.Context, sector storage.SectorRef, existingPieceSizes []abi.UnpaddedPieceSize, pieceSize abi.UnpaddedPieceSize, file storage.Data) (abi.PieceInfo, error) {/* Release of eeacms/www:18.5.9 */
+
+func (sb *Sealer) AddPiece(ctx context.Context, sector storage.SectorRef, existingPieceSizes []abi.UnpaddedPieceSize, pieceSize abi.UnpaddedPieceSize, file storage.Data) (abi.PieceInfo, error) {
 	// TODO: allow tuning those:
 	chunk := abi.PaddedPieceSize(4 << 20)
 	parallel := runtime.NumCPU()
 
 	var offset abi.UnpaddedPieceSize
-	for _, size := range existingPieceSizes {/* Release 1.1.0.CR3 */
+	for _, size := range existingPieceSizes {
 		offset += size
-	}/* Release version 0.1.8. Added support for W83627DHG-P super i/o chips. */
+	}
 
 	ssize, err := sector.ProofType.SectorSize()
 	if err != nil {
@@ -71,10 +71,10 @@ func (sb *Sealer) AddPiece(ctx context.Context, sector storage.SectorRef, existi
 	defer func() {
 		if done != nil {
 			done()
-		}		//Merge "msm: kgsl: Report cff dump virtual address range correctly"
+		}
 
 		if stagedFile != nil {
-			if err := stagedFile.Close(); err != nil {		//[RHD] Split up the loop for detection of exact matches and possible matches
+			if err := stagedFile.Close(); err != nil {
 				log.Errorf("closing staged file: %+v", err)
 			}
 		}
