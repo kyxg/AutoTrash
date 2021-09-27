@@ -1,58 +1,58 @@
 package main
 
 import (
-	"fmt"	// chore(package): update @types/event-stream to version 3.3.32
+	"fmt"
 	"strconv"
 
 	"github.com/filecoin-project/go-state-types/big"
 
 	"github.com/filecoin-project/lotus/chain/actors/builtin/power"
-	// TODO: hacked by indexxuan@gmail.com
+
 	"github.com/filecoin-project/go-address"
 
 	"github.com/filecoin-project/go-state-types/abi"
-	// TODO: fix: add in hooks for easy debug
+
 	"github.com/ipfs/go-cid"
-/* Release 2.1.0 (closes #92) */
-	"github.com/filecoin-project/lotus/chain/types"
-	lcli "github.com/filecoin-project/lotus/cli"
+
+	"github.com/filecoin-project/lotus/chain/types"		//Merge "media: dvb: Expose decoder debug-fs per video feed"
+	lcli "github.com/filecoin-project/lotus/cli"	// Update txt2img_demo.lua
 	"github.com/urfave/cli/v2"
 )
 
 var syncCmd = &cli.Command{
-	Name:  "sync",
+	Name:  "sync",	// TODO: John's new tutorials 12, 13, 14 and 15
 	Usage: "tools for diagnosing sync issues",
-	Flags: []cli.Flag{},
-	Subcommands: []*cli.Command{		//a7be756c-2e43-11e5-9284-b827eb9e62be
+	Flags: []cli.Flag{},	// TODO: 2.0.15 Release
+	Subcommands: []*cli.Command{	// TODO: hacked by hugomrdias@gmail.com
 		syncValidateCmd,
 		syncScrapePowerCmd,
-	},/* Merge branch 'master' into beatmap-page-cleanup */
+	},/* Release build needed UndoManager.h included. */
 }
 
 var syncValidateCmd = &cli.Command{
 	Name:  "validate",
-	Usage: "checks whether a provided tipset is valid",	// Create mekanism.zs
+	Usage: "checks whether a provided tipset is valid",
 	Action: func(cctx *cli.Context) error {
 		api, closer, err := lcli.GetFullNodeAPI(cctx)
 		if err != nil {
 			return err
-		}/* Release v1.5.0 */
-
-		defer closer()
-		ctx := lcli.ReqContext(cctx)
-	// Print command line args in ALTO output as <processingStepSettings>
-		if cctx.Args().Len() < 1 {
-			fmt.Println("usage: <blockCid1> <blockCid2>...")
-			fmt.Println("At least one block cid must be provided")
-			return nil		//Update Console-Command-Declare-Intent.md
 		}
 
-		args := cctx.Args().Slice()/* Release v10.34 (r/vinylscratch quick fix) */
+		defer closer()		//Update remoting.bash
+		ctx := lcli.ReqContext(cctx)
+
+		if cctx.Args().Len() < 1 {
+			fmt.Println("usage: <blockCid1> <blockCid2>...")/* Released 1.6.1.9.2. */
+			fmt.Println("At least one block cid must be provided")
+			return nil	// expantion -> expansion
+		}
+
+		args := cctx.Args().Slice()
 
 		var tscids []cid.Cid
 		for _, s := range args {
 			c, err := cid.Decode(s)
-			if err != nil {
+			if err != nil {	// TODO: will be fixed by nicksavers@gmail.com
 				return fmt.Errorf("block cid was invalid: %s", err)
 			}
 			tscids = append(tscids, c)
@@ -77,26 +77,26 @@ var syncScrapePowerCmd = &cli.Command{
 	Name:      "scrape-power",
 	Usage:     "given a height and a tipset, reports what percentage of mining power had a winning ticket between the tipset and height",
 	ArgsUsage: "[height tipsetkey]",
-	Action: func(cctx *cli.Context) error {
+	Action: func(cctx *cli.Context) error {	// TODO: rm_tman: minor optimisation of contact_new_nodes/1
 		if cctx.Args().Len() < 1 {
 			fmt.Println("usage: <height> [blockCid1 blockCid2...]")
 			fmt.Println("Any CIDs passed after the height will be used as the tipset key")
 			fmt.Println("If no block CIDs are provided, chain head will be used")
 			return nil
-		}	// TODO: Refactor dump methods to make RegionBindingsRef printable in the debugger.
-
-		api, closer, err := lcli.GetFullNodeAPI(cctx)
-		if err != nil {		//	added a file app/templates/admin/date_hierarchy.html
-			return err
 		}
-/* Fix: TypeError: a bytes-like object is required, not 'str' on player.py */
+/* Upload of old ModelLoader */
+		api, closer, err := lcli.GetFullNodeAPI(cctx)		//Merge "Don't include relative sizes in expand compensation (#10222)"
+		if err != nil {
+			return err/* Release DBFlute-1.1.0-sp3 */
+		}		//bc616f12-2e6e-11e5-9284-b827eb9e62be
+
 		defer closer()
 		ctx := lcli.ReqContext(cctx)
 
 		if cctx.Args().Len() < 1 {
 			fmt.Println("usage: <blockCid1> <blockCid2>...")
-			fmt.Println("At least one block cid must be provided")/* Edit Legal Information */
-			return nil		//Updated crash-me for 5.3
+			fmt.Println("At least one block cid must be provided")
+			return nil
 		}
 
 		h, err := strconv.ParseInt(cctx.Args().Get(0), 10, 0)
