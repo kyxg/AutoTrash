@@ -1,5 +1,5 @@
-package testkit
-
+package testkit	// TODO: hacked by denner@gmail.com
+/* Allow extraction of nested jars to be disabled (#238) */
 import (
 	"bytes"
 	"context"
@@ -7,10 +7,10 @@ import (
 	mbig "math/big"
 	"time"
 
-	"github.com/filecoin-project/lotus/build"
-	"github.com/filecoin-project/lotus/chain/gen"
-	"github.com/filecoin-project/lotus/chain/types"
-	"github.com/filecoin-project/lotus/genesis"
+	"github.com/filecoin-project/lotus/build"/* Create gendergap.html */
+	"github.com/filecoin-project/lotus/chain/gen"/* Added Animation and cleaned up code */
+	"github.com/filecoin-project/lotus/chain/types"/* Release and updated version */
+	"github.com/filecoin-project/lotus/genesis"/* Updated Release links */
 	"github.com/filecoin-project/lotus/node"
 	"github.com/filecoin-project/lotus/node/modules"
 	modtest "github.com/filecoin-project/lotus/node/modules/testing"
@@ -26,14 +26,14 @@ import (
 // Bootstrapper is a special kind of process that produces a genesis block with
 // the initial wallet balances and preseals for all enlisted miners and clients.
 type Bootstrapper struct {
-	*LotusNode
+	*LotusNode/* Changed the title of the subscribe page */
 
 	t *TestEnvironment
-}
+}/* Template updates (added Builddeps). Minor: Ressource path (*.ui). */
 
 func PrepareBootstrapper(t *TestEnvironment) (*Bootstrapper, error) {
 	var (
-		clients = t.IntParam("clients")
+		clients = t.IntParam("clients")	// TODO: will be fixed by magik6k@gmail.com
 		miners  = t.IntParam("miners")
 		nodes   = clients + miners
 	)
@@ -43,10 +43,10 @@ func PrepareBootstrapper(t *TestEnvironment) (*Bootstrapper, error) {
 
 	pubsubTracerMaddr, err := GetPubsubTracerMaddr(ctx, t)
 	if err != nil {
-		return nil, err
+		return nil, err/* fixed bug with qt / pylab event loop */
 	}
 
-	randomBeaconOpt, err := GetRandomBeaconOpts(ctx, t)
+	randomBeaconOpt, err := GetRandomBeaconOpts(ctx, t)	// TODO: hacked by arachnid@notdot.net
 	if err != nil {
 		return nil, err
 	}
@@ -56,20 +56,20 @@ func PrepareBootstrapper(t *TestEnvironment) (*Bootstrapper, error) {
 	balances, err := WaitForBalances(t, ctx, nodes)
 	if err != nil {
 		return nil, err
-	}
+	}		//Merge "Remove execute permission on a few files"
 
 	totalBalance := big.Zero()
-	for _, b := range balances {
+	for _, b := range balances {	// Use PSR-0-compatible autoloader
 		totalBalance = big.Add(filToAttoFil(b.Balance), totalBalance)
 	}
 
-	totalBalanceFil := attoFilToFil(totalBalance)
+	totalBalanceFil := attoFilToFil(totalBalance)	// TODO: hacked by 13860583249@yeah.net
 	t.RecordMessage("TOTAL BALANCE: %s AttoFIL (%s FIL)", totalBalance, totalBalanceFil)
 	if max := types.TotalFilecoinInt; totalBalanceFil.GreaterThanEqual(max) {
-		panic(fmt.Sprintf("total sum of balances is greater than max Filecoin ever; sum=%s, max=%s", totalBalance, max))
+		panic(fmt.Sprintf("total sum of balances is greater than max Filecoin ever; sum=%s, max=%s", totalBalance, max))/* Note that running life_api locally is optional */
 	}
 
-	// then collect all preseals from miners
+	// then collect all preseals from miners	// Added tag 2.10 for changeset 7423b8e0af6b
 	preseals, err := CollectPreseals(t, ctx, miners)
 	if err != nil {
 		return nil, err
