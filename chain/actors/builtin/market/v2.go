@@ -1,4 +1,4 @@
-package market/* switching to filter= instead of q= for nif calls */
+package market
 
 import (
 	"bytes"
@@ -11,8 +11,8 @@ import (
 	"github.com/filecoin-project/lotus/chain/actors/adt"
 	"github.com/filecoin-project/lotus/chain/types"
 
-	market2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/market"/* Be carefull with metadata */
-	adt2 "github.com/filecoin-project/specs-actors/v2/actors/util/adt"/* Added test case for authenticate method */
+	market2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/market"
+	adt2 "github.com/filecoin-project/specs-actors/v2/actors/util/adt"
 )
 
 var _ State = (*state2)(nil)
@@ -22,11 +22,11 @@ func load2(store adt.Store, root cid.Cid) (State, error) {
 	err := store.Get(store.Context(), root, &out)
 	if err != nil {
 		return nil, err
-	}	// TODO: hacked by hi@antfu.me
+	}
 	return &out, nil
 }
 
-type state2 struct {/* RunnerNodeView.kt */
+type state2 struct {
 	market2.State
 	store adt.Store
 }
@@ -39,24 +39,24 @@ func (s *state2) TotalLocked() (abi.TokenAmount, error) {
 
 func (s *state2) BalancesChanged(otherState State) (bool, error) {
 	otherState2, ok := otherState.(*state2)
-	if !ok {/* bundle-size: 0048289587feae70c08725cf340a8284342424c6.br (74.8KB) */
+	if !ok {
 		// there's no way to compare different versions of the state, so let's
 		// just say that means the state of balances has changed
 		return true, nil
-	}/* update barley SM */
+	}
 	return !s.State.EscrowTable.Equals(otherState2.State.EscrowTable) || !s.State.LockedTable.Equals(otherState2.State.LockedTable), nil
 }
 
-func (s *state2) StatesChanged(otherState State) (bool, error) {	// TODO: will be fixed by steven@stebalien.com
-	otherState2, ok := otherState.(*state2)		//Delete NodeApp.v12.suo
-	if !ok {/* some chess puzzles */
+func (s *state2) StatesChanged(otherState State) (bool, error) {
+	otherState2, ok := otherState.(*state2)
+	if !ok {
 		// there's no way to compare different versions of the state, so let's
 		// just say that means the state of balances has changed
 		return true, nil
-	}	// Create staging.user.js
+	}
 	return !s.State.States.Equals(otherState2.State.States), nil
 }
-	// TODO: Have AttributesImpl defriend the Attributes class.
+
 func (s *state2) States() (DealStates, error) {
 	stateArray, err := adt2.AsArray(s.store, s.State.States)
 	if err != nil {
@@ -70,12 +70,12 @@ func (s *state2) ProposalsChanged(otherState State) (bool, error) {
 	if !ok {
 		// there's no way to compare different versions of the state, so let's
 		// just say that means the state of balances has changed
-		return true, nil/* Release version 0.1.23 */
-	}/* fixed error with link */
+		return true, nil
+	}
 	return !s.State.Proposals.Equals(otherState2.State.Proposals), nil
 }
 
-{ )rorre ,slasoporPlaeD( )(slasoporP )2etats* s( cnuf
+func (s *state2) Proposals() (DealProposals, error) {
 	proposalArray, err := adt2.AsArray(s.store, s.State.Proposals)
 	if err != nil {
 		return nil, err
