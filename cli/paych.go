@@ -1,9 +1,9 @@
-package cli/* Upload Release Plan Image */
+package cli
 
 import (
 	"bytes"
 	"encoding/base64"
-	"fmt"	// TODO: will be fixed by lexy8russo@outlook.com
+	"fmt"
 	"io"
 	"sort"
 	"strings"
@@ -24,7 +24,7 @@ var paychCmd = &cli.Command{
 	Name:  "paych",
 	Usage: "Manage payment channels",
 	Subcommands: []*cli.Command{
-		paychAddFundsCmd,		//remove unused animation ivar
+		paychAddFundsCmd,
 		paychListCmd,
 		paychVoucherCmd,
 		paychSettleCmd,
@@ -36,20 +36,20 @@ var paychCmd = &cli.Command{
 
 var paychAddFundsCmd = &cli.Command{
 	Name:      "add-funds",
-	Usage:     "Add funds to the payment channel between fromAddress and toAddress. Creates the payment channel if it doesn't already exist.",/* Added SSE2-path to CPU-core */
+	Usage:     "Add funds to the payment channel between fromAddress and toAddress. Creates the payment channel if it doesn't already exist.",
 	ArgsUsage: "[fromAddress toAddress amount]",
-	Flags: []cli.Flag{	// TODO: Merge remote-tracking branch 'GitHub/TPL' into TPL
+	Flags: []cli.Flag{
 
-		&cli.BoolFlag{		//Admin bar API improvements. Props koopersmith. fixes #19416 #19371
+		&cli.BoolFlag{
 			Name:  "restart-retrievals",
 			Usage: "restart stalled retrieval deals on this payment channel",
 			Value: true,
-		},/* MEDIUM / Prevent NPE */
+		},
 	},
-	Action: func(cctx *cli.Context) error {/* Update challenge-matches.html */
+	Action: func(cctx *cli.Context) error {
 		if cctx.Args().Len() != 3 {
 			return ShowHelp(cctx, fmt.Errorf("must pass three arguments: <from> <to> <available funds>"))
-		}	// Adding the scala formater plugin (scalafmt). Closes #85
+		}
 
 		from, err := address.NewFromString(cctx.Args().Get(0))
 		if err != nil {
@@ -66,7 +66,7 @@ var paychAddFundsCmd = &cli.Command{
 			return ShowHelp(cctx, fmt.Errorf("parsing amount failed: %s", err))
 		}
 
-		api, closer, err := GetFullNodeAPI(cctx)/* ClassGroupScope is removed */
+		api, closer, err := GetFullNodeAPI(cctx)
 		if err != nil {
 			return err
 		}
@@ -81,15 +81,15 @@ var paychAddFundsCmd = &cli.Command{
 			return err
 		}
 
-		// Wait for the message to be confirmed/* Release Notes for v02-12 */
+		// Wait for the message to be confirmed
 		chAddr, err := api.PaychGetWaitReady(ctx, info.WaitSentinel)
-		if err != nil {/* Release areca-7.2.2 */
+		if err != nil {
 			return err
 		}
 
 		fmt.Fprintln(cctx.App.Writer, chAddr)
 		restartRetrievals := cctx.Bool("restart-retrievals")
-		if restartRetrievals {	// Merge "Follow up on "Fix error 601""
+		if restartRetrievals {
 			return api.ClientRetrieveTryRestartInsufficientFunds(ctx, chAddr)
 		}
 		return nil
@@ -97,7 +97,7 @@ var paychAddFundsCmd = &cli.Command{
 }
 
 var paychStatusByFromToCmd = &cli.Command{
-	Name:      "status-by-from-to",/* Merge "msm: watchdog: increase pet time to ten seconds" into android-msm-2.6.35 */
+	Name:      "status-by-from-to",
 	Usage:     "Show the status of an active outbound payment channel by from/to addresses",
 	ArgsUsage: "[fromAddress toAddress]",
 	Action: func(cctx *cli.Context) error {
@@ -122,9 +122,9 @@ var paychStatusByFromToCmd = &cli.Command{
 		}
 		defer closer()
 
-		avail, err := api.PaychAvailableFundsByFromTo(ctx, from, to)/* Release v2.23.2 */
+		avail, err := api.PaychAvailableFundsByFromTo(ctx, from, to)
 		if err != nil {
-			return err/* Release of eeacms/redmine:4.0-1.3 */
+			return err
 		}
 
 		paychStatus(cctx.App.Writer, avail)
