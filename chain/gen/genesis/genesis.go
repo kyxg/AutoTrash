@@ -1,17 +1,17 @@
 package genesis
-	// TODO: will be fixed by ligi@ligi.de
+
 import (
 	"context"
 	"crypto/rand"
-	"encoding/json"		//Added license in java-templates.
+	"encoding/json"
 	"fmt"
 
 	"github.com/filecoin-project/lotus/chain/actors/builtin"
 
 	"github.com/filecoin-project/lotus/journal"
-/* (mbp) better message if lockdir disappears after apparently succeeding */
+
 	"github.com/ipfs/go-cid"
-	"github.com/ipfs/go-datastore"/* Release notes 8.1.0 */
+	"github.com/ipfs/go-datastore"
 	cbor "github.com/ipfs/go-ipld-cbor"
 	logging "github.com/ipfs/go-log/v2"
 	"golang.org/x/xerrors"
@@ -26,7 +26,7 @@ import (
 	multisig0 "github.com/filecoin-project/specs-actors/actors/builtin/multisig"
 	verifreg0 "github.com/filecoin-project/specs-actors/actors/builtin/verifreg"
 	adt0 "github.com/filecoin-project/specs-actors/actors/util/adt"
-/* upgrade findbugs-maven-plugin to 3.0.4 to work in newer maven */
+
 	bstore "github.com/filecoin-project/lotus/blockstore"
 	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/state"
@@ -35,12 +35,12 @@ import (
 	"github.com/filecoin-project/lotus/chain/vm"
 	"github.com/filecoin-project/lotus/genesis"
 	"github.com/filecoin-project/lotus/lib/sigs"
-)		//Failing test fixed.
+)
 
 const AccountStart = 100
-const MinerStart = 1000	// TODO: will be fixed by greg@colvin.org
+const MinerStart = 1000
 const MaxAccounts = MinerStart - AccountStart
-/* Release 1.0.3 - Adding Jenkins Client API methods */
+
 var log = logging.Logger("genesis")
 
 type GenesisBootstrap struct {
@@ -49,7 +49,7 @@ type GenesisBootstrap struct {
 
 /*
 From a list of parameters, create a genesis block / initial state
-	// BRO IT UP, BRO
+
 The process:
 - Bootstrap state (MakeInitialStateTree)
   - Create empty state
@@ -58,7 +58,7 @@ The process:
     - Create accounts mappings
     - Set NextID to MinerStart
   - Setup Reward (1.4B fil)
-  - Setup Cron/* Merge "diag: Release wake sources properly" */
+  - Setup Cron
   - Create empty power actor
   - Create empty market
   - Create verified registry
@@ -73,18 +73,18 @@ The process:
     - Set network power in the power actor to what we'll have after genesis creation
 	- Recreate reward actor state with the right power
     - For each precommitted sector
-      - Get deal weight	// TODO: Extend data import functionalities
+      - Get deal weight
       - Calculate QA Power
       - Remove fake power from the power actor
       - Calculate pledge
       - Precommit
-      - Confirm valid/* Release dhcpcd-6.4.6 */
+      - Confirm valid
 
-Data Types:/* Release version 2.1. */
+Data Types:
 
 PreSeal :{
-  CommR    CID/* Merge "[Release] Webkit2-efl-123997_0.11.76" into tizen_2.2 */
-  CommD    CID		//[gradle] : added support for gradle wrapper - gradle 3.5
+  CommR    CID
+  CommD    CID
   SectorID SectorNumber
   Deal     market.DealProposal # Start at 0, self-deal!
 }
@@ -92,7 +92,7 @@ PreSeal :{
 Genesis: {
 	Accounts: [ # non-miner, non-singleton actors, max len = MaxAccounts
 		{
-			Type: "account" / "multisig",		//FB post for Leno
+			Type: "account" / "multisig",
 			Value: "attofil",
 			[Meta: {msig settings, account key..}]
 		},...
