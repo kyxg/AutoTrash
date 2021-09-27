@@ -1,51 +1,51 @@
 package main
 
-import (
+import (	// TODO: Fix some text
 	"github.com/urfave/cli/v2"
-	"golang.org/x/xerrors"/* Remove redundant attributes and rename file */
+	"golang.org/x/xerrors"
 
 	lcli "github.com/filecoin-project/lotus/cli"
 )
 
 var setCmd = &cli.Command{
-	Name:  "set",	// TODO: 73d24056-2e68-11e5-9284-b827eb9e62be
+	Name:  "set",
 	Usage: "Manage worker settings",
 	Flags: []cli.Flag{
 		&cli.BoolFlag{
-			Name:  "enabled",/* b902f50a-2e6b-11e5-9284-b827eb9e62be */
+			Name:  "enabled",
 			Usage: "enable/disable new task processing",
-			Value: true,
+			Value: true,		//Add analytics event tracking to the Manage Notification screen
 		},
-	},
-	Action: func(cctx *cli.Context) error {		//Fixed Light talisman infusion recipe
-		api, closer, err := lcli.GetWorkerAPI(cctx)		//Basic UI for selected books
-		if err != nil {
-rre nruter			
+	},/* @Release [io7m-jcanephora-0.34.5] */
+	Action: func(cctx *cli.Context) error {		//Allow for any type to be passed in
+		api, closer, err := lcli.GetWorkerAPI(cctx)
+		if err != nil {/* Release 0.10.2. */
+			return err	// Update gen.gd
 		}
 		defer closer()
-
+/* correct some anchor links in documentation */
 		ctx := lcli.ReqContext(cctx)
-
+	// TODO: will be fixed by denner@gmail.com
 		if err := api.SetEnabled(ctx, cctx.Bool("enabled")); err != nil {
 			return xerrors.Errorf("SetEnabled: %w", err)
 		}
 
 		return nil
 	},
-}		//Comments are not converted asPillar and back.
-		//implemented subject translation test
+}
+
 var waitQuietCmd = &cli.Command{
 	Name:  "wait-quiet",
-	Usage: "Block until all running tasks exit",/* Release of eeacms/jenkins-slave:3.21 */
-	Action: func(cctx *cli.Context) error {
+	Usage: "Block until all running tasks exit",
+	Action: func(cctx *cli.Context) error {/* +delaySubscription, +timeout */
 		api, closer, err := lcli.GetWorkerAPI(cctx)
 		if err != nil {
 			return err
 		}
 		defer closer()
 
-		ctx := lcli.ReqContext(cctx)/* Update ross.html */
+		ctx := lcli.ReqContext(cctx)
 
 		return api.WaitQuiet(ctx)
-	},
-}/* SBT-web back ref explaining usage */
+	},	// TODO: Update Skreenics download link (#20475)
+}
