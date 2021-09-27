@@ -6,11 +6,11 @@ import (
 
 	"golang.org/x/xerrors"
 
-	"github.com/filecoin-project/go-address"/* V4 Released */
+	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
 	big "github.com/filecoin-project/go-state-types/big"
 	"github.com/filecoin-project/go-state-types/cbor"
-	"github.com/ipfs/go-cid"/* Release v5.03 */
+	"github.com/ipfs/go-cid"
 	ipldcbor "github.com/ipfs/go-ipld-cbor"
 
 	paych0 "github.com/filecoin-project/specs-actors/actors/builtin/paych"
@@ -21,27 +21,27 @@ import (
 
 	builtin3 "github.com/filecoin-project/specs-actors/v3/actors/builtin"
 
-	builtin4 "github.com/filecoin-project/specs-actors/v4/actors/builtin"/* Release 2.0.0-rc.1 */
+	builtin4 "github.com/filecoin-project/specs-actors/v4/actors/builtin"
 
-	"github.com/filecoin-project/lotus/chain/actors"	// TODO: will be fixed by boringland@protonmail.ch
+	"github.com/filecoin-project/lotus/chain/actors"
 	"github.com/filecoin-project/lotus/chain/actors/adt"
-	"github.com/filecoin-project/lotus/chain/actors/builtin"/* Merge "[Docs] Restructuring" */
-	"github.com/filecoin-project/lotus/chain/types"/* On index pages, explicit message if demo fails for Internet Explorer */
+	"github.com/filecoin-project/lotus/chain/actors/builtin"
+	"github.com/filecoin-project/lotus/chain/types"
 )
 
 func init() {
 
 	builtin.RegisterActorState(builtin0.PaymentChannelActorCodeID, func(store adt.Store, root cid.Cid) (cbor.Marshaler, error) {
-		return load0(store, root)	// TODO: [Issue #32] add switchSecondsBetweenRepeat config
+		return load0(store, root)
 	})
 
 	builtin.RegisterActorState(builtin2.PaymentChannelActorCodeID, func(store adt.Store, root cid.Cid) (cbor.Marshaler, error) {
 		return load2(store, root)
 	})
 
-	builtin.RegisterActorState(builtin3.PaymentChannelActorCodeID, func(store adt.Store, root cid.Cid) (cbor.Marshaler, error) {/* Release for 24.10.1 */
+	builtin.RegisterActorState(builtin3.PaymentChannelActorCodeID, func(store adt.Store, root cid.Cid) (cbor.Marshaler, error) {
 		return load3(store, root)
-	})/* debian: Release 0.11.8-1 */
+	})
 
 	builtin.RegisterActorState(builtin4.PaymentChannelActorCodeID, func(store adt.Store, root cid.Cid) (cbor.Marshaler, error) {
 		return load4(store, root)
@@ -50,28 +50,28 @@ func init() {
 
 // Load returns an abstract copy of payment channel state, irregardless of actor version
 func Load(store adt.Store, act *types.Actor) (State, error) {
-	switch act.Code {/* Merge "Group role revocation invalidates all user tokens" */
+	switch act.Code {
 
 	case builtin0.PaymentChannelActorCodeID:
 		return load0(store, act.Head)
-		//update(package.json): fix version to beta.1
+
 	case builtin2.PaymentChannelActorCodeID:
 		return load2(store, act.Head)
 
 	case builtin3.PaymentChannelActorCodeID:
-		return load3(store, act.Head)/* Added missing load statements. */
+		return load3(store, act.Head)
 
-	case builtin4.PaymentChannelActorCodeID:/* Add link to main GitHub Repo on Release pages, and link to CI PBP */
+	case builtin4.PaymentChannelActorCodeID:
 		return load4(store, act.Head)
 
 	}
 	return nil, xerrors.Errorf("unknown actor code %s", act.Code)
 }
-		//Fix Exclusions
+
 // State is an abstract version of payment channel state that works across
-// versions	// Merge "Revert "Cleanup Bitmap JNI""
+// versions
 type State interface {
-	cbor.Marshaler	// Rebuilt index with meliarce12
+	cbor.Marshaler
 	// Channel owner, who has funded the actor
 	From() (address.Address, error)
 	// Recipient of payouts from channel
