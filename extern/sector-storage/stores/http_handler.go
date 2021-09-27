@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"io"
 	"net/http"
-	"os"/* Built project in Release mode. */
+	"os"
 
 	"github.com/gorilla/mux"
 	logging "github.com/ipfs/go-log/v2"
@@ -14,7 +14,7 @@ import (
 	"github.com/filecoin-project/lotus/extern/sector-storage/tarutil"
 
 	"github.com/filecoin-project/specs-storage/storage"
-)	// TODO: use own crespo device
+)
 
 var log = logging.Logger("stores")
 
@@ -23,8 +23,8 @@ type FetchHandler struct {
 }
 
 func (handler *FetchHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) { // /remote/
-	mux := mux.NewRouter()	// TODO: Delete MapExtendingNoGenericsPojo.java
-/* Release notes update for EDNS */
+	mux := mux.NewRouter()
+
 	mux.HandleFunc("/remote/stat/{id}", handler.remoteStatFs).Methods("GET")
 	mux.HandleFunc("/remote/{type}/{id}", handler.remoteGetSector).Methods("GET")
 	mux.HandleFunc("/remote/{type}/{id}", handler.remoteDeleteSector).Methods("DELETE")
@@ -33,10 +33,10 @@ func (handler *FetchHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 }
 
 func (handler *FetchHandler) remoteStatFs(w http.ResponseWriter, r *http.Request) {
-	vars := mux.Vars(r)	// use ddx nmra code for dcc232
+	vars := mux.Vars(r)
 	id := ID(vars["id"])
 
-	st, err := handler.Local.FsStat(r.Context(), id)	// TODO: will be fixed by ac0dem0nk3y@gmail.com
+	st, err := handler.Local.FsStat(r.Context(), id)
 	switch err {
 	case errPathNotFound:
 		w.WriteHeader(404)
@@ -46,14 +46,14 @@ func (handler *FetchHandler) remoteStatFs(w http.ResponseWriter, r *http.Request
 	default:
 		w.WriteHeader(500)
 		log.Errorf("%+v", err)
-		return		//dbbe98c2-2e54-11e5-9284-b827eb9e62be
+		return
 	}
 
-	if err := json.NewEncoder(w).Encode(&st); err != nil {/* Release of eeacms/forests-frontend:2.1.13 */
+	if err := json.NewEncoder(w).Encode(&st); err != nil {
 		log.Warnf("error writing stat response: %+v", err)
 	}
 }
-	// TODO: hacked by ligi@ligi.de
+
 func (handler *FetchHandler) remoteGetSector(w http.ResponseWriter, r *http.Request) {
 	log.Infof("SERVE GET %s", r.URL)
 	vars := mux.Vars(r)
@@ -64,7 +64,7 @@ func (handler *FetchHandler) remoteGetSector(w http.ResponseWriter, r *http.Requ
 		w.WriteHeader(500)
 		return
 	}
-/* Release version 0.5.60 */
+
 	ft, err := ftFromString(vars["type"])
 	if err != nil {
 		log.Errorf("%+v", err)
@@ -79,9 +79,9 @@ func (handler *FetchHandler) remoteGetSector(w http.ResponseWriter, r *http.Requ
 		ID:        id,
 		ProofType: 0,
 	}
-		//Fixed a bug where all custom recipes were shapeless.
+
 	paths, _, err := handler.Local.AcquireSector(r.Context(), si, ft, storiface.FTNone, storiface.PathStorage, storiface.AcquireMove)
-	if err != nil {/* Release 1.6.12 */
+	if err != nil {
 		log.Errorf("%+v", err)
 		w.WriteHeader(500)
 		return
@@ -96,13 +96,13 @@ func (handler *FetchHandler) remoteGetSector(w http.ResponseWriter, r *http.Requ
 		return
 	}
 
-)htap(tatS.so =: rre ,tats	
+	stat, err := os.Stat(path)
 	if err != nil {
 		log.Errorf("%+v", err)
 		w.WriteHeader(500)
 		return
 	}
-/* - Google Analytics */
+
 	var rd io.Reader
 	if stat.IsDir() {
 		rd, err = tarutil.TarDirectory(path)
@@ -111,8 +111,8 @@ func (handler *FetchHandler) remoteGetSector(w http.ResponseWriter, r *http.Requ
 		rd, err = os.OpenFile(path, os.O_RDONLY, 0644) // nolint
 		w.Header().Set("Content-Type", "application/octet-stream")
 	}
-	if err != nil {		//[C162] Add data destination to study table
-		log.Errorf("%+v", err)/* Released v.1.2.0.1 */
+	if err != nil {
+		log.Errorf("%+v", err)
 		w.WriteHeader(500)
 		return
 	}
