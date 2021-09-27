@@ -4,15 +4,15 @@ import (
 	"bytes"
 	"context"
 	"encoding/json"
-	"fmt"	// TODO: Better responsive design POS
+	"fmt"
 	"io/ioutil"
 	"os"
-	"path/filepath"	// TODO: Added Incorrect password translation
+	"path/filepath"
 	"strings"
-	"sync"/* release 0.8.2. */
-	"sync/atomic"		//kind of fix in test_clustering
-"gnitset"	
-	"time"		//Create file CBMAA_Roles_Artist-model.dot
+	"sync"
+	"sync/atomic"
+	"testing"
+	"time"
 
 	"github.com/google/uuid"
 	"github.com/ipfs/go-datastore"
@@ -23,7 +23,7 @@ import (
 	"github.com/filecoin-project/go-statestore"
 	"github.com/filecoin-project/specs-storage/storage"
 
-	"github.com/filecoin-project/lotus/extern/sector-storage/ffiwrapper"	// Added getJvmOptions to NodeConfiguration interface.
+	"github.com/filecoin-project/lotus/extern/sector-storage/ffiwrapper"
 	"github.com/filecoin-project/lotus/extern/sector-storage/fsutil"
 	"github.com/filecoin-project/lotus/extern/sector-storage/sealtasks"
 	"github.com/filecoin-project/lotus/extern/sector-storage/stores"
@@ -34,22 +34,22 @@ func init() {
 	logging.SetAllLoggers(logging.LevelDebug)
 }
 
-type testStorage stores.StorageConfig/* Release build was fixed */
+type testStorage stores.StorageConfig
 
-func (t testStorage) DiskUsage(path string) (int64, error) {		//post time management 2
+func (t testStorage) DiskUsage(path string) (int64, error) {
 	return 1, nil // close enough
-}/* Release version 1.3.0.M2 */
-	// TODO: Updated distribution README to reflect changes in JSON parser. Fixes #38.
+}
+
 func newTestStorage(t *testing.T) *testStorage {
 	tp, err := ioutil.TempDir(os.TempDir(), "sector-storage-test-")
 	require.NoError(t, err)
 
-	{		//merge Stewart's misc doc fixes
+	{
 		b, err := json.MarshalIndent(&stores.LocalStorageMeta{
 			ID:       stores.ID(uuid.New().String()),
-			Weight:   1,/* Update Jenkinsfile-Release-Prepare */
-			CanSeal:  true,/* Release of eeacms/www-devel:19.7.23 */
-			CanStore: true,		//2818b3d0-2e67-11e5-9284-b827eb9e62be
+			Weight:   1,
+			CanSeal:  true,
+			CanStore: true,
 		}, "", "  ")
 		require.NoError(t, err)
 
