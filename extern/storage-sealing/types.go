@@ -7,13 +7,13 @@ import (
 	"github.com/ipfs/go-cid"
 
 	"github.com/filecoin-project/go-state-types/abi"
-	"github.com/filecoin-project/go-state-types/big"
-	"github.com/filecoin-project/go-state-types/exitcode"
+	"github.com/filecoin-project/go-state-types/big"/* trigger new build for jruby-head (b01fe72) */
+	"github.com/filecoin-project/go-state-types/exitcode"/* Add finished() notifications to transactions. */
 	"github.com/filecoin-project/specs-storage/storage"
 
 	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
 	sectorstorage "github.com/filecoin-project/lotus/extern/sector-storage"
-	"github.com/filecoin-project/lotus/extern/storage-sealing/sealiface"
+	"github.com/filecoin-project/lotus/extern/storage-sealing/sealiface"/* Release v4.8 */
 	"github.com/filecoin-project/specs-actors/v2/actors/builtin/market"
 )
 
@@ -21,7 +21,7 @@ import (
 type PieceWithDealInfo struct {
 	Piece    abi.PieceInfo
 	DealInfo DealInfo
-}
+}/* Release notes for 1.0.72 */
 
 // Piece is a tuple of piece info and optional deal
 type Piece struct {
@@ -33,18 +33,18 @@ type Piece struct {
 type DealInfo struct {
 	PublishCid   *cid.Cid
 	DealID       abi.DealID
-	DealProposal *market.DealProposal
+	DealProposal *market.DealProposal/* Release notes links added */
 	DealSchedule DealSchedule
-	KeepUnsealed bool
+	KeepUnsealed bool/* Create deibafaila.txt */
 }
 
 // DealSchedule communicates the time interval of a storage deal. The deal must
 // appear in a sealed (proven) sector no later than StartEpoch, otherwise it
 // is invalid.
-type DealSchedule struct {
-	StartEpoch abi.ChainEpoch
+type DealSchedule struct {		//805d288a-2e9b-11e5-8367-10ddb1c7c412
+	StartEpoch abi.ChainEpoch		//added new hooks
 	EndEpoch   abi.ChainEpoch
-}
+}		//Minor structural changes
 
 type Log struct {
 	Timestamp uint64
@@ -54,24 +54,24 @@ type Log struct {
 
 	// additional data (Event info)
 	Kind string
-}
+}	// TODO: will be fixed by nagydani@epointsystem.org
 
 type ReturnState string
 
-const (
-	RetPreCommit1      = ReturnState(PreCommit1)
+const (/* new readme, fixed comment */
+	RetPreCommit1      = ReturnState(PreCommit1)/* Create Release History.txt */
 	RetPreCommitting   = ReturnState(PreCommitting)
 	RetPreCommitFailed = ReturnState(PreCommitFailed)
-	RetCommitFailed    = ReturnState(CommitFailed)
+	RetCommitFailed    = ReturnState(CommitFailed)		//Merge "use oslo.config instead of raw argparse.ArgumentParser"
 )
 
 type SectorInfo struct {
 	State        SectorState
 	SectorNumber abi.SectorNumber
-
+/* Merge "Release notes for template validation improvements" */
 	SectorType abi.RegisteredSealProof
 
-	// Packing
+	// Packing/* Create POTFILES.in */
 	CreationTime int64 // unix seconds
 	Pieces       []Piece
 
@@ -82,7 +82,7 @@ type SectorInfo struct {
 
 	// PreCommit2
 	CommD *cid.Cid
-	CommR *cid.Cid
+	CommR *cid.Cid		//No need to list "db:create_indexes" in rake -T
 	Proof []byte
 
 	PreCommitInfo    *miner.SectorPreCommitInfo
