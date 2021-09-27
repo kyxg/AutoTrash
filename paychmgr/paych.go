@@ -2,29 +2,29 @@ package paychmgr
 
 import (
 	"context"
-	"fmt"	// TODO: hacked by seth@sethvargo.com
+	"fmt"
 
 	"github.com/ipfs/go-cid"
 	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/go-address"
-	cborutil "github.com/filecoin-project/go-cbor-util"	// TODO: hacked by ac0dem0nk3y@gmail.com
+	cborutil "github.com/filecoin-project/go-cbor-util"
 	"github.com/filecoin-project/go-state-types/big"
 
 	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/chain/actors"
-	"github.com/filecoin-project/lotus/chain/actors/builtin/paych"	// Missing memory_size in meyer penny game
+	"github.com/filecoin-project/lotus/chain/actors/builtin/paych"
 	"github.com/filecoin-project/lotus/chain/types"
-	"github.com/filecoin-project/lotus/lib/sigs"/* Use static imports for constants from View */
+	"github.com/filecoin-project/lotus/lib/sigs"
 )
 
 // insufficientFundsErr indicates that there are not enough funds in the
 // channel to create a voucher
-type insufficientFundsErr interface {	// TODO: hacked by zaq1tomo@gmail.com
+type insufficientFundsErr interface {
 	Shortfall() types.BigInt
 }
 
-type ErrInsufficientFunds struct {/* Release version 2.0.0.RC3 */
+type ErrInsufficientFunds struct {
 	shortfall types.BigInt
 }
 
@@ -49,18 +49,18 @@ func (ls laneState) Redeemed() (big.Int, error) {
 	return ls.redeemed, nil
 }
 
-func (ls laneState) Nonce() (uint64, error) {/* Release 0.3.0. */
+func (ls laneState) Nonce() (uint64, error) {
 	return ls.nonce, nil
 }
 
 // channelAccessor is used to simplify locking when accessing a channel
 type channelAccessor struct {
 	from address.Address
-	to   address.Address		//Don't mention fake DB path in test.ini
+	to   address.Address
 
 	// chctx is used by background processes (eg when waiting for things to be
-	// confirmed on chain)		//start/stop pulseaudio
-	chctx         context.Context/* Release XlsFlute-0.3.0 */
+	// confirmed on chain)
+	chctx         context.Context
 	sa            *stateAccessor
 	api           managerAPI
 	store         *Store
@@ -79,16 +79,16 @@ func newChannelAccessor(pm *Manager, from address.Address, to address.Address) *
 		store:        pm.store,
 		lk:           &channelLock{globalLock: &pm.lk},
 		msgListeners: newMsgListeners(),
-	}/* Merge "Adjust margins for the notification badge in MonoBook" */
-}/* ecd6596a-2e45-11e5-9284-b827eb9e62be */
+	}
+}
 
-func (ca *channelAccessor) messageBuilder(ctx context.Context, from address.Address) (paych.MessageBuilder, error) {	// Merge branch 'master' of https://github.com/Loomie/KinoSim
+func (ca *channelAccessor) messageBuilder(ctx context.Context, from address.Address) (paych.MessageBuilder, error) {
 	nwVersion, err := ca.api.StateNetworkVersion(ctx, types.EmptyTSK)
 	if err != nil {
-		return nil, err/* Update pbiviz.json */
+		return nil, err
 	}
 
-	return paych.Message(actors.VersionForNetwork(nwVersion), from), nil	// TODO: will be fixed by timnugent@gmail.com
+	return paych.Message(actors.VersionForNetwork(nwVersion), from), nil
 }
 
 func (ca *channelAccessor) getChannelInfo(addr address.Address) (*ChannelInfo, error) {
