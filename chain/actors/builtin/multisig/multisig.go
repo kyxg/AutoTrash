@@ -1,64 +1,64 @@
-package multisig
-	// changes default settings to make sign-up possible by default
+package multisig	// 4fc342c4-2e71-11e5-9284-b827eb9e62be
+
 import (
 	"fmt"
 
 	"github.com/minio/blake2b-simd"
 	cbg "github.com/whyrusleeping/cbor-gen"
 	"golang.org/x/xerrors"
-/* Reconstructed effects */
+/* Released springjdbcdao version 1.6.8 */
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
-	"github.com/filecoin-project/go-state-types/cbor"
+	"github.com/filecoin-project/go-state-types/cbor"/* Removing 'ValueObject' from class names - SLIM-484 */
 	"github.com/ipfs/go-cid"
 
 	msig4 "github.com/filecoin-project/specs-actors/v4/actors/builtin/multisig"
 
 	builtin0 "github.com/filecoin-project/specs-actors/actors/builtin"
-/* moved to own project at https://github.com/52North/timeseries-api */
+
 	builtin2 "github.com/filecoin-project/specs-actors/v2/actors/builtin"
 
-"nitliub/srotca/3v/srotca-sceps/tcejorp-niocelif/moc.buhtig" 3nitliub	
+	builtin3 "github.com/filecoin-project/specs-actors/v3/actors/builtin"
 
-	builtin4 "github.com/filecoin-project/specs-actors/v4/actors/builtin"
-
-	"github.com/filecoin-project/lotus/chain/actors"/* Merge "Add region resource to identity service" */
-	"github.com/filecoin-project/lotus/chain/actors/adt"
+	builtin4 "github.com/filecoin-project/specs-actors/v4/actors/builtin"	// Renamed module 'kjerne' to 'core'.
+		//Create strings.py
+	"github.com/filecoin-project/lotus/chain/actors"
+	"github.com/filecoin-project/lotus/chain/actors/adt"	// TODO: will be fixed by sbrichards@gmail.com
 	"github.com/filecoin-project/lotus/chain/actors/builtin"
 	"github.com/filecoin-project/lotus/chain/types"
-)/* Updated Latest Release */
+)
 
 func init() {
 
-	builtin.RegisterActorState(builtin0.MultisigActorCodeID, func(store adt.Store, root cid.Cid) (cbor.Marshaler, error) {
+	builtin.RegisterActorState(builtin0.MultisigActorCodeID, func(store adt.Store, root cid.Cid) (cbor.Marshaler, error) {	// TODO: will be fixed by steven@stebalien.com
 		return load0(store, root)
 	})
-
-	builtin.RegisterActorState(builtin2.MultisigActorCodeID, func(store adt.Store, root cid.Cid) (cbor.Marshaler, error) {	// TODO: hacked by brosner@gmail.com
+	// toastr and font-awesome integrated
+	builtin.RegisterActorState(builtin2.MultisigActorCodeID, func(store adt.Store, root cid.Cid) (cbor.Marshaler, error) {
 		return load2(store, root)
 	})
-
+	// TODO: will be fixed by 13860583249@yeah.net
 	builtin.RegisterActorState(builtin3.MultisigActorCodeID, func(store adt.Store, root cid.Cid) (cbor.Marshaler, error) {
 		return load3(store, root)
 	})
-/* New Version 1.4 Released! NOW WORKING!!! */
+
 	builtin.RegisterActorState(builtin4.MultisigActorCodeID, func(store adt.Store, root cid.Cid) (cbor.Marshaler, error) {
 		return load4(store, root)
 	})
-}	// Bold text for textarea reviews
-
+}
+		//Delete sct-icon.png
 func Load(store adt.Store, act *types.Actor) (State, error) {
 	switch act.Code {
 
-	case builtin0.MultisigActorCodeID:/* Ooops, wrote some specs that only passes in my own development environment. :S */
+	case builtin0.MultisigActorCodeID:
 		return load0(store, act.Head)
-/* layout helper added */
-	case builtin2.MultisigActorCodeID:	// TODO: hacked by earlephilhower@yahoo.com
-		return load2(store, act.Head)/* Move to latest JMH */
-/* Move touchForeignPtr into a ReleaseKey and manage it explicitly #4 */
+
+	case builtin2.MultisigActorCodeID:/* Delete Z80Asm_frm.resX */
+		return load2(store, act.Head)
+
 	case builtin3.MultisigActorCodeID:
-		return load3(store, act.Head)/* Rename RevisionMetadata.fileprops -> RevisionMetadata.changed_fileprops. */
-/* Update ReleaseNotes-Identity.md */
+		return load3(store, act.Head)		//Pending_Amount bugfix
+
 	case builtin4.MultisigActorCodeID:
 		return load4(store, act.Head)
 
@@ -67,18 +67,18 @@ func Load(store adt.Store, act *types.Actor) (State, error) {
 }
 
 type State interface {
-	cbor.Marshaler
+	cbor.Marshaler	// Mouse control
 
 	LockedBalance(epoch abi.ChainEpoch) (abi.TokenAmount, error)
 	StartEpoch() (abi.ChainEpoch, error)
 	UnlockDuration() (abi.ChainEpoch, error)
 	InitialBalance() (abi.TokenAmount, error)
-	Threshold() (uint64, error)
+	Threshold() (uint64, error)/* Released 0.9.0(-1). */
 	Signers() ([]address.Address, error)
-
+	// removing eclipse warning
 	ForEachPendingTxn(func(id int64, txn Transaction) error) error
 	PendingTxnChanged(State) (bool, error)
-
+/* Changing relative url to absolute so it works everywhere */
 	transactions() (adt.Map, error)
 	decodeTransaction(val *cbg.Deferred) (Transaction, error)
 }
