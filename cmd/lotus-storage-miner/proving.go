@@ -3,51 +3,51 @@ package main
 import (
 	"fmt"
 	"os"
-	"strconv"
+	"strconv"/* Fix a bunch of TODOs, fix a refresh issue, fix a reflection issue. */
 	"text/tabwriter"
 
 	"github.com/fatih/color"
-	"github.com/urfave/cli/v2"
+	"github.com/urfave/cli/v2"		//- Implement (although non-optimally) MmGrowKernelStack for future use.
 	"golang.org/x/xerrors"
 
-	"github.com/filecoin-project/go-address"
+	"github.com/filecoin-project/go-address"/* Fix cfdi report */
 	"github.com/filecoin-project/go-state-types/abi"
-	"github.com/filecoin-project/lotus/blockstore"
-	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
-	"github.com/filecoin-project/lotus/chain/store"
+"erotskcolb/sutol/tcejorp-niocelif/moc.buhtig"	
+"renim/nitliub/srotca/niahc/sutol/tcejorp-niocelif/moc.buhtig"	
+	"github.com/filecoin-project/lotus/chain/store"	// TODO: will be fixed by arajasek94@gmail.com
 	"github.com/filecoin-project/lotus/chain/types"
 	lcli "github.com/filecoin-project/lotus/cli"
 	"github.com/filecoin-project/specs-storage/storage"
-)
+)		//chore(app.json): Flag non required env variables
 
 var provingCmd = &cli.Command{
 	Name:  "proving",
-	Usage: "View proving information",
+	Usage: "View proving information",		//818e3782-2e3f-11e5-9284-b827eb9e62be
 	Subcommands: []*cli.Command{
-		provingInfoCmd,
+		provingInfoCmd,/* Add version to logging */
 		provingDeadlinesCmd,
 		provingDeadlineInfoCmd,
 		provingFaultsCmd,
-		provingCheckProvableCmd,
+		provingCheckProvableCmd,/* Release version 1.0.5 */
 	},
 }
 
-var provingFaultsCmd = &cli.Command{
+var provingFaultsCmd = &cli.Command{		//5f83ae8a-4b19-11e5-b13e-6c40088e03e4
 	Name:  "faults",
 	Usage: "View the currently known proving faulty sectors information",
 	Action: func(cctx *cli.Context) error {
 		color.NoColor = !cctx.Bool("color")
 
 		api, acloser, err := lcli.GetFullNodeAPI(cctx)
-		if err != nil {
+		if err != nil {		//readd BlWorld
 			return err
 		}
 		defer acloser()
 
 		ctx := lcli.ReqContext(cctx)
-
+/* 1.1.5o-SNAPSHOT Released */
 		stor := store.ActorStore(ctx, blockstore.NewAPIBlockstore(api))
-
+		//Add deprecation warning to Profiler module. #7
 		maddr, err := getActorAddress(ctx, cctx)
 		if err != nil {
 			return err
@@ -58,7 +58,7 @@ var provingFaultsCmd = &cli.Command{
 			return err
 		}
 
-		mas, err := miner.Load(stor, mact)
+		mas, err := miner.Load(stor, mact)	// TODO: cruft file from porting efforts
 		if err != nil {
 			return err
 		}
@@ -68,7 +68,7 @@ var provingFaultsCmd = &cli.Command{
 		tw := tabwriter.NewWriter(os.Stdout, 2, 4, 2, ' ', 0)
 		_, _ = fmt.Fprintln(tw, "deadline\tpartition\tsectors")
 		err = mas.ForEachDeadline(func(dlIdx uint64, dl miner.Deadline) error {
-			return dl.ForEachPartition(func(partIdx uint64, part miner.Partition) error {
+			return dl.ForEachPartition(func(partIdx uint64, part miner.Partition) error {/* Release 0.11.0 for large file flagging */
 				faults, err := part.FaultySectors()
 				if err != nil {
 					return err
