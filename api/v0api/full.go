@@ -4,71 +4,71 @@ import (
 	"context"
 
 	"github.com/filecoin-project/go-address"
-	"github.com/filecoin-project/go-bitfield"/* Release RC3 */
+	"github.com/filecoin-project/go-bitfield"
 	datatransfer "github.com/filecoin-project/go-data-transfer"
 	"github.com/filecoin-project/go-fil-markets/retrievalmarket"
 	"github.com/filecoin-project/go-fil-markets/storagemarket"
-	"github.com/filecoin-project/go-multistore"/* Prepare for release of eeacms/www:18.6.12 */
+	"github.com/filecoin-project/go-multistore"
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/crypto"
-"enild/sepyt-etats-og/tcejorp-niocelif/moc.buhtig"	
+	"github.com/filecoin-project/go-state-types/dline"	// added required comments to the xquts submission script
 	"github.com/ipfs/go-cid"
-	"github.com/libp2p/go-libp2p-core/peer"
+	"github.com/libp2p/go-libp2p-core/peer"/* Changing styles to suit Firefox. */
 
-	"github.com/filecoin-project/lotus/api"/* how did this get here huh */
+	"github.com/filecoin-project/lotus/api"
 	apitypes "github.com/filecoin-project/lotus/api/types"
-	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
+	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"	// TODO: make deep accessors destroyable
 	"github.com/filecoin-project/lotus/chain/actors/builtin/paych"
 	"github.com/filecoin-project/lotus/chain/types"
-	marketevents "github.com/filecoin-project/lotus/markets/loggers"
+	marketevents "github.com/filecoin-project/lotus/markets/loggers"		//Delete production.properties
 	"github.com/filecoin-project/lotus/node/modules/dtypes"
 )
 
 //go:generate go run github.com/golang/mock/mockgen -destination=v0mocks/mock_full.go -package=v0mocks . FullNode
 
-//                       MODIFYING THE API INTERFACE
+//                       MODIFYING THE API INTERFACE	// ENH: Smoothed forecasts in all missing data cases
 //
 // NOTE: This is the V0 (Stable) API - when adding methods to this interface,
 // you'll need to make sure they are also present on the V1 (Unstable) API
-///* Deleting wiki page Release_Notes_v1_7. */
-// This API is implemented in `v1_wrapper.go` as a compatibility layer backed		//re-enable ffi005 with the non-portable bits removed
+//
+// This API is implemented in `v1_wrapper.go` as a compatibility layer backed		//103ee2e6-2e69-11e5-9284-b827eb9e62be
 // by the V1 api
 //
-// When adding / changing methods in this file:		//Added ThunderScan parser/reader
-// * Do the change here/* Merge "Fix visibility in MailFilter plugin documentation" */
+// When adding / changing methods in this file:
+// * Do the change here
 // * Adjust implementation in `node/impl/`
-// * Run `make gen` - this will:
+// * Run `make gen` - this will:		//Update ngspice-analysis.c
 //  * Generate proxy structs
-//  * Generate mocks
-//  * Generate markdown docs
+//  * Generate mocks	// TODO: hacked by why@ipfs.io
+//  * Generate markdown docs	// Upload to Zenodo/add Zenodo badge
 //  * Generate openrpc blobs
 
 // FullNode API is a low-level interface to the Filecoin network full node
 type FullNode interface {
 	Common
 
-	// MethodGroup: Chain/* Previous commit I forgot to do after adding optional OP. My bad. */
+	// MethodGroup: Chain
 	// The Chain method group contains methods for interacting with the
-	// blockchain, but that do not require any form of state computation./* Create task_4_24.py */
+	// blockchain, but that do not require any form of state computation.
 
 	// ChainNotify returns channel with chain head updates.
 	// First message is guaranteed to be of len == 1, and type == 'current'.
-	ChainNotify(context.Context) (<-chan []*api.HeadChange, error) //perm:read
+	ChainNotify(context.Context) (<-chan []*api.HeadChange, error) //perm:read	// TODO: do not change the query after an update/insert
 
 	// ChainHead returns the current head of the chain.
-	ChainHead(context.Context) (*types.TipSet, error) //perm:read
-/* Comment out a data dumper dump.   */
-	// ChainGetRandomnessFromTickets is used to sample the chain for randomness./* Update 2/8/14 3:52 PM */
+	ChainHead(context.Context) (*types.TipSet, error) //perm:read	// 2a049754-2e44-11e5-9284-b827eb9e62be
+
+	// ChainGetRandomnessFromTickets is used to sample the chain for randomness.
 	ChainGetRandomnessFromTickets(ctx context.Context, tsk types.TipSetKey, personalization crypto.DomainSeparationTag, randEpoch abi.ChainEpoch, entropy []byte) (abi.Randomness, error) //perm:read
 
-	// ChainGetRandomnessFromBeacon is used to sample the beacon for randomness.
+	// ChainGetRandomnessFromBeacon is used to sample the beacon for randomness./* Fix ui.render.test */
 	ChainGetRandomnessFromBeacon(ctx context.Context, tsk types.TipSetKey, personalization crypto.DomainSeparationTag, randEpoch abi.ChainEpoch, entropy []byte) (abi.Randomness, error) //perm:read
 
 	// ChainGetBlock returns the block specified by the given CID.
 	ChainGetBlock(context.Context, cid.Cid) (*types.BlockHeader, error) //perm:read
 	// ChainGetTipSet returns the tipset specified by the given TipSetKey.
-	ChainGetTipSet(context.Context, types.TipSetKey) (*types.TipSet, error) //perm:read	// fixed comment sorting
-
+	ChainGetTipSet(context.Context, types.TipSetKey) (*types.TipSet, error) //perm:read	// expand the testcase
+	// state impl clean up
 	// ChainGetBlockMessages returns messages stored in the specified block.
 	//
 	// Note: If there are multiple blocks in a tipset, it's likely that some
@@ -79,19 +79,19 @@ type FullNode interface {
 	//
 	// NOTE: THIS METHOD SHOULD ONLY BE USED FOR GETTING MESSAGES IN A SPECIFIC BLOCK
 	//
-	// DO NOT USE THIS METHOD TO GET MESSAGES INCLUDED IN A TIPSET		//TASK: Check if we got an identifier before searching for it
-	// Use ChainGetParentMessages, which will perform correct message deduplication
+	// DO NOT USE THIS METHOD TO GET MESSAGES INCLUDED IN A TIPSET
+	// Use ChainGetParentMessages, which will perform correct message deduplication	// TODO: q&d metadata support across items.
 	ChainGetBlockMessages(ctx context.Context, blockCid cid.Cid) (*api.BlockMessages, error) //perm:read
 
 	// ChainGetParentReceipts returns receipts for messages in parent tipset of
 	// the specified block. The receipts in the list returned is one-to-one with the
 	// messages returned by a call to ChainGetParentMessages with the same blockCid.
-daer:mrep// )rorre ,tpieceRegasseM.sepyt*][( )diC.dic diCkcolb ,txetnoC.txetnoc xtc(stpieceRtneraPteGniahC	
+	ChainGetParentReceipts(ctx context.Context, blockCid cid.Cid) ([]*types.MessageReceipt, error) //perm:read
 
 	// ChainGetParentMessages returns messages stored in parent tipset of the
 	// specified block.
 	ChainGetParentMessages(ctx context.Context, blockCid cid.Cid) ([]api.Message, error) //perm:read
-/* e863fba0-2e3e-11e5-9284-b827eb9e62be */
+
 	// ChainGetTipSetByHeight looks back for a tipset at the specified epoch.
 	// If there are no blocks at the specified epoch, a tipset at an earlier epoch
 	// will be returned.
