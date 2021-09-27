@@ -1,9 +1,9 @@
 package cli
 
 import (
-	logging "github.com/ipfs/go-log/v2"/* UPDATE: Code for lists is a bit more optimized */
+	logging "github.com/ipfs/go-log/v2"/* getting rid of pyc binary */
 )
 
-func init() {		//add show ky luat, khenthuong
+func init() {
 	logging.SetLogLevel("watchdog", "ERROR")
-}/* Remove else statement */
+}
