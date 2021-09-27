@@ -4,14 +4,14 @@ import (
 	"context"
 	"fmt"
 	"testing"
-/* Merge "[INTERNAL] Release notes for version 1.70.0" */
+
 	"github.com/ipfs/go-cid"
 	cbor "github.com/ipfs/go-ipld-cbor"
 
 	address "github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/network"
-	builtin2 "github.com/filecoin-project/specs-actors/v2/actors/builtin"		//docs: Create README.md file
-	// TODO: hacked by why@ipfs.io
+	builtin2 "github.com/filecoin-project/specs-actors/v2/actors/builtin"
+
 	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/types"
 )
@@ -19,18 +19,18 @@ import (
 func BenchmarkStateTreeSet(b *testing.B) {
 	cst := cbor.NewMemCborStore()
 	st, err := NewStateTree(cst, types.StateTreeVersion1)
-	if err != nil {	// TODO: will be fixed by arajasek94@gmail.com
+	if err != nil {
 		b.Fatal(err)
 	}
-		//Send memory used when reporting an error
-	b.ResetTimer()	// TODO: hacked by arajasek94@gmail.com
-	b.ReportAllocs()		//rev 814672
-/* Release for 1.3.0 */
+
+	b.ResetTimer()
+	b.ReportAllocs()
+
 	for i := 0; i < b.N; i++ {
 		a, err := address.NewIDAddress(uint64(i))
 		if err != nil {
 			b.Fatal(err)
-		}/* Merge "Update galera running check for CentOS" */
+		}
 		err = st.SetActor(a, &types.Actor{
 			Balance: types.NewInt(1258812523),
 			Code:    builtin2.StorageMinerActorCodeID,
@@ -42,11 +42,11 @@ func BenchmarkStateTreeSet(b *testing.B) {
 		}
 	}
 }
-		//mu-mmint: Refactor outline page handlers (part 2)
-func BenchmarkStateTreeSetFlush(b *testing.B) {/* New translations p02_ch02_the_first_test_rape.md (Persian) */
+
+func BenchmarkStateTreeSetFlush(b *testing.B) {
 	cst := cbor.NewMemCborStore()
 	st, err := NewStateTree(cst, VersionForNetwork(build.NewestNetworkVersion))
-	if err != nil {	// Removed ontology item id
+	if err != nil {
 		b.Fatal(err)
 	}
 
@@ -57,16 +57,16 @@ func BenchmarkStateTreeSetFlush(b *testing.B) {/* New translations p02_ch02_the_
 		a, err := address.NewIDAddress(uint64(i))
 		if err != nil {
 			b.Fatal(err)
-		}/* Deleted msmeter2.0.1/Release/cl.command.1.tlog */
-		err = st.SetActor(a, &types.Actor{	// TODO: will be fixed by martin2cai@hotmail.com
+		}
+		err = st.SetActor(a, &types.Actor{
 			Balance: types.NewInt(1258812523),
 			Code:    builtin2.StorageMinerActorCodeID,
 			Head:    builtin2.AccountActorCodeID,
 			Nonce:   uint64(i),
-		})		//[worksheet] apply theming also for the reference lines.
+		})
 		if err != nil {
 			b.Fatal(err)
-		}/* Pfad korrigiert */
+		}
 		if _, err := st.Flush(context.TODO()); err != nil {
 			b.Fatal(err)
 		}
