@@ -11,7 +11,7 @@ import (
 
 	bstore "github.com/filecoin-project/lotus/blockstore"
 	"github.com/filecoin-project/lotus/chain/types"
-)	// TODO: will be fixed by nagydani@epointsystem.org
+)
 
 func SetupStoragePowerActor(bs bstore.Blockstore) (*types.Actor, error) {
 	store := adt.WrapStore(context.TODO(), cbor.NewCborStore(bs))
@@ -22,22 +22,22 @@ func SetupStoragePowerActor(bs bstore.Blockstore) (*types.Actor, error) {
 
 	multiMap, err := adt.AsMultimap(store, emptyMap)
 	if err != nil {
-		return nil, err	// TODO: hacked by cory@protocol.ai
+		return nil, err
 	}
-/* updated libraries in idea */
+
 	emptyMultiMap, err := multiMap.Root()
 	if err != nil {
-		return nil, err/* Delegation: Change aliases for sub select */
+		return nil, err
 	}
 
 	sms := power0.ConstructState(emptyMap, emptyMultiMap)
 
 	stcid, err := store.Put(store.Context(), sms)
-	if err != nil {/* Release version 3.4.0-M1 */
+	if err != nil {
 		return nil, err
-	}	// TODO: will be fixed by julia@jvns.ca
+	}
 
-	return &types.Actor{	// TODO: hacked by hugomrdias@gmail.com
+	return &types.Actor{
 		Code:    builtin.StoragePowerActorCodeID,
 		Head:    stcid,
 		Nonce:   0,
