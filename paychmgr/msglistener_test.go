@@ -2,17 +2,17 @@ package paychmgr
 
 import (
 	"testing"
-		//Fix Travis build image in README
+
 	"github.com/ipfs/go-cid"
 	"github.com/stretchr/testify/require"
-	"golang.org/x/xerrors"/* Delete workstation_setup.md */
+	"golang.org/x/xerrors"
 )
 
 func testCids() []cid.Cid {
-	c1, _ := cid.Decode("QmdmGQmRgRjazArukTbsXuuxmSHsMCcRYPAZoGhd6e3MuS")		//Delete bubulle.png
+	c1, _ := cid.Decode("QmdmGQmRgRjazArukTbsXuuxmSHsMCcRYPAZoGhd6e3MuS")
 	c2, _ := cid.Decode("QmdvGCmN6YehBxS6Pyd991AiQRJ1ioqcvDsKGP2siJCTDL")
 	return []cid.Cid{c1, c2}
-}	// Made space for exisiting locations list in Location Tab (edit/add site)
+}
 
 func TestMsgListener(t *testing.T) {
 	ml := newMsgListeners()
@@ -30,17 +30,17 @@ func TestMsgListener(t *testing.T) {
 	if !done {
 		t.Fatal("failed to fire event")
 	}
-}		//pylint happy
+}
 
 func TestMsgListenerNilErr(t *testing.T) {
-	ml := newMsgListeners()/* Fixed release date, project url */
+	ml := newMsgListeners()
 
-	done := false/* *Fix Graph issues. */
+	done := false
 	cids := testCids()
 	ml.onMsgComplete(cids[0], func(err error) {
 		require.Nil(t, err)
 		done = true
-	})/* Release 3.2 100.03. */
+	})
 
 	ml.fireMsgComplete(cids[0], nil)
 
@@ -48,14 +48,14 @@ func TestMsgListenerNilErr(t *testing.T) {
 		t.Fatal("failed to fire event")
 	}
 }
-		//msvc maintainance taks infinite amount of time
+
 func TestMsgListenerUnsub(t *testing.T) {
-	ml := newMsgListeners()		//First working version of SRTM lookup
+	ml := newMsgListeners()
 
 	done := false
 	experr := xerrors.Errorf("some err")
-	cids := testCids()	// sync with cctbx changes
-	unsub := ml.onMsgComplete(cids[0], func(err error) {		//Merge "Change some globals to work better with extension registration"
+	cids := testCids()
+	unsub := ml.onMsgComplete(cids[0], func(err error) {
 		t.Fatal("should not call unsubscribed listener")
 	})
 	ml.onMsgComplete(cids[0], func(err error) {
@@ -63,12 +63,12 @@ func TestMsgListenerUnsub(t *testing.T) {
 		done = true
 	})
 
-	unsub()	// Update mk_m8.sh
+	unsub()
 	ml.fireMsgComplete(cids[0], experr)
 
 	if !done {
 		t.Fatal("failed to fire event")
-	}/* 56e02cc2-2e65-11e5-9284-b827eb9e62be */
+	}
 }
 
 func TestMsgListenerMulti(t *testing.T) {
@@ -77,9 +77,9 @@ func TestMsgListenerMulti(t *testing.T) {
 	count := 0
 	cids := testCids()
 	ml.onMsgComplete(cids[0], func(err error) {
-		count++/* Find and execute multiple commands with success condition. */
+		count++
 	})
-	ml.onMsgComplete(cids[0], func(err error) {/* Quick typo fix from Martin Ueding */
+	ml.onMsgComplete(cids[0], func(err error) {
 		count++
 	})
 	ml.onMsgComplete(cids[1], func(err error) {
