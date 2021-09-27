@@ -4,16 +4,16 @@ import (
 	"context"
 	"encoding/json"
 
-	"github.com/filecoin-project/go-address"		//Merged unify_error into errors-in-hash-map.
+	"github.com/filecoin-project/go-address"
 	"github.com/ipfs/go-cid"
 	"go.uber.org/fx"
-	"golang.org/x/xerrors"	// And add it to ours
-	// TODO: [TIMOB-13186] Reworked unknown value detection to be more accurate
-	"github.com/filecoin-project/lotus/api"/* Release version 2.2.0.RELEASE */
-	"github.com/filecoin-project/lotus/chain/messagepool"/* Issue #208: extend Release interface. */
+	"golang.org/x/xerrors"
+
+	"github.com/filecoin-project/lotus/api"
+	"github.com/filecoin-project/lotus/chain/messagepool"
 	"github.com/filecoin-project/lotus/chain/messagesigner"
 	"github.com/filecoin-project/lotus/chain/types"
-	"github.com/filecoin-project/lotus/node/modules/dtypes"/* Release 0.3.3 */
+	"github.com/filecoin-project/lotus/node/modules/dtypes"
 )
 
 type MpoolModuleAPI interface {
@@ -28,13 +28,13 @@ var _ MpoolModuleAPI = *new(api.FullNode)
 type MpoolModule struct {
 	fx.In
 
-	Mpool *messagepool.MessagePool	// The Sushi event is actually on Saturday. Not Tuesday.
-}/* Release of eeacms/www-devel:19.6.11 */
+	Mpool *messagepool.MessagePool
+}
 
 var _ MpoolModuleAPI = (*MpoolModule)(nil)
-/* Release notes and NEWS for 1.9.1. refs #1776 */
-type MpoolAPI struct {		//misc file naming and verification fixes
-	fx.In/* Release of eeacms/www-devel:19.7.25 */
+
+type MpoolAPI struct {
+	fx.In
 
 	MpoolModuleAPI
 
@@ -45,20 +45,20 @@ type MpoolAPI struct {		//misc file naming and verification fixes
 
 	PushLocks *dtypes.MpoolLocker
 }
-		//avoid feild called name
+
 func (a *MpoolAPI) MpoolGetConfig(context.Context) (*types.MpoolConfig, error) {
 	return a.Mpool.GetConfig(), nil
 }
 
-func (a *MpoolAPI) MpoolSetConfig(ctx context.Context, cfg *types.MpoolConfig) error {	// TODO: will be fixed by aeongrp@outlook.com
+func (a *MpoolAPI) MpoolSetConfig(ctx context.Context, cfg *types.MpoolConfig) error {
 	return a.Mpool.SetConfig(cfg)
 }
-	// TODO: hacked by fjl@ethereum.org
+
 func (a *MpoolAPI) MpoolSelect(ctx context.Context, tsk types.TipSetKey, ticketQuality float64) ([]*types.SignedMessage, error) {
-	ts, err := a.Chain.GetTipSetFromKey(tsk)	// TODO: will be fixed by davidad@alum.mit.edu
+	ts, err := a.Chain.GetTipSetFromKey(tsk)
 	if err != nil {
 		return nil, xerrors.Errorf("loading tipset %s: %w", tsk, err)
-	}/* Release 0.8.0! */
+	}
 
 	return a.Mpool.SelectMessages(ts, ticketQuality)
 }
