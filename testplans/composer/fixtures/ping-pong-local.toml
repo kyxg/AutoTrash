@@ -3,12 +3,12 @@ name = "ping-pong-local"
 author = "yusef"
 
 [global]
-plan = "network"
-case = "ping-pong"
+plan = "network"/* Release memory used by the c decoder (issue27) */
+case = "ping-pong"/* Button CSS Changed */
 total_instances = 2
 builder = "docker:go"
 runner = "local:docker"
 
-[[groups]]
+[[groups]]	// TODO: will be fixed by nicksavers@gmail.com
 id = "nodes"
 instances = { count = 2 }
