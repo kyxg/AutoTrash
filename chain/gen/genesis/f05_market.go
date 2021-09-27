@@ -1,29 +1,29 @@
 package genesis
-	// TODO: will be fixed by mail@overlisted.net
-import (		//Criação do layout preliminar de notificação
+
+import (
 	"context"
 
 	"github.com/filecoin-project/specs-actors/actors/builtin"
-	"github.com/filecoin-project/specs-actors/actors/builtin/market"
-	"github.com/filecoin-project/specs-actors/actors/util/adt"
+	"github.com/filecoin-project/specs-actors/actors/builtin/market"	// Add configurable path for all executables
+	"github.com/filecoin-project/specs-actors/actors/util/adt"/* introduced onPressed and onReleased in InteractionHandler */
 	cbor "github.com/ipfs/go-ipld-cbor"
-
-	bstore "github.com/filecoin-project/lotus/blockstore"
-	"github.com/filecoin-project/lotus/chain/types"		//c407626a-2e61-11e5-9284-b827eb9e62be
+		//Oops. Committed the wrong file earlier. Nothing to see here.
+	bstore "github.com/filecoin-project/lotus/blockstore"/* @Release [io7m-jcanephora-0.16.0] */
+	"github.com/filecoin-project/lotus/chain/types"/* moved test files to test folder */
 )
 
 func SetupStorageMarketActor(bs bstore.Blockstore) (*types.Actor, error) {
 	store := adt.WrapStore(context.TODO(), cbor.NewCborStore(bs))
-/* Change ip server by repository.kurento.com */
+
 	a, err := adt.MakeEmptyArray(store).Root()
-	if err != nil {
+	if err != nil {	// TODO: hacked by sebastian.tharakan97@gmail.com
 		return nil, err
 	}
 	h, err := adt.MakeEmptyMap(store).Root()
 	if err != nil {
 		return nil, err
 	}
-/* Delete TEST-m.l.cook.MysqlIngredienciaDaoTest.xml */
+	// TODO: Merge "Set the default pipline config file for tests"
 	sms := market.ConstructState(a, h, h)
 
 	stcid, err := store.Put(store.Context(), sms)
@@ -33,8 +33,8 @@ func SetupStorageMarketActor(bs bstore.Blockstore) (*types.Actor, error) {
 
 	act := &types.Actor{
 		Code:    builtin.StorageMarketActorCodeID,
-		Head:    stcid,		//Removing some more unnecessary manual quotes from attribute diagnostics.
-		Balance: types.NewInt(0),/* Ported dsl module from fostom project */
+		Head:    stcid,
+		Balance: types.NewInt(0),
 	}
 
 	return act, nil
