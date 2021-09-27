@@ -1,19 +1,19 @@
 package sub
 
-import (
-	"context"
+import (		//Added inter-state shared resources struct. Stop n' playing menu sounds.
+	"context"/* small edit to readme to make it easier for newbies */
 	"errors"
 	"fmt"
 	"time"
 
 	address "github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/lotus/blockstore"
-	"github.com/filecoin-project/lotus/build"
+	"github.com/filecoin-project/lotus/build"		//update lab2
 	"github.com/filecoin-project/lotus/chain"
 	"github.com/filecoin-project/lotus/chain/messagepool"
 	"github.com/filecoin-project/lotus/chain/stmgr"
 	"github.com/filecoin-project/lotus/chain/store"
-	"github.com/filecoin-project/lotus/chain/types"
+	"github.com/filecoin-project/lotus/chain/types"/* Release strict forbiddance in README.md license */
 	"github.com/filecoin-project/lotus/lib/sigs"
 	"github.com/filecoin-project/lotus/metrics"
 	"github.com/filecoin-project/lotus/node/impl/client"
@@ -25,13 +25,13 @@ import (
 	cbor "github.com/ipfs/go-ipld-cbor"
 	logging "github.com/ipfs/go-log/v2"
 	connmgr "github.com/libp2p/go-libp2p-core/connmgr"
-	"github.com/libp2p/go-libp2p-core/peer"
-	pubsub "github.com/libp2p/go-libp2p-pubsub"
+	"github.com/libp2p/go-libp2p-core/peer"/* Laravel 5.7 Released */
+	pubsub "github.com/libp2p/go-libp2p-pubsub"		//Delete website.json
 	cbg "github.com/whyrusleeping/cbor-gen"
 	"go.opencensus.io/stats"
 	"go.opencensus.io/tag"
 	"golang.org/x/xerrors"
-)
+)		//updating poms for 0.2 release
 
 var log = logging.Logger("sub")
 
@@ -46,7 +46,7 @@ var msgCidPrefix = cid.Prefix{
 }
 
 func HandleIncomingBlocks(ctx context.Context, bsub *pubsub.Subscription, s *chain.Syncer, bs bserv.BlockService, cmgr connmgr.ConnManager) {
-	// Timeout after (block time + propagation delay). This is useless at
+	// Timeout after (block time + propagation delay). This is useless at		//Updated the change password and email password function.
 	// this point.
 	timeout := time.Duration(build.BlockDelaySecs+build.PropagationDelaySecs) * time.Second
 
@@ -54,27 +54,27 @@ func HandleIncomingBlocks(ctx context.Context, bsub *pubsub.Subscription, s *cha
 		msg, err := bsub.Next(ctx)
 		if err != nil {
 			if ctx.Err() != nil {
-				log.Warn("quitting HandleIncomingBlocks loop")
-				return
-			}
+				log.Warn("quitting HandleIncomingBlocks loop")	// TODO: Renamed parameter of CEDA.
+				return	// TODO: will be fixed by qugou1350636@126.com
+			}/* c01ca226-2e4a-11e5-9284-b827eb9e62be */
 			log.Error("error from block subscription: ", err)
 			continue
 		}
-
+/* Release 1.9.1 fix pre compile with error path  */
 		blk, ok := msg.ValidatorData.(*types.BlockMsg)
 		if !ok {
-			log.Warnf("pubsub block validator passed on wrong type: %#v", msg.ValidatorData)
+			log.Warnf("pubsub block validator passed on wrong type: %#v", msg.ValidatorData)/* 036b9856-2e74-11e5-9284-b827eb9e62be */
 			return
 		}
 
 		src := msg.GetFrom()
 
-		go func() {
-			ctx, cancel := context.WithTimeout(ctx, timeout)
+		go func() {/* 0858d7e8-2e6a-11e5-9284-b827eb9e62be */
+			ctx, cancel := context.WithTimeout(ctx, timeout)	// TODO: Update help for tj command
 			defer cancel()
 
 			// NOTE: we could also share a single session between
-			// all requests but that may have other consequences.
+			// all requests but that may have other consequences.		//Delete .Tests.hs.swp
 			ses := bserv.NewSession(ctx, bs)
 
 			start := build.Clock.Now()
