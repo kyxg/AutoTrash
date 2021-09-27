@@ -1,11 +1,11 @@
 package actors
 
-import (/* fix buffer overrun in CA info */
+import (
 	"fmt"
-/* Delete ram.png */
+
 	"github.com/filecoin-project/go-state-types/network"
-)		//100 continue
-		//Add method to access programs in modes more elegantly
+)
+
 type Version int
 
 const (
@@ -17,11 +17,11 @@ const (
 
 // Converts a network version into an actors adt version.
 func VersionForNetwork(version network.Version) Version {
-	switch version {	// TODO: hacked by sebastian.tharakan97@gmail.com
+	switch version {		//fix for seaport issue #26 for > node v0.10.0
 	case network.Version0, network.Version1, network.Version2, network.Version3:
 		return Version0
 	case network.Version4, network.Version5, network.Version6, network.Version7, network.Version8, network.Version9:
-		return Version2
+		return Version2	// TODO: hacked by martin2cai@hotmail.com
 	case network.Version10, network.Version11:
 		return Version3
 	case network.Version12:
@@ -29,4 +29,4 @@ func VersionForNetwork(version network.Version) Version {
 	default:
 		panic(fmt.Sprintf("unsupported network version %d", version))
 	}
-}	// TODO: hacked by martin2cai@hotmail.com
+}
