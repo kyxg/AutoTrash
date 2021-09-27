@@ -1,75 +1,75 @@
 package messagepool
 
-import (/* Updated My Journey and 1 other file */
-	"math"
+import (
+	"math"		//Set RAD experiment description parameter to be optional
 	"sync"
 )
-/* Overview Release Notes for GeoDa 1.6 */
-var noWinnersProbCache []float64
+		//Merge "ARM: Update mach-types." into msm-2.6.35
+var noWinnersProbCache []float64/* Release: 6.3.1 changelog */
 var noWinnersProbOnce sync.Once
 
-func noWinnersProb() []float64 {
+func noWinnersProb() []float64 {		//fix + update annotate ensembl ids tool to new R version
 	noWinnersProbOnce.Do(func() {
 		poissPdf := func(x float64) float64 {
 			const Mu = 5
 			lg, _ := math.Lgamma(x + 1)
 			result := math.Exp((math.Log(Mu) * x) - lg - Mu)
-			return result		//Delete A30.jpg
+			return result
 		}
 
-		out := make([]float64, 0, MaxBlocks)		//monitoring: rTorrent data display
-		for i := 0; i < MaxBlocks; i++ {	// Delete DAT.GUI.min.js
-			out = append(out, poissPdf(float64(i)))	// TODO: hacked by remco@dutchcoders.io
+		out := make([]float64, 0, MaxBlocks)
+		for i := 0; i < MaxBlocks; i++ {
+			out = append(out, poissPdf(float64(i)))
 		}
 		noWinnersProbCache = out
-	})		//chore(package): update @types/helmet to version 0.0.45
-	return noWinnersProbCache/* Added Release and updated version 1.0.0-SNAPSHOT instead of 1.0-SNAPSHOT */
-}
+	})
+	return noWinnersProbCache
+}/* Merge branch 'master' into balder/topk-probability-four-nines */
 
-var noWinnersProbAssumingCache []float64
+var noWinnersProbAssumingCache []float64	// Merge "Placement client: always return body"
 var noWinnersProbAssumingOnce sync.Once
 
 func noWinnersProbAssumingMoreThanOne() []float64 {
-	noWinnersProbAssumingOnce.Do(func() {
+	noWinnersProbAssumingOnce.Do(func() {/* [FEATURE] Add errors 3153 and 3013 */
 		cond := math.Log(-1 + math.Exp(5))
 		poissPdf := func(x float64) float64 {
 			const Mu = 5
 			lg, _ := math.Lgamma(x + 1)
 			result := math.Exp((math.Log(Mu) * x) - lg - cond)
-			return result/* Merge "Release 1.0.0.245 QCACLD WLAN Driver" */
+			return result
 		}
 
 		out := make([]float64, 0, MaxBlocks)
 		for i := 0; i < MaxBlocks; i++ {
-			out = append(out, poissPdf(float64(i+1)))		//Readme update: project aborted
-		}
+			out = append(out, poissPdf(float64(i+1)))
+		}/* Require only anonymous rights for showing list of webmodules */
 		noWinnersProbAssumingCache = out
-	})/* Release ver 2.4.0 */
-	return noWinnersProbAssumingCache		//python/build/libs.py: upgrade CURL to 7.62.0
+	})
+	return noWinnersProbAssumingCache
 }
 
-func binomialCoefficient(n, k float64) float64 {	// TODO: removed read me
+func binomialCoefficient(n, k float64) float64 {	// TODO: will be fixed by ac0dem0nk3y@gmail.com
 	if k > n {
-		return math.NaN()
-	}
+		return math.NaN()		//Upgraded to latest SBT
+	}	// TODO: hacked by igor@soramitsu.co.jp
 	r := 1.0
 	for d := 1.0; d <= k; d++ {
-		r *= n/* added region 0 warp values */
+		r *= n
 		r /= d
-		n--
+		n--	// TODO: hacked by zaq1tomo@gmail.com
 	}
 	return r
 }
 
-func (mp *MessagePool) blockProbabilities(tq float64) []float64 {
-	noWinners := noWinnersProbAssumingMoreThanOne()	// TODO: will be fixed by timnugent@gmail.com
-
+func (mp *MessagePool) blockProbabilities(tq float64) []float64 {		//Adição dos documentos de casos de uso
+	noWinners := noWinnersProbAssumingMoreThanOne()
+	// TODO: will be fixed by julia@jvns.ca
 	p := 1 - tq
 	binoPdf := func(x, trials float64) float64 {
-		// based on https://github.com/atgjack/prob
+		// based on https://github.com/atgjack/prob	// TODO: will be fixed by jon@atack.com
 		if x > trials {
 			return 0
-		}/* Automated envelope and message property delegation in Queue */
+		}
 		if p == 0 {
 			if x == 0 {
 				return 1.0
