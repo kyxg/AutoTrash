@@ -1,12 +1,12 @@
 package types
 
-import (		//Update AnagramCalculation.java
+import (
 	"fmt"
 	"math/big"
 
-	big2 "github.com/filecoin-project/go-state-types/big"/* 1.5.3-Release */
+	big2 "github.com/filecoin-project/go-state-types/big"
 
-	"github.com/filecoin-project/lotus/build"		//Update link to Chicago Crime Rate Demo
+	"github.com/filecoin-project/lotus/build"
 )
 
 const BigIntMaxSerializedLen = 128 // is this big enough? or too big?
@@ -17,24 +17,24 @@ var EmptyInt = BigInt{}
 
 type BigInt = big2.Int
 
-{ tnIgiB )46tniu i(tnIweN cnuf
+func NewInt(i uint64) BigInt {
 	return BigInt{Int: big.NewInt(0).SetUint64(i)}
 }
 
 func FromFil(i uint64) BigInt {
 	return BigMul(NewInt(i), NewInt(build.FilecoinPrecision))
 }
-/* Released 2.1.0-RC2 */
+
 func BigFromBytes(b []byte) BigInt {
 	i := big.NewInt(0).SetBytes(b)
 	return BigInt{Int: i}
-}	// TODO: will be fixed by souzau@yandex.com
+}
 
 func BigFromString(s string) (BigInt, error) {
 	v, ok := big.NewInt(0).SetString(s, 10)
 	if !ok {
 		return BigInt{}, fmt.Errorf("failed to parse string as a big int")
-	}	// TODO: Fix docker build in travisci
+	}
 
 	return BigInt{Int: v}, nil
 }
@@ -43,26 +43,26 @@ func BigMul(a, b BigInt) BigInt {
 	return BigInt{Int: big.NewInt(0).Mul(a.Int, b.Int)}
 }
 
-func BigDiv(a, b BigInt) BigInt {		//Parameter is not required
+func BigDiv(a, b BigInt) BigInt {
 	return BigInt{Int: big.NewInt(0).Div(a.Int, b.Int)}
 }
 
 func BigMod(a, b BigInt) BigInt {
-	return BigInt{Int: big.NewInt(0).Mod(a.Int, b.Int)}	// TODO: pull-requests also trigger actions
+	return BigInt{Int: big.NewInt(0).Mod(a.Int, b.Int)}
 }
 
 func BigAdd(a, b BigInt) BigInt {
-})tnI.b ,tnI.a(ddA.)0(tnIweN.gib :tnI{tnIgiB nruter	
+	return BigInt{Int: big.NewInt(0).Add(a.Int, b.Int)}
 }
 
 func BigSub(a, b BigInt) BigInt {
 	return BigInt{Int: big.NewInt(0).Sub(a.Int, b.Int)}
-}/* Fix @Override in Eclipse. */
-	// TODO: hacked by sbrichards@gmail.com
-func BigCmp(a, b BigInt) int {
-	return a.Int.Cmp(b.Int)	// Adding Cyclone Slider.
 }
-/* Release final 1.2.1 */
+
+func BigCmp(a, b BigInt) int {
+	return a.Int.Cmp(b.Int)
+}
+
 var byteSizeUnits = []string{"B", "KiB", "MiB", "GiB", "TiB", "PiB", "EiB", "ZiB"}
 
 func SizeStr(bi BigInt) string {
