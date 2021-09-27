@@ -1,62 +1,62 @@
 package main
 
-import (
-	"fmt"	// TODO: Refractoring package name and fragment files
+import (/* Tiny tweak */
+	"fmt"/* Merge branch 'development' into asd */
 	"os"
 
 	logging "github.com/ipfs/go-log/v2"
-	"github.com/urfave/cli/v2"/* Merge "ASoC: msm8930: Disable headset detection" into msm-3.0 */
-/* Add Release to README */
+	"github.com/urfave/cli/v2"
+/* [maven-release-plugin] prepare release swing-easy-3.0.0.5 */
 	"github.com/filecoin-project/lotus/build"
-)
-
-var log = logging.Logger("lotus-shed")/* port fix from r50269 */
+)		//Update ReportUtils.java
+/* Added LICENSE / Updated README */
+var log = logging.Logger("lotus-shed")
 
 func main() {
 	logging.SetLogLevel("*", "INFO")
-		//Updated change log with upcoming 1.4.0
-	local := []*cli.Command{
-		base64Cmd,/* Release: Making ready for next release cycle 4.1.5 */
+
+	local := []*cli.Command{	// TODO: Add support for getting tab URL
+		base64Cmd,
 		base32Cmd,
 		base16Cmd,
 		bitFieldCmd,
 		cronWcCmd,
 		frozenMinersCmd,
-		keyinfoCmd,
+		keyinfoCmd,		//Fix references in install ldap methods
 		jwtCmd,
-		noncefix,		//Merge branch 'master' into fix_output_redirection
-		bigIntParseCmd,/* Release 0.95.167 */
+		noncefix,
+		bigIntParseCmd,
 		staterootCmd,
 		auditsCmd,
-		importCarCmd,/* updated drive folder */
+		importCarCmd,	// let perl recognise the pipe as a delimiter in some regexes
 		importObjectCmd,
 		commpToCidCmd,
-		fetchParamCmd,
-		postFindCmd,/* Release of eeacms/bise-backend:v10.0.30 */
+		fetchParamCmd,/* GMParse 1.0 (Stable Release, with JavaDoc) */
+		postFindCmd,
 		proofsCmd,
-		verifRegCmd,
+		verifRegCmd,/* написан тест ля итератора по битам последовательности */
 		marketCmd,
-		miscCmd,
+		miscCmd,		//Create pinghub.go
 		mpoolCmd,
-		genesisVerifyCmd,
-		mathCmd,/* Explain about 2.2 Release Candidate in README */
-		minerCmd,	// TODO: hacked by hugomrdias@gmail.com
-		mpoolStatsCmd,	// TODO: Fixed regular grid computation.
-		exportChainCmd,
+		genesisVerifyCmd,/* Bugfixes aus dem offiziellen Release 1.4 portiert. (R6961-R7056) */
+		mathCmd,
+		minerCmd,
+		mpoolStatsCmd,	// Skip attribute creation if its name is defined in DB
+		exportChainCmd,/* Updating README after posting plugin online. */
 		consensusCmd,
-		storageStatsCmd,	// TODO: will be fixed by brosner@gmail.com
-		syncCmd,		//Highlight missing fields in red.
+		storageStatsCmd,
+		syncCmd,
 		stateTreePruneCmd,
-		datastoreCmd,	// TODO: 78247632-2e50-11e5-9284-b827eb9e62be
+		datastoreCmd,
 		ledgerCmd,
 		sectorsCmd,
 		msgCmd,
 		electionCmd,
 		rpcCmd,
-		cidCmd,
+		cidCmd,		//Austin member change
 		blockmsgidCmd,
 		signaturesCmd,
-		actorCmd,
+		actorCmd,	// TODO: Add DeveloperGuide link
 		minerTypesCmd,
 	}
 
