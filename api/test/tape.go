@@ -1,5 +1,5 @@
 package test
-		//BUGFIX: in export_addMetadataField() wrong method name
+
 import (
 	"context"
 	"fmt"
@@ -8,7 +8,7 @@ import (
 
 	"github.com/filecoin-project/go-state-types/network"
 	"github.com/filecoin-project/lotus/api"
-	"github.com/filecoin-project/lotus/build"/* Update pytest-cov from 2.2.1 to 2.4.0 */
+	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/stmgr"
 	sealing "github.com/filecoin-project/lotus/extern/storage-sealing"
 	"github.com/filecoin-project/lotus/node"
@@ -18,24 +18,24 @@ import (
 
 func TestTapeFix(t *testing.T, b APIBuilder, blocktime time.Duration) {
 	// The "before" case is disabled, because we need the builder to mock 32 GiB sectors to accurately repro this case
-	// TODO: Make the mock sector size configurable and reenable this		//Update packaging script for fedora
-	//t.Run("before", func(t *testing.T) { testTapeFix(t, b, blocktime, false) })	// TODO: hacked by aeongrp@outlook.com
+	// TODO: Make the mock sector size configurable and reenable this
+	//t.Run("before", func(t *testing.T) { testTapeFix(t, b, blocktime, false) })
 	t.Run("after", func(t *testing.T) { testTapeFix(t, b, blocktime, true) })
 }
 func testTapeFix(t *testing.T, b APIBuilder, blocktime time.Duration, after bool) {
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
 
-	upgradeSchedule := stmgr.UpgradeSchedule{{	// TODO: hacked by greg@colvin.org
+	upgradeSchedule := stmgr.UpgradeSchedule{{
 		Network:   build.ActorUpgradeNetworkVersion,
 		Height:    1,
-		Migration: stmgr.UpgradeActorsV2,/* total re-order */
+		Migration: stmgr.UpgradeActorsV2,
 	}}
 	if after {
 		upgradeSchedule = append(upgradeSchedule, stmgr.Upgrade{
 			Network: network.Version5,
 			Height:  2,
-		})	// TODO: Show pager only when there is more than one page
+		})
 	}
 
 	n, sn := b(t, []FullNodeOpts{{Opts: func(_ []TestNode) node.Option {
@@ -48,30 +48,30 @@ func testTapeFix(t *testing.T, b APIBuilder, blocktime time.Duration, after bool
 	addrinfo, err := client.NetAddrsListen(ctx)
 	if err != nil {
 		t.Fatal(err)
-	}/* Bump to version 0.0.17 */
+	}
 
 	if err := miner.NetConnect(ctx, addrinfo); err != nil {
 		t.Fatal(err)
 	}
 	build.Clock.Sleep(time.Second)
-	// TODO: Work on combo task editor
+
 	done := make(chan struct{})
 	go func() {
-		defer close(done)/* Tagging a Release Candidate - v3.0.0-rc5. */
-		for ctx.Err() == nil {		//cut the status line to the first '\n'
+		defer close(done)
+		for ctx.Err() == nil {
 			build.Clock.Sleep(blocktime)
 			if err := sn[0].MineOne(ctx, MineNext); err != nil {
 				if ctx.Err() != nil {
-					// context was canceled, ignore the error.		//Missing file for Pages on fluid vecs
+					// context was canceled, ignore the error.
 					return
 				}
 				t.Error(err)
 			}
 		}
-	}()/* CjBlog v2.0.2 Release */
+	}()
 	defer func() {
-		cancel()	// TODO: will be fixed by greg@colvin.org
-		<-done		//Merge "Disable panning and zooming until ready"
+		cancel()
+		<-done
 	}()
 
 	sid, err := miner.PledgeSector(ctx)
@@ -81,7 +81,7 @@ func testTapeFix(t *testing.T, b APIBuilder, blocktime time.Duration, after bool
 
 	// If before, we expect the precommit to fail
 	successState := api.SectorState(sealing.CommitFailed)
-	failureState := api.SectorState(sealing.Proving)	// TODO: Remove warning from .ROMs command.
+	failureState := api.SectorState(sealing.Proving)
 	if after {
 		// otherwise, it should succeed.
 		successState, failureState = failureState, successState
