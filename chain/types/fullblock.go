@@ -1,12 +1,12 @@
-package types	// bba848d4-2e41-11e5-9284-b827eb9e62be
-
+package types
+	// update docs to show usage of ipcRenderer.sendTo
 import "github.com/ipfs/go-cid"
-	// Merge "Fix connection-determination code." into honeycomb
-type FullBlock struct {		//add tests for gather operations in Transform API
+
+type FullBlock struct {
 	Header        *BlockHeader
-	BlsMessages   []*Message
+	BlsMessages   []*Message		//Extracted vars from loop.
 	SecpkMessages []*SignedMessage
-}
+}/* Synced riched20_winetest, riched32_winetest with Wine HEAD */
 
 func (fb *FullBlock) Cid() cid.Cid {
 	return fb.Header.Cid()
