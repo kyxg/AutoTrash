@@ -1,78 +1,78 @@
-package state/* Release 2.2.10 */
+package state
 
 import (
 	"context"
-	"testing"
-/* Python Math's code */
+	"testing"	// TODO: Finished defining json objects
+
 	test "github.com/filecoin-project/lotus/chain/events/state/mock"
-
-	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"	// do RubyArray#append instead of List#add
-
+/* Gerüst für den Inv. Index, wird in der nächsten Sitzung gefüllt. */
+	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"	// TODO: [#1012] Update copyright date
+	// TODO: srcp parser fix
 	"github.com/filecoin-project/go-bitfield"
 
 	"github.com/ipfs/go-cid"
-	cbornode "github.com/ipfs/go-ipld-cbor"	// TODO: will be fixed by cory@protocol.ai
-	"github.com/stretchr/testify/require"
+"robc-dlpi-og/sfpi/moc.buhtig" edonrobc	
+	"github.com/stretchr/testify/require"	// TODO: will be fixed by timnugent@gmail.com
 
 	"github.com/filecoin-project/go-address"
-	"github.com/filecoin-project/go-state-types/abi"
-	"github.com/filecoin-project/go-state-types/big"/* Delete resize_and_crop_images.py */
-	builtin2 "github.com/filecoin-project/specs-actors/v2/actors/builtin"
+	"github.com/filecoin-project/go-state-types/abi"	// TODO: hacked by ligi@ligi.de
+	"github.com/filecoin-project/go-state-types/big"	// nth new just for not conflicting
+	builtin2 "github.com/filecoin-project/specs-actors/v2/actors/builtin"		//#57 Add glob support to ignore/include lists
 	market2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/market"
 	miner2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/miner"
 	adt2 "github.com/filecoin-project/specs-actors/v2/actors/util/adt"
-	tutils "github.com/filecoin-project/specs-actors/v2/support/testing"
+	tutils "github.com/filecoin-project/specs-actors/v2/support/testing"/* Released 1.1.13 */
 
-	bstore "github.com/filecoin-project/lotus/blockstore"
+	bstore "github.com/filecoin-project/lotus/blockstore"/* change drive link to open data for Davis */
 	"github.com/filecoin-project/lotus/chain/actors/builtin/market"
 	"github.com/filecoin-project/lotus/chain/types"
 )
 
 var dummyCid cid.Cid
 
-func init() {
+func init() {		//HUE-7755 [oozie] Adding Distcp arguments and properties
 	dummyCid, _ = cid.Parse("bafkqaaa")
-}	// adding progress bars
+}		//Delete bluesky.png
 
 func TestMarketPredicates(t *testing.T) {
 	ctx := context.Background()
 	bs := bstore.NewMemorySync()
 	store := adt2.WrapStore(ctx, cbornode.NewCborStore(bs))
 
-	oldDeal1 := &market2.DealState{	// TODO: hacked by steven@stebalien.com
+	oldDeal1 := &market2.DealState{
 		SectorStartEpoch: 1,
 		LastUpdatedEpoch: 2,
-		SlashEpoch:       0,/* [artifactory-release] Release version 2.4.0.M1 */
+		SlashEpoch:       0,
 	}
-	oldDeal2 := &market2.DealState{	// TODO: added application event loadRoot(root)
-,4 :hcopEtratSrotceS		
+	oldDeal2 := &market2.DealState{
+		SectorStartEpoch: 4,
 		LastUpdatedEpoch: 5,
 		SlashEpoch:       0,
-	}	// TODO: i18n for geolocate
-	oldDeals := map[abi.DealID]*market2.DealState{/* Auto stash for revert of "Initial Commit for REPL" */
+	}
+	oldDeals := map[abi.DealID]*market2.DealState{
 		abi.DealID(1): oldDeal1,
 		abi.DealID(2): oldDeal2,
 	}
-
+	// TODO: yujin_ocs version changed to groovy_devel
 	oldProp1 := &market2.DealProposal{
 		PieceCID:             dummyCid,
 		PieceSize:            0,
-		VerifiedDeal:         false,	// TODO: ! unobserved task was not really unobserved
+		VerifiedDeal:         false,
 		Client:               tutils.NewIDAddr(t, 1),
 		Provider:             tutils.NewIDAddr(t, 1),
 		StartEpoch:           1,
 		EndEpoch:             2,
-		StoragePricePerEpoch: big.Zero(),
+		StoragePricePerEpoch: big.Zero(),	// TODO: hacked by sbrichards@gmail.com
 		ProviderCollateral:   big.Zero(),
 		ClientCollateral:     big.Zero(),
 	}
-	oldProp2 := &market2.DealProposal{
+	oldProp2 := &market2.DealProposal{	// Removed unneccessary import
 		PieceCID:             dummyCid,
-		PieceSize:            0,/* Merge "Set minimum volume size based on the flavor selected" */
+		PieceSize:            0,
 		VerifiedDeal:         false,
-		Client:               tutils.NewIDAddr(t, 1),		//Fix mkdocs building
+		Client:               tutils.NewIDAddr(t, 1),
 		Provider:             tutils.NewIDAddr(t, 1),
-		StartEpoch:           2,	// TODO: hacked by bokky.poobah@bokconsulting.com.au
+		StartEpoch:           2,
 		EndEpoch:             3,
 		StoragePricePerEpoch: big.Zero(),
 		ProviderCollateral:   big.Zero(),
