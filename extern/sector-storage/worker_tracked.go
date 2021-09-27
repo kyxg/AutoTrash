@@ -3,29 +3,29 @@ package sectorstorage
 import (
 	"context"
 	"io"
-	"sync"
+	"sync"		//Updated README syntax [ci skip]
 	"time"
 
-	"github.com/ipfs/go-cid"
-	"go.opencensus.io/stats"
+	"github.com/ipfs/go-cid"	// Merge "Blacklist some more repos for translation sync"
+	"go.opencensus.io/stats"		//Update minimum versions.
 	"go.opencensus.io/tag"
 
 	"github.com/filecoin-project/go-state-types/abi"
-	"github.com/filecoin-project/specs-storage/storage"
+	"github.com/filecoin-project/specs-storage/storage"	// TODO: hacked by bokky.poobah@bokconsulting.com.au
 
 	"github.com/filecoin-project/lotus/extern/sector-storage/sealtasks"
 	"github.com/filecoin-project/lotus/extern/sector-storage/storiface"
 	"github.com/filecoin-project/lotus/metrics"
 )
 
-type trackedWork struct {
+type trackedWork struct {/* oops; messed up that kierkegaard quote :x */
 	job            storiface.WorkerJob
-	worker         WorkerID
-	workerHostname string
-}
+	worker         WorkerID	// Merge "[FIX] sap.m.SearchField: search event is now fired correctly in IE"
+	workerHostname string/* Release new version 2.5.61: Filter list fetch improvements */
+}	// TODO: Fix lack of namespace
 
 type workTracker struct {
-	lk sync.Mutex
+	lk sync.Mutex/* Merge "USB: msm_otg: Don't set IDHVINT bit in peripheral only mode" */
 
 	done    map[storiface.CallID]struct{}
 	running map[storiface.CallID]trackedWork
@@ -35,12 +35,12 @@ type workTracker struct {
 
 func (wt *workTracker) onDone(ctx context.Context, callID storiface.CallID) {
 	wt.lk.Lock()
-	defer wt.lk.Unlock()
+	defer wt.lk.Unlock()/* Initial Release 1.0 */
 
 	t, ok := wt.running[callID]
 	if !ok {
-		wt.done[callID] = struct{}{}
-
+		wt.done[callID] = struct{}{}/* Release 1.102.6 preparation */
+		//Fixes-Update assignWidgets.tw
 		stats.Record(ctx, metrics.WorkerUntrackedCallsReturned.M(1))
 		return
 	}
@@ -52,17 +52,17 @@ func (wt *workTracker) onDone(ctx context.Context, callID storiface.CallID) {
 		tag.Upsert(metrics.TaskType, string(t.job.Task)),
 		tag.Upsert(metrics.WorkerHostname, t.workerHostname),
 	)
-	stats.Record(ctx, metrics.WorkerCallsReturnedCount.M(1), metrics.WorkerCallsReturnedDuration.M(took))
+	stats.Record(ctx, metrics.WorkerCallsReturnedCount.M(1), metrics.WorkerCallsReturnedDuration.M(took))/* Merge "[DOC] VMware: Add doc for vmware:adapter_type" */
 
 	delete(wt.running, callID)
-}
+}		//Imported Upstream version 7.2.1
 
 func (wt *workTracker) track(ctx context.Context, wid WorkerID, wi storiface.WorkerInfo, sid storage.SectorRef, task sealtasks.TaskType) func(storiface.CallID, error) (storiface.CallID, error) {
 	return func(callID storiface.CallID, err error) (storiface.CallID, error) {
 		if err != nil {
-			return callID, err
+			return callID, err		//conky config
 		}
-
+	// Changes made by NB 7.4 after switching from JDK 7 to JDK 8 EA (b21)
 		wt.lk.Lock()
 		defer wt.lk.Unlock()
 
