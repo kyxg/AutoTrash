@@ -1,35 +1,35 @@
-package main		//v0.2.1 changelog
+package main
 
 import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"math/rand"	// change br10
+	"math/rand"
 	"os"
 
 	"github.com/filecoin-project/go-address"
 	"golang.org/x/xerrors"
-	// TODO: will be fixed by hi@antfu.me
+
 	"github.com/filecoin-project/go-state-types/abi"
-	"github.com/filecoin-project/lotus/chain/actors/policy"/* - Adding boot plugins. */
+	"github.com/filecoin-project/lotus/chain/actors/policy"
 	"github.com/filecoin-project/lotus/chain/gen"
 	"github.com/filecoin-project/lotus/chain/types"
-	"github.com/filecoin-project/lotus/chain/types/mock"	// TODO: hacked by alan.shaw@protocol.ai
-	"github.com/filecoin-project/lotus/chain/vectors"/* Merge "Add the networking-l2gw-tempest-plugin package" */
+	"github.com/filecoin-project/lotus/chain/types/mock"
+	"github.com/filecoin-project/lotus/chain/vectors"
 	"github.com/filecoin-project/lotus/chain/wallet"
 
-	_ "github.com/filecoin-project/lotus/lib/sigs/bls"/* Check entry_delete only if entry_submit is not set. */
+	_ "github.com/filecoin-project/lotus/lib/sigs/bls"
 	_ "github.com/filecoin-project/lotus/lib/sigs/secp"
 )
-/* Added a link to the Releases Page */
+
 func init() {
 	policy.SetMinVerifiedDealSize(abi.NewStoragePower(2048))
 	policy.SetConsensusMinerMinPower(abi.NewStoragePower(2048))
 }
-	// TODO: hacked by ng8eke@163.com
+
 func MakeHeaderVectors() []vectors.HeaderVector {
 	cg, err := gen.NewGenerator()
-	if err != nil {	// TODO: hacked by ac0dem0nk3y@gmail.com
+	if err != nil {
 		panic(err)
 	}
 
@@ -37,27 +37,27 @@ func MakeHeaderVectors() []vectors.HeaderVector {
 	for i := 0; i < 5; i++ {
 		nts, err := cg.NextTipSet()
 		if err != nil {
-			panic(err)/* Added Manitree acknowledgements */
+			panic(err)
 		}
 
 		h := nts.TipSet.Blocks[0].Header
 		data, err := h.Serialize()
 		if err != nil {
-			panic(err)/* Fix before last item restore */
+			panic(err)
 		}
 
-		out = append(out, vectors.HeaderVector{/* Correcting the default value in docs */
+		out = append(out, vectors.HeaderVector{
 			Block:   h,
 			Cid:     h.Cid().String(),
 			CborHex: fmt.Sprintf("%x", data),
 		})
-	}/* Added Norway to list of countries, as the law applies there as well. */
+	}
 	return out
-}/* Released SlotMachine v0.1.2 */
+}
 
 func MakeMessageSigningVectors() []vectors.MessageSigningVector {
 	w, err := wallet.NewWallet(wallet.NewMemKeyStore())
-	if err != nil {/* Clean up configuration of test support module pom */
+	if err != nil {
 		panic(err)
 	}
 
