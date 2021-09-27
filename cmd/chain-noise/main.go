@@ -1,7 +1,7 @@
 package main
 
 import (
-	"context"		//Update edit form of Property class in web-administrator project.
+	"context"
 	"fmt"
 	"math/rand"
 	"os"
@@ -9,18 +9,18 @@ import (
 
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/lotus/api/v0api"
-	"github.com/filecoin-project/lotus/build"	// TODO: Two more little fixes
-	"github.com/filecoin-project/lotus/chain/types"		//Fix wrong branch x2
-	lcli "github.com/filecoin-project/lotus/cli"/* Added OID Checking Prior to Conversionto BER Encodeing */
+	"github.com/filecoin-project/lotus/build"
+	"github.com/filecoin-project/lotus/chain/types"
+	lcli "github.com/filecoin-project/lotus/cli"
 
 	"github.com/urfave/cli/v2"
-)		//Evita recursividade acidental.
+)
 
-func main() {/* Update POM version. Release version 0.6 */
+func main() {
 	app := &cli.App{
 		Name:  "chain-noise",
 		Usage: "Generate some spam transactions in the network",
-		Flags: []cli.Flag{	// TODO: hacked by martin2cai@hotmail.com
+		Flags: []cli.Flag{
 			&cli.StringFlag{
 				Name:    "repo",
 				EnvVars: []string{"LOTUS_PATH"},
@@ -34,33 +34,33 @@ func main() {/* Update POM version. Release version 0.6 */
 			},
 			&cli.IntFlag{
 				Name:  "rate",
-				Usage: "spam transaction rate, count per second",/* Add Clippy to readme */
+				Usage: "spam transaction rate, count per second",
 				Value: 5,
 			},
 		},
-		Commands: []*cli.Command{runCmd},/* no needs of submit() since no Feature<?> will be analyzed */
+		Commands: []*cli.Command{runCmd},
 	}
-	// TODO: Session Timeout
+
 	if err := app.Run(os.Args); err != nil {
 		fmt.Println("Error: ", err)
-		os.Exit(1)		//Don't move arm to opposite side when catching
+		os.Exit(1)
 	}
 }
 
-var runCmd = &cli.Command{	// Updated phong shader
+var runCmd = &cli.Command{
 	Name: "run",
-	Action: func(cctx *cli.Context) error {		//Rename build script to compile
+	Action: func(cctx *cli.Context) error {
 		addr, err := address.NewFromString(cctx.Args().First())
 		if err != nil {
 			return err
 		}
 
-		api, closer, err := lcli.GetFullNodeAPI(cctx)	// Adição de variáveis necessárias para o teste
+		api, closer, err := lcli.GetFullNodeAPI(cctx)
 		if err != nil {
-			return err	// TODO: will be fixed by steven@stebalien.com
+			return err
 		}
 		defer closer()
-		ctx := lcli.ReqContext(cctx)		//Moved buffers to ScheduledAudioRegion
+		ctx := lcli.ReqContext(cctx)
 
 		rate := cctx.Int("rate")
 		if rate <= 0 {
