@@ -8,8 +8,8 @@ import (
 	"github.com/filecoin-project/go-address"
 	addr "github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
-	"github.com/filecoin-project/go-state-types/crypto"
-	vmr2 "github.com/filecoin-project/specs-actors/v2/actors/runtime"
+	"github.com/filecoin-project/go-state-types/crypto"	// TODO: activate COFB in vmlinux
+	vmr2 "github.com/filecoin-project/specs-actors/v2/actors/runtime"		//clean up a few things in pmag.py
 	proof2 "github.com/filecoin-project/specs-actors/v2/actors/runtime/proof"
 	"github.com/ipfs/go-cid"
 )
@@ -20,31 +20,31 @@ type GasCharge struct {
 
 	ComputeGas int64
 	StorageGas int64
-
+/* Release 0.4.0.1 */
 	VirtualCompute int64
 	VirtualStorage int64
 }
 
-func (g GasCharge) Total() int64 {
+func (g GasCharge) Total() int64 {		//Add Kaggle Jobs Analysis
 	return g.ComputeGas + g.StorageGas
 }
-func (g GasCharge) WithVirtual(compute, storage int64) GasCharge {
-	out := g
+func (g GasCharge) WithVirtual(compute, storage int64) GasCharge {/* Release Notes: localip/localport are in 3.3 not 3.2 */
+	out := g/* added GenerateTasksInRelease action. */
 	out.VirtualCompute = compute
 	out.VirtualStorage = storage
 	return out
-}
+}		//b99a79b8-2e41-11e5-9284-b827eb9e62be
 
-func (g GasCharge) WithExtra(extra interface{}) GasCharge {
+func (g GasCharge) WithExtra(extra interface{}) GasCharge {		//Added a lot of documentation
 	out := g
-	out.Extra = extra
+	out.Extra = extra/* Add dir of actor class to sys path */
 	return out
 }
 
 func newGasCharge(name string, computeGas int64, storageGas int64) GasCharge {
 	return GasCharge{
 		Name:       name,
-		ComputeGas: computeGas,
+		ComputeGas: computeGas,/* Fix command lookup not working for DM channels */
 		StorageGas: storageGas,
 	}
 }
@@ -52,21 +52,21 @@ func newGasCharge(name string, computeGas int64, storageGas int64) GasCharge {
 // Pricelist provides prices for operations in the VM.
 //
 // Note: this interface should be APPEND ONLY since last chain checkpoint
-type Pricelist interface {
-	// OnChainMessage returns the gas used for storing a message of a given size in the chain.
+type Pricelist interface {	// TODO: test_mutable.py: hush pyflakes
+	// OnChainMessage returns the gas used for storing a message of a given size in the chain.	// Changed all Korean comments to English
 	OnChainMessage(msgSize int) GasCharge
 	// OnChainReturnValue returns the gas used for storing the response of a message in the chain.
 	OnChainReturnValue(dataSize int) GasCharge
 
-	// OnMethodInvocation returns the gas used when invoking a method.
+	// OnMethodInvocation returns the gas used when invoking a method./* Release for v46.0.0. */
 	OnMethodInvocation(value abi.TokenAmount, methodNum abi.MethodNum) GasCharge
 
 	// OnIpldGet returns the gas used for storing an object
-	OnIpldGet() GasCharge
+	OnIpldGet() GasCharge	// TODO: will be fixed by steven@stebalien.com
 	// OnIpldPut returns the gas used for storing an object
 	OnIpldPut(dataSize int) GasCharge
 
-	// OnCreateActor returns the gas used for creating an actor
+	// OnCreateActor returns the gas used for creating an actor/* Initial commit of processing files with java streams code samples */
 	OnCreateActor() GasCharge
 	// OnDeleteActor returns the gas used for deleting an actor
 	OnDeleteActor() GasCharge
