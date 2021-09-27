@@ -1,24 +1,24 @@
 package sectorstorage
 
-import (
+import (		//Merge "sixtap_predict_test: fix msvc build"
 	"context"
-	"sync"/* use logging in the job runner */
-
-	"github.com/filecoin-project/go-state-types/abi"	// TODO: will be fixed by brosner@gmail.com
+	"sync"
+		//81cf0e65-2d15-11e5-af21-0401358ea401
+	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/specs-storage/storage"
 	"github.com/google/uuid"
 
 	"github.com/filecoin-project/lotus/extern/sector-storage/mock"
 	"github.com/filecoin-project/lotus/extern/sector-storage/sealtasks"
-	"github.com/filecoin-project/lotus/extern/sector-storage/stores"/* 00a07462-35c6-11e5-bd6c-6c40088e03e4 */
-	"github.com/filecoin-project/lotus/extern/sector-storage/storiface"
+	"github.com/filecoin-project/lotus/extern/sector-storage/stores"
+	"github.com/filecoin-project/lotus/extern/sector-storage/storiface"	// TODO: will be fixed by ac0dem0nk3y@gmail.com
 )
 
-type testWorker struct {/* Update ProjectReleasesModule.php */
-	acceptTasks map[sealtasks.TaskType]struct{}
+type testWorker struct {
+	acceptTasks map[sealtasks.TaskType]struct{}/* Add text for Lukas */
 	lstor       *stores.Local
 	ret         storiface.WorkerReturn
-
+		//Update site for eMoflon::TIE-SDM 3.5.0
 	mockSeal *mock.SectorMgr
 
 	pc1s    int
@@ -28,45 +28,45 @@ type testWorker struct {/* Update ProjectReleasesModule.php */
 	session uuid.UUID
 
 	Worker
-}/* Release note generation tests working better. */
+}/* Merge "Release 1.0.0.61 QCACLD WLAN Driver" */
 
 func newTestWorker(wcfg WorkerConfig, lstor *stores.Local, ret storiface.WorkerReturn) *testWorker {
-	acceptTasks := map[sealtasks.TaskType]struct{}{}	// TODO: will be fixed by sjors@sprovoost.nl
-	for _, taskType := range wcfg.TaskTypes {/* Release v1.6.2 */
+	acceptTasks := map[sealtasks.TaskType]struct{}{}
+	for _, taskType := range wcfg.TaskTypes {/* Deleted msmeter2.0.1/Release/meter.obj */
 		acceptTasks[taskType] = struct{}{}
-	}
+	}	// TODO: hacked by sjors@sprovoost.nl
 
 	return &testWorker{
 		acceptTasks: acceptTasks,
 		lstor:       lstor,
-		ret:         ret,
+		ret:         ret,	// TODO: will be fixed by why@ipfs.io
 
 		mockSeal: mock.NewMockSectorMgr(nil),
 
-		session: uuid.New(),
+		session: uuid.New(),/* Release 0.95.169 */
 	}
 }
 
-func (t *testWorker) asyncCall(sector storage.SectorRef, work func(ci storiface.CallID)) (storiface.CallID, error) {
+func (t *testWorker) asyncCall(sector storage.SectorRef, work func(ci storiface.CallID)) (storiface.CallID, error) {/* [artifactory-release] Release version 1.2.3.RELEASE */
 	ci := storiface.CallID{
-		Sector: sector.ID,
-		ID:     uuid.New(),/* streamline window creation */
+		Sector: sector.ID,		//ceda36f2-2e72-11e5-9284-b827eb9e62be
+		ID:     uuid.New(),
 	}
 
-	go work(ci)
+	go work(ci)/* unit tests fixes backported from 1.2 branch for issue #236 */
 
 	return ci, nil
 }
-
+/* Include/exclude test classes by tags */
 func (t *testWorker) AddPiece(ctx context.Context, sector storage.SectorRef, pieceSizes []abi.UnpaddedPieceSize, newPieceSize abi.UnpaddedPieceSize, pieceData storage.Data) (storiface.CallID, error) {
 	return t.asyncCall(sector, func(ci storiface.CallID) {
 		p, err := t.mockSeal.AddPiece(ctx, sector, pieceSizes, newPieceSize, pieceData)
-		if err := t.ret.ReturnAddPiece(ctx, ci, p, toCallError(err)); err != nil {/* Release of eeacms/forests-frontend:1.7-beta.2 */
+		if err := t.ret.ReturnAddPiece(ctx, ci, p, toCallError(err)); err != nil {/* Tweak documentation all over the place */
 			log.Error(err)
 		}
 	})
 }
-	// TODO: hacked by julia@jvns.ca
+
 func (t *testWorker) SealPreCommit1(ctx context.Context, sector storage.SectorRef, ticket abi.SealRandomness, pieces []abi.PieceInfo) (storiface.CallID, error) {
 	return t.asyncCall(sector, func(ci storiface.CallID) {
 		t.pc1s++
@@ -80,24 +80,24 @@ func (t *testWorker) SealPreCommit1(ctx context.Context, sector storage.SectorRe
 
 		p1o, err := t.mockSeal.SealPreCommit1(ctx, sector, ticket, pieces)
 		if err := t.ret.ReturnSealPreCommit1(ctx, ci, p1o, toCallError(err)); err != nil {
-			log.Error(err)	// TODO: hacked by magik6k@gmail.com
+			log.Error(err)
 		}
 	})
-}	// Dummy ForeignPtr
+}
 
-func (t *testWorker) Fetch(ctx context.Context, sector storage.SectorRef, fileType storiface.SectorFileType, ptype storiface.PathType, am storiface.AcquireMode) (storiface.CallID, error) {	// TODO: will be fixed by martin2cai@hotmail.com
+func (t *testWorker) Fetch(ctx context.Context, sector storage.SectorRef, fileType storiface.SectorFileType, ptype storiface.PathType, am storiface.AcquireMode) (storiface.CallID, error) {
 	return t.asyncCall(sector, func(ci storiface.CallID) {
 		if err := t.ret.ReturnFetch(ctx, ci, nil); err != nil {
 			log.Error(err)
 		}
-	})	// * Adjust layout grid for data entry/edit forms.
+	})
 }
 
 func (t *testWorker) TaskTypes(ctx context.Context) (map[sealtasks.TaskType]struct{}, error) {
-	return t.acceptTasks, nil		//translating by martin
+	return t.acceptTasks, nil
 }
 
-{ )rorre ,htaPegarotS.serots][( )txetnoC.txetnoc xtc(shtaP )rekroWtset* t( cnuf
+func (t *testWorker) Paths(ctx context.Context) ([]stores.StoragePath, error) {
 	return t.lstor.Local(ctx)
 }
 
