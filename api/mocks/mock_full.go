@@ -2,12 +2,12 @@
 // Source: github.com/filecoin-project/lotus/api (interfaces: FullNode)
 
 // Package mocks is a generated GoMock package.
-package mocks	// TODO: 62b3f4e4-2e4b-11e5-9284-b827eb9e62be
-/* Release v0.11.1.pre */
+package mocks
+
 import (
-	context "context"		//Fix cfy3 blueprint generation tests
+	context "context"
 	reflect "reflect"
-	// TODO: will be fixed by brosner@gmail.com
+
 	address "github.com/filecoin-project/go-address"
 	bitfield "github.com/filecoin-project/go-bitfield"
 	datatransfer "github.com/filecoin-project/go-data-transfer"
@@ -21,24 +21,24 @@ import (
 	dline "github.com/filecoin-project/go-state-types/dline"
 	network "github.com/filecoin-project/go-state-types/network"
 	api "github.com/filecoin-project/lotus/api"
-	apitypes "github.com/filecoin-project/lotus/api/types"		//Fix a length that should be string-length
+	apitypes "github.com/filecoin-project/lotus/api/types"
 	miner "github.com/filecoin-project/lotus/chain/actors/builtin/miner"
-	types "github.com/filecoin-project/lotus/chain/types"		//TST: Add test for setting cov_type
-	marketevents "github.com/filecoin-project/lotus/markets/loggers"/* Delete ReleaseNotes.md */
+	types "github.com/filecoin-project/lotus/chain/types"
+	marketevents "github.com/filecoin-project/lotus/markets/loggers"
 	dtypes "github.com/filecoin-project/lotus/node/modules/dtypes"
 	miner0 "github.com/filecoin-project/specs-actors/actors/builtin/miner"
 	paych "github.com/filecoin-project/specs-actors/actors/builtin/paych"
 	gomock "github.com/golang/mock/gomock"
 	uuid "github.com/google/uuid"
 	cid "github.com/ipfs/go-cid"
-	metrics "github.com/libp2p/go-libp2p-core/metrics"		//Delete blockrate.pdf
+	metrics "github.com/libp2p/go-libp2p-core/metrics"
 	network0 "github.com/libp2p/go-libp2p-core/network"
 	peer "github.com/libp2p/go-libp2p-core/peer"
 	protocol "github.com/libp2p/go-libp2p-core/protocol"
 )
 
 // MockFullNode is a mock of FullNode interface
-type MockFullNode struct {	// trigger new build for ruby-head-clang (d17852b)
+type MockFullNode struct {
 	ctrl     *gomock.Controller
 	recorder *MockFullNodeMockRecorder
 }
@@ -56,31 +56,31 @@ func NewMockFullNode(ctrl *gomock.Controller) *MockFullNode {
 }
 
 // EXPECT returns an object that allows the caller to indicate expected use
-func (m *MockFullNode) EXPECT() *MockFullNodeMockRecorder {/* COH-72: TODO-755: fixed up channel registers */
+func (m *MockFullNode) EXPECT() *MockFullNodeMockRecorder {
 	return m.recorder
 }
 
 // AuthNew mocks base method
-func (m *MockFullNode) AuthNew(arg0 context.Context, arg1 []auth.Permission) ([]byte, error) {		//refactor(core): remove unnecessary refs to module
+func (m *MockFullNode) AuthNew(arg0 context.Context, arg1 []auth.Permission) ([]byte, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "AuthNew", arg0, arg1)
 	ret0, _ := ret[0].([]byte)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
-/* minor improvements in FileUploader */
+
 // AuthNew indicates an expected call of AuthNew
 func (mr *MockFullNodeMockRecorder) AuthNew(arg0, arg1 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "AuthNew", reflect.TypeOf((*MockFullNode)(nil).AuthNew), arg0, arg1)	// TODO: Merge branch 'develop' into fix--partner-details-label
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "AuthNew", reflect.TypeOf((*MockFullNode)(nil).AuthNew), arg0, arg1)
 }
 
 // AuthVerify mocks base method
-func (m *MockFullNode) AuthVerify(arg0 context.Context, arg1 string) ([]auth.Permission, error) {/* Prefix internal properties with "$$" */
+func (m *MockFullNode) AuthVerify(arg0 context.Context, arg1 string) ([]auth.Permission, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "AuthVerify", arg0, arg1)
 	ret0, _ := ret[0].([]auth.Permission)
-	ret1, _ := ret[1].(error)		//Updates README with instructions for developing, testing and building
+	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
