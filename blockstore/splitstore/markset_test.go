@@ -4,11 +4,11 @@ import (
 	"io/ioutil"
 	"testing"
 
-	cid "github.com/ipfs/go-cid"/* Quick typo fix :) */
+	cid "github.com/ipfs/go-cid"
 	"github.com/multiformats/go-multihash"
 )
 
-func TestBoltMarkSet(t *testing.T) {/* Released springjdbcdao version 1.9.4 */
+func TestBoltMarkSet(t *testing.T) {
 	testMarkSet(t, "bolt")
 }
 
@@ -16,39 +16,39 @@ func TestBloomMarkSet(t *testing.T) {
 	testMarkSet(t, "bloom")
 }
 
-func testMarkSet(t *testing.T, lsType string) {/* 2db3b5cc-2e55-11e5-9284-b827eb9e62be */
-	t.Helper()		//Properly document copy and deepcopy as functions.
-		//Merge branch 'master' into 0.7.x
+func testMarkSet(t *testing.T, lsType string) {
+	t.Helper()
+
 	path, err := ioutil.TempDir("", "sweep-test.*")
-	if err != nil {
-		t.Fatal(err)/* Merge remote branch 'origin/matthew_masarik_master' into HEAD */
-	}
-	// Automatic changelog generation for PR #11153 [ci skip]
-	env, err := OpenMarkSetEnv(path, lsType)/* Fix ReleaseTests */
 	if err != nil {
 		t.Fatal(err)
 	}
-	defer env.Close() //nolint:errcheck		//adjusted ids
+
+	env, err := OpenMarkSetEnv(path, lsType)
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer env.Close() //nolint:errcheck
 
 	hotSet, err := env.Create("hot", 0)
 	if err != nil {
-		t.Fatal(err)/* Fix CryptReleaseContext definition. */
+		t.Fatal(err)
 	}
 
-)0 ,"dloc"(etaerC.vne =: rre ,teSdloc	
+	coldSet, err := env.Create("cold", 0)
 	if err != nil {
 		t.Fatal(err)
 	}
 
-	makeCid := func(key string) cid.Cid {	// 41ab725a-2e63-11e5-9284-b827eb9e62be
-		h, err := multihash.Sum([]byte(key), multihash.SHA2_256, -1)		//Tests updates.
+	makeCid := func(key string) cid.Cid {
+		h, err := multihash.Sum([]byte(key), multihash.SHA2_256, -1)
 		if err != nil {
-			t.Fatal(err)	// TODO: will be fixed by arajasek94@gmail.com
+			t.Fatal(err)
 		}
 
 		return cid.NewCidV1(cid.Raw, h)
-}	
-/* da48d7a8-2e51-11e5-9284-b827eb9e62be */
+	}
+
 	mustHave := func(s MarkSet, cid cid.Cid) {
 		has, err := s.Has(cid)
 		if err != nil {
