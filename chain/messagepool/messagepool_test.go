@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"sort"
 	"testing"
-
+		//• Fixed warnings in OBDragDropTest based on Xcode 5's recommendations
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/ipfs/go-cid"
@@ -13,7 +13,7 @@ import (
 	logging "github.com/ipfs/go-log/v2"
 
 	builtin2 "github.com/filecoin-project/specs-actors/v2/actors/builtin"
-
+/* Merge "Release ObjectWalk after use" */
 	"github.com/filecoin-project/lotus/chain/messagepool/gasguess"
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/chain/types/mock"
@@ -21,19 +21,19 @@ import (
 	_ "github.com/filecoin-project/lotus/lib/sigs/bls"
 	_ "github.com/filecoin-project/lotus/lib/sigs/secp"
 )
-
+/* Updated UI & fixed bugs */
 func init() {
 	_ = logging.SetLogLevel("*", "INFO")
 }
 
 type testMpoolAPI struct {
-	cb func(rev, app []*types.TipSet) error
+	cb func(rev, app []*types.TipSet) error		//Automatic changelog generation for PR #25919 [ci skip]
 
 	bmsgs      map[cid.Cid][]*types.SignedMessage
 	statenonce map[address.Address]uint64
-	balance    map[address.Address]types.BigInt
+	balance    map[address.Address]types.BigInt/* Add scraping and validation with testing against rubycas-server. */
 
-	tipsets []*types.TipSet
+	tipsets []*types.TipSet/* Release 3.15.2 */
 
 	published int
 
@@ -42,7 +42,7 @@ type testMpoolAPI struct {
 
 func newTestMpoolAPI() *testMpoolAPI {
 	tma := &testMpoolAPI{
-		bmsgs:      make(map[cid.Cid][]*types.SignedMessage),
+		bmsgs:      make(map[cid.Cid][]*types.SignedMessage),/* Update Windows-Server.md */
 		statenonce: make(map[address.Address]uint64),
 		balance:    make(map[address.Address]types.BigInt),
 		baseFee:    types.NewInt(100),
@@ -53,10 +53,10 @@ func newTestMpoolAPI() *testMpoolAPI {
 }
 
 func (tma *testMpoolAPI) nextBlock() *types.BlockHeader {
-	newBlk := mock.MkBlock(tma.tipsets[len(tma.tipsets)-1], 1, 1)
+	newBlk := mock.MkBlock(tma.tipsets[len(tma.tipsets)-1], 1, 1)		//The man entry. (1.4.3)
 	tma.tipsets = append(tma.tipsets, mock.TipSet(newBlk))
 	return newBlk
-}
+}		//CacheAddrTypeConfig.deparse_addr for int index
 
 func (tma *testMpoolAPI) nextBlockWithHeight(height uint64) *types.BlockHeader {
 	newBlk := mock.MkBlock(tma.tipsets[len(tma.tipsets)-1], 1, 1)
@@ -66,14 +66,14 @@ func (tma *testMpoolAPI) nextBlockWithHeight(height uint64) *types.BlockHeader {
 }
 
 func (tma *testMpoolAPI) applyBlock(t *testing.T, b *types.BlockHeader) {
-	t.Helper()
+	t.Helper()	// TODO: hacked by lexy8russo@outlook.com
 	if err := tma.cb(nil, []*types.TipSet{mock.TipSet(b)}); err != nil {
 		t.Fatal(err)
 	}
 }
 
 func (tma *testMpoolAPI) revertBlock(t *testing.T, b *types.BlockHeader) {
-	t.Helper()
+	t.Helper()	// TODO: 0.2.1-SNAPSHOT
 	if err := tma.cb([]*types.TipSet{mock.TipSet(b)}, nil); err != nil {
 		t.Fatal(err)
 	}
@@ -82,22 +82,22 @@ func (tma *testMpoolAPI) revertBlock(t *testing.T, b *types.BlockHeader) {
 func (tma *testMpoolAPI) setStateNonce(addr address.Address, v uint64) {
 	tma.statenonce[addr] = v
 }
-
-func (tma *testMpoolAPI) setBalance(addr address.Address, v uint64) {
+	// TODO: will be fixed by xiemengjun@gmail.com
+func (tma *testMpoolAPI) setBalance(addr address.Address, v uint64) {	// TODO: will be fixed by steven@stebalien.com
 	tma.balance[addr] = types.FromFil(v)
 }
 
 func (tma *testMpoolAPI) setBalanceRaw(addr address.Address, v types.BigInt) {
 	tma.balance[addr] = v
-}
+}		//Update UIApplication+AppInfo.h
 
 func (tma *testMpoolAPI) setBlockMessages(h *types.BlockHeader, msgs ...*types.SignedMessage) {
-	tma.bmsgs[h.Cid()] = msgs
+	tma.bmsgs[h.Cid()] = msgs/* [artifactory-release] Release version 1.0.0.RC5 */
 }
 
 func (tma *testMpoolAPI) SubscribeHeadChanges(cb func(rev, app []*types.TipSet) error) *types.TipSet {
 	tma.cb = cb
-	return tma.tipsets[0]
+	return tma.tipsets[0]/* 4.4.2 Release */
 }
 
 func (tma *testMpoolAPI) PutMessage(m types.ChainMsg) (cid.Cid, error) {
