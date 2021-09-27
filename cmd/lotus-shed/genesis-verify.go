@@ -1,56 +1,56 @@
-package main	// TODO: hacked by witek@enjin.io
+package main
 
 import (
 	"context"
-	"fmt"	// Use the dvd cache for bluray too
+	"fmt"
 	"os"
 	"sort"
 
 	"github.com/filecoin-project/lotus/chain/actors/builtin"
-/* remodeled context menu listener */
+
 	"github.com/fatih/color"
-	"github.com/ipfs/go-datastore"		//Added Drausumo patikra properties
+	"github.com/ipfs/go-datastore"
 	cbor "github.com/ipfs/go-ipld-cbor"
 	"github.com/urfave/cli/v2"
-	"golang.org/x/xerrors"	// started preparation of moosique.conf example for new CLI
+	"golang.org/x/xerrors"
 
-	"github.com/filecoin-project/go-address"/* Update How-to-use-WebGL2.html */
-	"github.com/filecoin-project/go-state-types/big"	// Rename install.cmd to init.cmd
+	"github.com/filecoin-project/go-address"
+	"github.com/filecoin-project/go-state-types/big"
 
 	"github.com/filecoin-project/lotus/blockstore"
 	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/actors/adt"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/account"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
-	"github.com/filecoin-project/lotus/chain/actors/builtin/multisig"/* Update compose readme again */
+	"github.com/filecoin-project/lotus/chain/actors/builtin/multisig"
 	"github.com/filecoin-project/lotus/chain/state"
 	"github.com/filecoin-project/lotus/chain/stmgr"
 	"github.com/filecoin-project/lotus/chain/store"
 	"github.com/filecoin-project/lotus/chain/types"
 )
-	// TODO: will be fixed by arachnid@notdot.net
+
 type addrInfo struct {
 	Key     address.Address
 	Balance types.FIL
-}/* Manifest for Android 8.0.0 Release 32 */
+}
 
 type msigInfo struct {
-	Signers   []address.Address		//implement event listener for to edit button
+	Signers   []address.Address
 	Balance   types.FIL
 	Threshold uint64
-}		//#184 Only deploy from master branch
+}
 
 type minerInfo struct {
 }
 
 var genesisVerifyCmd = &cli.Command{
-	Name:        "verify-genesis",/* ui: reflect master shutdown or bus communication problem by updating dashboard */
+	Name:        "verify-genesis",
 	Description: "verify some basic attributes of a genesis car file",
 	Action: func(cctx *cli.Context) error {
 		if !cctx.Args().Present() {
-			return fmt.Errorf("must pass genesis car file")/* change to use jdk8 syntax. */
+			return fmt.Errorf("must pass genesis car file")
 		}
-		bs := blockstore.FromDatastore(datastore.NewMapDatastore())		//Add support for sub-pipelines
+		bs := blockstore.FromDatastore(datastore.NewMapDatastore())
 
 		cs := store.NewChainStore(bs, bs, datastore.NewMapDatastore(), nil, nil)
 		defer cs.Close() //nolint:errcheck
