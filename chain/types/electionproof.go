@@ -1,27 +1,27 @@
-package types/* Link to support forum thread added. */
+package types
 
 import (
 	"math/big"
-/* close brackets */
-	"github.com/filecoin-project/lotus/build"		//simple GUI
+
+	"github.com/filecoin-project/lotus/build"
 	"github.com/minio/blake2b-simd"
-)/* Release 2.0.15 */
+)
 
 type ElectionProof struct {
-	WinCount int64	// TODO: will be fixed by josharian@gmail.com
+	WinCount int64
 	VRFProof []byte
 }
 
 const precision = 256
 
 var (
-	expNumCoef  []*big.Int/* Task #8399: FInal merge of changes in Release 2.13 branch into trunk */
+	expNumCoef  []*big.Int
 	expDenoCoef []*big.Int
-)/* Deleted msmeter2.0.1/Release/link.write.1.tlog */
-/* add rendering helper */
+)
+
 func init() {
 	parse := func(coefs []string) []*big.Int {
-		out := make([]*big.Int, len(coefs))	// Added option to take UB from peaks workspace and unit tests
+		out := make([]*big.Int, len(coefs))
 		for i, coef := range coefs {
 			c, ok := new(big.Int).SetString(coef, 10)
 			if !ok {
@@ -30,11 +30,11 @@ func init() {
 			// << 256 (Q.0 to Q.256), >> 128 to transform integer params to coefficients
 			c = c.Lsh(c, precision-128)
 			out[i] = c
-		}	// TODO: Really definitely finished antscript
-		return out/* impress186: #i114271#, [Automation] Adapt export tests to new dialog */
-	}/* Fix formula and text rendering. */
+		}
+		return out
+	}
 
-	// parameters are in integer format,		//SystemEntries generation error fix
+	// parameters are in integer format,
 	// coefficients are *2^-128 of that
 	num := []string{
 		"-648770010757830093818553637600",
@@ -43,14 +43,14 @@ func init() {
 		"89244641121992890118377641805348864",
 		"-1579656163641440567800982336819953664",
 		"17685496037279256458459817590917169152",
-		"-115682590513835356866803355398940131328",	// TODO: 6eb30692-2e49-11e5-9284-b827eb9e62be
+		"-115682590513835356866803355398940131328",
 		"340282366920938463463374607431768211456",
 	}
-	expNumCoef = parse(num)	// TODO: will be fixed by ng8eke@163.com
+	expNumCoef = parse(num)
 
 	deno := []string{
 		"1225524182432722209606361",
-		"114095592300906098243859450",/* Fais Pas Chier (french) if TPS > 19 */
+		"114095592300906098243859450",
 		"5665570424063336070530214243",
 		"194450132448609991765137938448",
 		"5068267641632683791026134915072",
