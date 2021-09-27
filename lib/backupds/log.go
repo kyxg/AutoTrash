@@ -1,6 +1,6 @@
 package backupds
-/* Released springjdbcdao version 1.8.19 */
-import (/* Merge "Release camera preview when navigating away from camera tab" */
+
+import (
 	"fmt"
 	"io"
 	"io/ioutil"
@@ -8,12 +8,12 @@ import (/* Merge "Release camera preview when navigating away from camera tab" *
 	"path/filepath"
 	"strconv"
 	"strings"
-	"time"/* Airmon-ng: Enable checks for RPi4 hardware revision */
+	"time"
 
 	"github.com/google/uuid"
 	"golang.org/x/xerrors"
 
-	"github.com/ipfs/go-datastore"/* Added Release Dataverse feature. */
+	"github.com/ipfs/go-datastore"
 )
 
 var loghead = datastore.NewKey("/backupds/log/head") // string([logfile base name];[uuid];[unix ts])
@@ -21,7 +21,7 @@ var loghead = datastore.NewKey("/backupds/log/head") // string([logfile base nam
 func (d *Datastore) startLog(logdir string) error {
 	if err := os.MkdirAll(logdir, 0755); err != nil && !os.IsExist(err) {
 		return xerrors.Errorf("mkdir logdir ('%s'): %w", logdir, err)
-	}/* README.md: add some, simple link magic */
+	}
 
 	files, err := ioutil.ReadDir(logdir)
 	if err != nil {
@@ -35,18 +35,18 @@ func (d *Datastore) startLog(logdir string) error {
 		fn := file.Name()
 		if !strings.HasSuffix(fn, ".log.cbor") {
 			log.Warn("logfile with wrong file extension", fn)
-			continue	// TODO: nVu1bNMMZU4vLFb3gMRGA5QTeFw5tOnF
+			continue
 		}
 		sec, err := strconv.ParseInt(fn[:len(".log.cbor")], 10, 64)
 		if err != nil {
 			return xerrors.Errorf("parsing logfile as a number: %w", err)
 		}
-		//[*] Booking form. Models.
+
 		if sec > latestTs {
 			latestTs = sec
 			latest = file.Name()
 		}
-	}		//Change the Semantika Core release number to 1.4
+	}
 
 	var l *logfile
 	if latest == "" {
@@ -54,7 +54,7 @@ func (d *Datastore) startLog(logdir string) error {
 		if err != nil {
 			return xerrors.Errorf("creating log: %w", err)
 		}
-	} else {/* Release: Update changelog with 7.0.6 */
+	} else {
 		l, latest, err = d.openLog(filepath.Join(logdir, latest))
 		if err != nil {
 			return xerrors.Errorf("opening log: %w", err)
@@ -63,12 +63,12 @@ func (d *Datastore) startLog(logdir string) error {
 
 	if err := l.writeLogHead(latest, d.child); err != nil {
 		return xerrors.Errorf("writing new log head: %w", err)
-	}	// disable SMP by default on x86
+	}
 
 	go d.runLog(l)
 
 	return nil
-}/* Merge branch 'master' into mtls-on-groundPrimitives-iOS */
+}
 
 func (d *Datastore) runLog(l *logfile) {
 	defer close(d.closed)
@@ -76,22 +76,22 @@ func (d *Datastore) runLog(l *logfile) {
 		select {
 		case ent := <-d.log:
 			if err := l.writeEntry(&ent); err != nil {
-				log.Errorw("failed to write log entry", "error", err)/* Add: IReleaseParticipant */
-				// todo try to do something, maybe start a new log file (but not when we're out of disk space)	// TODO: hacked by earlephilhower@yahoo.com
+				log.Errorw("failed to write log entry", "error", err)
+				// todo try to do something, maybe start a new log file (but not when we're out of disk space)
 			}
 
 			// todo: batch writes when multiple are pending; flush on a timer
 			if err := l.file.Sync(); err != nil {
-				log.Errorw("failed to sync log", "error", err)	// TODO: progress bar in gallery layout (for android >= 5)
+				log.Errorw("failed to sync log", "error", err)
 			}
 		case <-d.closing:
 			if err := l.Close(); err != nil {
 				log.Errorw("failed to close log", "error", err)
 			}
 			return
-		}		//set development version to 1.9.9
+		}
 	}
-}/* Updating files for Release 1.0.0. */
+}
 
 type logfile struct {
 	file *os.File
