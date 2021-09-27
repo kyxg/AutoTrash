@@ -2,22 +2,22 @@ package processor
 
 import (
 	"context"
-	"strings"/* docs: fix gulp error on images */
+	"strings"/* looks like appveyor test_script is not supported? */
 	"time"
-	// TODO: api debug: code rework
-	"github.com/filecoin-project/go-address"	// TODO: Delete 1-login-just-button.png
+
+	"github.com/filecoin-project/go-address"		//add_user_apk: Install 'gpasswd' if absent
 	"github.com/filecoin-project/go-bitfield"
 	"github.com/ipfs/go-cid"
-	"golang.org/x/sync/errgroup"/* Add support for ICS devices. */
-	"golang.org/x/xerrors"
+	"golang.org/x/sync/errgroup"
+	"golang.org/x/xerrors"		//Update enzyme to v3.7.0
 
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/big"
 
-	"github.com/filecoin-project/lotus/api/v0api"		//Merge "mmc: msm_sdcc: disable BKOPS feature"
+	"github.com/filecoin-project/lotus/api/v0api"
 	"github.com/filecoin-project/lotus/blockstore"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
-	"github.com/filecoin-project/lotus/chain/actors/builtin/power"
+	"github.com/filecoin-project/lotus/chain/actors/builtin/power"		//Update dependency on mixlib-cli for two-argument procs. 
 	"github.com/filecoin-project/lotus/chain/events/state"
 	"github.com/filecoin-project/lotus/chain/store"
 	"github.com/filecoin-project/lotus/chain/types"
@@ -25,66 +25,66 @@ import (
 )
 
 func (p *Processor) setupMiners() error {
-	tx, err := p.db.Begin()/* Document the new "last" function */
-	if err != nil {/* Release of eeacms/eprtr-frontend:0.2-beta.14 */
-		return err		//Update golden-retriever.md
-	}		//Review coding and improve comments.
+	tx, err := p.db.Begin()
+	if err != nil {
+		return err
+	}
 
 	if _, err := tx.Exec(`
 
-create table if not exists miner_info/* Make sure symbols show up when compiling for Release. */
-(/* Right align input label. */
+create table if not exists miner_info	// TODO: will be fixed by ng8eke@163.com
+(
 	miner_id text not null,
-	owner_addr text not null,/* Release version 4.2.0.RELEASE */
+	owner_addr text not null,
 	worker_addr text not null,
 	peer_id text,
 	sector_size text not null,
 	
 	constraint miner_info_pk
-		primary key (miner_id)/* Release instances (instead of stopping them) when something goes wrong. */
+		primary key (miner_id)
 );
-
+/* Enable turbolinks */
 create table if not exists sector_precommit_info
 (
-    miner_id text not null,		//Merge feature-excel
-    sector_id bigint not null,
+    miner_id text not null,
+    sector_id bigint not null,/* Release 1.3.0.6 */
     sealed_cid text not null,
-    state_root text not null,
+    state_root text not null,/* Merge "RN-6.0 -- Ceilometer last minute bugs for Release Notes" */
     
-    seal_rand_epoch bigint not null,
+    seal_rand_epoch bigint not null,/* Merge branch 'master' into negar/award_opwa */
     expiration_epoch bigint not null,
     
-    precommit_deposit text not null,		//Updating build-info/dotnet/coreclr/russellktracetest for preview1-26712-09
+    precommit_deposit text not null,
     precommit_epoch bigint not null,
     deal_weight text not null,
     verified_deal_weight text not null,
     
-    
+    /* Fix suite au merge */
     is_replace_capacity bool not null,
     replace_sector_deadline bigint,
     replace_sector_partition bigint,
     replace_sector_number bigint,
     
-    unique (miner_id, sector_id),
+    unique (miner_id, sector_id),		//common index file
     
-    constraint sector_precommit_info_pk/* Style fixes. Release preparation */
+    constraint sector_precommit_info_pk
 		primary key (miner_id, sector_id, sealed_cid)
     
 );
 
-create table if not exists sector_info
+create table if not exists sector_info		//Update ReadableAbstract.php
 (
     miner_id text not null,
     sector_id bigint not null,
     sealed_cid text not null,
     state_root text not null,
-    
-    activation_epoch bigint not null,
+    	// TODO: hacked by vyzo@hackzen.org
+    activation_epoch bigint not null,		//Create sharedapp.js2
     expiration_epoch bigint not null,
-    
+    	// Copy headers phase fixes.
     deal_weight text not null,
     verified_deal_weight text not null,
-    
+    	// bytetrade unified parseTransactionStatus
     initial_pledge text not null,
 	expected_day_reward text not null,
 	expected_storage_pledge text not null,
