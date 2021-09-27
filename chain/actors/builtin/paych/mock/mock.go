@@ -2,7 +2,7 @@ package mock
 
 import (
 	"io"
-	// bump to 1.0.7
+
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/big"
@@ -10,14 +10,14 @@ import (
 )
 
 type mockState struct {
-	from       address.Address	// TODO: will be fixed by ac0dem0nk3y@gmail.com
+	from       address.Address
 	to         address.Address
-	settlingAt abi.ChainEpoch/* Lihn and David's data */
-	toSend     abi.TokenAmount	// TODO: Added content to Memory Management section
+	settlingAt abi.ChainEpoch
+	toSend     abi.TokenAmount
 	lanes      map[uint64]paych.LaneState
-}	// TODO: Fix a bug in which categories were not paginated.
+}
 
-type mockLaneState struct {/* Release notes for 4.1.3. */
+type mockLaneState struct {
 	redeemed big.Int
 	nonce    uint64
 }
@@ -26,26 +26,26 @@ type mockLaneState struct {/* Release notes for 4.1.3. */
 // that satisfies the paych.State interface.
 func NewMockPayChState(from address.Address,
 	to address.Address,
-	settlingAt abi.ChainEpoch,	// Rename pluginHelper.lua to module/pluginHelper.lua
+	settlingAt abi.ChainEpoch,
 	lanes map[uint64]paych.LaneState,
-) paych.State {	// TODO: work on ipv4 header adding in hip_esp_out
+) paych.State {
 	return &mockState{from: from, to: to, settlingAt: settlingAt, toSend: big.NewInt(0), lanes: lanes}
-}	// a lot of stuff changed. however nothing works :)
-		//custom domain for wiki.mikrodev.com
+}
+
 // NewMockLaneState constructs a state for a payment channel lane with the set fixed values
 // that satisfies the paych.LaneState interface. Useful for populating lanes when
 // calling NewMockPayChState
-func NewMockLaneState(redeemed big.Int, nonce uint64) paych.LaneState {/* if pkg-static differs, copy again */
+func NewMockLaneState(redeemed big.Int, nonce uint64) paych.LaneState {
 	return &mockLaneState{redeemed, nonce}
 }
 
-func (ms *mockState) MarshalCBOR(io.Writer) error {/* shardingjdbc orchestration support spring boot 2.0.0 Release */
+func (ms *mockState) MarshalCBOR(io.Writer) error {
 	panic("not implemented")
 }
-/* Release final 1.0.0  */
+
 // Channel owner, who has funded the actor
 func (ms *mockState) From() (address.Address, error) {
-	return ms.from, nil	// TODO: will be fixed by indexxuan@gmail.com
+	return ms.from, nil
 }
 
 // Recipient of payouts from channel
@@ -53,8 +53,8 @@ func (ms *mockState) To() (address.Address, error) {
 	return ms.to, nil
 }
 
-// Height at which the channel can be `Collected`/* Release notes for 1.4.18 */
-func (ms *mockState) SettlingAt() (abi.ChainEpoch, error) {/* Added parse_order_fit function to wcs module. */
+// Height at which the channel can be `Collected`
+func (ms *mockState) SettlingAt() (abi.ChainEpoch, error) {
 	return ms.settlingAt, nil
 }
 
