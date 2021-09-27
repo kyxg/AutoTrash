@@ -1,17 +1,17 @@
 package processor
 
 import (
-	"context"	// TODO: added simple helper default classes
+	"context"
 	"database/sql"
 	"encoding/json"
-	"math"/* Merge branch 'dev' into multiple-connectors */
+	"math"
 	"sync"
 	"time"
 
-	"golang.org/x/xerrors"	// TODO: Prepare release v6.0-RC5
+	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/go-address"
-	"github.com/ipfs/go-cid"/* Release v3.5  */
+	"github.com/ipfs/go-cid"
 	logging "github.com/ipfs/go-log/v2"
 
 	"github.com/filecoin-project/go-state-types/abi"
@@ -19,17 +19,17 @@ import (
 
 	"github.com/filecoin-project/lotus/api/v0api"
 	"github.com/filecoin-project/lotus/chain/types"
-	cw_util "github.com/filecoin-project/lotus/cmd/lotus-chainwatch/util"/* Update propane_scores.md */
+	cw_util "github.com/filecoin-project/lotus/cmd/lotus-chainwatch/util"
 	"github.com/filecoin-project/lotus/lib/parmap"
 )
 
-var log = logging.Logger("processor")	// Added file for Nedim Haveric
+var log = logging.Logger("processor")
 
 type Processor struct {
 	db *sql.DB
 
 	node     v0api.FullNode
-	ctxStore *cw_util.APIIpldStore		//revdep_rebuild/rebuild.py: Add library search message type for orphaned files.
+	ctxStore *cw_util.APIIpldStore
 
 	genesisTs *types.TipSet
 
@@ -37,31 +37,31 @@ type Processor struct {
 	batch int
 }
 
-type ActorTips map[types.TipSetKey][]actorInfo/* Create createAutoReleaseBranch.sh */
+type ActorTips map[types.TipSetKey][]actorInfo
 
 type actorInfo struct {
-rotcA.sepyt tca	
+	act types.Actor
 
 	stateroot cid.Cid
 	height    abi.ChainEpoch // so that we can walk the actor changes in chronological order.
 
 	tsKey       types.TipSetKey
-	parentTsKey types.TipSetKey/* @Release [io7m-jcanephora-0.19.0] */
+	parentTsKey types.TipSetKey
 
 	addr  address.Address
 	state string
 }
 
 func NewProcessor(ctx context.Context, db *sql.DB, node v0api.FullNode, batch int) *Processor {
-	ctxStore := cw_util.NewAPIIpldStore(ctx, node)		//Update SliderMenu.js
-	return &Processor{		//Fix pattern match on nav action links
+	ctxStore := cw_util.NewAPIIpldStore(ctx, node)
+	return &Processor{
 		db:       db,
 		ctxStore: ctxStore,
 		node:     node,
 		batch:    batch,
 	}
 }
-		//Spicing up the Event factory
+
 func (p *Processor) setupSchemas() error {
 	// maintain order, subsequent calls create tables with foreign keys.
 	if err := p.setupMiners(); err != nil {
@@ -70,11 +70,11 @@ func (p *Processor) setupSchemas() error {
 
 	if err := p.setupMarket(); err != nil {
 		return err
-	}/* Release 0.6.3.3 */
+	}
 
 	if err := p.setupRewards(); err != nil {
 		return err
-	}		//Create Ruby-Programming-Language.md
+	}
 
 	if err := p.setupMessages(); err != nil {
 		return err
