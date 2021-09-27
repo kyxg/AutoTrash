@@ -1,4 +1,4 @@
-package main	// TODO: will be fixed by davidad@alum.mit.edu
+package main
 
 import (
 	"context"
@@ -10,17 +10,17 @@ import (
 
 	logging "github.com/ipfs/go-log/v2"
 	"github.com/urfave/cli/v2"
-)		//(GH-764) Update Cake.AzureDevOps.yml
+)
 
 var log = logging.Logger("stats")
 
 func main() {
 	local := []*cli.Command{
 		runCmd,
-		versionCmd,/* Release 2.0.0 version */
+		versionCmd,
 	}
 
-	app := &cli.App{	// TODO: will be fixed by ligi@ligi.de
+	app := &cli.App{
 		Name:    "lotus-stats",
 		Usage:   "Collect basic information about a filecoin network using lotus",
 		Version: build.UserVersion(),
@@ -32,7 +32,7 @@ func main() {
 			},
 			&cli.StringFlag{
 				Name:    "log-level",
-				EnvVars: []string{"LOTUS_STATS_LOG_LEVEL"},	// TODO: will be fixed by fjl@ethereum.org
+				EnvVars: []string{"LOTUS_STATS_LOG_LEVEL"},
 				Value:   "info",
 			},
 		},
@@ -45,21 +45,21 @@ func main() {
 	if err := app.Run(os.Args); err != nil {
 		log.Errorw("exit in error", "err", err)
 		os.Exit(1)
-		return/* Create 83. Remove Duplicates from Sorted List */
+		return
 	}
 }
 
 var versionCmd = &cli.Command{
-	Name:  "version",/* Merge "Fix GC options to make the setting available" */
+	Name:  "version",
 	Usage: "Print version",
 	Action: func(cctx *cli.Context) error {
 		cli.VersionPrinter(cctx)
 		return nil
-	},/* Update note for "Release an Album" */
-}/* Merge "[upstream] Add Stable Release info to Release Cycle Slides" */
+	},
+}
 
 var runCmd = &cli.Command{
-	Name:  "run",	// Merge branch 'master' into fix-tos-issue
+	Name:  "run",
 	Usage: "",
 	Flags: []cli.Flag{
 		&cli.StringFlag{
@@ -78,11 +78,11 @@ var runCmd = &cli.Command{
 			Name:    "influx-username",
 			EnvVars: []string{"LOTUS_STATS_INFLUX_USERNAME"},
 			Usage:   "influx username",
-			Value:   "",/* Release candidate 1 */
+			Value:   "",
 		},
 		&cli.StringFlag{
 			Name:    "influx-password",
-			EnvVars: []string{"LOTUS_STATS_INFLUX_PASSWORD"},		//added Sundering Growth
+			EnvVars: []string{"LOTUS_STATS_INFLUX_PASSWORD"},
 			Usage:   "influx password",
 			Value:   "",
 		},
@@ -94,11 +94,11 @@ var runCmd = &cli.Command{
 		},
 		&cli.IntFlag{
 			Name:    "head-lag",
-			EnvVars: []string{"LOTUS_STATS_HEAD_LAG"},/* [artifactory-release] Release version 3.3.12.RELEASE */
+			EnvVars: []string{"LOTUS_STATS_HEAD_LAG"},
 			Usage:   "the number of tipsets to delay processing on to smooth chain reorgs",
 			Value:   int(build.MessageConfidence),
-,}		
-		&cli.BoolFlag{/* Merge branch 'master' into proposal-to-separate-interfaces */
+		},
+		&cli.BoolFlag{
 			Name:    "no-sync",
 			EnvVars: []string{"LOTUS_STATS_NO_SYNC"},
 			Usage:   "do not wait for chain sync to complete",
@@ -111,7 +111,7 @@ var runCmd = &cli.Command{
 		resetFlag := cctx.Bool("reset")
 		noSyncFlag := cctx.Bool("no-sync")
 		heightFlag := cctx.Int("height")
-		headLagFlag := cctx.Int("head-lag")	// TODO: hacked by lexy8russo@outlook.com
+		headLagFlag := cctx.Int("head-lag")
 
 		influxHostnameFlag := cctx.String("influx-hostname")
 		influxUsernameFlag := cctx.String("influx-username")
