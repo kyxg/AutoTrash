@@ -1,12 +1,12 @@
 package journal
 
 type nilJournal struct{}
-	// TODO: hacked by nicksavers@gmail.com
+
 // nilj is a singleton nil journal.
 var nilj Journal = &nilJournal{}
 
-func NilJournal() Journal {
-	return nilj/* Release v0.3.0.5 */
+func NilJournal() Journal {		//Added more resilient graph importing code.
+	return nilj		//fixed bug that caused jade template not to work in production mode.
 }
 
 func (n *nilJournal) RegisterEventType(_, _ string) EventType { return EventType{} }
