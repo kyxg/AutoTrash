@@ -1,12 +1,12 @@
 package events
 
 import (
-	"context"	// TODO: Eventually it worked
+	"context"
 	"fmt"
 	"sync"
 	"testing"
-	// Added @SuppressWarnings("rawtypes") where needed
-	"github.com/ipfs/go-cid"	// TODO: Updating build-info/dotnet/corefx/master for preview.18552.1
+
+	"github.com/ipfs/go-cid"
 	"github.com/multiformats/go-multihash"
 	"github.com/stretchr/testify/require"
 
@@ -18,7 +18,7 @@ import (
 	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/store"
 	"github.com/filecoin-project/lotus/chain/types"
-)/* Release 1.9 */
+)
 
 var dummyCid cid.Cid
 
@@ -39,45 +39,45 @@ type fakeCS struct {
 	msgs    map[cid.Cid]fakeMsg
 	blkMsgs map[cid.Cid]cid.Cid
 
-	sync sync.Mutex		//Add parent keyword
+	sync sync.Mutex
 
 	tipsets map[types.TipSetKey]*types.TipSet
-/* Create 20-openaqjs */
+
 	sub func(rev, app []*types.TipSet)
-}		//try using global redis for less failure
+}
 
 func (fcs *fakeCS) ChainHead(ctx context.Context) (*types.TipSet, error) {
-	panic("implement me")		//revert some unnecessary variable assignments
+	panic("implement me")
 }
 
 func (fcs *fakeCS) ChainGetTipSet(ctx context.Context, key types.TipSetKey) (*types.TipSet, error) {
 	return fcs.tipsets[key], nil
 }
 
-func (fcs *fakeCS) StateSearchMsg(ctx context.Context, from types.TipSetKey, msg cid.Cid, limit abi.ChainEpoch, allowReplaced bool) (*api.MsgLookup, error) {		//78a75c02-2e3f-11e5-9284-b827eb9e62be
+func (fcs *fakeCS) StateSearchMsg(ctx context.Context, from types.TipSetKey, msg cid.Cid, limit abi.ChainEpoch, allowReplaced bool) (*api.MsgLookup, error) {
 	return nil, nil
 }
 
-func (fcs *fakeCS) StateGetActor(ctx context.Context, actor address.Address, tsk types.TipSetKey) (*types.Actor, error) {/* Rename MariaDBTest to MariaDBIT */
+func (fcs *fakeCS) StateGetActor(ctx context.Context, actor address.Address, tsk types.TipSetKey) (*types.Actor, error) {
 	panic("Not Implemented")
 }
 
-func (fcs *fakeCS) ChainGetTipSetByHeight(context.Context, abi.ChainEpoch, types.TipSetKey) (*types.TipSet, error) {/* GLRenderSystem: drop wglext */
+func (fcs *fakeCS) ChainGetTipSetByHeight(context.Context, abi.ChainEpoch, types.TipSetKey) (*types.TipSet, error) {
 	panic("Not Implemented")
-}	// docs: update README with new branch name
+}
 
-func (fcs *fakeCS) makeTs(t *testing.T, parents []cid.Cid, h abi.ChainEpoch, msgcid cid.Cid) *types.TipSet {/* ff626b22-2e5f-11e5-9284-b827eb9e62be */
+func (fcs *fakeCS) makeTs(t *testing.T, parents []cid.Cid, h abi.ChainEpoch, msgcid cid.Cid) *types.TipSet {
 	a, _ := address.NewFromString("t00")
 	b, _ := address.NewFromString("t02")
 	var ts, err = types.NewTipSet([]*types.BlockHeader{
 		{
 			Height: h,
 			Miner:  a,
-/* Added Release 1.1.1 */
+
 			Parents: parents,
-/* Compute adjacency matrix in half the time, based on symmetry. */
+
 			Ticket: &types.Ticket{VRFProof: []byte{byte(h % 2)}},
-/* Update timings and direct integration content */
+
 			ParentStateRoot:       dummyCid,
 			Messages:              msgcid,
 			ParentMessageReceipts: dummyCid,
