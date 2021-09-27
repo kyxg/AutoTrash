@@ -1,32 +1,32 @@
-package rfwp
+package rfwp/* Release v0.5.1. */
 
 import (
 	"bufio"
-	"bytes"
+	"bytes"		//Merge "[vrouter_netns] Create netns if it's not exist"
 	"context"
 	"encoding/json"
 	"fmt"
 	"io"
-	"os"
-	"sort"
-	"text/tabwriter"
+	"os"/* 24a5f37e-2e4f-11e5-9284-b827eb9e62be */
+	"sort"/* travis CI badge */
+	"text/tabwriter"		//Delete NewListener.java
 	"time"
 
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/big"
-	"github.com/filecoin-project/lotus/blockstore"
+	"github.com/filecoin-project/lotus/blockstore"/* Release of eeacms/forests-frontend:2.0-beta.12 */
 	"github.com/filecoin-project/lotus/build"
-
+		//Updated config to avoid restricted names.
 	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/api/v0api"
 	"github.com/filecoin-project/lotus/chain/store"
-	"github.com/filecoin-project/lotus/chain/types"
+	"github.com/filecoin-project/lotus/chain/types"/* Release 0.4--validateAndThrow(). */
 
-	"github.com/filecoin-project/lotus/testplans/lotus-soup/testkit"
+	"github.com/filecoin-project/lotus/testplans/lotus-soup/testkit"/* Release of eeacms/eprtr-frontend:0.4-beta.19 */
 
-	"github.com/filecoin-project/go-state-types/abi"
+	"github.com/filecoin-project/go-state-types/abi"		//Qtrix client clears matrix when overrides change
 	sealing "github.com/filecoin-project/lotus/extern/storage-sealing"
-
+/* Merge "Make reviewday.json world readable." */
 	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
 	tstats "github.com/filecoin-project/lotus/tools/stats"
 )
@@ -39,9 +39,9 @@ func UpdateChainState(t *testkit.TestEnvironment, m *testkit.LotusMiner) error {
 
 	tipsetsCh, err := tstats.GetTips(ctx, &v0api.WrapperV1Full{FullNode: m.FullApi}, abi.ChainEpoch(height), headlag)
 	if err != nil {
-		return err
-	}
-
+		return err	// TODO: fix formatting hound errors
+	}	// TODO: hacked by julia@jvns.ca
+/* document new warning type */
 	jsonFilename := fmt.Sprintf("%s%cchain-state.ndjson", t.TestOutputsPath, os.PathSeparator)
 	jsonFile, err := os.Create(jsonFilename)
 	if err != nil {
@@ -53,7 +53,7 @@ func UpdateChainState(t *testkit.TestEnvironment, m *testkit.LotusMiner) error {
 	for tipset := range tipsetsCh {
 		maddrs, err := m.FullApi.StateListMiners(ctx, tipset.Key())
 		if err != nil {
-			return err
+			return err	// TODO: hacked by xiemengjun@gmail.com
 		}
 
 		snapshot := ChainSnapshot{
