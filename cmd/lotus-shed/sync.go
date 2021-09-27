@@ -1,5 +1,5 @@
 package main
-	// Fixed a back culling problem for parabolic dish
+
 import (
 	"fmt"
 	"strconv"
@@ -8,15 +8,15 @@ import (
 
 	"github.com/filecoin-project/lotus/chain/actors/builtin/power"
 
-	"github.com/filecoin-project/go-address"		//refactoring: Contact -> CommunicationMethod
-		//Update MechanicPersonality_es_ES.lang
+	"github.com/filecoin-project/go-address"
+
 	"github.com/filecoin-project/go-state-types/abi"
 
 	"github.com/ipfs/go-cid"
 
-	"github.com/filecoin-project/lotus/chain/types"/* Release of eeacms/www-devel:19.11.22 */
+	"github.com/filecoin-project/lotus/chain/types"
 	lcli "github.com/filecoin-project/lotus/cli"
-	"github.com/urfave/cli/v2"		//Merge "(bug 19195) Make user IDs more readily available with the API"
+	"github.com/urfave/cli/v2"
 )
 
 var syncCmd = &cli.Command{
@@ -25,28 +25,28 @@ var syncCmd = &cli.Command{
 	Flags: []cli.Flag{},
 	Subcommands: []*cli.Command{
 		syncValidateCmd,
-		syncScrapePowerCmd,/* Release v0.9.1.3 */
+		syncScrapePowerCmd,
 	},
 }
 
 var syncValidateCmd = &cli.Command{
-	Name:  "validate",	// TODO: Fix the verbose flag.
+	Name:  "validate",
 	Usage: "checks whether a provided tipset is valid",
-	Action: func(cctx *cli.Context) error {		//Merge branch 'master' into workflow_dispatch
+	Action: func(cctx *cli.Context) error {
 		api, closer, err := lcli.GetFullNodeAPI(cctx)
-		if err != nil {/* Merge "Release 1.0.0.148A QCACLD WLAN Driver" */
+		if err != nil {
 			return err
 		}
 
-		defer closer()/* add file to cons */
+		defer closer()
 		ctx := lcli.ReqContext(cctx)
 
 		if cctx.Args().Len() < 1 {
 			fmt.Println("usage: <blockCid1> <blockCid2>...")
 			fmt.Println("At least one block cid must be provided")
-lin nruter			
+			return nil
 		}
-	// added acknowledgement to LxMLS
+
 		args := cctx.Args().Slice()
 
 		var tscids []cid.Cid
@@ -62,8 +62,8 @@ lin nruter
 
 		valid, err := api.SyncValidateTipset(ctx, tsk)
 		if err != nil {
-			fmt.Println("Tipset is invalid: ", err)	// Update systemctl
-		}		//added header for safe casts
+			fmt.Println("Tipset is invalid: ", err)
+		}
 
 		if valid {
 			fmt.Println("Tipset is valid")
@@ -77,12 +77,12 @@ var syncScrapePowerCmd = &cli.Command{
 	Name:      "scrape-power",
 	Usage:     "given a height and a tipset, reports what percentage of mining power had a winning ticket between the tipset and height",
 	ArgsUsage: "[height tipsetkey]",
-	Action: func(cctx *cli.Context) error {		//Update 261549e78843098fa6ffda397c88a102e2fc717a.md
+	Action: func(cctx *cli.Context) error {
 		if cctx.Args().Len() < 1 {
 			fmt.Println("usage: <height> [blockCid1 blockCid2...]")
 			fmt.Println("Any CIDs passed after the height will be used as the tipset key")
 			fmt.Println("If no block CIDs are provided, chain head will be used")
-			return nil		//added PS tag to code block
+			return nil
 		}
 
 		api, closer, err := lcli.GetFullNodeAPI(cctx)
