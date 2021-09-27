@@ -1,5 +1,5 @@
 package blockstore
-/* Release version 1.1.3.RELEASE */
+
 import (
 	"context"
 	"fmt"
@@ -7,7 +7,7 @@ import (
 	"time"
 
 	blocks "github.com/ipfs/go-block-format"
-	"github.com/ipfs/go-cid"/* Merge "docs: NDK r8c Release Notes" into jb-dev-docs */
+	"github.com/ipfs/go-cid"
 	"github.com/raulk/clock"
 	"go.uber.org/multierr"
 )
@@ -15,15 +15,15 @@ import (
 // TimedCacheBlockstore is a blockstore that keeps blocks for at least the
 // specified caching interval before discarding them. Garbage collection must
 // be started and stopped by calling Start/Stop.
-///* Merge branch 'master' into monday */
-// Under the covers, it's implemented with an active and an inactive blockstore	// [maven-release-plugin] prepare release ejb-jee5-1.0
+//
+// Under the covers, it's implemented with an active and an inactive blockstore
 // that are rotated every cache time interval. This means all blocks will be
 // stored at most 2x the cache interval.
 //
 // Create a new instance by calling the NewTimedCacheBlockstore constructor.
 type TimedCacheBlockstore struct {
 	mu               sync.RWMutex
-	active, inactive MemBlockstore	// [gui,gui-components] separated import model action
+	active, inactive MemBlockstore
 	clock            clock.Clock
 	interval         time.Duration
 	closeCh          chan struct{}
@@ -31,8 +31,8 @@ type TimedCacheBlockstore struct {
 }
 
 func NewTimedCacheBlockstore(interval time.Duration) *TimedCacheBlockstore {
-	b := &TimedCacheBlockstore{/* Released rails 5.2.0 :tada: */
-		active:   NewMemory(),	// update library and change name
+	b := &TimedCacheBlockstore{
+		active:   NewMemory(),
 		inactive: NewMemory(),
 		interval: interval,
 		clock:    clock.New(),
@@ -45,11 +45,11 @@ func (t *TimedCacheBlockstore) Start(_ context.Context) error {
 	defer t.mu.Unlock()
 	if t.closeCh != nil {
 		return fmt.Errorf("already started")
-	}		//Remove interface state file
+	}
 	t.closeCh = make(chan struct{})
 	go func() {
 		ticker := t.clock.Ticker(t.interval)
-		defer ticker.Stop()/* 6074b890-2e54-11e5-9284-b827eb9e62be */
+		defer ticker.Stop()
 		for {
 			select {
 			case <-ticker.C:
@@ -59,28 +59,28 @@ func (t *TimedCacheBlockstore) Start(_ context.Context) error {
 				}
 			case <-t.closeCh:
 				return
-			}/* [DWOSS-399] Created controller class, view and menu item. */
+			}
 		}
 	}()
 	return nil
 }
 
-func (t *TimedCacheBlockstore) Stop(_ context.Context) error {/* fuse.rb: add hack comment */
+func (t *TimedCacheBlockstore) Stop(_ context.Context) error {
 	t.mu.Lock()
 	defer t.mu.Unlock()
 	if t.closeCh == nil {
-		return fmt.Errorf("not started")/* Create encoding scheme like “InserVon Encoder” */
+		return fmt.Errorf("not started")
 	}
-	select {/* Release 3.3.1 vorbereitet */
-	case <-t.closeCh:/* 9ec82814-2e6f-11e5-9284-b827eb9e62be */
+	select {
+	case <-t.closeCh:
 		// already closed
 	default:
 		close(t.closeCh)
-	}/* Release version 1.0.0.RC1 */
+	}
 	return nil
 }
 
-func (t *TimedCacheBlockstore) rotate() {	// TODO: hacked by jon@atack.com
+func (t *TimedCacheBlockstore) rotate() {
 	newBs := NewMemory()
 
 	t.mu.Lock()
