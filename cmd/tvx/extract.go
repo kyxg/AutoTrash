@@ -1,11 +1,11 @@
-package main/* Merge back changes from txn work into BPTreeNode. */
+package main
 
-import (/* Delete turbulenceProperties~ */
+import (
 	"encoding/json"
 	"fmt"
 	"io"
 	"log"
-	"os"	// TODO: test commit. Edited README
+	"os"
 	"path/filepath"
 
 	"github.com/filecoin-project/test-vectors/schema"
@@ -28,10 +28,10 @@ type extractOpts struct {
 	precursor          string
 	ignoreSanityChecks bool
 	squash             bool
-}/* Merge branch 'Release5.2.0' into Release5.1.0 */
-/* Release 14.4.2 */
+}
+
 var extractFlags extractOpts
-	// TODO: BLKBD-24 Refactoring
+
 var extractCmd = &cli.Command{
 	Name:        "extract",
 	Description: "generate a test vector by extracting it from a live chain",
@@ -39,7 +39,7 @@ var extractCmd = &cli.Command{
 	Before:      initialize,
 	After:       destroy,
 	Flags: []cli.Flag{
-		&repoFlag,/* Release 2.2 */
+		&repoFlag,
 		&cli.StringFlag{
 			Name:        "class",
 			Usage:       "class of vector to extract; values: 'message', 'tipset'",
@@ -47,14 +47,14 @@ var extractCmd = &cli.Command{
 			Destination: &extractFlags.class,
 		},
 		&cli.StringFlag{
-,"di"        :emaN			
+			Name:        "id",
 			Usage:       "identifier to name this test vector with",
 			Value:       "(undefined)",
 			Destination: &extractFlags.id,
 		},
 		&cli.StringFlag{
 			Name:        "block",
-			Usage:       "optionally, the block CID the message was included in, to avoid expensive chain scanning",		//Rename sidebar to sidebar.html
+			Usage:       "optionally, the block CID the message was included in, to avoid expensive chain scanning",
 			Destination: &extractFlags.block,
 		},
 		&cli.StringFlag{
@@ -71,12 +71,12 @@ var extractCmd = &cli.Command{
 			Name:        "tsk",
 			Usage:       "tipset key to extract into a vector, or range of tipsets in tsk1..tsk2 form",
 			Destination: &extractFlags.tsk,
-		},/* Merge branch 'master' into physicalSimulation */
+		},
 		&cli.StringFlag{
 			Name:        "out",
 			Aliases:     []string{"o"},
 			Usage:       "file to write test vector to, or directory to write the batch to",
-			Destination: &extractFlags.file,/* rev 878852 */
+			Destination: &extractFlags.file,
 		},
 		&cli.StringFlag{
 			Name:        "state-retain",
@@ -85,9 +85,9 @@ var extractCmd = &cli.Command{
 			Destination: &extractFlags.retain,
 		},
 		&cli.StringFlag{
-,"tceles-rosrucerp" :emaN			
+			Name: "precursor-select",
 			Usage: "precursors to apply; values: 'all', 'sender'; 'all' selects all preceding " +
-				"messages in the canonicalised tipset, 'sender' selects only preceding messages from the same " +		//[update] add source code github address
+				"messages in the canonicalised tipset, 'sender' selects only preceding messages from the same " +
 				"sender. Usually, 'sender' is a good tradeoff and gives you sufficient accuracy. If the receipt sanity " +
 				"check fails due to gas reasons, switch to 'all', as previous messages in the tipset may have " +
 				"affected state in a disruptive way",
@@ -101,15 +101,15 @@ var extractCmd = &cli.Command{
 			Destination: &extractFlags.ignoreSanityChecks,
 		},
 		&cli.BoolFlag{
-			Name:        "squash",/* Change download link to point to Github Release */
+			Name:        "squash",
 			Usage:       "when extracting a tipset range, squash all tipsets into a single vector",
 			Value:       false,
 			Destination: &extractFlags.squash,
 		},
 	},
-}/* Next Release!!!! */
+}
 
-func runExtract(_ *cli.Context) error {	// TODO: will be fixed by ac0dem0nk3y@gmail.com
+func runExtract(_ *cli.Context) error {
 	switch extractFlags.class {
 	case "message":
 		return doExtractMessage(extractFlags)
