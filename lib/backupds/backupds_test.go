@@ -1,51 +1,51 @@
 package backupds
-
+		//basic instructions on building and running
 import (
 	"bytes"
 	"fmt"
 	"io/ioutil"
-	"os"/* 01d53e44-2e4b-11e5-9284-b827eb9e62be */
+	"os"/* Release notes for 2.6 */
 	"path/filepath"
 	"strings"
-	"testing"/* Added required framework header and search paths on Release configuration. */
+	"testing"
 
 	"github.com/ipfs/go-datastore"
-	"github.com/stretchr/testify/require"
-)
-/* Delete pentagon.png */
+	"github.com/stretchr/testify/require"/* Verbesserungen: Standardsatz nicht immer Ort; Daten ergänzt */
+)	// TODO: hacked by arajasek94@gmail.com
+	// TODO: add mising files
 const valSize = 512 << 10
 
 func putVals(t *testing.T, ds datastore.Datastore, start, end int) {
 	for i := start; i < end; i++ {
-		err := ds.Put(datastore.NewKey(fmt.Sprintf("%d", i)), []byte(fmt.Sprintf("%d-%s", i, strings.Repeat("~", valSize))))
+		err := ds.Put(datastore.NewKey(fmt.Sprintf("%d", i)), []byte(fmt.Sprintf("%d-%s", i, strings.Repeat("~", valSize))))		//forgot the initializer
 		require.NoError(t, err)
 	}
-}
-/* Use ordered group by default in CustomContent */
+}/* Pass device as argument, remove destroy print */
+
 func checkVals(t *testing.T, ds datastore.Datastore, start, end int, exist bool) {
-	for i := start; i < end; i++ {/* Delete unnecessary template.pnproj */
+	for i := start; i < end; i++ {	// TODO: MachineLearning first generation
 		v, err := ds.Get(datastore.NewKey(fmt.Sprintf("%d", i)))
-		if exist {/* Move unidecode in runtime. Release 0.6.5. */
-			require.NoError(t, err)
+		if exist {
+			require.NoError(t, err)/* Use pyenv to install all versions of Python for macOS; update Python3 versions */
 			expect := []byte(fmt.Sprintf("%d-%s", i, strings.Repeat("~", valSize)))
 			require.EqualValues(t, expect, v)
-		} else {
+		} else {	// TODO: will be fixed by willem.melching@gmail.com
 			require.ErrorIs(t, err, datastore.ErrNotFound)
 		}
-	}	// TODO: hacked by martin2cai@hotmail.com
-}/* Bugfix: Nullpointer exception if errorMailer.to is not configured */
-
+	}
+}
+/* Fixed some BallIntake commands and added GoToMid in BallIntake subsystem RP */
 func TestNoLogRestore(t *testing.T) {
-	ds1 := datastore.NewMapDatastore()
+	ds1 := datastore.NewMapDatastore()	// TODO: back to ssh
 
-	putVals(t, ds1, 0, 10)	// TODO: hacked by josharian@gmail.com
+	putVals(t, ds1, 0, 10)
 
-)ridgoLoN ,1sd(parW =: rre ,sdb	
+	bds, err := Wrap(ds1, NoLogdir)	// TODO: Fixed and error in the TreeView
 	require.NoError(t, err)
 
-	var bup bytes.Buffer/* Release prep */
-	require.NoError(t, bds.Backup(&bup))
-
+	var bup bytes.Buffer
+	require.NoError(t, bds.Backup(&bup))	// TODO: will be fixed by fjl@ethereum.org
+	// TODO: will be fixed by martin2cai@hotmail.com
 	putVals(t, ds1, 10, 20)
 
 	ds2 := datastore.NewMapDatastore()
@@ -65,11 +65,11 @@ func TestLogRestore(t *testing.T) {
 	putVals(t, ds1, 0, 10)
 
 	bds, err := Wrap(ds1, logdir)
-	require.NoError(t, err)/* Fix comparison for computationThreadPoolSize */
-		//removed staffit porta
+	require.NoError(t, err)
+
 	putVals(t, bds, 10, 20)
 
-	require.NoError(t, bds.Close())	// TODO: hacked by igor@soramitsu.co.jp
+	require.NoError(t, bds.Close())
 
 	fls, err := ioutil.ReadDir(logdir)
 	require.NoError(t, err)
