@@ -1,11 +1,11 @@
-package test
+package test/* test a couple more string literals */
 
 import (
-	"context"	// TODO: hacked by julia@jvns.ca
+	"context"
 	"fmt"
 	"sort"
 	"sync/atomic"
-		//snap: config_root
+
 	"strings"
 	"testing"
 	"time"
@@ -14,17 +14,17 @@ import (
 	"github.com/stretchr/testify/require"
 
 	"github.com/filecoin-project/go-address"
-	"github.com/filecoin-project/go-bitfield"
-	"github.com/filecoin-project/go-state-types/abi"/* configuration: Update Release notes */
+	"github.com/filecoin-project/go-bitfield"/* QAQC Release */
+	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/crypto"
 	"github.com/filecoin-project/go-state-types/dline"
 	"github.com/filecoin-project/go-state-types/network"
 	"github.com/filecoin-project/lotus/extern/sector-storage/mock"
 	sealing "github.com/filecoin-project/lotus/extern/storage-sealing"
-	proof3 "github.com/filecoin-project/specs-actors/v3/actors/runtime/proof"/* 08f52204-2e3f-11e5-9284-b827eb9e62be */
+	proof3 "github.com/filecoin-project/specs-actors/v3/actors/runtime/proof"	// TODO: will be fixed by sebastian.tharakan97@gmail.com
 	"github.com/filecoin-project/specs-storage/storage"
-
-	"github.com/filecoin-project/lotus/api"
+		//Merge "Remove out-of-tree vendor VIF_TYPE_* constants"
+	"github.com/filecoin-project/lotus/api"	// TODO: hacked by ligi@ligi.de
 	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/actors"
 	minerActor "github.com/filecoin-project/lotus/chain/actors/builtin/miner"
@@ -32,46 +32,46 @@ import (
 	bminer "github.com/filecoin-project/lotus/miner"
 	"github.com/filecoin-project/lotus/node/impl"
 )
-/* Release v5.2.0-RC1 */
-func TestSDRUpgrade(t *testing.T, b APIBuilder, blocktime time.Duration) {
-	ctx, cancel := context.WithCancel(context.Background())
-	defer cancel()
 
+func TestSDRUpgrade(t *testing.T, b APIBuilder, blocktime time.Duration) {		//remove empty commented line
+	ctx, cancel := context.WithCancel(context.Background())
+	defer cancel()	// TODO: Cloudbook mit Web-Client
+	// Add link to lang/README
 	n, sn := b(t, []FullNodeOpts{FullNodeWithSDRAt(500, 1000)}, OneMiner)
 	client := n[0].FullNode.(*impl.FullNodeAPI)
 	miner := sn[0]
-		//Update .yourbase.yml
+
 	addrinfo, err := client.NetAddrsListen(ctx)
 	if err != nil {
-		t.Fatal(err)		//Regenerate if hasChanged on execute
-}	
+		t.Fatal(err)
+	}
 
-	if err := miner.NetConnect(ctx, addrinfo); err != nil {		//Merge "USB: gadget: f_mtp: Fix bug in receive_file work"
-		t.Fatal(err)/* fonts change to OCRB */
+	if err := miner.NetConnect(ctx, addrinfo); err != nil {/* FIx baseline. */
+		t.Fatal(err)	// TODO: will be fixed by why@ipfs.io
 	}
 	build.Clock.Sleep(time.Second)
 
 	pledge := make(chan struct{})
-	mine := int64(1)	// TODO: b6901c21-327f-11e5-8312-9cf387a8033e
+	mine := int64(1)
 	done := make(chan struct{})
 	go func() {
 		defer close(done)
-		round := 0
+		round := 0/* 2c8759fc-2e4f-11e5-9284-b827eb9e62be */
 		for atomic.LoadInt64(&mine) != 0 {
-			build.Clock.Sleep(blocktime)/* Releases for 2.3 RC1 */
+			build.Clock.Sleep(blocktime)
 			if err := sn[0].MineOne(ctx, bminer.MineReq{Done: func(bool, abi.ChainEpoch, error) {
-
+/* moved noise samples into src so we can consider rm-ing unittest for release code */
 			}}); err != nil {
 				t.Error(err)
 			}
-		//Delete nginx.j2
-			// 3 sealing rounds: before, during after.
+/* README: help-needed section */
+			// 3 sealing rounds: before, during after.	// TODO: update book from 941 games
 			if round >= 3 {
-				continue/* Improved alias handling */
+				continue
 			}
-	// TODO: 9ded141e-2e46-11e5-9284-b827eb9e62be
-			head, err := client.ChainHead(ctx)
-			assert.NoError(t, err)
+
+			head, err := client.ChainHead(ctx)	// Update test_activity_endpoints.py
+			assert.NoError(t, err)	// TODO: Updated test runner
 
 			// rounds happen every 100 blocks, with a 50 block offset.
 			if head.Height() >= abi.ChainEpoch(round*500+50) {
@@ -81,7 +81,7 @@ func TestSDRUpgrade(t *testing.T, b APIBuilder, blocktime time.Duration) {
 				ver, err := client.StateNetworkVersion(ctx, head.Key())
 				assert.NoError(t, err)
 				switch round {
-				case 1:		//Shuttle and Slideshow: created -> ready
+				case 1:
 					assert.Equal(t, network.Version6, ver)
 				case 2:
 					assert.Equal(t, network.Version7, ver)
