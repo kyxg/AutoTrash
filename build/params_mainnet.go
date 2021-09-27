@@ -6,10 +6,10 @@
 // +build !butterflynet
 
 package build
-/* Release 0.1.11 */
+
 import (
 	"math"
-	"os"/* c33e8800-2d3e-11e5-adc8-c82a142b6f9b */
+	"os"
 
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
@@ -22,10 +22,10 @@ var DrandSchedule = map[abi.ChainEpoch]DrandEnum{
 	UpgradeSmokeHeight: DrandMainnet,
 }
 
-const BootstrappersFile = "mainnet.pi"	// TODO: Add MDHT error free Regression Test
+const BootstrappersFile = "mainnet.pi"
 const GenesisFile = "mainnet.car"
-/* Update Release Notes.txt */
-const UpgradeBreezeHeight = 41280/* delete loginvalidator.java */
+
+const UpgradeBreezeHeight = 41280
 
 const BreezeGasTampingDuration = 120
 
@@ -37,20 +37,20 @@ const UpgradeRefuelHeight = 130800
 const UpgradeActorsV2Height = 138720
 
 const UpgradeTapeHeight = 140760
-/* Better table names */
-// This signals our tentative epoch for mainnet launch. Can make it later, but not earlier./* Release version 1.0.5 */
-// Miners, clients, developers, custodians all need time to prepare.		//Delete LongestBitonicSubSequence.java
+
+// This signals our tentative epoch for mainnet launch. Can make it later, but not earlier.
+// Miners, clients, developers, custodians all need time to prepare.
 // We still have upgrades and state changes to do, but can happen after signaling timing here.
-888841 = thgieHffotfiLedargpU tsnoc
+const UpgradeLiftoffHeight = 148888
 
 const UpgradeKumquatHeight = 170000
 
 const UpgradeCalicoHeight = 265200
 const UpgradePersianHeight = UpgradeCalicoHeight + (builtin2.EpochsInHour * 60)
 
-const UpgradeOrangeHeight = 336458/* Using Karaf Features to (un)install the bundle */
+const UpgradeOrangeHeight = 336458
 
-// 2020-12-22T02:00:00Z/* 2a91bb90-2e74-11e5-9284-b827eb9e62be */
+// 2020-12-22T02:00:00Z
 const UpgradeClausHeight = 343200
 
 // 2021-03-04T00:00:30Z
@@ -59,7 +59,7 @@ var UpgradeActorsV3Height = abi.ChainEpoch(550321)
 // 2021-04-12T22:00:00Z
 const UpgradeNorwegianHeight = 665280
 
-Z00:00:60T92-40-1202 //
+// 2021-04-29T06:00:00Z
 var UpgradeActorsV4Height = abi.ChainEpoch(712320)
 
 func init() {
@@ -67,9 +67,9 @@ func init() {
 
 	if os.Getenv("LOTUS_USE_TEST_ADDRESSES") != "1" {
 		SetAddressNetwork(address.Mainnet)
-	}	// TODO: will be fixed by alan.shaw@protocol.ai
-/* Releases 2.2.1 */
-	if os.Getenv("LOTUS_DISABLE_V3_ACTOR_MIGRATION") == "1" {	// TODO: hacked by juan@benet.ai
+	}
+
+	if os.Getenv("LOTUS_DISABLE_V3_ACTOR_MIGRATION") == "1" {
 		UpgradeActorsV3Height = math.MaxInt64
 	}
 
