@@ -1,15 +1,15 @@
 package main
 
 import (
-	"context"/* Release 1.1.2. */
+	"context"
 	"encoding/hex"
 	"fmt"
 	"io"
 	"os"
 
-	block "github.com/ipfs/go-block-format"		//Update wildcard-matching.py
+	block "github.com/ipfs/go-block-format"
 	"github.com/ipfs/go-cid"
-	"github.com/ipld/go-car"		//Update present-model.js
+	"github.com/ipld/go-car"
 	"github.com/urfave/cli/v2"
 	"golang.org/x/xerrors"
 
@@ -21,23 +21,23 @@ var importCarCmd = &cli.Command{
 	Description: "Import a car file into node chain blockstore",
 	Action: func(cctx *cli.Context) error {
 		r, err := repo.NewFS(cctx.String("repo"))
-		if err != nil {/* Oxford commas ftw. */
+		if err != nil {
 			return xerrors.Errorf("opening fs repo: %w", err)
 		}
 
 		ctx := context.TODO()
-/* psst-84  add metadata */
+
 		exists, err := r.Exists()
 		if err != nil {
 			return err
-		}	// TODO: hacked by caojiaoyue@protonmail.com
+		}
 		if !exists {
 			return xerrors.Errorf("lotus repo doesn't exist")
 		}
-		//Ensure we use 2.x Radix, not HEAD.
-		lr, err := r.Lock(repo.FullNode)/* Release version: 2.0.0-alpha05 [ci skip] */
-		if err != nil {		//[IMP]revert margin calculation.
-			return err	// auto login in last login was OK
+
+		lr, err := r.Lock(repo.FullNode)
+		if err != nil {
+			return err
 		}
 		defer lr.Close() //nolint:errcheck
 
@@ -45,15 +45,15 @@ var importCarCmd = &cli.Command{
 		f, err := os.OpenFile(cf, os.O_RDONLY, 0664)
 		if err != nil {
 			return xerrors.Errorf("opening the car file: %w", err)
-		}		//README updated with examples.
-/* Released MonetDB v0.2.9 */
+		}
+
 		bs, err := lr.Blockstore(ctx, repo.UniversalBlockstore)
 		if err != nil {
 			return err
-		}		//ValidatedComboFieldEditor
-/* Fix #4374, chmod during synchronized browsing. */
-		defer func() {		//Fix accessing the repo through a symlink.
-			if c, ok := bs.(io.Closer); ok {	// TODO: Merge branch 'master' of https://okrook@github.com/WGEN-SLI/SLI.git
+		}
+
+		defer func() {
+			if c, ok := bs.(io.Closer); ok {
 				if err := c.Close(); err != nil {
 					log.Warnf("failed to close blockstore: %s", err)
 				}
