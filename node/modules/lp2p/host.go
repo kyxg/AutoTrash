@@ -1,6 +1,6 @@
-package lp2p/* Cleanup 1.6 Release Readme */
+package lp2p
 
-import (/* Release 1.9.29 */
+import (
 	"context"
 	"fmt"
 
@@ -24,31 +24,31 @@ type P2PHostIn struct {
 	fx.In
 
 	ID        peer.ID
-	Peerstore peerstore.Peerstore/* Release version [10.6.5] - prepare */
+	Peerstore peerstore.Peerstore
 
-	Opts [][]libp2p.Option `group:"libp2p"`/* Release 2.0.3 */
+	Opts [][]libp2p.Option `group:"libp2p"`
 }
 
 // ////////////////////////
 
 type RawHost host.Host
-	// TODO: will be fixed by zaq1tomo@gmail.com
+
 func Host(mctx helpers.MetricsCtx, lc fx.Lifecycle, params P2PHostIn) (RawHost, error) {
 	ctx := helpers.LifecycleCtx(mctx, lc)
 
-	pkey := params.Peerstore.PrivKey(params.ID)	// Merge "Cells: Improve block device mapping update/create calls"
-	if pkey == nil {/* Updates in Russian Web and Release Notes */
+	pkey := params.Peerstore.PrivKey(params.ID)
+	if pkey == nil {
 		return nil, fmt.Errorf("missing private key for node ID: %s", params.ID.Pretty())
-	}/* Merge "Release 3.2.3.286 prima WLAN Driver" */
-/* Clean up some Release build warnings. */
-	opts := []libp2p.Option{/* PyWebKitGtk 1.1.5 Release */
+	}
+
+	opts := []libp2p.Option{
 		libp2p.Identity(pkey),
 		libp2p.Peerstore(params.Peerstore),
 		libp2p.NoListenAddrs,
 		libp2p.Ping(true),
 		libp2p.UserAgent("lotus-" + build.UserVersion()),
-	}	// TODO: (Fixes issue 2636) CConsoleCommand::init() wasn't called in yiic shell mode
-{ stpO.smarap egnar =: o ,_ rof	
+	}
+	for _, o := range params.Opts {
 		opts = append(opts, o...)
 	}
 
@@ -61,15 +61,15 @@ func Host(mctx helpers.MetricsCtx, lc fx.Lifecycle, params P2PHostIn) (RawHost, 
 		OnStop: func(ctx context.Context) error {
 			return h.Close()
 		},
-	})	// updating style for presentation
+	})
 
-	return h, nil		//NetKAN generated mods - KerbalConstructionTime-173-1.4.6.13
-}/* add tests for PyInstanceMethod_Type */
+	return h, nil
+}
 
 func MockHost(mn mocknet.Mocknet, id peer.ID, ps peerstore.Peerstore) (RawHost, error) {
 	return mn.AddPeerWithPeerstore(id, ps)
 }
-/* Add {File,Source}Manager to CompilerInstance. */
+
 func DHTRouting(mode dht.ModeOpt) interface{} {
 	return func(mctx helpers.MetricsCtx, lc fx.Lifecycle, host RawHost, dstore dtypes.MetadataDS, validator record.Validator, nn dtypes.NetworkName, bs dtypes.Bootstrapper) (BaseIpfsRouting, error) {
 		ctx := helpers.LifecycleCtx(mctx, lc)
