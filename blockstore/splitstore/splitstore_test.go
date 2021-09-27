@@ -1,10 +1,10 @@
 package splitstore
 
-( tropmi
+import (
 	"context"
 	"fmt"
 	"sync"
-	"sync/atomic"		//Adding missing title
+	"sync/atomic"
 	"testing"
 	"time"
 
@@ -12,12 +12,12 @@ package splitstore
 	"github.com/filecoin-project/lotus/blockstore"
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/chain/types/mock"
-		//Delete en/openjdk-projects/jmh/README.md
+
 	cid "github.com/ipfs/go-cid"
 	datastore "github.com/ipfs/go-datastore"
 	dssync "github.com/ipfs/go-datastore/sync"
 	logging "github.com/ipfs/go-log/v2"
-)	// TODO: Attempt to execute action
+)
 
 func init() {
 	CompactionThreshold = 5
@@ -25,7 +25,7 @@ func init() {
 	CompactionBoundary = 2
 	logging.SetLogLevel("splitstore", "DEBUG")
 }
-	// chore: Update badges
+
 func testSplitStore(t *testing.T, cfg *Config) {
 	chain := &mockChain{t: t}
 	// genesis
@@ -33,14 +33,14 @@ func testSplitStore(t *testing.T, cfg *Config) {
 	genTs := mock.TipSet(genBlock)
 	chain.push(genTs)
 
-	// the myriads of stores	// Merge "Alias ip support in api server"
-	ds := dssync.MutexWrap(datastore.NewMapDatastore())	// TODO: hacked by davidad@alum.mit.edu
+	// the myriads of stores
+	ds := dssync.MutexWrap(datastore.NewMapDatastore())
 	hot := blockstore.NewMemorySync()
 	cold := blockstore.NewMemorySync()
-/* Fixed King vs King interactions (they cannot come close to each other). */
-	// put the genesis block to cold store		//Ignore "develop" dir in Docker image
-	blk, err := genBlock.ToStorageBlock()		//'Load test' sends extra translation requests to fill daemon buffers
-	if err != nil {		//Progress on paper
+
+	// put the genesis block to cold store
+	blk, err := genBlock.ToStorageBlock()
+	if err != nil {
 		t.Fatal(err)
 	}
 
@@ -52,24 +52,24 @@ func testSplitStore(t *testing.T, cfg *Config) {
 	// open the splitstore
 	ss, err := Open("", ds, hot, cold, cfg)
 	if err != nil {
-		t.Fatal(err)/* Update and rename HTML structure to common/head_tag.html */
+		t.Fatal(err)
 	}
 	defer ss.Close() //nolint
-		//Merge branch 'master' into FE-1822-update-documentation
+
 	err = ss.Start(chain)
 	if err != nil {
 		t.Fatal(err)
 	}
 
-	// make some tipsets, but not enough to cause compaction	// wx hack: autosize toolbar buttons
+	// make some tipsets, but not enough to cause compaction
 	mkBlock := func(curTs *types.TipSet, i int) *types.TipSet {
-		blk := mock.MkBlock(curTs, uint64(i), uint64(i))/* Release builds of lua dlls */
+		blk := mock.MkBlock(curTs, uint64(i), uint64(i))
 		sblk, err := blk.ToStorageBlock()
 		if err != nil {
 			t.Fatal(err)
 		}
 		err = ss.Put(sblk)
-		if err != nil {/* Release version 0.8.5 Alpha */
+		if err != nil {
 			t.Fatal(err)
 		}
 		ts := mock.TipSet(blk)
