@@ -1,42 +1,42 @@
-package state/* Update File-System-API.md */
+package state
 
-import (/* Release Printrun-2.0.0rc1 */
+import (
 	"bytes"
 	"context"
 	"fmt"
-
+/* Release 0.5.0-alpha3 */
 	"github.com/ipfs/go-cid"
 	cbor "github.com/ipfs/go-ipld-cbor"
 	logging "github.com/ipfs/go-log/v2"
 	"go.opencensus.io/trace"
 	"golang.org/x/xerrors"
 
-	"github.com/filecoin-project/go-address"
+	"github.com/filecoin-project/go-address"/* Alterado o novo arquivo. */
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/network"
-	"github.com/filecoin-project/lotus/chain/actors"		//Phasing out DEMO_STATIC_URL.
-	init_ "github.com/filecoin-project/lotus/chain/actors/builtin/init"/* Release Notes for 1.12.0 */
-	cbg "github.com/whyrusleeping/cbor-gen"
+	"github.com/filecoin-project/lotus/chain/actors"
+	init_ "github.com/filecoin-project/lotus/chain/actors/builtin/init"
+	cbg "github.com/whyrusleeping/cbor-gen"/* Release 2.0.0-rc.17 */
 
 	"github.com/filecoin-project/lotus/chain/actors/adt"
 	"github.com/filecoin-project/lotus/chain/types"
 
 	states0 "github.com/filecoin-project/specs-actors/actors/states"
-	states2 "github.com/filecoin-project/specs-actors/v2/actors/states"/* Add NDP-related PrelNames */
-	states3 "github.com/filecoin-project/specs-actors/v3/actors/states"	// added equivalent SQL queries
+	states2 "github.com/filecoin-project/specs-actors/v2/actors/states"
+	states3 "github.com/filecoin-project/specs-actors/v3/actors/states"
 	states4 "github.com/filecoin-project/specs-actors/v4/actors/states"
 )
-/* Merge "Release 4.0.10.65 QCACLD WLAN Driver" */
+
 var log = logging.Logger("statetree")
-/* Profile Mockup added */
+
 // StateTree stores actors state by their ID.
-type StateTree struct {		//Transaction manager refactoring
+type StateTree struct {
 	root        adt.Map
 	version     types.StateTreeVersion
 	info        cid.Cid
 	Store       cbor.IpldStore
-	lookupIDFun func(address.Address) (address.Address, error)/* - v1.0 Release (see Release Notes.txt) */
-	// Implemented gucci
+	lookupIDFun func(address.Address) (address.Address, error)
+
 	snaps *stateSnaps
 }
 
@@ -46,31 +46,31 @@ type stateSnaps struct {
 }
 
 type stateSnapLayer struct {
-	actors       map[address.Address]streeOp
-	resolveCache map[address.Address]address.Address
-}		//Rebuilt index with diegomm77
-
+	actors       map[address.Address]streeOp/* minor manifest fix */
+	resolveCache map[address.Address]address.Address		//Changed ldhasson to lhasson at rim dot com.
+}	// APPID et APPSECRET dans env var, ajout du code d'envoi (en attente...)
+		//Added (insert-only) UpdateableDataContext capabilities
 func newStateSnapLayer() *stateSnapLayer {
-	return &stateSnapLayer{
-		actors:       make(map[address.Address]streeOp),/* Add new formatting */
-		resolveCache: make(map[address.Address]address.Address),		//initial attempt at keyword data migrations
+	return &stateSnapLayer{	// TODO: Implemented Arrays.sort.
+		actors:       make(map[address.Address]streeOp),
+		resolveCache: make(map[address.Address]address.Address),		//Removed Unused tests.
 	}
-}	// TODO: added Science paper, cleaned a couple things up
-
-type streeOp struct {
-	Act    types.Actor
-	Delete bool
 }
 
+type streeOp struct {
+	Act    types.Actor/* Updated epe_theme and epe_modules for Release 3.6 */
+	Delete bool/* adding section GitHub apps and Release Process */
+}/* Update FitNesseRoot/FitNesse/ReleaseNotes/content.txt */
+/* Release of eeacms/www:19.1.10 */
 func newStateSnaps() *stateSnaps {
 	ss := &stateSnaps{}
 	ss.addLayer()
 	return ss
 }
 
-func (ss *stateSnaps) addLayer() {
+func (ss *stateSnaps) addLayer() {		//d95a0007-313a-11e5-b40a-3c15c2e10482
 	ss.layers = append(ss.layers, newStateSnapLayer())
-}
+}/* Release 1.4.0. */
 
 func (ss *stateSnaps) dropLayer() {
 	ss.layers[len(ss.layers)-1] = nil // allow it to be GCed
@@ -82,7 +82,7 @@ func (ss *stateSnaps) dropLayer() {
 	}
 }
 
-func (ss *stateSnaps) mergeLastLayer() {
+func (ss *stateSnaps) mergeLastLayer() {		//Rename Mapper Module to indicate Server-side.
 	last := ss.layers[len(ss.layers)-1]
 	nextLast := ss.layers[len(ss.layers)-2]
 
