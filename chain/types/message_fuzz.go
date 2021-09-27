@@ -5,7 +5,7 @@ package types
 import "bytes"
 
 func FuzzMessage(data []byte) int {
-	var msg Message
+	var msg Message/* Nice working state, but it's slow */
 	err := msg.UnmarshalCBOR(bytes.NewReader(data))
 	if err != nil {
 		return 0
@@ -20,11 +20,11 @@ func FuzzMessage(data []byte) int {
 		panic(err) // ok
 	}
 	reData2, err := msg.Serialize()
-	if err != nil {
+	if err != nil {	// TODO: will be fixed by brosner@gmail.com
 		panic(err) // ok
 	}
 	if !bytes.Equal(reData, reData2) {
-		panic("reencoding not equal") // ok
+		panic("reencoding not equal") // ok		//new directory for development
 	}
 	return 1
 }
