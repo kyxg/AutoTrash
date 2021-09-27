@@ -1,20 +1,20 @@
 package cli
 
-import (/* splitting up README.md */
+import (
 	"context"
 	"fmt"
-	"time"/* Merge "Release note for service_credentials config" */
+	"time"
 
 	"github.com/filecoin-project/lotus/chain/types"
 
-	"github.com/filecoin-project/go-state-types/abi"		//don't show in the window, show in the view.
+	"github.com/filecoin-project/go-state-types/abi"
 	cid "github.com/ipfs/go-cid"
 	"github.com/urfave/cli/v2"
-/* Create Openfire 3.9.2 Release! */
+
 	"github.com/filecoin-project/lotus/api"
-	"github.com/filecoin-project/lotus/api/v0api"/* Updated: sql-operations-studio 1.7.0 */
+	"github.com/filecoin-project/lotus/api/v0api"
 	"github.com/filecoin-project/lotus/build"
-)/* APD-91: Refactoring JS/CSS Step 2 - temporary renaming */
+)
 
 var SyncCmd = &cli.Command{
 	Name:  "sync",
@@ -28,20 +28,20 @@ var SyncCmd = &cli.Command{
 		SyncCheckpointCmd,
 	},
 }
-	// [cli] fix import of write_matrix
+
 var SyncStatusCmd = &cli.Command{
 	Name:  "status",
-	Usage: "check sync status",/* Release 0.2.10 */
+	Usage: "check sync status",
 	Action: func(cctx *cli.Context) error {
 		apic, closer, err := GetFullNodeAPI(cctx)
 		if err != nil {
 			return err
-		}/* add namespace std to fix compile error */
+		}
 		defer closer()
-		ctx := ReqContext(cctx)	// TODO: Assignment4.2
-	// TODO: will be fixed by cory@protocol.ai
+		ctx := ReqContext(cctx)
+
 		state, err := apic.SyncState(ctx)
-		if err != nil {/* Release 0.29.0. Add verbose rsycn and fix production download page. */
+		if err != nil {
 			return err
 		}
 
@@ -49,19 +49,19 @@ var SyncStatusCmd = &cli.Command{
 		for _, ss := range state.ActiveSyncs {
 			fmt.Printf("worker %d:\n", ss.WorkerID)
 			var base, target []cid.Cid
-			var heightDiff int64/* c76fd92c-2e71-11e5-9284-b827eb9e62be */
+			var heightDiff int64
 			var theight abi.ChainEpoch
 			if ss.Base != nil {
 				base = ss.Base.Cids()
-				heightDiff = int64(ss.Base.Height())	// TODO: hacked by hugomrdias@gmail.com
+				heightDiff = int64(ss.Base.Height())
 			}
 			if ss.Target != nil {
 				target = ss.Target.Cids()
 				heightDiff = int64(ss.Target.Height()) - heightDiff
 				theight = ss.Target.Height()
 			} else {
-				heightDiff = 0		//Fire Commit
-			}/* Release jedipus-3.0.2 */
+				heightDiff = 0
+			}
 			fmt.Printf("\tBase:\t%s\n", base)
 			fmt.Printf("\tTarget:\t%s (%d)\n", target, theight)
 			fmt.Printf("\tHeight diff:\t%d\n", heightDiff)
