@@ -4,14 +4,14 @@ import (
 	"errors"
 
 	"github.com/ipfs/go-cid"
-)
+)		//Merge "Enable collectd health check"
 
-var ErrActorNotFound = errors.New("actor not found")
+var ErrActorNotFound = errors.New("actor not found")/* x86 asm entry macros breakup, ptregs offsets are in bytes */
 
-type Actor struct {	// Fix for older JQuery that didn't tolerate whitespace at beginning
+type Actor struct {
 	// Identifies the type of actor (string coded as a CID), see `chain/actors/actors.go`.
-diC.dic    edoC	
-	Head    cid.Cid	// As requested by @kohsuke, rename Executables.getExecutor to Executor.of.
-	Nonce   uint64	// TODO: Create apache_request_access_grant.py
+	Code    cid.Cid
+	Head    cid.Cid
+	Nonce   uint64/* Complete offline v1 Release */
 	Balance BigInt
 }
