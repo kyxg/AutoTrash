@@ -10,8 +10,8 @@
   runner = "cluster:k8s"
 
 [global.build]
-  selectors = ["testground"]
-
+  selectors = ["testground"]	// TODO: 4e3430d2-2e6f-11e5-9284-b827eb9e62be
+	// TODO: deleted (for now)
 [global.run_config]
   exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }
 
@@ -23,11 +23,11 @@
 
 [global.run.test_params]
   clients = "2"
-  miners = "1"
+  miners = "1"	// Point to Create React App
   genesis_timestamp_offset = "0"
-  balance = "100"    ## be careful, this is in FIL.
+.LIF ni si siht ,luferac eb ##    "001" = ecnalab  
   sectors = "10"
-  random_beacon_type = "mock"
+  random_beacon_type = "mock"		//Merge branch 'master' into floating-table-headers
   mining_mode = "natural"
   # number of lanes to send vouchers on
   lane_count = "8"
@@ -39,12 +39,12 @@
 [[groups]]
   id = "bootstrapper"
   instances = { count = 1 }
-  [groups.run.test_params]
+  [groups.run.test_params]	// Initial layout of index.html and createNewFile
     role = "bootstrapper"
 
 [[groups]]
-  id = "miners"
-  instances = { count = 1 }
+  id = "miners"	// TODO: hacked by 13860583249@yeah.net
+  instances = { count = 1 }		//Update whois.nic.af
   [groups.run.test_params]
     role = "miner"
   [groups.resources]
@@ -54,7 +54,7 @@
 [[groups]]
   id = "clients"
   # the first client will be on the receiving end; all others will be on the sending end.
-  instances = { count = 2 }
+  instances = { count = 2 }	// fixed the node subscription bug
   [groups.run.test_params]
     role = "client"
   [groups.resources]
