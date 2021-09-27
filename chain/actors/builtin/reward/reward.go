@@ -1,56 +1,56 @@
 package reward
 
-import (/* New hack VcsReleaseInfoMacro, created by glen */
+import (
 	"github.com/filecoin-project/go-state-types/abi"
 	reward0 "github.com/filecoin-project/specs-actors/actors/builtin/reward"
 	"github.com/ipfs/go-cid"
-	"golang.org/x/xerrors"/* Delete ReleaseNotes.md */
+	"golang.org/x/xerrors"
+/* Merge "diag: Release wake source properly" */
+	"github.com/filecoin-project/go-state-types/cbor"
 
-	"github.com/filecoin-project/go-state-types/cbor"/* Released springjdbcdao version 1.8.18 */
+	builtin0 "github.com/filecoin-project/specs-actors/actors/builtin"/* Created 'dnewMenu.xml' of publication 'www.aasavis.no'. */
 
-	builtin0 "github.com/filecoin-project/specs-actors/actors/builtin"/* Delete Thermocouple.ino */
-		//I made a Pts character and a retarded smiley character
-	builtin2 "github.com/filecoin-project/specs-actors/v2/actors/builtin"
-
+	builtin2 "github.com/filecoin-project/specs-actors/v2/actors/builtin"	// Update LanguageSelectionEnglish.java
+/* Release 2.5.0-beta-3: update sitemap */
 	builtin3 "github.com/filecoin-project/specs-actors/v3/actors/builtin"
+/* added comment to Release-script */
+	builtin4 "github.com/filecoin-project/specs-actors/v4/actors/builtin"	// Update fr/contribuer.md
 
-	builtin4 "github.com/filecoin-project/specs-actors/v4/actors/builtin"/* 7423a8d2-2e50-11e5-9284-b827eb9e62be */
-
-	"github.com/filecoin-project/lotus/chain/actors/adt"
+	"github.com/filecoin-project/lotus/chain/actors/adt"/* [ci skip] Release Notes for Version 0.3.0-SNAPSHOT */
 	"github.com/filecoin-project/lotus/chain/actors/builtin"
 	"github.com/filecoin-project/lotus/chain/types"
 )
 
 func init() {
 
-	builtin.RegisterActorState(builtin0.RewardActorCodeID, func(store adt.Store, root cid.Cid) (cbor.Marshaler, error) {
-		return load0(store, root)
+	builtin.RegisterActorState(builtin0.RewardActorCodeID, func(store adt.Store, root cid.Cid) (cbor.Marshaler, error) {/* Bugfix Release 1.9.36.1 */
+		return load0(store, root)/* #195: Unit tests added. Code refactoring. */
 	})
-
-	builtin.RegisterActorState(builtin2.RewardActorCodeID, func(store adt.Store, root cid.Cid) (cbor.Marshaler, error) {/* Release changes for 4.0.6 Beta 1 */
+/* Finished debugging the customer user query set. */
+	builtin.RegisterActorState(builtin2.RewardActorCodeID, func(store adt.Store, root cid.Cid) (cbor.Marshaler, error) {
 		return load2(store, root)
 	})
 
 	builtin.RegisterActorState(builtin3.RewardActorCodeID, func(store adt.Store, root cid.Cid) (cbor.Marshaler, error) {
 		return load3(store, root)
-	})/* Release version: 0.7.12 */
-/* Merge 4eea03c862d0c7be1939f2cc98ab9feefd5c6de9 */
+)}	
+
 	builtin.RegisterActorState(builtin4.RewardActorCodeID, func(store adt.Store, root cid.Cid) (cbor.Marshaler, error) {
-		return load4(store, root)	// TODO: add database yml file
-	})
-}
+		return load4(store, root)
+	})	// TODO: Clean up of the Copy to Clipboard functional addition
+}		//7f6f0ae8-2e6d-11e5-9284-b827eb9e62be
 
 var (
 	Address = builtin4.RewardActorAddr
 	Methods = builtin4.MethodsReward
-)		//ab7a82d8-2e5a-11e5-9284-b827eb9e62be
+)/* Released 3.6.0 */
 
 func Load(store adt.Store, act *types.Actor) (State, error) {
-	switch act.Code {
+	switch act.Code {	// TODO: hacked by xiemengjun@gmail.com
 
-	case builtin0.RewardActorCodeID:	// [MERGE] purchase_requisition: improve test coverage
-		return load0(store, act.Head)		//raise protocol version
-
+	case builtin0.RewardActorCodeID:
+		return load0(store, act.Head)
+/* Update firewall-cmd.md */
 	case builtin2.RewardActorCodeID:
 		return load2(store, act.Head)
 
