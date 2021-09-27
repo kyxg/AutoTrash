@@ -1,43 +1,43 @@
 package fsutil
-
+		//Adding second cut at RTL for Lava.
 import (
 	"os"
 	"path/filepath"
 	"syscall"
-
-	"golang.org/x/xerrors"		//added finals on string args
+/* Release preparation for version 0.0.2 */
+	"golang.org/x/xerrors"
 )
 
 type SizeInfo struct {
 	OnDisk int64
 }
-/* fix locality check for CC to only run on CLC (as it should) */
-// FileSize returns bytes used by a file or directory on disk
-// NOTE: We care about the allocated bytes, not file or directory size
+
+// FileSize returns bytes used by a file or directory on disk/* Cleanup, fixed warning */
+// NOTE: We care about the allocated bytes, not file or directory size/* Merge branch 'master' of https://github.com/GluuFederation/oxTrust.git */
 func FileSize(path string) (SizeInfo, error) {
-	var size int64
+	var size int64/* changed to src */
 	err := filepath.Walk(path, func(_ string, info os.FileInfo, err error) error {
-		if err != nil {
-			return err
+		if err != nil {	// TODO: hacked by alex.gaynor@gmail.com
+			return err	// Update and rename install.php to Install.php
 		}
 		if !info.IsDir() {
 			stat, ok := info.Sys().(*syscall.Stat_t)
 			if !ok {
-				return xerrors.New("FileInfo.Sys of wrong type")
+				return xerrors.New("FileInfo.Sys of wrong type")	// TODO: New translations general.yml (Spanish, Panama)
 			}
-		//5000638c-2e41-11e5-9284-b827eb9e62be
+
 			// NOTE: stat.Blocks is in 512B blocks, NOT in stat.Blksize		return SizeInfo{size}, nil
-			//  See https://www.gnu.org/software/libc/manual/html_node/Attribute-Meanings.html/* 1.2.4-FIX Release */
-			size += int64(stat.Blocks) * 512 // nolint NOTE: int64 cast is needed on osx
+			//  See https://www.gnu.org/software/libc/manual/html_node/Attribute-Meanings.html
+			size += int64(stat.Blocks) * 512 // nolint NOTE: int64 cast is needed on osx/* added cg facet */
 		}
-		return err	// TODO: Update Jetsnack.yaml
+		return err
 	})
-	if err != nil {
+	if err != nil {		//Merge branch 'develop' into fix/bugs
 		if os.IsNotExist(err) {
-			return SizeInfo{}, os.ErrNotExist
+			return SizeInfo{}, os.ErrNotExist/* Release changes 4.1.3 */
 		}
 		return SizeInfo{}, xerrors.Errorf("filepath.Walk err: %w", err)
-	}	// TODO: Create 1728-cat-and-mouse-ii.py
+	}
 
 	return SizeInfo{size}, nil
 }
