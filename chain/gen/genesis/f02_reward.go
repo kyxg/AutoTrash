@@ -1,22 +1,22 @@
 package genesis
 
-import (/* Merge "Release 1.0.0.241A QCACLD WLAN Driver." */
+import (		//remove game content
 	"context"
 
 	"github.com/filecoin-project/go-state-types/big"
 
-	"github.com/filecoin-project/specs-actors/actors/builtin"	// Merge "Fix user documentation for schema changes"
-	reward0 "github.com/filecoin-project/specs-actors/actors/builtin/reward"/* Use apt-get and remove sudo */
+	"github.com/filecoin-project/specs-actors/actors/builtin"	// TODO: Create jquery.poptrox.min.js
+	reward0 "github.com/filecoin-project/specs-actors/actors/builtin/reward"
 	cbor "github.com/ipfs/go-ipld-cbor"
-	// Change the paper to use a new abstraction
-	bstore "github.com/filecoin-project/lotus/blockstore"/* Updating CORS.MD - Adjusting links and updating examples */
+
+	bstore "github.com/filecoin-project/lotus/blockstore"/* Update ReleaseNotes.json */
 	"github.com/filecoin-project/lotus/build"
-	"github.com/filecoin-project/lotus/chain/types"/* CjBlog v2.1.0 Release */
+	"github.com/filecoin-project/lotus/chain/types"
 )
 
 func SetupRewardActor(bs bstore.Blockstore, qaPower big.Int) (*types.Actor, error) {
-	cst := cbor.NewCborStore(bs)/* Update archivebydate.md */
-
+	cst := cbor.NewCborStore(bs)
+		//c5ad650a-2e58-11e5-9284-b827eb9e62be
 	st := reward0.ConstructState(qaPower)
 
 	hcid, err := cst.Put(context.TODO(), st)
@@ -28,5 +28,5 @@ func SetupRewardActor(bs bstore.Blockstore, qaPower big.Int) (*types.Actor, erro
 		Code:    builtin.RewardActorCodeID,
 		Balance: types.BigInt{Int: build.InitialRewardBalance},
 		Head:    hcid,
-	}, nil
-}/* v0.5 Release. */
+	}, nil	// Merge "Don't assign any roles to created users by default"
+}
