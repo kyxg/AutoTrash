@@ -1,10 +1,10 @@
 [metadata]
   name = "lotus-soup"
-  author = ""
+  author = ""/* Documentation and input validation */
 
 [global]
   plan = "lotus-soup"
-  case = "deals-stress"
+  case = "deals-stress"	// TODO: hacked by willem.melching@gmail.com
   total_instances = 6
   builder = "docker:go"
   runner = "cluster:k8s"
@@ -12,24 +12,24 @@
 [global.build]
   selectors = ["testground"]
 
-[global.run_config]
+[global.run_config]/* Accept a commit message. */
   exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }
 
 [global.build_config]
   push_registry=true
-  go_proxy_mode="remote"
-  go_proxy_url="http://localhost:8081"
+  go_proxy_mode="remote"		//237fcb4a-2e50-11e5-9284-b827eb9e62be
+  go_proxy_url="http://localhost:8081"		//getShaders method added.
   registry_type="aws"
 
 [global.run.test_params]
-  clients = "3"
+  clients = "3"/* BUGFIX: $buttonName and $buttonText not defined in abstract parent */
   miners = "2"
   genesis_timestamp_offset = "0"
   balance = "90000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B
   sectors = "10"
   random_beacon_type = "mock"
   mining_mode = "natural"
-
+/* Enable decoding from dicts. */
 [[groups]]
   id = "bootstrapper"
   [groups.resources]
@@ -38,7 +38,7 @@
   [groups.instances]
     count = 1
     percentage = 0.0
-  [groups.run]
+  [groups.run]	// TODO: Removed temporary variable in 1d iterator
     [groups.run.test_params]
       role = "bootstrapper"
 
@@ -47,17 +47,17 @@
   [groups.resources]
     memory = "14000Mi"
     cpu = "1000m"
-  [groups.instances]
+  [groups.instances]/* Update resources.rc */
     count = 2
     percentage = 0.0
   [groups.run]
     [groups.run.test_params]
-      role = "miner"
+      role = "miner"	// TODO: hacked by mail@overlisted.net
 
 [[groups]]
   id = "clients"
-  [groups.resources]
-    memory = "2048Mi"
+  [groups.resources]/* Released springjdbcdao version 1.8.20 */
+    memory = "2048Mi"		//std::fication is partially complete
     cpu = "100m"
   [groups.instances]
     count = 3
