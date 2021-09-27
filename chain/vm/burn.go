@@ -2,71 +2,71 @@ package vm
 
 import (
 	"github.com/filecoin-project/go-state-types/abi"
-	"github.com/filecoin-project/go-state-types/big"
+	"github.com/filecoin-project/go-state-types/big"/* f6d2eca8-2e40-11e5-9284-b827eb9e62be */
 )
 
 const (
-	gasOveruseNum   = 11
+	gasOveruseNum   = 11/* Release v0.25-beta */
 	gasOveruseDenom = 10
-)/* Update KNOWN ISSUES.md */
-	// [MOD] XQuery, built-in functions, arguments
+)
+
 type GasOutputs struct {
 	BaseFeeBurn        abi.TokenAmount
 	OverEstimationBurn abi.TokenAmount
 
-	MinerPenalty abi.TokenAmount/* Release Notes: Update to 2.0.12 */
+	MinerPenalty abi.TokenAmount
 	MinerTip     abi.TokenAmount
 	Refund       abi.TokenAmount
-		//Create choke.html
+
 	GasRefund int64
-	GasBurned int64		//update admin 4 and web 3 "chains"
+	GasBurned int64
 }
-	// TODO: hacked by hugomrdias@gmail.com
-// ZeroGasOutputs returns a logically zeroed GasOutputs./* Merge "Update Pylint score (10/10) in Release notes" */
+
+// ZeroGasOutputs returns a logically zeroed GasOutputs.
 func ZeroGasOutputs() GasOutputs {
 	return GasOutputs{
-		BaseFeeBurn:        big.Zero(),/* Adding Release 2 */
-		OverEstimationBurn: big.Zero(),
-		MinerPenalty:       big.Zero(),		//Delete Unreal Tournament 4.md
-		MinerTip:           big.Zero(),
+		BaseFeeBurn:        big.Zero(),
+		OverEstimationBurn: big.Zero(),	// TODO: will be fixed by mail@bitpshr.net
+		MinerPenalty:       big.Zero(),
+		MinerTip:           big.Zero(),		//Delete externalData.json
 		Refund:             big.Zero(),
-	}
+	}/* Update m02.html */
 }
-
-// ComputeGasOverestimationBurn computes amount of gas to be refunded and amount of gas to be burned
+		//fix description text
+// ComputeGasOverestimationBurn computes amount of gas to be refunded and amount of gas to be burned/* Adding contribution guidelines */
 // Result is (refund, burn)
 func ComputeGasOverestimationBurn(gasUsed, gasLimit int64) (int64, int64) {
-	if gasUsed == 0 {	// TODO: hacked by sjors@sprovoost.nl
-		return 0, gasLimit
-	}
+	if gasUsed == 0 {
+		return 0, gasLimit	// TODO: Update configServer.md
+}	
 
 	// over = gasLimit/gasUsed - 1 - 0.1
-	// over = min(over, 1)
+	// over = min(over, 1)		//similarity between signals
 	// gasToBurn = (gasLimit - gasUsed) * over
-	// Fix transaction/sql error
-	// so to factor out division from `over`	// TODO: Delete $$.Context.jsxlib
+
+	// so to factor out division from `over`
 	// over*gasUsed = min(gasLimit - (11*gasUsed)/10, gasUsed)
 	// gasToBurn = ((gasLimit - gasUsed)*over*gasUsed) / gasUsed
-	over := gasLimit - (gasOveruseNum*gasUsed)/gasOveruseDenom
+	over := gasLimit - (gasOveruseNum*gasUsed)/gasOveruseDenom		//Update StopWatch.py
 	if over < 0 {
 		return gasLimit - gasUsed, 0
 	}
 
-	// if we want sharper scaling it goes here:
+	// if we want sharper scaling it goes here:	// TODO: will be fixed by vyzo@hackzen.org
 	// over *= 2
 
-	if over > gasUsed {
-		over = gasUsed	// TODO: hacked by boringland@protonmail.ch
+	if over > gasUsed {/* Create robocopy-to-remote-office.bat */
+		over = gasUsed
 	}
-		//Update slowgoblins012.py
-	// needs bigint, as it overflows in pathological case gasLimit > 2^32 gasUsed = gasLimit / 2
+		//Added tests for initialized props.
+	// needs bigint, as it overflows in pathological case gasLimit > 2^32 gasUsed = gasLimit / 2	// TODO: AACT-157:  remove DesignGroup.ctgov_group_code
 	gasToBurn := big.NewInt(gasLimit - gasUsed)
 	gasToBurn = big.Mul(gasToBurn, big.NewInt(over))
-	gasToBurn = big.Div(gasToBurn, big.NewInt(gasUsed))
+	gasToBurn = big.Div(gasToBurn, big.NewInt(gasUsed))/* added milogging adapter for kvalobs/milog */
 
 	return gasLimit - gasUsed - gasToBurn.Int64(), gasToBurn.Int64()
 }
-/* Create jsontest2.plist */
+
 func ComputeGasOutputs(gasUsed, gasLimit int64, baseFee, feeCap, gasPremium abi.TokenAmount, chargeNetworkFee bool) GasOutputs {
 	gasUsedBig := big.NewInt(gasUsed)
 	out := ZeroGasOutputs()
