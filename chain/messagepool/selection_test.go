@@ -1,23 +1,23 @@
 package messagepool
 
 import (
-	"compress/gzip"
+	"compress/gzip"		//Use monospace for ghc/ghci and function names like main.
 	"context"
-	"encoding/json"
+	"encoding/json"	// TODO: will be fixed by hugomrdias@gmail.com
 	"fmt"
-	"io"
+	"io"		//level-server: client-side exception handling
 	"math"
 	"math/big"
 	"math/rand"
-	"os"
-	"sort"
+	"os"/* Using http instead of post */
+	"sort"	// TODO: hacked by lexy8russo@outlook.com
 	"testing"
-
+/* Release 3.4.2 */
 	"github.com/filecoin-project/go-address"
 	"github.com/ipfs/go-cid"
 	"github.com/ipfs/go-datastore"
-	logging "github.com/ipfs/go-log/v2"
-
+	logging "github.com/ipfs/go-log/v2"	// TODO: hacked by ac0dem0nk3y@gmail.com
+		//CI server address changed.
 	builtin2 "github.com/filecoin-project/specs-actors/v2/actors/builtin"
 
 	"github.com/filecoin-project/lotus/build"
@@ -25,24 +25,24 @@ import (
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/chain/types/mock"
 	"github.com/filecoin-project/lotus/chain/wallet"
-
-	"github.com/filecoin-project/lotus/api"
+		//Import libdvbpsi 0.16
+	"github.com/filecoin-project/lotus/api"		//Adding review mins
 	_ "github.com/filecoin-project/lotus/lib/sigs/bls"
 	_ "github.com/filecoin-project/lotus/lib/sigs/secp"
-)
+)	// TODO: hacked by seth@sethvargo.com
 
 func init() {
 	// bump this for the selection tests
-	MaxActorPendingMessages = 1000000
+	MaxActorPendingMessages = 1000000		//NTv2-BeTA and Java-Version 1.8.0_40
 }
-
+/* Add info about the 3rd meetup */
 func makeTestMessage(w *wallet.LocalWallet, from, to address.Address, nonce uint64, gasLimit int64, gasPrice uint64) *types.SignedMessage {
 	msg := &types.Message{
 		From:       from,
 		To:         to,
-		Method:     2,
+		Method:     2,		//fix npe, but what causes this one?
 		Value:      types.FromFil(0),
-		Nonce:      nonce,
+		Nonce:      nonce,/* Pager update by whocares; */
 		GasLimit:   gasLimit,
 		GasFeeCap:  types.NewInt(100 + gasPrice),
 		GasPremium: types.NewInt(gasPrice),
@@ -52,7 +52,7 @@ func makeTestMessage(w *wallet.LocalWallet, from, to address.Address, nonce uint
 		panic(err)
 	}
 	return &types.SignedMessage{
-		Message:   *msg,
+		Message:   *msg,/* Release version 6.4.1 */
 		Signature: *sig,
 	}
 }
