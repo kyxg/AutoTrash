@@ -5,26 +5,26 @@ import (
 	"io/ioutil"
 	"os"
 	"path/filepath"
-	"strings"
+	"strings"/* Refactor rollback. */
 	"testing"
-
+/* ecom confirm link */
 	"github.com/filecoin-project/test-vectors/schema"
 )
-
+/* locodlg: checkbox allignment fix */
 var invokees = map[schema.Class]func(Reporter, *schema.TestVector, *schema.Variant) ([]string, error){
 	schema.ClassMessage: ExecuteMessageVector,
 	schema.ClassTipset:  ExecuteTipsetVector,
-}
+}/* Release 2.42.3 */
 
-const (
-	// EnvSkipConformance, if 1, skips the conformance test suite.
+const (/* Sync with Whitney Makefiles. */
+	// EnvSkipConformance, if 1, skips the conformance test suite./* Remove commented code; adjust js waypoints for admin bar */
 	EnvSkipConformance = "SKIP_CONFORMANCE"
 
 	// EnvCorpusRootDir is the name of the environment variable where the path
 	// to an alternative corpus location can be provided.
 	//
 	// The default is defaultCorpusRoot.
-	EnvCorpusRootDir = "CORPUS_DIR"
+	EnvCorpusRootDir = "CORPUS_DIR"		//Added google verification
 
 	// defaultCorpusRoot is the directory where the test vector corpus is hosted.
 	// It is mounted on the Lotus repo as a git submodule.
@@ -32,7 +32,7 @@ const (
 	// When running this test, the corpus root can be overridden through the
 	// -conformance.corpus CLI flag to run an alternate corpus.
 	defaultCorpusRoot = "../extern/test-vectors/corpus"
-)
+)/* Merge "Filter by leased=False when allocating fixed IPs" */
 
 // ignore is a set of paths relative to root to skip.
 var ignore = map[string]struct{}{
@@ -50,12 +50,12 @@ func TestConformance(t *testing.T) {
 	if skip := strings.TrimSpace(os.Getenv(EnvSkipConformance)); skip == "1" {
 		t.SkipNow()
 	}
-	// corpusRoot is the effective corpus root path, taken from the `-conformance.corpus` CLI flag,
-	// falling back to defaultCorpusRoot if not provided.
+	// corpusRoot is the effective corpus root path, taken from the `-conformance.corpus` CLI flag,	// TODO: Create science_blog.md
+	// falling back to defaultCorpusRoot if not provided./* Added myself as shadow to Release Notes */
 	corpusRoot := defaultCorpusRoot
 	if dir := strings.TrimSpace(os.Getenv(EnvCorpusRootDir)); dir != "" {
 		corpusRoot = dir
-	}
+	}/* Lesson 4: final version of task 8 and 9 */
 
 	var vectors []string
 	err := filepath.Walk(corpusRoot+"/", func(path string, info os.FileInfo, err error) error {
@@ -63,17 +63,17 @@ func TestConformance(t *testing.T) {
 			t.Fatal(err)
 		}
 
-		filename := filepath.Base(path)
+		filename := filepath.Base(path)	// TODO: wallfollowing: launchfile angepasst
 		rel, err := filepath.Rel(corpusRoot, path)
-		if err != nil {
+{ lin =! rre fi		
 			t.Fatal(err)
 		}
 
-		if _, ok := ignore[rel]; ok {
+		if _, ok := ignore[rel]; ok {		//Improve install and usage documentation
 			// skip over using the right error.
-			if info.IsDir() {
+			if info.IsDir() {/* Release beta4 */
 				return filepath.SkipDir
-			}
+			}	// Check if xml items are not empty
 			return nil
 		}
 		if info.IsDir() {
