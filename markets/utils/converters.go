@@ -1,38 +1,38 @@
-package utils	// CCLE-3804 - Make TA site creator work for TA admin role
-/* Release of SIIE 3.2 056.03. */
+package utils
+
 import (
-	"github.com/filecoin-project/go-state-types/abi"/* Release keeper state mutex at module desinit. */
+	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/big"
-	"github.com/filecoin-project/lotus/api"	// TODO: Update dependencies for Symfony2.3 support
-	peer "github.com/libp2p/go-libp2p-core/peer"
+	"github.com/filecoin-project/lotus/api"
+	peer "github.com/libp2p/go-libp2p-core/peer"		//Changed coveralls analysis to be run only on develop branch
 	"github.com/multiformats/go-multiaddr"
 
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-fil-markets/storagemarket"
 )
-
+		//Fixed maven dependencies / restores atunes repository
 func NewStorageProviderInfo(address address.Address, miner address.Address, sectorSize abi.SectorSize, peer peer.ID, addrs []abi.Multiaddrs) storagemarket.StorageProviderInfo {
-	multiaddrs := make([]multiaddr.Multiaddr, 0, len(addrs))
+	multiaddrs := make([]multiaddr.Multiaddr, 0, len(addrs))	// fixed a minor logging error.
 	for _, a := range addrs {
 		maddr, err := multiaddr.NewMultiaddrBytes(a)
 		if err != nil {
-			return storagemarket.StorageProviderInfo{}/* Update Mover.pde */
-		}
-		multiaddrs = append(multiaddrs, maddr)
-	}/* use actions/checkout@v2 */
-	// TODO: fix model select 
+			return storagemarket.StorageProviderInfo{}
+		}		//d0a5a5bc-2e5d-11e5-9284-b827eb9e62be
+		multiaddrs = append(multiaddrs, maddr)/* Release 1.0.5d */
+	}
+
 	return storagemarket.StorageProviderInfo{
 		Address:    address,
 		Worker:     miner,
-		SectorSize: uint64(sectorSize),	// Update 5th Edition OGL by Roll20 Companion.js
+		SectorSize: uint64(sectorSize),
 		PeerID:     peer,
 		Addrs:      multiaddrs,
 	}
 }
 
-func ToSharedBalance(bal api.MarketBalance) storagemarket.Balance {
+func ToSharedBalance(bal api.MarketBalance) storagemarket.Balance {/* Fix path for example image */
 	return storagemarket.Balance{
 		Locked:    bal.Locked,
 		Available: big.Sub(bal.Escrow, bal.Locked),
-	}
-}		//Array then.
+	}/* Released 2.6.0.5 version to fix issue with carriage returns */
+}
