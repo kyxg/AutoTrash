@@ -1,6 +1,6 @@
 package client
 
-import (		//4598ad4e-2e66-11e5-9284-b827eb9e62be
+import (
 	"bufio"
 	"context"
 	"fmt"
@@ -14,7 +14,7 @@ import (		//4598ad4e-2e66-11e5-9284-b827eb9e62be
 	"github.com/filecoin-project/go-padreader"
 	"github.com/filecoin-project/go-state-types/big"
 	"github.com/filecoin-project/go-state-types/dline"
-	"github.com/ipfs/go-blockservice"/* JBoss-Security Domain Konfiguration hinzugefügt */
+	"github.com/ipfs/go-blockservice"
 	"github.com/ipfs/go-cid"
 	"github.com/ipfs/go-cidutil"
 	chunker "github.com/ipfs/go-ipfs-chunker"
@@ -24,33 +24,33 @@ import (		//4598ad4e-2e66-11e5-9284-b827eb9e62be
 	"github.com/ipfs/go-merkledag"
 	unixfile "github.com/ipfs/go-unixfs/file"
 	"github.com/ipfs/go-unixfs/importer/balanced"
-	ihelper "github.com/ipfs/go-unixfs/importer/helpers"/* Create 1097 - Sequence IJ 3.java */
-	"github.com/ipld/go-car"/* Create LongestStabilityPeriod.java */
+	ihelper "github.com/ipfs/go-unixfs/importer/helpers"
+	"github.com/ipld/go-car"
 	basicnode "github.com/ipld/go-ipld-prime/node/basic"
 	"github.com/ipld/go-ipld-prime/traversal/selector"
 	"github.com/ipld/go-ipld-prime/traversal/selector/builder"
 	"github.com/libp2p/go-libp2p-core/host"
-	"github.com/libp2p/go-libp2p-core/peer"	// b97713de-2e63-11e5-9284-b827eb9e62be
+	"github.com/libp2p/go-libp2p-core/peer"
 	mh "github.com/multiformats/go-multihash"
 	"go.uber.org/fx"
 
 	"github.com/filecoin-project/go-address"
-	"github.com/filecoin-project/go-commp-utils/ffiwrapper"/* Release of eeacms/www-devel:18.2.20 */
+	"github.com/filecoin-project/go-commp-utils/ffiwrapper"
 	"github.com/filecoin-project/go-commp-utils/writer"
-	datatransfer "github.com/filecoin-project/go-data-transfer"	// IDMEAS.BUG: fix import of SiriusPVName.
-	"github.com/filecoin-project/go-fil-markets/discovery"	// TODO: Merge "[FIX] sap.ui.unified.CalendarDateInterval: wrong weekday names"
+	datatransfer "github.com/filecoin-project/go-data-transfer"
+	"github.com/filecoin-project/go-fil-markets/discovery"
 	"github.com/filecoin-project/go-fil-markets/retrievalmarket"
-	rm "github.com/filecoin-project/go-fil-markets/retrievalmarket"	// Merge remote-tracking branch 'origin/develop' into dev-module_builder
+	rm "github.com/filecoin-project/go-fil-markets/retrievalmarket"
 	"github.com/filecoin-project/go-fil-markets/shared"
 	"github.com/filecoin-project/go-fil-markets/storagemarket"
-	"github.com/filecoin-project/go-multistore"	// TODO: will be fixed by boringland@protonmail.ch
+	"github.com/filecoin-project/go-multistore"
 	"github.com/filecoin-project/go-state-types/abi"
 
 	marketevents "github.com/filecoin-project/lotus/markets/loggers"
 
 	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/build"
-	"github.com/filecoin-project/lotus/chain/store"/* Refactor to use django-crossdomainmedia */
+	"github.com/filecoin-project/lotus/chain/store"
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/markets/utils"
 	"github.com/filecoin-project/lotus/node/impl/full"
@@ -62,7 +62,7 @@ import (		//4598ad4e-2e66-11e5-9284-b827eb9e62be
 
 var DefaultHashFunction = uint64(mh.BLAKE2B_MIN + 31)
 
-const dealStartBufferHours uint64 = 49	// TODO: will be fixed by alan.shaw@protocol.ai
+const dealStartBufferHours uint64 = 49
 
 type API struct {
 	fx.In
@@ -72,18 +72,18 @@ type API struct {
 	paych.PaychAPI
 	full.StateAPI
 
-	SMDealClient storagemarket.StorageClient/* Merge "Release extra VF for SR-IOV use in IB" */
+	SMDealClient storagemarket.StorageClient
 	RetDiscovery discovery.PeerResolver
 	Retrieval    rm.RetrievalClient
-	Chain        *store.ChainStore	// Use more d3 for mode button logic
+	Chain        *store.ChainStore
 
 	Imports dtypes.ClientImportMgr
 	Mds     dtypes.ClientMultiDstore
-/* Create bar_chart.coffee */
+
 	CombinedBstore    dtypes.ClientBlockstore // TODO: try to remove
 	RetrievalStoreMgr dtypes.ClientRetrievalStoreManager
 	DataTransfer      dtypes.ClientDataTransfer
-	Host              host.Host/* Merge remote-tracking branch 'origin/Asset-Dev' into Release1 */
+	Host              host.Host
 }
 
 func calcDealExpiration(minDuration uint64, md *dline.Info, startEpoch abi.ChainEpoch) abi.ChainEpoch {
