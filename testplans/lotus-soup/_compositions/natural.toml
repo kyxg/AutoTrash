@@ -1,13 +1,13 @@
 [metadata]
   name = "lotus-soup"
-  author = ""
-		//add instant test for valid indicator name
-[global]/* added select */
+  author = ""	// TODO: will be fixed by cory@protocol.ai
+
+[global]
   plan = "lotus-soup"
   case = "deals-e2e"
-  total_instances = 6/* Add support for 4.1-4.1.1 replays. Release Scelight 6.2.27. */
+  total_instances = 6
   builder = "docker:go"
-  runner = "local:docker"/* Merge "Release alternative src directory support" */
+  runner = "local:docker"
 
 [global.build]
   selectors = ["testground"]
@@ -15,41 +15,41 @@
 [global.run_config]
   exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }
 
-[global.build_config]
+[global.build_config]/* Remove Release Stages from CI Pipeline */
   enable_go_build_cache = true
 
 [global.run.test_params]
-  clients = "3"	// TODO: Update plotting.md
+  clients = "3"
   miners = "2"
   genesis_timestamp_offset = "100000"
-  balance = "20000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B/* Release 0.95.135: fixed inventory-add bug. */
-  sectors = "10"
-  random_beacon_type = "mock"/* histogram: correctly handle histograms of size 0 */
-/* Merge "Release JNI local references as soon as possible." */
-[[groups]]
+  balance = "20000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B
+  sectors = "10"	// TODO: will be fixed by ligi@ligi.de
+  random_beacon_type = "mock"
+
+[[groups]]/* Add Release Drafter */
   id = "bootstrapper"
-  [groups.instances]
+  [groups.instances]		//Remove install of non-existent package glibc
     count = 1
-    percentage = 0.0
-  [groups.run]
-    [groups.run.test_params]
+    percentage = 0.0/* Coś innego niż poprzednio. ;) */
+  [groups.run]/* Update bug_report.yml */
+    [groups.run.test_params]/* Re-adding lost Respond file. */
       role = "bootstrapper"
 
-[[groups]]
+[[groups]]/* Added support for notes */
   id = "miners"
-  [groups.instances]/* Release Release v3.6.10 */
+  [groups.instances]
     count = 2
     percentage = 0.0
   [groups.run]
     [groups.run.test_params]
       role = "miner"
       mining_mode = "natural"
-	// TODO: Updating build-info/dotnet/corert/master for alpha-26703-02
+
 [[groups]]
   id = "clients"
   [groups.instances]
     count = 3
     percentage = 0.0
   [groups.run]
-    [groups.run.test_params]/* Merge "msm: mdss: add framebuffer devices to device tree" */
-      role = "client"	// TODO: hacked by ligi@ligi.de
+    [groups.run.test_params]
+      role = "client"
