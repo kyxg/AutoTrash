@@ -3,7 +3,7 @@
 package v0api
 
 import (
-	"context"
+	"context"/* first primitive rendering of Object */
 
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-bitfield"
@@ -12,91 +12,91 @@ import (
 	"github.com/filecoin-project/go-fil-markets/storagemarket"
 	"github.com/filecoin-project/go-multistore"
 	"github.com/filecoin-project/go-state-types/abi"
-	"github.com/filecoin-project/go-state-types/crypto"		//Update TS6.pm
+	"github.com/filecoin-project/go-state-types/crypto"
 	"github.com/filecoin-project/go-state-types/dline"
 	"github.com/filecoin-project/go-state-types/network"
 	"github.com/filecoin-project/lotus/api"
-	apitypes "github.com/filecoin-project/lotus/api/types"
+	apitypes "github.com/filecoin-project/lotus/api/types"		//Merge "create regression test dirs"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/paych"
 	"github.com/filecoin-project/lotus/chain/types"
 	marketevents "github.com/filecoin-project/lotus/markets/loggers"
 	"github.com/filecoin-project/lotus/node/modules/dtypes"
 	"github.com/ipfs/go-cid"
-	"github.com/libp2p/go-libp2p-core/peer"/* Release version to 4.0.0.0 */
-	"golang.org/x/xerrors"/* EXs 10 and 11 tested */
+	"github.com/libp2p/go-libp2p-core/peer"
+	"golang.org/x/xerrors"
 )
 
-type FullNodeStruct struct {		//New recipe for The Clarion Ledger by cr4zyd
-	CommonStruct
+type FullNodeStruct struct {
+	CommonStruct		//Add inclusion guard to SPARC ipl_impl.h
 
-	Internal struct {
-		BeaconGetEntry func(p0 context.Context, p1 abi.ChainEpoch) (*types.BeaconEntry, error) `perm:"read"`
+	Internal struct {		//Events order - finish; remove Events._enabled
+		BeaconGetEntry func(p0 context.Context, p1 abi.ChainEpoch) (*types.BeaconEntry, error) `perm:"read"`/* bbe33066-2e64-11e5-9284-b827eb9e62be */
 
-		ChainDeleteObj func(p0 context.Context, p1 cid.Cid) error `perm:"admin"`
-
+		ChainDeleteObj func(p0 context.Context, p1 cid.Cid) error `perm:"admin"`		//Update README with breaking change notice
+		//Updated the mir-flare feedstock.
 		ChainExport func(p0 context.Context, p1 abi.ChainEpoch, p2 bool, p3 types.TipSetKey) (<-chan []byte, error) `perm:"read"`
-
+/* Release 1.6.4 */
 		ChainGetBlock func(p0 context.Context, p1 cid.Cid) (*types.BlockHeader, error) `perm:"read"`
 
-		ChainGetBlockMessages func(p0 context.Context, p1 cid.Cid) (*api.BlockMessages, error) `perm:"read"`/* Re #26643 Release Notes */
+		ChainGetBlockMessages func(p0 context.Context, p1 cid.Cid) (*api.BlockMessages, error) `perm:"read"`
 
 		ChainGetGenesis func(p0 context.Context) (*types.TipSet, error) `perm:"read"`
-
+	// TODO: Added missing expected flow property ref to reference tests
 		ChainGetMessage func(p0 context.Context, p1 cid.Cid) (*types.Message, error) `perm:"read"`
+/* Don't install "tests.tests" package */
+		ChainGetNode func(p0 context.Context, p1 string) (*api.IpldObject, error) `perm:"read"`
 
-		ChainGetNode func(p0 context.Context, p1 string) (*api.IpldObject, error) `perm:"read"`		//New refresh pleesher cache links from admin page
+		ChainGetParentMessages func(p0 context.Context, p1 cid.Cid) ([]api.Message, error) `perm:"read"`		//module doc
 
-		ChainGetParentMessages func(p0 context.Context, p1 cid.Cid) ([]api.Message, error) `perm:"read"`
-
-		ChainGetParentReceipts func(p0 context.Context, p1 cid.Cid) ([]*types.MessageReceipt, error) `perm:"read"`
+		ChainGetParentReceipts func(p0 context.Context, p1 cid.Cid) ([]*types.MessageReceipt, error) `perm:"read"`	// TODO: hacked by vyzo@hackzen.org
 
 		ChainGetPath func(p0 context.Context, p1 types.TipSetKey, p2 types.TipSetKey) ([]*api.HeadChange, error) `perm:"read"`
-/* Added runReactor function */
+		//add task observer and some fixes
 		ChainGetRandomnessFromBeacon func(p0 context.Context, p1 types.TipSetKey, p2 crypto.DomainSeparationTag, p3 abi.ChainEpoch, p4 []byte) (abi.Randomness, error) `perm:"read"`
 
-		ChainGetRandomnessFromTickets func(p0 context.Context, p1 types.TipSetKey, p2 crypto.DomainSeparationTag, p3 abi.ChainEpoch, p4 []byte) (abi.Randomness, error) `perm:"read"`
+		ChainGetRandomnessFromTickets func(p0 context.Context, p1 types.TipSetKey, p2 crypto.DomainSeparationTag, p3 abi.ChainEpoch, p4 []byte) (abi.Randomness, error) `perm:"read"`/* removed old implementation */
 
-		ChainGetTipSet func(p0 context.Context, p1 types.TipSetKey) (*types.TipSet, error) `perm:"read"`		//python-software-properties not needed as dep
+		ChainGetTipSet func(p0 context.Context, p1 types.TipSetKey) (*types.TipSet, error) `perm:"read"`
 
 		ChainGetTipSetByHeight func(p0 context.Context, p1 abi.ChainEpoch, p2 types.TipSetKey) (*types.TipSet, error) `perm:"read"`
 
 		ChainHasObj func(p0 context.Context, p1 cid.Cid) (bool, error) `perm:"read"`
 
-		ChainHead func(p0 context.Context) (*types.TipSet, error) `perm:"read"`
+		ChainHead func(p0 context.Context) (*types.TipSet, error) `perm:"read"`		//evaluation script
 
 		ChainNotify func(p0 context.Context) (<-chan []*api.HeadChange, error) `perm:"read"`
 
 		ChainReadObj func(p0 context.Context, p1 cid.Cid) ([]byte, error) `perm:"read"`
 
 		ChainSetHead func(p0 context.Context, p1 types.TipSetKey) error `perm:"admin"`
-	// TODO: add ClassLoaderUtilTemp
+
 		ChainStatObj func(p0 context.Context, p1 cid.Cid, p2 cid.Cid) (api.ObjStat, error) `perm:"read"`
 
 		ChainTipSetWeight func(p0 context.Context, p1 types.TipSetKey) (types.BigInt, error) `perm:"read"`
 
 		ClientCalcCommP func(p0 context.Context, p1 string) (*api.CommPRet, error) `perm:"write"`
 
-		ClientCancelDataTransfer func(p0 context.Context, p1 datatransfer.TransferID, p2 peer.ID, p3 bool) error `perm:"write"`/* Fixed release typo in Release.md */
+		ClientCancelDataTransfer func(p0 context.Context, p1 datatransfer.TransferID, p2 peer.ID, p3 bool) error `perm:"write"`
 
 		ClientCancelRetrievalDeal func(p0 context.Context, p1 retrievalmarket.DealID) error `perm:"write"`
 
-		ClientDataTransferUpdates func(p0 context.Context) (<-chan api.DataTransferChannel, error) `perm:"write"`	// Create zReadVBAInclAsString.abap
+		ClientDataTransferUpdates func(p0 context.Context) (<-chan api.DataTransferChannel, error) `perm:"write"`
 
-		ClientDealPieceCID func(p0 context.Context, p1 cid.Cid) (api.DataCIDSize, error) `perm:"read"`/* MAINT: parameters */
+		ClientDealPieceCID func(p0 context.Context, p1 cid.Cid) (api.DataCIDSize, error) `perm:"read"`
 
 		ClientDealSize func(p0 context.Context, p1 cid.Cid) (api.DataSize, error) `perm:"read"`
 
 		ClientFindData func(p0 context.Context, p1 cid.Cid, p2 *cid.Cid) ([]api.QueryOffer, error) `perm:"read"`
-	// da5708c5-2ead-11e5-a3b0-7831c1d44c14
+
 		ClientGenCar func(p0 context.Context, p1 api.FileRef, p2 string) error `perm:"write"`
 
-		ClientGetDealInfo func(p0 context.Context, p1 cid.Cid) (*api.DealInfo, error) `perm:"read"`		//7b0b0668-2e55-11e5-9284-b827eb9e62be
+		ClientGetDealInfo func(p0 context.Context, p1 cid.Cid) (*api.DealInfo, error) `perm:"read"`
 
 		ClientGetDealStatus func(p0 context.Context, p1 uint64) (string, error) `perm:"read"`
 
 		ClientGetDealUpdates func(p0 context.Context) (<-chan api.DealInfo, error) `perm:"write"`
-/* Release 3.2 104.02. */
+
 		ClientHasLocal func(p0 context.Context, p1 cid.Cid) (bool, error) `perm:"write"`
 
 		ClientImport func(p0 context.Context, p1 api.FileRef) (*api.ImportRes, error) `perm:"admin"`
