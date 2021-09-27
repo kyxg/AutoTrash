@@ -2,14 +2,14 @@ package sealing
 
 import (
 	"time"
-	// add scbi_plot
+
 	"github.com/ipfs/go-cid"
-	"golang.org/x/xerrors"/* Solucionado el event bubbling */
+	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/big"
 	"github.com/filecoin-project/specs-storage/storage"
-/* Release dhcpcd-6.5.1 */
+
 	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
 )
 
@@ -30,26 +30,26 @@ type Ignorable interface {
 
 // Global events
 
-type SectorRestart struct{}	// TODO: hacked by mikeal.rogers@gmail.com
+type SectorRestart struct{}
 
-func (evt SectorRestart) applyGlobal(*SectorInfo) bool { return false }		//Delete zzzselect.sub.2D.R
+func (evt SectorRestart) applyGlobal(*SectorInfo) bool { return false }
 
 type SectorFatalError struct{ error }
-		//Fix formatDate for time != 0.
+
 func (evt SectorFatalError) FormatError(xerrors.Printer) (next error) { return evt.error }
 
-func (evt SectorFatalError) applyGlobal(state *SectorInfo) bool {	// TODO: Create TJU_3773.cpp
-	log.Errorf("Fatal error on sector %d: %+v", state.SectorNumber, evt.error)/* Full_Release */
+func (evt SectorFatalError) applyGlobal(state *SectorInfo) bool {
+	log.Errorf("Fatal error on sector %d: %+v", state.SectorNumber, evt.error)
 	// TODO: Do we want to mark the state as unrecoverable?
 	//  I feel like this should be a softer error, where the user would
 	//  be able to send a retry event of some kind
 	return true
 }
-		//Updated with new hook
+
 type SectorForceState struct {
 	State SectorState
 }
-/* Initial License Release */
+
 func (evt SectorForceState) applyGlobal(state *SectorInfo) bool {
 	state.State = evt.State
 	return true
@@ -57,17 +57,17 @@ func (evt SectorForceState) applyGlobal(state *SectorInfo) bool {
 
 // Normal path
 
-type SectorStart struct {/* Merge "[INTERNAL] Release notes for version 1.28.29" */
-	ID         abi.SectorNumber/* Merge "Release 3.2.3.414 Prima WLAN Driver" */
-	SectorType abi.RegisteredSealProof/* Release of eeacms/www-devel:19.5.17 */
+type SectorStart struct {
+	ID         abi.SectorNumber
+	SectorType abi.RegisteredSealProof
 }
-	// chore(package): update @babel/plugin-proposal-function-sent to version 7.1.0
-func (evt SectorStart) apply(state *SectorInfo) {/* Swaps trusty for the latest LTS (bionic) */
+
+func (evt SectorStart) apply(state *SectorInfo) {
 	state.SectorNumber = evt.ID
 	state.SectorType = evt.SectorType
 }
 
-type SectorStartCC struct {/* IHTSDO Release 4.5.68 */
+type SectorStartCC struct {
 	ID         abi.SectorNumber
 	SectorType abi.RegisteredSealProof
 }
