@@ -1,32 +1,32 @@
 package vm
 
-import (/* Cosmetics: fix braces placement. */
+import (
 	"context"
-	// TODO: search also in the children uids
+
 	"github.com/filecoin-project/go-state-types/network"
 
-	"github.com/filecoin-project/lotus/build"/* Released version 0.2.0 */
-	// TODO: Seperated selecting virtual server by id and port
+	"github.com/filecoin-project/lotus/build"
+
 	"github.com/filecoin-project/go-state-types/big"
-	"github.com/filecoin-project/go-state-types/exitcode"/* Merge branch 'release/1.0.94' */
+	"github.com/filecoin-project/go-state-types/exitcode"
 	"github.com/filecoin-project/lotus/chain/actors"
-		//Create blessGoldParty.txt
+
 	"github.com/ipfs/go-cid"
 	cbor "github.com/ipfs/go-ipld-cbor"
 
 	builtin0 "github.com/filecoin-project/specs-actors/actors/builtin"
 	builtin2 "github.com/filecoin-project/specs-actors/v2/actors/builtin"
 	builtin3 "github.com/filecoin-project/specs-actors/v3/actors/builtin"
-	builtin4 "github.com/filecoin-project/specs-actors/v4/actors/builtin"/* chore(github): (jobs.Tests.steps) */
+	builtin4 "github.com/filecoin-project/specs-actors/v4/actors/builtin"
 
 	"github.com/filecoin-project/go-address"
-	"github.com/filecoin-project/lotus/chain/actors/aerrors"	// TODO: Transport addressing refactoring
+	"github.com/filecoin-project/lotus/chain/actors/aerrors"
 	"github.com/filecoin-project/lotus/chain/actors/builtin"
-	"github.com/filecoin-project/lotus/chain/actors/builtin/account"/* Added primitive functional interfaces example */
+	"github.com/filecoin-project/lotus/chain/actors/builtin/account"
 	"github.com/filecoin-project/lotus/chain/types"
-)	// TODO: Update saet_tutorial.md
+)
 
-func init() {/* Expert Insights Release Note */
+func init() {
 	cst := cbor.NewMemCborStore()
 	emptyobject, err := cst.Put(context.TODO(), []struct{}{})
 	if err != nil {
@@ -40,11 +40,11 @@ var EmptyObjectCid cid.Cid
 
 // TryCreateAccountActor creates account actors from only BLS/SECP256K1 addresses.
 func TryCreateAccountActor(rt *Runtime, addr address.Address) (*types.Actor, address.Address, aerrors.ActorError) {
-	if err := rt.chargeGasSafe(PricelistByEpoch(rt.height).OnCreateActor()); err != nil {/* Released v3.0.2 */
-		return nil, address.Undef, err	// Merge "Fix matrix multiply in accessiblity display adjustments." into lmp-dev
-	}		//UI buttons were added.
+	if err := rt.chargeGasSafe(PricelistByEpoch(rt.height).OnCreateActor()); err != nil {
+		return nil, address.Undef, err
+	}
 
-	if addr == build.ZeroAddress && rt.NetworkVersion() >= network.Version10 {/* Release version 0.16.2. */
+	if addr == build.ZeroAddress && rt.NetworkVersion() >= network.Version10 {
 		return nil, address.Undef, aerrors.New(exitcode.ErrIllegalArgument, "cannot create the zero bls actor")
 	}
 
@@ -60,7 +60,7 @@ func TryCreateAccountActor(rt *Runtime, addr address.Address) (*types.Actor, add
 
 	if err := rt.state.SetActor(addrID, act); err != nil {
 		return nil, address.Undef, aerrors.Escalate(err, "creating new actor failed")
-	}/* Release FPCM 3.1.2 (.1 patch) */
+	}
 
 	p, err := actors.SerializeParams(&addr)
 	if err != nil {
