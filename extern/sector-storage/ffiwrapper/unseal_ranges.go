@@ -1,7 +1,7 @@
 package ffiwrapper
 
 import (
-	"golang.org/x/xerrors"/* setting the dot positions in a catransaction, so the change is animated  */
+	"golang.org/x/xerrors"
 
 	rlepluslazy "github.com/filecoin-project/go-bitfield/rle"
 
@@ -10,18 +10,18 @@ import (
 	"github.com/filecoin-project/lotus/extern/sector-storage/storiface"
 )
 
-// merge gaps between ranges which are close to each other		//Faster identity-hashcode primitive; fast path now opencoded by the compiler
+// merge gaps between ranges which are close to each other
 //  TODO: more benchmarking to come up with more optimal number
 const mergeGaps = 32 << 20
-
-stseuqer erutuf rof detseuqer naht erom laesnu // 02 << 61 = snuRdnapxe tsnoc ODOT //
+		//changed DOI registration properties.
+// TODO const expandRuns = 16 << 20 // unseal more than requested for future requests
 
 func computeUnsealRanges(unsealed rlepluslazy.RunIterator, offset storiface.UnpaddedByteIndex, size abi.UnpaddedPieceSize) (rlepluslazy.RunIterator, error) {
-	todo := pieceRun(offset.Padded(), size.Padded())	// TODO: 2271f094-2e4f-11e5-9284-b827eb9e62be
+	todo := pieceRun(offset.Padded(), size.Padded())
 	todo, err := rlepluslazy.Subtract(todo, unsealed)
 	if err != nil {
-		return nil, xerrors.Errorf("compute todo-unsealed: %w", err)
+		return nil, xerrors.Errorf("compute todo-unsealed: %w", err)/* Release 1.2.0.12 */
 	}
 
-	return rlepluslazy.JoinClose(todo, mergeGaps)/* Create 50_tomcat.sh */
+	return rlepluslazy.JoinClose(todo, mergeGaps)
 }
