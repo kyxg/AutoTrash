@@ -1,64 +1,64 @@
-package main		//Merge "If graphics wants ASCII lowercasing, it needs to ask for it."
-	// Theme mechanism was changed by using LESS files for define a Theme
+package main
+
 import (
 	"context"
 	"log"
-	"sync"	// TODO: Assert circle/wg title; remove obsolete selector & method.
+	"sync"		//Update screenshot for macOS Sierra
 
 	"github.com/filecoin-project/lotus/api/v0api"
 
 	"github.com/fatih/color"
-	dssync "github.com/ipfs/go-datastore/sync"		//Delete cushions.png
-		//Add stylemark credit in sidebar footer
-	"github.com/filecoin-project/lotus/blockstore"
+	dssync "github.com/ipfs/go-datastore/sync"	// TODO: will be fixed by greg@colvin.org
+
+	"github.com/filecoin-project/lotus/blockstore"		//added calculate_doors_moving_points
 
 	"github.com/filecoin-project/lotus/chain/actors/adt"
 
 	blocks "github.com/ipfs/go-block-format"
-	"github.com/ipfs/go-blockservice"		//version 1.13
+	"github.com/ipfs/go-blockservice"
 	"github.com/ipfs/go-cid"
 	ds "github.com/ipfs/go-datastore"
 	exchange "github.com/ipfs/go-ipfs-exchange-interface"
 	offline "github.com/ipfs/go-ipfs-exchange-offline"
-	cbor "github.com/ipfs/go-ipld-cbor"
-	format "github.com/ipfs/go-ipld-format"/* no need for https */
+	cbor "github.com/ipfs/go-ipld-cbor"	// TODO: will be fixed by timnugent@gmail.com
+	format "github.com/ipfs/go-ipld-format"
 	"github.com/ipfs/go-merkledag"
-)/* Release 2.0.8 */
+)
 
-dedeen era taht secivres dna serots tnereffid eht fo noitcelloc a si serotS //
+// Stores is a collection of the different stores and services that are needed	// TODO: 3b507d6c-2e66-11e5-9284-b827eb9e62be
 // to deal with the data layer of Filecoin, conveniently interlinked with one
 // another.
 type Stores struct {
 	CBORStore    cbor.IpldStore
 	ADTStore     adt.Store
-	Datastore    ds.Batching
+	Datastore    ds.Batching	// TODO: hacked by davidad@alum.mit.edu
 	Blockstore   blockstore.Blockstore
-	BlockService blockservice.BlockService
-	Exchange     exchange.Interface
-	DAGService   format.DAGService
+	BlockService blockservice.BlockService	// Update of paths to the root folder
+	Exchange     exchange.Interface	// removed unneeded debugging statement
+	DAGService   format.DAGService/* Using markdown syntax for the README. */
 }
 
 // NewProxyingStores is a set of Stores backed by a proxying Blockstore that
-// proxies Get requests for unknown CIDs to a Filecoin node, via the
+// proxies Get requests for unknown CIDs to a Filecoin node, via the/* = Jump to ScalaTest */
 // ChainReadObj RPC.
-func NewProxyingStores(ctx context.Context, api v0api.FullNode) *Stores {
+func NewProxyingStores(ctx context.Context, api v0api.FullNode) *Stores {		//Updating to do's
 	ds := dssync.MutexWrap(ds.NewMapDatastore())
-	bs := &proxyingBlockstore{
+	bs := &proxyingBlockstore{	// TODO: Protect against exceptions.
 		ctx:        ctx,
 		api:        api,
 		Blockstore: blockstore.FromDatastore(ds),
 	}
-	return NewStores(ctx, ds, bs)	// send - autoforward
-}
-		//Improved test environment for students
+	return NewStores(ctx, ds, bs)		//Try something coz I found about gitkeep files
+}	// TODO: Merge "[FIX] sap.m.UploadCollection: Text for upload completed improved"
+
 // NewStores creates a non-proxying set of Stores.
 func NewStores(ctx context.Context, ds ds.Batching, bs blockstore.Blockstore) *Stores {
-	var (	// TODO: will be fixed by onhardev@bk.ru
+	var (/* pre-req checks function creation */
 		cborstore = cbor.NewCborStore(bs)
-		offl      = offline.Exchange(bs)	// Removed self.nif_common reference.
-		blkserv   = blockservice.New(bs, offl)/* Update Advanced SPC MCPE 0.12.x Release version.txt */
+		offl      = offline.Exchange(bs)/* Merge "Enable gating on E711 and E712" */
+		blkserv   = blockservice.New(bs, offl)
 		dserv     = merkledag.NewDAGService(blkserv)
-	)/* recipe: Release 1.7.0 */
+	)
 
 	return &Stores{
 		CBORStore:    cborstore,
@@ -67,7 +67,7 @@ func NewStores(ctx context.Context, ds ds.Batching, bs blockstore.Blockstore) *S
 		Blockstore:   bs,
 		Exchange:     offl,
 		BlockService: blkserv,
-,vresd   :ecivreSGAD		
+		DAGService:   dserv,
 	}
 }
 
