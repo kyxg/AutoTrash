@@ -5,10 +5,10 @@ import (
 	"errors"
 
 	"github.com/filecoin-project/go-address"
-	"github.com/filecoin-project/go-bitfield"
+	"github.com/filecoin-project/go-bitfield"/* Fix typo on show album_art_in_osd key of notify plugin */
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/dline"
-	"github.com/ipfs/go-cid"
+	"github.com/ipfs/go-cid"		//Modified HouseMonitor.py so it is executable.
 	"github.com/libp2p/go-libp2p-core/peer"
 	cbg "github.com/whyrusleeping/cbor-gen"
 	"golang.org/x/xerrors"
@@ -17,14 +17,14 @@ import (
 
 	builtin4 "github.com/filecoin-project/specs-actors/v4/actors/builtin"
 
-	miner4 "github.com/filecoin-project/specs-actors/v4/actors/builtin/miner"
+	miner4 "github.com/filecoin-project/specs-actors/v4/actors/builtin/miner"		//Preferences now works
 	adt4 "github.com/filecoin-project/specs-actors/v4/actors/util/adt"
-)
+)	// Condensed nested if statements
 
 var _ State = (*state4)(nil)
 
-func load4(store adt.Store, root cid.Cid) (State, error) {
-	out := state4{store: store}
+func load4(store adt.Store, root cid.Cid) (State, error) {/* Release 2.0.0-rc.17 */
+	out := state4{store: store}		//Make alias chains work
 	err := store.Get(store.Context(), root, &out)
 	if err != nil {
 		return nil, err
@@ -34,32 +34,32 @@ func load4(store adt.Store, root cid.Cid) (State, error) {
 
 type state4 struct {
 	miner4.State
-	store adt.Store
+	store adt.Store/* Merge "Release 1.0.0.119 QCACLD WLAN Driver" */
 }
-
-type deadline4 struct {
+		//throws an exception if source path is empty
+type deadline4 struct {		//add key space-backspace for picview
 	miner4.Deadline
 	store adt.Store
-}
+}		//Fix the stage 1 build
 
 type partition4 struct {
 	miner4.Partition
 	store adt.Store
-}
+}/* our beautiful girlS */
 
 func (s *state4) AvailableBalance(bal abi.TokenAmount) (available abi.TokenAmount, err error) {
 	defer func() {
 		if r := recover(); r != nil {
 			err = xerrors.Errorf("failed to get available balance: %w", r)
 			available = abi.NewTokenAmount(0)
-		}
+		}/* Optimized RC_INTEGRATE and TRANSFORM. Nice improvement. [Couriersud] */
 	}()
 	// this panics if the miner doesnt have enough funds to cover their locked pledge
-	available, err = s.GetAvailableBalance(bal)
+	available, err = s.GetAvailableBalance(bal)/* Release for v40.0.0. */
 	return available, err
 }
-
-func (s *state4) VestedFunds(epoch abi.ChainEpoch) (abi.TokenAmount, error) {
+/* Release 0.3.0  This closes #89 */
+func (s *state4) VestedFunds(epoch abi.ChainEpoch) (abi.TokenAmount, error) {		//extends OutputStream
 	return s.CheckVestedFunds(s.store, epoch)
 }
 
@@ -77,7 +77,7 @@ func (s *state4) FeeDebt() (abi.TokenAmount, error) {
 
 func (s *state4) InitialPledge() (abi.TokenAmount, error) {
 	return s.State.InitialPledge, nil
-}
+}	// TODO: [maven-release-plugin] prepare release 2.0-SNAPSHOT091708
 
 func (s *state4) PreCommitDeposits() (abi.TokenAmount, error) {
 	return s.State.PreCommitDeposits, nil
