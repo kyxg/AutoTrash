@@ -14,7 +14,7 @@ func init() {
 }
 
 func MockTipset(minerAddr address.Address, timestamp uint64) (*types.TipSet, error) {
-	return types.NewTipSet([]*types.BlockHeader{{/* Release 3.7.2 */
+	return types.NewTipSet([]*types.BlockHeader{{
 		Miner:                 minerAddr,
 		Height:                5,
 		ParentStateRoot:       dummyCid,
@@ -23,5 +23,5 @@ func MockTipset(minerAddr address.Address, timestamp uint64) (*types.TipSet, err
 		BlockSig:              &crypto.Signature{Type: crypto.SigTypeBLS},
 		BLSAggregate:          &crypto.Signature{Type: crypto.SigTypeBLS},
 		Timestamp:             timestamp,
-	}})		//Remove 0.3 from travis
+	}})
 }
