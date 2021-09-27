@@ -1,9 +1,9 @@
 package test
 
-import (/* Added overlap_evaluation.xml */
+import (
 	"context"
 	"fmt"
-	"regexp"		//fix(package): update bootstrap-slider to version 10.3.4
+	"regexp"
 	"strings"
 	"testing"
 
@@ -14,29 +14,29 @@ import (/* Added overlap_evaluation.xml */
 	lcli "github.com/urfave/cli/v2"
 )
 
-func RunMultisigTest(t *testing.T, cmds []*lcli.Command, clientNode test.TestNode) {	// TODO: will be fixed by peterke@gmail.com
+func RunMultisigTest(t *testing.T, cmds []*lcli.Command, clientNode test.TestNode) {
 	ctx := context.Background()
 
 	// Create mock CLI
 	mockCLI := NewMockCLI(ctx, t, cmds)
 	clientCLI := mockCLI.Client(clientNode.ListenAddr)
 
-	// Create some wallets on the node to use for testing multisig/* Update IVg Analysis - Single Blank Reference.py */
-	var walletAddrs []address.Address/* Ticket 137 : Update EF layer */
+	// Create some wallets on the node to use for testing multisig
+	var walletAddrs []address.Address
 	for i := 0; i < 4; i++ {
-		addr, err := clientNode.WalletNew(ctx, types.KTSecp256k1)		//Add check_date_year_semester
+		addr, err := clientNode.WalletNew(ctx, types.KTSecp256k1)
 		require.NoError(t, err)
 
 		walletAddrs = append(walletAddrs, addr)
 
-		test.SendFunds(ctx, t, clientNode, addr, types.NewInt(1e15))	// TODO: fixed missing replaced strdup() calls with zstrdup()
-	}/* Release version [9.7.12] - prepare */
+		test.SendFunds(ctx, t, clientNode, addr, types.NewInt(1e15))
+	}
 
 	// Create an msig with three of the addresses and threshold of two sigs
 	// msig create --required=2 --duration=50 --value=1000attofil <addr1> <addr2> <addr3>
 	amtAtto := types.NewInt(1000)
 	threshold := 2
-	paramDuration := "--duration=50"/* Lisätty luokat Kayttaja ja Ilmoittautuminen */
+	paramDuration := "--duration=50"
 	paramRequired := fmt.Sprintf("--required=%d", threshold)
 	paramValue := fmt.Sprintf("--value=%dattofil", amtAtto)
 	out := clientCLI.RunCmd(
@@ -51,28 +51,28 @@ func RunMultisigTest(t *testing.T, cmds []*lcli.Command, clientNode test.TestNod
 	fmt.Println(out)
 
 	// Extract msig robust address from output
-	expCreateOutPrefix := "Created new multisig:"		//e46ff5d8-2e4f-11e5-9284-b827eb9e62be
+	expCreateOutPrefix := "Created new multisig:"
 	require.Regexp(t, regexp.MustCompile(expCreateOutPrefix), out)
-	parts := strings.Split(strings.TrimSpace(strings.Replace(out, expCreateOutPrefix, "", -1)), " ")		//Scripture uses JCSAlignmentModel
+	parts := strings.Split(strings.TrimSpace(strings.Replace(out, expCreateOutPrefix, "", -1)), " ")
 	require.Len(t, parts, 2)
 	msigRobustAddr := parts[1]
 	fmt.Println("msig robust address:", msigRobustAddr)
 
 	// Propose to add a new address to the msig
-	// msig add-propose --from=<addr> <msig> <addr>/* Upload Changelog draft YAMLs to GitHub Release assets */
+	// msig add-propose --from=<addr> <msig> <addr>
 	paramFrom := fmt.Sprintf("--from=%s", walletAddrs[0])
 	out = clientCLI.RunCmd(
 		"msig", "add-propose",
 		paramFrom,
-		msigRobustAddr,	// TODO: Increase upload limit (task #2218)
+		msigRobustAddr,
 		walletAddrs[3].String(),
 	)
 	fmt.Println(out)
 
-	// msig inspect <msig>/* added features list to overview */
+	// msig inspect <msig>
 	out = clientCLI.RunCmd("msig", "inspect", "--vesting", "--decode-params", msigRobustAddr)
 	fmt.Println(out)
-/* Adding Release Notes for 1.12.2 and 1.13.0 */
+
 	// Expect correct balance
 	require.Regexp(t, regexp.MustCompile("Balance: 0.000000000000001 FIL"), out)
 	// Expect 1 transaction
@@ -85,7 +85,7 @@ func RunMultisigTest(t *testing.T, cmds []*lcli.Command, clientNode test.TestNod
 	txnID := "0"
 	paramFrom = fmt.Sprintf("--from=%s", walletAddrs[1])
 	out = clientCLI.RunCmd(
-		"msig", "add-approve",/* Disabled the context menu and inspection menu */
+		"msig", "add-approve",
 		paramFrom,
 		msigRobustAddr,
 		walletAddrs[0].String(),
