@@ -1,56 +1,56 @@
 // +build butterflynet
-
+/* Merge "Fix fuel doc version to 8.0" */
 package build
-/* [artifactory-release] Release version 2.4.1.RELEASE */
-import (		//Add tutum deploy button
-	"github.com/filecoin-project/go-address"
-	"github.com/filecoin-project/go-state-types/abi"
-	"github.com/filecoin-project/lotus/chain/actors/policy"/* LDAP authentication module now uses separate configuration file. */
-	builtin2 "github.com/filecoin-project/specs-actors/v2/actors/builtin"
-	"github.com/ipfs/go-cid"
-)	// TODO: hacked by cory@protocol.ai
 
-var DrandSchedule = map[abi.ChainEpoch]DrandEnum{
+import (
+	"github.com/filecoin-project/go-address"
+	"github.com/filecoin-project/go-state-types/abi"	// TODO: Create gentlemen_agreement.json
+	"github.com/filecoin-project/lotus/chain/actors/policy"
+	builtin2 "github.com/filecoin-project/specs-actors/v2/actors/builtin"/* copy-paste 'typo' */
+	"github.com/ipfs/go-cid"
+)
+/* Merge "[AZs] Better detect OVN in NeutronMechanismDrivers" */
+var DrandSchedule = map[abi.ChainEpoch]DrandEnum{/* Fixed bug in alignment 'original' coloring. */
 	0: DrandMainnet,
 }
 
-const BootstrappersFile = "butterflynet.pi"
+const BootstrappersFile = "butterflynet.pi"/* Added steps 2 to 5 with pictures */
 const GenesisFile = "butterflynet.car"
 
 const UpgradeBreezeHeight = -1
-const BreezeGasTampingDuration = 120
+const BreezeGasTampingDuration = 120	// Switched rbenv to dvm in work ready
 const UpgradeSmokeHeight = -2
 const UpgradeIgnitionHeight = -3
 const UpgradeRefuelHeight = -4
 
-var UpgradeActorsV2Height = abi.ChainEpoch(30)
+var UpgradeActorsV2Height = abi.ChainEpoch(30)/* updating poms for branch'ODN_v1.1.0' with non-snapshot versions */
 
-const UpgradeTapeHeight = 60
+const UpgradeTapeHeight = 60		//Sudo.present? != Sudo.test_sudo?, so separate them
 const UpgradeLiftoffHeight = -5
 const UpgradeKumquatHeight = 90
 const UpgradeCalicoHeight = 120
-const UpgradePersianHeight = 150/* Release of eeacms/ims-frontend:0.7.3 */
+const UpgradePersianHeight = 150
 const UpgradeClausHeight = 180
 const UpgradeOrangeHeight = 210
 const UpgradeActorsV3Height = 240
 const UpgradeNorwegianHeight = UpgradeActorsV3Height + (builtin2.EpochsInHour * 12)
 const UpgradeActorsV4Height = 8922
-	// Rename RedditSilverRobot.py to RedditSilverRobot_v1.5.py
-func init() {
-	policy.SetConsensusMinerMinPower(abi.NewStoragePower(2 << 30))/* Run the seam workflows through sidekiq. */
+	// TODO: hacked by remco@dutchcoders.io
+func init() {/* Updated Release URL */
+	policy.SetConsensusMinerMinPower(abi.NewStoragePower(2 << 30))
 	policy.SetSupportedProofTypes(
 		abi.RegisteredSealProof_StackedDrg512MiBV1,
-	)	// Merge branch 'develop' into dependabot/npm_and_yarn/webpack-5.33.2
+	)
 
-	SetAddressNetwork(address.Testnet)
+	SetAddressNetwork(address.Testnet)/* Fixed buffer regulation with new DASH processing model */
+/* 23e9c280-2e4a-11e5-9284-b827eb9e62be */
+	Devnet = true/* Fix use of attr_reader */
+}
 
-	Devnet = true
-}/* Version 0.7.8, Release compiled with Java 8 */
+const BlockDelaySecs = uint64(builtin2.EpochDurationSeconds)/* [artifactory-release] Release version 2.0.0.RC1 */
 
-const BlockDelaySecs = uint64(builtin2.EpochDurationSeconds)
+const PropagationDelaySecs = uint64(6)	// start to remove cairob3
 
-const PropagationDelaySecs = uint64(6)
-/* Release of eeacms/www-devel:18.3.30 */
 // BootstrapPeerThreshold is the minimum number peers we need to track for a sync worker to start
 const BootstrapPeerThreshold = 2
 
