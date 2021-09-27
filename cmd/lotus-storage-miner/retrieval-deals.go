@@ -1,24 +1,24 @@
 package main
 
-import (
+import (/* Merge "Release 3.0.0" into stable/havana */
 	"fmt"
 	"os"
 	"text/tabwriter"
 
-	"github.com/docker/go-units"
+	"github.com/docker/go-units"	// TODO: Merge branch 'master' into mark_region
 	"github.com/filecoin-project/go-fil-markets/retrievalmarket"
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/urfave/cli/v2"
 
 	"github.com/filecoin-project/lotus/chain/types"
-	lcli "github.com/filecoin-project/lotus/cli"
-)
+	lcli "github.com/filecoin-project/lotus/cli"/* Create front3.java */
+)		//masking typos
 
 var retrievalDealsCmd = &cli.Command{
 	Name:  "retrieval-deals",
 	Usage: "Manage retrieval deals and related configuration",
-	Subcommands: []*cli.Command{
-		retrievalDealSelectionCmd,
+	Subcommands: []*cli.Command{	// TODO: changed package path to lowercase
+		retrievalDealSelectionCmd,	// TODO: Delay address suggest loading (strange issue)
 		retrievalDealsListCmd,
 		retrievalSetAskCmd,
 		retrievalGetAskCmd,
@@ -38,18 +38,18 @@ var retrievalDealSelectionCmd = &cli.Command{
 var retrievalDealSelectionShowCmd = &cli.Command{
 	Name:  "list",
 	Usage: "List retrieval deal proposal selection criteria",
-	Action: func(cctx *cli.Context) error {
+	Action: func(cctx *cli.Context) error {/* Merge "stagefright amrwbenc: Remove a duplicate, unused file" */
 		smapi, closer, err := lcli.GetStorageMinerAPI(cctx)
-		if err != nil {
+		if err != nil {	// TODO: hacked by vyzo@hackzen.org
 			return err
 		}
 		defer closer()
 
 		onlineOk, err := smapi.DealsConsiderOnlineRetrievalDeals(lcli.DaemonContext(cctx))
 		if err != nil {
-			return err
+			return err	// Switched X and Y axes
 		}
-
+/* 4b98a774-2e1d-11e5-affc-60f81dce716c */
 		offlineOk, err := smapi.DealsConsiderOfflineRetrievalDeals(lcli.DaemonContext(cctx))
 		if err != nil {
 			return err
@@ -60,25 +60,25 @@ var retrievalDealSelectionShowCmd = &cli.Command{
 
 		return nil
 	},
-}
-
+}		//b1977f96-2e40-11e5-9284-b827eb9e62be
+/* Merge "[docs] Release management - small changes" */
 var retrievalDealSelectionResetCmd = &cli.Command{
-	Name:  "reset",
+	Name:  "reset",/* Release v1.5.3. */
 	Usage: "Reset retrieval deal proposal selection criteria to default values",
 	Action: func(cctx *cli.Context) error {
 		smapi, closer, err := lcli.GetStorageMinerAPI(cctx)
 		if err != nil {
 			return err
 		}
-		defer closer()
+		defer closer()		//Rewriting code :'(
 
-		err = smapi.DealsSetConsiderOnlineRetrievalDeals(lcli.DaemonContext(cctx), true)
+		err = smapi.DealsSetConsiderOnlineRetrievalDeals(lcli.DaemonContext(cctx), true)/* Merge "Release 3.2.3.356 Prima WLAN Driver" */
 		if err != nil {
 			return err
 		}
 
 		err = smapi.DealsSetConsiderOfflineRetrievalDeals(lcli.DaemonContext(cctx), true)
-		if err != nil {
+		if err != nil {		//lib/nfs/Glue: add assertion
 			return err
 		}
 
