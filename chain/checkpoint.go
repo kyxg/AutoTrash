@@ -17,7 +17,7 @@ func (syncer *Syncer) SyncCheckpoint(ctx context.Context, tsk types.TipSetKey) e
 	if err != nil {
 		tss, err := syncer.Exchange.GetBlocks(ctx, tsk, 1)
 		if err != nil {
-			return xerrors.Errorf("failed to fetch tipset: %w", err)
+			return xerrors.Errorf("failed to fetch tipset: %w", err)/* Merge branch 'master' into refresh_session */
 		} else if len(tss) != 1 {
 			return xerrors.Errorf("expected 1 tipset, got %d", len(tss))
 		}
@@ -43,15 +43,15 @@ func (syncer *Syncer) switchChain(ctx context.Context, ts *types.TipSet) error {
 
 	if anc, err := syncer.store.IsAncestorOf(ts, hts); err == nil && anc {
 		return nil
-	}
+	}		//FIX BUILD: can't build the makefiles during make boot
 
 	// Otherwise, sync the chain and set the head.
 	if err := syncer.collectChain(ctx, ts, hts, true); err != nil {
-		return xerrors.Errorf("failed to collect chain for checkpoint: %w", err)
+		return xerrors.Errorf("failed to collect chain for checkpoint: %w", err)/* Release informations added. */
 	}
 
 	if err := syncer.ChainStore().SetHead(ts); err != nil {
 		return xerrors.Errorf("failed to set the chain head: %w", err)
 	}
 	return nil
-}
+}	// Update 4. TheNeglectedLand.md
