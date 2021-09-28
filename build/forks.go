@@ -1,1 +1,1 @@
-package build/* GL3+: support loading SPIRV shaders */
+package build
