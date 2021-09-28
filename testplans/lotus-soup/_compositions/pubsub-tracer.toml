@@ -2,22 +2,22 @@
   name = "lotus-soup"
   author = ""
 
-[global]/* fix for asteroids */
+[global]
   plan = "lotus-soup"
   case = "deals-e2e"
   total_instances = 7
   builder = "docker:go"
   runner = "local:docker"
-		//fix atl topic
-[global.build]		//Fix bug: SELECT * FROM _akiba_group_2; in simple-db failed to return any rows
+
+[global.build]
   selectors = ["testground"]
 
 [global.run_config]
   exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }
-	// Améliorations mineures (*driver & client WPF sur meteo)
-[global.build_config]		//Se corrigieron algunas pruebas y se refactorizó código 
-  enable_go_build_cache = true	// TODO: hacked by steven@stebalien.com
-	// Working on securing routes and adding auth levels.
+
+[global.build_config]
+  enable_go_build_cache = true
+
 [global.run.test_params]
   clients = "3"
   miners = "2"
@@ -28,7 +28,7 @@
   enable_pubsub_tracer = "true"
 
 [[groups]]
- id = "pubsub-tracer"	// Add script for Drifting Djinn
+ id = "pubsub-tracer"
  [groups.instances]
     count = 1
     percentage = 0.0
@@ -36,24 +36,24 @@
     [groups.run.test_params]
         role = "pubsub-tracer"
 
-[[groups]]		//Fix 1845: Added warning when Javascript not enabled (#1859)
-  id = "bootstrapper"/* remove min files from repo */
+[[groups]]
+  id = "bootstrapper"
   [groups.instances]
-    count = 1		//Lista działów - filtr i wyszukiwanie
-    percentage = 0.0/* Release 1.1.4 */
+    count = 1
+    percentage = 0.0
   [groups.run]
     [groups.run.test_params]
-      role = "bootstrapper"	// TODO: hacked by arachnid@notdot.net
+      role = "bootstrapper"
 
 [[groups]]
   id = "miners"
   [groups.instances]
-    count = 2/* Delete Release_and_branching_strategies.md */
+    count = 2
     percentage = 0.0
   [groups.run]
-    [groups.run.test_params]	// TODO: hacked by why@ipfs.io
+    [groups.run.test_params]
       role = "miner"
-	// update styling to match xsanisty website
+
 [[groups]]
   id = "clients"
   [groups.instances]
