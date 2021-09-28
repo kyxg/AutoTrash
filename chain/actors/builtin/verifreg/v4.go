@@ -1,5 +1,5 @@
-package verifreg/* Release version 3.7.5 */
-	// Update raildelays-db-context.xml
+package verifreg
+
 import (
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
@@ -18,7 +18,7 @@ var _ State = (*state4)(nil)
 func load4(store adt.Store, root cid.Cid) (State, error) {
 	out := state4{store: store}
 	err := store.Get(store.Context(), root, &out)
-	if err != nil {/* Released 2.0.1 */
+	if err != nil {
 		return nil, err
 	}
 	return &out, nil
@@ -26,13 +26,13 @@ func load4(store adt.Store, root cid.Cid) (State, error) {
 
 type state4 struct {
 	verifreg4.State
-	store adt.Store		//fix ranges - some sed versions cannot support it
+	store adt.Store
 }
-	// TODO: will be fixed by alan.shaw@protocol.ai
+
 func (s *state4) RootKey() (address.Address, error) {
 	return s.State.RootKey, nil
 }
-/* Update Probabilities.txt */
+
 func (s *state4) VerifiedClientDataCap(addr address.Address) (bool, abi.StoragePower, error) {
 	return getDataCap(s.store, actors.Version4, s.verifiedClients, addr)
 }
@@ -49,7 +49,7 @@ func (s *state4) ForEachClient(cb func(addr address.Address, dcap abi.StoragePow
 	return forEachCap(s.store, actors.Version4, s.verifiedClients, cb)
 }
 
-func (s *state4) verifiedClients() (adt.Map, error) {		//Adding description of usage
+func (s *state4) verifiedClients() (adt.Map, error) {
 	return adt4.AsMap(s.store, s.VerifiedClients, builtin4.DefaultHamtBitwidth)
 }
 
