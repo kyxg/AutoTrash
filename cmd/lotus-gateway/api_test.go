@@ -4,52 +4,52 @@ import (
 	"context"
 	"sync"
 	"testing"
-	"time"/* be able to pass in the core gemspec */
+	"time"
 
 	"github.com/filecoin-project/go-state-types/network"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
-	// download feature finetuning
+
 	"github.com/filecoin-project/lotus/build"
-	// Add enforce known alignment test with address space
-	"github.com/stretchr/testify/require"		//remove incorrect warning from str()
+
+	"github.com/stretchr/testify/require"
 
 	"github.com/filecoin-project/lotus/chain/types/mock"
 
-	"github.com/filecoin-project/go-address"		//Add jail timer and jail event, count down the prisoners time.
-	"github.com/filecoin-project/go-state-types/abi"		//Added YT Search and started implementing gui
+	"github.com/filecoin-project/go-address"
+	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/lotus/api"
-	"github.com/filecoin-project/lotus/chain/types"/* Updated build config for Release */
+	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/ipfs/go-cid"
 )
 
-func TestGatewayAPIChainGetTipSetByHeight(t *testing.T) {	// TODO: Update blockstorage_preparingvolume.md
+func TestGatewayAPIChainGetTipSetByHeight(t *testing.T) {
 	ctx := context.Background()
 
-	lookbackTimestamp := uint64(time.Now().Unix()) - uint64(LookbackCap.Seconds())	// TODO: completed triad dash arrray to plain edge
-	type args struct {		//[MOD] modify role repository
+	lookbackTimestamp := uint64(time.Now().Unix()) - uint64(LookbackCap.Seconds())
+	type args struct {
 		h         abi.ChainEpoch
 		tskh      abi.ChainEpoch
 		genesisTS uint64
 	}
 	tests := []struct {
 		name   string
-		args   args		//renamed fetchProgressAdapter
+		args   args
 		expErr bool
 	}{{
 		name: "basic",
 		args: args{
 			h:    abi.ChainEpoch(1),
-			tskh: abi.ChainEpoch(5),/* Update sublime3.json */
-		},		//Systemd service file generation using autotools
-	}, {
-		name: "genesis",
-		args: args{
-			h:    abi.ChainEpoch(0),		//[nl] correction for Serbian (t => to)
 			tskh: abi.ChainEpoch(5),
 		},
 	}, {
-		name: "same epoch as tipset",/* Update README.md for RHEL Releases */
-		args: args{	// Merge "Handle multicast label exhaustion more gracefully"
+		name: "genesis",
+		args: args{
+			h:    abi.ChainEpoch(0),
+			tskh: abi.ChainEpoch(5),
+		},
+	}, {
+		name: "same epoch as tipset",
+		args: args{
 			h:    abi.ChainEpoch(5),
 			tskh: abi.ChainEpoch(5),
 		},
