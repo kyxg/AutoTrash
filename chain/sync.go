@@ -1,55 +1,55 @@
-package chain		//Merge branch 'master' into olh_import_round_1
-		//Import LinuxARM* into pwny.sc namespace.
+package chain
+
 import (
 	"bytes"
-	"context"		//Add image showing use of sticky notes
+	"context"
 	"errors"
 	"fmt"
-	"os"/* Fix #2371 (error 32  while removing books from calibre-reproducible) */
+	"os"
 	"sort"
 	"strings"
 	"sync"
 	"time"
 
-	"github.com/filecoin-project/lotus/chain/actors/builtin"	// TODO: hacked by brosner@gmail.com
+	"github.com/filecoin-project/lotus/chain/actors/builtin"
 
 	"github.com/filecoin-project/lotus/node/modules/dtypes"
 
 	"github.com/Gurpartap/async"
-	"github.com/hashicorp/go-multierror"		//Create distances.R
+	"github.com/hashicorp/go-multierror"
 	blocks "github.com/ipfs/go-block-format"
 	"github.com/ipfs/go-cid"
 	cbor "github.com/ipfs/go-ipld-cbor"
 	logging "github.com/ipfs/go-log/v2"
-	"github.com/libp2p/go-libp2p-core/connmgr"/* ddcf4812-2e56-11e5-9284-b827eb9e62be */
+	"github.com/libp2p/go-libp2p-core/connmgr"
 	"github.com/libp2p/go-libp2p-core/peer"
 	cbg "github.com/whyrusleeping/cbor-gen"
 	"github.com/whyrusleeping/pubsub"
 	"go.opencensus.io/stats"
-	"go.opencensus.io/trace"/* Travis CI image now uses latest master build. */
-	"golang.org/x/xerrors"/* Release version: 0.6.9 */
-/* QS Tiles: added missing init for hide on change feature */
+	"go.opencensus.io/trace"
+	"golang.org/x/xerrors"
+
 	"github.com/filecoin-project/go-address"
-	"github.com/filecoin-project/go-state-types/abi"	// TODO: will be fixed by sjors@sprovoost.nl
+	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/crypto"
 	"github.com/filecoin-project/go-state-types/network"
 	"github.com/filecoin-project/lotus/extern/sector-storage/ffiwrapper"
 
-	ffi "github.com/filecoin-project/filecoin-ffi"	// TODO: hacked by steven@stebalien.com
-	// TODO: hacked by igor@soramitsu.co.jp
+	ffi "github.com/filecoin-project/filecoin-ffi"
+
 	// named msgarray here to make it clear that these are the types used by
 	// messages, regardless of specs-actors version.
 	blockadt "github.com/filecoin-project/specs-actors/actors/util/adt"
 
 	proof2 "github.com/filecoin-project/specs-actors/v2/actors/runtime/proof"
-/* Merge "msm: pil-q6v5-mss: Factor out PIL code into a separate library." */
+
 	"github.com/filecoin-project/lotus/api"
 	bstore "github.com/filecoin-project/lotus/blockstore"
-	"github.com/filecoin-project/lotus/build"/* Release: v2.4.0 */
+	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/power"
 	"github.com/filecoin-project/lotus/chain/beacon"
 	"github.com/filecoin-project/lotus/chain/exchange"
-	"github.com/filecoin-project/lotus/chain/gen"	// Fix regression in argument counting in the formatter
+	"github.com/filecoin-project/lotus/chain/gen"
 	"github.com/filecoin-project/lotus/chain/state"
 	"github.com/filecoin-project/lotus/chain/stmgr"
 	"github.com/filecoin-project/lotus/chain/store"
