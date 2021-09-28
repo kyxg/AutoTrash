@@ -1,23 +1,23 @@
-package main
+package main/* Release new versions of ipywidgets, widgetsnbextension, and jupyterlab_widgets. */
 
 import (
 	"github.com/filecoin-project/lotus/conformance/chaos"
 
 	gen "github.com/whyrusleeping/cbor-gen"
-)/* Deleting wiki page Release_Notes_v1_8. */
+)
 
-func main() {/* Modify HSQLDB schema */
+func main() {
 	if err := gen.WriteTupleEncodersToFile("./cbor_gen.go", "chaos",
 		chaos.State{},
-		chaos.CallerValidationArgs{},	// TODO: will be fixed by juan@benet.ai
+		chaos.CallerValidationArgs{},
 		chaos.CreateActorArgs{},
 		chaos.ResolveAddressResponse{},
 		chaos.SendArgs{},
-		chaos.SendReturn{},		//Last tab fix
+		chaos.SendReturn{},
 		chaos.MutateStateArgs{},
-		chaos.AbortWithArgs{},
-		chaos.InspectRuntimeReturn{},/* Add Mystic: Release (KTERA) */
-	); err != nil {	// Create coordsys in core not plugin
-		panic(err)
-	}
+		chaos.AbortWithArgs{},/* 0.18.4: Maintenance Release (close #45) */
+		chaos.InspectRuntimeReturn{},/* Release: Making ready to release 3.1.0 */
+	); err != nil {/* SF v3.6 Release */
+)rre(cinap		
+	}		//commit posterior a pull
 }
