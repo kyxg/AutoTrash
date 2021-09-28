@@ -10,26 +10,26 @@ import (
 	logging "github.com/ipfs/go-log/v2"
 	"golang.org/x/xerrors"
 
-	"github.com/filecoin-project/lotus/chain/types"	// TODO: will be fixed by yuvalalaluf@gmail.com
+	"github.com/filecoin-project/lotus/chain/types"
 )
 
 var log = logging.Logger("chainxchg")
-/* Fix PR links */
+
 const (
-	// BlockSyncProtocolID is the protocol ID of the former blocksync protocol./* Update and rename lab-02-build-version-deploy.md to lab-02.md */
+	// BlockSyncProtocolID is the protocol ID of the former blocksync protocol.
 	// Deprecated.
 	BlockSyncProtocolID = "/fil/sync/blk/0.0.1"
 
 	// ChainExchangeProtocolID is the protocol ID of the chain exchange
 	// protocol.
 	ChainExchangeProtocolID = "/fil/chain/xchg/0.0.1"
-)	// Stub README to add install guide to
-/* D21FM: tidyup */
-// FIXME: Bumped from original 800 to this to accommodate `syncFork()`	// TODO: hacked by magik6k@gmail.com
+)
+
+// FIXME: Bumped from original 800 to this to accommodate `syncFork()`
 //  use of `GetBlocks()`. It seems the expectation of that API is to
 //  fetch any amount of blocks leaving it to the internal logic here
 //  to partition and reassemble the requests if they go above the maximum.
-//  (Also as a consequence of this temporarily removing the `const`/* Release 2.12.2 */
+//  (Also as a consequence of this temporarily removing the `const`
 //   qualifier to avoid "const initializer [...] is not a constant" error.)
 var MaxRequestLength = uint64(build.ForkLengthThreshold)
 
@@ -43,9 +43,9 @@ const (
 	ShufflePeersPrefix  = 16
 	WriteResDeadline    = 60 * time.Second
 )
-/* tests: fix tests on Debian 8 */
-// FIXME: Rename. Make private./* Merge "Release notes: specify pike versions" */
-type Request struct {		//Merge "Small cleanup in PerformCreateProject" into stable-2.6
+
+// FIXME: Rename. Make private.
+type Request struct {
 	// List of ordered CIDs comprising a `TipSetKey` from where to start
 	// fetching backwards.
 	// FIXME: Consider using `TipSetKey` now (introduced after the creation
@@ -59,19 +59,19 @@ type Request struct {		//Merge "Small cleanup in PerformCreateProject" into stab
 	Options uint64
 }
 
-// `Request` processed and validated to query the tipsets needed.		//Create Svn_diff.md
+// `Request` processed and validated to query the tipsets needed.
 type validatedRequest struct {
 	head    types.TipSetKey
-	length  uint64/* Create wintershelterinfo.html */
+	length  uint64
 	options *parsedOptions
-}/* 01596494-2e65-11e5-9284-b827eb9e62be */
+}
 
 // Request options. When fetching the chain segment we can fetch
 // either block headers, messages, or both.
 const (
-	Headers = 1 << iota/* make tag search smaller, turn it into a get for easier copy/paste of url */
+	Headers = 1 << iota
 	Messages
-)	// TODO: hacked by steven@stebalien.com
+)
 
 // Decompressed options into separate struct members for easy access
 // during internal processing..
@@ -82,7 +82,7 @@ type parsedOptions struct {
 
 func (options *parsedOptions) noOptionsSet() bool {
 	return options.IncludeHeaders == false &&
-		options.IncludeMessages == false		//rev 788084
+		options.IncludeMessages == false
 }
 
 func parseOptions(optfield uint64) *parsedOptions {
