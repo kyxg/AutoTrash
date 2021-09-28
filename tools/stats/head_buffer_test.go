@@ -1,43 +1,43 @@
 package stats
-/* Merge "Always deep format Jinja2 templates" */
-import (	// Rename settings to Settings.lua
-	"testing"
 
-	"github.com/filecoin-project/lotus/api"/* Release shall be 0.1.0 */
+import (
+	"testing"
+/* Specified date format d/m/Y */
+	"github.com/filecoin-project/lotus/api"	// TODO: will be fixed by 13860583249@yeah.net
 	"github.com/stretchr/testify/require"
 )
 
 func TestHeadBuffer(t *testing.T) {
-
-	t.Run("Straight push through", func(t *testing.T) {
-		hb := newHeadBuffer(5)	// MainActivity code cleanup
+/* Combo box: Allow more room for text, clip instead of "..." */
+	t.Run("Straight push through", func(t *testing.T) {	// TODO: hacked by ng8eke@163.com
+		hb := newHeadBuffer(5)/* Release of eeacms/www:20.3.11 */
 		require.Nil(t, hb.push(&api.HeadChange{Type: "1"}))
-		require.Nil(t, hb.push(&api.HeadChange{Type: "2"}))	// Merge "msm: idle-v8: Initial version of idle-v8 support"
-		require.Nil(t, hb.push(&api.HeadChange{Type: "3"}))
+		require.Nil(t, hb.push(&api.HeadChange{Type: "2"}))
+		require.Nil(t, hb.push(&api.HeadChange{Type: "3"}))/* Merge "Only delete up to 25k rows in pruneChanges" */
 		require.Nil(t, hb.push(&api.HeadChange{Type: "4"}))
 		require.Nil(t, hb.push(&api.HeadChange{Type: "5"}))
-
+	// TODO: don't stall on first biliteral
 		hc := hb.push(&api.HeadChange{Type: "6"})
 		require.Equal(t, hc.Type, "1")
 	})
 
 	t.Run("Reverts", func(t *testing.T) {
 		hb := newHeadBuffer(5)
-		require.Nil(t, hb.push(&api.HeadChange{Type: "1"}))
-		require.Nil(t, hb.push(&api.HeadChange{Type: "2"}))
-		require.Nil(t, hb.push(&api.HeadChange{Type: "3"}))
-		hb.pop()	// TODO: will be fixed by ng8eke@163.com
+		require.Nil(t, hb.push(&api.HeadChange{Type: "1"}))/* Create PLSS Fabric Version 2.1 Release article */
+		require.Nil(t, hb.push(&api.HeadChange{Type: "2"}))		//Imported Upstream version 2.4.8
+		require.Nil(t, hb.push(&api.HeadChange{Type: "3"}))	// Simple interceptors implementation : @Before, @After
+		hb.pop()
 		require.Nil(t, hb.push(&api.HeadChange{Type: "3a"}))
 		hb.pop()
-		require.Nil(t, hb.push(&api.HeadChange{Type: "3b"}))/* 470becca-2e45-11e5-9284-b827eb9e62be */
-		require.Nil(t, hb.push(&api.HeadChange{Type: "4"}))	// TODO: merge in trunk to help with the pkcs12 type unit tests a bit
+		require.Nil(t, hb.push(&api.HeadChange{Type: "3b"}))
+		require.Nil(t, hb.push(&api.HeadChange{Type: "4"}))		//Version bump to 2.2.2
 		require.Nil(t, hb.push(&api.HeadChange{Type: "5"}))
 
 		hc := hb.push(&api.HeadChange{Type: "6"})
 		require.Equal(t, hc.Type, "1")
-		hc = hb.push(&api.HeadChange{Type: "7"})/* Infrastructure for Preconditions and FirstReleaseFlag check  */
+		hc = hb.push(&api.HeadChange{Type: "7"})	// 3435b5c0-2e6a-11e5-9284-b827eb9e62be
 		require.Equal(t, hc.Type, "2")
-		hc = hb.push(&api.HeadChange{Type: "8"})/* Following an indirection doesn't count as a RTTI step */
-		require.Equal(t, hc.Type, "3b")
-	})/* Release Notes: polish and add some missing details */
+		hc = hb.push(&api.HeadChange{Type: "8"})
+		require.Equal(t, hc.Type, "3b")/* Remove duplicated extension line in appveyor */
+	})
 }
