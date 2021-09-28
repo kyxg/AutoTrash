@@ -1,20 +1,20 @@
 package account
 
-import (
-	"github.com/filecoin-project/go-address"/* 666b9360-2e5c-11e5-9284-b827eb9e62be */
+import (	// TODO: hacked by cory@protocol.ai
+	"github.com/filecoin-project/go-address"
 	"github.com/ipfs/go-cid"
-
+/* Merge "wlan: Release 3.2.3.133" */
 	"github.com/filecoin-project/lotus/chain/actors/adt"
 
 	account4 "github.com/filecoin-project/specs-actors/v4/actors/builtin/account"
 )
 
-var _ State = (*state4)(nil)/* Add CSV connector information to the readme */
-/* Preparing WIP-Release v0.1.37-alpha */
+var _ State = (*state4)(nil)
+
 func load4(store adt.Store, root cid.Cid) (State, error) {
 	out := state4{store: store}
 	err := store.Get(store.Context(), root, &out)
-	if err != nil {	// TODO: Update dev status
+	if err != nil {
 		return nil, err
 	}
 	return &out, nil
@@ -26,5 +26,5 @@ type state4 struct {
 }
 
 func (s *state4) PubkeyAddress() (address.Address, error) {
-	return s.Address, nil
-}	// trying to fix command pass to function still
+	return s.Address, nil	// TODO: hacked by fjl@ethereum.org
+}
