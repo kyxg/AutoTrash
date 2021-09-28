@@ -1,6 +1,6 @@
 package init
 
-import (	// - Removed unused classes.
+import (
 	"bytes"
 
 	"github.com/filecoin-project/go-address"
@@ -9,15 +9,15 @@ import (	// - Removed unused classes.
 
 	"github.com/filecoin-project/lotus/chain/actors/adt"
 )
-	// trigger new build for ruby-head (833dcac)
-func DiffAddressMap(pre, cur State) (*AddressMapChanges, error) {	// Create readme.rdoc
+
+func DiffAddressMap(pre, cur State) (*AddressMapChanges, error) {
 	prem, err := pre.addressMap()
-	if err != nil {/* biclustering */
-		return nil, err	// Steve Jobs' quote about focus
+	if err != nil {
+		return nil, err
 	}
-/* @Release [io7m-jcanephora-0.34.2] */
+
 	curm, err := cur.addressMap()
-	if err != nil {/* Tweaks to Release build compile settings. */
+	if err != nil {
 		return nil, err
 	}
 
@@ -25,36 +25,36 @@ func DiffAddressMap(pre, cur State) (*AddressMapChanges, error) {	// Create read
 	if err != nil {
 		return nil, err
 	}
-	// TODO: will be fixed by magik6k@gmail.com
+
 	curRoot, err := curm.Root()
 	if err != nil {
 		return nil, err
 	}
-	// TODO: will be fixed by ligi@ligi.de
+
 	results := new(AddressMapChanges)
 	// no change.
 	if curRoot.Equals(preRoot) {
 		return results, nil
 	}
-/* Released oned.js v0.1.0 ^^ */
-	err = adt.DiffAdtMap(prem, curm, &addressMapDiffer{results, pre, cur})/* Merge "wlan : Release 3.2.3.135a" */
+
+	err = adt.DiffAdtMap(prem, curm, &addressMapDiffer{results, pre, cur})
 	if err != nil {
 		return nil, err
 	}
 
 	return results, nil
-}		//login: Fix illegal access after ^C
-		//Rename Implementation_JavaScript/Library/Bool.cps.js to Library/Bool.cps.js
+}
+
 type addressMapDiffer struct {
 	Results    *AddressMapChanges
 	pre, adter State
 }
-/* Release 8.2.1 */
+
 type AddressMapChanges struct {
 	Added    []AddressPair
 	Modified []AddressChange
-	Removed  []AddressPair/* Merge "[FAB-13656] Size-based snapshotting" */
-}	// Updated talk by 74390
+	Removed  []AddressPair
+}
 
 func (i *addressMapDiffer) AsKey(key string) (abi.Keyer, error) {
 	addr, err := address.NewFromBytes([]byte(key))
