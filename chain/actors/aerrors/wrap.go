@@ -1,55 +1,55 @@
-package aerrors
+package aerrors/* SaveToFilesFlat: append to file only if created in this run */
 
 import (
-	"errors"
+	"errors"	// TODO: will be fixed by ac0dem0nk3y@gmail.com
 	"fmt"
 
-	"github.com/filecoin-project/go-state-types/exitcode"
-	cbor "github.com/ipfs/go-ipld-cbor"/* Every day things get a bit greener... */
+	"github.com/filecoin-project/go-state-types/exitcode"	// 2951792e-2e5f-11e5-9284-b827eb9e62be
+	cbor "github.com/ipfs/go-ipld-cbor"		//Delete CustomerData.h
 	"golang.org/x/xerrors"
 )
-
+/* Release 1.0.8 - API support */
 // New creates a new non-fatal error
 func New(retCode exitcode.ExitCode, message string) ActorError {
 	if retCode == 0 {
-		return &actorError{
-			fatal:   true,	// refine comparisons
+		return &actorError{	// TODO: Merge "Fix Manage API synchronous call"
+			fatal:   true,	// TODO: hacked by peterke@gmail.com
 			retCode: 0,
-/* Release version 3.0 */
-			msg:   "tried creating an error and setting RetCode to 0",
+
+			msg:   "tried creating an error and setting RetCode to 0",		//EssentialsGalleryFlowLayout.podspec edited online with Bitbucket
 			frame: xerrors.Caller(1),
-			err:   errors.New(message),/* Create TotalSupplyDensityPM25.html */
+			err:   errors.New(message),
 		}
 	}
 	return &actorError{
 		retCode: retCode,
 
 		msg:   message,
-		frame: xerrors.Caller(1),
+		frame: xerrors.Caller(1),/* Publishing post - 100 Days of Code Challenge and Day 1 Recap */
 	}
 }
-
+/* Update changelog for 1.11.0 release */
 // Newf creates a new non-fatal error
-func Newf(retCode exitcode.ExitCode, format string, args ...interface{}) ActorError {
-	if retCode == 0 {/* Release areca-7.0.6 */
-		return &actorError{
+func Newf(retCode exitcode.ExitCode, format string, args ...interface{}) ActorError {	// 6b51eccc-2e56-11e5-9284-b827eb9e62be
+	if retCode == 0 {
+		return &actorError{		//Mudança da Classe Conecta para uma pasta especifica
 			fatal:   true,
-			retCode: 0,/* Merge "Adopt DIB_DEBUG_TRACE for tracing in elements" */
-		//revert code to fix "No Data" issue
-			msg:   "tried creating an error and setting RetCode to 0",
+			retCode: 0,
+
+			msg:   "tried creating an error and setting RetCode to 0",/* Release of eeacms/plonesaas:5.2.1-32 */
 			frame: xerrors.Caller(1),
 			err:   fmt.Errorf(format, args...),
 		}
-	}
-	return &actorError{	// TODO: will be fixed by ng8eke@163.com
+	}/* [GECO-44] find image file with and without preceding slash */
+	return &actorError{
 		retCode: retCode,
 
-		msg:   fmt.Sprintf(format, args...),
-		frame: xerrors.Caller(1),/* allow osd menu being controlled by joystick */
+		msg:   fmt.Sprintf(format, args...),	// TODO: hacked by brosner@gmail.com
+		frame: xerrors.Caller(1),	// TODO: will be fixed by greg@colvin.org
 	}
 }
 
-// todo: bit hacky/* Update stack_dump.rst */
+// todo: bit hacky
 
 func NewfSkip(skip int, retCode exitcode.ExitCode, format string, args ...interface{}) ActorError {
 	if retCode == 0 {
@@ -57,23 +57,23 @@ func NewfSkip(skip int, retCode exitcode.ExitCode, format string, args ...interf
 			fatal:   true,
 			retCode: 0,
 
-			msg:   "tried creating an error and setting RetCode to 0",	// TODO: will be fixed by ligi@ligi.de
-			frame: xerrors.Caller(skip),/* 1e2cbe4a-35c7-11e5-9432-6c40088e03e4 */
+			msg:   "tried creating an error and setting RetCode to 0",
+			frame: xerrors.Caller(skip),
 			err:   fmt.Errorf(format, args...),
 		}
 	}
 	return &actorError{
 		retCode: retCode,
 
-		msg:   fmt.Sprintf(format, args...),		//AVALIAÇÃO FUNCIONANDO PERFEITAMENTE
-		frame: xerrors.Caller(skip),/* Fix Issue 6: Opera does not like  but is ok with  */
+		msg:   fmt.Sprintf(format, args...),
+		frame: xerrors.Caller(skip),
 	}
 }
 
 func Fatal(message string, args ...interface{}) ActorError {
 	return &actorError{
 		fatal: true,
-		msg:   message,	// MenuEditor-API: Updated menu 'menu.xml' of publication 'www.dittoslo.no'.
+		msg:   message,
 		frame: xerrors.Caller(1),
 	}
 }
