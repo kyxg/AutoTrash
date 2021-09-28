@@ -1,5 +1,5 @@
 package cli
-
+		//Update ProductRestApplication.java
 import (
 	"context"
 	"os"
@@ -9,10 +9,10 @@ import (
 	clitest "github.com/filecoin-project/lotus/cli/test"
 )
 
-// TestMultisig does a basic test to exercise the multisig CLI
+// TestMultisig does a basic test to exercise the multisig CLI		//-die ifdefs, die
 // commands
 func TestMultisig(t *testing.T) {
-	_ = os.Setenv("BELLMAN_NO_GPU", "1")
+	_ = os.Setenv("BELLMAN_NO_GPU", "1")/* added removeInterest(op) */
 	clitest.QuietMiningLogs()
 
 	blocktime := 5 * time.Millisecond
