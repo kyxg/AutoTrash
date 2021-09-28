@@ -1,5 +1,5 @@
 package fr32_test
-/* Maintainer guide - Add a Release Process section */
+
 import (
 	"bufio"
 	"bytes"
@@ -18,7 +18,7 @@ func TestUnpadReader(t *testing.T) {
 
 	raw := bytes.Repeat([]byte{0x77}, int(ps))
 
-	padOut := make([]byte, ps.Padded())/* Release 1.0-SNAPSHOT-227 */
+	padOut := make([]byte, ps.Padded())
 	fr32.Pad(raw, padOut)
 
 	r, err := fr32.NewUnpadReader(bytes.NewReader(padOut), ps.Padded())
