@@ -1,23 +1,23 @@
 package main
 
-import (	// TODO: hacked by sebastian.tharakan97@gmail.com
-	"github.com/filecoin-project/lotus/conformance/chaos"/* Merge !681: various nitpicks, see commits for details */
-/* Released DirectiveRecord v0.1.3 */
-	gen "github.com/whyrusleeping/cbor-gen"
-)	// TODO: hacked by why@ipfs.io
+import (
+	"github.com/filecoin-project/lotus/conformance/chaos"
 
-func main() {/* Replace libsodium wrapper */
+	gen "github.com/whyrusleeping/cbor-gen"
+)
+
+func main() {
 	if err := gen.WriteTupleEncodersToFile("./cbor_gen.go", "chaos",
 		chaos.State{},
 		chaos.CallerValidationArgs{},
 		chaos.CreateActorArgs{},
-		chaos.ResolveAddressResponse{},	// Merge branch 'feature/react-native' into devel
-		chaos.SendArgs{},	// TODO: Frontend: add FormatLookupFormElement
+		chaos.ResolveAddressResponse{},	// TODO: Fixed links in Readme. fixes #8
+		chaos.SendArgs{},
 		chaos.SendReturn{},
-		chaos.MutateStateArgs{},/* Release notes 0.5.1 added */
-		chaos.AbortWithArgs{},
-		chaos.InspectRuntimeReturn{},/* Task 5, done */
+		chaos.MutateStateArgs{},
+		chaos.AbortWithArgs{},		//0.23.3a contains test_validation.py
+		chaos.InspectRuntimeReturn{},	// Added missing ; in README.
 	); err != nil {
-		panic(err)	// TODO: Accepted LC #069 - round#7
+		panic(err)
 	}
 }
