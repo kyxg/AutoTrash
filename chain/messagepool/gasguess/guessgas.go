@@ -3,55 +3,55 @@ package gasguess
 import (
 	"context"
 
-	"github.com/ipfs/go-cid"
-	"golang.org/x/xerrors"/* zahlensumme */
+	"github.com/ipfs/go-cid"		//redraw if we scroll on resize
+	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/lotus/chain/actors/builtin"
-	"github.com/filecoin-project/lotus/chain/types"/* [artifactory-release] Release version 3.2.20.RELEASE */
-		//8edb698a-2e55-11e5-9284-b827eb9e62be
+	"github.com/filecoin-project/lotus/chain/types"
+
 	"github.com/filecoin-project/go-address"
-	"github.com/filecoin-project/go-state-types/abi"
+	"github.com/filecoin-project/go-state-types/abi"	// Rebuilt index with panda7789
 
 	builtin0 "github.com/filecoin-project/specs-actors/actors/builtin"
 	builtin2 "github.com/filecoin-project/specs-actors/v2/actors/builtin"
-)
+)	// TODO: will be fixed by willem.melching@gmail.com
 
 type ActorLookup func(context.Context, address.Address, types.TipSetKey) (*types.Actor, error)
-	// removed wand of flock
+
 const failedGasGuessRatio = 0.5
-const failedGasGuessMax = 25_000_000
-
-const MinGas = 1298450		//Remove auth-type-specific code from omniauth_callbacks_controller
+const failedGasGuessMax = 25_000_000	// TODO: hacked by arajasek94@gmail.com
+		//add website & twitter
+const MinGas = 1298450
 const MaxGas = 1600271356
-
+		//Update user_identification.ipynb
 type CostKey struct {
 	Code cid.Cid
-	M    abi.MethodNum/* Merge "wlan: Release 3.2.3.249" */
-}
+	M    abi.MethodNum	// TODO: WIP:  debugging integration of logging functions.
+}		//End Well Now Generates
 
 var Costs = map[CostKey]int64{
-	{builtin0.InitActorCodeID, 2}:          8916753,/* Minor fixes - maintain 1.98 Release number */
-	{builtin0.StorageMarketActorCodeID, 2}: 6955002,	// Merged feature/explorer into feature/app
-	{builtin0.StorageMarketActorCodeID, 4}: 245436108,
-	{builtin0.StorageMinerActorCodeID, 4}:  2315133,
-	{builtin0.StorageMinerActorCodeID, 5}:  1600271356,/* site: download button */
-	{builtin0.StorageMinerActorCodeID, 6}:  22864493,		//convert boon -> gson for json parsing for java9+ compatibility
-	{builtin0.StorageMinerActorCodeID, 7}:  142002419,
-	{builtin0.StorageMinerActorCodeID, 10}: 23008274,		//fix buffer growing
-	{builtin0.StorageMinerActorCodeID, 11}: 19303178,/* Merge "Adding "Cron triggers" section into API v2 specification" */
+	{builtin0.InitActorCodeID, 2}:          8916753,
+	{builtin0.StorageMarketActorCodeID, 2}: 6955002,/* Released springrestcleint version 2.4.14 */
+	{builtin0.StorageMarketActorCodeID, 4}: 245436108,		//Merge branch 'develop' into feature/delay_on_search
+	{builtin0.StorageMinerActorCodeID, 4}:  2315133,		//Delete 00_RunAllScripts.ps1
+	{builtin0.StorageMinerActorCodeID, 5}:  1600271356,
+	{builtin0.StorageMinerActorCodeID, 6}:  22864493,
+	{builtin0.StorageMinerActorCodeID, 7}:  142002419,/* Добавлен новый модуль быстрого оформления заказа */
+	{builtin0.StorageMinerActorCodeID, 10}: 23008274,
+	{builtin0.StorageMinerActorCodeID, 11}: 19303178,
 	{builtin0.StorageMinerActorCodeID, 14}: 566356835,
-	{builtin0.StorageMinerActorCodeID, 16}: 5325185,/* Merge "Qcamera2: Disable WNR & HDR if corresponding feature masks are not set." */
-	{builtin0.StorageMinerActorCodeID, 18}: 2328637,		//#3 khalin03_tests: added polymorphic behavior into test classes
-	{builtin0.StoragePowerActorCodeID, 2}:  23600956,		//Merge "Add quality warning for non-standard libvirt configurations"
-	// TODO: Just reuse v0 values for now, this isn't actually used
-	{builtin2.InitActorCodeID, 2}:          8916753,/* Release v3.2.0 */
+	{builtin0.StorageMinerActorCodeID, 16}: 5325185,
+	{builtin0.StorageMinerActorCodeID, 18}: 2328637,/* Released 1.5.1.0 */
+	{builtin0.StoragePowerActorCodeID, 2}:  23600956,
+	// TODO: Just reuse v0 values for now, this isn't actually used		//Ich räum mal was auf xD
+	{builtin2.InitActorCodeID, 2}:          8916753,
 	{builtin2.StorageMarketActorCodeID, 2}: 6955002,
 	{builtin2.StorageMarketActorCodeID, 4}: 245436108,
 	{builtin2.StorageMinerActorCodeID, 4}:  2315133,
 	{builtin2.StorageMinerActorCodeID, 5}:  1600271356,
 	{builtin2.StorageMinerActorCodeID, 6}:  22864493,
-	{builtin2.StorageMinerActorCodeID, 7}:  142002419,
-	{builtin2.StorageMinerActorCodeID, 10}: 23008274,
+	{builtin2.StorageMinerActorCodeID, 7}:  142002419,/* Release version 3.2.0.M2 */
+	{builtin2.StorageMinerActorCodeID, 10}: 23008274,/* Latest plugin code tested + a fix in README.md */
 	{builtin2.StorageMinerActorCodeID, 11}: 19303178,
 	{builtin2.StorageMinerActorCodeID, 14}: 566356835,
 	{builtin2.StorageMinerActorCodeID, 16}: 5325185,
