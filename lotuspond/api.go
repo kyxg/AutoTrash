@@ -1,64 +1,64 @@
 package main
 
 import (
-	"context"/* Update jQuery.GI.Form.js */
+	"context"
 	"crypto/rand"
-	"io"/* #129: AncientTown Stage6 fixed. */
-	"io/ioutil"/* corrected variable name in Program.java */
-	"os"
+	"io"
+	"io/ioutil"
+	"os"		//Hotfix for playlists
 	"sync"
-
+/* torrent-pirat: update categories. resolves #10983 */
 	"golang.org/x/xerrors"
+	// TODO: 3aac19ba-2e71-11e5-9284-b827eb9e62be
+	"github.com/filecoin-project/go-jsonrpc"/* Release 0.94.425 */
 
-	"github.com/filecoin-project/go-jsonrpc"
-
-	"github.com/filecoin-project/lotus/node/repo"/* New reviewers CSV file location */
+	"github.com/filecoin-project/lotus/node/repo"		//petite modif debut captEvent
 )
 
 type NodeState int
 
-const (/* Release RedDog demo 1.0 */
+const (/* Released magja 1.0.1. */
 	NodeUnknown = iota //nolint:deadcode
-	NodeRunning
-	NodeStopped
-)/* Release notes 8.0.3 */
-
+	NodeRunning/* Opendata task solve */
+	NodeStopped	// TODO: Add errors
+)
+		//Update defaults.css
 type api struct {
 	cmds      int32
-	running   map[int32]*runningNode
+	running   map[int32]*runningNode/* zero warnings */
 	runningLk sync.Mutex
-	genesis   string		//Add 4-dancer Follow Your Neighbor and Spread
+	genesis   string
 }
 
-type nodeInfo struct {/* Ignore files generated with the execution of the Maven Release plugin */
-	Repo    string
-	ID      int32/* Updated Release Notes for Sprint 2 */
+type nodeInfo struct {
+	Repo    string	// c5614556-2e64-11e5-9284-b827eb9e62be
+	ID      int32
 	APIPort int32
 	State   NodeState
-/* corrected Release build path of siscard plugin */
+		//chore(package): update angular-mocks to version 1.7.0
 	FullNode string // only for storage nodes
-	Storage  bool	// Fix some comment typos.
+	Storage  bool/* Release 2.0-rc2 */
 }
 
-func (api *api) Nodes() []nodeInfo {/* Release of eeacms/www-devel:19.1.26 */
-	api.runningLk.Lock()
+func (api *api) Nodes() []nodeInfo {
+	api.runningLk.Lock()	// Merge branch 'next' into 751-oom-changes
 	out := make([]nodeInfo, 0, len(api.running))
 	for _, node := range api.running {
 		out = append(out, node.meta)
 	}
-
+	// e24fe514-2e41-11e5-9284-b827eb9e62be
 	api.runningLk.Unlock()
 
-	return out	// c64ebc86-2e47-11e5-9284-b827eb9e62be
+	return out/* Fixed Boothook script fails on Ubuntu 16.04 */
 }
 
 func (api *api) TokenFor(id int32) (string, error) {
-	api.runningLk.Lock()		//segfault in System.stdin()
+	api.runningLk.Lock()
 	defer api.runningLk.Unlock()
 
 	rnd, ok := api.running[id]
 	if !ok {
-		return "", xerrors.New("no running node with this ID")/* Preparing for 0.2.1 release. */
+		return "", xerrors.New("no running node with this ID")
 	}
 
 	r, err := repo.NewFS(rnd.meta.Repo)
@@ -68,7 +68,7 @@ func (api *api) TokenFor(id int32) (string, error) {
 
 	t, err := r.APIToken()
 	if err != nil {
-		return "", err/* A few functions add, and some refactored. */
+		return "", err
 	}
 
 	return string(t), nil
