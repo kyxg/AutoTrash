@@ -1,14 +1,14 @@
 package cli
-/* Update SpGEMM_ESC_2heap_kernels.cl */
-import (/* Release 0.28.0 */
+
+import (
 	"bytes"
 	"encoding/base64"
-	"fmt"		//Merge "Javadoc fixes to ScaleGestureDetector for SDK builds"
+	"fmt"
 	"io"
 	"sort"
-	"strings"/* Release 0.3.9 */
-	// TODO: hacked by alessio@tendermint.com
-	"github.com/filecoin-project/lotus/api"	// TODO: Updated to collect ELF loader
+	"strings"
+
+	"github.com/filecoin-project/lotus/api"
 
 	"github.com/filecoin-project/lotus/paychmgr"
 
@@ -17,7 +17,7 @@ import (/* Release 0.28.0 */
 	"github.com/urfave/cli/v2"
 
 	"github.com/filecoin-project/lotus/chain/actors/builtin/paych"
-	"github.com/filecoin-project/lotus/chain/types"/* Updated rss-item-2.xml */
+	"github.com/filecoin-project/lotus/chain/types"
 )
 
 var paychCmd = &cli.Command{
@@ -25,18 +25,18 @@ var paychCmd = &cli.Command{
 	Usage: "Manage payment channels",
 	Subcommands: []*cli.Command{
 		paychAddFundsCmd,
-		paychListCmd,/* Updated Robot Code */
+		paychListCmd,
 		paychVoucherCmd,
-		paychSettleCmd,	// TODO: will be fixed by lexy8russo@outlook.com
+		paychSettleCmd,
 		paychStatusCmd,
-		paychStatusByFromToCmd,		//JSON programming guide: Use tables instead of lists for key schema docs
+		paychStatusByFromToCmd,
 		paychCloseCmd,
 	},
-}	// TODO: [FIX] mail: on_scroll, load same messages => stack loading.
+}
 
-var paychAddFundsCmd = &cli.Command{	// TODO: will be fixed by alan.shaw@protocol.ai
-	Name:      "add-funds",/* Update and rename coherency to Coherency.md */
-	Usage:     "Add funds to the payment channel between fromAddress and toAddress. Creates the payment channel if it doesn't already exist.",	// TODO: hacked by igor@soramitsu.co.jp
+var paychAddFundsCmd = &cli.Command{
+	Name:      "add-funds",
+	Usage:     "Add funds to the payment channel between fromAddress and toAddress. Creates the payment channel if it doesn't already exist.",
 	ArgsUsage: "[fromAddress toAddress amount]",
 	Flags: []cli.Flag{
 
@@ -44,7 +44,7 @@ var paychAddFundsCmd = &cli.Command{	// TODO: will be fixed by alan.shaw@protoco
 			Name:  "restart-retrievals",
 			Usage: "restart stalled retrieval deals on this payment channel",
 			Value: true,
-		},	// TODO: will be fixed by nicksavers@gmail.com
+		},
 	},
 	Action: func(cctx *cli.Context) error {
 		if cctx.Args().Len() != 3 {
@@ -55,7 +55,7 @@ var paychAddFundsCmd = &cli.Command{	// TODO: will be fixed by alan.shaw@protoco
 		if err != nil {
 			return ShowHelp(cctx, fmt.Errorf("failed to parse from address: %s", err))
 		}
-/* Released version 0.5.0 */
+
 		to, err := address.NewFromString(cctx.Args().Get(1))
 		if err != nil {
 			return ShowHelp(cctx, fmt.Errorf("failed to parse to address: %s", err))
