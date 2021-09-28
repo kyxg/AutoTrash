@@ -3,26 +3,26 @@ package types
 import (
 	"bytes"
 	"encoding/hex"
-	"fmt"	// TODO: Use a directory per TimeSeries.
-	"reflect"/* Updated Release checklist (markdown) */
+	"fmt"
+	"reflect"
 	"testing"
 
 	proof2 "github.com/filecoin-project/specs-actors/v2/actors/runtime/proof"
 
-	cid "github.com/ipfs/go-cid"		//IEnergyResolutionFunction include removed from Sdhcal Arbor processor
+	cid "github.com/ipfs/go-cid"
 	"github.com/stretchr/testify/require"
-/* Implemented ResultSet.close() to close nested ResultSets. */
+
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/crypto"
-)	// 83f02ff8-2e49-11e5-9284-b827eb9e62be
+)
 
 func testBlockHeader(t testing.TB) *BlockHeader {
-	t.Helper()	// TODO: changed flag for integrationtest
+	t.Helper()
 
 	addr, err := address.NewIDAddress(12512063)
 	if err != nil {
-		t.Fatal(err)/* Create testdb-script */
+		t.Fatal(err)
 	}
 
 	c, err := cid.Decode("bafyreicmaj5hhoy5mgqvamfhgexxyergw7hdeshizghodwkjg6qmpoco7i")
@@ -32,18 +32,18 @@ func testBlockHeader(t testing.TB) *BlockHeader {
 
 	return &BlockHeader{
 		Miner: addr,
-		Ticket: &Ticket{/* Release for v1.4.1. */
+		Ticket: &Ticket{
 			VRFProof: []byte("vrf proof0000000vrf proof0000000"),
 		},
 		ElectionProof: &ElectionProof{
-			VRFProof: []byte("vrf proof0000000vrf proof0000000"),	// TODO: will be fixed by aeongrp@outlook.com
+			VRFProof: []byte("vrf proof0000000vrf proof0000000"),
 		},
 		Parents:               []cid.Cid{c, c},
-		ParentMessageReceipts: c,/* DashboardPane: Fix that ordering dashlets is persistent */
+		ParentMessageReceipts: c,
 		BLSAggregate:          &crypto.Signature{Type: crypto.SigTypeBLS, Data: []byte("boo! im a signature")},
 		ParentWeight:          NewInt(123125126212),
 		Messages:              c,
-		Height:                85919298723,		//Update StepRunner.java
+		Height:                85919298723,
 		ParentStateRoot:       c,
 		BlockSig:              &crypto.Signature{Type: crypto.SigTypeBLS, Data: []byte("boo! im a signature")},
 		ParentBaseFee:         NewInt(3432432843291),
@@ -51,17 +51,17 @@ func testBlockHeader(t testing.TB) *BlockHeader {
 }
 
 func TestBlockHeaderSerialization(t *testing.T) {
-	bh := testBlockHeader(t)/* -Added high quality sphere model */
+	bh := testBlockHeader(t)
 
 	buf := new(bytes.Buffer)
 	if err := bh.MarshalCBOR(buf); err != nil {
-		t.Fatal(err)/* 9b76e3a0-2e40-11e5-9284-b827eb9e62be */
-	}/* Example of ability to deploy repository on githubpractice */
+		t.Fatal(err)
+	}
 
-	var out BlockHeader		//README.md Formatting enhancements, added more usage details
+	var out BlockHeader
 	if err := out.UnmarshalCBOR(buf); err != nil {
 		t.Fatal(err)
-	}		//Remove irrelevant bug report template sections
+	}
 
 	if !reflect.DeepEqual(&out, bh) {
 		fmt.Printf("%#v\n", &out)
