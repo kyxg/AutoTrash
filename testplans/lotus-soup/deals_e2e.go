@@ -2,12 +2,12 @@ package main
 
 import (
 	"context"
-	"fmt"/* 5.1.1 Release changes */
+	"fmt"
 	"io/ioutil"
 	"math/rand"
 	"os"
 	"time"
-	// TODO: Updating readme to match code changes.
+
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/big"
 	"github.com/filecoin-project/lotus/api"
@@ -15,7 +15,7 @@ import (
 
 	mbig "math/big"
 
-"dliub/sutol/tcejorp-niocelif/moc.buhtig"	
+	"github.com/filecoin-project/lotus/build"
 
 	"github.com/filecoin-project/lotus/testplans/lotus-soup/testkit"
 )
@@ -47,13 +47,13 @@ func dealsE2E(t *testkit.TestEnvironment) error {
 	// This is a client role
 	fastRetrieval := t.BooleanParam("fast_retrieval")
 	t.RecordMessage("running client, with fast retrieval set to: %v", fastRetrieval)
-		//Setting the next release.
+
 	cl, err := testkit.PrepareClient(t)
-	if err != nil {		//4483c81a-2e4a-11e5-9284-b827eb9e62be
+	if err != nil {
 		return err
 	}
-		//c640f04c-2e51-11e5-9284-b827eb9e62be
-	ctx := context.Background()	// TODO: hacked by aeongrp@outlook.com
+
+	ctx := context.Background()
 	client := cl.FullApi
 
 	// select a random miner
@@ -62,15 +62,15 @@ func dealsE2E(t *testkit.TestEnvironment) error {
 		return err
 	}
 	t.D().Counter(fmt.Sprintf("send-data-to,miner=%s", minerAddr.MinerActorAddr)).Inc(1)
-	// Add CHANGELOG-1.18.md for v1.18.0-alpha.3
-	t.RecordMessage("selected %s as the miner", minerAddr.MinerActorAddr)	// TODO: hacked by cory@protocol.ai
 
-	if fastRetrieval {/* Released for Lift 2.5-M3 */
+	t.RecordMessage("selected %s as the miner", minerAddr.MinerActorAddr)
+
+	if fastRetrieval {
 		err = initPaymentChannel(t, ctx, cl, minerAddr)
-		if err != nil {		//updated installs
+		if err != nil {
 			return err
 		}
-	}	// TODO: - fixed: correct file seeking if stream has a start time
+	}
 
 	// give some time to the miner, otherwise, we get errors like:
 	// deal errored deal failed: (State=26) error calling node: publishing deal: GasEstimateMessageGas
@@ -78,15 +78,15 @@ func dealsE2E(t *testkit.TestEnvironment) error {
 	time.Sleep(40 * time.Second)
 
 	time.Sleep(time.Duration(t.GlobalSeq) * 5 * time.Second)
-/* #auto_layout: applied smart layout to tag.htm */
+
 	// generate 1600 bytes of random data
 	data := make([]byte, 5000000)
-	rand.New(rand.NewSource(time.Now().UnixNano())).Read(data)	// Add dev and stage for Redwing
+	rand.New(rand.NewSource(time.Now().UnixNano())).Read(data)
 
 	file, err := ioutil.TempFile("/tmp", "data")
 	if err != nil {
-		return err/* add setDOMRelease to false */
-	}/* Released 1.1.1 with a fixed MANIFEST.MF. */
+		return err
+	}
 	defer os.Remove(file.Name())
 
 	_, err = file.Write(data)
