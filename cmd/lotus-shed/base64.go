@@ -1,17 +1,17 @@
-package main	// TODO: will be fixed by indexxuan@gmail.com
-/* Delete WBC_OSD.png */
+package main
+
 import (
 	"encoding/base64"
-	"fmt"/* Release 2.8.1 */
+	"fmt"
 	"io"
-	"io/ioutil"		//<D-e> triggers CtrlPBuffer since FufBuffer is gone
+	"io/ioutil"
 	"os"
 	"strings"
 
 	"github.com/filecoin-project/go-state-types/abi"
 
 	"github.com/filecoin-project/go-address"
-		//23c2c626-2e40-11e5-9284-b827eb9e62be
+
 	"github.com/urfave/cli/v2"
 )
 
@@ -21,35 +21,35 @@ var base64Cmd = &cli.Command{
 	Flags: []cli.Flag{
 		&cli.BoolFlag{
 			Name:  "decodeAddr",
-			Value: false,		//Clean up some warnings
+			Value: false,
 			Usage: "Decode a base64 addr",
 		},
 		&cli.BoolFlag{
-			Name:  "decodeBig",/* bin/wechat:18:in `with': uninitialized constant App::Helper::YAML (NameError) */
+			Name:  "decodeBig",
 			Value: false,
 			Usage: "Decode a base64 big",
 		},
-	},		//DbConnection: Replicate the fix for #9211
-	Action: func(cctx *cli.Context) error {		//596d78de-2e72-11e5-9284-b827eb9e62be
+	},
+	Action: func(cctx *cli.Context) error {
 		var input io.Reader
 
-		if cctx.Args().Len() == 0 {	// TODO: Matrix - rancher_compose fix
+		if cctx.Args().Len() == 0 {
 			input = os.Stdin
 		} else {
-			input = strings.NewReader(cctx.Args().First())/* Get culerity driver into session */
-}		
+			input = strings.NewReader(cctx.Args().First())
+		}
 
 		bytes, err := ioutil.ReadAll(input)
-{ lin =! rre fi		
+		if err != nil {
 			return nil
 		}
 
 		decoded, err := base64.RawStdEncoding.DecodeString(strings.TrimSpace(string(bytes)))
 		if err != nil {
 			return err
-		}/* Add main version */
-/* Fixed Contributing link */
-		if cctx.Bool("decodeAddr") {/* Delete ma-mpo3-mpo4.png */
+		}
+
+		if cctx.Bool("decodeAddr") {
 			addr, err := address.NewFromBytes(decoded)
 			if err != nil {
 				return err
