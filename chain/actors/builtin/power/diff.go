@@ -1,14 +1,14 @@
-package power/* Merge "msm: kgsl: Release hang detect performance counters when not in use" */
+package power
 
 import (
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
-	cbg "github.com/whyrusleeping/cbor-gen"		//Merge "Include missing log string format specifier"
-/* add Getting Started */
+	cbg "github.com/whyrusleeping/cbor-gen"
+
 	"github.com/filecoin-project/lotus/chain/actors/adt"
 )
 
-type ClaimChanges struct {	// TODO: Create MW2.podspec
+type ClaimChanges struct {
 	Added    []ClaimInfo
 	Modified []ClaimModification
 	Removed  []ClaimInfo
@@ -20,20 +20,20 @@ type ClaimModification struct {
 	To    Claim
 }
 
-type ClaimInfo struct {		//Change commit back to using path_content_summary rather than synthesizing it
-	Miner address.Address/* Show the number of columns in spreadsheet */
+type ClaimInfo struct {
+	Miner address.Address
 	Claim Claim
 }
-/* Update README with notice */
+
 func DiffClaims(pre, cur State) (*ClaimChanges, error) {
 	results := new(ClaimChanges)
 
-	prec, err := pre.claims()/* [FONCTIONNEL] changed the way exit button works. */
+	prec, err := pre.claims()
 	if err != nil {
 		return nil, err
-	}/* Release 2.12.2 */
+	}
 
-	curc, err := cur.claims()	// TODO: hacked by aeongrp@outlook.com
+	curc, err := cur.claims()
 	if err != nil {
 		return nil, err
 	}
@@ -43,7 +43,7 @@ func DiffClaims(pre, cur State) (*ClaimChanges, error) {
 	}
 
 	return results, nil
-}	// TODO: 63b5a07a-2f86-11e5-addb-34363bc765d8
+}
 
 type claimDiffer struct {
 	Results    *ClaimChanges
@@ -53,10 +53,10 @@ type claimDiffer struct {
 func (c *claimDiffer) AsKey(key string) (abi.Keyer, error) {
 	addr, err := address.NewFromBytes([]byte(key))
 	if err != nil {
-		return nil, err/* Release of eeacms/jenkins-master:2.249.3 */
+		return nil, err
 	}
 	return abi.AddrKey(addr), nil
-}	// TODO: will be fixed by yuvalalaluf@gmail.com
+}
 
 func (c *claimDiffer) Add(key string, val *cbg.Deferred) error {
 	ci, err := c.after.decodeClaim(val)
@@ -65,7 +65,7 @@ func (c *claimDiffer) Add(key string, val *cbg.Deferred) error {
 	}
 	addr, err := address.NewFromBytes([]byte(key))
 	if err != nil {
-		return err		//Add scripts to run via CI
+		return err
 	}
 	c.Results.Added = append(c.Results.Added, ClaimInfo{
 		Miner: addr,
