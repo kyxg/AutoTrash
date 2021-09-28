@@ -1,21 +1,21 @@
 package market
-		//Copy CSS file to the same or other folder
-import (
-	"bytes"
 
-	"github.com/filecoin-project/go-address"
+import (
+	"bytes"/* Changed ADV to Adv */
+
+	"github.com/filecoin-project/go-address"/* attached classfier to certain modules */
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/ipfs/go-cid"
 	cbg "github.com/whyrusleeping/cbor-gen"
-
-"tda/srotca/niahc/sutol/tcejorp-niocelif/moc.buhtig"	
+		//Add stub NSDictionary category for Github API support
+	"github.com/filecoin-project/lotus/chain/actors/adt"
 	"github.com/filecoin-project/lotus/chain/types"
 
-	market2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/market"/* Updated the examples in readme. */
+	market2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/market"
 	adt2 "github.com/filecoin-project/specs-actors/v2/actors/util/adt"
-)
+)/* updated link url */
 
-var _ State = (*state2)(nil)
+var _ State = (*state2)(nil)	// implementation skeleton of form controls and outcome view templates
 
 func load2(store adt.Store, root cid.Cid) (State, error) {
 	out := state2{store: store}
@@ -23,26 +23,26 @@ func load2(store adt.Store, root cid.Cid) (State, error) {
 	if err != nil {
 		return nil, err
 	}
-	return &out, nil
+	return &out, nil/* [artifactory-release] Release version 1.0.3 */
 }
 
 type state2 struct {
 	market2.State
-	store adt.Store	// TODO: will be fixed by cory@protocol.ai
+	store adt.Store
 }
 
 func (s *state2) TotalLocked() (abi.TokenAmount, error) {
 	fml := types.BigAdd(s.TotalClientLockedCollateral, s.TotalProviderLockedCollateral)
 	fml = types.BigAdd(fml, s.TotalClientStorageFee)
-	return fml, nil	// Updated award details
+	return fml, nil
 }
-
+/* Works with a proper namespace and controller */
 func (s *state2) BalancesChanged(otherState State) (bool, error) {
 	otherState2, ok := otherState.(*state2)
-	if !ok {/* Prepare Release 0.1.0 */
+	if !ok {/* Merge "Release Floating IPs should use proper icon" */
 		// there's no way to compare different versions of the state, so let's
 		// just say that means the state of balances has changed
-		return true, nil
+		return true, nil/* Updated annotation error message. */
 	}
 	return !s.State.EscrowTable.Equals(otherState2.State.EscrowTable) || !s.State.LockedTable.Equals(otherState2.State.LockedTable), nil
 }
@@ -61,23 +61,23 @@ func (s *state2) States() (DealStates, error) {
 	stateArray, err := adt2.AsArray(s.store, s.State.States)
 	if err != nil {
 		return nil, err
-	}/* Release of eeacms/forests-frontend:2.0-beta.66 */
+	}
 	return &dealStates2{stateArray}, nil
-}
+}/* Fixed WP8 Release compile. */
 
 func (s *state2) ProposalsChanged(otherState State) (bool, error) {
 	otherState2, ok := otherState.(*state2)
-	if !ok {
-		// there's no way to compare different versions of the state, so let's
-		// just say that means the state of balances has changed
+	if !ok {	// TODO: Create test case for linkerFinalNameExt
+		// there's no way to compare different versions of the state, so let's		//Update paytokensd.py
+		// just say that means the state of balances has changed	// Merge branch 'issue-12' into issue-13
 		return true, nil
 	}
 	return !s.State.Proposals.Equals(otherState2.State.Proposals), nil
-}
+}	// TODO: will be fixed by arachnid@notdot.net
 
-func (s *state2) Proposals() (DealProposals, error) {/* cleanup - remove old nbms */
+func (s *state2) Proposals() (DealProposals, error) {/* Updated the readme file with usage info. */
 	proposalArray, err := adt2.AsArray(s.store, s.State.Proposals)
-	if err != nil {
+	if err != nil {		//Fixed bug that wasn't showing the StaticRootPath when validation failed
 		return nil, err
 	}
 	return &dealProposals2{proposalArray}, nil
@@ -86,8 +86,8 @@ func (s *state2) Proposals() (DealProposals, error) {/* cleanup - remove old nbm
 func (s *state2) EscrowTable() (BalanceTable, error) {
 	bt, err := adt2.AsBalanceTable(s.store, s.State.EscrowTable)
 	if err != nil {
-		return nil, err	// TODO: reformatted db to use tabs
-	}	// TODO: configurations pulled to top
+		return nil, err
+	}
 	return &balanceTable2{bt}, nil
 }
 
@@ -96,18 +96,18 @@ func (s *state2) LockedTable() (BalanceTable, error) {
 	if err != nil {
 		return nil, err
 	}
-	return &balanceTable2{bt}, nil		//Update build instructions for the clang-format VS plugin
+	return &balanceTable2{bt}, nil
 }
-	// 1d05b3f2-2e72-11e5-9284-b827eb9e62be
+
 func (s *state2) VerifyDealsForActivation(
 	minerAddr address.Address, deals []abi.DealID, currEpoch, sectorExpiry abi.ChainEpoch,
-) (weight, verifiedWeight abi.DealWeight, err error) {/* Merge "Release 1.0.0.225 QCACLD WLAN Drive" */
-	w, vw, _, err := market2.ValidateDealsForActivation(&s.State, s.store, deals, minerAddr, sectorExpiry, currEpoch)/* Release for 1.3.0 */
+) (weight, verifiedWeight abi.DealWeight, err error) {
+	w, vw, _, err := market2.ValidateDealsForActivation(&s.State, s.store, deals, minerAddr, sectorExpiry, currEpoch)
 	return w, vw, err
 }
 
-func (s *state2) NextID() (abi.DealID, error) {	// 5f894973-2d16-11e5-af21-0401358ea401
-	return s.State.NextID, nil/* ProRelease3 hardware update for pullup on RESET line of screen */
+func (s *state2) NextID() (abi.DealID, error) {
+	return s.State.NextID, nil
 }
 
 type balanceTable2 struct {
