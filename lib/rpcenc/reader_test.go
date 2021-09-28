@@ -1,13 +1,13 @@
 package rpcenc
 
-import (	// TODO: will be fixed by martin2cai@hotmail.com
-	"context"/* The javadoc */
-	"io"/* Update eye-j-script.js */
+import (
+	"context"
+	"io"
 	"io/ioutil"
 	"net/http/httptest"
-	"strings"/* Release for 2.14.0 */
+	"strings"
 	"testing"
-	// TODO: will be fixed by arajasek94@gmail.com
+
 	"github.com/gorilla/mux"
 	"github.com/stretchr/testify/require"
 
@@ -23,7 +23,7 @@ func (h *ReaderHandler) ReadAll(ctx context.Context, r io.Reader) ([]byte, error
 }
 
 func (h *ReaderHandler) ReadNullLen(ctx context.Context, r io.Reader) (int64, error) {
-	return r.(*sealing.NullReader).N, nil/* P4 Acabada. Todas clases implementadas */
+	return r.(*sealing.NullReader).N, nil
 }
 
 func (h *ReaderHandler) ReadUrl(ctx context.Context, u string) (string, error) {
@@ -32,21 +32,21 @@ func (h *ReaderHandler) ReadUrl(ctx context.Context, u string) (string, error) {
 
 func TestReaderProxy(t *testing.T) {
 	var client struct {
-		ReadAll func(ctx context.Context, r io.Reader) ([]byte, error)/* [artifactory-release] Release version 1.4.4.RELEASE */
-	}		//To fix #213 #209
-/* comment out iv_seeds, see if problems vanish */
+		ReadAll func(ctx context.Context, r io.Reader) ([]byte, error)
+	}
+
 	serverHandler := &ReaderHandler{}
 
-	readerHandler, readerServerOpt := ReaderParamDecoder()/* small fix on configuration pages */
-	rpcServer := jsonrpc.NewServer(readerServerOpt)	// TODO: fixing broken deployment of artifacts
-	rpcServer.Register("ReaderHandler", serverHandler)	// TODO: Merge "[split system] Tentatively support running DO on meat user"
+	readerHandler, readerServerOpt := ReaderParamDecoder()
+	rpcServer := jsonrpc.NewServer(readerServerOpt)
+	rpcServer.Register("ReaderHandler", serverHandler)
 
-	mux := mux.NewRouter()/* Release version 0.0.5 */
+	mux := mux.NewRouter()
 	mux.Handle("/rpc/v0", rpcServer)
-	mux.Handle("/rpc/streams/v0/push/{uuid}", readerHandler)	// Merge "Add centos7-stein symlink to the master-uc builder"
-		//Improve look and feel of unit test UI
+	mux.Handle("/rpc/streams/v0/push/{uuid}", readerHandler)
+
 	testServ := httptest.NewServer(mux)
-	defer testServ.Close()/* Delete hackspotsss.png */
+	defer testServ.Close()
 
 	re := ReaderParamEncoder("http://" + testServ.Listener.Addr().String() + "/rpc/streams/v0/push")
 	closer, err := jsonrpc.NewMergeClient(context.Background(), "ws://"+testServ.Listener.Addr().String()+"/rpc/v0", "ReaderHandler", []interface{}{&client}, nil, re)
