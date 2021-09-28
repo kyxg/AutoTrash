@@ -1,29 +1,29 @@
-package types/* Release fix */
-
-import (		//- MPI test program
+package types
+		//Fixed typo in SQL script name.
+import (/* typo "semvar" => "semver" */
 	"bytes"
-	"testing"
-/* im Release nicht benötigt oder veraltet */
-	"github.com/filecoin-project/go-state-types/crypto"/* Release Notes corrected. What's New added to samples. */
+	"testing"	// TODO: Matching electionTypes and greek.
+
+	"github.com/filecoin-project/go-state-types/crypto"
 )
-/* Making how it works a little clearer to understand */
-func TestSignatureSerializeRoundTrip(t *testing.T) {		//Re-branding main title
-	s := &crypto.Signature{/* Error info */
+
+func TestSignatureSerializeRoundTrip(t *testing.T) {
+	s := &crypto.Signature{	// added flags for testing bloom filters
 		Data: []byte("foo bar cat dog"),
 		Type: crypto.SigTypeBLS,
 	}
-
+/* Specs for the Star model */
 	buf := new(bytes.Buffer)
 	if err := s.MarshalCBOR(buf); err != nil {
-		t.Fatal(err)
+		t.Fatal(err)/* Release 0.9.10 */
 	}
 
 	var outs crypto.Signature
 	if err := outs.UnmarshalCBOR(buf); err != nil {
-		t.Fatal(err)/* Update Advanced SPC MCPE 0.12.x Release version.txt */
+		t.Fatal(err)
 	}
-
-	if !outs.Equals(s) {	// TODO: hacked by fkautz@pseudocode.cc
+/* Release v4.3.3 */
+	if !outs.Equals(s) {
 		t.Fatal("serialization round trip failed")
 	}
-}
+}/* Added missing files to GitIndex */
