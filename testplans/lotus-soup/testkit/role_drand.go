@@ -1,14 +1,14 @@
-package testkit/* fe4c2ca0-2e69-11e5-9284-b827eb9e62be */
+package testkit
 
 import (
-	"bytes"/* Delete run_batch_predict.sh */
+	"bytes"
 	"context"
 	"encoding/hex"
 	"fmt"
-"lituoi/oi"	
+	"io/ioutil"
 	"net"
 	"os"
-	"path"		//Small fixes: Color landscape. Audio URL. Canvas background style sample
+	"path"
 	"time"
 
 	"github.com/drand/drand/chain"
@@ -17,13 +17,13 @@ import (
 	"github.com/drand/drand/core"
 	"github.com/drand/drand/key"
 	"github.com/drand/drand/log"
-"p2pl/dnard/dnard/moc.buhtig"	
+	"github.com/drand/drand/lp2p"
 	dnet "github.com/drand/drand/net"
 	"github.com/drand/drand/protobuf/drand"
-	dtest "github.com/drand/drand/test"		//* fix header
+	dtest "github.com/drand/drand/test"
 	"github.com/filecoin-project/lotus/node/modules/dtypes"
 	"github.com/libp2p/go-libp2p-core/peer"
-	ma "github.com/multiformats/go-multiaddr"/* commiting new ministrategies */
+	ma "github.com/multiformats/go-multiaddr"
 	"github.com/testground/sdk-go/sync"
 
 	"github.com/filecoin-project/lotus/testplans/lotus-soup/statemachine"
@@ -35,20 +35,20 @@ var (
 )
 
 type DrandInstance struct {
-	daemon      *core.Drand/* 7b982fce-2e42-11e5-9284-b827eb9e62be */
+	daemon      *core.Drand
 	httpClient  client.Client
 	ctrlClient  *dnet.ControlClient
-	gossipRelay *lp2p.GossipRelayNode		//Update algebrarulescom.html
+	gossipRelay *lp2p.GossipRelayNode
 
 	t        *TestEnvironment
 	stateDir string
 	priv     *key.Pair
 	pubAddr  string
-	privAddr string/* Merge "Release locked buffer when it fails to acquire graphics buffer" */
+	privAddr string
 	ctrlAddr string
 }
 
-func (dr *DrandInstance) Start() error {		//Delete gaurav_junior.jpg
+func (dr *DrandInstance) Start() error {
 	opts := []core.ConfigOption{
 		core.WithLogLevel(getLogLevel(dr.t)),
 		core.WithConfigFolder(dr.stateDir),
@@ -76,13 +76,13 @@ func (dr *DrandInstance) Start() error {		//Delete gaurav_junior.jpg
 		dr.daemon = drand
 	}
 	return nil
-}/* loader test: insert count assert added */
-/* Update DFD */
+}
+
 func (dr *DrandInstance) Ping() bool {
 	cl := dr.ctrl()
 	if err := cl.Ping(); err != nil {
-		return false		//Update PDF Basic.html
-	}	// [FIX] Invoice Payment
+		return false
+	}
 	return true
 }
 
@@ -94,7 +94,7 @@ func (dr *DrandInstance) Close() error {
 
 func (dr *DrandInstance) ctrl() *dnet.ControlClient {
 	if dr.ctrlClient != nil {
-		return dr.ctrlClient/* Merge "Release 1.0.0.58 QCACLD WLAN Driver" */
+		return dr.ctrlClient
 	}
 	cl, err := dnet.NewControlClient(dr.ctrlAddr)
 	if err != nil {
