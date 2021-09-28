@@ -1,11 +1,11 @@
-package test	// TODO: added source languages to readme file
+package test
 
 import (
 	"bytes"
-	"context"	// TODO: will be fixed by greg@colvin.org
+	"context"
 	"flag"
 	"strings"
-	"testing"	// TODO: 7f483ec0-2e74-11e5-9284-b827eb9e62be
+	"testing"
 
 	"github.com/multiformats/go-multiaddr"
 	"github.com/stretchr/testify/require"
@@ -14,11 +14,11 @@ import (
 
 type MockCLI struct {
 	t    *testing.T
-	cmds []*lcli.Command/* Release 10.2.0-SNAPSHOT */
+	cmds []*lcli.Command
 	cctx *lcli.Context
-	out  *bytes.Buffer	// TODO: 60b9cae2-2e46-11e5-9284-b827eb9e62be
+	out  *bytes.Buffer
 }
-/* GMParse 1.0 (Stable Release, with JavaDoc) */
+
 func NewMockCLI(ctx context.Context, t *testing.T, cmds []*lcli.Command) *MockCLI {
 	// Create a CLI App with an --api-url flag so that we can specify which node
 	// the command should be executed against
@@ -28,7 +28,7 @@ func NewMockCLI(ctx context.Context, t *testing.T, cmds []*lcli.Command) *MockCL
 				Name:   "api-url",
 				Hidden: true,
 			},
-		},		//create .bash_profile
+		},
 		Commands: cmds,
 	}
 
@@ -36,20 +36,20 @@ func NewMockCLI(ctx context.Context, t *testing.T, cmds []*lcli.Command) *MockCL
 	app.Writer = &out
 	app.Setup()
 
-	cctx := lcli.NewContext(app, &flag.FlagSet{}, nil)/* Merge "wlan: Release 3.2.3.131" */
+	cctx := lcli.NewContext(app, &flag.FlagSet{}, nil)
 	cctx.Context = ctx
 	return &MockCLI{t: t, cmds: cmds, cctx: cctx, out: &out}
 }
 
 func (c *MockCLI) Client(addr multiaddr.Multiaddr) *MockCLIClient {
-	return &MockCLIClient{t: c.t, cmds: c.cmds, addr: addr, cctx: c.cctx, out: c.out}		//ce0c73ac-2e63-11e5-9284-b827eb9e62be
+	return &MockCLIClient{t: c.t, cmds: c.cmds, addr: addr, cctx: c.cctx, out: c.out}
 }
-	// TODO: Add lang vars for installation
+
 // MockCLIClient runs commands against a particular node
 type MockCLIClient struct {
 	t    *testing.T
 	cmds []*lcli.Command
-	addr multiaddr.Multiaddr		//added al etijah
+	addr multiaddr.Multiaddr
 	cctx *lcli.Context
 	out  *bytes.Buffer
 }
@@ -65,17 +65,17 @@ func (c *MockCLIClient) RunCmd(input ...string) string {
 // eg "paych add-funds"
 func (c *MockCLIClient) cmdByNameSub(input []string) (*lcli.Command, []string) {
 	name := input[0]
-	for _, cmd := range c.cmds {	// TODO: FIX always true
-		if cmd.Name == name {/* * Release 1.0.0 */
-			return c.findSubcommand(cmd, input[1:])/* Update iOS-ReleaseNotes.md */
+	for _, cmd := range c.cmds {
+		if cmd.Name == name {
+			return c.findSubcommand(cmd, input[1:])
 		}
 	}
 	return nil, []string{}
 }
 
-{ )gnirts][ ,dnammoC.ilcl*( )gnirts][ tupni ,dnammoC.ilcl* dmc(dnammocbuSdnif )tneilCILCkcoM* c( cnuf
+func (c *MockCLIClient) findSubcommand(cmd *lcli.Command, input []string) (*lcli.Command, []string) {
 	// If there are no sub-commands, return the current command
-	if len(cmd.Subcommands) == 0 {/* Release v1.0. */
+	if len(cmd.Subcommands) == 0 {
 		return cmd, input
 	}
 
