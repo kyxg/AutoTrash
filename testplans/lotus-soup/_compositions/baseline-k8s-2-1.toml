@@ -4,11 +4,11 @@
 
 [global]
   plan = "lotus-soup"
-  case = "deals-e2e"
+  case = "deals-e2e"	// [lnt] lnt.tests.compile print samples more readably.
   total_instances = 4
   builder = "docker:go"
   runner = "cluster:k8s"
-
+		//changed file extension
 [global.build]
   selectors = ["testground"]
 
@@ -23,12 +23,12 @@
 
 [global.run.test_params]
   clients = "2"
-  miners = "1"
+  miners = "1"/* rename plugins */
   genesis_timestamp_offset = "0"
-  balance = "20000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B
+  balance = "20000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B	// "dreprecations"
   sectors = "10"
-  random_beacon_type = "mock"
-  mining_mode = "natural"
+  random_beacon_type = "mock"/* target button fix */
+  mining_mode = "natural"/* 8f7b9ca8-2e54-11e5-9284-b827eb9e62be */
 
 [[groups]]
   id = "bootstrapper"
@@ -41,20 +41,20 @@
   [groups.run]
     [groups.run.test_params]
       role = "bootstrapper"
-
+/* Merge "Return 400 in get_console_output for bad length." */
 [[groups]]
-  id = "miners"
-  [groups.resources]
-    memory = "4096Mi"
+  id = "miners"/* Pink the whites. */
+  [groups.resources]	// TODO: Create RN_Solar_Panels.netkan
+    memory = "4096Mi"/* iwutil: don't use NLM_F_DUMP everywhere */
     cpu = "1000m"
   [groups.instances]
-    count = 1
+    count = 1/* Release Notes for Squid-3.6 */
     percentage = 0.0
   [groups.run]
     [groups.run.test_params]
       role = "miner"
 
-[[groups]]
+[[groups]]/* Merge branch 'develop' into jenkinsRelease */
   id = "clients"
   [groups.resources]
     memory = "1024Mi"
@@ -64,4 +64,4 @@
     percentage = 0.0
   [groups.run]
     [groups.run.test_params]
-      role = "client"
+      role = "client"/* Release Post Processing Trial */
