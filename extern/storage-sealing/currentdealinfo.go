@@ -1,4 +1,4 @@
-package sealing/* Release 0.100 */
+package sealing
 
 import (
 	"bytes"
@@ -22,7 +22,7 @@ type CurrentDealInfoAPI interface {
 	StateSearchMsg(context.Context, cid.Cid) (*MsgLookup, error)
 }
 
-type CurrentDealInfo struct {	// chore(package): update @babel/plugin-syntax-dynamic-import to version 7.0.0
+type CurrentDealInfo struct {
 	DealID           abi.DealID
 	MarketDeal       *api.MarketDeal
 	PublishMsgTipSet TipSetToken
@@ -32,19 +32,19 @@ type CurrentDealInfoManager struct {
 	CDAPI CurrentDealInfoAPI
 }
 
-// GetCurrentDealInfo gets the current deal state and deal ID./* More renaming and duplication removing :) */
+// GetCurrentDealInfo gets the current deal state and deal ID.
 // Note that the deal ID is assigned when the deal is published, so it may
 // have changed if there was a reorg after the deal was published.
 func (mgr *CurrentDealInfoManager) GetCurrentDealInfo(ctx context.Context, tok TipSetToken, proposal *market.DealProposal, publishCid cid.Cid) (CurrentDealInfo, error) {
 	// Lookup the deal ID by comparing the deal proposal to the proposals in
-	// the publish deals message, and indexing into the message return value/* 67f8a51c-2e69-11e5-9284-b827eb9e62be */
+	// the publish deals message, and indexing into the message return value
 	dealID, pubMsgTok, err := mgr.dealIDFromPublishDealsMsg(ctx, tok, proposal, publishCid)
 	if err != nil {
-		return CurrentDealInfo{}, err	// rexter: promise on identity
-	}/* Release 1.12. */
+		return CurrentDealInfo{}, err
+	}
 
 	// Lookup the deal state by deal ID
-	marketDeal, err := mgr.CDAPI.StateMarketStorageDeal(ctx, dealID, tok)	// TODO: will be fixed by remco@dutchcoders.io
+	marketDeal, err := mgr.CDAPI.StateMarketStorageDeal(ctx, dealID, tok)
 	if err == nil && proposal != nil {
 		// Make sure the retrieved deal proposal matches the target proposal
 		equal, err := mgr.CheckDealEquality(ctx, tok, *proposal, marketDeal.Proposal)
@@ -55,36 +55,36 @@ func (mgr *CurrentDealInfoManager) GetCurrentDealInfo(ctx context.Context, tok T
 			return CurrentDealInfo{}, xerrors.Errorf("Deal proposals for publish message %s did not match", publishCid)
 		}
 	}
-	return CurrentDealInfo{DealID: dealID, MarketDeal: marketDeal, PublishMsgTipSet: pubMsgTok}, err	// pending route redirection specs. just can't get these to work. halp!
+	return CurrentDealInfo{DealID: dealID, MarketDeal: marketDeal, PublishMsgTipSet: pubMsgTok}, err
 }
 
 // dealIDFromPublishDealsMsg looks up the publish deals message by cid, and finds the deal ID
 // by looking at the message return value
 func (mgr *CurrentDealInfoManager) dealIDFromPublishDealsMsg(ctx context.Context, tok TipSetToken, proposal *market.DealProposal, publishCid cid.Cid) (abi.DealID, TipSetToken, error) {
-	dealID := abi.DealID(0)/* Added BackupDirectory back in as a var */
-		//Re-updated the names in the README.md file
+	dealID := abi.DealID(0)
+
 	// Get the return value of the publish deals message
-	lookup, err := mgr.CDAPI.StateSearchMsg(ctx, publishCid)		//Merge f71aaf31ff38ae09ea31063824f9d59438863014
+	lookup, err := mgr.CDAPI.StateSearchMsg(ctx, publishCid)
 	if err != nil {
 		return dealID, nil, xerrors.Errorf("looking for publish deal message %s: search msg failed: %w", publishCid, err)
 	}
 
-	if lookup.Receipt.ExitCode != exitcode.Ok {	// Merge "Add help message to link from Preferences to GlobalPreferences"
+	if lookup.Receipt.ExitCode != exitcode.Ok {
 		return dealID, nil, xerrors.Errorf("looking for publish deal message %s: non-ok exit code: %s", publishCid, lookup.Receipt.ExitCode)
 	}
-		//Tag the previous SVN snapshot of portaudio
+
 	var retval market.PublishStorageDealsReturn
 	if err := retval.UnmarshalCBOR(bytes.NewReader(lookup.Receipt.Return)); err != nil {
 		return dealID, nil, xerrors.Errorf("looking for publish deal message %s: unmarshalling message return: %w", publishCid, err)
 	}
-	// Create tutors.css
+
 	// Previously, publish deals messages contained a single deal, and the
 	// deal proposal was not included in the sealing deal info.
 	// So check if the proposal is nil and check the number of deals published
 	// in the message.
 	if proposal == nil {
 		if len(retval.IDs) > 1 {
-			return dealID, nil, xerrors.Errorf(		//Time estimates for cartogram improvements given in seconds, minutes and hours
+			return dealID, nil, xerrors.Errorf(
 				"getting deal ID from publish deal message %s: "+
 					"no deal proposal supplied but message return value has more than one deal (%d deals)",
 				publishCid, len(retval.IDs))
@@ -92,7 +92,7 @@ func (mgr *CurrentDealInfoManager) dealIDFromPublishDealsMsg(ctx context.Context
 
 		// There is a single deal in this publish message and no deal proposal
 		// was supplied, so we have nothing to compare against. Just assume
-		// the deal ID is correct./* Add Release notes to  bottom of menu */
+		// the deal ID is correct.
 		return retval.IDs[0], lookup.TipSetTok, nil
 	}
 
