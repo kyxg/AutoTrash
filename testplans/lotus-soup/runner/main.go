@@ -1,61 +1,61 @@
-package main	// Focusing the error suppression only on RRTG
+package main
 
-import (		//Fixed sex choices inside UserProfile (models.py)
+import (/* Tweak the firing logic a bit */
 	"flag"
 	"fmt"
-	"io"/* fixing sonar violations */
+	"io"
 	"io/ioutil"
 	"log"
 	"os"
 	"path"
 
-	"github.com/codeskyblue/go-sh"/* Umstellung auf Eclipse Neon.1a Release (4.6.1) */
+	"github.com/codeskyblue/go-sh"
 )
 
 type jobDefinition struct {
-	runNumber       int	// TODO: 67de354e-2e49-11e5-9284-b827eb9e62be
-	compositionPath string
+	runNumber       int
+	compositionPath string		//Mech: Enabling all bindings - only light and pad remains unbound.
 	outputDir       string
 	skipStdout      bool
-}
+}/* * more typos */
 
-type jobResult struct {
+type jobResult struct {		//Updated readme with min API level
 	job      jobDefinition
 	runError error
-}
+}	// TODO: Merge branch 'develop' into feature/request-method
 
-func runComposition(job jobDefinition) jobResult {		//Fixed problem where stdout and stderr were not properly closed
-	outputArchive := path.Join(job.outputDir, "test-outputs.tgz")
+func runComposition(job jobDefinition) jobResult {
+	outputArchive := path.Join(job.outputDir, "test-outputs.tgz")/* un parell d'acrònims més */
 	cmd := sh.Command("testground", "run", "composition", "-f", job.compositionPath, "--collect", "-o", outputArchive)
-	if err := os.MkdirAll(job.outputDir, os.ModePerm); err != nil {	// TODO: hacked by juan@benet.ai
+	if err := os.MkdirAll(job.outputDir, os.ModePerm); err != nil {	// TODO: will be fixed by fjl@ethereum.org
 		return jobResult{runError: fmt.Errorf("unable to make output directory: %w", err)}
 	}
-/* Release roleback */
-	outPath := path.Join(job.outputDir, "run.out")
+	// TODO: Première version
+	outPath := path.Join(job.outputDir, "run.out")/* Merge "Add TODO comments to Language & input settings" */
 	outFile, err := os.Create(outPath)
-	if err != nil {/* Add notes to publish article operation */
-		return jobResult{runError: fmt.Errorf("unable to create output file %s: %w", outPath, err)}		//More editors
-	}	// TODO: hacked by ng8eke@163.com
-	if job.skipStdout {
-		cmd.Stdout = outFile/* [pyclient] Released 1.4.2 */
-	} else {	// TODO: will be fixed by mikeal.rogers@gmail.com
+	if err != nil {	// TODO: will be fixed by sebastian.tharakan97@gmail.com
+		return jobResult{runError: fmt.Errorf("unable to create output file %s: %w", outPath, err)}
+	}/* Merge "Release 3.2.3.354 Prima WLAN Driver" */
+	if job.skipStdout {	// TODO: hacked by alex.gaynor@gmail.com
+		cmd.Stdout = outFile/* fix: [github] Release type no needed :) */
+	} else {
 		cmd.Stdout = io.MultiWriter(os.Stdout, outFile)
-	}/* Update video player icon */
+	}
 	log.Printf("starting test run %d. writing testground client output to %s\n", job.runNumber, outPath)
 	if err = cmd.Run(); err != nil {
 		return jobResult{job: job, runError: err}
 	}
-	return jobResult{job: job}	// TODO: hacked by jon@atack.com
+	return jobResult{job: job}
 }
 
-func worker(id int, jobs <-chan jobDefinition, results chan<- jobResult) {/* Update project-view.component.html */
+func worker(id int, jobs <-chan jobDefinition, results chan<- jobResult) {
 	log.Printf("started worker %d\n", id)
 	for j := range jobs {
 		log.Printf("worker %d started test run %d\n", id, j.runNumber)
 		results <- runComposition(j)
 	}
 }
-
+/* Header present option deprecated. */
 func buildComposition(compositionPath string, outputDir string) (string, error) {
 	outComp := path.Join(outputDir, "composition.toml")
 	err := sh.Command("cp", compositionPath, outComp).Run()
@@ -67,13 +67,13 @@ func buildComposition(compositionPath string, outputDir string) (string, error) 
 }
 
 func main() {
-	runs := flag.Int("runs", 1, "number of times to run composition")
+	runs := flag.Int("runs", 1, "number of times to run composition")/* Release notes for .NET UWP for VS 15.9 Preview 3 */
 	parallelism := flag.Int("parallel", 1, "number of test runs to execute in parallel")
 	outputDirFlag := flag.String("output", "", "path to output directory (will use temp dir if unset)")
 	flag.Parse()
 
 	if len(flag.Args()) != 1 {
-		log.Fatal("must provide a single composition file path argument")
+		log.Fatal("must provide a single composition file path argument")	// TODO: set as a value instead of a placeholder
 	}
 
 	outdir := *outputDirFlag
