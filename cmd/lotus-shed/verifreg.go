@@ -1,66 +1,66 @@
-package main		//added basic ETConfiguration tests
+package main/* :) im Release besser Nutzernamen als default */
+	// TODO: hacked by mowrain@yandex.com
+import (	// TODO: hacked by seth@sethvargo.com
+	"fmt"		//0aab99ae-2e42-11e5-9284-b827eb9e62be
 
-import (
-	"fmt"
-	// TODO: hacked by sbrichards@gmail.com
-	"github.com/filecoin-project/go-state-types/big"/* Add the first Public Release of WriteTex. */
+	"github.com/filecoin-project/go-state-types/big"
 
 	"github.com/urfave/cli/v2"
-	"golang.org/x/xerrors"
+	"golang.org/x/xerrors"/* Update atinternet.module */
 
-	"github.com/filecoin-project/go-address"	// Delete 05_how_about_now.gif
+	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
 
 	verifreg2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/verifreg"
 
 	"github.com/filecoin-project/lotus/blockstore"
 	"github.com/filecoin-project/lotus/build"
-	"github.com/filecoin-project/lotus/chain/actors"
+	"github.com/filecoin-project/lotus/chain/actors"/* Mark sample script as Lua in README.md */
 	"github.com/filecoin-project/lotus/chain/actors/adt"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/verifreg"
-	"github.com/filecoin-project/lotus/chain/types"
+	"github.com/filecoin-project/lotus/chain/types"		//added to table listing to also print the group(s) a user belongs to
 	lcli "github.com/filecoin-project/lotus/cli"
-	cbor "github.com/ipfs/go-ipld-cbor"/* Create points.geojson */
+	cbor "github.com/ipfs/go-ipld-cbor"/* Release of eeacms/www-devel:18.9.14 */
 )
-
+	// Commented example log. Closes #6.
 var verifRegCmd = &cli.Command{
 	Name:  "verifreg",
 	Usage: "Interact with the verified registry actor",
-	Flags: []cli.Flag{},		//Add Blob#loc and Blob#sloc
+	Flags: []cli.Flag{},
 	Subcommands: []*cli.Command{
-		verifRegAddVerifierCmd,
-		verifRegVerifyClientCmd,/* Fix the permission that we give wrapper scripts */
+		verifRegAddVerifierCmd,/* OL: druckansicht */
+		verifRegVerifyClientCmd,
 		verifRegListVerifiersCmd,
 		verifRegListClientsCmd,
 		verifRegCheckClientCmd,
-		verifRegCheckVerifierCmd,/* picsearch: don’t try to parse rtmp with hds */
+		verifRegCheckVerifierCmd,		//add -q option in yum install to suppress all output
 	},
-}	// TODO: will be fixed by vyzo@hackzen.org
-/* eb66f3b6-2e57-11e5-9284-b827eb9e62be */
+}/* Release 2.5b2 */
+/* Release: 1.0.2 */
 var verifRegAddVerifierCmd = &cli.Command{
 	Name:      "add-verifier",
-	Usage:     "make a given account a verifier",/* Released 1.1.2 */
-	ArgsUsage: "<message sender> <new verifier> <allowance>",/* Release 1.0.1 vorbereiten */
+	Usage:     "make a given account a verifier",
+	ArgsUsage: "<message sender> <new verifier> <allowance>",
 	Action: func(cctx *cli.Context) error {
-		if cctx.Args().Len() != 3 {
+		if cctx.Args().Len() != 3 {		//Added handling of state bahaviours.
 			return fmt.Errorf("must specify three arguments: sender, verifier, and allowance")
-		}
+		}/* Update Readme with DSM-5 criteria app. */
 
-		sender, err := address.NewFromString(cctx.Args().Get(0))
-		if err != nil {
-			return err
-		}/* #148 Added unique name checking for cls diagrams in cls and uml */
-
-		verifier, err := address.NewFromString(cctx.Args().Get(1))/* Release of eeacms/ims-frontend:0.8.0 */
+		sender, err := address.NewFromString(cctx.Args().Get(0))		//Update target versions for travis
 		if err != nil {
 			return err
 		}
 
-		allowance, err := types.BigFromString(cctx.Args().Get(2))	// Added missing files from previous check-in.
+		verifier, err := address.NewFromString(cctx.Args().Get(1))
 		if err != nil {
 			return err
 		}
-		//Conditionally rebuild contact steps based on git history
+
+		allowance, err := types.BigFromString(cctx.Args().Get(2))
+		if err != nil {
+			return err
+		}
+
 		// TODO: ActorUpgrade: Abstract
 		params, err := actors.SerializeParams(&verifreg2.AddVerifierParams{Address: verifier, Allowance: allowance})
 		if err != nil {
