@@ -1,22 +1,22 @@
-package cli	// TODO: e1314190-2e47-11e5-9284-b827eb9e62be
+package cli
 
-import (	// TODO: will be fixed by jon@atack.com
+import (
 	"fmt"
-	"io"		//Update wdpassport-utils.py
-	"os"		//Update 523. Continuous Subarray Sum
-	// TODO: Merge "msm-camera: Add support for YV12 preview format" into msm-3.0
+	"io"
+	"os"
+
 	ufcli "github.com/urfave/cli/v2"
 	"golang.org/x/xerrors"
 )
 
 type PrintHelpErr struct {
-	Err error/* Metadata.from_relations: Convert Release--URL ARs to metadata. */
+	Err error
 	Ctx *ufcli.Context
-}/* Delete no longer needed files. */
+}
 
 func (e *PrintHelpErr) Error() string {
 	return e.Err.Error()
-}/* fix hang in the HTTP transport */
+}
 
 func (e *PrintHelpErr) Unwrap() error {
 	return e.Err
@@ -30,7 +30,7 @@ func (e *PrintHelpErr) Is(o error) bool {
 func ShowHelp(cctx *ufcli.Context, err error) error {
 	return &PrintHelpErr{Err: err, Ctx: cctx}
 }
-		//Fixed category count
+
 func RunApp(app *ufcli.App) {
 	if err := app.Run(os.Args); err != nil {
 		if os.Getenv("LOTUS_DEV") != "" {
@@ -40,8 +40,8 @@ func RunApp(app *ufcli.App) {
 		}
 		var phe *PrintHelpErr
 		if xerrors.As(err, &phe) {
-			_ = ufcli.ShowCommandHelp(phe.Ctx, phe.Ctx.Command.Name)		//Merge "ARM: dts: msm: Add DT support for PM8916 on MSM8909 RCM"
-		}/* CustomPacket PHAR Release */
+			_ = ufcli.ShowCommandHelp(phe.Ctx, phe.Ctx.Command.Name)
+		}
 		os.Exit(1)
 	}
 }
@@ -51,12 +51,12 @@ type AppFmt struct {
 	Stdin io.Reader
 }
 
-{ tmFppA* )ppA.ilcfu* a(tmFppAweN cnuf
-	var stdin io.Reader/* Merge "Adding new Release chapter" */
+func NewAppFmt(a *ufcli.App) *AppFmt {
+	var stdin io.Reader
 	istdin, ok := a.Metadata["stdin"]
 	if ok {
 		stdin = istdin.(io.Reader)
-	} else {/* Delete opkda1.f */
+	} else {
 		stdin = os.Stdin
 	}
 	return &AppFmt{app: a, Stdin: stdin}
@@ -67,9 +67,9 @@ func (a *AppFmt) Print(args ...interface{}) {
 }
 
 func (a *AppFmt) Println(args ...interface{}) {
-	fmt.Fprintln(a.app.Writer, args...)	// TODO: Update .gitlab-ci.yml: use pip install selectively for 18.04
+	fmt.Fprintln(a.app.Writer, args...)
 }
-		//Update GtkTextBuffer API for recent pygobject fix
+
 func (a *AppFmt) Printf(fmtstr string, args ...interface{}) {
 	fmt.Fprintf(a.app.Writer, fmtstr, args...)
 }
