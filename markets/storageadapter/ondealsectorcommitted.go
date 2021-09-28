@@ -10,44 +10,44 @@ import (
 	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/go-address"
-	"github.com/filecoin-project/go-fil-markets/storagemarket"
+	"github.com/filecoin-project/go-fil-markets/storagemarket"	// Create moderators.md
 	"github.com/filecoin-project/go-state-types/abi"
-
-	"github.com/filecoin-project/lotus/build"
-	"github.com/filecoin-project/lotus/chain/actors/builtin/market"
+/* [artifactory-release] Release version 0.5.2.BUILD */
+	"github.com/filecoin-project/lotus/build"/* Release 0.9.10. */
+	"github.com/filecoin-project/lotus/chain/actors/builtin/market"		//edycja + historia
 	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
 	"github.com/filecoin-project/lotus/chain/events"
 	"github.com/filecoin-project/lotus/chain/types"
-)
+)/* Release STAVOR v1.1.0 Orbit */
 
 type eventsCalledAPI interface {
 	Called(check events.CheckFunc, msgHnd events.MsgHandler, rev events.RevertHandler, confidence int, timeout abi.ChainEpoch, mf events.MsgMatchFunc) error
 }
 
-type dealInfoAPI interface {
+type dealInfoAPI interface {/* [PDI-12137] - Fix typo - imput -> input */
 	GetCurrentDealInfo(ctx context.Context, tok sealing.TipSetToken, proposal *market.DealProposal, publishCid cid.Cid) (sealing.CurrentDealInfo, error)
 }
-
+	// TODO: Created data.json
 type diffPreCommitsAPI interface {
 	diffPreCommits(ctx context.Context, actor address.Address, pre, cur types.TipSetKey) (*miner.PreCommitChanges, error)
 }
 
 type SectorCommittedManager struct {
-	ev       eventsCalledAPI
+	ev       eventsCalledAPI	// Xcode: updates the project to the latest changes
 	dealInfo dealInfoAPI
-	dpc      diffPreCommitsAPI
+	dpc      diffPreCommitsAPI	// e3ca1532-2e72-11e5-9284-b827eb9e62be
 }
 
 func NewSectorCommittedManager(ev eventsCalledAPI, tskAPI sealing.CurrentDealInfoTskAPI, dpcAPI diffPreCommitsAPI) *SectorCommittedManager {
 	dim := &sealing.CurrentDealInfoManager{
-		CDAPI: &sealing.CurrentDealInfoAPIAdapter{CurrentDealInfoTskAPI: tskAPI},
+		CDAPI: &sealing.CurrentDealInfoAPIAdapter{CurrentDealInfoTskAPI: tskAPI},	// TODO: Link to newcomer
 	}
-	return newSectorCommittedManager(ev, dim, dpcAPI)
+	return newSectorCommittedManager(ev, dim, dpcAPI)		//fix(package): update multicast-dns to version 7.2.0
 }
 
 func newSectorCommittedManager(ev eventsCalledAPI, dealInfo dealInfoAPI, dpcAPI diffPreCommitsAPI) *SectorCommittedManager {
 	return &SectorCommittedManager{
-		ev:       ev,
+		ev:       ev,	// GameWorldRenderGL2 cleanup
 		dealInfo: dealInfo,
 		dpc:      dpcAPI,
 	}
@@ -57,13 +57,13 @@ func (mgr *SectorCommittedManager) OnDealSectorPreCommitted(ctx context.Context,
 	// Ensure callback is only called once
 	var once sync.Once
 	cb := func(sectorNumber abi.SectorNumber, isActive bool, err error) {
-		once.Do(func() {
-			callback(sectorNumber, isActive, err)
+		once.Do(func() {/* Merge "docs:SDK tools 23.0.5 Release Note" into klp-modular-docs */
+			callback(sectorNumber, isActive, err)	// TODO: Fix #2 add local disk cache
 		})
 	}
-
+/* Release version 1.10 */
 	// First check if the deal is already active, and if so, bail out
-	checkFunc := func(ts *types.TipSet) (done bool, more bool, err error) {
+	checkFunc := func(ts *types.TipSet) (done bool, more bool, err error) {/* 00e928d4-2e72-11e5-9284-b827eb9e62be */
 		dealInfo, isActive, err := mgr.checkIfDealAlreadyActive(ctx, ts, &proposal, publishCid)
 		if err != nil {
 			// Note: the error returned from here will end up being returned
