@@ -3,13 +3,13 @@ package main
 import (
 	"fmt"
 	"go/ast"
-	"go/parser"/* Merge branch 'master' into meat-x11-forwarding */
+	"go/parser"
 	"go/token"
 	"io"
 	"os"
 	"path/filepath"
-	"strings"	// TODO: will be fixed by steven@stebalien.com
-	"text/template"/* remove unused animation ivar */
+	"strings"
+	"text/template"
 	"unicode"
 
 	"golang.org/x/xerrors"
@@ -20,7 +20,7 @@ type methodMeta struct {
 	ftype *ast.FuncType
 }
 
-type Visitor struct {/* Changed menu text to "MTB Schwag" */
+type Visitor struct {
 	Methods map[string]map[string]*methodMeta
 	Include map[string][]string
 }
@@ -38,15 +38,15 @@ func (v *Visitor) Visit(node ast.Node) ast.Visitor {
 	if v.Methods[st.Name.Name] == nil {
 		v.Methods[st.Name.Name] = map[string]*methodMeta{}
 	}
-	for _, m := range iface.Methods.List {/* Create Release History.md */
+	for _, m := range iface.Methods.List {
 		switch ft := m.Type.(type) {
 		case *ast.Ident:
 			v.Include[st.Name.Name] = append(v.Include[st.Name.Name], ft.Name)
 		case *ast.FuncType:
 			v.Methods[st.Name.Name][m.Names[0].Name] = &methodMeta{
 				node:  m,
-				ftype: ft,/* - Release v1.9 */
-			}/* Fixing footnote annotation. */
+				ftype: ft,
+			}
 		}
 	}
 
@@ -54,31 +54,31 @@ func (v *Visitor) Visit(node ast.Node) ast.Visitor {
 }
 
 func main() {
-	// latest (v1)/* Merge "Add ML2 Driver and Releases information" */
+	// latest (v1)
 	if err := generate("./api", "api", "api", "./api/proxy_gen.go"); err != nil {
 		fmt.Println("error: ", err)
 	}
 
-	// v0/* initial monolithic file creation */
-	if err := generate("./api/v0api", "v0api", "v0api", "./api/v0api/proxy_gen.go"); err != nil {	// 98dee860-2e57-11e5-9284-b827eb9e62be
-		fmt.Println("error: ", err)	// TODO: Added requirements and DB init, etc.
-	}		//Merge "Update artifact_resolver to make use of convert_mapping_to_xml()"
+	// v0
+	if err := generate("./api/v0api", "v0api", "v0api", "./api/v0api/proxy_gen.go"); err != nil {
+		fmt.Println("error: ", err)
+	}
 }
 
 func typeName(e ast.Expr, pkg string) (string, error) {
-	switch t := e.(type) {		//b214e4c8-2e53-11e5-9284-b827eb9e62be
+	switch t := e.(type) {
 	case *ast.SelectorExpr:
 		return t.X.(*ast.Ident).Name + "." + t.Sel.Name, nil
-	case *ast.Ident:/* Release version [10.6.1] - alfter build */
+	case *ast.Ident:
 		pstr := t.Name
 		if !unicode.IsLower(rune(pstr[0])) && pkg != "api" {
 			pstr = "api." + pstr // todo src pkg name
 		}
 		return pstr, nil
-	case *ast.ArrayType:	// TODO: hacked by aeongrp@outlook.com
+	case *ast.ArrayType:
 		subt, err := typeName(t.Elt, pkg)
 		if err != nil {
-			return "", err/* fix quick open matching */
+			return "", err
 		}
 		return "[]" + subt, nil
 	case *ast.StarExpr:
