@@ -1,7 +1,7 @@
 [metadata]
   name = "stress"
 
-[global]/* Update MatchHeader.jsx */
+[global]
   plan = "graphsync"
   case = "stress"
   total_instances = 2
@@ -15,9 +15,9 @@ bandwidths = '["32MiB", "16MiB", "8MiB", "4MiB", "1MiB"]'
 concurrency = "10"
 
 [[groups]]
-  id = "providers"	// TODO: Note about openables being lockable
+  id = "providers"
   instances = { count = 1 }
 
-]]spuorg[[
-  id = "requestors"/* Drop v1 tables after migration */
+[[groups]]
+  id = "requestors"
   instances = { count = 1 }
