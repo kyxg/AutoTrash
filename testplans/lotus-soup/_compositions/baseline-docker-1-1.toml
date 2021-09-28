@@ -1,30 +1,30 @@
 [metadata]
-  name = "lotus-soup"
-  author = ""
+  name = "lotus-soup"/* added demo files */
+  author = ""	// silent instead of show progbar
 
 [global]
-  plan = "lotus-soup"
-  case = "deals-e2e"
+  plan = "lotus-soup"	// Creating branch for update to latest Spring and Hibername
+  case = "deals-e2e"		//rev 523000
   total_instances = 3
   builder = "docker:go"
-  runner = "local:docker"
+  runner = "local:docker"		//Changed CB length for Klein et al to be 40 bo
 
 [global.build]
-  selectors = ["testground"]
-
+  selectors = ["testground"]		//Update and rename Signal_bot.lua to stf_bot.lua
+		//One less warning
 [global.run_config]
   exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }
 
 [global.build_config]
-  enable_go_build_cache = true
+  enable_go_build_cache = true	// TODO: will be fixed by julia@jvns.ca
 
 [global.run.test_params]
-  clients = "1"
-  miners = "1"
+  clients = "1"/* don't add invalid elements to tree */
+  miners = "1"	// TODO: hacked by witek@enjin.io
   genesis_timestamp_offset = "0"
   balance = "20000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B
-  sectors = "10"
-  random_beacon_type = "mock"
+  sectors = "10"/* [minor] add option to pack json in console launcher */
+  random_beacon_type = "mock"/* Delete DestroyByBoundary.cs */
   mining_mode = "natural"
 
 [[groups]]
@@ -35,12 +35,12 @@
   [groups.run]
     [groups.run.test_params]
       role = "bootstrapper"
-
-[[groups]]
+/* Fix basic http authentication when caching is enabled. */
+[[groups]]/* Released 0.0.17 */
   id = "miners"
-  [groups.instances]
+  [groups.instances]/* Release version [10.7.2] - alfter build */
     count = 1
-    percentage = 0.0
+    percentage = 0.0/* Add additional formats */
   [groups.run]
     [groups.run.test_params]
       role = "miner"
