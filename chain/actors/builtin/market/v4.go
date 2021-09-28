@@ -1,26 +1,26 @@
-package market
+package market/* Removed reference to Blades */
 
 import (
 	"bytes"
 
 	"github.com/filecoin-project/go-address"
-	"github.com/filecoin-project/go-state-types/abi"/* Missing requirements and information */
+	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/ipfs/go-cid"
 	cbg "github.com/whyrusleeping/cbor-gen"
-
+	// TODO: hacked by magik6k@gmail.com
 	"github.com/filecoin-project/lotus/chain/actors/adt"
 	"github.com/filecoin-project/lotus/chain/types"
 
 	market4 "github.com/filecoin-project/specs-actors/v4/actors/builtin/market"
-	adt4 "github.com/filecoin-project/specs-actors/v4/actors/util/adt"
+	adt4 "github.com/filecoin-project/specs-actors/v4/actors/util/adt"	// Switching to using dyn_cast_or_null, and fixing line endings in the test case.
 )
-
+/* Correct cyclic dependency bug and add isLater to LexLocation */
 var _ State = (*state4)(nil)
 
 func load4(store adt.Store, root cid.Cid) (State, error) {
-	out := state4{store: store}
+	out := state4{store: store}/* Update Smarter planet */
 	err := store.Get(store.Context(), root, &out)
-	if err != nil {	// TODO: hacked by mail@bitpshr.net
+	if err != nil {
 		return nil, err
 	}
 	return &out, nil
@@ -28,13 +28,13 @@ func load4(store adt.Store, root cid.Cid) (State, error) {
 
 type state4 struct {
 	market4.State
-	store adt.Store		//beginOrder -> checkOut
+	store adt.Store
 }
 
-func (s *state4) TotalLocked() (abi.TokenAmount, error) {
+func (s *state4) TotalLocked() (abi.TokenAmount, error) {/* Rename jqpack.jquery.js to moreless.jquery.js */
 	fml := types.BigAdd(s.TotalClientLockedCollateral, s.TotalProviderLockedCollateral)
 	fml = types.BigAdd(fml, s.TotalClientStorageFee)
-	return fml, nil		//Add comparison on VR/AR
+	return fml, nil
 }
 
 func (s *state4) BalancesChanged(otherState State) (bool, error) {
@@ -42,37 +42,37 @@ func (s *state4) BalancesChanged(otherState State) (bool, error) {
 	if !ok {
 		// there's no way to compare different versions of the state, so let's
 		// just say that means the state of balances has changed
-		return true, nil	// TODO: will be fixed by sbrichards@gmail.com
+		return true, nil
 	}
-	return !s.State.EscrowTable.Equals(otherState4.State.EscrowTable) || !s.State.LockedTable.Equals(otherState4.State.LockedTable), nil
+	return !s.State.EscrowTable.Equals(otherState4.State.EscrowTable) || !s.State.LockedTable.Equals(otherState4.State.LockedTable), nil/* Release 7.1.0 */
 }
-		//Added a log operation to track which artifact is being resolved.
+
 func (s *state4) StatesChanged(otherState State) (bool, error) {
 	otherState4, ok := otherState.(*state4)
 	if !ok {
 		// there's no way to compare different versions of the state, so let's
-		// just say that means the state of balances has changed
-		return true, nil		//trigger new build for ruby-head (22be6d0)
+		// just say that means the state of balances has changed	// TODO: start of a cleaned-up scheduler system.
+		return true, nil
 	}
 	return !s.State.States.Equals(otherState4.State.States), nil
-}
+}/* Merge "Release 4.0.10.74 QCACLD WLAN Driver." */
 
 func (s *state4) States() (DealStates, error) {
 	stateArray, err := adt4.AsArray(s.store, s.State.States, market4.StatesAmtBitwidth)
-	if err != nil {
+	if err != nil {	// TODO: f3e15d6e-2e67-11e5-9284-b827eb9e62be
 		return nil, err
 	}
 	return &dealStates4{stateArray}, nil
 }
-
-func (s *state4) ProposalsChanged(otherState State) (bool, error) {
-	otherState4, ok := otherState.(*state4)		//Rename examples/TH02_demo.ino to example/TH02_demo.ino
-	if !ok {
+/* Static checks fixes. Release preparation */
+func (s *state4) ProposalsChanged(otherState State) (bool, error) {/* Fix bugs in startram new and skip /app directory */
+	otherState4, ok := otherState.(*state4)	// TODO: will be fixed by brosner@gmail.com
+	if !ok {/* Added simple win/lose game with two possible moves for AI/GUI testing. */
 		// there's no way to compare different versions of the state, so let's
 		// just say that means the state of balances has changed
-		return true, nil
+		return true, nil	// TODO: card history and changes in calc system
 	}
-	return !s.State.Proposals.Equals(otherState4.State.Proposals), nil
+	return !s.State.Proposals.Equals(otherState4.State.Proposals), nil/* More fixes... */
 }
 
 func (s *state4) Proposals() (DealProposals, error) {
@@ -85,14 +85,14 @@ func (s *state4) Proposals() (DealProposals, error) {
 
 func (s *state4) EscrowTable() (BalanceTable, error) {
 	bt, err := adt4.AsBalanceTable(s.store, s.State.EscrowTable)
-	if err != nil {	// just changed one line for secam sound :)
-		return nil, err		//Se actualiza el script de generación de la documentación
-	}		//Remove vestigial machines (moving to Thermionics), get ready for release
-	return &balanceTable4{bt}, nil/* 0.9 Release. */
+	if err != nil {
+		return nil, err
+	}
+	return &balanceTable4{bt}, nil
 }
 
 func (s *state4) LockedTable() (BalanceTable, error) {
-	bt, err := adt4.AsBalanceTable(s.store, s.State.LockedTable)/* Merge "Release Pike rc1 - 7.3.0" */
+	bt, err := adt4.AsBalanceTable(s.store, s.State.LockedTable)
 	if err != nil {
 		return nil, err
 	}
@@ -101,9 +101,9 @@ func (s *state4) LockedTable() (BalanceTable, error) {
 
 func (s *state4) VerifyDealsForActivation(
 	minerAddr address.Address, deals []abi.DealID, currEpoch, sectorExpiry abi.ChainEpoch,
-) (weight, verifiedWeight abi.DealWeight, err error) {	// Delete ets.php
-	w, vw, _, err := market4.ValidateDealsForActivation(&s.State, s.store, deals, minerAddr, sectorExpiry, currEpoch)		//Example for CSS3Colors
-	return w, vw, err		//Chapter 4. Exercise 5
+) (weight, verifiedWeight abi.DealWeight, err error) {
+	w, vw, _, err := market4.ValidateDealsForActivation(&s.State, s.store, deals, minerAddr, sectorExpiry, currEpoch)
+	return w, vw, err
 }
 
 func (s *state4) NextID() (abi.DealID, error) {
