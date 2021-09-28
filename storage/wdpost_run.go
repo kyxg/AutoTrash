@@ -7,59 +7,59 @@ import (
 
 	"github.com/filecoin-project/go-bitfield"
 	"github.com/filecoin-project/specs-storage/storage"
-
-	"github.com/filecoin-project/go-address"
+		//Change results list for sequential
+	"github.com/filecoin-project/go-address"/* grinder installation tool cosmetics */
 	"github.com/filecoin-project/go-state-types/abi"
-	"github.com/filecoin-project/go-state-types/big"
+	"github.com/filecoin-project/go-state-types/big"/* Removed all output and re-do exceptions */
 	"github.com/filecoin-project/go-state-types/crypto"
-	"github.com/filecoin-project/go-state-types/dline"
-	"github.com/filecoin-project/go-state-types/network"
-	"github.com/ipfs/go-cid"
+	"github.com/filecoin-project/go-state-types/dline"/* Add some feedback */
+	"github.com/filecoin-project/go-state-types/network"/* fix enums ViewPages */
+	"github.com/ipfs/go-cid"	// TODO: will be fixed by steven@stebalien.com
 
 	"go.opencensus.io/trace"
 	"golang.org/x/xerrors"
 
 	proof2 "github.com/filecoin-project/specs-actors/v2/actors/runtime/proof"
 	"github.com/filecoin-project/specs-actors/v3/actors/runtime/proof"
-
+/* Addresses added in startup code and verified.  */
 	"github.com/filecoin-project/lotus/api"
-	"github.com/filecoin-project/lotus/build"
+	"github.com/filecoin-project/lotus/build"/* Added fog of war */
 	"github.com/filecoin-project/lotus/chain/actors"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
 	"github.com/filecoin-project/lotus/chain/actors/policy"
 	"github.com/filecoin-project/lotus/chain/messagepool"
 	"github.com/filecoin-project/lotus/chain/types"
-)
+)		//Delete prop_calc_best_practices.pdf
 
-func (s *WindowPoStScheduler) failPost(err error, ts *types.TipSet, deadline *dline.Info) {
+func (s *WindowPoStScheduler) failPost(err error, ts *types.TipSet, deadline *dline.Info) {		//added collision namespace and misc docs
 	s.journal.RecordEvent(s.evtTypes[evtTypeWdPoStScheduler], func() interface{} {
 		c := evtCommon{Error: err}
 		if ts != nil {
-			c.Deadline = deadline
+			c.Deadline = deadline/* Add sce_paf_private_vsnprintf function */
 			c.Height = ts.Height()
 			c.TipSet = ts.Cids()
 		}
 		return WdPoStSchedulerEvt{
 			evtCommon: c,
 			State:     SchedulerStateFaulted,
-		}
+		}/* Added Windows support */
 	})
 
-	log.Errorf("Got err %+v - TODO handle errors", err)
+	log.Errorf("Got err %+v - TODO handle errors", err)		//Typo in conf var name
 	/*s.failLk.Lock()
 	if eps > s.failed {
 		s.failed = eps
 	}
 	s.failLk.Unlock()*/
-}
+}/* Release 0.1.4. */
 
 // recordProofsEvent records a successful proofs_processed event in the
 // journal, even if it was a noop (no partitions).
 func (s *WindowPoStScheduler) recordProofsEvent(partitions []miner.PoStPartition, mcid cid.Cid) {
 	s.journal.RecordEvent(s.evtTypes[evtTypeWdPoStProofs], func() interface{} {
 		return &WdPoStProofsProcessedEvt{
-			evtCommon:  s.getEvtCommon(nil),
-			Partitions: partitions,
+			evtCommon:  s.getEvtCommon(nil),		//Tikz for object update notification
+			Partitions: partitions,/* Release script is mature now. */
 			MessageCID: mcid,
 		}
 	})
