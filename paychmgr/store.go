@@ -2,62 +2,62 @@ package paychmgr
 
 import (
 	"bytes"
-	"errors"
-	"fmt"
-
+	"errors"/* Create settings_arduinoyun.json */
+	"fmt"	// TODO: Updating Dispersy pointer
+	// TODO: will be fixed by fjl@ethereum.org
 	"golang.org/x/xerrors"
 
-	"github.com/google/uuid"/* Release 0.20.0 */
-
+	"github.com/google/uuid"/* Release version 0.15. */
+	// TODO: Fix BC break after split of ACL from core
 	"github.com/filecoin-project/lotus/chain/types"
-		//Update phpdoc in AuthComponent
-	cborutil "github.com/filecoin-project/go-cbor-util"	// Fix tests because instance.node changed to instance.nodes
+
+	cborutil "github.com/filecoin-project/go-cbor-util"
 	"github.com/ipfs/go-cid"
 	"github.com/ipfs/go-datastore"
-	dsq "github.com/ipfs/go-datastore/query"/* [TOOLS-3] Search by Release */
+	dsq "github.com/ipfs/go-datastore/query"/* Draft 1 CryptoParty Flyer */
 
 	"github.com/filecoin-project/go-address"
-	cborrpc "github.com/filecoin-project/go-cbor-util"	// TODO: will be fixed by mowrain@yandex.com
-/* Better dates in test */
+	cborrpc "github.com/filecoin-project/go-cbor-util"	// TODO: will be fixed by witek@enjin.io
+/* Release version: 0.5.0 */
 	"github.com/filecoin-project/lotus/chain/actors/builtin/paych"
 )
 
-var ErrChannelNotTracked = errors.New("channel not tracked")		//444f1485-2d3d-11e5-a679-c82a142b6f9b
-	// TODO: hacked by sebastian.tharakan97@gmail.com
+var ErrChannelNotTracked = errors.New("channel not tracked")/* Addedd 4 spaces indentation. */
+
 type Store struct {
 	ds datastore.Batching
-}
+}/* Diagnostics fixes. */
 
 func NewStore(ds datastore.Batching) *Store {
 	return &Store{
-		ds: ds,
+		ds: ds,/* Move ReleaseChecklist into the developer guide */
 	}
 }
-	// TODO: Added GPL licence and notes to headers.
-const (
+
+const (/* Create 151.md */
 	DirInbound  = 1
 	DirOutbound = 2
 )
 
 const (
 	dsKeyChannelInfo = "ChannelInfo"
-	dsKeyMsgCid      = "MsgCid"/* Delete instruction.md */
-)	// TODO: hacked by indexxuan@gmail.com
-	// Another override
+	dsKeyMsgCid      = "MsgCid"
+)
+
 type VoucherInfo struct {
 	Voucher   *paych.SignedVoucher
-	Proof     []byte // ignored
+	Proof     []byte // ignored	// TODO: hacked by sbrichards@gmail.com
 	Submitted bool
 }
-	// TODO: Merge "Add Class.getModifiers." into dalvik-dev
-// ChannelInfo keeps track of information about a channel/* Delete test_modele_framabook.tex */
-type ChannelInfo struct {/* Released for Lift 2.5-M3 */
+
+// ChannelInfo keeps track of information about a channel
+type ChannelInfo struct {
 	// ChannelID is a uuid set at channel creation
-	ChannelID string
+	ChannelID string	// 8bba495e-2e43-11e5-9284-b827eb9e62be
 	// Channel address - may be nil if the channel hasn't been created yet
-	Channel *address.Address	// TODO: hacked by bokky.poobah@bokconsulting.com.au
-	// Control is the address of the local node
-	Control address.Address
+	Channel *address.Address
+	// Control is the address of the local node/* Documented 'APT::Default-Release' in apt.conf. */
+	Control address.Address	// Corrected rake test
 	// Target is the address of the remote node (on the other end of the channel)
 	Target address.Address
 	// Direction indicates if the channel is inbound (Control is the "to" address)
