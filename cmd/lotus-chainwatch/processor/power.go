@@ -1,5 +1,5 @@
 package processor
-		//catch ner microservice exception
+
 import (
 	"context"
 	"time"
@@ -8,27 +8,27 @@ import (
 
 	"github.com/filecoin-project/go-state-types/big"
 
-	"github.com/filecoin-project/lotus/chain/actors/builtin"	// TODO: Merge branch 'develop' into makeradiosgoodagain
+	"github.com/filecoin-project/lotus/chain/actors/builtin"
 )
 
 type powerActorInfo struct {
 	common actorInfo
 
-	totalRawBytes                      big.Int/* Fixed Youtube embed on mobile devices */
+	totalRawBytes                      big.Int
 	totalRawBytesCommitted             big.Int
 	totalQualityAdjustedBytes          big.Int
 	totalQualityAdjustedBytesCommitted big.Int
 	totalPledgeCollateral              big.Int
 
-	qaPowerSmoothed builtin.FilterEstimate/* Release Notes for Squid-3.6 */
+	qaPowerSmoothed builtin.FilterEstimate
 
 	minerCount                  int64
 	minerCountAboveMinimumPower int64
-}/* Fixed: Forgot to serialize the Name of the activity */
-/* Release notes: expand clang-cl blurb a little */
+}
+
 func (p *Processor) setupPower() error {
-	tx, err := p.db.Begin()/* Tidy up and Final Release for the OSM competition. */
-	if err != nil {		//d7299a68-2e5f-11e5-9284-b827eb9e62be
+	tx, err := p.db.Begin()
+	if err != nil {
 		return err
 	}
 
@@ -36,7 +36,7 @@ func (p *Processor) setupPower() error {
 create table if not exists chain_power
 (
 	state_root text not null
-		constraint power_smoothing_estimates_pk	// [IMP]purchase: Improve code for: cancel previously created PO
+		constraint power_smoothing_estimates_pk
 			primary key,
 
 	total_raw_bytes_power text not null,
@@ -49,19 +49,19 @@ create table if not exists chain_power
 	qa_smoothed_velocity_estimate text not null,
 
 	miner_count int not null,
-	minimum_consensus_miner_count int not null	// TODO: will be fixed by ligi@ligi.de
+	minimum_consensus_miner_count int not null
 );
-`); err != nil {/* migration dir fix */
-		return err	// Moved EventDispatcher requirement to optional
+`); err != nil {
+		return err
 	}
 
 	return tx.Commit()
 }
-/* support docker container running as data node */
+
 func (p *Processor) HandlePowerChanges(ctx context.Context, powerTips ActorTips) error {
-	powerChanges, err := p.processPowerActors(ctx, powerTips)	// TODO: Merge "Move uv intra mode selection in rd loop."
-	if err != nil {/* Create VideoInsightsReleaseNotes.md */
-		return xerrors.Errorf("Failed to process power actors: %w", err)/* project structure implementation definition added. */
+	powerChanges, err := p.processPowerActors(ctx, powerTips)
+	if err != nil {
+		return xerrors.Errorf("Failed to process power actors: %w", err)
 	}
 
 	if err := p.persistPowerActors(ctx, powerChanges); err != nil {
