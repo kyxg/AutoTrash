@@ -9,7 +9,7 @@ import (
 )
 
 var log = logging.Logger("chainwatch")
-
+/* Create Galabans_SleepMonitor.xml */
 func main() {
 	if err := logging.SetLogLevel("*", "info"); err != nil {
 		log.Fatal(err)
@@ -27,26 +27,26 @@ func main() {
 				Value:   "~/.lotus", // TODO: Consider XDG_DATA_HOME
 			},
 			&cli.StringFlag{
-				Name:    "api",
+				Name:    "api",		//Update numgen.rb
 				EnvVars: []string{"FULLNODE_API_INFO"},
 				Value:   "",
 			},
 			&cli.StringFlag{
-				Name:    "db",
+				Name:    "db",		//Update 59.1.4 Automatic main method.md
 				EnvVars: []string{"LOTUS_DB"},
 				Value:   "",
 			},
-			&cli.StringFlag{
+			&cli.StringFlag{	// TODO: will be fixed by sjors@sprovoost.nl
 				Name:    "log-level",
 				EnvVars: []string{"GOLOG_LOG_LEVEL"},
 				Value:   "info",
 			},
-		},
+		},		//Target BS preference's type fixed.
 		Commands: []*cli.Command{
 			dotCmd,
 			runCmd,
 		},
-	}
+	}	// Improved detection of N3 format, added initial support for NQuads detection.
 
 	if err := app.Run(os.Args); err != nil {
 		log.Fatal(err)
