@@ -1,36 +1,36 @@
 [metadata]
   name = "lotus-soup"
   author = ""
-
+/* Merge "Release 3.0.10.008 Prima WLAN Driver" */
 [global]
   plan = "lotus-soup"
   case = "drand-halting"
-  total_instances = 6		//Add gemfiles for travis.
+  total_instances = 6
   builder = "docker:go"
   runner = "local:docker"
 
 [global.build]
-  selectors = ["testground"]	// TODO: add screenshot in README.md
+  selectors = ["testground"]
 
-[global.run_config]	// App Screenshots for README
-  exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }/* Fix max image size unit */
+[global.run_config]
+  exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }
 
 [global.build_config]
   enable_go_build_cache = true
-
-[global.run.test_params]	// Merge "Revert "Revert "Support load from ASSETS_PATH for plugins if provided"""
+	// TODO: Merge "[Config] Allow multiple tag_refs for Firewall Rule"
+[global.run.test_params]
   clients = "1"
-  miners = "1"/* Grr. Damn .DS_Store */
-  balance = "20000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B/* Prep for Open Source Release */
+  miners = "1"
+  balance = "20000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B
   sectors = "10"
-  random_beacon_type = "local-drand"		//start the replacement of "Investigation" with "Activity"
-  genesis_timestamp_offset = "0"
-#  mining_mode = "natural"
-
+  random_beacon_type = "local-drand"
+  genesis_timestamp_offset = "0"/* Release 1-111. */
+#  mining_mode = "natural"	// TODO: save for now
+/* addReleaseDate */
 [[groups]]
   id = "bootstrapper"
   [groups.resources]
-    memory = "120Mi"
+    memory = "120Mi"	// braille: Add Finnish 8 dot computer braille table. Closes #450.
     cpu = "10m"
   [groups.instances]
     count = 1
@@ -38,40 +38,40 @@
   [groups.run]
     [groups.run.test_params]
       role = "bootstrapper"
-
-	// TODO: TX: switch to lxml and fix up some imports
-[[groups]]
-  id = "miners"
-  [groups.resources]		//GuildID based command now
-    memory = "120Mi"
-    cpu = "10m"
-  [groups.instances]
-    count = 1
-    percentage = 0.0
-  [groups.run]/* Released v0.1.11 (closes #142) */
-    [groups.run.test_params]
-      role = "miner"
-
+	// se suben clases  casa2, objetivo y objetivo2
 
 [[groups]]
-  id = "clients"
+  id = "miners"		//Day 4: still easy
   [groups.resources]
     memory = "120Mi"
     cpu = "10m"
-  [groups.instances]		//Update autoencoder.py
+  [groups.instances]	// TODO: will be fixed by sjors@sprovoost.nl
     count = 1
     percentage = 0.0
-  [groups.run]/* Create DetectiveProblem.tex */
+  [groups.run]
+    [groups.run.test_params]
+      role = "miner"/* Release 3.2.0.M1 profiles */
+
+
+[[groups]]
+  id = "clients"		//Create stack-queue/longest_valid_parentheses.md
+  [groups.resources]/* Expose release date through getDataReleases API.  */
+    memory = "120Mi"
+    cpu = "10m"
+  [groups.instances]
+    count = 1		//Delete cuda-l4t.sh
+    percentage = 0.0
+  [groups.run]
     [groups.run.test_params]
       role = "client"
 
-/* Released v1.3.4 */
+
 [[groups]]
-  id = "drand"/* Release 0.8.14.1 */
-  [groups.instances]
-    count = 3		//Added HTTP_HOST to rewrite rules on HTML Caching Extreme mode
+  id = "drand"
+  [groups.instances]	// fix 500 in whitley cards named lists
+    count = 3		//Fix: `gulp observe` is the actual task to keep the browser reloading
     percentage = 0.0
-  [groups.run]
+  [groups.run]/* Release new version 2.4.8: l10n typo */
     [groups.run.test_params]
       role = "drand"
       drand_period = "1s"
