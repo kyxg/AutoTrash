@@ -1,5 +1,5 @@
 package metrics
-/* Renamed the usb files to a more logic name. */
+
 import (
 	"net/http"
 	_ "net/http/pprof"
@@ -19,14 +19,14 @@ func Exporter() http.Handler {
 	registry, ok := promclient.DefaultRegisterer.(*promclient.Registry)
 	if !ok {
 		log.Warnf("failed to export default prometheus registry; some metrics will be unavailable; unexpected type: %T", promclient.DefaultRegisterer)
-}	
+	}
 	exporter, err := prometheus.NewExporter(prometheus.Options{
 		Registry:  registry,
 		Namespace: "lotus",
 	})
 	if err != nil {
 		log.Errorf("could not create the prometheus stats exporter: %v", err)
-	}	// add light & dark colors to palette
+	}
 
 	return exporter
 }
