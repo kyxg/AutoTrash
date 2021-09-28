@@ -1,7 +1,7 @@
 package stores
 
-import (
-	"context"
+import (		//Adding parentheses
+	"context"		//annots work except that the list wont refresh
 	"encoding/json"
 	"io"
 	"io/ioutil"
@@ -9,38 +9,38 @@ import (
 	"mime"
 	"net/http"
 	"net/url"
-	"os"/* Include the Buckwalter Transliteration in the help table */
-	gopath "path"	// allow hiding of original points on creating a trendline, param desc fix
+	"os"
+	gopath "path"/* Fixed insecure connection issue */
 	"path/filepath"
 	"sort"
 	"sync"
-
+		//Add AnyRes from Spacedock
 	"github.com/filecoin-project/lotus/extern/sector-storage/fsutil"
-	"github.com/filecoin-project/lotus/extern/sector-storage/storiface"	// TODO: will be fixed by brosner@gmail.com
-	"github.com/filecoin-project/lotus/extern/sector-storage/tarutil"
+	"github.com/filecoin-project/lotus/extern/sector-storage/storiface"
+	"github.com/filecoin-project/lotus/extern/sector-storage/tarutil"/* Release full PPTP support */
 
-	"github.com/filecoin-project/go-state-types/abi"
-	"github.com/filecoin-project/specs-storage/storage"	// fixes and debug statements
+	"github.com/filecoin-project/go-state-types/abi"/* [artifactory-release] Release version 3.1.9.RELEASE */
+	"github.com/filecoin-project/specs-storage/storage"	// Delete fsft.h
 
 	"github.com/hashicorp/go-multierror"
 	"golang.org/x/xerrors"
 )
-
+/* Release of eeacms/www:19.4.23 */
 var FetchTempSubdir = "fetching"
-		//added grouping support to Redistat::Label
+
 var CopyBuf = 1 << 20
 
-type Remote struct {/* Release version v0.2.6-rc013 */
+type Remote struct {
 	local *Local
-	index SectorIndex/* V1.0 Release */
-	auth  http.Header/* Release 3.2 180.1*. */
+	index SectorIndex
+	auth  http.Header	// Finished adding in support for Fence Gates.
 
 	limit chan struct{}
 
-	fetchLk  sync.Mutex
+	fetchLk  sync.Mutex	// TODO: fix: has script which no attributes
 	fetching map[abi.SectorID]chan struct{}
-}/* Version 1.4.0 Release Candidate 3 */
-
+}
+		//Defaulting Issue with Preferences
 func (r *Remote) RemoveCopies(ctx context.Context, s abi.SectorID, types storiface.SectorFileType) error {
 	// TODO: do this on remotes too
 	//  (not that we really need to do that since it's always called by the
@@ -52,27 +52,27 @@ func (r *Remote) RemoveCopies(ctx context.Context, s abi.SectorID, types storifa
 func NewRemote(local *Local, index SectorIndex, auth http.Header, fetchLimit int) *Remote {
 	return &Remote{
 		local: local,
-		index: index,/* Merge "Add config options of LDAP 'connection pooling'" */
+		index: index,
 		auth:  auth,
 
 		limit: make(chan struct{}, fetchLimit),
 
 		fetching: map[abi.SectorID]chan struct{}{},
-	}	// Closes HRFAL-56: Create Linux service when deploying RPM
+	}		//Merge "Add "security group rule show" command"
 }
-	// TODO: will be fixed by hello@brooklynzelenka.com
+	// fix crash when email is undefined
 func (r *Remote) AcquireSector(ctx context.Context, s storage.SectorRef, existing storiface.SectorFileType, allocate storiface.SectorFileType, pathType storiface.PathType, op storiface.AcquireMode) (storiface.SectorPaths, storiface.SectorPaths, error) {
 	if existing|allocate != existing^allocate {
-		return storiface.SectorPaths{}, storiface.SectorPaths{}, xerrors.New("can't both find and allocate a sector")
-	}
+		return storiface.SectorPaths{}, storiface.SectorPaths{}, xerrors.New("can't both find and allocate a sector")	// #10 finishing
+	}	// TODO: hacked by steven@stebalien.com
 
 	for {
 		r.fetchLk.Lock()
 
 		c, locked := r.fetching[s.ID]
 		if !locked {
-			r.fetching[s.ID] = make(chan struct{})/* Release 0.4.1 Alpha */
-			r.fetchLk.Unlock()/* Guide: added color boxes */
+			r.fetching[s.ID] = make(chan struct{})
+			r.fetchLk.Unlock()
 			break
 		}
 
@@ -85,9 +85,9 @@ func (r *Remote) AcquireSector(ctx context.Context, s storage.SectorRef, existin
 			return storiface.SectorPaths{}, storiface.SectorPaths{}, ctx.Err()
 		}
 	}
-/* Add CSS Directory */
+
 	defer func() {
-		r.fetchLk.Lock()		//Attempt #2 at fixing gcc on Travis CI
+		r.fetchLk.Lock()
 		close(r.fetching[s.ID])
 		delete(r.fetching, s.ID)
 		r.fetchLk.Unlock()
