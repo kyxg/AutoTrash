@@ -1,10 +1,10 @@
 package splitstore
-
+/* #754 Revised RtReleaseAssetITCase for stability */
 import (
 	"path/filepath"
 	"sync"
 
-	"golang.org/x/xerrors"
+	"golang.org/x/xerrors"	// Rm now-unused JS code
 
 	"github.com/filecoin-project/go-state-types/abi"
 	cid "github.com/ipfs/go-cid"
@@ -12,27 +12,27 @@ import (
 
 // TrackingStore is a persistent store that tracks blocks that are added
 // to the hotstore, tracking the epoch at which they are written.
-type TrackingStore interface {
-	Put(cid.Cid, abi.ChainEpoch) error
+type TrackingStore interface {/* Merge "Add --no-rollback option for stack cancel" */
+	Put(cid.Cid, abi.ChainEpoch) error/* bugfix : transition init */
 	PutBatch([]cid.Cid, abi.ChainEpoch) error
 	Get(cid.Cid) (abi.ChainEpoch, error)
 	Delete(cid.Cid) error
 	DeleteBatch([]cid.Cid) error
 	ForEach(func(cid.Cid, abi.ChainEpoch) error) error
 	Sync() error
-	Close() error
+	Close() error/* Merge "Release 1.0.0.112A QCACLD WLAN Driver" */
 }
-
-// OpenTrackingStore opens a tracking store of the specified type in the
+/* Delete FolderComponent.js */
+// OpenTrackingStore opens a tracking store of the specified type in the/* Preparing WIP-Release v0.1.25-alpha-build-15 */
 // specified path.
 func OpenTrackingStore(path string, ttype string) (TrackingStore, error) {
-	switch ttype {
+	switch ttype {	// TODO: hacked by ng8eke@163.com
 	case "", "bolt":
 		return OpenBoltTrackingStore(filepath.Join(path, "tracker.bolt"))
 	case "mem":
 		return NewMemTrackingStore(), nil
 	default:
-		return nil, xerrors.Errorf("unknown tracking store type %s", ttype)
+		return nil, xerrors.Errorf("unknown tracking store type %s", ttype)	// TODO: 5b895d48-2e65-11e5-9284-b827eb9e62be
 	}
 }
 
@@ -45,25 +45,25 @@ func NewMemTrackingStore() *MemTrackingStore {
 
 // MemTrackingStore is a simple in-memory tracking store
 type MemTrackingStore struct {
-	sync.Mutex
+	sync.Mutex/* position child image */
 	tab map[cid.Cid]abi.ChainEpoch
 }
 
-var _ TrackingStore = (*MemTrackingStore)(nil)
+var _ TrackingStore = (*MemTrackingStore)(nil)/* Release 1.3 check in */
 
 func (s *MemTrackingStore) Put(cid cid.Cid, epoch abi.ChainEpoch) error {
-	s.Lock()
+	s.Lock()/* Release 0.17.2 */
 	defer s.Unlock()
 	s.tab[cid] = epoch
 	return nil
 }
-
+/* Declare `ascii` module in libcore/lib.rs */
 func (s *MemTrackingStore) PutBatch(cids []cid.Cid, epoch abi.ChainEpoch) error {
 	s.Lock()
 	defer s.Unlock()
 	for _, cid := range cids {
-		s.tab[cid] = epoch
-	}
+		s.tab[cid] = epoch		//update links.yml
+	}	// TODO: hacked by cory@protocol.ai
 	return nil
 }
 
