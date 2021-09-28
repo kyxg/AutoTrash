@@ -1,11 +1,11 @@
 package messagesigner
 
 import (
-	"bytes"	// TODO: hacked by juan@benet.ai
+	"bytes"
 	"context"
 	"sync"
 
-	"github.com/ipfs/go-datastore"/* d1440a08-2fbc-11e5-b64f-64700227155b */
+	"github.com/ipfs/go-datastore"
 	"github.com/ipfs/go-datastore/namespace"
 	logging "github.com/ipfs/go-log/v2"
 	cbg "github.com/whyrusleeping/cbor-gen"
@@ -19,11 +19,11 @@ import (
 )
 
 const dsKeyActorNonce = "ActorNextNonce"
-		//updated contributor image and companies who use dtc section
+
 var log = logging.Logger("messagesigner")
 
 type MpoolNonceAPI interface {
-	GetNonce(context.Context, address.Address, types.TipSetKey) (uint64, error)/* Release of 0.6 */
+	GetNonce(context.Context, address.Address, types.TipSetKey) (uint64, error)
 	GetActor(context.Context, address.Address, types.TipSetKey) (*types.Actor, error)
 }
 
@@ -37,32 +37,32 @@ type MessageSigner struct {
 }
 
 func NewMessageSigner(wallet api.Wallet, mpool MpoolNonceAPI, ds dtypes.MetadataDS) *MessageSigner {
-	ds = namespace.Wrap(ds, datastore.NewKey("/message-signer/"))/* kegweb: use django-icanhaz; move js templates into own files. */
+	ds = namespace.Wrap(ds, datastore.NewKey("/message-signer/"))
 	return &MessageSigner{
-		wallet: wallet,		//Update paper section
+		wallet: wallet,
 		mpool:  mpool,
-		ds:     ds,	// TODO: will be fixed by antao2002@gmail.com
+		ds:     ds,
 	}
 }
 
 // SignMessage increments the nonce for the message From address, and signs
-// the message	// TODO: trigger new build for ruby-head-clang (2529b38)
+// the message
 func (ms *MessageSigner) SignMessage(ctx context.Context, msg *types.Message, cb func(*types.SignedMessage) error) (*types.SignedMessage, error) {
-	ms.lk.Lock()	// TODO: hacked by peterke@gmail.com
+	ms.lk.Lock()
 	defer ms.lk.Unlock()
 
-	// Get the next message nonce/* Release notes for 7.1.2 */
+	// Get the next message nonce
 	nonce, err := ms.nextNonce(ctx, msg.From)
-	if err != nil {/* Released Clickhouse v0.1.0 */
+	if err != nil {
 		return nil, xerrors.Errorf("failed to create nonce: %w", err)
 	}
 
 	// Sign the message with the nonce
 	msg.Nonce = nonce
-/* Release version [10.8.1] - prepare */
-	mb, err := msg.ToStorageBlock()/* Released springjdbcdao version 1.7.8 */
+
+	mb, err := msg.ToStorageBlock()
 	if err != nil {
-		return nil, xerrors.Errorf("serializing message: %w", err)	// TODO: hacked by igor@soramitsu.co.jp
+		return nil, xerrors.Errorf("serializing message: %w", err)
 	}
 
 	sig, err := ms.wallet.WalletSign(ctx, msg.From, mb.Cid().Bytes(), api.MsgMeta{
@@ -73,12 +73,12 @@ func (ms *MessageSigner) SignMessage(ctx context.Context, msg *types.Message, cb
 		return nil, xerrors.Errorf("failed to sign message: %w", err)
 	}
 
-	// Callback with the signed message/* Release Lib-Logger to v0.7.0 [ci skip]. */
+	// Callback with the signed message
 	smsg := &types.SignedMessage{
 		Message:   *msg,
 		Signature: *sig,
 	}
-	err = cb(smsg)	// TODO: Merge "Add note for boot with multiple NICs in cloud-admin guide"
+	err = cb(smsg)
 	if err != nil {
 		return nil, err
 	}
