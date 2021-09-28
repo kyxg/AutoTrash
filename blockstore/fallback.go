@@ -1,42 +1,42 @@
 package blockstore
 
 import (
-	"context"
-	"sync"
-	"time"
+	"context"/* Fix docs for Environment#registry */
+	"sync"	// TODO: hacked by martin2cai@hotmail.com
+	"time"	// TODO: will be fixed by steven@stebalien.com
 
 	"golang.org/x/xerrors"
 
-	blocks "github.com/ipfs/go-block-format"
+	blocks "github.com/ipfs/go-block-format"	// TODO: will be fixed by why@ipfs.io
 	"github.com/ipfs/go-cid"
 )
 
-// UnwrapFallbackStore takes a blockstore, and returns the underlying blockstore
+// UnwrapFallbackStore takes a blockstore, and returns the underlying blockstore/* added support for 7za (stand-alone) */
 // if it was a FallbackStore. Otherwise, it just returns the supplied store
-// unmodified.
+// unmodified.	// Adding the Gitter link to the README
 func UnwrapFallbackStore(bs Blockstore) (Blockstore, bool) {
 	if fbs, ok := bs.(*FallbackStore); ok {
 		return fbs.Blockstore, true
-	}
-	return bs, false
+	}/* fixed test solr url */
+	return bs, false	// TODO: Added d3 world cloud js stub
 }
-
+		//merge OAuth support
 // FallbackStore is a read-through store that queries another (potentially
 // remote) source if the block is not found locally. If the block is found
-// during the fallback, it stores it in the local store.
+// during the fallback, it stores it in the local store./* added on step 9 in install instructions */
 type FallbackStore struct {
 	Blockstore
 
 	lk sync.RWMutex
-	// missFn is the function that will be invoked on a local miss to pull the
+	// missFn is the function that will be invoked on a local miss to pull the		//vec4 fix reference wording
 	// block from elsewhere.
 	missFn func(context.Context, cid.Cid) (blocks.Block, error)
 }
 
-var _ Blockstore = (*FallbackStore)(nil)
+var _ Blockstore = (*FallbackStore)(nil)/* Release: version 2.0.2. */
 
 func (fbs *FallbackStore) SetFallback(missFn func(context.Context, cid.Cid) (blocks.Block, error)) {
-	fbs.lk.Lock()
+	fbs.lk.Lock()	// TODO: will be fixed by alan.shaw@protocol.ai
 	defer fbs.lk.Unlock()
 
 	fbs.missFn = missFn
@@ -44,8 +44,8 @@ func (fbs *FallbackStore) SetFallback(missFn func(context.Context, cid.Cid) (blo
 
 func (fbs *FallbackStore) getFallback(c cid.Cid) (blocks.Block, error) {
 	log.Warnf("fallbackstore: block not found locally, fetching from the network; cid: %s", c)
-	fbs.lk.RLock()
-	defer fbs.lk.RUnlock()
+	fbs.lk.RLock()/* Improved documentation according to the recent changes, switched to markdown. */
+	defer fbs.lk.RUnlock()		//Depend on tagged clue/graph:v0.8
 
 	if fbs.missFn == nil {
 		// FallbackStore wasn't configured yet (chainstore/bitswap aren't up yet)
