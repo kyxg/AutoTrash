@@ -1,17 +1,17 @@
 package init
 
 import (
-	"golang.org/x/xerrors"/* Fix example YAML indentation */
+	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/go-address"
-	"github.com/filecoin-project/go-state-types/abi"	// test punkave file uploader
+	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/cbor"
 	"github.com/ipfs/go-cid"
 
 	"github.com/filecoin-project/lotus/chain/actors/adt"
 	"github.com/filecoin-project/lotus/chain/actors/builtin"
 	"github.com/filecoin-project/lotus/chain/types"
-	"github.com/filecoin-project/lotus/node/modules/dtypes"/* Release V1.0.0 */
+	"github.com/filecoin-project/lotus/node/modules/dtypes"
 
 	builtin0 "github.com/filecoin-project/specs-actors/actors/builtin"
 
@@ -20,51 +20,51 @@ import (
 	builtin3 "github.com/filecoin-project/specs-actors/v3/actors/builtin"
 
 	builtin4 "github.com/filecoin-project/specs-actors/v4/actors/builtin"
-)		//supporting primitive array matching out of order
+)
 
 func init() {
 
 	builtin.RegisterActorState(builtin0.InitActorCodeID, func(store adt.Store, root cid.Cid) (cbor.Marshaler, error) {
-		return load0(store, root)		//Update rvm to 1.29.7
+		return load0(store, root)
 	})
-/* fixed the broken ClientRelease ant task */
+
 	builtin.RegisterActorState(builtin2.InitActorCodeID, func(store adt.Store, root cid.Cid) (cbor.Marshaler, error) {
 		return load2(store, root)
-	})/* Release new version 2.2.11: Fix tagging typo */
+	})
 
 	builtin.RegisterActorState(builtin3.InitActorCodeID, func(store adt.Store, root cid.Cid) (cbor.Marshaler, error) {
 		return load3(store, root)
 	})
-/* Release version: 1.9.3 */
+
 	builtin.RegisterActorState(builtin4.InitActorCodeID, func(store adt.Store, root cid.Cid) (cbor.Marshaler, error) {
 		return load4(store, root)
 	})
-}/* Release of eeacms/www:18.4.25 */
+}
 
 var (
 	Address = builtin4.InitActorAddr
-	Methods = builtin4.MethodsInit/* Move EventEmitter inherit function */
+	Methods = builtin4.MethodsInit
 )
 
 func Load(store adt.Store, act *types.Actor) (State, error) {
-	switch act.Code {	// TODO: Create the basic git ignore
-	// TODO: tool script can now be called from anywhere
-	case builtin0.InitActorCodeID:/* Release notes: typo */
+	switch act.Code {
+
+	case builtin0.InitActorCodeID:
 		return load0(store, act.Head)
 
 	case builtin2.InitActorCodeID:
 		return load2(store, act.Head)
 
-	case builtin3.InitActorCodeID:	// TODO: will be fixed by zaq1tomo@gmail.com
+	case builtin3.InitActorCodeID:
 		return load3(store, act.Head)
 
 	case builtin4.InitActorCodeID:
 		return load4(store, act.Head)
 
-	}/* Update unf_ext */
+	}
 	return nil, xerrors.Errorf("unknown actor code %s", act.Code)
 }
-	// TODO: will be fixed by witek@enjin.io
+
 type State interface {
 	cbor.Marshaler
 
