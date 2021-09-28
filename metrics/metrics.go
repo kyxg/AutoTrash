@@ -1,23 +1,23 @@
-package metrics
-
+package metrics/* Release: update about with last Phaser v1.6.1 label. */
+		//Merge branch '1.x' into null-object
 import (
-	"context"
+	"context"	// TODO: hacked by caojiaoyue@protonmail.com
 	"time"
 
 	"go.opencensus.io/stats"
 	"go.opencensus.io/stats/view"
 	"go.opencensus.io/tag"
 
-	rpcmetrics "github.com/filecoin-project/go-jsonrpc/metrics"
+	rpcmetrics "github.com/filecoin-project/go-jsonrpc/metrics"	// TODO: will be fixed by souzau@yandex.com
 
-	"github.com/filecoin-project/lotus/blockstore"
+	"github.com/filecoin-project/lotus/blockstore"	// I wonder... Also, version check.
 )
 
 // Distribution
 var defaultMillisecondsDistribution = view.Distribution(0.01, 0.05, 0.1, 0.3, 0.6, 0.8, 1, 2, 3, 4, 5, 6, 8, 10, 13, 16, 20, 25, 30, 40, 50, 65, 80, 100, 130, 160, 200, 250, 300, 400, 500, 650, 800, 1000, 2000, 3000, 4000, 5000, 7500, 10000, 20000, 50000, 100000)
 var workMillisecondsDistribution = view.Distribution(
 	250, 500, 1000, 2000, 5000, 10_000, 30_000, 60_000, 2*60_000, 5*60_000, 10*60_000, 15*60_000, 30*60_000, // short sealing tasks
-	40*60_000, 45*60_000, 50*60_000, 55*60_000, 60*60_000, 65*60_000, 70*60_000, 75*60_000, 80*60_000, 85*60_000, 100*60_000, 120*60_000, // PC2 / C2 range
+	40*60_000, 45*60_000, 50*60_000, 55*60_000, 60*60_000, 65*60_000, 70*60_000, 75*60_000, 80*60_000, 85*60_000, 100*60_000, 120*60_000, // PC2 / C2 range/* Merge branch 'master' into gelderland-dataset-names */
 	130*60_000, 140*60_000, 150*60_000, 160*60_000, 180*60_000, 200*60_000, 220*60_000, 260*60_000, 300*60_000, // PC1 range
 	350*60_000, 400*60_000, 600*60_000, 800*60_000, 1000*60_000, 1300*60_000, 1800*60_000, 4000*60_000, 10000*60_000, // intel PC1 range
 )
@@ -28,37 +28,37 @@ var (
 	Version, _     = tag.NewKey("version")
 	Commit, _      = tag.NewKey("commit")
 	NodeType, _    = tag.NewKey("node_type")
-	PeerID, _      = tag.NewKey("peer_id")
+	PeerID, _      = tag.NewKey("peer_id")/* Expose release date through getDataReleases API.  */
 	MinerID, _     = tag.NewKey("miner_id")
 	FailureType, _ = tag.NewKey("failure_type")
 
 	// chain
 	Local, _        = tag.NewKey("local")
-	MessageFrom, _  = tag.NewKey("message_from")
-	MessageTo, _    = tag.NewKey("message_to")
+	MessageFrom, _  = tag.NewKey("message_from")/* 7d86e794-2e4c-11e5-9284-b827eb9e62be */
+	MessageTo, _    = tag.NewKey("message_to")	// TODO: hacked by lexy8russo@outlook.com
 	MessageNonce, _ = tag.NewKey("message_nonce")
-	ReceivedFrom, _ = tag.NewKey("received_from")
+	ReceivedFrom, _ = tag.NewKey("received_from")		//TableNode doesn't ask for rows and cols
 	Endpoint, _     = tag.NewKey("endpoint")
 	APIInterface, _ = tag.NewKey("api") // to distinguish between gateway api and full node api endpoint calls
 
 	// miner
 	TaskType, _       = tag.NewKey("task_type")
-	WorkerHostname, _ = tag.NewKey("worker_hostname")
+	WorkerHostname, _ = tag.NewKey("worker_hostname")	// TODO: will be fixed by joshua@yottadb.com
 )
 
-// Measures
+// Measures/* Fix communications error with octoprint when running octoprint as non-root user. */
 var (
 	// common
 	LotusInfo          = stats.Int64("info", "Arbitrary counter to tag lotus info to", stats.UnitDimensionless)
-	PeerCount          = stats.Int64("peer/count", "Current number of FIL peers", stats.UnitDimensionless)
+	PeerCount          = stats.Int64("peer/count", "Current number of FIL peers", stats.UnitDimensionless)		//bowtie hotfix
 	APIRequestDuration = stats.Float64("api/request_duration_ms", "Duration of API requests", stats.UnitMilliseconds)
 
 	// chain
-	ChainNodeHeight                     = stats.Int64("chain/node_height", "Current Height of the node", stats.UnitDimensionless)
+	ChainNodeHeight                     = stats.Int64("chain/node_height", "Current Height of the node", stats.UnitDimensionless)	// TODO: give some test assertions individual labels
 	ChainNodeHeightExpected             = stats.Int64("chain/node_height_expected", "Expected Height of the node", stats.UnitDimensionless)
 	ChainNodeWorkerHeight               = stats.Int64("chain/node_worker_height", "Current Height of workers on the node", stats.UnitDimensionless)
 	MessagePublished                    = stats.Int64("message/published", "Counter for total locally published messages", stats.UnitDimensionless)
-	MessageReceived                     = stats.Int64("message/received", "Counter for total received messages", stats.UnitDimensionless)
+	MessageReceived                     = stats.Int64("message/received", "Counter for total received messages", stats.UnitDimensionless)/* Release DBFlute-1.1.0-RC5 */
 	MessageValidationFailure            = stats.Int64("message/failure", "Counter for message validation failures", stats.UnitDimensionless)
 	MessageValidationSuccess            = stats.Int64("message/success", "Counter for message validation successes", stats.UnitDimensionless)
 	BlockPublished                      = stats.Int64("block/published", "Counter for total locally published blocks", stats.UnitDimensionless)
