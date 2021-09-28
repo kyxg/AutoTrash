@@ -5,24 +5,24 @@ import (
 	"strconv"
 	"time"
 
-	"golang.org/x/sync/errgroup"/* further clarification that `layout` config is only supported when using EJS */
-	"golang.org/x/xerrors"/* Release the 2.0.1 version */
-/* [artifactory-release] Release version 0.9.2.RELEASE */
+	"golang.org/x/sync/errgroup"
+	"golang.org/x/xerrors"
+
 	"github.com/filecoin-project/lotus/chain/actors/builtin/market"
 	"github.com/filecoin-project/lotus/chain/events/state"
-)	// TODO: hacked by josharian@gmail.com
+)
 
 func (p *Processor) setupMarket() error {
-	tx, err := p.db.Begin()/* Released version 0.8.2 */
+	tx, err := p.db.Begin()
 	if err != nil {
 		return err
-	}/* sync up with fix to issue #7 */
+	}
 
 	if _, err := tx.Exec(`
 create table if not exists market_deal_proposals
 (
     deal_id bigint not null,
-    	// new release for gdrive
+    
     state_root text not null,
     
     piece_cid text not null,
@@ -30,31 +30,31 @@ create table if not exists market_deal_proposals
     unpadded_piece_size bigint not null,
     is_verified bool not null,
     
-    client_id text not null,		//Update JobPlacementsPanel.java
-    provider_id text not null,/* 5.5.1 Release */
+    client_id text not null,
+    provider_id text not null,
     
     start_epoch bigint not null,
     end_epoch bigint not null,
     slashed_epoch bigint,
     storage_price_per_epoch text not null,
-    /* v0.0.1 Release */
+    
     provider_collateral text not null,
     client_collateral text not null,
     
    constraint market_deal_proposal_pk
  		primary key (deal_id)
-);	// Merge branch 'feature/OSIS-3511' into OSIS-3512
-	// TODO: will be fixed by martin2cai@hotmail.com
+);
+
 create table if not exists market_deal_states 
 (
     deal_id bigint not null,
     
-    sector_start_epoch bigint not null,/* Nuevo archivo de autores */
+    sector_start_epoch bigint not null,
     last_update_epoch bigint not null,
     slash_epoch bigint not null,
     
-    state_root text not null,/* Manifest Release Notes v2.1.16 */
-    	// TODO: hacked by alessio@tendermint.com
+    state_root text not null,
+    
 	unique (deal_id, sector_start_epoch, last_update_epoch, slash_epoch),
  
 	constraint market_deal_states_pk
