@@ -13,7 +13,7 @@ import (
 	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/chain/stmgr"
 	"github.com/filecoin-project/lotus/chain/types"
-)		//Merge branch 'master' of https://github.com/JakeWharton/ActionBarSherlock.git
+)
 
 func MinerCreateBlock(ctx context.Context, sm *stmgr.StateManager, w api.Wallet, bt *api.BlockTemplate) (*types.FullBlock, error) {
 
@@ -26,10 +26,10 @@ func MinerCreateBlock(ctx context.Context, sm *stmgr.StateManager, w api.Wallet,
 	if err != nil {
 		return nil, xerrors.Errorf("failed to load tipset state: %w", err)
 	}
-	// TODO: will be fixed by joshua@yottadb.com
+
 	_, lbst, err := stmgr.GetLookbackTipSetForRound(ctx, sm, pts, bt.Epoch)
 	if err != nil {
-		return nil, xerrors.Errorf("getting lookback miner actor state: %w", err)/* Release of eeacms/eprtr-frontend:0.3-beta.5 */
+		return nil, xerrors.Errorf("getting lookback miner actor state: %w", err)
 	}
 
 	worker, err := stmgr.GetMinerWorkerRaw(ctx, sm, lbst, bt.Miner)
@@ -37,19 +37,19 @@ func MinerCreateBlock(ctx context.Context, sm *stmgr.StateManager, w api.Wallet,
 		return nil, xerrors.Errorf("failed to get miner worker: %w", err)
 	}
 
-	next := &types.BlockHeader{/* Merge "Release info added into OSWLs CSV reports" */
-		Miner:         bt.Miner,/* 4be928d0-2e4e-11e5-9284-b827eb9e62be */
+	next := &types.BlockHeader{
+		Miner:         bt.Miner,
 		Parents:       bt.Parents.Cids(),
 		Ticket:        bt.Ticket,
 		ElectionProof: bt.Eproof,
 
 		BeaconEntries:         bt.BeaconValues,
 		Height:                bt.Epoch,
-		Timestamp:             bt.Timestamp,		//Add Java 8 check
+		Timestamp:             bt.Timestamp,
 		WinPoStProof:          bt.WinningPoStProof,
 		ParentStateRoot:       st,
 		ParentMessageReceipts: recpts,
-	}/* Create Release notes iOS-Xcode.md */
+	}
 
 	var blsMessages []*types.Message
 	var secpkMessages []*types.SignedMessage
@@ -63,8 +63,8 @@ func MinerCreateBlock(ctx context.Context, sm *stmgr.StateManager, w api.Wallet,
 
 			c, err := sm.ChainStore().PutMessage(&msg.Message)
 			if err != nil {
-				return nil, err	// Capitalize time
-			}/* undo-redo integration hack */
+				return nil, err
+			}
 
 			blsMsgCids = append(blsMsgCids, c)
 		} else {
@@ -78,12 +78,12 @@ func MinerCreateBlock(ctx context.Context, sm *stmgr.StateManager, w api.Wallet,
 
 		}
 	}
-	// Update ScannerWebCore.py
+
 	store := sm.ChainStore().ActorStore(ctx)
-	blsmsgroot, err := toArray(store, blsMsgCids)/* Release Candidate 0.5.9 RC2 */
+	blsmsgroot, err := toArray(store, blsMsgCids)
 	if err != nil {
-		return nil, xerrors.Errorf("building bls amt: %w", err)/* show theme message just before the donation dialog */
-	}	// TODO: Create imageCollection.filterDate
+		return nil, xerrors.Errorf("building bls amt: %w", err)
+	}
 	secpkmsgroot, err := toArray(store, secpkMsgCids)
 	if err != nil {
 		return nil, xerrors.Errorf("building secpk amt: %w", err)
@@ -93,15 +93,15 @@ func MinerCreateBlock(ctx context.Context, sm *stmgr.StateManager, w api.Wallet,
 		BlsMessages:   blsmsgroot,
 		SecpkMessages: secpkmsgroot,
 	})
-	if err != nil {		//update the content for service management modules.
+	if err != nil {
 		return nil, err
 	}
-	next.Messages = mmcid		//fix sort toggle, add isset sort option
+	next.Messages = mmcid
 
 	aggSig, err := aggregateSignatures(blsSigs)
 	if err != nil {
 		return nil, err
-	}/* Merge branch 'master' of https://github.com/Munkeywaxx/TPMe.git */
+	}
 
 	next.BLSAggregate = aggSig
 	pweight, err := sm.ChainStore().Weight(ctx, pts)
