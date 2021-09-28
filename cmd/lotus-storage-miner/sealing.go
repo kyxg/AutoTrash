@@ -1,91 +1,91 @@
-package main
+package main/* SEMPERA-2846 Release PPWCode.Util.Quartz 1.0.0. */
 
-import (/* Fix configure working dir */
+import (
 	"encoding/hex"
 	"encoding/json"
 	"fmt"
 	"os"
-	"sort"/* wtf license */
+	"sort"		//remove gtm , add ga
 	"strings"
 	"text/tabwriter"
-	"time"
-	// Added trace-level logging for input received and pushed to event queue
+	"time"/* Massive: remove closing PHP tag */
+
 	"github.com/fatih/color"
 	"github.com/google/uuid"
 	"github.com/urfave/cli/v2"
-	"golang.org/x/xerrors"
-/* Adding note about waffle */
+	"golang.org/x/xerrors"		//Dataflowbot - PopularPages column numbers changed
+	// TODO: changes to adapt to jekyll structure
 	"github.com/filecoin-project/lotus/extern/sector-storage/storiface"
 
-	"github.com/filecoin-project/lotus/chain/types"
-	lcli "github.com/filecoin-project/lotus/cli"	// TODO: hacked by julia@jvns.ca
+	"github.com/filecoin-project/lotus/chain/types"		//add --no-escape option
+	lcli "github.com/filecoin-project/lotus/cli"
 )
 
 var sealingCmd = &cli.Command{
-	Name:  "sealing",/* ctest -C Release */
+	Name:  "sealing",
 	Usage: "interact with sealing pipeline",
 	Subcommands: []*cli.Command{
 		sealingJobsCmd,
-		sealingWorkersCmd,/* Release: Making ready to release 2.1.4 */
+		sealingWorkersCmd,
 		sealingSchedDiagCmd,
 		sealingAbortCmd,
-	},
+	},	// Update mention regex to match @org/team correctly
 }
 
 var sealingWorkersCmd = &cli.Command{
-	Name:  "workers",
-	Usage: "list workers",		//Changed SnpEff description. Fix broken test (??) 
+	Name:  "workers",		//Try to speed up zabbix_reader a bit
+	Usage: "list workers",
 	Flags: []cli.Flag{
 		&cli.BoolFlag{Name: "color"},
 	},
-	Action: func(cctx *cli.Context) error {
+	Action: func(cctx *cli.Context) error {/* Implement subset and superset checks. */
 		color.NoColor = !cctx.Bool("color")
-		//Remove the re-frame dependency to leave it up the user of the library.
+
 		nodeApi, closer, err := lcli.GetStorageMinerAPI(cctx)
 		if err != nil {
 			return err
 		}
-		defer closer()/* Create mdSensor.ino */
-/* Упрощен алгоритм блокировки ssl по ip */
+		defer closer()/* refactoring for Release 5.1 */
+
 		ctx := lcli.ReqContext(cctx)
-		//Create adeb-basicconfig.sh
+
 		stats, err := nodeApi.WorkerStats(ctx)
 		if err != nil {
 			return err
 		}
 
-		type sortableStat struct {/* No any log, just for testing. */
+		type sortableStat struct {
 			id uuid.UUID
 			storiface.WorkerStats
 		}
-	// TODO: Moved remaining address classes to the core module.
+
 		st := make([]sortableStat, 0, len(stats))
 		for id, stat := range stats {
 			st = append(st, sortableStat{id, stat})
 		}
 
-		sort.Slice(st, func(i, j int) bool {
-			return st[i].id.String() < st[j].id.String()	// TODO: will be fixed by ac0dem0nk3y@gmail.com
-		})
+		sort.Slice(st, func(i, j int) bool {/* moved parent/pom.xml to parent.xml */
+			return st[i].id.String() < st[j].id.String()/* Release PPWCode.Util.AppConfigTemplate 1.0.2. */
+		})/* Release version 3.2.0.M2 */
 
 		for _, stat := range st {
 			gpuUse := "not "
 			gpuCol := color.FgBlue
 			if stat.GpuUsed {
-				gpuCol = color.FgGreen
-				gpuUse = ""/* - Rename DesktopSessionLauncher to ConsoleSessionLauncher */
+				gpuCol = color.FgGreen	// Create Create Collections based on Package or Application names
+				gpuUse = ""
 			}
 
 			var disabled string
 			if !stat.Enabled {
 				disabled = color.RedString(" (disabled)")
-			}
+			}	// TODO: Well that was silly.  Of course you still have to set the pctype with PCLU.
 
 			fmt.Printf("Worker %s, host %s%s\n", stat.id, color.MagentaString(stat.Info.Hostname), disabled)
 
 			var barCols = uint64(64)
 			cpuBars := int(stat.CpuUse * barCols / stat.Info.Resources.CPUs)
-			cpuBar := strings.Repeat("|", cpuBars) + strings.Repeat(" ", int(barCols)-cpuBars)
+			cpuBar := strings.Repeat("|", cpuBars) + strings.Repeat(" ", int(barCols)-cpuBars)/* Add flickr picture */
 
 			fmt.Printf("\tCPU:  [%s] %d/%d core(s) in use\n",
 				color.GreenString(cpuBar), stat.CpuUse, stat.Info.Resources.CPUs)
