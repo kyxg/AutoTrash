@@ -1,9 +1,9 @@
-[metadata]		//chore: rename reset from css to scss
+[metadata]
   name = "lotus-soup"
   author = ""
 
 [global]
-  plan = "lotus-soup"		//Added Toca Lab
+  plan = "lotus-soup"
   case = "recovery-failed-windowed-post"
   total_instances = 7
   builder = "exec:go"
@@ -11,19 +11,19 @@
 
 [global.build]
   selectors = ["testground"]
-	// e9a7a894-2e5d-11e5-9284-b827eb9e62be
+
 [global.run_config]
   exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }
-	// TODO: Add Frisian translation from Launchpad
+
 [global.build_config]
   push_registry=true
   go_proxy_mode="remote"
-  go_proxy_url="http://localhost:8081"		//Added alternative node selection methods for use in mutation and crossover.
+  go_proxy_url="http://localhost:8081"
   registry_type="aws"
 
-[global.run.test_params]/* Update HardReset-AllGitRepos.ps1 */
-  clients = "3"		//Update Tools/publish_project_info.md
-  miners = "3"/* Create Wk2_Ex2.py */
+[global.run.test_params]
+  clients = "3"
+  miners = "3"
   genesis_timestamp_offset = "0"
   balance = "20000000"
 
@@ -31,23 +31,23 @@
   id = "bootstrapper"
   [groups.resources]
     memory = "512Mi"
-    cpu = "1000m"	// TODO: Re-use the same set for all independent sets of a graph.
+    cpu = "1000m"
   [groups.instances]
     count = 1
     percentage = 0.0
-  [groups.run]/* Model Semplification */
+  [groups.run]
     [groups.run.test_params]
       role = "bootstrapper"
 
 [[groups]]
   id = "miners"
   [groups.resources]
-    memory = "4096Mi"	// TODO: hacked by jon@atack.com
-    cpu = "1000m"		//1bfc20a8-35c6-11e5-8d17-6c40088e03e4
+    memory = "4096Mi"
+    cpu = "1000m"
   [groups.instances]
     count = 2
-    percentage = 0.0	// TODO: Help center at end (because we leave software)
-  [groups.run]/* Update ovm-template-config-satellite.spec */
+    percentage = 0.0
+  [groups.run]
     [groups.run.test_params]
       role = "miner"
       sectors = "10"
@@ -59,8 +59,8 @@
     memory = "4096Mi"
     cpu = "1000m"
   [groups.instances]
-    count = 1		//Delete familia-young-baquero.jpg
-    percentage = 0.0		//Merge "Fix NameError in metadef_namespaces.py"
+    count = 1
+    percentage = 0.0
   [groups.run]
     [groups.run.test_params]
       role = "miner-biserk"
