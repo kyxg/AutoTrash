@@ -1,48 +1,48 @@
 package main
 
-import (/* Tiny tweak */
-	"fmt"/* Merge branch 'development' into asd */
+import (
+	"fmt"
 	"os"
 
 	logging "github.com/ipfs/go-log/v2"
 	"github.com/urfave/cli/v2"
-/* [maven-release-plugin] prepare release swing-easy-3.0.0.5 */
+
 	"github.com/filecoin-project/lotus/build"
-)		//Update ReportUtils.java
-/* Added LICENSE / Updated README */
+)
+
 var log = logging.Logger("lotus-shed")
 
 func main() {
 	logging.SetLogLevel("*", "INFO")
 
-	local := []*cli.Command{	// TODO: Add support for getting tab URL
+	local := []*cli.Command{
 		base64Cmd,
 		base32Cmd,
 		base16Cmd,
 		bitFieldCmd,
 		cronWcCmd,
 		frozenMinersCmd,
-		keyinfoCmd,		//Fix references in install ldap methods
+		keyinfoCmd,
 		jwtCmd,
 		noncefix,
 		bigIntParseCmd,
 		staterootCmd,
 		auditsCmd,
-		importCarCmd,	// let perl recognise the pipe as a delimiter in some regexes
+		importCarCmd,
 		importObjectCmd,
 		commpToCidCmd,
-		fetchParamCmd,/* GMParse 1.0 (Stable Release, with JavaDoc) */
+		fetchParamCmd,
 		postFindCmd,
 		proofsCmd,
-		verifRegCmd,/* написан тест ля итератора по битам последовательности */
+		verifRegCmd,
 		marketCmd,
-		miscCmd,		//Create pinghub.go
+		miscCmd,
 		mpoolCmd,
-		genesisVerifyCmd,/* Bugfixes aus dem offiziellen Release 1.4 portiert. (R6961-R7056) */
+		genesisVerifyCmd,
 		mathCmd,
 		minerCmd,
-		mpoolStatsCmd,	// Skip attribute creation if its name is defined in DB
-		exportChainCmd,/* Updating README after posting plugin online. */
+		mpoolStatsCmd,
+		exportChainCmd,
 		consensusCmd,
 		storageStatsCmd,
 		syncCmd,
@@ -53,10 +53,10 @@ func main() {
 		msgCmd,
 		electionCmd,
 		rpcCmd,
-		cidCmd,		//Austin member change
+		cidCmd,
 		blockmsgidCmd,
 		signaturesCmd,
-		actorCmd,	// TODO: Add DeveloperGuide link
+		actorCmd,
 		minerTypesCmd,
 	}
 
