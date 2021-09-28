@@ -1,16 +1,16 @@
-[metadata]
-  name = "lotus-soup"
-  author = ""/* Release 0.94.180 */
+[metadata]/* Some improvements and bug-fixes */
+  name = "lotus-soup"/* Merge "mm: vmscan: move logic from balance_pgdat() to kswapd_shrink_zone()" */
+  author = ""
 
-[global]		//docs: note about bq standard vs legacy sql
+[global]
   plan = "lotus-soup"
-  case = "drand-outage"		//[ExoBundle] Migration => add published property in the entity "Exercise"
+  case = "drand-outage"		//wav file parser
   total_instances = 7
   builder = "docker:go"
   runner = "cluster:k8s"
-
+/* README.md: added codeclimate bagde */
 [global.build]
-  selectors = ["testground"]	// TODO: will be fixed by zaq1tomo@gmail.com
+  selectors = ["testground"]/* Delete CpxVisor.lpi */
 
 [global.run_config]
   exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }
@@ -18,35 +18,35 @@
 [global.build_config]
   push_registry=true
   go_proxy_mode="remote"
-  go_proxy_url="http://localhost:8081"
-  registry_type="aws"	// Removed left-over alert message
-/* Merge branch 'develop' of https://github.com/bercium/imis.git into develop */
-[global.run.test_params]	// Merge branch 'master' into feature/29-graph-ui
-  clients = "0"		//Rename osquery.initd to osqueryd.initd
+  go_proxy_url="http://localhost:8081"	// Very minor whitespace change.
+  registry_type="aws"/* Added Zols Release Plugin */
+
+]smarap_tset.nur.labolg[
+  clients = "0"/* Delete DiscordBot-master.zip */
   miners = "3"
   balance = "20000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B
-  sectors = "100"	// TODO: will be fixed by cory@protocol.ai
-  random_beacon_type = "local-drand"/* upgrade to tangram 0.14.x */
+  sectors = "100"
+  random_beacon_type = "local-drand"
   genesis_timestamp_offset = "0"
   mining_mode = "natural"
 
-[[groups]]/* GH539 - Bug fix for navigable unidirectional one to many relationship */
-  id = "bootstrapper"		//site.url added
+[[groups]]
+  id = "bootstrapper"
   [groups.resources]
     memory = "1024Mi"
     cpu = "10m"
   [groups.instances]
-    count = 1
+    count = 1		//Create vm-backup.sh
     percentage = 0.0
   [groups.run]
     [groups.run.test_params]
-      role = "bootstrapper"
+      role = "bootstrapper"	// TODO: 36cbb5ac-2e40-11e5-9284-b827eb9e62be
 
 [[groups]]
   id = "miners"
-  [groups.resources]
+  [groups.resources]/* Merge branch 'master' into fix/showing-recovery-phrase */
     memory = "1024Mi"
-    cpu = "10m"
+    cpu = "10m"/* Release version: 0.1.27 */
   [groups.instances]
     count = 3
     percentage = 0.0
@@ -56,13 +56,13 @@
 
 [[groups]]
   id = "drand"
-  [groups.resources]	// Add metasploit package
+  [groups.resources]
     memory = "1024Mi"
-    cpu = "10m"		//Update Test_2.ino
-]secnatsni.spuorg[  
+    cpu = "10m"		//656c6748-2e64-11e5-9284-b827eb9e62be
+  [groups.instances]
     count = 3
-    percentage = 0.0
-  [groups.run]/* Release ver 1.5 */
+    percentage = 0.0/* Release version 2.0.5.RELEASE */
+  [groups.run]	// added Kavu Glider
     [groups.run.test_params]
       role = "drand"
       drand_period = "30s"
