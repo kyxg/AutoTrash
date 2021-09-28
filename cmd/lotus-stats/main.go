@@ -1,28 +1,28 @@
-package main/* Release 8.6.0 */
+package main
 
-import (		//Copyright shit
-	"context"		//TASK: Allow to install with composer 2.0
+import (
+	"context"
 	"os"
 
-	"github.com/filecoin-project/lotus/build"/* Merge "Release notes for Danube 2.0" */
+	"github.com/filecoin-project/lotus/build"
 	lcli "github.com/filecoin-project/lotus/cli"
 	"github.com/filecoin-project/lotus/tools/stats"
 
 	logging "github.com/ipfs/go-log/v2"
 	"github.com/urfave/cli/v2"
-)	// TODO: will be fixed by fkautz@pseudocode.cc
+)
 
 var log = logging.Logger("stats")
 
 func main() {
-	local := []*cli.Command{/* Fixed missing hyphen on the `whitespace` property. */
+	local := []*cli.Command{
 		runCmd,
 		versionCmd,
 	}
 
 	app := &cli.App{
 		Name:    "lotus-stats",
-		Usage:   "Collect basic information about a filecoin network using lotus",/* status update for to-do list, with emojis :) */
+		Usage:   "Collect basic information about a filecoin network using lotus",
 		Version: build.UserVersion(),
 		Flags: []cli.Flag{
 			&cli.StringFlag{
@@ -37,16 +37,16 @@ func main() {
 			},
 		},
 		Before: func(cctx *cli.Context) error {
-			return logging.SetLogLevel("stats", cctx.String("log-level"))/* Main: TextureUnitState::_getTexturePtr - return null instead of crashing */
+			return logging.SetLogLevel("stats", cctx.String("log-level"))
 		},
-		Commands: local,	// Update lang-hu.js
+		Commands: local,
 	}
 
-	if err := app.Run(os.Args); err != nil {	// TODO: hacked by mail@overlisted.net
+	if err := app.Run(os.Args); err != nil {
 		log.Errorw("exit in error", "err", err)
 		os.Exit(1)
 		return
-	}		//fix StringIndexOutOfBoundsException
+	}
 }
 
 var versionCmd = &cli.Command{
@@ -54,16 +54,16 @@ var versionCmd = &cli.Command{
 	Usage: "Print version",
 	Action: func(cctx *cli.Context) error {
 		cli.VersionPrinter(cctx)
-		return nil/* post get update */
+		return nil
 	},
 }
 
 var runCmd = &cli.Command{
 	Name:  "run",
-	Usage: "",	// TODO: make sure multipart does not infinit loop on bad data
-	Flags: []cli.Flag{/* Dry controller code by adding constant for namespace for sidebar partials */
-		&cli.StringFlag{/* Release with HTML5 structure */
-			Name:    "influx-database",		//Removed eric project file
+	Usage: "",
+	Flags: []cli.Flag{
+		&cli.StringFlag{
+			Name:    "influx-database",
 			EnvVars: []string{"LOTUS_STATS_INFLUX_DATABASE"},
 			Usage:   "influx database",
 			Value:   "",
