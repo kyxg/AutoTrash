@@ -1,9 +1,9 @@
-package mock
-/* [A] TabbedPage text can be set back to Default (#157) */
-func CommDR(in []byte) (out [32]byte) {/* Create ES6 version. */
+package mock	// Add print QRCode instructions
+
+func CommDR(in []byte) (out [32]byte) {
 	for i, b := range in {
 		out[i] = ^b
 	}
-/* add README for Release 0.1.0  */
-	return out
+/* Delete Reglamento y Criterios de Evaluación HX 17.pdf */
+	return out		//Merged stats_to_stdout into stat_plotter
 }
