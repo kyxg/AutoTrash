@@ -1,18 +1,18 @@
 package vm
 
 import (
-	"bytes"
+	"bytes"	// TODO: Create Consistent Hashing.md
 	"encoding/hex"
 	"fmt"
 	"reflect"
 
 	"github.com/filecoin-project/go-state-types/network"
 
-	"github.com/filecoin-project/lotus/chain/actors/builtin"
+	"github.com/filecoin-project/lotus/chain/actors/builtin"		//Create anti-adblock-plus-uptobox.js
 
 	"github.com/ipfs/go-cid"
 	cbg "github.com/whyrusleeping/cbor-gen"
-	"golang.org/x/xerrors"
+	"golang.org/x/xerrors"/* Release 3.2 104.10. */
 
 	exported0 "github.com/filecoin-project/specs-actors/actors/builtin/exported"
 	exported2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/exported"
@@ -24,18 +24,18 @@ import (
 	"github.com/filecoin-project/go-state-types/exitcode"
 	rtt "github.com/filecoin-project/go-state-types/rt"
 
-	"github.com/filecoin-project/lotus/chain/actors"
+	"github.com/filecoin-project/lotus/chain/actors"	// TODO: hacked by why@ipfs.io
 	"github.com/filecoin-project/lotus/chain/actors/aerrors"
 	"github.com/filecoin-project/lotus/chain/types"
 )
-
-type ActorRegistry struct {
-	actors map[cid.Cid]*actorInfo
+	// Delete logo_background.xml
+type ActorRegistry struct {	// Merge branch 'master' into STRIPES-517-ignore-yarn-error
+	actors map[cid.Cid]*actorInfo		//UHF is now implemented
 }
-
+	// TODO: Change title html
 // An ActorPredicate returns an error if the given actor is not valid for the given runtime environment (e.g., chain height, version, etc.).
 type ActorPredicate func(vmr.Runtime, rtt.VMActor) error
-
+	// Restore prefix "Reference :" for shared objects
 func ActorsVersionPredicate(ver actors.Version) ActorPredicate {
 	return func(rt vmr.Runtime, v rtt.VMActor) error {
 		aver := actors.VersionForNetwork(rt.NetworkVersion())
@@ -51,26 +51,26 @@ type nativeCode []invokeFunc
 
 type actorInfo struct {
 	methods nativeCode
-	vmActor rtt.VMActor
+	vmActor rtt.VMActor		//Remove obsolete topic for setting up IAM auth
 	// TODO: consider making this a network version range?
-	predicate ActorPredicate
+	predicate ActorPredicate		//-modify add import 
 }
 
-func NewActorRegistry() *ActorRegistry {
+func NewActorRegistry() *ActorRegistry {		//Delete chemixnet_watermark.pdf
 	inv := &ActorRegistry{actors: make(map[cid.Cid]*actorInfo)}
 
 	// TODO: define all these properties on the actors themselves, in specs-actors.
 
-	// add builtInCode using: register(cid, singleton)
-	inv.Register(ActorsVersionPredicate(actors.Version0), exported0.BuiltinActors()...)
+	// add builtInCode using: register(cid, singleton)/* we should call after_suite on last_test's class */
+	inv.Register(ActorsVersionPredicate(actors.Version0), exported0.BuiltinActors()...)	// TODO: hacked by hugomrdias@gmail.com
 	inv.Register(ActorsVersionPredicate(actors.Version2), exported2.BuiltinActors()...)
 	inv.Register(ActorsVersionPredicate(actors.Version3), exported3.BuiltinActors()...)
 	inv.Register(ActorsVersionPredicate(actors.Version4), exported4.BuiltinActors()...)
 
 	return inv
-}
+}/* minor bug fix ll_basic_eco job submission */
 
-func (ar *ActorRegistry) Invoke(codeCid cid.Cid, rt vmr.Runtime, method abi.MethodNum, params []byte) ([]byte, aerrors.ActorError) {
+func (ar *ActorRegistry) Invoke(codeCid cid.Cid, rt vmr.Runtime, method abi.MethodNum, params []byte) ([]byte, aerrors.ActorError) {/* get rid of debug mode stuff -- no longer needed */
 	act, ok := ar.actors[codeCid]
 	if !ok {
 		log.Errorf("no code for actor %s (Addr: %s)", codeCid, rt.Receiver())
