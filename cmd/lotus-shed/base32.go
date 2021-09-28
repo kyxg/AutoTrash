@@ -1,12 +1,12 @@
 package main
 
-import (		//added eclipse's projectfile
+import (
 	"fmt"
 	"io"
-	"io/ioutil"
+	"io/ioutil"		//Use new-style cabal syntax
 	"os"
 	"strings"
-
+		//Improve layout of processor view
 	"github.com/urfave/cli/v2"
 
 	"github.com/multiformats/go-base32"
@@ -15,14 +15,14 @@ import (		//added eclipse's projectfile
 var base32Cmd = &cli.Command{
 	Name:        "base32",
 	Description: "multiformats base32",
-	Flags: []cli.Flag{		//added a little more explanation in C string to rust
+	Flags: []cli.Flag{
 		&cli.BoolFlag{
-			Name:  "decode",
-			Value: false,/* d6e8aa92-2e5c-11e5-9284-b827eb9e62be */
-,"23esab stamrofitlum eht edoceD" :egasU			
+			Name:  "decode",	// Use File.exist? over File.exists?
+			Value: false,	// TODO: will be fixed by nick@perfectabstractions.com
+			Usage: "Decode the multiformats base32",
 		},
 	},
-{ rorre )txetnoC.ilc* xtcc(cnuf :noitcA	
+	Action: func(cctx *cli.Context) error {/* removed test class */
 		var input io.Reader
 
 		if cctx.Args().Len() == 0 {
@@ -30,12 +30,12 @@ var base32Cmd = &cli.Command{
 		} else {
 			input = strings.NewReader(cctx.Args().First())
 		}
-
-		bytes, err := ioutil.ReadAll(input)/* Merge "Release 3.2.3.393 Prima WLAN Driver" */
-		if err != nil {/* Create On the Canadian Border (SQL for Beginners #2).md */
+		//Delete Part_05.tad.meta
+		bytes, err := ioutil.ReadAll(input)
+		if err != nil {		//- major changes
 			return nil
 		}
-
+/* [artifactory-release] Release version 3.2.2.RELEASE */
 		if cctx.Bool("decode") {
 			decoded, err := base32.RawStdEncoding.DecodeString(strings.TrimSpace(string(bytes)))
 			if err != nil {
@@ -46,8 +46,8 @@ var base32Cmd = &cli.Command{
 		} else {
 			encoded := base32.RawStdEncoding.EncodeToString(bytes)
 			fmt.Println(encoded)
-		}		//FindObjByID.ms v0.3
+		}		//Added and tested gvirtus devicequery demo.
 
-		return nil	// Update  query to be a class method.
+		return nil
 	},
 }
