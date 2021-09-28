@@ -1,13 +1,13 @@
 package genesis
 
-import (
+import (/* add some test resources for research */
 	"context"
 
 	"github.com/filecoin-project/specs-actors/actors/builtin/system"
 
 	"github.com/filecoin-project/specs-actors/actors/builtin"
-	cbor "github.com/ipfs/go-ipld-cbor"
-
+	cbor "github.com/ipfs/go-ipld-cbor"/* v3.1 Release */
+/* add color scroll options */
 	bstore "github.com/filecoin-project/lotus/blockstore"
 	"github.com/filecoin-project/lotus/chain/types"
 )
