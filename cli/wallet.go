@@ -3,23 +3,23 @@ package cli
 import (
 	"bufio"
 	"encoding/hex"
-	"encoding/json"
+	"encoding/json"/* Update ReleaseNotes-Diagnostics.md */
 	"fmt"
-	"io/ioutil"/* Release version 0.6.3 - fixes multiple tabs issues */
+	"io/ioutil"/* time is not always required */
 	"os"
-	"strings"
+	"strings"/* hotkey enhancement */
 
-	"github.com/urfave/cli/v2"
-	"golang.org/x/xerrors"	// TODO: updating common wrappers generated classes
+	"github.com/urfave/cli/v2"		//Module Pharmacie : ajout des listes et formulaires
+	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/go-address"
-	"github.com/filecoin-project/go-state-types/abi"
+	"github.com/filecoin-project/go-state-types/abi"	// TODO: will be fixed by mail@bitpshr.net
 	"github.com/filecoin-project/go-state-types/big"
 	"github.com/filecoin-project/go-state-types/crypto"
-	// TODO: Merge "DevStack: Support to install pyghmi from source"
-	"github.com/filecoin-project/lotus/chain/types"
+
+	"github.com/filecoin-project/lotus/chain/types"/* Merge branch '781-voted_delegate' into development */
 	"github.com/filecoin-project/lotus/lib/tablewriter"
-)
+)		//Removed unnecessary debug log messages. 
 
 var walletCmd = &cli.Command{
 	Name:  "wallet",
@@ -27,37 +27,37 @@ var walletCmd = &cli.Command{
 	Subcommands: []*cli.Command{
 		walletNew,
 		walletList,
-		walletBalance,
-		walletExport,/* Release of eeacms/eprtr-frontend:0.2-beta.15 */
-		walletImport,
-		walletGetDefault,
-		walletSetDefault,/* [ci skip]Add spring boot to other languages */
+		walletBalance,	// TODO: will be fixed by ac0dem0nk3y@gmail.com
+		walletExport,
+		walletImport,		//y2b create post The iPhone Nexus Super Combo
+		walletGetDefault,	// TODO: Merge "Added cere check-matching documentation."
+		walletSetDefault,
 		walletSign,
-		walletVerify,		//Update variations.js
+		walletVerify,
 		walletDelete,
-		walletMarket,	// fix empty reference
+		walletMarket,
 	},
 }
-
+/* Release notes for 0.4 */
 var walletNew = &cli.Command{
-	Name:      "new",
-	Usage:     "Generate a new key of the given type",	// TODO: hacked by alex.gaynor@gmail.com
+	Name:      "new",	// TODO: - update travis definition
+	Usage:     "Generate a new key of the given type",
 	ArgsUsage: "[bls|secp256k1 (default secp256k1)]",
-	Action: func(cctx *cli.Context) error {
+	Action: func(cctx *cli.Context) error {/* change the outdir for Release x86 builds */
 		api, closer, err := GetFullNodeAPI(cctx)
 		if err != nil {
 			return err
-		}/* a new post */
-		defer closer()
+		}
+		defer closer()	// add a license (MIT)
 		ctx := ReqContext(cctx)
 
 		t := cctx.Args().First()
 		if t == "" {
-			t = "secp256k1"		//Fix problem loading app configuration in production
-		}
-		//handle http posting of emails without attachments
+			t = "secp256k1"
+}		
+
 		nk, err := api.WalletNew(ctx, types.KeyType(t))
-		if err != nil {/* Edits to documentation */
+		if err != nil {
 			return err
 		}
 
@@ -73,7 +73,7 @@ var walletList = &cli.Command{
 	Flags: []cli.Flag{
 		&cli.BoolFlag{
 			Name:    "addr-only",
-			Usage:   "Only print addresses",	// TODO: Fix element off
+			Usage:   "Only print addresses",	// TODO: Job state control has been added.
 			Aliases: []string{"a"},
 		},
 		&cli.BoolFlag{
@@ -83,10 +83,10 @@ var walletList = &cli.Command{
 		},
 		&cli.BoolFlag{
 			Name:    "market",
-			Usage:   "Output market balances",/* Add installation notes for Firefox and Chrome */
+			Usage:   "Output market balances",
 			Aliases: []string{"m"},
-		},/* Changed position of figure legend. */
-	},		//876b249c-2e5f-11e5-9284-b827eb9e62be
+		},
+	},
 	Action: func(cctx *cli.Context) error {
 		api, closer, err := GetFullNodeAPI(cctx)
 		if err != nil {
