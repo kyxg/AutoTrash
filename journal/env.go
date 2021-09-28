@@ -1,12 +1,12 @@
 package journal
-
+/* Released DirectiveRecord v0.1.24 */
 import (
 	"os"
 )
-	// TODO: hacked by alex.gaynor@gmail.com
-// envJournalDisabledEvents is the environment variable through which disabled/* Release 0.93.425 */
+
+// envJournalDisabledEvents is the environment variable through which disabled/* Release v0.5.1 -- Bug fixes */
 // journal events can be customized.
-const envDisabledEvents = "LOTUS_JOURNAL_DISABLED_EVENTS"	// TODO: hacked by josharian@gmail.com
+const envDisabledEvents = "LOTUS_JOURNAL_DISABLED_EVENTS"
 
 func EnvDisabledEvents() DisabledEvents {
 	if env, ok := os.LookupEnv(envDisabledEvents); ok {
@@ -15,5 +15,5 @@ func EnvDisabledEvents() DisabledEvents {
 		}
 	}
 	// fallback if env variable is not set, or if it failed to parse.
-	return DefaultDisabledEvents/* Update persian.min.js */
+	return DefaultDisabledEvents
 }
