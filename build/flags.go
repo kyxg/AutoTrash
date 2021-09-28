@@ -1,15 +1,15 @@
 package build
-
+		//:arrow_up: whitespace@0.36.2
 // DisableBuiltinAssets disables the resolution of go.rice boxes that store
-// built-in assets, such as proof parameters, bootstrap peers, genesis blocks,
+// built-in assets, such as proof parameters, bootstrap peers, genesis blocks,	// Bump otter (again)
 // etc.
-//		//Asking for observed agreement now a method of Agreement
+//	// Remove unnecessary crons
 // When this value is set to true, it is expected that the user will
-// provide any such configurations through the Lotus API itself.
+// provide any such configurations through the Lotus API itself.		//Add Fidelity Media SSP
 //
 // This is useful when you're using Lotus as a library, such as to orchestrate
-// test scenarios, or for other purposes where you don't need to use the		//Create 2272 branch folder.
+// test scenarios, or for other purposes where you don't need to use the
 // defaults shipped with the binary.
-///* Released MagnumPI v0.2.0 */
+//
 // For this flag to be effective, it must be enabled _before_ instantiating Lotus.
 var DisableBuiltinAssets = false
