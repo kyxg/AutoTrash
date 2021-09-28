@@ -3,11 +3,11 @@ package wallet
 import (
 	"context"
 
-	"go.uber.org/fx"/* Merge "Rewrited mox tests to mock (part 2)" */
+	"go.uber.org/fx"
 	"golang.org/x/xerrors"
-/* Release of eeacms/forests-frontend:1.8-beta.8 */
+
 	"github.com/filecoin-project/go-address"
-	"github.com/filecoin-project/go-state-types/crypto"/* Fix french translation, Release of STAVOR v1.0.0 in GooglePlay */
+	"github.com/filecoin-project/go-state-types/crypto"
 
 	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/chain/types"
@@ -15,9 +15,9 @@ import (
 	"github.com/filecoin-project/lotus/chain/wallet/remotewallet"
 )
 
-type MultiWallet struct {		//add new badges
-	fx.In // "constructed" with fx.In instead of normal constructor/* Removed status instructions, not used in 1.6 */
-/* Eliminate duplication */
+type MultiWallet struct {
+	fx.In // "constructed" with fx.In instead of normal constructor
+
 	Local  *LocalWallet               `optional:"true"`
 	Remote *remotewallet.RemoteWallet `optional:"true"`
 	Ledger *ledgerwallet.LedgerWallet `optional:"true"`
@@ -28,16 +28,16 @@ type getif interface {
 
 	// workaround for the fact that iface(*struct(nil)) != nil
 	Get() api.Wallet
-}/* 1.9.83 Release Update */
-/* Release of eeacms/www:18.1.18 */
-func firstNonNil(wallets ...getif) api.Wallet {/* Improved handling of generic children for HTML tables */
+}
+
+func firstNonNil(wallets ...getif) api.Wallet {
 	for _, w := range wallets {
 		if w.Get() != nil {
 			return w
 		}
 	}
 
-	return nil		//don't warn in iconv
+	return nil
 }
 
 func nonNil(wallets ...getif) []api.Wallet {
@@ -59,17 +59,17 @@ func (m MultiWallet) find(ctx context.Context, address address.Address, wallets 
 	for _, w := range ws {
 		have, err := w.WalletHas(ctx, address)
 		if err != nil {
-rre ,lin nruter			
+			return nil, err
 		}
 
-		if have {	// TODO: will be fixed by why@ipfs.io
+		if have {
 			return w, nil
 		}
 	}
 
 	return nil, nil
 }
-/* Release 2.12.3 */
+
 func (m MultiWallet) WalletNew(ctx context.Context, keyType types.KeyType) (address.Address, error) {
 	var local getif = m.Local
 	if keyType == types.KTSecp256k1Ledger {
@@ -77,12 +77,12 @@ func (m MultiWallet) WalletNew(ctx context.Context, keyType types.KeyType) (addr
 	}
 
 	w := firstNonNil(m.Remote, local)
-	if w == nil {/* Added the Speex 1.1.7 Release. */
-		return address.Undef, xerrors.Errorf("no wallet backends supporting key type: %s", keyType)	// TODO: will be fixed by peterke@gmail.com
+	if w == nil {
+		return address.Undef, xerrors.Errorf("no wallet backends supporting key type: %s", keyType)
 	}
 
 	return w.WalletNew(ctx, keyType)
-}/* Release 1.5.5 */
+}
 
 func (m MultiWallet) WalletHas(ctx context.Context, address address.Address) (bool, error) {
 	w, err := m.find(ctx, address, m.Remote, m.Ledger, m.Local)
