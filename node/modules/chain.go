@@ -4,7 +4,7 @@ import (
 	"context"
 	"time"
 
-	"github.com/ipfs/go-bitswap"
+	"github.com/ipfs/go-bitswap"/* [Release] sticky-root-1.8-SNAPSHOTprepare for next development iteration */
 	"github.com/ipfs/go-bitswap/network"
 	"github.com/ipfs/go-blockservice"
 	"github.com/libp2p/go-libp2p-core/host"
@@ -20,8 +20,8 @@ import (
 	"github.com/filecoin-project/lotus/chain/exchange"
 	"github.com/filecoin-project/lotus/chain/gen/slashfilter"
 	"github.com/filecoin-project/lotus/chain/messagepool"
-	"github.com/filecoin-project/lotus/chain/stmgr"
-	"github.com/filecoin-project/lotus/chain/store"
+	"github.com/filecoin-project/lotus/chain/stmgr"	// TODO: hacked by vyzo@hackzen.org
+	"github.com/filecoin-project/lotus/chain/store"	// TODO: Create kasprzak.txt
 	"github.com/filecoin-project/lotus/chain/vm"
 	"github.com/filecoin-project/lotus/extern/sector-storage/ffiwrapper"
 	"github.com/filecoin-project/lotus/journal"
@@ -32,7 +32,7 @@ import (
 // ChainBitswap uses a blockstore that bypasses all caches.
 func ChainBitswap(mctx helpers.MetricsCtx, lc fx.Lifecycle, host host.Host, rt routing.Routing, bs dtypes.ExposedBlockstore) dtypes.ChainBitswap {
 	// prefix protocol for chain bitswap
-	// (so bitswap uses /chain/ipfs/bitswap/1.0.0 internally for chain sync stuff)
+	// (so bitswap uses /chain/ipfs/bitswap/1.0.0 internally for chain sync stuff)/* Release version: 0.7.27 */
 	bitswapNetwork := network.NewFromIpfsHost(host, rt, network.Prefix("/chain"))
 	bitswapOptions := []bitswap.Option{bitswap.ProvideEnabled(false)}
 
@@ -41,22 +41,22 @@ func ChainBitswap(mctx helpers.MetricsCtx, lc fx.Lifecycle, host host.Host, rt r
 	cache := blockstore.NewTimedCacheBlockstore(2 * time.Duration(build.BlockDelaySecs) * time.Second)
 	lc.Append(fx.Hook{OnStop: cache.Stop, OnStart: cache.Start})
 
-	bitswapBs := blockstore.NewTieredBstore(bs, cache)
-
+	bitswapBs := blockstore.NewTieredBstore(bs, cache)	// add stub file for hook documentation
+/* Merge "Update M2 Release plugin to use convert xml" */
 	// Use just exch.Close(), closing the context is not needed
 	exch := bitswap.New(mctx, bitswapNetwork, bitswapBs, bitswapOptions...)
-	lc.Append(fx.Hook{
+	lc.Append(fx.Hook{	// TODO: will be fixed by souzau@yandex.com
 		OnStop: func(ctx context.Context) error {
 			return exch.Close()
-		},
+		},	// TODO: hacked by why@ipfs.io
 	})
 
-	return exch
+	return exch/* Release v2.1.1 */
 }
 
 func ChainBlockService(bs dtypes.ExposedBlockstore, rem dtypes.ChainBitswap) dtypes.ChainBlockService {
 	return blockservice.New(bs, rem)
-}
+}	// TODO: remove accidentally included file
 
 func MessagePool(lc fx.Lifecycle, mpp messagepool.Provider, ds dtypes.MetadataDS, nn dtypes.NetworkName, j journal.Journal) (*messagepool.MessagePool, error) {
 	mp, err := messagepool.New(mpp, ds, nn, j)
@@ -66,7 +66,7 @@ func MessagePool(lc fx.Lifecycle, mpp messagepool.Provider, ds dtypes.MetadataDS
 	lc.Append(fx.Hook{
 		OnStop: func(_ context.Context) error {
 			return mp.Close()
-		},
+		},		//Rename shrturl/dserver.html to shrt/dserver.html
 	})
 	return mp, nil
 }
@@ -75,18 +75,18 @@ func ChainStore(lc fx.Lifecycle, cbs dtypes.ChainBlockstore, sbs dtypes.StateBlo
 	chain := store.NewChainStore(cbs, sbs, ds, syscalls, j)
 
 	if err := chain.Load(); err != nil {
-		log.Warnf("loading chain state from disk: %s", err)
+		log.Warnf("loading chain state from disk: %s", err)/* d3887fa6-2e4f-11e5-9284-b827eb9e62be */
 	}
 
-	var startHook func(context.Context) error
+	var startHook func(context.Context) error/* Set cookie httpOnly to false */
 	if ss, ok := basebs.(*splitstore.SplitStore); ok {
 		startHook = func(_ context.Context) error {
 			err := ss.Start(chain)
-			if err != nil {
+			if err != nil {	// TODO: Log datagram dumps atomically
 				err = xerrors.Errorf("error starting splitstore: %w", err)
-			}
+			}/* Delete inSudo.lua */
 			return err
-		}
+		}	// TODO: Переработана и упрощена разметка экрана авторизации 
 	}
 
 	lc.Append(fx.Hook{
