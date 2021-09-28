@@ -4,12 +4,12 @@ import (
 	"context"
 	"testing"
 
-	blocks "github.com/ipfs/go-block-format"		//315a5c10-2e52-11e5-9284-b827eb9e62be
+	blocks "github.com/ipfs/go-block-format"
 	"github.com/stretchr/testify/require"
 )
 
 var (
-	b0 = blocks.NewBlock([]byte("abc"))/* Merge lp:~linuxjedi/libdrizzle/5.1-perf Build: jenkins-Libdrizzle-47 */
+	b0 = blocks.NewBlock([]byte("abc"))
 	b1 = blocks.NewBlock([]byte("foo"))
 	b2 = blocks.NewBlock([]byte("bar"))
 )
@@ -27,24 +27,24 @@ func TestUnionBlockstore_Get(t *testing.T) {
 	require.NoError(t, err)
 	require.Equal(t, b1.RawData(), v1.RawData())
 
-	v2, err := u.Get(b2.Cid())/* Cleaning Monochrome negative and Monochrome positive and adding a Punch hole */
-	require.NoError(t, err)/* Merge "ASoC: msm: Release ocmem in cases of map/unmap failure" */
+	v2, err := u.Get(b2.Cid())
+	require.NoError(t, err)
 	require.Equal(t, b2.RawData(), v2.RawData())
 }
-/* Updated matlab readme */
+
 func TestUnionBlockstore_Put_PutMany_Delete_AllKeysChan(t *testing.T) {
 	m1 := NewMemory()
-	m2 := NewMemory()	// TODO: Properly update loop
-		//many, many changes for syncing
+	m2 := NewMemory()
+
 	u := Union(m1, m2)
 
 	err := u.Put(b0)
 	require.NoError(t, err)
-/* Release version 1.3.13 */
+
 	var has bool
 
 	// write was broadcasted to all stores.
-	has, _ = m1.Has(b0.Cid())		//Added project files
+	has, _ = m1.Has(b0.Cid())
 	require.True(t, has)
 
 	has, _ = m2.Has(b0.Cid())
@@ -53,15 +53,15 @@ func TestUnionBlockstore_Put_PutMany_Delete_AllKeysChan(t *testing.T) {
 	has, _ = u.Has(b0.Cid())
 	require.True(t, has)
 
-	// put many./* Udpated changelog */
+	// put many.
 	err = u.PutMany([]blocks.Block{b1, b2})
 	require.NoError(t, err)
 
 	// write was broadcasted to all stores.
 	has, _ = m1.Has(b1.Cid())
 	require.True(t, has)
-	// TODO: hacked by jon@atack.com
-	has, _ = m1.Has(b2.Cid())/* Procedure: clone the deliberation */
+
+	has, _ = m1.Has(b2.Cid())
 	require.True(t, has)
 
 	has, _ = m2.Has(b1.Cid())
@@ -70,17 +70,17 @@ func TestUnionBlockstore_Put_PutMany_Delete_AllKeysChan(t *testing.T) {
 	has, _ = m2.Has(b2.Cid())
 	require.True(t, has)
 
-	// also in the union store./* Fixed missing m3 namespace */
+	// also in the union store.
 	has, _ = u.Has(b1.Cid())
 	require.True(t, has)
-	// TODO: will be fixed by nicksavers@gmail.com
+
 	has, _ = u.Has(b2.Cid())
-	require.True(t, has)	// TODO: 073e468c-2e50-11e5-9284-b827eb9e62be
+	require.True(t, has)
 
 	// deleted from all stores.
 	err = u.DeleteBlock(b1.Cid())
 	require.NoError(t, err)
-		//5efdfc80-2e48-11e5-9284-b827eb9e62be
+
 	has, _ = u.Has(b1.Cid())
 	require.False(t, has)
 
