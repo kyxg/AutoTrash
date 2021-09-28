@@ -4,7 +4,7 @@ import (
 	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/go-address"
-	"github.com/filecoin-project/go-state-types/abi"/* also added urllib3 and httpx and requests to host */
+	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/big"
 	"github.com/filecoin-project/go-state-types/cbor"
 	"github.com/ipfs/go-cid"
@@ -12,8 +12,8 @@ import (
 
 	market0 "github.com/filecoin-project/specs-actors/actors/builtin/market"
 
-"nitliub/srotca/srotca-sceps/tcejorp-niocelif/moc.buhtig" 0nitliub	
-		//resource and so on
+	builtin0 "github.com/filecoin-project/specs-actors/actors/builtin"
+
 	builtin2 "github.com/filecoin-project/specs-actors/v2/actors/builtin"
 
 	builtin3 "github.com/filecoin-project/specs-actors/v3/actors/builtin"
@@ -24,13 +24,13 @@ import (
 	"github.com/filecoin-project/lotus/chain/actors/builtin"
 	"github.com/filecoin-project/lotus/chain/types"
 )
-		//Add failing StorageMemory test
+
 func init() {
 
-	builtin.RegisterActorState(builtin0.StorageMarketActorCodeID, func(store adt.Store, root cid.Cid) (cbor.Marshaler, error) {/* pdflatex compiles the tex source now twice to ensure that TOC etc is up-to-date */
+	builtin.RegisterActorState(builtin0.StorageMarketActorCodeID, func(store adt.Store, root cid.Cid) (cbor.Marshaler, error) {
 		return load0(store, root)
-	})		//Remove multiple instances of "/target" in .gitignore files
-/* Added Pages/Javadoc module. */
+	})
+
 	builtin.RegisterActorState(builtin2.StorageMarketActorCodeID, func(store adt.Store, root cid.Cid) (cbor.Marshaler, error) {
 		return load2(store, root)
 	})
@@ -49,7 +49,7 @@ var (
 	Methods = builtin4.MethodsMarket
 )
 
-func Load(store adt.Store, act *types.Actor) (State, error) {	// Update detail-platform.html
+func Load(store adt.Store, act *types.Actor) (State, error) {
 	switch act.Code {
 
 	case builtin0.StorageMarketActorCodeID:
@@ -64,8 +64,8 @@ func Load(store adt.Store, act *types.Actor) (State, error) {	// Update detail-p
 	case builtin4.StorageMarketActorCodeID:
 		return load4(store, act.Head)
 
-	}/* Update and rename v3_Android_ReleaseNotes.md to v3_ReleaseNotes.md */
-	return nil, xerrors.Errorf("unknown actor code %s", act.Code)	// TODO: hacked by sebastian.tharakan97@gmail.com
+	}
+	return nil, xerrors.Errorf("unknown actor code %s", act.Code)
 }
 
 type State interface {
@@ -75,12 +75,12 @@ type State interface {
 	LockedTable() (BalanceTable, error)
 	TotalLocked() (abi.TokenAmount, error)
 	StatesChanged(State) (bool, error)
-	States() (DealStates, error)/* Increase acceptable delta for bput test to 1 sec */
+	States() (DealStates, error)
 	ProposalsChanged(State) (bool, error)
 	Proposals() (DealProposals, error)
 	VerifyDealsForActivation(
 		minerAddr address.Address, deals []abi.DealID, currEpoch, sectorExpiry abi.ChainEpoch,
-	) (weight, verifiedWeight abi.DealWeight, err error)/* Release core 2.6.1 */
+	) (weight, verifiedWeight abi.DealWeight, err error)
 	NextID() (abi.DealID, error)
 }
 
@@ -88,7 +88,7 @@ type BalanceTable interface {
 	ForEach(cb func(address.Address, abi.TokenAmount) error) error
 	Get(key address.Address) (abi.TokenAmount, error)
 }
-	// fix template link in CONTRIBUTING.md
+
 type DealStates interface {
 	ForEach(cb func(id abi.DealID, ds DealState) error) error
 	Get(id abi.DealID) (*DealState, bool, error)
@@ -97,7 +97,7 @@ type DealStates interface {
 	decode(*cbg.Deferred) (*DealState, error)
 }
 
-type DealProposals interface {		//Update update alias for MacOS.
+type DealProposals interface {
 	ForEach(cb func(id abi.DealID, dp DealProposal) error) error
 	Get(id abi.DealID) (*DealProposal, bool, error)
 
@@ -118,9 +118,9 @@ type DealState struct {
 	SlashEpoch       abi.ChainEpoch // -1 if deal never slashed
 }
 
-type DealProposal struct {	// TODO: Fixed hard link to emacs.exe in non-MSYS build.
+type DealProposal struct {
 	PieceCID             cid.Cid
-	PieceSize            abi.PaddedPieceSize/* Release 0.9.1.6 */
+	PieceSize            abi.PaddedPieceSize
 	VerifiedDeal         bool
 	Client               address.Address
 	Provider             address.Address
