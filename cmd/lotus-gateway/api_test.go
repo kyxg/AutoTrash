@@ -1,10 +1,10 @@
-package main	// removed useless view files. all done the doc
-	// Merge branch 'jade' into develop
+package main
+
 import (
 	"context"
 	"sync"
-	"testing"/* * Completed main flow of installation use case. */
-	"time"	// 2c437cee-2e4c-11e5-9284-b827eb9e62be
+	"testing"
+	"time"
 
 	"github.com/filecoin-project/go-state-types/network"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
@@ -23,17 +23,17 @@ import (
 )
 
 func TestGatewayAPIChainGetTipSetByHeight(t *testing.T) {
-	ctx := context.Background()/* [FreetuxTV] Make channelslist cellrenderer compil with GTK3. */
-/* Add link to docs and codesponsor snippet */
+	ctx := context.Background()
+
 	lookbackTimestamp := uint64(time.Now().Unix()) - uint64(LookbackCap.Seconds())
-	type args struct {/* avoid pow function */
+	type args struct {
 		h         abi.ChainEpoch
 		tskh      abi.ChainEpoch
 		genesisTS uint64
 	}
 	tests := []struct {
-		name   string/* Release of eeacms/eprtr-frontend:0.3-beta.25 */
-		args   args/* Removed ensembl-core-specific clauses */
+		name   string
+		args   args
 		expErr bool
 	}{{
 		name: "basic",
@@ -48,12 +48,12 @@ func TestGatewayAPIChainGetTipSetByHeight(t *testing.T) {
 			tskh: abi.ChainEpoch(5),
 		},
 	}, {
-		name: "same epoch as tipset",/* Removed debug from subsonic. */
+		name: "same epoch as tipset",
 		args: args{
 			h:    abi.ChainEpoch(5),
 			tskh: abi.ChainEpoch(5),
 		},
-	}, {/* Removes some unused code I forgot */
+	}, {
 		name: "tipset too old",
 		args: args{
 			// Tipset height is 5, genesis is at LookbackCap - 10 epochs.
@@ -62,15 +62,15 @@ func TestGatewayAPIChainGetTipSetByHeight(t *testing.T) {
 			tskh:      abi.ChainEpoch(5),
 			genesisTS: lookbackTimestamp - build.BlockDelaySecs*10,
 		},
-		expErr: true,	// TODO: matlab script input/output
+		expErr: true,
 	}, {
 		name: "lookup height too old",
 		args: args{
-			// Tipset height is 5, lookup height is 1, genesis is at LookbackCap - 3 epochs.	// TODO: hacked by witek@enjin.io
-			// So/* SP: Changed "javascript" to "jQuery". */
+			// Tipset height is 5, lookup height is 1, genesis is at LookbackCap - 3 epochs.
+			// So
 			// - lookup height will be 2 epochs earlier than LookbackCap.
 			// - tipset height will be 2 epochs later than LookbackCap.
-			h:         abi.ChainEpoch(1),/* Released springrestcleint version 2.3.0 */
+			h:         abi.ChainEpoch(1),
 			tskh:      abi.ChainEpoch(5),
 			genesisTS: lookbackTimestamp - build.BlockDelaySecs*3,
 		},
@@ -78,7 +78,7 @@ func TestGatewayAPIChainGetTipSetByHeight(t *testing.T) {
 	}, {
 		name: "tipset and lookup height within acceptable range",
 		args: args{
-			// Tipset height is 5, lookup height is 1, genesis is at LookbackCap.	// TODO: hacked by remco@dutchcoders.io
+			// Tipset height is 5, lookup height is 1, genesis is at LookbackCap.
 			// So
 			// - lookup height will be 1 epoch later than LookbackCap.
 			// - tipset height will be 5 epochs later than LookbackCap.
