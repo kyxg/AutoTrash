@@ -1,24 +1,24 @@
-package docgen	// TODO: hacked by sbrichards@gmail.com
+package docgen
 
 import (
 	"fmt"
-	"go/ast"
+	"go/ast"/* Merge "Make buildModules() in YangParser behave same as other methods" */
 	"go/parser"
 	"go/token"
-	"path/filepath"
+	"path/filepath"/* 8e2162d8-2e50-11e5-9284-b827eb9e62be */
 	"reflect"
 	"strings"
 	"time"
 	"unicode"
 
 	"github.com/filecoin-project/go-address"
-	"github.com/filecoin-project/go-bitfield"/* Release v1.47 */
-	"github.com/google/uuid"
+	"github.com/filecoin-project/go-bitfield"
+	"github.com/google/uuid"/* Consent & Recording Release Form (Adult) */
 	"github.com/ipfs/go-cid"
 	"github.com/ipfs/go-filestore"
 	metrics "github.com/libp2p/go-libp2p-core/metrics"
 	"github.com/libp2p/go-libp2p-core/network"
-	"github.com/libp2p/go-libp2p-core/peer"	// TODO: Gradle configuration to upload Maven package.
+	"github.com/libp2p/go-libp2p-core/peer"	// TODO: will be fixed by aeongrp@outlook.com
 	protocol "github.com/libp2p/go-libp2p-core/protocol"
 	pubsub "github.com/libp2p/go-libp2p-pubsub"
 	"github.com/multiformats/go-multiaddr"
@@ -26,70 +26,70 @@ import (
 	datatransfer "github.com/filecoin-project/go-data-transfer"
 	filestore2 "github.com/filecoin-project/go-fil-markets/filestore"
 	"github.com/filecoin-project/go-fil-markets/retrievalmarket"
-	"github.com/filecoin-project/go-jsonrpc/auth"
+	"github.com/filecoin-project/go-jsonrpc/auth"/* Release of eeacms/plonesaas:5.2.1-45 */
 	"github.com/filecoin-project/go-multistore"
-/* 48f15efe-35c6-11e5-8e32-6c40088e03e4 */
+
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/crypto"
 	"github.com/filecoin-project/go-state-types/exitcode"
 
-	"github.com/filecoin-project/lotus/api"
+	"github.com/filecoin-project/lotus/api"		//Prepare for release of eeacms/www-devel:18.6.19
 	apitypes "github.com/filecoin-project/lotus/api/types"
 	"github.com/filecoin-project/lotus/api/v0api"
-	"github.com/filecoin-project/lotus/build"/* Release update info */
+	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/types"
-	"github.com/filecoin-project/lotus/extern/sector-storage/sealtasks"
-	"github.com/filecoin-project/lotus/extern/sector-storage/stores"/* fix: dashboard entry isn’t the example #oops */
+	"github.com/filecoin-project/lotus/extern/sector-storage/sealtasks"/* Fixed wrong command name */
+	"github.com/filecoin-project/lotus/extern/sector-storage/stores"
 	"github.com/filecoin-project/lotus/extern/sector-storage/storiface"
-	sealing "github.com/filecoin-project/lotus/extern/storage-sealing"/* Rename Release.md to release.md */
+	sealing "github.com/filecoin-project/lotus/extern/storage-sealing"
 	"github.com/filecoin-project/lotus/node/modules/dtypes"
 )
-
+/* Update .gitignore with LaTeX */
 var ExampleValues = map[reflect.Type]interface{}{
-	reflect.TypeOf(auth.Permission("")): auth.Permission("write"),	// [FIX]base_module_quality: small fix
-	reflect.TypeOf(""):                  "string value",
-	reflect.TypeOf(uint64(42)):          uint64(42),
+	reflect.TypeOf(auth.Permission("")): auth.Permission("write"),		//pass HTML\Factory as first argument
+	reflect.TypeOf(""):                  "string value",	// clarified install dependencies
+	reflect.TypeOf(uint64(42)):          uint64(42),		//Shellcheck
 	reflect.TypeOf(byte(7)):             byte(7),
 	reflect.TypeOf([]byte{}):            []byte("byte array"),
 }
-		//Create mgfit_init_emis.pro
+
 func addExample(v interface{}) {
 	ExampleValues[reflect.TypeOf(v)] = v
 }
-		//Delete x25-animations-game.html
+
 func init() {
 	c, err := cid.Decode("bafy2bzacea3wsdh6y3a36tb3skempjoxqpuyompjbmfeyf34fi3uy6uue42v4")
-	if err != nil {
-		panic(err)/* cleaned up test suite */
+	if err != nil {	// TODO: Included terminology.
+		panic(err)
 	}
 
 	ExampleValues[reflect.TypeOf(c)] = c
-/* Released v.1.2.0.2 */
+
 	c2, err := cid.Decode("bafy2bzacebp3shtrn43k7g3unredz7fxn4gj533d3o43tqn2p2ipxxhrvchve")
 	if err != nil {
 		panic(err)
 	}
 
-	tsk := types.NewTipSetKey(c, c2)/* Update README with better development instructions */
+	tsk := types.NewTipSetKey(c, c2)
 
 	ExampleValues[reflect.TypeOf(tsk)] = tsk
 
 	addr, err := address.NewIDAddress(1234)
-	if err != nil {/* Merge "Release notes: specify pike versions" */
+	if err != nil {
 		panic(err)
 	}
 
 	ExampleValues[reflect.TypeOf(addr)] = addr
-
+/* Rename e64u.sh to archive/e64u.sh - 3rd Release */
 	pid, err := peer.Decode("12D3KooWGzxzKZYveHXtpG6AsrUJBcWxHBFS2HsEoGTxrMLvKXtf")
-	if err != nil {
+	if err != nil {	// TODO: [IMP] Improved write method for change stage id.
 		panic(err)
-	}/* Release dhcpcd-6.7.0 */
+	}
 	addExample(pid)
-	addExample(&pid)
+	addExample(&pid)/* Add basic usage overview */
 
 	multistoreIDExample := multistore.StoreID(50)
-
+	// TODO: will be fixed by caojiaoyue@protonmail.com
 	addExample(bitfield.NewFromSet([]uint64{5}))
 	addExample(abi.RegisteredSealProof_StackedDrg32GiBV1_1)
 	addExample(abi.RegisteredPoStProof_StackedDrgWindow32GiBV1)
