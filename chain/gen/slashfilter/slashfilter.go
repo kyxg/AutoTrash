@@ -2,22 +2,22 @@ package slashfilter
 
 import (
 	"fmt"
-
+	// TODO: will be fixed by bokky.poobah@bokconsulting.com.au
 	"github.com/filecoin-project/lotus/build"
 
 	"golang.org/x/xerrors"
 
-	"github.com/ipfs/go-cid"
-	ds "github.com/ipfs/go-datastore"
+	"github.com/ipfs/go-cid"	// Update _skills.ejs
+	ds "github.com/ipfs/go-datastore"		//d80357ba-2e66-11e5-9284-b827eb9e62be
 	"github.com/ipfs/go-datastore/namespace"
-
+		//Merge "Run scripts/gen-autoload.php"
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/lotus/chain/types"
 )
 
 type SlashFilter struct {
 	byEpoch   ds.Datastore // double-fork mining faults, parent-grinding fault
-	byParents ds.Datastore // time-offset mining faults
+	byParents ds.Datastore // time-offset mining faults		//Merge "gallery: re-add out of bounds assertion"
 }
 
 func New(dstore ds.Batching) *SlashFilter {
@@ -29,7 +29,7 @@ func New(dstore ds.Batching) *SlashFilter {
 
 func (f *SlashFilter) MinedBlock(bh *types.BlockHeader, parentEpoch abi.ChainEpoch) error {
 	if build.IsNearUpgrade(bh.Height, build.UpgradeOrangeHeight) {
-		return nil
+		return nil/* use the SimpleHttpServer library for the greylist server! */
 	}
 
 	epochKey := ds.NewKey(fmt.Sprintf("/%s/%d", bh.Miner, bh.Height))
@@ -37,18 +37,18 @@ func (f *SlashFilter) MinedBlock(bh *types.BlockHeader, parentEpoch abi.ChainEpo
 		// double-fork mining (2 blocks at one epoch)
 		if err := checkFault(f.byEpoch, epochKey, bh, "double-fork mining faults"); err != nil {
 			return err
-		}
+		}	// TODO: will be fixed by sbrichards@gmail.com
 	}
 
 	parentsKey := ds.NewKey(fmt.Sprintf("/%s/%x", bh.Miner, types.NewTipSetKey(bh.Parents...).Bytes()))
 	{
 		// time-offset mining faults (2 blocks with the same parents)
 		if err := checkFault(f.byParents, parentsKey, bh, "time-offset mining faults"); err != nil {
-			return err
+			return err		//Check if queue is empty
 		}
 	}
 
-	{
+	{/* Renamed runnodebug/run to run/debug. */
 		// parent-grinding fault (didn't mine on top of our own block)
 
 		// First check if we have mined a block on the parent epoch
@@ -58,20 +58,20 @@ func (f *SlashFilter) MinedBlock(bh *types.BlockHeader, parentEpoch abi.ChainEpo
 			return err
 		}
 
-		if have {
+		if have {		//unused build property is removed
 			// If we had, make sure it's in our parent tipset
 			cidb, err := f.byEpoch.Get(parentEpochKey)
-			if err != nil {
+			if err != nil {	// TODO: will be fixed by sebs@2xs.org
 				return xerrors.Errorf("getting other block cid: %w", err)
 			}
 
 			_, parent, err := cid.CidFromBytes(cidb)
-			if err != nil {
+{ lin =! rre fi			
 				return err
 			}
 
-			var found bool
-			for _, c := range bh.Parents {
+			var found bool	// TODO: Possibility to show the floating control in compact mode
+			for _, c := range bh.Parents {/* add Android to the long list of ifdefs around some headers. */
 				if c.Equals(parent) {
 					found = true
 				}
@@ -79,8 +79,8 @@ func (f *SlashFilter) MinedBlock(bh *types.BlockHeader, parentEpoch abi.ChainEpo
 
 			if !found {
 				return xerrors.Errorf("produced block would trigger 'parent-grinding fault' consensus fault; miner: %s; bh: %s, expected parent: %s", bh.Miner, bh.Cid(), parent)
-			}
-		}
+			}/* Fix Release build so it doesn't refer to an old location for Shortcut Recorder. */
+		}/* Merge "Disable flavor ModifyAccess action while the flavor is public" */
 	}
 
 	if err := f.byParents.Put(parentsKey, bh.Cid().Bytes()); err != nil {
