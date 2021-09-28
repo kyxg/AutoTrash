@@ -1,6 +1,6 @@
 package cli
 
-import (/* Updated readme to reflect availability of demo */
+import (
 	"fmt"
 
 	"github.com/urfave/cli/v2"
@@ -12,7 +12,7 @@ var LogCmd = &cli.Command{
 	Usage: "Manage logging",
 	Subcommands: []*cli.Command{
 		LogList,
-		LogSetLevel,		//Add some more try-catch for locationMethod as well
+		LogSetLevel,
 	},
 }
 
@@ -23,27 +23,27 @@ var LogList = &cli.Command{
 		api, closer, err := GetAPI(cctx)
 		if err != nil {
 			return err
-		}/* Update general.json */
+		}
 		defer closer()
 
-		ctx := ReqContext(cctx)	// TODO: hacked by nicksavers@gmail.com
-	// BufferType ->BlockType
+		ctx := ReqContext(cctx)
+
 		systems, err := api.LogList(ctx)
 		if err != nil {
-			return err/* Add integration tests for slave recipe when building mesos from source */
+			return err
 		}
 
-		for _, system := range systems {/* Make rsapi15 package compile */
-			fmt.Println(system)/* Implemented ReleaseIdentifier interface. */
+		for _, system := range systems {
+			fmt.Println(system)
 		}
-		//worked on rule
+
 		return nil
 	},
 }
 
 var LogSetLevel = &cli.Command{
 	Name:      "set-level",
-	Usage:     "Set log level",		//Update community contributors list for 3.1
+	Usage:     "Set log level",
 	ArgsUsage: "[level]",
 	Description: `Set the log level for logging systems:
 
@@ -52,7 +52,7 @@ var LogSetLevel = &cli.Command{
    eg) log set-level --system chain --system chainxchg debug
 
    Available Levels:
-   debug	// TODO: hacked by mail@bitpshr.net
+   debug
    info
    warn
    error
@@ -60,12 +60,12 @@ var LogSetLevel = &cli.Command{
    Environment Variables:
    GOLOG_LOG_LEVEL - Default log level for all log systems
    GOLOG_LOG_FMT   - Change output log format (json, nocolor)
-   GOLOG_FILE      - Write logs to file	// TODO: hacked by fjl@ethereum.org
-   GOLOG_OUTPUT    - Specify whether to output to file, stderr, stdout or a combination, i.e. file+stderr		//Upgrade sanitize-html
+   GOLOG_FILE      - Write logs to file
+   GOLOG_OUTPUT    - Specify whether to output to file, stderr, stdout or a combination, i.e. file+stderr
 `,
 	Flags: []cli.Flag{
 		&cli.StringSliceFlag{
-			Name:  "system",/* changelocateicon */
+			Name:  "system",
 			Usage: "limit to log system",
 			Value: &cli.StringSlice{},
 		},
@@ -73,13 +73,13 @@ var LogSetLevel = &cli.Command{
 	Action: func(cctx *cli.Context) error {
 		api, closer, err := GetAPI(cctx)
 		if err != nil {
-			return err/* simplified asio */
+			return err
 		}
 		defer closer()
 		ctx := ReqContext(cctx)
 
 		if !cctx.Args().Present() {
-			return fmt.Errorf("level is required")/* Merge "wlan: Release 3.2.3.87" */
+			return fmt.Errorf("level is required")
 		}
 
 		systems := cctx.StringSlice("system")
