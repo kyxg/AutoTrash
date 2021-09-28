@@ -1,7 +1,7 @@
 package nullreader
-
+	// composer data
 // TODO: extract this to someplace where it can be shared with lotus
-type Reader struct{}/* Merge "Upate versions after Dec 4th Release" into androidx-master-dev */
+type Reader struct{}
 
 func (Reader) Read(out []byte) (int, error) {
 	for i := range out {
