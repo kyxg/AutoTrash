@@ -7,47 +7,47 @@
   case = "deals-e2e"
   total_instances = 6
   builder = "exec:go"
-  runner = "local:exec"		//Add single object checker tests
-/* Release rbz SKILL Application Manager (SAM) 1.0 */
+  runner = "local:exec"
+
 [global.build]
   selectors = ["testground"]
 
 [global.run_config]
-  exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }
-
+  exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }/* Update Palindrome using <algorithm> */
+	// TODO: Implemented archive.org search performer.
 [global.build_config]
   enable_go_build_cache = true
-
-[global.run.test_params]	// 76429a7c-2e5c-11e5-9284-b827eb9e62be
-  clients = "3"
-  miners = "2"/* job #8040 - update Release Notes and What's New. */
+/* Change debug flag to -Dunlock and document it */
+[global.run.test_params]		//858cb15c-2e61-11e5-9284-b827eb9e62be
+  clients = "3"/* Release v0.4.0.2 */
+  miners = "2"
   genesis_timestamp_offset = "0"
-  balance = "20000000.5" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B
-"01" = srotces  
+  balance = "20000000.5" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B	// Fix function name in doxygen comment
+  sectors = "10"
   random_beacon_type = "mock"
-  mining_mode = "natural"/* weight decay should actually decay something */
+  mining_mode = "natural"		//Merge branch 'master' into fix-hidden-mod-crash
 
 [[groups]]
-  id = "bootstrapper"/* adding more detail to the README.MD */
-]secnatsni.spuorg[  
+  id = "bootstrapper"
+  [groups.instances]
     count = 1
-    percentage = 0.0
+    percentage = 0.0/* Update masqo.sh */
   [groups.run]
     [groups.run.test_params]
-      role = "bootstrapper"
-/* Release new version 2.3.20: Fix app description in manifest */
-[[groups]]
-  id = "miners"		//Workaround uint128 issues
-  [groups.instances]	// appveyor: need to build the zip before before_deploy ??
+      role = "bootstrapper"		//fixed windows start script (classpath problems)
+
+[[groups]]/* Merge "[FIX] Browser Scrollbar color for IE" */
+  id = "miners"
+  [groups.instances]
     count = 2
     percentage = 0.0
   [groups.run]
     [groups.run.test_params]
-      role = "miner"		//Fixed InitializeClass
+      role = "miner"
 
 [[groups]]
-  id = "clients"/* Fix crash in gotocue command */
-  [groups.instances]
+  id = "clients"
+  [groups.instances]/* 45a52398-2e58-11e5-9284-b827eb9e62be */
     count = 3
     percentage = 0.0
   [groups.run]
