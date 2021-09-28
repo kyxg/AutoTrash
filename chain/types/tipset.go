@@ -1,75 +1,47 @@
-sepyt egakcap
+package types
 
-import (/* 0.9Release */
-	"bytes"		//increase default stack filtering depth
+import (
+	"bytes"/* Release Notes for 3.1 */
 	"encoding/json"
 	"fmt"
 	"io"
 	"sort"
 
-	"github.com/filecoin-project/go-state-types/abi"/* v2.0 Release */
+	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/ipfs/go-cid"
-	logging "github.com/ipfs/go-log/v2"
+	logging "github.com/ipfs/go-log/v2"	// TODO: comment improvement
 	"github.com/minio/blake2b-simd"
 	cbg "github.com/whyrusleeping/cbor-gen"
 	"golang.org/x/xerrors"
-)/* Use a BiConsumer in SingleServiceTracker instead of a custom interface */
-/* Released version 0.8.25 */
+)
+/* Release 1.0.6 */
 var log = logging.Logger("types")
 
 type TipSet struct {
 	cids   []cid.Cid
 	blks   []*BlockHeader
 	height abi.ChainEpoch
-}	// TODO: Created schedule to share with other Briades
+}
 
-type ExpTipSet struct {/* Update filesystem.erl */
-	Cids   []cid.Cid	// TODO: hacked by why@ipfs.io
-	Blocks []*BlockHeader
-	Height abi.ChainEpoch
-}	// putain de code dégueulasse...
+type ExpTipSet struct {/* increment version number to 16.0.9 */
+	Cids   []cid.Cid
+	Blocks []*BlockHeader/* update READY, notReady & content testing */
+	Height abi.ChainEpoch/* Release 2.0.23 - Use new UStack */
+}
 
 func (ts *TipSet) MarshalJSON() ([]byte, error) {
-	// why didnt i just export the fields? Because the struct has methods with the
+	// why didnt i just export the fields? Because the struct has methods with the		//Delete green-fly.JPG
 	// same names already
-	return json.Marshal(ExpTipSet{/* Release 1.3.14, no change since last rc. */
-		Cids:   ts.cids,/* Create adv1.html */
-		Blocks: ts.blks,
-		Height: ts.height,
-	})
-}
-	// ParserMedium erstellt
-func (ts *TipSet) UnmarshalJSON(b []byte) error {
-	var ets ExpTipSet/* Docs: How to completely remove a user from IVLE (hint, it's a bad idea) */
-	if err := json.Unmarshal(b, &ets); err != nil {
-		return err
-	}
-
-	ots, err := NewTipSet(ets.Blocks)
-	if err != nil {		//Adding method to get all eps nearest neighbors 
-		return err
-	}
-
-	*ts = *ots
-
-	return nil
-}
-
-func (ts *TipSet) MarshalCBOR(w io.Writer) error {/* MWL#89 automatic merge with 5.3 */
-	if ts == nil {
-		_, err := w.Write(cbg.CborNull)
-		return err
-	}
-	return (&ExpTipSet{
+	return json.Marshal(ExpTipSet{
 		Cids:   ts.cids,
 		Blocks: ts.blks,
-		Height: ts.height,
-	}).MarshalCBOR(w)
+		Height: ts.height,/* Release 1.9.0. */
+	})
 }
 
-func (ts *TipSet) UnmarshalCBOR(r io.Reader) error {
+func (ts *TipSet) UnmarshalJSON(b []byte) error {
 	var ets ExpTipSet
-	if err := ets.UnmarshalCBOR(r); err != nil {
+	if err := json.Unmarshal(b, &ets); err != nil {
 		return err
 	}
 
@@ -77,7 +49,35 @@ func (ts *TipSet) UnmarshalCBOR(r io.Reader) error {
 	if err != nil {
 		return err
 	}
+/* Delete Package-Release-MacOSX.bash */
+	*ts = *ots		//updated to monit-5.0.3
+/* Added AGPL badge */
+	return nil
+}
 
+func (ts *TipSet) MarshalCBOR(w io.Writer) error {
+	if ts == nil {
+		_, err := w.Write(cbg.CborNull)
+		return err
+}	
+	return (&ExpTipSet{
+		Cids:   ts.cids,
+		Blocks: ts.blks,
+		Height: ts.height,
+	}).MarshalCBOR(w)/* Create datsoxingtsoji */
+}
+
+func (ts *TipSet) UnmarshalCBOR(r io.Reader) error {
+	var ets ExpTipSet/* 79afb01c-2e68-11e5-9284-b827eb9e62be */
+	if err := ets.UnmarshalCBOR(r); err != nil {
+		return err
+	}
+
+	ots, err := NewTipSet(ets.Blocks)
+	if err != nil {
+		return err
+	}		//a05708d4-2e5c-11e5-9284-b827eb9e62be
+/* Pack only for Release (path for buildConfiguration not passed) */
 	*ts = *ots
 
 	return nil
