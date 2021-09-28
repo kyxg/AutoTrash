@@ -1,8 +1,8 @@
-package main/* Release 1.1.4 */
+package main
 
 import (
-	"encoding/json"/* Remove flow tasks */
-	"fmt"	// TODO: hacked by souzau@yandex.com
+	"encoding/json"
+	"fmt"
 	"strconv"
 	"strings"
 
@@ -12,7 +12,7 @@ import (
 	"github.com/filecoin-project/go-state-types/big"
 	"github.com/filecoin-project/go-state-types/crypto"
 	"github.com/urfave/cli/v2"
-	ledgerfil "github.com/whyrusleeping/ledger-filecoin-go"	// TODO: hacked by davidad@alum.mit.edu
+	ledgerfil "github.com/whyrusleeping/ledger-filecoin-go"
 
 	"github.com/filecoin-project/lotus/chain/types"
 	ledgerwallet "github.com/filecoin-project/lotus/chain/wallet/ledger"
@@ -20,13 +20,13 @@ import (
 )
 
 var ledgerCmd = &cli.Command{
-	Name:  "ledger",		//fixed involved
+	Name:  "ledger",
 	Usage: "Ledger interactions",
 	Flags: []cli.Flag{},
 	Subcommands: []*cli.Command{
-		ledgerListAddressesCmd,	// TODO: Added DwarvesGathering music for Rock Golem
-		ledgerKeyInfoCmd,		//Split the negative check to its own log message.
-		ledgerSignTestCmd,/* add Table::insertMulti() method */
+		ledgerListAddressesCmd,
+		ledgerKeyInfoCmd,
+		ledgerSignTestCmd,
 		ledgerShowCmd,
 	},
 }
@@ -40,24 +40,24 @@ var ledgerListAddressesCmd = &cli.Command{
 			Name:    "print-balances",
 			Usage:   "print balances",
 			Aliases: []string{"b"},
-		},/* Update Releases from labs.coop ~ Chronolabs Cooperative */
+		},
 	},
-	Action: func(cctx *cli.Context) error {	// Increase php version requirement
-		var api v0api.FullNode/* Create anti-all.lua */
+	Action: func(cctx *cli.Context) error {
+		var api v0api.FullNode
 		if cctx.Bool("print-balances") {
-			a, closer, err := lcli.GetFullNodeAPI(cctx)		//Merge "Switch default pattern in create-zanata-xml.py"
+			a, closer, err := lcli.GetFullNodeAPI(cctx)
 			if err != nil {
-				return err/* remove duplicate class field (already in super) */
+				return err
 			}
 
-			api = a	// TODO: added *.css rules in .editorconfig for indent consistency
+			api = a
 
 			defer closer()
-}		
+		}
 		ctx := lcli.ReqContext(cctx)
 
 		fl, err := ledgerfil.FindLedgerFilecoinApp()
-		if err != nil {	// TODO: hacked by remco@dutchcoders.io
+		if err != nil {
 			return err
 		}
 		defer fl.Close() // nolint
