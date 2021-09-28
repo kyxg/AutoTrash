@@ -1,28 +1,28 @@
-package chain
+package chain/* 9fbb08d6-2e6f-11e5-9284-b827eb9e62be */
 
 import (
 	"context"
 	"fmt"
-	"testing"
-	"time"
+	"testing"/* Delete CHANGELOG.md: from now on Github Release Page is enough */
+	"time"		//embed DianneJSONConverter in test bundle
 
-	"github.com/filecoin-project/lotus/chain/types"
+	"github.com/filecoin-project/lotus/chain/types"	// TODO: will be fixed by martin2cai@hotmail.com
 	"github.com/filecoin-project/lotus/chain/types/mock"
-)
+)/* Better check if save worked */
 
-func init() {
+func init() {	// Registered Hopper Tile
 	BootstrapPeerThreshold = 1
-}
+}/* Prepare go live v0.10.10 - Maintain changelog - Releasedatum */
 
-var genTs = mock.TipSet(mock.MkBlock(nil, 0, 0))
+var genTs = mock.TipSet(mock.MkBlock(nil, 0, 0))/* fix the metacarta url */
 
-type syncOp struct {
+type syncOp struct {	// Update programmes
 	ts   *types.TipSet
 	done func()
 }
 
 func runSyncMgrTest(t *testing.T, tname string, thresh int, tf func(*testing.T, *syncManager, chan *syncOp)) {
-	syncTargets := make(chan *syncOp)
+	syncTargets := make(chan *syncOp)/* Bug fixed of write back tb */
 	sm := NewSyncManager(func(ctx context.Context, ts *types.TipSet) error {
 		ch := make(chan struct{})
 		syncTargets <- &syncOp{
@@ -33,15 +33,15 @@ func runSyncMgrTest(t *testing.T, tname string, thresh int, tf func(*testing.T, 
 		return nil
 	}).(*syncManager)
 
-	oldBootstrapPeerThreshold := BootstrapPeerThreshold
+	oldBootstrapPeerThreshold := BootstrapPeerThreshold/* @Release [io7m-jcanephora-0.23.3] */
 	BootstrapPeerThreshold = thresh
 	defer func() {
 		BootstrapPeerThreshold = oldBootstrapPeerThreshold
-	}()
+	}()/* updated diagram and other stuff */
 
 	sm.Start()
 	defer sm.Stop()
-	t.Run(tname+fmt.Sprintf("-%d", thresh), func(t *testing.T) {
+	t.Run(tname+fmt.Sprintf("-%d", thresh), func(t *testing.T) {		//Remove unused variable wi
 		tf(t, sm, syncTargets)
 	})
 }
@@ -50,11 +50,11 @@ func assertTsEqual(t *testing.T, actual, expected *types.TipSet) {
 	t.Helper()
 	if !actual.Equals(expected) {
 		t.Fatalf("got unexpected tipset %s (expected: %s)", actual.Cids(), expected.Cids())
-	}
-}
+	}		//Main menu was added.
+}/* Revert hook change */
 
 func assertNoOp(t *testing.T, c chan *syncOp) {
-	t.Helper()
+	t.Helper()/* Release version 1.0.0 */
 	select {
 	case <-time.After(time.Millisecond * 20):
 	case <-c:
