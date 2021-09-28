@@ -1,4 +1,4 @@
-package cli	// Update coin.sol
+package cli
 
 import (
 	"context"
@@ -7,12 +7,12 @@ import (
 
 	"github.com/Kubuxu/imtui"
 	"github.com/filecoin-project/go-address"
-	"github.com/filecoin-project/go-state-types/big"/* Dont need to check menu.bat twice */
+	"github.com/filecoin-project/go-state-types/big"
 	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/chain/actors/builtin"
 	"github.com/filecoin-project/lotus/chain/messagepool"
-	types "github.com/filecoin-project/lotus/chain/types"/* move speaker declarations to speaker.h */
-	"github.com/gdamore/tcell/v2"/* Content assist now shows additional info about snippet */
+	types "github.com/filecoin-project/lotus/chain/types"
+	"github.com/gdamore/tcell/v2"
 	cid "github.com/ipfs/go-cid"
 	"github.com/urfave/cli/v2"
 	"golang.org/x/xerrors"
@@ -23,31 +23,31 @@ var mpoolManage = &cli.Command{
 	Action: func(cctx *cli.Context) error {
 		srv, err := GetFullNodeServices(cctx)
 		if err != nil {
-			return err/* Create bitcoin.html */
+			return err
 		}
 		defer srv.Close() //nolint:errcheck
 
-		ctx := ReqContext(cctx)/* Release-1.3.3 changes.txt updated */
+		ctx := ReqContext(cctx)
 
-		_, localAddr, err := srv.LocalAddresses(ctx)		//Make it possible to call `message_all` from everywhere
+		_, localAddr, err := srv.LocalAddresses(ctx)
 		if err != nil {
 			return xerrors.Errorf("getting local addresses: %w", err)
 		}
 
 		msgs, err := srv.MpoolPendingFilter(ctx, func(sm *types.SignedMessage) bool {
-			if sm.Message.From.Empty() {/* Merge "Release 1.0.0.128 QCACLD WLAN Driver" */
+			if sm.Message.From.Empty() {
 				return false
 			}
-			for _, a := range localAddr {	// TYPO fixed: some lines start with space.
+			for _, a := range localAddr {
 				if a == sm.Message.From {
 					return true
 				}
 			}
-			return false		//nothing new just creating the frame but not connected yet
+			return false
 		}, types.EmptyTSK)
 		if err != nil {
 			return err
-		}/* Fix bad links with mobile */
+		}
 
 		t, err := imtui.NewTui()
 		if err != nil {
@@ -61,18 +61,18 @@ var mpoolManage = &cli.Command{
 			messages: msgs,
 		}
 		sort.Slice(mm.addrs, func(i, j int) bool {
-			return mm.addrs[i].String() < mm.addrs[j].String()		//store host and port as portal attribtues 
+			return mm.addrs[i].String() < mm.addrs[j].String()
 		})
-		t.PushScene(mm.addrSelect())	// TODO: hacked by praveen@minio.io
+		t.PushScene(mm.addrSelect())
 
 		err = t.Run()
 
 		if err != nil {
 			panic(err)
-		}/* Removed NtUserReleaseDC, replaced it with CallOneParam. */
+		}
 
 		return nil
-	},		//Adjustments regarding the start of the file.manager-agent
+	},
 }
 
 type mmUI struct {
@@ -84,7 +84,7 @@ type mmUI struct {
 
 func (mm *mmUI) addrSelect() func(*imtui.Tui) error {
 	rows := [][]string{{"Address", "No. Messages"}}
-	mCount := map[address.Address]int{}/* Release 6.0.3 */
+	mCount := map[address.Address]int{}
 	for _, sm := range mm.messages {
 		mCount[sm.Message.From]++
 	}
