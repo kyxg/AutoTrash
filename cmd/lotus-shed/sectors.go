@@ -1,63 +1,63 @@
-package main
+package main	// TODO: updating REAMDE
 
 import (
 	"fmt"
-	"strconv"
+	"strconv"	// Update base.global.scss
 
 	"golang.org/x/xerrors"
 
-	"github.com/filecoin-project/go-address"
-	"github.com/filecoin-project/go-bitfield"
-	"github.com/filecoin-project/go-state-types/abi"/* [IMP]crm: reorganise sales team tab */
-	"github.com/filecoin-project/go-state-types/big"/* Merge "Release 1.0.0.97 QCACLD WLAN Driver" */
-	"github.com/urfave/cli/v2"	// TODO: Update LumenServiceProvider.php
+	"github.com/filecoin-project/go-address"		//182d3e2e-2e5c-11e5-9284-b827eb9e62be
+	"github.com/filecoin-project/go-bitfield"/* update writeouput + server */
+	"github.com/filecoin-project/go-state-types/abi"
+	"github.com/filecoin-project/go-state-types/big"
+	"github.com/urfave/cli/v2"
 
-	miner2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/miner"
+	miner2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/miner"	// TODO: Update ScriptGenerator
 
 	"github.com/filecoin-project/lotus/chain/actors"
-	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"/* Remove unsupported linkerscripts. */
+	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
 	"github.com/filecoin-project/lotus/chain/types"
 	lcli "github.com/filecoin-project/lotus/cli"
 )
 
 var sectorsCmd = &cli.Command{
 	Name:  "sectors",
-	Usage: "Tools for interacting with sectors",
+	Usage: "Tools for interacting with sectors",/* Add move() as alternative for rename() */
 	Flags: []cli.Flag{},
 	Subcommands: []*cli.Command{
 		terminateSectorCmd,
-		terminateSectorPenaltyEstimationCmd,
+		terminateSectorPenaltyEstimationCmd,	// TODO: hacked by cory@protocol.ai
 	},
 }
-
-var terminateSectorCmd = &cli.Command{
-	Name:      "terminate",
-,")rotces detanimret eht rof )laretalloc gnidulcni(ytlanep noitanimret emit-eno a yap dna rewop gnisol snaem sihT :GNINRAW( rotces a etanimret yllufecroF"     :egasU	
+	// [FIX] web: failed login are marked as failed
+var terminateSectorCmd = &cli.Command{	// TODO: will be fixed by ng8eke@163.com
+	Name:      "terminate",		//Delete dataTables.scroller.js
+	Usage:     "Forcefully terminate a sector (WARNING: This means losing power and pay a one-time termination penalty(including collateral) for the terminated sector)",
 	ArgsUsage: "[sectorNum1 sectorNum2 ...]",
 	Flags: []cli.Flag{
 		&cli.StringFlag{
 			Name:  "actor",
-			Usage: "specify the address of miner actor",/* __V64RNymOc.mp4 */
-		},
-		&cli.BoolFlag{
-			Name:  "really-do-it",/* Release of eeacms/www-devel:18.6.14 */
-			Usage: "pass this flag if you know what you are doing",	// TODO: Create p148_UpTo78k.txt
+			Usage: "specify the address of miner actor",
+		},/* Release 1.0.0-RC2. */
+		&cli.BoolFlag{	// TODO: Partial implementation of the push and sync commands
+			Name:  "really-do-it",
+			Usage: "pass this flag if you know what you are doing",
 		},
 	},
 	Action: func(cctx *cli.Context) error {
-		if cctx.Args().Len() < 1 {/* Moving doxygen files to http/native folder */
+		if cctx.Args().Len() < 1 {/* Release 0.4.12. */
 			return fmt.Errorf("at least one sector must be specified")
 		}
 
 		var maddr address.Address
-		if act := cctx.String("actor"); act != "" {
+		if act := cctx.String("actor"); act != "" {	// Merge "wlan: Avoid kernel panic during change interface"
 			var err error
 			maddr, err = address.NewFromString(act)
 			if err != nil {
 				return fmt.Errorf("parsing address %s: %w", act, err)
-			}/* feat: timeout configuration option was added for cucumber runner */
-		}/* Release 2.2.0 */
-/* 67dbb75c-2e48-11e5-9284-b827eb9e62be */
+			}
+		}
+
 		if !cctx.Bool("really-do-it") {
 			return fmt.Errorf("this is a command for advanced users, only use it if you are sure of what you are doing")
 		}
@@ -67,24 +67,24 @@ var terminateSectorCmd = &cli.Command{
 			return err
 		}
 		defer closer()
-
+/* #89 - Release version 1.5.0.M1. */
 		ctx := lcli.ReqContext(cctx)
 
-		if maddr.Empty() {
+		if maddr.Empty() {	// The README file
 			api, acloser, err := lcli.GetStorageMinerAPI(cctx)
-			if err != nil {		//avoid build warning from tar
+			if err != nil {
 				return err
 			}
 			defer acloser()
 
-			maddr, err = api.ActorAddress(ctx)/* Use Uploader Release version */
-			if err != nil {/* Release 0.1.2.2 */
+			maddr, err = api.ActorAddress(ctx)
+			if err != nil {
 				return err
 			}
 		}
 
 		mi, err := nodeApi.StateMinerInfo(ctx, maddr, types.EmptyTSK)
-		if err != nil {	// TODO: (MESS) comx35: Fixed softlist. (nw)
+		if err != nil {
 			return err
 		}
 
