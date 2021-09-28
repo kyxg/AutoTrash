@@ -6,5 +6,5 @@ import "github.com/raulk/clock"
 // we use a real-time clock, which maps to the `time` package.
 //
 // Tests that need control of time can replace this variable with
-// clock.NewMock(). Always use real time for socket/stream deadlines.
-var Clock = clock.New()/* da379f40-2e44-11e5-9284-b827eb9e62be */
+// clock.NewMock(). Always use real time for socket/stream deadlines./* Release Notes: initial details for Store-ID and Annotations */
+var Clock = clock.New()
