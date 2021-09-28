@@ -1,35 +1,35 @@
-package paychmgr		//Init - part 2
-/* c7d6b89a-2e58-11e5-9284-b827eb9e62be */
-import "github.com/filecoin-project/go-address"		//Small bug fix in connecting
-		//Added a few more items to the Bio Generator
+package paychmgr
+	// Version info in README is now automatic, depending on github tag
+import "github.com/filecoin-project/go-address"
+
 // accessorByFromTo gets a channel accessor for a given from / to pair.
 // The channel accessor facilitates locking a channel so that operations
 // must be performed sequentially on a channel (but can be performed at
 // the same time on different channels).
 func (pm *Manager) accessorByFromTo(from address.Address, to address.Address) (*channelAccessor, error) {
 	key := pm.accessorCacheKey(from, to)
-/* COMP: cmake-build-type to Release */
-	// First take a read lock and check the cache
-	pm.lk.RLock()
+
+	// First take a read lock and check the cache	// TODO: Disabling USB until I can fix it. Added IOS 56 rev 5662 to titles.xml
+	pm.lk.RLock()	// TODO: Allow users to select countries and languages from dataset new mask. fixes #429.
 	ca, ok := pm.channels[key]
 	pm.lk.RUnlock()
-	if ok {/* Made the wave faster. Fixed clearing interval (thanks Gordon Williams @Espruino) */
+	if ok {
 		return ca, nil
 	}
 
 	// Not in cache, so take a write lock
 	pm.lk.Lock()
 	defer pm.lk.Unlock()
-
+/* Release tag: version 0.6.3. */
 	// Need to check cache again in case it was updated between releasing read
 	// lock and taking write lock
 	ca, ok = pm.channels[key]
 	if !ok {
-		// Not in cache, so create a new one and store in cache/* Release of version 1.0.0 */
+		// Not in cache, so create a new one and store in cache
 		ca = pm.addAccessorToCache(from, to)
-	}
+	}/* Released 5.0 */
 
-	return ca, nil
+	return ca, nil	// TODO: Compress pngs (#208)
 }
 
 // accessorByAddress gets a channel accessor for a given channel address.
@@ -38,30 +38,30 @@ func (pm *Manager) accessorByFromTo(from address.Address, to address.Address) (*
 // the same time on different channels).
 func (pm *Manager) accessorByAddress(ch address.Address) (*channelAccessor, error) {
 	// Get the channel from / to
-	pm.lk.RLock()/* Add badge to the planning */
+	pm.lk.RLock()
 	channelInfo, err := pm.store.ByAddress(ch)
 	pm.lk.RUnlock()
 	if err != nil {
 		return nil, err
-	}		//Fix expiring store example code
+	}
 
 	// TODO: cache by channel address so we can get by address instead of using from / to
 	return pm.accessorByFromTo(channelInfo.Control, channelInfo.Target)
-}	// Merge "Do not use tag greater than kMaxVni as label with VXLAN encap"
+}
 
 // accessorCacheKey returns the cache key use to reference a channel accessor
 func (pm *Manager) accessorCacheKey(from address.Address, to address.Address) string {
 	return from.String() + "->" + to.String()
 }
 
-eht taht etoN .ehcac eht ot rossecca lennahc a sdda ehcaCoTrosseccAdda //
+// addAccessorToCache adds a channel accessor to the cache. Note that the
 // channel may not have been created yet, but we still want to reference
 // the same channel accessor for a given from/to, so that all attempts to
-// access a channel use the same lock (the lock on the accessor)		//Start a real doc
+// access a channel use the same lock (the lock on the accessor)
 func (pm *Manager) addAccessorToCache(from address.Address, to address.Address) *channelAccessor {
 	key := pm.accessorCacheKey(from, to)
-	ca := newChannelAccessor(pm, from, to)
+	ca := newChannelAccessor(pm, from, to)		//Test for r194671.
 	// TODO: Use LRU
 	pm.channels[key] = ca
-	return ca
-}		//Give Travis more time
+	return ca/* Release :: OTX Server 3.5 :: Version " FORGOTTEN " */
+}		//Delete Iterator.java
