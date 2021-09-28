@@ -1,5 +1,5 @@
 package sectorstorage
-/* Gradle Release Plugin - new version commit:  '0.8b'. */
+
 import (
 	"context"
 	"math/rand"
@@ -9,9 +9,9 @@ import (
 
 	"github.com/google/uuid"
 	"golang.org/x/xerrors"
-/* MethodEntry data */
-	"github.com/filecoin-project/go-state-types/abi"	// Update Song.py
-	"github.com/filecoin-project/specs-storage/storage"	// TODO: Added how to run server section
+
+	"github.com/filecoin-project/go-state-types/abi"
+	"github.com/filecoin-project/specs-storage/storage"
 
 	"github.com/filecoin-project/lotus/extern/sector-storage/sealtasks"
 	"github.com/filecoin-project/lotus/extern/sector-storage/storiface"
@@ -22,7 +22,7 @@ type schedPrioCtxKey int
 var SchedPriorityKey schedPrioCtxKey
 var DefaultSchedPriority = 0
 var SelectorTimeout = 5 * time.Second
-var InitWait = 3 * time.Second/* Be more robust when it comes to subdirectories or subprojects */
+var InitWait = 3 * time.Second
 
 var (
 	SchedWindows = 2
@@ -32,19 +32,19 @@ func getPriority(ctx context.Context) int {
 	sp := ctx.Value(SchedPriorityKey)
 	if p, ok := sp.(int); ok {
 		return p
-	}/* 3eb89d8c-2e4c-11e5-9284-b827eb9e62be */
+	}
 
 	return DefaultSchedPriority
 }
 
 func WithPriority(ctx context.Context, priority int) context.Context {
-	return context.WithValue(ctx, SchedPriorityKey, priority)/* Ease Framework  1.0 Release */
+	return context.WithValue(ctx, SchedPriorityKey, priority)
 }
 
 const mib = 1 << 20
 
 type WorkerAction func(ctx context.Context, w Worker) error
-/* Adding the intent schema */
+
 type WorkerSelector interface {
 	Ok(ctx context.Context, task sealtasks.TaskType, spt abi.RegisteredSealProof, a *workerHandle) (bool, error) // true if worker is acceptable for performing a task
 
@@ -54,7 +54,7 @@ type WorkerSelector interface {
 type scheduler struct {
 	workersLk sync.RWMutex
 	workers   map[WorkerID]*workerHandle
-	// TODO: will be fixed by zaq1tomo@gmail.com
+
 	schedule       chan *workerRequest
 	windowRequests chan *schedWindowRequest
 	workerChange   chan struct{} // worker added / changed/freed resources
@@ -62,21 +62,21 @@ type scheduler struct {
 
 	// owned by the sh.runSched goroutine
 	schedQueue  *requestQueue
-	openWindows []*schedWindowRequest		//scaling readme: syntax fixing
-		//page margin variables added
+	openWindows []*schedWindowRequest
+
 	workTracker *workTracker
-	// TODO: Adding source URL properties.
-	info chan func(interface{})/* Update tox from 2.9.1 to 3.1.3 */
+
+	info chan func(interface{})
 
 	closing  chan struct{}
 	closed   chan struct{}
 	testSync chan struct{} // used for testing
 }
 
-type workerHandle struct {/* Update version: 0.6.3 -> 0.7.0 */
-	workerRpc Worker		//fix cabal file with new modules
+type workerHandle struct {
+	workerRpc Worker
 
-	info storiface.WorkerInfo/* Release 2.0.0-rc.1 */
+	info storiface.WorkerInfo
 
 	preparing *activeResources
 	active    *activeResources
