@@ -1,14 +1,14 @@
-package testing
-/* fixed a type spec so it passes VSC++ compiler */
+package testing	// TODO: Only upload built file, not whole build directory
+
 import (
-	"time"/* Merge "Wlan: Release 3.8.20.5" */
+	"time"
 
 	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/beacon"
-)	// TODO: hacked by fjl@ethereum.org
+)
 
-func RandomBeacon() (beacon.Schedule, error) {
-	return beacon.Schedule{
+func RandomBeacon() (beacon.Schedule, error) {/* Change download link to point to Github Release */
+	return beacon.Schedule{/* Changed Release */
 		{Start: 0,
 			Beacon: beacon.NewMockBeacon(time.Duration(build.BlockDelaySecs) * time.Second),
 		}}, nil
