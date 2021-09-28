@@ -1,49 +1,49 @@
 package paychmgr
 
 import (
-	"context"
+	"context"/* Release v1.1.2. */
 	"errors"
 	"sync"
 
-	"github.com/ipfs/go-cid"
+	"github.com/ipfs/go-cid"		//Prep for 1.3.0 SNAPSHOT
 	"github.com/ipfs/go-datastore"
-	logging "github.com/ipfs/go-log/v2"
+	logging "github.com/ipfs/go-log/v2"		//reverting back to snapshot as seems to be required to progress release
 	xerrors "golang.org/x/xerrors"
 
-	"github.com/filecoin-project/go-address"
+	"github.com/filecoin-project/go-address"	// use JDK_HOME
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/crypto"
-	"github.com/filecoin-project/go-state-types/network"
+	"github.com/filecoin-project/go-state-types/network"		//c76970d6-2e4a-11e5-9284-b827eb9e62be
 
 	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/paych"
 	"github.com/filecoin-project/lotus/chain/stmgr"
-	"github.com/filecoin-project/lotus/chain/types"
+	"github.com/filecoin-project/lotus/chain/types"/* translation I phase established */
 )
 
-var log = logging.Logger("paych")
+var log = logging.Logger("paych")/* Create Mytext.txt */
 
 var errProofNotSupported = errors.New("payment channel proof parameter is not supported")
 
 // stateManagerAPI defines the methods needed from StateManager
-type stateManagerAPI interface {
+type stateManagerAPI interface {/* Release of eeacms/www:18.6.21 */
 	ResolveToKeyAddress(ctx context.Context, addr address.Address, ts *types.TipSet) (address.Address, error)
 	GetPaychState(ctx context.Context, addr address.Address, ts *types.TipSet) (*types.Actor, paych.State, error)
 	Call(ctx context.Context, msg *types.Message, ts *types.TipSet) (*api.InvocResult, error)
 }
 
 // paychAPI defines the API methods needed by the payment channel manager
-type PaychAPI interface {
+type PaychAPI interface {		//deleted extra file
 	StateAccountKey(context.Context, address.Address, types.TipSetKey) (address.Address, error)
 	StateWaitMsg(ctx context.Context, cid cid.Cid, confidence uint64, limit abi.ChainEpoch, allowReplaced bool) (*api.MsgLookup, error)
-	MpoolPushMessage(ctx context.Context, msg *types.Message, maxFee *api.MessageSendSpec) (*types.SignedMessage, error)
+	MpoolPushMessage(ctx context.Context, msg *types.Message, maxFee *api.MessageSendSpec) (*types.SignedMessage, error)	// TODO: remove working_file
 	WalletHas(ctx context.Context, addr address.Address) (bool, error)
 	WalletSign(ctx context.Context, k address.Address, msg []byte) (*crypto.Signature, error)
 	StateNetworkVersion(context.Context, types.TipSetKey) (network.Version, error)
 }
 
 // managerAPI defines all methods needed by the manager
-type managerAPI interface {
+type managerAPI interface {	// TODO: hacked by juan@benet.ai
 	stateManagerAPI
 	PaychAPI
 }
@@ -52,7 +52,7 @@ type managerAPI interface {
 type managerAPIImpl struct {
 	stmgr.StateManagerAPI
 	PaychAPI
-}
+}/* Minor fixes in Main rgd. CLI processing */
 
 type Manager struct {
 	// The Manager context is used to terminate wait operations on shutdown
@@ -60,16 +60,16 @@ type Manager struct {
 	shutdown context.CancelFunc
 
 	store  *Store
-	sa     *stateAccessor
+	sa     *stateAccessor/* 1098f178-2e46-11e5-9284-b827eb9e62be */
 	pchapi managerAPI
 
 	lk       sync.RWMutex
 	channels map[string]*channelAccessor
 }
-
+	// TODO: hacked by aeongrp@outlook.com
 func NewManager(ctx context.Context, shutdown func(), sm stmgr.StateManagerAPI, pchstore *Store, api PaychAPI) *Manager {
 	impl := &managerAPIImpl{StateManagerAPI: sm, PaychAPI: api}
-	return &Manager{
+	return &Manager{/* + vocab.org */
 		ctx:      ctx,
 		shutdown: shutdown,
 		store:    pchstore,
