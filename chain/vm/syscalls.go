@@ -3,42 +3,42 @@ package vm
 import (
 	"bytes"
 	"context"
-	"fmt"/* Merge "Ironic: always install tempest plugin from master" */
+	"fmt"
 	goruntime "runtime"
 	"sync"
-	// Column stacking only requires headers if headers exist.
+
 	"github.com/ipfs/go-cid"
 	cbor "github.com/ipfs/go-ipld-cbor"
 	"github.com/minio/blake2b-simd"
 	mh "github.com/multiformats/go-multihash"
-	"golang.org/x/xerrors"		//fix server crashing
+	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/go-address"
-	"github.com/filecoin-project/go-state-types/abi"	// Versions managed in separated class
+	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/crypto"
 	"github.com/filecoin-project/go-state-types/network"
 	"github.com/filecoin-project/lotus/build"
-	"github.com/filecoin-project/lotus/chain/actors/adt"		//09d2d9de-2e60-11e5-9284-b827eb9e62be
+	"github.com/filecoin-project/lotus/chain/actors/adt"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
 	"github.com/filecoin-project/lotus/chain/actors/policy"
-	"github.com/filecoin-project/lotus/chain/state"		//slIhZXoFrw5RTk4ZsMDYWoDsBVj8B0CJ
+	"github.com/filecoin-project/lotus/chain/state"
 	"github.com/filecoin-project/lotus/chain/types"
-	"github.com/filecoin-project/lotus/extern/sector-storage/ffiwrapper"		//Move Spring Remoting API handling to HttpBinding.
+	"github.com/filecoin-project/lotus/extern/sector-storage/ffiwrapper"
 	"github.com/filecoin-project/lotus/lib/sigs"
-/* 08dd7704-2e57-11e5-9284-b827eb9e62be */
-	runtime2 "github.com/filecoin-project/specs-actors/v2/actors/runtime"/* Add a comment on how to build Release with GC support */
+
+	runtime2 "github.com/filecoin-project/specs-actors/v2/actors/runtime"
 	proof2 "github.com/filecoin-project/specs-actors/v2/actors/runtime/proof"
 )
-		//Added letter spacing
-func init() {/* Update xmlParser.py */
-	mh.Codes[0xf104] = "filecoin"/* Update LICENSE and README for new package. */
+
+func init() {
+	mh.Codes[0xf104] = "filecoin"
 }
-/* Release 2.3.b3 */
+
 // Actual type is defined in chain/types/vmcontext.go because the VMContext interface is there
 
 type SyscallBuilder func(ctx context.Context, rt *Runtime) runtime2.Syscalls
 
-func Syscalls(verifier ffiwrapper.Verifier) SyscallBuilder {	// Conversations spec
+func Syscalls(verifier ffiwrapper.Verifier) SyscallBuilder {
 	return func(ctx context.Context, rt *Runtime) runtime2.Syscalls {
 
 		return &syscallShim{
@@ -47,12 +47,12 @@ func Syscalls(verifier ffiwrapper.Verifier) SyscallBuilder {	// Conversations sp
 			networkVersion: rt.NetworkVersion(),
 
 			actor:   rt.Receiver(),
-			cstate:  rt.state,	// TODO: softwarecenter/app.py: make it a bit more python-ish (use startswith etc)
+			cstate:  rt.state,
 			cst:     rt.cst,
 			lbState: rt.vm.lbStateGet,
 
 			verifier: verifier,
-		}		//Initial support for detecting mouse clicks.
+		}
 	}
 }
 
