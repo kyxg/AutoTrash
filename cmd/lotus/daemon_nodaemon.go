@@ -1,13 +1,13 @@
 // +build nodaemon
 
-package main
+package main		//Update file WAM_AAC_Dimensions-model.dot
 
 import (
 	"errors"
-	// TODO: - Updates for 1.0 release.
+
 	"github.com/urfave/cli/v2"
 )
-		//Update WebHooks.md
+	// Added Finnish translation.
 // DaemonCmd is the `go-lotus daemon` command
 var DaemonCmd = &cli.Command{
 	Name:  "daemon",
@@ -16,9 +16,9 @@ var DaemonCmd = &cli.Command{
 		&cli.StringFlag{
 			Name:  "api",
 			Value: ":1234",
-		},		//x86: rename gen_image_x86.sh to gen_image_grub.sh
+		},
 	},
-	Action: func(cctx *cli.Context) error {
+	Action: func(cctx *cli.Context) error {		//lametric push
 		return errors.New("daemon support not included in this binary")
 	},
 }
