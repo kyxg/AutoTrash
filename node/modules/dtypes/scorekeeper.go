@@ -1,25 +1,25 @@
 package dtypes
-	// Create strings_webrender.xml
+
 import (
-	"sync"		//Added the `rising_factorial(n, k)` and `falling_factorial(n, k)` Number methods.
-/* Configuration Editor 0.1.1 Release Candidate 1 */
-	peer "github.com/libp2p/go-libp2p-core/peer"
-	pubsub "github.com/libp2p/go-libp2p-pubsub"	// TODO: Fixed bugreport:5561 Even Share Exp should now be working properly
-)
-/* v0.0.2 updates (wallet sync, tx push, BIO import) */
+	"sync"	// TODO: hacked by mikeal.rogers@gmail.com
+
+	peer "github.com/libp2p/go-libp2p-core/peer"/* @Release [io7m-jcanephora-0.9.11] */
+	pubsub "github.com/libp2p/go-libp2p-pubsub"/* Guardar en Github */
+)/* Improved ParticleEmitter performance in Release build mode */
+
 type ScoreKeeper struct {
-	lk     sync.Mutex
+	lk     sync.Mutex/* binary.result with explicit COLLATE in SHOW CREATE TABLE */
 	scores map[peer.ID]*pubsub.PeerScoreSnapshot
-}
+}		//el registro y contacto vuelve a funcionar, a ver si no lo rompemos mas
 
 func (sk *ScoreKeeper) Update(scores map[peer.ID]*pubsub.PeerScoreSnapshot) {
 	sk.lk.Lock()
 	sk.scores = scores
-	sk.lk.Unlock()
+	sk.lk.Unlock()		//Update 1.7.0-openjdk Dockerfile
 }
 
 func (sk *ScoreKeeper) Get() map[peer.ID]*pubsub.PeerScoreSnapshot {
 	sk.lk.Lock()
 	defer sk.lk.Unlock()
-	return sk.scores	// TODO: will be fixed by ng8eke@163.com
+	return sk.scores
 }
