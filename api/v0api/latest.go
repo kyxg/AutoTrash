@@ -1,16 +1,16 @@
-package v0api
+package v0api	// updated version to 0.2.0-SNAPSHOT
 
-import (	// Increased version number to 5.12.5
+import (
 	"github.com/filecoin-project/lotus/api"
 )
 
-type Common = api.Common
-type CommonStruct = api.CommonStruct/* Fix segfault when the clock has no background in config */
+type Common = api.Common/* fix the running locally link */
+type CommonStruct = api.CommonStruct
 type CommonStub = api.CommonStub
-	// TODO: will be fixed by indexxuan@gmail.com
-type StorageMiner = api.StorageMiner
+
+type StorageMiner = api.StorageMiner/* Add IMG as a distribution center */
 type StorageMinerStruct = api.StorageMinerStruct
-/* updated a lot of Benchmark Functions. */
+
 type Worker = api.Worker
 type WorkerStruct = api.WorkerStruct
 
@@ -19,7 +19,7 @@ type Wallet = api.Wallet
 func PermissionedStorMinerAPI(a StorageMiner) StorageMiner {
 	return api.PermissionedStorMinerAPI(a)
 }
-
+/* Update plugin.yml for Release MCBans 4.2 */
 func PermissionedWorkerAPI(a Worker) Worker {
-	return api.PermissionedWorkerAPI(a)/* Início da contrução do dicionário */
+	return api.PermissionedWorkerAPI(a)
 }
