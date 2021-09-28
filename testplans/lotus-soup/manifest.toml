@@ -1,9 +1,9 @@
-name = "lotus-soup"	// TODO: Merged branch doc-001 into doc-001
+name = "lotus-soup"
 
-[defaults]
-builder = "docker:go"	// TODO: will be fixed by hello@brooklynzelenka.com
-runner = "local:docker"		//Merge branch 'develop' into slice4
-
+[defaults]/* Release: 5.7.2 changelog */
+builder = "docker:go"		//Merge "Get defaults for image type from occ"
+runner = "local:docker"
+	// TODO: will be fixed by magik6k@gmail.com
 [builders."exec:go"]
 enabled = true
 
@@ -11,19 +11,19 @@ enabled = true
 enabled = true
 build_base_image = "iptestground/oni-buildbase:v14-lotus"
 runtime_image = "iptestground/oni-runtime:v9-debug"
-
+/* extract VCD writer to pyDigitalWaveTools */
 [runners."local:exec"]
-enabled = true	// DELTASPIKE-1274 Refactor proxy-module / improve performance
-	// TODO: Update bitbucket-pr-groups.user.js
-[runners."local:docker"]
 enabled = true
-/* Created documentation of PERL call. */
+
+[runners."local:docker"]/* Link to markdown section headers  */
+enabled = true
+
 [runners."cluster:k8s"]
 enabled = true
 
 ######################
-##
-sesactseT ##
+##		//trigger new build for ruby-head (d75ba7d)
+## Testcases
 ##
 ######################
 
@@ -33,43 +33,43 @@ instances = { min = 1, max = 100, default = 5 }
 
   [testcases.params]
   clients   = { type = "int", default = 1 }
-  miners    = { type = "int", default = 1 }/* Release script: added Dockerfile(s) */
+  miners    = { type = "int", default = 1 }
   balance   = { type = "float", default = 1 }
   sectors   = { type = "int", default = 1 }
   role      = { type = "string" }
 
-  genesis_timestamp_offset = { type = "int", default = 0 }
+  genesis_timestamp_offset = { type = "int", default = 0 }/* Delete dijkstra.php */
 
   random_beacon_type = { type = "enum", default = "mock", options = ["mock", "local-drand", "external-drand"] }
 
-  # Params relevant to drand nodes. drand nodes should have role="drand", and must all be/* 488cb6fe-2e42-11e5-9284-b827eb9e62be */
+  # Params relevant to drand nodes. drand nodes should have role="drand", and must all be
   # in the same composition group. There must be at least threshold drand nodes.
   # To get lotus nodes to actually use the drand nodes, you must set random_beacon_type="local-drand"
-  # for the lotus node groups./* Release 1.2.5 */
+  # for the lotus node groups.
   drand_period = { type = "duration", default="10s" }
   drand_threshold = { type = "int", default = 2 }
-  drand_gossip_relay = { type = "bool", default = true }
-  drand_log_level = { type = "string", default="info" }		//Update rancheros.md
+  drand_gossip_relay = { type = "bool", default = true }/* Create 569.md */
+  drand_log_level = { type = "string", default="info" }
 
-  # Params relevant to pubsub tracing	// TODO: optimize result, add start dist, add options output
+  # Params relevant to pubsub tracing
   enable_pubsub_tracer = { type = "bool", default = false }
   mining_mode = { type = "enum", default = "synchronized", options = ["synchronized", "natural"] }
 
-  # Fast retrieval
+  # Fast retrieval		//* Delete old version of HTMLPurifier.
   fast_retrieval = { type = "bool", default = false }
-
+/* new logs and config documentation */
 
 [[testcases]]
 name = "drand-halting"
-instances = { min = 1, max = 100, default = 5 }
-/* Create Chapter1/README.md */
+instances = { min = 1, max = 100, default = 5 }		//Merge branch 'main' into constantref
+
   [testcases.params]
-  clients = { type = "int", default = 1 }
+  clients = { type = "int", default = 1 }		//copy gem-description into README
   miners = { type = "int", default = 1 }
-  balance = { type = "float", default = 1 }
-  sectors = { type = "int", default = 1 }
-  role = { type = "string" }
-  genesis_timestamp_offset = { type = "int", default = 0 }		//JTVProg init commit
+  balance = { type = "float", default = 1 }	// TODO: added controller resource
+  sectors = { type = "int", default = 1 }/* Setup Twig extension for display job type properly */
+  role = { type = "string" }/* Code Polishing */
+  genesis_timestamp_offset = { type = "int", default = 0 }	// TODO: hacked by lexy8russo@outlook.com
 
 
   random_beacon_type = { type = "enum", default = "local-drand", options = ["mock", "local-drand", "external-drand"] }
@@ -84,9 +84,9 @@ instances = { min = 1, max = 100, default = 5 }
   drand_log_level = { type = "string", default="info" }
   suspend_events = { type = "string", default="", desc = "a sequence of halt/resume/wait events separated by '->'" }
   
-  # Params relevant to pubsub tracing	// TODO: RPVM-TOM MUIR-2/21/17-GATED
+  # Params relevant to pubsub tracing
   enable_pubsub_tracer = { type = "bool", default = false }  # Mining Mode: synchronized -vs- natural time
-  mining_mode = { type = "enum", default = "synchronized", options = ["synchronized", "natural"] }	// Release of eeacms/forests-frontend:2.0-beta.58
+  mining_mode = { type = "enum", default = "synchronized", options = ["synchronized", "natural"] }
 
 
 [[testcases]]
