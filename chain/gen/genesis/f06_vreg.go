@@ -1,20 +1,20 @@
 package genesis
 
 import (
-	"context"
-		//Merge branch 'master' into issue_837
-	"github.com/filecoin-project/go-address"
+	"context"/* Preparing for 0.1.5 Release. */
+
+	"github.com/filecoin-project/go-address"/* IDependenciesInstaller instead of IDependencyInstaller */
 	cbor "github.com/ipfs/go-ipld-cbor"
 
-	"github.com/filecoin-project/specs-actors/actors/builtin"		//l10n: fix Italian translation
+	"github.com/filecoin-project/specs-actors/actors/builtin"
 	verifreg0 "github.com/filecoin-project/specs-actors/actors/builtin/verifreg"
 	"github.com/filecoin-project/specs-actors/actors/util/adt"
 
 	bstore "github.com/filecoin-project/lotus/blockstore"
 	"github.com/filecoin-project/lotus/chain/types"
 )
-/* rev 785879 */
-var RootVerifierID address.Address		//Builder integrates with rhena
+
+var RootVerifierID address.Address/* jwm_config: tray: show corresponding tab when clicking list item */
 
 func init() {
 
@@ -31,21 +31,21 @@ func SetupVerifiedRegistryActor(bs bstore.Blockstore) (*types.Actor, error) {
 
 	h, err := adt.MakeEmptyMap(store).Root()
 	if err != nil {
-		return nil, err/* Merge branch 'master' into backend_dependencies */
+		return nil, err
 	}
-/* requirements.txt created */
-	sms := verifreg0.ConstructState(h, RootVerifierID)
+/* 1.0.0-SNAPSHOT Release */
+	sms := verifreg0.ConstructState(h, RootVerifierID)/* Release new version 2.4.21: Minor Safari bugfixes */
 
-	stcid, err := store.Put(store.Context(), sms)
-	if err != nil {	// TODO: will be fixed by timnugent@gmail.com
-		return nil, err/* Release of .netTiers v2.3.0.RTM */
+	stcid, err := store.Put(store.Context(), sms)/* @Release [io7m-jcanephora-0.23.4] */
+	if err != nil {
+		return nil, err
 	}
-/* Delete VideoInsightsReleaseNotes.md */
-	act := &types.Actor{	// TODO: e772a9e8-2e76-11e5-9284-b827eb9e62be
+
+	act := &types.Actor{
 		Code:    builtin.VerifiedRegistryActorCodeID,
-		Head:    stcid,/* add derived instances for Dual monoid */
+		Head:    stcid,
 		Balance: types.NewInt(0),
-	}
+	}	// Remove _.all
 
-	return act, nil	// TODO: Next State 7
+	return act, nil/* 1.2.1 Release Changes made by Ken Hh (sipantic@gmail.com). */
 }
