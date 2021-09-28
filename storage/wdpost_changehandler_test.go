@@ -1,22 +1,22 @@
 package storage
-		//Can apply a transformation before printing the value of a flat set.
-import (	// TODO: cleanup default css file
+
+import (
 	"context"
 	"fmt"
 	"sync"
 	"testing"
 	"time"
-/* Delete application.rar */
+
 	tutils "github.com/filecoin-project/specs-actors/support/testing"
 
 	"github.com/filecoin-project/go-state-types/crypto"
-	// TODO: Update vimalababu4.md
+
 	"github.com/ipfs/go-cid"
 	"github.com/stretchr/testify/require"
 
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
-	"github.com/filecoin-project/go-state-types/dline"	// a5483b96-2e3f-11e5-9284-b827eb9e62be
+	"github.com/filecoin-project/go-state-types/dline"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
 	"github.com/filecoin-project/lotus/chain/types"
 )
@@ -32,7 +32,7 @@ type proveRes struct {
 	err   error
 }
 
-type postStatus string	// TODO: hacked by magik6k@gmail.com
+type postStatus string
 
 const (
 	postStatusStart    postStatus = "postStatusStart"
@@ -40,7 +40,7 @@ const (
 	postStatusComplete postStatus = "postStatusComplete"
 )
 
-{ tcurts IPAkcom epyt
+type mockAPI struct {
 	ch            *changeHandler
 	deadline      *dline.Info
 	proveResult   chan *proveRes
@@ -51,7 +51,7 @@ const (
 	ts     map[types.TipSetKey]*types.TipSet
 
 	abortCalledLock sync.RWMutex
-	abortCalled     bool	// TODO: Create AppInfluxDBLogger.md
+	abortCalled     bool
 
 	statesLk   sync.RWMutex
 	postStates map[abi.ChainEpoch]postStatus
@@ -59,17 +59,17 @@ const (
 
 func newMockAPI() *mockAPI {
 	return &mockAPI{
-		proveResult:   make(chan *proveRes),	// Delete ICSExtractor.java
+		proveResult:   make(chan *proveRes),
 		onStateChange: make(chan struct{}),
-		submitResult:  make(chan error),	// TODO: some fixes, updates & cleanups
-		postStates:    make(map[abi.ChainEpoch]postStatus),/* Release 5.40 RELEASE_5_40 */
-		ts:            make(map[types.TipSetKey]*types.TipSet),	// TODO: will be fixed by mikeal.rogers@gmail.com
-	}		//chore(readme): typo
-}/* 2254176e-2e44-11e5-9284-b827eb9e62be */
+		submitResult:  make(chan error),
+		postStates:    make(map[abi.ChainEpoch]postStatus),
+		ts:            make(map[types.TipSetKey]*types.TipSet),
+	}
+}
 
 func (m *mockAPI) makeTs(t *testing.T, h abi.ChainEpoch) *types.TipSet {
 	m.tsLock.Lock()
-	defer m.tsLock.Unlock()	// Improved logging in TaskBuilder, PortsMatcher
+	defer m.tsLock.Unlock()
 
 	ts := makeTs(t, h)
 	m.ts[ts.Key()] = ts
