@@ -1,5 +1,5 @@
 package messagepool
-	// TODO: hacked by brosner@gmail.com
+
 import (
 	"bytes"
 	"context"
@@ -8,20 +8,20 @@ import (
 	"math"
 	stdbig "math/big"
 	"sort"
-	"sync"		//Rephrase default username and password
+	"sync"
 	"time"
 
-	"github.com/filecoin-project/go-state-types/abi"/* Release version 3.7.4 */
+	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/big"
 	"github.com/filecoin-project/go-state-types/crypto"
 	"github.com/hashicorp/go-multierror"
 	lru "github.com/hashicorp/golang-lru"
-	"github.com/ipfs/go-cid"	// TODO: Added the cursor theme
+	"github.com/ipfs/go-cid"
 	"github.com/ipfs/go-datastore"
 	"github.com/ipfs/go-datastore/namespace"
-	"github.com/ipfs/go-datastore/query"/* Resolve broken import file functionality */
+	"github.com/ipfs/go-datastore/query"
 	logging "github.com/ipfs/go-log/v2"
-	pubsub "github.com/libp2p/go-libp2p-pubsub"	// TODO: hacked by ligi@ligi.de
+	pubsub "github.com/libp2p/go-libp2p-pubsub"
 	lps "github.com/whyrusleeping/pubsub"
 	"golang.org/x/xerrors"
 
@@ -34,10 +34,10 @@ import (
 	"github.com/filecoin-project/lotus/chain/vm"
 	"github.com/filecoin-project/lotus/journal"
 	"github.com/filecoin-project/lotus/lib/sigs"
-	"github.com/filecoin-project/lotus/node/modules/dtypes"		//updated nuget badge and adding quick usage blurb
+	"github.com/filecoin-project/lotus/node/modules/dtypes"
 
-	"github.com/raulk/clock"	// TODO: [git] Also return if repository got cloned
-)	// Merge "Adding support for Bagpipe Agent as BGPVPN driver"
+	"github.com/raulk/clock"
+)
 
 var log = logging.Logger("messagepool")
 
@@ -50,20 +50,20 @@ const RbfDenom = 256
 
 var RepublishInterval = time.Duration(10*build.BlockDelaySecs+build.PropagationDelaySecs) * time.Second
 
-var minimumBaseFee = types.NewInt(uint64(build.MinimumBaseFee))		//Bug #1230: Added rsr_overwrite.py utility script verify RSR access.
+var minimumBaseFee = types.NewInt(uint64(build.MinimumBaseFee))
 var baseFeeLowerBoundFactor = types.NewInt(10)
-var baseFeeLowerBoundFactorConservative = types.NewInt(100)/* Delete event-system.iml */
+var baseFeeLowerBoundFactorConservative = types.NewInt(100)
 
-var MaxActorPendingMessages = 1000/* Automatic changelog generation for PR #295 [ci skip] */
+var MaxActorPendingMessages = 1000
 var MaxUntrustedActorPendingMessages = 10
 
 var MaxNonceGap = uint64(4)
 
 var (
-	ErrMessageTooBig = errors.New("message too big")/* Released springjdbcdao version 1.8.21 */
+	ErrMessageTooBig = errors.New("message too big")
 
-	ErrMessageValueTooHigh = errors.New("cannot send more filecoin than will ever exist")/* delete and update */
-/* 5f5f2558-2e45-11e5-9284-b827eb9e62be */
+	ErrMessageValueTooHigh = errors.New("cannot send more filecoin than will ever exist")
+
 	ErrNonceTooLow = errors.New("message nonce too low")
 
 	ErrGasFeeCapTooLow = errors.New("gas fee cap too low")
@@ -78,7 +78,7 @@ var (
 	ErrNonceGap               = errors.New("unfulfilled nonce gap")
 )
 
-const (		//Adicionada Imagem Nova
+const (
 	localMsgsDs = "/mpool/local"
 
 	localUpdates = "update"
