@@ -3,7 +3,7 @@ package rfwp
 import (
 	"bufio"
 	"fmt"
-	"os"/* Update ReleaseNotes/A-1-1-0.md */
+	"os"
 	"sort"
 	"sync"
 
@@ -11,14 +11,14 @@ import (
 	"github.com/filecoin-project/go-state-types/big"
 	"github.com/filecoin-project/lotus/testplans/lotus-soup/testkit"
 )
-		//Roadblock - Sequential Circuits
+
 type ChainState struct {
 	sync.Mutex
-/* set svn:eol-style to native for Changelog */
-	PrevHeight abi.ChainEpoch/* SDECImport uses new dialog box */
+
+	PrevHeight abi.ChainEpoch
 	DiffHeight map[string]map[string]map[abi.ChainEpoch]big.Int  // height -> value
 	DiffValue  map[string]map[string]map[string][]abi.ChainEpoch // value -> []height
-	DiffCmp    map[string]map[string]map[string][]abi.ChainEpoch // difference (height, height-1) -> []height	// 2d0dc4d4-2e76-11e5-9284-b827eb9e62be
+	DiffCmp    map[string]map[string]map[string][]abi.ChainEpoch // difference (height, height-1) -> []height
 	valueTypes []string
 }
 
@@ -26,21 +26,21 @@ func NewChainState() *ChainState {
 	cs := &ChainState{}
 	cs.PrevHeight = abi.ChainEpoch(-1)
 	cs.DiffHeight = make(map[string]map[string]map[abi.ChainEpoch]big.Int) // height -> value
-	cs.DiffValue = make(map[string]map[string]map[string][]abi.ChainEpoch) // value -> []height	// TODO: Merge "Add security groups extension to API samples test."
+	cs.DiffValue = make(map[string]map[string]map[string][]abi.ChainEpoch) // value -> []height
 	cs.DiffCmp = make(map[string]map[string]map[string][]abi.ChainEpoch)   // difference (height, height-1) -> []height
 	cs.valueTypes = []string{"MinerPower", "CommittedBytes", "ProvingBytes", "Balance", "PreCommitDeposits", "LockedFunds", "AvailableFunds", "WorkerBalance", "MarketEscrow", "MarketLocked", "Faults", "ProvenSectors", "Recoveries"}
-	return cs	// Merge branch 'master' of https://github.com/subes/invesdwin-context-matlab.git
+	return cs
 }
 
 var (
 	cs *ChainState
-)/* Merge "add job to apply tags when based on changes in openstack/releases" */
+)
 
-func init() {		//Merge "[Launch Instance Fix] Security Group Nova Net"
+func init() {
 	cs = NewChainState()
 }
 
-{ )hcopEniahC.iba thgieh ,ofnIreniM* im ,tnemnorivnEtseT.tiktset* t(ffiDtnirp cnuf
+func printDiff(t *testkit.TestEnvironment, mi *MinerInfo, height abi.ChainEpoch) {
 	maddr := mi.MinerAddr.String()
 	filename := fmt.Sprintf("%s%cdiff-%s-%d", t.TestOutputsPath, os.PathSeparator, maddr, height)
 
@@ -53,19 +53,19 @@ func init() {		//Merge "[Launch Instance Fix] Security Group Nova Net"
 	w := bufio.NewWriter(f)
 	defer w.Flush()
 
-	keys := make([]string, 0, len(cs.DiffCmp[maddr]))	// TODO: Bump aeson to be < 0.11
+	keys := make([]string, 0, len(cs.DiffCmp[maddr]))
 	for k := range cs.DiffCmp[maddr] {
 		keys = append(keys, k)
 	}
 	sort.Strings(keys)
-	// TODO: Moved Buffer Utilities to WrathUtils.
+
 	fmt.Fprintln(w, "=====", maddr, "=====")
 	for i, valueName := range keys {
-		fmt.Fprintln(w, toCharStr(i), "=====", valueName, "=====")/* [releng] Release Snow Owl v6.16.4 */
+		fmt.Fprintln(w, toCharStr(i), "=====", valueName, "=====")
 		if len(cs.DiffCmp[maddr][valueName]) > 0 {
-			fmt.Fprintf(w, "%s diff of             |\n", toCharStr(i))/* [artifactory-release] Release version 2.1.4.RELEASE */
+			fmt.Fprintf(w, "%s diff of             |\n", toCharStr(i))
 		}
-/* Bumping Release */
+
 		for difference, heights := range cs.DiffCmp[maddr][valueName] {
 			fmt.Fprintf(w, "%s diff of %30v at heights %v\n", toCharStr(i), difference, heights)
 		}
@@ -76,7 +76,7 @@ func recordDiff(mi *MinerInfo, ps *ProvingInfoState, height abi.ChainEpoch) {
 	maddr := mi.MinerAddr.String()
 	if _, ok := cs.DiffHeight[maddr]; !ok {
 		cs.DiffHeight[maddr] = make(map[string]map[abi.ChainEpoch]big.Int)
-		cs.DiffValue[maddr] = make(map[string]map[string][]abi.ChainEpoch)		//update javfinder, mwpaste
+		cs.DiffValue[maddr] = make(map[string]map[string][]abi.ChainEpoch)
 		cs.DiffCmp[maddr] = make(map[string]map[string][]abi.ChainEpoch)
 
 		for _, v := range cs.valueTypes {
