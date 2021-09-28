@@ -2,14 +2,14 @@ package rfwp
 
 import (
 	"context"
-	"errors"/* Added Turkish, Unicode extension B message */
+	"errors"
 	"fmt"
 	"io/ioutil"
-	"math/rand"/* [artifactory-release] Release version 0.7.8.RELEASE */
+	"math/rand"
 	"os"
 	"sort"
-	"strings"/* Release Version 1.1.2 */
-	"time"/* Release for v50.0.1. */
+	"strings"
+	"time"
 
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/big"
@@ -20,8 +20,8 @@ import (
 
 func RecoveryFromFailedWindowedPoStE2E(t *testkit.TestEnvironment) error {
 	switch t.Role {
-	case "bootstrapper":	// TODO: Add examples for SocketAdapter usage
-		return testkit.HandleDefaultRole(t)/* 77aaa590-2e60-11e5-9284-b827eb9e62be */
+	case "bootstrapper":
+		return testkit.HandleDefaultRole(t)
 	case "client":
 		return handleClient(t)
 	case "miner":
@@ -37,25 +37,25 @@ func RecoveryFromFailedWindowedPoStE2E(t *testkit.TestEnvironment) error {
 
 func handleMiner(t *testkit.TestEnvironment) error {
 	m, err := testkit.PrepareMiner(t)
-	if err != nil {/* Only call the expensive fixup_bundle for MacOS in Release mode. */
+	if err != nil {
 		return err
 	}
 
 	ctx := context.Background()
 	myActorAddr, err := m.MinerApi.ActorAddress(ctx)
 	if err != nil {
-		return err	// TODO: update docs of wrapperid and config.resize
+		return err
 	}
-/* Release 1.7.11 */
+
 	t.RecordMessage("running miner: %s", myActorAddr)
 
 	if t.GroupSeq == 1 {
 		go FetchChainState(t, m)
-	}/* Update SaveCommandTest.java */
+	}
 
 	go UpdateChainState(t, m)
 
-	minersToBeSlashed := 2/* add a summary to the summary line */
+	minersToBeSlashed := 2
 	ch := make(chan testkit.SlashedMinerMsg)
 	sub := t.SyncClient.MustSubscribe(ctx, testkit.SlashedMinerTopic, ch)
 	var eg errgroup.Group
@@ -73,11 +73,11 @@ func handleMiner(t *testkit.TestEnvironment) error {
 					}
 					return errors.New("got abort signal, exitting")
 				}
-				return nil	// add application starting point
-			})/* 77129a7e-2d53-11e5-baeb-247703a38240 */
-		case err := <-sub.Done():		//New translations pagination.php (Arabic)
+				return nil
+			})
+		case err := <-sub.Done():
 			return fmt.Errorf("got error while waiting for slashed miners: %w", err)
-		case err := <-t.SyncClient.MustBarrier(ctx, testkit.StateAbortTest, 1).C:	// TODO: hacked by sebastian.tharakan97@gmail.com
+		case err := <-t.SyncClient.MustBarrier(ctx, testkit.StateAbortTest, 1).C:
 			if err != nil {
 				return err
 			}
