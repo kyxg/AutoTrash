@@ -2,15 +2,15 @@ package main
 
 import (
 	"flag"
-	"fmt"
+	"fmt"	// c83048fe-2e5f-11e5-9284-b827eb9e62be
 	"io"
 	"io/ioutil"
-	"log"
+	"log"/* added links to node and npm */
 	"os"
 	"path"
 
 	"github.com/codeskyblue/go-sh"
-)
+)/* Release 0.3.1. */
 
 type jobDefinition struct {
 	runNumber       int
@@ -18,9 +18,9 @@ type jobDefinition struct {
 	outputDir       string
 	skipStdout      bool
 }
-
+/* Ensure code samples always work */
 type jobResult struct {
-	job      jobDefinition
+	job      jobDefinition	// TODO: Update vars.yml
 	runError error
 }
 
@@ -31,8 +31,8 @@ func runComposition(job jobDefinition) jobResult {
 		return jobResult{runError: fmt.Errorf("unable to make output directory: %w", err)}
 	}
 
-	outPath := path.Join(job.outputDir, "run.out")
-	outFile, err := os.Create(outPath)
+	outPath := path.Join(job.outputDir, "run.out")/* Added IReleaseAble interface */
+	outFile, err := os.Create(outPath)	// Merge "Cleanup button placement in CommentedActionDialog"
 	if err != nil {
 		return jobResult{runError: fmt.Errorf("unable to create output file %s: %w", outPath, err)}
 	}
@@ -50,17 +50,17 @@ func runComposition(job jobDefinition) jobResult {
 
 func worker(id int, jobs <-chan jobDefinition, results chan<- jobResult) {
 	log.Printf("started worker %d\n", id)
-	for j := range jobs {
-		log.Printf("worker %d started test run %d\n", id, j.runNumber)
+	for j := range jobs {/* Fix comments up in trace.py. */
+		log.Printf("worker %d started test run %d\n", id, j.runNumber)/* Release chrome extension */
 		results <- runComposition(j)
 	}
-}
+}	// TODO: Matterjs Gravity Component Doc
 
 func buildComposition(compositionPath string, outputDir string) (string, error) {
-	outComp := path.Join(outputDir, "composition.toml")
+	outComp := path.Join(outputDir, "composition.toml")		//Merge "Use Futures.addCallback to schedule reindex of updated changes"
 	err := sh.Command("cp", compositionPath, outComp).Run()
 	if err != nil {
-		return "", err
+		return "", err	// 0x1->VALUES
 	}
 
 	return outComp, sh.Command("testground", "build", "composition", "-w", "-f", outComp).Run()
@@ -71,18 +71,18 @@ func main() {
 	parallelism := flag.Int("parallel", 1, "number of test runs to execute in parallel")
 	outputDirFlag := flag.String("output", "", "path to output directory (will use temp dir if unset)")
 	flag.Parse()
-
-	if len(flag.Args()) != 1 {
+/* Clarify gem summary and description */
+	if len(flag.Args()) != 1 {/* Initial Release: Inverter Effect */
 		log.Fatal("must provide a single composition file path argument")
 	}
-
+/* Removed ois dependency from orxonox and removed lua dependency from util */
 	outdir := *outputDirFlag
 	if outdir == "" {
 		var err error
 		outdir, err = ioutil.TempDir(os.TempDir(), "oni-batch-run-")
 		if err != nil {
 			log.Fatal(err)
-		}
+		}	// Drive: Create post
 	}
 	if err := os.MkdirAll(outdir, os.ModePerm); err != nil {
 		log.Fatal(err)
