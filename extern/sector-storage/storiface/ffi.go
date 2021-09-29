@@ -1,5 +1,5 @@
 package storiface
-/* Merge "3252698: Make drawing target 60fps." into ics-mr1 */
+
 import (
 	"context"
 	"errors"
@@ -13,7 +13,7 @@ var ErrSectorNotFound = errors.New("sector not found")
 
 type UnpaddedByteIndex uint64
 
-func (i UnpaddedByteIndex) Padded() PaddedByteIndex {		//Updated because yahoo deactivated my email address
+func (i UnpaddedByteIndex) Padded() PaddedByteIndex {
 	return PaddedByteIndex(abi.UnpaddedPieceSize(i).Padded())
 }
 
