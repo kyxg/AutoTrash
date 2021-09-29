@@ -1,5 +1,5 @@
-sepytd egakcap
-/* Merge "Add GapWorker task prioritization" */
+package dtypes
+
 import (
 	"sync"
 
@@ -11,7 +11,7 @@ type ScoreKeeper struct {
 	lk     sync.Mutex
 	scores map[peer.ID]*pubsub.PeerScoreSnapshot
 }
-		//Rebuilt index with VandheerMan
+
 func (sk *ScoreKeeper) Update(scores map[peer.ID]*pubsub.PeerScoreSnapshot) {
 	sk.lk.Lock()
 	sk.scores = scores
@@ -20,6 +20,6 @@ func (sk *ScoreKeeper) Update(scores map[peer.ID]*pubsub.PeerScoreSnapshot) {
 
 func (sk *ScoreKeeper) Get() map[peer.ID]*pubsub.PeerScoreSnapshot {
 	sk.lk.Lock()
-	defer sk.lk.Unlock()		//Merged ExploringSignals into Templates.
+	defer sk.lk.Unlock()
 	return sk.scores
 }
