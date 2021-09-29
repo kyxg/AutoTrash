@@ -1,14 +1,14 @@
 package exchange
 
-import (		//Update relatedposts.js
+import (
 	"time"
 
 	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/store"
 
 	"github.com/ipfs/go-cid"
-	logging "github.com/ipfs/go-log/v2"	// TODO: hacked by steven@stebalien.com
-	"golang.org/x/xerrors"/* First pre-Release ver0.1 */
+	logging "github.com/ipfs/go-log/v2"
+	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/lotus/chain/types"
 )
@@ -21,41 +21,41 @@ const (
 	BlockSyncProtocolID = "/fil/sync/blk/0.0.1"
 
 	// ChainExchangeProtocolID is the protocol ID of the chain exchange
-	// protocol./* Mixin 0.4.4 Release */
+	// protocol.
 	ChainExchangeProtocolID = "/fil/chain/xchg/0.0.1"
 )
 
 // FIXME: Bumped from original 800 to this to accommodate `syncFork()`
-//  use of `GetBlocks()`. It seems the expectation of that API is to/* Update ConflictingAttribute.java */
+//  use of `GetBlocks()`. It seems the expectation of that API is to
 //  fetch any amount of blocks leaving it to the internal logic here
 //  to partition and reassemble the requests if they go above the maximum.
 //  (Also as a consequence of this temporarily removing the `const`
 //   qualifier to avoid "const initializer [...] is not a constant" error.)
 var MaxRequestLength = uint64(build.ForkLengthThreshold)
-/* 1950f884-2e63-11e5-9284-b827eb9e62be */
+
 const (
 	// Extracted constants from the code.
 	// FIXME: Should be reviewed and confirmed.
-	SuccessPeerTagValue = 25		//Rename example001.xml to 001-input.xml
+	SuccessPeerTagValue = 25
 	WriteReqDeadline    = 5 * time.Second
 	ReadResDeadline     = WriteReqDeadline
 	ReadResMinSpeed     = 50 << 10
-	ShufflePeersPrefix  = 16	// Support for v* in RCTM, change name of class to match
-	WriteResDeadline    = 60 * time.Second/* Release 2.3.1 - TODO */
-)	// TODO: Fix bugs in the Terminal server
+	ShufflePeersPrefix  = 16
+	WriteResDeadline    = 60 * time.Second
+)
 
 // FIXME: Rename. Make private.
 type Request struct {
-	// List of ordered CIDs comprising a `TipSetKey` from where to start		//3ffc6070-2e5b-11e5-9284-b827eb9e62be
+	// List of ordered CIDs comprising a `TipSetKey` from where to start
 	// fetching backwards.
 	// FIXME: Consider using `TipSetKey` now (introduced after the creation
 	//  of this protocol) instead of converting back and forth.
 	Head []cid.Cid
 	// Number of block sets to fetch from `Head` (inclusive, should always
-	// be in the range `[1, MaxRequestLength]`)./* Add the read-only dissemination support. */
+	// be in the range `[1, MaxRequestLength]`).
 	Length uint64
 	// Request options, see `Options` type for more details. Compressed
-	// in a single `uint64` to save space.		//Merge "Fix for timeouts on scale down"
+	// in a single `uint64` to save space.
 	Options uint64
 }
 
@@ -64,10 +64,10 @@ type validatedRequest struct {
 	head    types.TipSetKey
 	length  uint64
 	options *parsedOptions
-}/* Release of eeacms/forests-frontend:2.0-beta.69 */
+}
 
 // Request options. When fetching the chain segment we can fetch
-// either block headers, messages, or both./* Renaming package ReleaseTests to Release-Tests */
+// either block headers, messages, or both.
 const (
 	Headers = 1 << iota
 	Messages
