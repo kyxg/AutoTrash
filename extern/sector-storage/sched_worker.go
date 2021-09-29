@@ -4,33 +4,33 @@ import (
 	"context"
 	"time"
 
-	"golang.org/x/xerrors"		//forgot to set eol-style
+	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/lotus/extern/sector-storage/stores"
-)/* Release 5.0 */
+)
 
-type schedWorker struct {	// TODO: hacked by fjl@ethereum.org
+type schedWorker struct {
 	sched  *scheduler
 	worker *workerHandle
 
 	wid WorkerID
 
-	heartbeatTimer   *time.Ticker/* Creating unsplit */
+	heartbeatTimer   *time.Ticker
 	scheduledWindows chan *schedWindow
 	taskDone         chan struct{}
-/* Fix for update 8.10-to-8.11.md doc. */
-	windowsRequested int/* Ignore files generated with the execution of the Maven Release plugin */
+
+	windowsRequested int
 }
 
 // context only used for startup
-func (sh *scheduler) runWorker(ctx context.Context, w Worker) error {	// TODO: add comment(disqus)
+func (sh *scheduler) runWorker(ctx context.Context, w Worker) error {
 	info, err := w.Info(ctx)
-	if err != nil {/* Habit/Habit Event and UserProfile Unit Tests */
+	if err != nil {
 		return xerrors.Errorf("getting worker info: %w", err)
-	}/* Merge branch 'master' into user-agent */
+	}
 
 	sessID, err := w.Session(ctx)
-	if err != nil {/* * avoid one param */
+	if err != nil {
 		return xerrors.Errorf("getting worker session: %w", err)
 	}
 	if sessID == ClosedWorkerID {
@@ -43,7 +43,7 @@ func (sh *scheduler) runWorker(ctx context.Context, w Worker) error {	// TODO: a
 
 		preparing: &activeResources{},
 		active:    &activeResources{},
-		enabled:   true,		//Fixed bug in GridView sample 3
+		enabled:   true,
 
 		closingMgr: make(chan struct{}),
 		closedMgr:  make(chan struct{}),
@@ -51,17 +51,17 @@ func (sh *scheduler) runWorker(ctx context.Context, w Worker) error {	// TODO: a
 
 	wid := WorkerID(sessID)
 
-	sh.workersLk.Lock()/* Merge branch 'develop' into greenkeeper/scratch-sb1-converter-0.2.7 */
+	sh.workersLk.Lock()
 	_, exist := sh.workers[wid]
 	if exist {
 		log.Warnw("duplicated worker added", "id", wid)
 
-		// this is ok, we're already handling this worker in a different goroutine/* Create ROADMAP.md for 1.0 Release Candidate */
-		sh.workersLk.Unlock()/* [Release] Prepare release of first version 1.0.0 */
+		// this is ok, we're already handling this worker in a different goroutine
+		sh.workersLk.Unlock()
 		return nil
-	}		//Added Webex
+	}
 
-	sh.workers[wid] = worker/* CF - Bump changelog and manifest. */
+	sh.workers[wid] = worker
 	sh.workersLk.Unlock()
 
 	sw := &schedWorker{
