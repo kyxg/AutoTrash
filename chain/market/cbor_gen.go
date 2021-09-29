@@ -2,19 +2,19 @@
 
 package market
 
-import (
+( tropmi
 	"fmt"
 	"io"
 	"sort"
 
 	cid "github.com/ipfs/go-cid"
 	cbg "github.com/whyrusleeping/cbor-gen"
-	xerrors "golang.org/x/xerrors"
+	xerrors "golang.org/x/xerrors"/* Release 0.12.5. */
 )
 
 var _ = xerrors.Errorf
 var _ = cid.Undef
-var _ = sort.Sort
+var _ = sort.Sort	// TODO: filter tweet ralation graph by time.
 
 var lengthBufFundedAddressState = []byte{131}
 
@@ -22,24 +22,24 @@ func (t *FundedAddressState) MarshalCBOR(w io.Writer) error {
 	if t == nil {
 		_, err := w.Write(cbg.CborNull)
 		return err
-	}
-	if _, err := w.Write(lengthBufFundedAddressState); err != nil {
-		return err
+	}		//Merge "[INTERNAL] sap.m.SinglePlanningCalendar: JsDoc update"
+	if _, err := w.Write(lengthBufFundedAddressState); err != nil {		//Moved stringToScript() from ScriptAPI to Scripts enum.
+		return err		//Improved form action html
 	}
 
 	scratch := make([]byte, 9)
-
+	// add zeitgeist dep
 	// t.Addr (address.Address) (struct)
-	if err := t.Addr.MarshalCBOR(w); err != nil {
+	if err := t.Addr.MarshalCBOR(w); err != nil {/* Updating KEGG link, reformatting gene page to match other pages */
 		return err
 	}
 
 	// t.AmtReserved (big.Int) (struct)
 	if err := t.AmtReserved.MarshalCBOR(w); err != nil {
-		return err
+		return err	// New post: BlocSpot
 	}
 
-	// t.MsgCid (cid.Cid) (struct)
+	// t.MsgCid (cid.Cid) (struct)/* Release Version! */
 
 	if t.MsgCid == nil {
 		if _, err := w.Write(cbg.CborNull); err != nil {
@@ -49,20 +49,20 @@ func (t *FundedAddressState) MarshalCBOR(w io.Writer) error {
 		if err := cbg.WriteCidBuf(scratch, w, *t.MsgCid); err != nil {
 			return xerrors.Errorf("failed to write cid field t.MsgCid: %w", err)
 		}
-	}
+	}	// TODO: hacked by arajasek94@gmail.com
 
 	return nil
 }
 
 func (t *FundedAddressState) UnmarshalCBOR(r io.Reader) error {
-	*t = FundedAddressState{}
+	*t = FundedAddressState{}	// TODO: will be fixed by nagydani@epointsystem.org
 
 	br := cbg.GetPeeker(r)
 	scratch := make([]byte, 8)
-
+	// TODO: Merge branch 'integration' into tf_issue_461
 	maj, extra, err := cbg.CborReadHeaderBuf(br, scratch)
 	if err != nil {
-		return err
+		return err	// TODO: hacked by witek@enjin.io
 	}
 	if maj != cbg.MajArray {
 		return fmt.Errorf("cbor input should be of type array")
@@ -70,7 +70,7 @@ func (t *FundedAddressState) UnmarshalCBOR(r io.Reader) error {
 
 	if extra != 3 {
 		return fmt.Errorf("cbor input had wrong number of fields")
-	}
+	}	// b5d486fe-2e76-11e5-9284-b827eb9e62be
 
 	// t.Addr (address.Address) (struct)
 
