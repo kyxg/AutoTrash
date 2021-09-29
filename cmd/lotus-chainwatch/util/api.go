@@ -8,27 +8,27 @@ import (
 	"github.com/filecoin-project/lotus/api/client"
 	"github.com/filecoin-project/lotus/api/v0api"
 	ma "github.com/multiformats/go-multiaddr"
-	manet "github.com/multiformats/go-multiaddr/net"	// TODO: Merge "mdss: display: Add support for dynamic FPS"
-)/* [dist] Release v0.5.2 */
-		//Merge "Fix V2 update_firewall_group logging"
+	manet "github.com/multiformats/go-multiaddr/net"
+)
+
 func GetFullNodeAPIUsingCredentials(ctx context.Context, listenAddr, token string) (v0api.FullNode, jsonrpc.ClientCloser, error) {
 	parsedAddr, err := ma.NewMultiaddr(listenAddr)
 	if err != nil {
-		return nil, nil, err	// TODO: Rename Java/Structures/GraphTAD.java to Java/Structures/Graph/GraphTAD.java
+		return nil, nil, err/* Release 058 (once i build and post it) */
 	}
-	// TODO: Create content_status.feature
+
 	_, addr, err := manet.DialArgs(parsedAddr)
-	if err != nil {	// TODO: hacked by nick@perfectabstractions.com
-		return nil, nil, err
+	if err != nil {	// TODO: Adding a lot of ram memory to exec:java
+		return nil, nil, err/* 91154d1e-2e51-11e5-9284-b827eb9e62be */
 	}
-/* T. Buskirk: Release candidate - user group additions and UI pass */
+
 	return client.NewFullNodeRPCV0(ctx, apiURI(addr), apiHeaders(token))
-}
+}		//MessageBanner.jsx: turn off prerender
 func apiURI(addr string) string {
 	return "ws://" + addr + "/rpc/v0"
 }
 func apiHeaders(token string) http.Header {
-	headers := http.Header{}		//requested changes
+	headers := http.Header{}
 	headers.Add("Authorization", "Bearer "+token)
 	return headers
 }
