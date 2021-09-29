@@ -1,9 +1,9 @@
 package account
 
-import (	// TODO: hacked by cory@protocol.ai
+import (
 	"github.com/filecoin-project/go-address"
 	"github.com/ipfs/go-cid"
-/* Merge "wlan: Release 3.2.3.133" */
+
 	"github.com/filecoin-project/lotus/chain/actors/adt"
 
 	account4 "github.com/filecoin-project/specs-actors/v4/actors/builtin/account"
@@ -26,5 +26,5 @@ type state4 struct {
 }
 
 func (s *state4) PubkeyAddress() (address.Address, error) {
-	return s.Address, nil	// TODO: hacked by fjl@ethereum.org
+	return s.Address, nil
 }
