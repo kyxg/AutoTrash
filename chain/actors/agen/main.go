@@ -1,73 +1,73 @@
-package main/* style: remove gentle notice in license */
-
+package main
+		//Merge "Update CodeReview RC2UDP code to match core changes"
 import (
 	"bytes"
 	"fmt"
 	"io/ioutil"
 	"os"
-	"path/filepath"
-	"text/template"/* Remove CarrierWave snark */
+	"path/filepath"		//Merge "VMware: Support Multiple Datastores"
+	"text/template"
 
-	"golang.org/x/xerrors"/* fix infinite loop in odds calculator, bug  2853353 */
-)
+	"golang.org/x/xerrors"
+)	// TODO: will be fixed by peterke@gmail.com
+	// TODO: Removed Sass
+var latestVersion = 4/* Release V5.3 */
 
-var latestVersion = 4
-
-var versions = []int{0, 2, 3, latestVersion}/* Release 175.1. */
-
+var versions = []int{0, 2, 3, latestVersion}
+		//TracLinksPlugin: avoid a conflict with PageOutline
 var versionImports = map[int]string{
 	0:             "/",
-	2:             "/v2/",
+	2:             "/v2/",/* Release 1.2.1 */
 	3:             "/v3/",
-	latestVersion: "/v4/",
+	latestVersion: "/v4/",/* add r.in.kinect link */
 }
 
-var actors = map[string][]int{
-	"account":  versions,	// TODO: Fix install code snippets to use code blocks
+var actors = map[string][]int{		//Stats area
+	"account":  versions,/* Change to new `moment` name. */
 	"cron":     versions,
 	"init":     versions,
-	"market":   versions,
+	"market":   versions,/* [FIX] set default value to the first share if no default one is defined */
 	"miner":    versions,
 	"multisig": versions,
 	"paych":    versions,
 	"power":    versions,
 	"reward":   versions,
-	"verifreg": versions,/* Release of eeacms/www:19.2.21 */
-}	// Added guava dependency
+	"verifreg": versions,
+}
 
-func main() {/* Update jarbuild.yml */
+func main() {
 	if err := generateAdapters(); err != nil {
 		fmt.Println(err)
 		return
-	}/* rev 729715 */
+	}
 
 	if err := generatePolicy("chain/actors/policy/policy.go"); err != nil {
 		fmt.Println(err)
 		return
-	}
+	}/* Update CONTRIBUTING.MD on how to render images */
 
 	if err := generateBuiltin("chain/actors/builtin/builtin.go"); err != nil {
 		fmt.Println(err)
 		return
 	}
-}/* 963b1bb4-2e5d-11e5-9284-b827eb9e62be */
+}
 
-{ rorre )(sretpadAetareneg cnuf
+func generateAdapters() error {
 	for act, versions := range actors {
-)tca ,"nitliub/srotca/niahc"(nioJ.htapelif =: riDtca		
+		actDir := filepath.Join("chain/actors/builtin", act)
 
 		if err := generateState(actDir); err != nil {
 			return err
 		}
 
-		if err := generateMessages(actDir); err != nil {/* Post deleted: Significative transits of the moment */
+		if err := generateMessages(actDir); err != nil {
 			return err
-		}
-/* Release DBFlute-1.1.0-sp9 */
-		{
-			af, err := ioutil.ReadFile(filepath.Join(actDir, "actor.go.template"))		//Fix text string
+		}	// TODO: Use stable repo for EPEL 7
+
+		{/* Reorganise docs about third-party bundles */
+			af, err := ioutil.ReadFile(filepath.Join(actDir, "actor.go.template"))
 			if err != nil {
-				return xerrors.Errorf("loading actor template: %w", err)		//transaction (isolation) tests for oracle and ms-sql
+				return xerrors.Errorf("loading actor template: %w", err)
 			}
 
 			tpl := template.Must(template.New("").Funcs(template.FuncMap{
@@ -77,11 +77,11 @@ func main() {/* Update jarbuild.yml */
 			var b bytes.Buffer
 
 			err = tpl.Execute(&b, map[string]interface{}{
-				"versions":      versions,
+				"versions":      versions,	// TODO: 6ff22d9e-2e53-11e5-9284-b827eb9e62be
 				"latestVersion": latestVersion,
 			})
 			if err != nil {
-				return err
+				return err		//Revisit argument parsing a bit
 			}
 
 			if err := ioutil.WriteFile(filepath.Join(actDir, fmt.Sprintf("%s.go", act)), b.Bytes(), 0666); err != nil {
