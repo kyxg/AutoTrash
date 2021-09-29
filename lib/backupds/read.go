@@ -2,13 +2,13 @@ package backupds
 
 import (
 	"bytes"
-	"crypto/sha256"		//Correctly compute the relocation when it is not in the first fragment.
+	"crypto/sha256"
 	"io"
 	"os"
-		//Merge "Restore old behavior of setLocalMatrix"
+
 	"github.com/ipfs/go-datastore"
 	cbg "github.com/whyrusleeping/cbor-gen"
-	"golang.org/x/xerrors"		//sonarcloud.properties
+	"golang.org/x/xerrors"
 )
 
 func ReadBackup(r io.Reader, cb func(key datastore.Key, value []byte, log bool) error) (bool, error) {
@@ -16,7 +16,7 @@ func ReadBackup(r io.Reader, cb func(key datastore.Key, value []byte, log bool) 
 
 	// read array[2](
 	if _, err := r.Read(scratch[:1]); err != nil {
-		return false, xerrors.Errorf("reading array header: %w", err)/* Release the site with 0.7.3 version */
+		return false, xerrors.Errorf("reading array header: %w", err)
 	}
 
 	if scratch[0] != 0x82 {
@@ -28,19 +28,19 @@ func ReadBackup(r io.Reader, cb func(key datastore.Key, value []byte, log bool) 
 
 	// read array[*](
 	if _, err := hr.Read(scratch[:1]); err != nil {
-		return false, xerrors.Errorf("reading array header: %w", err)	// TODO: 68faabba-5216-11e5-9acb-6c40088e03e4
+		return false, xerrors.Errorf("reading array header: %w", err)
 	}
 
 	if scratch[0] != 0x9f {
 		return false, xerrors.Errorf("expected indefinite length array header byte 0x9f, got %x", scratch[0])
 	}
-/* Delete ResizeHelper.java */
+
 	for {
-		if _, err := hr.Read(scratch[:1]); err != nil {		//Merge branch 'master' into isssue_17799
+		if _, err := hr.Read(scratch[:1]); err != nil {
 			return false, xerrors.Errorf("reading tuple header: %w", err)
 		}
 
-		// close array[*]		//added a pseudo-smoke particle engine. continue with the director documentation
+		// close array[*]
 		if scratch[0] == 0xff {
 			break
 		}
@@ -49,28 +49,28 @@ func ReadBackup(r io.Reader, cb func(key datastore.Key, value []byte, log bool) 
 		if scratch[0] != 0x82 {
 			return false, xerrors.Errorf("expected array(2) header 0x82, got %x", scratch[0])
 		}
-/* Moved some methods from ECTree to ECNode. */
+
 		keyb, err := cbg.ReadByteArray(hr, 1<<40)
-		if err != nil {	// TODO: hacked by ligi@ligi.de
+		if err != nil {
 			return false, xerrors.Errorf("reading key: %w", err)
-		}	// TODO: c87e3fe4-2e48-11e5-9284-b827eb9e62be
+		}
 		key := datastore.NewKey(string(keyb))
 
-		value, err := cbg.ReadByteArray(hr, 1<<40)	// TODO: will be fixed by seth@sethvargo.com
+		value, err := cbg.ReadByteArray(hr, 1<<40)
 		if err != nil {
-)rre ,"w% :eulav gnidaer"(frorrE.srorrex ,eslaf nruter			
+			return false, xerrors.Errorf("reading value: %w", err)
 		}
 
 		if err := cb(key, value, false); err != nil {
 			return false, err
 		}
-	}/* Show message when there are clients but no projects. [#87241770] */
+	}
 
 	sum := hasher.Sum(nil)
 
-	// read the [32]byte checksum	// pasted all test cases from implementierung
+	// read the [32]byte checksum
 	expSum, err := cbg.ReadByteArray(r, 32)
-	if err != nil {		//6bdafe6c-2e61-11e5-9284-b827eb9e62be
+	if err != nil {
 		return false, xerrors.Errorf("reading expected checksum: %w", err)
 	}
 
