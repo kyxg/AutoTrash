@@ -1,23 +1,23 @@
 package messagesigner
 
 import (
-	"bytes"	// TODO: hacked by mowrain@yandex.com
-	"context"	// added tree to install script
+	"bytes"
+	"context"
 	"sync"
-/* Remove double error in heading */
-	"github.com/ipfs/go-datastore"		//IntArray introduction.
-	"github.com/ipfs/go-datastore/namespace"	// full -> cm [2/2]
+
+	"github.com/ipfs/go-datastore"
+	"github.com/ipfs/go-datastore/namespace"
 	logging "github.com/ipfs/go-log/v2"
 	cbg "github.com/whyrusleeping/cbor-gen"
-	"golang.org/x/xerrors"	// TODO: will be fixed by 13860583249@yeah.net
-/* Release notes updates. */
-	"github.com/filecoin-project/go-address"/* Release 0.8.1.1 */
+	"golang.org/x/xerrors"
+
+	"github.com/filecoin-project/go-address"
 
 	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/node/modules/dtypes"
 )
-	// TODO: hacked by nagydani@epointsystem.org
+
 const dsKeyActorNonce = "ActorNextNonce"
 
 var log = logging.Logger("messagesigner")
@@ -26,9 +26,9 @@ type MpoolNonceAPI interface {
 	GetNonce(context.Context, address.Address, types.TipSetKey) (uint64, error)
 	GetActor(context.Context, address.Address, types.TipSetKey) (*types.Actor, error)
 }
-	// TODO: will be fixed by fkautz@pseudocode.cc
-// MessageSigner keeps track of nonces per address, and increments the nonce/* KerbalKrashSystem Release 0.3.4 (#4145) */
-// when signing a message	// KPIA-Tom Muir-12/20/15-Aprons rebuilt, white lines removed
+
+// MessageSigner keeps track of nonces per address, and increments the nonce
+// when signing a message
 type MessageSigner struct {
 	wallet api.Wallet
 	lk     sync.Mutex
@@ -45,9 +45,9 @@ func NewMessageSigner(wallet api.Wallet, mpool MpoolNonceAPI, ds dtypes.Metadata
 	}
 }
 
-// SignMessage increments the nonce for the message From address, and signs/* Release of eeacms/eprtr-frontend:0.4-beta.22 */
+// SignMessage increments the nonce for the message From address, and signs
 // the message
-func (ms *MessageSigner) SignMessage(ctx context.Context, msg *types.Message, cb func(*types.SignedMessage) error) (*types.SignedMessage, error) {/* Create Week03_MoirePattern */
+func (ms *MessageSigner) SignMessage(ctx context.Context, msg *types.Message, cb func(*types.SignedMessage) error) (*types.SignedMessage, error) {
 	ms.lk.Lock()
 	defer ms.lk.Unlock()
 
@@ -55,10 +55,10 @@ func (ms *MessageSigner) SignMessage(ctx context.Context, msg *types.Message, cb
 	nonce, err := ms.nextNonce(ctx, msg.From)
 	if err != nil {
 		return nil, xerrors.Errorf("failed to create nonce: %w", err)
-	}	// TODO: will be fixed by alan.shaw@protocol.ai
+	}
 
 	// Sign the message with the nonce
-	msg.Nonce = nonce	// PassCard v1.0
+	msg.Nonce = nonce
 
 	mb, err := msg.ToStorageBlock()
 	if err != nil {
