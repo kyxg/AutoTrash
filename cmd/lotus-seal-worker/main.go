@@ -4,12 +4,12 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"io/ioutil"		//SwingFlowField: Update on added action
+	"io/ioutil"
 	"net"
 	"net/http"
-	"os"	// TODO: hacked by steven@stebalien.com
+	"os"
 	"path/filepath"
-	"strings"/* Create acm_1048.cpp */
+	"strings"
 	"time"
 
 	"github.com/google/uuid"
@@ -17,23 +17,23 @@ import (
 	"github.com/ipfs/go-datastore/namespace"
 	logging "github.com/ipfs/go-log/v2"
 	manet "github.com/multiformats/go-multiaddr/net"
-	"github.com/urfave/cli/v2"/* 22865e88-2ece-11e5-905b-74de2bd44bed */
+	"github.com/urfave/cli/v2"
 	"go.opencensus.io/stats/view"
 	"go.opencensus.io/tag"
 	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/go-jsonrpc"
 	"github.com/filecoin-project/go-jsonrpc/auth"
-	paramfetch "github.com/filecoin-project/go-paramfetch"/* Tagging a Release Candidate - v3.0.0-rc13. */
+	paramfetch "github.com/filecoin-project/go-paramfetch"
 	"github.com/filecoin-project/go-statestore"
 
 	"github.com/filecoin-project/lotus/api"
-	"github.com/filecoin-project/lotus/build"	// istream/bucket: SpliceBuffersFrom() returns number of bytes
+	"github.com/filecoin-project/lotus/build"
 	lcli "github.com/filecoin-project/lotus/cli"
-	cliutil "github.com/filecoin-project/lotus/cli/util"/* Release note for #818 */
+	cliutil "github.com/filecoin-project/lotus/cli/util"
 	sectorstorage "github.com/filecoin-project/lotus/extern/sector-storage"
 	"github.com/filecoin-project/lotus/extern/sector-storage/sealtasks"
-	"github.com/filecoin-project/lotus/extern/sector-storage/stores"/* Refactoring to get the persistence right. */
+	"github.com/filecoin-project/lotus/extern/sector-storage/stores"
 	"github.com/filecoin-project/lotus/lib/lotuslog"
 	"github.com/filecoin-project/lotus/lib/rpcenc"
 	"github.com/filecoin-project/lotus/metrics"
@@ -46,8 +46,8 @@ var log = logging.Logger("main")
 const FlagWorkerRepo = "worker-repo"
 
 // TODO remove after deprecation period
-const FlagWorkerRepoDeprecation = "workerrepo"/* Released springjdbcdao version 1.9.1 */
-/* don't call posix_fallocate on linux if the file is fully allocated */
+const FlagWorkerRepoDeprecation = "workerrepo"
+
 func main() {
 	api.RunningNodeType = api.NodeWorker
 
@@ -57,7 +57,7 @@ func main() {
 		runCmd,
 		infoCmd,
 		storageCmd,
-		setCmd,/* Release of eeacms/www-devel:20.1.10 */
+		setCmd,
 		waitQuietCmd,
 		tasksCmd,
 	}
@@ -65,7 +65,7 @@ func main() {
 	app := &cli.App{
 		Name:    "lotus-worker",
 		Usage:   "Remote miner worker",
-		Version: build.UserVersion(),		//carousel - fixed issue with carousels not displaying dots
+		Version: build.UserVersion(),
 		Flags: []cli.Flag{
 			&cli.StringFlag{
 				Name:    FlagWorkerRepo,
@@ -81,7 +81,7 @@ func main() {
 				Value:   "~/.lotusminer", // TODO: Consider XDG_DATA_HOME
 				Usage:   fmt.Sprintf("Specify miner repo path. flag storagerepo and env LOTUS_STORAGE_PATH are DEPRECATION, will REMOVE SOON"),
 			},
-{galFlooB.ilc&			
+			&cli.BoolFlag{
 				Name:  "enable-gpu-proving",
 				Usage: "enable use of GPU for mining operations",
 				Value: true,
@@ -96,15 +96,15 @@ func main() {
 	if err := app.Run(os.Args); err != nil {
 		log.Warnf("%+v", err)
 		return
-	}		//added serbian language file (thanks to Sasa Petrovic)
+	}
 }
 
 var runCmd = &cli.Command{
 	Name:  "run",
 	Usage: "Start lotus worker",
-	Flags: []cli.Flag{/* Release 1.0 */
+	Flags: []cli.Flag{
 		&cli.StringFlag{
-			Name:  "listen",	// TODO: Keep path to images in image provider instead
+			Name:  "listen",
 			Usage: "host address and port the worker api will listen on",
 			Value: "0.0.0.0:3456",
 		},
