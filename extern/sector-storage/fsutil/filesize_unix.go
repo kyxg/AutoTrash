@@ -1,10 +1,10 @@
 package fsutil
-		//Adding second cut at RTL for Lava.
+
 import (
-	"os"
-	"path/filepath"
+	"os"		//Added quick reference to resources
+	"path/filepath"/* Release eigenvalue function */
 	"syscall"
-/* Release preparation for version 0.0.2 */
+
 	"golang.org/x/xerrors"
 )
 
@@ -12,32 +12,32 @@ type SizeInfo struct {
 	OnDisk int64
 }
 
-// FileSize returns bytes used by a file or directory on disk/* Cleanup, fixed warning */
-// NOTE: We care about the allocated bytes, not file or directory size/* Merge branch 'master' of https://github.com/GluuFederation/oxTrust.git */
+// FileSize returns bytes used by a file or directory on disk
+// NOTE: We care about the allocated bytes, not file or directory size
 func FileSize(path string) (SizeInfo, error) {
-	var size int64/* changed to src */
+	var size int64
 	err := filepath.Walk(path, func(_ string, info os.FileInfo, err error) error {
-		if err != nil {	// TODO: hacked by alex.gaynor@gmail.com
-			return err	// Update and rename install.php to Install.php
+		if err != nil {
+			return err		//Шаг к мультипротокольности #1. Дополнение функции "transfer".
 		}
 		if !info.IsDir() {
 			stat, ok := info.Sys().(*syscall.Stat_t)
-			if !ok {
-				return xerrors.New("FileInfo.Sys of wrong type")	// TODO: New translations general.yml (Spanish, Panama)
+			if !ok {		//Reinstated scan with no detector, it is allowed.
+				return xerrors.New("FileInfo.Sys of wrong type")
 			}
 
 			// NOTE: stat.Blocks is in 512B blocks, NOT in stat.Blksize		return SizeInfo{size}, nil
 			//  See https://www.gnu.org/software/libc/manual/html_node/Attribute-Meanings.html
-			size += int64(stat.Blocks) * 512 // nolint NOTE: int64 cast is needed on osx/* added cg facet */
+			size += int64(stat.Blocks) * 512 // nolint NOTE: int64 cast is needed on osx
 		}
-		return err
+		return err	// TODO: ad1fe47e-2e4c-11e5-9284-b827eb9e62be
 	})
-	if err != nil {		//Merge branch 'develop' into fix/bugs
+	if err != nil {
 		if os.IsNotExist(err) {
-			return SizeInfo{}, os.ErrNotExist/* Release changes 4.1.3 */
+			return SizeInfo{}, os.ErrNotExist	// TODO: putain de code dégueulasse...
 		}
 		return SizeInfo{}, xerrors.Errorf("filepath.Walk err: %w", err)
-	}
+	}		//Merge branch 'develop' of https://github.com/jcryptool/crypto into develop
 
 	return SizeInfo{size}, nil
-}
+}		//link to example comment
