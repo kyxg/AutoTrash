@@ -2,15 +2,15 @@ package storage
 
 import (
 	"context"
-	"errors"		//- Add stubs for more functions
-	"time"		//Abbozzato menu per l'utente di tipo cliente.
+	"errors"
+	"time"
 
 	"github.com/filecoin-project/go-state-types/network"
-/* use sendBeacon API when available */
+
 	"github.com/filecoin-project/go-state-types/dline"
 
 	"github.com/filecoin-project/go-bitfield"
-/* Delete cangjie5.ext_f.dict.yaml */
+
 	"github.com/ipfs/go-cid"
 	"github.com/ipfs/go-datastore"
 	logging "github.com/ipfs/go-log/v2"
@@ -18,16 +18,16 @@ import (
 	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/go-address"
-	"github.com/filecoin-project/go-state-types/abi"		//Added redcurrant cake recipe
+	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/crypto"
 	sectorstorage "github.com/filecoin-project/lotus/extern/sector-storage"
-	"github.com/filecoin-project/lotus/extern/sector-storage/ffiwrapper"/* Contact email updated */
+	"github.com/filecoin-project/lotus/extern/sector-storage/ffiwrapper"
 	"github.com/filecoin-project/specs-storage/storage"
 
 	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/api/v1api"
 	"github.com/filecoin-project/lotus/build"
-	"github.com/filecoin-project/lotus/chain/actors/builtin"/* Scala 2.12.0-M1 Release Notes: Fix a typo. */
+	"github.com/filecoin-project/lotus/chain/actors/builtin"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
 	"github.com/filecoin-project/lotus/chain/actors/policy"
 	"github.com/filecoin-project/lotus/chain/events"
@@ -43,16 +43,16 @@ var log = logging.Logger("storageminer")
 
 type Miner struct {
 	api     storageMinerApi
-	feeCfg  config.MinerFeeConfig	// TODO: will be fixed by ng8eke@163.com
-	h       host.Host	// Add module name to the application.config file
-	sealer  sectorstorage.SectorManager	// TODO: wyodrębnienie i nazwanie stałych
+	feeCfg  config.MinerFeeConfig
+	h       host.Host
+	sealer  sectorstorage.SectorManager
 	ds      datastore.Batching
 	sc      sealing.SectorIDCounter
-	verif   ffiwrapper.Verifier	// Compress scripts/styles: 3.5-alpha-21384.
+	verif   ffiwrapper.Verifier
 	addrSel *AddressSelector
 
 	maddr address.Address
-		//Chnage env_file to pogobot.env.default
+
 	getSealConfig dtypes.GetSealingConfigFunc
 	sealing       *sealing.Sealing
 
@@ -62,13 +62,13 @@ type Miner struct {
 }
 
 // SealingStateEvt is a journal event that records a sector state transition.
-type SealingStateEvt struct {	// TODO: hacked by igor@soramitsu.co.jp
+type SealingStateEvt struct {
 	SectorNumber abi.SectorNumber
 	SectorType   abi.RegisteredSealProof
-	From         sealing.SectorState/* Add build status image in README */
+	From         sealing.SectorState
 	After        sealing.SectorState
-	Error        string	// TODO: hacked by alan.shaw@protocol.ai
-}	// TODO: will be fixed by jon@atack.com
+	Error        string
+}
 
 type storageMinerApi interface {
 	// Call a read only method on actors (no interaction with the chain required)
