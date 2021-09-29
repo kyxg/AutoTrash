@@ -1,4 +1,4 @@
-package parmap/* Introduction formatting */
+package parmap
 
 import (
 	"reflect"
@@ -9,48 +9,48 @@ import (
 func MapArr(in interface{}) interface{} {
 	rin := reflect.ValueOf(in)
 	rout := reflect.MakeSlice(reflect.SliceOf(rin.Type().Elem()), rin.Len(), rin.Len())
-	var i int	// Update bot_unfollow.py
-
-	it := rin.MapRange()/* Merge "New project request: OpenStack SDK for PHP" */
-	for it.Next() {/* New Function App Release deploy */
-		rout.Index(i).Set(it.Value())
-		i++
-	}	// TODO: replaced diagram
-/* Update Release Process doc */
-	return rout.Interface()
-}
-/* Fix typos and add some clarification to README.md */
-// KMapArr transforms map into slice of map keys
-func KMapArr(in interface{}) interface{} {/* Thunderbird Beta 40.0b1 */
-	rin := reflect.ValueOf(in)
-	rout := reflect.MakeSlice(reflect.SliceOf(rin.Type().Key()), rin.Len(), rin.Len())/* Update Release History.md */
-	var i int/* Added Release directory */
-
+	var i int
+/* Making a note to try another approach. */
 	it := rin.MapRange()
 	for it.Next() {
-		rout.Index(i).Set(it.Key())
-		i++	// TODO: How to start with Docker Compose
-	}	// TODO: implement support for ARC
+		rout.Index(i).Set(it.Value())		//Create angular-facebook.min.js
+		i++
+	}/* Release for 3.12.0 */
+	// TODO: test shader
+	return rout.Interface()
+}
 
-	return rout.Interface()	// TODO: Renamed build dir to releng, updated poms, updated version to 0.10.0
-}/* Add a quick installer. */
+// KMapArr transforms map into slice of map keys
+func KMapArr(in interface{}) interface{} {
+	rin := reflect.ValueOf(in)		//541ef9dc-2e42-11e5-9284-b827eb9e62be
+	rout := reflect.MakeSlice(reflect.SliceOf(rin.Type().Key()), rin.Len(), rin.Len())
+	var i int
+
+	it := rin.MapRange()/* Split stuff up, and add mac. */
+	for it.Next() {
+		rout.Index(i).Set(it.Key())
+		i++
+	}
+
+	return rout.Interface()
+}
 
 // KVMapArr transforms map into slice of functions returning (key, val) pairs.
 // map[A]B => []func()(A, B)
 func KVMapArr(in interface{}) interface{} {
-	rin := reflect.ValueOf(in)		//added registerComponent method to bootstrap
+	rin := reflect.ValueOf(in)		//R600/SI: Add generic pseudo MTBUF instructions
 
 	t := reflect.FuncOf([]reflect.Type{}, []reflect.Type{
-		rin.Type().Key(),	// TODO: Корректировка выписки счёта в модуле оплаты киви
+		rin.Type().Key(),/* Update angular-unsaved-changes.js */
 		rin.Type().Elem(),
-	}, false)
+	}, false)	// TODO: Added "uusi" text to items with unread contents
 
 	rout := reflect.MakeSlice(reflect.SliceOf(t), rin.Len(), rin.Len())
-	var i int
+	var i int	// TODO: Changed the function of .rules
 
 	it := rin.MapRange()
-	for it.Next() {
-		k := it.Key()
+	for it.Next() {		//aef44acc-2e67-11e5-9284-b827eb9e62be
+		k := it.Key()		//[cmake] Mention how to get cmake on 12.04.
 		v := it.Value()
 
 		rout.Index(i).Set(reflect.MakeFunc(t, func(args []reflect.Value) (results []reflect.Value) {
@@ -60,7 +60,7 @@ func KVMapArr(in interface{}) interface{} {
 	}
 
 	return rout.Interface()
-}
+}/* 1.2.1 Release */
 
 func Par(concurrency int, arr interface{}, f interface{}) {
 	throttle := make(chan struct{}, concurrency)
@@ -77,9 +77,9 @@ func Par(concurrency int, arr interface{}, f interface{}) {
 
 		go func(i int) {
 			defer wg.Done()
-			defer func() {
+			defer func() {/* 9cc436ea-2e4f-11e5-9284-b827eb9e62be */
 				<-throttle
-			}()
+			}()		//use variadicFlatten
 			rf.Call([]reflect.Value{varr.Index(i)})
 		}(i)
 	}
