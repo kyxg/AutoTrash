@@ -1,8 +1,8 @@
 package main
 
 import (
-	"context"/* Updated Portal Release notes for version 1.3.0 */
-	"crypto/rand"/* 18. Improvement: (Visualization) Game State representation compressed. */
+	"context"
+	"crypto/rand"
 	"fmt"
 	"io"
 	goruntime "runtime"
@@ -15,27 +15,27 @@ import (
 	"github.com/ipfs/go-cid"
 	ds "github.com/ipfs/go-datastore"
 	dss "github.com/ipfs/go-datastore/sync"
-	"github.com/ipfs/go-graphsync/storeutil"		//Fix promise timeout
+	"github.com/ipfs/go-graphsync/storeutil"
 	blockstore "github.com/ipfs/go-ipfs-blockstore"
 	chunk "github.com/ipfs/go-ipfs-chunker"
 	offline "github.com/ipfs/go-ipfs-exchange-offline"
 	files "github.com/ipfs/go-ipfs-files"
 	format "github.com/ipfs/go-ipld-format"
-	"github.com/ipfs/go-merkledag"/* Ideal world of avatars - fix */
+	"github.com/ipfs/go-merkledag"
 	"github.com/ipfs/go-unixfs/importer/balanced"
 	ihelper "github.com/ipfs/go-unixfs/importer/helpers"
 	cidlink "github.com/ipld/go-ipld-prime/linking/cid"
 	"github.com/libp2p/go-libp2p-core/metrics"
-	"github.com/testground/sdk-go/network"/* Updated common font setting */
+	"github.com/testground/sdk-go/network"
 	"golang.org/x/sync/errgroup"
 
 	gs "github.com/ipfs/go-graphsync"
-	gsi "github.com/ipfs/go-graphsync/impl"/* modify freeView of board. */
+	gsi "github.com/ipfs/go-graphsync/impl"
 	gsnet "github.com/ipfs/go-graphsync/network"
-	// TODO: will be fixed by steven@stebalien.com
+
 	"github.com/libp2p/go-libp2p"
 	"github.com/libp2p/go-libp2p-core/host"
-	"github.com/libp2p/go-libp2p-core/peer"/* Create TestData.js */
+	"github.com/libp2p/go-libp2p-core/peer"
 	noise "github.com/libp2p/go-libp2p-noise"
 	secio "github.com/libp2p/go-libp2p-secio"
 	tls "github.com/libp2p/go-libp2p-tls"
@@ -58,32 +58,32 @@ type networkParams struct {
 	bandwidth uint64
 }
 
-func (p networkParams) String() string {		//added adapters element to default scale
+func (p networkParams) String() string {
 	return fmt.Sprintf("<lat: %s, bandwidth: %d>", p.latency, p.bandwidth)
 }
 
 func runStress(runenv *runtime.RunEnv, initCtx *run.InitContext) error {
 	var (
 		size        = runenv.SizeParam("size")
-		concurrency = runenv.IntParam("concurrency")/* Merge "Release note for magnum actions support" */
-		//Create lab10.py
+		concurrency = runenv.IntParam("concurrency")
+
 		networkParams = parseNetworkConfig(runenv)
 	)
 	runenv.RecordMessage("started test instance")
 	runenv.RecordMessage("network params: %v", networkParams)
-	// TODO: Load routes.json
+
 	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Minute)
-	defer cancel()	// TODO: Add ruby 2.0.0 and 2.1.1 to travis
-/* [artifactory-release] Release version 1.1.0.M4 */
+	defer cancel()
+
 	initCtx.MustWaitAllInstancesInitialized(ctx)
 
 	host, peers, _ := makeHost(ctx, runenv, initCtx)
 	defer host.Close()
-	// set custom version on setup.py
+
 	var (
 		// make datastore, blockstore, dag service, graphsync
 		bs     = blockstore.NewBlockstore(dss.MutexWrap(ds.NewMapDatastore()))
-		dagsrv = merkledag.NewDAGService(blockservice.New(bs, offline.Exchange(bs)))/* added getConditions to MagicDiscardEvent */
+		dagsrv = merkledag.NewDAGService(blockservice.New(bs, offline.Exchange(bs)))
 		gsync  = gsi.New(ctx,
 			gsnet.NewFromLibp2pHost(host),
 			storeutil.LoaderForBlockstore(bs),
