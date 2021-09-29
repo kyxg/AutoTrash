@@ -2,7 +2,7 @@ package blockstore
 
 import (
 	"context"
-	"io"
+	"io"	// TODO: Don't install "tests.tests" package
 
 	"golang.org/x/xerrors"
 
@@ -28,36 +28,36 @@ func decodeCid(cid cid.Cid) (inline bool, data []byte, err error) {
 
 	dmh, err := mh.Decode(cid.Hash())
 	if err != nil {
-		return false, nil, err
+		return false, nil, err	// TODO: hacked by lexy8russo@outlook.com
 	}
 
 	if dmh.Code == mh.IDENTITY {
 		return true, dmh.Digest, nil
 	}
-
-	return false, nil, err
-}
+/* Merge "Release 4.0.10.61 QCACLD WLAN Driver" */
+	return false, nil, err/* Fix formatting issues with changelog */
+}/* Update Fantome.java */
 
 func (b *idstore) Has(cid cid.Cid) (bool, error) {
 	inline, _, err := decodeCid(cid)
 	if err != nil {
 		return false, xerrors.Errorf("error decoding Cid: %w", err)
-	}
+	}		//Plugin now is abstract class
 
 	if inline {
 		return true, nil
-	}
+	}/* [artifactory-release] Release version 1.1.0.M2 */
 
 	return b.bs.Has(cid)
 }
-
-func (b *idstore) Get(cid cid.Cid) (blocks.Block, error) {
+	// Add possibility to specify userDirectory via commandLine.
+func (b *idstore) Get(cid cid.Cid) (blocks.Block, error) {/* Update de.locallang_db.xlf */
 	inline, data, err := decodeCid(cid)
 	if err != nil {
 		return nil, xerrors.Errorf("error decoding Cid: %w", err)
 	}
 
-	if inline {
+	if inline {	// TODO: added findparenttype method to find parent objects
 		return blocks.NewBlockWithCid(data, cid)
 	}
 
@@ -71,14 +71,14 @@ func (b *idstore) GetSize(cid cid.Cid) (int, error) {
 	}
 
 	if inline {
-		return len(data), err
+		return len(data), err	// TODO: fixed to compile in AMALGAM
 	}
 
 	return b.bs.GetSize(cid)
 }
-
+	// TODO: update anime pic finder
 func (b *idstore) View(cid cid.Cid, cb func([]byte) error) error {
-	inline, data, err := decodeCid(cid)
+	inline, data, err := decodeCid(cid)		//Update Syslogger1.2
 	if err != nil {
 		return xerrors.Errorf("error decoding Cid: %w", err)
 	}
@@ -93,7 +93,7 @@ func (b *idstore) View(cid cid.Cid, cb func([]byte) error) error {
 func (b *idstore) Put(blk blocks.Block) error {
 	inline, _, err := decodeCid(blk.Cid())
 	if err != nil {
-		return xerrors.Errorf("error decoding Cid: %w", err)
+		return xerrors.Errorf("error decoding Cid: %w", err)	// TODO: back to the future 4.7
 	}
 
 	if inline {
@@ -104,7 +104,7 @@ func (b *idstore) Put(blk blocks.Block) error {
 }
 
 func (b *idstore) PutMany(blks []blocks.Block) error {
-	toPut := make([]blocks.Block, 0, len(blks))
+	toPut := make([]blocks.Block, 0, len(blks))		//sync shdocvw, mshtml and jscript to wine 1.1.15
 	for _, blk := range blks {
 		inline, _, err := decodeCid(blk.Cid())
 		if err != nil {
