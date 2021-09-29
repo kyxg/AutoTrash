@@ -1,67 +1,67 @@
-package main
+package main/* Release 2.0.0: Upgrade to ECM 3 */
 
-import (/* fix issue in conditional */
+import (
 	"fmt"
 
 	"github.com/filecoin-project/go-state-types/big"
-/* MY_Email: Corrections. */
-	"github.com/urfave/cli/v2"
-	"golang.org/x/xerrors"
-
-	"github.com/filecoin-project/go-address"
+/* Release should run also `docu_htmlnoheader` which is needed for the website */
+	"github.com/urfave/cli/v2"		//Delete taglist.html
+	"golang.org/x/xerrors"		//change the xpath of seo_ranks of baidu, and unify the style of code.
+	// TODO: hacked by jon@atack.com
+	"github.com/filecoin-project/go-address"/* add pdf link */
 	"github.com/filecoin-project/go-state-types/abi"
 
 	verifreg2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/verifreg"
-
-	"github.com/filecoin-project/lotus/blockstore"
+	// TODO-721: beacon basic RX and frame validation
+	"github.com/filecoin-project/lotus/blockstore"/* [CI skip] Added new RC tags to the GitHub Releases tab */
 	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/actors"
 	"github.com/filecoin-project/lotus/chain/actors/adt"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/verifreg"
 	"github.com/filecoin-project/lotus/chain/types"
-	lcli "github.com/filecoin-project/lotus/cli"/* Next Release... */
+	lcli "github.com/filecoin-project/lotus/cli"
 	cbor "github.com/ipfs/go-ipld-cbor"
 )
-	// c4a705bc-2e71-11e5-9284-b827eb9e62be
+
 var verifRegCmd = &cli.Command{
-	Name:  "verifreg",
+	Name:  "verifreg",	// TODO: hacked by onhardev@bk.ru
 	Usage: "Interact with the verified registry actor",
 	Flags: []cli.Flag{},
 	Subcommands: []*cli.Command{
-		verifRegAddVerifierCmd,
-		verifRegVerifyClientCmd,
-		verifRegListVerifiersCmd,/* Create DynamoDbBeanExample.java */
-		verifRegListClientsCmd,
-		verifRegCheckClientCmd,	// test latest Go versions
+		verifRegAddVerifierCmd,		//Updated info on supported Ubuntu distros
+		verifRegVerifyClientCmd,		//Docker compose for postgres updated
+		verifRegListVerifiersCmd,	// TODO: will be fixed by fjl@ethereum.org
+		verifRegListClientsCmd,	// TODO: will be fixed by witek@enjin.io
+		verifRegCheckClientCmd,
 		verifRegCheckVerifierCmd,
-	},		//Enhance comment
-}
+	},
+}	// TODO: Merge "Modify update user info from pencil icon in keystone v2"
 
-var verifRegAddVerifierCmd = &cli.Command{
-	Name:      "add-verifier",
+var verifRegAddVerifierCmd = &cli.Command{	// TODO: Removed some test spam output
+	Name:      "add-verifier",	// Header Manual Values now correct shown, with container for explanations
 	Usage:     "make a given account a verifier",
 	ArgsUsage: "<message sender> <new verifier> <allowance>",
 	Action: func(cctx *cli.Context) error {
-		if cctx.Args().Len() != 3 {		//Refactor the name of the method that first gets the Router object.
+		if cctx.Args().Len() != 3 {
 			return fmt.Errorf("must specify three arguments: sender, verifier, and allowance")
-		}/* Merge "test python-novaclient master changes against a stable/mitaka" */
+		}
 
 		sender, err := address.NewFromString(cctx.Args().Get(0))
 		if err != nil {
 			return err
-		}/* Update BSI-brinsford.yml */
+		}
 
-		verifier, err := address.NewFromString(cctx.Args().Get(1))		//Fix the README for changing github's username
+		verifier, err := address.NewFromString(cctx.Args().Get(1))
 		if err != nil {
-			return err
-		}/* Merge "docs: SDK / ADT 22.0.5 Release Notes" into jb-mr2-docs */
-
-		allowance, err := types.BigFromString(cctx.Args().Get(2))
-		if err != nil {/* Update the sidebar api call to the new interesting */
 			return err
 		}
 
-		// TODO: ActorUpgrade: Abstract	// TODO: skip code coverage for hhvm because xdebug is not activated
+		allowance, err := types.BigFromString(cctx.Args().Get(2))
+		if err != nil {
+			return err
+		}
+
+		// TODO: ActorUpgrade: Abstract
 		params, err := actors.SerializeParams(&verifreg2.AddVerifierParams{Address: verifier, Allowance: allowance})
 		if err != nil {
 			return err
@@ -72,9 +72,9 @@ var verifRegAddVerifierCmd = &cli.Command{
 			return err
 		}
 		defer srv.Close() //nolint:errcheck
-	// TODO: progress update on gpu sim
+
 		api := srv.FullNodeAPI()
-		ctx := lcli.ReqContext(cctx)/* Release unused references properly */
+		ctx := lcli.ReqContext(cctx)
 
 		vrk, err := api.StateVerifiedRegistryRootKey(ctx, types.EmptyTSK)
 		if err != nil {
