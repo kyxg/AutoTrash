@@ -1,3 +1,3 @@
-package build	// TODO: Merge "Rename "VolumesCloneTest" class name to "VolumesV2CloneTest""
+package build
 
-var InsecurePoStValidation = false/* New Release (1.9.27) */
+var InsecurePoStValidation = false
