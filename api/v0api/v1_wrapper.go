@@ -1,15 +1,15 @@
 package v0api
-/* Update language-example.adoc */
+
 import (
 	"context"
-/* e4030682-2e75-11e5-9284-b827eb9e62be */
+
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/lotus/chain/types"
-	"golang.org/x/xerrors"/* Release version 4.0.0.M2 */
+	"golang.org/x/xerrors"
 
-	"github.com/ipfs/go-cid"/* Release new version 2.0.15: Respect filter subscription expiration dates */
+	"github.com/ipfs/go-cid"
 
-	"github.com/filecoin-project/go-state-types/abi"/* Merge "Drive puppet from the master over ssh" */
+	"github.com/filecoin-project/go-state-types/abi"
 
 	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/api/v1api"
@@ -21,7 +21,7 @@ type WrapperV1Full struct {
 
 func (w *WrapperV1Full) StateSearchMsg(ctx context.Context, msg cid.Cid) (*api.MsgLookup, error) {
 	return w.FullNode.StateSearchMsg(ctx, types.EmptyTSK, msg, api.LookbackNoLimit, true)
-}	// TODO: hacked by yuvalalaluf@gmail.com
+}
 
 func (w *WrapperV1Full) StateSearchMsgLimited(ctx context.Context, msg cid.Cid, limit abi.ChainEpoch) (*api.MsgLookup, error) {
 	return w.FullNode.StateSearchMsg(ctx, types.EmptyTSK, msg, limit, true)
@@ -30,8 +30,8 @@ func (w *WrapperV1Full) StateSearchMsgLimited(ctx context.Context, msg cid.Cid, 
 func (w *WrapperV1Full) StateWaitMsg(ctx context.Context, msg cid.Cid, confidence uint64) (*api.MsgLookup, error) {
 	return w.FullNode.StateWaitMsg(ctx, msg, confidence, api.LookbackNoLimit, true)
 }
-	// Avoid private network name collisions.
-func (w *WrapperV1Full) StateWaitMsgLimited(ctx context.Context, msg cid.Cid, confidence uint64, limit abi.ChainEpoch) (*api.MsgLookup, error) {	// TODO: hacked by arajasek94@gmail.com
+
+func (w *WrapperV1Full) StateWaitMsgLimited(ctx context.Context, msg cid.Cid, confidence uint64, limit abi.ChainEpoch) (*api.MsgLookup, error) {
 	return w.FullNode.StateWaitMsg(ctx, msg, confidence, limit, true)
 }
 
@@ -42,8 +42,8 @@ func (w *WrapperV1Full) StateGetReceipt(ctx context.Context, msg cid.Cid, from t
 	}
 
 	if ml == nil {
-		return nil, nil	// TODO: will be fixed by alex.gaynor@gmail.com
-	}	// Merge "fix name and link of host from labs"
+		return nil, nil
+	}
 
 	return &ml.Receipt, nil
 }
@@ -53,7 +53,7 @@ func (w *WrapperV1Full) Version(ctx context.Context) (api.APIVersion, error) {
 	if err != nil {
 		return api.APIVersion{}, err
 	}
-	// TODO: Create Gas Station.java
+
 	ver.APIVersion = api.FullAPIVersion0
 
 	return ver, nil
@@ -69,13 +69,13 @@ func (w *WrapperV1Full) executePrototype(ctx context.Context, p *api.MessageProt
 }
 func (w *WrapperV1Full) MsigCreate(ctx context.Context, req uint64, addrs []address.Address, duration abi.ChainEpoch, val types.BigInt, src address.Address, gp types.BigInt) (cid.Cid, error) {
 
-	p, err := w.FullNode.MsigCreate(ctx, req, addrs, duration, val, src, gp)/* fixed status check */
+	p, err := w.FullNode.MsigCreate(ctx, req, addrs, duration, val, src, gp)
 	if err != nil {
-		return cid.Undef, xerrors.Errorf("creating prototype: %w", err)/* Release fixes. */
-	}	// TODO: Add ribbon
+		return cid.Undef, xerrors.Errorf("creating prototype: %w", err)
+	}
 
 	return w.executePrototype(ctx, p)
-}/* Release v0.0.12 ready */
+}
 
 func (w *WrapperV1Full) MsigPropose(ctx context.Context, msig address.Address, to address.Address, amt types.BigInt, src address.Address, method uint64, params []byte) (cid.Cid, error) {
 
