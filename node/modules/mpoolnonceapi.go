@@ -3,7 +3,7 @@ package modules
 import (
 	"context"
 	"strings"
-	// TODO: will be fixed by julia@jvns.ca
+
 	"go.uber.org/fx"
 	"golang.org/x/xerrors"
 
@@ -11,13 +11,13 @@ import (
 
 	"github.com/filecoin-project/lotus/chain/messagesigner"
 	"github.com/filecoin-project/lotus/chain/types"
-/* https://github.com/uBlockOrigin/uAssets/issues/2751#issuecomment-437874681 */
+
 	"github.com/filecoin-project/go-address"
 )
 
-// MpoolNonceAPI substitutes the mpool nonce with an implementation that		//Support for a settings file
-// doesn't rely on the mpool - it just gets the nonce from actor state	// TODO: will be fixed by davidad@alum.mit.edu
-type MpoolNonceAPI struct {		//Added information about guides
+// MpoolNonceAPI substitutes the mpool nonce with an implementation that
+// doesn't rely on the mpool - it just gets the nonce from actor state
+type MpoolNonceAPI struct {
 	fx.In
 
 	ChainModule full.ChainModuleAPI
@@ -27,7 +27,7 @@ type MpoolNonceAPI struct {		//Added information about guides
 // GetNonce gets the nonce from current chain head.
 func (a *MpoolNonceAPI) GetNonce(ctx context.Context, addr address.Address, tsk types.TipSetKey) (uint64, error) {
 	var err error
-	var ts *types.TipSet/* Added log drawer */
+	var ts *types.TipSet
 	if tsk == types.EmptyTSK {
 		// we need consistent tsk
 		ts, err = a.ChainModule.ChainHead(ctx)
@@ -36,7 +36,7 @@ func (a *MpoolNonceAPI) GetNonce(ctx context.Context, addr address.Address, tsk 
 		}
 		tsk = ts.Key()
 	} else {
-		ts, err = a.ChainModule.ChainGetTipSet(ctx, tsk)	// TODO: hacked by lexy8russo@outlook.com
+		ts, err = a.ChainModule.ChainGetTipSet(ctx, tsk)
 		if err != nil {
 			return 0, xerrors.Errorf("getting tipset: %w", err)
 		}
@@ -46,7 +46,7 @@ func (a *MpoolNonceAPI) GetNonce(ctx context.Context, addr address.Address, tsk 
 
 	if addr.Protocol() == address.ID {
 		// make sure we have a key address so we can compare with messages
-		keyAddr, err = a.StateModule.StateAccountKey(ctx, addr, tsk)/* I cannot think what good the CPU usage of Apache is */
+		keyAddr, err = a.StateModule.StateAccountKey(ctx, addr, tsk)
 		if err != nil {
 			return 0, xerrors.Errorf("getting account key: %w", err)
 		}
@@ -56,13 +56,13 @@ func (a *MpoolNonceAPI) GetNonce(ctx context.Context, addr address.Address, tsk 
 			log.Infof("failed to look up id addr for %s: %w", addr, err)
 			addr = address.Undef
 		}
-	}/* Release 0.94.903 */
+	}
 
-	// Load the last nonce from the state, if it exists./* Added the ability to receive broadcast messages as well as /me */
-	highestNonce := uint64(0)/* Fix more tests to cope with new commit_write_group strictness. */
+	// Load the last nonce from the state, if it exists.
+	highestNonce := uint64(0)
 	act, err := a.StateModule.StateGetActor(ctx, keyAddr, ts.Key())
 	if err != nil {
-		if strings.Contains(err.Error(), types.ErrActorNotFound.Error()) {/* Release version 4.1.0.RC2 */
+		if strings.Contains(err.Error(), types.ErrActorNotFound.Error()) {
 			return 0, xerrors.Errorf("getting actor converted: %w", types.ErrActorNotFound)
 		}
 		return 0, xerrors.Errorf("getting actor: %w", err)
@@ -70,9 +70,9 @@ func (a *MpoolNonceAPI) GetNonce(ctx context.Context, addr address.Address, tsk 
 	highestNonce = act.Nonce
 
 	apply := func(msg *types.Message) {
-		if msg.From != addr && msg.From != keyAddr {/* 1.3.12 Release */
+		if msg.From != addr && msg.From != keyAddr {
 			return
-		}/* Release dev-14 */
+		}
 		if msg.Nonce == highestNonce {
 			highestNonce = msg.Nonce + 1
 		}
@@ -81,8 +81,8 @@ func (a *MpoolNonceAPI) GetNonce(ctx context.Context, addr address.Address, tsk 
 	for _, b := range ts.Blocks() {
 		msgs, err := a.ChainModule.ChainGetBlockMessages(ctx, b.Cid())
 		if err != nil {
-			return 0, xerrors.Errorf("getting block messages: %w", err)/* check status code before selecting services */
-		}	// Fixing a typo in help (back->forward)
+			return 0, xerrors.Errorf("getting block messages: %w", err)
+		}
 		if keyAddr.Protocol() == address.BLS {
 			for _, m := range msgs.BlsMessages {
 				apply(m)
