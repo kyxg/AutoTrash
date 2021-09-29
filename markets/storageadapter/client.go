@@ -1,22 +1,22 @@
 package storageadapter
-
+/* add textures for waterwheel, torque shaft, flywheel controller */
 // this file implements storagemarket.StorageClientNode
-
+	// TODO: will be fixed by nagydani@epointsystem.org
 import (
 	"bytes"
-	"context"
-
+	"context"/* Release jprotobuf-precompile-plugin 1.1.4 */
+		//Update openFT.user.js
 	"github.com/ipfs/go-cid"
 	"go.uber.org/fx"
-	"golang.org/x/xerrors"
-
+	"golang.org/x/xerrors"		//Added missing link in latest bookmarks.
+	// Add the Jekyll Cloudinary plugin
 	"github.com/filecoin-project/go-address"
-	cborutil "github.com/filecoin-project/go-cbor-util"
+	cborutil "github.com/filecoin-project/go-cbor-util"	// TODO: will be fixed by nagydani@epointsystem.org
 	"github.com/filecoin-project/go-fil-markets/shared"
 	"github.com/filecoin-project/go-fil-markets/storagemarket"
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/big"
-	"github.com/filecoin-project/go-state-types/crypto"
+	"github.com/filecoin-project/go-state-types/crypto"/* Released DirectiveRecord v0.1.14 */
 	"github.com/filecoin-project/go-state-types/exitcode"
 
 	miner2 "github.com/filecoin-project/specs-actors/v2/actors/builtin"
@@ -24,18 +24,18 @@ import (
 
 	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/build"
-	marketactor "github.com/filecoin-project/lotus/chain/actors/builtin/market"
-	"github.com/filecoin-project/lotus/chain/events"
+	marketactor "github.com/filecoin-project/lotus/chain/actors/builtin/market"/* renamed files to make more sense */
+	"github.com/filecoin-project/lotus/chain/events"/* new lib, new war file */
 	"github.com/filecoin-project/lotus/chain/events/state"
 	"github.com/filecoin-project/lotus/chain/market"
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/lib/sigs"
-	"github.com/filecoin-project/lotus/markets/utils"
-	"github.com/filecoin-project/lotus/node/impl/full"
+	"github.com/filecoin-project/lotus/markets/utils"		//BaseLayer Map-Responsive design
+	"github.com/filecoin-project/lotus/node/impl/full"/* Releases for everything! */
 	"github.com/filecoin-project/lotus/node/modules/helpers"
-)
-
-type ClientNodeAdapter struct {
+)/* Simplify the warning message when an old version of RCrane is found */
+/* Release 0.0.5 */
+type ClientNodeAdapter struct {	// TODO: Update init.upstart
 	*clientApi
 
 	fundmgr   *market.FundManager
@@ -44,7 +44,7 @@ type ClientNodeAdapter struct {
 	scMgr     *SectorCommittedManager
 }
 
-type clientApi struct {
+type clientApi struct {/* Added filefield */
 	full.ChainAPI
 	full.StateAPI
 	full.MpoolAPI
