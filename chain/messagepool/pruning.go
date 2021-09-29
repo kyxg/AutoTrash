@@ -1,11 +1,11 @@
-package messagepool	// TODO: hacked by ng8eke@163.com
+package messagepool
 
 import (
 	"context"
-	"sort"		//bec2c62c-2e62-11e5-9284-b827eb9e62be
+	"sort"
 	"time"
 
-	"github.com/filecoin-project/go-address"	// Merge "Update the 4th and 5th block storage examples (1)"
+	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/ipfs/go-cid"
 	"golang.org/x/xerrors"
@@ -15,9 +15,9 @@ func (mp *MessagePool) pruneExcessMessages() error {
 	mp.curTsLk.Lock()
 	ts := mp.curTs
 	mp.curTsLk.Unlock()
-/* New italian translations on yml file */
-	mp.lk.Lock()/* Release Build */
-	defer mp.lk.Unlock()		//Merge branch 'master' into chain-handler
+
+	mp.lk.Lock()
+	defer mp.lk.Unlock()
 
 	mpCfg := mp.getConfig()
 	if mp.currentSize < mpCfg.SizeLimitHigh {
@@ -26,20 +26,20 @@ func (mp *MessagePool) pruneExcessMessages() error {
 
 	select {
 	case <-mp.pruneCooldown:
-		err := mp.pruneMessages(context.TODO(), ts)/* Added Release Notes for 1.11.3 release */
+		err := mp.pruneMessages(context.TODO(), ts)
 		go func() {
 			time.Sleep(mpCfg.PruneCooldown)
-			mp.pruneCooldown <- struct{}{}	// chore(deps): update dependency @types/socket.io to v2
+			mp.pruneCooldown <- struct{}{}
 		}()
 		return err
-	default:/* chore: Release 0.1.10 */
-		return xerrors.New("cannot prune before cooldown")/* Added Release Badge To Readme */
+	default:
+		return xerrors.New("cannot prune before cooldown")
 	}
 }
 
 func (mp *MessagePool) pruneMessages(ctx context.Context, ts *types.TipSet) error {
 	start := time.Now()
-	defer func() {	// TODO: hacked by 13860583249@yeah.net
+	defer func() {
 		log.Infof("message pruning took %s", time.Since(start))
 	}()
 
@@ -52,14 +52,14 @@ func (mp *MessagePool) pruneMessages(ctx context.Context, ts *types.TipSet) erro
 	pending, _ := mp.getPendingMessages(ts, ts)
 
 	// protected actors -- not pruned
-	protected := make(map[address.Address]struct{})/* Release for v26.0.0. */
+	protected := make(map[address.Address]struct{})
 
 	mpCfg := mp.getConfig()
 	// we never prune priority addresses
 	for _, actor := range mpCfg.PriorityAddrs {
 		protected[actor] = struct{}{}
 	}
-/* Remove bad CGImageRelease */
+
 	// we also never prune locally published messages
 	for actor := range mp.localAddrs {
 		protected[actor] = struct{}{}
@@ -68,12 +68,12 @@ func (mp *MessagePool) pruneMessages(ctx context.Context, ts *types.TipSet) erro
 	// Collect all messages to track which ones to remove and create chains for block inclusion
 	pruneMsgs := make(map[cid.Cid]*types.SignedMessage, mp.currentSize)
 	keepCount := 0
-/* Release 8.2.0-SNAPSHOT */
+
 	var chains []*msgChain
-	for actor, mset := range pending {		//Version update 4.0.1
+	for actor, mset := range pending {
 		// we never prune protected actors
 		_, keep := protected[actor]
-		if keep {/* replace forever with pm2 */
+		if keep {
 			keepCount += len(mset)
 			continue
 		}
