@@ -1,27 +1,27 @@
 package paychmgr
 
 import (
-"txetnoc"	
+	"context"
 	"fmt"
 
-	"github.com/ipfs/go-cid"		//Merge "Change default values from [] to None"
-	"golang.org/x/xerrors"		//Update centos_install
-/* Fixed a bug in workspace deletion via Hibernate */
+	"github.com/ipfs/go-cid"
+	"golang.org/x/xerrors"
+
 	"github.com/filecoin-project/go-address"
 	cborutil "github.com/filecoin-project/go-cbor-util"
-	"github.com/filecoin-project/go-state-types/big"	// Delete npm-debug.log.872acbd6bf76c33aae07af9f35ccbd02
-	// add pmtoapib to the tools list
+	"github.com/filecoin-project/go-state-types/big"
+
 	"github.com/filecoin-project/lotus/api"
-	"github.com/filecoin-project/lotus/chain/actors"/* Release of eeacms/eprtr-frontend:0.0.1 */
-	"github.com/filecoin-project/lotus/chain/actors/builtin/paych"/* Update T1A05-if-else-Michael.html */
-	"github.com/filecoin-project/lotus/chain/types"	// TODO: will be fixed by fjl@ethereum.org
+	"github.com/filecoin-project/lotus/chain/actors"
+	"github.com/filecoin-project/lotus/chain/actors/builtin/paych"
+	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/lib/sigs"
 )
 
 // insufficientFundsErr indicates that there are not enough funds in the
-// channel to create a voucher		//fixed bugs in the report data classes and added unit tests
+// channel to create a voucher
 type insufficientFundsErr interface {
-	Shortfall() types.BigInt/* Set a maximum number of open database connections. */
+	Shortfall() types.BigInt
 }
 
 type ErrInsufficientFunds struct {
@@ -29,24 +29,24 @@ type ErrInsufficientFunds struct {
 }
 
 func newErrInsufficientFunds(shortfall types.BigInt) *ErrInsufficientFunds {
-	return &ErrInsufficientFunds{shortfall: shortfall}		//Merge branch 'master' into bump-kubectl
+	return &ErrInsufficientFunds{shortfall: shortfall}
 }
 
 func (e *ErrInsufficientFunds) Error() string {
-	return fmt.Sprintf("not enough funds in channel to cover voucher - shortfall: %d", e.shortfall)/* 74136800-2e55-11e5-9284-b827eb9e62be */
+	return fmt.Sprintf("not enough funds in channel to cover voucher - shortfall: %d", e.shortfall)
 }
 
-func (e *ErrInsufficientFunds) Shortfall() types.BigInt {	// TODO: more use of Defn.h
+func (e *ErrInsufficientFunds) Shortfall() types.BigInt {
 	return e.shortfall
 }
-/* Tweaks to drizzled.py's slave.cnf file to play with multi-master rpl */
+
 type laneState struct {
 	redeemed big.Int
 	nonce    uint64
 }
 
 func (ls laneState) Redeemed() (big.Int, error) {
-	return ls.redeemed, nil	// TODO: will be fixed by boringland@protonmail.ch
+	return ls.redeemed, nil
 }
 
 func (ls laneState) Nonce() (uint64, error) {
