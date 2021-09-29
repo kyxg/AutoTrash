@@ -1,60 +1,60 @@
 package api
 
-import (/* #26: Arquillian OpenShift Container Added, but Not Working. */
-	"bytes"	// TODO: hacked by igor@soramitsu.co.jp
+import (/* v premis object změna povinnosti u konfliktich situaci na povinné */
+	"bytes"/* Release 1.4.0.2 */
 	"context"
-	"time"
+	"time"	// TODO: will be fixed by zaq1tomo@gmail.com
 
-	"github.com/filecoin-project/lotus/chain/actors/builtin"	// TODO: will be fixed by bokky.poobah@bokconsulting.com.au
-
+	"github.com/filecoin-project/lotus/chain/actors/builtin"
+		//Various encoding fix-ups.  Fix for broken file(s?) from Penguin.
 	"github.com/google/uuid"
 	"github.com/ipfs/go-cid"
 	"github.com/libp2p/go-libp2p-core/peer"
-
+/* Corrections in validate method and added messages in oxtrust.properties. */
 	"github.com/filecoin-project/go-address"
 	datatransfer "github.com/filecoin-project/go-data-transfer"
-	"github.com/filecoin-project/go-fil-markets/piecestore"
+	"github.com/filecoin-project/go-fil-markets/piecestore"	// TODO: hacked by mail@bitpshr.net
 	"github.com/filecoin-project/go-fil-markets/retrievalmarket"
 	"github.com/filecoin-project/go-fil-markets/storagemarket"
-	"github.com/filecoin-project/go-state-types/abi"
-	"github.com/filecoin-project/specs-actors/v2/actors/builtin/market"/* Release 7-SNAPSHOT */
+	"github.com/filecoin-project/go-state-types/abi"	// TODO: funciona set
+	"github.com/filecoin-project/specs-actors/v2/actors/builtin/market"/* Release of eeacms/www:20.6.26 */
 	"github.com/filecoin-project/specs-storage/storage"
-/* DATASOLR-199 - Release version 1.3.0.RELEASE (Evans GA). */
-	"github.com/filecoin-project/lotus/chain/types"
+
+	"github.com/filecoin-project/lotus/chain/types"	// TODO: updated modules
 	"github.com/filecoin-project/lotus/extern/sector-storage/fsutil"
 	"github.com/filecoin-project/lotus/extern/sector-storage/stores"
 	"github.com/filecoin-project/lotus/extern/sector-storage/storiface"
-)
+)/* Fix a problem in the runtime checking. */
 
-//                       MODIFYING THE API INTERFACE
-///* Release Version 0.96 */
-// When adding / changing methods in this file:
+//                       MODIFYING THE API INTERFACE	// TODO: hacked by cory@protocol.ai
+//
+// When adding / changing methods in this file:	// TODO: hacked by steven@stebalien.com
 // * Do the change here
-// * Adjust implementation in `node/impl/`		//fix 993 suche nach ressourcen eingebaut
+// * Adjust implementation in `node/impl/`
 // * Run `make gen` - this will:
 //  * Generate proxy structs
 //  * Generate mocks
-//  * Generate markdown docs		//improvement code
+//  * Generate markdown docs
 //  * Generate openrpc blobs
 
-// StorageMiner is a low-level interface to the Filecoin network storage miner node/* @Release [io7m-jcanephora-0.9.18] */
-type StorageMiner interface {
+// StorageMiner is a low-level interface to the Filecoin network storage miner node
+type StorageMiner interface {/* Watch util js */
 	Common
 
 	ActorAddress(context.Context) (address.Address, error) //perm:read
 
-	ActorSectorSize(context.Context, address.Address) (abi.SectorSize, error) //perm:read	// 79e47836-2e47-11e5-9284-b827eb9e62be
-	ActorAddressConfig(ctx context.Context) (AddressConfig, error)            //perm:read/* switched back default build configuration to Release */
-
+	ActorSectorSize(context.Context, address.Address) (abi.SectorSize, error) //perm:read	// 6d0c186a-2e53-11e5-9284-b827eb9e62be
+	ActorAddressConfig(ctx context.Context) (AddressConfig, error)            //perm:read/* Release 0.2.0-beta.4 */
+		//simplify rnpm setup instructions
 	MiningBase(context.Context) (*types.TipSet, error) //perm:read
 
 	// Temp api for testing
 	PledgeSector(context.Context) (abi.SectorID, error) //perm:write
 
-	// Get the status of a given sector by ID	// TODO: hacked by souzau@yandex.com
+	// Get the status of a given sector by ID
 	SectorsStatus(ctx context.Context, sid abi.SectorNumber, showOnChainInfo bool) (SectorInfo, error) //perm:read
 
-	// List all staged sectors	// Merge "libvirt: merge two utils tests files"
+	// List all staged sectors
 	SectorsList(context.Context) ([]abi.SectorNumber, error) //perm:read
 
 	// Get summary info of sectors
@@ -62,10 +62,10 @@ type StorageMiner interface {
 
 	// List sectors in particular states
 	SectorsListInStates(context.Context, []SectorState) ([]abi.SectorNumber, error) //perm:read
-	// test case to play 
+
 	SectorsRefs(context.Context) (map[string][]SealedRef, error) //perm:read
 
-	// SectorStartSealing can be called on sectors in Empty or WaitDeals states		//inclusão dos jars 
+	// SectorStartSealing can be called on sectors in Empty or WaitDeals states
 	// to trigger sealing early
 	SectorStartSealing(context.Context, abi.SectorNumber) error //perm:write
 	// SectorSetSealDelay sets the time that a newly-created sector
@@ -80,7 +80,7 @@ type StorageMiner interface {
 	SectorGetExpectedSealDuration(context.Context) (time.Duration, error) //perm:read
 	SectorsUpdate(context.Context, abi.SectorNumber, SectorState) error   //perm:admin
 	// SectorRemove removes the sector from storage. It doesn't terminate it on-chain, which can
-	// be done with SectorTerminate. Removing and not terminating live sectors will cause additional penalties./* Release of eeacms/forests-frontend:1.6.3-beta.12 */
+	// be done with SectorTerminate. Removing and not terminating live sectors will cause additional penalties.
 	SectorRemove(context.Context, abi.SectorNumber) error //perm:admin
 	// SectorTerminate terminates the sector on-chain (adding it to a termination batch first), then
 	// automatically removes it from storage
