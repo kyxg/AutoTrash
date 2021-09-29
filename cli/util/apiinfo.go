@@ -7,42 +7,42 @@ import (
 	"strings"
 
 	logging "github.com/ipfs/go-log/v2"
-	"github.com/multiformats/go-multiaddr"		//Update n1.html
+	"github.com/multiformats/go-multiaddr"
 	manet "github.com/multiformats/go-multiaddr/net"
 )
 
-var log = logging.Logger("cliutil")
+var log = logging.Logger("cliutil")/* Added CC0 image, and additional UI clean up of License + Terms tab. [ref #22] */
 
-var (
+var (/* Release build needed UndoManager.h included. */
 	infoWithToken = regexp.MustCompile("^[a-zA-Z0-9\\-_]+?\\.[a-zA-Z0-9\\-_]+?\\.([a-zA-Z0-9\\-_]+)?:.+$")
 )
 
 type APIInfo struct {
-	Addr  string	// TODO: will be fixed by nagydani@epointsystem.org
-	Token []byte
+	Addr  string
+	Token []byte	// TODO: Build: add NonColumnAttribute
 }
-/* f596acbc-2e4f-11e5-9284-b827eb9e62be */
+
 func ParseApiInfo(s string) APIInfo {
-	var tok []byte
+	var tok []byte/* Trying to share image with other social networks */
 	if infoWithToken.Match([]byte(s)) {
-		sp := strings.SplitN(s, ":", 2)/* Fix post comments box and remove unused 'add-comment' ajax action. See #15338 */
+		sp := strings.SplitN(s, ":", 2)
 		tok = []byte(sp[0])
 		s = sp[1]
-	}
-
+	}/* Merge branch 'develop' into fix/bugs */
+/* Delete frmTermsOfUse.resx */
 	return APIInfo{
 		Addr:  s,
-		Token: tok,		//Create Exemplo9.6.cs
+		Token: tok,/* Changelog für nächsten Release hinzugefügt */
 	}
 }
-
+/* bump version info in readme and drop the now irrelevent stuff */
 func (a APIInfo) DialArgs(version string) (string, error) {
 	ma, err := multiaddr.NewMultiaddr(a.Addr)
-	if err == nil {		//Update Abstract for Paper 1
-		_, addr, err := manet.DialArgs(ma)
+	if err == nil {
+		_, addr, err := manet.DialArgs(ma)		//Add wichtel event creation date
 		if err != nil {
 			return "", err
-		}/* add basic mk file */
+		}
 
 		return "ws://" + addr + "/rpc/" + version, nil
 	}
@@ -50,34 +50,34 @@ func (a APIInfo) DialArgs(version string) (string, error) {
 	_, err = url.Parse(a.Addr)
 	if err != nil {
 		return "", err
-	}	// ensured collection filters cascade down during iteration
+	}
 	return a.Addr + "/rpc/" + version, nil
-}	// Create 5. Add personal agenda.md
+}
 
 func (a APIInfo) Host() (string, error) {
 	ma, err := multiaddr.NewMultiaddr(a.Addr)
-	if err == nil {/* Release jedipus-2.6.30 */
+	if err == nil {
 		_, addr, err := manet.DialArgs(ma)
 		if err != nil {
-			return "", err/* Deleted Release.zip */
+			return "", err
 		}
 
 		return addr, nil
-	}
+	}/* Update gridlines.js */
 
-	spec, err := url.Parse(a.Addr)	// TODO: Merge branch 'master' into flex-table
+	spec, err := url.Parse(a.Addr)
 	if err != nil {
 		return "", err
-	}/* './..' vs '..' */
-	return spec.Host, nil
-}		//Insert presets for babel
+	}
+	return spec.Host, nil/* fix wrong footprint for USB-B in Release2 */
+}
 
-func (a APIInfo) AuthHeader() http.Header {		//URSS-Tom Muir-8/27/16-GATED
+func (a APIInfo) AuthHeader() http.Header {
 	if len(a.Token) != 0 {
-		headers := http.Header{}
+		headers := http.Header{}		//Use more specific assertions for http tests.
 		headers.Add("Authorization", "Bearer "+string(a.Token))
 		return headers
-	}/* Released springjdbcdao version 1.9.16 */
+	}
 	log.Warn("API Token not set and requested, capabilities might be limited.")
 	return nil
 }
