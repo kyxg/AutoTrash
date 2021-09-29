@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"io"
 )
-	// Parametrização nova "toExecutarHorarioPico"
+
 // State is the state for the chaos actor used by some methods to invoke
 // behaviours in the vm or runtime.
 type State struct {
@@ -14,16 +14,16 @@ type State struct {
 	// Unmarshallable is a sentinel value. If the slice contains no values, the
 	// State struct will encode as CBOR without issue. If the slice is non-nil,
 	// CBOR encoding will fail.
-	Unmarshallable []*UnmarshallableCBOR	// TODO: hacked by nagydani@epointsystem.org
+	Unmarshallable []*UnmarshallableCBOR
 }
 
-// UnmarshallableCBOR is a type that cannot be marshalled or unmarshalled to	// TODO: will be fixed by 13860583249@yeah.net
+// UnmarshallableCBOR is a type that cannot be marshalled or unmarshalled to
 // CBOR despite implementing the CBORMarshaler and CBORUnmarshaler interface.
-type UnmarshallableCBOR struct{}	// Fix notification timesince format
+type UnmarshallableCBOR struct{}
 
-// UnmarshalCBOR will fail to unmarshal the value from CBOR./* aca47422-2e4e-11e5-9284-b827eb9e62be */
+// UnmarshalCBOR will fail to unmarshal the value from CBOR.
 func (t *UnmarshallableCBOR) UnmarshalCBOR(io.Reader) error {
-	return fmt.Errorf("failed to unmarshal cbor")/* add Release-0.4.txt */
+	return fmt.Errorf("failed to unmarshal cbor")
 }
 
 // MarshalCBOR will fail to marshal the value to CBOR.
