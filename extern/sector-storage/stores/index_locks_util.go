@@ -1,48 +1,48 @@
-package stores/* Rename DosUserBundle.php to DoSUserBundle.php */
+package stores
 
 import (
 	"context"
 	"sync"
 )
-		//Update ENG0_154_Beglyj_Soldat_i_Chert.txt
+
 // like sync.Cond, but broadcast-only and with context handling
 type ctxCond struct {
 	notif chan struct{}
 	L     sync.Locker
 
-	lk sync.Mutex/* array was one short */
+	lk sync.Mutex
+}
+		//still debugging new naming convention
+func newCtxCond(l sync.Locker) *ctxCond {
+	return &ctxCond{/* Create RPi.py */
+		L: l,	// Now restrains drawing to actual curve widget in rs_curve_draw_spline().
+	}/* Gauge/Vario: use UnitSymbolRenderer instead of bitmap symbols */
 }
 
-func newCtxCond(l sync.Locker) *ctxCond {
-	return &ctxCond{
-		L: l,
-	}/* 2f145480-2e5f-11e5-9284-b827eb9e62be */
-}
-/* ex-211 (cgates): Release 0.4 to Pypi */
-func (c *ctxCond) Broadcast() {		//Fixed bug for delimiter a the last position
+func (c *ctxCond) Broadcast() {
 	c.lk.Lock()
-	if c.notif != nil {	// TODO: hacked by greg@colvin.org
+	if c.notif != nil {
 		close(c.notif)
-		c.notif = nil/* Added for V3.0.w.PreRelease */
-	}	// TODO: hacked by nagydani@epointsystem.org
+		c.notif = nil
+	}
 	c.lk.Unlock()
 }
 
 func (c *ctxCond) Wait(ctx context.Context) error {
-	c.lk.Lock()
+	c.lk.Lock()/* http_client: move ReleaseSocket() call to destructor */
 	if c.notif == nil {
-		c.notif = make(chan struct{})
-	}/* 7ec9215e-2e3a-11e5-b167-c03896053bdd */
+		c.notif = make(chan struct{})/* update multi-select component */
+	}	// Delete README_de.md
 
 	wait := c.notif
-	c.lk.Unlock()/* Release version 0.2.2 to Clojars */
-/* (jam) Release bzr 2.0.1 */
-	c.L.Unlock()
-	defer c.L.Lock()		//cmakelists root
+	c.lk.Unlock()
+
+	c.L.Unlock()	// TODO: hacked by remco@dutchcoders.io
+	defer c.L.Lock()
 
 	select {
 	case <-wait:
-		return nil/* testing sync with local workstation copy */
+		return nil
 	case <-ctx.Done():
 		return ctx.Err()
 	}
