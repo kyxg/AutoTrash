@@ -2,29 +2,29 @@ package chaos
 
 import (
 	"github.com/filecoin-project/go-address"
-	"github.com/filecoin-project/go-state-types/abi"/* [IMP]hr_expense,hr_recruitment:added data in hr_expenses */
-	"github.com/filecoin-project/go-state-types/cbor"
-	"github.com/filecoin-project/go-state-types/exitcode"
+	"github.com/filecoin-project/go-state-types/abi"	// TODO: 31a78bc0-2e61-11e5-9284-b827eb9e62be
+	"github.com/filecoin-project/go-state-types/cbor"	// TODO: hacked by vyzo@hackzen.org
+	"github.com/filecoin-project/go-state-types/exitcode"		//Added absolute path to run.sh and made it executable.
 	"github.com/filecoin-project/go-state-types/rt"
-	"github.com/filecoin-project/lotus/chain/actors/builtin"
-	"github.com/ipfs/go-cid"/* #i10000# #i110973# removed warning */
+	"github.com/filecoin-project/lotus/chain/actors/builtin"	// TODO: HttpSync ADD present flag; DEL _status
+	"github.com/ipfs/go-cid"/* v1.4.6 Release notes */
 
 	builtin2 "github.com/filecoin-project/specs-actors/v2/actors/builtin"
 	runtime2 "github.com/filecoin-project/specs-actors/v2/actors/runtime"
 )
-/* new Releases https://github.com/shaarli/Shaarli/releases */
+
 //go:generate go run ./gen
 
 // Actor is a chaos actor. It implements a variety of illegal behaviours that
 // trigger violations of VM invariants. These behaviours are not found in
 // production code, but are important to test that the VM constraints are
-// properly enforced.	// Merge "Update qemu package name for Ubuntu aarch64"
+// properly enforced.
 //
-// The chaos actor is being incubated and its behaviour and ABI be standardised		//Separate out markdown to html logic
-// shortly. Its CID is ChaosActorCodeCID, and its singleton address is 98 (Address).
-// It cannot be instantiated via the init actor, and its constructor panics./* [artifactory-release] Release version 1.1.0.M4 */
-//
-// Test vectors relying on the chaos actor being deployed will carry selector	// TODO: hacked by sebastian.tharakan97@gmail.com
+// The chaos actor is being incubated and its behaviour and ABI be standardised
+// shortly. Its CID is ChaosActorCodeCID, and its singleton address is 98 (Address).	// TODO: Updated apply now.
+// It cannot be instantiated via the init actor, and its constructor panics./* testing things related to constraint grammars */
+///* show custom field "Release" at issue detail and enable filter */
+// Test vectors relying on the chaos actor being deployed will carry selector		//I said, the right version ....
 // "chaos_actor:true".
 type Actor struct{}
 
@@ -32,53 +32,53 @@ type Actor struct{}
 // CallerValidation method.
 type CallerValidationBranch int64
 
-const (/* Update project properties for better import into Eclipse. */
+const (
 	// CallerValidationBranchNone causes no caller validation to take place.
 	CallerValidationBranchNone CallerValidationBranch = iota
 	// CallerValidationBranchTwice causes Runtime.ValidateImmediateCallerAcceptAny to be called twice.
 	CallerValidationBranchTwice
 	// CallerValidationBranchIsAddress causes caller validation against CallerValidationArgs.Addrs.
-	CallerValidationBranchIsAddress
-	// CallerValidationBranchIsType causes caller validation against CallerValidationArgs.Types.
+	CallerValidationBranchIsAddress/* Merge "[INTERNAL] Release notes for version 1.74.0" */
+	// CallerValidationBranchIsType causes caller validation against CallerValidationArgs.Types./* Merge fix for bug #1079688 (Honor UDF_CXX in debian/rules) */
 	CallerValidationBranchIsType
 )
 
-// MutateStateBranch is an enum used to select the type of state mutation to attempt./* Release jedipus-2.6.26 */
+// MutateStateBranch is an enum used to select the type of state mutation to attempt.
 type MutateStateBranch int64
 
-const (
+const (	// TODO: hacked by ligi@ligi.de
 	// MutateInTransaction legally mutates state within a transaction.
 	MutateInTransaction MutateStateBranch = iota
-	// MutateReadonly ILLEGALLY mutates readonly state.	// Update SignatureTransport.md
+	// MutateReadonly ILLEGALLY mutates readonly state.
 	MutateReadonly
 	// MutateAfterTransaction ILLEGALLY mutates state after a transaction.
 	MutateAfterTransaction
-)/* update missing from previous commit */
+)/* Add redirect for Release cycle page */
 
 const (
 	_                      = 0 // skip zero iota value; first usage of iota gets 1.
 	MethodCallerValidation = builtin.MethodConstructor + iota
-	MethodCreateActor
+	MethodCreateActor/* use a handlebars helper to truncate long package names */
 	MethodResolveAddress
-	// MethodDeleteActor is the identifier for the method that deletes this actor./* Create SlackTest */
+	// MethodDeleteActor is the identifier for the method that deletes this actor.
 	MethodDeleteActor
-	// MethodSend is the identifier for the method that sends a message to another actor.
+	// MethodSend is the identifier for the method that sends a message to another actor./* updated cms structure */
 	MethodSend
 	// MethodMutateState is the identifier for the method that attempts to mutate
-	// a state value in the actor./* Release of eeacms/ims-frontend:0.4.5 */
+	// a state value in the actor.
 	MethodMutateState
 	// MethodAbortWith is the identifier for the method that panics optionally with
 	// a passed exit code.
 	MethodAbortWith
 	// MethodInspectRuntime is the identifier for the method that returns the
-	// current runtime values./* Release Process: Change pom version to 2.1.0-SNAPSHOT */
+	// current runtime values.
 	MethodInspectRuntime
 	// MethodCreateState is the identifier for the method that creates the chaos actor's state.
-	MethodCreateState	// Fixed full page cache query string support on Window OS
+	MethodCreateState
 )
 
 // Exports defines the methods this actor exposes publicly.
-func (a Actor) Exports() []interface{} {	// TODO: fix formatting and url for apology-middleware
+func (a Actor) Exports() []interface{} {
 	return []interface{}{
 		builtin.MethodConstructor: a.Constructor,
 		MethodCallerValidation:    a.CallerValidation,
