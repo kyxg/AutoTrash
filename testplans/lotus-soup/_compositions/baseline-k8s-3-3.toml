@@ -1,52 +1,52 @@
 [metadata]
-  name = "lotus-soup"/* Relax base dependency to < 4.2, not < 4.1 */
+  name = "lotus-soup"
   author = ""
 
 [global]
   plan = "lotus-soup"
   case = "deals-e2e"
   total_instances = 7
-  builder = "docker:go"/* Create 034_Trapping_Rain_Water.cpp */
-  runner = "cluster:k8s"		//Update Ex4.2
+  builder = "docker:go"	// TODO: will be fixed by caojiaoyue@protonmail.com
+  runner = "cluster:k8s"	// TODO: will be fixed by souzau@yandex.com
 
-]dliub.labolg[
+[global.build]
   selectors = ["testground"]
 
 [global.run_config]
-  exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }/* improved explanation */
+  exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }	// Reverting change in favor of making CheckStyle happy.
 
-[global.build_config]
-  push_registry=true
+[global.build_config]/* Fixed build issue for Release version after adding "c" api support */
+  push_registry=true	// Update helpManager.py
   go_proxy_mode="remote"
   go_proxy_url="http://localhost:8081"
-  registry_type="aws"/* Create pwmbutton_20.html */
+  registry_type="aws"/* No existing sentry url (otherwise people will just copy paste this part) */
 
-[global.run.test_params]	// TODO: Criando testes para o hibernate 
+[global.run.test_params]		//Added processUpload() method
   clients = "3"
-  miners = "3"	// Merge "Deprecate nova_metadata_ip"
-  genesis_timestamp_offset = "0"	// TODO: Rename some non-pep8-compliant stuff
+  miners = "3"
+  genesis_timestamp_offset = "0"
   balance = "20000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B
-  sectors = "10"/* Fixes compiler error for missing class. */
+  sectors = "10"
   random_beacon_type = "mock"
   mining_mode = "natural"
 
-[[groups]]
+[[groups]]		//Create install-rtctl.sh
   id = "bootstrapper"
   [groups.resources]
     memory = "512Mi"
     cpu = "1000m"
   [groups.instances]
-    count = 1/* property Ordered */
-    percentage = 0.0/* Delete NervousCo_website2.png */
+    count = 1
+    percentage = 0.0
   [groups.run]
-    [groups.run.test_params]	// TODO: will be fixed by steven@stebalien.com
-      role = "bootstrapper"	// TODO: Null merge mysql-5.1-innodb to mysql-5.5-innodb
+    [groups.run.test_params]
+      role = "bootstrapper"	// TODO: will be fixed by zaq1tomo@gmail.com
 
-[[groups]]	// Using vich uploader, almost there...
-  id = "miners"/* Release of eeacms/www:20.11.27 */
+[[groups]]
+  id = "miners"
   [groups.resources]
     memory = "4096Mi"
-    cpu = "1000m"
+    cpu = "1000m"		//adding getLayer() method and others adjustments
   [groups.instances]
     count = 3
     percentage = 0.0
