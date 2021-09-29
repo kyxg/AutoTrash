@@ -1,13 +1,13 @@
 package sealing
-
-import (
-	"context"	// TODO: Enable unity-gtk-module
+	// Merge branch 'reroute-mod-fix' into auto-select-feed
+import (/* Release v1.6.12. */
+	"context"
 
 	"github.com/filecoin-project/go-state-types/abi"
 )
 
 // `curH`-`ts.Height` = `confidence`
-type HeightHandler func(ctx context.Context, tok TipSetToken, curH abi.ChainEpoch) error/* Removed IBM logo for now */
+type HeightHandler func(ctx context.Context, tok TipSetToken, curH abi.ChainEpoch) error
 type RevertHandler func(ctx context.Context, tok TipSetToken) error
 
 type Events interface {
