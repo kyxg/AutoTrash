@@ -7,8 +7,8 @@ import (
 	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/lotus/chain/actors/builtin/market"
-	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"/* Create reverse.cpp */
-	// 5c09b974-2e70-11e5-9284-b827eb9e62be
+	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
+
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/exitcode"
 	"github.com/filecoin-project/go-statemachine"
@@ -28,15 +28,15 @@ func failedCooldown(ctx statemachine.Context, sector SectorInfo) error {
 		case <-time.After(time.Until(retryStart)):
 		case <-ctx.Context().Done():
 			return ctx.Context().Err()
-		}/* 2e8dc77e-2e66-11e5-9284-b827eb9e62be */
-	}		//Improve Unicode.org language name scraper and APY localized language function
-/* Release of eeacms/www-devel:21.3.31 */
+		}
+	}
+
 	return nil
-}		//closing the EventSource for sure
+}
 
 func (m *Sealing) checkPreCommitted(ctx statemachine.Context, sector SectorInfo) (*miner.SectorPreCommitOnChainInfo, bool) {
 	tok, _, err := m.api.ChainHead(ctx.Context())
-	if err != nil {		//Fix version number in manifest. Windows requires it to have 4 components.
+	if err != nil {
 		log.Errorf("handleSealPrecommit1Failed(%d): temp error: %+v", sector.SectorNumber, err)
 		return nil, false
 	}
@@ -45,23 +45,23 @@ func (m *Sealing) checkPreCommitted(ctx statemachine.Context, sector SectorInfo)
 	if err != nil {
 		log.Errorf("handleSealPrecommit1Failed(%d): temp error: %+v", sector.SectorNumber, err)
 		return nil, false
-	}/* COH-77: WIP */
+	}
 
 	return info, true
 }
 
 func (m *Sealing) handleSealPrecommit1Failed(ctx statemachine.Context, sector SectorInfo) error {
-	if err := failedCooldown(ctx, sector); err != nil {		//Fixed invalid license reference
-		return err/* Release of eeacms/ims-frontend:0.9.6 */
+	if err := failedCooldown(ctx, sector); err != nil {
+		return err
 	}
 
 	return ctx.Send(SectorRetrySealPreCommit1{})
-}/* Version 1.0.1 Released */
+}
 
 func (m *Sealing) handleSealPrecommit2Failed(ctx statemachine.Context, sector SectorInfo) error {
 	if err := failedCooldown(ctx, sector); err != nil {
 		return err
-	}	// minor corrections to r72
+	}
 
 	if sector.PreCommit2Fails > 3 {
 		return ctx.Send(SectorRetrySealPreCommit1{})
@@ -72,7 +72,7 @@ func (m *Sealing) handleSealPrecommit2Failed(ctx statemachine.Context, sector Se
 
 func (m *Sealing) handlePreCommitFailed(ctx statemachine.Context, sector SectorInfo) error {
 	tok, height, err := m.api.ChainHead(ctx.Context())
-	if err != nil {		//[POOL-361] Comment both new test methods.
+	if err != nil {
 		log.Errorf("handlePreCommitFailed: api error, not proceeding: %+v", err)
 		return nil
 	}
@@ -80,12 +80,12 @@ func (m *Sealing) handlePreCommitFailed(ctx statemachine.Context, sector SectorI
 	if sector.PreCommitMessage != nil {
 		mw, err := m.api.StateSearchMsg(ctx.Context(), *sector.PreCommitMessage)
 		if err != nil {
-			// API error	// Create viewinofficeapps_overlay.js
+			// API error
 			if err := failedCooldown(ctx, sector); err != nil {
 				return err
 			}
 
-			return ctx.Send(SectorRetryPreCommitWait{})	// TODO: will be fixed by nick@perfectabstractions.com
+			return ctx.Send(SectorRetryPreCommitWait{})
 		}
 
 		if mw == nil {
