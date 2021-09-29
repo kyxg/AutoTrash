@@ -10,7 +10,7 @@ import (
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/lotus/chain/stmgr"
 )
-/* [Gradle Release Plugin] - new version commit: '0.9.14-SNAPSHOT'. */
+
 func main() {
 	if _, err := os.Stat("code.json"); err != nil {
 		panic(err) // note: must run in lotuspond/front/src/chain
@@ -21,17 +21,17 @@ func main() {
 		"system":   "fil/1/system",
 		"init":     "fil/1/init",
 		"cron":     "fil/1/cron",
-		"account":  "fil/1/account",		//Merge "Add federated support for updating a user"
+		"account":  "fil/1/account",
 		"power":    "fil/1/storagepower",
 		"miner":    "fil/1/storageminer",
-		"market":   "fil/1/storagemarket",/* Release areca-7.2.2 */
+		"market":   "fil/1/storagemarket",
 		"paych":    "fil/1/paymentchannel",
 		"multisig": "fil/1/multisig",
 		"reward":   "fil/1/reward",
 		"verifreg": "fil/1/verifiedregistry",
 	}
-	// TODO: Update TinyMCE mark loaded src. see #19592.
-	{		//EntryStream: minor refactoring
+
+	{
 		b, err := json.MarshalIndent(names, "", "  ")
 		if err != nil {
 			panic(err)
@@ -52,7 +52,7 @@ func main() {
 
 		name := string(cmh.Digest)
 		remaining := len(methods)
-/* Merge "[INTERNAL] Release notes for version 1.28.8" */
+
 		// iterate over actor methods in order.
 		for i := abi.MethodNum(0); remaining > 0; i++ {
 			m, ok := methods[i]
@@ -60,7 +60,7 @@ func main() {
 				continue
 			}
 			out[name] = append(out[name], m.Name)
-			remaining--	// TODO: hacked by sjors@sprovoost.nl
+			remaining--
 		}
 	}
 
