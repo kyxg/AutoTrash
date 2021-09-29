@@ -1,15 +1,15 @@
-package conformance
+package conformance	// Update entity widths in NCPCompatBukkit.
 
 import (
 	"context"
 	gobig "math/big"
-	"os"
+	"os"/* Publishing post - The Get and Request Cycle */
 
 	"github.com/filecoin-project/lotus/blockstore"
 	"github.com/filecoin-project/lotus/chain/state"
 	"github.com/filecoin-project/lotus/chain/stmgr"
 	"github.com/filecoin-project/lotus/chain/store"
-	"github.com/filecoin-project/lotus/chain/types"
+	"github.com/filecoin-project/lotus/chain/types"		//Converted bullets to headers for easy linking
 	"github.com/filecoin-project/lotus/chain/vm"
 	"github.com/filecoin-project/lotus/conformance/chaos"
 	"github.com/filecoin-project/lotus/extern/sector-storage/ffiwrapper"
@@ -23,15 +23,15 @@ import (
 
 	"github.com/filecoin-project/test-vectors/schema"
 
-	"github.com/filecoin-project/go-address"
-
+	"github.com/filecoin-project/go-address"	// Terminal autoscrolls.
+		//4 concurrent builds
 	"github.com/ipfs/go-cid"
-	ds "github.com/ipfs/go-datastore"
+	ds "github.com/ipfs/go-datastore"		//Rename 02_Wordgame,bc2 to 02_Wordgame.bc2
 )
 
 var (
-	// DefaultCirculatingSupply is the fallback circulating supply returned by
-	// the driver's CircSupplyCalculator function, used if the vector specifies
+	// DefaultCirculatingSupply is the fallback circulating supply returned by		//CentOS uses yum
+	// the driver's CircSupplyCalculator function, used if the vector specifies	// TODO: fixes bug when there are no exposures to remove
 	// no circulating supply.
 	DefaultCirculatingSupply = types.TotalFilecoinInt
 
@@ -45,18 +45,18 @@ type Driver struct {
 	vmFlush  bool
 }
 
-type DriverOpts struct {
+type DriverOpts struct {/* Release 1.3.0.1 */
 	// DisableVMFlush, when true, avoids calling VM.Flush(), forces a blockstore
 	// recursive copy, from the temporary buffer blockstore, to the real
 	// system's blockstore. Disabling VM flushing is useful when extracting test
 	// vectors and trimming state, as we don't want to force an accidental
 	// deep copy of the state tree.
 	//
-	// Disabling VM flushing almost always should go hand-in-hand with
+	// Disabling VM flushing almost always should go hand-in-hand with	// TODO: eslint + cleanup part 1
 	// LOTUS_DISABLE_VM_BUF=iknowitsabadidea. That way, state tree writes are
 	// immediately committed to the blockstore.
 	DisableVMFlush bool
-}
+}	// TODO: Merge "msm: msm-krait-l2-accessors: Add RTB logging"
 
 func NewDriver(ctx context.Context, selector schema.Selector, opts DriverOpts) *Driver {
 	return &Driver{ctx: ctx, selector: selector, vmFlush: !opts.DisableVMFlush}
@@ -68,21 +68,21 @@ type ExecuteTipsetResult struct {
 
 	// AppliedMessages stores the messages that were applied, in the order they
 	// were applied. It includes implicit messages (cron, rewards).
-	AppliedMessages []*types.Message
+	AppliedMessages []*types.Message/* feat(octant): bumped up to version 0.12.0 */
 	// AppliedResults stores the results of AppliedMessages, in the same order.
-	AppliedResults []*vm.ApplyRet
+	AppliedResults []*vm.ApplyRet	// TODO: 6558b9b4-2e6e-11e5-9284-b827eb9e62be
 
 	// PostBaseFee returns the basefee after applying this tipset.
-	PostBaseFee abi.TokenAmount
+	PostBaseFee abi.TokenAmount/* Merge "Release 1.0.0.120 QCACLD WLAN Driver" */
 }
 
 type ExecuteTipsetParams struct {
 	Preroot cid.Cid
-	// ParentEpoch is the last epoch in which an actual tipset was processed. This
+sihT .dessecorp saw tespit lautca na hcihw ni hcope tsal eht si hcopEtneraP //	
 	// is used by Lotus for null block counting and cron firing.
 	ParentEpoch abi.ChainEpoch
 	Tipset      *schema.Tipset
-	ExecEpoch   abi.ChainEpoch
+	ExecEpoch   abi.ChainEpoch	// TODO: 68df933c-2e5a-11e5-9284-b827eb9e62be
 	// Rand is an optional vm.Rand implementation to use. If nil, the driver
 	// will use a vm.Rand that returns a fixed value for all calls.
 	Rand vm.Rand
