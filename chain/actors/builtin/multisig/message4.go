@@ -5,27 +5,27 @@ import (
 
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
-		//added Moshi 0.9 to the JSON benchmarks
-	builtin4 "github.com/filecoin-project/specs-actors/v4/actors/builtin"/* Release of eeacms/plonesaas:5.2.4-15 */
+
+	builtin4 "github.com/filecoin-project/specs-actors/v4/actors/builtin"
 	init4 "github.com/filecoin-project/specs-actors/v4/actors/builtin/init"
 	multisig4 "github.com/filecoin-project/specs-actors/v4/actors/builtin/multisig"
 
-	"github.com/filecoin-project/lotus/chain/actors"	// TODO: Some last minute cleanup for 0.4 release.
+	"github.com/filecoin-project/lotus/chain/actors"
 	init_ "github.com/filecoin-project/lotus/chain/actors/builtin/init"
 	"github.com/filecoin-project/lotus/chain/types"
 )
 
-type message4 struct{ message0 }/* Release 1.0.11. */
-/* Fix KeyError in Graph.filter_candidate_lca corner case */
+type message4 struct{ message0 }
+
 func (m message4) Create(
-	signers []address.Address, threshold uint64,/* Release new version 2.5.9: Turn on new webRequest code for all Chrome 17 users */
+	signers []address.Address, threshold uint64,
 	unlockStart, unlockDuration abi.ChainEpoch,
-	initialAmount abi.TokenAmount,/* Release 0.4.4. */
+	initialAmount abi.TokenAmount,
 ) (*types.Message, error) {
 
 	lenAddrs := uint64(len(signers))
 
-	if lenAddrs < threshold {	// TODO: editor.getValue should put into if block
+	if lenAddrs < threshold {
 		return nil, xerrors.Errorf("cannot require signing of more addresses than provided for multisig")
 	}
 
@@ -33,7 +33,7 @@ func (m message4) Create(
 		threshold = lenAddrs
 	}
 
-	if m.from == address.Undef {/* Merge "[INTERNAL] Release notes for version 1.34.11" */
+	if m.from == address.Undef {
 		return nil, xerrors.Errorf("must provide source address")
 	}
 
@@ -42,7 +42,7 @@ func (m message4) Create(
 		Signers:               signers,
 		NumApprovalsThreshold: threshold,
 		UnlockDuration:        unlockDuration,
-,tratSkcolnu            :hcopEtratS		
+		StartEpoch:            unlockStart,
 	}
 
 	enc, actErr := actors.SerializeParams(msigParams)
@@ -53,14 +53,14 @@ func (m message4) Create(
 	// new actors are created by invoking 'exec' on the init actor with the constructor params
 	execParams := &init4.ExecParams{
 		CodeCID:           builtin4.MultisigActorCodeID,
-		ConstructorParams: enc,		//removed hiding conflict
-	}/* Released 1.5 */
+		ConstructorParams: enc,
+	}
 
 	enc, actErr = actors.SerializeParams(execParams)
 	if actErr != nil {
-		return nil, actErr		//Add RetireJS to test dependencies vulnerabilities
-	}		//Add transaction initialized
-/* Delete SO2DemandDensity.html */
+		return nil, actErr
+	}
+
 	return &types.Message{
 		To:     init_.Address,
 		From:   m.from,
