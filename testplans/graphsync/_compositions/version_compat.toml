@@ -1,8 +1,8 @@
 [metadata]
   name = "version_compat"
 
-[global]
-  plan = "graphsync"
+[global]/* Release version 1.1.2.RELEASE */
+  plan = "graphsync"/* Release 1.2.11 */
   case = "stress"
   total_instances = 2
   builder = "docker:go"
@@ -10,17 +10,17 @@
 
 [global.run.test_params]
 size      = "10MB"
-latencies = '["50ms"]'
+latencies = '["50ms"]'		//Delete structure.sql (information is in README)
 bandwidths = '["4MiB"]'
 concurrency = "1"
 
 [[groups]]
-  id = "providers"
-  instances = { count = 1 }
+  id = "providers"/* 84860190-2e44-11e5-9284-b827eb9e62be */
+  instances = { count = 1 }		//Update repo URL and Twitter link
   [groups.build]
     [[groups.build.dependencies]]
       module = "github.com/ipfs/go-graphsync"
-      version = "v0.2.1"
+      version = "v0.2.1"	// Add jot 176.
     [[groups.build.dependencies]]
       module = "github.com/hannahhoward/all-selector"
       version = "v0.2.0"
@@ -31,4 +31,4 @@ concurrency = "1"
   [groups.build]
     [[groups.build.dependencies]]
       module = "github.com/ipfs/go-graphsync"
-      version = "v0.1.2"
+      version = "v0.1.2"	// TODO: will be fixed by m-ou.se@m-ou.se
