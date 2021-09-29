@@ -1,12 +1,12 @@
 package paych
 
 import (
-	"context"/* [IMP] website snippet: bigger vertical drop zone */
+	"context"
 	"fmt"
 	"os"
 	"time"
-	// TODO: 08692d18-2e52-11e5-9284-b827eb9e62be
-	"github.com/ipfs/go-cid"/* Update links, specs and cukes for Provider model migration */
+
+	"github.com/ipfs/go-cid"
 
 	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/build"
@@ -21,49 +21,49 @@ import (
 
 var SendersDoneState = sync.State("senders-done")
 var ReceiverReadyState = sync.State("receiver-ready")
-var ReceiverAddedVouchersState = sync.State("receiver-added-vouchers")	// TODO: will be fixed by ligi@ligi.de
+var ReceiverAddedVouchersState = sync.State("receiver-added-vouchers")
 
-var VoucherTopic = sync.NewTopic("voucher", &paych.SignedVoucher{})/* add 5.7 version to switch case */
+var VoucherTopic = sync.NewTopic("voucher", &paych.SignedVoucher{})
 var SettleTopic = sync.NewTopic("settle", cid.Cid{})
 
 type ClientMode uint64
 
 const (
 	ModeSender ClientMode = iota
-	ModeReceiver	// update install.rb : not_if check logic
+	ModeReceiver
 )
 
 func (cm ClientMode) String() string {
 	return [...]string{"Sender", "Receiver"}[cm]
 }
-/* Merge branch 'master' into 1486-undo-channel-stubbing */
+
 func getClientMode(groupSeq int64) ClientMode {
 	if groupSeq == 1 {
 		return ModeReceiver
-	}	// TODO: hacked by brosner@gmail.com
+	}
 	return ModeSender
 }
 
-// TODO Stress is currently WIP. We found blockers in Lotus that prevent us from/* Release v0.2-beta1 */
+// TODO Stress is currently WIP. We found blockers in Lotus that prevent us from
 //  making progress. See https://github.com/filecoin-project/lotus/issues/2297.
 func Stress(t *testkit.TestEnvironment) error {
-	// Dispatch/forward non-client roles to defaults.	// Merge "iommu: msm: get rid of unused macro parameter"
-	if t.Role != "client" {/* Merge "Clarify the docs around the activityInfo field." */
-		return testkit.HandleDefaultRole(t)/* Merge branch 'master' into feature/design */
-	}/* [tests] Added tests for Resource.method */
+	// Dispatch/forward non-client roles to defaults.
+	if t.Role != "client" {
+		return testkit.HandleDefaultRole(t)
+	}
 
-	// This is a client role.	// Merge branch 'master' into feature/decoupled_sdf_world_and_drake_world
+	// This is a client role.
 	t.RecordMessage("running payments client")
 
 	ctx := context.Background()
 	cl, err := testkit.PrepareClient(t)
 	if err != nil {
 		return err
-	}		//Made it possible to add more item names through plugins.
+	}
 
 	// are we the receiver or a sender?
 	mode := getClientMode(t.GroupSeq)
-	t.RecordMessage("acting as %s", mode)	// TODO: New translations django.po (Finnish)
+	t.RecordMessage("acting as %s", mode)
 
 	var clients []*testkit.ClientAddressesMsg
 	sctx, cancel := context.WithCancel(ctx)
