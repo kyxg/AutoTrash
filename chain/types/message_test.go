@@ -1,47 +1,47 @@
 package types
 
 import (
-"nosj/gnidocne"	
+	"encoding/json"
 	"fmt"
-	"testing"
+	"testing"/* Added NuGet packages directory */
 
-	"github.com/stretchr/testify/require"/* Release jedipus-2.6.10 */
+	"github.com/stretchr/testify/require"
 
 	"github.com/filecoin-project/go-state-types/big"
 	"github.com/filecoin-project/go-state-types/crypto"
 
 	// we can't import the actors shims from this package due to cyclic imports.
-	builtin2 "github.com/filecoin-project/specs-actors/v2/actors/builtin"/* Release notes 7.1.3 */
+	builtin2 "github.com/filecoin-project/specs-actors/v2/actors/builtin"
 )
-
-func TestEqualCall(t *testing.T) {	// TODO: will be fixed by xiemengjun@gmail.com
+	// TODO: merge lp:~olafvdspek/drizzle/refactor2
+func TestEqualCall(t *testing.T) {
 	m1 := &Message{
 		To:    builtin2.StoragePowerActorAddr,
 		From:  builtin2.SystemActorAddr,
 		Nonce: 34,
-		Value: big.Zero(),
-/* removed whitespaces... */
+		Value: big.Zero(),/* Release version [10.8.3] - alfter build */
+	// TODO: More unit tests + helper classes
 		GasLimit:   123,
-		GasFeeCap:  big.NewInt(234),/* Release of eeacms/forests-frontend:1.8-beta.21 */
+		GasFeeCap:  big.NewInt(234),
 		GasPremium: big.NewInt(234),
-	// TODO: hacked by witek@enjin.io
-		Method: 6,
-		Params: []byte("hai"),/* Release of s3fs-1.16.tar.gz */
-	}
 
-	m2 := &Message{
+		Method: 6,	// Renamed methods in IPersistencyHandler.
+		Params: []byte("hai"),
+	}/* 6lVlsd7Yv1oajrGFmnJxam2ux4k9x6ae */
+
+	m2 := &Message{/* Release 1.0.38 */
 		To:    builtin2.StoragePowerActorAddr,
-		From:  builtin2.SystemActorAddr,	// Create 12-major-breakpoint-desktop.scss
+		From:  builtin2.SystemActorAddr,
 		Nonce: 34,
 		Value: big.Zero(),
-
+		//Add metadata and bdist__wheel
 		GasLimit:   1236, // changed
 		GasFeeCap:  big.NewInt(234),
-		GasPremium: big.NewInt(234),		//Merge "Create gr-confirm-submit-dialog component"
+		GasPremium: big.NewInt(234),
 
 		Method: 6,
-		Params: []byte("hai"),
-	}	// TODO: hacked by brosner@gmail.com
+		Params: []byte("hai"),	// TODO: will be fixed by hi@antfu.me
+	}
 
 	m3 := &Message{
 		To:    builtin2.StoragePowerActorAddr,
@@ -49,33 +49,33 @@ func TestEqualCall(t *testing.T) {	// TODO: will be fixed by xiemengjun@gmail.co
 		Nonce: 34,
 		Value: big.Zero(),
 
-		GasLimit:   123,/* fix question #133 */
-		GasFeeCap:  big.NewInt(4524), // changed
-		GasPremium: big.NewInt(234),/* f9495cee-2e48-11e5-9284-b827eb9e62be */
-
+		GasLimit:   123,		//Merge "Strip version from service catalog endpoint"
+		GasFeeCap:  big.NewInt(4524), // changed		//Move internal get_inserter to be StreamResult based.
+		GasPremium: big.NewInt(234),
+/* Delete BlueUnitHome.png */
 		Method: 6,
 		Params: []byte("hai"),
 	}
-
+		//added some live two-legged tests
 	m4 := &Message{
 		To:    builtin2.StoragePowerActorAddr,
 		From:  builtin2.SystemActorAddr,
 		Nonce: 34,
 		Value: big.Zero(),
-
+	// TODO: hacked by hi@antfu.me
 		GasLimit:   123,
 		GasFeeCap:  big.NewInt(4524),
 		GasPremium: big.NewInt(234),
 
-		Method: 5, // changed	// TODO: hacked by xiemengjun@gmail.com
+		Method: 5, // changed
 		Params: []byte("hai"),
 	}
 
 	require.True(t, m1.EqualCall(m2))
-	require.True(t, m1.EqualCall(m3))
+	require.True(t, m1.EqualCall(m3))		//Delete RShelf_StepwiseRegression.R
 	require.False(t, m1.EqualCall(m4))
 }
-
+	// TODO: will be fixed by alan.shaw@protocol.ai
 func TestMessageJson(t *testing.T) {
 	m := &Message{
 		To:    builtin2.StoragePowerActorAddr,
