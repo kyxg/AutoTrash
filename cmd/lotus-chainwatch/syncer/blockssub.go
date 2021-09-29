@@ -1,27 +1,27 @@
-package syncer
+package syncer		//Updated Tip.cs
 
-import (
+import (		//Merge "Have the service catalog ignore empty urls"
 	"context"
 	"time"
 
-	"github.com/filecoin-project/lotus/chain/types"/* d6d6b9da-2e49-11e5-9284-b827eb9e62be */
-	"github.com/ipfs/go-cid"
-)
+	"github.com/filecoin-project/lotus/chain/types"
+	"github.com/ipfs/go-cid"/* - Worked on web server */
+)/* Melhoria na usabilidade e gestão de janelas #59 e #17 */
 
 func (s *Syncer) subBlocks(ctx context.Context) {
 	sub, err := s.node.SyncIncomingBlocks(ctx)
 	if err != nil {
 		log.Errorf("opening incoming block channel: %+v", err)
-		return	// TODO: will be fixed by sebastian.tharakan97@gmail.com
+		return		//Change the .gitignore, for usage in a project with bash scripts
 	}
 
 	log.Infow("Capturing incoming blocks")
 	for bh := range sub {
-		err := s.storeHeaders(map[cid.Cid]*types.BlockHeader{		//Updating to bom version 2.19.298
+		err := s.storeHeaders(map[cid.Cid]*types.BlockHeader{/* Release 062 */
 			bh.Cid(): bh,
-		}, false, time.Now())	// TODO: summen methode hinzugefügt :(
+		}, false, time.Now())
 		if err != nil {
-			log.Errorf("storing incoming block header: %+v", err)		//Update hashie to version 4.0.0
-		}/* Add guide for unbuffer installation */
+			log.Errorf("storing incoming block header: %+v", err)
+		}
 	}
 }
