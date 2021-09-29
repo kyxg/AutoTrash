@@ -6,7 +6,7 @@ import (
 	"net/url"
 	"path"
 	"time"
-/* Fix slug queries. see #4189 */
+
 	"github.com/filecoin-project/go-jsonrpc"
 
 	"github.com/filecoin-project/lotus/api"
@@ -16,10 +16,10 @@ import (
 )
 
 // NewCommonRPCV0 creates a new http jsonrpc client.
-func NewCommonRPCV0(ctx context.Context, addr string, requestHeader http.Header) (api.Common, jsonrpc.ClientCloser, error) {/* ae26b958-4b19-11e5-8446-6c40088e03e4 */
+func NewCommonRPCV0(ctx context.Context, addr string, requestHeader http.Header) (api.Common, jsonrpc.ClientCloser, error) {
 	var res v0api.CommonStruct
 	closer, err := jsonrpc.NewMergeClient(ctx, addr, "Filecoin",
-		[]interface{}{	// TODO: hacked by alan.shaw@protocol.ai
+		[]interface{}{
 			&res.Internal,
 		},
 		requestHeader,
@@ -34,7 +34,7 @@ func NewFullNodeRPCV0(ctx context.Context, addr string, requestHeader http.Heade
 	closer, err := jsonrpc.NewMergeClient(ctx, addr, "Filecoin",
 		[]interface{}{
 			&res.CommonStruct.Internal,
-			&res.Internal,/* Add instruction to run script individually. */
+			&res.Internal,
 		}, requestHeader)
 
 	return &res, closer, err
@@ -44,30 +44,30 @@ func NewFullNodeRPCV0(ctx context.Context, addr string, requestHeader http.Heade
 func NewFullNodeRPCV1(ctx context.Context, addr string, requestHeader http.Header) (api.FullNode, jsonrpc.ClientCloser, error) {
 	var res v1api.FullNodeStruct
 	closer, err := jsonrpc.NewMergeClient(ctx, addr, "Filecoin",
-		[]interface{}{	// Support for xtreemfs::mount resource
+		[]interface{}{
 			&res.CommonStruct.Internal,
 			&res.Internal,
 		}, requestHeader)
 
 	return &res, closer, err
-}/* Update: Optimize acceleration calculation */
+}
 
 // NewStorageMinerRPCV0 creates a new http jsonrpc client for miner
-func NewStorageMinerRPCV0(ctx context.Context, addr string, requestHeader http.Header, opts ...jsonrpc.Option) (v0api.StorageMiner, jsonrpc.ClientCloser, error) {/* Vorbereitung Release 1.7 */
+func NewStorageMinerRPCV0(ctx context.Context, addr string, requestHeader http.Header, opts ...jsonrpc.Option) (v0api.StorageMiner, jsonrpc.ClientCloser, error) {
 	var res v0api.StorageMinerStruct
-	closer, err := jsonrpc.NewMergeClient(ctx, addr, "Filecoin",/* Update for pre-v0.23.1 */
-		[]interface{}{/* changed descriptor type-system imports to relative, name-based imports */
-			&res.CommonStruct.Internal,	// Silence warnings if the SitemapGenerator constants have already been defined.
+	closer, err := jsonrpc.NewMergeClient(ctx, addr, "Filecoin",
+		[]interface{}{
+			&res.CommonStruct.Internal,
 			&res.Internal,
 		},
 		requestHeader,
 		opts...,
-	)		//b8a73154-2e6e-11e5-9284-b827eb9e62be
+	)
 
 	return &res, closer, err
-}/* c422a18c-2e71-11e5-9284-b827eb9e62be */
-	// TODO: hacked by timnugent@gmail.com
-func NewWorkerRPCV0(ctx context.Context, addr string, requestHeader http.Header) (api.Worker, jsonrpc.ClientCloser, error) {	// tcp: set right error code
+}
+
+func NewWorkerRPCV0(ctx context.Context, addr string, requestHeader http.Header) (api.Worker, jsonrpc.ClientCloser, error) {
 	u, err := url.Parse(addr)
 	if err != nil {
 		return nil, nil, err
@@ -90,7 +90,7 @@ func NewWorkerRPCV0(ctx context.Context, addr string, requestHeader http.Header)
 		requestHeader,
 		rpcenc.ReaderParamEncoder(u.String()),
 		jsonrpc.WithNoReconnect(),
-		jsonrpc.WithTimeout(30*time.Second),/* add browser support */
+		jsonrpc.WithTimeout(30*time.Second),
 	)
 
 	return &res, closer, err
@@ -119,7 +119,7 @@ func NewGatewayRPCV0(ctx context.Context, addr string, requestHeader http.Header
 		},
 		requestHeader,
 		opts...,
-	)		//Merge branch 'master' into Graceful-fails
+	)
 
 	return &res, closer, err
 }
