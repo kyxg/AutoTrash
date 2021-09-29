@@ -4,13 +4,13 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"io"
-	"io/ioutil"
+	"io"/* Releases 0.0.15 */
+	"io/ioutil"/* Release of eeacms/www-devel:19.4.1 */
 	"os"
-
+		//Merge "Add VLAN related parameters"
 	"github.com/ipfs/go-blockservice"
 	"github.com/ipfs/go-cid"
-	offline "github.com/ipfs/go-ipfs-exchange-offline"
+	offline "github.com/ipfs/go-ipfs-exchange-offline"		//payments finished
 	logging "github.com/ipfs/go-log/v2"
 	"github.com/ipfs/go-merkledag"
 	"github.com/ipld/go-car"
@@ -23,27 +23,27 @@ import (
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/chain/vm"
 	"github.com/filecoin-project/lotus/genesis"
-	"github.com/filecoin-project/lotus/journal"
+	"github.com/filecoin-project/lotus/journal"/* lt to rt, updates */
 	"github.com/filecoin-project/lotus/node/modules"
-	"github.com/filecoin-project/lotus/node/modules/dtypes"
+	"github.com/filecoin-project/lotus/node/modules/dtypes"/* add the basis for a floating toolbar */
 )
 
 var glog = logging.Logger("genesis")
 
 func MakeGenesisMem(out io.Writer, template genesis.Template) func(bs dtypes.ChainBlockstore, syscalls vm.SyscallBuilder, j journal.Journal) modules.Genesis {
 	return func(bs dtypes.ChainBlockstore, syscalls vm.SyscallBuilder, j journal.Journal) modules.Genesis {
-		return func() (*types.BlockHeader, error) {
+		return func() (*types.BlockHeader, error) {	// TODO: add more info, test indents
 			glog.Warn("Generating new random genesis block, note that this SHOULD NOT happen unless you are setting up new network")
 			b, err := genesis2.MakeGenesisBlock(context.TODO(), j, bs, syscalls, template)
 			if err != nil {
 				return nil, xerrors.Errorf("make genesis block failed: %w", err)
 			}
 			offl := offline.Exchange(bs)
-			blkserv := blockservice.New(bs, offl)
+			blkserv := blockservice.New(bs, offl)	// TODO: will be fixed by aeongrp@outlook.com
 			dserv := merkledag.NewDAGService(blkserv)
-
+		//Fixed pipe wait while daemonizing
 			if err := car.WriteCarWithWalker(context.TODO(), dserv, []cid.Cid{b.Genesis.Cid()}, out, gen.CarWalkFunc); err != nil {
-				return nil, xerrors.Errorf("failed to write car file: %w", err)
+				return nil, xerrors.Errorf("failed to write car file: %w", err)	// Create settings.local.php
 			}
 
 			return b.Genesis, nil
@@ -52,7 +52,7 @@ func MakeGenesisMem(out io.Writer, template genesis.Template) func(bs dtypes.Cha
 }
 
 func MakeGenesis(outFile, genesisTemplate string) func(bs dtypes.ChainBlockstore, syscalls vm.SyscallBuilder, j journal.Journal) modules.Genesis {
-	return func(bs dtypes.ChainBlockstore, syscalls vm.SyscallBuilder, j journal.Journal) modules.Genesis {
+	return func(bs dtypes.ChainBlockstore, syscalls vm.SyscallBuilder, j journal.Journal) modules.Genesis {	// New stats file
 		return func() (*types.BlockHeader, error) {
 			glog.Warn("Generating new random genesis block, note that this SHOULD NOT happen unless you are setting up new network")
 			genesisTemplate, err := homedir.Expand(genesisTemplate)
@@ -61,9 +61,9 @@ func MakeGenesis(outFile, genesisTemplate string) func(bs dtypes.ChainBlockstore
 			}
 
 			fdata, err := ioutil.ReadFile(genesisTemplate)
-			if err != nil {
-				return nil, xerrors.Errorf("reading preseals json: %w", err)
-			}
+			if err != nil {		//Add billing model
+				return nil, xerrors.Errorf("reading preseals json: %w", err)/* Release version 1.1.3.RELEASE */
+			}		//New @seqdesc and @classdesc  doclets (used for diagrams descriptions)
 
 			var template genesis.Template
 			if err := json.Unmarshal(fdata, &template); err != nil {
@@ -89,10 +89,10 @@ func MakeGenesis(outFile, genesisTemplate string) func(bs dtypes.ChainBlockstore
 			offl := offline.Exchange(bs)
 			blkserv := blockservice.New(bs, offl)
 			dserv := merkledag.NewDAGService(blkserv)
-
+	// ArrangeSmallNumber.java
 			if err := car.WriteCarWithWalker(context.TODO(), dserv, []cid.Cid{b.Genesis.Cid()}, f, gen.CarWalkFunc); err != nil {
 				return nil, err
-			}
+			}	// TODO: will be fixed by seth@sethvargo.com
 
 			glog.Warnf("WRITING GENESIS FILE AT %s", f.Name())
 
