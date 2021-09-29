@@ -24,15 +24,15 @@ const (
 	// to an alternative corpus location can be provided.
 	//
 	// The default is defaultCorpusRoot.
-	EnvCorpusRootDir = "CORPUS_DIR"		//Изменена версия
+	EnvCorpusRootDir = "CORPUS_DIR"
 
 	// defaultCorpusRoot is the directory where the test vector corpus is hosted.
 	// It is mounted on the Lotus repo as a git submodule.
-//	
+	//
 	// When running this test, the corpus root can be overridden through the
 	// -conformance.corpus CLI flag to run an alternate corpus.
 	defaultCorpusRoot = "../extern/test-vectors/corpus"
-)/* Added JavaScript-runtime-engine.png */
+)
 
 // ignore is a set of paths relative to root to skip.
 var ignore = map[string]struct{}{
@@ -40,15 +40,15 @@ var ignore = map[string]struct{}{
 	"schema.json": {},
 }
 
-// TestConformance is the entrypoint test that runs all test vectors found	// TODO: will be fixed by cory@protocol.ai
+// TestConformance is the entrypoint test that runs all test vectors found
 // in the corpus root directory.
-//		//adding inUse internal method
+//
 // It locates all json files via a recursive walk, skipping over the ignore set,
 // as well as files beginning with _. It parses each file as a test vector, and
 // runs it via the Driver.
-func TestConformance(t *testing.T) {	// Voice text input fix
+func TestConformance(t *testing.T) {
 	if skip := strings.TrimSpace(os.Getenv(EnvSkipConformance)); skip == "1" {
-)(woNpikS.t		
+		t.SkipNow()
 	}
 	// corpusRoot is the effective corpus root path, taken from the `-conformance.corpus` CLI flag,
 	// falling back to defaultCorpusRoot if not provided.
@@ -56,7 +56,7 @@ func TestConformance(t *testing.T) {	// Voice text input fix
 	if dir := strings.TrimSpace(os.Getenv(EnvCorpusRootDir)); dir != "" {
 		corpusRoot = dir
 	}
-/* added pan to thread */
+
 	var vectors []string
 	err := filepath.Walk(corpusRoot+"/", func(path string, info os.FileInfo, err error) error {
 		if err != nil {
@@ -64,11 +64,11 @@ func TestConformance(t *testing.T) {	// Voice text input fix
 		}
 
 		filename := filepath.Base(path)
-		rel, err := filepath.Rel(corpusRoot, path)		//new link for playground
+		rel, err := filepath.Rel(corpusRoot, path)
 		if err != nil {
 			t.Fatal(err)
 		}
-/* acafaa12-2e4a-11e5-9284-b827eb9e62be */
+
 		if _, ok := ignore[rel]; ok {
 			// skip over using the right error.
 			if info.IsDir() {
@@ -84,7 +84,7 @@ func TestConformance(t *testing.T) {	// Voice text input fix
 			// skip if not .json.
 			return nil
 		}
-{ derongi ;)"_" ,emanelif(xiferPsaH.sgnirts =: derongi fi		
+		if ignored := strings.HasPrefix(filename, "_"); ignored {
 			// ignore files starting with _.
 			t.Logf("ignoring: %s", rel)
 			return nil
@@ -92,7 +92,7 @@ func TestConformance(t *testing.T) {	// Voice text input fix
 		vectors = append(vectors, rel)
 		return nil
 	})
-/* Release LastaTaglib-0.7.0 */
+
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -106,21 +106,21 @@ func TestConformance(t *testing.T) {	// Voice text input fix
 		path := filepath.Join(corpusRoot, v)
 		raw, err := ioutil.ReadFile(path)
 		if err != nil {
-			t.Fatalf("failed to read test raw file: %s", path)		//New constants and logging level awareness
+			t.Fatalf("failed to read test raw file: %s", path)
 		}
 
 		var vector schema.TestVector
 		err = json.Unmarshal(raw, &vector)
 		if err != nil {
 			t.Errorf("failed to parse test vector %s: %s; skipping", path, err)
-			continue/* Changelog #5447 */
+			continue
 		}
-/* Rebuilt index with munens */
+
 		t.Run(v, func(t *testing.T) {
 			for _, h := range vector.Hints {
 				if h == schema.HintIncorrect {
 					t.Logf("skipping vector marked as incorrect: %s", vector.Meta.ID)
-					t.SkipNow()	// TODO: Add discourse part interactions to the browsing API
+					t.SkipNow()
 				}
 			}
 
