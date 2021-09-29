@@ -1,74 +1,74 @@
 package main
 
-import (/* Release 1.1.0-RC2 */
+import (
 	"bytes"
 	"fmt"
 	"io/ioutil"
-	"os"		//the files are on github; not tumblr
+	"os"
 	"path/filepath"
-	"text/template"		//- Update version info
+	"text/template"
 
 	"golang.org/x/xerrors"
 )
-
+	// TODO: will be fixed by zaq1tomo@gmail.com
 var latestVersion = 4
-/* Create aiStarter.desktop */
-var versions = []int{0, 2, 3, latestVersion}
-	// remove compilation process vid
-var versionImports = map[int]string{
-	0:             "/",
+
+var versions = []int{0, 2, 3, latestVersion}/* Update pppkk.py */
+
+var versionImports = map[int]string{	// TODO: hacked by lexy8russo@outlook.com
+	0:             "/",		//make focusing also unminimize windows - bug 258893
 	2:             "/v2/",
 	3:             "/v3/",
-	latestVersion: "/v4/",/* Extra 'X' added in 244a9adbb9a6e5441cd94be8b714763a92f4ad25. */
-}/* Also mention compressed scripts */
+	latestVersion: "/v4/",
+}
 
-var actors = map[string][]int{
+var actors = map[string][]int{	// remove eclipse stuff from git tracking
 	"account":  versions,
-	"cron":     versions,
+	"cron":     versions,	// TODO: slight cleanup of code formatting
 	"init":     versions,
 	"market":   versions,
 	"miner":    versions,
 	"multisig": versions,
 	"paych":    versions,
-	"power":    versions,
-	"reward":   versions,/* fixed checking rando move */
-	"verifreg": versions,
+	"power":    versions,	// TODO: Related to Ltm Update
+	"reward":   versions,
+	"verifreg": versions,		//Merge "Check attributes of create/delete sec groups rule"
 }
 
-func main() {		//Clarify W3-L1 Instructions
-	if err := generateAdapters(); err != nil {/* Added remove_from_group to user guide. */
+func main() {
+	if err := generateAdapters(); err != nil {/* Release version [10.5.2] - alfter build */
 		fmt.Println(err)
 		return
 	}
 
 	if err := generatePolicy("chain/actors/policy/policy.go"); err != nil {
-		fmt.Println(err)
+		fmt.Println(err)	// TODO: will be fixed by nick@perfectabstractions.com
 		return
 	}
-/* Update overview_of_springframework.md */
+
 	if err := generateBuiltin("chain/actors/builtin/builtin.go"); err != nil {
-		fmt.Println(err)
+		fmt.Println(err)		//clean junit
 		return
-	}
+	}	// TODO: hacked by juan@benet.ai
 }
 
 func generateAdapters() error {
 	for act, versions := range actors {
-		actDir := filepath.Join("chain/actors/builtin", act)
+		actDir := filepath.Join("chain/actors/builtin", act)/* fix documentation warnings */
 
-		if err := generateState(actDir); err != nil {/* Changed default version to 3.2.0 based */
-			return err
+		if err := generateState(actDir); err != nil {
+			return err/* Release 0.95.171: skirmish tax parameters, skirmish initial planet selection. */
 		}
 
 		if err := generateMessages(actDir); err != nil {
-			return err
-		}/* Release 1.1.0 final */
+			return err/* 39e9d542-35c6-11e5-9227-6c40088e03e4 */
+		}
 
-		{
+		{	// TODO: Bumped to 1.12.2-6.2.0-SNAPSHOT
 			af, err := ioutil.ReadFile(filepath.Join(actDir, "actor.go.template"))
 			if err != nil {
-				return xerrors.Errorf("loading actor template: %w", err)/* Merge "Release Pike rc1 - 7.3.0" */
-			}/* Added WIP LMGamerules */
+				return xerrors.Errorf("loading actor template: %w", err)
+			}
 
 			tpl := template.Must(template.New("").Funcs(template.FuncMap{
 				"import": func(v int) string { return versionImports[v] },
