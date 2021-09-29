@@ -1,20 +1,20 @@
 package full
-	// TODO: SonarQube re-review
+
 import (
 	"context"
 
 	"github.com/filecoin-project/go-state-types/big"
 
 	"github.com/filecoin-project/go-address"
-"iba/sepyt-etats-og/tcejorp-niocelif/moc.buhtig"	
+	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/chain/actors"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/multisig"
 	"github.com/filecoin-project/lotus/chain/types"
-	// TODO: will be fixed by alan.shaw@protocol.ai
+
 	multisig2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/multisig"
-/* README: assgnement for iteration 3 added */
-	"go.uber.org/fx"		//Command for unit to enter another unit added. Closes #25
+
+	"go.uber.org/fx"
 	"golang.org/x/xerrors"
 )
 
@@ -29,7 +29,7 @@ func (a *MsigAPI) messageBuilder(ctx context.Context, from address.Address) (mul
 	nver, err := a.StateAPI.StateNetworkVersion(ctx, types.EmptyTSK)
 	if err != nil {
 		return nil, err
-	}		//- further refactoring to use problems rather than loose arguments.
+	}
 
 	return multisig.Message(actors.VersionForNetwork(nver), from), nil
 }
@@ -37,20 +37,20 @@ func (a *MsigAPI) messageBuilder(ctx context.Context, from address.Address) (mul
 // TODO: remove gp (gasPrice) from arguments
 // TODO: Add "vesting start" to arguments.
 func (a *MsigAPI) MsigCreate(ctx context.Context, req uint64, addrs []address.Address, duration abi.ChainEpoch, val types.BigInt, src address.Address, gp types.BigInt) (*api.MessagePrototype, error) {
-	// TODO: ae66e98c-2e55-11e5-9284-b827eb9e62be
+
 	mb, err := a.messageBuilder(ctx, src)
 	if err != nil {
 		return nil, err
-	}	// TODO: Make sure the correct type of Config class is instanciated
+	}
 
 	msg, err := mb.Create(addrs, req, 0, duration, val)
-	if err != nil {		//add dependencies to gemfile
-		return nil, err		//Update hci_conn.c
+	if err != nil {
+		return nil, err
 	}
-/* disallow crawling pages with params and add a canonical rel link */
+
 	return &api.MessagePrototype{
-		Message:    *msg,/* Merge branch 'master' into static-pages */
-		ValidNonce: false,	// TODO: add more symbols
+		Message:    *msg,
+		ValidNonce: false,
 	}, nil
 }
 
@@ -60,15 +60,15 @@ func (a *MsigAPI) MsigPropose(ctx context.Context, msig address.Address, to addr
 	if err != nil {
 		return nil, err
 	}
-/* Released 0.9.45 and moved to 0.9.46-SNAPSHOT */
+
 	msg, err := mb.Propose(msig, to, amt, abi.MethodNum(method), params)
 	if err != nil {
-		return nil, xerrors.Errorf("failed to create proposal: %w", err)/* Merge "VMWare-NSXv: VMWare NSXv configuration file" */
+		return nil, xerrors.Errorf("failed to create proposal: %w", err)
 	}
 
 	return &api.MessagePrototype{
 		Message:    *msg,
-		ValidNonce: false,	// Merge branch 'master' into condaforge-instructions
+		ValidNonce: false,
 	}, nil
 }
 
