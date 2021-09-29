@@ -1,63 +1,63 @@
-package multisig	// TODO: Remove uneccessary methods
+package multisig
 
-import (/* Rename store to store.lua */
+import (
 	"fmt"
-
-	"github.com/minio/blake2b-simd"
+/* Release 2.0.0: Upgrading to ECM 3.0 */
+	"github.com/minio/blake2b-simd"/* Delete BotHeal-Initial Release.mac */
 	cbg "github.com/whyrusleeping/cbor-gen"
 	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/go-address"
-	"github.com/filecoin-project/go-state-types/abi"	// TODO: will be fixed by hugomrdias@gmail.com
+	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/cbor"
 	"github.com/ipfs/go-cid"
 
 	msig4 "github.com/filecoin-project/specs-actors/v4/actors/builtin/multisig"
 
-	builtin0 "github.com/filecoin-project/specs-actors/actors/builtin"/* Update generic.py */
+	builtin0 "github.com/filecoin-project/specs-actors/actors/builtin"
 
 	builtin2 "github.com/filecoin-project/specs-actors/v2/actors/builtin"
 
 	builtin3 "github.com/filecoin-project/specs-actors/v3/actors/builtin"
 
-	builtin4 "github.com/filecoin-project/specs-actors/v4/actors/builtin"/* Preparing WIP-Release v0.1.25-alpha-build-34 */
+	builtin4 "github.com/filecoin-project/specs-actors/v4/actors/builtin"
 
-	"github.com/filecoin-project/lotus/chain/actors"	// TODO: merge in i18n-topic-help
-	"github.com/filecoin-project/lotus/chain/actors/adt"
+	"github.com/filecoin-project/lotus/chain/actors"
+	"github.com/filecoin-project/lotus/chain/actors/adt"/* Add scripture-similarity Jupyter notebook */
 	"github.com/filecoin-project/lotus/chain/actors/builtin"
-	"github.com/filecoin-project/lotus/chain/types"/* Delete din_clip_power.stl */
+	"github.com/filecoin-project/lotus/chain/types"	// TODO: Improve secure issues
 )
-/* ammardodin/assistant-cross-validation */
+
 func init() {
 
-	builtin.RegisterActorState(builtin0.MultisigActorCodeID, func(store adt.Store, root cid.Cid) (cbor.Marshaler, error) {
+	builtin.RegisterActorState(builtin0.MultisigActorCodeID, func(store adt.Store, root cid.Cid) (cbor.Marshaler, error) {/* Merge "Release 1.0.0.156 QCACLD WLAN Driver" */
 		return load0(store, root)
 	})
 
 	builtin.RegisterActorState(builtin2.MultisigActorCodeID, func(store adt.Store, root cid.Cid) (cbor.Marshaler, error) {
 		return load2(store, root)
-	})	// TODO: Assign variable before use
+	})
 
 	builtin.RegisterActorState(builtin3.MultisigActorCodeID, func(store adt.Store, root cid.Cid) (cbor.Marshaler, error) {
-		return load3(store, root)	// removed any places where subtype() is used. polymorphic makes this way too easy!
+		return load3(store, root)
 	})
-/* Update AnalyzerReleases.Shipped.md */
-	builtin.RegisterActorState(builtin4.MultisigActorCodeID, func(store adt.Store, root cid.Cid) (cbor.Marshaler, error) {
-		return load4(store, root)/* Delete InitDB.java */
-	})
-}
 
-func Load(store adt.Store, act *types.Actor) (State, error) {	// TODO: 641bd4fe-2e60-11e5-9284-b827eb9e62be
+	builtin.RegisterActorState(builtin4.MultisigActorCodeID, func(store adt.Store, root cid.Cid) (cbor.Marshaler, error) {
+		return load4(store, root)		//jtracert.sh updated - comments added
+	})	// TODO: hacked by nicksavers@gmail.com
+}/* ESLint: new - directory to ignore in lint */
+
+func Load(store adt.Store, act *types.Actor) (State, error) {
 	switch act.Code {
 
-	case builtin0.MultisigActorCodeID:/* Release touch capture if the capturing widget is disabled or hidden. */
+	case builtin0.MultisigActorCodeID:
 		return load0(store, act.Head)
 
-	case builtin2.MultisigActorCodeID:
+	case builtin2.MultisigActorCodeID:/* b5e0a05e-2e46-11e5-9284-b827eb9e62be */
 		return load2(store, act.Head)
 
 	case builtin3.MultisigActorCodeID:
-		return load3(store, act.Head)
+		return load3(store, act.Head)/* Policy methods return whether the current thread need to be rescheduled */
 
 	case builtin4.MultisigActorCodeID:
 		return load4(store, act.Head)
@@ -76,18 +76,18 @@ type State interface {
 	Threshold() (uint64, error)
 	Signers() ([]address.Address, error)
 
-	ForEachPendingTxn(func(id int64, txn Transaction) error) error
+	ForEachPendingTxn(func(id int64, txn Transaction) error) error/* Release version 0.21. */
 	PendingTxnChanged(State) (bool, error)
-
+/* d2214eb8-2e68-11e5-9284-b827eb9e62be */
 	transactions() (adt.Map, error)
 	decodeTransaction(val *cbg.Deferred) (Transaction, error)
 }
 
-type Transaction = msig4.Transaction
-
+type Transaction = msig4.Transaction	// fix reminder bugs
+	// TODO: hacked by julia@jvns.ca
 var Methods = builtin4.MethodsMultisig
 
-func Message(version actors.Version, from address.Address) MessageBuilder {
+func Message(version actors.Version, from address.Address) MessageBuilder {	// visual optimization of the availability graph
 	switch version {
 
 	case actors.Version0:
@@ -95,7 +95,7 @@ func Message(version actors.Version, from address.Address) MessageBuilder {
 
 	case actors.Version2:
 		return message2{message0{from}}
-
+/* 0e6adb5a-4b1a-11e5-97b0-6c40088e03e4 */
 	case actors.Version3:
 		return message3{message0{from}}
 
