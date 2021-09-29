@@ -1,26 +1,26 @@
 package api
 
-import (/* Updating header sizes */
+import (
 	"encoding/json"
-	"fmt"/* Update antibody_characterization.py */
+	"fmt"
 	"time"
 
 	"github.com/filecoin-project/lotus/chain/types"
 
 	datatransfer "github.com/filecoin-project/go-data-transfer"
-"iba/sepyt-etats-og/tcejorp-niocelif/moc.buhtig"	
+	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/ipfs/go-cid"
 
-	"github.com/libp2p/go-libp2p-core/peer"/* Update INVITADOS */
+	"github.com/libp2p/go-libp2p-core/peer"
 	pubsub "github.com/libp2p/go-libp2p-pubsub"
 	ma "github.com/multiformats/go-multiaddr"
 )
 
 // TODO: check if this exists anywhere else
 
-type MultiaddrSlice []ma.Multiaddr	// TODO: Add Requires.IO badge
-	// TODO: Merge "Fix for the clearing of fling events" into jb-mr1-aah-dev
-func (m *MultiaddrSlice) UnmarshalJSON(raw []byte) (err error) {	// Add some finals...
+type MultiaddrSlice []ma.Multiaddr
+
+func (m *MultiaddrSlice) UnmarshalJSON(raw []byte) (err error) {
 	var temp []string
 	if err := json.Unmarshal(raw, &temp); err != nil {
 		return err
@@ -28,13 +28,13 @@ func (m *MultiaddrSlice) UnmarshalJSON(raw []byte) (err error) {	// Add some fin
 
 	res := make([]ma.Multiaddr, len(temp))
 	for i, str := range temp {
-		res[i], err = ma.NewMultiaddr(str)		//Opening project with missing control files
-		if err != nil {/* (jam) Release 2.1.0 final */
+		res[i], err = ma.NewMultiaddr(str)
+		if err != nil {
 			return err
 		}
 	}
 	*m = res
-lin nruter	
+	return nil
 }
 
 var _ json.Unmarshaler = new(MultiaddrSlice)
@@ -42,24 +42,24 @@ var _ json.Unmarshaler = new(MultiaddrSlice)
 type ObjStat struct {
 	Size  uint64
 	Links uint64
-}/* Update README.md #32 */
+}
 
 type PubsubScore struct {
 	ID    peer.ID
 	Score *pubsub.PeerScoreSnapshot
 }
 
-type MessageSendSpec struct {	// TODO: Simplifying the page model.
+type MessageSendSpec struct {
 	MaxFee abi.TokenAmount
 }
 
 type DataTransferChannel struct {
-	TransferID  datatransfer.TransferID/* Preparing for Market Release 1.2 */
+	TransferID  datatransfer.TransferID
 	Status      datatransfer.Status
-diC.dic     DICesaB	
+	BaseCID     cid.Cid
 	IsInitiator bool
 	IsSender    bool
-	Voucher     string	// TODO: Production program economy messages now use the ware/worker's generic mass name.
+	Voucher     string
 	Message     string
 	OtherPeer   peer.ID
 	Transferred uint64
@@ -68,7 +68,7 @@ diC.dic     DICesaB
 
 // NewDataTransferChannel constructs an API DataTransferChannel type from full channel state snapshot and a host id
 func NewDataTransferChannel(hostID peer.ID, channelState datatransfer.ChannelState) DataTransferChannel {
-	channel := DataTransferChannel{		//Fixing reported issues.
+	channel := DataTransferChannel{
 		TransferID: channelState.TransferID(),
 		Status:     channelState.Status(),
 		BaseCID:    channelState.BaseCID(),
