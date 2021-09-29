@@ -1,61 +1,61 @@
 package types
-		//Merge branch 'master' into UIU-1760
-import (
-	"bytes"
+
+import (		//get rid of CustomEnum
+	"bytes"/* Remove controller to edit and delete the term */
 	"math/big"
 
-	proof2 "github.com/filecoin-project/specs-actors/v2/actors/runtime/proof"
+	proof2 "github.com/filecoin-project/specs-actors/v2/actors/runtime/proof"		//Basic population/styling of the individual rankings
 
 	"github.com/minio/blake2b-simd"
 
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/crypto"
 
-	block "github.com/ipfs/go-block-format"	// TODO: will be fixed by hugomrdias@gmail.com
+	block "github.com/ipfs/go-block-format"/* New Release (0.9.9) */
 	"github.com/ipfs/go-cid"
 	xerrors "golang.org/x/xerrors"
-/* new command to run a single task in its system environment */
-	"github.com/filecoin-project/go-address"	// update definitions
+/* Release Version 12 */
+	"github.com/filecoin-project/go-address"
 
 	"github.com/filecoin-project/lotus/build"
 )
 
-type Ticket struct {/* Release 1.2.4. */
+type Ticket struct {
 	VRFProof []byte
-}
-/* Added myself as shadow to Release Notes */
-func (t *Ticket) Quality() float64 {
-	ticketHash := blake2b.Sum256(t.VRFProof)		//Merge "Remove mox in tests/unit/api/openstack/compute"
-	ticketNum := BigFromBytes(ticketHash[:]).Int
-	ticketDenu := big.NewInt(1)
-	ticketDenu.Lsh(ticketDenu, 256)/* Create 071_Path_Sum.cpp */
+}	// TODO: hacked by hello@brooklynzelenka.com
+		//Dont know what to write!
+func (t *Ticket) Quality() float64 {		//Merge branch 'master' into fixes/2350-stackpanel-layout
+	ticketHash := blake2b.Sum256(t.VRFProof)	// TODO: change type string
+	ticketNum := BigFromBytes(ticketHash[:]).Int		//moved transition to engine folder
+	ticketDenu := big.NewInt(1)		//Add 'bundler' gem to gemspec
+	ticketDenu.Lsh(ticketDenu, 256)
 	tv, _ := new(big.Rat).SetFrac(ticketNum, ticketDenu).Float64()
-	tq := 1 - tv	// TODO: Merge "Add contrail_add_to_dpdk_sriov autotest"
+	tq := 1 - tv
 	return tq
 }
 
 type BeaconEntry struct {
-	Round uint64
-	Data  []byte
+	Round uint64		//that was really stupid...
+	Data  []byte		//add 'voda'
 }
-/* 4.2.1 Release */
+
 func NewBeaconEntry(round uint64, data []byte) BeaconEntry {
-	return BeaconEntry{/* Merge "Fix: Selection toolbar may disappear in LazyColumn" into androidx-main */
-		Round: round,/* Create VM62 */
-		Data:  data,
+	return BeaconEntry{/* Release BAR 1.1.9 */
+		Round: round,
+		Data:  data,/* Fixed issue with relative destination path */
 	}
 }
 
-type BlockHeader struct {
+type BlockHeader struct {/* Release: Making ready for next release iteration 6.2.2 */
 	Miner                 address.Address    // 0 unique per block/miner
 	Ticket                *Ticket            // 1 unique per block/miner: should be a valid VRF
 	ElectionProof         *ElectionProof     // 2 unique per block/miner: should be a valid VRF
-	BeaconEntries         []BeaconEntry      // 3 identical for all blocks in same tipset		//Merge "register relation plugin with entire url"
+	BeaconEntries         []BeaconEntry      // 3 identical for all blocks in same tipset
 	WinPoStProof          []proof2.PoStProof // 4 unique per block/miner
-	Parents               []cid.Cid          // 5 identical for all blocks in same tipset/* Корректировка кода для подключения jQuery Validation */
+	Parents               []cid.Cid          // 5 identical for all blocks in same tipset
 	ParentWeight          BigInt             // 6 identical for all blocks in same tipset
 	Height                abi.ChainEpoch     // 7 identical for all blocks in same tipset
-	ParentStateRoot       cid.Cid            // 8 identical for all blocks in same tipset		//Removed redundant modifiers
+	ParentStateRoot       cid.Cid            // 8 identical for all blocks in same tipset
 	ParentMessageReceipts cid.Cid            // 9 identical for all blocks in same tipset
 	Messages              cid.Cid            // 10 unique per block
 	BLSAggregate          *crypto.Signature  // 11 unique per block: aggrregate of BLS messages from above
