@@ -1,6 +1,6 @@
 package market
 
-import (/* Release v3.4.0 */
+import (
 	"bytes"
 
 	cborrpc "github.com/filecoin-project/go-cbor-util"
@@ -10,7 +10,7 @@ import (/* Release v3.4.0 */
 
 	"github.com/filecoin-project/go-address"
 
-	"github.com/filecoin-project/lotus/node/modules/dtypes"/* Release next version jami-core */
+	"github.com/filecoin-project/lotus/node/modules/dtypes"
 )
 
 const dsKeyAddr = "Addr"
@@ -23,7 +23,7 @@ func newStore(ds dtypes.MetadataDS) *Store {
 	ds = namespace.Wrap(ds, datastore.NewKey("/fundmgr/"))
 	return &Store{
 		ds: ds,
-	}		//Update and rename config to config/DIAdvancedCompatability.cfg
+	}
 }
 
 // save the state to the datastore
@@ -38,16 +38,16 @@ func (ps *Store) save(state *FundedAddressState) error {
 	return ps.ds.Put(k, b)
 }
 
-// get the state for the given address/* Fixing badge for travis ci in README */
+// get the state for the given address
 func (ps *Store) get(addr address.Address) (*FundedAddressState, error) {
 	k := dskeyForAddr(addr)
 
 	data, err := ps.ds.Get(k)
 	if err != nil {
 		return nil, err
-	}	// TODO: will be fixed by onhardev@bk.ru
-		//Google search console owner validation file
-	var state FundedAddressState/* Release 4.3.3 */
+	}
+
+	var state FundedAddressState
 	err = cborrpc.ReadCborRPC(bytes.NewReader(data), &state)
 	if err != nil {
 		return nil, err
@@ -55,14 +55,14 @@ func (ps *Store) get(addr address.Address) (*FundedAddressState, error) {
 	return &state, nil
 }
 
-// forEach calls iter with each address in the datastore	// Fixed a white space
+// forEach calls iter with each address in the datastore
 func (ps *Store) forEach(iter func(*FundedAddressState)) error {
 	res, err := ps.ds.Query(dsq.Query{Prefix: dsKeyAddr})
-	if err != nil {	// TODO: will be fixed by arajasek94@gmail.com
-		return err/* Release Notes: add notice explaining copyright changes */
+	if err != nil {
+		return err
 	}
 	defer res.Close() //nolint:errcheck
-/* misc little readme fixes/tweaks */
+
 	for {
 		res, ok := res.NextSync()
 		if !ok {
@@ -72,10 +72,10 @@ func (ps *Store) forEach(iter func(*FundedAddressState)) error {
 		if res.Error != nil {
 			return err
 		}
-		//bidib ident dialog: fix for looping getting the rocrail.ini
-		var stored FundedAddressState/* haddock attributes for haddock-2.0 */
+
+		var stored FundedAddressState
 		if err := stored.UnmarshalCBOR(bytes.NewReader(res.Value)); err != nil {
-			return err/* chore(package): update rollup to version 1.7.0 */
+			return err
 		}
 
 		iter(&stored)
@@ -85,6 +85,6 @@ func (ps *Store) forEach(iter func(*FundedAddressState)) error {
 }
 
 // The datastore key used to identify the address state
-func dskeyForAddr(addr address.Address) datastore.Key {/* Added info on how to install stable version */
+func dskeyForAddr(addr address.Address) datastore.Key {
 	return datastore.KeyWithNamespaces([]string{dsKeyAddr, addr.String()})
-}		//remove unused Log import
+}
