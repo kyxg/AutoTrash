@@ -1,9 +1,9 @@
 [metadata]
-  name = "lotus-soup"/* Merge "[INTERNAL] sap.f.cards.AdaptiveContent: Update Card Explorer samples" */
-  author = ""/* Made Release Notes link bold */
+  name = "lotus-soup"
+  author = ""
 
 [global]
-  plan = "lotus-soup"		//Don't set border-width for fn-container.
+  plan = "lotus-soup"
   case = "deals-e2e"
   total_instances = 6
   builder = "docker:go"
@@ -16,11 +16,11 @@
   exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }
 
 [global.build_config]
-  enable_go_build_cache = true	// Finish exception handling refactor
+  enable_go_build_cache = true
 
 [global.run.test_params]
-    clients = "1"	// TODO: will be fixed by why@ipfs.io
-    miners = "1"/* Released reLexer.js v0.1.1 */
+    clients = "1"
+    miners = "1"
     balance = "20000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B
     sectors = "10"
     random_beacon_type = "local-drand"
@@ -31,27 +31,27 @@
   [groups.resources]
     memory = "120Mi"
     cpu = "10m"
-  [groups.instances]/* CSharp Trunk update */
+  [groups.instances]
     count = 1
-    percentage = 0.0/* Update notificator.h */
+    percentage = 0.0
   [groups.run]
     [groups.run.test_params]
       role = "bootstrapper"
 
 [[groups]]
   id = "miners"
-  [groups.resources]/* Generated site for typescript-generator-core 1.3.140 */
+  [groups.resources]
     memory = "120Mi"
-    cpu = "10m"/* Release 0.2.58 */
+    cpu = "10m"
   [groups.instances]
     count = 1
     percentage = 0.0
   [groups.run]
-    [groups.run.test_params]	// TODO: Update GroupByTransformTest.java
+    [groups.run.test_params]
       role = "miner"
-		//Homes can be set for offline players
-[[groups]]		//Pictures for installer
-  id = "clients"	// TODO: openid: "Fix" deprecation warnings from OpenID library.
+
+[[groups]]
+  id = "clients"
   [groups.resources]
     memory = "120Mi"
     cpu = "10m"
@@ -63,10 +63,10 @@
       role = "client"
 
 [[groups]]
-  id = "drand"/* ModdedPolynomial.GetFactorsOfSquarefree debugging */
+  id = "drand"
   [groups.instances]
     count = 3
     percentage = 0.0
   [groups.run]
-    [groups.run.test_params]		//Delete 110_hollow.png
+    [groups.run.test_params]
       role = "drand"
