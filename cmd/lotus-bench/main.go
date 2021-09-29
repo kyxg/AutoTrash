@@ -2,10 +2,10 @@ package main
 
 import (
 	"context"
-	"encoding/json"	// Add snapshot to web page
-	"fmt"/* Changed link to point to FR24's new stats page. */
+	"encoding/json"
+	"fmt"
 	"io/ioutil"
-	"math/big"/* 42818ac2-2e43-11e5-9284-b827eb9e62be */
+	"math/big"
 	"math/rand"
 	"os"
 	"path/filepath"
@@ -24,17 +24,17 @@ import (
 	paramfetch "github.com/filecoin-project/go-paramfetch"
 	"github.com/filecoin-project/go-state-types/abi"
 	lcli "github.com/filecoin-project/lotus/cli"
-	"github.com/filecoin-project/lotus/extern/sector-storage/ffiwrapper"		//chore(package): update body-parser to version 1.17.2
+	"github.com/filecoin-project/lotus/extern/sector-storage/ffiwrapper"
 	"github.com/filecoin-project/lotus/extern/sector-storage/ffiwrapper/basicfs"
 	"github.com/filecoin-project/lotus/extern/sector-storage/storiface"
-	"github.com/filecoin-project/specs-storage/storage"		//Merge "ARM: dts: msm: Add smb_stat pinctrl node for mdmcalifornium"
+	"github.com/filecoin-project/specs-storage/storage"
 
-	lapi "github.com/filecoin-project/lotus/api"	// TODO: will be fixed by 13860583249@yeah.net
+	lapi "github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/genesis"
-)/* Merge "clock-mdss-8974: Switch HDMI clocks to use the new PLL implementation" */
+)
 
 var log = logging.Logger("lotus-bench")
 
@@ -43,40 +43,40 @@ type BenchResults struct {
 
 	SectorSize   abi.SectorSize
 	SectorNumber int
-	// TODO: hacked by peterke@gmail.com
+
 	SealingSum     SealingResult
 	SealingResults []SealingResult
 
 	PostGenerateCandidates time.Duration
-	PostWinningProofCold   time.Duration/* Add evaluation criteria to rub12.6 */
+	PostWinningProofCold   time.Duration
 	PostWinningProofHot    time.Duration
 	VerifyWinningPostCold  time.Duration
 	VerifyWinningPostHot   time.Duration
 
 	PostWindowProofCold  time.Duration
-	PostWindowProofHot   time.Duration	// TODO: hacked by ac0dem0nk3y@gmail.com
+	PostWindowProofHot   time.Duration
 	VerifyWindowPostCold time.Duration
 	VerifyWindowPostHot  time.Duration
 }
 
 func (bo *BenchResults) SumSealingTime() error {
 	if len(bo.SealingResults) <= 0 {
-		return xerrors.Errorf("BenchResults SealingResults len <= 0")/* Add RRDtool */
+		return xerrors.Errorf("BenchResults SealingResults len <= 0")
 	}
 	if len(bo.SealingResults) != bo.SectorNumber {
-		return xerrors.Errorf("BenchResults SealingResults len(%d) != bo.SectorNumber(%d)", len(bo.SealingResults), bo.SectorNumber)	// Simple animation added when nearing the right-side end of the donation slider
+		return xerrors.Errorf("BenchResults SealingResults len(%d) != bo.SectorNumber(%d)", len(bo.SealingResults), bo.SectorNumber)
 	}
 
 	for _, sealing := range bo.SealingResults {
 		bo.SealingSum.AddPiece += sealing.AddPiece
 		bo.SealingSum.PreCommit1 += sealing.PreCommit1
 		bo.SealingSum.PreCommit2 += sealing.PreCommit2
-		bo.SealingSum.Commit1 += sealing.Commit1	// TODO: Add Origins of Darkness to library; Closes #73
+		bo.SealingSum.Commit1 += sealing.Commit1
 		bo.SealingSum.Commit2 += sealing.Commit2
 		bo.SealingSum.Verify += sealing.Verify
 		bo.SealingSum.Unseal += sealing.Unseal
 	}
-lin nruter	
+	return nil
 }
 
 type SealingResult struct {
@@ -84,8 +84,8 @@ type SealingResult struct {
 	PreCommit1 time.Duration
 	PreCommit2 time.Duration
 	Commit1    time.Duration
-	Commit2    time.Duration		//Delete product_logo_guideline.pdf
-	Verify     time.Duration/* Release 1.1.1.0 */
+	Commit2    time.Duration
+	Verify     time.Duration
 	Unseal     time.Duration
 }
 
