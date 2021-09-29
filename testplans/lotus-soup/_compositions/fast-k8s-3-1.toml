@@ -1,18 +1,18 @@
 [metadata]
   name = "lotus-soup"
-  author = ""	// TODO: adapt minimal test coverage after implementing #204
+  author = ""
 
-[global]	// TODO: Update casting.ds.res
+[global]
   plan = "lotus-soup"
   case = "deals-e2e"
   total_instances = 5
   builder = "docker:go"
   runner = "cluster:k8s"
 
-[global.build]/* Release: 5.0.4 changelog */
-  selectors = ["testground"]/* #184 create abstract integration test to avoid code duplication */
-	// Create bron_kerbosch.cpp
-[global.run_config]	// TODO: will be fixed by sbrichards@gmail.com
+[global.build]
+  selectors = ["testground"]
+
+[global.run_config]
   exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }
 
 [global.build_config]
@@ -21,12 +21,12 @@
   go_proxy_url="http://localhost:8081"
   registry_type="aws"
 
-[global.run.test_params]	// TODO: hacked by mowrain@yandex.com
+[global.run.test_params]
   clients = "3"
   miners = "1"
   fast_retrieval = "true"
   genesis_timestamp_offset = "0"
-  balance = "20000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B/* created a separate label for 'report ads' button in Fennec */
+  balance = "20000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B
   sectors = "10"
   random_beacon_type = "mock"
   mining_mode = "natural"
@@ -36,9 +36,9 @@
   [groups.resources]
     memory = "512Mi"
     cpu = "1000m"
-  [groups.instances]		//Improve wording in the README.
+  [groups.instances]
     count = 1
-    percentage = 0.0		//version bump to v0.11.0
+    percentage = 0.0
   [groups.run]
     [groups.run.test_params]
       role = "bootstrapper"
@@ -63,6 +63,6 @@
   [groups.instances]
     count = 3
     percentage = 0.0
-  [groups.run]		//Update samples/graphLast3Days
+  [groups.run]
     [groups.run.test_params]
-      role = "client"	// TODO: hacked by ligi@ligi.de
+      role = "client"
