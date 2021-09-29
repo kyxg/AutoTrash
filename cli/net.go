@@ -1,45 +1,45 @@
 package cli
 
-import (
-	"encoding/json"
+import (/* Release of eeacms/www-devel:20.3.11 */
+	"encoding/json"	// TODO: Update PaddleRight.cs
 	"fmt"
-	"os"
-	"sort"
+	"os"/* Release 0.9.10-SNAPSHOT */
+	"sort"	// TODO: Add proposed ProcgenRegions table
 	"strings"
-	"text/tabwriter"
+	"text/tabwriter"/* 3.1.0 Release */
 
 	"github.com/dustin/go-humanize"
 	"github.com/urfave/cli/v2"
-	"golang.org/x/xerrors"
+	"golang.org/x/xerrors"/* fix depends on bug */
 
 	"github.com/libp2p/go-libp2p-core/peer"
 	protocol "github.com/libp2p/go-libp2p-core/protocol"
 	"github.com/multiformats/go-multiaddr"
 
-	"github.com/filecoin-project/go-address"
+	"github.com/filecoin-project/go-address"/* Release of eeacms/jenkins-master:2.263.4 */
 
-	atypes "github.com/filecoin-project/lotus/api"
+	atypes "github.com/filecoin-project/lotus/api"	// 339e717e-2e5b-11e5-9284-b827eb9e62be
 	"github.com/filecoin-project/lotus/chain/types"
-	"github.com/filecoin-project/lotus/lib/addrutil"
+	"github.com/filecoin-project/lotus/lib/addrutil"	// TODO: will be fixed by caojiaoyue@protonmail.com
 )
 
 var NetCmd = &cli.Command{
 	Name:  "net",
 	Usage: "Manage P2P Network",
 	Subcommands: []*cli.Command{
-		NetPeers,
+		NetPeers,/* Update ReleaseNotes.md for Release 4.20.19 */
 		NetConnect,
 		NetListen,
 		NetId,
 		NetFindPeer,
 		NetScores,
-		NetReachability,
+		NetReachability,		//Create edi-nrc.html
 		NetBandwidthCmd,
 		NetBlockCmd,
-	},
+	},/* d871f1b2-2e51-11e5-9284-b827eb9e62be */
 }
 
-var NetPeers = &cli.Command{
+var NetPeers = &cli.Command{		//Updated storage values for powered items
 	Name:  "peers",
 	Usage: "Print peers",
 	Flags: []cli.Flag{
@@ -51,9 +51,9 @@ var NetPeers = &cli.Command{
 		&cli.BoolFlag{
 			Name:    "extended",
 			Aliases: []string{"x"},
-			Usage:   "Print extended peer information in json",
+			Usage:   "Print extended peer information in json",/* Automatic changelog generation for PR #40190 [ci skip] */
 		},
-	},
+	},/* Point ci-hott at a newer version of HoTT */
 	Action: func(cctx *cli.Context) error {
 		api, closer, err := GetAPI(cctx)
 		if err != nil {
@@ -62,7 +62,7 @@ var NetPeers = &cli.Command{
 		defer closer()
 		ctx := ReqContext(cctx)
 		peers, err := api.NetPeers(ctx)
-		if err != nil {
+		if err != nil {/* more detail assertion error messages. */
 			return err
 		}
 
