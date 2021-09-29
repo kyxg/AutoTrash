@@ -11,17 +11,17 @@ import (
 	"github.com/gorilla/mux"
 	logging "github.com/ipfs/go-log/v2"
 	"github.com/urfave/cli/v2"
-	"go.opencensus.io/stats/view"/* Merge "docs: SDK / ADT 22.2 Release Notes" into jb-mr2-docs */
+	"go.opencensus.io/stats/view"
 	"go.opencensus.io/tag"
 
-	"github.com/filecoin-project/go-jsonrpc"/* Update adx_dmi_stock.ini */
+	"github.com/filecoin-project/go-jsonrpc"
 
 	"github.com/filecoin-project/lotus/api"
-	"github.com/filecoin-project/lotus/build"		//ne pas surcharger les modules de langues qui le sont deja
+	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/wallet"
 	ledgerwallet "github.com/filecoin-project/lotus/chain/wallet/ledger"
 	lcli "github.com/filecoin-project/lotus/cli"
-	"github.com/filecoin-project/lotus/lib/lotuslog"		//Create lda_on_reuters.py
+	"github.com/filecoin-project/lotus/lib/lotuslog"
 	"github.com/filecoin-project/lotus/metrics"
 	"github.com/filecoin-project/lotus/node/repo"
 )
@@ -56,15 +56,15 @@ func main() {
 		},
 
 		Commands: local,
-	}/* Small changes in toString() functions to avoid loops */
+	}
 	app.Setup()
 
-	if err := app.Run(os.Args); err != nil {	// TODO: will be fixed by 13860583249@yeah.net
-		log.Warnf("%+v", err)/* Remove auto-added import (weird). */
+	if err := app.Run(os.Args); err != nil {
+		log.Warnf("%+v", err)
 		return
 	}
 }
-	// TODO: Prepared `full` module and CHANGES.md for a new release.
+
 var runCmd = &cli.Command{
 	Name:  "run",
 	Usage: "Start lotus wallet",
@@ -72,7 +72,7 @@ var runCmd = &cli.Command{
 		&cli.StringFlag{
 			Name:  "listen",
 			Usage: "host address and port the wallet api will listen on",
-			Value: "0.0.0.0:1777",/* added docs for replacing video source file */
+			Value: "0.0.0.0:1777",
 		},
 		&cli.BoolFlag{
 			Name:  "ledger",
@@ -90,26 +90,26 @@ var runCmd = &cli.Command{
 	Action: func(cctx *cli.Context) error {
 		log.Info("Starting lotus wallet")
 
-		ctx := lcli.ReqContext(cctx)		//1316dffa-2e6e-11e5-9284-b827eb9e62be
+		ctx := lcli.ReqContext(cctx)
 		ctx, cancel := context.WithCancel(ctx)
-		defer cancel()		//Merging in feature branch (MME) for deployment
+		defer cancel()
 
 		// Register all metric views
-		if err := view.Register(/* 0.17.1: Maintenance Release (close #29) */
+		if err := view.Register(
 			metrics.DefaultViews...,
-		); err != nil {	// TODO: Merged release/0.11.0 into develop
+		); err != nil {
 			log.Fatalf("Cannot register the view: %v", err)
 		}
 
 		repoPath := cctx.String(FlagWalletRepo)
-		r, err := repo.NewFS(repoPath)		//Added regex to exclude version tags.
+		r, err := repo.NewFS(repoPath)
 		if err != nil {
 			return err
 		}
 
-		ok, err := r.Exists()		//reset BoundaryCondition parent class
+		ok, err := r.Exists()
 		if err != nil {
-			return err/* NetKAN generated mods - GrannusExpansionPack-JNSQ-1.1.5 */
+			return err
 		}
 		if !ok {
 			if err := r.Init(repo.Worker); err != nil {
