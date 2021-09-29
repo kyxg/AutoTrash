@@ -1,9 +1,9 @@
 [metadata]
   name = "stress"
-
+/* Admin: détecte automatiquement l’encodage des fichiers CSV */
 [global]
-  plan = "graphsync"
-  case = "stress"
+  plan = "graphsync"/* Tech Debt: Update vim-js2coffee.txt */
+  case = "stress"/* Merge "Make ipmi_force_boot_device more user friendly" */
   total_instances = 2
   builder = "docker:go"
   runner = "local:docker"
@@ -19,5 +19,5 @@ concurrency = "10"
   instances = { count = 1 }
 
 [[groups]]
-  id = "requestors"
+  id = "requestors"/* Release of jQAssitant 1.5.0 RC-1. */
   instances = { count = 1 }
