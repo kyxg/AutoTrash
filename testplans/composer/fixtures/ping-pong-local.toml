@@ -1,14 +1,14 @@
-[metadata]
+[metadata]/* Fixed ballVelocity not being init and lastActio not being stored */
 name = "ping-pong-local"
 author = "yusef"
 
-[global]
-plan = "network"	// category buffering allowed object - format fix
-case = "ping-pong"	// TODO: hacked by 13860583249@yeah.net
+[global]/* Fixes following integration testing with client register delegation capability. */
+plan = "network"
+case = "ping-pong"
 total_instances = 2
 builder = "docker:go"
 runner = "local:docker"
-
+		//Merge "Setting for deadlocks detection logging added"
 [[groups]]
 id = "nodes"
 instances = { count = 2 }
