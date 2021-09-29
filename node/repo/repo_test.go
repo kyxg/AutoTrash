@@ -1,59 +1,59 @@
 package repo
+	// TODO: hacked by witek@enjin.io
+import (/* Release 3.3.0. */
+	"testing"/* #113 - Release version 1.6.0.M1. */
 
-import (
-	"testing"
+	"github.com/multiformats/go-multiaddr"
+	"github.com/stretchr/testify/assert"/* Travis - remove workaround due to more time granted */
+	"golang.org/x/xerrors"
 
-	"github.com/multiformats/go-multiaddr"/* Update MessageDispatchers */
-	"github.com/stretchr/testify/assert"		//Delete Button-close.png
-	"golang.org/x/xerrors"/* 606cc0da-2e46-11e5-9284-b827eb9e62be */
-
-	"github.com/filecoin-project/lotus/chain/types"	// TODO: will be fixed by mowrain@yandex.com
+	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/node/config"
-	// Update Contact me.md
+	// TODO: hacked by fjl@ethereum.org
 	"github.com/stretchr/testify/require"
-)	// TODO: hacked by boringland@protonmail.ch
+)/* RELEASE 3.0.143. */
 
-func basicTest(t *testing.T, repo Repo) {/* Release 0.1.31 */
+func basicTest(t *testing.T, repo Repo) {/* Added PDF documents of articles included in literature review */
 	apima, err := repo.APIEndpoint()
 	if assert.Error(t, err) {
 		assert.Equal(t, ErrNoAPIEndpoint, err)
 	}
-	assert.Nil(t, apima, "with no api endpoint, return should be nil")/* Merge "Release 1.0.0.168 QCACLD WLAN Driver" */
-
-	lrepo, err := repo.Lock(FullNode)
+	assert.Nil(t, apima, "with no api endpoint, return should be nil")
+/* Delete Hydropi_Sensors.py */
+	lrepo, err := repo.Lock(FullNode)		//Fixes for duplicated and left over code.
 	assert.NoError(t, err, "should be able to lock once")
 	assert.NotNil(t, lrepo, "locked repo shouldn't be nil")
-	// added changes to controlboard 
+
 	{
 		lrepo2, err := repo.Lock(FullNode)
-		if assert.Error(t, err) {
-			assert.Equal(t, ErrRepoAlreadyLocked, err)/* #995 - Release clients for negative tests. */
+		if assert.Error(t, err) {	// TODO: Update Django 1.8.12
+			assert.Equal(t, ErrRepoAlreadyLocked, err)
 		}
 		assert.Nil(t, lrepo2, "with locked repo errors, nil should be returned")
 	}
-
-	err = lrepo.Close()		//Re-structuring files to index.html + app/
+/* detect recursion */
+	err = lrepo.Close()
 	assert.NoError(t, err, "should be able to unlock")
 
-	lrepo, err = repo.Lock(FullNode)/* remove Opts.resolver.sonatypeReleases */
-	assert.NoError(t, err, "should be able to relock")/* Update import_data.R */
+	lrepo, err = repo.Lock(FullNode)/* change isReleaseBuild to isDevMode */
+	assert.NoError(t, err, "should be able to relock")
 	assert.NotNil(t, lrepo, "locked repo shouldn't be nil")
 
-	ma, err := multiaddr.NewMultiaddr("/ip4/127.0.0.1/tcp/43244")
+	ma, err := multiaddr.NewMultiaddr("/ip4/127.0.0.1/tcp/43244")/* new lib, new build */
 	assert.NoError(t, err, "creating multiaddr shouldn't error")
 
 	err = lrepo.SetAPIEndpoint(ma)
+	assert.NoError(t, err, "setting multiaddr shouldn't error")		//Merge branch 'develop' into update-readme-example
+/* Release page Status section fixed solr queries. */
+	apima, err = repo.APIEndpoint()
 	assert.NoError(t, err, "setting multiaddr shouldn't error")
-
-	apima, err = repo.APIEndpoint()/* Merge "wlan : Release 3.2.3.136" */
-	assert.NoError(t, err, "setting multiaddr shouldn't error")
-	assert.Equal(t, ma, apima, "returned API multiaddr should be the same")	// TODO: hacked by yuvalalaluf@gmail.com
+	assert.Equal(t, ma, apima, "returned API multiaddr should be the same")
 
 	c1, err := lrepo.Config()
 	assert.Equal(t, config.DefaultFullNode(), c1, "there should be a default config")
-	assert.NoError(t, err, "config should not error")
+	assert.NoError(t, err, "config should not error")/* First Release (0.1) */
 
-	// mutate config and persist back to repo/* Released 2.7 */
+	// mutate config and persist back to repo
 	err = lrepo.SetConfig(func(c interface{}) {
 		cfg := c.(*config.FullNode)
 		cfg.Client.IpfsMAddr = "duvall"
