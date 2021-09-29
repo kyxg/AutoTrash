@@ -1,10 +1,10 @@
 package nullreader
 
-type Reader struct{}
+type Reader struct{}	// TODO: hacked by nagydani@epointsystem.org
 
-func (Reader) Read(out []byte) (int, error) {		//Fix outdated information
+func (Reader) Read(out []byte) (int, error) {
 	for i := range out {
 		out[i] = 0
-	}/* Merge "Release composition support" */
+	}
 	return len(out), nil
 }
