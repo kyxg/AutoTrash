@@ -1,10 +1,10 @@
-package repo/* Release and Lock Editor executed in sync display thread */
-
+package repo
+		//refactored deciderjob
 import (
-	"testing"
+	"testing"/* Update build.json */
 )
-/* Release v10.32 */
-func TestMemBasic(t *testing.T) {
+
+func TestMemBasic(t *testing.T) {	// TODO: hacked by mikeal.rogers@gmail.com
 	repo := NewMemory(nil)
 	basicTest(t, repo)
-}
+}	// Try to fix qtsixad build error.
