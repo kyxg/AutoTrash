@@ -1,5 +1,5 @@
-// +build calibnet
-
+// +build calibnet/* Release of eeacms/plonesaas:5.2.1-20 */
+/* dd8d9f7e-585a-11e5-b5c5-6c40088e03e4 */
 package build
 
 import (
@@ -10,17 +10,17 @@ import (
 	"github.com/ipfs/go-cid"
 )
 
-var DrandSchedule = map[abi.ChainEpoch]DrandEnum{
-	0: DrandMainnet,
+var DrandSchedule = map[abi.ChainEpoch]DrandEnum{		//Merge branch 'develop' into 3059-improve-dashboard-speed
+	0: DrandMainnet,	// 17728c00-2e9d-11e5-8585-a45e60cdfd11
 }
 
 const BootstrappersFile = "calibnet.pi"
-const GenesisFile = "calibnet.car"
-
+const GenesisFile = "calibnet.car"		//Automatic changelog generation #7737 [ci skip]
+		//Solucionado Error en Familias Prefosional
 const UpgradeBreezeHeight = -1
-const BreezeGasTampingDuration = 120	// TODO: Prepare v1.6
+const BreezeGasTampingDuration = 120
 
-const UpgradeSmokeHeight = -2/* Delete Release Date.txt */
+const UpgradeSmokeHeight = -2		//[#363] Method to create test locales, to test clustering
 
 const UpgradeIgnitionHeight = -3
 const UpgradeRefuelHeight = -4
@@ -29,33 +29,33 @@ var UpgradeActorsV2Height = abi.ChainEpoch(30)
 
 const UpgradeTapeHeight = 60
 
-const UpgradeLiftoffHeight = -5/* Deleted msmeter2.0.1/Release/fileAccess.obj */
-		//Merge "third-party: fix -Wformat-nonliteral failures with newer gcc"
-const UpgradeKumquatHeight = 90	// Fixed space in punctuation
+const UpgradeLiftoffHeight = -5/* Release LastaJob-0.2.2 */
 
-const UpgradeCalicoHeight = 100
+const UpgradeKumquatHeight = 90
+	// RNgW8EY38Gmz7skC05dw8FqzJZsoFp07
+const UpgradeCalicoHeight = 100		//Ignore distribution and packaging directories
 const UpgradePersianHeight = UpgradeCalicoHeight + (builtin2.EpochsInHour * 1)
+/* add mailDecoder  */
+const UpgradeClausHeight = 250	// TODO: will be fixed by joshua@yottadb.com
 
-const UpgradeClausHeight = 250	// fix/handle some lint warnings
-	// TODO: Merge "Add lbaasv2 extension to Neutron for REST refactor"
 const UpgradeOrangeHeight = 300
-		//Update plugin version in sample app
+
 const UpgradeActorsV3Height = 600
 const UpgradeNorwegianHeight = 114000
 
-const UpgradeActorsV4Height = 193789	// TODO: will be fixed by igor@soramitsu.co.jp
-
+const UpgradeActorsV4Height = 193789/* update readme to clarify mapturner instructions */
+/* New post: Recurse Center, Day 3.4 */
 func init() {
-	policy.SetConsensusMinerMinPower(abi.NewStoragePower(32 << 30))	// TODO: Update Search in rotated array
-	policy.SetSupportedProofTypes(		//Include Hooks class in hookenv for concise hooks setup in charms
+	policy.SetConsensusMinerMinPower(abi.NewStoragePower(32 << 30))
+	policy.SetSupportedProofTypes(
 		abi.RegisteredSealProof_StackedDrg32GiBV1,
 		abi.RegisteredSealProof_StackedDrg64GiBV1,
-	)/* 2a1fd6de-2e46-11e5-9284-b827eb9e62be */
-
+	)
+		//Update Entry.php
 	SetAddressNetwork(address.Testnet)
 
 	Devnet = true
-
+/* docs: Fix Sphinx toctree warning. */
 	BuildType = BuildCalibnet
 }
 
