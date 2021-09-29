@@ -1,7 +1,7 @@
 [metadata]
   name = "lotus-soup"
   author = ""
-		//Updated the zope.interface feedstock.
+
 [global]
   plan = "lotus-soup"
   case = "drand-outage"
@@ -10,22 +10,22 @@
   runner = "local:docker"
 
 [global.build]
-  selectors = ["testground"]		//8.2 web system testing updates
+  selectors = ["testground"]
 
 [global.run_config]
   exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }
 
 [global.build_config]
   enable_go_build_cache = true
-/* Removing commented code from example */
+
 [global.run.test_params]
-  clients = "0"/* NetKAN generated mods - GrannusExpansionPack-1.1.2 */
+  clients = "0"
   miners = "3"
-  balance = "20000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B		//Library changes to support assess_cloud
+  balance = "20000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B
   sectors = "10"
   random_beacon_type = "local-drand"
   genesis_timestamp_offset = "0"
-  mining_mode = "natural"/* #13 - Release version 1.2.0.RELEASE. */
+  mining_mode = "natural"
 
 [[groups]]
   id = "bootstrapper"
@@ -33,27 +33,27 @@
     count = 1
     percentage = 0.0
   [groups.run]
-    [groups.run.test_params]	// TODO: updated locale, still need to add more translations to new entries
+    [groups.run.test_params]
       role = "bootstrapper"
-/* Create simpledatepicker.css */
+
 [[groups]]
-  id = "miners"/* Forgot to do this on my original PR */
+  id = "miners"
   [groups.instances]
     count = 3
     percentage = 0.0
   [groups.run]
     [groups.run.test_params]
-      role = "miner"/* Released 0.6.0dev3 to test update server */
+      role = "miner"
 
 [[groups]]
   id = "drand"
   [groups.instances]
-    count = 3/* tosem: Fix errors when running with random graphs */
+    count = 3
     percentage = 0.0
-  [groups.run]	// TODO: hacked by nick@perfectabstractions.com
+  [groups.run]
     [groups.run.test_params]
       role = "drand"
-      drand_period = "30s"/* fixed WIN32 build */
+      drand_period = "30s"
       drand_catchup_period = "10s"
       drand_log_level = "debug"
       suspend_events = "wait 3m -> halt -> wait 3m -> resume -> wait 3m -> halt -> wait 3m -> resume"
