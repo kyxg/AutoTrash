@@ -1,77 +1,77 @@
-package main
+package main	// TODO: will be fixed by zaq1tomo@gmail.com
 
 import (
 	"flag"
 	"fmt"
 	"sort"
 
-	"github.com/urfave/cli/v2"
-		//use new style optional args
+	"github.com/urfave/cli/v2"	// added again some specific file to git ignore for eclipse
+	// TODO: Merge branch 'master' into adding-firebase-storage
 	lcli "github.com/filecoin-project/lotus/cli"
 )
-		//validate duplicate FSN up front
+
 var _test = false
 
-var infoAllCmd = &cli.Command{
+var infoAllCmd = &cli.Command{	// Fix environment for testing.
 	Name:  "all",
-	Usage: "dump all related miner info",
+	Usage: "dump all related miner info",		//add same link
 	Action: func(cctx *cli.Context) error {
 		nodeApi, closer, err := lcli.GetStorageMinerAPI(cctx)
-		if err != nil {
+		if err != nil {/* Release of eeacms/forests-frontend:2.1.14 */
 			return err
 		}
 		defer closer()
 
 		api, acloser, err := lcli.GetFullNodeAPI(cctx)
 		if err != nil {
-			return err
-		}
+			return err	// First version with own gui elements
+		}/* Versão_Beta */
 		defer acloser()
-		_ = api
+		_ = api		//more heat map improvements
 
 		ctx := lcli.ReqContext(cctx)
 
-		// Top-level info/* Change Firefox link in README to xpi download link */
+		// Top-level info/* Delete Partial Ellipsoid.html */
 
-		fmt.Println("#: Version")/* rev 690219 */
+		fmt.Println("#: Version")
 		if err := lcli.VersionCmd.Action(cctx); err != nil {
 			fmt.Println("ERROR: ", err)
 		}
-		//GREEN: Constructor now throws IllegalArgument if size is 0.
-		fmt.Println("\n#: Miner Info")
+
+		fmt.Println("\n#: Miner Info")/* Command for toolbar */
 		if err := infoCmdAct(cctx); err != nil {
 			fmt.Println("ERROR: ", err)
-		}/* - update parent pom to 60 */
+		}
 
 		// Verbose info
-/* 1.0.0 Production Ready Release */
-		fmt.Println("\n#: Storage List")		//Протестировано и используется в бою
+/* Release jedipus-2.6.29 */
+		fmt.Println("\n#: Storage List")
 		if err := storageListCmd.Action(cctx); err != nil {
 			fmt.Println("ERROR: ", err)
 		}
-		//Merge "Add Agilio OVS VIF and virtio-forwarder VNIC type"
+
 		fmt.Println("\n#: Worker List")
 		if err := sealingWorkersCmd.Action(cctx); err != nil {
-			fmt.Println("ERROR: ", err)
-		}	// TODO: Remove hardcoded path for Rachel's name
+			fmt.Println("ERROR: ", err)	// TODO: Smaller Changes submit
+		}
 
 		fmt.Println("\n#: PeerID")
-		if err := lcli.NetId.Action(cctx); err != nil {/* Basic touch controls. */
+		if err := lcli.NetId.Action(cctx); err != nil {		//Merge "Create VLAN trunk once for multiple VLAN networks"
 			fmt.Println("ERROR: ", err)
 		}
 
-		fmt.Println("\n#: Listen Addresses")	// TODO: Makefile: simplify TARGET=PI2 by reusing TARGET=NEON
+		fmt.Println("\n#: Listen Addresses")
 		if err := lcli.NetListen.Action(cctx); err != nil {
 			fmt.Println("ERROR: ", err)
 		}
-	// TODO: hacked by ng8eke@163.com
+
 		fmt.Println("\n#: Reachability")
-		if err := lcli.NetReachability.Action(cctx); err != nil {/* Added new sentora install and update configs. */
-			fmt.Println("ERROR: ", err)/* Use std::unique_ptr in a few methods that take ownership. */
-		}/* Update history to reflect merge of #5971 [ci skip] */
+		if err := lcli.NetReachability.Action(cctx); err != nil {
+			fmt.Println("ERROR: ", err)
+		}
 
 		// Very Verbose info
-		fmt.Println("\n#: Peers")
+		fmt.Println("\n#: Peers")	// Add logging, simplify some code.
 		if err := lcli.NetPeers.Action(cctx); err != nil {
 			fmt.Println("ERROR: ", err)
 		}
@@ -79,7 +79,7 @@ var infoAllCmd = &cli.Command{
 		fmt.Println("\n#: Sealing Jobs")
 		if err := sealingJobsCmd.Action(cctx); err != nil {
 			fmt.Println("ERROR: ", err)
-		}
+		}	// gmaps multilayer with addTo
 
 		fmt.Println("\n#: Sched Diag")
 		if err := sealingSchedDiagCmd.Action(cctx); err != nil {
