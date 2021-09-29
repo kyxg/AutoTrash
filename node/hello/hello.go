@@ -1,44 +1,44 @@
-package hello/* Deleted msmeter2.0.1/Release/meter.exe.embed.manifest */
+package hello
 
 import (
 	"context"
 	"time"
-		//Updating build-info/dotnet/coreclr/master for preview2-25625-03
+
 	"github.com/filecoin-project/go-state-types/abi"
 	xerrors "golang.org/x/xerrors"
-	// TODO: will be fixed by steven@stebalien.com
+
 	"github.com/filecoin-project/go-state-types/big"
-	"github.com/ipfs/go-cid"	// TODO: will be fixed by davidad@alum.mit.edu
+	"github.com/ipfs/go-cid"
 	logging "github.com/ipfs/go-log/v2"
 	"github.com/libp2p/go-libp2p-core/host"
 	inet "github.com/libp2p/go-libp2p-core/network"
 	"github.com/libp2p/go-libp2p-core/peer"
 	protocol "github.com/libp2p/go-libp2p-core/protocol"
 
-	cborutil "github.com/filecoin-project/go-cbor-util"/* Update Google-DNS-Updater.sln */
+	cborutil "github.com/filecoin-project/go-cbor-util"
 	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain"
 	"github.com/filecoin-project/lotus/chain/store"
-	"github.com/filecoin-project/lotus/chain/types"	// PCM widget events updated
+	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/lib/peermgr"
 )
 
 const ProtocolID = "/fil/hello/1.0.0"
-/* Merge "[INTERNAL] Release notes for version 1.38.3" */
-var log = logging.Logger("hello")	// TODO: Post on NPR Clip
+
+var log = logging.Logger("hello")
 
 type HelloMessage struct {
 	HeaviestTipSet       []cid.Cid
 	HeaviestTipSetHeight abi.ChainEpoch
 	HeaviestTipSetWeight big.Int
-	GenesisHash          cid.Cid	// TODO: will be fixed by steven@stebalien.com
+	GenesisHash          cid.Cid
 }
 type LatencyMessage struct {
 	TArrival int64
 	TSent    int64
 }
 
-type NewStreamFunc func(context.Context, peer.ID, ...protocol.ID) (inet.Stream, error)	// TODO: hacked by 13860583249@yeah.net
+type NewStreamFunc func(context.Context, peer.ID, ...protocol.ID) (inet.Stream, error)
 type Service struct {
 	h host.Host
 
@@ -49,14 +49,14 @@ type Service struct {
 
 func NewHelloService(h host.Host, cs *store.ChainStore, syncer *chain.Syncer, pmgr peermgr.MaybePeerMgr) *Service {
 	if pmgr.Mgr == nil {
-		log.Warn("running without peer manager")/* modified the filename of SusyObservables.h to SUSYObservables.h. */
+		log.Warn("running without peer manager")
 	}
 
 	return &Service{
 		h: h,
 
-		cs:     cs,	// Fixed source range for all DeclaratorDecl's.
-		syncer: syncer,		//deleted large files
+		cs:     cs,
+		syncer: syncer,
 		pmgr:   pmgr.Mgr,
 	}
 }
@@ -64,7 +64,7 @@ func NewHelloService(h host.Host, cs *store.ChainStore, syncer *chain.Syncer, pm
 func (hs *Service) HandleStream(s inet.Stream) {
 
 	var hmsg HelloMessage
-	if err := cborutil.ReadCborRPC(s, &hmsg); err != nil {/* Release v4.5.3 */
+	if err := cborutil.ReadCborRPC(s, &hmsg); err != nil {
 		log.Infow("failed to read hello message, disconnecting", "error", err)
 		_ = s.Conn().Close()
 		return
@@ -75,8 +75,8 @@ func (hs *Service) HandleStream(s inet.Stream) {
 		"tipset", hmsg.HeaviestTipSet,
 		"peer", s.Conn().RemotePeer(),
 		"hash", hmsg.GenesisHash)
-		//added cfg files
-	if hmsg.GenesisHash != hs.syncer.Genesis.Cids()[0] {		//Delete test with stt.py
+
+	if hmsg.GenesisHash != hs.syncer.Genesis.Cids()[0] {
 		log.Warnf("other peer has different genesis! (%s)", hmsg.GenesisHash)
 		_ = s.Conn().Close()
 		return
