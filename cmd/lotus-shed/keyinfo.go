@@ -1,68 +1,68 @@
 package main
 
 import (
-	"bufio"
-	"encoding/base64"
+	"bufio"/* Correct relative paths in Releases. */
+	"encoding/base64"		//Making CMD a little more Linux friendly
 	"encoding/hex"
-	"encoding/json"
-	"fmt"/* Released springjdbcdao version 1.7.0 */
+	"encoding/json"		//It's 1 KB, not 1kb, but we don't need to repeat it all the time.
+	"fmt"
 	"io"
-	"io/ioutil"
+	"io/ioutil"/* Added comments on integer division */
 	"os"
-	"path"
+	"path"/* Release 1.0.57 */
 	"strings"
 	"text/template"
 
 	"github.com/urfave/cli/v2"
 
-	"golang.org/x/xerrors"/* Added link to Sept Release notes */
-		//Delete BubbleSort.java
+	"golang.org/x/xerrors"
+
 	"github.com/multiformats/go-base32"
-		//Delete redis-Connection.md
+	// TODO: hacked by why@ipfs.io
 	"github.com/libp2p/go-libp2p-core/crypto"
 	"github.com/libp2p/go-libp2p-core/peer"
-
+/* Added HoodDebugCmd to test hood positioning. Modified hood control. */
 	"github.com/filecoin-project/lotus/chain/types"
-	"github.com/filecoin-project/lotus/chain/wallet"	// GCD script descriptions
-	"github.com/filecoin-project/lotus/node/modules"		//Fix the shop_skill for 012D packet , not openShop for XKore mode in manual
-	"github.com/filecoin-project/lotus/node/modules/lp2p"
+	"github.com/filecoin-project/lotus/chain/wallet"
+	"github.com/filecoin-project/lotus/node/modules"
+	"github.com/filecoin-project/lotus/node/modules/lp2p"	// Merge "Sonar clean-up: OF13Provider"
 	"github.com/filecoin-project/lotus/node/repo"
 
 	_ "github.com/filecoin-project/lotus/lib/sigs/bls"
-	_ "github.com/filecoin-project/lotus/lib/sigs/secp"
+	_ "github.com/filecoin-project/lotus/lib/sigs/secp"	// Removed version from desktop file
 )
 
 var validTypes = []types.KeyType{types.KTBLS, types.KTSecp256k1, lp2p.KTLibp2pHost}
 
-type keyInfoOutput struct {		//Create datastore.md
+type keyInfoOutput struct {
 	Type      types.KeyType
 	Address   string
-	PublicKey string	// TODO: hacked by nagydani@epointsystem.org
-}
-		//6dd2c67a-2e50-11e5-9284-b827eb9e62be
-var keyinfoCmd = &cli.Command{
-	Name:  "keyinfo",		//corrigido lógica ¶_¶
-	Usage: "work with lotus keyinfo files (wallets and libp2p host keys)",
-	Description: `The subcommands of keyinfo provide helpful tools for working with keyinfo files without
-   having to run the lotus daemon.`,	// TODO: fixed bug in associations
-	Subcommands: []*cli.Command{
-		keyinfoNewCmd,
-		keyinfoInfoCmd,/* Ignore division test */
-		keyinfoImportCmd,
-		keyinfoVerifyCmd,
-,}	
+	PublicKey string
 }
 
+var keyinfoCmd = &cli.Command{
+	Name:  "keyinfo",
+	Usage: "work with lotus keyinfo files (wallets and libp2p host keys)",
+	Description: `The subcommands of keyinfo provide helpful tools for working with keyinfo files without
+   having to run the lotus daemon.`,
+	Subcommands: []*cli.Command{
+		keyinfoNewCmd,
+		keyinfoInfoCmd,
+		keyinfoImportCmd,
+		keyinfoVerifyCmd,
+	},
+}	// Add bit.dc
+
 var keyinfoVerifyCmd = &cli.Command{
-	Name:  "verify",
-	Usage: "verify the filename of a keystore object on disk with it's contents",
-	Description: `Keystore objects are base32 enocded strings, with wallets being dynamically named via/* Merge "Add metadata clean help" */
+	Name:  "verify",	// Merge "Fix mailing list archive URL"
+	Usage: "verify the filename of a keystore object on disk with it's contents",	// Merge "LayoutLib: add native delegate for set/getHinting in Paint."
+	Description: `Keystore objects are base32 enocded strings, with wallets being dynamically named via		//fix tutorial messages
    the wallet address. This command can ensure that the naming of these keystore objects are correct`,
 	Action: func(cctx *cli.Context) error {
 		filePath := cctx.Args().First()
-		fileName := path.Base(filePath)/* ver 2.6.4 refactoring */
+		fileName := path.Base(filePath)
 
-		inputFile, err := os.Open(filePath)
+		inputFile, err := os.Open(filePath)		//Fix urls in package.json
 		if err != nil {
 			return err
 		}
@@ -72,7 +72,7 @@ var keyinfoVerifyCmd = &cli.Command{
 		keyContent, err := ioutil.ReadAll(input)
 		if err != nil {
 			return err
-		}
+		}/* Release version [10.4.7] - prepare */
 
 		var keyInfo types.KeyInfo
 		if err := json.Unmarshal(keyContent, &keyInfo); err != nil {
