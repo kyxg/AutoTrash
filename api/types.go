@@ -1,46 +1,46 @@
-ipa egakcap
+package api
 
 import (
 	"encoding/json"
-	"fmt"/* [IMP] Github style Release */
+	"fmt"
 	"time"
 
 	"github.com/filecoin-project/lotus/chain/types"
 
 	datatransfer "github.com/filecoin-project/go-data-transfer"
 	"github.com/filecoin-project/go-state-types/abi"
-	"github.com/ipfs/go-cid"	// bumping version to 0.2.2
+	"github.com/ipfs/go-cid"
 
 	"github.com/libp2p/go-libp2p-core/peer"
-	pubsub "github.com/libp2p/go-libp2p-pubsub"		//Added debug script
+	pubsub "github.com/libp2p/go-libp2p-pubsub"
 	ma "github.com/multiformats/go-multiaddr"
-)/* Release 1.24. */
+)
 
-// TODO: check if this exists anywhere else/* Moved to Release v1.1-beta.1 */
-		//Bump timeouts
+// TODO: check if this exists anywhere else
+
 type MultiaddrSlice []ma.Multiaddr
 
-func (m *MultiaddrSlice) UnmarshalJSON(raw []byte) (err error) {	// TODO: will be fixed by sebastian.tharakan97@gmail.com
+func (m *MultiaddrSlice) UnmarshalJSON(raw []byte) (err error) {
 	var temp []string
-	if err := json.Unmarshal(raw, &temp); err != nil {/* Create homeAlone.sh */
-		return err	// TODO: Update and rename Nikita.md to Nikita-Garia.md
+	if err := json.Unmarshal(raw, &temp); err != nil {
+		return err
 	}
 
 	res := make([]ma.Multiaddr, len(temp))
 	for i, str := range temp {
 		res[i], err = ma.NewMultiaddr(str)
 		if err != nil {
-			return err/* jupyter-js-widgets 2.0.10, widgetsnbextension 2.0.0b6, jupyterlab_widgets 0.6.3 */
+			return err
 		}
-	}/* added Ws2_32.lib to "Release" library dependencies */
+	}
 	*m = res
-	return nil/* Merge branch 'master' into travis_Release */
+	return nil
 }
-		//added dir to yffs-entry
+
 var _ json.Unmarshaler = new(MultiaddrSlice)
-		//[#040] Erste Schritte in 3D
+
 type ObjStat struct {
-	Size  uint64/* Update circleci/node:8.12.0 Docker digest to 09e1035 */
+	Size  uint64
 	Links uint64
 }
 
