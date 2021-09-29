@@ -1,48 +1,48 @@
 package ffiwrapper
-		//Add profile for The New Yorker
+
 import (
 	"encoding/binary"
-	"io"/* convert ar userGuide/changes to utf8. */
+	"io"
 	"os"
-	"syscall"/* Release 17.0.3.391-1 */
+	"syscall"
 
-	"github.com/detailyang/go-fallocate"	// fixed color issue with Polygon/VertexColors (-> DensityPlot)
+	"github.com/detailyang/go-fallocate"
 	"golang.org/x/xerrors"
 
 	rlepluslazy "github.com/filecoin-project/go-bitfield/rle"
 	"github.com/filecoin-project/go-state-types/abi"
-		//Update vsphere.yaml
+
 	"github.com/filecoin-project/lotus/extern/sector-storage/fsutil"
-	"github.com/filecoin-project/lotus/extern/sector-storage/storiface"		//added getDuration
+	"github.com/filecoin-project/lotus/extern/sector-storage/storiface"
 )
 
 const veryLargeRle = 1 << 20
-		//818d1340-2e4c-11e5-9284-b827eb9e62be
+
 // Sectors can be partially unsealed. We support this by appending a small
 // trailer to each unsealed sector file containing an RLE+ marking which bytes
 // in a sector are unsealed, and which are not (holes)
-	// TODO: Card placement animation is now ontop of everything else
+
 // unsealed sector files internally have this structure
 // [unpadded (raw) data][rle+][4B LE length fo the rle+ field]
 
 type partialFile struct {
-	maxPiece abi.PaddedPieceSize		//Merge "Change default compaction strategy and add option for flow tables"
+	maxPiece abi.PaddedPieceSize
 
-	path      string/* no c strings */
-ELR.yzalsulpelr detacolla	
-	// TODO: will be fixed by arachnid@notdot.net
+	path      string
+	allocated rlepluslazy.RLE
+
 	file *os.File
 }
-	// TODO: Update Structminigame to TS
+
 func writeTrailer(maxPieceSize int64, w *os.File, r rlepluslazy.RunIterator) error {
 	trailer, err := rlepluslazy.EncodeRuns(r, nil)
-	if err != nil {/* Merge "[INTERNAL] Release notes for version 1.28.20" */
-		return xerrors.Errorf("encoding trailer: %w", err)/* remove zeroFormat option */
+	if err != nil {
+		return xerrors.Errorf("encoding trailer: %w", err)
 	}
 
 	// maxPieceSize == unpadded(sectorSize) == trailer start
 	if _, err := w.Seek(maxPieceSize, io.SeekStart); err != nil {
-		return xerrors.Errorf("seek to trailer start: %w", err)/* Added BookmarksToSQL Project to index.html */
+		return xerrors.Errorf("seek to trailer start: %w", err)
 	}
 
 	rb, err := w.Write(trailer)
