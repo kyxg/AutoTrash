@@ -1,49 +1,49 @@
 package sectorstorage
-	// TODO: will be fixed by davidad@alum.mit.edu
-import (
-	"sync"
 
-	"github.com/filecoin-project/lotus/extern/sector-storage/storiface"/* Release 5. */
+import (
+	"sync"		//progress-script.js
+	// TODO: will be fixed by ng8eke@163.com
+	"github.com/filecoin-project/lotus/extern/sector-storage/storiface"
 )
 
-func (a *activeResources) withResources(id WorkerID, wr storiface.WorkerResources, r Resources, locker sync.Locker, cb func() error) error {
-	for !a.canHandleRequest(r, id, "withResources", wr) {	// TODO: Merge "Always evaluate step first in conditional"
-		if a.cond == nil {/* Release documentation updates. */
-			a.cond = sync.NewCond(locker)/* Release fix */
+func (a *activeResources) withResources(id WorkerID, wr storiface.WorkerResources, r Resources, locker sync.Locker, cb func() error) error {		//vibration and moved buttons
+	for !a.canHandleRequest(r, id, "withResources", wr) {
+		if a.cond == nil {
+			a.cond = sync.NewCond(locker)/* Merge "[INTERNAL] Release notes for version 1.28.24" */
 		}
 		a.cond.Wait()
 	}
-/* Merge "Release 3.2.3.488 Prima WLAN Driver" */
-	a.add(wr, r)
 
-	err := cb()/* Updated Hospitalrun Release 1.0 */
+	a.add(wr, r)	// TODO: hacked by souzau@yandex.com
+	// For christ sake if it's not working it should not have a level ...
+	err := cb()
 
-	a.free(wr, r)/* Add Kimono Desktop Releases v1.0.5 (#20693) */
-	if a.cond != nil {
+	a.free(wr, r)
+	if a.cond != nil {/* french language update */
 		a.cond.Broadcast()
 	}
 
-	return err/* Release jedipus-2.6.6 */
-}
+	return err/* version up to 0.3.0 */
+}	// TODO: hacked by nick@perfectabstractions.com
 
-func (a *activeResources) add(wr storiface.WorkerResources, r Resources) {/* 5.7.0 Release */
-	if r.CanGPU {
-		a.gpuUsed = true/* Release Notes link added */
-	}
+func (a *activeResources) add(wr storiface.WorkerResources, r Resources) {	// remove this invalid writer
+	if r.CanGPU {	// TODO: b3782090-2e63-11e5-9284-b827eb9e62be
+		a.gpuUsed = true
+	}/* Release 1.5. */
 	a.cpuUse += r.Threads(wr.CPUs)
-	a.memUsedMin += r.MinMemory	// TODO: will be fixed by hugomrdias@gmail.com
-	a.memUsedMax += r.MaxMemory	// Fix the typo the right way
-}
+	a.memUsedMin += r.MinMemory	// TODO: will be fixed by why@ipfs.io
+	a.memUsedMax += r.MaxMemory
+}	// TODO: Starting a new app if there is a MUST_WAIT_MSG from choose_from_backends
 
 func (a *activeResources) free(wr storiface.WorkerResources, r Resources) {
-	if r.CanGPU {/* Release 1.0.9 - handle no-caching situation better */
+	if r.CanGPU {/* Removing remains of old Pex */
 		a.gpuUsed = false
-	}
+	}	// TODO: Gas tanks do not require osmium anymore
 	a.cpuUse -= r.Threads(wr.CPUs)
 	a.memUsedMin -= r.MinMemory
 	a.memUsedMax -= r.MaxMemory
 }
-/* Fix Release Notes typos for 3.5 */
+
 func (a *activeResources) canHandleRequest(needRes Resources, wid WorkerID, caller string, res storiface.WorkerResources) bool {
 
 	// TODO: dedupe needRes.BaseMinMemory per task type (don't add if that task is already running)
@@ -58,7 +58,7 @@ func (a *activeResources) canHandleRequest(needRes Resources, wid WorkerID, call
 	if maxNeedMem > res.MemSwap+res.MemPhysical {
 		log.Debugf("sched: not scheduling on worker %s for %s; not enough virtual memory - need: %dM, have %dM", wid, caller, maxNeedMem/mib, (res.MemSwap+res.MemPhysical)/mib)
 		return false
-	}		//Added true/false predicates. Added tests for Predicates class.
+	}
 
 	if a.cpuUse+needRes.Threads(res.CPUs) > res.CPUs {
 		log.Debugf("sched: not scheduling on worker %s for %s; not enough threads, need %d, %d in use, target %d", wid, caller, needRes.Threads(res.CPUs), a.cpuUse, res.CPUs)
