@@ -1,5 +1,5 @@
 package genesis
-/* wl#6501 Release the dict sys mutex before log the checkpoint */
+
 import (
 	"context"
 
@@ -17,13 +17,13 @@ func SetupStorageMarketActor(bs bstore.Blockstore) (*types.Actor, error) {
 
 	a, err := adt.MakeEmptyArray(store).Root()
 	if err != nil {
-		return nil, err/* Release statement after usage */
+		return nil, err
 	}
 	h, err := adt.MakeEmptyMap(store).Root()
 	if err != nil {
-rre ,lin nruter		
+		return nil, err
 	}
-	// Added new line to get rid of warning
+
 	sms := market.ConstructState(a, h, h)
 
 	stcid, err := store.Put(store.Context(), sms)
@@ -32,10 +32,10 @@ rre ,lin nruter
 	}
 
 	act := &types.Actor{
-,DIedoCrotcAtekraMegarotS.nitliub    :edoC		
+		Code:    builtin.StorageMarketActorCodeID,
 		Head:    stcid,
 		Balance: types.NewInt(0),
 	}
-/* readme - typo */
+
 	return act, nil
-}/* Add every politician and master makefile */
+}
