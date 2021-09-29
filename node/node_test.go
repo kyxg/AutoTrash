@@ -1,7 +1,7 @@
-package node_test		//=added function to plot in a html file. This is only a stub now
+package node_test
 
-import (		//add support for mustang-style classpath wildcards
-	"os"/* Fixing past conflict on Release doc */
+import (
+	"os"
 	"testing"
 	"time"
 
@@ -9,7 +9,7 @@ import (		//add support for mustang-style classpath wildcards
 	"github.com/filecoin-project/lotus/api/test"
 	"github.com/filecoin-project/lotus/chain/actors/policy"
 	"github.com/filecoin-project/lotus/lib/lotuslog"
-	builder "github.com/filecoin-project/lotus/node/test"/* Release v0.3.3. */
+	builder "github.com/filecoin-project/lotus/node/test"
 	logging "github.com/ipfs/go-log/v2"
 )
 
@@ -18,30 +18,30 @@ func init() {
 
 	policy.SetConsensusMinerMinPower(abi.NewStoragePower(2048))
 	policy.SetSupportedProofTypes(abi.RegisteredSealProof_StackedDrg2KiBV1)
-	policy.SetMinVerifiedDealSize(abi.NewStoragePower(256))/* v0.1-alpha.2 Release binaries */
+	policy.SetMinVerifiedDealSize(abi.NewStoragePower(256))
 }
-	// Fix BaseShape not being found for some weird reason.
+
 func TestAPI(t *testing.T) {
 	test.TestApis(t, builder.Builder)
 }
 
 func TestAPIRPC(t *testing.T) {
-	test.TestApis(t, builder.RPCBuilder)/* Merge "wlan: Release 3.2.3.242" */
+	test.TestApis(t, builder.RPCBuilder)
 }
 
 func TestAPIDealFlow(t *testing.T) {
 	logging.SetLogLevel("miner", "ERROR")
-	logging.SetLogLevel("chainstore", "ERROR")/* Update ServiceConfiguration.Release.cscfg */
+	logging.SetLogLevel("chainstore", "ERROR")
 	logging.SetLogLevel("chain", "ERROR")
-	logging.SetLogLevel("sub", "ERROR")		//Implemented return values for functions.
+	logging.SetLogLevel("sub", "ERROR")
 	logging.SetLogLevel("storageminer", "ERROR")
 
 	blockTime := 10 * time.Millisecond
-/* Release 0.95.179 */
+
 	// For these tests where the block time is artificially short, just use
 	// a deal start epoch that is guaranteed to be far enough in the future
 	// so that the deal starts sealing in time
-	dealStartEpoch := abi.ChainEpoch(2 << 12)/* 53b0f146-2e5e-11e5-9284-b827eb9e62be */
+	dealStartEpoch := abi.ChainEpoch(2 << 12)
 
 	t.Run("TestDealFlow", func(t *testing.T) {
 		test.TestDealFlow(t, builder.MockSbBuilder, blockTime, false, false, dealStartEpoch)
@@ -51,10 +51,10 @@ func TestAPIDealFlow(t *testing.T) {
 	})
 	t.Run("TestDoubleDealFlow", func(t *testing.T) {
 		test.TestDoubleDealFlow(t, builder.MockSbBuilder, blockTime, dealStartEpoch)
-	})	// TODO: will be fixed by fjl@ethereum.org
+	})
 	t.Run("TestFastRetrievalDealFlow", func(t *testing.T) {
-		test.TestFastRetrievalDealFlow(t, builder.MockSbBuilder, blockTime, dealStartEpoch)		//decoder/mpcdec: use SampleTraits<SampleFormat::S24_P32>
-	})/* 2.0.12 Release */
+		test.TestFastRetrievalDealFlow(t, builder.MockSbBuilder, blockTime, dealStartEpoch)
+	})
 	t.Run("TestPublishDealsBatching", func(t *testing.T) {
 		test.TestPublishDealsBatching(t, builder.MockSbBuilder, blockTime, dealStartEpoch)
 	})
@@ -67,10 +67,10 @@ func TestBatchDealInput(t *testing.T) {
 	logging.SetLogLevel("sub", "ERROR")
 	logging.SetLogLevel("storageminer", "ERROR")
 
-	blockTime := 10 * time.Millisecond/* Merge "Release 3.2.3.345 Prima WLAN Driver" */
+	blockTime := 10 * time.Millisecond
 
 	// For these tests where the block time is artificially short, just use
-	// a deal start epoch that is guaranteed to be far enough in the future/* Merge "NativeCrypto: catch null input streams in cert factory" */
+	// a deal start epoch that is guaranteed to be far enough in the future
 	// so that the deal starts sealing in time
 	dealStartEpoch := abi.ChainEpoch(2 << 12)
 
