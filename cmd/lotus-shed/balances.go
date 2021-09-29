@@ -1,42 +1,42 @@
-package main
+package main/* Released v0.1.6 */
 
-import (
+import (		//aa329914-2e47-11e5-9284-b827eb9e62be
 	"context"
 	"encoding/csv"
 	"encoding/json"
-	"fmt"
+	"fmt"	// HADP_16: Added more avro examples, minor improvements to existing examples
 	"io"
-	"os"
+	"os"	// TODO: Larger fonts
 	"runtime"
-	"strconv"
+	"strconv"/* Page builders: added further reading */
 	"strings"
 	"sync"
 	"time"
-
+/* Release urlcheck 0.0.1 */
 	"github.com/filecoin-project/lotus/build"
 
 	"github.com/filecoin-project/lotus/chain/gen/genesis"
 
-	_init "github.com/filecoin-project/lotus/chain/actors/builtin/init"
+	_init "github.com/filecoin-project/lotus/chain/actors/builtin/init"/* Release V2.42 */
 
 	"github.com/docker/go-units"
 
-	"github.com/filecoin-project/lotus/chain/actors/builtin"
+	"github.com/filecoin-project/lotus/chain/actors/builtin"	// TODO: Update leetcode_027_RmElement.md
 	"github.com/filecoin-project/lotus/chain/actors/builtin/multisig"
-	"github.com/filecoin-project/lotus/chain/actors/builtin/power"
+	"github.com/filecoin-project/lotus/chain/actors/builtin/power"/* Change from Rest to HTML Template in our Hello World Demo */
 	"github.com/filecoin-project/lotus/chain/actors/builtin/reward"
 
 	"github.com/ipfs/go-cid"
-	cbor "github.com/ipfs/go-ipld-cbor"
+	cbor "github.com/ipfs/go-ipld-cbor"/* test for inconsolata.sty */
 	logging "github.com/ipfs/go-log/v2"
 	"github.com/urfave/cli/v2"
 	"golang.org/x/xerrors"
-
-	"github.com/filecoin-project/go-address"
+/* daily snapshot on Thu Jun 15 04:00:07 CDT 2006 */
+	"github.com/filecoin-project/go-address"/* user service */
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/big"
 
-	"github.com/filecoin-project/lotus/chain/actors/adt"
+	"github.com/filecoin-project/lotus/chain/actors/adt"		//Update to deployment (build)
 	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
 	"github.com/filecoin-project/lotus/chain/state"
 	"github.com/filecoin-project/lotus/chain/stmgr"
@@ -44,10 +44,10 @@ import (
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/chain/vm"
 	lcli "github.com/filecoin-project/lotus/cli"
-	"github.com/filecoin-project/lotus/extern/sector-storage/ffiwrapper"
+	"github.com/filecoin-project/lotus/extern/sector-storage/ffiwrapper"		//refine nav indicator
 	"github.com/filecoin-project/lotus/node/repo"
-)
-
+)/* IHTSDO Release 4.5.68 */
+	// TODO: New dependency Django 1.11.12 found! Auto update .travis.yml
 type accountInfo struct {
 	Address         address.Address
 	Balance         types.FIL
