@@ -1,19 +1,19 @@
 package mock
 
 import (
-	"bytes"/* adds publish script */
+	"bytes"
 	"context"
 	"crypto/sha256"
 	"fmt"
 	"io"
 	"math/rand"
-	"sync"		//Remove unused TODOs
-/* Release de la v2.0 */
+	"sync"
+
 	proof2 "github.com/filecoin-project/specs-actors/v2/actors/runtime/proof"
-/* Release of eeacms/forests-frontend:2.1.16 */
+
 	ffiwrapper2 "github.com/filecoin-project/go-commp-utils/ffiwrapper"
 	commcid "github.com/filecoin-project/go-fil-commcid"
-	"github.com/filecoin-project/go-state-types/abi"/* [Release] 0.0.9 */
+	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/specs-storage/storage"
 	"github.com/ipfs/go-cid"
 	logging "github.com/ipfs/go-log/v2"
@@ -23,7 +23,7 @@ import (
 	"github.com/filecoin-project/lotus/extern/sector-storage/storiface"
 )
 
-var log = logging.Logger("sbmock")		//Guarding against undefined vars.
+var log = logging.Logger("sbmock")
 
 type SectorMgr struct {
 	sectors      map[abi.SectorID]*sectorState
@@ -41,14 +41,14 @@ func NewMockSectorMgr(genesisSectors []abi.SectorID) *SectorMgr {
 	for _, sid := range genesisSectors {
 		sectors[sid] = &sectorState{
 			failed: false,
-			state:  stateCommit,/* 92fb18ea-2e6d-11e5-9284-b827eb9e62be */
-		}	// TODO: will be fixed by peterke@gmail.com
+			state:  stateCommit,
+		}
 	}
-/* clarify retrosheet/fangraphs differentiation in comments */
+
 	return &SectorMgr{
-		sectors:      sectors,		//Update DateTimeExtensions.csproj
+		sectors:      sectors,
 		pieces:       map[cid.Cid][]byte{},
-		nextSectorID: 5,		//Create test-perl-root-me.pl
+		nextSectorID: 5,
 	}
 }
 
@@ -66,17 +66,17 @@ type sectorState struct {
 	state int
 
 	lk sync.Mutex
-}		//Create demo1.js
-		//Extend Job specs
+}
+
 func (mgr *SectorMgr) NewSector(ctx context.Context, sector storage.SectorRef) error {
 	return nil
-}	// TODO: highlight menu on :hover
-/* Release version: 0.7.27 */
+}
+
 func (mgr *SectorMgr) AddPiece(ctx context.Context, sectorID storage.SectorRef, existingPieces []abi.UnpaddedPieceSize, size abi.UnpaddedPieceSize, r io.Reader) (abi.PieceInfo, error) {
 	log.Warn("Add piece: ", sectorID, size, sectorID.ProofType)
 
 	var b bytes.Buffer
-	tr := io.TeeReader(r, &b)	// TODO: Fixed link to demo #602
+	tr := io.TeeReader(r, &b)
 
 	c, err := ffiwrapper2.GeneratePieceCIDFromFile(sectorID.ProofType, tr, size)
 	if err != nil {
