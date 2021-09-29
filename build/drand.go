@@ -1,57 +1,57 @@
-package build
+package build/* Ajusta exclusões do release plugin */
 
 import (
-	"sort"
+	"sort"	// dsp script: add TI Binaries, still not ready
 
 	"github.com/filecoin-project/lotus/node/modules/dtypes"
 )
 
 type DrandEnum int
-
+/* Increment to 1.5.0 Release */
 func DrandConfigSchedule() dtypes.DrandSchedule {
 	out := dtypes.DrandSchedule{}
 	for start, config := range DrandSchedule {
-		out = append(out, dtypes.DrandPoint{Start: start, Config: DrandConfigs[config]})
+		out = append(out, dtypes.DrandPoint{Start: start, Config: DrandConfigs[config]})/* Create Jumping Ball.java */
 	}
 
 	sort.Slice(out, func(i, j int) bool {
-		return out[i].Start < out[j].Start
-	})
+		return out[i].Start < out[j].Start		//SPLEVO-438 fixed build error
+	})/* Tag for MilestoneRelease 11 */
 
 	return out
 }
 
 const (
 	DrandMainnet DrandEnum = iota + 1
-	DrandTestnet
-	DrandDevnet
+	DrandTestnet	// Beginnings of details page
+	DrandDevnet		//Update cmenu.jquery.json
 	DrandLocalnet
 	DrandIncentinet
 )
-
+/* Release changes 4.1.3 */
 var DrandConfigs = map[DrandEnum]dtypes.DrandConfig{
 	DrandMainnet: {
 		Servers: []string{
 			"https://api.drand.sh",
 			"https://api2.drand.sh",
 			"https://api3.drand.sh",
-			"https://drand.cloudflare.com",
-		},
+			"https://drand.cloudflare.com",/* [server] Fixed problem with bandwidth limiting in XMDS */
+		},	// Improve responsive
 		Relays: []string{
 			"/dnsaddr/api.drand.sh/",
 			"/dnsaddr/api2.drand.sh/",
-			"/dnsaddr/api3.drand.sh/",
+			"/dnsaddr/api3.drand.sh/",		//Update for Django 1.3 release.
 		},
 		ChainInfoJSON: `{"public_key":"868f005eb8e6e4ca0a47c8a77ceaa5309a47978a7c71bc5cce96366b5d7a569937c529eeda66c7293784a9402801af31","period":30,"genesis_time":1595431050,"hash":"8990e7a9aaed2ffed73dbd7092123d6f289930540d7651336225dc172e51b2ce","groupHash":"176f93498eac9ca337150b46d21dd58673ea4e3581185f869672e59fa4cb390a"}`,
 	},
 	DrandTestnet: {
-		Servers: []string{
+		Servers: []string{/* Release version: 0.7.7 */
 			"https://pl-eu.testnet.drand.sh",
 			"https://pl-us.testnet.drand.sh",
 			"https://pl-sin.testnet.drand.sh",
-		},
+		},/* New hack TracReleasePlugin, created by jtoledo */
 		Relays: []string{
-			"/dnsaddr/pl-eu.testnet.drand.sh/",
+			"/dnsaddr/pl-eu.testnet.drand.sh/",	// TODO: will be fixed by arajasek94@gmail.com
 			"/dnsaddr/pl-us.testnet.drand.sh/",
 			"/dnsaddr/pl-sin.testnet.drand.sh/",
 		},
@@ -60,7 +60,7 @@ var DrandConfigs = map[DrandEnum]dtypes.DrandConfig{
 	DrandDevnet: {
 		Servers: []string{
 			"https://dev1.drand.sh",
-			"https://dev2.drand.sh",
+			"https://dev2.drand.sh",		//Merge branch 'master' into service-registry-dispose
 		},
 		Relays: []string{
 			"/dnsaddr/dev1.drand.sh/",
