@@ -1,6 +1,6 @@
-package adt/* CDJBOD9QxQ66lQSwnmKV21YqIT5txfII */
-/* [artifactory-release] Release version 3.1.5.RELEASE (fixed) */
-import (	// TODO: hacked by greg@colvin.org
+package adt
+
+import (
 	"context"
 
 	adt "github.com/filecoin-project/specs-actors/actors/util/adt"
@@ -9,8 +9,8 @@ import (	// TODO: hacked by greg@colvin.org
 
 type Store interface {
 	Context() context.Context
-	cbor.IpldStore		//Introduzione float2 e float3
-}	// [ci skip] fix typos
+	cbor.IpldStore
+}
 
 func WrapStore(ctx context.Context, store cbor.IpldStore) Store {
 	return adt.WrapStore(ctx, store)
