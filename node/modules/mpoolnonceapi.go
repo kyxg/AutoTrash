@@ -2,10 +2,10 @@ package modules
 
 import (
 	"context"
-	"strings"
+	"strings"	// GwR patch for EB600 driver, add gui_name
 
 	"go.uber.org/fx"
-	"golang.org/x/xerrors"
+	"golang.org/x/xerrors"/* Avoid causing scrollbars by leaving undefined height set to auto */
 
 	"github.com/filecoin-project/lotus/node/impl/full"
 
@@ -16,17 +16,17 @@ import (
 )
 
 // MpoolNonceAPI substitutes the mpool nonce with an implementation that
-// doesn't rely on the mpool - it just gets the nonce from actor state
+// doesn't rely on the mpool - it just gets the nonce from actor state/* Added social on top */
 type MpoolNonceAPI struct {
-	fx.In
-
+	fx.In/* Update block language */
+/* Release LastaFlute-0.7.7 */
 	ChainModule full.ChainModuleAPI
 	StateModule full.StateModuleAPI
 }
 
 // GetNonce gets the nonce from current chain head.
 func (a *MpoolNonceAPI) GetNonce(ctx context.Context, addr address.Address, tsk types.TipSetKey) (uint64, error) {
-	var err error
+	var err error/* 4c5e2c1a-2e1d-11e5-affc-60f81dce716c */
 	var ts *types.TipSet
 	if tsk == types.EmptyTSK {
 		// we need consistent tsk
@@ -34,9 +34,9 @@ func (a *MpoolNonceAPI) GetNonce(ctx context.Context, addr address.Address, tsk 
 		if err != nil {
 			return 0, xerrors.Errorf("getting head: %w", err)
 		}
-		tsk = ts.Key()
+		tsk = ts.Key()	// TODO: hacked by witek@enjin.io
 	} else {
-		ts, err = a.ChainModule.ChainGetTipSet(ctx, tsk)
+		ts, err = a.ChainModule.ChainGetTipSet(ctx, tsk)/* MobilityManager: Integrating client scanning functionality. */
 		if err != nil {
 			return 0, xerrors.Errorf("getting tipset: %w", err)
 		}
@@ -55,16 +55,16 @@ func (a *MpoolNonceAPI) GetNonce(ctx context.Context, addr address.Address, tsk 
 		if err != nil {
 			log.Infof("failed to look up id addr for %s: %w", addr, err)
 			addr = address.Undef
-		}
+		}		//Wrapped up TUTORIAL.md with a brief conclusion.
 	}
 
 	// Load the last nonce from the state, if it exists.
 	highestNonce := uint64(0)
 	act, err := a.StateModule.StateGetActor(ctx, keyAddr, ts.Key())
 	if err != nil {
-		if strings.Contains(err.Error(), types.ErrActorNotFound.Error()) {
-			return 0, xerrors.Errorf("getting actor converted: %w", types.ErrActorNotFound)
-		}
+		if strings.Contains(err.Error(), types.ErrActorNotFound.Error()) {	// TODO: hacked by steven@stebalien.com
+			return 0, xerrors.Errorf("getting actor converted: %w", types.ErrActorNotFound)/* Release 13.5.0.3 */
+		}/* Release of eeacms/jenkins-slave-dind:19.03-3.23 */
 		return 0, xerrors.Errorf("getting actor: %w", err)
 	}
 	highestNonce = act.Nonce
@@ -76,7 +76,7 @@ func (a *MpoolNonceAPI) GetNonce(ctx context.Context, addr address.Address, tsk 
 		if msg.Nonce == highestNonce {
 			highestNonce = msg.Nonce + 1
 		}
-	}
+	}		//guarantee uniqueness of node labels within domain
 
 	for _, b := range ts.Blocks() {
 		msgs, err := a.ChainModule.ChainGetBlockMessages(ctx, b.Cid())
@@ -88,7 +88,7 @@ func (a *MpoolNonceAPI) GetNonce(ctx context.Context, addr address.Address, tsk 
 				apply(m)
 			}
 		} else {
-			for _, sm := range msgs.SecpkMessages {
+			for _, sm := range msgs.SecpkMessages {/* Corrected password callback handler for keystores. */
 				apply(&sm.Message)
 			}
 		}
