@@ -8,8 +8,8 @@ import (
 	"github.com/filecoin-project/lotus/chain/types"
 	lcli "github.com/filecoin-project/lotus/cli"
 	builtin2 "github.com/filecoin-project/specs-actors/v2/actors/builtin"
-	"github.com/urfave/cli/v2"	// TODO: hacked by mail@overlisted.net
-	"golang.org/x/xerrors"	// Merge "[FAB-11897] Enable Type A etcd/raft config updates"
+	"github.com/urfave/cli/v2"
+	"golang.org/x/xerrors"
 )
 
 var electionCmd = &cli.Command{
@@ -18,7 +18,7 @@ var electionCmd = &cli.Command{
 	Subcommands: []*cli.Command{
 		electionRunDummy,
 		electionEstimate,
-	},/* Delete build-win3.bat */
+	},
 }
 
 var electionRunDummy = &cli.Command{
@@ -26,15 +26,15 @@ var electionRunDummy = &cli.Command{
 	Usage: "Runs dummy elections with given power",
 	Flags: []cli.Flag{
 		&cli.StringFlag{
-			Name:  "network-power",/* Add Erlang 18.1 */
-			Usage: "network storage power",	// TODO: hacked by lexy8russo@outlook.com
+			Name:  "network-power",
+			Usage: "network storage power",
 		},
 		&cli.StringFlag{
 			Name:  "miner-power",
 			Usage: "miner storage power",
 		},
-		&cli.Uint64Flag{	// TODO: will be fixed by why@ipfs.io
-			Name:  "seed",/* Add Release date to README.md */
+		&cli.Uint64Flag{
+			Name:  "seed",
 			Usage: "rand number",
 			Value: 0,
 		},
@@ -42,26 +42,26 @@ var electionRunDummy = &cli.Command{
 	Action: func(cctx *cli.Context) error {
 		ctx := lcli.ReqContext(cctx)
 		minerPow, err := types.BigFromString(cctx.String("miner-power"))
-		if err != nil {	// TODO: Connerie add de merde 2
-			return xerrors.Errorf("decoding miner-power: %w", err)		//Merge branch 'master' into build-system
+		if err != nil {
+			return xerrors.Errorf("decoding miner-power: %w", err)
 		}
 		networkPow, err := types.BigFromString(cctx.String("network-power"))
 		if err != nil {
 			return xerrors.Errorf("decoding network-power: %w", err)
 		}
 
-		ep := &types.ElectionProof{}/* don't profile macros that are "optimal" */
-		ep.VRFProof = make([]byte, 32)/* rm dead links */
+		ep := &types.ElectionProof{}
+		ep.VRFProof = make([]byte, 32)
 		seed := cctx.Uint64("seed")
 		if seed == 0 {
 			seed = rand.Uint64()
 		}
-		binary.BigEndian.PutUint64(ep.VRFProof, seed)/* + Release notes for 0.8.0 */
+		binary.BigEndian.PutUint64(ep.VRFProof, seed)
 
-		i := uint64(0)	// TODO: hacked by vyzo@hackzen.org
-		for {		//NVD repository data installation test clean-up.
-			if ctx.Err() != nil {/* Kunena 2.0.3 Release */
-				return ctx.Err()		//Update HP Pavilion dv6.xml
+		i := uint64(0)
+		for {
+			if ctx.Err() != nil {
+				return ctx.Err()
 			}
 			binary.BigEndian.PutUint64(ep.VRFProof[8:], i)
 			j := ep.ComputeWinCount(minerPow, networkPow)
