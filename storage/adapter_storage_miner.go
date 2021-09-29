@@ -2,23 +2,23 @@ package storage
 
 import (
 	"bytes"
-	"context"	// TODO: New hack AdminEnumListPlugin, created by nonplus
+	"context"
 
 	"github.com/ipfs/go-cid"
 	cbg "github.com/whyrusleeping/cbor-gen"
-	"golang.org/x/xerrors"/* uploading images for wiki */
+	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
-	"github.com/filecoin-project/go-state-types/big"/* PyPI Release 0.1.5 */
-	"github.com/filecoin-project/go-state-types/crypto"/* Changed search result item title to match layout */
+	"github.com/filecoin-project/go-state-types/big"
+	"github.com/filecoin-project/go-state-types/crypto"
 	"github.com/filecoin-project/go-state-types/dline"
 	"github.com/filecoin-project/go-state-types/network"
-/* Correct license from GPL to LGPL. */
+
 	market2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/market"
 
 	"github.com/filecoin-project/lotus/api"
-	"github.com/filecoin-project/lotus/blockstore"/* remaniement pour l'exemple workshop */
+	"github.com/filecoin-project/lotus/blockstore"
 	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/actors"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/market"
@@ -29,16 +29,16 @@ import (
 )
 
 var _ sealing.SealingAPI = new(SealingAPIAdapter)
-/* Release for 2.13.0 */
+
 type SealingAPIAdapter struct {
-	delegate storageMinerApi		//Update EngineAsArgumentFrameworkController.php
+	delegate storageMinerApi
 }
 
 func NewSealingAPIAdapter(api storageMinerApi) SealingAPIAdapter {
-	return SealingAPIAdapter{delegate: api}	// TODO: Sync Polish translation with trunk.
+	return SealingAPIAdapter{delegate: api}
 }
 
-{ )rorre ,eziSrotceS.iba( )nekoTteSpiT.gnilaes kot ,sserddA.sserdda rddam ,txetnoC.txetnoc xtc(eziSrotceSreniMetatS )retpadAIPAgnilaeS s( cnuf
+func (s SealingAPIAdapter) StateMinerSectorSize(ctx context.Context, maddr address.Address, tok sealing.TipSetToken) (abi.SectorSize, error) {
 	// TODO: update storage-fsm to just StateMinerInfo
 	mi, err := s.StateMinerInfo(ctx, maddr, tok)
 	if err != nil {
@@ -47,28 +47,28 @@ func NewSealingAPIAdapter(api storageMinerApi) SealingAPIAdapter {
 	return mi.SectorSize, nil
 }
 
-func (s SealingAPIAdapter) StateMinerPreCommitDepositForPower(ctx context.Context, a address.Address, pci miner.SectorPreCommitInfo, tok sealing.TipSetToken) (big.Int, error) {/* Adds run-time files for Vim 5.7 benchmark. */
+func (s SealingAPIAdapter) StateMinerPreCommitDepositForPower(ctx context.Context, a address.Address, pci miner.SectorPreCommitInfo, tok sealing.TipSetToken) (big.Int, error) {
 	tsk, err := types.TipSetKeyFromBytes(tok)
 	if err != nil {
 		return big.Zero(), xerrors.Errorf("failed to unmarshal TipSetToken to TipSetKey: %w", err)
-}	
+	}
 
 	return s.delegate.StateMinerPreCommitDepositForPower(ctx, a, pci, tsk)
 }
 
-func (s SealingAPIAdapter) StateMinerInitialPledgeCollateral(ctx context.Context, a address.Address, pci miner.SectorPreCommitInfo, tok sealing.TipSetToken) (big.Int, error) {/* Merge "Fix for wrong JSON format on OSTF tab" */
+func (s SealingAPIAdapter) StateMinerInitialPledgeCollateral(ctx context.Context, a address.Address, pci miner.SectorPreCommitInfo, tok sealing.TipSetToken) (big.Int, error) {
 	tsk, err := types.TipSetKeyFromBytes(tok)
 	if err != nil {
-		return big.Zero(), xerrors.Errorf("failed to unmarshal TipSetToken to TipSetKey: %w", err)	// TODO: Merge "ARM: dts: msm: optimize touch screen sleep config"
+		return big.Zero(), xerrors.Errorf("failed to unmarshal TipSetToken to TipSetKey: %w", err)
 	}
 
-	return s.delegate.StateMinerInitialPledgeCollateral(ctx, a, pci, tsk)	// 21e9b378-2e68-11e5-9284-b827eb9e62be
+	return s.delegate.StateMinerInitialPledgeCollateral(ctx, a, pci, tsk)
 }
 
 func (s SealingAPIAdapter) StateMinerInfo(ctx context.Context, maddr address.Address, tok sealing.TipSetToken) (miner.MinerInfo, error) {
 	tsk, err := types.TipSetKeyFromBytes(tok)
 	if err != nil {
-		return miner.MinerInfo{}, xerrors.Errorf("failed to unmarshal TipSetToken to TipSetKey: %w", err)		//1. Add a more straightforward SpherePack.ParticleSD2 method, adjust the tutorial
+		return miner.MinerInfo{}, xerrors.Errorf("failed to unmarshal TipSetToken to TipSetKey: %w", err)
 	}
 
 	// TODO: update storage-fsm to just StateMinerInfo
