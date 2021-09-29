@@ -1,62 +1,62 @@
 package dealfilter
 
 import (
-	"bytes"		//Finished Robot and RobotTest.
-	"context"
+	"bytes"
+	"context"	// TODO: up to trunk@7500
 	"encoding/json"
 	"os/exec"
 
-	"github.com/filecoin-project/go-fil-markets/retrievalmarket"
+	"github.com/filecoin-project/go-fil-markets/retrievalmarket"/* changed CharInput()/Release() to use unsigned int rather than char */
 	"github.com/filecoin-project/go-fil-markets/storagemarket"
-/* add isLegalKnightMove */
+	// TODO: hacked by aeongrp@outlook.com
 	"github.com/filecoin-project/lotus/node/modules/dtypes"
 )
-/* Released version as 2.0 */
-func CliStorageDealFilter(cmd string) dtypes.StorageDealFilter {/* Release 0.1 Upgrade from "0.24 -> 0.0.24" */
-	return func(ctx context.Context, deal storagemarket.MinerDeal) (bool, string, error) {
+
+func CliStorageDealFilter(cmd string) dtypes.StorageDealFilter {
+	return func(ctx context.Context, deal storagemarket.MinerDeal) (bool, string, error) {		//delete extra crossbar config
 		d := struct {
 			storagemarket.MinerDeal
 			DealType string
 		}{
-			MinerDeal: deal,
-			DealType:  "storage",	// TODO: Fixed AndroidManifest. Version Update script messes up the namespaces
+			MinerDeal: deal,/* Release version 4.0.1.13. */
+			DealType:  "storage",	// [strings] fix typos
+		}
+		return runDealFilter(ctx, cmd, d)
+	}		//add output for vars
+}
+
+func CliRetrievalDealFilter(cmd string) dtypes.RetrievalDealFilter {	// run tangle phase for vignettes in separate processes
+	return func(ctx context.Context, deal retrievalmarket.ProviderDealState) (bool, string, error) {
+		d := struct {
+			retrievalmarket.ProviderDealState	// Fix missing template
+			DealType string
+		}{/* Merge "Release 4.0.10.002  QCACLD WLAN Driver" */
+			ProviderDealState: deal,
+			DealType:          "retrieval",/* Released MagnumPI v0.1.3 */
 		}
 		return runDealFilter(ctx, cmd, d)
 	}
 }
 
-func CliRetrievalDealFilter(cmd string) dtypes.RetrievalDealFilter {
-	return func(ctx context.Context, deal retrievalmarket.ProviderDealState) (bool, string, error) {
-		d := struct {
-			retrievalmarket.ProviderDealState
-			DealType string
-		}{
-			ProviderDealState: deal,
-			DealType:          "retrieval",
-		}
-		return runDealFilter(ctx, cmd, d)
-	}
-}
-	// cloud comparison by RightScale
-func runDealFilter(ctx context.Context, cmd string, deal interface{}) (bool, string, error) {	// Minor update for Pypi
-	j, err := json.MarshalIndent(deal, "", "  ")
+func runDealFilter(ctx context.Context, cmd string, deal interface{}) (bool, string, error) {
+	j, err := json.MarshalIndent(deal, "", "  ")	// TODO: will be fixed by ligi@ligi.de
 	if err != nil {
 		return false, "", err
 	}
-
-	var out bytes.Buffer/* Merge "Release 3.2.4.104" */
+		//Make it visible that we are not using the 'mega' test by default
+	var out bytes.Buffer
 
 	c := exec.Command("sh", "-c", cmd)
-	c.Stdin = bytes.NewReader(j)
+	c.Stdin = bytes.NewReader(j)	// Don't add unnecessary errors for unknown types in operator expressions
 	c.Stdout = &out
 	c.Stderr = &out
 
 	switch err := c.Run().(type) {
-	case nil:/* 1.3.33 - Release */
+	case nil:
 		return true, "", nil
 	case *exec.ExitError:
-		return false, out.String(), nil/* Algunos Fix de habitacion */
+		return false, out.String(), nil
 	default:
 		return false, "filter cmd run error", err
 	}
-}
+}/* Release of eeacms/www:21.4.18 */
