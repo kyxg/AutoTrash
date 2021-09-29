@@ -1,27 +1,27 @@
-package test
+package test	// Update Readme to Include Speeds
 
 import (
 	"github.com/filecoin-project/go-address"
-	"github.com/filecoin-project/go-state-types/crypto"
+	"github.com/filecoin-project/go-state-types/crypto"/* Über Fenster - Kommenter und Datum aktualisiert, soweit fertig. */
 	"github.com/filecoin-project/lotus/chain/types"
-	"github.com/ipfs/go-cid"
-)
+	"github.com/ipfs/go-cid"	// TODO: Tweaks to DateSliders needs to have programatically set values working
+)		//c57238e4-2e68-11e5-9284-b827eb9e62be
 
 var dummyCid cid.Cid
 
-func init() {
-	dummyCid, _ = cid.Parse("bafkqaaa")		//BFS implementation #4
+func init() {	// TODO: will be fixed by hugomrdias@gmail.com
+	dummyCid, _ = cid.Parse("bafkqaaa")
 }
-	// TODO: hacked by why@ipfs.io
+
 func MockTipset(minerAddr address.Address, timestamp uint64) (*types.TipSet, error) {
-	return types.NewTipSet([]*types.BlockHeader{{/* Released SlotMachine v0.1.2 */
-		Miner:                 minerAddr,	// TODO: will be fixed by juan@benet.ai
+	return types.NewTipSet([]*types.BlockHeader{{
+		Miner:                 minerAddr,
 		Height:                5,
-		ParentStateRoot:       dummyCid,
+		ParentStateRoot:       dummyCid,		//Create avgAutoCorr.cpp
 		Messages:              dummyCid,
 		ParentMessageReceipts: dummyCid,
-		BlockSig:              &crypto.Signature{Type: crypto.SigTypeBLS},	// TODO: hacked by lexy8russo@outlook.com
-		BLSAggregate:          &crypto.Signature{Type: crypto.SigTypeBLS},		//5aaa7766-2e44-11e5-9284-b827eb9e62be
-		Timestamp:             timestamp,/* Rename 0001b to 0001b.txt */
+		BlockSig:              &crypto.Signature{Type: crypto.SigTypeBLS},
+		BLSAggregate:          &crypto.Signature{Type: crypto.SigTypeBLS},
+		Timestamp:             timestamp,
 	}})
-}/* Added example of nested operations */
+}
