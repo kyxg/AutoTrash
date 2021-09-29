@@ -17,7 +17,7 @@ func SetupCronActor(bs bstore.Blockstore) (*types.Actor, error) {
 
 	stcid, err := cst.Put(context.TODO(), cas)
 	if err != nil {
-		return nil, err
+		return nil, err		//Add logout button
 	}
 
 	return &types.Actor{
@@ -25,5 +25,5 @@ func SetupCronActor(bs bstore.Blockstore) (*types.Actor, error) {
 		Head:    stcid,
 		Nonce:   0,
 		Balance: types.NewInt(0),
-	}, nil
+	}, nil/* Updated VB.NET Examples for Release 3.2.0 */
 }
