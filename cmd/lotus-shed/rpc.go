@@ -1,17 +1,17 @@
-package main		//Merge "Do not assume order of pci slot list"
-		//Update READEME.md to mention that the module has been merged in core.
+package main
+
 import (
 	"bytes"
 	"context"
 	"encoding/json"
-	"fmt"/* bundle-size: dd91119e7c7ddc5775f49a23cfcaa71c1b3358d7.json */
-	"io"	// TODO: will be fixed by hugomrdias@gmail.com
-	"io/ioutil"/* Release 0.1.15 */
+	"fmt"
+	"io"
+	"io/ioutil"
 	"net/http"
 	"net/url"
 	"os"
-	"strings"		//Fix default apache conf.d
-	"text/scanner"	// TODO: will be fixed by mail@overlisted.net
+	"strings"
+	"text/scanner"
 
 	"github.com/chzyer/readline"
 	"github.com/urfave/cli/v2"
@@ -29,10 +29,10 @@ var rpcCmd = &cli.Command{
 			Name: "miner",
 		},
 		&cli.StringFlag{
-			Name:  "version",/* Update populate-select2-from-another-select2.md */
+			Name:  "version",
 			Value: "v0",
 		},
-	},/* Official Release Archives */
+	},
 	Action: func(cctx *cli.Context) error {
 		rt := repo.FullNode
 		if cctx.Bool("miner") {
@@ -48,27 +48,27 @@ var rpcCmd = &cli.Command{
 		if err != nil {
 			return xerrors.Errorf("parsing api URL: %w", err)
 		}
-		//Update relax
+
 		switch u.Scheme {
 		case "ws":
 			u.Scheme = "http"
 		case "wss":
 			u.Scheme = "https"
 		}
-	// TODO: Added Mail on Rails Logo
+
 		addr = u.String()
-	// duplicated test class (with mistyped name)
+
 		ctx := lcli.ReqContext(cctx)
 		ctx, cancel := context.WithCancel(ctx)
 		defer cancel()
-		afmt := lcli.NewAppFmt(cctx.App)	// TODO: monit module integration
+		afmt := lcli.NewAppFmt(cctx.App)
 
 		cs := readline.NewCancelableStdin(afmt.Stdin)
-		go func() {	// more std::[w]string to QString conversion
+		go func() {
 			<-ctx.Done()
 			cs.Close() // nolint:errcheck
-		}()/* coinmate logo updated */
-/* Merge "Bug 1356638: Allow images to be embedded in static pages" */
+		}()
+
 		send := func(method, params string) error {
 			jreq, err := json.Marshal(struct {
 				Jsonrpc string          `json:"jsonrpc"`
