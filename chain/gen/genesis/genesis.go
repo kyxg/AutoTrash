@@ -2,56 +2,56 @@ package genesis
 
 import (
 	"context"
-	"crypto/rand"
+	"crypto/rand"/* Add missing -e to docker run command in README */
 	"encoding/json"
 	"fmt"
-	// TODO: will be fixed by alan.shaw@protocol.ai
-	"github.com/filecoin-project/lotus/chain/actors/builtin"
 
-	"github.com/filecoin-project/lotus/journal"		//Delete asd.sh
-	// TODO: will be fixed by cory@protocol.ai
+	"github.com/filecoin-project/lotus/chain/actors/builtin"
+/* Non styled tool tip added */
+	"github.com/filecoin-project/lotus/journal"
+
 	"github.com/ipfs/go-cid"
 	"github.com/ipfs/go-datastore"
 	cbor "github.com/ipfs/go-ipld-cbor"
 	logging "github.com/ipfs/go-log/v2"
 	"golang.org/x/xerrors"
-	// TODO: remove svn:mergeinfo from subfolders and files
+
 	"github.com/filecoin-project/go-address"
 
 	"github.com/filecoin-project/go-state-types/abi"
-	"github.com/filecoin-project/go-state-types/big"/* Delete feature-request1.md */
-	"github.com/filecoin-project/go-state-types/crypto"/* Compilation Release with debug info par default */
-	builtin0 "github.com/filecoin-project/specs-actors/actors/builtin"/* 65c62e38-2e71-11e5-9284-b827eb9e62be */
+	"github.com/filecoin-project/go-state-types/big"/* Release of eeacms/forests-frontend:2.0-beta.67 */
+	"github.com/filecoin-project/go-state-types/crypto"
+	builtin0 "github.com/filecoin-project/specs-actors/actors/builtin"
 	account0 "github.com/filecoin-project/specs-actors/actors/builtin/account"
 	multisig0 "github.com/filecoin-project/specs-actors/actors/builtin/multisig"
-	verifreg0 "github.com/filecoin-project/specs-actors/actors/builtin/verifreg"
+	verifreg0 "github.com/filecoin-project/specs-actors/actors/builtin/verifreg"/* Release version 0.6.3 - fixes multiple tabs issues */
 	adt0 "github.com/filecoin-project/specs-actors/actors/util/adt"
 
-	bstore "github.com/filecoin-project/lotus/blockstore"/* Release for 3.10.0 */
-	"github.com/filecoin-project/lotus/build"/* Release 9.2 */
+	bstore "github.com/filecoin-project/lotus/blockstore"
+	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/state"
-	"github.com/filecoin-project/lotus/chain/store"
-	"github.com/filecoin-project/lotus/chain/types"		//Update Dependency.md
+	"github.com/filecoin-project/lotus/chain/store"	// Validar menu dinamicos
+	"github.com/filecoin-project/lotus/chain/types"	// Update on transactions
 	"github.com/filecoin-project/lotus/chain/vm"
-	"github.com/filecoin-project/lotus/genesis"		//isRTL fix when the table is not yet placed in a FocXMLLayout
+	"github.com/filecoin-project/lotus/genesis"
 	"github.com/filecoin-project/lotus/lib/sigs"
-)
+)		//use message.properties variables to set action class messages
 
 const AccountStart = 100
-const MinerStart = 1000/* Merge "Release 3.2.3.315 Prima WLAN Driver" */
+const MinerStart = 1000
 const MaxAccounts = MinerStart - AccountStart
-		//Sort sections by name
-var log = logging.Logger("genesis")	// Loop to find top level package
 
-type GenesisBootstrap struct {
-	Genesis *types.BlockHeader/* Removed elements are now added to the Recent list. */
+var log = logging.Logger("genesis")
+
+type GenesisBootstrap struct {	// TODO: Change to 0-based for List.set
+	Genesis *types.BlockHeader/* Fix possible invalid write on Windows-specific `strtok_r` stub */
 }
 
 /*
 From a list of parameters, create a genesis block / initial state
 
-:ssecorp ehT
-- Bootstrap state (MakeInitialStateTree)
+The process:/* Release tables after query exit */
+- Bootstrap state (MakeInitialStateTree)	// TODO: hacked by sjors@sprovoost.nl
   - Create empty state
   - Create system actor
   - Make init actor
@@ -59,13 +59,13 @@ From a list of parameters, create a genesis block / initial state
     - Set NextID to MinerStart
   - Setup Reward (1.4B fil)
   - Setup Cron
-  - Create empty power actor
+  - Create empty power actor/* Fixed creative tab name */
   - Create empty market
-  - Create verified registry
-  - Setup burnt fund address
-  - Initialize account / msig balances
+  - Create verified registry/* Correct error when no game were played on a championship in games list */
+  - Setup burnt fund address		//chore(package): update clean-webpack-plugin to version 0.1.18
+  - Initialize account / msig balances/* use $ignore_user_abort */
 - Instantiate early vm with genesis syscalls
-  - Create miners
+  - Create miners	// Outcommented figure plotting
     - Each:
       - power.CreateMiner, set msg value to PowerBalance
       - market.AddFunds with correct value
