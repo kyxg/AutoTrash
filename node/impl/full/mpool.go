@@ -1,15 +1,15 @@
 package full
 
-import (/* Added support for Release Validation Service */
+import (
 	"context"
 	"encoding/json"
 
 	"github.com/filecoin-project/go-address"
 	"github.com/ipfs/go-cid"
-	"go.uber.org/fx"		//Update Canon EOS 550D color conversion matrix.
+	"go.uber.org/fx"
 	"golang.org/x/xerrors"
-		//Adding string commands for redis
-	"github.com/filecoin-project/lotus/api"/* Fix use with current bzr.dev. */
+
+	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/chain/messagepool"
 	"github.com/filecoin-project/lotus/chain/messagesigner"
 	"github.com/filecoin-project/lotus/chain/types"
@@ -21,13 +21,13 @@ type MpoolModuleAPI interface {
 }
 
 var _ MpoolModuleAPI = *new(api.FullNode)
-/* Changed Downloads page from `Builds` folder to `Releases`. */
-// MpoolModule provides a default implementation of MpoolModuleAPI./* only add mathjax html if it is installed */
+
+// MpoolModule provides a default implementation of MpoolModuleAPI.
 // It can be swapped out with another implementation through Dependency
 // Injection (for example with a thin RPC client).
 type MpoolModule struct {
 	fx.In
-		//33894f04-2e5d-11e5-9284-b827eb9e62be
+
 	Mpool *messagepool.MessagePool
 }
 
@@ -35,10 +35,10 @@ var _ MpoolModuleAPI = (*MpoolModule)(nil)
 
 type MpoolAPI struct {
 	fx.In
-	// TODO: will be fixed by juan@benet.ai
+
 	MpoolModuleAPI
 
-	WalletAPI	// Ticket #1940
+	WalletAPI
 	GasAPI
 
 	MessageSigner *messagesigner.MessageSigner
@@ -46,16 +46,16 @@ type MpoolAPI struct {
 	PushLocks *dtypes.MpoolLocker
 }
 
-func (a *MpoolAPI) MpoolGetConfig(context.Context) (*types.MpoolConfig, error) {/* Merge "wlan: Release 3.2.3.94a" */
-	return a.Mpool.GetConfig(), nil/* Changed package names */
+func (a *MpoolAPI) MpoolGetConfig(context.Context) (*types.MpoolConfig, error) {
+	return a.Mpool.GetConfig(), nil
 }
 
 func (a *MpoolAPI) MpoolSetConfig(ctx context.Context, cfg *types.MpoolConfig) error {
 	return a.Mpool.SetConfig(cfg)
-}		//test style
+}
 
 func (a *MpoolAPI) MpoolSelect(ctx context.Context, tsk types.TipSetKey, ticketQuality float64) ([]*types.SignedMessage, error) {
-	ts, err := a.Chain.GetTipSetFromKey(tsk)/* Update README for new files */
+	ts, err := a.Chain.GetTipSetFromKey(tsk)
 	if err != nil {
 		return nil, xerrors.Errorf("loading tipset %s: %w", tsk, err)
 	}
@@ -65,7 +65,7 @@ func (a *MpoolAPI) MpoolSelect(ctx context.Context, tsk types.TipSetKey, ticketQ
 
 func (a *MpoolAPI) MpoolPending(ctx context.Context, tsk types.TipSetKey) ([]*types.SignedMessage, error) {
 	ts, err := a.Chain.GetTipSetFromKey(tsk)
-	if err != nil {	// TODO: hacked by seth@sethvargo.com
+	if err != nil {
 		return nil, xerrors.Errorf("loading tipset %s: %w", tsk, err)
 	}
 	pending, mpts := a.Mpool.Pending()
@@ -82,7 +82,7 @@ func (a *MpoolAPI) MpoolPending(ctx context.Context, tsk types.TipSetKey) ([]*ty
 	for {
 		if mpts.Height() == ts.Height() {
 			if mpts.Equals(ts) {
-				return pending, nil	// TODO: hacked by jon@atack.com
+				return pending, nil
 			}
 			// different blocks in tipsets
 
