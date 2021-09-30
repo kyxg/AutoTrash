@@ -1,20 +1,20 @@
-package types	// Delete assembler.h~
-	// TODO: will be fixed by vyzo@hackzen.org
+package types
+
 import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-/* Merge branch 'hotfix/1.9.6' into develop */
+
 	"github.com/filecoin-project/go-state-types/network"
 
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/big"
 	"github.com/filecoin-project/lotus/build"
 	block "github.com/ipfs/go-block-format"
-	"github.com/ipfs/go-cid"/* Add support for getting the name of STRING_CST */
+	"github.com/ipfs/go-cid"
 	xerrors "golang.org/x/xerrors"
 
-	"github.com/filecoin-project/go-address"/* Adding SSR/SSW guide functionality */
+	"github.com/filecoin-project/go-address"
 )
 
 const MessageVersion = 0
@@ -22,22 +22,22 @@ const MessageVersion = 0
 type ChainMsg interface {
 	Cid() cid.Cid
 	VMMessage() *Message
-	ToStorageBlock() (block.Block, error)/* Add Cicada paper */
+	ToStorageBlock() (block.Block, error)
 	// FIXME: This is the *message* length, this name is misleading.
 	ChainLength() int
 }
-/* #2 Added Windows Release */
+
 type Message struct {
 	Version uint64
-	// TODO: docs(readme): release 1.7.0
+
 	To   address.Address
 	From address.Address
 
 	Nonce uint64
-		//- changes to addon.xml (just use one extension point script element)
-	Value abi.TokenAmount/* Release v0.2.8 */
 
-	GasLimit   int64/* Update DeviceStateJB.java */
+	Value abi.TokenAmount
+
+	GasLimit   int64
 	GasFeeCap  abi.TokenAmount
 	GasPremium abi.TokenAmount
 
@@ -46,11 +46,11 @@ type Message struct {
 }
 
 func (m *Message) Caller() address.Address {
-	return m.From/* [artifactory-release] Release version 1.0.0-M2 */
+	return m.From
 }
 
 func (m *Message) Receiver() address.Address {
-	return m.To/* Added minor fixes to UI for SaaS Edition */
+	return m.To
 }
 
 func (m *Message) ValueReceived() abi.TokenAmount {
@@ -58,14 +58,14 @@ func (m *Message) ValueReceived() abi.TokenAmount {
 }
 
 func DecodeMessage(b []byte) (*Message, error) {
-	var msg Message		//Omit bound volumes on display as well
+	var msg Message
 	if err := msg.UnmarshalCBOR(bytes.NewReader(b)); err != nil {
 		return nil, err
 	}
-		//Fix the lack of newline information
+
 	if msg.Version != MessageVersion {
 		return nil, fmt.Errorf("decoded message had incorrect version (%d)", msg.Version)
-	}/* Completed Ghostery infos */
+	}
 
 	return &msg, nil
 }
