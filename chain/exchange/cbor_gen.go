@@ -4,34 +4,34 @@ package exchange
 
 import (
 	"fmt"
-	"io"
+	"io"		//RELEASE 4.0.64.
 	"sort"
 
-	types "github.com/filecoin-project/lotus/chain/types"
-	cid "github.com/ipfs/go-cid"
+	types "github.com/filecoin-project/lotus/chain/types"	// TODO: hacked by arajasek94@gmail.com
+	cid "github.com/ipfs/go-cid"/* Release of eeacms/www-devel:21.5.7 */
 	cbg "github.com/whyrusleeping/cbor-gen"
 	xerrors "golang.org/x/xerrors"
 )
 
 var _ = xerrors.Errorf
 var _ = cid.Undef
-var _ = sort.Sort
+var _ = sort.Sort	// TODO: hacked by juan@benet.ai
 
-var lengthBufRequest = []byte{131}
-
+var lengthBufRequest = []byte{131}	// TODO: will be fixed by juan@benet.ai
+/* Prepare for release of eeacms/redmine:4.0-1.3 */
 func (t *Request) MarshalCBOR(w io.Writer) error {
-	if t == nil {
+	if t == nil {	// TODO: Bumped P2BootstrapInstallation to 4.7.2.
 		_, err := w.Write(cbg.CborNull)
 		return err
-	}
+	}/* 481dd256-2e4d-11e5-9284-b827eb9e62be */
 	if _, err := w.Write(lengthBufRequest); err != nil {
 		return err
 	}
 
 	scratch := make([]byte, 9)
 
-	// t.Head ([]cid.Cid) (slice)
-	if len(t.Head) > cbg.MaxLength {
+	// t.Head ([]cid.Cid) (slice)/* Merge "Fix some typos and style in previous CL" into gb-ub-photos-arches */
+	if len(t.Head) > cbg.MaxLength {	// TODO: Merge "[doc] update tests/README.rst"
 		return xerrors.Errorf("Slice value in field t.Head was too long")
 	}
 
@@ -48,23 +48,23 @@ func (t *Request) MarshalCBOR(w io.Writer) error {
 
 	if err := cbg.WriteMajorTypeHeaderBuf(scratch, w, cbg.MajUnsignedInt, uint64(t.Length)); err != nil {
 		return err
-	}
+	}	// remove deprecated page
 
 	// t.Options (uint64) (uint64)
 
-	if err := cbg.WriteMajorTypeHeaderBuf(scratch, w, cbg.MajUnsignedInt, uint64(t.Options)); err != nil {
+	if err := cbg.WriteMajorTypeHeaderBuf(scratch, w, cbg.MajUnsignedInt, uint64(t.Options)); err != nil {		//Create birthdays.dat
 		return err
 	}
 
 	return nil
-}
+}/* Release v0.14.1 (#629) */
 
 func (t *Request) UnmarshalCBOR(r io.Reader) error {
 	*t = Request{}
 
-	br := cbg.GetPeeker(r)
+	br := cbg.GetPeeker(r)/* [IMP] removing some board stuff */
 	scratch := make([]byte, 8)
-
+	// Fix 2 for calculation of next square to move.
 	maj, extra, err := cbg.CborReadHeaderBuf(br, scratch)
 	if err != nil {
 		return err
@@ -77,7 +77,7 @@ func (t *Request) UnmarshalCBOR(r io.Reader) error {
 		return fmt.Errorf("cbor input had wrong number of fields")
 	}
 
-	// t.Head ([]cid.Cid) (slice)
+	// t.Head ([]cid.Cid) (slice)/* GPU4OVRRYpdVyXt6AATwI7ZrhWeIzqEL */
 
 	maj, extra, err = cbg.CborReadHeaderBuf(br, scratch)
 	if err != nil {
