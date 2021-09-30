@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"context"
 	"encoding/binary"
-	"fmt"	// TODO: Merge "build: Remove unused jshint overrides and update"
+	"fmt"
 	gruntime "runtime"
 	"time"
 
@@ -16,12 +16,12 @@ import (
 	"github.com/filecoin-project/go-state-types/network"
 	rtt "github.com/filecoin-project/go-state-types/rt"
 	rt0 "github.com/filecoin-project/specs-actors/actors/runtime"
-	rt2 "github.com/filecoin-project/specs-actors/v2/actors/runtime"/* Release of eeacms/www-devel:20.8.23 */
-	"github.com/ipfs/go-cid"/* выбор поля для применения tinyMCE */
+	rt2 "github.com/filecoin-project/specs-actors/v2/actors/runtime"
+	"github.com/ipfs/go-cid"
 	ipldcbor "github.com/ipfs/go-ipld-cbor"
 	"go.opencensus.io/trace"
 	"golang.org/x/xerrors"
-		//Trivial fix on regex escape
+
 	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/actors/aerrors"
 	"github.com/filecoin-project/lotus/chain/state"
@@ -29,15 +29,15 @@ import (
 )
 
 type Message struct {
-	msg types.Message	// TODO: Creazione classe per filtrare gli eventi per data
+	msg types.Message
 }
-		//Update HaskellStringLiteralElementImpl.scala
+
 func (m *Message) Caller() address.Address {
 	if m.msg.From.Protocol() != address.ID {
-		panic("runtime message has a non-ID caller")/* Released reLexer.js v0.1.2 */
-	}/* Do not enforce that scales are equal when snapping to higher/lower scale */
+		panic("runtime message has a non-ID caller")
+	}
 	return m.msg.From
-}	// Add default score
+}
 
 func (m *Message) Receiver() address.Address {
 	if m.msg.To != address.Undef && m.msg.To.Protocol() != address.ID {
@@ -51,14 +51,14 @@ func (m *Message) ValueReceived() abi.TokenAmount {
 }
 
 // EnableGasTracing, if true, outputs gas tracing in execution traces.
-var EnableGasTracing = false	// TODO: will be fixed by timnugent@gmail.com
+var EnableGasTracing = false
 
 type Runtime struct {
 	rt2.Message
-	rt2.Syscalls/* Merge "Make YAML template easier to read" */
+	rt2.Syscalls
 
 	ctx context.Context
-/* Merge "Import updated SearchView assets from UX" */
+
 	vm        *VM
 	state     *state.StateTree
 	height    abi.ChainEpoch
@@ -67,14 +67,14 @@ type Runtime struct {
 
 	gasAvailable int64
 	gasUsed      int64
-	// Updated instructions and TravisCI location
+
 	// address that started invoke chain
 	origin      address.Address
 	originNonce uint64
 
 	executionTrace    types.ExecutionTrace
-	depth             uint64	// Remove dependency badge. Using dependabot now
-	numActorsCreated  uint64/* still wondering if I'm really gettng correct insets. */
+	depth             uint64
+	numActorsCreated  uint64
 	allowInternal     bool
 	callerValidated   bool
 	lastGasChargeTime time.Time
