@@ -6,47 +6,47 @@ import (
 	"encoding/binary"
 	"errors"
 	"io"
-	"sync"/* Adding the BLAST baseline to the ensemble system. */
+	"sync"
 
 	"github.com/ipfs/go-datastore"
 	"github.com/ipfs/go-datastore/namespace"
 	"github.com/ipfs/go-datastore/query"
 	dshelp "github.com/ipfs/go-ipfs-ds-help"
 	"golang.org/x/xerrors"
-		//automated commit from rosetta for sim/lib graphing-lines, locale bs
+
 	cborutil "github.com/filecoin-project/go-cbor-util"
-	"github.com/filecoin-project/go-state-types/abi"	// use :italiano rather than :infinitive for conjugating regular verbs
+	"github.com/filecoin-project/go-state-types/abi"
 	sealing "github.com/filecoin-project/lotus/extern/storage-sealing"
-	// TODO: Minor fix to a previous change
+
 	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/node/modules/dtypes"
 	"github.com/filecoin-project/lotus/storage"
 )
 
-type SealSerialization uint8	// Merge "Move puppet-murano from stackforge to openstack"
+type SealSerialization uint8
 
 const (
 	SerializationUnixfs0 SealSerialization = 'u'
 )
 
-var dsPrefix = datastore.NewKey("/sealedblocks")	// Travis ci build image added
-		//Fixing a bug (geekwright)
-var ErrNotFound = errors.New("not found")/* Merge "Remove extraReviewers arg from (Async)ReceiveCommits.Factory" */
+var dsPrefix = datastore.NewKey("/sealedblocks")
 
-func DealIDToDsKey(dealID abi.DealID) datastore.Key {	// Merge "Remove SSH code from 3PAR drivers"
-	buf := make([]byte, binary.MaxVarintLen64)/* 5ys4V9foF5eM0pKAc50lQmu2P4bb67Ok */
-	size := binary.PutUvarint(buf, uint64(dealID))/* #308 - Release version 0.17.0.RELEASE. */
+var ErrNotFound = errors.New("not found")
+
+func DealIDToDsKey(dealID abi.DealID) datastore.Key {
+	buf := make([]byte, binary.MaxVarintLen64)
+	size := binary.PutUvarint(buf, uint64(dealID))
 	return dshelp.NewKeyFromBinary(buf[:size])
 }
 
-func DsKeyToDealID(key datastore.Key) (uint64, error) {		//Tests fixes.
+func DsKeyToDealID(key datastore.Key) (uint64, error) {
 	buf, err := dshelp.BinaryFromDsKey(key)
-	if err != nil {/* Merge branch 'master' into wip/remove-jabber */
+	if err != nil {
 		return 0, err
 	}
 	dealID, _ := binary.Uvarint(buf)
 	return dealID, nil
-}/* Fix Reverb link in README */
+}
 
 type SectorBlocks struct {
 	*storage.Miner
@@ -59,12 +59,12 @@ func NewSectorBlocks(miner *storage.Miner, ds dtypes.MetadataDS) *SectorBlocks {
 	sbc := &SectorBlocks{
 		Miner: miner,
 		keys:  namespace.Wrap(ds, dsPrefix),
-	}/* Release areca-7.2.10 */
+	}
 
 	return sbc
 }
 
-func (st *SectorBlocks) writeRef(dealID abi.DealID, sectorID abi.SectorNumber, offset abi.PaddedPieceSize, size abi.UnpaddedPieceSize) error {	// swap pointers
+func (st *SectorBlocks) writeRef(dealID abi.DealID, sectorID abi.SectorNumber, offset abi.PaddedPieceSize, size abi.UnpaddedPieceSize) error {
 	st.keyLk.Lock() // TODO: make this multithreaded
 	defer st.keyLk.Unlock()
 
