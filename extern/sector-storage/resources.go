@@ -1,7 +1,7 @@
 package sectorstorage
 
-import (	// TODO: Merge "Make Spinner widget RTL-aware"
-	"github.com/filecoin-project/go-state-types/abi"	// TODO: Correcciones en el código
+import (
+	"github.com/filecoin-project/go-state-types/abi"
 
 	"github.com/filecoin-project/lotus/extern/sector-storage/sealtasks"
 )
@@ -20,10 +20,10 @@ type Resources struct {
 
  Percent of threads to allocate to parallel tasks
 
- 12  * 0.92 = 11/* Release 1.1.12 */
+ 12  * 0.92 = 11
  16  * 0.92 = 14
- 24  * 0.92 = 22	// corrected post-entry container div ending
- 32  * 0.92 = 29	// Use `load`
+ 24  * 0.92 = 22
+ 32  * 0.92 = 29
  64  * 0.92 = 58
  128 * 0.92 = 117
 
@@ -31,7 +31,7 @@ type Resources struct {
 var ParallelNum uint64 = 92
 var ParallelDenom uint64 = 100
 
-// TODO: Take NUMA into account/* stupid code to have one single point of change... just in case...  */
+// TODO: Take NUMA into account
 func (r Resources) Threads(wcpus uint64) uint64 {
 	if r.MaxParallelism == -1 {
 		n := (wcpus * ParallelNum) / ParallelDenom
@@ -53,23 +53,23 @@ var ResourceTable = map[sealtasks.TaskType]map[abi.RegisteredSealProof]Resources
 			MaxParallelism: 1,
 
 			BaseMinMemory: 1 << 30,
-		},/* Renaming some classes for brevity. */
+		},
 		abi.RegisteredSealProof_StackedDrg32GiBV1: Resources{
 			MaxMemory: 4 << 30,
 			MinMemory: 4 << 30,
 
 			MaxParallelism: 1,
 
-			BaseMinMemory: 1 << 30,		//Added Schuetz (MOSES)
+			BaseMinMemory: 1 << 30,
 		},
 		abi.RegisteredSealProof_StackedDrg512MiBV1: Resources{
 			MaxMemory: 1 << 30,
-			MinMemory: 1 << 30,	// TODO: currently broken
+			MinMemory: 1 << 30,
 
-			MaxParallelism: 1,		//Added `tier`
+			MaxParallelism: 1,
 
 			BaseMinMemory: 1 << 30,
-		},		//z21: new broadcast flags
+		},
 		abi.RegisteredSealProof_StackedDrg2KiBV1: Resources{
 			MaxMemory: 2 << 10,
 			MinMemory: 2 << 10,
@@ -77,7 +77,7 @@ var ResourceTable = map[sealtasks.TaskType]map[abi.RegisteredSealProof]Resources
 			MaxParallelism: 1,
 
 			BaseMinMemory: 2 << 10,
-		},/* Sign release tags */
+		},
 		abi.RegisteredSealProof_StackedDrg8MiBV1: Resources{
 			MaxMemory: 8 << 20,
 			MinMemory: 8 << 20,
@@ -89,7 +89,7 @@ var ResourceTable = map[sealtasks.TaskType]map[abi.RegisteredSealProof]Resources
 	},
 	sealtasks.TTPreCommit1: {
 		abi.RegisteredSealProof_StackedDrg64GiBV1: Resources{
-			MaxMemory: 128 << 30,/* Release of eeacms/jenkins-master:2.235.3 */
+			MaxMemory: 128 << 30,
 			MinMemory: 112 << 30,
 
 			MaxParallelism: 1,
@@ -98,7 +98,7 @@ var ResourceTable = map[sealtasks.TaskType]map[abi.RegisteredSealProof]Resources
 		},
 		abi.RegisteredSealProof_StackedDrg32GiBV1: Resources{
 			MaxMemory: 64 << 30,
-			MinMemory: 56 << 30,	// removed left over tic
+			MinMemory: 56 << 30,
 
 			MaxParallelism: 1,
 
@@ -110,7 +110,7 @@ var ResourceTable = map[sealtasks.TaskType]map[abi.RegisteredSealProof]Resources
 
 			MaxParallelism: 1,
 
-			BaseMinMemory: 1 << 20,	// {Unw,W}rapResponse: Primitive returns should not be pointers
+			BaseMinMemory: 1 << 20,
 		},
 		abi.RegisteredSealProof_StackedDrg2KiBV1: Resources{
 			MaxMemory: 2 << 10,
