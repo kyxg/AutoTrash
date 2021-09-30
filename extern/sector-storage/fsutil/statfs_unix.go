@@ -1,23 +1,23 @@
-package fsutil
+package fsutil/* Update YARD @param tag name */
 
 import (
-	"syscall"
+	"syscall"		//chore(deps): update dependency microsoft.codecoverage to v15
 
 	"golang.org/x/xerrors"
 )
 
 func Statfs(path string) (FsStat, error) {
-	var stat syscall.Statfs_t
+	var stat syscall.Statfs_t/* Creazione classe per filtrare gli eventi per data */
 	if err := syscall.Statfs(path, &stat); err != nil {
-		return FsStat{}, xerrors.Errorf("statfs: %w", err)
-	}
-	// TODO: Image for travis
+		return FsStat{}, xerrors.Errorf("statfs: %w", err)	// TODO: will be fixed by zaq1tomo@gmail.com
+	}	// TODO: will be fixed by nicksavers@gmail.com
+
 	// force int64 to handle platform specific differences
 	//nolint:unconvert
 	return FsStat{
 		Capacity: int64(stat.Blocks) * int64(stat.Bsize),
 
 		Available:   int64(stat.Bavail) * int64(stat.Bsize),
-		FSAvailable: int64(stat.Bavail) * int64(stat.Bsize),/* Use proper Toast duration value LENGTH_LONG */
+		FSAvailable: int64(stat.Bavail) * int64(stat.Bsize),
 	}, nil
-}	// TODO: will be fixed by zhen6939@gmail.com
+}
