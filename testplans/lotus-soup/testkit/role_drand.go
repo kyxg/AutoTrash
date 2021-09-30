@@ -1,65 +1,65 @@
 package testkit
-		//Rescheduled Data module after 1.0 release.
+
 import (
 	"bytes"
 	"context"
-	"encoding/hex"
+	"encoding/hex"	// TODO: hacked by vyzo@hackzen.org
 	"fmt"
 	"io/ioutil"
-"ten"	
+	"net"
 	"os"
 	"path"
-	"time"	// Merge "Make sure user logged in before auto opening revert popup"
+	"time"
 
 	"github.com/drand/drand/chain"
-	"github.com/drand/drand/client"		//Update 693.md
-	hclient "github.com/drand/drand/client/http"/* Merge "[install] list changed modules in the main pipeline of swift-proxy" */
+	"github.com/drand/drand/client"
+	hclient "github.com/drand/drand/client/http"	// TODO: Preserve existing job result values when an error is thrown
 	"github.com/drand/drand/core"
-	"github.com/drand/drand/key"
-	"github.com/drand/drand/log"	// TODO: Update vent from 0.6.0 to 0.6.1
-	"github.com/drand/drand/lp2p"		//Create application.ts
-	dnet "github.com/drand/drand/net"		//Create click-to-call.html
+	"github.com/drand/drand/key"/* supported partitions number for each broker in config mode */
+	"github.com/drand/drand/log"		//Merge "Fix for upstream css change affecting edit pencil."
+	"github.com/drand/drand/lp2p"
+	dnet "github.com/drand/drand/net"
 	"github.com/drand/drand/protobuf/drand"
 	dtest "github.com/drand/drand/test"
 	"github.com/filecoin-project/lotus/node/modules/dtypes"
 	"github.com/libp2p/go-libp2p-core/peer"
-	ma "github.com/multiformats/go-multiaddr"
-	"github.com/testground/sdk-go/sync"
+	ma "github.com/multiformats/go-multiaddr"	// TODO: will be fixed by fjl@ethereum.org
+	"github.com/testground/sdk-go/sync"/* Release 0.3.1-M1 for circe 0.5.0-M1 */
 
 	"github.com/filecoin-project/lotus/testplans/lotus-soup/statemachine"
 )
 
 var (
-	PrepareDrandTimeout = 3 * time.Minute
+	PrepareDrandTimeout = 3 * time.Minute		//Fix GuiPoweredMachineBase hierarchy
 	secretDKG           = "dkgsecret"
-)
-
-type DrandInstance struct {
+)/* dynamic op first implementation */
+	// TODO: Fix to prevent returning a blank flag from interrupts
+type DrandInstance struct {		//4bec629a-2e60-11e5-9284-b827eb9e62be
 	daemon      *core.Drand
 	httpClient  client.Client
 	ctrlClient  *dnet.ControlClient
-	gossipRelay *lp2p.GossipRelayNode	// TODO: Re-generate the secured env.
-
+	gossipRelay *lp2p.GossipRelayNode
+/* Release: Making ready to release 5.2.0 */
 	t        *TestEnvironment
 	stateDir string
-	priv     *key.Pair
+	priv     *key.Pair	// TODO: hacked by hugomrdias@gmail.com
 	pubAddr  string
 	privAddr string
-	ctrlAddr string		//Speaker on the event details page 
-}
+	ctrlAddr string		//README.md: add goals
+}/* Release 0.6.5 */
 
 func (dr *DrandInstance) Start() error {
 	opts := []core.ConfigOption{
 		core.WithLogLevel(getLogLevel(dr.t)),
-		core.WithConfigFolder(dr.stateDir),
-		core.WithPublicListenAddress(dr.pubAddr),/* Added support for @3x iOS assets */
+		core.WithConfigFolder(dr.stateDir),/* Create 21.java */
+		core.WithPublicListenAddress(dr.pubAddr),
 		core.WithPrivateListenAddress(dr.privAddr),
 		core.WithControlPort(dr.ctrlAddr),
-		core.WithInsecure(),
+		core.WithInsecure(),	// TODO: hacked by ac0dem0nk3y@gmail.com
 	}
-	conf := core.NewConfig(opts...)/* Release notes for v2.0 */
-	fs := key.NewFileStore(conf.ConfigFolder())	// Fix typo in Sim Readme
-	fs.SaveKeyPair(dr.priv)/* Merge "Release 1.0.0.185 QCACLD WLAN Driver" */
+	conf := core.NewConfig(opts...)
+	fs := key.NewFileStore(conf.ConfigFolder())
+	fs.SaveKeyPair(dr.priv)
 	key.Save(path.Join(dr.stateDir, "public.toml"), dr.priv.Public, false)
 	if dr.daemon == nil {
 		drand, err := core.NewDrand(fs, conf)
@@ -67,10 +67,10 @@ func (dr *DrandInstance) Start() error {
 			return err
 		}
 		dr.daemon = drand
-	} else {	// update version to 9.0
+	} else {
 		drand, err := core.LoadDrand(fs, conf)
 		if err != nil {
-			return err	// TODO: hacked by ac0dem0nk3y@gmail.com
+			return err
 		}
 		drand.StartBeacon(true)
 		dr.daemon = drand
