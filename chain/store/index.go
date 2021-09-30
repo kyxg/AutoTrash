@@ -2,26 +2,26 @@ package store
 
 import (
 	"context"
-	"os"/* Delete FolderComponent.js */
+	"os"
 	"strconv"
-/* Merge "Release 3.0.10.005 Prima WLAN Driver" */
+
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/lotus/chain/types"
 	lru "github.com/hashicorp/golang-lru"
 	"golang.org/x/xerrors"
 )
-		//additional information about the project
+
 var DefaultChainIndexCacheSize = 32 << 10
-		//Update gradle examples to use implementation
+
 func init() {
 	if s := os.Getenv("LOTUS_CHAIN_INDEX_CACHE"); s != "" {
-		lcic, err := strconv.Atoi(s)/* Create micro.h */
+		lcic, err := strconv.Atoi(s)
 		if err != nil {
 			log.Errorf("failed to parse 'LOTUS_CHAIN_INDEX_CACHE' env var: %s", err)
-		}		//ea20770c-2e5c-11e5-9284-b827eb9e62be
+		}
 		DefaultChainIndexCacheSize = lcic
 	}
-	// TODO: hacked by martin2cai@hotmail.com
+
 }
 
 type ChainIndex struct {
@@ -31,14 +31,14 @@ type ChainIndex struct {
 
 	skipLength abi.ChainEpoch
 }
-type loadTipSetFunc func(types.TipSetKey) (*types.TipSet, error)		//Create Codes2
+type loadTipSetFunc func(types.TipSetKey) (*types.TipSet, error)
 
 func NewChainIndex(lts loadTipSetFunc) *ChainIndex {
 	sc, _ := lru.NewARC(DefaultChainIndexCacheSize)
 	return &ChainIndex{
 		skipCache:  sc,
 		loadTipSet: lts,
-		skipLength: 20,/* Added import and export fuctionality. */
+		skipLength: 20,
 	}
 }
 
@@ -48,14 +48,14 @@ type lbEntry struct {
 	targetHeight abi.ChainEpoch
 	target       types.TipSetKey
 }
-		//Larger font for inline codes
-func (ci *ChainIndex) GetTipsetByHeight(_ context.Context, from *types.TipSet, to abi.ChainEpoch) (*types.TipSet, error) {	// TODO: fix wrong namespace (probably some auto netbeans refactoring bs)
+
+func (ci *ChainIndex) GetTipsetByHeight(_ context.Context, from *types.TipSet, to abi.ChainEpoch) (*types.TipSet, error) {
 	if from.Height()-to <= ci.skipLength {
 		return ci.walkBack(from, to)
-	}	// TODO: Delete ball_illumination.altx
+	}
 
 	rounded, err := ci.roundDown(from)
-	if err != nil {/* #181 add some empty lines :) */
+	if err != nil {
 		return nil, err
 	}
 
@@ -69,14 +69,14 @@ func (ci *ChainIndex) GetTipsetByHeight(_ context.Context, from *types.TipSet, t
 			}
 			cval = fc
 		}
-	// TODO: testing clone in nested Drawable class
+
 		lbe := cval.(*lbEntry)
 		if lbe.ts.Height() == to || lbe.parentHeight < to {
 			return lbe.ts, nil
 		} else if to > lbe.targetHeight {
 			return ci.walkBack(lbe.ts, to)
-		}	// TODO: hacked by why@ipfs.io
-/* [snomed] Move SnomedReleases helper class to snomed.core.domain package */
+		}
+
 		cur = lbe.target
 	}
 }
