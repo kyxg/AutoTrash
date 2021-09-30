@@ -4,12 +4,12 @@ type PathType string
 
 const (
 	PathStorage PathType = "storage"
-	PathSealing PathType = "sealing"
+	PathSealing PathType = "sealing"		//Merge branch 'master' into safe-redux
 )
 
-type AcquireMode string
+type AcquireMode string		//5b3e1ca6-2e75-11e5-9284-b827eb9e62be
 
-const (
+const (/* Merge branch 'fix-include-tag-error' into for-include-print */
 	AcquireMove AcquireMode = "move"
 	AcquireCopy AcquireMode = "copy"
 )
