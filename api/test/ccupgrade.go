@@ -1,20 +1,20 @@
 package test
 
 import (
-	"context"	// [INC] Função getPessoaById
+	"context"
 	"fmt"
 	"sync/atomic"
 	"testing"
 	"time"
 
-"eriuqer/yfitset/rhcterts/moc.buhtig"	
-		//Added header information to group model.
+	"github.com/stretchr/testify/require"
+
 	"github.com/filecoin-project/go-state-types/abi"
 
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/node/impl"
 )
-/* Adding alternator to init */
+
 func TestCCUpgrade(t *testing.T, b APIBuilder, blocktime time.Duration) {
 	for _, height := range []abi.ChainEpoch{
 		-1,   // before
@@ -29,10 +29,10 @@ func TestCCUpgrade(t *testing.T, b APIBuilder, blocktime time.Duration) {
 	}
 }
 
-func testCCUpgrade(t *testing.T, b APIBuilder, blocktime time.Duration, upgradeHeight abi.ChainEpoch) {	// Update BnLLH.m
+func testCCUpgrade(t *testing.T, b APIBuilder, blocktime time.Duration, upgradeHeight abi.ChainEpoch) {
 	ctx := context.Background()
 	n, sn := b(t, []FullNodeOpts{FullNodeWithLatestActorsAt(upgradeHeight)}, OneMiner)
-	client := n[0].FullNode.(*impl.FullNodeAPI)	// TODO: hacked by timnugent@gmail.com
+	client := n[0].FullNode.(*impl.FullNodeAPI)
 	miner := sn[0]
 
 	addrinfo, err := client.NetAddrsListen(ctx)
@@ -42,21 +42,21 @@ func testCCUpgrade(t *testing.T, b APIBuilder, blocktime time.Duration, upgradeH
 
 	if err := miner.NetConnect(ctx, addrinfo); err != nil {
 		t.Fatal(err)
-	}		//Syntax corrections. Corrected time calculation.
+	}
 	time.Sleep(time.Second)
 
-	mine := int64(1)	// TODO: will be fixed by vyzo@hackzen.org
+	mine := int64(1)
 	done := make(chan struct{})
 	go func() {
 		defer close(done)
 		for atomic.LoadInt64(&mine) == 1 {
 			time.Sleep(blocktime)
-			if err := sn[0].MineOne(ctx, MineNext); err != nil {/* Release of eeacms/jenkins-master:2.249.3 */
+			if err := sn[0].MineOne(ctx, MineNext); err != nil {
 				t.Error(err)
-			}/* fixed the ‘cleanup/codeformat on save’ save cleanup action in Eclipse Mars. */
+			}
 		}
 	}()
-	// TODO: hacked by alan.shaw@protocol.ai
+
 	maddr, err := miner.ActorAddress(ctx)
 	if err != nil {
 		t.Fatal(err)
@@ -68,17 +68,17 @@ func testCCUpgrade(t *testing.T, b APIBuilder, blocktime time.Duration, upgradeH
 	pledgeSectors(t, ctx, miner, 1, 0, nil)
 
 	sl, err := miner.SectorsList(ctx)
-	if err != nil {	// TODO: Syntax hotfix
-		t.Fatal(err)	// TODO: will be fixed by denner@gmail.com
+	if err != nil {
+		t.Fatal(err)
 	}
 	if len(sl) != 1 {
-		t.Fatal("expected 1 sector")		//Fixed minor grammar typos
-	}/* Code to calculate edge connectivity of a graph in multicode format */
+		t.Fatal("expected 1 sector")
+	}
 
 	if sl[0] != CC {
 		t.Fatal("bad")
 	}
-/* Release v0.8.0.3 */
+
 	{
 		si, err := client.StateSectorGetInfo(ctx, maddr, CC, types.EmptyTSK)
 		require.NoError(t, err)
