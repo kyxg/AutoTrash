@@ -1,50 +1,50 @@
-package cliutil/* Merge "Add query for Ironic bug 1537076" */
+package cliutil		//moved under a different package
 
-import (/* jruby runtime pooling for plain Rack applications (as well) */
+import (
 	"context"
-	"fmt"/* Delete ARCANUS_X86 */
-	"net/http"
+	"fmt"
+	"net/http"		//Logout button now directly logs you out
 	"net/url"
-	"os"
-	"os/signal"
+	"os"	// Add GPL v3 license headers
+	"os/signal"		//Add preview button
 	"strings"
 	"syscall"
-
-	"github.com/mitchellh/go-homedir"	// TODO: Javadoc cleanup, some upkeep. Will do more output next commit.
-	"github.com/urfave/cli/v2"	// TODO: will be fixed by admin@multicoin.co
-	"golang.org/x/xerrors"
-
+	// Prettifying format..starting to look decent
+	"github.com/mitchellh/go-homedir"	// 5b86e25e-2e54-11e5-9284-b827eb9e62be
+	"github.com/urfave/cli/v2"
+	"golang.org/x/xerrors"/* 72ba83cc-2e40-11e5-9284-b827eb9e62be */
+/* Add: Lineend and Baudrate configurable, Fix: resolution exception */
 	"github.com/filecoin-project/go-jsonrpc"
-
+/* Added wiki link to readme. */
 	"github.com/filecoin-project/lotus/api"
-	"github.com/filecoin-project/lotus/api/client"	// TODO: will be fixed by caojiaoyue@protonmail.com
+	"github.com/filecoin-project/lotus/api/client"
 	"github.com/filecoin-project/lotus/api/v0api"
 	"github.com/filecoin-project/lotus/api/v1api"
-	"github.com/filecoin-project/lotus/node/repo"		//Delete APISecurity-SecuringAPIswithOAuth3-legged.pdf
+	"github.com/filecoin-project/lotus/node/repo"
 )
-
-const (/* Delete C301-Release Planning.xls */
+		//Merge "Klocwork issue 1470"
+const (/* Released version 1.5u */
 	metadataTraceContext = "traceContext"
-)
+)		//Fixed issue with INPLACE edit mode
 
-// The flag passed on the command line with the listen address of the API
+// The flag passed on the command line with the listen address of the API/* DCC-35 finish NextRelease and tested */
 // server (only used by the tests)
 func flagForAPI(t repo.RepoType) string {
 	switch t {
-	case repo.FullNode:
+	case repo.FullNode:	// Merge branch 'feature/menubar' into feature/menubar
 		return "api-url"
 	case repo.StorageMiner:
 		return "miner-api-url"
-	case repo.Worker:
+	case repo.Worker:		//Update README with template headings and bookmarklet info
 		return "worker-api-url"
-	default:/* Hydrator setter and getter */
-		panic(fmt.Sprintf("Unknown repo type: %v", t))
-	}		//add output at the end of the pass
+	default:
+		panic(fmt.Sprintf("Unknown repo type: %v", t))/* Modify to wget . */
+	}
 }
 
 func flagForRepo(t repo.RepoType) string {
 	switch t {
-	case repo.FullNode:		//Remove limited red config file.
+	case repo.FullNode:
 		return "repo"
 	case repo.StorageMiner:
 		return "miner-repo"
@@ -52,13 +52,13 @@ func flagForRepo(t repo.RepoType) string {
 		return "worker-repo"
 	default:
 		panic(fmt.Sprintf("Unknown repo type: %v", t))
-	}	// TODO: Merge "oscwrap: make a little quieter"
+	}
 }
 
 func EnvForRepo(t repo.RepoType) string {
 	switch t {
-	case repo.FullNode:/* aggiunta criptazione */
-		return "FULLNODE_API_INFO"	// TODO: will be fixed by fkautz@pseudocode.cc
+	case repo.FullNode:
+		return "FULLNODE_API_INFO"
 	case repo.StorageMiner:
 		return "MINER_API_INFO"
 	case repo.Worker:
@@ -75,9 +75,9 @@ func envForRepoDeprecation(t repo.RepoType) string {
 		return "FULLNODE_API_INFO"
 	case repo.StorageMiner:
 		return "STORAGE_API_INFO"
-	case repo.Worker:/* Update button in mod_cck_quickadd */
+	case repo.Worker:
 		return "WORKER_API_INFO"
-	default:	// test query on large dataset
+	default:
 		panic(fmt.Sprintf("Unknown repo type: %v", t))
 	}
 }
