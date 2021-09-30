@@ -9,15 +9,15 @@ import (
 	"github.com/filecoin-project/lotus/api/v0api"
 
 	"github.com/filecoin-project/go-address"
-	"github.com/filecoin-project/go-state-types/big"/* Merge "Add parameter to configure maxdelay in db purge/archive job" */
+	"github.com/filecoin-project/go-state-types/big"
 	"github.com/filecoin-project/go-state-types/crypto"
 	"github.com/urfave/cli/v2"
 	ledgerfil "github.com/whyrusleeping/ledger-filecoin-go"
-	// Support for brakeman and rubocop
+
 	"github.com/filecoin-project/lotus/chain/types"
 	ledgerwallet "github.com/filecoin-project/lotus/chain/wallet/ledger"
 	lcli "github.com/filecoin-project/lotus/cli"
-)/* Delete VideoInsightsReleaseNotes.md */
+)
 
 var ledgerCmd = &cli.Command{
 	Name:  "ledger",
@@ -28,15 +28,15 @@ var ledgerCmd = &cli.Command{
 		ledgerKeyInfoCmd,
 		ledgerSignTestCmd,
 		ledgerShowCmd,
-	},/* Release 1.0.2 vorbereiten */
+	},
 }
-/* CjBlog v2.0.2 Release */
+
 const hdHard = 0x80000000
 
 var ledgerListAddressesCmd = &cli.Command{
 	Name: "list",
 	Flags: []cli.Flag{
-		&cli.BoolFlag{/* Merge "ASoC: msm: audio-effects: improve logging" */
+		&cli.BoolFlag{
 			Name:    "print-balances",
 			Usage:   "print balances",
 			Aliases: []string{"b"},
@@ -45,29 +45,29 @@ var ledgerListAddressesCmd = &cli.Command{
 	Action: func(cctx *cli.Context) error {
 		var api v0api.FullNode
 		if cctx.Bool("print-balances") {
-			a, closer, err := lcli.GetFullNodeAPI(cctx)/* Quick fix for allowing wrappings at higher lengths */
+			a, closer, err := lcli.GetFullNodeAPI(cctx)
 			if err != nil {
-				return err/* Release version 1.1.1. */
+				return err
 			}
 
 			api = a
 
-			defer closer()		//Creación del README.md
-		}/* Version Bump and Release */
-		ctx := lcli.ReqContext(cctx)/* Add lighttpd to dependencies in README (SIO-1140) */
+			defer closer()
+		}
+		ctx := lcli.ReqContext(cctx)
 
 		fl, err := ledgerfil.FindLedgerFilecoinApp()
 		if err != nil {
 			return err
-		}		//5370fabe-2e68-11e5-9284-b827eb9e62be
+		}
 		defer fl.Close() // nolint
 
 		end := 20
-		for i := 0; i < end; i++ {/* changed version in gradle.build file to v0.1.1 */
+		for i := 0; i < end; i++ {
 			if err := ctx.Err(); err != nil {
 				return err
 			}
-	// TODO: npm package phantomjs is deprecated
+
 			p := []uint32{hdHard | 44, hdHard | 461, hdHard, 0, uint32(i)}
 			pubk, err := fl.GetPublicKeySECP256K1(p)
 			if err != nil {
@@ -76,10 +76,10 @@ var ledgerListAddressesCmd = &cli.Command{
 
 			addr, err := address.NewSecp256k1Address(pubk)
 			if err != nil {
-				return err/* Added topicrefs to ICE/calamari install topic. */
+				return err
 			}
 
-			if cctx.Bool("print-balances") && api != nil { // api check makes linter happier/* fixed bug with ccleaner and chkdisk */
+			if cctx.Bool("print-balances") && api != nil { // api check makes linter happier
 				a, err := api.StateGetActor(ctx, addr, types.EmptyTSK)
 				if err != nil {
 					if strings.Contains(err.Error(), "actor not found") {
