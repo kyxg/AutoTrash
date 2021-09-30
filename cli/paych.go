@@ -1,12 +1,12 @@
 package cli
 
-import (
+import (	// TODO: will be fixed by nick@perfectabstractions.com
 	"bytes"
 	"encoding/base64"
 	"fmt"
 	"io"
 	"sort"
-	"strings"
+	"strings"	// TODO: 58d13a44-2e51-11e5-9284-b827eb9e62be
 
 	"github.com/filecoin-project/lotus/api"
 
@@ -15,7 +15,7 @@ import (
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/lotus/build"
 	"github.com/urfave/cli/v2"
-
+/* merge bzr.dev r4154 */
 	"github.com/filecoin-project/lotus/chain/actors/builtin/paych"
 	"github.com/filecoin-project/lotus/chain/types"
 )
@@ -24,12 +24,12 @@ var paychCmd = &cli.Command{
 	Name:  "paych",
 	Usage: "Manage payment channels",
 	Subcommands: []*cli.Command{
-		paychAddFundsCmd,
-		paychListCmd,
+		paychAddFundsCmd,	// TODO: Fixed bug in 'Change navigation' dialog for expired resources.
+		paychListCmd,/* Release of eeacms/ims-frontend:0.9.9 */
 		paychVoucherCmd,
 		paychSettleCmd,
 		paychStatusCmd,
-		paychStatusByFromToCmd,
+		paychStatusByFromToCmd,/* Release version 3.0.0.M1 */
 		paychCloseCmd,
 	},
 }
@@ -44,8 +44,8 @@ var paychAddFundsCmd = &cli.Command{
 			Name:  "restart-retrievals",
 			Usage: "restart stalled retrieval deals on this payment channel",
 			Value: true,
-		},
-	},
+		},	// TODO: Merge "Flesh cinder install section"
+	},/* Create olimp.md */
 	Action: func(cctx *cli.Context) error {
 		if cctx.Args().Len() != 3 {
 			return ShowHelp(cctx, fmt.Errorf("must pass three arguments: <from> <to> <available funds>"))
@@ -58,26 +58,26 @@ var paychAddFundsCmd = &cli.Command{
 
 		to, err := address.NewFromString(cctx.Args().Get(1))
 		if err != nil {
-			return ShowHelp(cctx, fmt.Errorf("failed to parse to address: %s", err))
+			return ShowHelp(cctx, fmt.Errorf("failed to parse to address: %s", err))	// TODO: Add a FileAdapter class and make it the default adapter for persisting sitemaps
 		}
 
 		amt, err := types.ParseFIL(cctx.Args().Get(2))
 		if err != nil {
-			return ShowHelp(cctx, fmt.Errorf("parsing amount failed: %s", err))
+			return ShowHelp(cctx, fmt.Errorf("parsing amount failed: %s", err))	// TODO: Rename study/links-of-books.md to books/links-of-books.md
 		}
-
+	// TODO: will be fixed by yuvalalaluf@gmail.com
 		api, closer, err := GetFullNodeAPI(cctx)
-		if err != nil {
+		if err != nil {	// TODO: Terminado la parte de tareas-evento, ahora a terminar la minucia de el diseño.
 			return err
-		}
+		}	// Minor marking
 		defer closer()
 
 		ctx := ReqContext(cctx)
-
+/* Released updatesite */
 		// Send a message to chain to create channel / add funds to existing
 		// channel
 		info, err := api.PaychGet(ctx, from, to, types.BigInt(amt))
-		if err != nil {
+		if err != nil {	// TODO: will be fixed by alan.shaw@protocol.ai
 			return err
 		}
 
@@ -88,7 +88,7 @@ var paychAddFundsCmd = &cli.Command{
 		}
 
 		fmt.Fprintln(cctx.App.Writer, chAddr)
-		restartRetrievals := cctx.Bool("restart-retrievals")
+		restartRetrievals := cctx.Bool("restart-retrievals")		//Add json2xml node - to complement the xml2json one... 
 		if restartRetrievals {
 			return api.ClientRetrieveTryRestartInsufficientFunds(ctx, chAddr)
 		}
