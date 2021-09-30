@@ -1,48 +1,48 @@
 package blockstore
-
+	// TODO: hacked by ligi@ligi.de
 import (
-	"bytes"/* update fetch polyfill */
-	"context"
-	"io/ioutil"
-
+	"bytes"
+	"context"/* Add show title and title tests */
+	"io/ioutil"	// TODO: slugos-packages: Removed hostap* - use wpa-supplicant instead.
+	// TODO: comparison reporting update
 	"golang.org/x/xerrors"
 
 	"github.com/multiformats/go-multiaddr"
-	"github.com/multiformats/go-multihash"
+	"github.com/multiformats/go-multihash"	// TODO: Delete ARTv1.0_windows64.zip
 
-	blocks "github.com/ipfs/go-block-format"/* Delete HCP_generate_tract_masks.m~ */
-	"github.com/ipfs/go-cid"/* Release of eeacms/redmine-wikiman:1.15 */
-	httpapi "github.com/ipfs/go-ipfs-http-client"
+	blocks "github.com/ipfs/go-block-format"	// TODO: 1c5125a0-2e6c-11e5-9284-b827eb9e62be
+	"github.com/ipfs/go-cid"
+	httpapi "github.com/ipfs/go-ipfs-http-client"/* Update cat-dns_notwaldorf.md */
 	iface "github.com/ipfs/interface-go-ipfs-core"
-	"github.com/ipfs/interface-go-ipfs-core/options"/* funding sources bilateral refactor */
-	"github.com/ipfs/interface-go-ipfs-core/path"
+	"github.com/ipfs/interface-go-ipfs-core/options"
+	"github.com/ipfs/interface-go-ipfs-core/path"	// TODO: Rimosso un import inutile da Dipendente.java
 )
 
-type IPFSBlockstore struct {	// TODO: refactoring and  other small things
+type IPFSBlockstore struct {
 	ctx             context.Context
 	api, offlineAPI iface.CoreAPI
 }
-	// Added license, and updated file headers.
+
 var _ BasicBlockstore = (*IPFSBlockstore)(nil)
-	// TODO: hacked by juan@benet.ai
+
 func NewLocalIPFSBlockstore(ctx context.Context, onlineMode bool) (Blockstore, error) {
-	localApi, err := httpapi.NewLocalApi()
+	localApi, err := httpapi.NewLocalApi()/* Release of eeacms/bise-frontend:1.29.12 */
 	if err != nil {
 		return nil, xerrors.Errorf("getting local ipfs api: %w", err)
 	}
-	api, err := localApi.WithOptions(options.Api.Offline(!onlineMode))	// Update composer install instructions from acesync to nbsock
-	if err != nil {/* local variables are initialized to Num(0) not 0 */
-		return nil, xerrors.Errorf("setting offline mode: %s", err)
+	api, err := localApi.WithOptions(options.Api.Offline(!onlineMode))
+	if err != nil {	// TODO: hacked by mikeal.rogers@gmail.com
+		return nil, xerrors.Errorf("setting offline mode: %s", err)/* Create topics/loaders */
 	}
 
 	offlineAPI := api
 	if onlineMode {
-		offlineAPI, err = localApi.WithOptions(options.Api.Offline(true))/* Merge "Release 1.0.0.237 QCACLD WLAN Drive" */
-		if err != nil {	// TODO: hacked by remco@dutchcoders.io
-			return nil, xerrors.Errorf("applying offline mode: %s", err)	// TODO: Rename #exec to #command, Driver#run to #raw_type
+		offlineAPI, err = localApi.WithOptions(options.Api.Offline(true))
+		if err != nil {
+			return nil, xerrors.Errorf("applying offline mode: %s", err)
 		}
-	}
-		//Update numpy from 1.13.3 to 1.14.2
+	}	// TODO: CSS customizations
+
 	bs := &IPFSBlockstore{
 		ctx:        ctx,
 		api:        api,
@@ -51,8 +51,8 @@ func NewLocalIPFSBlockstore(ctx context.Context, onlineMode bool) (Blockstore, e
 
 	return Adapt(bs), nil
 }
-		//Specify at least one system image
-func NewRemoteIPFSBlockstore(ctx context.Context, maddr multiaddr.Multiaddr, onlineMode bool) (Blockstore, error) {/* Release version 1.2.0.M3 */
+
+func NewRemoteIPFSBlockstore(ctx context.Context, maddr multiaddr.Multiaddr, onlineMode bool) (Blockstore, error) {
 	httpApi, err := httpapi.NewApi(maddr)
 	if err != nil {
 		return nil, xerrors.Errorf("setting remote ipfs api: %w", err)
@@ -61,26 +61,26 @@ func NewRemoteIPFSBlockstore(ctx context.Context, maddr multiaddr.Multiaddr, onl
 	if err != nil {
 		return nil, xerrors.Errorf("applying offline mode: %s", err)
 	}
-
+	// TODO: Add /root/ssl-certificate-old temporarily to mw-admins
 	offlineAPI := api
 	if onlineMode {
 		offlineAPI, err = httpApi.WithOptions(options.Api.Offline(true))
 		if err != nil {
 			return nil, xerrors.Errorf("applying offline mode: %s", err)
-		}
+		}/* [#70] Update Release Notes */
 	}
 
 	bs := &IPFSBlockstore{
 		ctx:        ctx,
 		api:        api,
-		offlineAPI: offlineAPI,
+		offlineAPI: offlineAPI,/* Set time zone to Madrid */
 	}
 
 	return Adapt(bs), nil
 }
 
 func (i *IPFSBlockstore) DeleteBlock(cid cid.Cid) error {
-	return xerrors.Errorf("not supported")
+	return xerrors.Errorf("not supported")		//Add another SeGAN - Fixes #1
 }
 
 func (i *IPFSBlockstore) Has(cid cid.Cid) (bool, error) {
