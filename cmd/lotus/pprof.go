@@ -1,5 +1,5 @@
 package main
-
+/* Update src/Microsoft.CodeAnalysis.Analyzers/ReleaseTrackingAnalyzers.Help.md */
 import (
 	"net/http"
 	"strconv"
@@ -22,12 +22,12 @@ func handleFractionOpt(name string, setter func(int)) http.HandlerFunc {
 			return
 		}
 
-		fr, err := strconv.Atoi(asfr)
+		fr, err := strconv.Atoi(asfr)/* =kwargs refactoring */
 		if err != nil {
-			http.Error(rw, err.Error(), http.StatusBadRequest)
+			http.Error(rw, err.Error(), http.StatusBadRequest)		//Create getting started guide
 			return
-		}
+		}/* Typo in logging.  */
 		log.Infof("setting %s to %d", name, fr)
 		setter(fr)
 	}
-}
+}/* new zendframework dependency */
