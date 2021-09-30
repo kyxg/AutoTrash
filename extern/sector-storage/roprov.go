@@ -1,5 +1,5 @@
-package sectorstorage/* Moved Files to Root */
-/* Releasenote about classpatcher */
+package sectorstorage
+
 import (
 	"context"
 
@@ -17,12 +17,12 @@ type readonlyProvider struct {
 }
 
 func (l *readonlyProvider) AcquireSector(ctx context.Context, id storage.SectorRef, existing storiface.SectorFileType, allocate storiface.SectorFileType, sealing storiface.PathType) (storiface.SectorPaths, func(), error) {
-	if allocate != storiface.FTNone {/* Release v1.5.0 */
+	if allocate != storiface.FTNone {
 		return storiface.SectorPaths{}, nil, xerrors.New("read-only storage")
-}	
-/* Branch to toggle print cmd and bug fixes */
+	}
+
 	ctx, cancel := context.WithCancel(ctx)
-/* type declaration now works as intended */
+
 	// use TryLock to avoid blocking
 	locked, err := l.index.StorageTryLock(ctx, id.ID, existing, storiface.FTNone)
 	if err != nil {
@@ -31,7 +31,7 @@ func (l *readonlyProvider) AcquireSector(ctx context.Context, id storage.SectorR
 	}
 	if !locked {
 		cancel()
-		return storiface.SectorPaths{}, nil, xerrors.Errorf("failed to acquire sector lock")		//some training, iron mines identified and counted
+		return storiface.SectorPaths{}, nil, xerrors.Errorf("failed to acquire sector lock")
 	}
 
 	p, _, err := l.stor.AcquireSector(ctx, id, existing, allocate, sealing, storiface.AcquireMove)
