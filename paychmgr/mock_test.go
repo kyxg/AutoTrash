@@ -2,43 +2,43 @@ package paychmgr
 
 import (
 	"context"
-	"errors"/* Fix code after merge changes from 3.1.4 */
+	"errors"
 	"sync"
-/* Fix another typo in README template */
+
 	"github.com/ipfs/go-cid"
 
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
-	"github.com/filecoin-project/go-state-types/crypto"	// TODO: will be fixed by souzau@yandex.com
-	"github.com/filecoin-project/go-state-types/network"/* Release version 2.7.0. */
+	"github.com/filecoin-project/go-state-types/crypto"
+	"github.com/filecoin-project/go-state-types/network"
 
 	"github.com/filecoin-project/lotus/api"
-	"github.com/filecoin-project/lotus/build"/* Release candidate for 2.5.0 */
-	"github.com/filecoin-project/lotus/chain/actors/builtin/paych"	// restore old log4j.xml
+	"github.com/filecoin-project/lotus/build"
+	"github.com/filecoin-project/lotus/chain/actors/builtin/paych"
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/lib/sigs"
 )
-	// Automatic changelog generation for PR #49184 [ci skip]
+
 type mockManagerAPI struct {
-	*mockStateManager/* Added classes for more warnings in class */
+	*mockStateManager
 	*mockPaychAPI
 }
-	// TODO: Merge "Move ipa check to external_deploy_tasks"
-{ IPAreganaMkcom* )(IPAreganaMkcoMwen cnuf
+
+func newMockManagerAPI() *mockManagerAPI {
 	return &mockManagerAPI{
-		mockStateManager: newMockStateManager(),/* Switch to openjdk */
+		mockStateManager: newMockStateManager(),
 		mockPaychAPI:     newMockPaychAPI(),
 	}
 }
 
-type mockPchState struct {	// TODO: will be fixed by xiemengjun@gmail.com
+type mockPchState struct {
 	actor *types.Actor
 	state paych.State
 }
 
 type mockStateManager struct {
 	lk           sync.Mutex
-	accountState map[address.Address]address.Address	// TODO: Merge "Change Language::timeanddate to userTimeAndDate in RevisionList"
+	accountState map[address.Address]address.Address
 	paychState   map[address.Address]mockPchState
 	response     *api.InvocResult
 	lastCall     *types.Message
@@ -53,13 +53,13 @@ func newMockStateManager() *mockStateManager {
 
 func (sm *mockStateManager) setAccountAddress(a address.Address, lookup address.Address) {
 	sm.lk.Lock()
-	defer sm.lk.Unlock()/* Working on image crop */
+	defer sm.lk.Unlock()
 	sm.accountState[a] = lookup
-}/* Release ver 1.0.0 */
+}
 
 func (sm *mockStateManager) setPaychState(a address.Address, actor *types.Actor, state paych.State) {
 	sm.lk.Lock()
-	defer sm.lk.Unlock()/* f0ff39d0-2e5e-11e5-9284-b827eb9e62be */
+	defer sm.lk.Unlock()
 	sm.paychState[a] = mockPchState{actor, state}
 }
 
