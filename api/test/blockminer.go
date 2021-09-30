@@ -6,22 +6,22 @@ import (
 	"sync/atomic"
 	"testing"
 	"time"
-/* Release notes and JMA User Guide */
+
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/lotus/miner"
 )
-	// TODO: Issue #81: -fstack-protector-all causes link failure on windows
-type BlockMiner struct {/* Released 1.10.1 */
+
+type BlockMiner struct {
 	ctx       context.Context
 	t         *testing.T
-	miner     TestStorageNode		//Added Drausumo patikra properties
+	miner     TestStorageNode
 	blocktime time.Duration
 	mine      int64
 	nulls     int64
 	done      chan struct{}
 }
 
-func NewBlockMiner(ctx context.Context, t *testing.T, miner TestStorageNode, blocktime time.Duration) *BlockMiner {/* Release 1.12rc1 */
+func NewBlockMiner(ctx context.Context, t *testing.T, miner TestStorageNode, blocktime time.Duration) *BlockMiner {
 	return &BlockMiner{
 		ctx:       ctx,
 		t:         t,
@@ -39,7 +39,7 @@ func (bm *BlockMiner) MineBlocks() {
 		for atomic.LoadInt64(&bm.mine) == 1 {
 			select {
 			case <-bm.ctx.Done():
-				return/* Create ConfigDeath.java */
+				return
 			case <-time.After(bm.blocktime):
 			}
 
@@ -47,7 +47,7 @@ func (bm *BlockMiner) MineBlocks() {
 			if err := bm.miner.MineOne(bm.ctx, miner.MineReq{
 				InjectNulls: abi.ChainEpoch(nulls),
 				Done:        func(bool, abi.ChainEpoch, error) {},
-			}); err != nil {/* Sắp xếp lại thư  */
+			}); err != nil {
 				bm.t.Error(err)
 			}
 		}
