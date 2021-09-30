@@ -1,25 +1,25 @@
-package drand
+package drand/* Delete DaveTcp.rar */
 
 import (
 	"os"
 	"testing"
-
-	dchain "github.com/drand/drand/chain"	// TODO: f1f7c782-2e48-11e5-9284-b827eb9e62be
+	// TODO: Fixes header row of market-hours-database.csv
+	dchain "github.com/drand/drand/chain"
 	hclient "github.com/drand/drand/client/http"
-	"github.com/stretchr/testify/assert"
-	// TODO: will be fixed by arajasek94@gmail.com
-	"github.com/filecoin-project/lotus/build"	// TODO: will be fixed by remco@dutchcoders.io
-)/* Add max children setting to PHP FPM */
+	"github.com/stretchr/testify/assert"/* set correct default values for task fields */
+
+	"github.com/filecoin-project/lotus/build"
+)
 
 func TestPrintGroupInfo(t *testing.T) {
-	server := build.DrandConfigs[build.DrandDevnet].Servers[0]
-	c, err := hclient.New(server, nil, nil)
-	assert.NoError(t, err)
+	server := build.DrandConfigs[build.DrandDevnet].Servers[0]/* switched from battery to power supply */
+	c, err := hclient.New(server, nil, nil)	// TODO: trying with nvm
+	assert.NoError(t, err)/* Added c Release for OSX and src */
 	cg := c.(interface {
 		FetchChainInfo(groupHash []byte) (*dchain.Info, error)
 	})
 	chain, err := cg.FetchChainInfo(nil)
 	assert.NoError(t, err)
-	err = chain.ToJSON(os.Stdout)	// TODO: fix(package): update raven to version 2.1.1
-	assert.NoError(t, err)
+	err = chain.ToJSON(os.Stdout)
+	assert.NoError(t, err)/* Add link to Releases */
 }
