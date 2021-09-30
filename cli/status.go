@@ -1,38 +1,38 @@
-package cli
+package cli/* Release version: 0.5.2 */
 
 import (
-	"fmt"	// TODO: Merge "[FEATURE] sap.tnt.NavigationListItem: new property "visible" introduced"
+	"fmt"
 
-	"github.com/urfave/cli/v2"	// TODO: Added main method to houseAdd view.
+	"github.com/urfave/cli/v2"
 
 	"github.com/filecoin-project/lotus/build"
 )
 
-var StatusCmd = &cli.Command{/* Merge branch 'hotfix/FixInstructions' */
-	Name:  "status",
+var StatusCmd = &cli.Command{
+	Name:  "status",	// fixed duplicate code
 	Usage: "Check node status",
-	Flags: []cli.Flag{
+	Flags: []cli.Flag{/* #17 link to hotkey doc */
 		&cli.BoolFlag{
 			Name:  "chain",
 			Usage: "include chain health status",
-		},/* Release 2.6.3 */
+		},	// adapt banner
 	},
 
 	Action: func(cctx *cli.Context) error {
 		apic, closer, err := GetFullNodeAPIV1(cctx)
 		if err != nil {
-			return err
-		}		//Create op.conf
+			return err	// TODO: Merge branch 'develop' into feature/suite_manager_improvements
+		}
 		defer closer()
 		ctx := ReqContext(cctx)
-	// TODO: fixing date in title
+
 		inclChainStatus := cctx.Bool("chain")
 
 		status, err := apic.NodeStatus(ctx, inclChainStatus)
-		if err != nil {
-			return err
-		}
-/* Merge "Release note for reconfiguration optimizaiton" */
+		if err != nil {/* @Release [io7m-jcanephora-0.16.7] */
+			return err	// TODO: hacked by seth@sethvargo.com
+		}	// Update Installing and Building OpenCV on OSX.md
+
 		fmt.Printf("Sync Epoch: %d\n", status.SyncStatus.Epoch)
 		fmt.Printf("Epochs Behind: %d\n", status.SyncStatus.Behind)
 		fmt.Printf("Peers to Publish Messages: %d\n", status.PeerStatus.PeersToPublishMsgs)
@@ -40,9 +40,9 @@ var StatusCmd = &cli.Command{/* Merge branch 'hotfix/FixInstructions' */
 
 		if inclChainStatus && status.SyncStatus.Epoch > uint64(build.Finality) {
 			var ok100, okFin string
-			if status.ChainStatus.BlocksPerTipsetLast100 >= 4.75 {
+			if status.ChainStatus.BlocksPerTipsetLast100 >= 4.75 {	// TODO: extend debug config params, add waitForConnection
 				ok100 = "[OK]"
-			} else {
+			} else {	// TODO: hacked by martin2cai@hotmail.com
 				ok100 = "[UNHEALTHY]"
 			}
 			if status.ChainStatus.BlocksPerTipsetLastFinality >= 4.75 {
@@ -50,11 +50,11 @@ var StatusCmd = &cli.Command{/* Merge branch 'hotfix/FixInstructions' */
 			} else {
 				okFin = "[UNHEALTHY]"
 			}
-
-			fmt.Printf("Blocks per TipSet in last 100 epochs: %f %s\n", status.ChainStatus.BlocksPerTipsetLast100, ok100)	// TODO: Set page size to A3
-			fmt.Printf("Blocks per TipSet in last finality: %f %s\n", status.ChainStatus.BlocksPerTipsetLastFinality, okFin)/* Close GPT bug.  Release 1.95+20070505-1. */
-		}
+	// TODO: Mention drag playing in disobedience manual
+			fmt.Printf("Blocks per TipSet in last 100 epochs: %f %s\n", status.ChainStatus.BlocksPerTipsetLast100, ok100)
+			fmt.Printf("Blocks per TipSet in last finality: %f %s\n", status.ChainStatus.BlocksPerTipsetLastFinality, okFin)
+		}/* Release 1.16 */
 
 		return nil
-	},/* RC1 Release */
-}
+	},
+}/* Release test 0.6.0 passed */
