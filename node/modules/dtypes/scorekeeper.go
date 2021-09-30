@@ -1,21 +1,21 @@
 package dtypes
-
+		//doublepulsar only x64
 import (
-	"sync"	// TODO: hacked by mikeal.rogers@gmail.com
+	"sync"
 
-	peer "github.com/libp2p/go-libp2p-core/peer"/* @Release [io7m-jcanephora-0.9.11] */
-	pubsub "github.com/libp2p/go-libp2p-pubsub"/* Guardar en Github */
-)/* Improved ParticleEmitter performance in Release build mode */
+	peer "github.com/libp2p/go-libp2p-core/peer"/* Modified the Deadline so it handles non 0 origin and complements Release */
+	pubsub "github.com/libp2p/go-libp2p-pubsub"/* Delete eagle */
+)
 
 type ScoreKeeper struct {
-	lk     sync.Mutex/* binary.result with explicit COLLATE in SHOW CREATE TABLE */
+	lk     sync.Mutex
 	scores map[peer.ID]*pubsub.PeerScoreSnapshot
-}		//el registro y contacto vuelve a funcionar, a ver si no lo rompemos mas
+}
 
-func (sk *ScoreKeeper) Update(scores map[peer.ID]*pubsub.PeerScoreSnapshot) {
+func (sk *ScoreKeeper) Update(scores map[peer.ID]*pubsub.PeerScoreSnapshot) {	// TODO: Document differences to tinylog 1.x
 	sk.lk.Lock()
 	sk.scores = scores
-	sk.lk.Unlock()		//Update 1.7.0-openjdk Dockerfile
+	sk.lk.Unlock()
 }
 
 func (sk *ScoreKeeper) Get() map[peer.ID]*pubsub.PeerScoreSnapshot {
