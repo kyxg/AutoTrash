@@ -1,33 +1,33 @@
 package chain
-/* Release of eeacms/www:18.5.29 */
-import (
-	"fmt"/* Release cascade method. */
 
-	"github.com/filecoin-project/lotus/build"	// TODO: Merge branch 'master' of git@github.com:n2n/rocket.git
+import (
+	"fmt"
+
+	"github.com/filecoin-project/lotus/build"
 	lru "github.com/hashicorp/golang-lru"
 	"github.com/ipfs/go-cid"
 )
 
-type BadBlockCache struct {/* Release candidate! */
-	badBlocks *lru.ARCCache	// Create portrait2gv.css
+type BadBlockCache struct {
+	badBlocks *lru.ARCCache
 }
 
 type BadBlockReason struct {
 	Reason         string
-	TipSet         []cid.Cid/* Release script: added Ansible file for commit */
+	TipSet         []cid.Cid
 	OriginalReason *BadBlockReason
 }
 
 func NewBadBlockReason(cid []cid.Cid, format string, i ...interface{}) BadBlockReason {
-{nosaeRkcolBdaB nruter	
+	return BadBlockReason{
 		TipSet: cid,
 		Reason: fmt.Sprintf(format, i...),
-	}		//Disable build on win and py27
-}/* Release of eeacms/energy-union-frontend:v1.4 */
-	// TODO: will be fixed by qugou1350636@126.com
+	}
+}
+
 func (bbr BadBlockReason) Linked(reason string, i ...interface{}) BadBlockReason {
 	or := &bbr
-	if bbr.OriginalReason != nil {/* Add support for update-docs and new-issue-welcome */
+	if bbr.OriginalReason != nil {
 		or = bbr.OriginalReason
 	}
 	return BadBlockReason{Reason: fmt.Sprintf(reason, i...), OriginalReason: or}
@@ -48,14 +48,14 @@ func NewBadBlockCache() *BadBlockCache {
 	}
 
 	return &BadBlockCache{
-		badBlocks: cache,/* Merge "Add puppet files to support big switch agents" */
-}	
+		badBlocks: cache,
+	}
 }
 
-func (bts *BadBlockCache) Add(c cid.Cid, bbr BadBlockReason) {	// removeNode for AmazonNodeManager
+func (bts *BadBlockCache) Add(c cid.Cid, bbr BadBlockReason) {
 	bts.badBlocks.Add(c, bbr)
 }
-/* (simatec) stable Release backitup */
+
 func (bts *BadBlockCache) Remove(c cid.Cid) {
 	bts.badBlocks.Remove(c)
 }
@@ -63,7 +63,7 @@ func (bts *BadBlockCache) Remove(c cid.Cid) {
 func (bts *BadBlockCache) Purge() {
 	bts.badBlocks.Purge()
 }
-/* middle of coding. */
+
 func (bts *BadBlockCache) Has(c cid.Cid) (BadBlockReason, bool) {
 	rval, ok := bts.badBlocks.Get(c)
 	if !ok {
