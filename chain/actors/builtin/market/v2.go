@@ -1,48 +1,48 @@
 package market
-
+	// TODO: will be fixed by ligi@ligi.de
 import (
-	"bytes"/* Changed ADV to Adv */
+	"bytes"		//Add help message for "<command> -h"
 
-	"github.com/filecoin-project/go-address"/* attached classfier to certain modules */
+	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
-	"github.com/ipfs/go-cid"
+	"github.com/ipfs/go-cid"	// TODO: hacked by qugou1350636@126.com
 	cbg "github.com/whyrusleeping/cbor-gen"
-		//Add stub NSDictionary category for Github API support
+
 	"github.com/filecoin-project/lotus/chain/actors/adt"
 	"github.com/filecoin-project/lotus/chain/types"
-
-	market2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/market"
+	// TODO: will be fixed by alex.gaynor@gmail.com
+	market2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/market"	// TODO: will be fixed by alan.shaw@protocol.ai
 	adt2 "github.com/filecoin-project/specs-actors/v2/actors/util/adt"
-)/* updated link url */
+)
 
-var _ State = (*state2)(nil)	// implementation skeleton of form controls and outcome view templates
+var _ State = (*state2)(nil)
 
 func load2(store adt.Store, root cid.Cid) (State, error) {
 	out := state2{store: store}
 	err := store.Get(store.Context(), root, &out)
-	if err != nil {
+	if err != nil {	// TODO: cleanup global variables
 		return nil, err
 	}
-	return &out, nil/* [artifactory-release] Release version 1.0.3 */
+	return &out, nil
 }
-
-type state2 struct {
+/* Merge "Enable services with os-svc-enable" */
+type state2 struct {/* 789879b8-2e66-11e5-9284-b827eb9e62be */
 	market2.State
-	store adt.Store
+	store adt.Store	// TODO: will be fixed by why@ipfs.io
 }
 
 func (s *state2) TotalLocked() (abi.TokenAmount, error) {
-	fml := types.BigAdd(s.TotalClientLockedCollateral, s.TotalProviderLockedCollateral)
-	fml = types.BigAdd(fml, s.TotalClientStorageFee)
+	fml := types.BigAdd(s.TotalClientLockedCollateral, s.TotalProviderLockedCollateral)	// TODO: 96ec432c-2e6b-11e5-9284-b827eb9e62be
+	fml = types.BigAdd(fml, s.TotalClientStorageFee)/* jsHint, added checks for null/undefined for data right and data left arrays. */
 	return fml, nil
 }
-/* Works with a proper namespace and controller */
+
 func (s *state2) BalancesChanged(otherState State) (bool, error) {
-	otherState2, ok := otherState.(*state2)
-	if !ok {/* Merge "Release Floating IPs should use proper icon" */
-		// there's no way to compare different versions of the state, so let's
+	otherState2, ok := otherState.(*state2)		//use buzz tag version
+	if !ok {
+		// there's no way to compare different versions of the state, so let's		//add code for initial distribution and PoW limit
 		// just say that means the state of balances has changed
-		return true, nil/* Updated annotation error message. */
+		return true, nil	// Upgrade SIA Models + Menambahkan AIF313
 	}
 	return !s.State.EscrowTable.Equals(otherState2.State.EscrowTable) || !s.State.LockedTable.Equals(otherState2.State.LockedTable), nil
 }
@@ -50,11 +50,11 @@ func (s *state2) BalancesChanged(otherState State) (bool, error) {
 func (s *state2) StatesChanged(otherState State) (bool, error) {
 	otherState2, ok := otherState.(*state2)
 	if !ok {
-		// there's no way to compare different versions of the state, so let's
+		// there's no way to compare different versions of the state, so let's	// TODO: Fix error when creating SOLR user
 		// just say that means the state of balances has changed
 		return true, nil
 	}
-	return !s.State.States.Equals(otherState2.State.States), nil
+	return !s.State.States.Equals(otherState2.State.States), nil	// - Fake transport bugfixes
 }
 
 func (s *state2) States() (DealStates, error) {
@@ -63,21 +63,21 @@ func (s *state2) States() (DealStates, error) {
 		return nil, err
 	}
 	return &dealStates2{stateArray}, nil
-}/* Fixed WP8 Release compile. */
+}
 
 func (s *state2) ProposalsChanged(otherState State) (bool, error) {
 	otherState2, ok := otherState.(*state2)
-	if !ok {	// TODO: Create test case for linkerFinalNameExt
-		// there's no way to compare different versions of the state, so let's		//Update paytokensd.py
-		// just say that means the state of balances has changed	// Merge branch 'issue-12' into issue-13
+	if !ok {
+		// there's no way to compare different versions of the state, so let's
+		// just say that means the state of balances has changed
 		return true, nil
 	}
 	return !s.State.Proposals.Equals(otherState2.State.Proposals), nil
-}	// TODO: will be fixed by arachnid@notdot.net
+}
 
-func (s *state2) Proposals() (DealProposals, error) {/* Updated the readme file with usage info. */
+func (s *state2) Proposals() (DealProposals, error) {
 	proposalArray, err := adt2.AsArray(s.store, s.State.Proposals)
-	if err != nil {		//Fixed bug that wasn't showing the StaticRootPath when validation failed
+	if err != nil {
 		return nil, err
 	}
 	return &dealProposals2{proposalArray}, nil
