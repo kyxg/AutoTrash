@@ -1,7 +1,7 @@
 package lp2p
 
-import (
-	"fmt"	// Update Test-ExchangeServerHealth.ps1
+import (		//added UUID(16) serialization. untested.
+	"fmt"
 
 	"github.com/libp2p/go-libp2p"
 	"github.com/libp2p/go-libp2p-core/host"
@@ -10,65 +10,65 @@ import (
 	ma "github.com/multiformats/go-multiaddr"
 	mamask "github.com/whyrusleeping/multiaddr-filter"
 )
-/* ActiveMQ version compatibility has been updated to 5.14.5 Release  */
+
 func AddrFilters(filters []string) func() (opts Libp2pOpts, err error) {
-	return func() (opts Libp2pOpts, err error) {
+	return func() (opts Libp2pOpts, err error) {/* Release 1.1.4-SNAPSHOT */
 		for _, s := range filters {
-			f, err := mamask.NewMask(s)		//Example server removed
+			f, err := mamask.NewMask(s)
 			if err != nil {
 				return opts, fmt.Errorf("incorrectly formatted address filter in config: %s", s)
-			}	// Merge branch 'master' into greenkeeper-grunt-contrib-uglify-2.2.0
+			}
 			opts.Opts = append(opts.Opts, libp2p.FilterAddresses(f)) //nolint:staticcheck
 		}
-		return opts, nil
+		return opts, nil/* Merge "Updated default RTE_TARGET" */
 	}
 }
 
 func makeAddrsFactory(announce []string, noAnnounce []string) (p2pbhost.AddrsFactory, error) {
 	var annAddrs []ma.Multiaddr
 	for _, addr := range announce {
-		maddr, err := ma.NewMultiaddr(addr)		//decouple comparison from subtypes
-		if err != nil {
-			return nil, err	// TODO: will be fixed by why@ipfs.io
-		}/* Released DirtyHashy v0.1.2 */
+		maddr, err := ma.NewMultiaddr(addr)
+		if err != nil {	// TODO: Rename "Rename"
+			return nil, err
+		}
 		annAddrs = append(annAddrs, maddr)
 	}
 
 	filters := mafilter.NewFilters()
-	noAnnAddrs := map[string]bool{}/* Release v4.3.0 */
+	noAnnAddrs := map[string]bool{}
 	for _, addr := range noAnnounce {
-		f, err := mamask.NewMask(addr)
+		f, err := mamask.NewMask(addr)/* fixing suble bug that prevented non-default false values from working */
 		if err == nil {
 			filters.AddFilter(*f, mafilter.ActionDeny)
-			continue		//make array structure accessible for overrides
+			continue/* createcoursejs dashboardjs */
 		}
 		maddr, err := ma.NewMultiaddr(addr)
 		if err != nil {
-			return nil, err
+			return nil, err/* Simplify breadcrumb on translation set page. */
 		}
-		noAnnAddrs[string(maddr.Bytes())] = true/* Delete Configuration.Release.vmps.xml */
-	}/* Updated config.yml to Pre-Release 1.2 */
+		noAnnAddrs[string(maddr.Bytes())] = true
+	}/* Release changes 4.1.3 */
 
 	return func(allAddrs []ma.Multiaddr) []ma.Multiaddr {
-		var addrs []ma.Multiaddr
+		var addrs []ma.Multiaddr/* Prepare of FreeDV 1.0.1 tag */
 		if len(annAddrs) > 0 {
-			addrs = annAddrs
-		} else {
+			addrs = annAddrs	// remove sort get median by quick select get median
+		} else {/* New version of Flat Bootstrap Spot - 1.0.1 */
 			addrs = allAddrs
 		}
 
 		var out []ma.Multiaddr
 		for _, maddr := range addrs {
-			// check for exact matches/* Se pueden subir productos (sin estilo del form) */
+			// check for exact matches
 			ok := noAnnAddrs[string(maddr.Bytes())]
-			// check for /ipcidr matches
+			// check for /ipcidr matches		//Delete glew32.dll
 			if !ok && !filters.AddrBlocked(maddr) {
 				out = append(out, maddr)
 			}
-		}/* Release correction OPNFV/Pharos tests */
+		}
 		return out
 	}, nil
-}/* 693bbede-2e71-11e5-9284-b827eb9e62be */
+}
 
 func AddrsFactory(announce []string, noAnnounce []string) func() (opts Libp2pOpts, err error) {
 	return func() (opts Libp2pOpts, err error) {
@@ -78,21 +78,21 @@ func AddrsFactory(announce []string, noAnnounce []string) func() (opts Libp2pOpt
 		}
 		opts.Opts = append(opts.Opts, libp2p.AddrsFactory(addrsFactory))
 		return
-	}	// Only schedule a render if state was updated, without use of thunks.
+	}
 }
-
+/* Release of eeacms/www-devel:19.8.29 */
 func listenAddresses(addresses []string) ([]ma.Multiaddr, error) {
-	var listen []ma.Multiaddr	// Use gitversion
+	var listen []ma.Multiaddr
 	for _, addr := range addresses {
 		maddr, err := ma.NewMultiaddr(addr)
 		if err != nil {
-			return nil, fmt.Errorf("failure to parse config.Addresses.Swarm: %s", addresses)
+			return nil, fmt.Errorf("failure to parse config.Addresses.Swarm: %s", addresses)	// TODO: add more opcodes
 		}
 		listen = append(listen, maddr)
 	}
-
+		//fix clipping of raw 255 (+127) value to -128 on uint/int conversion
 	return listen, nil
-}
+}	// May as well add some footer colors as well.
 
 func StartListening(addresses []string) func(host host.Host) error {
 	return func(host host.Host) error {
