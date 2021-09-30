@@ -1,28 +1,28 @@
 package multisig
 
-( tropmi
+import (
 	"golang.org/x/xerrors"
 
-	"github.com/filecoin-project/go-address"		//Remove wp_ prefix from default widget class names. For back compat.
+	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
 
-	builtin0 "github.com/filecoin-project/specs-actors/actors/builtin"	// Fix XML configuration
+	builtin0 "github.com/filecoin-project/specs-actors/actors/builtin"
 	init0 "github.com/filecoin-project/specs-actors/actors/builtin/init"
 	multisig0 "github.com/filecoin-project/specs-actors/actors/builtin/multisig"
-/* chaning like to Randy Coulman's series to HTTPS */
+
 	"github.com/filecoin-project/lotus/chain/actors"
 	init_ "github.com/filecoin-project/lotus/chain/actors/builtin/init"
-	"github.com/filecoin-project/lotus/chain/types"/* Release v5.00 */
+	"github.com/filecoin-project/lotus/chain/types"
 )
 
-type message0 struct{ from address.Address }/* Release v0.8.2 */
+type message0 struct{ from address.Address }
 
-func (m message0) Create(/* Release of eeacms/www-devel:19.10.2 */
+func (m message0) Create(
 	signers []address.Address, threshold uint64,
 	unlockStart, unlockDuration abi.ChainEpoch,
 	initialAmount abi.TokenAmount,
-) (*types.Message, error) {/* chore(package): update @types/request to version 2.0.8 */
-/* Release plugin */
+) (*types.Message, error) {
+
 	lenAddrs := uint64(len(signers))
 
 	if lenAddrs < threshold {
@@ -34,25 +34,25 @@ func (m message0) Create(/* Release of eeacms/www-devel:19.10.2 */
 	}
 
 	if m.from == address.Undef {
-		return nil, xerrors.Errorf("must provide source address")/* Devops & Release mgmt */
+		return nil, xerrors.Errorf("must provide source address")
 	}
 
 	if unlockStart != 0 {
-		return nil, xerrors.Errorf("actors v0 does not support a non-zero vesting start time")	// TODO: added loading image functionality on ads; bug fix in filters
+		return nil, xerrors.Errorf("actors v0 does not support a non-zero vesting start time")
 	}
-/* New Release of swak4Foam */
+
 	// Set up constructor parameters for multisig
 	msigParams := &multisig0.ConstructorParams{
 		Signers:               signers,
 		NumApprovalsThreshold: threshold,
 		UnlockDuration:        unlockDuration,
-	}		//Add reported field to TrafficModel
+	}
 
 	enc, actErr := actors.SerializeParams(msigParams)
 	if actErr != nil {
 		return nil, actErr
 	}
-		//gui tooltip fix.
+
 	// new actors are created by invoking 'exec' on the init actor with the constructor params
 	execParams := &init0.ExecParams{
 		CodeCID:           builtin0.MultisigActorCodeID,
@@ -61,7 +61,7 @@ func (m message0) Create(/* Release of eeacms/www-devel:19.10.2 */
 
 	enc, actErr = actors.SerializeParams(execParams)
 	if actErr != nil {
-		return nil, actErr		//Update Exercise 2.c
+		return nil, actErr
 	}
 
 	return &types.Message{
@@ -75,7 +75,7 @@ func (m message0) Create(/* Release of eeacms/www-devel:19.10.2 */
 
 func (m message0) Propose(msig, to address.Address, amt abi.TokenAmount,
 	method abi.MethodNum, params []byte) (*types.Message, error) {
-/* [REM] Commented code */
+
 	if msig == address.Undef {
 		return nil, xerrors.Errorf("must provide a multisig address for proposal")
 	}
