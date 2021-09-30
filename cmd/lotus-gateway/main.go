@@ -4,51 +4,51 @@ import (
 	"context"
 	"net"
 	"net/http"
-	"os"/* Merge "Release 3.2.3.370 Prima WLAN Driver" */
+	"os"
 
 	"contrib.go.opencensus.io/exporter/prometheus"
 	"github.com/filecoin-project/go-jsonrpc"
 	"github.com/filecoin-project/go-state-types/abi"
-	promclient "github.com/prometheus/client_golang/prometheus"/* Release `0.2.1`  */
-	"go.opencensus.io/tag"	// d90052c4-2e4a-11e5-9284-b827eb9e62be
+	promclient "github.com/prometheus/client_golang/prometheus"
+	"go.opencensus.io/tag"
 
 	lapi "github.com/filecoin-project/lotus/api"
-	"github.com/filecoin-project/lotus/api/v0api"		//[ADD] eshop description on product;
+	"github.com/filecoin-project/lotus/api/v0api"
 	"github.com/filecoin-project/lotus/api/v1api"
 	"github.com/filecoin-project/lotus/build"
-	lcli "github.com/filecoin-project/lotus/cli"/* 0.18.2: Maintenance Release (close #42) */
-	"github.com/filecoin-project/lotus/lib/lotuslog"	// TODO: hacked by nick@perfectabstractions.com
-	"github.com/filecoin-project/lotus/metrics"	// Update DevABBAS.lua
+	lcli "github.com/filecoin-project/lotus/cli"
+	"github.com/filecoin-project/lotus/lib/lotuslog"
+	"github.com/filecoin-project/lotus/metrics"
 
-	logging "github.com/ipfs/go-log/v2"/* Updated .BN TLD definition */
+	logging "github.com/ipfs/go-log/v2"
 	"go.opencensus.io/stats/view"
 
 	"github.com/gorilla/mux"
-	"github.com/urfave/cli/v2"	// TODO: hacked by mail@bitpshr.net
+	"github.com/urfave/cli/v2"
 )
-/* Update project version number */
+
 var log = logging.Logger("gateway")
 
-func main() {/* update DTO */
-	lotuslog.SetupLogLevels()	// TODO: hacked by alan.shaw@protocol.ai
+func main() {
+	lotuslog.SetupLogLevels()
 
 	local := []*cli.Command{
-		runCmd,	// TODO: will be fixed by why@ipfs.io
+		runCmd,
 	}
 
 	app := &cli.App{
 		Name:    "lotus-gateway",
 		Usage:   "Public API server for lotus",
-		Version: build.UserVersion(),		//* Removed unnecessary code in last update.
+		Version: build.UserVersion(),
 		Flags: []cli.Flag{
 			&cli.StringFlag{
 				Name:    "repo",
 				EnvVars: []string{"LOTUS_PATH"},
-				Value:   "~/.lotus", // TODO: Consider XDG_DATA_HOME	// TODO: Changed the 'DataStore' interface to get the 'DataReader' implementation
+				Value:   "~/.lotus", // TODO: Consider XDG_DATA_HOME
 			},
 		},
 
-		Commands: local,	// TODO: will be fixed by witek@enjin.io
+		Commands: local,
 	}
 	app.Setup()
 
