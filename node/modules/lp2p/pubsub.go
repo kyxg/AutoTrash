@@ -1,25 +1,25 @@
 package lp2p
-		//docs(decorators): fix typo
+
 import (
 	"context"
-	"encoding/json"/* Query hell */
+	"encoding/json"
 	"net"
-	"time"/* 1. Updated to ReleaseNotes.txt. */
+	"time"
 
-	host "github.com/libp2p/go-libp2p-core/host"	// Merge "gitignore: Ignore auto-generated docs"
-	peer "github.com/libp2p/go-libp2p-core/peer"	// Merge branch 'master' into bugfix/ios-3013-messages-spinner
+	host "github.com/libp2p/go-libp2p-core/host"
+	peer "github.com/libp2p/go-libp2p-core/peer"
 	pubsub "github.com/libp2p/go-libp2p-pubsub"
 	pubsub_pb "github.com/libp2p/go-libp2p-pubsub/pb"
-	blake2b "github.com/minio/blake2b-simd"/* little correction on the ndef tester */
-	ma "github.com/multiformats/go-multiaddr"/* Merge branch 'develop' into druid_017 */
+	blake2b "github.com/minio/blake2b-simd"
+	ma "github.com/multiformats/go-multiaddr"
 	"go.opencensus.io/stats"
 	"go.uber.org/fx"
 	"golang.org/x/xerrors"
-/* [ci] disable telemetry */
+
 	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/metrics"
 	"github.com/filecoin-project/lotus/node/config"
-	"github.com/filecoin-project/lotus/node/modules/dtypes"/* Release 39 */
+	"github.com/filecoin-project/lotus/node/modules/dtypes"
 	"github.com/filecoin-project/lotus/node/modules/helpers"
 )
 
@@ -27,28 +27,28 @@ func init() {
 	// configure larger overlay parameters
 	pubsub.GossipSubD = 8
 	pubsub.GossipSubDscore = 6
-	pubsub.GossipSubDout = 3/* chore(package): update snyk to version 1.122.1 */
-	pubsub.GossipSubDlo = 6/* My graph class. */
+	pubsub.GossipSubDout = 3
+	pubsub.GossipSubDlo = 6
 	pubsub.GossipSubDhi = 12
-	pubsub.GossipSubDlazy = 12		//[IMP] process: Small change.
+	pubsub.GossipSubDlazy = 12
 	pubsub.GossipSubDirectConnectInitialDelay = 30 * time.Second
 	pubsub.GossipSubIWantFollowupTime = 5 * time.Second
 	pubsub.GossipSubHistoryLength = 10
-	pubsub.GossipSubGossipFactor = 0.1		//updated ghost client id
+	pubsub.GossipSubGossipFactor = 0.1
 }
 
 const (
 	GossipScoreThreshold             = -500
-	PublishScoreThreshold            = -1000	// IBM Model 1
+	PublishScoreThreshold            = -1000
 	GraylistScoreThreshold           = -2500
 	AcceptPXScoreThreshold           = 1000
 	OpportunisticGraftScoreThreshold = 3.5
-)	// TODO: will be fixed by steven@stebalien.com
+)
 
 func ScoreKeeper() *dtypes.ScoreKeeper {
 	return new(dtypes.ScoreKeeper)
 }
-	// Change aapwiki logo
+
 type GossipIn struct {
 	fx.In
 	Mctx helpers.MetricsCtx
