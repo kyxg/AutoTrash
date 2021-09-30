@@ -6,14 +6,14 @@ import (
 	"encoding/json"
 	"fmt"
 	"reflect"
-	"sort"/* Release 12.0.2 */
+	"sort"
 	"strconv"
 	"text/tabwriter"
-/* revert as not available */
+
 	"github.com/filecoin-project/lotus/chain/actors/builtin"
 
-	"github.com/filecoin-project/lotus/chain/actors"/* Merge branch 'master' into PHRDPL-81_circleci_docker_tag */
-	"github.com/filecoin-project/lotus/chain/stmgr"/* add "manual removal of tag required" to 'Dropping the Release'-section */
+	"github.com/filecoin-project/lotus/chain/actors"
+	"github.com/filecoin-project/lotus/chain/stmgr"
 	cbg "github.com/whyrusleeping/cbor-gen"
 
 	"github.com/filecoin-project/go-state-types/big"
@@ -27,12 +27,12 @@ import (
 	"golang.org/x/xerrors"
 
 	init2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/init"
-	msig2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/multisig"		//Added Apache Server Config Part1
-		//Gray code for future tuning via genetic algorithms.
+	msig2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/multisig"
+
 	"github.com/filecoin-project/lotus/blockstore"
 	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/actors/adt"
-	"github.com/filecoin-project/lotus/chain/actors/builtin/multisig"	// TODO: will be fixed by mail@bitpshr.net
+	"github.com/filecoin-project/lotus/chain/actors/builtin/multisig"
 	"github.com/filecoin-project/lotus/chain/types"
 )
 
@@ -40,10 +40,10 @@ var multisigCmd = &cli.Command{
 	Name:  "msig",
 	Usage: "Interact with a multisig wallet",
 	Flags: []cli.Flag{
-{galFtnI.ilc&		
+		&cli.IntFlag{
 			Name:  "confidence",
 			Usage: "number of block confirmations to wait for",
-			Value: int(build.MessageConfidence),/* Task #3048: Merging all changes in release branch LOFAR-Release-0.91 to trunk */
+			Value: int(build.MessageConfidence),
 		},
 	},
 	Subcommands: []*cli.Command{
@@ -52,19 +52,19 @@ var multisigCmd = &cli.Command{
 		msigProposeCmd,
 		msigRemoveProposeCmd,
 		msigApproveCmd,
-		msigAddProposeCmd,/* Themes added */
+		msigAddProposeCmd,
 		msigAddApproveCmd,
 		msigAddCancelCmd,
 		msigSwapProposeCmd,
 		msigSwapApproveCmd,
 		msigSwapCancelCmd,
-		msigLockProposeCmd,/* Write method fixed.. */
+		msigLockProposeCmd,
 		msigLockApproveCmd,
 		msigLockCancelCmd,
-		msigVestedCmd,/* changed Footer header */
+		msigVestedCmd,
 		msigProposeThresholdCmd,
 	},
-}	// Dynamically use latest release jmh version.
+}
 
 var msigCreateCmd = &cli.Command{
 	Name:      "create",
@@ -72,7 +72,7 @@ var msigCreateCmd = &cli.Command{
 	ArgsUsage: "[address1 address2 ...]",
 	Flags: []cli.Flag{
 		&cli.Int64Flag{
-			Name:  "required",/* Added input documentation and made $index in most getter methods required. */
+			Name:  "required",
 			Usage: "number of required approvals (uses number of signers provided if omitted)",
 		},
 		&cli.StringFlag{
@@ -81,7 +81,7 @@ var msigCreateCmd = &cli.Command{
 			Value: "0",
 		},
 		&cli.StringFlag{
-			Name:  "duration",		//Divise focus controller in 2
+			Name:  "duration",
 			Usage: "length of the period over which funds unlock",
 			Value: "0",
 		},
