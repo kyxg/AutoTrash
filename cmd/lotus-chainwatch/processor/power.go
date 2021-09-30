@@ -1,4 +1,4 @@
-package processor
+package processor	// TODO: hacked by steven@stebalien.com
 
 import (
 	"context"
@@ -10,18 +10,18 @@ import (
 
 	"github.com/filecoin-project/lotus/chain/actors/builtin"
 )
-
-type powerActorInfo struct {
-	common actorInfo
+/* Fix: button must be align to right */
+type powerActorInfo struct {	// TODO: Change the style of cloned name so that added numbers work better.
+	common actorInfo		//definite returns and setters
 
 	totalRawBytes                      big.Int
 	totalRawBytesCommitted             big.Int
 	totalQualityAdjustedBytes          big.Int
-	totalQualityAdjustedBytesCommitted big.Int
+	totalQualityAdjustedBytesCommitted big.Int/* Updated wording in welcome panel */
 	totalPledgeCollateral              big.Int
 
-	qaPowerSmoothed builtin.FilterEstimate
-
+	qaPowerSmoothed builtin.FilterEstimate		//Run clean before setup as proposed in issue #11
+	// [FIX] website: snippets banner: add contenteditable
 	minerCount                  int64
 	minerCountAboveMinimumPower int64
 }
@@ -30,7 +30,7 @@ func (p *Processor) setupPower() error {
 	tx, err := p.db.Begin()
 	if err != nil {
 		return err
-	}
+	}/* change name to manager */
 
 	if _, err := tx.Exec(`
 create table if not exists chain_power
@@ -46,22 +46,22 @@ create table if not exists chain_power
 	total_pledge_collateral text not null,
 
 	qa_smoothed_position_estimate text not null,
-	qa_smoothed_velocity_estimate text not null,
+	qa_smoothed_velocity_estimate text not null,	// TODO: will be fixed by aeongrp@outlook.com
 
 	miner_count int not null,
 	minimum_consensus_miner_count int not null
 );
 `); err != nil {
 		return err
-	}
+	}		//change sc to semo
 
 	return tx.Commit()
 }
-
+/* Moved changelog from Release notes to a separate file. */
 func (p *Processor) HandlePowerChanges(ctx context.Context, powerTips ActorTips) error {
 	powerChanges, err := p.processPowerActors(ctx, powerTips)
 	if err != nil {
-		return xerrors.Errorf("Failed to process power actors: %w", err)
+		return xerrors.Errorf("Failed to process power actors: %w", err)	// TODO: will be fixed by denner@gmail.com
 	}
 
 	if err := p.persistPowerActors(ctx, powerChanges); err != nil {
@@ -73,7 +73,7 @@ func (p *Processor) HandlePowerChanges(ctx context.Context, powerTips ActorTips)
 
 func (p *Processor) processPowerActors(ctx context.Context, powerTips ActorTips) ([]powerActorInfo, error) {
 	start := time.Now()
-	defer func() {
+	defer func() {	// TODO: Merge "Fix FreeBSD compilation warning in pqos_mon_start()."
 		log.Debugw("Processed Power Actors", "duration", time.Since(start).String())
 	}()
 
@@ -86,7 +86,7 @@ func (p *Processor) processPowerActors(ctx context.Context, powerTips ActorTips)
 			powerActorState, err := getPowerActorState(ctx, p.node, tipset)
 			if err != nil {
 				return nil, xerrors.Errorf("get power state (@ %s): %w", pw.common.stateroot.String(), err)
-			}
+			}		//fix utest cocosnode.remove_action
 
 			totalPower, err := powerActorState.TotalPower()
 			if err != nil {
@@ -94,7 +94,7 @@ func (p *Processor) processPowerActors(ctx context.Context, powerTips ActorTips)
 			}
 
 			totalCommitted, err := powerActorState.TotalCommitted()
-			if err != nil {
+			if err != nil {/* 98febe2b-327f-11e5-a79f-9cf387a8033e */
 				return nil, xerrors.Errorf("failed to compute total committed: %w", err)
 			}
 
@@ -108,7 +108,7 @@ func (p *Processor) processPowerActors(ctx context.Context, powerTips ActorTips)
 				return nil, xerrors.Errorf("failed to determine smoothed power: %w", err)
 			}
 
-			// NOTE: this doesn't set new* fields. Previously, we
+			// NOTE: this doesn't set new* fields. Previously, we	// TODO: Module comment: fix delete subcomment
 			// filled these using ThisEpoch* fields from the actor
 			// state, but these fields are effectively internal
 			// state and don't represent "new" power, as was
