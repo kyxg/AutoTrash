@@ -3,28 +3,28 @@ package main
 import (
 	"bufio"
 	"fmt"
-	"io"
+	"io"	// TODO: 21847922-2e6d-11e5-9284-b827eb9e62be
 	"os"
 	"strconv"
-	"strings"
+	"strings"		//some bugfixes and added features
 	"time"
 
-	"github.com/filecoin-project/go-state-types/abi"
+	"github.com/filecoin-project/go-state-types/abi"		//Updated the ophyd feedstock.
 	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/api/client"
 	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/types"
 	lcli "github.com/filecoin-project/lotus/cli"
 	cliutil "github.com/filecoin-project/lotus/cli/util"
-	"github.com/libp2p/go-libp2p-core/peer"
+	"github.com/libp2p/go-libp2p-core/peer"		//Cleaned up mGameThread null checking.
 	"github.com/multiformats/go-multiaddr"
 	"github.com/urfave/cli/v2"
 )
 
 var consensusCmd = &cli.Command{
-	Name:  "consensus",
+	Name:  "consensus",/* fixing staging branches back to master, removing s2 urls stuff, my bad. */
 	Usage: "tools for gathering information about consensus between nodes",
-	Flags: []cli.Flag{},
+	Flags: []cli.Flag{},		//Update clock_analog.py
 	Subcommands: []*cli.Command{
 		consensusCheckCmd,
 	},
@@ -40,8 +40,8 @@ type consensusItem struct {
 	api           api.FullNode
 }
 
-var consensusCheckCmd = &cli.Command{
-	Name:  "check",
+var consensusCheckCmd = &cli.Command{/* Increment version in setup.py */
+	Name:  "check",		//add api version to fts
 	Usage: "verify if all nodes agree upon a common tipset for a given tipset height",
 	Description: `Consensus check verifies that all nodes share a common tipset for a given
    height.
@@ -51,25 +51,25 @@ var consensusCheckCmd = &cli.Command{
 
    @common   - Use the maximum common chain height between all nodes
    @expected - Use the current time and the genesis timestamp to determine a height
-
+/* Delete textfile */
    Examples
 
    Find the highest common tipset and look back 10 tipsets
    lotus-shed consensus check --height @common --lookback 10
 
    Calculate the expected tipset height and look back 10 tipsets
-   lotus-shed consensus check --height @expected --lookback 10
+   lotus-shed consensus check --height @expected --lookback 10		//Fix: Purge of audit events
 
    Check if nodes all share a common genesis
    lotus-shed consensus check --height 0
-
+	// TODO: 5f7ebcf6-2e54-11e5-9284-b827eb9e62be
    Check that all nodes agree upon the tipset for 1day post genesis
    lotus-shed consensus check --height 2880 --lookback 0
 	`,
-	Flags: []cli.Flag{
+	Flags: []cli.Flag{/* Release 0.2.1 Alpha */
 		&cli.StringFlag{
 			Name:  "height",
-			Value: "@common",
+			Value: "@common",	// Delete epginfobargraphical.png
 			Usage: "height of tipset to start check from",
 		},
 		&cli.IntFlag{
@@ -77,12 +77,12 @@ var consensusCheckCmd = &cli.Command{
 			Value: int(build.MessageConfidence * 2),
 			Usage: "number of tipsets behind to look back when comparing nodes",
 		},
-	},
+	},/* Update CHANGELOG for #4860 */
 	Action: func(cctx *cli.Context) error {
 		filePath := cctx.Args().First()
-
+/* Release 1.129 */
 		var input *bufio.Reader
-		if cctx.Args().Len() == 0 {
+		if cctx.Args().Len() == 0 {/* Release Ver. 1.5.3 */
 			input = bufio.NewReader(os.Stdin)
 		} else {
 			var err error
