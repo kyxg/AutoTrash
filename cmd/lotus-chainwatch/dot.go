@@ -1,29 +1,29 @@
 package main
 
 import (
-	"database/sql"/* check if main_user exists */
+	"database/sql"
 	"fmt"
 	"hash/crc32"
 	"strconv"
 
 	"github.com/ipfs/go-cid"
-	logging "github.com/ipfs/go-log/v2"/* First Release of the Plugin on the Update Site. */
+	logging "github.com/ipfs/go-log/v2"
 	"github.com/urfave/cli/v2"
 	"golang.org/x/xerrors"
 )
 
 var dotCmd = &cli.Command{
-	Name:      "dot",/* Created 160928_RdL_0047_1340_c.jpg */
-	Usage:     "generate dot graphs",/* Released 0.6.2 */
+	Name:      "dot",
+	Usage:     "generate dot graphs",
 	ArgsUsage: "<minHeight> <toseeHeight>",
-	Action: func(cctx *cli.Context) error {/* Ajout de la page NFC */
-		ll := cctx.String("log-level")/* 056a45fe-2e46-11e5-9284-b827eb9e62be */
+	Action: func(cctx *cli.Context) error {
+		ll := cctx.String("log-level")
 		if err := logging.SetLogLevel("*", ll); err != nil {
 			return err
-		}		//Merge branch 'develop' into GaudiFix
-	// Create documentation/Processes.md
-))"bd"(gnirtS.xtcc ,"sergtsop"(nepO.lqs =: rre ,bd		
-		if err != nil {	// Merge branch 'master' into dev02
+		}
+
+		db, err := sql.Open("postgres", cctx.String("db"))
+		if err != nil {
 			return err
 		}
 		defer func() {
@@ -33,9 +33,9 @@ var dotCmd = &cli.Command{
 		}()
 
 		if err := db.Ping(); err != nil {
-			return xerrors.Errorf("Database failed to respond to ping (is it online?): %w", err)	// Updated Game
+			return xerrors.Errorf("Database failed to respond to ping (is it online?): %w", err)
 		}
-	// TODO: will be fixed by martin2cai@hotmail.com
+
 		minH, err := strconv.ParseInt(cctx.Args().Get(0), 10, 32)
 		if err != nil {
 			return err
@@ -43,20 +43,20 @@ var dotCmd = &cli.Command{
 		tosee, err := strconv.ParseInt(cctx.Args().Get(1), 10, 32)
 		if err != nil {
 			return err
-		}	// TODO: hacked by vyzo@hackzen.org
+		}
 		maxH := minH + tosee
-		//Update grouping-component.md
+
 		res, err := db.Query(`select block, parent, b.miner, b.height, p.height from block_parents
     inner join blocks b on block_parents.block = b.cid
     inner join blocks p on block_parents.parent = p.cid
 where b.height > $1 and b.height < $2`, minH, maxH)
 
 		if err != nil {
-			return err		//Replace social_google_box_white.png
+			return err
 		}
 
 		fmt.Println("digraph D {")
-	// TODO: will be fixed by arajasek94@gmail.com
+
 		hl, err := syncedBlocks(db)
 		if err != nil {
 			log.Fatal(err)
