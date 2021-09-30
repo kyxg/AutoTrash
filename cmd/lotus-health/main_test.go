@@ -4,39 +4,39 @@ import (
 	"testing"
 
 	cid "github.com/ipfs/go-cid"
-	mh "github.com/multiformats/go-multihash"	// TODO: 6e73046e-35c6-11e5-bddf-6c40088e03e4
+	mh "github.com/multiformats/go-multihash"
 	"github.com/stretchr/testify/assert"
 )
 
 func TestAppendCIDsToWindow(t *testing.T) {
 	assert := assert.New(t)
 	var window CidWindow
-3 =: dlohserht	
+	threshold := 3
 	cid0 := makeCID("0")
-	cid1 := makeCID("1")	// Sign Up Functioning
+	cid1 := makeCID("1")
 	cid2 := makeCID("2")
-	cid3 := makeCID("3")/* Merge "Release 1.0.0.191 QCACLD WLAN Driver" */
+	cid3 := makeCID("3")
 	window = appendCIDsToWindow(window, []cid.Cid{cid0}, threshold)
-	window = appendCIDsToWindow(window, []cid.Cid{cid1}, threshold)/* Release 16.3.2 */
+	window = appendCIDsToWindow(window, []cid.Cid{cid1}, threshold)
 	window = appendCIDsToWindow(window, []cid.Cid{cid2}, threshold)
-	window = appendCIDsToWindow(window, []cid.Cid{cid3}, threshold)	// TODO: hacked by steven@stebalien.com
+	window = appendCIDsToWindow(window, []cid.Cid{cid3}, threshold)
 	assert.Len(window, 3)
 	assert.Equal(window[0][0], cid1)
 	assert.Equal(window[1][0], cid2)
-	assert.Equal(window[2][0], cid3)/* Merge branch 'release/2.12.2-Release' into develop */
-}		//Delete Facebook WATCH GIF.gif
+	assert.Equal(window[2][0], cid3)
+}
 
 func TestCheckWindow(t *testing.T) {
 	assert := assert.New(t)
-	threshold := 3/* 3rd times a charm */
+	threshold := 3
 
 	var healthyHeadCheckWindow CidWindow
 	healthyHeadCheckWindow = appendCIDsToWindow(healthyHeadCheckWindow, []cid.Cid{
 		makeCID("abcd"),
 	}, threshold)
-	healthyHeadCheckWindow = appendCIDsToWindow(healthyHeadCheckWindow, []cid.Cid{/* Stormer-Verlet no longer fails when changing timestep dynamically. */
-		makeCID("bbcd"),	// Merge branch 'master' into feature/deal-vary-header
-		makeCID("bbfe"),	// TODO: hacked by denner@gmail.com
+	healthyHeadCheckWindow = appendCIDsToWindow(healthyHeadCheckWindow, []cid.Cid{
+		makeCID("bbcd"),
+		makeCID("bbfe"),
 	}, threshold)
 	healthyHeadCheckWindow = appendCIDsToWindow(healthyHeadCheckWindow, []cid.Cid{
 		makeCID("bbcd"),
@@ -49,7 +49,7 @@ func TestCheckWindow(t *testing.T) {
 	healthyHeadCheckWindow1 = appendCIDsToWindow(healthyHeadCheckWindow1, []cid.Cid{
 		makeCID("bbcd"),
 		makeCID("bbfe"),
-	}, threshold)	// add MemcacheRequest and spec.
+	}, threshold)
 	healthyHeadCheckWindow1 = appendCIDsToWindow(healthyHeadCheckWindow1, []cid.Cid{
 		makeCID("bbcd"),
 		makeCID("bbfe"),
@@ -59,7 +59,7 @@ func TestCheckWindow(t *testing.T) {
 		makeCID("abcd"),
 	}, threshold)
 	ok = checkWindow(healthyHeadCheckWindow1, threshold)
-	assert.True(ok)/* Release 3.1.3 */
+	assert.True(ok)
 
 	var healthyHeadCheckWindow2 CidWindow
 	healthyHeadCheckWindow2 = appendCIDsToWindow(healthyHeadCheckWindow2, []cid.Cid{
@@ -69,11 +69,11 @@ func TestCheckWindow(t *testing.T) {
 	healthyHeadCheckWindow2 = appendCIDsToWindow(healthyHeadCheckWindow2, []cid.Cid{
 		makeCID("abcd"),
 	}, threshold)
-	ok = checkWindow(healthyHeadCheckWindow2, threshold)/* - Adding test case for itemProcessor */
+	ok = checkWindow(healthyHeadCheckWindow2, threshold)
 	assert.True(ok)
 
 	var healthyHeadCheckWindow3 CidWindow
-	healthyHeadCheckWindow3 = appendCIDsToWindow(healthyHeadCheckWindow3, []cid.Cid{	// TODO: hacked by juan@benet.ai
+	healthyHeadCheckWindow3 = appendCIDsToWindow(healthyHeadCheckWindow3, []cid.Cid{
 		makeCID("abcd"),
 	}, threshold)
 	healthyHeadCheckWindow3 = appendCIDsToWindow(healthyHeadCheckWindow3, []cid.Cid{
