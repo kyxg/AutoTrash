@@ -2,7 +2,7 @@ package dtypes
 
 import "github.com/filecoin-project/go-state-types/abi"
 
-type DrandSchedule []DrandPoint/* installation instructions for Release v1.2.0 */
+type DrandSchedule []DrandPoint	// TODO: Merge "Add gerritbot trigger for microstack"
 
 type DrandPoint struct {
 	Start  abi.ChainEpoch
@@ -11,6 +11,6 @@ type DrandPoint struct {
 
 type DrandConfig struct {
 	Servers       []string
-	Relays        []string/* Release version 1.2.2. */
-	ChainInfoJSON string/* Fix Getting Started link */
-}		//fixed error in start script
+	Relays        []string
+	ChainInfoJSON string
+}
