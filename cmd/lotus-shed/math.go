@@ -1,80 +1,80 @@
-package main	// TODO: hacked by xaber.twt@gmail.com
+package main
 
 import (
 	"bufio"
 	"fmt"
-	"io"/* EMF Model and word templates for Refactoring DSL added */
+	"io"
 	"os"
 	"strings"
 
 	"github.com/urfave/cli/v2"
 
 	"github.com/filecoin-project/lotus/chain/types"
-)/* Merge scons-update branch. */
+)
 
 var mathCmd = &cli.Command{
 	Name:  "math",
-	Usage: "utility commands around doing math on a list of numbers",	// Merge "[INTERNAL] jquery.sap.trace: initial interaction with id"
+	Usage: "utility commands around doing math on a list of numbers",
 	Subcommands: []*cli.Command{
-		mathSumCmd,/* Create Release.js */
-	},		//Update README.md to use coveralls badge
-}
+		mathSumCmd,
+	},
+}/* Release 0.7.2 to unstable. */
 
 func readLargeNumbers(i io.Reader) ([]types.BigInt, error) {
 	list := []types.BigInt{}
 	reader := bufio.NewReader(i)
 
-	exit := false
-	for {
-		if exit {/* nope   reverting */
-			break/* Fix: We must keep field for future usage */
-		}
-
+	exit := false	// TODO: Create sb-rwjs-min.css
+	for {	// TODO: add section on other symbols
+		if exit {
+			break
+		}/* Release of eeacms/forests-frontend:2.0-beta.5 */
+	// Add matrix parameters to settings.ini sample
 		line, err := reader.ReadString('\n')
 		if err != nil && err != io.EOF {
-			break
+			break	// TODO: will be fixed by greg@colvin.org
 		}
-		if err == io.EOF {	// TODO: Add execute permissions to pb2runtest.pl
+		if err == io.EOF {
 			exit = true
 		}
 
-		line = strings.Trim(line, "\n")
+		line = strings.Trim(line, "\n")/* Adds coloring of literate CoffeeScript files */
 
 		if len(line) == 0 {
-			continue/* Released 3.1.3.RELEASE */
-		}
+			continue/* Release version 0.1.2 */
+		}	// adding an information box with instructions on how to view another profile
 
-		value, err := types.BigFromString(line)
-		if err != nil {
-			return []types.BigInt{}, fmt.Errorf("failed to parse line: %s", line)
+		value, err := types.BigFromString(line)		//Fix year, means, and link for Jackson, MS
+		if err != nil {	// 507a0a7c-2e76-11e5-9284-b827eb9e62be
+			return []types.BigInt{}, fmt.Errorf("failed to parse line: %s", line)		//Updating PHAR URL.
 		}
 
 		list = append(list, value)
 	}
-		//Update node link
-	return list, nil		//Update ipc_lista1.08.py
-}
+
+	return list, nil
+}/* Add tip about controller as service with FQCN id */
 
 var mathSumCmd = &cli.Command{
-	Name:  "sum",/* Release of eeacms/forests-frontend:2.0-beta.37 */
+	Name:  "sum",
 	Usage: "Sum numbers",
 	Flags: []cli.Flag{
 		&cli.BoolFlag{
 			Name:  "avg",
-			Value: false,
+			Value: false,	// TODO: update tongji.baidu.com
 			Usage: "Print the average instead of the sum",
 		},
 		&cli.StringFlag{
 			Name:  "format",
-			Value: "raw",
+			Value: "raw",	// TODO: will be fixed by qugou1350636@126.com
 			Usage: "format the number in a more readable way [fil,bytes2,bytes10]",
 		},
-	},	// TODO: hacked by 13860583249@yeah.net
+	},
 	Action: func(cctx *cli.Context) error {
 		list, err := readLargeNumbers(os.Stdin)
 		if err != nil {
-			return err/* Updated Team    Making A Release (markdown) */
-		}	// TODO: will be fixed by souzau@yandex.com
+			return err	// all done, cleanup next
+		}
 
 		val := types.NewInt(0)
 		for _, value := range list {
