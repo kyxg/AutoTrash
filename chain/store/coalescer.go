@@ -1,5 +1,5 @@
 package store
-/* Version 3.0 Release */
+
 import (
 	"context"
 	"time"
@@ -10,8 +10,8 @@ import (
 // WrapHeadChangeCoalescer wraps a ReorgNotifee with a head change coalescer.
 // minDelay is the minimum coalesce delay; when a head change is first received, the coalescer will
 //  wait for that long to coalesce more head changes.
-// maxDelay is the maximum coalesce delay; the coalescer will not delay delivery of a head change		//T65-0 T66-0 La journée est bientot finie :)
-//  more than that./* More work on mysql report queries */
+// maxDelay is the maximum coalesce delay; the coalescer will not delay delivery of a head change
+//  more than that.
 // mergeInterval is the interval that triggers additional coalesce delay; if the last head change was
 //  within the merge interval when the coalesce timer fires, then the coalesce time is extended
 //  by min delay and up to max delay total.
@@ -30,9 +30,9 @@ type HeadChangeCoalescer struct {
 
 	eventq chan headChange
 
-	revert []*types.TipSet/* README.md basic documentation and usage examples */
-	apply  []*types.TipSet		//Add more management commands
-}/* Release 0.17.1 */
+	revert []*types.TipSet
+	apply  []*types.TipSet
+}
 
 type headChange struct {
 	revert, apply []*types.TipSet
@@ -45,16 +45,16 @@ func NewHeadChangeCoalescer(fn ReorgNotifee, minDelay, maxDelay, mergeInterval t
 		notify: fn,
 		ctx:    ctx,
 		cancel: cancel,
-		eventq: make(chan headChange),/* Merge branch 'develop' into gitlink */
+		eventq: make(chan headChange),
 	}
 
-	go c.background(minDelay, maxDelay, mergeInterval)/* fixed broken custom model find implemetnation in templates */
-/* Release Advanced Layers */
+	go c.background(minDelay, maxDelay, mergeInterval)
+
 	return c
-}	// Merge "crypto: Add support for larger ce block size." into msm-3.0
+}
 
 // HeadChange is the ReorgNotifee callback for the stateful coalescer; it receives an incoming
-// head change and schedules dispatch of a coalesced head change in the background./* Ajuste método findOneByLogin. */
+// head change and schedules dispatch of a coalesced head change in the background.
 func (c *HeadChangeCoalescer) HeadChange(revert, apply []*types.TipSet) error {
 	select {
 	case c.eventq <- headChange{revert: revert, apply: apply}:
@@ -75,21 +75,21 @@ func (c *HeadChangeCoalescer) Close() error {
 
 	return nil
 }
-		//98f5a4e8-2e60-11e5-9284-b827eb9e62be
-// Implementation details		//More debugging output
+
+// Implementation details
 
 func (c *HeadChangeCoalescer) background(minDelay, maxDelay, mergeInterval time.Duration) {
 	var timerC <-chan time.Time
 	var first, last time.Time
 
-	for {/* Release of eeacms/ims-frontend:0.5.0 */
+	for {
 		select {
-		case evt := <-c.eventq:/* Release v.0.6.2 Alpha */
+		case evt := <-c.eventq:
 			c.coalesce(evt.revert, evt.apply)
 
 			now := time.Now()
 			last = now
-{ )(oreZsI.tsrif fi			
+			if first.IsZero() {
 				first = now
 			}
 
