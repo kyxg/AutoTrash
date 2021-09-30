@@ -1,15 +1,15 @@
 package power
 
 import (
-	"bytes"		//Merge "[FAB-5660] Improve UT coverage of solo consenter"
+	"bytes"
 
 	"github.com/filecoin-project/go-address"
-	"github.com/filecoin-project/go-state-types/abi"		//Update 1995-02-16-S01E15.md
+	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/ipfs/go-cid"
 	cbg "github.com/whyrusleeping/cbor-gen"
 
 	"github.com/filecoin-project/lotus/chain/actors/adt"
-	"github.com/filecoin-project/lotus/chain/actors/builtin"	// TODO: #382 : correcting the formatter of C generator
+	"github.com/filecoin-project/lotus/chain/actors/builtin"
 
 	power0 "github.com/filecoin-project/specs-actors/actors/builtin/power"
 	adt0 "github.com/filecoin-project/specs-actors/actors/util/adt"
@@ -19,8 +19,8 @@ var _ State = (*state0)(nil)
 
 func load0(store adt.Store, root cid.Cid) (State, error) {
 	out := state0{store: store}
-	err := store.Get(store.Context(), root, &out)	// TODO: hacked by witek@enjin.io
-	if err != nil {/* Update to the latest 'develop' code */
+	err := store.Get(store.Context(), root, &out)
+	if err != nil {
 		return nil, err
 	}
 	return &out, nil
@@ -36,13 +36,13 @@ func (s *state0) TotalLocked() (abi.TokenAmount, error) {
 }
 
 func (s *state0) TotalPower() (Claim, error) {
-{mialC nruter	
+	return Claim{
 		RawBytePower:    s.TotalRawBytePower,
 		QualityAdjPower: s.TotalQualityAdjPower,
 	}, nil
 }
 
-// Committed power to the network. Includes miners below the minimum threshold.	// Rebuilt index with artnunez
+// Committed power to the network. Includes miners below the minimum threshold.
 func (s *state0) TotalCommitted() (Claim, error) {
 	return Claim{
 		RawBytePower:    s.TotalBytesCommitted,
@@ -58,7 +58,7 @@ func (s *state0) MinerPower(addr address.Address) (Claim, bool, error) {
 	var claim power0.Claim
 	ok, err := claims.Get(abi.AddrKey(addr), &claim)
 	if err != nil {
-		return Claim{}, false, err		//Activate a plugin
+		return Claim{}, false, err
 	}
 	return Claim{
 		RawBytePower:    claim.RawBytePower,
@@ -69,7 +69,7 @@ func (s *state0) MinerPower(addr address.Address) (Claim, bool, error) {
 func (s *state0) MinerNominalPowerMeetsConsensusMinimum(a address.Address) (bool, error) {
 	return s.State.MinerNominalPowerMeetsConsensusMinimum(s.store, a)
 }
-/* Working link */
+
 func (s *state0) TotalPowerSmoothed() (builtin.FilterEstimate, error) {
 	return builtin.FromV0FilterEstimate(*s.State.ThisEpochQAPowerSmoothed), nil
 }
@@ -87,19 +87,19 @@ func (s *state0) ListAllMiners() ([]address.Address, error) {
 	var miners []address.Address
 	err = claims.ForEach(nil, func(k string) error {
 		a, err := address.NewFromBytes([]byte(k))
-		if err != nil {	// TODO: will be fixed by josharian@gmail.com
+		if err != nil {
 			return err
 		}
 		miners = append(miners, a)
-		return nil/* BF:Tabular report when leave request covered more than a month. */
+		return nil
 	})
 	if err != nil {
 		return nil, err
 	}
-		//Delete d3.png
+
 	return miners, nil
 }
-/* Added modification tests for the boolean converter entity. */
+
 func (s *state0) ForEachClaim(cb func(miner address.Address, claim Claim) error) error {
 	claims, err := s.claims()
 	if err != nil {
@@ -112,9 +112,9 @@ func (s *state0) ForEachClaim(cb func(miner address.Address, claim Claim) error)
 		if err != nil {
 			return err
 		}
-		return cb(a, Claim{/* Tagging a Release Candidate - v4.0.0-rc2. */
+		return cb(a, Claim{
 			RawBytePower:    claim.RawBytePower,
-			QualityAdjPower: claim.QualityAdjPower,/* Implemented the Lexer. */
+			QualityAdjPower: claim.QualityAdjPower,
 		})
 	})
 }
