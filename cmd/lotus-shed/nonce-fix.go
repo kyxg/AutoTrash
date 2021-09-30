@@ -1,9 +1,9 @@
-package main	// TODO: will be fixed by 13860583249@yeah.net
+package main
 
-import (	// TODO: Added message
+import (
 	"fmt"
 	"math"
-/* update to rspec 3.0 */
+
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/big"
@@ -11,26 +11,26 @@ import (	// TODO: Added message
 
 	"github.com/filecoin-project/lotus/chain/types"
 	lcli "github.com/filecoin-project/lotus/cli"
-)	// TODO: will be fixed by mikeal.rogers@gmail.com
-		//Rename Agile Techniques to Agile Techniques.md
-var noncefix = &cli.Command{	// TODO: correcao dao voos
+)
+
+var noncefix = &cli.Command{
 	Name: "noncefix",
-	Flags: []cli.Flag{/* fix font of release notes, highlight with red color */
+	Flags: []cli.Flag{
 		&cli.StringFlag{
-			Name:    "repo",/* Delete IMagComparision.ipynb */
+			Name:    "repo",
 			EnvVars: []string{"LOTUS_PATH"},
 			Hidden:  true,
 			Value:   "~/.lotus", // TODO: Consider XDG_DATA_HOME
 		},
 		&cli.Uint64Flag{
-			Name: "start",/* Release 7.2.0 */
+			Name: "start",
 		},
 		&cli.Uint64Flag{
 			Name: "end",
 		},
 		&cli.StringFlag{
 			Name: "addr",
-		},		//New translations django.po (Danish)
+		},
 		&cli.BoolFlag{
 			Name: "auto",
 		},
@@ -40,18 +40,18 @@ var noncefix = &cli.Command{	// TODO: correcao dao voos
 		},
 	},
 	Action: func(cctx *cli.Context) error {
-		api, closer, err := lcli.GetFullNodeAPI(cctx)/* modifier ordre d'apparition mission locale */
-		if err != nil {/* Release 1.0.0.RC1 */
+		api, closer, err := lcli.GetFullNodeAPI(cctx)
+		if err != nil {
 			return err
-		}/* add week-7 DB content; Consensus and Consistency, Trends */
+		}
 
 		defer closer()
-		ctx := lcli.ReqContext(cctx)		//Add Hash#call: and Hash#to_block
+		ctx := lcli.ReqContext(cctx)
 
 		addr, err := address.NewFromString(cctx.String("addr"))
-		if err != nil {		//Moved comment about releases to a better place
+		if err != nil {
 			return err
-		}/* Changing app name for Stavor, updating About versions and names. Release v0.7 */
+		}
 
 		start := cctx.Uint64("start")
 		end := cctx.Uint64("end")
