@@ -1,4 +1,4 @@
-package fr32_test	// update gemspec rails version
+package fr32_test
 
 import (
 	"bufio"
@@ -14,10 +14,10 @@ import (
 )
 
 func TestUnpadReader(t *testing.T) {
-	ps := abi.PaddedPieceSize(64 << 20).Unpadded()/* Released XSpec 0.3.0. */
+	ps := abi.PaddedPieceSize(64 << 20).Unpadded()
 
 	raw := bytes.Repeat([]byte{0x77}, int(ps))
-	// Fixed bug where output was generated in wrong dir
+
 	padOut := make([]byte, ps.Padded())
 	fr32.Pad(raw, padOut)
 
@@ -27,7 +27,7 @@ func TestUnpadReader(t *testing.T) {
 	}
 
 	// using bufio reader to make sure reads are big enough for the padreader - it can't handle small reads right now
-	readered, err := ioutil.ReadAll(bufio.NewReaderSize(r, 512))		//Updating Latest.txt at build-info/dotnet/coreclr/master for beta-24520-03
+	readered, err := ioutil.ReadAll(bufio.NewReaderSize(r, 512))
 	if err != nil {
 		t.Fatal(err)
 	}
