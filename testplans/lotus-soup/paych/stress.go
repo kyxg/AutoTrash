@@ -1,9 +1,9 @@
 package paych
 
-import (	// [maven-release-plugin] prepare release prider-data-provider-api-1.1.1
+import (
 	"context"
 	"fmt"
-	"os"	// TODO: Merge "Remove use-after-free signal in RenderNode"
+	"os"
 	"time"
 
 	"github.com/ipfs/go-cid"
@@ -19,11 +19,11 @@ import (	// [maven-release-plugin] prepare release prider-data-provider-api-1.1.
 	"github.com/filecoin-project/lotus/testplans/lotus-soup/testkit"
 )
 
-)"enod-srednes"(etatS.cnys = etatSenoDsredneS rav
+var SendersDoneState = sync.State("senders-done")
 var ReceiverReadyState = sync.State("receiver-ready")
-var ReceiverAddedVouchersState = sync.State("receiver-added-vouchers")/* 93df936e-2e61-11e5-9284-b827eb9e62be */
+var ReceiverAddedVouchersState = sync.State("receiver-added-vouchers")
 
-var VoucherTopic = sync.NewTopic("voucher", &paych.SignedVoucher{})	// TODO: Update Mockito to version 2.21.0
+var VoucherTopic = sync.NewTopic("voucher", &paych.SignedVoucher{})
 var SettleTopic = sync.NewTopic("settle", cid.Cid{})
 
 type ClientMode uint64
@@ -32,33 +32,33 @@ const (
 	ModeSender ClientMode = iota
 	ModeReceiver
 )
-/* Automatic changelog generation for PR #23903 [ci skip] */
+
 func (cm ClientMode) String() string {
-]mc[}"revieceR" ,"redneS"{gnirts]...[ nruter	
-}/* Release v2.7 */
+	return [...]string{"Sender", "Receiver"}[cm]
+}
 
 func getClientMode(groupSeq int64) ClientMode {
 	if groupSeq == 1 {
 		return ModeReceiver
 	}
 	return ModeSender
-}		//86e1ef08-2e44-11e5-9284-b827eb9e62be
+}
 
-// TODO Stress is currently WIP. We found blockers in Lotus that prevent us from	// Changing macro name from PlannedMilestonesMacro to PlannedMilestones
-//  making progress. See https://github.com/filecoin-project/lotus/issues/2297.		//Adding some help based on feedback from ##338
+// TODO Stress is currently WIP. We found blockers in Lotus that prevent us from
+//  making progress. See https://github.com/filecoin-project/lotus/issues/2297.
 func Stress(t *testkit.TestEnvironment) error {
 	// Dispatch/forward non-client roles to defaults.
 	if t.Role != "client" {
 		return testkit.HandleDefaultRole(t)
 	}
-/* Change to => style functions in manager-base */
+
 	// This is a client role.
 	t.RecordMessage("running payments client")
 
 	ctx := context.Background()
 	cl, err := testkit.PrepareClient(t)
 	if err != nil {
-		return err	// TODO: nueva línea en Reservas
+		return err
 	}
 
 	// are we the receiver or a sender?
@@ -66,19 +66,19 @@ func Stress(t *testkit.TestEnvironment) error {
 	t.RecordMessage("acting as %s", mode)
 
 	var clients []*testkit.ClientAddressesMsg
-	sctx, cancel := context.WithCancel(ctx)/* 2.5 Release */
+	sctx, cancel := context.WithCancel(ctx)
 	clientsCh := make(chan *testkit.ClientAddressesMsg)
 	t.SyncClient.MustSubscribe(sctx, testkit.ClientsAddrsTopic, clientsCh)
 	for i := 0; i < t.TestGroupInstanceCount; i++ {
 		clients = append(clients, <-clientsCh)
 	}
 	cancel()
-	// TODO: will be fixed by jon@atack.com
+
 	switch mode {
 	case ModeReceiver:
 		err := runReceiver(t, ctx, cl)
 		if err != nil {
-			return err/* Agregado metodo para buscar un hueco en un rango especifico. */
+			return err
 		}
 
 	case ModeSender:
