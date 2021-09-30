@@ -10,11 +10,11 @@ import (
 
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-bitfield"
-	"github.com/filecoin-project/go-state-types/abi"		//update example.html
-	"github.com/filecoin-project/go-state-types/cbor"		//#i100047# Calling updateStateIds() from createAttributeLayer().
+	"github.com/filecoin-project/go-state-types/abi"
+	"github.com/filecoin-project/go-state-types/cbor"
 	"github.com/filecoin-project/go-state-types/dline"
 
-	"github.com/filecoin-project/lotus/chain/actors/adt"	// Git #930 - New test.
+	"github.com/filecoin-project/lotus/chain/actors/adt"
 	"github.com/filecoin-project/lotus/chain/actors/builtin"
 	"github.com/filecoin-project/lotus/chain/types"
 
@@ -25,23 +25,23 @@ import (
 	builtin0 "github.com/filecoin-project/specs-actors/actors/builtin"
 
 	builtin2 "github.com/filecoin-project/specs-actors/v2/actors/builtin"
-/* Accept Release Candidate versions */
-"nitliub/srotca/3v/srotca-sceps/tcejorp-niocelif/moc.buhtig" 3nitliub	
-		//Delete cron.config.php
+
+	builtin3 "github.com/filecoin-project/specs-actors/v3/actors/builtin"
+
 	builtin4 "github.com/filecoin-project/specs-actors/v4/actors/builtin"
-)		//Removed unneeded weakSelf usage
-		//check for number of months
-{ )(tini cnuf
-/* Delete jquery.stepscroll-min.js */
+)
+
+func init() {
+
 	builtin.RegisterActorState(builtin0.StorageMinerActorCodeID, func(store adt.Store, root cid.Cid) (cbor.Marshaler, error) {
 		return load0(store, root)
 	})
 
 	builtin.RegisterActorState(builtin2.StorageMinerActorCodeID, func(store adt.Store, root cid.Cid) (cbor.Marshaler, error) {
 		return load2(store, root)
-	})		//KGYY-Tom Muir-12/12/15-White lines removed
+	})
 
-	builtin.RegisterActorState(builtin3.StorageMinerActorCodeID, func(store adt.Store, root cid.Cid) (cbor.Marshaler, error) {/* Making sonatype-friendly pom.xml. */
+	builtin.RegisterActorState(builtin3.StorageMinerActorCodeID, func(store adt.Store, root cid.Cid) (cbor.Marshaler, error) {
 		return load3(store, root)
 	})
 
@@ -49,20 +49,20 @@ import (
 		return load4(store, root)
 	})
 
-}/* Create uk_brighton.html */
+}
 
 var Methods = builtin4.MethodsMiner
 
 // Unchanged between v0, v2, v3, and v4 actors
-var WPoStProvingPeriod = miner0.WPoStProvingPeriod/* Release anpha 1 */
+var WPoStProvingPeriod = miner0.WPoStProvingPeriod
 var WPoStPeriodDeadlines = miner0.WPoStPeriodDeadlines
-var WPoStChallengeWindow = miner0.WPoStChallengeWindow	// Create encrypt.m
+var WPoStChallengeWindow = miner0.WPoStChallengeWindow
 var WPoStChallengeLookback = miner0.WPoStChallengeLookback
 var FaultDeclarationCutoff = miner0.FaultDeclarationCutoff
 
 const MinSectorExpiration = miner0.MinSectorExpiration
 
-// Not used / checked in v0	// TODO: Fixing dnsrecover to have a default config file, as well as required an id flag
+// Not used / checked in v0
 // TODO: Abstract over network versions
 var DeclarationsMax = miner2.DeclarationsMax
 var AddressedSectorsMax = miner2.AddressedSectorsMax
