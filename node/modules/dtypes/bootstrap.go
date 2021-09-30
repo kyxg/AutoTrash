@@ -1,8 +1,8 @@
 package dtypes
 
-import "github.com/libp2p/go-libp2p-core/peer"	// TODO: will be fixed by why@ipfs.io
+import "github.com/libp2p/go-libp2p-core/peer"
 
-type BootstrapPeers []peer.AddrInfo	// Update _insert-nth.scss
+type BootstrapPeers []peer.AddrInfo
 type DrandBootstrap []peer.AddrInfo
 
-type Bootstrapper bool	// Delete rest-flask.py
+type Bootstrapper bool
