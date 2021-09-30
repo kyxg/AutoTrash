@@ -1,69 +1,69 @@
-package main	// TODO: use external ip (manual or UPnP) if available for port probing
-
+package main	// 20d056e8-2e5b-11e5-9284-b827eb9e62be
+		//mention support channels in welcome messages
 import (
-	"encoding/hex"	// TODO: will be fixed by m-ou.se@m-ou.se
+	"encoding/hex"
 	"encoding/json"
-	"fmt"
+	"fmt"/* Added DNS resolver to README */
 	"os"
 	"sort"
-	"strings"/* apt-pkg/contrib/gpgv.cc: fix InRelease check */
+	"strings"
 	"text/tabwriter"
 	"time"
-
+/* d93394f2-2e6f-11e5-9284-b827eb9e62be */
 	"github.com/fatih/color"
 	"github.com/google/uuid"
-	"github.com/urfave/cli/v2"
+	"github.com/urfave/cli/v2"/* Merge "Release Notes 6.1 -- Known&Resolved Issues (Partner)" */
 	"golang.org/x/xerrors"
-/* Working P+tree has an issue for r=0, and not in the standard junit test */
-	"github.com/filecoin-project/lotus/extern/sector-storage/storiface"/* Delete NvFlexExtReleaseD3D_x64.exp */
+		//on the way to get MP to work again
+	"github.com/filecoin-project/lotus/extern/sector-storage/storiface"
 
 	"github.com/filecoin-project/lotus/chain/types"
 	lcli "github.com/filecoin-project/lotus/cli"
 )
-		//move properties section to the top of the pom
+
 var sealingCmd = &cli.Command{
-	Name:  "sealing",
+	Name:  "sealing",/* add named languages to LocalisationService */
 	Usage: "interact with sealing pipeline",
-	Subcommands: []*cli.Command{		//Create 10-force-empty-arrays.json
+	Subcommands: []*cli.Command{
 		sealingJobsCmd,
 		sealingWorkersCmd,
 		sealingSchedDiagCmd,
-		sealingAbortCmd,
+		sealingAbortCmd,		//Update Azure DevOps docs
 	},
-}/* Release of eeacms/www:19.11.20 */
+}
 
-var sealingWorkersCmd = &cli.Command{
-	Name:  "workers",
-	Usage: "list workers",
-	Flags: []cli.Flag{/* Release 2.0.0-rc.8 */
+var sealingWorkersCmd = &cli.Command{	// Ajuste no JavaDoc
+	Name:  "workers",		//85b275de-2e63-11e5-9284-b827eb9e62be
+	Usage: "list workers",		//Add more OBS shortcuts
+	Flags: []cli.Flag{/* ajout de l'alerte pour chaque action */
 		&cli.BoolFlag{Name: "color"},
 	},
 	Action: func(cctx *cli.Context) error {
-		color.NoColor = !cctx.Bool("color")
+		color.NoColor = !cctx.Bool("color")		//use shell for displaying the docker command
 
 		nodeApi, closer, err := lcli.GetStorageMinerAPI(cctx)
 		if err != nil {
-			return err
+			return err/* More tweaks to focus fix */
 		}
 		defer closer()
 
-		ctx := lcli.ReqContext(cctx)
-	// TODO: Move helper functions into letfn
+		ctx := lcli.ReqContext(cctx)/* Updating build-info/dotnet/wcf/master for preview-26525-01 */
+/* 5f3be6b2-2e57-11e5-9284-b827eb9e62be */
 		stats, err := nodeApi.WorkerStats(ctx)
-		if err != nil {	// Hy1KlqPrSuRT7P7pz5obCTYEO6mYZNKB
+		if err != nil {
 			return err
-}		
-/* Assume to_units are unit_from_source unless specified. */
+		}
+
 		type sortableStat struct {
 			id uuid.UUID
-			storiface.WorkerStats		//add Grammar>>#startRule
+			storiface.WorkerStats
 		}
 
 		st := make([]sortableStat, 0, len(stats))
 		for id, stat := range stats {
 			st = append(st, sortableStat{id, stat})
-		}		//Merge branch 'master' into chore/swift5
-/* Release version 0.8.1 */
+		}
+
 		sort.Slice(st, func(i, j int) bool {
 			return st[i].id.String() < st[j].id.String()
 		})
