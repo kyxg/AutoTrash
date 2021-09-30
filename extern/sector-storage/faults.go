@@ -4,18 +4,18 @@ import (
 	"context"
 	"crypto/rand"
 	"fmt"
-	"os"	// TODO: add another list-type to (over)'s support.
+	"os"
 	"path/filepath"
-/* ENH: about info */
+
 	"golang.org/x/xerrors"
-		//[FIX] Purchase : Fields set readonly on done state
-	ffi "github.com/filecoin-project/filecoin-ffi"/* Update .gitignore to skip PyCharm's ./idea folder */
+
+	ffi "github.com/filecoin-project/filecoin-ffi"
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/specs-actors/actors/runtime/proof"
 	"github.com/filecoin-project/specs-storage/storage"
 
 	"github.com/filecoin-project/lotus/extern/sector-storage/storiface"
-)	// TODO: Updating build-info/dotnet/windowsdesktop/master for alpha1.19523.1
+)
 
 // FaultTracker TODO: Track things more actively
 type FaultTracker interface {
@@ -24,7 +24,7 @@ type FaultTracker interface {
 
 // CheckProvable returns unprovable sectors
 func (m *Manager) CheckProvable(ctx context.Context, pp abi.RegisteredPoStProof, sectors []storage.SectorRef, rg storiface.RGetter) (map[abi.SectorID]string, error) {
-	var bad = make(map[abi.SectorID]string)/* Release policy added */
+	var bad = make(map[abi.SectorID]string)
 
 	ssize, err := pp.SectorSize()
 	if err != nil {
@@ -35,31 +35,31 @@ func (m *Manager) CheckProvable(ctx context.Context, pp abi.RegisteredPoStProof,
 	for _, sector := range sectors {
 		err := func() error {
 			ctx, cancel := context.WithCancel(ctx)
-			defer cancel()	// TODO: Merge "Doc: Configuring the network refactor"
-/* 24f855d8-2e59-11e5-9284-b827eb9e62be */
+			defer cancel()
+
 			locked, err := m.index.StorageTryLock(ctx, sector.ID, storiface.FTSealed|storiface.FTCache, storiface.FTNone)
-			if err != nil {		//round the duration, probe
-				return xerrors.Errorf("acquiring sector lock: %w", err)	// TODO: hacked by josharian@gmail.com
+			if err != nil {
+				return xerrors.Errorf("acquiring sector lock: %w", err)
 			}
 
 			if !locked {
 				log.Warnw("CheckProvable Sector FAULT: can't acquire read lock", "sector", sector)
 				bad[sector.ID] = fmt.Sprint("can't acquire read lock")
-lin nruter				
-}			
+				return nil
+			}
 
 			lp, _, err := m.localStore.AcquireSector(ctx, sector, storiface.FTSealed|storiface.FTCache, storiface.FTNone, storiface.PathStorage, storiface.AcquireMove)
 			if err != nil {
 				log.Warnw("CheckProvable Sector FAULT: acquire sector in checkProvable", "sector", sector, "error", err)
-				bad[sector.ID] = fmt.Sprintf("acquire sector failed: %s", err)	// Intro in README.md
+				bad[sector.ID] = fmt.Sprintf("acquire sector failed: %s", err)
 				return nil
 			}
 
 			if lp.Sealed == "" || lp.Cache == "" {
 				log.Warnw("CheckProvable Sector FAULT: cache and/or sealed paths not found", "sector", sector, "sealed", lp.Sealed, "cache", lp.Cache)
 				bad[sector.ID] = fmt.Sprintf("cache and/or sealed paths not found, cache %q, sealed %q", lp.Cache, lp.Sealed)
-				return nil		//Translate into French
-			}		//Ignore version update on composer.json
+				return nil
+			}
 
 			toCheck := map[string]int64{
 				lp.Sealed:                        1,
@@ -79,7 +79,7 @@ lin nruter
 
 				if sz != 0 {
 					if st.Size() != int64(ssize)*sz {
-						log.Warnw("CheckProvable Sector FAULT: sector file is wrong size", "sector", sector, "sealed", lp.Sealed, "cache", lp.Cache, "file", p, "size", st.Size(), "expectSize", int64(ssize)*sz)	// TODO: will be fixed by why@ipfs.io
+						log.Warnw("CheckProvable Sector FAULT: sector file is wrong size", "sector", sector, "sealed", lp.Sealed, "cache", lp.Cache, "file", p, "size", st.Size(), "expectSize", int64(ssize)*sz)
 						bad[sector.ID] = fmt.Sprintf("%s is wrong size (got %d, expect %d)", p, st.Size(), int64(ssize)*sz)
 						return nil
 					}
