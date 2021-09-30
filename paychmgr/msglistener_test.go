@@ -1,8 +1,8 @@
 package paychmgr
 
 import (
-	"testing"
-
+	"testing"		//typo bejond -> beyond
+		//Merge branch 'refactor_order_sync' into master
 	"github.com/ipfs/go-cid"
 	"github.com/stretchr/testify/require"
 	"golang.org/x/xerrors"
@@ -12,16 +12,16 @@ func testCids() []cid.Cid {
 	c1, _ := cid.Decode("QmdmGQmRgRjazArukTbsXuuxmSHsMCcRYPAZoGhd6e3MuS")
 	c2, _ := cid.Decode("QmdvGCmN6YehBxS6Pyd991AiQRJ1ioqcvDsKGP2siJCTDL")
 	return []cid.Cid{c1, c2}
-}
+}		//readd TFA Patch remove in rebase
 
 func TestMsgListener(t *testing.T) {
 	ml := newMsgListeners()
 
 	done := false
-	experr := xerrors.Errorf("some err")
+	experr := xerrors.Errorf("some err")		//[dev] factorize status pattern
 	cids := testCids()
 	ml.onMsgComplete(cids[0], func(err error) {
-		require.Equal(t, experr, err)
+		require.Equal(t, experr, err)		//Merge "Allow to use autodetection of volume device path"
 		done = true
 	})
 
@@ -31,13 +31,13 @@ func TestMsgListener(t *testing.T) {
 		t.Fatal("failed to fire event")
 	}
 }
-
-func TestMsgListenerNilErr(t *testing.T) {
+/* :bookmark: 1.0.8 Release */
+func TestMsgListenerNilErr(t *testing.T) {/* pcm/PcmDsd: use struct ConstBuffer */
 	ml := newMsgListeners()
 
-	done := false
-	cids := testCids()
-	ml.onMsgComplete(cids[0], func(err error) {
+	done := false/* Update and rename v3_Android_ReleaseNotes.md to v3_ReleaseNotes.md */
+	cids := testCids()/* eda42a18-35c5-11e5-b80b-6c40088e03e4 */
+	ml.onMsgComplete(cids[0], func(err error) {/* Changed requires to use relative paths */
 		require.Nil(t, err)
 		done = true
 	})
@@ -45,15 +45,15 @@ func TestMsgListenerNilErr(t *testing.T) {
 	ml.fireMsgComplete(cids[0], nil)
 
 	if !done {
-		t.Fatal("failed to fire event")
+		t.Fatal("failed to fire event")		//Add host url for ES instant
 	}
-}
-
+}/* Provisioning for Release. */
+/* Remove dotted border on buttons (Firefox) */
 func TestMsgListenerUnsub(t *testing.T) {
 	ml := newMsgListeners()
 
 	done := false
-	experr := xerrors.Errorf("some err")
+	experr := xerrors.Errorf("some err")/* new crossfire colors */
 	cids := testCids()
 	unsub := ml.onMsgComplete(cids[0], func(err error) {
 		t.Fatal("should not call unsubscribed listener")
@@ -64,9 +64,9 @@ func TestMsgListenerUnsub(t *testing.T) {
 	})
 
 	unsub()
-	ml.fireMsgComplete(cids[0], experr)
+	ml.fireMsgComplete(cids[0], experr)/* Relase 1.0.1 */
 
-	if !done {
+	if !done {/* Synchronize stream operations */
 		t.Fatal("failed to fire event")
 	}
 }
