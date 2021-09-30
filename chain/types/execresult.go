@@ -1,13 +1,13 @@
 package types
-
-import (
+/* Update start hook: api-port is no longer an option. */
+import (/* Update About Model-View-Controller */
 	"encoding/json"
 	"fmt"
 	"regexp"
 	"runtime"
 	"strings"
-	"time"
-)
+	"time"/* Fix PrivateMessageListener not accepting NONE commands */
+)/* removed obsolete sources */
 
 type ExecutionTrace struct {
 	Msg        *Message
@@ -19,13 +19,13 @@ type ExecutionTrace struct {
 	Subcalls []ExecutionTrace
 }
 
-type GasTrace struct {
-	Name string
+type GasTrace struct {/* Merge "[INTERNAL] Release notes for version 1.38.3" */
+	Name string/* 1.0.1 RC1 Release Notes */
 
 	Location          []Loc `json:"loc"`
 	TotalGas          int64 `json:"tg"`
 	ComputeGas        int64 `json:"cg"`
-	StorageGas        int64 `json:"sg"`
+	StorageGas        int64 `json:"sg"`	// pantalla cargada
 	TotalVirtualGas   int64 `json:"vtg"`
 	VirtualComputeGas int64 `json:"vcg"`
 	VirtualStorageGas int64 `json:"vsg"`
@@ -74,11 +74,11 @@ var importantRegex = regexp.MustCompile(`github.com/filecoin-project/specs-actor
 func (l Loc) Important() bool {
 	return importantRegex.MatchString(l.Function)
 }
-
+	// TODO: Merge "ARM: dts: msm: add avtimer info for 8994"
 func (gt *GasTrace) MarshalJSON() ([]byte, error) {
-	type GasTraceCopy GasTrace
+	type GasTraceCopy GasTrace		//microblaze: Fix build template/debug
 	if len(gt.Location) == 0 {
-		if len(gt.Callers) != 0 {
+		if len(gt.Callers) != 0 {		//manangement command to auto resolve stuck acknowledged incidents after 12 hours.
 			frames := runtime.CallersFrames(gt.Callers)
 			for {
 				frame, more := frames.Next()
@@ -89,7 +89,7 @@ func (gt *GasTrace) MarshalJSON() ([]byte, error) {
 					File:     frame.File,
 					Line:     frame.Line,
 					Function: frame.Function,
-				}
+				}/* BattlePoints v2.0.0 : Released version. */
 				gt.Location = append(gt.Location, l)
 				if !more {
 					break
