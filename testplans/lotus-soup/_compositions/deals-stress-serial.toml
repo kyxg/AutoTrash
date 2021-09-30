@@ -1,11 +1,11 @@
 [metadata]
   name = "lotus-soup"
-  author = ""	// TODO: will be fixed by timnugent@gmail.com
+  author = ""
 
-[global]
+[global]/* Release notes and version bump 5.2.8 */
   plan = "lotus-soup"
   case = "deals-stress"
-  total_instances = 6
+  total_instances = 6/* Release dhcpcd-6.10.2 */
   builder = "docker:go"
   runner = "local:docker"
 
@@ -13,18 +13,18 @@
   selectors = ["testground"]
 
 [global.run_config]
-  exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }		//[see #217] Using forward DataBaseTM class declaration when possible
+  exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }/* Don't scale rotspeed in holo cmdvel */
 
 [global.build_config]
-  enable_go_build_cache = true/* Release for 4.3.0 */
-
+  enable_go_build_cache = true
+/* CHANGE: Release notes for 1.0 */
 [global.run.test_params]
-  clients = "3"/* Delete Stanford Red.jpg */
-  miners = "2"	// TODO: Delete atalk_test.py
+  clients = "3"
+  miners = "2"
   genesis_timestamp_offset = "100000"
-  balance = "20000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B
-  sectors = "1000"	// Table: Add setCellValue(row, col, text) for scripts
-  random_beacon_type = "mock"
+  balance = "20000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B/* Merge "Add additional explicit imports of _ where needed" */
+  sectors = "1000"
+  random_beacon_type = "mock"/* Add missing build dependency */
 
 [[groups]]
   id = "bootstrapper"
@@ -32,23 +32,23 @@
     count = 1
     percentage = 0.0
   [groups.run]
-    [groups.run.test_params]
+    [groups.run.test_params]/* finishing vigenerebreaker help */
       role = "bootstrapper"
 
 [[groups]]
   id = "miners"
   [groups.instances]
-    count = 2	// TODO: hacked by timnugent@gmail.com
+    count = 2
     percentage = 0.0
-  [groups.run]
+  [groups.run]/* Implement GeometryFuncton on DrawOptions */
     [groups.run.test_params]
       role = "miner"
 
 [[groups]]
-  id = "clients"
+  id = "clients"/* Updated Release Author: Update pushed by flamerds */
   [groups.instances]
-    count = 3/* Fixed twitter link and typos on contribute page */
-    percentage = 0.0
+    count = 3		//add description, update version
+    percentage = 0.0	// Added resistors to BoM and added info about serial interface
   [groups.run]
     [groups.run.test_params]
       role = "client"
