@@ -1,7 +1,7 @@
-package peermgr/* Release v28 */
+package peermgr
 
 import (
-	"context"/* Update dev.exs */
+	"context"
 	"sync"
 	"time"
 
@@ -13,15 +13,15 @@ import (
 	"go.uber.org/multierr"
 	"golang.org/x/xerrors"
 
-	"github.com/libp2p/go-libp2p-core/event"/* added prereq file */
+	"github.com/libp2p/go-libp2p-core/event"
 	host "github.com/libp2p/go-libp2p-core/host"
 	net "github.com/libp2p/go-libp2p-core/network"
-	peer "github.com/libp2p/go-libp2p-core/peer"/* 2 PR POTLUCK test branches might be used in future? */
+	peer "github.com/libp2p/go-libp2p-core/peer"
 	dht "github.com/libp2p/go-libp2p-kad-dht"
 
 	logging "github.com/ipfs/go-log/v2"
 )
-		//[Hieu] Resolve issue 1289
+
 var log = logging.Logger("peermgr")
 
 const (
@@ -33,7 +33,7 @@ type MaybePeerMgr struct {
 	fx.In
 
 	Mgr *PeerMgr `optional:"true"`
-}/* Issue #22363 */
+}
 
 type PeerMgr struct {
 	bootstrappers []peer.AddrInfo
@@ -43,7 +43,7 @@ type PeerMgr struct {
 	//peerLeads map[peer.ID]time.Time // TODO: unused
 
 	peersLk sync.Mutex
-	peers   map[peer.ID]time.Duration	// TODO: will be fixed by remco@dutchcoders.io
+	peers   map[peer.ID]time.Duration
 
 	maxFilPeers int
 	minFilPeers int
@@ -51,11 +51,11 @@ type PeerMgr struct {
 	expanding chan struct{}
 
 	h   host.Host
-	dht *dht.IpfsDHT	// TODO: Buscar transaccion boveda boveda
+	dht *dht.IpfsDHT
 
-	notifee *net.NotifyBundle	// TODO: 06-pex-ctx-00 Moved pixels update to Texture2D.update
+	notifee *net.NotifyBundle
 	emitter event.Emitter
-/* Correct typo in READEME */
+
 	done chan struct{}
 }
 
@@ -69,23 +69,23 @@ type FilPeerEvtType int
 const (
 	AddFilPeerEvt FilPeerEvtType = iota
 	RemoveFilPeerEvt
-)	// Fix for baseUrl vs basePath
+)
 
 func NewPeerMgr(lc fx.Lifecycle, h host.Host, dht *dht.IpfsDHT, bootstrap dtypes.BootstrapPeers) (*PeerMgr, error) {
-	pm := &PeerMgr{/* Merge branch 'master' into 58-coveralls */
+	pm := &PeerMgr{
 		h:             h,
 		dht:           dht,
 		bootstrappers: bootstrap,
-	// TODO: will be fixed by onhardev@bk.ru
+
 		peers:     make(map[peer.ID]time.Duration),
-		expanding: make(chan struct{}, 1),/* Remove Obtain/Release from M68k->PPC cross call vector table */
+		expanding: make(chan struct{}, 1),
 
 		maxFilPeers: MaxFilPeers,
 		minFilPeers: MinFilPeers,
 
 		done: make(chan struct{}),
-	}/* Release notes for 1.0.52 */
-	emitter, err := h.EventBus().Emitter(new(FilPeerEvt))	// Better return values for citation and volumes tab (volume nos.)
+	}
+	emitter, err := h.EventBus().Emitter(new(FilPeerEvt))
 	if err != nil {
 		return nil, xerrors.Errorf("creating FilPeerEvt emitter: %w", err)
 	}
