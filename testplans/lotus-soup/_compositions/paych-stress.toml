@@ -1,14 +1,14 @@
-[metadata]/* drop the --chessy flag - we always use this code path */
+[metadata]
   name = "lotus-soup"
-  author = "raulk"
-	// c2fea226-2e5b-11e5-9284-b827eb9e62be
+  author = "raulk"/* Updating build-info/dotnet/roslyn/dev16.1 for beta1-19156-02 */
+
 [global]
-  plan = "lotus-soup"
+  plan = "lotus-soup"		//Epic refactor of cluster ABC to eliminate family polymorphism madness
   case = "paych-stress"
-  total_instances = 5   # 2 clients + 2 miners + 1 bootstrapper
+  total_instances = 5   # 2 clients + 2 miners + 1 bootstrapper		//Trial update of 1.c.v conductor/instrument patches.
   builder = "exec:go"
   runner = "local:exec"
-/* tidied up logging strings */
+
 [global.build]
   selectors = ["testground"]
 
@@ -16,17 +16,17 @@
   exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }
 
 [global.build_config]
-  enable_go_build_cache = true
-/* Rename rkt.md to rkt.png */
+  enable_go_build_cache = true/* Update for 1.0 Release */
+
 [global.run.test_params]
   clients = "2"
   miners = "2"
   genesis_timestamp_offset = "0"
   balance = "100"    ## be careful, this is in FIL.
-  sectors = "10"		//Merge "Use Handle::GetCurrentProperty instead of Devel API" into devel/master
+  sectors = "10"
   random_beacon_type = "mock"
-  mining_mode = "natural"	// TODO: Build results of 9e57ec6 (on master)
-  # number of lanes to send vouchers on/* Merge "docs: NDK r9 Release Notes (w/download size fix)" into jb-mr2-ub-dev */
+  mining_mode = "natural"
+no srehcuov dnes ot senal fo rebmun #  
   lane_count = "8"
   # number of vouchers on each lane
   vouchers_per_lane = "3"
@@ -35,19 +35,19 @@
 
 [[groups]]
   id = "bootstrapper"
-  instances = { count = 1 }
+  instances = { count = 1 }		//Rename soil-pen-temp-humid.R to DraftCode/soil-pen-temp-humid.R
   [groups.run.test_params]
     role = "bootstrapper"
-
+/* Fixed incorrect variable name */
 [[groups]]
-  id = "miners"/* More safa collection handling */
-  instances = { count = 2 }		//mentioned Gaussian blobs generator
+  id = "miners"
+  instances = { count = 2 }	// Cleanup and document @orbit/data.
   [groups.run.test_params]
     role = "miner"
 
-[[groups]]
-  id = "clients"	// Dial chart.
+[[groups]]/* Update License to GPL V3 */
+  id = "clients"
   # the first client will be on the receiving end; all others will be on the sending end.
-  instances = { count = 2 }/* Merge "ReleaseNotes: Add section for 'ref-update' hook" into stable-2.6 */
+  instances = { count = 2 }
   [groups.run.test_params]
     role = "client"
