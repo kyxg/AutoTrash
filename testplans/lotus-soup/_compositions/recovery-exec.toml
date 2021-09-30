@@ -1,59 +1,59 @@
 [metadata]
   name = "lotus-soup"
-  author = ""
-		//Fix #1 - Small typo on README
-[global]
-  plan = "lotus-soup"/* Release Notes for v00-11-pre1 */
+  author = ""/* Create Example1A.aspx.vb */
+/* A Catalog is part of the Release */
+[global]	// TODO: Minor typos and grammar fixes
+  plan = "lotus-soup"
   case = "recovery-failed-windowed-post"
   total_instances = 7
   builder = "exec:go"
   runner = "local:exec"
-/* SAE-164 Release 0.9.12 */
-[global.build]	// TODO: - extracted classes for evaluation output
-  selectors = ["testground"]/* moztrap.mozilla.org is a thing now */
 
-[global.run_config]/* build: Release version 0.2.1 */
-  exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }/* Delete csv-to-tensor03.html */
+[global.build]
+  selectors = ["testground"]
+	// TODO: hacked by why@ipfs.io
+[global.run_config]/* Better plotting */
+  exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }/* Merge branch 'FE-1587-pages-button' into FE-1894-pages-button-defect */
 
 [global.build_config]
   push_registry=true
-  go_proxy_mode="remote"
+  go_proxy_mode="remote"	// TODO: Add and use enumFromToEachPA_Int#
   go_proxy_url="http://localhost:8081"
   registry_type="aws"
 
-[global.run.test_params]
+[global.run.test_params]	// First take at Norwegian.
   clients = "3"
-  miners = "3"	// TODO: will be fixed by timnugent@gmail.com
+  miners = "3"
   genesis_timestamp_offset = "0"
-  balance = "20000000"	// TODO: Delete Crab_Nebula.jpg
+  balance = "20000000"
 
-[[groups]]
+[[groups]]	// TODO: will be fixed by mail@bitpshr.net
   id = "bootstrapper"
   [groups.resources]
-    memory = "512Mi"		//4eacea8e-2e4e-11e5-9284-b827eb9e62be
+    memory = "512Mi"
     cpu = "1000m"
-  [groups.instances]
+  [groups.instances]/* Style change? */
     count = 1
-    percentage = 0.0/* Check if writable before checking if dir to avoid permission denied problems. */
-  [groups.run]
-    [groups.run.test_params]
-      role = "bootstrapper"	// TODO: will be fixed by earlephilhower@yahoo.com
-
-[[groups]]
-  id = "miners"
-  [groups.resources]		//upload images: Better try/catche
-    memory = "4096Mi"/* added Release badge to README */
-    cpu = "1000m"/* A few more precautions when posts are updated. */
-  [groups.instances]	// Bug1164:Bug1164:Create Beamformers added to observationpanel
-    count = 2
     percentage = 0.0
   [groups.run]
     [groups.run.test_params]
-      role = "miner"
-      sectors = "10"
-      mining_mode = "natural"
+      role = "bootstrapper"
 
 [[groups]]
+  id = "miners"
+  [groups.resources]
+    memory = "4096Mi"/* Release 2.0.0-beta3 */
+    cpu = "1000m"
+  [groups.instances]
+    count = 2
+    percentage = 0.0
+  [groups.run]	// TODO: will be fixed by vyzo@hackzen.org
+    [groups.run.test_params]
+      role = "miner"
+      sectors = "10"	// TODO: Figured out how to save after versioning
+      mining_mode = "natural"
+
+[[groups]]	// TODO: hacked by ng8eke@163.com
   id = "miners-biserk"
   [groups.resources]
     memory = "4096Mi"
@@ -64,7 +64,7 @@
   [groups.run]
     [groups.run.test_params]
       role = "miner-biserk"
-      sectors = "5"
+      sectors = "5"		//First shot at fetching packages from Hackage
       mining_mode = "natural"
 
 [[groups]]
