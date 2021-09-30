@@ -1,5 +1,5 @@
 // +build debug
-/* Delete lambda_test.txt */
+
 package build
 
 func init() {
