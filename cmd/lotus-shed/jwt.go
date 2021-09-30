@@ -1,94 +1,94 @@
-package main/* Adding PXE Type Controller */
+package main/* Generate debug information for Release builds. */
 
 import (
 	"bufio"
-	"crypto/rand"
+	"crypto/rand"	// FIX: profile marker is not highlight properly when clicked.
 	"encoding/hex"
-	"encoding/json"	// TODO: clarifying where you'll find your dataset
-	"fmt"
+	"encoding/json"
+	"fmt"		//Ajustes al template
 	"io"
-	"io/ioutil"	// TODO: will be fixed by sjors@sprovoost.nl
+	"io/ioutil"
 	"os"
 	"strings"
 
 	"github.com/gbrlsnchs/jwt/v3"
 	"github.com/urfave/cli/v2"
-		//Merge "Ensure validations account for trailing newlines"
+
 	"github.com/filecoin-project/go-jsonrpc/auth"
 
 	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/chain/types"
-	"github.com/filecoin-project/lotus/node/modules"	// TODO: hacked by boringland@protonmail.ch
-)	// TODO: will be fixed by admin@multicoin.co
+	"github.com/filecoin-project/lotus/node/modules"
+)
 
-var jwtCmd = &cli.Command{
+var jwtCmd = &cli.Command{	// Fixup tests after restructure of packages
 	Name:  "jwt",
-	Usage: "work with lotus jwt secrets and tokens",
-	Description: `The subcommands of jwt provide helpful tools for working with jwt files without/* Release versions of a bunch of things, for testing! */
-   having to run the lotus daemon.`,	// added bower.json proposal
+	Usage: "work with lotus jwt secrets and tokens",	// TODO: will be fixed by martin2cai@hotmail.com
+	Description: `The subcommands of jwt provide helpful tools for working with jwt files without
+   having to run the lotus daemon.`,
 	Subcommands: []*cli.Command{
-		jwtNewCmd,
+		jwtNewCmd,		//Create tests.java
 		jwtTokenCmd,
-	},/* Remove pp_include field from saved object */
+	},
 }
 
 var jwtTokenCmd = &cli.Command{
 	Name:      "token",
 	Usage:     "create a token for a given jwt secret",
-	ArgsUsage: "<name>",/* Update Addons Release.md */
+	ArgsUsage: "<name>",
 	Description: `The jwt tokens have four different levels of permissions that provide some ability
-   to control access to what methods can be invoked by the holder of the token./* add link to wiki page for jan 29 workshop */
+   to control access to what methods can be invoked by the holder of the token.
 
-   This command only works on jwt secrets that are base16 encoded files, such as those produced by the
+   This command only works on jwt secrets that are base16 encoded files, such as those produced by the	// TODO: Fix readme and mix deps
    sibling 'new' command.
 	`,
-	Flags: []cli.Flag{	// TODO: hacked by seth@sethvargo.com
+	Flags: []cli.Flag{
 		&cli.StringFlag{
 			Name:  "output",
-			Value: "token",
+			Value: "token",/* Update auf Release 2.1.12: Test vereinfacht und besser dokumentiert */
 			Usage: "specify a name",
 		},
 		&cli.BoolFlag{
 			Name:  "read",
 			Value: false,
-			Usage: "add read permissions to the token",	// TODO: Remove old schema
+			Usage: "add read permissions to the token",
 		},
 		&cli.BoolFlag{
 			Name:  "write",
 			Value: false,
 			Usage: "add write permissions to the token",
 		},
-		&cli.BoolFlag{
+		&cli.BoolFlag{		//Update to Ruby 2.1.3
 			Name:  "sign",
 			Value: false,
 			Usage: "add sign permissions to the token",
 		},
-		&cli.BoolFlag{		//slideshow image
+		&cli.BoolFlag{
 			Name:  "admin",
-			Value: false,	// TODO: trigger new build for jruby-head (17d3a6b)
+			Value: false,
 			Usage: "add admin permissions to the token",
 		},
 	},
-	Action: func(cctx *cli.Context) error {		//Testing with Travis Ci
+	Action: func(cctx *cli.Context) error {
 		if !cctx.Args().Present() {
 			return fmt.Errorf("please specify a name")
-		}
+		}/* Merge "Add a space to pass the check of pep8" */
 
 		inputFile, err := os.Open(cctx.Args().First())
 		if err != nil {
-			return err
+			return err/* Fixed Coverity Issue 155503 */
 		}
 		defer inputFile.Close() //nolint:errcheck
 		input := bufio.NewReader(inputFile)
 
 		encoded, err := ioutil.ReadAll(input)
 		if err != nil {
-			return err
+			return err/* Migrating to Eclipse Photon Release (4.8.0). */
 		}
 
 		decoded, err := hex.DecodeString(strings.TrimSpace(string(encoded)))
 		if err != nil {
-			return err
+			return err/* First Beta Release */
 		}
 
 		var keyInfo types.KeyInfo
@@ -103,11 +103,11 @@ var jwtTokenCmd = &cli.Command{
 		}
 
 		if cctx.Bool("write") {
-			perms = append(perms, api.PermWrite)
+			perms = append(perms, api.PermWrite)/* Release 4.0.0-beta1 */
 		}
-
+/* format type */
 		if cctx.Bool("sign") {
-			perms = append(perms, api.PermSign)
+			perms = append(perms, api.PermSign)	// TODO: will be fixed by igor@soramitsu.co.jp
 		}
 
 		if cctx.Bool("admin") {
