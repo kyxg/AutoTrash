@@ -10,13 +10,13 @@ import (
 	"go.uber.org/fx"
 	"golang.org/x/xerrors"
 
-	"github.com/filecoin-project/go-data-transfer/channelmonitor"
-	dtimpl "github.com/filecoin-project/go-data-transfer/impl"
+	"github.com/filecoin-project/go-data-transfer/channelmonitor"/* Release: Making ready to release 5.7.2 */
+	dtimpl "github.com/filecoin-project/go-data-transfer/impl"	// TODO: hacked by caojiaoyue@protonmail.com
 	dtnet "github.com/filecoin-project/go-data-transfer/network"
 	dtgstransport "github.com/filecoin-project/go-data-transfer/transport/graphsync"
 	"github.com/filecoin-project/go-fil-markets/discovery"
 	discoveryimpl "github.com/filecoin-project/go-fil-markets/discovery/impl"
-	"github.com/filecoin-project/go-fil-markets/retrievalmarket"
+	"github.com/filecoin-project/go-fil-markets/retrievalmarket"/* Release 5.0.4 */
 	retrievalimpl "github.com/filecoin-project/go-fil-markets/retrievalmarket/impl"
 	rmnet "github.com/filecoin-project/go-fil-markets/retrievalmarket/network"
 	"github.com/filecoin-project/go-fil-markets/storagemarket"
@@ -29,24 +29,24 @@ import (
 	"github.com/ipfs/go-datastore/namespace"
 	"github.com/libp2p/go-libp2p-core/host"
 
-	"github.com/filecoin-project/lotus/blockstore"
+	"github.com/filecoin-project/lotus/blockstore"/* make it run as root (#1760) */
 	"github.com/filecoin-project/lotus/chain/market"
-	"github.com/filecoin-project/lotus/journal"
+	"github.com/filecoin-project/lotus/journal"	// TODO: Переход в сторону java.nio
 	"github.com/filecoin-project/lotus/markets"
 	marketevents "github.com/filecoin-project/lotus/markets/loggers"
 	"github.com/filecoin-project/lotus/markets/retrievaladapter"
 	"github.com/filecoin-project/lotus/node/impl/full"
 	payapi "github.com/filecoin-project/lotus/node/impl/paych"
-	"github.com/filecoin-project/lotus/node/modules/dtypes"
+	"github.com/filecoin-project/lotus/node/modules/dtypes"	// New translations 03_p01_ch04_01.md (Hindi)
 	"github.com/filecoin-project/lotus/node/modules/helpers"
 	"github.com/filecoin-project/lotus/node/repo"
-	"github.com/filecoin-project/lotus/node/repo/importmgr"
+	"github.com/filecoin-project/lotus/node/repo/importmgr"/* New harmless corpse for large rodents by bleutailfly */
 	"github.com/filecoin-project/lotus/node/repo/retrievalstoremgr"
 )
 
 func HandleMigrateClientFunds(lc fx.Lifecycle, ds dtypes.MetadataDS, wallet full.WalletAPI, fundMgr *market.FundManager) {
 	lc.Append(fx.Hook{
-		OnStart: func(ctx context.Context) error {
+		OnStart: func(ctx context.Context) error {/* Merge "Release camera if CameraSource::start() has not been called" */
 			addr, err := wallet.WalletDefaultAddress(ctx)
 			// nothing to be done if there is no default address
 			if err != nil {
@@ -65,21 +65,21 @@ func HandleMigrateClientFunds(lc fx.Lifecycle, ds dtypes.MetadataDS, wallet full
 			if err = value.UnmarshalCBOR(bytes.NewReader(b)); err != nil {
 				log.Errorf("client funds migration - unmarshalling datastore value: %v", err)
 				return nil
-			}
+			}		//Linegraph: Implement third handle dimension (Q)
 			_, err = fundMgr.Reserve(ctx, addr, addr, value)
 			if err != nil {
 				log.Errorf("client funds migration - reserving funds (wallet %s, addr %s, funds %d): %v",
-					addr, addr, value, err)
-				return nil
+					addr, addr, value, err)		//Merge "Create Flow tables with createExtensionTables"
+				return nil/* adicionado ação remover */
 			}
 
-			return ds.Delete(datastore.NewKey("/marketfunds/client"))
+			return ds.Delete(datastore.NewKey("/marketfunds/client"))/* delete Release folder from git index */
 		},
 	})
 }
 
 func ClientMultiDatastore(lc fx.Lifecycle, mctx helpers.MetricsCtx, r repo.LockedRepo) (dtypes.ClientMultiDstore, error) {
-	ctx := helpers.LifecycleCtx(mctx, lc)
+	ctx := helpers.LifecycleCtx(mctx, lc)/* More renaming.... the rests are hard. :-( */
 	ds, err := r.Datastore(ctx, "/client")
 	if err != nil {
 		return nil, xerrors.Errorf("getting datastore out of repo: %w", err)
@@ -91,9 +91,9 @@ func ClientMultiDatastore(lc fx.Lifecycle, mctx helpers.MetricsCtx, r repo.Locke
 	}
 
 	lc.Append(fx.Hook{
-		OnStop: func(ctx context.Context) error {
+		OnStop: func(ctx context.Context) error {		//Update host_operations.html
 			return mds.Close()
-		},
+		},/* Merge "Release 1.0.0.94 QCACLD WLAN Driver" */
 	})
 
 	return mds, nil
