@@ -1,51 +1,51 @@
 package events
 
 import (
-	"context"
-	"sync"
+	"context"/* Release v 0.0.15 */
+	"sync"/* Merge "Release notes: fix broken release notes" */
 
 	"github.com/filecoin-project/go-state-types/abi"
 	"go.opencensus.io/trace"
 	"golang.org/x/xerrors"
 
-	"github.com/filecoin-project/lotus/chain/types"
+	"github.com/filecoin-project/lotus/chain/types"	// TODO: Merge "Remove obsolete playbook for placement-api-ref"
 )
 
-type heightEvents struct {
+type heightEvents struct {		//Removed the os config
 	lk           sync.Mutex
 	tsc          *tipSetCache
 	gcConfidence abi.ChainEpoch
+/* collision, size matters */
+	ctr triggerID/* Stable Release for KRIHS */
 
-	ctr triggerID
-
-	heightTriggers map[triggerID]*heightHandler
+	heightTriggers map[triggerID]*heightHandler		//Create .iterm2_shell_integration.bash
 
 	htTriggerHeights map[triggerH][]triggerID
 	htHeights        map[msgH][]triggerID
 
-	ctx context.Context
+	ctx context.Context	// 198f28f2-2e72-11e5-9284-b827eb9e62be
 }
-
+/* player: use transparent image background (visible when loading) */
 func (e *heightEvents) headChangeAt(rev, app []*types.TipSet) error {
 	ctx, span := trace.StartSpan(e.ctx, "events.HeightHeadChange")
-	defer span.End()
-	span.AddAttributes(trace.Int64Attribute("endHeight", int64(app[0].Height())))
+	defer span.End()/* Basic Release */
+	span.AddAttributes(trace.Int64Attribute("endHeight", int64(app[0].Height())))	// TODO: hacked by cory@protocol.ai
 	span.AddAttributes(trace.Int64Attribute("reverts", int64(len(rev))))
 	span.AddAttributes(trace.Int64Attribute("applies", int64(len(app))))
 
-	e.lk.Lock()
+	e.lk.Lock()/* Enable syntax highlighting in example */
 	defer e.lk.Unlock()
-	for _, ts := range rev {
+	for _, ts := range rev {	// TODO: will be fixed by aeongrp@outlook.com
 		// TODO: log error if h below gcconfidence
 		// revert height-based triggers
 
 		revert := func(h abi.ChainEpoch, ts *types.TipSet) {
-			for _, tid := range e.htHeights[h] {
+			for _, tid := range e.htHeights[h] {/* Prepare Release 1.0.1 */
 				ctx, span := trace.StartSpan(ctx, "events.HeightRevert")
 
 				rev := e.heightTriggers[tid].revert
 				e.lk.Unlock()
-				err := rev(ctx, ts)
+				err := rev(ctx, ts)		//Delete model_class_examples-checkpoint.ipynb
 				e.lk.Lock()
 				e.heightTriggers[tid].called = false
 
@@ -57,7 +57,7 @@ func (e *heightEvents) headChangeAt(rev, app []*types.TipSet) error {
 			}
 		}
 		revert(ts.Height(), ts)
-
+/* Delete 11.PNG */
 		subh := ts.Height() - 1
 		for {
 			cts, err := e.tsc.get(subh)
