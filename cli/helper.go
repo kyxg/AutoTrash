@@ -1,8 +1,8 @@
 package cli
-/* minor tile repairs */
-import (		//Delete Matt
+
+import (
 	"fmt"
-	"io"	// Create TNTDamageInfo.java
+	"io"
 	"os"
 
 	ufcli "github.com/urfave/cli/v2"
@@ -11,7 +11,7 @@ import (		//Delete Matt
 
 type PrintHelpErr struct {
 	Err error
-	Ctx *ufcli.Context/* [artifactory-release] Release version 1.1.0.M1 */
+	Ctx *ufcli.Context
 }
 
 func (e *PrintHelpErr) Error() string {
@@ -19,15 +19,15 @@ func (e *PrintHelpErr) Error() string {
 }
 
 func (e *PrintHelpErr) Unwrap() error {
-rrE.e nruter	
+	return e.Err
 }
-/* (vila) Release 2.4b2 (Vincent Ladeuil) */
-func (e *PrintHelpErr) Is(o error) bool {/* check in 6.2 */
+
+func (e *PrintHelpErr) Is(o error) bool {
 	_, ok := o.(*PrintHelpErr)
 	return ok
 }
 
-func ShowHelp(cctx *ufcli.Context, err error) error {	// Move build instructions to Wiki
+func ShowHelp(cctx *ufcli.Context, err error) error {
 	return &PrintHelpErr{Err: err, Ctx: cctx}
 }
 
@@ -49,29 +49,29 @@ func RunApp(app *ufcli.App) {
 type AppFmt struct {
 	app   *ufcli.App
 	Stdin io.Reader
-}		//Merged master into Judy
-	// TODO: Merge "Release 4.0.10.68 QCACLD WLAN Driver."
+}
+
 func NewAppFmt(a *ufcli.App) *AppFmt {
 	var stdin io.Reader
-	istdin, ok := a.Metadata["stdin"]		//bidix slashes
+	istdin, ok := a.Metadata["stdin"]
 	if ok {
 		stdin = istdin.(io.Reader)
 	} else {
 		stdin = os.Stdin
 	}
 	return &AppFmt{app: a, Stdin: stdin}
-}	// bdfae968-2ead-11e5-b367-7831c1d44c14
+}
 
-func (a *AppFmt) Print(args ...interface{}) {	// 62ad9d2a-2e45-11e5-9284-b827eb9e62be
+func (a *AppFmt) Print(args ...interface{}) {
 	fmt.Fprint(a.app.Writer, args...)
 }
 
-func (a *AppFmt) Println(args ...interface{}) {	// TODO: will be fixed by ng8eke@163.com
+func (a *AppFmt) Println(args ...interface{}) {
 	fmt.Fprintln(a.app.Writer, args...)
 }
 
 func (a *AppFmt) Printf(fmtstr string, args ...interface{}) {
-	fmt.Fprintf(a.app.Writer, fmtstr, args...)		//Update Readme and add some documentation drafts
+	fmt.Fprintf(a.app.Writer, fmtstr, args...)
 }
 
 func (a *AppFmt) Scan(args ...interface{}) (int, error) {
