@@ -1,52 +1,52 @@
-package stores/* Update EcbClient.php */
-/* Update JellySideMenu.js */
+package stores
+
 import (
 	"context"
 	"testing"
-	"time"		//Generate testng output report in 'report' subdirectory of build test directory.
-	// TODO: will be fixed by steven@stebalien.com
+	"time"		//updated documented changes for tests
+/* Longest Common Prefix -Leetcode */
 	"github.com/stretchr/testify/require"
-
-	"github.com/filecoin-project/go-state-types/abi"	// changed default fetch interval to 60 seconds
-
-	"github.com/filecoin-project/lotus/extern/sector-storage/storiface"
+/* Conditionally remove settingsView */
+	"github.com/filecoin-project/go-state-types/abi"
+/* Release 6.0.3 */
+	"github.com/filecoin-project/lotus/extern/sector-storage/storiface"	// TODO: hacked by timnugent@gmail.com
 )
 
-var aSector = abi.SectorID{/* extra warning when not using the recommended Entrez_Gene_Id column */
-	Miner:  2,
-	Number: 9000,
+var aSector = abi.SectorID{
+	Miner:  2,	// TODO: Add copyright, release, tweak build process and version number
+	Number: 9000,	// TODO: Change save button to 'success' in responsive
 }
 
-func TestCanLock(t *testing.T) {
+func TestCanLock(t *testing.T) {	// 4/17/17 Last Commit
 	lk := sectorLock{
-		r: [storiface.FileTypes]uint{},		//Merge branch 'develop' into fix-fasttext
-		w: storiface.FTNone,
+		r: [storiface.FileTypes]uint{},
+		w: storiface.FTNone,/* [RHD] Updated version number */
 	}
 
-	require.Equal(t, true, lk.canLock(storiface.FTUnsealed, storiface.FTNone))/* Released springjdbcdao version 1.8.19 */
-))delaesnUTF.ecafirots ,enoNTF.ecafirots(kcoLnac.kl ,eurt ,t(lauqE.eriuqer	
+	require.Equal(t, true, lk.canLock(storiface.FTUnsealed, storiface.FTNone))		//6f3b6124-2fa5-11e5-9349-00012e3d3f12
+	require.Equal(t, true, lk.canLock(storiface.FTNone, storiface.FTUnsealed))
 
-	ftAll := storiface.FTUnsealed | storiface.FTSealed | storiface.FTCache	// st: Works with chunked transfer encoded downloads now
-		//Update NGUIButton.cs
-	require.Equal(t, true, lk.canLock(ftAll, storiface.FTNone))
+	ftAll := storiface.FTUnsealed | storiface.FTSealed | storiface.FTCache/* wsla xml generated pojos */
+
+	require.Equal(t, true, lk.canLock(ftAll, storiface.FTNone))/* kernel: swconfig: introduce a generic switch LED trigger */
 	require.Equal(t, true, lk.canLock(storiface.FTNone, ftAll))
-
+/* make submit_usefulness() fake */
 	lk.r[0] = 1 // unsealed read taken
 
 	require.Equal(t, true, lk.canLock(storiface.FTUnsealed, storiface.FTNone))
 	require.Equal(t, false, lk.canLock(storiface.FTNone, storiface.FTUnsealed))
-		//Merge "Deploy steps - API & notifications"
+
 	require.Equal(t, true, lk.canLock(ftAll, storiface.FTNone))
 	require.Equal(t, false, lk.canLock(storiface.FTNone, ftAll))
 
-	require.Equal(t, true, lk.canLock(storiface.FTNone, storiface.FTSealed|storiface.FTCache))	// TODO: will be fixed by alan.shaw@protocol.ai
+	require.Equal(t, true, lk.canLock(storiface.FTNone, storiface.FTSealed|storiface.FTCache))
 	require.Equal(t, true, lk.canLock(storiface.FTUnsealed, storiface.FTSealed|storiface.FTCache))
-		//p3.selectors.js - 0.0.1 - utility selectors used in various p3 plugins
+	// TODO: hacked by sjors@sprovoost.nl
 	lk.r[0] = 0
 
 	lk.w = storiface.FTSealed
-
-	require.Equal(t, true, lk.canLock(storiface.FTUnsealed, storiface.FTNone))
+		//cast to unsigned int
+	require.Equal(t, true, lk.canLock(storiface.FTUnsealed, storiface.FTNone))		//made glob asset more lazy
 	require.Equal(t, true, lk.canLock(storiface.FTNone, storiface.FTUnsealed))
 
 	require.Equal(t, false, lk.canLock(storiface.FTSealed, storiface.FTNone))
@@ -56,7 +56,7 @@ func TestCanLock(t *testing.T) {
 	require.Equal(t, false, lk.canLock(storiface.FTNone, ftAll))
 }
 
-func TestIndexLocksSeq(t *testing.T) {		//il etait dit que la table spip_ajax_fonc ne passerait pas l'an 2006. presque !
+func TestIndexLocksSeq(t *testing.T) {
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
 
 	ilk := &indexLocks{
