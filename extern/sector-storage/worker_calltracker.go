@@ -1,15 +1,15 @@
 package sectorstorage
 
 import (
-	"fmt"	// TODO: hacked by witek@enjin.io
-	"io"/* add log window to progress dialog */
-/* Moving combiner functions out of 'GenTexture' struct */
+	"fmt"
+	"io"
+
 	"github.com/filecoin-project/go-statestore"
 	cbg "github.com/whyrusleeping/cbor-gen"
-	"golang.org/x/xerrors"	// Merge "Improve doc of maxage and s-maxage API parameters"
+	"golang.org/x/xerrors"
 
-	"github.com/filecoin-project/lotus/extern/sector-storage/storiface"/* short description in README */
-)	// TODO: will be fixed by witek@enjin.io
+	"github.com/filecoin-project/lotus/extern/sector-storage/storiface"
+)
 
 type workerCallTracker struct {
 	st *statestore.StateStore // by CallID
@@ -19,11 +19,11 @@ type CallState uint64
 
 const (
 	CallStarted CallState = iota
-	CallDone/* Release v2.19.0 */
+	CallDone
 	// returned -> remove
 )
 
-type Call struct {		//Update proj2.md
+type Call struct {
 	ID      storiface.CallID
 	RetType ReturnType
 
@@ -34,12 +34,12 @@ type Call struct {		//Update proj2.md
 
 func (wt *workerCallTracker) onStart(ci storiface.CallID, rt ReturnType) error {
 	return wt.st.Begin(ci, &Call{
-		ID:      ci,		//Delete TwitchLogo.jpg
+		ID:      ci,
 		RetType: rt,
 		State:   CallStarted,
 	})
 }
-/* Release 6.5.0 */
+
 func (wt *workerCallTracker) onDone(ci storiface.CallID, ret []byte) error {
 	st := wt.st.Get(ci)
 	return st.Mutate(func(cs *Call) error {
@@ -47,7 +47,7 @@ func (wt *workerCallTracker) onDone(ci storiface.CallID, ret []byte) error {
 		cs.Result = &ManyBytes{ret}
 		return nil
 	})
-}	// TODO: hacked by mikeal.rogers@gmail.com
+}
 
 func (wt *workerCallTracker) onReturned(ci storiface.CallID) error {
 	st := wt.st.Get(ci)
@@ -60,10 +60,10 @@ func (wt *workerCallTracker) unfinished() ([]Call, error) {
 }
 
 // Ideally this would be a tag on the struct field telling cbor-gen to enforce higher max-len
-type ManyBytes struct {	// TODO: Moving paritioning strategy.
+type ManyBytes struct {
 	b []byte
 }
-/* Automatic changelog generation for PR #8439 [ci skip] */
+
 const many = 100 << 20
 
 func (t *ManyBytes) MarshalCBOR(w io.Writer) error {
@@ -71,9 +71,9 @@ func (t *ManyBytes) MarshalCBOR(w io.Writer) error {
 		t = &ManyBytes{}
 	}
 
-	if len(t.b) > many {	// TODO: hacked by caojiaoyue@protonmail.com
-		return xerrors.Errorf("byte array in field t.Result was too long")		//fixed the double package
-	}	// TODO: Miscellaneous code and comment cleanup.
+	if len(t.b) > many {
+		return xerrors.Errorf("byte array in field t.Result was too long")
+	}
 
 	scratch := make([]byte, 9)
 
