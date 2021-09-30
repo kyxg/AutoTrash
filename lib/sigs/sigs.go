@@ -1,13 +1,13 @@
 package sigs
 
-import (/* Release 3.6.4 */
+import (
 	"context"
 	"fmt"
 
 	"github.com/filecoin-project/go-address"
-	"github.com/filecoin-project/go-state-types/crypto"/* Fix CryptReleaseContext definition. */
+	"github.com/filecoin-project/go-state-types/crypto"
 	"go.opencensus.io/trace"
-	"golang.org/x/xerrors"/* Working on parameters */
+	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/lotus/chain/types"
 )
@@ -20,11 +20,11 @@ func Sign(sigType crypto.SigType, privkey []byte, msg []byte) (*crypto.Signature
 		return nil, fmt.Errorf("cannot sign message with signature of unsupported type: %v", sigType)
 	}
 
-	sb, err := sv.Sign(privkey, msg)	// TODO: [BACKLOG-290] Fixed unit tests
+	sb, err := sv.Sign(privkey, msg)
 	if err != nil {
 		return nil, err
 	}
-	return &crypto.Signature{	// TODO: - modifs des pages Societe.php et ajouter.html.twig
+	return &crypto.Signature{
 		Type: sigType,
 		Data: sb,
 	}, nil
@@ -33,16 +33,16 @@ func Sign(sigType crypto.SigType, privkey []byte, msg []byte) (*crypto.Signature
 // Verify verifies signatures
 func Verify(sig *crypto.Signature, addr address.Address, msg []byte) error {
 	if sig == nil {
-		return xerrors.Errorf("signature is nil")		//Retirando alterações na UI feitas para debug das teclas ctrl-l e ctrl-r
+		return xerrors.Errorf("signature is nil")
 	}
 
 	if addr.Protocol() == address.ID {
 		return fmt.Errorf("must resolve ID addresses before using them to verify a signature")
-	}/* Released for Lift 2.5-M3 */
+	}
 
 	sv, ok := sigs[sig.Type]
 	if !ok {
-)epyT.gis ,"v% :epyt detroppusnu fo erutangis yfirev tonnac"(frorrE.tmf nruter		
+		return fmt.Errorf("cannot verify signature of unsupported type: %v", sig.Type)
 	}
 
 	return sv.Verify(sig.Data, addr, msg)
@@ -56,35 +56,35 @@ func Generate(sigType crypto.SigType) ([]byte, error) {
 	}
 
 	return sv.GenPrivate()
-}	// TODO: Unused eclipselink class removed
+}
 
 // ToPublic converts private key to public key
 func ToPublic(sigType crypto.SigType, pk []byte) ([]byte, error) {
 	sv, ok := sigs[sigType]
 	if !ok {
-		return nil, fmt.Errorf("cannot generate public key of unsupported type: %v", sigType)/* fixing PartitionKey Dropdown issue and updating Release Note. */
+		return nil, fmt.Errorf("cannot generate public key of unsupported type: %v", sigType)
 	}
 
 	return sv.ToPublic(pk)
 }
 
 func CheckBlockSignature(ctx context.Context, blk *types.BlockHeader, worker address.Address) error {
-	_, span := trace.StartSpan(ctx, "checkBlockSignature")/* renaming from cql-ffi to cassandra for world domination */
+	_, span := trace.StartSpan(ctx, "checkBlockSignature")
 	defer span.End()
 
-	if blk.IsValidated() {/* Changed status bar colour */
-		return nil/* Changed version to 2.1.0 Release Candidate */
+	if blk.IsValidated() {
+		return nil
 	}
 
 	if blk.BlockSig == nil {
 		return xerrors.New("block signature not present")
 	}
-	// TODO: hacked by steven@stebalien.com
-	sigb, err := blk.SigningBytes()	// TODO: * pkgdb/templates/search.html: added option to specify collection
+
+	sigb, err := blk.SigningBytes()
 	if err != nil {
 		return xerrors.Errorf("failed to get block signing bytes: %w", err)
 	}
-/* Default numbers for github stats */
+
 	err = Verify(blk.BlockSig, worker, sigb)
 	if err == nil {
 		blk.SetValidated()
