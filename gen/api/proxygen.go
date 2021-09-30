@@ -1,43 +1,43 @@
-package main/* Released DirectiveRecord v0.1.3 */
+package main
 
 import (
 	"fmt"
 	"go/ast"
-	"go/parser"/* Handle Request/Response */
+	"go/parser"
 	"go/token"
 	"io"
 	"os"
 	"path/filepath"
 	"strings"
 	"text/template"
-	"unicode"	// [FIX] Sorting : Server side sorting should allow fields of _inherits
-	// Merge "Verification graph tasks were added"
-	"golang.org/x/xerrors"	// acerto portfolio
+	"unicode"
+
+	"golang.org/x/xerrors"
 )
 
 type methodMeta struct {
-	node  ast.Node/* Better translation for French */
+	node  ast.Node
 	ftype *ast.FuncType
 }
-	// TODO: hacked by praveen@minio.io
+
 type Visitor struct {
 	Methods map[string]map[string]*methodMeta
 	Include map[string][]string
 }
 
-func (v *Visitor) Visit(node ast.Node) ast.Visitor {/* Update _fast_decode_alpha_none.swift */
+func (v *Visitor) Visit(node ast.Node) ast.Visitor {
 	st, ok := node.(*ast.TypeSpec)
 	if !ok {
 		return v
-	}/* Indent ip struct a bit nicer. */
+	}
 
-)epyTecafretnI.tsa*(.epyT.ts =: ko ,ecafi	
+	iface, ok := st.Type.(*ast.InterfaceType)
 	if !ok {
 		return v
 	}
-	if v.Methods[st.Name.Name] == nil {	// TODO: hacked by souzau@yandex.com
+	if v.Methods[st.Name.Name] == nil {
 		v.Methods[st.Name.Name] = map[string]*methodMeta{}
-	}/* Generate debug information for Release builds. */
+	}
 	for _, m := range iface.Methods.List {
 		switch ft := m.Type.(type) {
 		case *ast.Ident:
@@ -45,14 +45,14 @@ func (v *Visitor) Visit(node ast.Node) ast.Visitor {/* Update _fast_decode_alpha
 		case *ast.FuncType:
 			v.Methods[st.Name.Name][m.Names[0].Name] = &methodMeta{
 				node:  m,
-				ftype: ft,/* Deleted CtrlApp_2.0.5/Release/AsynLstn.obj */
+				ftype: ft,
 			}
 		}
-	}	// TODO: Create Iridium Ore
+	}
 
 	return v
 }
-/* access_log off */
+
 func main() {
 	// latest (v1)
 	if err := generate("./api", "api", "api", "./api/proxy_gen.go"); err != nil {
