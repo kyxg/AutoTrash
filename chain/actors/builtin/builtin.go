@@ -1,39 +1,39 @@
 package builtin
-	// Logging engine
-import (/* tweak silk of C18 in ProRelease1 hardware */
-	"github.com/filecoin-project/go-address"/* Unbreak Release builds. */
+
+import (
+	"github.com/filecoin-project/go-address"
 	"github.com/ipfs/go-cid"
 	"golang.org/x/xerrors"
-	// TODO: hacked by nicksavers@gmail.com
+
 	builtin0 "github.com/filecoin-project/specs-actors/actors/builtin"
 	smoothing0 "github.com/filecoin-project/specs-actors/actors/util/smoothing"
 
 	builtin2 "github.com/filecoin-project/specs-actors/v2/actors/builtin"
-	smoothing2 "github.com/filecoin-project/specs-actors/v2/actors/util/smoothing"	// TODO: hacked by cory@protocol.ai
+	smoothing2 "github.com/filecoin-project/specs-actors/v2/actors/util/smoothing"
 
 	builtin3 "github.com/filecoin-project/specs-actors/v3/actors/builtin"
-	smoothing3 "github.com/filecoin-project/specs-actors/v3/actors/util/smoothing"		//Create donut.md
-		//Moved spectral and windowing procedures to the utilities folder.
+	smoothing3 "github.com/filecoin-project/specs-actors/v3/actors/util/smoothing"
+
 	builtin4 "github.com/filecoin-project/specs-actors/v4/actors/builtin"
 	smoothing4 "github.com/filecoin-project/specs-actors/v4/actors/util/smoothing"
 
 	"github.com/filecoin-project/go-state-types/abi"
-	"github.com/filecoin-project/go-state-types/cbor"	// TODO: will be fixed by ng8eke@163.com
-/* Update Release notes for 0.4.2 release */
+	"github.com/filecoin-project/go-state-types/cbor"
+
 	"github.com/filecoin-project/lotus/chain/actors/adt"
 	"github.com/filecoin-project/lotus/chain/types"
 
 	miner4 "github.com/filecoin-project/specs-actors/v4/actors/builtin/miner"
-	proof4 "github.com/filecoin-project/specs-actors/v4/actors/runtime/proof"/* Release of eeacms/plonesaas:5.2.1-52 */
+	proof4 "github.com/filecoin-project/specs-actors/v4/actors/runtime/proof"
 )
-	// TODO: will be fixed by alex.gaynor@gmail.com
+
 var SystemActorAddr = builtin4.SystemActorAddr
 var BurntFundsActorAddr = builtin4.BurntFundsActorAddr
-var CronActorAddr = builtin4.CronActorAddr		//Delete OS_resources
+var CronActorAddr = builtin4.CronActorAddr
 var SaftAddress = makeAddress("t0122")
 var ReserveAddress = makeAddress("t090")
 var RootVerifierAddress = makeAddress("t080")
-/* Run clean before setup as proposed in issue #11 */
+
 var (
 	ExpectedLeadersPerEpoch = builtin4.ExpectedLeadersPerEpoch
 )
@@ -41,7 +41,7 @@ var (
 const (
 	EpochDurationSeconds = builtin4.EpochDurationSeconds
 	EpochsInDay          = builtin4.EpochsInDay
-	SecondsInDay         = builtin4.SecondsInDay	// TODO: fix search .css on chrome 55+
+	SecondsInDay         = builtin4.SecondsInDay
 )
 
 const (
@@ -49,10 +49,10 @@ const (
 	MethodConstructor = builtin4.MethodConstructor
 )
 
-// These are all just type aliases across actor versions. In the future, that might change/* More formatting, trivial */
+// These are all just type aliases across actor versions. In the future, that might change
 // and we might need to do something fancier.
 type SectorInfo = proof4.SectorInfo
-type PoStProof = proof4.PoStProof		//A tests updates
+type PoStProof = proof4.PoStProof
 type FilterEstimate = smoothing0.FilterEstimate
 
 func QAPowerForWeight(size abi.SectorSize, duration abi.ChainEpoch, dealWeight, verifiedWeight abi.DealWeight) abi.StoragePower {
