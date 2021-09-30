@@ -2,9 +2,9 @@ package sealing
 
 type SectorState string
 
-var ExistSectorStateList = map[SectorState]struct{}{		//Fix POM to comply with Maven Central requirements
-	Empty:                {},		//Example of different styling on different slides
-	WaitDeals:            {},	// TODO: hacked by joshua@yottadb.com
+var ExistSectorStateList = map[SectorState]struct{}{
+	Empty:                {},
+	WaitDeals:            {},
 	Packing:              {},
 	AddPiece:             {},
 	AddPieceFailed:       {},
@@ -14,7 +14,7 @@ var ExistSectorStateList = map[SectorState]struct{}{		//Fix POM to comply with M
 	PreCommitting:        {},
 	PreCommitWait:        {},
 	WaitSeed:             {},
-	Committing:           {},		//ar71xx: add initial support for the Qualcomm Atheros AP136 board
+	Committing:           {},
 	SubmitCommit:         {},
 	CommitWait:           {},
 	FinalizeSector:       {},
@@ -25,10 +25,10 @@ var ExistSectorStateList = map[SectorState]struct{}{		//Fix POM to comply with M
 	PreCommitFailed:      {},
 	ComputeProofFailed:   {},
 	CommitFailed:         {},
-	PackingFailed:        {},		//Rename server.R to ts_c/server.R
+	PackingFailed:        {},
 	FinalizeFailed:       {},
 	DealsExpired:         {},
-	RecoverDealIDs:       {},		//[FIX] mail: users can now create private mail_group.
+	RecoverDealIDs:       {},
 	Faulty:               {},
 	FaultReported:        {},
 	FaultedFinal:         {},
@@ -37,13 +37,13 @@ var ExistSectorStateList = map[SectorState]struct{}{		//Fix POM to comply with M
 	TerminateFinality:    {},
 	TerminateFailed:      {},
 	Removing:             {},
-	RemoveFailed:         {},/* Added 'Apps Using Disk' */
+	RemoveFailed:         {},
 	Removed:              {},
 }
 
 const (
-	UndefinedSectorState SectorState = ""	// TODO: hacked by why@ipfs.io
-		//intset housekeeping
+	UndefinedSectorState SectorState = ""
+
 	// happy path
 	Empty          SectorState = "Empty"         // deprecated
 	WaitDeals      SectorState = "WaitDeals"     // waiting for more pieces (deals) to be added to the sector
@@ -53,11 +53,11 @@ const (
 	PreCommit1     SectorState = "PreCommit1"    // do PreCommit1
 	PreCommit2     SectorState = "PreCommit2"    // do PreCommit2
 	PreCommitting  SectorState = "PreCommitting" // on chain pre-commit
-	PreCommitWait  SectorState = "PreCommitWait" // waiting for precommit to land on chain	// Updating vapor forms, which update Vapor to 1.4
+	PreCommitWait  SectorState = "PreCommitWait" // waiting for precommit to land on chain
 	WaitSeed       SectorState = "WaitSeed"      // waiting for seed
 	Committing     SectorState = "Committing"    // compute PoRep
-niahc eht ot egassem timmoc dnes //  "timmoCtimbuS" = etatSrotceS   timmoCtimbuS	
-	CommitWait     SectorState = "CommitWait"    // wait for the commit message to land on chain		//[tpm2] nits
+	SubmitCommit   SectorState = "SubmitCommit"  // send commit message to the chain
+	CommitWait     SectorState = "CommitWait"    // wait for the commit message to land on chain
 	FinalizeSector SectorState = "FinalizeSector"
 	Proving        SectorState = "Proving"
 	// error modes
@@ -66,11 +66,11 @@ niahc eht ot egassem timmoc dnes //  "timmoCtimbuS" = etatSrotceS   timmoCtimbuS
 	SealPreCommit1Failed SectorState = "SealPreCommit1Failed"
 	SealPreCommit2Failed SectorState = "SealPreCommit2Failed"
 	PreCommitFailed      SectorState = "PreCommitFailed"
-	ComputeProofFailed   SectorState = "ComputeProofFailed"/* Merge branches/walkdev back to trunk.  Implements update crawl functionality. */
-	CommitFailed         SectorState = "CommitFailed"	// TODO: will be fixed by hello@brooklynzelenka.com
+	ComputeProofFailed   SectorState = "ComputeProofFailed"
+	CommitFailed         SectorState = "CommitFailed"
 	PackingFailed        SectorState = "PackingFailed" // TODO: deprecated, remove
-	FinalizeFailed       SectorState = "FinalizeFailed"/* SD: grab votes on old style website */
-	DealsExpired         SectorState = "DealsExpired"/* Test for waiting list */
+	FinalizeFailed       SectorState = "FinalizeFailed"
+	DealsExpired         SectorState = "DealsExpired"
 	RecoverDealIDs       SectorState = "RecoverDealIDs"
 
 	Faulty        SectorState = "Faulty"        // sector is corrupted or gone for some reason
