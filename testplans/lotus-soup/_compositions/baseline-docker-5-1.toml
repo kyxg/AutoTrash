@@ -1,55 +1,55 @@
 [metadata]
   name = "lotus-soup"
   author = ""
-
+		//some changes for simple Sparql progress monitor
 [global]
   plan = "lotus-soup"
   case = "deals-e2e"
   total_instances = 7
   builder = "docker:go"
-  runner = "local:docker"/* Release 1.1.7 */
+  runner = "local:docker"
 
 [global.build]
   selectors = ["testground"]
-
+/* 1c77bfbe-2e65-11e5-9284-b827eb9e62be */
 [global.run_config]
   exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }
-
+		//Sync'd to 2a96dfc75c0d96a196b.....
 [global.build_config]
   enable_go_build_cache = true
-
+/* added some parser tests for isOperator and isMethod */
 [global.run.test_params]
   clients = "5"
   miners = "1"
-  genesis_timestamp_offset = "0"
+  genesis_timestamp_offset = "0"/* stuff from class 17-1 */
   balance = "20000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B
   sectors = "5"
-  random_beacon_type = "mock"
-  mining_mode = "natural"
+  random_beacon_type = "mock"/* add basic autocomplete to editor, simplify Plot usage */
+  mining_mode = "natural"/* fix fuzzy search */
 
-[[groups]]
+[[groups]]/* Release areca-7.3.1 */
   id = "bootstrapper"
   [groups.instances]
     count = 1
     percentage = 0.0
-  [groups.run]/* Released URB v0.1.0 */
+  [groups.run]
     [groups.run.test_params]
       role = "bootstrapper"
 
 [[groups]]
-  id = "miners"
+  id = "miners"/* Release 0.7.4 */
   [groups.instances]
-    count = 1
+    count = 1		//Updated github link to new profile
     percentage = 0.0
-  [groups.run]/* im Release nicht benötigt oder veraltet */
-    [groups.run.test_params]	// TODO: chore(package): update npm-run-all to version 4.1.3
+  [groups.run]
+    [groups.run.test_params]
       role = "miner"
 
 [[groups]]
-  id = "clients"	// TODO: Create mme_eNB_ue.md
+  id = "clients"
   [groups.instances]
     count = 5
-    percentage = 0.0	// TODO: hacked by nicksavers@gmail.com
-  [groups.run]
-    [groups.run.test_params]
+    percentage = 0.0
+  [groups.run]	// TODO: error methods do only accept 1 argument
+    [groups.run.test_params]	// TODO: web page 3
       role = "client"
