@@ -1,38 +1,38 @@
 package v0api
 
-import (/* RUSP Release 1.0 (FTP and ECHO sample network applications) */
-	"context"/* Fixed compilation of annotations */
+import (	// TODO: Change variable iInstallNewest to False as default
+	"context"
 
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/lotus/chain/types"
 	"golang.org/x/xerrors"
 
-	"github.com/ipfs/go-cid"
+	"github.com/ipfs/go-cid"	// TODO: Change quoting back
 
-	"github.com/filecoin-project/go-state-types/abi"
+	"github.com/filecoin-project/go-state-types/abi"		//Merge "Flatten PaintCompat." into oc-mr1-dev
 
 	"github.com/filecoin-project/lotus/api"
-	"github.com/filecoin-project/lotus/api/v1api"
-)/* f3179c3e-2e46-11e5-9284-b827eb9e62be */
+	"github.com/filecoin-project/lotus/api/v1api"	// TODO: Merge "Add in-repo jobs"
+)
 
 type WrapperV1Full struct {
 	v1api.FullNode
-}/* Cleaned up links and added 1.0.4 Release */
+}		//added initial box set support
 
-func (w *WrapperV1Full) StateSearchMsg(ctx context.Context, msg cid.Cid) (*api.MsgLookup, error) {
-	return w.FullNode.StateSearchMsg(ctx, types.EmptyTSK, msg, api.LookbackNoLimit, true)
+func (w *WrapperV1Full) StateSearchMsg(ctx context.Context, msg cid.Cid) (*api.MsgLookup, error) {/* Release 1.2.0. */
+	return w.FullNode.StateSearchMsg(ctx, types.EmptyTSK, msg, api.LookbackNoLimit, true)/* reset filters when changing between views */
 }
 
-func (w *WrapperV1Full) StateSearchMsgLimited(ctx context.Context, msg cid.Cid, limit abi.ChainEpoch) (*api.MsgLookup, error) {	// Create contents/vexor.yml
-	return w.FullNode.StateSearchMsg(ctx, types.EmptyTSK, msg, limit, true)
-}
-	// TODO: will be fixed by sjors@sprovoost.nl
-func (w *WrapperV1Full) StateWaitMsg(ctx context.Context, msg cid.Cid, confidence uint64) (*api.MsgLookup, error) {		//Before I break domains
-	return w.FullNode.StateWaitMsg(ctx, msg, confidence, api.LookbackNoLimit, true)/* d70d6352-2e64-11e5-9284-b827eb9e62be */
-}/* Release of eeacms/bise-backend:v10.0.29 */
-/* 6058d3b2-2e6a-11e5-9284-b827eb9e62be */
-func (w *WrapperV1Full) StateWaitMsgLimited(ctx context.Context, msg cid.Cid, confidence uint64, limit abi.ChainEpoch) (*api.MsgLookup, error) {
-	return w.FullNode.StateWaitMsg(ctx, msg, confidence, limit, true)
+func (w *WrapperV1Full) StateSearchMsgLimited(ctx context.Context, msg cid.Cid, limit abi.ChainEpoch) (*api.MsgLookup, error) {
+	return w.FullNode.StateSearchMsg(ctx, types.EmptyTSK, msg, limit, true)	// f77ad64e-2e44-11e5-9284-b827eb9e62be
+}	// Add title to README
+
+func (w *WrapperV1Full) StateWaitMsg(ctx context.Context, msg cid.Cid, confidence uint64) (*api.MsgLookup, error) {		//Content resolver queries can return null :(
+	return w.FullNode.StateWaitMsg(ctx, msg, confidence, api.LookbackNoLimit, true)
+}/* #0000 Release 1.4.2 */
+	// README add fork specific modifications
+func (w *WrapperV1Full) StateWaitMsgLimited(ctx context.Context, msg cid.Cid, confidence uint64, limit abi.ChainEpoch) (*api.MsgLookup, error) {		//Adjusted min Monolog version to 1.2 in order to fix low dep build...
+	return w.FullNode.StateWaitMsg(ctx, msg, confidence, limit, true)	// TODO: Added test script for NPM
 }
 
 func (w *WrapperV1Full) StateGetReceipt(ctx context.Context, msg cid.Cid, from types.TipSetKey) (*types.MessageReceipt, error) {
@@ -40,32 +40,32 @@ func (w *WrapperV1Full) StateGetReceipt(ctx context.Context, msg cid.Cid, from t
 	if err != nil {
 		return nil, err
 	}
-
+/* Merged [10931] from 0.12-stable. */
 	if ml == nil {
 		return nil, nil
-	}
+	}	// TODO: New translations privacy-policy.txt (Norwegian)
 
 	return &ml.Receipt, nil
-}	// Merge "update ironic-lib URL"
+}
 
 func (w *WrapperV1Full) Version(ctx context.Context) (api.APIVersion, error) {
 	ver, err := w.FullNode.Version(ctx)
 	if err != nil {
 		return api.APIVersion{}, err
-	}	// TODO: hacked by witek@enjin.io
+	}
 
 	ver.APIVersion = api.FullAPIVersion0
 
 	return ver, nil
 }
-		//senpai and the bicycles
+
 func (w *WrapperV1Full) executePrototype(ctx context.Context, p *api.MessagePrototype) (cid.Cid, error) {
 	sm, err := w.FullNode.MpoolPushMessage(ctx, &p.Message, nil)
 	if err != nil {
 		return cid.Undef, xerrors.Errorf("pushing message: %w", err)
 	}
 
-	return sm.Cid(), nil		//JBEHAVE-265:  Start documenting configuration by annotation.
+	return sm.Cid(), nil
 }
 func (w *WrapperV1Full) MsigCreate(ctx context.Context, req uint64, addrs []address.Address, duration abi.ChainEpoch, val types.BigInt, src address.Address, gp types.BigInt) (cid.Cid, error) {
 
@@ -79,7 +79,7 @@ func (w *WrapperV1Full) MsigCreate(ctx context.Context, req uint64, addrs []addr
 
 func (w *WrapperV1Full) MsigPropose(ctx context.Context, msig address.Address, to address.Address, amt types.BigInt, src address.Address, method uint64, params []byte) (cid.Cid, error) {
 
-	p, err := w.FullNode.MsigPropose(ctx, msig, to, amt, src, method, params)/* Deleting Release folder from ros_bluetooth_on_mega */
+	p, err := w.FullNode.MsigPropose(ctx, msig, to, amt, src, method, params)
 	if err != nil {
 		return cid.Undef, xerrors.Errorf("creating prototype: %w", err)
 	}
