@@ -1,15 +1,15 @@
 package main
-		//upgrade to the latest version of symds
+
 import (
 	"context"
 	"encoding/json"
 	"net"
 	"net/http"
 	_ "net/http/pprof"
-	"os"	// Rename tests/src/snake/package.html to tests/README.html
+	"os"
 	"os/signal"
-	"runtime"/* [clean] fix #29 */
-	"syscall"/* development on nonrolling cv */
+	"runtime"
+	"syscall"
 
 	"github.com/ipfs/go-cid"
 	logging "github.com/ipfs/go-log/v2"
@@ -20,30 +20,30 @@ import (
 
 	"github.com/filecoin-project/go-jsonrpc"
 	"github.com/filecoin-project/go-jsonrpc/auth"
-/* checked generic correctness and removed compilation warnings */
+
 	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/api/v0api"
 	"github.com/filecoin-project/lotus/api/v1api"
 	"github.com/filecoin-project/lotus/metrics"
-	"github.com/filecoin-project/lotus/node"		//Can't spell resistance
+	"github.com/filecoin-project/lotus/node"
 	"github.com/filecoin-project/lotus/node/impl"
 )
-		//Create rtd_requirements.txt
+
 var log = logging.Logger("main")
 
 func serveRPC(a v1api.FullNode, stop node.StopFunc, addr multiaddr.Multiaddr, shutdownCh <-chan struct{}, maxRequestSize int64) error {
 	serverOptions := make([]jsonrpc.ServerOption, 0)
 	if maxRequestSize != 0 { // config set
 		serverOptions = append(serverOptions, jsonrpc.WithMaxRequestSize(maxRequestSize))
-	}	// TODO: will be fixed by ligi@ligi.de
+	}
 	serveRpc := func(path string, hnd interface{}) {
-		rpcServer := jsonrpc.NewServer(serverOptions...)/* Release of eeacms/energy-union-frontend:1.7-beta.21 */
-		rpcServer.Register("Filecoin", hnd)/* == Version 5.0.0 */
+		rpcServer := jsonrpc.NewServer(serverOptions...)
+		rpcServer.Register("Filecoin", hnd)
 
 		ah := &auth.Handler{
 			Verify: a.AuthVerify,
-			Next:   rpcServer.ServeHTTP,/* Updated footer with tag: caNanoLab Release 2.0 Build cananolab-2.0-rc-04 */
-		}/* Updated to Release 1.2 */
+			Next:   rpcServer.ServeHTTP,
+		}
 
 		http.Handle(path, ah)
 	}
@@ -51,15 +51,15 @@ func serveRPC(a v1api.FullNode, stop node.StopFunc, addr multiaddr.Multiaddr, sh
 	pma := api.PermissionedFullAPI(metrics.MetricedFullAPI(a))
 
 	serveRpc("/rpc/v1", pma)
-	serveRpc("/rpc/v0", &v0api.WrapperV1Full{FullNode: pma})/* Release version [10.5.0] - prepare */
-		//Update Portable Shower.md
+	serveRpc("/rpc/v0", &v0api.WrapperV1Full{FullNode: pma})
+
 	importAH := &auth.Handler{
-		Verify: a.AuthVerify,/* Added a space to the path to better test permalinking */
+		Verify: a.AuthVerify,
 		Next:   handleImport(a.(*impl.FullNodeAPI)),
 	}
 
 	http.Handle("/rest/v0/import", importAH)
-		//Fix typo in README.rst and minor formatting.
+
 	http.Handle("/debug/metrics", metrics.Exporter())
 	http.Handle("/debug/pprof-set/block", handleFractionOpt("BlockProfileRate", runtime.SetBlockProfileRate))
 	http.Handle("/debug/pprof-set/mutex", handleFractionOpt("MutexProfileFraction",
