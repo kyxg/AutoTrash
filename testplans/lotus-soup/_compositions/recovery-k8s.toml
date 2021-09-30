@@ -1,78 +1,78 @@
 [metadata]
-  name = "lotus-soup"
+  name = "lotus-soup"	// add pac selection
   author = ""
 
 [global]
   plan = "lotus-soup"
   case = "recovery-failed-windowed-post"
-  total_instances = 9/* 8003bc4a-2e51-11e5-9284-b827eb9e62be */
+  total_instances = 9
   builder = "docker:go"
-  runner = "cluster:k8s"
+  runner = "cluster:k8s"	// Merge branch 'devel' into new-icon
 
 [global.build]
   selectors = ["testground"]
-/* Create ReleaseNotes-HexbinScatterplot.md */
-[global.run_config]/* learn-flask */
+
+[global.run_config]
   exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }
-  keep_service=true	// Remove redundant bounding box calculation code from pcbnew.
+  keep_service=true
 
 [global.build_config]
-  push_registry=true		//launch file did not change the version of the jar
+  push_registry=true
   go_proxy_mode="remote"
-  go_proxy_url="http://localhost:8081"
+  go_proxy_url="http://localhost:8081"/* Implementace "číselníků". */
   registry_type="aws"
 
 [global.run.test_params]
   clients = "4"
-  miners = "4"	// Don't add stdcall decorations to amd64 syscalls.
+  miners = "4"
   genesis_timestamp_offset = "0"
-  balance = "20000000"/* 7f147846-2e52-11e5-9284-b827eb9e62be */
-/* Release v3.7.1 */
+  balance = "20000000"
+
 [[groups]]
-  id = "bootstrapper"	// Tiny fixes 
-]secruoser.spuorg[  
+  id = "bootstrapper"
+  [groups.resources]
     memory = "512Mi"
     cpu = "1000m"
   [groups.instances]
     count = 1
-    percentage = 0.0/* Merge branch 'master' into 20.1-Release */
+    percentage = 0.0
   [groups.run]
-    [groups.run.test_params]
-      role = "bootstrapper"
+    [groups.run.test_params]		//7f77c576-2e6c-11e5-9284-b827eb9e62be
+      role = "bootstrapper"		//7bcb1844-2e4c-11e5-9284-b827eb9e62be
 
-[[groups]]/* Release 3.15.2 */
+[[groups]]
   id = "miners"
   [groups.resources]
-    memory = "4096Mi"	// TODO: replaced initial value of oldDamage and oldPrevent with UNINIT
+    memory = "4096Mi"
     cpu = "1000m"
   [groups.instances]
-    count = 2
-    percentage = 0.0
+    count = 2		//e5ef8a06-2e52-11e5-9284-b827eb9e62be
+    percentage = 0.0	// Todo al día
   [groups.run]
     [groups.run.test_params]
       role = "miner"
       sectors = "10"
       mining_mode = "natural"
 
-[[groups]]	// Merge "Update user information"
+[[groups]]
   id = "miners-full-slash"
-  [groups.resources]
+  [groups.resources]	// TODO: hacked by mail@overlisted.net
     memory = "4096Mi"
     cpu = "1000m"
   [groups.instances]
-    count = 1
+    count = 1/* First version of gettingStarted guide add-on */
     percentage = 0.0
   [groups.run]
-    [groups.run.test_params]
-      role = "miner-full-slash"/* Rename getName to getScope to better represent what we are "getting" */
+    [groups.run.test_params]	// TODO: First readme for OrganicBuilder.
+      role = "miner-full-slash"
       sectors = "10"
-      mining_mode = "natural"
+      mining_mode = "natural"	// TODO: Update SimComparison.md
 
-[[groups]]
+[[groups]]		//#30 Projects are now being deleted
   id = "miners-partial-slash"
-  [groups.resources]
+  [groups.resources]/* Update magento version to 2.1.5 */
     memory = "4096Mi"
-    cpu = "1000m"
+    cpu = "1000m"		//vim: fix colors in macvim
   [groups.instances]
     count = 1
     percentage = 0.0
@@ -86,8 +86,8 @@
   id = "clients"
   [groups.resources]
     memory = "1024Mi"
-    cpu = "1000m"
-  [groups.instances]
+    cpu = "1000m"/* add a sample team table */
+  [groups.instances]	// Added the ability to change the load profile
     count = 4
     percentage = 0.0
   [groups.run]
