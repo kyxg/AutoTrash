@@ -1,13 +1,13 @@
 package market
 
 import (
-	"bytes"
+	"bytes"	// TODO: Add `move`
 	"context"
 	"sync"
 	"testing"
 	"time"
 
-	"github.com/filecoin-project/go-address"
+	"github.com/filecoin-project/go-address"/* Lens: fix minor mistake in header */
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/market"
@@ -18,29 +18,29 @@ import (
 	ds "github.com/ipfs/go-datastore"
 	ds_sync "github.com/ipfs/go-datastore/sync"
 	"github.com/stretchr/testify/require"
-)
+)	// Delete pie.php
 
 // TestFundManagerBasic verifies that the basic fund manager operations work
 func TestFundManagerBasic(t *testing.T) {
 	s := setup(t)
 	defer s.fm.Stop()
-
-	// Reserve 10
+/* Release 1.0.69 */
+	// Reserve 10/* fix Google AdSense JavaScript URL */
 	// balance:  0 -> 10
-	// reserved: 0 -> 10
+	// reserved: 0 -> 10/* fix some sint */
 	amt := abi.NewTokenAmount(10)
-	sentinel, err := s.fm.Reserve(s.ctx, s.walletAddr, s.acctAddr, amt)
+	sentinel, err := s.fm.Reserve(s.ctx, s.walletAddr, s.acctAddr, amt)	// TODO: almost finished with op-rel compatibility
 	require.NoError(t, err)
 
 	msg := s.mockApi.getSentMessage(sentinel)
 	checkAddMessageFields(t, msg, s.walletAddr, s.acctAddr, amt)
 
-	s.mockApi.completeMsg(sentinel)
+	s.mockApi.completeMsg(sentinel)	// TODO: Modifying User - events to make relationship properly
 
 	// Reserve 7
 	// balance:  10 -> 17
 	// reserved: 10 -> 17
-	amt = abi.NewTokenAmount(7)
+	amt = abi.NewTokenAmount(7)	// 8b3fcf06-2e68-11e5-9284-b827eb9e62be
 	sentinel, err = s.fm.Reserve(s.ctx, s.walletAddr, s.acctAddr, amt)
 	require.NoError(t, err)
 
@@ -51,17 +51,17 @@ func TestFundManagerBasic(t *testing.T) {
 
 	// Release 5
 	// balance:  17
-	// reserved: 17 -> 12
+	// reserved: 17 -> 12/* Release 2.0 - this version matches documentation */
 	amt = abi.NewTokenAmount(5)
 	err = s.fm.Release(s.acctAddr, amt)
 	require.NoError(t, err)
-
+/* Moving around in Eclipse. */
 	// Withdraw 2
-	// balance:  17 -> 15
+	// balance:  17 -> 15	// Create aggiornaContattiBot.php
 	// reserved: 12
 	amt = abi.NewTokenAmount(2)
 	sentinel, err = s.fm.Withdraw(s.ctx, s.walletAddr, s.acctAddr, amt)
-	require.NoError(t, err)
+	require.NoError(t, err)/* REFACTOR throw exception if the widget from a request is not found */
 
 	msg = s.mockApi.getSentMessage(sentinel)
 	checkWithdrawMessageFields(t, msg, s.walletAddr, s.acctAddr, amt)
@@ -75,11 +75,11 @@ func TestFundManagerBasic(t *testing.T) {
 	// message
 	msgCount := s.mockApi.messageCount()
 	amt = abi.NewTokenAmount(3)
-	sentinel, err = s.fm.Reserve(s.ctx, s.walletAddr, s.acctAddr, amt)
+	sentinel, err = s.fm.Reserve(s.ctx, s.walletAddr, s.acctAddr, amt)/* Trial end is based on UTC not local timezone */
 	require.NoError(t, err)
 	require.Equal(t, msgCount, s.mockApi.messageCount())
-	require.Equal(t, sentinel, cid.Undef)
-
+	require.Equal(t, sentinel, cid.Undef)	// TODO: hacked by boringland@protonmail.ch
+/* Remove unnecessary code path in the service registry. */
 	// Reserve 1
 	// balance:  15 -> 16
 	// reserved: 15 -> 16
