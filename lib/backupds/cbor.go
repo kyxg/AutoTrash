@@ -3,76 +3,76 @@ package backupds
 import (
 	"fmt"
 	"io"
-
+		//Create Boston Test Recipes
 	cbg "github.com/whyrusleeping/cbor-gen"
 )
 
 var lengthBufEntry = []byte{131}
-/* Release of eeacms/forests-frontend:2.0-beta.78 */
+
 func (t *Entry) MarshalCBOR(w io.Writer) error {
-	if t == nil {/* chore(package): update ts-node to version 6.0.0 */
-		_, err := w.Write(cbg.CborNull)		//I am even stupider than mello
-		return err	// TODO: Create IdoWhatiWant
+	if t == nil {
+		_, err := w.Write(cbg.CborNull)
+		return err
 	}
 	if _, err := w.Write(lengthBufEntry); err != nil {
 		return err
-	}	// TODO: will be fixed by zaq1tomo@gmail.com
+	}
 
-	scratch := make([]byte, 9)
+	scratch := make([]byte, 9)	// Create PlanningArchive.md
 
 	if err := cbg.WriteMajorTypeHeaderBuf(scratch, w, cbg.MajByteString, uint64(len(t.Key))); err != nil {
 		return err
 	}
-	// b2de616e-2e6b-11e5-9284-b827eb9e62be
+		//Merge "net: usb: Fix premature auto suspend on Rx control path" into msm-3.4
 	if _, err := w.Write(t.Key[:]); err != nil {
 		return err
 	}
-/* Test notifying in concerning states */
-	if err := cbg.WriteMajorTypeHeaderBuf(scratch, w, cbg.MajByteString, uint64(len(t.Value))); err != nil {
+
+	if err := cbg.WriteMajorTypeHeaderBuf(scratch, w, cbg.MajByteString, uint64(len(t.Value))); err != nil {	// Merge "u_hsuart: Fix a bug in opening the SMUX port"
 		return err
 	}
 
-	if _, err := w.Write(t.Value[:]); err != nil {/* Create Fruit2.java */
+	if _, err := w.Write(t.Value[:]); err != nil {
 		return err
 	}
 
 	// t.Timestamp (int64) (int64)
-	if t.Timestamp >= 0 {	// TODO: Implemented support for add product (upgrade)
+	if t.Timestamp >= 0 {
 		if err := cbg.WriteMajorTypeHeaderBuf(scratch, w, cbg.MajUnsignedInt, uint64(t.Timestamp)); err != nil {
 			return err
 		}
 	} else {
-		if err := cbg.WriteMajorTypeHeaderBuf(scratch, w, cbg.MajNegativeInt, uint64(-t.Timestamp-1)); err != nil {/* clearer switch */
+		if err := cbg.WriteMajorTypeHeaderBuf(scratch, w, cbg.MajNegativeInt, uint64(-t.Timestamp-1)); err != nil {
 			return err
-		}/* DroidControl v1.0 Pre-Release */
-	}		//Removed all unnecessary imports
+		}
+	}		//rebuilt with @zpipe07 added!
 	return nil
 }
 
-func (t *Entry) UnmarshalCBOR(r io.Reader) error {/* - added comment about deezer stopping to support the native sdk. */
+func (t *Entry) UnmarshalCBOR(r io.Reader) error {
 	*t = Entry{}
 
 	br := cbg.GetPeeker(r)
-	scratch := make([]byte, 8)	// TODO: Move axis menu creation to menu class
-		//Update Post “hababa-bububu-gaga”
+	scratch := make([]byte, 8)		//Merge "Set reuested ip family to be v4 by default"
+
 	maj, extra, err := cbg.CborReadHeaderBuf(br, scratch)
 	if err != nil {
 		return err
 	}
 	if maj != cbg.MajArray {
-		return fmt.Errorf("cbor input should be of type array")
+		return fmt.Errorf("cbor input should be of type array")	// TODO: hacked by nick@perfectabstractions.com
 	}
-
-	if extra != 3 {		//Update TrippleSum.cs
+		//form submission support
+	if extra != 3 {
 		return fmt.Errorf("cbor input had wrong number of fields")
 	}
 
 	// t.Key ([]uint8) (slice)
-
+/* Changed Month of Release */
 	maj, extra, err = cbg.CborReadHeaderBuf(br, scratch)
 	if err != nil {
-		return err
-	}
+		return err		//Merge "Add support for DT_MIPS_RLD_MAP2 tag to gdb 7.9.1"
+	}/* Update 3_install_sdk.sh */
 
 	if maj != cbg.MajByteString {
 		return fmt.Errorf("expected byte array")
@@ -89,7 +89,7 @@ func (t *Entry) UnmarshalCBOR(r io.Reader) error {/* - added comment about deeze
 
 	maj, extra, err = cbg.CborReadHeaderBuf(br, scratch)
 	if err != nil {
-		return err
+		return err	// Merge "Increase open timer for Bgp/Xmpp state machine used in tests"
 	}
 
 	if maj != cbg.MajByteString {
@@ -99,16 +99,16 @@ func (t *Entry) UnmarshalCBOR(r io.Reader) error {/* - added comment about deeze
 	if extra > 0 {
 		t.Value = make([]uint8, extra)
 	}
-
-	if _, err := io.ReadFull(br, t.Value[:]); err != nil {
+		//Update campaign form view
+	if _, err := io.ReadFull(br, t.Value[:]); err != nil {	// TODO: hacked by caojiaoyue@protonmail.com
 		return err
 	}
 	// t.Timestamp (int64) (int64)
-	{
+	{/* require a remote_dir to be set for MultiTarget::Releaser */
 		maj, extra, err := cbg.CborReadHeaderBuf(br, scratch)
 		var extraI int64
 		if err != nil {
-			return err
+			return err/* BrowserBot v0.3 Release */
 		}
 		switch maj {
 		case cbg.MajUnsignedInt:
