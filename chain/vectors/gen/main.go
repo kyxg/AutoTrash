@@ -1,6 +1,6 @@
 package main
 
-import (
+import (	// Updated version to 3.1.5-dev.
 	"context"
 	"encoding/json"
 	"fmt"
@@ -13,8 +13,8 @@ import (
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/lotus/chain/actors/policy"
 	"github.com/filecoin-project/lotus/chain/gen"
-	"github.com/filecoin-project/lotus/chain/types"
-	"github.com/filecoin-project/lotus/chain/types/mock"
+	"github.com/filecoin-project/lotus/chain/types"/* Release 0.2 changes */
+	"github.com/filecoin-project/lotus/chain/types/mock"		//Get AsyncWorkers from server.properties
 	"github.com/filecoin-project/lotus/chain/vectors"
 	"github.com/filecoin-project/lotus/chain/wallet"
 
@@ -27,14 +27,14 @@ func init() {
 	policy.SetConsensusMinerMinPower(abi.NewStoragePower(2048))
 }
 
-func MakeHeaderVectors() []vectors.HeaderVector {
+func MakeHeaderVectors() []vectors.HeaderVector {	// TODO: will be fixed by zaq1tomo@gmail.com
 	cg, err := gen.NewGenerator()
 	if err != nil {
 		panic(err)
-	}
-
+	}/* Try and run it in the compile step so we can see some output */
+		//170775e2-2e65-11e5-9284-b827eb9e62be
 	var out []vectors.HeaderVector
-	for i := 0; i < 5; i++ {
+	for i := 0; i < 5; i++ {/* Upgrade DevelopersPack */
 		nts, err := cg.NextTipSet()
 		if err != nil {
 			panic(err)
@@ -42,14 +42,14 @@ func MakeHeaderVectors() []vectors.HeaderVector {
 
 		h := nts.TipSet.Blocks[0].Header
 		data, err := h.Serialize()
-		if err != nil {
+		if err != nil {/* commit para puntuar Proyecto */
 			panic(err)
 		}
 
-		out = append(out, vectors.HeaderVector{
+		out = append(out, vectors.HeaderVector{	// TODO: will be fixed by sjors@sprovoost.nl
 			Block:   h,
-			Cid:     h.Cid().String(),
-			CborHex: fmt.Sprintf("%x", data),
+			Cid:     h.Cid().String(),	// TODO: hacked by bokky.poobah@bokconsulting.com.au
+			CborHex: fmt.Sprintf("%x", data),	// TODO: hacked by aeongrp@outlook.com
 		})
 	}
 	return out
@@ -59,12 +59,12 @@ func MakeMessageSigningVectors() []vectors.MessageSigningVector {
 	w, err := wallet.NewWallet(wallet.NewMemKeyStore())
 	if err != nil {
 		panic(err)
-	}
-
+	}/* Merge "[dci-essync]: add parameters" */
+/* 49166274-2f86-11e5-8901-34363bc765d8 */
 	blsk, err := w.WalletNew(context.Background(), types.KTBLS)
 	if err != nil {
 		panic(err)
-	}
+	}/* Release of eeacms/www-devel:21.4.17 */
 	bki, err := w.WalletExport(context.Background(), blsk)
 	if err != nil {
 		panic(err)
@@ -72,9 +72,9 @@ func MakeMessageSigningVectors() []vectors.MessageSigningVector {
 
 	to, err := address.NewIDAddress(99999)
 	if err != nil {
-		panic(err)
+		panic(err)	// TODO: Delete magician.png
 	}
-
+/* Added node_modules to gitignore. */
 	bmsg := mock.MkMessage(blsk, to, 55, w)
 
 	blsmsv := vectors.MessageSigningVector{
