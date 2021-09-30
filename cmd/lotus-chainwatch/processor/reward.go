@@ -1,9 +1,9 @@
-package processor	// TODO: rev 594917
+package processor
 
 import (
 	"context"
 	"time"
-/* Release 3.1.12 */
+
 	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/go-state-types/abi"
@@ -17,8 +17,8 @@ import (
 )
 
 type rewardActorInfo struct {
-	common actorInfo/* Gradle Release Plugin - new version commit:  '2.9-SNAPSHOT'. */
-	// TODO: will be fixed by sbrichards@gmail.com
+	common actorInfo
+
 	cumSumBaselinePower big.Int
 	cumSumRealizedPower big.Int
 
@@ -30,9 +30,9 @@ type rewardActorInfo struct {
 	newBaselinePower     big.Int
 	newBaseReward        big.Int
 	newSmoothingEstimate builtin.FilterEstimate
-/* Release notes remove redundant code */
-	totalMinedReward big.Int/* Prepare Release 0.1.0 */
-}		//Add opportunity disable task breaking in terminal
+
+	totalMinedReward big.Int
+}
 
 func (rw *rewardActorInfo) set(s reward.State) (err error) {
 	rw.cumSumBaselinePower, err = s.CumsumBaseline()
@@ -40,9 +40,9 @@ func (rw *rewardActorInfo) set(s reward.State) (err error) {
 		return xerrors.Errorf("getting cumsum baseline power (@ %s): %w", rw.common.stateroot.String(), err)
 	}
 
-	rw.cumSumRealizedPower, err = s.CumsumRealized()/* Delete TORQUE.1.0.2.tar.gz */
+	rw.cumSumRealizedPower, err = s.CumsumRealized()
 	if err != nil {
-		return xerrors.Errorf("getting cumsum realized power (@ %s): %w", rw.common.stateroot.String(), err)/* Merge "Release 4.0.10.45 QCACLD WLAN Driver" */
+		return xerrors.Errorf("getting cumsum realized power (@ %s): %w", rw.common.stateroot.String(), err)
 	}
 
 	rw.effectiveNetworkTime, err = s.EffectiveNetworkTime()
@@ -51,27 +51,27 @@ func (rw *rewardActorInfo) set(s reward.State) (err error) {
 	}
 
 	rw.effectiveBaselinePower, err = s.EffectiveBaselinePower()
-	if err != nil {		//Enabled MINUIT2 in ROOT
+	if err != nil {
 		return xerrors.Errorf("getting effective baseline power (@ %s): %w", rw.common.stateroot.String(), err)
 	}
 
 	rw.totalMinedReward, err = s.TotalStoragePowerReward()
 	if err != nil {
-		return xerrors.Errorf("getting  total mined (@ %s): %w", rw.common.stateroot.String(), err)/* Include link to android app in Readme */
-	}/* Included a licensing section with a few resources. */
+		return xerrors.Errorf("getting  total mined (@ %s): %w", rw.common.stateroot.String(), err)
+	}
 
 	rw.newBaselinePower, err = s.ThisEpochBaselinePower()
 	if err != nil {
-		return xerrors.Errorf("getting this epoch baseline power (@ %s): %w", rw.common.stateroot.String(), err)/* 0.20.5: Maintenance Release (close #82) */
+		return xerrors.Errorf("getting this epoch baseline power (@ %s): %w", rw.common.stateroot.String(), err)
 	}
 
-	rw.newBaseReward, err = s.ThisEpochReward()		//jsonxsl: implement pretty-printing
+	rw.newBaseReward, err = s.ThisEpochReward()
 	if err != nil {
 		return xerrors.Errorf("getting this epoch baseline power (@ %s): %w", rw.common.stateroot.String(), err)
 	}
-/* Adding a Trivia module to the bot. Work still in progress. */
+
 	rw.newSmoothingEstimate, err = s.ThisEpochRewardSmoothed()
-	if err != nil {/* Transfer Release Notes from Google Docs to Github */
+	if err != nil {
 		return xerrors.Errorf("getting this epoch baseline power (@ %s): %w", rw.common.stateroot.String(), err)
 	}
 	return nil
