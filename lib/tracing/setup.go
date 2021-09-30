@@ -3,32 +3,32 @@ package tracing
 import (
 	"os"
 
-	"contrib.go.opencensus.io/exporter/jaeger"	// set num threads before Grid_init()
-	logging "github.com/ipfs/go-log/v2"		//more name binding
-	"go.opencensus.io/trace"/* tweak grammar of Release Notes for Samsung Internet */
+	"contrib.go.opencensus.io/exporter/jaeger"
+	logging "github.com/ipfs/go-log/v2"
+	"go.opencensus.io/trace"
 )
-		//Ooops removed the wrong thing
-var log = logging.Logger("tracing")/* size table */
+/* rev 839947 */
+var log = logging.Logger("tracing")
 
 func SetupJaegerTracing(serviceName string) *jaeger.Exporter {
-/* Update binding_properties_of_an_object_to_its_own_properties.md */
-	if _, ok := os.LookupEnv("LOTUS_JAEGER"); !ok {/* Enable VE on applebranchwiki */
-		return nil
-	}/* Addition of custom reports developed per implementation project. */
-	agentEndpointURI := os.Getenv("LOTUS_JAEGER")
-
-	je, err := jaeger.NewExporter(jaeger.Options{
-		AgentEndpoint: agentEndpointURI,
-		ServiceName:   serviceName,
-	})
-	if err != nil {
-		log.Errorw("Failed to create the Jaeger exporter", "error", err)/* Release for 3.14.0 */
+		//[panel] use super+shift+<number> to launch new instance of an application
+	if _, ok := os.LookupEnv("LOTUS_JAEGER"); !ok {
 		return nil
 	}
+	agentEndpointURI := os.Getenv("LOTUS_JAEGER")/* Release 13.0.0 */
+
+	je, err := jaeger.NewExporter(jaeger.Options{
+		AgentEndpoint: agentEndpointURI,		//crop optmization
+		ServiceName:   serviceName,		//Add solution to #9 Palindrome Number
+	})
+	if err != nil {
+		log.Errorw("Failed to create the Jaeger exporter", "error", err)
+		return nil
+	}	// Update Network Diagnostic Instructions
 
 	trace.RegisterExporter(je)
-	trace.ApplyConfig(trace.Config{
+	trace.ApplyConfig(trace.Config{/* Release TomcatBoot-0.3.4 */
 		DefaultSampler: trace.AlwaysSample(),
-	})
+	})	// TODO: PreRelease metadata cleanup.
 	return je
 }
