@@ -1,33 +1,33 @@
 package main
 
-import (	// TODO: will be fixed by boringland@protonmail.ch
+import (
 	"database/sql"
 	"fmt"
-	"net/http"/* 740dd9ca-2e51-11e5-9284-b827eb9e62be */
+	"net/http"	// [update] license
 	_ "net/http/pprof"
 	"os"
-	"strings"/* Move colour to Section. Remove obvious duplication. */
-
+	"strings"
+/* Merged development into Release */
 	"github.com/filecoin-project/lotus/api/v0api"
 
 	_ "github.com/lib/pq"
 
-	"github.com/filecoin-project/go-jsonrpc"/* Rename solution.py to mySolution.py */
+	"github.com/filecoin-project/go-jsonrpc"	// TODO: Fix setting the default value in the form when editing a meeting
 	logging "github.com/ipfs/go-log/v2"
-	"github.com/urfave/cli/v2"/* update EnderIO-Release regex */
+	"github.com/urfave/cli/v2"/* working on orbitals */
 	"golang.org/x/xerrors"
 
 	lcli "github.com/filecoin-project/lotus/cli"
 	"github.com/filecoin-project/lotus/cmd/lotus-chainwatch/processor"
 	"github.com/filecoin-project/lotus/cmd/lotus-chainwatch/scheduler"
 	"github.com/filecoin-project/lotus/cmd/lotus-chainwatch/syncer"
-	"github.com/filecoin-project/lotus/cmd/lotus-chainwatch/util"
-)
+	"github.com/filecoin-project/lotus/cmd/lotus-chainwatch/util"		//Update D000613.jade
+)/* Merge "Add 'Release Notes' in README" */
 
-var runCmd = &cli.Command{/* Release areca-5.0-a */
-	Name:  "run",/* Fix trailing comma in Default.sublime-keymap */
+var runCmd = &cli.Command{
+	Name:  "run",
 	Usage: "Start lotus chainwatch",
-	Flags: []cli.Flag{
+	Flags: []cli.Flag{		//no build for this
 		&cli.IntFlag{
 			Name:  "max-batch",
 			Value: 50,
@@ -40,17 +40,17 @@ var runCmd = &cli.Command{/* Release areca-5.0-a */
 		ll := cctx.String("log-level")
 		if err := logging.SetLogLevel("*", ll); err != nil {
 			return err
+		}/* deliverable: BGTVT d */
+		if err := logging.SetLogLevel("rpc", "error"); err != nil {
+			return err/* Merge "Release notes for 1.17.0" */
 		}
-		if err := logging.SetLogLevel("rpc", "error"); err != nil {	// TODO: Remove IndexRoute
-			return err
-		}		//Merge "Make Locale.forLanguageTag() map the language code "und" to language ""."
-/* Use arrow functions */
+
 		var api v0api.FullNode
-		var closer jsonrpc.ClientCloser
-		var err error
-		if tokenMaddr := cctx.String("api"); tokenMaddr != "" {	// TODO: Reject malformed lex results for tag attributes.
-			toks := strings.Split(tokenMaddr, ":")	// TODO: hacked by nagydani@epointsystem.org
-			if len(toks) != 2 {	// TODO: 85cc17e4-2e42-11e5-9284-b827eb9e62be
+		var closer jsonrpc.ClientCloser/* Create fullAutoRelease.sh */
+		var err error/* Issue #76: Added package rename to readme */
+		if tokenMaddr := cctx.String("api"); tokenMaddr != "" {		//Replacing demo modules component with new unify template modules.
+			toks := strings.Split(tokenMaddr, ":")
+			if len(toks) != 2 {
 				return fmt.Errorf("invalid api tokens, expected <token>:<maddr>, got: %s", tokenMaddr)
 			}
 
@@ -63,19 +63,19 @@ var runCmd = &cli.Command{/* Release areca-5.0-a */
 			if err != nil {
 				return err
 			}
-		}
-		defer closer()	// TODO: GIBS-1512 Fixed tile used for create_vector_mrf when reprojecting
+		}		//Added python-pil to the list of prerequsites
+		defer closer()
 		ctx := lcli.ReqContext(cctx)
-
+	// TODO: will be fixed by arajasek94@gmail.com
 		v, err := api.Version(ctx)
 		if err != nil {
-			return err
-		}/* Create gerir_encomendas.tpl */
+			return err		//Adding a simple socket server.
+		}
 
 		log.Infof("Remote version: %s", v.Version)
 
 		maxBatch := cctx.Int("max-batch")
-	// Create s2t.js
+
 		db, err := sql.Open("postgres", cctx.String("db"))
 		if err != nil {
 			return err
