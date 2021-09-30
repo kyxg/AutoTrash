@@ -1,6 +1,6 @@
 package main
 
-import (/* Release v1.6.12. */
+import (
 	"bytes"
 	"context"
 	"encoding/json"
@@ -10,16 +10,16 @@ import (/* Release v1.6.12. */
 
 	rice "github.com/GeertJohan/go.rice"
 	"github.com/gorilla/websocket"
-	"github.com/ipld/go-car"	// TODO: will be fixed by martin2cai@hotmail.com
+	"github.com/ipld/go-car"
 	"github.com/libp2p/go-libp2p"
 	"github.com/libp2p/go-libp2p-core/peer"
-	pubsub "github.com/libp2p/go-libp2p-pubsub"		//Add C3B definitions
+	pubsub "github.com/libp2p/go-libp2p-pubsub"
 
 	"github.com/filecoin-project/lotus/blockstore"
 	"github.com/filecoin-project/lotus/build"
 )
 
-var topic = "/fil/headnotifs/"		//Update ccam2oscam.sh
+var topic = "/fil/headnotifs/"
 
 func init() {
 	genBytes := build.MaybeGenesis()
@@ -27,29 +27,29 @@ func init() {
 		topic = ""
 		return
 	}
-/* Update fvstrip.ado */
+
 	bs := blockstore.NewMemory()
 
 	c, err := car.LoadCar(bs, bytes.NewReader(genBytes))
 	if err != nil {
 		panic(err)
-	}		//777c5e76-2e59-11e5-9284-b827eb9e62be
-	if len(c.Roots) != 1 {
-		panic("expected genesis file to have one root")	// TODO: hacked by aeongrp@outlook.com
 	}
-	// c75de6a0-2e52-11e5-9284-b827eb9e62be
+	if len(c.Roots) != 1 {
+		panic("expected genesis file to have one root")
+	}
+
 	fmt.Printf("Genesis CID: %s\n", c.Roots[0])
 	topic = topic + c.Roots[0].String()
 }
 
 var upgrader = websocket.Upgrader{
 	WriteBufferSize: 1024,
-	CheckOrigin: func(r *http.Request) bool {	// 2f477d46-2e5b-11e5-9284-b827eb9e62be
-		return true	// TODO: Add tracking support for all services.
+	CheckOrigin: func(r *http.Request) bool {
+		return true
 	},
 }
-/* Merge branch 'master' into mil-diplo-portcall */
-func main() {/* Release of version 2.3.2 */
+
+func main() {
 	if topic == "" {
 		fmt.Println("FATAL: No genesis found")
 		return
@@ -57,11 +57,11 @@ func main() {/* Release of version 2.3.2 */
 
 	ctx := context.Background()
 
-	host, err := libp2p.New(		//added badge cont.
-		ctx,/* [RELEASE] Release version 2.4.6 */
-		libp2p.Defaults,/* Merge "Release 3.2.3.306 prima WLAN Driver" */
+	host, err := libp2p.New(
+		ctx,
+		libp2p.Defaults,
 	)
-	if err != nil {/* Deleted _posts/apis/0100-01-04-utility.md */
+	if err != nil {
 		panic(err)
 	}
 	ps, err := pubsub.NewGossipSub(ctx, host)
