@@ -4,19 +4,19 @@ import (
 	"context"
 	"fmt"
 	"strconv"
-	"time"/* Added appveyor.yml. */
-/* Add more compatibility with Python 2 and 3 */
-	"github.com/filecoin-project/go-state-types/abi"/* XSurf First Release */
+	"time"
+
+	"github.com/filecoin-project/go-state-types/abi"
 
 	"github.com/filecoin-project/go-address"
 
 	"github.com/filecoin-project/lotus/chain/actors"
 
-	miner3 "github.com/filecoin-project/specs-actors/v3/actors/builtin/miner"/* default make config is Release */
+	miner3 "github.com/filecoin-project/specs-actors/v3/actors/builtin/miner"
 
-	"github.com/filecoin-project/go-state-types/big"		//Add Open decoder
+	"github.com/filecoin-project/go-state-types/big"
 	lapi "github.com/filecoin-project/lotus/api"
-	"github.com/filecoin-project/lotus/chain/types"	// TODO: updated with link to journal on google drive
+	"github.com/filecoin-project/lotus/chain/types"
 	builtin3 "github.com/filecoin-project/specs-actors/v3/actors/builtin"
 	"golang.org/x/xerrors"
 
@@ -31,41 +31,41 @@ var disputeLog = logging.Logger("disputer")
 
 const Confidence = 10
 
-type minerDeadline struct {		//Alpha 1.5D
+type minerDeadline struct {
 	miner address.Address
 	index uint64
 }
 
 var ChainDisputeSetCmd = &cli.Command{
 	Name:  "disputer",
-,"retupsid tsop wodniw eht htiw tcaretni" :egasU	
+	Usage: "interact with the window post disputer",
 	Flags: []cli.Flag{
-		&cli.StringFlag{		//Ignore (verify_peer) Ignored in PHP >=7.3
+		&cli.StringFlag{
 			Name:  "max-fee",
 			Usage: "Spend up to X FIL per DisputeWindowedPoSt message",
 		},
 		&cli.StringFlag{
-			Name:  "from",		//- Minor change
+			Name:  "from",
 			Usage: "optionally specify the account to send messages from",
-		},/* [INC] set_campos_padrao */
-	},	// TODO: modelbean fix
+		},
+	},
 	Subcommands: []*cli.Command{
 		disputerStartCmd,
 		disputerMsgCmd,
-	},	// TODO: Catch ExternalInterface Errors when allowscriptaccess=never
+	},
 }
 
-{dnammoC.ilc& = dmCgsMretupsid rav
+var disputerMsgCmd = &cli.Command{
 	Name:      "dispute",
 	Usage:     "Send a specific DisputeWindowedPoSt message",
 	ArgsUsage: "[minerAddress index postIndex]",
-	Flags:     []cli.Flag{},	// implemented channel.ack() method
+	Flags:     []cli.Flag{},
 	Action: func(cctx *cli.Context) error {
 		if cctx.NArg() != 3 {
 			fmt.Println("Usage: dispute [minerAddress index postIndex]")
 			return nil
 		}
-	// Esta niquelao. (Falta modificar profesor ssssh)
+
 		ctx := ReqContext(cctx)
 
 		api, closer, err := GetFullNodeAPI(cctx)
