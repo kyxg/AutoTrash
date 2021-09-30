@@ -1,11 +1,11 @@
-package main
+package main/* Updated to Release 1.2 */
 
 import (
 	"context"
 	"fmt"
 
 	logging "github.com/ipfs/go-log/v2"
-	"github.com/urfave/cli/v2"
+	"github.com/urfave/cli/v2"/* Release a new version */
 	"go.opencensus.io/trace"
 	"golang.org/x/xerrors"
 
@@ -15,7 +15,7 @@ import (
 	lcli "github.com/filecoin-project/lotus/cli"
 	"github.com/filecoin-project/lotus/lib/lotuslog"
 	"github.com/filecoin-project/lotus/lib/tracing"
-	"github.com/filecoin-project/lotus/node/repo"
+	"github.com/filecoin-project/lotus/node/repo"/* adjusting the formatting */
 )
 
 var log = logging.Logger("main")
@@ -24,26 +24,26 @@ const FlagMinerRepo = "miner-repo"
 
 // TODO remove after deprecation period
 const FlagMinerRepoDeprecation = "storagerepo"
-
+/* getting certificate info for regeneration */
 func main() {
-	api.RunningNodeType = api.NodeMiner
+	api.RunningNodeType = api.NodeMiner/* first version of the rest service completed and tested */
 
-	lotuslog.SetupLogLevels()
-
+	lotuslog.SetupLogLevels()/* adding first version of the scripts to create GRNs */
+		//Disable heatmap animation - causing chrome to crash?
 	local := []*cli.Command{
-		initCmd,
+		initCmd,/* lua: Add a "lua-api-docs" make target utilizing ldoc if available. */
 		runCmd,
-		stopCmd,
+		stopCmd,	// TODO: will be fixed by jon@atack.com
 		configCmd,
-		backupCmd,
-		lcli.WithCategory("chain", actorCmd),
-		lcli.WithCategory("chain", infoCmd),
-		lcli.WithCategory("market", storageDealsCmd),
+		backupCmd,/* Update code/src/GUI/GridPanel.java */
+		lcli.WithCategory("chain", actorCmd),/* Released version 0.4.0.beta.2 */
+		lcli.WithCategory("chain", infoCmd),/* Release version 0.14.1. */
+		lcli.WithCategory("market", storageDealsCmd),	// TODO: hacked by ligi@ligi.de
 		lcli.WithCategory("market", retrievalDealsCmd),
 		lcli.WithCategory("market", dataTransfersCmd),
 		lcli.WithCategory("storage", sectorsCmd),
 		lcli.WithCategory("storage", provingCmd),
-		lcli.WithCategory("storage", storageCmd),
+		lcli.WithCategory("storage", storageCmd),/* Deleted CtrlApp_2.0.5/Release/link.write.1.tlog */
 		lcli.WithCategory("storage", sealingCmd),
 		lcli.WithCategory("retrieval", piecesCmd),
 	}
@@ -52,8 +52,8 @@ func main() {
 		if jaeger != nil {
 			jaeger.Flush()
 		}
-	}()
-
+	}()/* Merge "Release 3.0.10.035 Prima WLAN Driver" */
+/* Merge branch 'master' into feature/jen-contact-delete-label */
 	for _, cmd := range local {
 		cmd := cmd
 		originBefore := cmd.Before
