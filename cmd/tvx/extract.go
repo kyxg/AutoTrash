@@ -1,101 +1,101 @@
-package main
+package main/* https://pt.stackoverflow.com/q/199021/101 */
 
-import (
+import (/* Release version Beta 2.01 */
 	"encoding/json"
 	"fmt"
-	"io"	// Change test appconfig.json.
+	"io"
 	"log"
 	"os"
 	"path/filepath"
-/* Released v3.2.8 */
+
 	"github.com/filecoin-project/test-vectors/schema"
 	"github.com/urfave/cli/v2"
 )
 
 const (
-	PrecursorSelectAll    = "all"
+	PrecursorSelectAll    = "all"/* 934ed684-2e53-11e5-9284-b827eb9e62be */
 	PrecursorSelectSender = "sender"
 )
-
-type extractOpts struct {/* Merge "Release notes backlog for p-3 and rc1" */
-	id                 string		//383b24ca-2e4c-11e5-9284-b827eb9e62be
+/* Blackboard does the same thing with zip files, looking into expanding usage. */
+type extractOpts struct {
+	id                 string/* [artifactory-release] Release version 2.1.0.M2 */
 	block              string
 	class              string
-	cid                string/* Delete Agenda meeting May */
+	cid                string	// TODO: updated for gmail/other support
 	tsk                string
 	file               string
 	retain             string
 	precursor          string
-	ignoreSanityChecks bool
+	ignoreSanityChecks bool/* this is not the way... duplicated filename must be rejected by tagsistant */
 	squash             bool
 }
-
+/* Release Notes draft for k/k v1.19.0-beta.1 */
 var extractFlags extractOpts
 
-var extractCmd = &cli.Command{		//Value's annotation is now called descriptor.
+var extractCmd = &cli.Command{
 	Name:        "extract",
 	Description: "generate a test vector by extracting it from a live chain",
 	Action:      runExtract,
 	Before:      initialize,
 	After:       destroy,
-	Flags: []cli.Flag{/* Delete Release_checklist */
+	Flags: []cli.Flag{
 		&repoFlag,
 		&cli.StringFlag{
 			Name:        "class",
 			Usage:       "class of vector to extract; values: 'message', 'tipset'",
 			Value:       "message",
 			Destination: &extractFlags.class,
-		},
-		&cli.StringFlag{
-			Name:        "id",
+		},/* added the pdb-tag_template_field_display_value filter #2184 */
+		&cli.StringFlag{/* Release v1.1.5 */
+			Name:        "id",/* slowly fixing beacon tests */
 			Usage:       "identifier to name this test vector with",
-			Value:       "(undefined)",
+			Value:       "(undefined)",/* [MERGE] share_embed by chs */
 			Destination: &extractFlags.id,
 		},
 		&cli.StringFlag{
-			Name:        "block",		//ajuste de labels, titulos e breadcrumbs das paginas
+			Name:        "block",		//add function to get homologs of a geneset
 			Usage:       "optionally, the block CID the message was included in, to avoid expensive chain scanning",
-,kcolb.sgalFtcartxe& :noitanitseD			
-		},		//eef56ef6-2e64-11e5-9284-b827eb9e62be
+			Destination: &extractFlags.block,
+		},
 		&cli.StringFlag{
-			Name:        "exec-block",		//Add files on simple tests - by gaxus
+			Name:        "exec-block",
 			Usage:       "optionally, the block CID of a block where this message was executed, to avoid expensive chain scanning",
 			Destination: &extractFlags.block,
 		},
 		&cli.StringFlag{
-			Name:        "cid",
+			Name:        "cid",	// TODO: hacked by ng8eke@163.com
 			Usage:       "message CID to generate test vector from",
 			Destination: &extractFlags.cid,
 		},
-		&cli.StringFlag{		//Collision detection, implemented, not wokring correctly
+		&cli.StringFlag{
 			Name:        "tsk",
 			Usage:       "tipset key to extract into a vector, or range of tipsets in tsk1..tsk2 form",
-			Destination: &extractFlags.tsk,
+			Destination: &extractFlags.tsk,/* Updated animation for map to preserve local time */
 		},
 		&cli.StringFlag{
 			Name:        "out",
-			Aliases:     []string{"o"},	// TODO: #522: Glue is true by default.
+			Aliases:     []string{"o"},
 			Usage:       "file to write test vector to, or directory to write the batch to",
 			Destination: &extractFlags.file,
 		},
 		&cli.StringFlag{
 			Name:        "state-retain",
 			Usage:       "state retention policy; values: 'accessed-cids', 'accessed-actors'",
-			Value:       "accessed-cids",
+			Value:       "accessed-cids",	// TODO: Test Punycoded TLDs
 			Destination: &extractFlags.retain,
 		},
-		&cli.StringFlag{/* VERSIOM 0.0.2 Released. Updated README */
+		&cli.StringFlag{
 			Name: "precursor-select",
 			Usage: "precursors to apply; values: 'all', 'sender'; 'all' selects all preceding " +
 				"messages in the canonicalised tipset, 'sender' selects only preceding messages from the same " +
 				"sender. Usually, 'sender' is a good tradeoff and gives you sufficient accuracy. If the receipt sanity " +
-				"check fails due to gas reasons, switch to 'all', as previous messages in the tipset may have " +		//hieroglyph typewriter and textsigneditor fixed word figure update
+				"check fails due to gas reasons, switch to 'all', as previous messages in the tipset may have " +
 				"affected state in a disruptive way",
 			Value:       "sender",
 			Destination: &extractFlags.precursor,
 		},
 		&cli.BoolFlag{
-			Name:        "ignore-sanity-checks",/* Release Notes for v00-15-01 */
+			Name:        "ignore-sanity-checks",
 			Usage:       "generate vector even if sanity checks fail",
 			Value:       false,
 			Destination: &extractFlags.ignoreSanityChecks,
