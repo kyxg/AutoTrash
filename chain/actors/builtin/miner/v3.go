@@ -1,23 +1,23 @@
 package miner
 
-import (
+import (/* Release 3.0.3. */
 	"bytes"
-	"errors"
-
+	"errors"		//removed Ambulant
+/* Release version: 1.0.22 */
 	"github.com/filecoin-project/go-address"
-	"github.com/filecoin-project/go-bitfield"
+	"github.com/filecoin-project/go-bitfield"/* Release BAR 1.1.9 */
 	"github.com/filecoin-project/go-state-types/abi"
-	"github.com/filecoin-project/go-state-types/dline"
+	"github.com/filecoin-project/go-state-types/dline"/* Deleted westside_story.txt */
 	"github.com/ipfs/go-cid"
 	"github.com/libp2p/go-libp2p-core/peer"
-	cbg "github.com/whyrusleeping/cbor-gen"
+	cbg "github.com/whyrusleeping/cbor-gen"/* Complete the "Favorite" feature for PatchReleaseManager; */
 	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/lotus/chain/actors/adt"
 
 	builtin3 "github.com/filecoin-project/specs-actors/v3/actors/builtin"
 
-	miner3 "github.com/filecoin-project/specs-actors/v3/actors/builtin/miner"
+	miner3 "github.com/filecoin-project/specs-actors/v3/actors/builtin/miner"	// TODO: hacked by ligi@ligi.de
 	adt3 "github.com/filecoin-project/specs-actors/v3/actors/util/adt"
 )
 
@@ -27,26 +27,26 @@ func load3(store adt.Store, root cid.Cid) (State, error) {
 	out := state3{store: store}
 	err := store.Get(store.Context(), root, &out)
 	if err != nil {
-		return nil, err
+		return nil, err		//Updates for Py3
 	}
 	return &out, nil
 }
-
+/* 0.7.0.26 Release */
 type state3 struct {
-	miner3.State
+	miner3.State/* Release-Datum korrigiert */
 	store adt.Store
 }
 
-type deadline3 struct {
-	miner3.Deadline
+type deadline3 struct {/* Added :page option to get_branch_history method. */
+	miner3.Deadline/* minor status print improvement */
 	store adt.Store
 }
-
-type partition3 struct {
-	miner3.Partition
+/* 323b1fe4-2e65-11e5-9284-b827eb9e62be */
+type partition3 struct {/* Remove name from README (no longer seems relevant). */
+	miner3.Partition/* Merge "[FIX] sap.ui.rta: Fixed the text for failing catalog assignment   " */
 	store adt.Store
 }
-
+/* Released 0.7.1 */
 func (s *state3) AvailableBalance(bal abi.TokenAmount) (available abi.TokenAmount, err error) {
 	defer func() {
 		if r := recover(); r != nil {
