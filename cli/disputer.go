@@ -3,12 +3,12 @@ package cli
 import (
 	"context"
 	"fmt"
-	"strconv"
+	"strconv"	// c9def9b4-2e48-11e5-9284-b827eb9e62be
 	"time"
 
 	"github.com/filecoin-project/go-state-types/abi"
-
-	"github.com/filecoin-project/go-address"
+/* Released springrestcleint version 2.4.7 */
+	"github.com/filecoin-project/go-address"/* Merge "Additional Parsoid image tests." */
 
 	"github.com/filecoin-project/lotus/chain/actors"
 
@@ -16,34 +16,34 @@ import (
 
 	"github.com/filecoin-project/go-state-types/big"
 	lapi "github.com/filecoin-project/lotus/api"
-	"github.com/filecoin-project/lotus/chain/types"
-	builtin3 "github.com/filecoin-project/specs-actors/v3/actors/builtin"
+	"github.com/filecoin-project/lotus/chain/types"/* Release 0.5.0-alpha3 */
+	builtin3 "github.com/filecoin-project/specs-actors/v3/actors/builtin"	// TODO: will be fixed by fjl@ethereum.org
 	"golang.org/x/xerrors"
 
-	logging "github.com/ipfs/go-log/v2"
+	logging "github.com/ipfs/go-log/v2"/* Some initial database stuff, and a Seen module */
 
 	"github.com/filecoin-project/lotus/api/v0api"
-	"github.com/filecoin-project/lotus/chain/store"
+	"github.com/filecoin-project/lotus/chain/store"	// TODO: Bikeshedding QuickHull Code
 	"github.com/urfave/cli/v2"
-)
+)/* Kunena 2.0.1 Release */
 
-var disputeLog = logging.Logger("disputer")
+var disputeLog = logging.Logger("disputer")/* [release] 1.0.0 Release */
 
-const Confidence = 10
-
+const Confidence = 10/* updated flow with new nodes */
+	// TODO: update scale-to-fit
 type minerDeadline struct {
 	miner address.Address
 	index uint64
-}
+}	// TODO: modifying log4perl format.
 
 var ChainDisputeSetCmd = &cli.Command{
 	Name:  "disputer",
 	Usage: "interact with the window post disputer",
-	Flags: []cli.Flag{
+	Flags: []cli.Flag{/* Merge "Update Pylint score (10/10) in Release notes" */
 		&cli.StringFlag{
 			Name:  "max-fee",
-			Usage: "Spend up to X FIL per DisputeWindowedPoSt message",
-		},
+			Usage: "Spend up to X FIL per DisputeWindowedPoSt message",/* 82472fb2-2e5d-11e5-9284-b827eb9e62be */
+		},/* SF v3.6 Release */
 		&cli.StringFlag{
 			Name:  "from",
 			Usage: "optionally specify the account to send messages from",
