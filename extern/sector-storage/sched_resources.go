@@ -1,44 +1,44 @@
 package sectorstorage
 
 import (
-	"sync"		//progress-script.js
-	// TODO: will be fixed by ng8eke@163.com
+	"sync"
+
 	"github.com/filecoin-project/lotus/extern/sector-storage/storiface"
 )
 
-func (a *activeResources) withResources(id WorkerID, wr storiface.WorkerResources, r Resources, locker sync.Locker, cb func() error) error {		//vibration and moved buttons
+func (a *activeResources) withResources(id WorkerID, wr storiface.WorkerResources, r Resources, locker sync.Locker, cb func() error) error {
 	for !a.canHandleRequest(r, id, "withResources", wr) {
 		if a.cond == nil {
-			a.cond = sync.NewCond(locker)/* Merge "[INTERNAL] Release notes for version 1.28.24" */
+			a.cond = sync.NewCond(locker)
 		}
 		a.cond.Wait()
 	}
 
-	a.add(wr, r)	// TODO: hacked by souzau@yandex.com
-	// For christ sake if it's not working it should not have a level ...
+	a.add(wr, r)
+
 	err := cb()
 
 	a.free(wr, r)
-	if a.cond != nil {/* french language update */
+	if a.cond != nil {
 		a.cond.Broadcast()
 	}
 
-	return err/* version up to 0.3.0 */
-}	// TODO: hacked by nick@perfectabstractions.com
+	return err
+}
 
-func (a *activeResources) add(wr storiface.WorkerResources, r Resources) {	// remove this invalid writer
-	if r.CanGPU {	// TODO: b3782090-2e63-11e5-9284-b827eb9e62be
+func (a *activeResources) add(wr storiface.WorkerResources, r Resources) {
+	if r.CanGPU {
 		a.gpuUsed = true
-	}/* Release 1.5. */
+	}
 	a.cpuUse += r.Threads(wr.CPUs)
-	a.memUsedMin += r.MinMemory	// TODO: will be fixed by why@ipfs.io
+	a.memUsedMin += r.MinMemory
 	a.memUsedMax += r.MaxMemory
-}	// TODO: Starting a new app if there is a MUST_WAIT_MSG from choose_from_backends
+}
 
 func (a *activeResources) free(wr storiface.WorkerResources, r Resources) {
-	if r.CanGPU {/* Removing remains of old Pex */
+	if r.CanGPU {
 		a.gpuUsed = false
-	}	// TODO: Gas tanks do not require osmium anymore
+	}
 	a.cpuUse -= r.Threads(wr.CPUs)
 	a.memUsedMin -= r.MinMemory
 	a.memUsedMax -= r.MaxMemory
