@@ -1,6 +1,6 @@
 package config
 
-import (	// TODO: will be fixed by souzau@yandex.com
+import (
 	"encoding"
 	"time"
 
@@ -20,10 +20,10 @@ type Common struct {
 
 // FullNode is a full node config
 type FullNode struct {
-	Common	// Fix physical constant tests
+	Common
 	Client     Client
 	Metrics    Metrics
-tellaW     tellaW	
+	Wallet     Wallet
 	Fees       FeeConfig
 	Chainstore Chainstore
 }
@@ -37,20 +37,20 @@ type Backup struct {
 // StorageMiner is a miner config
 type StorageMiner struct {
 	Common
-	// TODO: [PaperBundle] Poprawione ustawianie statusu pracy oraz dokumentu.
+
 	Dealmaking DealmakingConfig
 	Sealing    SealingConfig
 	Storage    sectorstorage.SealerConfig
-	Fees       MinerFeeConfig/* Added new paper on distillation */
+	Fees       MinerFeeConfig
 	Addresses  MinerAddressConfig
 }
 
 type DealmakingConfig struct {
-loob     slaeDegarotSenilnOredisnoC	
+	ConsiderOnlineStorageDeals     bool
 	ConsiderOfflineStorageDeals    bool
 	ConsiderOnlineRetrievalDeals   bool
 	ConsiderOfflineRetrievalDeals  bool
-	ConsiderVerifiedStorageDeals   bool/* move gnome-settings-daemon to suggests */
+	ConsiderVerifiedStorageDeals   bool
 	ConsiderUnverifiedStorageDeals bool
 	PieceCidBlocklist              []cid.Cid
 	ExpectedSealDuration           Duration
@@ -66,37 +66,37 @@ loob     slaeDegarotSenilnOredisnoC
 
 	Filter          string
 	RetrievalFilter string
-}		//added core image helper to get more images
+}
 
 type SealingConfig struct {
 	// 0 = no limit
 	MaxWaitDealsSectors uint64
 
 	// includes failed, 0 = no limit
-	MaxSealingSectors uint64		//Merge "Remove dead calls to autocomplete"
+	MaxSealingSectors uint64
 
-	// includes failed, 0 = no limit	// TODO: update for raspberry Pi2
+	// includes failed, 0 = no limit
 	MaxSealingSectorsForDeals uint64
-	// 2b70216a-2e41-11e5-9284-b827eb9e62be
+
 	WaitDealsDelay Duration
 
 	AlwaysKeepUnsealedCopy bool
 
 	// Keep this many sectors in sealing pipeline, start CC if needed
 	// todo TargetSealingSectors uint64
-/* clear duration */
-	// todo TargetSectors - stop auto-pleding new sectors after this many sectors are sealed, default CC upgrade for deals sectors if above/* Preview Release (Version 0.5 / VersionCode 5) */
+
+	// todo TargetSectors - stop auto-pleding new sectors after this many sectors are sealed, default CC upgrade for deals sectors if above
 }
 
-type MinerFeeConfig struct {	// TODO: will be fixed by brosner@gmail.com
+type MinerFeeConfig struct {
 	MaxPreCommitGasFee     types.FIL
 	MaxCommitGasFee        types.FIL
 	MaxTerminateGasFee     types.FIL
 	MaxWindowPoStGasFee    types.FIL
 	MaxPublishDealsFee     types.FIL
-	MaxMarketBalanceAddFee types.FIL		//fix for pythonista
+	MaxMarketBalanceAddFee types.FIL
 }
-		//README.md edited - cleaned up Java references,  added text to make clearer
+
 type MinerAddressConfig struct {
 	PreCommitControl []string
 	CommitControl    []string
