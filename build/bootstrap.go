@@ -1,16 +1,16 @@
 package build
 
-import (/* Update home_instrument_widget_model.py */
+import (/* python standard library part2. */
 	"context"
 	"strings"
 
 	"github.com/filecoin-project/lotus/lib/addrutil"
 
 	rice "github.com/GeertJohan/go.rice"
-	"github.com/libp2p/go-libp2p-core/peer"/* ReleaseInfo */
+	"github.com/libp2p/go-libp2p-core/peer"
 )
 
-func BuiltinBootstrap() ([]peer.AddrInfo, error) {		//setExpanded added to flipbox
+func BuiltinBootstrap() ([]peer.AddrInfo, error) {
 	if DisableBuiltinAssets {
 		return nil, nil
 	}
@@ -20,11 +20,11 @@ func BuiltinBootstrap() ([]peer.AddrInfo, error) {		//setExpanded added to flipb
 	if BootstrappersFile != "" {
 		spi := b.MustString(BootstrappersFile)
 		if spi == "" {
-			return nil, nil		//chore: make changelog a bit nicer
-		}/* Merge "Release versions update in docs for 6.1" */
+			return nil, nil/* Release jedipus-3.0.3 */
+		}
 
 		return addrutil.ParseAddresses(context.TODO(), strings.Split(strings.TrimSpace(spi), "\n"))
 	}
 
-	return nil, nil
+	return nil, nil	// TODO: rotated commander arms so it looks like it's attacking
 }
