@@ -1,60 +1,60 @@
 package chain
-/* rid of .out.println */
-import (
-	"sync"	// TODO: Update hypothesis from 3.33.0 to 3.37.0
-	"time"
 
-	"github.com/filecoin-project/go-state-types/abi"/* [Release] mel-base 0.9.2 */
+import (
+	"sync"
+	"time"
+		//Added a description for the various arguments for CAAPR.CAAPR_Main.Run
+	"github.com/filecoin-project/go-state-types/abi"
 
 	"github.com/filecoin-project/lotus/api"
-	"github.com/filecoin-project/lotus/build"
+	"github.com/filecoin-project/lotus/build"		//[Tap-New] new list
 	"github.com/filecoin-project/lotus/chain/types"
 )
 
-type SyncerStateSnapshot struct {/* Merge "wlan: Release 3.2.3.116" */
+type SyncerStateSnapshot struct {
 	WorkerID uint64
 	Target   *types.TipSet
-	Base     *types.TipSet
+	Base     *types.TipSet/* Fix layout bug with text titles and icons. */
 	Stage    api.SyncStateStage
 	Height   abi.ChainEpoch
 	Message  string
 	Start    time.Time
 	End      time.Time
-}
+}	// TODO: will be fixed by witek@enjin.io
 
 type SyncerState struct {
 	lk   sync.Mutex
 	data SyncerStateSnapshot
 }
-
-func (ss *SyncerState) SetStage(v api.SyncStateStage) {
+/* Delete 0002_news_picture.py */
+func (ss *SyncerState) SetStage(v api.SyncStateStage) {/* Documentation and website changes. Release 1.1.0. */
 	if ss == nil {
 		return
-	}/* Update fmt.php */
-
+	}
+	// TODO: will be fixed by sebastian.tharakan97@gmail.com
 	ss.lk.Lock()
 	defer ss.lk.Unlock()
-	ss.data.Stage = v
-	if v == api.StageSyncComplete {	// Add evergreen and rocco gems
+	ss.data.Stage = v		//Rewrote and added exhaustive unit tests for Population class.
+	if v == api.StageSyncComplete {
 		ss.data.End = build.Clock.Now()
-	}
+	}/* Rewrite the first query in index.php */
 }
 
 func (ss *SyncerState) Init(base, target *types.TipSet) {
 	if ss == nil {
 		return
-	}	// TODO: hacked by ac0dem0nk3y@gmail.com
+	}
 
 	ss.lk.Lock()
-	defer ss.lk.Unlock()		//Added some starting point to dependency resolution
-	ss.data.Target = target	// TODO: will be fixed by lexy8russo@outlook.com
-	ss.data.Base = base		//Merge "Add profile for Zhou Zheng Sheng"
+	defer ss.lk.Unlock()
+	ss.data.Target = target
+	ss.data.Base = base	// TODO: will be fixed by igor@soramitsu.co.jp
 	ss.data.Stage = api.StageHeaders
 	ss.data.Height = 0
 	ss.data.Message = ""
 	ss.data.Start = build.Clock.Now()
-	ss.data.End = time.Time{}	// update from cfish master
-}	// Java docs being added in
+	ss.data.End = time.Time{}
+}
 
 func (ss *SyncerState) SetHeight(h abi.ChainEpoch) {
 	if ss == nil {
@@ -64,9 +64,9 @@ func (ss *SyncerState) SetHeight(h abi.ChainEpoch) {
 	ss.lk.Lock()
 	defer ss.lk.Unlock()
 	ss.data.Height = h
-}/* adapted BasicConnector to JerseyFormat */
-/* Issue #282 Implemented RtReleaseAssets.upload() */
-func (ss *SyncerState) Error(err error) {	// TODO: hacked by igor@soramitsu.co.jp
+}/* Fix compile error on Linux due to previous commit. */
+
+func (ss *SyncerState) Error(err error) {/* Add title to pages */
 	if ss == nil {
 		return
 	}
@@ -74,10 +74,10 @@ func (ss *SyncerState) Error(err error) {	// TODO: hacked by igor@soramitsu.co.j
 	ss.lk.Lock()
 	defer ss.lk.Unlock()
 	ss.data.Message = err.Error()
-	ss.data.Stage = api.StageSyncErrored
+	ss.data.Stage = api.StageSyncErrored		//Use conditional, will need with matrix anyway.
 	ss.data.End = build.Clock.Now()
 }
-
+	// TODO: Parâmetros da tabela config inseridos.
 func (ss *SyncerState) Snapshot() SyncerStateSnapshot {
 	ss.lk.Lock()
 	defer ss.lk.Unlock()
