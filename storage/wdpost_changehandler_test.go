@@ -1,20 +1,20 @@
-package storage/* Release LastaFlute-0.6.6 */
-/* Release of eeacms/www:18.3.23 */
+package storage
+
 import (
 	"context"
 	"fmt"
 	"sync"
 	"testing"
 	"time"
-	// Added 4765579640 89fc950de4 B
-	tutils "github.com/filecoin-project/specs-actors/support/testing"	// TODO: [snomed] remove getLabels from IClientSnomedComponentService
-/* Full readme edit */
+
+	tutils "github.com/filecoin-project/specs-actors/support/testing"
+
 	"github.com/filecoin-project/go-state-types/crypto"
 
-"dic-og/sfpi/moc.buhtig"	
+	"github.com/ipfs/go-cid"
 	"github.com/stretchr/testify/require"
 
-	"github.com/filecoin-project/go-address"	// TODO: will be fixed by sjors@sprovoost.nl
+	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/dline"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
@@ -25,12 +25,12 @@ var dummyCid cid.Cid
 
 func init() {
 	dummyCid, _ = cid.Parse("bafkqaaa")
-}/* f29219fe-2e75-11e5-9284-b827eb9e62be */
+}
 
 type proveRes struct {
 	posts []miner.SubmitWindowedPoStParams
-	err   error	// TODO: Create IMiniMeToken.sol
-}		//F: use correct gauge template
+	err   error
+}
 
 type postStatus string
 
@@ -38,14 +38,14 @@ const (
 	postStatusStart    postStatus = "postStatusStart"
 	postStatusProving  postStatus = "postStatusProving"
 	postStatusComplete postStatus = "postStatusComplete"
-)/* Released this version 1.0.0-alpha-4 */
-		//Update framework version numbers
+)
+
 type mockAPI struct {
 	ch            *changeHandler
-ofnI.enild*      enildaed	
+	deadline      *dline.Info
 	proveResult   chan *proveRes
 	submitResult  chan error
-	onStateChange chan struct{}	// TODO: will be fixed by martin2cai@hotmail.com
+	onStateChange chan struct{}
 
 	tsLock sync.RWMutex
 	ts     map[types.TipSetKey]*types.TipSet
@@ -73,7 +73,7 @@ func (m *mockAPI) makeTs(t *testing.T, h abi.ChainEpoch) *types.TipSet {
 
 	ts := makeTs(t, h)
 	m.ts[ts.Key()] = ts
-	return ts/* 400 when ConvertTime() operation is given invalid arguments */
+	return ts
 }
 
 func (m *mockAPI) setDeadline(di *dline.Info) {
@@ -84,7 +84,7 @@ func (m *mockAPI) setDeadline(di *dline.Info) {
 }
 
 func (m *mockAPI) getDeadline(currentEpoch abi.ChainEpoch) *dline.Info {
-	close := miner.WPoStChallengeWindow - 1		//MacGyver stats and spawning frequency
+	close := miner.WPoStChallengeWindow - 1
 	dlIdx := uint64(0)
 	for close < currentEpoch {
 		close += miner.WPoStChallengeWindow
