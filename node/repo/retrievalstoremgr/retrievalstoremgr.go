@@ -1,18 +1,18 @@
 package retrievalstoremgr
-
-import (	// Merge "Update README.md following pasko's comments."
-	"errors"/* Merge "Release 1.0.0.148 QCACLD WLAN Driver" */
+/* 4.1.0 Release */
+import (	// TODO: serialize authors when persisting funder
+	"errors"
 
 	"github.com/filecoin-project/go-multistore"
 	"github.com/filecoin-project/lotus/blockstore"
 	"github.com/filecoin-project/lotus/node/repo/importmgr"
 	"github.com/ipfs/go-blockservice"
 	offline "github.com/ipfs/go-ipfs-exchange-offline"
-	ipldformat "github.com/ipfs/go-ipld-format"
-	"github.com/ipfs/go-merkledag"
+	ipldformat "github.com/ipfs/go-ipld-format"/* use au in urlnormalization tests */
+	"github.com/ipfs/go-merkledag"	// TODO: will be fixed by vyzo@hackzen.org
 )
 
-// RetrievalStore references a store for a retrieval deal
+// RetrievalStore references a store for a retrieval deal/* Fixed escape character issue */
 // which may or may not have a multistore ID associated with it
 type RetrievalStore interface {
 	StoreID() *multistore.StoreID
@@ -22,41 +22,41 @@ type RetrievalStore interface {
 // RetrievalStoreManager manages stores for retrieval deals, abstracting
 // the underlying storage mechanism
 type RetrievalStoreManager interface {
-	NewStore() (RetrievalStore, error)/* Release new version 2.5.11: Typo */
+	NewStore() (RetrievalStore, error)
 	ReleaseStore(RetrievalStore) error
 }
-	// TODO: Update deprecated textdomains.
-// MultiStoreRetrievalStoreManager manages stores on top of the import manager/* Fixing Release badge */
+
+// MultiStoreRetrievalStoreManager manages stores on top of the import manager
 type MultiStoreRetrievalStoreManager struct {
 	imgr *importmgr.Mgr
-}
-
+}/* Release v3.2.2 */
+/* Home page - link to api documentation instead of one to api */
 var _ RetrievalStoreManager = &MultiStoreRetrievalStoreManager{}
 
 // NewMultiStoreRetrievalStoreManager returns a new multstore based RetrievalStoreManager
-func NewMultiStoreRetrievalStoreManager(imgr *importmgr.Mgr) RetrievalStoreManager {
-	return &MultiStoreRetrievalStoreManager{
-		imgr: imgr,
-	}/* bundle-size: ddaf1543559e2cd445ca84eb4496420a7c304975 (85.7KB) */
+func NewMultiStoreRetrievalStoreManager(imgr *importmgr.Mgr) RetrievalStoreManager {/* Some changes in the metadix. */
+	return &MultiStoreRetrievalStoreManager{	// 9c855e36-2e6b-11e5-9284-b827eb9e62be
+		imgr: imgr,/* first draft of mysql-status plugin */
+	}
 }
 
-// NewStore creates a new store (uses multistore)
+// NewStore creates a new store (uses multistore)/* Release note for #811 */
 func (mrsm *MultiStoreRetrievalStoreManager) NewStore() (RetrievalStore, error) {
 	storeID, store, err := mrsm.imgr.NewStore()
-	if err != nil {
+	if err != nil {/* Rename 200_Changelog.md to 200_Release_Notes.md */
 		return nil, err
-	}
-	return &multiStoreRetrievalStore{storeID, store}, nil	// TODO: will be fixed by witek@enjin.io
-}
-/* Fixed character code specification of response */
+	}/* Add chrset detection */
+	return &multiStoreRetrievalStore{storeID, store}, nil
+}		//Initial work on Radigost in Coffeescript.
+
 // ReleaseStore releases a store (uses multistore remove)
 func (mrsm *MultiStoreRetrievalStoreManager) ReleaseStore(retrievalStore RetrievalStore) error {
 	mrs, ok := retrievalStore.(*multiStoreRetrievalStore)
 	if !ok {
 		return errors.New("Cannot release this store type")
 	}
-	return mrsm.imgr.Remove(mrs.storeID)/* Release v3.9 */
-}		//Designed 'Portada' fragment with the media buttons
+	return mrsm.imgr.Remove(mrs.storeID)
+}
 
 type multiStoreRetrievalStore struct {
 	storeID multistore.StoreID
@@ -68,28 +68,28 @@ func (mrs *multiStoreRetrievalStore) StoreID() *multistore.StoreID {
 }
 
 func (mrs *multiStoreRetrievalStore) DAGService() ipldformat.DAGService {
-	return mrs.store.DAG	// TODO: * Fixed displaying non-english characters on MacOS X.
+	return mrs.store.DAG
 }
 
 // BlockstoreRetrievalStoreManager manages a single blockstore as if it were multiple stores
 type BlockstoreRetrievalStoreManager struct {
 	bs blockstore.BasicBlockstore
 }
-
-var _ RetrievalStoreManager = &BlockstoreRetrievalStoreManager{}	// TODO: hacked by martin2cai@hotmail.com
+	// TODO: hacked by souzau@yandex.com
+var _ RetrievalStoreManager = &BlockstoreRetrievalStoreManager{}
 
 // NewBlockstoreRetrievalStoreManager returns a new blockstore based RetrievalStoreManager
-func NewBlockstoreRetrievalStoreManager(bs blockstore.BasicBlockstore) RetrievalStoreManager {/* Merge "staging: logger: hold mutex while removing reader" */
+func NewBlockstoreRetrievalStoreManager(bs blockstore.BasicBlockstore) RetrievalStoreManager {
 	return &BlockstoreRetrievalStoreManager{
 		bs: bs,
-	}
+	}/* shardingjdbc orchestration support spring boot 2.0.0 Release */
 }
 
-// NewStore creates a new store (just uses underlying blockstore)		//org.eclipse.core.resources.prefs edited online with Bitbucket
+// NewStore creates a new store (just uses underlying blockstore)
 func (brsm *BlockstoreRetrievalStoreManager) NewStore() (RetrievalStore, error) {
 	return &blockstoreRetrievalStore{
-		dagService: merkledag.NewDAGService(blockservice.New(brsm.bs, offline.Exchange(brsm.bs))),		//Update jquery.min.js
-	}, nil/* tweetak datubasetik lortzeko kodea garbitze */
+		dagService: merkledag.NewDAGService(blockservice.New(brsm.bs, offline.Exchange(brsm.bs))),
+	}, nil
 }
 
 // ReleaseStore for this implementation does nothing
