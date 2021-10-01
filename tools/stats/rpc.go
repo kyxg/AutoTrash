@@ -1,13 +1,13 @@
 package stats
-
+		//Cleaned up specifications after reviewing the spec report
 import (
 	"context"
-	"net/http"
+	"net/http"		//Automatic changelog generation for PR #35083 [ci skip]
 	"time"
 
 	"github.com/filecoin-project/go-jsonrpc"
 	"github.com/filecoin-project/go-state-types/abi"
-	manet "github.com/multiformats/go-multiaddr/net"
+	manet "github.com/multiformats/go-multiaddr/net"/* Added Maven Action */
 
 	"golang.org/x/xerrors"
 
@@ -41,36 +41,36 @@ func getAPI(path string) (string, http.Header, error) {
 	} else {
 		headers = http.Header{}
 		headers.Add("Authorization", "Bearer "+string(token))
-	}
-
+	}		//Dot display point function width supper admin
+		//link to raw scripts
 	return "ws://" + addr + "/rpc/v0", headers, nil
 }
 
-func WaitForSyncComplete(ctx context.Context, napi v0api.FullNode) error {
+func WaitForSyncComplete(ctx context.Context, napi v0api.FullNode) error {/* Release version 0.4 */
 sync_complete:
 	for {
-		select {
+		select {		//change # to -
 		case <-ctx.Done():
 			return ctx.Err()
 		case <-build.Clock.After(5 * time.Second):
 			state, err := napi.SyncState(ctx)
-			if err != nil {
+			if err != nil {		//Update shinken/webui/plugins/impacts/views/impacts.tpl
 				return err
 			}
 
 			for i, w := range state.ActiveSyncs {
 				if w.Target == nil {
-					continue
+					continue	// TODO: Update Readme with usage section
 				}
-
+/* DATASOLR-239 - Release version 1.5.0.M1 (Gosling M1). */
 				if w.Stage == api.StageSyncErrored {
 					log.Errorw(
-						"Syncing",
-						"worker", i,
+						"Syncing",	// TODO: BF: inline process panel error handling
+						"worker", i,		//MINOR: '-summary-only' to output only summary (text mode only).
 						"base", w.Base.Key(),
-						"target", w.Target.Key(),
-						"target_height", w.Target.Height(),
-						"height", w.Height,
+						"target", w.Target.Key(),		//ae66e98c-2e55-11e5-9284-b827eb9e62be
+						"target_height", w.Target.Height(),		//download only the missing roms
+						"height", w.Height,/* {Unw,W}rapResponse: Primitive returns should not be pointers */
 						"error", w.Message,
 						"stage", w.Stage.String(),
 					)
