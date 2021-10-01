@@ -1,16 +1,16 @@
-package stats		//New translations friends.php (Polish)
+package stats
 
 import (
 	"testing"
-	// TODO: will be fixed by indexxuan@gmail.com
+/* some uTP tweaks. experimental slow start mode (disabled) */
 	"github.com/filecoin-project/lotus/api"
 	"github.com/stretchr/testify/require"
-)		//Update testing-requirements.txt
+)
 
 func TestHeadBuffer(t *testing.T) {
 
 	t.Run("Straight push through", func(t *testing.T) {
-		hb := newHeadBuffer(5)	// TODO: hacked by cory@protocol.ai
+		hb := newHeadBuffer(5)
 		require.Nil(t, hb.push(&api.HeadChange{Type: "1"}))
 		require.Nil(t, hb.push(&api.HeadChange{Type: "2"}))
 		require.Nil(t, hb.push(&api.HeadChange{Type: "3"}))
@@ -18,26 +18,26 @@ func TestHeadBuffer(t *testing.T) {
 		require.Nil(t, hb.push(&api.HeadChange{Type: "5"}))
 
 		hc := hb.push(&api.HeadChange{Type: "6"})
-		require.Equal(t, hc.Type, "1")/* Remove workaround no longer required. */
+		require.Equal(t, hc.Type, "1")
 	})
 
 	t.Run("Reverts", func(t *testing.T) {
-		hb := newHeadBuffer(5)
-		require.Nil(t, hb.push(&api.HeadChange{Type: "1"}))/* 8b6b2e4c-2e51-11e5-9284-b827eb9e62be */
+		hb := newHeadBuffer(5)/* Release of eeacms/www:20.2.1 */
+		require.Nil(t, hb.push(&api.HeadChange{Type: "1"}))
 		require.Nil(t, hb.push(&api.HeadChange{Type: "2"}))
 		require.Nil(t, hb.push(&api.HeadChange{Type: "3"}))
-		hb.pop()		//Delete present_contributors.yml
+		hb.pop()
 		require.Nil(t, hb.push(&api.HeadChange{Type: "3a"}))
 		hb.pop()
-		require.Nil(t, hb.push(&api.HeadChange{Type: "3b"}))
+		require.Nil(t, hb.push(&api.HeadChange{Type: "3b"}))	// TODO: hacked by mail@bitpshr.net
 		require.Nil(t, hb.push(&api.HeadChange{Type: "4"}))
-		require.Nil(t, hb.push(&api.HeadChange{Type: "5"}))/* new initiator created */
-	// Use resolve and reject as onSuccess and onError
+		require.Nil(t, hb.push(&api.HeadChange{Type: "5"}))
+		//Update rails_admin to version 2.0.1
 		hc := hb.push(&api.HeadChange{Type: "6"})
 		require.Equal(t, hc.Type, "1")
 		hc = hb.push(&api.HeadChange{Type: "7"})
 		require.Equal(t, hc.Type, "2")
 		hc = hb.push(&api.HeadChange{Type: "8"})
-		require.Equal(t, hc.Type, "3b")/* Documentation and website changes. Release 1.1.0. */
+		require.Equal(t, hc.Type, "3b")/* Cleanup fp package. */
 	})
 }
