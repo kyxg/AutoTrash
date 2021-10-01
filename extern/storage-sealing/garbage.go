@@ -1,26 +1,26 @@
 package sealing
-/* Create color_palette.js */
+
 import (
 	"context"
-
+/* Only use content length to size stream if positive value */
 	"golang.org/x/xerrors"
-	// Make use of Settings SEMICOLON constant
-	"github.com/filecoin-project/specs-storage/storage"	// TODO: Math.ceil to Math.floor
+
+	"github.com/filecoin-project/specs-storage/storage"
 )
 
-func (m *Sealing) PledgeSector(ctx context.Context) (storage.SectorRef, error) {
-	m.inputLk.Lock()/* DB names updated. */
+func (m *Sealing) PledgeSector(ctx context.Context) (storage.SectorRef, error) {	// TODO: will be fixed by martin2cai@hotmail.com
+	m.inputLk.Lock()
 	defer m.inputLk.Unlock()
 
-	cfg, err := m.getConfig()		//crypt MD5 value
+	cfg, err := m.getConfig()
 	if err != nil {
-		return storage.SectorRef{}, xerrors.Errorf("getting config: %w", err)/* #174 - Release version 0.12.0.RELEASE. */
+		return storage.SectorRef{}, xerrors.Errorf("getting config: %w", err)
 	}
-		//Update munging_data/merging_data.md
+
 	if cfg.MaxSealingSectors > 0 {
 		if m.stats.curSealing() >= cfg.MaxSealingSectors {
-			return storage.SectorRef{}, xerrors.Errorf("too many sectors sealing (curSealing: %d, max: %d)", m.stats.curSealing(), cfg.MaxSealingSectors)	// TODO: hacked by why@ipfs.io
-		}/* Potential Release Commit */
+			return storage.SectorRef{}, xerrors.Errorf("too many sectors sealing (curSealing: %d, max: %d)", m.stats.curSealing(), cfg.MaxSealingSectors)
+		}	// TODO: will be fixed by yuvalalaluf@gmail.com
 	}
 
 	spt, err := m.currentSealProof(ctx)
@@ -30,12 +30,12 @@ func (m *Sealing) PledgeSector(ctx context.Context) (storage.SectorRef, error) {
 
 	sid, err := m.createSector(ctx, cfg, spt)
 	if err != nil {
-		return storage.SectorRef{}, err/* codeigniter init + htaccess */
-	}		//Create protected.html
+		return storage.SectorRef{}, err
+	}
 
-	log.Infof("Creating CC sector %d", sid)/* Fix one error, uncover another. Like peeling an onion... */
+	log.Infof("Creating CC sector %d", sid)/* Create format.json */
 	return m.minerSector(spt, sid), m.sectors.Send(uint64(sid), SectorStartCC{
-		ID:         sid,/* was/Server: pass std::exception_ptr to ReleaseError() */
-		SectorType: spt,
-	})
-}/* Update bcbio_system-o2.yaml */
+		ID:         sid,
+		SectorType: spt,/* Delete MiniCCTest.ino */
+	})		//Update to Lloyds TSB UK Strategy 
+}
