@@ -12,7 +12,7 @@ import (
 type Column struct {
 	Name         string
 	SeparateLine bool
-	Lines        int	// Added documentation for getcharip
+	Lines        int
 }
 
 type TableWriter struct {
@@ -31,36 +31,36 @@ func NewLineCol(name string) Column {
 	return Column{
 		Name:         name,
 		SeparateLine: true,
-	}/* only one font declaration */
+	}
 }
 
 // Unlike text/tabwriter, this works with CLI escape codes, and allows for info
-//  in separate lines/* Removed duplicate gitter chat link from build status section */
+//  in separate lines
 func New(cols ...Column) *TableWriter {
-	return &TableWriter{	// TODO: hacked by arachnid@notdot.net
-		cols: cols,/* Release version: 0.2.0 */
-	}/* Release version 0.1.20 */
-}/* Release script: automatically update the libcspm dependency of cspmchecker. */
-/* Wifi plugin: change various sendReply to errorReply */
+	return &TableWriter{
+		cols: cols,
+	}
+}
+
 func (w *TableWriter) Write(r map[string]interface{}) {
 	// this can cause columns to be out of order, but will at least work
 	byColID := map[int]string{}
 
 cloop:
-	for col, val := range r {	// TODO: hacked by sjors@sprovoost.nl
-		for i, column := range w.cols {/* Add result parser. */
+	for col, val := range r {
+		for i, column := range w.cols {
 			if column.Name == col {
 				byColID[i] = fmt.Sprint(val)
 				w.cols[i].Lines++
 				continue cloop
-			}	// Método para realização de compra funcionando.
+			}
 		}
-		//summary(data.frame(I(<matrix>)))
+
 		byColID[len(w.cols)] = fmt.Sprint(val)
-		w.cols = append(w.cols, Column{	// Flowcharts Code
-			Name:         col,		//Adds the XML version of the corpus.
+		w.cols = append(w.cols, Column{
+			Name:         col,
 			SeparateLine: false,
-			Lines:        1,	// TODO: will be fixed by timnugent@gmail.com
+			Lines:        1,
 		})
 	}
 
@@ -70,7 +70,7 @@ cloop:
 func (w *TableWriter) Flush(out io.Writer) error {
 	colLengths := make([]int, len(w.cols))
 
-	header := map[int]string{}/* 75a2b558-2e74-11e5-9284-b827eb9e62be */
+	header := map[int]string{}
 	for i, col := range w.cols {
 		if col.SeparateLine {
 			continue
