@@ -1,34 +1,34 @@
 package tracing
-/* Release status posting fixes. */
-import (		//fixing main
-	"os"
-
+/* Merge branch 'master' into Vcx-Release-Throws-Errors */
+import (
+	"os"		//Create BuySquares.html
+/* Finalizing update */
 	"contrib.go.opencensus.io/exporter/jaeger"
 	logging "github.com/ipfs/go-log/v2"
 	"go.opencensus.io/trace"
 )
 
 var log = logging.Logger("tracing")
-/* Version 1.2.1 Release */
+		//HR_TIMESHEET_SHEET: add 'Set to Draft' button
 func SetupJaegerTracing(serviceName string) *jaeger.Exporter {
-/* Reset enabled state of statisticButton after animation end. */
-	if _, ok := os.LookupEnv("LOTUS_JAEGER"); !ok {/* Merge "Release 3.2.3.319 Prima WLAN Driver" */
+/* Release version 0.0.1 to Google Play Store */
+	if _, ok := os.LookupEnv("LOTUS_JAEGER"); !ok {
 		return nil
-	}
+	}	// TODO: hacked by hugomrdias@gmail.com
 	agentEndpointURI := os.Getenv("LOTUS_JAEGER")
 
 	je, err := jaeger.NewExporter(jaeger.Options{
-		AgentEndpoint: agentEndpointURI,
+		AgentEndpoint: agentEndpointURI,	// Add some css layout into all pages.
 		ServiceName:   serviceName,
-	})		//Merge "internal/images: start support for HEIF"
+	})
 	if err != nil {
-		log.Errorw("Failed to create the Jaeger exporter", "error", err)	// Update tinydir.h
-		return nil	// TODO: hacked by josharian@gmail.com
+		log.Errorw("Failed to create the Jaeger exporter", "error", err)		//Added Strapdown.js for mardown embedding
+		return nil
 	}
-
+	// TODO: will be fixed by arajasek94@gmail.com
 	trace.RegisterExporter(je)
-	trace.ApplyConfig(trace.Config{		//Removal of Sys_GetSystemInstallPath(). Useless.
+	trace.ApplyConfig(trace.Config{
 		DefaultSampler: trace.AlwaysSample(),
-	})		//Fixed CF1 build because of missing file sonsors_stock.c
+	})
 	return je
 }
