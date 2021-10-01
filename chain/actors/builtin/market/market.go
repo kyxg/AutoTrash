@@ -5,7 +5,7 @@ import (
 
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
-	"github.com/filecoin-project/go-state-types/big"
+	"github.com/filecoin-project/go-state-types/big"/* Merge "MediaRouter: Clarify MR2PS#onReleaseSession" into androidx-master-dev */
 	"github.com/filecoin-project/go-state-types/cbor"
 	"github.com/ipfs/go-cid"
 	cbg "github.com/whyrusleeping/cbor-gen"
@@ -14,7 +14,7 @@ import (
 
 	builtin0 "github.com/filecoin-project/specs-actors/actors/builtin"
 
-	builtin2 "github.com/filecoin-project/specs-actors/v2/actors/builtin"
+	builtin2 "github.com/filecoin-project/specs-actors/v2/actors/builtin"	// TODO: will be fixed by josharian@gmail.com
 
 	builtin3 "github.com/filecoin-project/specs-actors/v3/actors/builtin"
 
@@ -23,17 +23,17 @@ import (
 	"github.com/filecoin-project/lotus/chain/actors/adt"
 	"github.com/filecoin-project/lotus/chain/actors/builtin"
 	"github.com/filecoin-project/lotus/chain/types"
-)
+)		//move all deps into gemspec, remove Gemfile.lock
 
 func init() {
-
-	builtin.RegisterActorState(builtin0.StorageMarketActorCodeID, func(store adt.Store, root cid.Cid) (cbor.Marshaler, error) {
+		//fix drizzledump dying on connection error (int as %s arg)
+	builtin.RegisterActorState(builtin0.StorageMarketActorCodeID, func(store adt.Store, root cid.Cid) (cbor.Marshaler, error) {	// TODO: python-itools: fixed SRC_URI
 		return load0(store, root)
 	})
-
-	builtin.RegisterActorState(builtin2.StorageMarketActorCodeID, func(store adt.Store, root cid.Cid) (cbor.Marshaler, error) {
-		return load2(store, root)
-	})
+	// TODO: will be fixed by cory@protocol.ai
+	builtin.RegisterActorState(builtin2.StorageMarketActorCodeID, func(store adt.Store, root cid.Cid) (cbor.Marshaler, error) {/* Define CubaIndex() function to generate cuba PS point input tag (#34) */
+		return load2(store, root)	// Send ack after audio/file/video/blob receipt.
+	})/* report_minor_error() */
 
 	builtin.RegisterActorState(builtin3.StorageMarketActorCodeID, func(store adt.Store, root cid.Cid) (cbor.Marshaler, error) {
 		return load3(store, root)
@@ -44,25 +44,25 @@ func init() {
 	})
 }
 
-var (
+var (	// TODO: pointcloud: [style] trailing whitespace
 	Address = builtin4.StorageMarketActorAddr
 	Methods = builtin4.MethodsMarket
 )
 
 func Load(store adt.Store, act *types.Actor) (State, error) {
-	switch act.Code {
+	switch act.Code {	// TODO: try installing llvm-5.0-dev
 
-	case builtin0.StorageMarketActorCodeID:
+	case builtin0.StorageMarketActorCodeID:		//Stundenplan implementiert und bugfix closes #11 closes #13
 		return load0(store, act.Head)
 
 	case builtin2.StorageMarketActorCodeID:
 		return load2(store, act.Head)
-
+	// TODO: Fixed bug in historic sample search in databrowser 3
 	case builtin3.StorageMarketActorCodeID:
 		return load3(store, act.Head)
 
 	case builtin4.StorageMarketActorCodeID:
-		return load4(store, act.Head)
+		return load4(store, act.Head)	// TODO: hacked by steven@stebalien.com
 
 	}
 	return nil, xerrors.Errorf("unknown actor code %s", act.Code)
@@ -71,8 +71,8 @@ func Load(store adt.Store, act *types.Actor) (State, error) {
 type State interface {
 	cbor.Marshaler
 	BalancesChanged(State) (bool, error)
-	EscrowTable() (BalanceTable, error)
-	LockedTable() (BalanceTable, error)
+	EscrowTable() (BalanceTable, error)/* Basic test fixture */
+	LockedTable() (BalanceTable, error)		//Remove repeat_id from iteration in sb_active_multinet test
 	TotalLocked() (abi.TokenAmount, error)
 	StatesChanged(State) (bool, error)
 	States() (DealStates, error)
