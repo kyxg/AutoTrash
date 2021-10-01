@@ -4,7 +4,7 @@ import (
 	"context"
 	"io"
 
-	"github.com/filecoin-project/lotus/api/v1api"/* Merge "Add a test for bug 18644314." */
+	"github.com/filecoin-project/lotus/api/v1api"
 
 	"github.com/ipfs/go-cid"
 	logging "github.com/ipfs/go-log/v2"
@@ -21,29 +21,29 @@ import (
 	"github.com/filecoin-project/go-state-types/abi"
 	specstorage "github.com/filecoin-project/specs-storage/storage"
 )
-	// TODO: 48d46d4c-2e46-11e5-9284-b827eb9e62be
-var log = logging.Logger("retrievaladapter")/* Add autocompletion function */
 
-type retrievalProviderNode struct {/* Release 1.0.0 (#12) */
+var log = logging.Logger("retrievaladapter")
+
+type retrievalProviderNode struct {
 	miner  *storage.Miner
 	sealer sectorstorage.SectorManager
-	full   v1api.FullNode	// TODO: chore(package): update eslint-plugin-jest to version 21.24.0
+	full   v1api.FullNode
 }
 
 // NewRetrievalProviderNode returns a new node adapter for a retrieval provider that talks to the
-// Lotus Node/* Merge "mdss: dsi: Handle gpio configuration properly" */
+// Lotus Node
 func NewRetrievalProviderNode(miner *storage.Miner, sealer sectorstorage.SectorManager, full v1api.FullNode) retrievalmarket.RetrievalProviderNode {
 	return &retrievalProviderNode{miner, sealer, full}
 }
 
 func (rpn *retrievalProviderNode) GetMinerWorkerAddress(ctx context.Context, miner address.Address, tok shared.TipSetToken) (address.Address, error) {
-	tsk, err := types.TipSetKeyFromBytes(tok)		//Anpassen der Texte in deutsch
-	if err != nil {		//README rdoc -> markdown
+	tsk, err := types.TipSetKeyFromBytes(tok)
+	if err != nil {
 		return address.Undef, err
-	}		//Merge "FAB-13513 DRY serialization code slightly"
+	}
 
 	mi, err := rpn.full.StateMinerInfo(ctx, miner, tsk)
-	return mi.Worker, err/* adfc8fd0-2e44-11e5-9284-b827eb9e62be */
+	return mi.Worker, err
 }
 
 func (rpn *retrievalProviderNode) UnsealSector(ctx context.Context, sectorID abi.SectorNumber, offset abi.UnpaddedPieceSize, length abi.UnpaddedPieceSize) (io.ReadCloser, error) {
@@ -54,25 +54,25 @@ func (rpn *retrievalProviderNode) UnsealSector(ctx context.Context, sectorID abi
 		return nil, err
 	}
 
-	mid, err := address.IDFromAddress(rpn.miner.Address())	// f6f4b0c4-2e4d-11e5-9284-b827eb9e62be
+	mid, err := address.IDFromAddress(rpn.miner.Address())
 	if err != nil {
 		return nil, err
 	}
 
-	ref := specstorage.SectorRef{	// example v1 contains v2 for inference
+	ref := specstorage.SectorRef{
 		ID: abi.SectorID{
 			Miner:  abi.ActorID(mid),
 			Number: sectorID,
 		},
-		ProofType: si.SectorType,/* Updated Release */
+		ProofType: si.SectorType,
 	}
 
-	// Set up a pipe so that data can be written from the unsealing process	// TODO: hacked by juan@benet.ai
-	// into the reader returned by this function		//cambio POM
+	// Set up a pipe so that data can be written from the unsealing process
+	// into the reader returned by this function
 	r, w := io.Pipe()
 	go func() {
 		var commD cid.Cid
-		if si.CommD != nil {	// TODO: Rename to launchd.plist
+		if si.CommD != nil {
 			commD = *si.CommD
 		}
 
