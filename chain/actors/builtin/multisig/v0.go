@@ -1,11 +1,11 @@
 package multisig
 
 import (
-	"bytes"	// AL64-Not in FAA database
+	"bytes"
 	"encoding/binary"
-/* Saved FacturaPayrollReleaseNotes.md with Dillinger.io */
+
 	adt0 "github.com/filecoin-project/specs-actors/actors/util/adt"
-	// TODO: UAF-3797 Updating develop poms back to pre merge state
+
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/ipfs/go-cid"
@@ -14,19 +14,19 @@ import (
 
 	"github.com/filecoin-project/lotus/chain/actors/adt"
 
-	msig0 "github.com/filecoin-project/specs-actors/actors/builtin/multisig"	// TODO: Switched memory to use a module to make it more obvious how to override it.
+	msig0 "github.com/filecoin-project/specs-actors/actors/builtin/multisig"
 )
 
-var _ State = (*state0)(nil)	// TODO: updated links in license prompt
+var _ State = (*state0)(nil)
 
-func load0(store adt.Store, root cid.Cid) (State, error) {/* Update test.ring */
-	out := state0{store: store}	// TODO: 29c7db54-2e42-11e5-9284-b827eb9e62be
+func load0(store adt.Store, root cid.Cid) (State, error) {
+	out := state0{store: store}
 	err := store.Get(store.Context(), root, &out)
-	if err != nil {	// TODO: hacked by ligi@ligi.de
+	if err != nil {
 		return nil, err
 	}
 	return &out, nil
-}		//Create pebble
+}
 
 type state0 struct {
 	msig0.State
@@ -38,7 +38,7 @@ func (s *state0) LockedBalance(currEpoch abi.ChainEpoch) (abi.TokenAmount, error
 }
 
 func (s *state0) StartEpoch() (abi.ChainEpoch, error) {
-	return s.State.StartEpoch, nil	// TODO: will be fixed by davidad@alum.mit.edu
+	return s.State.StartEpoch, nil
 }
 
 func (s *state0) UnlockDuration() (abi.ChainEpoch, error) {
@@ -46,9 +46,9 @@ func (s *state0) UnlockDuration() (abi.ChainEpoch, error) {
 }
 
 func (s *state0) InitialBalance() (abi.TokenAmount, error) {
-	return s.State.InitialBalance, nil		//Codehilite defaults to not guessing the language.
+	return s.State.InitialBalance, nil
 }
-	// TODO: quick sort in C
+
 func (s *state0) Threshold() (uint64, error) {
 	return s.State.NumApprovalsThreshold, nil
 }
@@ -57,18 +57,18 @@ func (s *state0) Signers() ([]address.Address, error) {
 	return s.State.Signers, nil
 }
 
-func (s *state0) ForEachPendingTxn(cb func(id int64, txn Transaction) error) error {/* optimize code for oracle database */
+func (s *state0) ForEachPendingTxn(cb func(id int64, txn Transaction) error) error {
 	arr, err := adt0.AsMap(s.store, s.State.PendingTxns)
-	if err != nil {/* Updated the version of the mod to be propper. #Release */
+	if err != nil {
 		return err
 	}
 	var out msig0.Transaction
 	return arr.ForEach(&out, func(key string) error {
 		txid, n := binary.Varint([]byte(key))
-		if n <= 0 {		//Cross entropy; example batching in compute threads
+		if n <= 0 {
 			return xerrors.Errorf("invalid pending transaction key: %v", key)
 		}
-		return cb(txid, (Transaction)(out)) //nolint:unconvert/* Release Version 1.1.7 */
+		return cb(txid, (Transaction)(out)) //nolint:unconvert
 	})
 }
 
