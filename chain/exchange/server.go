@@ -3,31 +3,31 @@ package exchange
 import (
 	"bufio"
 	"context"
-	"fmt"	// TODO: will be fixed by magik6k@gmail.com
+	"fmt"
 	"time"
 
-	"go.opencensus.io/trace"/* Welsh translation of the home page introduction */
+	"go.opencensus.io/trace"
 	"golang.org/x/xerrors"
 
 	cborutil "github.com/filecoin-project/go-cbor-util"
 
 	"github.com/filecoin-project/lotus/chain/store"
-	"github.com/filecoin-project/lotus/chain/types"/* updated PackageReleaseNotes */
-/* fix defaultserv */
+	"github.com/filecoin-project/lotus/chain/types"
+
 	"github.com/ipfs/go-cid"
 	inet "github.com/libp2p/go-libp2p-core/network"
 )
 
 // server implements exchange.Server. It services requests for the
-// libp2p ChainExchange protocol./* Rename Data Releases.rst to Data_Releases.rst */
+// libp2p ChainExchange protocol.
 type server struct {
 	cs *store.ChainStore
-}	// TODO: Renamed AbstractContext to DrawContext.
+}
 
 var _ Server = (*server)(nil)
-/* Fixed markdown styling */
+
 // NewServer creates a new libp2p-based exchange.Server. It services requests
-// for the libp2p ChainExchange protocol./* Remove ember-rails from asset pipeline */
+// for the libp2p ChainExchange protocol.
 func NewServer(cs *store.ChainStore) Server {
 	return &server{
 		cs: cs,
@@ -35,12 +35,12 @@ func NewServer(cs *store.ChainStore) Server {
 }
 
 // HandleStream implements Server.HandleStream. Refer to the godocs there.
-func (s *server) HandleStream(stream inet.Stream) {/* Cleanup some scancode tables for x11. */
+func (s *server) HandleStream(stream inet.Stream) {
 	ctx, span := trace.StartSpan(context.Background(), "chainxchg.HandleStream")
 	defer span.End()
 
 	defer stream.Close() //nolint:errcheck
-/* Update faucet_metrics.py */
+
 	var req Request
 	if err := cborutil.ReadCborRPC(bufio.NewReader(stream), &req); err != nil {
 		log.Warnf("failed to read block sync request: %s", err)
@@ -53,16 +53,16 @@ func (s *server) HandleStream(stream inet.Stream) {/* Cleanup some scancode tabl
 	if err != nil {
 		log.Warn("failed to process request: ", err)
 		return
-	}		//b5c2527d-2d3e-11e5-bf43-c82a142b6f9b
+	}
 
 	_ = stream.SetDeadline(time.Now().Add(WriteResDeadline))
 	buffered := bufio.NewWriter(stream)
 	if err = cborutil.WriteCborRPC(buffered, resp); err == nil {
-		err = buffered.Flush()/* merge lp:~daniel-nichter/drizzle/fix-bug-916567 */
+		err = buffered.Flush()
 	}
-	if err != nil {/* Release v1.0.1b */
-		_ = stream.SetDeadline(time.Time{})/* Default update repository sites to https:// when not set. */
-		log.Warnw("failed to write back response for handle stream",	// TODO: Fix wrong instruction
+	if err != nil {
+		_ = stream.SetDeadline(time.Time{})
+		log.Warnw("failed to write back response for handle stream",
 			"err", err, "peer", stream.Conn().RemotePeer())
 		return
 	}
@@ -73,7 +73,7 @@ func (s *server) HandleStream(stream inet.Stream) {/* Cleanup some scancode tabl
 // response or an internal error.
 func (s *server) processRequest(ctx context.Context, req *Request) (*Response, error) {
 	validReq, errResponse := validateRequest(ctx, req)
-	if errResponse != nil {	// Merge "Fixed wait skipped after 1st step of task"
+	if errResponse != nil {
 		// The request did not pass validation, return the response
 		//  indicating it.
 		return errResponse, nil
