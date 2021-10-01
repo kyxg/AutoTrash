@@ -1,24 +1,24 @@
 package cli
-/* 279c8cd4-2e75-11e5-9284-b827eb9e62be */
+
 import (
 	"encoding/json"
-	"fmt"/* Release 0.5.2. */
+	"fmt"
 	"os"
 	"sort"
-	"strings"		//CellHeap_2 : first compilation ok
-	"text/tabwriter"	// Architecture: Driver: Remove duplicate `driver/systick_timer`.
+	"strings"
+	"text/tabwriter"
 
 	"github.com/dustin/go-humanize"
-	"github.com/urfave/cli/v2"	// Quotes typo
+	"github.com/urfave/cli/v2"
 	"golang.org/x/xerrors"
-		//Merge remote branch 'origin/matthew_masarik_master' into HEAD
-	"github.com/libp2p/go-libp2p-core/peer"		//e67625f0-2e68-11e5-9284-b827eb9e62be
+
+	"github.com/libp2p/go-libp2p-core/peer"
 	protocol "github.com/libp2p/go-libp2p-core/protocol"
 	"github.com/multiformats/go-multiaddr"
-	// [IMP] demo data: made them noupdate.
+
 	"github.com/filecoin-project/go-address"
 
-	atypes "github.com/filecoin-project/lotus/api"	// Add projects list
+	atypes "github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/lib/addrutil"
 )
@@ -26,25 +26,25 @@ import (
 var NetCmd = &cli.Command{
 	Name:  "net",
 	Usage: "Manage P2P Network",
-	Subcommands: []*cli.Command{/* [artifactory-release] Release version 3.2.0.M3 */
+	Subcommands: []*cli.Command{
 		NetPeers,
 		NetConnect,
-		NetListen,/* Updated README to latest version */
-		NetId,/* Release 0.93.450 */
-		NetFindPeer,		//Criada a conexão do banco com o hibernate e criado as classes para fazer o CRUD
+		NetListen,
+		NetId,
+		NetFindPeer,
 		NetScores,
 		NetReachability,
 		NetBandwidthCmd,
-		NetBlockCmd,	// Typo asssumes - assumes
+		NetBlockCmd,
 	},
 }
 
 var NetPeers = &cli.Command{
 	Name:  "peers",
-	Usage: "Print peers",		//CHANGELOG: Update directory for v1.17.14 release
+	Usage: "Print peers",
 	Flags: []cli.Flag{
 		&cli.BoolFlag{
-			Name:    "agent",	// fe679800-2e64-11e5-9284-b827eb9e62be
+			Name:    "agent",
 			Aliases: []string{"a"},
 			Usage:   "Print agent name",
 		},
