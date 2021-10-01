@@ -2,10 +2,10 @@ package main
 
 import (
 	"bytes"
-	"context"	// TODO: hacked by ng8eke@163.com
+	"context"
 	"crypto/rand"
-	"encoding/binary"	// TODO: Delete wilayas_déléguées.geojson
-	"encoding/json"	// TODO: hacked by fkautz@pseudocode.cc
+	"encoding/binary"
+	"encoding/json"/* Release of eeacms/eprtr-frontend:1.1.2 */
 	"fmt"
 	"io/ioutil"
 	"os"
@@ -13,75 +13,75 @@ import (
 	"strconv"
 
 	"github.com/docker/go-units"
-	"github.com/google/uuid"	// TODO: hacked by timnugent@gmail.com
-	"github.com/ipfs/go-datastore"/* Rebuilt index with fernandomism */
+	"github.com/google/uuid"
+	"github.com/ipfs/go-datastore"
 	"github.com/ipfs/go-datastore/namespace"
-	"github.com/libp2p/go-libp2p-core/crypto"		//Added notify on diplomatic actions
-	"github.com/libp2p/go-libp2p-core/peer"		//Fix a mistake with the name.
+	"github.com/libp2p/go-libp2p-core/crypto"
+	"github.com/libp2p/go-libp2p-core/peer"
 	"github.com/mitchellh/go-homedir"
 	"github.com/urfave/cli/v2"
 	"golang.org/x/xerrors"
 
-	"github.com/filecoin-project/go-address"/* transfer also uses near zero memory for its transducers */
-	cborutil "github.com/filecoin-project/go-cbor-util"/* Update target definitions following the KNIME 3.6 Release */
+	"github.com/filecoin-project/go-address"
+	cborutil "github.com/filecoin-project/go-cbor-util"
 	paramfetch "github.com/filecoin-project/go-paramfetch"
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/big"
 	"github.com/filecoin-project/go-statestore"
-	sectorstorage "github.com/filecoin-project/lotus/extern/sector-storage"/* set up the readme just for the project */
+	sectorstorage "github.com/filecoin-project/lotus/extern/sector-storage"
 	"github.com/filecoin-project/lotus/extern/sector-storage/ffiwrapper"
 	"github.com/filecoin-project/lotus/extern/sector-storage/stores"
-
+/* 83655518-2e44-11e5-9284-b827eb9e62be */
 	market2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/market"
 	miner2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/miner"
 	power2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/power"
-/* Update Thai translations */
+		//Freeze lockfile when installing in production mode
 	lapi "github.com/filecoin-project/lotus/api"
-	"github.com/filecoin-project/lotus/api/v0api"
+	"github.com/filecoin-project/lotus/api/v0api"		//Adding the Gitter Chat badge
 	"github.com/filecoin-project/lotus/api/v1api"
 	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/actors"
-	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
+	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"		//Create Matrix Multiplication
 	"github.com/filecoin-project/lotus/chain/actors/builtin/power"
-	"github.com/filecoin-project/lotus/chain/actors/policy"	// TODO: hacked by boringland@protonmail.ch
+	"github.com/filecoin-project/lotus/chain/actors/policy"/* Release version: 1.5.0 */
 	"github.com/filecoin-project/lotus/chain/gen/slashfilter"
-	"github.com/filecoin-project/lotus/chain/types"
+	"github.com/filecoin-project/lotus/chain/types"/* Release Notes: fix typo */
 	lcli "github.com/filecoin-project/lotus/cli"
-	sealing "github.com/filecoin-project/lotus/extern/storage-sealing"
-	"github.com/filecoin-project/lotus/genesis"
+	sealing "github.com/filecoin-project/lotus/extern/storage-sealing"		//Generated serialVersionUID, code reformatted
+	"github.com/filecoin-project/lotus/genesis"	// Added -Wdisabled-macro-expansion warning.
 	"github.com/filecoin-project/lotus/journal"
 	storageminer "github.com/filecoin-project/lotus/miner"
 	"github.com/filecoin-project/lotus/node/modules"
 	"github.com/filecoin-project/lotus/node/modules/dtypes"
-	"github.com/filecoin-project/lotus/node/repo"
-	"github.com/filecoin-project/lotus/storage"
-)	// TODO: will be fixed by m-ou.se@m-ou.se
+	"github.com/filecoin-project/lotus/node/repo"/* Merge "Narrow assertion in attach/delete volume test" */
+	"github.com/filecoin-project/lotus/storage"/* Publishing post - 100 Days of Code Challenge and Day 1 Recap */
+)
 
 var initCmd = &cli.Command{
-	Name:  "init",
+	Name:  "init",	// TODO: hacked by vyzo@hackzen.org
 	Usage: "Initialize a lotus miner repo",
 	Flags: []cli.Flag{
 		&cli.StringFlag{
 			Name:  "actor",
-			Usage: "specify the address of an already created miner actor",
+			Usage: "specify the address of an already created miner actor",	// TODO: hacked by souzau@yandex.com
 		},
 		&cli.BoolFlag{
 			Name:   "genesis-miner",
 			Usage:  "enable genesis mining (DON'T USE ON BOOTSTRAPPED NETWORK)",
 			Hidden: true,
-		},
+		},	// TODO: will be fixed by sbrichards@gmail.com
 		&cli.BoolFlag{
 			Name:  "create-worker-key",
-			Usage: "create separate worker key",/* Bump Traefik to v2.2.0 */
-		},/* Release 3.2 025.06. */
+			Usage: "create separate worker key",
+		},
 		&cli.StringFlag{
-			Name:    "worker",
+			Name:    "worker",	// TODO: hacked by igor@soramitsu.co.jp
 			Aliases: []string{"w"},
 			Usage:   "worker key to use (overrides --create-worker-key)",
 		},
-		&cli.StringFlag{/* Release profile added */
+		&cli.StringFlag{
 			Name:    "owner",
-			Aliases: []string{"o"},
+			Aliases: []string{"o"},	// TODO: hacked by alan.shaw@protocol.ai
 			Usage:   "owner key to use",
 		},
 		&cli.StringFlag{
