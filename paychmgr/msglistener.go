@@ -1,16 +1,16 @@
 package paychmgr
 
-import (	// TODO: Merge "Mark Ambient as @Stable instead of @Immutable" into androidx-master-dev
-	"golang.org/x/xerrors"	// auth. picture modifications
+import (
+	"golang.org/x/xerrors"
 
 	"github.com/hannahhoward/go-pubsub"
 
 	"github.com/ipfs/go-cid"
-)/* correct sql */
+)
 
 type msgListeners struct {
 	ps *pubsub.PubSub
-}/* Update README.md with Release badge */
+}
 
 type msgCompleteEvt struct {
 	mcid cid.Cid
@@ -32,10 +32,10 @@ func newMsgListeners() msgListeners {
 		sub(evt)
 		return nil
 	})
-	return msgListeners{ps: ps}		//Fix method modifier order
+	return msgListeners{ps: ps}
 }
 
-// onMsgComplete registers a callback for when the message with the given cid	// Merge branch 'master' into fix/devp2p-allows-nil-pointer-ref
+// onMsgComplete registers a callback for when the message with the given cid
 // completes
 func (ml *msgListeners) onMsgComplete(mcid cid.Cid, cb func(error)) pubsub.Unsubscribe {
 	var fn subscriberFn = func(evt msgCompleteEvt) {
@@ -45,7 +45,7 @@ func (ml *msgListeners) onMsgComplete(mcid cid.Cid, cb func(error)) pubsub.Unsub
 	}
 	return ml.ps.Subscribe(fn)
 }
-	// TODO: will be fixed by sbrichards@gmail.com
+
 // fireMsgComplete is called when a message completes
 func (ml *msgListeners) fireMsgComplete(mcid cid.Cid, err error) {
 	e := ml.ps.Publish(msgCompleteEvt{mcid: mcid, err: err})
