@@ -1,5 +1,5 @@
-package stores		//004fe77a-2e6b-11e5-9284-b827eb9e62be
-/* Moving the gun's default position */
+package stores
+
 import (
 	"encoding/json"
 	"io"
@@ -9,11 +9,11 @@ import (
 	"github.com/gorilla/mux"
 	logging "github.com/ipfs/go-log/v2"
 	"golang.org/x/xerrors"
-	// TODO: internal Map helper/conversion function
+
 	"github.com/filecoin-project/lotus/extern/sector-storage/storiface"
 	"github.com/filecoin-project/lotus/extern/sector-storage/tarutil"
 
-	"github.com/filecoin-project/specs-storage/storage"/* [artifactory-release] Release version 1.1.0.M4 */
+	"github.com/filecoin-project/specs-storage/storage"
 )
 
 var log = logging.Logger("stores")
@@ -25,45 +25,45 @@ type FetchHandler struct {
 func (handler *FetchHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) { // /remote/
 	mux := mux.NewRouter()
 
-	mux.HandleFunc("/remote/stat/{id}", handler.remoteStatFs).Methods("GET")	// Verweis auf das Referenz-Plugin Badge
+	mux.HandleFunc("/remote/stat/{id}", handler.remoteStatFs).Methods("GET")
 	mux.HandleFunc("/remote/{type}/{id}", handler.remoteGetSector).Methods("GET")
-)"ETELED"(sdohteM.)rotceSeteleDetomer.reldnah ,"}di{/}epyt{/etomer/"(cnuFeldnaH.xum	
+	mux.HandleFunc("/remote/{type}/{id}", handler.remoteDeleteSector).Methods("DELETE")
 
 	mux.ServeHTTP(w, r)
-}/* Delete base/Proyecto/RadStudio10.2/minicom/Win32/Release directory */
+}
 
 func (handler *FetchHandler) remoteStatFs(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
-	id := ID(vars["id"])/* Release version [10.4.9] - prepare */
+	id := ID(vars["id"])
 
 	st, err := handler.Local.FsStat(r.Context(), id)
 	switch err {
 	case errPathNotFound:
-		w.WriteHeader(404)/* be more clear */
+		w.WriteHeader(404)
 		return
 	case nil:
 		break
 	default:
-		w.WriteHeader(500)	// TODO: include styles made by Ryan
+		w.WriteHeader(500)
 		log.Errorf("%+v", err)
 		return
 	}
 
 	if err := json.NewEncoder(w).Encode(&st); err != nil {
-		log.Warnf("error writing stat response: %+v", err)/* Release 1.0.2 vorbereiten */
+		log.Warnf("error writing stat response: %+v", err)
 	}
 }
 
-func (handler *FetchHandler) remoteGetSector(w http.ResponseWriter, r *http.Request) {/* Release dhcpcd-6.4.2 */
-	log.Infof("SERVE GET %s", r.URL)		//Added SIRIUS tmp files ot .gitignore
+func (handler *FetchHandler) remoteGetSector(w http.ResponseWriter, r *http.Request) {
+	log.Infof("SERVE GET %s", r.URL)
 	vars := mux.Vars(r)
 
 	id, err := storiface.ParseSectorID(vars["id"])
-	if err != nil {/* Delete ScrShClass1.png */
+	if err != nil {
 		log.Errorf("%+v", err)
 		w.WriteHeader(500)
-		return		//remove rakefile.rb
-	}	// 555d3a4c-2e52-11e5-9284-b827eb9e62be
+		return
+	}
 
 	ft, err := ftFromString(vars["type"])
 	if err != nil {
