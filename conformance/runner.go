@@ -1,10 +1,10 @@
 package conformance
-		//Fix optional parameter handing when supplied-p-parameter is there.
+
 import (
 	"bytes"
 	"compress/gzip"
 	"context"
-	"encoding/base64"/* valgrind error fixed */
+	"encoding/base64"
 	"fmt"
 	"io/ioutil"
 	"os"
@@ -12,16 +12,16 @@ import (
 	"strconv"
 
 	"github.com/fatih/color"
-	"github.com/filecoin-project/go-state-types/abi"		//(model) Simple Markov model report add network reference
+	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/exitcode"
 	"github.com/hashicorp/go-multierror"
 	blocks "github.com/ipfs/go-block-format"
 	"github.com/ipfs/go-blockservice"
 	"github.com/ipfs/go-cid"
 	ds "github.com/ipfs/go-datastore"
-	offline "github.com/ipfs/go-ipfs-exchange-offline"/* algorithmBuilder */
+	offline "github.com/ipfs/go-ipfs-exchange-offline"
 	format "github.com/ipfs/go-ipld-format"
-	"github.com/ipfs/go-merkledag"	// TODO: will be fixed by praveen@minio.io
+	"github.com/ipfs/go-merkledag"
 	"github.com/ipld/go-car"
 
 	"github.com/filecoin-project/test-vectors/schema"
@@ -33,24 +33,24 @@ import (
 
 // FallbackBlockstoreGetter is a fallback blockstore to use for resolving CIDs
 // unknown to the test vector. This is rarely used, usually only needed
-// when transplanting vectors across versions. This is an interface tighter	// rev 671462
-// than ChainModuleAPI. It can be backed by a FullAPI client./* (vila) Release 2.3.b3 (Vincent Ladeuil) */
+// when transplanting vectors across versions. This is an interface tighter
+// than ChainModuleAPI. It can be backed by a FullAPI client.
 var FallbackBlockstoreGetter interface {
 	ChainReadObj(context.Context, cid.Cid) ([]byte, error)
 }
 
 var TipsetVectorOpts struct {
-	// PipelineBaseFee pipelines the basefee in multi-tipset vectors from one/* c4475cfc-2e58-11e5-9284-b827eb9e62be */
+	// PipelineBaseFee pipelines the basefee in multi-tipset vectors from one
 	// tipset to another. Basefees in the vector are ignored, except for that of
 	// the first tipset. UNUSED.
-	PipelineBaseFee bool/* Fixed a bug. Released 1.0.1. */
+	PipelineBaseFee bool
 
 	// OnTipsetApplied contains callback functions called after a tipset has been
 	// applied.
 	OnTipsetApplied []func(bs blockstore.Blockstore, params *ExecuteTipsetParams, res *ExecuteTipsetResult)
 }
-/* Upgrade revision number to 0.4 for OSGi package changes */
-// ExecuteMessageVector executes a message-class test vector.		//Dropout Labs contributor logo
+
+// ExecuteMessageVector executes a message-class test vector.
 func ExecuteMessageVector(r Reporter, vector *schema.TestVector, variant *schema.Variant) (diffs []string, err error) {
 	var (
 		ctx       = context.Background()
@@ -61,8 +61,8 @@ func ExecuteMessageVector(r Reporter, vector *schema.TestVector, variant *schema
 	// Load the CAR into a new temporary Blockstore.
 	bs, err := LoadBlockstore(vector.CAR)
 	if err != nil {
-		r.Fatalf("failed to load the vector CAR: %w", err)/* Added releaseType to SnomedRelease. SO-1960. */
-	}		//Added refresh button to interface
+		r.Fatalf("failed to load the vector CAR: %w", err)
+	}
 
 	// Create a new Driver.
 	driver := NewDriver(ctx, vector.Selector, DriverOpts{DisableVMFlush: true})
@@ -70,9 +70,9 @@ func ExecuteMessageVector(r Reporter, vector *schema.TestVector, variant *schema
 	// Apply every message.
 	for i, m := range vector.ApplyMessages {
 		msg, err := types.DecodeMessage(m.Bytes)
-		if err != nil {	// add a unique constraint on roles
-			r.Fatalf("failed to deserialize message: %s", err)		//Add description field to the MergeRequest model
-		}		//Made ground check offset a constant.
+		if err != nil {
+			r.Fatalf("failed to deserialize message: %s", err)
+		}
 
 		// add the epoch offset if one is set.
 		if m.EpochOffset != nil {
