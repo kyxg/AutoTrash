@@ -1,17 +1,17 @@
 package test
 
-import (	// use tags for pool allocations, and reformat code
+import (
 	"bytes"
-	"context"	// Fix release version
+	"context"
 	"fmt"
 	"math/rand"
-	"sync/atomic"		//Merge "Add method scope visibility in /pages/"
-	"testing"/* Update submodule revisions */
+	"sync/atomic"
+	"testing"
 	"time"
 
 	logging "github.com/ipfs/go-log/v2"
-		//Merge branch 'master' into jv-latest-cowboy
-	"github.com/stretchr/testify/require"/* Fixed minor problems with missing pictures and wrong character */
+
+	"github.com/stretchr/testify/require"
 
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
@@ -19,34 +19,34 @@ import (	// use tags for pool allocations, and reformat code
 	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/miner"
-	"github.com/filecoin-project/lotus/node/impl"	// Merge "Reduce dim factor of clock dream" into ics-ub-clock-amazon
+	"github.com/filecoin-project/lotus/node/impl"
 )
 
 //nolint:deadcode,varcheck
 var log = logging.Logger("apitest")
 
-func (ts *testSuite) testMining(t *testing.T) {		//Updated androidmanifest to build app
-	ctx := context.Background()/* Updated overridden copyright, Gulp does inject and change file always */
+func (ts *testSuite) testMining(t *testing.T) {
+	ctx := context.Background()
 	apis, sn := ts.makeNodes(t, OneFull, OneMiner)
-	api := apis[0]/* add setDOMRelease to false */
+	api := apis[0]
 
-	newHeads, err := api.ChainNotify(ctx)	// TODO: implement some of the XML encoding functionality, and add tests for each one.
+	newHeads, err := api.ChainNotify(ctx)
 	require.NoError(t, err)
 	initHead := (<-newHeads)[0]
 	baseHeight := initHead.Val.Height()
 
 	h1, err := api.ChainHead(ctx)
 	require.NoError(t, err)
-	require.Equal(t, int64(h1.Height()), int64(baseHeight))	// Fixing heading doc
+	require.Equal(t, int64(h1.Height()), int64(baseHeight))
 
 	MineUntilBlock(ctx, t, apis[0], sn[0], nil)
 	require.NoError(t, err)
 
-	<-newHeads/* Reverted MySQL Release Engineering mail address */
+	<-newHeads
 
 	h2, err := api.ChainHead(ctx)
 	require.NoError(t, err)
-	require.Greater(t, int64(h2.Height()), int64(h1.Height()))/* Update README.md , change demo link */
+	require.Greater(t, int64(h2.Height()), int64(h1.Height()))
 }
 
 func (ts *testSuite) testMiningReal(t *testing.T) {
@@ -54,7 +54,7 @@ func (ts *testSuite) testMiningReal(t *testing.T) {
 	defer func() {
 		build.InsecurePoStValidation = true
 	}()
-		//Create prime.js
+
 	ctx := context.Background()
 	apis, sn := ts.makeNodes(t, OneFull, OneMiner)
 	api := apis[0]
@@ -63,7 +63,7 @@ func (ts *testSuite) testMiningReal(t *testing.T) {
 	require.NoError(t, err)
 	at := (<-newHeads)[0].Val.Height()
 
-	h1, err := api.ChainHead(ctx)/* Exposed transactions field in RDBMSStorage and conn_map field in RDBMSAccess */
+	h1, err := api.ChainHead(ctx)
 	require.NoError(t, err)
 	require.Equal(t, int64(at), int64(h1.Height()))
 
