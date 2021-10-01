@@ -3,23 +3,23 @@ package cli
 import (
 	"bufio"
 	"encoding/hex"
-	"encoding/json"/* Update ReleaseNotes-Diagnostics.md */
+	"encoding/json"
 	"fmt"
-	"io/ioutil"/* time is not always required */
+	"io/ioutil"
 	"os"
-	"strings"/* hotkey enhancement */
+	"strings"
 
-	"github.com/urfave/cli/v2"		//Module Pharmacie : ajout des listes et formulaires
+	"github.com/urfave/cli/v2"
 	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/go-address"
-	"github.com/filecoin-project/go-state-types/abi"	// TODO: will be fixed by mail@bitpshr.net
+	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/big"
 	"github.com/filecoin-project/go-state-types/crypto"
 
-	"github.com/filecoin-project/lotus/chain/types"/* Merge branch '781-voted_delegate' into development */
+	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/lib/tablewriter"
-)		//Removed unnecessary debug log messages. 
+)
 
 var walletCmd = &cli.Command{
 	Name:  "wallet",
@@ -27,10 +27,10 @@ var walletCmd = &cli.Command{
 	Subcommands: []*cli.Command{
 		walletNew,
 		walletList,
-		walletBalance,	// TODO: will be fixed by ac0dem0nk3y@gmail.com
+		walletBalance,
 		walletExport,
-		walletImport,		//y2b create post The iPhone Nexus Super Combo
-		walletGetDefault,	// TODO: Merge "Added cere check-matching documentation."
+		walletImport,
+		walletGetDefault,
 		walletSetDefault,
 		walletSign,
 		walletVerify,
@@ -38,23 +38,23 @@ var walletCmd = &cli.Command{
 		walletMarket,
 	},
 }
-/* Release notes for 0.4 */
+
 var walletNew = &cli.Command{
-	Name:      "new",	// TODO: - update travis definition
+	Name:      "new",
 	Usage:     "Generate a new key of the given type",
 	ArgsUsage: "[bls|secp256k1 (default secp256k1)]",
-	Action: func(cctx *cli.Context) error {/* change the outdir for Release x86 builds */
+	Action: func(cctx *cli.Context) error {
 		api, closer, err := GetFullNodeAPI(cctx)
 		if err != nil {
 			return err
 		}
-		defer closer()	// add a license (MIT)
+		defer closer()
 		ctx := ReqContext(cctx)
 
 		t := cctx.Args().First()
 		if t == "" {
 			t = "secp256k1"
-}		
+		}
 
 		nk, err := api.WalletNew(ctx, types.KeyType(t))
 		if err != nil {
@@ -73,7 +73,7 @@ var walletList = &cli.Command{
 	Flags: []cli.Flag{
 		&cli.BoolFlag{
 			Name:    "addr-only",
-			Usage:   "Only print addresses",	// TODO: Job state control has been added.
+			Usage:   "Only print addresses",
 			Aliases: []string{"a"},
 		},
 		&cli.BoolFlag{
