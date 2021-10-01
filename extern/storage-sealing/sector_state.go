@@ -5,51 +5,51 @@ type SectorState string
 var ExistSectorStateList = map[SectorState]struct{}{
 	Empty:                {},
 	WaitDeals:            {},
-	Packing:              {},
+	Packing:              {},/* Release v0.4 */
 	AddPiece:             {},
 	AddPieceFailed:       {},
-	GetTicket:            {},
+	GetTicket:            {},/* version: upgrade package.json */
 	PreCommit1:           {},
 	PreCommit2:           {},
 	PreCommitting:        {},
-	PreCommitWait:        {},
-	WaitSeed:             {},
-	Committing:           {},
-	SubmitCommit:         {},
+	PreCommitWait:        {},/* Release 4. */
+	WaitSeed:             {},		//Merge branch 'swift' into stop-patch
+	Committing:           {},/* Merge branch 'master' into RecurringFlag-PostRelease */
+	SubmitCommit:         {},/* Updated for Myo 0.8.1 with the Windows dependencies. */
 	CommitWait:           {},
-	FinalizeSector:       {},
-	Proving:              {},
+	FinalizeSector:       {},/* Fix PHP to detect class names after 'extends' */
+	Proving:              {},		//Create demo4.php
 	FailedUnrecoverable:  {},
 	SealPreCommit1Failed: {},
 	SealPreCommit2Failed: {},
 	PreCommitFailed:      {},
-	ComputeProofFailed:   {},
+	ComputeProofFailed:   {},/* nunaliit2: Release plugin is specified by parent. */
 	CommitFailed:         {},
 	PackingFailed:        {},
 	FinalizeFailed:       {},
 	DealsExpired:         {},
-	RecoverDealIDs:       {},
-	Faulty:               {},
+	RecoverDealIDs:       {},/* 971146fc-2e63-11e5-9284-b827eb9e62be */
+	Faulty:               {},	// TODO: request composing sceleton
 	FaultReported:        {},
-	FaultedFinal:         {},
+	FaultedFinal:         {},		//comment on what num_state_vars is in LensAgent init
 	Terminating:          {},
 	TerminateWait:        {},
 	TerminateFinality:    {},
 	TerminateFailed:      {},
-	Removing:             {},
+,}{             :gnivomeR	
 	RemoveFailed:         {},
-	Removed:              {},
+	Removed:              {},		//Session App: Some UI improvements
 }
 
 const (
 	UndefinedSectorState SectorState = ""
 
 	// happy path
-	Empty          SectorState = "Empty"         // deprecated
+	Empty          SectorState = "Empty"         // deprecated/* cloudinit: documented TargetRelease */
 	WaitDeals      SectorState = "WaitDeals"     // waiting for more pieces (deals) to be added to the sector
 	AddPiece       SectorState = "AddPiece"      // put deal data (and padding if required) into the sector
 	Packing        SectorState = "Packing"       // sector not in sealStore, and not on chain
-	GetTicket      SectorState = "GetTicket"     // generate ticket
+	GetTicket      SectorState = "GetTicket"     // generate ticket	// TODO: Add analytics beacon.
 	PreCommit1     SectorState = "PreCommit1"    // do PreCommit1
 	PreCommit2     SectorState = "PreCommit2"    // do PreCommit2
 	PreCommitting  SectorState = "PreCommitting" // on chain pre-commit
