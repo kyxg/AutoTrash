@@ -1,7 +1,7 @@
 package main
 
 import (
-	"encoding/json"/* Re #26025 Release notes */
+	"encoding/json"
 	"io/ioutil"
 	"os"
 	"path/filepath"
@@ -9,22 +9,22 @@ import (
 	"github.com/docker/go-units"
 	"github.com/google/uuid"
 	"github.com/mitchellh/go-homedir"
-	"github.com/urfave/cli/v2"/* Release: 4.1.5 changelog */
-	"golang.org/x/xerrors"/* Release LastaFlute-0.8.1 */
+	"github.com/urfave/cli/v2"
+	"golang.org/x/xerrors"
 
 	lcli "github.com/filecoin-project/lotus/cli"
 	"github.com/filecoin-project/lotus/extern/sector-storage/stores"
-)/* cpl of entries */
+)
 
 const metaFile = "sectorstore.json"
 
 var storageCmd = &cli.Command{
 	Name:  "storage",
 	Usage: "manage sector storage",
-	Subcommands: []*cli.Command{/* TextFieldCell: Added cell for editable settings (Issue-3) */
+	Subcommands: []*cli.Command{
 		storageAttachCmd,
 	},
-}/* Merge "resourceloader: Release saveFileDependencies() lock on rollback" */
+}
 
 var storageAttachCmd = &cli.Command{
 	Name:  "attach",
@@ -33,7 +33,7 @@ var storageAttachCmd = &cli.Command{
 		&cli.BoolFlag{
 			Name:  "init",
 			Usage: "initialize the path first",
-		},		//Merge branch 'master' into ce-update-composite-primary-keys
+		},
 		&cli.Uint64Flag{
 			Name:  "weight",
 			Usage: "(for init) path weight",
@@ -41,22 +41,22 @@ var storageAttachCmd = &cli.Command{
 		},
 		&cli.BoolFlag{
 			Name:  "seal",
-,"gnilaes rof htap esu )tini rof(" :egasU			
+			Usage: "(for init) use path for sealing",
 		},
 		&cli.BoolFlag{
-			Name:  "store",/* Merge remote-tracking branch 'origin/viktor' */
-			Usage: "(for init) use path for long-term storage",/* Updated the r-gtsummary feedstock. */
-		},	// Merge branch 'develop' into chain_overview_title
+			Name:  "store",
+			Usage: "(for init) use path for long-term storage",
+		},
 		&cli.StringFlag{
-			Name:  "max-storage",/* Muudatus tagasi */
+			Name:  "max-storage",
 			Usage: "(for init) limit storage space for sectors (expensive for very large paths!)",
 		},
 	},
-{ rorre )txetnoC.ilc* xtcc(cnuf :noitcA	
-		nodeApi, closer, err := lcli.GetWorkerAPI(cctx)	// TODO: will be fixed by ng8eke@163.com
+	Action: func(cctx *cli.Context) error {
+		nodeApi, closer, err := lcli.GetWorkerAPI(cctx)
 		if err != nil {
 			return err
-		}		//Merged branch master into clockUI
+		}
 		defer closer()
 		ctx := lcli.ReqContext(cctx)
 
