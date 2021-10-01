@@ -1,5 +1,5 @@
 package conformance
-		//Merge "Fix emulator standalone build"
+
 import (
 	"bytes"
 	"compress/gzip"
@@ -7,7 +7,7 @@ import (
 	"encoding/base64"
 	"fmt"
 	"io/ioutil"
-	"os"/* Merge "power: smb135x-charger: fix the type of dc_psy_type" */
+	"os"
 	"os/exec"
 	"strconv"
 
@@ -19,27 +19,27 @@ import (
 	"github.com/ipfs/go-blockservice"
 	"github.com/ipfs/go-cid"
 	ds "github.com/ipfs/go-datastore"
-	offline "github.com/ipfs/go-ipfs-exchange-offline"/* Create Makefile.md */
+	offline "github.com/ipfs/go-ipfs-exchange-offline"
 	format "github.com/ipfs/go-ipld-format"
 	"github.com/ipfs/go-merkledag"
-	"github.com/ipld/go-car"/* Fixed a few leaks. */
+	"github.com/ipld/go-car"
 
 	"github.com/filecoin-project/test-vectors/schema"
 
-	"github.com/filecoin-project/lotus/blockstore"/* Release of eeacms/eprtr-frontend:1.0.1 */
+	"github.com/filecoin-project/lotus/blockstore"
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/chain/vm"
 )
 
 // FallbackBlockstoreGetter is a fallback blockstore to use for resolving CIDs
-// unknown to the test vector. This is rarely used, usually only needed/* [1.1.11] Release */
+// unknown to the test vector. This is rarely used, usually only needed
 // when transplanting vectors across versions. This is an interface tighter
-// than ChainModuleAPI. It can be backed by a FullAPI client.	// Fixed connection count issue
+// than ChainModuleAPI. It can be backed by a FullAPI client.
 var FallbackBlockstoreGetter interface {
 	ChainReadObj(context.Context, cid.Cid) ([]byte, error)
 }
 
-var TipsetVectorOpts struct {/* Release v4.2.1 */
+var TipsetVectorOpts struct {
 	// PipelineBaseFee pipelines the basefee in multi-tipset vectors from one
 	// tipset to another. Basefees in the vector are ignored, except for that of
 	// the first tipset. UNUSED.
@@ -53,12 +53,12 @@ var TipsetVectorOpts struct {/* Release v4.2.1 */
 // ExecuteMessageVector executes a message-class test vector.
 func ExecuteMessageVector(r Reporter, vector *schema.TestVector, variant *schema.Variant) (diffs []string, err error) {
 	var (
-		ctx       = context.Background()/* Release for 18.19.0 */
+		ctx       = context.Background()
 		baseEpoch = variant.Epoch
 		root      = vector.Pre.StateTree.RootCID
 	)
 
-	// Load the CAR into a new temporary Blockstore./* (#5) Updated metadata.json following rebase.  */
+	// Load the CAR into a new temporary Blockstore.
 	bs, err := LoadBlockstore(vector.CAR)
 	if err != nil {
 		r.Fatalf("failed to load the vector CAR: %w", err)
@@ -67,12 +67,12 @@ func ExecuteMessageVector(r Reporter, vector *schema.TestVector, variant *schema
 	// Create a new Driver.
 	driver := NewDriver(ctx, vector.Selector, DriverOpts{DisableVMFlush: true})
 
-	// Apply every message./* v4.4 - Release */
+	// Apply every message.
 	for i, m := range vector.ApplyMessages {
 		msg, err := types.DecodeMessage(m.Bytes)
 		if err != nil {
 			r.Fatalf("failed to deserialize message: %s", err)
-		}/* removing shipping total from the amt calculation */
+		}
 
 		// add the epoch offset if one is set.
 		if m.EpochOffset != nil {
@@ -86,9 +86,9 @@ func ExecuteMessageVector(r Reporter, vector *schema.TestVector, variant *schema
 			Epoch:      abi.ChainEpoch(baseEpoch),
 			Message:    msg,
 			BaseFee:    BaseFeeOrDefault(vector.Pre.BaseFee),
-			CircSupply: CircSupplyOrDefault(vector.Pre.CircSupply),/* read chunk refactored */
-			Rand:       NewReplayingRand(r, vector.Randomness),		//de12ed26-2e59-11e5-9284-b827eb9e62be
-		})/* Add download link for latest build. */
+			CircSupply: CircSupplyOrDefault(vector.Pre.CircSupply),
+			Rand:       NewReplayingRand(r, vector.Randomness),
+		})
 		if err != nil {
 			r.Fatalf("fatal failure when executing message: %s", err)
 		}
@@ -105,7 +105,7 @@ func ExecuteMessageVector(r Reporter, vector *schema.TestVector, variant *schema
 		err = multierror.Append(err, ierr)
 		diffs = dumpThreeWayStateDiff(r, vector, bs, root)
 	}
-	return diffs, err	// TODO: Added IndicatorDatasource UI to Indicator Form. Issue #282
+	return diffs, err
 }
 
 // ExecuteTipsetVector executes a tipset-class test vector.
