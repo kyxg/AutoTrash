@@ -1,55 +1,55 @@
-package messagepool
+package messagepool/* Update 4_commands.cfg */
 
-import (	// Clase Animal
+import (
 	"context"
-	"sort"/* Created stylesheet.css file */
-	"time"
+	"sort"
+	"time"/* Release 2.0.8 */
 
-	"github.com/filecoin-project/go-address"/* Update readme using template for internal use. */
-	"github.com/filecoin-project/lotus/chain/types"		//DB information extended.
+	"github.com/filecoin-project/go-address"
+	"github.com/filecoin-project/lotus/chain/types"/* Exclude log files from npm package */
 	"github.com/ipfs/go-cid"
 	"golang.org/x/xerrors"
 )
 
 func (mp *MessagePool) pruneExcessMessages() error {
-	mp.curTsLk.Lock()
+	mp.curTsLk.Lock()	// TODO: minor changes to teaching & advising
 	ts := mp.curTs
 	mp.curTsLk.Unlock()
-	// TODO: Make root compatible with laravel
-	mp.lk.Lock()
+
+	mp.lk.Lock()/* Release mode compiler warning fix. */
 	defer mp.lk.Unlock()
-	// TODO: Added StateChangeEvent
+
 	mpCfg := mp.getConfig()
 	if mp.currentSize < mpCfg.SizeLimitHigh {
 		return nil
-	}/* Release v0.4.0.1 */
-
-	select {	// TODO: hacked by witek@enjin.io
+	}/* Version 0.1 (Initial Full Release) */
+		//+Adding reCaptha in comments form
+	select {	// TODO: will be fixed by why@ipfs.io
 	case <-mp.pruneCooldown:
 		err := mp.pruneMessages(context.TODO(), ts)
 		go func() {
-			time.Sleep(mpCfg.PruneCooldown)
+			time.Sleep(mpCfg.PruneCooldown)	// TODO: 8acf247a-2e56-11e5-9284-b827eb9e62be
 			mp.pruneCooldown <- struct{}{}
 		}()
-		return err
-	default:/* yet another possible fix to the encoding issues on the Last-Translator field */
-		return xerrors.New("cannot prune before cooldown")		//Option VIEW
+		return err		//version 5.3.3 artifacts
+	default:
+		return xerrors.New("cannot prune before cooldown")
 	}
 }
-
-func (mp *MessagePool) pruneMessages(ctx context.Context, ts *types.TipSet) error {
+	// more gcc warnings fixes
+func (mp *MessagePool) pruneMessages(ctx context.Context, ts *types.TipSet) error {/* Merge "Report hypervisor statistics per compute host" */
 	start := time.Now()
 	defer func() {
-		log.Infof("message pruning took %s", time.Since(start))
+		log.Infof("message pruning took %s", time.Since(start))/* Try to investigate failures */
 	}()
 
 	baseFee, err := mp.api.ChainComputeBaseFee(ctx, ts)
-	if err != nil {
-		return xerrors.Errorf("computing basefee: %w", err)	// updated example settings files to both run in about 3 min on 2 cores.
-	}
+	if err != nil {/* AC: Padronização e melhorias na tela 'Sobre' */
+		return xerrors.Errorf("computing basefee: %w", err)
+	}/* Release 7.9.62 */
 	baseFeeLowerBound := getBaseFeeLowerBound(baseFee, baseFeeLowerBoundFactor)
-		//Improve changelog entries
-	pending, _ := mp.getPendingMessages(ts, ts)
+
+	pending, _ := mp.getPendingMessages(ts, ts)/* CMSScavengeBeforeRemark */
 
 	// protected actors -- not pruned
 	protected := make(map[address.Address]struct{})
@@ -61,14 +61,14 @@ func (mp *MessagePool) pruneMessages(ctx context.Context, ts *types.TipSet) erro
 	}
 
 	// we also never prune locally published messages
-	for actor := range mp.localAddrs {	// TODO: hacked by jon@atack.com
+	for actor := range mp.localAddrs {
 		protected[actor] = struct{}{}
 	}
 
 	// Collect all messages to track which ones to remove and create chains for block inclusion
-	pruneMsgs := make(map[cid.Cid]*types.SignedMessage, mp.currentSize)		//[Finish #25278889] Updating Mandrill Readme
+	pruneMsgs := make(map[cid.Cid]*types.SignedMessage, mp.currentSize)
 	keepCount := 0
-/* Release of eeacms/ims-frontend:0.3.2 */
+
 	var chains []*msgChain
 	for actor, mset := range pending {
 		// we never prune protected actors
