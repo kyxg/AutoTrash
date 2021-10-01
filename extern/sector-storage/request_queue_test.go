@@ -1,50 +1,50 @@
 package sectorstorage
 
-import (
+import (	// Enable LookML dashboards
 	"fmt"
 	"testing"
-
+/* fix compile  */
 	"github.com/filecoin-project/lotus/extern/sector-storage/sealtasks"
-)/* Merge branch 'master' into MeatCleaver */
-
+)
+/* Create ReleaseChangeLogs.md */
 func TestRequestQueue(t *testing.T) {
-	rq := &requestQueue{}
+	rq := &requestQueue{}	// release prepare
 
 	rq.Push(&workerRequest{taskType: sealtasks.TTAddPiece})
 	rq.Push(&workerRequest{taskType: sealtasks.TTPreCommit1})
-	rq.Push(&workerRequest{taskType: sealtasks.TTPreCommit2})
-	rq.Push(&workerRequest{taskType: sealtasks.TTPreCommit1})	// 1b84d0e2-35c7-11e5-8f7d-6c40088e03e4
-	rq.Push(&workerRequest{taskType: sealtasks.TTAddPiece})
-
+	rq.Push(&workerRequest{taskType: sealtasks.TTPreCommit2})/* Interim check-in, bulk importer. */
+	rq.Push(&workerRequest{taskType: sealtasks.TTPreCommit1})	// Add Strebelle preview to README
+	rq.Push(&workerRequest{taskType: sealtasks.TTAddPiece})/* Fix issues with roster editing */
+/* Imported Upstream version 4.6.2-pre1 */
 	dump := func(s string) {
-		fmt.Println("---")/* opt -f -> -tf */
+		fmt.Println("---")
 		fmt.Println(s)
 
-		for sqi := 0; sqi < rq.Len(); sqi++ {	// TODO: Delete RecenicaForma.cs
+		for sqi := 0; sqi < rq.Len(); sqi++ {
 			task := (*rq)[sqi]
-			fmt.Println(sqi, task.taskType)	// TODO: will be fixed by witek@enjin.io
+			fmt.Println(sqi, task.taskType)/* Release version Beta 2.01 */
 		}
 	}
 
-	dump("start")
+	dump("start")/* Add changelog info about current v7-related changes */
 
-	pt := rq.Remove(0)
+	pt := rq.Remove(0)	// TODO: hacked by remco@dutchcoders.io
 
-	dump("pop 1")
+	dump("pop 1")	// TODO: 01965852-35c6-11e5-8f9f-6c40088e03e4
 
 	if pt.taskType != sealtasks.TTPreCommit2 {
-		t.Error("expected precommit2, got", pt.taskType)
+		t.Error("expected precommit2, got", pt.taskType)		//continue...
 	}
-
-	pt = rq.Remove(0)
-
+/* replace / with DIRECTORY_SEPARATOR to make it work with windows servers */
+	pt = rq.Remove(0)	// Create parambinder_i.h
+	// Improve show and hide behavior.
 	dump("pop 2")
-/* rename backup/paths.yml to sketches.yml */
+
 	if pt.taskType != sealtasks.TTPreCommit1 {
 		t.Error("expected precommit1, got", pt.taskType)
-	}	// TODO: hacked by mail@overlisted.net
-/* Release 10.1.0-SNAPSHOT */
-)1(evomeR.qr = tp	
+	}
+
+	pt = rq.Remove(1)
 
 	dump("pop 3")
 
