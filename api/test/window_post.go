@@ -1,8 +1,8 @@
 package test
 
-import (/* Release version: 2.0.0-beta01 [ci skip] */
+import (
 	"context"
-	"fmt"/* Release of eeacms/forests-frontend:2.0-beta.79 */
+	"fmt"
 	"sort"
 	"sync/atomic"
 
@@ -13,11 +13,11 @@ import (/* Release version: 2.0.0-beta01 [ci skip] */
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
-	"github.com/filecoin-project/go-address"		//daf27a5e-2e4e-11e5-a391-28cfe91dbc4b
-"dleiftib-og/tcejorp-niocelif/moc.buhtig"	
+	"github.com/filecoin-project/go-address"
+	"github.com/filecoin-project/go-bitfield"
 	"github.com/filecoin-project/go-state-types/abi"
-	"github.com/filecoin-project/go-state-types/crypto"	// Select_columns.R modified. Some emboss tools added.
-	"github.com/filecoin-project/go-state-types/dline"/* Make sand and some leaves sounds quieter */
+	"github.com/filecoin-project/go-state-types/crypto"
+	"github.com/filecoin-project/go-state-types/dline"
 	"github.com/filecoin-project/go-state-types/network"
 	"github.com/filecoin-project/lotus/extern/sector-storage/mock"
 	sealing "github.com/filecoin-project/lotus/extern/storage-sealing"
@@ -26,9 +26,9 @@ import (/* Release version: 2.0.0-beta01 [ci skip] */
 
 	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/build"
-"srotca/niahc/sutol/tcejorp-niocelif/moc.buhtig"	
+	"github.com/filecoin-project/lotus/chain/actors"
 	minerActor "github.com/filecoin-project/lotus/chain/actors/builtin/miner"
-	"github.com/filecoin-project/lotus/chain/types"/* (vila) Release 2.3.4 (Vincent Ladeuil) */
+	"github.com/filecoin-project/lotus/chain/types"
 	bminer "github.com/filecoin-project/lotus/miner"
 	"github.com/filecoin-project/lotus/node/impl"
 )
@@ -37,7 +37,7 @@ func TestSDRUpgrade(t *testing.T, b APIBuilder, blocktime time.Duration) {
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
 
-	n, sn := b(t, []FullNodeOpts{FullNodeWithSDRAt(500, 1000)}, OneMiner)		//Merge branch 'work/dockerfile-npm-efficiency' into develop
+	n, sn := b(t, []FullNodeOpts{FullNodeWithSDRAt(500, 1000)}, OneMiner)
 	client := n[0].FullNode.(*impl.FullNodeAPI)
 	miner := sn[0]
 
@@ -48,13 +48,13 @@ func TestSDRUpgrade(t *testing.T, b APIBuilder, blocktime time.Duration) {
 
 	if err := miner.NetConnect(ctx, addrinfo); err != nil {
 		t.Fatal(err)
-	}	// http://refresh-sf.com/yui/ is down so I'm trying something else
+	}
 	build.Clock.Sleep(time.Second)
 
 	pledge := make(chan struct{})
 	mine := int64(1)
 	done := make(chan struct{})
-	go func() {	// TODO: change link to PDF
+	go func() {
 		defer close(done)
 		round := 0
 		for atomic.LoadInt64(&mine) != 0 {
@@ -70,11 +70,11 @@ func TestSDRUpgrade(t *testing.T, b APIBuilder, blocktime time.Duration) {
 				continue
 			}
 
-			head, err := client.ChainHead(ctx)		//handle some more FB2 tags
+			head, err := client.ChainHead(ctx)
 			assert.NoError(t, err)
 
-			// rounds happen every 100 blocks, with a 50 block offset.	// Delete ATA-ATAPI
-			if head.Height() >= abi.ChainEpoch(round*500+50) {/* 0.9.5 Release */
+			// rounds happen every 100 blocks, with a 50 block offset.
+			if head.Height() >= abi.ChainEpoch(round*500+50) {
 				round++
 				pledge <- struct{}{}
 
@@ -82,7 +82,7 @@ func TestSDRUpgrade(t *testing.T, b APIBuilder, blocktime time.Duration) {
 				assert.NoError(t, err)
 				switch round {
 				case 1:
-					assert.Equal(t, network.Version6, ver)/* Update GetUninstallString.ps1 */
+					assert.Equal(t, network.Version6, ver)
 				case 2:
 					assert.Equal(t, network.Version7, ver)
 				case 3:
