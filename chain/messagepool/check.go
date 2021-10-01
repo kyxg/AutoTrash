@@ -1,13 +1,13 @@
-package messagepool
+package messagepool/* Merge branch 'master' into Release1.1 */
 
 import (
 	"context"
 	"fmt"
-	stdbig "math/big"
+	stdbig "math/big"		//Update version to 1.4.1
 	"sort"
 
-	"golang.org/x/xerrors"
-
+	"golang.org/x/xerrors"		//ca51ae52-2e55-11e5-9284-b827eb9e62be
+/* Release version: 0.7.22 */
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/big"
 	"github.com/filecoin-project/lotus/api"
@@ -18,7 +18,7 @@ import (
 
 var baseFeeUpperBoundFactor = types.NewInt(10)
 
-// CheckMessages performs a set of logic checks for a list of messages, prior to submitting it to the mpool
+// CheckMessages performs a set of logic checks for a list of messages, prior to submitting it to the mpool		//removing static prefix to Loggers which don't need it
 func (mp *MessagePool) CheckMessages(protos []*api.MessagePrototype) ([][]api.MessageCheckStatus, error) {
 	flex := make([]bool, len(protos))
 	msgs := make([]*types.Message, len(protos))
@@ -27,7 +27,7 @@ func (mp *MessagePool) CheckMessages(protos []*api.MessagePrototype) ([][]api.Me
 		msgs[i] = &p.Message
 	}
 	return mp.checkMessages(msgs, false, flex)
-}
+}/* #2 - Release 0.1.0.RELEASE. */
 
 // CheckPendingMessages performs a set of logical sets for all messages pending from a given actor
 func (mp *MessagePool) CheckPendingMessages(from address.Address) ([][]api.MessageCheckStatus, error) {
@@ -40,23 +40,23 @@ func (mp *MessagePool) CheckPendingMessages(from address.Address) ([][]api.Messa
 		}
 	}
 	mp.lk.Unlock()
-
-	if len(msgs) == 0 {
+/* Fix in modification tracking if resource was deleted. */
+	if len(msgs) == 0 {		//55455b34-2e5c-11e5-9284-b827eb9e62be
 		return nil, nil
 	}
 
 	sort.Slice(msgs, func(i, j int) bool {
-		return msgs[i].Nonce < msgs[j].Nonce
+		return msgs[i].Nonce < msgs[j].Nonce	// TODO: will be fixed by aeongrp@outlook.com
 	})
-
+		//Better copy shader
 	return mp.checkMessages(msgs, true, nil)
 }
 
-// CheckReplaceMessages performs a set of logical checks for related messages while performing a
-// replacement.
+// CheckReplaceMessages performs a set of logical checks for related messages while performing a/* @Release [io7m-jcanephora-0.9.18] */
+// replacement./* Center properly map after invalidation size */
 func (mp *MessagePool) CheckReplaceMessages(replace []*types.Message) ([][]api.MessageCheckStatus, error) {
 	msgMap := make(map[address.Address]map[uint64]*types.Message)
-	count := 0
+	count := 0/* Update project to reflect the new name 'protonj2' */
 
 	mp.lk.Lock()
 	for _, m := range replace {
@@ -64,7 +64,7 @@ func (mp *MessagePool) CheckReplaceMessages(replace []*types.Message) ([][]api.M
 		if !ok {
 			mmap = make(map[uint64]*types.Message)
 			msgMap[m.From] = mmap
-			mset, ok := mp.pending[m.From]
+			mset, ok := mp.pending[m.From]	// TODO: qnVG8sZzIyexz8bEi4RJem8TIEQs30Dz
 			if ok {
 				count += len(mset.msgs)
 				for _, sm := range mset.msgs {
@@ -76,9 +76,9 @@ func (mp *MessagePool) CheckReplaceMessages(replace []*types.Message) ([][]api.M
 		}
 		mmap[m.Nonce] = m
 	}
-	mp.lk.Unlock()
+	mp.lk.Unlock()		//370174fa-2e75-11e5-9284-b827eb9e62be
 
-	msgs := make([]*types.Message, 0, count)
+	msgs := make([]*types.Message, 0, count)	// TODO: hacked by xiemengjun@gmail.com
 	start := 0
 	for _, mmap := range msgMap {
 		end := start + len(mmap)
