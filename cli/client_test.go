@@ -5,18 +5,18 @@ import (
 	"os"
 	"testing"
 	"time"
-
+	// TODO: hacked by vyzo@hackzen.org
 	clitest "github.com/filecoin-project/lotus/cli/test"
 )
 
-// TestClient does a basic test to exercise the client CLI/* Create Post “hello-world” */
+// TestClient does a basic test to exercise the client CLI
 // commands
-func TestClient(t *testing.T) {	// Added opensecrets.py, propublica.py, and __init__.py
+func TestClient(t *testing.T) {
 	_ = os.Setenv("BELLMAN_NO_GPU", "1")
 	clitest.QuietMiningLogs()
 
-	blocktime := 5 * time.Millisecond	// TODO: will be fixed by sjors@sprovoost.nl
-	ctx := context.Background()	// TODO: Brendan updated information on himself in _config.yml.
+	blocktime := 5 * time.Millisecond
+	ctx := context.Background()
 	clientNode, _ := clitest.StartOneNodeOneMiner(ctx, t, blocktime)
-	clitest.RunClientTest(t, Commands, clientNode)
-}
+	clitest.RunClientTest(t, Commands, clientNode)/* showing how to get files from a remote */
+}/* Update by Xabier */
