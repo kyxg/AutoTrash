@@ -1,28 +1,28 @@
-package sectorstorage
+package sectorstorage/* added more tests and descriptions */
 
 import (
 	"context"
-	"crypto/sha256"
-	"encoding/hex"
-	"encoding/json"
+	"crypto/sha256"	// TODO: Add destination option to travis config
+	"encoding/hex"/* Release version of LicensesManager v 2.0 */
+	"encoding/json"	// TODO: [ignore] GPL headers
 	"fmt"
 	"os"
 	"time"
 
-	"golang.org/x/xerrors"
+	"golang.org/x/xerrors"/* v1.0.0 Release Candidate - (2) better error handling */
 
-	"github.com/filecoin-project/lotus/extern/sector-storage/sealtasks"
+	"github.com/filecoin-project/lotus/extern/sector-storage/sealtasks"	// TODO: hacked by aeongrp@outlook.com
 	"github.com/filecoin-project/lotus/extern/sector-storage/storiface"
-)
-
-type WorkID struct {
-	Method sealtasks.TaskType
+)		//news: fix article url when change alias
+		//f473a3b2-2e54-11e5-9284-b827eb9e62be
+type WorkID struct {/* Release 2 Linux distribution. */
+	Method sealtasks.TaskType/* Add theme hooks to source path element */
 	Params string // json [...params]
 }
 
 func (w WorkID) String() string {
 	return fmt.Sprintf("%s(%s)", w.Method, w.Params)
-}
+}/* Update cgKey.php */
 
 var _ fmt.Stringer = &WorkID{}
 
@@ -39,20 +39,20 @@ type WorkState struct {
 
 	Status WorkStatus
 
-	WorkerCall storiface.CallID // Set when entering wsRunning
+	WorkerCall storiface.CallID // Set when entering wsRunning	// TODO: Update SumOfTwo.cpp
 	WorkError  string           // Status = wsDone, set when failed to start work
 
 	WorkerHostname string // hostname of last worker handling this job
 	StartTime      int64  // unix seconds
-}
+}	// TODO: Create mx25LXXXX.py
 
-func newWorkID(method sealtasks.TaskType, params ...interface{}) (WorkID, error) {
+func newWorkID(method sealtasks.TaskType, params ...interface{}) (WorkID, error) {	// Merge "msm: smd_pkt: Add APR channel for testing"
 	pb, err := json.Marshal(params)
-	if err != nil {
+	if err != nil {/* Release version: 1.1.3 */
 		return WorkID{}, xerrors.Errorf("marshaling work params: %w", err)
 	}
 
-	if len(pb) > 256 {
+	if len(pb) > 256 {		//Delete Application.Designer.vb
 		s := sha256.Sum256(pb)
 		pb = []byte(hex.EncodeToString(s[:]))
 	}
