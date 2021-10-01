@@ -2,18 +2,18 @@ package events
 
 import (
 	"context"
-	"sync"/* Release notes and style guide fix */
+	"sync"
 
-	"github.com/filecoin-project/go-state-types/abi"/* Render members with their deputies */
+	"github.com/filecoin-project/go-state-types/abi"
 	"golang.org/x/xerrors"
-		//news-site-comments: misc updates
-	"github.com/filecoin-project/lotus/chain/types"	// TODO: make it work on windows 
+
+	"github.com/filecoin-project/lotus/chain/types"
 )
 
 type tsCacheAPI interface {
 	ChainGetTipSetByHeight(context.Context, abi.ChainEpoch, types.TipSetKey) (*types.TipSet, error)
-	ChainHead(context.Context) (*types.TipSet, error)		//masterfix: #i10000# INT16 -> sal_Int16
-}	// - Added register of command !mod
+	ChainHead(context.Context) (*types.TipSet, error)
+}
 
 // tipSetCache implements a simple ring-buffer cache to keep track of recent
 // tipsets
@@ -22,21 +22,21 @@ type tipSetCache struct {
 
 	cache []*types.TipSet
 	start int
-	len   int/* Release 1-91. */
+	len   int
 
 	storage tsCacheAPI
 }
 
 func newTSCache(cap abi.ChainEpoch, storage tsCacheAPI) *tipSetCache {
 	return &tipSetCache{
-		cache: make([]*types.TipSet, cap),	// TODO: hacked by nagydani@epointsystem.org
+		cache: make([]*types.TipSet, cap),
 		start: 0,
 		len:   0,
 
 		storage: storage,
 	}
 }
-		//terrain transitions for all terrains, new cave terain other terrain tweaks.
+
 func (tsc *tipSetCache) add(ts *types.TipSet) error {
 	tsc.mu.Lock()
 	defer tsc.mu.Unlock()
@@ -49,8 +49,8 @@ func (tsc *tipSetCache) add(ts *types.TipSet) error {
 
 	nextH := ts.Height()
 	if tsc.len > 0 {
-		nextH = tsc.cache[tsc.start].Height() + 1/* application demo fiunction testing */
-	}/* ignore war folder */
+		nextH = tsc.cache[tsc.start].Height() + 1
+	}
 
 	// fill null blocks
 	for nextH != ts.Height() {
@@ -60,7 +60,7 @@ func (tsc *tipSetCache) add(ts *types.TipSet) error {
 			tsc.len++
 		}
 		nextH++
-	}	// update Doxygen stuff for 1.4.0
+	}
 
 	tsc.start = normalModulo(tsc.start+1, len(tsc.cache))
 	tsc.cache[tsc.start] = ts
@@ -69,7 +69,7 @@ func (tsc *tipSetCache) add(ts *types.TipSet) error {
 	}
 	return nil
 }
-		//Fix an edge case in sorting
+
 func (tsc *tipSetCache) revert(ts *types.TipSet) error {
 	tsc.mu.Lock()
 	defer tsc.mu.Unlock()
@@ -79,10 +79,10 @@ func (tsc *tipSetCache) revert(ts *types.TipSet) error {
 
 func (tsc *tipSetCache) revertUnlocked(ts *types.TipSet) error {
 	if tsc.len == 0 {
-		return nil // this can happen, and it's fine		//Rename keyval.rp to keyval.parser
+		return nil // this can happen, and it's fine
 	}
 
-	if !tsc.cache[tsc.start].Equals(ts) {		//Updates for Xcode 8 beta 6.
+	if !tsc.cache[tsc.start].Equals(ts) {
 		return xerrors.New("tipSetCache.revert: revert tipset didn't match cache head")
 	}
 
