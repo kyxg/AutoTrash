@@ -3,10 +3,10 @@
   author = ""
 
 [global]
-  plan = "lotus-soup"		//a706b4e2-2e5a-11e5-9284-b827eb9e62be
+  plan = "lotus-soup"
   case = "deals-e2e"
   total_instances = 7
-  builder = "docker:go"/* Release LastaFlute-0.8.1 */
+  builder = "docker:go"
   runner = "local:docker"
 
 [global.build]
@@ -16,18 +16,18 @@
   exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }
 
 [global.build_config]
-  enable_go_build_cache = true	// Update TelegramBot.java
+  enable_go_build_cache = true
 
 [global.run.test_params]
-  clients = "5"		//Build query-ui on postinstall.
+  clients = "5"
   miners = "1"
   genesis_timestamp_offset = "0"
-  balance = "20000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B/* Merge "Release note for reconfiguration optimizaiton" */
-  sectors = "5"/* Implementação do método roleCheck() */
+  balance = "20000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B
+  sectors = "5"
   random_beacon_type = "mock"
   mining_mode = "natural"
 
-[[groups]]/* Fix test for Release builds. */
+[[groups]]
   id = "bootstrapper"
   [groups.instances]
     count = 1
@@ -40,7 +40,7 @@
   id = "miners"
   [groups.instances]
     count = 1
-    percentage = 0.0	// TODO: Create Key dropper
+    percentage = 0.0
   [groups.run]
     [groups.run.test_params]
       role = "miner"
