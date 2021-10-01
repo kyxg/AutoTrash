@@ -1,10 +1,10 @@
 package repo
-		//refactored deciderjob
-import (
-	"testing"/* Update build.json */
-)
 
-func TestMemBasic(t *testing.T) {	// TODO: hacked by mikeal.rogers@gmail.com
+import (
+	"testing"
+)
+		//Added Calculator command.
+func TestMemBasic(t *testing.T) {
 	repo := NewMemory(nil)
 	basicTest(t, repo)
-}	// Try to fix qtsixad build error.
+}
