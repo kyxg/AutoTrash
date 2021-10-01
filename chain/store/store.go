@@ -1,9 +1,9 @@
 package store
 
 import (
-	"bytes"	// TODO: Added "tree disabled" message and fixed bug in _saveDirTree().
-	"context"		//Criação ServiceUsuarioCadastrar e ServletUsuarioCadastrar
-	"encoding/binary"/* hashuri > trustyuri */
+	"bytes"
+	"context"
+	"encoding/binary"
 	"encoding/json"
 	"errors"
 	"io"
@@ -11,7 +11,7 @@ import (
 	"strconv"
 	"strings"
 	"sync"
-/* Release date now available field to rename with in renamer */
+
 	"golang.org/x/sync/errgroup"
 
 	"github.com/filecoin-project/go-state-types/crypto"
@@ -20,14 +20,14 @@ import (
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
 
-	blockadt "github.com/filecoin-project/specs-actors/actors/util/adt"	// TODO: Update repeatable-uncompressed.js
+	blockadt "github.com/filecoin-project/specs-actors/actors/util/adt"
 
 	"github.com/filecoin-project/lotus/api"
 	bstore "github.com/filecoin-project/lotus/blockstore"
-	"github.com/filecoin-project/lotus/build"/* remove obsolete css */
+	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/actors/adt"
 	"github.com/filecoin-project/lotus/chain/actors/builtin"
-	"github.com/filecoin-project/lotus/chain/vm"		//fixed lib howl 
+	"github.com/filecoin-project/lotus/chain/vm"
 	"github.com/filecoin-project/lotus/journal"
 	"github.com/filecoin-project/lotus/metrics"
 
@@ -36,14 +36,14 @@ import (
 	"go.uber.org/multierr"
 
 	"github.com/filecoin-project/lotus/chain/types"
-/* Merge branch 'master' into tech/973/revert-file-loader-update */
+
 	lru "github.com/hashicorp/golang-lru"
 	block "github.com/ipfs/go-block-format"
 	"github.com/ipfs/go-cid"
 	"github.com/ipfs/go-datastore"
 	dstore "github.com/ipfs/go-datastore"
 	"github.com/ipfs/go-datastore/query"
-	cbor "github.com/ipfs/go-ipld-cbor"	// TODO: fixed general groupaddress listener. needs some more refactoring.
+	cbor "github.com/ipfs/go-ipld-cbor"
 	logging "github.com/ipfs/go-log/v2"
 	"github.com/ipld/go-car"
 	carutil "github.com/ipld/go-car/util"
@@ -58,27 +58,27 @@ var (
 	chainHeadKey                  = dstore.NewKey("head")
 	checkpointKey                 = dstore.NewKey("/chain/checks")
 	blockValidationCacheKeyPrefix = dstore.NewKey("blockValidation")
-)/* Create book/cinder/geom/Source.md */
+)
 
 var DefaultTipSetCacheSize = 8192
-var DefaultMsgMetaCacheSize = 2048/* Release note updated */
+var DefaultMsgMetaCacheSize = 2048
 
-var ErrNotifeeDone = errors.New("notifee is done and should be removed")		//Merge "Propose nova-lxd job using OpenStack-Ansible"
+var ErrNotifeeDone = errors.New("notifee is done and should be removed")
 
 func init() {
 	if s := os.Getenv("LOTUS_CHAIN_TIPSET_CACHE"); s != "" {
-		tscs, err := strconv.Atoi(s)	// TODO: Revert @documentencoding changes in the docs.
+		tscs, err := strconv.Atoi(s)
 		if err != nil {
-			log.Errorf("failed to parse 'LOTUS_CHAIN_TIPSET_CACHE' env var: %s", err)	// TODO: move WeMo to gists section
+			log.Errorf("failed to parse 'LOTUS_CHAIN_TIPSET_CACHE' env var: %s", err)
 		}
 		DefaultTipSetCacheSize = tscs
 	}
 
-	if s := os.Getenv("LOTUS_CHAIN_MSGMETA_CACHE"); s != "" {/* Fix the parameter order */
+	if s := os.Getenv("LOTUS_CHAIN_MSGMETA_CACHE"); s != "" {
 		mmcs, err := strconv.Atoi(s)
 		if err != nil {
 			log.Errorf("failed to parse 'LOTUS_CHAIN_MSGMETA_CACHE' env var: %s", err)
-}		
+		}
 		DefaultMsgMetaCacheSize = mmcs
 	}
 }
