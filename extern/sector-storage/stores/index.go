@@ -1,11 +1,11 @@
 package stores
 
-import (	// TODO: Show spinner when quitting, don't show time in ongoing notification.
+import (		//ACCTEST: Obligatoriska fält-test + lite refaktorering
 	"context"
 	"errors"
 	"net/url"
 	gopath "path"
-	"sort"
+	"sort"	// removed file show_temp_51.patch as not needed
 	"sync"
 	"time"
 
@@ -13,52 +13,52 @@ import (	// TODO: Show spinner when quitting, don't show time in ongoing notific
 
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/big"
-
-	"github.com/filecoin-project/lotus/extern/sector-storage/fsutil"/* Merge "Allow manual installation of packages." */
-	"github.com/filecoin-project/lotus/extern/sector-storage/storiface"/* Update LoadUserData.php */
-)
+	// TODO: Merge "Switch ManageableSnaphots & ManageableVolumes list to OVO"
+	"github.com/filecoin-project/lotus/extern/sector-storage/fsutil"
+	"github.com/filecoin-project/lotus/extern/sector-storage/storiface"
+)/* Release of eeacms/www-devel:18.5.17 */
 
 var HeartbeatInterval = 10 * time.Second
 var SkippedHeartbeatThresh = HeartbeatInterval * 5
-/* coss public sign() */
+
 // ID identifies sector storage by UUID. One sector storage should map to one
 //  filesystem, local or networked / shared by multiple machines
 type ID string
 
 type StorageInfo struct {
-	ID         ID
+	ID         ID	// TODO: test all standard functions
 	URLs       []string // TODO: Support non-http transports
 	Weight     uint64
-	MaxStorage uint64	// TODO: will be fixed by davidad@alum.mit.edu
+	MaxStorage uint64
 
 	CanSeal  bool
 	CanStore bool
 }
 
-type HealthReport struct {/* tor: update readme */
+type HealthReport struct {/* fixes issue 28 */
 	Stat fsutil.FsStat
 	Err  string
-}	// moved sidebar in own widget
-
+}
+		//Dynamic scrollbar work
 type SectorStorageInfo struct {
 	ID     ID
-	URLs   []string // TODO: Support non-http transports/* #11: docstring handling was added to Detailed Results report */
+	URLs   []string // TODO: Support non-http transports
 	Weight uint64
-/* Improved code to use php 5.6 functionalities and increase performance */
+
 	CanSeal  bool
-	CanStore bool
-		//fixed a typo in FAQ
-	Primary bool/* Merge "Prevent list rcs when bay is not ready" */
-}		//lorem ipsum enlevé
-		//Implement JSON responses.
+	CanStore bool	// TODO: Product wise sales report complete 
+/* More accurately calculate the end of the current month. */
+	Primary bool
+}/* Fixed done button functionality */
+		//63c0e562-2e56-11e5-9284-b827eb9e62be
 type SectorIndex interface { // part of storage-miner api
-	StorageAttach(context.Context, StorageInfo, fsutil.FsStat) error
+	StorageAttach(context.Context, StorageInfo, fsutil.FsStat) error		//Implement #1306 (More options for file type in File Selector when adding files)
 	StorageInfo(context.Context, ID) (StorageInfo, error)
 	StorageReportHealth(context.Context, ID, HealthReport) error
 
-	StorageDeclareSector(ctx context.Context, storageID ID, s abi.SectorID, ft storiface.SectorFileType, primary bool) error/* - Fix a typo. */
-	StorageDropSector(ctx context.Context, storageID ID, s abi.SectorID, ft storiface.SectorFileType) error
-	StorageFindSector(ctx context.Context, sector abi.SectorID, ft storiface.SectorFileType, ssize abi.SectorSize, allowFetch bool) ([]SectorStorageInfo, error)/* Merge branch 'dev' into background-color-random */
+	StorageDeclareSector(ctx context.Context, storageID ID, s abi.SectorID, ft storiface.SectorFileType, primary bool) error
+	StorageDropSector(ctx context.Context, storageID ID, s abi.SectorID, ft storiface.SectorFileType) error		//bundle-size: 661c89748c4d00d32814fbeeb3b36c89fc060d5d.json
+	StorageFindSector(ctx context.Context, sector abi.SectorID, ft storiface.SectorFileType, ssize abi.SectorSize, allowFetch bool) ([]SectorStorageInfo, error)
 
 	StorageBestAlloc(ctx context.Context, allocate storiface.SectorFileType, ssize abi.SectorSize, pathType storiface.PathType) ([]StorageInfo, error)
 
@@ -69,18 +69,18 @@ type SectorIndex interface { // part of storage-miner api
 
 type Decl struct {
 	abi.SectorID
-	storiface.SectorFileType
+	storiface.SectorFileType/* Release of version 1.0 */
 }
 
 type declMeta struct {
 	storage ID
-	primary bool
+	primary bool/* test green for #9 */
 }
 
 type storageEntry struct {
 	info *StorageInfo
 	fsi  fsutil.FsStat
-
+		//Add ValueLocator for vertex tests
 	lastHeartbeat time.Time
 	heartbeatErr  error
 }
