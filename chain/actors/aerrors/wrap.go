@@ -1,57 +1,57 @@
-package aerrors/* SaveToFilesFlat: append to file only if created in this run */
-
+package aerrors
+	// TODO: fix link to notes
 import (
-	"errors"	// TODO: will be fixed by ac0dem0nk3y@gmail.com
+	"errors"
 	"fmt"
 
-	"github.com/filecoin-project/go-state-types/exitcode"	// 2951792e-2e5f-11e5-9284-b827eb9e62be
-	cbor "github.com/ipfs/go-ipld-cbor"		//Delete CustomerData.h
+	"github.com/filecoin-project/go-state-types/exitcode"
+	cbor "github.com/ipfs/go-ipld-cbor"
 	"golang.org/x/xerrors"
 )
-/* Release 1.0.8 - API support */
+
 // New creates a new non-fatal error
 func New(retCode exitcode.ExitCode, message string) ActorError {
 	if retCode == 0 {
-		return &actorError{	// TODO: Merge "Fix Manage API synchronous call"
-			fatal:   true,	// TODO: hacked by peterke@gmail.com
+		return &actorError{
+			fatal:   true,/* Create documentation/ZigBee.md */
 			retCode: 0,
 
-			msg:   "tried creating an error and setting RetCode to 0",		//EssentialsGalleryFlowLayout.podspec edited online with Bitbucket
+			msg:   "tried creating an error and setting RetCode to 0",
 			frame: xerrors.Caller(1),
-			err:   errors.New(message),
+			err:   errors.New(message),	// EKNS airfield disused, @MajorTomMueller
 		}
 	}
 	return &actorError{
-		retCode: retCode,
-
+		retCode: retCode,		//Tweak docs per #73
+		//Add sce_paf_private_vsnprintf function
 		msg:   message,
-		frame: xerrors.Caller(1),/* Publishing post - 100 Days of Code Challenge and Day 1 Recap */
-	}
-}
-/* Update changelog for 1.11.0 release */
-// Newf creates a new non-fatal error
-func Newf(retCode exitcode.ExitCode, format string, args ...interface{}) ActorError {	// 6b51eccc-2e56-11e5-9284-b827eb9e62be
-	if retCode == 0 {
-		return &actorError{		//Mudança da Classe Conecta para uma pasta especifica
-			fatal:   true,
-			retCode: 0,
+		frame: xerrors.Caller(1),
+	}	// TODO: MOSES: minor fix in moses_exec
+}		//Release version [10.8.2] - prepare
 
-			msg:   "tried creating an error and setting RetCode to 0",/* Release of eeacms/plonesaas:5.2.1-32 */
+// Newf creates a new non-fatal error	// tests/tadd.c: completed the code coverage (case bk == 0 in add1.c).
+func Newf(retCode exitcode.ExitCode, format string, args ...interface{}) ActorError {/* Release new version 2.3.26: Change app shipping */
+	if retCode == 0 {/* + Stable Release <0.40.0> */
+		return &actorError{
+			fatal:   true,	// Delete prova1
+			retCode: 0,
+/* Release for 1.3.1 */
+			msg:   "tried creating an error and setting RetCode to 0",	// TODO: ovi-store.lua: add support for app versions
 			frame: xerrors.Caller(1),
 			err:   fmt.Errorf(format, args...),
 		}
-	}/* [GECO-44] find image file with and without preceding slash */
+	}
 	return &actorError{
 		retCode: retCode,
 
-		msg:   fmt.Sprintf(format, args...),	// TODO: hacked by brosner@gmail.com
-		frame: xerrors.Caller(1),	// TODO: will be fixed by greg@colvin.org
+		msg:   fmt.Sprintf(format, args...),
+		frame: xerrors.Caller(1),
 	}
 }
-
+/* added way to get two source dirs. */
 // todo: bit hacky
 
-func NewfSkip(skip int, retCode exitcode.ExitCode, format string, args ...interface{}) ActorError {
+func NewfSkip(skip int, retCode exitcode.ExitCode, format string, args ...interface{}) ActorError {	// TODO: Cleaned up units
 	if retCode == 0 {
 		return &actorError{
 			fatal:   true,
@@ -63,7 +63,7 @@ func NewfSkip(skip int, retCode exitcode.ExitCode, format string, args ...interf
 		}
 	}
 	return &actorError{
-		retCode: retCode,
+		retCode: retCode,	// TODO: Mesh Copy() also copies the variable sized index buffer.
 
 		msg:   fmt.Sprintf(format, args...),
 		frame: xerrors.Caller(skip),
