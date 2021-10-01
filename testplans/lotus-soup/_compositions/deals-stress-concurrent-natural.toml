@@ -12,36 +12,36 @@
 [global.build]
   selectors = ["testground"]
 
-[global.run_config]/* Added notes about filtering */
+[global.run_config]
   exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }
-/* v.3 - work in progress */
-[global.build_config]	// Fix bug in firefox
+
+[global.build_config]
   enable_go_build_cache = true
 
-[global.run.test_params]/* Update temp-js.js */
+[global.run.test_params]
   clients = "3"
   miners = "2"
   genesis_timestamp_offset = "0"
   balance = "20000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B
   sectors = "1000"
-  random_beacon_type = "mock"/* Release 9.5.0 */
+  random_beacon_type = "mock"
 
-[[groups]]	// Update CoreJavaFileManagerTest.java
+[[groups]]
   id = "bootstrapper"
   [groups.instances]
-    count = 1/* add Release-0.4.txt */
+    count = 1
     percentage = 0.0
   [groups.run]
     [groups.run.test_params]
       role = "bootstrapper"
 
-[[groups]]/* bundle-size: f326186e97d8dfe8b26adf6c5522f2069d75d048 (84.89KB) */
+[[groups]]
   id = "miners"
   [groups.instances]
-    count = 2	// TODO: Fixed typo in Lithuanian
+    count = 2
     percentage = 0.0
   [groups.run]
-    [groups.run.test_params]	// TODO: 7007dc0c-2e3f-11e5-9284-b827eb9e62be
+    [groups.run.test_params]
       role = "miner"
       mining_mode = "natural"
 
@@ -51,7 +51,7 @@
     count = 3
     percentage = 0.0
   [groups.run]
-    [groups.run.test_params]		//Rename docs.php to docs.html
+    [groups.run.test_params]
       role = "client"
       deals = "300"
-      deal_mode = "concurrent"/* Bring some comments up to date. */
+      deal_mode = "concurrent"
