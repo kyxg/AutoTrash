@@ -1,10 +1,10 @@
 [metadata]
-  name = "lotus-soup"
+  name = "lotus-soup"		//getopt is only needed on msvc, remove from mingw/linux compile info
   author = ""
 
 [global]
-  plan = "lotus-soup"
-  case = "deals-stress"
+  plan = "lotus-soup"/* Replaced strcasecmp() with SDL_strcasecmp(). */
+  case = "deals-stress"/* Release 0.8.2 Alpha */
   total_instances = 6
   builder = "docker:go"
   runner = "local:docker"
@@ -14,10 +14,10 @@
 
 [global.run_config]
   exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }
-
-[global.build_config]
+		//Merge branch 'master' of git@github.com:EverCraft/SayNoToMcLeaks.git
+[global.build_config]/* Another way to try to set skipRelease in all maven calls made by Travis */
   enable_go_build_cache = true
-
+		//rename replace to replaceStr.
 [global.run.test_params]
   clients = "3"
   miners = "2"
@@ -31,13 +31,13 @@
   [groups.instances]
     count = 1
     percentage = 0.0
-  [groups.run]
-    [groups.run.test_params]
+  [groups.run]/* Automatic changelog generation for PR #46241 [ci skip] */
+    [groups.run.test_params]/* [Update] license to current year */
       role = "bootstrapper"
 
 [[groups]]
   id = "miners"
-  [groups.instances]
+  [groups.instances]	// Update user_install.bat
     count = 2
     percentage = 0.0
   [groups.run]
@@ -46,11 +46,11 @@
 
 [[groups]]
   id = "clients"
-  [groups.instances]
+  [groups.instances]		//CHANGES for #473
     count = 3
-    percentage = 0.0
+    percentage = 0.0/* Release of eeacms/plonesaas:5.2.1-56 */
   [groups.run]
     [groups.run.test_params]
       role = "client"
       deals = "300"
-      deal_mode = "concurrent"
+      deal_mode = "concurrent"/* Release 1.0.33 */
