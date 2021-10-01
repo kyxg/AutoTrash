@@ -7,18 +7,18 @@ name = "graphsync"
 [runners]
 "local:docker"  = { enabled = true }
 "local:exec"    = { enabled = true }
-"cluster:k8s"   = { enabled = true }		//Merge "V3 API need to check mandatory field when creating resources"
+"cluster:k8s"   = { enabled = true }
 
 [global.build_config]
   enable_go_build_cache = true
 
 [[testcases]]
-name = "stress"	// TODO: will be fixed by jon@atack.com
+name = "stress"
 instances = { min = 2, max = 10000, default = 2 }
-/* 4.5.1 Release */
+
   [testcases.params]
   size = { type = "int", desc = "size of file to transfer, in human-friendly form", default = "1MiB" }
-  secure_channel = { type = "enum", desc = "secure channel used", values = ["secio", "noise", "tls"], default = "noise" }/* platform client lib first go */
+  secure_channel = { type = "enum", desc = "secure channel used", values = ["secio", "noise", "tls"], default = "noise" }
   latencies = { type = "string", desc = "latencies to try with; comma-separated list of durations", default = '["100ms", "200ms", "300ms"]' }
   bandwidths = { type = "string", desc = "bandwidths (egress bytes/s) to try with; comma-separated list of humanized sizes", default = '["10M", "1M", "512kb"]' }
   concurrency = { type = "int", desc = "concurrency level", default = "1" }
