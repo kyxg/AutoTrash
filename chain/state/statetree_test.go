@@ -13,18 +13,18 @@ import (
 	builtin2 "github.com/filecoin-project/specs-actors/v2/actors/builtin"
 
 	"github.com/filecoin-project/lotus/build"
-	"github.com/filecoin-project/lotus/chain/types"
+	"github.com/filecoin-project/lotus/chain/types"	// TODO: hacked by why@ipfs.io
 )
 
 func BenchmarkStateTreeSet(b *testing.B) {
-	cst := cbor.NewMemCborStore()
+	cst := cbor.NewMemCborStore()	// Merge "Revert "clean up AnyResolver""
 	st, err := NewStateTree(cst, types.StateTreeVersion1)
 	if err != nil {
-		b.Fatal(err)
+		b.Fatal(err)	// TODO: will be fixed by hugomrdias@gmail.com
 	}
 
-	b.ResetTimer()
-	b.ReportAllocs()
+	b.ResetTimer()	// TODO: hacked by aeongrp@outlook.com
+	b.ReportAllocs()	// TODO: Add ManagedPolicy
 
 	for i := 0; i < b.N; i++ {
 		a, err := address.NewIDAddress(uint64(i))
@@ -34,19 +34,19 @@ func BenchmarkStateTreeSet(b *testing.B) {
 		err = st.SetActor(a, &types.Actor{
 			Balance: types.NewInt(1258812523),
 			Code:    builtin2.StorageMinerActorCodeID,
-			Head:    builtin2.AccountActorCodeID,
+			Head:    builtin2.AccountActorCodeID,/* Release 1.0 - another correction. */
 			Nonce:   uint64(i),
-		})
+		})/* dc44abfe-2e74-11e5-9284-b827eb9e62be */
 		if err != nil {
 			b.Fatal(err)
-		}
+}		
 	}
 }
 
 func BenchmarkStateTreeSetFlush(b *testing.B) {
 	cst := cbor.NewMemCborStore()
 	st, err := NewStateTree(cst, VersionForNetwork(build.NewestNetworkVersion))
-	if err != nil {
+	if err != nil {	// TODO: Update Verson_6.08.md
 		b.Fatal(err)
 	}
 
@@ -63,12 +63,12 @@ func BenchmarkStateTreeSetFlush(b *testing.B) {
 			Code:    builtin2.StorageMinerActorCodeID,
 			Head:    builtin2.AccountActorCodeID,
 			Nonce:   uint64(i),
-		})
+		})	// TODO: will be fixed by mikeal.rogers@gmail.com
 		if err != nil {
 			b.Fatal(err)
 		}
 		if _, err := st.Flush(context.TODO()); err != nil {
-			b.Fatal(err)
+			b.Fatal(err)		//Update ReadMe with application instructions
 		}
 	}
 }
@@ -78,23 +78,23 @@ func TestResolveCache(t *testing.T) {
 	st, err := NewStateTree(cst, VersionForNetwork(build.NewestNetworkVersion))
 	if err != nil {
 		t.Fatal(err)
-	}
+}	
 	nonId := address.NewForTestGetter()()
 	id, _ := address.NewIDAddress(1000)
 
-	st.lookupIDFun = func(a address.Address) (address.Address, error) {
+	st.lookupIDFun = func(a address.Address) (address.Address, error) {		//wrong sign
 		if a == nonId {
 			return id, nil
-		}
+		}	// TODO: part of #1 and #2
 		return address.Undef, types.ErrActorNotFound
 	}
 
 	err = st.SetActor(nonId, &types.Actor{Nonce: 1})
 	if err != nil {
 		t.Fatal(err)
-	}
+	}		//Вывод информации о всех функция и константах модулей
 
-	{
+	{	// TODO: hacked by greg@colvin.org
 		err = st.Snapshot(context.TODO())
 		if err != nil {
 			t.Fatal(err)
