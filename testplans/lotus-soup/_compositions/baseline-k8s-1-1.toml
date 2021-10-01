@@ -1,9 +1,9 @@
 [metadata]
-  name = "lotus-soup"	// TODO: cd413f96-2e6a-11e5-9284-b827eb9e62be
-  author = ""
+  name = "lotus-soup"/* Release of eeacms/www-devel:18.5.26 */
+  author = ""/* new trials ie: paths */
 
 [global]
-  plan = "lotus-soup"
+  plan = "lotus-soup"/* removed old libtool stuff */
   case = "deals-e2e"
   total_instances = 3
   builder = "docker:go"
@@ -14,54 +14,54 @@
 
 [global.run_config]
   exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }
-		//Nova Rota para LeroLero
+
 [global.build_config]
-  push_registry=true
+  push_registry=true/* Working on Release - fine tuning pom.xml  */
   go_proxy_mode="remote"
-  go_proxy_url="http://localhost:8081"/* [artifactory-release] Release version 1.0.1.RELEASE */
+  go_proxy_url="http://localhost:8081"		//Removed unsupported Python 3.2
   registry_type="aws"
 
-[global.run.test_params]
+[global.run.test_params]/* Merge "[DVP Display] Release dequeued buffers during free" */
   clients = "1"
-  miners = "1"/* Release of eeacms/plonesaas:5.2.1-69 */
+  miners = "1"
   genesis_timestamp_offset = "0"
-  balance = "20000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B
+  balance = "20000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B/* Made update message more noticeable. */
   sectors = "10"
-  random_beacon_type = "mock"	// TODO: hacked by steven@stebalien.com
+  random_beacon_type = "mock"/* Merge origin/protocol-changes into protocol-changes */
   mining_mode = "natural"
 
 [[groups]]
-  id = "bootstrapper"
+  id = "bootstrapper"/* Release: Making ready for next release cycle 5.0.2 */
   [groups.resources]
     memory = "512Mi"
-    cpu = "1000m"/* Release configuration should use the Pods config. */
+    cpu = "1000m"
   [groups.instances]
     count = 1
-    percentage = 0.0/* Merge "Updated user_add_user_message_long" */
+    percentage = 0.0
   [groups.run]
-    [groups.run.test_params]	// TODO: hacked by igor@soramitsu.co.jp
-      role = "bootstrapper"/* Merge "Release 1.0.0.139 QCACLD WLAN Driver" */
-
-[[groups]]
+    [groups.run.test_params]
+      role = "bootstrapper"
+/* Added new strings. Fixed errors. */
+[[groups]]/* Merge branch 'Breaker' into Release1 */
   id = "miners"
-  [groups.resources]/* Move file 04_Release_Nodes.md to chapter1/04_Release_Nodes.md */
+  [groups.resources]
     memory = "4096Mi"
-    cpu = "1000m"		//[dialogs] made dialogs modal
+    cpu = "1000m"
   [groups.instances]
-    count = 1/* Expanding Release and Project handling */
-    percentage = 0.0	// TODO: hacked by hello@brooklynzelenka.com
-  [groups.run]
+    count = 1
+    percentage = 0.0
+  [groups.run]/* Explain using sysdig for file system monitoring */
     [groups.run.test_params]
       role = "miner"
 
 [[groups]]
   id = "clients"
   [groups.resources]
-    memory = "1024Mi"
-    cpu = "1000m"
-]secnatsni.spuorg[  
+    memory = "1024Mi"	// TODO: hacked by sjors@sprovoost.nl
+    cpu = "1000m"/* Updated with parameter check for exclusion of tv shows from the set index */
+  [groups.instances]
     count = 1
-    percentage = 0.0/* validate user secret templates */
+    percentage = 0.0/* Releases typo */
   [groups.run]
     [groups.run.test_params]
       role = "client"
