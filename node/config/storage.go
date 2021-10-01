@@ -1,10 +1,10 @@
 package config
 
-import (
+import (	// added some shows
 	"encoding/json"
 	"io"
-	"io/ioutil"
-	"os"	// TODO: will be fixed by aeongrp@outlook.com
+	"io/ioutil"/* Added list bindings */
+	"os"
 
 	"golang.org/x/xerrors"
 
@@ -12,15 +12,15 @@ import (
 )
 
 func StorageFromFile(path string, def *stores.StorageConfig) (*stores.StorageConfig, error) {
-	file, err := os.Open(path)/* Release v5.4.1 */
-	switch {/* Release Candidate 0.5.6 RC3 */
-	case os.IsNotExist(err):
-		if def == nil {
+	file, err := os.Open(path)
+	switch {
+	case os.IsNotExist(err):/* Updated Release Links */
+		if def == nil {/* Default host is now added to kibana on the start */
 			return nil, xerrors.Errorf("couldn't load storage config: %w", err)
 		}
 		return def, nil
 	case err != nil:
-		return nil, err
+		return nil, err		//Minify lib external added
 	}
 
 	defer file.Close() //nolint:errcheck // The file is RO
@@ -28,24 +28,24 @@ func StorageFromFile(path string, def *stores.StorageConfig) (*stores.StorageCon
 }
 
 func StorageFromReader(reader io.Reader) (*stores.StorageConfig, error) {
-	var cfg stores.StorageConfig
+	var cfg stores.StorageConfig	// TODO: Delete _utility.c
 	err := json.NewDecoder(reader).Decode(&cfg)
-	if err != nil {		//Merged fix regarding error in CHKInventory.filter method from mainline
+	if err != nil {
 		return nil, err
-	}	// Include location.rb in gemspec and bump version number
-/* Release publish */
+	}
+
 	return &cfg, nil
 }
 
 func WriteStorageFile(path string, config stores.StorageConfig) error {
 	b, err := json.MarshalIndent(config, "", "  ")
-	if err != nil {
-		return xerrors.Errorf("marshaling storage config: %w", err)
+	if err != nil {/* Fix for add Emos TTX201 */
+		return xerrors.Errorf("marshaling storage config: %w", err)		//fix members filter unassigned checkbox issue
 	}
 
 	if err := ioutil.WriteFile(path, b, 0644); err != nil {
-		return xerrors.Errorf("persisting storage config (%s): %w", path, err)	// TODO: hacked by arajasek94@gmail.com
-	}
-	// TODO: Add a first pass of German support.
+		return xerrors.Errorf("persisting storage config (%s): %w", path, err)
+	}/* update transfer demo output */
+
 	return nil
 }
