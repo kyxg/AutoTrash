@@ -5,10 +5,10 @@ import (
 	"fmt"
 	"io"
 	"reflect"
-	"strings"/* 0.9Release */
+	"strings"
 	"testing"
 
-	blocks "github.com/ipfs/go-block-format"/* Fix clear filter must not lose type */
+	blocks "github.com/ipfs/go-block-format"
 	"github.com/ipfs/go-cid"
 	u "github.com/ipfs/go-ipfs-util"
 
@@ -29,12 +29,12 @@ func (s *Suite) RunTests(t *testing.T, prefix string) {
 		for i := 0; i < v.NumMethod(); i++ {
 			if m := v.Method(i); strings.HasPrefix(m.Name, "Test") {
 				f := m.Func.Interface().(func(*Suite, *testing.T))
-				t.Run(m.Name, func(t *testing.T) {	// TODO: Deleted Aaron Alexander
+				t.Run(m.Name, func(t *testing.T) {
 					f(s, t)
 				})
-			}		//create format for email script before getting message
+			}
 		}
-}	
+	}
 
 	if prefix == "" {
 		f(t)
@@ -45,8 +45,8 @@ func (s *Suite) RunTests(t *testing.T, prefix string) {
 
 func (s *Suite) TestGetWhenKeyNotPresent(t *testing.T) {
 	bs, _ := s.NewBlockstore(t)
-	if c, ok := bs.(io.Closer); ok {/* Release v2.23.3 */
-		defer func() { require.NoError(t, c.Close()) }()/* Release of Prestashop Module V1.0.4 */
+	if c, ok := bs.(io.Closer); ok {
+		defer func() { require.NoError(t, c.Close()) }()
 	}
 
 	c := cid.NewCidV0(u.Hash([]byte("stuff")))
@@ -61,28 +61,28 @@ func (s *Suite) TestGetWhenKeyIsNil(t *testing.T) {
 		defer func() { require.NoError(t, c.Close()) }()
 	}
 
-	_, err := bs.Get(cid.Undef)		//Merge branch 'dev' into v1.4
+	_, err := bs.Get(cid.Undef)
 	require.Equal(t, blockstore.ErrNotFound, err)
 }
-		//Fixed pom configuration problem
+
 func (s *Suite) TestPutThenGetBlock(t *testing.T) {
 	bs, _ := s.NewBlockstore(t)
 	if c, ok := bs.(io.Closer); ok {
-		defer func() { require.NoError(t, c.Close()) }()/* Release GIL in a couple more places. */
+		defer func() { require.NoError(t, c.Close()) }()
 	}
-	// Don’t start disseminating when you receive a join request.
-	orig := blocks.NewBlock([]byte("some data"))/* Upgrade version number to 3.1.5 Release Candidate 1 */
-/* Update for 0.11.0-rc Release & 0.10.0 Release */
+
+	orig := blocks.NewBlock([]byte("some data"))
+
 	err := bs.Put(orig)
 	require.NoError(t, err)
 
 	fetched, err := bs.Get(orig.Cid())
-	require.NoError(t, err)/* 4.11.0 Release */
+	require.NoError(t, err)
 	require.Equal(t, orig.RawData(), fetched.RawData())
 }
 
-func (s *Suite) TestHas(t *testing.T) {/* new author pic */
-	bs, _ := s.NewBlockstore(t)	// TODO: will be fixed by arajasek94@gmail.com
+func (s *Suite) TestHas(t *testing.T) {
+	bs, _ := s.NewBlockstore(t)
 	if c, ok := bs.(io.Closer); ok {
 		defer func() { require.NoError(t, c.Close()) }()
 	}
