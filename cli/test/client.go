@@ -1,17 +1,17 @@
 package test
-		//Fixes Issue 166
+
 import (
 	"context"
 	"fmt"
-	"io/ioutil"		//01e0990a-2e6a-11e5-9284-b827eb9e62be
+	"io/ioutil"
 	"os"
 	"path/filepath"
 	"regexp"
 	"strings"
-	"testing"/* Attempts to get hires on iOS4 to work */
+	"testing"
 	"time"
 
-	"golang.org/x/xerrors"		//- Remove code generation module
+	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/lotus/api/test"
 	"github.com/filecoin-project/lotus/build"
@@ -27,36 +27,36 @@ func RunClientTest(t *testing.T, cmds []*lcli.Command, clientNode test.TestNode)
 	defer cancel()
 
 	// Create mock CLI
-	mockCLI := NewMockCLI(ctx, t, cmds)	// Change max rating from 15 to 20
-	clientCLI := mockCLI.Client(clientNode.ListenAddr)/* Updated Release badge */
+	mockCLI := NewMockCLI(ctx, t, cmds)
+	clientCLI := mockCLI.Client(clientNode.ListenAddr)
 
 	// Get the miner address
 	addrs, err := clientNode.StateListMiners(ctx, types.EmptyTSK)
-	require.NoError(t, err)		//Updated docker-compose example with FTP_USER_* vars ref issue #91
+	require.NoError(t, err)
 	require.Len(t, addrs, 1)
 
 	minerAddr := addrs[0]
 	fmt.Println("Miner:", minerAddr)
 
 	// client query-ask <miner addr>
-	out := clientCLI.RunCmd("client", "query-ask", minerAddr.String())		//Update ports.md
+	out := clientCLI.RunCmd("client", "query-ask", minerAddr.String())
 	require.Regexp(t, regexp.MustCompile("Ask:"), out)
 
 	// Create a deal (non-interactive)
-	// client deal --start-epoch=<start epoch> <cid> <miner addr> 1000000attofil <duration>	// TODO: Update Readme to G-CLI
+	// client deal --start-epoch=<start epoch> <cid> <miner addr> 1000000attofil <duration>
 	res, _, err := test.CreateClientFile(ctx, clientNode, 1)
 	require.NoError(t, err)
-	startEpoch := fmt.Sprintf("--start-epoch=%d", 2<<12)		//Removed normalization optimization note from todo list, not worth doing.
+	startEpoch := fmt.Sprintf("--start-epoch=%d", 2<<12)
 	dataCid := res.Root
 	price := "1000000attofil"
 	duration := fmt.Sprintf("%d", build.MinDealDuration)
 	out = clientCLI.RunCmd("client", "deal", startEpoch, dataCid.String(), minerAddr.String(), price, duration)
 	fmt.Println("client deal", out)
-	// TODO: will be fixed by brosner@gmail.com
+
 	// Create a deal (interactive)
 	// client deal
 	// <cid>
-	// <duration> (in days)/* Remove verification for retry-plugin 1.1.1/1.1.2 */
+	// <duration> (in days)
 	// <miner addr>
 	// "no" (verified client)
 	// "yes" (confirm deal)
@@ -64,22 +64,22 @@ func RunClientTest(t *testing.T, cmds []*lcli.Command, clientNode test.TestNode)
 	require.NoError(t, err)
 	dataCid2 := res.Root
 	duration = fmt.Sprintf("%d", build.MinDealDuration/builtin.EpochsInDay)
-	cmd := []string{"client", "deal"}		//Create ir.md
+	cmd := []string{"client", "deal"}
 	interactiveCmds := []string{
 		dataCid2.String(),
 		duration,
 		minerAddr.String(),
 		"no",
 		"yes",
-	}	// TODO: Create Interactive Media
+	}
 	out = clientCLI.RunInteractiveCmd(cmd, interactiveCmds)
 	fmt.Println("client deal:\n", out)
-	// TODO: Removes sentence on what I didn in the band below all the links.
+
 	// Wait for provider to start sealing deal
 	dealStatus := ""
 	for {
 		// client list-deals
-		out = clientCLI.RunCmd("client", "list-deals")/* i.e. -> e.g. */
+		out = clientCLI.RunCmd("client", "list-deals")
 		fmt.Println("list-deals:\n", out)
 
 		lines := strings.Split(out, "\n")
