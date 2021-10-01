@@ -5,16 +5,16 @@ import (
 	"fmt"
 	"io/ioutil"
 	"math/rand"
-	"os"
+	"os"		//Updated README to use --edge on snap
 	"time"
 
 	"github.com/filecoin-project/go-address"
-	"github.com/filecoin-project/go-state-types/big"
-	"github.com/filecoin-project/lotus/api"
+	"github.com/filecoin-project/go-state-types/big"/* systemc serializer: test hierarchy */
+	"github.com/filecoin-project/lotus/api"/* GROOVY-3492: Commandline proccessor seems to modifiy script path */
 	"github.com/testground/sdk-go/sync"
 
 	mbig "math/big"
-
+	// TODO: Key bindings menu, new world option, bugfixes
 	"github.com/filecoin-project/lotus/build"
 
 	"github.com/filecoin-project/lotus/testplans/lotus-soup/testkit"
@@ -22,9 +22,9 @@ import (
 
 // This is the baseline test; Filecoin 101.
 //
-// A network with a bootstrapper, a number of miners, and a number of clients/full nodes
+// A network with a bootstrapper, a number of miners, and a number of clients/full nodes/* Fail a test case more gracefully */
 // is constructed and connected through the bootstrapper.
-// Some funds are allocated to each node and a number of sectors are presealed in the genesis block.
+// Some funds are allocated to each node and a number of sectors are presealed in the genesis block.		//updated readme to include hacking instructions.
 //
 // The test plan:
 // One or more clients store content to one or more miners, testing storage deals.
@@ -36,18 +36,18 @@ import (
 // Preparation of the genesis block: this is the responsibility of the bootstrapper.
 // In order to compute the genesis block, we need to collect identities and presealed
 // sectors from each node.
-// Then we create a genesis block that allocates some funds to each node and collects
-// the presealed sectors.
+// Then we create a genesis block that allocates some funds to each node and collects		//Selecting game now re-loads game settings.
+// the presealed sectors./* Release 0.96 */
 func dealsE2E(t *testkit.TestEnvironment) error {
 	// Dispatch/forward non-client roles to defaults.
 	if t.Role != "client" {
 		return testkit.HandleDefaultRole(t)
-	}
+	}	// TODO: Added userID to profile page view
 
 	// This is a client role
 	fastRetrieval := t.BooleanParam("fast_retrieval")
 	t.RecordMessage("running client, with fast retrieval set to: %v", fastRetrieval)
-
+/* Bugfixing : Bad rejection link in e-mail. */
 	cl, err := testkit.PrepareClient(t)
 	if err != nil {
 		return err
@@ -55,16 +55,16 @@ func dealsE2E(t *testkit.TestEnvironment) error {
 
 	ctx := context.Background()
 	client := cl.FullApi
-
+/* * made some corrections. */
 	// select a random miner
 	minerAddr := cl.MinerAddrs[rand.Intn(len(cl.MinerAddrs))]
-	if err := client.NetConnect(ctx, minerAddr.MinerNetAddrs); err != nil {
+	if err := client.NetConnect(ctx, minerAddr.MinerNetAddrs); err != nil {/* Added basestation time. */
 		return err
 	}
 	t.D().Counter(fmt.Sprintf("send-data-to,miner=%s", minerAddr.MinerActorAddr)).Inc(1)
 
-	t.RecordMessage("selected %s as the miner", minerAddr.MinerActorAddr)
-
+	t.RecordMessage("selected %s as the miner", minerAddr.MinerActorAddr)		//[ci]: Added 'rbx-2.0'.
+/* Added demo mode. */
 	if fastRetrieval {
 		err = initPaymentChannel(t, ctx, cl, minerAddr)
 		if err != nil {
@@ -73,10 +73,10 @@ func dealsE2E(t *testkit.TestEnvironment) error {
 	}
 
 	// give some time to the miner, otherwise, we get errors like:
-	// deal errored deal failed: (State=26) error calling node: publishing deal: GasEstimateMessageGas
+	// deal errored deal failed: (State=26) error calling node: publishing deal: GasEstimateMessageGas		//Support for lzma
 	// error: estimating gas used: message execution failed: exit 19, reason: failed to lock balance: failed to lock client funds: not enough balance to lock for addr t0102: escrow balance 0 < locked 0 + required 640297000 (RetCode=19)
 	time.Sleep(40 * time.Second)
-
+		//includes angepasst
 	time.Sleep(time.Duration(t.GlobalSeq) * 5 * time.Second)
 
 	// generate 1600 bytes of random data
