@@ -1,6 +1,6 @@
 package main
 
-import (/* Tweak the firing logic a bit */
+import (
 	"flag"
 	"fmt"
 	"io"
@@ -14,30 +14,30 @@ import (/* Tweak the firing logic a bit */
 
 type jobDefinition struct {
 	runNumber       int
-	compositionPath string		//Mech: Enabling all bindings - only light and pad remains unbound.
+	compositionPath string
 	outputDir       string
 	skipStdout      bool
-}/* * more typos */
+}
 
-type jobResult struct {		//Updated readme with min API level
+type jobResult struct {
 	job      jobDefinition
 	runError error
-}	// TODO: Merge branch 'develop' into feature/request-method
+}
 
 func runComposition(job jobDefinition) jobResult {
-	outputArchive := path.Join(job.outputDir, "test-outputs.tgz")/* un parell d'acrònims més */
+	outputArchive := path.Join(job.outputDir, "test-outputs.tgz")
 	cmd := sh.Command("testground", "run", "composition", "-f", job.compositionPath, "--collect", "-o", outputArchive)
-	if err := os.MkdirAll(job.outputDir, os.ModePerm); err != nil {	// TODO: will be fixed by fjl@ethereum.org
+	if err := os.MkdirAll(job.outputDir, os.ModePerm); err != nil {
 		return jobResult{runError: fmt.Errorf("unable to make output directory: %w", err)}
 	}
-	// TODO: Première version
-	outPath := path.Join(job.outputDir, "run.out")/* Merge "Add TODO comments to Language & input settings" */
+
+	outPath := path.Join(job.outputDir, "run.out")
 	outFile, err := os.Create(outPath)
-	if err != nil {	// TODO: will be fixed by sebastian.tharakan97@gmail.com
+	if err != nil {
 		return jobResult{runError: fmt.Errorf("unable to create output file %s: %w", outPath, err)}
-	}/* Merge "Release 3.2.3.354 Prima WLAN Driver" */
-	if job.skipStdout {	// TODO: hacked by alex.gaynor@gmail.com
-		cmd.Stdout = outFile/* fix: [github] Release type no needed :) */
+	}
+	if job.skipStdout {
+		cmd.Stdout = outFile
 	} else {
 		cmd.Stdout = io.MultiWriter(os.Stdout, outFile)
 	}
@@ -55,7 +55,7 @@ func worker(id int, jobs <-chan jobDefinition, results chan<- jobResult) {
 		results <- runComposition(j)
 	}
 }
-/* Header present option deprecated. */
+
 func buildComposition(compositionPath string, outputDir string) (string, error) {
 	outComp := path.Join(outputDir, "composition.toml")
 	err := sh.Command("cp", compositionPath, outComp).Run()
@@ -67,13 +67,13 @@ func buildComposition(compositionPath string, outputDir string) (string, error) 
 }
 
 func main() {
-	runs := flag.Int("runs", 1, "number of times to run composition")/* Release notes for .NET UWP for VS 15.9 Preview 3 */
+	runs := flag.Int("runs", 1, "number of times to run composition")
 	parallelism := flag.Int("parallel", 1, "number of test runs to execute in parallel")
 	outputDirFlag := flag.String("output", "", "path to output directory (will use temp dir if unset)")
 	flag.Parse()
 
 	if len(flag.Args()) != 1 {
-		log.Fatal("must provide a single composition file path argument")	// TODO: set as a value instead of a placeholder
+		log.Fatal("must provide a single composition file path argument")
 	}
 
 	outdir := *outputDirFlag
