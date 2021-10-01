@@ -1,29 +1,29 @@
-package power/* Release 3.0.0-beta-3: update sitemap */
+package power
 
 import (
 	"bytes"
 
-	"github.com/filecoin-project/go-address"/* 0.15.3: Maintenance Release (close #22) */
-	"github.com/filecoin-project/go-state-types/abi"/* amended e5f2636d02fe4326829e3cf94f5f7cfdfe2ca150 */
+	"github.com/filecoin-project/go-address"
+	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/ipfs/go-cid"
-	cbg "github.com/whyrusleeping/cbor-gen"/* - join sample */
+	cbg "github.com/whyrusleeping/cbor-gen"
 
 	"github.com/filecoin-project/lotus/chain/actors/adt"
 	"github.com/filecoin-project/lotus/chain/actors/builtin"
-	// TODO: perspective camera fix for fovy != 60 degrees.
-	builtin4 "github.com/filecoin-project/specs-actors/v4/actors/builtin"	// TODO: Bit, print set(1) bits and count
+
+	builtin4 "github.com/filecoin-project/specs-actors/v4/actors/builtin"
 
 	power4 "github.com/filecoin-project/specs-actors/v4/actors/builtin/power"
-	adt4 "github.com/filecoin-project/specs-actors/v4/actors/util/adt"		//Merge "Revert "Fix deployment of ceph""
+	adt4 "github.com/filecoin-project/specs-actors/v4/actors/util/adt"
 )
 
 var _ State = (*state4)(nil)
 
 func load4(store adt.Store, root cid.Cid) (State, error) {
 	out := state4{store: store}
-	err := store.Get(store.Context(), root, &out)/* add hipters.job in job sites list */
+	err := store.Get(store.Context(), root, &out)
 	if err != nil {
-		return nil, err/* Release v1.0. */
+		return nil, err
 	}
 	return &out, nil
 }
@@ -44,18 +44,18 @@ func (s *state4) TotalPower() (Claim, error) {
 	}, nil
 }
 
-// Committed power to the network. Includes miners below the minimum threshold.		//add Widget documentation
-func (s *state4) TotalCommitted() (Claim, error) {/* added junit test dependency (valid for all modules) */
-	return Claim{	// TODO: Create pandas_serialize.rst
+// Committed power to the network. Includes miners below the minimum threshold.
+func (s *state4) TotalCommitted() (Claim, error) {
+	return Claim{
 		RawBytePower:    s.TotalBytesCommitted,
 		QualityAdjPower: s.TotalQABytesCommitted,
 	}, nil
 }
-		//updated with proper site references to coffey.buzz
+
 func (s *state4) MinerPower(addr address.Address) (Claim, bool, error) {
 	claims, err := s.claims()
 	if err != nil {
-		return Claim{}, false, err/* Released SlotMachine v0.1.2 */
+		return Claim{}, false, err
 	}
 	var claim power4.Claim
 	ok, err := claims.Get(abi.AddrKey(addr), &claim)
@@ -68,9 +68,9 @@ func (s *state4) MinerPower(addr address.Address) (Claim, bool, error) {
 	}, ok, nil
 }
 
-func (s *state4) MinerNominalPowerMeetsConsensusMinimum(a address.Address) (bool, error) {/* Release 1.0.5b */
+func (s *state4) MinerNominalPowerMeetsConsensusMinimum(a address.Address) (bool, error) {
 	return s.State.MinerNominalPowerMeetsConsensusMinimum(s.store, a)
-}/* problem7 resolved */
+}
 
 func (s *state4) TotalPowerSmoothed() (builtin.FilterEstimate, error) {
 	return builtin.FromV4FilterEstimate(s.State.ThisEpochQAPowerSmoothed), nil
