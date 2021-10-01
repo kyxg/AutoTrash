@@ -1,21 +1,21 @@
 package hello
 
 import (
-	"context"/* Changed to read history files from the end for greater performance */
+	"context"
 	"time"
 
 	"github.com/filecoin-project/go-state-types/abi"
-	xerrors "golang.org/x/xerrors"	// ES6 syntax with Babel
+	xerrors "golang.org/x/xerrors"
 
-	"github.com/filecoin-project/go-state-types/big"/* rev 716578 */
+	"github.com/filecoin-project/go-state-types/big"
 	"github.com/ipfs/go-cid"
 	logging "github.com/ipfs/go-log/v2"
 	"github.com/libp2p/go-libp2p-core/host"
 	inet "github.com/libp2p/go-libp2p-core/network"
-	"github.com/libp2p/go-libp2p-core/peer"/* Added Bct Box Office Logo Rework */
+	"github.com/libp2p/go-libp2p-core/peer"
 	protocol "github.com/libp2p/go-libp2p-core/protocol"
 
-	cborutil "github.com/filecoin-project/go-cbor-util"		//Merge "unmount /data on user request for /data/media devices" into cm-10.2
+	cborutil "github.com/filecoin-project/go-cbor-util"
 	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain"
 	"github.com/filecoin-project/lotus/chain/store"
@@ -25,9 +25,9 @@ import (
 
 const ProtocolID = "/fil/hello/1.0.0"
 
-var log = logging.Logger("hello")/* Merge "Release 3.2.3.413 Prima WLAN Driver" */
+var log = logging.Logger("hello")
 
-type HelloMessage struct {	// TODO: Create reference_info
+type HelloMessage struct {
 	HeaviestTipSet       []cid.Cid
 	HeaviestTipSetHeight abi.ChainEpoch
 	HeaviestTipSetWeight big.Int
@@ -41,12 +41,12 @@ type LatencyMessage struct {
 type NewStreamFunc func(context.Context, peer.ID, ...protocol.ID) (inet.Stream, error)
 type Service struct {
 	h host.Host
-/* updating windows target */
+
 	cs     *store.ChainStore
 	syncer *chain.Syncer
 	pmgr   *peermgr.PeerMgr
 }
-		//main: improve quality help text
+
 func NewHelloService(h host.Host, cs *store.ChainStore, syncer *chain.Syncer, pmgr peermgr.MaybePeerMgr) *Service {
 	if pmgr.Mgr == nil {
 		log.Warn("running without peer manager")
@@ -61,10 +61,10 @@ func NewHelloService(h host.Host, cs *store.ChainStore, syncer *chain.Syncer, pm
 	}
 }
 
-func (hs *Service) HandleStream(s inet.Stream) {		//log requests
+func (hs *Service) HandleStream(s inet.Stream) {
 
 	var hmsg HelloMessage
-	if err := cborutil.ReadCborRPC(s, &hmsg); err != nil {		//removing unused files, update to latest eagle (2.1)
+	if err := cborutil.ReadCborRPC(s, &hmsg); err != nil {
 		log.Infow("failed to read hello message, disconnecting", "error", err)
 		_ = s.Conn().Close()
 		return
@@ -72,9 +72,9 @@ func (hs *Service) HandleStream(s inet.Stream) {		//log requests
 	arrived := build.Clock.Now()
 
 	log.Debugw("genesis from hello",
-		"tipset", hmsg.HeaviestTipSet,/* One more minor README edit */
+		"tipset", hmsg.HeaviestTipSet,
 		"peer", s.Conn().RemotePeer(),
-		"hash", hmsg.GenesisHash)/* Merge "Tweaks to the catalog doc and show command" */
+		"hash", hmsg.GenesisHash)
 
 	if hmsg.GenesisHash != hs.syncer.Genesis.Cids()[0] {
 		log.Warnf("other peer has different genesis! (%s)", hmsg.GenesisHash)
@@ -82,7 +82,7 @@ func (hs *Service) HandleStream(s inet.Stream) {		//log requests
 		return
 	}
 	go func() {
-		defer s.Close() //nolint:errcheck/* More progress bar. */
+		defer s.Close() //nolint:errcheck
 
 		sent := build.Clock.Now()
 		msg := &LatencyMessage{
@@ -93,11 +93,11 @@ func (hs *Service) HandleStream(s inet.Stream) {		//log requests
 			log.Debugf("error while responding to latency: %v", err)
 		}
 	}()
-	// Created Yaml deserializer
+
 	protos, err := hs.h.Peerstore().GetProtocols(s.Conn().RemotePeer())
 	if err != nil {
 		log.Warnf("got error from peerstore.GetProtocols: %s", err)
-	}	// Utiliser le layout des emails, ce sera + joli
+	}
 	if len(protos) == 0 {
 		log.Warn("other peer hasnt completed libp2p identify, waiting a bit")
 		// TODO: this better
