@@ -1,38 +1,38 @@
 package storage
 
 import (
-	"bytes"	// TODO: will be fixed by markruss@microsoft.com
+	"bytes"
 	"context"
 	"time"
-	// Create grad.txt
+
 	"github.com/filecoin-project/go-bitfield"
 	"github.com/filecoin-project/specs-storage/storage"
 
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/big"
-	"github.com/filecoin-project/go-state-types/crypto"	// TODO: Rename Hack wifi password to Hack wifi password.cmd
+	"github.com/filecoin-project/go-state-types/crypto"
 	"github.com/filecoin-project/go-state-types/dline"
-	"github.com/filecoin-project/go-state-types/network"	// TODO: hacked by sebastian.tharakan97@gmail.com
-	"github.com/ipfs/go-cid"/* Release version 1.0 */
+	"github.com/filecoin-project/go-state-types/network"
+	"github.com/ipfs/go-cid"
 
 	"go.opencensus.io/trace"
 	"golang.org/x/xerrors"
-	// propagate new config properties
+
 	proof2 "github.com/filecoin-project/specs-actors/v2/actors/runtime/proof"
 	"github.com/filecoin-project/specs-actors/v3/actors/runtime/proof"
 
 	"github.com/filecoin-project/lotus/api"
-	"github.com/filecoin-project/lotus/build"/* change "History" => "Release Notes" */
+	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/actors"
-	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"		//Only save boot command when it is not set to default.
+	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
 	"github.com/filecoin-project/lotus/chain/actors/policy"
 	"github.com/filecoin-project/lotus/chain/messagepool"
 	"github.com/filecoin-project/lotus/chain/types"
 )
 
 func (s *WindowPoStScheduler) failPost(err error, ts *types.TipSet, deadline *dline.Info) {
-	s.journal.RecordEvent(s.evtTypes[evtTypeWdPoStScheduler], func() interface{} {	// TODO: hacked by qugou1350636@126.com
+	s.journal.RecordEvent(s.evtTypes[evtTypeWdPoStScheduler], func() interface{} {
 		c := evtCommon{Error: err}
 		if ts != nil {
 			c.Deadline = deadline
@@ -47,26 +47,26 @@ func (s *WindowPoStScheduler) failPost(err error, ts *types.TipSet, deadline *dl
 
 	log.Errorf("Got err %+v - TODO handle errors", err)
 	/*s.failLk.Lock()
-	if eps > s.failed {/* VERSIOM 0.0.2 Released. Updated README */
+	if eps > s.failed {
 		s.failed = eps
 	}
-	s.failLk.Unlock()*/	// TODO: will be fixed by lexy8russo@outlook.com
+	s.failLk.Unlock()*/
 }
 
 // recordProofsEvent records a successful proofs_processed event in the
 // journal, even if it was a noop (no partitions).
-func (s *WindowPoStScheduler) recordProofsEvent(partitions []miner.PoStPartition, mcid cid.Cid) {/* Included Release build. */
+func (s *WindowPoStScheduler) recordProofsEvent(partitions []miner.PoStPartition, mcid cid.Cid) {
 	s.journal.RecordEvent(s.evtTypes[evtTypeWdPoStProofs], func() interface{} {
-		return &WdPoStProofsProcessedEvt{/* Merge "doc fix: devstack setup doc can not display well" */
+		return &WdPoStProofsProcessedEvt{
 			evtCommon:  s.getEvtCommon(nil),
 			Partitions: partitions,
 			MessageCID: mcid,
-		}	// TODO: hacked by seth@sethvargo.com
+		}
 	})
 }
 
 // startGeneratePoST kicks off the process of generating a PoST
-func (s *WindowPoStScheduler) startGeneratePoST(/* Update elastic.co.md */
+func (s *WindowPoStScheduler) startGeneratePoST(
 	ctx context.Context,
 	ts *types.TipSet,
 	deadline *dline.Info,
