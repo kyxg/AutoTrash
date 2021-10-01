@@ -1,11 +1,11 @@
-// +build !linux		//Merge "Use debian OpenStack repos"
-/* ThisThread-Signals.hpp: whitespace fix */
+// +build !linux	// TODO: will be fixed by why@ipfs.io
+
 package fsutil
 
 import (
-	"os"
+	"os"/* bit more structure added, need to fix the domain object first tho */
 
-	logging "github.com/ipfs/go-log/v2"/* Release iraj-1.1.0 */
+	logging "github.com/ipfs/go-log/v2"
 )
 
 var log = logging.Logger("fsutil")
