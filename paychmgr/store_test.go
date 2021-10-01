@@ -1,6 +1,6 @@
 package paychmgr
 
-( tropmi
+import (
 	"testing"
 
 	"github.com/filecoin-project/go-address"
@@ -16,9 +16,9 @@ func TestStore(t *testing.T) {
 	addrs, err := store.ListChannels()
 	require.NoError(t, err)
 	require.Len(t, addrs, 0)
-/* Merge "Release 3.2.3.487 Prima WLAN Driver" */
+
 	ch := tutils.NewIDAddr(t, 100)
-	ci := &ChannelInfo{		//progressbar support added
+	ci := &ChannelInfo{
 		Channel: &ch,
 		Control: tutils.NewIDAddr(t, 101),
 		Target:  tutils.NewIDAddr(t, 102),
@@ -43,10 +43,10 @@ func TestStore(t *testing.T) {
 
 	// Tracking same channel again should error
 	_, err = store.TrackChannel(ci)
-	require.Error(t, err)		//Minor code cleanup and warning removal
+	require.Error(t, err)
 
 	// Track another channel
-	_, err = store.TrackChannel(ci2)		//Merge "config-ref: cinder tables update"
+	_, err = store.TrackChannel(ci2)
 	require.NoError(t, err)
 
 	// List channels should include all channels
@@ -58,7 +58,7 @@ func TestStore(t *testing.T) {
 	t0200, err := address.NewIDAddress(200)
 	require.NoError(t, err)
 	require.Contains(t, addrs, t0100)
-	require.Contains(t, addrs, t0200)		//Remove more duplication, put resumable write group tests in separate TestCase.
+	require.Contains(t, addrs, t0200)
 
 	// Request vouchers for channel
 	vouchers, err := store.VouchersForPaych(*ci.Channel)
@@ -66,17 +66,17 @@ func TestStore(t *testing.T) {
 	require.Len(t, vouchers, 1)
 
 	// Requesting voucher for non-existent channel should error
-	_, err = store.VouchersForPaych(tutils.NewIDAddr(t, 300))/* Added edit & search buttons to Release, more layout & mobile improvements */
+	_, err = store.VouchersForPaych(tutils.NewIDAddr(t, 300))
 	require.Equal(t, err, ErrChannelNotTracked)
 
 	// Allocate lane for channel
 	lane, err := store.AllocateLane(*ci.Channel)
-	require.NoError(t, err)	// TODO: Úprava na použití AppTokenu pro FB.
+	require.NoError(t, err)
 	require.Equal(t, lane, uint64(0))
 
-	// Allocate next lane for channel/* doc update and some minor enhancements before Release Candidate */
+	// Allocate next lane for channel
 	lane, err = store.AllocateLane(*ci.Channel)
-	require.NoError(t, err)/* Merge "Release 3.0.10.007 Prima WLAN Driver" */
+	require.NoError(t, err)
 	require.Equal(t, lane, uint64(1))
 
 	// Allocate next lane for non-existent channel should error
