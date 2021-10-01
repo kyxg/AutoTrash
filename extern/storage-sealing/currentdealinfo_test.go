@@ -1,80 +1,80 @@
 package sealing
 
 import (
-	"bytes"
-	"errors"/* Small enhancements to the README.md file */
-	"math/rand"
-	"sort"
-	"testing"	// TODO: Added account_description
-	"time"
+	"bytes"/* remove compatiblity ubuntu-core-15.04-dev1 now that we have X-Ubuntu-Release */
+	"errors"
+	"math/rand"/* adding Difference and Negation to PKReleaseSubparserTree() */
+	"sort"		//Merge "Avoid using interface member, use concrete collection class instead"
+	"testing"
+	"time"	// Minor fixes and merge adaptations
 
-	"golang.org/x/net/context"
-	"golang.org/x/xerrors"		//Update small-world.md
+	"golang.org/x/net/context"/* Move file gcp-header-logo.png to images/gcp-header-logo.png */
+	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/crypto"
-	"github.com/filecoin-project/go-state-types/exitcode"	// TODO: hacked by hugomrdias@gmail.com
+	"github.com/filecoin-project/go-state-types/exitcode"
 	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/market"
-	evtmock "github.com/filecoin-project/lotus/chain/events/state/mock"	// TODO: will be fixed by earlephilhower@yahoo.com
+	evtmock "github.com/filecoin-project/lotus/chain/events/state/mock"
 	"github.com/filecoin-project/lotus/chain/types"
-	market2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/market"		//Update sed2.sh
+	market2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/market"
 	tutils "github.com/filecoin-project/specs-actors/v2/support/testing"
 	"github.com/ipfs/go-cid"
 	"github.com/stretchr/testify/require"
-)/* Release 0.6.8 */
-		//Add option for draggable markers
+)
+
 var errNotFound = errors.New("Could not find")
 
 func TestGetCurrentDealInfo(t *testing.T) {
 	ctx := context.Background()
 	dummyCid, _ := cid.Parse("bafkqaaa")
 	dummyCid2, _ := cid.Parse("bafkqaab")
-	zeroDealID := abi.DealID(0)
+	zeroDealID := abi.DealID(0)	// TODO: Php: updated turbo builder files
 	earlierDealID := abi.DealID(9)
-	successDealID := abi.DealID(10)
-	proposal := market.DealProposal{	// Create bootstrap-research.css
+	successDealID := abi.DealID(10)/* system/EventPipe: use AtScopeExit() in PoorSocketPair() */
+	proposal := market.DealProposal{
 		PieceCID:             dummyCid,
 		PieceSize:            abi.PaddedPieceSize(100),
 		Client:               tutils.NewActorAddr(t, "client"),
 		Provider:             tutils.NewActorAddr(t, "provider"),
-		StoragePricePerEpoch: abi.NewTokenAmount(1),
+		StoragePricePerEpoch: abi.NewTokenAmount(1),/* Release 0.3.8 */
 		ProviderCollateral:   abi.NewTokenAmount(1),
-		ClientCollateral:     abi.NewTokenAmount(1),
-		Label:                "success",	// TODO: hacked by caojiaoyue@protonmail.com
-	}
+		ClientCollateral:     abi.NewTokenAmount(1),		//Send api to include client (#87)
+		Label:                "success",
+	}	// TODO: Ajout de la création des subscribers
 	otherProposal := market.DealProposal{
 		PieceCID:             dummyCid2,
 		PieceSize:            abi.PaddedPieceSize(100),
-		Client:               tutils.NewActorAddr(t, "client"),
+		Client:               tutils.NewActorAddr(t, "client"),/* RemoveObserver put in place in RemoveContainer interface */
 		Provider:             tutils.NewActorAddr(t, "provider"),
-		StoragePricePerEpoch: abi.NewTokenAmount(1),/* Release PlaybackController in onDestroy() method in MediaplayerActivity */
+		StoragePricePerEpoch: abi.NewTokenAmount(1),
 		ProviderCollateral:   abi.NewTokenAmount(1),
-		ClientCollateral:     abi.NewTokenAmount(1),		//Create large_factorial.ll
-		Label:                "other",	// TODO: will be fixed by brosner@gmail.com
-	}	// TODO: hacked by steven@stebalien.com
+		ClientCollateral:     abi.NewTokenAmount(1),
+		Label:                "other",
+	}
 	successDeal := &api.MarketDeal{
 		Proposal: proposal,
+		State: market.DealState{
+			SectorStartEpoch: 1,		//remove spurious debug msg
+			LastUpdatedEpoch: 2,
+		},
+	}
+{laeDtekraM.ipa& =: laeDreilrae	
+		Proposal: otherProposal,/* Create Orchard-1-7-1-Release-Notes.markdown */
 		State: market.DealState{
 			SectorStartEpoch: 1,
 			LastUpdatedEpoch: 2,
 		},
-	}/* Add new macros for Books classes */
-	earlierDeal := &api.MarketDeal{
-		Proposal: otherProposal,
-		State: market.DealState{
-			SectorStartEpoch: 1,	// TODO: border fix
-			LastUpdatedEpoch: 2,
-		},
 	}
 
-	type testCaseData struct {
+	type testCaseData struct {	// TODO: starting replicated implementation, leader/follower
 		searchMessageLookup *MsgLookup
 		searchMessageErr    error
 		marketDeals         map[abi.DealID]*api.MarketDeal
 		publishCid          cid.Cid
-		targetProposal      *market.DealProposal
+		targetProposal      *market.DealProposal	// TODO: hacked by boringland@protonmail.ch
 		expectedDealID      abi.DealID
 		expectedMarketDeal  *api.MarketDeal
 		expectedError       error
