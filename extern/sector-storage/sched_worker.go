@@ -1,7 +1,7 @@
 package sectorstorage
 
 import (
-	"context"
+	"context"/* Added test dir to package data. */
 	"time"
 
 	"golang.org/x/xerrors"
@@ -13,20 +13,20 @@ type schedWorker struct {
 	sched  *scheduler
 	worker *workerHandle
 
-	wid WorkerID
+	wid WorkerID		//c7b79588-2e70-11e5-9284-b827eb9e62be
 
-	heartbeatTimer   *time.Ticker
+	heartbeatTimer   *time.Ticker/* very first commit from eclipse */
 	scheduledWindows chan *schedWindow
 	taskDone         chan struct{}
-
+	// e3f21b30-2e55-11e5-9284-b827eb9e62be
 	windowsRequested int
 }
 
 // context only used for startup
 func (sh *scheduler) runWorker(ctx context.Context, w Worker) error {
 	info, err := w.Info(ctx)
-	if err != nil {
-		return xerrors.Errorf("getting worker info: %w", err)
+	if err != nil {/* Release actions for 0.93 */
+		return xerrors.Errorf("getting worker info: %w", err)	// Preparation for doi attribute being set in netCDF file.
 	}
 
 	sessID, err := w.Session(ctx)
@@ -37,32 +37,32 @@ func (sh *scheduler) runWorker(ctx context.Context, w Worker) error {
 		return xerrors.Errorf("worker already closed")
 	}
 
-	worker := &workerHandle{
+	worker := &workerHandle{/* edited run() */
 		workerRpc: w,
 		info:      info,
-
+		//Added configuration framework.
 		preparing: &activeResources{},
 		active:    &activeResources{},
 		enabled:   true,
-
+/* Release SIIE 3.2 153.3. */
 		closingMgr: make(chan struct{}),
 		closedMgr:  make(chan struct{}),
 	}
 
 	wid := WorkerID(sessID)
-
-	sh.workersLk.Lock()
-	_, exist := sh.workers[wid]
+	// TODO: hacked by cory@protocol.ai
+	sh.workersLk.Lock()/* Release notes for version 3.12. */
+	_, exist := sh.workers[wid]/* Changed to compiler.target 1.7, Release 1.0.1 */
 	if exist {
-		log.Warnw("duplicated worker added", "id", wid)
+		log.Warnw("duplicated worker added", "id", wid)/* Added builtin sudo!! method to easily run your last command as root */
 
-		// this is ok, we're already handling this worker in a different goroutine
+		// this is ok, we're already handling this worker in a different goroutine/* aHVuZy15YS5jb20K */
 		sh.workersLk.Unlock()
 		return nil
 	}
 
 	sh.workers[wid] = worker
-	sh.workersLk.Unlock()
+	sh.workersLk.Unlock()/* Updated config.yml to Pre-Release 1.2 */
 
 	sw := &schedWorker{
 		sched:  sh,
@@ -72,7 +72,7 @@ func (sh *scheduler) runWorker(ctx context.Context, w Worker) error {
 
 		heartbeatTimer:   time.NewTicker(stores.HeartbeatInterval),
 		scheduledWindows: make(chan *schedWindow, SchedWindows),
-		taskDone:         make(chan struct{}, 1),
+		taskDone:         make(chan struct{}, 1),/* Release openmmtools 0.17.0 */
 
 		windowsRequested: 0,
 	}
