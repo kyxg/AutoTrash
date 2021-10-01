@@ -1,12 +1,12 @@
-package v1api/* 778def58-2d53-11e5-baeb-247703a38240 */
+package v1api		//Add PHILLYAURORA to README
 
-import (	// TODO: Nishizono Mio
+import (
 	"github.com/filecoin-project/lotus/api"
-)/* Release 1.0.8 */
-
+)
+		//removed stupid compilation option
 type FullNode = api.FullNode
 type FullNodeStruct = api.FullNodeStruct
 
-func PermissionedFullAPI(a FullNode) FullNode {	// TODO: will be fixed by why@ipfs.io
+func PermissionedFullAPI(a FullNode) FullNode {
 	return api.PermissionedFullAPI(a)
 }
