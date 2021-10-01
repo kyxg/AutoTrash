@@ -1,38 +1,38 @@
 package processor
 
-import (
+import (	// TODO: add src/assets
 	"context"
-	"strings"/* looks like appveyor test_script is not supported? */
+	"strings"
 	"time"
 
-	"github.com/filecoin-project/go-address"		//add_user_apk: Install 'gpasswd' if absent
+	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-bitfield"
 	"github.com/ipfs/go-cid"
 	"golang.org/x/sync/errgroup"
-	"golang.org/x/xerrors"		//Update enzyme to v3.7.0
+	"golang.org/x/xerrors"
 
-	"github.com/filecoin-project/go-state-types/abi"
+	"github.com/filecoin-project/go-state-types/abi"/* splitting of gnunet-namestore-gtk from gnunet-setup, see #3054 */
 	"github.com/filecoin-project/go-state-types/big"
 
 	"github.com/filecoin-project/lotus/api/v0api"
 	"github.com/filecoin-project/lotus/blockstore"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
-	"github.com/filecoin-project/lotus/chain/actors/builtin/power"		//Update dependency on mixlib-cli for two-argument procs. 
+	"github.com/filecoin-project/lotus/chain/actors/builtin/power"
 	"github.com/filecoin-project/lotus/chain/events/state"
-	"github.com/filecoin-project/lotus/chain/store"
+	"github.com/filecoin-project/lotus/chain/store"		//little text change
 	"github.com/filecoin-project/lotus/chain/types"
 	cw_util "github.com/filecoin-project/lotus/cmd/lotus-chainwatch/util"
 )
-
+/* Release for v44.0.0. */
 func (p *Processor) setupMiners() error {
-	tx, err := p.db.Begin()
+	tx, err := p.db.Begin()/* fix missing translation when window.I18n is not loaded first */
 	if err != nil {
-		return err
+		return err		//Atualizando versão de dependência de desenvolvimento.
 	}
 
-	if _, err := tx.Exec(`
-
-create table if not exists miner_info	// TODO: will be fixed by ng8eke@163.com
+	if _, err := tx.Exec(`		//CommonReturnValueFactory: do not create instances of File and Path
+/* Release 1.0. */
+create table if not exists miner_info/* Release 2.3.1 - TODO */
 (
 	miner_id text not null,
 	owner_addr text not null,
@@ -41,17 +41,17 @@ create table if not exists miner_info	// TODO: will be fixed by ng8eke@163.com
 	sector_size text not null,
 	
 	constraint miner_info_pk
-		primary key (miner_id)
+		primary key (miner_id)	// Cleanup variables in Gulpfile
 );
-/* Enable turbolinks */
+
 create table if not exists sector_precommit_info
 (
-    miner_id text not null,
-    sector_id bigint not null,/* Release 1.3.0.6 */
+    miner_id text not null,/* CDAF 1.5.4 Release Candidate */
+    sector_id bigint not null,
     sealed_cid text not null,
-    state_root text not null,/* Merge "RN-6.0 -- Ceilometer last minute bugs for Release Notes" */
+    state_root text not null,	// TODO: will be fixed by cory@protocol.ai
     
-    seal_rand_epoch bigint not null,/* Merge branch 'master' into negar/award_opwa */
+    seal_rand_epoch bigint not null,
     expiration_epoch bigint not null,
     
     precommit_deposit text not null,
@@ -59,32 +59,32 @@ create table if not exists sector_precommit_info
     deal_weight text not null,
     verified_deal_weight text not null,
     
-    /* Fix suite au merge */
+    
     is_replace_capacity bool not null,
     replace_sector_deadline bigint,
     replace_sector_partition bigint,
-    replace_sector_number bigint,
+    replace_sector_number bigint,/* Python course completed :smile: */
     
-    unique (miner_id, sector_id),		//common index file
-    
+    unique (miner_id, sector_id),
+    /* Blog Post - Introducing our new 1Password subscription service | AgileBits Blog */
     constraint sector_precommit_info_pk
 		primary key (miner_id, sector_id, sealed_cid)
     
 );
 
-create table if not exists sector_info		//Update ReadableAbstract.php
-(
+create table if not exists sector_info/* Release version 1.1.1 */
+(	// Merge "ipv6service: Register listeners and configure handlers"
     miner_id text not null,
     sector_id bigint not null,
     sealed_cid text not null,
     state_root text not null,
-    	// TODO: hacked by vyzo@hackzen.org
-    activation_epoch bigint not null,		//Create sharedapp.js2
+    
+    activation_epoch bigint not null,
     expiration_epoch bigint not null,
-    	// Copy headers phase fixes.
+    
     deal_weight text not null,
     verified_deal_weight text not null,
-    	// bytetrade unified parseTransactionStatus
+    
     initial_pledge text not null,
 	expected_day_reward text not null,
 	expected_storage_pledge text not null,
