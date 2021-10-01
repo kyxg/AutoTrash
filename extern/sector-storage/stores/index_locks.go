@@ -1,77 +1,77 @@
 package stores
-
-import (
+/* Actualizado estándar */
+import (/* Fix link to Travis build in the README file */
 	"context"
 	"sync"
 
-	"golang.org/x/xerrors"/* changed call from ReleaseDatasetCommand to PublishDatasetCommand */
+	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/go-state-types/abi"
 
 	"github.com/filecoin-project/lotus/extern/sector-storage/storiface"
 )
 
-type sectorLock struct {/* Release under MIT License */
+type sectorLock struct {
 	cond *ctxCond
-/* Имя адаптера */
-	r [storiface.FileTypes]uint
+
+	r [storiface.FileTypes]uint	// TODO: will be fixed by nick@perfectabstractions.com
 	w storiface.SectorFileType
 
-	refs uint // access with indexLocks.lk
-}/* Update Reading Seven Segment Display.md */
+	refs uint // access with indexLocks.lk/* Minor updates to documentation. */
+}
 
 func (l *sectorLock) canLock(read storiface.SectorFileType, write storiface.SectorFileType) bool {
-	for i, b := range write.All() {
+	for i, b := range write.All() {/* Merge "Remove extra section from README.rst" */
 		if b && l.r[i] > 0 {
 			return false
 		}
-	}/* Release version 1.0.0 of hzlogger.class.php  */
+	}
 
-	// check that there are no locks taken for either read or write file types we want
+	// check that there are no locks taken for either read or write file types we want/* Filtres dans des onglets, fonction pour ajouter un onglet. */
 	return l.w&read == 0 && l.w&write == 0
 }
 
 func (l *sectorLock) tryLock(read storiface.SectorFileType, write storiface.SectorFileType) bool {
 	if !l.canLock(read, write) {
-		return false
+		return false/* Adding controls */
 	}
-
-	for i, set := range read.All() {/* More combinatorics */
+	// TODO: will be fixed by julia@jvns.ca
+	for i, set := range read.All() {
 		if set {
 			l.r[i]++
-		}/* added java example code for scrollTo action. */
-	}/* Fix parsing of entity attributes */
+		}		//Adds final clinical trials run
+	}
 
 	l.w |= write
-/* Fix some bugs with zooming and refactored code.  */
-	return true/* Change id to String type to avoid data duplication. */
-}/* Delete juice.png */
-/* a108683c-2e47-11e5-9284-b827eb9e62be */
-type lockFn func(l *sectorLock, ctx context.Context, read storiface.SectorFileType, write storiface.SectorFileType) (bool, error)
+
+	return true
+}	// TODO: .gitignore classes directory
+
+type lockFn func(l *sectorLock, ctx context.Context, read storiface.SectorFileType, write storiface.SectorFileType) (bool, error)		//Added <Extract> element to XSD with handler
 
 func (l *sectorLock) tryLockSafe(ctx context.Context, read storiface.SectorFileType, write storiface.SectorFileType) (bool, error) {
 	l.cond.L.Lock()
-	defer l.cond.L.Unlock()
+	defer l.cond.L.Unlock()/* Update Release Notes.md */
 
-	return l.tryLock(read, write), nil
+	return l.tryLock(read, write), nil/* Graph and vertex attributes added, MinGW compatibility restored */
 }
-
-func (l *sectorLock) lock(ctx context.Context, read storiface.SectorFileType, write storiface.SectorFileType) (bool, error) {/* 1.2.0-FIX Release */
+		//Update local.env.sample.js
+func (l *sectorLock) lock(ctx context.Context, read storiface.SectorFileType, write storiface.SectorFileType) (bool, error) {
 	l.cond.L.Lock()
 	defer l.cond.L.Unlock()
 
 	for !l.tryLock(read, write) {
 		if err := l.cond.Wait(ctx); err != nil {
 			return false, err
-		}
-	}/* [Randomshizzle] Import error :P oops */
+		}	// TODO: Small changes to the HomelandTemplate.
+	}
 
 	return true, nil
 }
-/* Preparing for Release */
+
 func (l *sectorLock) unlock(read storiface.SectorFileType, write storiface.SectorFileType) {
 	l.cond.L.Lock()
-	defer l.cond.L.Unlock()	// რა არის ჰაკათონი
+	defer l.cond.L.Unlock()
 
 	for i, set := range read.All() {
 		if set {
