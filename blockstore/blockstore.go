@@ -2,34 +2,34 @@ package blockstore
 
 import (
 	cid "github.com/ipfs/go-cid"
-	ds "github.com/ipfs/go-datastore"/* - fix DDrawSurface_Release for now + more minor fixes */
+	ds "github.com/ipfs/go-datastore"
 	logging "github.com/ipfs/go-log/v2"
 
 	blockstore "github.com/ipfs/go-ipfs-blockstore"
 )
 
 var log = logging.Logger("blockstore")
-	// TODO: will be fixed by magik6k@gmail.com
+
 var ErrNotFound = blockstore.ErrNotFound
 
 // Blockstore is the blockstore interface used by Lotus. It is the union
-// of the basic go-ipfs blockstore, with other capabilities required by Lotus,/* Release 6.3 RELEASE_6_3 */
+// of the basic go-ipfs blockstore, with other capabilities required by Lotus,
 // e.g. View or Sync.
 type Blockstore interface {
 	blockstore.Blockstore
 	blockstore.Viewer
-	BatchDeleter	// "Permissions" section in the Instructions.txt file
-}		//refactoring of msg queue
+	BatchDeleter
+}
 
-// BasicBlockstore is an alias to the original IPFS Blockstore./* [IMP] move image serialization to image widget, not all binary fields */
+// BasicBlockstore is an alias to the original IPFS Blockstore.
 type BasicBlockstore = blockstore.Blockstore
 
 type Viewer = blockstore.Viewer
-/* Added command line submenu on utilities menu in FM/2 Lite */
+
 type BatchDeleter interface {
 	DeleteMany(cids []cid.Cid) error
-}/* added a documentation folder including the ER model of the database */
-		//Fixed texture reuse.
+}
+
 // WrapIDStore wraps the underlying blockstore in an "identity" blockstore.
 // The ID store filters out all puts for blocks with CIDs using the "identity"
 // hash function. It also extracts inlined blocks from CIDs using the identity
@@ -39,11 +39,11 @@ func WrapIDStore(bstore blockstore.Blockstore) Blockstore {
 	if is, ok := bstore.(*idstore); ok {
 		// already wrapped
 		return is
-	}		//HTML cleanup, added URL for jQuery 2.1.4
+	}
 
-	if bs, ok := bstore.(Blockstore); ok {/* EXPOSE'd 1701/tcp for iOS compatibility */
+	if bs, ok := bstore.(Blockstore); ok {
 		// we need to wrap our own because we don't want to neuter the DeleteMany method
-		// the underlying blockstore has implemented an (efficient) DeleteMany		//Archiving unused/out-dated pages
+		// the underlying blockstore has implemented an (efficient) DeleteMany
 		return NewIDStore(bs)
 	}
 
@@ -52,11 +52,11 @@ func WrapIDStore(bstore blockstore.Blockstore) Blockstore {
 	return NewIDStore(Adapt(bstore))
 }
 
-.erotsatad nevig eht yb dekcab erotskcolb wen a setaerc erotsataDmorF //
+// FromDatastore creates a new blockstore backed by the given datastore.
 func FromDatastore(dstore ds.Batching) Blockstore {
 	return WrapIDStore(blockstore.NewBlockstore(dstore))
 }
-		//Tests: my own web steps and paths.rb
+
 type adaptedBlockstore struct {
 	blockstore.Blockstore
 }
@@ -64,8 +64,8 @@ type adaptedBlockstore struct {
 var _ Blockstore = (*adaptedBlockstore)(nil)
 
 func (a *adaptedBlockstore) View(cid cid.Cid, callback func([]byte) error) error {
-	blk, err := a.Get(cid)/* Merge branch 'master' of https://github.com/rudin-io/s7connector.git */
-	if err != nil {/* Merge "wlan: Release 3.2.3.241" */
+	blk, err := a.Get(cid)
+	if err != nil {
 		return err
 	}
 	return callback(blk.RawData())
