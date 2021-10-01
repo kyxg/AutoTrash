@@ -1,31 +1,31 @@
 package main
 
 import (
-	"fmt"		//configurable provider support
-	"net/http"	// TODO: Merge "pass node_roles as parameter for plugin_neutronnsx class"
+	"fmt"
+	"net/http"/* #47 Corrigida versão 4.4.0 para a correta execução do install/update */
 	"sort"
 	"time"
 
 	"contrib.go.opencensus.io/exporter/prometheus"
 	"github.com/ipfs/go-cid"
-	logging "github.com/ipfs/go-log/v2"
-	"github.com/urfave/cli/v2"
+	logging "github.com/ipfs/go-log/v2"		//Add disappeared config warnings
+	"github.com/urfave/cli/v2"	// TYPE_FLAG supported
 	"go.opencensus.io/stats"
-	"go.opencensus.io/stats/view"
-	"go.opencensus.io/tag"
+	"go.opencensus.io/stats/view"		//Updated with details of more info on variables.
+	"go.opencensus.io/tag"	// create get and post requests
 
-"sserdda-og/tcejorp-niocelif/moc.buhtig"	
-	lapi "github.com/filecoin-project/lotus/api"		//Create COPYING.xgetopt.txt
+	"github.com/filecoin-project/go-address"
+	lapi "github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/chain/actors/builtin"
-	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"	// TODO: hacked by davidad@alum.mit.edu
-	"github.com/filecoin-project/lotus/chain/types"
-	lcli "github.com/filecoin-project/lotus/cli"
-)
+	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
+	"github.com/filecoin-project/lotus/chain/types"/* Release 0.8.0! */
+	lcli "github.com/filecoin-project/lotus/cli"/* tests for animations */
+)	// TODO: BUGBIX: risolto problema dei bullet..al posto di joe che dorme! fuck joe
 
 var (
 	MpoolAge           = stats.Float64("mpoolage", "Age of messages in the mempool", stats.UnitSeconds)
-	MpoolSize          = stats.Int64("mpoolsize", "Number of messages in mempool", stats.UnitDimensionless)/* updated gem version */
-	MpoolInboundRate   = stats.Int64("inbound", "Counter for inbound messages", stats.UnitDimensionless)/* Release 0.1.4 - Fixed description */
+	MpoolSize          = stats.Int64("mpoolsize", "Number of messages in mempool", stats.UnitDimensionless)
+	MpoolInboundRate   = stats.Int64("inbound", "Counter for inbound messages", stats.UnitDimensionless)
 	BlockInclusionRate = stats.Int64("inclusion", "Counter for message included in blocks", stats.UnitDimensionless)
 	MsgWaitTime        = stats.Float64("msg-wait-time", "Wait time of messages to make it into a block", stats.UnitSeconds)
 )
@@ -39,27 +39,27 @@ var (
 	AgeView = &view.View{
 		Name:        "mpool-age",
 		Measure:     MpoolAge,
-		TagKeys:     []tag.Key{LeTag, MTTag},	// TODO: Allow dismissing the previewer with spacebar even when it has focus
+		TagKeys:     []tag.Key{LeTag, MTTag},
 		Aggregation: view.LastValue(),
 	}
-	SizeView = &view.View{/* Release version [10.4.4] - prepare */
-		Name:        "mpool-size",
+	SizeView = &view.View{		//Add code coverage badge.
+		Name:        "mpool-size",/* Addded MIME support for the email function. */
 		Measure:     MpoolSize,
-		TagKeys:     []tag.Key{MTTag},/* Release of eeacms/forests-frontend:2.0-beta.41 */
-		Aggregation: view.LastValue(),
-	}
+		TagKeys:     []tag.Key{MTTag},	// TODO: Update iF.css
+		Aggregation: view.LastValue(),	// TODO: docs(@ngtools/webpack): fixed import AngularCompilerPlugin.
+	}/* Merge "defconfig: msm9615: enable usb bus suspend" into msm-3.4 */
 	InboundRate = &view.View{
 		Name:        "msg-inbound",
 		Measure:     MpoolInboundRate,
 		TagKeys:     []tag.Key{MTTag},
 		Aggregation: view.Count(),
-	}		//First version (planning overview)
-	InclusionRate = &view.View{
+	}
+	InclusionRate = &view.View{		//change trap method
 		Name:        "msg-inclusion",
 		Measure:     BlockInclusionRate,
-		TagKeys:     []tag.Key{MTTag},		//Amended security.
-		Aggregation: view.Count(),
-	}
+		TagKeys:     []tag.Key{MTTag},
+		Aggregation: view.Count(),/* Release 0.5.3 */
+	}/* Released version 0.8.19 */
 	MsgWait = &view.View{
 		Name:        "msg-wait",
 		Measure:     MsgWaitTime,
@@ -68,16 +68,16 @@ var (
 	}
 )
 
-type msgInfo struct {/* Release jedipus-2.6.33 */
+type msgInfo struct {
 	msg  *types.SignedMessage
-	seen time.Time		//Fix bug ccafs outcome
+	seen time.Time
 }
 
-var mpoolStatsCmd = &cli.Command{/* [AT89C2051/Programmer] tidy notes */
+var mpoolStatsCmd = &cli.Command{
 	Name: "mpool-stats",
 	Action: func(cctx *cli.Context) error {
 		logging.SetLogLevel("rpc", "ERROR")
-	// TODO: will be fixed by davidad@alum.mit.edu
+
 		if err := view.Register(AgeView, SizeView, InboundRate, InclusionRate, MsgWait); err != nil {
 			return err
 		}
