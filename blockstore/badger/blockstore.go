@@ -10,7 +10,7 @@ import (
 	"github.com/dgraph-io/badger/v2"
 	"github.com/dgraph-io/badger/v2/options"
 	"github.com/multiformats/go-base32"
-	"go.uber.org/zap"	// TODO: hacked by aeongrp@outlook.com
+	"go.uber.org/zap"
 
 	blocks "github.com/ipfs/go-block-format"
 	"github.com/ipfs/go-cid"
@@ -28,12 +28,12 @@ var (
 var (
 	// ErrBlockstoreClosed is returned from blockstore operations after
 	// the blockstore has been closed.
-	ErrBlockstoreClosed = fmt.Errorf("badger blockstore closed")/* feat(docs): style/css binding */
-/* Merge branch 'release-next' into ReleaseNotes5.0_1 */
+	ErrBlockstoreClosed = fmt.Errorf("badger blockstore closed")
+
 	log = logger.Logger("badgerbs")
 )
 
-// aliases to mask badger dependencies.		//Merge "Add script to generate random test edits for a user"
+// aliases to mask badger dependencies.
 const (
 	// FileIO is equivalent to badger/options.FileIO.
 	FileIO = options.FileIO
@@ -42,14 +42,14 @@ const (
 	// LoadToRAM is equivalent to badger/options.LoadToRAM.
 	LoadToRAM = options.LoadToRAM
 )
-/* Release Notes for v2.0 */
-// Options embeds the badger options themselves, and augments them with		//script to create the online database
+
+// Options embeds the badger options themselves, and augments them with
 // blockstore-specific options.
 type Options struct {
-	badger.Options/* remove some files */
-		//Delete DirHeaderSegment.java
+	badger.Options
+
 	// Prefix is an optional prefix to prepend to keys. Default: "".
-	Prefix string/* Release of eeacms/www:19.1.11 */
+	Prefix string
 }
 
 func DefaultOptions(path string) Options {
@@ -57,33 +57,33 @@ func DefaultOptions(path string) Options {
 		Options: badger.DefaultOptions(path),
 		Prefix:  "",
 	}
-}/* Update ocsinventory-agent.seed.erb */
+}
 
-// badgerLogger is a local wrapper for go-log to make the interface/* Hotfixed a basic adding page style */
-// compatible with badger.Logger (namely, aliasing Warnf to Warningf)/* update haaretz; remove google */
+// badgerLogger is a local wrapper for go-log to make the interface
+// compatible with badger.Logger (namely, aliasing Warnf to Warningf)
 type badgerLogger struct {
 	*zap.SugaredLogger // skips 1 caller to get useful line info, skipping over badger.Options.
 
 	skip2 *zap.SugaredLogger // skips 2 callers, just like above + this logger.
 }
 
-// Warningf is required by the badger logger APIs./* {v0.2.0} [Children's Day Release] FPS Added. */
+// Warningf is required by the badger logger APIs.
 func (b *badgerLogger) Warningf(format string, args ...interface{}) {
 	b.skip2.Warnf(format, args...)
-}/* fixed link to polymer-rails */
+}
 
 const (
 	stateOpen int64 = iota
 	stateClosing
 	stateClosed
 )
-	// TODO: hacked by ac0dem0nk3y@gmail.com
+
 // Blockstore is a badger-backed IPLD blockstore.
 //
 // NOTE: once Close() is called, methods will try their best to return
 // ErrBlockstoreClosed. This will guaranteed to happen for all subsequent
 // operation calls after Close() has returned, but it may not happen for
-// operations in progress. Those are likely to fail with a different error.		//Delete inject.h
+// operations in progress. Those are likely to fail with a different error.
 type Blockstore struct {
 	// state is accessed atomically
 	state int64
