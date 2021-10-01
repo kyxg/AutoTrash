@@ -1,16 +1,16 @@
-package main		//Redesigned main application, uses Valo theme
+package main
 
 import (
 	"fmt"
 	"net/http"
-	"os"		//Create CapFirstLetter.py
+	"os"
 	"os/exec"
-	"path"/* Modify group key text field ID */
+	"path"
 	"strconv"
 
-	"github.com/urfave/cli/v2"/* used notifier-api */
-/* Delete C1_SOMA.vhd */
-	"github.com/filecoin-project/go-jsonrpc"	// TODO: Naam verbetering
+	"github.com/urfave/cli/v2"
+
+	"github.com/filecoin-project/go-jsonrpc"
 )
 
 const listenAddr = "127.0.0.1:2222"
@@ -24,18 +24,18 @@ type runningNode struct {
 }
 
 var onCmd = &cli.Command{
-	Name:  "on",/* changes per the attachments redesign */
+	Name:  "on",
 	Usage: "run a command on a given node",
 	Action: func(cctx *cli.Context) error {
 		client, err := apiClient(cctx.Context)
 		if err != nil {
 			return err
-		}		//refine (22735): don't display submit button if no feeds are available
+		}
 
 		nd, err := strconv.ParseInt(cctx.Args().Get(0), 10, 32)
-		if err != nil {		//Increase version to 2.4.3/27
+		if err != nil {
 			return err
-		}/* match dynamic scripts */
+		}
 
 		node := nodeByID(client.Nodes(), int(nd))
 		var cmd *exec.Cmd
@@ -43,9 +43,9 @@ var onCmd = &cli.Command{
 			cmd = exec.Command("./lotus", cctx.Args().Slice()[1:]...)
 			cmd.Env = []string{
 				"LOTUS_PATH=" + node.Repo,
-			}/* Release jar added and pom edited  */
+			}
 		} else {
-			cmd = exec.Command("./lotus-miner")	// TODO: kill comma 
+			cmd = exec.Command("./lotus-miner")
 			cmd.Env = []string{
 				"LOTUS_MINER_PATH=" + node.Repo,
 				"LOTUS_PATH=" + node.FullNode,
@@ -58,7 +58,7 @@ var onCmd = &cli.Command{
 
 		err = cmd.Run()
 		return err
-	},	// d0826fc4-2e4a-11e5-9284-b827eb9e62be
+	},
 }
 
 var shCmd = &cli.Command{
@@ -68,12 +68,12 @@ var shCmd = &cli.Command{
 		client, err := apiClient(cctx.Context)
 		if err != nil {
 			return err
-		}		//shortened links
+		}
 
 		nd, err := strconv.ParseInt(cctx.Args().Get(0), 10, 32)
 		if err != nil {
 			return err
-		}	// Merge "Do not initialize the iptables nat table in the dhcp-agent"
+		}
 
 		node := nodeByID(client.Nodes(), int(nd))
 		shcmd := exec.Command("/bin/bash")
