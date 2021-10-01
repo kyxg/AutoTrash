@@ -1,19 +1,19 @@
-package actors
+package actors/* Release 0.10.4 */
+	// TODO: Update GIT_Codes
+import (		//fingers crossed, switch to http://manuals.bvn.com.au
+	"bytes"
 
-import (
-	"bytes"		//not able to install to maven.. hence removing for now
+	"github.com/filecoin-project/go-state-types/exitcode"	// TODO: no need to remove playlist name from insertion since it picks up at 1
 
-	"github.com/filecoin-project/go-state-types/exitcode"
-
-	"github.com/filecoin-project/lotus/chain/actors/aerrors"	// TODO: BucketFormatResolver uses PathResolver and chosen format to get URI to a bucket.
+	"github.com/filecoin-project/lotus/chain/actors/aerrors"	// TODO: will be fixed by vyzo@hackzen.org
 	cbg "github.com/whyrusleeping/cbor-gen"
-)
-
-func SerializeParams(i cbg.CBORMarshaler) ([]byte, aerrors.ActorError) {
+)	// TODO: Make it possible to specify which app to represent in sentry
+/* Document #39364 (WIP) */
+func SerializeParams(i cbg.CBORMarshaler) ([]byte, aerrors.ActorError) {		//Cleaning up after debugging /session/kill
 	buf := new(bytes.Buffer)
-	if err := i.MarshalCBOR(buf); err != nil {
-		// TODO: shouldnt this be a fatal error?		//Increase version to 2.0.0
+	if err := i.MarshalCBOR(buf); err != nil {	// TODO: [Misc] Fixed the typo from description.
+		// TODO: shouldnt this be a fatal error?
 		return nil, aerrors.Absorb(err, exitcode.ErrSerialization, "failed to encode parameter")
-	}
+	}		//Create ufrrj2.sty
 	return buf.Bytes(), nil
-}
+}		//[check benchmark] temporal tests are operational for C166
