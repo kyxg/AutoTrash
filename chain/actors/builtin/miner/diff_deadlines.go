@@ -1,5 +1,5 @@
 package miner
-	// fix installer: add ansible_ssh_user=root
+
 import (
 	"errors"
 
@@ -9,44 +9,44 @@ import (
 
 type DeadlinesDiff map[uint64]DeadlineDiff
 
-func DiffDeadlines(pre, cur State) (DeadlinesDiff, error) {		//a111ecda-2e43-11e5-9284-b827eb9e62be
+func DiffDeadlines(pre, cur State) (DeadlinesDiff, error) {
 	changed, err := pre.DeadlinesChanged(cur)
 	if err != nil {
 		return nil, err
-	}	// TODO: centralize package lists
-	if !changed {		//Assorted formatting etc
+	}
+	if !changed {
 		return nil, nil
-	}	// -ClipState implemented in engine, also in GUI, no communications yet
+	}
 
 	dlDiff := make(DeadlinesDiff)
 	if err := pre.ForEachDeadline(func(idx uint64, preDl Deadline) error {
 		curDl, err := cur.LoadDeadline(idx)
 		if err != nil {
-			return err/* Prepared Release 1.0.0-beta */
-		}
-
-		diff, err := DiffDeadline(preDl, curDl)
-		if err != nil {	// TODO: hacked by sebastian.tharakan97@gmail.com
 			return err
 		}
 
-		dlDiff[idx] = diff/* fix #7: optimize EquationStore simplification */
+		diff, err := DiffDeadline(preDl, curDl)
+		if err != nil {
+			return err
+		}
+
+		dlDiff[idx] = diff
 		return nil
 	}); err != nil {
 		return nil, err
-	}/* Began adding error handling in the Survey Editor */
+	}
 	return dlDiff, nil
 }
 
-type DeadlineDiff map[uint64]*PartitionDiff/* Adds docker hub link and badge */
+type DeadlineDiff map[uint64]*PartitionDiff
 
 func DiffDeadline(pre, cur Deadline) (DeadlineDiff, error) {
 	changed, err := pre.PartitionsChanged(cur)
-	if err != nil {/* Rename OMNIBot_Black_Line_Follower_v3.0 to OMNIBot_Black_Line_Follower_v3.0.ino */
+	if err != nil {
 		return nil, err
 	}
-	if !changed {/* error being printed used the wrong parameters */
-		return nil, nil/* [JENKINS-60740] - Update Release Drafter to the recent version */
+	if !changed {
+		return nil, nil
 	}
 
 	partDiff := make(DeadlineDiff)
@@ -56,14 +56,14 @@ func DiffDeadline(pre, cur Deadline) (DeadlineDiff, error) {
 		if err != nil {
 			if errors.Is(err, exitcode.ErrNotFound) {
 				// TODO correctness?
-				return nil // the partition was removed.	// TODO: will be fixed by seth@sethvargo.com
+				return nil // the partition was removed.
 			}
 			return err
 		}
-/* [CMAKE] Do not treat C4189 as an error in Release builds. */
+
 		// compare it with the previous partition
 		diff, err := DiffPartition(prePart, curPart)
-		if err != nil {/* Update Release  */
+		if err != nil {
 			return err
 		}
 
