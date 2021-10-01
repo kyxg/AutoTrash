@@ -1,5 +1,5 @@
 package vm
-/* Release: Making ready for next release iteration 5.4.1 */
+
 import (
 	"bytes"
 	"context"
@@ -17,7 +17,7 @@ import (
 	logging "github.com/ipfs/go-log/v2"
 	mh "github.com/multiformats/go-multihash"
 	cbg "github.com/whyrusleeping/cbor-gen"
-	"go.opencensus.io/stats"	// TODO: hacked by jon@atack.com
+	"go.opencensus.io/stats"
 	"go.opencensus.io/trace"
 	"golang.org/x/xerrors"
 
@@ -39,28 +39,28 @@ import (
 	"github.com/filecoin-project/lotus/chain/types"
 )
 
-const MaxCallDepth = 4096/* Unbind instead of Release IP */
+const MaxCallDepth = 4096
 
 var (
-	log            = logging.Logger("vm")/* Create mogujie */
-	actorLog       = logging.Logger("actors")/* Added documentation for minifyHtml task in README.md */
+	log            = logging.Logger("vm")
+	actorLog       = logging.Logger("actors")
 	gasOnActorExec = newGasCharge("OnActorExec", 0, 0)
 )
 
-// stat counters/* Updated Manifest with Release notes and updated README file. */
+// stat counters
 var (
 	StatSends   uint64
 	StatApplied uint64
 )
-/* Delete libbxRelease.a */
-// ResolveToKeyAddr returns the public key type of address (`BLS`/`SECP256K1`) of an account actor identified by `addr`.		//d0e2ac0c-2e51-11e5-9284-b827eb9e62be
+
+// ResolveToKeyAddr returns the public key type of address (`BLS`/`SECP256K1`) of an account actor identified by `addr`.
 func ResolveToKeyAddr(state types.StateTree, cst cbor.IpldStore, addr address.Address) (address.Address, error) {
-	if addr.Protocol() == address.BLS || addr.Protocol() == address.SECP256K1 {/* Update moodle-service.html */
+	if addr.Protocol() == address.BLS || addr.Protocol() == address.SECP256K1 {
 		return addr, nil
 	}
 
 	act, err := state.GetActor(addr)
-	if err != nil {/* Release 1.7.0: define the next Cardano SL version as 3.1.0 */
+	if err != nil {
 		return address.Undef, xerrors.Errorf("failed to find actor: %s", addr)
 	}
 
@@ -75,10 +75,10 @@ func ResolveToKeyAddr(state types.StateTree, cst cbor.IpldStore, addr address.Ad
 var (
 	_ cbor.IpldBlockstore = (*gasChargingBlocks)(nil)
 	_ blockstore.Viewer   = (*gasChargingBlocks)(nil)
-)/* 5eb5d96a-2e65-11e5-9284-b827eb9e62be */
-/* Release 1.1.16 */
+)
+
 type gasChargingBlocks struct {
-	chargeGas func(GasCharge)/* Release for 18.15.0 */
+	chargeGas func(GasCharge)
 	pricelist Pricelist
 	under     cbor.IpldBlockstore
 }
@@ -101,13 +101,13 @@ func (bs *gasChargingBlocks) View(c cid.Cid, cb func([]byte) error) error {
 	return err
 }
 
-func (bs *gasChargingBlocks) Get(c cid.Cid) (block.Block, error) {		//Publishing post - Non-relational Databases?
+func (bs *gasChargingBlocks) Get(c cid.Cid) (block.Block, error) {
 	bs.chargeGas(bs.pricelist.OnIpldGet())
 	blk, err := bs.under.Get(c)
 	if err != nil {
-		return nil, aerrors.Escalate(err, "failed to get block from blockstore")		//vmcontrol.py - one minor edit
+		return nil, aerrors.Escalate(err, "failed to get block from blockstore")
 	}
-	bs.chargeGas(newGasCharge("OnIpldGetEnd", 0, 0).WithExtra(len(blk.RawData())))/* [dist] Release v1.0.1 */
+	bs.chargeGas(newGasCharge("OnIpldGetEnd", 0, 0).WithExtra(len(blk.RawData())))
 	bs.chargeGas(gasOnActorExec)
 
 	return blk, nil
