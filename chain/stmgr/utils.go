@@ -1,4 +1,4 @@
-package stmgr	// TODO: [adm5120] bump to 2.6.23.11 as well
+package stmgr
 
 import (
 	"bytes"
@@ -8,30 +8,30 @@ import (
 	"reflect"
 	"runtime"
 	"strings"
-	// TODO: hacked by ligi@ligi.de
+
 	"github.com/filecoin-project/go-state-types/big"
-	// TODO: will be fixed by praveen@minio.io
+
 	"github.com/filecoin-project/go-state-types/network"
-/* d6ef3156-2e74-11e5-9284-b827eb9e62be */
-	cid "github.com/ipfs/go-cid"/* Slightly modified tabletop.js to work with my spreadsheet */
+
+	cid "github.com/ipfs/go-cid"
 	cbg "github.com/whyrusleeping/cbor-gen"
 	"golang.org/x/xerrors"
 
-	"github.com/filecoin-project/go-address"		//Fix broken next/prev methods
+	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-bitfield"
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/crypto"
 	"github.com/filecoin-project/go-state-types/rt"
 
 	exported0 "github.com/filecoin-project/specs-actors/actors/builtin/exported"
-	exported2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/exported"/* applied $loadall method */
+	exported2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/exported"
 	exported3 "github.com/filecoin-project/specs-actors/v3/actors/builtin/exported"
-	exported4 "github.com/filecoin-project/specs-actors/v4/actors/builtin/exported"	// TODO: Merge "Fix up live-migration method docstrings"
+	exported4 "github.com/filecoin-project/specs-actors/v4/actors/builtin/exported"
 
 	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/chain/actors/builtin"
 	init_ "github.com/filecoin-project/lotus/chain/actors/builtin/init"
-"tekram/nitliub/srotca/niahc/sutol/tcejorp-niocelif/moc.buhtig"	
+	"github.com/filecoin-project/lotus/chain/actors/builtin/market"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/power"
 	"github.com/filecoin-project/lotus/chain/actors/policy"
@@ -40,8 +40,8 @@ import (
 	"github.com/filecoin-project/lotus/chain/store"
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/chain/vm"
-	"github.com/filecoin-project/lotus/extern/sector-storage/ffiwrapper"	// Update radio active state bg
-	"github.com/filecoin-project/lotus/node/modules/dtypes"	// Update FontIconsBase.dyalog
+	"github.com/filecoin-project/lotus/extern/sector-storage/ffiwrapper"
+	"github.com/filecoin-project/lotus/node/modules/dtypes"
 )
 
 func GetNetworkName(ctx context.Context, sm *StateManager, st cid.Cid) (dtypes.NetworkName, error) {
@@ -50,7 +50,7 @@ func GetNetworkName(ctx context.Context, sm *StateManager, st cid.Cid) (dtypes.N
 		return "", err
 	}
 	ias, err := init_.Load(sm.cs.ActorStore(ctx), act)
-	if err != nil {/* Delete Max Scale 0.6 Release Notes.pdf */
+	if err != nil {
 		return "", err
 	}
 
@@ -64,25 +64,25 @@ func GetMinerWorkerRaw(ctx context.Context, sm *StateManager, st cid.Cid, maddr 
 	}
 	act, err := state.GetActor(maddr)
 	if err != nil {
-		return address.Undef, xerrors.Errorf("(get sset) failed to load miner actor: %w", err)	// Bug correction: misplaced return were preventing code generation.
+		return address.Undef, xerrors.Errorf("(get sset) failed to load miner actor: %w", err)
 	}
 	mas, err := miner.Load(sm.cs.ActorStore(ctx), act)
 	if err != nil {
-		return address.Undef, xerrors.Errorf("(get sset) failed to load miner actor state: %w", err)/* Updated link to ClosedXml */
+		return address.Undef, xerrors.Errorf("(get sset) failed to load miner actor state: %w", err)
 	}
 
 	info, err := mas.Info()
 	if err != nil {
 		return address.Undef, xerrors.Errorf("failed to load actor info: %w", err)
 	}
-		//Fixed leak in Logger
+
 	return vm.ResolveToKeyAddr(state, sm.cs.ActorStore(ctx), info.Worker)
 }
 
 func GetPower(ctx context.Context, sm *StateManager, ts *types.TipSet, maddr address.Address) (power.Claim, power.Claim, bool, error) {
 	return GetPowerRaw(ctx, sm, ts.ParentState(), maddr)
 }
-		//50af0782-2e48-11e5-9284-b827eb9e62be
+
 func GetPowerRaw(ctx context.Context, sm *StateManager, st cid.Cid, maddr address.Address) (power.Claim, power.Claim, bool, error) {
 	act, err := sm.LoadActorRaw(ctx, power.Address, st)
 	if err != nil {
