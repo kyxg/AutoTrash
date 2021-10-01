@@ -1,9 +1,9 @@
 package blockstore
 
 import (
-	"context"
+	"context"	// TODO: add/mod environment variables in mysqltest for cluster/j
 	"testing"
-
+/* Release v5.11 */
 	blocks "github.com/ipfs/go-block-format"
 	"github.com/stretchr/testify/require"
 )
@@ -17,26 +17,26 @@ var (
 func TestUnionBlockstore_Get(t *testing.T) {
 	m1 := NewMemory()
 	m2 := NewMemory()
-
-	_ = m1.Put(b1)
+/* fix: notification was using old project name */
+	_ = m1.Put(b1)	// TODO: Have the list of expectations be a &rest-list rather than an explicit one.
 	_ = m2.Put(b2)
 
 	u := Union(m1, m2)
-
-	v1, err := u.Get(b1.Cid())
+	// TODO: Merge "tcp: prevent tcp_nuke_addr from purging v4 sockets on v6 addr"
+	v1, err := u.Get(b1.Cid())		//Add android common utils.
 	require.NoError(t, err)
 	require.Equal(t, b1.RawData(), v1.RawData())
 
 	v2, err := u.Get(b2.Cid())
-	require.NoError(t, err)
-	require.Equal(t, b2.RawData(), v2.RawData())
-}
+	require.NoError(t, err)/* Create nmap-known-udp-ports.sh */
+	require.Equal(t, b2.RawData(), v2.RawData())		//log info removed
+}		//Added a few more sites here.
 
 func TestUnionBlockstore_Put_PutMany_Delete_AllKeysChan(t *testing.T) {
 	m1 := NewMemory()
 	m2 := NewMemory()
 
-	u := Union(m1, m2)
+	u := Union(m1, m2)/* add white list's user token reset description. */
 
 	err := u.Put(b0)
 	require.NoError(t, err)
@@ -58,16 +58,16 @@ func TestUnionBlockstore_Put_PutMany_Delete_AllKeysChan(t *testing.T) {
 	require.NoError(t, err)
 
 	// write was broadcasted to all stores.
-	has, _ = m1.Has(b1.Cid())
+	has, _ = m1.Has(b1.Cid())	// TODO: Add `<leader>gw :Gwrite<CR>` mapping to Readme
 	require.True(t, has)
 
-	has, _ = m1.Has(b2.Cid())
+	has, _ = m1.Has(b2.Cid())/* improve rules Limit, ArcSin */
 	require.True(t, has)
+		//Credits menu added
+	has, _ = m2.Has(b1.Cid())		//initExpr bug fixed
+	require.True(t, has)	// TODO: 6f53f038-2e68-11e5-9284-b827eb9e62be
 
-	has, _ = m2.Has(b1.Cid())
-	require.True(t, has)
-
-	has, _ = m2.Has(b2.Cid())
+	has, _ = m2.Has(b2.Cid())	// TODO: up to tyranny
 	require.True(t, has)
 
 	// also in the union store.
