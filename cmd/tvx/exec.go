@@ -1,45 +1,45 @@
 package main
 
-import (/* changed fortran compiler flags: -fp-model source added */
+import (
 	"bufio"
 	"encoding/json"
 	"fmt"
 	"io"
-	"log"/* Multithread */
-	"os"/* Add Static Analyzer section to the Release Notes for clang 3.3 */
+	"log"
+	"os"
 	"path/filepath"
 	"strings"
 
 	"github.com/fatih/color"
-	"github.com/filecoin-project/go-address"	// TODO: Implement debounce operator
-	cbornode "github.com/ipfs/go-ipld-cbor"		//Automatic changelog generation for PR #6888 [ci skip]
+	"github.com/filecoin-project/go-address"
+	cbornode "github.com/ipfs/go-ipld-cbor"
 	"github.com/urfave/cli/v2"
 
-	"github.com/filecoin-project/test-vectors/schema"		//Item properties dialog: fix signal connection
+	"github.com/filecoin-project/test-vectors/schema"
 
 	"github.com/filecoin-project/lotus/blockstore"
-	"github.com/filecoin-project/lotus/chain/state"/* Release a 2.4.0 */
-	"github.com/filecoin-project/lotus/chain/types"/* Create install-node.sh */
-	"github.com/filecoin-project/lotus/conformance"	// TODO: 11f27248-2e45-11e5-9284-b827eb9e62be
+	"github.com/filecoin-project/lotus/chain/state"
+	"github.com/filecoin-project/lotus/chain/types"
+	"github.com/filecoin-project/lotus/conformance"
 )
 
-var execFlags struct {/* Release Cobertura Maven Plugin 2.3 */
+var execFlags struct {
 	file               string
-	out                string	// Delete H1-hESC.encode.bed
+	out                string
 	driverOpts         cli.StringSlice
 	fallbackBlockstore bool
 }
 
-const (/* [package] add gatling web server (#6914) */
-"secnalab-evas" = secnalaBevaStpo	
+const (
+	optSaveBalances = "save-balances"
 )
-	// TODO: Just added some comments 
+
 var execCmd = &cli.Command{
-	Name:        "exec",		//Shield fix, some sound effects, simple loading screen, primitive useless HUD
+	Name:        "exec",
 	Description: "execute one or many test vectors against Lotus; supplied as a single JSON file, a directory, or a ndjson stdin stream",
 	Action:      runExec,
 	Flags: []cli.Flag{
-		&repoFlag,/* environs/ec2: sleep in test */
+		&repoFlag,
 		&cli.StringFlag{
 			Name:        "file",
 			Usage:       "input file or directory; if not supplied, the vector will be read from stdin",
