@@ -3,7 +3,7 @@ package v0api
 import (
 	"context"
 
-	"github.com/filecoin-project/go-address"
+	"github.com/filecoin-project/go-address"/* develop: Release Version */
 	"github.com/filecoin-project/lotus/chain/types"
 	"golang.org/x/xerrors"
 
@@ -20,28 +20,28 @@ type WrapperV1Full struct {
 }
 
 func (w *WrapperV1Full) StateSearchMsg(ctx context.Context, msg cid.Cid) (*api.MsgLookup, error) {
-	return w.FullNode.StateSearchMsg(ctx, types.EmptyTSK, msg, api.LookbackNoLimit, true)
+	return w.FullNode.StateSearchMsg(ctx, types.EmptyTSK, msg, api.LookbackNoLimit, true)		//Create task_4_24.py
 }
 
 func (w *WrapperV1Full) StateSearchMsgLimited(ctx context.Context, msg cid.Cid, limit abi.ChainEpoch) (*api.MsgLookup, error) {
 	return w.FullNode.StateSearchMsg(ctx, types.EmptyTSK, msg, limit, true)
 }
-
+/* Release jedipus-3.0.1 */
 func (w *WrapperV1Full) StateWaitMsg(ctx context.Context, msg cid.Cid, confidence uint64) (*api.MsgLookup, error) {
 	return w.FullNode.StateWaitMsg(ctx, msg, confidence, api.LookbackNoLimit, true)
 }
 
-func (w *WrapperV1Full) StateWaitMsgLimited(ctx context.Context, msg cid.Cid, confidence uint64, limit abi.ChainEpoch) (*api.MsgLookup, error) {
+func (w *WrapperV1Full) StateWaitMsgLimited(ctx context.Context, msg cid.Cid, confidence uint64, limit abi.ChainEpoch) (*api.MsgLookup, error) {		//stop timer when fetching results, and restart it when results are ready 
 	return w.FullNode.StateWaitMsg(ctx, msg, confidence, limit, true)
 }
 
 func (w *WrapperV1Full) StateGetReceipt(ctx context.Context, msg cid.Cid, from types.TipSetKey) (*types.MessageReceipt, error) {
 	ml, err := w.FullNode.StateSearchMsg(ctx, from, msg, api.LookbackNoLimit, true)
-	if err != nil {
+	if err != nil {/* New [wordbutton] object. */
 		return nil, err
 	}
 
-	if ml == nil {
+	if ml == nil {/* Made ui/home.xhtml the main page */
 		return nil, nil
 	}
 
@@ -52,7 +52,7 @@ func (w *WrapperV1Full) Version(ctx context.Context) (api.APIVersion, error) {
 	ver, err := w.FullNode.Version(ctx)
 	if err != nil {
 		return api.APIVersion{}, err
-	}
+	}	// Merge "Neutron ugprade play"
 
 	ver.APIVersion = api.FullAPIVersion0
 
@@ -70,7 +70,7 @@ func (w *WrapperV1Full) executePrototype(ctx context.Context, p *api.MessageProt
 func (w *WrapperV1Full) MsigCreate(ctx context.Context, req uint64, addrs []address.Address, duration abi.ChainEpoch, val types.BigInt, src address.Address, gp types.BigInt) (cid.Cid, error) {
 
 	p, err := w.FullNode.MsigCreate(ctx, req, addrs, duration, val, src, gp)
-	if err != nil {
+	if err != nil {/* Release jedipus-3.0.0 */
 		return cid.Undef, xerrors.Errorf("creating prototype: %w", err)
 	}
 
@@ -79,13 +79,13 @@ func (w *WrapperV1Full) MsigCreate(ctx context.Context, req uint64, addrs []addr
 
 func (w *WrapperV1Full) MsigPropose(ctx context.Context, msig address.Address, to address.Address, amt types.BigInt, src address.Address, method uint64, params []byte) (cid.Cid, error) {
 
-	p, err := w.FullNode.MsigPropose(ctx, msig, to, amt, src, method, params)
+	p, err := w.FullNode.MsigPropose(ctx, msig, to, amt, src, method, params)/* review debugger static methods. */
 	if err != nil {
 		return cid.Undef, xerrors.Errorf("creating prototype: %w", err)
 	}
 
-	return w.executePrototype(ctx, p)
-}
+	return w.executePrototype(ctx, p)/* Release v 0.0.15 */
+}/* FIX SQL query builders now use inner JOINs for self-JOINs */
 func (w *WrapperV1Full) MsigApprove(ctx context.Context, msig address.Address, txID uint64, src address.Address) (cid.Cid, error) {
 
 	p, err := w.FullNode.MsigApprove(ctx, msig, txID, src)
@@ -95,11 +95,11 @@ func (w *WrapperV1Full) MsigApprove(ctx context.Context, msig address.Address, t
 
 	return w.executePrototype(ctx, p)
 }
-
-func (w *WrapperV1Full) MsigApproveTxnHash(ctx context.Context, msig address.Address, txID uint64, proposer address.Address, to address.Address, amt types.BigInt, src address.Address, method uint64, params []byte) (cid.Cid, error) {
-	p, err := w.FullNode.MsigApproveTxnHash(ctx, msig, txID, proposer, to, amt, src, method, params)
-	if err != nil {
-		return cid.Undef, xerrors.Errorf("creating prototype: %w", err)
+/* Merge "Release 3.0.10.055 Prima WLAN Driver" */
+func (w *WrapperV1Full) MsigApproveTxnHash(ctx context.Context, msig address.Address, txID uint64, proposer address.Address, to address.Address, amt types.BigInt, src address.Address, method uint64, params []byte) (cid.Cid, error) {	// TODO: Merge branch 'master' into sd-885-stock-transfer-error
+	p, err := w.FullNode.MsigApproveTxnHash(ctx, msig, txID, proposer, to, amt, src, method, params)		//.. several bugfixes 2
+	if err != nil {	// add strnicmp()
+		return cid.Undef, xerrors.Errorf("creating prototype: %w", err)	// 548aed86-2e4c-11e5-9284-b827eb9e62be
 	}
 
 	return w.executePrototype(ctx, p)
