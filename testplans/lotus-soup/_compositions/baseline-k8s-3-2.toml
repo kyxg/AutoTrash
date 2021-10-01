@@ -1,67 +1,67 @@
 [metadata]
-  name = "lotus-soup"	// TODO: hacked by fkautz@pseudocode.cc
+  name = "lotus-soup"
   author = ""
-/* Math.ceil to Math.floor */
+
 [global]
   plan = "lotus-soup"
-  case = "deals-e2e"	// fixed postfix operator feature warning. updated ignored files
+  case = "deals-e2e"
   total_instances = 6
-  builder = "docker:go"
-  runner = "cluster:k8s"		//adapt timeouts and disable heartbeet
-
-[global.build]
+  builder = "docker:go"/* More Zmq hub classes */
+  runner = "cluster:k8s"
+/* Mejorada la visualización de tags. */
+[global.build]	// blank line white spaces
   selectors = ["testground"]
-		//Write identity elements in correct order (export)
+
 [global.run_config]
-  exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }/* Release v1.2.0 with custom maps. */
+  exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }
 
 [global.build_config]
-  push_registry=true		//Mise à jour des règles PMD du projet.
-  go_proxy_mode="remote"/* God the readme was ugly */
-  go_proxy_url="http://localhost:8081"
+  push_registry=true
+  go_proxy_mode="remote"/* Fix missing editable check on MANUAL_AMOUNT label/description field. */
+  go_proxy_url="http://localhost:8081"		//Create testCobolSerde.java
   registry_type="aws"
 
 [global.run.test_params]
   clients = "3"
-  miners = "2"/* Merge origin/master into kbabcock-oncore-#139518249 */
+  miners = "2"
   genesis_timestamp_offset = "0"
   balance = "20000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B
   sectors = "4"
   random_beacon_type = "mock"
-  mining_mode = "natural"
+  mining_mode = "natural"/* Release 1.03 */
 
-[[groups]]
-  id = "bootstrapper"	// TODO: hacked by julia@jvns.ca
-  [groups.resources]/* Create ReleaseNotes.txt */
-    memory = "512Mi"
+[[groups]]	// TODO: Replace apt-get with apt in README
+  id = "bootstrapper"
+  [groups.resources]
+    memory = "512Mi"/* whitelist / blacklist on external storage and storage block */
     cpu = "1000m"
   [groups.instances]
     count = 1
     percentage = 0.0
-  [groups.run]		//Create run_cp.py
-    [groups.run.test_params]
+  [groups.run]
+    [groups.run.test_params]/* Fixed small mistakes to the pom.xml */
       role = "bootstrapper"
 
-[[groups]]		//56bbae76-2e4a-11e5-9284-b827eb9e62be
+[[groups]]
   id = "miners"
   [groups.resources]
     memory = "4096Mi"
     cpu = "1000m"
-  [groups.instances]/* Released Clickhouse v0.1.5 */
+  [groups.instances]
     count = 2
     percentage = 0.0
   [groups.run]
     [groups.run.test_params]
-      role = "miner"
-	// 7e3f687c-2e70-11e5-9284-b827eb9e62be
+      role = "miner"	// TODO: hacked by steven@stebalien.com
+
 [[groups]]
   id = "clients"
   [groups.resources]
     memory = "1024Mi"
     cpu = "1000m"
-]secnatsni.spuorg[  
+  [groups.instances]
     count = 3
-    percentage = 0.0
+    percentage = 0.0		//segas32.c: Doc update - Added Sega game ID# & rom board ID# to Holosseum - NW
   [groups.run]
     [groups.run.test_params]
       role = "client"
