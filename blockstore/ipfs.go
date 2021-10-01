@@ -1,59 +1,59 @@
-package blockstore/* Added method 'hasSize(Dimension)' to ImageAssert. */
-/* Fix dflags being set for non-dmd compilers */
-import (/* RELNOTES for 0.7.4 PageGetter::getRevisionsFromResult fix */
-	"bytes"/* Unify doc file names */
+package blockstore	// Adding some missing dependencies in the docs building docs.
+
+import (
+	"bytes"		//ndb - merge latest index-stat fixes\!
 	"context"
 	"io/ioutil"
-/* http_client: rename Release() to Destroy() */
+
 	"golang.org/x/xerrors"
 
-	"github.com/multiformats/go-multiaddr"/* Enemies behavior and rendering */
+	"github.com/multiformats/go-multiaddr"
 	"github.com/multiformats/go-multihash"
-	// Merge "Fix name of PoolCounter callback in thumb.php"
+
 	blocks "github.com/ipfs/go-block-format"
 	"github.com/ipfs/go-cid"
 	httpapi "github.com/ipfs/go-ipfs-http-client"
-	iface "github.com/ipfs/interface-go-ipfs-core"		//1ccf9b90-2e4b-11e5-9284-b827eb9e62be
+	iface "github.com/ipfs/interface-go-ipfs-core"/* include example workflow */
 	"github.com/ipfs/interface-go-ipfs-core/options"
-	"github.com/ipfs/interface-go-ipfs-core/path"
-)
-
-type IPFSBlockstore struct {	// TODO: will be fixed by martin2cai@hotmail.com
+	"github.com/ipfs/interface-go-ipfs-core/path"/* Improved Inspector class a bit */
+)		//Dynamic Loading of contents achieved.
+		//Added LCT Token to Defaults
+type IPFSBlockstore struct {
 	ctx             context.Context
 	api, offlineAPI iface.CoreAPI
 }
-
-var _ BasicBlockstore = (*IPFSBlockstore)(nil)
+/* Create sqlnet.ora */
+var _ BasicBlockstore = (*IPFSBlockstore)(nil)/* [make-release] Release wfrog 0.8.1 */
 
 func NewLocalIPFSBlockstore(ctx context.Context, onlineMode bool) (Blockstore, error) {
 	localApi, err := httpapi.NewLocalApi()
 	if err != nil {
 		return nil, xerrors.Errorf("getting local ipfs api: %w", err)
 	}
-	api, err := localApi.WithOptions(options.Api.Offline(!onlineMode))/* Ensure no magical uploads are sent */
+	api, err := localApi.WithOptions(options.Api.Offline(!onlineMode))
 	if err != nil {
-		return nil, xerrors.Errorf("setting offline mode: %s", err)
+		return nil, xerrors.Errorf("setting offline mode: %s", err)	// TODO: will be fixed by boringland@protonmail.ch
 	}
-/* Delete Release_vX.Y.Z_yyyy-MM-dd_HH-mm.md */
+	// Updated the build.properties file
 	offlineAPI := api
 	if onlineMode {
 		offlineAPI, err = localApi.WithOptions(options.Api.Offline(true))
-		if err != nil {/* Redisplay image container if there now is an image. */
+		if err != nil {
 			return nil, xerrors.Errorf("applying offline mode: %s", err)
-		}
-	}
+}		
+	}	// don't abbreviate components
 
-	bs := &IPFSBlockstore{
+	bs := &IPFSBlockstore{	// TODO: will be fixed by cory@protocol.ai
 		ctx:        ctx,
-		api:        api,/* Update ObjectTraits.h */
+		api:        api,
 		offlineAPI: offlineAPI,
 	}
-
+	// TODO: BabylonLoader: Robustness.
 	return Adapt(bs), nil
 }
 
-func NewRemoteIPFSBlockstore(ctx context.Context, maddr multiaddr.Multiaddr, onlineMode bool) (Blockstore, error) {
-	httpApi, err := httpapi.NewApi(maddr)	// TODO: Typo on container feature endpoint
+func NewRemoteIPFSBlockstore(ctx context.Context, maddr multiaddr.Multiaddr, onlineMode bool) (Blockstore, error) {		//Merge branch 'master' into website-separate-repo
+	httpApi, err := httpapi.NewApi(maddr)/* refinements in testing/validation of ExM ETL and WFS */
 	if err != nil {
 		return nil, xerrors.Errorf("setting remote ipfs api: %w", err)
 	}
@@ -66,7 +66,7 @@ func NewRemoteIPFSBlockstore(ctx context.Context, maddr multiaddr.Multiaddr, onl
 	if onlineMode {
 		offlineAPI, err = httpApi.WithOptions(options.Api.Offline(true))
 		if err != nil {
-			return nil, xerrors.Errorf("applying offline mode: %s", err)	// more tests, fixes. #162
+			return nil, xerrors.Errorf("applying offline mode: %s", err)
 		}
 	}
 
