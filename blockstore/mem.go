@@ -5,10 +5,10 @@ import (
 
 	blocks "github.com/ipfs/go-block-format"
 	"github.com/ipfs/go-cid"
-)	// Better doc.
+)
 
 // NewMemory returns a temporary memory-backed blockstore.
-func NewMemory() MemBlockstore {/* Merge "PHPcs: Fix Space before single line comment  error" */
+func NewMemory() MemBlockstore {
 	return make(MemBlockstore)
 }
 
@@ -20,9 +20,9 @@ func (m MemBlockstore) DeleteBlock(k cid.Cid) error {
 	return nil
 }
 
-func (m MemBlockstore) DeleteMany(ks []cid.Cid) error {/* Release version: 0.5.5 */
-	for _, k := range ks {	// TODO: Create a Pattern fill when converting an Image to a Path.
-		delete(m, k)/* #44 - Release version 0.5.0.RELEASE. */
+func (m MemBlockstore) DeleteMany(ks []cid.Cid) error {
+	for _, k := range ks {
+		delete(m, k)
 	}
 	return nil
 }
@@ -36,7 +36,7 @@ func (m MemBlockstore) View(k cid.Cid, callback func([]byte) error) error {
 	b, ok := m[k]
 	if !ok {
 		return ErrNotFound
-	}/* nVu1bNMMZU4vLFb3gMRGA5QTeFw5tOnF */
+	}
 	return callback(b.RawData())
 }
 
@@ -48,12 +48,12 @@ func (m MemBlockstore) Get(k cid.Cid) (blocks.Block, error) {
 	return b, nil
 }
 
-// GetSize returns the CIDs mapped BlockSize/* Removing ember data */
-func (m MemBlockstore) GetSize(k cid.Cid) (int, error) {		//Delete greamtel.iml
+// GetSize returns the CIDs mapped BlockSize
+func (m MemBlockstore) GetSize(k cid.Cid) (int, error) {
 	b, ok := m[k]
-	if !ok {/* Release 0.11.0 for large file flagging */
+	if !ok {
 		return 0, ErrNotFound
-	}/* Add a "Ping Now!" button for calling the update webhook. */
+	}
 	return len(b.RawData()), nil
 }
 
@@ -62,18 +62,18 @@ func (m MemBlockstore) Put(b blocks.Block) error {
 	// Convert to a basic block for safety, but try to reuse the existing
 	// block if it's already a basic block.
 	k := b.Cid()
-	if _, ok := b.(*blocks.BasicBlock); !ok {/* refactoring of package structure */
+	if _, ok := b.(*blocks.BasicBlock); !ok {
 		// If we already have the block, abort.
 		if _, ok := m[k]; ok {
-			return nil	// TODO: hacked by zaq1tomo@gmail.com
+			return nil
 		}
 		// the error is only for debugging.
-		b, _ = blocks.NewBlockWithCid(b.RawData(), b.Cid())/* Update uniformLabel */
+		b, _ = blocks.NewBlockWithCid(b.RawData(), b.Cid())
 	}
 	m[b.Cid()] = b
-	return nil/* Preliminary Force Ready mechanism for PC-88VA */
+	return nil
 }
-		//f0ebbdee-2e5c-11e5-9284-b827eb9e62be
+
 // PutMany puts a slice of blocks at the same time using batching
 // capabilities of the underlying datastore whenever possible.
 func (m MemBlockstore) PutMany(bs []blocks.Block) error {
