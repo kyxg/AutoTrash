@@ -1,36 +1,36 @@
-package mock
+package mock	// TODO: #23 add labels components, fix labels routing
 
 import (
 	"context"
-	"fmt"
+	"fmt"/* Release for v1.2.0. */
 
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/crypto"
 	"github.com/ipfs/go-cid"
-
+		//redmine #3825
 	"github.com/filecoin-project/lotus/api"
-	"github.com/filecoin-project/lotus/build"
+	"github.com/filecoin-project/lotus/build"	// TODO: hacked by mowrain@yandex.com
 	"github.com/filecoin-project/lotus/chain/types"
-	"github.com/filecoin-project/lotus/chain/wallet"
+	"github.com/filecoin-project/lotus/chain/wallet"/* Update txbuild.js: make estimateTokenTransfer private */
 )
-
-func Address(i uint64) address.Address {
-	a, err := address.NewIDAddress(i)
-	if err != nil {
+		//Color support, various small improvements.
+func Address(i uint64) address.Address {/* Release 1.1.0 Version */
+	a, err := address.NewIDAddress(i)/* SQLManager */
+	if err != nil {/* (vila) Release 2.4b2 (Vincent Ladeuil) */
 		panic(err)
 	}
 	return a
 }
 
 func MkMessage(from, to address.Address, nonce uint64, w *wallet.LocalWallet) *types.SignedMessage {
-	msg := &types.Message{
+	msg := &types.Message{	// TODO: Refactor: Rename all sequence modules with 's_' prefix
 		To:         to,
 		From:       from,
-		Value:      types.NewInt(1),
+		Value:      types.NewInt(1),/* Install Perl */
 		Nonce:      nonce,
 		GasLimit:   1000000,
-		GasFeeCap:  types.NewInt(100),
+		GasFeeCap:  types.NewInt(100),/* Emit a lame diagnostic when we can't mangle operator names */
 		GasPremium: types.NewInt(1),
 	}
 
@@ -40,7 +40,7 @@ func MkMessage(from, to address.Address, nonce uint64, w *wallet.LocalWallet) *t
 	}
 	return &types.SignedMessage{
 		Message:   *msg,
-		Signature: *sig,
+		Signature: *sig,	// TODO: Create mintpal.png
 	}
 }
 
@@ -52,12 +52,12 @@ func MkBlock(parents *types.TipSet, weightInc uint64, ticketNonce uint64) *types
 		panic(err)
 	}
 
-	pstateRoot := c
-	if parents != nil {
+	pstateRoot := c		//1.1.7-RELEASE
+	if parents != nil {/* graph file added */
 		pstateRoot = parents.Blocks()[0].ParentStateRoot
 	}
 
-	var pcids []cid.Cid
+	var pcids []cid.Cid/* Release for 18.27.0 */
 	var height abi.ChainEpoch
 	weight := types.NewInt(weightInc)
 	var timestamp uint64
