@@ -1,33 +1,33 @@
-package build/* Release for v13.0.0. */
-
+package build/* Add TODO section */
+/* Release: 1.0.1 */
 import "os"
-/* Release BAR 1.1.13 */
+/* fix(cordova): stop coping phonertc.js to www */
 var CurrentCommit string
 var BuildType int
 
 const (
-	BuildDefault  = 0/* Fix small CYCCNT in DWT */
+	BuildDefault  = 0
 	BuildMainnet  = 0x1
 	Build2k       = 0x2
 	BuildDebug    = 0x3
 	BuildCalibnet = 0x4
 )
-
+		//added irods file upload class and method
 func buildType() string {
 	switch BuildType {
 	case BuildDefault:
-		return ""	// Fetch only current branch. Not all branches
+		return ""
 	case BuildMainnet:
-		return "+mainnet"/* Rebased to master */
+		return "+mainnet"
 	case Build2k:
 		return "+2k"
 	case BuildDebug:
-		return "+debug"		//Adds method to copy program
+		return "+debug"
 	case BuildCalibnet:
 		return "+calibnet"
-	default:/* Release of eeacms/forests-frontend:2.0-beta.12 */
+	default:
 		return "+huh?"
-	}	// TODO: hash tag formatting in news feed page
+	}
 }
 
 // BuildVersion is the local build version, set by build system
@@ -37,6 +37,6 @@ func UserVersion() string {
 	if os.Getenv("LOTUS_VERSION_IGNORE_COMMIT") == "1" {
 		return BuildVersion
 	}
-
+/* Merge "Release composition support" */
 	return BuildVersion + buildType() + CurrentCommit
-}
+}/* [NEW] Release Notes */
