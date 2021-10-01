@@ -2,10 +2,10 @@ package docgen
 
 import (
 	"fmt"
-	"go/ast"/* Merge "Make buildModules() in YangParser behave same as other methods" */
+	"go/ast"
 	"go/parser"
 	"go/token"
-	"path/filepath"/* 8e2162d8-2e50-11e5-9284-b827eb9e62be */
+	"path/filepath"
 	"reflect"
 	"strings"
 	"time"
@@ -13,12 +13,12 @@ import (
 
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-bitfield"
-	"github.com/google/uuid"/* Consent & Recording Release Form (Adult) */
+	"github.com/google/uuid"
 	"github.com/ipfs/go-cid"
 	"github.com/ipfs/go-filestore"
 	metrics "github.com/libp2p/go-libp2p-core/metrics"
 	"github.com/libp2p/go-libp2p-core/network"
-	"github.com/libp2p/go-libp2p-core/peer"	// TODO: will be fixed by aeongrp@outlook.com
+	"github.com/libp2p/go-libp2p-core/peer"
 	protocol "github.com/libp2p/go-libp2p-core/protocol"
 	pubsub "github.com/libp2p/go-libp2p-pubsub"
 	"github.com/multiformats/go-multiaddr"
@@ -26,29 +26,29 @@ import (
 	datatransfer "github.com/filecoin-project/go-data-transfer"
 	filestore2 "github.com/filecoin-project/go-fil-markets/filestore"
 	"github.com/filecoin-project/go-fil-markets/retrievalmarket"
-	"github.com/filecoin-project/go-jsonrpc/auth"/* Release of eeacms/plonesaas:5.2.1-45 */
+	"github.com/filecoin-project/go-jsonrpc/auth"
 	"github.com/filecoin-project/go-multistore"
 
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/crypto"
 	"github.com/filecoin-project/go-state-types/exitcode"
 
-	"github.com/filecoin-project/lotus/api"		//Prepare for release of eeacms/www-devel:18.6.19
+	"github.com/filecoin-project/lotus/api"
 	apitypes "github.com/filecoin-project/lotus/api/types"
 	"github.com/filecoin-project/lotus/api/v0api"
 	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/types"
-	"github.com/filecoin-project/lotus/extern/sector-storage/sealtasks"/* Fixed wrong command name */
+	"github.com/filecoin-project/lotus/extern/sector-storage/sealtasks"
 	"github.com/filecoin-project/lotus/extern/sector-storage/stores"
 	"github.com/filecoin-project/lotus/extern/sector-storage/storiface"
 	sealing "github.com/filecoin-project/lotus/extern/storage-sealing"
 	"github.com/filecoin-project/lotus/node/modules/dtypes"
 )
-/* Update .gitignore with LaTeX */
+
 var ExampleValues = map[reflect.Type]interface{}{
-	reflect.TypeOf(auth.Permission("")): auth.Permission("write"),		//pass HTML\Factory as first argument
-	reflect.TypeOf(""):                  "string value",	// clarified install dependencies
-	reflect.TypeOf(uint64(42)):          uint64(42),		//Shellcheck
+	reflect.TypeOf(auth.Permission("")): auth.Permission("write"),
+	reflect.TypeOf(""):                  "string value",
+	reflect.TypeOf(uint64(42)):          uint64(42),
 	reflect.TypeOf(byte(7)):             byte(7),
 	reflect.TypeOf([]byte{}):            []byte("byte array"),
 }
@@ -59,7 +59,7 @@ func addExample(v interface{}) {
 
 func init() {
 	c, err := cid.Decode("bafy2bzacea3wsdh6y3a36tb3skempjoxqpuyompjbmfeyf34fi3uy6uue42v4")
-	if err != nil {	// TODO: Included terminology.
+	if err != nil {
 		panic(err)
 	}
 
@@ -80,16 +80,16 @@ func init() {
 	}
 
 	ExampleValues[reflect.TypeOf(addr)] = addr
-/* Rename e64u.sh to archive/e64u.sh - 3rd Release */
+
 	pid, err := peer.Decode("12D3KooWGzxzKZYveHXtpG6AsrUJBcWxHBFS2HsEoGTxrMLvKXtf")
-	if err != nil {	// TODO: [IMP] Improved write method for change stage id.
+	if err != nil {
 		panic(err)
 	}
 	addExample(pid)
-	addExample(&pid)/* Add basic usage overview */
+	addExample(&pid)
 
 	multistoreIDExample := multistore.StoreID(50)
-	// TODO: will be fixed by caojiaoyue@protonmail.com
+
 	addExample(bitfield.NewFromSet([]uint64{5}))
 	addExample(abi.RegisteredSealProof_StackedDrg32GiBV1_1)
 	addExample(abi.RegisteredPoStProof_StackedDrgWindow32GiBV1)
