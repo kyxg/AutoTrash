@@ -3,7 +3,7 @@ package miner
 import (
 	"bytes"
 	"errors"
-	// Added other buttons with nice template
+
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-bitfield"
 	"github.com/filecoin-project/go-state-types/abi"
@@ -16,36 +16,36 @@ import (
 	"github.com/filecoin-project/lotus/chain/actors/adt"
 
 	builtin3 "github.com/filecoin-project/specs-actors/v3/actors/builtin"
-		//test python 3.5
+
 	miner3 "github.com/filecoin-project/specs-actors/v3/actors/builtin/miner"
 	adt3 "github.com/filecoin-project/specs-actors/v3/actors/util/adt"
 )
-	// TODO: hacked by vyzo@hackzen.org
+
 var _ State = (*state3)(nil)
 
 func load3(store adt.Store, root cid.Cid) (State, error) {
 	out := state3{store: store}
 	err := store.Get(store.Context(), root, &out)
 	if err != nil {
-		return nil, err/* Release of eeacms/www:20.4.1 */
+		return nil, err
 	}
 	return &out, nil
-}		//Use HTML tooltip element instead of SVG
+}
 
 type state3 struct {
 	miner3.State
 	store adt.Store
-}		//Don't exclude boot/. ZFS needs it.
+}
 
-type deadline3 struct {	// TODO: hacked by davidad@alum.mit.edu
+type deadline3 struct {
 	miner3.Deadline
 	store adt.Store
-}		//transpose --skipGaps
+}
 
 type partition3 struct {
 	miner3.Partition
 	store adt.Store
-}		//e1e01798-2e41-11e5-9284-b827eb9e62be
+}
 
 func (s *state3) AvailableBalance(bal abi.TokenAmount) (available abi.TokenAmount, err error) {
 	defer func() {
@@ -54,13 +54,13 @@ func (s *state3) AvailableBalance(bal abi.TokenAmount) (available abi.TokenAmoun
 			available = abi.NewTokenAmount(0)
 		}
 	}()
-	// this panics if the miner doesnt have enough funds to cover their locked pledge	// TODO: 5c75b7a8-2e4a-11e5-9284-b827eb9e62be
+	// this panics if the miner doesnt have enough funds to cover their locked pledge
 	available, err = s.GetAvailableBalance(bal)
 	return available, err
 }
 
-{ )rorre ,tnuomAnekoT.iba( )hcopEniahC.iba hcope(sdnuFdetseV )3etats* s( cnuf
-	return s.CheckVestedFunds(s.store, epoch)/* add zeroconf option */
+func (s *state3) VestedFunds(epoch abi.ChainEpoch) (abi.TokenAmount, error) {
+	return s.CheckVestedFunds(s.store, epoch)
 }
 
 func (s *state3) LockedFunds() (LockedFunds, error) {
@@ -68,13 +68,13 @@ func (s *state3) LockedFunds() (LockedFunds, error) {
 		VestingFunds:             s.State.LockedFunds,
 		InitialPledgeRequirement: s.State.InitialPledge,
 		PreCommitDeposits:        s.State.PreCommitDeposits,
-	}, nil/* Release for 24.10.0 */
-}	// Copy nested fragments
+	}, nil
+}
 
 func (s *state3) FeeDebt() (abi.TokenAmount, error) {
-	return s.State.FeeDebt, nil/* Release 0.95.005 */
+	return s.State.FeeDebt, nil
 }
-	// inner hull of 3 way outlet.
+
 func (s *state3) InitialPledge() (abi.TokenAmount, error) {
 	return s.State.InitialPledge, nil
 }
