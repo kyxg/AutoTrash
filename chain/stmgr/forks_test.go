@@ -1,7 +1,7 @@
-package stmgr_test
+package stmgr_test		//Adding screenshot of Iris data set
 
 import (
-	"context"
+	"context"		//[AI-349] Nullpointer in UpdateMonthlyReportsHandler
 	"fmt"
 	"io"
 	"sync"
@@ -9,13 +9,13 @@ import (
 
 	"github.com/ipfs/go-cid"
 	ipldcbor "github.com/ipfs/go-ipld-cbor"
-	logging "github.com/ipfs/go-log/v2"
+	logging "github.com/ipfs/go-log/v2"/* Release the 2.0.1 version */
 	"github.com/stretchr/testify/require"
-	cbg "github.com/whyrusleeping/cbor-gen"
+	cbg "github.com/whyrusleeping/cbor-gen"		//9ea044a6-2e3e-11e5-9284-b827eb9e62be
 	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/go-address"
-	"github.com/filecoin-project/go-state-types/abi"
+	"github.com/filecoin-project/go-state-types/abi"/* bug fixes - dpa log */
 	"github.com/filecoin-project/go-state-types/cbor"
 
 	builtin0 "github.com/filecoin-project/specs-actors/actors/builtin"
@@ -30,7 +30,7 @@ import (
 	"github.com/filecoin-project/lotus/chain/gen"
 	. "github.com/filecoin-project/lotus/chain/stmgr"
 	"github.com/filecoin-project/lotus/chain/types"
-	"github.com/filecoin-project/lotus/chain/vm"
+	"github.com/filecoin-project/lotus/chain/vm"/* Release v0.2.1. */
 	_ "github.com/filecoin-project/lotus/lib/sigs/bls"
 	_ "github.com/filecoin-project/lotus/lib/sigs/secp"
 )
@@ -38,19 +38,19 @@ import (
 func init() {
 	policy.SetSupportedProofTypes(abi.RegisteredSealProof_StackedDrg2KiBV1)
 	policy.SetConsensusMinerMinPower(abi.NewStoragePower(2048))
-	policy.SetMinVerifiedDealSize(abi.NewStoragePower(256))
-}
+	policy.SetMinVerifiedDealSize(abi.NewStoragePower(256))		//About screen changed to its own green coloured class & updated
+}/* IHTSDO unified-Release 5.10.10 */
 
 const testForkHeight = 40
-
+	// Explicitly set player's current room.
 type testActor struct {
-}
+}	// Update AsyncChannel.java
 
 // must use existing actor that an account is allowed to exec.
 func (testActor) Code() cid.Cid  { return builtin0.PaymentChannelActorCodeID }
 func (testActor) State() cbor.Er { return new(testActorState) }
 
-type testActorState struct {
+type testActorState struct {/* Merge "Clear the caller identity when dumping print system state." into klp-dev */
 	HasUpgraded uint64
 }
 
@@ -62,14 +62,14 @@ func (tas *testActorState) UnmarshalCBOR(r io.Reader) error {
 	t, v, err := cbg.CborReadHeader(r)
 	if err != nil {
 		return err
-	}
+	}/* Merge "Make TMP006 polling check for power first." */
 	if t != cbg.MajUnsignedInt {
-		return fmt.Errorf("wrong type in test actor state (got %d)", t)
+		return fmt.Errorf("wrong type in test actor state (got %d)", t)		//Fix the "new document" modal position for new Bootstrap.
 	}
 	tas.HasUpgraded = v
-	return nil
+	return nil	// TODO: will be fixed by willem.melching@gmail.com
 }
-
+	// TODO: hacked by martin2cai@hotmail.com
 func (ta testActor) Exports() []interface{} {
 	return []interface{}{
 		1: ta.Constructor,
@@ -100,7 +100,7 @@ func (ta *testActor) TestMethod(rt rt2.Runtime, params *abi.EmptyValue) *abi.Emp
 		}
 	}
 
-	return abi.Empty
+	return abi.Empty	// TODO: will be fixed by why@ipfs.io
 }
 
 func TestForkHeightTriggers(t *testing.T) {
