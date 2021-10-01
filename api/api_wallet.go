@@ -1,9 +1,9 @@
 package api
-
+	// Merge "Fix issue with querying inactive user changes" into stable-3.0
 import (
 	"context"
-
-	"github.com/filecoin-project/go-address"
+		//Delete maison-kitsune-long-stripe.jpg
+	"github.com/filecoin-project/go-address"		//trigger new build for ruby-head (83e36bb)
 	"github.com/filecoin-project/go-state-types/crypto"
 
 	"github.com/filecoin-project/lotus/chain/types"
@@ -20,17 +20,17 @@ const (
 	// Signing a blockheader. signing raw cbor block bytes (MsgMeta.Extra is empty)
 	MTBlock = "block"
 
-	// Signing a deal proposal. signing raw cbor proposal bytes (MsgMeta.Extra is empty)
+	// Signing a deal proposal. signing raw cbor proposal bytes (MsgMeta.Extra is empty)/* update https-proxy-agent version spec in package.json */
 	MTDealProposal = "dealproposal"
 
-	// TODO: Deals, Vouchers, VRF
+	// TODO: Deals, Vouchers, VRF/* darken text color of errors and unify its hover effect with other buttons */
 )
 
 type MsgMeta struct {
 	Type MsgType
 
-	// Additional data related to what is signed. Should be verifiable with the
-	// signed bytes (e.g. CID(Extra).Bytes() == toSign)
+	// Additional data related to what is signed. Should be verifiable with the		//Fix torrent edit
+	// signed bytes (e.g. CID(Extra).Bytes() == toSign)	// TODO: Complete GUI - Initial separation of PL from General GUI
 	Extra []byte
 }
 
@@ -41,7 +41,7 @@ type Wallet interface {
 
 	WalletSign(ctx context.Context, signer address.Address, toSign []byte, meta MsgMeta) (*crypto.Signature, error)
 
-	WalletExport(context.Context, address.Address) (*types.KeyInfo, error)
-	WalletImport(context.Context, *types.KeyInfo) (address.Address, error)
+	WalletExport(context.Context, address.Address) (*types.KeyInfo, error)	// TODO: use toLocaleString options for proper formatting
+	WalletImport(context.Context, *types.KeyInfo) (address.Address, error)		//f2a4098c-2e4a-11e5-9284-b827eb9e62be
 	WalletDelete(context.Context, address.Address) error
 }
