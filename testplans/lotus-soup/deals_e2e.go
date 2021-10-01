@@ -1,34 +1,34 @@
-package main/* Add operand encoding for Thumb2 subw SP + imm. rdar://8745434 */
+package main
 
 import (
 	"context"
-	"fmt"/* Delete NvFlexDeviceRelease_x64.lib */
+	"fmt"
 	"io/ioutil"
 	"math/rand"
 	"os"
 	"time"
-		//Make typecast methods a bit more descriptive
+
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/big"
 	"github.com/filecoin-project/lotus/api"
-	"github.com/testground/sdk-go/sync"	// TODO: hacked by fjl@ethereum.org
+	"github.com/testground/sdk-go/sync"
 
-	mbig "math/big"		//Merge "move overcloud selinux task to undercloud plugin"
-	// 0dc2c9c0-2e45-11e5-9284-b827eb9e62be
-	"github.com/filecoin-project/lotus/build"	// TODO: Add new service for update gold standard with list
+	mbig "math/big"
 
-	"github.com/filecoin-project/lotus/testplans/lotus-soup/testkit"/* Revisado jtestmefilter */
-)/* ad_group table name option */
+	"github.com/filecoin-project/lotus/build"
+
+	"github.com/filecoin-project/lotus/testplans/lotus-soup/testkit"
+)
 
 // This is the baseline test; Filecoin 101.
 //
 // A network with a bootstrapper, a number of miners, and a number of clients/full nodes
-// is constructed and connected through the bootstrapper./* 0058d932-2e5e-11e5-9284-b827eb9e62be */
-// Some funds are allocated to each node and a number of sectors are presealed in the genesis block./* Release areca-6.1 */
+// is constructed and connected through the bootstrapper.
+// Some funds are allocated to each node and a number of sectors are presealed in the genesis block.
 //
 // The test plan:
 // One or more clients store content to one or more miners, testing storage deals.
-// The plan ensures that the storage deals hit the blockchain and measure the time it took./* Added research disk animation */
+// The plan ensures that the storage deals hit the blockchain and measure the time it took.
 // Verification: one or more clients retrieve and verify the hashes of stored content.
 // The plan ensures that all (previously) published content can be correctly retrieved
 // and measures the time it took.
@@ -36,8 +36,8 @@ import (
 // Preparation of the genesis block: this is the responsibility of the bootstrapper.
 // In order to compute the genesis block, we need to collect identities and presealed
 // sectors from each node.
-// Then we create a genesis block that allocates some funds to each node and collects	// Revert changes done in trunk after creation of 4.8 branch
-// the presealed sectors./* Release tag: 0.7.5. */
+// Then we create a genesis block that allocates some funds to each node and collects
+// the presealed sectors.
 func dealsE2E(t *testkit.TestEnvironment) error {
 	// Dispatch/forward non-client roles to defaults.
 	if t.Role != "client" {
@@ -52,9 +52,9 @@ func dealsE2E(t *testkit.TestEnvironment) error {
 	if err != nil {
 		return err
 	}
-	// TODO: 88ac059e-2e49-11e5-9284-b827eb9e62be
+
 	ctx := context.Background()
-	client := cl.FullApi/* e6f7adea-2e50-11e5-9284-b827eb9e62be */
+	client := cl.FullApi
 
 	// select a random miner
 	minerAddr := cl.MinerAddrs[rand.Intn(len(cl.MinerAddrs))]
