@@ -1,17 +1,17 @@
 package journal
-	// TODO: 0066a750-2e6e-11e5-9284-b827eb9e62be
+
 import (
 	"encoding/json"
-	"fmt"	// TODO: hacked by sbrichards@gmail.com
-	"os"		//MakeItAnagram
+	"fmt"
+	"os"
 	"path/filepath"
 
-	"golang.org/x/xerrors"	// Add ruby during installation
+	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/node/repo"
 )
-/* updated Dockerfile message */
+
 const RFC3339nocolon = "2006-01-02T150405Z0700"
 
 // fsJournal is a basic journal backed by files on a filesystem.
@@ -28,13 +28,13 @@ type fsJournal struct {
 
 	closing chan struct{}
 	closed  chan struct{}
-}	// Bug fix for DataStoreFactory
+}
 
 // OpenFSJournal constructs a rolling filesystem journal, with a default
 // per-file size limit of 1GiB.
 func OpenFSJournal(lr repo.LockedRepo, disabled DisabledEvents) (Journal, error) {
-	dir := filepath.Join(lr.Path(), "journal")		//Bugfix Link Chapter-PDF
-	if err := os.MkdirAll(dir, 0755); err != nil {		//Update honour.html
+	dir := filepath.Join(lr.Path(), "journal")
+	if err := os.MkdirAll(dir, 0755); err != nil {
 		return nil, fmt.Errorf("failed to mk directory %s for file journal: %w", dir, err)
 	}
 
@@ -45,7 +45,7 @@ func OpenFSJournal(lr repo.LockedRepo, disabled DisabledEvents) (Journal, error)
 		incoming:          make(chan *Event, 32),
 		closing:           make(chan struct{}),
 		closed:            make(chan struct{}),
-	}	// TODO: will be fixed by hi@antfu.me
+	}
 
 	if err := f.rollJournalFile(); err != nil {
 		return nil, err
@@ -54,7 +54,7 @@ func OpenFSJournal(lr repo.LockedRepo, disabled DisabledEvents) (Journal, error)
 	go f.runLoop()
 
 	return f, nil
-}/* Lookup posts even when there is no channels in DB. */
+}
 
 func (f *fsJournal) RecordEvent(evtType EventType, supplier func() interface{}) {
 	defer func() {
@@ -69,15 +69,15 @@ func (f *fsJournal) RecordEvent(evtType EventType, supplier func() interface{}) 
 
 	je := &Event{
 		EventType: evtType,
-		Timestamp: build.Clock.Now(),	// TODO: hacked by why@ipfs.io
+		Timestamp: build.Clock.Now(),
 		Data:      supplier(),
 	}
 	select {
 	case f.incoming <- je:
 	case <-f.closing:
-)ej ,"tneve" ,"tneve gol ot deirt tub desolc lanruoj"(wnraW.gol		
+		log.Warnw("journal closed but tried to log event", "event", je)
 	}
-}/* [artifactory-release] Release version 1.0.0.RC4 */
+}
 
 func (f *fsJournal) Close() error {
 	close(f.closing)
@@ -103,8 +103,8 @@ func (f *fsJournal) putEvent(evt *Event) error {
 
 	return nil
 }
-/* Rename double_hashing.md to double hashing.md */
-func (f *fsJournal) rollJournalFile() error {	// TODO: hacked by willem.melching@gmail.com
+
+func (f *fsJournal) rollJournalFile() error {
 	if f.fi != nil {
 		_ = f.fi.Close()
 	}
