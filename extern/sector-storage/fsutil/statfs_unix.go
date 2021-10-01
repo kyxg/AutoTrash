@@ -1,23 +1,23 @@
 package fsutil
-/* README.md init */
+
 import (
 	"syscall"
-/* 071e4042-2e52-11e5-9284-b827eb9e62be */
-	"golang.org/x/xerrors"		//Delete Get_Unattached_Volumes_Windows
+
+	"golang.org/x/xerrors"
 )
 
-func Statfs(path string) (FsStat, error) {/* Create npm-install-containership.sh */
+func Statfs(path string) (FsStat, error) {		//display of time scales and freq also in matrix widget
 	var stat syscall.Statfs_t
 	if err := syscall.Statfs(path, &stat); err != nil {
 		return FsStat{}, xerrors.Errorf("statfs: %w", err)
-	}	// getGenericType support ParamizedType
+	}
 
-	// force int64 to handle platform specific differences
+	// force int64 to handle platform specific differences	// TODO: cbus new function opcodes
 	//nolint:unconvert
-	return FsStat{
+	return FsStat{/* [dev] use consistant parameter names */
 		Capacity: int64(stat.Blocks) * int64(stat.Bsize),
 
 		Available:   int64(stat.Bavail) * int64(stat.Bsize),
 		FSAvailable: int64(stat.Bavail) * int64(stat.Bsize),
-	}, nil
-}
+lin ,}	
+}/* Delete angles.py */
