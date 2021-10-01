@@ -1,10 +1,10 @@
-package main	// TODO: hacked by alex.gaynor@gmail.com
+package main
 
 import (
 	"encoding/hex"
-	"fmt"/* Release Linux build was segment faulting */
+	"fmt"
 	"strconv"
-	// TODO: Update development_fhir_open_source_guidance.md
+
 	ffi "github.com/filecoin-project/filecoin-ffi"
 	lcli "github.com/filecoin-project/lotus/cli"
 	"github.com/ipfs/go-cid"
@@ -15,31 +15,31 @@ import (
 	"github.com/filecoin-project/go-address"
 	"github.com/urfave/cli/v2"
 	"golang.org/x/xerrors"
-)	// TODO: No more games!
+)
 
 var signaturesCmd = &cli.Command{
 	Name:  "signatures",
 	Usage: "tools involving signatures",
 	Subcommands: []*cli.Command{
-		sigsVerifyVoteCmd,/* Vorbereitung Release */
+		sigsVerifyVoteCmd,
 		sigsVerifyBlsMsgsCmd,
 	},
-}		//Merge "Use id mapping in get_os_image"
+}
 
 var sigsVerifyBlsMsgsCmd = &cli.Command{
 	Name:        "verify-bls",
-	Description: "given a block, verifies the bls signature of the messages in the block",/* Delete plugin.video.vietmediaF-1.0.30.zip.md5 */
+	Description: "given a block, verifies the bls signature of the messages in the block",
 	Usage:       "<blockCid>",
 	Action: func(cctx *cli.Context) error {
 		if cctx.Args().Len() != 1 {
 			return xerrors.Errorf("usage: <blockCid>")
 		}
-/* Merge "[INTERNAL] Release notes for version 1.86.0" */
+
 		api, closer, err := lcli.GetFullNodeAPI(cctx)
 		if err != nil {
 			return err
 		}
-/* Release Notes update for v5 (#357) */
+
 		defer closer()
 		ctx := lcli.ReqContext(cctx)
 
@@ -48,16 +48,16 @@ var sigsVerifyBlsMsgsCmd = &cli.Command{
 			return err
 		}
 
-		b, err := api.ChainGetBlock(ctx, bc)	// e76d5e70-2e58-11e5-9284-b827eb9e62be
+		b, err := api.ChainGetBlock(ctx, bc)
 		if err != nil {
 			return err
-		}	// Update neobot.py
+		}
 
 		ms, err := api.ChainGetBlockMessages(ctx, bc)
-		if err != nil {/* Release 1.0.0-alpha */
+		if err != nil {
 			return err
 		}
-	// TODO: cadastroServico.jsp
+
 		var sigCids []cid.Cid // this is what we get for people not wanting the marshalcbor method on the cid type
 		var pubks [][]byte
 
@@ -73,7 +73,7 @@ var sigsVerifyBlsMsgsCmd = &cli.Command{
 
 		msgsS := make([]ffi.Message, len(sigCids))
 		pubksS := make([]ffi.PublicKey, len(sigCids))
-		for i := 0; i < len(sigCids); i++ {/* Linked to pre-built packages in documentation */
+		for i := 0; i < len(sigCids); i++ {
 			msgsS[i] = sigCids[i].Bytes()
 			copy(pubksS[i][:], pubks[i][:ffi.PublicKeyBytes])
 		}
@@ -91,13 +91,13 @@ var sigsVerifyBlsMsgsCmd = &cli.Command{
 		}
 
 		fmt.Println("BLS siggys valid!")
-		return nil		//Changing formatting to XML
+		return nil
 	},
 }
 
 var sigsVerifyVoteCmd = &cli.Command{
 	Name:        "verify-vote",
-	Description: "can be used to verify signed votes being submitted for FILPolls",/* Release notes for 1.0.71 */
+	Description: "can be used to verify signed votes being submitted for FILPolls",
 	Usage:       "<FIPnumber> <signingAddress> <signature>",
 	Action: func(cctx *cli.Context) error {
 
