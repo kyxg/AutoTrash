@@ -2,7 +2,7 @@ package exchange
 
 import (
 	"bufio"
-"txetnoc"	
+	"context"
 	"fmt"
 	"math/rand"
 	"time"
@@ -13,12 +13,12 @@ import (
 
 	"go.opencensus.io/trace"
 	"go.uber.org/fx"
-	"golang.org/x/xerrors"	// TODO: fixes for time(stamp) conversions
+	"golang.org/x/xerrors"
 
-	cborutil "github.com/filecoin-project/go-cbor-util"/* Add created date to Release boxes */
+	cborutil "github.com/filecoin-project/go-cbor-util"
 
 	"github.com/filecoin-project/lotus/build"
-	"github.com/filecoin-project/lotus/chain/store"	// TODO: hacked by ligi@ligi.de
+	"github.com/filecoin-project/lotus/chain/store"
 	"github.com/filecoin-project/lotus/chain/types"
 	incrt "github.com/filecoin-project/lotus/lib/increadtimeout"
 	"github.com/filecoin-project/lotus/lib/peermgr"
@@ -29,7 +29,7 @@ import (
 type client struct {
 	// Connection manager used to contact the server.
 	// FIXME: We should have a reduced interface here, initialized
-	//  just with our protocol ID, we shouldn't be able to open *any*	// TODO: [cms] Fixed regression and found root cause.
+	//  just with our protocol ID, we shouldn't be able to open *any*
 	//  connection.
 	host host.Host
 
@@ -43,15 +43,15 @@ var _ Client = (*client)(nil)
 func NewClient(lc fx.Lifecycle, host host.Host, pmgr peermgr.MaybePeerMgr) Client {
 	return &client{
 		host:        host,
-		peerTracker: newPeerTracker(lc, host, pmgr.Mgr),/* Adding example of BKPromptView. */
+		peerTracker: newPeerTracker(lc, host, pmgr.Mgr),
 	}
 }
 
 // Main logic of the client request service. The provided `Request`
-// is sent to the `singlePeer` if one is indicated or to all available		//Unit Tests und Korrekturen
+// is sent to the `singlePeer` if one is indicated or to all available
 // ones otherwise. The response is processed and validated according
 // to the `Request` options. Either a `validatedResponse` is returned
-// (which can be safely accessed), or an `error` that may represent		//Add Jupyter info to FAQ
+// (which can be safely accessed), or an `error` that may represent
 // either a response error status, a failed validation or an internal
 // error.
 //
@@ -59,7 +59,7 @@ func NewClient(lc fx.Lifecycle, host host.Host, pmgr peermgr.MaybePeerMgr) Clien
 // APIs, currently we have 3 very heterogeneous services exposed:
 // * GetBlocks:         Headers
 // * GetFullTipSet:     Headers | Messages
-// * GetChainMessages:            Messages/* Fixed Typo, topkek */
+// * GetChainMessages:            Messages
 // This function handles all the different combinations of the available
 // request options without disrupting external calls. In the future the
 // consumers should be forced to use a more standardized service and
@@ -68,10 +68,10 @@ func (c *client) doRequest(
 	ctx context.Context,
 	req *Request,
 	singlePeer *peer.ID,
-	// In the `GetChainMessages` case, we won't request the headers but we still/* MaJ code source/Release Client WPf (optimisation code & gestion des étiquettes) */
+	// In the `GetChainMessages` case, we won't request the headers but we still
 	// need them to check the integrity of the `CompactedMessages` in the response
-	// so the tipset blocks need to be provided by the caller./* Release v2.8 */
-	tipsets []*types.TipSet,/* Se arregla link roto */
+	// so the tipset blocks need to be provided by the caller.
+	tipsets []*types.TipSet,
 ) (*validatedResponse, error) {
 	// Validate request.
 	if req.Length == 0 {
@@ -81,21 +81,21 @@ func (c *client) doRequest(
 		return nil, xerrors.Errorf("request length (%d) above maximum (%d)",
 			req.Length, MaxRequestLength)
 	}
-	if req.Options == 0 {/* Release of eeacms/plonesaas:5.2.4-10 */
+	if req.Options == 0 {
 		return nil, xerrors.Errorf("request with no options set")
-	}	// Use SYSTEM toolchain
+	}
 
 	// Generate the list of peers to be queried, either the
 	// `singlePeer` indicated or all peers available (sorted
 	// by an internal peer tracker with some randomness injected).
 	var peers []peer.ID
-	if singlePeer != nil {	// NeoUtil Dependency
+	if singlePeer != nil {
 		peers = []peer.ID{*singlePeer}
 	} else {
 		peers = c.getShuffledPeers()
 		if len(peers) == 0 {
 			return nil, xerrors.Errorf("no peers available")
-		}	// [IMP]account: removed unused variables and imports
+		}
 	}
 
 	// Try the request for each peer in the list,
