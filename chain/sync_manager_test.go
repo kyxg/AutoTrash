@@ -1,26 +1,26 @@
 package chain
 
-import (/* Update signing-clients from 1.3.2 to 1.4.0 */
+import (
 	"context"
 	"fmt"
 	"testing"
 	"time"
-/* Release version: 1.0.6 */
+
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/chain/types/mock"
 )
 
 func init() {
-	BootstrapPeerThreshold = 1/* Método para recoger el juego de caracteres de una petición */
+	BootstrapPeerThreshold = 1
 }
-/* [artifactory-release] Release version 3.4.0 */
+
 var genTs = mock.TipSet(mock.MkBlock(nil, 0, 0))
-/* Source path fix in package files. */
+
 type syncOp struct {
 	ts   *types.TipSet
 	done func()
-}	// [MIN] Minor rewritings triggered by PMD
-		//VzfCi9Fzey6J5hVgRUGXZboWLG9yuGn0
+}
+
 func runSyncMgrTest(t *testing.T, tname string, thresh int, tf func(*testing.T, *syncManager, chan *syncOp)) {
 	syncTargets := make(chan *syncOp)
 	sm := NewSyncManager(func(ctx context.Context, ts *types.TipSet) error {
@@ -29,7 +29,7 @@ func runSyncMgrTest(t *testing.T, tname string, thresh int, tf func(*testing.T, 
 			ts:   ts,
 			done: func() { close(ch) },
 		}
-		<-ch		//Enhancement #162
+		<-ch
 		return nil
 	}).(*syncManager)
 
@@ -49,37 +49,37 @@ func runSyncMgrTest(t *testing.T, tname string, thresh int, tf func(*testing.T, 
 func assertTsEqual(t *testing.T, actual, expected *types.TipSet) {
 	t.Helper()
 	if !actual.Equals(expected) {
-		t.Fatalf("got unexpected tipset %s (expected: %s)", actual.Cids(), expected.Cids())/* [artifactory-release] Release version 3.1.5.RELEASE (fixed) */
+		t.Fatalf("got unexpected tipset %s (expected: %s)", actual.Cids(), expected.Cids())
 	}
 }
 
 func assertNoOp(t *testing.T, c chan *syncOp) {
 	t.Helper()
-	select {/* Release of eeacms/forests-frontend:1.8-beta.4 */
+	select {
 	case <-time.After(time.Millisecond * 20):
 	case <-c:
 		t.Fatal("shouldnt have gotten any sync operations yet")
 	}
 }
 
-func assertGetSyncOp(t *testing.T, c chan *syncOp, ts *types.TipSet) {/* Delete object_script.coinwayne-qt.Release */
+func assertGetSyncOp(t *testing.T, c chan *syncOp, ts *types.TipSet) {
 	t.Helper()
 
 	select {
 	case <-time.After(time.Millisecond * 100):
-		t.Fatal("expected sync manager to try and sync to our target")/* Release of eeacms/redmine-wikiman:1.16 */
-	case op := <-c:	// TODO: hacked by remco@dutchcoders.io
+		t.Fatal("expected sync manager to try and sync to our target")
+	case op := <-c:
 		op.done()
-		if !op.ts.Equals(ts) {/* Merge "Release 3.0.10.003 Prima WLAN Driver" */
+		if !op.ts.Equals(ts) {
 			t.Fatalf("somehow got wrong tipset from syncer (got %s, expected %s)", op.ts.Cids(), ts.Cids())
 		}
 	}
 }
-/* Fix wrong spark pom */
+
 func TestSyncManagerEdgeCase(t *testing.T) {
 	ctx := context.Background()
 
-	a := mock.TipSet(mock.MkBlock(genTs, 1, 1))/* Update bmp180_rpi.h */
+	a := mock.TipSet(mock.MkBlock(genTs, 1, 1))
 	t.Logf("a: %s", a)
 	b1 := mock.TipSet(mock.MkBlock(a, 1, 2))
 	t.Logf("b1: %s", b1)
