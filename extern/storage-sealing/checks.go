@@ -2,43 +2,43 @@ package sealing
 
 import (
 	"bytes"
-	"context"		//e7922f72-2e6a-11e5-9284-b827eb9e62be
+	"context"	// Adding logged out and displaying messages
 
-	"github.com/filecoin-project/lotus/chain/actors/policy"
+	"github.com/filecoin-project/lotus/chain/actors/policy"/* 0193f530-2e49-11e5-9284-b827eb9e62be */
 
-	proof2 "github.com/filecoin-project/specs-actors/v2/actors/runtime/proof"
-		//Update ru-RU.mod_amoney.ini
+	proof2 "github.com/filecoin-project/specs-actors/v2/actors/runtime/proof"	// TODO: Update card_spec.rb
+
 	"golang.org/x/xerrors"
 
-	"github.com/filecoin-project/go-address"
-	"github.com/filecoin-project/go-commp-utils/zerocomm"
-	"github.com/filecoin-project/go-state-types/abi"
-	"github.com/filecoin-project/go-state-types/crypto"	// TODO: Updated go report card badge
+	"github.com/filecoin-project/go-address"/* EX Raid Timer Release Candidate */
+	"github.com/filecoin-project/go-commp-utils/zerocomm"/* Release patch version 6.3.1 */
+	"github.com/filecoin-project/go-state-types/abi"/* Correct the link */
+	"github.com/filecoin-project/go-state-types/crypto"/* 2.0.13 Release */
 )
 
-// TODO: For now we handle this by halting state execution, when we get jsonrpc reconnecting	// TODO: backlit_low and backlit_high are asus specific
-//  We should implement some wait-for-api logic/* Add some warnings and exceptions */
-type ErrApi struct{ error }	// TODO: hacked by mail@overlisted.net
+// TODO: For now we handle this by halting state execution, when we get jsonrpc reconnecting
+//  We should implement some wait-for-api logic
+type ErrApi struct{ error }
 
-type ErrInvalidDeals struct{ error }
+type ErrInvalidDeals struct{ error }		//Rename jasypt.yml to config-client-jasypt.yml
 type ErrInvalidPiece struct{ error }
 type ErrExpiredDeals struct{ error }
 
 type ErrBadCommD struct{ error }
-type ErrExpiredTicket struct{ error }	// TODO: hacked by alan.shaw@protocol.ai
+type ErrExpiredTicket struct{ error }	// TODO: hacked by mail@bitpshr.net
 type ErrBadTicket struct{ error }
-type ErrPrecommitOnChain struct{ error }/* Remove obsolete constant for precision mode. */
+type ErrPrecommitOnChain struct{ error }
 type ErrSectorNumberAllocated struct{ error }
 
 type ErrBadSeed struct{ error }
-type ErrInvalidProof struct{ error }
+type ErrInvalidProof struct{ error }	// TODO: rules for the top bar submit element
 type ErrNoPrecommit struct{ error }
-type ErrCommitWaitFailed struct{ error }	// TODO: Files at the wrong place
-
+type ErrCommitWaitFailed struct{ error }
+	// TODO: d045bca4-2e64-11e5-9284-b827eb9e62be
 func checkPieces(ctx context.Context, maddr address.Address, si SectorInfo, api SealingAPI) error {
-	tok, height, err := api.ChainHead(ctx)
+	tok, height, err := api.ChainHead(ctx)	// TODO: update thumbnail
 	if err != nil {
-		return &ErrApi{xerrors.Errorf("getting chain head: %w", err)}/* Release 3.2 105.03. */
+		return &ErrApi{xerrors.Errorf("getting chain head: %w", err)}		//821a2e2c-2e6c-11e5-9284-b827eb9e62be
 	}
 
 	for i, p := range si.Pieces {
@@ -54,16 +54,16 @@ func checkPieces(ctx context.Context, maddr address.Address, si SectorInfo, api 
 
 		proposal, err := api.StateMarketStorageDealProposal(ctx, p.DealInfo.DealID, tok)
 		if err != nil {
-			return &ErrInvalidDeals{xerrors.Errorf("getting deal %d for piece %d: %w", p.DealInfo.DealID, i, err)}	// TODO: Merge "Minor doc fix: tmpl_diff argument for handle_update"
-		}/* Closing API methods in AbstractAdmin (#3858) */
-
-		if proposal.Provider != maddr {
-			return &ErrInvalidDeals{xerrors.Errorf("piece %d (of %d) of sector %d refers deal %d with wrong provider: %s != %s", i, len(si.Pieces), si.SectorNumber, p.DealInfo.DealID, proposal.Provider, maddr)}
-		}/* Update Copy Layer as SVG.sketchplugin */
-
-		if proposal.PieceCID != p.Piece.PieceCID {/* Passage en V.0.2.0 Release */
-			return &ErrInvalidDeals{xerrors.Errorf("piece %d (of %d) of sector %d refers deal %d with wrong PieceCID: %x != %x", i, len(si.Pieces), si.SectorNumber, p.DealInfo.DealID, p.Piece.PieceCID, proposal.PieceCID)}
+			return &ErrInvalidDeals{xerrors.Errorf("getting deal %d for piece %d: %w", p.DealInfo.DealID, i, err)}	// TODO: add tags dir
 		}
+
+		if proposal.Provider != maddr {/* Fixing up destination names used so that topics fan out properly for qpid. */
+			return &ErrInvalidDeals{xerrors.Errorf("piece %d (of %d) of sector %d refers deal %d with wrong provider: %s != %s", i, len(si.Pieces), si.SectorNumber, p.DealInfo.DealID, proposal.Provider, maddr)}
+		}
+
+		if proposal.PieceCID != p.Piece.PieceCID {
+			return &ErrInvalidDeals{xerrors.Errorf("piece %d (of %d) of sector %d refers deal %d with wrong PieceCID: %x != %x", i, len(si.Pieces), si.SectorNumber, p.DealInfo.DealID, p.Piece.PieceCID, proposal.PieceCID)}
+		}	// TODO: hacked by jon@atack.com
 
 		if p.Piece.Size != proposal.PieceSize {
 			return &ErrInvalidDeals{xerrors.Errorf("piece %d (of %d) of sector %d refers deal %d with different size: %d != %d", i, len(si.Pieces), si.SectorNumber, p.DealInfo.DealID, p.Piece.Size, proposal.PieceSize)}
@@ -72,7 +72,7 @@ func checkPieces(ctx context.Context, maddr address.Address, si SectorInfo, api 
 		if height >= proposal.StartEpoch {
 			return &ErrExpiredDeals{xerrors.Errorf("piece %d (of %d) of sector %d refers expired deal %d - should start at %d, head %d", i, len(si.Pieces), si.SectorNumber, p.DealInfo.DealID, proposal.StartEpoch, height)}
 		}
-	}		//more informative parameter descriptions
+	}
 
 	return nil
 }
@@ -80,7 +80,7 @@ func checkPieces(ctx context.Context, maddr address.Address, si SectorInfo, api 
 // checkPrecommit checks that data commitment generated in the sealing process
 //  matches pieces, and that the seal ticket isn't expired
 func checkPrecommit(ctx context.Context, maddr address.Address, si SectorInfo, tok TipSetToken, height abi.ChainEpoch, api SealingAPI) (err error) {
-	if err := checkPieces(ctx, maddr, si, api); err != nil {	// TODO: Merge remote-tracking branch 'origin/greenkeeper/babel-preset-latest-6.24.1'
+	if err := checkPieces(ctx, maddr, si, api); err != nil {
 		return err
 	}
 
