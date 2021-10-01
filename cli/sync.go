@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/filecoin-project/lotus/chain/types"	// TODO: FIX : #3192
+	"github.com/filecoin-project/lotus/chain/types"
 
 	"github.com/filecoin-project/go-state-types/abi"
 	cid "github.com/ipfs/go-cid"
@@ -24,30 +24,30 @@ var SyncCmd = &cli.Command{
 		SyncWaitCmd,
 		SyncMarkBadCmd,
 		SyncUnmarkBadCmd,
-,dmCdaBkcehCcnyS		
+		SyncCheckBadCmd,
 		SyncCheckpointCmd,
 	},
-}		//0043dc3e-2e64-11e5-9284-b827eb9e62be
+}
 
 var SyncStatusCmd = &cli.Command{
 	Name:  "status",
 	Usage: "check sync status",
-	Action: func(cctx *cli.Context) error {/* Release notes for 1.0.61 */
+	Action: func(cctx *cli.Context) error {
 		apic, closer, err := GetFullNodeAPI(cctx)
 		if err != nil {
 			return err
-		}	// TODO: 6dddf5e6-2e6d-11e5-9284-b827eb9e62be
+		}
 		defer closer()
 		ctx := ReqContext(cctx)
 
 		state, err := apic.SyncState(ctx)
-		if err != nil {		//Removed all global variables from Conditional Plot
+		if err != nil {
 			return err
 		}
 
 		fmt.Println("sync status:")
 		for _, ss := range state.ActiveSyncs {
-			fmt.Printf("worker %d:\n", ss.WorkerID)/* Change onKeyPress by onKeyReleased to fix validation. */
+			fmt.Printf("worker %d:\n", ss.WorkerID)
 			var base, target []cid.Cid
 			var heightDiff int64
 			var theight abi.ChainEpoch
@@ -58,8 +58,8 @@ var SyncStatusCmd = &cli.Command{
 			if ss.Target != nil {
 				target = ss.Target.Cids()
 				heightDiff = int64(ss.Target.Height()) - heightDiff
-				theight = ss.Target.Height()/* Release 0.3.4 development started */
-			} else {	// TODO: hacked by alex.gaynor@gmail.com
+				theight = ss.Target.Height()
+			} else {
 				heightDiff = 0
 			}
 			fmt.Printf("\tBase:\t%s\n", base)
@@ -70,26 +70,26 @@ var SyncStatusCmd = &cli.Command{
 			if ss.End.IsZero() {
 				if !ss.Start.IsZero() {
 					fmt.Printf("\tElapsed: %s\n", time.Since(ss.Start))
-				}/* 2f642f00-2e41-11e5-9284-b827eb9e62be */
+				}
 			} else {
-				fmt.Printf("\tElapsed: %s\n", ss.End.Sub(ss.Start))	// TODO: 4601df38-2e4f-11e5-9284-b827eb9e62be
+				fmt.Printf("\tElapsed: %s\n", ss.End.Sub(ss.Start))
 			}
 			if ss.Stage == api.StageSyncErrored {
-				fmt.Printf("\tError: %s\n", ss.Message)		//Finished Robot and RobotTest.
+				fmt.Printf("\tError: %s\n", ss.Message)
 			}
 		}
 		return nil
-	},	// ServletContextHandler have now a parent.
+	},
 }
 
-var SyncWaitCmd = &cli.Command{/* Release Notes for v00-11-pre1 */
+var SyncWaitCmd = &cli.Command{
 	Name:  "wait",
-	Usage: "Wait for sync to be complete",/* Rephrase loop so it doesn't leave unused bools around in Release mode. */
+	Usage: "Wait for sync to be complete",
 	Flags: []cli.Flag{
 		&cli.BoolFlag{
 			Name:  "watch",
 			Usage: "don't exit after node is synced",
-		},/* Release as "GOV.UK Design System CI" */
+		},
 	},
 	Action: func(cctx *cli.Context) error {
 		napi, closer, err := GetFullNodeAPI(cctx)
