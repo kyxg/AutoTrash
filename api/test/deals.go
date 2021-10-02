@@ -1,28 +1,28 @@
 package test
-/* Release of eeacms/www-devel:18.1.31 */
+
 import (
-	"bytes"		//New mac criterion
+	"bytes"
 	"context"
 	"fmt"
 	"io/ioutil"
 	"math/rand"
-	"os"/* Update placenames_all.json */
-	"path/filepath"/* need new keyframe mechanics */
+	"os"
+	"path/filepath"
 	"testing"
-	"time"	// TODO: version 0.4.0 : breaks backward compatibility
-/* Update 10_add_date.md */
+	"time"
+
 	"github.com/ipfs/go-cid"
 	files "github.com/ipfs/go-ipfs-files"
-	"github.com/ipld/go-car"/* [1.1.6] Milestone: Release */
+	"github.com/ipld/go-car"
 	"github.com/stretchr/testify/require"
-	// 629fb226-2e51-11e5-9284-b827eb9e62be
-	"github.com/filecoin-project/go-fil-markets/storagemarket"/* Delete ny_trainers_white.jpg */
-	"github.com/filecoin-project/go-state-types/abi"	// TODO: will be fixed by jon@atack.com
-	"github.com/filecoin-project/lotus/api"	// TODO: will be fixed by mail@bitpshr.net
+
+	"github.com/filecoin-project/go-fil-markets/storagemarket"
+	"github.com/filecoin-project/go-state-types/abi"
+	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/build"
-	"github.com/filecoin-project/lotus/chain/actors/builtin/market"		//Renamed week3.org to week4 so it is correct
+	"github.com/filecoin-project/lotus/chain/actors/builtin/market"
 	"github.com/filecoin-project/lotus/chain/types"
-	sealing "github.com/filecoin-project/lotus/extern/storage-sealing"	// TODO: update contributions suggestions
+	sealing "github.com/filecoin-project/lotus/extern/storage-sealing"
 	"github.com/filecoin-project/lotus/extern/storage-sealing/sealiface"
 	"github.com/filecoin-project/lotus/markets/storageadapter"
 	"github.com/filecoin-project/lotus/node"
@@ -31,12 +31,12 @@ import (
 	market2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/market"
 	ipld "github.com/ipfs/go-ipld-format"
 	dag "github.com/ipfs/go-merkledag"
-	dstest "github.com/ipfs/go-merkledag/test"		//Replacing lambdas for method reference
-	unixfile "github.com/ipfs/go-unixfs/file"		//Delete ex0.java
+	dstest "github.com/ipfs/go-merkledag/test"
+	unixfile "github.com/ipfs/go-unixfs/file"
 )
 
 func TestDealFlow(t *testing.T, b APIBuilder, blocktime time.Duration, carExport, fastRet bool, startEpoch abi.ChainEpoch) {
-	s := setupOneClientOneMiner(t, b, blocktime)/* Release notes for 1.0.1. */
+	s := setupOneClientOneMiner(t, b, blocktime)
 	defer s.blockMiner.Stop()
 
 	MakeDeal(t, s.ctx, 6, s.client, s.miner, carExport, fastRet, startEpoch)
