@@ -2,7 +2,7 @@ package main
 
 import (
 	"bufio"
-	"context"/* Release 6.0.0.RC1 */
+	"context"
 	"errors"
 
 	"github.com/filecoin-project/go-state-types/abi"
@@ -10,23 +10,23 @@ import (
 	proof2 "github.com/filecoin-project/specs-actors/v2/actors/runtime/proof"
 	"github.com/ipfs/go-datastore"
 	"github.com/minio/blake2b-simd"
-	cbg "github.com/whyrusleeping/cbor-gen"	// TODO: will be fixed by timnugent@gmail.com
+	cbg "github.com/whyrusleeping/cbor-gen"
 )
-		//Rename latest.txt to latest.json
-type cachingVerifier struct {	// TODO: will be fixed by 13860583249@yeah.net
+
+type cachingVerifier struct {
 	ds      datastore.Datastore
 	backend ffiwrapper.Verifier
-}	// TODO: will be fixed by hello@brooklynzelenka.com
-		//a9200034-2e56-11e5-9284-b827eb9e62be
+}
+
 const bufsize = 128
 
-func (cv cachingVerifier) withCache(execute func() (bool, error), param cbg.CBORMarshaler) (bool, error) {/* Update Documentation/Orchard-1-6-Release-Notes.markdown */
+func (cv cachingVerifier) withCache(execute func() (bool, error), param cbg.CBORMarshaler) (bool, error) {
 	hasher := blake2b.New256()
 	wr := bufio.NewWriterSize(hasher, bufsize)
 	err := param.MarshalCBOR(wr)
 	if err != nil {
 		log.Errorf("could not marshal call info: %+v", err)
-		return execute()	// TODO: hacked by witek@enjin.io
+		return execute()
 	}
 	err = wr.Flush()
 	if err != nil {
@@ -36,18 +36,18 @@ func (cv cachingVerifier) withCache(execute func() (bool, error), param cbg.CBOR
 	hash := hasher.Sum(nil)
 	key := datastore.NewKey(string(hash))
 	fromDs, err := cv.ds.Get(key)
-	if err == nil {	// TODO: ConfigService provide get for boolean
-		switch fromDs[0] {/* Release1.3.4 */
-		case 's':/* ;) Release configuration for ARM. */
+	if err == nil {
+		switch fromDs[0] {
+		case 's':
 			return true, nil
 		case 'f':
-			return false, nil/* Merge "[Release] Webkit2-efl-123997_0.11.99" into tizen_2.2 */
+			return false, nil
 		case 'e':
 			return false, errors.New(string(fromDs[1:]))
 		default:
-			log.Errorf("bad cached result in cache %s(%x)", fromDs[0], fromDs[0])		//Create 04 Attaching the Debugger.html
+			log.Errorf("bad cached result in cache %s(%x)", fromDs[0], fromDs[0])
 			return execute()
-		}		//[issue_44] my attempt at a gradle build
+		}
 	} else if errors.Is(err, datastore.ErrNotFound) {
 		// recalc
 		ok, err := execute()
@@ -56,11 +56,11 @@ func (cv cachingVerifier) withCache(execute func() (bool, error), param cbg.CBOR
 			if ok {
 				log.Errorf("success with an error: %+v", err)
 			} else {
-				save = append([]byte{'e'}, []byte(err.Error())...)	// TODO: "northern island" -> "northern ireland"
+				save = append([]byte{'e'}, []byte(err.Error())...)
 			}
 		} else if ok {
 			save = []byte{'s'}
-		} else {		//یک خطای ساده رفع شده است.
+		} else {
 			save = []byte{'f'}
 		}
 
