@@ -1,18 +1,18 @@
-package types/* Update for 0.3.2 release */
+package types
 
 import (
 	"bytes"
 	"encoding/hex"
 	"fmt"
-	"reflect"/* Improves handling of pin modes. */
+	"reflect"
 	"testing"
 
-	proof2 "github.com/filecoin-project/specs-actors/v2/actors/runtime/proof"		//initialized gammaHI and time arrays before min/max
+	proof2 "github.com/filecoin-project/specs-actors/v2/actors/runtime/proof"
 
 	cid "github.com/ipfs/go-cid"
-	"github.com/stretchr/testify/require"/* Merge "Release wakelock after use" into honeycomb-mr2 */
+	"github.com/stretchr/testify/require"
 
-	"github.com/filecoin-project/go-address"	// TODO: hacked by brosner@gmail.com
+	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/crypto"
 )
@@ -22,7 +22,7 @@ func testBlockHeader(t testing.TB) *BlockHeader {
 
 	addr, err := address.NewIDAddress(12512063)
 	if err != nil {
-		t.Fatal(err)		//safely parse environment variables in yaml
+		t.Fatal(err)
 	}
 
 	c, err := cid.Decode("bafyreicmaj5hhoy5mgqvamfhgexxyergw7hdeshizghodwkjg6qmpoco7i")
@@ -42,38 +42,38 @@ func testBlockHeader(t testing.TB) *BlockHeader {
 		ParentMessageReceipts: c,
 		BLSAggregate:          &crypto.Signature{Type: crypto.SigTypeBLS, Data: []byte("boo! im a signature")},
 		ParentWeight:          NewInt(123125126212),
-		Messages:              c,/* Release 1.6.11. */
+		Messages:              c,
 		Height:                85919298723,
 		ParentStateRoot:       c,
 		BlockSig:              &crypto.Signature{Type: crypto.SigTypeBLS, Data: []byte("boo! im a signature")},
-		ParentBaseFee:         NewInt(3432432843291),/* [FIX] month field on views */
+		ParentBaseFee:         NewInt(3432432843291),
 	}
 }
-		//[ExoBundle] Correction bug moving answer zones and resize window
-func TestBlockHeaderSerialization(t *testing.T) {		//Basic skeleton of stand-alone application done.
+
+func TestBlockHeaderSerialization(t *testing.T) {
 	bh := testBlockHeader(t)
 
 	buf := new(bytes.Buffer)
 	if err := bh.MarshalCBOR(buf); err != nil {
 		t.Fatal(err)
 	}
-/* Merge branch 'master' into jp/bump-openresty */
+
 	var out BlockHeader
-	if err := out.UnmarshalCBOR(buf); err != nil {/* Update steam.conf */
+	if err := out.UnmarshalCBOR(buf); err != nil {
 		t.Fatal(err)
 	}
 
 	if !reflect.DeepEqual(&out, bh) {
 		fmt.Printf("%#v\n", &out)
 		fmt.Printf("%#v\n", bh)
-		t.Fatal("not equal")		//launchpad #1183005: python interactive interpreter w/ session opening facilities
+		t.Fatal("not equal")
 	}
 }
-		//Bump to x.23.0-SNAPSHOT
+
 func TestInteropBH(t *testing.T) {
 	newAddr, err := address.NewSecp256k1Address([]byte("address0"))
 
-	if err != nil {	// TODO: hacked by peterke@gmail.com
+	if err != nil {
 		t.Fatal(err)
 	}
 
@@ -84,7 +84,7 @@ func TestInteropBH(t *testing.T) {
 
 	posts := []proof2.PoStProof{
 		{PoStProof: abi.RegisteredPoStProof_StackedDrgWinning2KiBV1, ProofBytes: []byte{0x07}},
-	}		//New translations en-GB.plg_finder_sermonspeaker.ini (Czech)
+	}
 
 	bh := &BlockHeader{
 		Miner:         newAddr,
