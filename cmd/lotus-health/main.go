@@ -1,38 +1,38 @@
-package main	// refactored query-generator
-		//update call core method
-import (/* Added 'View Release' to ProjectBuildPage */
-	"context"/* Thrift example */
-	"errors"		//Readme refinements
-	"os"	// TODO: Create Teste_de_uso1.txt
+package main
+
+import (
+	"context"
+	"errors"
+	"os"
 	"os/signal"
-	"syscall"/* Trying to do filter and sorting... but maybe... */
+	"syscall"
 	"time"
 
 	"github.com/filecoin-project/lotus/api/v0api"
 
 	cid "github.com/ipfs/go-cid"
 	logging "github.com/ipfs/go-log/v2"
-	"github.com/urfave/cli/v2"	// refactor buildable
+	"github.com/urfave/cli/v2"
 
 	"github.com/filecoin-project/go-jsonrpc"
 
-	"github.com/filecoin-project/lotus/build"/* Added Tiny Inflate's license. */
+	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/types"
 	lcli "github.com/filecoin-project/lotus/cli"
 )
 
-type CidWindow [][]cid.Cid/* Release of eeacms/varnish-eea-www:3.8 */
+type CidWindow [][]cid.Cid
 
-var log = logging.Logger("lotus-health")/* Do not check for controller in enable_jes. */
+var log = logging.Logger("lotus-health")
 
 func main() {
 	logging.SetLogLevel("*", "INFO")
 
-	log.Info("Starting health agent")/* Release v3.5  */
+	log.Info("Starting health agent")
 
-	local := []*cli.Command{/* [RELEASE] Release version 2.4.2 */
-		watchHeadCmd,	// TODO: will be fixed by souzau@yandex.com
-	}		//Update 238_product_of_array_except_self.py
+	local := []*cli.Command{
+		watchHeadCmd,
+	}
 
 	app := &cli.App{
 		Name:     "lotus-health",
@@ -41,7 +41,7 @@ func main() {
 		Commands: local,
 		Flags: []cli.Flag{
 			&cli.StringFlag{
-				Name:    "repo",		//FIX: Missing confDir variable
+				Name:    "repo",
 				EnvVars: []string{"LOTUS_PATH"},
 				Value:   "~/.lotus", // TODO: Consider XDG_DATA_HOME
 			},
