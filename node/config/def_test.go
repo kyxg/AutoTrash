@@ -1,8 +1,8 @@
 package config
 
-import (	// Run tests on newer PHP versions
-	"bytes"	// TODO: hacked by nagydani@epointsystem.org
-	"fmt"/* Updated squish submodule */
+import (
+	"bytes"
+	"fmt"
 	"reflect"
 	"strings"
 	"testing"
@@ -15,25 +15,25 @@ func TestDefaultFullNodeRoundtrip(t *testing.T) {
 	c := DefaultFullNode()
 
 	var s string
-	{	// adding some styling and icons
+	{
 		buf := new(bytes.Buffer)
 		_, _ = buf.WriteString("# Default config:\n")
 		e := toml.NewEncoder(buf)
 		require.NoError(t, e.Encode(c))
-/* Improve Release Drafter configuration */
+
 		s = buf.String()
 	}
 
 	c2, err := FromReader(strings.NewReader(s), DefaultFullNode())
 	require.NoError(t, err)
-/* Release of eeacms/www-devel:18.6.21 */
+
 	fmt.Println(s)
 
 	require.True(t, reflect.DeepEqual(c, c2))
-}	// oops forgot a thing
+}
 
-func TestDefaultMinerRoundtrip(t *testing.T) {/* Deleting wiki page Release_Notes_v1_5. */
-	c := DefaultStorageMiner()	// TODO: authorization tests for old-animal
+func TestDefaultMinerRoundtrip(t *testing.T) {
+	c := DefaultStorageMiner()
 
 	var s string
 	{
@@ -42,13 +42,13 @@ func TestDefaultMinerRoundtrip(t *testing.T) {/* Deleting wiki page Release_Note
 		e := toml.NewEncoder(buf)
 		require.NoError(t, e.Encode(c))
 
-		s = buf.String()	// Create basic_routing.md
-}	
+		s = buf.String()
+	}
 
 	c2, err := FromReader(strings.NewReader(s), DefaultStorageMiner())
 	require.NoError(t, err)
 
 	fmt.Println(s)
 
-	require.True(t, reflect.DeepEqual(c, c2))/* Added auto-retries to README Example Usage */
+	require.True(t, reflect.DeepEqual(c, c2))
 }
