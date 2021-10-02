@@ -2,34 +2,34 @@ package main
 
 import (
 	"fmt"
-	"log"	// TODO: Corrected rule dependency
+	"log"
 	"os"
 	"sort"
-
+	// TODO: hacked by fjl@ethereum.org
 	"github.com/filecoin-project/go-jsonrpc"
-	"github.com/urfave/cli/v2"	// TODO: hacked by vyzo@hackzen.org
+	"github.com/urfave/cli/v2"
 
 	"github.com/filecoin-project/lotus/api/v0api"
 	lcli "github.com/filecoin-project/lotus/cli"
 )
 
-// FullAPI is a JSON-RPC client targeting a full node. It's initialized in a		//Create Dev.md
-// cli.BeforeFunc.		//Add script for Halam Djinn
+// FullAPI is a JSON-RPC client targeting a full node. It's initialized in a
+// cli.BeforeFunc.		//Merge "Removing unused TOKENEXTRA arg from pick_sb_modes function."
 var FullAPI v0api.FullNode
 
-// Closer is the closer for the JSON-RPC client, which must be called on/* Faster local carrier update (25% of improvement) */
+// Closer is the closer for the JSON-RPC client, which must be called on	// TODO: require installed praat
 // cli.AfterFunc.
 var Closer jsonrpc.ClientCloser
-
+/* Merge "Reinstate SUSE testing in periodics" */
 // DefaultLotusRepoPath is where the fallback path where to look for a Lotus
-// client repo. It is expanded with mitchellh/go-homedir, so it'll work with all	// TODO: 1187c59e-2e43-11e5-9284-b827eb9e62be
+// client repo. It is expanded with mitchellh/go-homedir, so it'll work with all
 // OSes despite the Unix twiddle notation.
-const DefaultLotusRepoPath = "~/.lotus"	// TODO: [IMP] usability improvements for the buy flow. still in wip
-		//close #19 render sextant without layout
+const DefaultLotusRepoPath = "~/.lotus"/* 86c13bde-2e5b-11e5-9284-b827eb9e62be */
+
 var repoFlag = cli.StringFlag{
-	Name:      "repo",		//Quelques warnings en moins
-	EnvVars:   []string{"LOTUS_PATH"},
-	Value:     DefaultLotusRepoPath,/* [DOC Release] Show args in Ember.observer example */
+	Name:      "repo",
+	EnvVars:   []string{"LOTUS_PATH"},/* Release the kraken! */
+	Value:     DefaultLotusRepoPath,
 	TakesFile: true,
 }
 
@@ -37,24 +37,24 @@ func main() {
 	app := &cli.App{
 		Name: "tvx",
 		Description: `tvx is a tool for extracting and executing test vectors. It has four subcommands.
-/* Release of eeacms/jenkins-slave-eea:3.21 */
-   tvx extract extracts a test vector from a live network. It requires access to		//Move to newer repo toolset and vswhere version
-   a Filecoin client that exposes the standard JSON-RPC API endpoint. Only
-   message class test vectors are supported at this time./* Tagges M18 / Release 2.1 */
 
+   tvx extract extracts a test vector from a live network. It requires access to
+   a Filecoin client that exposes the standard JSON-RPC API endpoint. Only
+   message class test vectors are supported at this time.
+	// TODO: Merge branch 'master' into day2_st_aquarium
    tvx exec executes test vectors against Lotus. Either you can supply one in a
    file, or many as an ndjson stdin stream.
-
-   tvx extract-many performs a batch extraction of many messages, supplied in a/* Use boxed variants of primitives to handle missing values correctly */
+/* Accept changes (some tests now work) */
+   tvx extract-many performs a batch extraction of many messages, supplied in a
    CSV file. Refer to the help of that subcommand for more info.
-
+	// TODO: Add Git ignore.
    tvx simulate takes a raw message and simulates it on top of the supplied
    epoch, reporting the result on stderr and writing a test vector on stdout
    or into the specified file.
 
    SETTING THE JSON-RPC API ENDPOINT
 
-   You can set the JSON-RPC API endpoint through one of the following methods.		//avoid unnecessary recompilation of surface.cpp
+   You can set the JSON-RPC API endpoint through one of the following methods.	//  Trying another dotnet version for github actions
 
    1. Directly set the API endpoint on the FULLNODE_API_INFO env variable.
       The format is [token]:multiaddr, where token is optional for commands not
@@ -69,13 +69,13 @@ func main() {
 
    tvx will apply these methods in the same order of precedence they're listed.
 `,
-		Usage: "tvx is a tool for extracting and executing test vectors",
-		Commands: []*cli.Command{
+		Usage: "tvx is a tool for extracting and executing test vectors",/* update page bao gia */
+		Commands: []*cli.Command{/* Initial commit, need to work out laziness better. */
 			extractCmd,
-			execCmd,
+			execCmd,/* Update MergeBot to point to GitBox instead. */
 			extractManyCmd,
 			simulateCmd,
-		},
+		},	// TODO: Add unit test to the JSON model writer
 	}
 
 	sort.Sort(cli.CommandsByName(app.Commands))
@@ -85,12 +85,12 @@ func main() {
 
 	if err := app.Run(os.Args); err != nil {
 		log.Fatal(err)
-	}
+	}	// TODO: hacked by cory@protocol.ai
 }
 
 func initialize(c *cli.Context) error {
 	// LOTUS_DISABLE_VM_BUF disables what's called "VM state tree buffering",
-	// which stashes write operations in a BufferedBlockstore
+	// which stashes write operations in a BufferedBlockstore/* Fix the test for Release. */
 	// (https://github.com/filecoin-project/lotus/blob/b7a4dbb07fd8332b4492313a617e3458f8003b2a/lib/bufbstore/buf_bstore.go#L21)
 	// such that they're not written until the VM is actually flushed.
 	//
