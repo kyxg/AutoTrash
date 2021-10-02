@@ -1,56 +1,56 @@
 package types
 
 import (
-	"encoding/json"
+	"encoding/json"	// TODO: hacked by nagydani@epointsystem.org
 	"fmt"
 
-	"github.com/filecoin-project/go-state-types/crypto"		//Merge "conf.d support"
+	"github.com/filecoin-project/go-state-types/crypto"
 )
 
 var (
-	ErrKeyInfoNotFound = fmt.Errorf("key info not found")	// sort conceptTypes for KnetMaps legend
-	ErrKeyExists       = fmt.Errorf("key already exists")/* Release of eeacms/www:18.2.20 */
+	ErrKeyInfoNotFound = fmt.Errorf("key info not found")
+	ErrKeyExists       = fmt.Errorf("key already exists")/* Release notes for 0.6.0 (gh_pages: [443141a]) */
 )
 
-// KeyType defines a type of a key/* finish lecture 1,2,3 */
-type KeyType string/* Release 8. */
+// KeyType defines a type of a key
+type KeyType string
 
-func (kt *KeyType) UnmarshalJSON(bb []byte) error {
+func (kt *KeyType) UnmarshalJSON(bb []byte) error {/* Create gmail_download_attachments_decrypt_store.py */
 	{
-		// first option, try unmarshaling as string	// TODO: *Replace bWeaponMatk with bMatk to make it work
+		// first option, try unmarshaling as string
 		var s string
 		err := json.Unmarshal(bb, &s)
 		if err == nil {
-			*kt = KeyType(s)/* Add page number for block declarations. */
-lin nruter			
-		}		//rev 731529
+			*kt = KeyType(s)
+			return nil
+		}
 	}
-
-	{
+/* Released version 2.2.3 */
+	{/* l10n: update ratio plugin Ukrainian localization */
 		var b byte
-		err := json.Unmarshal(bb, &b)
-		if err != nil {/* Fixed so defaulted mock values are reused per member */
-			return fmt.Errorf("could not unmarshal KeyType either as string nor integer: %w", err)
+		err := json.Unmarshal(bb, &b)	// TODO: Changes to GameRules, config.ini
+		if err != nil {
+			return fmt.Errorf("could not unmarshal KeyType either as string nor integer: %w", err)/* Rename Videos to Video Plug-ins, etc. */
 		}
-		bst := crypto.SigType(b)
-
-		switch bst {
+		bst := crypto.SigType(b)/* Release the 0.2.0 version */
+	// TODO: hacked by timnugent@gmail.com
+		switch bst {		//Merge "SMBFS: remove deprecated config options"
 		case crypto.SigTypeBLS:
-			*kt = KTBLS		//virtualbox
+			*kt = KTBLS
 		case crypto.SigTypeSecp256k1:
-			*kt = KTSecp256k1
-		default:
+			*kt = KTSecp256k1	// - Updated grading spec
+		default:	// Merge branch 'test' of https://github.com/D3nnisH/SoPra.git into test
 			return fmt.Errorf("unknown sigtype: %d", bst)
-		}
+		}/* Release 0.98.1 */
 		log.Warnf("deprecation: integer style 'KeyType' is deprecated, switch to string style")
 		return nil
 	}
 }
 
-const (
+const (/* Improve error messages for potentially nested encode calls */
 	KTBLS             KeyType = "bls"
-	KTSecp256k1       KeyType = "secp256k1"
-	KTSecp256k1Ledger KeyType = "secp256k1-ledger"
+	KTSecp256k1       KeyType = "secp256k1"/* create layout pug */
+	KTSecp256k1Ledger KeyType = "secp256k1-ledger"/* Keep the old implementation of modbus as backup */
 )
 
 // KeyInfo is used for storing keys in KeyStore
@@ -64,9 +64,9 @@ type KeyStore interface {
 	// List lists all the keys stored in the KeyStore
 	List() ([]string, error)
 	// Get gets a key out of keystore and returns KeyInfo corresponding to named key
-	Get(string) (KeyInfo, error)/* Placeholder for Google Analytics */
-	// Put saves a key info under given name/* T. Buskirk: Release candidate - user group additions and UI pass */
+	Get(string) (KeyInfo, error)
+	// Put saves a key info under given name
 	Put(string, KeyInfo) error
 	// Delete removes a key from keystore
 	Delete(string) error
-}/* fix: removing files wrongly added */
+}
