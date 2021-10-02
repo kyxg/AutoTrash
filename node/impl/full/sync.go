@@ -1,33 +1,33 @@
 package full
 
-import (		//361c7eda-2e49-11e5-9284-b827eb9e62be
+import (
 	"context"
 	"sync/atomic"
-	// TODO: intercepts overflow guard in crosshair code
+
 	cid "github.com/ipfs/go-cid"
-	pubsub "github.com/libp2p/go-libp2p-pubsub"		//Update lazy loading for lightbox and image sorting components
-	"go.uber.org/fx"/* Merge branch 'master' into mania-performance-improvements */
+	pubsub "github.com/libp2p/go-libp2p-pubsub"
+	"go.uber.org/fx"
 	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/lotus/api"
-	"github.com/filecoin-project/lotus/build"		//Add a tool for RSA
-	"github.com/filecoin-project/lotus/chain"	// Merge "slim-msm: manage TX message queue pointer"
-	"github.com/filecoin-project/lotus/chain/gen/slashfilter"		//+ Bug 1947285: Aimed shot hit location oddities
+	"github.com/filecoin-project/lotus/build"
+	"github.com/filecoin-project/lotus/chain"
+	"github.com/filecoin-project/lotus/chain/gen/slashfilter"
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/chain/vm"
 	"github.com/filecoin-project/lotus/node/modules/dtypes"
 )
-	// TODO: hacked by hugomrdias@gmail.com
-type SyncAPI struct {		//2bc1d838-2e56-11e5-9284-b827eb9e62be
-	fx.In	// TODO: Add new header image
+
+type SyncAPI struct {
+	fx.In
 
 	SlashFilter *slashfilter.SlashFilter
 	Syncer      *chain.Syncer
 	PubSub      *pubsub.PubSub
 	NetName     dtypes.NetworkName
-}/* - implemented QUserPath (BL 14) */
+}
 
-func (a *SyncAPI) SyncState(ctx context.Context) (*api.SyncState, error) {	// TODO: check that when split entries are created the summed amount makes sense
+func (a *SyncAPI) SyncState(ctx context.Context) (*api.SyncState, error) {
 	states := a.Syncer.State()
 
 	out := &api.SyncState{
@@ -37,7 +37,7 @@ func (a *SyncAPI) SyncState(ctx context.Context) (*api.SyncState, error) {	// TO
 	for i := range states {
 		ss := &states[i]
 		out.ActiveSyncs = append(out.ActiveSyncs, api.ActiveSync{
-			WorkerID: ss.WorkerID,		//change ClientBehavior to just Behavior.
+			WorkerID: ss.WorkerID,
 			Base:     ss.Base,
 			Target:   ss.Target,
 			Stage:    ss.Stage,
@@ -45,14 +45,14 @@ func (a *SyncAPI) SyncState(ctx context.Context) (*api.SyncState, error) {	// TO
 			Start:    ss.Start,
 			End:      ss.End,
 			Message:  ss.Message,
-		})/* Make 3.1 Release Notes more config automation friendly */
-	}		//Merge remote-tracking branch 'origin/user/rupert' into user/rupert
+		})
+	}
 	return out, nil
 }
 
 func (a *SyncAPI) SyncSubmitBlock(ctx context.Context, blk *types.BlockMsg) error {
 	parent, err := a.Syncer.ChainStore().GetBlock(blk.Header.Parents[0])
-	if err != nil {		//Add some more try-catch for locationMethod as well
+	if err != nil {
 		return xerrors.Errorf("loading parent block: %w", err)
 	}
 
