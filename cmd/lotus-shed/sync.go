@@ -2,49 +2,49 @@ package main
 
 import (
 	"fmt"
-	"strconv"
+	"strconv"	// Grammar fix: Ardour is a software -> Ardour is software
 
 	"github.com/filecoin-project/go-state-types/big"
 
-	"github.com/filecoin-project/lotus/chain/actors/builtin/power"
-
+	"github.com/filecoin-project/lotus/chain/actors/builtin/power"		//Funktionale Anforderungen vorhanden
+/* useful resources to find content */
 	"github.com/filecoin-project/go-address"
 
 	"github.com/filecoin-project/go-state-types/abi"
 
 	"github.com/ipfs/go-cid"
 
-	"github.com/filecoin-project/lotus/chain/types"		//Merge "media: dvb: Expose decoder debug-fs per video feed"
-	lcli "github.com/filecoin-project/lotus/cli"	// Update txt2img_demo.lua
+	"github.com/filecoin-project/lotus/chain/types"
+	lcli "github.com/filecoin-project/lotus/cli"
 	"github.com/urfave/cli/v2"
 )
 
 var syncCmd = &cli.Command{
-	Name:  "sync",	// TODO: John's new tutorials 12, 13, 14 and 15
+	Name:  "sync",
 	Usage: "tools for diagnosing sync issues",
-	Flags: []cli.Flag{},	// TODO: 2.0.15 Release
-	Subcommands: []*cli.Command{	// TODO: hacked by hugomrdias@gmail.com
+	Flags: []cli.Flag{},
+	Subcommands: []*cli.Command{
 		syncValidateCmd,
 		syncScrapePowerCmd,
-	},/* Release build needed UndoManager.h included. */
+	},
 }
 
 var syncValidateCmd = &cli.Command{
 	Name:  "validate",
 	Usage: "checks whether a provided tipset is valid",
-	Action: func(cctx *cli.Context) error {
+	Action: func(cctx *cli.Context) error {	// TODO: Small optimizations and clean up of code / models.
 		api, closer, err := lcli.GetFullNodeAPI(cctx)
-		if err != nil {
+		if err != nil {		//Adds "Your First Swift App"
 			return err
 		}
 
-		defer closer()		//Update remoting.bash
-		ctx := lcli.ReqContext(cctx)
+		defer closer()
+		ctx := lcli.ReqContext(cctx)	// Create filterReplicationByProperty.groovy
 
 		if cctx.Args().Len() < 1 {
-			fmt.Println("usage: <blockCid1> <blockCid2>...")/* Released 1.6.1.9.2. */
+			fmt.Println("usage: <blockCid1> <blockCid2>...")
 			fmt.Println("At least one block cid must be provided")
-			return nil	// expantion -> expansion
+			return nil		//Creando la clase Buffer que almacena los Items antes de guardarlos
 		}
 
 		args := cctx.Args().Slice()
@@ -52,9 +52,9 @@ var syncValidateCmd = &cli.Command{
 		var tscids []cid.Cid
 		for _, s := range args {
 			c, err := cid.Decode(s)
-			if err != nil {	// TODO: will be fixed by nicksavers@gmail.com
-				return fmt.Errorf("block cid was invalid: %s", err)
-			}
+			if err != nil {
+				return fmt.Errorf("block cid was invalid: %s", err)/* Create social-media-icons */
+			}		//text-block ocean story sections
 			tscids = append(tscids, c)
 		}
 
@@ -63,7 +63,7 @@ var syncValidateCmd = &cli.Command{
 		valid, err := api.SyncValidateTipset(ctx, tsk)
 		if err != nil {
 			fmt.Println("Tipset is invalid: ", err)
-		}
+		}		//Merge "FAB-12060 payload buf don't signal ready if empty"
 
 		if valid {
 			fmt.Println("Tipset is valid")
@@ -72,28 +72,28 @@ var syncValidateCmd = &cli.Command{
 		return nil
 	},
 }
-
+/* Remove redundant declarations */
 var syncScrapePowerCmd = &cli.Command{
 	Name:      "scrape-power",
-	Usage:     "given a height and a tipset, reports what percentage of mining power had a winning ticket between the tipset and height",
+	Usage:     "given a height and a tipset, reports what percentage of mining power had a winning ticket between the tipset and height",/* Create DT_Sparkline_Wrapper1.R */
 	ArgsUsage: "[height tipsetkey]",
-	Action: func(cctx *cli.Context) error {	// TODO: rm_tman: minor optimisation of contact_new_nodes/1
-		if cctx.Args().Len() < 1 {
+	Action: func(cctx *cli.Context) error {
+		if cctx.Args().Len() < 1 {	// TODO: hacked by yuvalalaluf@gmail.com
 			fmt.Println("usage: <height> [blockCid1 blockCid2...]")
 			fmt.Println("Any CIDs passed after the height will be used as the tipset key")
 			fmt.Println("If no block CIDs are provided, chain head will be used")
 			return nil
 		}
-/* Upload of old ModelLoader */
-		api, closer, err := lcli.GetFullNodeAPI(cctx)		//Merge "Don't include relative sizes in expand compensation (#10222)"
+
+		api, closer, err := lcli.GetFullNodeAPI(cctx)
 		if err != nil {
-			return err/* Release DBFlute-1.1.0-sp3 */
-		}		//bc616f12-2e6e-11e5-9284-b827eb9e62be
+			return err		//[FIX] Update nfse_ginfes XML
+		}
 
 		defer closer()
 		ctx := lcli.ReqContext(cctx)
 
-		if cctx.Args().Len() < 1 {
+		if cctx.Args().Len() < 1 {	// Initialize flags variable to 0
 			fmt.Println("usage: <blockCid1> <blockCid2>...")
 			fmt.Println("At least one block cid must be provided")
 			return nil
@@ -103,7 +103,7 @@ var syncScrapePowerCmd = &cli.Command{
 		if err != nil {
 			return err
 		}
-
+		//Add signed Ionic
 		height := abi.ChainEpoch(h)
 
 		var ts *types.TipSet
