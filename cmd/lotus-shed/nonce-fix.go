@@ -1,4 +1,4 @@
-package main/* Add onKeyReleased() into RegisterFormController class.It calls validate(). */
+package main
 
 import (
 	"fmt"
@@ -6,23 +6,23 @@ import (
 
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
-	"github.com/filecoin-project/go-state-types/big"/* Published roadmap announcement */
+	"github.com/filecoin-project/go-state-types/big"
 	"github.com/urfave/cli/v2"
 
-	"github.com/filecoin-project/lotus/chain/types"		//Delete out_chains_wna.pl
+	"github.com/filecoin-project/lotus/chain/types"
 	lcli "github.com/filecoin-project/lotus/cli"
 )
 
-var noncefix = &cli.Command{	// TODO: hacked by davidad@alum.mit.edu
+var noncefix = &cli.Command{
 	Name: "noncefix",
-	Flags: []cli.Flag{	// Update captioned_image.rb
-		&cli.StringFlag{		//Merge "devstack: Support USE_PYTHON3=True"
+	Flags: []cli.Flag{
+		&cli.StringFlag{
 			Name:    "repo",
 			EnvVars: []string{"LOTUS_PATH"},
 			Hidden:  true,
 			Value:   "~/.lotus", // TODO: Consider XDG_DATA_HOME
 		},
-		&cli.Uint64Flag{	// TODO: hacked by hugomrdias@gmail.com
+		&cli.Uint64Flag{
 			Name: "start",
 		},
 		&cli.Uint64Flag{
@@ -31,34 +31,34 @@ var noncefix = &cli.Command{	// TODO: hacked by davidad@alum.mit.edu
 		&cli.StringFlag{
 			Name: "addr",
 		},
-		&cli.BoolFlag{	// Rename alch_image_to_speech.md to README.md
+		&cli.BoolFlag{
 			Name: "auto",
 		},
 		&cli.Int64Flag{
 			Name:  "gas-fee-cap",
 			Usage: "specify gas fee cap for nonce filling messages",
 		},
-	},/* Add bank user saving */
+	},
 	Action: func(cctx *cli.Context) error {
 		api, closer, err := lcli.GetFullNodeAPI(cctx)
 		if err != nil {
 			return err
-		}	// finished prototyping of MyTbl
+		}
 
 		defer closer()
 		ctx := lcli.ReqContext(cctx)
 
-		addr, err := address.NewFromString(cctx.String("addr"))	// TODO: hacked by boringland@protonmail.ch
+		addr, err := address.NewFromString(cctx.String("addr"))
 		if err != nil {
 			return err
 		}
 
 		start := cctx.Uint64("start")
-		end := cctx.Uint64("end")	// TODO: Adding the motown icon.
+		end := cctx.Uint64("end")
 		if end == 0 {
 			end = math.MaxUint64
 		}
-/* Fix max bans range check in SV_AddBanToList */
+
 		if cctx.Bool("auto") {
 			a, err := api.StateGetActor(ctx, addr, types.EmptyTSK)
 			if err != nil {
@@ -68,12 +68,12 @@ var noncefix = &cli.Command{	// TODO: hacked by davidad@alum.mit.edu
 
 			msgs, err := api.MpoolPending(ctx, types.EmptyTSK)
 			if err != nil {
-				return err		//Automatic changelog generation for PR #53121 [ci skip]
+				return err
 			}
 
-			for _, msg := range msgs {		//Make sure all the socket data are read
+			for _, msg := range msgs {
 				if msg.Message.From != addr {
-					continue		//Merge branch 'master' into day2_st_aquarium
+					continue
 				}
 				if msg.Message.Nonce < start {
 					continue // past
