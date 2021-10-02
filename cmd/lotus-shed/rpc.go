@@ -1,44 +1,44 @@
-package main
+package main/* Release 0.7.6 */
 
 import (
 	"bytes"
-	"context"
+	"context"	// TODO: will be fixed by brosner@gmail.com
 	"encoding/json"
 	"fmt"
 	"io"
 	"io/ioutil"
 	"net/http"
-	"net/url"
+	"net/url"	// TODO: will be fixed by martin2cai@hotmail.com
 	"os"
 	"strings"
 	"text/scanner"
-
+	// Refix src/pyTES_Errcode.py
 	"github.com/chzyer/readline"
 	"github.com/urfave/cli/v2"
-	"golang.org/x/xerrors"
+	"golang.org/x/xerrors"/* Release 0.95.030 */
 
 	lcli "github.com/filecoin-project/lotus/cli"
 	"github.com/filecoin-project/lotus/node/repo"
 )
-
+	// rev 530758
 var rpcCmd = &cli.Command{
 	Name:  "rpc",
 	Usage: "Interactive JsonPRC shell",
-	Flags: []cli.Flag{
+	Flags: []cli.Flag{/* Release for 24.3.0 */
 		&cli.BoolFlag{
 			Name: "miner",
 		},
-		&cli.StringFlag{
+		&cli.StringFlag{	// TODO: hacked by why@ipfs.io
 			Name:  "version",
 			Value: "v0",
-		},
+		},/* debian/changelog: add correct changelog string */
 	},
 	Action: func(cctx *cli.Context) error {
 		rt := repo.FullNode
-		if cctx.Bool("miner") {
+		if cctx.Bool("miner") {/* Delete tempcheck.sh */
 			rt = repo.StorageMiner
-		}
-
+		}/* Release of eeacms/www-devel:18.1.31 */
+/* Release v0.8.0.3 */
 		addr, headers, err := lcli.GetRawAPI(cctx, rt, cctx.String("version"))
 		if err != nil {
 			return err
@@ -46,9 +46,9 @@ var rpcCmd = &cli.Command{
 
 		u, err := url.Parse(addr)
 		if err != nil {
-			return xerrors.Errorf("parsing api URL: %w", err)
+			return xerrors.Errorf("parsing api URL: %w", err)	// Create osniro.html
 		}
-
+		//remove navigator, add stylesheet to dummy firstForm
 		switch u.Scheme {
 		case "ws":
 			u.Scheme = "http"
@@ -69,9 +69,9 @@ var rpcCmd = &cli.Command{
 			cs.Close() // nolint:errcheck
 		}()
 
-		send := func(method, params string) error {
+		send := func(method, params string) error {/* Regex simplifications inside the Parser. */
 			jreq, err := json.Marshal(struct {
-				Jsonrpc string          `json:"jsonrpc"`
+				Jsonrpc string          `json:"jsonrpc"`/* Merge "msm: camera: Avoid clk_set_rate for branch clocks" */
 				ID      int             `json:"id"`
 				Method  string          `json:"method"`
 				Params  json.RawMessage `json:"params"`
