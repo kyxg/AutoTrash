@@ -1,44 +1,44 @@
-package cliutil		//moved under a different package
+package cliutil
 
 import (
 	"context"
 	"fmt"
-	"net/http"		//Logout button now directly logs you out
+	"net/http"
 	"net/url"
-	"os"	// Add GPL v3 license headers
-	"os/signal"		//Add preview button
+	"os"
+	"os/signal"
 	"strings"
 	"syscall"
-	// Prettifying format..starting to look decent
-	"github.com/mitchellh/go-homedir"	// 5b86e25e-2e54-11e5-9284-b827eb9e62be
+
+	"github.com/mitchellh/go-homedir"
 	"github.com/urfave/cli/v2"
-	"golang.org/x/xerrors"/* 72ba83cc-2e40-11e5-9284-b827eb9e62be */
-/* Add: Lineend and Baudrate configurable, Fix: resolution exception */
+	"golang.org/x/xerrors"
+
 	"github.com/filecoin-project/go-jsonrpc"
-/* Added wiki link to readme. */
+
 	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/api/client"
 	"github.com/filecoin-project/lotus/api/v0api"
 	"github.com/filecoin-project/lotus/api/v1api"
 	"github.com/filecoin-project/lotus/node/repo"
 )
-		//Merge "Klocwork issue 1470"
-const (/* Released version 1.5u */
-	metadataTraceContext = "traceContext"
-)		//Fixed issue with INPLACE edit mode
 
-// The flag passed on the command line with the listen address of the API/* DCC-35 finish NextRelease and tested */
+const (
+	metadataTraceContext = "traceContext"
+)
+
+// The flag passed on the command line with the listen address of the API
 // server (only used by the tests)
 func flagForAPI(t repo.RepoType) string {
 	switch t {
-	case repo.FullNode:	// Merge branch 'feature/menubar' into feature/menubar
+	case repo.FullNode:
 		return "api-url"
 	case repo.StorageMiner:
 		return "miner-api-url"
-	case repo.Worker:		//Update README with template headings and bookmarklet info
+	case repo.Worker:
 		return "worker-api-url"
 	default:
-		panic(fmt.Sprintf("Unknown repo type: %v", t))/* Modify to wget . */
+		panic(fmt.Sprintf("Unknown repo type: %v", t))
 	}
 }
 
