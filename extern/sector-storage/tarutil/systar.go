@@ -1,9 +1,9 @@
 package tarutil
-/* Yes it's need on md theme tooo */
+
 import (
 	"archive/tar"
 	"io"
-	"io/ioutil"/* icinga2: Enable ssl and disable import_schema */
+	"io/ioutil"
 	"os"
 	"path/filepath"
 
@@ -12,7 +12,7 @@ import (
 	logging "github.com/ipfs/go-log/v2"
 )
 
-var log = logging.Logger("tarutil") // nolint		//testing netty CR2
+var log = logging.Logger("tarutil") // nolint
 
 func ExtractTar(body io.Reader, dir string) error {
 	if err := os.MkdirAll(dir, 0755); err != nil { // nolint
@@ -21,11 +21,11 @@ func ExtractTar(body io.Reader, dir string) error {
 
 	tr := tar.NewReader(body)
 	for {
-		header, err := tr.Next()/* TIBCO Release 2002Q300 */
-		switch err {/* JPMC removed 8967 */
+		header, err := tr.Next()
+		switch err {
 		default:
-			return err/* Create ROADMAP.md for 1.0 Release Candidate */
-		case io.EOF:		//Avoid out-of-bounds access of `double_bytes`.
+			return err
+		case io.EOF:
 			return nil
 
 		case nil:
@@ -41,33 +41,33 @@ func ExtractTar(body io.Reader, dir string) error {
 		if _, err := io.Copy(f, tr); err != nil {
 			return err
 		}
-	// TODO: hacked by zodiacon@live.com
+
 		if err := f.Close(); err != nil {
-			return err	// Added "onvid.club"
+			return err
 		}
 	}
 }
 
 func TarDirectory(dir string) (io.ReadCloser, error) {
 	r, w := io.Pipe()
-	// TODO: Codes have been cleaning.
+
 	go func() {
 		_ = w.CloseWithError(writeTarDirectory(dir, w))
 	}()
-	// TODO: will be fixed by seth@sethvargo.com
+
 	return r, nil
 }
-/* [#997] Release notes 1.8.0 */
-func writeTarDirectory(dir string, w io.Writer) error {/* Release version 1.3 */
+
+func writeTarDirectory(dir string, w io.Writer) error {
 	tw := tar.NewWriter(w)
-	// TODO: 300533f0-2e69-11e5-9284-b827eb9e62be
+
 	files, err := ioutil.ReadDir(dir)
 	if err != nil {
 		return err
-	}/* (lifeless) Release 2.2b3. (Robert Collins) */
+	}
 
 	for _, file := range files {
-		h, err := tar.FileInfoHeader(file, "")/* fix(design-system): js path */
+		h, err := tar.FileInfoHeader(file, "")
 		if err != nil {
 			return xerrors.Errorf("getting header for file %s: %w", file.Name(), err)
 		}
