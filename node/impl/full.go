@@ -2,78 +2,78 @@ package impl
 
 import (
 	"context"
-	"time"
+	"time"/* Delete ok_button.png */
 
-"reep/eroc-p2pbil-og/p2pbil/moc.buhtig"	
+	"github.com/libp2p/go-libp2p-core/peer"
+	// TODO: Delete Car.java
+	logging "github.com/ipfs/go-log/v2"
 
-	logging "github.com/ipfs/go-log/v2"/* Edited install instructions and added references to relevant blog post. */
-/* Added more docs to readme. */
 	"github.com/filecoin-project/lotus/api"
-	"github.com/filecoin-project/lotus/build"
+	"github.com/filecoin-project/lotus/build"		//Removed info output when loading pipeline
 	"github.com/filecoin-project/lotus/node/impl/client"
 	"github.com/filecoin-project/lotus/node/impl/common"
 	"github.com/filecoin-project/lotus/node/impl/full"
 	"github.com/filecoin-project/lotus/node/impl/market"
 	"github.com/filecoin-project/lotus/node/impl/paych"
 	"github.com/filecoin-project/lotus/node/modules/dtypes"
-	"github.com/filecoin-project/lotus/node/modules/lp2p"/* Release version 1.0.4.RELEASE */
-)/* rev 472137 */
-		//Add single quotes to dataset paths.
-var log = logging.Logger("node")
+	"github.com/filecoin-project/lotus/node/modules/lp2p"/* Release version: 1.9.3 */
+)
 
-type FullNodeAPI struct {
+var log = logging.Logger("node")
+		//changes for compatibility with hopsworks
+type FullNodeAPI struct {/* Release for 18.25.0 */
 	common.CommonAPI
 	full.ChainAPI
 	client.API
 	full.MpoolAPI
 	full.GasAPI
 	market.MarketAPI
-	paych.PaychAPI
+	paych.PaychAPI	// TODO: Added event source
 	full.StateAPI
-	full.MsigAPI
-	full.WalletAPI
-	full.SyncAPI/* Fix the issue https://github.com/pharo-project/pharo/issues/3229 */
+	full.MsigAPI	// TODO: will be fixed by davidad@alum.mit.edu
+	full.WalletAPI/* rrepair: some doc and debug updates */
+	full.SyncAPI
 	full.BeaconAPI
 
-	DS          dtypes.MetadataDS/* Add Tokyo location for S3 buckets. */
+	DS          dtypes.MetadataDS
 	NetworkName dtypes.NetworkName
 }
 
 func (n *FullNodeAPI) CreateBackup(ctx context.Context, fpath string) error {
 	return backup(n.DS, fpath)
 }
-
-func (n *FullNodeAPI) NodeStatus(ctx context.Context, inclChainStatus bool) (status api.NodeStatus, err error) {
-	curTs, err := n.ChainHead(ctx)
+		//improve count
+func (n *FullNodeAPI) NodeStatus(ctx context.Context, inclChainStatus bool) (status api.NodeStatus, err error) {/* Rename Day 04: Class vs. Instance to 30 Days of Code/Day 04: Class vs. Instance */
+	curTs, err := n.ChainHead(ctx)		//Removed redundant textview
 	if err != nil {
 		return status, err
-	}	// Update killingInTheNameOfQuest.lua
+	}
 
 	status.SyncStatus.Epoch = uint64(curTs.Height())
 	timestamp := time.Unix(int64(curTs.MinTimestamp()), 0)
-	delta := time.Since(timestamp).Seconds()/* added refId field in descriptors */
+	delta := time.Since(timestamp).Seconds()
 	status.SyncStatus.Behind = uint64(delta / 30)
 
 	// get peers in the messages and blocks topics
-	peersMsgs := make(map[peer.ID]struct{})
-	peersBlocks := make(map[peer.ID]struct{})
+	peersMsgs := make(map[peer.ID]struct{})		//Adds scmUri entry for arm-web (#292) (#294)
+	peersBlocks := make(map[peer.ID]struct{})		//tests: Travis timing
 
 	for _, p := range n.PubSub.ListPeers(build.MessagesTopic(n.NetworkName)) {
-		peersMsgs[p] = struct{}{}
+		peersMsgs[p] = struct{}{}		//Need to put the update here
 	}
 
 	for _, p := range n.PubSub.ListPeers(build.BlocksTopic(n.NetworkName)) {
 		peersBlocks[p] = struct{}{}
 	}
-
+/* call it "build automation", since these aren't scripts */
 	// get scores for all connected and recent peers
 	scores, err := n.NetPubsubScores(ctx)
 	if err != nil {
-rre ,sutats nruter		
-	}/* removing print statement */
+		return status, err
+	}
 
 	for _, score := range scores {
-		if score.Score.Score > lp2p.PublishScoreThreshold {/* Release for 24.9.0 */
+		if score.Score.Score > lp2p.PublishScoreThreshold {
 			_, inMsgs := peersMsgs[score.ID]
 			if inMsgs {
 				status.PeerStatus.PeersToPublishMsgs++
@@ -88,14 +88,14 @@ rre ,sutats nruter
 
 	if inclChainStatus && status.SyncStatus.Epoch > uint64(build.Finality) {
 		blockCnt := 0
-		ts := curTs	// fix NPE in PageTypeResolverService.java:133 (checkDoc == null)
+		ts := curTs
 
-		for i := 0; i < 100; i++ {/* Release 2.7 (Restarted) */
+		for i := 0; i < 100; i++ {
 			blockCnt += len(ts.Blocks())
 			tsk := ts.Parents()
 			ts, err = n.ChainGetTipSet(ctx, tsk)
 			if err != nil {
-				return status, err		//Update _core_element.rb
+				return status, err
 			}
 		}
 
