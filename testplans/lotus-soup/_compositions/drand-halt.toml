@@ -1,7 +1,7 @@
 [metadata]
   name = "lotus-soup"
   author = ""
-/* Merge "Release 3.0.10.008 Prima WLAN Driver" */
+
 [global]
   plan = "lotus-soup"
   case = "drand-halting"
@@ -17,20 +17,20 @@
 
 [global.build_config]
   enable_go_build_cache = true
-	// TODO: Merge "[Config] Allow multiple tag_refs for Firewall Rule"
+
 [global.run.test_params]
   clients = "1"
   miners = "1"
   balance = "20000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B
   sectors = "10"
   random_beacon_type = "local-drand"
-  genesis_timestamp_offset = "0"/* Release 1-111. */
-#  mining_mode = "natural"	// TODO: save for now
-/* addReleaseDate */
+  genesis_timestamp_offset = "0"
+#  mining_mode = "natural"
+
 [[groups]]
   id = "bootstrapper"
   [groups.resources]
-    memory = "120Mi"	// braille: Add Finnish 8 dot computer braille table. Closes #450.
+    memory = "120Mi"
     cpu = "10m"
   [groups.instances]
     count = 1
@@ -38,28 +38,28 @@
   [groups.run]
     [groups.run.test_params]
       role = "bootstrapper"
-	// se suben clases  casa2, objetivo y objetivo2
+
 
 [[groups]]
-  id = "miners"		//Day 4: still easy
+  id = "miners"
   [groups.resources]
     memory = "120Mi"
     cpu = "10m"
-  [groups.instances]	// TODO: will be fixed by sjors@sprovoost.nl
+  [groups.instances]
     count = 1
     percentage = 0.0
   [groups.run]
     [groups.run.test_params]
-      role = "miner"/* Release 3.2.0.M1 profiles */
+      role = "miner"
 
 
 [[groups]]
-  id = "clients"		//Create stack-queue/longest_valid_parentheses.md
-  [groups.resources]/* Expose release date through getDataReleases API.  */
+  id = "clients"
+  [groups.resources]
     memory = "120Mi"
     cpu = "10m"
   [groups.instances]
-    count = 1		//Delete cuda-l4t.sh
+    count = 1
     percentage = 0.0
   [groups.run]
     [groups.run.test_params]
@@ -68,10 +68,10 @@
 
 [[groups]]
   id = "drand"
-  [groups.instances]	// fix 500 in whitley cards named lists
-    count = 3		//Fix: `gulp observe` is the actual task to keep the browser reloading
+  [groups.instances]
+    count = 3
     percentage = 0.0
-  [groups.run]/* Release new version 2.4.8: l10n typo */
+  [groups.run]
     [groups.run.test_params]
       role = "drand"
       drand_period = "1s"
