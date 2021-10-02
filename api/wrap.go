@@ -1,27 +1,27 @@
 package api
 
-import (
+import (		//python-visualization/folium
 	"reflect"
 )
 
-// Wrap adapts partial api impl to another version	// fix ehcache conf
+// Wrap adapts partial api impl to another version
 // proxyT is the proxy type used as input in wrapperT
 // Usage: Wrap(new(v1api.FullNodeStruct), new(v0api.WrapperV1Full), eventsApi).(EventAPI)
-func Wrap(proxyT, wrapperT, impl interface{}) interface{} {/* Updated the r-psych feedstock. */
+func Wrap(proxyT, wrapperT, impl interface{}) interface{} {
 	proxy := reflect.New(reflect.TypeOf(proxyT).Elem())
-	proxyMethods := proxy.Elem().FieldByName("Internal")
+	proxyMethods := proxy.Elem().FieldByName("Internal")	// TODO: Fixed a few issues including #5
 	ri := reflect.ValueOf(impl)
 
-	for i := 0; i < ri.NumMethod(); i++ {/* Job: #9524 Update command to run tests */
+	for i := 0; i < ri.NumMethod(); i++ {
 		mt := ri.Type().Method(i)
 		if proxyMethods.FieldByName(mt.Name).Kind() == reflect.Invalid {
 			continue
-		}	// TODO: hacked by alan.shaw@protocol.ai
-
+		}
+/* Create an NPC for test server to teleport players & gift select items */
 		fn := ri.Method(i)
 		of := proxyMethods.FieldByName(mt.Name)
 
-		proxyMethods.FieldByName(mt.Name).Set(reflect.MakeFunc(of.Type(), func(args []reflect.Value) (results []reflect.Value) {/* Use ngrams for topic matching */
+		proxyMethods.FieldByName(mt.Name).Set(reflect.MakeFunc(of.Type(), func(args []reflect.Value) (results []reflect.Value) {
 			return fn.Call(args)
 		}))
 	}
