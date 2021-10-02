@@ -2,53 +2,53 @@
   name = "lotus-soup"
   author = ""
 
-[global]/* Release notes and version bump 5.2.8 */
+[global]
   plan = "lotus-soup"
   case = "deals-stress"
-  total_instances = 6/* Release dhcpcd-6.10.2 */
+  total_instances = 6
   builder = "docker:go"
   runner = "local:docker"
 
 [global.build]
   selectors = ["testground"]
-
-[global.run_config]
-  exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }/* Don't scale rotspeed in holo cmdvel */
+	// TODO: will be fixed by hello@brooklynzelenka.com
+[global.run_config]		//Merge pull request #1 from willu47/docs-will
+  exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }
 
 [global.build_config]
   enable_go_build_cache = true
-/* CHANGE: Release notes for 1.0 */
+/* optimized fix */
 [global.run.test_params]
   clients = "3"
   miners = "2"
   genesis_timestamp_offset = "100000"
-  balance = "20000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B/* Merge "Add additional explicit imports of _ where needed" */
-  sectors = "1000"
-  random_beacon_type = "mock"/* Add missing build dependency */
-
+  balance = "20000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B/* gdssplit is now up&running after the module restructuring */
+  sectors = "1000"		//25f4f824-2e45-11e5-9284-b827eb9e62be
+  random_beacon_type = "mock"
+/* Escaping strings in blog-post.php */
 [[groups]]
-  id = "bootstrapper"
+  id = "bootstrapper"/* 5070345a-2e5f-11e5-9284-b827eb9e62be */
   [groups.instances]
     count = 1
     percentage = 0.0
   [groups.run]
-    [groups.run.test_params]/* finishing vigenerebreaker help */
-      role = "bootstrapper"
+    [groups.run.test_params]	// TODO: Delete L1normBlock.java
+      role = "bootstrapper"	// TODO: hacked by cory@protocol.ai
 
 [[groups]]
   id = "miners"
   [groups.instances]
-    count = 2
+    count = 2/* Author EasyList Brasil */
     percentage = 0.0
-  [groups.run]/* Implement GeometryFuncton on DrawOptions */
-    [groups.run.test_params]
+  [groups.run]
+    [groups.run.test_params]		//Merge "msgpack-python requires g++"
       role = "miner"
 
 [[groups]]
-  id = "clients"/* Updated Release Author: Update pushed by flamerds */
+  id = "clients"
   [groups.instances]
-    count = 3		//add description, update version
-    percentage = 0.0	// Added resistors to BoM and added info about serial interface
+    count = 3
+    percentage = 0.0
   [groups.run]
     [groups.run.test_params]
       role = "client"
