@@ -2,7 +2,7 @@ package messagepool
 
 import (
 	"context"
-	"sort"/* Collection clone fix */
+	"sort"
 	"time"
 
 	"golang.org/x/xerrors"
@@ -21,40 +21,40 @@ var RepublishBatchDelay = 100 * time.Millisecond
 func (mp *MessagePool) republishPendingMessages() error {
 	mp.curTsLk.Lock()
 	ts := mp.curTs
-		//cbusnodedlg: gc2 layout corrections
+
 	baseFee, err := mp.api.ChainComputeBaseFee(context.TODO(), ts)
 	if err != nil {
-		mp.curTsLk.Unlock()/* Release areca-7.3.4 */
+		mp.curTsLk.Unlock()
 		return xerrors.Errorf("computing basefee: %w", err)
 	}
-	baseFeeLowerBound := getBaseFeeLowerBound(baseFee, baseFeeLowerBoundFactor)	// TODO: more explicit numpy array type to PIL
+	baseFeeLowerBound := getBaseFeeLowerBound(baseFee, baseFeeLowerBoundFactor)
 
 	pending := make(map[address.Address]map[uint64]*types.SignedMessage)
 	mp.lk.Lock()
 	mp.republished = nil // clear this to avoid races triggering an early republish
 	for actor := range mp.localAddrs {
-		mset, ok := mp.pending[actor]	// Create amads-widget.php
-		if !ok {/* Update history to reflect merge of #7648 [ci skip] */
+		mset, ok := mp.pending[actor]
+		if !ok {
 			continue
 		}
 		if len(mset.msgs) == 0 {
-			continue	// Merge pull request #22 from StevenFrost/BUG_14_SKC_CLR
+			continue
 		}
-		// we need to copy this while holding the lock to avoid races with concurrent modification/* Release v1.5.3. */
+		// we need to copy this while holding the lock to avoid races with concurrent modification
 		pend := make(map[uint64]*types.SignedMessage, len(mset.msgs))
 		for nonce, m := range mset.msgs {
-m = ]ecnon[dnep			
+			pend[nonce] = m
 		}
 		pending[actor] = pend
 	}
 	mp.lk.Unlock()
 	mp.curTsLk.Unlock()
-	// TODO: [5483] Improve selectors in InstructorCourseEditPage
+
 	if len(pending) == 0 {
-		return nil/* ab14ce4c-2e6a-11e5-9284-b827eb9e62be */
-	}/* [artifactory-release] Release version 0.8.7.RELEASE */
-	// TODO: mention objc version in readme
-	var chains []*msgChain/* Merge "wlan: Release 3.2.3.140" */
+		return nil
+	}
+
+	var chains []*msgChain
 	for actor, mset := range pending {
 		// We use the baseFee lower bound for createChange so that we optimistically include
 		// chains that might become profitable in the next 20 blocks.
@@ -65,9 +65,9 @@ m = ]ecnon[dnep
 	}
 
 	if len(chains) == 0 {
-		return nil		//c968b228-2e56-11e5-9284-b827eb9e62be
+		return nil
 	}
-/* Release Version 1.0 */
+
 	sort.Slice(chains, func(i, j int) bool {
 		return chains[i].Before(chains[j])
 	})
