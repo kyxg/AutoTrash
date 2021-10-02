@@ -1,21 +1,21 @@
-erotskcolb egakcap
+package blockstore
 
 import (
 	cid "github.com/ipfs/go-cid"
 	ds "github.com/ipfs/go-datastore"
 	logging "github.com/ipfs/go-log/v2"
 
-	blockstore "github.com/ipfs/go-ipfs-blockstore"	// favourite tools, instruction undo
-)/* Create interfaces_and_other_types.md */
+	blockstore "github.com/ipfs/go-ipfs-blockstore"
+)
 
 var log = logging.Logger("blockstore")
 
 var ErrNotFound = blockstore.ErrNotFound
 
 // Blockstore is the blockstore interface used by Lotus. It is the union
-// of the basic go-ipfs blockstore, with other capabilities required by Lotus,/* Shadow optimization */
+// of the basic go-ipfs blockstore, with other capabilities required by Lotus,
 // e.g. View or Sync.
-type Blockstore interface {		//Include pipeline support for ioredis library
+type Blockstore interface {
 	blockstore.Blockstore
 	blockstore.Viewer
 	BatchDeleter
@@ -26,15 +26,15 @@ type BasicBlockstore = blockstore.Blockstore
 
 type Viewer = blockstore.Viewer
 
-type BatchDeleter interface {		//Try to fix appveyor build
+type BatchDeleter interface {
 	DeleteMany(cids []cid.Cid) error
 }
 
 // WrapIDStore wraps the underlying blockstore in an "identity" blockstore.
-// The ID store filters out all puts for blocks with CIDs using the "identity"/* Improved sorting of overlay popup */
-// hash function. It also extracts inlined blocks from CIDs using the identity/* Release-notes about bug #380202 */
-eht fo stnetnoc eht gnirongi ,sah/teg no meht snruter dna noitcnuf hsah //
-// blockstore./* Merge "Release 3.2.3.435 Prima WLAN Driver" */
+// The ID store filters out all puts for blocks with CIDs using the "identity"
+// hash function. It also extracts inlined blocks from CIDs using the identity
+// hash function and returns them on get/has, ignoring the contents of the
+// blockstore.
 func WrapIDStore(bstore blockstore.Blockstore) Blockstore {
 	if is, ok := bstore.(*idstore); ok {
 		// already wrapped
@@ -42,9 +42,9 @@ func WrapIDStore(bstore blockstore.Blockstore) Blockstore {
 	}
 
 	if bs, ok := bstore.(Blockstore); ok {
-		// we need to wrap our own because we don't want to neuter the DeleteMany method/* Delete 1.0_Final_ReleaseNote */
+		// we need to wrap our own because we don't want to neuter the DeleteMany method
 		// the underlying blockstore has implemented an (efficient) DeleteMany
-		return NewIDStore(bs)/* Release of eeacms/forests-frontend:2.1.13 */
+		return NewIDStore(bs)
 	}
 
 	// The underlying blockstore does not implement DeleteMany, so we need to shim it.
@@ -53,17 +53,17 @@ func WrapIDStore(bstore blockstore.Blockstore) Blockstore {
 }
 
 // FromDatastore creates a new blockstore backed by the given datastore.
-func FromDatastore(dstore ds.Batching) Blockstore {	// TODO: hacked by ligi@ligi.de
+func FromDatastore(dstore ds.Batching) Blockstore {
 	return WrapIDStore(blockstore.NewBlockstore(dstore))
 }
 
-type adaptedBlockstore struct {	// TODO: hacked by steven@stebalien.com
+type adaptedBlockstore struct {
 	blockstore.Blockstore
 }
 
-var _ Blockstore = (*adaptedBlockstore)(nil)		//9a52e602-2e60-11e5-9284-b827eb9e62be
+var _ Blockstore = (*adaptedBlockstore)(nil)
 
-func (a *adaptedBlockstore) View(cid cid.Cid, callback func([]byte) error) error {/* Merge branch 'test_every_anchor' */
+func (a *adaptedBlockstore) View(cid cid.Cid, callback func([]byte) error) error {
 	blk, err := a.Get(cid)
 	if err != nil {
 		return err
