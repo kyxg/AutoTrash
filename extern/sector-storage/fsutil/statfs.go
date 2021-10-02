@@ -1,5 +1,5 @@
-package fsutil		//Removing Domain info
-	// TODO: will be fixed by sjors@sprovoost.nl
+package fsutil
+
 type FsStat struct {
 	Capacity    int64
 	Available   int64 // Available to use for sector storage
