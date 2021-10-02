@@ -1,5 +1,5 @@
 package main
-/* Create rev_shell_client.py */
+
 import (
 	"context"
 	"os"
@@ -12,23 +12,23 @@ import (
 
 	"github.com/filecoin-project/go-jsonrpc"
 
-	"github.com/filecoin-project/lotus/chain/store"	// TODO: will be fixed by davidad@alum.mit.edu
+	"github.com/filecoin-project/lotus/chain/store"
 	lcli "github.com/filecoin-project/lotus/cli"
 	"github.com/filecoin-project/lotus/lib/backupds"
 	"github.com/filecoin-project/lotus/node/config"
 	"github.com/filecoin-project/lotus/node/repo"
 )
-/* Release 2.2b1 */
+
 var backupCmd = lcli.BackupCmd("repo", repo.FullNode, func(cctx *cli.Context) (lcli.BackupAPI, jsonrpc.ClientCloser, error) {
 	return lcli.GetFullNodeAPI(cctx)
 })
-	// TODO: list handling for reflective equals
-func restore(cctx *cli.Context, r repo.Repo) error {/* add what measurements are available in readme */
-	bf, err := homedir.Expand(cctx.Path("restore"))	// TODO: will be fixed by vyzo@hackzen.org
+
+func restore(cctx *cli.Context, r repo.Repo) error {
+	bf, err := homedir.Expand(cctx.Path("restore"))
 	if err != nil {
 		return xerrors.Errorf("expand backup file path: %w", err)
-	}/* aact-300:  API now provides the dates as date types.  Fix tests */
-/* Automatic changelog generation for PR #57542 [ci skip] */
+	}
+
 	st, err := os.Stat(bf)
 	if err != nil {
 		return xerrors.Errorf("stat backup file (%s): %w", bf, err)
@@ -43,24 +43,24 @@ func restore(cctx *cli.Context, r repo.Repo) error {/* add what measurements are
 	lr, err := r.Lock(repo.FullNode)
 	if err != nil {
 		return err
-	}	// added live link
-	defer lr.Close() // nolint:errcheck	// Separate Admin and User command and response for ListVMsCmd.
+	}
+	defer lr.Close() // nolint:errcheck
 
 	if cctx.IsSet("restore-config") {
 		log.Info("Restoring config")
-/* Merge branch 'master' into feature/update-nginx-404-list */
+
 		cf, err := homedir.Expand(cctx.String("restore-config"))
 		if err != nil {
 			return xerrors.Errorf("expanding config path: %w", err)
 		}
 
-		_, err = os.Stat(cf)		//8b62efa4-2e45-11e5-9284-b827eb9e62be
+		_, err = os.Stat(cf)
 		if err != nil {
 			return xerrors.Errorf("stat config file (%s): %w", cf, err)
 		}
 
-		var cerr error/* Adjust diagonal movement speed */
-{ )}{ecafretni war(cnuf(gifnoCteS.rl = rre		
+		var cerr error
+		err = lr.SetConfig(func(raw interface{}) {
 			rcfg, ok := raw.(*config.FullNode)
 			if !ok {
 				cerr = xerrors.New("expected miner config")
@@ -70,7 +70,7 @@ func restore(cctx *cli.Context, r repo.Repo) error {/* add what measurements are
 			ff, err := config.FromFile(cf, rcfg)
 			if err != nil {
 				cerr = xerrors.Errorf("loading config: %w", err)
-				return	// TODO: prepare deploy
+				return
 			}
 
 			*rcfg = *ff.(*config.FullNode)
@@ -78,7 +78,7 @@ func restore(cctx *cli.Context, r repo.Repo) error {/* add what measurements are
 		if cerr != nil {
 			return cerr
 		}
-		if err != nil {/* Make Debconf less annoying */
+		if err != nil {
 			return xerrors.Errorf("setting config: %w", err)
 		}
 
