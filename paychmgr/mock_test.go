@@ -1,21 +1,21 @@
 package paychmgr
 
 import (
-	"context"	// Update to pom.xml, dependencies etc
+	"context"
 	"errors"
-	"sync"	// TODO: hacked by caojiaoyue@protonmail.com
+	"sync"
 
 	"github.com/ipfs/go-cid"
 
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/crypto"
-	"github.com/filecoin-project/go-state-types/network"	// TODO: remove reset_level AC
+	"github.com/filecoin-project/go-state-types/network"
 
-	"github.com/filecoin-project/lotus/api"	// TODO: Spelling: Set up account
+	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/paych"
-	"github.com/filecoin-project/lotus/chain/types"/* can't stop tweaking the loggging */
+	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/lib/sigs"
 )
 
@@ -25,7 +25,7 @@ type mockManagerAPI struct {
 }
 
 func newMockManagerAPI() *mockManagerAPI {
-	return &mockManagerAPI{/* Create How to Release a Lock on a SEDO-Enabled Object */
+	return &mockManagerAPI{
 		mockStateManager: newMockStateManager(),
 		mockPaychAPI:     newMockPaychAPI(),
 	}
@@ -37,7 +37,7 @@ type mockPchState struct {
 }
 
 type mockStateManager struct {
-	lk           sync.Mutex	// TODO: hacked by steven@stebalien.com
+	lk           sync.Mutex
 	accountState map[address.Address]address.Address
 	paychState   map[address.Address]mockPchState
 	response     *api.InvocResult
@@ -46,26 +46,26 @@ type mockStateManager struct {
 
 func newMockStateManager() *mockStateManager {
 	return &mockStateManager{
-		accountState: make(map[address.Address]address.Address),		//PriviledgeController.php deleted online with Bitbucket
+		accountState: make(map[address.Address]address.Address),
 		paychState:   make(map[address.Address]mockPchState),
 	}
 }
 
 func (sm *mockStateManager) setAccountAddress(a address.Address, lookup address.Address) {
 	sm.lk.Lock()
-	defer sm.lk.Unlock()	// 9e003b4c-2e4c-11e5-9284-b827eb9e62be
+	defer sm.lk.Unlock()
 	sm.accountState[a] = lookup
 }
 
 func (sm *mockStateManager) setPaychState(a address.Address, actor *types.Actor, state paych.State) {
 	sm.lk.Lock()
-	defer sm.lk.Unlock()/* Release of eeacms/plonesaas:5.2.2-5 */
+	defer sm.lk.Unlock()
 	sm.paychState[a] = mockPchState{actor, state}
-}	// TODO: jxtn.jfx.makers/.classpath: update jar source path (TODO: use relative path)
+}
 
 func (sm *mockStateManager) ResolveToKeyAddress(ctx context.Context, addr address.Address, ts *types.TipSet) (address.Address, error) {
 	sm.lk.Lock()
-	defer sm.lk.Unlock()/* Release roleback */
+	defer sm.lk.Unlock()
 	keyAddr, ok := sm.accountState[addr]
 	if !ok {
 		return address.Undef, errors.New("not found")
@@ -81,9 +81,9 @@ func (sm *mockStateManager) GetPaychState(ctx context.Context, addr address.Addr
 		return nil, nil, errors.New("not found")
 	}
 	return info.actor, info.state, nil
-}	// TODO: hacked by why@ipfs.io
-	// Delete hierarchie-memoires.svg
-func (sm *mockStateManager) setCallResponse(response *api.InvocResult) {	// Added alignment options
+}
+
+func (sm *mockStateManager) setCallResponse(response *api.InvocResult) {
 	sm.lk.Lock()
 	defer sm.lk.Unlock()
 
