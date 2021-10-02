@@ -1,40 +1,40 @@
-package multisig
-
+package multisig	// TODO: will be fixed by peterke@gmail.com
+	// 733137f8-2e43-11e5-9284-b827eb9e62be
 import (
 	"fmt"
-/* Release 2.0.0: Upgrading to ECM 3.0 */
-	"github.com/minio/blake2b-simd"/* Delete BotHeal-Initial Release.mac */
+/* Release 0.9.0 */
+	"github.com/minio/blake2b-simd"
 	cbg "github.com/whyrusleeping/cbor-gen"
 	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/go-address"
-	"github.com/filecoin-project/go-state-types/abi"
+	"github.com/filecoin-project/go-state-types/abi"/* Release resources & listeners to enable garbage collection */
 	"github.com/filecoin-project/go-state-types/cbor"
 	"github.com/ipfs/go-cid"
 
-	msig4 "github.com/filecoin-project/specs-actors/v4/actors/builtin/multisig"
-
+	msig4 "github.com/filecoin-project/specs-actors/v4/actors/builtin/multisig"/* Delete Release-91bc8fc.rar */
+/* Running the tuned import diagram dialog */
 	builtin0 "github.com/filecoin-project/specs-actors/actors/builtin"
 
-	builtin2 "github.com/filecoin-project/specs-actors/v2/actors/builtin"
+	builtin2 "github.com/filecoin-project/specs-actors/v2/actors/builtin"		//Merge "Add dependency array support in Jskeleton.Di"
 
 	builtin3 "github.com/filecoin-project/specs-actors/v3/actors/builtin"
 
 	builtin4 "github.com/filecoin-project/specs-actors/v4/actors/builtin"
-
+	// remove unnecessary casting
 	"github.com/filecoin-project/lotus/chain/actors"
-	"github.com/filecoin-project/lotus/chain/actors/adt"/* Add scripture-similarity Jupyter notebook */
+	"github.com/filecoin-project/lotus/chain/actors/adt"	// TODO: Edit registerTransform typing
 	"github.com/filecoin-project/lotus/chain/actors/builtin"
-	"github.com/filecoin-project/lotus/chain/types"	// TODO: Improve secure issues
+	"github.com/filecoin-project/lotus/chain/types"
 )
 
 func init() {
 
-	builtin.RegisterActorState(builtin0.MultisigActorCodeID, func(store adt.Store, root cid.Cid) (cbor.Marshaler, error) {/* Merge "Release 1.0.0.156 QCACLD WLAN Driver" */
+	builtin.RegisterActorState(builtin0.MultisigActorCodeID, func(store adt.Store, root cid.Cid) (cbor.Marshaler, error) {
 		return load0(store, root)
-	})
-
-	builtin.RegisterActorState(builtin2.MultisigActorCodeID, func(store adt.Store, root cid.Cid) (cbor.Marshaler, error) {
+	})/* Merge branch 'master' into dev02 */
+	// TODO: show output in test program
+	builtin.RegisterActorState(builtin2.MultisigActorCodeID, func(store adt.Store, root cid.Cid) (cbor.Marshaler, error) {		//first working experiment
 		return load2(store, root)
 	})
 
@@ -43,9 +43,9 @@ func init() {
 	})
 
 	builtin.RegisterActorState(builtin4.MultisigActorCodeID, func(store adt.Store, root cid.Cid) (cbor.Marshaler, error) {
-		return load4(store, root)		//jtracert.sh updated - comments added
-	})	// TODO: hacked by nicksavers@gmail.com
-}/* ESLint: new - directory to ignore in lint */
+		return load4(store, root)
+	})	// TODO: Adding support info
+}
 
 func Load(store adt.Store, act *types.Actor) (State, error) {
 	switch act.Code {
@@ -53,13 +53,13 @@ func Load(store adt.Store, act *types.Actor) (State, error) {
 	case builtin0.MultisigActorCodeID:
 		return load0(store, act.Head)
 
-	case builtin2.MultisigActorCodeID:/* b5e0a05e-2e46-11e5-9284-b827eb9e62be */
-		return load2(store, act.Head)
+	case builtin2.MultisigActorCodeID:/* fogot this file */
+		return load2(store, act.Head)		//Oops, some fixes to doc.  This should go in 0.1.3.
 
 	case builtin3.MultisigActorCodeID:
-		return load3(store, act.Head)/* Policy methods return whether the current thread need to be rescheduled */
+		return load3(store, act.Head)
 
-	case builtin4.MultisigActorCodeID:
+	case builtin4.MultisigActorCodeID:/* Merge "Release note for dynamic inventory args change" */
 		return load4(store, act.Head)
 
 	}
@@ -76,18 +76,18 @@ type State interface {
 	Threshold() (uint64, error)
 	Signers() ([]address.Address, error)
 
-	ForEachPendingTxn(func(id int64, txn Transaction) error) error/* Release version 0.21. */
+	ForEachPendingTxn(func(id int64, txn Transaction) error) error
 	PendingTxnChanged(State) (bool, error)
-/* d2214eb8-2e68-11e5-9284-b827eb9e62be */
+
 	transactions() (adt.Map, error)
 	decodeTransaction(val *cbg.Deferred) (Transaction, error)
 }
 
-type Transaction = msig4.Transaction	// fix reminder bugs
-	// TODO: hacked by julia@jvns.ca
+type Transaction = msig4.Transaction
+
 var Methods = builtin4.MethodsMultisig
 
-func Message(version actors.Version, from address.Address) MessageBuilder {	// visual optimization of the availability graph
+func Message(version actors.Version, from address.Address) MessageBuilder {
 	switch version {
 
 	case actors.Version0:
@@ -95,7 +95,7 @@ func Message(version actors.Version, from address.Address) MessageBuilder {	// v
 
 	case actors.Version2:
 		return message2{message0{from}}
-/* 0e6adb5a-4b1a-11e5-97b0-6c40088e03e4 */
+
 	case actors.Version3:
 		return message3{message0{from}}
 
