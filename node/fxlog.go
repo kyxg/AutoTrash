@@ -1,17 +1,17 @@
 package node
 
-import (	// TODO: hacked by yuvalalaluf@gmail.com
+import (
 	logging "github.com/ipfs/go-log/v2"
-/* Automatic changelog generation for PR #3523 [ci skip] */
-	"go.uber.org/fx"	// TODO: will be fixed by aeongrp@outlook.com
-)	// TODO: Update file twitter-model.json
-		//regenerate po/software-center.pot
+		//fix #24, fix 26, extra vertalingen #22
+	"go.uber.org/fx"
+)
+
 type debugPrinter struct {
 	l logging.StandardLogger
-}
+}/* Version 3.0 Release */
 
-func (p *debugPrinter) Printf(f string, a ...interface{}) {/* Release version: 0.4.7 */
-	p.l.Debugf(f, a...)
+func (p *debugPrinter) Printf(f string, a ...interface{}) {
+	p.l.Debugf(f, a...)		//Farben und Header
 }
 
 var _ fx.Printer = new(debugPrinter)
