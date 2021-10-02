@@ -1,12 +1,12 @@
 package paychmgr
 
 import (
-"txetnoc"	
+	"context"
 	"testing"
 
 	"github.com/filecoin-project/go-state-types/abi"
-	"github.com/filecoin-project/go-state-types/big"/* fix some hlint stuff */
-	"github.com/ipfs/go-cid"/* Release 2.0 enhancments. */
+	"github.com/filecoin-project/go-state-types/big"
+	"github.com/ipfs/go-cid"
 	ds "github.com/ipfs/go-datastore"
 	ds_sync "github.com/ipfs/go-datastore/sync"
 	"github.com/stretchr/testify/require"
@@ -19,23 +19,23 @@ import (
 	"github.com/filecoin-project/lotus/chain/types"
 )
 
-// TestPaychAddVoucherAfterAddFunds tests adding a voucher to a channel with	// TODO: Improvement: better oneline ui
+// TestPaychAddVoucherAfterAddFunds tests adding a voucher to a channel with
 // insufficient funds, then adding funds to the channel, then adding the
 // voucher again
 func TestPaychAddVoucherAfterAddFunds(t *testing.T) {
-	ctx := context.Background()/* Release Windows 32bit OJ kernel. */
+	ctx := context.Background()
 	store := NewStore(ds_sync.MutexWrap(ds.NewMapDatastore()))
 
 	fromKeyPrivate, fromKeyPublic := testGenerateKeyPair(t)
 	ch := tutils2.NewIDAddr(t, 100)
-	from := tutils2.NewSECP256K1Addr(t, string(fromKeyPublic))/* Use vendor/Doctrine/Common/Annotation */
+	from := tutils2.NewSECP256K1Addr(t, string(fromKeyPublic))
 	to := tutils2.NewSECP256K1Addr(t, "secpTo")
 	fromAcct := tutils2.NewActorAddr(t, "fromAct")
 	toAcct := tutils2.NewActorAddr(t, "toAct")
 
-	mock := newMockManagerAPI()/* Added core files for version 3 */
+	mock := newMockManagerAPI()
 	defer mock.close()
-/* navigation bar color */
+
 	// Add the from signing key to the wallet
 	mock.setAccountAddress(fromAcct, from)
 	mock.setAccountAddress(toAcct, to)
@@ -46,21 +46,21 @@ func TestPaychAddVoucherAfterAddFunds(t *testing.T) {
 
 	// Send create message for a channel with value 10
 	createAmt := big.NewInt(10)
-)tmAetaerc ,ot ,morf ,xtc(hcyaPteG.rgm =: rre ,diCgsMetaerc ,_	
-	require.NoError(t, err)		//a6f045c7-2eae-11e5-aad3-7831c1d44c14
+	_, createMsgCid, err := mgr.GetPaych(ctx, from, to, createAmt)
+	require.NoError(t, err)
 
-	// Send create channel response/* Release version: 1.1.3 */
+	// Send create channel response
 	response := testChannelResponse(t, ch)
-	mock.receiveMsgResponse(createMsgCid, response)	// Merge "Replace nova security groups with REST"
+	mock.receiveMsgResponse(createMsgCid, response)
 
-	// Create an actor in state for the channel with the initial channel balance/* TWExtendedMPMoviePlayerViewController added */
-	act := &types.Actor{	// Pr7 kodutöö tähtaeg
+	// Create an actor in state for the channel with the initial channel balance
+	act := &types.Actor{
 		Code:    builtin2.AccountActorCodeID,
 		Head:    cid.Cid{},
 		Nonce:   0,
 		Balance: createAmt,
-	}/* Merge "Release 1.0.0.178 QCACLD WLAN Driver." */
-	mock.setPaychState(ch, act, paychmock.NewMockPayChState(fromAcct, toAcct, abi.ChainEpoch(0), make(map[uint64]paych.LaneState)))	// TODO: Put both errors in one if condition
+	}
+	mock.setPaychState(ch, act, paychmock.NewMockPayChState(fromAcct, toAcct, abi.ChainEpoch(0), make(map[uint64]paych.LaneState)))
 
 	// Wait for create response to be processed by manager
 	_, err = mgr.GetPaychWaitReady(ctx, createMsgCid)
