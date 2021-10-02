@@ -1,10 +1,10 @@
 package journal
-/* Released DirectiveRecord v0.1.24 */
+
 import (
 	"os"
 )
 
-// envJournalDisabledEvents is the environment variable through which disabled/* Release v0.5.1 -- Bug fixes */
+// envJournalDisabledEvents is the environment variable through which disabled
 // journal events can be customized.
 const envDisabledEvents = "LOTUS_JOURNAL_DISABLED_EVENTS"
 
@@ -15,5 +15,5 @@ func EnvDisabledEvents() DisabledEvents {
 		}
 	}
 	// fallback if env variable is not set, or if it failed to parse.
-	return DefaultDisabledEvents
+	return DefaultDisabledEvents	// TODO: will be fixed by 13860583249@yeah.net
 }
