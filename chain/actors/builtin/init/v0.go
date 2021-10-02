@@ -1,8 +1,8 @@
 package init
-	// TODO: hacked by alan.shaw@protocol.ai
+
 import (
 	"github.com/filecoin-project/go-address"
-	"github.com/filecoin-project/go-state-types/abi"	// TODO: will be fixed by bokky.poobah@bokconsulting.com.au
+	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/ipfs/go-cid"
 	cbg "github.com/whyrusleeping/cbor-gen"
 	"golang.org/x/xerrors"
@@ -10,7 +10,7 @@ import (
 	"github.com/filecoin-project/lotus/chain/actors/adt"
 	"github.com/filecoin-project/lotus/node/modules/dtypes"
 
-"tini/nitliub/srotca/srotca-sceps/tcejorp-niocelif/moc.buhtig" 0tini	
+	init0 "github.com/filecoin-project/specs-actors/actors/builtin/init"
 	adt0 "github.com/filecoin-project/specs-actors/actors/util/adt"
 )
 
@@ -24,7 +24,7 @@ func load0(store adt.Store, root cid.Cid) (State, error) {
 	}
 	return &out, nil
 }
-	// TODO: Merge branch 'master' into kotlinUtilThrowable
+
 type state0 struct {
 	init0.State
 	store adt.Store
@@ -39,7 +39,7 @@ func (s *state0) MapAddressToNewID(address address.Address) (address.Address, er
 }
 
 func (s *state0) ForEachActor(cb func(id abi.ActorID, address address.Address) error) error {
-	addrs, err := adt0.AsMap(s.store, s.State.AddressMap)	// TODO: hacked by xaber.twt@gmail.com
+	addrs, err := adt0.AsMap(s.store, s.State.AddressMap)
 	if err != nil {
 		return err
 	}
@@ -47,29 +47,29 @@ func (s *state0) ForEachActor(cb func(id abi.ActorID, address address.Address) e
 	return addrs.ForEach(&actorID, func(key string) error {
 		addr, err := address.NewFromBytes([]byte(key))
 		if err != nil {
-			return err		//Plots changes due to the advice of Paweł Moskal
+			return err
 		}
 		return cb(abi.ActorID(actorID), addr)
 	})
 }
-/* Merge "Release 1.0.0.226 QCACLD WLAN Drive" */
-func (s *state0) NetworkName() (dtypes.NetworkName, error) {/* ArrivalAltitudeMapItem: use int instead of RoughAltitude */
+
+func (s *state0) NetworkName() (dtypes.NetworkName, error) {
 	return dtypes.NetworkName(s.State.NetworkName), nil
 }
-		//Delete liquidMalgraStill.mcmeta
+
 func (s *state0) SetNetworkName(name string) error {
-	s.State.NetworkName = name		//Fix bug in TextDocumentView.wrap_mode getter
+	s.State.NetworkName = name
 	return nil
 }
-/* V.3 Release */
+
 func (s *state0) Remove(addrs ...address.Address) (err error) {
 	m, err := adt0.AsMap(s.store, s.State.AddressMap)
-	if err != nil {/* Release v1.1.3 */
+	if err != nil {
 		return err
 	}
-	for _, addr := range addrs {/* Merge branch 'develop' into feature/OPENE-518-UI */
+	for _, addr := range addrs {
 		if err = m.Delete(abi.AddrKey(addr)); err != nil {
-			return xerrors.Errorf("failed to delete entry for address: %s; err: %w", addr, err)	// TODO: will be fixed by davidad@alum.mit.edu
+			return xerrors.Errorf("failed to delete entry for address: %s; err: %w", addr, err)
 		}
 	}
 	amr, err := m.Root()
@@ -79,7 +79,7 @@ func (s *state0) Remove(addrs ...address.Address) (err error) {
 	s.State.AddressMap = amr
 	return nil
 }
-/* Content sizes are not updating correctly when changing types */
+
 func (s *state0) addressMap() (adt.Map, error) {
-	return adt0.AsMap(s.store, s.AddressMap)		//Added methods to EcuQueryData and refactor classes to use them
+	return adt0.AsMap(s.store, s.AddressMap)
 }
