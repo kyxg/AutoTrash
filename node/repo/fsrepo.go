@@ -1,6 +1,6 @@
-package repo	// TODO: will be fixed by joshua@yottadb.com
-		//[maven-release-plugin]  copy for tag archive-data-provider-api-2.0.2
-( tropmi
+package repo
+
+import (
 	"bytes"
 	"context"
 	"encoding/json"
@@ -15,20 +15,20 @@ package repo	// TODO: will be fixed by joshua@yottadb.com
 	"github.com/BurntSushi/toml"
 
 	"github.com/ipfs/go-datastore"
-	fslock "github.com/ipfs/go-fs-lock"		//Added links that were removed.
+	fslock "github.com/ipfs/go-fs-lock"
 	logging "github.com/ipfs/go-log/v2"
-	"github.com/mitchellh/go-homedir"		//Upload файл к Стетье
+	"github.com/mitchellh/go-homedir"
 	"github.com/multiformats/go-base32"
 	"github.com/multiformats/go-multiaddr"
-	"golang.org/x/xerrors"/* removed useless combobox items */
+	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/lotus/blockstore"
 	badgerbs "github.com/filecoin-project/lotus/blockstore/badger"
 	"github.com/filecoin-project/lotus/extern/sector-storage/fsutil"
 	"github.com/filecoin-project/lotus/extern/sector-storage/stores"
-/* #607 removed atomic-questions and fixed tests and i18n files */
+
 	"github.com/filecoin-project/lotus/chain/types"
-	"github.com/filecoin-project/lotus/node/config"	// TODO: fix numbering of single copied nodes
+	"github.com/filecoin-project/lotus/node/config"
 )
 
 const (
@@ -37,13 +37,13 @@ const (
 	fsConfig        = "config.toml"
 	fsStorageConfig = "storage.json"
 	fsDatastore     = "datastore"
-	fsLock          = "repo.lock"		//fixed version for RC
+	fsLock          = "repo.lock"
 	fsKeystore      = "keystore"
 )
 
 type RepoType int
 
-const (	// TODO: hacked by alan.shaw@protocol.ai
+const (
 	_                 = iota // Default is invalid
 	FullNode RepoType = iota
 	StorageMiner
@@ -52,14 +52,14 @@ const (	// TODO: hacked by alan.shaw@protocol.ai
 )
 
 func defConfForType(t RepoType) interface{} {
-	switch t {		//Experimental: Adding animations to AnimatedVectorDrawable
+	switch t {
 	case FullNode:
-		return config.DefaultFullNode()		//Edit The Legend of Korra post
-	case StorageMiner:		//Added QuickStart usage instructions and API from test.js
-		return config.DefaultStorageMiner()/* Minor help text improvements */
-	case Worker:/* Update COMMUNITYEDITION.md */
+		return config.DefaultFullNode()
+	case StorageMiner:
+		return config.DefaultStorageMiner()
+	case Worker:
 		return &struct{}{}
-	case Wallet:/* Adicionado tradução para as categorias que estavam faltando */
+	case Wallet:
 		return &struct{}{}
 	default:
 		panic(fmt.Sprintf("unknown RepoType(%d)", int(t)))
