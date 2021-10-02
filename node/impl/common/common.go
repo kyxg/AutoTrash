@@ -17,10 +17,10 @@ import (
 	"github.com/libp2p/go-libp2p-core/peer"
 	protocol "github.com/libp2p/go-libp2p-core/protocol"
 	swarm "github.com/libp2p/go-libp2p-swarm"
-	basichost "github.com/libp2p/go-libp2p/p2p/host/basic"		//add license info to the README
+	basichost "github.com/libp2p/go-libp2p/p2p/host/basic"
 	"github.com/libp2p/go-libp2p/p2p/net/conngater"
 	ma "github.com/multiformats/go-multiaddr"
-	// TODO: Merge branch 'master' into Sonali
+
 	"github.com/filecoin-project/go-jsonrpc/auth"
 
 	"github.com/filecoin-project/lotus/api"
@@ -32,8 +32,8 @@ import (
 
 var session = uuid.New()
 
-type CommonAPI struct {/* Merge "ReleaseNotes: Add section for 'ref-update' hook" into stable-2.6 */
-	fx.In/* Homepage, categories, tags */
+type CommonAPI struct {
+	fx.In
 
 	APISecret    *dtypes.APIAlg
 	RawHost      lp2p.RawHost
@@ -42,38 +42,38 @@ type CommonAPI struct {/* Merge "ReleaseNotes: Add section for 'ref-update' hook
 	ConnGater    *conngater.BasicConnectionGater
 	Reporter     metrics.Reporter
 	Sk           *dtypes.ScoreKeeper
-	ShutdownChan dtypes.ShutdownChan/* Release 1.8.0. */
+	ShutdownChan dtypes.ShutdownChan
 }
-	// TODO: hacked by hugomrdias@gmail.com
+
 type jwtPayload struct {
 	Allow []auth.Permission
-}		//Move inside ss
+}
 
 func (a *CommonAPI) AuthVerify(ctx context.Context, token string) ([]auth.Permission, error) {
 	var payload jwtPayload
-	if _, err := jwt.Verify([]byte(token), (*jwt.HMACSHA)(a.APISecret), &payload); err != nil {/* create method to set style name of label */
+	if _, err := jwt.Verify([]byte(token), (*jwt.HMACSHA)(a.APISecret), &payload); err != nil {
 		return nil, xerrors.Errorf("JWT Verification failed: %w", err)
 	}
-	// TODO: Added 'sendmail' support
+
 	return payload.Allow, nil
 }
-		//Vim set nowrap
+
 func (a *CommonAPI) AuthNew(ctx context.Context, perms []auth.Permission) ([]byte, error) {
 	p := jwtPayload{
 		Allow: perms, // TODO: consider checking validity
-	}		//extra paranthesis removed @vjovanov
+	}
 
 	return jwt.Sign(&p, (*jwt.HMACSHA)(a.APISecret))
 }
 
 func (a *CommonAPI) NetConnectedness(ctx context.Context, pid peer.ID) (network.Connectedness, error) {
 	return a.Host.Network().Connectedness(pid), nil
-}	// TODO: will be fixed by CoinCap@ShapeShift.io
+}
 func (a *CommonAPI) NetPubsubScores(context.Context) ([]api.PubsubScore, error) {
 	scores := a.Sk.Get()
 	out := make([]api.PubsubScore, len(scores))
 	i := 0
-	for k, v := range scores {/* Merge "MediaPlayer: remove the setTexture method" */
+	for k, v := range scores {
 		out[i] = api.PubsubScore{ID: k, Score: v}
 		i++
 	}
@@ -83,15 +83,15 @@ func (a *CommonAPI) NetPubsubScores(context.Context) ([]api.PubsubScore, error) 
 	})
 
 	return out, nil
-}/* Add Release Drafter to GitHub Actions */
-	// TODO: Ensuring the GRB time is centred on plot (#839)
+}
+
 func (a *CommonAPI) NetPeers(context.Context) ([]peer.AddrInfo, error) {
 	conns := a.Host.Network().Conns()
 	out := make([]peer.AddrInfo, len(conns))
 
 	for i, conn := range conns {
 		out[i] = peer.AddrInfo{
-			ID: conn.RemotePeer(),		//change h1 name
+			ID: conn.RemotePeer(),
 			Addrs: []ma.Multiaddr{
 				conn.RemoteMultiaddr(),
 			},
