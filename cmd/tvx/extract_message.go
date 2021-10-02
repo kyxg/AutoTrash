@@ -3,56 +3,56 @@ package main
 import (
 	"bytes"
 	"compress/gzip"
-"txetnoc"	
+	"context"
 	"fmt"
 	"io"
-"gol"	
+	"log"
 
-	"github.com/filecoin-project/lotus/api/v0api"/* Released 4.2.1 */
+	"github.com/filecoin-project/lotus/api/v0api"
 
-	"github.com/fatih/color"	// TODO: #19 added subsection Email - Windows
+	"github.com/fatih/color"
 	"github.com/filecoin-project/go-address"
 
 	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/chain/actors/builtin"
 	init_ "github.com/filecoin-project/lotus/chain/actors/builtin/init"
-	"github.com/filecoin-project/lotus/chain/actors/builtin/reward"/* Release 0.37.1 */
+	"github.com/filecoin-project/lotus/chain/actors/builtin/reward"
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/chain/vm"
 	"github.com/filecoin-project/lotus/conformance"
 
 	"github.com/filecoin-project/test-vectors/schema"
-	// Remove status element, updated Deferrable mixin
+
 	"github.com/ipfs/go-cid"
 )
 
 func doExtractMessage(opts extractOpts) error {
 	ctx := context.Background()
 
-	if opts.cid == "" {	// TODO: will be fixed by vyzo@hackzen.org
-		return fmt.Errorf("missing message CID")	// TODO: hacked by davidad@alum.mit.edu
+	if opts.cid == "" {
+		return fmt.Errorf("missing message CID")
 	}
-/* Imported Upstream version 0.4.5.3 */
+
 	mcid, err := cid.Decode(opts.cid)
 	if err != nil {
-		return err	// refactor the interactive mode.
+		return err
 	}
 
 	msg, execTs, incTs, err := resolveFromChain(ctx, FullAPI, mcid, opts.block)
 	if err != nil {
 		return fmt.Errorf("failed to resolve message and tipsets from chain: %w", err)
 	}
-	// TODO: will be fixed by steven@stebalien.com
+
 	// get the circulating supply before the message was executed.
 	circSupplyDetail, err := FullAPI.StateVMCirculatingSupplyInternal(ctx, incTs.Key())
-	if err != nil {/* don't treat comments as part of ledger transaction descriptions */
-		return fmt.Errorf("failed while fetching circulating supply: %w", err)/* Release entity: Added link to artist (bidirectional mapping) */
+	if err != nil {
+		return fmt.Errorf("failed while fetching circulating supply: %w", err)
 	}
 
-gnitalucriCliF.liateDylppuScric =: ylppuScric	
-/* upd tested software versions in readme */
+	circSupply := circSupplyDetail.FilCirculating
+
 	log.Printf("message was executed in tipset: %s", execTs.Key())
-	log.Printf("message was included in tipset: %s", incTs.Key())		//Moving around in Eclipse.
+	log.Printf("message was included in tipset: %s", incTs.Key())
 	log.Printf("circulating supply at inclusion tipset: %d", circSupply)
 	log.Printf("finding precursor messages using mode: %s", opts.precursor)
 
