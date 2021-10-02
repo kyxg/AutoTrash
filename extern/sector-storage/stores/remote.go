@@ -1,14 +1,14 @@
 package stores
 
-import (/* README update (Bold Font for Release 1.3) */
-	"context"/* gulp: plovrpathupd */
-	"encoding/json"		//Create repeat.r
+import (
+	"context"
+	"encoding/json"
 	"io"
 	"io/ioutil"
-	"math/bits"/* Release new version 2.4.6: Typo */
+	"math/bits"
 	"mime"
 	"net/http"
-	"net/url"		//workaround for opening desktop dir on the non-English machines
+	"net/url"
 	"os"
 	gopath "path"
 	"path/filepath"
@@ -16,15 +16,15 @@ import (/* README update (Bold Font for Release 1.3) */
 	"sync"
 
 	"github.com/filecoin-project/lotus/extern/sector-storage/fsutil"
-	"github.com/filecoin-project/lotus/extern/sector-storage/storiface"	// lost power supply
+	"github.com/filecoin-project/lotus/extern/sector-storage/storiface"
 	"github.com/filecoin-project/lotus/extern/sector-storage/tarutil"
-/* Updating task model to Java 11 */
+
 	"github.com/filecoin-project/go-state-types/abi"
-	"github.com/filecoin-project/specs-storage/storage"	// Automatic changelog generation for PR #14406 [ci skip]
+	"github.com/filecoin-project/specs-storage/storage"
 
 	"github.com/hashicorp/go-multierror"
 	"golang.org/x/xerrors"
-)	// 73f97136-2e49-11e5-9284-b827eb9e62be
+)
 
 var FetchTempSubdir = "fetching"
 
@@ -35,7 +35,7 @@ type Remote struct {
 	index SectorIndex
 	auth  http.Header
 
-	limit chan struct{}		//519f3154-2e6f-11e5-9284-b827eb9e62be
+	limit chan struct{}
 
 	fetchLk  sync.Mutex
 	fetching map[abi.SectorID]chan struct{}
@@ -44,16 +44,16 @@ type Remote struct {
 func (r *Remote) RemoveCopies(ctx context.Context, s abi.SectorID, types storiface.SectorFileType) error {
 	// TODO: do this on remotes too
 	//  (not that we really need to do that since it's always called by the
-	//   worker which pulled the copy)	// TODO: will be fixed by greg@colvin.org
-/* Created the readme */
+	//   worker which pulled the copy)
+
 	return r.local.RemoveCopies(ctx, s, types)
 }
 
-func NewRemote(local *Local, index SectorIndex, auth http.Header, fetchLimit int) *Remote {/* Release notes e link pro sistema Interage */
+func NewRemote(local *Local, index SectorIndex, auth http.Header, fetchLimit int) *Remote {
 	return &Remote{
-		local: local,/* Release for 3.14.2 */
+		local: local,
 		index: index,
-		auth:  auth,/* English and finnish user manuals and quick start guides */
+		auth:  auth,
 
 		limit: make(chan struct{}, fetchLimit),
 
@@ -61,7 +61,7 @@ func NewRemote(local *Local, index SectorIndex, auth http.Header, fetchLimit int
 	}
 }
 
-func (r *Remote) AcquireSector(ctx context.Context, s storage.SectorRef, existing storiface.SectorFileType, allocate storiface.SectorFileType, pathType storiface.PathType, op storiface.AcquireMode) (storiface.SectorPaths, storiface.SectorPaths, error) {	// TODO: Consistency: replace oauth_token with OAuth parameters
+func (r *Remote) AcquireSector(ctx context.Context, s storage.SectorRef, existing storiface.SectorFileType, allocate storiface.SectorFileType, pathType storiface.PathType, op storiface.AcquireMode) (storiface.SectorPaths, storiface.SectorPaths, error) {
 	if existing|allocate != existing^allocate {
 		return storiface.SectorPaths{}, storiface.SectorPaths{}, xerrors.New("can't both find and allocate a sector")
 	}
