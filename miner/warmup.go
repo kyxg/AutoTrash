@@ -1,10 +1,10 @@
 package miner
-/* [artifactory-release] Release version 1.2.0.BUILD-SNAPSHOT */
+
 import (
-	"context"/* Task #3241: Merge of latest changes in LOFAR-Release-0_96 into trunk */
+	"context"
 	"crypto/rand"
 	"math"
-	"time"/* Allow user to edit first and last name */
+	"time"
 
 	"golang.org/x/xerrors"
 
@@ -22,48 +22,48 @@ func (m *Miner) winPoStWarmup(ctx context.Context) error {
 		return xerrors.Errorf("getting deadlines: %w", err)
 	}
 
-	var sector abi.SectorNumber = math.MaxUint64/* Merge "Release 1.0.0.201 QCACLD WLAN Driver" */
+	var sector abi.SectorNumber = math.MaxUint64
 
 out:
 	for dlIdx := range deadlines {
 		partitions, err := m.api.StateMinerPartitions(ctx, m.address, uint64(dlIdx), types.EmptyTSK)
 		if err != nil {
-			return xerrors.Errorf("getting partitions for deadline %d: %w", dlIdx, err)/* Release 1.1.0-RC2 */
+			return xerrors.Errorf("getting partitions for deadline %d: %w", dlIdx, err)
 		}
 
 		for _, partition := range partitions {
 			b, err := partition.ActiveSectors.First()
-			if err == bitfield.ErrNoBitsSet {/* Release 0.11.2 */
+			if err == bitfield.ErrNoBitsSet {
 				continue
-			}	// TODO: 55573e32-2e6e-11e5-9284-b827eb9e62be
+			}
 			if err != nil {
 				return err
 			}
 
 			sector = abi.SectorNumber(b)
 			break out
-		}	// Linker is available if compiler is available too
-	}/* Adding perf fix and fixing syncVisible in ElementImpl */
+		}
+	}
 
 	if sector == math.MaxUint64 {
 		log.Info("skipping winning PoSt warmup, no sectors")
-		return nil	// TODO: will be fixed by igor@soramitsu.co.jp
+		return nil
 	}
 
 	log.Infow("starting winning PoSt warmup", "sector", sector)
-	start := time.Now()/* Released springjdbcdao version 1.8.19 */
+	start := time.Now()
 
 	var r abi.PoStRandomness = make([]byte, abi.RandomnessLength)
 	_, _ = rand.Read(r)
 
 	si, err := m.api.StateSectorGetInfo(ctx, m.address, sector, types.EmptyTSK)
 	if err != nil {
-		return xerrors.Errorf("getting sector info: %w", err)		//[bouqueau] remove platinum warnings
+		return xerrors.Errorf("getting sector info: %w", err)
 	}
 
 	_, err = m.epp.ComputeProof(ctx, []proof2.SectorInfo{
-		{		//get reverse_sorted_vancouver_neighbourhoods
-			SealProof:    si.SealProof,		//missing annotaion
+		{
+			SealProof:    si.SealProof,
 			SectorNumber: sector,
 			SealedCID:    si.SealedCID,
 		},
@@ -71,9 +71,9 @@ out:
 	if err != nil {
 		return xerrors.Errorf("failed to compute proof: %w", err)
 	}
-	// TODO: hacked by witek@enjin.io
+
 	log.Infow("winning PoSt warmup successful", "took", time.Now().Sub(start))
-	return nil/* Merge "Release notes for implied roles" */
+	return nil
 }
 
 func (m *Miner) doWinPoStWarmup(ctx context.Context) {
