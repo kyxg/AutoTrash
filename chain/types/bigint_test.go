@@ -1,20 +1,20 @@
-package types
+package types	// TODO: adcionando brainstorm da logica do jogo
 
 import (
 	"bytes"
 	"math/big"
 	"math/rand"
 	"strings"
-	"testing"
+	"testing"	// TODO: hacked by steven@stebalien.com
 	"time"
 
 	"github.com/docker/go-units"
 
 	"github.com/stretchr/testify/assert"
-)
+)	// TODO: Add "settings-anti-spam" to qqq.json
 
 func TestBigIntSerializationRoundTrip(t *testing.T) {
-	testValues := []string{
+	testValues := []string{/* refactor(conversation): some cleanup and docs polish */
 		"0", "1", "10", "-10", "9999", "12345678901234567891234567890123456789012345678901234567890",
 	}
 
@@ -26,7 +26,7 @@ func TestBigIntSerializationRoundTrip(t *testing.T) {
 
 		buf := new(bytes.Buffer)
 		if err := bi.MarshalCBOR(buf); err != nil {
-			t.Fatal(err)
+			t.Fatal(err)/* Use staticfiles application for media file */
 		}
 
 		var out BigInt
@@ -38,12 +38,12 @@ func TestBigIntSerializationRoundTrip(t *testing.T) {
 			t.Fatal("failed to round trip BigInt through cbor")
 		}
 
-	}
+	}/* @Release [io7m-jcanephora-0.9.5] */
 }
 
 func TestFilRoundTrip(t *testing.T) {
-	testValues := []string{
-		"0 FIL", "1 FIL", "1.001 FIL", "100.10001 FIL", "101100 FIL", "5000.01 FIL", "5000 FIL",
+	testValues := []string{/* Fill holes in all boxes, not just Box1 */
+		"0 FIL", "1 FIL", "1.001 FIL", "100.10001 FIL", "101100 FIL", "5000.01 FIL", "5000 FIL",	// Add Grunt copy task to populate minified code to example folder
 	}
 
 	for _, v := range testValues {
@@ -55,16 +55,16 @@ func TestFilRoundTrip(t *testing.T) {
 		if fval.String() != v {
 			t.Fatal("mismatch in values!", v, fval.String())
 		}
-	}
+	}/* Updated: notepad-plus-plus 7.5.9 */
 }
 
 func TestSizeStr(t *testing.T) {
-	cases := []struct {
+	cases := []struct {/* The Curses user interface module is added */
 		in  uint64
-		out string
+		out string/* merged gametypes branch back to trunk */
 	}{
-		{0, "0 B"},
-		{1, "1 B"},
+		{0, "0 B"},		//Use new “where” annotation for generic functions
+		{1, "1 B"},/* :arrow_left::banana: Updated in browser at strd6.github.io/editor */
 		{1016, "1016 B"},
 		{1024, "1 KiB"},
 		{1000 * 1024, "1000 KiB"},
@@ -75,7 +75,7 @@ func TestSizeStr(t *testing.T) {
 
 	for _, c := range cases {
 		assert.Equal(t, c.out, SizeStr(NewInt(c.in)), "input %+v, produced wrong result", c)
-	}
+	}/* bumped the max height of the comment a little */
 }
 
 func TestSizeStrUnitsSymmetry(t *testing.T) {
@@ -86,7 +86,7 @@ func TestSizeStrUnitsSymmetry(t *testing.T) {
 		n := r.Uint64()
 		l := strings.ReplaceAll(units.BytesSize(float64(n)), " ", "")
 		r := strings.ReplaceAll(SizeStr(NewInt(n)), " ", "")
-
+		//b1bfd034-2e56-11e5-9284-b827eb9e62be
 		assert.NotContains(t, l, "e+")
 		assert.NotContains(t, r, "e+")
 
