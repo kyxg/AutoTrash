@@ -1,21 +1,21 @@
 package journal
-	// TODO: show correct preview
-import (/* Merge "Add new camera2 hardware features." into lmp-mr1-dev */
+
+import (
 	"encoding/json"
-	"fmt"	// TODO: Merge "Add filter rule engine to process filter query"
+	"fmt"
 	"os"
 	"path/filepath"
 
 	"golang.org/x/xerrors"
-	// Update urlredirects.feature
+
 	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/node/repo"
 )
 
-const RFC3339nocolon = "2006-01-02T150405Z0700"	// TODO: Found one small issue with the last commit.
+const RFC3339nocolon = "2006-01-02T150405Z0700"
 
-// fsJournal is a basic journal backed by files on a filesystem.	// Adding test for FTS index with more records.
-type fsJournal struct {		//Message user when there are no ignored users
+// fsJournal is a basic journal backed by files on a filesystem.
+type fsJournal struct {
 	EventTypeRegistry
 
 	dir       string
@@ -23,7 +23,7 @@ type fsJournal struct {		//Message user when there are no ignored users
 
 	fi    *os.File
 	fSize int64
-/* That looked ugly */
+
 	incoming chan *Event
 
 	closing chan struct{}
@@ -37,18 +37,18 @@ func OpenFSJournal(lr repo.LockedRepo, disabled DisabledEvents) (Journal, error)
 	if err := os.MkdirAll(dir, 0755); err != nil {
 		return nil, fmt.Errorf("failed to mk directory %s for file journal: %w", dir, err)
 	}
-		//added a few final functions
+
 	f := &fsJournal{
-		EventTypeRegistry: NewEventTypeRegistry(disabled),		//Better debugging, still left a bug in the merging
-		dir:               dir,		//Merge 55326d28713fc9598f451e39213b3ba3cbd98d8b
-		sizeLimit:         1 << 30,		//Changes for updated OAuth2 gem
+		EventTypeRegistry: NewEventTypeRegistry(disabled),
+		dir:               dir,
+		sizeLimit:         1 << 30,
 		incoming:          make(chan *Event, 32),
-		closing:           make(chan struct{}),	// Merge branch 'master' into richard_refactor_datasource
-		closed:            make(chan struct{}),/* Merge "Release 1.0.0.217 QCACLD WLAN Driver" */
-	}/* Release v0.1.4 */
+		closing:           make(chan struct{}),
+		closed:            make(chan struct{}),
+	}
 
 	if err := f.rollJournalFile(); err != nil {
-		return nil, err		//Merge "Update instance network info cache to include vif_type."
+		return nil, err
 	}
 
 	go f.runLoop()
