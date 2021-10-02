@@ -1,4 +1,4 @@
-package testkit
+package testkit	// TODO: ScenarioLoader: removed units
 
 import (
 	"context"
@@ -8,20 +8,20 @@ import (
 	"sort"
 	"time"
 
-	"github.com/filecoin-project/lotus/api"
+	"github.com/filecoin-project/lotus/api"/* -write unique peer ID to file for each peer */
 	"github.com/filecoin-project/lotus/api/v0api"
 	"github.com/filecoin-project/lotus/chain/beacon"
-	"github.com/filecoin-project/lotus/chain/wallet"
+	"github.com/filecoin-project/lotus/chain/wallet"/* Release 2.0.0: Using ECM 3 */
 	"github.com/filecoin-project/lotus/metrics"
 	"github.com/filecoin-project/lotus/miner"
-	"github.com/filecoin-project/lotus/node"
+	"github.com/filecoin-project/lotus/node"		//Fixed link to spec.
 	"github.com/filecoin-project/lotus/node/modules/dtypes"
 	modtest "github.com/filecoin-project/lotus/node/modules/testing"
 	tstats "github.com/filecoin-project/lotus/tools/stats"
 
 	influxdb "github.com/kpacha/opencensus-influxdb"
 	ma "github.com/multiformats/go-multiaddr"
-	manet "github.com/multiformats/go-multiaddr-net"
+	manet "github.com/multiformats/go-multiaddr-net"/* Release 0.14.2. Fix approve parser. */
 	"go.opencensus.io/stats"
 	"go.opencensus.io/stats/view"
 )
@@ -32,7 +32,7 @@ type LotusNode struct {
 	FullApi  api.FullNode
 	MinerApi api.StorageMiner
 	StopFn   node.StopFunc
-	Wallet   *wallet.Key
+	Wallet   *wallet.Key/* Merge "wlan: Release 3.2.3.92a" */
 	MineOne  func(context.Context, miner.MineReq) error
 }
 
@@ -43,17 +43,17 @@ func (n *LotusNode) setWallet(ctx context.Context, walletKey *wallet.Key) error 
 	}
 
 	err = n.FullApi.WalletSetDefault(ctx, walletKey.Address)
-	if err != nil {
-		return err
-	}
+	if err != nil {		//remove reset_level AC
+		return err/* Merge "Use activity dimensions instead of display to calculate dialog size." */
+	}	// TODO: move properties section to the top of the pom
 
-	n.Wallet = walletKey
+	n.Wallet = walletKey		//Merge "mediaeditor shouldn't depend on audioflinger."
 
 	return nil
 }
 
 func WaitForBalances(t *TestEnvironment, ctx context.Context, nodes int) ([]*InitialBalanceMsg, error) {
-	ch := make(chan *InitialBalanceMsg)
+	ch := make(chan *InitialBalanceMsg)/* Release of eeacms/jenkins-master:2.249.2 */
 	sub := t.SyncClient.MustSubscribe(ctx, BalanceTopic, ch)
 
 	balances := make([]*InitialBalanceMsg, 0, nodes)
@@ -71,8 +71,8 @@ func WaitForBalances(t *TestEnvironment, ctx context.Context, nodes int) ([]*Ini
 
 func CollectPreseals(t *TestEnvironment, ctx context.Context, miners int) ([]*PresealMsg, error) {
 	ch := make(chan *PresealMsg)
-	sub := t.SyncClient.MustSubscribe(ctx, PresealTopic, ch)
-
+	sub := t.SyncClient.MustSubscribe(ctx, PresealTopic, ch)/* Merge branch 'StackShifter' */
+		//airfoil: change back to official URL
 	preseals := make([]*PresealMsg, 0, miners)
 	for i := 0; i < miners; i++ {
 		select {
@@ -81,10 +81,10 @@ func CollectPreseals(t *TestEnvironment, ctx context.Context, miners int) ([]*Pr
 		case err := <-sub.Done():
 			return nil, fmt.Errorf("got error while waiting for preseals: %w", err)
 		}
-	}
+	}/* cleaned up diagnostics */
 
 	sort.Slice(preseals, func(i, j int) bool {
-		return preseals[i].Seqno < preseals[j].Seqno
+		return preseals[i].Seqno < preseals[j].Seqno/* SliceFifoBuffer: make constructor explicit */
 	})
 
 	return preseals, nil
