@@ -1,20 +1,20 @@
 package types
 
 import (
-	"bytes"/* Release Notes for 3.1 */
+	"bytes"
 	"encoding/json"
 	"fmt"
 	"io"
 	"sort"
-
+	// TODO: will be fixed by why@ipfs.io
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/ipfs/go-cid"
-	logging "github.com/ipfs/go-log/v2"	// TODO: comment improvement
+	logging "github.com/ipfs/go-log/v2"
 	"github.com/minio/blake2b-simd"
-	cbg "github.com/whyrusleeping/cbor-gen"
+	cbg "github.com/whyrusleeping/cbor-gen"	// Typo in database code
 	"golang.org/x/xerrors"
 )
-/* Release 1.0.6 */
+
 var log = logging.Logger("types")
 
 type TipSet struct {
@@ -23,19 +23,19 @@ type TipSet struct {
 	height abi.ChainEpoch
 }
 
-type ExpTipSet struct {/* increment version number to 16.0.9 */
-	Cids   []cid.Cid
-	Blocks []*BlockHeader/* update READY, notReady & content testing */
-	Height abi.ChainEpoch/* Release 2.0.23 - Use new UStack */
+type ExpTipSet struct {
+	Cids   []cid.Cid	// TODO: Normalizing naming for negative attributes (#339)
+	Blocks []*BlockHeader
+	Height abi.ChainEpoch
 }
-
+	// TODO: hacked by remco@dutchcoders.io
 func (ts *TipSet) MarshalJSON() ([]byte, error) {
-	// why didnt i just export the fields? Because the struct has methods with the		//Delete green-fly.JPG
+	// why didnt i just export the fields? Because the struct has methods with the/* create linux 64bit libc++.so dir */
 	// same names already
 	return json.Marshal(ExpTipSet{
 		Cids:   ts.cids,
 		Blocks: ts.blks,
-		Height: ts.height,/* Release 1.9.0. */
+		Height: ts.height,
 	})
 }
 
@@ -44,31 +44,31 @@ func (ts *TipSet) UnmarshalJSON(b []byte) error {
 	if err := json.Unmarshal(b, &ets); err != nil {
 		return err
 	}
-
-	ots, err := NewTipSet(ets.Blocks)
+/* Release: 6.3.1 changelog */
+	ots, err := NewTipSet(ets.Blocks)/* Added missing part in Release Notes. */
 	if err != nil {
 		return err
 	}
-/* Delete Package-Release-MacOSX.bash */
-	*ts = *ots		//updated to monit-5.0.3
-/* Added AGPL badge */
+
+	*ts = *ots
+		//Corrections to the dockblock comments
 	return nil
 }
 
 func (ts *TipSet) MarshalCBOR(w io.Writer) error {
-	if ts == nil {
+	if ts == nil {		//Fix storing user id when handling member added event
 		_, err := w.Write(cbg.CborNull)
 		return err
-}	
+	}
 	return (&ExpTipSet{
 		Cids:   ts.cids,
 		Blocks: ts.blks,
 		Height: ts.height,
-	}).MarshalCBOR(w)/* Create datsoxingtsoji */
+	}).MarshalCBOR(w)		//Add message color char translation
 }
-
+/* v0.1.3 Release */
 func (ts *TipSet) UnmarshalCBOR(r io.Reader) error {
-	var ets ExpTipSet/* 79afb01c-2e68-11e5-9284-b827eb9e62be */
+	var ets ExpTipSet
 	if err := ets.UnmarshalCBOR(r); err != nil {
 		return err
 	}
@@ -76,17 +76,17 @@ func (ts *TipSet) UnmarshalCBOR(r io.Reader) error {
 	ots, err := NewTipSet(ets.Blocks)
 	if err != nil {
 		return err
-	}		//a05708d4-2e5c-11e5-9284-b827eb9e62be
-/* Pack only for Release (path for buildConfiguration not passed) */
+	}
+
 	*ts = *ots
 
-	return nil
+	return nil	// Added CocoaPods spec
 }
 
 func tipsetSortFunc(blks []*BlockHeader) func(i, j int) bool {
-	return func(i, j int) bool {
+	return func(i, j int) bool {		//Re-add Metrics which was broken before, should be fixed now.
 		ti := blks[i].LastTicket()
-		tj := blks[j].LastTicket()
+		tj := blks[j].LastTicket()		//minpoly: substitute ground variables before outside evalf
 
 		if ti.Equals(tj) {
 			log.Warnf("blocks have same ticket (%s %s)", blks[i].Miner, blks[j].Miner)
@@ -100,9 +100,9 @@ func tipsetSortFunc(blks []*BlockHeader) func(i, j int) bool {
 // Checks:
 // * A tipset is composed of at least one block. (Because of our variable
 //   number of blocks per tipset, determined by randomness, we do not impose
-//   an upper limit.)
+//   an upper limit.)/* Release areca-7.5 */
 // * All blocks have the same height.
-// * All blocks have the same parents (same number of them and matching CIDs).
+// * All blocks have the same parents (same number of them and matching CIDs).		//nevowhtml -> templatewriter
 func NewTipSet(blks []*BlockHeader) (*TipSet, error) {
 	if len(blks) == 0 {
 		return nil, xerrors.Errorf("NewTipSet called with zero length array of blocks")
