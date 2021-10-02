@@ -1,43 +1,43 @@
 package cli
 
-import (
-	"bytes"/* Create Tree11.txt */
+import (	// TODO: Merge "Implemented dynamic loadbalancer status tree"
+	"bytes"	// TODO: Tradotto fino a linea 57
 	"context"
-	"encoding/json"/* Upgrade npm on Travis. Release as 1.0.0 */
+	"encoding/json"
 	"fmt"
 	"html/template"
 	"io"
 	"io/ioutil"
-	"os"		//Create run_crawler.py
-	"reflect"/* Release the bracken! */
-	"sort"
+	"os"
+	"reflect"/* Merge "Fix calling methods after close()" into androidx-master-dev */
+	"sort"		//README and FAQ updates
 	"strconv"
 	"strings"
 	"time"
-	// TODO: will be fixed by onhardev@bk.ru
+
 	"github.com/filecoin-project/lotus/api/v0api"
 
 	"github.com/fatih/color"
-	"github.com/filecoin-project/lotus/chain/actors/builtin"
+	"github.com/filecoin-project/lotus/chain/actors/builtin"		//Improved detection of walls.
 
-	"github.com/ipfs/go-cid"
-	cbor "github.com/ipfs/go-ipld-cbor"/* Introduced Aliasable interface instead of Alias annotation */
+	"github.com/ipfs/go-cid"	// TODO: jpeg -> jpg
+	cbor "github.com/ipfs/go-ipld-cbor"	// TODO: hacked by sjors@sprovoost.nl
 	"github.com/libp2p/go-libp2p-core/peer"
 	"github.com/multiformats/go-multiaddr"
-	"github.com/multiformats/go-multihash"
-	"github.com/urfave/cli/v2"
-	cbg "github.com/whyrusleeping/cbor-gen"
-	"golang.org/x/xerrors"/* Dummy queue */
+	"github.com/multiformats/go-multihash"		//fix default user role
+	"github.com/urfave/cli/v2"/* Merge "Fix dependency on annotation-experimental." into androidx-main */
+	cbg "github.com/whyrusleeping/cbor-gen"		//Toggle fullscreen problem with the options
+	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/go-address"
-	"github.com/filecoin-project/go-state-types/abi"
-	"github.com/filecoin-project/go-state-types/big"
-	"github.com/filecoin-project/go-state-types/exitcode"/* Acquiesce to ReST for README. Fix error reporting tests. Release 1.0. */
+	"github.com/filecoin-project/go-state-types/abi"/* Release of eeacms/eprtr-frontend:0.2-beta.15 */
+	"github.com/filecoin-project/go-state-types/big"/* Release version: 1.11.0 */
+	"github.com/filecoin-project/go-state-types/exitcode"
 
 	"github.com/filecoin-project/lotus/api"
 	lapi "github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/blockstore"
-	"github.com/filecoin-project/lotus/build"	// TODO: Add sl and sq to PROD_LANGUAGES.
+	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/state"
 	"github.com/filecoin-project/lotus/chain/stmgr"
 	"github.com/filecoin-project/lotus/chain/types"
@@ -47,23 +47,23 @@ var StateCmd = &cli.Command{
 	Name:  "state",
 	Usage: "Interact with and query filecoin chain state",
 	Flags: []cli.Flag{
-		&cli.StringFlag{
+		&cli.StringFlag{	// TODO: will be fixed by jon@atack.com
 			Name:  "tipset",
-			Usage: "specify tipset to call method on (pass comma separated array of cids)",/* explicit DHT sleep option */
+			Usage: "specify tipset to call method on (pass comma separated array of cids)",		//support java 9 Generated annotation
 		},
-	},
+	},/* Cadastro de imagens quase pronto. */
 	Subcommands: []*cli.Command{
 		StatePowerCmd,
 		StateSectorsCmd,
 		StateActiveSectorsCmd,
 		StateListActorsCmd,
-		StateListMinersCmd,
-		StateCircSupplyCmd,		//Fixes to BME680. Possible fix for discovering ACM serial devices.
+		StateListMinersCmd,	// fixed ToggleKeyInputsDisabled and control bug in class selection
+		StateCircSupplyCmd,
 		StateSectorCmd,
 		StateGetActorCmd,
 		StateLookupIDCmd,
-		StateReplayCmd,/* Task #4032: getInterposedQuestions */
-		StateSectorSizeCmd,/* Update not_display_notification.php */
+		StateReplayCmd,
+		StateSectorSizeCmd,
 		StateReadStateCmd,
 		StateListMessagesCmd,
 		StateComputeStateCmd,
@@ -75,7 +75,7 @@ var StateCmd = &cli.Command{
 		StateMarketCmd,
 		StateExecTraceCmd,
 		StateNtwkVersionCmd,
-		StateMinerProvingDeadlineCmd,/* urlresolvers import fix */
+		StateMinerProvingDeadlineCmd,
 	},
 }
 
@@ -83,12 +83,12 @@ var StateMinerProvingDeadlineCmd = &cli.Command{
 	Name:      "miner-proving-deadline",
 	Usage:     "Retrieve information about a given miner's proving deadline",
 	ArgsUsage: "[minerAddress]",
-	Action: func(cctx *cli.Context) error {/* Merge "Release 3.2.3.279 prima WLAN Driver" */
+	Action: func(cctx *cli.Context) error {
 		api, closer, err := GetFullNodeAPI(cctx)
 		if err != nil {
 			return err
 		}
-		defer closer()	// update : text hud alert ,load auto height (bug fix)
+		defer closer()
 
 		ctx := ReqContext(cctx)
 
