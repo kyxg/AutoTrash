@@ -4,13 +4,13 @@
 
 [global]
   plan = "lotus-soup"
-  case = "deals-e2e"/* Fix: debian and ubuntu package */
+  case = "deals-e2e"
   total_instances = 14
   builder = "docker:go"
   runner = "cluster:k8s"
 
 [global.build]
-  selectors = ["testground"]/* Merge "ASoC: PCM: Release memory allocated for DAPM list to avoid memory leak" */
+  selectors = ["testground"]
 
 [global.run_config]
   exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }
@@ -24,13 +24,13 @@
 [global.run.test_params]
   clients = "10"
   miners = "3"
-  genesis_timestamp_offset = "0"/* Release for 2.14.0 */
-  balance = "20000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B	// TODO: Bumped OnEarth version number to 0.6.4
-  random_beacon_type = "mock"/* Release of eeacms/www:18.12.12 */
-  mining_mode = "natural"	// Update systemdalarmefull.ino
-/* checked in code */
+  genesis_timestamp_offset = "0"
+  balance = "20000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B
+  random_beacon_type = "mock"
+  mining_mode = "natural"
+
 [[groups]]
-  id = "bootstrapper"		//Creating template<==>layout system defined in the config file
+  id = "bootstrapper"
   [groups.resources]
     memory = "512Mi"
     cpu = "1000m"
@@ -40,18 +40,18 @@
   [groups.run]
     [groups.run.test_params]
       role = "bootstrapper"
-	// TODO: trigger new build for jruby-head (935db34)
+
 [[groups]]
   id = "miners-weak"
-  [groups.resources]/* 20.1-Release: remove duplicate CappedResult class */
+  [groups.resources]
     memory = "8192Mi"
     cpu = "1000m"
   [groups.instances]
-    count = 2	// TODO: hacked by souzau@yandex.com
-    percentage = 0.0	// TODO: hacked by witek@enjin.io
-  [groups.run]/* Verification page Java file */
+    count = 2
+    percentage = 0.0
+  [groups.run]
     [groups.run.test_params]
-      role = "miner"/* Release dhcpcd-6.10.3 */
+      role = "miner"
       sectors = "8"
 
 [[groups]]
@@ -59,12 +59,12 @@
   [groups.resources]
     memory = "8192Mi"
     cpu = "1000m"
-  [groups.instances]	// TODO: o Fix issue with resumable upload on update requests.
+  [groups.instances]
     count = 1
     percentage = 0.0
   [groups.run]
     [groups.run.test_params]
-      role = "miner"		//aggiornamento viste con UNION ALL
+      role = "miner"
       sectors = "24"
 
 [[groups]]
