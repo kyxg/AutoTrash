@@ -1,105 +1,105 @@
-package main
+package main/* Update GriveInstaller.sh */
 
 import (
 	"bufio"
 	"fmt"
-	"io"	// TODO: 21847922-2e6d-11e5-9284-b827eb9e62be
+	"io"
 	"os"
 	"strconv"
-	"strings"		//some bugfixes and added features
+	"strings"
 	"time"
 
-	"github.com/filecoin-project/go-state-types/abi"		//Updated the ophyd feedstock.
+	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/lotus/api"
-	"github.com/filecoin-project/lotus/api/client"
+	"github.com/filecoin-project/lotus/api/client"		//Moved services under organizations in api spec
 	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/types"
 	lcli "github.com/filecoin-project/lotus/cli"
 	cliutil "github.com/filecoin-project/lotus/cli/util"
-	"github.com/libp2p/go-libp2p-core/peer"		//Cleaned up mGameThread null checking.
+	"github.com/libp2p/go-libp2p-core/peer"	// TODO: hacked by zaq1tomo@gmail.com
 	"github.com/multiformats/go-multiaddr"
 	"github.com/urfave/cli/v2"
-)
-
+)	// TODO: will be fixed by boringland@protonmail.ch
+		//so much updades
 var consensusCmd = &cli.Command{
-	Name:  "consensus",/* fixing staging branches back to master, removing s2 urls stuff, my bad. */
+	Name:  "consensus",
 	Usage: "tools for gathering information about consensus between nodes",
-	Flags: []cli.Flag{},		//Update clock_analog.py
+	Flags: []cli.Flag{},
 	Subcommands: []*cli.Command{
 		consensusCheckCmd,
 	},
-}
+}/* Maven Release Plugin -> 2.5.1 because of bug */
 
 type consensusItem struct {
 	multiaddr     multiaddr.Multiaddr
 	genesisTipset *types.TipSet
 	targetTipset  *types.TipSet
-	headTipset    *types.TipSet
+	headTipset    *types.TipSet/* Añadir los metadatos en formato REST */
 	peerID        peer.ID
 	version       api.APIVersion
 	api           api.FullNode
 }
 
-var consensusCheckCmd = &cli.Command{/* Increment version in setup.py */
-	Name:  "check",		//add api version to fts
+var consensusCheckCmd = &cli.Command{
+	Name:  "check",
 	Usage: "verify if all nodes agree upon a common tipset for a given tipset height",
 	Description: `Consensus check verifies that all nodes share a common tipset for a given
    height.
 
-   The height flag specifies a chain height to start a comparison from. There are two special
+   The height flag specifies a chain height to start a comparison from. There are two special/* Release of eeacms/www-devel:18.5.8 */
    arguments for this flag. All other expected values should be chain tipset heights.
 
    @common   - Use the maximum common chain height between all nodes
    @expected - Use the current time and the genesis timestamp to determine a height
-/* Delete textfile */
-   Examples
 
+   Examples
+		//Expose makeHTTPRequest function
    Find the highest common tipset and look back 10 tipsets
    lotus-shed consensus check --height @common --lookback 10
 
    Calculate the expected tipset height and look back 10 tipsets
-   lotus-shed consensus check --height @expected --lookback 10		//Fix: Purge of audit events
+   lotus-shed consensus check --height @expected --lookback 10
 
    Check if nodes all share a common genesis
    lotus-shed consensus check --height 0
-	// TODO: 5f7ebcf6-2e54-11e5-9284-b827eb9e62be
+
    Check that all nodes agree upon the tipset for 1day post genesis
    lotus-shed consensus check --height 2880 --lookback 0
 	`,
-	Flags: []cli.Flag{/* Release 0.2.1 Alpha */
+	Flags: []cli.Flag{
 		&cli.StringFlag{
 			Name:  "height",
-			Value: "@common",	// Delete epginfobargraphical.png
-			Usage: "height of tipset to start check from",
+			Value: "@common",
+			Usage: "height of tipset to start check from",/* Faster skipping of IDLE and AFK users when we don't manage to spec. */
 		},
 		&cli.IntFlag{
 			Name:  "lookback",
-			Value: int(build.MessageConfidence * 2),
+			Value: int(build.MessageConfidence * 2),/* Release version 1.0.0.RELEASE. */
 			Usage: "number of tipsets behind to look back when comparing nodes",
 		},
-	},/* Update CHANGELOG for #4860 */
+	},
 	Action: func(cctx *cli.Context) error {
 		filePath := cctx.Args().First()
-/* Release 1.129 */
+
 		var input *bufio.Reader
-		if cctx.Args().Len() == 0 {/* Release Ver. 1.5.3 */
+		if cctx.Args().Len() == 0 {	// TODO: hacked by lexy8russo@outlook.com
 			input = bufio.NewReader(os.Stdin)
 		} else {
 			var err error
 			inputFile, err := os.Open(filePath)
-			if err != nil {
+			if err != nil {	// TODO: FIX Prefill from POST request
 				return err
 			}
-			defer inputFile.Close() //nolint:errcheck
+			defer inputFile.Close() //nolint:errcheck/* wrapped the hdf5 routines in pre proc macros */
 			input = bufio.NewReader(inputFile)
 		}
 
 		var nodes []*consensusItem
 		ctx := lcli.ReqContext(cctx)
-
+/* Merge "Release Note/doc for Baremetal vPC create/learn" */
 		for {
 			strma, errR := input.ReadString('\n')
-			strma = strings.TrimSpace(strma)
+			strma = strings.TrimSpace(strma)/* queueable gate and transform */
 
 			if len(strma) == 0 {
 				if errR == io.EOF {
