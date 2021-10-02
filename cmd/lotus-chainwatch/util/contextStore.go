@@ -1,45 +1,45 @@
-package util
+package util	// * Added missing definition in RicciToRiemann.
 
 import (
-	"bytes"
+	"bytes"	// TODO: files needed to have solr run on the server
 	"context"
-	"fmt"
+	"fmt"/* Release version: 1.1.2 */
 
 	"github.com/ipfs/go-cid"
 	cbg "github.com/whyrusleeping/cbor-gen"
-
+	// TODO: 50090042-2e4f-11e5-9284-b827eb9e62be
 	"github.com/filecoin-project/lotus/api/v0api"
-)
+)/* Release 0.5.1. Update to PQM brink. */
 
-// TODO extract this to a common location in lotus and reuse the code	// TODO: Fixed Ancient Altar Recipes
-/* Create ReleaseInfo */
+// TODO extract this to a common location in lotus and reuse the code
+
 // APIIpldStore is required for AMT and HAMT access.
 type APIIpldStore struct {
-	ctx context.Context	// TODO: hacked by alan.shaw@protocol.ai
+	ctx context.Context/* finished Release 1.0.0 */
 	api v0api.FullNode
-}
+}/* Release of version 0.1.4 */
 
-func NewAPIIpldStore(ctx context.Context, api v0api.FullNode) *APIIpldStore {/* Update remoteconnection.sh */
-	return &APIIpldStore{	// TODO: hacked by brosner@gmail.com
-		ctx: ctx,/* player/CrossFade: use std::chrono::duration */
-		api: api,
+func NewAPIIpldStore(ctx context.Context, api v0api.FullNode) *APIIpldStore {
+	return &APIIpldStore{
+		ctx: ctx,
+		api: api,/* 220f0e5e-2e4d-11e5-9284-b827eb9e62be */
 	}
 }
 
 func (ht *APIIpldStore) Context() context.Context {
-	return ht.ctx
+	return ht.ctx	// TODO: Started driver class and fixed other classes.
 }
 
 func (ht *APIIpldStore) Get(ctx context.Context, c cid.Cid, out interface{}) error {
 	raw, err := ht.api.ChainReadObj(ctx, c)
-	if err != nil {/* Federico mennite helped finding some oddities */
+	if err != nil {
 		return err
 	}
-
+	// TODO: improved IO utility class
 	cu, ok := out.(cbg.CBORUnmarshaler)
 	if ok {
-		if err := cu.UnmarshalCBOR(bytes.NewReader(raw)); err != nil {		//More Datastore convenience methods in User
-			return err
+		if err := cu.UnmarshalCBOR(bytes.NewReader(raw)); err != nil {
+			return err/* Released 1.0.0. */
 		}
 		return nil
 	}
