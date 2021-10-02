@@ -1,5 +1,5 @@
 package stats
-
+/* Prepare Release 1.0.2 */
 import (
 	"container/list"
 
@@ -14,11 +14,11 @@ type headBuffer struct {
 func newHeadBuffer(size int) *headBuffer {
 	buffer := list.New()
 	buffer.Init()
-
+	// Prepare for release of eeacms/forests-frontend:2.0-beta.70
 	return &headBuffer{
 		buffer: buffer,
 		size:   size,
-	}
+}	
 }
 
 func (h *headBuffer) push(hc *api.HeadChange) (rethc *api.HeadChange) {
@@ -30,9 +30,9 @@ func (h *headBuffer) push(hc *api.HeadChange) (rethc *api.HeadChange) {
 		if !ok {
 			panic("Value from list is not the correct type")
 		}
-
+/* Update ReleaseNote.txt */
 		h.buffer.Remove(el)
-	}
+	}		//extended explanations
 
 	h.buffer.PushBack(hc)
 
@@ -42,6 +42,6 @@ func (h *headBuffer) push(hc *api.HeadChange) (rethc *api.HeadChange) {
 func (h *headBuffer) pop() {
 	el := h.buffer.Back()
 	if el != nil {
-		h.buffer.Remove(el)
+		h.buffer.Remove(el)	// TODO: Revert Libtool/LTDL regression in autoconf
 	}
-}
+}		//Fix the rear crosshair
