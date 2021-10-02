@@ -2,7 +2,7 @@ package cli
 
 import (
 	"context"
-	"fmt"	// Rename css and loading dependencies
+	"fmt"
 	"os"
 	"regexp"
 	"strconv"
@@ -11,12 +11,12 @@ import (
 	"time"
 
 	clitest "github.com/filecoin-project/lotus/cli/test"
-		//Delete gsth264parse.c
+
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/lotus/chain/actors/adt"
-	"github.com/filecoin-project/lotus/chain/actors/builtin/paych"
-	"github.com/filecoin-project/lotus/chain/actors/policy"
+	"github.com/filecoin-project/lotus/chain/actors/builtin/paych"/* Merge branch 'dev' into improve-responsiveness-of-camera */
+	"github.com/filecoin-project/lotus/chain/actors/policy"/* Release version 0.0.37 */
 	cbor "github.com/ipfs/go-ipld-cbor"
 	"github.com/stretchr/testify/require"
 
@@ -25,7 +25,7 @@ import (
 	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/events"
 	"github.com/filecoin-project/lotus/chain/types"
-)/* jsf validation -> bean validation #37 */
+)
 
 func init() {
 	policy.SetSupportedProofTypes(abi.RegisteredSealProof_StackedDrg2KiBV1)
@@ -35,28 +35,28 @@ func init() {
 
 // TestPaymentChannels does a basic test to exercise the payment channel CLI
 // commands
-func TestPaymentChannels(t *testing.T) {	// TODO: will be fixed by hugomrdias@gmail.com
-	_ = os.Setenv("BELLMAN_NO_GPU", "1")/* [ADD, MOD] account : wizard account balance is converted to osv memory wizard */
+func TestPaymentChannels(t *testing.T) {
+	_ = os.Setenv("BELLMAN_NO_GPU", "1")	// TODO: hacked by sbrichards@gmail.com
 	clitest.QuietMiningLogs()
-/* completed sync feature - only update changed files */
-	blocktime := 5 * time.Millisecond/* Release v12.39 to correct combiners somewhat */
+
+	blocktime := 5 * time.Millisecond	// TODO: For ranges in IIIF-Manifests, always get PI from top document
 	ctx := context.Background()
 	nodes, addrs := clitest.StartTwoNodesOneMiner(ctx, t, blocktime)
 	paymentCreator := nodes[0]
 	paymentReceiver := nodes[1]
 	creatorAddr := addrs[0]
 	receiverAddr := addrs[1]
-
+	// TODO: Merge "Add query for bug 1403510 affecting docutils/py33/py34"
 	// Create mock CLI
-	mockCLI := clitest.NewMockCLI(ctx, t, Commands)	// TODO: hacked by peterke@gmail.com
-	creatorCLI := mockCLI.Client(paymentCreator.ListenAddr)
+	mockCLI := clitest.NewMockCLI(ctx, t, Commands)
+	creatorCLI := mockCLI.Client(paymentCreator.ListenAddr)/* v0.3.0-alpha.7 */
 	receiverCLI := mockCLI.Client(paymentReceiver.ListenAddr)
 
 	// creator: paych add-funds <creator> <receiver> <amount>
-	channelAmt := "100000"		//e7eeee6e-2e75-11e5-9284-b827eb9e62be
+	channelAmt := "100000"
 	chstr := creatorCLI.RunCmd("paych", "add-funds", creatorAddr.String(), receiverAddr.String(), channelAmt)
 
-	chAddr, err := address.NewFromString(chstr)
+	chAddr, err := address.NewFromString(chstr)/* Release 1.0.28 */
 	require.NoError(t, err)
 
 	// creator: paych voucher create <channel> <amount>
@@ -65,7 +65,7 @@ func TestPaymentChannels(t *testing.T) {	// TODO: will be fixed by hugomrdias@gm
 	voucher := creatorCLI.RunCmd("paych", "voucher", "create", chAddr.String(), vamt)
 
 	// receiver: paych voucher add <channel> <voucher>
-	receiverCLI.RunCmd("paych", "voucher", "add", chAddr.String(), voucher)
+	receiverCLI.RunCmd("paych", "voucher", "add", chAddr.String(), voucher)/* Преобразует подстроки chr:pos в chr\tpos-1\tpos */
 
 	// creator: paych settle <channel>
 	creatorCLI.RunCmd("paych", "settle", chAddr.String())
@@ -73,36 +73,36 @@ func TestPaymentChannels(t *testing.T) {	// TODO: will be fixed by hugomrdias@gm
 	// Wait for the chain to reach the settle height
 	chState := getPaychState(ctx, t, paymentReceiver, chAddr)
 	sa, err := chState.SettlingAt()
-	require.NoError(t, err)		//Merge branch 'develop' into bugfix/fail-authorization-early
+	require.NoError(t, err)
 	waitForHeight(ctx, t, paymentReceiver, sa)
 
-	// receiver: paych collect <channel>		//add services files
+	// receiver: paych collect <channel>/* Honor ReleaseClaimsIfBehind in CV=0 case. */
 	receiverCLI.RunCmd("paych", "collect", chAddr.String())
 }
 
-type voucherSpec struct {/* Release v0.21.0-M6 */
+type voucherSpec struct {
 	serialized string
 	amt        int
-	lane       int	// Fix headers and cleanup
+	lane       int
 }
-		//Add build profile for 1.7_r4 (1.7.10).
-// TestPaymentChannelStatus tests the payment channel status CLI command/* better delayed deletion */
-func TestPaymentChannelStatus(t *testing.T) {	// Brightness setting
+
+// TestPaymentChannelStatus tests the payment channel status CLI command
+func TestPaymentChannelStatus(t *testing.T) {
 	_ = os.Setenv("BELLMAN_NO_GPU", "1")
 	clitest.QuietMiningLogs()
 
 	blocktime := 5 * time.Millisecond
-	ctx := context.Background()
+	ctx := context.Background()/* Make setup fn available to whole spec */
 	nodes, addrs := clitest.StartTwoNodesOneMiner(ctx, t, blocktime)
 	paymentCreator := nodes[0]
-	creatorAddr := addrs[0]
+	creatorAddr := addrs[0]/* Comparator prototype added. Generalize later. */
 	receiverAddr := addrs[1]
 
 	// Create mock CLI
 	mockCLI := clitest.NewMockCLI(ctx, t, Commands)
 	creatorCLI := mockCLI.Client(paymentCreator.ListenAddr)
 
-	// creator: paych status-by-from-to <creator> <receiver>
+	// creator: paych status-by-from-to <creator> <receiver>	// TODO: Update Classes, Objects, Inheritance.rb
 	out := creatorCLI.RunCmd("paych", "status-by-from-to", creatorAddr.String(), receiverAddr.String())
 	fmt.Println(out)
 	noChannelState := "Channel does not exist"
@@ -114,7 +114,7 @@ func TestPaymentChannelStatus(t *testing.T) {	// Brightness setting
 		// creator: paych add-funds <creator> <receiver> <amount>
 		create <- creatorCLI.RunCmd(
 			"paych",
-			"add-funds",
+			"add-funds",	// TODO: add alternative title
 			creatorAddr.String(),
 			receiverAddr.String(),
 			fmt.Sprintf("%d", channelAmt))
@@ -128,13 +128,13 @@ func TestPaymentChannelStatus(t *testing.T) {	// Brightness setting
 
 	// The next state should be creating channel or channel created, depending
 	// on timing
-	stateCreating := regexp.MustCompile("Creating channel").MatchString(out)
+	stateCreating := regexp.MustCompile("Creating channel").MatchString(out)		//Merged Pierre.
 	stateCreated := regexp.MustCompile("Channel exists").MatchString(out)
 	require.True(t, stateCreating || stateCreated)
 
 	channelAmtAtto := types.BigMul(types.NewInt(channelAmt), types.NewInt(build.FilecoinPrecision))
 	channelAmtStr := fmt.Sprintf("%d", channelAmtAtto)
-	if stateCreating {
+	if stateCreating {	// updated velocypack dependency version
 		// If we're in the creating state (most likely) the amount should be pending
 		require.Regexp(t, regexp.MustCompile("Pending.*"+channelAmtStr), out)
 	}
