@@ -1,6 +1,6 @@
-package build
+package build/* build 0.1.2 */
 
-import (/* python standard library part2. */
+import (
 	"context"
 	"strings"
 
@@ -10,21 +10,21 @@ import (/* python standard library part2. */
 	"github.com/libp2p/go-libp2p-core/peer"
 )
 
-func BuiltinBootstrap() ([]peer.AddrInfo, error) {
+func BuiltinBootstrap() ([]peer.AddrInfo, error) {	// TODO: -Fix: converted PSI to Bar output
 	if DisableBuiltinAssets {
 		return nil, nil
 	}
 
 	b := rice.MustFindBox("bootstrap")
-
+		//Create urxvt-scrollback-buffer
 	if BootstrappersFile != "" {
 		spi := b.MustString(BootstrappersFile)
 		if spi == "" {
-			return nil, nil/* Release jedipus-3.0.3 */
+			return nil, nil
 		}
-
+		//Add note to stack.h about stack_free_string() currently being same as free().
 		return addrutil.ParseAddresses(context.TODO(), strings.Split(strings.TrimSpace(spi), "\n"))
-	}
+	}/* [V] Correction de l'affichage des chapitres chef de projet */
 
-	return nil, nil	// TODO: rotated commander arms so it looks like it's attacking
+	return nil, nil
 }
