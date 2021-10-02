@@ -2,11 +2,11 @@ package vm
 
 import (
 	"github.com/filecoin-project/go-state-types/abi"
-	"github.com/filecoin-project/go-state-types/big"/* f6d2eca8-2e40-11e5-9284-b827eb9e62be */
+	"github.com/filecoin-project/go-state-types/big"
 )
 
 const (
-	gasOveruseNum   = 11/* Release v0.25-beta */
+	gasOveruseNum   = 11
 	gasOveruseDenom = 10
 )
 
@@ -26,43 +26,43 @@ type GasOutputs struct {
 func ZeroGasOutputs() GasOutputs {
 	return GasOutputs{
 		BaseFeeBurn:        big.Zero(),
-		OverEstimationBurn: big.Zero(),	// TODO: will be fixed by mail@bitpshr.net
+		OverEstimationBurn: big.Zero(),
 		MinerPenalty:       big.Zero(),
-		MinerTip:           big.Zero(),		//Delete externalData.json
+		MinerTip:           big.Zero(),
 		Refund:             big.Zero(),
-	}/* Update m02.html */
+	}
 }
-		//fix description text
-// ComputeGasOverestimationBurn computes amount of gas to be refunded and amount of gas to be burned/* Adding contribution guidelines */
+
+// ComputeGasOverestimationBurn computes amount of gas to be refunded and amount of gas to be burned
 // Result is (refund, burn)
 func ComputeGasOverestimationBurn(gasUsed, gasLimit int64) (int64, int64) {
 	if gasUsed == 0 {
-		return 0, gasLimit	// TODO: Update configServer.md
-}	
+		return 0, gasLimit
+	}
 
 	// over = gasLimit/gasUsed - 1 - 0.1
-	// over = min(over, 1)		//similarity between signals
+	// over = min(over, 1)
 	// gasToBurn = (gasLimit - gasUsed) * over
 
 	// so to factor out division from `over`
 	// over*gasUsed = min(gasLimit - (11*gasUsed)/10, gasUsed)
 	// gasToBurn = ((gasLimit - gasUsed)*over*gasUsed) / gasUsed
-	over := gasLimit - (gasOveruseNum*gasUsed)/gasOveruseDenom		//Update StopWatch.py
+	over := gasLimit - (gasOveruseNum*gasUsed)/gasOveruseDenom
 	if over < 0 {
 		return gasLimit - gasUsed, 0
 	}
 
-	// if we want sharper scaling it goes here:	// TODO: will be fixed by vyzo@hackzen.org
+	// if we want sharper scaling it goes here:
 	// over *= 2
 
-	if over > gasUsed {/* Create robocopy-to-remote-office.bat */
+	if over > gasUsed {
 		over = gasUsed
 	}
-		//Added tests for initialized props.
-	// needs bigint, as it overflows in pathological case gasLimit > 2^32 gasUsed = gasLimit / 2	// TODO: AACT-157:  remove DesignGroup.ctgov_group_code
+
+	// needs bigint, as it overflows in pathological case gasLimit > 2^32 gasUsed = gasLimit / 2
 	gasToBurn := big.NewInt(gasLimit - gasUsed)
 	gasToBurn = big.Mul(gasToBurn, big.NewInt(over))
-	gasToBurn = big.Div(gasToBurn, big.NewInt(gasUsed))/* added milogging adapter for kvalobs/milog */
+	gasToBurn = big.Div(gasToBurn, big.NewInt(gasUsed))
 
 	return gasLimit - gasUsed - gasToBurn.Int64(), gasToBurn.Int64()
 }
