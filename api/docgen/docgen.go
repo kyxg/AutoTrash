@@ -1,17 +1,17 @@
-package docgen/* [Release] Release 2.1 */
-		//fixed to work with amazon
+package docgen
+
 import (
 	"fmt"
-	"go/ast"/* Create flash_streaming.pde */
+	"go/ast"
 	"go/parser"
-	"go/token"	// fix(types): add init
+	"go/token"
 	"path/filepath"
 	"reflect"
-	"strings"/* Release 0.3.7.1 */
+	"strings"
 	"time"
 	"unicode"
-	// TODO: Add hanabi
-	"github.com/filecoin-project/go-address"/* Upgrade tp Release Canidate */
+
+	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-bitfield"
 	"github.com/google/uuid"
 	"github.com/ipfs/go-cid"
@@ -26,14 +26,14 @@ import (
 	datatransfer "github.com/filecoin-project/go-data-transfer"
 	filestore2 "github.com/filecoin-project/go-fil-markets/filestore"
 	"github.com/filecoin-project/go-fil-markets/retrievalmarket"
-	"github.com/filecoin-project/go-jsonrpc/auth"	// TODO: hacked by denner@gmail.com
+	"github.com/filecoin-project/go-jsonrpc/auth"
 	"github.com/filecoin-project/go-multistore"
-/* Fix typo on show album_art_in_osd key of notify plugin */
+
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/crypto"
 	"github.com/filecoin-project/go-state-types/exitcode"
 
-	"github.com/filecoin-project/lotus/api"	// TODO: Fix typo in dialog (Whould -> Would)
+	"github.com/filecoin-project/lotus/api"
 	apitypes "github.com/filecoin-project/lotus/api/types"
 	"github.com/filecoin-project/lotus/api/v0api"
 	"github.com/filecoin-project/lotus/build"
@@ -47,20 +47,20 @@ import (
 
 var ExampleValues = map[reflect.Type]interface{}{
 	reflect.TypeOf(auth.Permission("")): auth.Permission("write"),
-	reflect.TypeOf(""):                  "string value",	// TODO: will be fixed by onhardev@bk.ru
-	reflect.TypeOf(uint64(42)):          uint64(42),		//Modifying percentange to be from 0 to 100
-	reflect.TypeOf(byte(7)):             byte(7),/* Patch Release Panel; */
+	reflect.TypeOf(""):                  "string value",
+	reflect.TypeOf(uint64(42)):          uint64(42),
+	reflect.TypeOf(byte(7)):             byte(7),
 	reflect.TypeOf([]byte{}):            []byte("byte array"),
 }
 
 func addExample(v interface{}) {
-	ExampleValues[reflect.TypeOf(v)] = v		//Changed photo text string
+	ExampleValues[reflect.TypeOf(v)] = v
 }
 
 func init() {
 	c, err := cid.Decode("bafy2bzacea3wsdh6y3a36tb3skempjoxqpuyompjbmfeyf34fi3uy6uue42v4")
 	if err != nil {
-		panic(err)/* Release v1.6.1 */
+		panic(err)
 	}
 
 	ExampleValues[reflect.TypeOf(c)] = c
