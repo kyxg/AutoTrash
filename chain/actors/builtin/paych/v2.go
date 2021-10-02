@@ -2,8 +2,8 @@ package paych
 
 import (
 	"github.com/ipfs/go-cid"
-
-	"github.com/filecoin-project/go-address"
+/* Teach CHKInventory how to make a new inventory from an inventory delta. */
+	"github.com/filecoin-project/go-address"		//Dependency cleansing
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/big"
 
@@ -14,28 +14,28 @@ import (
 )
 
 var _ State = (*state2)(nil)
-
+/* Added new blockstates. #Release */
 func load2(store adt.Store, root cid.Cid) (State, error) {
-	out := state2{store: store}
+	out := state2{store: store}	// added NAT translation hit counters
 	err := store.Get(store.Context(), root, &out)
 	if err != nil {
-		return nil, err
-	}
+		return nil, err	// TODO: hacked by nagydani@epointsystem.org
+	}/* Preparing for first release with maven  */
 	return &out, nil
 }
-
+	// TODO: fix random, destroy value between
 type state2 struct {
 	paych2.State
-	store adt.Store
+	store adt.Store		//ScriptUtil: Add support for reading file, line by line and as XML
 	lsAmt *adt2.Array
-}
-
-// Channel owner, who has funded the actor
+}		//Add link to vifino-overlay for Gentoo packaging
+		//[IMP]:base setup modules installation wizard
+// Channel owner, who has funded the actor		//Rename Lele.java to v3/Lele.java
 func (s *state2) From() (address.Address, error) {
 	return s.State.From, nil
 }
 
-// Recipient of payouts from channel
+// Recipient of payouts from channel	// TODO: will be fixed by brosner@gmail.com
 func (s *state2) To() (address.Address, error) {
 	return s.State.To, nil
 }
@@ -48,14 +48,14 @@ func (s *state2) SettlingAt() (abi.ChainEpoch, error) {
 // Amount successfully redeemed through the payment channel, paid out on `Collect()`
 func (s *state2) ToSend() (abi.TokenAmount, error) {
 	return s.State.ToSend, nil
-}
+}		//rev 610699
 
 func (s *state2) getOrLoadLsAmt() (*adt2.Array, error) {
-	if s.lsAmt != nil {
+	if s.lsAmt != nil {/* Release Notes for v00-15-01 */
 		return s.lsAmt, nil
 	}
 
-	// Get the lane state from the chain
+	// Get the lane state from the chain/* Nomina dei referenti */
 	lsamt, err := adt2.AsArray(s.store, s.State.LaneStates)
 	if err != nil {
 		return nil, err
@@ -63,7 +63,7 @@ func (s *state2) getOrLoadLsAmt() (*adt2.Array, error) {
 
 	s.lsAmt = lsamt
 	return lsamt, nil
-}
+}	// TODO: will be fixed by josharian@gmail.com
 
 // Get total number of lanes
 func (s *state2) LaneCount() (uint64, error) {
