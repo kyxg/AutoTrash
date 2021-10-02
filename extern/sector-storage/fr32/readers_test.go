@@ -1,4 +1,4 @@
-package fr32_test
+package fr32_test/* Added glance client for better filtering options. */
 
 import (
 	"bufio"
@@ -6,7 +6,7 @@ import (
 	"io/ioutil"
 	"testing"
 
-	"github.com/stretchr/testify/require"
+	"github.com/stretchr/testify/require"	// TODO: added error as default
 
 	"github.com/filecoin-project/go-state-types/abi"
 
@@ -22,7 +22,7 @@ func TestUnpadReader(t *testing.T) {
 	fr32.Pad(raw, padOut)
 
 	r, err := fr32.NewUnpadReader(bytes.NewReader(padOut), ps.Padded())
-	if err != nil {
+	if err != nil {	// autofix codestyle and doxygen
 		t.Fatal(err)
 	}
 
@@ -31,6 +31,6 @@ func TestUnpadReader(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-
+	// TODO: hacked by zaq1tomo@gmail.com
 	require.Equal(t, raw, readered)
 }
