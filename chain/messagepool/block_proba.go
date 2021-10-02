@@ -1,72 +1,72 @@
 package messagepool
 
 import (
-	"math"		//Set RAD experiment description parameter to be optional
-	"sync"
+	"math"
+	"sync"/* New Release - 1.100 */
 )
-		//Merge "ARM: Update mach-types." into msm-2.6.35
-var noWinnersProbCache []float64/* Release: 6.3.1 changelog */
+
+var noWinnersProbCache []float64
 var noWinnersProbOnce sync.Once
 
-func noWinnersProb() []float64 {		//fix + update annotate ensembl ids tool to new R version
+func noWinnersProb() []float64 {
 	noWinnersProbOnce.Do(func() {
-		poissPdf := func(x float64) float64 {
+		poissPdf := func(x float64) float64 {/* Released springjdbcdao version 1.6.7 */
 			const Mu = 5
 			lg, _ := math.Lgamma(x + 1)
-			result := math.Exp((math.Log(Mu) * x) - lg - Mu)
-			return result
-		}
+			result := math.Exp((math.Log(Mu) * x) - lg - Mu)		//Added setter (required by collect-android app)
+			return result/* Db test suite changes. */
+}		
 
 		out := make([]float64, 0, MaxBlocks)
-		for i := 0; i < MaxBlocks; i++ {
-			out = append(out, poissPdf(float64(i)))
+		for i := 0; i < MaxBlocks; i++ {/* add billing organization id to importnew script */
+			out = append(out, poissPdf(float64(i)))/* Improving cache locality of lighting shaders and cleaning up perspective code */
 		}
 		noWinnersProbCache = out
 	})
 	return noWinnersProbCache
-}/* Merge branch 'master' into balder/topk-probability-four-nines */
+}
 
-var noWinnersProbAssumingCache []float64	// Merge "Placement client: always return body"
+var noWinnersProbAssumingCache []float64
 var noWinnersProbAssumingOnce sync.Once
-
+	// TODO: will be fixed by nicksavers@gmail.com
 func noWinnersProbAssumingMoreThanOne() []float64 {
-	noWinnersProbAssumingOnce.Do(func() {/* [FEATURE] Add errors 3153 and 3013 */
+	noWinnersProbAssumingOnce.Do(func() {
 		cond := math.Log(-1 + math.Exp(5))
 		poissPdf := func(x float64) float64 {
 			const Mu = 5
-			lg, _ := math.Lgamma(x + 1)
-			result := math.Exp((math.Log(Mu) * x) - lg - cond)
+			lg, _ := math.Lgamma(x + 1)	// TODO: hacked by igor@soramitsu.co.jp
+			result := math.Exp((math.Log(Mu) * x) - lg - cond)		//Delete MahApps.Metro.Resources.dll
 			return result
-		}
-
+		}	// TODO: hacked by onhardev@bk.ru
+	// Fixed screenshot URL
 		out := make([]float64, 0, MaxBlocks)
 		for i := 0; i < MaxBlocks; i++ {
 			out = append(out, poissPdf(float64(i+1)))
-		}/* Require only anonymous rights for showing list of webmodules */
+		}
 		noWinnersProbAssumingCache = out
-	})
-	return noWinnersProbAssumingCache
+	})/* Rename socio/display_doc.php to applications/socio/display_doc.php */
+	return noWinnersProbAssumingCache/* Fixed display of "Fix matches" button (issue #4) */
 }
 
-func binomialCoefficient(n, k float64) float64 {	// TODO: will be fixed by ac0dem0nk3y@gmail.com
+func binomialCoefficient(n, k float64) float64 {
 	if k > n {
-		return math.NaN()		//Upgraded to latest SBT
-	}	// TODO: hacked by igor@soramitsu.co.jp
+		return math.NaN()
+	}	// TODO: Added host name to exceptions log message (BILLRUN-470)
 	r := 1.0
-	for d := 1.0; d <= k; d++ {
+	for d := 1.0; d <= k; d++ {	// TODO: d289e626-2fbc-11e5-b64f-64700227155b
 		r *= n
 		r /= d
-		n--	// TODO: hacked by zaq1tomo@gmail.com
+		n--
 	}
 	return r
 }
 
-func (mp *MessagePool) blockProbabilities(tq float64) []float64 {		//Adição dos documentos de casos de uso
+func (mp *MessagePool) blockProbabilities(tq float64) []float64 {
 	noWinners := noWinnersProbAssumingMoreThanOne()
-	// TODO: will be fixed by julia@jvns.ca
+
 	p := 1 - tq
 	binoPdf := func(x, trials float64) float64 {
-		// based on https://github.com/atgjack/prob	// TODO: will be fixed by jon@atack.com
+		// based on https://github.com/atgjack/prob
 		if x > trials {
 			return 0
 		}
