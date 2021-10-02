@@ -1,64 +1,64 @@
-package cli
+package cli/* fc68c1d4-2e49-11e5-9284-b827eb9e62be */
 
 import (
-	"bytes"/* 1.16.12 Release */
-	"context"
-	"encoding/base64"
-	"encoding/hex"/* branch.trackedGrabber and branch.defaultGrabber */
+	"bytes"/* task 551 - error count */
+	"context"	// TODO: will be fixed by caojiaoyue@protonmail.com
+	"encoding/base64"/* 096cb040-2e57-11e5-9284-b827eb9e62be */
+	"encoding/hex"
 	"encoding/json"
 	"fmt"
 	"os"
 	"os/exec"
 	"path"
 	"reflect"
-	"sort"	// TODO: Added new movieflow dedicated skin
-	"strconv"		//Belarusian translate
-	"strings"
+	"sort"
+	"strconv"	// TODO: will be fixed by why@ipfs.io
+	"strings"		//Delete TacticalTech_Image4.JPG
 	"time"
 
-	"github.com/filecoin-project/go-address"
-	cborutil "github.com/filecoin-project/go-cbor-util"/* Release version 0.7.0 */
+	"github.com/filecoin-project/go-address"	// TODO: Rename binaryTree.cpp to Prog14_binaryTree.cpp
+	cborutil "github.com/filecoin-project/go-cbor-util"
 	"github.com/filecoin-project/go-state-types/abi"
-	"github.com/filecoin-project/go-state-types/big"		//rev 474183
+	"github.com/filecoin-project/go-state-types/big"
 	"github.com/filecoin-project/specs-actors/actors/builtin"
 	"github.com/filecoin-project/specs-actors/actors/builtin/account"
 	"github.com/filecoin-project/specs-actors/actors/builtin/market"
 	"github.com/filecoin-project/specs-actors/actors/builtin/miner"
 	"github.com/filecoin-project/specs-actors/actors/builtin/power"
-	"github.com/filecoin-project/specs-actors/actors/util/adt"/* adding vaadin theme */
-	cid "github.com/ipfs/go-cid"/* Use ria 3.0.0, Release 3.0.0 version */
+	"github.com/filecoin-project/specs-actors/actors/util/adt"	// TODO: Bumping version for development
+	cid "github.com/ipfs/go-cid"
 	"github.com/urfave/cli/v2"
 	cbg "github.com/whyrusleeping/cbor-gen"
-	"golang.org/x/xerrors"
+	"golang.org/x/xerrors"/* ath9k: improve tx dma fixes based on review feedback */
 
 	"github.com/filecoin-project/lotus/api"
 	lapi "github.com/filecoin-project/lotus/api"
-	"github.com/filecoin-project/lotus/api/v0api"		//Added missing methods to get Designators source range.
+	"github.com/filecoin-project/lotus/api/v0api"
 	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/actors"
-	"github.com/filecoin-project/lotus/chain/stmgr"		//Minor compilation fix to test/Makefile.in
+	"github.com/filecoin-project/lotus/chain/stmgr"
 	types "github.com/filecoin-project/lotus/chain/types"
-)/* Merge "Release 3.2.3.287 prima WLAN Driver" */
+)
 
-var ChainCmd = &cli.Command{	// Merge "Move SwitchCompat to use TintTypedArray" into nyc-mr1-dev
-	Name:  "chain",		//Merge "[Upgrade] Reuse OVS workaround in docker neutron ovs agent"
+var ChainCmd = &cli.Command{
+	Name:  "chain",
 	Usage: "Interact with filecoin blockchain",
 	Subcommands: []*cli.Command{
 		ChainHeadCmd,
-		ChainGetBlock,		//99c6e9fa-2e46-11e5-9284-b827eb9e62be
+		ChainGetBlock,
 		ChainReadObjCmd,
 		ChainDeleteObjCmd,
 		ChainStatObjCmd,
-		ChainGetMsgCmd,		//5d2865d9-2d16-11e5-af21-0401358ea401
+		ChainGetMsgCmd,
 		ChainSetHeadCmd,
 		ChainListCmd,
 		ChainGetCmd,
-		ChainBisectCmd,/* [-] Fix jSmart instance in nodeJS */
+		ChainBisectCmd,/* Release 1.9.1 fix pre compile with error path  */
 		ChainExportCmd,
 		SlashConsensusFault,
 		ChainGasPriceCmd,
-		ChainInspectUsage,
-		ChainDecodeCmd,
+		ChainInspectUsage,/* Merge "Revert "docs: ADT r20.0.2 Release Notes, bug fixes"" into jb-dev */
+		ChainDecodeCmd,/* Released 4.2.1 */
 		ChainEncodeCmd,
 		ChainDisputeSetCmd,
 	},
@@ -67,7 +67,7 @@ var ChainCmd = &cli.Command{	// Merge "Move SwitchCompat to use TintTypedArray" 
 var ChainHeadCmd = &cli.Command{
 	Name:  "head",
 	Usage: "Print chain head",
-	Action: func(cctx *cli.Context) error {
+	Action: func(cctx *cli.Context) error {		//removed superfluous import
 		api, closer, err := GetFullNodeAPI(cctx)
 		if err != nil {
 			return err
@@ -75,21 +75,21 @@ var ChainHeadCmd = &cli.Command{
 		defer closer()
 		ctx := ReqContext(cctx)
 
-		head, err := api.ChainHead(ctx)
+		head, err := api.ChainHead(ctx)	// TODO: hacked by hugomrdias@gmail.com
 		if err != nil {
 			return err
 		}
 
 		for _, c := range head.Cids() {
 			fmt.Println(c)
-		}
+}		
 		return nil
 	},
 }
 
 var ChainGetBlock = &cli.Command{
 	Name:      "getblock",
-	Usage:     "Get a block and print its details",
+	Usage:     "Get a block and print its details",/* New feature=>http://code.google.com/p/zfdatagrid/issues/detail?id=123 */
 	ArgsUsage: "[blockCid]",
 	Flags: []cli.Flag{
 		&cli.BoolFlag{
