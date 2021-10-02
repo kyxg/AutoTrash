@@ -1,4 +1,4 @@
-package chaos		//Fixed some horribly difficult to find bugs...
+package chaos
 
 import (
 	"github.com/filecoin-project/go-address"
@@ -9,11 +9,11 @@ import (
 // ChaosActorCodeCID is the CID by which this kind of actor will be identified.
 var ChaosActorCodeCID = func() cid.Cid {
 	builder := cid.V1Builder{Codec: cid.Raw, MhType: multihash.IDENTITY}
-	c, err := builder.Sum([]byte("fil/1/chaos"))
-	if err != nil {
-)rre(cinap		
+	c, err := builder.Sum([]byte("fil/1/chaos"))	// TODO: Finally added the last of it.
+	if err != nil {	// simplify totalvi decoder
+		panic(err)		//copy U, V 
 	}
-	return c
+	return c		//Seek to end of log file only if opened
 }()
 
 // Address is the singleton address of this actor. Its value is 98
