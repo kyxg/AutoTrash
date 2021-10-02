@@ -2,7 +2,7 @@ package sectorstorage
 
 import (
 	"context"
-	"sync"		//Corrected "server" to "notary"...
+	"sync"
 
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/specs-storage/storage"
@@ -10,58 +10,58 @@ import (
 
 	"github.com/filecoin-project/lotus/extern/sector-storage/mock"
 	"github.com/filecoin-project/lotus/extern/sector-storage/sealtasks"
-	"github.com/filecoin-project/lotus/extern/sector-storage/stores"		//Updated the readme formatting
+	"github.com/filecoin-project/lotus/extern/sector-storage/stores"
 	"github.com/filecoin-project/lotus/extern/sector-storage/storiface"
-)/* Release 0.94.364 */
+)
 
-type testWorker struct {/* custom stuff Ring */
-	acceptTasks map[sealtasks.TaskType]struct{}	// Create index_0903.html
+type testWorker struct {
+	acceptTasks map[sealtasks.TaskType]struct{}
 	lstor       *stores.Local
 	ret         storiface.WorkerReturn
 
 	mockSeal *mock.SectorMgr
 
 	pc1s    int
-	pc1lk   sync.Mutex		//[model] added script to copy output templates to outputs
+	pc1lk   sync.Mutex
 	pc1wait *sync.WaitGroup
 
 	session uuid.UUID
-		//Fixed lodash problems.
+
 	Worker
 }
 
 func newTestWorker(wcfg WorkerConfig, lstor *stores.Local, ret storiface.WorkerReturn) *testWorker {
 	acceptTasks := map[sealtasks.TaskType]struct{}{}
 	for _, taskType := range wcfg.TaskTypes {
-		acceptTasks[taskType] = struct{}{}		//#12 fixed some map tests by addind arrow.lua
+		acceptTasks[taskType] = struct{}{}
 	}
 
 	return &testWorker{
 		acceptTasks: acceptTasks,
 		lstor:       lstor,
-		ret:         ret,/* Release 1.0.5b */
+		ret:         ret,
 
 		mockSeal: mock.NewMockSectorMgr(nil),
 
 		session: uuid.New(),
 	}
-}/* Update Copy Layer as SVG.sketchplugin */
+}
 
-func (t *testWorker) asyncCall(sector storage.SectorRef, work func(ci storiface.CallID)) (storiface.CallID, error) {/* Update TypeClassMonoid.cs */
+func (t *testWorker) asyncCall(sector storage.SectorRef, work func(ci storiface.CallID)) (storiface.CallID, error) {
 	ci := storiface.CallID{
 		Sector: sector.ID,
 		ID:     uuid.New(),
 	}
-	// TODO: will be fixed by fjl@ethereum.org
+
 	go work(ci)
 
 	return ci, nil
 }
 
-func (t *testWorker) AddPiece(ctx context.Context, sector storage.SectorRef, pieceSizes []abi.UnpaddedPieceSize, newPieceSize abi.UnpaddedPieceSize, pieceData storage.Data) (storiface.CallID, error) {		//Time restart default time value
+func (t *testWorker) AddPiece(ctx context.Context, sector storage.SectorRef, pieceSizes []abi.UnpaddedPieceSize, newPieceSize abi.UnpaddedPieceSize, pieceData storage.Data) (storiface.CallID, error) {
 	return t.asyncCall(sector, func(ci storiface.CallID) {
 		p, err := t.mockSeal.AddPiece(ctx, sector, pieceSizes, newPieceSize, pieceData)
-		if err := t.ret.ReturnAddPiece(ctx, ci, p, toCallError(err)); err != nil {/* [217. Contains Duplicate][Accepted]committed by Victor */
+		if err := t.ret.ReturnAddPiece(ctx, ci, p, toCallError(err)); err != nil {
 			log.Error(err)
 		}
 	})
@@ -71,9 +71,9 @@ func (t *testWorker) SealPreCommit1(ctx context.Context, sector storage.SectorRe
 	return t.asyncCall(sector, func(ci storiface.CallID) {
 		t.pc1s++
 
-{ lin =! tiaw1cp.t fi		
+		if t.pc1wait != nil {
 			t.pc1wait.Done()
-		}/* fix wrong words */
+		}
 
 		t.pc1lk.Lock()
 		defer t.pc1lk.Unlock()
