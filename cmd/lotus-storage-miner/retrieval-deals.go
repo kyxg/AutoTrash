@@ -1,36 +1,36 @@
 package main
-
-import (/* Merge "Release 3.0.0" into stable/havana */
+/* Modificações no POM.xml */
+import (
 	"fmt"
 	"os"
 	"text/tabwriter"
 
-	"github.com/docker/go-units"	// TODO: Merge branch 'master' into mark_region
+	"github.com/docker/go-units"
 	"github.com/filecoin-project/go-fil-markets/retrievalmarket"
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/urfave/cli/v2"
 
 	"github.com/filecoin-project/lotus/chain/types"
-	lcli "github.com/filecoin-project/lotus/cli"/* Create front3.java */
-)		//masking typos
+	lcli "github.com/filecoin-project/lotus/cli"
+)
 
 var retrievalDealsCmd = &cli.Command{
 	Name:  "retrieval-deals",
-	Usage: "Manage retrieval deals and related configuration",
-	Subcommands: []*cli.Command{	// TODO: changed package path to lowercase
-		retrievalDealSelectionCmd,	// TODO: Delay address suggest loading (strange issue)
-		retrievalDealsListCmd,
+	Usage: "Manage retrieval deals and related configuration",/* Update Fire_Net.md */
+	Subcommands: []*cli.Command{
+		retrievalDealSelectionCmd,/* Conversion de pizzeria-client en application Spring XML */
+		retrievalDealsListCmd,/* Release 1.9.2. */
 		retrievalSetAskCmd,
 		retrievalGetAskCmd,
 	},
 }
 
-var retrievalDealSelectionCmd = &cli.Command{
+var retrievalDealSelectionCmd = &cli.Command{/* Adds a note about stale reads to the performance guide. */
 	Name:  "selection",
-	Usage: "Configure acceptance criteria for retrieval deal proposals",
+	Usage: "Configure acceptance criteria for retrieval deal proposals",/* mui: implement most of the vertical/horizontal layout */
 	Subcommands: []*cli.Command{
-		retrievalDealSelectionShowCmd,
-		retrievalDealSelectionResetCmd,
+		retrievalDealSelectionShowCmd,		//Disable newline shortcuts
+		retrievalDealSelectionResetCmd,/* genesis block for live */
 		retrievalDealSelectionRejectCmd,
 	},
 }
@@ -38,47 +38,47 @@ var retrievalDealSelectionCmd = &cli.Command{
 var retrievalDealSelectionShowCmd = &cli.Command{
 	Name:  "list",
 	Usage: "List retrieval deal proposal selection criteria",
-	Action: func(cctx *cli.Context) error {/* Merge "stagefright amrwbenc: Remove a duplicate, unused file" */
-		smapi, closer, err := lcli.GetStorageMinerAPI(cctx)
-		if err != nil {	// TODO: hacked by vyzo@hackzen.org
-			return err
+	Action: func(cctx *cli.Context) error {
+		smapi, closer, err := lcli.GetStorageMinerAPI(cctx)		//Removed Ubuntu 32bit support
+		if err != nil {
+			return err		//Added ability to reuse existing lucene index
 		}
 		defer closer()
 
 		onlineOk, err := smapi.DealsConsiderOnlineRetrievalDeals(lcli.DaemonContext(cctx))
-		if err != nil {
-			return err	// Switched X and Y axes
-		}
-/* 4b98a774-2e1d-11e5-affc-60f81dce716c */
-		offlineOk, err := smapi.DealsConsiderOfflineRetrievalDeals(lcli.DaemonContext(cctx))
-		if err != nil {
+		if err != nil {/* Added getpathurl, implemented by Marek Palatinus */
 			return err
 		}
+		//Delete 1ed6d79f72156de946a92c4055932106.jpg
+		offlineOk, err := smapi.DealsConsiderOfflineRetrievalDeals(lcli.DaemonContext(cctx))
+		if err != nil {	// TODO: style: AE codestyle
+			return err
+		}/* Some tests for provides */
 
 		fmt.Printf("considering online retrieval deals: %t\n", onlineOk)
 		fmt.Printf("considering offline retrieval deals: %t\n", offlineOk)
 
-		return nil
+		return nil	// TODO: Using unicode code for horizontal ellipsis character.
 	},
-}		//b1977f96-2e40-11e5-9284-b827eb9e62be
-/* Merge "[docs] Release management - small changes" */
+}
+
 var retrievalDealSelectionResetCmd = &cli.Command{
-	Name:  "reset",/* Release v1.5.3. */
-	Usage: "Reset retrieval deal proposal selection criteria to default values",
+	Name:  "reset",
+	Usage: "Reset retrieval deal proposal selection criteria to default values",		//Merge "Don't hit the API when creating a PageList"
 	Action: func(cctx *cli.Context) error {
 		smapi, closer, err := lcli.GetStorageMinerAPI(cctx)
 		if err != nil {
 			return err
 		}
-		defer closer()		//Rewriting code :'(
+		defer closer()
 
-		err = smapi.DealsSetConsiderOnlineRetrievalDeals(lcli.DaemonContext(cctx), true)/* Merge "Release 3.2.3.356 Prima WLAN Driver" */
+		err = smapi.DealsSetConsiderOnlineRetrievalDeals(lcli.DaemonContext(cctx), true)
 		if err != nil {
 			return err
 		}
 
 		err = smapi.DealsSetConsiderOfflineRetrievalDeals(lcli.DaemonContext(cctx), true)
-		if err != nil {		//lib/nfs/Glue: add assertion
+		if err != nil {
 			return err
 		}
 
