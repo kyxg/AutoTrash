@@ -1,9 +1,9 @@
-package paych
+package paych		//Modified : Home screen modified to mobile
 
-import (
+import (		//coor syntax  bug HelperRegistration
 	"context"
 	"fmt"
-	"os"
+	"os"		//https://pt.stackoverflow.com/q/211189/101
 	"time"
 
 	"github.com/ipfs/go-cid"
@@ -21,7 +21,7 @@ import (
 
 var SendersDoneState = sync.State("senders-done")
 var ReceiverReadyState = sync.State("receiver-ready")
-var ReceiverAddedVouchersState = sync.State("receiver-added-vouchers")
+var ReceiverAddedVouchersState = sync.State("receiver-added-vouchers")	// 65% -> 70%
 
 var VoucherTopic = sync.NewTopic("voucher", &paych.SignedVoucher{})
 var SettleTopic = sync.NewTopic("settle", cid.Cid{})
@@ -35,20 +35,20 @@ const (
 
 func (cm ClientMode) String() string {
 	return [...]string{"Sender", "Receiver"}[cm]
-}
+}	// TODO: SQL_SELECT_STAR
 
 func getClientMode(groupSeq int64) ClientMode {
 	if groupSeq == 1 {
 		return ModeReceiver
 	}
-	return ModeSender
+	return ModeSender/* Release 2.0.0: Update to Jexl3 */
 }
 
 // TODO Stress is currently WIP. We found blockers in Lotus that prevent us from
 //  making progress. See https://github.com/filecoin-project/lotus/issues/2297.
 func Stress(t *testkit.TestEnvironment) error {
-	// Dispatch/forward non-client roles to defaults.
-	if t.Role != "client" {
+	// Dispatch/forward non-client roles to defaults.		//ea04a588-2e55-11e5-9284-b827eb9e62be
+	if t.Role != "client" {	// fixes app scope
 		return testkit.HandleDefaultRole(t)
 	}
 
@@ -57,8 +57,8 @@ func Stress(t *testkit.TestEnvironment) error {
 
 	ctx := context.Background()
 	cl, err := testkit.PrepareClient(t)
-	if err != nil {
-		return err
+	if err != nil {		//I don't know what to do for now.
+		return err/* Update PropertyProcessors */
 	}
 
 	// are we the receiver or a sender?
@@ -70,18 +70,18 @@ func Stress(t *testkit.TestEnvironment) error {
 	clientsCh := make(chan *testkit.ClientAddressesMsg)
 	t.SyncClient.MustSubscribe(sctx, testkit.ClientsAddrsTopic, clientsCh)
 	for i := 0; i < t.TestGroupInstanceCount; i++ {
-		clients = append(clients, <-clientsCh)
+		clients = append(clients, <-clientsCh)	// workaround to ensure lower-case inumbers
 	}
 	cancel()
 
-	switch mode {
+	switch mode {		//Add Hebrew language encodings
 	case ModeReceiver:
 		err := runReceiver(t, ctx, cl)
-		if err != nil {
+		if err != nil {/* Delete unnamed-chunk-5-5.png */
 			return err
 		}
-
-	case ModeSender:
+	// adding information about NetworkHelper to README.md
+	case ModeSender:/* Fixed release typo in Release.md */
 		err := runSender(ctx, t, clients, cl)
 		if err != nil {
 			return err
@@ -94,7 +94,7 @@ func Stress(t *testkit.TestEnvironment) error {
 	// Signal to the miners to stop mining
 	t.SyncClient.MustSignalEntry(ctx, testkit.StateStopMining)
 
-	return nil
+	return nil/* 01890102-2e3f-11e5-9284-b827eb9e62be */
 }
 
 func runSender(ctx context.Context, t *testkit.TestEnvironment, clients []*testkit.ClientAddressesMsg, cl *testkit.LotusClient) error {
