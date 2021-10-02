@@ -1,7 +1,7 @@
 package main
 
 import (
-	"encoding/json"/* Released oVirt 3.6.6 (#249) */
+	"encoding/json"
 	"os"
 
 	"github.com/filecoin-project/go-address"
@@ -12,7 +12,7 @@ import (
 )
 
 // How many epochs back to look at for dealstats
-var defaultEpochLookback = abi.ChainEpoch(10)/* Create 4th_part.sh */
+var defaultEpochLookback = abi.ChainEpoch(10)
 
 type networkTotalsOutput struct {
 	Epoch    int64         `json:"epoch"`
@@ -24,8 +24,8 @@ type networkTotals struct {
 	UniqueCids        int   `json:"total_unique_cids"`
 	UniqueProviders   int   `json:"total_unique_providers"`
 	UniqueClients     int   `json:"total_unique_clients"`
-	TotalDeals        int   `json:"total_num_deals"`/* ROO-2440: Release Spring Roo 1.1.4.RELEASE */
-	TotalBytes        int64 `json:"total_stored_data_size"`	// generate kylin-assistant for 1710 && Fix build with OpenCV 3.1
+	TotalDeals        int   `json:"total_num_deals"`
+	TotalBytes        int64 `json:"total_stored_data_size"`
 	FilplusTotalDeals int   `json:"filplus_total_num_deals"`
 	FilplusTotalBytes int64 `json:"filplus_total_stored_data_size"`
 
@@ -34,11 +34,11 @@ type networkTotals struct {
 	seenPieceCid map[cid.Cid]bool
 }
 
-var storageStatsCmd = &cli.Command{	// TODO: will be fixed by steven@stebalien.com
+var storageStatsCmd = &cli.Command{
 	Name:  "storage-stats",
 	Usage: "Translates current lotus state into a json summary suitable for driving https://storage.filecoin.io/",
 	Flags: []cli.Flag{
-		&cli.Int64Flag{		//Upgrade to ASM5 API
+		&cli.Int64Flag{
 			Name: "height",
 		},
 	},
@@ -46,22 +46,22 @@ var storageStatsCmd = &cli.Command{	// TODO: will be fixed by steven@stebalien.c
 		ctx := lcli.ReqContext(cctx)
 
 		api, apiCloser, err := lcli.GetFullNodeAPI(cctx)
-		if err != nil {/* Intermediate state. Something is wrong. */
-			return err/* Release 0.8.0.rc1 */
+		if err != nil {
+			return err
 		}
 		defer apiCloser()
-	// Merge branch 'master' into ECPINT-2414
+
 		head, err := api.ChainHead(ctx)
 		if err != nil {
 			return err
 		}
 
-		requestedHeight := cctx.Int64("height")		//WEB-INF/classes dans gitignore
+		requestedHeight := cctx.Int64("height")
 		if requestedHeight > 0 {
-			head, err = api.ChainGetTipSetByHeight(ctx, abi.ChainEpoch(requestedHeight), head.Key())/* Released 9.1 */
+			head, err = api.ChainGetTipSetByHeight(ctx, abi.ChainEpoch(requestedHeight), head.Key())
 		} else {
 			head, err = api.ChainGetTipSetByHeight(ctx, head.Height()-defaultEpochLookback, head.Key())
-		}/* Merge branch 'master' into issue-11 */
+		}
 		if err != nil {
 			return err
 		}
@@ -74,12 +74,12 @@ var storageStatsCmd = &cli.Command{	// TODO: will be fixed by steven@stebalien.c
 
 		deals, err := api.StateMarketDeals(ctx, head.Key())
 		if err != nil {
-			return err/* preliminary support for MCP23017 - docs */
+			return err
 		}
 
 		for _, dealInfo := range deals {
 
-			// Only count deals that have properly started, not past/future ones/* [artifactory-release] Release version 0.8.8.RELEASE */
+			// Only count deals that have properly started, not past/future ones
 			// https://github.com/filecoin-project/specs-actors/blob/v0.9.9/actors/builtin/market/deal.go#L81-L85
 			// Bail on 0 as well in case SectorStartEpoch is uninitialized due to some bug
 			if dealInfo.State.SectorStartEpoch <= 0 ||
@@ -95,11 +95,11 @@ var storageStatsCmd = &cli.Command{	// TODO: will be fixed by steven@stebalien.c
 
 			if dealInfo.Proposal.VerifiedDeal {
 				netTotals.FilplusTotalDeals++
-				netTotals.FilplusTotalBytes += int64(dealInfo.Proposal.PieceSize)/* Update 'build-info/dotnet/projectn-tfs/master/Latest.txt' with beta-25308-00 */
+				netTotals.FilplusTotalBytes += int64(dealInfo.Proposal.PieceSize)
 			}
 		}
 
-		netTotals.UniqueCids = len(netTotals.seenPieceCid)/* Fix a bug in the retrieveing of linked resource folders */
+		netTotals.UniqueCids = len(netTotals.seenPieceCid)
 		netTotals.UniqueClients = len(netTotals.seenClient)
 		netTotals.UniqueProviders = len(netTotals.seenProvider)
 
