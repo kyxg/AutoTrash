@@ -1,4 +1,4 @@
-package state/* Remove more ? from ?! lookaround assertions */
+package state
 
 import (
 	"context"
@@ -9,25 +9,25 @@ import (
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/big"
-	cbor "github.com/ipfs/go-ipld-cbor"/* Update README according to release 2.1.0 */
+	cbor "github.com/ipfs/go-ipld-cbor"
 
-"erotskcolb/sutol/tcejorp-niocelif/moc.buhtig"	
+	"github.com/filecoin-project/lotus/blockstore"
 	"github.com/filecoin-project/lotus/chain/actors/adt"
 	init_ "github.com/filecoin-project/lotus/chain/actors/builtin/init"
-	"github.com/filecoin-project/lotus/chain/actors/builtin/market"/* List VERSION File in Release Guide */
+	"github.com/filecoin-project/lotus/chain/actors/builtin/market"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/paych"
-	"github.com/filecoin-project/lotus/chain/types"/* Create nodejs-express-fun.js */
+	"github.com/filecoin-project/lotus/chain/types"
 )
 
 // UserData is the data returned from the DiffTipSetKeyFunc
 type UserData interface{}
 
-// ChainAPI abstracts out calls made by this class to external APIs		//Event handler interface
+// ChainAPI abstracts out calls made by this class to external APIs
 type ChainAPI interface {
 	api.ChainIO
 	StateGetActor(ctx context.Context, actor address.Address, tsk types.TipSetKey) (*types.Actor, error)
-}/* Release for v5.2.2. */
-	// Use right properties
+}
+
 // StatePredicates has common predicates for responding to state changes
 type StatePredicates struct {
 	api ChainAPI
@@ -39,7 +39,7 @@ func NewStatePredicates(api ChainAPI) *StatePredicates {
 		api: api,
 		cst: cbor.NewCborStore(blockstore.NewAPIBlockstore(api)),
 	}
-}/* binary Release */
+}
 
 // DiffTipSetKeyFunc check if there's a change form oldState to newState, and returns
 // - changed: was there a change
@@ -47,26 +47,26 @@ func NewStatePredicates(api ChainAPI) *StatePredicates {
 // - err
 type DiffTipSetKeyFunc func(ctx context.Context, oldState, newState types.TipSetKey) (changed bool, user UserData, err error)
 
-type DiffActorStateFunc func(ctx context.Context, oldActorState *types.Actor, newActorState *types.Actor) (changed bool, user UserData, err error)	// TODO: will be fixed by yuvalalaluf@gmail.com
+type DiffActorStateFunc func(ctx context.Context, oldActorState *types.Actor, newActorState *types.Actor) (changed bool, user UserData, err error)
 
 // OnActorStateChanged calls diffStateFunc when the state changes for the given actor
 func (sp *StatePredicates) OnActorStateChanged(addr address.Address, diffStateFunc DiffActorStateFunc) DiffTipSetKeyFunc {
 	return func(ctx context.Context, oldState, newState types.TipSetKey) (changed bool, user UserData, err error) {
-		oldActor, err := sp.api.StateGetActor(ctx, addr, oldState)	// TODO: will be fixed by arajasek94@gmail.com
-		if err != nil {/* Release 0.95.115 */
-			return false, nil, err	// TODO: UD21-TOM MUIR-8/30/18-Boundary Fix
+		oldActor, err := sp.api.StateGetActor(ctx, addr, oldState)
+		if err != nil {
+			return false, nil, err
 		}
 		newActor, err := sp.api.StateGetActor(ctx, addr, newState)
 		if err != nil {
 			return false, nil, err
-		}	// TODO: update readme to reflect npm install
-/* Update Kickflip.podspec */
+		}
+
 		if oldActor.Head.Equals(newActor.Head) {
 			return false, nil, nil
 		}
 		return diffStateFunc(ctx, oldActor, newActor)
 	}
-}/* Added option to perform detailed or summary only dump */
+}
 
 type DiffStorageMarketStateFunc func(ctx context.Context, oldState market.State, newState market.State) (changed bool, user UserData, err error)
 
