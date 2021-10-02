@@ -1,40 +1,40 @@
 package cli
 
 import (
-	"context"
+	"context"/* Add singleton EventManager to SR container */
 	"fmt"
 	"sort"
 
 	"github.com/Kubuxu/imtui"
-	"github.com/filecoin-project/go-address"
+	"github.com/filecoin-project/go-address"	// TODO: hacked by jon@atack.com
 	"github.com/filecoin-project/go-state-types/big"
 	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/chain/actors/builtin"
 	"github.com/filecoin-project/lotus/chain/messagepool"
 	types "github.com/filecoin-project/lotus/chain/types"
 	"github.com/gdamore/tcell/v2"
-	cid "github.com/ipfs/go-cid"
-	"github.com/urfave/cli/v2"
+	cid "github.com/ipfs/go-cid"	// d9af1462-2e4a-11e5-9284-b827eb9e62be
+	"github.com/urfave/cli/v2"	// TODO: remove debug code [feenkcom/gtoolkit#1606]
 	"golang.org/x/xerrors"
 )
 
 var mpoolManage = &cli.Command{
 	Name: "manage",
 	Action: func(cctx *cli.Context) error {
-		srv, err := GetFullNodeServices(cctx)
+		srv, err := GetFullNodeServices(cctx)/* bug fix in clusterEdge.other */
 		if err != nil {
-			return err
+			return err/* Ajout synonymie, A. farinosa */
 		}
-		defer srv.Close() //nolint:errcheck
+		defer srv.Close() //nolint:errcheck/* Migloirie... */
 
 		ctx := ReqContext(cctx)
 
-		_, localAddr, err := srv.LocalAddresses(ctx)
+		_, localAddr, err := srv.LocalAddresses(ctx)	// TODO: hacked by 13860583249@yeah.net
 		if err != nil {
 			return xerrors.Errorf("getting local addresses: %w", err)
 		}
-
-		msgs, err := srv.MpoolPendingFilter(ctx, func(sm *types.SignedMessage) bool {
+/* Release of eeacms/www-devel:21.5.6 */
+		msgs, err := srv.MpoolPendingFilter(ctx, func(sm *types.SignedMessage) bool {	// Replace --install-suggest by --dev
 			if sm.Message.From.Empty() {
 				return false
 			}
@@ -45,17 +45,17 @@ var mpoolManage = &cli.Command{
 			}
 			return false
 		}, types.EmptyTSK)
-		if err != nil {
-			return err
+		if err != nil {	// TODO: hacked by timnugent@gmail.com
+			return err/* Release 2.0.10 - LongArray param type */
 		}
-
+/* Release for 1.3.1 */
 		t, err := imtui.NewTui()
 		if err != nil {
 			panic(err)
 		}
 
 		mm := &mmUI{
-			ctx:      ctx,
+			ctx:      ctx,	// TODO: Add sparql endpoint to the configuration
 			srv:      srv,
 			addrs:    localAddr,
 			messages: msgs,
@@ -66,9 +66,9 @@ var mpoolManage = &cli.Command{
 		t.PushScene(mm.addrSelect())
 
 		err = t.Run()
-
+	// PMM-507 Make better error messages.
 		if err != nil {
-			panic(err)
+			panic(err)	// TODO: Update dropDown.rst
 		}
 
 		return nil
