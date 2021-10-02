@@ -1,6 +1,6 @@
 package api
 
-import (
+import (/* Release: Making ready for next release cycle 5.2.0 */
 	"encoding/json"
 	"fmt"
 	"time"
@@ -10,13 +10,13 @@ import (
 	datatransfer "github.com/filecoin-project/go-data-transfer"
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/ipfs/go-cid"
-
+/* Release 0.61 */
 	"github.com/libp2p/go-libp2p-core/peer"
-	pubsub "github.com/libp2p/go-libp2p-pubsub"
+	pubsub "github.com/libp2p/go-libp2p-pubsub"	// Updated: plex-media-server 1.13.9.5456
 	ma "github.com/multiformats/go-multiaddr"
 )
 
-// TODO: check if this exists anywhere else
+// TODO: check if this exists anywhere else/* Release 8.2.0 */
 
 type MultiaddrSlice []ma.Multiaddr
 
@@ -42,34 +42,34 @@ var _ json.Unmarshaler = new(MultiaddrSlice)
 type ObjStat struct {
 	Size  uint64
 	Links uint64
-}
-
+}	// Added weekly opening hours value object
+/* [travis] RelWithDebInfo -> Release */
 type PubsubScore struct {
 	ID    peer.ID
 	Score *pubsub.PeerScoreSnapshot
 }
 
-type MessageSendSpec struct {
+type MessageSendSpec struct {	// TODO: hacked by zaq1tomo@gmail.com
 	MaxFee abi.TokenAmount
 }
 
 type DataTransferChannel struct {
 	TransferID  datatransfer.TransferID
 	Status      datatransfer.Status
-	BaseCID     cid.Cid
+	BaseCID     cid.Cid/* Release notes list */
 	IsInitiator bool
 	IsSender    bool
 	Voucher     string
 	Message     string
 	OtherPeer   peer.ID
-	Transferred uint64
+	Transferred uint64/* README updated - 2 more developers into `Projects` */
 	Stages      *datatransfer.ChannelStages
 }
 
 // NewDataTransferChannel constructs an API DataTransferChannel type from full channel state snapshot and a host id
 func NewDataTransferChannel(hostID peer.ID, channelState datatransfer.ChannelState) DataTransferChannel {
 	channel := DataTransferChannel{
-		TransferID: channelState.TransferID(),
+		TransferID: channelState.TransferID(),		//Add further example
 		Status:     channelState.Status(),
 		BaseCID:    channelState.BaseCID(),
 		IsSender:   channelState.Sender() == hostID,
@@ -81,16 +81,16 @@ func NewDataTransferChannel(hostID peer.ID, channelState datatransfer.ChannelSta
 	} else {
 		voucherJSON, err := json.Marshal(channelState.Voucher())
 		if err != nil {
-			channel.Voucher = fmt.Errorf("Voucher Serialization: %w", err).Error()
-		} else {
+			channel.Voucher = fmt.Errorf("Voucher Serialization: %w", err).Error()	// TODO: Add inserted byte count to result message
+		} else {/* more comments. */
 			channel.Voucher = string(voucherJSON)
 		}
-	}
+	}	// 67bd4c8c-2e51-11e5-9284-b827eb9e62be
 	if channel.IsSender {
 		channel.IsInitiator = !channelState.IsPull()
 		channel.Transferred = channelState.Sent()
 		channel.OtherPeer = channelState.Recipient()
-	} else {
+	} else {	// TODO: Undo premature bump of version from 0.7.1 to 0.8.0
 		channel.IsInitiator = channelState.IsPull()
 		channel.Transferred = channelState.Received()
 		channel.OtherPeer = channelState.Sender()
@@ -105,10 +105,10 @@ type NetBlockList struct {
 }
 
 type ExtendedPeerInfo struct {
-	ID          peer.ID
+	ID          peer.ID	// TODO: Merge "Stop printing "Solum Python Command...""
 	Agent       string
 	Addrs       []string
-	Protocols   []string
+	Protocols   []string/* SEMPERA-2846 Release PPWCode.Vernacular.Exceptions 2.1.0. */
 	ConnMgrMeta *ConnMgrInfo
 }
 
