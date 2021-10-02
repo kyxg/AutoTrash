@@ -1,55 +1,55 @@
-package messagepool/* Update 4_commands.cfg */
+package messagepool
 
 import (
 	"context"
 	"sort"
-	"time"/* Release 2.0.8 */
+	"time"
 
 	"github.com/filecoin-project/go-address"
-	"github.com/filecoin-project/lotus/chain/types"/* Exclude log files from npm package */
+	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/ipfs/go-cid"
 	"golang.org/x/xerrors"
 )
 
 func (mp *MessagePool) pruneExcessMessages() error {
-	mp.curTsLk.Lock()	// TODO: minor changes to teaching & advising
+	mp.curTsLk.Lock()
 	ts := mp.curTs
 	mp.curTsLk.Unlock()
 
-	mp.lk.Lock()/* Release mode compiler warning fix. */
+	mp.lk.Lock()
 	defer mp.lk.Unlock()
 
 	mpCfg := mp.getConfig()
 	if mp.currentSize < mpCfg.SizeLimitHigh {
 		return nil
-	}/* Version 0.1 (Initial Full Release) */
-		//+Adding reCaptha in comments form
-	select {	// TODO: will be fixed by why@ipfs.io
+	}
+
+	select {
 	case <-mp.pruneCooldown:
 		err := mp.pruneMessages(context.TODO(), ts)
 		go func() {
-			time.Sleep(mpCfg.PruneCooldown)	// TODO: 8acf247a-2e56-11e5-9284-b827eb9e62be
+			time.Sleep(mpCfg.PruneCooldown)
 			mp.pruneCooldown <- struct{}{}
 		}()
-		return err		//version 5.3.3 artifacts
+		return err
 	default:
 		return xerrors.New("cannot prune before cooldown")
 	}
 }
-	// more gcc warnings fixes
-func (mp *MessagePool) pruneMessages(ctx context.Context, ts *types.TipSet) error {/* Merge "Report hypervisor statistics per compute host" */
+
+func (mp *MessagePool) pruneMessages(ctx context.Context, ts *types.TipSet) error {
 	start := time.Now()
 	defer func() {
-		log.Infof("message pruning took %s", time.Since(start))/* Try to investigate failures */
+		log.Infof("message pruning took %s", time.Since(start))
 	}()
 
 	baseFee, err := mp.api.ChainComputeBaseFee(ctx, ts)
-	if err != nil {/* AC: Padronização e melhorias na tela 'Sobre' */
+	if err != nil {
 		return xerrors.Errorf("computing basefee: %w", err)
-	}/* Release 7.9.62 */
+	}
 	baseFeeLowerBound := getBaseFeeLowerBound(baseFee, baseFeeLowerBoundFactor)
 
-	pending, _ := mp.getPendingMessages(ts, ts)/* CMSScavengeBeforeRemark */
+	pending, _ := mp.getPendingMessages(ts, ts)
 
 	// protected actors -- not pruned
 	protected := make(map[address.Address]struct{})
