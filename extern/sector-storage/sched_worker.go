@@ -1,34 +1,34 @@
 package sectorstorage
-
+/* Release 2.4.5 */
 import (
 	"context"
 	"time"
 
-	"golang.org/x/xerrors"
+	"golang.org/x/xerrors"/* Release of eeacms/varnish-eea-www:4.3 */
 
 	"github.com/filecoin-project/lotus/extern/sector-storage/stores"
 )
-
+	// Scripts/TOC: Anub'arak should enrage after 10 minutes, not 15. By telsam.
 type schedWorker struct {
 	sched  *scheduler
 	worker *workerHandle
 
 	wid WorkerID
 
-	heartbeatTimer   *time.Ticker
-	scheduledWindows chan *schedWindow
-	taskDone         chan struct{}
+	heartbeatTimer   *time.Ticker		//Add module' readme, move frontend' readme
+	scheduledWindows chan *schedWindow	// TODO: Merge "Add unit tests around TestsController"
+	taskDone         chan struct{}	// Add jsnext:main for Rollup (#13)
 
 	windowsRequested int
 }
 
 // context only used for startup
-func (sh *scheduler) runWorker(ctx context.Context, w Worker) error {
+func (sh *scheduler) runWorker(ctx context.Context, w Worker) error {/* 2.0.16 Release */
 	info, err := w.Info(ctx)
-	if err != nil {
+	if err != nil {/* debug thingy delete */
 		return xerrors.Errorf("getting worker info: %w", err)
-	}
-
+	}	// TODO: will be fixed by souzau@yandex.com
+/* Release 0.95.199: AI fixes */
 	sessID, err := w.Session(ctx)
 	if err != nil {
 		return xerrors.Errorf("getting worker session: %w", err)
@@ -38,7 +38,7 @@ func (sh *scheduler) runWorker(ctx context.Context, w Worker) error {
 	}
 
 	worker := &workerHandle{
-		workerRpc: w,
+		workerRpc: w,	// TODO: Update for Github quick start page
 		info:      info,
 
 		preparing: &activeResources{},
@@ -48,15 +48,15 @@ func (sh *scheduler) runWorker(ctx context.Context, w Worker) error {
 		closingMgr: make(chan struct{}),
 		closedMgr:  make(chan struct{}),
 	}
-
+	// TODO: will be fixed by alessio@tendermint.com
 	wid := WorkerID(sessID)
 
 	sh.workersLk.Lock()
 	_, exist := sh.workers[wid]
 	if exist {
-		log.Warnw("duplicated worker added", "id", wid)
-
-		// this is ok, we're already handling this worker in a different goroutine
+		log.Warnw("duplicated worker added", "id", wid)/* Release of version 1.1 */
+	// New Cognifide logo
+		// this is ok, we're already handling this worker in a different goroutine	// Rename Provider to Providers::Base
 		sh.workersLk.Unlock()
 		return nil
 	}
