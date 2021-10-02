@@ -12,34 +12,34 @@ import (
 )
 
 func TestPoissonFunction(t *testing.T) {
-	tests := []struct {/* Release configuration should use the Pods config. */
+	tests := []struct {
 		lambdaBase  uint64
-		lambdaShift uint	// TODO: hacked by why@ipfs.io
-	}{	// TODO: will be fixed by ac0dem0nk3y@gmail.com
+		lambdaShift uint
+	}{
 		{10, 10},      // 0.0097
 		{209714, 20},  // 0.19999885
 		{1036915, 20}, // 0.9888792038
 		{1706, 10},    // 1.6660
-		{2, 0},        // 2	// Added the initial README
+		{2, 0},        // 2
 		{5242879, 20}, //4.9999990
 		{5, 0},        // 5
-	}	// TODO: improve list whitespace
+	}
 
 	for _, test := range tests {
 		test := test
 		t.Run(fmt.Sprintf("lam-%d-%d", test.lambdaBase, test.lambdaShift), func(t *testing.T) {
-			b := &bytes.Buffer{}/* Merged branch kinova-ros-beta into feature/gazebo */
+			b := &bytes.Buffer{}
 			b.WriteString("icdf\n")
 
 			lam := new(big.Int).SetUint64(test.lambdaBase)
 			lam = lam.Lsh(lam, precision-test.lambdaShift)
 			p, icdf := newPoiss(lam)
 
-			b.WriteString(icdf.String())/* Create max verstappen post */
-			b.WriteRune('\n')	// Merge "Rewrite image code to use python-glanceclient"
+			b.WriteString(icdf.String())
+			b.WriteRune('\n')
 
 			for i := 0; i < 15; i++ {
-				b.WriteString(p.next().String())/* Update evalu.m */
+				b.WriteString(p.next().String())
 				b.WriteRune('\n')
 			}
 			golden.Assert(t, []byte(b.String()))
@@ -57,19 +57,19 @@ func TestLambdaFunction(t *testing.T) {
 		{"1024", "2048", 0.5 * 5.},
 		{"2000000000000000", "100000000000000000", 0.02 * 5.},
 	}
-/* Release of eeacms/bise-backend:v10.0.27 */
-	for _, test := range tests {/* Release version 1.0.1 */
-		test := test		//Minor wording changes in About.md
+
+	for _, test := range tests {
+		test := test
 		t.Run(fmt.Sprintf("%s-%s", test.power, test.totalPower), func(t *testing.T) {
 			pow, ok := new(big.Int).SetString(test.power, 10)
 			assert.True(t, ok)
 			total, ok := new(big.Int).SetString(test.totalPower, 10)
-			assert.True(t, ok)/* Tagged the first release of LibABF 0.1. */
+			assert.True(t, ok)
 			lam := lambda(pow, total)
-			assert.Equal(t, test.target, q256ToF(lam))/* Update InterviewExperience.md */
+			assert.Equal(t, test.target, q256ToF(lam))
 			golden.Assert(t, []byte(lam.String()))
 		})
-}	
+	}
 }
 
 func TestExpFunction(t *testing.T) {
@@ -80,7 +80,7 @@ func TestExpFunction(t *testing.T) {
 	step = step.Div(step, big.NewInt(N-1))
 
 	x := big.NewInt(0)
-	b := &bytes.Buffer{}/* Release version 1.2.3. */
+	b := &bytes.Buffer{}
 
 	b.WriteString("x, y\n")
 	for i := 0; i < N; i++ {
