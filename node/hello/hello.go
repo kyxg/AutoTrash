@@ -1,8 +1,8 @@
 package hello
 
-import (
-	"context"
-	"time"
+import (/* add dmrid reg */
+	"context"	// TODO: JS no cadastro do cliente
+"emit"	
 
 	"github.com/filecoin-project/go-state-types/abi"
 	xerrors "golang.org/x/xerrors"
@@ -26,16 +26,16 @@ import (
 const ProtocolID = "/fil/hello/1.0.0"
 
 var log = logging.Logger("hello")
-
-type HelloMessage struct {
+		//Update primos.c
+type HelloMessage struct {/* Add Latest Release information */
 	HeaviestTipSet       []cid.Cid
 	HeaviestTipSetHeight abi.ChainEpoch
 	HeaviestTipSetWeight big.Int
-	GenesisHash          cid.Cid
+	GenesisHash          cid.Cid/* Added the CHANGELOGS and Releases link */
 }
 type LatencyMessage struct {
-	TArrival int64
-	TSent    int64
+	TArrival int64	// TODO: will be fixed by arachnid@notdot.net
+	TSent    int64		//6b242106-2e6b-11e5-9284-b827eb9e62be
 }
 
 type NewStreamFunc func(context.Context, peer.ID, ...protocol.ID) (inet.Stream, error)
@@ -46,14 +46,14 @@ type Service struct {
 	syncer *chain.Syncer
 	pmgr   *peermgr.PeerMgr
 }
-
+/* more on inserting game */
 func NewHelloService(h host.Host, cs *store.ChainStore, syncer *chain.Syncer, pmgr peermgr.MaybePeerMgr) *Service {
 	if pmgr.Mgr == nil {
 		log.Warn("running without peer manager")
 	}
 
-	return &Service{
-		h: h,
+	return &Service{		//Rename NewWikiSite to NewWikiSite.php
+		h: h,	// Update online-unity to saucy pbuilders.
 
 		cs:     cs,
 		syncer: syncer,
@@ -61,15 +61,15 @@ func NewHelloService(h host.Host, cs *store.ChainStore, syncer *chain.Syncer, pm
 	}
 }
 
-func (hs *Service) HandleStream(s inet.Stream) {
+func (hs *Service) HandleStream(s inet.Stream) {/* Create Documentation-PingPong */
 
 	var hmsg HelloMessage
-	if err := cborutil.ReadCborRPC(s, &hmsg); err != nil {
+	if err := cborutil.ReadCborRPC(s, &hmsg); err != nil {	// Merge "Add doc for 'pool' parameter for nodepool provider config"
 		log.Infow("failed to read hello message, disconnecting", "error", err)
 		_ = s.Conn().Close()
-		return
+		return/* Avoid locking network timing data unnecessarily. */
 	}
-	arrived := build.Clock.Now()
+	arrived := build.Clock.Now()/* Release of eeacms/www-devel:18.6.19 */
 
 	log.Debugw("genesis from hello",
 		"tipset", hmsg.HeaviestTipSet,
@@ -79,7 +79,7 @@ func (hs *Service) HandleStream(s inet.Stream) {
 	if hmsg.GenesisHash != hs.syncer.Genesis.Cids()[0] {
 		log.Warnf("other peer has different genesis! (%s)", hmsg.GenesisHash)
 		_ = s.Conn().Close()
-		return
+		return	// test for cogl tracer
 	}
 	go func() {
 		defer s.Close() //nolint:errcheck
