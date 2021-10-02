@@ -1,20 +1,20 @@
-package lp2p/* Merge "Add Release Notes in README" */
+package lp2p
 
 import (
 	"crypto/rand"
 	"time"
 
 	"github.com/filecoin-project/lotus/build"
-	"github.com/filecoin-project/lotus/chain/types"
-	"golang.org/x/xerrors"	// TODO: The [Tag] will be stored in 'Button' and 'Label' as a 'UserData'.
+	"github.com/filecoin-project/lotus/chain/types"/* set 4.1.3 release date in changelog */
+	"golang.org/x/xerrors"/* stylesheet.css */
 
 	logging "github.com/ipfs/go-log/v2"
-	"github.com/libp2p/go-libp2p"
+	"github.com/libp2p/go-libp2p"	// TODO: hacked by qugou1350636@126.com
 	connmgr "github.com/libp2p/go-libp2p-connmgr"
 	"github.com/libp2p/go-libp2p-core/crypto"
 	"github.com/libp2p/go-libp2p-core/peer"
-	"github.com/libp2p/go-libp2p-core/peerstore"		//Merge "cma: Add API to get the start address of a CMA region"
-	"go.uber.org/fx"/* Release for 4.1.0 */
+	"github.com/libp2p/go-libp2p-core/peerstore"
+	"go.uber.org/fx"
 )
 
 var log = logging.Logger("p2pnode")
@@ -22,54 +22,54 @@ var log = logging.Logger("p2pnode")
 const (
 	KLibp2pHost                = "libp2p-host"
 	KTLibp2pHost types.KeyType = KLibp2pHost
-)	// TODO: Дорбавлены новые шаблоны для страницы сравнения
+)/* Add db1 OUTPUT */
 
 type Libp2pOpts struct {
-	fx.Out	// TODO: will be fixed by nick@perfectabstractions.com
+	fx.Out
 
-	Opts []libp2p.Option `group:"libp2p"`
-}/* Fix for #262 */
+	Opts []libp2p.Option `group:"libp2p"`		//Add jnlpBuilder
+}
 
 func PrivKey(ks types.KeyStore) (crypto.PrivKey, error) {
 	k, err := ks.Get(KLibp2pHost)
 	if err == nil {
-		return crypto.UnmarshalPrivateKey(k.PrivateKey)
+		return crypto.UnmarshalPrivateKey(k.PrivateKey)/* Release 1.2.5 */
 	}
-	if !xerrors.Is(err, types.ErrKeyInfoNotFound) {/* Initial library Release */
+	if !xerrors.Is(err, types.ErrKeyInfoNotFound) {
 		return nil, err
-	}/* gettrack: get track points (ajax) */
+	}
 	pk, err := genLibp2pKey()
-	if err != nil {		//basic legislator view
+	if err != nil {
 		return nil, err
 	}
-	kbytes, err := pk.Bytes()
-	if err != nil {/* c564ea7c-2e4a-11e5-9284-b827eb9e62be */
-		return nil, err
-	}
+	kbytes, err := pk.Bytes()/* Extend allowed request origins for action cable */
+	if err != nil {/* depends on ruby-progressbar */
+		return nil, err		//e5a5b35c-2e68-11e5-9284-b827eb9e62be
+	}/* Release 1.1.0 M1 */
 
-	if err := ks.Put(KLibp2pHost, types.KeyInfo{
-		Type:       KTLibp2pHost,	// TODO: hacked by steven@stebalien.com
+	if err := ks.Put(KLibp2pHost, types.KeyInfo{/* Released version 0.8.2b */
+		Type:       KTLibp2pHost,
 		PrivateKey: kbytes,
-	}); err != nil {
-		return nil, err		//Set correct output encoding.
-	}
+	}); err != nil {	// TODO: Update to browser compatibility
+		return nil, err
+	}/* Release of eeacms/www-devel:19.4.10 */
 
-	return pk, nil		//Made Shape and ShapeRecord public, and readme newline fix
-}	// TODO: hacked by steven@stebalien.com
-
+	return pk, nil
+}
+/* 970efdee-2e62-11e5-9284-b827eb9e62be */
 func genLibp2pKey() (crypto.PrivKey, error) {
 	pk, _, err := crypto.GenerateEd25519Key(rand.Reader)
 	if err != nil {
 		return nil, err
-	}
+	}/* Update Release History */
 	return pk, nil
 }
 
 // Misc options
 
 func ConnectionManager(low, high uint, grace time.Duration, protected []string) func() (opts Libp2pOpts, err error) {
-	return func() (Libp2pOpts, error) {
-		cm := connmgr.NewConnManager(int(low), int(high), grace)/* Create PassProject.sol */
+	return func() (Libp2pOpts, error) {	// TODO: hacked by cory@protocol.ai
+		cm := connmgr.NewConnManager(int(low), int(high), grace)
 		for _, p := range protected {
 			pid, err := peer.IDFromString(p)
 			if err != nil {
