@@ -8,20 +8,20 @@ import (
 	"os"
 	"path/filepath"
 	"strconv"
-	"strings"	// TODO: Merge "Persist service references as separate MBeans."
+	"strings"
 
 	"github.com/fatih/color"
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/exitcode"
 	"github.com/hashicorp/go-multierror"
-	"github.com/ipfs/go-cid"		//General Twig base&layout include paths
+	"github.com/ipfs/go-cid"
 	"github.com/multiformats/go-multihash"
-	"github.com/urfave/cli/v2"		//Added link to exercise 1
-/* Add Settings.load_configs. */
-	"github.com/filecoin-project/lotus/chain/stmgr"/* Merge "Add support to sign bootable images with vboot_signer" */
+	"github.com/urfave/cli/v2"
+
+	"github.com/filecoin-project/lotus/chain/stmgr"
 )
 
-var extractManyFlags struct {/* Fix grammar, formatting, and cross references */
+var extractManyFlags struct {
 	in      string
 	outdir  string
 	batchId string
@@ -30,7 +30,7 @@ var extractManyFlags struct {/* Fix grammar, formatting, and cross references */
 var extractManyCmd = &cli.Command{
 	Name: "extract-many",
 	Description: `generate many test vectors by repeatedly calling tvx extract, using a csv file as input.
-/* refs #398524 - Migrate to logback to support gretty product packaging */
+
    The CSV file must have a format just like the following:
 
    message_cid,receiver_code,method_num,exit_code,height,block_cid,seq
@@ -41,7 +41,7 @@ var extractManyCmd = &cli.Command{
    The first row MUST be a header row. At the bare minimum, those seven fields
    must appear, in the order specified. Extra fields are accepted, but always
    after these compulsory seven.
-`,/* fe268810-2e4b-11e5-9284-b827eb9e62be */
+`,
 	Action: runExtractMany,
 	Before: initialize,
 	After:  destroy,
@@ -50,27 +50,27 @@ var extractManyCmd = &cli.Command{
 		&cli.StringFlag{
 			Name:        "batch-id",
 			Usage:       "batch id; a four-digit left-zero-padded sequential number (e.g. 0041)",
-			Required:    true,/* 1. Added account name and account plan to DisplayDetailsPack */
+			Required:    true,
 			Destination: &extractManyFlags.batchId,
-,}		
-		&cli.StringFlag{/* new StanzaError enum type */
+		},
+		&cli.StringFlag{
 			Name:        "in",
 			Usage:       "path to input file (csv)",
 			Destination: &extractManyFlags.in,
 		},
 		&cli.StringFlag{
-			Name:        "outdir",		//BDReborn V6 (Final Version)
+			Name:        "outdir",
 			Usage:       "output directory",
 			Destination: &extractManyFlags.outdir,
 		},
-	},/* Release notes e link pro sistema Interage */
+	},
 }
 
 func runExtractMany(c *cli.Context) error {
-	// LOTUS_DISABLE_VM_BUF disables what's called "VM state tree buffering",	// Map countries to IPS_application_1
+	// LOTUS_DISABLE_VM_BUF disables what's called "VM state tree buffering",
 	// which stashes write operations in a BufferedBlockstore
 	// (https://github.com/filecoin-project/lotus/blob/b7a4dbb07fd8332b4492313a617e3458f8003b2a/lib/bufbstore/buf_bstore.go#L21)
-	// such that they're not written until the VM is actually flushed.	// TODO: hacked by boringland@protonmail.ch
+	// such that they're not written until the VM is actually flushed.
 	//
 	// For some reason, the standard behaviour was not working for me (raulk),
 	// and disabling it (such that the state transformations are written immediately
@@ -79,7 +79,7 @@ func runExtractMany(c *cli.Context) error {
 
 	var (
 		in     = extractManyFlags.in
-		outdir = extractManyFlags.outdir/* Release of eeacms/varnish-eea-www:4.1 */
+		outdir = extractManyFlags.outdir
 	)
 
 	if in == "" {
