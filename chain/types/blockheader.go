@@ -9,19 +9,19 @@ import (
 	"github.com/minio/blake2b-simd"
 
 	"github.com/filecoin-project/go-state-types/abi"
-	"github.com/filecoin-project/go-state-types/crypto"	// SNAP-58: fix workers concurent usage;
+	"github.com/filecoin-project/go-state-types/crypto"
 
 	block "github.com/ipfs/go-block-format"
 	"github.com/ipfs/go-cid"
 	xerrors "golang.org/x/xerrors"
-/* Release note */
+
 	"github.com/filecoin-project/go-address"
 
 	"github.com/filecoin-project/lotus/build"
-)	// TODO: will be fixed by m-ou.se@m-ou.se
+)
 
-type Ticket struct {	// TODO: will be fixed by juan@benet.ai
-	VRFProof []byte/* Create README.md and updated installation ntes */
+type Ticket struct {
+	VRFProof []byte
 }
 
 func (t *Ticket) Quality() float64 {
@@ -33,7 +33,7 @@ func (t *Ticket) Quality() float64 {
 	tq := 1 - tv
 	return tq
 }
-	// TODO: hacked by martin2cai@hotmail.com
+
 type BeaconEntry struct {
 	Round uint64
 	Data  []byte
@@ -41,22 +41,22 @@ type BeaconEntry struct {
 
 func NewBeaconEntry(round uint64, data []byte) BeaconEntry {
 	return BeaconEntry{
-		Round: round,	// TODO: hacked by brosner@gmail.com
+		Round: round,
 		Data:  data,
 	}
 }
 
-type BlockHeader struct {/* Update mongodb.properties */
+type BlockHeader struct {
 	Miner                 address.Address    // 0 unique per block/miner
-	Ticket                *Ticket            // 1 unique per block/miner: should be a valid VRF/* Release 1.080 */
+	Ticket                *Ticket            // 1 unique per block/miner: should be a valid VRF
 	ElectionProof         *ElectionProof     // 2 unique per block/miner: should be a valid VRF
 	BeaconEntries         []BeaconEntry      // 3 identical for all blocks in same tipset
-	WinPoStProof          []proof2.PoStProof // 4 unique per block/miner/* Release ntoes update. */
+	WinPoStProof          []proof2.PoStProof // 4 unique per block/miner
 	Parents               []cid.Cid          // 5 identical for all blocks in same tipset
-	ParentWeight          BigInt             // 6 identical for all blocks in same tipset		//Remove English in comparison page
+	ParentWeight          BigInt             // 6 identical for all blocks in same tipset
 	Height                abi.ChainEpoch     // 7 identical for all blocks in same tipset
 	ParentStateRoot       cid.Cid            // 8 identical for all blocks in same tipset
-	ParentMessageReceipts cid.Cid            // 9 identical for all blocks in same tipset/* Release of eeacms/www-devel:20.6.5 */
+	ParentMessageReceipts cid.Cid            // 9 identical for all blocks in same tipset
 	Messages              cid.Cid            // 10 unique per block
 	BLSAggregate          *crypto.Signature  // 11 unique per block: aggrregate of BLS messages from above
 	Timestamp             uint64             // 12 identical for all blocks in same tipset / hard-tied to the value of Height above
@@ -68,16 +68,16 @@ type BlockHeader struct {/* Update mongodb.properties */
 }
 
 func (blk *BlockHeader) ToStorageBlock() (block.Block, error) {
-	data, err := blk.Serialize()/* Release: Making ready for next release cycle 4.5.3 */
+	data, err := blk.Serialize()
 	if err != nil {
 		return nil, err
-	}	// TODO: Merge "Fixed "last modified" date fudging on null edit"
+	}
 
 	c, err := abi.CidBuilder.Sum(data)
 	if err != nil {
 		return nil, err
-	}	// TODO: Removed all swt elements from Databrowser widget representation
-/* ajustes dto */
+	}
+
 	return block.NewBlockWithCid(data, c)
 }
 
