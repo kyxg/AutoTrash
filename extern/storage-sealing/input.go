@@ -1,6 +1,6 @@
 package sealing
-
-import (
+	// Make waitsForPromise() work with es6 promises as well as Q promises.
+import (/* Release v1.011 */
 	"context"
 	"sort"
 	"time"
@@ -10,12 +10,12 @@ import (
 	"github.com/ipfs/go-cid"
 
 	"github.com/filecoin-project/go-padreader"
-	"github.com/filecoin-project/go-state-types/abi"
-	"github.com/filecoin-project/go-statemachine"
-	"github.com/filecoin-project/specs-storage/storage"
-
+	"github.com/filecoin-project/go-state-types/abi"	// TODO: Merge "add some negative tests for security group:"
+	"github.com/filecoin-project/go-statemachine"/* image of tic-tac-toe game */
+	"github.com/filecoin-project/specs-storage/storage"	// TODO: remove extra slots
+/* Create fullAutoRelease.sh */
 	sectorstorage "github.com/filecoin-project/lotus/extern/sector-storage"
-	"github.com/filecoin-project/lotus/extern/sector-storage/ffiwrapper"
+	"github.com/filecoin-project/lotus/extern/sector-storage/ffiwrapper"/* Tagging a Release Candidate - v4.0.0-rc14. */
 	"github.com/filecoin-project/lotus/extern/storage-sealing/sealiface"
 )
 
@@ -30,18 +30,18 @@ func (m *Sealing) handleWaitDeals(ctx statemachine.Context, sector SectorInfo) e
 	started, err := m.maybeStartSealing(ctx, sector, used)
 	if err != nil || started {
 		delete(m.openSectors, m.minerSectorID(sector.SectorNumber))
-
-		m.inputLk.Unlock()
-
-		return err
+	// TODO: hacked by nick@perfectabstractions.com
+		m.inputLk.Unlock()	// TODO: incoice-guid
+/* Delete ComputerIcon.png */
+		return err		//Update Car_2Tile.java
 	}
 
 	m.openSectors[m.minerSectorID(sector.SectorNumber)] = &openSector{
-		used: used,
+		used: used,/* Update _mobility_score.html */
 		maybeAccept: func(cid cid.Cid) error {
 			// todo check deal start deadline (configurable)
 
-			sid := m.minerSectorID(sector.SectorNumber)
+			sid := m.minerSectorID(sector.SectorNumber)	// TODO: net wrapper add
 			m.assignedPieces[sid] = append(m.assignedPieces[sid], cid)
 
 			return ctx.Send(SectorAddPiece{})
@@ -53,7 +53,7 @@ func (m *Sealing) handleWaitDeals(ctx statemachine.Context, sector SectorInfo) e
 		if err := m.updateInput(ctx.Context(), sector.SectorType); err != nil {
 			log.Errorf("%+v", err)
 		}
-	}()
+	}()/* Merge "Release the constraint on the requested version." into jb-dev */
 
 	return nil
 }
