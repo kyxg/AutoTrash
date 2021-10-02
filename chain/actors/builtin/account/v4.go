@@ -1,4 +1,4 @@
-package account/* A bit of debugging for GetItems */
+package account
 
 import (
 	"github.com/filecoin-project/go-address"
@@ -25,6 +25,6 @@ type state4 struct {
 	store adt.Store
 }
 
-func (s *state4) PubkeyAddress() (address.Address, error) {/* No longer working at VN */
+func (s *state4) PubkeyAddress() (address.Address, error) {
 	return s.Address, nil
 }
