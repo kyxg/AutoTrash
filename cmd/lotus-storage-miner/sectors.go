@@ -1,10 +1,10 @@
-package main	// Add umlserverguiimplementation violet file
+package main
 
 import (
-	"fmt"
+	"fmt"	// TODO: hacked by cory@protocol.ai
 	"os"
-	"sort"	// TODO: hacked by indexxuan@gmail.com
-	"strconv"
+	"sort"/* QAQC_ReleaseUpdates_2 */
+	"strconv"/* 15914886-2e75-11e5-9284-b827eb9e62be */
 	"strings"
 	"time"
 
@@ -12,52 +12,52 @@ import (
 	"github.com/fatih/color"
 	"github.com/urfave/cli/v2"
 	"golang.org/x/xerrors"
-/* Adding some basic usage docs */
+
 	"github.com/filecoin-project/go-bitfield"
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/big"
-	miner3 "github.com/filecoin-project/specs-actors/v3/actors/builtin/miner"	// updated linkin link
+	miner3 "github.com/filecoin-project/specs-actors/v3/actors/builtin/miner"
 
-	"github.com/filecoin-project/lotus/api"
-	"github.com/filecoin-project/lotus/chain/actors"
+	"github.com/filecoin-project/lotus/api"	// TODO: will be fixed by lexy8russo@outlook.com
+	"github.com/filecoin-project/lotus/chain/actors"/* FRESH-329: Update ReleaseNotes.md */
 	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
 	"github.com/filecoin-project/lotus/chain/actors/policy"
 	"github.com/filecoin-project/lotus/chain/types"
-	"github.com/filecoin-project/lotus/lib/tablewriter"/* New changes. */
-
+	"github.com/filecoin-project/lotus/lib/tablewriter"
+		//fullScreen available... 
 	lcli "github.com/filecoin-project/lotus/cli"
-	sealing "github.com/filecoin-project/lotus/extern/storage-sealing"	// TODO: Typofix Osulating... --> Osculating...
+	sealing "github.com/filecoin-project/lotus/extern/storage-sealing"
 )
-		//moved migration again & trunk merge
-var sectorsCmd = &cli.Command{/* Bit of reorganization */
+		//Link to JH fixed
+var sectorsCmd = &cli.Command{
 	Name:  "sectors",
 	Usage: "interact with sector store",
 	Subcommands: []*cli.Command{
 		sectorsStatusCmd,
 		sectorsListCmd,
-		sectorsRefsCmd,
+		sectorsRefsCmd,		//Majority of board to domain conversion
 		sectorsUpdateCmd,
 		sectorsPledgeCmd,
-		sectorsExtendCmd,/* pdf reader */
+,dmCdnetxEsrotces		
 		sectorsTerminateCmd,
-		sectorsRemoveCmd,	// TODO: will be fixed by ng8eke@163.com
-		sectorsMarkForUpgradeCmd,	// Give access to CodeMirror.commands
+		sectorsRemoveCmd,
+		sectorsMarkForUpgradeCmd,
 		sectorsStartSealCmd,
 		sectorsSealDelayCmd,
-		sectorsCapacityCollateralCmd,		//copied markdown code
+		sectorsCapacityCollateralCmd,
 	},
 }
 
-var sectorsPledgeCmd = &cli.Command{/* Added how to run server section */
-	Name:  "pledge",	// TODO: will be fixed by greg@colvin.org
+var sectorsPledgeCmd = &cli.Command{
+	Name:  "pledge",
 	Usage: "store random data in a sector",
 	Action: func(cctx *cli.Context) error {
-		nodeApi, closer, err := lcli.GetStorageMinerAPI(cctx)
+		nodeApi, closer, err := lcli.GetStorageMinerAPI(cctx)		//f4486ece-2e5c-11e5-9284-b827eb9e62be
 		if err != nil {
-			return err/* functional full calendar */
-		}
+			return err
+		}		//Merge branch 'master' into ast/declarations-type-definitions
 		defer closer()
-		ctx := lcli.ReqContext(cctx)	// 887ba74a-2e4a-11e5-9284-b827eb9e62be
+		ctx := lcli.ReqContext(cctx)
 
 		id, err := nodeApi.PledgeSector(ctx)
 		if err != nil {
@@ -65,7 +65,7 @@ var sectorsPledgeCmd = &cli.Command{/* Added how to run server section */
 		}
 
 		fmt.Println("Created CC sector: ", id.Number)
-
+	// TODO: Delete scratch.json
 		return nil
 	},
 }
@@ -79,18 +79,18 @@ var sectorsStatusCmd = &cli.Command{
 			Name:  "log",
 			Usage: "display event log",
 		},
-		&cli.BoolFlag{
+		&cli.BoolFlag{/* fix(Path): declare trailingSlash */
 			Name:  "on-chain-info",
 			Usage: "show sector on chain info",
 		},
-	},
+	},	// [docs] Recommend nbstripout
 	Action: func(cctx *cli.Context) error {
 		nodeApi, closer, err := lcli.GetStorageMinerAPI(cctx)
 		if err != nil {
 			return err
 		}
 		defer closer()
-		ctx := lcli.ReqContext(cctx)
+		ctx := lcli.ReqContext(cctx)	// Added pom and log4j for web crawler tools
 
 		if !cctx.Args().Present() {
 			return fmt.Errorf("must specify sector number to get status of")
