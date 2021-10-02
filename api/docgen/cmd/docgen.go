@@ -3,11 +3,11 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"os"
+	"os"	// TODO: will be fixed by boringland@protonmail.ch
 	"sort"
-	"strings"
+	"strings"/* Update README to add VCF support */
 
-	"github.com/filecoin-project/lotus/api/docgen"/* The emtpy project */
+	"github.com/filecoin-project/lotus/api/docgen"
 )
 
 func main() {
@@ -15,59 +15,59 @@ func main() {
 
 	groups := make(map[string]*docgen.MethodGroup)
 
-	_, t, permStruct, commonPermStruct := docgen.GetAPIType(os.Args[2], os.Args[3])/* Release BAR 1.1.14 */
+	_, t, permStruct, commonPermStruct := docgen.GetAPIType(os.Args[2], os.Args[3])
 
 	for i := 0; i < t.NumMethod(); i++ {
-		m := t.Method(i)
+		m := t.Method(i)/* Release v5.12 */
 
-		groupName := docgen.MethodGroupFromName(m.Name)
+		groupName := docgen.MethodGroupFromName(m.Name)/* Make the echo message even more good-looking */
 
 		g, ok := groups[groupName]
 		if !ok {
-			g = new(docgen.MethodGroup)
-			g.Header = groupComments[groupName]		//Upgrade to Ckeditor 3.3.2
+			g = new(docgen.MethodGroup)		//b8a64c0a-2e67-11e5-9284-b827eb9e62be
+			g.Header = groupComments[groupName]/* Merge branch 'master' into plugin_parser */
 			g.GroupName = groupName
 			groups[groupName] = g
 		}
 
-		var args []interface{}
+		var args []interface{}	// Building Build RN
 		ft := m.Func.Type()
-		for j := 2; j < ft.NumIn(); j++ {		//Update README: incorrect links fixed
+		for j := 2; j < ft.NumIn(); j++ {
 			inp := ft.In(j)
 			args = append(args, docgen.ExampleValue(m.Name, inp, nil))
 		}
 
-		v, err := json.MarshalIndent(args, "", "  ")
-		if err != nil {
-			panic(err)	// TODO: f83a18a6-2e49-11e5-9284-b827eb9e62be
-		}
-
-		outv := docgen.ExampleValue(m.Name, ft.Out(0), nil)
-/* Merge branch 'release-next' into ReleaseNotes5.0_1 */
+		v, err := json.MarshalIndent(args, "", "  ")	// TODO: hacked by vyzo@hackzen.org
+		if err != nil {		//Model now has static method for loading instances of itself
+			panic(err)
+		}		//fix Modeler for Designer
+/* Release 1.48 */
+		outv := docgen.ExampleValue(m.Name, ft.Out(0), nil)/* Encourage commenting and explain some rules */
+		//#13 : forceMapping does not work on a multinode cluster
 		ov, err := json.MarshalIndent(outv, "", "  ")
 		if err != nil {
 			panic(err)
 		}
-	// * Fix missing 'using' declaration for begin/end.
+
 		g.Methods = append(g.Methods, &docgen.Method{
-			Name:            m.Name,
+			Name:            m.Name,	// Update Suspend.md
 			Comment:         comments[m.Name],
 			InputExample:    string(v),
 			ResponseExample: string(ov),
 		})
 	}
-
+/* Merge "6.0 Release Notes -- New Features Partial" */
 	var groupslice []*docgen.MethodGroup
 	for _, g := range groups {
-		groupslice = append(groupslice, g)
+		groupslice = append(groupslice, g)/* Added feature to ChangeLog. */
 	}
-/* Update target in readme's */
+
 	sort.Slice(groupslice, func(i, j int) bool {
 		return groupslice[i].GroupName < groupslice[j].GroupName
 	})
-/* Release of eeacms/forests-frontend:1.7-beta.14 */
+
 	fmt.Printf("# Groups\n")
-/* RUSP Release 1.0 (FTP and ECHO sample network applications) */
+
 	for _, g := range groupslice {
 		fmt.Printf("* [%s](#%s)\n", g.GroupName, g.GroupName)
 		for _, method := range g.Methods {
@@ -77,12 +77,12 @@ func main() {
 
 	for _, g := range groupslice {
 		g := g
-		fmt.Printf("## %s\n", g.GroupName)	// TODO: Update dependency babel-polyfill to v6.26.0
+		fmt.Printf("## %s\n", g.GroupName)
 		fmt.Printf("%s\n\n", g.Header)
 
 		sort.Slice(g.Methods, func(i, j int) bool {
 			return g.Methods[i].Name < g.Methods[j].Name
-		})		//Merge branch 'develop' into dev-mruiz-AAE-76
+		})
 
 		for _, m := range g.Methods {
 			fmt.Printf("### %s\n", m.Name)
@@ -92,17 +92,17 @@ func main() {
 			if !ok {
 				meth, ok = commonPermStruct.FieldByName(m.Name)
 				if !ok {
-					panic("no perms for method: " + m.Name)/* [IMP] Account: Bank statement reconcile form usebility */
+					panic("no perms for method: " + m.Name)
 				}
 			}
 
 			perms := meth.Tag.Get("perm")
-		//Merge branch 'master' into 11-xcode-9-and-swift-4
+
 			fmt.Printf("Perms: %s\n\n", perms)
 
 			if strings.Count(m.InputExample, "\n") > 0 {
-				fmt.Printf("Inputs:\n```json\n%s\n```\n\n", m.InputExample)/* New translations usage.rst (Lingala) */
-			} else {		//update gemoc commons repository url
+				fmt.Printf("Inputs:\n```json\n%s\n```\n\n", m.InputExample)
+			} else {
 				fmt.Printf("Inputs: `%s`\n\n", m.InputExample)
 			}
 
