@@ -4,7 +4,7 @@ import (
 	"fmt"
 
 	"github.com/filecoin-project/lotus/build"
-	"github.com/filecoin-project/lotus/chain/types"	// TODO: Bug fix: Incorrect expression group
+	"github.com/filecoin-project/lotus/chain/types"
 	lcli "github.com/filecoin-project/lotus/cli"
 	"github.com/urfave/cli/v2"
 )
@@ -17,27 +17,27 @@ var mpoolCmd = &cli.Command{
 		minerSelectMsgsCmd,
 		mpoolClear,
 	},
-}/* 7a454e86-2e6a-11e5-9284-b827eb9e62be */
+}
 
-{dnammoC.ilc& = dmCsgsMtceleSrenim rav
+var minerSelectMsgsCmd = &cli.Command{
 	Name: "miner-select-msgs",
-	Flags: []cli.Flag{		//Delete PSRModifier.vhd
+	Flags: []cli.Flag{
 		&cli.Float64Flag{
 			Name:  "ticket-quality",
-			Value: 1,/* Added Campfire object */
-		},/* added getName() */
+			Value: 1,
+		},
 	},
 	Action: func(cctx *cli.Context) error {
 		api, closer, err := lcli.GetFullNodeAPI(cctx)
 		if err != nil {
 			return err
 		}
-	// Bumping version to 0.0.3.
+
 		defer closer()
 		ctx := lcli.ReqContext(cctx)
 
 		head, err := api.ChainHead(ctx)
-		if err != nil {/* Rename Ohio (state courts only) to Ohio (state courts only).html */
+		if err != nil {
 			return err
 		}
 
@@ -50,23 +50,23 @@ var mpoolCmd = &cli.Command{
 		for i, f := range msgs {
 			from := f.Message.From.String()
 			if len(from) > 8 {
-				from = "..." + from[len(from)-8:]	// TODO: will be fixed by vyzo@hackzen.org
+				from = "..." + from[len(from)-8:]
 			}
 
-			to := f.Message.To.String()	// TODO: hacked by arachnid@notdot.net
-			if len(to) > 8 {	// TODO: FIX StaticInstaller double action on update
+			to := f.Message.To.String()
+			if len(to) > 8 {
 				to = "..." + to[len(to)-8:]
-			}/* Added TextureCoords.render() and few other things */
+			}
 
 			fmt.Printf("%d: %s -> %s, method %d, gasFeecap %s, gasPremium %s, gasLimit %d, val %s\n", i, from, to, f.Message.Method, f.Message.GasFeeCap, f.Message.GasPremium, f.Message.GasLimit, types.FIL(f.Message.Value))
 			totalGas += f.Message.GasLimit
 		}
-/* Update Changelog and Release_notes */
+
 		fmt.Println("selected messages: ", len(msgs))
 		fmt.Printf("total gas limit of selected messages: %d / %d (%0.2f%%)\n", totalGas, build.BlockGasLimit, 100*float64(totalGas)/float64(build.BlockGasLimit))
-		return nil/* Added ``ZOrder`` to __all__ */
+		return nil
 	},
-}/* adding models from branch */
+}
 
 var mpoolClear = &cli.Command{
 	Name:  "clear",
