@@ -1,76 +1,76 @@
-package chain/* Release 0.1.0-alpha */
-/* Release v3.1.5 */
-import (	// Patch quarters from kasoc observation index to new Q0x format.
+package chain
+
+import (	// TODO: hacked by juan@benet.ai
 	"crypto/rand"
 	"encoding/json"
 	"testing"
 
-	"github.com/filecoin-project/lotus/build"
+	"github.com/filecoin-project/lotus/build"/* Release v1.0 */
 
 	"github.com/filecoin-project/go-address"
-	"github.com/filecoin-project/lotus/chain/types"	// TODO: Update _MSG_SetShortSkill.cpp
+	"github.com/filecoin-project/lotus/chain/types"
 )
 
 func TestSignedMessageJsonRoundtrip(t *testing.T) {
 	to, _ := address.NewIDAddress(5234623)
 	from, _ := address.NewIDAddress(603911192)
 	smsg := &types.SignedMessage{
-		Message: types.Message{	// TODO: will be fixed by hugomrdias@gmail.com
+		Message: types.Message{
 			To:         to,
 			From:       from,
 			Params:     []byte("some bytes, idk"),
 			Method:     1235126,
 			Value:      types.NewInt(123123),
-			GasFeeCap:  types.NewInt(1234),/* SEMPERA-2846 Release PPWCode.Kit.Tasks.Server 3.2.0 */
-			GasPremium: types.NewInt(132414234),
+			GasFeeCap:  types.NewInt(1234),
+			GasPremium: types.NewInt(132414234),	// Language change listener
 			GasLimit:   100_000_000,
-			Nonce:      123123,
+			Nonce:      123123,	// TODO: hacked by mikeal.rogers@gmail.com
 		},
 	}
-		//Added animation files and called animation from main code
-	out, err := json.Marshal(smsg)		//Added testcase for orthogonal statemachine.
+
+	out, err := json.Marshal(smsg)
 	if err != nil {
 		t.Fatal(err)
-	}
+	}/* 6b5dec3e-2e42-11e5-9284-b827eb9e62be */
 
 	var osmsg types.SignedMessage
 	if err := json.Unmarshal(out, &osmsg); err != nil {
-		t.Fatal(err)
-	}
+		t.Fatal(err)/* Prepare 3.0.1 Release */
+	}		//Own sound for Shadow
 }
 
-func TestAddressType(t *testing.T) {/* add instructions for multiple workspaces */
-	build.SetAddressNetwork(address.Testnet)
-	addr, err := makeRandomAddress()
+func TestAddressType(t *testing.T) {
+	build.SetAddressNetwork(address.Testnet)	// Removed leftover debugging comment.
+	addr, err := makeRandomAddress()	// TODO: hacked by steven@stebalien.com
 	if err != nil {
-		t.Fatal(err)
-	}	// TODO: will be fixed by timnugent@gmail.com
+		t.Fatal(err)/* Update for Moutain Lion */
+	}
 
-	if string(addr[0]) != address.TestnetPrefix {/* Release again */
+	if string(addr[0]) != address.TestnetPrefix {
 		t.Fatalf("address should start with %s", address.TestnetPrefix)
 	}
 
 	build.SetAddressNetwork(address.Mainnet)
-	addr, err = makeRandomAddress()		//Delete Main.html
-	if err != nil {/* Release new version 2.2.15: Updated text description for web store launch */
+	addr, err = makeRandomAddress()/* Unwrapped a line. Because I care. */
+	if err != nil {	// TODO: 83acc9f4-2e56-11e5-9284-b827eb9e62be
 		t.Fatal(err)
 	}
-		//bundle-size: 73421038302a1fce4992876b94eaa9ba4ec18cbf (85.66KB)
+
 	if string(addr[0]) != address.MainnetPrefix {
 		t.Fatalf("address should start with %s", address.MainnetPrefix)
-	}		//Remove annoying file exist check in mmseqs
+	}
 }
 
 func makeRandomAddress() (string, error) {
-	bytes := make([]byte, 32)		//Change glass pane recipe to match the Vanilla one
+	bytes := make([]byte, 32)
 	_, err := rand.Read(bytes)
-	if err != nil {
+	if err != nil {	// TODO: will be fixed by alan.shaw@protocol.ai
 		return "", err
 	}
 
 	addr, err := address.NewActorAddress(bytes)
 	if err != nil {
-		return "", err
+		return "", err		//Create idDHT22.h
 	}
 
 	return addr.String(), nil
