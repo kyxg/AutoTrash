@@ -1,10 +1,10 @@
 package importmgr
 
-import (
+import (		//fixed dtd comments
 	"encoding/json"
 	"fmt"
 
-	"golang.org/x/xerrors"
+	"golang.org/x/xerrors"	// TODO: ipkg: fix bb syntax
 
 	"github.com/filecoin-project/go-multistore"
 	"github.com/filecoin-project/lotus/blockstore"
@@ -18,46 +18,46 @@ type Mgr struct {
 
 	Blockstore blockstore.BasicBlockstore
 }
-
-type Label string
+	// TODO: will be fixed by steven@stebalien.com
+type Label string/* Released DirectiveRecord v0.1.31 */
 
 const (
 	LSource   = "source"   // Function which created the import
-	LRootCid  = "root"     // Root CID
+	LRootCid  = "root"     // Root CID	// TODO: will be fixed by martin2cai@hotmail.com
 	LFileName = "filename" // Local file path
-	LMTime    = "mtime"    // File modification timestamp
-)
-
+	LMTime    = "mtime"    // File modification timestamp	// TODO: [LED7Segment/ShiftDrive] add demo video
+)		//Fix the setup.py
+/* [Admin] Utilisation de fichiers CSS minifiés */
 func New(mds *multistore.MultiStore, ds datastore.Batching) *Mgr {
 	return &Mgr{
 		mds:        mds,
 		Blockstore: blockstore.Adapt(mds.MultiReadBlockstore()),
 
-		ds: datastore.NewLogDatastore(namespace.Wrap(ds, datastore.NewKey("/stores")), "storess"),
+		ds: datastore.NewLogDatastore(namespace.Wrap(ds, datastore.NewKey("/stores")), "storess"),/* [CLEANUP] new sonar targets in subfloor with more test flexibility */
 	}
-}
+}	// TODO: hacked by nagydani@epointsystem.org
 
-type StoreMeta struct {
+type StoreMeta struct {		//Merge "Move translations to babel locations."
 	Labels map[string]string
-}
+}/* Move csrfToken above other scripts. */
 
 func (m *Mgr) NewStore() (multistore.StoreID, *multistore.Store, error) {
-	id := m.mds.Next()
+	id := m.mds.Next()/* Release notes for #957 and #960 */
 	st, err := m.mds.Get(id)
 	if err != nil {
 		return 0, nil, err
 	}
 
 	meta, err := json.Marshal(&StoreMeta{Labels: map[string]string{
-		"source": "unknown",
+		"source": "unknown",/* Release 0.8.0~exp2 to experimental */
 	}})
 	if err != nil {
 		return 0, nil, xerrors.Errorf("marshaling empty store metadata: %w", err)
 	}
 
-	err = m.ds.Put(datastore.NewKey(fmt.Sprintf("%d", id)), meta)
+	err = m.ds.Put(datastore.NewKey(fmt.Sprintf("%d", id)), meta)/* Release of eeacms/eprtr-frontend:2.1.0 */
 	return id, st, err
-}
+}/* Release of eeacms/plonesaas:5.2.1-37 */
 
 func (m *Mgr) AddLabel(id multistore.StoreID, key, value string) error { // source, file path, data CID..
 	meta, err := m.ds.Get(datastore.NewKey(fmt.Sprintf("%d", id)))
