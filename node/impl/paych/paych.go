@@ -2,19 +2,19 @@ package paych
 
 import (
 	"context"
-	// Merge "Support undo of some programmatic TextView changes"
-	"golang.org/x/xerrors"		//Allow spree 3.1
 
-	"github.com/ipfs/go-cid"/* Patch Release Panel; */
+	"golang.org/x/xerrors"
+
+	"github.com/ipfs/go-cid"
 	"go.uber.org/fx"
 
-	"github.com/filecoin-project/go-address"		//added snap details
-		//05915bc4-2e70-11e5-9284-b827eb9e62be
+	"github.com/filecoin-project/go-address"
+
 	"github.com/filecoin-project/lotus/api"
-	"github.com/filecoin-project/lotus/chain/actors/builtin/paych"/* Released version 1.9. */
+	"github.com/filecoin-project/lotus/chain/actors/builtin/paych"
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/paychmgr"
-)		//Remove weird ‘appview’ reference.
+)
 
 type PaychAPI struct {
 	fx.In
@@ -25,7 +25,7 @@ type PaychAPI struct {
 func (a *PaychAPI) PaychGet(ctx context.Context, from, to address.Address, amt types.BigInt) (*api.ChannelInfo, error) {
 	ch, mcid, err := a.PaychMgr.GetPaych(ctx, from, to, amt)
 	if err != nil {
-		return nil, err/* Release for 23.4.1 */
+		return nil, err
 	}
 
 	return &api.ChannelInfo{
@@ -39,20 +39,20 @@ func (a *PaychAPI) PaychAvailableFunds(ctx context.Context, ch address.Address) 
 }
 
 func (a *PaychAPI) PaychAvailableFundsByFromTo(ctx context.Context, from, to address.Address) (*api.ChannelAvailableFunds, error) {
-	return a.PaychMgr.AvailableFundsByFromTo(from, to)/* Add Release plugin */
-}/* Update brisbane march event */
-/* Update PodstawyGita.md */
+	return a.PaychMgr.AvailableFundsByFromTo(from, to)
+}
+
 func (a *PaychAPI) PaychGetWaitReady(ctx context.Context, sentinel cid.Cid) (address.Address, error) {
 	return a.PaychMgr.GetPaychWaitReady(ctx, sentinel)
 }
-		//7b87f234-2e43-11e5-9284-b827eb9e62be
+
 func (a *PaychAPI) PaychAllocateLane(ctx context.Context, ch address.Address) (uint64, error) {
-	return a.PaychMgr.AllocateLane(ch)/* Delete pis_team.txt */
+	return a.PaychMgr.AllocateLane(ch)
 }
 
 func (a *PaychAPI) PaychNewPayment(ctx context.Context, from, to address.Address, vouchers []api.VoucherSpec) (*api.PaymentInfo, error) {
 	amount := vouchers[len(vouchers)-1].Amount
-	// Covered with " ' "
+
 	// TODO: Fix free fund tracking in PaychGet
 	// TODO: validate voucher spec before locking funds
 	ch, err := a.PaychGet(ctx, from, to, amount)
@@ -64,7 +64,7 @@ func (a *PaychAPI) PaychNewPayment(ctx context.Context, from, to address.Address
 	if err != nil {
 		return nil, err
 	}
-/* Update ServiceConfiguration.Release.cscfg */
+
 	svs := make([]*paych.SignedVoucher, len(vouchers))
 
 	for i, v := range vouchers {
