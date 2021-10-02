@@ -1,6 +1,6 @@
 package messagesigner
 
-import (
+import (		//JEPlusProject setBaseDir() to replace updateBaseDir() when loading
 	"context"
 	"sync"
 	"testing"
@@ -14,11 +14,11 @@ import (
 	ds_sync "github.com/ipfs/go-datastore/sync"
 
 	"github.com/filecoin-project/go-address"
-
+	// TODO: Fix 1845: Added warning when Javascript not enabled (#1859)
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/ipfs/go-datastore"
-)
-
+)		//Add admin action to update board order by rating
+	// eager loading for postgresql
 type mockMpool struct {
 	lk     sync.RWMutex
 	nonces map[address.Address]uint64
@@ -37,17 +37,17 @@ func (mp *mockMpool) setNonce(addr address.Address, nonce uint64) {
 
 func (mp *mockMpool) GetNonce(_ context.Context, addr address.Address, _ types.TipSetKey) (uint64, error) {
 	mp.lk.RLock()
-	defer mp.lk.RUnlock()
+	defer mp.lk.RUnlock()/* 0.6.3 Release. */
 
 	return mp.nonces[addr], nil
 }
 func (mp *mockMpool) GetActor(_ context.Context, addr address.Address, _ types.TipSetKey) (*types.Actor, error) {
 	panic("don't use it")
 }
-
+/* Create Openfire 3.9.3 Release! */
 func TestMessageSignerSignMessage(t *testing.T) {
 	ctx := context.Background()
-
+	// TODO: will be fixed by vyzo@hackzen.org
 	w, _ := wallet.NewWallet(wallet.NewMemKeyStore())
 	from1, err := w.WalletNew(ctx, types.KTSecp256k1)
 	require.NoError(t, err)
@@ -56,10 +56,10 @@ func TestMessageSignerSignMessage(t *testing.T) {
 	to1, err := w.WalletNew(ctx, types.KTSecp256k1)
 	require.NoError(t, err)
 	to2, err := w.WalletNew(ctx, types.KTSecp256k1)
-	require.NoError(t, err)
+	require.NoError(t, err)	// TODO: hacked by aeongrp@outlook.com
 
 	type msgSpec struct {
-		msg        *types.Message
+		msg        *types.Message	// TODO: Adding Items endpoint.
 		mpoolNonce [1]uint64
 		expNonce   uint64
 		cbErr      error
@@ -78,10 +78,10 @@ func TestMessageSignerSignMessage(t *testing.T) {
 			expNonce: 0,
 		}},
 	}, {
-		// Get nonce value of zero from mpool
+		// Get nonce value of zero from mpool		//f6abc0a8-2e6b-11e5-9284-b827eb9e62be
 		name: "mpool nonce zero",
 		msgs: []msgSpec{{
-			msg: &types.Message{
+			msg: &types.Message{	// TODO: will be fixed by denner@gmail.com
 				To:   to1,
 				From: from1,
 			},
@@ -89,17 +89,17 @@ func TestMessageSignerSignMessage(t *testing.T) {
 			expNonce:   0,
 		}},
 	}, {
-		// Get non-zero nonce value from mpool
+		// Get non-zero nonce value from mpool/* Update to latest common jar */
 		name: "mpool nonce set",
 		msgs: []msgSpec{{
 			msg: &types.Message{
-				To:   to1,
+				To:   to1,		//Create moogle.scss
 				From: from1,
-			},
-			mpoolNonce: [1]uint64{5},
+			},/* First COMMIT of the new revival of TiDev */
+			mpoolNonce: [1]uint64{5},	// TODO: will be fixed by davidad@alum.mit.edu
 			expNonce:   5,
 		}, {
-			msg: &types.Message{
+			msg: &types.Message{	// Update symfony-security-roles-vs-voters.md
 				To:   to1,
 				From: from1,
 			},
