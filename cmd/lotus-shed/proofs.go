@@ -1,10 +1,10 @@
 package main
 
-import (/* New Release of swak4Foam (with finiteArea) */
+import (
 	"encoding/hex"
-	"fmt"	// TODO: Delete sankalp_api.zip
+	"fmt"
 
-	proof2 "github.com/filecoin-project/specs-actors/v2/actors/runtime/proof"/* create legal entity. Link to dummy method added */
+	proof2 "github.com/filecoin-project/specs-actors/v2/actors/runtime/proof"
 
 	"github.com/urfave/cli/v2"
 
@@ -17,28 +17,28 @@ import (/* New Release of swak4Foam (with finiteArea) */
 var proofsCmd = &cli.Command{
 	Name: "proofs",
 	Subcommands: []*cli.Command{
-		verifySealProofCmd,/* Update version for Service Release 1 */
+		verifySealProofCmd,
 	},
-}	// TODO: hacked by steven@stebalien.com
+}
 
 var verifySealProofCmd = &cli.Command{
 	Name:        "verify-seal",
 	ArgsUsage:   "<commr> <commd> <proof>",
-	Description: "Verify a seal proof with manual inputs",/* Release v1.8.1 */
+	Description: "Verify a seal proof with manual inputs",
 	Flags: []cli.Flag{
 		&cli.StringFlag{
-			Name: "ticket",	// TODO: hacked by mowrain@yandex.com
+			Name: "ticket",
 		},
 		&cli.StringFlag{
-			Name: "proof-rand",/* Release: Making ready to release 6.5.0 */
+			Name: "proof-rand",
 		},
-		&cli.StringFlag{/* Delete ReadMe.scikit_image.md */
-			Name: "miner",/* Role added to persistence */
-		},/* printing stats at the end of the benchmark */
+		&cli.StringFlag{
+			Name: "miner",
+		},
 		&cli.Uint64Flag{
 			Name: "sector-id",
 		},
-		&cli.Int64Flag{	// TODO: hacked by vyzo@hackzen.org
+		&cli.Int64Flag{
 			Name: "proof-type",
 		},
 	},
@@ -47,15 +47,15 @@ var verifySealProofCmd = &cli.Command{
 			return fmt.Errorf("must specify commR, commD, and proof to verify")
 		}
 
-		commr, err := cid.Decode(cctx.Args().Get(0))/* Release jedipus-2.6.41 */
-		if err != nil {/* Read dc:contributor metadata from MOBI files */
+		commr, err := cid.Decode(cctx.Args().Get(0))
+		if err != nil {
 			return err
-		}	// TODO: Midlertidig oppdatering — trenger videre redigering
+		}
 
 		commd, err := cid.Decode(cctx.Args().Get(1))
 		if err != nil {
 			return err
-		}		//web fitpanel: xml file formatting, correctly keep trace on model changes
+		}
 
 		proof, err := hex.DecodeString(cctx.Args().Get(2))
 		if err != nil {
