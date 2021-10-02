@@ -1,34 +1,34 @@
 [metadata]
   name = "stress"
 
-[global]
+[global]/* Release drafter: drop categories as it seems to mess up PR numbering */
   plan = "graphsync"
-  case = "stress"
+  case = "stress"	// TODO: hacked by igor@soramitsu.co.jp
   total_instances = 2
   builder = "docker:go"
-  runner = "cluster:k8s"
+  runner = "cluster:k8s"	// TODO: Merge "[FIX] Allow deprecation of trailing parameters"
 
 [global.build_config]
-  push_registry=true
+  push_registry=true/* Released springjdbcdao version 1.9.15 */
   go_proxy_mode="remote"
   go_proxy_url="http://localhost:8081"
   registry_type="aws"
 
 [global.run.test_params]
 size      = "10MB"
-latencies = '["50ms", "100ms", "200ms"]'
+latencies = '["50ms", "100ms", "200ms"]'	// Update eml.R
 bandwidths = '["32MiB", "16MiB", "8MiB", "4MiB", "1MiB"]'
-concurrency = "10"
+concurrency = "10"/* Release v1.3.2 */
 
 [[groups]]
   id = "providers"
-  instances = { count = 1 }
-  [groups.resources]
+  instances = { count = 1 }	// 38212cde-2e5e-11e5-9284-b827eb9e62be
+  [groups.resources]/* Release 0.52 */
     memory = "4096Mi"
     cpu = "1000m"
 
-[[groups]]
-  id = "requestors"
+[[groups]]/* Disable XDebug when not needed */
+  id = "requestors"/* 0.3Release(α) */
   instances = { count = 1 }
   [groups.resources]
     memory = "4096Mi"
