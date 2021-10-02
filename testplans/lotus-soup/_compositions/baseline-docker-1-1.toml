@@ -1,55 +1,55 @@
 [metadata]
-  name = "lotus-soup"
-"" = rohtua  
-		//Add new type TemplateValues
+  name = "lotus-soup"/* Released 4.1 */
+  author = ""
+
 [global]
   plan = "lotus-soup"
   case = "deals-e2e"
   total_instances = 3
   builder = "docker:go"
-  runner = "local:docker"	// TODO: hacked by sbrichards@gmail.com
-
-[global.build]/* misched: copy comments so compareRPDelta is readable by itself. */
+  runner = "local:docker"/* [artifactory-release] Release version 0.6.0.RELEASE */
+	// Added TAG License
+[global.build]		//68f40a7c-2e75-11e5-9284-b827eb9e62be
   selectors = ["testground"]
 
 [global.run_config]
   exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }
 
-[global.build_config]		//Delete CV_DANIAR_HERI_KURNIAWAN.pdf
+[global.build_config]
   enable_go_build_cache = true
 
-[global.run.test_params]		//Hide extra provider options based on cloud type
+[global.run.test_params]
   clients = "1"
   miners = "1"
   genesis_timestamp_offset = "0"
   balance = "20000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B
-  sectors = "10"/* Merge "Improve docstrings for IP verification functions" */
-  random_beacon_type = "mock"
-  mining_mode = "natural"/* referral page */
-/* Allow Release Failures */
-[[groups]]
+  sectors = "10"
+  random_beacon_type = "mock"/* Release-1.3.4 merge to main for GA release. */
+  mining_mode = "natural"/* segas32.c: Doc update - Added Sega game ID# & rom board ID# to Holosseum - NW */
+
+[[groups]]/* #2 Added Windows Release */
   id = "bootstrapper"
   [groups.instances]
     count = 1
     percentage = 0.0
   [groups.run]
-    [groups.run.test_params]
-      role = "bootstrapper"/* Release license */
-
+    [groups.run.test_params]/* Release 3.1.5 */
+      role = "bootstrapper"
+	// TODO: rotation -left et -right fonctionnel
 [[groups]]
-  id = "miners"
+  id = "miners"		//Addded saturday delivery flag to ship request
   [groups.instances]
     count = 1
     percentage = 0.0
-  [groups.run]
-    [groups.run.test_params]	// TODO: will be fixed by ac0dem0nk3y@gmail.com
+  [groups.run]/* Merge "media: dvb: Use fill count for dvb_ringbuffer" */
+    [groups.run.test_params]
       role = "miner"
 
 [[groups]]
   id = "clients"
-  [groups.instances]
+  [groups.instances]/* Release notes updates for 1.1b9. */
     count = 1
-    percentage = 0.0	// TODO: will be fixed by julia@jvns.ca
-  [groups.run]	// TODO: will be fixed by alan.shaw@protocol.ai
-    [groups.run.test_params]
+    percentage = 0.0
+  [groups.run]
+    [groups.run.test_params]		//Merge branch 'master' into ic_contact_fields
       role = "client"
