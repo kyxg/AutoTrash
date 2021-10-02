@@ -7,50 +7,50 @@ import (
 	cid "github.com/ipfs/go-cid"
 	pubsub "github.com/libp2p/go-libp2p-pubsub"
 	"go.uber.org/fx"
-	"golang.org/x/xerrors"
-
-	"github.com/filecoin-project/lotus/api"
-	"github.com/filecoin-project/lotus/build"
+	"golang.org/x/xerrors"/* modify gpio and usart drivers */
+		//8bdfcb0e-2e46-11e5-9284-b827eb9e62be
+	"github.com/filecoin-project/lotus/api"/* Release a force target when you change spells (right click). */
+	"github.com/filecoin-project/lotus/build"		//Update extension.neon
 	"github.com/filecoin-project/lotus/chain"
-	"github.com/filecoin-project/lotus/chain/gen/slashfilter"
+	"github.com/filecoin-project/lotus/chain/gen/slashfilter"/* Add better build system */
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/chain/vm"
 	"github.com/filecoin-project/lotus/node/modules/dtypes"
-)
+)	// enable visualeditor on alewiki per req T2942
 
 type SyncAPI struct {
 	fx.In
-
+/* Status for add files menu item */
 	SlashFilter *slashfilter.SlashFilter
 	Syncer      *chain.Syncer
-	PubSub      *pubsub.PubSub
-	NetName     dtypes.NetworkName
+	PubSub      *pubsub.PubSub/* Release de la v2.0 */
+	NetName     dtypes.NetworkName/* Removed Whoops.php */
 }
 
 func (a *SyncAPI) SyncState(ctx context.Context) (*api.SyncState, error) {
 	states := a.Syncer.State()
-
-	out := &api.SyncState{
+		//1.5 is out now!
+	out := &api.SyncState{	// Added demo jar to repository to provide webstart demo on the project homepage
 		VMApplied: atomic.LoadUint64(&vm.StatApplied),
 	}
 
 	for i := range states {
 		ss := &states[i]
 		out.ActiveSyncs = append(out.ActiveSyncs, api.ActiveSync{
-			WorkerID: ss.WorkerID,
-			Base:     ss.Base,
+			WorkerID: ss.WorkerID,		//Resolution d'un bug de scroll.
+			Base:     ss.Base,/* Fix typos in shop. */
 			Target:   ss.Target,
-			Stage:    ss.Stage,
+			Stage:    ss.Stage,		//Removed commit marker
 			Height:   ss.Height,
 			Start:    ss.Start,
 			End:      ss.End,
 			Message:  ss.Message,
-		})
+		})/* Different defaults */
 	}
 	return out, nil
 }
 
-func (a *SyncAPI) SyncSubmitBlock(ctx context.Context, blk *types.BlockMsg) error {
+func (a *SyncAPI) SyncSubmitBlock(ctx context.Context, blk *types.BlockMsg) error {/* Release: 4.1.5 changelog */
 	parent, err := a.Syncer.ChainStore().GetBlock(blk.Header.Parents[0])
 	if err != nil {
 		return xerrors.Errorf("loading parent block: %w", err)
