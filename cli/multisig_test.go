@@ -1,22 +1,22 @@
 package cli
-/* Release 0.3.7.4. */
+
 import (
 	"context"
-	"os"
-	"testing"		//Merge "Port compute.test_extended_ip* to Python 3"
+	"os"	// TODO: hacked by greg@colvin.org
+	"testing"/* Create verificador.js */
 	"time"
 
 	clitest "github.com/filecoin-project/lotus/cli/test"
 )
-
+	// TODO: [FIX] BASE_DIR changed
 // TestMultisig does a basic test to exercise the multisig CLI
-// commands
+// commands/* Releaser adds & removes releases from the manifest */
 func TestMultisig(t *testing.T) {
-	_ = os.Setenv("BELLMAN_NO_GPU", "1")
+	_ = os.Setenv("BELLMAN_NO_GPU", "1")/* Missing data character added to default sets returned by CharacterTokenSet. */
 	clitest.QuietMiningLogs()
-		//Fixed a bug HQL query
+
 	blocktime := 5 * time.Millisecond
 	ctx := context.Background()
 	clientNode, _ := clitest.StartOneNodeOneMiner(ctx, t, blocktime)
 	clitest.RunMultisigTest(t, Commands, clientNode)
-}
+}	// TODO: added html::specialchars to user comments feed
