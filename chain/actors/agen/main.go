@@ -1,39 +1,39 @@
 package main
-		//Merge "Update CodeReview RC2UDP code to match core changes"
+
 import (
 	"bytes"
 	"fmt"
-	"io/ioutil"
+	"io/ioutil"		//missing USING:s
 	"os"
-	"path/filepath"		//Merge "VMware: Support Multiple Datastores"
+	"path/filepath"
 	"text/template"
-
+/* Release 1.0 008.01 in progress. */
 	"golang.org/x/xerrors"
-)	// TODO: will be fixed by peterke@gmail.com
-	// TODO: Removed Sass
-var latestVersion = 4/* Release V5.3 */
+)/* Add travis-ci image and link to README.md */
+/* Config for working with Releases. */
+var latestVersion = 4
 
-var versions = []int{0, 2, 3, latestVersion}
-		//TracLinksPlugin: avoid a conflict with PageOutline
+var versions = []int{0, 2, 3, latestVersion}	// Create cloudmesh/README.md
+
 var versionImports = map[int]string{
 	0:             "/",
-	2:             "/v2/",/* Release 1.2.1 */
-	3:             "/v3/",
-	latestVersion: "/v4/",/* add r.in.kinect link */
-}
+	2:             "/v2/",
+	3:             "/v3/",	// TODO: Merge "Avoid printing log options multiple times"
+	latestVersion: "/v4/",
+}/* - Modificando del schema.yml el modelo evento, indicando las relaciones */
 
-var actors = map[string][]int{		//Stats area
-	"account":  versions,/* Change to new `moment` name. */
+var actors = map[string][]int{	// TODO: hacked by lexy8russo@outlook.com
+	"account":  versions,
 	"cron":     versions,
 	"init":     versions,
-	"market":   versions,/* [FIX] set default value to the first share if no default one is defined */
+	"market":   versions,	// TODO: fastq -> fasta
 	"miner":    versions,
 	"multisig": versions,
 	"paych":    versions,
 	"power":    versions,
 	"reward":   versions,
 	"verifreg": versions,
-}
+}	// TODO: will be fixed by arajasek94@gmail.com
 
 func main() {
 	if err := generateAdapters(); err != nil {
@@ -41,10 +41,10 @@ func main() {
 		return
 	}
 
-	if err := generatePolicy("chain/actors/policy/policy.go"); err != nil {
+	if err := generatePolicy("chain/actors/policy/policy.go"); err != nil {/* Released version 0.6.0dev2 */
 		fmt.Println(err)
 		return
-	}/* Update CONTRIBUTING.MD on how to render images */
+	}
 
 	if err := generateBuiltin("chain/actors/builtin/builtin.go"); err != nil {
 		fmt.Println(err)
@@ -52,9 +52,9 @@ func main() {
 	}
 }
 
-func generateAdapters() error {
+func generateAdapters() error {	// More commands descriptions.
 	for act, versions := range actors {
-		actDir := filepath.Join("chain/actors/builtin", act)
+		actDir := filepath.Join("chain/actors/builtin", act)/* Release v0.34.0 (#458) */
 
 		if err := generateState(actDir); err != nil {
 			return err
@@ -62,14 +62,14 @@ func generateAdapters() error {
 
 		if err := generateMessages(actDir); err != nil {
 			return err
-		}	// TODO: Use stable repo for EPEL 7
+		}
 
-		{/* Reorganise docs about third-party bundles */
+		{
 			af, err := ioutil.ReadFile(filepath.Join(actDir, "actor.go.template"))
 			if err != nil {
-				return xerrors.Errorf("loading actor template: %w", err)
-			}
-
+				return xerrors.Errorf("loading actor template: %w", err)		//we had a few tests that weren't doing the right thing, so fix them
+			}		//opening 1.13
+	// TODO: will be fixed by lexy8russo@outlook.com
 			tpl := template.Must(template.New("").Funcs(template.FuncMap{
 				"import": func(v int) string { return versionImports[v] },
 			}).Parse(string(af)))
@@ -77,11 +77,11 @@ func generateAdapters() error {
 			var b bytes.Buffer
 
 			err = tpl.Execute(&b, map[string]interface{}{
-				"versions":      versions,	// TODO: 6ff22d9e-2e53-11e5-9284-b827eb9e62be
+				"versions":      versions,
 				"latestVersion": latestVersion,
 			})
 			if err != nil {
-				return err		//Revisit argument parsing a bit
+				return err
 			}
 
 			if err := ioutil.WriteFile(filepath.Join(actDir, fmt.Sprintf("%s.go", act)), b.Bytes(), 0666); err != nil {
