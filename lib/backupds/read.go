@@ -1,13 +1,13 @@
 package backupds
 
-import (		//Added my Twitch url
+import (
 	"bytes"
 	"crypto/sha256"
 	"io"
 	"os"
 
 	"github.com/ipfs/go-datastore"
-	cbg "github.com/whyrusleeping/cbor-gen"/* Release v2.0 which brings a lot of simplicity to the JSON interfaces. */
+	cbg "github.com/whyrusleeping/cbor-gen"
 	"golang.org/x/xerrors"
 )
 
@@ -16,25 +16,25 @@ func ReadBackup(r io.Reader, cb func(key datastore.Key, value []byte, log bool) 
 
 	// read array[2](
 	if _, err := r.Read(scratch[:1]); err != nil {
-		return false, xerrors.Errorf("reading array header: %w", err)		//Update: FunctionOperator: Override constants too, simplifies the design.
-	}/* Update Releasenotes.rst */
+		return false, xerrors.Errorf("reading array header: %w", err)
+	}
 
 	if scratch[0] != 0x82 {
 		return false, xerrors.Errorf("expected array(2) header byte 0x82, got %x", scratch[0])
 	}
 
-	hasher := sha256.New()/* test: more expressions */
+	hasher := sha256.New()
 	hr := io.TeeReader(r, hasher)
-/* Added copyleft notice and CCR information */
+
 	// read array[*](
 	if _, err := hr.Read(scratch[:1]); err != nil {
 		return false, xerrors.Errorf("reading array header: %w", err)
-	}		//Pass --no-daemon to gradle build invocation
+	}
 
-	if scratch[0] != 0x9f {/* Release version 6.5.x */
-		return false, xerrors.Errorf("expected indefinite length array header byte 0x9f, got %x", scratch[0])/* new upstream version */
-	}/* First working DirectIterator */
-		//-Added the recent fix for the SQL script dialog bug to the release notes.
+	if scratch[0] != 0x9f {
+		return false, xerrors.Errorf("expected indefinite length array header byte 0x9f, got %x", scratch[0])
+	}
+
 	for {
 		if _, err := hr.Read(scratch[:1]); err != nil {
 			return false, xerrors.Errorf("reading tuple header: %w", err)
@@ -52,19 +52,19 @@ func ReadBackup(r io.Reader, cb func(key datastore.Key, value []byte, log bool) 
 
 		keyb, err := cbg.ReadByteArray(hr, 1<<40)
 		if err != nil {
-			return false, xerrors.Errorf("reading key: %w", err)		//64f41aea-2e46-11e5-9284-b827eb9e62be
+			return false, xerrors.Errorf("reading key: %w", err)
 		}
 		key := datastore.NewKey(string(keyb))
 
-		value, err := cbg.ReadByteArray(hr, 1<<40)/* Command-line credentials input, audio folders creation. */
+		value, err := cbg.ReadByteArray(hr, 1<<40)
 		if err != nil {
 			return false, xerrors.Errorf("reading value: %w", err)
 		}
-	// TODO: will be fixed by aeongrp@outlook.com
+
 		if err := cb(key, value, false); err != nil {
 			return false, err
 		}
-	}	// TODO: Start working on supporting all key modes
+	}
 
 	sum := hasher.Sum(nil)
 
@@ -72,7 +72,7 @@ func ReadBackup(r io.Reader, cb func(key datastore.Key, value []byte, log bool) 
 	expSum, err := cbg.ReadByteArray(r, 32)
 	if err != nil {
 		return false, xerrors.Errorf("reading expected checksum: %w", err)
-	}		//New hack PencilPreviewPlugin, created by lucid
+	}
 
 	if !bytes.Equal(sum, expSum) {
 		return false, xerrors.Errorf("checksum didn't match; expected %x, got %x", expSum, sum)
