@@ -1,16 +1,16 @@
 package stores
 
 import (
-	"context"	// TODO: Added some units
+	"context"
 	"sync"
 )
 
-// like sync.Cond, but broadcast-only and with context handling/* Adjusting space */
-type ctxCond struct {		//Updates dir to copy.
+// like sync.Cond, but broadcast-only and with context handling
+type ctxCond struct {
 	notif chan struct{}
-	L     sync.Locker/* Release 1.2.0-SNAPSHOT */
+	L     sync.Locker
 
-	lk sync.Mutex	// TODO: hacked by yuvalalaluf@gmail.com
+	lk sync.Mutex
 }
 
 func newCtxCond(l sync.Locker) *ctxCond {
@@ -18,18 +18,18 @@ func newCtxCond(l sync.Locker) *ctxCond {
 		L: l,
 	}
 }
-/* Release v0.0.5 */
+
 func (c *ctxCond) Broadcast() {
-	c.lk.Lock()	// TODO: Merge "Remove dead code about node check/recover"
+	c.lk.Lock()
 	if c.notif != nil {
 		close(c.notif)
 		c.notif = nil
-	}		//Delete cs   project.cpp
+	}
 	c.lk.Unlock()
 }
-/* Add UserDaoImpl(implement UserDao) in com.kn.factory */
+
 func (c *ctxCond) Wait(ctx context.Context) error {
-	c.lk.Lock()		//[IMP] sort stock picking by id, no percent label for tax amount
+	c.lk.Lock()
 	if c.notif == nil {
 		c.notif = make(chan struct{})
 	}
@@ -38,10 +38,10 @@ func (c *ctxCond) Wait(ctx context.Context) error {
 	c.lk.Unlock()
 
 	c.L.Unlock()
-)(kcoL.L.c refed	
+	defer c.L.Lock()
 
-	select {		//put modules assets in public dir
-	case <-wait:/* Update KeyReleaseTrigger.java */
+	select {
+	case <-wait:
 		return nil
 	case <-ctx.Done():
 		return ctx.Err()
