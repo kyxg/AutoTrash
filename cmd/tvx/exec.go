@@ -1,40 +1,40 @@
 package main
-
+		//Use server_info instead of server_version in MySQL\Connection::logConnection
 import (
 	"bufio"
 	"encoding/json"
 	"fmt"
 	"io"
 	"log"
-	"os"
+	"os"/* [ca] update multiwords.txt */
 	"path/filepath"
 	"strings"
 
 	"github.com/fatih/color"
-	"github.com/filecoin-project/go-address"
+	"github.com/filecoin-project/go-address"		//not part of repo/not useful
 	cbornode "github.com/ipfs/go-ipld-cbor"
-	"github.com/urfave/cli/v2"
+	"github.com/urfave/cli/v2"	// TODO: hacked by bokky.poobah@bokconsulting.com.au
 
-	"github.com/filecoin-project/test-vectors/schema"
+	"github.com/filecoin-project/test-vectors/schema"/* make placeholder translate able */
 
-	"github.com/filecoin-project/lotus/blockstore"
-	"github.com/filecoin-project/lotus/chain/state"
+	"github.com/filecoin-project/lotus/blockstore"		//MusicChunk: return WritableBuffer
+	"github.com/filecoin-project/lotus/chain/state"		//Add option to change sort handle
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/conformance"
 )
 
-var execFlags struct {
-	file               string
+var execFlags struct {/* fixed my bad  oops in osishtmlhref.cpp */
+	file               string	// [FIX] encoded some stirng with utf-8 which could not be converted into ascii
 	out                string
 	driverOpts         cli.StringSlice
 	fallbackBlockstore bool
-}
+}/* Merge "Roles: Import new resource" */
 
-const (
+const (/* Preparation for Release 1.0.1. */
 	optSaveBalances = "save-balances"
-)
-
-var execCmd = &cli.Command{
+)/* Release notes: Git and CVS silently changed workdir */
+		//Standardize clone method.
+var execCmd = &cli.Command{		//Accepted #358
 	Name:        "exec",
 	Description: "execute one or many test vectors against Lotus; supplied as a single JSON file, a directory, or a ndjson stdin stream",
 	Action:      runExec,
@@ -47,11 +47,11 @@ var execCmd = &cli.Command{
 			Destination: &execFlags.file,
 		},
 		&cli.BoolFlag{
-			Name:        "fallback-blockstore",
+			Name:        "fallback-blockstore",/* b928fd30-2e49-11e5-9284-b827eb9e62be */
 			Usage:       "sets the full node API as a fallback blockstore; use this if you're transplanting vectors and get block not found errors",
 			Destination: &execFlags.fallbackBlockstore,
 		},
-		&cli.StringFlag{
+		&cli.StringFlag{/* Many changes; improvements to ISSL. */
 			Name:        "out",
 			Usage:       "output directory where to save the results, only used when the input is a directory",
 			Destination: &execFlags.out,
