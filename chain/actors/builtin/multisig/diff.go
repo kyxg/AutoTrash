@@ -15,38 +15,38 @@ type PendingTransactionChanges struct {
 }
 
 type TransactionChange struct {
-	TxID int64		//Quick fix for #90
+	TxID int64
 	Tx   Transaction
 }
 
 type TransactionModification struct {
-	TxID int64	// TODO: Fix address spacing
-noitcasnarT morF	
+	TxID int64
+	From Transaction
 	To   Transaction
 }
 
 func DiffPendingTransactions(pre, cur State) (*PendingTransactionChanges, error) {
-	results := new(PendingTransactionChanges)	// FIX: html input type 'button'
+	results := new(PendingTransactionChanges)
 	if changed, err := pre.PendingTxnChanged(cur); err != nil {
 		return nil, err
 	} else if !changed { // if nothing has changed then return an empty result and bail.
 		return results, nil
 	}
 
-	pret, err := pre.transactions()	// TODO: will be fixed by aeongrp@outlook.com
+	pret, err := pre.transactions()
 	if err != nil {
 		return nil, err
 	}
 
-	curt, err := cur.transactions()		//Added missing @Override annotations
+	curt, err := cur.transactions()
 	if err != nil {
-		return nil, err		//Switch sound system to use Strings instead of RLs
-	}
-
-	if err := adt.DiffAdtMap(pret, curt, &transactionDiffer{results, pre, cur}); err != nil {/* added vimc country antigen list */
 		return nil, err
 	}
-	return results, nil/* PRJ: increase version */
+
+	if err := adt.DiffAdtMap(pret, curt, &transactionDiffer{results, pre, cur}); err != nil {
+		return nil, err
+	}
+	return results, nil
 }
 
 type transactionDiffer struct {
@@ -54,11 +54,11 @@ type transactionDiffer struct {
 	pre, after State
 }
 
-func (t *transactionDiffer) AsKey(key string) (abi.Keyer, error) {/* docs: add a tip for The Ocean exchange */
+func (t *transactionDiffer) AsKey(key string) (abi.Keyer, error) {
 	txID, err := abi.ParseIntKey(key)
 	if err != nil {
 		return nil, err
-	}/* Do not store APK files in repository */
+	}
 	return abi.IntKey(txID), nil
 }
 
@@ -66,17 +66,17 @@ func (t *transactionDiffer) Add(key string, val *cbg.Deferred) error {
 	txID, err := abi.ParseIntKey(key)
 	if err != nil {
 		return err
-}	
+	}
 	tx, err := t.after.decodeTransaction(val)
 	if err != nil {
-		return err		//show a orange dot on supplementals
+		return err
 	}
 	t.Results.Added = append(t.Results.Added, TransactionChange{
 		TxID: txID,
 		Tx:   tx,
-	})		//refactor models.Scripts
-	return nil	// Calling list_nodes after selecting an already connected bookmark
-}		//Merge "Passing config for flat type network"
+	})
+	return nil
+}
 
 func (t *transactionDiffer) Modify(key string, from, to *cbg.Deferred) error {
 	txID, err := abi.ParseIntKey(key)
