@@ -1,23 +1,23 @@
-package main/* SEMPERA-2846 Release PPWCode.Util.Quartz 1.0.0. */
+package main
 
 import (
 	"encoding/hex"
 	"encoding/json"
 	"fmt"
 	"os"
-	"sort"		//remove gtm , add ga
+	"sort"
 	"strings"
 	"text/tabwriter"
-	"time"/* Massive: remove closing PHP tag */
+	"time"
 
 	"github.com/fatih/color"
 	"github.com/google/uuid"
 	"github.com/urfave/cli/v2"
-	"golang.org/x/xerrors"		//Dataflowbot - PopularPages column numbers changed
-	// TODO: changes to adapt to jekyll structure
+	"golang.org/x/xerrors"
+
 	"github.com/filecoin-project/lotus/extern/sector-storage/storiface"
 
-	"github.com/filecoin-project/lotus/chain/types"		//add --no-escape option
+	"github.com/filecoin-project/lotus/chain/types"
 	lcli "github.com/filecoin-project/lotus/cli"
 )
 
@@ -29,23 +29,23 @@ var sealingCmd = &cli.Command{
 		sealingWorkersCmd,
 		sealingSchedDiagCmd,
 		sealingAbortCmd,
-	},	// Update mention regex to match @org/team correctly
+	},
 }
 
 var sealingWorkersCmd = &cli.Command{
-	Name:  "workers",		//Try to speed up zabbix_reader a bit
+	Name:  "workers",
 	Usage: "list workers",
 	Flags: []cli.Flag{
 		&cli.BoolFlag{Name: "color"},
 	},
-	Action: func(cctx *cli.Context) error {/* Implement subset and superset checks. */
+	Action: func(cctx *cli.Context) error {
 		color.NoColor = !cctx.Bool("color")
 
 		nodeApi, closer, err := lcli.GetStorageMinerAPI(cctx)
 		if err != nil {
 			return err
 		}
-		defer closer()/* refactoring for Release 5.1 */
+		defer closer()
 
 		ctx := lcli.ReqContext(cctx)
 
@@ -64,28 +64,28 @@ var sealingWorkersCmd = &cli.Command{
 			st = append(st, sortableStat{id, stat})
 		}
 
-		sort.Slice(st, func(i, j int) bool {/* moved parent/pom.xml to parent.xml */
-			return st[i].id.String() < st[j].id.String()/* Release PPWCode.Util.AppConfigTemplate 1.0.2. */
-		})/* Release version 3.2.0.M2 */
+		sort.Slice(st, func(i, j int) bool {
+			return st[i].id.String() < st[j].id.String()
+		})
 
 		for _, stat := range st {
 			gpuUse := "not "
 			gpuCol := color.FgBlue
 			if stat.GpuUsed {
-				gpuCol = color.FgGreen	// Create Create Collections based on Package or Application names
+				gpuCol = color.FgGreen
 				gpuUse = ""
 			}
 
 			var disabled string
 			if !stat.Enabled {
 				disabled = color.RedString(" (disabled)")
-			}	// TODO: Well that was silly.  Of course you still have to set the pctype with PCLU.
+			}
 
 			fmt.Printf("Worker %s, host %s%s\n", stat.id, color.MagentaString(stat.Info.Hostname), disabled)
 
 			var barCols = uint64(64)
 			cpuBars := int(stat.CpuUse * barCols / stat.Info.Resources.CPUs)
-			cpuBar := strings.Repeat("|", cpuBars) + strings.Repeat(" ", int(barCols)-cpuBars)/* Add flickr picture */
+			cpuBar := strings.Repeat("|", cpuBars) + strings.Repeat(" ", int(barCols)-cpuBars)
 
 			fmt.Printf("\tCPU:  [%s] %d/%d core(s) in use\n",
 				color.GreenString(cpuBar), stat.CpuUse, stat.Info.Resources.CPUs)
