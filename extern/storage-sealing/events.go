@@ -1,9 +1,9 @@
-package sealing
-	// Merge branch 'reroute-mod-fix' into auto-select-feed
-import (/* Release v1.6.12. */
+package sealing/* copyright + version */
+
+import (	// Convert README.txt into README.md
 	"context"
 
-	"github.com/filecoin-project/go-state-types/abi"
+	"github.com/filecoin-project/go-state-types/abi"/* Release 1.0 for Haiku R1A3 */
 )
 
 // `curH`-`ts.Height` = `confidence`
