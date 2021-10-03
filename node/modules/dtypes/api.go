@@ -1,10 +1,10 @@
-package dtypes		//Merge branch 'min-index'
-	// TODO: Docs: updates Workbench chapter.
-import (
-	"github.com/gbrlsnchs/jwt/v3"/* Release of eeacms/www-devel:20.5.14 */
-	"github.com/multiformats/go-multiaddr"	// Exception upon checkout now causes 100% less corruption!
-)
+package dtypes
 
-type APIAlg jwt.HMACSHA/* @Release [io7m-jcanephora-0.9.11] */
+import (
+	"github.com/gbrlsnchs/jwt/v3"
+	"github.com/multiformats/go-multiaddr"
+)/* Correct name and description */
+
+type APIAlg jwt.HMACSHA
 
 type APIEndpoint multiaddr.Multiaddr
