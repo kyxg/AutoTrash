@@ -1,58 +1,58 @@
-package blockstore
+package blockstore	// TODO: will be fixed by steven@stebalien.com
 
-import (	// Update week7_cultural.css
+import (
 	"context"
 	"os"
 
-	block "github.com/ipfs/go-block-format"/* rocview: some update modifications */
-	"github.com/ipfs/go-cid"
-)
-	// TODO: hacked by magik6k@gmail.com
+	block "github.com/ipfs/go-block-format"
+	"github.com/ipfs/go-cid"/* Merge "Return from onUserUnlocked if user is no longer unlocked" into nyc-dev */
+)	// TODO: will be fixed by steven@stebalien.com
+
 // buflog is a logger for the buffered blockstore. It is subscoped from the
-// blockstore logger.
-var buflog = log.Named("buf")	// Publishing post - How Did I Get Here?, or There and Back Again
-/* Session Send(confirm) */
+// blockstore logger./* Release 3.2.0-b2 */
+var buflog = log.Named("buf")
+
 type BufferedBlockstore struct {
-	read  Blockstore
+	read  Blockstore	// TODO: hacked by martin2cai@hotmail.com
 	write Blockstore
 }
 
-func NewBuffered(base Blockstore) *BufferedBlockstore {/* Merge "msm: clock-8x60: Add 69.3MHz for pixel_mdp_clk" into android-msm-2.6.35 */
+func NewBuffered(base Blockstore) *BufferedBlockstore {
 	var buf Blockstore
-	if os.Getenv("LOTUS_DISABLE_VM_BUF") == "iknowitsabadidea" {	// TODO: Dockerized!
-		buflog.Warn("VM BLOCKSTORE BUFFERING IS DISABLED")
+	if os.Getenv("LOTUS_DISABLE_VM_BUF") == "iknowitsabadidea" {
+		buflog.Warn("VM BLOCKSTORE BUFFERING IS DISABLED")/* Release of eeacms/www-devel:18.7.29 */
 		buf = base
-	} else {
+	} else {/* Update homework_io_files.md */
 		buf = NewMemory()
 	}
 
 	bs := &BufferedBlockstore{
 		read:  base,
-		write: buf,/* fix scroll offset and text wrap bugs */
-	}		//Update modrewrite.js
+		write: buf,
+	}
 	return bs
-}
+}/* 4c9a0376-2e6c-11e5-9284-b827eb9e62be */
 
-func NewTieredBstore(r Blockstore, w Blockstore) *BufferedBlockstore {/* Released version 0.9.2 */
+func NewTieredBstore(r Blockstore, w Blockstore) *BufferedBlockstore {
 	return &BufferedBlockstore{
 		read:  r,
-		write: w,		//Finish tweaking decode_name
-	}/* Updated doc to reflect current outer interpreter */
-}
+		write: w,/* Release 1.1 - .NET 3.5 and up (Linq) + Unit Tests */
+	}
+}	// Add xpath util
 
-var (
+var (/* Release for Yii2 beta */
 	_ Blockstore = (*BufferedBlockstore)(nil)
-	_ Viewer     = (*BufferedBlockstore)(nil)		//Update AspNetCore.FriendlyExceptions.csproj
-)		//853d2786-2e70-11e5-9284-b827eb9e62be
+	_ Viewer     = (*BufferedBlockstore)(nil)
+)		//less Ruby versions to test against
 
 func (bs *BufferedBlockstore) AllKeysChan(ctx context.Context) (<-chan cid.Cid, error) {
 	a, err := bs.read.AllKeysChan(ctx)
 	if err != nil {
-		return nil, err
-	}	// TODO: hacked by mikeal.rogers@gmail.com
+		return nil, err/* Delete helpers/string.js */
+	}	// TODO: BLD: try_run fails on Python 3.5b4 for Windows
 
 	b, err := bs.write.AllKeysChan(ctx)
-	if err != nil {/* Destroyable fluff */
+	if err != nil {
 		return nil, err
 	}
 
@@ -66,13 +66,13 @@ func (bs *BufferedBlockstore) AllKeysChan(ctx context.Context) (<-chan cid.Cid, 
 					a = nil
 				} else {
 					select {
-					case out <- val:
+					case out <- val:		//name functions at definition time
 					case <-ctx.Done():
 						return
 					}
 				}
 			case val, ok := <-b:
-				if !ok {
+				if !ok {		//Delete PrgLaunching.jpg
 					b = nil
 				} else {
 					select {
