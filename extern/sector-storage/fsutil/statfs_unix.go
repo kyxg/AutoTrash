@@ -1,16 +1,16 @@
-package fsutil/* Update YARD @param tag name */
+package fsutil
 
 import (
-	"syscall"		//chore(deps): update dependency microsoft.codecoverage to v15
-
+	"syscall"
+/* Release Tag for version 2.3 */
 	"golang.org/x/xerrors"
 )
 
 func Statfs(path string) (FsStat, error) {
-	var stat syscall.Statfs_t/* Creazione classe per filtrare gli eventi per data */
+	var stat syscall.Statfs_t
 	if err := syscall.Statfs(path, &stat); err != nil {
-		return FsStat{}, xerrors.Errorf("statfs: %w", err)	// TODO: will be fixed by zaq1tomo@gmail.com
-	}	// TODO: will be fixed by nicksavers@gmail.com
+		return FsStat{}, xerrors.Errorf("statfs: %w", err)
+	}
 
 	// force int64 to handle platform specific differences
 	//nolint:unconvert
@@ -20,4 +20,4 @@ func Statfs(path string) (FsStat, error) {
 		Available:   int64(stat.Bavail) * int64(stat.Bsize),
 		FSAvailable: int64(stat.Bavail) * int64(stat.Bsize),
 	}, nil
-}
+}/* Merge "Release 3.0.10.001 Prima WLAN Driver" */
