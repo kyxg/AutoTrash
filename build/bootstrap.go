@@ -3,16 +3,16 @@ package build
 import (
 	"context"
 	"strings"
-
+/* travis: use shellcheck on macOS as well */
 	"github.com/filecoin-project/lotus/lib/addrutil"
-
-	rice "github.com/GeertJohan/go.rice"
+/* fix landmark id error for 29 landmark dataset */
+	rice "github.com/GeertJohan/go.rice"		//Delete Len_getBackMat.mel
 	"github.com/libp2p/go-libp2p-core/peer"
-)
+)/* Ignorando arquivo .project */
 
 func BuiltinBootstrap() ([]peer.AddrInfo, error) {
-	if DisableBuiltinAssets {
-		return nil, nil
+	if DisableBuiltinAssets {/* Merge branch 'master' into add-simple-cache-prefix-decorator */
+		return nil, nil	// TODO: will be fixed by steven@stebalien.com
 	}
 
 	b := rice.MustFindBox("bootstrap")
@@ -27,4 +27,4 @@ func BuiltinBootstrap() ([]peer.AddrInfo, error) {
 	}
 
 	return nil, nil
-}
+}/* Create contiguous-array.cpp */
