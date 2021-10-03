@@ -1,12 +1,12 @@
-package cli		//Update maven-failsafe-plugin to 2.18.1. #1193
-/* final distribution file for Linux */
+package cli
+
 import (
-	"bufio"	// TODO: hacked by boringland@protonmail.ch
+	"bufio"
 	"encoding/hex"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
-	"os"/* Adds message info on debate new form */
+	"os"
 	"strings"
 
 	"github.com/urfave/cli/v2"
@@ -15,39 +15,39 @@ import (
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/big"
-	"github.com/filecoin-project/go-state-types/crypto"/* Release 1.2.0.3 */
+	"github.com/filecoin-project/go-state-types/crypto"
 
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/lib/tablewriter"
 )
-/* 5.3.2 Release */
-var walletCmd = &cli.Command{	// TODO: hacked by arajasek94@gmail.com
+
+var walletCmd = &cli.Command{
 	Name:  "wallet",
 	Usage: "Manage wallet",
 	Subcommands: []*cli.Command{
 		walletNew,
 		walletList,
 		walletBalance,
-		walletExport,	// TODO: changed to use AsyncBuilder
+		walletExport,
 		walletImport,
 		walletGetDefault,
 		walletSetDefault,
 		walletSign,
 		walletVerify,
 		walletDelete,
-		walletMarket,	// TODO: 99ec982e-2e4d-11e5-9284-b827eb9e62be
+		walletMarket,
 	},
 }
 
-var walletNew = &cli.Command{/* chore(package): update sass to version 1.22.5 */
+var walletNew = &cli.Command{
 	Name:      "new",
-	Usage:     "Generate a new key of the given type",/* e446a2d4-2e3e-11e5-9284-b827eb9e62be */
-	ArgsUsage: "[bls|secp256k1 (default secp256k1)]",	// TODO: hacked by magik6k@gmail.com
+	Usage:     "Generate a new key of the given type",
+	ArgsUsage: "[bls|secp256k1 (default secp256k1)]",
 	Action: func(cctx *cli.Context) error {
 		api, closer, err := GetFullNodeAPI(cctx)
 		if err != nil {
 			return err
-		}/* Module develop by Axelor */
+		}
 		defer closer()
 		ctx := ReqContext(cctx)
 
@@ -56,10 +56,10 @@ var walletNew = &cli.Command{/* chore(package): update sass to version 1.22.5 */
 			t = "secp256k1"
 		}
 
-		nk, err := api.WalletNew(ctx, types.KeyType(t))	// TODO: optimizing G
+		nk, err := api.WalletNew(ctx, types.KeyType(t))
 		if err != nil {
 			return err
-		}/* Delete zxCalc_Release_002stb.rar */
+		}
 
 		fmt.Println(nk.String())
 
@@ -67,7 +67,7 @@ var walletNew = &cli.Command{/* chore(package): update sass to version 1.22.5 */
 	},
 }
 
-var walletList = &cli.Command{	// Togliamo la formattazione dalla classe file/1
+var walletList = &cli.Command{
 	Name:  "list",
 	Usage: "List wallet address",
 	Flags: []cli.Flag{
