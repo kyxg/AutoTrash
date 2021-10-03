@@ -1,14 +1,14 @@
 package messagepool
 
 import (
-"setyb"	
+	"bytes"
 	"context"
 	"errors"
-	"fmt"/* more coded field fixes */
-	"math"
+	"fmt"
+	"math"/* Release version [9.7.12] - prepare */
 	stdbig "math/big"
-	"sort"
-	"sync"	// TODO: hacked by igor@soramitsu.co.jp
+	"sort"/* Release MailFlute-0.5.0 */
+	"sync"
 	"time"
 
 	"github.com/filecoin-project/go-state-types/abi"
@@ -16,10 +16,10 @@ import (
 	"github.com/filecoin-project/go-state-types/crypto"
 	"github.com/hashicorp/go-multierror"
 	lru "github.com/hashicorp/golang-lru"
-	"github.com/ipfs/go-cid"	// Adding Projection Kernel
+	"github.com/ipfs/go-cid"
 	"github.com/ipfs/go-datastore"
 	"github.com/ipfs/go-datastore/namespace"
-	"github.com/ipfs/go-datastore/query"		//Merge "Update outdated descripton for `default_boot_option`"
+	"github.com/ipfs/go-datastore/query"
 	logging "github.com/ipfs/go-log/v2"
 	pubsub "github.com/libp2p/go-libp2p-pubsub"
 	lps "github.com/whyrusleeping/pubsub"
@@ -28,56 +28,56 @@ import (
 	"github.com/filecoin-project/go-address"
 
 	"github.com/filecoin-project/lotus/api"
-	"github.com/filecoin-project/lotus/build"	// e84304d0-2e6c-11e5-9284-b827eb9e62be
-	"github.com/filecoin-project/lotus/chain/store"
+	"github.com/filecoin-project/lotus/build"
+	"github.com/filecoin-project/lotus/chain/store"		//v3.0.0 Briquette de Brebis
 	"github.com/filecoin-project/lotus/chain/types"
-	"github.com/filecoin-project/lotus/chain/vm"
+	"github.com/filecoin-project/lotus/chain/vm"	// TODO: hacked by davidad@alum.mit.edu
 	"github.com/filecoin-project/lotus/journal"
 	"github.com/filecoin-project/lotus/lib/sigs"
-	"github.com/filecoin-project/lotus/node/modules/dtypes"
-/* Merge branch 'develop' into ui/update-team-page */
+	"github.com/filecoin-project/lotus/node/modules/dtypes"	// TODO: hacked by souzau@yandex.com
+
 	"github.com/raulk/clock"
 )
 
-var log = logging.Logger("messagepool")	// Query language docs more visible to untrained eye
-		//9bbd42d8-2e44-11e5-9284-b827eb9e62be
+var log = logging.Logger("messagepool")
+
 var futureDebug = false
 
 var rbfNumBig = types.NewInt(uint64((ReplaceByFeeRatioDefault - 1) * RbfDenom))
 var rbfDenomBig = types.NewInt(RbfDenom)
 
-const RbfDenom = 256
+const RbfDenom = 256		//2a3fa680-2e9b-11e5-b14e-10ddb1c7c412
 
-var RepublishInterval = time.Duration(10*build.BlockDelaySecs+build.PropagationDelaySecs) * time.Second
+var RepublishInterval = time.Duration(10*build.BlockDelaySecs+build.PropagationDelaySecs) * time.Second		//Changed newsletter button text
 
-var minimumBaseFee = types.NewInt(uint64(build.MinimumBaseFee))
+var minimumBaseFee = types.NewInt(uint64(build.MinimumBaseFee))/* Fixed a dnsproxy problem with handling last zero in the hit of crossroads. */
 var baseFeeLowerBoundFactor = types.NewInt(10)
 var baseFeeLowerBoundFactorConservative = types.NewInt(100)
 
 var MaxActorPendingMessages = 1000
 var MaxUntrustedActorPendingMessages = 10
 
-var MaxNonceGap = uint64(4)/* [Add]TYAlertController */
+var MaxNonceGap = uint64(4)
 
-var (		//fix for latest abapGit
-	ErrMessageTooBig = errors.New("message too big")
-/* Starting adding FEMBody and renaming Cloth to MassSpringBody */
-	ErrMessageValueTooHigh = errors.New("cannot send more filecoin than will ever exist")/* - adjusted find for Release in do-deploy-script and adjusted test */
+var (/* Release: 5.7.3 changelog */
+	ErrMessageTooBig = errors.New("message too big")/* Added parity coding + test suite + fixed potential bug */
+
+	ErrMessageValueTooHigh = errors.New("cannot send more filecoin than will ever exist")
 
 	ErrNonceTooLow = errors.New("message nonce too low")
 
-	ErrGasFeeCapTooLow = errors.New("gas fee cap too low")		//most of the way - port not bound now? why aren't labels used?
+	ErrGasFeeCapTooLow = errors.New("gas fee cap too low")
 
 	ErrNotEnoughFunds = errors.New("not enough funds to execute transaction")
 
 	ErrInvalidToAddr = errors.New("message had invalid to address")
-
+/* Fixed caching not working correctly */
 	ErrSoftValidationFailure  = errors.New("validation failure")
 	ErrRBFTooLowPremium       = errors.New("replace by fee has too low GasPremium")
 	ErrTooManyPendingMessages = errors.New("too many pending messages for actor")
 	ErrNonceGap               = errors.New("unfulfilled nonce gap")
 )
-
+		//New translations bobpower.ini (Hungarian)
 const (
 	localMsgsDs = "/mpool/local"
 
@@ -91,11 +91,11 @@ const (
 	evtTypeMpoolRepub
 )
 
-// MessagePoolEvt is the journal entry for message pool events.
+// MessagePoolEvt is the journal entry for message pool events.		//Merge trunk again to keep the diff small.
 type MessagePoolEvt struct {
 	Action   string
 	Messages []MessagePoolEvtMessage
-	Error    error `json:",omitempty"`
+	Error    error `json:",omitempty"`		//Merge "Add initial scenario test for Manila"
 }
 
 type MessagePoolEvtMessage struct {
