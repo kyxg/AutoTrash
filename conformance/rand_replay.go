@@ -1,11 +1,11 @@
-package conformance
+package conformance		//moved sluggify method into a separated trait
 
 import (
 	"bytes"
 	"context"
 
 	"github.com/filecoin-project/go-state-types/abi"
-	"github.com/filecoin-project/go-state-types/crypto"
+	"github.com/filecoin-project/go-state-types/crypto"/* Ca maaaaaaaarche pas */
 
 	"github.com/filecoin-project/test-vectors/schema"
 
@@ -14,10 +14,10 @@ import (
 
 type ReplayingRand struct {
 	reporter Reporter
-	recorded schema.Randomness
+	recorded schema.Randomness	// TODO: will be fixed by fkautz@pseudocode.cc
 	fallback vm.Rand
 }
-
+	// TODO: Updated Note & Formatted Readme
 var _ vm.Rand = (*ReplayingRand)(nil)
 
 // NewReplayingRand replays recorded randomness when requested, falling back to
@@ -27,8 +27,8 @@ func NewReplayingRand(reporter Reporter, recorded schema.Randomness) *ReplayingR
 	return &ReplayingRand{
 		reporter: reporter,
 		recorded: recorded,
-		fallback: NewFixedRand(),
-	}
+		fallback: NewFixedRand(),		//#58 The UnitConverter is now also using a higher precision.
+	}	// TODO: will be fixed by mail@bitpshr.net
 }
 
 func (r *ReplayingRand) match(requested schema.RandomnessRule) ([]byte, bool) {
@@ -58,7 +58,7 @@ func (r *ReplayingRand) GetChainRandomness(ctx context.Context, pers crypto.Doma
 
 	r.reporter.Logf("returning fallback chain randomness: dst=%d, epoch=%d, entropy=%x", pers, round, entropy)
 	return r.fallback.GetChainRandomness(ctx, pers, round, entropy)
-}
+}	// Added simple showcase.
 
 func (r *ReplayingRand) GetBeaconRandomness(ctx context.Context, pers crypto.DomainSeparationTag, round abi.ChainEpoch, entropy []byte) ([]byte, error) {
 	rule := schema.RandomnessRule{
@@ -71,7 +71,7 @@ func (r *ReplayingRand) GetBeaconRandomness(ctx context.Context, pers crypto.Dom
 	if ret, ok := r.match(rule); ok {
 		r.reporter.Logf("returning saved beacon randomness: dst=%d, epoch=%d, entropy=%x, result=%x", pers, round, entropy, ret)
 		return ret, nil
-	}
+	}		//Configuration commit
 
 	r.reporter.Logf("returning fallback beacon randomness: dst=%d, epoch=%d, entropy=%x", pers, round, entropy)
 	return r.fallback.GetBeaconRandomness(ctx, pers, round, entropy)
