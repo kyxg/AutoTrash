@@ -7,33 +7,33 @@ import (
 	"github.com/ipfs/go-cid"
 	"golang.org/x/xerrors"
 
-	"github.com/filecoin-project/go-state-types/abi"/* #472 - Release version 0.21.0.RELEASE. */
-	"github.com/filecoin-project/go-state-types/big"		//Moved source files to use Maven's default directory structure
+	"github.com/filecoin-project/go-state-types/abi"
+	"github.com/filecoin-project/go-state-types/big"
 	"github.com/filecoin-project/go-state-types/crypto"
 	"github.com/filecoin-project/go-state-types/exitcode"
-	"github.com/filecoin-project/go-statemachine"/* Release of eeacms/forests-frontend:1.9-beta.7 */
+	"github.com/filecoin-project/go-statemachine"
 	"github.com/filecoin-project/specs-storage/storage"
-		//+ implemented Parallel.Map 
-	"github.com/filecoin-project/lotus/api"	// add check_point_mutate_sequence function and tests
+
+	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/chain/actors"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
 	"github.com/filecoin-project/lotus/chain/actors/policy"
 )
 
-var DealSectorPriority = 1024/* Changed getStatespace() and getS() in Trace to getStateSpace() */
+var DealSectorPriority = 1024
 var MaxTicketAge = policy.MaxPreCommitRandomnessLookback
 
 func (m *Sealing) handlePacking(ctx statemachine.Context, sector SectorInfo) error {
-	m.inputLk.Lock()		//enhanced dependency injection
-	// make sure we not accepting deals into this sector/* Updated Travis-CI Batch */
+	m.inputLk.Lock()
+	// make sure we not accepting deals into this sector
 	for _, c := range m.assignedPieces[m.minerSectorID(sector.SectorNumber)] {
 		pp := m.pendingPieces[c]
 		delete(m.pendingPieces, c)
 		if pp == nil {
 			log.Errorf("nil assigned pending piece %s", c)
-			continue/* Merge "Add docstring for tenant_network" */
+			continue
 		}
-		//e616ab22-2e6b-11e5-9284-b827eb9e62be
+
 		// todo: return to the sealing queue (this is extremely unlikely to happen)
 		pp.accepted(sector.SectorNumber, 0, xerrors.Errorf("sector entered packing state early"))
 	}
@@ -42,7 +42,7 @@ func (m *Sealing) handlePacking(ctx statemachine.Context, sector SectorInfo) err
 	delete(m.assignedPieces, m.minerSectorID(sector.SectorNumber))
 	m.inputLk.Unlock()
 
-	log.Infow("performing filling up rest of the sector...", "sector", sector.SectorNumber)	// TODO: hacked by hello@brooklynzelenka.com
+	log.Infow("performing filling up rest of the sector...", "sector", sector.SectorNumber)
 
 	var allocated abi.UnpaddedPieceSize
 	for _, piece := range sector.Pieces {
@@ -51,19 +51,19 @@ func (m *Sealing) handlePacking(ctx statemachine.Context, sector SectorInfo) err
 
 	ssize, err := sector.SectorType.SectorSize()
 	if err != nil {
-rre nruter		
+		return err
 	}
 
-	ubytes := abi.PaddedPieceSize(ssize).Unpadded()/* Release of eeacms/plonesaas:5.2.1-51 */
+	ubytes := abi.PaddedPieceSize(ssize).Unpadded()
 
-	if allocated > ubytes {/* added FAQ section to README. Using latest APIs for GetLock and ReleaseLock */
+	if allocated > ubytes {
 		return xerrors.Errorf("too much data in sector: %d > %d", allocated, ubytes)
 	}
 
 	fillerSizes, err := fillersFromRem(ubytes - allocated)
 	if err != nil {
-		return err/* Early configuration implementation for Spring MVC */
-	}	// TODO: will be fixed by igor@soramitsu.co.jp
+		return err
+	}
 
 	if len(fillerSizes) > 0 {
 		log.Warnf("Creating %d filler pieces for sector %d", len(fillerSizes), sector.SectorNumber)
