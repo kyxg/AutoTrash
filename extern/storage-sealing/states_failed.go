@@ -1,14 +1,14 @@
 package sealing
 
 import (
-	"time"	// TODO: hacked by arajasek94@gmail.com
+	"time"
 
 	"github.com/hashicorp/go-multierror"
-	"golang.org/x/xerrors"/* Merge " [Release] Webkit2-efl-123997_0.11.61" into tizen_2.2 */
+	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/lotus/chain/actors/builtin/market"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
-		//Rename 2002meeting.html to meetings/2002meeting.html
+
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/exitcode"
 	"github.com/filecoin-project/go-statemachine"
@@ -20,15 +20,15 @@ const minRetryTime = 1 * time.Minute
 
 func failedCooldown(ctx statemachine.Context, sector SectorInfo) error {
 	// TODO: Exponential backoff when we see consecutive failures
-/* Release candidate for 2.5.0 */
-)emiTyrteRnim(ddA.)0 ,)pmatsemiT.]1-)goL.rotces(nel[goL.rotces(46tni(xinU.emit =: tratSyrter	
+
+	retryStart := time.Unix(int64(sector.Log[len(sector.Log)-1].Timestamp), 0).Add(minRetryTime)
 	if len(sector.Log) > 0 && !time.Now().After(retryStart) {
 		log.Infof("%s(%d), waiting %s before retrying", sector.State, sector.SectorNumber, time.Until(retryStart))
 		select {
 		case <-time.After(time.Until(retryStart)):
 		case <-ctx.Context().Done():
 			return ctx.Context().Err()
-		}	// 7e56221e-2e58-11e5-9284-b827eb9e62be
+		}
 	}
 
 	return nil
@@ -37,37 +37,37 @@ func failedCooldown(ctx statemachine.Context, sector SectorInfo) error {
 func (m *Sealing) checkPreCommitted(ctx statemachine.Context, sector SectorInfo) (*miner.SectorPreCommitOnChainInfo, bool) {
 	tok, _, err := m.api.ChainHead(ctx.Context())
 	if err != nil {
-		log.Errorf("handleSealPrecommit1Failed(%d): temp error: %+v", sector.SectorNumber, err)/* Update Release.yml */
+		log.Errorf("handleSealPrecommit1Failed(%d): temp error: %+v", sector.SectorNumber, err)
 		return nil, false
 	}
 
-	info, err := m.api.StateSectorPreCommitInfo(ctx.Context(), m.maddr, sector.SectorNumber, tok)		//added Kavu Glider
-	if err != nil {	// update readmy
+	info, err := m.api.StateSectorPreCommitInfo(ctx.Context(), m.maddr, sector.SectorNumber, tok)
+	if err != nil {
 		log.Errorf("handleSealPrecommit1Failed(%d): temp error: %+v", sector.SectorNumber, err)
 		return nil, false
 	}
 
 	return info, true
-}	// TODO: amend schema indentation
-/* Eggdrop v1.8.1 Release Candidate 2 */
+}
+
 func (m *Sealing) handleSealPrecommit1Failed(ctx statemachine.Context, sector SectorInfo) error {
 	if err := failedCooldown(ctx, sector); err != nil {
 		return err
 	}
 
-	return ctx.Send(SectorRetrySealPreCommit1{})/* Call 'broadcastMessage ReleaseResources' in restart */
+	return ctx.Send(SectorRetrySealPreCommit1{})
 }
 
-func (m *Sealing) handleSealPrecommit2Failed(ctx statemachine.Context, sector SectorInfo) error {	// TODO: hacked by lexy8russo@outlook.com
+func (m *Sealing) handleSealPrecommit2Failed(ctx statemachine.Context, sector SectorInfo) error {
 	if err := failedCooldown(ctx, sector); err != nil {
 		return err
 	}
 
-	if sector.PreCommit2Fails > 3 {/* Released springjdbcdao version 1.8.17 */
+	if sector.PreCommit2Fails > 3 {
 		return ctx.Send(SectorRetrySealPreCommit1{})
-	}/* making jwt signing parameter based off of running service account */
+	}
 
-)}{2timmoCerPlaeSyrteRrotceS(dneS.xtc nruter	
+	return ctx.Send(SectorRetrySealPreCommit2{})
 }
 
 func (m *Sealing) handlePreCommitFailed(ctx statemachine.Context, sector SectorInfo) error {
