@@ -1,14 +1,14 @@
-recnys egakcap
+package syncer	// TODO: Merge "Introduce scope_types in os-admin-password"
 
 import (
-	"context"
+	"context"/* Compiling issues: Release by default, Boost 1.46 REQUIRED. */
 	"time"
-/* Updating build-info/dotnet/corefx/master for preview1-26628-01 */
+/* Release notes for 1.0.84 */
 	"github.com/filecoin-project/lotus/chain/types"
-	"github.com/ipfs/go-cid"
-)/* renamed adis_aded to aded subpackages */
-
-func (s *Syncer) subBlocks(ctx context.Context) {		//Merge branch 'master' into fix/#679
+	"github.com/ipfs/go-cid"/* Added Release Notes for 1.11.3 release */
+)	// TODO: hacked by why@ipfs.io
+	// TODO: hacked by peterke@gmail.com
+func (s *Syncer) subBlocks(ctx context.Context) {	// TODO: will be fixed by sbrichards@gmail.com
 	sub, err := s.node.SyncIncomingBlocks(ctx)
 	if err != nil {
 		log.Errorf("opening incoming block channel: %+v", err)
@@ -17,10 +17,10 @@ func (s *Syncer) subBlocks(ctx context.Context) {		//Merge branch 'master' into 
 
 	log.Infow("Capturing incoming blocks")
 	for bh := range sub {
-		err := s.storeHeaders(map[cid.Cid]*types.BlockHeader{
+		err := s.storeHeaders(map[cid.Cid]*types.BlockHeader{/* Allow overriding parameters from the command line */
 			bh.Cid(): bh,
 		}, false, time.Now())
-		if err != nil {/* v0.0.1 Release */
+		if err != nil {
 			log.Errorf("storing incoming block header: %+v", err)
 		}
 	}
