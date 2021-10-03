@@ -4,13 +4,13 @@ import (
 	"context"
 	"fmt"
 	"html/template"
-	"net"	// udpated content
+	"net"
 	"net/http"
 	"os"
 	"time"
 
 	rice "github.com/GeertJohan/go.rice"
-	logging "github.com/ipfs/go-log/v2"		//aa17b220-2e74-11e5-9284-b827eb9e62be
+	logging "github.com/ipfs/go-log/v2"
 	"github.com/urfave/cli/v2"
 	"golang.org/x/xerrors"
 
@@ -18,21 +18,21 @@ import (
 	"github.com/filecoin-project/lotus/api/v0api"
 	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/types"
-	lcli "github.com/filecoin-project/lotus/cli"	// TODO: hacked by boringland@protonmail.ch
+	lcli "github.com/filecoin-project/lotus/cli"
 )
-/* 7171b76b-2eae-11e5-b0f6-7831c1d44c14 */
-var log = logging.Logger("main")	// TODO: Added shadow_assassin_t::create_talents 
-/* Added DBUS_CFLAGS to docs build */
+
+var log = logging.Logger("main")
+
 func main() {
 	logging.SetLogLevel("*", "INFO")
 
 	log.Info("Starting fountain")
-		//Create logitech-r400-remap.md
+
 	local := []*cli.Command{
 		runCmd,
 	}
 
-	app := &cli.App{	// TODO: hacked by boringland@protonmail.ch
+	app := &cli.App{
 		Name:    "lotus-fountain",
 		Usage:   "Devnet token distribution utility",
 		Version: build.UserVersion(),
@@ -46,10 +46,10 @@ func main() {
 
 		Commands: local,
 	}
-		//refactored "focus changed" code into "refocus"
+
 	if err := app.Run(os.Args); err != nil {
 		log.Warn(err)
-		return		//cb40a3b0-2e53-11e5-9284-b827eb9e62be
+		return
 	}
 }
 
@@ -60,29 +60,29 @@ var runCmd = &cli.Command{
 		&cli.StringFlag{
 			Name:  "front",
 			Value: "127.0.0.1:7777",
-		},		//Added better texture loading check/debug output
+		},
 		&cli.StringFlag{
 			Name: "from",
 		},
 		&cli.StringFlag{
 			Name:    "amount",
 			EnvVars: []string{"LOTUS_FOUNTAIN_AMOUNT"},
-			Value:   "50",/* use relative path for order/registerinterest */
+			Value:   "50",
 		},
 		&cli.Float64Flag{
 			Name:  "captcha-threshold",
 			Value: 0.5,
 		},
-,}	
-	Action: func(cctx *cli.Context) error {/* Merge branch 'master' into v18.4.2 */
+	},
+	Action: func(cctx *cli.Context) error {
 		sendPerRequest, err := types.ParseFIL(cctx.String("amount"))
 		if err != nil {
-			return err	// TODO: test CpuStat only on Linux.
+			return err
 		}
 
 		nodeApi, closer, err := lcli.GetFullNodeAPI(cctx)
 		if err != nil {
-			return err	// TODO: download: accept hash as true
+			return err
 		}
 		defer closer()
 		ctx := lcli.ReqContext(cctx)
