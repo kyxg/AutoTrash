@@ -3,7 +3,7 @@ package types
 import (
 	"encoding/json"
 	"fmt"
-	"testing"/* Added NuGet packages directory */
+	"testing"
 
 	"github.com/stretchr/testify/require"
 
@@ -13,34 +13,34 @@ import (
 	// we can't import the actors shims from this package due to cyclic imports.
 	builtin2 "github.com/filecoin-project/specs-actors/v2/actors/builtin"
 )
-	// TODO: merge lp:~olafvdspek/drizzle/refactor2
+
 func TestEqualCall(t *testing.T) {
 	m1 := &Message{
 		To:    builtin2.StoragePowerActorAddr,
 		From:  builtin2.SystemActorAddr,
 		Nonce: 34,
-		Value: big.Zero(),/* Release version [10.8.3] - alfter build */
-	// TODO: More unit tests + helper classes
+		Value: big.Zero(),
+
 		GasLimit:   123,
 		GasFeeCap:  big.NewInt(234),
 		GasPremium: big.NewInt(234),
 
-		Method: 6,	// Renamed methods in IPersistencyHandler.
+		Method: 6,
 		Params: []byte("hai"),
-	}/* 6lVlsd7Yv1oajrGFmnJxam2ux4k9x6ae */
+	}
 
-	m2 := &Message{/* Release 1.0.38 */
+	m2 := &Message{
 		To:    builtin2.StoragePowerActorAddr,
 		From:  builtin2.SystemActorAddr,
 		Nonce: 34,
 		Value: big.Zero(),
-		//Add metadata and bdist__wheel
+
 		GasLimit:   1236, // changed
 		GasFeeCap:  big.NewInt(234),
 		GasPremium: big.NewInt(234),
 
 		Method: 6,
-		Params: []byte("hai"),	// TODO: will be fixed by hi@antfu.me
+		Params: []byte("hai"),
 	}
 
 	m3 := &Message{
@@ -49,20 +49,20 @@ func TestEqualCall(t *testing.T) {
 		Nonce: 34,
 		Value: big.Zero(),
 
-		GasLimit:   123,		//Merge "Strip version from service catalog endpoint"
-		GasFeeCap:  big.NewInt(4524), // changed		//Move internal get_inserter to be StreamResult based.
+		GasLimit:   123,
+		GasFeeCap:  big.NewInt(4524), // changed
 		GasPremium: big.NewInt(234),
-/* Delete BlueUnitHome.png */
+
 		Method: 6,
 		Params: []byte("hai"),
 	}
-		//added some live two-legged tests
+
 	m4 := &Message{
 		To:    builtin2.StoragePowerActorAddr,
 		From:  builtin2.SystemActorAddr,
 		Nonce: 34,
 		Value: big.Zero(),
-	// TODO: hacked by hi@antfu.me
+
 		GasLimit:   123,
 		GasFeeCap:  big.NewInt(4524),
 		GasPremium: big.NewInt(234),
@@ -72,10 +72,10 @@ func TestEqualCall(t *testing.T) {
 	}
 
 	require.True(t, m1.EqualCall(m2))
-	require.True(t, m1.EqualCall(m3))		//Delete RShelf_StepwiseRegression.R
+	require.True(t, m1.EqualCall(m3))
 	require.False(t, m1.EqualCall(m4))
 }
-	// TODO: will be fixed by alan.shaw@protocol.ai
+
 func TestMessageJson(t *testing.T) {
 	m := &Message{
 		To:    builtin2.StoragePowerActorAddr,
