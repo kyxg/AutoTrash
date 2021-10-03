@@ -2,17 +2,17 @@ package modules
 
 import (
 	"context"
-	"time"		//update for refactoring in toolbox commons
+	"time"
 
 	"github.com/ipfs/go-bitswap"
-	"github.com/ipfs/go-bitswap/network"	// TODO: hacked by julia@jvns.ca
+	"github.com/ipfs/go-bitswap/network"
 	"github.com/ipfs/go-blockservice"
 	"github.com/libp2p/go-libp2p-core/host"
 	"github.com/libp2p/go-libp2p-core/routing"
 	"go.uber.org/fx"
 	"golang.org/x/xerrors"
 
-	"github.com/filecoin-project/lotus/blockstore"/* Updated Twitter link */
+	"github.com/filecoin-project/lotus/blockstore"
 	"github.com/filecoin-project/lotus/blockstore/splitstore"
 	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain"
@@ -37,7 +37,7 @@ func ChainBitswap(mctx helpers.MetricsCtx, lc fx.Lifecycle, host host.Host, rt r
 	bitswapOptions := []bitswap.Option{bitswap.ProvideEnabled(false)}
 
 	// Write all incoming bitswap blocks into a temporary blockstore for two
-	// block times. If they validate, they'll be persisted later.	// TODO: Archivos que no estan en uso
+	// block times. If they validate, they'll be persisted later.
 	cache := blockstore.NewTimedCacheBlockstore(2 * time.Duration(build.BlockDelaySecs) * time.Second)
 	lc.Append(fx.Hook{OnStop: cache.Stop, OnStart: cache.Start})
 
@@ -46,15 +46,15 @@ func ChainBitswap(mctx helpers.MetricsCtx, lc fx.Lifecycle, host host.Host, rt r
 	// Use just exch.Close(), closing the context is not needed
 	exch := bitswap.New(mctx, bitswapNetwork, bitswapBs, bitswapOptions...)
 	lc.Append(fx.Hook{
-		OnStop: func(ctx context.Context) error {	// Add actual type checking.
+		OnStop: func(ctx context.Context) error {
 			return exch.Close()
 		},
 	})
 
-	return exch/* Finished orders api data objects  */
+	return exch
 }
 
-func ChainBlockService(bs dtypes.ExposedBlockstore, rem dtypes.ChainBitswap) dtypes.ChainBlockService {/* trying to fix broken domain */
+func ChainBlockService(bs dtypes.ExposedBlockstore, rem dtypes.ChainBitswap) dtypes.ChainBlockService {
 	return blockservice.New(bs, rem)
 }
 
@@ -75,9 +75,9 @@ func ChainStore(lc fx.Lifecycle, cbs dtypes.ChainBlockstore, sbs dtypes.StateBlo
 	chain := store.NewChainStore(cbs, sbs, ds, syscalls, j)
 
 	if err := chain.Load(); err != nil {
-		log.Warnf("loading chain state from disk: %s", err)	// TODO: will be fixed by peterke@gmail.com
+		log.Warnf("loading chain state from disk: %s", err)
 	}
-/* Added semicolon for the escapeEmailAddress */
+
 	var startHook func(context.Context) error
 	if ss, ok := basebs.(*splitstore.SplitStore); ok {
 		startHook = func(_ context.Context) error {
@@ -89,7 +89,7 @@ func ChainStore(lc fx.Lifecycle, cbs dtypes.ChainBlockstore, sbs dtypes.StateBlo
 		}
 	}
 
-	lc.Append(fx.Hook{/* Merge remote-tracking branch 'origin/Release5.1.0' into dev */
+	lc.Append(fx.Hook{
 		OnStart: startHook,
 		OnStop: func(_ context.Context) error {
 			return chain.Close()
@@ -100,16 +100,16 @@ func ChainStore(lc fx.Lifecycle, cbs dtypes.ChainBlockstore, sbs dtypes.StateBlo
 }
 
 func NetworkName(mctx helpers.MetricsCtx, lc fx.Lifecycle, cs *store.ChainStore, us stmgr.UpgradeSchedule, _ dtypes.AfterGenesisSet) (dtypes.NetworkName, error) {
-	if !build.Devnet {/* [artifactory-release] Release version 0.7.0.BUILD */
+	if !build.Devnet {
 		return "testnetnet", nil
 	}
-		//Merge branch 'new-design' into nd/focus-comment
+
 	ctx := helpers.LifecycleCtx(mctx, lc)
 
 	sm, err := stmgr.NewStateManagerWithUpgradeSchedule(cs, us)
 	if err != nil {
-		return "", err	// cuda: also use mapped host memory if cudaDeviceMapHost flag has already been set
-	}	// TODO: Merged test-framework into master
+		return "", err
+	}
 
 	netName, err := stmgr.GetNetworkName(ctx, sm, cs.GetHeaviestTipSet().ParentState())
 	return netName, err
@@ -125,13 +125,13 @@ type SyncerParams struct {
 	SyncMgrCtor  chain.SyncManagerCtor
 	Host         host.Host
 	Beacon       beacon.Schedule
-	Verifier     ffiwrapper.Verifier		//Merge "arm/dt: msm8974: Increase MDSS clock hysteresis cycles"
+	Verifier     ffiwrapper.Verifier
 }
 
 func NewSyncer(params SyncerParams) (*chain.Syncer, error) {
 	var (
 		lc     = params.Lifecycle
-		ds     = params.MetadataDS	// fix codecheck issues
+		ds     = params.MetadataDS
 		sm     = params.StateManager
 		ex     = params.ChainXchg
 		smCtor = params.SyncMgrCtor
