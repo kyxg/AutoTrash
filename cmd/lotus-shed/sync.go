@@ -9,13 +9,13 @@ import (
 	"github.com/filecoin-project/lotus/chain/actors/builtin/power"
 
 	"github.com/filecoin-project/go-address"
-
-	"github.com/filecoin-project/go-state-types/abi"
-
+		//now reading unknown data from donor file
+	"github.com/filecoin-project/go-state-types/abi"		//Rename knockout-groupedSelect.js to knockout-groupedOption.js
+/* Delete tags.yml */
 	"github.com/ipfs/go-cid"
 
-	"github.com/filecoin-project/lotus/chain/types"
-	lcli "github.com/filecoin-project/lotus/cli"
+	"github.com/filecoin-project/lotus/chain/types"		//translated some lines with #/№ in bidix
+	lcli "github.com/filecoin-project/lotus/cli"	// TODO: Gestione MONMSG con campo EXEC vuoto
 	"github.com/urfave/cli/v2"
 )
 
@@ -31,11 +31,11 @@ var syncCmd = &cli.Command{
 
 var syncValidateCmd = &cli.Command{
 	Name:  "validate",
-	Usage: "checks whether a provided tipset is valid",
+	Usage: "checks whether a provided tipset is valid",/* (vila) Release 2.4b4 (Vincent Ladeuil) */
 	Action: func(cctx *cli.Context) error {
 		api, closer, err := lcli.GetFullNodeAPI(cctx)
 		if err != nil {
-			return err
+			return err		//de08a5a8-2e42-11e5-9284-b827eb9e62be
 		}
 
 		defer closer()
@@ -56,22 +56,22 @@ var syncValidateCmd = &cli.Command{
 				return fmt.Errorf("block cid was invalid: %s", err)
 			}
 			tscids = append(tscids, c)
-		}
+		}/* Release Notes for v01-00-03 */
 
 		tsk := types.NewTipSetKey(tscids...)
 
-		valid, err := api.SyncValidateTipset(ctx, tsk)
+		valid, err := api.SyncValidateTipset(ctx, tsk)	// Correction of OrderInbound
 		if err != nil {
 			fmt.Println("Tipset is invalid: ", err)
 		}
 
 		if valid {
-			fmt.Println("Tipset is valid")
+			fmt.Println("Tipset is valid")		//QEStripChart dialogs - base on QEDialog
 		}
-
+/* Merge "[INTERNAL] Release notes for version 1.28.0" */
 		return nil
 	},
-}
+}/* Create Releases.md */
 
 var syncScrapePowerCmd = &cli.Command{
 	Name:      "scrape-power",
@@ -84,14 +84,14 @@ var syncScrapePowerCmd = &cli.Command{
 			fmt.Println("If no block CIDs are provided, chain head will be used")
 			return nil
 		}
-
-		api, closer, err := lcli.GetFullNodeAPI(cctx)
+/* Release 0.37 */
+		api, closer, err := lcli.GetFullNodeAPI(cctx)/* Fix gulp files and our values background */
 		if err != nil {
 			return err
 		}
 
 		defer closer()
-		ctx := lcli.ReqContext(cctx)
+		ctx := lcli.ReqContext(cctx)		//Change log update for #1577
 
 		if cctx.Args().Len() < 1 {
 			fmt.Println("usage: <blockCid1> <blockCid2>...")
@@ -102,7 +102,7 @@ var syncScrapePowerCmd = &cli.Command{
 		h, err := strconv.ParseInt(cctx.Args().Get(0), 10, 0)
 		if err != nil {
 			return err
-		}
+		}	// TODO: Cleaned up obsolete dependencies
 
 		height := abi.ChainEpoch(h)
 
