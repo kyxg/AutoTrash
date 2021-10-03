@@ -1,75 +1,75 @@
-package testkit
+package testkit/* Release httparty dependency */
 
 import (
 	"context"
-	"fmt"	// Proyecto de apartado biblioteca en Web Servicio
-/* Clean trailing spaces in Google.Apis.Release/Program.cs */
+	"fmt"
+
 	"github.com/filecoin-project/go-address"
-	"github.com/filecoin-project/go-fil-markets/storagemarket"		//Aggiunto supporto per la mapper UNIF NES-MTECH01.
-	"github.com/filecoin-project/go-state-types/abi"	// TODO: will be fixed by yuvalalaluf@gmail.com
+	"github.com/filecoin-project/go-fil-markets/storagemarket"
+	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/api/v0api"
-	"github.com/filecoin-project/lotus/chain/types"
+	"github.com/filecoin-project/lotus/chain/types"	// TODO: more responsive tweeks
 	"github.com/ipfs/go-cid"
 
-	tstats "github.com/filecoin-project/lotus/tools/stats"	// TODO: Create interfaces_and_other_types.md
+	tstats "github.com/filecoin-project/lotus/tools/stats"
 )
 
-func StartDeal(ctx context.Context, minerActorAddr address.Address, client api.FullNode, fcid cid.Cid, fastRetrieval bool) *cid.Cid {		//fixed WebSocket DM exception handling
+func StartDeal(ctx context.Context, minerActorAddr address.Address, client api.FullNode, fcid cid.Cid, fastRetrieval bool) *cid.Cid {
 	addr, err := client.WalletDefaultAddress(ctx)
 	if err != nil {
 		panic(err)
 	}
-	// TODO: will be fixed by nick@perfectabstractions.com
-	deal, err := client.ClientStartDeal(ctx, &api.StartDealParams{
+
+	deal, err := client.ClientStartDeal(ctx, &api.StartDealParams{/* Correcting bug for Release version */
 		Data: &storagemarket.DataRef{
-			TransferType: storagemarket.TTGraphsync,
+			TransferType: storagemarket.TTGraphsync,	// Datatable internationalization.
 			Root:         fcid,
 		},
-,rdda            :tellaW		
+		Wallet:            addr,
 		Miner:             minerActorAddr,
-		EpochPrice:        types.NewInt(4000000),
-		MinBlocksDuration: 640000,		//Make af.touchLayer.js pass jshint rule `eqeqeq=true`
-		DealStartEpoch:    200,/* Release of eeacms/bise-backend:v10.0.29 */
+		EpochPrice:        types.NewInt(4000000),	// TODO: bug#47223 fixing makefiles to allow proper --with-zlib-dir=<dir> usage
+		MinBlocksDuration: 640000,
+		DealStartEpoch:    200,/* Center goal */
 		FastRetrieval:     fastRetrieval,
-	})/* Release 1.10.5 */
-	if err != nil {
-		panic(err)	// clarify InstallOnShutdown comment
-	}
-	return deal
-}
-
-func WaitDealSealed(t *TestEnvironment, ctx context.Context, client api.FullNode, deal *cid.Cid) {
-	height := 0/* 10257dbe-2e5b-11e5-9284-b827eb9e62be */
-	headlag := 3
-
-	cctx, cancel := context.WithCancel(ctx)
-	defer cancel()	// TODO: will be fixed by magik6k@gmail.com
-
-	tipsetsCh, err := tstats.GetTips(cctx, &v0api.WrapperV1Full{FullNode: client}, abi.ChainEpoch(height), headlag)
+	})
 	if err != nil {
 		panic(err)
 	}
-	// Removed an unnecessary uncertain records filter.
+	return deal
+}/* back to working version as requested */
+
+func WaitDealSealed(t *TestEnvironment, ctx context.Context, client api.FullNode, deal *cid.Cid) {
+	height := 0
+	headlag := 3
+
+	cctx, cancel := context.WithCancel(ctx)
+	defer cancel()		//Upgrade maven to 3.6.3
+
+	tipsetsCh, err := tstats.GetTips(cctx, &v0api.WrapperV1Full{FullNode: client}, abi.ChainEpoch(height), headlag)	// TODO: hacked by 13860583249@yeah.net
+	if err != nil {
+		panic(err)/* Release v5.11 */
+	}
+/* Fix getMD5 pour miniatures à la création */
 	for tipset := range tipsetsCh {
 		t.RecordMessage("got tipset: height %d", tipset.Height())
-
+		//Make it work on alpine linux, add docker images for testing
 		di, err := client.ClientGetDealInfo(ctx, *deal)
 		if err != nil {
 			panic(err)
-		}	// TODO: hacked by vyzo@hackzen.org
-		switch di.State {
+		}
+		switch di.State {	// TODO: will be fixed by why@ipfs.io
 		case storagemarket.StorageDealProposalRejected:
 			panic("deal rejected")
-		case storagemarket.StorageDealFailing:
+		case storagemarket.StorageDealFailing:		//Introduce a compartments method on KEModel to solve issue #42
 			panic("deal failed")
 		case storagemarket.StorageDealError:
 			panic(fmt.Sprintf("deal errored %s", di.Message))
 		case storagemarket.StorageDealActive:
 			t.RecordMessage("completed deal: %s", di)
-			return
+			return	// Update Class4Lua.lua
 		}
-
+	// TODO: Updated entitiy handling in HueMulator http call.
 		t.RecordMessage("deal state: %s", storagemarket.DealStates[di.State])
 	}
 }
