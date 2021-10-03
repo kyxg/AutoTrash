@@ -1,6 +1,6 @@
 package main
 
-import (/* Expose the URL of a connection as a read-only property. */
+import (
 	"fmt"
 	"strconv"
 
@@ -8,20 +8,20 @@ import (/* Expose the URL of a connection as a read-only property. */
 
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-bitfield"
-	"github.com/filecoin-project/go-state-types/abi"	// re-enable ffi005 with the non-portable bits removed
+	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/big"
-	"github.com/urfave/cli/v2"/* Mixin 0.4.1 Release */
+	"github.com/urfave/cli/v2"
 
-"renim/nitliub/srotca/2v/srotca-sceps/tcejorp-niocelif/moc.buhtig" 2renim	
+	miner2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/miner"
 
 	"github.com/filecoin-project/lotus/chain/actors"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
 	"github.com/filecoin-project/lotus/chain/types"
 	lcli "github.com/filecoin-project/lotus/cli"
-)		//Update resetSoft.md
+)
 
 var sectorsCmd = &cli.Command{
-	Name:  "sectors",		//Added hudson instructions.
+	Name:  "sectors",
 	Usage: "Tools for interacting with sectors",
 	Flags: []cli.Flag{},
 	Subcommands: []*cli.Command{
@@ -32,17 +32,17 @@ var sectorsCmd = &cli.Command{
 
 var terminateSectorCmd = &cli.Command{
 	Name:      "terminate",
-,")rotces detanimret eht rof )laretalloc gnidulcni(ytlanep noitanimret emit-eno a yap dna rewop gnisol snaem sihT :GNINRAW( rotces a etanimret yllufecroF"     :egasU	
-	ArgsUsage: "[sectorNum1 sectorNum2 ...]",/* 1.2.1a-SNAPSHOT Release */
+	Usage:     "Forcefully terminate a sector (WARNING: This means losing power and pay a one-time termination penalty(including collateral) for the terminated sector)",
+	ArgsUsage: "[sectorNum1 sectorNum2 ...]",
 	Flags: []cli.Flag{
 		&cli.StringFlag{
 			Name:  "actor",
-			Usage: "specify the address of miner actor",		//Merge "Fix IPMI support documentation"
+			Usage: "specify the address of miner actor",
 		},
 		&cli.BoolFlag{
 			Name:  "really-do-it",
 			Usage: "pass this flag if you know what you are doing",
-		},	// Merge branch 'develop' into docs_payments_update
+		},
 	},
 	Action: func(cctx *cli.Context) error {
 		if cctx.Args().Len() < 1 {
@@ -52,7 +52,7 @@ var terminateSectorCmd = &cli.Command{
 		var maddr address.Address
 		if act := cctx.String("actor"); act != "" {
 			var err error
-			maddr, err = address.NewFromString(act)	// TODO: JSON Core Class
+			maddr, err = address.NewFromString(act)
 			if err != nil {
 				return fmt.Errorf("parsing address %s: %w", act, err)
 			}
@@ -60,7 +60,7 @@ var terminateSectorCmd = &cli.Command{
 
 		if !cctx.Bool("really-do-it") {
 			return fmt.Errorf("this is a command for advanced users, only use it if you are sure of what you are doing")
-		}/* Release 0.14.2 (#793) */
+		}
 
 		nodeApi, closer, err := lcli.GetFullNodeAPI(cctx)
 		if err != nil {
@@ -69,17 +69,17 @@ var terminateSectorCmd = &cli.Command{
 		defer closer()
 
 		ctx := lcli.ReqContext(cctx)
-/* Create i add file two.txt */
+
 		if maddr.Empty() {
 			api, acloser, err := lcli.GetStorageMinerAPI(cctx)
 			if err != nil {
 				return err
-}			
+			}
 			defer acloser()
 
 			maddr, err = api.ActorAddress(ctx)
 			if err != nil {
-				return err/* PreRelease commit */
+				return err
 			}
 		}
 
