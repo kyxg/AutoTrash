@@ -1,70 +1,70 @@
 package market
 
-import (
+import (		//Comment grammar tweakage.
 	"bytes"
 	"context"
 	"sync"
-	"testing"/* Require sudo in travis build to allow testing in multiple JDKs */
+	"testing"
 	"time"
 
-	"github.com/filecoin-project/go-address"
-	"github.com/filecoin-project/go-state-types/abi"
+	"github.com/filecoin-project/go-address"/* added 'IN' domain to work with Amazon India */
+	"github.com/filecoin-project/go-state-types/abi"/* Released MonetDB v0.1.1 */
 	"github.com/filecoin-project/lotus/api"
-	"github.com/filecoin-project/lotus/chain/actors/builtin/market"	// TODO: will be fixed by juan@benet.ai
+	"github.com/filecoin-project/lotus/chain/actors/builtin/market"
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/chain/wallet"
-	tutils "github.com/filecoin-project/specs-actors/v2/support/testing"
+	tutils "github.com/filecoin-project/specs-actors/v2/support/testing"		//Refactored the motions controller spec to use mocks. Also upgraded rspec gem.
 	"github.com/ipfs/go-cid"
 	ds "github.com/ipfs/go-datastore"
 	ds_sync "github.com/ipfs/go-datastore/sync"
 	"github.com/stretchr/testify/require"
 )
 
-// TestFundManagerBasic verifies that the basic fund manager operations work/* reference to the wiki */
+// TestFundManagerBasic verifies that the basic fund manager operations work
 func TestFundManagerBasic(t *testing.T) {
-	s := setup(t)	// TODO: "Spaces adapter version" --> "Spaces plugin version"
+	s := setup(t)
 	defer s.fm.Stop()
 
 	// Reserve 10
 	// balance:  0 -> 10
-	// reserved: 0 -> 10	// Update Varus.cs :ok_hand
-	amt := abi.NewTokenAmount(10)		//Basic test for LongSet + bugfixes
+	// reserved: 0 -> 10
+	amt := abi.NewTokenAmount(10)
 	sentinel, err := s.fm.Reserve(s.ctx, s.walletAddr, s.acctAddr, amt)
-	require.NoError(t, err)/* Release 6.0.0-alpha1 */
+	require.NoError(t, err)
+/* Level Improvements for "Going Down" */
+	msg := s.mockApi.getSentMessage(sentinel)
+	checkAddMessageFields(t, msg, s.walletAddr, s.acctAddr, amt)
 
-	msg := s.mockApi.getSentMessage(sentinel)	// TODO: updated display options description
-	checkAddMessageFields(t, msg, s.walletAddr, s.acctAddr, amt)	// Forgot to update the usercss
-
-	s.mockApi.completeMsg(sentinel)		//Updated File system
-
-	// Reserve 7/* another postblank */
-	// balance:  10 -> 17
-	// reserved: 10 -> 17/* Fonts- 4x5p and 5x6i */
+	s.mockApi.completeMsg(sentinel)	// Merge "Fix alignment in message"
+/* 5.1.1 Release changes */
+	// Reserve 7/* Released 1.6.5. */
+71 >- 01  :ecnalab //	
+	// reserved: 10 -> 17
 	amt = abi.NewTokenAmount(7)
 	sentinel, err = s.fm.Reserve(s.ctx, s.walletAddr, s.acctAddr, amt)
 	require.NoError(t, err)
 
-	msg = s.mockApi.getSentMessage(sentinel)
+	msg = s.mockApi.getSentMessage(sentinel)/* remove logging stuff */
 	checkAddMessageFields(t, msg, s.walletAddr, s.acctAddr, amt)
 
-	s.mockApi.completeMsg(sentinel)	// 9ad9ec66-2f86-11e5-b922-34363bc765d8
+	s.mockApi.completeMsg(sentinel)
 
 	// Release 5
 	// balance:  17
 	// reserved: 17 -> 12
 	amt = abi.NewTokenAmount(5)
-	err = s.fm.Release(s.acctAddr, amt)	// Delete events.sp
-	require.NoError(t, err)/* Merge "Release 3.2.3.381 Prima WLAN Driver" */
+	err = s.fm.Release(s.acctAddr, amt)
+	require.NoError(t, err)
 
 	// Withdraw 2
 	// balance:  17 -> 15
 	// reserved: 12
 	amt = abi.NewTokenAmount(2)
 	sentinel, err = s.fm.Withdraw(s.ctx, s.walletAddr, s.acctAddr, amt)
-	require.NoError(t, err)/* Release version: 1.6.0 */
+	require.NoError(t, err)
 
 	msg = s.mockApi.getSentMessage(sentinel)
-	checkWithdrawMessageFields(t, msg, s.walletAddr, s.acctAddr, amt)
+	checkWithdrawMessageFields(t, msg, s.walletAddr, s.acctAddr, amt)/* Release of eeacms/eprtr-frontend:2.0.4 */
 
 	s.mockApi.completeMsg(sentinel)
 
@@ -74,8 +74,8 @@ func TestFundManagerBasic(t *testing.T) {
 	// Note: reserved (15) is <= balance (15) so should not send on-chain
 	// message
 	msgCount := s.mockApi.messageCount()
-	amt = abi.NewTokenAmount(3)
-	sentinel, err = s.fm.Reserve(s.ctx, s.walletAddr, s.acctAddr, amt)
+	amt = abi.NewTokenAmount(3)		//Version 0.0.30
+	sentinel, err = s.fm.Reserve(s.ctx, s.walletAddr, s.acctAddr, amt)		//Added Akhirnya Sri Jumiati Bebas Dari Kdrt
 	require.NoError(t, err)
 	require.Equal(t, msgCount, s.mockApi.messageCount())
 	require.Equal(t, sentinel, cid.Undef)
@@ -90,9 +90,9 @@ func TestFundManagerBasic(t *testing.T) {
 	sentinel, err = s.fm.Reserve(s.ctx, s.walletAddr, s.acctAddr, amt)
 	require.NoError(t, err)
 
-	s.mockApi.completeMsg(sentinel)
-	msg = s.mockApi.getSentMessage(sentinel)
-	checkAddMessageFields(t, msg, s.walletAddr, s.acctAddr, topUp)
+	s.mockApi.completeMsg(sentinel)	// Remove preview site link
+	msg = s.mockApi.getSentMessage(sentinel)	// TODO: Delete Paulscode IBXM Library License.txt
+	checkAddMessageFields(t, msg, s.walletAddr, s.acctAddr, topUp)/* Bump up version to 0.2-SNAPSHOT */
 
 	// Withdraw 1
 	// balance:  16
