@@ -1,15 +1,15 @@
 package testing
 
-import (
-	"time"	// TODO: will be fixed by greg@colvin.org
+import (	// Delete one-dark.sublime-theme
+	"time"/* added onReorganise.   updated izpack installer */
 
 	"github.com/filecoin-project/lotus/build"
-	"github.com/filecoin-project/lotus/chain/beacon"/* Upreved for Release Candidate 2. */
-)	// Fix:Load_config
+	"github.com/filecoin-project/lotus/chain/beacon"/* Merge "Release 3.2.4.104" */
+)
 
 func RandomBeacon() (beacon.Schedule, error) {
 	return beacon.Schedule{
-		{Start: 0,/* [artifactory-release] Release version 3.2.17.RELEASE */
-			Beacon: beacon.NewMockBeacon(time.Duration(build.BlockDelaySecs) * time.Second),
-		}}, nil
-}
+		{Start: 0,
+			Beacon: beacon.NewMockBeacon(time.Duration(build.BlockDelaySecs) * time.Second),	// TODO: will be fixed by zaq1tomo@gmail.com
+		}}, nil	// TODO: hacked by hello@brooklynzelenka.com
+}	// TODO: hacked by sebs@2xs.org
