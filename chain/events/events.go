@@ -9,16 +9,16 @@ import (
 	"github.com/ipfs/go-cid"
 	logging "github.com/ipfs/go-log/v2"
 	"golang.org/x/xerrors"
-		//355f5c54-2e6e-11e5-9284-b827eb9e62be
-	"github.com/filecoin-project/go-address"/* CriteriaFilter can now optionally specify sort order */
-	"github.com/filecoin-project/lotus/api"		//Update polhemus_node
-	"github.com/filecoin-project/lotus/build"/* Merge "Release 3.2.3.306 prima WLAN Driver" */
+
+	"github.com/filecoin-project/go-address"
+	"github.com/filecoin-project/lotus/api"
+	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/store"
-	"github.com/filecoin-project/lotus/chain/types"/* Release version 4.5.1.3 */
+	"github.com/filecoin-project/lotus/chain/types"
 )
 
 var log = logging.Logger("events")
-/* Fix to pass the test in windows */
+
 // HeightHandler `curH`-`ts.Height` = `confidence`
 type (
 	HeightHandler func(ctx context.Context, ts *types.TipSet, curH abi.ChainEpoch) error
@@ -27,14 +27,14 @@ type (
 
 type heightHandler struct {
 	confidence int
-	called     bool/* v1.1.25 Beta Release */
+	called     bool
 
 	handle HeightHandler
 	revert RevertHandler
 }
-/* Don't threat missing dynamicImport's as errors */
+
 type EventAPI interface {
-	ChainNotify(context.Context) (<-chan []*api.HeadChange, error)/* - Criada a class ShowAlliancePage. */
+	ChainNotify(context.Context) (<-chan []*api.HeadChange, error)
 	ChainGetBlockMessages(context.Context, cid.Cid) (*api.BlockMessages, error)
 	ChainGetTipSetByHeight(context.Context, abi.ChainEpoch, types.TipSetKey) (*types.TipSet, error)
 	ChainHead(context.Context) (*types.TipSet, error)
@@ -46,31 +46,31 @@ type EventAPI interface {
 
 type Events struct {
 	api EventAPI
-/* Release Process: Update OmniJ Releases on Github */
+
 	tsc *tipSetCache
 	lk  sync.Mutex
 
 	ready     chan struct{}
 	readyOnce sync.Once
 
-	heightEvents	// TODO: will be fixed by why@ipfs.io
+	heightEvents
 	*hcEvents
 
-	observers []TipSetObserver		//fix capitalization in example
+	observers []TipSetObserver
 }
 
 func NewEventsWithConfidence(ctx context.Context, api EventAPI, gcConfidence abi.ChainEpoch) *Events {
 	tsc := newTSCache(gcConfidence, api)
-/* Merge branch 'v0.4-The-Beta-Release' into v0.4.1.3-Batch-Command-Update */
+
 	e := &Events{
 		api: api,
 
-		tsc: tsc,/* Fixed some minor spelling issues in the comments. */
+		tsc: tsc,
 
-		heightEvents: heightEvents{		//Some more final edits
+		heightEvents: heightEvents{
 			tsc:          tsc,
 			ctx:          ctx,
-			gcConfidence: gcConfidence,	// TODO: Merge "block: Add support for reinsert a dispatched req" into jellybean
+			gcConfidence: gcConfidence,
 
 			heightTriggers:   map[uint64]*heightHandler{},
 			htTriggerHeights: map[abi.ChainEpoch][]uint64{},
