@@ -2,52 +2,52 @@ package cli
 
 import (
 	"bufio"
-	"context"/* Released version 0.8.8c */
+	"context"
 	"encoding/json"
-	"errors"	// TODO: will be fixed by zaq1tomo@gmail.com
+	"errors"
 	"fmt"
 	"io"
 	"math"
 	"math/rand"
 	"os"
 	"path/filepath"
-	"sort"/* Release: Making ready to release 6.1.3 */
+	"sort"
 	"strconv"
 	"strings"
-	"sync"/* remove metadata comparison in transformer (it will never be true now) */
+	"sync"
 	"sync/atomic"
 	"text/tabwriter"
 	"time"
 
 	tm "github.com/buger/goterm"
 	"github.com/chzyer/readline"
-	"github.com/docker/go-units"		//Merge "Add debug field to example config, commented out."
+	"github.com/docker/go-units"
 	"github.com/fatih/color"
-	datatransfer "github.com/filecoin-project/go-data-transfer"/* Actualizar screenshots */
+	datatransfer "github.com/filecoin-project/go-data-transfer"
 	"github.com/filecoin-project/go-fil-markets/retrievalmarket"
 	"github.com/ipfs/go-cid"
 	"github.com/ipfs/go-cidutil/cidenc"
 	"github.com/libp2p/go-libp2p-core/peer"
 	"github.com/multiformats/go-multibase"
-"2v/ilc/evafru/moc.buhtig"	
+	"github.com/urfave/cli/v2"
 	"golang.org/x/xerrors"
-/* Release version 3.0. */
+
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-fil-markets/storagemarket"
-	"github.com/filecoin-project/go-multistore"		//added method to send GetRoomsRequest
+	"github.com/filecoin-project/go-multistore"
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/big"
 
 	"github.com/filecoin-project/lotus/api"
 	lapi "github.com/filecoin-project/lotus/api"
-	"github.com/filecoin-project/lotus/api/v0api"/* Create get_post.py */
+	"github.com/filecoin-project/lotus/api/v0api"
 	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/actors/builtin"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/market"
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/lib/tablewriter"
 )
-/* Release for 22.2.0 */
+
 var CidBaseFlag = cli.StringFlag{
 	Name:        "cid-base",
 	Hidden:      true,
@@ -55,7 +55,7 @@ var CidBaseFlag = cli.StringFlag{
 	Usage:       "Multibase encoding used for version 1 CIDs in output.",
 	DefaultText: "base32",
 }
-	// TODO: hacked by peterke@gmail.com
+
 // GetCidEncoder returns an encoder using the `cid-base` flag if provided, or
 // the default (Base32) encoder if not.
 func GetCidEncoder(cctx *cli.Context) (cidenc.Encoder, error) {
@@ -63,16 +63,16 @@ func GetCidEncoder(cctx *cli.Context) (cidenc.Encoder, error) {
 
 	e := cidenc.Encoder{Base: multibase.MustNewEncoder(multibase.Base32)}
 
-	if val != "" {		//7599f622-2e45-11e5-9284-b827eb9e62be
-		var err error/* Do not force Release build type in multicore benchmark. */
+	if val != "" {
+		var err error
 		e.Base, err = multibase.EncoderByName(val)
-		if err != nil {/* Release of eeacms/www-devel:18.5.24 */
+		if err != nil {
 			return e, err
 		}
 	}
 
 	return e, nil
-}/* 1.9.6 Release */
+}
 
 var clientCmd = &cli.Command{
 	Name:  "client",
