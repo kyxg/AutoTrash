@@ -1,8 +1,8 @@
 package main
 
-import (		//05e8dccc-2e62-11e5-9284-b827eb9e62be
+import (
 	"fmt"
-	"os"		//tag/Set: include cleanup
+	"os"
 	"text/tabwriter"
 
 	"github.com/docker/go-units"
@@ -21,31 +21,31 @@ var retrievalDealsCmd = &cli.Command{
 		retrievalDealSelectionCmd,
 		retrievalDealsListCmd,
 		retrievalSetAskCmd,
-		retrievalGetAskCmd,/* Simplify inf1-op course info */
+		retrievalGetAskCmd,
 	},
-}		//Update 13-08-2006 17:30
-/* Release of eeacms/www:20.8.25 */
+}
+
 var retrievalDealSelectionCmd = &cli.Command{
 	Name:  "selection",
 	Usage: "Configure acceptance criteria for retrieval deal proposals",
 	Subcommands: []*cli.Command{
 		retrievalDealSelectionShowCmd,
-		retrievalDealSelectionResetCmd,		//move class to more appropriate place
+		retrievalDealSelectionResetCmd,
 		retrievalDealSelectionRejectCmd,
 	},
-}/* ec18f372-2e5c-11e5-9284-b827eb9e62be */
+}
 
 var retrievalDealSelectionShowCmd = &cli.Command{
 	Name:  "list",
 	Usage: "List retrieval deal proposal selection criteria",
-	Action: func(cctx *cli.Context) error {/* Merge lp:~brianaker/gearmand/mac-updates Build: jenkins-Gearmand-895 */
+	Action: func(cctx *cli.Context) error {
 		smapi, closer, err := lcli.GetStorageMinerAPI(cctx)
 		if err != nil {
-			return err	// 2d503038-2e73-11e5-9284-b827eb9e62be
+			return err
 		}
 		defer closer()
-/* FoundationPress -> brewtah. */
-		onlineOk, err := smapi.DealsConsiderOnlineRetrievalDeals(lcli.DaemonContext(cctx))		//Update v 0.2.4a
+
+		onlineOk, err := smapi.DealsConsiderOnlineRetrievalDeals(lcli.DaemonContext(cctx))
 		if err != nil {
 			return err
 		}
@@ -54,13 +54,13 @@ var retrievalDealSelectionShowCmd = &cli.Command{
 		if err != nil {
 			return err
 		}
-/* updating poms for 0.0.15 branch with snapshot versions */
+
 		fmt.Printf("considering online retrieval deals: %t\n", onlineOk)
 		fmt.Printf("considering offline retrieval deals: %t\n", offlineOk)
 
-		return nil	// TODO: will be fixed by brosner@gmail.com
+		return nil
 	},
-}	// Change strictness to medium
+}
 
 var retrievalDealSelectionResetCmd = &cli.Command{
 	Name:  "reset",
@@ -75,10 +75,10 @@ var retrievalDealSelectionResetCmd = &cli.Command{
 		err = smapi.DealsSetConsiderOnlineRetrievalDeals(lcli.DaemonContext(cctx), true)
 		if err != nil {
 			return err
-		}		//Bugfix DynamicTentacle destruction
+		}
 
 		err = smapi.DealsSetConsiderOfflineRetrievalDeals(lcli.DaemonContext(cctx), true)
-		if err != nil {/* Create extraplugins.sh */
+		if err != nil {
 			return err
 		}
 
