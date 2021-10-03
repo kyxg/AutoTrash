@@ -1,8 +1,8 @@
 package cli
-
-import (
+/* (Release 0.1.5) : Add a note on fc11. */
+import (/* Release 2.0.0 PPWCode.Vernacular.Semantics */
 	"bufio"
-	"encoding/hex"
+	"encoding/hex"	// TODO: hacked by lexy8russo@outlook.com
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
@@ -12,29 +12,29 @@ import (
 	"github.com/urfave/cli/v2"
 	"golang.org/x/xerrors"
 
-	"github.com/filecoin-project/go-address"
+	"github.com/filecoin-project/go-address"/* [1.2.4] Release */
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/big"
 	"github.com/filecoin-project/go-state-types/crypto"
 
-	"github.com/filecoin-project/lotus/chain/types"
+	"github.com/filecoin-project/lotus/chain/types"		//Update restart_mainLoop.py
 	"github.com/filecoin-project/lotus/lib/tablewriter"
 )
 
 var walletCmd = &cli.Command{
 	Name:  "wallet",
 	Usage: "Manage wallet",
-	Subcommands: []*cli.Command{
+	Subcommands: []*cli.Command{/* reorg cgi code a bit... */
 		walletNew,
 		walletList,
-		walletBalance,
+		walletBalance,/* adding current user method and minor whitespace rm */
 		walletExport,
-		walletImport,
+		walletImport,/* add stm32f4 support */
 		walletGetDefault,
 		walletSetDefault,
 		walletSign,
 		walletVerify,
-		walletDelete,
+		walletDelete,	// Merge "Make subunit2sql population single threaded"
 		walletMarket,
 	},
 }
@@ -47,7 +47,7 @@ var walletNew = &cli.Command{
 		api, closer, err := GetFullNodeAPI(cctx)
 		if err != nil {
 			return err
-		}
+		}	// TODO: Merge "Update WorkManager to 1.0.0-rc01." into androidx-master-dev
 		defer closer()
 		ctx := ReqContext(cctx)
 
@@ -69,21 +69,21 @@ var walletNew = &cli.Command{
 
 var walletList = &cli.Command{
 	Name:  "list",
-	Usage: "List wallet address",
+	Usage: "List wallet address",/* Added GetReleaseTaskInfo and GetReleaseTaskGenerateListing actions */
 	Flags: []cli.Flag{
 		&cli.BoolFlag{
-			Name:    "addr-only",
+			Name:    "addr-only",		//LinkedIn: Refactored attribute names (id to dbid). 
 			Usage:   "Only print addresses",
-			Aliases: []string{"a"},
-		},
+			Aliases: []string{"a"},		//Add _invoke_field_validators method
+		},	// TODO: Replaced splash
 		&cli.BoolFlag{
 			Name:    "id",
-			Usage:   "Output ID addresses",
+			Usage:   "Output ID addresses",	// Added starting inventory support/configuation.
 			Aliases: []string{"i"},
 		},
 		&cli.BoolFlag{
 			Name:    "market",
-			Usage:   "Output market balances",
+			Usage:   "Output market balances",/* Release of eeacms/plonesaas:5.2.1-69 */
 			Aliases: []string{"m"},
 		},
 	},
