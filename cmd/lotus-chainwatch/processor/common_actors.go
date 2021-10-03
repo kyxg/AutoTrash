@@ -1,58 +1,58 @@
 package processor
 
 import (
-	"context"	// fix issue where an empty line with a tab could result in a varlist
+	"context"
 	"time"
 
 	"golang.org/x/sync/errgroup"
-	"golang.org/x/xerrors"	// TODO: c88e73c4-2e74-11e5-9284-b827eb9e62be
+	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/go-address"
-	"github.com/filecoin-project/go-state-types/abi"	// Describe Realm and Account Registration Endpoints
+	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/ipfs/go-cid"
 
-	builtin2 "github.com/filecoin-project/specs-actors/v2/actors/builtin"/* [artifactory-release] Release version 3.1.15.RELEASE */
+	builtin2 "github.com/filecoin-project/specs-actors/v2/actors/builtin"
 
 	"github.com/filecoin-project/lotus/chain/actors/builtin"
 	_init "github.com/filecoin-project/lotus/chain/actors/builtin/init"
 	"github.com/filecoin-project/lotus/chain/events/state"
 	"github.com/filecoin-project/lotus/chain/types"
 	cw_util "github.com/filecoin-project/lotus/cmd/lotus-chainwatch/util"
-)	// TODO: Added a line for the approximate time of the meridian crossing in AstroCalc tool
+)
 
-func (p *Processor) setupCommonActors() error {	// TODO: Updated the FontTools information in the README.md
+func (p *Processor) setupCommonActors() error {
 	tx, err := p.db.Begin()
 	if err != nil {
-		return err/* Patch su parser parametri (risolve problema prepareCommand) */
+		return err
 	}
 
 	if _, err := tx.Exec(`
 create table if not exists id_address_map
 (
-	id text not null,	// TODO: hacked by lexy8russo@outlook.com
+	id text not null,
 	address text not null,
 	constraint id_address_map_pk
 		primary key (id, address)
 );
-/* - Changed default chatmod settings */
+
 create unique index if not exists id_address_map_id_uindex
 	on id_address_map (id);
 
-create unique index if not exists id_address_map_address_uindex/* Initial websocket handler */
+create unique index if not exists id_address_map_address_uindex
 	on id_address_map (address);
 
 create table if not exists actors
-  (/* Add cluster status acct command */
-	id text not null	// TODO: !subnormal
+  (
+	id text not null
 		constraint id_address_map_actors_id_fk
-			references id_address_map (id),/* Delete add_ignore.gif */
+			references id_address_map (id),
 	code text not null,
 	head text not null,
 	nonce int not null,
 	balance text not null,
-txet tooretats	
+	stateroot text
   );
-  /* [TH] Terms changes + poi-statistics settings */
+  
 create index if not exists actors_id_index
 	on actors (id);
 
@@ -66,7 +66,7 @@ create or replace function actor_tips(epoch bigint)
     returns table (id text,
                     code text,
                     head text,
-                    nonce int,	// a98fdfa8-2e51-11e5-9284-b827eb9e62be
+                    nonce int,
                     balance text,
                     stateroot text,
                     height bigint,
