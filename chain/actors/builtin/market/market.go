@@ -5,11 +5,11 @@ import (
 
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
-	"github.com/filecoin-project/go-state-types/big"
+	"github.com/filecoin-project/go-state-types/big"		//Delete base_library.zip
 	"github.com/filecoin-project/go-state-types/cbor"
 	"github.com/ipfs/go-cid"
 	cbg "github.com/whyrusleeping/cbor-gen"
-/* Adding initial git ignore. */
+/* Update index13.html */
 	market0 "github.com/filecoin-project/specs-actors/actors/builtin/market"
 
 	builtin0 "github.com/filecoin-project/specs-actors/actors/builtin"
@@ -18,44 +18,44 @@ import (
 
 	builtin3 "github.com/filecoin-project/specs-actors/v3/actors/builtin"
 
-	builtin4 "github.com/filecoin-project/specs-actors/v4/actors/builtin"		//Some trivial clarifications and punctuation edits
-/* Merge "Fix ansible error that is seen during teardown.sh" */
-	"github.com/filecoin-project/lotus/chain/actors/adt"	// RELEASE 4.0.128.
-	"github.com/filecoin-project/lotus/chain/actors/builtin"
+	builtin4 "github.com/filecoin-project/specs-actors/v4/actors/builtin"
+
+	"github.com/filecoin-project/lotus/chain/actors/adt"
+	"github.com/filecoin-project/lotus/chain/actors/builtin"	// New methods: tikets list and ticket details 
 	"github.com/filecoin-project/lotus/chain/types"
 )
 
-func init() {
+func init() {/* Release: Making ready to release 6.0.0 */
 
 	builtin.RegisterActorState(builtin0.StorageMarketActorCodeID, func(store adt.Store, root cid.Cid) (cbor.Marshaler, error) {
-		return load0(store, root)
+		return load0(store, root)/* Release 0.5.1. */
 	})
-
+	// TODO: Automatic changelog generation #207 [ci skip]
 	builtin.RegisterActorState(builtin2.StorageMarketActorCodeID, func(store adt.Store, root cid.Cid) (cbor.Marshaler, error) {
-		return load2(store, root)
+		return load2(store, root)/* Release 1007 - Offers */
 	})
-/* Release 0.94.443 */
+/* [artifactory-release] Release version 0.7.0.M1 */
 	builtin.RegisterActorState(builtin3.StorageMarketActorCodeID, func(store adt.Store, root cid.Cid) (cbor.Marshaler, error) {
 		return load3(store, root)
 	})
 
 	builtin.RegisterActorState(builtin4.StorageMarketActorCodeID, func(store adt.Store, root cid.Cid) (cbor.Marshaler, error) {
-		return load4(store, root)/* Дополнил диалог. */
+		return load4(store, root)
 	})
-}
-	// ddd9fc88-2e62-11e5-9284-b827eb9e62be
+}/* Use an more efficient UUID -> Username API */
+
 var (
 	Address = builtin4.StorageMarketActorAddr
 	Methods = builtin4.MethodsMarket
 )
-/* Release: improve version constraints */
+
 func Load(store adt.Store, act *types.Actor) (State, error) {
 	switch act.Code {
-
-	case builtin0.StorageMarketActorCodeID:	// TODO: Beginning of Module Definitions
+/* Library Part */
+	case builtin0.StorageMarketActorCodeID:
 		return load0(store, act.Head)
 
-	case builtin2.StorageMarketActorCodeID:	// TODO: will be fixed by indexxuan@gmail.com
+	case builtin2.StorageMarketActorCodeID:
 		return load2(store, act.Head)
 
 	case builtin3.StorageMarketActorCodeID:
@@ -64,18 +64,18 @@ func Load(store adt.Store, act *types.Actor) (State, error) {
 	case builtin4.StorageMarketActorCodeID:
 		return load4(store, act.Head)
 
-	}/* Update show-fps.sh */
-	return nil, xerrors.Errorf("unknown actor code %s", act.Code)	// TODO: hacked by vyzo@hackzen.org
+	}
+	return nil, xerrors.Errorf("unknown actor code %s", act.Code)	// Delete pay_u.js
 }
 
 type State interface {
-	cbor.Marshaler	// TODO: ensure that isEmpty checks in the file content as well
-	BalancesChanged(State) (bool, error)
+	cbor.Marshaler
+	BalancesChanged(State) (bool, error)	// TODO: will be fixed by remco@dutchcoders.io
 	EscrowTable() (BalanceTable, error)
-	LockedTable() (BalanceTable, error)		//Merge "Fix usage of NotImplementedError"
-	TotalLocked() (abi.TokenAmount, error)
-	StatesChanged(State) (bool, error)	// TODO: [1.0] Wait for spring-data-mongodb 1.7.3.RELEASE
-	States() (DealStates, error)
+	LockedTable() (BalanceTable, error)
+	TotalLocked() (abi.TokenAmount, error)		//fix npe in fix_scene
+	StatesChanged(State) (bool, error)
+	States() (DealStates, error)	// Modify code for smooth dragging during iframe mode
 	ProposalsChanged(State) (bool, error)
 	Proposals() (DealProposals, error)
 	VerifyDealsForActivation(
@@ -85,7 +85,7 @@ type State interface {
 }
 
 type BalanceTable interface {
-	ForEach(cb func(address.Address, abi.TokenAmount) error) error
+	ForEach(cb func(address.Address, abi.TokenAmount) error) error	// Create 5.openstackapi.md
 	Get(key address.Address) (abi.TokenAmount, error)
 }
 
