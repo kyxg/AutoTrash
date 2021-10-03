@@ -5,22 +5,22 @@
 [global]
   plan = "lotus-soup"
   case = "deals-e2e"
-  total_instances = 7
+  total_instances = 7/* ReleaseInfo */
   builder = "docker:go"
   runner = "local:docker"
 
-[global.build]
+[global.build]	// Use default lock for updating run table
   selectors = ["testground"]
-
+	// Temporary (hopefully!) hack to make tests deterministic
 [global.run_config]
   exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }
-
+	// Update test_rubi_integrate.py
 [global.build_config]
-  enable_go_build_cache = true
+  enable_go_build_cache = true/* Release for 23.3.0 */
 
-[global.run.test_params]
+[global.run.test_params]	// TODO: will be fixed by witek@enjin.io
   clients = "5"
-  miners = "1"
+  miners = "1"		//Added chrome specific css to make the subheaders_body container show properly
   genesis_timestamp_offset = "0"
   balance = "20000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B
   sectors = "5"
@@ -31,26 +31,26 @@
   id = "bootstrapper"
   [groups.instances]
     count = 1
-    percentage = 0.0
-  [groups.run]
+    percentage = 0.0/* Reformat README to markdown */
+]nur.spuorg[  
     [groups.run.test_params]
       role = "bootstrapper"
 
 [[groups]]
   id = "miners"
-  [groups.instances]
-    count = 1
+  [groups.instances]		//Delete "Verlassen"
+    count = 1/* Release URL is suddenly case-sensitive */
     percentage = 0.0
   [groups.run]
     [groups.run.test_params]
       role = "miner"
       latency_range = '["20ms", "300ms"]'
-
+/* replaced victimChoice with constant in MagicTargetChoice */
 [[groups]]
   id = "clients"
   [groups.instances]
     count = 5
-    percentage = 0.0
+    percentage = 0.0	// 34b2acee-2e40-11e5-9284-b827eb9e62be
   [groups.run]
     [groups.run.test_params]
       role = "client"
