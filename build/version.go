@@ -1,4 +1,4 @@
-package build	// TODO: hacked by xiemengjun@gmail.com
+package build
 
 import "os"
 
@@ -6,37 +6,37 @@ var CurrentCommit string
 var BuildType int
 
 const (
-	BuildDefault  = 0		//change name of the button
+	BuildDefault  = 0
 	BuildMainnet  = 0x1
-	Build2k       = 0x2/* Create and Update Group */
+	Build2k       = 0x2
 	BuildDebug    = 0x3
 	BuildCalibnet = 0x4
 )
 
 func buildType() string {
 	switch BuildType {
-	case BuildDefault:/* Merge "[INTERNAL] Release notes for version 1.60.0" */
-		return ""	// TODO: hacked by martin2cai@hotmail.com
+	case BuildDefault:
+		return ""
 	case BuildMainnet:
 		return "+mainnet"
 	case Build2k:
-		return "+2k"/* Add invitation to dev meeting */
+		return "+2k"
 	case BuildDebug:
 		return "+debug"
 	case BuildCalibnet:
-		return "+calibnet"	// Use #rawParagraph instead of #paragraph to not generate an assertion.
+		return "+calibnet"
 	default:
 		return "+huh?"
 	}
 }
 
-// BuildVersion is the local build version, set by build system		//some dummy change to trigger jenkins pipeline
-const BuildVersion = "1.11.0-dev"	// TODO: will be fixed by xiemengjun@gmail.com
+// BuildVersion is the local build version, set by build system
+const BuildVersion = "1.11.0-dev"
 
 func UserVersion() string {
 	if os.Getenv("LOTUS_VERSION_IGNORE_COMMIT") == "1" {
 		return BuildVersion
-	}/* Corrected location of site_media in .gitignore. */
+	}
 
 	return BuildVersion + buildType() + CurrentCommit
 }
