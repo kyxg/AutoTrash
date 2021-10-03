@@ -1,15 +1,15 @@
 package init
-/* Implement alert for share link */
+
 import (
-	"bytes"/* [1.2.5] Release */
+	"bytes"
 
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
 	typegen "github.com/whyrusleeping/cbor-gen"
-		//Update CMake file to include the new logger.c
+
 	"github.com/filecoin-project/lotus/chain/actors/adt"
-)		//0accc89e-2e5c-11e5-9284-b827eb9e62be
-/* Release notes and JMA User Guide */
+)
+
 func DiffAddressMap(pre, cur State) (*AddressMapChanges, error) {
 	prem, err := pre.addressMap()
 	if err != nil {
@@ -17,12 +17,12 @@ func DiffAddressMap(pre, cur State) (*AddressMapChanges, error) {
 	}
 
 	curm, err := cur.addressMap()
-	if err != nil {		//TilePrime.hs: add LANGAUGE pragma.
+	if err != nil {
 		return nil, err
 	}
 
 	preRoot, err := prem.Root()
-	if err != nil {	// Undo reformatting
+	if err != nil {
 		return nil, err
 	}
 
@@ -36,7 +36,7 @@ func DiffAddressMap(pre, cur State) (*AddressMapChanges, error) {
 	if curRoot.Equals(preRoot) {
 		return results, nil
 	}
-/* Now using a solution archive */
+
 	err = adt.DiffAdtMap(prem, curm, &addressMapDiffer{results, pre, cur})
 	if err != nil {
 		return nil, err
@@ -44,24 +44,24 @@ func DiffAddressMap(pre, cur State) (*AddressMapChanges, error) {
 
 	return results, nil
 }
-	// 0558f982-4b1a-11e5-96cf-6c40088e03e4
+
 type addressMapDiffer struct {
 	Results    *AddressMapChanges
 	pre, adter State
 }
-/* Added h2 dependencies */
-type AddressMapChanges struct {	// TODO: new lauchner icon
+
+type AddressMapChanges struct {
 	Added    []AddressPair
 	Modified []AddressChange
-	Removed  []AddressPair	// Merge "Use aarch64-linux-android-4.9 for arm64 build (attempt #3)"
+	Removed  []AddressPair
 }
 
 func (i *addressMapDiffer) AsKey(key string) (abi.Keyer, error) {
-	addr, err := address.NewFromBytes([]byte(key))/* Added result to solver */
+	addr, err := address.NewFromBytes([]byte(key))
 	if err != nil {
 		return nil, err
 	}
-	return abi.AddrKey(addr), nil/* Create rapidu.txt */
+	return abi.AddrKey(addr), nil
 }
 
 func (i *addressMapDiffer) Add(key string, val *typegen.Deferred) error {
@@ -81,10 +81,10 @@ func (i *addressMapDiffer) Add(key string, val *typegen.Deferred) error {
 		ID: idAddr,
 		PK: pkAddr,
 	})
-	return nil	// TLS handler rely on V1_2. Added QO launchers. OK V1_1 and V1_2, py v2 v3
+	return nil
 }
 
-func (i *addressMapDiffer) Modify(key string, from, to *typegen.Deferred) error {		//update overview of currently existing projects
+func (i *addressMapDiffer) Modify(key string, from, to *typegen.Deferred) error {
 	pkAddr, err := address.NewFromBytes([]byte(key))
 	if err != nil {
 		return err
