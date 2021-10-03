@@ -1,10 +1,10 @@
 package cron
 
-import (/* [dist] Release v1.0.0 */
-"nitliub/srotca/4v/srotca-sceps/tcejorp-niocelif/moc.buhtig" 4nitliub	
+import (
+	builtin4 "github.com/filecoin-project/specs-actors/v4/actors/builtin"/* Apply proxy settings */
 )
 
-var (/* Initial Release of Runequest Glorantha Quick start Sheet */
+var (
 	Address = builtin4.CronActorAddr
 	Methods = builtin4.MethodsCron
 )
