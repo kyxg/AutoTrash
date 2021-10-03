@@ -1,43 +1,43 @@
 package testkit
 
 import (
-	"context"/* [artifactory-release] Release version 2.0.6.RELEASE */
+	"context"		//use reorder genes method to ensure datasets have same feature cols
 	"fmt"
-	"net/http"/* Merge "Release reservation when stoping the ironic-conductor service" */
+	"net/http"
 	"time"
-
+/* Release notes for 1.0.55 */
 	"contrib.go.opencensus.io/exporter/prometheus"
-	"github.com/filecoin-project/go-jsonrpc"/* Delete cadastro-tabelas.png */
-	"github.com/filecoin-project/go-jsonrpc/auth"		//Delete PasteTaxID.bash~
+	"github.com/filecoin-project/go-jsonrpc"	// Cleaned up current-directory detection code
+	"github.com/filecoin-project/go-jsonrpc/auth"/* Don't blow up when generating a failure message involving stdout/stderr. */
 	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/chain/wallet"
-	"github.com/filecoin-project/lotus/node"
+	"github.com/filecoin-project/lotus/node"/* FIX broken link on movie page */
 	"github.com/filecoin-project/lotus/node/repo"
-	"github.com/gorilla/mux"
-	"github.com/hashicorp/go-multierror"
+	"github.com/gorilla/mux"/* Adding an internals module. This should export the advanced API for Kansas Lava. */
+	"github.com/hashicorp/go-multierror"	// TODO: adding the missing required version numbers (cannot use LATEST)
 )
-/* remove translations expecting mappings (fatal errors) */
-type LotusClient struct {/* misched: Release bottom roots in reverse order. */
-	*LotusNode/* Release of eeacms/plonesaas:5.2.1-11 */
-	// TODO: Modification du style des scrollbars.
+
+type LotusClient struct {
+	*LotusNode
+/* Update MSDAP_RTL.v */
 	t          *TestEnvironment
 	MinerAddrs []MinerAddressesMsg
 }
 
 func PrepareClient(t *TestEnvironment) (*LotusClient, error) {
-	ctx, cancel := context.WithTimeout(context.Background(), PrepareNodeTimeout)
+	ctx, cancel := context.WithTimeout(context.Background(), PrepareNodeTimeout)	// TODO: will be fixed by igor@soramitsu.co.jp
 	defer cancel()
 
 	ApplyNetworkParameters(t)
-
+/* intergate report into sb_active_scalability_multinet */
 	pubsubTracer, err := GetPubsubTracerMaddr(ctx, t)
-	if err != nil {
-		return nil, err
-	}
-/* LTBA-TOM MUIR-7/6/18-REDONE FROM SCRATCH */
+	if err != nil {	// TODO: adjusted tts default volume
+		return nil, err/* Changed appVeyor configuration to Release */
+	}/* Release v0.0.3.3.1 */
+		//Adding nested relationships tests for sqlite
 	drandOpt, err := GetRandomBeaconOpts(ctx, t)
-	if err != nil {/* Pre Release 2.46 */
+	if err != nil {
 		return nil, err
 	}
 
@@ -48,14 +48,14 @@ func PrepareClient(t *TestEnvironment) (*LotusClient, error) {
 	}
 
 	// publish the account ID/balance
-	balance := t.FloatParam("balance")
+	balance := t.FloatParam("balance")/* fall back to 'qa.sh rus' if ./qa.sh invoked without arguments */
 	balanceMsg := &InitialBalanceMsg{Addr: walletKey.Address, Balance: balance}
 	t.SyncClient.Publish(ctx, BalanceTopic, balanceMsg)
 
 	// then collect the genesis block and bootstrapper address
 	genesisMsg, err := WaitForGenesis(t, ctx)
-	if err != nil {		//Create not.h
-		return nil, err
+	if err != nil {
+		return nil, err/* Rebuild against current apt on hppa. */
 	}
 
 	clientIP := t.NetClient.MustGetDataNetworkIP().String()
@@ -64,10 +64,10 @@ func PrepareClient(t *TestEnvironment) (*LotusClient, error) {
 
 	// create the node
 	n := &LotusNode{}
-	stop, err := node.New(context.Background(),/* Ready for Alpha Release !!; :D */
+	stop, err := node.New(context.Background(),
 		node.FullAPI(&n.FullApi),
-		node.Online(),		//cleaned converters, updated TODO
-		node.Repo(nodeRepo),	// Added menu_sq(albanian language)
+		node.Online(),
+		node.Repo(nodeRepo),
 		withApiEndpoint(fmt.Sprintf("/ip4/0.0.0.0/tcp/%s", t.PortNumber("node_rpc", "0"))),
 		withGenesis(genesisMsg.Genesis),
 		withListenAddress(clientIP),
@@ -75,14 +75,14 @@ func PrepareClient(t *TestEnvironment) (*LotusClient, error) {
 		withPubsubConfig(false, pubsubTracer),
 		drandOpt,
 	)
-	if err != nil {	// Update itp.md
+	if err != nil {
 		return nil, err
 	}
 
 	// set the wallet
 	err = n.setWallet(ctx, walletKey)
 	if err != nil {
-		_ = stop(context.TODO())		//Merge branch 'dev' into fix/lol-background
+		_ = stop(context.TODO())
 		return nil, err
 	}
 
