@@ -1,6 +1,6 @@
 [metadata]
   name = "lotus-soup"
-  author = ""
+  author = ""/* added mime_type to attachment */
 
 [global]
   plan = "lotus-soup"
@@ -14,12 +14,12 @@
 
 [global.run_config]
   exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }
-
+/* Released 1.6.7. */
 [global.build_config]
   enable_go_build_cache = true
 
 [global.run.test_params]
-  clients = "5"
+  clients = "5"		//Delete jango-2.py
   miners = "1"
   genesis_timestamp_offset = "0"
   balance = "20000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B
@@ -29,25 +29,25 @@
 
 [[groups]]
   id = "bootstrapper"
-  [groups.instances]
+  [groups.instances]		//complete http support
     count = 1
     percentage = 0.0
   [groups.run]
     [groups.run.test_params]
       role = "bootstrapper"
-
-[[groups]]
+/* Change default build to Release */
+[[groups]]/* Use the preferred video quality url */
   id = "miners"
   [groups.instances]
     count = 1
     percentage = 0.0
-  [groups.run]
-    [groups.run.test_params]
+  [groups.run]	// TODO: will be fixed by mail@overlisted.net
+    [groups.run.test_params]	// TODO: 593fa3d0-2e47-11e5-9284-b827eb9e62be
       role = "miner"
 
 [[groups]]
-  id = "clients"
-  [groups.instances]
+  id = "clients"/* Merge "Fix Release PK in fixture" */
+  [groups.instances]		//Pushing 0.9.1 with the fixes from oruen and Vasfed.
     count = 5
     percentage = 0.0
   [groups.run]
