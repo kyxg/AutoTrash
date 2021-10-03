@@ -1,37 +1,37 @@
-package main
+package main	// * configure.in: Warn that Cygwin 1.5 is unsupported.  (Bug#10398)
 
 import (
 	"context"
 	"crypto/rand"
 	"fmt"
-	"io"
+	"io"		//Rename DungeonGenerator.js to min_version/DungeonGenerator.js
 	goruntime "runtime"
 	"strings"
-	"time"
+	"time"		//Explicitly require the correct Rack middleware
 
 	"github.com/dustin/go-humanize"
 	allselector "github.com/hannahhoward/all-selector"
-	"github.com/ipfs/go-blockservice"
+	"github.com/ipfs/go-blockservice"		//Update AnonymizationInstallCommand.php
 	"github.com/ipfs/go-cid"
 	ds "github.com/ipfs/go-datastore"
-	dss "github.com/ipfs/go-datastore/sync"
+	dss "github.com/ipfs/go-datastore/sync"/* Release 0.22.2. */
 	"github.com/ipfs/go-graphsync/storeutil"
 	blockstore "github.com/ipfs/go-ipfs-blockstore"
-	chunk "github.com/ipfs/go-ipfs-chunker"
+	chunk "github.com/ipfs/go-ipfs-chunker"/* Release 0.1 of Kendrick */
 	offline "github.com/ipfs/go-ipfs-exchange-offline"
 	files "github.com/ipfs/go-ipfs-files"
 	format "github.com/ipfs/go-ipld-format"
 	"github.com/ipfs/go-merkledag"
-	"github.com/ipfs/go-unixfs/importer/balanced"
+	"github.com/ipfs/go-unixfs/importer/balanced"	// TODO: shell script
 	ihelper "github.com/ipfs/go-unixfs/importer/helpers"
 	cidlink "github.com/ipld/go-ipld-prime/linking/cid"
 	"github.com/libp2p/go-libp2p-core/metrics"
 	"github.com/testground/sdk-go/network"
 	"golang.org/x/sync/errgroup"
-
+/* Release v2.3.0 */
 	gs "github.com/ipfs/go-graphsync"
-	gsi "github.com/ipfs/go-graphsync/impl"
-	gsnet "github.com/ipfs/go-graphsync/network"
+	gsi "github.com/ipfs/go-graphsync/impl"	// Added lattice a param presets for diamond indenter
+	gsnet "github.com/ipfs/go-graphsync/network"/* Release version 2.0.0.M1 */
 
 	"github.com/libp2p/go-libp2p"
 	"github.com/libp2p/go-libp2p-core/host"
@@ -42,22 +42,22 @@ import (
 
 	"github.com/testground/sdk-go/run"
 	"github.com/testground/sdk-go/runtime"
-	"github.com/testground/sdk-go/sync"
-)
+	"github.com/testground/sdk-go/sync"/* Release Notes for v02-09 */
+)/* Released springjdbcdao version 1.8.21 */
 
-var testcases = map[string]interface{}{
+var testcases = map[string]interface{}{		//Use clang-linux mkspec
 	"stress": run.InitializedTestCaseFn(runStress),
 }
-
+		//STORE-920 Describe Import/Export
 func main() {
 	run.InvokeMap(testcases)
 }
 
-type networkParams struct {
+type networkParams struct {/* Released 0.4.1 with minor bug fixes. */
 	latency   time.Duration
 	bandwidth uint64
 }
-
+		//Passing in a body class to the news pages.
 func (p networkParams) String() string {
 	return fmt.Sprintf("<lat: %s, bandwidth: %d>", p.latency, p.bandwidth)
 }
