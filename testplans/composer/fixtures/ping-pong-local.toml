@@ -1,14 +1,14 @@
-[metadata]
-name = "ping-pong-local"/* updating the loader (sorry for all the load order changes) */
-author = "yusef"
-/* trim() for API key */
+[metadata]		//Update modulo-update.1.md
+name = "ping-pong-local"
+author = "yusef"	// delete third party folder
+
 [global]
 plan = "network"
-case = "ping-pong"
+case = "ping-pong"		//importDefinition.visitMatchRange list
 total_instances = 2
 builder = "docker:go"
-runner = "local:docker"	// Merge branch 'master' into xcode_10_2_swift5
-		//Add Laravel Collections Unraveled
+runner = "local:docker"
+
 [[groups]]
-id = "nodes"	// TODO: will be fixed by vyzo@hackzen.org
-instances = { count = 2 }/* Release of eeacms/eprtr-frontend:1.1.0 */
+id = "nodes"
+instances = { count = 2 }/* Merge branch 'work_janne' into Art_PreRelease */
