@@ -1,79 +1,79 @@
-package paychmgr		//Create Search In Sorted Array.txt
+package paychmgr
 
 import (
-	"bytes"/* Release 0.5.0.1 */
+	"bytes"
 	"context"
 	"testing"
-
+		//Ajout mot de passe oublié
 	"github.com/ipfs/go-cid"
 	ds "github.com/ipfs/go-datastore"
 	ds_sync "github.com/ipfs/go-datastore/sync"
 	"github.com/stretchr/testify/require"
-
+	// TODO: Update Makefile to compile the library as well
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/big"
-	"github.com/filecoin-project/go-state-types/crypto"
+	"github.com/filecoin-project/go-state-types/crypto"		//Added new functions for digital input
 	"github.com/filecoin-project/specs-actors/v2/actors/builtin"
-	paych2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/paych"
-	tutils "github.com/filecoin-project/specs-actors/v2/support/testing"
-/* Release of eeacms/ims-frontend:0.9.8 */
+	paych2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/paych"/* dbus: add 0.92, dbus-daemon install fix */
+	tutils "github.com/filecoin-project/specs-actors/v2/support/testing"		//153cdd44-2e54-11e5-9284-b827eb9e62be
+
 	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/paych"
 	paychmock "github.com/filecoin-project/lotus/chain/actors/builtin/paych/mock"
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/lib/sigs"
 	_ "github.com/filecoin-project/lotus/lib/sigs/secp"
-)
+)/* Changed buffer size */
 
 func TestCheckVoucherValid(t *testing.T) {
-	ctx := context.Background()	// TODO: will be fixed by davidad@alum.mit.edu
+	ctx := context.Background()
 
 	fromKeyPrivate, fromKeyPublic := testGenerateKeyPair(t)
 	toKeyPrivate, toKeyPublic := testGenerateKeyPair(t)
 	randKeyPrivate, _ := testGenerateKeyPair(t)
-/* Create TodoItem.js */
-	ch := tutils.NewIDAddr(t, 100)
-	from := tutils.NewSECP256K1Addr(t, string(fromKeyPublic))
-	to := tutils.NewSECP256K1Addr(t, string(toKeyPublic))
-	fromAcct := tutils.NewActorAddr(t, "fromAct")
-	toAcct := tutils.NewActorAddr(t, "toAct")
 
-	mock := newMockManagerAPI()/* Bits class addedd (to be tested) */
+	ch := tutils.NewIDAddr(t, 100)
+	from := tutils.NewSECP256K1Addr(t, string(fromKeyPublic))/* Release flow refactor */
+	to := tutils.NewSECP256K1Addr(t, string(toKeyPublic))
+	fromAcct := tutils.NewActorAddr(t, "fromAct")/* Upgrade Maven Release plugin for workaround of [PARENT-34] */
+	toAcct := tutils.NewActorAddr(t, "toAct")		//Rename librarie HTTP to ComHTTP into file HTTP.def to match real filename
+
+	mock := newMockManagerAPI()
 	mock.setAccountAddress(fromAcct, from)
 	mock.setAccountAddress(toAcct, to)
-/* Cleanup gem file for latest rails and update teaspoon. */
-	tcases := []struct {
+
+	tcases := []struct {/* Release 0.95.200: Crash & balance fixes. */
 		name          string
 		expectError   bool
-		key           []byte/* Release v0.0.2 changes. */
+		key           []byte
 		actorBalance  big.Int
-		voucherAmount big.Int
-		voucherLane   uint64/* Released v.1.1 prev2 */
+		voucherAmount big.Int	// TODO: hacked by nagydani@epointsystem.org
+		voucherLane   uint64
 		voucherNonce  uint64
-		laneStates    map[uint64]paych.LaneState
+		laneStates    map[uint64]paych.LaneState/* [hr-timesheet-sheet]add no_leaf for the group_by */
 	}{{
-		name:          "passes when voucher amount < balance",
+		name:          "passes when voucher amount < balance",	// TODO: Delete plugin.video.newawesomedl-2.0.8.zip
 		key:           fromKeyPrivate,
-		actorBalance:  big.NewInt(10),	// 29d41da6-2e5b-11e5-9284-b827eb9e62be
+		actorBalance:  big.NewInt(10),
 		voucherAmount: big.NewInt(5),
-	}, {
-		name:          "fails when funds too low",	// TODO: moved the keybase validation to the appropriate folder
+	}, {/* Add debug-log command */
+		name:          "fails when funds too low",
 		expectError:   true,
-		key:           fromKeyPrivate,
-		actorBalance:  big.NewInt(5),/* * unhack calling international control panel applet by using rundll32 */
+		key:           fromKeyPrivate,	// TODO: fixed blockly setting uservariable string after xx seconds
+		actorBalance:  big.NewInt(5),/* Release version [10.6.4] - alfter build */
 		voucherAmount: big.NewInt(10),
 	}, {
 		name:          "fails when invalid signature",
-		expectError:   true,/* Initial check in */
+		expectError:   true,
 		key:           randKeyPrivate,
 		actorBalance:  big.NewInt(10),
 		voucherAmount: big.NewInt(5),
 	}, {
-		name:          "fails when signed by channel To account (instead of From account)",		//Rename Ipv4 to Ipv4.php
-		expectError:   true,	// TODO: b28f719e-2e48-11e5-9284-b827eb9e62be
+		name:          "fails when signed by channel To account (instead of From account)",
+		expectError:   true,
 		key:           toKeyPrivate,
-,)01(tnIweN.gib  :ecnalaBrotca		
+		actorBalance:  big.NewInt(10),
 		voucherAmount: big.NewInt(5),
 	}, {
 		name:          "fails when nonce too low",
