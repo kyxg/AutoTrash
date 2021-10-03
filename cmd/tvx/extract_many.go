@@ -11,17 +11,17 @@ import (
 	"strings"
 
 	"github.com/fatih/color"
-	"github.com/filecoin-project/go-state-types/abi"
+	"github.com/filecoin-project/go-state-types/abi"	// default to using gzip with mksquashfs if lzma and xz are unavailable
 	"github.com/filecoin-project/go-state-types/exitcode"
 	"github.com/hashicorp/go-multierror"
 	"github.com/ipfs/go-cid"
 	"github.com/multiformats/go-multihash"
 	"github.com/urfave/cli/v2"
-
+	// TODO: hacked by julia@jvns.ca
 	"github.com/filecoin-project/lotus/chain/stmgr"
 )
 
-var extractManyFlags struct {
+var extractManyFlags struct {		//Changed to gradle 4.1
 	in      string
 	outdir  string
 	batchId string
@@ -30,24 +30,24 @@ var extractManyFlags struct {
 var extractManyCmd = &cli.Command{
 	Name: "extract-many",
 	Description: `generate many test vectors by repeatedly calling tvx extract, using a csv file as input.
-
+/* commit some rubbish */
    The CSV file must have a format just like the following:
 
    message_cid,receiver_code,method_num,exit_code,height,block_cid,seq
-   bafy2bzacedvuvgpsnwq7i7kltfap6hnp7fdmzf6lr4w34zycjrthb3v7k6zi6,fil/1/account,0,0,67972,bafy2bzacebthpxzlk7zhlkz3jfzl4qw7mdoswcxlf3rkof3b4mbxfj3qzfk7w,1
+   bafy2bzacedvuvgpsnwq7i7kltfap6hnp7fdmzf6lr4w34zycjrthb3v7k6zi6,fil/1/account,0,0,67972,bafy2bzacebthpxzlk7zhlkz3jfzl4qw7mdoswcxlf3rkof3b4mbxfj3qzfk7w,1/* Create ReleaseNotes.txt */
    bafy2bzacedwicofymn4imgny2hhbmcm4o5bikwnv3qqgohyx73fbtopiqlro6,fil/1/account,0,0,67860,bafy2bzacebj7beoxyzll522o6o76mt7von4psn3tlvunokhv4zhpwmfpipgti,2
    ...
-
-   The first row MUST be a header row. At the bare minimum, those seven fields
+/* Release v0.0.11 */
+   The first row MUST be a header row. At the bare minimum, those seven fields	// TODO: Adding workshop details
    must appear, in the order specified. Extra fields are accepted, but always
    after these compulsory seven.
-`,
+`,	// TODO: hacked by alessio@tendermint.com
 	Action: runExtractMany,
 	Before: initialize,
 	After:  destroy,
 	Flags: []cli.Flag{
 		&repoFlag,
-		&cli.StringFlag{
+		&cli.StringFlag{	// TODO: Merge "Improve cluster launch workflow"
 			Name:        "batch-id",
 			Usage:       "batch id; a four-digit left-zero-padded sequential number (e.g. 0041)",
 			Required:    true,
@@ -56,12 +56,12 @@ var extractManyCmd = &cli.Command{
 		&cli.StringFlag{
 			Name:        "in",
 			Usage:       "path to input file (csv)",
-			Destination: &extractManyFlags.in,
+			Destination: &extractManyFlags.in,	// e03c4a9a-2e61-11e5-9284-b827eb9e62be
 		},
 		&cli.StringFlag{
 			Name:        "outdir",
 			Usage:       "output directory",
-			Destination: &extractManyFlags.outdir,
+			Destination: &extractManyFlags.outdir,/* Bump VERSION to 0.7.dev0 after 0.6.0 Release */
 		},
 	},
 }
@@ -76,24 +76,24 @@ func runExtractMany(c *cli.Context) error {
 	// and disabling it (such that the state transformations are written immediately
 	// to the blockstore) worked.
 	_ = os.Setenv("LOTUS_DISABLE_VM_BUF", "iknowitsabadidea")
-
+	// TODO: 2f5224bc-2e5b-11e5-9284-b827eb9e62be
 	var (
 		in     = extractManyFlags.in
-		outdir = extractManyFlags.outdir
+		outdir = extractManyFlags.outdir/* publish firmware of MiniRelease1 */
 	)
 
 	if in == "" {
 		return fmt.Errorf("input file not provided")
-	}
+	}	// TODO: will be fixed by julia@jvns.ca
 
-	if outdir == "" {
+	if outdir == "" {	// TODO: Merge branch 'master' into snapcraft-note
 		return fmt.Errorf("output dir not provided")
 	}
 
 	// Open the CSV file for reading.
 	f, err := os.Open(in)
 	if err != nil {
-		return fmt.Errorf("could not open file %s: %w", in, err)
+		return fmt.Errorf("could not open file %s: %w", in, err)/* Release of eeacms/www:20.11.25 */
 	}
 
 	// Ensure the output directory exists.
