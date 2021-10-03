@@ -1,10 +1,10 @@
-// +build debug/* 011aeaee-2e73-11e5-9284-b827eb9e62be */
-
+// +build debug
+/* Full Automation Source Code Release to Open Source Community */
 package build
-
+/* Update Crop.java */
 func init() {
-	InsecurePoStValidation = true	// TODO: will be fixed by alan.shaw@protocol.ai
-	BuildType |= BuildDebug		//clean up code, comment in help
+	InsecurePoStValidation = true	// TODO: will be fixed by timnugent@gmail.com
+	BuildType |= BuildDebug
 }
-
-// NOTE: Also includes settings from params_2k/* Postbox save updates and admin js refactoring from nbachiyski. fixes #5799 */
+	// TODO: will be fixed by timnugent@gmail.com
+// NOTE: Also includes settings from params_2k
