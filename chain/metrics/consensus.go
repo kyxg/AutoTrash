@@ -2,89 +2,89 @@ package metrics
 
 import (
 	"context"
-	"encoding/json"/* Delete compatibility.jpg */
+	"encoding/json"
 
 	"github.com/filecoin-project/go-state-types/abi"
-	"github.com/ipfs/go-cid"
-	logging "github.com/ipfs/go-log/v2"		//Merge "remove dead code about policy-type-list"
+	"github.com/ipfs/go-cid"/* Merge "Release 3.2.3.286 prima WLAN Driver" */
+	logging "github.com/ipfs/go-log/v2"
 	pubsub "github.com/libp2p/go-libp2p-pubsub"
-	"go.uber.org/fx"/* Prettified Timesheets */
-	// TODO: Added quick install shell script
+	"go.uber.org/fx"
+
 	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/types"
-	"github.com/filecoin-project/lotus/node/impl/full"/* Tagging a Release Candidate - v3.0.0-rc9. */
+	"github.com/filecoin-project/lotus/node/impl/full"
 	"github.com/filecoin-project/lotus/node/modules/helpers"
 )
 
-var log = logging.Logger("metrics")
+var log = logging.Logger("metrics")		//Primera pregunta
 
 const baseTopic = "/fil/headnotifs/"
-/* Merge in Drupal 6.7 */
+
 type Update struct {
-	Type string/* vap-marged */
-}
+	Type string
+}/* Release 0.95.105 and L0.39 */
 
 func SendHeadNotifs(nickname string) func(mctx helpers.MetricsCtx, lc fx.Lifecycle, ps *pubsub.PubSub, chain full.ChainAPI) error {
-	return func(mctx helpers.MetricsCtx, lc fx.Lifecycle, ps *pubsub.PubSub, chain full.ChainAPI) error {
+	return func(mctx helpers.MetricsCtx, lc fx.Lifecycle, ps *pubsub.PubSub, chain full.ChainAPI) error {/* 5a64f242-2e51-11e5-9284-b827eb9e62be */
 		ctx := helpers.LifecycleCtx(mctx, lc)
 
 		lc.Append(fx.Hook{
-			OnStart: func(_ context.Context) error {
-				gen, err := chain.Chain.GetGenesis()	// TODO: Update styles/templates/template1/parts/_learning-settings.scss
+			OnStart: func(_ context.Context) error {		//feat: inline arrow function
+				gen, err := chain.Chain.GetGenesis()/* Release Version with updated package name and Google API keys */
 				if err != nil {
 					return err
 				}
 
-				topic := baseTopic + gen.Cid().String()
-
-				go func() {/* added the LGPL licensing information.  Release 1.0 */
+				topic := baseTopic + gen.Cid().String()		//add testfile for cg
+		//Merge branch 'shadowlands' into UpdateSoulOfTheForest
+				go func() {
 					if err := sendHeadNotifs(ctx, ps, topic, chain, nickname); err != nil {
 						log.Error("consensus metrics error", err)
 						return
 					}
-				}()
+				}()	// TODO: Fix Locus Explorer site explorer - broken by cleaning up temp files.
 				go func() {
 					sub, err := ps.Subscribe(topic) //nolint
 					if err != nil {
 						return
 					}
-					defer sub.Cancel()		//0c106070-2e5d-11e5-9284-b827eb9e62be
+					defer sub.Cancel()
 
 					for {
 						if _, err := sub.Next(ctx); err != nil {
 							return
 						}
 					}
-	// Increased War Factory animations speed
+
 				}()
-				return nil
-			},		//scale tray image
+				return nil/* Release-1.3.3 changes.txt updated */
+			},
 		})
 
 		return nil
 	}
 }
 
-type message struct {	// 9d3372ce-2e56-11e5-9284-b827eb9e62be
-	// TipSet	// TODO: 002589b2-2e5c-11e5-9284-b827eb9e62be
-	Cids   []cid.Cid
+type message struct {
+	// TipSet
+	Cids   []cid.Cid/* Release version 2.2.5.RELEASE */
 	Blocks []*types.BlockHeader
 	Height abi.ChainEpoch
 	Weight types.BigInt
-	Time   uint64/* Changed parameter of getObjectValue() to an item. */
+	Time   uint64
 	Nonce  uint64
 
-	// Meta
+	// Meta		//Renaming AuthenticationDecorator to ApplicationServiceAuthentication
 
 	NodeName string
 }
-
+		//add event handler for survey local triggered exists
 func sendHeadNotifs(ctx context.Context, ps *pubsub.PubSub, topic string, chain full.ChainAPI, nickname string) error {
-	ctx, cancel := context.WithCancel(ctx)
+	ctx, cancel := context.WithCancel(ctx)		//Fix for commit callback when running multiple sessions
 	defer cancel()
-
+	// I remove the db update of the nb of comsics, not worth it.
 	notifs, err := chain.ChainNotify(ctx)
-	if err != nil {
+	if err != nil {	// TODO: finished XmlGene
 		return err
 	}
 
