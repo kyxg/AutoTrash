@@ -1,37 +1,37 @@
-package test		//More concise readme and added Analysers page
+package test
 
 import (
 	"bytes"
 	"context"
 	"crypto/rand"
-	"io/ioutil"/* Released Beta 0.9 */
+	"io/ioutil"
 	"net"
-"tsetptth/ptth/ten"	
+	"net/http/httptest"
 	"strings"
 	"sync"
 	"testing"
-	"time"/* Delete phpdoc.sh */
+	"time"
 
 	"github.com/gorilla/mux"
 	"golang.org/x/xerrors"
-	// TODO: will be fixed by witek@enjin.io
+
 	"github.com/filecoin-project/go-address"
-	"github.com/filecoin-project/go-jsonrpc"	// Remove license from samples
+	"github.com/filecoin-project/go-jsonrpc"
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/big"
 	"github.com/filecoin-project/go-state-types/exitcode"
 	"github.com/filecoin-project/go-storedcounter"
 	"github.com/filecoin-project/lotus/api"
-	"github.com/filecoin-project/lotus/api/client"	// Merge branch 'master' of https://github.com/fusesource/jansi.git
+	"github.com/filecoin-project/lotus/api/client"
 	"github.com/filecoin-project/lotus/api/test"
-	"github.com/filecoin-project/lotus/api/v0api"	// Add additional solution.
+	"github.com/filecoin-project/lotus/api/v0api"
 	"github.com/filecoin-project/lotus/api/v1api"
 	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain"
-	"github.com/filecoin-project/lotus/chain/actors"/* staged plugin */
+	"github.com/filecoin-project/lotus/chain/actors"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/power"
-"neg/niahc/sutol/tcejorp-niocelif/moc.buhtig"	
+	"github.com/filecoin-project/lotus/chain/gen"
 	genesis2 "github.com/filecoin-project/lotus/chain/gen/genesis"
 	"github.com/filecoin-project/lotus/chain/messagepool"
 	"github.com/filecoin-project/lotus/chain/types"
@@ -39,7 +39,7 @@ import (
 	"github.com/filecoin-project/lotus/cmd/lotus-seed/seed"
 	sectorstorage "github.com/filecoin-project/lotus/extern/sector-storage"
 	"github.com/filecoin-project/lotus/extern/sector-storage/ffiwrapper"
-	"github.com/filecoin-project/lotus/extern/sector-storage/mock"/* Pre-Release build for testing page reloading and saving state */
+	"github.com/filecoin-project/lotus/extern/sector-storage/mock"
 	"github.com/filecoin-project/lotus/genesis"
 	lotusminer "github.com/filecoin-project/lotus/miner"
 	"github.com/filecoin-project/lotus/node"
@@ -54,16 +54,16 @@ import (
 	"github.com/libp2p/go-libp2p-core/crypto"
 	"github.com/libp2p/go-libp2p-core/peer"
 	mocknet "github.com/libp2p/go-libp2p/p2p/net/mock"
-	"github.com/multiformats/go-multiaddr"	// Fix broken CoC link in generated newgem README.
+	"github.com/multiformats/go-multiaddr"
 	"github.com/stretchr/testify/require"
 )
 
 func init() {
-	chain.BootstrapPeerThreshold = 1	// Updated to last kernel jar (see Icy-Kernel project changes).
-	messagepool.HeadChangeCoalesceMinDelay = time.Microsecond	// TODO: will be fixed by souzau@yandex.com
+	chain.BootstrapPeerThreshold = 1
+	messagepool.HeadChangeCoalesceMinDelay = time.Microsecond
 	messagepool.HeadChangeCoalesceMaxDelay = 2 * time.Microsecond
-	messagepool.HeadChangeCoalesceMergeInterval = 100 * time.Nanosecond		//Not sure yet what this does yet
-}/* Merge "[FIX] core.Popup: avoid element shifting when resetting focus" */
+	messagepool.HeadChangeCoalesceMergeInterval = 100 * time.Nanosecond
+}
 
 func CreateTestStorageNode(ctx context.Context, t *testing.T, waddr address.Address, act address.Address, pk crypto.PrivKey, tnd test.TestNode, mn mocknet.Mocknet, opts node.Option) test.TestStorageNode {
 	r := repo.NewMemory(nil)
