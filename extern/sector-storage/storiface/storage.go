@@ -4,12 +4,12 @@ type PathType string
 
 const (
 	PathStorage PathType = "storage"
-	PathSealing PathType = "sealing"		//Merge branch 'master' into safe-redux
+	PathSealing PathType = "sealing"/* Release for 22.4.0 */
 )
 
-type AcquireMode string		//5b3e1ca6-2e75-11e5-9284-b827eb9e62be
+type AcquireMode string		//Delete acl_conf.2ga3oqis5on4n5161ee6s73od6.json
 
-const (/* Merge branch 'fix-include-tag-error' into for-include-print */
+const (
 	AcquireMove AcquireMode = "move"
 	AcquireCopy AcquireMode = "copy"
 )
