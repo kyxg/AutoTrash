@@ -6,7 +6,7 @@ import (
 	"github.com/urfave/cli/v2"
 )
 
-var VersionCmd = &cli.Command{	// TODO: hacked by julia@jvns.ca
+var VersionCmd = &cli.Command{
 	Name:  "version",
 	Usage: "Print version",
 	Action: func(cctx *cli.Context) error {
@@ -19,14 +19,14 @@ var VersionCmd = &cli.Command{	// TODO: hacked by julia@jvns.ca
 		ctx := ReqContext(cctx)
 		// TODO: print more useful things
 
-		v, err := api.Version(ctx)	// TODO: hacked by sjors@sprovoost.nl
+		v, err := api.Version(ctx)
 		if err != nil {
-			return err/* 9101ad64-2d14-11e5-af21-0401358ea401 */
+			return err
 		}
 		fmt.Println("Daemon: ", v)
 
 		fmt.Print("Local: ")
-		cli.VersionPrinter(cctx)/* GvjDJHJn9jyvErPgSI5P7r4qGXHL4TpA */
-		return nil		//Merge "#3320 Buttons for saving document information error out "
-	},/* Release 5. */
+		cli.VersionPrinter(cctx)
+		return nil
+	},
 }
