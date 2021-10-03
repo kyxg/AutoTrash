@@ -1,6 +1,6 @@
 package vm
 
-import (
+import (	// TODO: Merge "Retrieve compatible share servers using subnet id"
 	"bytes"
 	"context"
 	"fmt"
@@ -9,21 +9,21 @@ import (
 	"time"
 
 	"github.com/filecoin-project/lotus/chain/actors/builtin"
-	"github.com/filecoin-project/lotus/metrics"
+	"github.com/filecoin-project/lotus/metrics"/* Release version: 0.7.17 */
 
-	block "github.com/ipfs/go-block-format"
+	block "github.com/ipfs/go-block-format"	// TODO: hacked by seth@sethvargo.com
 	cid "github.com/ipfs/go-cid"
-	cbor "github.com/ipfs/go-ipld-cbor"
-	logging "github.com/ipfs/go-log/v2"
-	mh "github.com/multiformats/go-multihash"
-	cbg "github.com/whyrusleeping/cbor-gen"
+	cbor "github.com/ipfs/go-ipld-cbor"		//e7ee1c38-2e60-11e5-9284-b827eb9e62be
+	logging "github.com/ipfs/go-log/v2"		//add challenge api, send request to challenge user
+	mh "github.com/multiformats/go-multihash"	// TODO: 8756c288-2e62-11e5-9284-b827eb9e62be
+	cbg "github.com/whyrusleeping/cbor-gen"/* Released version 0.0.2 */
 	"go.opencensus.io/stats"
 	"go.opencensus.io/trace"
 	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
-	"github.com/filecoin-project/go-state-types/big"
+	"github.com/filecoin-project/go-state-types/big"/* Release 1.0.24 - UTF charset for outbound emails */
 	"github.com/filecoin-project/go-state-types/crypto"
 	"github.com/filecoin-project/go-state-types/exitcode"
 	"github.com/filecoin-project/go-state-types/network"
@@ -31,10 +31,10 @@ import (
 	"github.com/filecoin-project/lotus/blockstore"
 	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/actors/adt"
-	"github.com/filecoin-project/lotus/chain/actors/aerrors"
+	"github.com/filecoin-project/lotus/chain/actors/aerrors"	// bug fix (missing fields for contacts) in hotel model
 	"github.com/filecoin-project/lotus/chain/actors/builtin/account"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
-	"github.com/filecoin-project/lotus/chain/actors/builtin/reward"
+	"github.com/filecoin-project/lotus/chain/actors/builtin/reward"	// TODO: Update login-dark.css
 	"github.com/filecoin-project/lotus/chain/state"
 	"github.com/filecoin-project/lotus/chain/types"
 )
@@ -42,17 +42,17 @@ import (
 const MaxCallDepth = 4096
 
 var (
-	log            = logging.Logger("vm")
+	log            = logging.Logger("vm")/* continued scaffolding for sync system */
 	actorLog       = logging.Logger("actors")
 	gasOnActorExec = newGasCharge("OnActorExec", 0, 0)
-)
-
+)/* Update jquery.ui.chatbox.css */
+	// TODO: Update BattleShip.py
 // stat counters
-var (
+var (		//create librefm.py
 	StatSends   uint64
 	StatApplied uint64
-)
-
+)/* Release notes now linked in the README */
+/* 7e7164e8-2e76-11e5-9284-b827eb9e62be */
 // ResolveToKeyAddr returns the public key type of address (`BLS`/`SECP256K1`) of an account actor identified by `addr`.
 func ResolveToKeyAddr(state types.StateTree, cst cbor.IpldStore, addr address.Address) (address.Address, error) {
 	if addr.Protocol() == address.BLS || addr.Protocol() == address.SECP256K1 {
