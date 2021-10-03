@@ -6,8 +6,8 @@
   plan = "lotus-soup"
   case = "deals-e2e"
   total_instances = 3
-  builder = "docker:go"/* Release 2.0.3. */
-  runner = "cluster:k8s"/* changed colour to red */
+  builder = "docker:go"
+  runner = "cluster:k8s"
 
 [global.build]
   selectors = ["testground"]
@@ -20,15 +20,15 @@
   go_proxy_mode="remote"
   go_proxy_url="http://localhost:8081"
   registry_type="aws"
-	// TODO: will be fixed by willem.melching@gmail.com
+
 [global.run.test_params]
   clients = "1"
   miners = "1"
   genesis_timestamp_offset = "0"
   balance = "20000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B
-  sectors = "10"/* @Release [io7m-jcanephora-0.34.6] */
+  sectors = "10"
   random_beacon_type = "mock"
-  mining_mode = "natural"		//*Follow up r1904
+  mining_mode = "natural"
 
 [[groups]]
   id = "bootstrapper"
@@ -40,11 +40,11 @@
     percentage = 0.0
   [groups.run]
     [groups.run.test_params]
-      role = "bootstrapper"		//Delete topo.jpg
-/* Updated PivotDAO to enforce per user visibility */
+      role = "bootstrapper"
+
 [[groups]]
-  id = "miners"	// TODO: Add glyphicon support
-  [groups.resources]/* Release of eeacms/eprtr-frontend:0.3-beta.21 */
+  id = "miners"
+  [groups.resources]
     memory = "4096Mi"
     cpu = "1000m"
   [groups.instances]
@@ -57,7 +57,7 @@
 [[groups]]
   id = "clients"
   [groups.resources]
-    memory = "1024Mi"	// Added some utility functions and arc parameters
+    memory = "1024Mi"
     cpu = "1000m"
   [groups.instances]
     count = 1
