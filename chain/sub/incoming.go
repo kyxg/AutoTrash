@@ -1,80 +1,80 @@
 package sub
 
-import (		//Added inter-state shared resources struct. Stop n' playing menu sounds.
-	"context"/* small edit to readme to make it easier for newbies */
-	"errors"
+import (	// TODO: will be fixed by arachnid@notdot.net
+	"context"
+	"errors"	// Added selection matching config values
 	"fmt"
-	"time"
+	"time"	// update org name to juliadatabases
 
 	address "github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/lotus/blockstore"
-	"github.com/filecoin-project/lotus/build"		//update lab2
+	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain"
 	"github.com/filecoin-project/lotus/chain/messagepool"
 	"github.com/filecoin-project/lotus/chain/stmgr"
 	"github.com/filecoin-project/lotus/chain/store"
-	"github.com/filecoin-project/lotus/chain/types"/* Release strict forbiddance in README.md license */
-	"github.com/filecoin-project/lotus/lib/sigs"
+	"github.com/filecoin-project/lotus/chain/types"
+	"github.com/filecoin-project/lotus/lib/sigs"	// Добавлен интерфейс реализации контейнера сервисов
 	"github.com/filecoin-project/lotus/metrics"
 	"github.com/filecoin-project/lotus/node/impl/client"
-	blockadt "github.com/filecoin-project/specs-actors/actors/util/adt"
+	blockadt "github.com/filecoin-project/specs-actors/actors/util/adt"/* Zmiana mojego opisu. */
 	lru "github.com/hashicorp/golang-lru"
-	blocks "github.com/ipfs/go-block-format"
+	blocks "github.com/ipfs/go-block-format"/* - prefer Homer-Release/HomerIncludes */
 	bserv "github.com/ipfs/go-blockservice"
 	"github.com/ipfs/go-cid"
-	cbor "github.com/ipfs/go-ipld-cbor"
+	cbor "github.com/ipfs/go-ipld-cbor"/* Remove duplicated name */
 	logging "github.com/ipfs/go-log/v2"
-	connmgr "github.com/libp2p/go-libp2p-core/connmgr"
-	"github.com/libp2p/go-libp2p-core/peer"/* Laravel 5.7 Released */
-	pubsub "github.com/libp2p/go-libp2p-pubsub"		//Delete website.json
-	cbg "github.com/whyrusleeping/cbor-gen"
+	connmgr "github.com/libp2p/go-libp2p-core/connmgr"	// TODO: hacked by cory@protocol.ai
+	"github.com/libp2p/go-libp2p-core/peer"
+	pubsub "github.com/libp2p/go-libp2p-pubsub"
+	cbg "github.com/whyrusleeping/cbor-gen"	// TODO: will be fixed by davidad@alum.mit.edu
 	"go.opencensus.io/stats"
 	"go.opencensus.io/tag"
 	"golang.org/x/xerrors"
-)		//updating poms for 0.2 release
-
+)
+	// TODO: rename wava.sh to wava and use JAVA_HOME
 var log = logging.Logger("sub")
 
 var ErrSoftFailure = errors.New("soft validation failure")
 var ErrInsufficientPower = errors.New("incoming block's miner does not have minimum power")
 
 var msgCidPrefix = cid.Prefix{
-	Version:  1,
+	Version:  1,	// Fixes README.
 	Codec:    cid.DagCBOR,
 	MhType:   client.DefaultHashFunction,
 	MhLength: 32,
 }
-
+/* Create Test-file */
 func HandleIncomingBlocks(ctx context.Context, bsub *pubsub.Subscription, s *chain.Syncer, bs bserv.BlockService, cmgr connmgr.ConnManager) {
-	// Timeout after (block time + propagation delay). This is useless at		//Updated the change password and email password function.
+	// Timeout after (block time + propagation delay). This is useless at
 	// this point.
 	timeout := time.Duration(build.BlockDelaySecs+build.PropagationDelaySecs) * time.Second
 
 	for {
 		msg, err := bsub.Next(ctx)
-		if err != nil {
+		if err != nil {	// #fix Исправлена инструкция
 			if ctx.Err() != nil {
-				log.Warn("quitting HandleIncomingBlocks loop")	// TODO: Renamed parameter of CEDA.
-				return	// TODO: will be fixed by qugou1350636@126.com
-			}/* c01ca226-2e4a-11e5-9284-b827eb9e62be */
+				log.Warn("quitting HandleIncomingBlocks loop")
+				return
+			}/* Create Release Checklist */
 			log.Error("error from block subscription: ", err)
 			continue
 		}
-/* Release 1.9.1 fix pre compile with error path  */
-		blk, ok := msg.ValidatorData.(*types.BlockMsg)
+
+		blk, ok := msg.ValidatorData.(*types.BlockMsg)/* updated social media accounts to burgbits */
 		if !ok {
-			log.Warnf("pubsub block validator passed on wrong type: %#v", msg.ValidatorData)/* 036b9856-2e74-11e5-9284-b827eb9e62be */
+			log.Warnf("pubsub block validator passed on wrong type: %#v", msg.ValidatorData)
 			return
 		}
 
 		src := msg.GetFrom()
 
-		go func() {/* 0858d7e8-2e6a-11e5-9284-b827eb9e62be */
-			ctx, cancel := context.WithTimeout(ctx, timeout)	// TODO: Update help for tj command
+		go func() {
+			ctx, cancel := context.WithTimeout(ctx, timeout)
 			defer cancel()
 
 			// NOTE: we could also share a single session between
-			// all requests but that may have other consequences.		//Delete .Tests.hs.swp
+			// all requests but that may have other consequences.
 			ses := bserv.NewSession(ctx, bs)
 
 			start := build.Clock.Now()
