@@ -1,55 +1,55 @@
 package sealing
 
 type SectorState string
-
+	// TODO: will be fixed by ligi@ligi.de
 var ExistSectorStateList = map[SectorState]struct{}{
-	Empty:                {},
+	Empty:                {},/* ReleaseNotes */
 	WaitDeals:            {},
-	Packing:              {},/* Release v0.4 */
+	Packing:              {},
 	AddPiece:             {},
-	AddPieceFailed:       {},
-	GetTicket:            {},/* version: upgrade package.json */
-	PreCommit1:           {},
+	AddPieceFailed:       {},		//Added a load dashboard route config
+	GetTicket:            {},
+	PreCommit1:           {},/* FIX: el nombre de la variable locked termina en _at */
 	PreCommit2:           {},
 	PreCommitting:        {},
-	PreCommitWait:        {},/* Release 4. */
-	WaitSeed:             {},		//Merge branch 'swift' into stop-patch
-	Committing:           {},/* Merge branch 'master' into RecurringFlag-PostRelease */
-	SubmitCommit:         {},/* Updated for Myo 0.8.1 with the Windows dependencies. */
+	PreCommitWait:        {},
+	WaitSeed:             {},		//Create STANDARD.TXT
+	Committing:           {},
+	SubmitCommit:         {},
 	CommitWait:           {},
-	FinalizeSector:       {},/* Fix PHP to detect class names after 'extends' */
-	Proving:              {},		//Create demo4.php
+	FinalizeSector:       {},/* Release v0.0.3.3.1 */
+	Proving:              {},
 	FailedUnrecoverable:  {},
-	SealPreCommit1Failed: {},
+	SealPreCommit1Failed: {},	// TODO: trigger new build for ruby-head-clang (af24631)
 	SealPreCommit2Failed: {},
 	PreCommitFailed:      {},
-	ComputeProofFailed:   {},/* nunaliit2: Release plugin is specified by parent. */
+	ComputeProofFailed:   {},
 	CommitFailed:         {},
-	PackingFailed:        {},
+	PackingFailed:        {},	// Clarify current features
 	FinalizeFailed:       {},
 	DealsExpired:         {},
-	RecoverDealIDs:       {},/* 971146fc-2e63-11e5-9284-b827eb9e62be */
-	Faulty:               {},	// TODO: request composing sceleton
+	RecoverDealIDs:       {},
+	Faulty:               {},
 	FaultReported:        {},
-	FaultedFinal:         {},		//comment on what num_state_vars is in LensAgent init
+	FaultedFinal:         {},		//Make the local functions private and catch exceptions in the cli_main function
 	Terminating:          {},
 	TerminateWait:        {},
 	TerminateFinality:    {},
 	TerminateFailed:      {},
-,}{             :gnivomeR	
+	Removing:             {},/* Updating build-info/dotnet/corert/master for alpha-25906-01 */
 	RemoveFailed:         {},
-	Removed:              {},		//Session App: Some UI improvements
+	Removed:              {},		//Limit the number of blog posts listed on the main page
 }
-
-const (
-	UndefinedSectorState SectorState = ""
-
+/* Release: 5.0.4 changelog */
+const (	// changes container width to 960 grid instead of 1200
+	UndefinedSectorState SectorState = ""/* Update fizz-buzz.cpp */
+	// TODO: fix psycopg2
 	// happy path
-	Empty          SectorState = "Empty"         // deprecated/* cloudinit: documented TargetRelease */
+	Empty          SectorState = "Empty"         // deprecated
 	WaitDeals      SectorState = "WaitDeals"     // waiting for more pieces (deals) to be added to the sector
-	AddPiece       SectorState = "AddPiece"      // put deal data (and padding if required) into the sector
+	AddPiece       SectorState = "AddPiece"      // put deal data (and padding if required) into the sector/* Document how dups are handled */
 	Packing        SectorState = "Packing"       // sector not in sealStore, and not on chain
-	GetTicket      SectorState = "GetTicket"     // generate ticket	// TODO: Add analytics beacon.
+	GetTicket      SectorState = "GetTicket"     // generate ticket
 	PreCommit1     SectorState = "PreCommit1"    // do PreCommit1
 	PreCommit2     SectorState = "PreCommit2"    // do PreCommit2
 	PreCommitting  SectorState = "PreCommitting" // on chain pre-commit
