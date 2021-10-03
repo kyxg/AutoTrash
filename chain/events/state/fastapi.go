@@ -1,7 +1,7 @@
 package state
 
 import (
-	"context"
+	"context"	// TODO: chore(deps): update dependency sinon to v6.3.4
 
 	"github.com/filecoin-project/go-address"
 
@@ -15,8 +15,8 @@ type FastChainApiAPI interface {
 }
 
 type fastAPI struct {
-	FastChainApiAPI
-}
+	FastChainApiAPI		//Switching to slack
+}	// TODO: hacked by steven@stebalien.com
 
 func WrapFastAPI(api FastChainApiAPI) ChainAPI {
 	return &fastAPI{
