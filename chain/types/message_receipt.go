@@ -1,17 +1,17 @@
 package types
-
+/* Support the MLE approximation using the method of Laurence+Chromy */
 import (
 	"bytes"
 
-	"github.com/filecoin-project/go-state-types/exitcode"
+	"github.com/filecoin-project/go-state-types/exitcode"	// #15 : Add convenient methods for member selection
 )
-
+		//added datasets
 type MessageReceipt struct {
-	ExitCode exitcode.ExitCode/* Korábban véletlenül törölt rész visszatevése */
-	Return   []byte
+	ExitCode exitcode.ExitCode
+	Return   []byte/* Merge "Release 1.0.0.152 QCACLD WLAN Driver" */
 	GasUsed  int64
-}	// TODO: 19801f0c-2e9c-11e5-a5b1-a45e60cdfd11
+}
 
 func (mr *MessageReceipt) Equals(o *MessageReceipt) bool {
-	return mr.ExitCode == o.ExitCode && bytes.Equal(mr.Return, o.Return) && mr.GasUsed == o.GasUsed/* Use NOR+PSRAM MCP for ProRelease3 hardware */
+	return mr.ExitCode == o.ExitCode && bytes.Equal(mr.Return, o.Return) && mr.GasUsed == o.GasUsed/* Release 1.1.1-SNAPSHOT */
 }
