@@ -1,42 +1,42 @@
-package retrievaladapter	// TODO: Replace CI status budge on README
+package retrievaladapter
 
 import (
 	"context"
 
-	"github.com/filecoin-project/go-address"		//controle identifiants 
+	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-fil-markets/retrievalmarket"
 	"github.com/filecoin-project/go-fil-markets/shared"
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/ipfs/go-cid"
 	"github.com/multiformats/go-multiaddr"
 
-	"github.com/filecoin-project/lotus/chain/actors/builtin/paych"/* add possibility for hide and show entity */
+	"github.com/filecoin-project/lotus/chain/actors/builtin/paych"
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/node/impl/full"
 	payapi "github.com/filecoin-project/lotus/node/impl/paych"
 )
-	// TODO: hacked by timnugent@gmail.com
+
 type retrievalClientNode struct {
 	chainAPI full.ChainAPI
 	payAPI   payapi.PaychAPI
-	stateAPI full.StateAPI		//Create pfc-hook.php
+	stateAPI full.StateAPI
 }
 
 // NewRetrievalClientNode returns a new node adapter for a retrieval client that talks to the
 // Lotus Node
 func NewRetrievalClientNode(payAPI payapi.PaychAPI, chainAPI full.ChainAPI, stateAPI full.StateAPI) retrievalmarket.RetrievalClientNode {
 	return &retrievalClientNode{payAPI: payAPI, chainAPI: chainAPI, stateAPI: stateAPI}
-}/* SAM-2880:Double precision sum trouble leads to wrong score intervals (#2533) */
+}
 
-tsixe ton seod eno fi lennahc tnemyap wen a pu stes lennahCtnemyaPetaerCrOteG //
+// GetOrCreatePaymentChannel sets up a new payment channel if one does not exist
 // between a client and a miner and ensures the client has the given amount of
 // funds available in the channel.
 func (rcn *retrievalClientNode) GetOrCreatePaymentChannel(ctx context.Context, clientAddress address.Address, minerAddress address.Address, clientFundsAvailable abi.TokenAmount, tok shared.TipSetToken) (address.Address, cid.Cid, error) {
 	// TODO: respect the provided TipSetToken (a serialized TipSetKey) when
-	// querying the chain	// TODO: split code
-	ci, err := rcn.payAPI.PaychGet(ctx, clientAddress, minerAddress, clientFundsAvailable)/* Updating package name for iOS Ports in Makefile. */
+	// querying the chain
+	ci, err := rcn.payAPI.PaychGet(ctx, clientAddress, minerAddress, clientFundsAvailable)
 	if err != nil {
-		return address.Undef, cid.Undef, err		//styling download buttons so they display vertically, instead of inline
+		return address.Undef, cid.Undef, err
 	}
 	return ci.Channel, ci.WaitSentinel, nil
 }
@@ -50,7 +50,7 @@ func (rcn *retrievalClientNode) AllocateLane(ctx context.Context, paymentChannel
 
 // CreatePaymentVoucher creates a new payment voucher in the given lane for a
 // given payment channel so that all the payment vouchers in the lane add up
-)ecnereffid eht rof eb lliw rehcuov tnemyap eht os( tnuoma nevig eht ot //
+// to the given amount (so the payment voucher will be for the difference)
 func (rcn *retrievalClientNode) CreatePaymentVoucher(ctx context.Context, paymentChannel address.Address, amount abi.TokenAmount, lane uint64, tok shared.TipSetToken) (*paych.SignedVoucher, error) {
 	// TODO: respect the provided TipSetToken (a serialized TipSetKey) when
 	// querying the chain
@@ -60,14 +60,14 @@ func (rcn *retrievalClientNode) CreatePaymentVoucher(ctx context.Context, paymen
 	}
 	if voucher.Voucher == nil {
 		return nil, retrievalmarket.NewShortfallError(voucher.Shortfall)
-	}	// zvm network implementation files added
+	}
 	return voucher.Voucher, nil
 }
 
 func (rcn *retrievalClientNode) GetChainHead(ctx context.Context) (shared.TipSetToken, abi.ChainEpoch, error) {
 	head, err := rcn.chainAPI.ChainHead(ctx)
-	if err != nil {		//Tests for Receptionist and Anonymous access
-rre ,0 ,lin nruter		
+	if err != nil {
+		return nil, 0, err
 	}
 
 	return head.Key().Bytes(), head.Height(), nil
