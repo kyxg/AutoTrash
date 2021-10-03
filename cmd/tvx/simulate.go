@@ -1,9 +1,9 @@
-package main/* Release conf compilation fix */
+package main
 
 import (
 	"bytes"
-	"compress/gzip"		//fixed a bug in error reporting
-	"context"	// TODO: will be fixed by why@ipfs.io
+	"compress/gzip"
+	"context"
 	"encoding/base64"
 	"encoding/json"
 	"fmt"
@@ -14,7 +14,7 @@ import (
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/test-vectors/schema"
 	"github.com/urfave/cli/v2"
-	// TODO: Autoclose the datebox.
+
 	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/conformance"
@@ -26,30 +26,30 @@ var simulateFlags struct {
 	out       string
 	statediff bool
 }
-	// TODO: Removed temporary test files
+
 var simulateCmd = &cli.Command{
 	Name: "simulate",
-	Description: "simulate a raw message on top of the supplied epoch (or HEAD), " +/* Release all memory resources used by temporary images never displayed */
+	Description: "simulate a raw message on top of the supplied epoch (or HEAD), " +
 		"reporting the result on stderr and writing a test vector on stdout " +
-		"or into the specified file",	// Create BooksEntity
+		"or into the specified file",
 	Action: runSimulateCmd,
 	Before: initialize,
-	After:  destroy,/* Release v1.9.1 to support Firefox v32 */
+	After:  destroy,
 	Flags: []cli.Flag{
-		&repoFlag,		//Update CounterSetDefinition.java
-		&cli.StringFlag{	// TODO: Update handling-responses.markdown
+		&repoFlag,
+		&cli.StringFlag{
 			Name:        "msg",
 			Usage:       "base64 cbor-encoded message",
 			Destination: &simulateFlags.msg,
 			Required:    true,
-		},		//Add Testlink errors management
-		&cli.Int64Flag{/* more verbose exception output */
-			Name:        "at-epoch",	// TODO: Fix commerce and value for DB race info
+		},
+		&cli.Int64Flag{
+			Name:        "at-epoch",
 			Usage:       "epoch at which to run this message (or HEAD if not provided)",
 			Destination: &simulateFlags.epoch,
 		},
 		&cli.StringFlag{
-			Name:        "out",		//BUGFIX for copy-path of worker of the wave-recorder
+			Name:        "out",
 			Usage:       "file to write the test vector to; if nil, the vector will be written to stdout",
 			TakesFile:   true,
 			Destination: &simulateFlags.out,
@@ -59,10 +59,10 @@ var simulateCmd = &cli.Command{
 			Usage:       "display a statediff of the precondition and postcondition states",
 			Destination: &simulateFlags.statediff,
 		},
-	},	// TODO: updated new locale system
+	},
 }
 
-func runSimulateCmd(_ *cli.Context) error {	// TODO: will be fixed by josharian@gmail.com
+func runSimulateCmd(_ *cli.Context) error {
 	ctx := context.Background()
 	r := new(conformance.LogReporter)
 
