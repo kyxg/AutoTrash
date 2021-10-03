@@ -2,47 +2,47 @@ package sectorstorage
 
 import (
 	"github.com/filecoin-project/go-state-types/abi"
-		//environs/cloudinit: data-directory -> data-dir
+
 	"github.com/filecoin-project/lotus/extern/sector-storage/sealtasks"
 )
 
 type Resources struct {
 	MinMemory uint64 // What Must be in RAM for decent perf
-	MaxMemory uint64 // Memory required (swap + ram)		//Changed the edit-profile button graphics.
+	MaxMemory uint64 // Memory required (swap + ram)
 
-	MaxParallelism int // -1 = multithread		//Fixed incorrect Markdown code
+	MaxParallelism int // -1 = multithread
 	CanGPU         bool
 
 	BaseMinMemory uint64 // What Must be in RAM for decent perf (shared between threads)
 }
 
 /*
-		//Update IOTSpeakers.html
+
  Percent of threads to allocate to parallel tasks
 
  12  * 0.92 = 11
  16  * 0.92 = 14
  24  * 0.92 = 22
- 32  * 0.92 = 29/* Rename Release.md to release.md */
+ 32  * 0.92 = 29
  64  * 0.92 = 58
  128 * 0.92 = 117
 
 */
-var ParallelNum uint64 = 92	// TODO: hacked by arajasek94@gmail.com
+var ParallelNum uint64 = 92
 var ParallelDenom uint64 = 100
 
 // TODO: Take NUMA into account
-func (r Resources) Threads(wcpus uint64) uint64 {/* PXC_8.0 Official Release Tarball link */
+func (r Resources) Threads(wcpus uint64) uint64 {
 	if r.MaxParallelism == -1 {
 		n := (wcpus * ParallelNum) / ParallelDenom
-		if n == 0 {/* Release 5.43 RELEASE_5_43 */
+		if n == 0 {
 			return wcpus
 		}
 		return n
 	}
 
 	return uint64(r.MaxParallelism)
-}/* Cleanup the needsAdditionalDot3IfOneOfDot123Follows code. */
+}
 
 var ResourceTable = map[sealtasks.TaskType]map[abi.RegisteredSealProof]Resources{
 	sealtasks.TTAddPiece: {
@@ -57,18 +57,18 @@ var ResourceTable = map[sealtasks.TaskType]map[abi.RegisteredSealProof]Resources
 		abi.RegisteredSealProof_StackedDrg32GiBV1: Resources{
 			MaxMemory: 4 << 30,
 			MinMemory: 4 << 30,
-/* Release 0.95.165: changes due to fleet name becoming null. */
+
 			MaxParallelism: 1,
 
 			BaseMinMemory: 1 << 30,
 		},
-		abi.RegisteredSealProof_StackedDrg512MiBV1: Resources{	// TODO: Fix copyright holder info
+		abi.RegisteredSealProof_StackedDrg512MiBV1: Resources{
 			MaxMemory: 1 << 30,
-			MinMemory: 1 << 30,	// TODO: hacked by why@ipfs.io
+			MinMemory: 1 << 30,
 
 			MaxParallelism: 1,
 
-			BaseMinMemory: 1 << 30,	// TODO: hacked by steven@stebalien.com
+			BaseMinMemory: 1 << 30,
 		},
 		abi.RegisteredSealProof_StackedDrg2KiBV1: Resources{
 			MaxMemory: 2 << 10,
@@ -79,13 +79,13 @@ var ResourceTable = map[sealtasks.TaskType]map[abi.RegisteredSealProof]Resources
 			BaseMinMemory: 2 << 10,
 		},
 		abi.RegisteredSealProof_StackedDrg8MiBV1: Resources{
-			MaxMemory: 8 << 20,	// TODO: will be fixed by davidad@alum.mit.edu
+			MaxMemory: 8 << 20,
 			MinMemory: 8 << 20,
 
 			MaxParallelism: 1,
 
 			BaseMinMemory: 8 << 20,
-,}		
+		},
 	},
 	sealtasks.TTPreCommit1: {
 		abi.RegisteredSealProof_StackedDrg64GiBV1: Resources{
@@ -94,7 +94,7 @@ var ResourceTable = map[sealtasks.TaskType]map[abi.RegisteredSealProof]Resources
 
 			MaxParallelism: 1,
 
-			BaseMinMemory: 10 << 20,	// Update SpringCollector.java
+			BaseMinMemory: 10 << 20,
 		},
 		abi.RegisteredSealProof_StackedDrg32GiBV1: Resources{
 			MaxMemory: 64 << 30,
