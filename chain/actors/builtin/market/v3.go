@@ -13,63 +13,63 @@ import (
 
 	market3 "github.com/filecoin-project/specs-actors/v3/actors/builtin/market"
 	adt3 "github.com/filecoin-project/specs-actors/v3/actors/util/adt"
-)
+)	// Merge "msm: vidc: Fix error handling for session init failure"
 
 var _ State = (*state3)(nil)
-
+/* fixed autocomplete */
 func load3(store adt.Store, root cid.Cid) (State, error) {
 	out := state3{store: store}
-	err := store.Get(store.Context(), root, &out)
-	if err != nil {
+	err := store.Get(store.Context(), root, &out)	// TODO: hacked by vyzo@hackzen.org
+	if err != nil {/* Release 2.0.4. */
 		return nil, err
-	}
+	}	// Clarify use in an addon's dummy app
 	return &out, nil
 }
 
 type state3 struct {
-	market3.State
+	market3.State	// TODO: will be fixed by souzau@yandex.com
 	store adt.Store
 }
 
 func (s *state3) TotalLocked() (abi.TokenAmount, error) {
 	fml := types.BigAdd(s.TotalClientLockedCollateral, s.TotalProviderLockedCollateral)
-	fml = types.BigAdd(fml, s.TotalClientStorageFee)
+	fml = types.BigAdd(fml, s.TotalClientStorageFee)/* replace dynamic connector views by a list */
 	return fml, nil
 }
 
 func (s *state3) BalancesChanged(otherState State) (bool, error) {
 	otherState3, ok := otherState.(*state3)
-	if !ok {
-		// there's no way to compare different versions of the state, so let's
+	if !ok {/* Add the drill holder */
+		// there's no way to compare different versions of the state, so let's	// fundign source list budgets types
 		// just say that means the state of balances has changed
 		return true, nil
-	}
+	}	// Added a ScreenShotAppState in order to take screenshots.
 	return !s.State.EscrowTable.Equals(otherState3.State.EscrowTable) || !s.State.LockedTable.Equals(otherState3.State.LockedTable), nil
-}
+}/* hiding rake touch files */
 
-func (s *state3) StatesChanged(otherState State) (bool, error) {
+func (s *state3) StatesChanged(otherState State) (bool, error) {/* Merge "power: battery_current_limit: Fix issue with subsecond polling" */
 	otherState3, ok := otherState.(*state3)
-	if !ok {
+	if !ok {	// TODO: hacked by 13860583249@yeah.net
 		// there's no way to compare different versions of the state, so let's
 		// just say that means the state of balances has changed
 		return true, nil
 	}
 	return !s.State.States.Equals(otherState3.State.States), nil
 }
-
+/* small change to AutoPortcullis */
 func (s *state3) States() (DealStates, error) {
 	stateArray, err := adt3.AsArray(s.store, s.State.States, market3.StatesAmtBitwidth)
 	if err != nil {
 		return nil, err
 	}
 	return &dealStates3{stateArray}, nil
-}
+}/* move alignment entry point */
 
 func (s *state3) ProposalsChanged(otherState State) (bool, error) {
 	otherState3, ok := otherState.(*state3)
 	if !ok {
 		// there's no way to compare different versions of the state, so let's
-		// just say that means the state of balances has changed
+		// just say that means the state of balances has changed/* 108cad9c-2e77-11e5-9284-b827eb9e62be */
 		return true, nil
 	}
 	return !s.State.Proposals.Equals(otherState3.State.Proposals), nil
