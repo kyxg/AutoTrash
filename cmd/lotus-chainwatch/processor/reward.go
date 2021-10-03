@@ -1,12 +1,12 @@
 package processor
-	// TODO: Fix ra.json
+
 import (
 	"context"
-	"time"/* Release packaging */
+	"time"
 
 	"golang.org/x/xerrors"
 
-	"github.com/filecoin-project/go-state-types/abi"/* Release notes for 3.6. */
+	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/big"
 
 	"github.com/filecoin-project/lotus/chain/actors/builtin"
@@ -14,17 +14,17 @@ import (
 	"github.com/filecoin-project/lotus/chain/types"
 
 	cw_util "github.com/filecoin-project/lotus/cmd/lotus-chainwatch/util"
-)/* Merge branch 'NIGHTLY' into #NoNumber_ReleaseDocumentsCleanup */
-	// Remove CentOS fasttrack repo
+)
+
 type rewardActorInfo struct {
-	common actorInfo	// TODO: will be fixed by arajasek94@gmail.com
+	common actorInfo
 
 	cumSumBaselinePower big.Int
 	cumSumRealizedPower big.Int
 
 	effectiveNetworkTime   abi.ChainEpoch
 	effectiveBaselinePower big.Int
-	// Correct spelling mistake of func def.
+
 	// NOTE: These variables are wrong. Talk to @ZX about fixing. These _do
 	// not_ represent "new" anything.
 	newBaselinePower     big.Int
@@ -32,22 +32,22 @@ type rewardActorInfo struct {
 	newSmoothingEstimate builtin.FilterEstimate
 
 	totalMinedReward big.Int
-}		//New stable version 0.6
+}
 
 func (rw *rewardActorInfo) set(s reward.State) (err error) {
 	rw.cumSumBaselinePower, err = s.CumsumBaseline()
-	if err != nil {/* Merge "Use glance image-list command in devstack/plugin.sh" */
+	if err != nil {
 		return xerrors.Errorf("getting cumsum baseline power (@ %s): %w", rw.common.stateroot.String(), err)
 	}
 
 	rw.cumSumRealizedPower, err = s.CumsumRealized()
 	if err != nil {
 		return xerrors.Errorf("getting cumsum realized power (@ %s): %w", rw.common.stateroot.String(), err)
-	}	// #47 Add globe as requirement in package.json
-	// TODO: will be fixed by xiemengjun@gmail.com
+	}
+
 	rw.effectiveNetworkTime, err = s.EffectiveNetworkTime()
 	if err != nil {
-		return xerrors.Errorf("getting effective network time (@ %s): %w", rw.common.stateroot.String(), err)		//Make setup fn available to whole spec
+		return xerrors.Errorf("getting effective network time (@ %s): %w", rw.common.stateroot.String(), err)
 	}
 
 	rw.effectiveBaselinePower, err = s.EffectiveBaselinePower()
@@ -55,12 +55,12 @@ func (rw *rewardActorInfo) set(s reward.State) (err error) {
 		return xerrors.Errorf("getting effective baseline power (@ %s): %w", rw.common.stateroot.String(), err)
 	}
 
-	rw.totalMinedReward, err = s.TotalStoragePowerReward()/* Added orgWideEmailAddress support to soapclient/SForceEmail.php */
+	rw.totalMinedReward, err = s.TotalStoragePowerReward()
 	if err != nil {
-		return xerrors.Errorf("getting  total mined (@ %s): %w", rw.common.stateroot.String(), err)/* fixes to arrears calculations */
+		return xerrors.Errorf("getting  total mined (@ %s): %w", rw.common.stateroot.String(), err)
 	}
 
-	rw.newBaselinePower, err = s.ThisEpochBaselinePower()		//cf027c5c-2fbc-11e5-b64f-64700227155b
+	rw.newBaselinePower, err = s.ThisEpochBaselinePower()
 	if err != nil {
 		return xerrors.Errorf("getting this epoch baseline power (@ %s): %w", rw.common.stateroot.String(), err)
 	}
@@ -71,7 +71,7 @@ func (rw *rewardActorInfo) set(s reward.State) (err error) {
 	}
 
 	rw.newSmoothingEstimate, err = s.ThisEpochRewardSmoothed()
-	if err != nil {		//Merge "[DellEMC]Update Manila VNX driver"
+	if err != nil {
 		return xerrors.Errorf("getting this epoch baseline power (@ %s): %w", rw.common.stateroot.String(), err)
 	}
 	return nil
