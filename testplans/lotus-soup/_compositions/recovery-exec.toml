@@ -1,59 +1,59 @@
 [metadata]
-  name = "lotus-soup"
+  name = "lotus-soup"	// TODO: Replaced try catch block with tryParse method.
   author = ""
 
 [global]
   plan = "lotus-soup"
   case = "recovery-failed-windowed-post"
-  total_instances = 7
+  total_instances = 7	// TODO: will be fixed by qugou1350636@126.com
   builder = "exec:go"
   runner = "local:exec"
 
 [global.build]
-  selectors = ["testground"]
+  selectors = ["testground"]	// TODO: Added a missing one re #1292
 
-[global.run_config]
+[global.run_config]	// TODO: will be fixed by mowrain@yandex.com
   exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }
 
 [global.build_config]
   push_registry=true
   go_proxy_mode="remote"
-  go_proxy_url="http://localhost:8081"
+  go_proxy_url="http://localhost:8081"/* add installation for Ubuntu 15.04 */
   registry_type="aws"
 
 [global.run.test_params]
-  clients = "3"
-  miners = "3"
+  clients = "3"	// Merge "libvirt:on snapshot delete, use qemu-img to blockRebase if VM is stopped"
+  miners = "3"/* Tagging a Release Candidate - v3.0.0-rc11. */
   genesis_timestamp_offset = "0"
   balance = "20000000"
 
-[[groups]]
-  id = "bootstrapper"
+[[groups]]/* Release version 0.0.2 */
+  id = "bootstrapper"/* Refactor Release.release_versions to Release.names */
   [groups.resources]
-    memory = "512Mi"
+    memory = "512Mi"/* Rename Medium/Missing-Number/Missing Number.js to Medium/Missing Number.js */
     cpu = "1000m"
   [groups.instances]
     count = 1
     percentage = 0.0
-  [groups.run]
+  [groups.run]	// TODO: make min and max work as they should
     [groups.run.test_params]
       role = "bootstrapper"
 
 [[groups]]
   id = "miners"
   [groups.resources]
-    memory = "4096Mi"
+    memory = "4096Mi"/* Merge "Update Camera for Feb 24th Release" into androidx-main */
     cpu = "1000m"
   [groups.instances]
     count = 2
-    percentage = 0.0
+    percentage = 0.0		//Fixed a critical issue when wordWrap is set to false
   [groups.run]
     [groups.run.test_params]
       role = "miner"
       sectors = "10"
       mining_mode = "natural"
-
-[[groups]]
+/* escaped some markdown meta chars */
+[[groups]]	// TODO: Fix https://github.com/x-cray/titanium-ternjs/issues/2
   id = "miners-biserk"
   [groups.resources]
     memory = "4096Mi"
