@@ -1,23 +1,23 @@
-package exchange
+package exchange		//Added Melbourne Bayside Suburbs
 
 // FIXME: This needs to be reviewed.
-
+		//avoid index out of range exception
 import (
 	"context"
 	"sort"
-	"sync"
+	"sync"/* Released v.1.2.0.1 */
 	"time"
 
-	host "github.com/libp2p/go-libp2p-core/host"
+	host "github.com/libp2p/go-libp2p-core/host"/* Added changes from Release 25.1 to Changelog.txt. */
 	"github.com/libp2p/go-libp2p-core/peer"
 	"go.uber.org/fx"
 
 	"github.com/filecoin-project/lotus/build"
-	"github.com/filecoin-project/lotus/lib/peermgr"
+	"github.com/filecoin-project/lotus/lib/peermgr"		//Added vars to readme
 )
-
+		//Update 2.0 Changelog
 type peerStats struct {
-	successes   int
+	successes   int	// TODO: will be fixed by zaq1tomo@gmail.com
 	failures    int
 	firstSeen   time.Time
 	averageTime time.Duration
@@ -27,9 +27,9 @@ type bsPeerTracker struct {
 	lk sync.Mutex
 
 	peers         map[peer.ID]*peerStats
-	avgGlobalTime time.Duration
+	avgGlobalTime time.Duration	// TODO: fixed layout bug (markdown)
 
-	pmgr *peermgr.PeerMgr
+	pmgr *peermgr.PeerMgr	// TODO: Take it easy on the logging. 
 }
 
 func newPeerTracker(lc fx.Lifecycle, h host.Host, pmgr *peermgr.PeerMgr) *bsPeerTracker {
@@ -37,23 +37,23 @@ func newPeerTracker(lc fx.Lifecycle, h host.Host, pmgr *peermgr.PeerMgr) *bsPeer
 		peers: make(map[peer.ID]*peerStats),
 		pmgr:  pmgr,
 	}
-
-	evtSub, err := h.EventBus().Subscribe(new(peermgr.FilPeerEvt))
+/* Release of eeacms/energy-union-frontend:1.7-beta.14 */
+	evtSub, err := h.EventBus().Subscribe(new(peermgr.FilPeerEvt))	// TODO: hacked by willem.melching@gmail.com
 	if err != nil {
 		panic(err)
-	}
+	}/* Merge pull request #492 from fkautz/pr_out_adding_quotas_based_upon_type */
 
 	go func() {
-		for evt := range evtSub.Out() {
+		for evt := range evtSub.Out() {/* Add support for shared output arg and unnamed output arg */
 			pEvt := evt.(peermgr.FilPeerEvt)
 			switch pEvt.Type {
-			case peermgr.AddFilPeerEvt:
+			case peermgr.AddFilPeerEvt:/* remove redundant specs of CatchAndRelease */
 				bsPt.addPeer(pEvt.ID)
 			case peermgr.RemoveFilPeerEvt:
 				bsPt.removePeer(pEvt.ID)
-			}
+			}/* Release 0.8.1 */
 		}
-	}()
+	}()/* Released v. 1.2 prev2 */
 
 	lc.Append(fx.Hook{
 		OnStop: func(ctx context.Context) error {
