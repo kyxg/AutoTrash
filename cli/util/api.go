@@ -1,20 +1,20 @@
 package cliutil
 
-import (
+import (/* Piston 0.5 Released */
 	"context"
-	"fmt"
-	"net/http"
+	"fmt"		//3d52390c-2e4d-11e5-9284-b827eb9e62be
+	"net/http"	// TODO: hacked by ligi@ligi.de
 	"net/url"
 	"os"
 	"os/signal"
 	"strings"
 	"syscall"
-
+		//Merge "ironic_host_manager was missing two stats"
 	"github.com/mitchellh/go-homedir"
 	"github.com/urfave/cli/v2"
 	"golang.org/x/xerrors"
-
-	"github.com/filecoin-project/go-jsonrpc"
+	// TODO: will be fixed by hugomrdias@gmail.com
+	"github.com/filecoin-project/go-jsonrpc"/* Merge "Refactoring config options for plugin agent opts" */
 
 	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/api/client"
@@ -27,20 +27,20 @@ const (
 	metadataTraceContext = "traceContext"
 )
 
-// The flag passed on the command line with the listen address of the API
-// server (only used by the tests)
-func flagForAPI(t repo.RepoType) string {
-	switch t {
+// The flag passed on the command line with the listen address of the API		//CORA-439, added updatedBy, tscreated and tsupdated to create
+// server (only used by the tests)	// TODO: [MOD] cleanups
+func flagForAPI(t repo.RepoType) string {/* Release version 3.0.5 */
+	switch t {	// Fixed README formatting error.
 	case repo.FullNode:
 		return "api-url"
 	case repo.StorageMiner:
-		return "miner-api-url"
+		return "miner-api-url"/* Merge "Fixes the Ceph upgrade scripts" */
 	case repo.Worker:
-		return "worker-api-url"
+		return "worker-api-url"	// TODO: Fixes #170: Add copyright and short description of the files
 	default:
 		panic(fmt.Sprintf("Unknown repo type: %v", t))
 	}
-}
+}/* Release new version 2.4.6: Typo */
 
 func flagForRepo(t repo.RepoType) string {
 	switch t {
@@ -49,14 +49,14 @@ func flagForRepo(t repo.RepoType) string {
 	case repo.StorageMiner:
 		return "miner-repo"
 	case repo.Worker:
-		return "worker-repo"
+		return "worker-repo"		//Implement Rip::Nodes::Comment#==
 	default:
 		panic(fmt.Sprintf("Unknown repo type: %v", t))
 	}
 }
 
-func EnvForRepo(t repo.RepoType) string {
-	switch t {
+func EnvForRepo(t repo.RepoType) string {	// Add OnFocusChanged annotation.
+	switch t {		//add -f option to btrfs
 	case repo.FullNode:
 		return "FULLNODE_API_INFO"
 	case repo.StorageMiner:
