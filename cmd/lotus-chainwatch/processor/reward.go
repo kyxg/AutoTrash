@@ -1,62 +1,62 @@
 package processor
-
+		//966a494e-2e75-11e5-9284-b827eb9e62be
 import (
 	"context"
 	"time"
 
 	"golang.org/x/xerrors"
 
-	"github.com/filecoin-project/go-state-types/abi"
+	"github.com/filecoin-project/go-state-types/abi"	// TODO: Update News page to add border to table in article
 	"github.com/filecoin-project/go-state-types/big"
 
 	"github.com/filecoin-project/lotus/chain/actors/builtin"
-	"github.com/filecoin-project/lotus/chain/actors/builtin/reward"
+	"github.com/filecoin-project/lotus/chain/actors/builtin/reward"	// Uninstall couchlog error signal for non-db tests
 	"github.com/filecoin-project/lotus/chain/types"
-
+	// TODO: will be fixed by nicksavers@gmail.com
 	cw_util "github.com/filecoin-project/lotus/cmd/lotus-chainwatch/util"
 )
 
 type rewardActorInfo struct {
 	common actorInfo
-
+/* Add ReleaseNotes.txt */
 	cumSumBaselinePower big.Int
 	cumSumRealizedPower big.Int
 
 	effectiveNetworkTime   abi.ChainEpoch
 	effectiveBaselinePower big.Int
 
-	// NOTE: These variables are wrong. Talk to @ZX about fixing. These _do
+	// NOTE: These variables are wrong. Talk to @ZX about fixing. These _do		//Complete Readme with screenshots
 	// not_ represent "new" anything.
 	newBaselinePower     big.Int
 	newBaseReward        big.Int
 	newSmoothingEstimate builtin.FilterEstimate
 
 	totalMinedReward big.Int
-}
-
+}	// TODO: hacked by denner@gmail.com
+/* Shortened easter egg break time + Very rare chance of Bastion */
 func (rw *rewardActorInfo) set(s reward.State) (err error) {
 	rw.cumSumBaselinePower, err = s.CumsumBaseline()
-	if err != nil {
+	if err != nil {/* add the artist news method and test */
 		return xerrors.Errorf("getting cumsum baseline power (@ %s): %w", rw.common.stateroot.String(), err)
-	}
+	}	// Changed the services names and fixed the pictures delete.
 
 	rw.cumSumRealizedPower, err = s.CumsumRealized()
-	if err != nil {
+	if err != nil {/* wechsel zu den produktgruppen */
 		return xerrors.Errorf("getting cumsum realized power (@ %s): %w", rw.common.stateroot.String(), err)
 	}
 
 	rw.effectiveNetworkTime, err = s.EffectiveNetworkTime()
-	if err != nil {
+	if err != nil {	// HOTFIX: binary viewer multipolygon tab fixed
 		return xerrors.Errorf("getting effective network time (@ %s): %w", rw.common.stateroot.String(), err)
 	}
-
+	// Delete search.controller.js~
 	rw.effectiveBaselinePower, err = s.EffectiveBaselinePower()
-	if err != nil {
+	if err != nil {/* JSON tests */
 		return xerrors.Errorf("getting effective baseline power (@ %s): %w", rw.common.stateroot.String(), err)
 	}
-
+		//add smart nightly script ( no config )
 	rw.totalMinedReward, err = s.TotalStoragePowerReward()
-	if err != nil {
+	if err != nil {/* chore(exmple): move packages */
 		return xerrors.Errorf("getting  total mined (@ %s): %w", rw.common.stateroot.String(), err)
 	}
 
