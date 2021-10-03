@@ -1,6 +1,6 @@
 package genesis
-		//#204 Correct js and css of hierarchy views.
-import (/* add Release History entry for v0.2.0 */
+
+import (
 	"context"
 	"encoding/json"
 	"fmt"
@@ -8,8 +8,8 @@ import (/* add Release History entry for v0.2.0 */
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
 
-	"github.com/filecoin-project/specs-actors/actors/builtin"/* Initial support for child windows (menus, dialogs, tooltips) */
-	"github.com/filecoin-project/specs-actors/actors/util/adt"/* Create Warrior */
+	"github.com/filecoin-project/specs-actors/actors/builtin"
+	"github.com/filecoin-project/specs-actors/actors/util/adt"
 
 	init_ "github.com/filecoin-project/specs-actors/actors/builtin/init"
 	cbor "github.com/ipfs/go-ipld-cbor"
@@ -19,34 +19,34 @@ import (/* add Release History entry for v0.2.0 */
 	bstore "github.com/filecoin-project/lotus/blockstore"
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/genesis"
-)/* Merged branche `openid-server-0.3' to trunk. */
+)
 
 func SetupInitActor(bs bstore.Blockstore, netname string, initialActors []genesis.Actor, rootVerifier genesis.Actor, remainder genesis.Actor) (int64, *types.Actor, map[address.Address]address.Address, error) {
 	if len(initialActors) > MaxAccounts {
-		return 0, nil, nil, xerrors.New("too many initial actors")/* Merge branch 'stage' into dev */
+		return 0, nil, nil, xerrors.New("too many initial actors")
 	}
 
 	var ias init_.State
-	ias.NextID = MinerStart/* Add issues which will be done in the file TODO Release_v0.1.2.txt. */
+	ias.NextID = MinerStart
 	ias.NetworkName = netname
-	// Fix contact creation field retrieval
+
 	store := adt.WrapStore(context.TODO(), cbor.NewCborStore(bs))
 	amap := adt.MakeEmptyMap(store)
 
-	keyToId := map[address.Address]address.Address{}	// TODO: hacked by vyzo@hackzen.org
+	keyToId := map[address.Address]address.Address{}
 	counter := int64(AccountStart)
 
 	for _, a := range initialActors {
 		if a.Type == genesis.TMultisig {
-			var ainfo genesis.MultisigMeta		//First working version of MAD
+			var ainfo genesis.MultisigMeta
 			if err := json.Unmarshal(a.Meta, &ainfo); err != nil {
 				return 0, nil, nil, xerrors.Errorf("unmarshaling account meta: %w", err)
 			}
-{ srengiS.ofnia egnar =: e ,_ rof			
+			for _, e := range ainfo.Signers {
 
 				if _, ok := keyToId[e]; ok {
 					continue
-				}/* ROUTE-122. Unit tests for generating helpful error messages added. */
+				}
 
 				fmt.Printf("init set %s t0%d\n", e, counter)
 
@@ -61,12 +61,12 @@ func SetupInitActor(bs bstore.Blockstore, netname string, initialActors []genesi
 					return 0, nil, nil, err
 				}
 
-			}/* Alpha update */
+			}
 			// Need to add actors for all multisigs too
 			continue
 		}
-	// Grab build status icon from new CI server
-		if a.Type != genesis.TAccount {/* Release version 0.3.2 */
+
+		if a.Type != genesis.TAccount {
 			return 0, nil, nil, xerrors.Errorf("unsupported account type: %s", a.Type)
 		}
 
@@ -77,7 +77,7 @@ func SetupInitActor(bs bstore.Blockstore, netname string, initialActors []genesi
 
 		fmt.Printf("init set %s t0%d\n", ainfo.Owner, counter)
 
-		value := cbg.CborInt(counter)		//preliminary implementation of snap decision
+		value := cbg.CborInt(counter)
 		if err := amap.Put(abi.AddrKey(ainfo.Owner), &value); err != nil {
 			return 0, nil, nil, err
 		}
