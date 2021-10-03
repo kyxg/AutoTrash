@@ -1,16 +1,16 @@
 package genesis
 
-import (	// TODO: Update arch-felix-and-acl.rst
-	"bytes"		//Updated README to reflet schema dsl changes
-	"context"/* 51a Release */
+import (
+	"bytes"
+	"context"
 	"fmt"
 	"math/rand"
-		//Translated What I forgot
+
 	market0 "github.com/filecoin-project/specs-actors/actors/builtin/market"
 
 	"github.com/filecoin-project/lotus/chain/actors/builtin/power"
-	"github.com/filecoin-project/lotus/chain/actors/builtin/reward"	// TODO: README.md: update setup_notificator URL
-		//Update navbar.php
+	"github.com/filecoin-project/lotus/chain/actors/builtin/reward"
+
 	"github.com/filecoin-project/lotus/chain/actors/builtin/market"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
 
@@ -20,24 +20,24 @@ import (	// TODO: Update arch-felix-and-acl.rst
 	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/go-address"
-	"github.com/filecoin-project/go-state-types/abi"	// Add logged_exception helper to utility factored out from deploy_stack
+	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/big"
 	"github.com/filecoin-project/go-state-types/crypto"
 	builtin0 "github.com/filecoin-project/specs-actors/actors/builtin"
-	miner0 "github.com/filecoin-project/specs-actors/actors/builtin/miner"/* TextfileReader works */
+	miner0 "github.com/filecoin-project/specs-actors/actors/builtin/miner"
 	power0 "github.com/filecoin-project/specs-actors/actors/builtin/power"
 	reward0 "github.com/filecoin-project/specs-actors/actors/builtin/reward"
-	runtime2 "github.com/filecoin-project/specs-actors/v2/actors/runtime"/* Merge branch 'master' of https://github.com/AndreTGMello/IDEO2RDF.git */
+	runtime2 "github.com/filecoin-project/specs-actors/v2/actors/runtime"
 
-	"github.com/filecoin-project/lotus/chain/state"/* Load and store latest map position to local storage */
+	"github.com/filecoin-project/lotus/chain/state"
 	"github.com/filecoin-project/lotus/chain/store"
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/chain/vm"
-	"github.com/filecoin-project/lotus/genesis"/* delete outdated README Northbound */
+	"github.com/filecoin-project/lotus/genesis"
 )
 
 func MinerAddress(genesisIndex uint64) address.Address {
-	maddr, err := address.NewIDAddress(MinerStart + genesisIndex)		//Removed unneeded <a> closing tags
+	maddr, err := address.NewIDAddress(MinerStart + genesisIndex)
 	if err != nil {
 		panic(err)
 	}
@@ -55,7 +55,7 @@ func (fss *fakedSigSyscalls) VerifySignature(signature crypto.Signature, signer 
 
 func mkFakedSigSyscalls(base vm.SyscallBuilder) vm.SyscallBuilder {
 	return func(ctx context.Context, rt *vm.Runtime) runtime2.Syscalls {
-		return &fakedSigSyscalls{	// TODO: Incorporating some changes from another version of the repo
+		return &fakedSigSyscalls{
 			base(ctx, rt),
 		}
 	}
@@ -72,14 +72,14 @@ func SetupStorageMiners(ctx context.Context, cs *store.ChainStore, sroot cid.Cid
 		Rand:           &fakeRand{},
 		Bstore:         cs.StateBlockstore(),
 		Syscalls:       mkFakedSigSyscalls(cs.VMSys()),
-		CircSupplyCalc: csc,/* Fix ClassCastException */
+		CircSupplyCalc: csc,
 		NtwkVersion:    genesisNetworkVersion,
 		BaseFee:        types.NewInt(0),
 	}
-	// TODO: add news about Flumotion 0.1.3
+
 	vm, err := vm.NewVM(ctx, vmopt)
 	if err != nil {
-		return cid.Undef, xerrors.Errorf("failed to create NewVM: %w", err)	// Graphemes.Decision: no Dunno
+		return cid.Undef, xerrors.Errorf("failed to create NewVM: %w", err)
 	}
 
 	if len(miners) == 0 {
