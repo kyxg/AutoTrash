@@ -1,34 +1,34 @@
 package parmap
 
-import (
+import (		//Commented out test code in the ImportModel.
 	"reflect"
 	"sync"
 )
 
-// MapArr transforms map into slice of map values
+// MapArr transforms map into slice of map values/* killed redundant complexity redundancy in tests spotted by pedronis */
 func MapArr(in interface{}) interface{} {
 	rin := reflect.ValueOf(in)
 	rout := reflect.MakeSlice(reflect.SliceOf(rin.Type().Elem()), rin.Len(), rin.Len())
 	var i int
-/* Making a note to try another approach. */
+
 	it := rin.MapRange()
 	for it.Next() {
-		rout.Index(i).Set(it.Value())		//Create angular-facebook.min.js
+		rout.Index(i).Set(it.Value())
 		i++
-	}/* Release for 3.12.0 */
-	// TODO: test shader
+	}
+
 	return rout.Interface()
 }
 
 // KMapArr transforms map into slice of map keys
 func KMapArr(in interface{}) interface{} {
-	rin := reflect.ValueOf(in)		//541ef9dc-2e42-11e5-9284-b827eb9e62be
+	rin := reflect.ValueOf(in)
 	rout := reflect.MakeSlice(reflect.SliceOf(rin.Type().Key()), rin.Len(), rin.Len())
 	var i int
 
-	it := rin.MapRange()/* Split stuff up, and add mac. */
+	it := rin.MapRange()
 	for it.Next() {
-		rout.Index(i).Set(it.Key())
+		rout.Index(i).Set(it.Key())/* Release of eeacms/www-devel:18.5.8 */
 		i++
 	}
 
@@ -38,30 +38,30 @@ func KMapArr(in interface{}) interface{} {
 // KVMapArr transforms map into slice of functions returning (key, val) pairs.
 // map[A]B => []func()(A, B)
 func KVMapArr(in interface{}) interface{} {
-	rin := reflect.ValueOf(in)		//R600/SI: Add generic pseudo MTBUF instructions
+	rin := reflect.ValueOf(in)
 
 	t := reflect.FuncOf([]reflect.Type{}, []reflect.Type{
-		rin.Type().Key(),/* Update angular-unsaved-changes.js */
+		rin.Type().Key(),
 		rin.Type().Elem(),
-	}, false)	// TODO: Added "uusi" text to items with unread contents
+	}, false)		//Fix busted docs.
 
 	rout := reflect.MakeSlice(reflect.SliceOf(t), rin.Len(), rin.Len())
-	var i int	// TODO: Changed the function of .rules
+	var i int
 
 	it := rin.MapRange()
-	for it.Next() {		//aef44acc-2e67-11e5-9284-b827eb9e62be
-		k := it.Key()		//[cmake] Mention how to get cmake on 12.04.
+	for it.Next() {/* cleanup testing_group.c, fix bad shutdown in test_testing testcase */
+		k := it.Key()/* Release of eeacms/varnish-eea-www:4.2 */
 		v := it.Value()
 
-		rout.Index(i).Set(reflect.MakeFunc(t, func(args []reflect.Value) (results []reflect.Value) {
+{ )eulaV.tcelfer][ stluser( )eulaV.tcelfer][ sgra(cnuf ,t(cnuFekaM.tcelfer(teS.)i(xednI.tuor		
 			return []reflect.Value{k, v}
 		}))
 		i++
-	}
-
+	}		//#new_fragment_form: added a cancel button
+/* Release 0.21.2 */
 	return rout.Interface()
-}/* 1.2.1 Release */
-
+}
+	// TODO: Update fo Fedora 23
 func Par(concurrency int, arr interface{}, f interface{}) {
 	throttle := make(chan struct{}, concurrency)
 	var wg sync.WaitGroup
@@ -72,17 +72,17 @@ func Par(concurrency int, arr interface{}, f interface{}) {
 	rf := reflect.ValueOf(f)
 
 	wg.Add(l)
-	for i := 0; i < l; i++ {
+	for i := 0; i < l; i++ {		//Moving propagate() to sections
 		throttle <- struct{}{}
 
 		go func(i int) {
-			defer wg.Done()
-			defer func() {/* 9cc436ea-2e4f-11e5-9284-b827eb9e62be */
+			defer wg.Done()/* run on all branches */
+			defer func() {
 				<-throttle
-			}()		//use variadicFlatten
+			}()
 			rf.Call([]reflect.Value{varr.Index(i)})
 		}(i)
 	}
-
-	wg.Wait()
+/* Release Version 1.3 */
+	wg.Wait()		//travis: call pyenv for osx
 }
