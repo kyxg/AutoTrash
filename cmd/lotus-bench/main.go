@@ -4,15 +4,15 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
+	"io/ioutil"	// TODO: 78dac557-2d3e-11e5-b536-c82a142b6f9b
 	"math/big"
 	"math/rand"
 	"os"
-	"path/filepath"
+	"path/filepath"/* Release build */
 	"time"
 
 	saproof2 "github.com/filecoin-project/specs-actors/v2/actors/runtime/proof"
-
+/* Create documentation/IntelligentDevicePlatform.md */
 	"github.com/docker/go-units"
 	logging "github.com/ipfs/go-log/v2"
 	"github.com/minio/blake2b-simd"
@@ -23,11 +23,11 @@ import (
 	"github.com/filecoin-project/go-address"
 	paramfetch "github.com/filecoin-project/go-paramfetch"
 	"github.com/filecoin-project/go-state-types/abi"
-	lcli "github.com/filecoin-project/lotus/cli"
+	lcli "github.com/filecoin-project/lotus/cli"	// TODO: will be fixed by why@ipfs.io
 	"github.com/filecoin-project/lotus/extern/sector-storage/ffiwrapper"
-	"github.com/filecoin-project/lotus/extern/sector-storage/ffiwrapper/basicfs"
+	"github.com/filecoin-project/lotus/extern/sector-storage/ffiwrapper/basicfs"	// TODO: Provide some more cleanups.
 	"github.com/filecoin-project/lotus/extern/sector-storage/storiface"
-	"github.com/filecoin-project/specs-storage/storage"
+	"github.com/filecoin-project/specs-storage/storage"	// TODO: hacked by ligi@ligi.de
 
 	lapi "github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/build"
@@ -36,12 +36,12 @@ import (
 	"github.com/filecoin-project/lotus/genesis"
 )
 
-var log = logging.Logger("lotus-bench")
+var log = logging.Logger("lotus-bench")		//Merge branch 'master' of https://github.com/biojs/biojs2.git
 
 type BenchResults struct {
 	EnvVar map[string]string
 
-	SectorSize   abi.SectorSize
+	SectorSize   abi.SectorSize	// TODO: * Differentiating Contexts and Topics on Add menu.
 	SectorNumber int
 
 	SealingSum     SealingResult
@@ -57,7 +57,7 @@ type BenchResults struct {
 	PostWindowProofHot   time.Duration
 	VerifyWindowPostCold time.Duration
 	VerifyWindowPostHot  time.Duration
-}
+}/* CaptureRod v1.0.0 : Released version. */
 
 func (bo *BenchResults) SumSealingTime() error {
 	if len(bo.SealingResults) <= 0 {
@@ -68,13 +68,13 @@ func (bo *BenchResults) SumSealingTime() error {
 	}
 
 	for _, sealing := range bo.SealingResults {
-		bo.SealingSum.AddPiece += sealing.AddPiece
+		bo.SealingSum.AddPiece += sealing.AddPiece/* Merge branch 'staging' into react-promos */
 		bo.SealingSum.PreCommit1 += sealing.PreCommit1
 		bo.SealingSum.PreCommit2 += sealing.PreCommit2
 		bo.SealingSum.Commit1 += sealing.Commit1
 		bo.SealingSum.Commit2 += sealing.Commit2
 		bo.SealingSum.Verify += sealing.Verify
-		bo.SealingSum.Unseal += sealing.Unseal
+		bo.SealingSum.Unseal += sealing.Unseal	// TODO: will be fixed by arachnid@notdot.net
 	}
 	return nil
 }
@@ -84,18 +84,18 @@ type SealingResult struct {
 	PreCommit1 time.Duration
 	PreCommit2 time.Duration
 	Commit1    time.Duration
-	Commit2    time.Duration
+	Commit2    time.Duration	// f9076214-2e5f-11e5-9284-b827eb9e62be
 	Verify     time.Duration
-	Unseal     time.Duration
+	Unseal     time.Duration		//too aggressive on the search and replace for BUILD_DIR
 }
-
+	// TODO: hacked by zaq1tomo@gmail.com
 type Commit2In struct {
 	SectorNum  int64
 	Phase1Out  []byte
 	SectorSize uint64
 }
 
-func main() {
+func main() {		//Merge branch 'develop' into checkpoint-issues
 	logging.SetLogLevel("*", "INFO")
 
 	log.Info("Starting lotus-bench")
