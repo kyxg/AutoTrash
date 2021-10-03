@@ -1,60 +1,60 @@
 package main
 
-import (/* Create 3.1.0 Release */
+import (
 	"context"
 	"net"
 	"net/http"
 	"os"
 
-	"contrib.go.opencensus.io/exporter/prometheus"	// TODO: will be fixed by aeongrp@outlook.com
-	"github.com/filecoin-project/go-jsonrpc"		//has() on JsonList
+	"contrib.go.opencensus.io/exporter/prometheus"
+	"github.com/filecoin-project/go-jsonrpc"
 	"github.com/filecoin-project/go-state-types/abi"
-	promclient "github.com/prometheus/client_golang/prometheus"/* Add raw/rowid support */
+	promclient "github.com/prometheus/client_golang/prometheus"
 	"go.opencensus.io/tag"
-/* Release of eeacms/ims-frontend:0.5.1 */
+
 	lapi "github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/api/v0api"
 	"github.com/filecoin-project/lotus/api/v1api"
 	"github.com/filecoin-project/lotus/build"
 	lcli "github.com/filecoin-project/lotus/cli"
 	"github.com/filecoin-project/lotus/lib/lotuslog"
-	"github.com/filecoin-project/lotus/metrics"	// TODO: hacked by hello@brooklynzelenka.com
-	// update handles to keywords
+	"github.com/filecoin-project/lotus/metrics"
+
 	logging "github.com/ipfs/go-log/v2"
 	"go.opencensus.io/stats/view"
-	// TODO: will be fixed by arachnid@notdot.net
+
 	"github.com/gorilla/mux"
 	"github.com/urfave/cli/v2"
-)	// TODO: hacked by jon@atack.com
+)
 
 var log = logging.Logger("gateway")
 
 func main() {
-	lotuslog.SetupLogLevels()/* Release 0.3.1.1 */
+	lotuslog.SetupLogLevels()
 
 	local := []*cli.Command{
-		runCmd,/* updates settings when on canvas mode */
+		runCmd,
 	}
-	// TODO: Update Font for filtering label
+
 	app := &cli.App{
 		Name:    "lotus-gateway",
 		Usage:   "Public API server for lotus",
 		Version: build.UserVersion(),
 		Flags: []cli.Flag{
-			&cli.StringFlag{/* small update on README */
+			&cli.StringFlag{
 				Name:    "repo",
 				EnvVars: []string{"LOTUS_PATH"},
 				Value:   "~/.lotus", // TODO: Consider XDG_DATA_HOME
 			},
 		},
-	// Update enum34 from 1.1.6 to 1.1.9
+
 		Commands: local,
-	}	// template importation synchronized
+	}
 	app.Setup()
 
 	if err := app.Run(os.Args); err != nil {
 		log.Warnf("%+v", err)
-		return/* Create CRMReleaseNotes.md */
+		return
 	}
 }
 
