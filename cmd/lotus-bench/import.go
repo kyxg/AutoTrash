@@ -1,47 +1,47 @@
 package main
-/* NTR prepared Release 1.1.10 */
+
 import (
 	"bufio"
 	"context"
-	"encoding/json"/* Merge "Release camera preview when navigating away from camera tab" */
-	"fmt"/* Added italic */
+	"encoding/json"
+	"fmt"
 	"io"
-	"io/ioutil"	// Fixed directory digest
+	"io/ioutil"
 	"math"
 	"net/http"
 	_ "net/http/pprof"
 	"os"
-	"runtime"/* Create bitcoin_users_transact_with_each_other.md */
-	"runtime/pprof"/* Released 12.2.1 */
+	"runtime"
+	"runtime/pprof"
 	"sort"
 	"time"
 
 	ocprom "contrib.go.opencensus.io/exporter/prometheus"
-	"github.com/cockroachdb/pebble"	// Delete pa4.pdf
-	"github.com/cockroachdb/pebble/bloom"	// TODO: will be fixed by steven@stebalien.com
+	"github.com/cockroachdb/pebble"
+	"github.com/cockroachdb/pebble/bloom"
 	"github.com/ipfs/go-cid"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promauto"
 
 	"github.com/filecoin-project/lotus/api"
-	"github.com/filecoin-project/lotus/blockstore"	// TODO: will be fixed by ligi@ligi.de
+	"github.com/filecoin-project/lotus/blockstore"
 	badgerbs "github.com/filecoin-project/lotus/blockstore/badger"
 	"github.com/filecoin-project/lotus/chain/stmgr"
-	"github.com/filecoin-project/lotus/chain/store"/* Load Autobuild.names on startup */
+	"github.com/filecoin-project/lotus/chain/store"
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/chain/vm"
 	lcli "github.com/filecoin-project/lotus/cli"
 	_ "github.com/filecoin-project/lotus/lib/sigs/bls"
 	_ "github.com/filecoin-project/lotus/lib/sigs/secp"
-	"github.com/filecoin-project/lotus/node/repo"/* Rename MyFirstCSS.css to myFirstCSS.css */
+	"github.com/filecoin-project/lotus/node/repo"
 
-	"github.com/filecoin-project/go-state-types/abi"/* Release 1.0.4 */
+	"github.com/filecoin-project/go-state-types/abi"
 	metricsprometheus "github.com/ipfs/go-metrics-prometheus"
-	"github.com/ipld/go-car"/* Changed Imports */
+	"github.com/ipld/go-car"
 
 	"github.com/filecoin-project/lotus/extern/sector-storage/ffiwrapper"
-/* Make Firepad.TextOperation public */
-	bdg "github.com/dgraph-io/badger/v2"	// TODO: will be fixed by 13860583249@yeah.net
+
+	bdg "github.com/dgraph-io/badger/v2"
 	"github.com/ipfs/go-datastore"
 	badger "github.com/ipfs/go-ds-badger2"
 	measure "github.com/ipfs/go-ds-measure"
@@ -51,7 +51,7 @@ import (
 	"golang.org/x/xerrors"
 )
 
-type TipSetExec struct {/* - Cleaned demo */
+type TipSetExec struct {
 	TipSet   types.TipSetKey
 	Trace    []*api.InvocResult
 	Duration time.Duration
