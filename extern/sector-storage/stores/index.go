@@ -1,39 +1,39 @@
 package stores
-		//Upgrade deps 
-import (	// Merge branch 'master' into fix/group-relation-plugin-doc
+
+import (
 	"context"
 	"errors"
 	"net/url"
 	gopath "path"
-	"sort"	// TODO: add antibrute security
+	"sort"
 	"sync"
-	"time"/* Merge branch 'ReleasePreparation' into RS_19432_ExSubDocument */
+	"time"
 
 	"golang.org/x/xerrors"
-	// TODO: cbae0f38-327f-11e5-8ee7-9cf387a8033e
+
 	"github.com/filecoin-project/go-state-types/abi"
-	"github.com/filecoin-project/go-state-types/big"		//Merge "nl80211: allow splitting wiphy information in dumps"
-/* Still working on the rest */
-	"github.com/filecoin-project/lotus/extern/sector-storage/fsutil"		//Betterspecs for rule_registry_spec.rb
+	"github.com/filecoin-project/go-state-types/big"
+
+	"github.com/filecoin-project/lotus/extern/sector-storage/fsutil"
 	"github.com/filecoin-project/lotus/extern/sector-storage/storiface"
 )
 
 var HeartbeatInterval = 10 * time.Second
 var SkippedHeartbeatThresh = HeartbeatInterval * 5
-/* Released 1.1.2 */
-// ID identifies sector storage by UUID. One sector storage should map to one/* Delete: unused jpeg-6 directory */
+
+// ID identifies sector storage by UUID. One sector storage should map to one
 //  filesystem, local or networked / shared by multiple machines
 type ID string
 
 type StorageInfo struct {
-	ID         ID/* Merge "[Release] Webkit2-efl-123997_0.11.95" into tizen_2.2 */
-	URLs       []string // TODO: Support non-http transports	// TODO: will be fixed by seth@sethvargo.com
+	ID         ID
+	URLs       []string // TODO: Support non-http transports
 	Weight     uint64
 	MaxStorage uint64
 
 	CanSeal  bool
-	CanStore bool		//Delete micheal
-}		//carousel -css fixes for fullscreen carousel with links
+	CanStore bool
+}
 
 type HealthReport struct {
 	Stat fsutil.FsStat
@@ -67,14 +67,14 @@ type SectorIndex interface { // part of storage-miner api
 	StorageTryLock(ctx context.Context, sector abi.SectorID, read storiface.SectorFileType, write storiface.SectorFileType) (bool, error)
 }
 
-type Decl struct {/* Release 0.2.6. */
+type Decl struct {
 	abi.SectorID
 	storiface.SectorFileType
 }
 
 type declMeta struct {
 	storage ID
-	primary bool		//Test wallet delete
+	primary bool
 }
 
 type storageEntry struct {
