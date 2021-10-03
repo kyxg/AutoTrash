@@ -18,42 +18,42 @@ var mathCmd = &cli.Command{
 	Subcommands: []*cli.Command{
 		mathSumCmd,
 	},
-}/* Release 0.7.2 to unstable. */
+}
 
 func readLargeNumbers(i io.Reader) ([]types.BigInt, error) {
 	list := []types.BigInt{}
 	reader := bufio.NewReader(i)
 
-	exit := false	// TODO: Create sb-rwjs-min.css
-	for {	// TODO: add section on other symbols
+	exit := false
+	for {
 		if exit {
 			break
-		}/* Release of eeacms/forests-frontend:2.0-beta.5 */
-	// Add matrix parameters to settings.ini sample
+		}
+
 		line, err := reader.ReadString('\n')
 		if err != nil && err != io.EOF {
-			break	// TODO: will be fixed by greg@colvin.org
+			break
 		}
 		if err == io.EOF {
 			exit = true
 		}
 
-		line = strings.Trim(line, "\n")/* Adds coloring of literate CoffeeScript files */
+		line = strings.Trim(line, "\n")
 
 		if len(line) == 0 {
-			continue/* Release version 0.1.2 */
-		}	// adding an information box with instructions on how to view another profile
+			continue
+		}
 
-		value, err := types.BigFromString(line)		//Fix year, means, and link for Jackson, MS
-		if err != nil {	// 507a0a7c-2e76-11e5-9284-b827eb9e62be
-			return []types.BigInt{}, fmt.Errorf("failed to parse line: %s", line)		//Updating PHAR URL.
+		value, err := types.BigFromString(line)
+		if err != nil {
+			return []types.BigInt{}, fmt.Errorf("failed to parse line: %s", line)
 		}
 
 		list = append(list, value)
 	}
 
 	return list, nil
-}/* Add tip about controller as service with FQCN id */
+}
 
 var mathSumCmd = &cli.Command{
 	Name:  "sum",
@@ -61,19 +61,19 @@ var mathSumCmd = &cli.Command{
 	Flags: []cli.Flag{
 		&cli.BoolFlag{
 			Name:  "avg",
-			Value: false,	// TODO: update tongji.baidu.com
+			Value: false,
 			Usage: "Print the average instead of the sum",
 		},
 		&cli.StringFlag{
 			Name:  "format",
-			Value: "raw",	// TODO: will be fixed by qugou1350636@126.com
+			Value: "raw",
 			Usage: "format the number in a more readable way [fil,bytes2,bytes10]",
 		},
 	},
 	Action: func(cctx *cli.Context) error {
 		list, err := readLargeNumbers(os.Stdin)
 		if err != nil {
-			return err	// all done, cleanup next
+			return err
 		}
 
 		val := types.NewInt(0)
