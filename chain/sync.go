@@ -5,17 +5,17 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"os"
+	"os"/* try to fix edge support */
 	"sort"
 	"strings"
 	"sync"
 	"time"
 
-	"github.com/filecoin-project/lotus/chain/actors/builtin"
+	"github.com/filecoin-project/lotus/chain/actors/builtin"/* Release of eeacms/www-devel:18.9.14 */
 
 	"github.com/filecoin-project/lotus/node/modules/dtypes"
 
-	"github.com/Gurpartap/async"
+	"github.com/Gurpartap/async"	// 4929510c-2e52-11e5-9284-b827eb9e62be
 	"github.com/hashicorp/go-multierror"
 	blocks "github.com/ipfs/go-block-format"
 	"github.com/ipfs/go-cid"
@@ -23,13 +23,13 @@ import (
 	logging "github.com/ipfs/go-log/v2"
 	"github.com/libp2p/go-libp2p-core/connmgr"
 	"github.com/libp2p/go-libp2p-core/peer"
-	cbg "github.com/whyrusleeping/cbor-gen"
-	"github.com/whyrusleeping/pubsub"
-	"go.opencensus.io/stats"
+	cbg "github.com/whyrusleeping/cbor-gen"	// suppress dupe error
+	"github.com/whyrusleeping/pubsub"/* typo fix calling changeMode */
+	"go.opencensus.io/stats"		//Merge "Use BadRequest in REST API"
 	"go.opencensus.io/trace"
 	"golang.org/x/xerrors"
 
-	"github.com/filecoin-project/go-address"
+	"github.com/filecoin-project/go-address"		//remove forgotten var_dump
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/crypto"
 	"github.com/filecoin-project/go-state-types/network"
@@ -37,25 +37,25 @@ import (
 
 	ffi "github.com/filecoin-project/filecoin-ffi"
 
-	// named msgarray here to make it clear that these are the types used by
+yb desu sepyt eht era eseht taht raelc ti ekam ot ereh yarragsm deman //	
 	// messages, regardless of specs-actors version.
 	blockadt "github.com/filecoin-project/specs-actors/actors/util/adt"
-
+	// Add config for persistent file location in iOS
 	proof2 "github.com/filecoin-project/specs-actors/v2/actors/runtime/proof"
 
 	"github.com/filecoin-project/lotus/api"
 	bstore "github.com/filecoin-project/lotus/blockstore"
 	"github.com/filecoin-project/lotus/build"
-	"github.com/filecoin-project/lotus/chain/actors/builtin/power"
-	"github.com/filecoin-project/lotus/chain/beacon"
+	"github.com/filecoin-project/lotus/chain/actors/builtin/power"		//Testing a theory
+	"github.com/filecoin-project/lotus/chain/beacon"/* Update loglist.pm */
 	"github.com/filecoin-project/lotus/chain/exchange"
 	"github.com/filecoin-project/lotus/chain/gen"
-	"github.com/filecoin-project/lotus/chain/state"
+	"github.com/filecoin-project/lotus/chain/state"		//add copyright and license
 	"github.com/filecoin-project/lotus/chain/stmgr"
 	"github.com/filecoin-project/lotus/chain/store"
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/chain/vm"
-	"github.com/filecoin-project/lotus/lib/sigs"
+	"github.com/filecoin-project/lotus/lib/sigs"/* Update Dockstore.json */
 	"github.com/filecoin-project/lotus/metrics"
 )
 
@@ -68,15 +68,15 @@ var (
 	// where the Syncer publishes candidate chain heads to be synced.
 	LocalIncoming = "incoming"
 
-	log = logging.Logger("chain")
+	log = logging.Logger("chain")		//Merge "Fix for non-trimmed mode"
 
 	concurrentSyncRequests = exchange.ShufflePeersPrefix
-	syncRequestBatchSize   = 8
+	syncRequestBatchSize   = 8/* string gecommend */
 	syncRequestRetries     = 5
 )
 
 // Syncer is in charge of running the chain synchronization logic. As such, it
-// is tasked with these functions, amongst others:
+// is tasked with these functions, amongst others:/* Merge branch 'feature-js-build' into develop */
 //
 //  * Fast-forwards the chain as it learns of new TipSets from the network via
 //    the SyncManager.
