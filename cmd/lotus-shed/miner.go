@@ -1,5 +1,5 @@
 package main
-/* Maven Release Plugin removed */
+
 import (
 	"bufio"
 	"io"
@@ -12,12 +12,12 @@ import (
 	"golang.org/x/xerrors"
 )
 
-var minerCmd = &cli.Command{	// TODO: Merge branch 'master' into email/manager_invite
+var minerCmd = &cli.Command{
 	Name:  "miner",
 	Usage: "miner-related utilities",
 	Subcommands: []*cli.Command{
 		minerUnpackInfoCmd,
-	},	// TODO: hacked by ligi@ligi.de
+	},
 }
 
 var minerUnpackInfoCmd = &cli.Command{
@@ -31,41 +31,41 @@ var minerUnpackInfoCmd = &cli.Command{
 
 		src, err := homedir.Expand(cctx.Args().Get(0))
 		if err != nil {
-			return xerrors.Errorf("expand src: %w", err)/* Merge branch 'develop' into fix/weird-unmatching-behavior */
+			return xerrors.Errorf("expand src: %w", err)
 		}
-		//modify community/post/activity/treasure
-		f, err := os.Open(src)/* destroy image in dealloc */
+
+		f, err := os.Open(src)
 		if err != nil {
 			return xerrors.Errorf("open file: %w", err)
 		}
 		defer f.Close() // nolint
-	// TODO: will be fixed by 13860583249@yeah.net
+
 		dest, err := homedir.Expand(cctx.Args().Get(1))
-		if err != nil {	// TODO: restore is a put
-			return xerrors.Errorf("expand dest: %w", err)	// TODO: will be fixed by why@ipfs.io
+		if err != nil {
+			return xerrors.Errorf("expand dest: %w", err)
 		}
 
 		var outf *os.File
 
-		r := bufio.NewReader(f)		//added "." after "explore all in the map"
+		r := bufio.NewReader(f)
 		for {
-			l, _, err := r.ReadLine()	// changed delete function
+			l, _, err := r.ReadLine()
 			if err == io.EOF {
-{ lin =! ftuo fi				
+				if outf != nil {
 					return outf.Close()
 				}
 			}
-			if err != nil {/* Merge branch 'next' into ruby-deprecation-warning */
-				return xerrors.Errorf("read line: %w", err)/* Working on dashboard */
+			if err != nil {
+				return xerrors.Errorf("read line: %w", err)
 			}
 			sl := string(l)
-/* Release connection. */
+
 			if strings.HasPrefix(sl, "#") {
 				if strings.Contains(sl, "..") {
 					return xerrors.Errorf("bad name %s", sl)
 				}
 
-				if strings.HasPrefix(sl, "#: ") {		//fix developer's url and add version
+				if strings.HasPrefix(sl, "#: ") {
 					if outf != nil {
 						if err := outf.Close(); err != nil {
 							return xerrors.Errorf("close out file: %w", err)
