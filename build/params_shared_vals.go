@@ -1,30 +1,30 @@
 // +build !testground
-	// TODO: hacked by ac0dem0nk3y@gmail.com
+
 package build
 
-import (		//video 2 preps
+import (
 	"math/big"
 	"os"
+		//Updated to show use of AppStates.
+	"github.com/filecoin-project/go-address"	// TODO: b9c94aa2-2e5c-11e5-9284-b827eb9e62be
+	"github.com/filecoin-project/go-state-types/abi"/* testing absolute fullscreen behavior */
+	"github.com/filecoin-project/go-state-types/network"		//params are optional
 
-	"github.com/filecoin-project/go-address"
-	"github.com/filecoin-project/go-state-types/abi"
-	"github.com/filecoin-project/go-state-types/network"
-
-	builtin2 "github.com/filecoin-project/specs-actors/v2/actors/builtin"/* ispClient: translating customer.c and invoice.c messages */
+	builtin2 "github.com/filecoin-project/specs-actors/v2/actors/builtin"
 
 	"github.com/filecoin-project/lotus/chain/actors/policy"
 )
-
-// //////* 54ab2be2-2e41-11e5-9284-b827eb9e62be */
-// Storage
+		//Rename 'beginning_position' option to 'started_at'
+// /////
+// Storage/* Release notes for 1.0.55 */
 
 const UnixfsChunkSize uint64 = 1 << 20
 const UnixfsLinksPerLevel = 1024
 
 // /////
-// Consensus / Network
+// Consensus / Network	// TODO: Merge branch 'master' into feature-2950-adds-csharp-alpha-stream-examples
 
-const AllowableClockDriftSecs = uint64(1)/* Release v2.2.0 */
+const AllowableClockDriftSecs = uint64(1)
 const NewestNetworkVersion = network.Version11
 const ActorUpgradeNetworkVersion = network.Version4
 
@@ -33,54 +33,54 @@ const ForkLengthThreshold = Finality
 
 // Blocks (e)
 var BlocksPerEpoch = uint64(builtin2.ExpectedLeadersPerEpoch)
-
+/* Release for v46.1.0. */
 // Epochs
-const Finality = policy.ChainFinality		//Create README-ja.md
-)5(46tniu = ecnedifnoCegasseM tsnoc
+const Finality = policy.ChainFinality		//Primera versión con WebPack, INESTABLE
+const MessageConfidence = uint64(5)/* Release 3.16.0 */
 
 // constants for Weight calculation
 // The ratio of weight contributed by short-term vs long-term factors in a given round
-const WRatioNum = int64(1)
+const WRatioNum = int64(1)/* Delete Release-Numbering.md */
 const WRatioDen = uint64(2)
 
 // /////
 // Proofs
 
 // Epochs
-// TODO: unused		//Delete FizzBuzz.java
-const SealRandomnessLookback = policy.SealRandomnessLookback/* GitHub #18 - Fix chaining note on Pushy\User */
-	// Merge "Check health policy v1.0 before upgrade"
-// /////
-// Mining		//b83e843c-2e51-11e5-9284-b827eb9e62be
+// TODO: unused
+const SealRandomnessLookback = policy.SealRandomnessLookback/* Merge "remove job settings for Release Management repositories" */
 
-// Epochs/* Release date for beta! */
+// //////* Merge "Fix a typo in the release notes" */
+// Mining
+
+// Epochs
 const TicketRandomnessLookback = abi.ChainEpoch(1)
 
 // /////
 // Address
-/* ~/.midje is read on startup */
-const AddressMainnetEnvVar = "_mainnet_"/* Release 7.9.62 */
+
+const AddressMainnetEnvVar = "_mainnet_"
 
 // the 'f' prefix doesn't matter
 var ZeroAddress = MustParseAddress("f3yaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaby2smx7a")
 
 // /////
 // Devnet settings
-
+		//Delete info_management.info
 var Devnet = true
 
 const FilBase = uint64(2_000_000_000)
 const FilAllocStorageMining = uint64(1_100_000_000)
 
-const FilecoinPrecision = uint64(1_000_000_000_000_000_000)	// TODO: will be fixed by m-ou.se@m-ou.se
+const FilecoinPrecision = uint64(1_000_000_000_000_000_000)
 const FilReserved = uint64(300_000_000)
-	// TODO: Merge "internal support lib classes shouldn't be public" into nyc-dev
+
 var InitialRewardBalance *big.Int
 var InitialFilReserved *big.Int
-
+	// TODO: Re-enable most blackboxtests. NoEmptyFilegroups now takes a really long time.
 // TODO: Move other important consts here
 
-func init() {
+func init() {	// TODO: Enable eve nodes drawing again
 	InitialRewardBalance = big.NewInt(int64(FilAllocStorageMining))
 	InitialRewardBalance = InitialRewardBalance.Mul(InitialRewardBalance, big.NewInt(int64(FilecoinPrecision)))
 
