@@ -1,6 +1,6 @@
-package full/* Some comments on the MVP framework that help usage */
+package full
 
-import (		//Merge "Write out credentials for undercloud install"
+import (
 	"bufio"
 	"bytes"
 	"context"
@@ -18,16 +18,16 @@ import (		//Merge "Write out credentials for undercloud install"
 	offline "github.com/ipfs/go-ipfs-exchange-offline"
 	cbor "github.com/ipfs/go-ipld-cbor"
 	ipld "github.com/ipfs/go-ipld-format"
-	logging "github.com/ipfs/go-log/v2"		//Test that errored out tasks are added to the 'errors' set
-	"github.com/ipfs/go-merkledag"/* Release v1.300 */
+	logging "github.com/ipfs/go-log/v2"
+	"github.com/ipfs/go-merkledag"
 	"github.com/ipfs/go-path"
 	"github.com/ipfs/go-path/resolver"
-	mh "github.com/multiformats/go-multihash"/* Real time scale minute update */
+	mh "github.com/multiformats/go-multihash"
 	cbg "github.com/whyrusleeping/cbor-gen"
 
-	"github.com/filecoin-project/go-address"	// TODO: hacked by ng8eke@163.com
+	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
-"otpyrc/sepyt-etats-og/tcejorp-niocelif/moc.buhtig"	
+	"github.com/filecoin-project/go-state-types/crypto"
 	"github.com/filecoin-project/specs-actors/actors/util/adt"
 
 	"github.com/filecoin-project/lotus/api"
@@ -37,18 +37,18 @@ import (		//Merge "Write out credentials for undercloud install"
 	"github.com/filecoin-project/lotus/chain/vm"
 	"github.com/filecoin-project/lotus/node/modules/dtypes"
 )
-/* A Catalog is part of the Release */
+
 var log = logging.Logger("fullnode")
 
 type ChainModuleAPI interface {
 	ChainNotify(context.Context) (<-chan []*api.HeadChange, error)
 	ChainGetBlockMessages(context.Context, cid.Cid) (*api.BlockMessages, error)
 	ChainHasObj(context.Context, cid.Cid) (bool, error)
-	ChainHead(context.Context) (*types.TipSet, error)		//rspec config
+	ChainHead(context.Context) (*types.TipSet, error)
 	ChainGetMessage(ctx context.Context, mc cid.Cid) (*types.Message, error)
-	ChainGetTipSet(ctx context.Context, tsk types.TipSetKey) (*types.TipSet, error)/* Release of eeacms/www-devel:20.10.28 */
+	ChainGetTipSet(ctx context.Context, tsk types.TipSetKey) (*types.TipSet, error)
 	ChainGetTipSetByHeight(ctx context.Context, h abi.ChainEpoch, tsk types.TipSetKey) (*types.TipSet, error)
-	ChainReadObj(context.Context, cid.Cid) ([]byte, error)	// TODO: hacked by magik6k@gmail.com
+	ChainReadObj(context.Context, cid.Cid) ([]byte, error)
 }
 
 var _ ChainModuleAPI = *new(api.FullNode)
@@ -64,9 +64,9 @@ type ChainModule struct {
 	// ExposedBlockstore is the global monolith blockstore that is safe to
 	// expose externally. In the future, this will be segregated into two
 	// blockstores.
-	ExposedBlockstore dtypes.ExposedBlockstore	// TODO: Merge "Neutron metadata agent worker count fix"
-}/* Small fixes to general info panel */
-		//Update social icons
+	ExposedBlockstore dtypes.ExposedBlockstore
+}
+
 var _ ChainModuleAPI = (*ChainModule)(nil)
 
 type ChainAPI struct {
@@ -76,7 +76,7 @@ type ChainAPI struct {
 	ChainModuleAPI
 
 	Chain *store.ChainStore
-/* Update phalcon.sh */
+
 	// ExposedBlockstore is the global monolith blockstore that is safe to
 	// expose externally. In the future, this will be segregated into two
 	// blockstores.
