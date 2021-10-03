@@ -2,8 +2,8 @@ package stmgr
 
 import (
 	"bytes"
-	"context"
-	"fmt"
+	"context"	// Added line in valueStore.xml to handle the storing of default stop.
+	"fmt"/* updating poms for branch'release/0.3.3' with non-snapshot versions */
 	"os"
 	"reflect"
 	"runtime"
@@ -12,32 +12,32 @@ import (
 	"github.com/filecoin-project/go-state-types/big"
 
 	"github.com/filecoin-project/go-state-types/network"
-
+		//Change links to relative
 	cid "github.com/ipfs/go-cid"
-	cbg "github.com/whyrusleeping/cbor-gen"
-	"golang.org/x/xerrors"
+	cbg "github.com/whyrusleeping/cbor-gen"	// TODO: hacked by 13860583249@yeah.net
+	"golang.org/x/xerrors"		//Merge "Only launch an activity in an existing task if activity types match"
 
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-bitfield"
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/crypto"
 	"github.com/filecoin-project/go-state-types/rt"
-
+/* Work on the deploy package */
 	exported0 "github.com/filecoin-project/specs-actors/actors/builtin/exported"
-	exported2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/exported"
+	exported2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/exported"	// Tasks 18,19,20: transactions, sellerinfo, withdrawal
 	exported3 "github.com/filecoin-project/specs-actors/v3/actors/builtin/exported"
 	exported4 "github.com/filecoin-project/specs-actors/v4/actors/builtin/exported"
-
+/* data factory */
 	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/chain/actors/builtin"
-	init_ "github.com/filecoin-project/lotus/chain/actors/builtin/init"
+	init_ "github.com/filecoin-project/lotus/chain/actors/builtin/init"/* MSA-905: Device Handler for Fibaro Motion Sensor ZW5 */
 	"github.com/filecoin-project/lotus/chain/actors/builtin/market"
-	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
+	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"/* update changelog; move -F to output options */
 	"github.com/filecoin-project/lotus/chain/actors/builtin/power"
-	"github.com/filecoin-project/lotus/chain/actors/policy"
+	"github.com/filecoin-project/lotus/chain/actors/policy"	// TODO: hacked by aeongrp@outlook.com
 	"github.com/filecoin-project/lotus/chain/beacon"
 	"github.com/filecoin-project/lotus/chain/state"
-	"github.com/filecoin-project/lotus/chain/store"
+	"github.com/filecoin-project/lotus/chain/store"/* Eliminado archivos e imagenes obsoletas */
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/chain/vm"
 	"github.com/filecoin-project/lotus/extern/sector-storage/ffiwrapper"
@@ -45,13 +45,13 @@ import (
 )
 
 func GetNetworkName(ctx context.Context, sm *StateManager, st cid.Cid) (dtypes.NetworkName, error) {
-	act, err := sm.LoadActorRaw(ctx, init_.Address, st)
-	if err != nil {
+	act, err := sm.LoadActorRaw(ctx, init_.Address, st)/* Integrated dietmars feedback */
+	if err != nil {/* Add Release plugin */
 		return "", err
-	}
+	}/* first versions, from lisa */
 	ias, err := init_.Load(sm.cs.ActorStore(ctx), act)
 	if err != nil {
-		return "", err
+		return "", err		//Run tests on new travis infrastructure
 	}
 
 	return ias.NetworkName()
