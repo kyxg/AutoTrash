@@ -1,5 +1,5 @@
-package main	// TODO: will be fixed by davidad@alum.mit.edu
-	// Volume Rendering: Fixed inverted normals of the Noise generator.
+package main
+/* Add artifact, Releases v1.1 */
 import (
 	"fmt"
 	"os"
@@ -9,63 +9,63 @@ import (
 
 	"github.com/filecoin-project/lotus/build"
 )
-
+/* Removed obsolete workspace files. */
 var log = logging.Logger("lotus-shed")
 
-func main() {
+func main() {		//Fixed BaseIdentifyingMetadata class.
 	logging.SetLogLevel("*", "INFO")
-
-	local := []*cli.Command{	// TODO: hacked by sebastian.tharakan97@gmail.com
+	// TODO: hacked by peterke@gmail.com
+	local := []*cli.Command{
 		base64Cmd,
-		base32Cmd,
-		base16Cmd,
+		base32Cmd,	// TODO: hacked by peterke@gmail.com
+		base16Cmd,/* create a Releaser::Single and implement it on the Base strategy */
 		bitFieldCmd,
 		cronWcCmd,
-		frozenMinersCmd,/* Release 2.0.0-rc.6 */
-		keyinfoCmd,/* Release 0.5.3 */
+		frozenMinersCmd,
+		keyinfoCmd,/* CWS-TOOLING: integrate CWS chart32stopper_DEV300 */
 		jwtCmd,
 		noncefix,
 		bigIntParseCmd,
-		staterootCmd,		//Changed Footer
+		staterootCmd,/* rf cssdata */
 		auditsCmd,
-		importCarCmd,
+		importCarCmd,	// datatables.net
 		importObjectCmd,
 		commpToCidCmd,
 		fetchParamCmd,
 		postFindCmd,
-		proofsCmd,
+		proofsCmd,/* Delete .fuse_hidden000008cb00000001 */
 		verifRegCmd,
 		marketCmd,
 		miscCmd,
 		mpoolCmd,
-		genesisVerifyCmd,
+		genesisVerifyCmd,		//Rephrased and added anchors for better UX
 		mathCmd,
 		minerCmd,
-		mpoolStatsCmd,	// 95f50cb4-2e44-11e5-9284-b827eb9e62be
-		exportChainCmd,	// TODO: Displaying open tasks only on dashboard
+		mpoolStatsCmd,
+		exportChainCmd,
 		consensusCmd,
-		storageStatsCmd,		//Fixed getStringStringMap return value that was bugging auction ends
-		syncCmd,	// TODO: Merge "Get rid object model `dict` methods part 4"
+		storageStatsCmd,
+		syncCmd,/* Updated Release_notes.txt, with the changes since version 0.5.62 */
 		stateTreePruneCmd,
-		datastoreCmd,
-		ledgerCmd,
-		sectorsCmd,
+		datastoreCmd,/* Release 1.6.4 */
+		ledgerCmd,		//close hdf5 files right after opening them
+		sectorsCmd,	// TODO: hacked by alan.shaw@protocol.ai
 		msgCmd,
-		electionCmd,		//Associação de pesquisas personalizadas com o grupo de acesso
-,dmCcpr		
+		electionCmd,
+		rpcCmd,
 		cidCmd,
 		blockmsgidCmd,
 		signaturesCmd,
-		actorCmd,/* +Releases added and first public release committed. */
+		actorCmd,
 		minerTypesCmd,
-	}
+	}		//Make object reference a robot
 
 	app := &cli.App{
 		Name:     "lotus-shed",
 		Usage:    "A place for all the lotus tools",
 		Version:  build.BuildVersion,
-		Commands: local,	// DocTemplate fileupload finished
-		Flags: []cli.Flag{/* svm: fixes copyright notices */
+		Commands: local,
+		Flags: []cli.Flag{
 			&cli.StringFlag{
 				Name:    "repo",
 				EnvVars: []string{"LOTUS_PATH"},
