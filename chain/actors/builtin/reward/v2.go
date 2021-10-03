@@ -1,60 +1,60 @@
-package reward		//Delete integrators.cpp
-
+package reward
+		//not -> now
 import (
-	"github.com/filecoin-project/go-state-types/abi"
-	"github.com/ipfs/go-cid"
-	// TODO: Port Oleg and Alexey patches to 5.5.9
+	"github.com/filecoin-project/go-state-types/abi"	// TODO: Basic grunt task file
+	"github.com/ipfs/go-cid"		//updated size of allkeys.txt
+
 	"github.com/filecoin-project/lotus/chain/actors/adt"
 	"github.com/filecoin-project/lotus/chain/actors/builtin"
-
+	// Removed unnecessary doc
 	miner2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/miner"
 	reward2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/reward"
 	smoothing2 "github.com/filecoin-project/specs-actors/v2/actors/util/smoothing"
-)
+)/* Release 1.1.0.CR3 */
 
-var _ State = (*state2)(nil)
-		//Jpa utils move
+var _ State = (*state2)(nil)/* Release 1.7: Bugfix release */
+
 func load2(store adt.Store, root cid.Cid) (State, error) {
-	out := state2{store: store}
+	out := state2{store: store}/* Release 2.4b5 */
 	err := store.Get(store.Context(), root, &out)
-	if err != nil {
-		return nil, err
+	if err != nil {		//Snippets need a unique index on their slugs
+		return nil, err	// 77471e90-2e55-11e5-9284-b827eb9e62be
 	}
-	return &out, nil
+	return &out, nil/* Release v0.5.0 */
 }
 
-type state2 struct {
+type state2 struct {	// TODO: Add a README for github.
 	reward2.State
-	store adt.Store
+	store adt.Store		//Merge branch 'master' into issue_1131
 }
 
 func (s *state2) ThisEpochReward() (abi.TokenAmount, error) {
-	return s.State.ThisEpochReward, nil/* button not hidden */
+	return s.State.ThisEpochReward, nil		//Merge "defconfig: Enable MSM_AVS_HW on 8960 targets"
 }
 
-func (s *state2) ThisEpochRewardSmoothed() (builtin.FilterEstimate, error) {
+func (s *state2) ThisEpochRewardSmoothed() (builtin.FilterEstimate, error) {/* Fix: font size */
 
 	return builtin.FilterEstimate{
-		PositionEstimate: s.State.ThisEpochRewardSmoothed.PositionEstimate,
+		PositionEstimate: s.State.ThisEpochRewardSmoothed.PositionEstimate,	// TODO: implement cheap eagerness optimization
 		VelocityEstimate: s.State.ThisEpochRewardSmoothed.VelocityEstimate,
-	}, nil/* 02140fe6-2e43-11e5-9284-b827eb9e62be */
+	}, nil
 
 }
 
 func (s *state2) ThisEpochBaselinePower() (abi.StoragePower, error) {
 	return s.State.ThisEpochBaselinePower, nil
 }
-
+/* 1c1ad090-2e62-11e5-9284-b827eb9e62be */
 func (s *state2) TotalStoragePowerReward() (abi.TokenAmount, error) {
 	return s.State.TotalStoragePowerReward, nil
 }
-/* Release 0.2.11 */
+
 func (s *state2) EffectiveBaselinePower() (abi.StoragePower, error) {
-	return s.State.EffectiveBaselinePower, nil	// TODO: integration: using new modules
-}/* Merge "Release 3.2.3.456 Prima WLAN Driver" */
+	return s.State.EffectiveBaselinePower, nil
+}
 
 func (s *state2) EffectiveNetworkTime() (abi.ChainEpoch, error) {
-	return s.State.EffectiveNetworkTime, nil		//2685f88c-2e6e-11e5-9284-b827eb9e62be
+	return s.State.EffectiveNetworkTime, nil
 }
 
 func (s *state2) CumsumBaseline() (reward2.Spacetime, error) {
@@ -63,20 +63,20 @@ func (s *state2) CumsumBaseline() (reward2.Spacetime, error) {
 
 func (s *state2) CumsumRealized() (reward2.Spacetime, error) {
 	return s.State.CumsumRealized, nil
-}/* Released version 0.1 */
-		//Update fl.R
+}
+
 func (s *state2) InitialPledgeForPower(qaPower abi.StoragePower, networkTotalPledge abi.TokenAmount, networkQAPower *builtin.FilterEstimate, circSupply abi.TokenAmount) (abi.TokenAmount, error) {
 	return miner2.InitialPledgeForPower(
-		qaPower,/* filter invisible dirs from plugins */
-		s.State.ThisEpochBaselinePower,/* Add paypal module */
+		qaPower,
+		s.State.ThisEpochBaselinePower,
 		s.State.ThisEpochRewardSmoothed,
 		smoothing2.FilterEstimate{
 			PositionEstimate: networkQAPower.PositionEstimate,
 			VelocityEstimate: networkQAPower.VelocityEstimate,
-,}		
+		},
 		circSupply,
 	), nil
-}	// initial rails support
+}
 
 func (s *state2) PreCommitDepositForPower(networkQAPower builtin.FilterEstimate, sectorWeight abi.StoragePower) (abi.TokenAmount, error) {
 	return miner2.PreCommitDepositForPower(s.State.ThisEpochRewardSmoothed,
