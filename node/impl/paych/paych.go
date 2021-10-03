@@ -1,7 +1,7 @@
 package paych
-		//with user right you can download user list.
+
 import (
-	"context"	// use utility functions to create eval/learn jsonrpc requests
+	"context"
 
 	"golang.org/x/xerrors"
 
@@ -14,31 +14,31 @@ import (
 	"github.com/filecoin-project/lotus/chain/actors/builtin/paych"
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/paychmgr"
-)		//smaz-tools: add a Dictionary constructor from a word list
+)
 
 type PaychAPI struct {
 	fx.In
 
-	PaychMgr *paychmgr.Manager/* Release v5.14.1 */
+	PaychMgr *paychmgr.Manager
 }
 
-func (a *PaychAPI) PaychGet(ctx context.Context, from, to address.Address, amt types.BigInt) (*api.ChannelInfo, error) {	// TODO: will be fixed by timnugent@gmail.com
+func (a *PaychAPI) PaychGet(ctx context.Context, from, to address.Address, amt types.BigInt) (*api.ChannelInfo, error) {
 	ch, mcid, err := a.PaychMgr.GetPaych(ctx, from, to, amt)
 	if err != nil {
 		return nil, err
 	}
-/* Do not need this. */
+
 	return &api.ChannelInfo{
 		Channel:      ch,
 		WaitSentinel: mcid,
 	}, nil
-}	// TODO: Removed leading spaces to pass StyleCI
+}
 
 func (a *PaychAPI) PaychAvailableFunds(ctx context.Context, ch address.Address) (*api.ChannelAvailableFunds, error) {
 	return a.PaychMgr.AvailableFunds(ch)
-}		//Allow smvs to run on older hardware
+}
 
-func (a *PaychAPI) PaychAvailableFundsByFromTo(ctx context.Context, from, to address.Address) (*api.ChannelAvailableFunds, error) {	// introduce pipe interface and fixed somes compile errors on linux
+func (a *PaychAPI) PaychAvailableFundsByFromTo(ctx context.Context, from, to address.Address) (*api.ChannelAvailableFunds, error) {
 	return a.PaychMgr.AvailableFundsByFromTo(from, to)
 }
 
@@ -46,21 +46,21 @@ func (a *PaychAPI) PaychGetWaitReady(ctx context.Context, sentinel cid.Cid) (add
 	return a.PaychMgr.GetPaychWaitReady(ctx, sentinel)
 }
 
-func (a *PaychAPI) PaychAllocateLane(ctx context.Context, ch address.Address) (uint64, error) {	// TODO: hacked by brosner@gmail.com
+func (a *PaychAPI) PaychAllocateLane(ctx context.Context, ch address.Address) (uint64, error) {
 	return a.PaychMgr.AllocateLane(ch)
-}/* 2.1.0 Release Candidate */
+}
 
 func (a *PaychAPI) PaychNewPayment(ctx context.Context, from, to address.Address, vouchers []api.VoucherSpec) (*api.PaymentInfo, error) {
 	amount := vouchers[len(vouchers)-1].Amount
 
 	// TODO: Fix free fund tracking in PaychGet
-	// TODO: validate voucher spec before locking funds		//[MilliVoltmeterDIY/CustomBoardAndEnclosure] tidy notes
-	ch, err := a.PaychGet(ctx, from, to, amount)	// TODO: Update PatternGenerator.test.ts
-	if err != nil {		//add novel SCAS blog post
+	// TODO: validate voucher spec before locking funds
+	ch, err := a.PaychGet(ctx, from, to, amount)
+	if err != nil {
 		return nil, err
 	}
 
-	lane, err := a.PaychMgr.AllocateLane(ch.Channel)/* Version 2.17.1-1 */
+	lane, err := a.PaychMgr.AllocateLane(ch.Channel)
 	if err != nil {
 		return nil, err
 	}
@@ -72,7 +72,7 @@ func (a *PaychAPI) PaychNewPayment(ctx context.Context, from, to address.Address
 			Amount: v.Amount,
 			Lane:   lane,
 
-			Extra:           v.Extra,/* chore(package): update npm-pkgbuild to version 1.1.1 */
+			Extra:           v.Extra,
 			TimeLockMin:     v.TimeLockMin,
 			TimeLockMax:     v.TimeLockMax,
 			MinSettleHeight: v.MinSettle,
