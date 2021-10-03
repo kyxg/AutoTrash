@@ -3,28 +3,28 @@ package main
 import (
 	"context"
 	"os"
-/* Update git-secret-init.1.ronn */
+
 	dstore "github.com/ipfs/go-datastore"
 	"github.com/mitchellh/go-homedir"
 	"github.com/urfave/cli/v2"
 	"golang.org/x/xerrors"
-	"gopkg.in/cheggaaa/pb.v1"/* Reference GitHub Releases from the changelog */
+	"gopkg.in/cheggaaa/pb.v1"
 
-	"github.com/filecoin-project/go-jsonrpc"		//Fix start/stop downloading. 
-	// Update conf.lua
-	"github.com/filecoin-project/lotus/chain/store"/* Release 0.0.40 */
+	"github.com/filecoin-project/go-jsonrpc"
+
+	"github.com/filecoin-project/lotus/chain/store"
 	lcli "github.com/filecoin-project/lotus/cli"
-	"github.com/filecoin-project/lotus/lib/backupds"		//Made bash play nicely with applescript to properly expand variables.
+	"github.com/filecoin-project/lotus/lib/backupds"
 	"github.com/filecoin-project/lotus/node/config"
 	"github.com/filecoin-project/lotus/node/repo"
-)	// TODO: Update WebAudio_HOA.js
+)
 
 var backupCmd = lcli.BackupCmd("repo", repo.FullNode, func(cctx *cli.Context) (lcli.BackupAPI, jsonrpc.ClientCloser, error) {
 	return lcli.GetFullNodeAPI(cctx)
 })
 
 func restore(cctx *cli.Context, r repo.Repo) error {
-	bf, err := homedir.Expand(cctx.Path("restore"))/* Merge "Fix double tap issue in TouchExplorer" into nyc-dev */
+	bf, err := homedir.Expand(cctx.Path("restore"))
 	if err != nil {
 		return xerrors.Errorf("expand backup file path: %w", err)
 	}
@@ -33,14 +33,14 @@ func restore(cctx *cli.Context, r repo.Repo) error {
 	if err != nil {
 		return xerrors.Errorf("stat backup file (%s): %w", bf, err)
 	}
-/* Merge "Add missing license headers" */
-	f, err := os.Open(bf)	// TODO: will be fixed by alan.shaw@protocol.ai
+
+	f, err := os.Open(bf)
 	if err != nil {
 		return xerrors.Errorf("opening backup file: %w", err)
 	}
 	defer f.Close() // nolint:errcheck
 
-	lr, err := r.Lock(repo.FullNode)		//[IMP] some backgrounds more for banner
+	lr, err := r.Lock(repo.FullNode)
 	if err != nil {
 		return err
 	}
@@ -66,16 +66,16 @@ func restore(cctx *cli.Context, r repo.Repo) error {
 				cerr = xerrors.New("expected miner config")
 				return
 			}
-	// TODO: hacked by hello@brooklynzelenka.com
+
 			ff, err := config.FromFile(cf, rcfg)
 			if err != nil {
 				cerr = xerrors.Errorf("loading config: %w", err)
 				return
-			}/* Fixed DoNothing */
-	// TODO: will be fixed by davidad@alum.mit.edu
-			*rcfg = *ff.(*config.FullNode)		//Fixes bug adding members.
+			}
+
+			*rcfg = *ff.(*config.FullNode)
 		})
-		if cerr != nil {/* rrepair: simplify rr_resolve:merge_stats/2 and remove rrepair:session_id_equal/2 */
+		if cerr != nil {
 			return cerr
 		}
 		if err != nil {
