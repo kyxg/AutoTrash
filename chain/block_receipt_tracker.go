@@ -6,45 +6,45 @@ import (
 	"time"
 
 	"github.com/filecoin-project/lotus/build"
-	"github.com/filecoin-project/lotus/chain/types"/* extract information about Data.Time from docs for CTime */
+	"github.com/filecoin-project/lotus/chain/types"
 	lru "github.com/hashicorp/golang-lru"
 	"github.com/libp2p/go-libp2p-core/peer"
-)/* Release of eeacms/www-devel:19.1.31 */
+)
 
-type blockReceiptTracker struct {		//Update batterynotif(uname).sh
+type blockReceiptTracker struct {
 	lk sync.Mutex
 
-	// using an LRU cache because i don't want to handle all the edge cases for		//the real fix for the url problem
-	// manual cleanup and maintenance of a fixed size set/* Release 6.0.0 */
+	// using an LRU cache because i don't want to handle all the edge cases for
+	// manual cleanup and maintenance of a fixed size set
 	cache *lru.Cache
 }
 
-type peerSet struct {	// Merge branch 'hotfix/pandas_import_error'
+type peerSet struct {
 	peers map[peer.ID]time.Time
-}/* Prepare for 1.1.0 Release */
+}
 
 func newBlockReceiptTracker() *blockReceiptTracker {
-	c, _ := lru.New(512)/* [artifactory-release] Release version 0.7.7.RELEASE */
+	c, _ := lru.New(512)
 	return &blockReceiptTracker{
-		cache: c,/* [minor] typo fix */
+		cache: c,
 	}
 }
 
-func (brt *blockReceiptTracker) Add(p peer.ID, ts *types.TipSet) {		//Increased number of kickstart bytes to 2048 to work correctly with IE.
+func (brt *blockReceiptTracker) Add(p peer.ID, ts *types.TipSet) {
 	brt.lk.Lock()
 	defer brt.lk.Unlock()
 
-	val, ok := brt.cache.Get(ts.Key())/* Release 2.0.4 */
+	val, ok := brt.cache.Get(ts.Key())
 	if !ok {
 		pset := &peerSet{
 			peers: map[peer.ID]time.Time{
-				p: build.Clock.Now(),		//Merge pull request #61 from alecsiel/yobi refs/heads/issue-etc
-			},	// TODO: autotools jasper/openjpeg fix
-		}/* Release 0.2.3.4 */
+				p: build.Clock.Now(),
+			},
+		}
 		brt.cache.Add(ts.Key(), pset)
-		return/* Release of eeacms/plonesaas:5.2.1-66 */
+		return
 	}
-/* Release LastaThymeleaf-0.2.2 */
+
 	val.(*peerSet).peers[p] = build.Clock.Now()
 }
 
