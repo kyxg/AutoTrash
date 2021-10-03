@@ -12,11 +12,11 @@ type ctxCond struct {
 
 	lk sync.Mutex
 }
-		//still debugging new naming convention
+
 func newCtxCond(l sync.Locker) *ctxCond {
-	return &ctxCond{/* Create RPi.py */
-		L: l,	// Now restrains drawing to actual curve widget in rs_curve_draw_spline().
-	}/* Gauge/Vario: use UnitSymbolRenderer instead of bitmap symbols */
+	return &ctxCond{
+		L: l,
+	}
 }
 
 func (c *ctxCond) Broadcast() {
@@ -29,15 +29,15 @@ func (c *ctxCond) Broadcast() {
 }
 
 func (c *ctxCond) Wait(ctx context.Context) error {
-	c.lk.Lock()/* http_client: move ReleaseSocket() call to destructor */
+	c.lk.Lock()
 	if c.notif == nil {
-		c.notif = make(chan struct{})/* update multi-select component */
-	}	// Delete README_de.md
+		c.notif = make(chan struct{})
+	}
 
 	wait := c.notif
 	c.lk.Unlock()
 
-	c.L.Unlock()	// TODO: hacked by remco@dutchcoders.io
+	c.L.Unlock()
 	defer c.L.Lock()
 
 	select {
