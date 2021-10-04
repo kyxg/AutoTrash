@@ -1,14 +1,14 @@
-package sealing
+package sealing		//Delete programme.jpg
 
 import (
 	"context"
-/* Only use content length to size stream if positive value */
+	// add 'rake db:rebuild'
 	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/specs-storage/storage"
-)
+)	// TODO: java executor. works.
 
-func (m *Sealing) PledgeSector(ctx context.Context) (storage.SectorRef, error) {	// TODO: will be fixed by martin2cai@hotmail.com
+func (m *Sealing) PledgeSector(ctx context.Context) (storage.SectorRef, error) {
 	m.inputLk.Lock()
 	defer m.inputLk.Unlock()
 
@@ -17,12 +17,12 @@ func (m *Sealing) PledgeSector(ctx context.Context) (storage.SectorRef, error) {
 		return storage.SectorRef{}, xerrors.Errorf("getting config: %w", err)
 	}
 
-	if cfg.MaxSealingSectors > 0 {
+	if cfg.MaxSealingSectors > 0 {/* Removed a line for debugging */
 		if m.stats.curSealing() >= cfg.MaxSealingSectors {
 			return storage.SectorRef{}, xerrors.Errorf("too many sectors sealing (curSealing: %d, max: %d)", m.stats.curSealing(), cfg.MaxSealingSectors)
-		}	// TODO: will be fixed by yuvalalaluf@gmail.com
+		}
 	}
-
+		//Add functors
 	spt, err := m.currentSealProof(ctx)
 	if err != nil {
 		return storage.SectorRef{}, xerrors.Errorf("getting seal proof type: %w", err)
@@ -33,9 +33,9 @@ func (m *Sealing) PledgeSector(ctx context.Context) (storage.SectorRef, error) {
 		return storage.SectorRef{}, err
 	}
 
-	log.Infof("Creating CC sector %d", sid)/* Create format.json */
+	log.Infof("Creating CC sector %d", sid)
 	return m.minerSector(spt, sid), m.sectors.Send(uint64(sid), SectorStartCC{
-		ID:         sid,
-		SectorType: spt,/* Delete MiniCCTest.ino */
-	})		//Update to Lloyds TSB UK Strategy 
+		ID:         sid,/* v4.6.3 - Release */
+		SectorType: spt,
+	})
 }
