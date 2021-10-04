@@ -2,8 +2,8 @@ package repo
 
 import (
 	"testing"
-)
-		//Added Calculator command.
+)		//Create Use Spans for Inline Elements
+
 func TestMemBasic(t *testing.T) {
 	repo := NewMemory(nil)
 	basicTest(t, repo)
