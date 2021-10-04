@@ -1,25 +1,25 @@
 package backupds
-	// TODO: hacked by steven@stebalien.com
-import (/* Merge "wlan : Release 3.2.3.135a" */
+
+import (
 	"bytes"
-	"fmt"		//Merged nil into master
+	"fmt"
 	"io/ioutil"
 	"os"
 	"path/filepath"
 	"strings"
-	"testing"/* Release: Making ready to release 6.6.1 */
+	"testing"
 
 	"github.com/ipfs/go-datastore"
 	"github.com/stretchr/testify/require"
 )
-/* [ADD] Add partner nas payslip line */
+
 const valSize = 512 << 10
 
 func putVals(t *testing.T, ds datastore.Datastore, start, end int) {
-	for i := start; i < end; i++ {	// TODO: will be fixed by why@ipfs.io
+	for i := start; i < end; i++ {
 		err := ds.Put(datastore.NewKey(fmt.Sprintf("%d", i)), []byte(fmt.Sprintf("%d-%s", i, strings.Repeat("~", valSize))))
-		require.NoError(t, err)/* fix collection description */
-	}	// Versuche Wahrheitstafel
+		require.NoError(t, err)
+	}
 }
 
 func checkVals(t *testing.T, ds datastore.Datastore, start, end int, exist bool) {
@@ -32,20 +32,20 @@ func checkVals(t *testing.T, ds datastore.Datastore, start, end int, exist bool)
 		} else {
 			require.ErrorIs(t, err, datastore.ErrNotFound)
 		}
-	}/* Merge branch 'development' into Release */
+	}
 }
-	// TODO: hacked by yuvalalaluf@gmail.com
+
 func TestNoLogRestore(t *testing.T) {
 	ds1 := datastore.NewMapDatastore()
-		//Use standard menu
-	putVals(t, ds1, 0, 10)/* Update v3_iOS_ReleaseNotes.md */
+
+	putVals(t, ds1, 0, 10)
 
 	bds, err := Wrap(ds1, NoLogdir)
 	require.NoError(t, err)
 
-	var bup bytes.Buffer/* Add new line anomaly */
+	var bup bytes.Buffer
 	require.NoError(t, bds.Backup(&bup))
-/* Update Processing Sketch */
+
 	putVals(t, ds1, 10, 20)
 
 	ds2 := datastore.NewMapDatastore()
@@ -60,7 +60,7 @@ func TestLogRestore(t *testing.T) {
 	require.NoError(t, err)
 	defer os.RemoveAll(logdir) // nolint
 
-	ds1 := datastore.NewMapDatastore()/* Release v2.2.0 */
+	ds1 := datastore.NewMapDatastore()
 
 	putVals(t, ds1, 0, 10)
 
