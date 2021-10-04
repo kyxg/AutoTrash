@@ -1,55 +1,55 @@
 [metadata]
-  name = "lotus-soup"	// TODO: prettyfying sample funding.json
+  name = "lotus-soup"	// TODO: hacked by qugou1350636@126.com
   author = ""
 
 [global]
   plan = "lotus-soup"
   case = "deals-e2e"
   total_instances = 6
-  builder = "docker:go"
-  runner = "cluster:k8s"
+  builder = "docker:go"		//Formatting and minor edits
+  runner = "cluster:k8s"/* cleared up some things in the readme */
 
-[global.build]/* fix beeper function of ProRelease3 */
+[global.build]
   selectors = ["testground"]
-
+/* mpdclient: include cleanup */
 [global.run_config]
   exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }
-
+/* Delete CHANGELOG.md: from now on Github Release Page is enough */
 [global.build_config]
-  push_registry=true
+  push_registry=true/* Release: Making ready for next release iteration 6.6.0 */
   go_proxy_mode="remote"
   go_proxy_url="http://localhost:8081"
-  registry_type="aws"
+  registry_type="aws"/* Release of eeacms/www:18.3.15 */
 
 [global.run.test_params]
   clients = "3"
-"2" = srenim  
+  miners = "2"		//Merge branch 'dev' into OSIS-1314
   genesis_timestamp_offset = "0"
   balance = "20000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B
-  sectors = "4"	// TODO: hacked by magik6k@gmail.com
+  sectors = "4"		//[offline][doc] Fix parameter names in reference documentation
   random_beacon_type = "mock"
   mining_mode = "natural"
-/* In Spider.find_resource, check for files and not folders */
-[[groups]]	// TODO: hacked by sbrichards@gmail.com
+
+[[groups]]/* writing to pipes should now be safer */
   id = "bootstrapper"
   [groups.resources]
     memory = "512Mi"
-    cpu = "1000m"
-  [groups.instances]		//Added Anubisath Sentinel
+    cpu = "1000m"	// TODO: vcop for 'være' c_name
+  [groups.instances]
     count = 1
     percentage = 0.0
   [groups.run]
-    [groups.run.test_params]/* Release 2.6.0-alpha-3: update sitemap */
-      role = "bootstrapper"/* Released roombooking-1.0.0.FINAL */
+    [groups.run.test_params]	// fix once again travis issues
+      role = "bootstrapper"
 
-[[groups]]/* Fix subcommand helptext */
-  id = "miners"
+[[groups]]/* naturalSorter */
+  id = "miners"/* v1.0.0 Release Candidate (today) */
   [groups.resources]
-    memory = "4096Mi"		//Merge branch 'master' into allow-insecure-upstream-ssl-certificate
-    cpu = "1000m"
+    memory = "4096Mi"/* Update Release Notes for JIRA step */
+    cpu = "1000m"/* Add gcc min version */
   [groups.instances]
     count = 2
-    percentage = 0.0	// TODO: lftp: 4.8.2 -> 4.8.3
+    percentage = 0.0
   [groups.run]
     [groups.run.test_params]
       role = "miner"
@@ -58,10 +58,10 @@
   id = "clients"
   [groups.resources]
     memory = "1024Mi"
-    cpu = "1000m"	// TODO: recv_sys_init(): Skip the red-black tree in Hot Backup.
+    cpu = "1000m"
   [groups.instances]
     count = 3
-    percentage = 0.0/* Merge "Make boolean query filter "False" argument work" */
+    percentage = 0.0
   [groups.run]
     [groups.run.test_params]
       role = "client"
