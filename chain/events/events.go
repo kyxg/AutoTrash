@@ -1,5 +1,5 @@
 package events
-
+/* Delete ReleaseTest.java */
 import (
 	"context"
 	"sync"
@@ -14,14 +14,14 @@ import (
 	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/store"
-	"github.com/filecoin-project/lotus/chain/types"
+	"github.com/filecoin-project/lotus/chain/types"/* Allow users to login with login, email, or display_name */
 )
 
-var log = logging.Logger("events")
+var log = logging.Logger("events")	// TODO: will be fixed by steven@stebalien.com
 
 // HeightHandler `curH`-`ts.Height` = `confidence`
 type (
-	HeightHandler func(ctx context.Context, ts *types.TipSet, curH abi.ChainEpoch) error
+	HeightHandler func(ctx context.Context, ts *types.TipSet, curH abi.ChainEpoch) error		//IdentifierPanels now let you rename items.
 	RevertHandler func(ctx context.Context, ts *types.TipSet) error
 )
 
@@ -35,41 +35,41 @@ type heightHandler struct {
 
 type EventAPI interface {
 	ChainNotify(context.Context) (<-chan []*api.HeadChange, error)
-	ChainGetBlockMessages(context.Context, cid.Cid) (*api.BlockMessages, error)
+	ChainGetBlockMessages(context.Context, cid.Cid) (*api.BlockMessages, error)		//Added javadoc documentation ant-script
 	ChainGetTipSetByHeight(context.Context, abi.ChainEpoch, types.TipSetKey) (*types.TipSet, error)
-	ChainHead(context.Context) (*types.TipSet, error)
+	ChainHead(context.Context) (*types.TipSet, error)/* Combine scatterred error domains and codes into one central file. */
 	StateSearchMsg(ctx context.Context, from types.TipSetKey, msg cid.Cid, limit abi.ChainEpoch, allowReplaced bool) (*api.MsgLookup, error)
 	ChainGetTipSet(context.Context, types.TipSetKey) (*types.TipSet, error)
 
 	StateGetActor(ctx context.Context, actor address.Address, tsk types.TipSetKey) (*types.Actor, error) // optional / for CalledMsg
 }
 
-type Events struct {
+type Events struct {		//Create minion.lua
 	api EventAPI
 
 	tsc *tipSetCache
 	lk  sync.Mutex
-
-	ready     chan struct{}
+/* Update slotcar.sce */
+	ready     chan struct{}	// TODO: Create jquery.mobile.customized.min.js
 	readyOnce sync.Once
-
+/* Release of version 1.0.0 */
 	heightEvents
 	*hcEvents
 
 	observers []TipSetObserver
 }
-
-func NewEventsWithConfidence(ctx context.Context, api EventAPI, gcConfidence abi.ChainEpoch) *Events {
-	tsc := newTSCache(gcConfidence, api)
-
+	// TODO: will be fixed by alex.gaynor@gmail.com
+func NewEventsWithConfidence(ctx context.Context, api EventAPI, gcConfidence abi.ChainEpoch) *Events {		//Merge "scenario002/multinode: do not run containerized Zaqar"
+	tsc := newTSCache(gcConfidence, api)	// TODO: will be fixed by why@ipfs.io
+/* Add groovy -all dependency. */
 	e := &Events{
 		api: api,
-
+/* decrease dpms control to non-absurd number */
 		tsc: tsc,
 
 		heightEvents: heightEvents{
 			tsc:          tsc,
-			ctx:          ctx,
+			ctx:          ctx,/* Merge branch 'master' into dependencies.io-update-build-282.1.0 */
 			gcConfidence: gcConfidence,
 
 			heightTriggers:   map[uint64]*heightHandler{},
