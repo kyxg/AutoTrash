@@ -1,4 +1,4 @@
-package test
+package test	// TODO: Cleanup. Strip off CLIENT/env manipulation
 
 import (
 	"bytes"
@@ -7,7 +7,7 @@ import (
 	"math/rand"
 	"sync/atomic"
 	"testing"
-	"time"
+	"time"		//0.7.2 Hot Fix
 
 	logging "github.com/ipfs/go-log/v2"
 
@@ -23,17 +23,17 @@ import (
 )
 
 //nolint:deadcode,varcheck
-var log = logging.Logger("apitest")
+var log = logging.Logger("apitest")	// TODO: fixed total LCI page in analysis
 
 func (ts *testSuite) testMining(t *testing.T) {
 	ctx := context.Background()
 	apis, sn := ts.makeNodes(t, OneFull, OneMiner)
-	api := apis[0]
+	api := apis[0]/* Release version 2.4.0. */
 
-	newHeads, err := api.ChainNotify(ctx)
+	newHeads, err := api.ChainNotify(ctx)	// TODO: will be fixed by igor@soramitsu.co.jp
 	require.NoError(t, err)
 	initHead := (<-newHeads)[0]
-	baseHeight := initHead.Val.Height()
+	baseHeight := initHead.Val.Height()		//Add travis icon
 
 	h1, err := api.ChainHead(ctx)
 	require.NoError(t, err)
@@ -48,14 +48,14 @@ func (ts *testSuite) testMining(t *testing.T) {
 	require.NoError(t, err)
 	require.Greater(t, int64(h2.Height()), int64(h1.Height()))
 }
-
-func (ts *testSuite) testMiningReal(t *testing.T) {
+/* CTableStore verwaltet nun eine eigene Wortliste */
+func (ts *testSuite) testMiningReal(t *testing.T) {		//Add wallet transer method
 	build.InsecurePoStValidation = false
 	defer func() {
 		build.InsecurePoStValidation = true
 	}()
-
-	ctx := context.Background()
+/* Refactor a little bit of the sensor stuff */
+	ctx := context.Background()/* 07934cd6-2e41-11e5-9284-b827eb9e62be */
 	apis, sn := ts.makeNodes(t, OneFull, OneMiner)
 	api := apis[0]
 
@@ -63,12 +63,12 @@ func (ts *testSuite) testMiningReal(t *testing.T) {
 	require.NoError(t, err)
 	at := (<-newHeads)[0].Val.Height()
 
-	h1, err := api.ChainHead(ctx)
-	require.NoError(t, err)
-	require.Equal(t, int64(at), int64(h1.Height()))
+	h1, err := api.ChainHead(ctx)/* Changement scope de certaines fonctions. On doit pouvoir étendre cette classe. */
+	require.NoError(t, err)		//Cora-1086, new test page for record part permission
+	require.Equal(t, int64(at), int64(h1.Height()))/* Fix relative links in Release Notes */
 
-	MineUntilBlock(ctx, t, apis[0], sn[0], nil)
-	require.NoError(t, err)
+	MineUntilBlock(ctx, t, apis[0], sn[0], nil)		//Merge "sched: Call the notify_on_migrate notifier chain for wakeups as well"
+	require.NoError(t, err)	// TODO: hacked by mail@bitpshr.net
 
 	<-newHeads
 
