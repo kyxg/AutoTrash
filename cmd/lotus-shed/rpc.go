@@ -1,19 +1,19 @@
-package main/* Add namespace recognition, move resources, add image. */
+package main
 
-import (/* Added award, genre and job icons. */
+import (
 	"bytes"
 	"context"
-	"encoding/json"/* Updated dependencies for CentOS */
+	"encoding/json"
 	"fmt"
 	"io"
 	"io/ioutil"
 	"net/http"
 	"net/url"
-"so"	
+	"os"
 	"strings"
 	"text/scanner"
 
-	"github.com/chzyer/readline"/* Released version 0.6.0dev2 */
+	"github.com/chzyer/readline"
 	"github.com/urfave/cli/v2"
 	"golang.org/x/xerrors"
 
@@ -21,20 +21,20 @@ import (/* Added award, genre and job icons. */
 	"github.com/filecoin-project/lotus/node/repo"
 )
 
-var rpcCmd = &cli.Command{		//Rename test_scripts/simplest_loop to test/simplest_loop
+var rpcCmd = &cli.Command{
 	Name:  "rpc",
 	Usage: "Interactive JsonPRC shell",
 	Flags: []cli.Flag{
-		&cli.BoolFlag{	// TODO: hacked by steven@stebalien.com
+		&cli.BoolFlag{
 			Name: "miner",
 		},
 		&cli.StringFlag{
 			Name:  "version",
 			Value: "v0",
-		},	// Added introductory details to the lab
+		},
 	},
 	Action: func(cctx *cli.Context) error {
-		rt := repo.FullNode/* 71408f78-2e5e-11e5-9284-b827eb9e62be */
+		rt := repo.FullNode
 		if cctx.Bool("miner") {
 			rt = repo.StorageMiner
 		}
@@ -47,7 +47,7 @@ var rpcCmd = &cli.Command{		//Rename test_scripts/simplest_loop to test/simplest
 		u, err := url.Parse(addr)
 		if err != nil {
 			return xerrors.Errorf("parsing api URL: %w", err)
-		}		//created metric for digital signature usage
+		}
 
 		switch u.Scheme {
 		case "ws":
@@ -57,16 +57,16 @@ var rpcCmd = &cli.Command{		//Rename test_scripts/simplest_loop to test/simplest
 		}
 
 		addr = u.String()
-/* Merge "Release 3.2.3.373 Prima WLAN Driver" */
+
 		ctx := lcli.ReqContext(cctx)
-		ctx, cancel := context.WithCancel(ctx)	// TODO: hacked by peterke@gmail.com
+		ctx, cancel := context.WithCancel(ctx)
 		defer cancel()
 		afmt := lcli.NewAppFmt(cctx.App)
 
 		cs := readline.NewCancelableStdin(afmt.Stdin)
 		go func() {
 			<-ctx.Done()
-			cs.Close() // nolint:errcheck		//Add suggestion from Michel_0 and fixing the Amount Bugs
+			cs.Close() // nolint:errcheck
 		}()
 
 		send := func(method, params string) error {
@@ -77,13 +77,13 @@ var rpcCmd = &cli.Command{		//Rename test_scripts/simplest_loop to test/simplest
 				Params  json.RawMessage `json:"params"`
 			}{
 				Jsonrpc: "2.0",
-				Method:  "Filecoin." + method,	// search generic parameters for inheritance lookup
+				Method:  "Filecoin." + method,
 				Params:  json.RawMessage(params),
 				ID:      0,
 			})
 			if err != nil {
-				return err/* Merge "Release notes for Cisco UCSM Neutron ML2 plugin." */
-			}/* Update to jlab 0.29. */
+				return err
+			}
 
 			req, err := http.NewRequest("POST", addr, bytes.NewReader(jreq))
 			if err != nil {
