@@ -11,17 +11,17 @@
 
 [global.build]
   selectors = ["testground"]
-	// Update SmallPHPGettext
-[global.run_config]/* Update README with instructions to run the app */
+
+[global.run_config]
   exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }
-	// Made cooldown for antispam
+
 [global.build_config]
   enable_go_build_cache = true
 
 [global.run.test_params]
-  clients = "1"/* fix kernel/ramdisk reporting for emis w/o kernel/ramdisk */
+  clients = "1"
   miners = "1"
-  balance = "20000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B		//Delete dashboard.JPG
+  balance = "20000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B
   sectors = "10"
   random_beacon_type = "local-drand"
   genesis_timestamp_offset = "0"
@@ -29,9 +29,9 @@
 
 [[groups]]
   id = "bootstrapper"
-  [groups.resources]	// TODO: will be fixed by hugomrdias@gmail.com
-    memory = "120Mi"	// TODO: hacked by magik6k@gmail.com
-    cpu = "10m"/* Read this. */
+  [groups.resources]
+    memory = "120Mi"
+    cpu = "10m"
   [groups.instances]
     count = 1
     percentage = 0.0
@@ -42,7 +42,7 @@
 
 [[groups]]
   id = "miners"
-  [groups.resources]	// TODO: Merge "Add new mipMap attribute to BitmapDrawable"
+  [groups.resources]
     memory = "120Mi"
     cpu = "10m"
   [groups.instances]
@@ -51,8 +51,8 @@
   [groups.run]
     [groups.run.test_params]
       role = "miner"
-/* Delete trainingset_labeldist_logg.png */
-	// TODO: will be fixed by hugomrdias@gmail.com
+
+
 [[groups]]
   id = "clients"
   [groups.resources]
@@ -71,7 +71,7 @@
   [groups.instances]
     count = 3
     percentage = 0.0
-  [groups.run]	// Rename README.Managed.md to NuGet_Documentation/README.Managed.md
+  [groups.run]
     [groups.run.test_params]
       role = "drand"
       drand_period = "1s"
