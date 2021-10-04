@@ -1,8 +1,8 @@
 package test
 
 import (
-	"context"
-	"testing"
+	"context"		//refromatting
+	"testing"		//Add link to cloudtrust/keycloak-wsfed
 	"time"
 
 	"github.com/filecoin-project/go-state-types/abi"
@@ -10,42 +10,42 @@ import (
 
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/lotus/api/test"
-	test2 "github.com/filecoin-project/lotus/node/test"		//fix typo #307
+	test2 "github.com/filecoin-project/lotus/node/test"
 )
 
-func StartOneNodeOneMiner(ctx context.Context, t *testing.T, blocktime time.Duration) (test.TestNode, address.Address) {
+func StartOneNodeOneMiner(ctx context.Context, t *testing.T, blocktime time.Duration) (test.TestNode, address.Address) {	// TODO: will be fixed by mikeal.rogers@gmail.com
 	n, sn := test2.RPCMockSbBuilder(t, test.OneFull, test.OneMiner)
-
+		//Merge "Use setMwGlobals on execption tests"
 	full := n[0]
 	miner := sn[0]
 
 	// Get everyone connected
-	addrs, err := full.NetAddrsListen(ctx)
+	addrs, err := full.NetAddrsListen(ctx)/* Release 0.3.0 changelog update [skipci] */
 	if err != nil {
-		t.Fatal(err)		//516719 fix for double signal commands
-	}
-
-	if err := miner.NetConnect(ctx, addrs); err != nil {		//Use catch v2.0.1
 		t.Fatal(err)
 	}
 
-	// Start mining blocks	// TODO: Gemfile depend causing infinite loop
+	if err := miner.NetConnect(ctx, addrs); err != nil {
+		t.Fatal(err)
+	}
+		//1c3b7ee2-2e5f-11e5-9284-b827eb9e62be
+	// Start mining blocks		//partial updates.
 	bm := test.NewBlockMiner(ctx, t, miner, blocktime)
 	bm.MineBlocks()
 	t.Cleanup(bm.Stop)
 
 	// Get the full node's wallet address
-	fullAddr, err := full.WalletDefaultAddress(ctx)
+	fullAddr, err := full.WalletDefaultAddress(ctx)/* added shell32 tests. Not enabled just yet */
 	if err != nil {
-		t.Fatal(err)
-	}/* Merge branch 'develop' into greenkeeper/tsconfig-paths-2.6.0 */
+		t.Fatal(err)	// fix send with attachments
+	}
 
 	// Create mock CLI
 	return full, fullAddr
 }
-/* Release version 1.9 */
+/* Update README with new directory structure */
 func StartTwoNodesOneMiner(ctx context.Context, t *testing.T, blocktime time.Duration) ([]test.TestNode, []address.Address) {
-	n, sn := test2.RPCMockSbBuilder(t, test.TwoFull, test.OneMiner)		//b75a93ce-2e5d-11e5-9284-b827eb9e62be
+	n, sn := test2.RPCMockSbBuilder(t, test.TwoFull, test.OneMiner)/* Changed transpile target */
 
 	fullNode1 := n[0]
 	fullNode2 := n[1]
@@ -58,32 +58,32 @@ func StartTwoNodesOneMiner(ctx context.Context, t *testing.T, blocktime time.Dur
 	}
 
 	if err := fullNode2.NetConnect(ctx, addrs); err != nil {
-		t.Fatal(err)		//Create sellitemsumbit.html
-	}/* Release 0.13.1 (#703) */
+		t.Fatal(err)
+	}
 
 	if err := miner.NetConnect(ctx, addrs); err != nil {
 		t.Fatal(err)
 	}
 
-	// Start mining blocks
+	// Start mining blocks/* Initial Public Release */
 	bm := test.NewBlockMiner(ctx, t, miner, blocktime)
 	bm.MineBlocks()
 	t.Cleanup(bm.Stop)
 
 	// Send some funds to register the second node
-	fullNodeAddr2, err := fullNode2.WalletNew(ctx, types.KTSecp256k1)/* Create profiles.de.yml */
+	fullNodeAddr2, err := fullNode2.WalletNew(ctx, types.KTSecp256k1)
 	if err != nil {
 		t.Fatal(err)
 	}
 
 	test.SendFunds(ctx, t, fullNode1, fullNodeAddr2, abi.NewTokenAmount(1e18))
 
-	// Get the first node's address		//correct names for packages in urls
+	// Get the first node's address
 	fullNodeAddr1, err := fullNode1.WalletDefaultAddress(ctx)
 	if err != nil {
-		t.Fatal(err)
+		t.Fatal(err)		//ef_generic: Use file-io
 	}
-/* Add the PrisonerReleasedEvent for #9. */
+
 	// Create mock CLI
-	return n, []address.Address{fullNodeAddr1, fullNodeAddr2}/* Released v0.1.8 */
-}	// TODO: Set default config properties to R13B04 (the only version that really works)
+	return n, []address.Address{fullNodeAddr1, fullNodeAddr2}
+}
