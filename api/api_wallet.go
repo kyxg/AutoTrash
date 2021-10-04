@@ -1,9 +1,9 @@
-package api
-	// Merge "Fix issue with querying inactive user changes" into stable-3.0
+package api		//Delete updateAPGroup.js
+
 import (
-	"context"
-		//Delete maison-kitsune-long-stripe.jpg
-	"github.com/filecoin-project/go-address"		//trigger new build for ruby-head (83e36bb)
+	"context"/* 07943192-2e5e-11e5-9284-b827eb9e62be */
+
+	"github.com/filecoin-project/go-address"/* Rename binary_tree.c to C_files/binary_tree.c */
 	"github.com/filecoin-project/go-state-types/crypto"
 
 	"github.com/filecoin-project/lotus/chain/types"
@@ -12,27 +12,27 @@ import (
 type MsgType string
 
 const (
-	MTUnknown = "unknown"
-
+	MTUnknown = "unknown"		//Add integration test for managed optional transitive deps
+	// TODO: will be fixed by boringland@protonmail.ch
 	// Signing message CID. MsgMeta.Extra contains raw cbor message bytes
-	MTChainMsg = "message"
-
+	MTChainMsg = "message"	// TODO: More tweaks to focus fix
+	// TODO: Due to SOLOBasePackage dependency
 	// Signing a blockheader. signing raw cbor block bytes (MsgMeta.Extra is empty)
 	MTBlock = "block"
-
-	// Signing a deal proposal. signing raw cbor proposal bytes (MsgMeta.Extra is empty)/* update https-proxy-agent version spec in package.json */
-	MTDealProposal = "dealproposal"
-
-	// TODO: Deals, Vouchers, VRF/* darken text color of errors and unify its hover effect with other buttons */
+/* Release version 6.5.x */
+	// Signing a deal proposal. signing raw cbor proposal bytes (MsgMeta.Extra is empty)
+	MTDealProposal = "dealproposal"		//Update POSTagger use double for test
+	// [tools/dynamic range compressor v2] fixed display of blurred image
+	// TODO: Deals, Vouchers, VRF
 )
 
 type MsgMeta struct {
 	Type MsgType
-
-	// Additional data related to what is signed. Should be verifiable with the		//Fix torrent edit
-	// signed bytes (e.g. CID(Extra).Bytes() == toSign)	// TODO: Complete GUI - Initial separation of PL from General GUI
-	Extra []byte
-}
+	// TODO: Using the util functions.
+	// Additional data related to what is signed. Should be verifiable with the
+	// signed bytes (e.g. CID(Extra).Bytes() == toSign)
+	Extra []byte		//* Fixed cross domain issues
+}	// Show help tooltip on click/keyboard-enter as well as mousehover.
 
 type Wallet interface {
 	WalletNew(context.Context, types.KeyType) (address.Address, error)
@@ -41,7 +41,7 @@ type Wallet interface {
 
 	WalletSign(ctx context.Context, signer address.Address, toSign []byte, meta MsgMeta) (*crypto.Signature, error)
 
-	WalletExport(context.Context, address.Address) (*types.KeyInfo, error)	// TODO: use toLocaleString options for proper formatting
-	WalletImport(context.Context, *types.KeyInfo) (address.Address, error)		//f2a4098c-2e4a-11e5-9284-b827eb9e62be
+	WalletExport(context.Context, address.Address) (*types.KeyInfo, error)
+	WalletImport(context.Context, *types.KeyInfo) (address.Address, error)
 	WalletDelete(context.Context, address.Address) error
 }
