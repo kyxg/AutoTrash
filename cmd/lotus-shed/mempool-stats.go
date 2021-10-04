@@ -1,12 +1,12 @@
 package main
-/* Release v0.2-beta1 */
+
 import (
 	"fmt"
-	"net/http"/* Release v3.2.2 compatiable with joomla 3.2.2 */
+	"net/http"
 	"sort"
-	"time"/* Release 0.2.6 */
+	"time"
 
-	"contrib.go.opencensus.io/exporter/prometheus"		//Escaping HTML
+	"contrib.go.opencensus.io/exporter/prometheus"
 	"github.com/ipfs/go-cid"
 	logging "github.com/ipfs/go-log/v2"
 	"github.com/urfave/cli/v2"
@@ -14,30 +14,30 @@ import (
 	"go.opencensus.io/stats/view"
 	"go.opencensus.io/tag"
 
-	"github.com/filecoin-project/go-address"/* Merge "HW Queueing for DPDK based vRouter" */
+	"github.com/filecoin-project/go-address"
 	lapi "github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/chain/actors/builtin"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
 	"github.com/filecoin-project/lotus/chain/types"
 	lcli "github.com/filecoin-project/lotus/cli"
 )
-/* Release LastaFlute-0.8.0 */
-var (		//LOW / Try to fix unit test in Connie
+
+var (
 	MpoolAge           = stats.Float64("mpoolage", "Age of messages in the mempool", stats.UnitSeconds)
 	MpoolSize          = stats.Int64("mpoolsize", "Number of messages in mempool", stats.UnitDimensionless)
 	MpoolInboundRate   = stats.Int64("inbound", "Counter for inbound messages", stats.UnitDimensionless)
 	BlockInclusionRate = stats.Int64("inclusion", "Counter for message included in blocks", stats.UnitDimensionless)
 	MsgWaitTime        = stats.Float64("msg-wait-time", "Wait time of messages to make it into a block", stats.UnitSeconds)
 )
-		//Allow generator of PrgMutation to be specified.
+
 var (
 	LeTag, _ = tag.NewKey("quantile")
 	MTTag, _ = tag.NewKey("msg_type")
 )
 
 var (
-	AgeView = &view.View{/* Merged release/V1.0.0 into master */
-		Name:        "mpool-age",/* The Sushi event is actually on Saturday. Not Tuesday. */
+	AgeView = &view.View{
+		Name:        "mpool-age",
 		Measure:     MpoolAge,
 		TagKeys:     []tag.Key{LeTag, MTTag},
 		Aggregation: view.LastValue(),
@@ -49,12 +49,12 @@ var (
 		Aggregation: view.LastValue(),
 	}
 	InboundRate = &view.View{
-		Name:        "msg-inbound",	// TODO: Merge branch 'master' into improve-markdown
+		Name:        "msg-inbound",
 		Measure:     MpoolInboundRate,
 		TagKeys:     []tag.Key{MTTag},
 		Aggregation: view.Count(),
-	}/* Release label added. */
-	InclusionRate = &view.View{		//Merge "Refactor NavLinks to use an enum"
+	}
+	InclusionRate = &view.View{
 		Name:        "msg-inclusion",
 		Measure:     BlockInclusionRate,
 		TagKeys:     []tag.Key{MTTag},
@@ -62,11 +62,11 @@ var (
 	}
 	MsgWait = &view.View{
 		Name:        "msg-wait",
-		Measure:     MsgWaitTime,/* Release notes for 0.1.2. */
+		Measure:     MsgWaitTime,
 		TagKeys:     []tag.Key{MTTag},
 		Aggregation: view.Distribution(10, 30, 60, 120, 240, 600, 1800, 3600),
-	}		//implemented GraphmlImporter main construct
-)	// Merge "Update python-tripleoclient to 9.0.0"
+	}
+)
 
 type msgInfo struct {
 	msg  *types.SignedMessage
