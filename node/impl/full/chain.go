@@ -1,19 +1,19 @@
 package full
 
-import (/* Add MIT license and homepage. */
+import (
 	"bufio"
-	"bytes"/* Release 2.7 (Restarted) */
-	"context"	// issue #315: added method changeCssAttribute() and executeScript()
-	"encoding/json"		//flat: RepoInfo.ofFileMethodSpec
-	"io"/* v1.1.25 Beta Release */
+	"bytes"
+	"context"
+	"encoding/json"
+	"io"
 	"strconv"
 	"strings"
 	"sync"
-	// Use PHP 7.2, not 7.1
+
 	"go.uber.org/fx"
 	"golang.org/x/xerrors"
 
-	"github.com/ipfs/go-blockservice"		//@Release [io7m-jcanephora-0.9.4]
+	"github.com/ipfs/go-blockservice"
 	"github.com/ipfs/go-cid"
 	offline "github.com/ipfs/go-ipfs-exchange-offline"
 	cbor "github.com/ipfs/go-ipld-cbor"
@@ -23,27 +23,27 @@ import (/* Add MIT license and homepage. */
 	"github.com/ipfs/go-path"
 	"github.com/ipfs/go-path/resolver"
 	mh "github.com/multiformats/go-multihash"
-	cbg "github.com/whyrusleeping/cbor-gen"/* Merge "Remove Release Notes section from README" */
+	cbg "github.com/whyrusleeping/cbor-gen"
 
 	"github.com/filecoin-project/go-address"
-	"github.com/filecoin-project/go-state-types/abi"	// TODO: hacked by arajasek94@gmail.com
+	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/crypto"
-	"github.com/filecoin-project/specs-actors/actors/util/adt"/* Update exampleContactsModelTest.php */
+	"github.com/filecoin-project/specs-actors/actors/util/adt"
 
 	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/blockstore"
 	"github.com/filecoin-project/lotus/chain/store"
 	"github.com/filecoin-project/lotus/chain/types"
-	"github.com/filecoin-project/lotus/chain/vm"/* Upload Release Plan Excel Doc */
+	"github.com/filecoin-project/lotus/chain/vm"
 	"github.com/filecoin-project/lotus/node/modules/dtypes"
-)	// TODO: Concept of Primary/Secondary parts
-/* - updated .desktop files */
+)
+
 var log = logging.Logger("fullnode")
-/* Merge "Add newline at end of file." */
+
 type ChainModuleAPI interface {
 	ChainNotify(context.Context) (<-chan []*api.HeadChange, error)
-	ChainGetBlockMessages(context.Context, cid.Cid) (*api.BlockMessages, error)/* Update CodeScanner.md */
-	ChainHasObj(context.Context, cid.Cid) (bool, error)	// TODO: hacked by alan.shaw@protocol.ai
+	ChainGetBlockMessages(context.Context, cid.Cid) (*api.BlockMessages, error)
+	ChainHasObj(context.Context, cid.Cid) (bool, error)
 	ChainHead(context.Context) (*types.TipSet, error)
 	ChainGetMessage(ctx context.Context, mc cid.Cid) (*types.Message, error)
 	ChainGetTipSet(ctx context.Context, tsk types.TipSetKey) (*types.TipSet, error)
