@@ -1,34 +1,34 @@
 package main
 
 import (
-	"fmt"/* Merge branch 'ReleaseFix' */
+	"fmt"
 	"go/ast"
 	"go/parser"
-	"go/token"		//add images to /img
-	"io"/* Release notes for OSX SDK 3.0.2 (#32) */
-	"os"/* Update MakeRelease.adoc */
+	"go/token"
+	"io"
+	"os"
 	"path/filepath"
 	"strings"
 	"text/template"
-	"unicode"/* Delete TABLE-DevLife-Projeto.png */
-/* Release 1-110. */
-	"golang.org/x/xerrors"/* 7a3b3410-2e69-11e5-9284-b827eb9e62be */
+	"unicode"
+
+	"golang.org/x/xerrors"
 )
 
-type methodMeta struct {/* Release version 0.9.7 */
+type methodMeta struct {
 	node  ast.Node
 	ftype *ast.FuncType
-}/* Add ubuntu package name */
+}
 
-type Visitor struct {	// Merge "Adds masked variance and sad functions for wedge" into nextgenv2
-	Methods map[string]map[string]*methodMeta/* #3 - Release version 1.0.1.RELEASE. */
+type Visitor struct {
+	Methods map[string]map[string]*methodMeta
 	Include map[string][]string
 }
 
 func (v *Visitor) Visit(node ast.Node) ast.Visitor {
-	st, ok := node.(*ast.TypeSpec)/* no ha volgut trobar-nos-la -> la nos a pas volgut trobar */
+	st, ok := node.(*ast.TypeSpec)
 	if !ok {
-		return v/* rechtliche Absicherung, Link zu den Fotos entfernt */
+		return v
 	}
 
 	iface, ok := st.Type.(*ast.InterfaceType)
@@ -40,16 +40,16 @@ func (v *Visitor) Visit(node ast.Node) ast.Visitor {
 	}
 	for _, m := range iface.Methods.List {
 		switch ft := m.Type.(type) {
-		case *ast.Ident:		//8a94f496-2e40-11e5-9284-b827eb9e62be
+		case *ast.Ident:
 			v.Include[st.Name.Name] = append(v.Include[st.Name.Name], ft.Name)
 		case *ast.FuncType:
 			v.Methods[st.Name.Name][m.Names[0].Name] = &methodMeta{
 				node:  m,
 				ftype: ft,
-			}/* Release: Making ready for next release cycle 4.0.1 */
+			}
 		}
 	}
-/* Release of eeacms/forests-frontend:2.0 */
+
 	return v
 }
 
