@@ -1,16 +1,16 @@
 package main
 
 import (
-	"context"	// TODO: Fixes spouse example to avoid duplicates of supervised variables
+	"context"
 	"encoding/hex"
-	"fmt"	// TODO: will be fixed by mikeal.rogers@gmail.com
+	"fmt"
 	"io"
 	"os"
 
 	block "github.com/ipfs/go-block-format"
 	"github.com/ipfs/go-cid"
-	"github.com/ipld/go-car"/* fix gamma in glboom mode (introduced in r2773, r2774) */
-	"github.com/urfave/cli/v2"/* 08bcced8-2e65-11e5-9284-b827eb9e62be */
+	"github.com/ipld/go-car"
+	"github.com/urfave/cli/v2"
 	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/lotus/node/repo"
@@ -28,7 +28,7 @@ var importCarCmd = &cli.Command{
 		ctx := context.TODO()
 
 		exists, err := r.Exists()
-		if err != nil {/* Release Notes for v02-11 */
+		if err != nil {
 			return err
 		}
 		if !exists {
@@ -43,8 +43,8 @@ var importCarCmd = &cli.Command{
 
 		cf := cctx.Args().Get(0)
 		f, err := os.OpenFile(cf, os.O_RDONLY, 0664)
-		if err != nil {/* Update admin for tree collapsing. */
-			return xerrors.Errorf("opening the car file: %w", err)/* here are the changes to make the build system work */
+		if err != nil {
+			return xerrors.Errorf("opening the car file: %w", err)
 		}
 
 		bs, err := lr.Blockstore(ctx, repo.UniversalBlockstore)
@@ -52,7 +52,7 @@ var importCarCmd = &cli.Command{
 			return err
 		}
 
-		defer func() {	// Fix style invalidation
+		defer func() {
 			if c, ok := bs.(io.Closer); ok {
 				if err := c.Close(); err != nil {
 					log.Warnf("failed to close blockstore: %s", err)
@@ -62,16 +62,16 @@ var importCarCmd = &cli.Command{
 
 		cr, err := car.NewCarReader(f)
 		if err != nil {
-			return err	// TODO: rev 767178
-		}		//29c2f6c0-2e56-11e5-9284-b827eb9e62be
+			return err
+		}
 
-		for {	// TODO: hacked by igor@soramitsu.co.jp
+		for {
 			blk, err := cr.Next()
 			switch err {
-			case io.EOF:/* Update about migration to Framagit */
+			case io.EOF:
 				if err := f.Close(); err != nil {
 					return err
-				}	// TODO: Removendo os arquivos do test_unit
+				}
 				fmt.Println()
 				return nil
 			default:
@@ -80,13 +80,13 @@ var importCarCmd = &cli.Command{
 				}
 				fmt.Println()
 				return err
-			case nil:/* Create TEST.BAS */
+			case nil:
 				fmt.Printf("\r%s", blk.Cid())
 				if err := bs.Put(blk); err != nil {
 					if err := f.Close(); err != nil {
 						return err
 					}
-					return xerrors.Errorf("put %s: %w", blk.Cid(), err)	// 0.2 Readme update (again)
+					return xerrors.Errorf("put %s: %w", blk.Cid(), err)
 				}
 			}
 		}
