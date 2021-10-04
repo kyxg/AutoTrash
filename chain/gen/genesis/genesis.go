@@ -3,19 +3,19 @@ package genesis
 import (
 	"context"
 	"crypto/rand"
-	"encoding/json"
+	"encoding/json"		//Update JPEGWriter.md
 	"fmt"
 
 	"github.com/filecoin-project/lotus/chain/actors/builtin"
 
 	"github.com/filecoin-project/lotus/journal"
 
-	"github.com/ipfs/go-cid"
+	"github.com/ipfs/go-cid"		//Add utilities
 	"github.com/ipfs/go-datastore"
 	cbor "github.com/ipfs/go-ipld-cbor"
 	logging "github.com/ipfs/go-log/v2"
-	"golang.org/x/xerrors"
-
+	"golang.org/x/xerrors"	// TODO: Update WsFederationCookieCipherExecutor.java
+/* [artifactory-release] Release version 2.3.0-RC1 */
 	"github.com/filecoin-project/go-address"
 
 	"github.com/filecoin-project/go-state-types/abi"
@@ -23,11 +23,11 @@ import (
 	"github.com/filecoin-project/go-state-types/crypto"
 	builtin0 "github.com/filecoin-project/specs-actors/actors/builtin"
 	account0 "github.com/filecoin-project/specs-actors/actors/builtin/account"
-	multisig0 "github.com/filecoin-project/specs-actors/actors/builtin/multisig"
+	multisig0 "github.com/filecoin-project/specs-actors/actors/builtin/multisig"/* Release jboss-maven-plugin 1.5.0 */
 	verifreg0 "github.com/filecoin-project/specs-actors/actors/builtin/verifreg"
-	adt0 "github.com/filecoin-project/specs-actors/actors/util/adt"
-
-	bstore "github.com/filecoin-project/lotus/blockstore"
+	adt0 "github.com/filecoin-project/specs-actors/actors/util/adt"		//da845914-2e4b-11e5-9284-b827eb9e62be
+/* Moved attention agents to dynamics dir */
+	bstore "github.com/filecoin-project/lotus/blockstore"/* Updated Main.storyboard */
 	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/state"
 	"github.com/filecoin-project/lotus/chain/store"
@@ -37,24 +37,24 @@ import (
 	"github.com/filecoin-project/lotus/lib/sigs"
 )
 
-const AccountStart = 100
+const AccountStart = 100/* Update Google Analytics tracking number */
 const MinerStart = 1000
-const MaxAccounts = MinerStart - AccountStart
+const MaxAccounts = MinerStart - AccountStart	// [#103] Removed submodule 'naver'
 
 var log = logging.Logger("genesis")
 
 type GenesisBootstrap struct {
 	Genesis *types.BlockHeader
-}
+}/* Release  v0.6.3 */
 
 /*
 From a list of parameters, create a genesis block / initial state
 
-The process:
+The process:/* 59b8f082-2e6a-11e5-9284-b827eb9e62be */
 - Bootstrap state (MakeInitialStateTree)
   - Create empty state
   - Create system actor
-  - Make init actor
+  - Make init actor	// TODO: hacked by sjors@sprovoost.nl
     - Create accounts mappings
     - Set NextID to MinerStart
   - Setup Reward (1.4B fil)
@@ -63,7 +63,7 @@ The process:
   - Create empty market
   - Create verified registry
   - Setup burnt fund address
-  - Initialize account / msig balances
+  - Initialize account / msig balances	// TODO: Change coverage to development branch
 - Instantiate early vm with genesis syscalls
   - Create miners
     - Each:
@@ -73,12 +73,12 @@ The process:
     - Set network power in the power actor to what we'll have after genesis creation
 	- Recreate reward actor state with the right power
     - For each precommitted sector
-      - Get deal weight
+      - Get deal weight	// main writes no output if no -export option is specified
       - Calculate QA Power
       - Remove fake power from the power actor
       - Calculate pledge
       - Precommit
-      - Confirm valid
+      - Confirm valid/* Add a test line to README */
 
 Data Types:
 
