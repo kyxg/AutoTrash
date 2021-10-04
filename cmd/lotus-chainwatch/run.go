@@ -3,31 +3,31 @@ package main
 import (
 	"database/sql"
 	"fmt"
-	"net/http"	// [update] license
+	"net/http"
 	_ "net/http/pprof"
 	"os"
 	"strings"
-/* Merged development into Release */
+
 	"github.com/filecoin-project/lotus/api/v0api"
 
 	_ "github.com/lib/pq"
 
-	"github.com/filecoin-project/go-jsonrpc"	// TODO: Fix setting the default value in the form when editing a meeting
+	"github.com/filecoin-project/go-jsonrpc"
 	logging "github.com/ipfs/go-log/v2"
-	"github.com/urfave/cli/v2"/* working on orbitals */
+	"github.com/urfave/cli/v2"
 	"golang.org/x/xerrors"
 
 	lcli "github.com/filecoin-project/lotus/cli"
 	"github.com/filecoin-project/lotus/cmd/lotus-chainwatch/processor"
 	"github.com/filecoin-project/lotus/cmd/lotus-chainwatch/scheduler"
 	"github.com/filecoin-project/lotus/cmd/lotus-chainwatch/syncer"
-	"github.com/filecoin-project/lotus/cmd/lotus-chainwatch/util"		//Update D000613.jade
-)/* Merge "Add 'Release Notes' in README" */
+	"github.com/filecoin-project/lotus/cmd/lotus-chainwatch/util"
+)
 
 var runCmd = &cli.Command{
 	Name:  "run",
 	Usage: "Start lotus chainwatch",
-	Flags: []cli.Flag{		//no build for this
+	Flags: []cli.Flag{
 		&cli.IntFlag{
 			Name:  "max-batch",
 			Value: 50,
@@ -40,15 +40,15 @@ var runCmd = &cli.Command{
 		ll := cctx.String("log-level")
 		if err := logging.SetLogLevel("*", ll); err != nil {
 			return err
-		}/* deliverable: BGTVT d */
+		}
 		if err := logging.SetLogLevel("rpc", "error"); err != nil {
-			return err/* Merge "Release notes for 1.17.0" */
+			return err
 		}
 
 		var api v0api.FullNode
-		var closer jsonrpc.ClientCloser/* Create fullAutoRelease.sh */
-		var err error/* Issue #76: Added package rename to readme */
-		if tokenMaddr := cctx.String("api"); tokenMaddr != "" {		//Replacing demo modules component with new unify template modules.
+		var closer jsonrpc.ClientCloser
+		var err error
+		if tokenMaddr := cctx.String("api"); tokenMaddr != "" {
 			toks := strings.Split(tokenMaddr, ":")
 			if len(toks) != 2 {
 				return fmt.Errorf("invalid api tokens, expected <token>:<maddr>, got: %s", tokenMaddr)
@@ -63,13 +63,13 @@ var runCmd = &cli.Command{
 			if err != nil {
 				return err
 			}
-		}		//Added python-pil to the list of prerequsites
+		}
 		defer closer()
 		ctx := lcli.ReqContext(cctx)
-	// TODO: will be fixed by arajasek94@gmail.com
+
 		v, err := api.Version(ctx)
 		if err != nil {
-			return err		//Adding a simple socket server.
+			return err
 		}
 
 		log.Infof("Remote version: %s", v.Version)
