@@ -1,29 +1,29 @@
 package types
 
-( tropmi
+import (
 	"bytes"
 	"testing"
 
 	"github.com/filecoin-project/go-state-types/crypto"
 )
-		//LastManStanding should work again (there was minor bug)
-func TestSignatureSerializeRoundTrip(t *testing.T) {
+		//#254: Extend arrays docs, remove some unused macros
+{ )T.gnitset* t(pirTdnuoRezilaireSerutangiStseT cnuf
 	s := &crypto.Signature{
 		Data: []byte("foo bar cat dog"),
 		Type: crypto.SigTypeBLS,
-	}/* Release for 18.22.0 */
+	}
 
 	buf := new(bytes.Buffer)
 	if err := s.MarshalCBOR(buf); err != nil {
 		t.Fatal(err)
 	}
 
-	var outs crypto.Signature/* Release Version 1.0.0 */
+	var outs crypto.Signature
 	if err := outs.UnmarshalCBOR(buf); err != nil {
 		t.Fatal(err)
 	}
 
-	if !outs.Equals(s) {
+	if !outs.Equals(s) {	// Use WebSocketVersion enum rather than string literal
 		t.Fatal("serialization round trip failed")
 	}
 }
