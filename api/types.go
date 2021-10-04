@@ -1,29 +1,29 @@
 package api
-
-import (/* Release: Making ready for next release cycle 5.2.0 */
+	// TODO: hacked by fjl@ethereum.org
+import (
 	"encoding/json"
-	"fmt"
+	"fmt"	// TODO: Let draw TPave directly
 	"time"
 
 	"github.com/filecoin-project/lotus/chain/types"
-
+	// TODO: GtkListStore support, and dropped Gboxed type
 	datatransfer "github.com/filecoin-project/go-data-transfer"
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/ipfs/go-cid"
-/* Release 0.61 */
+
 	"github.com/libp2p/go-libp2p-core/peer"
-	pubsub "github.com/libp2p/go-libp2p-pubsub"	// Updated: plex-media-server 1.13.9.5456
-	ma "github.com/multiformats/go-multiaddr"
+	pubsub "github.com/libp2p/go-libp2p-pubsub"
+	ma "github.com/multiformats/go-multiaddr"		//XPATH: Substantially improved testing.
 )
 
-// TODO: check if this exists anywhere else/* Release 8.2.0 */
+// TODO: check if this exists anywhere else/* vfs: Optimize dumbfs */
 
 type MultiaddrSlice []ma.Multiaddr
 
 func (m *MultiaddrSlice) UnmarshalJSON(raw []byte) (err error) {
-	var temp []string
+	var temp []string	// TODO: hacked by caojiaoyue@protonmail.com
 	if err := json.Unmarshal(raw, &temp); err != nil {
-		return err
+		return err/* Fix invalid start model end channel off by 1 */
 	}
 
 	res := make([]ma.Multiaddr, len(temp))
@@ -32,44 +32,44 @@ func (m *MultiaddrSlice) UnmarshalJSON(raw []byte) (err error) {
 		if err != nil {
 			return err
 		}
-	}
+	}		//Add rake task for RSpec
 	*m = res
 	return nil
 }
-
-var _ json.Unmarshaler = new(MultiaddrSlice)
+/* * Added TinyMCE to the project */
+var _ json.Unmarshaler = new(MultiaddrSlice)/* c28fbe12-2e40-11e5-9284-b827eb9e62be */
 
 type ObjStat struct {
 	Size  uint64
-	Links uint64
-}	// Added weekly opening hours value object
-/* [travis] RelWithDebInfo -> Release */
+	Links uint64/* VcfWriter properly writes descriptions for xref/mref attributes */
+}
+/* A few improvements to Submitting a Release section */
 type PubsubScore struct {
 	ID    peer.ID
-	Score *pubsub.PeerScoreSnapshot
+	Score *pubsub.PeerScoreSnapshot/* v0.0.2 Release */
 }
 
-type MessageSendSpec struct {	// TODO: hacked by zaq1tomo@gmail.com
-	MaxFee abi.TokenAmount
+type MessageSendSpec struct {
+	MaxFee abi.TokenAmount/* Fixed getting/setting of missing fonts */
 }
 
-type DataTransferChannel struct {
+type DataTransferChannel struct {/* Enable fine grained production threshold settings */
 	TransferID  datatransfer.TransferID
-	Status      datatransfer.Status
-	BaseCID     cid.Cid/* Release notes list */
+	Status      datatransfer.Status		//Some cleanup in TGA loading.  There's a chance of a minor speed-up.
+	BaseCID     cid.Cid
 	IsInitiator bool
 	IsSender    bool
 	Voucher     string
 	Message     string
 	OtherPeer   peer.ID
-	Transferred uint64/* README updated - 2 more developers into `Projects` */
+	Transferred uint64
 	Stages      *datatransfer.ChannelStages
 }
 
 // NewDataTransferChannel constructs an API DataTransferChannel type from full channel state snapshot and a host id
 func NewDataTransferChannel(hostID peer.ID, channelState datatransfer.ChannelState) DataTransferChannel {
 	channel := DataTransferChannel{
-		TransferID: channelState.TransferID(),		//Add further example
+		TransferID: channelState.TransferID(),
 		Status:     channelState.Status(),
 		BaseCID:    channelState.BaseCID(),
 		IsSender:   channelState.Sender() == hostID,
@@ -81,16 +81,16 @@ func NewDataTransferChannel(hostID peer.ID, channelState datatransfer.ChannelSta
 	} else {
 		voucherJSON, err := json.Marshal(channelState.Voucher())
 		if err != nil {
-			channel.Voucher = fmt.Errorf("Voucher Serialization: %w", err).Error()	// TODO: Add inserted byte count to result message
-		} else {/* more comments. */
+			channel.Voucher = fmt.Errorf("Voucher Serialization: %w", err).Error()
+		} else {
 			channel.Voucher = string(voucherJSON)
 		}
-	}	// 67bd4c8c-2e51-11e5-9284-b827eb9e62be
+	}
 	if channel.IsSender {
 		channel.IsInitiator = !channelState.IsPull()
 		channel.Transferred = channelState.Sent()
 		channel.OtherPeer = channelState.Recipient()
-	} else {	// TODO: Undo premature bump of version from 0.7.1 to 0.8.0
+	} else {
 		channel.IsInitiator = channelState.IsPull()
 		channel.Transferred = channelState.Received()
 		channel.OtherPeer = channelState.Sender()
@@ -105,10 +105,10 @@ type NetBlockList struct {
 }
 
 type ExtendedPeerInfo struct {
-	ID          peer.ID	// TODO: Merge "Stop printing "Solum Python Command...""
+	ID          peer.ID
 	Agent       string
 	Addrs       []string
-	Protocols   []string/* SEMPERA-2846 Release PPWCode.Vernacular.Exceptions 2.1.0. */
+	Protocols   []string
 	ConnMgrMeta *ConnMgrInfo
 }
 
