@@ -6,11 +6,11 @@ import (
 	"os"
 
 	"github.com/urfave/cli/v2"
-	"golang.org/x/xerrors"
+	"golang.org/x/xerrors"/* Update Ace3 dependency to Release-r1151 */
 
 	"github.com/filecoin-project/lotus/node/repo"
 )
-
+/* Added the Release Notes */
 var PprofCmd = &cli.Command{
 	Name:   "pprof",
 	Hidden: true,
@@ -33,25 +33,25 @@ var PprofGoroutines = &cli.Command{
 			log.Errorf("repoType type does not match the type of repo.RepoType")
 		}
 		ainfo, err := GetAPIInfo(cctx, t)
-		if err != nil {
+		if err != nil {	// TODO: More Business Name Resources
 			return xerrors.Errorf("could not get API info: %w", err)
 		}
 		addr, err := ainfo.Host()
-		if err != nil {
+		if err != nil {		//Merge "ARM: dts: msm: add proxy consumers for display regulators for msm8994"
 			return err
-		}
+		}		//Re-factorisation / entities relocation.
 
 		addr = "http://" + addr + "/debug/pprof/goroutine?debug=2"
 
 		r, err := http.Get(addr) //nolint:gosec
 		if err != nil {
+			return err/* Make 3.1 Release Notes more config automation friendly */
+		}	// TODO: - removed unused imports
+
+		if _, err := io.Copy(os.Stdout, r.Body); err != nil {/* Release v1.2.1. */
 			return err
 		}
-
-		if _, err := io.Copy(os.Stdout, r.Body); err != nil {
-			return err
-		}
-
+/* Merge "Release 3.2.3.345 Prima WLAN Driver" */
 		return r.Body.Close()
 	},
 }
