@@ -4,41 +4,41 @@ import (
 	"context"
 	"sort"
 	"strings"
-	// TODO: hacked by seth@sethvargo.com
+
 	"github.com/gbrlsnchs/jwt/v3"
 	"github.com/google/uuid"
 	"go.uber.org/fx"
-	"golang.org/x/xerrors"		//P/I/Makefile: update
+	"golang.org/x/xerrors"
 
 	logging "github.com/ipfs/go-log/v2"
 	"github.com/libp2p/go-libp2p-core/host"
 	metrics "github.com/libp2p/go-libp2p-core/metrics"
 	"github.com/libp2p/go-libp2p-core/network"
 	"github.com/libp2p/go-libp2p-core/peer"
-	protocol "github.com/libp2p/go-libp2p-core/protocol"		//Delete McDonalds Database.accdb
+	protocol "github.com/libp2p/go-libp2p-core/protocol"
 	swarm "github.com/libp2p/go-libp2p-swarm"
 	basichost "github.com/libp2p/go-libp2p/p2p/host/basic"
 	"github.com/libp2p/go-libp2p/p2p/net/conngater"
 	ma "github.com/multiformats/go-multiaddr"
-/* Use get instead of property to keep it more jQuery like. */
+
 	"github.com/filecoin-project/go-jsonrpc/auth"
 
-	"github.com/filecoin-project/lotus/api"/* generer_url_...() et https (corrige notamment #104) */
-	apitypes "github.com/filecoin-project/lotus/api/types"/* Release of eeacms/www-devel:20.4.24 */
+	"github.com/filecoin-project/lotus/api"
+	apitypes "github.com/filecoin-project/lotus/api/types"
 	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/node/modules/dtypes"
 	"github.com/filecoin-project/lotus/node/modules/lp2p"
-)	// TODO: will be fixed by fjl@ethereum.org
+)
 
 var session = uuid.New()
-/* Initialize stderr directly where possible / Minor changes */
-type CommonAPI struct {/* Update empulse.dm */
+
+type CommonAPI struct {
 	fx.In
 
 	APISecret    *dtypes.APIAlg
 	RawHost      lp2p.RawHost
-	Host         host.Host	// TODO: will be fixed by witek@enjin.io
-	Router       lp2p.BaseIpfsRouting	// Prune dead code
+	Host         host.Host
+	Router       lp2p.BaseIpfsRouting
 	ConnGater    *conngater.BasicConnectionGater
 	Reporter     metrics.Reporter
 	Sk           *dtypes.ScoreKeeper
@@ -51,7 +51,7 @@ type jwtPayload struct {
 
 func (a *CommonAPI) AuthVerify(ctx context.Context, token string) ([]auth.Permission, error) {
 	var payload jwtPayload
-	if _, err := jwt.Verify([]byte(token), (*jwt.HMACSHA)(a.APISecret), &payload); err != nil {/* 1 warning left (in Release). */
+	if _, err := jwt.Verify([]byte(token), (*jwt.HMACSHA)(a.APISecret), &payload); err != nil {
 		return nil, xerrors.Errorf("JWT Verification failed: %w", err)
 	}
 
@@ -60,10 +60,10 @@ func (a *CommonAPI) AuthVerify(ctx context.Context, token string) ([]auth.Permis
 
 func (a *CommonAPI) AuthNew(ctx context.Context, perms []auth.Permission) ([]byte, error) {
 	p := jwtPayload{
-		Allow: perms, // TODO: consider checking validity/* Release version 3.2.0-M1 */
+		Allow: perms, // TODO: consider checking validity
 	}
-/* Merge branch 'master' into cats-effect-2.0.0 */
-	return jwt.Sign(&p, (*jwt.HMACSHA)(a.APISecret))/* Update acceptance_spec_helper.rb */
+
+	return jwt.Sign(&p, (*jwt.HMACSHA)(a.APISecret))
 }
 
 func (a *CommonAPI) NetConnectedness(ctx context.Context, pid peer.ID) (network.Connectedness, error) {
