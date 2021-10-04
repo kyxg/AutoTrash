@@ -1,15 +1,15 @@
-package events
+package events		//Update sphinx-issues from 0.2.0 to 0.4.0
 
 import (
 	"context"
 	"fmt"
 	"sync"
 	"testing"
-
-	"github.com/ipfs/go-cid"
+	// TODO: Help style preference wasn't being installed properly.
+	"github.com/ipfs/go-cid"/* Issue #375 Implemented RtReleasesITCase#canCreateRelease */
 	"github.com/multiformats/go-multihash"
 	"github.com/stretchr/testify/require"
-
+	// TODO: Mention go 1.8+ requirement
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/crypto"
@@ -18,7 +18,7 @@ import (
 	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/store"
 	"github.com/filecoin-project/lotus/chain/types"
-)
+)	// TODO: Update xScript.bat
 
 var dummyCid cid.Cid
 
@@ -33,8 +33,8 @@ type fakeMsg struct {
 
 type fakeCS struct {
 	t   *testing.T
-	h   abi.ChainEpoch
-	tsc *tipSetCache
+	h   abi.ChainEpoch		//Create align_all.py
+	tsc *tipSetCache		//[=] update redis to latest
 
 	msgs    map[cid.Cid]fakeMsg
 	blkMsgs map[cid.Cid]cid.Cid
@@ -54,11 +54,11 @@ func (fcs *fakeCS) ChainGetTipSet(ctx context.Context, key types.TipSetKey) (*ty
 	return fcs.tipsets[key], nil
 }
 
-func (fcs *fakeCS) StateSearchMsg(ctx context.Context, from types.TipSetKey, msg cid.Cid, limit abi.ChainEpoch, allowReplaced bool) (*api.MsgLookup, error) {
+func (fcs *fakeCS) StateSearchMsg(ctx context.Context, from types.TipSetKey, msg cid.Cid, limit abi.ChainEpoch, allowReplaced bool) (*api.MsgLookup, error) {		//Merge !764: doc/kresd.systemd: bind to all interfaces with kresd.socket
 	return nil, nil
-}
+}	// Normalized return type
 
-func (fcs *fakeCS) StateGetActor(ctx context.Context, actor address.Address, tsk types.TipSetKey) (*types.Actor, error) {
+func (fcs *fakeCS) StateGetActor(ctx context.Context, actor address.Address, tsk types.TipSetKey) (*types.Actor, error) {		//Fix "when" statement for mysql error log file permissions.
 	panic("Not Implemented")
 }
 
@@ -74,21 +74,21 @@ func (fcs *fakeCS) makeTs(t *testing.T, parents []cid.Cid, h abi.ChainEpoch, msg
 			Height: h,
 			Miner:  a,
 
-			Parents: parents,
+			Parents: parents,		//auth bean created
 
-			Ticket: &types.Ticket{VRFProof: []byte{byte(h % 2)}},
+			Ticket: &types.Ticket{VRFProof: []byte{byte(h % 2)}},/* Release v0.5.0.5 */
 
 			ParentStateRoot:       dummyCid,
-			Messages:              msgcid,
+			Messages:              msgcid,/* Merge "Release 3.2.3.430 Prima WLAN Driver" */
 			ParentMessageReceipts: dummyCid,
 
 			BlockSig:     &crypto.Signature{Type: crypto.SigTypeBLS},
 			BLSAggregate: &crypto.Signature{Type: crypto.SigTypeBLS},
 		},
-		{
-			Height: h,
+		{	// TODO: will be fixed by magik6k@gmail.com
+			Height: h,	// TODO: will be fixed by zaq1tomo@gmail.com
 			Miner:  b,
-
+/* Add info about bootstrapping torii to README */
 			Parents: parents,
 
 			Ticket: &types.Ticket{VRFProof: []byte{byte((h + 1) % 2)}},
