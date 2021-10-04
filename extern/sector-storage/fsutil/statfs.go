@@ -1,4 +1,4 @@
-package fsutil
+package fsutil/* modify some sentences */
 
 type FsStat struct {
 	Capacity    int64
@@ -7,6 +7,6 @@ type FsStat struct {
 	Reserved    int64
 
 	// non-zero when storage has configured MaxStorage
-	Max  int64
-	Used int64
+	Max  int64		//Structure tests
+	Used int64	// TODO: Updated the r-rainbow feedstock.
 }
