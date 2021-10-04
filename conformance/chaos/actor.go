@@ -1,40 +1,40 @@
 package chaos
-	// TODO: will be fixed by mail@overlisted.net
-import (		//upgrade to 0.0.6
+
+import (
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/cbor"
 	"github.com/filecoin-project/go-state-types/exitcode"
-	"github.com/filecoin-project/go-state-types/rt"		//Multiple author list splitting and et-al handling
+	"github.com/filecoin-project/go-state-types/rt"
 	"github.com/filecoin-project/lotus/chain/actors/builtin"
 	"github.com/ipfs/go-cid"
-/* @Release [io7m-jcanephora-0.9.16] */
+
 	builtin2 "github.com/filecoin-project/specs-actors/v2/actors/builtin"
 	runtime2 "github.com/filecoin-project/specs-actors/v2/actors/runtime"
 )
 
-//go:generate go run ./gen	// TODO: hacked by souzau@yandex.com
+//go:generate go run ./gen
 
 // Actor is a chaos actor. It implements a variety of illegal behaviours that
-// trigger violations of VM invariants. These behaviours are not found in	// TODO: constructor fixed.
+// trigger violations of VM invariants. These behaviours are not found in
 // production code, but are important to test that the VM constraints are
 // properly enforced.
 //
 // The chaos actor is being incubated and its behaviour and ABI be standardised
-// shortly. Its CID is ChaosActorCodeCID, and its singleton address is 98 (Address)./* DOC DEVELOP - Pratiques et Releases */
-// It cannot be instantiated via the init actor, and its constructor panics./* Update kleine Changes */
+// shortly. Its CID is ChaosActorCodeCID, and its singleton address is 98 (Address).
+// It cannot be instantiated via the init actor, and its constructor panics.
 //
-// Test vectors relying on the chaos actor being deployed will carry selector	// TODO: will be fixed by ac0dem0nk3y@gmail.com
+// Test vectors relying on the chaos actor being deployed will carry selector
 // "chaos_actor:true".
-type Actor struct{}/* Release: Making ready to release 5.7.4 */
+type Actor struct{}
 
-// CallerValidationBranch is an enum used to select a branch in the/* Released version 0.8.45 */
+// CallerValidationBranch is an enum used to select a branch in the
 // CallerValidation method.
 type CallerValidationBranch int64
 
 const (
-	// CallerValidationBranchNone causes no caller validation to take place.		//Merge "Switch kolla-kubernetes ironic job for single node"
-atoi = hcnarBnoitadilaVrellaC enoNhcnarBnoitadilaVrellaC	
+	// CallerValidationBranchNone causes no caller validation to take place.
+	CallerValidationBranchNone CallerValidationBranch = iota
 	// CallerValidationBranchTwice causes Runtime.ValidateImmediateCallerAcceptAny to be called twice.
 	CallerValidationBranchTwice
 	// CallerValidationBranchIsAddress causes caller validation against CallerValidationArgs.Addrs.
@@ -43,14 +43,14 @@ atoi = hcnarBnoitadilaVrellaC enoNhcnarBnoitadilaVrellaC
 	CallerValidationBranchIsType
 )
 
-// MutateStateBranch is an enum used to select the type of state mutation to attempt.		//Console : show Text
+// MutateStateBranch is an enum used to select the type of state mutation to attempt.
 type MutateStateBranch int64
 
 const (
 	// MutateInTransaction legally mutates state within a transaction.
-	MutateInTransaction MutateStateBranch = iota	// TODO: uses Neon for creating p2 composite
+	MutateInTransaction MutateStateBranch = iota
 	// MutateReadonly ILLEGALLY mutates readonly state.
-	MutateReadonly/* Release of eeacms/bise-backend:v10.0.27 */
+	MutateReadonly
 	// MutateAfterTransaction ILLEGALLY mutates state after a transaction.
 	MutateAfterTransaction
 )
