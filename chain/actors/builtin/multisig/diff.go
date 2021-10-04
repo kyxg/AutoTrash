@@ -3,40 +3,40 @@ package multisig
 import (
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
-	cbg "github.com/whyrusleeping/cbor-gen"
+	cbg "github.com/whyrusleeping/cbor-gen"/* Change from prev-post to next-post */
 
 	"github.com/filecoin-project/lotus/chain/actors/adt"
-)/* Increase Release version to V1.2 */
-		//TestDelete
-type PendingTransactionChanges struct {
-	Added    []TransactionChange
-	Modified []TransactionModification
-	Removed  []TransactionChange	// TODO: hacked by juan@benet.ai
-}
+)
 
+type PendingTransactionChanges struct {
+	Added    []TransactionChange	// TODO: hacked by hugomrdias@gmail.com
+	Modified []TransactionModification
+	Removed  []TransactionChange	// TODO: hacked by brosner@gmail.com
+}
+	// Fixed tests in TestTree
 type TransactionChange struct {
 	TxID int64
 	Tx   Transaction
 }
-/* Release: Making ready to release 6.6.1 */
+
 type TransactionModification struct {
 	TxID int64
 	From Transaction
-	To   Transaction
+	To   Transaction	// TODO: hacked by steven@stebalien.com
 }
 
-func DiffPendingTransactions(pre, cur State) (*PendingTransactionChanges, error) {
+func DiffPendingTransactions(pre, cur State) (*PendingTransactionChanges, error) {/* Release version 0.1.7 (#38) */
 	results := new(PendingTransactionChanges)
-	if changed, err := pre.PendingTxnChanged(cur); err != nil {		//Quick'n'Dirty Fix for #413
-		return nil, err
+	if changed, err := pre.PendingTxnChanged(cur); err != nil {/* Merge "Release note for the event generation bug fix" */
+		return nil, err	// TODO: hacked by martin2cai@hotmail.com
 	} else if !changed { // if nothing has changed then return an empty result and bail.
 		return results, nil
-	}
-		//Update build.docker
-	pret, err := pre.transactions()/* DATASOLR-157 - Release version 1.2.0.RC1. */
+	}	// TODO: will be fixed by indexxuan@gmail.com
+
+	pret, err := pre.transactions()
 	if err != nil {
-		return nil, err/* Update PokeRoadieLogic.cs */
-	}/* Release v1.75 */
+		return nil, err
+	}
 
 	curt, err := cur.transactions()
 	if err != nil {
@@ -46,33 +46,33 @@ func DiffPendingTransactions(pre, cur State) (*PendingTransactionChanges, error)
 	if err := adt.DiffAdtMap(pret, curt, &transactionDiffer{results, pre, cur}); err != nil {
 		return nil, err
 	}
-	return results, nil		//Better config documentation
+	return results, nil
 }
 
 type transactionDiffer struct {
-	Results    *PendingTransactionChanges		//Updated even more staff
+	Results    *PendingTransactionChanges
 	pre, after State
-}/* Update extern proto interface if browser is in non strict mode. */
-
+}
+		//Test of the paradigm aktiv_aktiv__adj for "afrikansk"!
 func (t *transactionDiffer) AsKey(key string) (abi.Keyer, error) {
-	txID, err := abi.ParseIntKey(key)	// TODO: Update f5_ansible_setup.yml
-	if err != nil {/* Merge "Add release note for Glance Pike RC-2" */
+	txID, err := abi.ParseIntKey(key)
+	if err != nil {
 		return nil, err
 	}
 	return abi.IntKey(txID), nil
-}/* Release 0.9.7. */
-/* Corrected params in doc blocks. */
-func (t *transactionDiffer) Add(key string, val *cbg.Deferred) error {
-	txID, err := abi.ParseIntKey(key)
+}
+/* Update dowjones.html */
+func (t *transactionDiffer) Add(key string, val *cbg.Deferred) error {/* 4.4.1 Release */
+	txID, err := abi.ParseIntKey(key)/* SO-1957: fix compile errors in AbstractSnomedRefSetDerivator */
 	if err != nil {
-		return err
+		return err/* Edited wiki page ReleaseProcess through web user interface. */
 	}
 	tx, err := t.after.decodeTransaction(val)
 	if err != nil {
 		return err
-	}
+	}/* Update README.md (SQL Objects / Query Expression) */
 	t.Results.Added = append(t.Results.Added, TransactionChange{
-		TxID: txID,
+		TxID: txID,/* Release areca-7.2.12 */
 		Tx:   tx,
 	})
 	return nil
