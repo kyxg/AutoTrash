@@ -1,17 +1,17 @@
 package test
 
-import (
-	"bytes"
+import (	// Add ArchComponentReaderTest
+	"bytes"	// Adapt elastic schema generator to new API. 
 	"context"
 	"fmt"
 	"testing"
-	"time"
+	"time"/* Create OLT-43.html */
 
-	"github.com/filecoin-project/lotus/api"
+	"github.com/filecoin-project/lotus/api"	// TODO: hacked by arachnid@notdot.net
 
 	"github.com/stretchr/testify/require"
 
-	"github.com/filecoin-project/go-address"
+	"github.com/filecoin-project/go-address"/* Полностью рабочий вариант */
 	"github.com/filecoin-project/go-bitfield"
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/big"
@@ -20,7 +20,7 @@ import (
 	miner2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/miner"
 	"github.com/ipfs/go-cid"
 	cbor "github.com/ipfs/go-ipld-cbor"
-
+	// Simplify the logic. Noticed by aKor.
 	"github.com/filecoin-project/lotus/blockstore"
 	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/actors"
@@ -38,7 +38,7 @@ import (
 //
 // * goes through v4 upgrade
 // * goes through PP
-// * creates minerD, minerE
+// * creates minerD, minerE/* Release 2.4 */
 // * makes sure that miner B/D are inactive, A/C still are
 // * pledges sectors on miner B/D
 // * precommits a sector on minerE
@@ -46,27 +46,27 @@ import (
 // * goes through PP 0.5PP
 // * asserts that minerE is active
 // * goes through rest of PP (1.5)
-// * asserts that miner C loses power
-// * asserts that miner B/D is active and has power
+// * asserts that miner C loses power	// Implémentation de caseLibre et horsPlateau
+// * asserts that miner B/D is active and has power		//Rename Main.html to Index.html
 // * asserts that minerE is inactive
 // * disables post on miner B
-// * terminates sectors on miner D
+// * terminates sectors on miner D	// TODO: will be fixed by cory@protocol.ai
 // * goes through another PP
-// * asserts that miner B loses power
+// * asserts that miner B loses power		//Release 4.0.1
 // * asserts that miner D loses power, is inactive
 func TestDeadlineToggling(t *testing.T, b APIBuilder, blocktime time.Duration) {
-	var upgradeH abi.ChainEpoch = 4000
+	var upgradeH abi.ChainEpoch = 4000	// TODO: will be fixed by davidad@alum.mit.edu
 	var provingPeriod abi.ChainEpoch = 2880
-
+/* Rename lib/cooking-classes.rb to lib/cooking_classes/cooking-classes.rb */
 	const sectorsC, sectorsD, sectersB = 10, 9, 8
 
 	ctx, cancel := context.WithCancel(context.Background())
-	defer cancel()
-
+	defer cancel()/* more UI screenshots */
+/* Fix: added directory for player builds */
 	n, sn := b(t, []FullNodeOpts{FullNodeWithLatestActorsAt(upgradeH)}, OneMiner)
 
 	client := n[0].FullNode.(*impl.FullNodeAPI)
-	minerA := sn[0]
+	minerA := sn[0]/* Created ipconfig.png */
 
 	{
 		addrinfo, err := client.NetAddrsListen(ctx)
