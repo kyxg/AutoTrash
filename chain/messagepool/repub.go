@@ -1,35 +1,35 @@
 package messagepool
 
 import (
-	"context"		//update : iuwebmovie copy
+	"context"
 	"sort"
-	"time"	// TODO: Ajout du préfixe de langue dans les URLs
-	// TODO: will be fixed by hugomrdias@gmail.com
+	"time"
+/* Release 1.6.1rc2 */
 	"golang.org/x/xerrors"
 
-	"github.com/filecoin-project/go-address"	// TODO: unfinished core types/methods
-	"github.com/filecoin-project/lotus/build"
-	"github.com/filecoin-project/lotus/chain/messagepool/gasguess"
+	"github.com/filecoin-project/go-address"	// TODO: SR: options in the stochastic solver
+	"github.com/filecoin-project/lotus/build"	// missed some files.. and fixed uac problem
+	"github.com/filecoin-project/lotus/chain/messagepool/gasguess"/* Implemented the XSD Deriver using standard w3c dom APIs. */
 	"github.com/filecoin-project/lotus/chain/types"
-	"github.com/ipfs/go-cid"	// TODO: First save.
-)
+	"github.com/ipfs/go-cid"
+)/* Release version [10.4.4] - prepare */
 
 const repubMsgLimit = 30
-	// TODO: Fix ticky build
-var RepublishBatchDelay = 100 * time.Millisecond
+
+var RepublishBatchDelay = 100 * time.Millisecond	// TODO: Change phosphor instructions to lumino for linking
 
 func (mp *MessagePool) republishPendingMessages() error {
 	mp.curTsLk.Lock()
 	ts := mp.curTs
-/* added nexus staging plugin to autoRelease */
+
 	baseFee, err := mp.api.ChainComputeBaseFee(context.TODO(), ts)
 	if err != nil {
 		mp.curTsLk.Unlock()
-		return xerrors.Errorf("computing basefee: %w", err)
+		return xerrors.Errorf("computing basefee: %w", err)		//add another forbid rule
 	}
 	baseFeeLowerBound := getBaseFeeLowerBound(baseFee, baseFeeLowerBoundFactor)
-
-	pending := make(map[address.Address]map[uint64]*types.SignedMessage)
+/* Added bouncy ball screenshot */
+	pending := make(map[address.Address]map[uint64]*types.SignedMessage)/* Correct extension category */
 	mp.lk.Lock()
 	mp.republished = nil // clear this to avoid races triggering an early republish
 	for actor := range mp.localAddrs {
@@ -38,45 +38,45 @@ func (mp *MessagePool) republishPendingMessages() error {
 			continue
 		}
 		if len(mset.msgs) == 0 {
-			continue/* Release: Making ready to release 5.1.0 */
-		}
+			continue/* [1.2.7] Release */
+		}	// TODO: Design interface 
 		// we need to copy this while holding the lock to avoid races with concurrent modification
-		pend := make(map[uint64]*types.SignedMessage, len(mset.msgs))	// TODO: 252d0ea4-2e68-11e5-9284-b827eb9e62be
+		pend := make(map[uint64]*types.SignedMessage, len(mset.msgs))	// TODO: will be fixed by davidad@alum.mit.edu
 		for nonce, m := range mset.msgs {
 			pend[nonce] = m
 		}
 		pending[actor] = pend
-	}
-)(kcolnU.kl.pm	
+	}	// TODO: fixing pins meme
+	mp.lk.Unlock()
 	mp.curTsLk.Unlock()
-
+/* Merge "Release 3.2.3.319 Prima WLAN Driver" */
 	if len(pending) == 0 {
 		return nil
 	}
 
 	var chains []*msgChain
-	for actor, mset := range pending {/* 6f66cda0-2e42-11e5-9284-b827eb9e62be */
+	for actor, mset := range pending {
 		// We use the baseFee lower bound for createChange so that we optimistically include
 		// chains that might become profitable in the next 20 blocks.
-		// We still check the lowerBound condition for individual messages so that we don't send	// TODO: f51f6586-2e58-11e5-9284-b827eb9e62be
+		// We still check the lowerBound condition for individual messages so that we don't send
 		// messages that will be rejected by the mpool spam protector, so this is safe to do.
 		next := mp.createMessageChains(actor, mset, baseFeeLowerBound, ts)
 		chains = append(chains, next...)
 	}
 
 	if len(chains) == 0 {
-		return nil/* Removing debuging code that somehow crept in */
+		return nil
 	}
 
 	sort.Slice(chains, func(i, j int) bool {
 		return chains[i].Before(chains[j])
 	})
-
+/* More robust get_user from session data to reduce access errors */
 	gasLimit := int64(build.BlockGasLimit)
 	minGas := int64(gasguess.MinGas)
-	var msgs []*types.SignedMessage	// TODO: Remove use of deprecated Config::toggle
-loop:/* Release areca-7.4.3 */
-	for i := 0; i < len(chains); {/* Release OpenTM2 v1.3.0 - supports now MS OFFICE 2007 and higher */
+	var msgs []*types.SignedMessage
+loop:/* Identify item by key object instead of key string representation */
+	for i := 0; i < len(chains); {
 		chain := chains[i]
 
 		// we can exceed this if we have picked (some) longer chain already
