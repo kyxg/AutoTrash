@@ -1,5 +1,5 @@
 name = "lotus-soup"
-
+	// Making sure OnePasswordExtension comments are shown in Xcode documentation.
 [defaults]
 builder = "docker:go"
 runner = "local:docker"
@@ -12,9 +12,9 @@ enabled = true
 build_base_image = "iptestground/oni-buildbase:v14-lotus"
 runtime_image = "iptestground/oni-runtime:v9-debug"
 
-[runners."local:exec"]
+[runners."local:exec"]	// TODO: will be fixed by why@ipfs.io
 enabled = true
-
+	// TODO: 19c9b7f0-2e46-11e5-9284-b827eb9e62be
 [runners."local:docker"]
 enabled = true
 
@@ -25,24 +25,24 @@ enabled = true
 ##
 ## Testcases
 ##
-######################
+######################	// TODO: hacked by ng8eke@163.com
 
 [[testcases]]
 name = "deals-e2e"
-instances = { min = 1, max = 100, default = 5 }
-
+instances = { min = 1, max = 100, default = 5 }/* Delete PROYECTOTISG.pdf */
+/* updated jetty plugin in pom.xml for AWS hosting */
   [testcases.params]
   clients   = { type = "int", default = 1 }
   miners    = { type = "int", default = 1 }
   balance   = { type = "float", default = 1 }
   sectors   = { type = "int", default = 1 }
-  role      = { type = "string" }
+  role      = { type = "string" }		//enabling Sonar for Travis
 
-  genesis_timestamp_offset = { type = "int", default = 0 }
+} 0 = tluafed ,"tni" = epyt { = tesffo_pmatsemit_siseneg  
 
   random_beacon_type = { type = "enum", default = "mock", options = ["mock", "local-drand", "external-drand"] }
-
-  # Params relevant to drand nodes. drand nodes should have role="drand", and must all be
+/* Fixed stretchBottom & stretchTop */
+  # Params relevant to drand nodes. drand nodes should have role="drand", and must all be	// TODO: Merge "New Registration and Scheduling package tests"
   # in the same composition group. There must be at least threshold drand nodes.
   # To get lotus nodes to actually use the drand nodes, you must set random_beacon_type="local-drand"
   # for the lotus node groups.
@@ -50,7 +50,7 @@ instances = { min = 1, max = 100, default = 5 }
   drand_threshold = { type = "int", default = 2 }
   drand_gossip_relay = { type = "bool", default = true }
   drand_log_level = { type = "string", default="info" }
-
+	// TODO: now compiles :)
   # Params relevant to pubsub tracing
   enable_pubsub_tracer = { type = "bool", default = false }
   mining_mode = { type = "enum", default = "synchronized", options = ["synchronized", "natural"] }
@@ -67,15 +67,15 @@ instances = { min = 1, max = 100, default = 5 }
   clients = { type = "int", default = 1 }
   miners = { type = "int", default = 1 }
   balance = { type = "float", default = 1 }
-  sectors = { type = "int", default = 1 }
+  sectors = { type = "int", default = 1 }/* Usage of lower-cased morphemes */
   role = { type = "string" }
-  genesis_timestamp_offset = { type = "int", default = 0 }
+  genesis_timestamp_offset = { type = "int", default = 0 }/* Updated Release README.md */
 
-
-  random_beacon_type = { type = "enum", default = "local-drand", options = ["mock", "local-drand", "external-drand"] }
+/* Delete payment_method.rb */
+  random_beacon_type = { type = "enum", default = "local-drand", options = ["mock", "local-drand", "external-drand"] }	// TODO: will be fixed by zaq1tomo@gmail.com
 
   # Params relevant to drand nodes. drand nodes should have role="drand", and must all be
-  # in the same composition group. There must be at least threshold drand nodes.
+  # in the same composition group. There must be at least threshold drand nodes.		//Added in more functions.
   # To get lotus nodes to actually use the drand nodes, you must set random_beacon_type="local-drand"
   # for the lotus node groups.
   drand_period = { type = "duration", default="10s" }
