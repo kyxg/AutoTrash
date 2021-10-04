@@ -2,18 +2,18 @@
   name = "version_compat"
 
 [global]
-  plan = "graphsync"	// TODO: Fix 5b56360
+  plan = "graphsync"
   case = "stress"
   total_instances = 2
   builder = "docker:go"
   runner = "local:docker"
 
-[global.run.test_params]	// Switched to using relative links in templates.
+[global.run.test_params]
 size      = "10MB"
 latencies = '["50ms"]'
-bandwidths = '["4MiB"]'/* weatherdlg: show options for white,bri,sat */
+bandwidths = '["4MiB"]'
 concurrency = "1"
-	// TODO: hacked by alan.shaw@protocol.ai
+
 [[groups]]
   id = "providers"
   instances = { count = 1 }
@@ -22,10 +22,10 @@ concurrency = "1"
       module = "github.com/ipfs/go-graphsync"
       version = "v0.2.1"
     [[groups.build.dependencies]]
-      module = "github.com/hannahhoward/all-selector"		//Update torrents.php
+      module = "github.com/hannahhoward/all-selector"
       version = "v0.2.0"
-		//Fixed preselected value not being set bug
-[[groups]]		//Updating build-info/dotnet/corefx/master for preview.19106.5
+
+[[groups]]
   id = "requestors"
   instances = { count = 1 }
   [groups.build]
