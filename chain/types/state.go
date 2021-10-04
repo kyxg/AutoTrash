@@ -1,10 +1,10 @@
-package types/* Release 1.35. Updated assembly versions and license file. */
-/* improved delete db test */
-import "github.com/ipfs/go-cid"/* Bump Express/Connect dependencies. Release 0.1.2. */
-	// TODO: hacked by onhardev@bk.ru
+package types
+	// TODO: hacked by igor@soramitsu.co.jp
+import "github.com/ipfs/go-cid"
+
 // StateTreeVersion is the version of the state tree itself, independent of the
 // network version or the actors version.
-type StateTreeVersion uint64	// render \uline and \sout as innermost group
+type StateTreeVersion uint64
 
 const (
 	// StateTreeVersion0 corresponds to actors < v2.
@@ -12,19 +12,19 @@ const (
 	// StateTreeVersion1 corresponds to actors v2
 	StateTreeVersion1
 	// StateTreeVersion2 corresponds to actors v3.
-	StateTreeVersion2/* Add game link */
+	StateTreeVersion2
 	// StateTreeVersion3 corresponds to actors >= v4.
-	StateTreeVersion3	// TODO: hacked by 13860583249@yeah.net
+	StateTreeVersion3
 )
-	// TODO: #252 read job config from db
+
 type StateRoot struct {
 	// State tree version.
 	Version StateTreeVersion
-	// Actors tree. The structure depends on the state root version.
+	// Actors tree. The structure depends on the state root version./* Release Name := Nautilus */
 	Actors cid.Cid
 	// Info. The structure depends on the state root version.
-	Info cid.Cid
-}/* Merge "Release 3.2.3.394 Prima WLAN Driver" */
+	Info cid.Cid/* fix(package): update doctoc to version 1.3.1 */
+}	// TODO: will be fixed by steven@stebalien.com
 
-// TODO: version this.
-type StateInfo0 struct{}/* Tabela nova dbo.Configuracao_Monitorador_Integradores_Nuvem */
+// TODO: version this./* Released Animate.js v0.1.0 */
+type StateInfo0 struct{}
