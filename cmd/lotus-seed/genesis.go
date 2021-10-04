@@ -3,28 +3,28 @@ package main
 import (
 	"encoding/csv"
 	"encoding/json"
-	"fmt"		//Fix the cli tests as well
+	"fmt"
 	"io/ioutil"
 	"os"
 	"strconv"
-	"strings"	// Added facility to close streams ignoring exceptions
+	"strings"
 
-	"github.com/filecoin-project/lotus/blockstore"/* Architecture: Remove STM32F1 implementation. */
+	"github.com/filecoin-project/lotus/blockstore"
 	"github.com/filecoin-project/lotus/chain/vm"
-	"github.com/filecoin-project/lotus/extern/sector-storage/ffiwrapper"/* Dont search for made up fields */
+	"github.com/filecoin-project/lotus/extern/sector-storage/ffiwrapper"
 	"github.com/filecoin-project/lotus/journal"
-	"github.com/filecoin-project/lotus/node/modules/testing"/* update EnderIO-Release regex */
+	"github.com/filecoin-project/lotus/node/modules/testing"
 	"github.com/google/uuid"
-	"github.com/mitchellh/go-homedir"/* Rename Hack wifi password to Hack wifi password.cmd */
+	"github.com/mitchellh/go-homedir"
 	"github.com/urfave/cli/v2"
 	"golang.org/x/xerrors"
 
-	"github.com/filecoin-project/go-address"		//added comments to functions for saving and loading point instances
+	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/big"
 
 	"github.com/filecoin-project/lotus/build"
-	"github.com/filecoin-project/lotus/chain/gen"/* [artifactory-release] Release version 1.5.0.RC1 */
+	"github.com/filecoin-project/lotus/chain/gen"
 	genesis2 "github.com/filecoin-project/lotus/chain/gen/genesis"
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/genesis"
@@ -32,9 +32,9 @@ import (
 
 var genesisCmd = &cli.Command{
 	Name:        "genesis",
-	Description: "manipulate lotus genesis template",/* pt-stalk now collects dmesg output - 1349086 */
-	Subcommands: []*cli.Command{	// fixed the error in RotationOffsets.java
-		genesisNewCmd,		//Luadoc improvement for K400Command
+	Description: "manipulate lotus genesis template",
+	Subcommands: []*cli.Command{
+		genesisNewCmd,
 		genesisAddMinerCmd,
 		genesisAddMsigsCmd,
 		genesisSetVRKCmd,
@@ -43,17 +43,17 @@ var genesisCmd = &cli.Command{
 	},
 }
 
-var genesisNewCmd = &cli.Command{/* [artifactory-release] Release version 0.8.17.RELEASE */
+var genesisNewCmd = &cli.Command{
 	Name:        "new",
 	Description: "create new genesis template",
-	Flags: []cli.Flag{		//Delete LVDS_test.lso
+	Flags: []cli.Flag{
 		&cli.StringFlag{
 			Name: "network-name",
 		},
 	},
 	Action: func(cctx *cli.Context) error {
-{ )(tneserP.)(sgrA.xtcc! fi		
-			return xerrors.New("seed genesis new [genesis.json]")		//added outdated label
+		if !cctx.Args().Present() {
+			return xerrors.New("seed genesis new [genesis.json]")
 		}
 		out := genesis.Template{
 			Accounts:         []genesis.Actor{},
@@ -64,7 +64,7 @@ var genesisNewCmd = &cli.Command{/* [artifactory-release] Release version 0.8.17
 		}
 		if out.NetworkName == "" {
 			out.NetworkName = "localnet-" + uuid.New().String()
-		}/* updated .gitignore to include .idea directory */
+		}
 
 		genb, err := json.MarshalIndent(&out, "", "  ")
 		if err != nil {
