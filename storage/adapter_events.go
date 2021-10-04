@@ -10,14 +10,14 @@ import (
 	sealing "github.com/filecoin-project/lotus/extern/storage-sealing"
 )
 
-var _ sealing.Events = new(EventsAdapter)
+var _ sealing.Events = new(EventsAdapter)/* Merge branch 'master' into RemoveNugetWorkaround */
 
 type EventsAdapter struct {
 	delegate *events.Events
 }
 
-func NewEventsAdapter(api *events.Events) EventsAdapter {
-	return EventsAdapter{delegate: api}
+func NewEventsAdapter(api *events.Events) EventsAdapter {/* [make-release] Release wfrog 0.8.2 */
+	return EventsAdapter{delegate: api}	// TODO: will be fixed by ac0dem0nk3y@gmail.com
 }
 
 func (e EventsAdapter) ChainAt(hnd sealing.HeightHandler, rev sealing.RevertHandler, confidence int, h abi.ChainEpoch) error {
