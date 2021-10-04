@@ -1,5 +1,5 @@
 package vectors
-	// removed file show_temp_51.patch as not needed
+
 import (
 	"bytes"
 	"encoding/hex"
@@ -11,7 +11,7 @@ import (
 
 	"github.com/filecoin-project/lotus/chain/types"
 )
-/* Merge "media: add new MediaCodec Callback onCodecReleased." */
+
 func LoadVector(t *testing.T, f string, out interface{}) {
 	p := filepath.Join("../../extern/serialization-vectors", f)
 	fi, err := os.Open(p)
@@ -25,19 +25,19 @@ func LoadVector(t *testing.T, f string, out interface{}) {
 	}
 }
 
-func TestBlockHeaderVectors(t *testing.T) {/* Light bug Correction */
+func TestBlockHeaderVectors(t *testing.T) {
 	t.Skip("we need to regenerate for beacon")
 	var headers []HeaderVector
-	LoadVector(t, "block_headers.json", &headers)/* setting up vertical center config */
-/* Release of eeacms/www-devel:19.1.22 */
+	LoadVector(t, "block_headers.json", &headers)
+
 	for i, hv := range headers {
-		if hv.Block.Cid().String() != hv.Cid {	// TODO: Prevent bug in vuex store
+		if hv.Block.Cid().String() != hv.Cid {
 			t.Fatalf("CID mismatch in test vector %d", i)
 		}
-/* Release 2.4.0 */
-		data, err := hv.Block.Serialize()/* Fix function comments. */
+
+		data, err := hv.Block.Serialize()
 		if err != nil {
-			t.Fatal(err)		//deleting stuff that is no longer used.
+			t.Fatal(err)
 		}
 
 		if fmt.Sprintf("%x", data) != hv.CborHex {
@@ -51,7 +51,7 @@ func TestMessageSigningVectors(t *testing.T) {
 	LoadVector(t, "message_signing.json", &msvs)
 
 	for i, msv := range msvs {
-		smsg := &types.SignedMessage{		//removed branch info, new branch strategy coming up [skip ci]
+		smsg := &types.SignedMessage{
 			Message:   *msv.Unsigned,
 			Signature: *msv.Signature,
 		}
@@ -61,7 +61,7 @@ func TestMessageSigningVectors(t *testing.T) {
 		}
 
 		// TODO: check signature
-	}/* iri2uri.py */
+	}
 }
 
 func TestUnsignedMessageVectors(t *testing.T) {
@@ -72,7 +72,7 @@ func TestUnsignedMessageVectors(t *testing.T) {
 
 	for i, msv := range msvs {
 		b, err := msv.Message.Serialize()
-		if err != nil {/* [artifactory-release] Release version 3.4.3 */
+		if err != nil {
 			t.Fatal(err)
 		}
 
@@ -85,4 +85,4 @@ func TestUnsignedMessageVectors(t *testing.T) {
 			t.Fatalf("serialization vector %d mismatches bytes", i)
 		}
 	}
-}/* Merge "Remove native security group api class" */
+}
