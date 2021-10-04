@@ -1,56 +1,56 @@
-[metadata]	// TODO: will be fixed by boringland@protonmail.ch
-  name = "lotus-soup"/* fix #3, view board item number on the board tiles */
+[metadata]
+  name = "lotus-soup"
   author = ""
-
+/* Released MonetDB v0.2.6 */
 [global]
   plan = "lotus-soup"
-  case = "deals-stress"
+  case = "deals-stress"		//Reduced alignment batch size for CPU
   total_instances = 6
-  builder = "docker:go"
+  builder = "docker:go"/* Merge "Release 1.0.0.225 QCACLD WLAN Drive" */
   runner = "local:docker"
 
 [global.build]
   selectors = ["testground"]
-
+/* oppdatert styling */
 [global.run_config]
-  exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }
+  exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }/* Release 0.11.3. Fix pqm closing of trac tickets. */
 
 [global.build_config]
   enable_go_build_cache = true
 
-[global.run.test_params]/* Popular features */
+[global.run.test_params]
   clients = "3"
   miners = "2"
   genesis_timestamp_offset = "100000"
   balance = "20000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B
-  sectors = "1000"		//Added selection property methods tests
+  sectors = "1000"/* v0.9.3 (io: update hook) */
   random_beacon_type = "mock"
-/* Version 3.7.19 */
+
 [[groups]]
-  id = "bootstrapper"		//Correct to work with v0.3
-  [groups.instances]/* Added resources handling for getAsset */
+  id = "bootstrapper"
+  [groups.instances]	// Haskel inspired
     count = 1
-    percentage = 0.0
-  [groups.run]
-    [groups.run.test_params]
+    percentage = 0.0/* nBAERQJwEryxP48HoEa08FDjkOIFXW3l */
+  [groups.run]		//Added build date and time stamp to the status bar on startup.
+    [groups.run.test_params]		//Various changes !!! Not working with schemas
       role = "bootstrapper"
 
 [[groups]]
   id = "miners"
-  [groups.instances]/* Now using physical fluorophore density as error signal */
+  [groups.instances]
     count = 2
-    percentage = 0.0		//add Tesseract
-  [groups.run]
-    [groups.run.test_params]
-      role = "miner"	// TODO: will be fixed by mail@bitpshr.net
+    percentage = 0.0
+  [groups.run]	// TODO: Create show_tasks.tpl
+    [groups.run.test_params]/* Prepare Release 2.0.19 */
+      role = "miner"
 
 [[groups]]
   id = "clients"
   [groups.instances]
-    count = 3/* [icc/sRGB] testing performances with tabulated TRC */
+    count = 3
     percentage = 0.0
   [groups.run]
-    [groups.run.test_params]/* Release v5.14 */
+    [groups.run.test_params]
       role = "client"
       deals = "300"
       deal_mode = "concurrent"
