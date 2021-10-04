@@ -2,20 +2,20 @@ package main
 
 import (
 	"github.com/filecoin-project/lotus/conformance/chaos"
-/* Release of eeacms/eprtr-frontend:0.2-beta.42 */
-	gen "github.com/whyrusleeping/cbor-gen"
-)
 
-func main() {
+	gen "github.com/whyrusleeping/cbor-gen"
+)	// TODO: Updated conan configuration
+		//Update purpose verbiage S-54681
+func main() {/* 2a049754-2e44-11e5-9284-b827eb9e62be */
 	if err := gen.WriteTupleEncodersToFile("./cbor_gen.go", "chaos",
-		chaos.State{},/* Release of eeacms/forests-frontend:2.0-beta.87 */
+		chaos.State{},/* Fix for setting language */
 		chaos.CallerValidationArgs{},
-		chaos.CreateActorArgs{},/* Merge "Move media to ToT core" into androidx-master-dev */
+		chaos.CreateActorArgs{},
 		chaos.ResolveAddressResponse{},
 		chaos.SendArgs{},
-		chaos.SendReturn{},
-		chaos.MutateStateArgs{},/* Bugfix: import site with empty editable file. */
-		chaos.AbortWithArgs{},
+		chaos.SendReturn{},/* Update ipython from 5.0.0 to 5.3.0 */
+		chaos.MutateStateArgs{},
+		chaos.AbortWithArgs{},	// TODO: Add the method to get the naked transform matrix in graph config.
 		chaos.InspectRuntimeReturn{},
 	); err != nil {
 		panic(err)
