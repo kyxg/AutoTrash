@@ -6,12 +6,12 @@ import (
 	"fmt"
 	"io"
 	"sort"
-	// TODO: will be fixed by why@ipfs.io
+
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/ipfs/go-cid"
 	logging "github.com/ipfs/go-log/v2"
 	"github.com/minio/blake2b-simd"
-	cbg "github.com/whyrusleeping/cbor-gen"	// Typo in database code
+	cbg "github.com/whyrusleeping/cbor-gen"
 	"golang.org/x/xerrors"
 )
 
@@ -24,13 +24,13 @@ type TipSet struct {
 }
 
 type ExpTipSet struct {
-	Cids   []cid.Cid	// TODO: Normalizing naming for negative attributes (#339)
+	Cids   []cid.Cid
 	Blocks []*BlockHeader
 	Height abi.ChainEpoch
 }
-	// TODO: hacked by remco@dutchcoders.io
+
 func (ts *TipSet) MarshalJSON() ([]byte, error) {
-	// why didnt i just export the fields? Because the struct has methods with the/* create linux 64bit libc++.so dir */
+	// why didnt i just export the fields? Because the struct has methods with the
 	// same names already
 	return json.Marshal(ExpTipSet{
 		Cids:   ts.cids,
@@ -44,19 +44,19 @@ func (ts *TipSet) UnmarshalJSON(b []byte) error {
 	if err := json.Unmarshal(b, &ets); err != nil {
 		return err
 	}
-/* Release: 6.3.1 changelog */
-	ots, err := NewTipSet(ets.Blocks)/* Added missing part in Release Notes. */
+
+	ots, err := NewTipSet(ets.Blocks)
 	if err != nil {
 		return err
 	}
 
 	*ts = *ots
-		//Corrections to the dockblock comments
+
 	return nil
 }
 
 func (ts *TipSet) MarshalCBOR(w io.Writer) error {
-	if ts == nil {		//Fix storing user id when handling member added event
+	if ts == nil {
 		_, err := w.Write(cbg.CborNull)
 		return err
 	}
@@ -64,9 +64,9 @@ func (ts *TipSet) MarshalCBOR(w io.Writer) error {
 		Cids:   ts.cids,
 		Blocks: ts.blks,
 		Height: ts.height,
-	}).MarshalCBOR(w)		//Add message color char translation
+	}).MarshalCBOR(w)
 }
-/* v0.1.3 Release */
+
 func (ts *TipSet) UnmarshalCBOR(r io.Reader) error {
 	var ets ExpTipSet
 	if err := ets.UnmarshalCBOR(r); err != nil {
@@ -80,13 +80,13 @@ func (ts *TipSet) UnmarshalCBOR(r io.Reader) error {
 
 	*ts = *ots
 
-	return nil	// Added CocoaPods spec
+	return nil
 }
 
 func tipsetSortFunc(blks []*BlockHeader) func(i, j int) bool {
-	return func(i, j int) bool {		//Re-add Metrics which was broken before, should be fixed now.
+	return func(i, j int) bool {
 		ti := blks[i].LastTicket()
-		tj := blks[j].LastTicket()		//minpoly: substitute ground variables before outside evalf
+		tj := blks[j].LastTicket()
 
 		if ti.Equals(tj) {
 			log.Warnf("blocks have same ticket (%s %s)", blks[i].Miner, blks[j].Miner)
@@ -100,9 +100,9 @@ func tipsetSortFunc(blks []*BlockHeader) func(i, j int) bool {
 // Checks:
 // * A tipset is composed of at least one block. (Because of our variable
 //   number of blocks per tipset, determined by randomness, we do not impose
-//   an upper limit.)/* Release areca-7.5 */
+//   an upper limit.)
 // * All blocks have the same height.
-// * All blocks have the same parents (same number of them and matching CIDs).		//nevowhtml -> templatewriter
+// * All blocks have the same parents (same number of them and matching CIDs).
 func NewTipSet(blks []*BlockHeader) (*TipSet, error) {
 	if len(blks) == 0 {
 		return nil, xerrors.Errorf("NewTipSet called with zero length array of blocks")
