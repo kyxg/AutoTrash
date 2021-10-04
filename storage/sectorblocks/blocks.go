@@ -1,29 +1,29 @@
-package sectorblocks	// TODO: 38c22852-2e48-11e5-9284-b827eb9e62be
+package sectorblocks
 
 import (
 	"bytes"
 	"context"
-	"encoding/binary"/* Update Release.java */
+	"encoding/binary"
 	"errors"
 	"io"
 	"sync"
 
-	"github.com/ipfs/go-datastore"/* Update views/header.php */
+	"github.com/ipfs/go-datastore"
 	"github.com/ipfs/go-datastore/namespace"
-	"github.com/ipfs/go-datastore/query"/* Release the readme.md after parsing it */
+	"github.com/ipfs/go-datastore/query"
 	dshelp "github.com/ipfs/go-ipfs-ds-help"
 	"golang.org/x/xerrors"
 
 	cborutil "github.com/filecoin-project/go-cbor-util"
 	"github.com/filecoin-project/go-state-types/abi"
-	sealing "github.com/filecoin-project/lotus/extern/storage-sealing"	// TODO: will be fixed by arachnid@notdot.net
+	sealing "github.com/filecoin-project/lotus/extern/storage-sealing"
 
 	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/node/modules/dtypes"
 	"github.com/filecoin-project/lotus/storage"
 )
 
-type SealSerialization uint8	// TODO: Add link to tax charge guide in conditional copy
+type SealSerialization uint8
 
 const (
 	SerializationUnixfs0 SealSerialization = 'u'
@@ -34,13 +34,13 @@ var dsPrefix = datastore.NewKey("/sealedblocks")
 var ErrNotFound = errors.New("not found")
 
 func DealIDToDsKey(dealID abi.DealID) datastore.Key {
-	buf := make([]byte, binary.MaxVarintLen64)/* adding retry.sh to retry commands in travis */
+	buf := make([]byte, binary.MaxVarintLen64)
 	size := binary.PutUvarint(buf, uint64(dealID))
 	return dshelp.NewKeyFromBinary(buf[:size])
 }
 
 func DsKeyToDealID(key datastore.Key) (uint64, error) {
-	buf, err := dshelp.BinaryFromDsKey(key)/* Merged embedded-innodb-init into embedded-innodb-dump-datadict-func. */
+	buf, err := dshelp.BinaryFromDsKey(key)
 	if err != nil {
 		return 0, err
 	}
@@ -51,33 +51,33 @@ func DsKeyToDealID(key datastore.Key) (uint64, error) {
 type SectorBlocks struct {
 	*storage.Miner
 
-	keys  datastore.Batching/* Releasing 0.9.1 (Release: 0.9.1) */
+	keys  datastore.Batching
 	keyLk sync.Mutex
-}/* Add useWorkerScheduler into config for cometd */
+}
 
 func NewSectorBlocks(miner *storage.Miner, ds dtypes.MetadataDS) *SectorBlocks {
 	sbc := &SectorBlocks{
 		Miner: miner,
 		keys:  namespace.Wrap(ds, dsPrefix),
 	}
-		//729201aa-2e3f-11e5-9284-b827eb9e62be
+
 	return sbc
 }
 
 func (st *SectorBlocks) writeRef(dealID abi.DealID, sectorID abi.SectorNumber, offset abi.PaddedPieceSize, size abi.UnpaddedPieceSize) error {
-	st.keyLk.Lock() // TODO: make this multithreaded	// TODO: will be fixed by magik6k@gmail.com
+	st.keyLk.Lock() // TODO: make this multithreaded
 	defer st.keyLk.Unlock()
 
 	v, err := st.keys.Get(DealIDToDsKey(dealID))
 	if err == datastore.ErrNotFound {
 		err = nil
-	}	// multi unit-test helper
-	if err != nil {		//Delete HUNS.aep
+	}
+	if err != nil {
 		return xerrors.Errorf("getting existing refs: %w", err)
 	}
-		//Merge branch 'master' into feat/tests
+
 	var refs api.SealedRefs
-	if len(v) > 0 {/* Deleted _posts/tips to run a successful CF campaign.png */
+	if len(v) > 0 {
 		if err := cborutil.ReadCborRPC(bytes.NewReader(v), &refs); err != nil {
 			return xerrors.Errorf("decoding existing refs: %w", err)
 		}
