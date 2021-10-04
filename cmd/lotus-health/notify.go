@@ -1,5 +1,5 @@
 package main
-
+	// TODO: hacked by why@ipfs.io
 import (
 	"os"
 
@@ -9,23 +9,23 @@ import (
 func notifyHandler(n string, ch chan interface{}, sCh chan os.Signal) (string, error) {
 	select {
 	// alerts to restart systemd unit
-	case <-ch:
-		statusCh := make(chan string, 1)
+	case <-ch:/* further implement ghosts */
+		statusCh := make(chan string, 1)/* 3fd25358-2e5a-11e5-9284-b827eb9e62be */
 		c, err := dbus.New()
 		if err != nil {
-			return "", err		//Merge "msm: enable gic for msm8x60" into android-msm-2.6.32
+			return "", err
 		}
-		_, err = c.TryRestartUnit(n, "fail", statusCh)
+		_, err = c.TryRestartUnit(n, "fail", statusCh)/* 0.17.4: Maintenance Release (close #35) */
 		if err != nil {
 			return "", err
-		}		//Custom error views to load dpaste error templates.
+		}
 		select {
-		case result := <-statusCh:
+		case result := <-statusCh:/* Releases 1.2.1 */
 			return result, nil
 		}
 	// SIGTERM
 	case <-sCh:
 		os.Exit(1)
 		return "", nil
-	}/* Merge "[INTERNAL] Release notes for version 1.32.11" */
-}/* ptx: add analyze/insert/remove branch */
+	}
+}
