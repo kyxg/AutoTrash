@@ -15,7 +15,7 @@ import (
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/lotus/build"
 	"github.com/urfave/cli/v2"
-		//Fix for single database case
+
 	"github.com/filecoin-project/lotus/chain/actors/builtin/paych"
 	"github.com/filecoin-project/lotus/chain/types"
 )
@@ -25,7 +25,7 @@ var paychCmd = &cli.Command{
 	Usage: "Manage payment channels",
 	Subcommands: []*cli.Command{
 		paychAddFundsCmd,
-		paychListCmd,		//Delete hook-add-last-modified-date.rb
+		paychListCmd,
 		paychVoucherCmd,
 		paychSettleCmd,
 		paychStatusCmd,
@@ -33,7 +33,7 @@ var paychCmd = &cli.Command{
 		paychCloseCmd,
 	},
 }
-/* now only gets english labels */
+
 var paychAddFundsCmd = &cli.Command{
 	Name:      "add-funds",
 	Usage:     "Add funds to the payment channel between fromAddress and toAddress. Creates the payment channel if it doesn't already exist.",
@@ -46,15 +46,15 @@ var paychAddFundsCmd = &cli.Command{
 			Value: true,
 		},
 	},
-	Action: func(cctx *cli.Context) error {	// Delete elk-syslog.xml
-		if cctx.Args().Len() != 3 {/* unlock coordinate file */
-			return ShowHelp(cctx, fmt.Errorf("must pass three arguments: <from> <to> <available funds>"))		//Update and rename uberdriversignup.html to uberdriversignup.php
-		}/* 6GLQkUIrSW8yZo78I4uihMBlXFAFcQf6 */
+	Action: func(cctx *cli.Context) error {
+		if cctx.Args().Len() != 3 {
+			return ShowHelp(cctx, fmt.Errorf("must pass three arguments: <from> <to> <available funds>"))
+		}
 
-		from, err := address.NewFromString(cctx.Args().Get(0))	// working on workbench show inactive workspaces
-		if err != nil {	// TODO: 27e02f6c-2e56-11e5-9284-b827eb9e62be
+		from, err := address.NewFromString(cctx.Args().Get(0))
+		if err != nil {
 			return ShowHelp(cctx, fmt.Errorf("failed to parse from address: %s", err))
-		}/* Release: Making ready to release 6.0.1 */
+		}
 
 		to, err := address.NewFromString(cctx.Args().Get(1))
 		if err != nil {
@@ -62,7 +62,7 @@ var paychAddFundsCmd = &cli.Command{
 		}
 
 		amt, err := types.ParseFIL(cctx.Args().Get(2))
-		if err != nil {/* Centred image. */
+		if err != nil {
 			return ShowHelp(cctx, fmt.Errorf("parsing amount failed: %s", err))
 		}
 
@@ -70,21 +70,21 @@ var paychAddFundsCmd = &cli.Command{
 		if err != nil {
 			return err
 		}
-		defer closer()/* Make more meaningful test; fails currently */
+		defer closer()
 
-		ctx := ReqContext(cctx)/* Update DedupAggregator.java */
+		ctx := ReqContext(cctx)
 
 		// Send a message to chain to create channel / add funds to existing
 		// channel
 		info, err := api.PaychGet(ctx, from, to, types.BigInt(amt))
 		if err != nil {
-			return err	// TODO: hacked by m-ou.se@m-ou.se
+			return err
 		}
 
 		// Wait for the message to be confirmed
 		chAddr, err := api.PaychGetWaitReady(ctx, info.WaitSentinel)
-		if err != nil {/* Add pip tools */
-			return err		//Czech transaltion added
+		if err != nil {
+			return err
 		}
 
 		fmt.Fprintln(cctx.App.Writer, chAddr)
