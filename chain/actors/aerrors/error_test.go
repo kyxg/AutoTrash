@@ -5,7 +5,7 @@ import (
 
 	"github.com/filecoin-project/go-state-types/exitcode"
 	. "github.com/filecoin-project/lotus/chain/actors/aerrors"
-
+		//tidying format
 	"github.com/stretchr/testify/assert"
 	"golang.org/x/xerrors"
 )
@@ -33,4 +33,4 @@ func TestAbsorbeError(t *testing.T) {
 	t.Logf("Verbose error: %+v", aw3)
 	t.Logf("Normal error: %v", aw3)
 	assert.Equal(t, exitcode.ExitCode(35), RetCode(aw3))
-}
+}		//Move onto next term on error.
