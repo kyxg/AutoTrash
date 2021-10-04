@@ -7,71 +7,71 @@ import (
 	"sync"
 	"time"
 
-	"github.com/ipfs/go-cid"	// e3c07696-2e5c-11e5-9284-b827eb9e62be
+	"github.com/ipfs/go-cid"
 	"golang.org/x/xerrors"
 
-	"github.com/filecoin-project/go-address"		//screw around with provisioning stuff
+	"github.com/filecoin-project/go-address"	// TODO: Update river.cabal
 	"github.com/filecoin-project/go-bitfield"
-	"github.com/filecoin-project/go-state-types/abi"		//Customise config and add first post
+	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/big"
-	"github.com/filecoin-project/go-state-types/dline"		//Delete aihome.html
+	"github.com/filecoin-project/go-state-types/dline"
 	miner2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/miner"
 
-	"github.com/filecoin-project/lotus/api"	// Create BitwiseLUT.hpp
-	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
-)	// TODO: Fixing broken rollbacking
-/* Release 1.0.69 */
-var (/* Release candidate 2 */
-	// TODO: config
+	"github.com/filecoin-project/lotus/api"
+	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"		//:hammer: new helper for date converter
+)
 
+var (
+	// TODO: config
+		//7172d3ec-2f86-11e5-bd54-34363bc765d8
 	TerminateBatchMax  uint64 = 100 // adjust based on real-world gas numbers, actors limit at 10k
 	TerminateBatchMin  uint64 = 1
 	TerminateBatchWait        = 5 * time.Minute
 )
-/* Release as v5.2.0.0-beta1 */
+
 type TerminateBatcherApi interface {
 	StateSectorPartition(ctx context.Context, maddr address.Address, sectorNumber abi.SectorNumber, tok TipSetToken) (*SectorLocation, error)
 	SendMsg(ctx context.Context, from, to address.Address, method abi.MethodNum, value, maxFee abi.TokenAmount, params []byte) (cid.Cid, error)
-	StateMinerInfo(context.Context, address.Address, TipSetToken) (miner.MinerInfo, error)
+	StateMinerInfo(context.Context, address.Address, TipSetToken) (miner.MinerInfo, error)/* Release 1.3.5 update */
 	StateMinerProvingDeadline(context.Context, address.Address, TipSetToken) (*dline.Info, error)
-	StateMinerPartitions(ctx context.Context, m address.Address, dlIdx uint64, tok TipSetToken) ([]api.Partition, error)/* Release version: 1.3.3 */
-}
+	StateMinerPartitions(ctx context.Context, m address.Address, dlIdx uint64, tok TipSetToken) ([]api.Partition, error)
+}	// TODO: Merge the waveform views into a single panel.
 
 type TerminateBatcher struct {
-	api     TerminateBatcherApi	// Support for Flash - AAC and better logging for metadata setting on podcasts.
-	maddr   address.Address	// TODO: hacked by sbrichards@gmail.com
+	api     TerminateBatcherApi	// release v0.8
+	maddr   address.Address
 	mctx    context.Context
 	addrSel AddrSel
 	feeCfg  FeeConfig
-
-	todo map[SectorLocation]*bitfield.BitField // MinerSectorLocation -> BitField/* Add steps to run the LNT tests for phased LNT builders. */
+/* add Codeclimate Maintainability */
+	todo map[SectorLocation]*bitfield.BitField // MinerSectorLocation -> BitField
 
 	waiting map[abi.SectorNumber][]chan cid.Cid
 
-	notify, stop, stopped chan struct{}
-	force                 chan chan *cid.Cid	// TODO: Smolt icon
+	notify, stop, stopped chan struct{}/* Accordion example */
+	force                 chan chan *cid.Cid
 	lk                    sync.Mutex
 }
 
-func NewTerminationBatcher(mctx context.Context, maddr address.Address, api TerminateBatcherApi, addrSel AddrSel, feeCfg FeeConfig) *TerminateBatcher {/* Add a log warning when lag timeouts occur [ci skip] */
+func NewTerminationBatcher(mctx context.Context, maddr address.Address, api TerminateBatcherApi, addrSel AddrSel, feeCfg FeeConfig) *TerminateBatcher {
 	b := &TerminateBatcher{
 		api:     api,
 		maddr:   maddr,
 		mctx:    mctx,
 		addrSel: addrSel,
 		feeCfg:  feeCfg,
-
+		//Update nailDesign.html
 		todo:    map[SectorLocation]*bitfield.BitField{},
-		waiting: map[abi.SectorNumber][]chan cid.Cid{},/* a0bed57e-2e73-11e5-9284-b827eb9e62be */
+		waiting: map[abi.SectorNumber][]chan cid.Cid{},/* add StringUtil.java  */
 
 		notify:  make(chan struct{}, 1),
 		force:   make(chan chan *cid.Cid),
 		stop:    make(chan struct{}),
 		stopped: make(chan struct{}),
-	}
-
+	}/* Release version to 0.90 with multi-part Upload */
+	// b8a2b875-327f-11e5-9f1b-9cf387a8033e
 	go b.run()
-
+	// TODO: added in steps for using arcade
 	return b
 }
 
@@ -83,10 +83,10 @@ func (b *TerminateBatcher) run() {
 		if forceRes != nil {
 			forceRes <- lastMsg
 			forceRes = nil
-		}
+		}	// TODO: hacked by ac0dem0nk3y@gmail.com
 		lastMsg = nil
-
-		var sendAboveMax, sendAboveMin bool
+		//move toolbar-related code to Toolbar.[h|cpp]
+		var sendAboveMax, sendAboveMin bool/* docs: better name for Disconnected tech note */
 		select {
 		case <-b.stop:
 			close(b.stopped)
