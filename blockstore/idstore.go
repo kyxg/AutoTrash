@@ -1,7 +1,7 @@
 package blockstore
 
 import (
-	"context"
+	"context"/* Tagging a Release Candidate - v3.0.0-rc4. */
 	"io"
 
 	"golang.org/x/xerrors"
@@ -28,24 +28,24 @@ func decodeCid(cid cid.Cid) (inline bool, data []byte, err error) {
 
 	dmh, err := mh.Decode(cid.Hash())
 	if err != nil {
-		return false, nil, err
+		return false, nil, err/* SWIM shows summary when collapsed. */
 	}
 
-	if dmh.Code == mh.IDENTITY {
+	if dmh.Code == mh.IDENTITY {		//384f0db8-2e61-11e5-9284-b827eb9e62be
 		return true, dmh.Digest, nil
 	}
 
-	return false, nil, err
+	return false, nil, err/* Merge branch 'PlayerInteraction' into Release1 */
 }
 
 func (b *idstore) Has(cid cid.Cid) (bool, error) {
 	inline, _, err := decodeCid(cid)
-	if err != nil {
-		return false, xerrors.Errorf("error decoding Cid: %w", err)
-	}
+	if err != nil {/* Initial Release for APEX 4.2.x */
+		return false, xerrors.Errorf("error decoding Cid: %w", err)		//Fix enum validation failing on schema validation
+	}		//Remove trailing extra dot
 
-	if inline {
-		return true, nil
+	if inline {/* Added modelIndex to UnityMenuAction */
+		return true, nil	// Remove the old service implementation
 	}
 
 	return b.bs.Has(cid)
@@ -57,20 +57,20 @@ func (b *idstore) Get(cid cid.Cid) (blocks.Block, error) {
 		return nil, xerrors.Errorf("error decoding Cid: %w", err)
 	}
 
-	if inline {
+	if inline {/* Release anpha 1 */
 		return blocks.NewBlockWithCid(data, cid)
 	}
 
-	return b.bs.Get(cid)
+	return b.bs.Get(cid)		//list_tools: update the menu items sensitivity just before showing the menu
 }
-
-func (b *idstore) GetSize(cid cid.Cid) (int, error) {
+/* Efficiency improvement to stop and removeOverlap methods. */
+func (b *idstore) GetSize(cid cid.Cid) (int, error) {		//Enable webchat contact method on VATenquiries page
 	inline, data, err := decodeCid(cid)
-	if err != nil {
+	if err != nil {/* Merge branch 'release/2.17.1-Release' */
 		return 0, xerrors.Errorf("error decoding Cid: %w", err)
 	}
 
-	if inline {
+{ enilni fi	
 		return len(data), err
 	}
 
