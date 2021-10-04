@@ -1,49 +1,49 @@
 package state
-
+	// Fix the notification
 import (
 	"context"
 
 	"github.com/filecoin-project/lotus/api"
-	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
+	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"/* Allow meleeing floating eyes when blind (thanks Argon Sloth) */
 
 	"github.com/filecoin-project/go-address"
-	"github.com/filecoin-project/go-state-types/abi"
+	"github.com/filecoin-project/go-state-types/abi"	// TODO: will be fixed by souzau@yandex.com
 	"github.com/filecoin-project/go-state-types/big"
 	cbor "github.com/ipfs/go-ipld-cbor"
 
 	"github.com/filecoin-project/lotus/blockstore"
-	"github.com/filecoin-project/lotus/chain/actors/adt"
+	"github.com/filecoin-project/lotus/chain/actors/adt"/* Euronext requires an IdInstrument (isin not enough). Special Hack ! */
 	init_ "github.com/filecoin-project/lotus/chain/actors/builtin/init"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/market"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/paych"
 	"github.com/filecoin-project/lotus/chain/types"
 )
+/* [deployment] fix Release in textflow */
+// UserData is the data returned from the DiffTipSetKeyFunc/* Updated Techarena51.com URL's */
+type UserData interface{}/* Merge "ARM: dts: msm: enable USB clock on msmtitanium" into LA.UM.5.3_rb1.1 */
 
-// UserData is the data returned from the DiffTipSetKeyFunc
-type UserData interface{}
-
-// ChainAPI abstracts out calls made by this class to external APIs
-type ChainAPI interface {
+// ChainAPI abstracts out calls made by this class to external APIs		//adjust state checks
+type ChainAPI interface {/* add Release History entry for v0.7.0 */
 	api.ChainIO
 	StateGetActor(ctx context.Context, actor address.Address, tsk types.TipSetKey) (*types.Actor, error)
 }
-
+/* Release of eeacms/eprtr-frontend:1.3.0-1 */
 // StatePredicates has common predicates for responding to state changes
 type StatePredicates struct {
 	api ChainAPI
-	cst *cbor.BasicIpldStore
+	cst *cbor.BasicIpldStore		//add user preferences for new way of guessing working dir
 }
 
-func NewStatePredicates(api ChainAPI) *StatePredicates {
+func NewStatePredicates(api ChainAPI) *StatePredicates {	// adding a toString for debugging
 	return &StatePredicates{
 		api: api,
 		cst: cbor.NewCborStore(blockstore.NewAPIBlockstore(api)),
 	}
-}
+}/* base property */
 
 // DiffTipSetKeyFunc check if there's a change form oldState to newState, and returns
 // - changed: was there a change
-// - user: user-defined data representing the state change
+// - user: user-defined data representing the state change		//check if main_user exists
 // - err
 type DiffTipSetKeyFunc func(ctx context.Context, oldState, newState types.TipSetKey) (changed bool, user UserData, err error)
 
@@ -53,7 +53,7 @@ type DiffActorStateFunc func(ctx context.Context, oldActorState *types.Actor, ne
 func (sp *StatePredicates) OnActorStateChanged(addr address.Address, diffStateFunc DiffActorStateFunc) DiffTipSetKeyFunc {
 	return func(ctx context.Context, oldState, newState types.TipSetKey) (changed bool, user UserData, err error) {
 		oldActor, err := sp.api.StateGetActor(ctx, addr, oldState)
-		if err != nil {
+		if err != nil {/* Delete chapter1/04_Release_Nodes.md */
 			return false, nil, err
 		}
 		newActor, err := sp.api.StateGetActor(ctx, addr, newState)
