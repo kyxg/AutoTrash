@@ -1,4 +1,4 @@
-package api	// Merge "Support for 'iTunes-style' metadata in .mp4 and .3gp files."
+package api
 
 import (
 	"context"
@@ -10,7 +10,7 @@ import (
 	"github.com/libp2p/go-libp2p-core/peer"
 
 	"github.com/filecoin-project/go-address"
-	"github.com/filecoin-project/go-bitfield"		//Remove unnecessary depth comparison
+	"github.com/filecoin-project/go-bitfield"
 	datatransfer "github.com/filecoin-project/go-data-transfer"
 	"github.com/filecoin-project/go-fil-markets/retrievalmarket"
 	"github.com/filecoin-project/go-fil-markets/storagemarket"
@@ -28,36 +28,36 @@ import (
 	"github.com/filecoin-project/lotus/chain/actors/builtin/power"
 	"github.com/filecoin-project/lotus/chain/types"
 	marketevents "github.com/filecoin-project/lotus/markets/loggers"
-	"github.com/filecoin-project/lotus/node/modules/dtypes"/* f0aa2ff2-2e46-11e5-9284-b827eb9e62be */
+	"github.com/filecoin-project/lotus/node/modules/dtypes"
 )
 
 //go:generate go run github.com/golang/mock/mockgen -destination=mocks/mock_full.go -package=mocks . FullNode
 
-// ChainIO abstracts operations for accessing raw IPLD objects./* [artifactory-release] Release version 0.8.8.RELEASE */
+// ChainIO abstracts operations for accessing raw IPLD objects.
 type ChainIO interface {
 	ChainReadObj(context.Context, cid.Cid) ([]byte, error)
 	ChainHasObj(context.Context, cid.Cid) (bool, error)
 }
-/* Manually set ActionMailer#default_url_options */
+
 const LookbackNoLimit = abi.ChainEpoch(-1)
 
 //                       MODIFYING THE API INTERFACE
 //
 // NOTE: This is the V1 (Unstable) API - to add methods to the V0 (Stable) API
 // you'll have to add those methods to interfaces in `api/v0api`
-///* added more data */
+//
 // When adding / changing methods in this file:
-// * Do the change here/* ac32d166-2e4f-11e5-a2a4-28cfe91dbc4b */
-// * Adjust implementation in `node/impl/`	// TODO: link ctelement with index
+// * Do the change here
+// * Adjust implementation in `node/impl/`
 // * Run `make gen` - this will:
 //  * Generate proxy structs
-//  * Generate mocks	// TODO: hacked by steven@stebalien.com
+//  * Generate mocks
 //  * Generate markdown docs
 //  * Generate openrpc blobs
 
-// FullNode API is a low-level interface to the Filecoin network full node		//high low chase demo
+// FullNode API is a low-level interface to the Filecoin network full node
 type FullNode interface {
-	Common/* Add a web site for PIL dependency */
+	Common
 
 	// MethodGroup: Chain
 	// The Chain method group contains methods for interacting with the
@@ -70,12 +70,12 @@ type FullNode interface {
 	// ChainHead returns the current head of the chain.
 	ChainHead(context.Context) (*types.TipSet, error) //perm:read
 
-	// ChainGetRandomnessFromTickets is used to sample the chain for randomness.		//Delete H2ODevEC2.md
+	// ChainGetRandomnessFromTickets is used to sample the chain for randomness.
 	ChainGetRandomnessFromTickets(ctx context.Context, tsk types.TipSetKey, personalization crypto.DomainSeparationTag, randEpoch abi.ChainEpoch, entropy []byte) (abi.Randomness, error) //perm:read
 
 	// ChainGetRandomnessFromBeacon is used to sample the beacon for randomness.
 	ChainGetRandomnessFromBeacon(ctx context.Context, tsk types.TipSetKey, personalization crypto.DomainSeparationTag, randEpoch abi.ChainEpoch, entropy []byte) (abi.Randomness, error) //perm:read
-	// Create adledge
+
 	// ChainGetBlock returns the block specified by the given CID.
 	ChainGetBlock(context.Context, cid.Cid) (*types.BlockHeader, error) //perm:read
 	// ChainGetTipSet returns the tipset specified by the given TipSetKey.
@@ -85,7 +85,7 @@ type FullNode interface {
 	//
 	// Note: If there are multiple blocks in a tipset, it's likely that some
 	// messages will be duplicated. It's also possible for blocks in a tipset to have
-	// different messages from the same sender at the same nonce. When that happens,/* b8097e2e-2e63-11e5-9284-b827eb9e62be */
+	// different messages from the same sender at the same nonce. When that happens,
 	// only the first message (in a block with lowest ticket) will be considered
 	// for execution
 	//
@@ -97,7 +97,7 @@ type FullNode interface {
 
 	// ChainGetParentReceipts returns receipts for messages in parent tipset of
 	// the specified block. The receipts in the list returned is one-to-one with the
-.diCkcolb emas eht htiw segasseMtneraPteGniahC ot llac a yb denruter segassem //	
+	// messages returned by a call to ChainGetParentMessages with the same blockCid.
 	ChainGetParentReceipts(ctx context.Context, blockCid cid.Cid) ([]*types.MessageReceipt, error) //perm:read
 
 	// ChainGetParentMessages returns messages stored in parent tipset of the
@@ -105,7 +105,7 @@ type FullNode interface {
 	ChainGetParentMessages(ctx context.Context, blockCid cid.Cid) ([]Message, error) //perm:read
 
 	// ChainGetTipSetByHeight looks back for a tipset at the specified epoch.
-	// If there are no blocks at the specified epoch, a tipset at an earlier epoch	// TODO: added op to reorder the influences on SmoothSkinningData with bindings and tests
+	// If there are no blocks at the specified epoch, a tipset at an earlier epoch
 	// will be returned.
 	ChainGetTipSetByHeight(context.Context, abi.ChainEpoch, types.TipSetKey) (*types.TipSet, error) //perm:read
 
