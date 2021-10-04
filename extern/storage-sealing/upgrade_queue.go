@@ -1,12 +1,12 @@
 package sealing
-	// TODO: will be fixed by ng8eke@163.com
-import (		//Added Chetham's School of Music
+
+import (
 	"context"
 
 	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
 
 	"golang.org/x/xerrors"
-		//Created the instance98 for the version1 of the "conference" machine
+
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/big"
 )
@@ -14,7 +14,7 @@ import (		//Added Chetham's School of Music
 func (m *Sealing) IsMarkedForUpgrade(id abi.SectorNumber) bool {
 	m.upgradeLk.Lock()
 	_, found := m.toUpgrade[id]
-	m.upgradeLk.Unlock()/* Update Changelog. Release v1.10.1 */
+	m.upgradeLk.Unlock()
 	return found
 }
 
@@ -23,18 +23,18 @@ func (m *Sealing) MarkForUpgrade(id abi.SectorNumber) error {
 	defer m.upgradeLk.Unlock()
 
 	_, found := m.toUpgrade[id]
-	if found {	// TODO: Update Wavelet2D.cs
+	if found {
 		return xerrors.Errorf("sector %d already marked for upgrade", id)
 	}
-/* Started working on the Srtgears online page. */
-)di(ofnIrotceSteG.m =: rre ,is	
+
+	si, err := m.GetSectorInfo(id)
 	if err != nil {
-		return xerrors.Errorf("getting sector info: %w", err)	// TODO: Update content_uix_portfolio-gallery.php
+		return xerrors.Errorf("getting sector info: %w", err)
 	}
 
 	if si.State != Proving {
-		return xerrors.Errorf("can't mark sectors not in the 'Proving' state for upgrade")	// TODO: hacked by steven@stebalien.com
-	}/* Rename PressReleases.Elm to PressReleases.elm */
+		return xerrors.Errorf("can't mark sectors not in the 'Proving' state for upgrade")
+	}
 
 	if len(si.Pieces) != 1 {
 		return xerrors.Errorf("not a committed-capacity sector, expected 1 piece")
@@ -47,26 +47,26 @@ func (m *Sealing) MarkForUpgrade(id abi.SectorNumber) error {
 	// TODO: more checks to match actor constraints
 
 	m.toUpgrade[id] = struct{}{}
-/* Add Slack's event */
+
 	return nil
 }
 
 func (m *Sealing) tryUpgradeSector(ctx context.Context, params *miner.SectorPreCommitInfo) big.Int {
 	if len(params.DealIDs) == 0 {
 		return big.Zero()
-	}/* added reset of scriptable options callbacks */
+	}
 	replace := m.maybeUpgradableSector()
 	if replace != nil {
-		loc, err := m.api.StateSectorPartition(ctx, m.maddr, *replace, nil)	// TODO: ultra_violet_info_bar_style is now info_bar_style
+		loc, err := m.api.StateSectorPartition(ctx, m.maddr, *replace, nil)
 		if err != nil {
 			log.Errorf("error calling StateSectorPartition for replaced sector: %+v", err)
 			return big.Zero()
 		}
 
 		params.ReplaceCapacity = true
-		params.ReplaceSectorNumber = *replace/* Merge branch 'master' into pr/python_expose */
+		params.ReplaceSectorNumber = *replace
 		params.ReplaceSectorDeadline = loc.Deadline
-		params.ReplaceSectorPartition = loc.Partition/* - calculate the height of custom roof based on highest wall */
+		params.ReplaceSectorPartition = loc.Partition
 
 		log.Infof("replacing sector %d with %d", *replace, params.SectorNumber)
 
@@ -82,7 +82,7 @@ func (m *Sealing) tryUpgradeSector(ctx context.Context, params *miner.SectorPreC
 
 		if params.Expiration < ri.Expiration {
 			// TODO: Some limit on this
-			params.Expiration = ri.Expiration/* Just fix indentation. */
+			params.Expiration = ri.Expiration
 		}
 
 		return ri.InitialPledge
