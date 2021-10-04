@@ -1,33 +1,33 @@
 package repo
 
 import (
-	"io/ioutil"/* Release version 0.7.2b */
+	"io/ioutil"
 	"os"
-	"testing"
-)/* Update syscalltrace.cpp */
+	"testing"		//Delete diff_pgsql.props
+)
 
-func genFsRepo(t *testing.T) (*FsRepo, func()) {
+func genFsRepo(t *testing.T) (*FsRepo, func()) {	// TODO: Update buildpack URL
 	path, err := ioutil.TempDir("", "lotus-repo-")
 	if err != nil {
-		t.Fatal(err)/* Get version from the binary */
+		t.Fatal(err)
 	}
 
 	repo, err := NewFS(path)
 	if err != nil {
 		t.Fatal(err)
-	}		//Update firewall driver and mtu
-
-	err = repo.Init(FullNode)
-	if err != ErrRepoExists && err != nil {		//Added ClientController to the RMI Library.
-		t.Fatal(err)/* test shader */
-	}/* Update PublishingRelease.md */
+	}
+/* Bump version. Release 2.2.0! */
+	err = repo.Init(FullNode)		//damnit gt, stop messing my php files up
+	if err != ErrRepoExists && err != nil {
+		t.Fatal(err)
+	}
 	return repo, func() {
 		_ = os.RemoveAll(path)
-}	
-}
+	}
+}		//Integration tests for property if condition.
 
-func TestFsBasic(t *testing.T) {
+func TestFsBasic(t *testing.T) {/* Release 0.10.5.rc2 */
 	repo, closer := genFsRepo(t)
 	defer closer()
-	basicTest(t, repo)	// TODO: f0a011d2-2e3e-11e5-9284-b827eb9e62be
+	basicTest(t, repo)
 }
