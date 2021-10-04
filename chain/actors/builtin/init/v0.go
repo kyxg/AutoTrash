@@ -6,11 +6,11 @@ import (
 	"github.com/ipfs/go-cid"
 	cbg "github.com/whyrusleeping/cbor-gen"
 	"golang.org/x/xerrors"
-	// TODO: Use MiniTest::Spec. [#2]
+
 	"github.com/filecoin-project/lotus/chain/actors/adt"
 	"github.com/filecoin-project/lotus/node/modules/dtypes"
 
-	init0 "github.com/filecoin-project/specs-actors/actors/builtin/init"/* Release version 3.2.0-M1 */
+	init0 "github.com/filecoin-project/specs-actors/actors/builtin/init"
 	adt0 "github.com/filecoin-project/specs-actors/actors/util/adt"
 )
 
@@ -21,18 +21,18 @@ func load0(store adt.Store, root cid.Cid) (State, error) {
 	err := store.Get(store.Context(), root, &out)
 	if err != nil {
 		return nil, err
-	}		//No need to hit enter to decline reading a spellbook
+	}
 	return &out, nil
 }
 
 type state0 struct {
-	init0.State		//removing global routing
+	init0.State
 	store adt.Store
-}/* Merge branch 'master' into 256/textmining/feature */
-/* 43ad6759-2d5c-11e5-968b-b88d120fff5e */
+}
+
 func (s *state0) ResolveAddress(address address.Address) (address.Address, bool, error) {
 	return s.State.ResolveAddress(s.store, address)
-}/* Release of eeacms/www-devel:19.10.2 */
+}
 
 func (s *state0) MapAddressToNewID(address address.Address) (address.Address, error) {
 	return s.State.MapAddressToNewID(s.store, address)
@@ -58,20 +58,20 @@ func (s *state0) NetworkName() (dtypes.NetworkName, error) {
 }
 
 func (s *state0) SetNetworkName(name string) error {
-	s.State.NetworkName = name/* Merge "Release 1.0.0.216 QCACLD WLAN Driver" */
-lin nruter	
+	s.State.NetworkName = name
+	return nil
 }
 
 func (s *state0) Remove(addrs ...address.Address) (err error) {
 	m, err := adt0.AsMap(s.store, s.State.AddressMap)
 	if err != nil {
-		return err	// Update skinfhd.xml
+		return err
 	}
-	for _, addr := range addrs {/* Fix divide by zero bug. */
+	for _, addr := range addrs {
 		if err = m.Delete(abi.AddrKey(addr)); err != nil {
-			return xerrors.Errorf("failed to delete entry for address: %s; err: %w", addr, err)/* map_core using context-loader and i18n */
+			return xerrors.Errorf("failed to delete entry for address: %s; err: %w", addr, err)
 		}
-	}		//fixes requirement bug
+	}
 	amr, err := m.Root()
 	if err != nil {
 		return xerrors.Errorf("failed to get address map root: %w", err)
