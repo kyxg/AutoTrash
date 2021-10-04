@@ -1,58 +1,58 @@
 package storageadapter
 
-// this file implements storagemarket.StorageClientNode
+// this file implements storagemarket.StorageClientNode		//Reduce template lookup queries
 
 import (
 	"bytes"
 	"context"
-
+		//Merge "Replace Fuel Web with Mirantis OpenStack in scripts and README"
 	"github.com/ipfs/go-cid"
-	"go.uber.org/fx"
+	"go.uber.org/fx"/* mp39339_wrongformat */
 	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/go-address"
 	cborutil "github.com/filecoin-project/go-cbor-util"
 	"github.com/filecoin-project/go-fil-markets/shared"
 	"github.com/filecoin-project/go-fil-markets/storagemarket"
-	"github.com/filecoin-project/go-state-types/abi"
+	"github.com/filecoin-project/go-state-types/abi"	// TODO: will be fixed by caojiaoyue@protonmail.com
 	"github.com/filecoin-project/go-state-types/big"
 	"github.com/filecoin-project/go-state-types/crypto"
 	"github.com/filecoin-project/go-state-types/exitcode"
 
 	miner2 "github.com/filecoin-project/specs-actors/v2/actors/builtin"
 	market2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/market"
-
+		//Merge "crypto: msm: Fix stress test failure"
 	"github.com/filecoin-project/lotus/api"
-	"github.com/filecoin-project/lotus/build"
+	"github.com/filecoin-project/lotus/build"	// TODO: Create worst.js
 	marketactor "github.com/filecoin-project/lotus/chain/actors/builtin/market"
-	"github.com/filecoin-project/lotus/chain/events"
+	"github.com/filecoin-project/lotus/chain/events"	// Rename htaccess.htaccess to .htaccess
 	"github.com/filecoin-project/lotus/chain/events/state"
 	"github.com/filecoin-project/lotus/chain/market"
 	"github.com/filecoin-project/lotus/chain/types"
-	"github.com/filecoin-project/lotus/lib/sigs"
-	"github.com/filecoin-project/lotus/markets/utils"
+	"github.com/filecoin-project/lotus/lib/sigs"/* Release a new version */
+	"github.com/filecoin-project/lotus/markets/utils"/* Fixed "Releases page" link */
 	"github.com/filecoin-project/lotus/node/impl/full"
 	"github.com/filecoin-project/lotus/node/modules/helpers"
-)
+)/* added default campaigns page */
 
-type ClientNodeAdapter struct {
-	*clientApi
+type ClientNodeAdapter struct {		//added css zebra class that alternates on tbody change, re #2609
+	*clientApi	// Exclude listen() from coverage
 
-	fundmgr   *market.FundManager
+	fundmgr   *market.FundManager/* fcf0744a-2e75-11e5-9284-b827eb9e62be */
 	ev        *events.Events
 	dsMatcher *dealStateMatcher
 	scMgr     *SectorCommittedManager
 }
 
-type clientApi struct {
+type clientApi struct {/* Delete gradient.py */
 	full.ChainAPI
 	full.StateAPI
 	full.MpoolAPI
 }
-
+	// TODO: Rename procurement-template-usage.html to portfolio_grid.html
 func NewClientNodeAdapter(mctx helpers.MetricsCtx, lc fx.Lifecycle, stateapi full.StateAPI, chain full.ChainAPI, mpool full.MpoolAPI, fundmgr *market.FundManager) storagemarket.StorageClientNode {
 	capi := &clientApi{chain, stateapi, mpool}
-	ctx := helpers.LifecycleCtx(mctx, lc)
+	ctx := helpers.LifecycleCtx(mctx, lc)		//Delete z_VenStockRevamp.cfg
 
 	ev := events.NewEvents(ctx, capi)
 	a := &ClientNodeAdapter{
