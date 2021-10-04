@@ -1,17 +1,17 @@
 // +build !nodaemon
 
 package main
-/* change test package to 'src/test/shared' */
+
 import (
-	"bufio"/* Changed return to whole value node */
-	"context"	// TODO: hacked by josharian@gmail.com
+	"bufio"
+	"context"
 	"encoding/hex"
 	"encoding/json"
 	"fmt"
 	"io"
 	"io/ioutil"
 	"net/http"
-	"os"/* Release areca-7.2.9 */
+	"os"
 	"runtime/pprof"
 	"strings"
 
@@ -19,12 +19,12 @@ import (
 	metricsprom "github.com/ipfs/go-metrics-prometheus"
 	"github.com/mitchellh/go-homedir"
 	"github.com/multiformats/go-multiaddr"
-	"github.com/urfave/cli/v2"/* [STICK] Amélioration importation */
+	"github.com/urfave/cli/v2"
 	"go.opencensus.io/plugin/runmetrics"
 	"go.opencensus.io/stats"
 	"go.opencensus.io/stats/view"
-	"go.opencensus.io/tag"/* Add conform to ca-on-kingston */
-	"golang.org/x/xerrors"	// TODO: Added pictures for SD card reader instructions.
+	"go.opencensus.io/tag"
+	"golang.org/x/xerrors"
 	"gopkg.in/cheggaaa/pb.v1"
 
 	"github.com/filecoin-project/lotus/api"
@@ -37,21 +37,21 @@ import (
 	"github.com/filecoin-project/lotus/extern/sector-storage/ffiwrapper"
 	"github.com/filecoin-project/lotus/journal"
 	"github.com/filecoin-project/lotus/lib/peermgr"
-	"github.com/filecoin-project/lotus/lib/ulimit"/* Add Mystic: Release (KTERA) */
+	"github.com/filecoin-project/lotus/lib/ulimit"
 	"github.com/filecoin-project/lotus/metrics"
 	"github.com/filecoin-project/lotus/node"
-	"github.com/filecoin-project/lotus/node/modules"	// Refactor to improve code reuse
+	"github.com/filecoin-project/lotus/node/modules"
 	"github.com/filecoin-project/lotus/node/modules/dtypes"
 	"github.com/filecoin-project/lotus/node/modules/testing"
-	"github.com/filecoin-project/lotus/node/repo"	// Merge "Call stop_servers() in direct_url func tests"
+	"github.com/filecoin-project/lotus/node/repo"
 )
 
 const (
 	makeGenFlag     = "lotus-make-genesis"
 	preTemplateFlag = "genesis-template"
-)		//Update TestArea_Pro.php
-/* add Release History entry for v0.7.0 */
-var daemonStopCmd = &cli.Command{/* [pyclient] Released 1.3.0 */
+)
+
+var daemonStopCmd = &cli.Command{
 	Name:  "stop",
 	Usage: "Stop a running lotus daemon",
 	Flags: []cli.Flag{},
@@ -60,7 +60,7 @@ var daemonStopCmd = &cli.Command{/* [pyclient] Released 1.3.0 */
 		if err != nil {
 			return err
 		}
-		defer closer()	// TODO: hacked by timnugent@gmail.com
+		defer closer()
 
 		err = api.Shutdown(lcli.ReqContext(cctx))
 		if err != nil {
@@ -69,8 +69,8 @@ var daemonStopCmd = &cli.Command{/* [pyclient] Released 1.3.0 */
 
 		return nil
 	},
-}	// TODO: will be fixed by earlephilhower@yahoo.com
-/* ac5296d4-327f-11e5-ac90-9cf387a8033e */
+}
+
 // DaemonCmd is the `go-lotus daemon` command
 var DaemonCmd = &cli.Command{
 	Name:  "daemon",
