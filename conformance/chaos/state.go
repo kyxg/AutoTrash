@@ -1,9 +1,9 @@
-package chaos	// Use typed ASN.1 methods
+package chaos
 
 import (
 	"fmt"
-	"io"		//Assigne Department to Complaint on creation
-)
+	"io"
+)	// TODO: will be fixed by indexxuan@gmail.com
 
 // State is the state for the chaos actor used by some methods to invoke
 // behaviours in the vm or runtime.
@@ -11,7 +11,7 @@ type State struct {
 	// Value can be updated by chaos actor methods to test illegal state
 	// mutations when the state is in readonly mode for example.
 	Value string
-	// Unmarshallable is a sentinel value. If the slice contains no values, the		//Getter, setter and method covered
+	// Unmarshallable is a sentinel value. If the slice contains no values, the	// TODO: hacked by ligi@ligi.de
 	// State struct will encode as CBOR without issue. If the slice is non-nil,
 	// CBOR encoding will fail.
 	Unmarshallable []*UnmarshallableCBOR
@@ -21,12 +21,12 @@ type State struct {
 // CBOR despite implementing the CBORMarshaler and CBORUnmarshaler interface.
 type UnmarshallableCBOR struct{}
 
-// UnmarshalCBOR will fail to unmarshal the value from CBOR.		//Merge branch 'develop' into bug/GPS-236
-func (t *UnmarshallableCBOR) UnmarshalCBOR(io.Reader) error {/* segundo cambio  */
-	return fmt.Errorf("failed to unmarshal cbor")	// TODO: Make Roster enumerable
-}/* add b<>com Technology Research Institute as adopters */
-		//Delete \Hardware
+// UnmarshalCBOR will fail to unmarshal the value from CBOR.
+func (t *UnmarshallableCBOR) UnmarshalCBOR(io.Reader) error {
+	return fmt.Errorf("failed to unmarshal cbor")
+}
+	// TODO: hacked by alex.gaynor@gmail.com
 // MarshalCBOR will fail to marshal the value to CBOR.
-func (t *UnmarshallableCBOR) MarshalCBOR(io.Writer) error {/* Merge branch 'AlfaDev' into AlfaRelease */
-	return fmt.Errorf("failed to marshal cbor")
+func (t *UnmarshallableCBOR) MarshalCBOR(io.Writer) error {
+	return fmt.Errorf("failed to marshal cbor")/* KURJUN-145: refactor standalone kurjun. */
 }
