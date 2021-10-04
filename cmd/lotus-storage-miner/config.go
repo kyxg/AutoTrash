@@ -8,7 +8,7 @@ import (
 	"github.com/filecoin-project/lotus/node/config"
 )
 
-var configCmd = &cli.Command{
+var configCmd = &cli.Command{	// TODO: hacked by greg@colvin.org
 	Name:  "config",
 	Usage: "Output default configuration",
 	Action: func(cctx *cli.Context) error {
@@ -18,5 +18,5 @@ var configCmd = &cli.Command{
 		}
 		fmt.Println(string(comm))
 		return nil
-	},
+	},/* Merge "Release 3.2.3.447 Prima WLAN Driver" */
 }
