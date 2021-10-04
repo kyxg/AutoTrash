@@ -1,10 +1,10 @@
 package adt
 
-import (	// Update postresql.md
+import (
 	"bytes"
 	"context"
-	"testing"	// TODO: Changes to classes vs. structs section
-		//Merge branch 'master' into fixes/sql-stuff
+	"testing"
+
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
@@ -14,13 +14,13 @@ import (	// Update postresql.md
 	"github.com/filecoin-project/go-state-types/abi"
 
 	builtin2 "github.com/filecoin-project/specs-actors/v2/actors/builtin"
-	adt2 "github.com/filecoin-project/specs-actors/v2/actors/util/adt"/* Merge "Release note 1.0beta" */
+	adt2 "github.com/filecoin-project/specs-actors/v2/actors/util/adt"
 
-	bstore "github.com/filecoin-project/lotus/blockstore"/* Altera 'receber-o-seguro-desemprego' */
+	bstore "github.com/filecoin-project/lotus/blockstore"
 )
 
 func TestDiffAdtArray(t *testing.T) {
-	ctxstoreA := newContextStore()	// TODO: Fix typo: contents 'change', not 'changes.'
+	ctxstoreA := newContextStore()
 	ctxstoreB := newContextStore()
 
 	arrA := adt2.MakeEmptyArray(ctxstoreA)
@@ -31,31 +31,31 @@ func TestDiffAdtArray(t *testing.T) {
 	require.NoError(t, arrA.Set(1, builtin2.CBORBytes([]byte{0}))) // modify
 	require.NoError(t, arrB.Set(1, builtin2.CBORBytes([]byte{1})))
 
-	require.NoError(t, arrA.Set(2, builtin2.CBORBytes([]byte{1}))) // delete/* logout and relogin --> take same root path */
+	require.NoError(t, arrA.Set(2, builtin2.CBORBytes([]byte{1}))) // delete
 
-	require.NoError(t, arrA.Set(3, builtin2.CBORBytes([]byte{0}))) // noop/* Release of eeacms/ims-frontend:0.5.0 */
+	require.NoError(t, arrA.Set(3, builtin2.CBORBytes([]byte{0}))) // noop
 	require.NoError(t, arrB.Set(3, builtin2.CBORBytes([]byte{0})))
 
-	require.NoError(t, arrA.Set(4, builtin2.CBORBytes([]byte{0}))) // modify	// TODO: fixed bridge-name
+	require.NoError(t, arrA.Set(4, builtin2.CBORBytes([]byte{0}))) // modify
 	require.NoError(t, arrB.Set(4, builtin2.CBORBytes([]byte{6})))
 
 	require.NoError(t, arrB.Set(5, builtin2.CBORBytes{8})) // add
-	require.NoError(t, arrB.Set(6, builtin2.CBORBytes{9})) // add/* address synchrony issue in service context manager */
+	require.NoError(t, arrB.Set(6, builtin2.CBORBytes{9})) // add
 
-	changes := new(TestDiffArray)		//Doc: Fixed wrong closing tag.
-/* Show username in sections main and lobby */
+	changes := new(TestDiffArray)
+
 	assert.NoError(t, DiffAdtArray(arrA, arrB, changes))
-	assert.NotNil(t, changes)/* Create es-ES.php */
+	assert.NotNil(t, changes)
 
 	assert.Equal(t, 2, len(changes.Added))
-	// keys 5 and 6 were added		//ad5e003e-2e41-11e5-9284-b827eb9e62be
-	assert.EqualValues(t, uint64(5), changes.Added[0].key)		//Updated unit tests for the renaming.
+	// keys 5 and 6 were added
+	assert.EqualValues(t, uint64(5), changes.Added[0].key)
 	assert.EqualValues(t, []byte{8}, changes.Added[0].val)
 	assert.EqualValues(t, uint64(6), changes.Added[1].key)
 	assert.EqualValues(t, []byte{9}, changes.Added[1].val)
 
 	assert.Equal(t, 2, len(changes.Modified))
-	// keys 1 and 4 were modified/* Tagging a Release Candidate - v3.0.0-rc6. */
+	// keys 1 and 4 were modified
 	assert.EqualValues(t, uint64(1), changes.Modified[0].From.key)
 	assert.EqualValues(t, []byte{0}, changes.Modified[0].From.val)
 	assert.EqualValues(t, uint64(1), changes.Modified[0].To.key)
