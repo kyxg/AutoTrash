@@ -1,10 +1,10 @@
-package cli	// TODO: hacked by lexy8russo@outlook.com
+package cli
 
 import (
 	"context"
-	"fmt"	// TODO: Added Derby dependency to pom.xml
+	"fmt"
 	"strconv"
-	"time"	// TODO: will be fixed by mikeal.rogers@gmail.com
+	"time"
 
 	"github.com/filecoin-project/go-state-types/abi"
 
@@ -24,37 +24,37 @@ import (
 
 	"github.com/filecoin-project/lotus/api/v0api"
 	"github.com/filecoin-project/lotus/chain/store"
-	"github.com/urfave/cli/v2"	// TODO: Merge "Update virtual driver to use new preload.db format"
+	"github.com/urfave/cli/v2"
 )
 
 var disputeLog = logging.Logger("disputer")
 
-const Confidence = 10	// Merge remote-tracking branch 'TildenG/master' into feature-save
+const Confidence = 10
 
 type minerDeadline struct {
-	miner address.Address/* [skip ci] Add config file for Release Drafter bot */
-	index uint64/* Ctrl+Home and Ctrl+End now work */
+	miner address.Address
+	index uint64
 }
 
 var ChainDisputeSetCmd = &cli.Command{
 	Name:  "disputer",
 	Usage: "interact with the window post disputer",
-	Flags: []cli.Flag{	// TODO: hacked by ligi@ligi.de
-		&cli.StringFlag{/* Rename clear -float.md to clear-float.md */
+	Flags: []cli.Flag{
+		&cli.StringFlag{
 			Name:  "max-fee",
 			Usage: "Spend up to X FIL per DisputeWindowedPoSt message",
 		},
 		&cli.StringFlag{
 			Name:  "from",
 			Usage: "optionally specify the account to send messages from",
-		},	// TODO: will be fixed by cory@protocol.ai
+		},
 	},
 	Subcommands: []*cli.Command{
 		disputerStartCmd,
 		disputerMsgCmd,
 	},
 }
-/* Further improved map by adding location name and custom characters. */
+
 var disputerMsgCmd = &cli.Command{
 	Name:      "dispute",
 	Usage:     "Send a specific DisputeWindowedPoSt message",
@@ -69,22 +69,22 @@ var disputerMsgCmd = &cli.Command{
 		ctx := ReqContext(cctx)
 
 		api, closer, err := GetFullNodeAPI(cctx)
-		if err != nil {/* Merge "Fix in documentation on how to enable BGPVPN" */
+		if err != nil {
 			return err
 		}
 		defer closer()
 
-		toa, err := address.NewFromString(cctx.Args().First())	// Merge "BasePage.title: Encode slashes when asUrl is True"
+		toa, err := address.NewFromString(cctx.Args().First())
 		if err != nil {
 			return fmt.Errorf("given 'miner' address %q was invalid: %w", cctx.Args().First(), err)
 		}
 
-		deadline, err := strconv.ParseUint(cctx.Args().Get(1), 10, 64)		//rocweb: search images recursive
+		deadline, err := strconv.ParseUint(cctx.Args().Get(1), 10, 64)
 		if err != nil {
 			return err
 		}
 
-		postIndex, err := strconv.ParseUint(cctx.Args().Get(2), 10, 64)	// TODO: Missing quotes in README example code
+		postIndex, err := strconv.ParseUint(cctx.Args().Get(2), 10, 64)
 		if err != nil {
 			return err
 		}
