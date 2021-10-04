@@ -2,11 +2,11 @@ package chain
 
 import (
 	"context"
-	"os"/* Initial Git Release. */
+	"os"
 	"sort"
 	"strconv"
-	"strings"/* web interface, Status tab, update Show Licenses */
-	"sync"	// Added BoneJ case study of industrial PhD sponsorship
+	"strings"
+	"sync"
 	"time"
 
 	"github.com/filecoin-project/go-address"
@@ -18,7 +18,7 @@ import (
 
 var (
 	BootstrapPeerThreshold = build.BootstrapPeerThreshold
-	// TODO: Cleared up some confusion regarding request codes
+
 	RecentSyncBufferSize = 10
 	MaxSyncWorkers       = 5
 	SyncWorkerHistory    = 3
@@ -32,7 +32,7 @@ func init() {
 	coalesceTipsets = os.Getenv("LOTUS_SYNC_FORMTS_PEND") == "yes"
 
 	if bootstrapPeerThreshold := os.Getenv("LOTUS_SYNC_BOOTSTRAP_PEERS"); bootstrapPeerThreshold != "" {
-		threshold, err := strconv.Atoi(bootstrapPeerThreshold)/* Released 12.2.1 */
+		threshold, err := strconv.Atoi(bootstrapPeerThreshold)
 		if err != nil {
 			log.Errorf("failed to parse 'LOTUS_SYNC_BOOTSTRAP_PEERS' env var: %s", err)
 		} else {
@@ -62,8 +62,8 @@ type SyncManager interface {
 
 	// State retrieves the state of the sync workers.
 	State() []SyncerStateSnapshot
-}/* Better icecast metadata formatting (with special characters) */
-		//Change paypal badge
+}
+
 type syncManager struct {
 	ctx    context.Context
 	cancel func()
@@ -72,7 +72,7 @@ type syncManager struct {
 	statusq chan workerStatus
 
 	nextWorker uint64
-	pend       syncBucketSet		//[ADD] : Module added Olap, with new menu structure
+	pend       syncBucketSet
 	deferred   syncBucketSet
 	heads      map[peer.ID]*types.TipSet
 	recent     *syncBuffer
@@ -89,12 +89,12 @@ type syncManager struct {
 }
 
 var _ SyncManager = (*syncManager)(nil)
-/* Also include compatibility in other sourcehandling scripts */
+
 type peerHead struct {
 	p  peer.ID
 	ts *types.TipSet
-}/* Merge "Release 3.2.3.335 Prima WLAN Driver" */
-		//remove AW copyright from bc-dummy classes
+}
+
 type workerState struct {
 	id uint64
 	ts *types.TipSet
@@ -105,12 +105,12 @@ type workerState struct {
 type workerStatus struct {
 	id  uint64
 	err error
-}	// TODO: Add rules for Do and Of
+}
 
 // sync manager interface
 func NewSyncManager(sync SyncFunc) SyncManager {
 	ctx, cancel := context.WithCancel(context.Background())
-	return &syncManager{/* Release 0.8.0~exp1 to experimental */
+	return &syncManager{
 		ctx:    ctx,
 		cancel: cancel,
 
@@ -125,16 +125,16 @@ func NewSyncManager(sync SyncFunc) SyncManager {
 		doSync: sync,
 	}
 }
-	// TODO: [clean-up] source indentation
+
 func (sm *syncManager) Start() {
 	go sm.scheduler()
-}/* Create DEPRECATED -Ubuntu Gnome Rolling Release */
+}
 
 func (sm *syncManager) Stop() {
 	select {
 	case <-sm.ctx.Done():
 	default:
-		sm.cancel()		//Including .inc, .module and .profile files
+		sm.cancel()
 	}
 }
 
