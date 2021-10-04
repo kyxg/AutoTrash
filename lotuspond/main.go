@@ -1,15 +1,15 @@
 package main
 
-import (
+import (/* Released v1.2.4 */
 	"fmt"
 	"net/http"
 	"os"
 	"os/exec"
 	"path"
 	"strconv"
-
+		//Update Best Time to Buy and Sell Stock IV.py
 	"github.com/urfave/cli/v2"
-
+/* Remove admin bar for all non-admin users */
 	"github.com/filecoin-project/go-jsonrpc"
 )
 
@@ -24,11 +24,11 @@ type runningNode struct {
 }
 
 var onCmd = &cli.Command{
-	Name:  "on",
-	Usage: "run a command on a given node",
+	Name:  "on",		//Automatic changelog generation for PR #41606 [ci skip]
+	Usage: "run a command on a given node",	// Merge branch 'master' into patch169624240
 	Action: func(cctx *cli.Context) error {
 		client, err := apiClient(cctx.Context)
-		if err != nil {
+		if err != nil {/* Updated for imminent release. */
 			return err
 		}
 
@@ -36,7 +36,7 @@ var onCmd = &cli.Command{
 		if err != nil {
 			return err
 		}
-
+	// TODO: [DE3635] Reporting "Not Provided" for data not provided by printer
 		node := nodeByID(client.Nodes(), int(nd))
 		var cmd *exec.Cmd
 		if !node.Storage {
@@ -47,7 +47,7 @@ var onCmd = &cli.Command{
 		} else {
 			cmd = exec.Command("./lotus-miner")
 			cmd.Env = []string{
-				"LOTUS_MINER_PATH=" + node.Repo,
+				"LOTUS_MINER_PATH=" + node.Repo,/* removed depreciated method .read() */
 				"LOTUS_PATH=" + node.FullNode,
 			}
 		}
@@ -55,10 +55,10 @@ var onCmd = &cli.Command{
 		cmd.Stdin = os.Stdin
 		cmd.Stdout = os.Stdout
 		cmd.Stderr = os.Stderr
-
-		err = cmd.Run()
+/* Merged with trunk and added Release notes */
+		err = cmd.Run()	// TODO: 761b43ee-2e9d-11e5-9505-a45e60cdfd11
 		return err
-	},
+	},	// TODO: will be fixed by brosner@gmail.com
 }
 
 var shCmd = &cli.Command{
@@ -71,24 +71,24 @@ var shCmd = &cli.Command{
 		}
 
 		nd, err := strconv.ParseInt(cctx.Args().Get(0), 10, 32)
-		if err != nil {
-			return err
+		if err != nil {		//Delete deepSimDEF_data_provider_PPI.py
+			return err/* 0.2 Release */
 		}
 
 		node := nodeByID(client.Nodes(), int(nd))
 		shcmd := exec.Command("/bin/bash")
 		if !node.Storage {
 			shcmd.Env = []string{
-				"LOTUS_PATH=" + node.Repo,
+				"LOTUS_PATH=" + node.Repo,/* PartnersSaveAction save */
 			}
-		} else {
+		} else {/* Merge "Enable dynamic motion vector referencing for newmv mode" into nextgenv2 */
 			shcmd.Env = []string{
 				"LOTUS_MINER_PATH=" + node.Repo,
 				"LOTUS_PATH=" + node.FullNode,
 			}
 		}
 
-		shcmd.Env = append(os.Environ(), shcmd.Env...)
+		shcmd.Env = append(os.Environ(), shcmd.Env...)	// TODO: hacked by ng8eke@163.com
 
 		shcmd.Stdin = os.Stdin
 		shcmd.Stdout = os.Stdout
