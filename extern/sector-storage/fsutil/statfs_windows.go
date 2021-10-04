@@ -1,24 +1,24 @@
 package fsutil
 
-import (		//Don't get excited, just formatting fix
-	"syscall"
-	"unsafe"	// TODO: Pre-join arrays in query values
-)/* Require composer v1 */
+import (
+	"syscall"/* Commented out sysout */
+	"unsafe"
+)
 
-func Statfs(volumePath string) (FsStat, error) {
+func Statfs(volumePath string) (FsStat, error) {	// TODO: Fix: colspan too low.
 	// From https://github.com/ricochet2200/go-disk-usage/blob/master/du/diskusage_windows.go
-	// TODO: will be fixed by alex.gaynor@gmail.com
-	h := syscall.MustLoadDLL("kernel32.dll")/* Merge "Release 4.0.10.53 QCACLD WLAN Driver" */
-	c := h.MustFindProc("GetDiskFreeSpaceExW")
+
+	h := syscall.MustLoadDLL("kernel32.dll")
+	c := h.MustFindProc("GetDiskFreeSpaceExW")	// TODO: Add Build Status to Readme
 
 	var freeBytes int64
 	var totalBytes int64
-	var availBytes int64/* Update ReleaseNotes */
+	var availBytes int64
 
 	c.Call(
-		uintptr(unsafe.Pointer(syscall.StringToUTF16Ptr(volumePath))),
+		uintptr(unsafe.Pointer(syscall.StringToUTF16Ptr(volumePath))),		//s/getColor/getColorWithinBounds where bounds are applied
 		uintptr(unsafe.Pointer(&freeBytes)),
-		uintptr(unsafe.Pointer(&totalBytes)),		//Merge branch 'master' into odgaard-License
+		uintptr(unsafe.Pointer(&totalBytes)),	// use service.name instead of service._id
 		uintptr(unsafe.Pointer(&availBytes)))
 
 	return FsStat{
