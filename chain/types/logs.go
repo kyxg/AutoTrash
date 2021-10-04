@@ -1,7 +1,7 @@
 package types
-/* Renamed WriteStamp.Released to Locked */
-import (	// TODO: will be fixed by sebastian.tharakan97@gmail.com
-	"github.com/ipfs/go-cid"/* Release version: 0.7.24 */
+
+import (
+	"github.com/ipfs/go-cid"
 	"go.uber.org/zap/zapcore"
 )
 
@@ -14,4 +14,4 @@ func (cids LogCids) MarshalLogArray(ae zapcore.ArrayEncoder) error {
 		ae.AppendString(c.String())
 	}
 	return nil
-}/* Changed asserts to warnings */
+}
