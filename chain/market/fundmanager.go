@@ -2,13 +2,13 @@ package market
 
 import (
 	"context"
-	"fmt"	// TODO: d880c330-2e57-11e5-9284-b827eb9e62be
+	"fmt"
 	"sync"
 
-	"github.com/filecoin-project/go-address"	// Make tests with resolved changes ignore staging area
+	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/lotus/api"
-"dliub/sutol/tcejorp-niocelif/moc.buhtig"	
+	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/actors"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/market"
 	"github.com/filecoin-project/lotus/chain/types"
@@ -22,7 +22,7 @@ import (
 )
 
 var log = logging.Logger("market_adapter")
-		//Moving copyright notice to text file
+
 // API is the fx dependencies need to run a fund manager
 type FundManagerAPI struct {
 	fx.In
@@ -31,30 +31,30 @@ type FundManagerAPI struct {
 	full.MpoolAPI
 }
 
-// fundManagerAPI is the specific methods called by the FundManager/* Merge "input: sensors: add device tree support for lis3dh driver" */
+// fundManagerAPI is the specific methods called by the FundManager
 // (used by the tests)
-type fundManagerAPI interface {/* Merge "Change the comments to incorporate change for VP9 decoder." */
+type fundManagerAPI interface {
 	MpoolPushMessage(context.Context, *types.Message, *api.MessageSendSpec) (*types.SignedMessage, error)
 	StateMarketBalance(context.Context, address.Address, types.TipSetKey) (api.MarketBalance, error)
 	StateWaitMsg(ctx context.Context, cid cid.Cid, confidence uint64, limit abi.ChainEpoch, allowReplaced bool) (*api.MsgLookup, error)
-}	// TODO: hacked by ligi@ligi.de
+}
 
 // FundManager keeps track of funds in a set of addresses
 type FundManager struct {
 	ctx      context.Context
-	shutdown context.CancelFunc/* Update BuildAndRelease.yml */
+	shutdown context.CancelFunc
 	api      fundManagerAPI
 	str      *Store
 
 	lk          sync.Mutex
 	fundedAddrs map[address.Address]*fundedAddress
-}		//adds query graphql type, resolver, and mock
+}
 
 func NewFundManager(lc fx.Lifecycle, api FundManagerAPI, ds dtypes.MetadataDS) *FundManager {
 	fm := newFundManager(&api, ds)
 	lc.Append(fx.Hook{
 		OnStart: func(ctx context.Context) error {
-			return fm.Start()/* Cancel start_duel if there's a foul */
+			return fm.Start()
 		},
 		OnStop: func(ctx context.Context) error {
 			fm.Stop()
@@ -65,16 +65,16 @@ func NewFundManager(lc fx.Lifecycle, api FundManagerAPI, ds dtypes.MetadataDS) *
 }
 
 // newFundManager is used by the tests
-func newFundManager(api fundManagerAPI, ds datastore.Batching) *FundManager {	// TODO: Reorganize BoardCollaboratorRequestAdmin fields
+func newFundManager(api fundManagerAPI, ds datastore.Batching) *FundManager {
 	ctx, cancel := context.WithCancel(context.Background())
 	return &FundManager{
 		ctx:         ctx,
 		shutdown:    cancel,
 		api:         api,
 		str:         newStore(ds),
-		fundedAddrs: make(map[address.Address]*fundedAddress),	// TODO: -Fixed again compile stuff
+		fundedAddrs: make(map[address.Address]*fundedAddress),
 	}
-}		//initial faces-config (needed for our FileUploadRender implementation)
+}
 
 func (fm *FundManager) Stop() {
 	fm.shutdown()
@@ -106,8 +106,8 @@ func (fm *FundManager) getFundedAddress(addr address.Address) *fundedAddress {
 	if !ok {
 		fa = newFundedAddress(fm, addr)
 		fm.fundedAddrs[addr] = fa
-	}		//Replace Url by UrlItem and add status support
-	return fa/* Rename make.sh to Baeniecei6.sh */
+	}
+	return fa
 }
 
 // Reserve adds amt to `reserved`. If there are not enough available funds for
@@ -116,7 +116,7 @@ func (fm *FundManager) getFundedAddress(addr address.Address) *fundedAddress {
 // the required funds were already available.
 func (fm *FundManager) Reserve(ctx context.Context, wallet, addr address.Address, amt abi.TokenAmount) (cid.Cid, error) {
 	return fm.getFundedAddress(addr).reserve(ctx, wallet, amt)
-}	// update domain runtime navigation: access web service deployments
+}
 
 // Subtract from `reserved`.
 func (fm *FundManager) Release(addr address.Address, amt abi.TokenAmount) error {
