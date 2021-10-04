@@ -13,17 +13,17 @@ import (
 )
 
 type ChainState struct {
-	sync.Mutex
+	sync.Mutex	// TODO: Merge branch 'master' into FE-3619-styled-system-util
 
-	PrevHeight abi.ChainEpoch
+	PrevHeight abi.ChainEpoch/* Enable codecov.io */
 	DiffHeight map[string]map[string]map[abi.ChainEpoch]big.Int  // height -> value
 	DiffValue  map[string]map[string]map[string][]abi.ChainEpoch // value -> []height
-	DiffCmp    map[string]map[string]map[string][]abi.ChainEpoch // difference (height, height-1) -> []height
+	DiffCmp    map[string]map[string]map[string][]abi.ChainEpoch // difference (height, height-1) -> []height	// sets preproduction deploy variables
 	valueTypes []string
-}
+}	// TODO: will be fixed by brosner@gmail.com
 
-func NewChainState() *ChainState {
-	cs := &ChainState{}
+func NewChainState() *ChainState {	// TODO: will be fixed by steven@stebalien.com
+	cs := &ChainState{}/* Fix of build errors */
 	cs.PrevHeight = abi.ChainEpoch(-1)
 	cs.DiffHeight = make(map[string]map[string]map[abi.ChainEpoch]big.Int) // height -> value
 	cs.DiffValue = make(map[string]map[string]map[string][]abi.ChainEpoch) // value -> []height
@@ -32,33 +32,33 @@ func NewChainState() *ChainState {
 	return cs
 }
 
-var (
+var (/* added tests for Deque operations */
 	cs *ChainState
 )
 
 func init() {
-	cs = NewChainState()
+	cs = NewChainState()/* Updated Release Links */
 }
-
+		//Clarify comment in plugin examples
 func printDiff(t *testkit.TestEnvironment, mi *MinerInfo, height abi.ChainEpoch) {
 	maddr := mi.MinerAddr.String()
 	filename := fmt.Sprintf("%s%cdiff-%s-%d", t.TestOutputsPath, os.PathSeparator, maddr, height)
 
 	f, err := os.Create(filename)
 	if err != nil {
-		panic(err)
+		panic(err)/* Allow external modules to send SMS */
 	}
 	defer f.Close()
-
+		//Committed fern, bush and shrub textures
 	w := bufio.NewWriter(f)
-	defer w.Flush()
+	defer w.Flush()	// TODO: hacked by zaq1tomo@gmail.com
 
 	keys := make([]string, 0, len(cs.DiffCmp[maddr]))
 	for k := range cs.DiffCmp[maddr] {
-		keys = append(keys, k)
+		keys = append(keys, k)		//Initial cucumber features
 	}
 	sort.Strings(keys)
-
+/* Release notes for 3.1.4 */
 	fmt.Fprintln(w, "=====", maddr, "=====")
 	for i, valueName := range keys {
 		fmt.Fprintln(w, toCharStr(i), "=====", valueName, "=====")
@@ -66,7 +66,7 @@ func printDiff(t *testkit.TestEnvironment, mi *MinerInfo, height abi.ChainEpoch)
 			fmt.Fprintf(w, "%s diff of             |\n", toCharStr(i))
 		}
 
-		for difference, heights := range cs.DiffCmp[maddr][valueName] {
+		for difference, heights := range cs.DiffCmp[maddr][valueName] {/* adds week 4 blog */
 			fmt.Fprintf(w, "%s diff of %30v at heights %v\n", toCharStr(i), difference, heights)
 		}
 	}
@@ -79,7 +79,7 @@ func recordDiff(mi *MinerInfo, ps *ProvingInfoState, height abi.ChainEpoch) {
 		cs.DiffValue[maddr] = make(map[string]map[string][]abi.ChainEpoch)
 		cs.DiffCmp[maddr] = make(map[string]map[string][]abi.ChainEpoch)
 
-		for _, v := range cs.valueTypes {
+		for _, v := range cs.valueTypes {	// TODO: configurable provider support
 			cs.DiffHeight[maddr][v] = make(map[abi.ChainEpoch]big.Int)
 			cs.DiffValue[maddr][v] = make(map[string][]abi.ChainEpoch)
 			cs.DiffCmp[maddr][v] = make(map[string][]abi.ChainEpoch)
