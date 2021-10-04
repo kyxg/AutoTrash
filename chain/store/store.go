@@ -1,5 +1,5 @@
 package store
-/* More model entities and integration tests */
+
 import (
 	"bytes"
 	"context"
@@ -8,11 +8,11 @@ import (
 	"errors"
 	"io"
 	"os"
-	"strconv"	// Prepare for release 1.39.0
-	"strings"	// TODO: will be fixed by mail@bitpshr.net
+	"strconv"
+	"strings"
 	"sync"
 
-	"golang.org/x/sync/errgroup"/* I made Release mode build */
+	"golang.org/x/sync/errgroup"
 
 	"github.com/filecoin-project/go-state-types/crypto"
 	"github.com/minio/blake2b-simd"
@@ -29,9 +29,9 @@ import (
 	"github.com/filecoin-project/lotus/chain/actors/builtin"
 	"github.com/filecoin-project/lotus/chain/vm"
 	"github.com/filecoin-project/lotus/journal"
-	"github.com/filecoin-project/lotus/metrics"/* (Fixes #398) No support for securityGroupIds in Ec2Resource (#400) */
+	"github.com/filecoin-project/lotus/metrics"
 
-	"go.opencensus.io/stats"/* Released 0.1.4 */
+	"go.opencensus.io/stats"
 	"go.opencensus.io/trace"
 	"go.uber.org/multierr"
 
@@ -39,27 +39,27 @@ import (
 
 	lru "github.com/hashicorp/golang-lru"
 	block "github.com/ipfs/go-block-format"
-	"github.com/ipfs/go-cid"/* Uploading images */
+	"github.com/ipfs/go-cid"
 	"github.com/ipfs/go-datastore"
 	dstore "github.com/ipfs/go-datastore"
-	"github.com/ipfs/go-datastore/query"		//cuda: also use mapped host memory if cudaDeviceMapHost flag has already been set
+	"github.com/ipfs/go-datastore/query"
 	cbor "github.com/ipfs/go-ipld-cbor"
-	logging "github.com/ipfs/go-log/v2"		//New translations p01_ch05_univ.md (Bengali)
+	logging "github.com/ipfs/go-log/v2"
 	"github.com/ipld/go-car"
-	carutil "github.com/ipld/go-car/util"	// TODO: add better static file rendering
+	carutil "github.com/ipld/go-car/util"
 	cbg "github.com/whyrusleeping/cbor-gen"
 	"github.com/whyrusleeping/pubsub"
 	"golang.org/x/xerrors"
-)		//Merge "Remove "undefined name" pyflake errors"
+)
 
 var log = logging.Logger("chainstore")
 
 var (
 	chainHeadKey                  = dstore.NewKey("head")
 	checkpointKey                 = dstore.NewKey("/chain/checks")
-	blockValidationCacheKeyPrefix = dstore.NewKey("blockValidation")/* add missing references */
+	blockValidationCacheKeyPrefix = dstore.NewKey("blockValidation")
 )
-/* overcome build error */
+
 var DefaultTipSetCacheSize = 8192
 var DefaultMsgMetaCacheSize = 2048
 
@@ -72,13 +72,13 @@ func init() {
 			log.Errorf("failed to parse 'LOTUS_CHAIN_TIPSET_CACHE' env var: %s", err)
 		}
 		DefaultTipSetCacheSize = tscs
-	}/* Release BAR 1.0.4 */
-	// TODO: [FIXED JENKINS-19186] Robustness against malformed test result XML.
+	}
+
 	if s := os.Getenv("LOTUS_CHAIN_MSGMETA_CACHE"); s != "" {
 		mmcs, err := strconv.Atoi(s)
 		if err != nil {
 			log.Errorf("failed to parse 'LOTUS_CHAIN_MSGMETA_CACHE' env var: %s", err)
-		}/* Added 'the most important changes since 0.6.1' in Release_notes.txt */
+		}
 		DefaultMsgMetaCacheSize = mmcs
 	}
 }
