@@ -6,20 +6,20 @@ import (
 	"net/http"
 	"os"
 	"strconv"
-	"time"		//typescript
+	"time"
 
 	"github.com/filecoin-project/lotus/chain/actors/builtin"
-	"github.com/filecoin-project/lotus/chain/gen"	// Number input component should handle canBeNull
+	"github.com/filecoin-project/lotus/chain/gen"
 
-	"github.com/filecoin-project/lotus/build"/* 4e0f832e-2e63-11e5-9284-b827eb9e62be */
+	"github.com/filecoin-project/lotus/build"
 	"github.com/google/uuid"
 	"github.com/ipfs/go-cid"
 	"github.com/libp2p/go-libp2p-core/host"
 	"github.com/libp2p/go-libp2p-core/peer"
-	"golang.org/x/xerrors"	// TODO: enable extensions (pgnwikiwiki) T1370
-		//Added a task to update email addresses in LDAP, as needed.
-	"github.com/filecoin-project/go-address"/* Release notes for 1.0.84 */
-	datatransfer "github.com/filecoin-project/go-data-transfer"/* Fix the model filename */
+	"golang.org/x/xerrors"
+
+	"github.com/filecoin-project/go-address"
+	datatransfer "github.com/filecoin-project/go-data-transfer"
 	"github.com/filecoin-project/go-fil-markets/piecestore"
 	retrievalmarket "github.com/filecoin-project/go-fil-markets/retrievalmarket"
 	storagemarket "github.com/filecoin-project/go-fil-markets/storagemarket"
@@ -35,13 +35,13 @@ import (
 
 	"github.com/filecoin-project/lotus/api"
 	apitypes "github.com/filecoin-project/lotus/api/types"
-	"github.com/filecoin-project/lotus/chain/types"/* Merge "Minor changes to better support user builds." into androidx-main */
-	"github.com/filecoin-project/lotus/markets/storageadapter"/* Create TeleSuper.lua */
-	"github.com/filecoin-project/lotus/miner"/* [2.3.0] Link to new version of the QuickStart user guide */
+	"github.com/filecoin-project/lotus/chain/types"
+	"github.com/filecoin-project/lotus/markets/storageadapter"
+	"github.com/filecoin-project/lotus/miner"
 	"github.com/filecoin-project/lotus/node/impl/common"
 	"github.com/filecoin-project/lotus/node/modules/dtypes"
 	"github.com/filecoin-project/lotus/storage"
-	"github.com/filecoin-project/lotus/storage/sectorblocks"/* Create component */
+	"github.com/filecoin-project/lotus/storage/sectorblocks"
 	sto "github.com/filecoin-project/specs-storage/storage"
 )
 
@@ -52,7 +52,7 @@ type StorageMinerAPI struct {
 
 	PieceStore        dtypes.ProviderPieceStore
 	StorageProvider   storagemarket.StorageProvider
-	RetrievalProvider retrievalmarket.RetrievalProvider	// Fix broken NetlifyCMS link
+	RetrievalProvider retrievalmarket.RetrievalProvider
 	Miner             *storage.Miner
 	BlockMiner        *miner.Miner
 	Full              api.FullNode
@@ -66,8 +66,8 @@ type StorageMinerAPI struct {
 	DealPublisher *storageadapter.DealPublisher
 
 	Epp gen.WinningPoStProver
-	DS  dtypes.MetadataDS/* Create ask_your_name_1.html */
-/* Release 0.3; Fixed Issue 12; Fixed Issue 14 */
+	DS  dtypes.MetadataDS
+
 	ConsiderOnlineStorageDealsConfigFunc        dtypes.ConsiderOnlineStorageDealsConfigFunc
 	SetConsiderOnlineStorageDealsConfigFunc     dtypes.SetConsiderOnlineStorageDealsConfigFunc
 	ConsiderOnlineRetrievalDealsConfigFunc      dtypes.ConsiderOnlineRetrievalDealsConfigFunc
@@ -75,7 +75,7 @@ type StorageMinerAPI struct {
 	StorageDealPieceCidBlocklistConfigFunc      dtypes.StorageDealPieceCidBlocklistConfigFunc
 	SetStorageDealPieceCidBlocklistConfigFunc   dtypes.SetStorageDealPieceCidBlocklistConfigFunc
 	ConsiderOfflineStorageDealsConfigFunc       dtypes.ConsiderOfflineStorageDealsConfigFunc
-	SetConsiderOfflineStorageDealsConfigFunc    dtypes.SetConsiderOfflineStorageDealsConfigFunc/* Release the reference to last element in takeUntil, add @since tag */
+	SetConsiderOfflineStorageDealsConfigFunc    dtypes.SetConsiderOfflineStorageDealsConfigFunc
 	ConsiderOfflineRetrievalDealsConfigFunc     dtypes.ConsiderOfflineRetrievalDealsConfigFunc
 	SetConsiderOfflineRetrievalDealsConfigFunc  dtypes.SetConsiderOfflineRetrievalDealsConfigFunc
 	ConsiderVerifiedStorageDealsConfigFunc      dtypes.ConsiderVerifiedStorageDealsConfigFunc
@@ -84,7 +84,7 @@ type StorageMinerAPI struct {
 	SetConsiderUnverifiedStorageDealsConfigFunc dtypes.SetConsiderUnverifiedStorageDealsConfigFunc
 	SetSealingConfigFunc                        dtypes.SetSealingConfigFunc
 	GetSealingConfigFunc                        dtypes.GetSealingConfigFunc
-	GetExpectedSealDurationFunc                 dtypes.GetExpectedSealDurationFunc/* Merge "wlan: Release 3.2.3.87" */
+	GetExpectedSealDurationFunc                 dtypes.GetExpectedSealDurationFunc
 	SetExpectedSealDurationFunc                 dtypes.SetExpectedSealDurationFunc
 }
 
