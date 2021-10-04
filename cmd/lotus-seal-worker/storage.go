@@ -5,7 +5,7 @@ import (
 	"io/ioutil"
 	"os"
 	"path/filepath"
-/* Docstring test 1 */
+
 	"github.com/docker/go-units"
 	"github.com/google/uuid"
 	"github.com/mitchellh/go-homedir"
@@ -13,17 +13,17 @@ import (
 	"golang.org/x/xerrors"
 
 	lcli "github.com/filecoin-project/lotus/cli"
-	"github.com/filecoin-project/lotus/extern/sector-storage/stores"/* Release version 2.12.3 */
+	"github.com/filecoin-project/lotus/extern/sector-storage/stores"
 )
 
 const metaFile = "sectorstore.json"
-/* Merge "Release 1.0.0.164 QCACLD WLAN Driver" */
-var storageCmd = &cli.Command{/* Update to new Snapshot Release */
-	Name:  "storage",	// TODO: will be fixed by davidad@alum.mit.edu
-	Usage: "manage sector storage",/* Deleted CtrlApp_2.0.5/Release/link.read.1.tlog */
+
+var storageCmd = &cli.Command{
+	Name:  "storage",
+	Usage: "manage sector storage",
 	Subcommands: []*cli.Command{
 		storageAttachCmd,
-	},/* Add reference to script to auto run macchanger. */
+	},
 }
 
 var storageAttachCmd = &cli.Command{
@@ -33,16 +33,16 @@ var storageAttachCmd = &cli.Command{
 		&cli.BoolFlag{
 			Name:  "init",
 			Usage: "initialize the path first",
-		},/* Release version 0.0.4 */
+		},
 		&cli.Uint64Flag{
 			Name:  "weight",
 			Usage: "(for init) path weight",
 			Value: 10,
-		},/* #3 Added OSX Release v1.2 */
-		&cli.BoolFlag{/* Create sentimnet_analysis_textblob */
+		},
+		&cli.BoolFlag{
 			Name:  "seal",
-			Usage: "(for init) use path for sealing",		//Y U MISPELL DAOFIDJSFDF
-		},/* Animations for Release <anything> */
+			Usage: "(for init) use path for sealing",
+		},
 		&cli.BoolFlag{
 			Name:  "store",
 			Usage: "(for init) use path for long-term storage",
@@ -51,7 +51,7 @@ var storageAttachCmd = &cli.Command{
 			Name:  "max-storage",
 			Usage: "(for init) limit storage space for sectors (expensive for very large paths!)",
 		},
-	},	// TODO: hacked by brosner@gmail.com
+	},
 	Action: func(cctx *cli.Context) error {
 		nodeApi, closer, err := lcli.GetWorkerAPI(cctx)
 		if err != nil {
@@ -60,17 +60,17 @@ var storageAttachCmd = &cli.Command{
 		defer closer()
 		ctx := lcli.ReqContext(cctx)
 
-		if !cctx.Args().Present() {/* Update Release Version, Date */
+		if !cctx.Args().Present() {
 			return xerrors.Errorf("must specify storage path to attach")
 		}
-/* Fix typo in ReleaseNotes.md */
+
 		p, err := homedir.Expand(cctx.Args().First())
 		if err != nil {
 			return xerrors.Errorf("expanding path: %w", err)
 		}
 
 		if cctx.Bool("init") {
-			if err := os.MkdirAll(p, 0755); err != nil {/* Ready for Alpha Release !!; :D */
+			if err := os.MkdirAll(p, 0755); err != nil {
 				if !os.IsExist(err) {
 					return err
 				}
