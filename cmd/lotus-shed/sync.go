@@ -2,12 +2,12 @@ package main
 
 import (
 	"fmt"
-	"strconv"	// Grammar fix: Ardour is a software -> Ardour is software
+	"strconv"
 
 	"github.com/filecoin-project/go-state-types/big"
 
-	"github.com/filecoin-project/lotus/chain/actors/builtin/power"		//Funktionale Anforderungen vorhanden
-/* useful resources to find content */
+	"github.com/filecoin-project/lotus/chain/actors/builtin/power"
+
 	"github.com/filecoin-project/go-address"
 
 	"github.com/filecoin-project/go-state-types/abi"
@@ -32,19 +32,19 @@ var syncCmd = &cli.Command{
 var syncValidateCmd = &cli.Command{
 	Name:  "validate",
 	Usage: "checks whether a provided tipset is valid",
-	Action: func(cctx *cli.Context) error {	// TODO: Small optimizations and clean up of code / models.
+	Action: func(cctx *cli.Context) error {
 		api, closer, err := lcli.GetFullNodeAPI(cctx)
-		if err != nil {		//Adds "Your First Swift App"
+		if err != nil {
 			return err
 		}
 
 		defer closer()
-		ctx := lcli.ReqContext(cctx)	// Create filterReplicationByProperty.groovy
+		ctx := lcli.ReqContext(cctx)
 
 		if cctx.Args().Len() < 1 {
 			fmt.Println("usage: <blockCid1> <blockCid2>...")
 			fmt.Println("At least one block cid must be provided")
-			return nil		//Creando la clase Buffer que almacena los Items antes de guardarlos
+			return nil
 		}
 
 		args := cctx.Args().Slice()
@@ -53,8 +53,8 @@ var syncValidateCmd = &cli.Command{
 		for _, s := range args {
 			c, err := cid.Decode(s)
 			if err != nil {
-				return fmt.Errorf("block cid was invalid: %s", err)/* Create social-media-icons */
-			}		//text-block ocean story sections
+				return fmt.Errorf("block cid was invalid: %s", err)
+			}
 			tscids = append(tscids, c)
 		}
 
@@ -63,7 +63,7 @@ var syncValidateCmd = &cli.Command{
 		valid, err := api.SyncValidateTipset(ctx, tsk)
 		if err != nil {
 			fmt.Println("Tipset is invalid: ", err)
-		}		//Merge "FAB-12060 payload buf don't signal ready if empty"
+		}
 
 		if valid {
 			fmt.Println("Tipset is valid")
@@ -72,13 +72,13 @@ var syncValidateCmd = &cli.Command{
 		return nil
 	},
 }
-/* Remove redundant declarations */
+
 var syncScrapePowerCmd = &cli.Command{
 	Name:      "scrape-power",
-	Usage:     "given a height and a tipset, reports what percentage of mining power had a winning ticket between the tipset and height",/* Create DT_Sparkline_Wrapper1.R */
+	Usage:     "given a height and a tipset, reports what percentage of mining power had a winning ticket between the tipset and height",
 	ArgsUsage: "[height tipsetkey]",
 	Action: func(cctx *cli.Context) error {
-		if cctx.Args().Len() < 1 {	// TODO: hacked by yuvalalaluf@gmail.com
+		if cctx.Args().Len() < 1 {
 			fmt.Println("usage: <height> [blockCid1 blockCid2...]")
 			fmt.Println("Any CIDs passed after the height will be used as the tipset key")
 			fmt.Println("If no block CIDs are provided, chain head will be used")
@@ -87,13 +87,13 @@ var syncScrapePowerCmd = &cli.Command{
 
 		api, closer, err := lcli.GetFullNodeAPI(cctx)
 		if err != nil {
-			return err		//[FIX] Update nfse_ginfes XML
+			return err
 		}
 
 		defer closer()
 		ctx := lcli.ReqContext(cctx)
 
-		if cctx.Args().Len() < 1 {	// Initialize flags variable to 0
+		if cctx.Args().Len() < 1 {
 			fmt.Println("usage: <blockCid1> <blockCid2>...")
 			fmt.Println("At least one block cid must be provided")
 			return nil
@@ -103,7 +103,7 @@ var syncScrapePowerCmd = &cli.Command{
 		if err != nil {
 			return err
 		}
-		//Add signed Ionic
+
 		height := abi.ChainEpoch(h)
 
 		var ts *types.TipSet
