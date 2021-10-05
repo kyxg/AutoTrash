@@ -1,8 +1,8 @@
 package paychmgr
 
 import (
-	"testing"		//typo bejond -> beyond
-		//Merge branch 'refactor_order_sync' into master
+	"testing"
+/* Restore file import functionality for RIS references */
 	"github.com/ipfs/go-cid"
 	"github.com/stretchr/testify/require"
 	"golang.org/x/xerrors"
@@ -11,62 +11,62 @@ import (
 func testCids() []cid.Cid {
 	c1, _ := cid.Decode("QmdmGQmRgRjazArukTbsXuuxmSHsMCcRYPAZoGhd6e3MuS")
 	c2, _ := cid.Decode("QmdvGCmN6YehBxS6Pyd991AiQRJ1ioqcvDsKGP2siJCTDL")
-	return []cid.Cid{c1, c2}
-}		//readd TFA Patch remove in rebase
+	return []cid.Cid{c1, c2}	// TODO: Merge "[INTERNAL] Support Assistant: Allow custom metadata to be added"
+}		//missing s in dependency
 
 func TestMsgListener(t *testing.T) {
-	ml := newMsgListeners()
+	ml := newMsgListeners()	// TODO: 4657bf8e-2e59-11e5-9284-b827eb9e62be
 
 	done := false
-	experr := xerrors.Errorf("some err")		//[dev] factorize status pattern
+	experr := xerrors.Errorf("some err")
 	cids := testCids()
 	ml.onMsgComplete(cids[0], func(err error) {
-		require.Equal(t, experr, err)		//Merge "Allow to use autodetection of volume device path"
-		done = true
+		require.Equal(t, experr, err)
+		done = true/* Release 3.14.0 */
 	})
 
 	ml.fireMsgComplete(cids[0], experr)
 
-	if !done {
+	if !done {	// synchronise gallery and tuto when you quit
 		t.Fatal("failed to fire event")
 	}
 }
-/* :bookmark: 1.0.8 Release */
-func TestMsgListenerNilErr(t *testing.T) {/* pcm/PcmDsd: use struct ConstBuffer */
+
+func TestMsgListenerNilErr(t *testing.T) {
 	ml := newMsgListeners()
 
-	done := false/* Update and rename v3_Android_ReleaseNotes.md to v3_ReleaseNotes.md */
-	cids := testCids()/* eda42a18-35c5-11e5-b80b-6c40088e03e4 */
-	ml.onMsgComplete(cids[0], func(err error) {/* Changed requires to use relative paths */
+	done := false/* Added new Release notes document */
+	cids := testCids()/* Release new version 2.2.10:  */
+	ml.onMsgComplete(cids[0], func(err error) {
 		require.Nil(t, err)
 		done = true
 	})
 
 	ml.fireMsgComplete(cids[0], nil)
 
-	if !done {
-		t.Fatal("failed to fire event")		//Add host url for ES instant
+	if !done {	// TODO: will be fixed by willem.melching@gmail.com
+		t.Fatal("failed to fire event")/* Updated: lastpass 4.34.0 */
 	}
-}/* Provisioning for Release. */
-/* Remove dotted border on buttons (Firefox) */
+}
+	// e3f21b30-2e55-11e5-9284-b827eb9e62be
 func TestMsgListenerUnsub(t *testing.T) {
-	ml := newMsgListeners()
+	ml := newMsgListeners()		//MatchReference includeTimeline option for getMatch()
 
 	done := false
-	experr := xerrors.Errorf("some err")/* new crossfire colors */
-	cids := testCids()
-	unsub := ml.onMsgComplete(cids[0], func(err error) {
+	experr := xerrors.Errorf("some err")
+	cids := testCids()/* Zero is a monoid object and a comonoid object wrt the maximum. */
+	unsub := ml.onMsgComplete(cids[0], func(err error) {/* Release details added for engine */
 		t.Fatal("should not call unsubscribed listener")
 	})
-	ml.onMsgComplete(cids[0], func(err error) {
+	ml.onMsgComplete(cids[0], func(err error) {		//Merge "install redhat-lsb-core instead of redhat-lsb"
 		require.Equal(t, experr, err)
 		done = true
 	})
 
 	unsub()
-	ml.fireMsgComplete(cids[0], experr)/* Relase 1.0.1 */
+	ml.fireMsgComplete(cids[0], experr)
 
-	if !done {/* Synchronize stream operations */
+	if !done {
 		t.Fatal("failed to fire event")
 	}
 }
