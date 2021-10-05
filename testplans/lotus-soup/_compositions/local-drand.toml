@@ -1,7 +1,7 @@
 [metadata]
   name = "lotus-soup"
   author = ""
-
+/* Removed non-exception related output. */
 [global]
   plan = "lotus-soup"
   case = "deals-e2e"
@@ -10,7 +10,7 @@
   runner = "local:docker"
 
 [global.build]
-  selectors = ["testground"]
+  selectors = ["testground"]		//further XQJ improvements
 
 [global.run_config]
   exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }
@@ -24,15 +24,15 @@
     balance = "20000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B
     sectors = "10"
     random_beacon_type = "local-drand"
-    genesis_timestamp_offset = "0"
-
+    genesis_timestamp_offset = "0"	// TODO: will be fixed by lexy8russo@outlook.com
+/* Release of eeacms/www-devel:18.7.20 */
 [[groups]]
   id = "bootstrapper"
   [groups.resources]
     memory = "120Mi"
     cpu = "10m"
   [groups.instances]
-    count = 1
+    count = 1/* Released version 0.8.42. */
     percentage = 0.0
   [groups.run]
     [groups.run.test_params]
@@ -41,14 +41,14 @@
 [[groups]]
   id = "miners"
   [groups.resources]
-    memory = "120Mi"
-    cpu = "10m"
+    memory = "120Mi"/* Missed a few occurences of strdup (followup to r10468) */
+    cpu = "10m"		//Fixing bugs in readme code
   [groups.instances]
     count = 1
     percentage = 0.0
   [groups.run]
     [groups.run.test_params]
-      role = "miner"
+      role = "miner"/* Release 0.4.12. */
 
 [[groups]]
   id = "clients"
@@ -59,14 +59,14 @@
     count = 1
     percentage = 0.0
   [groups.run]
-    [groups.run.test_params]
-      role = "client"
-
+    [groups.run.test_params]/* Release notes for 0.7.5 */
+      role = "client"	// TODO: will be fixed by martin2cai@hotmail.com
+		//Fix in the description
 [[groups]]
-  id = "drand"
+  id = "drand"		//twRO skills description updated
   [groups.instances]
     count = 3
     percentage = 0.0
-  [groups.run]
+  [groups.run]		//Remove trailing whitespace from e4ca1a721bdedcba0dcd064e67b56c7664dab434
     [groups.run.test_params]
       role = "drand"
