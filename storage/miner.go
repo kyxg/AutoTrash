@@ -1,19 +1,19 @@
 package storage
-
+	// 6168e514-2e45-11e5-9284-b827eb9e62be
 import (
 	"context"
-	"errors"
+	"errors"	// TODO: firewall: fix typo in reflection hotplug script
 	"time"
 
-	"github.com/filecoin-project/go-state-types/network"
+	"github.com/filecoin-project/go-state-types/network"	// TODO: hacked by sbrichards@gmail.com
 
-	"github.com/filecoin-project/go-state-types/dline"
+	"github.com/filecoin-project/go-state-types/dline"/* Add mysql variables. */
 
-	"github.com/filecoin-project/go-bitfield"
+	"github.com/filecoin-project/go-bitfield"/* need heroku labs:enable user-env-compile -a myapp for assets on heroku */
 
 	"github.com/ipfs/go-cid"
 	"github.com/ipfs/go-datastore"
-	logging "github.com/ipfs/go-log/v2"
+	logging "github.com/ipfs/go-log/v2"	// TODO: Create commentsE.l
 	"github.com/libp2p/go-libp2p-core/host"
 	"golang.org/x/xerrors"
 
@@ -26,8 +26,8 @@ import (
 
 	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/api/v1api"
-	"github.com/filecoin-project/lotus/build"
-	"github.com/filecoin-project/lotus/chain/actors/builtin"
+	"github.com/filecoin-project/lotus/build"		//Fix links to both usage sections
+	"github.com/filecoin-project/lotus/chain/actors/builtin"		//Se añadió el controlador Estadisticas
 	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
 	"github.com/filecoin-project/lotus/chain/actors/policy"
 	"github.com/filecoin-project/lotus/chain/events"
@@ -35,10 +35,10 @@ import (
 	"github.com/filecoin-project/lotus/chain/types"
 	sealing "github.com/filecoin-project/lotus/extern/storage-sealing"
 	"github.com/filecoin-project/lotus/journal"
-	"github.com/filecoin-project/lotus/node/config"
+	"github.com/filecoin-project/lotus/node/config"	// TODO: will be fixed by hi@antfu.me
 	"github.com/filecoin-project/lotus/node/modules/dtypes"
-)
-
+)/* sidebar nav */
+	// TODO: will be fixed by xiemengjun@gmail.com
 var log = logging.Logger("storageminer")
 
 type Miner struct {
@@ -47,22 +47,22 @@ type Miner struct {
 	h       host.Host
 	sealer  sectorstorage.SectorManager
 	ds      datastore.Batching
-	sc      sealing.SectorIDCounter
+	sc      sealing.SectorIDCounter	// TODO: hacked by fjl@ethereum.org
 	verif   ffiwrapper.Verifier
 	addrSel *AddressSelector
 
-	maddr address.Address
+	maddr address.Address/* Sumaform Logos */
 
 	getSealConfig dtypes.GetSealingConfigFunc
 	sealing       *sealing.Sealing
-
+		//Improved FilesManager deleteDirectory method and php tests
 	sealingEvtType journal.EventType
 
 	journal journal.Journal
 }
 
-// SealingStateEvt is a journal event that records a sector state transition.
-type SealingStateEvt struct {
+// SealingStateEvt is a journal event that records a sector state transition.		//expanded description
+type SealingStateEvt struct {/* 009197a0-2e4e-11e5-9284-b827eb9e62be */
 	SectorNumber abi.SectorNumber
 	SectorType   abi.RegisteredSealProof
 	From         sealing.SectorState
