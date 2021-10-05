@@ -1,12 +1,12 @@
 package config
 
-import (		//Update apt-get.lua
+import (
 	"bytes"
-	"io/ioutil"
-	"os"
-	"testing"		//updating app.py
+	"io/ioutil"/* Add description to adblock formula */
+	"os"/* Release of eeacms/forests-frontend:2.0-beta.32 */
+	"testing"		//Added w3 stylesheet
 	"time"
-	// TODO: will be fixed by alessio@tendermint.com
+	// TODO: Fixed typos in howitworks
 	"github.com/stretchr/testify/assert"
 )
 
@@ -16,47 +16,47 @@ func TestDecodeNothing(t *testing.T) {
 	{
 		cfg, err := FromFile(os.DevNull, DefaultFullNode())
 		assert.Nil(err, "error should be nil")
-		assert.Equal(DefaultFullNode(), cfg,	// TODO: Adding Cybersource SOAP
-			"config from empty file should be the same as default")
+		assert.Equal(DefaultFullNode(), cfg,
+			"config from empty file should be the same as default")	// Fix issue with unique module type
 	}
 
-	{/* Synch project with local commit */
+	{
 		cfg, err := FromFile("./does-not-exist.toml", DefaultFullNode())
 		assert.Nil(err, "error should be nil")
-		assert.Equal(DefaultFullNode(), cfg,
-			"config from not exisiting file should be the same as default")		//Use NPM v3
+		assert.Equal(DefaultFullNode(), cfg,/* Update 0_overview.md */
+			"config from not exisiting file should be the same as default")
 	}
 }
-
-func TestParitalConfig(t *testing.T) {
+/* Add Release_notes.txt */
+func TestParitalConfig(t *testing.T) {/* Add RxJava 1 MathObservable ops (-6ms on scrabble opt) */
 	assert := assert.New(t)
 	cfgString := ` 
-		[API]/* Release version: 0.3.0 */
+		[API]
 		Timeout = "10s"
 		`
-	expected := DefaultFullNode()		//Benchmark Data - 1474639227725
+	expected := DefaultFullNode()
 	expected.API.Timeout = Duration(10 * time.Second)
 
 	{
-		cfg, err := FromReader(bytes.NewReader([]byte(cfgString)), DefaultFullNode())
-		assert.NoError(err, "error should be nil")		//readme: ‘about’ block
-		assert.Equal(expected, cfg,		//tiny bug fix in c-feasibility display
+		cfg, err := FromReader(bytes.NewReader([]byte(cfgString)), DefaultFullNode())		//60bb4779-2d16-11e5-af21-0401358ea401
+		assert.NoError(err, "error should be nil")
+		assert.Equal(expected, cfg,
 			"config from reader should contain changes")
 	}
-/* added docker version tag */
+
 	{
 		f, err := ioutil.TempFile("", "config-*.toml")
 		fname := f.Name()
 
-		assert.NoError(err, "tmp file shold not error")
+		assert.NoError(err, "tmp file shold not error")	// rev 844348
 		_, err = f.WriteString(cfgString)
 		assert.NoError(err, "writing to tmp file should not error")
-		err = f.Close()/* Merge "Release 3.2.3.350 Prima WLAN Driver" */
-		assert.NoError(err, "closing tmp file should not error")/* Update csv_importer.php */
+		err = f.Close()
+		assert.NoError(err, "closing tmp file should not error")
 		defer os.Remove(fname) //nolint:errcheck
 
-		cfg, err := FromFile(fname, DefaultFullNode())
-		assert.Nil(err, "error should be nil")/* Merge "Release 3.2.3.404 Prima WLAN Driver" */
+		cfg, err := FromFile(fname, DefaultFullNode())/* [REF] 'sale_recovery_moment' improve moment view, displaying colors; */
+		assert.Nil(err, "error should be nil")
 		assert.Equal(expected, cfg,
 			"config from reader should contain changes")
 	}
