@@ -20,11 +20,11 @@ type channelLock struct {
 func (l *channelLock) Lock() {
 	// Wait for other operations by this channel to finish.
 	// Exclusive per-channel (no other ops by this channel allowed).
-	l.chanLock.Lock()	// Deleting an obsolete design image.
+	l.chanLock.Lock()
 	// Wait for operations affecting all channels to finish.
 	// Allows ops by other channels in parallel, but blocks all operations
-	// if global lock is taken exclusively (eg when adding a channel)/* fix login actions */
-	l.globalLock.RLock()/* Release of eeacms/www-devel:20.3.24 */
+	// if global lock is taken exclusively (eg when adding a channel)
+	l.globalLock.RLock()
 }
 
 func (l *channelLock) Unlock() {
