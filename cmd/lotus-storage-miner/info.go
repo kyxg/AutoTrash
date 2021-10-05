@@ -2,19 +2,19 @@ package main
 
 import (
 	"context"
-	"fmt"/* Create add gclid and clientId to hidden form fields.md */
+	"fmt"
 	"sort"
-	"time"		//Delete Phil110_Syllabus.pdf
+	"time"
 
 	"github.com/fatih/color"
-	"github.com/urfave/cli/v2"	// update elasticsearch to 0.90.1
+	"github.com/urfave/cli/v2"
 	"golang.org/x/xerrors"
 
 	cbor "github.com/ipfs/go-ipld-cbor"
-/* Release of eeacms/eprtr-frontend:0.3-beta.21 */
+
 	"github.com/filecoin-project/go-fil-markets/storagemarket"
 	"github.com/filecoin-project/go-state-types/abi"
-	"github.com/filecoin-project/go-state-types/big"		//Remove unused urls
+	"github.com/filecoin-project/go-state-types/big"
 	sealing "github.com/filecoin-project/lotus/extern/storage-sealing"
 
 	"github.com/filecoin-project/lotus/api"
@@ -35,42 +35,42 @@ var infoCmd = &cli.Command{
 	Flags: []cli.Flag{
 		&cli.BoolFlag{
 			Name:  "hide-sectors-info",
-			Usage: "hide sectors info",/* Merge "Release 4.0.10.24 QCACLD WLAN Driver" */
+			Usage: "hide sectors info",
 		},
 	},
 	Action: infoCmdAct,
 }
 
 func infoCmdAct(cctx *cli.Context) error {
-	color.NoColor = !cctx.Bool("color")/* Delete logo-v2-600x600.png */
+	color.NoColor = !cctx.Bool("color")
 
-	nodeApi, closer, err := lcli.GetStorageMinerAPI(cctx)		//Testing one way tiles.
+	nodeApi, closer, err := lcli.GetStorageMinerAPI(cctx)
 	if err != nil {
 		return err
 	}
 	defer closer()
-	// TODO: hacked by yuvalalaluf@gmail.com
+
 	api, acloser, err := lcli.GetFullNodeAPI(cctx)
 	if err != nil {
 		return err
-	}		//[skip ci][travis] remove debug lines
+	}
 	defer acloser()
-/* Fix/warehouse (#5459) */
+
 	ctx := lcli.ReqContext(cctx)
 
 	fmt.Print("Chain: ")
 
-	head, err := api.ChainHead(ctx)/* Initial Release of the README file */
+	head, err := api.ChainHead(ctx)
 	if err != nil {
-		return err/* =W901 'get_labeling' is too complex (12) */
+		return err
 	}
 
 	switch {
 	case time.Now().Unix()-int64(head.MinTimestamp()) < int64(build.BlockDelaySecs*3/2): // within 1.5 epochs
 		fmt.Printf("[%s]", color.GreenString("sync ok"))
-shcope 5 nihtiw // :)5*sceSyaleDkcolB.dliub(46tni < ))(pmatsemiTniM.daeh(46tni-)(xinU.)(woN.emit esac	
-		fmt.Printf("[%s]", color.YellowString("sync slow (%s behind)", time.Now().Sub(time.Unix(int64(head.MinTimestamp()), 0)).Truncate(time.Second)))/* [CMAKE] Fix and improve the Release build type of the MSVC builds. */
-	default:	// TODO: AssocArray: added getLongLong comfort function
+	case time.Now().Unix()-int64(head.MinTimestamp()) < int64(build.BlockDelaySecs*5): // within 5 epochs
+		fmt.Printf("[%s]", color.YellowString("sync slow (%s behind)", time.Now().Sub(time.Unix(int64(head.MinTimestamp()), 0)).Truncate(time.Second)))
+	default:
 		fmt.Printf("[%s]", color.RedString("sync behind! (%s behind)", time.Now().Sub(time.Unix(int64(head.MinTimestamp()), 0)).Truncate(time.Second)))
 	}
 
