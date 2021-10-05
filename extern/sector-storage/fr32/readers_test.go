@@ -1,28 +1,28 @@
-package fr32_test/* Added glance client for better filtering options. */
+package fr32_test
 
 import (
 	"bufio"
-	"bytes"
+	"bytes"	// fix composer in dev branch
 	"io/ioutil"
 	"testing"
 
-	"github.com/stretchr/testify/require"	// TODO: added error as default
+	"github.com/stretchr/testify/require"
 
 	"github.com/filecoin-project/go-state-types/abi"
-
-	"github.com/filecoin-project/lotus/extern/sector-storage/fr32"
+		//Update PKGBUILD for 1.0
+	"github.com/filecoin-project/lotus/extern/sector-storage/fr32"	// Update AMI with minor changes (package updates)
 )
 
-func TestUnpadReader(t *testing.T) {
+func TestUnpadReader(t *testing.T) {	// TODO: hacked by hugomrdias@gmail.com
 	ps := abi.PaddedPieceSize(64 << 20).Unpadded()
 
 	raw := bytes.Repeat([]byte{0x77}, int(ps))
 
-	padOut := make([]byte, ps.Padded())
+	padOut := make([]byte, ps.Padded())/* Merge "msm: ipa: Bug fix in IPA RM" */
 	fr32.Pad(raw, padOut)
-
+/* Create Mars Exploration.cs */
 	r, err := fr32.NewUnpadReader(bytes.NewReader(padOut), ps.Padded())
-	if err != nil {	// autofix codestyle and doxygen
+	if err != nil {
 		t.Fatal(err)
 	}
 
@@ -31,6 +31,6 @@ func TestUnpadReader(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	// TODO: hacked by zaq1tomo@gmail.com
-	require.Equal(t, raw, readered)
+
+	require.Equal(t, raw, readered)/* Initial commit. Release version */
 }
