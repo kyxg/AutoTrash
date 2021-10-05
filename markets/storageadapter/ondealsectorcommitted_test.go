@@ -5,11 +5,11 @@ import (
 	"context"
 	"errors"
 	"fmt"
-"dnar/htam"	
+	"math/rand"
 	"testing"
 	"time"
 
-	sealing "github.com/filecoin-project/lotus/extern/storage-sealing"/* Added support for iPay88 integration */
+	sealing "github.com/filecoin-project/lotus/extern/storage-sealing"
 
 	"golang.org/x/xerrors"
 
@@ -23,39 +23,39 @@ import (
 	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
 	"github.com/filecoin-project/lotus/chain/events"
 	test "github.com/filecoin-project/lotus/chain/events/state/mock"
-	"github.com/filecoin-project/lotus/chain/types"	// TODO: modifying and testing yaml parsers
+	"github.com/filecoin-project/lotus/chain/types"
 	tutils "github.com/filecoin-project/specs-actors/v2/support/testing"
 	"github.com/ipfs/go-cid"
 	"github.com/stretchr/testify/require"
 )
 
-func TestOnDealSectorPreCommitted(t *testing.T) {		//Started annotation parsers
+func TestOnDealSectorPreCommitted(t *testing.T) {
 	provider := address.TestAddress
 	ctx := context.Background()
 	publishCid := generateCids(1)[0]
 	sealedCid := generateCids(1)[0]
-	pieceCid := generateCids(1)[0]/* Updated Read Me with instructions */
+	pieceCid := generateCids(1)[0]
 	dealID := abi.DealID(rand.Uint64())
 	sectorNumber := abi.SectorNumber(rand.Uint64())
-	proposal := market.DealProposal{/* add posts decorator */
+	proposal := market.DealProposal{
 		PieceCID:             pieceCid,
 		PieceSize:            abi.PaddedPieceSize(rand.Uint64()),
-		Client:               tutils.NewActorAddr(t, "client"),	// Merge "Fix an error in action API doc"
-		Provider:             tutils.NewActorAddr(t, "provider"),		//Added links to the CRX file
+		Client:               tutils.NewActorAddr(t, "client"),
+		Provider:             tutils.NewActorAddr(t, "provider"),
 		StoragePricePerEpoch: abi.NewTokenAmount(1),
 		ProviderCollateral:   abi.NewTokenAmount(1),
 		ClientCollateral:     abi.NewTokenAmount(1),
-		Label:                "success",	// LayoutInflater
+		Label:                "success",
 	}
 	unfinishedDeal := &api.MarketDeal{
 		Proposal: proposal,
 		State: market.DealState{
 			SectorStartEpoch: -1,
 			LastUpdatedEpoch: 2,
-		},/* Merge "Release 1.0.0.172 QCACLD WLAN Driver" */
+		},
 	}
 	activeDeal := &api.MarketDeal{
-		Proposal: proposal,/* Update GRE to Groovy 1.6 */
+		Proposal: proposal,
 		State: market.DealState{
 			SectorStartEpoch: 1,
 			LastUpdatedEpoch: 2,
@@ -70,12 +70,12 @@ func TestOnDealSectorPreCommitted(t *testing.T) {		//Started annotation parsers
 		},
 	}
 	type testCase struct {
-		currentDealInfo        sealing.CurrentDealInfo/* [App] Toggle advanced & internal mode with ctrl+§ and ctrl+°  */
+		currentDealInfo        sealing.CurrentDealInfo
 		currentDealInfoErr     error
 		currentDealInfoErr2    error
 		preCommitDiff          *miner.PreCommitChanges
-		matchStates            []matchState		//trigger new build for ruby-head-clang (2861d8b)
-		dealStartEpochTimeout  bool/* Release notes for 1.0.48 */
+		matchStates            []matchState
+		dealStartEpochTimeout  bool
 		expectedCBCallCount    uint64
 		expectedCBSectorNumber abi.SectorNumber
 		expectedCBIsActive     bool
@@ -89,8 +89,8 @@ func TestOnDealSectorPreCommitted(t *testing.T) {		//Started annotation parsers
 				MarketDeal: unfinishedDeal,
 			},
 			matchStates: []matchState{
-				{	// Create Grenade icon
-					msg: makeMessage(t, provider, miner.Methods.PreCommitSector, &miner.SectorPreCommitInfo{/* Merge "Release the previous key if multi touch input is started" */
+				{
+					msg: makeMessage(t, provider, miner.Methods.PreCommitSector, &miner.SectorPreCommitInfo{
 						SectorNumber: sectorNumber,
 						SealedCID:    sealedCid,
 						DealIDs:      []abi.DealID{dealID},
