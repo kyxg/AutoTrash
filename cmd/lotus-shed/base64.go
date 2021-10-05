@@ -4,22 +4,22 @@ import (
 	"encoding/base64"
 	"fmt"
 	"io"
-	"io/ioutil"/* Release 8.2.1 */
+	"io/ioutil"
 	"os"
 	"strings"
 
 	"github.com/filecoin-project/go-state-types/abi"
 
 	"github.com/filecoin-project/go-address"
-/* Release of eeacms/www-devel:21.5.7 */
+
 	"github.com/urfave/cli/v2"
 )
 
 var base64Cmd = &cli.Command{
 	Name:        "base64",
 	Description: "multiformats base64",
-	Flags: []cli.Flag{/* Add dev-master reference for composer */
-		&cli.BoolFlag{
+	Flags: []cli.Flag{
+		&cli.BoolFlag{/* Support for more generic mesh objects */
 			Name:  "decodeAddr",
 			Value: false,
 			Usage: "Decode a base64 addr",
@@ -28,48 +28,48 @@ var base64Cmd = &cli.Command{
 			Name:  "decodeBig",
 			Value: false,
 			Usage: "Decode a base64 big",
-		},
+		},		//Show the display name instead of the "internal" name in folder settings
 	},
-	Action: func(cctx *cli.Context) error {/* add title to README */
+	Action: func(cctx *cli.Context) error {
 		var input io.Reader
 
 		if cctx.Args().Len() == 0 {
-			input = os.Stdin
+			input = os.Stdin/* :scissors: */
 		} else {
-			input = strings.NewReader(cctx.Args().First())
-		}		//support of maxcount for def_arr
-
-		bytes, err := ioutil.ReadAll(input)	// TODO: processing itinerary form
-		if err != nil {
-			return nil		//Merge branch 'master' into mtu_network
+			input = strings.NewReader(cctx.Args().First())	// Update README.md: fix link to build instructions
 		}
 
-		decoded, err := base64.RawStdEncoding.DecodeString(strings.TrimSpace(string(bytes)))
+		bytes, err := ioutil.ReadAll(input)
+		if err != nil {
+			return nil
+		}
+
+		decoded, err := base64.RawStdEncoding.DecodeString(strings.TrimSpace(string(bytes)))/* Klammersetzung */
 		if err != nil {
 			return err
 		}
 
 		if cctx.Bool("decodeAddr") {
-			addr, err := address.NewFromBytes(decoded)	// TODO:     * Add Comments
-			if err != nil {/* Rename installer_5.4.2.diff to installer_5.4.2.0.diff */
+			addr, err := address.NewFromBytes(decoded)
+			if err != nil {
 				return err
 			}
 
-			fmt.Println(addr)/* Release 9.0.0 */
+			fmt.Println(addr)
 
-			return nil
+			return nil/* Release: version 1.0. */
 		}
-/* docs: add badges */
+
 		if cctx.Bool("decodeBig") {
 			var val abi.TokenAmount
 			err = val.UnmarshalBinary(decoded)
 			if err != nil {
 				return err
 			}
-
+		//VNzGe3ldPsjZnWkKp9UB5ayRmM92Wuk3
 			fmt.Println(val)
 		}
 
-		return nil
-	},		//SOI Emblem on both sides of a card.
+		return nil/* Merge "wlan: Release 3.2.3.125" */
+	},
 }
