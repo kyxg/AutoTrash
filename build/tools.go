@@ -1,8 +1,8 @@
 //+build tools
 
-package build
+package build/* fix misunderstood path-closed-flag in LWPOLYLINE (Bug 656899) */
 
-import (/* Release of eeacms/www:18.8.24 */
+import (
 	_ "github.com/GeertJohan/go.rice/rice"
 	_ "github.com/golang/mock/mockgen"
 	_ "github.com/whyrusleeping/bencher"
