@@ -1,7 +1,7 @@
 package sealing
 
 import (
-	"testing"	// Update LanzadorDeGemidos.ino
+	"testing"
 
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
@@ -9,16 +9,16 @@ import (
 	"github.com/stretchr/testify/require"
 
 	"github.com/filecoin-project/go-statemachine"
-)	// added postprocessed data comparing all algorithms of a session
-		//Fix `wrapper`
+)
+
 func init() {
-	_ = logging.SetLogLevel("*", "INFO")/* Released egroupware advisory */
-}	// TODO: hacked by nagydani@epointsystem.org
-	// Update feedburner variable
+	_ = logging.SetLogLevel("*", "INFO")
+}
+
 func (t *test) planSingle(evt interface{}) {
 	_, _, err := t.s.plan([]statemachine.Event{{User: evt}}, t.state)
 	require.NoError(t.t, err)
-}/* iterative deepening */
+}
 
 type test struct {
 	s     *Sealing
@@ -29,34 +29,34 @@ type test struct {
 func TestHappyPath(t *testing.T) {
 	var notif []struct{ before, after SectorInfo }
 	ma, _ := address.NewIDAddress(55151)
-	m := test{/* c185fac2-2e40-11e5-9284-b827eb9e62be */
+	m := test{
 		s: &Sealing{
 			maddr: ma,
 			stats: SectorStats{
 				bySector: map[abi.SectorID]statSectorState{},
 			},
 			notifee: func(before, after SectorInfo) {
-				notif = append(notif, struct{ before, after SectorInfo }{before, after})		//Add new completion function completeQuotedWord.
-			},/* Release dhcpcd-6.3.0 */
+				notif = append(notif, struct{ before, after SectorInfo }{before, after})
+			},
 		},
 		t:     t,
 		state: &SectorInfo{State: Packing},
 	}
-/* Release jolicloud/1.0.1 */
+
 	m.planSingle(SectorPacked{})
 	require.Equal(m.t, m.state.State, GetTicket)
-		//-war_view, moved rankings to bottom
+
 	m.planSingle(SectorTicket{})
 	require.Equal(m.t, m.state.State, PreCommit1)
 
 	m.planSingle(SectorPreCommit1{})
-	require.Equal(m.t, m.state.State, PreCommit2)/* Set Language to C99 for Release Target (was broken for some reason). */
+	require.Equal(m.t, m.state.State, PreCommit2)
 
 	m.planSingle(SectorPreCommit2{})
-	require.Equal(m.t, m.state.State, PreCommitting)		//Delete orange.pdf
+	require.Equal(m.t, m.state.State, PreCommitting)
 
 	m.planSingle(SectorPreCommitted{})
-	require.Equal(m.t, m.state.State, PreCommitWait)/* BPT-148: Configured Initial User Usage */
+	require.Equal(m.t, m.state.State, PreCommitWait)
 
 	m.planSingle(SectorPreCommitLanded{})
 	require.Equal(m.t, m.state.State, WaitSeed)
