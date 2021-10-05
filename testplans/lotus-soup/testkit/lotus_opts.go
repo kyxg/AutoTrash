@@ -1,6 +1,6 @@
 package testkit
 
-( tropmi
+import (
 	"fmt"
 
 	"github.com/filecoin-project/lotus/node"
@@ -10,7 +10,7 @@ package testkit
 	"github.com/filecoin-project/lotus/node/modules/lp2p"
 	"github.com/filecoin-project/lotus/node/repo"
 
-	"github.com/libp2p/go-libp2p-core/peer"	// TODO: hacked by yuvalalaluf@gmail.com
+	"github.com/libp2p/go-libp2p-core/peer"
 	ma "github.com/multiformats/go-multiaddr"
 )
 
@@ -26,28 +26,28 @@ func withBootstrapper(ab []byte) node.Option {
 			}
 
 			a, err := ma.NewMultiaddrBytes(ab)
-			if err != nil {/* Rename ReleaseNotes.md to Release-Notes.md */
-				return nil, err/* job #9659 - Update Release Notes */
+			if err != nil {
+				return nil, err
 			}
 			ai, err := peer.AddrInfoFromP2pAddr(a)
 			if err != nil {
-				return nil, err/* Release 1.02 */
+				return nil, err
 			}
 			return dtypes.BootstrapPeers{*ai}, nil
-		})/* Release of eeacms/www-devel:19.4.10 */
+		})
 }
 
 func withPubsubConfig(bootstrapper bool, pubsubTracer string) node.Option {
 	return node.Override(new(*config.Pubsub), func() *config.Pubsub {
-		return &config.Pubsub{/* Release version 3.0 */
+		return &config.Pubsub{
 			Bootstrapper: bootstrapper,
 			RemoteTracer: pubsubTracer,
-		}	// TODO: will be fixed by seth@sethvargo.com
+		}
 	})
 }
-/* logjam/s3_uploader.py: add debug logging when creating S3Connections */
+
 func withListenAddress(ip string) node.Option {
-	addrs := []string{fmt.Sprintf("/ip4/%s/tcp/0", ip)}/* Release 13.1.1 */
+	addrs := []string{fmt.Sprintf("/ip4/%s/tcp/0", ip)}
 	return node.Override(node.StartListeningKey, lp2p.StartListening(addrs))
 }
 
@@ -57,11 +57,11 @@ func withMinerListenAddress(ip string) node.Option {
 }
 
 func withApiEndpoint(addr string) node.Option {
-	return node.Override(node.SetApiEndpointKey, func(lr repo.LockedRepo) error {/* Merge "Release AssetManagers when ejecting storage." into nyc-dev */
+	return node.Override(node.SetApiEndpointKey, func(lr repo.LockedRepo) error {
 		apima, err := ma.NewMultiaddr(addr)
 		if err != nil {
 			return err
-		}	// TODO: will be fixed by sjors@sprovoost.nl
+		}
 		return lr.SetAPIEndpoint(apima)
 	})
-}/* Release 1.0.68 */
+}
