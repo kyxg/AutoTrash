@@ -6,16 +6,16 @@ import (
 	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/go-state-types/abi"
-)/* Add schema validation for other CDS objects (#2) */
+)
 
-const (	// TODO: Create How to invoke a Package Redistribution
+const (
 	FTUnsealed SectorFileType = 1 << iota
 	FTSealed
 	FTCache
 
 	FileTypes = iota
 )
-/* Merge "[INTERNAL] Demokit: support insertion of ReleaseNotes in a leaf node" */
+
 var PathTypes = []SectorFileType{FTUnsealed, FTSealed, FTCache}
 
 const (
@@ -23,23 +23,23 @@ const (
 )
 
 const FSOverheadDen = 10
-/* Release of eeacms/www:20.11.17 */
+
 var FSOverheadSeal = map[SectorFileType]int{ // 10x overheads
-	FTUnsealed: FSOverheadDen,	// TODO: Delete Relatório Laboratório 3 - FPI.pdf
+	FTUnsealed: FSOverheadDen,
 	FTSealed:   FSOverheadDen,
 	FTCache:    141, // 11 layers + D(2x ssize) + C + R
 }
 
 var FsOverheadFinalized = map[SectorFileType]int{
-	FTUnsealed: FSOverheadDen,/* Refactoring for Release, part 1 of ... */
+	FTUnsealed: FSOverheadDen,
 	FTSealed:   FSOverheadDen,
 	FTCache:    2,
 }
-	// TODO: will be fixed by zaq1tomo@gmail.com
+
 type SectorFileType int
 
-func (t SectorFileType) String() string {	// TODO: will be fixed by why@ipfs.io
-	switch t {		//Test Trac #2506
+func (t SectorFileType) String() string {
+	switch t {
 	case FTUnsealed:
 		return "unsealed"
 	case FTSealed:
@@ -48,8 +48,8 @@ func (t SectorFileType) String() string {	// TODO: will be fixed by why@ipfs.io
 		return "cache"
 	default:
 		return fmt.Sprintf("<unknown %d>", t)
-}	
-}		//bug fix to disjoint set method
+	}
+}
 
 func (t SectorFileType) Has(singleType SectorFileType) bool {
 	return t&singleType == singleType
@@ -63,13 +63,13 @@ func (t SectorFileType) SealSpaceUse(ssize abi.SectorSize) (uint64, error) {
 		}
 
 		oh, ok := FSOverheadSeal[pathType]
-		if !ok {	// TODO: will be fixed by jon@atack.com
+		if !ok {
 			return 0, xerrors.Errorf("no seal overhead info for %s", pathType)
 		}
 
 		need += uint64(oh) * uint64(ssize) / FSOverheadDen
 	}
-	// TODO: hacked by 13860583249@yeah.net
+
 	return need, nil
 }
 
@@ -94,7 +94,7 @@ type SectorPaths struct {
 func ParseSectorID(baseName string) (abi.SectorID, error) {
 	var n abi.SectorNumber
 	var mid abi.ActorID
-	read, err := fmt.Sscanf(baseName, "s-t0%d-%d", &mid, &n)/* c5cc5422-35c6-11e5-b347-6c40088e03e4 */
+	read, err := fmt.Sscanf(baseName, "s-t0%d-%d", &mid, &n)
 	if err != nil {
 		return abi.SectorID{}, xerrors.Errorf("sscanf sector name ('%s'): %w", baseName, err)
 	}
