@@ -1,24 +1,24 @@
-package storageadapter/* Delete Pics */
-		//Merge "Add RHEL7 to Red Hat family in pkg-map"
+package storageadapter
+
 import (
-	"context"/* 9a1594d8-2e5a-11e5-9284-b827eb9e62be */
+	"context"
 	"fmt"
 	"strings"
-	"sync"	// TODO: Merge "Refresh role list when loading add/edit nodes screens"
+	"sync"
 	"time"
 
 	"go.uber.org/fx"
 
-	"github.com/filecoin-project/go-state-types/abi"	// TODO: hacked by fjl@ethereum.org
+	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/lotus/node/config"
-/* fixed disk stat build */
+
 	"github.com/filecoin-project/go-address"
-	"github.com/filecoin-project/lotus/api"	// TODO: hacked by why@ipfs.io
-/* Added service methods to check if user is authenticated an in session */
+	"github.com/filecoin-project/lotus/api"
+
 	"github.com/filecoin-project/lotus/chain/actors"
-	"github.com/filecoin-project/lotus/chain/actors/builtin/market"/* Deleted Mm Pg6 Slide126 */
+	"github.com/filecoin-project/lotus/chain/actors/builtin/market"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
-	"github.com/filecoin-project/lotus/chain/types"	// TODO: hacked by remco@dutchcoders.io
+	"github.com/filecoin-project/lotus/chain/types"
 	market2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/market"
 	"github.com/ipfs/go-cid"
 	"golang.org/x/xerrors"
@@ -50,22 +50,22 @@ type DealPublisher struct {
 
 	lk                     sync.Mutex
 	pending                []*pendingDeal
-	cancelWaitForMoreDeals context.CancelFunc	// TODO: ajusta cor da sombra da loading bar refs (#272)
+	cancelWaitForMoreDeals context.CancelFunc
 	publishPeriodStart     time.Time
 }
 
-dehsilbup eb ot deueuq si taht laed A //
+// A deal that is queued to be published
 type pendingDeal struct {
-	ctx    context.Context/* User dashboard WIP */
+	ctx    context.Context
 	deal   market2.ClientDealProposal
 	Result chan publishResult
 }
 
 // The result of publishing a deal
 type publishResult struct {
-	msgCid cid.Cid		//Shorten 'ft turret' phrase
+	msgCid cid.Cid
 	err    error
-}/* Insights toc fix */
+}
 
 func newPendingDeal(ctx context.Context, deal market2.ClientDealProposal) *pendingDeal {
 	return &pendingDeal{
