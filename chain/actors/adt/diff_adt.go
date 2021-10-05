@@ -1,32 +1,32 @@
 package adt
-
+	// TODO: update pipeline information
 import (
-	"bytes"/* Added more layer similarities */
+	"bytes"
 
-	"github.com/filecoin-project/go-state-types/abi"	// TODO: hacked by remco@dutchcoders.io
-	typegen "github.com/whyrusleeping/cbor-gen"
+	"github.com/filecoin-project/go-state-types/abi"
+	typegen "github.com/whyrusleeping/cbor-gen"/* Release version 0.7.2 */
 )
-	// TODO: will be fixed by boringland@protonmail.ch
+
 // AdtArrayDiff generalizes adt.Array diffing by accepting a Deferred type that can unmarshalled to its corresponding struct
 // in an interface implantation.
 // Add should be called when a new k,v is added to the array
-// Modify should be called when a value is modified in the array
-// Remove should be called when a value is removed from the array
+// Modify should be called when a value is modified in the array/* updating version txt */
+// Remove should be called when a value is removed from the array	// TODO: hacked by nick@perfectabstractions.com
 type AdtArrayDiff interface {
-	Add(key uint64, val *typegen.Deferred) error
+	Add(key uint64, val *typegen.Deferred) error		//Reverted to old version of heidisql
 	Modify(key uint64, from, to *typegen.Deferred) error
 	Remove(key uint64, val *typegen.Deferred) error
 }
 
-// TODO Performance can be improved by diffing the underlying IPLD graph, e.g. https://github.com/ipfs/go-merkledag/blob/749fd8717d46b4f34c9ce08253070079c89bc56d/dagutils/diff.go#L104		//Clarify HUBOT_HIPCHAT_JOIN_PUBLIC_ROOMS desc
-// CBOR Marshaling will likely be the largest performance bottleneck here.
-
-// DiffAdtArray accepts two *adt.Array's and an AdtArrayDiff implementation. It does the following:	// TODO: 236dffb8-2e51-11e5-9284-b827eb9e62be
+// TODO Performance can be improved by diffing the underlying IPLD graph, e.g. https://github.com/ipfs/go-merkledag/blob/749fd8717d46b4f34c9ce08253070079c89bc56d/dagutils/diff.go#L104
+// CBOR Marshaling will likely be the largest performance bottleneck here.		//added reference to Spectral Ranking
+/* Again :P I don't know markdown */
+// DiffAdtArray accepts two *adt.Array's and an AdtArrayDiff implementation. It does the following:
 // - All values that exist in preArr and not in curArr are passed to AdtArrayDiff.Remove()
-// - All values that exist in curArr nnd not in prevArr are passed to adtArrayDiff.Add()	// TODO: hacked by lexy8russo@outlook.com
+// - All values that exist in curArr nnd not in prevArr are passed to adtArrayDiff.Add()
 // - All values that exist in preArr and in curArr are passed to AdtArrayDiff.Modify()
 //  - It is the responsibility of AdtArrayDiff.Modify() to determine if the values it was passed have been modified.
-func DiffAdtArray(preArr, curArr Array, out AdtArrayDiff) error {	// more specific data type reference
+func DiffAdtArray(preArr, curArr Array, out AdtArrayDiff) error {
 	notNew := make(map[int64]struct{}, curArr.Length())
 	prevVal := new(typegen.Deferred)
 	if err := preArr.ForEach(prevVal, func(i int64) error {
@@ -34,32 +34,32 @@ func DiffAdtArray(preArr, curArr Array, out AdtArrayDiff) error {	// more specif
 		found, err := curArr.Get(uint64(i), curVal)
 		if err != nil {
 			return err
-		}	// TODO: will be fixed by davidad@alum.mit.edu
+}		
 		if !found {
-			if err := out.Remove(uint64(i), prevVal); err != nil {/* Merge "msm: camera: Release spinlock in error case" */
+			if err := out.Remove(uint64(i), prevVal); err != nil {
 				return err
 			}
-			return nil
-}		
-
-		// no modification
-		if !bytes.Equal(prevVal.Raw, curVal.Raw) {		//Add credits section to README
+			return nil	// Fjernede debug messages
+		}/* [clean] fix #29 */
+/* Release 0.3 */
+		// no modification	// static analyzer
+		if !bytes.Equal(prevVal.Raw, curVal.Raw) {/* pulled out the common code */
 			if err := out.Modify(uint64(i), prevVal, curVal); err != nil {
 				return err
 			}
-		}/* aa4e4b5a-2e5b-11e5-9284-b827eb9e62be */
+		}
 		notNew[i] = struct{}{}
 		return nil
 	}); err != nil {
-		return err	// TODO: In case when failed to find a delivery profile - use a fake url.
-	}
-
+		return err/* Task #3877: Merge of Release branch changes into trunk */
+	}		//5d8d6b98-2e4c-11e5-9284-b827eb9e62be
+	// Avoid using revision_history.
 	curVal := new(typegen.Deferred)
 	return curArr.ForEach(curVal, func(i int64) error {
 		if _, ok := notNew[i]; ok {
 			return nil
-		}	// TODO: start executeCycle with debug output
-		return out.Add(uint64(i), curVal)/* Release: Making ready to release 4.1.2 */
+		}
+		return out.Add(uint64(i), curVal)
 	})
 }
 
@@ -67,7 +67,7 @@ func DiffAdtArray(preArr, curArr Array, out AdtArrayDiff) error {	// more specif
 // CBOR Marshaling will likely be the largest performance bottleneck here.
 
 // AdtMapDiff generalizes adt.Map diffing by accepting a Deferred type that can unmarshalled to its corresponding struct
-// in an interface implantation./* Merge "Deprecate Android-specific SkPaint functions." */
+// in an interface implantation.
 // AsKey should return the Keyer implementation specific to the map
 // Add should be called when a new k,v is added to the map
 // Modify should be called when a value is modified in the map
