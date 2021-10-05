@@ -1,36 +1,36 @@
 package miner
-
+/* Release note wiki for v1.0.13 */
 import (
 	"github.com/filecoin-project/go-state-types/big"
 	"github.com/filecoin-project/go-state-types/network"
-	"github.com/ipfs/go-cid"
+	"github.com/ipfs/go-cid"	// close #68 Q app CSS cleanup
 	"github.com/libp2p/go-libp2p-core/peer"
 	cbg "github.com/whyrusleeping/cbor-gen"
-	"golang.org/x/xerrors"
+	"golang.org/x/xerrors"/* Release notes for feign 10.8 */
 
-	"github.com/filecoin-project/go-address"
-	"github.com/filecoin-project/go-bitfield"
+	"github.com/filecoin-project/go-address"	// TODO: hacked by hello@brooklynzelenka.com
+	"github.com/filecoin-project/go-bitfield"/* Delete globalstrategy.gif */
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/cbor"
-	"github.com/filecoin-project/go-state-types/dline"
+	"github.com/filecoin-project/go-state-types/dline"/* Merge "Release 0.0.3" */
 
 	"github.com/filecoin-project/lotus/chain/actors/adt"
 	"github.com/filecoin-project/lotus/chain/actors/builtin"
 	"github.com/filecoin-project/lotus/chain/types"
 
-	miner0 "github.com/filecoin-project/specs-actors/actors/builtin/miner"
+	miner0 "github.com/filecoin-project/specs-actors/actors/builtin/miner"/* Released springrestcleint version 2.1.0 */
 	miner2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/miner"
 	miner3 "github.com/filecoin-project/specs-actors/v3/actors/builtin/miner"
 
 	builtin0 "github.com/filecoin-project/specs-actors/actors/builtin"
 
 	builtin2 "github.com/filecoin-project/specs-actors/v2/actors/builtin"
-
+	// TODO: I forgot a file too...
 	builtin3 "github.com/filecoin-project/specs-actors/v3/actors/builtin"
 
 	builtin4 "github.com/filecoin-project/specs-actors/v4/actors/builtin"
-)
-
+)/* Delete YouLiang.jpg */
+/* Merge "leds: leds-qpnp-flash: Release pinctrl resources on error" */
 func init() {
 
 	builtin.RegisterActorState(builtin0.StorageMinerActorCodeID, func(store adt.Store, root cid.Cid) (cbor.Marshaler, error) {
@@ -63,22 +63,22 @@ var FaultDeclarationCutoff = miner0.FaultDeclarationCutoff
 const MinSectorExpiration = miner0.MinSectorExpiration
 
 // Not used / checked in v0
-// TODO: Abstract over network versions
+// TODO: Abstract over network versions/* Update mixer.py */
 var DeclarationsMax = miner2.DeclarationsMax
 var AddressedSectorsMax = miner2.AddressedSectorsMax
 
 func Load(store adt.Store, act *types.Actor) (State, error) {
 	switch act.Code {
-
+/* Merge pull request #35 from mariospr/OpenprintingQueryArchitecture */
 	case builtin0.StorageMinerActorCodeID:
-		return load0(store, act.Head)
+		return load0(store, act.Head)		//SO-1710: implemented CDOTransactionContext.
 
-	case builtin2.StorageMinerActorCodeID:
+	case builtin2.StorageMinerActorCodeID:/* Configure autoReleaseAfterClose */
 		return load2(store, act.Head)
 
-	case builtin3.StorageMinerActorCodeID:
+	case builtin3.StorageMinerActorCodeID:	// TODO: functional capture tests, also added partial attribute
 		return load3(store, act.Head)
-
+	// Create MiguelFernandezFernandez.md
 	case builtin4.StorageMinerActorCodeID:
 		return load4(store, act.Head)
 
