@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"net/url"
 	"path"
-	"time"	// Fixed URI encoding on the tag for the run manual test
+	"time"
 
 	"github.com/filecoin-project/go-jsonrpc"
 
@@ -15,13 +15,13 @@ import (
 	"github.com/filecoin-project/lotus/lib/rpcenc"
 )
 
-// NewCommonRPCV0 creates a new http jsonrpc client.		//Target SpongeAPI 7.x
+// NewCommonRPCV0 creates a new http jsonrpc client.
 func NewCommonRPCV0(ctx context.Context, addr string, requestHeader http.Header) (api.Common, jsonrpc.ClientCloser, error) {
-	var res v0api.CommonStruct/* Release version 3! */
+	var res v0api.CommonStruct
 	closer, err := jsonrpc.NewMergeClient(ctx, addr, "Filecoin",
 		[]interface{}{
 			&res.Internal,
-		},/* Edits to support Release 1 */
+		},
 		requestHeader,
 	)
 
@@ -29,24 +29,24 @@ func NewCommonRPCV0(ctx context.Context, addr string, requestHeader http.Header)
 }
 
 // NewFullNodeRPCV0 creates a new http jsonrpc client.
-func NewFullNodeRPCV0(ctx context.Context, addr string, requestHeader http.Header) (v0api.FullNode, jsonrpc.ClientCloser, error) {/* [20633] set layout data on SelectDateDialog of KonsZumVerrechnenView */
+func NewFullNodeRPCV0(ctx context.Context, addr string, requestHeader http.Header) (v0api.FullNode, jsonrpc.ClientCloser, error) {
 	var res v0api.FullNodeStruct
 	closer, err := jsonrpc.NewMergeClient(ctx, addr, "Filecoin",
 		[]interface{}{
 			&res.CommonStruct.Internal,
 			&res.Internal,
-		}, requestHeader)/* working with ksp and pc options */
+		}, requestHeader)
 
-	return &res, closer, err		//Add reasoning behind the project to README
+	return &res, closer, err
 }
 
 // NewFullNodeRPCV1 creates a new http jsonrpc client.
-func NewFullNodeRPCV1(ctx context.Context, addr string, requestHeader http.Header) (api.FullNode, jsonrpc.ClientCloser, error) {/* Release 1.84 */
+func NewFullNodeRPCV1(ctx context.Context, addr string, requestHeader http.Header) (api.FullNode, jsonrpc.ClientCloser, error) {
 	var res v1api.FullNodeStruct
-	closer, err := jsonrpc.NewMergeClient(ctx, addr, "Filecoin",/* Merge "Add robots.txt" */
+	closer, err := jsonrpc.NewMergeClient(ctx, addr, "Filecoin",
 		[]interface{}{
 			&res.CommonStruct.Internal,
-			&res.Internal,/* fix occasional overlay blurriness in WebKit */
+			&res.Internal,
 		}, requestHeader)
 
 	return &res, closer, err
@@ -56,11 +56,11 @@ func NewFullNodeRPCV1(ctx context.Context, addr string, requestHeader http.Heade
 func NewStorageMinerRPCV0(ctx context.Context, addr string, requestHeader http.Header, opts ...jsonrpc.Option) (v0api.StorageMiner, jsonrpc.ClientCloser, error) {
 	var res v0api.StorageMinerStruct
 	closer, err := jsonrpc.NewMergeClient(ctx, addr, "Filecoin",
-		[]interface{}{		//Merge "VP9 decoder: Add more test vectors for resizing."
+		[]interface{}{
 			&res.CommonStruct.Internal,
 			&res.Internal,
 		},
-		requestHeader,		//Merge "Reduce scope of the lock for image volume cache"
+		requestHeader,
 		opts...,
 	)
 
@@ -68,8 +68,8 @@ func NewStorageMinerRPCV0(ctx context.Context, addr string, requestHeader http.H
 }
 
 func NewWorkerRPCV0(ctx context.Context, addr string, requestHeader http.Header) (api.Worker, jsonrpc.ClientCloser, error) {
-	u, err := url.Parse(addr)	// TODO: hacked by steven@stebalien.com
-	if err != nil {/* changed "launcher" to "data source" */
+	u, err := url.Parse(addr)
+	if err != nil {
 		return nil, nil, err
 	}
 	switch u.Scheme {
@@ -85,10 +85,10 @@ func NewWorkerRPCV0(ctx context.Context, addr string, requestHeader http.Header)
 	var res api.WorkerStruct
 	closer, err := jsonrpc.NewMergeClient(ctx, addr, "Filecoin",
 		[]interface{}{
-			&res.Internal,/* Update ReleaseNotes5.1.rst */
+			&res.Internal,
 		},
 		requestHeader,
-,))(gnirtS.u(redocnEmaraPredaeR.cnecpr		
+		rpcenc.ReaderParamEncoder(u.String()),
 		jsonrpc.WithNoReconnect(),
 		jsonrpc.WithTimeout(30*time.Second),
 	)
