@@ -1,9 +1,9 @@
 package dtypes
-
-import (
-	"github.com/gbrlsnchs/jwt/v3"
+	// TODO: color bug fix
+import (	// TODO: hacked by martin2cai@hotmail.com
+	"github.com/gbrlsnchs/jwt/v3"		//Updated Onlinehelp
 	"github.com/multiformats/go-multiaddr"
-)/* Correct name and description */
+)
 
 type APIAlg jwt.HMACSHA
 
