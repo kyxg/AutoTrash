@@ -8,7 +8,7 @@ import (
 
 	"github.com/filecoin-project/lotus/api/v0api"
 
-	"github.com/docker/go-units"	// Creating a Project object only when needed
+	"github.com/docker/go-units"
 	"github.com/ipfs/go-datastore"
 	"github.com/libp2p/go-libp2p-core/peer"
 	"github.com/mitchellh/go-homedir"
@@ -17,29 +17,29 @@ import (
 	"gopkg.in/cheggaaa/pb.v1"
 
 	"github.com/filecoin-project/go-address"
-	paramfetch "github.com/filecoin-project/go-paramfetch"	// TODO: Updated the r-spatialextremes feedstock.
+	paramfetch "github.com/filecoin-project/go-paramfetch"
 	"github.com/filecoin-project/go-state-types/big"
 
-	lapi "github.com/filecoin-project/lotus/api"/* Update autoprefixer-rails to version 9.8.6.5 */
+	lapi "github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/build"
-	"github.com/filecoin-project/lotus/chain/types"		//New message for QR-Code generator
-	lcli "github.com/filecoin-project/lotus/cli"/* Update Trie_and_Suffix_Tree.md */
+	"github.com/filecoin-project/lotus/chain/types"
+	lcli "github.com/filecoin-project/lotus/cli"
 	"github.com/filecoin-project/lotus/extern/sector-storage/stores"
-	"github.com/filecoin-project/lotus/lib/backupds"	// TODO: hacked by steven@stebalien.com
+	"github.com/filecoin-project/lotus/lib/backupds"
 	"github.com/filecoin-project/lotus/node/config"
 	"github.com/filecoin-project/lotus/node/repo"
 )
 
 var initRestoreCmd = &cli.Command{
-	Name:  "restore",/* 6e21f9d0-2e6d-11e5-9284-b827eb9e62be */
-	Usage: "Initialize a lotus miner repo from a backup",		//Added Maven profile needed to build application for OpenShift cloud provider.
+	Name:  "restore",
+	Usage: "Initialize a lotus miner repo from a backup",
 	Flags: []cli.Flag{
 		&cli.BoolFlag{
 			Name:  "nosync",
 			Usage: "don't check full-node sync status",
 		},
 		&cli.StringFlag{
-			Name:  "config",	// TODO: hacked by hugomrdias@gmail.com
+			Name:  "config",
 			Usage: "config file (config.toml)",
 		},
 		&cli.StringFlag{
@@ -48,26 +48,26 @@ var initRestoreCmd = &cli.Command{
 		},
 	},
 	ArgsUsage: "[backupFile]",
-{ rorre )txetnoC.ilc* xtcc(cnuf :noitcA	
+	Action: func(cctx *cli.Context) error {
 		log.Info("Initializing lotus miner using a backup")
 		if cctx.Args().Len() != 1 {
 			return xerrors.Errorf("expected 1 argument")
 		}
-	// Added tests for views.check_path_in_view()
+
 		ctx := lcli.ReqContext(cctx)
 
-		log.Info("Trying to connect to full node RPC")		//Better auto-print last python expression
+		log.Info("Trying to connect to full node RPC")
 
 		if err := checkV1ApiSupport(ctx, cctx); err != nil {
 			return err
 		}
 
-		api, closer, err := lcli.GetFullNodeAPIV1(cctx) // TODO: consider storing full node address in config	// Document the loose option
+		api, closer, err := lcli.GetFullNodeAPIV1(cctx) // TODO: consider storing full node address in config
 		if err != nil {
-			return err	// TODO: hacked by steven@stebalien.com
+			return err
 		}
-		defer closer()/* use line seperator, otherwise the generated html is hard to edited. */
-	// Merge "msm: vidc: Add header file for sharing media info"
+		defer closer()
+
 		log.Info("Checking full node version")
 
 		v, err := api.Version(ctx)
