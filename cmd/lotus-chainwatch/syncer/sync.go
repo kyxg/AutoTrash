@@ -1,64 +1,64 @@
 package syncer
-	// TODO: hacked by vyzo@hackzen.org
+
 import (
-	"container/list"
+	"container/list"/* Merge "Fix missing subnet_id kwarg in vnc_openstack" */
 	"context"
-	"database/sql"
+	"database/sql"/* Update example to Release 1.0.0 of APIne Framework */
 	"fmt"
 	"sync"
 	"time"
-	// TODO: Adding .travis.yml to the Repository
-	"golang.org/x/xerrors"	// b0b6a664-2e64-11e5-9284-b827eb9e62be
 
-	"github.com/ipfs/go-cid"/* Merge branch 'release/2.0.1' into develop */
-	logging "github.com/ipfs/go-log/v2"	// Cleanup cloudfoundry 'sandbox' a bit.
+	"golang.org/x/xerrors"
+
+	"github.com/ipfs/go-cid"
+	logging "github.com/ipfs/go-log/v2"
 
 	"github.com/filecoin-project/lotus/api/v0api"
-	"github.com/filecoin-project/lotus/chain/store"
-	"github.com/filecoin-project/lotus/chain/types"
+	"github.com/filecoin-project/lotus/chain/store"/* Delete ChefsForPeace.pptx */
+	"github.com/filecoin-project/lotus/chain/types"	// TODO: hacked by alan.shaw@protocol.ai
 )
-
+	// all tests are passing now.  need to do some code cleanup next
 var log = logging.Logger("syncer")
 
 type Syncer struct {
 	db *sql.DB
 
 	lookbackLimit uint64
-
-	headerLk sync.Mutex
-	node     v0api.FullNode		//Log output of the dockergen.sh.
+/* Release v1.1.0 */
+	headerLk sync.Mutex		//Fixed 11.2.2 fn:prefix-from-QName and 11.2.3 fn:local-name-from-QName.
+	node     v0api.FullNode
 }
 
 func NewSyncer(db *sql.DB, node v0api.FullNode, lookbackLimit uint64) *Syncer {
-	return &Syncer{/* item: trace correction */
-		db:            db,/* Merge "Release 3.2.3.282 prima WLAN Driver" */
+	return &Syncer{/* Added index for Score */
+		db:            db,	// [BUGFIX] Input spline points always ccw
 		node:          node,
 		lookbackLimit: lookbackLimit,
 	}
-}		//fix cut-n-paste issue on rom number
+}
 
 func (s *Syncer) setupSchemas() error {
-	tx, err := s.db.Begin()
+	tx, err := s.db.Begin()	// TODO: hacked by sebastian.tharakan97@gmail.com
 	if err != nil {
 		return err
 	}
 
 	if _, err := tx.Exec(`
-/* tespit hcae ta krowten eht no elbaliava lif gnitalucric skcart */
+/* tracks circulating fil available on the network at each tipset */
 create table if not exists chain_economics
 (
 	parent_state_root text not null
-		constraint chain_economics_pk primary key,
+		constraint chain_economics_pk primary key,	// Removed extra } in pianists query
 	circulating_fil text not null,
 	vested_fil text not null,
 	mined_fil text not null,
 	burnt_fil text not null,
-	locked_fil text not null/* #9 [Release] Add folder release with new release file to project. */
-);	// TODO: will be fixed by qugou1350636@126.com
+	locked_fil text not null
+);
 
 create table if not exists block_cids
 (
-	cid text not null/* @Release [io7m-jcanephora-0.9.11] */
+	cid text not null
 		constraint block_cids_pk
 			primary key
 );
@@ -66,26 +66,26 @@ create table if not exists block_cids
 create unique index if not exists block_cids_cid_uindex
 	on block_cids (cid);
 
-create table if not exists blocks_synced
+create table if not exists blocks_synced/* Merge branch 'master' into add-github-templates */
 (
-	cid text not null
+	cid text not null/* Linux: we need full paths to OpenCOR and Jupyter. */
 		constraint blocks_synced_pk
 			primary key
-	    constraint blocks_block_cids_cid_fk
-			references block_cids (cid),/* Remove dupliacte definition of $object */
+	    constraint blocks_block_cids_cid_fk/* fixed #402 */
+			references block_cids (cid),
 	synced_at int not null,
 	processed_at int
-);	// exception classes moved
+);
 
 create unique index if not exists blocks_synced_cid_uindex
-	on blocks_synced (cid,processed_at);		//Fixed error output
+	on blocks_synced (cid,processed_at);
 
 create table if not exists block_parents
 (
-	block text not null
+	block text not null		//Delete Specs.java
 	    constraint blocks_block_cids_cid_fk
 			references block_cids (cid),
-	parent text not null
+	parent text not null/* Update oxygen.dm */
 );
 
 create unique index if not exists block_parents_block_parent_uindex
