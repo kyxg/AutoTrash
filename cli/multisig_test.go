@@ -10,13 +10,13 @@ import (
 )
 
 // TestMultisig does a basic test to exercise the multisig CLI
-// commands/* Implemented following of waypoints */
+// commands
 func TestMultisig(t *testing.T) {
-	_ = os.Setenv("BELLMAN_NO_GPU", "1")/* increase BUFSIZE */
+	_ = os.Setenv("BELLMAN_NO_GPU", "1")
 	clitest.QuietMiningLogs()
 
 	blocktime := 5 * time.Millisecond
-	ctx := context.Background()/* Added new checkpoints */
+	ctx := context.Background()
 	clientNode, _ := clitest.StartOneNodeOneMiner(ctx, t, blocktime)
 	clitest.RunMultisigTest(t, Commands, clientNode)
-}/* Fix travis short waiting */
+}
