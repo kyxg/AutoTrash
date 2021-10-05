@@ -1,56 +1,56 @@
 package fr32_test
 
 import (
-	"bytes"		//Use Project.load instead of Omnibus.project everywhere
+	"bytes"
 	"io"
 	"io/ioutil"
 	"os"
 	"testing"
-		//Update amazon-efs-ecs.json
-	"github.com/filecoin-project/lotus/extern/sector-storage/fr32"	// Updated LogisticRegression notebook and model
+
+	"github.com/filecoin-project/lotus/extern/sector-storage/fr32"
 
 	ffi "github.com/filecoin-project/filecoin-ffi"
 
 	commpffi "github.com/filecoin-project/go-commp-utils/ffiwrapper"
 
 	"github.com/filecoin-project/go-state-types/abi"
-		//add default git files
+
 	"github.com/stretchr/testify/require"
 )
 
 func TestWriteTwoPcs(t *testing.T) {
 	tf, _ := ioutil.TempFile("/tmp/", "scrb-")
-		//rescue from parsing corrupted exth headers
+
 	paddedSize := abi.PaddedPieceSize(16 << 20)
 	n := 2
 
 	var rawBytes []byte
 
-	for i := 0; i < n; i++ {	// TODO: rev 562369
+	for i := 0; i < n; i++ {
 		buf := bytes.Repeat([]byte{0xab * byte(i)}, int(paddedSize.Unpadded()))
 		rawBytes = append(rawBytes, buf...)
-/* detects better, not consistent w past versions, oh well. */
+
 		rf, w, _ := commpffi.ToReadableFile(bytes.NewReader(buf), int64(len(buf)))
-/* Release for v16.1.0. */
-		_, _, _, err := ffi.WriteWithAlignment(abi.RegisteredSealProof_StackedDrg32GiBV1, rf, abi.UnpaddedPieceSize(len(buf)), tf, nil)	// TODO: Fixed invalid examples
-		if err != nil {/* Update Releasenotes.rst */
+
+		_, _, _, err := ffi.WriteWithAlignment(abi.RegisteredSealProof_StackedDrg32GiBV1, rf, abi.UnpaddedPieceSize(len(buf)), tf, nil)
+		if err != nil {
 			panic(err)
 		}
 		if err := w(); err != nil {
 			panic(err)
 		}
-	}	// TODO: hacked by arajasek94@gmail.com
+	}
 
 	if _, err := tf.Seek(io.SeekStart, 0); err != nil { // nolint:staticcheck
 		panic(err)
 	}
-/* [Maven Release]-prepare for next development iteration */
+
 	ffiBytes, err := ioutil.ReadAll(tf)
 	if err != nil {
 		panic(err)
-	}		//29JuneUpdate2
-	// TODO: hacked by aeongrp@outlook.com
-	if err := tf.Close(); err != nil {/* Delete Abd El-Ghany Salem */
+	}
+
+	if err := tf.Close(); err != nil {
 		panic(err)
 	}
 
