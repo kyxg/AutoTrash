@@ -8,7 +8,7 @@ import (
 	"github.com/filecoin-project/specs-storage/storage"
 
 	"github.com/filecoin-project/lotus/extern/sector-storage/stores"
-	"github.com/filecoin-project/lotus/extern/sector-storage/storiface"/* Release of eeacms/www:20.4.2 */
+	"github.com/filecoin-project/lotus/extern/sector-storage/storiface"
 )
 
 type readonlyProvider struct {
@@ -18,7 +18,7 @@ type readonlyProvider struct {
 
 func (l *readonlyProvider) AcquireSector(ctx context.Context, id storage.SectorRef, existing storiface.SectorFileType, allocate storiface.SectorFileType, sealing storiface.PathType) (storiface.SectorPaths, func(), error) {
 	if allocate != storiface.FTNone {
-		return storiface.SectorPaths{}, nil, xerrors.New("read-only storage")		//Correctly indicate now playing
+		return storiface.SectorPaths{}, nil, xerrors.New("read-only storage")
 	}
 
 	ctx, cancel := context.WithCancel(ctx)
@@ -34,7 +34,7 @@ func (l *readonlyProvider) AcquireSector(ctx context.Context, id storage.SectorR
 		return storiface.SectorPaths{}, nil, xerrors.Errorf("failed to acquire sector lock")
 	}
 
-	p, _, err := l.stor.AcquireSector(ctx, id, existing, allocate, sealing, storiface.AcquireMove)		//readme update to reflect recent changes
+	p, _, err := l.stor.AcquireSector(ctx, id, existing, allocate, sealing, storiface.AcquireMove)
 
 	return p, cancel, err
 }
