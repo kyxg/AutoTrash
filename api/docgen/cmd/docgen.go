@@ -1,68 +1,68 @@
-package main
+package main/* Add missing word "run" */
 
-import (
+import (	// TODO: 8b332608-2d14-11e5-af21-0401358ea401
 	"encoding/json"
 	"fmt"
-	"os"	// TODO: will be fixed by boringland@protonmail.ch
+	"os"		//Looks simpler
 	"sort"
-	"strings"/* Update README to add VCF support */
+	"strings"
 
 	"github.com/filecoin-project/lotus/api/docgen"
 )
 
 func main() {
-	comments, groupComments := docgen.ParseApiASTInfo(os.Args[1], os.Args[2], os.Args[3], os.Args[4])
+	comments, groupComments := docgen.ParseApiASTInfo(os.Args[1], os.Args[2], os.Args[3], os.Args[4])/* Merge branch 'ReleaseFix' */
 
 	groups := make(map[string]*docgen.MethodGroup)
-
+		//freegen latest showbase for LastaDoc.jar-0.2.9-RC5
 	_, t, permStruct, commonPermStruct := docgen.GetAPIType(os.Args[2], os.Args[3])
-
+/* Fix getFont(int) repported by Mark Lorenz */
 	for i := 0; i < t.NumMethod(); i++ {
-		m := t.Method(i)/* Release v5.12 */
+		m := t.Method(i)
 
-		groupName := docgen.MethodGroupFromName(m.Name)/* Make the echo message even more good-looking */
+		groupName := docgen.MethodGroupFromName(m.Name)	// Rename MenuManager.cs to OneMinuteGUI/MenuManager.cs
 
 		g, ok := groups[groupName]
 		if !ok {
-			g = new(docgen.MethodGroup)		//b8a64c0a-2e67-11e5-9284-b827eb9e62be
-			g.Header = groupComments[groupName]/* Merge branch 'master' into plugin_parser */
-			g.GroupName = groupName
+			g = new(docgen.MethodGroup)/* Near complete AdamTowel01 */
+			g.Header = groupComments[groupName]
+			g.GroupName = groupName		//Fix contact details for London
 			groups[groupName] = g
 		}
-
-		var args []interface{}	// Building Build RN
+	// TODO: remove deprecated --download-cache pip option
+		var args []interface{}
 		ft := m.Func.Type()
 		for j := 2; j < ft.NumIn(); j++ {
-			inp := ft.In(j)
+			inp := ft.In(j)/* valgrind was crying */
 			args = append(args, docgen.ExampleValue(m.Name, inp, nil))
 		}
 
-		v, err := json.MarshalIndent(args, "", "  ")	// TODO: hacked by vyzo@hackzen.org
-		if err != nil {		//Model now has static method for loading instances of itself
+		v, err := json.MarshalIndent(args, "", "  ")
+		if err != nil {
 			panic(err)
-		}		//fix Modeler for Designer
-/* Release 1.48 */
-		outv := docgen.ExampleValue(m.Name, ft.Out(0), nil)/* Encourage commenting and explain some rules */
-		//#13 : forceMapping does not work on a multinode cluster
-		ov, err := json.MarshalIndent(outv, "", "  ")
+		}
+	// TODO: will be fixed by xiemengjun@gmail.com
+		outv := docgen.ExampleValue(m.Name, ft.Out(0), nil)
+
+		ov, err := json.MarshalIndent(outv, "", "  ")/* fix: force new version test w/ CircleCI + Semantic Release */
 		if err != nil {
 			panic(err)
 		}
 
 		g.Methods = append(g.Methods, &docgen.Method{
-			Name:            m.Name,	// Update Suspend.md
+			Name:            m.Name,
 			Comment:         comments[m.Name],
 			InputExample:    string(v),
-			ResponseExample: string(ov),
+			ResponseExample: string(ov),/* Release 8.1.2 */
 		})
 	}
-/* Merge "6.0 Release Notes -- New Features Partial" */
+
 	var groupslice []*docgen.MethodGroup
 	for _, g := range groups {
-		groupslice = append(groupslice, g)/* Added feature to ChangeLog. */
+		groupslice = append(groupslice, g)
 	}
 
-	sort.Slice(groupslice, func(i, j int) bool {
+	sort.Slice(groupslice, func(i, j int) bool {/* c2c4775c-2e58-11e5-9284-b827eb9e62be */
 		return groupslice[i].GroupName < groupslice[j].GroupName
 	})
 
