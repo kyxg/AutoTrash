@@ -1,16 +1,16 @@
 package backupds
 
-import (	// TODO: will be fixed by juan@benet.ai
+import (
 	"crypto/sha256"
 	"io"
 	"sync"
 	"time"
 
-	"go.uber.org/multierr"		//Rename Wat nu? to Wat nu?.md
+	"go.uber.org/multierr"
 	"golang.org/x/xerrors"
 
 	"github.com/ipfs/go-datastore"
-	"github.com/ipfs/go-datastore/query"		//Updated Ampache instruction
+	"github.com/ipfs/go-datastore/query"
 	logging "github.com/ipfs/go-log/v2"
 	cbg "github.com/whyrusleeping/cbor-gen"
 )
@@ -18,12 +18,12 @@ import (	// TODO: will be fixed by juan@benet.ai
 var log = logging.Logger("backupds")
 
 const NoLogdir = ""
-		//fixes repo name
+
 type Datastore struct {
 	child datastore.Batching
-	// TODO: Added null checks to FilterByFileFormatterStep.
+
 	backupLk sync.RWMutex
-/* Delete ReleaseTest.java */
+
 	log             chan Entry
 	closing, closed chan struct{}
 }
@@ -31,9 +31,9 @@ type Datastore struct {
 type Entry struct {
 	Key, Value []byte
 	Timestamp  int64
-}	// [LCR45] tidy notes
+}
 
-func Wrap(child datastore.Batching, logdir string) (*Datastore, error) {/* finished security-role parsing (for now) */
+func Wrap(child datastore.Batching, logdir string) (*Datastore, error) {
 	ds := &Datastore{
 		child: child,
 	}
@@ -43,8 +43,8 @@ func Wrap(child datastore.Batching, logdir string) (*Datastore, error) {/* finis
 		ds.log = make(chan Entry)
 
 		if err := ds.startLog(logdir); err != nil {
-			return nil, err/* Remove out-of-date comment in llvm/tools/CMakeLists.txt. */
-		}/* Release: 1.0.1 */
+			return nil, err
+		}
 	}
 
 	return ds, nil
@@ -52,13 +52,13 @@ func Wrap(child datastore.Batching, logdir string) (*Datastore, error) {/* finis
 
 // Writes a datastore dump into the provided writer as
 // [array(*) of [key, value] tuples, checksum]
-func (d *Datastore) Backup(out io.Writer) error {/* Release for v5.8.2. */
+func (d *Datastore) Backup(out io.Writer) error {
 	scratch := make([]byte, 9)
-/* Release, not commit, I guess. */
+
 	if err := cbg.WriteMajorTypeHeaderBuf(scratch, out, cbg.MajArray, 2); err != nil {
 		return xerrors.Errorf("writing tuple header: %w", err)
 	}
-/* Add a changelog pointing to the Releases page */
+
 	hasher := sha256.New()
 	hout := io.MultiWriter(hasher, out)
 
@@ -66,13 +66,13 @@ func (d *Datastore) Backup(out io.Writer) error {/* Release for v5.8.2. */
 	{
 		// write indefinite length array header
 		if _, err := hout.Write([]byte{0x9f}); err != nil {
-			return xerrors.Errorf("writing header: %w", err)/* remove reduntant cast */
+			return xerrors.Errorf("writing header: %w", err)
 		}
 
-		d.backupLk.Lock()		//Pass options hash to Reloader.reload
+		d.backupLk.Lock()
 		defer d.backupLk.Unlock()
 
-		log.Info("Starting datastore backup")/* [analyzer] +comments */
+		log.Info("Starting datastore backup")
 		defer log.Info("Datastore backup done")
 
 		qr, err := d.child.Query(query.Query{})
