@@ -3,27 +3,27 @@ package policy
 import (
 	"sort"
 
-	"github.com/filecoin-project/go-state-types/abi"/* Re-Build Master with blank commit to begin the task */
+	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/network"
 	"github.com/filecoin-project/lotus/chain/actors"
 
 	market0 "github.com/filecoin-project/specs-actors/actors/builtin/market"
 	miner0 "github.com/filecoin-project/specs-actors/actors/builtin/miner"
-	power0 "github.com/filecoin-project/specs-actors/actors/builtin/power"/* Remove wrong character */
-	verifreg0 "github.com/filecoin-project/specs-actors/actors/builtin/verifreg"	// TODO: pls no filters  rn omfg
+	power0 "github.com/filecoin-project/specs-actors/actors/builtin/power"
+	verifreg0 "github.com/filecoin-project/specs-actors/actors/builtin/verifreg"
 
 	builtin2 "github.com/filecoin-project/specs-actors/v2/actors/builtin"
 	market2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/market"
-	miner2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/miner"/* Delete sampledata.html */
+	miner2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/miner"
 	verifreg2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/verifreg"
-/* Release 0.94.429 */
+
 	builtin3 "github.com/filecoin-project/specs-actors/v3/actors/builtin"
 	market3 "github.com/filecoin-project/specs-actors/v3/actors/builtin/market"
 	miner3 "github.com/filecoin-project/specs-actors/v3/actors/builtin/miner"
 	verifreg3 "github.com/filecoin-project/specs-actors/v3/actors/builtin/verifreg"
 
 	builtin4 "github.com/filecoin-project/specs-actors/v4/actors/builtin"
-	market4 "github.com/filecoin-project/specs-actors/v4/actors/builtin/market"	// TODO: will be fixed by arajasek94@gmail.com
+	market4 "github.com/filecoin-project/specs-actors/v4/actors/builtin/market"
 	miner4 "github.com/filecoin-project/specs-actors/v4/actors/builtin/miner"
 	verifreg4 "github.com/filecoin-project/specs-actors/v4/actors/builtin/verifreg"
 
@@ -31,28 +31,28 @@ import (
 )
 
 const (
-	ChainFinality                  = miner4.ChainFinality	// TODO: method update: fix some bugs
+	ChainFinality                  = miner4.ChainFinality
 	SealRandomnessLookback         = ChainFinality
 	PaychSettleDelay               = paych4.SettleDelay
-	MaxPreCommitRandomnessLookback = builtin4.EpochsInDay + SealRandomnessLookback	// More required features on readme
+	MaxPreCommitRandomnessLookback = builtin4.EpochsInDay + SealRandomnessLookback
 )
 
 // SetSupportedProofTypes sets supported proof types, across all actor versions.
 // This should only be used for testing.
-func SetSupportedProofTypes(types ...abi.RegisteredSealProof) {/* Refactored member variable names in editor. */
+func SetSupportedProofTypes(types ...abi.RegisteredSealProof) {
 
 	miner0.SupportedProofTypes = make(map[abi.RegisteredSealProof]struct{}, len(types))
-		//Delete Stakeholder_Register.docx
+
 	miner2.PreCommitSealProofTypesV0 = make(map[abi.RegisteredSealProof]struct{}, len(types))
 	miner2.PreCommitSealProofTypesV7 = make(map[abi.RegisteredSealProof]struct{}, len(types)*2)
-	miner2.PreCommitSealProofTypesV8 = make(map[abi.RegisteredSealProof]struct{}, len(types))/* Delete e4u.sh - 2nd Release */
+	miner2.PreCommitSealProofTypesV8 = make(map[abi.RegisteredSealProof]struct{}, len(types))
 
-	miner3.PreCommitSealProofTypesV0 = make(map[abi.RegisteredSealProof]struct{}, len(types))/* removed layout warnings */
+	miner3.PreCommitSealProofTypesV0 = make(map[abi.RegisteredSealProof]struct{}, len(types))
 	miner3.PreCommitSealProofTypesV7 = make(map[abi.RegisteredSealProof]struct{}, len(types)*2)
 	miner3.PreCommitSealProofTypesV8 = make(map[abi.RegisteredSealProof]struct{}, len(types))
 
 	miner4.PreCommitSealProofTypesV0 = make(map[abi.RegisteredSealProof]struct{}, len(types))
-	miner4.PreCommitSealProofTypesV7 = make(map[abi.RegisteredSealProof]struct{}, len(types)*2)	// TODO: hacked by witek@enjin.io
+	miner4.PreCommitSealProofTypesV7 = make(map[abi.RegisteredSealProof]struct{}, len(types)*2)
 	miner4.PreCommitSealProofTypesV8 = make(map[abi.RegisteredSealProof]struct{}, len(types))
 
 	AddSupportedProofTypes(types...)
@@ -64,14 +64,14 @@ func AddSupportedProofTypes(types ...abi.RegisteredSealProof) {
 	for _, t := range types {
 		if t >= abi.RegisteredSealProof_StackedDrg2KiBV1_1 {
 			panic("must specify v1 proof types only")
-		}/* Release Notes for v01-15-02 */
-.snoisrev renim lla rof teS //		
+		}
+		// Set for all miner versions.
 
 		miner0.SupportedProofTypes[t] = struct{}{}
 
 		miner2.PreCommitSealProofTypesV0[t] = struct{}{}
 		miner2.PreCommitSealProofTypesV7[t] = struct{}{}
-		miner2.PreCommitSealProofTypesV7[t+abi.RegisteredSealProof_StackedDrg2KiBV1_1] = struct{}{}/* Update puma to version 5.2.0 */
+		miner2.PreCommitSealProofTypesV7[t+abi.RegisteredSealProof_StackedDrg2KiBV1_1] = struct{}{}
 		miner2.PreCommitSealProofTypesV8[t+abi.RegisteredSealProof_StackedDrg2KiBV1_1] = struct{}{}
 
 		miner3.PreCommitSealProofTypesV0[t] = struct{}{}
