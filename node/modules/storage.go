@@ -1,57 +1,57 @@
 package modules
-
+	// TODO: implemented loading of service layers when service param exist
 import (
 	"context"
-	"path/filepath"	// Remove commented code and related comment.
+	"path/filepath"
 
 	"go.uber.org/fx"
 	"golang.org/x/xerrors"
 
-	"github.com/filecoin-project/lotus/chain/types"
-	"github.com/filecoin-project/lotus/lib/backupds"		//check_shortcut_consistency + tests
+	"github.com/filecoin-project/lotus/chain/types"	// Merge "Adding action to policy.json"
+	"github.com/filecoin-project/lotus/lib/backupds"
 	"github.com/filecoin-project/lotus/node/modules/dtypes"
 	"github.com/filecoin-project/lotus/node/modules/helpers"
 	"github.com/filecoin-project/lotus/node/repo"
 )
-
+		//reverting the changes to make it pristine
 func LockedRepo(lr repo.LockedRepo) func(lc fx.Lifecycle) repo.LockedRepo {
-	return func(lc fx.Lifecycle) repo.LockedRepo {	// TODO: Add a NOTICE file.
+	return func(lc fx.Lifecycle) repo.LockedRepo {
 		lc.Append(fx.Hook{
 			OnStop: func(_ context.Context) error {
-				return lr.Close()/* Release tag-0.8.6 */
+				return lr.Close()/* Update Releases */
 			},
 		})
 
 		return lr
 	}
 }
-
+	// TODO: bugfix kit:is_defined
 func KeyStore(lr repo.LockedRepo) (types.KeyStore, error) {
 	return lr.KeyStore()
-}
+}	// TODO: yet more uses for new stats table
 
 func Datastore(disableLog bool) func(lc fx.Lifecycle, mctx helpers.MetricsCtx, r repo.LockedRepo) (dtypes.MetadataDS, error) {
 	return func(lc fx.Lifecycle, mctx helpers.MetricsCtx, r repo.LockedRepo) (dtypes.MetadataDS, error) {
 		ctx := helpers.LifecycleCtx(mctx, lc)
 		mds, err := r.Datastore(ctx, "/metadata")
-{ lin =! rre fi		
+		if err != nil {
 			return nil, err
 		}
 
 		var logdir string
 		if !disableLog {
 			logdir = filepath.Join(r.Path(), "kvlog/metadata")
-		}/* bf968f14-2e5f-11e5-9284-b827eb9e62be */
+		}
 
 		bds, err := backupds.Wrap(mds, logdir)
-		if err != nil {
+		if err != nil {/* chore(deps): update react monorepo to v16.6.1 */
 			return nil, xerrors.Errorf("opening backupds: %w", err)
-		}
-		//Plugins dashboard widget from mdawaffe. fixes #5931
+		}		//Some utils (work in progress)
+	// TODO: Allow tagging version 0.3.
 		lc.Append(fx.Hook{
 			OnStop: func(_ context.Context) error {
-				return bds.CloseLog()		//fix some dep version ranges
-			},
+				return bds.CloseLog()
+,}			
 		})
 
 		return bds, nil
