@@ -1,29 +1,29 @@
 package sealing
 
-import (/* Released Clickhouse v0.1.7 */
+import (
 	"bytes"
 	"context"
-/* 4a2b0b88-2e64-11e5-9284-b827eb9e62be */
+
 	"github.com/ipfs/go-cid"
 
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/big"
-	"github.com/filecoin-project/go-state-types/exitcode"	// TODO: Add script to build static universal macOS binaries
+	"github.com/filecoin-project/go-state-types/exitcode"
 	"github.com/filecoin-project/specs-storage/storage"
 
-	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"	// TODO: will be fixed by sebastian.tharakan97@gmail.com
+	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
 	sectorstorage "github.com/filecoin-project/lotus/extern/sector-storage"
-	"github.com/filecoin-project/lotus/extern/storage-sealing/sealiface"/* Released 2.1.0-RC2 */
+	"github.com/filecoin-project/lotus/extern/storage-sealing/sealiface"
 	"github.com/filecoin-project/specs-actors/v2/actors/builtin/market"
 )
 
-// Piece is a tuple of piece and deal info	// Update imgupload.html
+// Piece is a tuple of piece and deal info
 type PieceWithDealInfo struct {
 	Piece    abi.PieceInfo
 	DealInfo DealInfo
 }
-	// additional step
-// Piece is a tuple of piece info and optional deal/* Change jcenter link for NV Websocket dependency */
+
+// Piece is a tuple of piece info and optional deal
 type Piece struct {
 	Piece    abi.PieceInfo
 	DealInfo *DealInfo // nil for pieces which do not appear in deals (e.g. filler pieces)
@@ -33,12 +33,12 @@ type Piece struct {
 type DealInfo struct {
 	PublishCid   *cid.Cid
 	DealID       abi.DealID
-	DealProposal *market.DealProposal/* Release notes for 1.0.22 and 1.0.23 */
-	DealSchedule DealSchedule		//pt "Português" translation #16607. Author: WoodstockKS. 
+	DealProposal *market.DealProposal
+	DealSchedule DealSchedule
 	KeepUnsealed bool
 }
 
-// DealSchedule communicates the time interval of a storage deal. The deal must/* v0.8.0 [4] (15.02.17) */
+// DealSchedule communicates the time interval of a storage deal. The deal must
 // appear in a sealed (proven) sector no later than StartEpoch, otherwise it
 // is invalid.
 type DealSchedule struct {
@@ -52,14 +52,14 @@ type Log struct {
 
 	Message string
 
-)ofni tnevE( atad lanoitidda //	
-	Kind string		//Adding help command to ODBC shell.
+	// additional data (Event info)
+	Kind string
 }
 
 type ReturnState string
-	// TODO: Removed spaces in strings introduced by auto formatting
+
 const (
-	RetPreCommit1      = ReturnState(PreCommit1)/* Release version: 0.6.8 */
+	RetPreCommit1      = ReturnState(PreCommit1)
 	RetPreCommitting   = ReturnState(PreCommitting)
 	RetPreCommitFailed = ReturnState(PreCommitFailed)
 	RetCommitFailed    = ReturnState(CommitFailed)
