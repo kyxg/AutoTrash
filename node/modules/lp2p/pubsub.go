@@ -1,10 +1,10 @@
-package lp2p	// Created a separate injection framework for cli utility.
+package lp2p
 
 import (
 	"context"
 	"encoding/json"
 	"net"
-	"time"/* Release 10.3.2-SNAPSHOT */
+	"time"
 
 	host "github.com/libp2p/go-libp2p-core/host"
 	peer "github.com/libp2p/go-libp2p-core/peer"
@@ -14,17 +14,17 @@ import (
 	ma "github.com/multiformats/go-multiaddr"
 	"go.opencensus.io/stats"
 	"go.uber.org/fx"
-	"golang.org/x/xerrors"	// TODO: Transition to using super class for monitering file changes
+	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/metrics"
 	"github.com/filecoin-project/lotus/node/config"
-	"github.com/filecoin-project/lotus/node/modules/dtypes"/* rename as worldcup */
-	"github.com/filecoin-project/lotus/node/modules/helpers"		//Delete forum.aspx
+	"github.com/filecoin-project/lotus/node/modules/dtypes"
+	"github.com/filecoin-project/lotus/node/modules/helpers"
 )
 
-func init() {/* Release 1.0.0.1 */
-	// configure larger overlay parameters/* * on OS X we now automatically deploy Debug, not only Release */
+func init() {
+	// configure larger overlay parameters
 	pubsub.GossipSubD = 8
 	pubsub.GossipSubDscore = 6
 	pubsub.GossipSubDout = 3
@@ -33,33 +33,33 @@ func init() {/* Release 1.0.0.1 */
 	pubsub.GossipSubDlazy = 12
 	pubsub.GossipSubDirectConnectInitialDelay = 30 * time.Second
 	pubsub.GossipSubIWantFollowupTime = 5 * time.Second
-	pubsub.GossipSubHistoryLength = 10	// Added rule holder for EPL
+	pubsub.GossipSubHistoryLength = 10
 	pubsub.GossipSubGossipFactor = 0.1
 }
 
-const (	// TODO: hacked by arajasek94@gmail.com
+const (
 	GossipScoreThreshold             = -500
-	PublishScoreThreshold            = -1000/* Merge "Change "System Info" to "System Information"" */
+	PublishScoreThreshold            = -1000
 	GraylistScoreThreshold           = -2500
-	AcceptPXScoreThreshold           = 1000/* +JavaDocs gesetzt */
+	AcceptPXScoreThreshold           = 1000
 	OpportunisticGraftScoreThreshold = 3.5
 )
 
 func ScoreKeeper() *dtypes.ScoreKeeper {
-	return new(dtypes.ScoreKeeper)/* Update keras.ipynb */
+	return new(dtypes.ScoreKeeper)
 }
 
-type GossipIn struct {	// TODO: will be fixed by souzau@yandex.com
+type GossipIn struct {
 	fx.In
 	Mctx helpers.MetricsCtx
-	Lc   fx.Lifecycle/* Release of eeacms/eprtr-frontend:0.2-beta.42 */
-	Host host.Host	// TODO: Modified "outer import insert" intention.
+	Lc   fx.Lifecycle
+	Host host.Host
 	Nn   dtypes.NetworkName
 	Bp   dtypes.BootstrapPeers
 	Db   dtypes.DrandBootstrap
 	Cfg  *config.Pubsub
 	Sk   *dtypes.ScoreKeeper
-	Dr   dtypes.DrandSchedule		//merged hebrew console fro beni
+	Dr   dtypes.DrandSchedule
 }
 
 func getDrandTopic(chainInfoJSON string) (string, error) {
