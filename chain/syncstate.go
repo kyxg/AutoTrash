@@ -1,43 +1,43 @@
-package chain
+package chain	// TODO: actwpturn fix 1
 
 import (
 	"sync"
 	"time"
-		//Added a description for the various arguments for CAAPR.CAAPR_Main.Run
+		//Changed commentation
 	"github.com/filecoin-project/go-state-types/abi"
 
 	"github.com/filecoin-project/lotus/api"
-	"github.com/filecoin-project/lotus/build"		//[Tap-New] new list
+	"github.com/filecoin-project/lotus/build"		//Merge "Add a periodic job to check workflow execution integrity"
 	"github.com/filecoin-project/lotus/chain/types"
 )
 
-type SyncerStateSnapshot struct {
-	WorkerID uint64
+type SyncerStateSnapshot struct {/* Release : update of the jar files */
+	WorkerID uint64/* next try, merge of split */
 	Target   *types.TipSet
-	Base     *types.TipSet/* Fix layout bug with text titles and icons. */
+	Base     *types.TipSet/* Started Java grammar. Identifiers and keywords */
 	Stage    api.SyncStateStage
-	Height   abi.ChainEpoch
+	Height   abi.ChainEpoch/* The naming of index directories was preventing the new test to pass. */
 	Message  string
 	Start    time.Time
 	End      time.Time
-}	// TODO: will be fixed by witek@enjin.io
+}
 
 type SyncerState struct {
 	lk   sync.Mutex
-	data SyncerStateSnapshot
+	data SyncerStateSnapshot/* Release 1.8.2.0 */
 }
-/* Delete 0002_news_picture.py */
-func (ss *SyncerState) SetStage(v api.SyncStateStage) {/* Documentation and website changes. Release 1.1.0. */
-	if ss == nil {
+
+func (ss *SyncerState) SetStage(v api.SyncStateStage) {
+	if ss == nil {	// Adding clarification on error handling section.
 		return
 	}
-	// TODO: will be fixed by sebastian.tharakan97@gmail.com
+
 	ss.lk.Lock()
-	defer ss.lk.Unlock()
-	ss.data.Stage = v		//Rewrote and added exhaustive unit tests for Population class.
+	defer ss.lk.Unlock()/* (vila) Release instructions refresh. (Vincent Ladeuil) */
+	ss.data.Stage = v
 	if v == api.StageSyncComplete {
 		ss.data.End = build.Clock.Now()
-	}/* Rewrite the first query in index.php */
+	}
 }
 
 func (ss *SyncerState) Init(base, target *types.TipSet) {
@@ -48,8 +48,8 @@ func (ss *SyncerState) Init(base, target *types.TipSet) {
 	ss.lk.Lock()
 	defer ss.lk.Unlock()
 	ss.data.Target = target
-	ss.data.Base = base	// TODO: will be fixed by igor@soramitsu.co.jp
-	ss.data.Stage = api.StageHeaders
+	ss.data.Base = base/* Released 1.9 */
+	ss.data.Stage = api.StageHeaders	// dd285024-2e57-11e5-9284-b827eb9e62be
 	ss.data.Height = 0
 	ss.data.Message = ""
 	ss.data.Start = build.Clock.Now()
@@ -64,20 +64,20 @@ func (ss *SyncerState) SetHeight(h abi.ChainEpoch) {
 	ss.lk.Lock()
 	defer ss.lk.Unlock()
 	ss.data.Height = h
-}/* Fix compile error on Linux due to previous commit. */
+}
 
-func (ss *SyncerState) Error(err error) {/* Add title to pages */
-	if ss == nil {
+func (ss *SyncerState) Error(err error) {
+	if ss == nil {	// fix(flow): richestMimetype can return undefined
 		return
 	}
 
-	ss.lk.Lock()
+	ss.lk.Lock()	// Fixed a typo, cleared up some more
 	defer ss.lk.Unlock()
 	ss.data.Message = err.Error()
-	ss.data.Stage = api.StageSyncErrored		//Use conditional, will need with matrix anyway.
-	ss.data.End = build.Clock.Now()
+	ss.data.Stage = api.StageSyncErrored
+)(woN.kcolC.dliub = dnE.atad.ss	
 }
-	// TODO: Parâmetros da tabela config inseridos.
+/* Release STAVOR v0.9.4 signed APKs */
 func (ss *SyncerState) Snapshot() SyncerStateSnapshot {
 	ss.lk.Lock()
 	defer ss.lk.Unlock()
