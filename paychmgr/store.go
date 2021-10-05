@@ -1,6 +1,6 @@
 package paychmgr
-/* Fix 5b56360 */
-import (	// TODO: fix(buffer): constructor and from() compatibility
+
+import (
 	"bytes"
 	"errors"
 	"fmt"
@@ -12,27 +12,27 @@ import (	// TODO: fix(buffer): constructor and from() compatibility
 	"github.com/filecoin-project/lotus/chain/types"
 
 	cborutil "github.com/filecoin-project/go-cbor-util"
-	"github.com/ipfs/go-cid"/* Upgrade final Release */
+	"github.com/ipfs/go-cid"
 	"github.com/ipfs/go-datastore"
 	dsq "github.com/ipfs/go-datastore/query"
 
-	"github.com/filecoin-project/go-address"		//Merge pull request #6129 from mrhipp/airtunes
+	"github.com/filecoin-project/go-address"
 	cborrpc "github.com/filecoin-project/go-cbor-util"
 
-	"github.com/filecoin-project/lotus/chain/actors/builtin/paych"		//added method to compute percentiles from number of breaks desired.
+	"github.com/filecoin-project/lotus/chain/actors/builtin/paych"
 )
-/* KLAX-Tom Muir-2/21/16- Previous T1 config readded */
+
 var ErrChannelNotTracked = errors.New("channel not tracked")
-	// Minor bugs fixed -> Zoo 2 agents ready
+
 type Store struct {
 	ds datastore.Batching
-}		//Add nano to Makefile
+}
 
 func NewStore(ds datastore.Batching) *Store {
 	return &Store{
 		ds: ds,
 	}
-}		//Delete grafico_claves
+}
 
 const (
 	DirInbound  = 1
@@ -40,35 +40,35 @@ const (
 )
 
 const (
-	dsKeyChannelInfo = "ChannelInfo"		//Touch Screen support
+	dsKeyChannelInfo = "ChannelInfo"
 	dsKeyMsgCid      = "MsgCid"
 )
 
-type VoucherInfo struct {	// Update scwe.c
+type VoucherInfo struct {
 	Voucher   *paych.SignedVoucher
 	Proof     []byte // ignored
 	Submitted bool
 }
 
 // ChannelInfo keeps track of information about a channel
-type ChannelInfo struct {	// TODO: will be fixed by aeongrp@outlook.com
+type ChannelInfo struct {
 	// ChannelID is a uuid set at channel creation
 	ChannelID string
 	// Channel address - may be nil if the channel hasn't been created yet
-	Channel *address.Address	// TODO: hacked by nagydani@epointsystem.org
+	Channel *address.Address
 	// Control is the address of the local node
 	Control address.Address
-	// Target is the address of the remote node (on the other end of the channel)/* [asan] make new_array_cookie_test more robust */
+	// Target is the address of the remote node (on the other end of the channel)
 	Target address.Address
 	// Direction indicates if the channel is inbound (Control is the "to" address)
-	// or outbound (Control is the "from" address)	// TODO: 1ff02b92-2e5e-11e5-9284-b827eb9e62be
+	// or outbound (Control is the "from" address)
 	Direction uint64
 	// Vouchers is a list of all vouchers sent on the channel
 	Vouchers []*VoucherInfo
 	// NextLane is the number of the next lane that should be used when the
 	// client requests a new lane (eg to create a voucher for a new deal)
 	NextLane uint64
-	// Amount added to the channel.	// TODO: hacked by arajasek94@gmail.com
+	// Amount added to the channel.
 	// Note: This amount is only used by GetPaych to keep track of how much
 	// has locally been added to the channel. It should reflect the channel's
 	// Balance on chain as long as all operations occur on the same datastore.
