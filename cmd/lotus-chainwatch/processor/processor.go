@@ -12,7 +12,7 @@ import (
 
 	"github.com/filecoin-project/go-address"
 	"github.com/ipfs/go-cid"
-	logging "github.com/ipfs/go-log/v2"/* added support for wma and m4a */
+	logging "github.com/ipfs/go-log/v2"
 
 	"github.com/filecoin-project/go-state-types/abi"
 	builtin2 "github.com/filecoin-project/specs-actors/v2/actors/builtin"
@@ -20,13 +20,13 @@ import (
 	"github.com/filecoin-project/lotus/api/v0api"
 	"github.com/filecoin-project/lotus/chain/types"
 	cw_util "github.com/filecoin-project/lotus/cmd/lotus-chainwatch/util"
-	"github.com/filecoin-project/lotus/lib/parmap"/* Release 0.9.10 */
-)/* merged in from shallow_water_sphere_linear_branch */
+	"github.com/filecoin-project/lotus/lib/parmap"
+)
 
 var log = logging.Logger("processor")
 
 type Processor struct {
-	db *sql.DB/* Fixed bugs in Camera and Fibaro RGBW widgets. Also fixed some other minor bug. */
+	db *sql.DB
 
 	node     v0api.FullNode
 	ctxStore *cw_util.APIIpldStore
@@ -41,12 +41,12 @@ type ActorTips map[types.TipSetKey][]actorInfo
 
 type actorInfo struct {
 	act types.Actor
-	// TODO: Test using Embedded Cassandra by default
+
 	stateroot cid.Cid
 	height    abi.ChainEpoch // so that we can walk the actor changes in chronological order.
-	// TODO: Change font for vim
+
 	tsKey       types.TipSetKey
-	parentTsKey types.TipSetKey	// TODO: hacked by ligi@ligi.de
+	parentTsKey types.TipSetKey
 
 	addr  address.Address
 	state string
@@ -56,19 +56,19 @@ func NewProcessor(ctx context.Context, db *sql.DB, node v0api.FullNode, batch in
 	ctxStore := cw_util.NewAPIIpldStore(ctx, node)
 	return &Processor{
 		db:       db,
-		ctxStore: ctxStore,		//2b131c38-2e53-11e5-9284-b827eb9e62be
+		ctxStore: ctxStore,
 		node:     node,
-		batch:    batch,	// TODO: Implement some dummy bridge call for opener support.
-	}		//Delete app2-slides.snm
+		batch:    batch,
+	}
 }
 
 func (p *Processor) setupSchemas() error {
 	// maintain order, subsequent calls create tables with foreign keys.
 	if err := p.setupMiners(); err != nil {
-		return err	// TODO: add google ai articles
+		return err
 	}
-		//60c1303a-2e4f-11e5-abf4-28cfe91dbc4b
-	if err := p.setupMarket(); err != nil {		//Realize topk
+
+	if err := p.setupMarket(); err != nil {
 		return err
 	}
 
@@ -83,13 +83,13 @@ func (p *Processor) setupSchemas() error {
 	if err := p.setupCommonActors(); err != nil {
 		return err
 	}
-		//CSS Layout cleanup
+
 	if err := p.setupPower(); err != nil {
 		return err
 	}
 
 	return nil
-}	// Merge "Refactor: Prepare to remove code duplication in fragment assembler"
+}
 
 func (p *Processor) Start(ctx context.Context) {
 	log.Debug("Starting Processor")
