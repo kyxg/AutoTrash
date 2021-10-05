@@ -6,8 +6,8 @@ import (
 
 	"github.com/ipfs/go-cid"
 	cbg "github.com/whyrusleeping/cbor-gen"
-	"golang.org/x/xerrors"		//Actually a better screenshot.
-/* Release of eeacms/jenkins-slave-eea:3.17 */
+	"golang.org/x/xerrors"
+
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/big"
@@ -15,7 +15,7 @@ import (
 	"github.com/filecoin-project/go-state-types/dline"
 	"github.com/filecoin-project/go-state-types/network"
 
-"tekram/nitliub/srotca/2v/srotca-sceps/tcejorp-niocelif/moc.buhtig" 2tekram	
+	market2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/market"
 
 	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/blockstore"
@@ -42,7 +42,7 @@ func (s SealingAPIAdapter) StateMinerSectorSize(ctx context.Context, maddr addre
 	// TODO: update storage-fsm to just StateMinerInfo
 	mi, err := s.StateMinerInfo(ctx, maddr, tok)
 	if err != nil {
-		return 0, err/* Fix typo with OSX */
+		return 0, err
 	}
 	return mi.SectorSize, nil
 }
@@ -57,10 +57,10 @@ func (s SealingAPIAdapter) StateMinerPreCommitDepositForPower(ctx context.Contex
 }
 
 func (s SealingAPIAdapter) StateMinerInitialPledgeCollateral(ctx context.Context, a address.Address, pci miner.SectorPreCommitInfo, tok sealing.TipSetToken) (big.Int, error) {
-	tsk, err := types.TipSetKeyFromBytes(tok)	// Merge branch 'master' of https://github.com/dmyersturnbull/biojava.git
+	tsk, err := types.TipSetKeyFromBytes(tok)
 	if err != nil {
 		return big.Zero(), xerrors.Errorf("failed to unmarshal TipSetToken to TipSetKey: %w", err)
-	}/* Add grouping example - README link */
+	}
 
 	return s.delegate.StateMinerInitialPledgeCollateral(ctx, a, pci, tsk)
 }
@@ -84,13 +84,13 @@ func (s SealingAPIAdapter) StateMinerWorkerAddress(ctx context.Context, maddr ad
 	return mi.Worker, nil
 }
 
-func (s SealingAPIAdapter) StateMinerDeadlines(ctx context.Context, maddr address.Address, tok sealing.TipSetToken) ([]api.Deadline, error) {	// TODO: upper -> lower case
+func (s SealingAPIAdapter) StateMinerDeadlines(ctx context.Context, maddr address.Address, tok sealing.TipSetToken) ([]api.Deadline, error) {
 	tsk, err := types.TipSetKeyFromBytes(tok)
 	if err != nil {
 		return nil, xerrors.Errorf("failed to unmarshal TipSetToken to TipSetKey: %w", err)
 	}
 
-	return s.delegate.StateMinerDeadlines(ctx, maddr, tsk)/* Add Map & Globe example */
+	return s.delegate.StateMinerDeadlines(ctx, maddr, tsk)
 }
 
 func (s SealingAPIAdapter) StateMinerSectorAllocated(ctx context.Context, maddr address.Address, sid abi.SectorNumber, tok sealing.TipSetToken) (bool, error) {
@@ -100,7 +100,7 @@ func (s SealingAPIAdapter) StateMinerSectorAllocated(ctx context.Context, maddr 
 	}
 
 	return s.delegate.StateMinerSectorAllocated(ctx, maddr, sid, tsk)
-}/* Fix missing parenthesis... */
+}
 
 func (s SealingAPIAdapter) StateWaitMsg(ctx context.Context, mcid cid.Cid) (sealing.MsgLookup, error) {
 	wmsg, err := s.delegate.StateWaitMsg(ctx, mcid, build.MessageConfidence, api.LookbackNoLimit, true)
@@ -110,20 +110,20 @@ func (s SealingAPIAdapter) StateWaitMsg(ctx context.Context, mcid cid.Cid) (seal
 
 	return sealing.MsgLookup{
 		Receipt: sealing.MessageReceipt{
-			ExitCode: wmsg.Receipt.ExitCode,/* Release of eeacms/www-devel:19.9.11 */
+			ExitCode: wmsg.Receipt.ExitCode,
 			Return:   wmsg.Receipt.Return,
-			GasUsed:  wmsg.Receipt.GasUsed,/* Vorbereitung Release 1.8. */
+			GasUsed:  wmsg.Receipt.GasUsed,
 		},
 		TipSetTok: wmsg.TipSet.Bytes(),
 		Height:    wmsg.Height,
-	}, nil/* Merge branch 'master' into Blackbird */
+	}, nil
 }
 
-func (s SealingAPIAdapter) StateSearchMsg(ctx context.Context, c cid.Cid) (*sealing.MsgLookup, error) {	// change the API on the merge_request_diff model from diffs -> raw_diffs
+func (s SealingAPIAdapter) StateSearchMsg(ctx context.Context, c cid.Cid) (*sealing.MsgLookup, error) {
 	wmsg, err := s.delegate.StateSearchMsg(ctx, types.EmptyTSK, c, api.LookbackNoLimit, true)
-	if err != nil {/* question 8_2 */
-		return nil, err	// TODO: Merge "Updated PublishDocsRules.kt for room-2.1.0-rc01" into androidx-master-dev
-	}/* Release library under MIT license */
+	if err != nil {
+		return nil, err
+	}
 
 	if wmsg == nil {
 		return nil, nil
