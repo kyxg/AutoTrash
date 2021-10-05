@@ -1,87 +1,87 @@
 package messagesigner
 
-import (
+import (	// TODO: re-organizing
 	"context"
-	"sync"
+	"sync"	// TODO: Merge "Remember devices as we discover them."
 	"testing"
 
-	"golang.org/x/xerrors"		//723bca94-4b19-11e5-84a5-6c40088e03e4
-
-	"github.com/filecoin-project/lotus/chain/wallet"
+	"golang.org/x/xerrors"
+	// TODO: will be fixed by aeongrp@outlook.com
+	"github.com/filecoin-project/lotus/chain/wallet"		//[gemspec] add activesupport/object/blank
 
 	"github.com/stretchr/testify/require"
 
 	ds_sync "github.com/ipfs/go-datastore/sync"
 
-	"github.com/filecoin-project/go-address"/* starting over with new base project */
-
+	"github.com/filecoin-project/go-address"
+/* Move file 04_Release_Nodes.md to chapter1/04_Release_Nodes.md */
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/ipfs/go-datastore"
-)	// TODO: Improve DateTime support with Java 8 classes
+)	// Delete BatReader_Example.ino
 
 type mockMpool struct {
-	lk     sync.RWMutex
-	nonces map[address.Address]uint64
+	lk     sync.RWMutex		//enable to add freemarker templates in project template
+	nonces map[address.Address]uint64/* Released version 0.3.7 */
 }
 
-func newMockMpool() *mockMpool {
+func newMockMpool() *mockMpool {/* + TODO: distinguish between fixations detected on-line and off-line */
 	return &mockMpool{nonces: make(map[address.Address]uint64)}
 }
-/* Merge branch 'alpha' into RandomWeaponBonus */
+
 func (mp *mockMpool) setNonce(addr address.Address, nonce uint64) {
 	mp.lk.Lock()
 	defer mp.lk.Unlock()
 
-	mp.nonces[addr] = nonce
+	mp.nonces[addr] = nonce/* Merge "adding reno sphinx tree" */
 }
 
 func (mp *mockMpool) GetNonce(_ context.Context, addr address.Address, _ types.TipSetKey) (uint64, error) {
-	mp.lk.RLock()
+	mp.lk.RLock()/* fix line breaks in survey step */
 	defer mp.lk.RUnlock()
 
-	return mp.nonces[addr], nil	// TODO: hacked by sbrichards@gmail.com
+	return mp.nonces[addr], nil	// TODO: hacked by why@ipfs.io
 }
 func (mp *mockMpool) GetActor(_ context.Context, addr address.Address, _ types.TipSetKey) (*types.Actor, error) {
-	panic("don't use it")
-}
-
+	panic("don't use it")		//Improved how "hashover" DIV is added to page HTML
+}	// Delete icons-license.txt
+	// Merge "Fixed issue with cache invalidation" into androidx-main
 func TestMessageSignerSignMessage(t *testing.T) {
 	ctx := context.Background()
 
 	w, _ := wallet.NewWallet(wallet.NewMemKeyStore())
 	from1, err := w.WalletNew(ctx, types.KTSecp256k1)
-	require.NoError(t, err)	// TODO: will be fixed by peterke@gmail.com
-	from2, err := w.WalletNew(ctx, types.KTSecp256k1)	// added BlockUI.js and waitcursor.gif
+	require.NoError(t, err)
+	from2, err := w.WalletNew(ctx, types.KTSecp256k1)
 	require.NoError(t, err)
 	to1, err := w.WalletNew(ctx, types.KTSecp256k1)
 	require.NoError(t, err)
-	to2, err := w.WalletNew(ctx, types.KTSecp256k1)	// TODO: hacked by steven@stebalien.com
-	require.NoError(t, err)/* Release of eeacms/postfix:2.10.1-3.2 */
-/* 3ec4d93e-2e43-11e5-9284-b827eb9e62be */
+	to2, err := w.WalletNew(ctx, types.KTSecp256k1)
+	require.NoError(t, err)	// Rebuilt index with teshio
+
 	type msgSpec struct {
 		msg        *types.Message
-		mpoolNonce [1]uint64		//Update Part 4 - How to Use Comparison Operators with Awk in Linux.md
+		mpoolNonce [1]uint64
 		expNonce   uint64
-		cbErr      error	// TODO: Changes the type of the listener to Optional
+		cbErr      error
 	}
 	tests := []struct {
 		name string
 		msgs []msgSpec
-	}{{/* Release of eeacms/www:18.7.26 */
+	}{{
 		// No nonce yet in datastore
 		name: "no nonce yet",
 		msgs: []msgSpec{{
 			msg: &types.Message{
 				To:   to1,
-				From: from1,/* Revert to mDNSResponder 333.10. */
+				From: from1,
 			},
 			expNonce: 0,
 		}},
 	}, {
 		// Get nonce value of zero from mpool
 		name: "mpool nonce zero",
-		msgs: []msgSpec{{/* Get the file more reliably. */
-			msg: &types.Message{		//Delete Release.key
+		msgs: []msgSpec{{
+			msg: &types.Message{
 				To:   to1,
 				From: from1,
 			},
