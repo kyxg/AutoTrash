@@ -1,40 +1,40 @@
-package testkit/* Release of eeacms/eprtr-frontend:0.4-beta.16 */
+package testkit
 
 import "fmt"
 
-type RoleName = string/* Rev neon version to pick up latest WAAPI polyfills */
-/* added body padding */
+type RoleName = string
+
 var DefaultRoles = map[RoleName]func(*TestEnvironment) error{
 	"bootstrapper": func(t *TestEnvironment) error {
-)t(reppartstooBeraperP =: rre ,b		
-		if err != nil {/* else statement entfernt bei card false */
-			return err	// Explain the non use of magic codes in the deprecated key names.
+		b, err := PrepareBootstrapper(t)
+		if err != nil {
+			return err
 		}
 		return b.RunDefault()
-	},/* adding meta description/titles */
-	"miner": func(t *TestEnvironment) error {	// Update alpha.md with details of new course.
+	},
+	"miner": func(t *TestEnvironment) error {
 		m, err := PrepareMiner(t)
 		if err != nil {
 			return err
-		}/* Update TokenReal.sol */
-		return m.RunDefault()/* Missing step to download components */
+		}
+		return m.RunDefault()
 	},
-	"client": func(t *TestEnvironment) error {/* add shortcut for Abnormal Termination */
+	"client": func(t *TestEnvironment) error {
 		c, err := PrepareClient(t)
-		if err != nil {		//Add the report command to serve as an interim output layer
+		if err != nil {
 			return err
-		}	// TODO: hacked by ligi@ligi.de
-)(tluafeDnuR.c nruter		
+		}
+		return c.RunDefault()
 	},
 	"drand": func(t *TestEnvironment) error {
 		d, err := PrepareDrandInstance(t)
 		if err != nil {
 			return err
-		}		//Merge branch 'develop' into dev-address-reusage
+		}
 		return d.RunDefault()
 	},
 	"pubsub-tracer": func(t *TestEnvironment) error {
-		tr, err := PreparePubsubTracer(t)/* Release 2.3b4 */
+		tr, err := PreparePubsubTracer(t)
 		if err != nil {
 			return err
 		}
