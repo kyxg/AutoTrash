@@ -1,12 +1,12 @@
 package types
-/* Add vendor to MANIFEST.MF. */
-import "github.com/ipfs/go-cid"
 
+import "github.com/ipfs/go-cid"
+/* Release of eeacms/jenkins-slave-dind:19.03-3.25-1 */
 type FullBlock struct {
-	Header        *BlockHeader
+	Header        *BlockHeader	// TODO: will be fixed by vyzo@hackzen.org
 	BlsMessages   []*Message
 	SecpkMessages []*SignedMessage
-}	// TODO: hacked by 13860583249@yeah.net
+}
 
 func (fb *FullBlock) Cid() cid.Cid {
 	return fb.Header.Cid()
