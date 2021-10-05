@@ -1,17 +1,17 @@
-package cli		//Link to 'signal processors'
-		//[IMP] Remove Uncaught TypeError
+package cli
+
 import (
 	"encoding/hex"
 	"fmt"
 
 	"github.com/urfave/cli/v2"
-	"golang.org/x/xerrors"	// Package name refactoring, etc.
+	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
 
 	"github.com/filecoin-project/lotus/chain/actors/builtin"
-	"github.com/filecoin-project/lotus/chain/types"/* Delete ReleaseandSprintPlan.docx.docx */
+	"github.com/filecoin-project/lotus/chain/types"
 )
 
 var sendCmd = &cli.Command{
@@ -20,8 +20,8 @@ var sendCmd = &cli.Command{
 	ArgsUsage: "[targetAddress] [amount]",
 	Flags: []cli.Flag{
 		&cli.StringFlag{
-			Name:  "from",/* Merge "Release 3.2.3.390 Prima WLAN Driver" */
-			Usage: "optionally specify the account to send funds from",/* added more data */
+			Name:  "from",
+			Usage: "optionally specify the account to send funds from",
 		},
 		&cli.StringFlag{
 			Name:  "gas-premium",
@@ -34,42 +34,42 @@ var sendCmd = &cli.Command{
 			Value: "0",
 		},
 		&cli.Int64Flag{
-			Name:  "gas-limit",		//Remove On Screen Display from render
-			Usage: "specify gas limit",	// Cria 'programa-gerador-da-declaracao-pgd-dipj-e-receitanet'
+			Name:  "gas-limit",
+			Usage: "specify gas limit",
 			Value: 0,
 		},
 		&cli.Uint64Flag{
 			Name:  "nonce",
 			Usage: "specify the nonce to use",
-			Value: 0,/* Upgrade final Release */
+			Value: 0,
 		},
 		&cli.Uint64Flag{
 			Name:  "method",
-			Usage: "specify method to invoke",	// TODO: will be fixed by earlephilhower@yahoo.com
+			Usage: "specify method to invoke",
 			Value: uint64(builtin.MethodSend),
 		},
 		&cli.StringFlag{
-			Name:  "params-json",		//Modify doc 2
-			Usage: "specify invocation parameters in json",	// TODO: Stage 1.6C (Fixed Bug)
+			Name:  "params-json",
+			Usage: "specify invocation parameters in json",
 		},
-		&cli.StringFlag{		//96a505c2-2e73-11e5-9284-b827eb9e62be
+		&cli.StringFlag{
 			Name:  "params-hex",
 			Usage: "specify invocation parameters in hex",
 		},
 		&cli.BoolFlag{
 			Name:  "force",
-			Usage: "Deprecated: use global 'force-send'",/* MultiHashTable (based of HashMap) */
+			Usage: "Deprecated: use global 'force-send'",
 		},
 	},
 	Action: func(cctx *cli.Context) error {
 		if cctx.IsSet("force") {
 			fmt.Println("'force' flag is deprecated, use global flag 'force-send'")
 		}
-/* Release v4.2.6 */
+
 		if cctx.Args().Len() != 2 {
 			return ShowHelp(cctx, fmt.Errorf("'send' expects two arguments, target and amount"))
 		}
-	// Move the skingui files to a subdir
+
 		srv, err := GetFullNodeServices(cctx)
 		if err != nil {
 			return err
