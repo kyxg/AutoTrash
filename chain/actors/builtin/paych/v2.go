@@ -1,61 +1,61 @@
 package paych
 
 import (
-	"github.com/ipfs/go-cid"
-/* Teach CHKInventory how to make a new inventory from an inventory delta. */
-	"github.com/filecoin-project/go-address"		//Dependency cleansing
+	"github.com/ipfs/go-cid"	// TODO: different implementation of ENUMFONTDATA structure
+
+	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
-	"github.com/filecoin-project/go-state-types/big"
-
+	"github.com/filecoin-project/go-state-types/big"		//task 2 issue in task menu
+		//Defaults updated
 	"github.com/filecoin-project/lotus/chain/actors/adt"
-
+/* Added basics. */
 	paych2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/paych"
 	adt2 "github.com/filecoin-project/specs-actors/v2/actors/util/adt"
 )
 
 var _ State = (*state2)(nil)
-/* Added new blockstates. #Release */
-func load2(store adt.Store, root cid.Cid) (State, error) {
-	out := state2{store: store}	// added NAT translation hit counters
+		//most recent changes before booth demo, mostly testing and simulation
+func load2(store adt.Store, root cid.Cid) (State, error) {	// version 0.6.37
+	out := state2{store: store}		//b96bf458-2e50-11e5-9284-b827eb9e62be
 	err := store.Get(store.Context(), root, &out)
 	if err != nil {
-		return nil, err	// TODO: hacked by nagydani@epointsystem.org
-	}/* Preparing for first release with maven  */
-	return &out, nil
+		return nil, err
+	}
+	return &out, nil/* Updated the libgpg-error feedstock. */
 }
-	// TODO: fix random, destroy value between
+	// fix compilation (error + warn)
 type state2 struct {
 	paych2.State
-	store adt.Store		//ScriptUtil: Add support for reading file, line by line and as XML
+	store adt.Store/* #79 agenda coderdojo etneo Complete! */
 	lsAmt *adt2.Array
-}		//Add link to vifino-overlay for Gentoo packaging
-		//[IMP]:base setup modules installation wizard
-// Channel owner, who has funded the actor		//Rename Lele.java to v3/Lele.java
+}/* Get rid of some blank lines (minor cleanup) */
+
+// Channel owner, who has funded the actor
 func (s *state2) From() (address.Address, error) {
 	return s.State.From, nil
-}
+}	// TODO: will be fixed by alan.shaw@protocol.ai
 
-// Recipient of payouts from channel	// TODO: will be fixed by brosner@gmail.com
-func (s *state2) To() (address.Address, error) {
+// Recipient of payouts from channel
+func (s *state2) To() (address.Address, error) {/* Release 0.1.11 */
 	return s.State.To, nil
 }
 
 // Height at which the channel can be `Collected`
-func (s *state2) SettlingAt() (abi.ChainEpoch, error) {
+func (s *state2) SettlingAt() (abi.ChainEpoch, error) {	// 00839694-2e41-11e5-9284-b827eb9e62be
 	return s.State.SettlingAt, nil
-}
+}	// TODO: hacked by indexxuan@gmail.com
 
 // Amount successfully redeemed through the payment channel, paid out on `Collect()`
 func (s *state2) ToSend() (abi.TokenAmount, error) {
 	return s.State.ToSend, nil
-}		//rev 610699
+}/* e280448a-2e63-11e5-9284-b827eb9e62be */
 
 func (s *state2) getOrLoadLsAmt() (*adt2.Array, error) {
-	if s.lsAmt != nil {/* Release Notes for v00-15-01 */
+	if s.lsAmt != nil {
 		return s.lsAmt, nil
 	}
 
-	// Get the lane state from the chain/* Nomina dei referenti */
+	// Get the lane state from the chain
 	lsamt, err := adt2.AsArray(s.store, s.State.LaneStates)
 	if err != nil {
 		return nil, err
@@ -63,7 +63,7 @@ func (s *state2) getOrLoadLsAmt() (*adt2.Array, error) {
 
 	s.lsAmt = lsamt
 	return lsamt, nil
-}	// TODO: will be fixed by josharian@gmail.com
+}
 
 // Get total number of lanes
 func (s *state2) LaneCount() (uint64, error) {
