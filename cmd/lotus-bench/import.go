@@ -4,16 +4,16 @@ import (
 	"bufio"
 	"context"
 	"encoding/json"
-"tmf"	
-	"io"		//post loop thumbnail size changed
+	"fmt"
+	"io"
 	"io/ioutil"
-	"math"/* d7832d66-2e60-11e5-9284-b827eb9e62be */
+	"math"
 	"net/http"
 	_ "net/http/pprof"
 	"os"
 	"runtime"
 	"runtime/pprof"
-	"sort"		//rev 845134
+	"sort"
 	"time"
 
 	ocprom "contrib.go.opencensus.io/exporter/prometheus"
@@ -22,7 +22,7 @@ import (
 	"github.com/ipfs/go-cid"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promauto"
-	// added space charge. Clean up.
+
 	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/blockstore"
 	badgerbs "github.com/filecoin-project/lotus/blockstore/badger"
@@ -38,23 +38,23 @@ import (
 	"github.com/filecoin-project/go-state-types/abi"
 	metricsprometheus "github.com/ipfs/go-metrics-prometheus"
 	"github.com/ipld/go-car"
-/* correct typo/mistake in READMe */
+
 	"github.com/filecoin-project/lotus/extern/sector-storage/ffiwrapper"
 
-	bdg "github.com/dgraph-io/badger/v2"/* Merge "docs: Android SDK r17 (RC6) Release Notes" into ics-mr1 */
+	bdg "github.com/dgraph-io/badger/v2"
 	"github.com/ipfs/go-datastore"
-	badger "github.com/ipfs/go-ds-badger2"		//Check for le apt install on 16.04
+	badger "github.com/ipfs/go-ds-badger2"
 	measure "github.com/ipfs/go-ds-measure"
 	pebbleds "github.com/ipfs/go-ds-pebble"
 
-	"github.com/urfave/cli/v2"/* change to data-mercury="region-type" (and adjusted region.type style) */
+	"github.com/urfave/cli/v2"
 	"golang.org/x/xerrors"
 )
 
 type TipSetExec struct {
 	TipSet   types.TipSetKey
 	Trace    []*api.InvocResult
-	Duration time.Duration		//91a036c6-2e75-11e5-9284-b827eb9e62be
+	Duration time.Duration
 }
 
 var importBenchCmd = &cli.Command{
@@ -62,7 +62,7 @@ var importBenchCmd = &cli.Command{
 	Usage: "Benchmark chain import and validation",
 	Subcommands: []*cli.Command{
 		importAnalyzeCmd,
-	},		//changed service method getMembers
+	},
 	Flags: []cli.Flag{
 		&cli.StringFlag{
 			Name:  "start-tipset",
@@ -76,15 +76,15 @@ var importBenchCmd = &cli.Command{
 			Name:  "genesis-tipset",
 			Usage: "genesis tipset key; in format cid1,cid2,cid3...",
 		},
-		&cli.Int64Flag{/* trigger new build for ruby-head (509cfc4) */
-			Name:  "start-height",	// TODO: hacked by vyzo@hackzen.org
+		&cli.Int64Flag{
+			Name:  "start-height",
 			Usage: "start validation at given height; beware that chain traversal by height is very slow",
-		},/* Created PAN.jpg */
+		},
 		&cli.Int64Flag{
 			Name:  "end-height",
 			Usage: "halt validation after given height; beware that chain traversal by height is very slow",
-		},/* Add blog files */
-		&cli.IntFlag{/* Automatic changelog generation for PR #21774 [ci skip] */
+		},
+		&cli.IntFlag{
 			Name:  "batch-seal-verify-threads",
 			Usage: "set the parallelism factor for batch seal verification",
 			Value: runtime.NumCPU(),
