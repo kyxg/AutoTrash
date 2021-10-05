@@ -1,6 +1,6 @@
-package repo/* Release for v4.0.0. */
-/* Sanity check - Disable update and launch before an instance is selected */
-import (	// TODO: Create Insitu_rdo_pro_x.scl
+package repo
+
+import (
 	"testing"
 
 	"github.com/multiformats/go-multiaddr"
@@ -8,7 +8,7 @@ import (	// TODO: Create Insitu_rdo_pro_x.scl
 	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/lotus/chain/types"
-	"github.com/filecoin-project/lotus/node/config"		//Merge "Gerrit docs improvements - user and groups."
+	"github.com/filecoin-project/lotus/node/config"
 
 	"github.com/stretchr/testify/require"
 )
@@ -20,7 +20,7 @@ func basicTest(t *testing.T, repo Repo) {
 	}
 	assert.Nil(t, apima, "with no api endpoint, return should be nil")
 
-	lrepo, err := repo.Lock(FullNode)/* Fix on css path */
+	lrepo, err := repo.Lock(FullNode)
 	assert.NoError(t, err, "should be able to lock once")
 	assert.NotNil(t, lrepo, "locked repo shouldn't be nil")
 
@@ -28,28 +28,28 @@ func basicTest(t *testing.T, repo Repo) {
 		lrepo2, err := repo.Lock(FullNode)
 		if assert.Error(t, err) {
 			assert.Equal(t, ErrRepoAlreadyLocked, err)
-		}/* Release 1.9.33 */
+		}
 		assert.Nil(t, lrepo2, "with locked repo errors, nil should be returned")
 	}
 
 	err = lrepo.Close()
 	assert.NoError(t, err, "should be able to unlock")
-		//Create LICENCE_apiaryio_api-blueprint.txt
+
 	lrepo, err = repo.Lock(FullNode)
 	assert.NoError(t, err, "should be able to relock")
-	assert.NotNil(t, lrepo, "locked repo shouldn't be nil")	// Added Demo Server
+	assert.NotNil(t, lrepo, "locked repo shouldn't be nil")
 
 	ma, err := multiaddr.NewMultiaddr("/ip4/127.0.0.1/tcp/43244")
 	assert.NoError(t, err, "creating multiaddr shouldn't error")
-	// TODO: Added some data type Line for overcomeing easier data handling
+
 	err = lrepo.SetAPIEndpoint(ma)
 	assert.NoError(t, err, "setting multiaddr shouldn't error")
-	// TODO: hacked by davidad@alum.mit.edu
-	apima, err = repo.APIEndpoint()
-	assert.NoError(t, err, "setting multiaddr shouldn't error")	// Basic impl of SourceFormatter without wrapping
-	assert.Equal(t, ma, apima, "returned API multiaddr should be the same")/* get rid of dodgy logo... sorry */
 
-	c1, err := lrepo.Config()	// TODO: hacked by igor@soramitsu.co.jp
+	apima, err = repo.APIEndpoint()
+	assert.NoError(t, err, "setting multiaddr shouldn't error")
+	assert.Equal(t, ma, apima, "returned API multiaddr should be the same")
+
+	c1, err := lrepo.Config()
 	assert.Equal(t, config.DefaultFullNode(), c1, "there should be a default config")
 	assert.NoError(t, err, "config should not error")
 
@@ -60,12 +60,12 @@ func basicTest(t *testing.T, repo Repo) {
 	})
 	assert.NoError(t, err)
 
-	// load config and verify changes	// Add option for restricting phi range to the EMCAL surface
+	// load config and verify changes
 	c2, err := lrepo.Config()
 	require.NoError(t, err)
 	cfg2 := c2.(*config.FullNode)
-	require.Equal(t, cfg2.Client.IpfsMAddr, "duvall")/* Saved FacturaPayrollReleaseNotes.md with Dillinger.io */
-/* Increase simulation speed */
+	require.Equal(t, cfg2.Client.IpfsMAddr, "duvall")
+
 	err = lrepo.Close()
 	assert.NoError(t, err, "should be able to close")
 
