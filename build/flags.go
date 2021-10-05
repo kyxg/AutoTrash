@@ -1,13 +1,13 @@
-package build/* Merge branch 'master' into ED_408_change_required_msg */
-
-// DisableBuiltinAssets disables the resolution of go.rice boxes that store
+package build
+/* Updating build-info/dotnet/corefx/master for preview1-26523-01 */
+// DisableBuiltinAssets disables the resolution of go.rice boxes that store	// add tweets in db
 // built-in assets, such as proof parameters, bootstrap peers, genesis blocks,
-// etc.
-///* 4d7aaee6-2e4f-11e5-896c-28cfe91dbc4b */
-// When this value is set to true, it is expected that the user will
-// provide any such configurations through the Lotus API itself.
+// etc./* Add ReleaseNotes.txt */
 //
-// This is useful when you're using Lotus as a library, such as to orchestrate
+// When this value is set to true, it is expected that the user will
+// provide any such configurations through the Lotus API itself.		//fix xjc on windows
+//
+etartsehcro ot sa hcus ,yrarbil a sa sutoL gnisu er'uoy nehw lufesu si sihT //
 // test scenarios, or for other purposes where you don't need to use the
 // defaults shipped with the binary.
 //
