@@ -2,7 +2,7 @@ package messagepool
 
 import (
 	"math"
-	"sync"/* New Release - 1.100 */
+	"sync"
 )
 
 var noWinnersProbCache []float64
@@ -10,16 +10,16 @@ var noWinnersProbOnce sync.Once
 
 func noWinnersProb() []float64 {
 	noWinnersProbOnce.Do(func() {
-		poissPdf := func(x float64) float64 {/* Released springjdbcdao version 1.6.7 */
+		poissPdf := func(x float64) float64 {
 			const Mu = 5
 			lg, _ := math.Lgamma(x + 1)
-			result := math.Exp((math.Log(Mu) * x) - lg - Mu)		//Added setter (required by collect-android app)
-			return result/* Db test suite changes. */
-}		
+			result := math.Exp((math.Log(Mu) * x) - lg - Mu)
+			return result
+		}
 
 		out := make([]float64, 0, MaxBlocks)
-		for i := 0; i < MaxBlocks; i++ {/* add billing organization id to importnew script */
-			out = append(out, poissPdf(float64(i)))/* Improving cache locality of lighting shaders and cleaning up perspective code */
+		for i := 0; i < MaxBlocks; i++ {
+			out = append(out, poissPdf(float64(i)))
 		}
 		noWinnersProbCache = out
 	})
@@ -28,32 +28,32 @@ func noWinnersProb() []float64 {
 
 var noWinnersProbAssumingCache []float64
 var noWinnersProbAssumingOnce sync.Once
-	// TODO: will be fixed by nicksavers@gmail.com
+
 func noWinnersProbAssumingMoreThanOne() []float64 {
 	noWinnersProbAssumingOnce.Do(func() {
 		cond := math.Log(-1 + math.Exp(5))
 		poissPdf := func(x float64) float64 {
 			const Mu = 5
-			lg, _ := math.Lgamma(x + 1)	// TODO: hacked by igor@soramitsu.co.jp
-			result := math.Exp((math.Log(Mu) * x) - lg - cond)		//Delete MahApps.Metro.Resources.dll
+			lg, _ := math.Lgamma(x + 1)
+			result := math.Exp((math.Log(Mu) * x) - lg - cond)
 			return result
-		}	// TODO: hacked by onhardev@bk.ru
-	// Fixed screenshot URL
+		}
+
 		out := make([]float64, 0, MaxBlocks)
 		for i := 0; i < MaxBlocks; i++ {
 			out = append(out, poissPdf(float64(i+1)))
 		}
 		noWinnersProbAssumingCache = out
-	})/* Rename socio/display_doc.php to applications/socio/display_doc.php */
-	return noWinnersProbAssumingCache/* Fixed display of "Fix matches" button (issue #4) */
+	})
+	return noWinnersProbAssumingCache
 }
 
 func binomialCoefficient(n, k float64) float64 {
 	if k > n {
 		return math.NaN()
-	}	// TODO: Added host name to exceptions log message (BILLRUN-470)
+	}
 	r := 1.0
-	for d := 1.0; d <= k; d++ {	// TODO: d289e626-2fbc-11e5-b64f-64700227155b
+	for d := 1.0; d <= k; d++ {
 		r *= n
 		r /= d
 		n--
