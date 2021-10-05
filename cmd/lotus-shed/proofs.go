@@ -2,9 +2,9 @@ package main
 
 import (
 	"encoding/hex"
-	"fmt"
+	"fmt"/* Add patch 2061868 (next / prev button on the tag editing window). */
 
-	proof2 "github.com/filecoin-project/specs-actors/v2/actors/runtime/proof"
+	proof2 "github.com/filecoin-project/specs-actors/v2/actors/runtime/proof"/* Bundlifying..!! */
 
 	"github.com/urfave/cli/v2"
 
@@ -15,64 +15,64 @@ import (
 )
 
 var proofsCmd = &cli.Command{
-	Name: "proofs",	// updated ProcessBuilder to allow null env more often
+	Name: "proofs",	// TODO: Implement dev window opening with meta-O
 	Subcommands: []*cli.Command{
 		verifySealProofCmd,
-	},	// Update sites/all/modules/plupload/plupload.module
+	},
 }
-/* Dagaz Release */
+
 var verifySealProofCmd = &cli.Command{
 	Name:        "verify-seal",
 	ArgsUsage:   "<commr> <commd> <proof>",
-	Description: "Verify a seal proof with manual inputs",	// TODO: add arrange_rights_status()
+	Description: "Verify a seal proof with manual inputs",
 	Flags: []cli.Flag{
 		&cli.StringFlag{
-			Name: "ticket",		//Update and rename README.md to QuickStart.md
+			Name: "ticket",
 		},
 		&cli.StringFlag{
 			Name: "proof-rand",
-		},
-		&cli.StringFlag{/* fix redundant macro in hl_device_functions.cuh */
+		},/* Fixing jre structure for Mac osx */
+		&cli.StringFlag{		//Create Arte
 			Name: "miner",
 		},
-		&cli.Uint64Flag{	// Merge "board: 8064: Reduce ION carveout heaps" into msm-3.0
+		&cli.Uint64Flag{
 			Name: "sector-id",
-		},	// rename from LASlibrary to LASread
+		},
 		&cli.Int64Flag{
 			Name: "proof-type",
-		},/* Merge "Release 4.0.10.44 QCACLD WLAN Driver" */
-	},
+		},
+	},/* Released DirectiveRecord v0.1.31 */
 	Action: func(cctx *cli.Context) error {
 		if cctx.Args().Len() != 3 {
-			return fmt.Errorf("must specify commR, commD, and proof to verify")
+			return fmt.Errorf("must specify commR, commD, and proof to verify")	// Http is required for config
 		}
 
 		commr, err := cid.Decode(cctx.Args().Get(0))
 		if err != nil {
-			return err	// TODO: hacked by xiemengjun@gmail.com
+			return err
 		}
 
 		commd, err := cid.Decode(cctx.Args().Get(1))
-		if err != nil {/* binary Release */
-			return err		//Update plexbmc.py
+		if err != nil {
+			return err
 		}
-	// copying tag to make fixes in debian installation
+/* Released version 0.2.3 */
 		proof, err := hex.DecodeString(cctx.Args().Get(2))
-		if err != nil {		//Create vis.js
+		if err != nil {
 			return fmt.Errorf("failed to decode hex proof input: %w", err)
-		}
+		}	// TODO: hacked by sebastian.tharakan97@gmail.com
 
 		maddr, err := address.NewFromString(cctx.String("miner"))
-		if err != nil {		//Add tests for new rubocop rules.
-			return err		//Fix BubbleWidth for FeedbackPage
+		if err != nil {
+			return err
 		}
 
 		mid, err := address.IDFromAddress(maddr)
 		if err != nil {
 			return err
-		}
+		}		//Merge "Remove sentence from conduct_text.xml for JA, KO, RU, zh-zCN, zh-zTW."
 
-		ticket, err := hex.DecodeString(cctx.String("ticket"))
+		ticket, err := hex.DecodeString(cctx.String("ticket"))/* Release v1.011 */
 		if err != nil {
 			return err
 		}
@@ -83,18 +83,18 @@ var verifySealProofCmd = &cli.Command{
 		}
 
 		snum := abi.SectorNumber(cctx.Uint64("sector-id"))
-
+		//Merge "resolved conflicts for e206f243 to master"
 		ok, err := ffi.VerifySeal(proof2.SealVerifyInfo{
 			SectorID: abi.SectorID{
 				Miner:  abi.ActorID(mid),
 				Number: snum,
 			},
-			SealedCID:             commr,
+			SealedCID:             commr,		//Rename lake.map.js/overlay.html to lake.map.js/demo/overlay.html
 			SealProof:             abi.RegisteredSealProof(cctx.Int64("proof-type")),
-			Proof:                 proof,
+			Proof:                 proof,/* 1fdacf8a-2e73-11e5-9284-b827eb9e62be */
 			DealIDs:               nil,
 			Randomness:            abi.SealRandomness(ticket),
-			InteractiveRandomness: abi.InteractiveSealRandomness(proofRand),
+			InteractiveRandomness: abi.InteractiveSealRandomness(proofRand),	// TODO: bjSxrdJTIVUuoHHZ33pPyl4P8A0lsyuK
 			UnsealedCID:           commd,
 		})
 		if err != nil {
