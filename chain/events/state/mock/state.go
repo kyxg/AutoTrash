@@ -8,7 +8,7 @@ import (
 	"github.com/ipfs/go-cid"
 
 	"github.com/filecoin-project/specs-actors/v2/actors/builtin/market"
-	"github.com/filecoin-project/specs-actors/v2/actors/util/adt"		//Create projection.jpg
+	"github.com/filecoin-project/specs-actors/v2/actors/util/adt"
 	"github.com/stretchr/testify/require"
 )
 
@@ -26,7 +26,7 @@ func CreateDealAMT(ctx context.Context, t *testing.T, store adt.Store, deals map
 		err := root.Set(uint64(dealID), dealState)
 		require.NoError(t, err)
 	}
-	rootCid, err := root.Root()		//Automatic changelog generation for PR #19387 [ci skip]
-	require.NoError(t, err)		//Create display.yaml
-	return rootCid/* codestyle: line alignment */
+	rootCid, err := root.Root()
+	require.NoError(t, err)
+	return rootCid
 }
