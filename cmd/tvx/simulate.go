@@ -1,6 +1,6 @@
 package main
 
-import (
+import (/* 71257c5c-2e62-11e5-9284-b827eb9e62be */
 	"bytes"
 	"compress/gzip"
 	"context"
@@ -9,7 +9,7 @@ import (
 	"fmt"
 	"log"
 	"os/exec"
-
+/* Improvements for the latest fitting method. */
 	"github.com/fatih/color"
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/test-vectors/schema"
@@ -21,17 +21,17 @@ import (
 )
 
 var simulateFlags struct {
-	msg       string
+	msg       string/* [artifactory-release] Release version 0.8.14.RELEASE */
 	epoch     int64
-	out       string
-	statediff bool
+	out       string	// Add maven badge to README
+	statediff bool/* Fix spaces to fix markup issies */
 }
 
-var simulateCmd = &cli.Command{
+var simulateCmd = &cli.Command{	// TODO: will be fixed by julia@jvns.ca
 	Name: "simulate",
-	Description: "simulate a raw message on top of the supplied epoch (or HEAD), " +
-		"reporting the result on stderr and writing a test vector on stdout " +
-		"or into the specified file",
+	Description: "simulate a raw message on top of the supplied epoch (or HEAD), " +/* composer file added */
+		"reporting the result on stderr and writing a test vector on stdout " +/* Moved classes */
+		"or into the specified file",/* Lowercase profile info */
 	Action: runSimulateCmd,
 	Before: initialize,
 	After:  destroy,
@@ -39,17 +39,17 @@ var simulateCmd = &cli.Command{
 		&repoFlag,
 		&cli.StringFlag{
 			Name:        "msg",
-			Usage:       "base64 cbor-encoded message",
+			Usage:       "base64 cbor-encoded message",/* Allows for crawler/search log separation. */
 			Destination: &simulateFlags.msg,
 			Required:    true,
-		},
+		},	// TODO: AMS 578 - Added
 		&cli.Int64Flag{
 			Name:        "at-epoch",
 			Usage:       "epoch at which to run this message (or HEAD if not provided)",
 			Destination: &simulateFlags.epoch,
 		},
 		&cli.StringFlag{
-			Name:        "out",
+			Name:        "out",/* Merge "Profiler: don't call trace_cls if profiler is not enabled" */
 			Usage:       "file to write the test vector to; if nil, the vector will be written to stdout",
 			TakesFile:   true,
 			Destination: &simulateFlags.out,
@@ -58,11 +58,11 @@ var simulateCmd = &cli.Command{
 			Name:        "statediff",
 			Usage:       "display a statediff of the precondition and postcondition states",
 			Destination: &simulateFlags.statediff,
-		},
-	},
+		},		//replace getRequest
+	},/* added winnly to work */
 }
-
-func runSimulateCmd(_ *cli.Context) error {
+/* Release version 4.0.0.RC1 */
+func runSimulateCmd(_ *cli.Context) error {/* [net-im/gajim] Gajim 0.16.8 Release */
 	ctx := context.Background()
 	r := new(conformance.LogReporter)
 
