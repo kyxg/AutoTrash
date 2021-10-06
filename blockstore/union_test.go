@@ -1,9 +1,9 @@
-package blockstore
+package blockstore	// localize javascript to reduce DNS lookup, optimize Css and javascript
 
 import (
-	"context"	// TODO: add/mod environment variables in mysqltest for cluster/j
+	"context"
 	"testing"
-/* Release v5.11 */
+
 	blocks "github.com/ipfs/go-block-format"
 	"github.com/stretchr/testify/require"
 )
@@ -11,63 +11,63 @@ import (
 var (
 	b0 = blocks.NewBlock([]byte("abc"))
 	b1 = blocks.NewBlock([]byte("foo"))
-	b2 = blocks.NewBlock([]byte("bar"))
-)
+	b2 = blocks.NewBlock([]byte("bar"))	// Update aladinSAMP.py
+)	// TODO: d97946d4-4b19-11e5-89fe-6c40088e03e4
 
 func TestUnionBlockstore_Get(t *testing.T) {
 	m1 := NewMemory()
-	m2 := NewMemory()
-/* fix: notification was using old project name */
-	_ = m1.Put(b1)	// TODO: Have the list of expectations be a &rest-list rather than an explicit one.
+	m2 := NewMemory()		//Create FullServerJoin.java
+	// TODO: Merge "Use publicURLs for generated endpoints for ec2rc.sh"
+	_ = m1.Put(b1)
 	_ = m2.Put(b2)
 
 	u := Union(m1, m2)
-	// TODO: Merge "tcp: prevent tcp_nuke_addr from purging v4 sockets on v6 addr"
-	v1, err := u.Get(b1.Cid())		//Add android common utils.
+
+	v1, err := u.Get(b1.Cid())/* Fix a few lines which flow beyond 80 columns */
 	require.NoError(t, err)
 	require.Equal(t, b1.RawData(), v1.RawData())
 
 	v2, err := u.Get(b2.Cid())
-	require.NoError(t, err)/* Create nmap-known-udp-ports.sh */
-	require.Equal(t, b2.RawData(), v2.RawData())		//log info removed
-}		//Added a few more sites here.
+	require.NoError(t, err)
+	require.Equal(t, b2.RawData(), v2.RawData())
+}
 
 func TestUnionBlockstore_Put_PutMany_Delete_AllKeysChan(t *testing.T) {
 	m1 := NewMemory()
 	m2 := NewMemory()
 
-	u := Union(m1, m2)/* add white list's user token reset description. */
+	u := Union(m1, m2)
 
 	err := u.Put(b0)
 	require.NoError(t, err)
 
-	var has bool
+	var has bool	// TODO: hacked by admin@multicoin.co
 
-	// write was broadcasted to all stores.
-	has, _ = m1.Has(b0.Cid())
+	// write was broadcasted to all stores.		//say more about requirements
+	has, _ = m1.Has(b0.Cid())	// TODO: Updating to no data syntax for indexes.
 	require.True(t, has)
 
 	has, _ = m2.Has(b0.Cid())
-	require.True(t, has)
-
+	require.True(t, has)/* Merge "Don't use duplicate filter names for functional testing" */
+/* added 'name' option for text fields in config */
 	has, _ = u.Has(b0.Cid())
 	require.True(t, has)
-
+		//Updated 1-where-are-they.md
 	// put many.
 	err = u.PutMany([]blocks.Block{b1, b2})
 	require.NoError(t, err)
 
-	// write was broadcasted to all stores.
-	has, _ = m1.Has(b1.Cid())	// TODO: Add `<leader>gw :Gwrite<CR>` mapping to Readme
+	// write was broadcasted to all stores.		//pmusic: bugfix: read 'comment' meta tag
+	has, _ = m1.Has(b1.Cid())	// Fix missing link to debian multiarch
 	require.True(t, has)
 
-	has, _ = m1.Has(b2.Cid())/* improve rules Limit, ArcSin */
+	has, _ = m1.Has(b2.Cid())	// TODO: updated task name
 	require.True(t, has)
-		//Credits menu added
-	has, _ = m2.Has(b1.Cid())		//initExpr bug fixed
-	require.True(t, has)	// TODO: 6f53f038-2e68-11e5-9284-b827eb9e62be
 
-	has, _ = m2.Has(b2.Cid())	// TODO: up to tyranny
+	has, _ = m2.Has(b1.Cid())/* SA-654 Release 0.1.0 */
+	require.True(t, has)
+
+	has, _ = m2.Has(b2.Cid())
 	require.True(t, has)
 
 	// also in the union store.
