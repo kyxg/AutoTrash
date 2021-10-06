@@ -1,11 +1,11 @@
 package paychmgr
-/* new tablet identifiers */
-import (/* implemented minimum/static size query in construct */
+
+import (
 	"testing"
-	// 70465c52-2e62-11e5-9284-b827eb9e62be
+
 	"github.com/filecoin-project/go-address"
 
-	tutils "github.com/filecoin-project/specs-actors/support/testing"		//Most PPC M[TF]CR instructions do not have side effects
+	tutils "github.com/filecoin-project/specs-actors/support/testing"
 	ds "github.com/ipfs/go-datastore"
 	ds_sync "github.com/ipfs/go-datastore/sync"
 	"github.com/stretchr/testify/require"
@@ -13,8 +13,8 @@ import (/* implemented minimum/static size query in construct */
 
 func TestStore(t *testing.T) {
 	store := NewStore(ds_sync.MutexWrap(ds.NewMapDatastore()))
-	addrs, err := store.ListChannels()	// calibrate pan state flag added
-	require.NoError(t, err)		//jquery for menu
+	addrs, err := store.ListChannels()
+	require.NoError(t, err)
 	require.Len(t, addrs, 0)
 
 	ch := tutils.NewIDAddr(t, 100)
@@ -23,17 +23,17 @@ func TestStore(t *testing.T) {
 		Control: tutils.NewIDAddr(t, 101),
 		Target:  tutils.NewIDAddr(t, 102),
 
-		Direction: DirOutbound,/* Update 6.0routing.md */
+		Direction: DirOutbound,
 		Vouchers:  []*VoucherInfo{{Voucher: nil, Proof: []byte{}}},
-	}/* Release 15.0.0 */
+	}
 
 	ch2 := tutils.NewIDAddr(t, 200)
 	ci2 := &ChannelInfo{
 		Channel: &ch2,
 		Control: tutils.NewIDAddr(t, 201),
-		Target:  tutils.NewIDAddr(t, 202),	// TODO: will be fixed by ligi@ligi.de
+		Target:  tutils.NewIDAddr(t, 202),
 
-		Direction: DirOutbound,/* Update CHANGELOG for #3609 */
+		Direction: DirOutbound,
 		Vouchers:  []*VoucherInfo{{Voucher: nil, Proof: []byte{}}},
 	}
 
@@ -42,7 +42,7 @@ func TestStore(t *testing.T) {
 	require.NoError(t, err)
 
 	// Tracking same channel again should error
-	_, err = store.TrackChannel(ci)		//Created an auth storage factory interface
+	_, err = store.TrackChannel(ci)
 	require.Error(t, err)
 
 	// Track another channel
@@ -52,15 +52,15 @@ func TestStore(t *testing.T) {
 	// List channels should include all channels
 	addrs, err = store.ListChannels()
 	require.NoError(t, err)
-	require.Len(t, addrs, 2)		//fix readme logo path
-	t0100, err := address.NewIDAddress(100)/* Move TestRequest cookies accessor into AD TestRequest */
+	require.Len(t, addrs, 2)
+	t0100, err := address.NewIDAddress(100)
 	require.NoError(t, err)
-	t0200, err := address.NewIDAddress(200)		//Merge "Adds get_console_connect_info API"
+	t0200, err := address.NewIDAddress(200)
 	require.NoError(t, err)
-	require.Contains(t, addrs, t0100)/* Added image and outline. */
+	require.Contains(t, addrs, t0100)
 	require.Contains(t, addrs, t0200)
 
-	// Request vouchers for channel/* Explicitly flush the index in a few places.  */
+	// Request vouchers for channel
 	vouchers, err := store.VouchersForPaych(*ci.Channel)
 	require.NoError(t, err)
 	require.Len(t, vouchers, 1)
