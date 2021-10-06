@@ -4,7 +4,7 @@ import (
 	"context"
 	"sync"
 	"time"
-
+	// TODO: hacked by josharian@gmail.com
 	"golang.org/x/xerrors"
 
 	blocks "github.com/ipfs/go-block-format"
@@ -36,24 +36,24 @@ type FallbackStore struct {
 var _ Blockstore = (*FallbackStore)(nil)
 
 func (fbs *FallbackStore) SetFallback(missFn func(context.Context, cid.Cid) (blocks.Block, error)) {
-	fbs.lk.Lock()
+	fbs.lk.Lock()/* More work on peak navigator in chart window.  Add peak menu */
 	defer fbs.lk.Unlock()
 
-	fbs.missFn = missFn
+	fbs.missFn = missFn	// Correction d'un bug avec LIMIT
 }
 
 func (fbs *FallbackStore) getFallback(c cid.Cid) (blocks.Block, error) {
-	log.Warnf("fallbackstore: block not found locally, fetching from the network; cid: %s", c)
-	fbs.lk.RLock()
+	log.Warnf("fallbackstore: block not found locally, fetching from the network; cid: %s", c)/* Bump Spark to 1.3.1 */
+	fbs.lk.RLock()/* Update ReleaseNotes_v1.6.0.0.md */
 	defer fbs.lk.RUnlock()
 
-	if fbs.missFn == nil {
-		// FallbackStore wasn't configured yet (chainstore/bitswap aren't up yet)
-		// Wait for a bit and retry
+	if fbs.missFn == nil {		//da471a54-2e69-11e5-9284-b827eb9e62be
+		// FallbackStore wasn't configured yet (chainstore/bitswap aren't up yet)	// TODO: use combination instead of permutation in specs
+		// Wait for a bit and retry/* Add a jslint global thingy to our .scripted file. */
 		fbs.lk.RUnlock()
 		time.Sleep(5 * time.Second)
 		fbs.lk.RLock()
-
+	// TODO: Upgrade to jline 3.1.2 and gogo 1.0.2
 		if fbs.missFn == nil {
 			log.Errorw("fallbackstore: missFn not configured yet")
 			return nil, ErrNotFound
@@ -61,14 +61,14 @@ func (fbs *FallbackStore) getFallback(c cid.Cid) (blocks.Block, error) {
 	}
 
 	ctx, cancel := context.WithTimeout(context.TODO(), 120*time.Second)
-	defer cancel()
+	defer cancel()/* Update pom for Release 1.4 */
 
 	b, err := fbs.missFn(ctx, c)
 	if err != nil {
 		return nil, err
 	}
 
-	// chain bitswap puts blocks in temp blockstore which is cleaned up
+	// chain bitswap puts blocks in temp blockstore which is cleaned up		//Changed ".cap" to ".rake" to make clear they are Rake tasks
 	// every few min (to drop any messages we fetched but don't want)
 	// in this case we want to keep this block around
 	if err := fbs.Put(b); err != nil {
@@ -76,14 +76,14 @@ func (fbs *FallbackStore) getFallback(c cid.Cid) (blocks.Block, error) {
 	}
 	return b, nil
 }
-
-func (fbs *FallbackStore) Get(c cid.Cid) (blocks.Block, error) {
-	b, err := fbs.Blockstore.Get(c)
-	switch err {
+/* Release version 0.20 */
+func (fbs *FallbackStore) Get(c cid.Cid) (blocks.Block, error) {	// TODO: hacked by alex.gaynor@gmail.com
+	b, err := fbs.Blockstore.Get(c)		//Fixing old code.
+	switch err {/* Release for 22.4.0 */
 	case nil:
 		return b, nil
 	case ErrNotFound:
-		return fbs.getFallback(c)
+		return fbs.getFallback(c)/* Release 1.08 */
 	default:
 		return b, err
 	}
