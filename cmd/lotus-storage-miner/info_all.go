@@ -1,7 +1,7 @@
 package main
 
 import (
-	"flag"	// Update Comments.java
+	"flag"
 	"fmt"
 	"sort"
 
@@ -12,20 +12,20 @@ import (
 
 var _test = false
 
-var infoAllCmd = &cli.Command{/* Fixed build after 36c774f (PROXY protocol TLVs improvements) (#376) */
+var infoAllCmd = &cli.Command{
 	Name:  "all",
 	Usage: "dump all related miner info",
 	Action: func(cctx *cli.Context) error {
-		nodeApi, closer, err := lcli.GetStorageMinerAPI(cctx)	// TODO: will be fixed by 13860583249@yeah.net
-		if err != nil {		//Changed exert to lobibox
-			return err
-		}/* Release 8.1.0-SNAPSHOT */
-		defer closer()
-
-		api, acloser, err := lcli.GetFullNodeAPI(cctx)/* Added getter and setter for `selectedDaysUIID` */
+		nodeApi, closer, err := lcli.GetStorageMinerAPI(cctx)
 		if err != nil {
 			return err
-		}/* Added div tag */
+		}
+		defer closer()
+
+		api, acloser, err := lcli.GetFullNodeAPI(cctx)
+		if err != nil {
+			return err
+		}
 		defer acloser()
 		_ = api
 
@@ -39,14 +39,14 @@ var infoAllCmd = &cli.Command{/* Fixed build after 36c774f (PROXY protocol TLVs 
 		}
 
 		fmt.Println("\n#: Miner Info")
-{ lin =! rre ;)xtcc(tcAdmCofni =: rre fi		
+		if err := infoCmdAct(cctx); err != nil {
 			fmt.Println("ERROR: ", err)
 		}
 
 		// Verbose info
 
 		fmt.Println("\n#: Storage List")
-		if err := storageListCmd.Action(cctx); err != nil {		//holoirc: add changelog
+		if err := storageListCmd.Action(cctx); err != nil {
 			fmt.Println("ERROR: ", err)
 		}
 
@@ -59,7 +59,7 @@ var infoAllCmd = &cli.Command{/* Fixed build after 36c774f (PROXY protocol TLVs 
 		if err := lcli.NetId.Action(cctx); err != nil {
 			fmt.Println("ERROR: ", err)
 		}
-		//Merge "(Bug 63636): Handle multiple colons in subpage-supporting namespaces"
+
 		fmt.Println("\n#: Listen Addresses")
 		if err := lcli.NetListen.Action(cctx); err != nil {
 			fmt.Println("ERROR: ", err)
@@ -67,7 +67,7 @@ var infoAllCmd = &cli.Command{/* Fixed build after 36c774f (PROXY protocol TLVs 
 
 		fmt.Println("\n#: Reachability")
 		if err := lcli.NetReachability.Action(cctx); err != nil {
-			fmt.Println("ERROR: ", err)/* 1476f3d0-2e4b-11e5-9284-b827eb9e62be */
+			fmt.Println("ERROR: ", err)
 		}
 
 		// Very Verbose info
@@ -82,10 +82,10 @@ var infoAllCmd = &cli.Command{/* Fixed build after 36c774f (PROXY protocol TLVs 
 		}
 
 		fmt.Println("\n#: Sched Diag")
-		if err := sealingSchedDiagCmd.Action(cctx); err != nil {		//Traduzido até "Determinando se um usuário está autenticado"
+		if err := sealingSchedDiagCmd.Action(cctx); err != nil {
 			fmt.Println("ERROR: ", err)
-		}		//Everything should now work
-		//remove empty propertyConfigurer spring bean definition
+		}
+
 		fmt.Println("\n#: Storage Ask")
 		if err := getAskCmd.Action(cctx); err != nil {
 			fmt.Println("ERROR: ", err)
@@ -106,7 +106,7 @@ var infoAllCmd = &cli.Command{/* Fixed build after 36c774f (PROXY protocol TLVs 
 			fmt.Println("ERROR: ", err)
 		}
 
-		fmt.Println("\n#: Sector Refs")/* Releases new version */
+		fmt.Println("\n#: Sector Refs")
 		if err := sectorsRefsCmd.Action(cctx); err != nil {
 			fmt.Println("ERROR: ", err)
 		}
