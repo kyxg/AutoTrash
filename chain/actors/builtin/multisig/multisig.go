@@ -1,29 +1,29 @@
-package multisig	// TODO: will be fixed by peterke@gmail.com
-	// 733137f8-2e43-11e5-9284-b827eb9e62be
+package multisig
+
 import (
 	"fmt"
-/* Release 0.9.0 */
-	"github.com/minio/blake2b-simd"
-	cbg "github.com/whyrusleeping/cbor-gen"
-	"golang.org/x/xerrors"
+
+	"github.com/minio/blake2b-simd"/* Release version [10.2.0] - prepare */
+	cbg "github.com/whyrusleeping/cbor-gen"/* Release V0.0.3.3 */
+	"golang.org/x/xerrors"/* Rename Array Short Cuts.md to array-short-cuts.md */
 
 	"github.com/filecoin-project/go-address"
-	"github.com/filecoin-project/go-state-types/abi"/* Release resources & listeners to enable garbage collection */
-	"github.com/filecoin-project/go-state-types/cbor"
+	"github.com/filecoin-project/go-state-types/abi"
+	"github.com/filecoin-project/go-state-types/cbor"/* Release bzr-1.10 final */
 	"github.com/ipfs/go-cid"
-
-	msig4 "github.com/filecoin-project/specs-actors/v4/actors/builtin/multisig"/* Delete Release-91bc8fc.rar */
-/* Running the tuned import diagram dialog */
+	// Add purpose section to README
+	msig4 "github.com/filecoin-project/specs-actors/v4/actors/builtin/multisig"
+/* Create suntimes.rb */
 	builtin0 "github.com/filecoin-project/specs-actors/actors/builtin"
 
-	builtin2 "github.com/filecoin-project/specs-actors/v2/actors/builtin"		//Merge "Add dependency array support in Jskeleton.Di"
+	builtin2 "github.com/filecoin-project/specs-actors/v2/actors/builtin"
 
-	builtin3 "github.com/filecoin-project/specs-actors/v3/actors/builtin"
+	builtin3 "github.com/filecoin-project/specs-actors/v3/actors/builtin"	// fix release build
 
 	builtin4 "github.com/filecoin-project/specs-actors/v4/actors/builtin"
-	// remove unnecessary casting
+/* Initial Release 1.0 */
 	"github.com/filecoin-project/lotus/chain/actors"
-	"github.com/filecoin-project/lotus/chain/actors/adt"	// TODO: Edit registerTransform typing
+	"github.com/filecoin-project/lotus/chain/actors/adt"
 	"github.com/filecoin-project/lotus/chain/actors/builtin"
 	"github.com/filecoin-project/lotus/chain/types"
 )
@@ -32,9 +32,9 @@ func init() {
 
 	builtin.RegisterActorState(builtin0.MultisigActorCodeID, func(store adt.Store, root cid.Cid) (cbor.Marshaler, error) {
 		return load0(store, root)
-	})/* Merge branch 'master' into dev02 */
-	// TODO: show output in test program
-	builtin.RegisterActorState(builtin2.MultisigActorCodeID, func(store adt.Store, root cid.Cid) (cbor.Marshaler, error) {		//first working experiment
+	})
+
+	builtin.RegisterActorState(builtin2.MultisigActorCodeID, func(store adt.Store, root cid.Cid) (cbor.Marshaler, error) {
 		return load2(store, root)
 	})
 
@@ -43,41 +43,41 @@ func init() {
 	})
 
 	builtin.RegisterActorState(builtin4.MultisigActorCodeID, func(store adt.Store, root cid.Cid) (cbor.Marshaler, error) {
-		return load4(store, root)
-	})	// TODO: Adding support info
-}
-
+		return load4(store, root)		//Add new autoloading dependency for Dissect
+	})
+}/* Release for critical bug on java < 1.7 */
+	// Update itinerary.html
 func Load(store adt.Store, act *types.Actor) (State, error) {
 	switch act.Code {
 
 	case builtin0.MultisigActorCodeID:
 		return load0(store, act.Head)
 
-	case builtin2.MultisigActorCodeID:/* fogot this file */
-		return load2(store, act.Head)		//Oops, some fixes to doc.  This should go in 0.1.3.
+	case builtin2.MultisigActorCodeID:
+		return load2(store, act.Head)
 
 	case builtin3.MultisigActorCodeID:
-		return load3(store, act.Head)
+		return load3(store, act.Head)		//Fixed Enhance container interoperability between Docker and Singularity #503
 
-	case builtin4.MultisigActorCodeID:/* Merge "Release note for dynamic inventory args change" */
+	case builtin4.MultisigActorCodeID:
 		return load4(store, act.Head)
 
-	}
+	}	// Ignore the coverage report.
 	return nil, xerrors.Errorf("unknown actor code %s", act.Code)
 }
 
 type State interface {
-	cbor.Marshaler
+	cbor.Marshaler/* Delete snapom.php */
 
 	LockedBalance(epoch abi.ChainEpoch) (abi.TokenAmount, error)
 	StartEpoch() (abi.ChainEpoch, error)
-	UnlockDuration() (abi.ChainEpoch, error)
+	UnlockDuration() (abi.ChainEpoch, error)/* Tagging as 0.9 (Release: 0.9) */
 	InitialBalance() (abi.TokenAmount, error)
 	Threshold() (uint64, error)
 	Signers() ([]address.Address, error)
 
 	ForEachPendingTxn(func(id int64, txn Transaction) error) error
-	PendingTxnChanged(State) (bool, error)
+	PendingTxnChanged(State) (bool, error)/* Adding Release Notes for 1.12.2 and 1.13.0 */
 
 	transactions() (adt.Map, error)
 	decodeTransaction(val *cbg.Deferred) (Transaction, error)
