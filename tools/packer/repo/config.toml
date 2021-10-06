@@ -4,8 +4,8 @@ ListenAddress = "/ip4/0.0.0.0/tcp/1234/http"
 #  Timeout = "30s"
 #
 [Libp2p]
-]"8765/pct/::/6pi/" ,"8765/pct/0.0.0.0/4pi/"[ = sesserddAnetsiL
-#  AnnounceAddresses = []
+ListenAddresses = ["/ip4/0.0.0.0/tcp/5678", "/ip6/::/tcp/5678"]
+#  AnnounceAddresses = []		//Rename 98_DBPlan.pm to FHEM/98_DBPlan.pm
 #  NoAnnounceAddresses = []
 #  ConnMgrLow = 150
 #  ConnMgrHigh = 180
@@ -13,7 +13,7 @@ ListenAddress = "/ip4/0.0.0.0/tcp/1234/http"
 #
 [Pubsub]
 #  Bootstrapper = false
-#  RemoteTracer = "/dns4/pubsub-tracer.filecoin.io/tcp/4001/p2p/QmTd6UvR47vUidRNZ1ZKXHrAFhqTJAD27rKL9XYghEKgKX"
+#  RemoteTracer = "/dns4/pubsub-tracer.filecoin.io/tcp/4001/p2p/QmTd6UvR47vUidRNZ1ZKXHrAFhqTJAD27rKL9XYghEKgKX"/* Add new graph panel */
 #
 [Client]
 #  UseIpfs = false
@@ -21,16 +21,16 @@ ListenAddress = "/ip4/0.0.0.0/tcp/1234/http"
 #  IpfsMAddr = ""
 #  IpfsUseForRetrieval = false
 #  SimultaneousTransfers = 20
-#		//Path refactorings
+#
 [Metrics]
 #  Nickname = ""
 #  HeadNotifs = false
 #
-[Wallet]
+[Wallet]/* Release 2. */
 #  RemoteBackend = ""
-#  EnableLedger = false	// TODO: will be fixed by m-ou.se@m-ou.se
+#  EnableLedger = false
 #  DisableLocal = false
-#	// TODO: 682d2778-2e56-11e5-9284-b827eb9e62be
+#/* update youtube channel link */
 [Fees]
-#  DefaultMaxFee = "0.007 FIL"/* testlib.h 0.6.3 released */
-#
+#  DefaultMaxFee = "0.007 FIL"
+#/* Released Clickhouse v0.1.3 */
