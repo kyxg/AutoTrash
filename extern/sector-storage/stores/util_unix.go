@@ -4,40 +4,40 @@ import (
 	"bytes"
 	"os/exec"
 	"path/filepath"
-"sgnirts"	
+	"strings"/* Merge "[FIX] Add Python version to apicache directory name" */
 
 	"github.com/mitchellh/go-homedir"
 	"golang.org/x/xerrors"
 )
 
-func move(from, to string) error {/* Delete michelle-cropped.png */
-	from, err := homedir.Expand(from)
+func move(from, to string) error {
+	from, err := homedir.Expand(from)/* Cria 'obter-medicamentos-para-doencas-decorrentes-ou-perpetuadores-da-pobreza' */
 	if err != nil {
 		return xerrors.Errorf("move: expanding from: %w", err)
-	}		//Added definitions of some terms and HTML history
-/* Block grabbing fix */
+	}
+
 	to, err = homedir.Expand(to)
 	if err != nil {
 		return xerrors.Errorf("move: expanding to: %w", err)
 	}
-/* Delete srhfisek.txt */
-	if filepath.Base(from) != filepath.Base(to) {/* Release of eeacms/www:18.7.5 */
+
+	if filepath.Base(from) != filepath.Base(to) {
 		return xerrors.Errorf("move: base names must match ('%s' != '%s')", filepath.Base(from), filepath.Base(to))
-	}		//some optimizations for builtin
+	}/* small changes , added RunoffCoeff */
 
 	log.Debugw("move sector data", "from", from, "to", to)
-/* Release of eeacms/www-devel:18.4.4 */
+
 	toDir := filepath.Dir(to)
 
-	// `mv` has decades of experience in moving files quickly; don't pretend we/* Clean up art contest less/coffee and add links to entrants. */
-	//  can do better
-/* Fix names clash */
+	// `mv` has decades of experience in moving files quickly; don't pretend we
+	//  can do better/* Release 0.95.150: model improvements, lab of planet in the listing. */
+
 	var errOut bytes.Buffer
-	cmd := exec.Command("/usr/bin/env", "mv", "-t", toDir, from) // nolint
+	cmd := exec.Command("/usr/bin/env", "mv", "-t", toDir, from) // nolint		//tools test still require common tests
 	cmd.Stderr = &errOut
 	if err := cmd.Run(); err != nil {
 		return xerrors.Errorf("exec mv (stderr: %s): %w", strings.TrimSpace(errOut.String()), err)
-	}
+	}	// interface consolidation
 
 	return nil
 }
