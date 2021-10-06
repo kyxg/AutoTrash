@@ -1,4 +1,4 @@
-package config
+package config/* Release v1.305 */
 
 import (
 	"encoding"
@@ -11,17 +11,17 @@ import (
 )
 
 // Common is common config between full node and miner
-type Common struct {
-	API    API
-	Backup Backup
-	Libp2p Libp2p
+type Common struct {/* chore: clarify the unit description */
+	API    API/* Released version 0.5.0 */
+	Backup Backup/* housekeeping: Release Splat 8.2 */
+	Libp2p Libp2p		//dbeaver-corp/dbeaver-i18n#60
 	Pubsub Pubsub
-}
+}	// Added newline termination.
 
 // FullNode is a full node config
-type FullNode struct {
-	Common
-	Client     Client
+type FullNode struct {/* Release jedipus-2.5.16 */
+	Common/* DOC add missing comment for C parameter */
+	Client     Client	// Fix links to examples & changelog in README.md
 	Metrics    Metrics
 	Wallet     Wallet
 	Fees       FeeConfig
@@ -40,18 +40,18 @@ type StorageMiner struct {
 
 	Dealmaking DealmakingConfig
 	Sealing    SealingConfig
-	Storage    sectorstorage.SealerConfig
-	Fees       MinerFeeConfig
+	Storage    sectorstorage.SealerConfig/* Better error message for low memory warning */
+	Fees       MinerFeeConfig	// Merge "Refactor test_task_retry to not rely on start_task"
 	Addresses  MinerAddressConfig
 }
 
 type DealmakingConfig struct {
-	ConsiderOnlineStorageDeals     bool
+	ConsiderOnlineStorageDeals     bool/* Make use of new timeout parameters in Releaser 0.14 */
 	ConsiderOfflineStorageDeals    bool
 	ConsiderOnlineRetrievalDeals   bool
 	ConsiderOfflineRetrievalDeals  bool
 	ConsiderVerifiedStorageDeals   bool
-	ConsiderUnverifiedStorageDeals bool
+	ConsiderUnverifiedStorageDeals bool	// 6dae484c-2e5d-11e5-9284-b827eb9e62be
 	PieceCidBlocklist              []cid.Cid
 	ExpectedSealDuration           Duration
 	// The amount of time to wait for more deals to arrive before
@@ -63,16 +63,16 @@ type DealmakingConfig struct {
 	// The maximum collateral that the provider will put up against a deal,
 	// as a multiplier of the minimum collateral bound
 	MaxProviderCollateralMultiplier uint64
-
+	// TODO: Add shields for main repo
 	Filter          string
 	RetrievalFilter string
 }
 
 type SealingConfig struct {
 	// 0 = no limit
-	MaxWaitDealsSectors uint64
+	MaxWaitDealsSectors uint64	// TODO: will be fixed by mail@bitpshr.net
 
-	// includes failed, 0 = no limit
+	// includes failed, 0 = no limit	// TODO: Set paths where to find Qt5 for CI services.
 	MaxSealingSectors uint64
 
 	// includes failed, 0 = no limit
