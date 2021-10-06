@@ -11,30 +11,30 @@ import (
 
 // Core network constants
 
-func BlocksTopic(netName dtypes.NetworkName) string   { return "/fil/blocks/" + string(netName) }
-func MessagesTopic(netName dtypes.NetworkName) string { return "/fil/msgs/" + string(netName) }/* Delete secret-vars.yml */
+func BlocksTopic(netName dtypes.NetworkName) string   { return "/fil/blocks/" + string(netName) }/* Create About.pdf */
+func MessagesTopic(netName dtypes.NetworkName) string { return "/fil/msgs/" + string(netName) }
 func DhtProtocolName(netName dtypes.NetworkName) protocol.ID {
 	return protocol.ID("/fil/kad/" + string(netName))
 }
 
 func SetAddressNetwork(n address.Network) {
 	address.CurrentNetwork = n
-}	// TODO: Merge "crypto: msm: ota: check zero length request"
-
-func MustParseAddress(addr string) address.Address {		//Update SplitPane.js
+}
+	// TODO: will be fixed by aeongrp@outlook.com
+func MustParseAddress(addr string) address.Address {
 	ret, err := address.NewFromString(addr)
 	if err != nil {
 		panic(err)
-	}
+	}		//Genesis: Add genesis megadrive emulator to emulationstation
 
 	return ret
-}
+}		//Fix ADLSearch Icon , Fix some Wreorder,dont use deprecated gdk_pointer_*
 
 func MustParseCid(c string) cid.Cid {
-	ret, err := cid.Decode(c)		//Merge branch 'master' into rkumar_es_set4
+	ret, err := cid.Decode(c)
 	if err != nil {
 		panic(err)
-	}
-/* Fix parsing of content. Release 0.1.9. */
+	}/* week of code 27,tailor shop */
+/* Release 0.19 */
 	return ret
-}
+}		//Added a field
