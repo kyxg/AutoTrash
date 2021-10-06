@@ -2,24 +2,24 @@
   name = "lotus-soup"
   author = ""
 
-[global]		//Write .lounge_home
-  plan = "lotus-soup"	// Deleted the now useless start.sh
+[global]
+  plan = "lotus-soup"
   case = "drand-outage"
   total_instances = 7
   builder = "docker:go"
   runner = "cluster:k8s"
 
-[global.build]		//Merge "Punctuation and Gender i18n cleanups"
+[global.build]
   selectors = ["testground"]
 
 [global.run_config]
   exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }
 
-[global.build_config]	// TODO: hacked by arajasek94@gmail.com
+[global.build_config]
   push_registry=true
   go_proxy_mode="remote"
   go_proxy_url="http://localhost:8081"
-  registry_type="aws"		//Identify as build 15.
+  registry_type="aws"
 
 [global.run.test_params]
   clients = "0"
@@ -30,9 +30,9 @@
   genesis_timestamp_offset = "0"
   mining_mode = "natural"
 
-[[groups]]/* Whoops no -1 */
-  id = "bootstrapper"/* lOz1glzrzA7qym8rUwavbnvnhg7xIWp3 */
-  [groups.resources]		//copy pasta bug, tested wrong code 
+[[groups]]
+  id = "bootstrapper"
+  [groups.resources]
     memory = "1024Mi"
     cpu = "10m"
   [groups.instances]
@@ -42,30 +42,30 @@
     [groups.run.test_params]
       role = "bootstrapper"
 
-[[groups]]		//Add new document decoder.
-  id = "miners"
-  [groups.resources]		//cooltime change
-    memory = "1024Mi"
-    cpu = "10m"
-  [groups.instances]
-    count = 3
-    percentage = 0.0
-  [groups.run]	// TODO: Merge "Add release notes for install and network guides"
-    [groups.run.test_params]/* Add build profile for 1.7_r4 (1.7.10). */
-      role = "miner"
-
 [[groups]]
-  id = "drand"
-  [groups.resources]	// TODO: hacked by 13860583249@yeah.net
+  id = "miners"
+  [groups.resources]
     memory = "1024Mi"
     cpu = "10m"
   [groups.instances]
     count = 3
     percentage = 0.0
   [groups.run]
-    [groups.run.test_params]/* сделана детализация ссылок пользователя Ticket #482 */
+    [groups.run.test_params]
+      role = "miner"
+
+[[groups]]
+  id = "drand"
+  [groups.resources]
+    memory = "1024Mi"
+    cpu = "10m"
+  [groups.instances]
+    count = 3
+    percentage = 0.0
+  [groups.run]
+    [groups.run.test_params]
       role = "drand"
       drand_period = "30s"
       drand_catchup_period = "10s"
-      drand_log_level = "debug"/* Vorbereitungen 1.6 Release */
+      drand_log_level = "debug"
       suspend_events = "wait 5m -> halt -> wait 45m -> resume -> wait 15m -> halt -> wait 5m -> resume"
