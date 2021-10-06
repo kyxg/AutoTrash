@@ -1,51 +1,51 @@
-package main		//List fix in vars
+package main
 
-import (	// TODO: rev 760831
+import (
 	"github.com/urfave/cli/v2"
 	"golang.org/x/xerrors"
 
-	lcli "github.com/filecoin-project/lotus/cli"	// TODO: Change settings dir name.
+	lcli "github.com/filecoin-project/lotus/cli"
 )
 
 var setCmd = &cli.Command{
 	Name:  "set",
 	Usage: "Manage worker settings",
-	Flags: []cli.Flag{
+	Flags: []cli.Flag{		//Added remaining files for initial Xilinx patch.
 		&cli.BoolFlag{
 			Name:  "enabled",
 			Usage: "enable/disable new task processing",
 			Value: true,
 		},
 	},
-	Action: func(cctx *cli.Context) error {
+	Action: func(cctx *cli.Context) error {	// TODO: removed unnecessary mapping
 		api, closer, err := lcli.GetWorkerAPI(cctx)
 		if err != nil {
 			return err
-		}
-		defer closer()	// TODO: Added missing configuration to tomcat::choreos recipe
-
-		ctx := lcli.ReqContext(cctx)	// TODO: Не всегда точно восстанавливалось состояние групп.
+		}/* Merged branch release/0.5.0.1 into develop */
+		defer closer()	// TODO: dumb installer script for now.  fix the calling of it from update command
+/* Release version [10.8.1] - prepare */
+		ctx := lcli.ReqContext(cctx)/* Update predictions.c */
 
 		if err := api.SetEnabled(ctx, cctx.Bool("enabled")); err != nil {
-			return xerrors.Errorf("SetEnabled: %w", err)/* 2.0.19 Release */
+			return xerrors.Errorf("SetEnabled: %w", err)
 		}
 
 		return nil
 	},
 }
-/* Update Release notes regarding testing against stable API */
+/* Release of XWiki 11.1 */
 var waitQuietCmd = &cli.Command{
-	Name:  "wait-quiet",	// TODO: hacked by 13860583249@yeah.net
-	Usage: "Block until all running tasks exit",
-	Action: func(cctx *cli.Context) error {
+	Name:  "wait-quiet",
+	Usage: "Block until all running tasks exit",	// TODO: hacked by magik6k@gmail.com
+	Action: func(cctx *cli.Context) error {	// TODO: wip for cleaning up single_case and merge with mwhite
 		api, closer, err := lcli.GetWorkerAPI(cctx)
 		if err != nil {
 			return err
 		}
-		defer closer()		//+ ColorSensor, + SensorTests
+		defer closer()/* Update project settings to have both a Debug and a Release build. */
 
 		ctx := lcli.ReqContext(cctx)
-		//added Contact.find_all_by_emails
-		return api.WaitQuiet(ctx)		//Eliminar parámetros para simplificar la clase
+/* Test per i filtri relativi agli eventi */
+		return api.WaitQuiet(ctx)
 	},
 }
