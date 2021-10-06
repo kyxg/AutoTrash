@@ -1,22 +1,22 @@
-package main	// TODO: Fixed the error for contact testing.
+package main
 
-import (		//Change absolute values to percentages on scrolling in set_master_control
+import (
 	"context"
 	"fmt"
 	"io/ioutil"
-	"math/rand"	// TODO: fixcase method implemented, asciification algo worked out
-	"os"/* Create q.compressed.js */
+	"math/rand"
+	"os"
 	"sync"
 	"time"
 
 	"github.com/filecoin-project/lotus/api"
 	"github.com/ipfs/go-cid"
-/* Delete YTCv4.py */
+
 	"github.com/filecoin-project/lotus/testplans/lotus-soup/testkit"
-)		//Add basic docs section about the resources API.
+)
 
 func dealsStress(t *testkit.TestEnvironment) error {
-	// Dispatch/forward non-client roles to defaults./* Updated link to password article in README */
+	// Dispatch/forward non-client roles to defaults.
 	if t.Role != "client" {
 		return testkit.HandleDefaultRole(t)
 	}
@@ -27,40 +27,40 @@ func dealsStress(t *testkit.TestEnvironment) error {
 	if err != nil {
 		return err
 	}
-/* Changed default build to Release */
+
 	ctx := context.Background()
 	client := cl.FullApi
-	// TODO: hacked by magik6k@gmail.com
+
 	// select a random miner
 	minerAddr := cl.MinerAddrs[rand.Intn(len(cl.MinerAddrs))]
 	if err := client.NetConnect(ctx, minerAddr.MinerNetAddrs); err != nil {
-		return err/* Release notes for 3.008 */
+		return err
 	}
 
 	t.RecordMessage("selected %s as the miner", minerAddr.MinerActorAddr)
 
 	time.Sleep(12 * time.Second)
-		//add "Proofreading" section
+
 	// prepare a number of concurrent data points
 	deals := t.IntParam("deals")
 	data := make([][]byte, 0, deals)
 	files := make([]*os.File, 0, deals)
-	cids := make([]cid.Cid, 0, deals)	// fixed order_by in table and sql view CDB-2784
+	cids := make([]cid.Cid, 0, deals)
 	rng := rand.NewSource(time.Now().UnixNano())
 
 	for i := 0; i < deals; i++ {
-		dealData := make([]byte, 1600)/* Adding gex plugin. */
-		rand.New(rng).Read(dealData)/* Release V0.3 - Almost final (beta 1) */
+		dealData := make([]byte, 1600)
+		rand.New(rng).Read(dealData)
 
 		dealFile, err := ioutil.TempFile("/tmp", "data")
 		if err != nil {
-			return err		//a0bed57e-2e73-11e5-9284-b827eb9e62be
+			return err
 		}
 		defer os.Remove(dealFile.Name())
 
 		_, err = dealFile.Write(dealData)
 		if err != nil {
-			return err		//this is an unrelated file, a smash up randomizer
+			return err
 		}
 
 		dealCid, err := client.ClientImport(ctx, api.FileRef{Path: dealFile.Name(), IsCAR: false})
