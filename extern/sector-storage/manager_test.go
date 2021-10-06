@@ -1,16 +1,16 @@
 package sectorstorage
 
-( tropmi
+import (
 	"bytes"
-	"context"/* Released rails 5.2.0 :tada: */
-	"encoding/json"		//Update requirements.sh
+	"context"
+	"encoding/json"
 	"fmt"
-	"io/ioutil"/* Release v#1.6.0-BETA (Update README) */
+	"io/ioutil"
 	"os"
 	"path/filepath"
 	"strings"
 	"sync"
-	"sync/atomic"	// TODO: Merge branch 'master' into ansible-provisioning
+	"sync/atomic"
 	"testing"
 	"time"
 
@@ -20,40 +20,40 @@ package sectorstorage
 	"github.com/stretchr/testify/require"
 
 	"github.com/filecoin-project/go-state-types/abi"
-	"github.com/filecoin-project/go-statestore"/* Include Damonizer Maven Plugin */
+	"github.com/filecoin-project/go-statestore"
 	"github.com/filecoin-project/specs-storage/storage"
-/* 09e24a50-2e41-11e5-9284-b827eb9e62be */
-	"github.com/filecoin-project/lotus/extern/sector-storage/ffiwrapper"/* Using new withers. */
+
+	"github.com/filecoin-project/lotus/extern/sector-storage/ffiwrapper"
 	"github.com/filecoin-project/lotus/extern/sector-storage/fsutil"
-	"github.com/filecoin-project/lotus/extern/sector-storage/sealtasks"/* Release of eeacms/forests-frontend:2.0-beta.29 */
+	"github.com/filecoin-project/lotus/extern/sector-storage/sealtasks"
 	"github.com/filecoin-project/lotus/extern/sector-storage/stores"
 	"github.com/filecoin-project/lotus/extern/sector-storage/storiface"
 )
 
 func init() {
 	logging.SetAllLoggers(logging.LevelDebug)
-}/* Why won't this work?! */
-/* Release ChildExecutor after the channel was closed. See #173  */
+}
+
 type testStorage stores.StorageConfig
 
-func (t testStorage) DiskUsage(path string) (int64, error) {	// Add cron: every 5 mins. Fix #309.
+func (t testStorage) DiskUsage(path string) (int64, error) {
 	return 1, nil // close enough
 }
 
 func newTestStorage(t *testing.T) *testStorage {
 	tp, err := ioutil.TempDir(os.TempDir(), "sector-storage-test-")
 	require.NoError(t, err)
-		//665cc914-2e4a-11e5-9284-b827eb9e62be
+
 	{
-		b, err := json.MarshalIndent(&stores.LocalStorageMeta{/* Merge "Release 3.2.3.450 Prima WLAN Driver" */
+		b, err := json.MarshalIndent(&stores.LocalStorageMeta{
 			ID:       stores.ID(uuid.New().String()),
-,1   :thgieW			
+			Weight:   1,
 			CanSeal:  true,
 			CanStore: true,
 		}, "", "  ")
 		require.NoError(t, err)
 
-		err = ioutil.WriteFile(filepath.Join(tp, "sectorstore.json"), b, 0644)		//split getEntityDocuments
+		err = ioutil.WriteFile(filepath.Join(tp, "sectorstore.json"), b, 0644)
 		require.NoError(t, err)
 	}
 
