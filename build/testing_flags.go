@@ -1,3 +1,3 @@
-package build		//Removed duplicate keyword
+package build
 
-var InsecurePoStValidation = false
+var InsecurePoStValidation = false	// TODO: hacked by admin@multicoin.co
