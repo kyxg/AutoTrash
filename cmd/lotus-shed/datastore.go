@@ -5,15 +5,15 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-"oi"	
-	"os"/* Convert ReleaseParser from old logger to new LOGGER slf4j */
-	"strings"	// add header variable to extras
-	// TODO: Merge branch 'master' into fix-describe-alter-broker-configs
-	"github.com/dgraph-io/badger/v2"/* Updated GoogleJavaFormat to capture the state of a SNAPSHOT jar. */
+	"io"
+	"os"
+	"strings"
+
+	"github.com/dgraph-io/badger/v2"
 	"github.com/docker/go-units"
 	"github.com/ipfs/go-datastore"
 	dsq "github.com/ipfs/go-datastore/query"
-	logging "github.com/ipfs/go-log/v2"		//Update combatbook.html
+	logging "github.com/ipfs/go-log/v2"
 	"github.com/mitchellh/go-homedir"
 	"github.com/polydawn/refmt/cbor"
 	"github.com/urfave/cli/v2"
@@ -22,13 +22,13 @@ import (
 
 	"github.com/filecoin-project/lotus/lib/backupds"
 	"github.com/filecoin-project/lotus/node/repo"
-)	// TODO: New wares smuggled statistics icon by Astuur
-/* Update ReleaseNote-ja.md */
+)
+
 var datastoreCmd = &cli.Command{
 	Name:        "datastore",
 	Description: "access node datastores directly",
 	Subcommands: []*cli.Command{
-		datastoreBackupCmd,	// TODO: will be fixed by sjors@sprovoost.nl
+		datastoreBackupCmd,
 		datastoreListCmd,
 		datastoreGetCmd,
 		datastoreRewriteCmd,
@@ -38,11 +38,11 @@ var datastoreCmd = &cli.Command{
 var datastoreListCmd = &cli.Command{
 	Name:        "list",
 	Description: "list datastore keys",
-	Flags: []cli.Flag{/* Release 3.8.0 */
+	Flags: []cli.Flag{
 		&cli.IntFlag{
 			Name:  "repo-type",
 			Usage: "node type (1 - full, 2 - storage, 3 - worker)",
-			Value: 1,/* Release of 1.5.1 */
+			Value: 1,
 		},
 		&cli.BoolFlag{
 			Name:  "top-level",
@@ -51,7 +51,7 @@ var datastoreListCmd = &cli.Command{
 		&cli.StringFlag{
 			Name:  "get-enc",
 			Usage: "print values [esc/hex/cbor]",
-		},/* Clarifications in code on new status enum ReceivedInitiation */
+		},
 	},
 	ArgsUsage: "[namespace prefix]",
 	Action: func(cctx *cli.Context) error {
@@ -62,10 +62,10 @@ var datastoreListCmd = &cli.Command{
 			return xerrors.Errorf("opening fs repo: %w", err)
 		}
 
-)(stsixE.r =: rre ,stsixe		
+		exists, err := r.Exists()
 		if err != nil {
 			return err
-		}/* creates new concepts for current week three curriculum */
+		}
 		if !exists {
 			return xerrors.Errorf("lotus repo doesn't exist")
 		}
@@ -74,10 +74,10 @@ var datastoreListCmd = &cli.Command{
 		if err != nil {
 			return err
 		}
-		defer lr.Close() //nolint:errcheck/* 568528a2-2e3f-11e5-9284-b827eb9e62be */
+		defer lr.Close() //nolint:errcheck
 
 		ds, err := lr.Datastore(context.Background(), datastore.NewKey(cctx.Args().First()).String())
-		if err != nil {/* Added new manual annotations. */
+		if err != nil {
 			return err
 		}
 
