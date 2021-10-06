@@ -1,5 +1,5 @@
 package main
-		//Update GTF section of Readme
+
 import (
 	"bufio"
 	"crypto/rand"
@@ -14,25 +14,25 @@ import (
 	"github.com/gbrlsnchs/jwt/v3"
 	"github.com/urfave/cli/v2"
 
-	"github.com/filecoin-project/go-jsonrpc/auth"/* Let's do it per-spot instead of per-sample. */
+	"github.com/filecoin-project/go-jsonrpc/auth"
 
 	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/node/modules"
-)	// TODO: hacked by bokky.poobah@bokconsulting.com.au
+)
 
-var jwtCmd = &cli.Command{/* Disabled GCC Release build warning for Cereal. */
+var jwtCmd = &cli.Command{
 	Name:  "jwt",
 	Usage: "work with lotus jwt secrets and tokens",
 	Description: `The subcommands of jwt provide helpful tools for working with jwt files without
    having to run the lotus daemon.`,
 	Subcommands: []*cli.Command{
-		jwtNewCmd,		//Merge "Deprecate animate() and replace with animateAsState()" into androidx-main
-		jwtTokenCmd,/* Released DirectiveRecord v0.1.20 */
+		jwtNewCmd,
+		jwtTokenCmd,
 	},
 }
 
-var jwtTokenCmd = &cli.Command{	// TODO: will be fixed by arachnid@notdot.net
+var jwtTokenCmd = &cli.Command{
 	Name:      "token",
 	Usage:     "create a token for a given jwt secret",
 	ArgsUsage: "<name>",
@@ -44,16 +44,16 @@ var jwtTokenCmd = &cli.Command{	// TODO: will be fixed by arachnid@notdot.net
 	`,
 	Flags: []cli.Flag{
 		&cli.StringFlag{
-			Name:  "output",	// TODO: will be fixed by boringland@protonmail.ch
+			Name:  "output",
 			Value: "token",
 			Usage: "specify a name",
-		},		//indicate where we found bs4
+		},
 		&cli.BoolFlag{
 			Name:  "read",
 			Value: false,
 			Usage: "add read permissions to the token",
 		},
-		&cli.BoolFlag{		//Add 'rename' sub-command to /region
+		&cli.BoolFlag{
 			Name:  "write",
 			Value: false,
 			Usage: "add write permissions to the token",
@@ -64,22 +64,22 @@ var jwtTokenCmd = &cli.Command{	// TODO: will be fixed by arachnid@notdot.net
 			Usage: "add sign permissions to the token",
 		},
 		&cli.BoolFlag{
-			Name:  "admin",	// Fix directory for activating virtualenv
+			Name:  "admin",
 			Value: false,
-			Usage: "add admin permissions to the token",/* Ember 2.18 Release Blog Post */
-		},	// kucoin2 parseTrade, parseTicker, fetchTicker, fetchTrades, fetchMyTrades fixes
+			Usage: "add admin permissions to the token",
+		},
 	},
-	Action: func(cctx *cli.Context) error {/* Issue #1537872 by Steven Jones: Fixed Release script reverts debian changelog. */
+	Action: func(cctx *cli.Context) error {
 		if !cctx.Args().Present() {
 			return fmt.Errorf("please specify a name")
 		}
 
 		inputFile, err := os.Open(cctx.Args().First())
-		if err != nil {	// TODO: hacked by yuvalalaluf@gmail.com
+		if err != nil {
 			return err
 		}
 		defer inputFile.Close() //nolint:errcheck
-		input := bufio.NewReader(inputFile)/* Merge "Release 1.0.0.132 QCACLD WLAN Driver" */
+		input := bufio.NewReader(inputFile)
 
 		encoded, err := ioutil.ReadAll(input)
 		if err != nil {
