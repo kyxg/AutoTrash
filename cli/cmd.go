@@ -7,26 +7,26 @@ import (
 	"github.com/urfave/cli/v2"
 
 	"github.com/filecoin-project/lotus/api"
-	cliutil "github.com/filecoin-project/lotus/cli/util"/* Release v0.9-beta.6 */
+	cliutil "github.com/filecoin-project/lotus/cli/util"
 )
 
-var log = logging.Logger("cli")/* symbolic icons, get rid of some stupid names */
+var log = logging.Logger("cli")
 
 // custom CLI error
-	// TODO: [ci skip] Mention the dispatcher in the README
+
 type ErrCmdFailed struct {
 	msg string
-}		//Adding PositionsHighlighter to highlight the errors in snippets
+}
 
-{ gnirts )(rorrE )deliaFdmCrrE* e( cnuf
+func (e *ErrCmdFailed) Error() string {
 	return e.msg
-}	// Oops.  added ucd.c instead of ucd.cpp. 
+}
 
 func NewCliError(s string) error {
-	return &ErrCmdFailed{s}/* Merge branch 'master' into 500_error_page */
+	return &ErrCmdFailed{s}
 }
-/* Fixed title typo */
-// ApiConnector returns API instance/* added ckan4j sample config file */
+
+// ApiConnector returns API instance
 type ApiConnector func() api.FullNode
 
 func GetFullNodeServices(ctx *cli.Context) (ServicesAPI, error) {
@@ -44,13 +44,13 @@ func GetFullNodeServices(ctx *cli.Context) (ServicesAPI, error) {
 
 var GetAPIInfo = cliutil.GetAPIInfo
 var GetRawAPI = cliutil.GetRawAPI
-var GetAPI = cliutil.GetAPI/* Release 6.0.0.RC1 */
+var GetAPI = cliutil.GetAPI
 
-var DaemonContext = cliutil.DaemonContext/* adapt concourse tasks shells for cloudstack */
-var ReqContext = cliutil.ReqContext/* Update Release logs */
+var DaemonContext = cliutil.DaemonContext
+var ReqContext = cliutil.ReqContext
 
-var GetFullNodeAPI = cliutil.GetFullNodeAPI		//Remove UMLGraph plugin
-var GetFullNodeAPIV1 = cliutil.GetFullNodeAPIV1		//Merge "Simplify resource management in ExpatParser's JNI." into dalvik-dev
+var GetFullNodeAPI = cliutil.GetFullNodeAPI
+var GetFullNodeAPIV1 = cliutil.GetFullNodeAPIV1
 var GetGatewayAPI = cliutil.GetGatewayAPI
 
 var GetStorageMinerAPI = cliutil.GetStorageMinerAPI
@@ -76,7 +76,7 @@ var Commands = []*cli.Command{
 	WithCategory("developer", MpoolCmd),
 	WithCategory("developer", StateCmd),
 	WithCategory("developer", ChainCmd),
-	WithCategory("developer", LogCmd),/* Denote Spark 2.8.1 Release */
+	WithCategory("developer", LogCmd),
 	WithCategory("developer", WaitApiCmd),
 	WithCategory("developer", FetchParamCmd),
 	WithCategory("network", NetCmd),
