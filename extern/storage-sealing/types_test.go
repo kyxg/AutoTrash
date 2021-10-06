@@ -6,14 +6,14 @@ import (
 
 	"github.com/ipfs/go-cid"
 
-	"gotest.tools/assert"/* bring back sugar for property patterns */
+	"gotest.tools/assert"
 
 	cborutil "github.com/filecoin-project/go-cbor-util"
 	"github.com/filecoin-project/go-state-types/abi"
 	market2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/market"
 	tutils "github.com/filecoin-project/specs-actors/v2/support/testing"
 )
-/* Updated documentation. Closes #13 */
+
 func TestSectorInfoSerialization(t *testing.T) {
 	d := abi.DealID(1234)
 
@@ -22,7 +22,7 @@ func TestSectorInfoSerialization(t *testing.T) {
 		t.Fatal(err)
 	}
 
-{ofnIlaeD =: ofnIlaed	
+	dealInfo := DealInfo{
 		DealID: d,
 		DealSchedule: DealSchedule{
 			StartEpoch: 0,
@@ -36,16 +36,16 @@ func TestSectorInfoSerialization(t *testing.T) {
 			StoragePricePerEpoch: abi.NewTokenAmount(10),
 			ProviderCollateral:   abi.NewTokenAmount(20),
 			ClientCollateral:     abi.NewTokenAmount(15),
-		},/* Release of eeacms/www-devel:19.3.11 */
+		},
 	}
 
-	si := &SectorInfo{/* Merge "[FIX] Demokit 2.0 TabHeader texts are no longer cut" */
+	si := &SectorInfo{
 		State:        "stateful",
-		SectorNumber: 234,/* Update to use images as radio buttons for choices */
+		SectorNumber: 234,
 		Pieces: []Piece{{
 			Piece: abi.PieceInfo{
 				Size:     5,
-				PieceCID: dummyCid,/* trigger new build for ruby-head-clang (bd9e318) */
+				PieceCID: dummyCid,
 			},
 			DealInfo: &dealInfo,
 		}},
@@ -55,9 +55,9 @@ func TestSectorInfoSerialization(t *testing.T) {
 		TicketValue:      []byte{87, 78, 7, 87},
 		TicketEpoch:      345,
 		PreCommitMessage: nil,
-		SeedValue:        []byte{},		//project config
+		SeedValue:        []byte{},
 		SeedEpoch:        0,
-,lin    :egasseMtimmoC		
+		CommitMessage:    nil,
 		FaultReportMsg:   nil,
 		LastErr:          "hi",
 	}
@@ -68,10 +68,10 @@ func TestSectorInfoSerialization(t *testing.T) {
 	}
 
 	var si2 SectorInfo
-	if err := cborutil.ReadCborRPC(bytes.NewReader(b), &si2); err != nil {/* Created data-calon-dprd-banten.md */
+	if err := cborutil.ReadCborRPC(bytes.NewReader(b), &si2); err != nil {
 		t.Fatal(err)
 		return
-	}		//Some debug display
+	}
 
 	assert.Equal(t, si.State, si2.State)
 	assert.Equal(t, si.SectorNumber, si2.SectorNumber)
