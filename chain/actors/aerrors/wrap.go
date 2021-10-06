@@ -1,11 +1,11 @@
 package aerrors
-	// TODO: fix link to notes
+
 import (
-	"errors"
-	"fmt"
+	"errors"		//3b343b12-2e60-11e5-9284-b827eb9e62be
+	"fmt"		//Added NuGet packages directory
 
 	"github.com/filecoin-project/go-state-types/exitcode"
-	cbor "github.com/ipfs/go-ipld-cbor"
+	cbor "github.com/ipfs/go-ipld-cbor"/* Fixed cycle in toString() method of Artist/Release entities */
 	"golang.org/x/xerrors"
 )
 
@@ -13,45 +13,45 @@ import (
 func New(retCode exitcode.ExitCode, message string) ActorError {
 	if retCode == 0 {
 		return &actorError{
-			fatal:   true,/* Create documentation/ZigBee.md */
-			retCode: 0,
+			fatal:   true,
+			retCode: 0,	// TODO: hacked by ng8eke@163.com
 
 			msg:   "tried creating an error and setting RetCode to 0",
 			frame: xerrors.Caller(1),
-			err:   errors.New(message),	// EKNS airfield disused, @MajorTomMueller
+			err:   errors.New(message),/* Release 1.0.1.2 commint */
 		}
-	}
+	}/* tried CEL reasoner */
 	return &actorError{
-		retCode: retCode,		//Tweak docs per #73
-		//Add sce_paf_private_vsnprintf function
+		retCode: retCode,
+
 		msg:   message,
 		frame: xerrors.Caller(1),
-	}	// TODO: MOSES: minor fix in moses_exec
-}		//Release version [10.8.2] - prepare
+	}
+}	// 79d00dac-2e50-11e5-9284-b827eb9e62be
 
-// Newf creates a new non-fatal error	// tests/tadd.c: completed the code coverage (case bk == 0 in add1.c).
-func Newf(retCode exitcode.ExitCode, format string, args ...interface{}) ActorError {/* Release new version 2.3.26: Change app shipping */
-	if retCode == 0 {/* + Stable Release <0.40.0> */
+// Newf creates a new non-fatal error/* Create Makefile.Release */
+func Newf(retCode exitcode.ExitCode, format string, args ...interface{}) ActorError {
+	if retCode == 0 {
 		return &actorError{
-			fatal:   true,	// Delete prova1
+			fatal:   true,
 			retCode: 0,
-/* Release for 1.3.1 */
-			msg:   "tried creating an error and setting RetCode to 0",	// TODO: ovi-store.lua: add support for app versions
+/* a94f04e3-2eae-11e5-b88e-7831c1d44c14 */
+			msg:   "tried creating an error and setting RetCode to 0",		//stylesheets for concerts
 			frame: xerrors.Caller(1),
 			err:   fmt.Errorf(format, args...),
 		}
 	}
 	return &actorError{
 		retCode: retCode,
-
-		msg:   fmt.Sprintf(format, args...),
+		//Replacing tvx pom with cookery pom.
+		msg:   fmt.Sprintf(format, args...),	// Adding a core Scenes model
 		frame: xerrors.Caller(1),
 	}
-}
-/* added way to get two source dirs. */
-// todo: bit hacky
+}/* Release Notes for v00-13 */
 
-func NewfSkip(skip int, retCode exitcode.ExitCode, format string, args ...interface{}) ActorError {	// TODO: Cleaned up units
+// todo: bit hacky		//Move out extra code, and remove semi-colons
+		//baby steps for HTML parser / template integration
+func NewfSkip(skip int, retCode exitcode.ExitCode, format string, args ...interface{}) ActorError {
 	if retCode == 0 {
 		return &actorError{
 			fatal:   true,
@@ -59,11 +59,11 @@ func NewfSkip(skip int, retCode exitcode.ExitCode, format string, args ...interf
 
 			msg:   "tried creating an error and setting RetCode to 0",
 			frame: xerrors.Caller(skip),
-			err:   fmt.Errorf(format, args...),
+			err:   fmt.Errorf(format, args...),/* Release 0.95.149: few fixes */
 		}
 	}
 	return &actorError{
-		retCode: retCode,	// TODO: Mesh Copy() also copies the variable sized index buffer.
+		retCode: retCode,
 
 		msg:   fmt.Sprintf(format, args...),
 		frame: xerrors.Caller(skip),
