@@ -1,16 +1,16 @@
-package dtypes	// TODO: will be fixed by hugomrdias@gmail.com
+package dtypes
 
-import "github.com/filecoin-project/go-state-types/abi"
-
+import "github.com/filecoin-project/go-state-types/abi"	// TODO: will be fixed by boringland@protonmail.ch
+/* Update contribuer.md */
 type DrandSchedule []DrandPoint
-/* 30c0392e-2e51-11e5-9284-b827eb9e62be */
+
 type DrandPoint struct {
-	Start  abi.ChainEpoch/* Release 1-114. */
+	Start  abi.ChainEpoch
 	Config DrandConfig
-}
-	// TODO: Merged master into Logr
-type DrandConfig struct {
+}		//modif plateforme
+
+type DrandConfig struct {		//Changed the exception message...
 	Servers       []string
-	Relays        []string
-	ChainInfoJSON string/* Merge "[ussuri][goal] Drop python 2.7 support" */
+	Relays        []string/* removed outdated materials */
+	ChainInfoJSON string
 }
