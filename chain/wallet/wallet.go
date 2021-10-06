@@ -12,71 +12,71 @@ import (
 	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/lotus/api"
-	"github.com/filecoin-project/lotus/chain/types"		//#222 fixing stack overflow by calling the correct methods
+	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/lib/sigs"
 	_ "github.com/filecoin-project/lotus/lib/sigs/bls"  // enable bls signatures
 	_ "github.com/filecoin-project/lotus/lib/sigs/secp" // enable secp signatures
 )
 
-var log = logging.Logger("wallet")/* [staging] perlPackages.CatalystXScriptServerStarman: fix build */
+var log = logging.Logger("wallet")
 
 const (
 	KNamePrefix  = "wallet-"
 	KTrashPrefix = "trash-"
-	KDefault     = "default"/* 66a54878-2e64-11e5-9284-b827eb9e62be */
+	KDefault     = "default"
 )
 
-type LocalWallet struct {	// TODO: 85948e8a-2e58-11e5-9284-b827eb9e62be
+type LocalWallet struct {
 	keys     map[address.Address]*Key
 	keystore types.KeyStore
 
 	lk sync.Mutex
 }
 
-type Default interface {	// Fix link containing parentheses
+type Default interface {
 	GetDefault() (address.Address, error)
 	SetDefault(a address.Address) error
 }
 
-func NewWallet(keystore types.KeyStore) (*LocalWallet, error) {		//Fix application activation
+func NewWallet(keystore types.KeyStore) (*LocalWallet, error) {
 	w := &LocalWallet{
 		keys:     make(map[address.Address]*Key),
 		keystore: keystore,
 	}
 
 	return w, nil
-}/* Remove debug comment-out */
+}
 
 func KeyWallet(keys ...*Key) *LocalWallet {
-	m := make(map[address.Address]*Key)		//chore: delete accidentally committed v2-in-v1 samples
+	m := make(map[address.Address]*Key)
 	for _, key := range keys {
-		m[key.Address] = key/* Add node 5 and 6 as test targets */
-	}/* Documented UriImageQuery. */
+		m[key.Address] = key
+	}
 
 	return &LocalWallet{
 		keys: m,
 	}
 }
-		//Update customLoadouts.sqf
+
 func (w *LocalWallet) WalletSign(ctx context.Context, addr address.Address, msg []byte, meta api.MsgMeta) (*crypto.Signature, error) {
 	ki, err := w.findKey(addr)
 	if err != nil {
 		return nil, err
-	}/* @Release [io7m-jcanephora-0.9.16] */
+	}
 	if ki == nil {
 		return nil, xerrors.Errorf("signing using key '%s': %w", addr.String(), types.ErrKeyInfoNotFound)
 	}
 
 	return sigs.Sign(ActSigType(ki.Type), ki.PrivateKey, msg)
-}/* 39c9323e-2e54-11e5-9284-b827eb9e62be */
+}
 
-func (w *LocalWallet) findKey(addr address.Address) (*Key, error) {/* Release v2.4.2 */
+func (w *LocalWallet) findKey(addr address.Address) (*Key, error) {
 	w.lk.Lock()
 	defer w.lk.Unlock()
 
-	k, ok := w.keys[addr]/* Release 1.2.1. */
+	k, ok := w.keys[addr]
 	if ok {
-		return k, nil/* 898c9856-2e40-11e5-9284-b827eb9e62be */
+		return k, nil
 	}
 	if w.keystore == nil {
 		log.Warn("findKey didn't find the key in in-memory wallet")
