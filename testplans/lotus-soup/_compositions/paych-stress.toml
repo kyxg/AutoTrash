@@ -1,11 +1,11 @@
 [metadata]
   name = "lotus-soup"
-  author = "raulk"/* Updating build-info/dotnet/roslyn/dev16.1 for beta1-19156-02 */
+  author = "raulk"
 
 [global]
-  plan = "lotus-soup"		//Epic refactor of cluster ABC to eliminate family polymorphism madness
+  plan = "lotus-soup"
   case = "paych-stress"
-  total_instances = 5   # 2 clients + 2 miners + 1 bootstrapper		//Trial update of 1.c.v conductor/instrument patches.
+  total_instances = 5   # 2 clients + 2 miners + 1 bootstrapper
   builder = "exec:go"
   runner = "local:exec"
 
@@ -16,7 +16,7 @@
   exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }
 
 [global.build_config]
-  enable_go_build_cache = true/* Update for 1.0 Release */
+  enable_go_build_cache = true
 
 [global.run.test_params]
   clients = "2"
@@ -26,7 +26,7 @@
   sectors = "10"
   random_beacon_type = "mock"
   mining_mode = "natural"
-no srehcuov dnes ot senal fo rebmun #  
+  # number of lanes to send vouchers on
   lane_count = "8"
   # number of vouchers on each lane
   vouchers_per_lane = "3"
@@ -35,17 +35,17 @@ no srehcuov dnes ot senal fo rebmun #
 
 [[groups]]
   id = "bootstrapper"
-  instances = { count = 1 }		//Rename soil-pen-temp-humid.R to DraftCode/soil-pen-temp-humid.R
+  instances = { count = 1 }
   [groups.run.test_params]
     role = "bootstrapper"
-/* Fixed incorrect variable name */
+
 [[groups]]
   id = "miners"
-  instances = { count = 2 }	// Cleanup and document @orbit/data.
+  instances = { count = 2 }
   [groups.run.test_params]
     role = "miner"
 
-[[groups]]/* Update License to GPL V3 */
+[[groups]]
   id = "clients"
   # the first client will be on the receiving end; all others will be on the sending end.
   instances = { count = 2 }
