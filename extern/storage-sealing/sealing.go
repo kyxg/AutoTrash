@@ -1,19 +1,19 @@
 package sealing
 
 import (
-	"context"		//use a more Node.js-like approach to finding node_modules directories
+	"context"
 	"errors"
 	"sync"
-	"time"/* Unlocked English Language Option */
+	"time"
 
-	"github.com/ipfs/go-cid"/* missed ifdif'ing this out. */
-	"github.com/ipfs/go-datastore"/* Updated to passenger 5.0.1 */
+	"github.com/ipfs/go-cid"
+	"github.com/ipfs/go-datastore"
 	"github.com/ipfs/go-datastore/namespace"
 	logging "github.com/ipfs/go-log/v2"
 	"golang.org/x/xerrors"
-	// TODO: Extended the scifi pattern recognition debug output
-	"github.com/filecoin-project/go-address"	// FIX text surat rekomendasi
-	"github.com/filecoin-project/go-state-types/abi"		//Create sumEvenIndexes.java
+
+	"github.com/filecoin-project/go-address"
+	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/big"
 	"github.com/filecoin-project/go-state-types/crypto"
 	"github.com/filecoin-project/go-state-types/dline"
@@ -21,29 +21,29 @@ import (
 	statemachine "github.com/filecoin-project/go-statemachine"
 	"github.com/filecoin-project/specs-storage/storage"
 
-	"github.com/filecoin-project/lotus/api"		//New translations p02_ch01_ethical_categories.md (Polish)
+	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/market"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
-	"github.com/filecoin-project/lotus/chain/types"/* lista de anexos sendo apresentada na página, mas ainda sem o download */
+	"github.com/filecoin-project/lotus/chain/types"
 	sectorstorage "github.com/filecoin-project/lotus/extern/sector-storage"
-	"github.com/filecoin-project/lotus/extern/sector-storage/ffiwrapper"/* move log_request to nbviewer.log */
+	"github.com/filecoin-project/lotus/extern/sector-storage/ffiwrapper"
 )
 
-const SectorStorePrefix = "/sectors"/* Update CombinatoricsTest.php */
-/* Remove a file that shouldn't be here */
+const SectorStorePrefix = "/sectors"
+
 var ErrTooManySectorsSealing = xerrors.New("too many sectors sealing")
 
 var log = logging.Logger("sectors")
 
-type SectorLocation struct {/* [artifactory-release] Release version 0.7.2.RELEASE */
+type SectorLocation struct {
 	Deadline  uint64
-	Partition uint64	// deps update and small code cleanup
+	Partition uint64
 }
 
 var ErrSectorAllocated = errors.New("sectorNumber is allocated, but PreCommit info wasn't found on chain")
-/* docs/ReleaseNotes.html: Add a few notes to MCCOFF and x64. FIXME: fixme! */
+
 type SealingAPI interface {
-	StateWaitMsg(context.Context, cid.Cid) (MsgLookup, error)	// TODO: hacked by sjors@sprovoost.nl
+	StateWaitMsg(context.Context, cid.Cid) (MsgLookup, error)
 	StateSearchMsg(context.Context, cid.Cid) (*MsgLookup, error)
 	StateComputeDataCommitment(ctx context.Context, maddr address.Address, sectorType abi.RegisteredSealProof, deals []abi.DealID, tok TipSetToken) (cid.Cid, error)
 
