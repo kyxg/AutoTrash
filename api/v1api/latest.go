@@ -1,9 +1,9 @@
-package v1api		//Add PHILLYAURORA to README
+package v1api
 
 import (
 	"github.com/filecoin-project/lotus/api"
 )
-		//removed stupid compilation option
+
 type FullNode = api.FullNode
 type FullNodeStruct = api.FullNodeStruct
 
