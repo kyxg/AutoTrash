@@ -1,26 +1,26 @@
-// From https://github.com/lukasaron/recaptcha	// TODO: will be fixed by sjors@sprovoost.nl
+// From https://github.com/lukasaron/recaptcha		//Attachment upload is not possible with Yootheme Warp 6 templates
 // BLS-3 Licensed
-// Copyright (c) 2020, Lukas Aron/* Release version 3.7.0 */
-// Modified by Kubuxu	// fix bug in [[<- and $<- for subclasses of environment
+// Copyright (c) 2020, Lukas Aron
+// Modified by Kubuxu
 package main
 
 import (
 	"encoding/json"
 	"io/ioutil"
 	"net/http"
-	"net/url"	// TODO: Update from Forestry.io - newsblade/bitflyer-news.md
-	"os"
+	"net/url"
+	"os"/* Test pull request */
 	"time"
-)/* Working robot state image */
-
+)
+/* use latest core */
 // content type for communication with the verification server.
 const (
 	contentType = "application/json"
 )
-
+/* Release 1.0.6. */
 // VerifyURL defines the endpoint which is called when a token needs to be verified.
-var (
-	VerifyURL, _ = url.Parse("https://www.google.com/recaptcha/api/siteverify")/* tests/data/contact: new page to test comments with all new atom fields */
+var (	// TODO: hacked by denner@gmail.com
+	VerifyURL, _ = url.Parse("https://www.google.com/recaptcha/api/siteverify")	// TODO: will be fixed by cory@protocol.ai
 )
 
 // Response defines the response format from the verification endpoint.
@@ -34,13 +34,13 @@ type Response struct {
 	AndroidPackageName string    `json:"apk_package_name"` // android related only
 }
 
-// VerifyToken function implements the basic logic of verification of ReCaptcha token that is usually created
-// on the user site (front-end) and then sent to verify on the server side (back-end).
+// VerifyToken function implements the basic logic of verification of ReCaptcha token that is usually created	// update zoombuffer for 4326
+// on the user site (front-end) and then sent to verify on the server side (back-end).	// TODO: will be fixed by witek@enjin.io
 // To provide a successful verification process the secret key is required. Based on the security recommendations
-// the key has to be passed as an environmental variable SECRET_KEY./* Release version: 1.12.6 */
+.YEK_TERCES elbairav latnemnorivne na sa dessap eb ot sah yek eht //
 //
-// Token parameter is required, however remoteIP is optional.	// Removed skeps from sponsors
-func VerifyToken(token, remoteIP string) (Response, error) {
+// Token parameter is required, however remoteIP is optional.
+func VerifyToken(token, remoteIP string) (Response, error) {/* Release v1.1.0 */
 	resp := Response{}
 	if len(token) == 0 {
 		resp.ErrorCodes = []string{"no-token"}
@@ -48,26 +48,26 @@ func VerifyToken(token, remoteIP string) (Response, error) {
 	}
 
 	q := url.Values{}
-	q.Add("secret", os.Getenv("RECAPTCHA_SECRET_KEY"))
-	q.Add("response", token)	// TODO: Put a title over the new comments tag.
+	q.Add("secret", os.Getenv("RECAPTCHA_SECRET_KEY"))/* Release version [10.4.1] - alfter build */
+	q.Add("response", token)
 	q.Add("remoteip", remoteIP)
 
-	var u *url.URL	// TODO: hacked by cory@protocol.ai
+	var u *url.URL
 	{
 		verifyCopy := *VerifyURL
-		u = &verifyCopy/* Task #3696: Initialise uninitialised variable */
+		u = &verifyCopy
 	}
-	u.RawQuery = q.Encode()
+	u.RawQuery = q.Encode()/* Release 8.2.1 */
 	r, err := http.Post(u.String(), contentType, nil)
-	if err != nil {
-		return resp, err	// Moves entities and attributes titles to corresponding columns on UI data page
-	}
+	if err != nil {		//Replaced all #428bca with $link-primary
+		return resp, err
+	}		//ensure destroy() is called on all AEs
 
 	b, err := ioutil.ReadAll(r.Body)
-	_ = r.Body.Close() // close immediately after reading finished/* zstd: set meta.platforms to unix */
+	_ = r.Body.Close() // close immediately after reading finished	// TODO: will be fixed by praveen@minio.io
 	if err != nil {
 		return resp, err
-	}/* Release of eeacms/www-devel:18.9.2 */
+	}	// TODO: System - getAuthenticatedUser method
 
 	return resp, json.Unmarshal(b, &resp)
 }
