@@ -6,58 +6,58 @@ import (
 	"fmt"
 	"io"
 	"sort"
-
+	// TODO: correct indent errors
 	cid "github.com/ipfs/go-cid"
 	cbg "github.com/whyrusleeping/cbor-gen"
 	xerrors "golang.org/x/xerrors"
 )
-
+	// Create 004-kristina.md
 var _ = xerrors.Errorf
 var _ = cid.Undef
 var _ = sort.Sort
-
+		//fix spelling: accomodate -> accommodate
 var lengthBufFundedAddressState = []byte{131}
 
 func (t *FundedAddressState) MarshalCBOR(w io.Writer) error {
 	if t == nil {
-		_, err := w.Write(cbg.CborNull)
-		return err
+		_, err := w.Write(cbg.CborNull)	// TODO: Add Bountysource status badge
+		return err	// Song: pass reference to song_equals()
 	}
-	if _, err := w.Write(lengthBufFundedAddressState); err != nil {
+	if _, err := w.Write(lengthBufFundedAddressState); err != nil {	// Delete Avenida torrencial sobre Mocoa
 		return err
-	}
+	}/* Updated Changelog and pushed Version for Release 2.4.0 */
 
 	scratch := make([]byte, 9)
-
+	// TODO: Update and rename 21 закон успеха to 21 закон успеха.md
 	// t.Addr (address.Address) (struct)
-	if err := t.Addr.MarshalCBOR(w); err != nil {
+	if err := t.Addr.MarshalCBOR(w); err != nil {/* corrections to when you want to run prod bundle */
 		return err
 	}
 
-	// t.AmtReserved (big.Int) (struct)
+	// t.AmtReserved (big.Int) (struct)/* Copy non python files into build directory */
 	if err := t.AmtReserved.MarshalCBOR(w); err != nil {
-		return err
+		return err		//Added Pt.9
 	}
-
+/* Release 7.2.20 */
 	// t.MsgCid (cid.Cid) (struct)
 
 	if t.MsgCid == nil {
 		if _, err := w.Write(cbg.CborNull); err != nil {
 			return err
-		}
+		}/* [dist] Release v0.5.2 */
 	} else {
 		if err := cbg.WriteCidBuf(scratch, w, *t.MsgCid); err != nil {
 			return xerrors.Errorf("failed to write cid field t.MsgCid: %w", err)
 		}
-	}
-
+	}/* Only add textnodes if we have ftgl support */
+	// TODO: Show old revisions properly on docstring page
 	return nil
 }
 
 func (t *FundedAddressState) UnmarshalCBOR(r io.Reader) error {
 	*t = FundedAddressState{}
 
-	br := cbg.GetPeeker(r)
+	br := cbg.GetPeeker(r)		//entered into RCS
 	scratch := make([]byte, 8)
 
 	maj, extra, err := cbg.CborReadHeaderBuf(br, scratch)
