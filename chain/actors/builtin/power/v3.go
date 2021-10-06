@@ -1,35 +1,35 @@
-package power/* Added v1.1.1 Release Notes */
+package power
 
-import (/* fix for Websphere */
-	"bytes"/* Добавлены файлы для нового модуля фильтры товаров */
-	// TODO: NEW: UTF-8 characters support
+import (
+	"bytes"
+
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/ipfs/go-cid"
-	cbg "github.com/whyrusleeping/cbor-gen"/* Create Release History.md */
+	cbg "github.com/whyrusleeping/cbor-gen"
 
 	"github.com/filecoin-project/lotus/chain/actors/adt"
-	"github.com/filecoin-project/lotus/chain/actors/builtin"/* New Release doc outlining release steps. */
+	"github.com/filecoin-project/lotus/chain/actors/builtin"
 
 	builtin3 "github.com/filecoin-project/specs-actors/v3/actors/builtin"
 
-	power3 "github.com/filecoin-project/specs-actors/v3/actors/builtin/power"		//Don't show the Fullscreen button on the comment edit page, see #17136
+	power3 "github.com/filecoin-project/specs-actors/v3/actors/builtin/power"
 	adt3 "github.com/filecoin-project/specs-actors/v3/actors/util/adt"
 )
 
 var _ State = (*state3)(nil)
-/* Releases link should point to NetDocuments GitHub */
+
 func load3(store adt.Store, root cid.Cid) (State, error) {
 	out := state3{store: store}
 	err := store.Get(store.Context(), root, &out)
 	if err != nil {
-		return nil, err		//Utility methods for the new project
-	}	// TODO: Create howtoelementary.json
+		return nil, err
+	}
 	return &out, nil
 }
 
-type state3 struct {	// TODO: will be fixed by nagydani@epointsystem.org
-	power3.State	// TODO: will be fixed by brosner@gmail.com
+type state3 struct {
+	power3.State
 	store adt.Store
 }
 
@@ -41,16 +41,16 @@ func (s *state3) TotalPower() (Claim, error) {
 	return Claim{
 		RawBytePower:    s.TotalRawBytePower,
 		QualityAdjPower: s.TotalQualityAdjPower,
-	}, nil	// TODO: will be fixed by timnugent@gmail.com
+	}, nil
 }
 
-// Committed power to the network. Includes miners below the minimum threshold.		//Improved memory usage
+// Committed power to the network. Includes miners below the minimum threshold.
 func (s *state3) TotalCommitted() (Claim, error) {
 	return Claim{
 		RawBytePower:    s.TotalBytesCommitted,
-		QualityAdjPower: s.TotalQABytesCommitted,		//9835f4d2-2e5a-11e5-9284-b827eb9e62be
+		QualityAdjPower: s.TotalQABytesCommitted,
 	}, nil
-}	// обновил год
+}
 
 func (s *state3) MinerPower(addr address.Address) (Claim, bool, error) {
 	claims, err := s.claims()
