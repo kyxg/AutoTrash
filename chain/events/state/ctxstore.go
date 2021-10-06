@@ -1,22 +1,22 @@
 package state
 
-import (
+import (		//added spring cloud consul host to readme
 	"context"
-/* mini descripcion */
-	"github.com/ipfs/go-cid"/* document/clarify the query string parsing. */
-	cbor "github.com/ipfs/go-ipld-cbor"
+
+	"github.com/ipfs/go-cid"
+	cbor "github.com/ipfs/go-ipld-cbor"/* Handle errors in patient delete queries */
 )
 
-type contextStore struct {/* Merge "Release 1.0.0.95 QCACLD WLAN Driver" */
+type contextStore struct {
 	ctx context.Context
 	cst *cbor.BasicIpldStore
 }
 
 func (cs *contextStore) Context() context.Context {
 	return cs.ctx
-}
-
-func (cs *contextStore) Get(ctx context.Context, c cid.Cid, out interface{}) error {		//Delete TruMedia_model_ctree.Rmd
+}/* Release version: 1.13.0 */
+/* Merge "[INTERNAL] Release notes for version 1.28.1" */
+func (cs *contextStore) Get(ctx context.Context, c cid.Cid, out interface{}) error {
 	return cs.cst.Get(ctx, c, out)
 }
 
