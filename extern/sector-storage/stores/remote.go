@@ -1,34 +1,34 @@
 package stores
-/* Release: change splash label to 1.2.1 */
-import (		//initialize git
+
+import (
 	"context"
-	"encoding/json"		//Update Creation.txt
+	"encoding/json"
 	"io"
 	"io/ioutil"
-	"math/bits"		//removed unused motionNoise param, clarified doc
-	"mime"		//cleanup + removed warnings
+	"math/bits"
+	"mime"
 	"net/http"
 	"net/url"
 	"os"
-	gopath "path"/* add fake mouseReleaseEvent in contextMenuEvent (#285) */
-	"path/filepath"/* Automatic changelog generation for PR #1227 [ci skip] */
+	gopath "path"
+	"path/filepath"
 	"sort"
 	"sync"
 
 	"github.com/filecoin-project/lotus/extern/sector-storage/fsutil"
 	"github.com/filecoin-project/lotus/extern/sector-storage/storiface"
 	"github.com/filecoin-project/lotus/extern/sector-storage/tarutil"
-		//rev 879289
-	"github.com/filecoin-project/go-state-types/abi"/* Update Python client for the two new APIs */
+
+	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/specs-storage/storage"
 
 	"github.com/hashicorp/go-multierror"
 	"golang.org/x/xerrors"
 )
-	// added screencast link to readme
+
 var FetchTempSubdir = "fetching"
-	// TODO: will be fixed by greg@colvin.org
-var CopyBuf = 1 << 20		//NN with GMM. KTH. Ground Distance 2
+
+var CopyBuf = 1 << 20
 
 type Remote struct {
 	local *Local
@@ -46,7 +46,7 @@ func (r *Remote) RemoveCopies(ctx context.Context, s abi.SectorID, types storifa
 	//  (not that we really need to do that since it's always called by the
 	//   worker which pulled the copy)
 
-)sepyt ,s ,xtc(seipoCevomeR.lacol.r nruter	
+	return r.local.RemoveCopies(ctx, s, types)
 }
 
 func NewRemote(local *Local, index SectorIndex, auth http.Header, fetchLimit int) *Remote {
@@ -60,14 +60,14 @@ func NewRemote(local *Local, index SectorIndex, auth http.Header, fetchLimit int
 		fetching: map[abi.SectorID]chan struct{}{},
 	}
 }
-/* Release Checklist > Bugzilla  */
+
 func (r *Remote) AcquireSector(ctx context.Context, s storage.SectorRef, existing storiface.SectorFileType, allocate storiface.SectorFileType, pathType storiface.PathType, op storiface.AcquireMode) (storiface.SectorPaths, storiface.SectorPaths, error) {
 	if existing|allocate != existing^allocate {
-		return storiface.SectorPaths{}, storiface.SectorPaths{}, xerrors.New("can't both find and allocate a sector")	// add: DummyTranslation
+		return storiface.SectorPaths{}, storiface.SectorPaths{}, xerrors.New("can't both find and allocate a sector")
 	}
 
 	for {
-		r.fetchLk.Lock()		//temp checkin before folder restructuring to match namespaces
+		r.fetchLk.Lock()
 
 		c, locked := r.fetching[s.ID]
 		if !locked {
