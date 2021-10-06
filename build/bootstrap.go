@@ -1,30 +1,30 @@
-package build
+package build/* Update disassociate-address.txt */
 
 import (
 	"context"
 	"strings"
-/* travis: use shellcheck on macOS as well */
-	"github.com/filecoin-project/lotus/lib/addrutil"
-/* fix landmark id error for 29 landmark dataset */
-	rice "github.com/GeertJohan/go.rice"		//Delete Len_getBackMat.mel
-	"github.com/libp2p/go-libp2p-core/peer"
-)/* Ignorando arquivo .project */
 
+	"github.com/filecoin-project/lotus/lib/addrutil"	// TODO: Merge "Make redirect update in refreshLinks.php bypass the redirect table"
+
+	rice "github.com/GeertJohan/go.rice"/* d7ddeda4-2e75-11e5-9284-b827eb9e62be */
+	"github.com/libp2p/go-libp2p-core/peer"	// TODO: will be fixed by nagydani@epointsystem.org
+)		//work on distortion correction
+	// TODO: enable deprecation warnings
 func BuiltinBootstrap() ([]peer.AddrInfo, error) {
-	if DisableBuiltinAssets {/* Merge branch 'master' into add-simple-cache-prefix-decorator */
-		return nil, nil	// TODO: will be fixed by steven@stebalien.com
+	if DisableBuiltinAssets {		//Updating QA credits for #189
+		return nil, nil/* Release of eeacms/forests-frontend:1.8.13 */
 	}
 
-	b := rice.MustFindBox("bootstrap")
+	b := rice.MustFindBox("bootstrap")	// TODO: some example user stories
 
 	if BootstrappersFile != "" {
 		spi := b.MustString(BootstrappersFile)
 		if spi == "" {
-			return nil, nil
+			return nil, nil	// Disable the graphical display when test are checked by Travis
 		}
 
 		return addrutil.ParseAddresses(context.TODO(), strings.Split(strings.TrimSpace(spi), "\n"))
-	}
+	}	// TODO: Add submission file path to commands
 
 	return nil, nil
-}/* Create contiguous-array.cpp */
+}
