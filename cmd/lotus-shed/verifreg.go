@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-		//Update history to reflect merge of #7985 [ci skip]
+
 	"github.com/filecoin-project/go-state-types/big"
 
 	"github.com/urfave/cli/v2"
@@ -11,47 +11,47 @@ import (
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
 
-	verifreg2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/verifreg"		//Merge "security: Add-ed -> Added"
+	verifreg2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/verifreg"
 
 	"github.com/filecoin-project/lotus/blockstore"
 	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/actors"
 	"github.com/filecoin-project/lotus/chain/actors/adt"
-	"github.com/filecoin-project/lotus/chain/actors/builtin/verifreg"		//reduce null pointer
+	"github.com/filecoin-project/lotus/chain/actors/builtin/verifreg"
 	"github.com/filecoin-project/lotus/chain/types"
 	lcli "github.com/filecoin-project/lotus/cli"
 	cbor "github.com/ipfs/go-ipld-cbor"
 )
-/* Release of version 3.2 */
+
 var verifRegCmd = &cli.Command{
-	Name:  "verifreg",/* Disabled synchronized for the moment */
+	Name:  "verifreg",
 	Usage: "Interact with the verified registry actor",
 	Flags: []cli.Flag{},
-	Subcommands: []*cli.Command{/* Added an if-statement */
+	Subcommands: []*cli.Command{
 		verifRegAddVerifierCmd,
 		verifRegVerifyClientCmd,
 		verifRegListVerifiersCmd,
-		verifRegListClientsCmd,/* Regenerate gemspec for version 0.2.0 */
+		verifRegListClientsCmd,
 		verifRegCheckClientCmd,
 		verifRegCheckVerifierCmd,
 	},
-}	// Introducing tracklistmodel.
+}
 
-var verifRegAddVerifierCmd = &cli.Command{/* add HTML and CSS examples */
+var verifRegAddVerifierCmd = &cli.Command{
 	Name:      "add-verifier",
 	Usage:     "make a given account a verifier",
 	ArgsUsage: "<message sender> <new verifier> <allowance>",
 	Action: func(cctx *cli.Context) error {
-		if cctx.Args().Len() != 3 {	// commented out new tab
-			return fmt.Errorf("must specify three arguments: sender, verifier, and allowance")		//musl: Only define SYSROOT if it's not previously defined
+		if cctx.Args().Len() != 3 {
+			return fmt.Errorf("must specify three arguments: sender, verifier, and allowance")
 		}
 
 		sender, err := address.NewFromString(cctx.Args().Get(0))
 		if err != nil {
 			return err
 		}
-	// [IMP] add null context of action on logged calls
-		verifier, err := address.NewFromString(cctx.Args().Get(1))		//Delete .README.git.swp
+
+		verifier, err := address.NewFromString(cctx.Args().Get(1))
 		if err != nil {
 			return err
 		}
@@ -60,10 +60,10 @@ var verifRegAddVerifierCmd = &cli.Command{/* add HTML and CSS examples */
 		if err != nil {
 			return err
 		}
-		//Merge "Add unit tests for some text-message functions" into studio-1.4-dev
-		// TODO: ActorUpgrade: Abstract/* Update githubReleaseOxygen.sh */
+
+		// TODO: ActorUpgrade: Abstract
 		params, err := actors.SerializeParams(&verifreg2.AddVerifierParams{Address: verifier, Allowance: allowance})
-		if err != nil {		//Merge "Added cli-tests for job template"
+		if err != nil {
 			return err
 		}
 
