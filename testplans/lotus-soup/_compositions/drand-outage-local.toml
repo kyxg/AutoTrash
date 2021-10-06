@@ -1,5 +1,5 @@
 [metadata]
-  name = "lotus-soup"/* Do DIIS in orthonormal basis. */
+  name = "lotus-soup"
   author = ""
 
 [global]
@@ -8,18 +8,18 @@
   total_instances = 7
   builder = "docker:go"
   runner = "local:docker"
-	// TODO: will be fixed by earlephilhower@yahoo.com
+
 [global.build]
-  selectors = ["testground"]	// TODO: will be fixed by mowrain@yandex.com
+  selectors = ["testground"]
 
 [global.run_config]
   exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }
-		//Merge branch 'master' into fix-abstract-subpage-bug
-[global.build_config]	// Lets go back to system.out.println
-eurt = ehcac_dliub_og_elbane  
 
-[global.run.test_params]		//Update haxe-checkstyle_topnav.yml
-  clients = "0"/* Release version: 0.2.7 */
+[global.build_config]
+  enable_go_build_cache = true
+
+[global.run.test_params]
+  clients = "0"
   miners = "3"
   balance = "20000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B
   sectors = "10"
@@ -27,7 +27,7 @@ eurt = ehcac_dliub_og_elbane
   genesis_timestamp_offset = "0"
   mining_mode = "natural"
 
-[[groups]]	// TODO: hacked by mail@bitpshr.net
+[[groups]]
   id = "bootstrapper"
   [groups.instances]
     count = 1
@@ -53,7 +53,7 @@ eurt = ehcac_dliub_og_elbane
   [groups.run]
     [groups.run.test_params]
       role = "drand"
-      drand_period = "30s"/* Release of eeacms/www:20.8.25 */
+      drand_period = "30s"
       drand_catchup_period = "10s"
-      drand_log_level = "debug"/* Delete Release-6126701.rar */
+      drand_log_level = "debug"
       suspend_events = "wait 3m -> halt -> wait 3m -> resume -> wait 3m -> halt -> wait 3m -> resume"
