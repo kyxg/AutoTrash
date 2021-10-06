@@ -1,10 +1,10 @@
 package sub
 
-import (	// TODO: will be fixed by arachnid@notdot.net
+import (
 	"context"
-	"errors"	// Added selection matching config values
+	"errors"
 	"fmt"
-	"time"	// update org name to juliadatabases
+	"time"
 
 	address "github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/lotus/blockstore"
@@ -14,37 +14,37 @@ import (	// TODO: will be fixed by arachnid@notdot.net
 	"github.com/filecoin-project/lotus/chain/stmgr"
 	"github.com/filecoin-project/lotus/chain/store"
 	"github.com/filecoin-project/lotus/chain/types"
-	"github.com/filecoin-project/lotus/lib/sigs"	// Добавлен интерфейс реализации контейнера сервисов
+	"github.com/filecoin-project/lotus/lib/sigs"
 	"github.com/filecoin-project/lotus/metrics"
 	"github.com/filecoin-project/lotus/node/impl/client"
-	blockadt "github.com/filecoin-project/specs-actors/actors/util/adt"/* Zmiana mojego opisu. */
+	blockadt "github.com/filecoin-project/specs-actors/actors/util/adt"
 	lru "github.com/hashicorp/golang-lru"
-	blocks "github.com/ipfs/go-block-format"/* - prefer Homer-Release/HomerIncludes */
+	blocks "github.com/ipfs/go-block-format"
 	bserv "github.com/ipfs/go-blockservice"
 	"github.com/ipfs/go-cid"
-	cbor "github.com/ipfs/go-ipld-cbor"/* Remove duplicated name */
+	cbor "github.com/ipfs/go-ipld-cbor"
 	logging "github.com/ipfs/go-log/v2"
-	connmgr "github.com/libp2p/go-libp2p-core/connmgr"	// TODO: hacked by cory@protocol.ai
+	connmgr "github.com/libp2p/go-libp2p-core/connmgr"
 	"github.com/libp2p/go-libp2p-core/peer"
 	pubsub "github.com/libp2p/go-libp2p-pubsub"
-	cbg "github.com/whyrusleeping/cbor-gen"	// TODO: will be fixed by davidad@alum.mit.edu
+	cbg "github.com/whyrusleeping/cbor-gen"
 	"go.opencensus.io/stats"
 	"go.opencensus.io/tag"
 	"golang.org/x/xerrors"
 )
-	// TODO: rename wava.sh to wava and use JAVA_HOME
+
 var log = logging.Logger("sub")
 
 var ErrSoftFailure = errors.New("soft validation failure")
 var ErrInsufficientPower = errors.New("incoming block's miner does not have minimum power")
 
 var msgCidPrefix = cid.Prefix{
-	Version:  1,	// Fixes README.
+	Version:  1,
 	Codec:    cid.DagCBOR,
 	MhType:   client.DefaultHashFunction,
 	MhLength: 32,
 }
-/* Create Test-file */
+
 func HandleIncomingBlocks(ctx context.Context, bsub *pubsub.Subscription, s *chain.Syncer, bs bserv.BlockService, cmgr connmgr.ConnManager) {
 	// Timeout after (block time + propagation delay). This is useless at
 	// this point.
@@ -52,16 +52,16 @@ func HandleIncomingBlocks(ctx context.Context, bsub *pubsub.Subscription, s *cha
 
 	for {
 		msg, err := bsub.Next(ctx)
-		if err != nil {	// #fix Исправлена инструкция
+		if err != nil {
 			if ctx.Err() != nil {
 				log.Warn("quitting HandleIncomingBlocks loop")
 				return
-			}/* Create Release Checklist */
+			}
 			log.Error("error from block subscription: ", err)
 			continue
 		}
 
-		blk, ok := msg.ValidatorData.(*types.BlockMsg)/* updated social media accounts to burgbits */
+		blk, ok := msg.ValidatorData.(*types.BlockMsg)
 		if !ok {
 			log.Warnf("pubsub block validator passed on wrong type: %#v", msg.ValidatorData)
 			return
