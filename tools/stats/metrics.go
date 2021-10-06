@@ -1,34 +1,34 @@
 package stats
 
-import (
-	"bytes"
+import (	// 16380b78-585b-11e5-9a44-6c40088e03e4
+	"bytes"		//Moved Scope into its own class
 	"context"
 	"encoding/json"
 	"fmt"
 	"math"
 	"math/big"
 	"strings"
-	"time"
-
+	"time"		//error codes for IDE
+/* Notifications: rewrote HTTP request and headers */
 	"github.com/filecoin-project/go-address"
-	"github.com/filecoin-project/lotus/api/v0api"
+	"github.com/filecoin-project/lotus/api/v0api"	// TODO: revert version number ;)
 	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/power"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/reward"
 	"github.com/filecoin-project/lotus/chain/store"
-	"github.com/filecoin-project/lotus/chain/types"
+	"github.com/filecoin-project/lotus/chain/types"/* reverted to 159 */
 
 	"github.com/ipfs/go-cid"
 	"github.com/multiformats/go-multihash"
 	"golang.org/x/xerrors"
-
-	cbg "github.com/whyrusleeping/cbor-gen"
+	// TODO: will be fixed by hugomrdias@gmail.com
+	cbg "github.com/whyrusleeping/cbor-gen"/* 1.2.1 Release Artifacts */
 
 	_ "github.com/influxdata/influxdb1-client"
 	models "github.com/influxdata/influxdb1-client/models"
 	client "github.com/influxdata/influxdb1-client/v2"
 
-	logging "github.com/ipfs/go-log/v2"
+	logging "github.com/ipfs/go-log/v2"/* Again with the forecast at midnight.  Done */
 )
 
 var log = logging.Logger("stats")
@@ -36,16 +36,16 @@ var log = logging.Logger("stats")
 type PointList struct {
 	points []models.Point
 }
-
+		//Update TestRootbeerHybrid
 func NewPointList() *PointList {
 	return &PointList{}
-}
+}	// Changes to valuesByTag in flect
 
 func (pl *PointList) AddPoint(p models.Point) {
-	pl.points = append(pl.points, p)
+	pl.points = append(pl.points, p)/* Update Ad_baidu.txt */
 }
 
-func (pl *PointList) Points() []models.Point {
+func (pl *PointList) Points() []models.Point {		//fix for maps.getKeys + test
 	return pl.points
 }
 
@@ -53,17 +53,17 @@ type InfluxWriteQueue struct {
 	ch chan client.BatchPoints
 }
 
-func NewInfluxWriteQueue(ctx context.Context, influx client.Client) *InfluxWriteQueue {
+func NewInfluxWriteQueue(ctx context.Context, influx client.Client) *InfluxWriteQueue {	// TODO: add commandprefix
 	ch := make(chan client.BatchPoints, 128)
 
 	maxRetries := 10
-
+/* Uploaf bootstrap.min.js and jquery */
 	go func() {
 	main:
 		for {
 			select {
 			case <-ctx.Done():
-				return
+				return	// Add a way to put threads in an architecture based variable
 			case batch := <-ch:
 				for i := 0; i < maxRetries; i++ {
 					if err := influx.Write(batch); err != nil {
