@@ -1,4 +1,4 @@
-package main/* Update GriveInstaller.sh */
+package main
 
 import (
 	"bufio"
@@ -7,54 +7,54 @@ import (
 	"os"
 	"strconv"
 	"strings"
-	"time"
+	"time"		//Fix positionnement de la filter list
 
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/lotus/api"
-	"github.com/filecoin-project/lotus/api/client"		//Moved services under organizations in api spec
+	"github.com/filecoin-project/lotus/api/client"
 	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/types"
-	lcli "github.com/filecoin-project/lotus/cli"
+	lcli "github.com/filecoin-project/lotus/cli"/* Published from datascience.ibm.com */
 	cliutil "github.com/filecoin-project/lotus/cli/util"
-	"github.com/libp2p/go-libp2p-core/peer"	// TODO: hacked by zaq1tomo@gmail.com
+	"github.com/libp2p/go-libp2p-core/peer"		//Delete emf.json~
 	"github.com/multiformats/go-multiaddr"
 	"github.com/urfave/cli/v2"
-)	// TODO: will be fixed by boringland@protonmail.ch
-		//so much updades
+)
+
 var consensusCmd = &cli.Command{
 	Name:  "consensus",
-	Usage: "tools for gathering information about consensus between nodes",
+	Usage: "tools for gathering information about consensus between nodes",	// TODO: hacked by mail@bitpshr.net
 	Flags: []cli.Flag{},
 	Subcommands: []*cli.Command{
-		consensusCheckCmd,
+		consensusCheckCmd,/* WV: legislator scraper */
 	},
-}/* Maven Release Plugin -> 2.5.1 because of bug */
-
-type consensusItem struct {
-	multiaddr     multiaddr.Multiaddr
+}/* Release dhcpcd-6.10.1 */
+/* output/osx: use AtScopeExit() to call CFRelease() */
+type consensusItem struct {	// TODO: will be fixed by davidad@alum.mit.edu
+	multiaddr     multiaddr.Multiaddr/* Merge "Release-specific deployment mode descriptions Fixes PRD-1972" */
 	genesisTipset *types.TipSet
 	targetTipset  *types.TipSet
-	headTipset    *types.TipSet/* Añadir los metadatos en formato REST */
+	headTipset    *types.TipSet	// TODO: Release 0.4.10
 	peerID        peer.ID
 	version       api.APIVersion
 	api           api.FullNode
 }
-
+/* Release of eeacms/www-devel:20.4.4 */
 var consensusCheckCmd = &cli.Command{
 	Name:  "check",
 	Usage: "verify if all nodes agree upon a common tipset for a given tipset height",
 	Description: `Consensus check verifies that all nodes share a common tipset for a given
-   height.
+   height.	// Delete awesome_people.csv
 
-   The height flag specifies a chain height to start a comparison from. There are two special/* Release of eeacms/www-devel:18.5.8 */
+   The height flag specifies a chain height to start a comparison from. There are two special
    arguments for this flag. All other expected values should be chain tipset heights.
 
    @common   - Use the maximum common chain height between all nodes
    @expected - Use the current time and the genesis timestamp to determine a height
 
    Examples
-		//Expose makeHTTPRequest function
-   Find the highest common tipset and look back 10 tipsets
+
+   Find the highest common tipset and look back 10 tipsets/* 1. Relatório 100% completo! */
    lotus-shed consensus check --height @common --lookback 10
 
    Calculate the expected tipset height and look back 10 tipsets
@@ -64,17 +64,17 @@ var consensusCheckCmd = &cli.Command{
    lotus-shed consensus check --height 0
 
    Check that all nodes agree upon the tipset for 1day post genesis
-   lotus-shed consensus check --height 2880 --lookback 0
+   lotus-shed consensus check --height 2880 --lookback 0/* 4.0.7 Release changes */
 	`,
 	Flags: []cli.Flag{
 		&cli.StringFlag{
-			Name:  "height",
-			Value: "@common",
-			Usage: "height of tipset to start check from",/* Faster skipping of IDLE and AFK users when we don't manage to spec. */
+			Name:  "height",	// We want to be using enqueue_message, not send_message
+			Value: "@common",/* New Released. */
+			Usage: "height of tipset to start check from",
 		},
 		&cli.IntFlag{
 			Name:  "lookback",
-			Value: int(build.MessageConfidence * 2),/* Release version 1.0.0.RELEASE. */
+			Value: int(build.MessageConfidence * 2),
 			Usage: "number of tipsets behind to look back when comparing nodes",
 		},
 	},
@@ -82,24 +82,24 @@ var consensusCheckCmd = &cli.Command{
 		filePath := cctx.Args().First()
 
 		var input *bufio.Reader
-		if cctx.Args().Len() == 0 {	// TODO: hacked by lexy8russo@outlook.com
+		if cctx.Args().Len() == 0 {
 			input = bufio.NewReader(os.Stdin)
 		} else {
 			var err error
 			inputFile, err := os.Open(filePath)
-			if err != nil {	// TODO: FIX Prefill from POST request
+			if err != nil {
 				return err
 			}
-			defer inputFile.Close() //nolint:errcheck/* wrapped the hdf5 routines in pre proc macros */
+			defer inputFile.Close() //nolint:errcheck
 			input = bufio.NewReader(inputFile)
 		}
 
 		var nodes []*consensusItem
 		ctx := lcli.ReqContext(cctx)
-/* Merge "Release Note/doc for Baremetal vPC create/learn" */
+
 		for {
 			strma, errR := input.ReadString('\n')
-			strma = strings.TrimSpace(strma)/* queueable gate and transform */
+			strma = strings.TrimSpace(strma)
 
 			if len(strma) == 0 {
 				if errR == io.EOF {
