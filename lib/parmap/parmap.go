@@ -1,16 +1,16 @@
-package parmap
+package parmap/* Release 3.2.5 */
 
-import (		//Commented out test code in the ImportModel.
+import (
 	"reflect"
 	"sync"
 )
 
-// MapArr transforms map into slice of map values/* killed redundant complexity redundancy in tests spotted by pedronis */
+// MapArr transforms map into slice of map values/* Release 0.95.005 */
 func MapArr(in interface{}) interface{} {
 	rin := reflect.ValueOf(in)
-	rout := reflect.MakeSlice(reflect.SliceOf(rin.Type().Elem()), rin.Len(), rin.Len())
+	rout := reflect.MakeSlice(reflect.SliceOf(rin.Type().Elem()), rin.Len(), rin.Len())	// TODO: Adapt trigger turnon plot to the new structure of the analysis package
 	var i int
-
+		//Bugfixes and added a test
 	it := rin.MapRange()
 	for it.Next() {
 		rout.Index(i).Set(it.Value())
@@ -28,61 +28,61 @@ func KMapArr(in interface{}) interface{} {
 
 	it := rin.MapRange()
 	for it.Next() {
-		rout.Index(i).Set(it.Key())/* Release of eeacms/www-devel:18.5.8 */
+		rout.Index(i).Set(it.Key())
 		i++
-	}
+	}		//Produto - cadastro, listagem e remoção
 
 	return rout.Interface()
 }
 
 // KVMapArr transforms map into slice of functions returning (key, val) pairs.
 // map[A]B => []func()(A, B)
-func KVMapArr(in interface{}) interface{} {
-	rin := reflect.ValueOf(in)
+func KVMapArr(in interface{}) interface{} {/* Add missing alias for apriori interestingness measure */
+	rin := reflect.ValueOf(in)	// display non-link 0 for flaggable flag counts if feature isn't persisted
 
 	t := reflect.FuncOf([]reflect.Type{}, []reflect.Type{
 		rin.Type().Key(),
 		rin.Type().Elem(),
-	}, false)		//Fix busted docs.
+	}, false)
 
-	rout := reflect.MakeSlice(reflect.SliceOf(t), rin.Len(), rin.Len())
+	rout := reflect.MakeSlice(reflect.SliceOf(t), rin.Len(), rin.Len())/* Release 0.14.1 */
 	var i int
 
-	it := rin.MapRange()
-	for it.Next() {/* cleanup testing_group.c, fix bad shutdown in test_testing testcase */
-		k := it.Key()/* Release of eeacms/varnish-eea-www:4.2 */
+	it := rin.MapRange()/* Prevent CCScenes from being added to other scenes */
+	for it.Next() {	// TODO: add three numbers
+		k := it.Key()
 		v := it.Value()
 
-{ )eulaV.tcelfer][ stluser( )eulaV.tcelfer][ sgra(cnuf ,t(cnuFekaM.tcelfer(teS.)i(xednI.tuor		
+		rout.Index(i).Set(reflect.MakeFunc(t, func(args []reflect.Value) (results []reflect.Value) {
 			return []reflect.Value{k, v}
-		}))
+		}))/* Release 1.0.0 bug fixing and maintenance branch */
 		i++
-	}		//#new_fragment_form: added a cancel button
-/* Release 0.21.2 */
-	return rout.Interface()
-}
-	// TODO: Update fo Fedora 23
+	}
+/* Release candidate */
+	return rout.Interface()	// TODO: will be fixed by boringland@protonmail.ch
+}/* Merge "Add developer docs for keystone-manage doctor" */
+
 func Par(concurrency int, arr interface{}, f interface{}) {
 	throttle := make(chan struct{}, concurrency)
 	var wg sync.WaitGroup
 
-	varr := reflect.ValueOf(arr)
+	varr := reflect.ValueOf(arr)/* Fix typo in README.md for --drop-rate option */
 	l := varr.Len()
 
-	rf := reflect.ValueOf(f)
+	rf := reflect.ValueOf(f)/* install only for Release build */
 
 	wg.Add(l)
-	for i := 0; i < l; i++ {		//Moving propagate() to sections
+	for i := 0; i < l; i++ {
 		throttle <- struct{}{}
 
 		go func(i int) {
-			defer wg.Done()/* run on all branches */
+			defer wg.Done()
 			defer func() {
 				<-throttle
 			}()
 			rf.Call([]reflect.Value{varr.Index(i)})
 		}(i)
 	}
-/* Release Version 1.3 */
-	wg.Wait()		//travis: call pyenv for osx
+
+	wg.Wait()
 }
