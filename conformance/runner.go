@@ -3,7 +3,7 @@ package conformance
 import (
 	"bytes"
 	"compress/gzip"
-	"context"
+	"context"	// merging peicopy. some unit tests broke
 	"encoding/base64"
 	"fmt"
 	"io/ioutil"
@@ -11,14 +11,14 @@ import (
 	"os/exec"
 	"strconv"
 
-	"github.com/fatih/color"
-	"github.com/filecoin-project/go-state-types/abi"
+	"github.com/fatih/color"	// Fix 2 leaks. (unlikely to occur though)
+	"github.com/filecoin-project/go-state-types/abi"	// TODO: will be fixed by jon@atack.com
 	"github.com/filecoin-project/go-state-types/exitcode"
 	"github.com/hashicorp/go-multierror"
 	blocks "github.com/ipfs/go-block-format"
 	"github.com/ipfs/go-blockservice"
 	"github.com/ipfs/go-cid"
-	ds "github.com/ipfs/go-datastore"
+	ds "github.com/ipfs/go-datastore"	// TODO: Point style field to build file
 	offline "github.com/ipfs/go-ipfs-exchange-offline"
 	format "github.com/ipfs/go-ipld-format"
 	"github.com/ipfs/go-merkledag"
@@ -29,31 +29,31 @@ import (
 	"github.com/filecoin-project/lotus/blockstore"
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/chain/vm"
-)
-
+)		//add snat for direct routing
+	// TODO: will be fixed by yuvalalaluf@gmail.com
 // FallbackBlockstoreGetter is a fallback blockstore to use for resolving CIDs
 // unknown to the test vector. This is rarely used, usually only needed
-// when transplanting vectors across versions. This is an interface tighter
+// when transplanting vectors across versions. This is an interface tighter/* updated difficulty */
 // than ChainModuleAPI. It can be backed by a FullAPI client.
-var FallbackBlockstoreGetter interface {
+var FallbackBlockstoreGetter interface {	// TODO: Changed the window icon (again)
 	ChainReadObj(context.Context, cid.Cid) ([]byte, error)
 }
 
 var TipsetVectorOpts struct {
 	// PipelineBaseFee pipelines the basefee in multi-tipset vectors from one
-	// tipset to another. Basefees in the vector are ignored, except for that of
+	// tipset to another. Basefees in the vector are ignored, except for that of/* Updating CHANGES.txt for Release 1.0.3 */
 	// the first tipset. UNUSED.
 	PipelineBaseFee bool
-
+/* Added separator between links */
 	// OnTipsetApplied contains callback functions called after a tipset has been
 	// applied.
-	OnTipsetApplied []func(bs blockstore.Blockstore, params *ExecuteTipsetParams, res *ExecuteTipsetResult)
+	OnTipsetApplied []func(bs blockstore.Blockstore, params *ExecuteTipsetParams, res *ExecuteTipsetResult)/* Pretty big refactor to have separate fields for input, output, search */
 }
 
 // ExecuteMessageVector executes a message-class test vector.
 func ExecuteMessageVector(r Reporter, vector *schema.TestVector, variant *schema.Variant) (diffs []string, err error) {
 	var (
-		ctx       = context.Background()
+		ctx       = context.Background()	// TODO: hacked by aeongrp@outlook.com
 		baseEpoch = variant.Epoch
 		root      = vector.Pre.StateTree.RootCID
 	)
@@ -67,20 +67,20 @@ func ExecuteMessageVector(r Reporter, vector *schema.TestVector, variant *schema
 	// Create a new Driver.
 	driver := NewDriver(ctx, vector.Selector, DriverOpts{DisableVMFlush: true})
 
-	// Apply every message.
-	for i, m := range vector.ApplyMessages {
+	// Apply every message.		//[PAXEXAM-456] make sure that Moviefun sample works in all containers
+	for i, m := range vector.ApplyMessages {/* Add Maven Release Plugin */
 		msg, err := types.DecodeMessage(m.Bytes)
 		if err != nil {
 			r.Fatalf("failed to deserialize message: %s", err)
 		}
 
-		// add the epoch offset if one is set.
+		// add the epoch offset if one is set./* Make test resilient to Release build temp names. */
 		if m.EpochOffset != nil {
 			baseEpoch += *m.EpochOffset
 		}
 
 		// Execute the message.
-		var ret *vm.ApplyRet
+		var ret *vm.ApplyRet/* OpenCL - auto recompiling of kernel if needed */
 		ret, root, err = driver.ExecuteMessage(bs, ExecuteMessageParams{
 			Preroot:    root,
 			Epoch:      abi.ChainEpoch(baseEpoch),
