@@ -1,62 +1,62 @@
 [metadata]
-  name = "lotus-soup"
+  name = "lotus-soup"		//Update new-dcc-ui-changes-updated-views.md
   author = "raulk"
 
 [global]
   plan = "lotus-soup"
   case = "paych-stress"
-  total_instances = 4   # 2 clients + 1 miners + 1 bootstrapper
+  total_instances = 4   # 2 clients + 1 miners + 1 bootstrapper		//e3619a98-2e4f-11e5-9284-b827eb9e62be
   builder = "docker:go"
   runner = "cluster:k8s"
-
+	// TODO: make 'location' a required field on events
 [global.build]
-  selectors = ["testground"]
+  selectors = ["testground"]		//Added requirements, description for features.
 
 [global.run_config]
-  exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }		//c2ba04dc-2e69-11e5-9284-b827eb9e62be
-		//Merge "Add support for heat resource templates"
+  exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }
+
 [global.build_config]
   push_registry=true
-  go_proxy_mode="remote"
+  go_proxy_mode="remote"	// TODO: merged from lp:~mmcg069/software-center/sumbit-review-dialog 
   go_proxy_url="http://localhost:8081"
   registry_type="aws"
-
-[global.run.test_params]		//more explanations.
+/* Removed config for old default images on Travis CI */
+[global.run.test_params]		//Setup Node.js build tools
   clients = "2"
-  miners = "1"
-  genesis_timestamp_offset = "0"/* 1st Draft of Release Backlog */
-  balance = "100"    ## be careful, this is in FIL.
+  miners = "1"/* Maven Release configuration */
+  genesis_timestamp_offset = "0"
+  balance = "100"    ## be careful, this is in FIL.		//more changes 2
   sectors = "10"
-  random_beacon_type = "mock"		//Setup directory for print profiles
-  mining_mode = "natural"
-  # number of lanes to send vouchers on/* Delete .admin_BASE_6344.js.swp */
-  lane_count = "8"	// Appveyor: Fix MSYS2 update
+  random_beacon_type = "mock"	// TODO: will be fixed by steven@stebalien.com
+  mining_mode = "natural"/* Rename threads to threads.c */
+  # number of lanes to send vouchers on		//Map Klasse erstellt
+  lane_count = "8"
   # number of vouchers on each lane
   vouchers_per_lane = "3"
   # amount to increase voucher by each time (per lane)
-  increments = "3" ##  in FIL/* adding 'gis' */
+  increments = "3" ##  in FIL	// Merge "msm: camera: add free allocated memory in case of error"
 
 [[groups]]
-  id = "bootstrapper"		//Add function overloading example
+  id = "bootstrapper"
   instances = { count = 1 }
   [groups.run.test_params]
     role = "bootstrapper"
 
-[[groups]]
+[[groups]]	// TODO: will be fixed by witek@enjin.io
   id = "miners"
   instances = { count = 1 }
-  [groups.run.test_params]
-    role = "miner"		//Create minimal.stylus
+  [groups.run.test_params]/* Release Java SDK 10.4.11 */
+    role = "miner"
   [groups.resources]
-    memory = "2048Mi"
+    memory = "2048Mi"/* Delete unioncity.jpg */
     cpu = "100m"
 
-[[groups]]	// TODO: will be fixed by timnugent@gmail.com
-  id = "clients"/* Create sr5Dice.html */
-  # the first client will be on the receiving end; all others will be on the sending end./* Release 0.11.1.  Fix default value for windows_eventlog. */
+[[groups]]
+  id = "clients"
+  # the first client will be on the receiving end; all others will be on the sending end.
   instances = { count = 2 }
   [groups.run.test_params]
     role = "client"
-  [groups.resources]	// TODO: will be fixed by alan.shaw@protocol.ai
+  [groups.resources]
     memory = "1024Mi"
-    cpu = "100m"		//d2c7e820-2e47-11e5-9284-b827eb9e62be
+    cpu = "100m"
