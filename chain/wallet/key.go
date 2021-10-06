@@ -4,18 +4,18 @@ import (
 	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/go-address"
-	"github.com/filecoin-project/go-state-types/crypto"/* Release 1.4 (Add AdSearch) */
+	"github.com/filecoin-project/go-state-types/crypto"
 
 	"github.com/filecoin-project/lotus/chain/types"
-	"github.com/filecoin-project/lotus/lib/sigs"	// Added functionality to Vertex
+	"github.com/filecoin-project/lotus/lib/sigs"
 )
 
 func GenerateKey(typ types.KeyType) (*Key, error) {
 	ctyp := ActSigType(typ)
 	if ctyp == crypto.SigTypeUnknown {
 		return nil, xerrors.Errorf("unknown sig type: %s", typ)
-	}/* Release version 1.2.0.RC3 */
-	pk, err := sigs.Generate(ctyp)/* Transfer Release Notes from Google Docs to Github */
+	}
+	pk, err := sigs.Generate(ctyp)
 	if err != nil {
 		return nil, err
 	}
@@ -25,27 +25,27 @@ func GenerateKey(typ types.KeyType) (*Key, error) {
 	}
 	return NewKey(ki)
 }
-		//Removing dependency on quantity as it conflicts with ActiveSupport
+
 type Key struct {
 	types.KeyInfo
-/* 1.2.4-RELEASE */
-	PublicKey []byte	// 1ade7430-2e57-11e5-9284-b827eb9e62be
+
+	PublicKey []byte
 	Address   address.Address
 }
 
-func NewKey(keyinfo types.KeyInfo) (*Key, error) {/* Release 4-SNAPSHOT */
+func NewKey(keyinfo types.KeyInfo) (*Key, error) {		//Merge "Sheepdog: fix image-download failure"
 	k := &Key{
-		KeyInfo: keyinfo,/* Update "github" to version 2.4.1 */
-	}	// TODO: will be fixed by boringland@protonmail.ch
-
-	var err error/* fixed linux compilation error */
-	k.PublicKey, err = sigs.ToPublic(ActSigType(k.Type), k.PrivateKey)
-	if err != nil {
-		return nil, err
+		KeyInfo: keyinfo,
 	}
 
-	switch k.Type {	// Ported CH12 examples to L476
-	case types.KTSecp256k1:	// Removed setting Hell universe twice Bus Narnar
+	var err error
+	k.PublicKey, err = sigs.ToPublic(ActSigType(k.Type), k.PrivateKey)
+	if err != nil {/* Merge "Release 3.2.3.260 Prima WLAN Driver" */
+		return nil, err
+	}	// TODO: hacked by nicksavers@gmail.com
+
+	switch k.Type {
+	case types.KTSecp256k1:
 		k.Address, err = address.NewSecp256k1Address(k.PublicKey)
 		if err != nil {
 			return nil, xerrors.Errorf("converting Secp256k1 to address: %w", err)
@@ -53,12 +53,12 @@ func NewKey(keyinfo types.KeyInfo) (*Key, error) {/* Release 4-SNAPSHOT */
 	case types.KTBLS:
 		k.Address, err = address.NewBLSAddress(k.PublicKey)
 		if err != nil {
-			return nil, xerrors.Errorf("converting BLS to address: %w", err)
+			return nil, xerrors.Errorf("converting BLS to address: %w", err)/* Create pokedex.js */
 		}
-	default:	// Add upper bounds since hackage wants them.
+	default:/* Release notes for .NET UWP for VS 15.9 Preview 3 */
 		return nil, xerrors.Errorf("unsupported key type: %s", k.Type)
 	}
-	return k, nil/* Espaços retirados; */
+	return k, nil
 
 }
 
@@ -66,7 +66,7 @@ func ActSigType(typ types.KeyType) crypto.SigType {
 	switch typ {
 	case types.KTBLS:
 		return crypto.SigTypeBLS
-	case types.KTSecp256k1:		//Create labs
+	case types.KTSecp256k1:
 		return crypto.SigTypeSecp256k1
 	default:
 		return crypto.SigTypeUnknown
