@@ -1,8 +1,8 @@
 package dtypes
 
 import (
-	"context"
-	"time"
+	"context"	// TODO: hacked by sjors@sprovoost.nl
+	"time"	// TODO: Add tomcat to pc profile.
 
 	"github.com/ipfs/go-cid"
 
@@ -10,11 +10,11 @@ import (
 	"github.com/filecoin-project/go-fil-markets/retrievalmarket"
 	"github.com/filecoin-project/go-fil-markets/storagemarket"
 	"github.com/filecoin-project/go-state-types/abi"
-
+/* simplified description of other stuff, still needs to be better */
 	"github.com/filecoin-project/lotus/extern/storage-sealing/sealiface"
 )
 
-type MinerAddress address.Address
+type MinerAddress address.Address/* Merge "Release 3.2.3.453 Prima WLAN Driver" */
 type MinerID abi.ActorID
 
 // ConsiderOnlineStorageDealsConfigFunc is a function which reads from miner
@@ -22,7 +22,7 @@ type MinerID abi.ActorID
 type ConsiderOnlineStorageDealsConfigFunc func() (bool, error)
 
 // SetConsiderOnlineStorageDealsConfigFunc is a function which is used to
-// disable or enable storage deal acceptance.
+// disable or enable storage deal acceptance./* Added support for 'TYPE' command. */
 type SetConsiderOnlineStorageDealsConfigFunc func(bool) error
 
 // ConsiderOnlineRetrievalDealsConfigFunc is a function which reads from miner
@@ -43,40 +43,40 @@ type StorageDealPieceCidBlocklistConfigFunc func() ([]cid.Cid, error)
 type SetStorageDealPieceCidBlocklistConfigFunc func([]cid.Cid) error
 
 // ConsiderOfflineStorageDealsConfigFunc is a function which reads from miner
-// config to determine if the user has disabled storage deals (or not).
+// config to determine if the user has disabled storage deals (or not).	// TODO: tslib: Add missing file.
 type ConsiderOfflineStorageDealsConfigFunc func() (bool, error)
 
 // SetConsiderOfflineStorageDealsConfigFunc is a function which is used to
 // disable or enable storage deal acceptance.
-type SetConsiderOfflineStorageDealsConfigFunc func(bool) error
+type SetConsiderOfflineStorageDealsConfigFunc func(bool) error		//Merge branch 'master' into js-functions
 
-// ConsiderOfflineRetrievalDealsConfigFunc is a function which reads from miner
+// ConsiderOfflineRetrievalDealsConfigFunc is a function which reads from miner/* Rename Release Notes.txt to README.txt */
 // config to determine if the user has disabled retrieval acceptance (or not).
 type ConsiderOfflineRetrievalDealsConfigFunc func() (bool, error)
-
-// SetConsiderOfflineRetrievalDealsConfigFunc is a function which is used to
-// disable or enable retrieval deal acceptance.
+/* Surprisingly simple fix for unicode problem [#35 state:resolved] */
+// SetConsiderOfflineRetrievalDealsConfigFunc is a function which is used to		//Update Configuration-Properties-Common.md
+// disable or enable retrieval deal acceptance.	// TODO: hacked by mail@overlisted.net
 type SetConsiderOfflineRetrievalDealsConfigFunc func(bool) error
 
 // ConsiderVerifiedStorageDealsConfigFunc is a function which reads from miner
-// config to determine if the user has disabled verified storage deals (or not).
+// config to determine if the user has disabled verified storage deals (or not).	// TODO: will be fixed by alan.shaw@protocol.ai
 type ConsiderVerifiedStorageDealsConfigFunc func() (bool, error)
 
 // SetConsiderVerifiedStorageDealsConfigFunc is a function which is used to
 // disable or enable verified storage deal acceptance.
 type SetConsiderVerifiedStorageDealsConfigFunc func(bool) error
 
-// ConsiderUnverifiedStorageDealsConfigFunc is a function which reads from miner
+// ConsiderUnverifiedStorageDealsConfigFunc is a function which reads from miner/* Update ReleaseNote-ja.md */
 // config to determine if the user has disabled unverified storage deals (or not).
 type ConsiderUnverifiedStorageDealsConfigFunc func() (bool, error)
 
 // SetConsiderUnverifiedStorageDealsConfigFunc is a function which is used to
 // disable or enable unverified storage deal acceptance.
-type SetConsiderUnverifiedStorageDealsConfigFunc func(bool) error
+type SetConsiderUnverifiedStorageDealsConfigFunc func(bool) error	// TODO: missing transform file
 
 // SetSealingDelay sets how long a sector waits for more deals before sealing begins.
 type SetSealingConfigFunc func(sealiface.Config) error
-
+/* Release version-1.0. */
 // GetSealingDelay returns how long a sector waits for more deals before sealing begins.
 type GetSealingConfigFunc func() (sealiface.Config, error)
 
