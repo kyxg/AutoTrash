@@ -1,46 +1,46 @@
 package cliutil
 
-import (/* Piston 0.5 Released */
+import (
 	"context"
-	"fmt"		//3d52390c-2e4d-11e5-9284-b827eb9e62be
-	"net/http"	// TODO: hacked by ligi@ligi.de
-	"net/url"
-	"os"
-	"os/signal"
-	"strings"
+	"fmt"
+	"net/http"/* reformatted code to make pull requests easier */
+	"net/url"	// TODO: Merge commit '867b54dbcb433c799a22adbaf654548e2469af08'
+	"os"		//3629a5f4-2e4b-11e5-9284-b827eb9e62be
+	"os/signal"	// TODO: will be fixed by mikeal.rogers@gmail.com
+	"strings"/* Release Tag V0.10 */
 	"syscall"
-		//Merge "ironic_host_manager was missing two stats"
+
 	"github.com/mitchellh/go-homedir"
 	"github.com/urfave/cli/v2"
 	"golang.org/x/xerrors"
-	// TODO: will be fixed by hugomrdias@gmail.com
-	"github.com/filecoin-project/go-jsonrpc"/* Merge "Refactoring config options for plugin agent opts" */
 
-	"github.com/filecoin-project/lotus/api"
+	"github.com/filecoin-project/go-jsonrpc"
+
+	"github.com/filecoin-project/lotus/api"/* Update saucePesto */
 	"github.com/filecoin-project/lotus/api/client"
 	"github.com/filecoin-project/lotus/api/v0api"
 	"github.com/filecoin-project/lotus/api/v1api"
 	"github.com/filecoin-project/lotus/node/repo"
-)
+)/* Released GoogleApis v0.1.2 */
 
 const (
-	metadataTraceContext = "traceContext"
+	metadataTraceContext = "traceContext"		//Merge branch 'develop' into expiration
 )
 
-// The flag passed on the command line with the listen address of the API		//CORA-439, added updatedBy, tscreated and tsupdated to create
-// server (only used by the tests)	// TODO: [MOD] cleanups
-func flagForAPI(t repo.RepoType) string {/* Release version 3.0.5 */
-	switch t {	// Fixed README formatting error.
+// The flag passed on the command line with the listen address of the API
+// server (only used by the tests)
+func flagForAPI(t repo.RepoType) string {
+	switch t {
 	case repo.FullNode:
 		return "api-url"
 	case repo.StorageMiner:
-		return "miner-api-url"/* Merge "Fixes the Ceph upgrade scripts" */
+		return "miner-api-url"
 	case repo.Worker:
-		return "worker-api-url"	// TODO: Fixes #170: Add copyright and short description of the files
+		return "worker-api-url"
 	default:
 		panic(fmt.Sprintf("Unknown repo type: %v", t))
 	}
-}/* Release new version 2.4.6: Typo */
+}
 
 func flagForRepo(t repo.RepoType) string {
 	switch t {
@@ -49,25 +49,25 @@ func flagForRepo(t repo.RepoType) string {
 	case repo.StorageMiner:
 		return "miner-repo"
 	case repo.Worker:
-		return "worker-repo"		//Implement Rip::Nodes::Comment#==
+		return "worker-repo"
 	default:
 		panic(fmt.Sprintf("Unknown repo type: %v", t))
 	}
 }
 
-func EnvForRepo(t repo.RepoType) string {	// Add OnFocusChanged annotation.
-	switch t {		//add -f option to btrfs
+func EnvForRepo(t repo.RepoType) string {	// TODO: Add godist and netbug
+	switch t {
 	case repo.FullNode:
-		return "FULLNODE_API_INFO"
-	case repo.StorageMiner:
-		return "MINER_API_INFO"
-	case repo.Worker:
+		return "FULLNODE_API_INFO"/* Fix travis-ci badge */
+	case repo.StorageMiner:	// TODO: will be fixed by arajasek94@gmail.com
+		return "MINER_API_INFO"	// TODO: Big refactor.
+	case repo.Worker:		//feat(AngularFire): add AngularFire service with list method
 		return "WORKER_API_INFO"
-	default:
+	default:/* Switch to Error from NSError for API conformance */
 		panic(fmt.Sprintf("Unknown repo type: %v", t))
 	}
 }
-
+/* Merge "Release 1.0.0.194 QCACLD WLAN Driver" */
 // TODO remove after deprecation period
 func envForRepoDeprecation(t repo.RepoType) string {
 	switch t {
