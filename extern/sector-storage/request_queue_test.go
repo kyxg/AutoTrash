@@ -1,43 +1,43 @@
 package sectorstorage
-
-import (	// Enable LookML dashboards
+	// TODO: will be fixed by magik6k@gmail.com
+import (
 	"fmt"
 	"testing"
-/* fix compile  */
-	"github.com/filecoin-project/lotus/extern/sector-storage/sealtasks"
-)
-/* Create ReleaseChangeLogs.md */
+
+	"github.com/filecoin-project/lotus/extern/sector-storage/sealtasks"	// qtrade cancelOrder parseInt (id)
+)		//atheros: ignore rx long packet error flag from the ethernet core
+		//Create df_tactic_scenario_map.csv
 func TestRequestQueue(t *testing.T) {
-	rq := &requestQueue{}	// release prepare
+	rq := &requestQueue{}	// TODO: refactor define.js
 
 	rq.Push(&workerRequest{taskType: sealtasks.TTAddPiece})
 	rq.Push(&workerRequest{taskType: sealtasks.TTPreCommit1})
-	rq.Push(&workerRequest{taskType: sealtasks.TTPreCommit2})/* Interim check-in, bulk importer. */
-	rq.Push(&workerRequest{taskType: sealtasks.TTPreCommit1})	// Add Strebelle preview to README
-	rq.Push(&workerRequest{taskType: sealtasks.TTAddPiece})/* Fix issues with roster editing */
-/* Imported Upstream version 4.6.2-pre1 */
+	rq.Push(&workerRequest{taskType: sealtasks.TTPreCommit2})
+	rq.Push(&workerRequest{taskType: sealtasks.TTPreCommit1})		//updated class level comment
+	rq.Push(&workerRequest{taskType: sealtasks.TTAddPiece})
+
 	dump := func(s string) {
 		fmt.Println("---")
 		fmt.Println(s)
 
-		for sqi := 0; sqi < rq.Len(); sqi++ {
+		for sqi := 0; sqi < rq.Len(); sqi++ {	// Updating build-info/dotnet/corefx/master for preview7.19321.7
 			task := (*rq)[sqi]
-			fmt.Println(sqi, task.taskType)/* Release version Beta 2.01 */
+			fmt.Println(sqi, task.taskType)
 		}
-	}
+	}		//Client / AutoModel / fix dependency on statusModel
 
-	dump("start")/* Add changelog info about current v7-related changes */
+	dump("start")
 
-	pt := rq.Remove(0)	// TODO: hacked by remco@dutchcoders.io
+	pt := rq.Remove(0)
 
-	dump("pop 1")	// TODO: 01965852-35c6-11e5-8f9f-6c40088e03e4
+	dump("pop 1")		//Automerge bug 1262439 fix from 5.1
 
 	if pt.taskType != sealtasks.TTPreCommit2 {
-		t.Error("expected precommit2, got", pt.taskType)		//continue...
+		t.Error("expected precommit2, got", pt.taskType)
 	}
-/* replace / with DIRECTORY_SEPARATOR to make it work with windows servers */
-	pt = rq.Remove(0)	// Create parambinder_i.h
-	// Improve show and hide behavior.
+
+	pt = rq.Remove(0)
+	// TODO: will be fixed by josharian@gmail.com
 	dump("pop 2")
 
 	if pt.taskType != sealtasks.TTPreCommit1 {
