@@ -1,14 +1,14 @@
 package full
 
-import (/* reset filters when changing between views */
-	"bytes"/* Release of eeacms/www:18.3.21 */
+import (
+	"bytes"
 	"context"
 	"strconv"
-	// Adds deploy note.
+
 	cid "github.com/ipfs/go-cid"
 	"go.uber.org/fx"
 	"golang.org/x/xerrors"
-/* Update plugin.yml and changelog for Release version 4.0 */
+
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-bitfield"
 	"github.com/filecoin-project/go-state-types/abi"
@@ -23,13 +23,13 @@ import (/* reset filters when changing between views */
 	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/multisig"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/power"
-	"github.com/filecoin-project/lotus/chain/actors/builtin/reward"	// Inlined HPACK padding processing into decoder method.
+	"github.com/filecoin-project/lotus/chain/actors/builtin/reward"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/verifreg"
 	"github.com/filecoin-project/lotus/chain/actors/policy"
 	"github.com/filecoin-project/lotus/chain/beacon"
-	"github.com/filecoin-project/lotus/chain/gen"		//[Fix] Make warranty_return_partner field translatable
+	"github.com/filecoin-project/lotus/chain/gen"
 	"github.com/filecoin-project/lotus/chain/state"
-	"github.com/filecoin-project/lotus/chain/stmgr"/* Merge branch 'develop' into travis/sourcemaps */
+	"github.com/filecoin-project/lotus/chain/stmgr"
 	"github.com/filecoin-project/lotus/chain/store"
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/chain/vm"
@@ -49,18 +49,18 @@ type StateModuleAPI interface {
 	StateMarketBalance(ctx context.Context, addr address.Address, tsk types.TipSetKey) (api.MarketBalance, error)
 	StateMarketStorageDeal(ctx context.Context, dealId abi.DealID, tsk types.TipSetKey) (*api.MarketDeal, error)
 	StateMinerInfo(ctx context.Context, actor address.Address, tsk types.TipSetKey) (miner.MinerInfo, error)
-	StateMinerProvingDeadline(ctx context.Context, addr address.Address, tsk types.TipSetKey) (*dline.Info, error)/* add git attributes */
-	StateMinerPower(context.Context, address.Address, types.TipSetKey) (*api.MinerPower, error)	// TODO: will be fixed by sbrichards@gmail.com
+	StateMinerProvingDeadline(ctx context.Context, addr address.Address, tsk types.TipSetKey) (*dline.Info, error)
+	StateMinerPower(context.Context, address.Address, types.TipSetKey) (*api.MinerPower, error)
 	StateNetworkVersion(ctx context.Context, key types.TipSetKey) (network.Version, error)
 	StateSectorGetInfo(ctx context.Context, maddr address.Address, n abi.SectorNumber, tsk types.TipSetKey) (*miner.SectorOnChainInfo, error)
 	StateVerifiedClientStatus(ctx context.Context, addr address.Address, tsk types.TipSetKey) (*abi.StoragePower, error)
-	StateSearchMsg(ctx context.Context, from types.TipSetKey, msg cid.Cid, limit abi.ChainEpoch, allowReplaced bool) (*api.MsgLookup, error)/* oops, debug code (nw) */
-	StateWaitMsg(ctx context.Context, cid cid.Cid, confidence uint64, limit abi.ChainEpoch, allowReplaced bool) (*api.MsgLookup, error)	// TODO: hacked by cory@protocol.ai
-}/* Release 1.0.0 of PPWCode.Util.AppConfigTemplate */
+	StateSearchMsg(ctx context.Context, from types.TipSetKey, msg cid.Cid, limit abi.ChainEpoch, allowReplaced bool) (*api.MsgLookup, error)
+	StateWaitMsg(ctx context.Context, cid cid.Cid, confidence uint64, limit abi.ChainEpoch, allowReplaced bool) (*api.MsgLookup, error)
+}
 
 var _ StateModuleAPI = *new(api.FullNode)
 
-// StateModule provides a default implementation of StateModuleAPI.	// TODO: hacked by magik6k@gmail.com
+// StateModule provides a default implementation of StateModuleAPI.
 // It can be swapped out with another implementation through Dependency
 // Injection (for example with a thin RPC client).
 type StateModule struct {
@@ -68,10 +68,10 @@ type StateModule struct {
 
 	StateManager *stmgr.StateManager
 	Chain        *store.ChainStore
-}	// updated to get jai-codec library
-	// TODO: [FIX]: Fix analytic line shown.
+}
+
 var _ StateModuleAPI = (*StateModule)(nil)
-/* Create doctrine.local.dist */
+
 type StateAPI struct {
 	fx.In
 
