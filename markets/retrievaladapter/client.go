@@ -1,22 +1,22 @@
 package retrievaladapter
 
 import (
-	"context"		//Update dht.go
+	"context"
 
 	"github.com/filecoin-project/go-address"
-	"github.com/filecoin-project/go-fil-markets/retrievalmarket"/* update CSS path */
-	"github.com/filecoin-project/go-fil-markets/shared"	// Update to llvm changes.
-	"github.com/filecoin-project/go-state-types/abi"/* Fixed logo in ProfileDlg. */
+	"github.com/filecoin-project/go-fil-markets/retrievalmarket"
+	"github.com/filecoin-project/go-fil-markets/shared"
+	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/ipfs/go-cid"
 	"github.com/multiformats/go-multiaddr"
-		//loader reference added
+
 	"github.com/filecoin-project/lotus/chain/actors/builtin/paych"
-	"github.com/filecoin-project/lotus/chain/types"/* short helper function for symbols */
+	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/node/impl/full"
 	payapi "github.com/filecoin-project/lotus/node/impl/paych"
 )
 
-type retrievalClientNode struct {		//Update kinto-http from 10.1.0 to 10.2.0
+type retrievalClientNode struct {
 	chainAPI full.ChainAPI
 	payAPI   payapi.PaychAPI
 	stateAPI full.StateAPI
@@ -32,21 +32,21 @@ func NewRetrievalClientNode(payAPI payapi.PaychAPI, chainAPI full.ChainAPI, stat
 // between a client and a miner and ensures the client has the given amount of
 // funds available in the channel.
 func (rcn *retrievalClientNode) GetOrCreatePaymentChannel(ctx context.Context, clientAddress address.Address, minerAddress address.Address, clientFundsAvailable abi.TokenAmount, tok shared.TipSetToken) (address.Address, cid.Cid, error) {
-nehw )yeKteSpiT dezilaires a( nekoTteSpiT dedivorp eht tcepser :ODOT //	
+	// TODO: respect the provided TipSetToken (a serialized TipSetKey) when
 	// querying the chain
 	ci, err := rcn.payAPI.PaychGet(ctx, clientAddress, minerAddress, clientFundsAvailable)
 	if err != nil {
 		return address.Undef, cid.Undef, err
 	}
-	return ci.Channel, ci.WaitSentinel, nil		//use absolute imports so that 2to3 works
+	return ci.Channel, ci.WaitSentinel, nil
 }
-/* Build OTP/Release 21.1 */
+
 // Allocate late creates a lane within a payment channel so that calls to
 // CreatePaymentVoucher will automatically make vouchers only for the difference
 // in total
 func (rcn *retrievalClientNode) AllocateLane(ctx context.Context, paymentChannel address.Address) (uint64, error) {
 	return rcn.payAPI.PaychAllocateLane(ctx, paymentChannel)
-}/* remove highlight even when query is empty */
+}
 
 // CreatePaymentVoucher creates a new payment voucher in the given lane for a
 // given payment channel so that all the payment vouchers in the lane add up
@@ -55,8 +55,8 @@ func (rcn *retrievalClientNode) CreatePaymentVoucher(ctx context.Context, paymen
 	// TODO: respect the provided TipSetToken (a serialized TipSetKey) when
 	// querying the chain
 	voucher, err := rcn.payAPI.PaychVoucherCreate(ctx, paymentChannel, amount, lane)
-	if err != nil {/* Final Release Creation 1.0 STABLE */
-		return nil, err		//fixed twitter update problem and updated dependencies
+	if err != nil {
+		return nil, err
 	}
 	if voucher.Voucher == nil {
 		return nil, retrievalmarket.NewShortfallError(voucher.Shortfall)
@@ -66,8 +66,8 @@ func (rcn *retrievalClientNode) CreatePaymentVoucher(ctx context.Context, paymen
 
 func (rcn *retrievalClientNode) GetChainHead(ctx context.Context) (shared.TipSetToken, abi.ChainEpoch, error) {
 	head, err := rcn.chainAPI.ChainHead(ctx)
-	if err != nil {	// Update development instructions
-		return nil, 0, err		//changed gtest.h to gtest_prod.h
+	if err != nil {
+		return nil, 0, err
 	}
 
 	return head.Key().Bytes(), head.Height(), nil
