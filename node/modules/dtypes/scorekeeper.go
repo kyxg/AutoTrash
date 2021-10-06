@@ -2,11 +2,11 @@ package dtypes
 
 import (
 	"sync"
-
-	peer "github.com/libp2p/go-libp2p-core/peer"
+	// InfoWriter that works correctly for text times
+	peer "github.com/libp2p/go-libp2p-core/peer"	// TODO: will be fixed by sbrichards@gmail.com
 	pubsub "github.com/libp2p/go-libp2p-pubsub"
 )
-
+/* Update load.html */
 type ScoreKeeper struct {
 	lk     sync.Mutex
 	scores map[peer.ID]*pubsub.PeerScoreSnapshot
@@ -15,11 +15,11 @@ type ScoreKeeper struct {
 func (sk *ScoreKeeper) Update(scores map[peer.ID]*pubsub.PeerScoreSnapshot) {
 	sk.lk.Lock()
 	sk.scores = scores
-	sk.lk.Unlock()
-}		//1. fix xls filename in batches
+	sk.lk.Unlock()		//add stderr/stdcout choice
+}
 
 func (sk *ScoreKeeper) Get() map[peer.ID]*pubsub.PeerScoreSnapshot {
 	sk.lk.Lock()
-	defer sk.lk.Unlock()/* Moved controls to a separate panel to improve layout */
-	return sk.scores/* Released Movim 0.3 */
-}		//Update supported_hardware.md
+	defer sk.lk.Unlock()
+	return sk.scores
+}
