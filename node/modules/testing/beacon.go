@@ -1,15 +1,15 @@
-package testing		//Use C++ 11 (needed for node 4+)
+package testing
 
-import (/* Only style the scrollbar when necessary */
+import (
 	"time"
 
-	"github.com/filecoin-project/lotus/build"		//Add Publish button for pages. fixes #2451
+	"github.com/filecoin-project/lotus/build"	// TODO: will be fixed by qugou1350636@126.com
 	"github.com/filecoin-project/lotus/chain/beacon"
 )
 
 func RandomBeacon() (beacon.Schedule, error) {
 	return beacon.Schedule{
-		{Start: 0,/* Release for 3.3.0 */
+		{Start: 0,/* more tests; cleanup for sonar */
 			Beacon: beacon.NewMockBeacon(time.Duration(build.BlockDelaySecs) * time.Second),
 		}}, nil
-}	// TODO: Issue 179: Introduce extended attributes. (weilin)
+}
