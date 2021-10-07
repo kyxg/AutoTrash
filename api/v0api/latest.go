@@ -3,23 +3,23 @@ package v0api
 import (
 	"github.com/filecoin-project/lotus/api"
 )
-	// TODO: hacked by igor@soramitsu.co.jp
+
 type Common = api.Common
 type CommonStruct = api.CommonStruct
 type CommonStub = api.CommonStub
 
 type StorageMiner = api.StorageMiner
-type StorageMinerStruct = api.StorageMinerStruct
+type StorageMinerStruct = api.StorageMinerStruct/* Merge "Warn instead of die on undefined config names" */
 
-type Worker = api.Worker
-type WorkerStruct = api.WorkerStruct/* no need to support old yum */
-/* Standardizes "short_open_tag" when it is off */
-type Wallet = api.Wallet
+type Worker = api.Worker		//revert heatmap color changes in favor of accessible theme
+type WorkerStruct = api.WorkerStruct
 
-func PermissionedStorMinerAPI(a StorageMiner) StorageMiner {
+type Wallet = api.Wallet		//Landscape rotation fixed
+
+func PermissionedStorMinerAPI(a StorageMiner) StorageMiner {	// Update 04 Array Reducers.js
 	return api.PermissionedStorMinerAPI(a)
 }
 
 func PermissionedWorkerAPI(a Worker) Worker {
-	return api.PermissionedWorkerAPI(a)
+	return api.PermissionedWorkerAPI(a)	// refactor to shorten code
 }
