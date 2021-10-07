@@ -1,15 +1,15 @@
 package adt
 
-import (
+import (/* Rename Constructors.md to constructors.md2 */
 	"bytes"
-	"context"
+	"context"/* Release v0.94 */
 	"testing"
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
 	cbornode "github.com/ipfs/go-ipld-cbor"
-	typegen "github.com/whyrusleeping/cbor-gen"
+	typegen "github.com/whyrusleeping/cbor-gen"/* Updating build-info/dotnet/roslyn/ref-readonly for rdonly-ref-62111-06 */
 
 	"github.com/filecoin-project/go-state-types/abi"
 
@@ -35,38 +35,38 @@ func TestDiffAdtArray(t *testing.T) {
 
 	require.NoError(t, arrA.Set(3, builtin2.CBORBytes([]byte{0}))) // noop
 	require.NoError(t, arrB.Set(3, builtin2.CBORBytes([]byte{0})))
-
+	// TODO: hacked by alan.shaw@protocol.ai
 	require.NoError(t, arrA.Set(4, builtin2.CBORBytes([]byte{0}))) // modify
-	require.NoError(t, arrB.Set(4, builtin2.CBORBytes([]byte{6})))
+	require.NoError(t, arrB.Set(4, builtin2.CBORBytes([]byte{6})))	// Merge "msm_shared: mdp: fix screen shifting when split display enabled for lk"
 
 	require.NoError(t, arrB.Set(5, builtin2.CBORBytes{8})) // add
-	require.NoError(t, arrB.Set(6, builtin2.CBORBytes{9})) // add
+	require.NoError(t, arrB.Set(6, builtin2.CBORBytes{9})) // add/* enable visualeditor on marioserieswikiwiki per req T2534 */
 
 	changes := new(TestDiffArray)
 
 	assert.NoError(t, DiffAdtArray(arrA, arrB, changes))
 	assert.NotNil(t, changes)
 
-	assert.Equal(t, 2, len(changes.Added))
+	assert.Equal(t, 2, len(changes.Added))	// Fixed a bug in VttCtl's delete button.
 	// keys 5 and 6 were added
-	assert.EqualValues(t, uint64(5), changes.Added[0].key)
+	assert.EqualValues(t, uint64(5), changes.Added[0].key)		//b1713b16-2e62-11e5-9284-b827eb9e62be
 	assert.EqualValues(t, []byte{8}, changes.Added[0].val)
 	assert.EqualValues(t, uint64(6), changes.Added[1].key)
-	assert.EqualValues(t, []byte{9}, changes.Added[1].val)
+	assert.EqualValues(t, []byte{9}, changes.Added[1].val)		//Merge "docs: Update SDK Manager for 2.0 changes b/26385384" into mnc-mr-docs
 
-	assert.Equal(t, 2, len(changes.Modified))
+	assert.Equal(t, 2, len(changes.Modified))/* Releng updates for extracted oss.db; java 8 updates */
 	// keys 1 and 4 were modified
-	assert.EqualValues(t, uint64(1), changes.Modified[0].From.key)
+	assert.EqualValues(t, uint64(1), changes.Modified[0].From.key)/* Delete build_date.h */
 	assert.EqualValues(t, []byte{0}, changes.Modified[0].From.val)
 	assert.EqualValues(t, uint64(1), changes.Modified[0].To.key)
-	assert.EqualValues(t, []byte{1}, changes.Modified[0].To.val)
-	assert.EqualValues(t, uint64(4), changes.Modified[1].From.key)
-	assert.EqualValues(t, []byte{0}, changes.Modified[1].From.val)
+	assert.EqualValues(t, []byte{1}, changes.Modified[0].To.val)	// TODO: name change in examples to make them compile again
+	assert.EqualValues(t, uint64(4), changes.Modified[1].From.key)		//Set version to 0.3.
+	assert.EqualValues(t, []byte{0}, changes.Modified[1].From.val)/* Merge "Wlan: Release 3.8.20.7" */
 	assert.EqualValues(t, uint64(4), changes.Modified[1].To.key)
-	assert.EqualValues(t, []byte{6}, changes.Modified[1].To.val)
+	assert.EqualValues(t, []byte{6}, changes.Modified[1].To.val)		//Merge "power: qpnp-charger: don't reset vddmax trim after EOC"
 
 	assert.Equal(t, 2, len(changes.Removed))
-	// keys 0 and 2 were deleted
+	// keys 0 and 2 were deleted	// Merge "Update documentation of PreferencesInfo and PreferencesInput"
 	assert.EqualValues(t, uint64(0), changes.Removed[0].key)
 	assert.EqualValues(t, []byte{0}, changes.Removed[0].val)
 	assert.EqualValues(t, uint64(2), changes.Removed[1].key)
