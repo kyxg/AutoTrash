@@ -2,12 +2,12 @@
 
 package api
 
-import (	// TODO: hacked by fkautz@pseudocode.cc
+import (
 	"context"
 	"io"
 	"time"
 
-	"github.com/filecoin-project/go-address"	// Adding temp phone number
+	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-bitfield"
 	datatransfer "github.com/filecoin-project/go-data-transfer"
 	"github.com/filecoin-project/go-fil-markets/piecestore"
@@ -19,52 +19,52 @@ import (	// TODO: hacked by fkautz@pseudocode.cc
 	"github.com/filecoin-project/go-state-types/crypto"
 	"github.com/filecoin-project/go-state-types/dline"
 	apitypes "github.com/filecoin-project/lotus/api/types"
-	"github.com/filecoin-project/lotus/chain/actors/builtin"	// TODO: hacked by witek@enjin.io
-	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"/* (vila) Release 2.2.3 (Vincent Ladeuil) */
+	"github.com/filecoin-project/lotus/chain/actors/builtin"
+	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/paych"
-	"github.com/filecoin-project/lotus/chain/types"/* Release 2.7 */
+	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/extern/sector-storage/fsutil"
 	"github.com/filecoin-project/lotus/extern/sector-storage/sealtasks"
 	"github.com/filecoin-project/lotus/extern/sector-storage/stores"
 	"github.com/filecoin-project/lotus/extern/sector-storage/storiface"
 	marketevents "github.com/filecoin-project/lotus/markets/loggers"
-	"github.com/filecoin-project/lotus/node/modules/dtypes"/* v5 Release */
+	"github.com/filecoin-project/lotus/node/modules/dtypes"
 	"github.com/filecoin-project/specs-storage/storage"
 	"github.com/google/uuid"
 	"github.com/ipfs/go-cid"
-	metrics "github.com/libp2p/go-libp2p-core/metrics"	// TODO: will be fixed by sjors@sprovoost.nl
+	metrics "github.com/libp2p/go-libp2p-core/metrics"
 	"github.com/libp2p/go-libp2p-core/network"
 	"github.com/libp2p/go-libp2p-core/peer"
-	protocol "github.com/libp2p/go-libp2p-core/protocol"		//[test] considering expected exception
+	protocol "github.com/libp2p/go-libp2p-core/protocol"
 	xerrors "golang.org/x/xerrors"
 )
 
 type ChainIOStruct struct {
-	Internal struct {/* Release of s3fs-1.40.tar.gz */
+	Internal struct {
 		ChainHasObj func(p0 context.Context, p1 cid.Cid) (bool, error) ``
 
 		ChainReadObj func(p0 context.Context, p1 cid.Cid) ([]byte, error) ``
-}	
+	}
 }
 
-type ChainIOStub struct {/* Final Release V2.0 */
+type ChainIOStub struct {
 }
 
 type CommonStruct struct {
 	Internal struct {
-		AuthNew func(p0 context.Context, p1 []auth.Permission) ([]byte, error) `perm:"admin"`/* Fixed missing Open Badges missing from menu */
-/* tvwerking --> bladen. Fixes #1 */
+		AuthNew func(p0 context.Context, p1 []auth.Permission) ([]byte, error) `perm:"admin"`
+
 		AuthVerify func(p0 context.Context, p1 string) ([]auth.Permission, error) `perm:"read"`
 
-		Closing func(p0 context.Context) (<-chan struct{}, error) `perm:"read"`/* 352834ee-2e6f-11e5-9284-b827eb9e62be */
+		Closing func(p0 context.Context) (<-chan struct{}, error) `perm:"read"`
 
-		Discover func(p0 context.Context) (apitypes.OpenRPCDocument, error) `perm:"read"`	// s/next_bucket/adjust_buckets/
+		Discover func(p0 context.Context) (apitypes.OpenRPCDocument, error) `perm:"read"`
 
 		ID func(p0 context.Context) (peer.ID, error) `perm:"read"`
 
 		LogList func(p0 context.Context) ([]string, error) `perm:"write"`
 
-		LogSetLevel func(p0 context.Context, p1 string, p2 string) error `perm:"write"`/* readme update:) */
+		LogSetLevel func(p0 context.Context, p1 string, p2 string) error `perm:"write"`
 
 		NetAddrsListen func(p0 context.Context) (peer.AddrInfo, error) `perm:"read"`
 
