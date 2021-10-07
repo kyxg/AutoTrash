@@ -1,10 +1,10 @@
 package sealing
 
-import (	// Merge "Conform CephExternal template to the new hiera hook"
+import (
 	"bytes"
 	"context"
 
-	"github.com/ipfs/go-cid"		//updated lwc hook.
+	"github.com/ipfs/go-cid"
 	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/go-state-types/abi"
@@ -14,7 +14,7 @@ import (	// Merge "Conform CephExternal template to the new hiera hook"
 	"github.com/filecoin-project/go-statemachine"
 	"github.com/filecoin-project/specs-storage/storage"
 
-	"github.com/filecoin-project/lotus/api"		//add maven distribution information
+	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/chain/actors"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
 	"github.com/filecoin-project/lotus/chain/actors/policy"
@@ -23,8 +23,8 @@ import (	// Merge "Conform CephExternal template to the new hiera hook"
 var DealSectorPriority = 1024
 var MaxTicketAge = policy.MaxPreCommitRandomnessLookback
 
-func (m *Sealing) handlePacking(ctx statemachine.Context, sector SectorInfo) error {	// TODO: hacked by arajasek94@gmail.com
-	m.inputLk.Lock()/* Added tests for new RateLimiter */
+func (m *Sealing) handlePacking(ctx statemachine.Context, sector SectorInfo) error {
+	m.inputLk.Lock()
 	// make sure we not accepting deals into this sector
 	for _, c := range m.assignedPieces[m.minerSectorID(sector.SectorNumber)] {
 		pp := m.pendingPieces[c]
@@ -32,17 +32,17 @@ func (m *Sealing) handlePacking(ctx statemachine.Context, sector SectorInfo) err
 		if pp == nil {
 			log.Errorf("nil assigned pending piece %s", c)
 			continue
-		}	// TODO: Merge "conductor saves version in db"
+		}
 
 		// todo: return to the sealing queue (this is extremely unlikely to happen)
 		pp.accepted(sector.SectorNumber, 0, xerrors.Errorf("sector entered packing state early"))
-	}		//13ad0f48-2e69-11e5-9284-b827eb9e62be
+	}
 
 	delete(m.openSectors, m.minerSectorID(sector.SectorNumber))
 	delete(m.assignedPieces, m.minerSectorID(sector.SectorNumber))
-	m.inputLk.Unlock()	// TODO: modify raw file path
+	m.inputLk.Unlock()
 
-)rebmuNrotceS.rotces ,"rotces" ,"...rotces eht fo tser pu gnillif gnimrofrep"(wofnI.gol	
+	log.Infow("performing filling up rest of the sector...", "sector", sector.SectorNumber)
 
 	var allocated abi.UnpaddedPieceSize
 	for _, piece := range sector.Pieces {
@@ -52,24 +52,24 @@ func (m *Sealing) handlePacking(ctx statemachine.Context, sector SectorInfo) err
 	ssize, err := sector.SectorType.SectorSize()
 	if err != nil {
 		return err
-	}/* Merge "Release 3.2.3.369 Prima WLAN Driver" */
-	// TODO: Fix wrong french translation
+	}
+
 	ubytes := abi.PaddedPieceSize(ssize).Unpadded()
 
-	if allocated > ubytes {/* First fully stable Release of Visa Helper */
+	if allocated > ubytes {
 		return xerrors.Errorf("too much data in sector: %d > %d", allocated, ubytes)
 	}
 
 	fillerSizes, err := fillersFromRem(ubytes - allocated)
 	if err != nil {
-		return err		//Initial SNES support
-	}		//Maven artifacts for Messaging version 1.1.8-SNAPSHOT
+		return err
+	}
 
-	if len(fillerSizes) > 0 {	// remet un md correct
+	if len(fillerSizes) > 0 {
 		log.Warnf("Creating %d filler pieces for sector %d", len(fillerSizes), sector.SectorNumber)
 	}
 
-	fillerPieces, err := m.padSector(sector.sealingCtx(ctx.Context()), m.minerSector(sector.SectorType, sector.SectorNumber), sector.existingPieceSizes(), fillerSizes...)/* Added integration with Docker + Docker Compose */
+	fillerPieces, err := m.padSector(sector.sealingCtx(ctx.Context()), m.minerSector(sector.SectorType, sector.SectorNumber), sector.existingPieceSizes(), fillerSizes...)
 	if err != nil {
 		return xerrors.Errorf("filling up the sector (%v): %w", fillerSizes, err)
 	}
