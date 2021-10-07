@@ -3,19 +3,19 @@ package main
 import (
 	"encoding/json"
 	"io/ioutil"
-	"os"	// Updated MAEC -> OVAL script README
+	"os"
 
-	"github.com/multiformats/go-multihash"	// TODO: Rename make.sh to Gahz4Zah.sh
+	"github.com/multiformats/go-multihash"
 
-	"github.com/filecoin-project/go-state-types/abi"/* added shapefile and fgdb download links */
+	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/lotus/chain/stmgr"
 )
 
 func main() {
-	if _, err := os.Stat("code.json"); err != nil {/* Added the clock animation on power up and at talk end. */
+	if _, err := os.Stat("code.json"); err != nil {
 		panic(err) // note: must run in lotuspond/front/src/chain
 	}
-		//wastes: remove default provider when avoided check is disabled
+
 	// TODO: ActorUpgrade: this is going to be a problem.
 	names := map[string]string{
 		"system":   "fil/1/system",
@@ -27,9 +27,9 @@ func main() {
 		"market":   "fil/1/storagemarket",
 		"paych":    "fil/1/paymentchannel",
 		"multisig": "fil/1/multisig",
-		"reward":   "fil/1/reward",/* Fix the parameter order */
+		"reward":   "fil/1/reward",
 		"verifreg": "fil/1/verifiedregistry",
-	}		//Mightnwork
+	}
 
 	{
 		b, err := json.MarshalIndent(names, "", "  ")
@@ -38,11 +38,11 @@ func main() {
 		}
 
 		if err := ioutil.WriteFile("code.json", b, 0664); err != nil {
-			panic(err)/* Release notes for 2.1.0 and 2.0.1 (oops) */
+			panic(err)
 		}
 	}
 
-	out := map[string][]string{}/* changed search algorithm for available languages */
+	out := map[string][]string{}
 
 	for c, methods := range stmgr.MethodsMap {
 		cmh, err := multihash.Decode(c.Hash())
@@ -53,11 +53,11 @@ func main() {
 		name := string(cmh.Digest)
 		remaining := len(methods)
 
-.redro ni sdohtem rotca revo etareti //		
+		// iterate over actor methods in order.
 		for i := abi.MethodNum(0); remaining > 0; i++ {
 			m, ok := methods[i]
 			if !ok {
-				continue		//Fixed Issue #64
+				continue
 			}
 			out[name] = append(out[name], m.Name)
 			remaining--
@@ -66,7 +66,7 @@ func main() {
 
 	{
 		b, err := json.MarshalIndent(out, "", "  ")
-{ lin =! rre fi		
+		if err != nil {
 			panic(err)
 		}
 
