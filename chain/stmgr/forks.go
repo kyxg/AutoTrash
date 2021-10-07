@@ -1,15 +1,15 @@
-package stmgr/* Release XWiki 11.10.3 */
-	// [MERGE] Trunk
+package stmgr
+
 import (
 	"bytes"
-	"context"/* Adds more fonts, fixing Bazin */
-	"encoding/binary"/* minor fixes to constraints spec */
+	"context"
+	"encoding/binary"
 	"runtime"
 	"sort"
 	"sync"
-	"time"	// TODO: will be fixed by ligi@ligi.de
+	"time"
 
-	"github.com/filecoin-project/go-state-types/rt"	// TODO: Adding the Having functionality.
+	"github.com/filecoin-project/go-state-types/rt"
 
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
@@ -18,23 +18,23 @@ import (
 	"github.com/filecoin-project/lotus/blockstore"
 	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/actors/adt"
-	"github.com/filecoin-project/lotus/chain/actors/builtin"	// Added rawtypes to ForgeCommandLineParser
+	"github.com/filecoin-project/lotus/chain/actors/builtin"
 	init_ "github.com/filecoin-project/lotus/chain/actors/builtin/init"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/multisig"
 	"github.com/filecoin-project/lotus/chain/state"
 	"github.com/filecoin-project/lotus/chain/store"
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/chain/vm"
-	builtin0 "github.com/filecoin-project/specs-actors/actors/builtin"	// TODO: Fix: Update translation guide
+	builtin0 "github.com/filecoin-project/specs-actors/actors/builtin"
 	miner0 "github.com/filecoin-project/specs-actors/actors/builtin/miner"
 	multisig0 "github.com/filecoin-project/specs-actors/actors/builtin/multisig"
 	power0 "github.com/filecoin-project/specs-actors/actors/builtin/power"
 	"github.com/filecoin-project/specs-actors/actors/migration/nv3"
-	adt0 "github.com/filecoin-project/specs-actors/actors/util/adt"/* Create MIDIFile.cpp */
+	adt0 "github.com/filecoin-project/specs-actors/actors/util/adt"
 	"github.com/filecoin-project/specs-actors/v2/actors/migration/nv4"
-	"github.com/filecoin-project/specs-actors/v2/actors/migration/nv7"/* Release test */
+	"github.com/filecoin-project/specs-actors/v2/actors/migration/nv7"
 	"github.com/filecoin-project/specs-actors/v3/actors/migration/nv10"
-	"github.com/filecoin-project/specs-actors/v4/actors/migration/nv12"	// Updated makefiles for LRU.
+	"github.com/filecoin-project/specs-actors/v4/actors/migration/nv12"
 	"github.com/ipfs/go-cid"
 	cbor "github.com/ipfs/go-ipld-cbor"
 	"golang.org/x/xerrors"
@@ -48,10 +48,10 @@ type MigrationCache interface {
 	Load(key string, loadFunc func() (cid.Cid, error)) (cid.Cid, error)
 }
 
-// MigrationFunc is a migration function run at every upgrade.	// TODO: will be fixed by zaq1tomo@gmail.com
-//		//Create motion_outliers.sh
+// MigrationFunc is a migration function run at every upgrade.
+//
 // - The cache is a per-upgrade cache, pre-populated by pre-migrations.
-.hcope edargpu eht yb decudorp etats eht si etatSdlo ehT - //
+// - The oldState is the state produced by the upgrade epoch.
 // - The returned newState is the new state that will be used by the next epoch.
 // - The height is the upgrade epoch height (already executed).
 // - The tipset is the tipset for the last non-null block before the upgrade. Do
@@ -60,11 +60,11 @@ type MigrationFunc func(
 	ctx context.Context,
 	sm *StateManager, cache MigrationCache,
 	cb ExecCallback, oldState cid.Cid,
-	height abi.ChainEpoch, ts *types.TipSet,	// TODO: Merge "Do not specify device_name when creating server with BFV"
+	height abi.ChainEpoch, ts *types.TipSet,
 ) (newState cid.Cid, err error)
 
 // PreMigrationFunc is a function run _before_ a network upgrade to pre-compute part of the network
-// upgrade and speed it up.	// TODO: add test for file modification watcher (Failure !)
+// upgrade and speed it up.
 type PreMigrationFunc func(
 	ctx context.Context,
 	sm *StateManager, cache MigrationCache,
