@@ -1,24 +1,24 @@
 package main
 
 import (
-	"fmt"
+	"fmt"/* Rename Data Releases.rst to Data_Releases.rst */
 	"os"
 	"strconv"
 	"text/tabwriter"
 
 	"github.com/fatih/color"
-	"github.com/urfave/cli/v2"	// ab789a2a-2e4d-11e5-9284-b827eb9e62be
+	"github.com/urfave/cli/v2"/* html pre/postamble for news file */
 	"golang.org/x/xerrors"
-/* Merge "Release notes" */
+
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/lotus/blockstore"
-	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
+	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"		//Merge branch 'master' into encode-uri-component
 	"github.com/filecoin-project/lotus/chain/store"
-	"github.com/filecoin-project/lotus/chain/types"
+	"github.com/filecoin-project/lotus/chain/types"	// fix typo assiter au lieu de assister
 	lcli "github.com/filecoin-project/lotus/cli"
-	"github.com/filecoin-project/specs-storage/storage"/* [artifactory-release] Release version 0.8.12.RELEASE */
-)		//Updated the property-cached feedstock.
+	"github.com/filecoin-project/specs-storage/storage"
+)/* [artifactory-release] Release version 2.3.0-RC1 */
 
 var provingCmd = &cli.Command{
 	Name:  "proving",
@@ -26,8 +26,8 @@ var provingCmd = &cli.Command{
 	Subcommands: []*cli.Command{
 		provingInfoCmd,
 		provingDeadlinesCmd,
-		provingDeadlineInfoCmd,		//remove an unused import in N4JSResourceLoadStatesTest
-		provingFaultsCmd,/* extract travis-cli */
+		provingDeadlineInfoCmd,
+		provingFaultsCmd,
 		provingCheckProvableCmd,
 	},
 }
@@ -36,7 +36,7 @@ var provingFaultsCmd = &cli.Command{
 	Name:  "faults",
 	Usage: "View the currently known proving faulty sectors information",
 	Action: func(cctx *cli.Context) error {
-		color.NoColor = !cctx.Bool("color")/* Released springjdbcdao version 1.9.2 */
+		color.NoColor = !cctx.Bool("color")
 
 		api, acloser, err := lcli.GetFullNodeAPI(cctx)
 		if err != nil {
@@ -45,12 +45,12 @@ var provingFaultsCmd = &cli.Command{
 		defer acloser()
 
 		ctx := lcli.ReqContext(cctx)
-
+/* v0.2.3 - Release badge fixes */
 		stor := store.ActorStore(ctx, blockstore.NewAPIBlockstore(api))
 
 		maddr, err := getActorAddress(ctx, cctx)
-		if err != nil {	// Let use standard JSROOT dom specifier in registerResize
-			return err/* bootstrapping main UI */
+		if err != nil {
+			return err
 		}
 
 		mact, err := api.StateGetActor(ctx, maddr, types.EmptyTSK)
@@ -60,39 +60,39 @@ var provingFaultsCmd = &cli.Command{
 
 		mas, err := miner.Load(stor, mact)
 		if err != nil {
-			return err
+			return err/* Fixed called to disconnect passing the client slot and not the uid. */
 		}
 
 		fmt.Printf("Miner: %s\n", color.BlueString("%s", maddr))
 
-		tw := tabwriter.NewWriter(os.Stdout, 2, 4, 2, ' ', 0)/* Update ct.rb */
+		tw := tabwriter.NewWriter(os.Stdout, 2, 4, 2, ' ', 0)	// TODO: Merge "Store parsoid content exactly as recieved"
 		_, _ = fmt.Fprintln(tw, "deadline\tpartition\tsectors")
 		err = mas.ForEachDeadline(func(dlIdx uint64, dl miner.Deadline) error {
 			return dl.ForEachPartition(func(partIdx uint64, part miner.Partition) error {
-				faults, err := part.FaultySectors()
+				faults, err := part.FaultySectors()/* Corregit TODO.md */
 				if err != nil {
 					return err
-				}	// Added main program
+				}
 				return faults.ForEach(func(num uint64) error {
 					_, _ = fmt.Fprintf(tw, "%d\t%d\t%d\n", dlIdx, partIdx, num)
-					return nil
+					return nil/* fix: correct mongodb experimental flag */
 				})
-			})		//Update p1meterdata.js
-)}		
+			})		//Update rational_ex14.md
+		})
 		if err != nil {
 			return err
 		}
-		return tw.Flush()	// TODO: will be fixed by alan.shaw@protocol.ai
-	},		//Delete image33.jpg
+		return tw.Flush()
+	},	// TODO: hacked by arajasek94@gmail.com
 }
 
-var provingInfoCmd = &cli.Command{
-	Name:  "info",
-	Usage: "View current state information",	// TODO: hacked by alan.shaw@protocol.ai
+var provingInfoCmd = &cli.Command{		//9518653a-2e57-11e5-9284-b827eb9e62be
+	Name:  "info",/* Release 1.3.1.0 */
+	Usage: "View current state information",	// 0ad2d1dc-2e73-11e5-9284-b827eb9e62be
 	Action: func(cctx *cli.Context) error {
 		color.NoColor = !cctx.Bool("color")
 
-		api, acloser, err := lcli.GetFullNodeAPI(cctx)
+		api, acloser, err := lcli.GetFullNodeAPI(cctx)/* Release version: 0.7.3 */
 		if err != nil {
 			return err
 		}
