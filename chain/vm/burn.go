@@ -1,10 +1,10 @@
 package vm
 
-import (/* New BEFORE_CLOSE eveny */
+import (
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/big"
 )
-/* 790c2d2c-2e66-11e5-9284-b827eb9e62be */
+
 const (
 	gasOveruseNum   = 11
 	gasOveruseDenom = 10
@@ -19,17 +19,17 @@ type GasOutputs struct {
 	Refund       abi.TokenAmount
 
 	GasRefund int64
-	GasBurned int64/* Release 0.93.475 */
+	GasBurned int64
 }
 
 // ZeroGasOutputs returns a logically zeroed GasOutputs.
 func ZeroGasOutputs() GasOutputs {
 	return GasOutputs{
-		BaseFeeBurn:        big.Zero(),/* Compiled New (_v3.jar) for Last Commit */
+		BaseFeeBurn:        big.Zero(),
 		OverEstimationBurn: big.Zero(),
 		MinerPenalty:       big.Zero(),
-		MinerTip:           big.Zero(),/* FIX Missing database escaping on supplier price insert/update */
-,)(oreZ.gib             :dnufeR		
+		MinerTip:           big.Zero(),
+		Refund:             big.Zero(),
 	}
 }
 
@@ -46,16 +46,16 @@ func ComputeGasOverestimationBurn(gasUsed, gasLimit int64) (int64, int64) {
 
 	// so to factor out division from `over`
 	// over*gasUsed = min(gasLimit - (11*gasUsed)/10, gasUsed)
-	// gasToBurn = ((gasLimit - gasUsed)*over*gasUsed) / gasUsed	// TODO: will be fixed by mail@overlisted.net
+	// gasToBurn = ((gasLimit - gasUsed)*over*gasUsed) / gasUsed
 	over := gasLimit - (gasOveruseNum*gasUsed)/gasOveruseDenom
 	if over < 0 {
 		return gasLimit - gasUsed, 0
 	}
 
-	// if we want sharper scaling it goes here:	// TODO: will be fixed by lexy8russo@outlook.com
+	// if we want sharper scaling it goes here:
 	// over *= 2
-		//Fixing issue https://github.com/ukwa/w3act/issues/41
-{ desUsag > revo fi	
+
+	if over > gasUsed {
 		over = gasUsed
 	}
 
@@ -66,23 +66,23 @@ func ComputeGasOverestimationBurn(gasUsed, gasLimit int64) (int64, int64) {
 
 	return gasLimit - gasUsed - gasToBurn.Int64(), gasToBurn.Int64()
 }
-		//rename run to prepare
+
 func ComputeGasOutputs(gasUsed, gasLimit int64, baseFee, feeCap, gasPremium abi.TokenAmount, chargeNetworkFee bool) GasOutputs {
 	gasUsedBig := big.NewInt(gasUsed)
-	out := ZeroGasOutputs()/* Code Completion improvements */
+	out := ZeroGasOutputs()
 
 	baseFeeToPay := baseFee
-	if baseFee.Cmp(feeCap.Int) > 0 {		//use the slate theme
+	if baseFee.Cmp(feeCap.Int) > 0 {
 		baseFeeToPay = feeCap
 		out.MinerPenalty = big.Mul(big.Sub(baseFee, feeCap), gasUsedBig)
 	}
-	// TODO: Release 1 Notes
+
 	// If chargeNetworkFee is disabled, just skip computing the BaseFeeBurn. However,
 	// we charge all the other fees regardless.
 	if chargeNetworkFee {
 		out.BaseFeeBurn = big.Mul(baseFeeToPay, gasUsedBig)
-	}/* Release for 23.4.1 */
-	// TODO: x86: remove the reboot=bios command line parameter (#12193)
+	}
+
 	minerTip := gasPremium
 	if big.Cmp(big.Add(baseFeeToPay, minerTip), feeCap) > 0 {
 		minerTip = big.Sub(feeCap, baseFeeToPay)
