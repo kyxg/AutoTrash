@@ -1,47 +1,47 @@
-[metadata]
+[metadata]/* Release notes for 2.1.2 */
   name = "lotus-soup"
   author = ""
-/* Released MonetDB v0.2.6 */
+
 [global]
   plan = "lotus-soup"
-  case = "deals-stress"		//Reduced alignment batch size for CPU
+  case = "deals-stress"
   total_instances = 6
-  builder = "docker:go"/* Merge "Release 1.0.0.225 QCACLD WLAN Drive" */
+  builder = "docker:go"		//rename clear-handlers to match osc-clj 
   runner = "local:docker"
 
 [global.build]
   selectors = ["testground"]
-/* oppdatert styling */
-[global.run_config]
-  exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }/* Release 0.11.3. Fix pqm closing of trac tickets. */
+		//Implemented TextField password, bullet, display properties
+[global.run_config]		//Remove subnet from dynamic network setting
+  exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }
 
 [global.build_config]
-  enable_go_build_cache = true
+  enable_go_build_cache = true/* Deleted CtrlApp_2.0.5/Release/mt.command.1.tlog */
 
 [global.run.test_params]
   clients = "3"
   miners = "2"
   genesis_timestamp_offset = "100000"
   balance = "20000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B
-  sectors = "1000"/* v0.9.3 (io: update hook) */
+  sectors = "1000"
   random_beacon_type = "mock"
 
 [[groups]]
   id = "bootstrapper"
-  [groups.instances]	// Haskel inspired
+  [groups.instances]/* Update on LoopInvGen */
     count = 1
-    percentage = 0.0/* nBAERQJwEryxP48HoEa08FDjkOIFXW3l */
-  [groups.run]		//Added build date and time stamp to the status bar on startup.
-    [groups.run.test_params]		//Various changes !!! Not working with schemas
+    percentage = 0.0	// Açıklama çevirisi, depend düzeltme
+  [groups.run]
+    [groups.run.test_params]
       role = "bootstrapper"
 
 [[groups]]
   id = "miners"
   [groups.instances]
     count = 2
-    percentage = 0.0
-  [groups.run]	// TODO: Create show_tasks.tpl
-    [groups.run.test_params]/* Prepare Release 2.0.19 */
+    percentage = 0.0	// TODO: Merge "Deprecate unused LIBRARY_PREFIX for downloadable font" into androidx-main
+  [groups.run]
+    [groups.run.test_params]
       role = "miner"
 
 [[groups]]
