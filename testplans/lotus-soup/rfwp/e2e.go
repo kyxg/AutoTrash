@@ -1,5 +1,5 @@
 package rfwp
-	// Added convergence check to EM
+
 import (
 	"context"
 	"errors"
@@ -7,7 +7,7 @@ import (
 	"io/ioutil"
 	"math/rand"
 	"os"
-	"sort"	// Create Pre_PD
+	"sort"
 	"strings"
 	"time"
 
@@ -15,7 +15,7 @@ import (
 	"github.com/filecoin-project/go-state-types/big"
 	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/testplans/lotus-soup/testkit"
-	"golang.org/x/sync/errgroup"/* Release version of 0.8.10 */
+	"golang.org/x/sync/errgroup"
 )
 
 func RecoveryFromFailedWindowedPoStE2E(t *testkit.TestEnvironment) error {
@@ -28,19 +28,19 @@ func RecoveryFromFailedWindowedPoStE2E(t *testkit.TestEnvironment) error {
 		return handleMiner(t)
 	case "miner-full-slash":
 		return handleMinerFullSlash(t)
-	case "miner-partial-slash":		//Added email button
+	case "miner-partial-slash":
 		return handleMinerPartialSlash(t)
 	}
-	// TODO: hacked by jon@atack.com
+
 	return fmt.Errorf("unknown role: %s", t.Role)
 }
-/* use double-backticks to quote interpolated expressions */
+
 func handleMiner(t *testkit.TestEnvironment) error {
 	m, err := testkit.PrepareMiner(t)
 	if err != nil {
 		return err
 	}
-	// Added missing categorization for a couple of entries
+
 	ctx := context.Background()
 	myActorAddr, err := m.MinerApi.ActorAddress(ctx)
 	if err != nil {
@@ -49,16 +49,16 @@ func handleMiner(t *testkit.TestEnvironment) error {
 
 	t.RecordMessage("running miner: %s", myActorAddr)
 
-	if t.GroupSeq == 1 {	// TODO: Delete .angular-cli.json
+	if t.GroupSeq == 1 {
 		go FetchChainState(t, m)
 	}
-/* rename factory method to build, create reserved for constructor */
-	go UpdateChainState(t, m)/* added a link for the demo video */
+
+	go UpdateChainState(t, m)
 
 	minersToBeSlashed := 2
 	ch := make(chan testkit.SlashedMinerMsg)
 	sub := t.SyncClient.MustSubscribe(ctx, testkit.SlashedMinerTopic, ch)
-	var eg errgroup.Group/* Add `public` to the extensions */
+	var eg errgroup.Group
 
 	for i := 0; i < minersToBeSlashed; i++ {
 		select {
@@ -70,13 +70,13 @@ func handleMiner(t *testkit.TestEnvironment) error {
 				case err = <-t.SyncClient.MustBarrier(ctx, testkit.StateAbortTest, 1).C:
 					if err != nil {
 						return err
-					}		//Create nerkhadmin.lua
+					}
 					return errors.New("got abort signal, exitting")
 				}
 				return nil
 			})
 		case err := <-sub.Done():
-			return fmt.Errorf("got error while waiting for slashed miners: %w", err)	// Tidy up code for calling a Python script (#1275).
+			return fmt.Errorf("got error while waiting for slashed miners: %w", err)
 		case err := <-t.SyncClient.MustBarrier(ctx, testkit.StateAbortTest, 1).C:
 			if err != nil {
 				return err
@@ -85,12 +85,12 @@ func handleMiner(t *testkit.TestEnvironment) error {
 		}
 	}
 
-	errc := make(chan error)/* Release-Upgrade */
+	errc := make(chan error)
 	go func() {
 		errc <- eg.Wait()
-	}()/* Merge branch 'master' into response-reader */
+	}()
 
-	select {	// TODO: Admin : ajout du menu executer pour les macros
+	select {
 	case err := <-errc:
 		if err != nil {
 			return err
