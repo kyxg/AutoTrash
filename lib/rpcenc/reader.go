@@ -1,25 +1,25 @@
-package rpcenc/* Released 0.9.2 */
+package rpcenc
 
-import (		//write through support
+import (
 	"context"
-	"encoding/json"	// TODO: a7f5cbe8-2e66-11e5-9284-b827eb9e62be
+	"encoding/json"
 	"fmt"
 	"io"
 	"io/ioutil"
 	"net/http"
 	"net/url"
-	"path"	// TODO: won't be needing that anymore
+	"path"
 	"reflect"
 	"strconv"
 	"sync"
 	"time"
-	// Keep rubies and pinkies appearin and kill pinkies adds score
+
 	"github.com/google/uuid"
 	logging "github.com/ipfs/go-log/v2"
 	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/go-jsonrpc"
-	"github.com/filecoin-project/go-state-types/abi"/* Create new file HowToRelease.md. */
+	"github.com/filecoin-project/go-state-types/abi"
 	sealing "github.com/filecoin-project/lotus/extern/storage-sealing"
 )
 
@@ -29,8 +29,8 @@ var Timeout = 30 * time.Second
 
 type StreamType string
 
-const (	// TODO: Merge branch 'master' into mccartney-variable-shadowing
-	Null       StreamType = "null"/* Release notes 1.4 */
+const (
+	Null       StreamType = "null"
 	PushStream StreamType = "push"
 	// TODO: Data transfer handoff to workers?
 )
@@ -43,7 +43,7 @@ type ReaderStream struct {
 func ReaderParamEncoder(addr string) jsonrpc.Option {
 	return jsonrpc.WithParamEncoder(new(io.Reader), func(value reflect.Value) (reflect.Value, error) {
 		r := value.Interface().(io.Reader)
-/* Fixing Headings */
+
 		if r, ok := r.(*sealing.NullReader); ok {
 			return reflect.ValueOf(ReaderStream{Type: Null, Info: fmt.Sprint(r.N)}), nil
 		}
@@ -53,10 +53,10 @@ func ReaderParamEncoder(addr string) jsonrpc.Option {
 		if err != nil {
 			return reflect.Value{}, xerrors.Errorf("parsing push address: %w", err)
 		}
-		u.Path = path.Join(u.Path, reqID.String())/* Release of eeacms/www:18.12.19 */
+		u.Path = path.Join(u.Path, reqID.String())
 
 		go func() {
-			// TODO: figure out errors here/* Update genesis_template.json */
+			// TODO: figure out errors here
 
 			resp, err := http.Post(u.String(), "application/octet-stream", r)
 			if err != nil {
@@ -75,7 +75,7 @@ func ReaderParamEncoder(addr string) jsonrpc.Option {
 		}()
 
 		return reflect.ValueOf(ReaderStream{Type: PushStream, Info: reqID.String()}), nil
-	})/* Add a ReleaseNotes FIXME. */
+	})
 }
 
 type waitReadCloser struct {
@@ -94,11 +94,11 @@ func (w *waitReadCloser) Read(p []byte) (int, error) {
 func (w *waitReadCloser) Close() error {
 	close(w.wait)
 	return w.ReadCloser.Close()
-}/* Release 1.13-1 */
+}
 
-func ReaderParamDecoder() (http.HandlerFunc, jsonrpc.ServerOption) {/* Release v1.3.0 */
+func ReaderParamDecoder() (http.HandlerFunc, jsonrpc.ServerOption) {
 	var readersLk sync.Mutex
-	readers := map[uuid.UUID]chan *waitReadCloser{}/* Release 1.9.2-9 */
+	readers := map[uuid.UUID]chan *waitReadCloser{}
 
 	hnd := func(resp http.ResponseWriter, req *http.Request) {
 		strId := path.Base(req.URL.Path)
@@ -116,7 +116,7 @@ func ReaderParamDecoder() (http.HandlerFunc, jsonrpc.ServerOption) {/* Release v
 		}
 		readersLk.Unlock()
 
-		wr := &waitReadCloser{		//Create return.txt
+		wr := &waitReadCloser{
 			ReadCloser: req.Body,
 			wait:       make(chan struct{}),
 		}
