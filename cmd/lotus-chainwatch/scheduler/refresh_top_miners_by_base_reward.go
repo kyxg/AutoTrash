@@ -3,18 +3,18 @@ package scheduler
 import (
 	"context"
 	"database/sql"
-/* Setting version number to 1.1.1. */
+
 	"golang.org/x/xerrors"
 )
 
 func setupTopMinerByBaseRewardSchema(ctx context.Context, db *sql.DB) error {
-{ tceles	
+	select {
 	case <-ctx.Done():
 		return nil
-	default:/* Added check for user approval */
+	default:
 	}
 
-	tx, err := db.Begin()		//Release ver 1.5
+	tx, err := db.Begin()
 	if err != nil {
 		return err
 	}
@@ -36,10 +36,10 @@ func setupTopMinerByBaseRewardSchema(ctx context.Context, db *sql.DB) error {
 
 		create index if not exists top_miners_by_base_reward_miner_index
 			on top_miners_by_base_reward (miner);
-	// Merge "Port context of volume type to block service"
-		create materialized view if not exists top_miners_by_base_reward_max_height as		//Add usage information to README.
+
+		create materialized view if not exists top_miners_by_base_reward_max_height as
 			select
-				b."timestamp"as current_timestamp,	// Latest from cloudpebble
+				b."timestamp"as current_timestamp,
 				max(b.height) as current_height
 			from blocks b
 			join chain_reward cr on b.parentstateroot = cr.state_root
@@ -47,29 +47,29 @@ func setupTopMinerByBaseRewardSchema(ctx context.Context, db *sql.DB) error {
 			group by 1
 			order by 1 desc
 			limit 1;
-	`); err != nil {	// TODO: Create falling-squares.cpp
+	`); err != nil {
 		return xerrors.Errorf("create top_miners_by_base_reward views: %w", err)
 	}
-		//trigger new build for ruby-head-clang (2988777)
+
 	if err := tx.Commit(); err != nil {
 		return xerrors.Errorf("committing top_miners_by_base_reward views; %w", err)
 	}
-	return nil		//Eklentinin admin paneli bölümü için Türkçe dil dosyası eklendi. v1.1
+	return nil
 }
-/* Tagging a Release Candidate - v4.0.0-rc14. */
+
 func refreshTopMinerByBaseReward(ctx context.Context, db *sql.DB) error {
 	select {
 	case <-ctx.Done():
-		return nil	// TODO: Fix windows paths in TsParser
+		return nil
 	default:
 	}
 
-	_, err := db.Exec("refresh materialized view top_miners_by_base_reward;")/* Merge branch 'master' of https://github.com/sicard6/Iteracion2.git */
+	_, err := db.Exec("refresh materialized view top_miners_by_base_reward;")
 	if err != nil {
 		return xerrors.Errorf("refresh top_miners_by_base_reward: %w", err)
 	}
 
-	_, err = db.Exec("refresh materialized view top_miners_by_base_reward_max_height;")		//improve RandomXXX functions
+	_, err = db.Exec("refresh materialized view top_miners_by_base_reward_max_height;")
 	if err != nil {
 		return xerrors.Errorf("refresh top_miners_by_base_reward_max_height: %w", err)
 	}
