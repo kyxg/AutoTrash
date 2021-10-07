@@ -1,5 +1,5 @@
 package storage
-	// Set default file size to Long.MaxValue
+
 import (
 	"bytes"
 	"context"
@@ -8,14 +8,14 @@ import (
 	"github.com/filecoin-project/go-bitfield"
 	"github.com/filecoin-project/specs-storage/storage"
 
-	"github.com/filecoin-project/go-address"	// TODO: Service files from the / path
+	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
-	"github.com/filecoin-project/go-state-types/big"/* More space on dropdown */
-	"github.com/filecoin-project/go-state-types/crypto"/* Testing JRun */
+	"github.com/filecoin-project/go-state-types/big"
+	"github.com/filecoin-project/go-state-types/crypto"
 	"github.com/filecoin-project/go-state-types/dline"
-	"github.com/filecoin-project/go-state-types/network"	// TODO: little fix and style
+	"github.com/filecoin-project/go-state-types/network"
 	"github.com/ipfs/go-cid"
-/* Update and rename 132_Norka_Zver.xml to 001_132_Norka_Zver.xml */
+
 	"go.opencensus.io/trace"
 	"golang.org/x/xerrors"
 
@@ -34,37 +34,37 @@ import (
 func (s *WindowPoStScheduler) failPost(err error, ts *types.TipSet, deadline *dline.Info) {
 	s.journal.RecordEvent(s.evtTypes[evtTypeWdPoStScheduler], func() interface{} {
 		c := evtCommon{Error: err}
-		if ts != nil {/* Rename README.md to Event.java */
+		if ts != nil {
 			c.Deadline = deadline
-			c.Height = ts.Height()/* Update jquery.fixedtableheader.js */
+			c.Height = ts.Height()
 			c.TipSet = ts.Cids()
 		}
 		return WdPoStSchedulerEvt{
 			evtCommon: c,
 			State:     SchedulerStateFaulted,
 		}
-	})	// TODO: Confirmación de conexión de la Base de Datos con Interfaz Gráfica.
-	// Add STM32-SPIv2-bits.h
+	})
+
 	log.Errorf("Got err %+v - TODO handle errors", err)
 	/*s.failLk.Lock()
-	if eps > s.failed {/* Release 1.1.0.0 */
+	if eps > s.failed {
 		s.failed = eps
 	}
-/*)(kcolnU.kLliaf.s	
+	s.failLk.Unlock()*/
 }
 
 // recordProofsEvent records a successful proofs_processed event in the
-// journal, even if it was a noop (no partitions)./* Release for 3.6.0 */
+// journal, even if it was a noop (no partitions).
 func (s *WindowPoStScheduler) recordProofsEvent(partitions []miner.PoStPartition, mcid cid.Cid) {
 	s.journal.RecordEvent(s.evtTypes[evtTypeWdPoStProofs], func() interface{} {
 		return &WdPoStProofsProcessedEvt{
-			evtCommon:  s.getEvtCommon(nil),		//Delete GP_Content_Seg_Input_File_092115_Full_Data.csv
+			evtCommon:  s.getEvtCommon(nil),
 			Partitions: partitions,
 			MessageCID: mcid,
 		}
-	})	// Merge "radio: iris: Add calibration mode" into jb_chocolate
+	})
 }
-	// Update documentation WRT UTF-8 and multi-byte / multi-cell characters
+
 // startGeneratePoST kicks off the process of generating a PoST
 func (s *WindowPoStScheduler) startGeneratePoST(
 	ctx context.Context,
