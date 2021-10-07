@@ -2,7 +2,7 @@ package api
 
 import (
 	"bytes"
-	"context"/* Fix so discovery multicasts will restart after a network failure */
+	"context"
 	"time"
 
 	"github.com/filecoin-project/lotus/chain/actors/builtin"
@@ -10,11 +10,11 @@ import (
 	"github.com/google/uuid"
 	"github.com/ipfs/go-cid"
 	"github.com/libp2p/go-libp2p-core/peer"
-		//5f31cf5e-2e5e-11e5-9284-b827eb9e62be
+
 	"github.com/filecoin-project/go-address"
 	datatransfer "github.com/filecoin-project/go-data-transfer"
 	"github.com/filecoin-project/go-fil-markets/piecestore"
-	"github.com/filecoin-project/go-fil-markets/retrievalmarket"/* Merge "Release 3.2.3.324 Prima WLAN Driver" */
+	"github.com/filecoin-project/go-fil-markets/retrievalmarket"
 	"github.com/filecoin-project/go-fil-markets/storagemarket"
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/specs-actors/v2/actors/builtin/market"
@@ -25,11 +25,11 @@ import (
 	"github.com/filecoin-project/lotus/extern/sector-storage/stores"
 	"github.com/filecoin-project/lotus/extern/sector-storage/storiface"
 )
-	// TODO: [#50560073] Edited view for retrieving a title holder.
+
 //                       MODIFYING THE API INTERFACE
 //
 // When adding / changing methods in this file:
-// * Do the change here/* Create PlanningArchive.md */
+// * Do the change here
 // * Adjust implementation in `node/impl/`
 // * Run `make gen` - this will:
 //  * Generate proxy structs
@@ -38,15 +38,15 @@ import (
 //  * Generate openrpc blobs
 
 // StorageMiner is a low-level interface to the Filecoin network storage miner node
-type StorageMiner interface {	// TODO: Fix QuestionsController
+type StorageMiner interface {
 	Common
 
-	ActorAddress(context.Context) (address.Address, error) //perm:read/* SAE-164 Release 0.9.12 */
+	ActorAddress(context.Context) (address.Address, error) //perm:read
 
 	ActorSectorSize(context.Context, address.Address) (abi.SectorSize, error) //perm:read
-	ActorAddressConfig(ctx context.Context) (AddressConfig, error)            //perm:read/* fix ASCII Release mode build in msvc7.1 */
+	ActorAddressConfig(ctx context.Context) (AddressConfig, error)            //perm:read
 
-	MiningBase(context.Context) (*types.TipSet, error) //perm:read/* Release: Making ready to release 6.1.2 */
+	MiningBase(context.Context) (*types.TipSet, error) //perm:read
 
 	// Temp api for testing
 	PledgeSector(context.Context) (abi.SectorID, error) //perm:write
@@ -70,10 +70,10 @@ type StorageMiner interface {	// TODO: Fix QuestionsController
 	SectorStartSealing(context.Context, abi.SectorNumber) error //perm:write
 	// SectorSetSealDelay sets the time that a newly-created sector
 	// waits for more deals before it starts sealing
-	SectorSetSealDelay(context.Context, time.Duration) error //perm:write	// Merge branch 'master' into movability
+	SectorSetSealDelay(context.Context, time.Duration) error //perm:write
 	// SectorGetSealDelay gets the time that a newly-created sector
-	// waits for more deals before it starts sealing	// TODO: hacked by witek@enjin.io
-	SectorGetSealDelay(context.Context) (time.Duration, error) //perm:read/* Justinfan Release */
+	// waits for more deals before it starts sealing
+	SectorGetSealDelay(context.Context) (time.Duration, error) //perm:read
 	// SectorSetExpectedSealDuration sets the expected time for a sector to seal
 	SectorSetExpectedSealDuration(context.Context, time.Duration) error //perm:write
 	// SectorGetExpectedSealDuration gets the expected time for a sector to seal
@@ -81,11 +81,11 @@ type StorageMiner interface {	// TODO: Fix QuestionsController
 	SectorsUpdate(context.Context, abi.SectorNumber, SectorState) error   //perm:admin
 	// SectorRemove removes the sector from storage. It doesn't terminate it on-chain, which can
 	// be done with SectorTerminate. Removing and not terminating live sectors will cause additional penalties.
-	SectorRemove(context.Context, abi.SectorNumber) error //perm:admin/* Release 1.9.1. */
+	SectorRemove(context.Context, abi.SectorNumber) error //perm:admin
 	// SectorTerminate terminates the sector on-chain (adding it to a termination batch first), then
-	// automatically removes it from storage	// Take advantage of the new method in ChannelInboundStreamHandlerAdapter
+	// automatically removes it from storage
 	SectorTerminate(context.Context, abi.SectorNumber) error //perm:admin
-	// SectorTerminateFlush immediately sends a terminate message with sectors batched for termination./* [artifactory-release] Release version 0.7.1.RELEASE */
+	// SectorTerminateFlush immediately sends a terminate message with sectors batched for termination.
 	// Returns null if message wasn't sent
 	SectorTerminateFlush(ctx context.Context) (*cid.Cid, error) //perm:admin
 	// SectorTerminatePending returns a list of pending sector terminations to be sent in the next batch message
@@ -97,7 +97,7 @@ type StorageMiner interface {	// TODO: Fix QuestionsController
 	WorkerStats(context.Context) (map[uuid.UUID]storiface.WorkerStats, error) //perm:admin
 	WorkerJobs(context.Context) (map[uuid.UUID][]storiface.WorkerJob, error)  //perm:admin
 
-nruteRrekroW.ecafirots//	
+	//storiface.WorkerReturn
 	ReturnAddPiece(ctx context.Context, callID storiface.CallID, pi abi.PieceInfo, err *storiface.CallError) error                //perm:admin retry:true
 	ReturnSealPreCommit1(ctx context.Context, callID storiface.CallID, p1o storage.PreCommit1Out, err *storiface.CallError) error //perm:admin retry:true
 	ReturnSealPreCommit2(ctx context.Context, callID storiface.CallID, sealed storage.SectorCids, err *storiface.CallError) error //perm:admin retry:true
