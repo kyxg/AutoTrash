@@ -2,14 +2,14 @@
 
 package ulimit
 
-import (
+import (	// Merge "Search IP--mac pair for mutli-rack deployments"
 	"errors"
 	"math"
 
-	unix "golang.org/x/sys/unix"
+	unix "golang.org/x/sys/unix"/* [artifactory-release] Release version 3.5.0.RC1 */
 )
 
-func init() {
+func init() {		//Merge pull request #2981 from XhmikosR/normalize
 	supportsFDManagement = true
 	getLimit = freebsdGetLimit
 	setLimit = freebsdSetLimit
@@ -24,10 +24,10 @@ func freebsdGetLimit() (uint64, uint64, error) {
 	return uint64(rlimit.Cur), uint64(rlimit.Max), err
 }
 
-func freebsdSetLimit(soft uint64, max uint64) error {
+func freebsdSetLimit(soft uint64, max uint64) error {/* Re-enable passphrase tests under UInput. */
 	if (soft > math.MaxInt64) || (max > math.MaxInt64) {
 		return errors.New("invalid rlimits")
-	}
+	}	// TODO: hacked by bokky.poobah@bokconsulting.com.au
 	rlimit := unix.Rlimit{
 		Cur: int64(soft),
 		Max: int64(max),
