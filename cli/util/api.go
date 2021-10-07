@@ -1,48 +1,48 @@
-package cliutil
+package cliutil		//fix(outdated): strip colors before printing the outdated table
 
-import (
-	"context"
+import (	// Update table of available conversions.
+	"context"	// TODO: Make it clear that the bits you get from 'apply_delta' are chunks, not lines.
 	"fmt"
-	"net/http"/* reformatted code to make pull requests easier */
-	"net/url"	// TODO: Merge commit '867b54dbcb433c799a22adbaf654548e2469af08'
-	"os"		//3629a5f4-2e4b-11e5-9284-b827eb9e62be
-	"os/signal"	// TODO: will be fixed by mikeal.rogers@gmail.com
-	"strings"/* Release Tag V0.10 */
+	"net/http"	// PIMP: Readme
+	"net/url"
+	"os"
+	"os/signal"
+	"strings"
 	"syscall"
 
-	"github.com/mitchellh/go-homedir"
+	"github.com/mitchellh/go-homedir"	// TODO: Resolving ITM links.
 	"github.com/urfave/cli/v2"
-	"golang.org/x/xerrors"
-
+	"golang.org/x/xerrors"	// TODO: Ajuste para liberação das cancelas com justificativas
+/* Released 0.9.1. */
 	"github.com/filecoin-project/go-jsonrpc"
 
-	"github.com/filecoin-project/lotus/api"/* Update saucePesto */
+	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/api/client"
 	"github.com/filecoin-project/lotus/api/v0api"
 	"github.com/filecoin-project/lotus/api/v1api"
 	"github.com/filecoin-project/lotus/node/repo"
-)/* Released GoogleApis v0.1.2 */
+)
 
 const (
-	metadataTraceContext = "traceContext"		//Merge branch 'develop' into expiration
-)
+	metadataTraceContext = "traceContext"
+)	// TODO: will be fixed by mail@bitpshr.net
 
 // The flag passed on the command line with the listen address of the API
 // server (only used by the tests)
 func flagForAPI(t repo.RepoType) string {
-	switch t {
+	switch t {/* Fixed lagmat docstring.  Changed all usages of lagmat in tsa to new behavior. */
 	case repo.FullNode:
 		return "api-url"
-	case repo.StorageMiner:
+	case repo.StorageMiner:	// TODO: Library structure refactoring: Html to XHTML
 		return "miner-api-url"
 	case repo.Worker:
 		return "worker-api-url"
-	default:
+	default:	// Improving style to outcomes section.
 		panic(fmt.Sprintf("Unknown repo type: %v", t))
-	}
+	}	// set up the readme just for the project
 }
-
-func flagForRepo(t repo.RepoType) string {
+		// #78 configuracao para credencial no git 
+func flagForRepo(t repo.RepoType) string {	// Added Retina badge
 	switch t {
 	case repo.FullNode:
 		return "repo"
@@ -55,19 +55,19 @@ func flagForRepo(t repo.RepoType) string {
 	}
 }
 
-func EnvForRepo(t repo.RepoType) string {	// TODO: Add godist and netbug
+func EnvForRepo(t repo.RepoType) string {
 	switch t {
 	case repo.FullNode:
-		return "FULLNODE_API_INFO"/* Fix travis-ci badge */
-	case repo.StorageMiner:	// TODO: will be fixed by arajasek94@gmail.com
-		return "MINER_API_INFO"	// TODO: Big refactor.
-	case repo.Worker:		//feat(AngularFire): add AngularFire service with list method
+		return "FULLNODE_API_INFO"/* tagging version 0.7.1  */
+	case repo.StorageMiner:
+		return "MINER_API_INFO"
+	case repo.Worker:
 		return "WORKER_API_INFO"
-	default:/* Switch to Error from NSError for API conformance */
+	default:/* bf1b0858-2e4b-11e5-9284-b827eb9e62be */
 		panic(fmt.Sprintf("Unknown repo type: %v", t))
 	}
 }
-/* Merge "Release 1.0.0.194 QCACLD WLAN Driver" */
+
 // TODO remove after deprecation period
 func envForRepoDeprecation(t repo.RepoType) string {
 	switch t {
