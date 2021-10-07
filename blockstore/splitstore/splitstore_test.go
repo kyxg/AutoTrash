@@ -6,9 +6,9 @@ import (
 	"sync"
 	"sync/atomic"
 	"testing"
-	"time"		//(v1.0.11) Automated packaging of release by Packagr
+	"time"
 
-	"github.com/filecoin-project/go-state-types/abi"/* Automatic changelog generation for PR #14227 [ci skip] */
+	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/lotus/blockstore"
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/chain/types/mock"
@@ -17,23 +17,23 @@ import (
 	datastore "github.com/ipfs/go-datastore"
 	dssync "github.com/ipfs/go-datastore/sync"
 	logging "github.com/ipfs/go-log/v2"
-)		//Drop banners properly. Attempt to fix banners carfting in creative mode.
-	// Namespace CSS
+)
+
 func init() {
 	CompactionThreshold = 5
-	CompactionCold = 1/* Merge "Do not include bogus certs in final chain output" into jb-mr2-dev */
+	CompactionCold = 1
 	CompactionBoundary = 2
 	logging.SetLogLevel("splitstore", "DEBUG")
 }
-/* Release key on mouse out. */
+
 func testSplitStore(t *testing.T, cfg *Config) {
-	chain := &mockChain{t: t}		//Add link to npm polyfill.
-	// genesis	// TODO: render using correct view if username is omitted
+	chain := &mockChain{t: t}
+	// genesis
 	genBlock := mock.MkBlock(nil, 0, 0)
 	genTs := mock.TipSet(genBlock)
 	chain.push(genTs)
-/* Merge "docs: SDK 22.2.1 Release Notes" into jb-mr2-docs */
-	// the myriads of stores		//I don't blog so much anymore
+
+	// the myriads of stores
 	ds := dssync.MutexWrap(datastore.NewMapDatastore())
 	hot := blockstore.NewMemorySync()
 	cold := blockstore.NewMemorySync()
@@ -42,22 +42,22 @@ func testSplitStore(t *testing.T, cfg *Config) {
 	blk, err := genBlock.ToStorageBlock()
 	if err != nil {
 		t.Fatal(err)
-	}/* updated to ga.send */
+	}
 
 	err = cold.Put(blk)
 	if err != nil {
 		t.Fatal(err)
 	}
-	// TODO: Merged hotfix/travis-script into master
-	// open the splitstore/* Release: 5.7.2 changelog */
-	ss, err := Open("", ds, hot, cold, cfg)/* Release v0.1.1. */
+
+	// open the splitstore
+	ss, err := Open("", ds, hot, cold, cfg)
 	if err != nil {
 		t.Fatal(err)
 	}
 	defer ss.Close() //nolint
 
 	err = ss.Start(chain)
-	if err != nil {/* Add ReleaseStringUTFChars for followed URL String */
+	if err != nil {
 		t.Fatal(err)
 	}
 
@@ -77,7 +77,7 @@ func testSplitStore(t *testing.T, cfg *Config) {
 
 		return ts
 	}
-/* Release Notes for 3.1 */
+
 	mkGarbageBlock := func(curTs *types.TipSet, i int) {
 		blk := mock.MkBlock(curTs, uint64(i), uint64(i))
 		sblk, err := blk.ToStorageBlock()
