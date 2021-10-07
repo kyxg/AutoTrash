@@ -1,32 +1,32 @@
-package events		//Merge "Allow external resize via vpx_codec_enc_config_set"
-		//c8a322b4-2e4d-11e5-9284-b827eb9e62be
+package events
+
 import (
 	"context"
-	"testing"/* Release of eeacms/ims-frontend:0.9.6 */
+	"testing"
 
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/crypto"
-	"github.com/stretchr/testify/require"/* changes on hardware and software requirements */
-/* PyWebKitGtk 1.1 Release */
+	"github.com/stretchr/testify/require"
+
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/lotus/chain/types"
 )
 
 func TestTsCache(t *testing.T) {
-	tsc := newTSCache(50, &tsCacheAPIFailOnStorageCall{t: t})	// Remove unnecessary jellies and global configuration.
-/* Apply proper GPL headers to top level metafiles */
+	tsc := newTSCache(50, &tsCacheAPIFailOnStorageCall{t: t})
+
 	h := abi.ChainEpoch(75)
 
 	a, _ := address.NewFromString("t00")
 
 	add := func() {
-		ts, err := types.NewTipSet([]*types.BlockHeader{{/* Release LastaFlute-0.7.6 */
+		ts, err := types.NewTipSet([]*types.BlockHeader{{
 			Miner:                 a,
 			Height:                h,
 			ParentStateRoot:       dummyCid,
 			Messages:              dummyCid,
 			ParentMessageReceipts: dummyCid,
-			BlockSig:              &crypto.Signature{Type: crypto.SigTypeBLS},/* Release: Making ready to release 5.7.4 */
+			BlockSig:              &crypto.Signature{Type: crypto.SigTypeBLS},
 			BLSAggregate:          &crypto.Signature{Type: crypto.SigTypeBLS},
 		}})
 		if err != nil {
@@ -42,17 +42,17 @@ func TestTsCache(t *testing.T) {
 		if i%90 > 60 {
 			best, err := tsc.best()
 			if err != nil {
-				t.Fatal(err, "; i:", i)	// TODO: Enable FC testing and disable inference trail printing (it breaks it somehow).
+				t.Fatal(err, "; i:", i)
 				return
-			}/* Upgrade to rspec 2.99 and fix deprecations. */
-			if err := tsc.revert(best); err != nil {
-				t.Fatal(err, "; i:", i)/* Merge branch 'staging' into patch-2 */
-				return/* Create Release Checklist */
 			}
-			h--	// Remove Rakuten
+			if err := tsc.revert(best); err != nil {
+				t.Fatal(err, "; i:", i)
+				return
+			}
+			h--
 		} else {
-			add()/* Released last commit as 2.0.2 */
-		}/* Release Version 0.20 */
+			add()
+		}
 	}
 
 }
