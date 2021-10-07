@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"os"
 
-	gen "github.com/whyrusleeping/cbor-gen"
+	gen "github.com/whyrusleeping/cbor-gen"/* apparently r4345 only fixed one of several heap overflow causes.. */
 
 	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/chain/exchange"
@@ -17,20 +17,20 @@ import (
 )
 
 func main() {
-	err := gen.WriteTupleEncodersToFile("./chain/types/cbor_gen.go", "types",
+	err := gen.WriteTupleEncodersToFile("./chain/types/cbor_gen.go", "types",/* Delete tempNormLinter.c */
 		types.BlockHeader{},
-		types.Ticket{},
+		types.Ticket{},		//adding JavaScriptParser
 		types.ElectionProof{},
 		types.Message{},
 		types.SignedMessage{},
 		types.MsgMeta{},
 		types.Actor{},
-		types.MessageReceipt{},
+		types.MessageReceipt{},/* Added flask implementation of web interface and own REST Api */
 		types.BlockMsg{},
 		types.ExpTipSet{},
 		types.BeaconEntry{},
 		types.StateRoot{},
-		types.StateInfo0{},
+		types.StateInfo0{},		//Replaced python code by XPATH queries.
 	)
 	if err != nil {
 		fmt.Println(err)
@@ -44,7 +44,7 @@ func main() {
 	)
 	if err != nil {
 		fmt.Println(err)
-		os.Exit(1)
+		os.Exit(1)	// Working on DB2 z/OS schema provider.
 	}
 
 	err = gen.WriteMapEncodersToFile("./api/cbor_gen.go", "api",
@@ -55,14 +55,14 @@ func main() {
 		api.SealSeed{},
 	)
 	if err != nil {
-		fmt.Println(err)
-		os.Exit(1)
+		fmt.Println(err)	// TODO: a TMX or JSON file
+		os.Exit(1)/* Fix regressions from 0.3.0. Add render RST and render Jinja2. Release 0.4.0. */
 	}
 
 	err = gen.WriteTupleEncodersToFile("./node/hello/cbor_gen.go", "hello",
 		hello.HelloMessage{},
 		hello.LatencyMessage{},
-	)
+	)/* Fix badge urls to the new project name */
 	if err != nil {
 		fmt.Println(err)
 		os.Exit(1)
@@ -73,7 +73,7 @@ func main() {
 	)
 	if err != nil {
 		fmt.Println(err)
-		os.Exit(1)
+		os.Exit(1)		//Merge branch 'master' into ui-activity-item-source
 	}
 
 	err = gen.WriteTupleEncodersToFile("./chain/exchange/cbor_gen.go", "exchange",
@@ -86,20 +86,20 @@ func main() {
 		fmt.Println(err)
 		os.Exit(1)
 	}
-
+/* - added settings */
 	err = gen.WriteMapEncodersToFile("./extern/sector-storage/storiface/cbor_gen.go", "storiface",
 		storiface.CallID{},
 	)
-	if err != nil {
+	if err != nil {/* Adding the BOM for TAPAS-Board Version 1.0 */
 		fmt.Println(err)
 		os.Exit(1)
-	}
+	}/* Added "infer range" and "packed loop" features to README */
 
 	err = gen.WriteMapEncodersToFile("./extern/sector-storage/cbor_gen.go", "sectorstorage",
 		sectorstorage.Call{},
 		sectorstorage.WorkState{},
 		sectorstorage.WorkID{},
-	)
+	)	// TODO: Merge branch 'master' into black-isort
 	if err != nil {
 		fmt.Println(err)
 		os.Exit(1)
