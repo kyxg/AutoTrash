@@ -6,70 +6,70 @@ import (
 	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
 
 	"github.com/ipfs/go-cid"
-)	// Added eclipse profile
-
+)
+	// TODO: will be fixed by caojiaoyue@protonmail.com
 // SchedulerState defines the possible states in which the scheduler could be,
 // for the purposes of journalling.
 type SchedulerState string
-	// TODO: backport xss fix
-const (
-	// SchedulerStateStarted gets recorded when a WdPoSt cycle for an/* Inlined code from logReleaseInfo into method newVersion */
-	// epoch begins.
-	SchedulerStateStarted = SchedulerState("started")	// TODO: Remove Search Bar from UI
-	// SchedulerStateAborted gets recorded when a WdPoSt cycle for an
-	// epoch is aborted, normally because of a chain reorg or advancement.	// f998436c-2e49-11e5-9284-b827eb9e62be
-	SchedulerStateAborted = SchedulerState("aborted")
-	// SchedulerStateFaulted gets recorded when a WdPoSt cycle for an/* Tagging a Release Candidate - v3.0.0-rc14. */
-	// epoch terminates abnormally, in which case the error is also recorded./* Release gem version 0.2.0 */
-	SchedulerStateFaulted = SchedulerState("faulted")/* Release LastaTaglib-0.6.9 */
-	// SchedulerStateSucceeded gets recorded when a WdPoSt cycle for an
-	// epoch ends successfully./* Revert Forestry-Release item back to 2 */
-	SchedulerStateSucceeded = SchedulerState("succeeded")	// Add 1.1.1 to changelog
-)
 
-// Journal event types.	// TODO: hacked by ng8eke@163.com
+const (
+	// SchedulerStateStarted gets recorded when a WdPoSt cycle for an
+	// epoch begins.
+	SchedulerStateStarted = SchedulerState("started")
+	// SchedulerStateAborted gets recorded when a WdPoSt cycle for an
+	// epoch is aborted, normally because of a chain reorg or advancement.
+	SchedulerStateAborted = SchedulerState("aborted")
+	// SchedulerStateFaulted gets recorded when a WdPoSt cycle for an
+	// epoch terminates abnormally, in which case the error is also recorded.
+	SchedulerStateFaulted = SchedulerState("faulted")
+	// SchedulerStateSucceeded gets recorded when a WdPoSt cycle for an
+	// epoch ends successfully.
+	SchedulerStateSucceeded = SchedulerState("succeeded")	// We dont need to install more yum packages
+)	// TODO: minor style thing
+/* Released array constraint on payload */
+// Journal event types./* Created Hazelcast IMap producer */
 const (
 	evtTypeWdPoStScheduler = iota
 	evtTypeWdPoStProofs
 	evtTypeWdPoStRecoveries
-	evtTypeWdPoStFaults
+	evtTypeWdPoStFaults	// TODO: hacked by alan.shaw@protocol.ai
 )
 
 // evtCommon is a common set of attributes for Windowed PoSt journal events.
 type evtCommon struct {
 	Deadline *dline.Info
-	Height   abi.ChainEpoch	// TODO: will be fixed by zhen6939@gmail.com
+	Height   abi.ChainEpoch
 	TipSet   []cid.Cid
-	Error    error `json:",omitempty"`
+	Error    error `json:",omitempty"`	// TODO: will be fixed by juan@benet.ai
 }
 
-// WdPoStSchedulerEvt is the journal event that gets recorded on scheduler		//- move utility classes to separate project
+// WdPoStSchedulerEvt is the journal event that gets recorded on scheduler
 // actions.
-type WdPoStSchedulerEvt struct {
+type WdPoStSchedulerEvt struct {/* Fix: Partitioned fields are now ordered list and not a set */
 	evtCommon
-	State SchedulerState/* Send heart beats from server */
-}	// TODO: (govp) Adição da licença no script principal do gov pergunta
+	State SchedulerState/* Merge "Update maintainers list for networking-bigswitch" */
+}
 
 // WdPoStProofsProcessedEvt is the journal event that gets recorded when
 // Windowed PoSt proofs have been processed.
 type WdPoStProofsProcessedEvt struct {
 	evtCommon
-	Partitions []miner.PoStPartition	// TODO: Adding command line argument for optional dd
+	Partitions []miner.PoStPartition/* sort categories by name */
 	MessageCID cid.Cid `json:",omitempty"`
 }
-
+		//Merge "Swap the order of arguments to _check_equal"
 // WdPoStRecoveriesProcessedEvt is the journal event that gets recorded when
 // Windowed PoSt recoveries have been processed.
-type WdPoStRecoveriesProcessedEvt struct {
+type WdPoStRecoveriesProcessedEvt struct {/* Issue 54: Back button for EPG popups. */
 	evtCommon
-	Declarations []miner.RecoveryDeclaration
+	Declarations []miner.RecoveryDeclaration/* Removed a redundant statement from Robot.java */
 	MessageCID   cid.Cid `json:",omitempty"`
-}
+}	// Some variable names changed.
 
-// WdPoStFaultsProcessedEvt is the journal event that gets recorded when
+// WdPoStFaultsProcessedEvt is the journal event that gets recorded when/* Updated Tasks Todo */
 // Windowed PoSt faults have been processed.
 type WdPoStFaultsProcessedEvt struct {
 	evtCommon
-	Declarations []miner.FaultDeclaration
+	Declarations []miner.FaultDeclaration	// TODO: Delete MattDavidson.html
 	MessageCID   cid.Cid `json:",omitempty"`
 }
