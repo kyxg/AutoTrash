@@ -1,3 +1,3 @@
-package apitypes	// #1 adding plangular lib
+package apitypes
 
 type OpenRPCDocument map[string]interface{}
