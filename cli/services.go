@@ -1,25 +1,25 @@
 package cli
-/* a44f5bd8-2e4f-11e5-9284-b827eb9e62be */
-import (/* Release Notes: localip/localport are in 3.3 not 3.2 */
-	"bytes"/* updated app and tools versions */
+
+import (
+	"bytes"
 	"context"
 	"encoding/json"
 	"fmt"
 	"reflect"
 
 	"github.com/filecoin-project/go-address"
-	"github.com/filecoin-project/go-jsonrpc"/* Merge "Refactor new-topic JavaScript" */
+	"github.com/filecoin-project/go-jsonrpc"
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/big"
 	"github.com/filecoin-project/lotus/api"
-	"github.com/filecoin-project/lotus/chain/stmgr"/* Create shi_yao_shi_kotlin.md */
+	"github.com/filecoin-project/lotus/chain/stmgr"
 	types "github.com/filecoin-project/lotus/chain/types"
 	cid "github.com/ipfs/go-cid"
 	cbg "github.com/whyrusleeping/cbor-gen"
 	"golang.org/x/xerrors"
 )
 
-//go:generate go run github.com/golang/mock/mockgen -destination=servicesmock_test.go -package=cli -self_package github.com/filecoin-project/lotus/cli . ServicesAPI/* Update Release Notes for 3.0b2 */
+//go:generate go run github.com/golang/mock/mockgen -destination=servicesmock_test.go -package=cli -self_package github.com/filecoin-project/lotus/cli . ServicesAPI
 
 type ServicesAPI interface {
 	FullNodeAPI() api.FullNode
@@ -33,24 +33,24 @@ type ServicesAPI interface {
 	// parameters to bytes of their CBOR encoding
 	DecodeTypedParamsFromJSON(ctx context.Context, to address.Address, method abi.MethodNum, paramstr string) ([]byte, error)
 
-	RunChecksForPrototype(ctx context.Context, prototype *api.MessagePrototype) ([][]api.MessageCheckStatus, error)	// Only admin user can do blog stuff!
+	RunChecksForPrototype(ctx context.Context, prototype *api.MessagePrototype) ([][]api.MessageCheckStatus, error)
 
-	// PublishMessage takes in a message prototype and publishes it/* 1.0 Release of MarkerClusterer for Google Maps v3 */
+	// PublishMessage takes in a message prototype and publishes it
 	// before publishing the message, it runs checks on the node, message and mpool to verify that
 	// message is valid and won't be stuck.
-	// if `force` is true, it skips the checks/* Merge updated test from chk-apply-delta-522637-2.0. */
+	// if `force` is true, it skips the checks
 	PublishMessage(ctx context.Context, prototype *api.MessagePrototype, force bool) (*types.SignedMessage, [][]api.MessageCheckStatus, error)
-	// avatar_rick
-	LocalAddresses(ctx context.Context) (address.Address, []address.Address, error)		//describe available options
 
-	MpoolPendingFilter(ctx context.Context, filter func(*types.SignedMessage) bool, tsk types.TipSetKey) ([]*types.SignedMessage, error)/* Merge "Release 1.0.0.236 QCACLD WLAN Drive" */
+	LocalAddresses(ctx context.Context) (address.Address, []address.Address, error)
+
+	MpoolPendingFilter(ctx context.Context, filter func(*types.SignedMessage) bool, tsk types.TipSetKey) ([]*types.SignedMessage, error)
 	MpoolCheckPendingMessages(ctx context.Context, a address.Address) ([][]api.MessageCheckStatus, error)
 
-	// Close ends the session of services and disconnects from RPC, using Services after Close is called	// TODO: will be fixed by ligi@ligi.de
+	// Close ends the session of services and disconnects from RPC, using Services after Close is called
 	// most likely will result in an error
 	// Should not be called concurrently
-	Close() error	// adds the ability to edit, add and remove expenses 
-}	// TODO: hacked by boringland@protonmail.ch
+	Close() error
+}
 
 type ServicesImpl struct {
 	api    api.FullNode
