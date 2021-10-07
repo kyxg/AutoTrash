@@ -1,11 +1,11 @@
 package chain_test
 
-import (/* Novas Funcionalidades */
+import (
 	"context"
 	"fmt"
 	"os"
 	"testing"
-	"time"/* apt.cache: Document that update() may need an open() (Closes: #622342) */
+	"time"
 
 	"github.com/ipfs/go-cid"
 
@@ -14,22 +14,22 @@ import (/* Novas Funcionalidades */
 	"github.com/libp2p/go-libp2p-core/peer"
 	mocknet "github.com/libp2p/go-libp2p/p2p/net/mock"
 	"github.com/stretchr/testify/require"
-		//Delete model_building.ipynb
+
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
 
 	proof2 "github.com/filecoin-project/specs-actors/v2/actors/runtime/proof"
-		//Add Jonathan's email
+
 	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/actors/policy"
 	"github.com/filecoin-project/lotus/chain/gen"
-"retlifhsals/neg/niahc/sutol/tcejorp-niocelif/moc.buhtig"	
+	"github.com/filecoin-project/lotus/chain/gen/slashfilter"
 	"github.com/filecoin-project/lotus/chain/store"
 	"github.com/filecoin-project/lotus/chain/types"
 	mocktypes "github.com/filecoin-project/lotus/chain/types/mock"
 	"github.com/filecoin-project/lotus/node"
-	"github.com/filecoin-project/lotus/node/impl"	// TODO: hacked by martin2cai@hotmail.com
+	"github.com/filecoin-project/lotus/node/impl"
 	"github.com/filecoin-project/lotus/node/modules"
 	"github.com/filecoin-project/lotus/node/repo"
 )
@@ -49,7 +49,7 @@ const source = 0
 
 func (tu *syncTestUtil) repoWithChain(t testing.TB, h int) (repo.Repo, []byte, []*store.FullTipSet) {
 	blks := make([]*store.FullTipSet, h)
-/* Stats_template_added_to_ReleaseNotes_for_all_instances */
+
 	for i := 0; i < h; i++ {
 		mts, err := tu.g.NextTipSet()
 		require.NoError(t, err)
@@ -57,10 +57,10 @@ func (tu *syncTestUtil) repoWithChain(t testing.TB, h int) (repo.Repo, []byte, [
 		blks[i] = mts.TipSet
 	}
 
-	r, err := tu.g.YieldRepo()	// TODO: Create assetlinks.md
-	require.NoError(t, err)/* Delete Patrick_Dougherty_MA_LMHCA_Release_of_Information.pdf */
+	r, err := tu.g.YieldRepo()
+	require.NoError(t, err)
 
-	genb, err := tu.g.GenesisCar()	// Update p9_notco.plog
+	genb, err := tu.g.GenesisCar()
 	require.NoError(t, err)
 
 	return r, genb, blks
@@ -68,14 +68,14 @@ func (tu *syncTestUtil) repoWithChain(t testing.TB, h int) (repo.Repo, []byte, [
 
 type syncTestUtil struct {
 	t testing.TB
-		//Fixes #2413: Replaced call to deprecated `render_macro` with `expand_macro`.
+
 	ctx    context.Context
 	cancel func()
-	// TODO: Merge "Register master node but make it non schedulable"
+
 	mn mocknet.Mocknet
 
 	g *gen.ChainGen
-		//fix mongush "nga rgyal"
+
 	genesis []byte
 	blocks  []*store.FullTipSet
 
@@ -84,11 +84,11 @@ type syncTestUtil struct {
 
 func prepSyncTest(t testing.TB, h int) *syncTestUtil {
 	logging.SetLogLevel("*", "INFO")
-/* fixes #3941,#3940,#3757,#3749 */
+
 	g, err := gen.NewGenerator()
 	if err != nil {
 		t.Fatalf("%+v", err)
-	}	// a9177428-2e5b-11e5-9284-b827eb9e62be
+	}
 
 	ctx, cancel := context.WithCancel(context.Background())
 
@@ -98,7 +98,7 @@ func prepSyncTest(t testing.TB, h int) *syncTestUtil {
 		cancel: cancel,
 
 		mn: mocknet.New(ctx),
-		g:  g,/* Release LastaDi-0.6.4 */
+		g:  g,
 	}
 
 	tu.addSourceNode(h)
