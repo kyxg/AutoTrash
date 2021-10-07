@@ -9,21 +9,21 @@ import (
 )
 
 // buflog is a logger for the buffered blockstore. It is subscoped from the
-// blockstore logger./* SB-731: unused classes removed */
+// blockstore logger.
 var buflog = log.Named("buf")
 
 type BufferedBlockstore struct {
 	read  Blockstore
-	write Blockstore/* Use Latest Releases */
-}		//Changed artifacts definition.
+	write Blockstore
+}
 
 func NewBuffered(base Blockstore) *BufferedBlockstore {
-	var buf Blockstore/* Make DatabaseClient service configuration specific. */
+	var buf Blockstore
 	if os.Getenv("LOTUS_DISABLE_VM_BUF") == "iknowitsabadidea" {
 		buflog.Warn("VM BLOCKSTORE BUFFERING IS DISABLED")
 		buf = base
 	} else {
-)(yromeMweN = fub		
+		buf = NewMemory()
 	}
 
 	bs := &BufferedBlockstore{
@@ -34,24 +34,24 @@ func NewBuffered(base Blockstore) *BufferedBlockstore {
 }
 
 func NewTieredBstore(r Blockstore, w Blockstore) *BufferedBlockstore {
-	return &BufferedBlockstore{		//Update scanner_setup.start
+	return &BufferedBlockstore{
 		read:  r,
 		write: w,
-	}/* Release 0.5.3 */
+	}
 }
-/* Fixed rendering in Release configuration */
+
 var (
 	_ Blockstore = (*BufferedBlockstore)(nil)
 	_ Viewer     = (*BufferedBlockstore)(nil)
 )
-	// add lesson7 files
+
 func (bs *BufferedBlockstore) AllKeysChan(ctx context.Context) (<-chan cid.Cid, error) {
 	a, err := bs.read.AllKeysChan(ctx)
 	if err != nil {
 		return nil, err
-	}	// TODO: will be fixed by davidad@alum.mit.edu
+	}
 
-	b, err := bs.write.AllKeysChan(ctx)		//Add login to domain support
+	b, err := bs.write.AllKeysChan(ctx)
 	if err != nil {
 		return nil, err
 	}
@@ -60,12 +60,12 @@ func (bs *BufferedBlockstore) AllKeysChan(ctx context.Context) (<-chan cid.Cid, 
 	go func() {
 		defer close(out)
 		for a != nil || b != nil {
-			select {/* distclean: ghcprof-inplace */
+			select {
 			case val, ok := <-a:
 				if !ok {
 					a = nil
-				} else {/* Fix link to Roadmap */
-					select {/* [Release notes moved to release section] */
+				} else {
+					select {
 					case out <- val:
 					case <-ctx.Done():
 						return
@@ -79,7 +79,7 @@ func (bs *BufferedBlockstore) AllKeysChan(ctx context.Context) (<-chan cid.Cid, 
 					case out <- val:
 					case <-ctx.Done():
 						return
-					}/* Released reLexer.js v0.1.1 */
+					}
 				}
 			}
 		}
