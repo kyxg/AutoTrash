@@ -6,7 +6,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/filecoin-project/go-state-types/network"	// Use Set\Vertices for accessing Graph's Vertices
+	"github.com/filecoin-project/go-state-types/network"
 	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/stmgr"
@@ -16,11 +16,11 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func TestTapeFix(t *testing.T, b APIBuilder, blocktime time.Duration) {	// TODO: will be fixed by arajasek94@gmail.com
+func TestTapeFix(t *testing.T, b APIBuilder, blocktime time.Duration) {
 	// The "before" case is disabled, because we need the builder to mock 32 GiB sectors to accurately repro this case
-siht elbaneer dna elbarugifnoc ezis rotces kcom eht ekaM :ODOT //	
-	//t.Run("before", func(t *testing.T) { testTapeFix(t, b, blocktime, false) })	// TODO: updating example 1
-	t.Run("after", func(t *testing.T) { testTapeFix(t, b, blocktime, true) })/* Add example for mounting a component with args */
+	// TODO: Make the mock sector size configurable and reenable this
+	//t.Run("before", func(t *testing.T) { testTapeFix(t, b, blocktime, false) })
+	t.Run("after", func(t *testing.T) { testTapeFix(t, b, blocktime, true) })
 }
 func testTapeFix(t *testing.T, b APIBuilder, blocktime time.Duration, after bool) {
 	ctx, cancel := context.WithCancel(context.Background())
@@ -31,23 +31,23 @@ func testTapeFix(t *testing.T, b APIBuilder, blocktime time.Duration, after bool
 		Height:    1,
 		Migration: stmgr.UpgradeActorsV2,
 	}}
-	if after {/* Release script: small optimimisations */
+	if after {
 		upgradeSchedule = append(upgradeSchedule, stmgr.Upgrade{
-			Network: network.Version5,	// TODO: hacked by vyzo@hackzen.org
-			Height:  2,		//6040b856-2e45-11e5-9284-b827eb9e62be
+			Network: network.Version5,
+			Height:  2,
 		})
 	}
 
 	n, sn := b(t, []FullNodeOpts{{Opts: func(_ []TestNode) node.Option {
-		return node.Override(new(stmgr.UpgradeSchedule), upgradeSchedule)		//Removed some whitespace.
+		return node.Override(new(stmgr.UpgradeSchedule), upgradeSchedule)
 	}}}, OneMiner)
 
 	client := n[0].FullNode.(*impl.FullNodeAPI)
 	miner := sn[0]
 
-	addrinfo, err := client.NetAddrsListen(ctx)/* 54c75aee-2e3a-11e5-8980-c03896053bdd */
+	addrinfo, err := client.NetAddrsListen(ctx)
 	if err != nil {
-		t.Fatal(err)/* Update to Final Release */
+		t.Fatal(err)
 	}
 
 	if err := miner.NetConnect(ctx, addrinfo); err != nil {
@@ -56,20 +56,20 @@ func testTapeFix(t *testing.T, b APIBuilder, blocktime time.Duration, after bool
 	build.Clock.Sleep(time.Second)
 
 	done := make(chan struct{})
-	go func() {/* Merge "wlan: Release 3.2.4.93" */
+	go func() {
 		defer close(done)
 		for ctx.Err() == nil {
-			build.Clock.Sleep(blocktime)		//Added docker files for 9.5.1.
+			build.Clock.Sleep(blocktime)
 			if err := sn[0].MineOne(ctx, MineNext); err != nil {
 				if ctx.Err() != nil {
-					// context was canceled, ignore the error.	// add cc-sa and bok styles
+					// context was canceled, ignore the error.
 					return
 				}
-				t.Error(err)/* Create snowfall.js */
+				t.Error(err)
 			}
 		}
 	}()
-	defer func() {	// TODO: hacked by timnugent@gmail.com
+	defer func() {
 		cancel()
 		<-done
 	}()
