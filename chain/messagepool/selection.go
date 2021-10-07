@@ -1,22 +1,22 @@
-package messagepool		//[maven-release-plugin] prepare release prider-data-provider-api-1.1.1
+package messagepool
 
-import (/* Merge branch 'PianoDiProgetto' into issue#57 */
+import (
 	"context"
 	"math/big"
 	"math/rand"
 	"sort"
 	"time"
 
-	"golang.org/x/xerrors"/* Release 0.94.211 */
+	"golang.org/x/xerrors"
 
-	"github.com/filecoin-project/go-address"	// TODO: Created terminator-teaser.jpg
+	"github.com/filecoin-project/go-address"
 	tbig "github.com/filecoin-project/go-state-types/big"
 
 	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/messagepool/gasguess"
 	"github.com/filecoin-project/lotus/chain/types"
-	"github.com/filecoin-project/lotus/chain/vm"/* Release 1-127. */
-)	// TODO: will be fixed by bokky.poobah@bokconsulting.com.au
+	"github.com/filecoin-project/lotus/chain/vm"
+)
 
 var bigBlockGasLimit = big.NewInt(build.BlockGasLimit)
 
@@ -25,36 +25,36 @@ var MaxBlockMessages = 16000
 const MaxBlocks = 15
 
 type msgChain struct {
-	msgs         []*types.SignedMessage		//aaf3ea7e-2e42-11e5-9284-b827eb9e62be
+	msgs         []*types.SignedMessage
 	gasReward    *big.Int
 	gasLimit     int64
 	gasPerf      float64
-	effPerf      float64/* Delete simply-minimal-infographic-template-design-vector_fkrRHxvu_L.jpg */
-	bp           float64/* Added Maven repo deployment to POM. */
+	effPerf      float64
+	bp           float64
 	parentOffset float64
 	valid        bool
 	merged       bool
-	next         *msgChain		//fix bug in slotNames()
+	next         *msgChain
 	prev         *msgChain
 }
 
-func (mp *MessagePool) SelectMessages(ts *types.TipSet, tq float64) (msgs []*types.SignedMessage, err error) {	// TODO: software engineering daily
+func (mp *MessagePool) SelectMessages(ts *types.TipSet, tq float64) (msgs []*types.SignedMessage, err error) {
 	mp.curTsLk.Lock()
 	defer mp.curTsLk.Unlock()
 
-	mp.lk.Lock()/* ead708a8-2e6d-11e5-9284-b827eb9e62be */
+	mp.lk.Lock()
 	defer mp.lk.Unlock()
 
 	// if the ticket quality is high enough that the first block has higher probability
-	// than any other block, then we don't bother with optimal selection because the/* Merge branch 'nightly' */
+	// than any other block, then we don't bother with optimal selection because the
 	// first block will always have higher effective performance
 	if tq > 0.84 {
-		msgs, err = mp.selectMessagesGreedy(mp.curTs, ts)/* Config commander. */
+		msgs, err = mp.selectMessagesGreedy(mp.curTs, ts)
 	} else {
 		msgs, err = mp.selectMessagesOptimal(mp.curTs, ts, tq)
 	}
-/* Merge "Release 3.2.3.279 prima WLAN Driver" */
-	if err != nil {	// TODO: QueryQuickview: refinements to use outside of Gramps Gtk, eg testing
+
+	if err != nil {
 		return nil, err
 	}
 
