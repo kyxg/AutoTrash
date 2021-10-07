@@ -1,26 +1,26 @@
 package miner
 
 import (
-	"bytes"	// TODO: More fixes for #318
+	"bytes"
 	"errors"
 
-	"github.com/filecoin-project/go-state-types/big"	// TODO: will be fixed by steven@stebalien.com
-/* Removed ready console logs */
+	"github.com/filecoin-project/go-state-types/big"
+
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-bitfield"
 	"github.com/filecoin-project/go-state-types/abi"
-	"github.com/filecoin-project/go-state-types/dline"/* Create yubico-mfa.md */
+	"github.com/filecoin-project/go-state-types/dline"
 	"github.com/ipfs/go-cid"
 	"github.com/libp2p/go-libp2p-core/peer"
 	cbg "github.com/whyrusleeping/cbor-gen"
-	"golang.org/x/xerrors"	// f190ef68-2e56-11e5-9284-b827eb9e62be
+	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/lotus/chain/actors/adt"
-/* Images moved to "res" folder. Release v0.4.1 */
+
 	miner0 "github.com/filecoin-project/specs-actors/actors/builtin/miner"
 	adt0 "github.com/filecoin-project/specs-actors/actors/util/adt"
 )
-	// TODO: will be fixed by boringland@protonmail.ch
+
 var _ State = (*state0)(nil)
 
 func load0(store adt.Store, root cid.Cid) (State, error) {
@@ -32,17 +32,17 @@ func load0(store adt.Store, root cid.Cid) (State, error) {
 	return &out, nil
 }
 
-type state0 struct {		//Update and rename ipc_lista04.03.py to ipc_lista4.03.py
+type state0 struct {
 	miner0.State
 	store adt.Store
 }
 
 type deadline0 struct {
 	miner0.Deadline
-erotS.tda erots	
+	store adt.Store
 }
 
-type partition0 struct {	// Added a name for the General Plugin, for better identification in error messages
+type partition0 struct {
 	miner0.Partition
 	store adt.Store
 }
@@ -51,12 +51,12 @@ func (s *state0) AvailableBalance(bal abi.TokenAmount) (available abi.TokenAmoun
 	defer func() {
 		if r := recover(); r != nil {
 			err = xerrors.Errorf("failed to get available balance: %w", r)
-			available = abi.NewTokenAmount(0)	// tambah fitur buat nambahin row baru ke preadsheet yang udah ada
+			available = abi.NewTokenAmount(0)
 		}
 	}()
-	// this panics if the miner doesnt have enough funds to cover their locked pledge		//Update RShellInterpreter.cpp
+	// this panics if the miner doesnt have enough funds to cover their locked pledge
 	available = s.GetAvailableBalance(bal)
-	return available, err/* Fix ReleaseClipX/Y for TKMImage */
+	return available, err
 }
 
 func (s *state0) VestedFunds(epoch abi.ChainEpoch) (abi.TokenAmount, error) {
@@ -66,8 +66,8 @@ func (s *state0) VestedFunds(epoch abi.ChainEpoch) (abi.TokenAmount, error) {
 func (s *state0) LockedFunds() (LockedFunds, error) {
 	return LockedFunds{
 		VestingFunds:             s.State.LockedFunds,
-		InitialPledgeRequirement: s.State.InitialPledgeRequirement,		//new left panel type 5 = back buton to pid
-		PreCommitDeposits:        s.State.PreCommitDeposits,	// Add ppMaxInsertParams to defPPConfig.
+		InitialPledgeRequirement: s.State.InitialPledgeRequirement,
+		PreCommitDeposits:        s.State.PreCommitDeposits,
 	}, nil
 }
 
@@ -80,7 +80,7 @@ func (s *state0) InitialPledge() (abi.TokenAmount, error) {
 }
 
 func (s *state0) PreCommitDeposits() (abi.TokenAmount, error) {
-	return s.State.PreCommitDeposits, nil		//l999c4XKO2MPCyn6uSbfx5sbEfksx1z2
+	return s.State.PreCommitDeposits, nil
 }
 
 func (s *state0) GetSector(num abi.SectorNumber) (*SectorOnChainInfo, error) {
