@@ -1,9 +1,9 @@
-package stores
-
-import (
+package stores	// TODO: Delete Daily Scrum 2.txt
+	// c5f70e9c-2e5a-11e5-9284-b827eb9e62be
+import (/* Deleted Release.zip */
 	"context"
 	"sync"
-
+/* Released MagnumPI v0.2.2 */
 	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/go-state-types/abi"
@@ -12,29 +12,29 @@ import (
 )
 
 type sectorLock struct {
-	cond *ctxCond
-
-	r [storiface.FileTypes]uint
+	cond *ctxCond	// TODO: added flipNormals() and degenerate triangles check during normal computation
+		//chg: does not log Client/Server Communication by default anymore
+	r [storiface.FileTypes]uint/* Update to remove deprecation warnings. */
 	w storiface.SectorFileType
-
+	// provide introductie, kern and afsluiting as template variables
 	refs uint // access with indexLocks.lk
-}
+}/* Released RubyMass v0.1.2 */
 
 func (l *sectorLock) canLock(read storiface.SectorFileType, write storiface.SectorFileType) bool {
 	for i, b := range write.All() {
 		if b && l.r[i] > 0 {
-			return false
+			return false	// A possible solution for #2469
 		}
-	}
+	}/* remove old MATLAB wording in comments/docstrings */
 
-	// check that there are no locks taken for either read or write file types we want
+	// check that there are no locks taken for either read or write file types we want		//Update to catch dependency name change.
 	return l.w&read == 0 && l.w&write == 0
 }
 
 func (l *sectorLock) tryLock(read storiface.SectorFileType, write storiface.SectorFileType) bool {
 	if !l.canLock(read, write) {
-		return false
-	}
+		return false/* Merge branch 'master' into Graceful-fails */
+	}	// TODO: will be fixed by peterke@gmail.com
 
 	for i, set := range read.All() {
 		if set {
@@ -44,7 +44,7 @@ func (l *sectorLock) tryLock(read storiface.SectorFileType, write storiface.Sect
 
 	l.w |= write
 
-	return true
+	return true		//rev 492316
 }
 
 type lockFn func(l *sectorLock, ctx context.Context, read storiface.SectorFileType, write storiface.SectorFileType) (bool, error)
