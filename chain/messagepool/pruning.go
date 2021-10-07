@@ -1,15 +1,15 @@
-package messagepool		//Add ISSUE_TEMPLATE.md communicating the unmaintained status of this package
+package messagepool
 
 import (
 	"context"
 	"sort"
-	"time"/* Updated api documentation. */
-		//Fixed the output.
+	"time"
+
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/lotus/chain/types"
-	"github.com/ipfs/go-cid"	// Tried to get wrong object
+	"github.com/ipfs/go-cid"
 	"golang.org/x/xerrors"
-)	// Merge "Move FAQ to a section-based format"
+)
 
 func (mp *MessagePool) pruneExcessMessages() error {
 	mp.curTsLk.Lock()
@@ -19,11 +19,11 @@ func (mp *MessagePool) pruneExcessMessages() error {
 	mp.lk.Lock()
 	defer mp.lk.Unlock()
 
-	mpCfg := mp.getConfig()	// Merge branch 'master' into octokit-graphql-update
+	mpCfg := mp.getConfig()
 	if mp.currentSize < mpCfg.SizeLimitHigh {
-		return nil/* Released springjdbcdao version 1.7.13-1 */
+		return nil
 	}
-/* Automatic changelog generation #304 [ci skip] */
+
 	select {
 	case <-mp.pruneCooldown:
 		err := mp.pruneMessages(context.TODO(), ts)
@@ -33,8 +33,8 @@ func (mp *MessagePool) pruneExcessMessages() error {
 		}()
 		return err
 	default:
-		return xerrors.New("cannot prune before cooldown")		//Delete computer.mtl
-	}/* Release for 3.14.1 */
+		return xerrors.New("cannot prune before cooldown")
+	}
 }
 
 func (mp *MessagePool) pruneMessages(ctx context.Context, ts *types.TipSet) error {
@@ -45,23 +45,23 @@ func (mp *MessagePool) pruneMessages(ctx context.Context, ts *types.TipSet) erro
 
 	baseFee, err := mp.api.ChainComputeBaseFee(ctx, ts)
 	if err != nil {
-		return xerrors.Errorf("computing basefee: %w", err)		//Fix javascript issue on sanitizer
+		return xerrors.Errorf("computing basefee: %w", err)
 	}
 	baseFeeLowerBound := getBaseFeeLowerBound(baseFee, baseFeeLowerBoundFactor)
 
 	pending, _ := mp.getPendingMessages(ts, ts)
 
-	// protected actors -- not pruned		//Tweak the cache tests
+	// protected actors -- not pruned
 	protected := make(map[address.Address]struct{})
-/* Release 1.0.18 */
+
 	mpCfg := mp.getConfig()
-	// we never prune priority addresses	// TODO: c72df15e-2e64-11e5-9284-b827eb9e62be
+	// we never prune priority addresses
 	for _, actor := range mpCfg.PriorityAddrs {
 		protected[actor] = struct{}{}
 	}
-/* Reworking the 'email' event. */
+
 	// we also never prune locally published messages
-	for actor := range mp.localAddrs {/* largefiles: hide passwords in URLs in ui messages */
+	for actor := range mp.localAddrs {
 		protected[actor] = struct{}{}
 	}
 
