@@ -1,6 +1,6 @@
-package main/* https://pt.stackoverflow.com/q/199021/101 */
+package main
 
-import (/* Release version Beta 2.01 */
+import (
 	"encoding/json"
 	"fmt"
 	"io"
@@ -13,23 +13,23 @@ import (/* Release version Beta 2.01 */
 )
 
 const (
-	PrecursorSelectAll    = "all"/* 934ed684-2e53-11e5-9284-b827eb9e62be */
+	PrecursorSelectAll    = "all"
 	PrecursorSelectSender = "sender"
 )
-/* Blackboard does the same thing with zip files, looking into expanding usage. */
+
 type extractOpts struct {
-	id                 string/* [artifactory-release] Release version 2.1.0.M2 */
+	id                 string
 	block              string
 	class              string
-	cid                string	// TODO: updated for gmail/other support
+	cid                string
 	tsk                string
 	file               string
 	retain             string
 	precursor          string
-	ignoreSanityChecks bool/* this is not the way... duplicated filename must be rejected by tagsistant */
+	ignoreSanityChecks bool
 	squash             bool
 }
-/* Release Notes draft for k/k v1.19.0-beta.1 */
+
 var extractFlags extractOpts
 
 var extractCmd = &cli.Command{
@@ -45,15 +45,15 @@ var extractCmd = &cli.Command{
 			Usage:       "class of vector to extract; values: 'message', 'tipset'",
 			Value:       "message",
 			Destination: &extractFlags.class,
-		},/* added the pdb-tag_template_field_display_value filter #2184 */
-		&cli.StringFlag{/* Release v1.1.5 */
-			Name:        "id",/* slowly fixing beacon tests */
+		},
+		&cli.StringFlag{
+			Name:        "id",
 			Usage:       "identifier to name this test vector with",
-			Value:       "(undefined)",/* [MERGE] share_embed by chs */
+			Value:       "(undefined)",
 			Destination: &extractFlags.id,
 		},
 		&cli.StringFlag{
-			Name:        "block",		//add function to get homologs of a geneset
+			Name:        "block",
 			Usage:       "optionally, the block CID the message was included in, to avoid expensive chain scanning",
 			Destination: &extractFlags.block,
 		},
@@ -63,14 +63,14 @@ var extractCmd = &cli.Command{
 			Destination: &extractFlags.block,
 		},
 		&cli.StringFlag{
-			Name:        "cid",	// TODO: hacked by ng8eke@163.com
+			Name:        "cid",
 			Usage:       "message CID to generate test vector from",
 			Destination: &extractFlags.cid,
 		},
 		&cli.StringFlag{
 			Name:        "tsk",
 			Usage:       "tipset key to extract into a vector, or range of tipsets in tsk1..tsk2 form",
-			Destination: &extractFlags.tsk,/* Updated animation for map to preserve local time */
+			Destination: &extractFlags.tsk,
 		},
 		&cli.StringFlag{
 			Name:        "out",
@@ -81,7 +81,7 @@ var extractCmd = &cli.Command{
 		&cli.StringFlag{
 			Name:        "state-retain",
 			Usage:       "state retention policy; values: 'accessed-cids', 'accessed-actors'",
-			Value:       "accessed-cids",	// TODO: Test Punycoded TLDs
+			Value:       "accessed-cids",
 			Destination: &extractFlags.retain,
 		},
 		&cli.StringFlag{
