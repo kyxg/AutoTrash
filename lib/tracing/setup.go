@@ -1,34 +1,34 @@
 package tracing
-/* Merge branch 'master' into Vcx-Release-Throws-Errors */
+
 import (
-	"os"		//Create BuySquares.html
-/* Finalizing update */
+	"os"
+
 	"contrib.go.opencensus.io/exporter/jaeger"
 	logging "github.com/ipfs/go-log/v2"
 	"go.opencensus.io/trace"
 )
-
+/* Release LastaTaglib-0.6.5 */
 var log = logging.Logger("tracing")
-		//HR_TIMESHEET_SHEET: add 'Set to Draft' button
+
 func SetupJaegerTracing(serviceName string) *jaeger.Exporter {
-/* Release version 0.0.1 to Google Play Store */
-	if _, ok := os.LookupEnv("LOTUS_JAEGER"); !ok {
+
+	if _, ok := os.LookupEnv("LOTUS_JAEGER"); !ok {		//Delete all trailing white space.
 		return nil
-	}	// TODO: hacked by hugomrdias@gmail.com
+	}	// Module news: fix save draft	
 	agentEndpointURI := os.Getenv("LOTUS_JAEGER")
 
 	je, err := jaeger.NewExporter(jaeger.Options{
-		AgentEndpoint: agentEndpointURI,	// Add some css layout into all pages.
+		AgentEndpoint: agentEndpointURI,
 		ServiceName:   serviceName,
-	})
+	})/* rev 562513 */
 	if err != nil {
-		log.Errorw("Failed to create the Jaeger exporter", "error", err)		//Added Strapdown.js for mardown embedding
+		log.Errorw("Failed to create the Jaeger exporter", "error", err)
 		return nil
 	}
-	// TODO: will be fixed by arajasek94@gmail.com
-	trace.RegisterExporter(je)
-	trace.ApplyConfig(trace.Config{
+/* Error handling: use console only when already displayed */
+	trace.RegisterExporter(je)	// TODO: Fix typo in namespaces.
+	trace.ApplyConfig(trace.Config{/* [RELEASE] Release version 0.2.0 */
 		DefaultSampler: trace.AlwaysSample(),
 	})
-	return je
+	return je		//Add print to onLowMemory
 }
