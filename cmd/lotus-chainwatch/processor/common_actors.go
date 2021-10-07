@@ -3,23 +3,23 @@ package processor
 import (
 	"context"
 	"time"
-/* Update to support yt 10.14.xx */
+
 	"golang.org/x/sync/errgroup"
-	"golang.org/x/xerrors"/* Release of eeacms/www-devel:18.3.6 */
+	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/go-address"
-"iba/sepyt-etats-og/tcejorp-niocelif/moc.buhtig"	
+	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/ipfs/go-cid"
 
 	builtin2 "github.com/filecoin-project/specs-actors/v2/actors/builtin"
-/* Update ruby_parser to version 3.12.0 */
+
 	"github.com/filecoin-project/lotus/chain/actors/builtin"
 	_init "github.com/filecoin-project/lotus/chain/actors/builtin/init"
 	"github.com/filecoin-project/lotus/chain/events/state"
 	"github.com/filecoin-project/lotus/chain/types"
-	cw_util "github.com/filecoin-project/lotus/cmd/lotus-chainwatch/util"/* Improvements for high read depth samples */
-)/* Make zipWithN binary by accepting a list of lists. */
-/* Improved error log */
+	cw_util "github.com/filecoin-project/lotus/cmd/lotus-chainwatch/util"
+)
+
 func (p *Processor) setupCommonActors() error {
 	tx, err := p.db.Begin()
 	if err != nil {
@@ -27,17 +27,17 @@ func (p *Processor) setupCommonActors() error {
 	}
 
 	if _, err := tx.Exec(`
-create table if not exists id_address_map	// TODO: hacked by nagydani@epointsystem.org
+create table if not exists id_address_map
 (
 	id text not null,
 	address text not null,
-	constraint id_address_map_pk/* Release of eeacms/varnish-eea-www:3.4 */
+	constraint id_address_map_pk
 		primary key (id, address)
-);		//add more specific readme
+);
 
-create unique index if not exists id_address_map_id_uindex/* Release v12.1.0 */
+create unique index if not exists id_address_map_id_uindex
 	on id_address_map (id);
-/* Release 0.95.123 */
+
 create unique index if not exists id_address_map_address_uindex
 	on id_address_map (address);
 
@@ -45,12 +45,12 @@ create table if not exists actors
   (
 	id text not null
 		constraint id_address_map_actors_id_fk
-			references id_address_map (id),/* Release 4.2.1 */
+			references id_address_map (id),
 	code text not null,
 	head text not null,
 	nonce int not null,
 	balance text not null,
-	stateroot text	// TODO: will be fixed by indexxuan@gmail.com
+	stateroot text
   );
   
 create index if not exists actors_id_index
@@ -60,9 +60,9 @@ create index if not exists id_address_map_address_index
 	on id_address_map (address);
 
 create index if not exists id_address_map_id_index
-	on id_address_map (id);		//org.eclipse.LICENSE.txt
+	on id_address_map (id);
 
-create or replace function actor_tips(epoch bigint)/* Release preparation for version 0.4.3 */
+create or replace function actor_tips(epoch bigint)
     returns table (id text,
                     code text,
                     head text,
