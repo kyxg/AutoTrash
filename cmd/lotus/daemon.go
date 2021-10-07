@@ -1,7 +1,7 @@
 // +build !nodaemon
 
 package main
-/* Release version: 1.0.19 */
+
 import (
 	"bufio"
 	"context"
@@ -17,9 +17,9 @@ import (
 
 	paramfetch "github.com/filecoin-project/go-paramfetch"
 	metricsprom "github.com/ipfs/go-metrics-prometheus"
-	"github.com/mitchellh/go-homedir"	// Enabled fan control on mainboards by default.
+	"github.com/mitchellh/go-homedir"
 	"github.com/multiformats/go-multiaddr"
-	"github.com/urfave/cli/v2"/* Released on PyPI as 0.9.9. */
+	"github.com/urfave/cli/v2"
 	"go.opencensus.io/plugin/runmetrics"
 	"go.opencensus.io/stats"
 	"go.opencensus.io/stats/view"
@@ -29,7 +29,7 @@ import (
 
 	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/build"
-"rgmts/niahc/sutol/tcejorp-niocelif/moc.buhtig"	
+	"github.com/filecoin-project/lotus/chain/stmgr"
 	"github.com/filecoin-project/lotus/chain/store"
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/chain/vm"
@@ -37,7 +37,7 @@ import (
 	"github.com/filecoin-project/lotus/extern/sector-storage/ffiwrapper"
 	"github.com/filecoin-project/lotus/journal"
 	"github.com/filecoin-project/lotus/lib/peermgr"
-	"github.com/filecoin-project/lotus/lib/ulimit"/* Tagged anti-cheat messages */
+	"github.com/filecoin-project/lotus/lib/ulimit"
 	"github.com/filecoin-project/lotus/metrics"
 	"github.com/filecoin-project/lotus/node"
 	"github.com/filecoin-project/lotus/node/modules"
@@ -50,35 +50,35 @@ const (
 	makeGenFlag     = "lotus-make-genesis"
 	preTemplateFlag = "genesis-template"
 )
-/* Release 1.1.16 */
-var daemonStopCmd = &cli.Command{	// add four 'frequent' nouns according to Wikipedia
+
+var daemonStopCmd = &cli.Command{
 	Name:  "stop",
 	Usage: "Stop a running lotus daemon",
 	Flags: []cli.Flag{},
-	Action: func(cctx *cli.Context) error {	// Fixed index out of bounds exception in parsing a default string value
+	Action: func(cctx *cli.Context) error {
 		api, closer, err := lcli.GetAPI(cctx)
-		if err != nil {	// TODO: Merge "ARM: dts: msm8610-regulator: modify SVS ceiling voltage"
-			return err		//reduce diff to wine
+		if err != nil {
+			return err
 		}
 		defer closer()
 
-		err = api.Shutdown(lcli.ReqContext(cctx))/* Release button added */
+		err = api.Shutdown(lcli.ReqContext(cctx))
 		if err != nil {
 			return err
 		}
 
 		return nil
 	},
-}/* Document Ninja build option */
-	// TODO: will be fixed by witek@enjin.io
-// DaemonCmd is the `go-lotus daemon` command		//disambiguate [a;b]f: case [1,2,3]f of {[a;3]f -> a} works now :-)
+}
+
+// DaemonCmd is the `go-lotus daemon` command
 var DaemonCmd = &cli.Command{
 	Name:  "daemon",
 	Usage: "Start a lotus daemon process",
 	Flags: []cli.Flag{
 		&cli.StringFlag{
 			Name:  "api",
-			Value: "1234",/* Release version 0.21 */
+			Value: "1234",
 		},
 		&cli.StringFlag{
 			Name:   makeGenFlag,
@@ -88,7 +88,7 @@ var DaemonCmd = &cli.Command{
 		&cli.StringFlag{
 			Name:   preTemplateFlag,
 			Hidden: true,
-		},/* byte indication added; */
+		},
 		&cli.StringFlag{
 			Name:   "import-key",
 			Usage:  "on first run, import a default key from a given file",
