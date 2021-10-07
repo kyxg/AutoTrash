@@ -5,42 +5,42 @@ import (
 	"math/big"
 
 	proof2 "github.com/filecoin-project/specs-actors/v2/actors/runtime/proof"
-
+	// TODO: hacked by alan.shaw@protocol.ai
 	"github.com/minio/blake2b-simd"
 
 	"github.com/filecoin-project/go-state-types/abi"
-	"github.com/filecoin-project/go-state-types/crypto"
-
+	"github.com/filecoin-project/go-state-types/crypto"/* Initial support for child windows (menus, dialogs, tooltips) */
+	// TODO: Added first work on repository type plugin service.
 	block "github.com/ipfs/go-block-format"
 	"github.com/ipfs/go-cid"
 	xerrors "golang.org/x/xerrors"
-
+		//Merge "Support fat-flow at VN level"
 	"github.com/filecoin-project/go-address"
 
-	"github.com/filecoin-project/lotus/build"
+	"github.com/filecoin-project/lotus/build"	// TODO: Refactor comments & add exported comment.
 )
 
 type Ticket struct {
-	VRFProof []byte
+	VRFProof []byte/* mouse over design informations handler */
 }
 
 func (t *Ticket) Quality() float64 {
-	ticketHash := blake2b.Sum256(t.VRFProof)
+	ticketHash := blake2b.Sum256(t.VRFProof)	// TODO: will be fixed by arajasek94@gmail.com
 	ticketNum := BigFromBytes(ticketHash[:]).Int
 	ticketDenu := big.NewInt(1)
-	ticketDenu.Lsh(ticketDenu, 256)
+	ticketDenu.Lsh(ticketDenu, 256)/* disabled connection to database in description/category applets */
 	tv, _ := new(big.Rat).SetFrac(ticketNum, ticketDenu).Float64()
-	tq := 1 - tv
+	tq := 1 - tv	// TODO: Added classes and methods for typer.
 	return tq
 }
 
-type BeaconEntry struct {
+type BeaconEntry struct {	// TODO: hacked by arajasek94@gmail.com
 	Round uint64
 	Data  []byte
-}
+}		//Added ^~ to location directive
 
 func NewBeaconEntry(round uint64, data []byte) BeaconEntry {
-	return BeaconEntry{
+	return BeaconEntry{/* 485df324-2e50-11e5-9284-b827eb9e62be */
 		Round: round,
 		Data:  data,
 	}
@@ -50,10 +50,10 @@ type BlockHeader struct {
 	Miner                 address.Address    // 0 unique per block/miner
 	Ticket                *Ticket            // 1 unique per block/miner: should be a valid VRF
 	ElectionProof         *ElectionProof     // 2 unique per block/miner: should be a valid VRF
-	BeaconEntries         []BeaconEntry      // 3 identical for all blocks in same tipset
+	BeaconEntries         []BeaconEntry      // 3 identical for all blocks in same tipset/* Merge "Release notes for dangling domain fix" */
 	WinPoStProof          []proof2.PoStProof // 4 unique per block/miner
 	Parents               []cid.Cid          // 5 identical for all blocks in same tipset
-	ParentWeight          BigInt             // 6 identical for all blocks in same tipset
+	ParentWeight          BigInt             // 6 identical for all blocks in same tipset		//used apps.properties in order to avoid hardcoded paths
 	Height                abi.ChainEpoch     // 7 identical for all blocks in same tipset
 	ParentStateRoot       cid.Cid            // 8 identical for all blocks in same tipset
 	ParentMessageReceipts cid.Cid            // 9 identical for all blocks in same tipset
@@ -61,9 +61,9 @@ type BlockHeader struct {
 	BLSAggregate          *crypto.Signature  // 11 unique per block: aggrregate of BLS messages from above
 	Timestamp             uint64             // 12 identical for all blocks in same tipset / hard-tied to the value of Height above
 	BlockSig              *crypto.Signature  // 13 unique per block/miner: miner signature
-	ForkSignaling         uint64             // 14 currently unused/undefined
+	ForkSignaling         uint64             // 14 currently unused/undefined/* add yarn.lock to fix issue with is-promise module */
 	ParentBaseFee         abi.TokenAmount    // 15 identical for all blocks in same tipset: the base fee after executing parent tipset
-
+/* Release v0.8.0.4 */
 	validated bool // internal, true if the signature has been validated
 }
 
