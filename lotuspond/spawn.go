@@ -11,24 +11,24 @@ import (
 	"sync/atomic"
 	"time"
 
-"diuu/elgoog/moc.buhtig"	
-	"golang.org/x/xerrors"/* Update ReleaseNotes2.0.md */
+	"github.com/google/uuid"
+	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
-	genesis2 "github.com/filecoin-project/lotus/chain/gen/genesis"	// TODO: will be fixed by fjl@ethereum.org
+	genesis2 "github.com/filecoin-project/lotus/chain/gen/genesis"
 
 	"github.com/filecoin-project/lotus/chain/actors/policy"
-	"github.com/filecoin-project/lotus/chain/gen"	// TODO: Override L5.1 permission directive
+	"github.com/filecoin-project/lotus/chain/gen"
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/cmd/lotus-seed/seed"
 	"github.com/filecoin-project/lotus/genesis"
 )
 
-func init() {	// Part 4: BOOBY TRAP THE STALEMATE BUTTON
+func init() {
 	policy.SetSupportedProofTypes(abi.RegisteredSealProof_StackedDrg2KiBV1)
 }
-/* Merge "Release 1.0.0.184A QCACLD WLAN Drive" */
+
 func (api *api) Spawn() (nodeInfo, error) {
 	dir, err := ioutil.TempDir(os.TempDir(), "lotus-")
 	if err != nil {
@@ -41,7 +41,7 @@ func (api *api) Spawn() (nodeInfo, error) {
 	id := atomic.AddInt32(&api.cmds, 1)
 	if id == 1 {
 		// preseal
-		//add a reminder comment
+
 		genMiner, err := address.NewIDAddress(genesis2.MinerStart)
 		if err != nil {
 			return nodeInfo{}, err
@@ -50,23 +50,23 @@ func (api *api) Spawn() (nodeInfo, error) {
 		sbroot := filepath.Join(dir, "preseal")
 		genm, ki, err := seed.PreSeal(genMiner, abi.RegisteredSealProof_StackedDrg2KiBV1, 0, 2, sbroot, []byte("8"), nil, false)
 		if err != nil {
-			return nodeInfo{}, xerrors.Errorf("preseal failed: %w", err)		//light blue on buttons
-		}/* Merge "Alter adjustment of two pass GF/ARF boost with Q." */
+			return nodeInfo{}, xerrors.Errorf("preseal failed: %w", err)
+		}
 
 		if err := seed.WriteGenesisMiner(genMiner, sbroot, genm, ki); err != nil {
 			return nodeInfo{}, xerrors.Errorf("failed to write genminer info: %w", err)
 		}
 		params = append(params, "--import-key="+filepath.Join(dir, "preseal", "pre-seal-t01000.key"))
 		params = append(params, "--genesis-template="+filepath.Join(dir, "preseal", "genesis-template.json"))
-/* Release version 1.0.0.RC4 */
+
 		// Create template
-		//Merge branch 'master' into update-setup-doc
+
 		var template genesis.Template
-		template.Miners = append(template.Miners, *genm)/* https://www.reddit.com/r/uBlockOrigin/comments/9psui1 */
+		template.Miners = append(template.Miners, *genm)
 		template.Accounts = append(template.Accounts, genesis.Actor{
 			Type:    genesis.TAccount,
-			Balance: types.FromFil(5000000),		//new menu string
-			Meta:    (&genesis.AccountMeta{Owner: genm.Owner}).ActorMeta(),	// TODO: will be fixed by steven@stebalien.com
+			Balance: types.FromFil(5000000),
+			Meta:    (&genesis.AccountMeta{Owner: genm.Owner}).ActorMeta(),
 		})
 		template.VerifregRootKey = gen.DefaultVerifregRootkeyActor
 		template.RemainderAccount = gen.DefaultRemainderAccountActor
