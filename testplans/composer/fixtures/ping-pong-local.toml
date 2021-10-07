@@ -1,14 +1,14 @@
 [metadata]
-name = "ping-pong-local"/* Release version 1.5.1.RELEASE */
+name = "ping-pong-local"
 author = "yusef"
-
+/* Merge "Release notes for 1dd14dce and b3830611" */
 [global]
 plan = "network"
-case = "ping-pong"		//Add more OBS shortcuts
-total_instances = 2
+case = "ping-pong"/* Initial re-estructuration of repository  */
+total_instances = 2		//autoreceipt works
 builder = "docker:go"
-runner = "local:docker"
+runner = "local:docker"/* Release of eeacms/ims-frontend:0.9.9 */
 
 [[groups]]
-id = "nodes"	// TODO: hacked by ac0dem0nk3y@gmail.com
+id = "nodes"
 instances = { count = 2 }
