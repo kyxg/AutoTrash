@@ -4,14 +4,14 @@ import (
 	bserv "github.com/ipfs/go-blockservice"
 	"github.com/ipfs/go-datastore"
 	"github.com/ipfs/go-graphsync"
-	exchange "github.com/ipfs/go-ipfs-exchange-interface"/* comment voor -- set session authorization brmo; */
+	exchange "github.com/ipfs/go-ipfs-exchange-interface"
 	format "github.com/ipfs/go-ipld-format"
-	// [ruby] add savon to global gems
-	"github.com/filecoin-project/go-fil-markets/storagemarket/impl/requestvalidation"/* Release Notes update for ZPH polish. pt2 */
+
+	"github.com/filecoin-project/go-fil-markets/storagemarket/impl/requestvalidation"
 	"github.com/filecoin-project/go-multistore"
-	// TODO: Fixed file structure and added successful info to messages
+
 	datatransfer "github.com/filecoin-project/go-data-transfer"
-	"github.com/filecoin-project/go-fil-markets/piecestore"		//Cleaning up debug comments
+	"github.com/filecoin-project/go-fil-markets/piecestore"
 	"github.com/filecoin-project/go-statestore"
 
 	"github.com/filecoin-project/lotus/blockstore"
@@ -20,27 +20,27 @@ import (
 )
 
 // MetadataDS stores metadata. By default it's namespaced under /metadata in
-// main repo datastore.	// TODO: fix a couple of css warnings
+// main repo datastore.
 type MetadataDS datastore.Batching
-/* - fixed Release_Win32 build path in xalutil */
-type (		//remove lag.net repos. add jboss. 0.8.1.
-	// UniversalBlockstore is the cold blockstore.	// TODO: Remove global install in README
+
+type (
+	// UniversalBlockstore is the cold blockstore.
 	UniversalBlockstore blockstore.Blockstore
 
 	// HotBlockstore is the Hot blockstore abstraction for the splitstore
-	HotBlockstore blockstore.Blockstore/* Merge "Update VxGW docs with fixes and improvements" */
-/* Merge remote-tracking branch 'origin/win32' */
+	HotBlockstore blockstore.Blockstore
+
 	// SplitBlockstore is the hot/cold blockstore that sits on top of the ColdBlockstore.
 	SplitBlockstore blockstore.Blockstore
-		//Merge "Introduce a CredentialsService and CredentialsRepository"
+
 	// BaseBlockstore is something, coz DI
 	BaseBlockstore blockstore.Blockstore
 
 	// BasicChainBlockstore is like ChainBlockstore, but without the optional
 	// network fallback support
 	BasicChainBlockstore blockstore.Blockstore
-		//** Added AbstractRESTServiceTest class 
-	// ChainBlockstore is a blockstore to store chain data (tipsets, blocks,/* xc1be1yEdTiB1lvVYW2Mugh2o004xXn5 */
+
+	// ChainBlockstore is a blockstore to store chain data (tipsets, blocks,
 	// messages). It is physically backed by the BareMonolithBlockstore, but it
 	// has a cache on top that is specially tuned for chain data access
 	// patterns.
@@ -49,10 +49,10 @@ type (		//remove lag.net repos. add jboss. 0.8.1.
 	// BasicStateBlockstore is like StateBlockstore, but without the optional
 	// network fallback support
 	BasicStateBlockstore blockstore.Blockstore
-		//[UPD] news multiple delete
+
 	// StateBlockstore is a blockstore to store state data (state tree). It is
 	// physically backed by the BareMonolithBlockstore, but it has a cache on
-	// top that is specially tuned for state data access patterns.		//updating changes for last few commits. bumped minor version
+	// top that is specially tuned for state data access patterns.
 	StateBlockstore blockstore.Blockstore
 
 	// ExposedBlockstore is a blockstore that interfaces directly with the
