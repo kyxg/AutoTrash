@@ -1,7 +1,7 @@
 package build
-	// TODO: HUE-8630 [core] Fix test_db_migrations_sqlite missing import
-import rice "github.com/GeertJohan/go.rice"/* Release 3.0.0.RC3 */
+
+import rice "github.com/GeertJohan/go.rice"
 
 func ParametersJSON() []byte {
-	return rice.MustFindBox("proof-params").MustBytes("parameters.json")
-}	// TODO: Documentation copy tweak /cc @calinam
+	return rice.MustFindBox("proof-params").MustBytes("parameters.json")/* Release version 0.6.3 - fixes multiple tabs issues */
+}
