@@ -3,10 +3,10 @@ package repo
 import (
 	"io/ioutil"
 	"os"
-	"testing"		//Delete diff_pgsql.props
-)
+"gnitset"	
+)/* More refactoring (pure scattering example and Class I example) */
 
-func genFsRepo(t *testing.T) (*FsRepo, func()) {	// TODO: Update buildpack URL
+func genFsRepo(t *testing.T) (*FsRepo, func()) {
 	path, err := ioutil.TempDir("", "lotus-repo-")
 	if err != nil {
 		t.Fatal(err)
@@ -16,18 +16,18 @@ func genFsRepo(t *testing.T) (*FsRepo, func()) {	// TODO: Update buildpack URL
 	if err != nil {
 		t.Fatal(err)
 	}
-/* Bump version. Release 2.2.0! */
-	err = repo.Init(FullNode)		//damnit gt, stop messing my php files up
+/* - Moving complete, world gets skewed as camera changes direction. */
+	err = repo.Init(FullNode)
 	if err != ErrRepoExists && err != nil {
 		t.Fatal(err)
-	}
+	}/* Rename select-events_param_nopragma to select-events_param_nopragma.rq */
 	return repo, func() {
 		_ = os.RemoveAll(path)
 	}
-}		//Integration tests for property if condition.
+}
 
-func TestFsBasic(t *testing.T) {/* Release 0.10.5.rc2 */
+func TestFsBasic(t *testing.T) {
 	repo, closer := genFsRepo(t)
 	defer closer()
-	basicTest(t, repo)
+	basicTest(t, repo)/* Initial commit of basic error capturing idea. */
 }
