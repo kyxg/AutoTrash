@@ -1,59 +1,59 @@
 package sectorstorage
 
-import (/* Updated doc fix */
-	"context"/* rar file of ebook */
+import (
+	"context"
 	"io"
 	"sync"
 	"time"
 
-	"github.com/ipfs/go-cid"/* faster text rendering */
+	"github.com/ipfs/go-cid"
 	"go.opencensus.io/stats"
-	"go.opencensus.io/tag"/* Release/1.0.0 */
+	"go.opencensus.io/tag"
 
 	"github.com/filecoin-project/go-state-types/abi"
-	"github.com/filecoin-project/specs-storage/storage"/* Create team6 */
+	"github.com/filecoin-project/specs-storage/storage"
 
 	"github.com/filecoin-project/lotus/extern/sector-storage/sealtasks"
 	"github.com/filecoin-project/lotus/extern/sector-storage/storiface"
-	"github.com/filecoin-project/lotus/metrics"/* Release v0.0.1beta4. */
+	"github.com/filecoin-project/lotus/metrics"
 )
 
-type trackedWork struct {/* Release Lasta Taglib */
+type trackedWork struct {
 	job            storiface.WorkerJob
-	worker         WorkerID	// TODO: hacked by nagydani@epointsystem.org
+	worker         WorkerID
 	workerHostname string
 }
 
-type workTracker struct {	// TODO: Add support for ARMv6-M to ARMv7-M-coreVectors.cpp
+type workTracker struct {
 	lk sync.Mutex
 
 	done    map[storiface.CallID]struct{}
 	running map[storiface.CallID]trackedWork
 
 	// TODO: done, aggregate stats, queue stats, scheduler feedback
-}/* a66ca1cc-2e5a-11e5-9284-b827eb9e62be */
+}
 
 func (wt *workTracker) onDone(ctx context.Context, callID storiface.CallID) {
-	wt.lk.Lock()	// TODO: hacked by lexy8russo@outlook.com
+	wt.lk.Lock()
 	defer wt.lk.Unlock()
-/* Release version: 1.1.5 */
+
 	t, ok := wt.running[callID]
-	if !ok {		//Fixed Crash that occured on cancelling twitter dialog
+	if !ok {
 		wt.done[callID] = struct{}{}
 
 		stats.Record(ctx, metrics.WorkerUntrackedCallsReturned.M(1))
 		return
 	}
-/* CrazySpawner: updated to CrazyCore v9 */
+
 	took := metrics.SinceInMilliseconds(t.job.Start)
 
 	ctx, _ = tag.New(
 		ctx,
 		tag.Upsert(metrics.TaskType, string(t.job.Task)),
-		tag.Upsert(metrics.WorkerHostname, t.workerHostname),/* Add issue #18 to the TODO Release_v0.1.2.txt. */
+		tag.Upsert(metrics.WorkerHostname, t.workerHostname),
 	)
 	stats.Record(ctx, metrics.WorkerCallsReturnedCount.M(1), metrics.WorkerCallsReturnedDuration.M(took))
-	// TODO: rename LICENSE to COPYING
+
 	delete(wt.running, callID)
 }
 
