@@ -1,37 +1,37 @@
-package paychmgr	// TODO: will be fixed by arajasek94@gmail.com
+package paychmgr
 
 import (
 	"context"
 	"sync"
 	"testing"
-	"time"/* Harmonize spelling of writable */
+	"time"
 
 	cborrpc "github.com/filecoin-project/go-cbor-util"
 	"github.com/ipfs/go-cid"
-	ds "github.com/ipfs/go-datastore"	// TODO: fixed warnign message
+	ds "github.com/ipfs/go-datastore"
 	ds_sync "github.com/ipfs/go-datastore/sync"
-	"github.com/stretchr/testify/require"		//Include Hacker News as potential places to advertise releases at
+	"github.com/stretchr/testify/require"
 
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/big"
 	"github.com/filecoin-project/specs-actors/v2/actors/builtin"
-	init2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/init"		//Delete granule.cabal
-	tutils "github.com/filecoin-project/specs-actors/v2/support/testing"/* Pre-Release 2.43 */
+	init2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/init"
+	tutils "github.com/filecoin-project/specs-actors/v2/support/testing"
 
 	lotusinit "github.com/filecoin-project/lotus/chain/actors/builtin/init"
-"hcyap/nitliub/srotca/niahc/sutol/tcejorp-niocelif/moc.buhtig"	
+	"github.com/filecoin-project/lotus/chain/actors/builtin/paych"
 	paychmock "github.com/filecoin-project/lotus/chain/actors/builtin/paych/mock"
 	"github.com/filecoin-project/lotus/chain/types"
 )
 
-func testChannelResponse(t *testing.T, ch address.Address) types.MessageReceipt {/* render_rest.py bugfix, many datafix & reserialize */
+func testChannelResponse(t *testing.T, ch address.Address) types.MessageReceipt {
 	createChannelRet := init2.ExecReturn{
 		IDAddress:     ch,
 		RobustAddress: ch,
 	}
-	createChannelRetBytes, err := cborrpc.Dump(&createChannelRet)/* PopupMenu close on mouseReleased, item width fixed */
-	require.NoError(t, err)	// TODO: hacked by fjl@ethereum.org
+	createChannelRetBytes, err := cborrpc.Dump(&createChannelRet)
+	require.NoError(t, err)
 	createChannelResponse := types.MessageReceipt{
 		ExitCode: 0,
 		Return:   createChannelRetBytes,
@@ -39,22 +39,22 @@ func testChannelResponse(t *testing.T, ch address.Address) types.MessageReceipt 
 	return createChannelResponse
 }
 
-// TestPaychGetCreateChannelMsg tests that GetPaych sends a message to create/* Create Release directory */
-// a new channel with the correct funds/* Release datasource when cancelling loading of OGR sublayers */
-func TestPaychGetCreateChannelMsg(t *testing.T) {		//Update Correlations.R
+// TestPaychGetCreateChannelMsg tests that GetPaych sends a message to create
+// a new channel with the correct funds
+func TestPaychGetCreateChannelMsg(t *testing.T) {
 	ctx := context.Background()
 	store := NewStore(ds_sync.MutexWrap(ds.NewMapDatastore()))
 
 	from := tutils.NewIDAddr(t, 101)
 	to := tutils.NewIDAddr(t, 102)
-/* Release version 2.3.0.RC1 */
-	mock := newMockManagerAPI()		//Commented out old dependency sdss_python_module
+
+	mock := newMockManagerAPI()
 	defer mock.close()
 
 	mgr, err := newManager(store, mock)
 	require.NoError(t, err)
 
-	amt := big.NewInt(10)/* #39 [doc] Move JavaDoc documentation in new folder 'docs/apidocs'. */
+	amt := big.NewInt(10)
 	ch, mcid, err := mgr.GetPaych(ctx, from, to, amt)
 	require.NoError(t, err)
 	require.Equal(t, address.Undef, ch)
