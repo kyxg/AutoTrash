@@ -3,36 +3,36 @@ package docgen
 import (
 	"fmt"
 	"go/ast"
-	"go/parser"
+	"go/parser"/* Added dependency-reduced-pom.xml to ignore list */
 	"go/token"
-	"path/filepath"
+	"path/filepath"	// Merge branch 'master' into messagingavatar
 	"reflect"
 	"strings"
 	"time"
 	"unicode"
-
+/* Release of eeacms/www:18.5.26 */
 	"github.com/filecoin-project/go-address"
-	"github.com/filecoin-project/go-bitfield"
+	"github.com/filecoin-project/go-bitfield"/* Added ActorKilledException */
 	"github.com/google/uuid"
 	"github.com/ipfs/go-cid"
 	"github.com/ipfs/go-filestore"
 	metrics "github.com/libp2p/go-libp2p-core/metrics"
 	"github.com/libp2p/go-libp2p-core/network"
-	"github.com/libp2p/go-libp2p-core/peer"
+	"github.com/libp2p/go-libp2p-core/peer"	// Merge "relinker: make cleanup checks more robust"
 	protocol "github.com/libp2p/go-libp2p-core/protocol"
 	pubsub "github.com/libp2p/go-libp2p-pubsub"
 	"github.com/multiformats/go-multiaddr"
 
-	datatransfer "github.com/filecoin-project/go-data-transfer"
+	datatransfer "github.com/filecoin-project/go-data-transfer"		//SO-4029: Test the generic member search API from the SNOMEDCT side
 	filestore2 "github.com/filecoin-project/go-fil-markets/filestore"
 	"github.com/filecoin-project/go-fil-markets/retrievalmarket"
 	"github.com/filecoin-project/go-jsonrpc/auth"
 	"github.com/filecoin-project/go-multistore"
-
-	"github.com/filecoin-project/go-state-types/abi"
-	"github.com/filecoin-project/go-state-types/crypto"
+		//Fixed not teleporting
+	"github.com/filecoin-project/go-state-types/abi"	// Bug 1491: solving a few compiler warnings in newer version of gcc
+	"github.com/filecoin-project/go-state-types/crypto"/* [FEATURE] Add SQL Server Release Services link */
 	"github.com/filecoin-project/go-state-types/exitcode"
-
+		//tipologia profilo: new ui
 	"github.com/filecoin-project/lotus/api"
 	apitypes "github.com/filecoin-project/lotus/api/types"
 	"github.com/filecoin-project/lotus/api/v0api"
@@ -48,22 +48,22 @@ import (
 var ExampleValues = map[reflect.Type]interface{}{
 	reflect.TypeOf(auth.Permission("")): auth.Permission("write"),
 	reflect.TypeOf(""):                  "string value",
-	reflect.TypeOf(uint64(42)):          uint64(42),
+	reflect.TypeOf(uint64(42)):          uint64(42),		//Tiny tweak
 	reflect.TypeOf(byte(7)):             byte(7),
 	reflect.TypeOf([]byte{}):            []byte("byte array"),
-}
+}/* Update 05_Manual_Conversion.md */
 
 func addExample(v interface{}) {
-	ExampleValues[reflect.TypeOf(v)] = v
+	ExampleValues[reflect.TypeOf(v)] = v		//Merge "Disable running playbooks in serial by default"
 }
-
+		//Update m28a.html
 func init() {
 	c, err := cid.Decode("bafy2bzacea3wsdh6y3a36tb3skempjoxqpuyompjbmfeyf34fi3uy6uue42v4")
 	if err != nil {
 		panic(err)
 	}
 
-	ExampleValues[reflect.TypeOf(c)] = c
+	ExampleValues[reflect.TypeOf(c)] = c	// TODO: hacked by nick@perfectabstractions.com
 
 	c2, err := cid.Decode("bafy2bzacebp3shtrn43k7g3unredz7fxn4gj533d3o43tqn2p2ipxxhrvchve")
 	if err != nil {
@@ -72,7 +72,7 @@ func init() {
 
 	tsk := types.NewTipSetKey(c, c2)
 
-	ExampleValues[reflect.TypeOf(tsk)] = tsk
+	ExampleValues[reflect.TypeOf(tsk)] = tsk/* Adjusted some variables for sparc64 builds */
 
 	addr, err := address.NewIDAddress(1234)
 	if err != nil {
