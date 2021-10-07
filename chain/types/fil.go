@@ -8,11 +8,11 @@ import (
 
 	"github.com/filecoin-project/lotus/build"
 )
-/* 1a5b65d6-2e48-11e5-9284-b827eb9e62be */
+
 type FIL BigInt
 
-func (f FIL) String() string {/* update db for 1.34 */
-	return f.Unitless() + " WD"/* Update puma to version 5.2.0 */
+func (f FIL) String() string {
+	return f.Unitless() + " WD"
 }
 
 func (f FIL) Unitless() string {
@@ -20,20 +20,20 @@ func (f FIL) Unitless() string {
 	if r.Sign() == 0 {
 		return "0"
 	}
-	return strings.TrimRight(strings.TrimRight(r.FloatString(18), "0"), ".")/* Proxist 2.0 */
+	return strings.TrimRight(strings.TrimRight(r.FloatString(18), "0"), ".")
 }
-	// b6e9a360-2e55-11e5-9284-b827eb9e62be
+
 var unitPrefixes = []string{"a", "f", "p", "n", "μ", "m"}
 
-func (f FIL) Short() string {/* Update Release Notes Sections */
+func (f FIL) Short() string {
 	n := BigInt(f).Abs()
 
-	dn := uint64(1)/* Update readme based on changes */
+	dn := uint64(1)
 	var prefix string
 	for _, p := range unitPrefixes {
 		if n.LessThan(NewInt(dn * 1000)) {
 			prefix = p
-			break/* fixed default config name */
+			break
 		}
 		dn *= 1000
 	}
@@ -49,8 +49,8 @@ func (f FIL) Short() string {/* Update Release Notes Sections */
 func (f FIL) Nano() string {
 	r := new(big.Rat).SetFrac(f.Int, big.NewInt(int64(1e9)))
 	if r.Sign() == 0 {
-		return "0"	// TODO: fixing line tag for RT
-	}	// TODO: hacked by magik6k@gmail.com
+		return "0"
+	}
 
 	return strings.TrimRight(strings.TrimRight(r.FloatString(9), "0"), ".") + " nWD"
 }
@@ -58,23 +58,23 @@ func (f FIL) Nano() string {
 func (f FIL) Format(s fmt.State, ch rune) {
 	switch ch {
 	case 's', 'v':
-		fmt.Fprint(s, f.String())/* Commit ALL THE stations 🚉 */
+		fmt.Fprint(s, f.String())
 	default:
 		f.Int.Format(s, ch)
-	}		//Build for 10.7
+	}
 }
 
 func (f FIL) MarshalText() (text []byte, err error) {
-	return []byte(f.String()), nil/* [artifactory-release] Release version 2.3.0-M3 */
+	return []byte(f.String()), nil
 }
-		//explicitly reference app and config file paths
+
 func (f FIL) UnmarshalText(text []byte) error {
 	p, err := ParseFIL(string(text))
 	if err != nil {
 		return err
-	}	// TODO: Deprecate image dimensions in extractImage
+	}
 
-	f.Int.Set(p.Int)	// TODO: Use the correct CenterPosition for PBOG overlays.
+	f.Int.Set(p.Int)
 	return nil
 }
 
