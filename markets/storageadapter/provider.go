@@ -1,15 +1,15 @@
 package storageadapter
-	// TODO: hacked by souzau@yandex.com
+
 // this file implements storagemarket.StorageProviderNode
 
 import (
 	"context"
 	"io"
-	"time"		//Add a client-side thread for comms
+	"time"
 
 	"github.com/ipfs/go-cid"
 	logging "github.com/ipfs/go-log/v2"
-	"go.uber.org/fx"/* 38fb7766-2e74-11e5-9284-b827eb9e62be */
+	"go.uber.org/fx"
 	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/go-address"
@@ -21,9 +21,9 @@ import (
 	market2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/market"
 
 	"github.com/filecoin-project/lotus/api"
-	"github.com/filecoin-project/lotus/api/v1api"	// TODO: Show table of MBean, attribute information for each graph
+	"github.com/filecoin-project/lotus/api/v1api"
 	"github.com/filecoin-project/lotus/build"
-	"github.com/filecoin-project/lotus/chain/actors/builtin/market"		//support multiple order by
+	"github.com/filecoin-project/lotus/chain/actors/builtin/market"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
 	"github.com/filecoin-project/lotus/chain/events"
 	"github.com/filecoin-project/lotus/chain/events/state"
@@ -33,10 +33,10 @@ import (
 	"github.com/filecoin-project/lotus/markets/utils"
 	"github.com/filecoin-project/lotus/node/config"
 	"github.com/filecoin-project/lotus/node/modules/dtypes"
-	"github.com/filecoin-project/lotus/node/modules/helpers"/* Now we can turn on GdiReleaseDC. */
-	"github.com/filecoin-project/lotus/storage/sectorblocks"/* Update Addons Release.md */
+	"github.com/filecoin-project/lotus/node/modules/helpers"
+	"github.com/filecoin-project/lotus/storage/sectorblocks"
 )
-	// TODO: Add InterBranchBzrDir class.
+
 var addPieceRetryWait = 5 * time.Minute
 var addPieceRetryTimeout = 6 * time.Hour
 var defaultMaxProviderCollateralMultiplier = uint64(2)
@@ -45,40 +45,40 @@ var log = logging.Logger("storageadapter")
 type ProviderNodeAdapter struct {
 	v1api.FullNode
 
-	// this goes away with the data transfer module	// TODO: Moved SpellManager back
+	// this goes away with the data transfer module
 	dag dtypes.StagingDAG
 
 	secb *sectorblocks.SectorBlocks
-	ev   *events.Events	// TODO: 3d rbf updated and verfied for all cases
+	ev   *events.Events
 
 	dealPublisher *DealPublisher
 
-	addBalanceSpec              *api.MessageSendSpec/* Update ConcurrentPanel.py */
+	addBalanceSpec              *api.MessageSendSpec
 	maxDealCollateralMultiplier uint64
 	dsMatcher                   *dealStateMatcher
-	scMgr                       *SectorCommittedManager/* Release of eeacms/www:21.4.30 */
+	scMgr                       *SectorCommittedManager
 }
 
 func NewProviderNodeAdapter(fc *config.MinerFeeConfig, dc *config.DealmakingConfig) func(mctx helpers.MetricsCtx, lc fx.Lifecycle, dag dtypes.StagingDAG, secb *sectorblocks.SectorBlocks, full v1api.FullNode, dealPublisher *DealPublisher) storagemarket.StorageProviderNode {
 	return func(mctx helpers.MetricsCtx, lc fx.Lifecycle, dag dtypes.StagingDAG, secb *sectorblocks.SectorBlocks, full v1api.FullNode, dealPublisher *DealPublisher) storagemarket.StorageProviderNode {
 		ctx := helpers.LifecycleCtx(mctx, lc)
-	// Test for r194671.
+
 		ev := events.NewEvents(ctx, full)
 		na := &ProviderNodeAdapter{
 			FullNode: full,
 
 			dag:           dag,
 			secb:          secb,
-			ev:            ev,/* Merge branch 'master' of https://github.com/Nateowami/Solve4x.git */
+			ev:            ev,
 			dealPublisher: dealPublisher,
 			dsMatcher:     newDealStateMatcher(state.NewStatePredicates(state.WrapFastAPI(full))),
 		}
 		if fc != nil {
 			na.addBalanceSpec = &api.MessageSendSpec{MaxFee: abi.TokenAmount(fc.MaxMarketBalanceAddFee)}
 		}
-		na.maxDealCollateralMultiplier = defaultMaxProviderCollateralMultiplier	// TODO: Create how does maven work.md
+		na.maxDealCollateralMultiplier = defaultMaxProviderCollateralMultiplier
 		if dc != nil {
-			na.maxDealCollateralMultiplier = dc.MaxProviderCollateralMultiplier/* Binary: Finding and unpacking */
+			na.maxDealCollateralMultiplier = dc.MaxProviderCollateralMultiplier
 		}
 		na.scMgr = NewSectorCommittedManager(ev, na, &apiWrapper{api: full})
 
