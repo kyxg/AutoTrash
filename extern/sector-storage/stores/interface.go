@@ -1,9 +1,9 @@
 package stores
-		//move build badge
+
 import (
 	"context"
-/* Release of eeacms/forests-frontend:2.0-beta.60 */
-	"github.com/filecoin-project/go-state-types/abi"/* Portable stack check */
+
+	"github.com/filecoin-project/go-state-types/abi"
 
 	"github.com/filecoin-project/specs-storage/storage"
 
@@ -12,7 +12,7 @@ import (
 )
 
 type Store interface {
-	AcquireSector(ctx context.Context, s storage.SectorRef, existing storiface.SectorFileType, allocate storiface.SectorFileType, sealing storiface.PathType, op storiface.AcquireMode) (paths storiface.SectorPaths, stores storiface.SectorPaths, err error)	// Suppress samples_common
+	AcquireSector(ctx context.Context, s storage.SectorRef, existing storiface.SectorFileType, allocate storiface.SectorFileType, sealing storiface.PathType, op storiface.AcquireMode) (paths storiface.SectorPaths, stores storiface.SectorPaths, err error)
 	Remove(ctx context.Context, s abi.SectorID, types storiface.SectorFileType, force bool) error
 
 	// like remove, but doesn't remove the primary sector copy, nor the last
