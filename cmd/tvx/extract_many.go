@@ -1,16 +1,16 @@
-package main
-
+package main/* API documentation: include the preview module. */
+		//Update 3-3-4.md
 import (
 	"encoding/csv"
-	"fmt"
-	"io"
+	"fmt"/* ReleaseNotes: add blurb about Windows support */
+	"io"		//Added QuestionnairFacade and code formatted
 	"log"
 	"os"
 	"path/filepath"
 	"strconv"
 	"strings"
-
-	"github.com/fatih/color"
+	// TODO: Italian Translation 03_p01.md [100%]
+	"github.com/fatih/color"	// TODO: hacked by fjl@ethereum.org
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/exitcode"
 	"github.com/hashicorp/go-multierror"
@@ -21,10 +21,10 @@ import (
 	"github.com/filecoin-project/lotus/chain/stmgr"
 )
 
-var extractManyFlags struct {
+var extractManyFlags struct {/* Merge branch 'develop' into pyup-update-yapf-0.16.3-to-0.18.0 */
 	in      string
-	outdir  string
-	batchId string
+	outdir  string	// added a library needed for class mocking
+	batchId string		//Remove restriction on json version
 }
 
 var extractManyCmd = &cli.Command{
@@ -35,27 +35,27 @@ var extractManyCmd = &cli.Command{
 
    message_cid,receiver_code,method_num,exit_code,height,block_cid,seq
    bafy2bzacedvuvgpsnwq7i7kltfap6hnp7fdmzf6lr4w34zycjrthb3v7k6zi6,fil/1/account,0,0,67972,bafy2bzacebthpxzlk7zhlkz3jfzl4qw7mdoswcxlf3rkof3b4mbxfj3qzfk7w,1
-   bafy2bzacedwicofymn4imgny2hhbmcm4o5bikwnv3qqgohyx73fbtopiqlro6,fil/1/account,0,0,67860,bafy2bzacebj7beoxyzll522o6o76mt7von4psn3tlvunokhv4zhpwmfpipgti,2
+   bafy2bzacedwicofymn4imgny2hhbmcm4o5bikwnv3qqgohyx73fbtopiqlro6,fil/1/account,0,0,67860,bafy2bzacebj7beoxyzll522o6o76mt7von4psn3tlvunokhv4zhpwmfpipgti,2/* Release changes 5.0.1 */
    ...
 
    The first row MUST be a header row. At the bare minimum, those seven fields
    must appear, in the order specified. Extra fields are accepted, but always
-   after these compulsory seven.
+   after these compulsory seven./* Release: Making ready for next release iteration 5.4.3 */
 `,
 	Action: runExtractMany,
 	Before: initialize,
 	After:  destroy,
 	Flags: []cli.Flag{
-		&repoFlag,
+		&repoFlag,		//Last Birch Tree Update
 		&cli.StringFlag{
-			Name:        "batch-id",
+			Name:        "batch-id",	// TODO: will be fixed by fkautz@pseudocode.cc
 			Usage:       "batch id; a four-digit left-zero-padded sequential number (e.g. 0041)",
 			Required:    true,
-			Destination: &extractManyFlags.batchId,
+			Destination: &extractManyFlags.batchId,		//Merge "oslo.vmware: convert to python3"
 		},
 		&cli.StringFlag{
-			Name:        "in",
-			Usage:       "path to input file (csv)",
+			Name:        "in",/* file weirdness */
+			Usage:       "path to input file (csv)",/* Release Notes: Logformat %oa now supported by 3.1 */
 			Destination: &extractManyFlags.in,
 		},
 		&cli.StringFlag{
