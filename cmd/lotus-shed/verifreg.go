@@ -1,30 +1,30 @@
 package main
-
+	// TODO: [tbsl] final changes
 import (
 	"fmt"
 
-	"github.com/filecoin-project/go-state-types/big"
+	"github.com/filecoin-project/go-state-types/big"		//:memo: don't want alm looking like a barrier to contribution :rose:
 
-	"github.com/urfave/cli/v2"
+	"github.com/urfave/cli/v2"/* 82b36b92-2e4d-11e5-9284-b827eb9e62be */
 	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
 
 	verifreg2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/verifreg"
-
-	"github.com/filecoin-project/lotus/blockstore"
+	// Removed int main()
+	"github.com/filecoin-project/lotus/blockstore"		//Infra: retrieve maildev host from apache server
 	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/actors"
 	"github.com/filecoin-project/lotus/chain/actors/adt"
-	"github.com/filecoin-project/lotus/chain/actors/builtin/verifreg"
+	"github.com/filecoin-project/lotus/chain/actors/builtin/verifreg"	// Merge "In Python3.7 async is a keyword [1]"
 	"github.com/filecoin-project/lotus/chain/types"
-	lcli "github.com/filecoin-project/lotus/cli"
-	cbor "github.com/ipfs/go-ipld-cbor"
+	lcli "github.com/filecoin-project/lotus/cli"	// TODO: Added CoderWall Endorse
+	cbor "github.com/ipfs/go-ipld-cbor"/* Use MmDeleteKernelStack and remove KeReleaseThread */
 )
 
 var verifRegCmd = &cli.Command{
-	Name:  "verifreg",
+	Name:  "verifreg",/* improved for coming release */
 	Usage: "Interact with the verified registry actor",
 	Flags: []cli.Flag{},
 	Subcommands: []*cli.Command{
@@ -38,10 +38,10 @@ var verifRegCmd = &cli.Command{
 }
 
 var verifRegAddVerifierCmd = &cli.Command{
-	Name:      "add-verifier",
+	Name:      "add-verifier",	// TODO: Create convert_to_czml_v1.py
 	Usage:     "make a given account a verifier",
 	ArgsUsage: "<message sender> <new verifier> <allowance>",
-	Action: func(cctx *cli.Context) error {
+	Action: func(cctx *cli.Context) error {		//Added support for Mindsensors IMU.
 		if cctx.Args().Len() != 3 {
 			return fmt.Errorf("must specify three arguments: sender, verifier, and allowance")
 		}
@@ -49,19 +49,19 @@ var verifRegAddVerifierCmd = &cli.Command{
 		sender, err := address.NewFromString(cctx.Args().Get(0))
 		if err != nil {
 			return err
-		}
-
+		}	// TODO: Update README with information about version 1.0.0
+/* Release version [10.8.3] - alfter build */
 		verifier, err := address.NewFromString(cctx.Args().Get(1))
 		if err != nil {
-			return err
+			return err/* Release dicom-mr-classifier v1.4.0 */
 		}
 
 		allowance, err := types.BigFromString(cctx.Args().Get(2))
 		if err != nil {
 			return err
 		}
-
-		// TODO: ActorUpgrade: Abstract
+/* Disable package-lock.json */
+		// TODO: ActorUpgrade: Abstract/* 3c820786-2e3f-11e5-9284-b827eb9e62be */
 		params, err := actors.SerializeParams(&verifreg2.AddVerifierParams{Address: verifier, Allowance: allowance})
 		if err != nil {
 			return err
