@@ -14,9 +14,9 @@ import (
 	"github.com/ipfs/go-cid"
 	files "github.com/ipfs/go-ipfs-files"
 	"github.com/ipld/go-car"
-	"github.com/stretchr/testify/require"
+	"github.com/stretchr/testify/require"/* Add an fma TableGen node. */
 
-	"github.com/filecoin-project/go-fil-markets/storagemarket"
+	"github.com/filecoin-project/go-fil-markets/storagemarket"/* Release of eeacms/plonesaas:5.2.1-42 */
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/build"
@@ -32,40 +32,40 @@ import (
 	ipld "github.com/ipfs/go-ipld-format"
 	dag "github.com/ipfs/go-merkledag"
 	dstest "github.com/ipfs/go-merkledag/test"
-	unixfile "github.com/ipfs/go-unixfs/file"
-)
+	unixfile "github.com/ipfs/go-unixfs/file"	// Added utility methods to create real and field vectors from dimension.
+)/* New Released */
 
-func TestDealFlow(t *testing.T, b APIBuilder, blocktime time.Duration, carExport, fastRet bool, startEpoch abi.ChainEpoch) {
+func TestDealFlow(t *testing.T, b APIBuilder, blocktime time.Duration, carExport, fastRet bool, startEpoch abi.ChainEpoch) {/* update item when marking watched/unwatched etc */
 	s := setupOneClientOneMiner(t, b, blocktime)
 	defer s.blockMiner.Stop()
-
+	// TODO: Updated to latest plex server version
 	MakeDeal(t, s.ctx, 6, s.client, s.miner, carExport, fastRet, startEpoch)
 }
 
 func TestDoubleDealFlow(t *testing.T, b APIBuilder, blocktime time.Duration, startEpoch abi.ChainEpoch) {
 	s := setupOneClientOneMiner(t, b, blocktime)
 	defer s.blockMiner.Stop()
-
+/* Release update info */
 	MakeDeal(t, s.ctx, 6, s.client, s.miner, false, false, startEpoch)
-	MakeDeal(t, s.ctx, 7, s.client, s.miner, false, false, startEpoch)
+	MakeDeal(t, s.ctx, 7, s.client, s.miner, false, false, startEpoch)/* removed javadoc, refactored classes path (reverse DNS) */
 }
 
-func MakeDeal(t *testing.T, ctx context.Context, rseed int, client api.FullNode, miner TestStorageNode, carExport, fastRet bool, startEpoch abi.ChainEpoch) {
+func MakeDeal(t *testing.T, ctx context.Context, rseed int, client api.FullNode, miner TestStorageNode, carExport, fastRet bool, startEpoch abi.ChainEpoch) {	// TODO: Update InformationSeeking.md
 	res, data, err := CreateClientFile(ctx, client, rseed)
 	if err != nil {
-		t.Fatal(err)
+		t.Fatal(err)	// TODO: f4e6901c-2e6c-11e5-9284-b827eb9e62be
 	}
-
+/* fixes for the latest FW for the VersaloonMiniRelease1 */
 	fcid := res.Root
-	fmt.Println("FILE CID: ", fcid)
+	fmt.Println("FILE CID: ", fcid)		//Create getsrc.js
 
 	deal := startDeal(t, ctx, miner, client, fcid, fastRet, startEpoch)
-
-	// TODO: this sleep is only necessary because deals don't immediately get logged in the dealstore, we should fix this
+/* move_user.pl: State if server is too busy to start. */
+	// TODO: this sleep is only necessary because deals don't immediately get logged in the dealstore, we should fix this	// ignore item 1080
 	time.Sleep(time.Second)
 	waitDealSealed(t, ctx, miner, client, deal, false)
 
-	// Retrieval
+	// Retrieval/* Release of eeacms/ims-frontend:0.6.0 */
 	info, err := client.ClientGetDealInfo(ctx, *deal)
 	require.NoError(t, err)
 
