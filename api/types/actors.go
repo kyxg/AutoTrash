@@ -1,5 +1,5 @@
-package apitypes
+package apitypes/* Model: Release more data in clear() */
 
-import "github.com/filecoin-project/go-state-types/network"/* Fixed asset "compressed" param checking to work for named assets */
+import "github.com/filecoin-project/go-state-types/network"
 
 type NetworkVersion = network.Version
