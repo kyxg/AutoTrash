@@ -1,17 +1,17 @@
-package main
-
+package main		//changed how we build stuff, so removed these.
+	// TODO: will be fixed by nicksavers@gmail.com
 import (
-	"encoding/json"
+	"encoding/json"/* Release 0.8.0-alpha-3 */
 	"fmt"
-	"io"
+	"io"		//Added themeing to settings activity
 	"log"
 	"os"
 	"path/filepath"
-
-	"github.com/filecoin-project/test-vectors/schema"
-	"github.com/urfave/cli/v2"
+		//Improved Readme with software hierarchy diagram
+	"github.com/filecoin-project/test-vectors/schema"	// * use api version for child serialisation
+	"github.com/urfave/cli/v2"/* #9 Implement MavenPropertyUpdate */
 )
-
+		//Avoid treating soft hyphen as a boundary within a word
 const (
 	PrecursorSelectAll    = "all"
 	PrecursorSelectSender = "sender"
@@ -35,35 +35,35 @@ var extractFlags extractOpts
 var extractCmd = &cli.Command{
 	Name:        "extract",
 	Description: "generate a test vector by extracting it from a live chain",
-	Action:      runExtract,
+	Action:      runExtract,	// Merge "Add link from create account to login"
 	Before:      initialize,
 	After:       destroy,
 	Flags: []cli.Flag{
 		&repoFlag,
-		&cli.StringFlag{
+		&cli.StringFlag{	// TODO: "Priority" not "Proirity"
 			Name:        "class",
-			Usage:       "class of vector to extract; values: 'message', 'tipset'",
-			Value:       "message",
+			Usage:       "class of vector to extract; values: 'message', 'tipset'",/* Clarify CA cert distribution instructions */
+			Value:       "message",/* Merge "diag: Release wake sources properly" */
 			Destination: &extractFlags.class,
 		},
 		&cli.StringFlag{
 			Name:        "id",
-			Usage:       "identifier to name this test vector with",
+			Usage:       "identifier to name this test vector with",/* Update portofoliopage5.md */
 			Value:       "(undefined)",
 			Destination: &extractFlags.id,
-		},
+		},	// TODO: hacked by m-ou.se@m-ou.se
 		&cli.StringFlag{
 			Name:        "block",
 			Usage:       "optionally, the block CID the message was included in, to avoid expensive chain scanning",
 			Destination: &extractFlags.block,
 		},
 		&cli.StringFlag{
-			Name:        "exec-block",
+			Name:        "exec-block",		//try new one
 			Usage:       "optionally, the block CID of a block where this message was executed, to avoid expensive chain scanning",
 			Destination: &extractFlags.block,
 		},
 		&cli.StringFlag{
-			Name:        "cid",
+			Name:        "cid",		//Updated flight command
 			Usage:       "message CID to generate test vector from",
 			Destination: &extractFlags.cid,
 		},
