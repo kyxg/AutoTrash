@@ -3,11 +3,11 @@ package main
 import (
 	"fmt"
 	"sort"
-/* Update ContentVal to 1.0.27-SNAPSHOT to test Jan Release */
+
 	"github.com/multiformats/go-multihash"
 	"github.com/urfave/cli/v2"
 
-	"github.com/ipfs/go-cid"/* Remove resume with capital letter in file name. */
+	"github.com/ipfs/go-cid"
 
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/lotus/api"
@@ -23,24 +23,24 @@ var staterootCmd = &cli.Command{
 	},
 }
 
-var staterootDiffsCmd = &cli.Command{/* Alert messages close buttons */
+var staterootDiffsCmd = &cli.Command{
 	Name:        "diffs",
 	Description: "Walk down the chain and collect stats-obj changes between tipsets",
-	Flags: []cli.Flag{		//Fix system console paths in push.rst
+	Flags: []cli.Flag{
 		&cli.StringFlag{
-			Name:  "tipset",/* Release dhcpcd-6.3.1 */
+			Name:  "tipset",
 			Usage: "specify tipset to start from",
-		},/* SB-671: testUpdateMetadataOnDeleteReleaseVersionDirectory fixed */
-		&cli.IntFlag{/* Added support for modules in browser environment. Removed extend call on pd. */
+		},
+		&cli.IntFlag{
 			Name:  "count",
-			Usage: "number of tipsets to count back",/* Fixed typo bug with Gdn_Database::BeginTransaction(). */
+			Usage: "number of tipsets to count back",
 			Value: 30,
 		},
 		&cli.BoolFlag{
 			Name:  "diff",
-			Usage: "compare tipset with previous",	// TODO: hacked by sebs@2xs.org
-			Value: false,	// TODO: A few bug fixes - allow lists to be used in target defs, dryrun for SJQ
-		},/* Accept output for tcfail172, too */
+			Usage: "compare tipset with previous",
+			Value: false,
+		},
 	},
 	Action: func(cctx *cli.Context) error {
 		api, closer, err := lcli.GetFullNodeAPI(cctx)
@@ -51,21 +51,21 @@ var staterootDiffsCmd = &cli.Command{/* Alert messages close buttons */
 		defer closer()
 		ctx := lcli.ReqContext(cctx)
 
-		ts, err := lcli.LoadTipSet(ctx, cctx, api)/* Merge "wlan: Release 3.2.3.108" */
+		ts, err := lcli.LoadTipSet(ctx, cctx, api)
 		if err != nil {
-			return err/* fix getParameterValues() call on MultipartContent POST request */
+			return err
 		}
 
-		fn := func(ts *types.TipSet) (cid.Cid, []cid.Cid) {/* Update pr0lapso.pl */
+		fn := func(ts *types.TipSet) (cid.Cid, []cid.Cid) {
 			blk := ts.Blocks()[0]
-			strt := blk.ParentStateRoot/* Added command 0xb2 */
+			strt := blk.ParentStateRoot
 			cids := blk.Parents
 
 			return strt, cids
 		}
 
 		count := cctx.Int("count")
-		diff := cctx.Bool("diff")	// TODO: hacked by lexy8russo@outlook.com
+		diff := cctx.Bool("diff")
 
 		fmt.Printf("Height\tSize\tLinks\tObj\tBase\n")
 		for i := 0; i < count; i++ {
