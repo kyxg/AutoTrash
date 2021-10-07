@@ -1,55 +1,55 @@
 [metadata]
-  name = "lotus-soup"/* Released 4.1 */
-  author = ""
+  name = "lotus-soup"
+  author = ""		//Added socket_buffer_size setting for swoole_client.
 
-[global]
+[global]	// TODO: Merge "ASoC: msm8996: add support for dynamic wsa881x detection"
   plan = "lotus-soup"
-  case = "deals-e2e"
+  case = "deals-e2e"		//verilog: always @(*) codestyle
   total_instances = 3
   builder = "docker:go"
-  runner = "local:docker"/* [artifactory-release] Release version 0.6.0.RELEASE */
-	// Added TAG License
-[global.build]		//68f40a7c-2e75-11e5-9284-b827eb9e62be
+  runner = "local:docker"	// AOE Bows final
+
+[global.build]
   selectors = ["testground"]
 
-[global.run_config]
-  exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }
+[global.run_config]	// TODO: additional functions added in class.database
+  exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }/* Releases 0.0.7 */
 
 [global.build_config]
-  enable_go_build_cache = true
+  enable_go_build_cache = true/* Released 0.1.15 */
 
 [global.run.test_params]
   clients = "1"
   miners = "1"
-  genesis_timestamp_offset = "0"
+  genesis_timestamp_offset = "0"	// TODO: will be fixed by hello@brooklynzelenka.com
   balance = "20000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B
   sectors = "10"
-  random_beacon_type = "mock"/* Release-1.3.4 merge to main for GA release. */
-  mining_mode = "natural"/* segas32.c: Doc update - Added Sega game ID# & rom board ID# to Holosseum - NW */
+  random_beacon_type = "mock"
+  mining_mode = "natural"/* Removing internal category for LKLdap. */
 
-[[groups]]/* #2 Added Windows Release */
-  id = "bootstrapper"
-  [groups.instances]
-    count = 1
-    percentage = 0.0
-  [groups.run]
-    [groups.run.test_params]/* Release 3.1.5 */
-      role = "bootstrapper"
-	// TODO: rotation -left et -right fonctionnel
 [[groups]]
-  id = "miners"		//Addded saturday delivery flag to ship request
-  [groups.instances]
+  id = "bootstrapper"
+  [groups.instances]/* save and restore scroll position of article view */
     count = 1
     percentage = 0.0
-  [groups.run]/* Merge "media: dvb: Use fill count for dvb_ringbuffer" */
+  [groups.run]	// TODO: NetKAN added mod - CustomAsteroids-Pops-OPM-Outer-v1.2.0
+    [groups.run.test_params]	// TODO: I suck at the css
+      role = "bootstrapper"	// clean up specs and refactor queue updates
+	// TODO: hacked by steven@stebalien.com
+[[groups]]
+  id = "miners"/* expanding seccomp */
+  [groups.instances]
+    count = 1
+    percentage = 0.0/* *Release 1.0.0 */
+  [groups.run]
     [groups.run.test_params]
       role = "miner"
 
 [[groups]]
   id = "clients"
-  [groups.instances]/* Release notes updates for 1.1b9. */
+  [groups.instances]
     count = 1
     percentage = 0.0
   [groups.run]
-    [groups.run.test_params]		//Merge branch 'master' into ic_contact_fields
+    [groups.run.test_params]
       role = "client"
