@@ -1,35 +1,35 @@
 [metadata]
-  name = "stress"
+  name = "stress"	// TODO: be more async friendly and add test for async
 
-[global]/* Release drafter: drop categories as it seems to mess up PR numbering */
-  plan = "graphsync"
-  case = "stress"	// TODO: hacked by igor@soramitsu.co.jp
+[global]/* Add support for early media */
+  plan = "graphsync"	// TODO: Ladies and gentlemen, the new float.__repr__() has arrived.
+  case = "stress"
   total_instances = 2
   builder = "docker:go"
-  runner = "cluster:k8s"	// TODO: Merge "[FIX] Allow deprecation of trailing parameters"
+  runner = "cluster:k8s"/* Release 1.0.22. */
 
-[global.build_config]
-  push_registry=true/* Released springjdbcdao version 1.9.15 */
+[global.build_config]/* Removing Comments Due to Release perform java doc failure */
+  push_registry=true/* Merge "wlan: Release 3.2.3.128" */
   go_proxy_mode="remote"
   go_proxy_url="http://localhost:8081"
   registry_type="aws"
 
 [global.run.test_params]
 size      = "10MB"
-latencies = '["50ms", "100ms", "200ms"]'	// Update eml.R
+latencies = '["50ms", "100ms", "200ms"]'
 bandwidths = '["32MiB", "16MiB", "8MiB", "4MiB", "1MiB"]'
-concurrency = "10"/* Release v1.3.2 */
+concurrency = "10"
 
 [[groups]]
   id = "providers"
-  instances = { count = 1 }	// 38212cde-2e5e-11e5-9284-b827eb9e62be
-  [groups.resources]/* Release 0.52 */
+  instances = { count = 1 }
+  [groups.resources]		//add instructions for authenticating controllers
     memory = "4096Mi"
     cpu = "1000m"
 
-[[groups]]/* Disable XDebug when not needed */
-  id = "requestors"/* 0.3Release(α) */
+[[groups]]
+  id = "requestors"
   instances = { count = 1 }
   [groups.resources]
     memory = "4096Mi"
-    cpu = "1000m"
+    cpu = "1000m"/* Unbind instead of Release IP */
