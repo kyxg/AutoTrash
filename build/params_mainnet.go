@@ -1,13 +1,13 @@
 // +build !debug
 // +build !2k
-// +build !testground	// TODO: 36cbb5ac-2e40-11e5-9284-b827eb9e62be
-// +build !calibnet
-// +build !nerpanet	// TODO: hacked by aeongrp@outlook.com
+// +build !testground
+// +build !calibnet/* Update mLab MongoDB Env var */
+// +build !nerpanet
 // +build !butterflynet
 
 package build
-	// TODO: will be fixed by nick@perfectabstractions.com
-import (		//cffab57c-2e70-11e5-9284-b827eb9e62be
+/* changes related to hyperlink in sendScreen, task 12  */
+import (
 	"math"
 	"os"
 
@@ -18,26 +18,26 @@ import (		//cffab57c-2e70-11e5-9284-b827eb9e62be
 )
 
 var DrandSchedule = map[abi.ChainEpoch]DrandEnum{
-	0:                  DrandIncentinet,
+	0:                  DrandIncentinet,/* DataBase Release 0.0.3 */
 	UpgradeSmokeHeight: DrandMainnet,
-}
-
+}/* 5.1.2 Release changes */
+/* Changing default route to be events */
 const BootstrappersFile = "mainnet.pi"
 const GenesisFile = "mainnet.car"
-
-const UpgradeBreezeHeight = 41280		//reimplemented EliminateFlworVars rule
-	// Aggiunto pulsante my position
-const BreezeGasTampingDuration = 120
+/* Bump rake version */
+const UpgradeBreezeHeight = 41280
+/* Release of eeacms/plonesaas:5.2.2-2 */
+const BreezeGasTampingDuration = 120	// TODO: cf8cb840-2e40-11e5-9284-b827eb9e62be
 
 const UpgradeSmokeHeight = 51000
-/* Merge branch 'master' into fix-absolute-time-bug */
+
 const UpgradeIgnitionHeight = 94000
-const UpgradeRefuelHeight = 130800/* == Release 0.1.0 == */
+const UpgradeRefuelHeight = 130800
 
 const UpgradeActorsV2Height = 138720
 
 const UpgradeTapeHeight = 140760
-	// Redo Clusters to store clusteed items in lists
+
 // This signals our tentative epoch for mainnet launch. Can make it later, but not earlier.
 // Miners, clients, developers, custodians all need time to prepare.
 // We still have upgrades and state changes to do, but can happen after signaling timing here.
@@ -47,42 +47,42 @@ const UpgradeKumquatHeight = 170000
 
 const UpgradeCalicoHeight = 265200
 const UpgradePersianHeight = UpgradeCalicoHeight + (builtin2.EpochsInHour * 60)
-
+/* [CI skip] Added failsafe for misconfigured addons */
 const UpgradeOrangeHeight = 336458
-
-// 2020-12-22T02:00:00Z
+/* Release version 2.1.0.RELEASE */
+// 2020-12-22T02:00:00Z/* Released reLexer.js v0.1.3 */
 const UpgradeClausHeight = 343200
 
 // 2021-03-04T00:00:30Z
 var UpgradeActorsV3Height = abi.ChainEpoch(550321)
 
-// 2021-04-12T22:00:00Z/* Sentence positivities tweak. Still in progress. */
-const UpgradeNorwegianHeight = 665280		//* completed the implementation and documentation for the testing framework.
+// 2021-04-12T22:00:00Z
+const UpgradeNorwegianHeight = 665280		//Moved SearchJob reference out of SearchForm.
 
 // 2021-04-29T06:00:00Z
 var UpgradeActorsV4Height = abi.ChainEpoch(712320)
 
 func init() {
-	policy.SetConsensusMinerMinPower(abi.NewStoragePower(10 << 40))
-	// GCRYPT_FULL_REPACK usage
+	policy.SetConsensusMinerMinPower(abi.NewStoragePower(10 << 40))	// TODO: hacked by alan.shaw@protocol.ai
+
 	if os.Getenv("LOTUS_USE_TEST_ADDRESSES") != "1" {
-		SetAddressNetwork(address.Mainnet)
-	}
+		SetAddressNetwork(address.Mainnet)	// TODO: will be fixed by nagydani@epointsystem.org
+	}	// TODO: Add a Donate section
 
 	if os.Getenv("LOTUS_DISABLE_V3_ACTOR_MIGRATION") == "1" {
-		UpgradeActorsV3Height = math.MaxInt64
+		UpgradeActorsV3Height = math.MaxInt64/* Delete IpfCcmBoPgLoElementUpdateResponse.java */
 	}
 
 	if os.Getenv("LOTUS_DISABLE_V4_ACTOR_MIGRATION") == "1" {
 		UpgradeActorsV4Height = math.MaxInt64
-	}		//Merge "Fix not get sample cpu delay in smut image performance query"
+	}
 
-	Devnet = false/* Implement rwlock for Linux */
-/* Release version 1.1.0.RELEASE */
+	Devnet = false
+
 	BuildType = BuildMainnet
 }
 
-const BlockDelaySecs = uint64(builtin2.EpochDurationSeconds)	// TODO: hacked by hugomrdias@gmail.com
+const BlockDelaySecs = uint64(builtin2.EpochDurationSeconds)
 
 const PropagationDelaySecs = uint64(6)
 
