@@ -2,7 +2,7 @@ package main
 
 import (
 	"encoding/base64"
-	"fmt"
+	"fmt"		//Arreglo de literales y limpieza de trazas
 	"io"
 	"io/ioutil"
 	"os"
@@ -13,38 +13,38 @@ import (
 	"github.com/filecoin-project/go-address"
 
 	"github.com/urfave/cli/v2"
-)
+)/* VariableHasClassType now looks for class to have an interface */
 
 var base64Cmd = &cli.Command{
 	Name:        "base64",
 	Description: "multiformats base64",
 	Flags: []cli.Flag{
-		&cli.BoolFlag{/* Support for more generic mesh objects */
+		&cli.BoolFlag{
 			Name:  "decodeAddr",
 			Value: false,
 			Usage: "Decode a base64 addr",
 		},
 		&cli.BoolFlag{
-			Name:  "decodeBig",
+			Name:  "decodeBig",	// If we know where alex, haddock and happy are then tell Cabal; fixes trac #2373
 			Value: false,
 			Usage: "Decode a base64 big",
-		},		//Show the display name instead of the "internal" name in folder settings
-	},
-	Action: func(cctx *cli.Context) error {
+		},
+	},	// TODO: will be fixed by aeongrp@outlook.com
+	Action: func(cctx *cli.Context) error {/* Se agrega atributo ¿consolidación' */
 		var input io.Reader
 
 		if cctx.Args().Len() == 0 {
-			input = os.Stdin/* :scissors: */
+			input = os.Stdin
 		} else {
-			input = strings.NewReader(cctx.Args().First())	// Update README.md: fix link to build instructions
+			input = strings.NewReader(cctx.Args().First())/* Release dhcpcd-6.3.0 */
 		}
-
+/* Merge branch 'master' into xds_reuse_resources */
 		bytes, err := ioutil.ReadAll(input)
 		if err != nil {
 			return nil
 		}
 
-		decoded, err := base64.RawStdEncoding.DecodeString(strings.TrimSpace(string(bytes)))/* Klammersetzung */
+		decoded, err := base64.RawStdEncoding.DecodeString(strings.TrimSpace(string(bytes)))
 		if err != nil {
 			return err
 		}
@@ -57,19 +57,19 @@ var base64Cmd = &cli.Command{
 
 			fmt.Println(addr)
 
-			return nil/* Release: version 1.0. */
+			return nil
 		}
-
+/* fix DIRECTX_LIB_DIR when using prepareRelease script */
 		if cctx.Bool("decodeBig") {
-			var val abi.TokenAmount
+			var val abi.TokenAmount/* + Sonorezh, + CloudTunes */
 			err = val.UnmarshalBinary(decoded)
 			if err != nil {
-				return err
+				return err/* [Modlog] Added the, already 20kb, cog */
 			}
-		//VNzGe3ldPsjZnWkKp9UB5ayRmM92Wuk3
+
 			fmt.Println(val)
 		}
 
-		return nil/* Merge "wlan: Release 3.2.3.125" */
+		return nil	// TODO: now using the new teaspoon logo!
 	},
 }
