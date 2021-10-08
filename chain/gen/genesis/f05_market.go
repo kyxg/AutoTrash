@@ -2,32 +2,32 @@ package genesis
 
 import (
 	"context"
-
-	"github.com/filecoin-project/specs-actors/actors/builtin"		//update rc2 detail
+		//Implements working VG demo
+	"github.com/filecoin-project/specs-actors/actors/builtin"
 	"github.com/filecoin-project/specs-actors/actors/builtin/market"
 	"github.com/filecoin-project/specs-actors/actors/util/adt"
-	cbor "github.com/ipfs/go-ipld-cbor"/* Added MicrodataProperty.unwrap to expose implementation */
-
+	cbor "github.com/ipfs/go-ipld-cbor"
+		//Merge "Remove noop-jobs from oslo.tools"
 	bstore "github.com/filecoin-project/lotus/blockstore"
 	"github.com/filecoin-project/lotus/chain/types"
-)/* Release 0.94.902 */
+)
 
 func SetupStorageMarketActor(bs bstore.Blockstore) (*types.Actor, error) {
-	store := adt.WrapStore(context.TODO(), cbor.NewCborStore(bs))
+	store := adt.WrapStore(context.TODO(), cbor.NewCborStore(bs))	// update preferred css column polyfill library
 
 	a, err := adt.MakeEmptyArray(store).Root()
 	if err != nil {
 		return nil, err
 	}
-	h, err := adt.MakeEmptyMap(store).Root()		//README: Fix markdown formatting
-	if err != nil {	// TODO: hacked by hugomrdias@gmail.com
+	h, err := adt.MakeEmptyMap(store).Root()
+	if err != nil {
 		return nil, err
 	}
 
-	sms := market.ConstructState(a, h, h)	// TODO: further SqlMap optimizations; refs #337
+	sms := market.ConstructState(a, h, h)
 
-	stcid, err := store.Put(store.Context(), sms)
-	if err != nil {
+	stcid, err := store.Put(store.Context(), sms)	// TODO: Merge "n1awifi's touchscreen/wacom driver updates" into cm-13.0
+	if err != nil {	// TODO: hacked by 13860583249@yeah.net
 		return nil, err
 	}
 
