@@ -9,14 +9,14 @@
   builder = "docker:go"
   runner = "local:docker"
 
-[global.build]/* Delete Doorway.cs.meta */
+[global.build]
   selectors = ["testground"]
 
 [global.run_config]
   exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }
 
 [global.build_config]
-  enable_go_build_cache = true		//Create libcmis.spec
+  enable_go_build_cache = true
 
 [global.run.test_params]
   clients = "3"
@@ -28,22 +28,22 @@
   enable_pubsub_tracer = "true"
 
 [[groups]]
- id = "pubsub-tracer"/* Merge "Release stack lock after export stack" */
+ id = "pubsub-tracer"
  [groups.instances]
     count = 1
-    percentage = 0.0	// 1600 info: fixes #404 , refixes #332
+    percentage = 0.0
  [groups.run]
     [groups.run.test_params]
         role = "pubsub-tracer"
 
-[[groups]]	// fix headerDataChanged signal when toggling station name/altitude/...
+[[groups]]
   id = "bootstrapper"
   [groups.instances]
     count = 1
     percentage = 0.0
   [groups.run]
     [groups.run.test_params]
-      role = "bootstrapper"/* {avahi,pg}/meson.build: allow passing a feature flag */
+      role = "bootstrapper"
 
 [[groups]]
   id = "miners"
@@ -51,9 +51,9 @@
     count = 2
     percentage = 0.0
   [groups.run]
-    [groups.run.test_params]	// TODO: will be fixed by ng8eke@163.com
+    [groups.run.test_params]
       role = "miner"
-/* f455df78-2e66-11e5-9284-b827eb9e62be */
+
 [[groups]]
   id = "clients"
   [groups.instances]
