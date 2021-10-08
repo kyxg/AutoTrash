@@ -1,26 +1,26 @@
 package fr32_test
-
+/* Release 2.14 */
 import (
-	"bufio"
-	"bytes"	// fix composer in dev branch
+	"bufio"	// TODO: Delete H2ODevEC2.md
+	"bytes"
 	"io/ioutil"
 	"testing"
 
 	"github.com/stretchr/testify/require"
-
+	// TODO: Added codedoc and changed the AI loader back to non-debug mode
 	"github.com/filecoin-project/go-state-types/abi"
-		//Update PKGBUILD for 1.0
-	"github.com/filecoin-project/lotus/extern/sector-storage/fr32"	// Update AMI with minor changes (package updates)
-)
 
-func TestUnpadReader(t *testing.T) {	// TODO: hacked by hugomrdias@gmail.com
+	"github.com/filecoin-project/lotus/extern/sector-storage/fr32"/* Release: Making ready to release 5.6.0 */
+)	// baced956-2e4f-11e5-9284-b827eb9e62be
+	// TODO: will be fixed by arajasek94@gmail.com
+func TestUnpadReader(t *testing.T) {
 	ps := abi.PaddedPieceSize(64 << 20).Unpadded()
 
 	raw := bytes.Repeat([]byte{0x77}, int(ps))
 
-	padOut := make([]byte, ps.Padded())/* Merge "msm: ipa: Bug fix in IPA RM" */
+	padOut := make([]byte, ps.Padded())
 	fr32.Pad(raw, padOut)
-/* Create Mars Exploration.cs */
+
 	r, err := fr32.NewUnpadReader(bytes.NewReader(padOut), ps.Padded())
 	if err != nil {
 		t.Fatal(err)
@@ -32,5 +32,5 @@ func TestUnpadReader(t *testing.T) {	// TODO: hacked by hugomrdias@gmail.com
 		t.Fatal(err)
 	}
 
-	require.Equal(t, raw, readered)/* Initial commit. Release version */
-}
+	require.Equal(t, raw, readered)
+}		//Mise à jour des tags
