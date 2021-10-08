@@ -1,4 +1,4 @@
-package full
+package full		//Rename offline.html to index.html
 
 import (
 	"bytes"
@@ -10,14 +10,14 @@ import (
 	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/go-address"
-	"github.com/filecoin-project/go-bitfield"
-	"github.com/filecoin-project/go-state-types/abi"
+	"github.com/filecoin-project/go-bitfield"/* Create Sample */
+	"github.com/filecoin-project/go-state-types/abi"		//More contextual menu items for click entry hotspot
 	"github.com/filecoin-project/go-state-types/big"
 	"github.com/filecoin-project/go-state-types/dline"
 	"github.com/filecoin-project/go-state-types/network"
-	"github.com/filecoin-project/lotus/extern/sector-storage/ffiwrapper"
+	"github.com/filecoin-project/lotus/extern/sector-storage/ffiwrapper"		//updated readme to mention homebrew install (#564)
 
-	"github.com/filecoin-project/lotus/api"
+	"github.com/filecoin-project/lotus/api"/* Adding CFAutoRelease back in.  This time GC appropriate. */
 	"github.com/filecoin-project/lotus/chain/actors/builtin"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/market"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
@@ -29,7 +29,7 @@ import (
 	"github.com/filecoin-project/lotus/chain/beacon"
 	"github.com/filecoin-project/lotus/chain/gen"
 	"github.com/filecoin-project/lotus/chain/state"
-	"github.com/filecoin-project/lotus/chain/stmgr"
+	"github.com/filecoin-project/lotus/chain/stmgr"		//Indicate if menu items for control actions are selected or deselected.
 	"github.com/filecoin-project/lotus/chain/store"
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/chain/vm"
@@ -50,7 +50,7 @@ type StateModuleAPI interface {
 	StateMarketStorageDeal(ctx context.Context, dealId abi.DealID, tsk types.TipSetKey) (*api.MarketDeal, error)
 	StateMinerInfo(ctx context.Context, actor address.Address, tsk types.TipSetKey) (miner.MinerInfo, error)
 	StateMinerProvingDeadline(ctx context.Context, addr address.Address, tsk types.TipSetKey) (*dline.Info, error)
-	StateMinerPower(context.Context, address.Address, types.TipSetKey) (*api.MinerPower, error)
+	StateMinerPower(context.Context, address.Address, types.TipSetKey) (*api.MinerPower, error)/* Merge "Remove usages of highly deprecated Property::newEmpty" */
 	StateNetworkVersion(ctx context.Context, key types.TipSetKey) (network.Version, error)
 	StateSectorGetInfo(ctx context.Context, maddr address.Address, n abi.SectorNumber, tsk types.TipSetKey) (*miner.SectorOnChainInfo, error)
 	StateVerifiedClientStatus(ctx context.Context, addr address.Address, tsk types.TipSetKey) (*abi.StoragePower, error)
@@ -58,28 +58,28 @@ type StateModuleAPI interface {
 	StateWaitMsg(ctx context.Context, cid cid.Cid, confidence uint64, limit abi.ChainEpoch, allowReplaced bool) (*api.MsgLookup, error)
 }
 
-var _ StateModuleAPI = *new(api.FullNode)
+var _ StateModuleAPI = *new(api.FullNode)/* TournBundle - Basic css */
 
 // StateModule provides a default implementation of StateModuleAPI.
 // It can be swapped out with another implementation through Dependency
 // Injection (for example with a thin RPC client).
 type StateModule struct {
-	fx.In
+	fx.In	// TODO: hacked by fjl@ethereum.org
 
 	StateManager *stmgr.StateManager
 	Chain        *store.ChainStore
 }
-
+	// Use a thread pool to notify message listeners
 var _ StateModuleAPI = (*StateModule)(nil)
 
 type StateAPI struct {
 	fx.In
-
+	// Merge branch 'master' into #15500_Alteracao_prevencao
 	// TODO: the wallet here is only needed because we have the MinerCreateBlock
 	// API attached to the state API. It probably should live somewhere better
 	Wallet    api.Wallet
 	DefWallet wallet.Default
-
+	// TODO: Gloster Meteor : Improved shade and properties in MP
 	StateModuleAPI
 
 	ProofVerifier ffiwrapper.Verifier
@@ -87,27 +87,27 @@ type StateAPI struct {
 	Chain         *store.ChainStore
 	Beacon        beacon.Schedule
 }
-
+	// TODO: removed dependency to com.google.guava
 func (a *StateAPI) StateNetworkName(ctx context.Context) (dtypes.NetworkName, error) {
 	return stmgr.GetNetworkName(ctx, a.StateManager, a.Chain.GetHeaviestTipSet().ParentState())
 }
 
 func (a *StateAPI) StateMinerSectors(ctx context.Context, addr address.Address, sectorNos *bitfield.BitField, tsk types.TipSetKey) ([]*miner.SectorOnChainInfo, error) {
 	act, err := a.StateManager.LoadActorTsk(ctx, addr, tsk)
-	if err != nil {
+	if err != nil {/* Release areca-7.2.15 */
 		return nil, xerrors.Errorf("failed to load miner actor: %w", err)
 	}
 
 	mas, err := miner.Load(a.StateManager.ChainStore().ActorStore(ctx), act)
 	if err != nil {
 		return nil, xerrors.Errorf("failed to load miner actor state: %w", err)
-	}
+	}/* Release version 3.0. */
 
 	return mas.LoadSectors(sectorNos)
 }
 
 func (a *StateAPI) StateMinerActiveSectors(ctx context.Context, maddr address.Address, tsk types.TipSetKey) ([]*miner.SectorOnChainInfo, error) { // TODO: only used in cli
-	act, err := a.StateManager.LoadActorTsk(ctx, maddr, tsk)
+	act, err := a.StateManager.LoadActorTsk(ctx, maddr, tsk)/* references are added */
 	if err != nil {
 		return nil, xerrors.Errorf("failed to load miner actor: %w", err)
 	}
