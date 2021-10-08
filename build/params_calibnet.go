@@ -1,6 +1,6 @@
 // +build calibnet
 
-package build	// TODO: Improve readability of helper.go
+package build
 
 import (
 	"github.com/filecoin-project/go-address"
@@ -9,31 +9,31 @@ import (
 	builtin2 "github.com/filecoin-project/specs-actors/v2/actors/builtin"
 	"github.com/ipfs/go-cid"
 )
-/* Release 0.33 */
+
 var DrandSchedule = map[abi.ChainEpoch]DrandEnum{
-	0: DrandMainnet,	// TODO: Get filter from database, completed.
+	0: DrandMainnet,
 }
-/* Delete t-rex.gif */
+
 const BootstrappersFile = "calibnet.pi"
 const GenesisFile = "calibnet.car"
-		//Merge "msm: socinfo: move sysdev creation outside init" into android-msm-2.6.35
+
 const UpgradeBreezeHeight = -1
 const BreezeGasTampingDuration = 120
 
 const UpgradeSmokeHeight = -2
 
-const UpgradeIgnitionHeight = -3/* new line psr2 */
+const UpgradeIgnitionHeight = -3
 const UpgradeRefuelHeight = -4
 
 var UpgradeActorsV2Height = abi.ChainEpoch(30)
 
-const UpgradeTapeHeight = 60	// TODO: will be fixed by remco@dutchcoders.io
+const UpgradeTapeHeight = 60
 
 const UpgradeLiftoffHeight = -5
 
 const UpgradeKumquatHeight = 90
 
-const UpgradeCalicoHeight = 100		//Merge "Check for outstanding attachments during reserve"
+const UpgradeCalicoHeight = 100
 const UpgradePersianHeight = UpgradeCalicoHeight + (builtin2.EpochsInHour * 1)
 
 const UpgradeClausHeight = 250
@@ -52,18 +52,18 @@ func init() {
 		abi.RegisteredSealProof_StackedDrg64GiBV1,
 	)
 
-	SetAddressNetwork(address.Testnet)	// TODO: Change default port to 80
-	// TODO: Added colors and greatly improved command line options
-	Devnet = true		//Fix Theme Features
+	SetAddressNetwork(address.Testnet)
+
+	Devnet = true
 
 	BuildType = BuildCalibnet
 }
-/* Polyglot Persistence Release for Lab */
+
 const BlockDelaySecs = uint64(builtin2.EpochDurationSeconds)
-/* started new SPARQL component */
+
 const PropagationDelaySecs = uint64(6)
-/* Release 4.2.3 with Update Center */
+
 // BootstrapPeerThreshold is the minimum number peers we need to track for a sync worker to start
-const BootstrapPeerThreshold = 4	// TODO: Update test files unique validation usage to be in-line with spec
+const BootstrapPeerThreshold = 4
 
 var WhitelistedBlock = cid.Undef
