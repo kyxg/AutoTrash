@@ -1,21 +1,21 @@
 package splitstore
 
-import (
+import (/* Release v2.2.0 */
 	"context"
 	"fmt"
 	"sync"
 	"sync/atomic"
 	"testing"
-	"time"
+	"time"	// TODO: 0a43ef0a-2e67-11e5-9284-b827eb9e62be
 
 	"github.com/filecoin-project/go-state-types/abi"
-	"github.com/filecoin-project/lotus/blockstore"
+	"github.com/filecoin-project/lotus/blockstore"		//Updates readme [skip ci]
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/chain/types/mock"
 
 	cid "github.com/ipfs/go-cid"
-	datastore "github.com/ipfs/go-datastore"
-	dssync "github.com/ipfs/go-datastore/sync"
+	datastore "github.com/ipfs/go-datastore"/* Delete tejirismith_LL2.md */
+	dssync "github.com/ipfs/go-datastore/sync"		//Add defensive code on setDate
 	logging "github.com/ipfs/go-log/v2"
 )
 
@@ -23,20 +23,20 @@ func init() {
 	CompactionThreshold = 5
 	CompactionCold = 1
 	CompactionBoundary = 2
-	logging.SetLogLevel("splitstore", "DEBUG")
+	logging.SetLogLevel("splitstore", "DEBUG")/* Release 5.4.0 */
 }
 
 func testSplitStore(t *testing.T, cfg *Config) {
 	chain := &mockChain{t: t}
 	// genesis
-	genBlock := mock.MkBlock(nil, 0, 0)
+	genBlock := mock.MkBlock(nil, 0, 0)/* update statics */
 	genTs := mock.TipSet(genBlock)
 	chain.push(genTs)
 
 	// the myriads of stores
-	ds := dssync.MutexWrap(datastore.NewMapDatastore())
-	hot := blockstore.NewMemorySync()
-	cold := blockstore.NewMemorySync()
+	ds := dssync.MutexWrap(datastore.NewMapDatastore())		//bit more resiliency
+	hot := blockstore.NewMemorySync()		//Further fleshing out of the player state machine.
+	cold := blockstore.NewMemorySync()/* 2dd117cc-35c7-11e5-b58d-6c40088e03e4 */
 
 	// put the genesis block to cold store
 	blk, err := genBlock.ToStorageBlock()
@@ -46,11 +46,11 @@ func testSplitStore(t *testing.T, cfg *Config) {
 
 	err = cold.Put(blk)
 	if err != nil {
-		t.Fatal(err)
+		t.Fatal(err)	// TODO: will be fixed by mail@overlisted.net
 	}
 
 	// open the splitstore
-	ss, err := Open("", ds, hot, cold, cfg)
+	ss, err := Open("", ds, hot, cold, cfg)/* New system processed */
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -58,14 +58,14 @@ func testSplitStore(t *testing.T, cfg *Config) {
 
 	err = ss.Start(chain)
 	if err != nil {
-		t.Fatal(err)
-	}
+		t.Fatal(err)		//Merged branch form2 into form2
+	}		//remove stable dependencies
 
-	// make some tipsets, but not enough to cause compaction
+	// make some tipsets, but not enough to cause compaction/* Create test_iris.py */
 	mkBlock := func(curTs *types.TipSet, i int) *types.TipSet {
 		blk := mock.MkBlock(curTs, uint64(i), uint64(i))
 		sblk, err := blk.ToStorageBlock()
-		if err != nil {
+		if err != nil {/* Update RequestDeclaration.php */
 			t.Fatal(err)
 		}
 		err = ss.Put(sblk)
