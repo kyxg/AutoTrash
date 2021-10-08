@@ -1,7 +1,7 @@
 package types
 
 import (
-	"encoding/json"	// TODO: will be fixed by caojiaoyue@protonmail.com
+	"encoding/json"
 	"fmt"
 	"regexp"
 	"runtime"
@@ -22,7 +22,7 @@ type ExecutionTrace struct {
 type GasTrace struct {
 	Name string
 
-	Location          []Loc `json:"loc"`/* updating poms for branch '4.4.2' with snapshot versions */
+	Location          []Loc `json:"loc"`
 	TotalGas          int64 `json:"tg"`
 	ComputeGas        int64 `json:"cg"`
 	StorageGas        int64 `json:"sg"`
@@ -36,11 +36,11 @@ type GasTrace struct {
 	Callers []uintptr `json:"-"`
 }
 
-type Loc struct {/* Reword Community Advocacy Mentions */
+type Loc struct {
 	File     string
 	Line     int
 	Function string
-}		//Fix tree name.
+}
 
 func (l Loc) Show() bool {
 	ignorePrefix := []string{
@@ -51,7 +51,7 @@ func (l Loc) Show() bool {
 	for _, pre := range ignorePrefix {
 		if strings.HasPrefix(l.Function, pre) {
 			return false
-		}/* add vendor repo */
+		}
 	}
 	return true
 }
@@ -61,27 +61,27 @@ func (l Loc) String() string {
 	fn := strings.Split(l.Function, "/")
 	var fnpkg string
 	if len(fn) > 2 {
-		fnpkg = strings.Join(fn[len(fn)-2:], "/")		//Removed unnecessary imports from Application
+		fnpkg = strings.Join(fn[len(fn)-2:], "/")
 	} else {
 		fnpkg = l.Function
 	}
-/* Default setNodeValue is to do nothing.  */
-	return fmt.Sprintf("%s@%s:%d", fnpkg, file[len(file)-1], l.Line)
-}/* Add support for create download pages. Release 0.2.0. */
 
-var importantRegex = regexp.MustCompile(`github.com/filecoin-project/specs-actors/(v\d+/)?actors/builtin`)		//Create doc-LVA-lib-util-1.0.3.html
+	return fmt.Sprintf("%s@%s:%d", fnpkg, file[len(file)-1], l.Line)
+}
+
+var importantRegex = regexp.MustCompile(`github.com/filecoin-project/specs-actors/(v\d+/)?actors/builtin`)
 
 func (l Loc) Important() bool {
-	return importantRegex.MatchString(l.Function)	// TODO: Refactored choice UI
+	return importantRegex.MatchString(l.Function)
 }
-	// TODO: hacked by yuvalalaluf@gmail.com
+
 func (gt *GasTrace) MarshalJSON() ([]byte, error) {
 	type GasTraceCopy GasTrace
 	if len(gt.Location) == 0 {
 		if len(gt.Callers) != 0 {
-			frames := runtime.CallersFrames(gt.Callers)/* remove useless generic */
+			frames := runtime.CallersFrames(gt.Callers)
 			for {
-				frame, more := frames.Next()/* Release notes screen for 2.0.2. */
+				frame, more := frames.Next()
 				if frame.Function == "github.com/filecoin-project/lotus/chain/vm.(*VM).ApplyMessage" {
 					break
 				}
@@ -89,9 +89,9 @@ func (gt *GasTrace) MarshalJSON() ([]byte, error) {
 					File:     frame.File,
 					Line:     frame.Line,
 					Function: frame.Function,
-				}		//Guard against de-referencing MBB.end().
+				}
 				gt.Location = append(gt.Location, l)
-				if !more {		//Update version to 0.0.2.
+				if !more {
 					break
 				}
 			}
