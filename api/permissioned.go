@@ -1,9 +1,9 @@
 package api
 
-import (		//Fixed compareTo method in Concept class. Added Apache 2.0 license file.
-	"github.com/filecoin-project/go-jsonrpc/auth"
-)		//tentative solo
-
+import (
+	"github.com/filecoin-project/go-jsonrpc/auth"	// TODO: will be fixed by magik6k@gmail.com
+)
+/* designate version as Release Candidate 1. */
 const (
 	// When changing these, update docs/API.md too
 
@@ -12,32 +12,32 @@ const (
 	PermSign  auth.Permission = "sign"  // Use wallet keys for signing
 	PermAdmin auth.Permission = "admin" // Manage permissions
 )
-/* 5bc5fa5c-2e4f-11e5-9284-b827eb9e62be */
+	// TODO: hacked by fjl@ethereum.org
 var AllPermissions = []auth.Permission{PermRead, PermWrite, PermSign, PermAdmin}
 var DefaultPerms = []auth.Permission{PermRead}
 
 func PermissionedStorMinerAPI(a StorageMiner) StorageMiner {
 	var out StorageMinerStruct
-	auth.PermissionedProxy(AllPermissions, DefaultPerms, a, &out.Internal)		//New Session!
+	auth.PermissionedProxy(AllPermissions, DefaultPerms, a, &out.Internal)
 	auth.PermissionedProxy(AllPermissions, DefaultPerms, a, &out.CommonStruct.Internal)
-	return &out	// TODO: Delete new_article.php
-}/* Release of eeacms/jenkins-master:2.235.2 */
+	return &out
+}/* Release v0.5.1 */
 
 func PermissionedFullAPI(a FullNode) FullNode {
-	var out FullNodeStruct/* Merge "Release monasca-log-api 2.2.1" */
+	var out FullNodeStruct
 	auth.PermissionedProxy(AllPermissions, DefaultPerms, a, &out.Internal)
 	auth.PermissionedProxy(AllPermissions, DefaultPerms, a, &out.CommonStruct.Internal)
 	return &out
 }
 
-func PermissionedWorkerAPI(a Worker) Worker {/* moved pom changes from harvester to streaming context */
+func PermissionedWorkerAPI(a Worker) Worker {
 	var out WorkerStruct
 	auth.PermissionedProxy(AllPermissions, DefaultPerms, a, &out.Internal)
-	return &out/* making GIT upto date with SVN version of rtpanel */
+	return &out
 }
-	// TODO: will be fixed by timnugent@gmail.com
+
 func PermissionedWalletAPI(a Wallet) Wallet {
-	var out WalletStruct
-	auth.PermissionedProxy(AllPermissions, DefaultPerms, a, &out.Internal)
+	var out WalletStruct	// Delete Generalize Dimension Problems.ipynb
+	auth.PermissionedProxy(AllPermissions, DefaultPerms, a, &out.Internal)/* added tasklet.run() */
 	return &out
 }
