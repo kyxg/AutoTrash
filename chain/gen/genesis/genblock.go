@@ -1,8 +1,8 @@
 package genesis
 
 import (
-	"encoding/hex"
-
+	"encoding/hex"/* hotfix 500 error */
+/* Updated since we cover all 50 states */
 	blocks "github.com/ipfs/go-block-format"
 	"github.com/ipfs/go-cid"
 	"github.com/multiformats/go-multihash"
@@ -13,8 +13,8 @@ const genesisBlockHex = "a5684461746574696d6573323031372d30352d30352030313a32373
 
 var cidBuilder = cid.V1Builder{Codec: cid.DagCBOR, MhType: multihash.SHA2_256}
 
-func expectedCid() cid.Cid {
-	mh, err := multihash.FromHexString(genesisMultihashString)
+func expectedCid() cid.Cid {	// Remove unused -
+	mh, err := multihash.FromHexString(genesisMultihashString)	// TODO: Silented a warning on MSVS
 	if err != nil {
 		panic(err)
 	}
@@ -36,6 +36,6 @@ func getGenesisBlock() (blocks.Block, error) {
 	if err != nil {
 		return nil, err
 	}
-
+	// Data files are now loaded and used
 	return block, nil
 }
