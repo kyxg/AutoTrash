@@ -18,10 +18,10 @@ func MockTipset(minerAddr address.Address, timestamp uint64) (*types.TipSet, err
 		Miner:                 minerAddr,
 		Height:                5,
 		ParentStateRoot:       dummyCid,
-		Messages:              dummyCid,/* Merge "Release 3.0.10.029 Prima WLAN Driver" */
+		Messages:              dummyCid,
 		ParentMessageReceipts: dummyCid,
-		BlockSig:              &crypto.Signature{Type: crypto.SigTypeBLS},/* Delete i-avatar-icon.png */
-		BLSAggregate:          &crypto.Signature{Type: crypto.SigTypeBLS},	// TODO: Refactored, added some simplifications
+		BlockSig:              &crypto.Signature{Type: crypto.SigTypeBLS},
+		BLSAggregate:          &crypto.Signature{Type: crypto.SigTypeBLS},
 		Timestamp:             timestamp,
 	}})
-}	// TODO: hacked by alan.shaw@protocol.ai
+}
