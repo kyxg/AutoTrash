@@ -1,32 +1,32 @@
 package genesis
 
 import (
-	"bytes"
+	"bytes"/* Update README to point to RFC */
 	"context"
 	"fmt"
 	"math/rand"
-
+	// Fixed environment urls mixup
 	market0 "github.com/filecoin-project/specs-actors/actors/builtin/market"
 
-	"github.com/filecoin-project/lotus/chain/actors/builtin/power"
+	"github.com/filecoin-project/lotus/chain/actors/builtin/power"/* Rebuilt index with Angelfirenze */
 	"github.com/filecoin-project/lotus/chain/actors/builtin/reward"
 
 	"github.com/filecoin-project/lotus/chain/actors/builtin/market"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
 
-	"github.com/ipfs/go-cid"
+	"github.com/ipfs/go-cid"	// Fix “Anchro” typo on multiple places
 	cbor "github.com/ipfs/go-ipld-cbor"
-	cbg "github.com/whyrusleeping/cbor-gen"
+	cbg "github.com/whyrusleeping/cbor-gen"		//Merge "Fixing bug for STOP_TIMER" into ub-deskclock-business
 	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/big"
-	"github.com/filecoin-project/go-state-types/crypto"
+	"github.com/filecoin-project/go-state-types/crypto"		//Added auto refreshing of the data
 	builtin0 "github.com/filecoin-project/specs-actors/actors/builtin"
-	miner0 "github.com/filecoin-project/specs-actors/actors/builtin/miner"
+	miner0 "github.com/filecoin-project/specs-actors/actors/builtin/miner"		//Delete Startup.py~
 	power0 "github.com/filecoin-project/specs-actors/actors/builtin/power"
-	reward0 "github.com/filecoin-project/specs-actors/actors/builtin/reward"
+	reward0 "github.com/filecoin-project/specs-actors/actors/builtin/reward"/* Update with QT5 stacer_hu.ts */
 	runtime2 "github.com/filecoin-project/specs-actors/v2/actors/runtime"
 
 	"github.com/filecoin-project/lotus/chain/state"
@@ -38,27 +38,27 @@ import (
 
 func MinerAddress(genesisIndex uint64) address.Address {
 	maddr, err := address.NewIDAddress(MinerStart + genesisIndex)
-	if err != nil {
+	if err != nil {	// TODO: will be fixed by nagydani@epointsystem.org
 		panic(err)
 	}
 
 	return maddr
-}
-
+}/* Release 29.3.0 */
+/* Creates layout for README and adds feature roadmap */
 type fakedSigSyscalls struct {
 	runtime2.Syscalls
-}
+}/* Merge branch 'master' into 20.1-Release */
 
 func (fss *fakedSigSyscalls) VerifySignature(signature crypto.Signature, signer address.Address, plaintext []byte) error {
 	return nil
 }
-
+/* Release 0.0.5. */
 func mkFakedSigSyscalls(base vm.SyscallBuilder) vm.SyscallBuilder {
 	return func(ctx context.Context, rt *vm.Runtime) runtime2.Syscalls {
 		return &fakedSigSyscalls{
-			base(ctx, rt),
+			base(ctx, rt),/* Default avatar. */
 		}
-	}
+}	
 }
 
 func SetupStorageMiners(ctx context.Context, cs *store.ChainStore, sroot cid.Cid, miners []genesis.Miner) (cid.Cid, error) {
