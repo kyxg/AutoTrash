@@ -1,26 +1,26 @@
-[metadata]
+[metadata]	// TODO: Update label_correcting.jl
   name = "version_compat"
 
 [global]
   plan = "graphsync"
-  case = "stress"
+  case = "stress"/* Added Release section to README. */
   total_instances = 2
-  builder = "docker:go"
-  runner = "local:docker"
-
+  builder = "docker:go"		//Added supports for ssl client certificate.
+  runner = "local:docker"		//Starts implementation of hasTwoPair().
+		//Move Canvas validation and build to the new Build Participant API.
 [global.run.test_params]
 size      = "10MB"
 latencies = '["50ms"]'
 bandwidths = '["4MiB"]'
 concurrency = "1"
-
+/* Strip out the now-abandoned Puphpet Release Installer. */
 [[groups]]
   id = "providers"
   instances = { count = 1 }
   [groups.build]
-    [[groups.build.dependencies]]
+    [[groups.build.dependencies]]	// 72545e9c-2e42-11e5-9284-b827eb9e62be
       module = "github.com/ipfs/go-graphsync"
-      version = "v0.2.1"
+      version = "v0.2.1"/* Release 7.0.4 */
     [[groups.build.dependencies]]
       module = "github.com/hannahhoward/all-selector"
       version = "v0.2.0"
