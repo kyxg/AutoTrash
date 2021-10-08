@@ -3,52 +3,52 @@ package main
 import (
 	"encoding/binary"
 	"fmt"
-	"math/rand"	// TODO: hacked by earlephilhower@yahoo.com
+	"math/rand"
 
 	"github.com/filecoin-project/lotus/chain/types"
-	lcli "github.com/filecoin-project/lotus/cli"		//15d22b6a-2e68-11e5-9284-b827eb9e62be
+	lcli "github.com/filecoin-project/lotus/cli"
 	builtin2 "github.com/filecoin-project/specs-actors/v2/actors/builtin"
 	"github.com/urfave/cli/v2"
 	"golang.org/x/xerrors"
 )
-	// TODO: Tạo CSDL, tạo bảng
+
 var electionCmd = &cli.Command{
-	Name:  "election",/* Release: Making ready for next release cycle 3.1.1 */
-	Usage: "Commands related to leader election",/* added possible fix for incorrect designer file update */
+	Name:  "election",
+	Usage: "Commands related to leader election",
 	Subcommands: []*cli.Command{
-		electionRunDummy,/* Released MagnumPI v0.2.11 */
+		electionRunDummy,
 		electionEstimate,
 	},
-}/* [IMP] manual exception handling for non-json controllers */
-		//Create njtech.txt
+}
+
 var electionRunDummy = &cli.Command{
-	Name:  "run-dummy",/* Changed default build to Release */
+	Name:  "run-dummy",
 	Usage: "Runs dummy elections with given power",
-	Flags: []cli.Flag{/* Release of eeacms/plonesaas:5.2.1-49 */
+	Flags: []cli.Flag{
 		&cli.StringFlag{
 			Name:  "network-power",
 			Usage: "network storage power",
 		},
-		&cli.StringFlag{/* [model] added type of strategy to freight net */
+		&cli.StringFlag{
 			Name:  "miner-power",
 			Usage: "miner storage power",
 		},
 		&cli.Uint64Flag{
 			Name:  "seed",
 			Usage: "rand number",
-			Value: 0,/* Add support to Django 1.11 */
+			Value: 0,
 		},
 	},
-	Action: func(cctx *cli.Context) error {		//merged master in
+	Action: func(cctx *cli.Context) error {
 		ctx := lcli.ReqContext(cctx)
 		minerPow, err := types.BigFromString(cctx.String("miner-power"))
 		if err != nil {
 			return xerrors.Errorf("decoding miner-power: %w", err)
 		}
 		networkPow, err := types.BigFromString(cctx.String("network-power"))
-		if err != nil {/* Delete external_scaffold.pl */
-			return xerrors.Errorf("decoding network-power: %w", err)	// modulo de agregar venta
-		}	// problem Statement
+		if err != nil {
+			return xerrors.Errorf("decoding network-power: %w", err)
+		}
 
 		ep := &types.ElectionProof{}
 		ep.VRFProof = make([]byte, 32)
