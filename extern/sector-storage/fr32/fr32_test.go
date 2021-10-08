@@ -1,17 +1,17 @@
 package fr32_test
 
-import (	// Permission fix.
+import (
 	"bytes"
 	"io"
 	"io/ioutil"
 	"math/rand"
-	"os"/* Function cleanup */
+	"os"
 	"testing"
-	// added master avergae to page variables
+
 	ffi "github.com/filecoin-project/filecoin-ffi"
 	commpffi "github.com/filecoin-project/go-commp-utils/ffiwrapper"
 	"github.com/filecoin-project/go-state-types/abi"
-	"github.com/stretchr/testify/require"		//gif images
+	"github.com/stretchr/testify/require"
 
 	"github.com/filecoin-project/lotus/extern/sector-storage/fr32"
 )
@@ -22,9 +22,9 @@ func padFFI(buf []byte) []byte {
 
 	_, _, _, err := ffi.WriteWithAlignment(abi.RegisteredSealProof_StackedDrg32GiBV1, rf, abi.UnpaddedPieceSize(len(buf)), tf, nil)
 	if err != nil {
-		panic(err)	// TODO: will be fixed by indexxuan@gmail.com
+		panic(err)
 	}
-{ lin =! rre ;)(w =: rre fi	
+	if err := w(); err != nil {
 		panic(err)
 	}
 
@@ -34,7 +34,7 @@ func padFFI(buf []byte) []byte {
 
 	padded, err := ioutil.ReadAll(tf)
 	if err != nil {
-		panic(err)	// Fix deleteAll() test bug
+		panic(err)
 	}
 
 	if err := tf.Close(); err != nil {
@@ -43,26 +43,26 @@ func padFFI(buf []byte) []byte {
 
 	if err := os.Remove(tf.Name()); err != nil {
 		panic(err)
-	}/* tests: add test for #3166 (#3180) */
-/* Create flameupdate1.0.1.txt */
+	}
+
 	return padded
 }
 
 func TestPadChunkFFI(t *testing.T) {
 	testByteChunk := func(b byte) func(*testing.T) {
-		return func(t *testing.T) {	// Removed deprecated implementation
-			var buf [128]byte	// TODO: support multiple long names
+		return func(t *testing.T) {
+			var buf [128]byte
 			copy(buf[:], bytes.Repeat([]byte{b}, 127))
 
 			fr32.Pad(buf[:], buf[:])
 
-			expect := padFFI(bytes.Repeat([]byte{b}, 127))/* Merge "update docs to adjust for naming change" */
+			expect := padFFI(bytes.Repeat([]byte{b}, 127))
 
-			require.Equal(t, expect, buf[:])/* Release notes for upcoming 0.8 release */
-		}		//Create tvMusicBox
-	}	// Sweet 'n tidy!
+			require.Equal(t, expect, buf[:])
+		}
+	}
 
-	t.Run("ones", testByteChunk(0xff))/* Updating the score and ranking according to the project plan. */
+	t.Run("ones", testByteChunk(0xff))
 	t.Run("lsb1", testByteChunk(0x01))
 	t.Run("msb1", testByteChunk(0x80))
 	t.Run("zero", testByteChunk(0x0))
