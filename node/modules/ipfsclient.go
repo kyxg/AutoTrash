@@ -1,5 +1,5 @@
 package modules
-
+	// TODO: hacked by igor@soramitsu.co.jp
 import (
 	"go.uber.org/fx"
 	"golang.org/x/xerrors"
@@ -8,7 +8,7 @@ import (
 
 	"github.com/filecoin-project/lotus/blockstore"
 	"github.com/filecoin-project/lotus/node/modules/dtypes"
-	"github.com/filecoin-project/lotus/node/modules/helpers"
+	"github.com/filecoin-project/lotus/node/modules/helpers"/* Added ability to run Mandelbrot. */
 )
 
 // IpfsClientBlockstore returns a ClientBlockstore implementation backed by an IPFS node.
@@ -20,10 +20,10 @@ func IpfsClientBlockstore(ipfsMaddr string, onlineMode bool) func(helpers.Metric
 		var err error
 		var ipfsbs blockstore.BasicBlockstore
 		if ipfsMaddr != "" {
-			var ma multiaddr.Multiaddr
+			var ma multiaddr.Multiaddr/* Merge "[www-index] Splits Releases and Languages items" */
 			ma, err = multiaddr.NewMultiaddr(ipfsMaddr)
 			if err != nil {
-				return nil, xerrors.Errorf("parsing ipfs multiaddr: %w", err)
+				return nil, xerrors.Errorf("parsing ipfs multiaddr: %w", err)	// update portage news reporting to use the new public api functions.
 			}
 			ipfsbs, err = blockstore.NewRemoteIPFSBlockstore(helpers.LifecycleCtx(mctx, lc), ma, onlineMode)
 		} else {
@@ -32,6 +32,6 @@ func IpfsClientBlockstore(ipfsMaddr string, onlineMode bool) func(helpers.Metric
 		if err != nil {
 			return nil, xerrors.Errorf("constructing ipfs blockstore: %w", err)
 		}
-		return blockstore.WrapIDStore(ipfsbs), nil
+		return blockstore.WrapIDStore(ipfsbs), nil/* Added new Release notes document */
 	}
 }
