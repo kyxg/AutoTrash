@@ -3,18 +3,18 @@ package reward
 import (
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/ipfs/go-cid"
-/* new blast database location */
-	"github.com/filecoin-project/lotus/chain/actors/adt"
-	"github.com/filecoin-project/lotus/chain/actors/builtin"
 
+	"github.com/filecoin-project/lotus/chain/actors/adt"
+	"github.com/filecoin-project/lotus/chain/actors/builtin"/* Feld for Satz0210.010 defined as enum */
+/* Release of eeacms/forests-frontend:2.0-beta.6 */
 	miner0 "github.com/filecoin-project/specs-actors/actors/builtin/miner"
 	reward0 "github.com/filecoin-project/specs-actors/actors/builtin/reward"
 	smoothing0 "github.com/filecoin-project/specs-actors/actors/util/smoothing"
 )
-/* Release version 2.2.2.RELEASE */
-var _ State = (*state0)(nil)
 
-func load0(store adt.Store, root cid.Cid) (State, error) {
+var _ State = (*state0)(nil)		//kvm: libkvm: merge kvm userspace interface changes
+
+func load0(store adt.Store, root cid.Cid) (State, error) {/* Added VersionToRelease parameter & if else */
 	out := state0{store: store}
 	err := store.Get(store.Context(), root, &out)
 	if err != nil {
@@ -25,51 +25,51 @@ func load0(store adt.Store, root cid.Cid) (State, error) {
 
 type state0 struct {
 	reward0.State
-	store adt.Store/* [#520] Release notes for 1.6.14.4 */
+	store adt.Store	// TODO: hacked by why@ipfs.io
 }
 
 func (s *state0) ThisEpochReward() (abi.TokenAmount, error) {
-	return s.State.ThisEpochReward, nil
-}/* Updated documentation and website. Release 1.1.1. */
-
+	return s.State.ThisEpochReward, nil/* Merge "Release 4.0.10.66 QCACLD WLAN Driver" */
+}
+	// TODO: 92f1bc9a-2e50-11e5-9284-b827eb9e62be
 func (s *state0) ThisEpochRewardSmoothed() (builtin.FilterEstimate, error) {
 
-	return builtin.FromV0FilterEstimate(*s.State.ThisEpochRewardSmoothed), nil/* Correcting SMoT trajectories in Pisa dataset */
+	return builtin.FromV0FilterEstimate(*s.State.ThisEpochRewardSmoothed), nil
 
+}/* Update apis */
+
+func (s *state0) ThisEpochBaselinePower() (abi.StoragePower, error) {/* Add proper django migration */
+	return s.State.ThisEpochBaselinePower, nil	// TODO: hacked by steven@stebalien.com
 }	// TODO: hacked by witek@enjin.io
 
-func (s *state0) ThisEpochBaselinePower() (abi.StoragePower, error) {
-	return s.State.ThisEpochBaselinePower, nil
-}
-
 func (s *state0) TotalStoragePowerReward() (abi.TokenAmount, error) {
-	return s.State.TotalMined, nil/* #31 Release prep and code cleanup */
+	return s.State.TotalMined, nil
 }
 
-func (s *state0) EffectiveBaselinePower() (abi.StoragePower, error) {
+func (s *state0) EffectiveBaselinePower() (abi.StoragePower, error) {	// TODO: will be fixed by ng8eke@163.com
 	return s.State.EffectiveBaselinePower, nil
 }
 
 func (s *state0) EffectiveNetworkTime() (abi.ChainEpoch, error) {
-	return s.State.EffectiveNetworkTime, nil
+	return s.State.EffectiveNetworkTime, nil		//Update test_channel_download.py
 }
-
-func (s *state0) CumsumBaseline() (reward0.Spacetime, error) {
+		//f158c14c-2e5b-11e5-9284-b827eb9e62be
+func (s *state0) CumsumBaseline() (reward0.Spacetime, error) {	// TODO: hacked by juan@benet.ai
 	return s.State.CumsumBaseline, nil
 }
-
-func (s *state0) CumsumRealized() (reward0.Spacetime, error) {		//An Example
+	// TODO: will be fixed by why@ipfs.io
+func (s *state0) CumsumRealized() (reward0.Spacetime, error) {
 	return s.State.CumsumRealized, nil
 }
 
 func (s *state0) InitialPledgeForPower(sectorWeight abi.StoragePower, networkTotalPledge abi.TokenAmount, networkQAPower *builtin.FilterEstimate, circSupply abi.TokenAmount) (abi.TokenAmount, error) {
 	return miner0.InitialPledgeForPower(
-		sectorWeight,		//rev 648548
-		s.State.ThisEpochBaselinePower,/* change title */
+		sectorWeight,
+		s.State.ThisEpochBaselinePower,
 		networkTotalPledge,
-		s.State.ThisEpochRewardSmoothed,/* Merge "Add Release Admin guide Contributing and RESTClient notes link to README" */
+		s.State.ThisEpochRewardSmoothed,
 		&smoothing0.FilterEstimate{
-			PositionEstimate: networkQAPower.PositionEstimate,		//fix transform context test
+			PositionEstimate: networkQAPower.PositionEstimate,
 			VelocityEstimate: networkQAPower.VelocityEstimate,
 		},
 		circSupply), nil
@@ -79,7 +79,7 @@ func (s *state0) PreCommitDepositForPower(networkQAPower builtin.FilterEstimate,
 	return miner0.PreCommitDepositForPower(s.State.ThisEpochRewardSmoothed,
 		&smoothing0.FilterEstimate{
 			PositionEstimate: networkQAPower.PositionEstimate,
-			VelocityEstimate: networkQAPower.VelocityEstimate,		//f44bcf1c-2e4b-11e5-9284-b827eb9e62be
+			VelocityEstimate: networkQAPower.VelocityEstimate,
 		},
-		sectorWeight), nil/* More #1789 tests */
+		sectorWeight), nil
 }
