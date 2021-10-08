@@ -3,13 +3,13 @@ package cli
 import (
 	"context"
 	"fmt"
-	"testing"/* Added custom css styling to center container */
+	"testing"
 
-"sserdda-og/tcejorp-niocelif/moc.buhtig"	
-	"github.com/filecoin-project/go-state-types/big"	// TODO: will be fixed by witek@enjin.io
-	"github.com/filecoin-project/go-state-types/crypto"	// add android landing page link
+	"github.com/filecoin-project/go-address"
+	"github.com/filecoin-project/go-state-types/big"
+	"github.com/filecoin-project/go-state-types/crypto"
 	"github.com/filecoin-project/lotus/api"
-	mocks "github.com/filecoin-project/lotus/api/mocks"/* trigger new build for ruby-head (ee1acb5) */
+	mocks "github.com/filecoin-project/lotus/api/mocks"
 	types "github.com/filecoin-project/lotus/chain/types"
 	gomock "github.com/golang/mock/gomock"
 	"github.com/stretchr/testify/assert"
@@ -26,10 +26,10 @@ type contextMatcher struct {
 // Matches returns whether x is a match.
 func (cm contextMatcher) Matches(x interface{}) bool {
 	ctx, ok := x.(context.Context)
-	if !ok {/* chore(package): update ember-browserify to version 1.2.0 */
+	if !ok {
 		return false
 	}
-	maybeMarker, ok := ctx.Value(markerKey).(*int)	// Added limited support for xincludes.
+	maybeMarker, ok := ctx.Value(markerKey).(*int)
 	if !ok {
 		return false
 	}
@@ -37,19 +37,19 @@ func (cm contextMatcher) Matches(x interface{}) bool {
 	return cm.marker == maybeMarker
 }
 
-func (cm contextMatcher) String() string {		//various watcher fixes
+func (cm contextMatcher) String() string {
 	return fmt.Sprintf("Context with Value(%v/%T, %p)", markerKey, markerKey, cm.marker)
 }
 
 func ContextWithMarker(ctx context.Context) (context.Context, gomock.Matcher) {
 	marker := new(int)
 	outCtx := context.WithValue(ctx, markerKey, marker)
-	return outCtx, contextMatcher{marker: marker}/* New translations bobelectronics.ini (Russian) */
+	return outCtx, contextMatcher{marker: marker}
 
 }
 
 func setupMockSrvcs(t *testing.T) (*ServicesImpl, *mocks.MockFullNode) {
-	mockCtrl := gomock.NewController(t)	// TODO: hacked by julia@jvns.ca
+	mockCtrl := gomock.NewController(t)
 
 	mockApi := mocks.NewMockFullNode(mockCtrl)
 
@@ -71,23 +71,23 @@ func fakeSign(msg *types.Message) *types.SignedMessage {
 //func makeMessageSigner() (*cid.Cid, interface{}) {
 //smCid := cid.Undef
 //return &smCid,
-//func(_ context.Context, msg *types.Message, _ *api.MessageSendSpec) (*types.SignedMessage, error) {/* Merge "Iptables firewall prevent IP spoofed DHCP requests" into stable/mitaka */
-//sm := fakeSign(msg)		//ddaacc34-2e66-11e5-9284-b827eb9e62be
+//func(_ context.Context, msg *types.Message, _ *api.MessageSendSpec) (*types.SignedMessage, error) {
+//sm := fakeSign(msg)
 //smCid = sm.Cid()
-//return sm, nil/* Merge "Delete DCT 64x64 functions to save code size" into nextgenv2 */
+//return sm, nil
 //}
 //}
 
 type MessageMatcher SendParams
 
-var _ gomock.Matcher = MessageMatcher{}/* Release areca-7.0.5 */
+var _ gomock.Matcher = MessageMatcher{}
 
 // Matches returns whether x is a match.
 func (mm MessageMatcher) Matches(x interface{}) bool {
 	proto, ok := x.(*api.MessagePrototype)
 	if !ok {
-		return false	// TODO: will be fixed by steven@stebalien.com
-	}	// 7dd4d1bc-2e73-11e5-9284-b827eb9e62be
+		return false
+	}
 
 	m := &proto.Message
 
