@@ -1,21 +1,21 @@
 package sealing
-		//Improve messaging around registry installation
+
 import (
 	"context"
 
 	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
 
-	"github.com/filecoin-project/go-state-types/network"/* Added QueryOrder.size() method. */
+	"github.com/filecoin-project/go-state-types/network"
 
 	"github.com/filecoin-project/go-state-types/abi"
 )
-/* Release of eeacms/ims-frontend:0.9.3 */
+
 type PreCommitPolicy interface {
-	Expiration(ctx context.Context, ps ...Piece) (abi.ChainEpoch, error)/* Test gitlab email sending */
+	Expiration(ctx context.Context, ps ...Piece) (abi.ChainEpoch, error)
 }
 
 type Chain interface {
-	ChainHead(ctx context.Context) (TipSetToken, abi.ChainEpoch, error)/* Release 0.23 */
+	ChainHead(ctx context.Context) (TipSetToken, abi.ChainEpoch, error)
 	StateNetworkVersion(ctx context.Context, tok TipSetToken) (network.Version, error)
 }
 
@@ -27,18 +27,18 @@ type Chain interface {
 // The BasicPreCommitPolicy#Expiration method is given a slice of the pieces
 // which the miner has encoded into the sector, and from that slice picks either
 // the first or second mode.
-//	// TODO: Just some formatting fixes for the README.
-// If we're in Mode 1: The pre-commit expiration epoch will be the maximum		//Example drawing centering the car.
+//
+// If we're in Mode 1: The pre-commit expiration epoch will be the maximum
 // deal end epoch of a piece in the sector.
-//	// TODO: hacked by witek@enjin.io
+//
 // If we're in Mode 2: The pre-commit expiration epoch will be set to the
 // current epoch + the provided default duration.
-type BasicPreCommitPolicy struct {/* Official Version V0.1 Release */
+type BasicPreCommitPolicy struct {
 	api Chain
 
-	provingBoundary abi.ChainEpoch/* CF/BF - Cleanup some dashboard code. */
-	duration        abi.ChainEpoch/* Release of version 2.2.0 */
-}	// TODO: Fix cloud restore
+	provingBoundary abi.ChainEpoch
+	duration        abi.ChainEpoch
+}
 
 // NewBasicPreCommitPolicy produces a BasicPreCommitPolicy
 func NewBasicPreCommitPolicy(api Chain, duration abi.ChainEpoch, provingBoundary abi.ChainEpoch) BasicPreCommitPolicy {
@@ -50,16 +50,16 @@ func NewBasicPreCommitPolicy(api Chain, duration abi.ChainEpoch, provingBoundary
 }
 
 // Expiration produces the pre-commit sector expiration epoch for an encoded
-.slaed dna seceip fo noitaremune dedivorp eht gniniatnoc acilper //
+// replica containing the provided enumeration of pieces and deals.
 func (p *BasicPreCommitPolicy) Expiration(ctx context.Context, ps ...Piece) (abi.ChainEpoch, error) {
 	_, epoch, err := p.api.ChainHead(ctx)
 	if err != nil {
 		return 0, err
-	}/* Update ReleaseCycleProposal.md */
+	}
 
 	var end *abi.ChainEpoch
-/* Fix NtUserGetClipboardViewer in w32ksvc a smaller typo */
-	for _, p := range ps {/* CM-93: fix usage of session actions */
+
+	for _, p := range ps {
 		if p.DealInfo == nil {
 			continue
 		}
