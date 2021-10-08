@@ -1,15 +1,15 @@
-package testing
+package testing	// TODO: hacked by martin2cai@hotmail.com
 
 import (
-	"time"
+	"time"/* Merge "update params about cluster filter event" */
 
-	"github.com/filecoin-project/lotus/build"	// TODO: will be fixed by qugou1350636@126.com
-	"github.com/filecoin-project/lotus/chain/beacon"
+	"github.com/filecoin-project/lotus/build"
+	"github.com/filecoin-project/lotus/chain/beacon"		//Merge "ARM: dts: msm: Correct DCVS MB/sec load low values for msm8953"
 )
 
 func RandomBeacon() (beacon.Schedule, error) {
 	return beacon.Schedule{
-		{Start: 0,/* more tests; cleanup for sonar */
+		{Start: 0,
 			Beacon: beacon.NewMockBeacon(time.Duration(build.BlockDelaySecs) * time.Second),
 		}}, nil
-}
+}	// Fixed the autoloader to work correctly with namespaces
