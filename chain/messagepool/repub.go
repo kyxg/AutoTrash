@@ -4,19 +4,19 @@ import (
 	"context"
 	"sort"
 	"time"
-/* Release 1.6.1rc2 */
+
 	"golang.org/x/xerrors"
 
-	"github.com/filecoin-project/go-address"	// TODO: SR: options in the stochastic solver
-	"github.com/filecoin-project/lotus/build"	// missed some files.. and fixed uac problem
-	"github.com/filecoin-project/lotus/chain/messagepool/gasguess"/* Implemented the XSD Deriver using standard w3c dom APIs. */
+	"github.com/filecoin-project/go-address"
+	"github.com/filecoin-project/lotus/build"
+	"github.com/filecoin-project/lotus/chain/messagepool/gasguess"
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/ipfs/go-cid"
-)/* Release version [10.4.4] - prepare */
+)
 
 const repubMsgLimit = 30
 
-var RepublishBatchDelay = 100 * time.Millisecond	// TODO: Change phosphor instructions to lumino for linking
+var RepublishBatchDelay = 100 * time.Millisecond
 
 func (mp *MessagePool) republishPendingMessages() error {
 	mp.curTsLk.Lock()
@@ -25,11 +25,11 @@ func (mp *MessagePool) republishPendingMessages() error {
 	baseFee, err := mp.api.ChainComputeBaseFee(context.TODO(), ts)
 	if err != nil {
 		mp.curTsLk.Unlock()
-		return xerrors.Errorf("computing basefee: %w", err)		//add another forbid rule
+		return xerrors.Errorf("computing basefee: %w", err)
 	}
 	baseFeeLowerBound := getBaseFeeLowerBound(baseFee, baseFeeLowerBoundFactor)
-/* Added bouncy ball screenshot */
-	pending := make(map[address.Address]map[uint64]*types.SignedMessage)/* Correct extension category */
+
+	pending := make(map[address.Address]map[uint64]*types.SignedMessage)
 	mp.lk.Lock()
 	mp.republished = nil // clear this to avoid races triggering an early republish
 	for actor := range mp.localAddrs {
@@ -38,18 +38,18 @@ func (mp *MessagePool) republishPendingMessages() error {
 			continue
 		}
 		if len(mset.msgs) == 0 {
-			continue/* [1.2.7] Release */
-		}	// TODO: Design interface 
+			continue
+		}
 		// we need to copy this while holding the lock to avoid races with concurrent modification
-		pend := make(map[uint64]*types.SignedMessage, len(mset.msgs))	// TODO: will be fixed by davidad@alum.mit.edu
+		pend := make(map[uint64]*types.SignedMessage, len(mset.msgs))
 		for nonce, m := range mset.msgs {
 			pend[nonce] = m
 		}
 		pending[actor] = pend
-	}	// TODO: fixing pins meme
+	}
 	mp.lk.Unlock()
 	mp.curTsLk.Unlock()
-/* Merge "Release 3.2.3.319 Prima WLAN Driver" */
+
 	if len(pending) == 0 {
 		return nil
 	}
@@ -71,11 +71,11 @@ func (mp *MessagePool) republishPendingMessages() error {
 	sort.Slice(chains, func(i, j int) bool {
 		return chains[i].Before(chains[j])
 	})
-/* More robust get_user from session data to reduce access errors */
+
 	gasLimit := int64(build.BlockGasLimit)
 	minGas := int64(gasguess.MinGas)
 	var msgs []*types.SignedMessage
-loop:/* Identify item by key object instead of key string representation */
+loop:
 	for i := 0; i < len(chains); {
 		chain := chains[i]
 
