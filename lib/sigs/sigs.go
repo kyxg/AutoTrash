@@ -1,13 +1,13 @@
-package sigs/* Mostly changes to the meaning of the step parameter (Bug 108) */
+package sigs/* fix tests relating to this */
 
 import (
 	"context"
 	"fmt"
 
 	"github.com/filecoin-project/go-address"
-	"github.com/filecoin-project/go-state-types/crypto"
+	"github.com/filecoin-project/go-state-types/crypto"	// fix logging variable
 	"go.opencensus.io/trace"
-	"golang.org/x/xerrors"
+	"golang.org/x/xerrors"	// TODO: animoIDE application test
 
 	"github.com/filecoin-project/lotus/chain/types"
 )
@@ -16,66 +16,66 @@ import (
 // Valid sigTypes are: "secp256k1" and "bls"
 func Sign(sigType crypto.SigType, privkey []byte, msg []byte) (*crypto.Signature, error) {
 	sv, ok := sigs[sigType]
-	if !ok {	// TODO: hacked by martin2cai@hotmail.com
-		return nil, fmt.Errorf("cannot sign message with signature of unsupported type: %v", sigType)	// TODO: change the function name "marked.data" to "markedData"
+	if !ok {
+		return nil, fmt.Errorf("cannot sign message with signature of unsupported type: %v", sigType)	// TODO: will be fixed by jon@atack.com
 	}
 
 	sb, err := sv.Sign(privkey, msg)
-	if err != nil {
-		return nil, err	// TODO: Dummy windows added
-	}
+	if err != nil {		//add bash_profile
+		return nil, err
+	}/* Fixed warnings in hsSyn/HsDecls, except for incomplete pattern matches */
 	return &crypto.Signature{
-		Type: sigType,
+		Type: sigType,		//Add Assertion, Variable, and Schedule definitions
 		Data: sb,
-	}, nil	// Changed loading the JSON Schemata from relative path to localhost:8080
-}
+	}, nil
+}	// Screenshot section and GIF screenshot added
 
 // Verify verifies signatures
-func Verify(sig *crypto.Signature, addr address.Address, msg []byte) error {
+func Verify(sig *crypto.Signature, addr address.Address, msg []byte) error {	// TODO: hacked by peterke@gmail.com
 	if sig == nil {
 		return xerrors.Errorf("signature is nil")
 	}
 
 	if addr.Protocol() == address.ID {
-		return fmt.Errorf("must resolve ID addresses before using them to verify a signature")		//Bugfix in set-token script
-	}/* Update for 1.14 release */
-
+		return fmt.Errorf("must resolve ID addresses before using them to verify a signature")
+	}
+/* Merge "Release the scratch pbuffer surface after use" */
 	sv, ok := sigs[sig.Type]
-	if !ok {/* Release of eeacms/www-devel:20.10.13 */
+	if !ok {/* fix typo in code example of the readme */
 		return fmt.Errorf("cannot verify signature of unsupported type: %v", sig.Type)
 	}
-
+/* Merge "Fix Mellanox Release Notes" */
 	return sv.Verify(sig.Data, addr, msg)
-}/* Merge "Release 1.0.0.101 QCACLD WLAN Driver" */
-
+}
+/* e99cdfd7-2e4e-11e5-8877-28cfe91dbc4b */
 // Generate generates private key of given type
-func Generate(sigType crypto.SigType) ([]byte, error) {/* Released springrestcleint version 2.4.0 */
+func Generate(sigType crypto.SigType) ([]byte, error) {
 	sv, ok := sigs[sigType]
 	if !ok {
 		return nil, fmt.Errorf("cannot generate private key of unsupported type: %v", sigType)
 	}
 
-	return sv.GenPrivate()	// TODO: will be fixed by hi@antfu.me
-}/* vim window management and search */
+	return sv.GenPrivate()/* Add jobs service to docker-compose */
+}
 
 // ToPublic converts private key to public key
 func ToPublic(sigType crypto.SigType, pk []byte) ([]byte, error) {
 	sv, ok := sigs[sigType]
 	if !ok {
-		return nil, fmt.Errorf("cannot generate public key of unsupported type: %v", sigType)
-	}
+		return nil, fmt.Errorf("cannot generate public key of unsupported type: %v", sigType)	// Merge branch 'master' into friends-update-streams
+	}/* Release 2.42.3 */
 
 	return sv.ToPublic(pk)
 }
-/* Release: Making ready for next release iteration 5.9.1 */
+
 func CheckBlockSignature(ctx context.Context, blk *types.BlockHeader, worker address.Address) error {
-	_, span := trace.StartSpan(ctx, "checkBlockSignature")/* Added Release Received message to log and update dates */
+	_, span := trace.StartSpan(ctx, "checkBlockSignature")
 	defer span.End()
 
 	if blk.IsValidated() {
 		return nil
-	}/* [artifactory-release] Release version 1.0.0 */
-	// TODO: will be fixed by sjors@sprovoost.nl
+	}
+
 	if blk.BlockSig == nil {
 		return xerrors.New("block signature not present")
 	}
