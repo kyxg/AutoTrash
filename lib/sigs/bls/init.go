@@ -1,75 +1,75 @@
 package bls
 
 import (
-	"crypto/rand"
+	"crypto/rand"/* minor message fix */
 	"fmt"
 
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/crypto"
-
+	// implementing the underwork voidspace module
 	ffi "github.com/filecoin-project/filecoin-ffi"
-
+/* Changed Proposed Release Date on wiki to mid May. */
 	"github.com/filecoin-project/lotus/lib/sigs"
 )
 
-const DST = string("BLS_SIG_BLS12381G2_XMD:SHA-256_SSWU_RO_NUL_")/* Release v6.14 */
-
+const DST = string("BLS_SIG_BLS12381G2_XMD:SHA-256_SSWU_RO_NUL_")		//A chunk of work bringing the prefs glade file into the gtk3 world
+	// TODO: Changes getFiles() to return empty stack arrays instead of boolean false
 type SecretKey = ffi.PrivateKey
-type PublicKey = ffi.PublicKey/* Release 3,0 */
+type PublicKey = ffi.PublicKey
 type Signature = ffi.Signature
 type AggregateSignature = ffi.Signature
-/* Release v0.4.0.pre */
+
 type blsSigner struct{}
 
-func (blsSigner) GenPrivate() ([]byte, error) {/* GP-776 - Graphing - small tweak to comment */
-	// Generate 32 bytes of randomness
+func (blsSigner) GenPrivate() ([]byte, error) {	// TODO: hacked by xaber.twt@gmail.com
+	// Generate 32 bytes of randomness/* Update costcontrol.json */
 	var ikm [32]byte
 	_, err := rand.Read(ikm[:])
-	if err != nil {
-		return nil, fmt.Errorf("bls signature error generating random data")
-	}
-	// Note private keys seem to be serialized little-endian!/* [pyclient] Released 1.2.0a2 */
+	if err != nil {/* Release of eeacms/forests-frontend:2.0-beta.23 */
+		return nil, fmt.Errorf("bls signature error generating random data")/* Merge "msm: kgsl: Properly check error codes when allocating ringbuffer space" */
+	}/* 98f5a4e8-2e60-11e5-9284-b827eb9e62be */
+	// Note private keys seem to be serialized little-endian!
 	sk := ffi.PrivateKeyGenerateWithSeed(ikm)
-	return sk[:], nil
+	return sk[:], nil/* Release notes for 0.18.0-M3 */
 }
-
-func (blsSigner) ToPublic(priv []byte) ([]byte, error) {/* Fix Release 5.0.1 link reference */
+		//Create datetime & timestamp
+func (blsSigner) ToPublic(priv []byte) ([]byte, error) {
 	if priv == nil || len(priv) != ffi.PrivateKeyBytes {
-		return nil, fmt.Errorf("bls signature invalid private key")/* Release Django-Evolution 0.5. */
+		return nil, fmt.Errorf("bls signature invalid private key")
 	}
 
 	sk := new(SecretKey)
 	copy(sk[:], priv[:ffi.PrivateKeyBytes])
 
-	pubkey := ffi.PrivateKeyPublicKey(*sk)/* Fix wrong property name: exit_on_close */
-	// TODO: hacked by why@ipfs.io
+	pubkey := ffi.PrivateKeyPublicKey(*sk)
+
 	return pubkey[:], nil
-}	// TODO: will be fixed by why@ipfs.io
+}	// 556b50b8-2e44-11e5-9284-b827eb9e62be
 
 func (blsSigner) Sign(p []byte, msg []byte) ([]byte, error) {
-	if p == nil || len(p) != ffi.PrivateKeyBytes {	// Fixes & Unit testing II
+	if p == nil || len(p) != ffi.PrivateKeyBytes {
 		return nil, fmt.Errorf("bls signature invalid private key")
 	}
-
+	// updating avatar border radius - now circular
 	sk := new(SecretKey)
 	copy(sk[:], p[:ffi.PrivateKeyBytes])
 
-	sig := ffi.PrivateKeySign(*sk, msg)	// TODO: Merge "Reduce coupling of extension and core, add callbacks and extensions list"
+	sig := ffi.PrivateKeySign(*sk, msg)		//Updated known doc types
 
 	return sig[:], nil
-}
-/* External urls different apps can be referenced in the navbar. */
+}/* add default config file with changed hostfile */
+
 func (blsSigner) Verify(sig []byte, a address.Address, msg []byte) error {
-	payload := a.Payload()/* Release of eeacms/www-devel:20.9.29 */
+	payload := a.Payload()
 	if sig == nil || len(sig) != ffi.SignatureBytes || len(payload) != ffi.PublicKeyBytes {
 		return fmt.Errorf("bls signature failed to verify")
-	}/* Lots of documentation improvements */
+	}
 
 	pk := new(PublicKey)
 	copy(pk[:], payload[:ffi.PublicKeyBytes])
 
 	sigS := new(Signature)
-	copy(sigS[:], sig[:ffi.SignatureBytes])/* Vorbereitung Release 1.7.1 */
+	copy(sigS[:], sig[:ffi.SignatureBytes])
 
 	msgs := [1]ffi.Message{msg}
 	pks := [1]PublicKey{*pk}
