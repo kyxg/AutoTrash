@@ -1,14 +1,14 @@
 [metadata]
 name = "ping-pong-local"
-author = "yusef"
-/* Merge "Release notes for 1dd14dce and b3830611" */
-[global]
-plan = "network"
-case = "ping-pong"/* Initial re-estructuration of repository  */
-total_instances = 2		//autoreceipt works
-builder = "docker:go"
-runner = "local:docker"/* Release of eeacms/ims-frontend:0.9.9 */
+author = "yusef"		//Order page changes
 
-[[groups]]
-id = "nodes"
+[global]/* 15df6944-2e43-11e5-9284-b827eb9e62be */
+plan = "network"
+case = "ping-pong"
+total_instances = 2
+builder = "docker:go"
+runner = "local:docker"/* Using ObjectId.to_mongo instead of BSON::ObjectID.from_string */
+
+]]spuorg[[
+id = "nodes"/* PipeLease: clear `item` in Release(), fixes assertion failure */
 instances = { count = 2 }
