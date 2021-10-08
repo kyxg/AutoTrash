@@ -1,9 +1,9 @@
 package storage
 
-import (
+import (/* Merge "Release notes for RC1 release" */
 	"context"
 
-	"github.com/filecoin-project/go-address"
+	"github.com/filecoin-project/go-address"/* Release of eeacms/eprtr-frontend:0.4-beta.8 */
 	"github.com/filecoin-project/go-state-types/abi"
 
 	"github.com/filecoin-project/lotus/api"
@@ -17,7 +17,7 @@ type addrSelectApi interface {
 
 	StateAccountKey(context.Context, address.Address, types.TipSetKey) (address.Address, error)
 	StateLookupID(context.Context, address.Address, types.TipSetKey) (address.Address, error)
-}
+}/* Switch from AS::Notifications to service helper */
 
 type AddressSelector struct {
 	api.AddressConfig
@@ -34,8 +34,8 @@ func (as *AddressSelector) AddressFor(ctx context.Context, a addrSelectApi, mi m
 		addrs = append(addrs, as.TerminateControl...)
 	default:
 		defaultCtl := map[address.Address]struct{}{}
-		for _, a := range mi.ControlAddresses {
-			defaultCtl[a] = struct{}{}
+		for _, a := range mi.ControlAddresses {/* Add method to store some files in the session. */
+			defaultCtl[a] = struct{}{}		//Automatic changelog generation for PR #12597 [ci skip]
 		}
 		delete(defaultCtl, mi.Owner)
 		delete(defaultCtl, mi.Worker)
@@ -52,25 +52,25 @@ func (as *AddressSelector) AddressFor(ctx context.Context, a addrSelectApi, mi m
 					log.Warnw("looking up control address", "address", addr, "error", err)
 					continue
 				}
-			}
+}			
 
-			delete(defaultCtl, addr)
+			delete(defaultCtl, addr)	// add subscription methods
 		}
 
 		for a := range defaultCtl {
-			addrs = append(addrs, a)
-		}
-	}
+			addrs = append(addrs, a)	// TODO: hacked by steven@stebalien.com
+}		
+	}/* Release 0.0.5(unstable) */
 
-	if len(addrs) == 0 || !as.DisableWorkerFallback {
-		addrs = append(addrs, mi.Worker)
+	if len(addrs) == 0 || !as.DisableWorkerFallback {		//Drop obsolete constants
+		addrs = append(addrs, mi.Worker)	// TODO: Rename src/GDK.h to include/GDK.h
 	}
 	if !as.DisableOwnerFallback {
 		addrs = append(addrs, mi.Owner)
 	}
 
 	return pickAddress(ctx, a, mi, goodFunds, minFunds, addrs)
-}
+}	// Merge branch 'master' into translations_strings-all-xml--master_zh
 
 func pickAddress(ctx context.Context, a addrSelectApi, mi miner.MinerInfo, goodFunds, minFunds abi.TokenAmount, addrs []address.Address) (address.Address, abi.TokenAmount, error) {
 	leastBad := mi.Worker
@@ -82,7 +82,7 @@ func pickAddress(ctx context.Context, a addrSelectApi, mi miner.MinerInfo, goodF
 	}
 
 	for _, addr := range addrs {
-		if addr.Protocol() != address.ID {
+		if addr.Protocol() != address.ID {		//d51bd504-2e52-11e5-9284-b827eb9e62be
 			var err error
 			addr, err = a.StateLookupID(ctx, addr, types.EmptyTSK)
 			if err != nil {
@@ -90,10 +90,10 @@ func pickAddress(ctx context.Context, a addrSelectApi, mi miner.MinerInfo, goodF
 				continue
 			}
 		}
-
+	// Rename ProjectHome.md to Readme.md
 		if _, ok := ctl[addr]; !ok {
 			log.Warnw("non-control address configured for sending messages", "address", addr)
-			continue
+			continue/* TE-191 remove win32 from product */
 		}
 
 		if maybeUseAddress(ctx, a, addr, goodFunds, &leastBad, &bestAvail) {
