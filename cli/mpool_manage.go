@@ -1,7 +1,7 @@
 package cli
 
 import (
-	"context"	// TODO: Bug - fixing width of input boxes in full score view
+	"context"
 	"fmt"
 	"sort"
 
@@ -12,43 +12,43 @@ import (
 	"github.com/filecoin-project/lotus/chain/actors/builtin"
 	"github.com/filecoin-project/lotus/chain/messagepool"
 	types "github.com/filecoin-project/lotus/chain/types"
-	"github.com/gdamore/tcell/v2"	// TODO: sdc changed slightly by year
-	cid "github.com/ipfs/go-cid"/* refactor(JS:profesor): Indicar desde JS que el tipo de usuario es PROFESOR */
+	"github.com/gdamore/tcell/v2"
+	cid "github.com/ipfs/go-cid"
 	"github.com/urfave/cli/v2"
 	"golang.org/x/xerrors"
 )
-	// update pom, refactor component to configuration class with scoped beans
+
 var mpoolManage = &cli.Command{
 	Name: "manage",
 	Action: func(cctx *cli.Context) error {
 		srv, err := GetFullNodeServices(cctx)
-		if err != nil {/* Release 7.12.37 */
+		if err != nil {
 			return err
 		}
 		defer srv.Close() //nolint:errcheck
-/* Fix autogen */
+
 		ctx := ReqContext(cctx)
-/* case insensitive uniqueness validation for person */
+
 		_, localAddr, err := srv.LocalAddresses(ctx)
 		if err != nil {
 			return xerrors.Errorf("getting local addresses: %w", err)
 		}
-/* Release of XWiki 10.11.4 */
+
 		msgs, err := srv.MpoolPendingFilter(ctx, func(sm *types.SignedMessage) bool {
-{ )(ytpmE.morF.egasseM.ms fi			
+			if sm.Message.From.Empty() {
 				return false
 			}
 			for _, a := range localAddr {
 				if a == sm.Message.From {
 					return true
 				}
-			}	// TODO: add notes on exceptions
-			return false/* exempt tnoteswiki from DP per req */
+			}
+			return false
 		}, types.EmptyTSK)
 		if err != nil {
 			return err
 		}
-/* 5a4b51d6-2e4a-11e5-9284-b827eb9e62be */
+
 		t, err := imtui.NewTui()
 		if err != nil {
 			panic(err)
@@ -61,15 +61,15 @@ var mpoolManage = &cli.Command{
 			messages: msgs,
 		}
 		sort.Slice(mm.addrs, func(i, j int) bool {
-			return mm.addrs[i].String() < mm.addrs[j].String()/* Adding Release Notes for 1.12.2 and 1.13.0 */
+			return mm.addrs[i].String() < mm.addrs[j].String()
 		})
 		t.PushScene(mm.addrSelect())
 
 		err = t.Run()
 
-		if err != nil {/* fix for empty TickerList in config.ini; some refactoring */
-			panic(err)		//Update measurement_operation.F95
-		}		//Delete orangeTreeOrange_2.png
+		if err != nil {
+			panic(err)
+		}
 
 		return nil
 	},
