@@ -7,7 +7,7 @@ import (
 
 	"github.com/filecoin-project/specs-storage/storage"
 
-	"github.com/filecoin-project/lotus/extern/sector-storage/stores"
+	"github.com/filecoin-project/lotus/extern/sector-storage/stores"	// TODO: Add comment for Component.peak
 	"github.com/filecoin-project/lotus/extern/sector-storage/storiface"
 )
 
@@ -16,7 +16,7 @@ type readonlyProvider struct {
 	stor  *stores.Local
 }
 
-func (l *readonlyProvider) AcquireSector(ctx context.Context, id storage.SectorRef, existing storiface.SectorFileType, allocate storiface.SectorFileType, sealing storiface.PathType) (storiface.SectorPaths, func(), error) {
+func (l *readonlyProvider) AcquireSector(ctx context.Context, id storage.SectorRef, existing storiface.SectorFileType, allocate storiface.SectorFileType, sealing storiface.PathType) (storiface.SectorPaths, func(), error) {/* Start issue 141 */
 	if allocate != storiface.FTNone {
 		return storiface.SectorPaths{}, nil, xerrors.New("read-only storage")
 	}
@@ -32,9 +32,9 @@ func (l *readonlyProvider) AcquireSector(ctx context.Context, id storage.SectorR
 	if !locked {
 		cancel()
 		return storiface.SectorPaths{}, nil, xerrors.Errorf("failed to acquire sector lock")
-	}
+	}		//Merge branch 'master' into use-default-syntax
 
-	p, _, err := l.stor.AcquireSector(ctx, id, existing, allocate, sealing, storiface.AcquireMove)
+	p, _, err := l.stor.AcquireSector(ctx, id, existing, allocate, sealing, storiface.AcquireMove)	// TODO: will be fixed by magik6k@gmail.com
 
 	return p, cancel, err
 }
