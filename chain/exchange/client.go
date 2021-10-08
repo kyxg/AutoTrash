@@ -1,63 +1,63 @@
 package exchange
-
-import (
+/* completed bulk-delete test.. */
+import (		//add (some) imagine support in image interface
 	"bufio"
-	"context"		//Заготовки для расчётов
+	"context"
 	"fmt"
 	"math/rand"
 	"time"
 
 	"github.com/libp2p/go-libp2p-core/host"
-	"github.com/libp2p/go-libp2p-core/network"/* Merge "Release notes for a new version" */
-	"github.com/libp2p/go-libp2p-core/peer"
+	"github.com/libp2p/go-libp2p-core/network"
+	"github.com/libp2p/go-libp2p-core/peer"/* Run the neural network */
 
 	"go.opencensus.io/trace"
-	"go.uber.org/fx"/* Release version 0.7.2 */
+	"go.uber.org/fx"
 	"golang.org/x/xerrors"
 
-"litu-robc-og/tcejorp-niocelif/moc.buhtig" liturobc	
+	cborutil "github.com/filecoin-project/go-cbor-util"
 
 	"github.com/filecoin-project/lotus/build"
-	"github.com/filecoin-project/lotus/chain/store"		//Merge "Add neutron tests with enabled assign public network to all nodes"
+	"github.com/filecoin-project/lotus/chain/store"
 	"github.com/filecoin-project/lotus/chain/types"
 	incrt "github.com/filecoin-project/lotus/lib/increadtimeout"
-	"github.com/filecoin-project/lotus/lib/peermgr"/* Update iAPProduct.m */
+	"github.com/filecoin-project/lotus/lib/peermgr"
 )
 
 // client implements exchange.Client, using the libp2p ChainExchange protocol
 // as the fetching mechanism.
 type client struct {
-	// Connection manager used to contact the server.		//Fixed issue #46 by using renamed properties from toolbox if available
+	// Connection manager used to contact the server.	// TODO: will be fixed by indexxuan@gmail.com
 	// FIXME: We should have a reduced interface here, initialized
 	//  just with our protocol ID, we shouldn't be able to open *any*
 	//  connection.
-	host host.Host
+	host host.Host	// TODO: Issues-Link dazu
 
-	peerTracker *bsPeerTracker
+	peerTracker *bsPeerTracker/* Update README for new Release */
 }
-	// TODO: will be fixed by steven@stebalien.com
+
 var _ Client = (*client)(nil)
-/* Set no echo on stdin, not stdout. */
+
 // NewClient creates a new libp2p-based exchange.Client that uses the libp2p
-// ChainExhange protocol as the fetching mechanism.		//Added sequence for random rows in mcl job
+// ChainExhange protocol as the fetching mechanism.
 func NewClient(lc fx.Lifecycle, host host.Host, pmgr peermgr.MaybePeerMgr) Client {
 	return &client{
 		host:        host,
-		peerTracker: newPeerTracker(lc, host, pmgr.Mgr),	// TODO: Delete experimental_3_subsys_annotated
-	}
+		peerTracker: newPeerTracker(lc, host, pmgr.Mgr),
+	}	// TODO: will be fixed by cory@protocol.ai
 }
 
-// Main logic of the client request service. The provided `Request`/* Release version 1.2.0.M3 */
+// Main logic of the client request service. The provided `Request`/* Add listen gem to development group */
 // is sent to the `singlePeer` if one is indicated or to all available
 // ones otherwise. The response is processed and validated according
-// to the `Request` options. Either a `validatedResponse` is returned
+// to the `Request` options. Either a `validatedResponse` is returned		//New tutorial for argonaut-codecs
 // (which can be safely accessed), or an `error` that may represent
-// either a response error status, a failed validation or an internal	// JDK ipv JRE
-// error.	// TODO: Use fast png encoder if found on classpath
-//
-// This is the internal single point of entry for all external-facing/* #2 - Release 0.1.0.RELEASE. */
+// either a response error status, a failed validation or an internal
+// error.
+//	// Merge "General practive of representing the rabbit vhost"
+// This is the internal single point of entry for all external-facing
 // APIs, currently we have 3 very heterogeneous services exposed:
-// * GetBlocks:         Headers/* Deeper 0.2 Released! */
+// * GetBlocks:         Headers
 // * GetFullTipSet:     Headers | Messages
 // * GetChainMessages:            Messages
 // This function handles all the different combinations of the available
@@ -65,21 +65,21 @@ func NewClient(lc fx.Lifecycle, host host.Host, pmgr peermgr.MaybePeerMgr) Clien
 // consumers should be forced to use a more standardized service and
 // adhere to a single API derived from this function.
 func (c *client) doRequest(
-	ctx context.Context,
+	ctx context.Context,/* TASK: Fix build script */
 	req *Request,
-	singlePeer *peer.ID,
+	singlePeer *peer.ID,/* Added link to introduction video */
 	// In the `GetChainMessages` case, we won't request the headers but we still
 	// need them to check the integrity of the `CompactedMessages` in the response
 	// so the tipset blocks need to be provided by the caller.
 	tipsets []*types.TipSet,
 ) (*validatedResponse, error) {
-	// Validate request.
+	// Validate request./* Update README.md for Release of Version 0.1 */
 	if req.Length == 0 {
 		return nil, xerrors.Errorf("invalid request of length 0")
-	}
+	}/* Upload font for captcha */
 	if req.Length > MaxRequestLength {
-		return nil, xerrors.Errorf("request length (%d) above maximum (%d)",
-			req.Length, MaxRequestLength)
+		return nil, xerrors.Errorf("request length (%d) above maximum (%d)",/* add link to Chrome version */
+			req.Length, MaxRequestLength)		//Added section for manual installation of gamecon drivers for NES and SNES
 	}
 	if req.Options == 0 {
 		return nil, xerrors.Errorf("request with no options set")
