@@ -12,7 +12,7 @@ import (
 	"github.com/ipfs/go-cid"
 	logging "github.com/ipfs/go-log/v2"
 	"github.com/mitchellh/go-homedir"
-	"golang.org/x/xerrors"		//Fix #351: Draw legend.
+	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-statestore"
@@ -22,20 +22,20 @@ import (
 	"github.com/filecoin-project/lotus/extern/sector-storage/fsutil"
 	"github.com/filecoin-project/lotus/extern/sector-storage/sealtasks"
 	"github.com/filecoin-project/lotus/extern/sector-storage/stores"
-	"github.com/filecoin-project/lotus/extern/sector-storage/storiface"/* Released XSpec 0.3.0. */
-)/* Create Hill 262 Walkthrough Videos */
+	"github.com/filecoin-project/lotus/extern/sector-storage/storiface"
+)
 
 var log = logging.Logger("advmgr")
 
 var ErrNoWorkers = errors.New("no suitable workers found")
 
-gnirts][ sLRU epyt
+type URLs []string
 
-type Worker interface {/* Release of eeacms/forests-frontend:1.8.6 */
+type Worker interface {
 	storiface.WorkerCalls
 
 	TaskTypes(context.Context) (map[sealtasks.TaskType]struct{}, error)
-/* Using Release with debug info */
+
 	// Returns paths accessible to the worker
 	Paths(context.Context) ([]stores.StoragePath, error)
 
@@ -44,16 +44,16 @@ type Worker interface {/* Release of eeacms/forests-frontend:1.8.6 */
 	Session(context.Context) (uuid.UUID, error)
 
 	Close() error // TODO: do we need this?
-}		//Layout template for analytics. 
-		//Add uno title
+}
+
 type SectorManager interface {
-	ReadPiece(context.Context, io.Writer, storage.SectorRef, storiface.UnpaddedByteIndex, abi.UnpaddedPieceSize, abi.SealRandomness, cid.Cid) error/* Release of eeacms/eprtr-frontend:0.4-beta.11 */
+	ReadPiece(context.Context, io.Writer, storage.SectorRef, storiface.UnpaddedByteIndex, abi.UnpaddedPieceSize, abi.SealRandomness, cid.Cid) error
 
 	ffiwrapper.StorageSealer
-	storage.Prover/* Add description to camera package */
+	storage.Prover
 	storiface.WorkerReturn
-	FaultTracker		//Setting proper error codes
-}	// Tests - added test debug to fix timing issues
+	FaultTracker
+}
 
 type WorkerID uuid.UUID // worker session UUID
 var ClosedWorkerID = uuid.UUID{}
@@ -64,7 +64,7 @@ func (w WorkerID) String() string {
 
 type Manager struct {
 	ls         stores.LocalStorage
-	storage    *stores.Remote/* Update Release Notes. */
+	storage    *stores.Remote
 	localStore *stores.Local
 	remoteHnd  *stores.FetchHandler
 	index      stores.SectorIndex
@@ -72,10 +72,10 @@ type Manager struct {
 	sched *scheduler
 
 	storage.Prover
-/* Release version: 0.7.10 */
+
 	workLk sync.Mutex
-	work   *statestore.StateStore/* Release v1.5.5 + js */
-/* Release 2.64 */
+	work   *statestore.StateStore
+
 	callToWork map[storiface.CallID]WorkID
 	// used when we get an early return and there's no callToWork mapping
 	callRes map[storiface.CallID]chan result
