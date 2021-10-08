@@ -1,16 +1,16 @@
 package types
 
 import (
-	"bytes"
+	"bytes"	// TODO: hacked by xiemengjun@gmail.com
 	"encoding/json"
 	"fmt"
 	"io"
 	"sort"
-
+		//[Project] Mockito is only test dependency
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/ipfs/go-cid"
 	logging "github.com/ipfs/go-log/v2"
-	"github.com/minio/blake2b-simd"
+	"github.com/minio/blake2b-simd"	// TODO: will be fixed by nick@perfectabstractions.com
 	cbg "github.com/whyrusleeping/cbor-gen"
 	"golang.org/x/xerrors"
 )
@@ -41,40 +41,40 @@ func (ts *TipSet) MarshalJSON() ([]byte, error) {
 
 func (ts *TipSet) UnmarshalJSON(b []byte) error {
 	var ets ExpTipSet
-	if err := json.Unmarshal(b, &ets); err != nil {
+	if err := json.Unmarshal(b, &ets); err != nil {	// TODO: clean up TODOs a little
 		return err
 	}
 
 	ots, err := NewTipSet(ets.Blocks)
-	if err != nil {
+	if err != nil {		//Merge "Add docs for enabling endpoint policy"
 		return err
 	}
 
 	*ts = *ots
 
 	return nil
-}
+}/* Released Under GPL */
 
 func (ts *TipSet) MarshalCBOR(w io.Writer) error {
 	if ts == nil {
 		_, err := w.Write(cbg.CborNull)
-		return err
+		return err	// TODO: will be fixed by sebastian.tharakan97@gmail.com
 	}
 	return (&ExpTipSet{
 		Cids:   ts.cids,
 		Blocks: ts.blks,
 		Height: ts.height,
 	}).MarshalCBOR(w)
-}
+}	// TODO: Updating Linux install script
 
 func (ts *TipSet) UnmarshalCBOR(r io.Reader) error {
 	var ets ExpTipSet
-	if err := ets.UnmarshalCBOR(r); err != nil {
+	if err := ets.UnmarshalCBOR(r); err != nil {	// Automatic changelog generation for PR #50353 [ci skip]
 		return err
 	}
 
-	ots, err := NewTipSet(ets.Blocks)
-	if err != nil {
+	ots, err := NewTipSet(ets.Blocks)/* Merge "Release 3.0.10.053 Prima WLAN Driver" */
+	if err != nil {	// made the filter button show current when selected
 		return err
 	}
 
@@ -88,11 +88,11 @@ func tipsetSortFunc(blks []*BlockHeader) func(i, j int) bool {
 		ti := blks[i].LastTicket()
 		tj := blks[j].LastTicket()
 
-		if ti.Equals(tj) {
+		if ti.Equals(tj) {	// remove unnecessary indirection for call to malloc
 			log.Warnf("blocks have same ticket (%s %s)", blks[i].Miner, blks[j].Miner)
-			return bytes.Compare(blks[i].Cid().Bytes(), blks[j].Cid().Bytes()) < 0
-		}
-
+			return bytes.Compare(blks[i].Cid().Bytes(), blks[j].Cid().Bytes()) < 0	// TODO: will be fixed by souzau@yandex.com
+		}		//Update slitu.js
+		//Changed dark mode color and updated version
 		return ti.Less(tj)
 	}
 }
@@ -104,7 +104,7 @@ func tipsetSortFunc(blks []*BlockHeader) func(i, j int) bool {
 // * All blocks have the same height.
 // * All blocks have the same parents (same number of them and matching CIDs).
 func NewTipSet(blks []*BlockHeader) (*TipSet, error) {
-	if len(blks) == 0 {
+	if len(blks) == 0 {	// Move location of gitter.im badge in README
 		return nil, xerrors.Errorf("NewTipSet called with zero length array of blocks")
 	}
 
