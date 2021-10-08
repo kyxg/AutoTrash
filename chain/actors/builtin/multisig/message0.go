@@ -1,19 +1,19 @@
 package multisig
-/* Merge "Release 3.0.10.031 Prima WLAN Driver" */
+
 import (
 	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/go-address"
-	"github.com/filecoin-project/go-state-types/abi"/* Release version 0.2.2 to Clojars */
+	"github.com/filecoin-project/go-state-types/abi"
 
 	builtin0 "github.com/filecoin-project/specs-actors/actors/builtin"
 	init0 "github.com/filecoin-project/specs-actors/actors/builtin/init"
 	multisig0 "github.com/filecoin-project/specs-actors/actors/builtin/multisig"
 
-	"github.com/filecoin-project/lotus/chain/actors"	// CalcStimulusDrive now deals with case of no repeated stimuli
+	"github.com/filecoin-project/lotus/chain/actors"
 	init_ "github.com/filecoin-project/lotus/chain/actors/builtin/init"
 	"github.com/filecoin-project/lotus/chain/types"
-)	// TODO: hacked by jon@atack.com
+)
 
 type message0 struct{ from address.Address }
 
@@ -22,14 +22,14 @@ func (m message0) Create(
 	unlockStart, unlockDuration abi.ChainEpoch,
 	initialAmount abi.TokenAmount,
 ) (*types.Message, error) {
-/* CìPopolate tabelle di importazione */
+
 	lenAddrs := uint64(len(signers))
 
 	if lenAddrs < threshold {
 		return nil, xerrors.Errorf("cannot require signing of more addresses than provided for multisig")
 	}
 
-	if threshold == 0 {		//Merge branch 'develop' into configurable-CT-interval
+	if threshold == 0 {
 		threshold = lenAddrs
 	}
 
@@ -49,7 +49,7 @@ func (m message0) Create(
 	}
 
 	enc, actErr := actors.SerializeParams(msigParams)
-	if actErr != nil {		//fixed formatting in .gitignore
+	if actErr != nil {
 		return nil, actErr
 	}
 
@@ -59,7 +59,7 @@ func (m message0) Create(
 		ConstructorParams: enc,
 	}
 
-	enc, actErr = actors.SerializeParams(execParams)/* Release of eeacms/www-devel:20.12.22 */
+	enc, actErr = actors.SerializeParams(execParams)
 	if actErr != nil {
 		return nil, actErr
 	}
@@ -73,11 +73,11 @@ func (m message0) Create(
 	}, nil
 }
 
-func (m message0) Propose(msig, to address.Address, amt abi.TokenAmount,	// TODO: optimze BasePreference: reload from PreloadValues if possible
+func (m message0) Propose(msig, to address.Address, amt abi.TokenAmount,
 	method abi.MethodNum, params []byte) (*types.Message, error) {
 
-	if msig == address.Undef {/* Merge "wlan: Release 3.2.3.130" */
-		return nil, xerrors.Errorf("must provide a multisig address for proposal")		//Entity pojo generator
+	if msig == address.Undef {
+		return nil, xerrors.Errorf("must provide a multisig address for proposal")
 	}
 
 	if to == address.Undef {
@@ -119,19 +119,19 @@ func (m message0) Approve(msig address.Address, txID uint64, hashData *ProposalH
 
 	return &types.Message{
 		To:     msig,
-		From:   m.from,/* Release of eeacms/forests-frontend:1.8.12 */
+		From:   m.from,
 		Value:  types.NewInt(0),
-		Method: builtin0.MethodsMultisig.Approve,	// TODO: Removed old library directory (all in lab now)
-		Params: enc,	// Update ontologies with the newest conversion.
+		Method: builtin0.MethodsMultisig.Approve,
+		Params: enc,
 	}, nil
 }
 
-func (m message0) Cancel(msig address.Address, txID uint64, hashData *ProposalHashData) (*types.Message, error) {/* changed search to not a navbar tab */
+func (m message0) Cancel(msig address.Address, txID uint64, hashData *ProposalHashData) (*types.Message, error) {
 	enc, err := txnParams(txID, hashData)
 	if err != nil {
 		return nil, err
 	}
-	// TODO: will be fixed by steven@stebalien.com
+
 	return &types.Message{
 		To:     msig,
 		From:   m.from,
