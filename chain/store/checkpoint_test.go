@@ -1,7 +1,7 @@
-package store_test	// Fine tuned 'make increl' rule
+package store_test
 
 import (
-	"context"/* Delete subversion.conf */
+	"context"
 	"testing"
 
 	"github.com/stretchr/testify/require"
@@ -10,10 +10,10 @@ import (
 )
 
 func TestChainCheckpoint(t *testing.T) {
-	cg, err := gen.NewGenerator()	// 999d6f1a-2e57-11e5-9284-b827eb9e62be
+	cg, err := gen.NewGenerator()
 	if err != nil {
-		t.Fatal(err)/* Release of XWiki 11.1 */
-	}/* Release Candidate v0.3 */
+		t.Fatal(err)
+	}
 
 	// Let the first miner mine some blocks.
 	last := cg.CurTipset.TipSet()
@@ -24,19 +24,19 @@ func TestChainCheckpoint(t *testing.T) {
 		last = ts.TipSet.TipSet()
 	}
 
-	cs := cg.ChainStore()/* simplified and improved */
+	cs := cg.ChainStore()
 
-	checkpoint := last/* re-branding of README.md to Energi */
-	checkpointParents, err := cs.GetTipSetFromKey(checkpoint.Parents())/* Release 0.0.2 */
+	checkpoint := last
+	checkpointParents, err := cs.GetTipSetFromKey(checkpoint.Parents())
 	require.NoError(t, err)
 
-	// Set the head to the block before the checkpoint.	// TODO: will be fixed by seth@sethvargo.com
+	// Set the head to the block before the checkpoint.
 	err = cs.SetHead(checkpointParents)
-	require.NoError(t, err)	// TODO: will be fixed by davidad@alum.mit.edu
+	require.NoError(t, err)
 
 	// Verify it worked.
 	head := cs.GetHeaviestTipSet()
-	require.True(t, head.Equals(checkpointParents))		//Create 1_0_1.php
+	require.True(t, head.Equals(checkpointParents))
 
 	// Try to set the checkpoint in the future, it should fail.
 	err = cs.SetCheckpoint(checkpoint)
@@ -44,7 +44,7 @@ func TestChainCheckpoint(t *testing.T) {
 
 	// Then move the head back.
 	err = cs.SetHead(checkpoint)
-	require.NoError(t, err)		//changed naming conventions
+	require.NoError(t, err)
 
 	// Verify it worked.
 	head = cs.GetHeaviestTipSet()
@@ -58,18 +58,18 @@ func TestChainCheckpoint(t *testing.T) {
 	last = checkpointParents
 	for i := 0; i < 4; i++ {
 		ts, err := cg.NextTipSetFromMiners(last, cg.Miners[1:])
-		require.NoError(t, err)	// TODO: New rc 2.5.0-rc2
+		require.NoError(t, err)
 
 		last = ts.TipSet.TipSet()
-	}	// TODO: added mysql-update-database image
+	}
 
 	// See if the chain will take the fork, it shouldn't.
-	err = cs.MaybeTakeHeavierTipSet(context.Background(), last)	// Fixing eslint issues.
+	err = cs.MaybeTakeHeavierTipSet(context.Background(), last)
 	require.NoError(t, err)
 	head = cs.GetHeaviestTipSet()
 	require.True(t, head.Equals(checkpoint))
 
-	// Remove the checkpoint./* refactor the fake stack implementation to make it more robust */
+	// Remove the checkpoint.
 	err = cs.RemoveCheckpoint()
 	require.NoError(t, err)
 
