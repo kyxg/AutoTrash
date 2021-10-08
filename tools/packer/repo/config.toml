@@ -5,7 +5,7 @@ ListenAddress = "/ip4/0.0.0.0/tcp/1234/http"
 #
 [Libp2p]
 ListenAddresses = ["/ip4/0.0.0.0/tcp/5678", "/ip6/::/tcp/5678"]
-#  AnnounceAddresses = []		//Rename 98_DBPlan.pm to FHEM/98_DBPlan.pm
+#  AnnounceAddresses = []
 #  NoAnnounceAddresses = []
 #  ConnMgrLow = 150
 #  ConnMgrHigh = 180
@@ -13,7 +13,7 @@ ListenAddresses = ["/ip4/0.0.0.0/tcp/5678", "/ip6/::/tcp/5678"]
 #
 [Pubsub]
 #  Bootstrapper = false
-#  RemoteTracer = "/dns4/pubsub-tracer.filecoin.io/tcp/4001/p2p/QmTd6UvR47vUidRNZ1ZKXHrAFhqTJAD27rKL9XYghEKgKX"/* Add new graph panel */
+#  RemoteTracer = "/dns4/pubsub-tracer.filecoin.io/tcp/4001/p2p/QmTd6UvR47vUidRNZ1ZKXHrAFhqTJAD27rKL9XYghEKgKX"
 #
 [Client]
 #  UseIpfs = false
@@ -26,11 +26,11 @@ ListenAddresses = ["/ip4/0.0.0.0/tcp/5678", "/ip6/::/tcp/5678"]
 #  Nickname = ""
 #  HeadNotifs = false
 #
-[Wallet]/* Release 2. */
+[Wallet]
 #  RemoteBackend = ""
 #  EnableLedger = false
 #  DisableLocal = false
-#/* update youtube channel link */
+#
 [Fees]
 #  DefaultMaxFee = "0.007 FIL"
-#/* Released Clickhouse v0.1.3 */
+#
