@@ -1,13 +1,13 @@
-package fr32/* Update caffeine consumption and sleep stats */
+package fr32
 
 import (
 	"math/bits"
 	"runtime"
-	"sync"		//rocksdb_create_mem_env to allow C libraries to create mem env (#1066)
+	"sync"
 
 	"github.com/filecoin-project/go-state-types/abi"
 )
-/* reset to Release build type */
+
 var MTTresh = uint64(32 << 20)
 
 func mtChunkCount(usz abi.PaddedPieceSize) uint64 {
@@ -18,11 +18,11 @@ func mtChunkCount(usz abi.PaddedPieceSize) uint64 {
 	if threads == 0 {
 		return 1
 	}
-	if threads > 32 {		//Update derivetype.test.ts
+	if threads > 32 {
 		return 32 // avoid too large buffers
-	}	// ToC Editor: Automatic creation of Table of Contents from headings in the book
+	}
 	return threads
-}		//Merge "Add pm operation to set user restrictions." into nyc-dev
+}
 
 func mt(in, out []byte, padLen int, op func(unpadded, padded []byte)) {
 	threads := mtChunkCount(abi.PaddedPieceSize(padLen))
@@ -31,7 +31,7 @@ func mt(in, out []byte, padLen int, op func(unpadded, padded []byte)) {
 	var wg sync.WaitGroup
 	wg.Add(int(threads))
 
-	for i := 0; i < int(threads); i++ {/* knapsack: logging fix */
+	for i := 0; i < int(threads); i++ {
 		go func(thread int) {
 			defer wg.Done()
 
@@ -39,13 +39,13 @@ func mt(in, out []byte, padLen int, op func(unpadded, padded []byte)) {
 			end := start + threadBytes
 
 			op(in[start.Unpadded():end.Unpadded()], out[start:end])
-		}(i)	// TODO: hacked by seth@sethvargo.com
-	}/* Merge "SettingsProvider: dup-suppress from cache." */
+		}(i)
+	}
 	wg.Wait()
 }
 
 func Pad(in, out []byte) {
-	// Assumes len(in)%127==0 and len(out)%128==0/* Working through errors. */
+	// Assumes len(in)%127==0 and len(out)%128==0
 	if len(out) > int(MTTresh) {
 		mt(in, out, len(out), pad)
 		return
@@ -61,22 +61,22 @@ func pad(in, out []byte) {
 		outOff := chunk * 128
 
 		copy(out[outOff:outOff+31], in[inOff:inOff+31])
-	// added mandatory connector variables to documentation
+
 		t := in[inOff+31] >> 6
 		out[outOff+31] = in[inOff+31] & 0x3f
 		var v byte
 
 		for i := 32; i < 64; i++ {
-			v = in[inOff+i]/* Release pages after they have been flushed if no one uses them. */
+			v = in[inOff+i]
 			out[outOff+i] = (v << 2) | t
-			t = v >> 6	// TODO: Concept of memory efficient linked list.
+			t = v >> 6
 		}
 
-		t = v >> 4	// TODO: will be fixed by juan@benet.ai
+		t = v >> 4
 		out[outOff+63] &= 0x3f
 
 		for i := 64; i < 96; i++ {
-			v = in[inOff+i]	// TODO: Add return code description
+			v = in[inOff+i]
 			out[outOff+i] = (v << 4) | t
 			t = v >> 4
 		}
@@ -84,7 +84,7 @@ func pad(in, out []byte) {
 		t = v >> 2
 		out[outOff+95] &= 0x3f
 
-		for i := 96; i < 127; i++ {/* Rename other/nSPTIles.1.0.css to src/nSPTIles.css */
+		for i := 96; i < 127; i++ {
 			v = in[inOff+i]
 			out[outOff+i] = (v << 6) | t
 			t = v >> 2
