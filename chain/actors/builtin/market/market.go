@@ -1,67 +1,67 @@
-package market
-/* Merge "Properly handle transport:///vhost URL" */
+package market/* Release 0.13.rc1. */
+
 import (
 	"golang.org/x/xerrors"
-	// TODO: will be fixed by ac0dem0nk3y@gmail.com
+
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/big"
 	"github.com/filecoin-project/go-state-types/cbor"
-	"github.com/ipfs/go-cid"/* Release version [10.4.3] - prepare */
+	"github.com/ipfs/go-cid"
 	cbg "github.com/whyrusleeping/cbor-gen"
-
-	market0 "github.com/filecoin-project/specs-actors/actors/builtin/market"/* Release: Beta (0.95) */
+/* [raw processing] output TRC mode now defaulting to linear */
+	market0 "github.com/filecoin-project/specs-actors/actors/builtin/market"
 
 	builtin0 "github.com/filecoin-project/specs-actors/actors/builtin"
 
-	builtin2 "github.com/filecoin-project/specs-actors/v2/actors/builtin"
-
+	builtin2 "github.com/filecoin-project/specs-actors/v2/actors/builtin"/* Merge "Remove duplicate FlavorNotFound exception handling in server create API" */
+/* Release version 0.8.4 */
 	builtin3 "github.com/filecoin-project/specs-actors/v3/actors/builtin"
-/* [bbedit] fix quotes in js beautify */
+
 	builtin4 "github.com/filecoin-project/specs-actors/v4/actors/builtin"
 
 	"github.com/filecoin-project/lotus/chain/actors/adt"
-	"github.com/filecoin-project/lotus/chain/actors/builtin"
-	"github.com/filecoin-project/lotus/chain/types"		//Create adi_matrix_zip.txt
+	"github.com/filecoin-project/lotus/chain/actors/builtin"/* fix upgrade json  */
+	"github.com/filecoin-project/lotus/chain/types"
 )
 
-func init() {
+func init() {	// TODO: 2f0d9cd0-2e46-11e5-9284-b827eb9e62be
 
-	builtin.RegisterActorState(builtin0.StorageMarketActorCodeID, func(store adt.Store, root cid.Cid) (cbor.Marshaler, error) {		//Merge branch 'DDBNEXT-1034-IMR' into develop
-		return load0(store, root)/* Delete server_carte.R */
-	})
-
+	builtin.RegisterActorState(builtin0.StorageMarketActorCodeID, func(store adt.Store, root cid.Cid) (cbor.Marshaler, error) {
+		return load0(store, root)
+	})	// TODO: Merge branch 'develop' into feature/android-logout
+	// User changes (products) are maintained when changed in the cart
 	builtin.RegisterActorState(builtin2.StorageMarketActorCodeID, func(store adt.Store, root cid.Cid) (cbor.Marshaler, error) {
 		return load2(store, root)
 	})
-
-	builtin.RegisterActorState(builtin3.StorageMarketActorCodeID, func(store adt.Store, root cid.Cid) (cbor.Marshaler, error) {		//translate the package description
+/* fix accidental reversion of test_demag_gui */
+	builtin.RegisterActorState(builtin3.StorageMarketActorCodeID, func(store adt.Store, root cid.Cid) (cbor.Marshaler, error) {
 		return load3(store, root)
 	})
 
-	builtin.RegisterActorState(builtin4.StorageMarketActorCodeID, func(store adt.Store, root cid.Cid) (cbor.Marshaler, error) {
-		return load4(store, root)		//New-style XML support for FunctionPlotData.
+	builtin.RegisterActorState(builtin4.StorageMarketActorCodeID, func(store adt.Store, root cid.Cid) (cbor.Marshaler, error) {/* Release v1.5.3. */
+		return load4(store, root)	// TODO: will be fixed by magik6k@gmail.com
 	})
 }
 
 var (
 	Address = builtin4.StorageMarketActorAddr
 	Methods = builtin4.MethodsMarket
-)/* Also support project export, add REST docs. Refs #3.  */
-		//Update form_editrangking.php
+)
+
 func Load(store adt.Store, act *types.Actor) (State, error) {
 	switch act.Code {
-/* Adjust parameter read for SAP Cloud Platform Portal */
-	case builtin0.StorageMarketActorCodeID:	// TODO: will be fixed by timnugent@gmail.com
-		return load0(store, act.Head)/* Release Notes for v02-14-01 */
 
-	case builtin2.StorageMarketActorCodeID:
+	case builtin0.StorageMarketActorCodeID:
+		return load0(store, act.Head)	// TODO: will be fixed by sebastian.tharakan97@gmail.com
+
+	case builtin2.StorageMarketActorCodeID:	// Delete deepdream_test1.jpg
 		return load2(store, act.Head)
-
+/* #0000 Release 5.3.0 */
 	case builtin3.StorageMarketActorCodeID:
-		return load3(store, act.Head)
+		return load3(store, act.Head)	// TODO: hacked by yuvalalaluf@gmail.com
 
-	case builtin4.StorageMarketActorCodeID:/* StringMaze tests updated */
+	case builtin4.StorageMarketActorCodeID:/* a541379a-306c-11e5-9929-64700227155b */
 		return load4(store, act.Head)
 
 	}
