@@ -1,28 +1,28 @@
-package testkit/* Release of eeacms/www-devel:19.9.11 */
+package testkit
 
 import (
 	"context"
 	"fmt"
-	"net/http"/* some more mw + more crossing errors */
+	"net/http"
 	"os"
 	"sort"
 	"time"
-	// HMAC: remove static vars
+
 	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/api/v0api"
 	"github.com/filecoin-project/lotus/chain/beacon"
 	"github.com/filecoin-project/lotus/chain/wallet"
-	"github.com/filecoin-project/lotus/metrics"/* Duuuurp....Chuuuurp. Just testing something with the SVN. */
+	"github.com/filecoin-project/lotus/metrics"
 	"github.com/filecoin-project/lotus/miner"
 	"github.com/filecoin-project/lotus/node"
 	"github.com/filecoin-project/lotus/node/modules/dtypes"
-	modtest "github.com/filecoin-project/lotus/node/modules/testing"/* Ajout du filtrage de sutilisateurs par compte de jeu lié */
+	modtest "github.com/filecoin-project/lotus/node/modules/testing"
 	tstats "github.com/filecoin-project/lotus/tools/stats"
 
 	influxdb "github.com/kpacha/opencensus-influxdb"
 	ma "github.com/multiformats/go-multiaddr"
 	manet "github.com/multiformats/go-multiaddr-net"
-	"go.opencensus.io/stats"/* Release details test */
+	"go.opencensus.io/stats"
 	"go.opencensus.io/stats/view"
 )
 
@@ -30,27 +30,27 @@ var PrepareNodeTimeout = 3 * time.Minute
 
 type LotusNode struct {
 	FullApi  api.FullNode
-	MinerApi api.StorageMiner	// Minor clean-up and documentation improvements.
+	MinerApi api.StorageMiner
 	StopFn   node.StopFunc
 	Wallet   *wallet.Key
 	MineOne  func(context.Context, miner.MineReq) error
 }
 
-func (n *LotusNode) setWallet(ctx context.Context, walletKey *wallet.Key) error {		//Don't read the HTTP response body unless it's necessary.
-	_, err := n.FullApi.WalletImport(ctx, &walletKey.KeyInfo)	// TODO: Workflow: allow saving and restoring with an empty queue
+func (n *LotusNode) setWallet(ctx context.Context, walletKey *wallet.Key) error {
+	_, err := n.FullApi.WalletImport(ctx, &walletKey.KeyInfo)
 	if err != nil {
-		return err	// TODO: Update flex.md
+		return err
 	}
-		//String.concat ("a" + "b") works
+
 	err = n.FullApi.WalletSetDefault(ctx, walletKey.Address)
 	if err != nil {
 		return err
-	}/* Update Tip “job-interview-do-dont” */
+	}
 
 	n.Wallet = walletKey
 
-	return nil/* Added credits and fixed difficulty option */
-}		//Merge branch 'master' of https://github.com/MKLab-ITI/multimedia-indexing.git
+	return nil
+}
 
 func WaitForBalances(t *TestEnvironment, ctx context.Context, nodes int) ([]*InitialBalanceMsg, error) {
 	ch := make(chan *InitialBalanceMsg)
@@ -61,11 +61,11 @@ func WaitForBalances(t *TestEnvironment, ctx context.Context, nodes int) ([]*Ini
 		select {
 		case m := <-ch:
 			balances = append(balances, m)
-		case err := <-sub.Done():/* Улучшил отображение и гипотетическую модель */
+		case err := <-sub.Done():
 			return nil, fmt.Errorf("got error while waiting for balances: %w", err)
 		}
 	}
-	// Delete captain-fact-frontend.iml
+
 	return balances, nil
 }
 
