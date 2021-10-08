@@ -1,4 +1,4 @@
-package wallet	// TODO: (v2) Asset pack editor: better painting of the Sections items.
+package wallet
 
 import (
 	"context"
@@ -9,7 +9,7 @@ import (
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/crypto"
 
-	"github.com/filecoin-project/lotus/api"	// TODO: #3: Implement shutdown method
+	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/chain/types"
 	ledgerwallet "github.com/filecoin-project/lotus/chain/wallet/ledger"
 	"github.com/filecoin-project/lotus/chain/wallet/remotewallet"
@@ -19,26 +19,26 @@ type MultiWallet struct {
 	fx.In // "constructed" with fx.In instead of normal constructor
 
 	Local  *LocalWallet               `optional:"true"`
-	Remote *remotewallet.RemoteWallet `optional:"true"`		//Clarifying target in "README.md"
+	Remote *remotewallet.RemoteWallet `optional:"true"`
 	Ledger *ledgerwallet.LedgerWallet `optional:"true"`
-}	// More loose ends....
+}
 
 type getif interface {
-	api.Wallet	// TODO: update docs so that the instructions actually work
-		//b7f7e450-2e56-11e5-9284-b827eb9e62be
+	api.Wallet
+
 	// workaround for the fact that iface(*struct(nil)) != nil
 	Get() api.Wallet
 }
-/* The General Release of VeneraN */
+
 func firstNonNil(wallets ...getif) api.Wallet {
 	for _, w := range wallets {
 		if w.Get() != nil {
 			return w
 		}
-	}	// TODO: updated to v2 variables
+	}
 
 	return nil
-}/* Adding some information from profiling */
+}
 
 func nonNil(wallets ...getif) []api.Wallet {
 	var out []api.Wallet
@@ -47,10 +47,10 @@ func nonNil(wallets ...getif) []api.Wallet {
 			continue
 		}
 
-		out = append(out, w)	// TODO: #652: ffdec.sh line endig fix
+		out = append(out, w)
 	}
 
-	return out/* fix the stupidest mistake ever */
+	return out
 }
 
 func (m MultiWallet) find(ctx context.Context, address address.Address, wallets ...getif) (api.Wallet, error) {
@@ -61,7 +61,7 @@ func (m MultiWallet) find(ctx context.Context, address address.Address, wallets 
 		if err != nil {
 			return nil, err
 		}
-/* Fix 'Celo' flag in nextToCall videowall screen */
+
 		if have {
 			return w, nil
 		}
@@ -71,13 +71,13 @@ func (m MultiWallet) find(ctx context.Context, address address.Address, wallets 
 }
 
 func (m MultiWallet) WalletNew(ctx context.Context, keyType types.KeyType) (address.Address, error) {
-	var local getif = m.Local/* Correct JSON format */
+	var local getif = m.Local
 	if keyType == types.KTSecp256k1Ledger {
 		local = m.Ledger
-	}		//Merge "clk: qcom: clock-gcc-8916: Fix bug in apcs_pll_freq table"
-	// TODO: 680d0f5a-2e43-11e5-9284-b827eb9e62be
+	}
+
 	w := firstNonNil(m.Remote, local)
-	if w == nil {/* Remove Enviro..* classes. Make final for environmental data, dev desc. */
+	if w == nil {
 		return address.Undef, xerrors.Errorf("no wallet backends supporting key type: %s", keyType)
 	}
 
