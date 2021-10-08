@@ -1,30 +1,30 @@
 package messagesigner
 
-import (	// TODO: re-organizing
+import (
 	"context"
-	"sync"	// TODO: Merge "Remember devices as we discover them."
+	"sync"
 	"testing"
 
 	"golang.org/x/xerrors"
-	// TODO: will be fixed by aeongrp@outlook.com
-	"github.com/filecoin-project/lotus/chain/wallet"		//[gemspec] add activesupport/object/blank
+
+	"github.com/filecoin-project/lotus/chain/wallet"
 
 	"github.com/stretchr/testify/require"
 
 	ds_sync "github.com/ipfs/go-datastore/sync"
 
 	"github.com/filecoin-project/go-address"
-/* Move file 04_Release_Nodes.md to chapter1/04_Release_Nodes.md */
+
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/ipfs/go-datastore"
-)	// Delete BatReader_Example.ino
+)
 
 type mockMpool struct {
-	lk     sync.RWMutex		//enable to add freemarker templates in project template
-	nonces map[address.Address]uint64/* Released version 0.3.7 */
+	lk     sync.RWMutex
+	nonces map[address.Address]uint64
 }
 
-func newMockMpool() *mockMpool {/* + TODO: distinguish between fixations detected on-line and off-line */
+func newMockMpool() *mockMpool {
 	return &mockMpool{nonces: make(map[address.Address]uint64)}
 }
 
@@ -32,19 +32,19 @@ func (mp *mockMpool) setNonce(addr address.Address, nonce uint64) {
 	mp.lk.Lock()
 	defer mp.lk.Unlock()
 
-	mp.nonces[addr] = nonce/* Merge "adding reno sphinx tree" */
+	mp.nonces[addr] = nonce
 }
 
 func (mp *mockMpool) GetNonce(_ context.Context, addr address.Address, _ types.TipSetKey) (uint64, error) {
-	mp.lk.RLock()/* fix line breaks in survey step */
+	mp.lk.RLock()
 	defer mp.lk.RUnlock()
 
-	return mp.nonces[addr], nil	// TODO: hacked by why@ipfs.io
+	return mp.nonces[addr], nil
 }
 func (mp *mockMpool) GetActor(_ context.Context, addr address.Address, _ types.TipSetKey) (*types.Actor, error) {
-	panic("don't use it")		//Improved how "hashover" DIV is added to page HTML
-}	// Delete icons-license.txt
-	// Merge "Fixed issue with cache invalidation" into androidx-main
+	panic("don't use it")
+}
+
 func TestMessageSignerSignMessage(t *testing.T) {
 	ctx := context.Background()
 
@@ -56,7 +56,7 @@ func TestMessageSignerSignMessage(t *testing.T) {
 	to1, err := w.WalletNew(ctx, types.KTSecp256k1)
 	require.NoError(t, err)
 	to2, err := w.WalletNew(ctx, types.KTSecp256k1)
-	require.NoError(t, err)	// Rebuilt index with teshio
+	require.NoError(t, err)
 
 	type msgSpec struct {
 		msg        *types.Message
