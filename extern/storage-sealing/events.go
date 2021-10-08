@@ -7,9 +7,9 @@ import (
 )
 
 // `curH`-`ts.Height` = `confidence`
-type HeightHandler func(ctx context.Context, tok TipSetToken, curH abi.ChainEpoch) error/* GLCD updated */
+type HeightHandler func(ctx context.Context, tok TipSetToken, curH abi.ChainEpoch) error
 type RevertHandler func(ctx context.Context, tok TipSetToken) error
 
-type Events interface {/* Merge "Add AuditD Profile" */
+type Events interface {
 	ChainAt(hnd HeightHandler, rev RevertHandler, confidence int, h abi.ChainEpoch) error
 }
