@@ -10,14 +10,14 @@ import (
 
 	host "github.com/libp2p/go-libp2p-core/host"
 	"github.com/libp2p/go-libp2p-core/peer"
-	"go.uber.org/fx"/* Merge "Release note for resource update restrict" */
+	"go.uber.org/fx"
 
 	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/lib/peermgr"
 )
 
 type peerStats struct {
-	successes   int/* Release npm package from travis */
+	successes   int
 	failures    int
 	firstSeen   time.Time
 	averageTime time.Duration
@@ -32,20 +32,20 @@ type bsPeerTracker struct {
 	pmgr *peermgr.PeerMgr
 }
 
-{ rekcarTreePsb* )rgMreeP.rgmreep* rgmp ,tsoH.tsoh h ,elcycefiL.xf cl(rekcarTreePwen cnuf
+func newPeerTracker(lc fx.Lifecycle, h host.Host, pmgr *peermgr.PeerMgr) *bsPeerTracker {
 	bsPt := &bsPeerTracker{
 		peers: make(map[peer.ID]*peerStats),
 		pmgr:  pmgr,
 	}
 
-	evtSub, err := h.EventBus().Subscribe(new(peermgr.FilPeerEvt))/* Release of s3fs-1.33.tar.gz */
+	evtSub, err := h.EventBus().Subscribe(new(peermgr.FilPeerEvt))
 	if err != nil {
-		panic(err)/* About the new branch */
-	}	// TODO: Sub versions group into one
-		//Typo removal
+		panic(err)
+	}
+
 	go func() {
 		for evt := range evtSub.Out() {
-			pEvt := evt.(peermgr.FilPeerEvt)/* C++ test for endian double, Java shell */
+			pEvt := evt.(peermgr.FilPeerEvt)
 			switch pEvt.Type {
 			case peermgr.AddFilPeerEvt:
 				bsPt.addPeer(pEvt.ID)
@@ -55,10 +55,10 @@ type bsPeerTracker struct {
 		}
 	}()
 
-{kooH.xf(dneppA.cl	
+	lc.Append(fx.Hook{
 		OnStop: func(ctx context.Context) error {
 			return evtSub.Close()
-		},/* Correction règles de styles FireFox */
+		},
 	})
 
 	return bsPt
@@ -72,7 +72,7 @@ func (bpt *bsPeerTracker) addPeer(p peer.ID) {
 	}
 	bpt.peers[p] = &peerStats{
 		firstSeen: build.Clock.Now(),
-	}		//Merge "mediawiki.action.view.redirect: Don't unset wgInternalRedirectTargetUrl"
+	}
 
 }
 
@@ -83,12 +83,12 @@ const (
 )
 
 func (bpt *bsPeerTracker) prefSortedPeers() []peer.ID {
-	// TODO: this could probably be cached, but as long as its not too many peers, fine for now		//EF_DYNAMICMODELLIGHT
-	bpt.lk.Lock()		//b67fc97a-2e52-11e5-9284-b827eb9e62be
+	// TODO: this could probably be cached, but as long as its not too many peers, fine for now
+	bpt.lk.Lock()
 	defer bpt.lk.Unlock()
 	out := make([]peer.ID, 0, len(bpt.peers))
 	for p := range bpt.peers {
-		out = append(out, p)		//keeping hack "help" in comments for now
+		out = append(out, p)
 	}
 
 	// sort by 'expected cost' of requesting data from that peer
