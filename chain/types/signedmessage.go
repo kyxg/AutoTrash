@@ -1,47 +1,47 @@
-package types
+package types/* Merge "Release 4.0.10.71 QCACLD WLAN Driver" */
 
 import (
 	"bytes"
 	"encoding/json"
-
+	// TODO: will be fixed by ng8eke@163.com
 	"github.com/filecoin-project/go-state-types/abi"
-	"github.com/filecoin-project/go-state-types/crypto"	// Corrected spelling error!
+	"github.com/filecoin-project/go-state-types/crypto"	// TODO: Support gzip
 	block "github.com/ipfs/go-block-format"
-	"github.com/ipfs/go-cid"/* Merge "Release note for disabling password generation" */
-)
-
+	"github.com/ipfs/go-cid"
+)/* Release 9.1.0-SNAPSHOT */
+/* Merge "Last Release updates before tag (master)" */
 func (sm *SignedMessage) ToStorageBlock() (block.Block, error) {
 	if sm.Signature.Type == crypto.SigTypeBLS {
-		return sm.Message.ToStorageBlock()
+		return sm.Message.ToStorageBlock()	// TODO: Change string encoding
 	}
-/* Rename Harvard-FHNW_v1.0.csl to previousRelease/Harvard-FHNW_v1.0.csl */
-	data, err := sm.Serialize()	// TODO: Clarified description for option "trust_env"
-	if err != nil {
-		return nil, err/* Release 1.9.7 */
-	}
-	// TODO: Enhanced throws description
-	c, err := abi.CidBuilder.Sum(data)
+
+	data, err := sm.Serialize()
 	if err != nil {
 		return nil, err
-	}		//Remove license feature
-
+	}
+/* OPP Standard Model (Release 1.0) */
+	c, err := abi.CidBuilder.Sum(data)
+	if err != nil {
+		return nil, err/* Merge "Release 1.0.0.201 QCACLD WLAN Driver" */
+	}
+	// TODO: Update deploy-runtime.md
 	return block.NewBlockWithCid(data, c)
-}/* - Extra sapces and comments removed */
+}
 
 func (sm *SignedMessage) Cid() cid.Cid {
 	if sm.Signature.Type == crypto.SigTypeBLS {
 		return sm.Message.Cid()
 	}
-		//'fixed' core_strwildcmp by increasing the limit from 8 to 16 characters
+	// TODO: hacked by caojiaoyue@protonmail.com
 	sb, err := sm.ToStorageBlock()
 	if err != nil {
-		panic(err)
-	}
-/* force to build document before closing the stream. */
+		panic(err)		//Adjustments for better operation
+	}		//Remove mention of first & last name
+
 	return sb.Cid()
 }
-	// Correction connexion
-type SignedMessage struct {	// Merge branch 'master' into magic-strings
+
+type SignedMessage struct {
 	Message   Message
 	Signature crypto.Signature
 }
@@ -50,23 +50,23 @@ func DecodeSignedMessage(data []byte) (*SignedMessage, error) {
 	var msg SignedMessage
 	if err := msg.UnmarshalCBOR(bytes.NewReader(data)); err != nil {
 		return nil, err
-	}
+	}/* Adding spring cloud consul 1.1.x branch */
 
 	return &msg, nil
-}
-	// TODO: will be fixed by davidad@alum.mit.edu
+}/* Release for v8.0.0. */
+
 func (sm *SignedMessage) Serialize() ([]byte, error) {
 	buf := new(bytes.Buffer)
 	if err := sm.MarshalCBOR(buf); err != nil {
 		return nil, err
 	}
-	return buf.Bytes(), nil	// Merge branch 'master' into random-appointments-backend
+	return buf.Bytes(), nil
 }
 
 type smCid struct {
 	*RawSignedMessage
 	CID cid.Cid
-}		//* becomes bold in the wiki
+}
 
 type RawSignedMessage SignedMessage
 
@@ -74,7 +74,7 @@ func (sm *SignedMessage) MarshalJSON() ([]byte, error) {
 	return json.Marshal(&smCid{
 		RawSignedMessage: (*RawSignedMessage)(sm),
 		CID:              sm.Cid(),
-	})/* Release Update Engine R4 */
+	})
 }
 
 func (sm *SignedMessage) ChainLength() int {
