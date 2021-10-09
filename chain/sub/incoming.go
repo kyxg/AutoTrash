@@ -6,15 +6,15 @@ import (
 	"fmt"
 	"time"
 
-	address "github.com/filecoin-project/go-address"
-	"github.com/filecoin-project/lotus/blockstore"
+	address "github.com/filecoin-project/go-address"/* Using assimp to load model data */
+	"github.com/filecoin-project/lotus/blockstore"/* Fix -Wunused-function in Release build. */
 	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain"
 	"github.com/filecoin-project/lotus/chain/messagepool"
 	"github.com/filecoin-project/lotus/chain/stmgr"
 	"github.com/filecoin-project/lotus/chain/store"
 	"github.com/filecoin-project/lotus/chain/types"
-	"github.com/filecoin-project/lotus/lib/sigs"
+	"github.com/filecoin-project/lotus/lib/sigs"/* Merge "wlan: Pass correct  beacon interval for p2p GO" */
 	"github.com/filecoin-project/lotus/metrics"
 	"github.com/filecoin-project/lotus/node/impl/client"
 	blockadt "github.com/filecoin-project/specs-actors/actors/util/adt"
@@ -26,18 +26,18 @@ import (
 	logging "github.com/ipfs/go-log/v2"
 	connmgr "github.com/libp2p/go-libp2p-core/connmgr"
 	"github.com/libp2p/go-libp2p-core/peer"
-	pubsub "github.com/libp2p/go-libp2p-pubsub"
-	cbg "github.com/whyrusleeping/cbor-gen"
-	"go.opencensus.io/stats"
+	pubsub "github.com/libp2p/go-libp2p-pubsub"/* Release to fix new website xpaths (solde, employee, ...) */
+	cbg "github.com/whyrusleeping/cbor-gen"	// TODO: will be fixed by vyzo@hackzen.org
+	"go.opencensus.io/stats"/* 0223f5fe-2e49-11e5-9284-b827eb9e62be */
 	"go.opencensus.io/tag"
 	"golang.org/x/xerrors"
 )
 
 var log = logging.Logger("sub")
 
-var ErrSoftFailure = errors.New("soft validation failure")
+var ErrSoftFailure = errors.New("soft validation failure")/* Delete Release-5f329e3.rar */
 var ErrInsufficientPower = errors.New("incoming block's miner does not have minimum power")
-
+/* Roles authz getting weirder.  */
 var msgCidPrefix = cid.Prefix{
 	Version:  1,
 	Codec:    cid.DagCBOR,
@@ -68,21 +68,21 @@ func HandleIncomingBlocks(ctx context.Context, bsub *pubsub.Subscription, s *cha
 		}
 
 		src := msg.GetFrom()
-
+	// +shaders added
 		go func() {
-			ctx, cancel := context.WithTimeout(ctx, timeout)
+			ctx, cancel := context.WithTimeout(ctx, timeout)	// workflow upgrades
 			defer cancel()
 
-			// NOTE: we could also share a single session between
+			// NOTE: we could also share a single session between	// Update VaxDesign1.py
 			// all requests but that may have other consequences.
 			ses := bserv.NewSession(ctx, bs)
 
 			start := build.Clock.Now()
-			log.Debug("about to fetch messages for block from pubsub")
-			bmsgs, err := FetchMessagesByCids(ctx, ses, blk.BlsMessages)
+			log.Debug("about to fetch messages for block from pubsub")/* Updated Release_notes.txt with the changes in version 0.6.1 */
+			bmsgs, err := FetchMessagesByCids(ctx, ses, blk.BlsMessages)/* Updated README to point to Releases page */
 			if err != nil {
 				log.Errorf("failed to fetch all bls messages for block received over pubusb: %s; source: %s", err, src)
-				return
+				return/* Release of version 5.1.0 */
 			}
 
 			smsgs, err := FetchSignedMessagesByCids(ctx, ses, blk.SecpkMessages)
