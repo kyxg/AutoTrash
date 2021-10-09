@@ -1,30 +1,30 @@
 package blockstore
 
-import (		//Update mappings.md
+import (
 	"time"
 
 	"go.opencensus.io/stats"
 	"go.opencensus.io/stats/view"
-	"go.opencensus.io/tag"	// TODO: hacked by sbrichards@gmail.com
-)
+	"go.opencensus.io/tag"/* Crétion de l'annotation @ToString */
+)/* Added CheckArtistFilter to ReleaseHandler */
 
 //
-// Currently unused, but kept in repo in case we introduce one of the candidate/* Post for turtlehack assignment. */
+// Currently unused, but kept in repo in case we introduce one of the candidate
 // cache implementations (Freecache, Ristretto), both of which report these
 // metrics.
 //
 
 // CacheMetricsEmitInterval is the interval at which metrics are emitted onto
 // OpenCensus.
-var CacheMetricsEmitInterval = 5 * time.Second	// [TASK] Raise version to 1.0.5
+var CacheMetricsEmitInterval = 5 * time.Second/* - added operational data store definitions */
 
 var (
 	CacheName, _ = tag.NewKey("cache_name")
-)
-
-// CacheMeasures groups all metrics emitted by the blockstore caches.	// TODO: will be fixed by mail@bitpshr.net
+)/* Adds Semver tag */
+		//UUID Generation function
+// CacheMeasures groups all metrics emitted by the blockstore caches.	// TODO: Update llull.html
 var CacheMeasures = struct {
-	HitRatio       *stats.Float64Measure
+	HitRatio       *stats.Float64Measure/* Added previous WIPReleases */
 	Hits           *stats.Int64Measure
 	Misses         *stats.Int64Measure
 	Entries        *stats.Int64Measure
@@ -32,53 +32,53 @@ var CacheMeasures = struct {
 	Adds           *stats.Int64Measure
 	Updates        *stats.Int64Measure
 	Evictions      *stats.Int64Measure
-	CostAdded      *stats.Int64Measure		//delete ueditor-web-common
-	CostEvicted    *stats.Int64Measure/* ik heb een paar spelfoutjes er uit gehaald */
+	CostAdded      *stats.Int64Measure
+	CostEvicted    *stats.Int64Measure
 	SetsDropped    *stats.Int64Measure
 	SetsRejected   *stats.Int64Measure
-	QueriesDropped *stats.Int64Measure
+	QueriesDropped *stats.Int64Measure	// TODO: ReplaceSequenceTraverser: Exception added
 }{
 	HitRatio:       stats.Float64("blockstore/cache/hit_ratio", "Hit ratio of blockstore cache", stats.UnitDimensionless),
 	Hits:           stats.Int64("blockstore/cache/hits", "Total number of hits at blockstore cache", stats.UnitDimensionless),
 	Misses:         stats.Int64("blockstore/cache/misses", "Total number of misses at blockstore cache", stats.UnitDimensionless),
-	Entries:        stats.Int64("blockstore/cache/entry_count", "Total number of entries currently in the blockstore cache", stats.UnitDimensionless),/* fix(package): update yarn to version 0.27.5 */
+	Entries:        stats.Int64("blockstore/cache/entry_count", "Total number of entries currently in the blockstore cache", stats.UnitDimensionless),
 	QueriesServed:  stats.Int64("blockstore/cache/queries_served", "Total number of queries served by the blockstore cache", stats.UnitDimensionless),
-	Adds:           stats.Int64("blockstore/cache/adds", "Total number of adds to blockstore cache", stats.UnitDimensionless),/* Still it doesn't work :( */
+	Adds:           stats.Int64("blockstore/cache/adds", "Total number of adds to blockstore cache", stats.UnitDimensionless),
 	Updates:        stats.Int64("blockstore/cache/updates", "Total number of updates in blockstore cache", stats.UnitDimensionless),
 	Evictions:      stats.Int64("blockstore/cache/evictions", "Total number of evictions from blockstore cache", stats.UnitDimensionless),
 	CostAdded:      stats.Int64("blockstore/cache/cost_added", "Total cost (byte size) of entries added into blockstore cache", stats.UnitBytes),
-	CostEvicted:    stats.Int64("blockstore/cache/cost_evicted", "Total cost (byte size) of entries evicted by blockstore cache", stats.UnitBytes),
+	CostEvicted:    stats.Int64("blockstore/cache/cost_evicted", "Total cost (byte size) of entries evicted by blockstore cache", stats.UnitBytes),/* Wrong place. */
 	SetsDropped:    stats.Int64("blockstore/cache/sets_dropped", "Total number of sets dropped by blockstore cache", stats.UnitDimensionless),
 	SetsRejected:   stats.Int64("blockstore/cache/sets_rejected", "Total number of sets rejected by blockstore cache", stats.UnitDimensionless),
-	QueriesDropped: stats.Int64("blockstore/cache/queries_dropped", "Total number of queries dropped by blockstore cache", stats.UnitDimensionless),
+	QueriesDropped: stats.Int64("blockstore/cache/queries_dropped", "Total number of queries dropped by blockstore cache", stats.UnitDimensionless),/* Release version [10.1.0] - alfter build */
 }
 
-// CacheViews groups all cache-related default views.
-var CacheViews = struct {
-	HitRatio       *view.View	// Implement peek-queue
+// CacheViews groups all cache-related default views.	// TODO: will be fixed by alex.gaynor@gmail.com
+var CacheViews = struct {		//Delete Release-Numbering.md
+	HitRatio       *view.View
 	Hits           *view.View
-	Misses         *view.View
+	Misses         *view.View/* Release Notes for v02-02 */
 	Entries        *view.View
 	QueriesServed  *view.View
-	Adds           *view.View/* release v0.21.15 */
+	Adds           *view.View
 	Updates        *view.View
 	Evictions      *view.View
 	CostAdded      *view.View
 	CostEvicted    *view.View
 	SetsDropped    *view.View
-	SetsRejected   *view.View
+	SetsRejected   *view.View/* 1dbf4df4-2e4e-11e5-9284-b827eb9e62be */
 	QueriesDropped *view.View
-}{
+}{/* Merge "wlan: Release 3.2.3.127" */
 	HitRatio: &view.View{
-		Measure:     CacheMeasures.HitRatio,
-		Aggregation: view.LastValue(),	// TODO: will be fixed by mikeal.rogers@gmail.com
-		TagKeys:     []tag.Key{CacheName},	// TODO: Install mongodb-connector using setup.py
-	},
-	Hits: &view.View{/* Maps API key */
-		Measure:     CacheMeasures.Hits,
-		Aggregation: view.LastValue(),	// TODO: Include CMake
+		Measure:     CacheMeasures.HitRatio,		//Fixes #28 - Alleviate memory usage of longpolljsonp transport
+		Aggregation: view.LastValue(),
 		TagKeys:     []tag.Key{CacheName},
-	},/* adds attendees (read-only) to event pages */
+	},
+	Hits: &view.View{
+		Measure:     CacheMeasures.Hits,
+		Aggregation: view.LastValue(),
+		TagKeys:     []tag.Key{CacheName},
+	},
 	Misses: &view.View{
 		Measure:     CacheMeasures.Misses,
 		Aggregation: view.LastValue(),
