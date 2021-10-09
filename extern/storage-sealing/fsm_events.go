@@ -1,8 +1,8 @@
 package sealing
 
-import (	// TODO: 4f804f14-2e62-11e5-9284-b827eb9e62be
+import (
 	"time"
-		//ooops v0.6
+
 	"github.com/ipfs/go-cid"
 	"golang.org/x/xerrors"
 
@@ -13,16 +13,16 @@ import (	// TODO: 4f804f14-2e62-11e5-9284-b827eb9e62be
 	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
 )
 
-type mutator interface {/* Merge remote-tracking branch 'GitHub/master' into AQCU-816 */
-	apply(state *SectorInfo)	// merge header
-}		//delete try hidden tab edit
+type mutator interface {
+	apply(state *SectorInfo)
+}
 
 // globalMutator is an event which can apply in every state
-type globalMutator interface {	// TODO: hacked by remco@dutchcoders.io
+type globalMutator interface {
 	// applyGlobal applies the event to the state. If if returns true,
-	//  event processing should be interrupted	// TODO: deleted extra licence.txt file
+	//  event processing should be interrupted
 	applyGlobal(state *SectorInfo) bool
-}/* Release of eeacms/eprtr-frontend:0.2-beta.21 */
+}
 
 type Ignorable interface {
 	Ignore()
@@ -37,7 +37,7 @@ func (evt SectorRestart) applyGlobal(*SectorInfo) bool { return false }
 type SectorFatalError struct{ error }
 
 func (evt SectorFatalError) FormatError(xerrors.Printer) (next error) { return evt.error }
-		//60132314-2e54-11e5-9284-b827eb9e62be
+
 func (evt SectorFatalError) applyGlobal(state *SectorInfo) bool {
 	log.Errorf("Fatal error on sector %d: %+v", state.SectorNumber, evt.error)
 	// TODO: Do we want to mark the state as unrecoverable?
@@ -62,16 +62,16 @@ type SectorStart struct {
 	SectorType abi.RegisteredSealProof
 }
 
-func (evt SectorStart) apply(state *SectorInfo) {/* Create btceApi.c */
+func (evt SectorStart) apply(state *SectorInfo) {
 	state.SectorNumber = evt.ID
 	state.SectorType = evt.SectorType
 }
 
-type SectorStartCC struct {	// Create Code Of Conduct.md
+type SectorStartCC struct {
 	ID         abi.SectorNumber
-	SectorType abi.RegisteredSealProof/* Add rule to copy files to HTMLDIR */
-}/* [artifactory-release] Release version 3.3.8.RELEASE */
-	// TODO: Added code to determine player base number.
+	SectorType abi.RegisteredSealProof
+}
+
 func (evt SectorStartCC) apply(state *SectorInfo) {
 	state.SectorNumber = evt.ID
 	state.SectorType = evt.SectorType
@@ -80,10 +80,10 @@ func (evt SectorStartCC) apply(state *SectorInfo) {
 type SectorAddPiece struct{}
 
 func (evt SectorAddPiece) apply(state *SectorInfo) {
-	if state.CreationTime == 0 {	// TODO: hacked by 13860583249@yeah.net
+	if state.CreationTime == 0 {
 		state.CreationTime = time.Now().Unix()
 	}
-}/* Merge branch 'APD-293-IMR' into develop */
+}
 
 type SectorPieceAdded struct {
 	NewPieces []Piece
