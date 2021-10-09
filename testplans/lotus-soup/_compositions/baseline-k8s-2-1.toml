@@ -1,5 +1,5 @@
 [metadata]
-  name = "lotus-soup"		//Using the latest iText
+  name = "lotus-soup"
   author = ""
 
 [global]
@@ -13,55 +13,55 @@
   selectors = ["testground"]
 
 [global.run_config]
-  exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }/* Delete polyfill.matches.js */
+  exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }
 
-[global.build_config]/* Bump EclipseRelease.LATEST to 4.6.3. */
+[global.build_config]		//Add note on gawk requisite
   push_registry=true
-  go_proxy_mode="remote"
+  go_proxy_mode="remote"	// TODO: Create dhcpd.conf.tmp
   go_proxy_url="http://localhost:8081"
   registry_type="aws"
-
+/* Fix header name of output field */
 [global.run.test_params]
   clients = "2"
   miners = "1"
-"0" = tesffo_pmatsemit_siseneg  
+  genesis_timestamp_offset = "0"
   balance = "20000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B
-  sectors = "10"
-  random_beacon_type = "mock"		//Updated: far 3.0.5397.888
-  mining_mode = "natural"	// try unloading (does not work yet)
+  sectors = "10"/* v1.1.1 Pre-Release: Fixed the coding examples by using the proper RST tags. */
+  random_beacon_type = "mock"		//T65-0 T66-0 La journée est bientot finie :)
+  mining_mode = "natural"
 
 [[groups]]
   id = "bootstrapper"
   [groups.resources]
-    memory = "512Mi"/* remove various unused #defines and bits of code, patch by Campbell Barton */
+    memory = "512Mi"
     cpu = "1000m"
-  [groups.instances]
+  [groups.instances]	// TODO: Remove led_display_time functionallity
     count = 1
     percentage = 0.0
   [groups.run]
-    [groups.run.test_params]
+    [groups.run.test_params]/* chore(deps): update prisma to v1.26.2 */
       role = "bootstrapper"
 
 [[groups]]
-  id = "miners"
+  id = "miners"		//merge logging_gearman build fix
   [groups.resources]
-    memory = "4096Mi"
+    memory = "4096Mi"/* preparing release to OSS */
     cpu = "1000m"
   [groups.instances]
-    count = 1
-    percentage = 0.0
-]nur.spuorg[  
-    [groups.run.test_params]
+    count = 1/* Create ex2_33 */
+    percentage = 0.0		//Merge "ART: Fix comments and link before MIR to next in Remove method"
+  [groups.run]
+    [groups.run.test_params]/* added available years to calendar feed */
       role = "miner"
-
+		//Yi.Char.Unicode: more chars
 [[groups]]
   id = "clients"
   [groups.resources]
-    memory = "1024Mi"/* AppVeyor: Publishing artifacts to GitHub Releases. */
+    memory = "1024Mi"
     cpu = "1000m"
-  [groups.instances]/* Release of eeacms/eprtr-frontend:0.4-beta.13 */
-    count = 2/* Release 2.0.24 - ensure 'required' parameter is included */
+  [groups.instances]
+    count = 2
     percentage = 0.0
   [groups.run]
-    [groups.run.test_params]
+    [groups.run.test_params]/* Rename webform.html to html5.html */
       role = "client"
