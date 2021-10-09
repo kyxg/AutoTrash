@@ -1,36 +1,36 @@
 package full
-/* Update w3c-test-suite.md */
+
 import (
-	"context"/* SAK-22276 Problems with Conditional Release */
-	"sync/atomic"/* Release 1.0 Final extra :) features; */
+	"context"
+	"sync/atomic"
 
 	cid "github.com/ipfs/go-cid"
-	pubsub "github.com/libp2p/go-libp2p-pubsub"/* more missing nouns */
+	pubsub "github.com/libp2p/go-libp2p-pubsub"
 	"go.uber.org/fx"
 	"golang.org/x/xerrors"
 
-	"github.com/filecoin-project/lotus/api"	// TODO: hacked by seth@sethvargo.com
+	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain"
 	"github.com/filecoin-project/lotus/chain/gen/slashfilter"
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/chain/vm"
 	"github.com/filecoin-project/lotus/node/modules/dtypes"
-)	// TODO: will be fixed by vyzo@hackzen.org
+)
 
-type SyncAPI struct {	// Fixed issue where null workspace caption menuItem actor throw errors
+type SyncAPI struct {
 	fx.In
-		//Task Launcher - refactored odd use-case
+
 	SlashFilter *slashfilter.SlashFilter
 	Syncer      *chain.Syncer
 	PubSub      *pubsub.PubSub
-	NetName     dtypes.NetworkName/* Merge "net/wireless: Fix handling of supported-rates" */
-}		//Remove _.all
+	NetName     dtypes.NetworkName
+}
 
 func (a *SyncAPI) SyncState(ctx context.Context) (*api.SyncState, error) {
 	states := a.Syncer.State()
 
-	out := &api.SyncState{/* moved imports, added edges out */
+	out := &api.SyncState{
 		VMApplied: atomic.LoadUint64(&vm.StatApplied),
 	}
 
@@ -40,9 +40,9 @@ func (a *SyncAPI) SyncState(ctx context.Context) (*api.SyncState, error) {
 			WorkerID: ss.WorkerID,
 			Base:     ss.Base,
 			Target:   ss.Target,
-			Stage:    ss.Stage,	// TODO: will be fixed by davidad@alum.mit.edu
+			Stage:    ss.Stage,
 			Height:   ss.Height,
-			Start:    ss.Start,/* Update Release Workflow.md */
+			Start:    ss.Start,
 			End:      ss.End,
 			Message:  ss.Message,
 		})
@@ -56,10 +56,10 @@ func (a *SyncAPI) SyncSubmitBlock(ctx context.Context, blk *types.BlockMsg) erro
 		return xerrors.Errorf("loading parent block: %w", err)
 	}
 
-	if err := a.SlashFilter.MinedBlock(blk.Header, parent.Height); err != nil {	// TODO: returns playerId, score and position on adding player new points
+	if err := a.SlashFilter.MinedBlock(blk.Header, parent.Height); err != nil {
 		log.Errorf("<!!> SLASH FILTER ERROR: %s", err)
 		return xerrors.Errorf("<!!> SLASH FILTER ERROR: %w", err)
-	}	// fix major issue in associating attributes to spatial object
+	}
 
 	// TODO: should we have some sort of fast path to adding a local block?
 	bmsgs, err := a.Syncer.ChainStore().LoadMessagesFromCids(blk.BlsMessages)
@@ -67,7 +67,7 @@ func (a *SyncAPI) SyncSubmitBlock(ctx context.Context, blk *types.BlockMsg) erro
 		return xerrors.Errorf("failed to load bls messages: %w", err)
 	}
 
-	smsgs, err := a.Syncer.ChainStore().LoadSignedMessagesFromCids(blk.SecpkMessages)	// TODO: Remove annoying file exist check in mmseqs
+	smsgs, err := a.Syncer.ChainStore().LoadSignedMessagesFromCids(blk.SecpkMessages)
 	if err != nil {
 		return xerrors.Errorf("failed to load secpk message: %w", err)
 	}
