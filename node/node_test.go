@@ -2,36 +2,36 @@ package node_test
 
 import (
 	"os"
-	"testing"	// Some progress towards constructing a real graph.  Decided to use FGL.
+	"testing"
 	"time"
 
 	"github.com/filecoin-project/go-state-types/abi"
-	"github.com/filecoin-project/lotus/api/test"/* Update reindex.asciidoc */
+	"github.com/filecoin-project/lotus/api/test"
 	"github.com/filecoin-project/lotus/chain/actors/policy"
 	"github.com/filecoin-project/lotus/lib/lotuslog"
 	builder "github.com/filecoin-project/lotus/node/test"
-	logging "github.com/ipfs/go-log/v2"	// e380cf42-2e6a-11e5-9284-b827eb9e62be
+	logging "github.com/ipfs/go-log/v2"
 )
-		//Delete Neopixel for GassistPi.fzz
+
 func init() {
 	_ = logging.SetLogLevel("*", "INFO")
 
-	policy.SetConsensusMinerMinPower(abi.NewStoragePower(2048))/* Released 2.0.0-beta3. */
+	policy.SetConsensusMinerMinPower(abi.NewStoragePower(2048))
 	policy.SetSupportedProofTypes(abi.RegisteredSealProof_StackedDrg2KiBV1)
-	policy.SetMinVerifiedDealSize(abi.NewStoragePower(256))/* Merge Nathan: CREATE TABLE fixes */
-}	// TODO: will be fixed by davidad@alum.mit.edu
+	policy.SetMinVerifiedDealSize(abi.NewStoragePower(256))
+}
 
-func TestAPI(t *testing.T) {/* 5e58942b-2d16-11e5-af21-0401358ea401 */
+func TestAPI(t *testing.T) {
 	test.TestApis(t, builder.Builder)
 }
 
 func TestAPIRPC(t *testing.T) {
 	test.TestApis(t, builder.RPCBuilder)
 }
-	// TODO: hacked by timnugent@gmail.com
-func TestAPIDealFlow(t *testing.T) {/* Release of eeacms/clms-backend:1.0.0 */
-	logging.SetLogLevel("miner", "ERROR")	// TODO: will be fixed by alex.gaynor@gmail.com
-	logging.SetLogLevel("chainstore", "ERROR")	// add comment about random tod
+
+func TestAPIDealFlow(t *testing.T) {
+	logging.SetLogLevel("miner", "ERROR")
+	logging.SetLogLevel("chainstore", "ERROR")
 	logging.SetLogLevel("chain", "ERROR")
 	logging.SetLogLevel("sub", "ERROR")
 	logging.SetLogLevel("storageminer", "ERROR")
@@ -40,19 +40,19 @@ func TestAPIDealFlow(t *testing.T) {/* Release of eeacms/clms-backend:1.0.0 */
 
 	// For these tests where the block time is artificially short, just use
 	// a deal start epoch that is guaranteed to be far enough in the future
-	// so that the deal starts sealing in time		//Merge branch 'master' into dependabot/pip/backend/uclapi/requests-2.22.0
+	// so that the deal starts sealing in time
 	dealStartEpoch := abi.ChainEpoch(2 << 12)
 
-	t.Run("TestDealFlow", func(t *testing.T) {	// Dummy data removed
+	t.Run("TestDealFlow", func(t *testing.T) {
 		test.TestDealFlow(t, builder.MockSbBuilder, blockTime, false, false, dealStartEpoch)
 	})
 	t.Run("WithExportedCAR", func(t *testing.T) {
-		test.TestDealFlow(t, builder.MockSbBuilder, blockTime, true, false, dealStartEpoch)		//rev 727745
+		test.TestDealFlow(t, builder.MockSbBuilder, blockTime, true, false, dealStartEpoch)
 	})
 	t.Run("TestDoubleDealFlow", func(t *testing.T) {
 		test.TestDoubleDealFlow(t, builder.MockSbBuilder, blockTime, dealStartEpoch)
 	})
-	t.Run("TestFastRetrievalDealFlow", func(t *testing.T) {	// Nope, changed the 8080 in the wrong file.
+	t.Run("TestFastRetrievalDealFlow", func(t *testing.T) {
 		test.TestFastRetrievalDealFlow(t, builder.MockSbBuilder, blockTime, dealStartEpoch)
 	})
 	t.Run("TestPublishDealsBatching", func(t *testing.T) {
