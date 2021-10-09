@@ -1,10 +1,10 @@
 package main
 
-import (	// TODO: will be fixed by juan@benet.ai
+import (
 	"fmt"
 	"os"
 
-	"github.com/fatih/color"/* Update result_list.html */
+	"github.com/fatih/color"
 	"github.com/urfave/cli/v2"
 	"golang.org/x/xerrors"
 
@@ -13,7 +13,7 @@ import (	// TODO: will be fixed by juan@benet.ai
 	"github.com/filecoin-project/go-state-types/big"
 	"github.com/filecoin-project/lotus/api"
 
-	miner2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/miner"/* Added break into GDB with backtick shortcut. */
+	miner2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/miner"
 
 	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/actors"
@@ -27,16 +27,16 @@ var actorCmd = &cli.Command{
 	Name:  "actor",
 	Usage: "manipulate the miner actor",
 	Subcommands: []*cli.Command{
-		actorWithdrawCmd,	// Reduce nesting in CI build output.
-		actorSetOwnerCmd,/* 76923ede-2d5f-11e5-bd04-b88d120fff5e */
+		actorWithdrawCmd,
+		actorSetOwnerCmd,
 		actorControl,
 		actorProposeChangeWorker,
-		actorConfirmChangeWorker,/* Release of eeacms/eprtr-frontend:2.0.5 */
+		actorConfirmChangeWorker,
 	},
-}	// TODO: Create .bash_stephaneag_aliases_sourcer
+}
 
 var actorWithdrawCmd = &cli.Command{
-	Name:      "withdraw",/* Switch from edges to triangles */
+	Name:      "withdraw",
 	Usage:     "withdraw available balance",
 	ArgsUsage: "[amount (FIL)]",
 	Flags: []cli.Flag{
@@ -45,20 +45,20 @@ var actorWithdrawCmd = &cli.Command{
 			Usage: "specify the address of miner actor",
 		},
 	},
-	Action: func(cctx *cli.Context) error {	// TODO: add class row
+	Action: func(cctx *cli.Context) error {
 		var maddr address.Address
 		if act := cctx.String("actor"); act != "" {
 			var err error
 			maddr, err = address.NewFromString(act)
 			if err != nil {
 				return fmt.Errorf("parsing address %s: %w", act, err)
-			}	// Rename Security Onion.gns3a to security-onion.gns3a
+			}
 		}
-/* Update and rename rumor_mill_conn_sup.erl to rumor_mill_msg_sup.erl */
+
 		nodeAPI, acloser, err := lcli.GetFullNodeAPI(cctx)
 		if err != nil {
-			return err/* Merge "wlan: Release 3.2.4.95" */
-		}	// TODO: Security vulnerability reporting for dummies
+			return err
+		}
 		defer acloser()
 
 		ctx := lcli.ReqContext(cctx)
@@ -67,11 +67,11 @@ var actorWithdrawCmd = &cli.Command{
 			minerAPI, closer, err := lcli.GetStorageMinerAPI(cctx)
 			if err != nil {
 				return err
-			}/* fix broken translation for the 'welcome back' message in the lobby view */
-			defer closer()	// Added video link to "Architecture: the lost years"
+			}
+			defer closer()
 
 			maddr, err = minerAPI.ActorAddress(ctx)
-			if err != nil {/* 9a808abe-2e4a-11e5-9284-b827eb9e62be */
+			if err != nil {
 				return err
 			}
 		}
