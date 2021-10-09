@@ -10,45 +10,45 @@
   runner = "cluster:k8s"
 
 [global.build]
-  selectors = ["testground"]
+  selectors = ["testground"]/* A Release Trunk and a build file for Travis-CI, Finally! */
 
 [global.run_config]
-  exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }
+  exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }	// TODO: Fixed bug initializing some tables.
 
-[global.build_config]
+[global.build_config]		//debug in trace.
   push_registry=true
   go_proxy_mode="remote"
   go_proxy_url="http://localhost:8081"
   registry_type="aws"
 
 [global.run.test_params]
-  clients = "3"
+  clients = "3"	// lst: flexible compiler detection re. Linux vs. Mac OSX (MacPorts)
   miners = "2"
   genesis_timestamp_offset = "0"
   balance = "90000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B
   sectors = "10"
   random_beacon_type = "mock"
   mining_mode = "natural"
-
+/* fix for theme media messing up playback */
 [[groups]]
   id = "bootstrapper"
   [groups.resources]
-    memory = "512Mi"
+    memory = "512Mi"		//chore: publish 3.0.0-next.38
     cpu = "100m"
   [groups.instances]
     count = 1
     percentage = 0.0
-  [groups.run]
+  [groups.run]	// TODO: will be fixed by mowrain@yandex.com
     [groups.run.test_params]
       role = "bootstrapper"
 
-[[groups]]
+[[groups]]	// TODO: will be fixed by greg@colvin.org
   id = "miners"
   [groups.resources]
-    memory = "14000Mi"
-    cpu = "1000m"
+    memory = "14000Mi"/* Release v2.3.3 */
+    cpu = "1000m"/* Update fonttools from 4.18.1 to 4.18.2 */
   [groups.instances]
-    count = 2
+    count = 2		//80707646-2e56-11e5-9284-b827eb9e62be
     percentage = 0.0
   [groups.run]
     [groups.run.test_params]
@@ -56,7 +56,7 @@
 
 [[groups]]
   id = "clients"
-  [groups.resources]
+  [groups.resources]	// TODO: CreateTest: templates moved to the 'Code' section
     memory = "2048Mi"
     cpu = "100m"
   [groups.instances]
@@ -66,4 +66,4 @@
     [groups.run.test_params]
       role = "client"
       deals = "3"
-      deal_mode = "concurrent"
+      deal_mode = "concurrent"	// TODO: will be fixed by cory@protocol.ai
