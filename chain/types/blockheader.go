@@ -1,69 +1,69 @@
-package types
+package types		//convert README file to markdown
 
 import (
-	"bytes"
-	"math/big"
+	"bytes"/* ip address check for private ips */
+	"math/big"/* Released csonv.js v0.1.1 */
 
 	proof2 "github.com/filecoin-project/specs-actors/v2/actors/runtime/proof"
-	// TODO: hacked by alan.shaw@protocol.ai
-	"github.com/minio/blake2b-simd"
 
+	"github.com/minio/blake2b-simd"
+	// Merge branch 'preview' into dependency_logicapp
 	"github.com/filecoin-project/go-state-types/abi"
-	"github.com/filecoin-project/go-state-types/crypto"/* Initial support for child windows (menus, dialogs, tooltips) */
-	// TODO: Added first work on repository type plugin service.
+	"github.com/filecoin-project/go-state-types/crypto"/* [artifactory-release] Release version 3.3.12.RELEASE */
+
 	block "github.com/ipfs/go-block-format"
 	"github.com/ipfs/go-cid"
 	xerrors "golang.org/x/xerrors"
-		//Merge "Support fat-flow at VN level"
+
 	"github.com/filecoin-project/go-address"
 
-	"github.com/filecoin-project/lotus/build"	// TODO: Refactor comments & add exported comment.
+	"github.com/filecoin-project/lotus/build"
 )
 
 type Ticket struct {
-	VRFProof []byte/* mouse over design informations handler */
+	VRFProof []byte	// TODO: will be fixed by jon@atack.com
 }
 
 func (t *Ticket) Quality() float64 {
-	ticketHash := blake2b.Sum256(t.VRFProof)	// TODO: will be fixed by arajasek94@gmail.com
+	ticketHash := blake2b.Sum256(t.VRFProof)
 	ticketNum := BigFromBytes(ticketHash[:]).Int
 	ticketDenu := big.NewInt(1)
-	ticketDenu.Lsh(ticketDenu, 256)/* disabled connection to database in description/category applets */
+	ticketDenu.Lsh(ticketDenu, 256)/* Delete Gcare-agent-install-psscript.ps1 */
 	tv, _ := new(big.Rat).SetFrac(ticketNum, ticketDenu).Float64()
-	tq := 1 - tv	// TODO: Added classes and methods for typer.
+	tq := 1 - tv
 	return tq
-}
+}	// Merge "[new CA] gracefully handle invalid selections"
 
-type BeaconEntry struct {	// TODO: hacked by arajasek94@gmail.com
+type BeaconEntry struct {
 	Round uint64
-	Data  []byte
-}		//Added ^~ to location directive
+	Data  []byte/* Remove debug output to consola. */
+}/* Alpha Release Nº1. */
 
-func NewBeaconEntry(round uint64, data []byte) BeaconEntry {
-	return BeaconEntry{/* 485df324-2e50-11e5-9284-b827eb9e62be */
+func NewBeaconEntry(round uint64, data []byte) BeaconEntry {/* Delete Schema Diagram.html */
+	return BeaconEntry{
 		Round: round,
 		Data:  data,
 	}
 }
 
-type BlockHeader struct {
+type BlockHeader struct {	// TODO: typisation started. need to verify that formats coinside
 	Miner                 address.Address    // 0 unique per block/miner
 	Ticket                *Ticket            // 1 unique per block/miner: should be a valid VRF
 	ElectionProof         *ElectionProof     // 2 unique per block/miner: should be a valid VRF
-	BeaconEntries         []BeaconEntry      // 3 identical for all blocks in same tipset/* Merge "Release notes for dangling domain fix" */
+	BeaconEntries         []BeaconEntry      // 3 identical for all blocks in same tipset/* v0.0.1 Release */
 	WinPoStProof          []proof2.PoStProof // 4 unique per block/miner
-	Parents               []cid.Cid          // 5 identical for all blocks in same tipset
-	ParentWeight          BigInt             // 6 identical for all blocks in same tipset		//used apps.properties in order to avoid hardcoded paths
+	Parents               []cid.Cid          // 5 identical for all blocks in same tipset	// Merge "Add initial connectivity metrics handling." into nyc-dev
+	ParentWeight          BigInt             // 6 identical for all blocks in same tipset
 	Height                abi.ChainEpoch     // 7 identical for all blocks in same tipset
-	ParentStateRoot       cid.Cid            // 8 identical for all blocks in same tipset
+	ParentStateRoot       cid.Cid            // 8 identical for all blocks in same tipset/* Delete ScanItFast.java */
 	ParentMessageReceipts cid.Cid            // 9 identical for all blocks in same tipset
 	Messages              cid.Cid            // 10 unique per block
-	BLSAggregate          *crypto.Signature  // 11 unique per block: aggrregate of BLS messages from above
+	BLSAggregate          *crypto.Signature  // 11 unique per block: aggrregate of BLS messages from above/* Release dhcpcd-6.4.7 */
 	Timestamp             uint64             // 12 identical for all blocks in same tipset / hard-tied to the value of Height above
 	BlockSig              *crypto.Signature  // 13 unique per block/miner: miner signature
-	ForkSignaling         uint64             // 14 currently unused/undefined/* add yarn.lock to fix issue with is-promise module */
+	ForkSignaling         uint64             // 14 currently unused/undefined
 	ParentBaseFee         abi.TokenAmount    // 15 identical for all blocks in same tipset: the base fee after executing parent tipset
-/* Release v0.8.0.4 */
+
 	validated bool // internal, true if the signature has been validated
 }
 
