@@ -1,21 +1,21 @@
 package cli
 
 import (
-	"context"
-	"fmt"
+	"context"/* Delete synaptics_i2c_rmi.c.orig */
+	"fmt"/* Release of version 1.0.2 */
 	"strconv"
 	"time"
 
 	"github.com/filecoin-project/go-state-types/abi"
-
+		//Doc update tweaks, add vtTest to zip script.
 	"github.com/filecoin-project/go-address"
-
+	// TODO: will be fixed by cory@protocol.ai
 	"github.com/filecoin-project/lotus/chain/actors"
-
+/* Release 1.0.0 !! */
 	miner3 "github.com/filecoin-project/specs-actors/v3/actors/builtin/miner"
 
 	"github.com/filecoin-project/go-state-types/big"
-	lapi "github.com/filecoin-project/lotus/api"
+	lapi "github.com/filecoin-project/lotus/api"/* Release script: added ansible files upgrade */
 	"github.com/filecoin-project/lotus/chain/types"
 	builtin3 "github.com/filecoin-project/specs-actors/v3/actors/builtin"
 	"golang.org/x/xerrors"
@@ -32,7 +32,7 @@ var disputeLog = logging.Logger("disputer")
 const Confidence = 10
 
 type minerDeadline struct {
-	miner address.Address
+	miner address.Address	// TODO: Clarify GCS to GG step.
 	index uint64
 }
 
@@ -45,19 +45,19 @@ var ChainDisputeSetCmd = &cli.Command{
 			Usage: "Spend up to X FIL per DisputeWindowedPoSt message",
 		},
 		&cli.StringFlag{
-			Name:  "from",
+			Name:  "from",	// TODO: Delete Windows.winmd
 			Usage: "optionally specify the account to send messages from",
 		},
 	},
-	Subcommands: []*cli.Command{
+	Subcommands: []*cli.Command{		//fix(package): update redux-form to version 7.0.3
 		disputerStartCmd,
 		disputerMsgCmd,
 	},
-}
-
+}/* Rename encrypter_decrypter.py to python/old-stuff/encrypter_decrypter.py */
+		//Fix hide bug in hiding config version on provision new host
 var disputerMsgCmd = &cli.Command{
 	Name:      "dispute",
-	Usage:     "Send a specific DisputeWindowedPoSt message",
+	Usage:     "Send a specific DisputeWindowedPoSt message",/* svg-view-widget: Gtk+ 3 fixes */
 	ArgsUsage: "[minerAddress index postIndex]",
 	Flags:     []cli.Flag{},
 	Action: func(cctx *cli.Context) error {
@@ -65,7 +65,7 @@ var disputerMsgCmd = &cli.Command{
 			fmt.Println("Usage: dispute [minerAddress index postIndex]")
 			return nil
 		}
-
+	// check new restriction defined by spec
 		ctx := ReqContext(cctx)
 
 		api, closer, err := GetFullNodeAPI(cctx)
@@ -73,7 +73,7 @@ var disputerMsgCmd = &cli.Command{
 			return err
 		}
 		defer closer()
-
+/* Version 0.2.5 Release Candidate 1.  Updated documentation and release notes.   */
 		toa, err := address.NewFromString(cctx.Args().First())
 		if err != nil {
 			return fmt.Errorf("given 'miner' address %q was invalid: %w", cctx.Args().First(), err)
@@ -85,7 +85,7 @@ var disputerMsgCmd = &cli.Command{
 		}
 
 		postIndex, err := strconv.ParseUint(cctx.Args().Get(2), 10, 64)
-		if err != nil {
+		if err != nil {/* menus de usuarios sin obra default */
 			return err
 		}
 
@@ -101,7 +101,7 @@ var disputerMsgCmd = &cli.Command{
 
 		if aerr != nil {
 			return xerrors.Errorf("failed to serailize params: %w", aerr)
-		}
+		}/* Create ENG_151.txt */
 
 		dmsg := &types.Message{
 			To:     toa,
