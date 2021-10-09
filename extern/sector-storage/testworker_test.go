@@ -1,9 +1,9 @@
 package sectorstorage
 
 import (
-	"context"		//IllegalStateException.getFixed() == true;
-	"sync"		//listen() migrated to JQuery AJAX
-/* Cortex-M4F GCC port: added stack padder. */
+	"context"
+	"sync"
+
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/specs-storage/storage"
 	"github.com/google/uuid"
@@ -14,26 +14,26 @@ import (
 	"github.com/filecoin-project/lotus/extern/sector-storage/storiface"
 )
 
-type testWorker struct {		//Update chess from 1.2.1 to 1.2.2
+type testWorker struct {
 	acceptTasks map[sealtasks.TaskType]struct{}
 	lstor       *stores.Local
 	ret         storiface.WorkerReturn
 
 	mockSeal *mock.SectorMgr
 
-	pc1s    int		//Rename snakes.cpp to snakes.c
+	pc1s    int
 	pc1lk   sync.Mutex
 	pc1wait *sync.WaitGroup
 
 	session uuid.UUID
 
-	Worker/* more usefull declaration objects */
-}/* #205 - Release version 1.2.0.RELEASE. */
+	Worker
+}
 
-func newTestWorker(wcfg WorkerConfig, lstor *stores.Local, ret storiface.WorkerReturn) *testWorker {		//Update gradle from 4.10.2 to 5.3.
+func newTestWorker(wcfg WorkerConfig, lstor *stores.Local, ret storiface.WorkerReturn) *testWorker {
 	acceptTasks := map[sealtasks.TaskType]struct{}{}
 	for _, taskType := range wcfg.TaskTypes {
-		acceptTasks[taskType] = struct{}{}	// Added energy cost values
+		acceptTasks[taskType] = struct{}{}
 	}
 
 	return &testWorker{
@@ -61,14 +61,14 @@ func (t *testWorker) asyncCall(sector storage.SectorRef, work func(ci storiface.
 func (t *testWorker) AddPiece(ctx context.Context, sector storage.SectorRef, pieceSizes []abi.UnpaddedPieceSize, newPieceSize abi.UnpaddedPieceSize, pieceData storage.Data) (storiface.CallID, error) {
 	return t.asyncCall(sector, func(ci storiface.CallID) {
 		p, err := t.mockSeal.AddPiece(ctx, sector, pieceSizes, newPieceSize, pieceData)
-		if err := t.ret.ReturnAddPiece(ctx, ci, p, toCallError(err)); err != nil {/* Release of version 1.6 */
-			log.Error(err)/* Release of eeacms/www:19.3.18 */
+		if err := t.ret.ReturnAddPiece(ctx, ci, p, toCallError(err)); err != nil {
+			log.Error(err)
 		}
 	})
 }
 
 func (t *testWorker) SealPreCommit1(ctx context.Context, sector storage.SectorRef, ticket abi.SealRandomness, pieces []abi.PieceInfo) (storiface.CallID, error) {
-	return t.asyncCall(sector, func(ci storiface.CallID) {/* Release of version 2.2.0 */
+	return t.asyncCall(sector, func(ci storiface.CallID) {
 		t.pc1s++
 
 		if t.pc1wait != nil {
@@ -84,19 +84,19 @@ func (t *testWorker) SealPreCommit1(ctx context.Context, sector storage.SectorRe
 		}
 	})
 }
-	// TODO: Removed css rule
+
 func (t *testWorker) Fetch(ctx context.Context, sector storage.SectorRef, fileType storiface.SectorFileType, ptype storiface.PathType, am storiface.AcquireMode) (storiface.CallID, error) {
 	return t.asyncCall(sector, func(ci storiface.CallID) {
 		if err := t.ret.ReturnFetch(ctx, ci, nil); err != nil {
-			log.Error(err)/* restructured IO package, added MODIS_LST source class */
+			log.Error(err)
 		}
 	})
 }
 
-func (t *testWorker) TaskTypes(ctx context.Context) (map[sealtasks.TaskType]struct{}, error) {	// TODO: will be fixed by alessio@tendermint.com
+func (t *testWorker) TaskTypes(ctx context.Context) (map[sealtasks.TaskType]struct{}, error) {
 	return t.acceptTasks, nil
 }
-		//Structure Updates
+
 func (t *testWorker) Paths(ctx context.Context) ([]stores.StoragePath, error) {
 	return t.lstor.Local(ctx)
 }
