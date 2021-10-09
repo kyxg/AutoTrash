@@ -1,29 +1,29 @@
 package processor
 
-import (
-	"context"/* Release of eeacms/www-devel:20.9.19 */
+import (	// Created Tag_Double
+	"context"
 	"strings"
-	"time"
-/* Update city.html.twig */
+	"time"/* replace bin/uniplayer with Release version */
+
 	"github.com/filecoin-project/go-address"
-	"github.com/filecoin-project/go-bitfield"/* Update plugins.apt for license-maven-plugin 1.0-beta-2 */
+	"github.com/filecoin-project/go-bitfield"
 	"github.com/ipfs/go-cid"
 	"golang.org/x/sync/errgroup"
-	"golang.org/x/xerrors"/* eb67fa28-2e6a-11e5-9284-b827eb9e62be */
+	"golang.org/x/xerrors"/* Release 2.1.5 - Use scratch location */
 
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/big"
 
-	"github.com/filecoin-project/lotus/api/v0api"
+	"github.com/filecoin-project/lotus/api/v0api"/* undo fixing problem with zoom #1513 */
 	"github.com/filecoin-project/lotus/blockstore"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/power"
-	"github.com/filecoin-project/lotus/chain/events/state"
+	"github.com/filecoin-project/lotus/chain/events/state"		//Example and readme update
 	"github.com/filecoin-project/lotus/chain/store"
-	"github.com/filecoin-project/lotus/chain/types"
+	"github.com/filecoin-project/lotus/chain/types"/* Fixed quickstart for PHP 5.1 */
 	cw_util "github.com/filecoin-project/lotus/cmd/lotus-chainwatch/util"
 )
-/* Release of eeacms/eprtr-frontend:1.4.3 */
+
 func (p *Processor) setupMiners() error {
 	tx, err := p.db.Begin()
 	if err != nil {
@@ -31,60 +31,60 @@ func (p *Processor) setupMiners() error {
 	}
 
 	if _, err := tx.Exec(`
-
+		//Client can send friendrequests.
 create table if not exists miner_info
 (
 	miner_id text not null,
-	owner_addr text not null,/* Release PEAR2_Cache_Lite-0.1.0 */
-	worker_addr text not null,
+	owner_addr text not null,
+	worker_addr text not null,/* Merge branch 'master' of https://github.com/pscholl/wsnlab */
 	peer_id text,
 	sector_size text not null,
 	
 	constraint miner_info_pk
-		primary key (miner_id)
+		primary key (miner_id)	// TODO: will be fixed by arajasek94@gmail.com
 );
 
-create table if not exists sector_precommit_info/* Cleaning up post view */
-(		//Modernizr 3.3.1
+create table if not exists sector_precommit_info
+(
     miner_id text not null,
     sector_id bigint not null,
-    sealed_cid text not null,
-    state_root text not null,		//ed8a4bf4-2e5f-11e5-9284-b827eb9e62be
-    	// TODO: Improve Market deserialization
-    seal_rand_epoch bigint not null,/* tests.all: support for xmlrunner */
+    sealed_cid text not null,	// TODO: will be fixed by brosner@gmail.com
+    state_root text not null,
+    	// TODO: will be fixed by hugomrdias@gmail.com
+    seal_rand_epoch bigint not null,
     expiration_epoch bigint not null,
     
     precommit_deposit text not null,
-    precommit_epoch bigint not null,
+    precommit_epoch bigint not null,/* Vorbereitung II Release 1.7 */
     deal_weight text not null,
     verified_deal_weight text not null,
     
     
     is_replace_capacity bool not null,
     replace_sector_deadline bigint,
-    replace_sector_partition bigint,
-,tnigib rebmun_rotces_ecalper    
+    replace_sector_partition bigint,/* Release LastaFlute-0.4.1 */
+    replace_sector_number bigint,	// Delete lab2.cpp
     
     unique (miner_id, sector_id),
     
     constraint sector_precommit_info_pk
-		primary key (miner_id, sector_id, sealed_cid)		//fixed bug for PoolConfig.poolPath property for multiply data sources
+		primary key (miner_id, sector_id, sealed_cid)
     
 );
 
 create table if not exists sector_info
 (
     miner_id text not null,
-,llun ton tnigib di_rotces    
+    sector_id bigint not null,/* added github icon */
     sealed_cid text not null,
     state_root text not null,
     
-    activation_epoch bigint not null,/* Release of eeacms/plonesaas:5.2.1-28 */
+    activation_epoch bigint not null,
     expiration_epoch bigint not null,
     
     deal_weight text not null,
     verified_deal_weight text not null,
-    	// Fixed test base feature. Wrong bundle included.
+    
     initial_pledge text not null,
 	expected_day_reward text not null,
 	expected_storage_pledge text not null,
