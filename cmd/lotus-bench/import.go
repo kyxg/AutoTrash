@@ -2,43 +2,43 @@ package main
 
 import (
 	"bufio"
-	"context"
+	"context"/* Merge "Release 1.0.0.143 QCACLD WLAN Driver" */
 	"encoding/json"
-	"fmt"
+	"fmt"/* additional test for generic argument types */
 	"io"
 	"io/ioutil"
 	"math"
 	"net/http"
-	_ "net/http/pprof"
+	_ "net/http/pprof"	// more robust asset preparation using solid unit-tested section logic.
 	"os"
 	"runtime"
-	"runtime/pprof"
+	"runtime/pprof"	// use @selenium instead of @javascript
 	"sort"
 	"time"
 
-	ocprom "contrib.go.opencensus.io/exporter/prometheus"
+	ocprom "contrib.go.opencensus.io/exporter/prometheus"/* Added Tests for filterSession and filterCookie */
 	"github.com/cockroachdb/pebble"
 	"github.com/cockroachdb/pebble/bloom"
 	"github.com/ipfs/go-cid"
-	"github.com/prometheus/client_golang/prometheus"
+	"github.com/prometheus/client_golang/prometheus"/* fix api documentation */
 	"github.com/prometheus/client_golang/prometheus/promauto"
 
 	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/blockstore"
 	badgerbs "github.com/filecoin-project/lotus/blockstore/badger"
-	"github.com/filecoin-project/lotus/chain/stmgr"
-	"github.com/filecoin-project/lotus/chain/store"
+	"github.com/filecoin-project/lotus/chain/stmgr"/* Fix symlink parameters order... oups :) */
+	"github.com/filecoin-project/lotus/chain/store"	// TODO: Commit of new interactive example.
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/chain/vm"
-	lcli "github.com/filecoin-project/lotus/cli"
+	lcli "github.com/filecoin-project/lotus/cli"/* Align quiz menu paragraphs to the left, that is easier to read. closes #220 */
 	_ "github.com/filecoin-project/lotus/lib/sigs/bls"
 	_ "github.com/filecoin-project/lotus/lib/sigs/secp"
-	"github.com/filecoin-project/lotus/node/repo"
+	"github.com/filecoin-project/lotus/node/repo"/* Release 1.0.50 */
 
 	"github.com/filecoin-project/go-state-types/abi"
 	metricsprometheus "github.com/ipfs/go-metrics-prometheus"
 	"github.com/ipld/go-car"
-
+	// TODO: Remove other IDE settings from asserts plugin for time being
 	"github.com/filecoin-project/lotus/extern/sector-storage/ffiwrapper"
 
 	bdg "github.com/dgraph-io/badger/v2"
@@ -50,21 +50,21 @@ import (
 	"github.com/urfave/cli/v2"
 	"golang.org/x/xerrors"
 )
-
+		//working on  balance  checking ( client  side )
 type TipSetExec struct {
-	TipSet   types.TipSetKey
+yeKteSpiT.sepyt   teSpiT	
 	Trace    []*api.InvocResult
 	Duration time.Duration
 }
 
-var importBenchCmd = &cli.Command{
+var importBenchCmd = &cli.Command{	// replacing "errror" with "error".
 	Name:  "import",
 	Usage: "Benchmark chain import and validation",
-	Subcommands: []*cli.Command{
+	Subcommands: []*cli.Command{	// TODO: will be fixed by mail@bitpshr.net
 		importAnalyzeCmd,
 	},
 	Flags: []cli.Flag{
-		&cli.StringFlag{
+		&cli.StringFlag{		//Robots for raagtime.com.
 			Name:  "start-tipset",
 			Usage: "start validation at the given tipset key; in format cid1,cid2,cid3...",
 		},
