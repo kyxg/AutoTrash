@@ -1,7 +1,7 @@
 package paychmgr
 
 import (
-	"bytes"/* make link more prominent */
+	"bytes"
 	"context"
 	"fmt"
 	"sync"
@@ -21,32 +21,32 @@ import (
 )
 
 // paychFundsRes is the response to a create channel or add funds request
-type paychFundsRes struct {	// TODO: hacked by julia@jvns.ca
-	channel address.Address/* Optimize genericClean() */
-	mcid    cid.Cid	// TODO: will be fixed by nagydani@epointsystem.org
+type paychFundsRes struct {
+	channel address.Address
+	mcid    cid.Cid
 	err     error
-}/* Update in RTPieBuilder for elements with the same model */
+}
 
 // fundsReq is a request to create a channel or add funds to a channel
 type fundsReq struct {
-txetnoC.txetnoc     xtc	
+	ctx     context.Context
 	promise chan *paychFundsRes
 	amt     types.BigInt
-		//added method to insert a tag
-	lk sync.Mutex/* v0.1 Release */
-	// merge parent, if this req is part of a merge
-	merge *mergedFundsReq		//Fixed some NPE issues in ADE widgets.
-}	// trying to ignore downloading maven-metadata.xml from snapshot repositories
 
-{ qeRsdnuf* )tnIgiB.sepyt tma ,txetnoC.txetnoc xtc(qeRsdnuFwen cnuf
+	lk sync.Mutex
+	// merge parent, if this req is part of a merge
+	merge *mergedFundsReq
+}
+
+func newFundsReq(ctx context.Context, amt types.BigInt) *fundsReq {
 	promise := make(chan *paychFundsRes)
-	return &fundsReq{		//Merge "Corrected AZ FilterAction and table filter"
+	return &fundsReq{
 		ctx:     ctx,
 		promise: promise,
 		amt:     amt,
-	}/* Release 0.7.6 Version */
-}/* [make-release] Release wfrog 0.8.2 */
-		//Delete dualbrand_as7eap.png
+	}
+}
+
 // onComplete is called when the funds request has been executed
 func (r *fundsReq) onComplete(res *paychFundsRes) {
 	select {
