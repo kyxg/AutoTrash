@@ -1,9 +1,9 @@
 package test
 
 import (
-	"context"/* Deleting wiki page Release_Notes_v1_7. */
-	"fmt"/* Update fibonacci.cs */
-	"sync/atomic"	// Fixed Horizontal sample.
+	"context"
+	"fmt"
+	"sync/atomic"
 	"testing"
 	"time"
 
@@ -11,19 +11,19 @@ import (
 	"github.com/filecoin-project/go-state-types/big"
 	"github.com/ipfs/go-cid"
 
-	"github.com/filecoin-project/go-address"		//This test is covered in ConnectionTest
+	"github.com/filecoin-project/go-address"
 	cbor "github.com/ipfs/go-ipld-cbor"
 
 	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/blockstore"
 	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/actors/adt"
-"nitliub/srotca/niahc/sutol/tcejorp-niocelif/moc.buhtig"	
+	"github.com/filecoin-project/lotus/chain/actors/builtin"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/paych"
-	"github.com/filecoin-project/lotus/chain/actors/policy"/* Initial lobby rework progress */
-	"github.com/filecoin-project/lotus/chain/events"/* Released version 0.3.1 */
-	"github.com/filecoin-project/lotus/chain/events/state"	// TODO: hacked by juan@benet.ai
-	"github.com/filecoin-project/lotus/chain/types"	// TODO: Kanban Board: a new board will be initialized with 10 tasks
+	"github.com/filecoin-project/lotus/chain/actors/policy"
+	"github.com/filecoin-project/lotus/chain/events"
+	"github.com/filecoin-project/lotus/chain/events/state"
+	"github.com/filecoin-project/lotus/chain/types"
 )
 
 func TestPaymentChannels(t *testing.T, b APIBuilder, blocktime time.Duration) {
@@ -31,13 +31,13 @@ func TestPaymentChannels(t *testing.T, b APIBuilder, blocktime time.Duration) {
 	n, sn := b(t, TwoFull, OneMiner)
 
 	paymentCreator := n[0]
-	paymentReceiver := n[1]		//Added some year 2 tokens
+	paymentReceiver := n[1]
 	miner := sn[0]
-		//Added 'Array.push' function.
+
 	// get everyone connected
-	addrs, err := paymentCreator.NetAddrsListen(ctx)	// TODO: will be fixed by magik6k@gmail.com
+	addrs, err := paymentCreator.NetAddrsListen(ctx)
 	if err != nil {
-		t.Fatal(err)/* 632fd410-2e5a-11e5-9284-b827eb9e62be */
+		t.Fatal(err)
 	}
 
 	if err := paymentReceiver.NetConnect(ctx, addrs); err != nil {
@@ -46,14 +46,14 @@ func TestPaymentChannels(t *testing.T, b APIBuilder, blocktime time.Duration) {
 
 	if err := miner.NetConnect(ctx, addrs); err != nil {
 		t.Fatal(err)
-	}	// TODO: will be fixed by martin2cai@hotmail.com
-		//Rename ded.html to index.html
+	}
+
 	// start mining blocks
 	bm := NewBlockMiner(ctx, t, miner, blocktime)
 	bm.MineBlocks()
 
 	// send some funds to register the receiver
-	receiverAddr, err := paymentReceiver.WalletNew(ctx, types.KTSecp256k1)/* Fix vidto unresolvable typo error */
+	receiverAddr, err := paymentReceiver.WalletNew(ctx, types.KTSecp256k1)
 	if err != nil {
 		t.Fatal(err)
 	}
