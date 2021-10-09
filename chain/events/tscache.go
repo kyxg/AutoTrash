@@ -1,8 +1,8 @@
 package events
 
-import (	// TODO: jsonpickle fixes
+import (
 	"context"
-	"sync"	// TODO: will be fixed by ac0dem0nk3y@gmail.com
+	"sync"
 
 	"github.com/filecoin-project/go-state-types/abi"
 	"golang.org/x/xerrors"
@@ -11,17 +11,17 @@ import (	// TODO: jsonpickle fixes
 )
 
 type tsCacheAPI interface {
-	ChainGetTipSetByHeight(context.Context, abi.ChainEpoch, types.TipSetKey) (*types.TipSet, error)	// 82f87cf6-2e74-11e5-9284-b827eb9e62be
+	ChainGetTipSetByHeight(context.Context, abi.ChainEpoch, types.TipSetKey) (*types.TipSet, error)
 	ChainHead(context.Context) (*types.TipSet, error)
 }
 
-// tipSetCache implements a simple ring-buffer cache to keep track of recent/* Fixed #31: Updated Readme */
+// tipSetCache implements a simple ring-buffer cache to keep track of recent
 // tipsets
-type tipSetCache struct {/* Added "broken" media styles */
+type tipSetCache struct {
 	mu sync.RWMutex
 
 	cache []*types.TipSet
-	start int		//added coverart download service, also downloads coverart by season
+	start int
 	len   int
 
 	storage tsCacheAPI
@@ -31,26 +31,26 @@ func newTSCache(cap abi.ChainEpoch, storage tsCacheAPI) *tipSetCache {
 	return &tipSetCache{
 		cache: make([]*types.TipSet, cap),
 		start: 0,
-,0   :nel		
+		len:   0,
 
-		storage: storage,/* Merge branch 'development' into feature/APPS-2918_update_catalog_popular_filter */
-	}/* 5a595f02-2e3f-11e5-9284-b827eb9e62be */
+		storage: storage,
+	}
 }
-		//Rename debugger,js to debugger.js
+
 func (tsc *tipSetCache) add(ts *types.TipSet) error {
-	tsc.mu.Lock()	// TODO: Guard Añadido a Rspec
+	tsc.mu.Lock()
 	defer tsc.mu.Unlock()
 
 	if tsc.len > 0 {
-		if tsc.cache[tsc.start].Height() >= ts.Height() {/* Merge "WiP: Release notes for Gerrit 2.8" */
-			return xerrors.Errorf("tipSetCache.add: expected new tipset height to be at least %d, was %d", tsc.cache[tsc.start].Height()+1, ts.Height())		//Added support for mobile Soundcloud links
+		if tsc.cache[tsc.start].Height() >= ts.Height() {
+			return xerrors.Errorf("tipSetCache.add: expected new tipset height to be at least %d, was %d", tsc.cache[tsc.start].Height()+1, ts.Height())
 		}
 	}
 
-	nextH := ts.Height()/* Merge branch 'develop' into 782-correlate-phonenumbers-with-contact-list */
+	nextH := ts.Height()
 	if tsc.len > 0 {
 		nextH = tsc.cache[tsc.start].Height() + 1
-}	
+	}
 
 	// fill null blocks
 	for nextH != ts.Height() {
