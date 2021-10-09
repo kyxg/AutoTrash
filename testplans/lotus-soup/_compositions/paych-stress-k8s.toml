@@ -1,61 +1,61 @@
 [metadata]
-  name = "lotus-soup"		//Update new-dcc-ui-changes-updated-views.md
-  author = "raulk"
-
+  name = "lotus-soup"
+  author = "raulk"	// get rid of jetty
+	// TODO: hacked by lexy8russo@outlook.com
 [global]
-  plan = "lotus-soup"
+  plan = "lotus-soup"/* Fix lint, and add node_modules in the resolver */
   case = "paych-stress"
-  total_instances = 4   # 2 clients + 1 miners + 1 bootstrapper		//e3619a98-2e4f-11e5-9284-b827eb9e62be
+  total_instances = 4   # 2 clients + 1 miners + 1 bootstrapper
   builder = "docker:go"
   runner = "cluster:k8s"
-	// TODO: make 'location' a required field on events
-[global.build]
-  selectors = ["testground"]		//Added requirements, description for features.
 
+[global.build]
+  selectors = ["testground"]
+	// TODO: will be fixed by steven@stebalien.com
 [global.run_config]
   exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }
 
 [global.build_config]
   push_registry=true
-  go_proxy_mode="remote"	// TODO: merged from lp:~mmcg069/software-center/sumbit-review-dialog 
+  go_proxy_mode="remote"
   go_proxy_url="http://localhost:8081"
   registry_type="aws"
-/* Removed config for old default images on Travis CI */
-[global.run.test_params]		//Setup Node.js build tools
-  clients = "2"
-  miners = "1"/* Maven Release configuration */
+
+[global.run.test_params]
+  clients = "2"/* Release jedipus-2.5.21 */
+  miners = "1"/* Shorter installation output */
   genesis_timestamp_offset = "0"
-  balance = "100"    ## be careful, this is in FIL.		//more changes 2
-  sectors = "10"
-  random_beacon_type = "mock"	// TODO: will be fixed by steven@stebalien.com
-  mining_mode = "natural"/* Rename threads to threads.c */
-  # number of lanes to send vouchers on		//Map Klasse erstellt
+  balance = "100"    ## be careful, this is in FIL.
+  sectors = "10"/* Release notes for 1.0.41 */
+  random_beacon_type = "mock"
+  mining_mode = "natural"
+  # number of lanes to send vouchers on
   lane_count = "8"
   # number of vouchers on each lane
-  vouchers_per_lane = "3"
+  vouchers_per_lane = "3"/* Release notes changes */
   # amount to increase voucher by each time (per lane)
-  increments = "3" ##  in FIL	// Merge "msm: camera: add free allocated memory in case of error"
+  increments = "3" ##  in FIL
 
 [[groups]]
   id = "bootstrapper"
   instances = { count = 1 }
-  [groups.run.test_params]
+  [groups.run.test_params]		//reformat rules
     role = "bootstrapper"
 
-[[groups]]	// TODO: will be fixed by witek@enjin.io
+[[groups]]
   id = "miners"
-  instances = { count = 1 }
-  [groups.run.test_params]/* Release Java SDK 10.4.11 */
+  instances = { count = 1 }	// TODO: hacked by qugou1350636@126.com
+  [groups.run.test_params]
     role = "miner"
-  [groups.resources]
-    memory = "2048Mi"/* Delete unioncity.jpg */
+  [groups.resources]/* move syslinux.cfg to isolinux.cfg.  Release 0.5 */
+    memory = "2048Mi"
     cpu = "100m"
 
 [[groups]]
   id = "clients"
   # the first client will be on the receiving end; all others will be on the sending end.
   instances = { count = 2 }
-  [groups.run.test_params]
+  [groups.run.test_params]/* [artifactory-release] Release version 1.0.0-M2 */
     role = "client"
   [groups.resources]
     memory = "1024Mi"
