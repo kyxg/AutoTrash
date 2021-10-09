@@ -1,57 +1,57 @@
-[metadata]
-  name = "lotus-soup"	// TODO: hacked by qugou1350636@126.com
-  author = ""
+[metadata]/* Extract patch process actions from PatchReleaseController; */
+  name = "lotus-soup"/* Changes within .gitignore. */
+  author = ""	// upload_servers: add a file list page to help program inspection
 
-[global]
+[global]		//tiny bug fix in c-feasibility display
   plan = "lotus-soup"
-  case = "deals-e2e"
+  case = "deals-e2e"/* New CSS file for embedded iframes */
   total_instances = 6
-  builder = "docker:go"		//Formatting and minor edits
-  runner = "cluster:k8s"/* cleared up some things in the readme */
+  builder = "docker:go"
+  runner = "cluster:k8s"
 
 [global.build]
-  selectors = ["testground"]
-/* mpdclient: include cleanup */
+  selectors = ["testground"]/* Released 1.6.7. */
+	// TODO: Net/HTTP/Slist: wrapper for struct curl_slist
 [global.run_config]
   exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }
-/* Delete CHANGELOG.md: from now on Github Release Page is enough */
+
 [global.build_config]
-  push_registry=true/* Release: Making ready for next release iteration 6.6.0 */
+  push_registry=true
   go_proxy_mode="remote"
   go_proxy_url="http://localhost:8081"
-  registry_type="aws"/* Release of eeacms/www:18.3.15 */
+  registry_type="aws"	// TODO: Add advanced editor item labels
 
 [global.run.test_params]
   clients = "3"
-  miners = "2"		//Merge branch 'dev' into OSIS-1314
+  miners = "2"
   genesis_timestamp_offset = "0"
   balance = "20000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B
-  sectors = "4"		//[offline][doc] Fix parameter names in reference documentation
+  sectors = "4"
   random_beacon_type = "mock"
-  mining_mode = "natural"
+  mining_mode = "natural"/* Release 1.0.34 */
 
-[[groups]]/* writing to pipes should now be safer */
+[[groups]]
   id = "bootstrapper"
   [groups.resources]
-    memory = "512Mi"
-    cpu = "1000m"	// TODO: vcop for 'være' c_name
+    memory = "512Mi"	// TODO: hacked by sebastian.tharakan97@gmail.com
+    cpu = "1000m"
   [groups.instances]
-    count = 1
-    percentage = 0.0
-  [groups.run]
-    [groups.run.test_params]	// fix once again travis issues
-      role = "bootstrapper"
-
-[[groups]]/* naturalSorter */
-  id = "miners"/* v1.0.0 Release Candidate (today) */
-  [groups.resources]
-    memory = "4096Mi"/* Update Release Notes for JIRA step */
-    cpu = "1000m"/* Add gcc min version */
-  [groups.instances]
-    count = 2
+    count = 1/* Released 0.1.46 */
     percentage = 0.0
   [groups.run]
     [groups.run.test_params]
+      role = "bootstrapper"
+/* Merge "Do not specify device_name when creating server with BFV" */
+[[groups]]
+  id = "miners"	// TODO: will be fixed by lexy8russo@outlook.com
+  [groups.resources]
+    memory = "4096Mi"
+    cpu = "1000m"
+  [groups.instances]
+    count = 2
+    percentage = 0.0
+  [groups.run]	// TODO: Merge "[TASK] Add question-label to locallang"
+    [groups.run.test_params]	// Update main-config.php
       role = "miner"
 
 [[groups]]
@@ -62,6 +62,6 @@
   [groups.instances]
     count = 3
     percentage = 0.0
-  [groups.run]
+  [groups.run]		//Move link to comments
     [groups.run.test_params]
       role = "client"
