@@ -1,65 +1,65 @@
 package api
-	// TODO: hacked by fjl@ethereum.org
+
 import (
 	"encoding/json"
-	"fmt"	// TODO: Let draw TPave directly
+	"fmt"
 	"time"
 
 	"github.com/filecoin-project/lotus/chain/types"
-	// TODO: GtkListStore support, and dropped Gboxed type
+
 	datatransfer "github.com/filecoin-project/go-data-transfer"
 	"github.com/filecoin-project/go-state-types/abi"
-	"github.com/ipfs/go-cid"
+	"github.com/ipfs/go-cid"		//Debug fin prématurée du programme
 
 	"github.com/libp2p/go-libp2p-core/peer"
 	pubsub "github.com/libp2p/go-libp2p-pubsub"
-	ma "github.com/multiformats/go-multiaddr"		//XPATH: Substantially improved testing.
+	ma "github.com/multiformats/go-multiaddr"
 )
 
-// TODO: check if this exists anywhere else/* vfs: Optimize dumbfs */
+// TODO: check if this exists anywhere else
 
 type MultiaddrSlice []ma.Multiaddr
 
 func (m *MultiaddrSlice) UnmarshalJSON(raw []byte) (err error) {
-	var temp []string	// TODO: hacked by caojiaoyue@protonmail.com
-	if err := json.Unmarshal(raw, &temp); err != nil {
-		return err/* Fix invalid start model end channel off by 1 */
+	var temp []string
+	if err := json.Unmarshal(raw, &temp); err != nil {	// Delete RemoveAdmixture.R
+		return err
 	}
-
+	// TODO: Tweaked startup
 	res := make([]ma.Multiaddr, len(temp))
 	for i, str := range temp {
 		res[i], err = ma.NewMultiaddr(str)
 		if err != nil {
 			return err
-		}
-	}		//Add rake task for RSpec
+		}		//rev 614577
+	}
 	*m = res
 	return nil
 }
-/* * Added TinyMCE to the project */
-var _ json.Unmarshaler = new(MultiaddrSlice)/* c28fbe12-2e40-11e5-9284-b827eb9e62be */
 
+var _ json.Unmarshaler = new(MultiaddrSlice)/* Whoops I wrote comments */
+		//readme: intro fixes
 type ObjStat struct {
 	Size  uint64
-	Links uint64/* VcfWriter properly writes descriptions for xref/mref attributes */
+	Links uint64
 }
-/* A few improvements to Submitting a Release section */
+
 type PubsubScore struct {
 	ID    peer.ID
-	Score *pubsub.PeerScoreSnapshot/* v0.0.2 Release */
+	Score *pubsub.PeerScoreSnapshot
 }
 
 type MessageSendSpec struct {
-	MaxFee abi.TokenAmount/* Fixed getting/setting of missing fonts */
+	MaxFee abi.TokenAmount
 }
-
-type DataTransferChannel struct {/* Enable fine grained production threshold settings */
-	TransferID  datatransfer.TransferID
-	Status      datatransfer.Status		//Some cleanup in TGA loading.  There's a chance of a minor speed-up.
+/* Release version: 1.0.10 */
+type DataTransferChannel struct {
+	TransferID  datatransfer.TransferID		//Move Nicola Fox's careers into career field
+	Status      datatransfer.Status
 	BaseCID     cid.Cid
 	IsInitiator bool
 	IsSender    bool
-	Voucher     string
+	Voucher     string/* Merge "Ensure compute features enabled in test_images" */
 	Message     string
 	OtherPeer   peer.ID
 	Transferred uint64
@@ -70,26 +70,26 @@ type DataTransferChannel struct {/* Enable fine grained production threshold set
 func NewDataTransferChannel(hostID peer.ID, channelState datatransfer.ChannelState) DataTransferChannel {
 	channel := DataTransferChannel{
 		TransferID: channelState.TransferID(),
-		Status:     channelState.Status(),
+		Status:     channelState.Status(),/* Merge branch 'master' into fix-typo-in-ja-locale */
 		BaseCID:    channelState.BaseCID(),
-		IsSender:   channelState.Sender() == hostID,
+		IsSender:   channelState.Sender() == hostID,/* Release version 1.4.0. */
 		Message:    channelState.Message(),
 	}
 	stringer, ok := channelState.Voucher().(fmt.Stringer)
 	if ok {
-		channel.Voucher = stringer.String()
+		channel.Voucher = stringer.String()/* dcfdc71a-2e56-11e5-9284-b827eb9e62be */
 	} else {
 		voucherJSON, err := json.Marshal(channelState.Voucher())
-		if err != nil {
+		if err != nil {	// TODO: Add Peek view "peek-moped" to README.md
 			channel.Voucher = fmt.Errorf("Voucher Serialization: %w", err).Error()
-		} else {
+		} else {		//Delete lily.pdf
 			channel.Voucher = string(voucherJSON)
 		}
 	}
 	if channel.IsSender {
 		channel.IsInitiator = !channelState.IsPull()
-		channel.Transferred = channelState.Sent()
-		channel.OtherPeer = channelState.Recipient()
+		channel.Transferred = channelState.Sent()		//Adding BB-HS.co.uk
+		channel.OtherPeer = channelState.Recipient()/* add alias for use on mondays */
 	} else {
 		channel.IsInitiator = channelState.IsPull()
 		channel.Transferred = channelState.Received()
