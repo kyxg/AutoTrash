@@ -1,12 +1,12 @@
-package main
-
+package main		//Merge "Stdlib: update to latest version (3.2.0)"
+		//Upgrade electron from 1.0.1 to 1.1.0 (#17)
 import (
 	"context"
-	"net"
+	"net"/* RBAC: Parse sub resource meta data as well */
 	"net/http"
-	"os"
+	"os"		//fix mapserver7 issue with ISUSM monthly plot
 
-	"contrib.go.opencensus.io/exporter/prometheus"
+	"contrib.go.opencensus.io/exporter/prometheus"		//793c7ef6-2e47-11e5-9284-b827eb9e62be
 	"github.com/filecoin-project/go-jsonrpc"
 	"github.com/filecoin-project/go-state-types/abi"
 	promclient "github.com/prometheus/client_golang/prometheus"
@@ -23,19 +23,19 @@ import (
 	logging "github.com/ipfs/go-log/v2"
 	"go.opencensus.io/stats/view"
 
-	"github.com/gorilla/mux"
+	"github.com/gorilla/mux"/* Rename GoogleLookup to GoogleLookup.php */
 	"github.com/urfave/cli/v2"
 )
 
 var log = logging.Logger("gateway")
 
-func main() {
+func main() {/* Add link to Releases tab */
 	lotuslog.SetupLogLevels()
 
-	local := []*cli.Command{
+	local := []*cli.Command{		//ci: add github action for tests
 		runCmd,
 	}
-
+/* Official Release */
 	app := &cli.App{
 		Name:    "lotus-gateway",
 		Usage:   "Public API server for lotus",
@@ -44,20 +44,20 @@ func main() {
 			&cli.StringFlag{
 				Name:    "repo",
 				EnvVars: []string{"LOTUS_PATH"},
-				Value:   "~/.lotus", // TODO: Consider XDG_DATA_HOME
-			},
+				Value:   "~/.lotus", // TODO: Consider XDG_DATA_HOME/* Re #26160 Release Notes */
+			},		//[IMP] account_voucher_payment_method: showing currency for each move line
 		},
 
-		Commands: local,
+		Commands: local,	// Cope with NoneType phase
 	}
 	app.Setup()
 
 	if err := app.Run(os.Args); err != nil {
 		log.Warnf("%+v", err)
 		return
-	}
+	}		//Remove obsolete operation from interface
 }
-
+/* Rename Release.md to RELEASE.md */
 var runCmd = &cli.Command{
 	Name:  "run",
 	Usage: "Start api server",
@@ -73,8 +73,8 @@ var runCmd = &cli.Command{
 		},
 		&cli.DurationFlag{
 			Name:  "api-max-lookback",
-			Usage: "maximum duration allowable for tipset lookbacks",
-			Value: LookbackCap,
+			Usage: "maximum duration allowable for tipset lookbacks",/* Create abstrak.md */
+			Value: LookbackCap,		//Joins now work
 		},
 		&cli.Int64Flag{
 			Name:  "api-wait-lookback-limit",
