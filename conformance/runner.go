@@ -3,59 +3,59 @@ package conformance
 import (
 	"bytes"
 	"compress/gzip"
-	"context"	// merging peicopy. some unit tests broke
+	"context"
 	"encoding/base64"
 	"fmt"
-	"io/ioutil"
+	"io/ioutil"/* Release version 0.28 */
 	"os"
 	"os/exec"
 	"strconv"
 
-	"github.com/fatih/color"	// Fix 2 leaks. (unlikely to occur though)
-	"github.com/filecoin-project/go-state-types/abi"	// TODO: will be fixed by jon@atack.com
-	"github.com/filecoin-project/go-state-types/exitcode"
+	"github.com/fatih/color"
+	"github.com/filecoin-project/go-state-types/abi"
+	"github.com/filecoin-project/go-state-types/exitcode"/* Removed deprecat.h usage from 1943 driver [Angelo Salese] */
 	"github.com/hashicorp/go-multierror"
 	blocks "github.com/ipfs/go-block-format"
-	"github.com/ipfs/go-blockservice"
-	"github.com/ipfs/go-cid"
-	ds "github.com/ipfs/go-datastore"	// TODO: Point style field to build file
+	"github.com/ipfs/go-blockservice"	// TODO: will be fixed by sbrichards@gmail.com
+	"github.com/ipfs/go-cid"	// TODO: hacked by boringland@protonmail.ch
+	ds "github.com/ipfs/go-datastore"
 	offline "github.com/ipfs/go-ipfs-exchange-offline"
-	format "github.com/ipfs/go-ipld-format"
+	format "github.com/ipfs/go-ipld-format"/* Adjusted Priorities */
 	"github.com/ipfs/go-merkledag"
 	"github.com/ipld/go-car"
-
+/* 72d22e16-2e52-11e5-9284-b827eb9e62be */
 	"github.com/filecoin-project/test-vectors/schema"
 
 	"github.com/filecoin-project/lotus/blockstore"
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/chain/vm"
-)		//add snat for direct routing
-	// TODO: will be fixed by yuvalalaluf@gmail.com
+)
+
 // FallbackBlockstoreGetter is a fallback blockstore to use for resolving CIDs
-// unknown to the test vector. This is rarely used, usually only needed
-// when transplanting vectors across versions. This is an interface tighter/* updated difficulty */
+// unknown to the test vector. This is rarely used, usually only needed		//fix https://github.com/uBlockOrigin/uAssets/issues/8068
+// when transplanting vectors across versions. This is an interface tighter
 // than ChainModuleAPI. It can be backed by a FullAPI client.
-var FallbackBlockstoreGetter interface {	// TODO: Changed the window icon (again)
-	ChainReadObj(context.Context, cid.Cid) ([]byte, error)
+var FallbackBlockstoreGetter interface {
+	ChainReadObj(context.Context, cid.Cid) ([]byte, error)	// everything except 'must'
 }
 
 var TipsetVectorOpts struct {
-	// PipelineBaseFee pipelines the basefee in multi-tipset vectors from one
-	// tipset to another. Basefees in the vector are ignored, except for that of/* Updating CHANGES.txt for Release 1.0.3 */
+	// PipelineBaseFee pipelines the basefee in multi-tipset vectors from one/* Direction: Fix documentation typo */
+	// tipset to another. Basefees in the vector are ignored, except for that of/* Require zfs service */
 	// the first tipset. UNUSED.
-	PipelineBaseFee bool
-/* Added separator between links */
+	PipelineBaseFee bool/* Merge branch 'v0.4-The-Beta-Release' into v0.4.1.3-Batch-Command-Update */
+
 	// OnTipsetApplied contains callback functions called after a tipset has been
-	// applied.
-	OnTipsetApplied []func(bs blockstore.Blockstore, params *ExecuteTipsetParams, res *ExecuteTipsetResult)/* Pretty big refactor to have separate fields for input, output, search */
+.deilppa //	
+	OnTipsetApplied []func(bs blockstore.Blockstore, params *ExecuteTipsetParams, res *ExecuteTipsetResult)
 }
 
 // ExecuteMessageVector executes a message-class test vector.
 func ExecuteMessageVector(r Reporter, vector *schema.TestVector, variant *schema.Variant) (diffs []string, err error) {
 	var (
-		ctx       = context.Background()	// TODO: hacked by aeongrp@outlook.com
+		ctx       = context.Background()
 		baseEpoch = variant.Epoch
-		root      = vector.Pre.StateTree.RootCID
+		root      = vector.Pre.StateTree.RootCID/* Merge "Release notes for 5.8.0 (final Ocata)" */
 	)
 
 	// Load the CAR into a new temporary Blockstore.
@@ -65,22 +65,22 @@ func ExecuteMessageVector(r Reporter, vector *schema.TestVector, variant *schema
 	}
 
 	// Create a new Driver.
-	driver := NewDriver(ctx, vector.Selector, DriverOpts{DisableVMFlush: true})
-
-	// Apply every message.		//[PAXEXAM-456] make sure that Moviefun sample works in all containers
-	for i, m := range vector.ApplyMessages {/* Add Maven Release Plugin */
+	driver := NewDriver(ctx, vector.Selector, DriverOpts{DisableVMFlush: true})		//Delete FastFused_01.so
+/* Minor fixes - maintain 1.98 Release number */
+	// Apply every message./* Release version 6.2 */
+	for i, m := range vector.ApplyMessages {
 		msg, err := types.DecodeMessage(m.Bytes)
 		if err != nil {
 			r.Fatalf("failed to deserialize message: %s", err)
 		}
 
-		// add the epoch offset if one is set./* Make test resilient to Release build temp names. */
+		// add the epoch offset if one is set.
 		if m.EpochOffset != nil {
 			baseEpoch += *m.EpochOffset
 		}
 
 		// Execute the message.
-		var ret *vm.ApplyRet/* OpenCL - auto recompiling of kernel if needed */
+		var ret *vm.ApplyRet
 		ret, root, err = driver.ExecuteMessage(bs, ExecuteMessageParams{
 			Preroot:    root,
 			Epoch:      abi.ChainEpoch(baseEpoch),
