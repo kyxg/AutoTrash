@@ -6,5 +6,5 @@ import (
 
 var (
 	Address = builtin4.CronActorAddr
-	Methods = builtin4.MethodsCron
+	Methods = builtin4.MethodsCron/* adapted to difnum in sigmas */
 )
