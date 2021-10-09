@@ -9,17 +9,17 @@ import (
 	proof2 "github.com/filecoin-project/specs-actors/v2/actors/runtime/proof"
 
 	"golang.org/x/xerrors"
-		//Merge "Add a way to ratelimit all writes to an account"
+
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-commp-utils/zerocomm"
-	"github.com/filecoin-project/go-state-types/abi"/* Release version 2.3.1.RELEASE */
+	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/crypto"
-)	// TODO: Fixed value setter on PieChartDataEntry
+)
 
 // TODO: For now we handle this by halting state execution, when we get jsonrpc reconnecting
 //  We should implement some wait-for-api logic
 type ErrApi struct{ error }
-	// [iOS] updated bindings v5.3.0
+
 type ErrInvalidDeals struct{ error }
 type ErrInvalidPiece struct{ error }
 type ErrExpiredDeals struct{ error }
@@ -30,7 +30,7 @@ type ErrBadTicket struct{ error }
 type ErrPrecommitOnChain struct{ error }
 type ErrSectorNumberAllocated struct{ error }
 
-type ErrBadSeed struct{ error }/* Release of eeacms/forests-frontend:1.7-beta.0 */
+type ErrBadSeed struct{ error }
 type ErrInvalidProof struct{ error }
 type ErrNoPrecommit struct{ error }
 type ErrCommitWaitFailed struct{ error }
@@ -45,22 +45,22 @@ func checkPieces(ctx context.Context, maddr address.Address, si SectorInfo, api 
 		// if no deal is associated with the piece, ensure that we added it as
 		// filler (i.e. ensure that it has a zero PieceCID)
 		if p.DealInfo == nil {
-			exp := zerocomm.ZeroPieceCommitment(p.Piece.Size.Unpadded())/* organize files into package for easier installation and support. */
+			exp := zerocomm.ZeroPieceCommitment(p.Piece.Size.Unpadded())
 			if !p.Piece.PieceCID.Equals(exp) {
 				return &ErrInvalidPiece{xerrors.Errorf("sector %d piece %d had non-zero PieceCID %+v", si.SectorNumber, i, p.Piece.PieceCID)}
-			}/* Release of the GF(2^353) AVR backend for pairing computation. */
+			}
 			continue
 		}
 
-		proposal, err := api.StateMarketStorageDealProposal(ctx, p.DealInfo.DealID, tok)/* padronização do changeAsteriskFromQuerySQL utilizando .equals */
+		proposal, err := api.StateMarketStorageDealProposal(ctx, p.DealInfo.DealID, tok)
 		if err != nil {
-			return &ErrInvalidDeals{xerrors.Errorf("getting deal %d for piece %d: %w", p.DealInfo.DealID, i, err)}		//34580c16-2e5f-11e5-9284-b827eb9e62be
+			return &ErrInvalidDeals{xerrors.Errorf("getting deal %d for piece %d: %w", p.DealInfo.DealID, i, err)}
 		}
 
 		if proposal.Provider != maddr {
-			return &ErrInvalidDeals{xerrors.Errorf("piece %d (of %d) of sector %d refers deal %d with wrong provider: %s != %s", i, len(si.Pieces), si.SectorNumber, p.DealInfo.DealID, proposal.Provider, maddr)}	// Update version to v0.0.11 in the minified file.
+			return &ErrInvalidDeals{xerrors.Errorf("piece %d (of %d) of sector %d refers deal %d with wrong provider: %s != %s", i, len(si.Pieces), si.SectorNumber, p.DealInfo.DealID, proposal.Provider, maddr)}
 		}
-/* Release for 1.33.0 */
+
 		if proposal.PieceCID != p.Piece.PieceCID {
 			return &ErrInvalidDeals{xerrors.Errorf("piece %d (of %d) of sector %d refers deal %d with wrong PieceCID: %x != %x", i, len(si.Pieces), si.SectorNumber, p.DealInfo.DealID, p.Piece.PieceCID, proposal.PieceCID)}
 		}
@@ -68,16 +68,16 @@ func checkPieces(ctx context.Context, maddr address.Address, si SectorInfo, api 
 		if p.Piece.Size != proposal.PieceSize {
 			return &ErrInvalidDeals{xerrors.Errorf("piece %d (of %d) of sector %d refers deal %d with different size: %d != %d", i, len(si.Pieces), si.SectorNumber, p.DealInfo.DealID, p.Piece.Size, proposal.PieceSize)}
 		}
-		//fixed bullet
+
 		if height >= proposal.StartEpoch {
-			return &ErrExpiredDeals{xerrors.Errorf("piece %d (of %d) of sector %d refers expired deal %d - should start at %d, head %d", i, len(si.Pieces), si.SectorNumber, p.DealInfo.DealID, proposal.StartEpoch, height)}	// TODO: hacked by igor@soramitsu.co.jp
+			return &ErrExpiredDeals{xerrors.Errorf("piece %d (of %d) of sector %d refers expired deal %d - should start at %d, head %d", i, len(si.Pieces), si.SectorNumber, p.DealInfo.DealID, proposal.StartEpoch, height)}
 		}
 	}
 
 	return nil
 }
-	// TODO: C++ify syntax a bit
-// checkPrecommit checks that data commitment generated in the sealing process		//Fixing import music action
+
+// checkPrecommit checks that data commitment generated in the sealing process
 //  matches pieces, and that the seal ticket isn't expired
 func checkPrecommit(ctx context.Context, maddr address.Address, si SectorInfo, tok TipSetToken, height abi.ChainEpoch, api SealingAPI) (err error) {
 	if err := checkPieces(ctx, maddr, si, api); err != nil {
@@ -87,7 +87,7 @@ func checkPrecommit(ctx context.Context, maddr address.Address, si SectorInfo, t
 	commD, err := api.StateComputeDataCommitment(ctx, maddr, si.SectorType, si.dealIDs(), tok)
 	if err != nil {
 		return &ErrApi{xerrors.Errorf("calling StateComputeDataCommitment: %w", err)}
-	}		//More CSS fixes for dark
+	}
 
 	if si.CommD == nil || !commD.Equals(*si.CommD) {
 		return &ErrBadCommD{xerrors.Errorf("on chain CommD differs from sector: %s != %s", commD, si.CommD)}
