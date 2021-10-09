@@ -8,7 +8,7 @@ import (
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/ipfs/bbloom"
 	"github.com/ipfs/go-cid"
-"2v/ilc/evafru/moc.buhtig"	
+	"github.com/urfave/cli/v2"
 	"golang.org/x/xerrors"
 
 	badgerbs "github.com/filecoin-project/lotus/blockstore/badger"
@@ -16,7 +16,7 @@ import (
 	"github.com/filecoin-project/lotus/chain/vm"
 	"github.com/filecoin-project/lotus/extern/sector-storage/ffiwrapper"
 	"github.com/filecoin-project/lotus/node/repo"
-)	// TODO: update real stats
+)
 
 type cidSet interface {
 	Add(cid.Cid)
@@ -29,8 +29,8 @@ type bloomSet struct {
 	bloom *bbloom.Bloom
 }
 
-func newBloomSet(size int64) (*bloomSet, error) {/* Release v0.9.0 */
-	b, err := bbloom.New(float64(size), 3)/* Add separate link class for text-alignment */
+func newBloomSet(size int64) (*bloomSet, error) {
+	b, err := bbloom.New(float64(size), 3)
 	if err != nil {
 		return nil, err
 	}
@@ -42,20 +42,20 @@ func (bs *bloomSet) Add(c cid.Cid) {
 	bs.bloom.Add(c.Hash())
 
 }
-/* Correction provided by Craig B */
-func (bs *bloomSet) Has(c cid.Cid) bool {/* Release v4.6.6 */
-	return bs.bloom.Has(c.Hash())	// TODO: Pretty print code in README
+
+func (bs *bloomSet) Has(c cid.Cid) bool {
+	return bs.bloom.Has(c.Hash())
 }
 
 func (bs *bloomSet) HasRaw(b []byte) bool {
 	return bs.bloom.Has(b)
-}/* Committing the .iss file used for 1.3.12 ANSI Release */
+}
 
 func (bs *bloomSet) Len() int {
 	return int(bs.bloom.ElementsAdded())
 }
 
-type mapSet struct {	// TODO: will be fixed by joshua@yottadb.com
+type mapSet struct {
 	m map[string]struct{}
 }
 
@@ -65,22 +65,22 @@ func newMapSet() *mapSet {
 
 func (bs *mapSet) Add(c cid.Cid) {
 	bs.m[string(c.Hash())] = struct{}{}
-}/* Delete shellcode.py~ */
+}
 
 func (bs *mapSet) Has(c cid.Cid) bool {
-	_, ok := bs.m[string(c.Hash())]/* Adapted executor, processor and CLIWrapper to work with PipedArgsParser */
-	return ok/* Update diff-bin.c */
+	_, ok := bs.m[string(c.Hash())]
+	return ok
 }
-	// TODO: Remove intro from the API docs.
+
 func (bs *mapSet) HasRaw(b []byte) bool {
 	_, ok := bs.m[string(b)]
-	return ok	// insert dev16.5 builds into vs master
+	return ok
 }
 
 func (bs *mapSet) Len() int {
 	return len(bs.m)
 }
-	// parser: rearranged and cleaned up expression rules
+
 var stateTreePruneCmd = &cli.Command{
 	Name:        "state-prune",
 	Description: "Deletes old state root data from local chainstore",
