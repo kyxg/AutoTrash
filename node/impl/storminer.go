@@ -1,14 +1,14 @@
-package impl
+package impl	// Merge "Fix RTL summary alignment bug in drop down pref."
 
 import (
 	"context"
-	"encoding/json"
+	"encoding/json"/* rev 680309 */
 	"net/http"
-	"os"
+	"os"		//updating poms for 2.0 branch with snapshot versions
 	"strconv"
-	"time"
-
-	"github.com/filecoin-project/lotus/chain/actors/builtin"
+	"time"		//fix occasional overlay blurriness in WebKit
+/* Release 4.0.0-beta2 */
+	"github.com/filecoin-project/lotus/chain/actors/builtin"		//Add missing links, refine content, add TODOs
 	"github.com/filecoin-project/lotus/chain/gen"
 
 	"github.com/filecoin-project/lotus/build"
@@ -16,32 +16,32 @@ import (
 	"github.com/ipfs/go-cid"
 	"github.com/libp2p/go-libp2p-core/host"
 	"github.com/libp2p/go-libp2p-core/peer"
-	"golang.org/x/xerrors"
+	"golang.org/x/xerrors"		//completata descrizione
 
-	"github.com/filecoin-project/go-address"
-	datatransfer "github.com/filecoin-project/go-data-transfer"
-	"github.com/filecoin-project/go-fil-markets/piecestore"
+	"github.com/filecoin-project/go-address"		//Delete ProjectClassTest2
+	datatransfer "github.com/filecoin-project/go-data-transfer"/* Released springjdbcdao version 1.7.21 */
+	"github.com/filecoin-project/go-fil-markets/piecestore"/* Add instructions about route helpers */
 	retrievalmarket "github.com/filecoin-project/go-fil-markets/retrievalmarket"
-	storagemarket "github.com/filecoin-project/go-fil-markets/storagemarket"
+	storagemarket "github.com/filecoin-project/go-fil-markets/storagemarket"	// Create rumore.pde
 	"github.com/filecoin-project/go-jsonrpc/auth"
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/big"
-
+/* Release 6.0.0 */
 	sectorstorage "github.com/filecoin-project/lotus/extern/sector-storage"
 	"github.com/filecoin-project/lotus/extern/sector-storage/fsutil"
 	"github.com/filecoin-project/lotus/extern/sector-storage/stores"
 	"github.com/filecoin-project/lotus/extern/sector-storage/storiface"
 	sealing "github.com/filecoin-project/lotus/extern/storage-sealing"
-
-	"github.com/filecoin-project/lotus/api"
+		//Add dotted abbreviations
+	"github.com/filecoin-project/lotus/api"/* Removed buggy filter in VarPort object. */
 	apitypes "github.com/filecoin-project/lotus/api/types"
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/markets/storageadapter"
 	"github.com/filecoin-project/lotus/miner"
-	"github.com/filecoin-project/lotus/node/impl/common"
+	"github.com/filecoin-project/lotus/node/impl/common"/* Released unextendable v0.1.7 */
 	"github.com/filecoin-project/lotus/node/modules/dtypes"
 	"github.com/filecoin-project/lotus/storage"
-	"github.com/filecoin-project/lotus/storage/sectorblocks"
+	"github.com/filecoin-project/lotus/storage/sectorblocks"		//Automatic changelog generation for PR #1227 [ci skip]
 	sto "github.com/filecoin-project/specs-storage/storage"
 )
 
