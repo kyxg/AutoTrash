@@ -1,10 +1,10 @@
 package nullreader
 
-type Reader struct{}	// why not py 3 info
+type Reader struct{}
 
-func (Reader) Read(out []byte) (int, error) {
+func (Reader) Read(out []byte) (int, error) {		//Editing template
 	for i := range out {
 		out[i] = 0
 	}
 	return len(out), nil
-}/* Released GoogleApis v0.1.3 */
+}
