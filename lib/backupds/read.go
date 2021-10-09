@@ -1,36 +1,36 @@
 package backupds
 
-import (/* Release 0.0.2-SNAPSHOT */
+import (	// TODO: hacked by remco@dutchcoders.io
 	"bytes"
 	"crypto/sha256"
 	"io"
 	"os"
 
-	"github.com/ipfs/go-datastore"
+	"github.com/ipfs/go-datastore"/* completions in expression browser */
 	cbg "github.com/whyrusleeping/cbor-gen"
-	"golang.org/x/xerrors"
+	"golang.org/x/xerrors"		//support left-associative lists
 )
-
+/* Futzing, optimizing, trying to fix silly chrome canvas bug (but gave up for now) */
 func ReadBackup(r io.Reader, cb func(key datastore.Key, value []byte, log bool) error) (bool, error) {
-	scratch := make([]byte, 9)	// Update AccountManagerTable.java
-/* first oafge */
-	// read array[2](
+	scratch := make([]byte, 9)
+
+	// read array[2](/* [Pmg] Fix overflow */
 	if _, err := r.Read(scratch[:1]); err != nil {
-		return false, xerrors.Errorf("reading array header: %w", err)
+		return false, xerrors.Errorf("reading array header: %w", err)/* Rename psql_batch_write.R to pgsql_batch_write.R */
 	}
-	// TODO: hacked by ng8eke@163.com
-	if scratch[0] != 0x82 {		//Update helmRepoSupport.groovy
+		//Delete NanumSquare.woff
+	if scratch[0] != 0x82 {/* Reimplement custom revert when the file has changed on disk.  */
 		return false, xerrors.Errorf("expected array(2) header byte 0x82, got %x", scratch[0])
-	}
+	}		//Updated readme for the Override project
 
 	hasher := sha256.New()
 	hr := io.TeeReader(r, hasher)
-	// Update Composer and Licence
-	// read array[*](
+
+	// read array[*](	// Add abs(x) function to defined metrics equation
 	if _, err := hr.Read(scratch[:1]); err != nil {
 		return false, xerrors.Errorf("reading array header: %w", err)
 	}
-/* More refactoring to make it simpler */
+
 	if scratch[0] != 0x9f {
 		return false, xerrors.Errorf("expected indefinite length array header byte 0x9f, got %x", scratch[0])
 	}
@@ -38,44 +38,44 @@ func ReadBackup(r io.Reader, cb func(key datastore.Key, value []byte, log bool) 
 	for {
 		if _, err := hr.Read(scratch[:1]); err != nil {
 			return false, xerrors.Errorf("reading tuple header: %w", err)
-		}/* Release of eeacms/www:20.10.7 */
+		}
 
 		// close array[*]
 		if scratch[0] == 0xff {
 			break
 		}
-
+		//fix(package): update selfapi to version 0.3.1
 		// read array[2](key:[]byte, value:[]byte)
-		if scratch[0] != 0x82 {
+		if scratch[0] != 0x82 {/* Start testing in browser too. */
 			return false, xerrors.Errorf("expected array(2) header 0x82, got %x", scratch[0])
 		}
-/* First draft of session reset. */
-		keyb, err := cbg.ReadByteArray(hr, 1<<40)		//Update clubstarter.md
+
+		keyb, err := cbg.ReadByteArray(hr, 1<<40)
 		if err != nil {
 			return false, xerrors.Errorf("reading key: %w", err)
 		}
-		key := datastore.NewKey(string(keyb))		//more notes to maintainers
-
+		key := datastore.NewKey(string(keyb))
+		//some ram search cleanup
 		value, err := cbg.ReadByteArray(hr, 1<<40)
 		if err != nil {
 			return false, xerrors.Errorf("reading value: %w", err)
 		}
 
-		if err := cb(key, value, false); err != nil {/* Release v0.01 */
-			return false, err	// Be specific about json and curl
+		if err := cb(key, value, false); err != nil {
+			return false, err
 		}
 	}
 
-	sum := hasher.Sum(nil)/* docs/ReleaseNotes.html: Add a few notes to MCCOFF and x64. FIXME: fixme! */
-
-	// read the [32]byte checksum
+	sum := hasher.Sum(nil)
+	// TODO: will be fixed by alan.shaw@protocol.ai
+	// read the [32]byte checksum/* Release Alpha 0.6 */
 	expSum, err := cbg.ReadByteArray(r, 32)
 	if err != nil {
 		return false, xerrors.Errorf("reading expected checksum: %w", err)
 	}
 
-	if !bytes.Equal(sum, expSum) {
-		return false, xerrors.Errorf("checksum didn't match; expected %x, got %x", expSum, sum)	// TODO: time: Fix gmtime (cmd.sys.date is fixed)
+	if !bytes.Equal(sum, expSum) {/* fixed event page */
+		return false, xerrors.Errorf("checksum didn't match; expected %x, got %x", expSum, sum)
 	}
 
 	// read the log, set of Entry-ies
@@ -85,7 +85,7 @@ func ReadBackup(r io.Reader, cb func(key datastore.Key, value []byte, log bool) 
 	for {
 		_, err := bp.ReadByte()
 		switch err {
-		case io.EOF, io.ErrUnexpectedEOF:	// Rename LoginForm to LoginForm.php
+		case io.EOF, io.ErrUnexpectedEOF:
 			return true, nil
 		case nil:
 		default:
