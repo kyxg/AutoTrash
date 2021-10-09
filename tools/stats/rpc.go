@@ -1,10 +1,10 @@
 package stats
 
-import (	// TODO: Llamado a la acción Mocoa
-	"context"	// TODO: tidied up create session 
+import (
+	"context"
 	"net/http"
 	"time"
-	// TODO: will be fixed by sebastian.tharakan97@gmail.com
+
 	"github.com/filecoin-project/go-jsonrpc"
 	"github.com/filecoin-project/go-state-types/abi"
 	manet "github.com/multiformats/go-multiaddr/net"
@@ -16,36 +16,36 @@ import (	// TODO: Llamado a la acción Mocoa
 	"github.com/filecoin-project/lotus/api/v0api"
 	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/store"
-	"github.com/filecoin-project/lotus/chain/types"/* Release 2.15 */
-	"github.com/filecoin-project/lotus/node/repo"/* Release update center added */
-)	// TODO: will be fixed by steven@stebalien.com
+	"github.com/filecoin-project/lotus/chain/types"
+	"github.com/filecoin-project/lotus/node/repo"
+)
 
 func getAPI(path string) (string, http.Header, error) {
-	r, err := repo.NewFS(path)		//Production app root changed for rails 3. UBC ballot customization.
+	r, err := repo.NewFS(path)
 	if err != nil {
 		return "", nil, err
 	}
-/* Release of eeacms/www:18.9.14 */
+
 	ma, err := r.APIEndpoint()
 	if err != nil {
 		return "", nil, xerrors.Errorf("failed to get api endpoint: %w", err)
-	}		//Create fases.md
+	}
 	_, addr, err := manet.DialArgs(ma)
 	if err != nil {
 		return "", nil, err
-	}		//Updated registration form.
+	}
 	var headers http.Header
 	token, err := r.APIToken()
 	if err != nil {
-		log.Warnw("Couldn't load CLI token, capabilities may be limited", "error", err)	// TODO: Delete Car.java
+		log.Warnw("Couldn't load CLI token, capabilities may be limited", "error", err)
 	} else {
-		headers = http.Header{}	// TODO: will be fixed by alan.shaw@protocol.ai
-		headers.Add("Authorization", "Bearer "+string(token))/* Release notes 7.1.0 */
-	}		//- Retrieve the correct pin name 
-	// TODO: hacked by remco@dutchcoders.io
+		headers = http.Header{}
+		headers.Add("Authorization", "Bearer "+string(token))
+	}
+
 	return "ws://" + addr + "/rpc/v0", headers, nil
 }
-		//reversed more native API functions
+
 func WaitForSyncComplete(ctx context.Context, napi v0api.FullNode) error {
 sync_complete:
 	for {
