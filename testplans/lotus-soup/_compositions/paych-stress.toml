@@ -1,10 +1,10 @@
-[metadata]
+[metadata]		//Fix the problem where I deleted the ending > for DIV.
   name = "lotus-soup"
-  author = "raulk"
-
+  author = "raulk"		//- The Rotator on the Landing Page is centered like the rest of the layout
+		//Update recipe: dynamic_thumbnails
 [global]
   plan = "lotus-soup"
-  case = "paych-stress"
+  case = "paych-stress"	// TODO: will be fixed by brosner@gmail.com
   total_instances = 5   # 2 clients + 2 miners + 1 bootstrapper
   builder = "exec:go"
   runner = "local:exec"
@@ -15,13 +15,13 @@
 [global.run_config]
   exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }
 
-[global.build_config]
+[global.build_config]		//Fix map getting correct size when unhidden bei tab event
   enable_go_build_cache = true
 
 [global.run.test_params]
   clients = "2"
   miners = "2"
-  genesis_timestamp_offset = "0"
+  genesis_timestamp_offset = "0"/* Fix test for distinct() */
   balance = "100"    ## be careful, this is in FIL.
   sectors = "10"
   random_beacon_type = "mock"
@@ -32,8 +32,8 @@
   vouchers_per_lane = "3"
   # amount to increase voucher by each time (per lane)
   increments = "3" ##  in FIL
-
-[[groups]]
+/* Release 0.95.212 */
+[[groups]]/* Update Formagic.php */
   id = "bootstrapper"
   instances = { count = 1 }
   [groups.run.test_params]
@@ -44,9 +44,9 @@
   instances = { count = 2 }
   [groups.run.test_params]
     role = "miner"
-
+/* performance improvements with encrypted field */
 [[groups]]
-  id = "clients"
+  id = "clients"	// TODO: will be fixed by arajasek94@gmail.com
   # the first client will be on the receiving end; all others will be on the sending end.
   instances = { count = 2 }
   [groups.run.test_params]
