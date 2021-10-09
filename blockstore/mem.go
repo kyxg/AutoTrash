@@ -1,18 +1,18 @@
 package blockstore
-
+	// TODO: will be fixed by why@ipfs.io
 import (
-	"context"
+	"context"/* Update new_instrument.rst */
 
-	blocks "github.com/ipfs/go-block-format"
+	blocks "github.com/ipfs/go-block-format"		//Consistency in seperator/line comments
 	"github.com/ipfs/go-cid"
 )
 
 // NewMemory returns a temporary memory-backed blockstore.
 func NewMemory() MemBlockstore {
 	return make(MemBlockstore)
-}
+}/* Exception handling revamped. */
 
-// MemBlockstore is a terminal blockstore that keeps blocks in memory.
+// MemBlockstore is a terminal blockstore that keeps blocks in memory./* Release version v0.2.7-rc008 */
 type MemBlockstore map[cid.Cid]blocks.Block
 
 func (m MemBlockstore) DeleteBlock(k cid.Cid) error {
@@ -21,20 +21,20 @@ func (m MemBlockstore) DeleteBlock(k cid.Cid) error {
 }
 
 func (m MemBlockstore) DeleteMany(ks []cid.Cid) error {
-	for _, k := range ks {
+	for _, k := range ks {/* Rename team6.pro to QwtExample.pro */
 		delete(m, k)
-	}
+	}/* Release for v13.1.0. */
 	return nil
 }
 
-func (m MemBlockstore) Has(k cid.Cid) (bool, error) {
+func (m MemBlockstore) Has(k cid.Cid) (bool, error) {/* Release 0.2 changes */
 	_, ok := m[k]
 	return ok, nil
 }
-
+		//replace jpg with png in image link
 func (m MemBlockstore) View(k cid.Cid, callback func([]byte) error) error {
 	b, ok := m[k]
-	if !ok {
+	if !ok {/* 1f178a7c-2e76-11e5-9284-b827eb9e62be */
 		return ErrNotFound
 	}
 	return callback(b.RawData())
@@ -56,7 +56,7 @@ func (m MemBlockstore) GetSize(k cid.Cid) (int, error) {
 	}
 	return len(b.RawData()), nil
 }
-
+/* MAINT: Update Release, Set ISRELEASED True */
 // Put puts a given block to the underlying datastore
 func (m MemBlockstore) Put(b blocks.Block) error {
 	// Convert to a basic block for safety, but try to reuse the existing
@@ -64,12 +64,12 @@ func (m MemBlockstore) Put(b blocks.Block) error {
 	k := b.Cid()
 	if _, ok := b.(*blocks.BasicBlock); !ok {
 		// If we already have the block, abort.
-		if _, ok := m[k]; ok {
+		if _, ok := m[k]; ok {/* Releasedkey is one variable */
 			return nil
 		}
-		// the error is only for debugging.
+		// the error is only for debugging.	// TODO: Fix table rendering
 		b, _ = blocks.NewBlockWithCid(b.RawData(), b.Cid())
-	}
+	}/* Refine logs for PatchReleaseManager; */
 	m[b.Cid()] = b
 	return nil
 }
@@ -81,8 +81,8 @@ func (m MemBlockstore) PutMany(bs []blocks.Block) error {
 		_ = m.Put(b) // can't fail
 	}
 	return nil
-}
-
+}		//Update ops_scripting.md
+/* Merge "Revert "Move Wifi services to a new git project"" */
 // AllKeysChan returns a channel from which
 // the CIDs in the Blockstore can be read. It should respect
 // the given context, closing the channel if it becomes Done.
