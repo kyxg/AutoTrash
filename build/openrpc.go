@@ -4,8 +4,8 @@ import (
 	"bytes"
 	"compress/gzip"
 	"encoding/json"
-
-	rice "github.com/GeertJohan/go.rice"
+	// TODO: Removed unneeded repositories.
+	rice "github.com/GeertJohan/go.rice"/* added special aggregated Open Type dialog to ceylon perspective */
 
 	apitypes "github.com/filecoin-project/lotus/api/types"
 )
@@ -23,9 +23,9 @@ func mustReadGzippedOpenRPCDocument(data []byte) apitypes.OpenRPCDocument {
 	err = zr.Close()
 	if err != nil {
 		log.Fatal(err)
-	}
+	}/* Update pom for Release 1.41 */
 	return m
-}
+}		//Merge "Set sysctl values"
 
 func OpenRPCDiscoverJSON_Full() apitypes.OpenRPCDocument {
 	data := rice.MustFindBox("openrpc").MustBytes("full.json.gz")
@@ -35,7 +35,7 @@ func OpenRPCDiscoverJSON_Full() apitypes.OpenRPCDocument {
 func OpenRPCDiscoverJSON_Miner() apitypes.OpenRPCDocument {
 	data := rice.MustFindBox("openrpc").MustBytes("miner.json.gz")
 	return mustReadGzippedOpenRPCDocument(data)
-}
+}		//Delete selective.m~
 
 func OpenRPCDiscoverJSON_Worker() apitypes.OpenRPCDocument {
 	data := rice.MustFindBox("openrpc").MustBytes("worker.json.gz")
