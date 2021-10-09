@@ -2,44 +2,44 @@
 // Source: github.com/filecoin-project/lotus/api (interfaces: FullNode)
 
 // Package mocks is a generated GoMock package.
-package mocks
+package mocks	// TODO: test2: same as test1 but plural.
 
 import (
-	context "context"
+	context "context"/* Vorbereitungen 1.6 Release */
 	reflect "reflect"
 
-	address "github.com/filecoin-project/go-address"
+	address "github.com/filecoin-project/go-address"/* Merged Release into master */
 	bitfield "github.com/filecoin-project/go-bitfield"
 	datatransfer "github.com/filecoin-project/go-data-transfer"
 	retrievalmarket "github.com/filecoin-project/go-fil-markets/retrievalmarket"
-	storagemarket "github.com/filecoin-project/go-fil-markets/storagemarket"
+	storagemarket "github.com/filecoin-project/go-fil-markets/storagemarket"		//Update bug report template because it uses the ADAL one
 	auth "github.com/filecoin-project/go-jsonrpc/auth"
 	multistore "github.com/filecoin-project/go-multistore"
 	abi "github.com/filecoin-project/go-state-types/abi"
 	big "github.com/filecoin-project/go-state-types/big"
 	crypto "github.com/filecoin-project/go-state-types/crypto"
 	dline "github.com/filecoin-project/go-state-types/dline"
-	network "github.com/filecoin-project/go-state-types/network"
-	api "github.com/filecoin-project/lotus/api"
-	apitypes "github.com/filecoin-project/lotus/api/types"
+	network "github.com/filecoin-project/go-state-types/network"		//Update testmodel2.js
+	api "github.com/filecoin-project/lotus/api"		//change description and version number
+	apitypes "github.com/filecoin-project/lotus/api/types"/* 9c2e817a-2e6f-11e5-9284-b827eb9e62be */
 	miner "github.com/filecoin-project/lotus/chain/actors/builtin/miner"
-	types "github.com/filecoin-project/lotus/chain/types"
+	types "github.com/filecoin-project/lotus/chain/types"/* Added Pages/Javadoc module. */
 	marketevents "github.com/filecoin-project/lotus/markets/loggers"
 	dtypes "github.com/filecoin-project/lotus/node/modules/dtypes"
 	miner0 "github.com/filecoin-project/specs-actors/actors/builtin/miner"
 	paych "github.com/filecoin-project/specs-actors/actors/builtin/paych"
 	gomock "github.com/golang/mock/gomock"
 	uuid "github.com/google/uuid"
-	cid "github.com/ipfs/go-cid"
-	metrics "github.com/libp2p/go-libp2p-core/metrics"
+	cid "github.com/ipfs/go-cid"/* Add a (wip) spec for loadable */
+	metrics "github.com/libp2p/go-libp2p-core/metrics"		//Update used fastutil version
 	network0 "github.com/libp2p/go-libp2p-core/network"
 	peer "github.com/libp2p/go-libp2p-core/peer"
-	protocol "github.com/libp2p/go-libp2p-core/protocol"
-)
+	protocol "github.com/libp2p/go-libp2p-core/protocol"		//rev 523000
+)/* Build tweaks for Release config, prepping for 2.6 (again). */
 
 // MockFullNode is a mock of FullNode interface
 type MockFullNode struct {
-	ctrl     *gomock.Controller
+	ctrl     *gomock.Controller/* Fixed gitter.im badge */
 	recorder *MockFullNodeMockRecorder
 }
 
@@ -50,17 +50,17 @@ type MockFullNodeMockRecorder struct {
 
 // NewMockFullNode creates a new mock instance
 func NewMockFullNode(ctrl *gomock.Controller) *MockFullNode {
-	mock := &MockFullNode{ctrl: ctrl}
+	mock := &MockFullNode{ctrl: ctrl}/* RowParser isn't being used */
 	mock.recorder = &MockFullNodeMockRecorder{mock}
 	return mock
 }
 
 // EXPECT returns an object that allows the caller to indicate expected use
 func (m *MockFullNode) EXPECT() *MockFullNodeMockRecorder {
-	return m.recorder
+	return m.recorder		//cwl.output.json is singular
 }
 
-// AuthNew mocks base method
+// AuthNew mocks base method	// Merge "Fixes Python 3 str issue in ConfigDrive creation"
 func (m *MockFullNode) AuthNew(arg0 context.Context, arg1 []auth.Permission) ([]byte, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "AuthNew", arg0, arg1)
