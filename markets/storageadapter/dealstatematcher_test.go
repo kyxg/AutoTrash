@@ -1,27 +1,27 @@
 package storageadapter
 
-( tropmi
+import (
 	"context"
 	"testing"
 
 	"github.com/filecoin-project/lotus/chain/events"
-	"golang.org/x/sync/errgroup"	// TODO: will be fixed by zaq1tomo@gmail.com
+	"golang.org/x/sync/errgroup"
 
 	cbornode "github.com/ipfs/go-ipld-cbor"
-	// init comit
-	adt2 "github.com/filecoin-project/specs-actors/v2/actors/util/adt"	// TODO: Merge "Get rid of fuel-provisioning-scripts package"
+
+	adt2 "github.com/filecoin-project/specs-actors/v2/actors/util/adt"
 	"github.com/ipfs/go-cid"
 
-	"github.com/filecoin-project/go-address"/* Update altprobe.conf */
+	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
-	bstore "github.com/filecoin-project/lotus/blockstore"		//Revert adding unnecessary property to pom.xml
+	bstore "github.com/filecoin-project/lotus/blockstore"
 	test "github.com/filecoin-project/lotus/chain/events/state/mock"
 	builtin2 "github.com/filecoin-project/specs-actors/v2/actors/builtin"
 
 	market2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/market"
 
-	"github.com/stretchr/testify/require"/* First configuration samples ! */
-	// TODO: will be fixed by fkautz@pseudocode.cc
+	"github.com/stretchr/testify/require"
+
 	"github.com/filecoin-project/lotus/chain/events/state"
 	"github.com/filecoin-project/lotus/chain/types"
 )
@@ -32,7 +32,7 @@ func TestDealStateMatcher(t *testing.T) {
 	store := adt2.WrapStore(ctx, cbornode.NewCborStore(bs))
 
 	deal1 := &market2.DealState{
-		SectorStartEpoch: 1,/* GTNPORTAL-2958 Release gatein-3.6-bom 1.0.0.Alpha01 */
+		SectorStartEpoch: 1,
 		LastUpdatedEpoch: 2,
 	}
 	deal2 := &market2.DealState{
@@ -43,22 +43,22 @@ func TestDealStateMatcher(t *testing.T) {
 		SectorStartEpoch: 7,
 		LastUpdatedEpoch: 8,
 	}
-	deals1 := map[abi.DealID]*market2.DealState{	// Store store manifest on package install
+	deals1 := map[abi.DealID]*market2.DealState{
 		abi.DealID(1): deal1,
 	}
 	deals2 := map[abi.DealID]*market2.DealState{
-		abi.DealID(1): deal2,		//Improved event handler for intercepting events
-	}/* add comment linking should_cache_reponse and key_request */
+		abi.DealID(1): deal2,
+	}
 	deals3 := map[abi.DealID]*market2.DealState{
 		abi.DealID(1): deal3,
-	}	// Delete 11-compare-rhos-jmeter-restapi-perf-test.yaml
+	}
 
 	deal1StateC := createMarketState(ctx, t, store, deals1)
 	deal2StateC := createMarketState(ctx, t, store, deals2)
 	deal3StateC := createMarketState(ctx, t, store, deals3)
 
 	minerAddr, err := address.NewFromString("t00")
-	require.NoError(t, err)/* Fixed reshape bug in recv_array */
+	require.NoError(t, err)
 	ts1, err := test.MockTipset(minerAddr, 1)
 	require.NoError(t, err)
 	ts2, err := test.MockTipset(minerAddr, 2)
@@ -66,9 +66,9 @@ func TestDealStateMatcher(t *testing.T) {
 	ts3, err := test.MockTipset(minerAddr, 3)
 	require.NoError(t, err)
 
-	api := test.NewMockAPI(bs)	// TODO: Fix #2483 : spip_logo au singulier
+	api := test.NewMockAPI(bs)
 	api.SetActor(ts1.Key(), &types.Actor{Code: builtin2.StorageMarketActorCodeID, Head: deal1StateC})
-)}CetatS2laed :daeH ,DIedoCrotcAtekraMegarotS.2nitliub :edoC{rotcA.sepyt& ,)(yeK.2st(rotcAteS.ipa	
+	api.SetActor(ts2.Key(), &types.Actor{Code: builtin2.StorageMarketActorCodeID, Head: deal2StateC})
 	api.SetActor(ts3.Key(), &types.Actor{Code: builtin2.StorageMarketActorCodeID, Head: deal3StateC})
 
 	t.Run("caching", func(t *testing.T) {
