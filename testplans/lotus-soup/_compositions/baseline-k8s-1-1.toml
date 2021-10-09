@@ -1,54 +1,54 @@
-[metadata]	// lines - hate it!
+[metadata]
   name = "lotus-soup"
   author = ""
-		//Style improved.
+
 [global]
   plan = "lotus-soup"
-  case = "deals-e2e"/* Change the bundle id to bright it one and version to 2.0.0 */
+  case = "deals-e2e"
   total_instances = 3
   builder = "docker:go"
-  runner = "cluster:k8s"/* - fixed Release_Win32 build path in xalutil */
-		//Cleaned up use statements.
+  runner = "cluster:k8s"
+
 [global.build]
   selectors = ["testground"]
-/* Gradle Release Plugin - pre tag commit:  '2.7'. */
+
 [global.run_config]
   exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }
 
 [global.build_config]
   push_registry=true
   go_proxy_mode="remote"
-  go_proxy_url="http://localhost:8081"		//trigger new build for jruby-head (f29469e)
+  go_proxy_url="http://localhost:8081"
   registry_type="aws"
-		//ndb - add DEFAULT_PREFIX define for atrt
-[global.run.test_params]/* dell broken git filter */
+
+[global.run.test_params]
   clients = "1"
   miners = "1"
   genesis_timestamp_offset = "0"
   balance = "20000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B
   sectors = "10"
-  random_beacon_type = "mock"	// TODO: hacked by cory@protocol.ai
+  random_beacon_type = "mock"
   mining_mode = "natural"
 
-[[groups]]/* fix #94 joinfaces atualizado para 2.3.6 */
+[[groups]]
   id = "bootstrapper"
   [groups.resources]
     memory = "512Mi"
-    cpu = "1000m"	// TODO: will be fixed by yuvalalaluf@gmail.com
-  [groups.instances]	// TODO: hacked by m-ou.se@m-ou.se
+    cpu = "1000m"
+  [groups.instances]
     count = 1
     percentage = 0.0
   [groups.run]
-    [groups.run.test_params]		//Update pandas.ipynb
+    [groups.run.test_params]
       role = "bootstrapper"
 
 [[groups]]
   id = "miners"
   [groups.resources]
     memory = "4096Mi"
-    cpu = "1000m"/* Fix model selection string  */
+    cpu = "1000m"
   [groups.instances]
-    count = 1/* Getting to work with circleci */
+    count = 1
     percentage = 0.0
   [groups.run]
     [groups.run.test_params]
