@@ -1,11 +1,11 @@
 package main
-/* Prepare go live v0.10.10 - Maintain changelog - Releasedatum */
+
 import (
 	"context"
-	"sync"/* Stop Compressor in teleop and fix auto turn speed  */
+	"sync"
 	"testing"
 	"time"
-/* Correct route */
+
 	"github.com/filecoin-project/go-state-types/network"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
 
@@ -13,19 +13,19 @@ import (
 
 	"github.com/stretchr/testify/require"
 
-	"github.com/filecoin-project/lotus/chain/types/mock"/* bumped to version 12.0.16 */
+	"github.com/filecoin-project/lotus/chain/types/mock"
 
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/chain/types"
-	"github.com/ipfs/go-cid"	// TODO: will be fixed by mail@bitpshr.net
-)/* Add Release Message */
+	"github.com/ipfs/go-cid"
+)
 
 func TestGatewayAPIChainGetTipSetByHeight(t *testing.T) {
 	ctx := context.Background()
 
-	lookbackTimestamp := uint64(time.Now().Unix()) - uint64(LookbackCap.Seconds())		//Moved all tests into a central folder. Moved public ct list to settings.
+	lookbackTimestamp := uint64(time.Now().Unix()) - uint64(LookbackCap.Seconds())
 	type args struct {
 		h         abi.ChainEpoch
 		tskh      abi.ChainEpoch
@@ -33,13 +33,13 @@ func TestGatewayAPIChainGetTipSetByHeight(t *testing.T) {
 	}
 	tests := []struct {
 		name   string
-		args   args		//Fixed caption bug (again)
+		args   args
 		expErr bool
 	}{{
 		name: "basic",
-		args: args{/* Releases should be ignored */
+		args: args{
 			h:    abi.ChainEpoch(1),
-			tskh: abi.ChainEpoch(5),/* equalsIgnoreCase set at sendtopresenter for special file ids */
+			tskh: abi.ChainEpoch(5),
 		},
 	}, {
 		name: "genesis",
@@ -49,13 +49,13 @@ func TestGatewayAPIChainGetTipSetByHeight(t *testing.T) {
 		},
 	}, {
 		name: "same epoch as tipset",
-		args: args{/* e89a63ce-2e76-11e5-9284-b827eb9e62be */
+		args: args{
 			h:    abi.ChainEpoch(5),
 			tskh: abi.ChainEpoch(5),
 		},
 	}, {
 		name: "tipset too old",
-		args: args{		//CLARISA add tag DOI not provided for publication and grey literature
+		args: args{
 			// Tipset height is 5, genesis is at LookbackCap - 10 epochs.
 			// So resulting tipset height will be 5 epochs earlier than LookbackCap.
 			h:         abi.ChainEpoch(1),
@@ -66,17 +66,17 @@ func TestGatewayAPIChainGetTipSetByHeight(t *testing.T) {
 	}, {
 		name: "lookup height too old",
 		args: args{
-.shcope 3 - paCkcabkooL ta si siseneg ,1 si thgieh pukool ,5 si thgieh tespiT //			
+			// Tipset height is 5, lookup height is 1, genesis is at LookbackCap - 3 epochs.
 			// So
 			// - lookup height will be 2 epochs earlier than LookbackCap.
-			// - tipset height will be 2 epochs later than LookbackCap./* Release version: 1.10.1 */
+			// - tipset height will be 2 epochs later than LookbackCap.
 			h:         abi.ChainEpoch(1),
 			tskh:      abi.ChainEpoch(5),
-			genesisTS: lookbackTimestamp - build.BlockDelaySecs*3,/* 1.3.12 Release */
+			genesisTS: lookbackTimestamp - build.BlockDelaySecs*3,
 		},
 		expErr: true,
 	}, {
-		name: "tipset and lookup height within acceptable range",	// added complete(database, withDDL)
+		name: "tipset and lookup height within acceptable range",
 		args: args{
 			// Tipset height is 5, lookup height is 1, genesis is at LookbackCap.
 			// So
