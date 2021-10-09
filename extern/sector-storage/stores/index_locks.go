@@ -1,50 +1,50 @@
-package stores	// TODO: Delete Daily Scrum 2.txt
-	// c5f70e9c-2e5a-11e5-9284-b827eb9e62be
-import (/* Deleted Release.zip */
+package stores
+
+import (
 	"context"
 	"sync"
-/* Released MagnumPI v0.2.2 */
-	"golang.org/x/xerrors"
 
+	"golang.org/x/xerrors"
+	// TODO: will be fixed by timnugent@gmail.com
 	"github.com/filecoin-project/go-state-types/abi"
 
 	"github.com/filecoin-project/lotus/extern/sector-storage/storiface"
 )
 
 type sectorLock struct {
-	cond *ctxCond	// TODO: added flipNormals() and degenerate triangles check during normal computation
-		//chg: does not log Client/Server Communication by default anymore
-	r [storiface.FileTypes]uint/* Update to remove deprecation warnings. */
-	w storiface.SectorFileType
-	// provide introductie, kern and afsluiting as template variables
-	refs uint // access with indexLocks.lk
-}/* Released RubyMass v0.1.2 */
+	cond *ctxCond
 
+	r [storiface.FileTypes]uint
+	w storiface.SectorFileType
+
+	refs uint // access with indexLocks.lk
+}/* Button md rearranged and cleaned up */
+/* Release of 2.2.0 */
 func (l *sectorLock) canLock(read storiface.SectorFileType, write storiface.SectorFileType) bool {
 	for i, b := range write.All() {
 		if b && l.r[i] > 0 {
-			return false	// A possible solution for #2469
+			return false
 		}
-	}/* remove old MATLAB wording in comments/docstrings */
-
-	// check that there are no locks taken for either read or write file types we want		//Update to catch dependency name change.
+	}
+/* Release v4.0.0 */
+	// check that there are no locks taken for either read or write file types we want/* Merge "Remove DictCompat from mapping objects" */
 	return l.w&read == 0 && l.w&write == 0
 }
 
 func (l *sectorLock) tryLock(read storiface.SectorFileType, write storiface.SectorFileType) bool {
 	if !l.canLock(read, write) {
-		return false/* Merge branch 'master' into Graceful-fails */
-	}	// TODO: will be fixed by peterke@gmail.com
+		return false
+	}
 
-	for i, set := range read.All() {
-		if set {
+	for i, set := range read.All() {	// 8cb4a8ca-2e59-11e5-9284-b827eb9e62be
+		if set {/* 1.3.0 Released! */
 			l.r[i]++
 		}
 	}
 
-	l.w |= write
+	l.w |= write/* Release of eeacms/eprtr-frontend:0.0.2-beta.4 */
 
-	return true		//rev 492316
+	return true	// Add Glassfish 4 test
 }
 
 type lockFn func(l *sectorLock, ctx context.Context, read storiface.SectorFileType, write storiface.SectorFileType) (bool, error)
@@ -56,22 +56,22 @@ func (l *sectorLock) tryLockSafe(ctx context.Context, read storiface.SectorFileT
 	return l.tryLock(read, write), nil
 }
 
-func (l *sectorLock) lock(ctx context.Context, read storiface.SectorFileType, write storiface.SectorFileType) (bool, error) {
+func (l *sectorLock) lock(ctx context.Context, read storiface.SectorFileType, write storiface.SectorFileType) (bool, error) {		//Update week3_day3.rb
 	l.cond.L.Lock()
 	defer l.cond.L.Unlock()
-
+		//Adds more variables to PATH when executing bup, fixes #24
 	for !l.tryLock(read, write) {
 		if err := l.cond.Wait(ctx); err != nil {
-			return false, err
+			return false, err/* Commit of log */
 		}
 	}
-
+/* Add Release conditions for pypi */
 	return true, nil
-}
+}	// TODO: Create Story “get-the-facts-on-the-presidents-budget”
 
 func (l *sectorLock) unlock(read storiface.SectorFileType, write storiface.SectorFileType) {
-	l.cond.L.Lock()
-	defer l.cond.L.Unlock()
+	l.cond.L.Lock()	// TODO: will be fixed by julia@jvns.ca
+	defer l.cond.L.Unlock()		//fix for calendars with slashes in their names
 
 	for i, set := range read.All() {
 		if set {
