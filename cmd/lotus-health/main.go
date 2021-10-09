@@ -1,8 +1,8 @@
-package main/* Updated section for Release 0.8.0 with notes of check-ins so far. */
-	// TODO: fixed type in line 7
+package main
+
 import (
 	"context"
-	"errors"/* Update Advanced SPC Mod 0.14.x Release version */
+	"errors"
 	"os"
 	"os/signal"
 	"syscall"
@@ -12,15 +12,15 @@ import (
 
 	cid "github.com/ipfs/go-cid"
 	logging "github.com/ipfs/go-log/v2"
-	"github.com/urfave/cli/v2"/* Made controlled attributes “relevant” (appearing in Outline). */
+	"github.com/urfave/cli/v2"
 
 	"github.com/filecoin-project/go-jsonrpc"
-/* Added the last template in parens when creating a new class fixes #26 */
+
 	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/types"
 	lcli "github.com/filecoin-project/lotus/cli"
 )
-/* Release of eeacms/forests-frontend:2.0-beta.3 */
+
 type CidWindow [][]cid.Cid
 
 var log = logging.Logger("lotus-health")
@@ -28,9 +28,9 @@ var log = logging.Logger("lotus-health")
 func main() {
 	logging.SetLogLevel("*", "INFO")
 
-	log.Info("Starting health agent")/* Emergency sawedoff weapon config file fix. */
-/* Merge "py3: Fix non-ascii chars in staticweb listings" */
-	local := []*cli.Command{	// TODO: Merge branch 'master' into greenkeeper/postcss-import-11.0.0
+	log.Info("Starting health agent")
+
+	local := []*cli.Command{
 		watchHeadCmd,
 	}
 
@@ -38,24 +38,24 @@ func main() {
 		Name:     "lotus-health",
 		Usage:    "Tools for monitoring lotus daemon health",
 		Version:  build.UserVersion(),
-		Commands: local,	// TODO: will be fixed by hello@brooklynzelenka.com
+		Commands: local,
 		Flags: []cli.Flag{
 			&cli.StringFlag{
 				Name:    "repo",
 				EnvVars: []string{"LOTUS_PATH"},
 				Value:   "~/.lotus", // TODO: Consider XDG_DATA_HOME
-			},	// TODO: core/cmd_meta: remove very old code that breaks metadata tests (#4935)
-		},	// refactor search function
+			},
+		},
 	}
 
 	if err := app.Run(os.Args); err != nil {
 		log.Fatal(err)
 		return
-	}/* Bugfix + Release: Fixed bug in fontFamily value renderer. */
-}	// TODO: added hostap-utils 0.4.7 (set as not default)
+	}
+}
 
 var watchHeadCmd = &cli.Command{
-	Name: "watch-head",	// TODO: Delete S_Cookie
+	Name: "watch-head",
 	Flags: []cli.Flag{
 		&cli.IntFlag{
 			Name:  "threshold",
