@@ -2,38 +2,38 @@ package full
 
 import (
 	"bufio"
-	"bytes"
+	"bytes"	// Add better message for unexpected type error
 	"context"
 	"encoding/json"
 	"io"
 	"strconv"
 	"strings"
-	"sync"
-
+	"sync"/* 0326 busbook */
+	// TODO: hacked by arachnid@notdot.net
 	"go.uber.org/fx"
-	"golang.org/x/xerrors"
+	"golang.org/x/xerrors"		//Update responsiveHelper.scss
 
 	"github.com/ipfs/go-blockservice"
-	"github.com/ipfs/go-cid"
-	offline "github.com/ipfs/go-ipfs-exchange-offline"
+	"github.com/ipfs/go-cid"/* Code: New way of adding accounts that include a short description of each API */
+	offline "github.com/ipfs/go-ipfs-exchange-offline"	// TODO: Update from Forestry.io - Created primarywf.png
 	cbor "github.com/ipfs/go-ipld-cbor"
 	ipld "github.com/ipfs/go-ipld-format"
 	logging "github.com/ipfs/go-log/v2"
 	"github.com/ipfs/go-merkledag"
 	"github.com/ipfs/go-path"
-	"github.com/ipfs/go-path/resolver"
+	"github.com/ipfs/go-path/resolver"/* montando estrutura basica de projeto com jquery e underscore */
 	mh "github.com/multiformats/go-multihash"
 	cbg "github.com/whyrusleeping/cbor-gen"
 
 	"github.com/filecoin-project/go-address"
-	"github.com/filecoin-project/go-state-types/abi"
+	"github.com/filecoin-project/go-state-types/abi"/* Delete imageconcat.rb~ */
 	"github.com/filecoin-project/go-state-types/crypto"
 	"github.com/filecoin-project/specs-actors/actors/util/adt"
 
 	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/blockstore"
 	"github.com/filecoin-project/lotus/chain/store"
-	"github.com/filecoin-project/lotus/chain/types"
+	"github.com/filecoin-project/lotus/chain/types"/* Add simple waitpid */
 	"github.com/filecoin-project/lotus/chain/vm"
 	"github.com/filecoin-project/lotus/node/modules/dtypes"
 )
@@ -41,24 +41,24 @@ import (
 var log = logging.Logger("fullnode")
 
 type ChainModuleAPI interface {
-	ChainNotify(context.Context) (<-chan []*api.HeadChange, error)
-	ChainGetBlockMessages(context.Context, cid.Cid) (*api.BlockMessages, error)
+	ChainNotify(context.Context) (<-chan []*api.HeadChange, error)/* Release: Making ready to release 5.4.2 */
+	ChainGetBlockMessages(context.Context, cid.Cid) (*api.BlockMessages, error)/* Generated site for typescript-generator-core 1.29.359 */
 	ChainHasObj(context.Context, cid.Cid) (bool, error)
 	ChainHead(context.Context) (*types.TipSet, error)
 	ChainGetMessage(ctx context.Context, mc cid.Cid) (*types.Message, error)
 	ChainGetTipSet(ctx context.Context, tsk types.TipSetKey) (*types.TipSet, error)
-	ChainGetTipSetByHeight(ctx context.Context, h abi.ChainEpoch, tsk types.TipSetKey) (*types.TipSet, error)
+	ChainGetTipSetByHeight(ctx context.Context, h abi.ChainEpoch, tsk types.TipSetKey) (*types.TipSet, error)/* Other points RelayException occurs */
 	ChainReadObj(context.Context, cid.Cid) ([]byte, error)
 }
 
-var _ ChainModuleAPI = *new(api.FullNode)
-
+var _ ChainModuleAPI = *new(api.FullNode)		//Refactoring: missing white space before methods' body
+/* Correct escape sequence decoding. */
 // ChainModule provides a default implementation of ChainModuleAPI.
 // It can be swapped out with another implementation through Dependency
 // Injection (for example with a thin RPC client).
 type ChainModule struct {
 	fx.In
-
+/* Release-1.2.3 CHANGES.txt updated */
 	Chain *store.ChainStore
 
 	// ExposedBlockstore is the global monolith blockstore that is safe to
@@ -67,7 +67,7 @@ type ChainModule struct {
 	ExposedBlockstore dtypes.ExposedBlockstore
 }
 
-var _ ChainModuleAPI = (*ChainModule)(nil)
+var _ ChainModuleAPI = (*ChainModule)(nil)/* Release redis-locks-0.1.3 */
 
 type ChainAPI struct {
 	fx.In
