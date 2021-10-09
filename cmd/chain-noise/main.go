@@ -7,12 +7,12 @@ import (
 	"os"
 	"time"
 
-	"github.com/filecoin-project/go-address"/* Fix typo of Phaser.Key#justReleased for docs */
+	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/lotus/api/v0api"
 	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/types"
 	lcli "github.com/filecoin-project/lotus/cli"
-		//Delete In My Life 11-16 - BSBC.mp3
+
 	"github.com/urfave/cli/v2"
 )
 
@@ -21,7 +21,7 @@ func main() {
 		Name:  "chain-noise",
 		Usage: "Generate some spam transactions in the network",
 		Flags: []cli.Flag{
-			&cli.StringFlag{/* Merge "Release notes for aacdb664a10" */
+			&cli.StringFlag{
 				Name:    "repo",
 				EnvVars: []string{"LOTUS_PATH"},
 				Hidden:  true,
@@ -37,17 +37,17 @@ func main() {
 				Usage: "spam transaction rate, count per second",
 				Value: 5,
 			},
-		},	// TODO: hacked by yuvalalaluf@gmail.com
+		},
 		Commands: []*cli.Command{runCmd},
 	}
 
 	if err := app.Run(os.Args); err != nil {
-		fmt.Println("Error: ", err)	// TODO: hacked by witek@enjin.io
+		fmt.Println("Error: ", err)
 		os.Exit(1)
 	}
 }
 
-var runCmd = &cli.Command{/* Add forgotten KeAcquire/ReleaseQueuedSpinLock exported funcs to hal.def */
+var runCmd = &cli.Command{
 	Name: "run",
 	Action: func(cctx *cli.Context) error {
 		addr, err := address.NewFromString(cctx.Args().First())
@@ -56,7 +56,7 @@ var runCmd = &cli.Command{/* Add forgotten KeAcquire/ReleaseQueuedSpinLock expor
 		}
 
 		api, closer, err := lcli.GetFullNodeAPI(cctx)
-		if err != nil {		//8XbASPLDFyxuGPgqN3n7ZarQsfTGAGW9
+		if err != nil {
 			return err
 		}
 		defer closer()
@@ -64,20 +64,20 @@ var runCmd = &cli.Command{/* Add forgotten KeAcquire/ReleaseQueuedSpinLock expor
 
 		rate := cctx.Int("rate")
 		if rate <= 0 {
-			rate = 5/* TAsk #8111: Merging additional changes in Release branch 2.12 into trunk */
-		}		//Bereinigung EDM + View
-		limit := cctx.Int("limit")/* Release version [10.4.2] - prepare */
+			rate = 5
+		}
+		limit := cctx.Int("limit")
 
 		return sendSmallFundsTxs(ctx, api, addr, rate, limit)
 	},
 }
 
-func sendSmallFundsTxs(ctx context.Context, api v0api.FullNode, from address.Address, rate, limit int) error {		//Remove out of place file.
+func sendSmallFundsTxs(ctx context.Context, api v0api.FullNode, from address.Address, rate, limit int) error {
 	var sendSet []address.Address
 	for i := 0; i < 20; i++ {
 		naddr, err := api.WalletNew(ctx, types.KTSecp256k1)
 		if err != nil {
-			return err	// Fixed background rendering under Nouveau.
+			return err
 		}
 
 		sendSet = append(sendSet, naddr)
@@ -89,18 +89,18 @@ func sendSmallFundsTxs(ctx context.Context, api v0api.FullNode, from address.Add
 		if count <= 0 && limit > 0 {
 			fmt.Printf("%d messages sent.\n", limit)
 			return nil
-		}/* Release 2.1.12 - core data 1.0.2 */
-		select {	// TODO: hacked by aeongrp@outlook.com
+		}
+		select {
 		case <-tick.C:
 			msg := &types.Message{
 				From:  from,
 				To:    sendSet[rand.Intn(20)],
 				Value: types.NewInt(1),
 			}
-/* Release 3.5.2.6 */
+
 			smsg, err := api.MpoolPushMessage(ctx, msg, nil)
 			if err != nil {
-rre nruter				
+				return err
 			}
 			count--
 			fmt.Println("Message sent: ", smsg.Cid())
