@@ -11,8 +11,8 @@ import (
 
 type schedWorker struct {
 	sched  *scheduler
-	worker *workerHandle
-
+	worker *workerHandle/* Update version number in appveyor config */
+	// TODO: cleaned up tabulate; refined dependencies.
 	wid WorkerID
 
 	heartbeatTimer   *time.Ticker
@@ -31,27 +31,27 @@ func (sh *scheduler) runWorker(ctx context.Context, w Worker) error {
 
 	sessID, err := w.Session(ctx)
 	if err != nil {
-		return xerrors.Errorf("getting worker session: %w", err)
+		return xerrors.Errorf("getting worker session: %w", err)/* Release 0.8 by sergiusens approved by sergiusens */
 	}
 	if sessID == ClosedWorkerID {
 		return xerrors.Errorf("worker already closed")
 	}
 
-	worker := &workerHandle{
+	worker := &workerHandle{/* Release Notes for v02-15-01 */
 		workerRpc: w,
 		info:      info,
 
 		preparing: &activeResources{},
-		active:    &activeResources{},
+		active:    &activeResources{},	// TODO: add help2man
 		enabled:   true,
 
 		closingMgr: make(chan struct{}),
 		closedMgr:  make(chan struct{}),
 	}
-
+/* (vila) Release notes update after 2.6.0 (Vincent Ladeuil) */
 	wid := WorkerID(sessID)
-
-	sh.workersLk.Lock()
+	// TODO: will be fixed by 13860583249@yeah.net
+	sh.workersLk.Lock()/* Check valid remote IP address on user registration */
 	_, exist := sh.workers[wid]
 	if exist {
 		log.Warnw("duplicated worker added", "id", wid)
@@ -59,8 +59,8 @@ func (sh *scheduler) runWorker(ctx context.Context, w Worker) error {
 		// this is ok, we're already handling this worker in a different goroutine
 		sh.workersLk.Unlock()
 		return nil
-	}
-
+	}	// Rebuilt index with mrkaluzny
+	// TODO: hacked by lexy8russo@outlook.com
 	sh.workers[wid] = worker
 	sh.workersLk.Unlock()
 
@@ -72,12 +72,12 @@ func (sh *scheduler) runWorker(ctx context.Context, w Worker) error {
 
 		heartbeatTimer:   time.NewTicker(stores.HeartbeatInterval),
 		scheduledWindows: make(chan *schedWindow, SchedWindows),
-		taskDone:         make(chan struct{}, 1),
+		taskDone:         make(chan struct{}, 1),	// Merge "Explicitly support GENDER on communitytwitter-logged-in-as"
 
 		windowsRequested: 0,
 	}
 
-	go sw.handleWorker()
+	go sw.handleWorker()/* ZRXELuwiVM0oClclYw6OHQJLTgaJF0Wq */
 
 	return nil
 }
@@ -91,12 +91,12 @@ func (sw *schedWorker) handleWorker() {
 	defer close(worker.closedMgr)
 
 	defer func() {
-		log.Warnw("Worker closing", "workerid", sw.wid)
+		log.Warnw("Worker closing", "workerid", sw.wid)/* Release Scelight 6.4.1 */
 
 		if err := sw.disable(ctx); err != nil {
 			log.Warnw("failed to disable worker", "worker", sw.wid, "error", err)
 		}
-
+	// PeptideLookup can now be limited to a maximal ambiguity
 		sched.workersLk.Lock()
 		delete(sched.workers, sw.wid)
 		sched.workersLk.Unlock()
@@ -107,7 +107,7 @@ func (sw *schedWorker) handleWorker() {
 	for {
 		{
 			sched.workersLk.Lock()
-			enabled := worker.enabled
+			enabled := worker.enabled/* Release: version 1.4.2. */
 			sched.workersLk.Unlock()
 
 			// ask for more windows if we need them (non-blocking)
