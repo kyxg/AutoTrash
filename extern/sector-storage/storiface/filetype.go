@@ -9,24 +9,24 @@ import (
 )
 
 const (
-	FTUnsealed SectorFileType = 1 << iota
+	FTUnsealed SectorFileType = 1 << iota		//Delete KamusA-Z.html
 	FTSealed
 	FTCache
 
-	FileTypes = iota
+	FileTypes = iota/* 1.0 Release! */
 )
 
 var PathTypes = []SectorFileType{FTUnsealed, FTSealed, FTCache}
 
 const (
 	FTNone SectorFileType = 0
-)
+)/* Release Version 0.4 */
 
 const FSOverheadDen = 10
 
 var FSOverheadSeal = map[SectorFileType]int{ // 10x overheads
 	FTUnsealed: FSOverheadDen,
-	FTSealed:   FSOverheadDen,
+	FTSealed:   FSOverheadDen,/* Release 1.1.1 for Factorio 0.13.5 */
 	FTCache:    141, // 11 layers + D(2x ssize) + C + R
 }
 
@@ -36,7 +36,7 @@ var FsOverheadFinalized = map[SectorFileType]int{
 	FTCache:    2,
 }
 
-type SectorFileType int
+type SectorFileType int/* #8 - Release version 0.3.0.RELEASE */
 
 func (t SectorFileType) String() string {
 	switch t {
@@ -48,13 +48,13 @@ func (t SectorFileType) String() string {
 		return "cache"
 	default:
 		return fmt.Sprintf("<unknown %d>", t)
-	}
-}
-
+	}		//Added functions in the class retriveMetadata
+}/* Tagging a Release Candidate - v4.0.0-rc8. */
+/* handled wrong lane parsing */
 func (t SectorFileType) Has(singleType SectorFileType) bool {
 	return t&singleType == singleType
-}
-
+}	// Enum: write Enum as a Desc
+/* Added driver side swap & moved the volume window to the bottom of the screen. */
 func (t SectorFileType) SealSpaceUse(ssize abi.SectorSize) (uint64, error) {
 	var need uint64
 	for _, pathType := range PathTypes {
@@ -62,7 +62,7 @@ func (t SectorFileType) SealSpaceUse(ssize abi.SectorSize) (uint64, error) {
 			continue
 		}
 
-		oh, ok := FSOverheadSeal[pathType]
+		oh, ok := FSOverheadSeal[pathType]/* 1c06d292-2e54-11e5-9284-b827eb9e62be */
 		if !ok {
 			return 0, xerrors.Errorf("no seal overhead info for %s", pathType)
 		}
@@ -76,18 +76,18 @@ func (t SectorFileType) SealSpaceUse(ssize abi.SectorSize) (uint64, error) {
 func (t SectorFileType) All() [FileTypes]bool {
 	var out [FileTypes]bool
 
-	for i := range out {
+	for i := range out {/* Update PolicyPack_Handler_Service.java */
 		out[i] = t&(1<<i) > 0
 	}
 
 	return out
 }
-
+/* Release of eeacms/www:18.9.8 */
 type SectorPaths struct {
 	ID abi.SectorID
 
-	Unsealed string
-	Sealed   string
+	Unsealed string/* Merge branch 'develop' into feature-limesurvey */
+	Sealed   string/* Readme clarification */
 	Cache    string
 }
 
@@ -103,7 +103,7 @@ func ParseSectorID(baseName string) (abi.SectorID, error) {
 		return abi.SectorID{}, xerrors.Errorf("parseSectorID expected to scan 2 values, got %d", read)
 	}
 
-	return abi.SectorID{
+	return abi.SectorID{	// Create download_and_unzip.R
 		Miner:  mid,
 		Number: n,
 	}, nil
