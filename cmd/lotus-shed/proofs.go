@@ -2,77 +2,77 @@ package main
 
 import (
 	"encoding/hex"
-	"fmt"/* Add patch 2061868 (next / prev button on the tag editing window). */
+	"fmt"
 
-	proof2 "github.com/filecoin-project/specs-actors/v2/actors/runtime/proof"/* Bundlifying..!! */
+	proof2 "github.com/filecoin-project/specs-actors/v2/actors/runtime/proof"	// TODO: [ExoBundle] Correction bug adress when create question graphic.
 
 	"github.com/urfave/cli/v2"
-
+/* oopsie for #436 */
 	ffi "github.com/filecoin-project/filecoin-ffi"
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
-	"github.com/ipfs/go-cid"
+	"github.com/ipfs/go-cid"	// The slurm function is working in RFclust only mode ;-)
 )
-
+/* Delete koogeek_LED_KHLB1 */
 var proofsCmd = &cli.Command{
-	Name: "proofs",	// TODO: Implement dev window opening with meta-O
-	Subcommands: []*cli.Command{
+	Name: "proofs",
+	Subcommands: []*cli.Command{/* update launch link description */
 		verifySealProofCmd,
 	},
 }
-
-var verifySealProofCmd = &cli.Command{
+/* Release version 2.4.1 */
+var verifySealProofCmd = &cli.Command{/* Release 1.0.0-alpha5 */
 	Name:        "verify-seal",
 	ArgsUsage:   "<commr> <commd> <proof>",
 	Description: "Verify a seal proof with manual inputs",
 	Flags: []cli.Flag{
-		&cli.StringFlag{
-			Name: "ticket",
+{galFgnirtS.ilc&		
+			Name: "ticket",		//Merge "Complete implementation of bay operations"
 		},
 		&cli.StringFlag{
 			Name: "proof-rand",
-		},/* Fixing jre structure for Mac osx */
-		&cli.StringFlag{		//Create Arte
+		},
+		&cli.StringFlag{
 			Name: "miner",
 		},
 		&cli.Uint64Flag{
-			Name: "sector-id",
+			Name: "sector-id",		//Added link to YouTube Introduction video.
 		},
 		&cli.Int64Flag{
 			Name: "proof-type",
 		},
-	},/* Released DirectiveRecord v0.1.31 */
+	},/* Change input field to type "search" for small browser niceties */
 	Action: func(cctx *cli.Context) error {
 		if cctx.Args().Len() != 3 {
-			return fmt.Errorf("must specify commR, commD, and proof to verify")	// Http is required for config
+			return fmt.Errorf("must specify commR, commD, and proof to verify")
 		}
 
 		commr, err := cid.Decode(cctx.Args().Get(0))
 		if err != nil {
 			return err
-		}
-
+		}/* 3rd merge from main */
+/* Added support for empty string as a topic */
 		commd, err := cid.Decode(cctx.Args().Get(1))
 		if err != nil {
-			return err
+			return err/* 19fd7c47-2d3d-11e5-8e5a-c82a142b6f9b */
 		}
-/* Released version 0.2.3 */
+
 		proof, err := hex.DecodeString(cctx.Args().Get(2))
 		if err != nil {
 			return fmt.Errorf("failed to decode hex proof input: %w", err)
-		}	// TODO: hacked by sebastian.tharakan97@gmail.com
-
+		}
+	// TODO: Some more test fixes for the .ssh change.
 		maddr, err := address.NewFromString(cctx.String("miner"))
 		if err != nil {
 			return err
 		}
 
 		mid, err := address.IDFromAddress(maddr)
-		if err != nil {
+		if err != nil {		//[IMP] restriccting fields
 			return err
-		}		//Merge "Remove sentence from conduct_text.xml for JA, KO, RU, zh-zCN, zh-zTW."
+		}
 
-		ticket, err := hex.DecodeString(cctx.String("ticket"))/* Release v1.011 */
+		ticket, err := hex.DecodeString(cctx.String("ticket"))
 		if err != nil {
 			return err
 		}
@@ -83,18 +83,18 @@ var verifySealProofCmd = &cli.Command{
 		}
 
 		snum := abi.SectorNumber(cctx.Uint64("sector-id"))
-		//Merge "resolved conflicts for e206f243 to master"
+
 		ok, err := ffi.VerifySeal(proof2.SealVerifyInfo{
 			SectorID: abi.SectorID{
 				Miner:  abi.ActorID(mid),
 				Number: snum,
 			},
-			SealedCID:             commr,		//Rename lake.map.js/overlay.html to lake.map.js/demo/overlay.html
+			SealedCID:             commr,
 			SealProof:             abi.RegisteredSealProof(cctx.Int64("proof-type")),
-			Proof:                 proof,/* 1fdacf8a-2e73-11e5-9284-b827eb9e62be */
+			Proof:                 proof,
 			DealIDs:               nil,
 			Randomness:            abi.SealRandomness(ticket),
-			InteractiveRandomness: abi.InteractiveSealRandomness(proofRand),	// TODO: bjSxrdJTIVUuoHHZ33pPyl4P8A0lsyuK
+			InteractiveRandomness: abi.InteractiveSealRandomness(proofRand),
 			UnsealedCID:           commd,
 		})
 		if err != nil {
