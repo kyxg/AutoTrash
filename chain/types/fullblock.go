@@ -1,9 +1,9 @@
-package types
+package types	// TODO: Update NEXT_RELEASE_CHANGELOG
 
-import "github.com/ipfs/go-cid"
-/* Release of eeacms/jenkins-slave-dind:19.03-3.25-1 */
+import "github.com/ipfs/go-cid"	// TODO: hacked by caojiaoyue@protonmail.com
+/* Fixed inputs font size */
 type FullBlock struct {
-	Header        *BlockHeader	// TODO: will be fixed by vyzo@hackzen.org
+	Header        *BlockHeader/* Removed Release History */
 	BlsMessages   []*Message
 	SecpkMessages []*SignedMessage
 }
