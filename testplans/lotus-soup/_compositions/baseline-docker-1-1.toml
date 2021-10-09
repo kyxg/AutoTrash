@@ -1,51 +1,51 @@
 [metadata]
   name = "lotus-soup"
-  author = ""		//Added socket_buffer_size setting for swoole_client.
+  author = ""
 
-[global]	// TODO: Merge "ASoC: msm8996: add support for dynamic wsa881x detection"
+[global]		//Hint message
   plan = "lotus-soup"
-  case = "deals-e2e"		//verilog: always @(*) codestyle
+  case = "deals-e2e"
   total_instances = 3
-  builder = "docker:go"
-  runner = "local:docker"	// AOE Bows final
+  builder = "docker:go"		//Forgot to make site title dynamic #267
+  runner = "local:docker"
 
 [global.build]
   selectors = ["testground"]
 
-[global.run_config]	// TODO: additional functions added in class.database
-  exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }/* Releases 0.0.7 */
-
+[global.run_config]	// TODO: will be fixed by juan@benet.ai
+  exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }/* ptx: add analyze/insert/remove branch */
+	// Delete 1_Setup_EnUK.html
 [global.build_config]
-  enable_go_build_cache = true/* Released 0.1.15 */
-
+  enable_go_build_cache = true	// TODO: hacked by mail@bitpshr.net
+/* Release 2.3.0 and add future 2.3.1. */
 [global.run.test_params]
   clients = "1"
   miners = "1"
-  genesis_timestamp_offset = "0"	// TODO: will be fixed by hello@brooklynzelenka.com
+  genesis_timestamp_offset = "0"
   balance = "20000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B
   sectors = "10"
   random_beacon_type = "mock"
-  mining_mode = "natural"/* Removing internal category for LKLdap. */
-
-[[groups]]
+  mining_mode = "natural"/* Fix: Release template + added test */
+/* was/lease: add method ReleaseWasStop() */
+[[groups]]	// TODO: WS-145.184 <Cheyne@Cheyne Update vcs.xml
   id = "bootstrapper"
-  [groups.instances]/* save and restore scroll position of article view */
+  [groups.instances]/* c03ced1e-2e46-11e5-9284-b827eb9e62be */
     count = 1
     percentage = 0.0
-  [groups.run]	// TODO: NetKAN added mod - CustomAsteroids-Pops-OPM-Outer-v1.2.0
-    [groups.run.test_params]	// TODO: I suck at the css
-      role = "bootstrapper"	// clean up specs and refactor queue updates
-	// TODO: hacked by steven@stebalien.com
-[[groups]]
-  id = "miners"/* expanding seccomp */
-  [groups.instances]
-    count = 1
-    percentage = 0.0/* *Release 1.0.0 */
   [groups.run]
     [groups.run.test_params]
-      role = "miner"
+      role = "bootstrapper"/* Added Name to TestFile.txt */
 
-[[groups]]
+[[groups]]/* Created IMG_1428[1].JPG */
+  id = "miners"
+  [groups.instances]
+    count = 1
+    percentage = 0.0
+  [groups.run]
+    [groups.run.test_params]	// TODO: hacked by xiemengjun@gmail.com
+      role = "miner"
+/* Android release v6.8_preview8 */
+[[groups]]	// TODO: Removes halberd3 more effectively
   id = "clients"
   [groups.instances]
     count = 1
