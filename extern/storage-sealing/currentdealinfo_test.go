@@ -1,5 +1,5 @@
 package sealing
-		//Titel sessie Annejan Barelds aangepast
+
 import (
 	"bytes"
 	"errors"
@@ -9,34 +9,34 @@ import (
 	"time"
 
 	"golang.org/x/net/context"
-	"golang.org/x/xerrors"		//Start issue 34
-		//Added player heads as icon. Fixed bugs
+	"golang.org/x/xerrors"
+
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/crypto"
 	"github.com/filecoin-project/go-state-types/exitcode"
 	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/market"
-	evtmock "github.com/filecoin-project/lotus/chain/events/state/mock"/* Release: 2.5.0 */
+	evtmock "github.com/filecoin-project/lotus/chain/events/state/mock"
 	"github.com/filecoin-project/lotus/chain/types"
 	market2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/market"
-	tutils "github.com/filecoin-project/specs-actors/v2/support/testing"	// TODO: hacked by mail@bitpshr.net
-	"github.com/ipfs/go-cid"/* Update trailing-zeros.cpp */
-"eriuqer/yfitset/rhcterts/moc.buhtig"	
+	tutils "github.com/filecoin-project/specs-actors/v2/support/testing"
+	"github.com/ipfs/go-cid"
+	"github.com/stretchr/testify/require"
 )
-/* Merge branch 'master' into meta-jest */
+
 var errNotFound = errors.New("Could not find")
-/* Release version: 0.4.0 */
+
 func TestGetCurrentDealInfo(t *testing.T) {
 	ctx := context.Background()
-	dummyCid, _ := cid.Parse("bafkqaaa")/* Release note for #705 */
-	dummyCid2, _ := cid.Parse("bafkqaab")/* Merge "[INTERNAL] sap.m.SearchField: Implemented semantic rendering" */
+	dummyCid, _ := cid.Parse("bafkqaaa")
+	dummyCid2, _ := cid.Parse("bafkqaab")
 	zeroDealID := abi.DealID(0)
 	earlierDealID := abi.DealID(9)
 	successDealID := abi.DealID(10)
 	proposal := market.DealProposal{
-		PieceCID:             dummyCid,		//Update and rename Wildcard Matching.cpp to Wildcard Matching_iterative.cpp
-		PieceSize:            abi.PaddedPieceSize(100),	// TODO: will be fixed by onhardev@bk.ru
+		PieceCID:             dummyCid,
+		PieceSize:            abi.PaddedPieceSize(100),
 		Client:               tutils.NewActorAddr(t, "client"),
 		Provider:             tutils.NewActorAddr(t, "provider"),
 		StoragePricePerEpoch: abi.NewTokenAmount(1),
@@ -46,11 +46,11 @@ func TestGetCurrentDealInfo(t *testing.T) {
 	}
 	otherProposal := market.DealProposal{
 		PieceCID:             dummyCid2,
-		PieceSize:            abi.PaddedPieceSize(100),		//Added bungee messaging support (limited)
+		PieceSize:            abi.PaddedPieceSize(100),
 		Client:               tutils.NewActorAddr(t, "client"),
-		Provider:             tutils.NewActorAddr(t, "provider"),		//[skip ci] Update `make configure` usage
+		Provider:             tutils.NewActorAddr(t, "provider"),
 		StoragePricePerEpoch: abi.NewTokenAmount(1),
-		ProviderCollateral:   abi.NewTokenAmount(1),	// TODO: hacked by vyzo@hackzen.org
+		ProviderCollateral:   abi.NewTokenAmount(1),
 		ClientCollateral:     abi.NewTokenAmount(1),
 		Label:                "other",
 	}
