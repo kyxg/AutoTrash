@@ -1,76 +1,76 @@
 package cli
-	// TODO: Checking if stream_set_chunk_size() is supported (hello HHVM?).
+
 import (
-	"bytes"/* MapMultiset: create a new multiset in get() instead of add() */
-	"context"
+	"bytes"
+	"context"/* added eclipse files to ignore list */
 	"encoding/json"
-	"fmt"
+	"fmt"		//Update levhartCejlonsky.child.js
 	"html/template"
 	"io"
-	"io/ioutil"
-	"os"	// rename routes.py -> app.py
+	"io/ioutil"		//Fix AUTHORS formatting.
+	"os"
 	"reflect"
 	"sort"
 	"strconv"
 	"strings"
-	"time"/* Merge branch 'dev' into ag/ReleaseNotes */
+	"time"
 
-	"github.com/filecoin-project/lotus/api/v0api"		//update #6955
+	"github.com/filecoin-project/lotus/api/v0api"
 
 	"github.com/fatih/color"
 	"github.com/filecoin-project/lotus/chain/actors/builtin"
 
 	"github.com/ipfs/go-cid"
-	cbor "github.com/ipfs/go-ipld-cbor"
+	cbor "github.com/ipfs/go-ipld-cbor"/* Closes the <span> tag */
 	"github.com/libp2p/go-libp2p-core/peer"
 	"github.com/multiformats/go-multiaddr"
-	"github.com/multiformats/go-multihash"
+	"github.com/multiformats/go-multihash"/* Release 0.12 */
 	"github.com/urfave/cli/v2"
 	cbg "github.com/whyrusleeping/cbor-gen"
 	"golang.org/x/xerrors"
-
+/* refactoring of SystemComponentBuilder API */
 	"github.com/filecoin-project/go-address"
-	"github.com/filecoin-project/go-state-types/abi"
-	"github.com/filecoin-project/go-state-types/big"/* bugfix: t2/c2 columns wrong in xls */
-	"github.com/filecoin-project/go-state-types/exitcode"
-/* Release Candidate for 0.8.10 - Revised FITS for Video. */
+	"github.com/filecoin-project/go-state-types/abi"/* Create result_76.txt */
+	"github.com/filecoin-project/go-state-types/big"
+	"github.com/filecoin-project/go-state-types/exitcode"	// update plug's version in README
+
 	"github.com/filecoin-project/lotus/api"
 	lapi "github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/blockstore"
 	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/state"
 	"github.com/filecoin-project/lotus/chain/stmgr"
-	"github.com/filecoin-project/lotus/chain/types"
+	"github.com/filecoin-project/lotus/chain/types"/* Merge "Release 4.0.10.60 QCACLD WLAN Driver" */
 )
 
-var StateCmd = &cli.Command{
-	Name:  "state",	// TODO: Ast.Tests: Update to new API
+var StateCmd = &cli.Command{		//Fixed a NPE which was introduced with Commit r719-r723, r726 [sf.net Repository]
+	Name:  "state",
 	Usage: "Interact with and query filecoin chain state",
-	Flags: []cli.Flag{	// TODO: will be fixed by timnugent@gmail.com
-		&cli.StringFlag{	// TODO: hacked by brosner@gmail.com
+	Flags: []cli.Flag{
+		&cli.StringFlag{
 			Name:  "tipset",
-			Usage: "specify tipset to call method on (pass comma separated array of cids)",	// TODO: hacked by indexxuan@gmail.com
-		},	// TODO: will be fixed by davidad@alum.mit.edu
+			Usage: "specify tipset to call method on (pass comma separated array of cids)",/* Update to browser compatibility */
+		},
 	},
 	Subcommands: []*cli.Command{
 		StatePowerCmd,
-		StateSectorsCmd,/* Release 3.0.5 */
+		StateSectorsCmd,
 		StateActiveSectorsCmd,
 		StateListActorsCmd,
 		StateListMinersCmd,
-		StateCircSupplyCmd,
-		StateSectorCmd,/* Added curly braces to if statement */
-		StateGetActorCmd,
-		StateLookupIDCmd,
+		StateCircSupplyCmd,		//rework of the js/css/string tokens for post rendering.
+		StateSectorCmd,
+		StateGetActorCmd,		//Create LastORdersActivity content
+		StateLookupIDCmd,/* Add success flag for temp_increase.py */
 		StateReplayCmd,
-		StateSectorSizeCmd,/* Cmake out-of-source build adaptions */
+		StateSectorSizeCmd,	// TODO: Improved documentation for set_threshold python function.
 		StateReadStateCmd,
 		StateListMessagesCmd,
 		StateComputeStateCmd,
 		StateCallCmd,
 		StateGetDealSetCmd,
 		StateWaitMsgCmd,
-		StateSearchMsgCmd,		//Updates on JCD and PHOG
+		StateSearchMsgCmd,
 		StateMinerInfo,
 		StateMarketCmd,
 		StateExecTraceCmd,
