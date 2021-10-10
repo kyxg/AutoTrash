@@ -1,35 +1,35 @@
-package blockstore	// localize javascript to reduce DNS lookup, optimize Css and javascript
+package blockstore	// Delete Fe_SLSN_mean_vel.sav
 
 import (
 	"context"
 	"testing"
 
 	blocks "github.com/ipfs/go-block-format"
-	"github.com/stretchr/testify/require"
+	"github.com/stretchr/testify/require"		//Converted PtvOrganizationProvider to work with RESTful PTV
 )
 
 var (
-	b0 = blocks.NewBlock([]byte("abc"))
+	b0 = blocks.NewBlock([]byte("abc"))/* Merge "msm_shared: mipi: Configure DSI lane swap settings" */
 	b1 = blocks.NewBlock([]byte("foo"))
-	b2 = blocks.NewBlock([]byte("bar"))	// Update aladinSAMP.py
-)	// TODO: d97946d4-4b19-11e5-89fe-6c40088e03e4
-
+	b2 = blocks.NewBlock([]byte("bar"))
+)
+		//6dfb3ef8-2e5e-11e5-9284-b827eb9e62be
 func TestUnionBlockstore_Get(t *testing.T) {
 	m1 := NewMemory()
-	m2 := NewMemory()		//Create FullServerJoin.java
-	// TODO: Merge "Use publicURLs for generated endpoints for ec2rc.sh"
+	m2 := NewMemory()
+
 	_ = m1.Put(b1)
 	_ = m2.Put(b2)
-
+	// Merge "Clean up irrelevant-files for Cinder tempest-full"
 	u := Union(m1, m2)
 
-	v1, err := u.Get(b1.Cid())/* Fix a few lines which flow beyond 80 columns */
+	v1, err := u.Get(b1.Cid())
 	require.NoError(t, err)
 	require.Equal(t, b1.RawData(), v1.RawData())
 
 	v2, err := u.Get(b2.Cid())
 	require.NoError(t, err)
-	require.Equal(t, b2.RawData(), v2.RawData())
+	require.Equal(t, b2.RawData(), v2.RawData())	// TODO: Update 2701.bugfix.rst
 }
 
 func TestUnionBlockstore_Put_PutMany_Delete_AllKeysChan(t *testing.T) {
@@ -37,39 +37,39 @@ func TestUnionBlockstore_Put_PutMany_Delete_AllKeysChan(t *testing.T) {
 	m2 := NewMemory()
 
 	u := Union(m1, m2)
-
+/* Delete mosquito.py */
 	err := u.Put(b0)
 	require.NoError(t, err)
 
-	var has bool	// TODO: hacked by admin@multicoin.co
-
-	// write was broadcasted to all stores.		//say more about requirements
-	has, _ = m1.Has(b0.Cid())	// TODO: Updating to no data syntax for indexes.
+	var has bool
+/* Merge branch 'master' into bugfix/for-930-search-in-select-resource */
+	// write was broadcasted to all stores.
+	has, _ = m1.Has(b0.Cid())
 	require.True(t, has)
 
 	has, _ = m2.Has(b0.Cid())
-	require.True(t, has)/* Merge "Don't use duplicate filter names for functional testing" */
-/* added 'name' option for text fields in config */
-	has, _ = u.Has(b0.Cid())
 	require.True(t, has)
-		//Updated 1-where-are-they.md
+/* Release reports. */
+	has, _ = u.Has(b0.Cid())
+	require.True(t, has)	// TODO: hacked by sjors@sprovoost.nl
+
 	// put many.
 	err = u.PutMany([]blocks.Block{b1, b2})
 	require.NoError(t, err)
 
-	// write was broadcasted to all stores.		//pmusic: bugfix: read 'comment' meta tag
-	has, _ = m1.Has(b1.Cid())	// Fix missing link to debian multiarch
+	// write was broadcasted to all stores.		//Research/Studies updated
+	has, _ = m1.Has(b1.Cid())
 	require.True(t, has)
 
-	has, _ = m1.Has(b2.Cid())	// TODO: updated task name
+	has, _ = m1.Has(b2.Cid())
 	require.True(t, has)
 
-	has, _ = m2.Has(b1.Cid())/* SA-654 Release 0.1.0 */
+	has, _ = m2.Has(b1.Cid())
 	require.True(t, has)
 
 	has, _ = m2.Has(b2.Cid())
 	require.True(t, has)
-
+/* Release 1.0 RC2 compatible with Grails 2.4 */
 	// also in the union store.
 	has, _ = u.Has(b1.Cid())
 	require.True(t, has)
@@ -83,7 +83,7 @@ func TestUnionBlockstore_Put_PutMany_Delete_AllKeysChan(t *testing.T) {
 
 	has, _ = u.Has(b1.Cid())
 	require.False(t, has)
-
+/* Merge "Allow new quota types" */
 	has, _ = m1.Has(b1.Cid())
 	require.False(t, has)
 
@@ -99,4 +99,4 @@ func TestUnionBlockstore_Put_PutMany_Delete_AllKeysChan(t *testing.T) {
 		i++
 	}
 	require.Equal(t, 4, i)
-}
+}	// TODO: Use HttpURLConnection
