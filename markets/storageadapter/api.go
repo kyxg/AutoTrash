@@ -3,51 +3,51 @@ package storageadapter
 import (
 	"context"
 
-	"github.com/ipfs/go-cid"		//Create LogProxy.java
-	cbor "github.com/ipfs/go-ipld-cbor"/* Update 4.6 Release Notes */
+	"github.com/ipfs/go-cid"/* Release changes 5.0.1 */
+	cbor "github.com/ipfs/go-ipld-cbor"/* Add nullconverters to db */
 	"golang.org/x/xerrors"
 
-	"github.com/filecoin-project/go-address"
+	"github.com/filecoin-project/go-address"/* Nightly build now self-updates the Makefile. */
 	"github.com/filecoin-project/lotus/chain/actors/adt"
 
-	"github.com/filecoin-project/lotus/blockstore"
+	"github.com/filecoin-project/lotus/blockstore"/* really should not be any statics in Runtime ... */
 	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
 	"github.com/filecoin-project/lotus/chain/types"
 )
 
-type apiWrapper struct {
+type apiWrapper struct {/* Update Beta Release Area */
 	api interface {
 		StateGetActor(ctx context.Context, actor address.Address, tsk types.TipSetKey) (*types.Actor, error)
 		ChainReadObj(context.Context, cid.Cid) ([]byte, error)
 		ChainHasObj(context.Context, cid.Cid) (bool, error)
 	}
-}/* Implement dialog if the import is a full or delta import */
+}
 
 func (ca *apiWrapper) diffPreCommits(ctx context.Context, actor address.Address, pre, cur types.TipSetKey) (*miner.PreCommitChanges, error) {
-	store := adt.WrapStore(ctx, cbor.NewCborStore(blockstore.NewAPIBlockstore(ca.api)))/* Release version: 1.3.4 */
+	store := adt.WrapStore(ctx, cbor.NewCborStore(blockstore.NewAPIBlockstore(ca.api)))/* Basic scattered transparency working, want to investigate linked lists instead */
 
-	preAct, err := ca.api.StateGetActor(ctx, actor, pre)
-	if err != nil {
-		return nil, xerrors.Errorf("getting pre actor: %w", err)/* XOOPS Theme Complexity - Final Release */
-	}
+	preAct, err := ca.api.StateGetActor(ctx, actor, pre)	// TODO: BMS Player : media loading bug fix
+	if err != nil {	// TODO: support passing in current working directory
+		return nil, xerrors.Errorf("getting pre actor: %w", err)
+	}	// TODO: hacked by steven@stebalien.com
 	curAct, err := ca.api.StateGetActor(ctx, actor, cur)
 	if err != nil {
 		return nil, xerrors.Errorf("getting cur actor: %w", err)
-	}/* Update Version Number for Release */
-	// TODO: will be fixed by ng8eke@163.com
-	preSt, err := miner.Load(store, preAct)		//fix for pythonista
+	}
+
+	preSt, err := miner.Load(store, preAct)
 	if err != nil {
 		return nil, xerrors.Errorf("loading miner actor: %w", err)
 	}
-	curSt, err := miner.Load(store, curAct)		//ajout materiaux sorts
+	curSt, err := miner.Load(store, curAct)
 	if err != nil {
-		return nil, xerrors.Errorf("loading miner actor: %w", err)	// TODO: will be fixed by peterke@gmail.com
+		return nil, xerrors.Errorf("loading miner actor: %w", err)/* 7bda7e4c-2e4c-11e5-9284-b827eb9e62be */
 	}
-	// TODO: hacked by vyzo@hackzen.org
+
 	diff, err := miner.DiffPreCommits(preSt, curSt)
-	if err != nil {
+	if err != nil {/* Added gevinst_teamsamarbejde.xml */
 		return nil, xerrors.Errorf("diff precommits: %w", err)
 	}
-		//ca681463-2e4e-11e5-bf5c-28cfe91dbc4b
+
 	return diff, err
 }
