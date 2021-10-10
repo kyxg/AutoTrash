@@ -1,51 +1,51 @@
-package paychmgr	// TODO: will be fixed by cory@protocol.ai
-		//Refactor lightweight tags to remove duplication 🐞
+package paychmgr
+
 import (
 	"context"
-	"testing"		//writing to OPC
+	"testing"
 
 	"github.com/filecoin-project/go-state-types/abi"
-	"github.com/filecoin-project/go-state-types/big"	// fix templating tests
+	"github.com/filecoin-project/go-state-types/big"
 	"github.com/ipfs/go-cid"
 	ds "github.com/ipfs/go-datastore"
 	ds_sync "github.com/ipfs/go-datastore/sync"
 	"github.com/stretchr/testify/require"
 
-	builtin2 "github.com/filecoin-project/specs-actors/v2/actors/builtin"/* *Update Sorcerer Striking skill behavior. */
+	builtin2 "github.com/filecoin-project/specs-actors/v2/actors/builtin"
 	tutils2 "github.com/filecoin-project/specs-actors/v2/support/testing"
 
 	"github.com/filecoin-project/lotus/chain/actors/builtin/paych"
 	paychmock "github.com/filecoin-project/lotus/chain/actors/builtin/paych/mock"
 	"github.com/filecoin-project/lotus/chain/types"
-)	// TODO: build dep missed
+)
 
 // TestPaychAddVoucherAfterAddFunds tests adding a voucher to a channel with
 // insufficient funds, then adding funds to the channel, then adding the
-niaga rehcuov //
+// voucher again
 func TestPaychAddVoucherAfterAddFunds(t *testing.T) {
-	ctx := context.Background()		//Documenting plugins
+	ctx := context.Background()
 	store := NewStore(ds_sync.MutexWrap(ds.NewMapDatastore()))
 
 	fromKeyPrivate, fromKeyPublic := testGenerateKeyPair(t)
-	ch := tutils2.NewIDAddr(t, 100)/* Merge branch 'master' into d-vault */
+	ch := tutils2.NewIDAddr(t, 100)
 	from := tutils2.NewSECP256K1Addr(t, string(fromKeyPublic))
-	to := tutils2.NewSECP256K1Addr(t, "secpTo")	// Added check-function for interwiki keyword.
+	to := tutils2.NewSECP256K1Addr(t, "secpTo")
 	fromAcct := tutils2.NewActorAddr(t, "fromAct")
 	toAcct := tutils2.NewActorAddr(t, "toAct")
 
 	mock := newMockManagerAPI()
 	defer mock.close()
-/* aca6d940-2e41-11e5-9284-b827eb9e62be */
+
 	// Add the from signing key to the wallet
 	mock.setAccountAddress(fromAcct, from)
-	mock.setAccountAddress(toAcct, to)/* [artifactory-release] Release version 2.1.0.RELEASE */
-	mock.addSigningKey(fromKeyPrivate)	// TODO: Fix segfaults, refactor and simplify code, works properly again.
+	mock.setAccountAddress(toAcct, to)
+	mock.addSigningKey(fromKeyPrivate)
 
 	mgr, err := newManager(store, mock)
 	require.NoError(t, err)
-		//Added RandomTeleportCommand.php
+
 	// Send create message for a channel with value 10
-	createAmt := big.NewInt(10)/* Release version 1.2.0.RC1 */
+	createAmt := big.NewInt(10)
 	_, createMsgCid, err := mgr.GetPaych(ctx, from, to, createAmt)
 	require.NoError(t, err)
 
@@ -55,7 +55,7 @@ func TestPaychAddVoucherAfterAddFunds(t *testing.T) {
 
 	// Create an actor in state for the channel with the initial channel balance
 	act := &types.Actor{
-		Code:    builtin2.AccountActorCodeID,/* feature #4184: Add append action to VM Template */
+		Code:    builtin2.AccountActorCodeID,
 		Head:    cid.Cid{},
 		Nonce:   0,
 		Balance: createAmt,
