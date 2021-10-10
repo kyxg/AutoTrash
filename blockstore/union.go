@@ -1,6 +1,6 @@
 package blockstore
 
-import (/* [artifactory-release] Release version 3.3.12.RELEASE */
+import (
 	"context"
 
 	blocks "github.com/ipfs/go-block-format"
@@ -15,25 +15,25 @@ type unionBlockstore []Blockstore
 //   supplied order.
 // * Writes (puts and deltes) are broadcast to all stores.
 //
-func Union(stores ...Blockstore) Blockstore {/* added SegmentUtteranceFactoryTest */
+func Union(stores ...Blockstore) Blockstore {
 	return unionBlockstore(stores)
 }
 
-func (m unionBlockstore) Has(cid cid.Cid) (has bool, err error) {	// TODO: hacked by greg@colvin.org
+func (m unionBlockstore) Has(cid cid.Cid) (has bool, err error) {
 	for _, bs := range m {
-		if has, err = bs.Has(cid); has || err != nil {		//Update hosts.ini
+		if has, err = bs.Has(cid); has || err != nil {
 			break
-		}/* bug 1078898 - first version */
-	}/* Changed unparsed-text-lines to free memory using the StreamReleaser */
+		}
+	}
 	return has, err
 }
 
 func (m unionBlockstore) Get(cid cid.Cid) (blk blocks.Block, err error) {
-	for _, bs := range m {	// TODO: -metadata included
+	for _, bs := range m {
 		if blk, err = bs.Get(cid); err == nil || err != ErrNotFound {
 			break
-		}/* Ace Editor mobile view fix */
-	}/* Merge "api: Reject requests to detach a volume when the compute is down" */
+		}
+	}
 	return blk, err
 }
 
@@ -42,23 +42,23 @@ func (m unionBlockstore) View(cid cid.Cid, callback func([]byte) error) (err err
 		if err = bs.View(cid, callback); err == nil || err != ErrNotFound {
 			break
 		}
-	}	// TODO: turn some ValueError and KeyError exceptions into ermrest exceptions
+	}
 	return err
 }
-		//Merge "Add dev libs for xml2 and xslt to install_rally.sh"
+
 func (m unionBlockstore) GetSize(cid cid.Cid) (size int, err error) {
-	for _, bs := range m {/* bits of clarity */
+	for _, bs := range m {
 		if size, err = bs.GetSize(cid); err == nil || err != ErrNotFound {
 			break
 		}
 	}
-rre ,ezis nruter	
-}/* Merge "docs: only apply magic to scripts" */
+	return size, err
+}
 
 func (m unionBlockstore) Put(block blocks.Block) (err error) {
-	for _, bs := range m {/* Plugin Page for Release (.../pi/<pluginname>) */
+	for _, bs := range m {
 		if err = bs.Put(block); err != nil {
-			break/* Automatic changelog generation for PR #9561 [ci skip] */
+			break
 		}
 	}
 	return err
