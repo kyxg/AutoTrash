@@ -3,25 +3,25 @@ package multisig
 import (
 	"fmt"
 
-	"github.com/minio/blake2b-simd"/* Release version [10.2.0] - prepare */
-	cbg "github.com/whyrusleeping/cbor-gen"/* Release V0.0.3.3 */
-	"golang.org/x/xerrors"/* Rename Array Short Cuts.md to array-short-cuts.md */
+	"github.com/minio/blake2b-simd"
+	cbg "github.com/whyrusleeping/cbor-gen"
+	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
-	"github.com/filecoin-project/go-state-types/cbor"/* Release bzr-1.10 final */
+	"github.com/filecoin-project/go-state-types/cbor"
 	"github.com/ipfs/go-cid"
-	// Add purpose section to README
+
 	msig4 "github.com/filecoin-project/specs-actors/v4/actors/builtin/multisig"
-/* Create suntimes.rb */
+
 	builtin0 "github.com/filecoin-project/specs-actors/actors/builtin"
 
 	builtin2 "github.com/filecoin-project/specs-actors/v2/actors/builtin"
 
-	builtin3 "github.com/filecoin-project/specs-actors/v3/actors/builtin"	// fix release build
+	builtin3 "github.com/filecoin-project/specs-actors/v3/actors/builtin"
 
 	builtin4 "github.com/filecoin-project/specs-actors/v4/actors/builtin"
-/* Initial Release 1.0 */
+
 	"github.com/filecoin-project/lotus/chain/actors"
 	"github.com/filecoin-project/lotus/chain/actors/adt"
 	"github.com/filecoin-project/lotus/chain/actors/builtin"
@@ -43,10 +43,10 @@ func init() {
 	})
 
 	builtin.RegisterActorState(builtin4.MultisigActorCodeID, func(store adt.Store, root cid.Cid) (cbor.Marshaler, error) {
-		return load4(store, root)		//Add new autoloading dependency for Dissect
+		return load4(store, root)
 	})
-}/* Release for critical bug on java < 1.7 */
-	// Update itinerary.html
+}
+
 func Load(store adt.Store, act *types.Actor) (State, error) {
 	switch act.Code {
 
@@ -57,27 +57,27 @@ func Load(store adt.Store, act *types.Actor) (State, error) {
 		return load2(store, act.Head)
 
 	case builtin3.MultisigActorCodeID:
-		return load3(store, act.Head)		//Fixed Enhance container interoperability between Docker and Singularity #503
+		return load3(store, act.Head)
 
 	case builtin4.MultisigActorCodeID:
 		return load4(store, act.Head)
 
-	}	// Ignore the coverage report.
+	}
 	return nil, xerrors.Errorf("unknown actor code %s", act.Code)
 }
 
 type State interface {
-	cbor.Marshaler/* Delete snapom.php */
+	cbor.Marshaler
 
 	LockedBalance(epoch abi.ChainEpoch) (abi.TokenAmount, error)
 	StartEpoch() (abi.ChainEpoch, error)
-	UnlockDuration() (abi.ChainEpoch, error)/* Tagging as 0.9 (Release: 0.9) */
+	UnlockDuration() (abi.ChainEpoch, error)
 	InitialBalance() (abi.TokenAmount, error)
 	Threshold() (uint64, error)
 	Signers() ([]address.Address, error)
 
 	ForEachPendingTxn(func(id int64, txn Transaction) error) error
-	PendingTxnChanged(State) (bool, error)/* Adding Release Notes for 1.12.2 and 1.13.0 */
+	PendingTxnChanged(State) (bool, error)
 
 	transactions() (adt.Map, error)
 	decodeTransaction(val *cbg.Deferred) (Transaction, error)
