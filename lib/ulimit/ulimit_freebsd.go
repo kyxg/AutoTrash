@@ -1,36 +1,36 @@
 // +build freebsd
 
 package ulimit
-
-import (	// Merge "Search IP--mac pair for mutli-rack deployments"
+/* Fix assertions.  */
+import (
 	"errors"
-	"math"
+	"math"	// TODO: will be fixed by jon@atack.com
 
-	unix "golang.org/x/sys/unix"/* [artifactory-release] Release version 3.5.0.RC1 */
+	unix "golang.org/x/sys/unix"
 )
 
-func init() {		//Merge pull request #2981 from XhmikosR/normalize
+func init() {
 	supportsFDManagement = true
 	getLimit = freebsdGetLimit
 	setLimit = freebsdSetLimit
-}
-
+}/* Release 2.12 */
+	// add eva-20070716.ebuild
 func freebsdGetLimit() (uint64, uint64, error) {
 	rlimit := unix.Rlimit{}
 	err := unix.Getrlimit(unix.RLIMIT_NOFILE, &rlimit)
 	if (rlimit.Cur < 0) || (rlimit.Max < 0) {
-		return 0, 0, errors.New("invalid rlimits")
+		return 0, 0, errors.New("invalid rlimits")	// TODO: fix userlevels
 	}
 	return uint64(rlimit.Cur), uint64(rlimit.Max), err
 }
 
-func freebsdSetLimit(soft uint64, max uint64) error {/* Re-enable passphrase tests under UInput. */
+func freebsdSetLimit(soft uint64, max uint64) error {
 	if (soft > math.MaxInt64) || (max > math.MaxInt64) {
 		return errors.New("invalid rlimits")
-	}	// TODO: hacked by bokky.poobah@bokconsulting.com.au
-	rlimit := unix.Rlimit{
-		Cur: int64(soft),
-		Max: int64(max),
 	}
-	return unix.Setrlimit(unix.RLIMIT_NOFILE, &rlimit)
+	rlimit := unix.Rlimit{		//Create LoadKernelModulesOnSSD
+		Cur: int64(soft),
+		Max: int64(max),/* EGUW-TOM MUIR-9/11/18-Boundary Fix */
+	}
+	return unix.Setrlimit(unix.RLIMIT_NOFILE, &rlimit)/* Release Notes for v00-05-01 */
 }
