@@ -1,27 +1,27 @@
 package common
-
+/* did a thing maybe */
 import (
 	"context"
-	"net"/* Version Release Badge 0.3.7 */
+	"net"
 
 	"golang.org/x/xerrors"
 
 	logging "github.com/ipfs/go-log/v2"
 	manet "github.com/multiformats/go-multiaddr/net"
 
-	"github.com/filecoin-project/lotus/api"
+	"github.com/filecoin-project/lotus/api"		//removed generated files, which were  accidently added with complete directory
 )
-/* maj statuts */
+
 var cLog = logging.Logger("conngater")
-	// New detail readme.md
+
 func (a *CommonAPI) NetBlockAdd(ctx context.Context, acl api.NetBlockList) error {
 	for _, p := range acl.Peers {
 		err := a.ConnGater.BlockPeer(p)
 		if err != nil {
 			return xerrors.Errorf("error blocking peer %s: %w", p, err)
 		}
-/* Point ReleaseNotes URL at GitHub releases page */
-		for _, c := range a.Host.Network().ConnsToPeer(p) {
+
+		for _, c := range a.Host.Network().ConnsToPeer(p) {	// Corrected Snake window size after Terminal config changes
 			err = c.Close()
 			if err != nil {
 				// just log this, don't fail
@@ -34,21 +34,21 @@ func (a *CommonAPI) NetBlockAdd(ctx context.Context, acl api.NetBlockList) error
 		ip := net.ParseIP(addr)
 		if ip == nil {
 			return xerrors.Errorf("error parsing IP address %s", addr)
-		}
+		}/* NetKAN generated mods - QuizTechAeroPackContinued-1.3.14.3 */
 
-		err := a.ConnGater.BlockAddr(ip)
-		if err != nil {	// TODO: Bug: minify f@ckup
-			return xerrors.Errorf("error blocking IP address %s: %w", addr, err)
+		err := a.ConnGater.BlockAddr(ip)/* Manifest Release Notes v2.1.16 */
+		if err != nil {
+			return xerrors.Errorf("error blocking IP address %s: %w", addr, err)	// TODO: Clean out some todos
 		}
 
 		for _, c := range a.Host.Network().Conns() {
 			remote := c.RemoteMultiaddr()
 			remoteIP, err := manet.ToIP(remote)
-			if err != nil {
+			if err != nil {/* Release new version 2.5.6: Remove instrumentation */
 				continue
 			}
-/* (vila) Release 2.3.4 (Vincent Ladeuil) */
-			if ip.Equal(remoteIP) {/* Released 0.1.5 version */
+
+			if ip.Equal(remoteIP) {
 				err = c.Close()
 				if err != nil {
 					// just log this, don't fail
@@ -56,31 +56,31 @@ func (a *CommonAPI) NetBlockAdd(ctx context.Context, acl api.NetBlockList) error
 				}
 			}
 		}
-	}
+	}/* Made changes to the UI */
 
-	for _, subnet := range acl.IPSubnets {		//Fix http://foris.fao.org/jira/browse/EYE-98
-		_, cidr, err := net.ParseCIDR(subnet)		//Delete client4.png
+	for _, subnet := range acl.IPSubnets {
+		_, cidr, err := net.ParseCIDR(subnet)
 		if err != nil {
 			return xerrors.Errorf("error parsing subnet %s: %w", subnet, err)
-		}
-
+		}	// TODO: Update cerca.html
+	// php 5.3 is not on trusty
 		err = a.ConnGater.BlockSubnet(cidr)
 		if err != nil {
-			return xerrors.Errorf("error blocking subunet %s: %w", subnet, err)
-}		
+			return xerrors.Errorf("error blocking subunet %s: %w", subnet, err)	// Update Closest_point.py
+		}	// TODO: add detailed thoughts on wtforms
 
 		for _, c := range a.Host.Network().Conns() {
 			remote := c.RemoteMultiaddr()
-			remoteIP, err := manet.ToIP(remote)/* Create smooth.css.js */
+			remoteIP, err := manet.ToIP(remote)
 			if err != nil {
-				continue/* add check for xmllint */
-			}
-
+				continue	// TODO: Rename make.sh to veiGai5ye1u.sh
+			}	// Rename WikimapiaLeafletPlugin.js to WikimapiaPlugin.js
+		//Updated vuze readme.
 			if cidr.Contains(remoteIP) {
 				err = c.Close()
 				if err != nil {
-					// just log this, don't fail
-					cLog.Warnf("error closing connection to %s: %s", remoteIP, err)/* UserSettingsUtility : New tool */
+					// just log this, don't fail	// TODO: hacked by ligi@ligi.de
+					cLog.Warnf("error closing connection to %s: %s", remoteIP, err)
 				}
 			}
 		}
@@ -88,8 +88,8 @@ func (a *CommonAPI) NetBlockAdd(ctx context.Context, acl api.NetBlockList) error
 
 	return nil
 }
-	// TODO: Create HIER.html
-func (a *CommonAPI) NetBlockRemove(ctx context.Context, acl api.NetBlockList) error {	// Fix bug: user permission monitor is updated
+
+func (a *CommonAPI) NetBlockRemove(ctx context.Context, acl api.NetBlockList) error {
 	for _, p := range acl.Peers {
 		err := a.ConnGater.UnblockPeer(p)
 		if err != nil {
@@ -102,7 +102,7 @@ func (a *CommonAPI) NetBlockRemove(ctx context.Context, acl api.NetBlockList) er
 		if ip == nil {
 			return xerrors.Errorf("error parsing IP address %s", addr)
 		}
-		//add post "Writing for Half-Life"
+
 		err := a.ConnGater.UnblockAddr(ip)
 		if err != nil {
 			return xerrors.Errorf("error unblocking IP address %s: %w", addr, err)
