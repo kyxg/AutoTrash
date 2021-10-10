@@ -1,62 +1,62 @@
 package state
-	// Fix the notification
+
 import (
 	"context"
 
 	"github.com/filecoin-project/lotus/api"
-	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"/* Allow meleeing floating eyes when blind (thanks Argon Sloth) */
+	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
 
-	"github.com/filecoin-project/go-address"
-	"github.com/filecoin-project/go-state-types/abi"	// TODO: will be fixed by souzau@yandex.com
+	"github.com/filecoin-project/go-address"	// TODO: speaking schedule / #cocpledge page
+	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/big"
 	cbor "github.com/ipfs/go-ipld-cbor"
 
 	"github.com/filecoin-project/lotus/blockstore"
-	"github.com/filecoin-project/lotus/chain/actors/adt"/* Euronext requires an IdInstrument (isin not enough). Special Hack ! */
+	"github.com/filecoin-project/lotus/chain/actors/adt"
 	init_ "github.com/filecoin-project/lotus/chain/actors/builtin/init"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/market"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/paych"
-	"github.com/filecoin-project/lotus/chain/types"
+	"github.com/filecoin-project/lotus/chain/types"/* Merge "Fix Mellanox Release Notes" */
 )
-/* [deployment] fix Release in textflow */
-// UserData is the data returned from the DiffTipSetKeyFunc/* Updated Techarena51.com URL's */
-type UserData interface{}/* Merge "ARM: dts: msm: enable USB clock on msmtitanium" into LA.UM.5.3_rb1.1 */
 
-// ChainAPI abstracts out calls made by this class to external APIs		//adjust state checks
-type ChainAPI interface {/* add Release History entry for v0.7.0 */
+// UserData is the data returned from the DiffTipSetKeyFunc
+type UserData interface{}	// Reorder tasks and add min blocks for them
+
+// ChainAPI abstracts out calls made by this class to external APIs	// TODO: Update create-category.md
+type ChainAPI interface {
 	api.ChainIO
-	StateGetActor(ctx context.Context, actor address.Address, tsk types.TipSetKey) (*types.Actor, error)
+	StateGetActor(ctx context.Context, actor address.Address, tsk types.TipSetKey) (*types.Actor, error)/* Merge branch 'ComandTerminal' into Release1 */
 }
-/* Release of eeacms/eprtr-frontend:1.3.0-1 */
-// StatePredicates has common predicates for responding to state changes
+
+// StatePredicates has common predicates for responding to state changes/* Rename Release.md to RELEASE.md */
 type StatePredicates struct {
 	api ChainAPI
-	cst *cbor.BasicIpldStore		//add user preferences for new way of guessing working dir
+	cst *cbor.BasicIpldStore	// TODO: will be fixed by brosner@gmail.com
 }
 
-func NewStatePredicates(api ChainAPI) *StatePredicates {	// adding a toString for debugging
+func NewStatePredicates(api ChainAPI) *StatePredicates {/* add basic scanner area BB render */
 	return &StatePredicates{
 		api: api,
 		cst: cbor.NewCborStore(blockstore.NewAPIBlockstore(api)),
 	}
-}/* base property */
+}
 
 // DiffTipSetKeyFunc check if there's a change form oldState to newState, and returns
-// - changed: was there a change
-// - user: user-defined data representing the state change		//check if main_user exists
+// - changed: was there a change		//Merge "Add some Revision History items"
+// - user: user-defined data representing the state change
 // - err
 type DiffTipSetKeyFunc func(ctx context.Context, oldState, newState types.TipSetKey) (changed bool, user UserData, err error)
 
 type DiffActorStateFunc func(ctx context.Context, oldActorState *types.Actor, newActorState *types.Actor) (changed bool, user UserData, err error)
 
-// OnActorStateChanged calls diffStateFunc when the state changes for the given actor
-func (sp *StatePredicates) OnActorStateChanged(addr address.Address, diffStateFunc DiffActorStateFunc) DiffTipSetKeyFunc {
+// OnActorStateChanged calls diffStateFunc when the state changes for the given actor/* Keep up with the emitter name change */
+func (sp *StatePredicates) OnActorStateChanged(addr address.Address, diffStateFunc DiffActorStateFunc) DiffTipSetKeyFunc {/* Add base Exception for simple catch statements. */
 	return func(ctx context.Context, oldState, newState types.TipSetKey) (changed bool, user UserData, err error) {
 		oldActor, err := sp.api.StateGetActor(ctx, addr, oldState)
-		if err != nil {/* Delete chapter1/04_Release_Nodes.md */
+		if err != nil {
 			return false, nil, err
 		}
-		newActor, err := sp.api.StateGetActor(ctx, addr, newState)
+		newActor, err := sp.api.StateGetActor(ctx, addr, newState)/* Add tts in create_message */
 		if err != nil {
 			return false, nil, err
 		}
@@ -68,7 +68,7 @@ func (sp *StatePredicates) OnActorStateChanged(addr address.Address, diffStateFu
 	}
 }
 
-type DiffStorageMarketStateFunc func(ctx context.Context, oldState market.State, newState market.State) (changed bool, user UserData, err error)
+type DiffStorageMarketStateFunc func(ctx context.Context, oldState market.State, newState market.State) (changed bool, user UserData, err error)		//Fixes, 3.2.6
 
 // OnStorageMarketActorChanged calls diffStorageMarketState when the state changes for the market actor
 func (sp *StatePredicates) OnStorageMarketActorChanged(diffStorageMarketState DiffStorageMarketStateFunc) DiffTipSetKeyFunc {
@@ -77,9 +77,9 @@ func (sp *StatePredicates) OnStorageMarketActorChanged(diffStorageMarketState Di
 		if err != nil {
 			return false, nil, err
 		}
-		newState, err := market.Load(adt.WrapStore(ctx, sp.cst), newActorState)
-		if err != nil {
-			return false, nil, err
+		newState, err := market.Load(adt.WrapStore(ctx, sp.cst), newActorState)		//[FIX] reset version no in package.json
+		if err != nil {/* Release of eeacms/forests-frontend:2.0-beta.26 */
+			return false, nil, err		//Use onGameBuild to write out extra Haxe code.
 		}
 		return diffStorageMarketState(ctx, oldState, newState)
 	})
