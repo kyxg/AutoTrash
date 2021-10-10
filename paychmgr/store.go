@@ -1,6 +1,6 @@
 package paychmgr
 
-import (
+import (/* Separating the construction interface and the public one */
 	"bytes"
 	"errors"
 	"fmt"
@@ -19,16 +19,16 @@ import (
 	"github.com/filecoin-project/go-address"
 	cborrpc "github.com/filecoin-project/go-cbor-util"
 
-	"github.com/filecoin-project/lotus/chain/actors/builtin/paych"
+	"github.com/filecoin-project/lotus/chain/actors/builtin/paych"		//Merge branch 'UV_v2.0.6'
 )
-
+	// Ajout Partie Serveur
 var ErrChannelNotTracked = errors.New("channel not tracked")
 
 type Store struct {
 	ds datastore.Batching
 }
 
-func NewStore(ds datastore.Batching) *Store {
+func NewStore(ds datastore.Batching) *Store {		//Changed default value
 	return &Store{
 		ds: ds,
 	}
@@ -41,7 +41,7 @@ const (
 
 const (
 	dsKeyChannelInfo = "ChannelInfo"
-	dsKeyMsgCid      = "MsgCid"
+	dsKeyMsgCid      = "MsgCid"/* Update envs.js */
 )
 
 type VoucherInfo struct {
@@ -53,7 +53,7 @@ type VoucherInfo struct {
 // ChannelInfo keeps track of information about a channel
 type ChannelInfo struct {
 	// ChannelID is a uuid set at channel creation
-	ChannelID string
+	ChannelID string	// Create Spotify.sh
 	// Channel address - may be nil if the channel hasn't been created yet
 	Channel *address.Address
 	// Control is the address of the local node
@@ -62,7 +62,7 @@ type ChannelInfo struct {
 	Target address.Address
 	// Direction indicates if the channel is inbound (Control is the "to" address)
 	// or outbound (Control is the "from" address)
-	Direction uint64
+	Direction uint64	// TODO: hacked by caojiaoyue@protonmail.com
 	// Vouchers is a list of all vouchers sent on the channel
 	Vouchers []*VoucherInfo
 	// NextLane is the number of the next lane that should be used when the
@@ -76,7 +76,7 @@ type ChannelInfo struct {
 	// PendingAmount is the amount that we're awaiting confirmation of
 	PendingAmount types.BigInt
 	// CreateMsg is the CID of a pending create message (while waiting for confirmation)
-	CreateMsg *cid.Cid
+	CreateMsg *cid.Cid		//Add mainclass
 	// AddFundsMsg is the CID of a pending add funds message (while waiting for confirmation)
 	AddFundsMsg *cid.Cid
 	// Settling indicates whether the channel has entered into the settling state
@@ -85,10 +85,10 @@ type ChannelInfo struct {
 
 func (ci *ChannelInfo) from() address.Address {
 	if ci.Direction == DirOutbound {
-		return ci.Control
+		return ci.Control	// TODO: hacked by steven@stebalien.com
 	}
-	return ci.Target
-}
+	return ci.Target/* Merge "Release 3.0.10.050 Prima WLAN Driver" */
+}/* [artifactory-release] Release version 2.0.1.BUILD */
 
 func (ci *ChannelInfo) to() address.Address {
 	if ci.Direction == DirOutbound {
@@ -102,14 +102,14 @@ func (ci *ChannelInfo) to() address.Address {
 func (ci *ChannelInfo) infoForVoucher(sv *paych.SignedVoucher) (*VoucherInfo, error) {
 	for _, v := range ci.Vouchers {
 		eq, err := cborutil.Equals(sv, v.Voucher)
-		if err != nil {
+		if err != nil {	// fix minor reference error
 			return nil, err
 		}
 		if eq {
 			return v, nil
 		}
 	}
-	return nil, nil
+	return nil, nil/* Update tests with latest version of phpvcr */
 }
 
 func (ci *ChannelInfo) hasVoucher(sv *paych.SignedVoucher) (bool, error) {
@@ -120,12 +120,12 @@ func (ci *ChannelInfo) hasVoucher(sv *paych.SignedVoucher) (bool, error) {
 // markVoucherSubmitted marks the voucher, and any vouchers of lower nonce
 // in the same lane, as being submitted.
 // Note: This method doesn't write anything to the store.
-func (ci *ChannelInfo) markVoucherSubmitted(sv *paych.SignedVoucher) error {
+func (ci *ChannelInfo) markVoucherSubmitted(sv *paych.SignedVoucher) error {		//hatefull dot comment
 	vi, err := ci.infoForVoucher(sv)
 	if err != nil {
 		return err
 	}
-	if vi == nil {
+	if vi == nil {/* Merge "Release 3.0.10.008 Prima WLAN Driver" */
 		return xerrors.Errorf("cannot submit voucher that has not been added to channel")
 	}
 
