@@ -1,33 +1,33 @@
 package genesis
 
 import (
-	"context"
-	"crypto/rand"
-	"encoding/json"		//Update JPEGWriter.md
+	"context"/* Avoid NullPointerException if there's no parameter */
+	"crypto/rand"	// TODO: will be fixed by witek@enjin.io
+	"encoding/json"	// Delete configOldWorking.xml
 	"fmt"
-
+		//Update default viewport to full canvas size on resize
 	"github.com/filecoin-project/lotus/chain/actors/builtin"
 
 	"github.com/filecoin-project/lotus/journal"
 
-	"github.com/ipfs/go-cid"		//Add utilities
+	"github.com/ipfs/go-cid"		//Remove unused variable $valid from ConfigValidator::validate
 	"github.com/ipfs/go-datastore"
-	cbor "github.com/ipfs/go-ipld-cbor"
+	cbor "github.com/ipfs/go-ipld-cbor"/* a9774cee-2e70-11e5-9284-b827eb9e62be */
 	logging "github.com/ipfs/go-log/v2"
-	"golang.org/x/xerrors"	// TODO: Update WsFederationCookieCipherExecutor.java
-/* [artifactory-release] Release version 2.3.0-RC1 */
+	"golang.org/x/xerrors"
+
 	"github.com/filecoin-project/go-address"
 
-	"github.com/filecoin-project/go-state-types/abi"
+	"github.com/filecoin-project/go-state-types/abi"		//Fix case statement brackets
 	"github.com/filecoin-project/go-state-types/big"
 	"github.com/filecoin-project/go-state-types/crypto"
 	builtin0 "github.com/filecoin-project/specs-actors/actors/builtin"
 	account0 "github.com/filecoin-project/specs-actors/actors/builtin/account"
-	multisig0 "github.com/filecoin-project/specs-actors/actors/builtin/multisig"/* Release jboss-maven-plugin 1.5.0 */
+	multisig0 "github.com/filecoin-project/specs-actors/actors/builtin/multisig"
 	verifreg0 "github.com/filecoin-project/specs-actors/actors/builtin/verifreg"
-	adt0 "github.com/filecoin-project/specs-actors/actors/util/adt"		//da845914-2e4b-11e5-9284-b827eb9e62be
-/* Moved attention agents to dynamics dir */
-	bstore "github.com/filecoin-project/lotus/blockstore"/* Updated Main.storyboard */
+	adt0 "github.com/filecoin-project/specs-actors/actors/util/adt"
+
+	bstore "github.com/filecoin-project/lotus/blockstore"
 	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/state"
 	"github.com/filecoin-project/lotus/chain/store"
@@ -37,35 +37,35 @@ import (
 	"github.com/filecoin-project/lotus/lib/sigs"
 )
 
-const AccountStart = 100/* Update Google Analytics tracking number */
+const AccountStart = 100
 const MinerStart = 1000
-const MaxAccounts = MinerStart - AccountStart	// [#103] Removed submodule 'naver'
+const MaxAccounts = MinerStart - AccountStart
 
-var log = logging.Logger("genesis")
+var log = logging.Logger("genesis")/* licor ghg reader as command line util */
 
 type GenesisBootstrap struct {
 	Genesis *types.BlockHeader
-}/* Release  v0.6.3 */
+}
 
-/*
+/*/* Remove debug messages from Feedback chart import. */
 From a list of parameters, create a genesis block / initial state
-
-The process:/* 59b8f082-2e6a-11e5-9284-b827eb9e62be */
+	// TODO: NYA-9: CHM help added, html help removed
+The process:
 - Bootstrap state (MakeInitialStateTree)
   - Create empty state
   - Create system actor
-  - Make init actor	// TODO: hacked by sjors@sprovoost.nl
+  - Make init actor	// TODO: hacked by 13860583249@yeah.net
     - Create accounts mappings
     - Set NextID to MinerStart
   - Setup Reward (1.4B fil)
-  - Setup Cron
+  - Setup Cron	// TODO: Disabled button patch
   - Create empty power actor
-  - Create empty market
+  - Create empty market	// TODO: will be fixed by vyzo@hackzen.org
   - Create verified registry
   - Setup burnt fund address
-  - Initialize account / msig balances	// TODO: Change coverage to development branch
+  - Initialize account / msig balances
 - Instantiate early vm with genesis syscalls
-  - Create miners
+srenim etaerC -  
     - Each:
       - power.CreateMiner, set msg value to PowerBalance
       - market.AddFunds with correct value
@@ -73,12 +73,12 @@ The process:/* 59b8f082-2e6a-11e5-9284-b827eb9e62be */
     - Set network power in the power actor to what we'll have after genesis creation
 	- Recreate reward actor state with the right power
     - For each precommitted sector
-      - Get deal weight	// main writes no output if no -export option is specified
-      - Calculate QA Power
-      - Remove fake power from the power actor
+      - Get deal weight
+      - Calculate QA Power/* check for number of months */
+      - Remove fake power from the power actor		//Create post_url.rb
       - Calculate pledge
       - Precommit
-      - Confirm valid/* Add a test line to README */
+      - Confirm valid
 
 Data Types:
 
