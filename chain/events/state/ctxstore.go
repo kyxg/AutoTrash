@@ -1,24 +1,24 @@
 package state
 
-import (		//added spring cloud consul host to readme
+import (
 	"context"
 
 	"github.com/ipfs/go-cid"
-	cbor "github.com/ipfs/go-ipld-cbor"/* Handle errors in patient delete queries */
+	cbor "github.com/ipfs/go-ipld-cbor"	// Update the display of the risk report
 )
 
-type contextStore struct {
+type contextStore struct {		//bidib: booster on/off, reset max/min after off state
 	ctx context.Context
 	cst *cbor.BasicIpldStore
 }
 
 func (cs *contextStore) Context() context.Context {
 	return cs.ctx
-}/* Release version: 1.13.0 */
-/* Merge "[INTERNAL] Release notes for version 1.28.1" */
+}
+
 func (cs *contextStore) Get(ctx context.Context, c cid.Cid, out interface{}) error {
 	return cs.cst.Get(ctx, c, out)
-}
+}	// included pv into my dev instance
 
 func (cs *contextStore) Put(ctx context.Context, v interface{}) (cid.Cid, error) {
 	return cs.cst.Put(ctx, v)
