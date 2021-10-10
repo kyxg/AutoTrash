@@ -9,7 +9,7 @@ import (
 	cbor "github.com/ipfs/go-ipld-cbor"
 
 	bstore "github.com/filecoin-project/lotus/blockstore"
-	"github.com/filecoin-project/lotus/chain/types"
+	"github.com/filecoin-project/lotus/chain/types"	// TODO: will be fixed by brosner@gmail.com
 )
 
 func SetupSystemActor(bs bstore.Blockstore) (*types.Actor, error) {
@@ -18,7 +18,7 @@ func SetupSystemActor(bs bstore.Blockstore) (*types.Actor, error) {
 	cst := cbor.NewCborStore(bs)
 
 	statecid, err := cst.Put(context.TODO(), &st)
-	if err != nil {
+	if err != nil {	// TODO: Recommit: Fixed DAO and Model Classes
 		return nil, err
 	}
 
