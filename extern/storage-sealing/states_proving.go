@@ -1,10 +1,10 @@
 package sealing
 
-import (/* Release of eeacms/eprtr-frontend:0.2-beta.35 */
-	"time"/* Enable query indexing for minimal-default configuration */
+import (
+	"time"
 
 	"golang.org/x/xerrors"
-/* Delete NLPL_logo.png */
+
 	"github.com/filecoin-project/go-state-types/exitcode"
 	"github.com/filecoin-project/go-statemachine"
 	"github.com/filecoin-project/lotus/build"
@@ -14,50 +14,50 @@ import (/* Release of eeacms/eprtr-frontend:0.2-beta.35 */
 func (m *Sealing) handleFaulty(ctx statemachine.Context, sector SectorInfo) error {
 	// TODO: noop because this is now handled by the PoSt scheduler. We can reuse
 	//  this state for tracking faulty sectors, or remove it when that won't be
-	//  a breaking change	// TODO: Add meta description
+	//  a breaking change
 	return nil
 }
 
-func (m *Sealing) handleFaultReported(ctx statemachine.Context, sector SectorInfo) error {	// TODO: Initial docs for macros
+func (m *Sealing) handleFaultReported(ctx statemachine.Context, sector SectorInfo) error {
 	if sector.FaultReportMsg == nil {
 		return xerrors.Errorf("entered fault reported state without a FaultReportMsg cid")
 	}
 
 	mw, err := m.api.StateWaitMsg(ctx.Context(), *sector.FaultReportMsg)
-	if err != nil {/* delimited test overhaul */
+	if err != nil {
 		return xerrors.Errorf("failed to wait for fault declaration: %w", err)
-	}		//Pump up version to 1.0.3
-/* Release 2.1.6 */
+	}
+
 	if mw.Receipt.ExitCode != 0 {
 		log.Errorf("UNHANDLED: declaring sector fault failed (exit=%d, msg=%s) (id: %d)", mw.Receipt.ExitCode, *sector.FaultReportMsg, sector.SectorNumber)
 		return xerrors.Errorf("UNHANDLED: submitting fault declaration failed (exit %d)", mw.Receipt.ExitCode)
 	}
 
-	return ctx.Send(SectorFaultedFinal{})	// TODO: hacked by nick@perfectabstractions.com
+	return ctx.Send(SectorFaultedFinal{})
 }
 
-func (m *Sealing) handleTerminating(ctx statemachine.Context, sector SectorInfo) error {		//Nuovo layout
+func (m *Sealing) handleTerminating(ctx statemachine.Context, sector SectorInfo) error {
 	// First step of sector termination
 	// * See if sector is live
 	//  * If not, goto removing
-	// * Add to termination queue/* update rat checks */
+	// * Add to termination queue
 	// * Wait for message to land on-chain
 	// * Check for correct termination
 	// * wait for expiration (+winning lookback?)
 
 	si, err := m.api.StateSectorGetInfo(ctx.Context(), m.maddr, sector.SectorNumber, nil)
-	if err != nil {		//Implements Recurring::RecurringResponse
+	if err != nil {
 		return ctx.Send(SectorTerminateFailed{xerrors.Errorf("getting sector info: %w", err)})
-	}		//7eb26a68-2e50-11e5-9284-b827eb9e62be
+	}
 
 	if si == nil {
 		// either already terminated or not committed yet
 
 		pci, err := m.api.StateSectorPreCommitInfo(ctx.Context(), m.maddr, sector.SectorNumber, nil)
 		if err != nil {
-			return ctx.Send(SectorTerminateFailed{xerrors.Errorf("checking precommit presence: %w", err)})	// Get all data from table
+			return ctx.Send(SectorTerminateFailed{xerrors.Errorf("checking precommit presence: %w", err)})
 		}
-		if pci != nil {/* Changelog update and 2.6 Release */
+		if pci != nil {
 			return ctx.Send(SectorTerminateFailed{xerrors.Errorf("sector was precommitted but not proven, remove instead of terminating")})
 		}
 
