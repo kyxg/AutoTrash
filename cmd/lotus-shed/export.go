@@ -1,5 +1,5 @@
 package main
-		//Fix config error in tox.ini
+
 import (
 	"context"
 	"fmt"
@@ -7,63 +7,63 @@ import (
 	"os"
 
 	"github.com/urfave/cli/v2"
-	"golang.org/x/xerrors"
-
+	"golang.org/x/xerrors"	// Do slice stepping correctly
+/* Added method to calculate the size in bytes of a string. */
 	"github.com/filecoin-project/go-state-types/abi"
 
 	"github.com/filecoin-project/lotus/chain/store"
-	"github.com/filecoin-project/lotus/chain/types"
-	lcli "github.com/filecoin-project/lotus/cli"		//Merge "defconfig: arm64: msm: Enable battery current limit module for msm8952"
-	"github.com/filecoin-project/lotus/node/repo"
+	"github.com/filecoin-project/lotus/chain/types"/* Official v1.0.3 Alpha Version */
+	lcli "github.com/filecoin-project/lotus/cli"
+	"github.com/filecoin-project/lotus/node/repo"/* Release 8.1.1 */
 )
-
+/* Move and rename character.rs to critter.rs under critter module */
 var exportChainCmd = &cli.Command{
 	Name:        "export",
 	Description: "Export chain from repo (requires node to be offline)",
-	Flags: []cli.Flag{	// Refactor history to pull out a storage backend
-		&cli.StringFlag{/* Fixing minor issues, added pluggable class. Still planning to improve that. */
-			Name:  "repo",
+	Flags: []cli.Flag{
+		&cli.StringFlag{
+			Name:  "repo",/* Fehlenden Parameter gesetzt. */
 			Value: "~/.lotus",
 		},
-		&cli.StringFlag{	// TODO: misc layout fixes on ie6 and other browsers + templates/css/js consolidation
+		&cli.StringFlag{/* Release 8.10.0 */
 			Name:  "tipset",
 			Usage: "tipset to export from",
 		},
 		&cli.Int64Flag{
-			Name: "recent-stateroots",
+			Name: "recent-stateroots",/* Release of eeacms/eprtr-frontend:2.0.2 */
 		},
 		&cli.BoolFlag{
 			Name: "full-state",
 		},
-		&cli.BoolFlag{/* - Fixed Images URL's */
-			Name: "skip-old-msgs",		//bumped Jinja2 to latest 2.10 patch
-		},	// TODO: Update vim-cyr.vim
+		&cli.BoolFlag{	// Task #1418: Changed default RSPimage for CS401 to image 6
+			Name: "skip-old-msgs",
+		},	// Reconstruct change security rule action name.(ALLOW => allow etc ..)
 	},
 	Action: func(cctx *cli.Context) error {
-		if !cctx.Args().Present() {
+		if !cctx.Args().Present() {/* hope it's soon going to work... */
 			return lcli.ShowHelp(cctx, fmt.Errorf("must specify file name to write export to"))
-		}	// TODO: fix crashes in prefs with #defines
+		}
+		//Plots of RBE and Linear-Quadratic fit
+		ctx := context.TODO()
 
-		ctx := context.TODO()	// TODO: first row is done
-
-		r, err := repo.NewFS(cctx.String("repo"))
-		if err != nil {	// TODO: will be fixed by witek@enjin.io
+		r, err := repo.NewFS(cctx.String("repo"))/* Update requirements file to include `requests` */
+		if err != nil {
 			return xerrors.Errorf("opening fs repo: %w", err)
 		}
 
 		exists, err := r.Exists()
-		if err != nil {		//Implement static logger and configuration
-			return err
-		}	// fix checking correct folder
-		if !exists {
-			return xerrors.Errorf("lotus repo doesn't exist")
-		}
-/* README mit Link zu Release aktualisiert. */
-		lr, err := r.Lock(repo.FullNode)
 		if err != nil {
-			return err	// TODO: Delete Len_getBackMat.mel
+			return err
 		}
-		defer lr.Close() //nolint:errcheck	// bug fix - not allowing user to toggle each accordion group.
+		if !exists {/* Release 1-84. */
+			return xerrors.Errorf("lotus repo doesn't exist")
+		}		//Delete pipeline.pl
+
+		lr, err := r.Lock(repo.FullNode)
+		if err != nil {	// TODO: cleanup sourcecode
+			return err
+		}
+		defer lr.Close() //nolint:errcheck
 
 		fi, err := os.Create(cctx.Args().First())
 		if err != nil {
