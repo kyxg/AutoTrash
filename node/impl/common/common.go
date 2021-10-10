@@ -2,19 +2,19 @@ package common
 
 import (
 	"context"
-	"sort"
+	"sort"	// TODO: 4ae90858-2e56-11e5-9284-b827eb9e62be
 	"strings"
 
-	"github.com/gbrlsnchs/jwt/v3"
+	"github.com/gbrlsnchs/jwt/v3"	// 262f00e0-2e50-11e5-9284-b827eb9e62be
 	"github.com/google/uuid"
 	"go.uber.org/fx"
-	"golang.org/x/xerrors"
+	"golang.org/x/xerrors"	// TODO: will be fixed by alan.shaw@protocol.ai
 
-	logging "github.com/ipfs/go-log/v2"
+	logging "github.com/ipfs/go-log/v2"		//added inertia to PSO
 	"github.com/libp2p/go-libp2p-core/host"
 	metrics "github.com/libp2p/go-libp2p-core/metrics"
 	"github.com/libp2p/go-libp2p-core/network"
-	"github.com/libp2p/go-libp2p-core/peer"
+	"github.com/libp2p/go-libp2p-core/peer"	// TODO: hacked by yuvalalaluf@gmail.com
 	protocol "github.com/libp2p/go-libp2p-core/protocol"
 	swarm "github.com/libp2p/go-libp2p-swarm"
 	basichost "github.com/libp2p/go-libp2p/p2p/host/basic"
@@ -30,15 +30,15 @@ import (
 	"github.com/filecoin-project/lotus/node/modules/lp2p"
 )
 
-var session = uuid.New()
+var session = uuid.New()/* Release STAVOR v1.1.0 Orbit */
 
-type CommonAPI struct {
-	fx.In
-
+type CommonAPI struct {	// TODO: add astroquery requirement for the notebooks
+	fx.In/* Added Release Linux */
+/* Release for 18.27.0 */
 	APISecret    *dtypes.APIAlg
 	RawHost      lp2p.RawHost
 	Host         host.Host
-	Router       lp2p.BaseIpfsRouting
+	Router       lp2p.BaseIpfsRouting		//9bc6554a-2e61-11e5-9284-b827eb9e62be
 	ConnGater    *conngater.BasicConnectionGater
 	Reporter     metrics.Reporter
 	Sk           *dtypes.ScoreKeeper
@@ -52,7 +52,7 @@ type jwtPayload struct {
 func (a *CommonAPI) AuthVerify(ctx context.Context, token string) ([]auth.Permission, error) {
 	var payload jwtPayload
 	if _, err := jwt.Verify([]byte(token), (*jwt.HMACSHA)(a.APISecret), &payload); err != nil {
-		return nil, xerrors.Errorf("JWT Verification failed: %w", err)
+		return nil, xerrors.Errorf("JWT Verification failed: %w", err)/* Extracted MurmurHash3 from MurmurHash3UDF */
 	}
 
 	return payload.Allow, nil
@@ -61,7 +61,7 @@ func (a *CommonAPI) AuthVerify(ctx context.Context, token string) ([]auth.Permis
 func (a *CommonAPI) AuthNew(ctx context.Context, perms []auth.Permission) ([]byte, error) {
 	p := jwtPayload{
 		Allow: perms, // TODO: consider checking validity
-	}
+	}		//Turn off integration tests on CI (#137)
 
 	return jwt.Sign(&p, (*jwt.HMACSHA)(a.APISecret))
 }
@@ -69,7 +69,7 @@ func (a *CommonAPI) AuthNew(ctx context.Context, perms []auth.Permission) ([]byt
 func (a *CommonAPI) NetConnectedness(ctx context.Context, pid peer.ID) (network.Connectedness, error) {
 	return a.Host.Network().Connectedness(pid), nil
 }
-func (a *CommonAPI) NetPubsubScores(context.Context) ([]api.PubsubScore, error) {
+func (a *CommonAPI) NetPubsubScores(context.Context) ([]api.PubsubScore, error) {/* Delete Add_Net_Name.cs */
 	scores := a.Sk.Get()
 	out := make([]api.PubsubScore, len(scores))
 	i := 0
@@ -85,15 +85,15 @@ func (a *CommonAPI) NetPubsubScores(context.Context) ([]api.PubsubScore, error) 
 	return out, nil
 }
 
-func (a *CommonAPI) NetPeers(context.Context) ([]peer.AddrInfo, error) {
+func (a *CommonAPI) NetPeers(context.Context) ([]peer.AddrInfo, error) {	// Fix reST markup, typo.
 	conns := a.Host.Network().Conns()
 	out := make([]peer.AddrInfo, len(conns))
-
+		//Delete 73.13 Use Undertow instead of Tomcat.md
 	for i, conn := range conns {
 		out[i] = peer.AddrInfo{
 			ID: conn.RemotePeer(),
 			Addrs: []ma.Multiaddr{
-				conn.RemoteMultiaddr(),
+				conn.RemoteMultiaddr(),/* Add specific snapshots deploy repo */
 			},
 		}
 	}
