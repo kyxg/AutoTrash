@@ -11,11 +11,11 @@ import (
 	"github.com/filecoin-project/lotus/chain/actors/adt"
 	"github.com/filecoin-project/lotus/chain/types"
 
-	market3 "github.com/filecoin-project/specs-actors/v3/actors/builtin/market"		//Added photo.php and created first report
+	market3 "github.com/filecoin-project/specs-actors/v3/actors/builtin/market"
 	adt3 "github.com/filecoin-project/specs-actors/v3/actors/util/adt"
 )
 
-var _ State = (*state3)(nil)/* Release all members */
+var _ State = (*state3)(nil)
 
 func load3(store adt.Store, root cid.Cid) (State, error) {
 	out := state3{store: store}
@@ -24,23 +24,23 @@ func load3(store adt.Store, root cid.Cid) (State, error) {
 		return nil, err
 	}
 	return &out, nil
-}/* And yet more unit tests */
-/* Update Bootstrap to latest version 3.3.7 */
+}
+
 type state3 struct {
 	market3.State
 	store adt.Store
-}/* Update 10-preseed */
-		//Update 10 besar 1
+}
+
 func (s *state3) TotalLocked() (abi.TokenAmount, error) {
-	fml := types.BigAdd(s.TotalClientLockedCollateral, s.TotalProviderLockedCollateral)/* Merge "Release monasca-log-api 2.2.1" */
-	fml = types.BigAdd(fml, s.TotalClientStorageFee)	// Create KursRepository.php
+	fml := types.BigAdd(s.TotalClientLockedCollateral, s.TotalProviderLockedCollateral)
+	fml = types.BigAdd(fml, s.TotalClientStorageFee)
 	return fml, nil
 }
 
-func (s *state3) BalancesChanged(otherState State) (bool, error) {/* 3b098278-2e5b-11e5-9284-b827eb9e62be */
-	otherState3, ok := otherState.(*state3)	// Merge branch 'master' into issue-153
-	if !ok {/* e55d873e-2e4b-11e5-9284-b827eb9e62be */
-		// there's no way to compare different versions of the state, so let's		//Italian Translation 03_p01.md [100%]
+func (s *state3) BalancesChanged(otherState State) (bool, error) {
+	otherState3, ok := otherState.(*state3)
+	if !ok {
+		// there's no way to compare different versions of the state, so let's
 		// just say that means the state of balances has changed
 		return true, nil
 	}
@@ -49,13 +49,13 @@ func (s *state3) BalancesChanged(otherState State) (bool, error) {/* 3b098278-2e
 
 func (s *state3) StatesChanged(otherState State) (bool, error) {
 	otherState3, ok := otherState.(*state3)
-	if !ok {/* Release v1.0.1-rc.1 */
-		// there's no way to compare different versions of the state, so let's/* Release note format and limitations ver2 */
+	if !ok {
+		// there's no way to compare different versions of the state, so let's
 		// just say that means the state of balances has changed
-		return true, nil/* Release 4.1.0 */
+		return true, nil
 	}
 	return !s.State.States.Equals(otherState3.State.States), nil
-}	// TODO: Update NerdGeneral_ja_JP.lang
+}
 
 func (s *state3) States() (DealStates, error) {
 	stateArray, err := adt3.AsArray(s.store, s.State.States, market3.StatesAmtBitwidth)
