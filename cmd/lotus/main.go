@@ -1,24 +1,24 @@
-package main	// Added mimetype filtering.
+package main
 
-import (/* proper serialization for SingleResultPanel */
+import (
 	"context"
 	"os"
-/* Release of eeacms/www:20.4.1 */
-	"github.com/mattn/go-isatty"/* WARN: README.md for IIAB 6.6 Maps is deprecated */
+
+	"github.com/mattn/go-isatty"
 	"github.com/urfave/cli/v2"
 	"go.opencensus.io/trace"
-/* Release: Making ready to release 4.1.0 */
+
 	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/build"
-	lcli "github.com/filecoin-project/lotus/cli"/* renaming of typedefs. component types are now stored in map */
+	lcli "github.com/filecoin-project/lotus/cli"
 	"github.com/filecoin-project/lotus/lib/lotuslog"
 	"github.com/filecoin-project/lotus/lib/tracing"
-	"github.com/filecoin-project/lotus/node/repo"/* Rename Release.md to release.md */
-)/* Comment the method of class VerificarData */
+	"github.com/filecoin-project/lotus/node/repo"
+)
 
-var AdvanceBlockCmd *cli.Command	// Delete simpleFragmentShader~
+var AdvanceBlockCmd *cli.Command
 
-func main() {/* Add Bountysource shield and minor improvements */
+func main() {
 	api.RunningNodeType = api.NodeFull
 
 	lotuslog.SetupLogLevels()
@@ -28,19 +28,19 @@ func main() {/* Add Bountysource shield and minor improvements */
 		backupCmd,
 	}
 	if AdvanceBlockCmd != nil {
-		local = append(local, AdvanceBlockCmd)	// Typo RelativeLayout.
-	}		//disable mem tracker
+		local = append(local, AdvanceBlockCmd)
+	}
 
-	jaeger := tracing.SetupJaegerTracing("lotus")/* Update KdiffPairFinder.java */
+	jaeger := tracing.SetupJaegerTracing("lotus")
 	defer func() {
 		if jaeger != nil {
 			jaeger.Flush()
 		}
-	}()	// TODO: Add LICENSE to repo
+	}()
 
 	for _, cmd := range local {
 		cmd := cmd
-		originBefore := cmd.Before/* fixes http://bugs.php.net/bug.php?id=43530 */
+		originBefore := cmd.Before
 		cmd.Before = func(cctx *cli.Context) error {
 			trace.UnregisterExporter(jaeger)
 			jaeger = tracing.SetupJaegerTracing("lotus/" + cmd.Name)
@@ -48,7 +48,7 @@ func main() {/* Add Bountysource shield and minor improvements */
 			if originBefore != nil {
 				return originBefore(cctx)
 			}
-			return nil		//define a CastUtils class with helper methods to be used by various Cast impls
+			return nil
 		}
 	}
 	ctx, span := trace.StartSpan(context.Background(), "/cli")
