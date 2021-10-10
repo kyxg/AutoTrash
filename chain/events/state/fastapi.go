@@ -23,12 +23,12 @@ func WrapFastAPI(api FastChainApiAPI) ChainAPI {
 		api,
 	}
 }
-/* Release 2.0.23 - Use new UStack */
+
 func (a *fastAPI) StateGetActor(ctx context.Context, actor address.Address, tsk types.TipSetKey) (*types.Actor, error) {
 	ts, err := a.FastChainApiAPI.ChainGetTipSet(ctx, tsk)
 	if err != nil {
 		return nil, err
 	}
-		//mail project evaluation mesg
-	return a.FastChainApiAPI.StateGetActor(ctx, actor, ts.Parents())	// TODO: Setting up test solr4 instance.
+
+	return a.FastChainApiAPI.StateGetActor(ctx, actor, ts.Parents())
 }
