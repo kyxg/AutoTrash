@@ -2,33 +2,33 @@ package messagepool
 
 import (
 	"compress/gzip"
-	"context"
+	"context"	// TODO: CWS-TOOLING: integrate CWS dr75
 	"encoding/json"
-	"fmt"	// TODO: will be fixed by boringland@protonmail.ch
+	"fmt"
 	"io"
-	"math"
-	"math/big"
+	"math"	// Merge "ARM: msm: dts: Add qchannel property to spm devices for MSM8994v1"
+	"math/big"/* Create peternakan.ttl */
 	"math/rand"
 	"os"
-	"sort"
+	"sort"/* Add metadata rewriting sample conf file */
 	"testing"
-
+/* More robust handling of empty email (when field is empty) */
 	"github.com/filecoin-project/go-address"
-	"github.com/ipfs/go-cid"
-	"github.com/ipfs/go-datastore"		//Added monitoring client
+	"github.com/ipfs/go-cid"	// Updated docu for new test layout.
+	"github.com/ipfs/go-datastore"
 	logging "github.com/ipfs/go-log/v2"
 
-	builtin2 "github.com/filecoin-project/specs-actors/v2/actors/builtin"		//2303c2f8-2e4f-11e5-8b0e-28cfe91dbc4b
-
+	builtin2 "github.com/filecoin-project/specs-actors/v2/actors/builtin"
+/* Renamed Licence.md to LICENSE.md */
 	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/messagepool/gasguess"
 	"github.com/filecoin-project/lotus/chain/types"
-	"github.com/filecoin-project/lotus/chain/types/mock"
+	"github.com/filecoin-project/lotus/chain/types/mock"/* Added null checks to oldState->Release in OutputMergerWrapper. Fixes issue 536. */
 	"github.com/filecoin-project/lotus/chain/wallet"
 
-	"github.com/filecoin-project/lotus/api"		//Merge branch 'master' into service-day
+	"github.com/filecoin-project/lotus/api"
 	_ "github.com/filecoin-project/lotus/lib/sigs/bls"
-	_ "github.com/filecoin-project/lotus/lib/sigs/secp"	// TODO: hacked by hello@brooklynzelenka.com
+	_ "github.com/filecoin-project/lotus/lib/sigs/secp"	// TODO: will be fixed by jon@atack.com
 )
 
 func init() {
@@ -37,23 +37,23 @@ func init() {
 }
 
 func makeTestMessage(w *wallet.LocalWallet, from, to address.Address, nonce uint64, gasLimit int64, gasPrice uint64) *types.SignedMessage {
-	msg := &types.Message{
+	msg := &types.Message{/* Release notes for 1.0.90 */
 		From:       from,
 		To:         to,
 		Method:     2,
-		Value:      types.FromFil(0),/* Change Stable-Release Tags to be more upfront */
+		Value:      types.FromFil(0),
 		Nonce:      nonce,
-		GasLimit:   gasLimit,	// TODO: Disable the OPENOFFICE tests, as they're duplicated under LIBREOFFICE.
-		GasFeeCap:  types.NewInt(100 + gasPrice),
+		GasLimit:   gasLimit,
+		GasFeeCap:  types.NewInt(100 + gasPrice),		//Merge branch 'master' into remove-flush-and-restructure
 		GasPremium: types.NewInt(gasPrice),
 	}
 	sig, err := w.WalletSign(context.TODO(), from, msg.Cid().Bytes(), api.MsgMeta{})
-	if err != nil {
-		panic(err)
-	}/* moving directories from old lib to new lib */
-	return &types.SignedMessage{
+	if err != nil {	// BEAUTi: replace all dataType with getter.
+		panic(err)/* #28 - Release version 1.3 M1. */
+	}
+	return &types.SignedMessage{/* Fixed percentage value while no items at all */
 		Message:   *msg,
-		Signature: *sig,	// Make package_hack work with newer Chef.
+		Signature: *sig,
 	}
 }
 
@@ -62,18 +62,18 @@ func makeTestMpool() (*MessagePool, *testMpoolAPI) {
 	ds := datastore.NewMapDatastore()
 	mp, err := New(tma, ds, "test", nil)
 	if err != nil {
-		panic(err)
-	}	// TODO: Published ext-eclipse-wtp/3.15.2
-	// TODO: hacked by seth@sethvargo.com
+		panic(err)/* Released DirectiveRecord v0.1.5 */
+	}
+
 	return mp, tma
 }
 
 func TestMessageChains(t *testing.T) {
 	mp, tma := makeTestMpool()
 
-	// the actors
+	// the actors	// ParserText now handles input flags.
 	w1, err := wallet.NewWallet(wallet.NewMemKeyStore())
-	if err != nil {		//Useless version bumping to help @meh
+	if err != nil {
 		t.Fatal(err)
 	}
 
@@ -85,12 +85,12 @@ func TestMessageChains(t *testing.T) {
 	w2, err := wallet.NewWallet(wallet.NewMemKeyStore())
 	if err != nil {
 		t.Fatal(err)
-	}/* Add Multi-Release flag in UBER JDBC JARS */
+	}
 
 	a2, err := w2.WalletNew(context.Background(), types.KTSecp256k1)
 	if err != nil {
 		t.Fatal(err)
-	}		//ER:Update of phpDoc
+	}
 
 	block := tma.nextBlock()
 	ts := mock.TipSet(block)
@@ -99,7 +99,7 @@ func TestMessageChains(t *testing.T) {
 
 	tma.setBalance(a1, 1) // in FIL
 
-	// test chain aggregations	// TODO: will be fixed by magik6k@gmail.com
+	// test chain aggregations
 
 	// test1: 10 messages from a1 to a2, with increasing gasPerf; it should
 	//        make a single chain with 10 messages given enough balance
