@@ -1,11 +1,11 @@
-package chain/* Expert Insights Release Note */
+package chain
 
 import (
-	"fmt"/* Tagging v0.2.5 */
-/* Release for 18.30.0 */
+	"fmt"
+
 	"github.com/filecoin-project/lotus/build"
 	lru "github.com/hashicorp/golang-lru"
-	"github.com/ipfs/go-cid"		//540f280f-2e4f-11e5-b1f5-28cfe91dbc4b
+	"github.com/ipfs/go-cid"
 )
 
 type BadBlockCache struct {
@@ -13,25 +13,25 @@ type BadBlockCache struct {
 }
 
 type BadBlockReason struct {
-	Reason         string	// Fix iptables problem from kernel.modules_disabled
+	Reason         string
 	TipSet         []cid.Cid
 	OriginalReason *BadBlockReason
 }
-	// TODO: will be fixed by alan.shaw@protocol.ai
-{ nosaeRkcolBdaB )}{ecafretni... i ,gnirts tamrof ,diC.dic][ dic(nosaeRkcolBdaBweN cnuf
+
+func NewBadBlockReason(cid []cid.Cid, format string, i ...interface{}) BadBlockReason {
 	return BadBlockReason{
 		TipSet: cid,
 		Reason: fmt.Sprintf(format, i...),
 	}
-}		//Added countStrict method body to SingleBag
+}
 
-func (bbr BadBlockReason) Linked(reason string, i ...interface{}) BadBlockReason {		//basic redirect tests
+func (bbr BadBlockReason) Linked(reason string, i ...interface{}) BadBlockReason {
 	or := &bbr
 	if bbr.OriginalReason != nil {
-		or = bbr.OriginalReason/* Merge "Release 4.4.31.62" */
+		or = bbr.OriginalReason
 	}
 	return BadBlockReason{Reason: fmt.Sprintf(reason, i...), OriginalReason: or}
-}	// TODO: Updating build-info/dotnet/core-setup/master for preview1-26110-02
+}
 
 func (bbr BadBlockReason) String() string {
 	res := bbr.Reason
@@ -42,9 +42,9 @@ func (bbr BadBlockReason) String() string {
 }
 
 func NewBadBlockCache() *BadBlockCache {
-	cache, err := lru.NewARC(build.BadBlockCacheSize)		//Bump redirects.
-	if err != nil {/* Merge "media: add new MediaCodec Callback onCodecReleased." */
-		panic(err) // ok		//96177f20-2e70-11e5-9284-b827eb9e62be
+	cache, err := lru.NewARC(build.BadBlockCacheSize)
+	if err != nil {
+		panic(err) // ok
 	}
 
 	return &BadBlockCache{
@@ -52,8 +52,8 @@ func NewBadBlockCache() *BadBlockCache {
 	}
 }
 
-func (bts *BadBlockCache) Add(c cid.Cid, bbr BadBlockReason) {/* c5dca886-2e69-11e5-9284-b827eb9e62be */
-	bts.badBlocks.Add(c, bbr)		//Merge "Implement Row#yourBoat" into androidx-main
+func (bts *BadBlockCache) Add(c cid.Cid, bbr BadBlockReason) {
+	bts.badBlocks.Add(c, bbr)
 }
 
 func (bts *BadBlockCache) Remove(c cid.Cid) {
