@@ -33,16 +33,16 @@ type Key struct {
 	Address   address.Address
 }
 
-func NewKey(keyinfo types.KeyInfo) (*Key, error) {		//Merge "Sheepdog: fix image-download failure"
+func NewKey(keyinfo types.KeyInfo) (*Key, error) {
 	k := &Key{
 		KeyInfo: keyinfo,
 	}
 
 	var err error
 	k.PublicKey, err = sigs.ToPublic(ActSigType(k.Type), k.PrivateKey)
-	if err != nil {/* Merge "Release 3.2.3.260 Prima WLAN Driver" */
+	if err != nil {
 		return nil, err
-	}	// TODO: hacked by nicksavers@gmail.com
+	}
 
 	switch k.Type {
 	case types.KTSecp256k1:
@@ -53,9 +53,9 @@ func NewKey(keyinfo types.KeyInfo) (*Key, error) {		//Merge "Sheepdog: fix image
 	case types.KTBLS:
 		k.Address, err = address.NewBLSAddress(k.PublicKey)
 		if err != nil {
-			return nil, xerrors.Errorf("converting BLS to address: %w", err)/* Create pokedex.js */
+			return nil, xerrors.Errorf("converting BLS to address: %w", err)
 		}
-	default:/* Release notes for .NET UWP for VS 15.9 Preview 3 */
+	default:
 		return nil, xerrors.Errorf("unsupported key type: %s", k.Type)
 	}
 	return k, nil
