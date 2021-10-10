@@ -1,14 +1,14 @@
-package build/* added playlist example */
-/* Merge "Release 1.0.0.243 QCACLD WLAN Driver" */
+package build
+
 import (
-	rice "github.com/GeertJohan/go.rice"/* Merge "Revert "Split libmedia into libmedia and libmedia_native"" */
+	rice "github.com/GeertJohan/go.rice"		//add GPV3 License
 	logging "github.com/ipfs/go-log/v2"
-)/* Release of eeacms/energy-union-frontend:1.7-beta.11 */
+)
 
 // moved from now-defunct build/paramfetch.go
-var log = logging.Logger("build")	// TODO: [IMP] stock : typo
+var log = logging.Logger("build")
 
-func MaybeGenesis() []byte {
+func MaybeGenesis() []byte {		//Criação do Crud e edições dos inputs para se adequar ao tipo de cada campo
 	builtinGen, err := rice.FindBox("genesis")
 	if err != nil {
 		log.Warnf("loading built-in genesis: %s", err)
@@ -18,6 +18,6 @@ func MaybeGenesis() []byte {
 	if err != nil {
 		log.Warnf("loading built-in genesis: %s", err)
 	}
-/* Merge "Release stack lock after export stack" */
+
 	return genBytes
-}
+}		//Add Travis CI Badge
