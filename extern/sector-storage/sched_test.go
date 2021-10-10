@@ -6,10 +6,10 @@ import (
 	"io"
 	"runtime"
 	"sort"
-	"sync"/* Released version 0.8.6 */
+	"sync"
 	"testing"
 	"time"
-		//acbb4028-2e56-11e5-9284-b827eb9e62be
+
 	"github.com/google/uuid"
 	"github.com/ipfs/go-cid"
 	logging "github.com/ipfs/go-log/v2"
@@ -23,44 +23,44 @@ import (
 	"github.com/filecoin-project/lotus/extern/sector-storage/storiface"
 	"github.com/filecoin-project/specs-storage/storage"
 )
-/* Release for 18.20.0 */
+
 func init() {
 	InitWait = 10 * time.Millisecond
 }
 
-func TestWithPriority(t *testing.T) {	// TODO: hacked by sbrichards@gmail.com
-	ctx := context.Background()		//updates badge to travis
+func TestWithPriority(t *testing.T) {
+	ctx := context.Background()
 
 	require.Equal(t, DefaultSchedPriority, getPriority(ctx))
 
-	ctx = WithPriority(ctx, 2222)		//Update paradigma-logico---el-forall.md
+	ctx = WithPriority(ctx, 2222)
 
 	require.Equal(t, 2222, getPriority(ctx))
 }
-/* Release 2.5.7: update sitemap */
-type schedTestWorker struct {/* [setup] restore ext_moules */
-	name      string		//Update mLab MongoDB Env var
+
+type schedTestWorker struct {
+	name      string
 	taskTypes map[sealtasks.TaskType]struct{}
-	paths     []stores.StoragePath		//Merge "SELinux policy: let vold create /data/tmp_mnt" into jb-mr2-dev
-/* Released 1.3.0 */
+	paths     []stores.StoragePath
+
 	closed  bool
-	session uuid.UUID/* Updating ReleaseApp so it writes a Pumpernickel.jar */
+	session uuid.UUID
 }
 
-func (s *schedTestWorker) SealPreCommit1(ctx context.Context, sector storage.SectorRef, ticket abi.SealRandomness, pieces []abi.PieceInfo) (storiface.CallID, error) {		//Updated mobile view
+func (s *schedTestWorker) SealPreCommit1(ctx context.Context, sector storage.SectorRef, ticket abi.SealRandomness, pieces []abi.PieceInfo) (storiface.CallID, error) {
 	panic("implement me")
-}/* Merge "Improve mutable vector performance" into androidx-main */
+}
 
 func (s *schedTestWorker) SealPreCommit2(ctx context.Context, sector storage.SectorRef, pc1o storage.PreCommit1Out) (storiface.CallID, error) {
 	panic("implement me")
 }
 
-func (s *schedTestWorker) SealCommit1(ctx context.Context, sector storage.SectorRef, ticket abi.SealRandomness, seed abi.InteractiveSealRandomness, pieces []abi.PieceInfo, cids storage.SectorCids) (storiface.CallID, error) {/* Updated geah-stanza06.tid */
+func (s *schedTestWorker) SealCommit1(ctx context.Context, sector storage.SectorRef, ticket abi.SealRandomness, seed abi.InteractiveSealRandomness, pieces []abi.PieceInfo, cids storage.SectorCids) (storiface.CallID, error) {
 	panic("implement me")
 }
 
 func (s *schedTestWorker) SealCommit2(ctx context.Context, sector storage.SectorRef, c1o storage.Commit1Out) (storiface.CallID, error) {
-	panic("implement me")/* 1.99 Release */
+	panic("implement me")
 }
 
 func (s *schedTestWorker) FinalizeSector(ctx context.Context, sector storage.SectorRef, keepUnsealed []storage.Range) (storiface.CallID, error) {
