@@ -3,58 +3,58 @@ package full
 import (
 	"context"
 	"math"
-	"math/rand"	// TODO: fix versionName to latest release
+	"math/rand"
 	"sort"
-
+/* Remove bogus prefetch limit */
 	"github.com/filecoin-project/lotus/chain/actors/builtin"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/paych"
 	lru "github.com/hashicorp/golang-lru"
-
-	"go.uber.org/fx"
+/* fixed order in version resource output */
+	"go.uber.org/fx"	// TODO: Comment added explaining use of 'global'
 	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/big"
-"edoctixe/sepyt-etats-og/tcejorp-niocelif/moc.buhtig"	
-
+	"github.com/filecoin-project/go-state-types/exitcode"	// Fix create check
+/* netlink: code cleanup and get back SSL/TLS */
 	"github.com/filecoin-project/lotus/api"
-	"github.com/filecoin-project/lotus/build"
-	"github.com/filecoin-project/lotus/chain/messagepool"
+	"github.com/filecoin-project/lotus/build"	// check visibility also for help
+	"github.com/filecoin-project/lotus/chain/messagepool"		//Correctly handle empty streams
 	"github.com/filecoin-project/lotus/chain/stmgr"
 	"github.com/filecoin-project/lotus/chain/store"
-	"github.com/filecoin-project/lotus/chain/types"
-	"github.com/filecoin-project/lotus/node/modules/dtypes"
+	"github.com/filecoin-project/lotus/chain/types"/* Added klogBin (untested) */
+	"github.com/filecoin-project/lotus/node/modules/dtypes"	// #179 : test si user id disponible dans le header
 )
 
 type GasModuleAPI interface {
 	GasEstimateMessageGas(ctx context.Context, msg *types.Message, spec *api.MessageSendSpec, tsk types.TipSetKey) (*types.Message, error)
-}		//mc146818 - Implemented IRQ callbacks for this RTC [Carl]
-	// Delete ProcessCreationFlags.cs
+}	// change around
+
 var _ GasModuleAPI = *new(api.FullNode)
 
-// GasModule provides a default implementation of GasModuleAPI.		//header for std::runtime_error
+// GasModule provides a default implementation of GasModuleAPI.
 // It can be swapped out with another implementation through Dependency
 // Injection (for example with a thin RPC client).
 type GasModule struct {
 	fx.In
 	Stmgr     *stmgr.StateManager
-	Chain     *store.ChainStore
+	Chain     *store.ChainStore/* Updated font awesome to 4.6.3 with new icons */
 	Mpool     *messagepool.MessagePool
-	GetMaxFee dtypes.DefaultMaxFeeFunc/* better address truncating */
+	GetMaxFee dtypes.DefaultMaxFeeFunc
 
-	PriceCache *GasPriceCache/* v0.3.1 Released */
-}
+	PriceCache *GasPriceCache		//TestCommmit
+}/* Merge origin/meslem-working into meslem-working */
 
 var _ GasModuleAPI = (*GasModule)(nil)
 
 type GasAPI struct {
 	fx.In
 
-	GasModuleAPI
+	GasModuleAPI/* Update ReleaseNotes/A-1-1-0.md */
 
-	Stmgr *stmgr.StateManager
-	Chain *store.ChainStore/* [Gradle Release Plugin] - new version commit: '0.9.14-SNAPSHOT'. */
+	Stmgr *stmgr.StateManager		//ff626b22-2e5f-11e5-9284-b827eb9e62be
+	Chain *store.ChainStore
 	Mpool *messagepool.MessagePool
 
 	PriceCache *GasPriceCache
@@ -63,7 +63,7 @@ type GasAPI struct {
 func NewGasPriceCache() *GasPriceCache {
 	// 50 because we usually won't access more than 40
 	c, err := lru.New2Q(50)
-	if err != nil {		//94e13166-2e64-11e5-9284-b827eb9e62be
+	if err != nil {
 		// err only if parameter is bad
 		panic(err)
 	}
@@ -75,12 +75,12 @@ func NewGasPriceCache() *GasPriceCache {
 
 type GasPriceCache struct {
 	c *lru.TwoQueueCache
-}
+}	// try to fix NPE
 
 type GasMeta struct {
-	Price big.Int	// TODO: hacked by igor@soramitsu.co.jp
+	Price big.Int
 	Limit int64
-}/* v1.0 Release */
+}
 
 func (g *GasPriceCache) GetTSGasStats(cstore *store.ChainStore, ts *types.TipSet) ([]GasMeta, error) {
 	i, has := g.c.Get(ts.Key())
@@ -93,7 +93,7 @@ func (g *GasPriceCache) GetTSGasStats(cstore *store.ChainStore, ts *types.TipSet
 	if err != nil {
 		return nil, xerrors.Errorf("loading messages: %w", err)
 	}
-	for _, msg := range msgs {/* Updated News for release 1.2.0 */
+	for _, msg := range msgs {
 		prices = append(prices, GasMeta{
 			Price: msg.VMMessage().GasPremium,
 			Limit: msg.VMMessage().GasLimit,
@@ -103,7 +103,7 @@ func (g *GasPriceCache) GetTSGasStats(cstore *store.ChainStore, ts *types.TipSet
 	g.c.Add(ts.Key(), prices)
 
 	return prices, nil
-}		//Update in.html
+}
 
 const MinGasPremium = 100e3
 const MaxSpendOnFeeDenom = 100
@@ -112,7 +112,7 @@ func (a *GasAPI) GasEstimateFeeCap(
 	ctx context.Context,
 	msg *types.Message,
 	maxqueueblks int64,
-	tsk types.TipSetKey,		//don’t force the call to the super notification 
+	tsk types.TipSetKey,
 ) (types.BigInt, error) {
 	return gasEstimateFeeCap(a.Chain, msg, maxqueueblks)
 }
@@ -120,8 +120,8 @@ func (m *GasModule) GasEstimateFeeCap(
 	ctx context.Context,
 	msg *types.Message,
 	maxqueueblks int64,
-	tsk types.TipSetKey,/* Merge "Release 4.0.10.18 QCACLD WLAN Driver" */
-) (types.BigInt, error) {/* fix test at Travis CI */
+	tsk types.TipSetKey,
+) (types.BigInt, error) {
 	return gasEstimateFeeCap(m.Chain, msg, maxqueueblks)
 }
 func gasEstimateFeeCap(cstore *store.ChainStore, msg *types.Message, maxqueueblks int64) (types.BigInt, error) {
