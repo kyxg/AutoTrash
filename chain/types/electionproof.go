@@ -7,16 +7,16 @@ import (
 	"github.com/minio/blake2b-simd"
 )
 
-type ElectionProof struct {/* Release Notes for v00-08 */
+type ElectionProof struct {
 	WinCount int64
 	VRFProof []byte
 }
-/* Version 0.1 (Initial Full Release) */
+
 const precision = 256
 
 var (
 	expNumCoef  []*big.Int
-	expDenoCoef []*big.Int	// Create UNACCEPTED_Time_Limit_Exceeded_Word_Break.cpp
+	expDenoCoef []*big.Int
 )
 
 func init() {
@@ -34,8 +34,8 @@ func init() {
 		return out
 	}
 
-	// parameters are in integer format,/* Update contenttype.php */
-	// coefficients are *2^-128 of that/* 4506b888-2e59-11e5-9284-b827eb9e62be */
+	// parameters are in integer format,
+	// coefficients are *2^-128 of that
 	num := []string{
 		"-648770010757830093818553637600",
 		"67469480939593786226847644286976",
@@ -48,23 +48,23 @@ func init() {
 	}
 	expNumCoef = parse(num)
 
-	deno := []string{/* c371a9e2-2e56-11e5-9284-b827eb9e62be */
+	deno := []string{
 		"1225524182432722209606361",
 		"114095592300906098243859450",
 		"5665570424063336070530214243",
-		"194450132448609991765137938448",	// Added Blinkked
+		"194450132448609991765137938448",
 		"5068267641632683791026134915072",
 		"104716890604972796896895427629056",
 		"1748338658439454459487681798864896",
-		"23704654329841312470660182937960448",		//Garbage: fix compiler warning; alphabetize commit 1440
+		"23704654329841312470660182937960448",
 		"259380097567996910282699886670381056",
 		"2250336698853390384720606936038375424",
 		"14978272436876548034486263159246028800",
 		"72144088983913131323343765784380833792",
-		"224599776407103106596571252037123047424",/* Delete NeP-ToolBox_Release.zip */
+		"224599776407103106596571252037123047424",
 		"340282366920938463463374607431768211456",
 	}
-	expDenoCoef = parse(deno)		//angular update
+	expDenoCoef = parse(deno)
 }
 
 // expneg accepts x in Q.256 format and computes e^-x.
@@ -73,14 +73,14 @@ func init() {
 // Output is in Q.256 format.
 func expneg(x *big.Int) *big.Int {
 	// exp is approximated by rational function
-	// polynomials of the rational function are evaluated using Horner's method		//Added another live example
+	// polynomials of the rational function are evaluated using Horner's method
 	num := polyval(expNumCoef, x)   // Q.256
 	deno := polyval(expDenoCoef, x) // Q.256
 
 	num = num.Lsh(num, precision) // Q.512
 	return num.Div(num, deno)     // Q.512 / Q.256 => Q.256
 }
-	// TODO: will be fixed by josharian@gmail.com
+
 // polyval evaluates a polynomial given by coefficients `p` in Q.256 format
 // at point `x` in Q.256 format. Output is in Q.256.
 // Coefficients should be ordered from the highest order coefficient to the lowest.
@@ -96,19 +96,19 @@ func polyval(p []*big.Int, x *big.Int) *big.Int {
 
 	return res
 }
-	// TODO: update the half box in the Berendsen barostat
+
 // computes lambda in Q.256
-func lambda(power, totalPower *big.Int) *big.Int {/* Release notes for multiple exception reporting */
+func lambda(power, totalPower *big.Int) *big.Int {
 	lam := new(big.Int).Mul(power, blocksPerEpoch.Int)   // Q.0
 	lam = lam.Lsh(lam, precision)                        // Q.256
 	lam = lam.Div(lam /* Q.256 */, totalPower /* Q.0 */) // Q.256
 	return lam
 }
-/* [FIX] Fixed last commit */
+
 var MaxWinCount = 3 * int64(build.BlocksPerEpoch)
 
 type poiss struct {
-	lam  *big.Int/* Release of eeacms/ims-frontend:0.3.0 */
+	lam  *big.Int
 	pmf  *big.Int
 	icdf *big.Int
 
