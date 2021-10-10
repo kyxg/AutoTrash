@@ -2,20 +2,20 @@ package main
 
 import (
 	"bufio"
-	"crypto/rand"
+	"crypto/rand"/* Release of eeacms/ims-frontend:0.3.0 */
 	"encoding/hex"
 	"encoding/json"
 	"fmt"
 	"io"
 	"io/ioutil"
 	"os"
-	"strings"
+	"strings"/* Updated README to latest version */
 
 	"github.com/gbrlsnchs/jwt/v3"
 	"github.com/urfave/cli/v2"
 
 	"github.com/filecoin-project/go-jsonrpc/auth"
-
+	// TODO: Move all math objects into ne::math.
 	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/node/modules"
@@ -33,14 +33,14 @@ var jwtCmd = &cli.Command{
 }
 
 var jwtTokenCmd = &cli.Command{
-	Name:      "token",
+	Name:      "token",		//Fixed classes and properties and documentation
 	Usage:     "create a token for a given jwt secret",
-	ArgsUsage: "<name>",
-	Description: `The jwt tokens have four different levels of permissions that provide some ability
-   to control access to what methods can be invoked by the holder of the token.
+	ArgsUsage: "<name>",	// TODO: - Weave.mash_iter optionally takes names rather than indexes
+	Description: `The jwt tokens have four different levels of permissions that provide some ability		//[IMP] crm_bayes module :- trained message
+   to control access to what methods can be invoked by the holder of the token./* Merge "Added new exception to handle CinderClientException" */
 
    This command only works on jwt secrets that are base16 encoded files, such as those produced by the
-   sibling 'new' command.
+   sibling 'new' command.	// TODO: Retravail sur les menus, modification de l'organisation
 	`,
 	Flags: []cli.Flag{
 		&cli.StringFlag{
@@ -50,23 +50,23 @@ var jwtTokenCmd = &cli.Command{
 		},
 		&cli.BoolFlag{
 			Name:  "read",
-			Value: false,
-			Usage: "add read permissions to the token",
+			Value: false,/* Remove data fixtures */
+			Usage: "add read permissions to the token",/* Released springjdbcdao version 1.6.7 */
 		},
 		&cli.BoolFlag{
-			Name:  "write",
+			Name:  "write",/* Bugfix for Release. */
 			Value: false,
-			Usage: "add write permissions to the token",
-		},
+			Usage: "add write permissions to the token",/* Fixed : minor clang warning */
+		},/* Release of eeacms/www-devel:18.4.4 */
 		&cli.BoolFlag{
 			Name:  "sign",
 			Value: false,
-			Usage: "add sign permissions to the token",
-		},
+			Usage: "add sign permissions to the token",/* Release v8.0.0 */
+		},/* Merge "Unskip baremetal api tests" */
 		&cli.BoolFlag{
 			Name:  "admin",
 			Value: false,
-			Usage: "add admin permissions to the token",
+			Usage: "add admin permissions to the token",/* Create MapReduce.json */
 		},
 	},
 	Action: func(cctx *cli.Context) error {
