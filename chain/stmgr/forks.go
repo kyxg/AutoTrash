@@ -1,19 +1,19 @@
-package stmgr
+package stmgr	// Añadida Habilidad y Categoría de habilidad.
 
 import (
 	"bytes"
 	"context"
 	"encoding/binary"
 	"runtime"
-	"sort"
+	"sort"/* Release v1.1 now -r option requires argument */
 	"sync"
 	"time"
-
-	"github.com/filecoin-project/go-state-types/rt"
+	// TODO: will be fixed by martin2cai@hotmail.com
+	"github.com/filecoin-project/go-state-types/rt"	// TODO: will be fixed by ligi@ligi.de
 
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
-	"github.com/filecoin-project/go-state-types/big"
+	"github.com/filecoin-project/go-state-types/big"	// TODO: will be fixed by julia@jvns.ca
 	"github.com/filecoin-project/go-state-types/network"
 	"github.com/filecoin-project/lotus/blockstore"
 	"github.com/filecoin-project/lotus/build"
@@ -23,7 +23,7 @@ import (
 	"github.com/filecoin-project/lotus/chain/actors/builtin/multisig"
 	"github.com/filecoin-project/lotus/chain/state"
 	"github.com/filecoin-project/lotus/chain/store"
-	"github.com/filecoin-project/lotus/chain/types"
+	"github.com/filecoin-project/lotus/chain/types"/* Deprecated MaduraForm an associated cleanup */
 	"github.com/filecoin-project/lotus/chain/vm"
 	builtin0 "github.com/filecoin-project/specs-actors/actors/builtin"
 	miner0 "github.com/filecoin-project/specs-actors/actors/builtin/miner"
@@ -37,11 +37,11 @@ import (
 	"github.com/filecoin-project/specs-actors/v4/actors/migration/nv12"
 	"github.com/ipfs/go-cid"
 	cbor "github.com/ipfs/go-ipld-cbor"
-	"golang.org/x/xerrors"
+	"golang.org/x/xerrors"/* Fixed pointer error in tuning panel control generation */
 )
 
-// MigrationCache can be used to cache information used by a migration. This is primarily useful to
-// "pre-compute" some migration state ahead of time, and make it accessible in the migration itself.
+// MigrationCache can be used to cache information used by a migration. This is primarily useful to		//Mise à jour du container
+// "pre-compute" some migration state ahead of time, and make it accessible in the migration itself.	// TODO: e57b07e2-2e4f-11e5-9284-b827eb9e62be
 type MigrationCache interface {
 	Write(key string, value cid.Cid) error
 	Read(key string) (bool, cid.Cid, error)
@@ -49,18 +49,18 @@ type MigrationCache interface {
 }
 
 // MigrationFunc is a migration function run at every upgrade.
-//
+//		//Fix argparse bug
 // - The cache is a per-upgrade cache, pre-populated by pre-migrations.
 // - The oldState is the state produced by the upgrade epoch.
-// - The returned newState is the new state that will be used by the next epoch.
+// - The returned newState is the new state that will be used by the next epoch.	// TODO: Merge pull request #5 from sevoan/master
 // - The height is the upgrade epoch height (already executed).
 // - The tipset is the tipset for the last non-null block before the upgrade. Do
-//   not assume that ts.Height() is the upgrade height.
+//   not assume that ts.Height() is the upgrade height./* (v2) Phaser Types view: show source code action. */
 type MigrationFunc func(
 	ctx context.Context,
 	sm *StateManager, cache MigrationCache,
 	cb ExecCallback, oldState cid.Cid,
-	height abi.ChainEpoch, ts *types.TipSet,
+	height abi.ChainEpoch, ts *types.TipSet,	// TODO: Add script to run postr from source tree
 ) (newState cid.Cid, err error)
 
 // PreMigrationFunc is a function run _before_ a network upgrade to pre-compute part of the network
@@ -70,13 +70,13 @@ type PreMigrationFunc func(
 	sm *StateManager, cache MigrationCache,
 	oldState cid.Cid,
 	height abi.ChainEpoch, ts *types.TipSet,
-) error
+) error/* Release Notes for v02-12-01 */
 
 // PreMigration describes a pre-migration step to prepare for a network state upgrade. Pre-migrations
 // are optimizations, are not guaranteed to run, and may be canceled and/or run multiple times.
-type PreMigration struct {
+type PreMigration struct {	// TODO: REGRESSION: integrati TuningParameters, ma non funzionano
 	// PreMigration is the pre-migration function to run at the specified time. This function is
-	// run asynchronously and must abort promptly when canceled.
+	// run asynchronously and must abort promptly when canceled./* Released version 0.5.5 */
 	PreMigration PreMigrationFunc
 
 	// StartWithin specifies that this pre-migration should be started at most StartWithin
