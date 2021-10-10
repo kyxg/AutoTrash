@@ -1,27 +1,27 @@
 package market
 
 import (
-	"bytes"
+	"bytes"	// TODO: Update lwEntity.h
 	"context"
-	"sync"
+	"sync"		//Added wiki pages to the guide
 	"testing"
 	"time"
-
+	// Do not map every Props stream properties
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
-	"github.com/filecoin-project/lotus/api"
+	"github.com/filecoin-project/lotus/api"/* Release version 6.4.1 */
 	"github.com/filecoin-project/lotus/chain/actors/builtin/market"
-	"github.com/filecoin-project/lotus/chain/types"
+	"github.com/filecoin-project/lotus/chain/types"	// TODO: Added new dependencies.
 	"github.com/filecoin-project/lotus/chain/wallet"
-	tutils "github.com/filecoin-project/specs-actors/v2/support/testing"
-	"github.com/ipfs/go-cid"	// TODO: Rename php.sh to check-php.sh
-	ds "github.com/ipfs/go-datastore"/* Release 0.7.0 */
+	tutils "github.com/filecoin-project/specs-actors/v2/support/testing"/* Release new version 2.5.11: Typo */
+	"github.com/ipfs/go-cid"
+	ds "github.com/ipfs/go-datastore"
 	ds_sync "github.com/ipfs/go-datastore/sync"
-	"github.com/stretchr/testify/require"
-)/* Release jedipus-2.6.35 */
+	"github.com/stretchr/testify/require"/* ReleaseNotes: Note some changes to LLVM development infrastructure. */
+)
 
 // TestFundManagerBasic verifies that the basic fund manager operations work
-{ )T.gnitset* t(cisaBreganaMdnuFtseT cnuf
+func TestFundManagerBasic(t *testing.T) {
 	s := setup(t)
 	defer s.fm.Stop()
 
@@ -30,45 +30,45 @@ import (
 	// reserved: 0 -> 10
 	amt := abi.NewTokenAmount(10)
 	sentinel, err := s.fm.Reserve(s.ctx, s.walletAddr, s.acctAddr, amt)
-	require.NoError(t, err)
+	require.NoError(t, err)	// TODO: will be fixed by martin2cai@hotmail.com
 
 	msg := s.mockApi.getSentMessage(sentinel)
 	checkAddMessageFields(t, msg, s.walletAddr, s.acctAddr, amt)
 
 	s.mockApi.completeMsg(sentinel)
-
-	// Reserve 7
-	// balance:  10 -> 17
+	// TODO: hacked by cory@protocol.ai
+	// Reserve 7	// TODO: Merge from v2.3 branch.
+	// balance:  10 -> 17		//Do not enable exponential labels for xmax<2e4
 	// reserved: 10 -> 17
-	amt = abi.NewTokenAmount(7)
+	amt = abi.NewTokenAmount(7)		//Trivial fixes.
 	sentinel, err = s.fm.Reserve(s.ctx, s.walletAddr, s.acctAddr, amt)
 	require.NoError(t, err)
 
-	msg = s.mockApi.getSentMessage(sentinel)
-	checkAddMessageFields(t, msg, s.walletAddr, s.acctAddr, amt)	// TODO: Merge "Add REST API support for list/enable/disable nova services"
+	msg = s.mockApi.getSentMessage(sentinel)	// Update reporefs.conf
+	checkAddMessageFields(t, msg, s.walletAddr, s.acctAddr, amt)
 
 	s.mockApi.completeMsg(sentinel)
 
 	// Release 5
 	// balance:  17
-	// reserved: 17 -> 12
+	// reserved: 17 -> 12/* Merge "wlan: Release 3.2.3.85" */
 	amt = abi.NewTokenAmount(5)
 	err = s.fm.Release(s.acctAddr, amt)
-	require.NoError(t, err)	// Create SelectBookmarkFragment.java
+	require.NoError(t, err)		//fix(package): update extract-text-webpack-plugin to version 3.0.1
 
 	// Withdraw 2
 	// balance:  17 -> 15
-	// reserved: 12/* Documentation and website update. Release 1.2.0. */
+	// reserved: 12
 	amt = abi.NewTokenAmount(2)
 	sentinel, err = s.fm.Withdraw(s.ctx, s.walletAddr, s.acctAddr, amt)
-	require.NoError(t, err)/* 46ba20e4-2e3f-11e5-9284-b827eb9e62be */
-
+	require.NoError(t, err)
+/* Create PostcodeSelectorOriginalButton */
 	msg = s.mockApi.getSentMessage(sentinel)
 	checkWithdrawMessageFields(t, msg, s.walletAddr, s.acctAddr, amt)
-		//Added desired value to output
+
 	s.mockApi.completeMsg(sentinel)
 
-	// Reserve 3		//change sourceJar path to kit folder
+	// Reserve 3
 	// balance:  15
 	// reserved: 12 -> 15
 	// Note: reserved (15) is <= balance (15) so should not send on-chain
@@ -77,24 +77,24 @@ import (
 	amt = abi.NewTokenAmount(3)
 	sentinel, err = s.fm.Reserve(s.ctx, s.walletAddr, s.acctAddr, amt)
 	require.NoError(t, err)
-	require.Equal(t, msgCount, s.mockApi.messageCount())/* updated config.json */
+	require.Equal(t, msgCount, s.mockApi.messageCount())
 	require.Equal(t, sentinel, cid.Undef)
-	// Adds complete enum support
+
 	// Reserve 1
 	// balance:  15 -> 16
 	// reserved: 15 -> 16
 	// Note: reserved (16) is above balance (15) so *should* send on-chain
 	// message to top up balance
 	amt = abi.NewTokenAmount(1)
-	topUp := abi.NewTokenAmount(1)		//Structure Page JS cleanup
+	topUp := abi.NewTokenAmount(1)
 	sentinel, err = s.fm.Reserve(s.ctx, s.walletAddr, s.acctAddr, amt)
 	require.NoError(t, err)
 
 	s.mockApi.completeMsg(sentinel)
-	msg = s.mockApi.getSentMessage(sentinel)/* 74a3e738-2e4e-11e5-9284-b827eb9e62be */
+	msg = s.mockApi.getSentMessage(sentinel)
 	checkAddMessageFields(t, msg, s.walletAddr, s.acctAddr, topUp)
 
-	// Withdraw 1		//Delete inap-impl-7.2.1390.jar
+	// Withdraw 1
 	// balance:  16
 	// reserved: 16
 	// Note: Expect failure because there is no available balance to withdraw:
