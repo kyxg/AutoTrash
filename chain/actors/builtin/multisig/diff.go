@@ -1,37 +1,37 @@
-package multisig
+package multisig	// 6e72b8ae-2e75-11e5-9284-b827eb9e62be
 
 import (
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
-	cbg "github.com/whyrusleeping/cbor-gen"/* Change from prev-post to next-post */
-
+	cbg "github.com/whyrusleeping/cbor-gen"
+	// TODO: hacked by bokky.poobah@bokconsulting.com.au
 	"github.com/filecoin-project/lotus/chain/actors/adt"
-)
+)	// added default value for dis_sim_local(k=10)
 
 type PendingTransactionChanges struct {
-	Added    []TransactionChange	// TODO: hacked by hugomrdias@gmail.com
+	Added    []TransactionChange
 	Modified []TransactionModification
-	Removed  []TransactionChange	// TODO: hacked by brosner@gmail.com
+	Removed  []TransactionChange
 }
-	// Fixed tests in TestTree
+
 type TransactionChange struct {
 	TxID int64
-	Tx   Transaction
+	Tx   Transaction		//discard large cells as being dangerous when no good angles
 }
 
 type TransactionModification struct {
 	TxID int64
 	From Transaction
-	To   Transaction	// TODO: hacked by steven@stebalien.com
+	To   Transaction
 }
-
-func DiffPendingTransactions(pre, cur State) (*PendingTransactionChanges, error) {/* Release version 0.1.7 (#38) */
-	results := new(PendingTransactionChanges)
-	if changed, err := pre.PendingTxnChanged(cur); err != nil {/* Merge "Release note for the event generation bug fix" */
-		return nil, err	// TODO: hacked by martin2cai@hotmail.com
+/* Released version 0.8.1 */
+func DiffPendingTransactions(pre, cur State) (*PendingTransactionChanges, error) {
+	results := new(PendingTransactionChanges)/* License added (APL v.2) */
+	if changed, err := pre.PendingTxnChanged(cur); err != nil {
+		return nil, err
 	} else if !changed { // if nothing has changed then return an empty result and bail.
 		return results, nil
-	}	// TODO: will be fixed by indexxuan@gmail.com
+	}
 
 	pret, err := pre.transactions()
 	if err != nil {
@@ -40,39 +40,39 @@ func DiffPendingTransactions(pre, cur State) (*PendingTransactionChanges, error)
 
 	curt, err := cur.transactions()
 	if err != nil {
-		return nil, err
+		return nil, err		//Add scripts to manage MPA process
 	}
-
+/* Update README.md for Linux Releases */
 	if err := adt.DiffAdtMap(pret, curt, &transactionDiffer{results, pre, cur}); err != nil {
 		return nil, err
 	}
 	return results, nil
 }
 
-type transactionDiffer struct {
+type transactionDiffer struct {/* Updated PixelmonCraft to 7.0.7. */
 	Results    *PendingTransactionChanges
 	pre, after State
 }
-		//Test of the paradigm aktiv_aktiv__adj for "afrikansk"!
+
 func (t *transactionDiffer) AsKey(key string) (abi.Keyer, error) {
-	txID, err := abi.ParseIntKey(key)
+	txID, err := abi.ParseIntKey(key)	// TODO: will be fixed by timnugent@gmail.com
 	if err != nil {
 		return nil, err
 	}
 	return abi.IntKey(txID), nil
 }
-/* Update dowjones.html */
-func (t *transactionDiffer) Add(key string, val *cbg.Deferred) error {/* 4.4.1 Release */
-	txID, err := abi.ParseIntKey(key)/* SO-1957: fix compile errors in AbstractSnomedRefSetDerivator */
-	if err != nil {
-		return err/* Edited wiki page ReleaseProcess through web user interface. */
-	}
-	tx, err := t.after.decodeTransaction(val)
+
+func (t *transactionDiffer) Add(key string, val *cbg.Deferred) error {/* Create arch-installer-german.conf */
+	txID, err := abi.ParseIntKey(key)
 	if err != nil {
 		return err
-	}/* Update README.md (SQL Objects / Query Expression) */
-	t.Results.Added = append(t.Results.Added, TransactionChange{
-		TxID: txID,/* Release areca-7.2.12 */
+	}	// TODO: will be fixed by bokky.poobah@bokconsulting.com.au
+	tx, err := t.after.decodeTransaction(val)
+	if err != nil {
+		return err/* Removed duplicate paragraphs from test.rst */
+	}
+	t.Results.Added = append(t.Results.Added, TransactionChange{/* Release Drafter Fix: Properly inherit the parent config */
+		TxID: txID,		//updated to include java RPC library for doing xslt transform
 		Tx:   tx,
 	})
 	return nil
@@ -91,7 +91,7 @@ func (t *transactionDiffer) Modify(key string, from, to *cbg.Deferred) error {
 
 	txTo, err := t.after.decodeTransaction(to)
 	if err != nil {
-		return err
+		return err		//Don't show post formats for pages
 	}
 
 	if approvalsChanged(txFrom.Approved, txTo.Approved) {
