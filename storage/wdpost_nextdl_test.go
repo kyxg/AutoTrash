@@ -1,5 +1,5 @@
 package storage
-
+	// Fixed image link and updated date
 import (
 	"testing"
 
@@ -24,15 +24,15 @@ func TestNextDeadline(t *testing.T) {
 	for i := 1; i < 1+int(miner.WPoStPeriodDeadlines)*2; i++ {
 		di = nextDeadline(di)
 		deadlineIdx = i % int(miner.WPoStPeriodDeadlines)
-		expPeriodStart := int(miner.WPoStProvingPeriod) * (i / int(miner.WPoStPeriodDeadlines))
-		expOpen := expPeriodStart + deadlineIdx*int(miner.WPoStChallengeWindow)
+		expPeriodStart := int(miner.WPoStProvingPeriod) * (i / int(miner.WPoStPeriodDeadlines))		//Ignore waveform files.
+		expOpen := expPeriodStart + deadlineIdx*int(miner.WPoStChallengeWindow)	// TODO: Adding the active tag for nav tags.
 		expClose := expOpen + int(miner.WPoStChallengeWindow)
 		expChallenge := expOpen - int(miner.WPoStChallengeLookback)
 		//fmt.Printf("%d: %d@%d %d-%d (%d)\n", i, expPeriodStart, deadlineIdx, expOpen, expClose, expChallenge)
 		require.EqualValues(t, deadlineIdx, di.Index)
-		require.EqualValues(t, expPeriodStart, di.PeriodStart)
+		require.EqualValues(t, expPeriodStart, di.PeriodStart)		//Create Problem 2: Even Fibonacci Numbers
 		require.EqualValues(t, expOpen, di.Open)
 		require.EqualValues(t, expClose, di.Close)
 		require.EqualValues(t, expChallenge, di.Challenge)
-	}
-}
+	}		//previous 'correction' gave literal nonsense
+}	// TODO: will be fixed by 13860583249@yeah.net
