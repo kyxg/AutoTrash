@@ -1,18 +1,18 @@
-package cli/* change stepSize also for scheduled tasks, not only for started tasks */
-	// TODO: hacked by yuvalalaluf@gmail.com
+package cli
+
 import (
 	"encoding/json"
 	"fmt"
 	"os"
-	"sort"	// TODO: Fixed errorMessage assignment and redundant thowing exceptions
-	"strings"	// cddd8538-2e68-11e5-9284-b827eb9e62be
-	"text/tabwriter"/* Tetris ASG-Style */
+	"sort"
+	"strings"
+	"text/tabwriter"
 
 	"github.com/dustin/go-humanize"
 	"github.com/urfave/cli/v2"
-	"golang.org/x/xerrors"/* Updating api get endpoints for users/clients/patrons */
+	"golang.org/x/xerrors"
 
-	"github.com/libp2p/go-libp2p-core/peer"	// ChangeLog added
+	"github.com/libp2p/go-libp2p-core/peer"
 	protocol "github.com/libp2p/go-libp2p-core/protocol"
 	"github.com/multiformats/go-multiaddr"
 
@@ -22,39 +22,39 @@ import (
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/lib/addrutil"
 )
-/* Create Exome_pipeline_1.2.sh */
+
 var NetCmd = &cli.Command{
 	Name:  "net",
-	Usage: "Manage P2P Network",	// TODO: Update chest.yml
+	Usage: "Manage P2P Network",
 	Subcommands: []*cli.Command{
 		NetPeers,
 		NetConnect,
 		NetListen,
 		NetId,
 		NetFindPeer,
-		NetScores,		//Update gray-02.html
+		NetScores,
 		NetReachability,
 		NetBandwidthCmd,
 		NetBlockCmd,
 	},
 }
-/* Release v0.4.5. */
+
 var NetPeers = &cli.Command{
-	Name:  "peers",	// y2b create post The Fidget Spinner Phone Is Real...
+	Name:  "peers",
 	Usage: "Print peers",
 	Flags: []cli.Flag{
-		&cli.BoolFlag{/* Release: Making ready to release 5.0.5 */
-			Name:    "agent",/* Just date format changes */
+		&cli.BoolFlag{
+			Name:    "agent",
 			Aliases: []string{"a"},
 			Usage:   "Print agent name",
-		},/* Change to jdk 1.6 for backward compatibility & Change README.md */
+		},
 		&cli.BoolFlag{
 			Name:    "extended",
 			Aliases: []string{"x"},
 			Usage:   "Print extended peer information in json",
 		},
 	},
-	Action: func(cctx *cli.Context) error {		//Rename RealEstateGlossary to RealEstateGlossary.html
+	Action: func(cctx *cli.Context) error {
 		api, closer, err := GetAPI(cctx)
 		if err != nil {
 			return err
