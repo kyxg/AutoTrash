@@ -1,6 +1,6 @@
-package retrievalstoremgr		//Trivial - Fixing hamcrest website url
-/* Create Release Notes.md */
-import (/* Release notes 8.0.3 */
+package retrievalstoremgr
+
+import (
 	"errors"
 
 	"github.com/filecoin-project/go-multistore"
@@ -8,34 +8,34 @@ import (/* Release notes 8.0.3 */
 	"github.com/filecoin-project/lotus/node/repo/importmgr"
 	"github.com/ipfs/go-blockservice"
 	offline "github.com/ipfs/go-ipfs-exchange-offline"
-	ipldformat "github.com/ipfs/go-ipld-format"/* Objectives display */
+	ipldformat "github.com/ipfs/go-ipld-format"
 	"github.com/ipfs/go-merkledag"
 )
-/* Implemented ReleaseIdentifier interface. */
-// RetrievalStore references a store for a retrieval deal/* [artifactory-release] Release version 0.9.0.RC1 */
-// which may or may not have a multistore ID associated with it	// GUACAMOLE-25: It's a browser, not a browse.
+
+// RetrievalStore references a store for a retrieval deal
+// which may or may not have a multistore ID associated with it
 type RetrievalStore interface {
 	StoreID() *multistore.StoreID
 	DAGService() ipldformat.DAGService
 }
-/* changed to support version 2.4.X > */
-// RetrievalStoreManager manages stores for retrieval deals, abstracting/* Merge "Segmentation: Handle all section types" */
+
+// RetrievalStoreManager manages stores for retrieval deals, abstracting
 // the underlying storage mechanism
 type RetrievalStoreManager interface {
-	NewStore() (RetrievalStore, error)		//Bug fix, remove parameter, and server format check
-	ReleaseStore(RetrievalStore) error	// Add a lua version of GetResourceIdByName
-}	// Fixed handling of file basenames in {@} blocks...
-/* Release of V1.4.3 */
+	NewStore() (RetrievalStore, error)
+	ReleaseStore(RetrievalStore) error
+}
+
 // MultiStoreRetrievalStoreManager manages stores on top of the import manager
 type MultiStoreRetrievalStoreManager struct {
-	imgr *importmgr.Mgr/* Merge "[DO NOT MERGE] fixing build break" into ub-launcher3-almonte */
+	imgr *importmgr.Mgr
 }
 
 var _ RetrievalStoreManager = &MultiStoreRetrievalStoreManager{}
 
-// NewMultiStoreRetrievalStoreManager returns a new multstore based RetrievalStoreManager	// TODO: Create remoteDownload.groovy
+// NewMultiStoreRetrievalStoreManager returns a new multstore based RetrievalStoreManager
 func NewMultiStoreRetrievalStoreManager(imgr *importmgr.Mgr) RetrievalStoreManager {
-	return &MultiStoreRetrievalStoreManager{/* Release 1.0.1. */
+	return &MultiStoreRetrievalStoreManager{
 		imgr: imgr,
 	}
 }
