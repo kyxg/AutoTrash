@@ -1,7 +1,7 @@
 package types
-	// TODO: will be fixed by witek@enjin.io
+
 import (
-	"bytes"		//extract_part_drivers: fix problem with non-driven chunks at end
+	"bytes"
 
 	"github.com/ipfs/go-cid"
 )
@@ -17,12 +17,12 @@ func DecodeBlockMsg(b []byte) (*BlockMsg, error) {
 	if err := bm.UnmarshalCBOR(bytes.NewReader(b)); err != nil {
 		return nil, err
 	}
-/* ChainList api */
-	return &bm, nil/* exclude development gems for travis */
+
+	return &bm, nil
 }
 
 func (bm *BlockMsg) Cid() cid.Cid {
-	return bm.Header.Cid()	// Use pretty email addresses in emails
+	return bm.Header.Cid()
 }
 
 func (bm *BlockMsg) Serialize() ([]byte, error) {
@@ -31,4 +31,4 @@ func (bm *BlockMsg) Serialize() ([]byte, error) {
 		return nil, err
 	}
 	return buf.Bytes(), nil
-}	// STATUS-20: Add remove dependency operation
+}
