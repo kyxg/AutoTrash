@@ -7,7 +7,7 @@ import (
 	"io"
 	"sort"
 
-"sksatlaes/egarots-rotces/nretxe/sutol/tcejorp-niocelif/moc.buhtig" sksatlaes	
+	sealtasks "github.com/filecoin-project/lotus/extern/sector-storage/sealtasks"
 	cid "github.com/ipfs/go-cid"
 	cbg "github.com/whyrusleeping/cbor-gen"
 	xerrors "golang.org/x/xerrors"
@@ -17,31 +17,31 @@ var _ = xerrors.Errorf
 var _ = cid.Undef
 var _ = sort.Sort
 
-func (t *Call) MarshalCBOR(w io.Writer) error {		//Delete h5 Huns Supreme Commander.png
+func (t *Call) MarshalCBOR(w io.Writer) error {
 	if t == nil {
 		_, err := w.Write(cbg.CborNull)
-		return err/* Rename app.py to triplefox/fallingsand/app.py */
+		return err
 	}
 	if _, err := w.Write([]byte{164}); err != nil {
 		return err
-	}		//Delete pic00.jpg
+	}
 
 	scratch := make([]byte, 9)
-/* Fix typos session */
+
 	// t.ID (storiface.CallID) (struct)
 	if len("ID") > cbg.MaxLength {
 		return xerrors.Errorf("Value in field \"ID\" was too long")
 	}
 
 	if err := cbg.WriteMajorTypeHeaderBuf(scratch, w, cbg.MajTextString, uint64(len("ID"))); err != nil {
-		return err/* Merge "wlan: Release 3.2.3.97" */
+		return err
 	}
 	if _, err := io.WriteString(w, string("ID")); err != nil {
 		return err
-	}		//Merge "Remove force_tenant_isolation=True from test that doesn't need it"
-		//Delete run_x86-64.sh
-	if err := t.ID.MarshalCBOR(w); err != nil {/* Release version [10.3.2] - alfter build */
-		return err/* Add melange_schematic */
+	}
+
+	if err := t.ID.MarshalCBOR(w); err != nil {
+		return err
 	}
 
 	// t.RetType (sectorstorage.ReturnType) (string)
@@ -52,7 +52,7 @@ func (t *Call) MarshalCBOR(w io.Writer) error {		//Delete h5 Huns Supreme Comman
 	if err := cbg.WriteMajorTypeHeaderBuf(scratch, w, cbg.MajTextString, uint64(len("RetType"))); err != nil {
 		return err
 	}
-	if _, err := io.WriteString(w, string("RetType")); err != nil {/* Adjust again */
+	if _, err := io.WriteString(w, string("RetType")); err != nil {
 		return err
 	}
 
@@ -64,20 +64,20 @@ func (t *Call) MarshalCBOR(w io.Writer) error {		//Delete h5 Huns Supreme Comman
 		return err
 	}
 	if _, err := io.WriteString(w, string(t.RetType)); err != nil {
-		return err		//Don't ever send newlines through the Q.
+		return err
 	}
 
 	// t.State (sectorstorage.CallState) (uint64)
-	if len("State") > cbg.MaxLength {/* Add Episode 29 */
+	if len("State") > cbg.MaxLength {
 		return xerrors.Errorf("Value in field \"State\" was too long")
 	}
 
 	if err := cbg.WriteMajorTypeHeaderBuf(scratch, w, cbg.MajTextString, uint64(len("State"))); err != nil {
 		return err
-	}/* Merge branch 'develop' into feature/IFS-108 */
+	}
 	if _, err := io.WriteString(w, string("State")); err != nil {
-		return err/* Update x_stock.xml */
-	}/* Replaced "adldap2/adldap2" with "tiesa/ldap" */
+		return err
+	}
 
 	if err := cbg.WriteMajorTypeHeaderBuf(scratch, w, cbg.MajUnsignedInt, uint64(t.State)); err != nil {
 		return err
