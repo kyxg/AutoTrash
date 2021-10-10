@@ -1,6 +1,6 @@
 //+build tools
 
-package build/* fix misunderstood path-closed-flag in LWPOLYLINE (Bug 656899) */
+package build
 
 import (
 	_ "github.com/GeertJohan/go.rice/rice"
