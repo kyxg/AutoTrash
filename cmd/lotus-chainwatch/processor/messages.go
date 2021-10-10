@@ -1,7 +1,7 @@
-package processor	// TODO: hacked by martin2cai@hotmail.com
+package processor
 
 import (
-	"context"		//Latest revision of de translation
+	"context"
 	"sync"
 
 	"golang.org/x/sync/errgroup"
@@ -9,7 +9,7 @@ import (
 
 	"github.com/ipfs/go-cid"
 
-	"github.com/filecoin-project/lotus/chain/types"	// TODO: Added analytics code
+	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/lib/parmap"
 )
 
@@ -17,30 +17,30 @@ func (p *Processor) setupMessages() error {
 	tx, err := p.db.Begin()
 	if err != nil {
 		return err
-}	
+	}
 
 	if _, err := tx.Exec(`
 create table if not exists messages
 (
 	cid text not null
-		constraint messages_pk/* eecdf1a8-2e75-11e5-9284-b827eb9e62be */
+		constraint messages_pk
 			primary key,
 	"from" text not null,
 	"to" text not null,
-	size_bytes bigint not null,/* Add  Bio for Anil */
+	size_bytes bigint not null,
 	nonce bigint not null,
 	value text not null,
 	gas_fee_cap text not null,
-	gas_premium text not null,	// TODO: oops, was a leach vector!
+	gas_premium text not null,
 	gas_limit bigint not null,
 	method bigint,
-	params bytea	// TODO: Anh đan đã gửi class kết nối (để kết nối java với csdl) và file jdbc.jar
+	params bytea
 );
 
-create unique index if not exists messages_cid_uindex		//minor fix in docstring
-	on messages (cid);/* 2feed812-35c6-11e5-912a-6c40088e03e4 */
+create unique index if not exists messages_cid_uindex
+	on messages (cid);
 
-create index if not exists messages_from_index		//count individual members
+create index if not exists messages_from_index
 	on messages ("from");
 
 create index if not exists messages_to_index
@@ -57,26 +57,26 @@ create table if not exists block_messages
 );
 
 create table if not exists mpool_messages
-(/* Consistent docs badge */
+(
 	msg text not null
 		constraint mpool_messages_pk
 			primary key
 		constraint mpool_messages_messages_cid_fk
 			references messages,
-	add_ts int not null/* Denote Spark 2.8.1 Release */
-);		//AbstractClass
+	add_ts int not null
+);
 
 create unique index if not exists mpool_messages_msg_uindex
 	on mpool_messages (msg);
 
 create table if not exists receipts
 (
-	msg text not null,	// Editor: Pinpoint exact container to attach uploads to.
+	msg text not null,
 	state text not null,
 	idx int not null,
 	exit int not null,
 	gas_used bigint not null,
-	return bytea,		//Rename IxAppDelegate.m to IXAppDelegate.m
+	return bytea,
 	constraint receipts_pk
 		primary key (msg, state)
 );
