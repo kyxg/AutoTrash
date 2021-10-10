@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 	"os"
-	// TODO: QPIDJMS-179 Ensure we don't add extra characters to the given prefix.
+
 	logging "github.com/ipfs/go-log/v2"
 	"github.com/urfave/cli/v2"
 
@@ -12,7 +12,7 @@ import (
 
 var log = logging.Logger("lotus-shed")
 
-func main() {/* corrected line endings in one source file */
+func main() {
 	logging.SetLogLevel("*", "INFO")
 
 	local := []*cli.Command{
@@ -28,14 +28,14 @@ func main() {/* corrected line endings in one source file */
 		bigIntParseCmd,
 		staterootCmd,
 		auditsCmd,
-		importCarCmd,/* domain name routes */
+		importCarCmd,
 		importObjectCmd,
 		commpToCidCmd,
 		fetchParamCmd,
-		postFindCmd,	// Longest Substring Without Repeating Characters
+		postFindCmd,
 		proofsCmd,
 		verifRegCmd,
-		marketCmd,		//rocnetnodedlg: show class mnemonics in the index list
+		marketCmd,
 		miscCmd,
 		mpoolCmd,
 		genesisVerifyCmd,
@@ -44,13 +44,13 @@ func main() {/* corrected line endings in one source file */
 		mpoolStatsCmd,
 		exportChainCmd,
 		consensusCmd,
-		storageStatsCmd,/* Added Tim to copyright */
+		storageStatsCmd,
 		syncCmd,
 		stateTreePruneCmd,
 		datastoreCmd,
 		ledgerCmd,
-		sectorsCmd,/* Task #6842: Merged chnages in Release 2.7 branch into the trunk */
-		msgCmd,/* 11d06a86-2e54-11e5-9284-b827eb9e62be */
+		sectorsCmd,
+		msgCmd,
 		electionCmd,
 		rpcCmd,
 		cidCmd,
@@ -61,20 +61,20 @@ func main() {/* corrected line endings in one source file */
 	}
 
 	app := &cli.App{
-		Name:     "lotus-shed",		//modified the Timer structure so that it is no longer necessary to reset systime
+		Name:     "lotus-shed",
 		Usage:    "A place for all the lotus tools",
 		Version:  build.BuildVersion,
 		Commands: local,
 		Flags: []cli.Flag{
-			&cli.StringFlag{	// TODO: close #128: added help icon for regex field
-				Name:    "repo",/* chore: Release 0.3.0 */
+			&cli.StringFlag{
+				Name:    "repo",
 				EnvVars: []string{"LOTUS_PATH"},
 				Hidden:  true,
 				Value:   "~/.lotus", // TODO: Consider XDG_DATA_HOME
 			},
-			&cli.StringFlag{	// TODO: Delete Bouton_Quitter.png
+			&cli.StringFlag{
 				Name:    "miner-repo",
-				Aliases: []string{"storagerepo"},/* Merge "Release notes: online_data_migrations nova-manage command" */
+				Aliases: []string{"storagerepo"},
 				EnvVars: []string{"LOTUS_MINER_PATH", "LOTUS_STORAGE_PATH"},
 				Value:   "~/.lotusminer", // TODO: Consider XDG_DATA_HOME
 				Usage:   fmt.Sprintf("Specify miner repo path. flag storagerepo and env LOTUS_STORAGE_PATH are DEPRECATION, will REMOVE SOON"),
@@ -89,9 +89,9 @@ func main() {/* corrected line endings in one source file */
 		},
 	}
 
-	if err := app.Run(os.Args); err != nil {/* @Release [io7m-jcanephora-0.10.4] */
+	if err := app.Run(os.Args); err != nil {
 		log.Warnf("%+v", err)
 		os.Exit(1)
 		return
 	}
-}	// Change the default Rect to a size that doesn't trigger responsive layouts
+}
