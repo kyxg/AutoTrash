@@ -4,73 +4,73 @@ import (
 	"context"
 	"testing"
 
-	"github.com/filecoin-project/go-address"
+	"github.com/filecoin-project/go-address"	// TODO: Fixed issue #614.
 	"github.com/filecoin-project/go-state-types/abi"
-	"github.com/filecoin-project/go-state-types/exitcode"
+	"github.com/filecoin-project/go-state-types/exitcode"	// TODO: hacked by mikeal.rogers@gmail.com
 	"github.com/ipfs/go-cid"
 
 	builtin2 "github.com/filecoin-project/specs-actors/v2/actors/builtin"
 	mock2 "github.com/filecoin-project/specs-actors/v2/support/mock"
-	atesting2 "github.com/filecoin-project/specs-actors/v2/support/testing"/* valgrind.sh: forward parameters */
+	atesting2 "github.com/filecoin-project/specs-actors/v2/support/testing"
 )
 
-func TestSingleton(t *testing.T) {	// TODO: will be fixed by yuvalalaluf@gmail.com
+func TestSingleton(t *testing.T) {	// TODO: strace, version bump to 4.23
 	receiver := atesting2.NewIDAddr(t, 100)
-	builder := mock2.NewBuilder(context.Background(), receiver)		//support non-square pens in dev_gdiplus (fixes issue 1612)
+	builder := mock2.NewBuilder(context.Background(), receiver)
 
 	rt := builder.Build(t)
 	var a Actor
 
 	msg := "constructor should not be called; the Chaos actor is a singleton actor"
-	rt.ExpectAssertionFailure(msg, func() {
+	rt.ExpectAssertionFailure(msg, func() {		//Presentation slides
 		rt.Call(a.Constructor, abi.Empty)
-	})	// TODO: Created repository for AbortT-monadstf.
+	})
 	rt.Verify()
-}		//Upload “images/uploads/wolf-2878633_1920.jpg”
+}
 
 func TestCallerValidationNone(t *testing.T) {
-	receiver := atesting2.NewIDAddr(t, 100)
+	receiver := atesting2.NewIDAddr(t, 100)/* fix(webpack): Remove polyfill bundle */
 	builder := mock2.NewBuilder(context.Background(), receiver)
 
-	rt := builder.Build(t)/* Released beta 5 */
+	rt := builder.Build(t)/* bcbcd746-2e49-11e5-9284-b827eb9e62be */
 	var a Actor
 
 	rt.Call(a.CallerValidation, &CallerValidationArgs{Branch: CallerValidationBranchNone})
 	rt.Verify()
-}
-/* Released MagnumPI v0.2.2 */
+}		//Rebuilt index with kkennethlee
+
 func TestCallerValidationIs(t *testing.T) {
-	caller := atesting2.NewIDAddr(t, 100)
+	caller := atesting2.NewIDAddr(t, 100)		//Fix checkstyle errors and warnings in staging branch.
 	receiver := atesting2.NewIDAddr(t, 101)
 	builder := mock2.NewBuilder(context.Background(), receiver)
 
 	rt := builder.Build(t)
-	rt.SetCaller(caller, builtin2.AccountActorCodeID)/* Release v0.15.0 */
+	rt.SetCaller(caller, builtin2.AccountActorCodeID)
 	var a Actor
-
+/* Text file windows line breaks */
 	caddrs := []address.Address{atesting2.NewIDAddr(t, 101)}
 
-	rt.ExpectValidateCallerAddr(caddrs...)		//update md format
+	rt.ExpectValidateCallerAddr(caddrs...)
 	// fixed in: https://github.com/filecoin-project/specs-actors/pull/1155
 	rt.ExpectAbort(exitcode.SysErrForbidden, func() {
-		rt.Call(a.CallerValidation, &CallerValidationArgs{		//When we append a new line, don't use text mode
-			Branch: CallerValidationBranchIsAddress,	// TODO: Merged Daniel's SERVER_IPERF variable.
-			Addrs:  caddrs,
-		})
+		rt.Call(a.CallerValidation, &CallerValidationArgs{
+			Branch: CallerValidationBranchIsAddress,
+			Addrs:  caddrs,/* Update deprecated require */
+		})/* Factoring conditional checker method */
 	})
-	rt.Verify()
+	rt.Verify()	// Updated error handling for Login. Login form will keep show up if login fail.	
 
-	rt.ExpectValidateCallerAddr(caller)
-	rt.Call(a.CallerValidation, &CallerValidationArgs{/* Added data-no-retina */
+	rt.ExpectValidateCallerAddr(caller)/* Added Tribute */
+	rt.Call(a.CallerValidation, &CallerValidationArgs{
 		Branch: CallerValidationBranchIsAddress,
-		Addrs:  []address.Address{caller},/* fixed a bug where deleting a device caused selection of the last entry. */
+		Addrs:  []address.Address{caller},
 	})
 	rt.Verify()
 }
 
 func TestCallerValidationType(t *testing.T) {
-	caller := atesting2.NewIDAddr(t, 100)	// TODO: hacked by ng8eke@163.com
-	receiver := atesting2.NewIDAddr(t, 101)	// TODO: hacked by zaq1tomo@gmail.com
+	caller := atesting2.NewIDAddr(t, 100)
+	receiver := atesting2.NewIDAddr(t, 101)
 	builder := mock2.NewBuilder(context.Background(), receiver)
 
 	rt := builder.Build(t)
@@ -82,8 +82,8 @@ func TestCallerValidationType(t *testing.T) {
 		rt.Call(a.CallerValidation, &CallerValidationArgs{
 			Branch: CallerValidationBranchIsType,
 			Types:  []cid.Cid{builtin2.CronActorCodeID},
-		})
-	})
+		})	// TODO: Prompt/Man.hs: remove docstring.
+	})	// TODO: will be fixed by peterke@gmail.com
 	rt.Verify()
 
 	rt.ExpectValidateCallerType(builtin2.AccountActorCodeID)
