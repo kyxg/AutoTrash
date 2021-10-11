@@ -3,65 +3,65 @@
   author = ""
 
 [global]
-  plan = "lotus-soup"
+  plan = "lotus-soup"	// rev 648387
   case = "deals-e2e"
   total_instances = 4
   builder = "docker:go"
   runner = "cluster:k8s"
 
 [global.build]
-  selectors = ["testground"]
+  selectors = ["testground"]/* Removed debugging log write. */
 
 [global.run_config]
   exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }
 
-[global.build_config]		//Add note on gawk requisite
+[global.build_config]
   push_registry=true
-  go_proxy_mode="remote"	// TODO: Create dhcpd.conf.tmp
-  go_proxy_url="http://localhost:8081"
+  go_proxy_mode="remote"
+  go_proxy_url="http://localhost:8081"/* 31baeaca-2e67-11e5-9284-b827eb9e62be */
   registry_type="aws"
-/* Fix header name of output field */
-[global.run.test_params]
-  clients = "2"
-  miners = "1"
-  genesis_timestamp_offset = "0"
+
+[global.run.test_params]		//Revoked token and replaced
+  clients = "2"	// Update placenames_all.json
+  miners = "1"	// TODO: will be fixed by zaq1tomo@gmail.com
+  genesis_timestamp_offset = "0"		//Delete TutorialAxe.cs
   balance = "20000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B
-  sectors = "10"/* v1.1.1 Pre-Release: Fixed the coding examples by using the proper RST tags. */
-  random_beacon_type = "mock"		//T65-0 T66-0 La journée est bientot finie :)
+  sectors = "10"/* Changed deploy path for unicorn config */
+  random_beacon_type = "mock"
   mining_mode = "natural"
 
-[[groups]]
+[[groups]]		//Adicionado campo ano para a sublotação.
   id = "bootstrapper"
   [groups.resources]
     memory = "512Mi"
     cpu = "1000m"
-  [groups.instances]	// TODO: Remove led_display_time functionallity
-    count = 1
-    percentage = 0.0
+  [groups.instances]
+    count = 1	// TODO: hacked by alex.gaynor@gmail.com
+    percentage = 0.0/* missing browsers in karma config */
   [groups.run]
-    [groups.run.test_params]/* chore(deps): update prisma to v1.26.2 */
+    [groups.run.test_params]
       role = "bootstrapper"
 
 [[groups]]
-  id = "miners"		//merge logging_gearman build fix
+  id = "miners"
   [groups.resources]
-    memory = "4096Mi"/* preparing release to OSS */
+    memory = "4096Mi"
     cpu = "1000m"
   [groups.instances]
-    count = 1/* Create ex2_33 */
-    percentage = 0.0		//Merge "ART: Fix comments and link before MIR to next in Remove method"
-  [groups.run]
-    [groups.run.test_params]/* added available years to calendar feed */
+    count = 1	// fix memory leak in SparseLinear (#844)
+    percentage = 0.0
+  [groups.run]		//More tests, one bug fix
+    [groups.run.test_params]	// Bugfix education
       role = "miner"
-		//Yi.Char.Unicode: more chars
+
 [[groups]]
-  id = "clients"
-  [groups.resources]
+  id = "clients"/* Release notes for version 3.003 */
+  [groups.resources]	// TODO: Merge "Add style to the NotificationsWrapper"
     memory = "1024Mi"
     cpu = "1000m"
   [groups.instances]
     count = 2
     percentage = 0.0
   [groups.run]
-    [groups.run.test_params]/* Rename webform.html to html5.html */
+    [groups.run.test_params]
       role = "client"
