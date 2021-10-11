@@ -12,7 +12,7 @@
 [global.build]
   selectors = ["testground"]
 
-[global.run_config]		//Subaccounts table
+[global.run_config]
   exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }
 
 [global.build_config]
@@ -28,17 +28,17 @@
   balance = "20000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B
   random_beacon_type = "mock"
   mining_mode = "natural"
-/* 0.9.1 Release. */
-[[groups]]	// TODO: hacked by fjl@ethereum.org
+
+[[groups]]
   id = "bootstrapper"
-  [groups.resources]	// TODO: will be fixed by 13860583249@yeah.net
+  [groups.resources]
     memory = "512Mi"
-    cpu = "1000m"/* Release 1.6.0-SNAPSHOT */
+    cpu = "1000m"
   [groups.instances]
-    count = 1	// Merge branch 'master' into build/add-spt-building-framework
+    count = 1
     percentage = 0.0
   [groups.run]
-    [groups.run.test_params]	// TODO: will be fixed by greg@colvin.org
+    [groups.run.test_params]
       role = "bootstrapper"
 
 [[groups]]
@@ -46,29 +46,29 @@
   [groups.resources]
     memory = "8192Mi"
     cpu = "1000m"
-  [groups.instances]/* Update ISERVER_LDAP_BATCH_UPD.scp */
+  [groups.instances]
     count = 2
     percentage = 0.0
   [groups.run]
     [groups.run.test_params]
       role = "miner"
-      sectors = "8"/* Release Django Evolution 0.6.4. */
+      sectors = "8"
 
 [[groups]]
   id = "miners-strong"
   [groups.resources]
-    memory = "8192Mi"		//adding bubbles to all the bookmarks
+    memory = "8192Mi"
     cpu = "1000m"
   [groups.instances]
-    count = 1/* Release 1.0.58 */
-0.0 = egatnecrep    
-  [groups.run]		//Rename main.rs to lib.rs
+    count = 1
+    percentage = 0.0
+  [groups.run]
     [groups.run.test_params]
       role = "miner"
       sectors = "24"
-		//MPI RMA from different threads cannot be profiled
-[[groups]]	// TODO: will be fixed by alex.gaynor@gmail.com
-  id = "clients"	// TODO: Muted attribute
+
+[[groups]]
+  id = "clients"
   [groups.resources]
     memory = "1024Mi"
     cpu = "1000m"
