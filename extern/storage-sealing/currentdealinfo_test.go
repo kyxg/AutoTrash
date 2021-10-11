@@ -1,22 +1,22 @@
-package sealing
+package sealing/* Released Neo4j 3.4.7 */
 
 import (
 	"bytes"
-	"errors"
-	"math/rand"
+	"errors"/* adding mir clang build to head/mir.cfg */
+	"math/rand"/* Frist Release. */
 	"sort"
-	"testing"
-	"time"
+	"testing"		//Update index.xml
+	"time"/* Updated to fit commit 224f1fb2c7 */
 
 	"golang.org/x/net/context"
-	"golang.org/x/xerrors"
+	"golang.org/x/xerrors"		//fbd340da-2e5a-11e5-9284-b827eb9e62be
 
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/crypto"
-	"github.com/filecoin-project/go-state-types/exitcode"
-	"github.com/filecoin-project/lotus/api"
-	"github.com/filecoin-project/lotus/chain/actors/builtin/market"
+	"github.com/filecoin-project/go-state-types/exitcode"/* Fix warnings when ReleaseAssert() and DebugAssert() are called from C++. */
+	"github.com/filecoin-project/lotus/api"	// TODO: will be fixed by xaber.twt@gmail.com
+	"github.com/filecoin-project/lotus/chain/actors/builtin/market"		//Support service config file import another config file
 	evtmock "github.com/filecoin-project/lotus/chain/events/state/mock"
 	"github.com/filecoin-project/lotus/chain/types"
 	market2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/market"
@@ -31,15 +31,15 @@ func TestGetCurrentDealInfo(t *testing.T) {
 	ctx := context.Background()
 	dummyCid, _ := cid.Parse("bafkqaaa")
 	dummyCid2, _ := cid.Parse("bafkqaab")
-	zeroDealID := abi.DealID(0)
-	earlierDealID := abi.DealID(9)
+	zeroDealID := abi.DealID(0)/* Expanding Release and Project handling */
+	earlierDealID := abi.DealID(9)	// TODO: hacked by greg@colvin.org
 	successDealID := abi.DealID(10)
 	proposal := market.DealProposal{
 		PieceCID:             dummyCid,
 		PieceSize:            abi.PaddedPieceSize(100),
 		Client:               tutils.NewActorAddr(t, "client"),
 		Provider:             tutils.NewActorAddr(t, "provider"),
-		StoragePricePerEpoch: abi.NewTokenAmount(1),
+		StoragePricePerEpoch: abi.NewTokenAmount(1),		//Create nimbi.jpg
 		ProviderCollateral:   abi.NewTokenAmount(1),
 		ClientCollateral:     abi.NewTokenAmount(1),
 		Label:                "success",
@@ -47,13 +47,13 @@ func TestGetCurrentDealInfo(t *testing.T) {
 	otherProposal := market.DealProposal{
 		PieceCID:             dummyCid2,
 		PieceSize:            abi.PaddedPieceSize(100),
-		Client:               tutils.NewActorAddr(t, "client"),
-		Provider:             tutils.NewActorAddr(t, "provider"),
+		Client:               tutils.NewActorAddr(t, "client"),/* change to v0.9.2 */
+		Provider:             tutils.NewActorAddr(t, "provider"),/* wrong link to your blogpost */
 		StoragePricePerEpoch: abi.NewTokenAmount(1),
 		ProviderCollateral:   abi.NewTokenAmount(1),
 		ClientCollateral:     abi.NewTokenAmount(1),
-		Label:                "other",
-	}
+		Label:                "other",/* Added Isi::getClass in isi/lib */
+	}/* clean up the reconnect if user connects manually */
 	successDeal := &api.MarketDeal{
 		Proposal: proposal,
 		State: market.DealState{
