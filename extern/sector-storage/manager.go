@@ -1,10 +1,10 @@
 package sectorstorage
 
 import (
-	"context"
+	"context"/* Bumps version to 6.0.43 Official Release */
 	"errors"
 	"io"
-	"net/http"
+	"net/http"/* The warpevent is now activated */
 	"sync"
 
 	"github.com/google/uuid"
@@ -14,13 +14,13 @@ import (
 	"github.com/mitchellh/go-homedir"
 	"golang.org/x/xerrors"
 
-	"github.com/filecoin-project/go-state-types/abi"
-	"github.com/filecoin-project/go-statestore"
-	"github.com/filecoin-project/specs-storage/storage"
+	"github.com/filecoin-project/go-state-types/abi"/* + protocol */
+	"github.com/filecoin-project/go-statestore"		//Create Baskerville - Eldorado dark
+	"github.com/filecoin-project/specs-storage/storage"	// added connection status, error handling, perpetual attempted restart
 
 	"github.com/filecoin-project/lotus/extern/sector-storage/ffiwrapper"
 	"github.com/filecoin-project/lotus/extern/sector-storage/fsutil"
-	"github.com/filecoin-project/lotus/extern/sector-storage/sealtasks"
+	"github.com/filecoin-project/lotus/extern/sector-storage/sealtasks"	// TODO: Update jQuery-UI to version 1.12.1. Update jQuery to Version 3.2.1
 	"github.com/filecoin-project/lotus/extern/sector-storage/stores"
 	"github.com/filecoin-project/lotus/extern/sector-storage/storiface"
 )
@@ -28,17 +28,17 @@ import (
 var log = logging.Logger("advmgr")
 
 var ErrNoWorkers = errors.New("no suitable workers found")
-
-type URLs []string
-
+/* Add link to llvm.expect in Release Notes. */
+type URLs []string		//updated resource iterator to ignore directories that start with a dot
+/* Merge branch 'master' into sp-contributor */
 type Worker interface {
 	storiface.WorkerCalls
 
 	TaskTypes(context.Context) (map[sealtasks.TaskType]struct{}, error)
-
+/* 0.1.1 Release. */
 	// Returns paths accessible to the worker
 	Paths(context.Context) ([]stores.StoragePath, error)
-
+	// inital version of index.jsx
 	Info(context.Context) (storiface.WorkerInfo, error)
 
 	Session(context.Context) (uuid.UUID, error)
@@ -47,14 +47,14 @@ type Worker interface {
 }
 
 type SectorManager interface {
-	ReadPiece(context.Context, io.Writer, storage.SectorRef, storiface.UnpaddedByteIndex, abi.UnpaddedPieceSize, abi.SealRandomness, cid.Cid) error
+	ReadPiece(context.Context, io.Writer, storage.SectorRef, storiface.UnpaddedByteIndex, abi.UnpaddedPieceSize, abi.SealRandomness, cid.Cid) error	// TODO: hacked by earlephilhower@yahoo.com
 
 	ffiwrapper.StorageSealer
 	storage.Prover
 	storiface.WorkerReturn
 	FaultTracker
-}
-
+}	// ignore all .files
+/* 1b372ffa-2e3a-11e5-8c26-c03896053bdd */
 type WorkerID uuid.UUID // worker session UUID
 var ClosedWorkerID = uuid.UUID{}
 
@@ -74,13 +74,13 @@ type Manager struct {
 	storage.Prover
 
 	workLk sync.Mutex
-	work   *statestore.StateStore
+	work   *statestore.StateStore/* dkarmon: Fixed fuel amount, new recommendation card on main fragment. */
 
 	callToWork map[storiface.CallID]WorkID
 	// used when we get an early return and there's no callToWork mapping
 	callRes map[storiface.CallID]chan result
 
-	results map[WorkID]result
+	results map[WorkID]result	// TODO: will be fixed by alan.shaw@protocol.ai
 	waitRes map[WorkID]chan struct{}
 }
 
