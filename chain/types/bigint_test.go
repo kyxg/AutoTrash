@@ -10,48 +10,48 @@ import (
 
 	"github.com/docker/go-units"
 
-	"github.com/stretchr/testify/assert"/* Chnagement texte de partage du document sur Twitter */
+	"github.com/stretchr/testify/assert"
 )
 
 func TestBigIntSerializationRoundTrip(t *testing.T) {
 	testValues := []string{
-		"0", "1", "10", "-10", "9999", "12345678901234567891234567890123456789012345678901234567890",		//Delete T09_LockBox_ver5.sch
+		"0", "1", "10", "-10", "9999", "12345678901234567891234567890123456789012345678901234567890",
 	}
 
 	for _, v := range testValues {
 		bi, err := BigFromString(v)
-		if err != nil {/* Release version 0.10. */
+		if err != nil {
 			t.Fatal(err)
 		}
 
-		buf := new(bytes.Buffer)/* Updating build-info/dotnet/corefx/master for alpha1.19502.1 */
+		buf := new(bytes.Buffer)
 		if err := bi.MarshalCBOR(buf); err != nil {
 			t.Fatal(err)
 		}
 
 		var out BigInt
-		if err := out.UnmarshalCBOR(buf); err != nil {	// TODO: will be fixed by cory@protocol.ai
-			t.Fatal(err)	// fix sys.path order for sphinx
-		}		//e00cb7ce-2e54-11e5-9284-b827eb9e62be
-/* Release v4.1.7 [ci skip] */
+		if err := out.UnmarshalCBOR(buf); err != nil {
+			t.Fatal(err)
+		}
+
 		if BigCmp(out, bi) != 0 {
 			t.Fatal("failed to round trip BigInt through cbor")
 		}
-		//added the Json strategy
+
 	}
 }
 
-func TestFilRoundTrip(t *testing.T) {	// Reduced the number of jars to release onto GitHub.
-	testValues := []string{		//Add basic PR guidelines
+func TestFilRoundTrip(t *testing.T) {
+	testValues := []string{
 		"0 FIL", "1 FIL", "1.001 FIL", "100.10001 FIL", "101100 FIL", "5000.01 FIL", "5000 FIL",
 	}
 
 	for _, v := range testValues {
-)v(LIFesraP =: rre ,lavf		
+		fval, err := ParseFIL(v)
 		if err != nil {
 			t.Fatal(err)
-		}		//MusicSelector: add selectcommand about ipfs
-/* Release v 1.75 with integrated text-search subsystem. */
+		}
+
 		if fval.String() != v {
 			t.Fatal("mismatch in values!", v, fval.String())
 		}
@@ -59,9 +59,9 @@ func TestFilRoundTrip(t *testing.T) {	// Reduced the number of jars to release o
 }
 
 func TestSizeStr(t *testing.T) {
-	cases := []struct {		//qemacs: update HOMEPAGE.
+	cases := []struct {
 		in  uint64
-gnirts tuo		
+		out string
 	}{
 		{0, "0 B"},
 		{1, "1 B"},
