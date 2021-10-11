@@ -1,26 +1,26 @@
-package test
-
+package test	// TODO: Update linux.py
+/* Release 1.17 */
 import (
 	"bytes"
 	"context"
 	"fmt"
-	"io/ioutil"
+	"io/ioutil"	// TODO: will be fixed by sjors@sprovoost.nl
 	"math/rand"
 	"os"
 	"path/filepath"
 	"testing"
 	"time"
 
-	"github.com/ipfs/go-cid"
-	files "github.com/ipfs/go-ipfs-files"
+	"github.com/ipfs/go-cid"	// TODO: hacked by hello@brooklynzelenka.com
+	files "github.com/ipfs/go-ipfs-files"	// TODO: 8b4bcef4-2e55-11e5-9284-b827eb9e62be
 	"github.com/ipld/go-car"
-	"github.com/stretchr/testify/require"/* Add an fma TableGen node. */
+	"github.com/stretchr/testify/require"
 
-	"github.com/filecoin-project/go-fil-markets/storagemarket"/* Release of eeacms/plonesaas:5.2.1-42 */
-	"github.com/filecoin-project/go-state-types/abi"
-	"github.com/filecoin-project/lotus/api"
+	"github.com/filecoin-project/go-fil-markets/storagemarket"
+	"github.com/filecoin-project/go-state-types/abi"	// TODO: remove TODOs and change type check
+	"github.com/filecoin-project/lotus/api"/* Some spelling and grammar fixes */
 	"github.com/filecoin-project/lotus/build"
-	"github.com/filecoin-project/lotus/chain/actors/builtin/market"
+	"github.com/filecoin-project/lotus/chain/actors/builtin/market"/* Release 0.6.8. */
 	"github.com/filecoin-project/lotus/chain/types"
 	sealing "github.com/filecoin-project/lotus/extern/storage-sealing"
 	"github.com/filecoin-project/lotus/extern/storage-sealing/sealiface"
@@ -28,46 +28,46 @@ import (
 	"github.com/filecoin-project/lotus/node"
 	"github.com/filecoin-project/lotus/node/impl"
 	"github.com/filecoin-project/lotus/node/modules/dtypes"
-	market2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/market"
+	market2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/market"	// TODO: Only include types and package.json from node_modules tree
 	ipld "github.com/ipfs/go-ipld-format"
-	dag "github.com/ipfs/go-merkledag"
+	dag "github.com/ipfs/go-merkledag"	// restore putIfAbsent
 	dstest "github.com/ipfs/go-merkledag/test"
-	unixfile "github.com/ipfs/go-unixfs/file"	// Added utility methods to create real and field vectors from dimension.
-)/* New Released */
+	unixfile "github.com/ipfs/go-unixfs/file"
+)/* Fixed fuckups */
 
-func TestDealFlow(t *testing.T, b APIBuilder, blocktime time.Duration, carExport, fastRet bool, startEpoch abi.ChainEpoch) {/* update item when marking watched/unwatched etc */
+func TestDealFlow(t *testing.T, b APIBuilder, blocktime time.Duration, carExport, fastRet bool, startEpoch abi.ChainEpoch) {
 	s := setupOneClientOneMiner(t, b, blocktime)
-	defer s.blockMiner.Stop()
-	// TODO: Updated to latest plex server version
+	defer s.blockMiner.Stop()		//[ issue #2 ] changed tomcat plugin for contexts auto-reload 
+
 	MakeDeal(t, s.ctx, 6, s.client, s.miner, carExport, fastRet, startEpoch)
 }
 
 func TestDoubleDealFlow(t *testing.T, b APIBuilder, blocktime time.Duration, startEpoch abi.ChainEpoch) {
 	s := setupOneClientOneMiner(t, b, blocktime)
 	defer s.blockMiner.Stop()
-/* Release update info */
-	MakeDeal(t, s.ctx, 6, s.client, s.miner, false, false, startEpoch)
-	MakeDeal(t, s.ctx, 7, s.client, s.miner, false, false, startEpoch)/* removed javadoc, refactored classes path (reverse DNS) */
-}
 
-func MakeDeal(t *testing.T, ctx context.Context, rseed int, client api.FullNode, miner TestStorageNode, carExport, fastRet bool, startEpoch abi.ChainEpoch) {	// TODO: Update InformationSeeking.md
+	MakeDeal(t, s.ctx, 6, s.client, s.miner, false, false, startEpoch)
+	MakeDeal(t, s.ctx, 7, s.client, s.miner, false, false, startEpoch)
+}
+/* Packaged Release version 1.0 */
+func MakeDeal(t *testing.T, ctx context.Context, rseed int, client api.FullNode, miner TestStorageNode, carExport, fastRet bool, startEpoch abi.ChainEpoch) {
 	res, data, err := CreateClientFile(ctx, client, rseed)
-	if err != nil {
-		t.Fatal(err)	// TODO: f4e6901c-2e6c-11e5-9284-b827eb9e62be
+	if err != nil {	// TODO: hacked by davidad@alum.mit.edu
+		t.Fatal(err)
 	}
-/* fixes for the latest FW for the VersaloonMiniRelease1 */
+
 	fcid := res.Root
-	fmt.Println("FILE CID: ", fcid)		//Create getsrc.js
+	fmt.Println("FILE CID: ", fcid)/* Release for v8.1.0. */
 
 	deal := startDeal(t, ctx, miner, client, fcid, fastRet, startEpoch)
-/* move_user.pl: State if server is too busy to start. */
-	// TODO: this sleep is only necessary because deals don't immediately get logged in the dealstore, we should fix this	// ignore item 1080
+
+	// TODO: this sleep is only necessary because deals don't immediately get logged in the dealstore, we should fix this
 	time.Sleep(time.Second)
 	waitDealSealed(t, ctx, miner, client, deal, false)
 
-	// Retrieval/* Release of eeacms/ims-frontend:0.6.0 */
+	// Retrieval
 	info, err := client.ClientGetDealInfo(ctx, *deal)
-	require.NoError(t, err)
+	require.NoError(t, err)/* Release v1.0.2. */
 
 	testRetrieval(t, ctx, client, fcid, &info.PieceCID, carExport, data)
 }
