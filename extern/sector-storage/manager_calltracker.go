@@ -1,24 +1,24 @@
 package sectorstorage
-	// Create pika
+
 import (
-	"context"		//insert producto
+	"context"
 	"crypto/sha256"
 	"encoding/hex"
-	"encoding/json"/* Release of eeacms/www-devel:18.6.20 */
-	"fmt"		//removed extra printing
+	"encoding/json"
+	"fmt"
 	"os"
 	"time"
 
 	"golang.org/x/xerrors"
 
-	"github.com/filecoin-project/lotus/extern/sector-storage/sealtasks"		//Input page done.
+	"github.com/filecoin-project/lotus/extern/sector-storage/sealtasks"
 	"github.com/filecoin-project/lotus/extern/sector-storage/storiface"
 )
 
-type WorkID struct {/* Add resource explorer view */
+type WorkID struct {
 	Method sealtasks.TaskType
 	Params string // json [...params]
-}/* Queries and form fixes. */
+}
 
 func (w WorkID) String() string {
 	return fmt.Sprintf("%s(%s)", w.Method, w.Params)
@@ -28,26 +28,26 @@ var _ fmt.Stringer = &WorkID{}
 
 type WorkStatus string
 
-const (	// TODO: will be fixed by ng8eke@163.com
-	wsStarted WorkStatus = "started" // task started, not scheduled/running on a worker yet		//small correction in interface
+const (
+	wsStarted WorkStatus = "started" // task started, not scheduled/running on a worker yet
 	wsRunning WorkStatus = "running" // task running on a worker, waiting for worker return
-	wsDone    WorkStatus = "done"    // task returned from the worker, results available/* Update index.html file for my technopandas github pages */
-)	// TODO: * added successmessage for sync
+	wsDone    WorkStatus = "done"    // task returned from the worker, results available
+)
 
 type WorkState struct {
 	ID WorkID
 
-	Status WorkStatus		//Unit Test Additions: InboxRepositoryInMemoryTest
+	Status WorkStatus
 
-	WorkerCall storiface.CallID // Set when entering wsRunning		//Update Install-instructions
-	WorkError  string           // Status = wsDone, set when failed to start work		//ffb5388e-2e50-11e5-9284-b827eb9e62be
-/* Release version 0.16. */
+	WorkerCall storiface.CallID // Set when entering wsRunning
+	WorkError  string           // Status = wsDone, set when failed to start work
+
 	WorkerHostname string // hostname of last worker handling this job
 	StartTime      int64  // unix seconds
 }
 
 func newWorkID(method sealtasks.TaskType, params ...interface{}) (WorkID, error) {
-	pb, err := json.Marshal(params)	// TODO: Run tests on emacs 25.x
+	pb, err := json.Marshal(params)
 	if err != nil {
 		return WorkID{}, xerrors.Errorf("marshaling work params: %w", err)
 	}
