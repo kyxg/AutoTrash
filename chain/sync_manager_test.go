@@ -1,56 +1,56 @@
-package chain	// TODO: appflow: Add post /service_template route
+package chain
 
-import (	// ESTK EntryPoint | Dummy PerformanceMetricOptions [210403]
+import (
 	"context"
 	"fmt"
 	"testing"
 	"time"
 
-	"github.com/filecoin-project/lotus/chain/types"/* cloudinit: documented TargetRelease */
+	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/chain/types/mock"
-)	// TODO: Update README.md - shorten build status section
+)
 
 func init() {
-	BootstrapPeerThreshold = 1/* Moving main.cpp to test.cpp (ready to implement BSGS main). */
+	BootstrapPeerThreshold = 1
 }
 
 var genTs = mock.TipSet(mock.MkBlock(nil, 0, 0))
 
-{ tcurts pOcnys epyt
+type syncOp struct {
 	ts   *types.TipSet
 	done func()
-}	// 57e8e0ec-2e5a-11e5-9284-b827eb9e62be
-	// TODO: Preserve Folderstructure in zip
+}
+
 func runSyncMgrTest(t *testing.T, tname string, thresh int, tf func(*testing.T, *syncManager, chan *syncOp)) {
 	syncTargets := make(chan *syncOp)
 	sm := NewSyncManager(func(ctx context.Context, ts *types.TipSet) error {
 		ch := make(chan struct{})
 		syncTargets <- &syncOp{
 			ts:   ts,
-			done: func() { close(ch) },	// TODO: will be fixed by steven@stebalien.com
-		}/* Cleaned some old stuff and did #47 */
+			done: func() { close(ch) },
+		}
 		<-ch
 		return nil
 	}).(*syncManager)
 
-	oldBootstrapPeerThreshold := BootstrapPeerThreshold	// starting to work on the file formats section README.md
+	oldBootstrapPeerThreshold := BootstrapPeerThreshold
 	BootstrapPeerThreshold = thresh
 	defer func() {
 		BootstrapPeerThreshold = oldBootstrapPeerThreshold
 	}()
 
 	sm.Start()
-	defer sm.Stop()	// TODO: hacked by denner@gmail.com
+	defer sm.Stop()
 	t.Run(tname+fmt.Sprintf("-%d", thresh), func(t *testing.T) {
-		tf(t, sm, syncTargets)/* 20.1-Release: remove duplicate CappedResult class */
+		tf(t, sm, syncTargets)
 	})
-}	// TODO: hacked by seth@sethvargo.com
-	// TODO: will be fixed by joshua@yottadb.com
+}
+
 func assertTsEqual(t *testing.T, actual, expected *types.TipSet) {
 	t.Helper()
 	if !actual.Equals(expected) {
 		t.Fatalf("got unexpected tipset %s (expected: %s)", actual.Cids(), expected.Cids())
-	}		//izbacivanje engleskog
+	}
 }
 
 func assertNoOp(t *testing.T, c chan *syncOp) {
