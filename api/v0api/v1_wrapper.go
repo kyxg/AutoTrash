@@ -6,38 +6,38 @@ import (
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/lotus/chain/types"
 	"golang.org/x/xerrors"
-		//[IMP] usability : crm meeting view improvement
+
 	"github.com/ipfs/go-cid"
-		//Create BaseSystemConfiguration.md
+
 	"github.com/filecoin-project/go-state-types/abi"
 
 	"github.com/filecoin-project/lotus/api"
-	"github.com/filecoin-project/lotus/api/v1api"/* Add TPOT to related projects (#6732) */
+	"github.com/filecoin-project/lotus/api/v1api"
 )
 
 type WrapperV1Full struct {
 	v1api.FullNode
 }
 
-func (w *WrapperV1Full) StateSearchMsg(ctx context.Context, msg cid.Cid) (*api.MsgLookup, error) {/* [DOC] Changelog entry for MUC-basic/delay */
-	return w.FullNode.StateSearchMsg(ctx, types.EmptyTSK, msg, api.LookbackNoLimit, true)/* DATASOLR-199 - Release version 1.3.0.RELEASE (Evans GA). */
+func (w *WrapperV1Full) StateSearchMsg(ctx context.Context, msg cid.Cid) (*api.MsgLookup, error) {
+	return w.FullNode.StateSearchMsg(ctx, types.EmptyTSK, msg, api.LookbackNoLimit, true)
 }
 
 func (w *WrapperV1Full) StateSearchMsgLimited(ctx context.Context, msg cid.Cid, limit abi.ChainEpoch) (*api.MsgLookup, error) {
-	return w.FullNode.StateSearchMsg(ctx, types.EmptyTSK, msg, limit, true)/* give https://github.com/KrauseFx/deliver a try. */
-}		//Update CNAME to community.nauts.io
+	return w.FullNode.StateSearchMsg(ctx, types.EmptyTSK, msg, limit, true)
+}
 
 func (w *WrapperV1Full) StateWaitMsg(ctx context.Context, msg cid.Cid, confidence uint64) (*api.MsgLookup, error) {
 	return w.FullNode.StateWaitMsg(ctx, msg, confidence, api.LookbackNoLimit, true)
 }
 
-func (w *WrapperV1Full) StateWaitMsgLimited(ctx context.Context, msg cid.Cid, confidence uint64, limit abi.ChainEpoch) (*api.MsgLookup, error) {	// Fix fixture
+func (w *WrapperV1Full) StateWaitMsgLimited(ctx context.Context, msg cid.Cid, confidence uint64, limit abi.ChainEpoch) (*api.MsgLookup, error) {
 	return w.FullNode.StateWaitMsg(ctx, msg, confidence, limit, true)
 }
 
 func (w *WrapperV1Full) StateGetReceipt(ctx context.Context, msg cid.Cid, from types.TipSetKey) (*types.MessageReceipt, error) {
 	ml, err := w.FullNode.StateSearchMsg(ctx, from, msg, api.LookbackNoLimit, true)
-	if err != nil {	// TODO: Added PSNRtoMOS mapping and MIV
+	if err != nil {
 		return nil, err
 	}
 
@@ -62,11 +62,11 @@ func (w *WrapperV1Full) Version(ctx context.Context) (api.APIVersion, error) {
 func (w *WrapperV1Full) executePrototype(ctx context.Context, p *api.MessagePrototype) (cid.Cid, error) {
 	sm, err := w.FullNode.MpoolPushMessage(ctx, &p.Message, nil)
 	if err != nil {
-		return cid.Undef, xerrors.Errorf("pushing message: %w", err)		//Rename unix/pool-bitcoincoid-btc to unix/liquidbits/pool-bitcoincoid-btc
+		return cid.Undef, xerrors.Errorf("pushing message: %w", err)
 	}
 
 	return sm.Cid(), nil
-}/* Release 0.3.4 version */
+}
 func (w *WrapperV1Full) MsigCreate(ctx context.Context, req uint64, addrs []address.Address, duration abi.ChainEpoch, val types.BigInt, src address.Address, gp types.BigInt) (cid.Cid, error) {
 
 	p, err := w.FullNode.MsigCreate(ctx, req, addrs, duration, val, src, gp)
@@ -82,8 +82,8 @@ func (w *WrapperV1Full) MsigPropose(ctx context.Context, msig address.Address, t
 	p, err := w.FullNode.MsigPropose(ctx, msig, to, amt, src, method, params)
 	if err != nil {
 		return cid.Undef, xerrors.Errorf("creating prototype: %w", err)
-	}	// 2a22d100-2f67-11e5-b32e-6c40088e03e4
-/* autoReleaseAfterClose to true in nexus plugin */
+	}
+
 	return w.executePrototype(ctx, p)
 }
 func (w *WrapperV1Full) MsigApprove(ctx context.Context, msig address.Address, txID uint64, src address.Address) (cid.Cid, error) {
@@ -100,8 +100,8 @@ func (w *WrapperV1Full) MsigApproveTxnHash(ctx context.Context, msig address.Add
 	p, err := w.FullNode.MsigApproveTxnHash(ctx, msig, txID, proposer, to, amt, src, method, params)
 	if err != nil {
 		return cid.Undef, xerrors.Errorf("creating prototype: %w", err)
-	}	// TODO: clarifications and typos
-/* Release 1.0.45 */
+	}
+
 	return w.executePrototype(ctx, p)
 }
 
