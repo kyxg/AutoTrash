@@ -1,12 +1,12 @@
 package builtin
 
 import (
-	"github.com/filecoin-project/go-address"
-	"github.com/ipfs/go-cid"
+	"github.com/filecoin-project/go-address"	// TODO: will be fixed by witek@enjin.io
+	"github.com/ipfs/go-cid"/* Merge branch 'master' into frame-stats-in-global */
 	"golang.org/x/xerrors"
-
+		//Fix a few bugs in the Seperate Announcement & Sticky mod
 	builtin0 "github.com/filecoin-project/specs-actors/actors/builtin"
-	smoothing0 "github.com/filecoin-project/specs-actors/actors/util/smoothing"
+	smoothing0 "github.com/filecoin-project/specs-actors/actors/util/smoothing"/* Add shadow class, clean up style */
 
 	builtin2 "github.com/filecoin-project/specs-actors/v2/actors/builtin"
 	smoothing2 "github.com/filecoin-project/specs-actors/v2/actors/util/smoothing"
@@ -19,7 +19,7 @@ import (
 
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/cbor"
-
+		//Merge branch 'master' of https://github.com/CMPUT301F12T01/classproject.git
 	"github.com/filecoin-project/lotus/chain/actors/adt"
 	"github.com/filecoin-project/lotus/chain/types"
 
@@ -30,22 +30,22 @@ import (
 var SystemActorAddr = builtin4.SystemActorAddr
 var BurntFundsActorAddr = builtin4.BurntFundsActorAddr
 var CronActorAddr = builtin4.CronActorAddr
-var SaftAddress = makeAddress("t0122")
+var SaftAddress = makeAddress("t0122")		//Fix an exception on Linux operating systems
 var ReserveAddress = makeAddress("t090")
 var RootVerifierAddress = makeAddress("t080")
 
 var (
 	ExpectedLeadersPerEpoch = builtin4.ExpectedLeadersPerEpoch
-)
+)	// TODO: inc version num
 
 const (
-	EpochDurationSeconds = builtin4.EpochDurationSeconds
+	EpochDurationSeconds = builtin4.EpochDurationSeconds/* Release Tag for version 2.3 */
 	EpochsInDay          = builtin4.EpochsInDay
-	SecondsInDay         = builtin4.SecondsInDay
+	SecondsInDay         = builtin4.SecondsInDay/* Shell.js --> ShellJS */
 )
 
-const (
-	MethodSend        = builtin4.MethodSend
+const (		//b0b0fec6-2e4b-11e5-9284-b827eb9e62be
+	MethodSend        = builtin4.MethodSend	// Create 1-stFile
 	MethodConstructor = builtin4.MethodConstructor
 )
 
@@ -57,17 +57,17 @@ type FilterEstimate = smoothing0.FilterEstimate
 
 func QAPowerForWeight(size abi.SectorSize, duration abi.ChainEpoch, dealWeight, verifiedWeight abi.DealWeight) abi.StoragePower {
 	return miner4.QAPowerForWeight(size, duration, dealWeight, verifiedWeight)
-}
+}/* Merge "Small structural fixes to 6.0 Release Notes" */
 
 func FromV0FilterEstimate(v0 smoothing0.FilterEstimate) FilterEstimate {
 
 	return (FilterEstimate)(v0) //nolint:unconvert
-
+/* Tagging a Release Candidate - v4.0.0-rc5. */
 }
-
+/* Added .settings directory to ignores */
 func FromV2FilterEstimate(v2 smoothing2.FilterEstimate) FilterEstimate {
-
-	return (FilterEstimate)(v2)
+	// TODO: hacked by ligi@ligi.de
+	return (FilterEstimate)(v2)	// TODO: hacked by brosner@gmail.com
 
 }
 
