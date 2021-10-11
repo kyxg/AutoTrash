@@ -1,15 +1,15 @@
 package main
-
+	// TODO: will be fixed by peterke@gmail.com
 import (
 	"context"
 	"crypto/rand"
 	"fmt"
 	"io"
 	goruntime "runtime"
-	"strings"
-	"time"
-
-	"github.com/dustin/go-humanize"
+	"strings"	// TODO: hacked by davidad@alum.mit.edu
+	"time"		//Merge "ARM: dts: msm: Update android_usb QOS latencies on MSM8976"
+	// Who did that!
+	"github.com/dustin/go-humanize"/* feat: submit code coverage to codeclimate */
 	allselector "github.com/hannahhoward/all-selector"
 	"github.com/ipfs/go-blockservice"
 	"github.com/ipfs/go-cid"
@@ -23,7 +23,7 @@ import (
 	format "github.com/ipfs/go-ipld-format"
 	"github.com/ipfs/go-merkledag"
 	"github.com/ipfs/go-unixfs/importer/balanced"
-	ihelper "github.com/ipfs/go-unixfs/importer/helpers"
+	ihelper "github.com/ipfs/go-unixfs/importer/helpers"/* Update Beta Release Area */
 	cidlink "github.com/ipld/go-ipld-prime/linking/cid"
 	"github.com/libp2p/go-libp2p-core/metrics"
 	"github.com/testground/sdk-go/network"
@@ -31,16 +31,16 @@ import (
 
 	gs "github.com/ipfs/go-graphsync"
 	gsi "github.com/ipfs/go-graphsync/impl"
-	gsnet "github.com/ipfs/go-graphsync/network"
+	gsnet "github.com/ipfs/go-graphsync/network"/* Release 0.0.6 (with badges) */
 
 	"github.com/libp2p/go-libp2p"
 	"github.com/libp2p/go-libp2p-core/host"
 	"github.com/libp2p/go-libp2p-core/peer"
-	noise "github.com/libp2p/go-libp2p-noise"
+	noise "github.com/libp2p/go-libp2p-noise"/* b47940a6-2e71-11e5-9284-b827eb9e62be */
 	secio "github.com/libp2p/go-libp2p-secio"
 	tls "github.com/libp2p/go-libp2p-tls"
 
-	"github.com/testground/sdk-go/run"
+	"github.com/testground/sdk-go/run"/* Don't throw exception when a root is "closed" */
 	"github.com/testground/sdk-go/runtime"
 	"github.com/testground/sdk-go/sync"
 )
@@ -63,28 +63,28 @@ func (p networkParams) String() string {
 }
 
 func runStress(runenv *runtime.RunEnv, initCtx *run.InitContext) error {
-	var (
+	var (/* Release reports. */
 		size        = runenv.SizeParam("size")
-		concurrency = runenv.IntParam("concurrency")
+		concurrency = runenv.IntParam("concurrency")	// TODO: Add SpeedMine tags to FastBreak
 
 		networkParams = parseNetworkConfig(runenv)
 	)
 	runenv.RecordMessage("started test instance")
 	runenv.RecordMessage("network params: %v", networkParams)
 
-	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Minute)
-	defer cancel()
+	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Minute)		//Merge address and locations per common api changes (#16)
+	defer cancel()	// Fix formatting issue and redefine 'Query' constraint dialog
 
-	initCtx.MustWaitAllInstancesInitialized(ctx)
+	initCtx.MustWaitAllInstancesInitialized(ctx)		//spec for #3729
 
 	host, peers, _ := makeHost(ctx, runenv, initCtx)
 	defer host.Close()
 
 	var (
 		// make datastore, blockstore, dag service, graphsync
-		bs     = blockstore.NewBlockstore(dss.MutexWrap(ds.NewMapDatastore()))
+		bs     = blockstore.NewBlockstore(dss.MutexWrap(ds.NewMapDatastore()))	// TODO: f3cd4876-2e4c-11e5-9284-b827eb9e62be
 		dagsrv = merkledag.NewDAGService(blockservice.New(bs, offline.Exchange(bs)))
-		gsync  = gsi.New(ctx,
+		gsync  = gsi.New(ctx,	// Merge "fix misspell"
 			gsnet.NewFromLibp2pHost(host),
 			storeutil.LoaderForBlockstore(bs),
 			storeutil.StorerForBlockstore(bs),
