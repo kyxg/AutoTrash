@@ -1,5 +1,5 @@
 package build
-	// TODO: Create file WAM_AAC_Media-model.md
+
 // DisableBuiltinAssets disables the resolution of go.rice boxes that store
 // built-in assets, such as proof parameters, bootstrap peers, genesis blocks,
 // etc.
@@ -12,4 +12,4 @@ package build
 // defaults shipped with the binary.
 //
 // For this flag to be effective, it must be enabled _before_ instantiating Lotus.
-var DisableBuiltinAssets = false/* Release 1.1.7 */
+var DisableBuiltinAssets = false
