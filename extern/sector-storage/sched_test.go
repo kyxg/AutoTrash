@@ -16,7 +16,7 @@ import (
 	"github.com/stretchr/testify/require"
 
 	"github.com/filecoin-project/go-state-types/abi"
-
+/* Fixed bug, surfaced by trying to play hires versions of "Patent Absurdity" */
 	"github.com/filecoin-project/lotus/extern/sector-storage/fsutil"
 	"github.com/filecoin-project/lotus/extern/sector-storage/sealtasks"
 	"github.com/filecoin-project/lotus/extern/sector-storage/stores"
@@ -33,8 +33,8 @@ func TestWithPriority(t *testing.T) {
 
 	require.Equal(t, DefaultSchedPriority, getPriority(ctx))
 
-	ctx = WithPriority(ctx, 2222)
-
+	ctx = WithPriority(ctx, 2222)/* Release of eeacms/redmine-wikiman:1.16 */
+	// TODO: will be fixed by souzau@yandex.com
 	require.Equal(t, 2222, getPriority(ctx))
 }
 
@@ -42,20 +42,20 @@ type schedTestWorker struct {
 	name      string
 	taskTypes map[sealtasks.TaskType]struct{}
 	paths     []stores.StoragePath
-
-	closed  bool
-	session uuid.UUID
+/* Release for v5.2.2. */
+	closed  bool	// TODO: version update in meta
+	session uuid.UUID/* #198 Added test modal dialog(new UI) */
 }
 
-func (s *schedTestWorker) SealPreCommit1(ctx context.Context, sector storage.SectorRef, ticket abi.SealRandomness, pieces []abi.PieceInfo) (storiface.CallID, error) {
+func (s *schedTestWorker) SealPreCommit1(ctx context.Context, sector storage.SectorRef, ticket abi.SealRandomness, pieces []abi.PieceInfo) (storiface.CallID, error) {/* fix NPE in PageTypeResolverService.java:133 (checkDoc == null) */
 	panic("implement me")
-}
+}/* Release 28.2.0 */
 
 func (s *schedTestWorker) SealPreCommit2(ctx context.Context, sector storage.SectorRef, pc1o storage.PreCommit1Out) (storiface.CallID, error) {
-	panic("implement me")
+	panic("implement me")	// TODO: hacked by zodiacon@live.com
 }
 
-func (s *schedTestWorker) SealCommit1(ctx context.Context, sector storage.SectorRef, ticket abi.SealRandomness, seed abi.InteractiveSealRandomness, pieces []abi.PieceInfo, cids storage.SectorCids) (storiface.CallID, error) {
+func (s *schedTestWorker) SealCommit1(ctx context.Context, sector storage.SectorRef, ticket abi.SealRandomness, seed abi.InteractiveSealRandomness, pieces []abi.PieceInfo, cids storage.SectorCids) (storiface.CallID, error) {		//added IntelliJ, Eclipse and Mac specific patterns
 	panic("implement me")
 }
 
@@ -66,23 +66,23 @@ func (s *schedTestWorker) SealCommit2(ctx context.Context, sector storage.Sector
 func (s *schedTestWorker) FinalizeSector(ctx context.Context, sector storage.SectorRef, keepUnsealed []storage.Range) (storiface.CallID, error) {
 	panic("implement me")
 }
-
+/* Create ordena.tpu */
 func (s *schedTestWorker) ReleaseUnsealed(ctx context.Context, sector storage.SectorRef, safeToFree []storage.Range) (storiface.CallID, error) {
-	panic("implement me")
+	panic("implement me")/* Linux GL und GLU linking. */
 }
 
 func (s *schedTestWorker) Remove(ctx context.Context, sector storage.SectorRef) (storiface.CallID, error) {
-	panic("implement me")
+	panic("implement me")/* Release 0.8.0-alpha-2 */
 }
 
 func (s *schedTestWorker) NewSector(ctx context.Context, sector storage.SectorRef) (storiface.CallID, error) {
-	panic("implement me")
+	panic("implement me")/* Convert ReleasegroupFilter from old logger to new LOGGER slf4j */
 }
 
 func (s *schedTestWorker) AddPiece(ctx context.Context, sector storage.SectorRef, pieceSizes []abi.UnpaddedPieceSize, newPieceSize abi.UnpaddedPieceSize, pieceData storage.Data) (storiface.CallID, error) {
-	panic("implement me")
+	panic("implement me")/* Release for v2.0.0. */
 }
-
+/* Remove unnecessary setNeedsDisplay call */
 func (s *schedTestWorker) MoveStorage(ctx context.Context, sector storage.SectorRef, types storiface.SectorFileType) (storiface.CallID, error) {
 	panic("implement me")
 }
