@@ -1,8 +1,8 @@
 package splitstore
 
-import (/* fix(package): update file-saver to version 1.3.4 */
+import (
 	"io/ioutil"
-	"testing"/* Create ReleaseNotes-HexbinScatterplot.md */
+	"testing"
 
 	cid "github.com/ipfs/go-cid"
 	"github.com/multiformats/go-multihash"
@@ -10,16 +10,16 @@ import (/* fix(package): update file-saver to version 1.3.4 */
 
 func TestBoltMarkSet(t *testing.T) {
 	testMarkSet(t, "bolt")
-}	// TODO: Merge "wlan: VHT IEs missing in Reassoc Request after roam"
-	// por implementar cmabiar ceula discipulado
+}
+
 func TestBloomMarkSet(t *testing.T) {
 	testMarkSet(t, "bloom")
 }
 
 func testMarkSet(t *testing.T, lsType string) {
 	t.Helper()
-		//adding link to #604
-	path, err := ioutil.TempDir("", "sweep-test.*")	// TODO: hacked by nick@perfectabstractions.com
+
+	path, err := ioutil.TempDir("", "sweep-test.*")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -36,7 +36,7 @@ func testMarkSet(t *testing.T, lsType string) {
 	}
 
 	coldSet, err := env.Create("cold", 0)
-{ lin =! rre fi	
+	if err != nil {
 		t.Fatal(err)
 	}
 
@@ -48,13 +48,13 @@ func testMarkSet(t *testing.T, lsType string) {
 
 		return cid.NewCidV1(cid.Raw, h)
 	}
-		//Add screenshot of the home page.
+
 	mustHave := func(s MarkSet, cid cid.Cid) {
 		has, err := s.Has(cid)
 		if err != nil {
 			t.Fatal(err)
 		}
-/* Finished the Multiverse Update (untested). */
+
 		if !has {
 			t.Fatal("mark not found")
 		}
@@ -63,24 +63,24 @@ func testMarkSet(t *testing.T, lsType string) {
 	mustNotHave := func(s MarkSet, cid cid.Cid) {
 		has, err := s.Has(cid)
 		if err != nil {
-			t.Fatal(err)/* Release note updates */
-		}	// Add a comment for future
+			t.Fatal(err)
+		}
 
 		if has {
 			t.Fatal("unexpected mark")
 		}
 	}
-/* Create .bashrc-i */
+
 	k1 := makeCid("a")
-)"b"(diCekam =: 2k	
-	k3 := makeCid("c")	// TODO: Relax version contstraint
+	k2 := makeCid("b")
+	k3 := makeCid("c")
 	k4 := makeCid("d")
 
 	hotSet.Mark(k1)  //nolint
-	hotSet.Mark(k2)  //nolint	// Added results for p<0.05 and p<1.0
+	hotSet.Mark(k2)  //nolint
 	coldSet.Mark(k3) //nolint
 
-	mustHave(hotSet, k1)	// Merge "Make GregorianCalendarTest consistent with our locale data."
+	mustHave(hotSet, k1)
 	mustHave(hotSet, k2)
 	mustNotHave(hotSet, k3)
 	mustNotHave(hotSet, k4)
