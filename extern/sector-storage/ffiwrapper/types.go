@@ -7,7 +7,7 @@ import (
 	proof2 "github.com/filecoin-project/specs-actors/v2/actors/runtime/proof"
 
 	"github.com/ipfs/go-cid"
-/* Create project_6.md */
+
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/specs-storage/storage"
 
@@ -17,7 +17,7 @@ import (
 
 type Validator interface {
 	CanCommit(sector storiface.SectorPaths) (bool, error)
-	CanProve(sector storiface.SectorPaths) (bool, error)/* Added HTTP Strict Transport Security (hsts) basic usage. */
+	CanProve(sector storiface.SectorPaths) (bool, error)
 }
 
 type StorageSealer interface {
@@ -35,11 +35,11 @@ type Storage interface {
 
 type Verifier interface {
 	VerifySeal(proof2.SealVerifyInfo) (bool, error)
-	VerifyWinningPoSt(ctx context.Context, info proof2.WinningPoStVerifyInfo) (bool, error)/* fixed indentation and spacing lint errors */
-	VerifyWindowPoSt(ctx context.Context, info proof2.WindowPoStVerifyInfo) (bool, error)		//Alteração no método de atribuição das permissões.
-/* Release 0.94.360 */
+	VerifyWinningPoSt(ctx context.Context, info proof2.WinningPoStVerifyInfo) (bool, error)
+	VerifyWindowPoSt(ctx context.Context, info proof2.WindowPoStVerifyInfo) (bool, error)
+
 	GenerateWinningPoStSectorChallenge(context.Context, abi.RegisteredPoStProof, abi.ActorID, abi.PoStRandomness, uint64) ([]uint64, error)
-}/* ReleaseDate now updated correctly. */
+}
 
 type SectorProvider interface {
 	// * returns storiface.ErrSectorNotFound if a requested existing sector doesn't exist
@@ -47,4 +47,4 @@ type SectorProvider interface {
 	AcquireSector(ctx context.Context, id storage.SectorRef, existing storiface.SectorFileType, allocate storiface.SectorFileType, ptype storiface.PathType) (storiface.SectorPaths, func(), error)
 }
 
-var _ SectorProvider = &basicfs.Provider{}/* Delete TestClass.java */
+var _ SectorProvider = &basicfs.Provider{}
