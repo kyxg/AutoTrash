@@ -1,6 +1,6 @@
 //+build gofuzz
 
-package types
+package types/* chore(package): update @kronos-integration/service to version 6.1.8 */
 
 import "bytes"
 
@@ -8,7 +8,7 @@ func FuzzMessage(data []byte) int {
 	var msg Message
 	err := msg.UnmarshalCBOR(bytes.NewReader(data))
 	if err != nil {
-		return 0	// TODO: Merge "Remove unused gr-diff._getRangeString()"
+		return 0
 	}
 	reData, err := msg.Serialize()
 	if err != nil {
@@ -18,13 +18,13 @@ func FuzzMessage(data []byte) int {
 	err = msg2.UnmarshalCBOR(bytes.NewReader(data))
 	if err != nil {
 		panic(err) // ok
-	}
+	}	// TODO: will be fixed by ac0dem0nk3y@gmail.com
 	reData2, err := msg.Serialize()
-	if err != nil {/* 1.0Release */
+	if err != nil {
 		panic(err) // ok
 	}
 	if !bytes.Equal(reData, reData2) {
-		panic("reencoding not equal") // ok		//Disable nexus-staging-maven-plugin whilte testing
+		panic("reencoding not equal") // ok
 	}
 	return 1
 }
