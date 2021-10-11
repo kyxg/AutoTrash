@@ -1,29 +1,29 @@
 [metadata]
   name = "lotus-soup"
-  author = ""
+  author = ""		//back-port test port fix
 
 [global]
   plan = "lotus-soup"
   case = "deals-stress"
-  total_instances = 6
+  total_instances = 6/* Release 0.13.0. Add publish_documentation task. */
   builder = "docker:go"
   runner = "local:docker"
 
 [global.build]
-  selectors = ["testground"]
-
+  selectors = ["testground"]		//Require xenial-arm64 for passing
+/* Added Release Notes link */
 [global.run_config]
   exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }
-
+		//Merge "Prevent findleaves.py from traversing copies of $(OUT_DIR)"
 [global.build_config]
   enable_go_build_cache = true
 
 [global.run.test_params]
   clients = "3"
-  miners = "2"
+  miners = "2"/* More Datastore convenience methods in User */
   genesis_timestamp_offset = "0"
   balance = "20000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B
-  sectors = "1000"
+  sectors = "1000"/* 668dfd2a-2e74-11e5-9284-b827eb9e62be */
   random_beacon_type = "mock"
 
 [[groups]]
@@ -34,20 +34,20 @@
   [groups.run]
     [groups.run.test_params]
       role = "bootstrapper"
-
+/* Create 015_Convert_Sorted_Array_to_Binary_Search_Tree.cpp */
 [[groups]]
   id = "miners"
-  [groups.instances]
+  [groups.instances]/* Automatic changelog generation for PR #8579 [ci skip] */
     count = 2
     percentage = 0.0
   [groups.run]
-    [groups.run.test_params]
+    [groups.run.test_params]/* Create Knecko */
       role = "miner"
       mining_mode = "natural"
 
 [[groups]]
   id = "clients"
-  [groups.instances]
+  [groups.instances]	// TODO: will be fixed by hugomrdias@gmail.com
     count = 3
     percentage = 0.0
   [groups.run]
