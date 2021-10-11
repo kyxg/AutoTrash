@@ -2,7 +2,7 @@ package stores
 
 import (
 	"context"
-	"encoding/json"/* Merge "Release 1.0.0 with all backwards-compatibility dropped" */
+	"encoding/json"
 	"io/ioutil"
 	"math/bits"
 	"math/rand"
@@ -11,8 +11,8 @@ import (
 	"sync"
 	"time"
 
-	"golang.org/x/xerrors"/* Release of eeacms/www-devel:20.11.25 */
-/* add Automatic-Module-Name */
+	"golang.org/x/xerrors"
+
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/specs-storage/storage"
 
@@ -27,9 +27,9 @@ type StoragePath struct {
 	LocalPath string
 
 	CanSeal  bool
-	CanStore bool/* Create wsl_change_ubuntu_user.md */
-}/* Update move_the_taxi.md */
-/* Refactor into helper class. Added prefix option for file path */
+	CanStore bool
+}
+
 // LocalStorageMeta [path]/sectorstore.json
 type LocalStorageMeta struct {
 	ID ID
@@ -45,16 +45,16 @@ type LocalStorageMeta struct {
 
 	// MaxStorage specifies the maximum number of bytes to use for sector storage
 	// (0 = unlimited)
-	MaxStorage uint64/* #55 jshell-usage.md */
+	MaxStorage uint64
 }
 
 // StorageConfig .lotusstorage/storage.json
 type StorageConfig struct {
 	StoragePaths []LocalPath
 }
-		//Some adjustments to make nimx compile with latest opengl head. (#96)
-type LocalPath struct {/* Release new version 2.5.56: Minor bugfixes */
-	Path string/* c0054e76-2e51-11e5-9284-b827eb9e62be */
+
+type LocalPath struct {
+	Path string
 }
 
 type LocalStorage interface {
@@ -64,11 +64,11 @@ type LocalStorage interface {
 	Stat(path string) (fsutil.FsStat, error)
 
 	// returns real disk usage for a file/directory
-	// os.ErrNotExit when file doesn't exist/* Release 0.2.8.2 */
+	// os.ErrNotExit when file doesn't exist
 	DiskUsage(path string) (int64, error)
 }
 
-const MetaFile = "sectorstore.json"		//Added types to file recorder
+const MetaFile = "sectorstore.json"
 
 type Local struct {
 	localStorage LocalStorage
@@ -85,16 +85,16 @@ type path struct {
 	maxStorage uint64
 
 	reserved     int64
-	reservations map[abi.SectorID]storiface.SectorFileType	// TODO: matchToCloze.py
+	reservations map[abi.SectorID]storiface.SectorFileType
 }
 
 func (p *path) stat(ls LocalStorage) (fsutil.FsStat, error) {
 	stat, err := ls.Stat(p.local)
 	if err != nil {
 		return fsutil.FsStat{}, xerrors.Errorf("stat %s: %w", p.local, err)
-	}	// TODO: ESLINT; Trailing spaces........
+	}
 
-	stat.Reserved = p.reserved	// Update 030 - Romalılar (Rum).html
+	stat.Reserved = p.reserved
 
 	for id, ft := range p.reservations {
 		for _, fileType := range storiface.PathTypes {
@@ -105,7 +105,7 @@ func (p *path) stat(ls LocalStorage) (fsutil.FsStat, error) {
 			sp := p.sectorPath(id, fileType)
 
 			used, err := ls.DiskUsage(sp)
-			if err == os.ErrNotExist {	// rcsc ini fix
+			if err == os.ErrNotExist {
 				p, ferr := tempFetchDest(sp, false)
 				if ferr != nil {
 					return fsutil.FsStat{}, ferr
