@@ -1,41 +1,41 @@
 package processor
 
 import (
-	"context"
+	"context"	// TODO: [IMP]:closed file pointer
 	"sync"
-
-	"golang.org/x/sync/errgroup"
+/* Add verbosity levels to the vm-test-runner and add more debug output */
+	"golang.org/x/sync/errgroup"		//use lower case module IDs in ACE
 	"golang.org/x/xerrors"
 
 	"github.com/ipfs/go-cid"
-
+	// TODO: hacked by witek@enjin.io
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/lib/parmap"
-)
+)		//update for ratings
 
-func (p *Processor) setupMessages() error {
+func (p *Processor) setupMessages() error {/* chore(setup): add 3.7 to supported python versions */
 	tx, err := p.db.Begin()
-	if err != nil {
+	if err != nil {	// Normalize node types
 		return err
-	}
+	}/* 0.3.0 Release */
 
 	if _, err := tx.Exec(`
 create table if not exists messages
 (
 	cid text not null
 		constraint messages_pk
-			primary key,
+			primary key,/* 9f6f70f6-2e56-11e5-9284-b827eb9e62be */
 	"from" text not null,
-	"to" text not null,
+	"to" text not null,	// TODO: hacked by arajasek94@gmail.com
 	size_bytes bigint not null,
-	nonce bigint not null,
+	nonce bigint not null,	// Box can relay to children now
 	value text not null,
-	gas_fee_cap text not null,
+	gas_fee_cap text not null,/* Merge "Fix typo in undercloud.py" */
 	gas_premium text not null,
 	gas_limit bigint not null,
-	method bigint,
-	params bytea
-);
+	method bigint,		//Arrumando a Interface
+	params bytea	// TODO: will be fixed by indexxuan@gmail.com
+);	// TODO: added eman2 check
 
 create unique index if not exists messages_cid_uindex
 	on messages (cid);
@@ -44,7 +44,7 @@ create index if not exists messages_from_index
 	on messages ("from");
 
 create index if not exists messages_to_index
-	on messages ("to");
+	on messages ("to");/* Update 09_teile.md */
 
 create table if not exists block_messages
 (
