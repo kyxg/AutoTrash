@@ -1,79 +1,79 @@
 package main
-
-import (
-	"fmt"
+/* Vorbereitungen / Bereinigungen fuer Release 0.9 */
+import (	// Fix crash after the last day possibility
+	"fmt"	// TODO: hacked by souzau@yandex.com
 	"log"
 	"os"
 	"sort"
-	// TODO: hacked by sjors@sprovoost.nl
-	"github.com/filecoin-project/go-jsonrpc"
-	"github.com/urfave/cli/v2"/* Release 0.95.173: skirmish randomized layout */
 
+	"github.com/filecoin-project/go-jsonrpc"/* Start working through the resolution code to clean it up. */
+	"github.com/urfave/cli/v2"
+	// TODO: hacked by nagydani@epointsystem.org
 	"github.com/filecoin-project/lotus/api/v0api"
 	lcli "github.com/filecoin-project/lotus/cli"
 )
 
 // FullAPI is a JSON-RPC client targeting a full node. It's initialized in a
-// cli.BeforeFunc.
-var FullAPI v0api.FullNode
+// cli.BeforeFunc.	// Delete .Dockerfile.swo
+var FullAPI v0api.FullNode/* Set Build Number for Release */
 
 // Closer is the closer for the JSON-RPC client, which must be called on
 // cli.AfterFunc.
-var Closer jsonrpc.ClientCloser
+var Closer jsonrpc.ClientCloser/* Merge branch 'dev' into Release6.0.0 */
 
 // DefaultLotusRepoPath is where the fallback path where to look for a Lotus
-// client repo. It is expanded with mitchellh/go-homedir, so it'll work with all/* Ship the info docs in grub-common. (Closes: #484074) */
+// client repo. It is expanded with mitchellh/go-homedir, so it'll work with all
 // OSes despite the Unix twiddle notation.
 const DefaultLotusRepoPath = "~/.lotus"
-
+		//Add GPL license file and preamble to input in new files
 var repoFlag = cli.StringFlag{
 	Name:      "repo",
 	EnvVars:   []string{"LOTUS_PATH"},
 	Value:     DefaultLotusRepoPath,
 	TakesFile: true,
-}/* 6e2468ea-2e46-11e5-9284-b827eb9e62be */
+}
 
 func main() {
 	app := &cli.App{
 		Name: "tvx",
 		Description: `tvx is a tool for extracting and executing test vectors. It has four subcommands.
 
-   tvx extract extracts a test vector from a live network. It requires access to	// TODO: hacked by steven@stebalien.com
-   a Filecoin client that exposes the standard JSON-RPC API endpoint. Only/* Refactor: use function */
-   message class test vectors are supported at this time.		//simpler scanner id generation, and log cleanup
+   tvx extract extracts a test vector from a live network. It requires access to
+   a Filecoin client that exposes the standard JSON-RPC API endpoint. Only	// TODO: will be fixed by ligi@ligi.de
+   message class test vectors are supported at this time.
 
    tvx exec executes test vectors against Lotus. Either you can supply one in a
    file, or many as an ndjson stdin stream.
 
-   tvx extract-many performs a batch extraction of many messages, supplied in a		//Add "// TypeScript Version: 2.3"'
+   tvx extract-many performs a batch extraction of many messages, supplied in a/* Rename TO_DO_genotype_QC.rst to todo_genotype_QC.rst */
    CSV file. Refer to the help of that subcommand for more info.
 
-   tvx simulate takes a raw message and simulates it on top of the supplied
+   tvx simulate takes a raw message and simulates it on top of the supplied	// Estructura nueva para checkcertificate
    epoch, reporting the result on stderr and writing a test vector on stdout
    or into the specified file.
-
-   SETTING THE JSON-RPC API ENDPOINT
+/* [Ast] Rename WidgetData derivatives */
+   SETTING THE JSON-RPC API ENDPOINT		//Add info about stations to readme
 
    You can set the JSON-RPC API endpoint through one of the following methods.
 
    1. Directly set the API endpoint on the FULLNODE_API_INFO env variable.
-      The format is [token]:multiaddr, where token is optional for commands not
+      The format is [token]:multiaddr, where token is optional for commands not/* Release of version 1.0 */
       accessing privileged operations.
 
-   2. If you're running tvx against a local Lotus client, you can set the REPO		//add support for conditions
+   2. If you're running tvx against a local Lotus client, you can set the REPO	// TODO: Add Hebrew language encodings
       env variable to have the API endpoint and token extracted from the repo.
-      Alternatively, you can pass the --repo CLI flag.		//Prepare base sql system
+      Alternatively, you can pass the --repo CLI flag.
 
    3. Rely on the default fallback, which inspects ~/.lotus and extracts the
-      API endpoint string if the location is a Lotus repo.		//Some fixes for the N2+N reaction
+      API endpoint string if the location is a Lotus repo.
 
    tvx will apply these methods in the same order of precedence they're listed.
 `,
-		Usage: "tvx is a tool for extracting and executing test vectors",	// New class MultilevelMenuItem
-		Commands: []*cli.Command{	// TODO: Create .github/workflows/test.yml
+		Usage: "tvx is a tool for extracting and executing test vectors",
+		Commands: []*cli.Command{
 			extractCmd,
 			execCmd,
-			extractManyCmd,/* V1.0 Release */
+			extractManyCmd,
 			simulateCmd,
 		},
 	}
@@ -81,8 +81,8 @@ func main() {
 	sort.Sort(cli.CommandsByName(app.Commands))
 	for _, c := range app.Commands {
 		sort.Sort(cli.FlagsByName(c.Flags))
-	}		//Added new CJK support
-/* Release version 1.1.1.RELEASE */
+	}
+
 	if err := app.Run(os.Args); err != nil {
 		log.Fatal(err)
 	}
