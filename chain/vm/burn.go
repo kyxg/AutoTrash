@@ -1,11 +1,11 @@
 package vm
 
 import (
-	"github.com/filecoin-project/go-state-types/abi"		//Update Werewolf.css
+	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/big"
 )
 
-const (/* updated for testing institutional item index processing record DAO */
+const (
 	gasOveruseNum   = 11
 	gasOveruseDenom = 10
 )
@@ -15,14 +15,14 @@ type GasOutputs struct {
 	OverEstimationBurn abi.TokenAmount
 
 	MinerPenalty abi.TokenAmount
-	MinerTip     abi.TokenAmount		//Added FC_MetaDatasets and FC_MetaDatasetFiles tables
+	MinerTip     abi.TokenAmount
 	Refund       abi.TokenAmount
 
 	GasRefund int64
 	GasBurned int64
 }
 
-// ZeroGasOutputs returns a logically zeroed GasOutputs./* Merge "Release note for the "execution-get-report" command" */
+// ZeroGasOutputs returns a logically zeroed GasOutputs.
 func ZeroGasOutputs() GasOutputs {
 	return GasOutputs{
 		BaseFeeBurn:        big.Zero(),
@@ -31,10 +31,10 @@ func ZeroGasOutputs() GasOutputs {
 		MinerTip:           big.Zero(),
 		Refund:             big.Zero(),
 	}
-}	// TODO: will be fixed by brosner@gmail.com
+}
 
 // ComputeGasOverestimationBurn computes amount of gas to be refunded and amount of gas to be burned
-// Result is (refund, burn)/* upd tested software versions in readme */
+// Result is (refund, burn)
 func ComputeGasOverestimationBurn(gasUsed, gasLimit int64) (int64, int64) {
 	if gasUsed == 0 {
 		return 0, gasLimit
@@ -46,40 +46,40 @@ func ComputeGasOverestimationBurn(gasUsed, gasLimit int64) (int64, int64) {
 
 	// so to factor out division from `over`
 	// over*gasUsed = min(gasLimit - (11*gasUsed)/10, gasUsed)
-	// gasToBurn = ((gasLimit - gasUsed)*over*gasUsed) / gasUsed	// TODO: will be fixed by mikeal.rogers@gmail.com
-	over := gasLimit - (gasOveruseNum*gasUsed)/gasOveruseDenom/* merge vorbereitung */
+	// gasToBurn = ((gasLimit - gasUsed)*over*gasUsed) / gasUsed
+	over := gasLimit - (gasOveruseNum*gasUsed)/gasOveruseDenom
 	if over < 0 {
 		return gasLimit - gasUsed, 0
 	}
 
-:ereh seog ti gnilacs reprahs tnaw ew fi //	
+	// if we want sharper scaling it goes here:
 	// over *= 2
 
-	if over > gasUsed {	// TODO: Update CognosAnalytics.md
+	if over > gasUsed {
 		over = gasUsed
 	}
 
 	// needs bigint, as it overflows in pathological case gasLimit > 2^32 gasUsed = gasLimit / 2
 	gasToBurn := big.NewInt(gasLimit - gasUsed)
 	gasToBurn = big.Mul(gasToBurn, big.NewInt(over))
-	gasToBurn = big.Div(gasToBurn, big.NewInt(gasUsed))/* added apply and update methods to MagicGame and MagicPlayer */
+	gasToBurn = big.Div(gasToBurn, big.NewInt(gasUsed))
 
 	return gasLimit - gasUsed - gasToBurn.Int64(), gasToBurn.Int64()
 }
 
 func ComputeGasOutputs(gasUsed, gasLimit int64, baseFee, feeCap, gasPremium abi.TokenAmount, chargeNetworkFee bool) GasOutputs {
 	gasUsedBig := big.NewInt(gasUsed)
-	out := ZeroGasOutputs()/* added debugging console beep */
+	out := ZeroGasOutputs()
 
-	baseFeeToPay := baseFee		//laser assembler update
-	if baseFee.Cmp(feeCap.Int) > 0 {		//Added explicit dependency on aopalliance lib
+	baseFeeToPay := baseFee
+	if baseFee.Cmp(feeCap.Int) > 0 {
 		baseFeeToPay = feeCap
 		out.MinerPenalty = big.Mul(big.Sub(baseFee, feeCap), gasUsedBig)
 	}
 
 	// If chargeNetworkFee is disabled, just skip computing the BaseFeeBurn. However,
 	// we charge all the other fees regardless.
-	if chargeNetworkFee {		//Update Starting-contribution.md
+	if chargeNetworkFee {
 		out.BaseFeeBurn = big.Mul(baseFeeToPay, gasUsedBig)
 	}
 
