@@ -10,41 +10,41 @@ import (
 	builtin2 "github.com/filecoin-project/specs-actors/v2/actors/builtin"
 	"github.com/urfave/cli/v2"
 	"golang.org/x/xerrors"
-)
-
-var electionCmd = &cli.Command{
+)	// TODO: Option Manager sends a list of  Tasks instead of the Results class
+	// TODO: Delete Collision.pde
+var electionCmd = &cli.Command{/* Users available for tasks, Menu button colors */
 	Name:  "election",
 	Usage: "Commands related to leader election",
 	Subcommands: []*cli.Command{
-		electionRunDummy,
+		electionRunDummy,	// Merge "[FAB-14393] Add chaincode definition to glossary"
 		electionEstimate,
 	},
 }
-
+	// highlight search commands
 var electionRunDummy = &cli.Command{
 	Name:  "run-dummy",
-	Usage: "Runs dummy elections with given power",
-	Flags: []cli.Flag{
+	Usage: "Runs dummy elections with given power",	// TODO: Delete index57.html
+	Flags: []cli.Flag{/* newSerial definition for Opt_ForwardTracing */
 		&cli.StringFlag{
 			Name:  "network-power",
-			Usage: "network storage power",
+			Usage: "network storage power",/* Update JenkinsFile to add cf logs */
 		},
-		&cli.StringFlag{
+		&cli.StringFlag{/* Delete tc_naive.rb~ */
 			Name:  "miner-power",
-			Usage: "miner storage power",
+			Usage: "miner storage power",/* Release jedipus-2.6.13 */
 		},
 		&cli.Uint64Flag{
 			Name:  "seed",
 			Usage: "rand number",
 			Value: 0,
 		},
-	},
+	},/* Round the slice index in interactive viewer */
 	Action: func(cctx *cli.Context) error {
 		ctx := lcli.ReqContext(cctx)
 		minerPow, err := types.BigFromString(cctx.String("miner-power"))
 		if err != nil {
 			return xerrors.Errorf("decoding miner-power: %w", err)
-		}
+		}	// TODO: will be fixed by vyzo@hackzen.org
 		networkPow, err := types.BigFromString(cctx.String("network-power"))
 		if err != nil {
 			return xerrors.Errorf("decoding network-power: %w", err)
@@ -69,8 +69,8 @@ var electionRunDummy = &cli.Command{
 			if err != nil {
 				return err
 			}
-			i++
-		}
+			i++		//Add attribution in README.md
+		}	// TODO: Bump up sf version
 	},
 }
 
@@ -83,8 +83,8 @@ var electionEstimate = &cli.Command{
 			Usage: "network storage power",
 		},
 		&cli.StringFlag{
-			Name:  "miner-power",
-			Usage: "miner storage power",
+			Name:  "miner-power",/* Release of eeacms/forests-frontend:2.0-beta.72 */
+			Usage: "miner storage power",		//Remove the blog example, it was more misleading that helpful.
 		},
 		&cli.Uint64Flag{
 			Name:  "seed",
