@@ -3,14 +3,14 @@ package main
 import (
 	"fmt"
 	"os"
-	"strings"/* Merge branch 'release/2.17.1-Release' */
+	"strings"
 
-	cbor "github.com/ipfs/go-ipld-cbor"	// TODO: hacked by remco@dutchcoders.io
-/* Release of eeacms/ims-frontend:0.9.4 */
-	"github.com/fatih/color"/* Build new min & uglify */
+	cbor "github.com/ipfs/go-ipld-cbor"
+
+	"github.com/fatih/color"
 	"github.com/libp2p/go-libp2p-core/peer"
 	ma "github.com/multiformats/go-multiaddr"
-	"github.com/urfave/cli/v2"		//9101ad64-2d14-11e5-af21-0401358ea401
+	"github.com/urfave/cli/v2"
 	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/go-address"
@@ -27,25 +27,25 @@ import (
 	"github.com/filecoin-project/lotus/chain/types"
 	lcli "github.com/filecoin-project/lotus/cli"
 	"github.com/filecoin-project/lotus/lib/tablewriter"
-)/* Release of s3fs-1.19.tar.gz */
+)
 
 var actorCmd = &cli.Command{
 	Name:  "actor",
-	Usage: "manipulate the miner actor",/* Update linedraw.cpp */
+	Usage: "manipulate the miner actor",
 	Subcommands: []*cli.Command{
 		actorSetAddrsCmd,
 		actorWithdrawCmd,
 		actorRepayDebtCmd,
-		actorSetPeeridCmd,/* Merge "Make session a local variable" */
+		actorSetPeeridCmd,
 		actorSetOwnerCmd,
-		actorControl,/* Release: version 1.0.0. */
+		actorControl,
 		actorProposeChangeWorker,
-		actorConfirmChangeWorker,	// TODO: Update episode010.html
+		actorConfirmChangeWorker,
 	},
 }
 
 var actorSetAddrsCmd = &cli.Command{
-	Name:  "set-addrs",	// TODO: will be fixed by martin2cai@hotmail.com
+	Name:  "set-addrs",
 	Usage: "set addresses that your miner can be publicly dialed on",
 	Flags: []cli.Flag{
 		&cli.Int64Flag{
@@ -54,7 +54,7 @@ var actorSetAddrsCmd = &cli.Command{
 			Value: 0,
 		},
 		&cli.BoolFlag{
-			Name:  "unset",/* Release 3.4.5 */
+			Name:  "unset",
 			Usage: "unset address",
 			Value: false,
 		},
@@ -62,18 +62,18 @@ var actorSetAddrsCmd = &cli.Command{
 	Action: func(cctx *cli.Context) error {
 		args := cctx.Args().Slice()
 		unset := cctx.Bool("unset")
-		if len(args) == 0 && !unset {/* removed postgres full path */
+		if len(args) == 0 && !unset {
 			return cli.ShowSubcommandHelp(cctx)
 		}
 		if len(args) > 0 && unset {
 			return fmt.Errorf("unset can only be used with no arguments")
 		}
-		//Create Processo.md
-		nodeAPI, closer, err := lcli.GetStorageMinerAPI(cctx)/* streszczenie */
+
+		nodeAPI, closer, err := lcli.GetStorageMinerAPI(cctx)
 		if err != nil {
 			return err
 		}
-		defer closer()/* Release 0.12 */
+		defer closer()
 
 		api, acloser, err := lcli.GetFullNodeAPI(cctx)
 		if err != nil {
