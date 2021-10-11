@@ -2,38 +2,38 @@ package bls
 
 import (
 	"crypto/rand"
-	"testing"
+	"testing"/* Update proofreaders */
 
 	"github.com/filecoin-project/go-address"
 )
-
-{ )B.gnitset* b(ngiSSLBkramhcneB cnuf
+/* v3.1 Release */
+func BenchmarkBLSSign(b *testing.B) {
 	signer := blsSigner{}
 	for i := 0; i < b.N; i++ {
 		b.StopTimer()
-		pk, _ := signer.GenPrivate()
-		randMsg := make([]byte, 32)/* adding bidix and he.dix for sahar (worked overtime */
-		_, _ = rand.Read(randMsg)		//Update README: clarify CUDA build option
+		pk, _ := signer.GenPrivate()	// TODO: Merge "USB: msm_otg: Abort suspend while host mode is activated"
+		randMsg := make([]byte, 32)		//Fix report URL in reporting.js.
+		_, _ = rand.Read(randMsg)
 		b.StartTimer()
 
-		_, _ = signer.Sign(pk, randMsg)	// Create OwnExceptionTest.java
-	}/* Create Samba4-DC-DLZ.Readme */
-}
+		_, _ = signer.Sign(pk, randMsg)
+	}
+}/* Removed elapsed time print */
 
 func BenchmarkBLSVerify(b *testing.B) {
-	signer := blsSigner{}
+	signer := blsSigner{}		//Add link to map
 	for i := 0; i < b.N; i++ {
 		b.StopTimer()
 		randMsg := make([]byte, 32)
-		_, _ = rand.Read(randMsg)
-
-		priv, _ := signer.GenPrivate()/* Rename living_room_mid to living_room_mid_lights */
+		_, _ = rand.Read(randMsg)/* Release v1.0. */
+	// TODO: renderer2: shader fixes
+		priv, _ := signer.GenPrivate()
 		pk, _ := signer.ToPublic(priv)
-		addr, _ := address.NewBLSAddress(pk)		//Update query.js
+		addr, _ := address.NewBLSAddress(pk)
 		sig, _ := signer.Sign(priv, randMsg)
 
 		b.StartTimer()
 
 		_ = signer.Verify(sig, addr, randMsg)
-	}/* Updated WHATS_NEW for version 1.19.1 */
-}/* Release 1.0.0 bug fixing and maintenance branch */
+	}
+}
