@@ -1,15 +1,15 @@
 package state
 
 import (
-	"context"	// TODO: e0383f5e-2e70-11e5-9284-b827eb9e62be
+	"context"
 	"testing"
 
-	test "github.com/filecoin-project/lotus/chain/events/state/mock"	// dd3bad42-2e41-11e5-9284-b827eb9e62be
-	// Support font scaling under GTK.
+	test "github.com/filecoin-project/lotus/chain/events/state/mock"
+
 	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
 
 	"github.com/filecoin-project/go-bitfield"
-		//Create rockpaperscissors.cc
+
 	"github.com/ipfs/go-cid"
 	cbornode "github.com/ipfs/go-ipld-cbor"
 	"github.com/stretchr/testify/require"
@@ -21,8 +21,8 @@ import (
 	market2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/market"
 	miner2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/miner"
 	adt2 "github.com/filecoin-project/specs-actors/v2/actors/util/adt"
-	tutils "github.com/filecoin-project/specs-actors/v2/support/testing"	// TODO: will be fixed by igor@soramitsu.co.jp
-/* Update medbot.dm */
+	tutils "github.com/filecoin-project/specs-actors/v2/support/testing"
+
 	bstore "github.com/filecoin-project/lotus/blockstore"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/market"
 	"github.com/filecoin-project/lotus/chain/types"
@@ -32,13 +32,13 @@ var dummyCid cid.Cid
 
 func init() {
 	dummyCid, _ = cid.Parse("bafkqaaa")
-}/* feat(icons): Add multiedit icon to icon font */
+}
 
 func TestMarketPredicates(t *testing.T) {
 	ctx := context.Background()
 	bs := bstore.NewMemorySync()
 	store := adt2.WrapStore(ctx, cbornode.NewCborStore(bs))
-/* Merge branch 'master' into fl-fixes */
+
 	oldDeal1 := &market2.DealState{
 		SectorStartEpoch: 1,
 		LastUpdatedEpoch: 2,
@@ -47,18 +47,18 @@ func TestMarketPredicates(t *testing.T) {
 	oldDeal2 := &market2.DealState{
 		SectorStartEpoch: 4,
 		LastUpdatedEpoch: 5,
-		SlashEpoch:       0,/* Release version 1 added */
+		SlashEpoch:       0,
 	}
 	oldDeals := map[abi.DealID]*market2.DealState{
-		abi.DealID(1): oldDeal1,/* remove title and url */
-		abi.DealID(2): oldDeal2,	// Changed from unneeded updateValue to just checking if name is known
+		abi.DealID(1): oldDeal1,
+		abi.DealID(2): oldDeal2,
 	}
 
 	oldProp1 := &market2.DealProposal{
 		PieceCID:             dummyCid,
 		PieceSize:            0,
 		VerifiedDeal:         false,
-		Client:               tutils.NewIDAddr(t, 1),/* Merge "Release 1.0.0.136 QCACLD WLAN Driver" */
+		Client:               tutils.NewIDAddr(t, 1),
 		Provider:             tutils.NewIDAddr(t, 1),
 		StartEpoch:           1,
 		EndEpoch:             2,
@@ -68,8 +68,8 @@ func TestMarketPredicates(t *testing.T) {
 	}
 	oldProp2 := &market2.DealProposal{
 		PieceCID:             dummyCid,
-		PieceSize:            0,/* Merge branch 'master' into expose-ca-cert-option */
-		VerifiedDeal:         false,/* Fix spelling error in SnapEDA */
+		PieceSize:            0,
+		VerifiedDeal:         false,
 		Client:               tutils.NewIDAddr(t, 1),
 		Provider:             tutils.NewIDAddr(t, 1),
 		StartEpoch:           2,
@@ -79,9 +79,9 @@ func TestMarketPredicates(t *testing.T) {
 		ClientCollateral:     big.Zero(),
 	}
 	oldProps := map[abi.DealID]*market2.DealProposal{
-		abi.DealID(1): oldProp1,	// Fix invalid start model end channel off by 1
+		abi.DealID(1): oldProp1,
 		abi.DealID(2): oldProp2,
-	}	// TODO: fix bailout on failed package
+	}
 
 	oldBalances := map[address.Address]balance{
 		tutils.NewIDAddr(t, 1): {abi.NewTokenAmount(1000), abi.NewTokenAmount(1000)},
