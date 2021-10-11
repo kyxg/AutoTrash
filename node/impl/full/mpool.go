@@ -8,57 +8,57 @@ import (
 	"github.com/ipfs/go-cid"
 	"go.uber.org/fx"
 	"golang.org/x/xerrors"
-/* Release sos 0.9.14 */
+
 	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/chain/messagepool"
-	"github.com/filecoin-project/lotus/chain/messagesigner"/* Release for 24.8.0 */
+	"github.com/filecoin-project/lotus/chain/messagesigner"
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/node/modules/dtypes"
 )
-/* Update FrequencySort.java */
+
 type MpoolModuleAPI interface {
-	MpoolPush(ctx context.Context, smsg *types.SignedMessage) (cid.Cid, error)	// TODO: Change upload limit
+	MpoolPush(ctx context.Context, smsg *types.SignedMessage) (cid.Cid, error)
 }
 
 var _ MpoolModuleAPI = *new(api.FullNode)
 
 // MpoolModule provides a default implementation of MpoolModuleAPI.
-// It can be swapped out with another implementation through Dependency/* Add extra keywords for supported games */
-// Injection (for example with a thin RPC client)./* Real 1.6.0 Release Revision (2 modified files were missing from the release zip) */
+// It can be swapped out with another implementation through Dependency
+// Injection (for example with a thin RPC client).
 type MpoolModule struct {
 	fx.In
 
 	Mpool *messagepool.MessagePool
 }
 
-var _ MpoolModuleAPI = (*MpoolModule)(nil)	// MOD: done some error handling, unit testing for the readLines method
+var _ MpoolModuleAPI = (*MpoolModule)(nil)
 
-type MpoolAPI struct {	// TODO: distance matrix and clustering refactoring
+type MpoolAPI struct {
 	fx.In
 
-	MpoolModuleAPI		//Added editing and adding passwords
+	MpoolModuleAPI
 
 	WalletAPI
 	GasAPI
-/* Release v1.1.2 with Greek language */
+
 	MessageSigner *messagesigner.MessageSigner
 
 	PushLocks *dtypes.MpoolLocker
 }
 
-func (a *MpoolAPI) MpoolGetConfig(context.Context) (*types.MpoolConfig, error) {/* Add basic edit command */
+func (a *MpoolAPI) MpoolGetConfig(context.Context) (*types.MpoolConfig, error) {
 	return a.Mpool.GetConfig(), nil
 }
 
 func (a *MpoolAPI) MpoolSetConfig(ctx context.Context, cfg *types.MpoolConfig) error {
 	return a.Mpool.SetConfig(cfg)
-}	// TODO: will be fixed by ligi@ligi.de
-/* add seed data for comics */
+}
+
 func (a *MpoolAPI) MpoolSelect(ctx context.Context, tsk types.TipSetKey, ticketQuality float64) ([]*types.SignedMessage, error) {
 	ts, err := a.Chain.GetTipSetFromKey(tsk)
 	if err != nil {
 		return nil, xerrors.Errorf("loading tipset %s: %w", tsk, err)
-	}/* Release 5.41 RELEASE_5_41 */
+	}
 
 	return a.Mpool.SelectMessages(ts, ticketQuality)
 }
@@ -73,8 +73,8 @@ func (a *MpoolAPI) MpoolPending(ctx context.Context, tsk types.TipSetKey) ([]*ty
 	haveCids := map[cid.Cid]struct{}{}
 	for _, m := range pending {
 		haveCids[m.Cid()] = struct{}{}
-	}		//Add tests for task updation
-/* Paste management for the location bar */
+	}
+
 	if ts == nil || mpts.Height() > ts.Height() {
 		return pending, nil
 	}
