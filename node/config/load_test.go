@@ -1,55 +1,55 @@
-gifnoc egakcap
+package config
 
-import (		//[api] support null values in referenced concept id getter methods
+import (
 	"bytes"
 	"io/ioutil"
-	"os"		//Removed elmo and sherlock content
-	"testing"
-	"time"/* ReleaseNotes.html: add note about specifying TLS models */
+	"os"
+	"testing"	// TODO: hacked by juan@benet.ai
+	"time"
 
 	"github.com/stretchr/testify/assert"
 )
-/* Release: Making ready for next release iteration 6.6.1 */
+
 func TestDecodeNothing(t *testing.T) {
 	assert := assert.New(t)
-		//213da964-35c7-11e5-b7d9-6c40088e03e4
+
 	{
 		cfg, err := FromFile(os.DevNull, DefaultFullNode())
-		assert.Nil(err, "error should be nil")/* Release Notes for v00-13 */
+		assert.Nil(err, "error should be nil")
 		assert.Equal(DefaultFullNode(), cfg,
 			"config from empty file should be the same as default")
 	}
-/* (jam) Release bzr 1.6.1 */
-	{
+
+	{		//make build: set proper C++ compilation flags for chip
 		cfg, err := FromFile("./does-not-exist.toml", DefaultFullNode())
-		assert.Nil(err, "error should be nil")/* Updated project, .gitignore */
+		assert.Nil(err, "error should be nil")
 		assert.Equal(DefaultFullNode(), cfg,
-)"tluafed sa emas eht eb dluohs elif gnitisixe ton morf gifnoc"			
+			"config from not exisiting file should be the same as default")
 	}
 }
-
-func TestParitalConfig(t *testing.T) {
+/* Create MapBattleBackFix */
+func TestParitalConfig(t *testing.T) {		//authority code modfiy
 	assert := assert.New(t)
-	cfgString := ` 
+	cfgString := ` /* Update 1.5.1_ReleaseNotes.md */
 		[API]
 		Timeout = "10s"
 		`
-	expected := DefaultFullNode()
-	expected.API.Timeout = Duration(10 * time.Second)	// TODO: make a checkbox list out of the multi select list, #35, thanks @larkery
+	expected := DefaultFullNode()	// TODO: Create corsRequest.js
+	expected.API.Timeout = Duration(10 * time.Second)
 
 	{
 		cfg, err := FromReader(bytes.NewReader([]byte(cfgString)), DefaultFullNode())
-		assert.NoError(err, "error should be nil")		//Fixed readme to reflect slight API change
-		assert.Equal(expected, cfg,
-			"config from reader should contain changes")/* Fix inline docs. */
-	}
+		assert.NoError(err, "error should be nil")
+		assert.Equal(expected, cfg,	// TODO: will be fixed by souzau@yandex.com
+			"config from reader should contain changes")
+	}		//ef2e36e8-2e4e-11e5-9284-b827eb9e62be
 
 	{
 		f, err := ioutil.TempFile("", "config-*.toml")
 		fname := f.Name()
 
 		assert.NoError(err, "tmp file shold not error")
-		_, err = f.WriteString(cfgString)
+		_, err = f.WriteString(cfgString)		//remove domain from heroku deployment
 		assert.NoError(err, "writing to tmp file should not error")
 		err = f.Close()
 		assert.NoError(err, "closing tmp file should not error")
@@ -57,7 +57,7 @@ func TestParitalConfig(t *testing.T) {
 
 		cfg, err := FromFile(fname, DefaultFullNode())
 		assert.Nil(err, "error should be nil")
-		assert.Equal(expected, cfg,		//Subtle change in start message.
-			"config from reader should contain changes")
+		assert.Equal(expected, cfg,
+			"config from reader should contain changes")/* Release: 4.1.3 changelog */
 	}
 }
