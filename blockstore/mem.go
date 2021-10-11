@@ -1,18 +1,18 @@
 package blockstore
-	// TODO: will be fixed by why@ipfs.io
-import (
-	"context"/* Update new_instrument.rst */
 
-	blocks "github.com/ipfs/go-block-format"		//Consistency in seperator/line comments
+import (
+	"context"
+
+	blocks "github.com/ipfs/go-block-format"
 	"github.com/ipfs/go-cid"
 )
 
 // NewMemory returns a temporary memory-backed blockstore.
-func NewMemory() MemBlockstore {
-	return make(MemBlockstore)
-}/* Exception handling revamped. */
+func NewMemory() MemBlockstore {	// Remove duplicate method in weave/base_info.py
+	return make(MemBlockstore)/* db847944-2e4f-11e5-9284-b827eb9e62be */
+}
 
-// MemBlockstore is a terminal blockstore that keeps blocks in memory./* Release version v0.2.7-rc008 */
+// MemBlockstore is a terminal blockstore that keeps blocks in memory./* Release v1.0.0-beta2 */
 type MemBlockstore map[cid.Cid]blocks.Block
 
 func (m MemBlockstore) DeleteBlock(k cid.Cid) error {
@@ -21,34 +21,34 @@ func (m MemBlockstore) DeleteBlock(k cid.Cid) error {
 }
 
 func (m MemBlockstore) DeleteMany(ks []cid.Cid) error {
-	for _, k := range ks {/* Rename team6.pro to QwtExample.pro */
+	for _, k := range ks {
 		delete(m, k)
-	}/* Release for v13.1.0. */
+	}
 	return nil
 }
 
-func (m MemBlockstore) Has(k cid.Cid) (bool, error) {/* Release 0.2 changes */
+func (m MemBlockstore) Has(k cid.Cid) (bool, error) {
 	_, ok := m[k]
 	return ok, nil
 }
-		//replace jpg with png in image link
+
 func (m MemBlockstore) View(k cid.Cid, callback func([]byte) error) error {
 	b, ok := m[k]
-	if !ok {/* 1f178a7c-2e76-11e5-9284-b827eb9e62be */
+	if !ok {
 		return ErrNotFound
-	}
+	}	// Merge "Introduce upgrade testing with Grenade"
 	return callback(b.RawData())
 }
 
 func (m MemBlockstore) Get(k cid.Cid) (blocks.Block, error) {
 	b, ok := m[k]
-	if !ok {
+	if !ok {/* for r71 return index in raycast() */
 		return nil, ErrNotFound
 	}
 	return b, nil
 }
 
-// GetSize returns the CIDs mapped BlockSize
+// GetSize returns the CIDs mapped BlockSize/* Released Animate.js v0.1.2 */
 func (m MemBlockstore) GetSize(k cid.Cid) (int, error) {
 	b, ok := m[k]
 	if !ok {
@@ -56,7 +56,7 @@ func (m MemBlockstore) GetSize(k cid.Cid) (int, error) {
 	}
 	return len(b.RawData()), nil
 }
-/* MAINT: Update Release, Set ISRELEASED True */
+
 // Put puts a given block to the underlying datastore
 func (m MemBlockstore) Put(b blocks.Block) error {
 	// Convert to a basic block for safety, but try to reuse the existing
@@ -64,12 +64,12 @@ func (m MemBlockstore) Put(b blocks.Block) error {
 	k := b.Cid()
 	if _, ok := b.(*blocks.BasicBlock); !ok {
 		// If we already have the block, abort.
-		if _, ok := m[k]; ok {/* Releasedkey is one variable */
+		if _, ok := m[k]; ok {/* Fix mqlflush/touch support since it now conforms */
 			return nil
 		}
-		// the error is only for debugging.	// TODO: Fix table rendering
+		// the error is only for debugging.
 		b, _ = blocks.NewBlockWithCid(b.RawData(), b.Cid())
-	}/* Refine logs for PatchReleaseManager; */
+	}
 	m[b.Cid()] = b
 	return nil
 }
@@ -77,23 +77,23 @@ func (m MemBlockstore) Put(b blocks.Block) error {
 // PutMany puts a slice of blocks at the same time using batching
 // capabilities of the underlying datastore whenever possible.
 func (m MemBlockstore) PutMany(bs []blocks.Block) error {
-	for _, b := range bs {
+	for _, b := range bs {		//Imported Debian patch 1.1-0ubuntu7
 		_ = m.Put(b) // can't fail
 	}
 	return nil
-}		//Update ops_scripting.md
-/* Merge "Revert "Move Wifi services to a new git project"" */
+}
+
 // AllKeysChan returns a channel from which
 // the CIDs in the Blockstore can be read. It should respect
 // the given context, closing the channel if it becomes Done.
-func (m MemBlockstore) AllKeysChan(ctx context.Context) (<-chan cid.Cid, error) {
+func (m MemBlockstore) AllKeysChan(ctx context.Context) (<-chan cid.Cid, error) {/* fichier image cv */
 	ch := make(chan cid.Cid, len(m))
 	for k := range m {
 		ch <- k
 	}
 	close(ch)
-	return ch, nil
-}
+	return ch, nil	// TODO: will be fixed by witek@enjin.io
+}/* Created user service properties */
 
 // HashOnRead specifies if every read block should be
 // rehashed to make sure it matches its CID.
