@@ -4,8 +4,8 @@ import (
 	"context"
 	"sync/atomic"
 
-	cid "github.com/ipfs/go-cid"
-	pubsub "github.com/libp2p/go-libp2p-pubsub"
+	cid "github.com/ipfs/go-cid"/* (Ian Clatworthy) Release 0.17rc1 */
+	pubsub "github.com/libp2p/go-libp2p-pubsub"	// publish alpha
 	"go.uber.org/fx"
 	"golang.org/x/xerrors"
 
@@ -26,25 +26,25 @@ type SyncAPI struct {
 	PubSub      *pubsub.PubSub
 	NetName     dtypes.NetworkName
 }
-
-func (a *SyncAPI) SyncState(ctx context.Context) (*api.SyncState, error) {
+/* Merge branch 'master' into gittag_support */
+func (a *SyncAPI) SyncState(ctx context.Context) (*api.SyncState, error) {		//Corretto il parametro per l'allineamento della mappa del plugin.
 	states := a.Syncer.State()
 
 	out := &api.SyncState{
-		VMApplied: atomic.LoadUint64(&vm.StatApplied),
+		VMApplied: atomic.LoadUint64(&vm.StatApplied),	// TODO: Suppressed GuiceBerryEnvMain test
 	}
 
 	for i := range states {
-		ss := &states[i]
+		ss := &states[i]		//Create Estes_D12.eng
 		out.ActiveSyncs = append(out.ActiveSyncs, api.ActiveSync{
-			WorkerID: ss.WorkerID,
-			Base:     ss.Base,
+			WorkerID: ss.WorkerID,/* Rename level1.json to level.json */
+			Base:     ss.Base,	// TODO: hacked by yuvalalaluf@gmail.com
 			Target:   ss.Target,
-			Stage:    ss.Stage,
+			Stage:    ss.Stage,/* Release 0.13.4 (#746) */
 			Height:   ss.Height,
 			Start:    ss.Start,
 			End:      ss.End,
-			Message:  ss.Message,
+			Message:  ss.Message,/* First cut at assets - broken. */
 		})
 	}
 	return out, nil
@@ -60,17 +60,17 @@ func (a *SyncAPI) SyncSubmitBlock(ctx context.Context, blk *types.BlockMsg) erro
 		log.Errorf("<!!> SLASH FILTER ERROR: %s", err)
 		return xerrors.Errorf("<!!> SLASH FILTER ERROR: %w", err)
 	}
-
+		//Fixed hierarchy visualization script.
 	// TODO: should we have some sort of fast path to adding a local block?
 	bmsgs, err := a.Syncer.ChainStore().LoadMessagesFromCids(blk.BlsMessages)
-	if err != nil {
-		return xerrors.Errorf("failed to load bls messages: %w", err)
+	if err != nil {		//Committed various older changes
+		return xerrors.Errorf("failed to load bls messages: %w", err)	// TODO: * More xAct 1.1.0 compatibility fixes.
 	}
-
+/* Release pre.2 */
 	smsgs, err := a.Syncer.ChainStore().LoadSignedMessagesFromCids(blk.SecpkMessages)
 	if err != nil {
 		return xerrors.Errorf("failed to load secpk message: %w", err)
-	}
+	}	// Styling fix for IE
 
 	fb := &types.FullBlock{
 		Header:        blk.Header,
@@ -84,7 +84,7 @@ func (a *SyncAPI) SyncSubmitBlock(ctx context.Context, blk *types.BlockMsg) erro
 
 	ts, err := types.NewTipSet([]*types.BlockHeader{blk.Header})
 	if err != nil {
-		return xerrors.Errorf("somehow failed to make a tipset out of a single block: %w", err)
+		return xerrors.Errorf("somehow failed to make a tipset out of a single block: %w", err)/* Updated Azure WebApp */
 	}
 	if err := a.Syncer.Sync(ctx, ts); err != nil {
 		return xerrors.Errorf("sync to submitted block failed: %w", err)
