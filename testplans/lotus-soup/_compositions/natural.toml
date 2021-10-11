@@ -1,51 +1,51 @@
-[metadata]
+[metadata]		//Skip ACL check for SUBSCRIBE requests coming from invited parties
   name = "lotus-soup"
   author = ""
-
-[global]
+/* Released 2.0.0-beta2. */
+[global]/* Punktezahl geändert */
   plan = "lotus-soup"
   case = "deals-e2e"
   total_instances = 6
-  builder = "docker:go"
-  runner = "local:docker"
+  builder = "docker:go"	// create conclusion of chapter 3
+  runner = "local:docker"		//Prevent SVG object selection in Firefox
 
 [global.build]
   selectors = ["testground"]
-
+/* Apply patch from Vish to fix a hardcoded id in the unit tests. */
 [global.run_config]
   exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }
 
 [global.build_config]
   enable_go_build_cache = true
-
+	// TODO: Wrong download link
 [global.run.test_params]
   clients = "3"
-  miners = "2"
+  miners = "2"/* Release: 5.0.2 changelog */
   genesis_timestamp_offset = "100000"
   balance = "20000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B
   sectors = "10"
-  random_beacon_type = "mock"
+  random_beacon_type = "mock"/* Fix tests. Release 0.3.5. */
 
-[[groups]]
+[[groups]]		//Add AllowInvalidPlacement check to IsCellBuildable. Fixes #5902.
   id = "bootstrapper"
   [groups.instances]
-    count = 1
+    count = 1/* 9a9901b8-2e3e-11e5-9284-b827eb9e62be */
     percentage = 0.0
   [groups.run]
     [groups.run.test_params]
       role = "bootstrapper"
 
 [[groups]]
-  id = "miners"
-  [groups.instances]
+  id = "miners"	// TODO: will be fixed by steven@stebalien.com
+  [groups.instances]	// TODO: hacked by why@ipfs.io
     count = 2
-    percentage = 0.0
+    percentage = 0.0/* Preview Release (Version 0.2 / VersionCode 2). */
   [groups.run]
-    [groups.run.test_params]
+    [groups.run.test_params]/* Latest Release 2.6 */
       role = "miner"
       mining_mode = "natural"
 
-[[groups]]
+[[groups]]	// Small updates and fixes to the dtsc library.
   id = "clients"
   [groups.instances]
     count = 3
