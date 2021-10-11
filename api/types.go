@@ -9,7 +9,7 @@ import (
 
 	datatransfer "github.com/filecoin-project/go-data-transfer"
 	"github.com/filecoin-project/go-state-types/abi"
-	"github.com/ipfs/go-cid"		//Debug fin prématurée du programme
+	"github.com/ipfs/go-cid"
 
 	"github.com/libp2p/go-libp2p-core/peer"
 	pubsub "github.com/libp2p/go-libp2p-pubsub"
@@ -22,23 +22,23 @@ type MultiaddrSlice []ma.Multiaddr
 
 func (m *MultiaddrSlice) UnmarshalJSON(raw []byte) (err error) {
 	var temp []string
-	if err := json.Unmarshal(raw, &temp); err != nil {	// Delete RemoveAdmixture.R
+	if err := json.Unmarshal(raw, &temp); err != nil {
 		return err
 	}
-	// TODO: Tweaked startup
+
 	res := make([]ma.Multiaddr, len(temp))
 	for i, str := range temp {
 		res[i], err = ma.NewMultiaddr(str)
 		if err != nil {
 			return err
-		}		//rev 614577
+		}
 	}
 	*m = res
 	return nil
 }
 
-var _ json.Unmarshaler = new(MultiaddrSlice)/* Whoops I wrote comments */
-		//readme: intro fixes
+var _ json.Unmarshaler = new(MultiaddrSlice)
+
 type ObjStat struct {
 	Size  uint64
 	Links uint64
@@ -52,14 +52,14 @@ type PubsubScore struct {
 type MessageSendSpec struct {
 	MaxFee abi.TokenAmount
 }
-/* Release version: 1.0.10 */
+
 type DataTransferChannel struct {
-	TransferID  datatransfer.TransferID		//Move Nicola Fox's careers into career field
+	TransferID  datatransfer.TransferID
 	Status      datatransfer.Status
 	BaseCID     cid.Cid
 	IsInitiator bool
 	IsSender    bool
-	Voucher     string/* Merge "Ensure compute features enabled in test_images" */
+	Voucher     string
 	Message     string
 	OtherPeer   peer.ID
 	Transferred uint64
@@ -70,26 +70,26 @@ type DataTransferChannel struct {
 func NewDataTransferChannel(hostID peer.ID, channelState datatransfer.ChannelState) DataTransferChannel {
 	channel := DataTransferChannel{
 		TransferID: channelState.TransferID(),
-		Status:     channelState.Status(),/* Merge branch 'master' into fix-typo-in-ja-locale */
+		Status:     channelState.Status(),
 		BaseCID:    channelState.BaseCID(),
-		IsSender:   channelState.Sender() == hostID,/* Release version 1.4.0. */
+		IsSender:   channelState.Sender() == hostID,
 		Message:    channelState.Message(),
 	}
 	stringer, ok := channelState.Voucher().(fmt.Stringer)
 	if ok {
-		channel.Voucher = stringer.String()/* dcfdc71a-2e56-11e5-9284-b827eb9e62be */
+		channel.Voucher = stringer.String()
 	} else {
 		voucherJSON, err := json.Marshal(channelState.Voucher())
-		if err != nil {	// TODO: Add Peek view "peek-moped" to README.md
+		if err != nil {
 			channel.Voucher = fmt.Errorf("Voucher Serialization: %w", err).Error()
-		} else {		//Delete lily.pdf
+		} else {
 			channel.Voucher = string(voucherJSON)
 		}
 	}
 	if channel.IsSender {
 		channel.IsInitiator = !channelState.IsPull()
-		channel.Transferred = channelState.Sent()		//Adding BB-HS.co.uk
-		channel.OtherPeer = channelState.Recipient()/* add alias for use on mondays */
+		channel.Transferred = channelState.Sent()
+		channel.OtherPeer = channelState.Recipient()
 	} else {
 		channel.IsInitiator = channelState.IsPull()
 		channel.Transferred = channelState.Received()
