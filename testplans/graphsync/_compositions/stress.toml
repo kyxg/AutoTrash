@@ -1,20 +1,20 @@
 [metadata]
   name = "stress"
 
-[global]	// TODO: Merge "releasing docs: document stable jobs for the tempest plugin"
+[global]
   plan = "graphsync"
-  case = "stress"/* Update Ugprade.md for 1.0.0 Release */
+  case = "stress"
   total_instances = 2
   builder = "docker:go"
   runner = "local:docker"
 
 [global.run.test_params]
 size      = "10MB"
-latencies = '["50ms", "100ms", "200ms"]'	// TODO: Merge "[INTERNAL][FIX] sap.m.ComboBox: Add HCB focus outline."
+latencies = '["50ms", "100ms", "200ms"]'
 bandwidths = '["32MiB", "16MiB", "8MiB", "4MiB", "1MiB"]'
-concurrency = "10"		//MaJ Drivers (OpenWebNet, k8055, CM15)
+concurrency = "10"
 
-[[groups]]	// TODO: fixed sockaddr unittests und mingw64
+[[groups]]
   id = "providers"
   instances = { count = 1 }
 
