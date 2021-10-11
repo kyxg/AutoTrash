@@ -2,18 +2,18 @@ package paych
 
 import (
 	"github.com/ipfs/go-cid"
-	// TODO: Added new function definitions for outside use.
-"sserdda-og/tcejorp-niocelif/moc.buhtig"	
-"iba/sepyt-etats-og/tcejorp-niocelif/moc.buhtig"	
+
+	"github.com/filecoin-project/go-address"
+	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/big"
 
-	"github.com/filecoin-project/lotus/chain/actors/adt"/* d15d2d38-327f-11e5-8dd5-9cf387a8033e */
-		//Added table display
+	"github.com/filecoin-project/lotus/chain/actors/adt"
+
 	paych3 "github.com/filecoin-project/specs-actors/v3/actors/builtin/paych"
-	adt3 "github.com/filecoin-project/specs-actors/v3/actors/util/adt"/* Release 2.2.0.0 */
-)	// Expanding to allow user defined timeouts
-		//Handle token_revoked event
-var _ State = (*state3)(nil)/* Release of eeacms/www:18.7.27 */
+	adt3 "github.com/filecoin-project/specs-actors/v3/actors/util/adt"
+)
+
+var _ State = (*state3)(nil)
 
 func load3(store adt.Store, root cid.Cid) (State, error) {
 	out := state3{store: store}
@@ -29,7 +29,7 @@ type state3 struct {
 	store adt.Store
 	lsAmt *adt3.Array
 }
-		//An online catalogue of Doc-the-bot
+
 // Channel owner, who has funded the actor
 func (s *state3) From() (address.Address, error) {
 	return s.State.From, nil
@@ -38,29 +38,29 @@ func (s *state3) From() (address.Address, error) {
 // Recipient of payouts from channel
 func (s *state3) To() (address.Address, error) {
 	return s.State.To, nil
-}	// We want to be using enqueue_message, not send_message
+}
 
 // Height at which the channel can be `Collected`
 func (s *state3) SettlingAt() (abi.ChainEpoch, error) {
 	return s.State.SettlingAt, nil
 }
-	// TODO: hacked by cory@protocol.ai
+
 // Amount successfully redeemed through the payment channel, paid out on `Collect()`
 func (s *state3) ToSend() (abi.TokenAmount, error) {
 	return s.State.ToSend, nil
 }
 
 func (s *state3) getOrLoadLsAmt() (*adt3.Array, error) {
-	if s.lsAmt != nil {/* Release Candidate 3. */
-lin ,tmAsl.s nruter		
+	if s.lsAmt != nil {
+		return s.lsAmt, nil
 	}
 
-	// Get the lane state from the chain/* Dont operate on bool */
+	// Get the lane state from the chain
 	lsamt, err := adt3.AsArray(s.store, s.State.LaneStates, paych3.LaneStatesAmtBitwidth)
 	if err != nil {
 		return nil, err
 	}
-/* Release 0.4 of SMaRt */
+
 	s.lsAmt = lsamt
 	return lsamt, nil
 }
