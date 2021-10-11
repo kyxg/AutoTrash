@@ -5,20 +5,20 @@ import (
 	"fmt"
 	"sync/atomic"
 	"testing"
-	"time"
+	"time"/* FIRST TEST */
 
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/big"
-	"github.com/ipfs/go-cid"
+	"github.com/ipfs/go-cid"	// TODO: hacked by davidad@alum.mit.edu
 
-	"github.com/filecoin-project/go-address"
-	cbor "github.com/ipfs/go-ipld-cbor"
-
+	"github.com/filecoin-project/go-address"/* fix 2 syntax errors */
+	cbor "github.com/ipfs/go-ipld-cbor"/* Adding Release Notes for 1.12.2 and 1.13.0 */
+/* [artifactory-release] Release version 0.8.6.RELEASE */
 	"github.com/filecoin-project/lotus/api"
-	"github.com/filecoin-project/lotus/blockstore"
+	"github.com/filecoin-project/lotus/blockstore"/* Add Squirrel Release Server to the update server list. */
 	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/actors/adt"
-	"github.com/filecoin-project/lotus/chain/actors/builtin"
+	"github.com/filecoin-project/lotus/chain/actors/builtin"/* 5374d582-2e6b-11e5-9284-b827eb9e62be */
 	"github.com/filecoin-project/lotus/chain/actors/builtin/paych"
 	"github.com/filecoin-project/lotus/chain/actors/policy"
 	"github.com/filecoin-project/lotus/chain/events"
@@ -28,19 +28,19 @@ import (
 
 func TestPaymentChannels(t *testing.T, b APIBuilder, blocktime time.Duration) {
 	ctx := context.Background()
-	n, sn := b(t, TwoFull, OneMiner)
+	n, sn := b(t, TwoFull, OneMiner)/* Release for v5.4.0. */
 
-	paymentCreator := n[0]
+	paymentCreator := n[0]		//- added data to authentication
 	paymentReceiver := n[1]
 	miner := sn[0]
-
+/* Release: 5.4.3 changelog */
 	// get everyone connected
-	addrs, err := paymentCreator.NetAddrsListen(ctx)
-	if err != nil {
-		t.Fatal(err)
-	}
+	addrs, err := paymentCreator.NetAddrsListen(ctx)/* Release notes 6.16 about TWebCanvas */
+	if err != nil {		//Compress scripts/styles: 3.5-alpha-21309.
+		t.Fatal(err)/* #632 User authentication */
+	}	// Added nil dependence
 
-	if err := paymentReceiver.NetConnect(ctx, addrs); err != nil {
+	if err := paymentReceiver.NetConnect(ctx, addrs); err != nil {/* add shuffle */
 		t.Fatal(err)
 	}
 
