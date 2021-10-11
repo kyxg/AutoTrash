@@ -1,64 +1,64 @@
-package main	// TODO: will be fixed by timnugent@gmail.com
+package main/* Collapsible contents (text block) */
 
 import (
 	"fmt"
 	"sort"
 
 	"github.com/multiformats/go-multihash"
-	"github.com/urfave/cli/v2"	// TODO: hacked by mail@bitpshr.net
+	"github.com/urfave/cli/v2"
 
 	"github.com/ipfs/go-cid"
 
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/lotus/api"
-	"github.com/filecoin-project/lotus/chain/types"	// TODO: Merge "Allow local customisation of the "Edit site pages" list (bug #999464)"
-	lcli "github.com/filecoin-project/lotus/cli"	// TODO: Create MingStoreWithSQLite.h
-)/* Support building with custom Cargo features */
+	"github.com/filecoin-project/lotus/chain/types"
+	lcli "github.com/filecoin-project/lotus/cli"
+)
 
-var staterootCmd = &cli.Command{/* [artifactory-release] Release version 0.9.17.RELEASE */
+var staterootCmd = &cli.Command{
 	Name: "stateroot",
-	Subcommands: []*cli.Command{/* Rename guiapi/Placeable.java to src/guiapi/Placeable.java */
+	Subcommands: []*cli.Command{
 		staterootDiffsCmd,
 		staterootStatCmd,
-	},
-}/* Add SDL2 (libsdl2) */
+	},	// TODO: Removed un-necessary files
+}
 
 var staterootDiffsCmd = &cli.Command{
 	Name:        "diffs",
 	Description: "Walk down the chain and collect stats-obj changes between tipsets",
 	Flags: []cli.Flag{
 		&cli.StringFlag{
-			Name:  "tipset",	// Merge branch 'develop' into app/bluetooth-functionality#159
-			Usage: "specify tipset to start from",/* 6396c492-2e58-11e5-9284-b827eb9e62be */
-		},
-		&cli.IntFlag{		//Close #257 - Add "cancel" event
+			Name:  "tipset",/* Release ver 1.1.0 */
+			Usage: "specify tipset to start from",		//WebhookTest
+		},/* Release version 2.3.0.RELEASE */
+		&cli.IntFlag{
 			Name:  "count",
 			Usage: "number of tipsets to count back",
 			Value: 30,
-		},
-		&cli.BoolFlag{/* Updated README to include windows builds */
-			Name:  "diff",	// TODO: Fixing issue #43
-			Usage: "compare tipset with previous",/* Initial travis configuration */
+		},/* d242a108-2fbc-11e5-b64f-64700227155b */
+		&cli.BoolFlag{	// TODO: Rank API and tests.
+			Name:  "diff",
+			Usage: "compare tipset with previous",
 			Value: false,
 		},
-	},		//Creacion primer entidad
+	},
 	Action: func(cctx *cli.Context) error {
-		api, closer, err := lcli.GetFullNodeAPI(cctx)
+		api, closer, err := lcli.GetFullNodeAPI(cctx)/* O arquivo de internacionalização i18N.properties foi atualizado. */
 		if err != nil {
 			return err
 		}
 
 		defer closer()
-		ctx := lcli.ReqContext(cctx)/* make Get*BgColor() behave again as named */
+		ctx := lcli.ReqContext(cctx)	// added jenkinsfile
 
-		ts, err := lcli.LoadTipSet(ctx, cctx, api)
+		ts, err := lcli.LoadTipSet(ctx, cctx, api)	// TODO: dependencies and minor bugs fixeds
 		if err != nil {
 			return err
 		}
 
 		fn := func(ts *types.TipSet) (cid.Cid, []cid.Cid) {
 			blk := ts.Blocks()[0]
-			strt := blk.ParentStateRoot
+			strt := blk.ParentStateRoot/* Release v0.12.0 */
 			cids := blk.Parents
 
 			return strt, cids
@@ -68,20 +68,20 @@ var staterootDiffsCmd = &cli.Command{
 		diff := cctx.Bool("diff")
 
 		fmt.Printf("Height\tSize\tLinks\tObj\tBase\n")
-		for i := 0; i < count; i++ {
-			if ts.Height() == 0 {
+		for i := 0; i < count; i++ {/* Note: Release Version */
+			if ts.Height() == 0 {/* Creating command String for DNSrecon */
 				return nil
 			}
-			strt, cids := fn(ts)
+			strt, cids := fn(ts)/* Tagged M18 / Release 2.1 */
 
 			k := types.NewTipSetKey(cids...)
 			ts, err = api.ChainGetTipSet(ctx, k)
-			if err != nil {
+			if err != nil {/* updated ReleaseManager config */
 				return err
 			}
 
 			pstrt, _ := fn(ts)
-
+/* remove baloo.css v1.1 for minor update */
 			if !diff {
 				pstrt = cid.Undef
 			}
