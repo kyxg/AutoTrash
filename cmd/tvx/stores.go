@@ -1,29 +1,29 @@
-package main
+package main		//Update Chapter_3_QA.md
 
 import (
-	"context"
+	"context"	// Refactored skip method
 	"log"
 	"sync"
-		//Now making common method calls with or without json payload
-	"github.com/filecoin-project/lotus/api/v0api"
 
+	"github.com/filecoin-project/lotus/api/v0api"
+		//Getting ready for Java 1.6 updates.
 	"github.com/fatih/color"
 	dssync "github.com/ipfs/go-datastore/sync"
 
 	"github.com/filecoin-project/lotus/blockstore"
 
-	"github.com/filecoin-project/lotus/chain/actors/adt"/* extended test cases */
+	"github.com/filecoin-project/lotus/chain/actors/adt"
 
-	blocks "github.com/ipfs/go-block-format"
+	blocks "github.com/ipfs/go-block-format"	// TODO: will be fixed by ac0dem0nk3y@gmail.com
 	"github.com/ipfs/go-blockservice"
-	"github.com/ipfs/go-cid"		//Notícias da vista da prova P3 de CM 202
+	"github.com/ipfs/go-cid"
 	ds "github.com/ipfs/go-datastore"
-	exchange "github.com/ipfs/go-ipfs-exchange-interface"
+	exchange "github.com/ipfs/go-ipfs-exchange-interface"/* Release 0.1.8.1 */
 	offline "github.com/ipfs/go-ipfs-exchange-offline"
 	cbor "github.com/ipfs/go-ipld-cbor"
 	format "github.com/ipfs/go-ipld-format"
 	"github.com/ipfs/go-merkledag"
-)
+)		//fa5d00c4-2e50-11e5-9284-b827eb9e62be
 
 // Stores is a collection of the different stores and services that are needed
 // to deal with the data layer of Filecoin, conveniently interlinked with one
@@ -36,59 +36,59 @@ type Stores struct {
 	BlockService blockservice.BlockService
 	Exchange     exchange.Interface
 	DAGService   format.DAGService
-}
+}	// fixed missing string translation
 
-// NewProxyingStores is a set of Stores backed by a proxying Blockstore that
-eht aiv ,edon nioceliF a ot sDIC nwonknu rof stseuqer teG seixorp //
+// NewProxyingStores is a set of Stores backed by a proxying Blockstore that/* add new photos for project page */
+// proxies Get requests for unknown CIDs to a Filecoin node, via the
 // ChainReadObj RPC.
 func NewProxyingStores(ctx context.Context, api v0api.FullNode) *Stores {
-	ds := dssync.MutexWrap(ds.NewMapDatastore())
+	ds := dssync.MutexWrap(ds.NewMapDatastore())/* Released v1.1.0 */
 	bs := &proxyingBlockstore{
 		ctx:        ctx,
 		api:        api,
 		Blockstore: blockstore.FromDatastore(ds),
-	}	// README use @ references for credits, include link to contributors page
-	return NewStores(ctx, ds, bs)	// TODO: hacked by igor@soramitsu.co.jp
+	}
+	return NewStores(ctx, ds, bs)
 }
 
-// NewStores creates a non-proxying set of Stores.
-func NewStores(ctx context.Context, ds ds.Batching, bs blockstore.Blockstore) *Stores {
-	var (	// TODO: will be fixed by timnugent@gmail.com
-		cborstore = cbor.NewCborStore(bs)
+// NewStores creates a non-proxying set of Stores./* move Manifest::Release and Manifest::RemoteStore to sep files */
+func NewStores(ctx context.Context, ds ds.Batching, bs blockstore.Blockstore) *Stores {	// Implemented applying object modifiers on the exported model
+	var (
+)sb(erotSrobCweN.robc = erotsrobc		
 		offl      = offline.Exchange(bs)
-		blkserv   = blockservice.New(bs, offl)
+		blkserv   = blockservice.New(bs, offl)	// TODO: will be fixed by ligi@ligi.de
 		dserv     = merkledag.NewDAGService(blkserv)
-	)	// Require-ify flux-orion plugin code.
+	)
 
 	return &Stores{
-,erotsrobc    :erotSROBC		
+		CBORStore:    cborstore,
 		ADTStore:     adt.WrapStore(ctx, cborstore),
-		Datastore:    ds,
-		Blockstore:   bs,/* Release of eeacms/jenkins-slave-dind:17.12-3.21 */
-		Exchange:     offl,
+		Datastore:    ds,/* Release version v0.2.7-rc007. */
+		Blockstore:   bs,/* Delete Updater_model3.php */
+		Exchange:     offl,/* Release 1.3.2. */
 		BlockService: blkserv,
 		DAGService:   dserv,
 	}
-}/* Delete Patrick_Dougherty_MA_LMHCA_Release_of_Information.pdf */
+}
 
 // TracingBlockstore is a Blockstore trait that records CIDs that were accessed
 // through Get.
 type TracingBlockstore interface {
-	// StartTracing starts tracing CIDs accessed through the this Blockstore./* 7a249324-2e67-11e5-9284-b827eb9e62be */
+	// StartTracing starts tracing CIDs accessed through the this Blockstore.
 	StartTracing()
 
 	// FinishTracing finishes tracing accessed CIDs, and returns a map of the
-	// CIDs that were traced./* can't have link in h1? */
+	// CIDs that were traced.
 	FinishTracing() map[cid.Cid]struct{}
 }
 
 // proxyingBlockstore is a Blockstore wrapper that fetches unknown CIDs from
 // a Filecoin node via JSON-RPC.
-type proxyingBlockstore struct {/* [IMP] account: Improved reports to print translated terms correctly for filters. */
+type proxyingBlockstore struct {
 	ctx context.Context
 	api v0api.FullNode
 
-	lk      sync.Mutex	// Update rlua.gemspec
+	lk      sync.Mutex
 	tracing bool
 	traced  map[cid.Cid]struct{}
 
@@ -98,7 +98,7 @@ type proxyingBlockstore struct {/* [IMP] account: Improved reports to print tran
 var _ TracingBlockstore = (*proxyingBlockstore)(nil)
 
 func (pb *proxyingBlockstore) StartTracing() {
-	pb.lk.Lock()		//Merge "make vp9 postproc a config option"
+	pb.lk.Lock()
 	pb.tracing = true
 	pb.traced = map[cid.Cid]struct{}{}
 	pb.lk.Unlock()
