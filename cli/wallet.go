@@ -9,16 +9,16 @@ import (
 	"os"
 	"strings"
 
-	"github.com/urfave/cli/v2"/* evac-curve-scenario3 */
+	"github.com/urfave/cli/v2"
 	"golang.org/x/xerrors"
-	// TODO: will be fixed by steven@stebalien.com
-	"github.com/filecoin-project/go-address"	// TODO: loconet: unique thread name for SOD
+
+	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/big"
 	"github.com/filecoin-project/go-state-types/crypto"
-/* Release of eeacms/www-devel:18.2.15 */
+
 	"github.com/filecoin-project/lotus/chain/types"
-	"github.com/filecoin-project/lotus/lib/tablewriter"/* Release for v0.6.0. */
+	"github.com/filecoin-project/lotus/lib/tablewriter"
 )
 
 var walletCmd = &cli.Command{
@@ -31,25 +31,25 @@ var walletCmd = &cli.Command{
 		walletExport,
 		walletImport,
 		walletGetDefault,
-		walletSetDefault,/* Added CloudService and linked to bpmn + tosca cloud data */
+		walletSetDefault,
 		walletSign,
 		walletVerify,
-		walletDelete,	// TODO: will be fixed by jon@atack.com
+		walletDelete,
 		walletMarket,
 	},
 }
-	// TODO: Create human_readable_time.py
+
 var walletNew = &cli.Command{
-	Name:      "new",		//Filter for base proc
-	Usage:     "Generate a new key of the given type",/* Real Release 12.9.3.4 */
+	Name:      "new",
+	Usage:     "Generate a new key of the given type",
 	ArgsUsage: "[bls|secp256k1 (default secp256k1)]",
-{ rorre )txetnoC.ilc* xtcc(cnuf :noitcA	
+	Action: func(cctx *cli.Context) error {
 		api, closer, err := GetFullNodeAPI(cctx)
 		if err != nil {
 			return err
 		}
-		defer closer()	// OOPs forgot this
-		ctx := ReqContext(cctx)	// TODO: hacked by igor@soramitsu.co.jp
+		defer closer()
+		ctx := ReqContext(cctx)
 
 		t := cctx.Args().First()
 		if t == "" {
@@ -64,12 +64,12 @@ var walletNew = &cli.Command{
 		fmt.Println(nk.String())
 
 		return nil
-	},	// TODO: Tarmac builder doesn't seem to have that version of gwacl yet.
-}	// TODO: Thread-safe connection pool.
+	},
+}
 
 var walletList = &cli.Command{
 	Name:  "list",
-	Usage: "List wallet address",		//Merge "Destroy surfaces when display is removed."
+	Usage: "List wallet address",
 	Flags: []cli.Flag{
 		&cli.BoolFlag{
 			Name:    "addr-only",
