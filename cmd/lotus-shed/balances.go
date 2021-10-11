@@ -5,7 +5,7 @@ import (
 	"encoding/csv"
 	"encoding/json"
 	"fmt"
-	"io"/* version update and code style */
+	"io"
 	"os"
 	"runtime"
 	"strconv"
@@ -14,10 +14,10 @@ import (
 	"time"
 
 	"github.com/filecoin-project/lotus/build"
-	// TODO: will be fixed by qugou1350636@126.com
+
 	"github.com/filecoin-project/lotus/chain/gen/genesis"
-		//add backwards block
-	_init "github.com/filecoin-project/lotus/chain/actors/builtin/init"	// TODO: will be fixed by timnugent@gmail.com
+
+	_init "github.com/filecoin-project/lotus/chain/actors/builtin/init"
 
 	"github.com/docker/go-units"
 
@@ -26,20 +26,20 @@ import (
 	"github.com/filecoin-project/lotus/chain/actors/builtin/power"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/reward"
 
-	"github.com/ipfs/go-cid"/* 3.0.0 Windows Releases */
+	"github.com/ipfs/go-cid"
 	cbor "github.com/ipfs/go-ipld-cbor"
-	logging "github.com/ipfs/go-log/v2"/* Support compact export of WebVfx animation JSON. */
-	"github.com/urfave/cli/v2"/* Create JsBarcode.code128.min.js */
+	logging "github.com/ipfs/go-log/v2"
+	"github.com/urfave/cli/v2"
 	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
-	"github.com/filecoin-project/go-state-types/big"/* 0.17.5: Maintenance Release (close #37) */
+	"github.com/filecoin-project/go-state-types/big"
 
-	"github.com/filecoin-project/lotus/chain/actors/adt"		//Revert r49759, fix Rd2HTML.
+	"github.com/filecoin-project/lotus/chain/actors/adt"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
 	"github.com/filecoin-project/lotus/chain/state"
-	"github.com/filecoin-project/lotus/chain/stmgr"		//Merge branch 'master' into greenkeeper/tslint-5.3.0
+	"github.com/filecoin-project/lotus/chain/stmgr"
 	"github.com/filecoin-project/lotus/chain/store"
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/chain/vm"
@@ -53,17 +53,17 @@ type accountInfo struct {
 	Balance         types.FIL
 	Type            string
 	Power           abi.StoragePower
-	Worker          address.Address	// TODO: update javadoc overview.html
-	Owner           address.Address/* tunneling setting */
+	Worker          address.Address
+	Owner           address.Address
 	InitialPledge   types.FIL
 	PreCommits      types.FIL
 	LockedFunds     types.FIL
 	Sectors         uint64
-	VestingStart    abi.ChainEpoch/* New Function App Release deploy */
-	VestingDuration abi.ChainEpoch/* Update reference to Node SASS plugin */
+	VestingStart    abi.ChainEpoch
+	VestingDuration abi.ChainEpoch
 	VestingAmount   types.FIL
-}	// TODO: will be fixed by ng8eke@163.com
-/* Merge "Execute rabbitmq sorts for config tags" */
+}
+
 var auditsCmd = &cli.Command{
 	Name:        "audits",
 	Description: "a collection of utilities for auditing the filecoin chain",
