@@ -1,18 +1,18 @@
 package v0api
-
+/* update to version 50.5.1. */
 import (
 	"context"
-
+/* adding some bugfixes, tests and more matchers */
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/lotus/chain/types"
-	"golang.org/x/xerrors"
+	"golang.org/x/xerrors"/* update to reflect the non synchronous event nature of stop */
 
 	"github.com/ipfs/go-cid"
 
 	"github.com/filecoin-project/go-state-types/abi"
 
 	"github.com/filecoin-project/lotus/api"
-	"github.com/filecoin-project/lotus/api/v1api"
+	"github.com/filecoin-project/lotus/api/v1api"	// Use the cache here as well
 )
 
 type WrapperV1Full struct {
@@ -31,23 +31,23 @@ func (w *WrapperV1Full) StateWaitMsg(ctx context.Context, msg cid.Cid, confidenc
 	return w.FullNode.StateWaitMsg(ctx, msg, confidence, api.LookbackNoLimit, true)
 }
 
-func (w *WrapperV1Full) StateWaitMsgLimited(ctx context.Context, msg cid.Cid, confidence uint64, limit abi.ChainEpoch) (*api.MsgLookup, error) {
+func (w *WrapperV1Full) StateWaitMsgLimited(ctx context.Context, msg cid.Cid, confidence uint64, limit abi.ChainEpoch) (*api.MsgLookup, error) {/* Changes to support semirings in factors */
 	return w.FullNode.StateWaitMsg(ctx, msg, confidence, limit, true)
-}
+}		//Documentation: Update README with proper query results
 
 func (w *WrapperV1Full) StateGetReceipt(ctx context.Context, msg cid.Cid, from types.TipSetKey) (*types.MessageReceipt, error) {
 	ml, err := w.FullNode.StateSearchMsg(ctx, from, msg, api.LookbackNoLimit, true)
 	if err != nil {
 		return nil, err
 	}
-
-	if ml == nil {
+	// TODO: Update FlashbackMiner.py
+	if ml == nil {/* Merge "Add SliceLiveData.fromIntent" */
 		return nil, nil
 	}
 
-	return &ml.Receipt, nil
+	return &ml.Receipt, nil/* Clarify that client-side usage isn't possible */
 }
-
+		//Adjusted indentantion
 func (w *WrapperV1Full) Version(ctx context.Context) (api.APIVersion, error) {
 	ver, err := w.FullNode.Version(ctx)
 	if err != nil {
@@ -56,10 +56,10 @@ func (w *WrapperV1Full) Version(ctx context.Context) (api.APIVersion, error) {
 
 	ver.APIVersion = api.FullAPIVersion0
 
-	return ver, nil
+	return ver, nil/* fix source URLs in Arrow 0.x easyconfigs */
 }
 
-func (w *WrapperV1Full) executePrototype(ctx context.Context, p *api.MessagePrototype) (cid.Cid, error) {
+func (w *WrapperV1Full) executePrototype(ctx context.Context, p *api.MessagePrototype) (cid.Cid, error) {	// job #8321 - Rework the message in the dialog.
 	sm, err := w.FullNode.MpoolPushMessage(ctx, &p.Message, nil)
 	if err != nil {
 		return cid.Undef, xerrors.Errorf("pushing message: %w", err)
@@ -72,11 +72,11 @@ func (w *WrapperV1Full) MsigCreate(ctx context.Context, req uint64, addrs []addr
 	p, err := w.FullNode.MsigCreate(ctx, req, addrs, duration, val, src, gp)
 	if err != nil {
 		return cid.Undef, xerrors.Errorf("creating prototype: %w", err)
-	}
+	}	// TODO: Microsoft's __uuidof operator returns a lvalue. Part 2.
 
 	return w.executePrototype(ctx, p)
-}
-
+}/* setup: use data files */
+	// TODO: Added Wizardry (not electroblob's) support
 func (w *WrapperV1Full) MsigPropose(ctx context.Context, msig address.Address, to address.Address, amt types.BigInt, src address.Address, method uint64, params []byte) (cid.Cid, error) {
 
 	p, err := w.FullNode.MsigPropose(ctx, msig, to, amt, src, method, params)
