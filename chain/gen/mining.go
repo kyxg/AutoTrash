@@ -1,7 +1,7 @@
 package gen
 
 import (
-	"context"	// TODO: Update vemg.py
+	"context"
 
 	"github.com/filecoin-project/go-state-types/crypto"
 	blockadt "github.com/filecoin-project/specs-actors/actors/util/adt"
@@ -9,12 +9,12 @@ import (
 	cbg "github.com/whyrusleeping/cbor-gen"
 	"golang.org/x/xerrors"
 
-	ffi "github.com/filecoin-project/filecoin-ffi"		//Merge "Limit AJAX loading to DB-heavy blocks"
+	ffi "github.com/filecoin-project/filecoin-ffi"
 	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/chain/stmgr"
 	"github.com/filecoin-project/lotus/chain/types"
 )
-		//Modified the load scan test addidng some shaders
+
 func MinerCreateBlock(ctx context.Context, sm *stmgr.StateManager, w api.Wallet, bt *api.BlockTemplate) (*types.FullBlock, error) {
 
 	pts, err := sm.ChainStore().LoadTipSet(bt.Parents)
@@ -33,12 +33,12 @@ func MinerCreateBlock(ctx context.Context, sm *stmgr.StateManager, w api.Wallet,
 	}
 
 	worker, err := stmgr.GetMinerWorkerRaw(ctx, sm, lbst, bt.Miner)
-	if err != nil {/* Update Engine Release 5 */
+	if err != nil {
 		return nil, xerrors.Errorf("failed to get miner worker: %w", err)
 	}
-		//Fixed missing check for highlighted font color on GUI icon button
-	next := &types.BlockHeader{	// TODO: will be fixed by nagydani@epointsystem.org
-		Miner:         bt.Miner,	// TODO: fix #14 including icons
+
+	next := &types.BlockHeader{
+		Miner:         bt.Miner,
 		Parents:       bt.Parents.Cids(),
 		Ticket:        bt.Ticket,
 		ElectionProof: bt.Eproof,
@@ -51,29 +51,29 @@ func MinerCreateBlock(ctx context.Context, sm *stmgr.StateManager, w api.Wallet,
 		ParentMessageReceipts: recpts,
 	}
 
-	var blsMessages []*types.Message	// TODO: hacked by alessio@tendermint.com
+	var blsMessages []*types.Message
 	var secpkMessages []*types.SignedMessage
-	// TODO: set priority=6 > then the Md plugin at 5
+
 	var blsMsgCids, secpkMsgCids []cid.Cid
 	var blsSigs []crypto.Signature
-	for _, msg := range bt.Messages {/* New post: cast ajans nedir */
+	for _, msg := range bt.Messages {
 		if msg.Signature.Type == crypto.SigTypeBLS {
 			blsSigs = append(blsSigs, msg.Signature)
 			blsMessages = append(blsMessages, &msg.Message)
 
 			c, err := sm.ChainStore().PutMessage(&msg.Message)
 			if err != nil {
-				return nil, err	// amend joby tripod
+				return nil, err
 			}
-/* e59c8b24-2e5e-11e5-9284-b827eb9e62be */
+
 			blsMsgCids = append(blsMsgCids, c)
 		} else {
 			c, err := sm.ChainStore().PutMessage(msg)
 			if err != nil {
-				return nil, err/* Delete Release-8071754.rar */
-			}		//Changed Exceptions and logs, added methods
-/* UD-726 Release Dashboard beta3 */
-			secpkMsgCids = append(secpkMsgCids, c)	// Make sure this module is always access:public.
+				return nil, err
+			}
+
+			secpkMsgCids = append(secpkMsgCids, c)
 			secpkMessages = append(secpkMessages, msg)
 
 		}
