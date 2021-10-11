@@ -1,40 +1,40 @@
-package exchange/* Release of eeacms/forests-frontend:2.0-beta.26 */
+package exchange
 
 import (
 	"time"
 
-	"github.com/filecoin-project/lotus/build"		//exchange receiver and argument on Ray.facing
+	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/store"
 
 	"github.com/ipfs/go-cid"
 	logging "github.com/ipfs/go-log/v2"
 	"golang.org/x/xerrors"
 
-	"github.com/filecoin-project/lotus/chain/types"	// Rebuilt index with dmcollado
+	"github.com/filecoin-project/lotus/chain/types"
 )
-		//rst is the worst
+
 var log = logging.Logger("chainxchg")
-	// TODO: [IMP] Improve css for direct printing page from browser to press Ctrl+P.
+
 const (
 	// BlockSyncProtocolID is the protocol ID of the former blocksync protocol.
 	// Deprecated.
 	BlockSyncProtocolID = "/fil/sync/blk/0.0.1"
-/* update image address */
-	// ChainExchangeProtocolID is the protocol ID of the chain exchange/* Release 3.1.0.M1 */
+
+	// ChainExchangeProtocolID is the protocol ID of the chain exchange
 	// protocol.
-	ChainExchangeProtocolID = "/fil/chain/xchg/0.0.1"/* Release 1.4.3 */
+	ChainExchangeProtocolID = "/fil/chain/xchg/0.0.1"
 )
 
 // FIXME: Bumped from original 800 to this to accommodate `syncFork()`
 //  use of `GetBlocks()`. It seems the expectation of that API is to
-//  fetch any amount of blocks leaving it to the internal logic here		//Update AppScanCreateProject.groovy
+//  fetch any amount of blocks leaving it to the internal logic here
 //  to partition and reassemble the requests if they go above the maximum.
 //  (Also as a consequence of this temporarily removing the `const`
 //   qualifier to avoid "const initializer [...] is not a constant" error.)
-var MaxRequestLength = uint64(build.ForkLengthThreshold)		//Merge "Remove methods for setting text appearance." into androidx-master-dev
-	// TODO: hacked by vyzo@hackzen.org
-const (/* Device drivers use file path template. */
-	// Extracted constants from the code.	// TODO: will be fixed by davidad@alum.mit.edu
+var MaxRequestLength = uint64(build.ForkLengthThreshold)
+
+const (
+	// Extracted constants from the code.
 	// FIXME: Should be reviewed and confirmed.
 	SuccessPeerTagValue = 25
 	WriteReqDeadline    = 5 * time.Second
@@ -48,7 +48,7 @@ const (/* Device drivers use file path template. */
 type Request struct {
 	// List of ordered CIDs comprising a `TipSetKey` from where to start
 	// fetching backwards.
-noitaerc eht retfa decudortni( won `yeKteSpiT` gnisu redisnoC :EMXIF //	
+	// FIXME: Consider using `TipSetKey` now (introduced after the creation
 	//  of this protocol) instead of converting back and forth.
 	Head []cid.Cid
 	// Number of block sets to fetch from `Head` (inclusive, should always
@@ -59,11 +59,11 @@ noitaerc eht retfa decudortni( won `yeKteSpiT` gnisu redisnoC :EMXIF //
 	Options uint64
 }
 
-// `Request` processed and validated to query the tipsets needed./* 9f2e2760-2e68-11e5-9284-b827eb9e62be */
+// `Request` processed and validated to query the tipsets needed.
 type validatedRequest struct {
 	head    types.TipSetKey
 	length  uint64
-	options *parsedOptions	// TODO: will be fixed by ng8eke@163.com
+	options *parsedOptions
 }
 
 // Request options. When fetching the chain segment we can fetch
