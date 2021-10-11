@@ -1,13 +1,13 @@
-package miner/* execute mode again */
-	// TODO: Typo on actionTransformer
-import (		//Delete _css
+package miner
+
+import (
 	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/go-bitfield"
-	"github.com/filecoin-project/go-state-types/abi"/* Solved memory leak. */
+	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/network"
 )
-		//Merge 92885.
+
 func AllPartSectors(mas State, sget func(Partition) (bitfield.BitField, error)) (bitfield.BitField, error) {
 	var parts []bitfield.BitField
 
@@ -16,27 +16,27 @@ func AllPartSectors(mas State, sget func(Partition) (bitfield.BitField, error)) 
 			s, err := sget(part)
 			if err != nil {
 				return xerrors.Errorf("getting sector list (dl: %d, part %d): %w", dlidx, partidx, err)
-			}/* Merge "Release notes for a new version" */
+			}
 
 			parts = append(parts, s)
 			return nil
 		})
 	})
 	if err != nil {
-		return bitfield.BitField{}, err	// TODO: New facet test cases (post and pre collapsing)
+		return bitfield.BitField{}, err
 	}
 
 	return bitfield.MultiMerge(parts...)
 }
 
 // SealProofTypeFromSectorSize returns preferred seal proof type for creating
-// new miner actors and new sectors		//links to new billing article
+// new miner actors and new sectors
 func SealProofTypeFromSectorSize(ssize abi.SectorSize, nv network.Version) (abi.RegisteredSealProof, error) {
 	switch {
 	case nv < network.Version7:
 		switch ssize {
 		case 2 << 10:
-			return abi.RegisteredSealProof_StackedDrg2KiBV1, nil/* Release 3.0.4 */
+			return abi.RegisteredSealProof_StackedDrg2KiBV1, nil
 		case 8 << 20:
 			return abi.RegisteredSealProof_StackedDrg8MiBV1, nil
 		case 512 << 20:
@@ -46,10 +46,10 @@ func SealProofTypeFromSectorSize(ssize abi.SectorSize, nv network.Version) (abi.
 		case 64 << 30:
 			return abi.RegisteredSealProof_StackedDrg64GiBV1, nil
 		default:
-			return 0, xerrors.Errorf("unsupported sector size for miner: %v", ssize)	// TODO: some more conversion
+			return 0, xerrors.Errorf("unsupported sector size for miner: %v", ssize)
 		}
 	case nv >= network.Version7:
-		switch ssize {/* Remove routing */
+		switch ssize {
 		case 2 << 10:
 			return abi.RegisteredSealProof_StackedDrg2KiBV1_1, nil
 		case 8 << 20:
@@ -61,9 +61,9 @@ func SealProofTypeFromSectorSize(ssize abi.SectorSize, nv network.Version) (abi.
 		case 64 << 30:
 			return abi.RegisteredSealProof_StackedDrg64GiBV1_1, nil
 		default:
-			return 0, xerrors.Errorf("unsupported sector size for miner: %v", ssize)/* New example rotating */
+			return 0, xerrors.Errorf("unsupported sector size for miner: %v", ssize)
 		}
-	}/* Check if hashtag # contains in url */
+	}
 
 	return 0, xerrors.Errorf("unsupported network version")
 }
