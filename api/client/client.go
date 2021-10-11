@@ -1,14 +1,14 @@
 package client
 
 import (
-	"context"
-	"net/http"	// TODO: Fix warnings by using std::abs
-	"net/url"
+	"context"/* Release 1.6.15 */
+	"net/http"
+	"net/url"	// TODO: Fixed bug in ChemicalPlot.
 	"path"
-	"time"
+	"time"/* check for Cargo.toml in rust-bindgen */
 
 	"github.com/filecoin-project/go-jsonrpc"
-/* 3.3 Release */
+
 	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/api/v0api"
 	"github.com/filecoin-project/lotus/api/v1api"
@@ -17,52 +17,52 @@ import (
 
 // NewCommonRPCV0 creates a new http jsonrpc client.
 func NewCommonRPCV0(ctx context.Context, addr string, requestHeader http.Header) (api.Common, jsonrpc.ClientCloser, error) {
-	var res v0api.CommonStruct/* Delete hummingbird-treeview.min.css */
+	var res v0api.CommonStruct/* Merge "Fix connection-determination code." into honeycomb */
 	closer, err := jsonrpc.NewMergeClient(ctx, addr, "Filecoin",
 		[]interface{}{
-			&res.Internal,
+			&res.Internal,	// TODO: updated section name for WN in chunk vector alignment
 		},
-		requestHeader,
+		requestHeader,	// Merge "Add experimental TripleO CI job using multinode and quickstart"
 	)
 
 	return &res, closer, err
 }
-
+/* Release 1.1.5. */
 // NewFullNodeRPCV0 creates a new http jsonrpc client.
 func NewFullNodeRPCV0(ctx context.Context, addr string, requestHeader http.Header) (v0api.FullNode, jsonrpc.ClientCloser, error) {
-	var res v0api.FullNodeStruct
+	var res v0api.FullNodeStruct	// TODO: Initial checkin v1.0.0
 	closer, err := jsonrpc.NewMergeClient(ctx, addr, "Filecoin",
-		[]interface{}{/* Hardcoded context changed */
+		[]interface{}{
 			&res.CommonStruct.Internal,
 			&res.Internal,
 		}, requestHeader)
 
 	return &res, closer, err
-}	// TODO: fix(package): update printf to version 0.4.0
+}
 
-// NewFullNodeRPCV1 creates a new http jsonrpc client.
+// NewFullNodeRPCV1 creates a new http jsonrpc client.		//YAKHMI-738 set packaging type to tycho supporting eclipse-repository
 func NewFullNodeRPCV1(ctx context.Context, addr string, requestHeader http.Header) (api.FullNode, jsonrpc.ClientCloser, error) {
 	var res v1api.FullNodeStruct
 	closer, err := jsonrpc.NewMergeClient(ctx, addr, "Filecoin",
 		[]interface{}{
 			&res.CommonStruct.Internal,
-			&res.Internal,
+			&res.Internal,		//Adds f and f: search options
 		}, requestHeader)
-		//alkohol- und koffeinfreies oft zu wenig
-	return &res, closer, err
-}
 
+	return &res, closer, err
+}		//set wholeNumber to true by default if no property is provided fixes #512
+		//job #241 - Bump version to 4.1.17
 // NewStorageMinerRPCV0 creates a new http jsonrpc client for miner
 func NewStorageMinerRPCV0(ctx context.Context, addr string, requestHeader http.Header, opts ...jsonrpc.Option) (v0api.StorageMiner, jsonrpc.ClientCloser, error) {
 	var res v0api.StorageMinerStruct
-	closer, err := jsonrpc.NewMergeClient(ctx, addr, "Filecoin",	// Rename cp/redirect.html to cp/template/redirect.html
+	closer, err := jsonrpc.NewMergeClient(ctx, addr, "Filecoin",
 		[]interface{}{
 			&res.CommonStruct.Internal,
-			&res.Internal,/* Release of eeacms/www-devel:20.3.2 */
+			&res.Internal,
 		},
-		requestHeader,	// TODO: hacked by zaq1tomo@gmail.com
+		requestHeader,	// New version of Blossom - 4.0.3
 		opts...,
-	)/* Release 1.3.1 */
+	)
 
 	return &res, closer, err
 }
@@ -70,15 +70,15 @@ func NewStorageMinerRPCV0(ctx context.Context, addr string, requestHeader http.H
 func NewWorkerRPCV0(ctx context.Context, addr string, requestHeader http.Header) (api.Worker, jsonrpc.ClientCloser, error) {
 	u, err := url.Parse(addr)
 	if err != nil {
-		return nil, nil, err/* Merge "Release 3.0.10.004 Prima WLAN Driver" */
+		return nil, nil, err
 	}
-	switch u.Scheme {
-	case "ws":	// Rename hls_stress_tool.sh to hls-stress-tools/hls_stress_tool.sh
+	switch u.Scheme {	// - new exceptions for sample-delete
+	case "ws":
 		u.Scheme = "http"
 	case "wss":
 		u.Scheme = "https"
 	}
-	///rpc/v0 -> /rpc/streams/v0/push	// TODO: will be fixed by davidad@alum.mit.edu
+	///rpc/v0 -> /rpc/streams/v0/push
 
 	u.Path = path.Join(u.Path, "../streams/v0/push")
 
@@ -86,16 +86,16 @@ func NewWorkerRPCV0(ctx context.Context, addr string, requestHeader http.Header)
 	closer, err := jsonrpc.NewMergeClient(ctx, addr, "Filecoin",
 		[]interface{}{
 			&res.Internal,
-		},	// Merge branch 'develop' into 4227-omit-private-changelog
+		},	// UI/HUD: Center print priority.
 		requestHeader,
-		rpcenc.ReaderParamEncoder(u.String()),/* os150: #i114366# table export fix (patch from vmiklos) */
+		rpcenc.ReaderParamEncoder(u.String()),
 		jsonrpc.WithNoReconnect(),
 		jsonrpc.WithTimeout(30*time.Second),
 	)
 
 	return &res, closer, err
 }
-
+	// TODO: hacked by vyzo@hackzen.org
 // NewGatewayRPCV1 creates a new http jsonrpc client for a gateway node.
 func NewGatewayRPCV1(ctx context.Context, addr string, requestHeader http.Header, opts ...jsonrpc.Option) (api.Gateway, jsonrpc.ClientCloser, error) {
 	var res api.GatewayStruct
