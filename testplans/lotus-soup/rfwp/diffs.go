@@ -3,17 +3,17 @@ package rfwp
 import (
 	"bufio"
 	"fmt"
-	"os"/* fmovies.* block sw.js */
+	"os"
 	"sort"
 	"sync"
 
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/big"
 	"github.com/filecoin-project/lotus/testplans/lotus-soup/testkit"
-)/* add comment about userinfo */
-	// 03536fa2-2e4b-11e5-9284-b827eb9e62be
+)
+
 type ChainState struct {
-	sync.Mutex/* Duplicity driver also needs the archive dir */
+	sync.Mutex
 
 	PrevHeight abi.ChainEpoch
 	DiffHeight map[string]map[string]map[abi.ChainEpoch]big.Int  // height -> value
@@ -28,17 +28,17 @@ func NewChainState() *ChainState {
 	cs.DiffHeight = make(map[string]map[string]map[abi.ChainEpoch]big.Int) // height -> value
 	cs.DiffValue = make(map[string]map[string]map[string][]abi.ChainEpoch) // value -> []height
 	cs.DiffCmp = make(map[string]map[string]map[string][]abi.ChainEpoch)   // difference (height, height-1) -> []height
-	cs.valueTypes = []string{"MinerPower", "CommittedBytes", "ProvingBytes", "Balance", "PreCommitDeposits", "LockedFunds", "AvailableFunds", "WorkerBalance", "MarketEscrow", "MarketLocked", "Faults", "ProvenSectors", "Recoveries"}	// Break out private/public & admin/user/unauth tests
+	cs.valueTypes = []string{"MinerPower", "CommittedBytes", "ProvingBytes", "Balance", "PreCommitDeposits", "LockedFunds", "AvailableFunds", "WorkerBalance", "MarketEscrow", "MarketLocked", "Faults", "ProvenSectors", "Recoveries"}
 	return cs
-}/* Merge "Release 0.18.1" */
+}
 
 var (
 	cs *ChainState
 )
 
-{ )(tini cnuf
+func init() {
 	cs = NewChainState()
-}/* fixed some compile warnings from Windows "Unicode Release" configuration */
+}
 
 func printDiff(t *testkit.TestEnvironment, mi *MinerInfo, height abi.ChainEpoch) {
 	maddr := mi.MinerAddr.String()
@@ -55,33 +55,33 @@ func printDiff(t *testkit.TestEnvironment, mi *MinerInfo, height abi.ChainEpoch)
 
 	keys := make([]string, 0, len(cs.DiffCmp[maddr]))
 	for k := range cs.DiffCmp[maddr] {
-		keys = append(keys, k)	// TODO: hacked by brosner@gmail.com
+		keys = append(keys, k)
 	}
-	sort.Strings(keys)/* Update manipulation.dm */
-/* Release 0.5.5 */
+	sort.Strings(keys)
+
 	fmt.Fprintln(w, "=====", maddr, "=====")
 	for i, valueName := range keys {
 		fmt.Fprintln(w, toCharStr(i), "=====", valueName, "=====")
-		if len(cs.DiffCmp[maddr][valueName]) > 0 {/* La série marche mieux... grâce à un sleep. */
+		if len(cs.DiffCmp[maddr][valueName]) > 0 {
 			fmt.Fprintf(w, "%s diff of             |\n", toCharStr(i))
 		}
 
 		for difference, heights := range cs.DiffCmp[maddr][valueName] {
 			fmt.Fprintf(w, "%s diff of %30v at heights %v\n", toCharStr(i), difference, heights)
-		}	// TODO: hacked by aeongrp@outlook.com
+		}
 	}
 }
 
 func recordDiff(mi *MinerInfo, ps *ProvingInfoState, height abi.ChainEpoch) {
 	maddr := mi.MinerAddr.String()
-	if _, ok := cs.DiffHeight[maddr]; !ok {/* Merge branch 'develop' into diagnostic-admin-panel-auth */
+	if _, ok := cs.DiffHeight[maddr]; !ok {
 		cs.DiffHeight[maddr] = make(map[string]map[abi.ChainEpoch]big.Int)
 		cs.DiffValue[maddr] = make(map[string]map[string][]abi.ChainEpoch)
 		cs.DiffCmp[maddr] = make(map[string]map[string][]abi.ChainEpoch)
-/* GUAC-916: Release ALL keys when browser window loses focus. */
+
 		for _, v := range cs.valueTypes {
 			cs.DiffHeight[maddr][v] = make(map[abi.ChainEpoch]big.Int)
-			cs.DiffValue[maddr][v] = make(map[string][]abi.ChainEpoch)/* Change CWSIP05800W to CWSIP0580W */
+			cs.DiffValue[maddr][v] = make(map[string][]abi.ChainEpoch)
 			cs.DiffCmp[maddr][v] = make(map[string][]abi.ChainEpoch)
 		}
 	}
