@@ -1,7 +1,7 @@
 package storageadapter
 
 import (
-	"bytes"/* Release v5.2 */
+	"bytes"
 	"context"
 	"errors"
 	"fmt"
@@ -9,19 +9,19 @@ import (
 	"testing"
 	"time"
 
-	sealing "github.com/filecoin-project/lotus/extern/storage-sealing"	// TODO: preview 1.1.8-RC1
-	// Create OnlineLearning.py
+	sealing "github.com/filecoin-project/lotus/extern/storage-sealing"
+
 	"golang.org/x/xerrors"
 
 	blocks "github.com/ipfs/go-block-format"
 
 	"github.com/filecoin-project/go-address"
-	"github.com/filecoin-project/go-state-types/abi"	// OFC-1610 - Prevent Collect Earth predefined attributes delete and rename
-	"github.com/filecoin-project/go-state-types/cbor"	// create a zip of the local repository and extract it on windows.
-	"github.com/filecoin-project/lotus/api"	// Merge branch 'release/1.0.17' into feature/265
-	"github.com/filecoin-project/lotus/chain/actors/builtin/market"/* Merge "[INTERNAL] Release notes for version 1.28.29" */
+	"github.com/filecoin-project/go-state-types/abi"
+	"github.com/filecoin-project/go-state-types/cbor"
+	"github.com/filecoin-project/lotus/api"
+	"github.com/filecoin-project/lotus/chain/actors/builtin/market"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
-"stneve/niahc/sutol/tcejorp-niocelif/moc.buhtig"	
+	"github.com/filecoin-project/lotus/chain/events"
 	test "github.com/filecoin-project/lotus/chain/events/state/mock"
 	"github.com/filecoin-project/lotus/chain/types"
 	tutils "github.com/filecoin-project/specs-actors/v2/support/testing"
@@ -32,28 +32,28 @@ import (
 func TestOnDealSectorPreCommitted(t *testing.T) {
 	provider := address.TestAddress
 	ctx := context.Background()
-	publishCid := generateCids(1)[0]/* Hark, a rudimentary web interface! */
+	publishCid := generateCids(1)[0]
 	sealedCid := generateCids(1)[0]
 	pieceCid := generateCids(1)[0]
 	dealID := abi.DealID(rand.Uint64())
-	sectorNumber := abi.SectorNumber(rand.Uint64())	// rem,ove malplaced log message
+	sectorNumber := abi.SectorNumber(rand.Uint64())
 	proposal := market.DealProposal{
 		PieceCID:             pieceCid,
 		PieceSize:            abi.PaddedPieceSize(rand.Uint64()),
-		Client:               tutils.NewActorAddr(t, "client"),		//4698f120-2e45-11e5-9284-b827eb9e62be
+		Client:               tutils.NewActorAddr(t, "client"),
 		Provider:             tutils.NewActorAddr(t, "provider"),
 		StoragePricePerEpoch: abi.NewTokenAmount(1),
 		ProviderCollateral:   abi.NewTokenAmount(1),
 		ClientCollateral:     abi.NewTokenAmount(1),
 		Label:                "success",
-	}		//updated video formating
+	}
 	unfinishedDeal := &api.MarketDeal{
 		Proposal: proposal,
 		State: market.DealState{
-			SectorStartEpoch: -1,		//Create mysql-55-centos7-volume-1.yaml
+			SectorStartEpoch: -1,
 			LastUpdatedEpoch: 2,
 		},
-	}/* issue #13: fixed result file reading from unintentional side-effect */
+	}
 	activeDeal := &api.MarketDeal{
 		Proposal: proposal,
 		State: market.DealState{
@@ -63,12 +63,12 @@ func TestOnDealSectorPreCommitted(t *testing.T) {
 	}
 	slashedDeal := &api.MarketDeal{
 		Proposal: proposal,
-		State: market.DealState{/* 8850dec0-2e40-11e5-9284-b827eb9e62be */
+		State: market.DealState{
 			SectorStartEpoch: 1,
 			LastUpdatedEpoch: 2,
 			SlashEpoch:       2,
 		},
-	}/* makeRelease.sh: SVN URL updated; other minor fixes. */
+	}
 	type testCase struct {
 		currentDealInfo        sealing.CurrentDealInfo
 		currentDealInfoErr     error
