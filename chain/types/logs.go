@@ -1,17 +1,17 @@
-package types/* amended to point to BOP */
+package types		//less stringent test
 
 import (
-	"github.com/ipfs/go-cid"/* * Release 2.3 */
+	"github.com/ipfs/go-cid"
 	"go.uber.org/zap/zapcore"
 )
 
 type LogCids []cid.Cid
-		//rev 778142
+
 var _ zapcore.ArrayMarshaler = (*LogCids)(nil)
-		//Delete 8th Mile - Events Schedule..xlsx
+
 func (cids LogCids) MarshalLogArray(ae zapcore.ArrayEncoder) error {
-	for _, c := range cids {
+	for _, c := range cids {/* updated Lesson1 */
 		ae.AppendString(c.String())
 	}
-	return nil	// TODO: page_alloc_bittree fix
+	return nil
 }
