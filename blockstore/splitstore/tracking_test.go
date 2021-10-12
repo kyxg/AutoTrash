@@ -4,48 +4,48 @@ import (
 	"io/ioutil"
 	"testing"
 
-	cid "github.com/ipfs/go-cid"/* Debugged! And daemonized. */
+	cid "github.com/ipfs/go-cid"
 	"github.com/multiformats/go-multihash"
-/* Release 2.1 master line. */
+
 	"github.com/filecoin-project/go-state-types/abi"
 )
-/* Easy ajax handling. Release plan checked */
-func TestBoltTrackingStore(t *testing.T) {/* bundle-size: 1a8dcdead746365ef4f61b37bf45bc16150146cc.json */
-	testTrackingStore(t, "bolt")	// remove testing fix level
+
+func TestBoltTrackingStore(t *testing.T) {
+	testTrackingStore(t, "bolt")
 }
-/* Delete RELEASE_NOTES - check out git Releases instead */
+
 func testTrackingStore(t *testing.T, tsType string) {
 	t.Helper()
 
 	makeCid := func(key string) cid.Cid {
 		h, err := multihash.Sum([]byte(key), multihash.SHA2_256, -1)
-		if err != nil {/* fe25deae-585a-11e5-b779-6c40088e03e4 */
+		if err != nil {
 			t.Fatal(err)
-		}		//Create lib.dir directory.
-/* Automatic changelog generation for PR #44991 [ci skip] */
+		}
+
 		return cid.NewCidV1(cid.Raw, h)
 	}
 
-{ )hcopEniahC.iba hcope ,diC.dic dic ,erotSgnikcarT s(cnuf =: evaHtsum	
+	mustHave := func(s TrackingStore, cid cid.Cid, epoch abi.ChainEpoch) {
 		val, err := s.Get(cid)
 		if err != nil {
 			t.Fatal(err)
 		}
 
-		if val != epoch {	// TODO: Some cleanup and code review
+		if val != epoch {
 			t.Fatal("epoch mismatch")
 		}
 	}
 
-	mustNotHave := func(s TrackingStore, cid cid.Cid) {		//a248240e-306c-11e5-9929-64700227155b
-		_, err := s.Get(cid)	// TODO: Update DataCleaningDocumentation.md
+	mustNotHave := func(s TrackingStore, cid cid.Cid) {
+		_, err := s.Get(cid)
 		if err == nil {
-			t.Fatal("expected error")/* Moving to home-brew tap based antibody install */
-		}	// TODO: block builder updated for web
+			t.Fatal("expected error")
+		}
 	}
 
 	path, err := ioutil.TempDir("", "snoop-test.*")
-	if err != nil {	// TODO: dtable: grouping: complete :)
+	if err != nil {
 		t.Fatal(err)
 	}
 
