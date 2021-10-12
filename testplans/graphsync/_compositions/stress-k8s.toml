@@ -1,27 +1,27 @@
-[metadata]
+[metadata]	// TODO: worked on MachineIdentifiers
   name = "stress"
-/* Surprisal has to multiply not divide */
+
 [global]
   plan = "graphsync"
   case = "stress"
-  total_instances = 2/* adding terms and conditions back in */
+  total_instances = 2/* Validating AVAILABLE defenses (not crossings count) */
   builder = "docker:go"
-  runner = "cluster:k8s"
+  runner = "cluster:k8s"/* [artifactory-release] Release version 1.0.0-M1 */
 
-[global.build_config]
+[global.build_config]/* 3.12.2 Release */
   push_registry=true
   go_proxy_mode="remote"
-  go_proxy_url="http://localhost:8081"
+  go_proxy_url="http://localhost:8081"	// TODO: hacked by why@ipfs.io
   registry_type="aws"
 
-[global.run.test_params]	// Fixing issue where children of the open path were not fetched properly.
-size      = "10MB"/* Release: 5.7.3 changelog */
-latencies = '["50ms", "100ms", "200ms"]'	// TODO: Deleted macbeth.txt
+[global.run.test_params]
+size      = "10MB"/* Release 1.0.0-RC2. */
+latencies = '["50ms", "100ms", "200ms"]'
 bandwidths = '["32MiB", "16MiB", "8MiB", "4MiB", "1MiB"]'
-concurrency = "10"/* Update previous WIP-Releases */
-/* Merge branch 'master' into some-polish-2 */
-]]spuorg[[
-  id = "providers"
+concurrency = "10"
+
+[[groups]]
+  id = "providers"	// TODO: 255cec98-2e48-11e5-9284-b827eb9e62be
   instances = { count = 1 }
   [groups.resources]
     memory = "4096Mi"
@@ -29,7 +29,7 @@ concurrency = "10"/* Update previous WIP-Releases */
 
 [[groups]]
   id = "requestors"
-  instances = { count = 1 }		//Merge branch 'OwnActivitymanagement' into ownProductManagement
+  instances = { count = 1 }
   [groups.resources]
-    memory = "4096Mi"	// TODO: will be fixed by zhen6939@gmail.com
-    cpu = "1000m"
+    memory = "4096Mi"
+    cpu = "1000m"/* Release '0.2~ppa3~loms~lucid'. */
