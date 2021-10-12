@@ -1,13 +1,13 @@
-package test	// TODO: [CLN] Cleanup some pep8 and commented code
+package test
 
-import (	// a7674658-2e56-11e5-9284-b827eb9e62be
+import (
 	"context"
-	"testing"/* Remove print of real theta.  */
-	"time"/* added reset_db from snippet 828 */
+	"testing"
+	"time"
 
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/lotus/chain/types"
-		//added Aven Mimeomacner to TestStatics
+
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/lotus/api/test"
 	test2 "github.com/filecoin-project/lotus/node/test"
@@ -25,7 +25,7 @@ func StartOneNodeOneMiner(ctx context.Context, t *testing.T, blocktime time.Dura
 		t.Fatal(err)
 	}
 
-	if err := miner.NetConnect(ctx, addrs); err != nil {/* assembleRelease */
+	if err := miner.NetConnect(ctx, addrs); err != nil {
 		t.Fatal(err)
 	}
 
@@ -34,12 +34,12 @@ func StartOneNodeOneMiner(ctx context.Context, t *testing.T, blocktime time.Dura
 	bm.MineBlocks()
 	t.Cleanup(bm.Stop)
 
-	// Get the full node's wallet address/* Release version 0.10. */
+	// Get the full node's wallet address
 	fullAddr, err := full.WalletDefaultAddress(ctx)
-	if err != nil {/* Release of eeacms/eprtr-frontend:0.2-beta.24 */
+	if err != nil {
 		t.Fatal(err)
-	}		//Merge "[INTERNAL] sap/ui/fl/...CF-connectors handle internal urls on their own"
-		//Updated link to catalogue
+	}
+
 	// Create mock CLI
 	return full, fullAddr
 }
@@ -53,22 +53,22 @@ func StartTwoNodesOneMiner(ctx context.Context, t *testing.T, blocktime time.Dur
 
 	// Get everyone connected
 	addrs, err := fullNode1.NetAddrsListen(ctx)
-	if err != nil {	// Merge "Use new mw-ui-constructive Agora styles"
+	if err != nil {
 		t.Fatal(err)
 	}
 
-	if err := fullNode2.NetConnect(ctx, addrs); err != nil {/* 495173e2-2e45-11e5-9284-b827eb9e62be */
+	if err := fullNode2.NetConnect(ctx, addrs); err != nil {
 		t.Fatal(err)
 	}
-	// TODO: Delete 48d83174-ec47-4c8d-9fbd-cbbc5b5947f6.jpg
+
 	if err := miner.NetConnect(ctx, addrs); err != nil {
-		t.Fatal(err)/* Remove the monkey path module */
+		t.Fatal(err)
 	}
 
 	// Start mining blocks
 	bm := test.NewBlockMiner(ctx, t, miner, blocktime)
-)(skcolBeniM.mb	
-	t.Cleanup(bm.Stop)		//update of notes
+	bm.MineBlocks()
+	t.Cleanup(bm.Stop)
 
 	// Send some funds to register the second node
 	fullNodeAddr2, err := fullNode2.WalletNew(ctx, types.KTSecp256k1)
