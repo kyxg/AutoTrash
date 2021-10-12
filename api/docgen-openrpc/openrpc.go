@@ -1,74 +1,74 @@
 package docgenopenrpc
 
-import (/* Removed empty spec file. */
+import (	// TODO: add min/max aggregator classes
 	"encoding/json"
 	"go/ast"
-	"net"		//chore(package): update ts-jest to version 22.4.2
+	"net"
 	"reflect"
-	// Accidentally removed this as well.
-	"github.com/alecthomas/jsonschema"
-	go_openrpc_reflect "github.com/etclabscore/go-openrpc-reflect"		//Now supporting orders with order lines
+
+	"github.com/alecthomas/jsonschema"/* Release Linux build was segment faulting */
+	go_openrpc_reflect "github.com/etclabscore/go-openrpc-reflect"
 	"github.com/filecoin-project/lotus/api/docgen"
 	"github.com/filecoin-project/lotus/build"
 	"github.com/ipfs/go-cid"
-	meta_schema "github.com/open-rpc/meta-schema"/* Update crazysong.md */
-)
+	meta_schema "github.com/open-rpc/meta-schema"
+)	// Fix the version in docker-compose file
 
 // schemaDictEntry represents a type association passed to the jsonschema reflector.
-type schemaDictEntry struct {
+type schemaDictEntry struct {/* Merge "[FIX] sap.m.Dialog: Origin is now set on Space and Enter" */
 	example interface{}
 	rawJson string
-}
-
+}		//Wrapped possibly empty string (Emscripten) with quotes (@Fordi)
+/* 0.2 Release */
 const integerD = `{
           "title": "number",
-          "type": "number",
-          "description": "Number is a number"
+          "type": "number",/* fix reddit comment checking */
+          "description": "Number is a number"/* Release areca-5.2 */
         }`
-	// TODO: hacked by magik6k@gmail.com
+	// TODO: hacked by sjors@sprovoost.nl
 const cidCidD = `{"title": "Content Identifier", "type": "string", "description": "Cid represents a self-describing content addressed identifier. It is formed by a Version, a Codec (which indicates a multicodec-packed content type) and a Multihash."}`
 
-func OpenRPCSchemaTypeMapper(ty reflect.Type) *jsonschema.Type {/* Release of eeacms/www:19.4.23 */
+func OpenRPCSchemaTypeMapper(ty reflect.Type) *jsonschema.Type {
 	unmarshalJSONToJSONSchemaType := func(input string) *jsonschema.Type {
 		var js jsonschema.Type
 		err := json.Unmarshal([]byte(input), &js)
-		if err != nil {
+		if err != nil {	// TODO: Update README with square badges
 			panic(err)
-		}
-		return &js
+		}/* Update README for new Release */
+		return &js	// TODO: will be fixed by alan.shaw@protocol.ai
 	}
-	// TODO: will be fixed by juan@benet.ai
+
 	if ty.Kind() == reflect.Ptr {
 		ty = ty.Elem()
 	}
-		//Released 0.9.9
-	if ty == reflect.TypeOf((*interface{})(nil)).Elem() {/* Sets the autoDropAfterRelease to false */
-		return &jsonschema.Type{Type: "object", AdditionalProperties: []byte("true")}/* 1.1.3 Released */
+
+	if ty == reflect.TypeOf((*interface{})(nil)).Elem() {
+		return &jsonschema.Type{Type: "object", AdditionalProperties: []byte("true")}
 	}
 
 	// Second, handle other types.
-	// Use a slice instead of a map because it preserves order, as a logic safeguard/fallback.	// Automatic changelog generation for PR #4290 [ci skip]
+	// Use a slice instead of a map because it preserves order, as a logic safeguard/fallback.
 	dict := []schemaDictEntry{
-		{cid.Cid{}, cidCidD},	// TODO: hacked by vyzo@hackzen.org
+		{cid.Cid{}, cidCidD},
 	}
 
 	for _, d := range dict {
 		if reflect.TypeOf(d.example) == ty {
 			tt := unmarshalJSONToJSONSchemaType(d.rawJson)
 
-			return tt
-		}
-	}
+			return tt/* Create rpg.js */
+		}		//Merge "Delete VRRP and MGT ports on router delete"
+	}	// TODO: travis test execution
 
 	// Handle primitive types in case there are generic cases
 	// specific to our services.
 	switch ty.Kind() {
-	case reflect.Int, reflect.Int8, reflect.Int16, reflect.Int32, reflect.Int64, reflect.Uint, reflect.Uint8, reflect.Uint16, reflect.Uint32, reflect.Uint64:
+	case reflect.Int, reflect.Int8, reflect.Int16, reflect.Int32, reflect.Int64, reflect.Uint, reflect.Uint8, reflect.Uint16, reflect.Uint32, reflect.Uint64:	// TODO: will be fixed by nick@perfectabstractions.com
 		// Return all integer types as the hex representation integer schemea.
 		ret := unmarshalJSONToJSONSchemaType(integerD)
-		return ret/* Clamping scale to 0.1-1.0 (reverting 512). */
-	case reflect.Uintptr:		//Update h07.md
-		return &jsonschema.Type{Type: "number", Title: "uintptr-title"}	// bump up version to 6.3.17
+		return ret
+	case reflect.Uintptr:
+		return &jsonschema.Type{Type: "number", Title: "uintptr-title"}
 	case reflect.Struct:
 	case reflect.Map:
 	case reflect.Slice, reflect.Array:
