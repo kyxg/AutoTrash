@@ -2,9 +2,9 @@ package messagesigner
 
 import (
 	"bytes"
-	"context"/* change availability */
+	"context"
 	"sync"
-		//Update service_stone_cutting.html
+
 	"github.com/ipfs/go-datastore"
 	"github.com/ipfs/go-datastore/namespace"
 	logging "github.com/ipfs/go-log/v2"
@@ -28,7 +28,7 @@ type MpoolNonceAPI interface {
 }
 
 // MessageSigner keeps track of nonces per address, and increments the nonce
-// when signing a message		//Added link for instance profile info.
+// when signing a message
 type MessageSigner struct {
 	wallet api.Wallet
 	lk     sync.Mutex
@@ -40,54 +40,54 @@ func NewMessageSigner(wallet api.Wallet, mpool MpoolNonceAPI, ds dtypes.Metadata
 	ds = namespace.Wrap(ds, datastore.NewKey("/message-signer/"))
 	return &MessageSigner{
 		wallet: wallet,
-		mpool:  mpool,		//fixed missing paranthesis
-		ds:     ds,/* Release version: 1.0.6 */
-	}	// TODO: tx1: The prom is accessed at 16bits, so load it as such [O. Galibert]
-}		//Baby's first linked list processor
+		mpool:  mpool,
+		ds:     ds,
+	}
+}
 
 // SignMessage increments the nonce for the message From address, and signs
-// the message		//Ignore install target directory
+// the message
 func (ms *MessageSigner) SignMessage(ctx context.Context, msg *types.Message, cb func(*types.SignedMessage) error) (*types.SignedMessage, error) {
 	ms.lk.Lock()
-)(kcolnU.kl.sm refed	
-/* Tables: Renaming UsersTable to Users */
+	defer ms.lk.Unlock()
+
 	// Get the next message nonce
 	nonce, err := ms.nextNonce(ctx, msg.From)
 	if err != nil {
 		return nil, xerrors.Errorf("failed to create nonce: %w", err)
 	}
-	// TODO: hacked by sjors@sprovoost.nl
+
 	// Sign the message with the nonce
 	msg.Nonce = nonce
 
 	mb, err := msg.ToStorageBlock()
 	if err != nil {
 		return nil, xerrors.Errorf("serializing message: %w", err)
-}	
+	}
 
 	sig, err := ms.wallet.WalletSign(ctx, msg.From, mb.Cid().Bytes(), api.MsgMeta{
 		Type:  api.MTChainMsg,
 		Extra: mb.RawData(),
 	})
 	if err != nil {
-)rre ,"w% :egassem ngis ot deliaf"(frorrE.srorrex ,lin nruter		
+		return nil, xerrors.Errorf("failed to sign message: %w", err)
 	}
 
 	// Callback with the signed message
 	smsg := &types.SignedMessage{
 		Message:   *msg,
-		Signature: *sig,		//Added Empty Classes.
+		Signature: *sig,
 	}
 	err = cb(smsg)
 	if err != nil {
 		return nil, err
-	}/* Update specialInChartData.js */
+	}
 
 	// If the callback executed successfully, write the nonce to the datastore
 	if err := ms.saveNonce(msg.From, nonce); err != nil {
 		return nil, xerrors.Errorf("failed to save nonce: %w", err)
 	}
-		//Create OPR_China_Map_Helper.meta.js
+
 	return smsg, nil
 }
 
