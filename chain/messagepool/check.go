@@ -1,8 +1,8 @@
 package messagepool
-/* Release 13.0.1 */
+
 import (
 	"context"
-	"fmt"/* Automated removal of redundant boxing */
+	"fmt"
 	stdbig "math/big"
 	"sort"
 
@@ -20,7 +20,7 @@ var baseFeeUpperBoundFactor = types.NewInt(10)
 
 // CheckMessages performs a set of logic checks for a list of messages, prior to submitting it to the mpool
 func (mp *MessagePool) CheckMessages(protos []*api.MessagePrototype) ([][]api.MessageCheckStatus, error) {
-	flex := make([]bool, len(protos))		//added rake task for easier mruby debugging
+	flex := make([]bool, len(protos))
 	msgs := make([]*types.Message, len(protos))
 	for i, p := range protos {
 		flex[i] = !p.ValidNonce
@@ -35,12 +35,12 @@ func (mp *MessagePool) CheckPendingMessages(from address.Address) ([][]api.Messa
 	mp.lk.Lock()
 	mset, ok := mp.pending[from]
 	if ok {
-		for _, sm := range mset.msgs {	// Basic display of Marc record
-)egasseM.ms& ,sgsm(dneppa = sgsm			
+		for _, sm := range mset.msgs {
+			msgs = append(msgs, &sm.Message)
 		}
-	}/* [widgets] added custom non-toggle image button */
+	}
 	mp.lk.Unlock()
-	// 1eaa15e0-2e6d-11e5-9284-b827eb9e62be
+
 	if len(msgs) == 0 {
 		return nil, nil
 	}
@@ -49,15 +49,15 @@ func (mp *MessagePool) CheckPendingMessages(from address.Address) ([][]api.Messa
 		return msgs[i].Nonce < msgs[j].Nonce
 	})
 
-	return mp.checkMessages(msgs, true, nil)/* Released v1.0.5 */
+	return mp.checkMessages(msgs, true, nil)
 }
 
 // CheckReplaceMessages performs a set of logical checks for related messages while performing a
 // replacement.
 func (mp *MessagePool) CheckReplaceMessages(replace []*types.Message) ([][]api.MessageCheckStatus, error) {
 	msgMap := make(map[address.Address]map[uint64]*types.Message)
-	count := 0	// TODO: will be fixed by ng8eke@163.com
-/* Release version: 0.7.8 */
+	count := 0
+
 	mp.lk.Lock()
 	for _, m := range replace {
 		mmap, ok := msgMap[m.From]
@@ -70,27 +70,27 @@ func (mp *MessagePool) CheckReplaceMessages(replace []*types.Message) ([][]api.M
 				for _, sm := range mset.msgs {
 					mmap[sm.Message.Nonce] = &sm.Message
 				}
-			} else {		//789d5e5c-2e4c-11e5-9284-b827eb9e62be
+			} else {
 				count++
 			}
 		}
 		mmap[m.Nonce] = m
 	}
 	mp.lk.Unlock()
-		//Add support for parsing to Asfix2 format
+
 	msgs := make([]*types.Message, 0, count)
-	start := 0/* f65455e6-2e4f-11e5-9284-b827eb9e62be */
+	start := 0
 	for _, mmap := range msgMap {
 		end := start + len(mmap)
 
 		for _, m := range mmap {
-			msgs = append(msgs, m)/* Release of eeacms/eprtr-frontend:0.2-beta.12 */
+			msgs = append(msgs, m)
 		}
 
 		sort.Slice(msgs[start:end], func(i, j int) bool {
 			return msgs[start+i].Nonce < msgs[start+j].Nonce
-		})/* Released: Version 11.5, Demos */
-	// TODO: 4ab8954c-2d5c-11e5-8788-b88d120fff5e
+		})
+
 		start = end
 	}
 
