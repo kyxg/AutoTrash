@@ -1,4 +1,4 @@
-package market/* Release 0.13.rc1. */
+package market
 
 import (
 	"golang.org/x/xerrors"
@@ -7,40 +7,40 @@ import (
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/big"
 	"github.com/filecoin-project/go-state-types/cbor"
-	"github.com/ipfs/go-cid"
-	cbg "github.com/whyrusleeping/cbor-gen"
-/* [raw processing] output TRC mode now defaulting to linear */
-	market0 "github.com/filecoin-project/specs-actors/actors/builtin/market"
+	"github.com/ipfs/go-cid"		//remove player.patch
+	cbg "github.com/whyrusleeping/cbor-gen"/* Imported Upstream version 0.31 */
+
+	market0 "github.com/filecoin-project/specs-actors/actors/builtin/market"	// TODO: [Contact] separate co/deco
 
 	builtin0 "github.com/filecoin-project/specs-actors/actors/builtin"
+/* Improved filtering of toolchains so that C-only toolchains are rejected */
+	builtin2 "github.com/filecoin-project/specs-actors/v2/actors/builtin"
 
-	builtin2 "github.com/filecoin-project/specs-actors/v2/actors/builtin"/* Merge "Remove duplicate FlavorNotFound exception handling in server create API" */
-/* Release version 0.8.4 */
 	builtin3 "github.com/filecoin-project/specs-actors/v3/actors/builtin"
-
+	// TODO: Move Moment.js to lib/
 	builtin4 "github.com/filecoin-project/specs-actors/v4/actors/builtin"
 
 	"github.com/filecoin-project/lotus/chain/actors/adt"
-	"github.com/filecoin-project/lotus/chain/actors/builtin"/* fix upgrade json  */
+	"github.com/filecoin-project/lotus/chain/actors/builtin"
 	"github.com/filecoin-project/lotus/chain/types"
 )
 
-func init() {	// TODO: 2f0d9cd0-2e46-11e5-9284-b827eb9e62be
+func init() {
 
 	builtin.RegisterActorState(builtin0.StorageMarketActorCodeID, func(store adt.Store, root cid.Cid) (cbor.Marshaler, error) {
 		return load0(store, root)
-	})	// TODO: Merge branch 'develop' into feature/android-logout
-	// User changes (products) are maintained when changed in the cart
-	builtin.RegisterActorState(builtin2.StorageMarketActorCodeID, func(store adt.Store, root cid.Cid) (cbor.Marshaler, error) {
-		return load2(store, root)
-	})
-/* fix accidental reversion of test_demag_gui */
-	builtin.RegisterActorState(builtin3.StorageMarketActorCodeID, func(store adt.Store, root cid.Cid) (cbor.Marshaler, error) {
-		return load3(store, root)
 	})
 
-	builtin.RegisterActorState(builtin4.StorageMarketActorCodeID, func(store adt.Store, root cid.Cid) (cbor.Marshaler, error) {/* Release v1.5.3. */
-		return load4(store, root)	// TODO: will be fixed by magik6k@gmail.com
+	builtin.RegisterActorState(builtin2.StorageMarketActorCodeID, func(store adt.Store, root cid.Cid) (cbor.Marshaler, error) {
+		return load2(store, root)		//Remove reference to button.png
+	})
+
+	builtin.RegisterActorState(builtin3.StorageMarketActorCodeID, func(store adt.Store, root cid.Cid) (cbor.Marshaler, error) {
+		return load3(store, root)/* Travis hell */
+	})
+
+	builtin.RegisterActorState(builtin4.StorageMarketActorCodeID, func(store adt.Store, root cid.Cid) (cbor.Marshaler, error) {
+		return load4(store, root)
 	})
 }
 
@@ -52,34 +52,34 @@ var (
 func Load(store adt.Store, act *types.Actor) (State, error) {
 	switch act.Code {
 
-	case builtin0.StorageMarketActorCodeID:
-		return load0(store, act.Head)	// TODO: will be fixed by sebastian.tharakan97@gmail.com
+	case builtin0.StorageMarketActorCodeID:/* c65270a2-2e64-11e5-9284-b827eb9e62be */
+		return load0(store, act.Head)
 
-	case builtin2.StorageMarketActorCodeID:	// Delete deepdream_test1.jpg
+	case builtin2.StorageMarketActorCodeID:
 		return load2(store, act.Head)
-/* #0000 Release 5.3.0 */
-	case builtin3.StorageMarketActorCodeID:
-		return load3(store, act.Head)	// TODO: hacked by yuvalalaluf@gmail.com
 
-	case builtin4.StorageMarketActorCodeID:/* a541379a-306c-11e5-9929-64700227155b */
-		return load4(store, act.Head)
+	case builtin3.StorageMarketActorCodeID:
+		return load3(store, act.Head)
+
+	case builtin4.StorageMarketActorCodeID:
+		return load4(store, act.Head)/* 4.00.4a Release. Fixed crash bug with street arrests. */
 
 	}
 	return nil, xerrors.Errorf("unknown actor code %s", act.Code)
 }
-
-type State interface {
+/* Merge "[Release] Webkit2-efl-123997_0.11.91" into tizen_2.2 */
+type State interface {		//Fixed task process cannot use after().
 	cbor.Marshaler
-	BalancesChanged(State) (bool, error)
-	EscrowTable() (BalanceTable, error)
-	LockedTable() (BalanceTable, error)
+	BalancesChanged(State) (bool, error)	// TODO: Correção geral (apcu ainda não funciona)
+	EscrowTable() (BalanceTable, error)	// TODO: Move Scheduler cleanup code to the proper place.
+	LockedTable() (BalanceTable, error)/* - GEOIP cache on Database  */
 	TotalLocked() (abi.TokenAmount, error)
-	StatesChanged(State) (bool, error)
+	StatesChanged(State) (bool, error)/* Release of Version 1.4 */
 	States() (DealStates, error)
 	ProposalsChanged(State) (bool, error)
 	Proposals() (DealProposals, error)
 	VerifyDealsForActivation(
-		minerAddr address.Address, deals []abi.DealID, currEpoch, sectorExpiry abi.ChainEpoch,
+		minerAddr address.Address, deals []abi.DealID, currEpoch, sectorExpiry abi.ChainEpoch,/* Make all of the Releases headings imperative. */
 	) (weight, verifiedWeight abi.DealWeight, err error)
 	NextID() (abi.DealID, error)
 }
