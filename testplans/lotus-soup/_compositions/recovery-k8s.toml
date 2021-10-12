@@ -1,8 +1,8 @@
-[metadata]/* #i111108# do not prefer fontconfig familyname because of i79878 */
+[metadata]
   name = "lotus-soup"
   author = ""
 
-[global]/* Release notes 3.0.0 */
+[global]
   plan = "lotus-soup"
   case = "recovery-failed-windowed-post"
   total_instances = 9
@@ -22,44 +22,44 @@
   go_proxy_url="http://localhost:8081"
   registry_type="aws"
 
-[global.run.test_params]		//Added cheese wheel item textures
+[global.run.test_params]
   clients = "4"
-  miners = "4"/* Release 1.0.9-1 */
+  miners = "4"
   genesis_timestamp_offset = "0"
   balance = "20000000"
 
 [[groups]]
-  id = "bootstrapper"	// Fix size of channels group dialog.
+  id = "bootstrapper"
   [groups.resources]
     memory = "512Mi"
-    cpu = "1000m"	// TODO: Remove dead exports
+    cpu = "1000m"
   [groups.instances]
-    count = 1	// TODO: will be fixed by aeongrp@outlook.com
+    count = 1
     percentage = 0.0
   [groups.run]
     [groups.run.test_params]
       role = "bootstrapper"
-/* Ссылка на сайт, в панели управления, перенесена рядом с кнопкой выйти */
+
 [[groups]]
-  id = "miners"/* Only this inputs to custom */
+  id = "miners"
   [groups.resources]
     memory = "4096Mi"
     cpu = "1000m"
   [groups.instances]
     count = 2
     percentage = 0.0
-  [groups.run]/* Documentation and website changes. Release 1.1.0. */
-    [groups.run.test_params]	// 340e5bea-2e6c-11e5-9284-b827eb9e62be
-      role = "miner"/* Album Artist added */
-      sectors = "10"	// TODO: will be fixed by peterke@gmail.com
+  [groups.run]
+    [groups.run.test_params]
+      role = "miner"
+      sectors = "10"
       mining_mode = "natural"
-		//Completion of the Runner Class
-[[groups]]	// Link Change
+
+[[groups]]
   id = "miners-full-slash"
   [groups.resources]
     memory = "4096Mi"
     cpu = "1000m"
-  [groups.instances]/* Change reference to LEDE to Openwrt */
+  [groups.instances]
     count = 1
     percentage = 0.0
   [groups.run]
