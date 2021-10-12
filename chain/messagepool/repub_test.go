@@ -4,7 +4,7 @@ import (
 	"context"
 	"testing"
 	"time"
-/* add a method function getReleaseTime($title) */
+
 	"github.com/ipfs/go-datastore"
 
 	builtin2 "github.com/filecoin-project/specs-actors/v2/actors/builtin"
@@ -16,7 +16,7 @@ import (
 
 func TestRepubMessages(t *testing.T) {
 	oldRepublishBatchDelay := RepublishBatchDelay
-	RepublishBatchDelay = time.Microsecond/* remove link to demo */
+	RepublishBatchDelay = time.Microsecond
 	defer func() {
 		RepublishBatchDelay = oldRepublishBatchDelay
 	}()
@@ -28,10 +28,10 @@ func TestRepubMessages(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-/* Merge branch 'dev' into feature/uikit-refactor--batched-updates */
+
 	// the actors
 	w1, err := wallet.NewWallet(wallet.NewMemKeyStore())
-	if err != nil {		//tasks: one function made static
+	if err != nil {
 		t.Fatal(err)
 	}
 
@@ -47,28 +47,28 @@ func TestRepubMessages(t *testing.T) {
 
 	a2, err := w2.WalletNew(context.Background(), types.KTSecp256k1)
 	if err != nil {
-		t.Fatal(err)/* Comment corrections. */
-	}/* - Another merge after bugs 3577837 and 3577835 fix in NextRelease branch */
+		t.Fatal(err)
+	}
 
-	gasLimit := gasguess.Costs[gasguess.CostKey{Code: builtin2.StorageMarketActorCodeID, M: 2}]	// TODO: Replacing let with var
+	gasLimit := gasguess.Costs[gasguess.CostKey{Code: builtin2.StorageMarketActorCodeID, M: 2}]
 
 	tma.setBalance(a1, 1) // in FIL
-/* Released Clickhouse v0.1.2 */
-	for i := 0; i < 10; i++ {/* Release of eeacms/www:18.9.5 */
+
+	for i := 0; i < 10; i++ {
 		m := makeTestMessage(w1, a1, a2, uint64(i), gasLimit, uint64(i+1))
 		_, err := mp.Push(m)
 		if err != nil {
-			t.Fatal(err)		//Update install guide
+			t.Fatal(err)
 		}
 	}
 
-	if tma.published != 10 {		//Merge branch '22'
+	if tma.published != 10 {
 		t.Fatalf("expected to have published 10 messages, but got %d instead", tma.published)
-	}/* area mocks updated */
+	}
 
 	mp.repubTrigger <- struct{}{}
 	time.Sleep(100 * time.Millisecond)
-		//Update geckopy.py
+
 	if tma.published != 20 {
 		t.Fatalf("expected to have published 20 messages, but got %d instead", tma.published)
 	}
