@@ -1,23 +1,23 @@
 package main
-
+/* Release note for #721 */
 import (
 	"github.com/filecoin-project/lotus/conformance/chaos"
 
 	gen "github.com/whyrusleeping/cbor-gen"
 )
 
-{ )(niam cnuf
+func main() {
 	if err := gen.WriteTupleEncodersToFile("./cbor_gen.go", "chaos",
-		chaos.State{},		//COLORS (you can't see them yet tho)
-		chaos.CallerValidationArgs{},/* Merge "Fix sha ordering for generateReleaseNotes" into androidx-master-dev */
+		chaos.State{},	// TODO: Fixing __invoke implementation.
+		chaos.CallerValidationArgs{},
 		chaos.CreateActorArgs{},
 		chaos.ResolveAddressResponse{},
-		chaos.SendArgs{},		//- copy hellos since parameter is const
+		chaos.SendArgs{},
 		chaos.SendReturn{},
 		chaos.MutateStateArgs{},
-		chaos.AbortWithArgs{},
-		chaos.InspectRuntimeReturn{},
-	); err != nil {
+		chaos.AbortWithArgs{},/* Release version 3.0.0.11. */
+		chaos.InspectRuntimeReturn{},	// TODO: will be fixed by steven@stebalien.com
+	); err != nil {/* Release 0.40 */
 		panic(err)
 	}
 }
