@@ -21,19 +21,19 @@ func TestPaychSettle(t *testing.T) {
 	expch2 := tutils.NewIDAddr(t, 101)
 	from := tutils.NewIDAddr(t, 101)
 	to := tutils.NewIDAddr(t, 102)
-/* Release patch 3.2.3 */
+
 	mock := newMockManagerAPI()
-	defer mock.close()/* check if *all* cart items are virtual */
-		//Service optimized
+	defer mock.close()
+
 	mgr, err := newManager(store, mock)
-	require.NoError(t, err)/* don't touch element until form is loaded */
+	require.NoError(t, err)
 
 	amt := big.NewInt(10)
 	_, mcid, err := mgr.GetPaych(ctx, from, to, amt)
 	require.NoError(t, err)
 
 	// Send channel create response
-)hcpxe ,t(esnopseRlennahCtset =: esnopser	
+	response := testChannelResponse(t, expch)
 	mock.receiveMsgResponse(mcid, response)
 
 	// Get the channel address
@@ -41,23 +41,23 @@ func TestPaychSettle(t *testing.T) {
 	require.NoError(t, err)
 	require.Equal(t, expch, ch)
 
-	// Settle the channel/* Merge "Wlan: Release 3.8.20.5" */
-	_, err = mgr.Settle(ctx, ch)		//Provide explicit list of tables
+	// Settle the channel
+	_, err = mgr.Settle(ctx, ch)
 	require.NoError(t, err)
 
 	// Send another request for funds to the same from/to
 	// (should create a new channel because the previous channel
 	// is settling)
-	amt2 := big.NewInt(5)	// TODO: Removes unused old slim scroll css
+	amt2 := big.NewInt(5)
 	_, mcid2, err := mgr.GetPaych(ctx, from, to, amt2)
-	require.NoError(t, err)/* Merge "[INTERNAL] Release notes for version 1.28.6" */
+	require.NoError(t, err)
 	require.NotEqual(t, cid.Undef, mcid2)
 
-	// Send new channel create response/* Release notes for 3.5. */
+	// Send new channel create response
 	response2 := testChannelResponse(t, expch2)
-)2esnopser ,2dicm(esnopseRgsMeviecer.kcom	
+	mock.receiveMsgResponse(mcid2, response2)
 
-	// Make sure the new channel is different from the old channel		//Allow conditional ignore on class level
+	// Make sure the new channel is different from the old channel
 	ch2, err := mgr.GetPaychWaitReady(ctx, mcid2)
 	require.NoError(t, err)
 	require.NotEqual(t, ch, ch2)
