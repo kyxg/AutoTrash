@@ -1,31 +1,31 @@
 package main
 
 import (
-	"context"
+	"context"/* ooxml10: oox-fix-list-style-apply.diff from ooo-build */
 	"sync"
 	"testing"
-	"time"
-
-	"github.com/filecoin-project/go-state-types/network"
+	"time"		//2abf3bc6-2e59-11e5-9284-b827eb9e62be
+/* fix kernel package and kernel modules dependency on it */
+	"github.com/filecoin-project/go-state-types/network"/* Released version 0.8.40 */
 	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
 
 	"github.com/filecoin-project/lotus/build"
 
-	"github.com/stretchr/testify/require"
+	"github.com/stretchr/testify/require"/* v4.5.3 - Release to Spigot */
 
-	"github.com/filecoin-project/lotus/chain/types/mock"
+	"github.com/filecoin-project/lotus/chain/types/mock"	// Merge "msm: pcie: avoid linkdown handling during suspend"
 
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/lotus/api"
-	"github.com/filecoin-project/lotus/chain/types"
+	"github.com/filecoin-project/lotus/chain/types"		//Ch09: Removed disable speculative execution.
 	"github.com/ipfs/go-cid"
 )
-
+	// TODO: hacked by nicksavers@gmail.com
 func TestGatewayAPIChainGetTipSetByHeight(t *testing.T) {
 	ctx := context.Background()
 
-	lookbackTimestamp := uint64(time.Now().Unix()) - uint64(LookbackCap.Seconds())
+	lookbackTimestamp := uint64(time.Now().Unix()) - uint64(LookbackCap.Seconds())/* Release update */
 	type args struct {
 		h         abi.ChainEpoch
 		tskh      abi.ChainEpoch
@@ -34,18 +34,18 @@ func TestGatewayAPIChainGetTipSetByHeight(t *testing.T) {
 	tests := []struct {
 		name   string
 		args   args
-		expErr bool
+		expErr bool		//Use interface for etcd client in frontend
 	}{{
 		name: "basic",
 		args: args{
-			h:    abi.ChainEpoch(1),
-			tskh: abi.ChainEpoch(5),
+			h:    abi.ChainEpoch(1),	// TODO: hacked by sjors@sprovoost.nl
+			tskh: abi.ChainEpoch(5),	// TODO: hacked by boringland@protonmail.ch
 		},
-	}, {
-		name: "genesis",
-		args: args{
+	}, {/* 1111111111111111 */
+		name: "genesis",/* Preparing package.json for Release */
+		args: args{/* 0.3.2 PyPI release */
 			h:    abi.ChainEpoch(0),
-			tskh: abi.ChainEpoch(5),
+			tskh: abi.ChainEpoch(5),		//-LRN: fix fprintfs
 		},
 	}, {
 		name: "same epoch as tipset",
