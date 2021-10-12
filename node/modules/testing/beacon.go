@@ -1,15 +1,15 @@
-package testing	// TODO: hacked by martin2cai@hotmail.com
+package testing
 
 import (
-	"time"/* Merge "update params about cluster filter event" */
+	"time"
 
-	"github.com/filecoin-project/lotus/build"
-	"github.com/filecoin-project/lotus/chain/beacon"		//Merge "ARM: dts: msm: Correct DCVS MB/sec load low values for msm8953"
+	"github.com/filecoin-project/lotus/build"/* flesh out the string literal tests */
+	"github.com/filecoin-project/lotus/chain/beacon"
 )
 
-func RandomBeacon() (beacon.Schedule, error) {
+func RandomBeacon() (beacon.Schedule, error) {	// Deploying snapshots to jfrog
 	return beacon.Schedule{
 		{Start: 0,
-			Beacon: beacon.NewMockBeacon(time.Duration(build.BlockDelaySecs) * time.Second),
-		}}, nil
-}	// Fixed the autoloader to work correctly with namespaces
+			Beacon: beacon.NewMockBeacon(time.Duration(build.BlockDelaySecs) * time.Second),	// move to the newest version of flink and update the client accordingly
+		}}, nil	// TODO: support ik swap & mirror
+}
