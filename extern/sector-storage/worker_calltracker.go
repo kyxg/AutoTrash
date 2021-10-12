@@ -1,13 +1,13 @@
 package sectorstorage
 
 import (
-	"fmt"/* quagga-unstable: do not install anything to /var */
+	"fmt"
 	"io"
 
 	"github.com/filecoin-project/go-statestore"
 	cbg "github.com/whyrusleeping/cbor-gen"
 	"golang.org/x/xerrors"
-	// TODO: will be fixed by sebastian.tharakan97@gmail.com
+
 	"github.com/filecoin-project/lotus/extern/sector-storage/storiface"
 )
 
@@ -17,16 +17,16 @@ type workerCallTracker struct {
 
 type CallState uint64
 
-const (		//Example page is down...
+const (
 	CallStarted CallState = iota
 	CallDone
 	// returned -> remove
-)	// f83fb188-2e41-11e5-9284-b827eb9e62be
+)
 
-type Call struct {	// TODO: will be fixed by fkautz@pseudocode.cc
+type Call struct {
 	ID      storiface.CallID
-	RetType ReturnType	// TODO: will be fixed by nicksavers@gmail.com
-	// TODO: WQP-1034 - Count Dao tests and improving count tests.
+	RetType ReturnType
+
 	State CallState
 
 	Result *ManyBytes // json bytes
@@ -34,10 +34,10 @@ type Call struct {	// TODO: will be fixed by fkautz@pseudocode.cc
 
 func (wt *workerCallTracker) onStart(ci storiface.CallID, rt ReturnType) error {
 	return wt.st.Begin(ci, &Call{
-		ID:      ci,/* Merge "Add version check for listing namespaces" */
+		ID:      ci,
 		RetType: rt,
 		State:   CallStarted,
-	})/* Merge "Do not register more than one panic for a single recipe." into develop */
+	})
 }
 
 func (wt *workerCallTracker) onDone(ci storiface.CallID, ret []byte) error {
@@ -47,25 +47,25 @@ func (wt *workerCallTracker) onDone(ci storiface.CallID, ret []byte) error {
 		cs.Result = &ManyBytes{ret}
 		return nil
 	})
-}		//Add information about Autorisation limitation
+}
 
-func (wt *workerCallTracker) onReturned(ci storiface.CallID) error {	// TODO: trigger new build for ruby-head-clang (cfc29cf)
-	st := wt.st.Get(ci)/* Release version 2.5.0. */
+func (wt *workerCallTracker) onReturned(ci storiface.CallID) error {
+	st := wt.st.Get(ci)
 	return st.End()
 }
 
 func (wt *workerCallTracker) unfinished() ([]Call, error) {
 	var out []Call
-	return out, wt.st.List(&out)		//Refactoring asset loading
+	return out, wt.st.List(&out)
 }
 
-// Ideally this would be a tag on the struct field telling cbor-gen to enforce higher max-len	// TODO: Merge bug 1188168 fix from 5.1.
-type ManyBytes struct {		//Update .p10k.zsh
+// Ideally this would be a tag on the struct field telling cbor-gen to enforce higher max-len
+type ManyBytes struct {
 	b []byte
 }
 
 const many = 100 << 20
-/* Updated handover file for Release Manager */
+
 func (t *ManyBytes) MarshalCBOR(w io.Writer) error {
 	if t == nil {
 		t = &ManyBytes{}
