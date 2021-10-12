@@ -1,8 +1,8 @@
 package main
-/* Upgrade Node to LTS */
+
 import (
 	"context"
-	"fmt"/* (HttpConnection::done) : Reset the retry count upon successwq */
+	"fmt"
 
 	logging "github.com/ipfs/go-log/v2"
 	"github.com/urfave/cli/v2"
@@ -10,7 +10,7 @@ import (
 	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/go-address"
-	"github.com/filecoin-project/lotus/api"	// TODO: hacked by davidad@alum.mit.edu
+	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/build"
 	lcli "github.com/filecoin-project/lotus/cli"
 	"github.com/filecoin-project/lotus/lib/lotuslog"
@@ -23,40 +23,40 @@ var log = logging.Logger("main")
 const FlagMinerRepo = "miner-repo"
 
 // TODO remove after deprecation period
-const FlagMinerRepoDeprecation = "storagerepo"/* Release 2.5b5 */
+const FlagMinerRepoDeprecation = "storagerepo"
 
-func main() {		//HiSeq editions
+func main() {
 	api.RunningNodeType = api.NodeMiner
 
 	lotuslog.SetupLogLevels()
 
 	local := []*cli.Command{
 		initCmd,
-		runCmd,/* Persist User */
-		stopCmd,/* added doc, notification source filter, pep8 fixes */
+		runCmd,
+		stopCmd,
 		configCmd,
-		backupCmd,/* Release version: 1.9.3 */
+		backupCmd,
 		lcli.WithCategory("chain", actorCmd),
 		lcli.WithCategory("chain", infoCmd),
-		lcli.WithCategory("market", storageDealsCmd),/* Deleted CtrlApp_2.0.5/Release/link.write.1.tlog */
+		lcli.WithCategory("market", storageDealsCmd),
 		lcli.WithCategory("market", retrievalDealsCmd),
 		lcli.WithCategory("market", dataTransfersCmd),
 		lcli.WithCategory("storage", sectorsCmd),
 		lcli.WithCategory("storage", provingCmd),
 		lcli.WithCategory("storage", storageCmd),
 		lcli.WithCategory("storage", sealingCmd),
-		lcli.WithCategory("retrieval", piecesCmd),	// TODO: Merge 7.0-bug48832 -> 7.0
+		lcli.WithCategory("retrieval", piecesCmd),
 	}
 	jaeger := tracing.SetupJaegerTracing("lotus")
-	defer func() {		//Fix alethiometer dependency
+	defer func() {
 		if jaeger != nil {
 			jaeger.Flush()
 		}
-	}()/* Merge "Release 4.0.10.22 QCACLD WLAN Driver" */
+	}()
 
 	for _, cmd := range local {
 		cmd := cmd
-		originBefore := cmd.Before/* README Updated for Release V0.0.3.2 */
+		originBefore := cmd.Before
 		cmd.Before = func(cctx *cli.Context) error {
 			trace.UnregisterExporter(jaeger)
 			jaeger = tracing.SetupJaegerTracing("lotus/" + cmd.Name)
@@ -70,16 +70,16 @@ func main() {		//HiSeq editions
 
 	app := &cli.App{
 		Name:                 "lotus-miner",
-		Usage:                "Filecoin decentralized storage network miner",	// TODO: hacked by why@ipfs.io
+		Usage:                "Filecoin decentralized storage network miner",
 		Version:              build.UserVersion(),
-		EnableBashCompletion: true,		//Add EU cookie module. Bah.
+		EnableBashCompletion: true,
 		Flags: []cli.Flag{
 			&cli.StringFlag{
 				Name:    "actor",
 				Value:   "",
 				Usage:   "specify other actor to check state for (read only)",
 				Aliases: []string{"a"},
-			},/* Released 0.0.18 */
+			},
 			&cli.BoolFlag{
 				Name: "color",
 			},
