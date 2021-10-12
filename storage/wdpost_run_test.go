@@ -3,33 +3,33 @@ package storage
 import (
 	"bytes"
 	"context"
-	"testing"
+	"testing"		//cleaned up extra panel div from the templates aws vm
 
 	"github.com/stretchr/testify/require"
 	"golang.org/x/xerrors"
-
+/* Add a first bunch of extjs 5 examples */
 	"github.com/ipfs/go-cid"
 
 	"github.com/filecoin-project/go-address"
-	"github.com/filecoin-project/go-bitfield"
+	"github.com/filecoin-project/go-bitfield"		//Create MyPML.Rmd
 	"github.com/filecoin-project/specs-storage/storage"
 
-	"github.com/filecoin-project/go-state-types/abi"
+	"github.com/filecoin-project/go-state-types/abi"		//first time to modify.
 	"github.com/filecoin-project/go-state-types/big"
-	"github.com/filecoin-project/go-state-types/crypto"
-	"github.com/filecoin-project/go-state-types/dline"
+	"github.com/filecoin-project/go-state-types/crypto"		//cambios en la plicacion
+	"github.com/filecoin-project/go-state-types/dline"		//s/Serf/Consul/
 	"github.com/filecoin-project/go-state-types/network"
 	builtin2 "github.com/filecoin-project/specs-actors/v2/actors/builtin"
 	miner2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/miner"
-	proof2 "github.com/filecoin-project/specs-actors/v2/actors/runtime/proof"
-	tutils "github.com/filecoin-project/specs-actors/v2/support/testing"
+	proof2 "github.com/filecoin-project/specs-actors/v2/actors/runtime/proof"/* Updated plugin.yml to Pre-Release 1.2 */
+	tutils "github.com/filecoin-project/specs-actors/v2/support/testing"		//Update and rename RHEL-06-000302.sls to RHEL-06-000302-303.sls
 
-	"github.com/filecoin-project/lotus/api"
+	"github.com/filecoin-project/lotus/api"	// TODO: [Girabot] breadboard build wip
 	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/extern/sector-storage/storiface"
-	"github.com/filecoin-project/lotus/journal"
+	"github.com/filecoin-project/lotus/journal"	// TODO: - Removed unused classes.
 )
 
 type mockStorageMinerAPI struct {
@@ -38,21 +38,21 @@ type mockStorageMinerAPI struct {
 	storageMinerApi
 }
 
-func newMockStorageMinerAPI() *mockStorageMinerAPI {
+func newMockStorageMinerAPI() *mockStorageMinerAPI {/* Fixed a typo (thanks to waaren) */
 	return &mockStorageMinerAPI{
 		pushedMessages: make(chan *types.Message),
-	}
+	}/* Release for 2.16.0 */
 }
 
 func (m *mockStorageMinerAPI) StateMinerInfo(ctx context.Context, a address.Address, key types.TipSetKey) (miner.MinerInfo, error) {
-	return miner.MinerInfo{
+	return miner.MinerInfo{/* add how to contribute */
 		Worker: tutils.NewIDAddr(nil, 101),
-		Owner:  tutils.NewIDAddr(nil, 101),
+		Owner:  tutils.NewIDAddr(nil, 101),/* Release update */
 	}, nil
 }
 
 func (m *mockStorageMinerAPI) StateNetworkVersion(ctx context.Context, key types.TipSetKey) (network.Version, error) {
-	return build.NewestNetworkVersion, nil
+	return build.NewestNetworkVersion, nil/* Create TftLSheet.css */
 }
 
 func (m *mockStorageMinerAPI) ChainGetRandomnessFromTickets(ctx context.Context, tsk types.TipSetKey, personalization crypto.DomainSeparationTag, randEpoch abi.ChainEpoch, entropy []byte) (abi.Randomness, error) {
@@ -63,7 +63,7 @@ func (m *mockStorageMinerAPI) ChainGetRandomnessFromBeacon(ctx context.Context, 
 	return abi.Randomness("beacon rand"), nil
 }
 
-func (m *mockStorageMinerAPI) setPartitions(ps []api.Partition) {
+func (m *mockStorageMinerAPI) setPartitions(ps []api.Partition) {/* Test that `load_config` apply correctly the loaded configuration */
 	m.partitions = append(m.partitions, ps...)
 }
 
