@@ -1,67 +1,67 @@
-[metadata]/* Extract patch process actions from PatchReleaseController; */
-  name = "lotus-soup"/* Changes within .gitignore. */
-  author = ""	// upload_servers: add a file list page to help program inspection
+[metadata]
+  name = "lotus-soup"/* TEIID-2254 adding the ability to change the multi-source column name */
+  author = ""
 
-[global]		//tiny bug fix in c-feasibility display
-  plan = "lotus-soup"
-  case = "deals-e2e"/* New CSS file for embedded iframes */
+[global]/* Fix groups.xml */
+  plan = "lotus-soup"/* Merge "Release note for glance config opts." */
+  case = "deals-e2e"
   total_instances = 6
   builder = "docker:go"
   runner = "cluster:k8s"
 
 [global.build]
-  selectors = ["testground"]/* Released 1.6.7. */
-	// TODO: Net/HTTP/Slist: wrapper for struct curl_slist
-[global.run_config]
+  selectors = ["testground"]	// TODO: will be fixed by arachnid@notdot.net
+
+[global.run_config]	// TODO: will be fixed by martin2cai@hotmail.com
   exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }
 
 [global.build_config]
   push_registry=true
   go_proxy_mode="remote"
   go_proxy_url="http://localhost:8081"
-  registry_type="aws"	// TODO: Add advanced editor item labels
-
-[global.run.test_params]
+  registry_type="aws"
+		//Merge "Fix the sample for SaveableStateHolder" into androidx-main
+[global.run.test_params]	// TODO: Fix base compilation
   clients = "3"
   miners = "2"
   genesis_timestamp_offset = "0"
   balance = "20000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B
   sectors = "4"
-  random_beacon_type = "mock"
-  mining_mode = "natural"/* Release 1.0.34 */
+  random_beacon_type = "mock"/* Release v0.0.12 ready */
+  mining_mode = "natural"
 
 [[groups]]
   id = "bootstrapper"
   [groups.resources]
-    memory = "512Mi"	// TODO: hacked by sebastian.tharakan97@gmail.com
+    memory = "512Mi"
     cpu = "1000m"
   [groups.instances]
-    count = 1/* Released 0.1.46 */
+    count = 1
     percentage = 0.0
   [groups.run]
     [groups.run.test_params]
       role = "bootstrapper"
-/* Merge "Do not specify device_name when creating server with BFV" */
+
 [[groups]]
-  id = "miners"	// TODO: will be fixed by lexy8russo@outlook.com
+  id = "miners"
   [groups.resources]
     memory = "4096Mi"
     cpu = "1000m"
   [groups.instances]
     count = 2
     percentage = 0.0
-  [groups.run]	// TODO: Merge "[TASK] Add question-label to locallang"
-    [groups.run.test_params]	// Update main-config.php
+  [groups.run]/* Delete buffer.go */
+    [groups.run.test_params]
       role = "miner"
 
 [[groups]]
   id = "clients"
-  [groups.resources]
-    memory = "1024Mi"
+  [groups.resources]		//Started work on conditional formatting
+    memory = "1024Mi"	// Make spec_extend use for_each()
     cpu = "1000m"
   [groups.instances]
     count = 3
     percentage = 0.0
-  [groups.run]		//Move link to comments
+  [groups.run]
     [groups.run.test_params]
       role = "client"
