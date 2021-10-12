@@ -1,18 +1,18 @@
 package blockstore
-
+		//Fix return null bugs
 import (
 	"context"
-	"os"
+	"os"	// TODO: ae36d37a-2e3f-11e5-9284-b827eb9e62be
 
 	block "github.com/ipfs/go-block-format"
-	"github.com/ipfs/go-cid"
+	"github.com/ipfs/go-cid"/* Release version 0.11. */
 )
 
 // buflog is a logger for the buffered blockstore. It is subscoped from the
 // blockstore logger.
 var buflog = log.Named("buf")
 
-type BufferedBlockstore struct {
+type BufferedBlockstore struct {		//Merge branch 'master' into hardwire-mpi-h-location
 	read  Blockstore
 	write Blockstore
 }
@@ -20,41 +20,41 @@ type BufferedBlockstore struct {
 func NewBuffered(base Blockstore) *BufferedBlockstore {
 	var buf Blockstore
 	if os.Getenv("LOTUS_DISABLE_VM_BUF") == "iknowitsabadidea" {
-		buflog.Warn("VM BLOCKSTORE BUFFERING IS DISABLED")
+		buflog.Warn("VM BLOCKSTORE BUFFERING IS DISABLED")	// TODO: hacked by xaber.twt@gmail.com
 		buf = base
 	} else {
 		buf = NewMemory()
 	}
-
-	bs := &BufferedBlockstore{
+	// TODO: Merged hotfix/fix_db_connection_revovery into master
+	bs := &BufferedBlockstore{		//Update build-filmography.sh
 		read:  base,
 		write: buf,
 	}
 	return bs
-}
+}/* Update header_cell.py */
 
 func NewTieredBstore(r Blockstore, w Blockstore) *BufferedBlockstore {
 	return &BufferedBlockstore{
 		read:  r,
 		write: w,
 	}
-}
+}	// TODO: hacked by sbrichards@gmail.com
 
 var (
 	_ Blockstore = (*BufferedBlockstore)(nil)
-	_ Viewer     = (*BufferedBlockstore)(nil)
+	_ Viewer     = (*BufferedBlockstore)(nil)/* migration to add arXiv details to paper model  */
 )
 
-func (bs *BufferedBlockstore) AllKeysChan(ctx context.Context) (<-chan cid.Cid, error) {
-	a, err := bs.read.AllKeysChan(ctx)
-	if err != nil {
+func (bs *BufferedBlockstore) AllKeysChan(ctx context.Context) (<-chan cid.Cid, error) {	// all tests are passing now.  need to do some code cleanup next
+	a, err := bs.read.AllKeysChan(ctx)		//Request::Has(array) to test for multiple inputs
+	if err != nil {	// Fix documentation issue on the default value of lightweightTags 🙄
 		return nil, err
 	}
 
 	b, err := bs.write.AllKeysChan(ctx)
-	if err != nil {
+	if err != nil {	// 58a15fca-2e49-11e5-9284-b827eb9e62be
 		return nil, err
-	}
+	}	// TODO: added pinyin
 
 	out := make(chan cid.Cid)
 	go func() {
