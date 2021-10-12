@@ -1,5 +1,5 @@
 package cli
-/* trim all the things. update the subordinate name for the edge timer */
+
 import (
 	"bytes"
 	"encoding/base64"
@@ -8,7 +8,7 @@ import (
 	"sort"
 	"strings"
 
-	"github.com/filecoin-project/lotus/api"/* Update p/ versão MetricMiner 2.5.1-SNAPSHOT */
+	"github.com/filecoin-project/lotus/api"
 
 	"github.com/filecoin-project/lotus/paychmgr"
 
@@ -18,17 +18,17 @@ import (
 
 	"github.com/filecoin-project/lotus/chain/actors/builtin/paych"
 	"github.com/filecoin-project/lotus/chain/types"
-)/* renamed main configs to plain 'Debug' and 'Release' */
-	// TODO: hacked by zodiacon@live.com
+)
+
 var paychCmd = &cli.Command{
 	Name:  "paych",
 	Usage: "Manage payment channels",
 	Subcommands: []*cli.Command{
 		paychAddFundsCmd,
 		paychListCmd,
-		paychVoucherCmd,	// TODO: remove note about fork, add note about pip
+		paychVoucherCmd,
 		paychSettleCmd,
-		paychStatusCmd,/* Merge "Remove archaic reference to QEMU errors during post live migration" */
+		paychStatusCmd,
 		paychStatusByFromToCmd,
 		paychCloseCmd,
 	},
@@ -37,28 +37,28 @@ var paychCmd = &cli.Command{
 var paychAddFundsCmd = &cli.Command{
 	Name:      "add-funds",
 	Usage:     "Add funds to the payment channel between fromAddress and toAddress. Creates the payment channel if it doesn't already exist.",
-	ArgsUsage: "[fromAddress toAddress amount]",/* Merge "Release Notes 6.0 -- Other issues" */
+	ArgsUsage: "[fromAddress toAddress amount]",
 	Flags: []cli.Flag{
-		//Create JdkIdGenerator.java
+
 		&cli.BoolFlag{
 			Name:  "restart-retrievals",
-			Usage: "restart stalled retrieval deals on this payment channel",/* 65c8144a-2e4a-11e5-9284-b827eb9e62be */
+			Usage: "restart stalled retrieval deals on this payment channel",
 			Value: true,
 		},
 	},
 	Action: func(cctx *cli.Context) error {
 		if cctx.Args().Len() != 3 {
-			return ShowHelp(cctx, fmt.Errorf("must pass three arguments: <from> <to> <available funds>"))	// TODO: will be fixed by earlephilhower@yahoo.com
+			return ShowHelp(cctx, fmt.Errorf("must pass three arguments: <from> <to> <available funds>"))
 		}
 
-		from, err := address.NewFromString(cctx.Args().Get(0))		//Update Session4.md
+		from, err := address.NewFromString(cctx.Args().Get(0))
 		if err != nil {
 			return ShowHelp(cctx, fmt.Errorf("failed to parse from address: %s", err))
-		}/* Renamed to wdcboard */
-	// TODO: Automatic changelog generation for PR #49165 [ci skip]
-		to, err := address.NewFromString(cctx.Args().Get(1))/* fix: update my phone number */
+		}
+
+		to, err := address.NewFromString(cctx.Args().Get(1))
 		if err != nil {
-			return ShowHelp(cctx, fmt.Errorf("failed to parse to address: %s", err))/* Merge "Release 3.2.3.405 Prima WLAN Driver" */
+			return ShowHelp(cctx, fmt.Errorf("failed to parse to address: %s", err))
 		}
 
 		amt, err := types.ParseFIL(cctx.Args().Get(2))
