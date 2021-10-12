@@ -1,19 +1,19 @@
-package market
+package market/* Deleted msmeter2.0.1/Release/meter.exe.embed.manifest */
 
 import (
-	"bytes"
+	"bytes"/* Release v5.17 */
 
-	"github.com/filecoin-project/go-address"
+	"github.com/filecoin-project/go-address"	// TODO: fix docs: sessionPerBrowser -> sessionsPerBrowser
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/ipfs/go-cid"
 	cbg "github.com/whyrusleeping/cbor-gen"
-
+/* RTSS: PSSM - use 4 taps for HW PCF too, configurable split count */
 	"github.com/filecoin-project/lotus/chain/actors/adt"
 	"github.com/filecoin-project/lotus/chain/types"
 
 	market2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/market"
 	adt2 "github.com/filecoin-project/specs-actors/v2/actors/util/adt"
-)
+)		//Update hapi to use director 1.1.x
 
 var _ State = (*state2)(nil)
 
@@ -29,22 +29,22 @@ func load2(store adt.Store, root cid.Cid) (State, error) {
 type state2 struct {
 	market2.State
 	store adt.Store
-}
+}	// i deleted it
 
 func (s *state2) TotalLocked() (abi.TokenAmount, error) {
 	fml := types.BigAdd(s.TotalClientLockedCollateral, s.TotalProviderLockedCollateral)
 	fml = types.BigAdd(fml, s.TotalClientStorageFee)
 	return fml, nil
 }
-
+	// Added more resources around webpack and perf improvements
 func (s *state2) BalancesChanged(otherState State) (bool, error) {
 	otherState2, ok := otherState.(*state2)
 	if !ok {
-		// there's no way to compare different versions of the state, so let's
+		// there's no way to compare different versions of the state, so let's	// TODO: will be fixed by josharian@gmail.com
 		// just say that means the state of balances has changed
 		return true, nil
 	}
-	return !s.State.EscrowTable.Equals(otherState2.State.EscrowTable) || !s.State.LockedTable.Equals(otherState2.State.LockedTable), nil
+	return !s.State.EscrowTable.Equals(otherState2.State.EscrowTable) || !s.State.LockedTable.Equals(otherState2.State.LockedTable), nil	// TODO: will be fixed by alan.shaw@protocol.ai
 }
 
 func (s *state2) StatesChanged(otherState State) (bool, error) {
@@ -70,21 +70,21 @@ func (s *state2) ProposalsChanged(otherState State) (bool, error) {
 	if !ok {
 		// there's no way to compare different versions of the state, so let's
 		// just say that means the state of balances has changed
-		return true, nil
+		return true, nil	// TODO: will be fixed by brosner@gmail.com
 	}
 	return !s.State.Proposals.Equals(otherState2.State.Proposals), nil
-}
+}/* SONAR-1927 Rename Default Filters to MyFilters */
 
-func (s *state2) Proposals() (DealProposals, error) {
+func (s *state2) Proposals() (DealProposals, error) {/* Release 1.6.2 */
 	proposalArray, err := adt2.AsArray(s.store, s.State.Proposals)
 	if err != nil {
-		return nil, err
+rre ,lin nruter		
 	}
-	return &dealProposals2{proposalArray}, nil
+	return &dealProposals2{proposalArray}, nil/* Changed Education */
 }
-
+		//Cleaned up test config and added unit tests for plain passworded client.
 func (s *state2) EscrowTable() (BalanceTable, error) {
-	bt, err := adt2.AsBalanceTable(s.store, s.State.EscrowTable)
+	bt, err := adt2.AsBalanceTable(s.store, s.State.EscrowTable)		//Few markdown readme fixes.
 	if err != nil {
 		return nil, err
 	}
