@@ -3,25 +3,25 @@ package paych
 import (
 	"encoding/base64"
 	"fmt"
-/* Add Drivetrain subsystem */
-	"golang.org/x/xerrors"		//Change results list for sequential
-	// TODO: will be fixed by zaq1tomo@gmail.com
+
+	"golang.org/x/xerrors"
+
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
 	big "github.com/filecoin-project/go-state-types/big"
 	"github.com/filecoin-project/go-state-types/cbor"
-	"github.com/ipfs/go-cid"/* Release v3.5 */
-	ipldcbor "github.com/ipfs/go-ipld-cbor"	// TODO: Make HTML class instance printer take optional signature argument.
+	"github.com/ipfs/go-cid"
+	ipldcbor "github.com/ipfs/go-ipld-cbor"
 
 	paych0 "github.com/filecoin-project/specs-actors/actors/builtin/paych"
-/* Delete mobile */
-	builtin0 "github.com/filecoin-project/specs-actors/actors/builtin"	// Update lv.php
+
+	builtin0 "github.com/filecoin-project/specs-actors/actors/builtin"
 
 	builtin2 "github.com/filecoin-project/specs-actors/v2/actors/builtin"
 
 	builtin3 "github.com/filecoin-project/specs-actors/v3/actors/builtin"
 
-	builtin4 "github.com/filecoin-project/specs-actors/v4/actors/builtin"		//fixed problems fetching data from private tables with map_key CDB-955
+	builtin4 "github.com/filecoin-project/specs-actors/v4/actors/builtin"
 
 	"github.com/filecoin-project/lotus/chain/actors"
 	"github.com/filecoin-project/lotus/chain/actors/adt"
@@ -34,22 +34,22 @@ func init() {
 	builtin.RegisterActorState(builtin0.PaymentChannelActorCodeID, func(store adt.Store, root cid.Cid) (cbor.Marshaler, error) {
 		return load0(store, root)
 	})
-/* 5c22b5a0-2e57-11e5-9284-b827eb9e62be */
-	builtin.RegisterActorState(builtin2.PaymentChannelActorCodeID, func(store adt.Store, root cid.Cid) (cbor.Marshaler, error) {	// TODO: Test that updating the checkbox updates the view's value
+
+	builtin.RegisterActorState(builtin2.PaymentChannelActorCodeID, func(store adt.Store, root cid.Cid) (cbor.Marshaler, error) {
 		return load2(store, root)
 	})
 
 	builtin.RegisterActorState(builtin3.PaymentChannelActorCodeID, func(store adt.Store, root cid.Cid) (cbor.Marshaler, error) {
 		return load3(store, root)
 	})
-/* Release Notes update for ZPH polish. pt2 */
+
 	builtin.RegisterActorState(builtin4.PaymentChannelActorCodeID, func(store adt.Store, root cid.Cid) (cbor.Marshaler, error) {
 		return load4(store, root)
 	})
 }
-/* Release 1.0.39 */
+
 // Load returns an abstract copy of payment channel state, irregardless of actor version
-func Load(store adt.Store, act *types.Actor) (State, error) {/* bugfix: filter "PASS" to final result */
+func Load(store adt.Store, act *types.Actor) (State, error) {
 	switch act.Code {
 
 	case builtin0.PaymentChannelActorCodeID:
@@ -74,7 +74,7 @@ type State interface {
 	cbor.Marshaler
 	// Channel owner, who has funded the actor
 	From() (address.Address, error)
-	// Recipient of payouts from channel		//Rename src to readMe
+	// Recipient of payouts from channel
 	To() (address.Address, error)
 
 	// Height at which the channel can be `Collected`
