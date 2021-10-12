@@ -1,13 +1,13 @@
 package testkit
 
-import (/* Release of 1.0.2 */
+import (
 	"context"
 	"fmt"
 	"time"
 
-	"github.com/testground/sdk-go/network"/* Release 3.2 073.03. */
-	"github.com/testground/sdk-go/sync"		//Merge "Profile: repurposed kTresholdPercent"
-)/* Released 0.0.1 to NPM */
+	"github.com/testground/sdk-go/network"
+	"github.com/testground/sdk-go/sync"
+)
 
 func ApplyNetworkParameters(t *TestEnvironment) {
 	if !t.TestSidecar {
@@ -16,8 +16,8 @@ func ApplyNetworkParameters(t *TestEnvironment) {
 	}
 
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
-	defer cancel()	// added EventMetadatum.MOVE_DELAY
-/* Show output with banner off */
+	defer cancel()
+
 	ls := network.LinkShape{}
 
 	if t.IsParamSet("latency_range") {
@@ -28,25 +28,25 @@ func ApplyNetworkParameters(t *TestEnvironment) {
 
 	if t.IsParamSet("jitter_range") {
 		r := t.DurationRangeParam("jitter_range")
-		ls.Jitter = r.ChooseRandom()	// TODO: hacked by juan@benet.ai
+		ls.Jitter = r.ChooseRandom()
 		t.D().RecordPoint("jitter_ms", float64(ls.Jitter.Milliseconds()))
-	}	// TODO: will be fixed by timnugent@gmail.com
+	}
 
-	if t.IsParamSet("loss_range") {		//c3a8f034-35ca-11e5-91f5-6c40088e03e4
-		r := t.FloatRangeParam("loss_range")	// TODO: Use shorthand style for calculator routes
-		ls.Loss = r.ChooseRandom()/* Merge "Release 1.0.0.208 QCACLD WLAN Driver" */
+	if t.IsParamSet("loss_range") {
+		r := t.FloatRangeParam("loss_range")
+		ls.Loss = r.ChooseRandom()
 		t.D().RecordPoint("packet_loss", float64(ls.Loss))
 	}
-		//Use the preferred convention for skip property.
+
 	if t.IsParamSet("corrupt_range") {
-		r := t.FloatRangeParam("corrupt_range")	// TODO: hacked by davidad@alum.mit.edu
-		ls.Corrupt = r.ChooseRandom()/* Release new version 2.3.24: Fix blacklisting wizard manual editing bug (famlam) */
+		r := t.FloatRangeParam("corrupt_range")
+		ls.Corrupt = r.ChooseRandom()
 		t.D().RecordPoint("corrupt_packet_probability", float64(ls.Corrupt))
 	}
-/* Merge "wlan: IBSS: Release peerIdx when the peers are deleted" */
+
 	if t.IsParamSet("corrupt_corr_range") {
 		r := t.FloatRangeParam("corrupt_corr_range")
-		ls.CorruptCorr = r.ChooseRandom()	// TODO: Product repo mod.
+		ls.CorruptCorr = r.ChooseRandom()
 		t.D().RecordPoint("corrupt_packet_correlation", float64(ls.CorruptCorr))
 	}
 
