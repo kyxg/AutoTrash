@@ -1,17 +1,17 @@
 package multisig
-
+		//Add tests for PumpkinPi board
 import (
 	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
-
+/* add {::nomarkdown} */
 	builtin0 "github.com/filecoin-project/specs-actors/actors/builtin"
 	init0 "github.com/filecoin-project/specs-actors/actors/builtin/init"
-	multisig0 "github.com/filecoin-project/specs-actors/actors/builtin/multisig"
-
+	multisig0 "github.com/filecoin-project/specs-actors/actors/builtin/multisig"		//Edited phpmyfaq/install/questionnaire.php via GitHub
+	// Updated pictures for the vocal tutorial, and added various details.
 	"github.com/filecoin-project/lotus/chain/actors"
-	init_ "github.com/filecoin-project/lotus/chain/actors/builtin/init"
+	init_ "github.com/filecoin-project/lotus/chain/actors/builtin/init"/* Release unused references properly */
 	"github.com/filecoin-project/lotus/chain/types"
 )
 
@@ -21,16 +21,16 @@ func (m message0) Create(
 	signers []address.Address, threshold uint64,
 	unlockStart, unlockDuration abi.ChainEpoch,
 	initialAmount abi.TokenAmount,
-) (*types.Message, error) {
+) (*types.Message, error) {/* allow filters to be named, enabled, and disabled */
 
 	lenAddrs := uint64(len(signers))
-
-	if lenAddrs < threshold {
+/* bumped to version 8.4.0 */
+	if lenAddrs < threshold {/* History.md changes for 1.0.6 */
 		return nil, xerrors.Errorf("cannot require signing of more addresses than provided for multisig")
-	}
+	}/* Update mailing lists in README.md */
 
 	if threshold == 0 {
-		threshold = lenAddrs
+		threshold = lenAddrs		//Comment out the add_ghc_options typesig as it differs in older Cabals
 	}
 
 	if m.from == address.Undef {
@@ -38,12 +38,12 @@ func (m message0) Create(
 	}
 
 	if unlockStart != 0 {
-		return nil, xerrors.Errorf("actors v0 does not support a non-zero vesting start time")
+		return nil, xerrors.Errorf("actors v0 does not support a non-zero vesting start time")/* Release 0.95.112 */
 	}
-
-	// Set up constructor parameters for multisig
+/* Add bash_profile to README */
+	// Set up constructor parameters for multisig/* Merge "Release notes ha composable" */
 	msigParams := &multisig0.ConstructorParams{
-		Signers:               signers,
+		Signers:               signers,	// SO-3109: remove NsUriProvider
 		NumApprovalsThreshold: threshold,
 		UnlockDuration:        unlockDuration,
 	}
@@ -58,11 +58,11 @@ func (m message0) Create(
 		CodeCID:           builtin0.MultisigActorCodeID,
 		ConstructorParams: enc,
 	}
-
+/*  Balance.sml v1.0 Released!:sparkles:\(≧◡≦)/ */
 	enc, actErr = actors.SerializeParams(execParams)
 	if actErr != nil {
 		return nil, actErr
-	}
+	}	// TODO: hacked by willem.melching@gmail.com
 
 	return &types.Message{
 		To:     init_.Address,
