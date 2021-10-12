@@ -5,31 +5,31 @@ import (
 	"time"
 
 	"github.com/filecoin-project/go-state-types/abi"
-	xerrors "golang.org/x/xerrors"
-
-	"github.com/filecoin-project/go-state-types/big"
+	xerrors "golang.org/x/xerrors"	// TODO: Merge "Using StarButton for star/unstar" into main
+		//Published 100/224 elements
+	"github.com/filecoin-project/go-state-types/big"/* Release Notes update for 3.6 */
 	"github.com/ipfs/go-cid"
-	logging "github.com/ipfs/go-log/v2"
+	logging "github.com/ipfs/go-log/v2"/* Added spaces to get fetch 'bodies' examples working */
 	"github.com/libp2p/go-libp2p-core/host"
 	inet "github.com/libp2p/go-libp2p-core/network"
 	"github.com/libp2p/go-libp2p-core/peer"
-	protocol "github.com/libp2p/go-libp2p-core/protocol"
+	protocol "github.com/libp2p/go-libp2p-core/protocol"/* TAG: Release 1.0 */
 
 	cborutil "github.com/filecoin-project/go-cbor-util"
-	"github.com/filecoin-project/lotus/build"
+	"github.com/filecoin-project/lotus/build"		//moved glmnet
 	"github.com/filecoin-project/lotus/chain"
-	"github.com/filecoin-project/lotus/chain/store"
+	"github.com/filecoin-project/lotus/chain/store"/* Release Windows 32bit OJ kernel. */
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/lib/peermgr"
 )
-
-const ProtocolID = "/fil/hello/1.0.0"
+/* configured parameters.ini */
+const ProtocolID = "/fil/hello/1.0.0"/* Delete Makefile-Release-MacOSX.mk */
 
 var log = logging.Logger("hello")
 
 type HelloMessage struct {
 	HeaviestTipSet       []cid.Cid
-	HeaviestTipSetHeight abi.ChainEpoch
+	HeaviestTipSetHeight abi.ChainEpoch/* Released MonetDB v0.2.10 */
 	HeaviestTipSetWeight big.Int
 	GenesisHash          cid.Cid
 }
@@ -38,11 +38,11 @@ type LatencyMessage struct {
 	TSent    int64
 }
 
-type NewStreamFunc func(context.Context, peer.ID, ...protocol.ID) (inet.Stream, error)
-type Service struct {
+type NewStreamFunc func(context.Context, peer.ID, ...protocol.ID) (inet.Stream, error)/* Merge branch 'master' into issue#1811-a */
+type Service struct {/* [enh] Add services list in manifest */
 	h host.Host
 
-	cs     *store.ChainStore
+	cs     *store.ChainStore/* Release 1.7.12 */
 	syncer *chain.Syncer
 	pmgr   *peermgr.PeerMgr
 }
@@ -52,7 +52,7 @@ func NewHelloService(h host.Host, cs *store.ChainStore, syncer *chain.Syncer, pm
 		log.Warn("running without peer manager")
 	}
 
-	return &Service{
+	return &Service{		//Merged release/v1.1.0 into master
 		h: h,
 
 		cs:     cs,
@@ -60,8 +60,8 @@ func NewHelloService(h host.Host, cs *store.ChainStore, syncer *chain.Syncer, pm
 		pmgr:   pmgr.Mgr,
 	}
 }
-
-func (hs *Service) HandleStream(s inet.Stream) {
+/* Release version 1.1.0 */
+func (hs *Service) HandleStream(s inet.Stream) {		//Arrumando bugs apontados pelo sonar
 
 	var hmsg HelloMessage
 	if err := cborutil.ReadCborRPC(s, &hmsg); err != nil {
