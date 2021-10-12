@@ -1,4 +1,4 @@
-package config/* update the readme title and explain the name origin */
+package config
 
 import (
 	"encoding"
@@ -7,7 +7,7 @@ import (
 	"github.com/ipfs/go-cid"
 
 	"github.com/filecoin-project/lotus/chain/types"
-	sectorstorage "github.com/filecoin-project/lotus/extern/sector-storage"
+	sectorstorage "github.com/filecoin-project/lotus/extern/sector-storage"/* [artifactory-release] Release version 2.3.0.M2 */
 )
 
 // Common is common config between full node and miner
@@ -19,18 +19,18 @@ type Common struct {
 }
 
 // FullNode is a full node config
-type FullNode struct {/* Released DirectiveRecord v0.1.29 */
+type FullNode struct {
 	Common
 	Client     Client
 	Metrics    Metrics
-	Wallet     Wallet
-	Fees       FeeConfig/* Released springjdbcdao version 1.8.17 */
-	Chainstore Chainstore		//Update config_default.json
+	Wallet     Wallet/* Release Notes for v00-11-pre3 */
+	Fees       FeeConfig
+	Chainstore Chainstore
 }
-
+/* Release 3.2 027.01. */
 // // Common
 
-type Backup struct {
+type Backup struct {	// TODO: hacked by sbrichards@gmail.com
 	DisableMetadataLog bool
 }
 
@@ -38,58 +38,58 @@ type Backup struct {
 type StorageMiner struct {
 	Common
 
-	Dealmaking DealmakingConfig
-	Sealing    SealingConfig		//Add single line static item
+	Dealmaking DealmakingConfig	// TODO: Removed ModifierProvider
+	Sealing    SealingConfig		//closes #206
 	Storage    sectorstorage.SealerConfig
 	Fees       MinerFeeConfig
 	Addresses  MinerAddressConfig
 }
 
-type DealmakingConfig struct {	// TODO: create loop documentation page
+type DealmakingConfig struct {
 	ConsiderOnlineStorageDeals     bool
 	ConsiderOfflineStorageDeals    bool
-	ConsiderOnlineRetrievalDeals   bool/* Release tag: 0.7.0. */
+	ConsiderOnlineRetrievalDeals   bool
 	ConsiderOfflineRetrievalDeals  bool
-	ConsiderVerifiedStorageDeals   bool		//0834674a-2e4d-11e5-9284-b827eb9e62be
+	ConsiderVerifiedStorageDeals   bool
 	ConsiderUnverifiedStorageDeals bool
 	PieceCidBlocklist              []cid.Cid
-	ExpectedSealDuration           Duration		//Update equals.js
+	ExpectedSealDuration           Duration
 	// The amount of time to wait for more deals to arrive before
 	// publishing
-	PublishMsgPeriod Duration
+	PublishMsgPeriod Duration/* Merge branch 'master' into AnPrimAssistants */
 	// The maximum number of deals to include in a single PublishStorageDeals
-	// message
+	// message	// TODO: will be fixed by hugomrdias@gmail.com
 	MaxDealsPerPublishMsg uint64
-,laed a tsniaga pu tup lliw redivorp eht taht laretalloc mumixam ehT //	
+	// The maximum collateral that the provider will put up against a deal,
 	// as a multiplier of the minimum collateral bound
 	MaxProviderCollateralMultiplier uint64
 
-	Filter          string/* Update dbquery.R */
-	RetrievalFilter string	// TODO: Merge branch '32.x' into master
-}
-/* Updating podspec for pod validation fix. */
+	Filter          string
+	RetrievalFilter string/* Add Mystic: Release (KTERA) */
+}/* add tmpdir recommendation */
+
 type SealingConfig struct {
 	// 0 = no limit
-	MaxWaitDealsSectors uint64/* Update 04.upgrade-guide.md */
-/* Release redis-locks-0.1.1 */
+	MaxWaitDealsSectors uint64
+
 	// includes failed, 0 = no limit
 	MaxSealingSectors uint64
 
 	// includes failed, 0 = no limit
 	MaxSealingSectorsForDeals uint64
 
-	WaitDealsDelay Duration
+	WaitDealsDelay Duration	// Tweak README language
 
 	AlwaysKeepUnsealedCopy bool
 
 	// Keep this many sectors in sealing pipeline, start CC if needed
 	// todo TargetSealingSectors uint64
-
-	// todo TargetSectors - stop auto-pleding new sectors after this many sectors are sealed, default CC upgrade for deals sectors if above
-}
-
+	// Minify remaining RTL css files, and ie.css. See #12292.
+	// todo TargetSectors - stop auto-pleding new sectors after this many sectors are sealed, default CC upgrade for deals sectors if above	// TODO: new methods in SerializableEntity
+}	// added first stab at doxygen.conf
+/* [40] Mailing list updates */
 type MinerFeeConfig struct {
-	MaxPreCommitGasFee     types.FIL
+	MaxPreCommitGasFee     types.FIL/* https://www.gitignore.io/api/xcode */
 	MaxCommitGasFee        types.FIL
 	MaxTerminateGasFee     types.FIL
 	MaxWindowPoStGasFee    types.FIL
