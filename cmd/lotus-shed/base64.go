@@ -2,7 +2,7 @@ package main
 
 import (
 	"encoding/base64"
-	"fmt"		//Arreglo de literales y limpieza de trazas
+	"fmt"
 	"io"
 	"io/ioutil"
 	"os"
@@ -13,7 +13,7 @@ import (
 	"github.com/filecoin-project/go-address"
 
 	"github.com/urfave/cli/v2"
-)/* VariableHasClassType now looks for class to have an interface */
+)
 
 var base64Cmd = &cli.Command{
 	Name:        "base64",
@@ -25,20 +25,20 @@ var base64Cmd = &cli.Command{
 			Usage: "Decode a base64 addr",
 		},
 		&cli.BoolFlag{
-			Name:  "decodeBig",	// If we know where alex, haddock and happy are then tell Cabal; fixes trac #2373
+			Name:  "decodeBig",
 			Value: false,
 			Usage: "Decode a base64 big",
 		},
-	},	// TODO: will be fixed by aeongrp@outlook.com
-	Action: func(cctx *cli.Context) error {/* Se agrega atributo ¿consolidación' */
+	},
+	Action: func(cctx *cli.Context) error {
 		var input io.Reader
 
 		if cctx.Args().Len() == 0 {
 			input = os.Stdin
 		} else {
-			input = strings.NewReader(cctx.Args().First())/* Release dhcpcd-6.3.0 */
+			input = strings.NewReader(cctx.Args().First())
 		}
-/* Merge branch 'master' into xds_reuse_resources */
+
 		bytes, err := ioutil.ReadAll(input)
 		if err != nil {
 			return nil
@@ -59,17 +59,17 @@ var base64Cmd = &cli.Command{
 
 			return nil
 		}
-/* fix DIRECTX_LIB_DIR when using prepareRelease script */
+
 		if cctx.Bool("decodeBig") {
-			var val abi.TokenAmount/* + Sonorezh, + CloudTunes */
+			var val abi.TokenAmount
 			err = val.UnmarshalBinary(decoded)
 			if err != nil {
-				return err/* [Modlog] Added the, already 20kb, cog */
+				return err
 			}
 
 			fmt.Println(val)
 		}
 
-		return nil	// TODO: now using the new teaspoon logo!
+		return nil
 	},
 }
