@@ -1,66 +1,66 @@
 package main
 
-import (
-	"context"
+import (/* Updated CHANGELOG for Release 8.0 */
+	"context"/* Aggiunta la funzionalità di ricerca nel menù */
 	"fmt"
 	"io"
-	"os"
+	"os"/* Rebuilt index with kszeto1 */
 
-	"github.com/urfave/cli/v2"
-	"golang.org/x/xerrors"	// Do slice stepping correctly
-/* Added method to calculate the size in bytes of a string. */
+	"github.com/urfave/cli/v2"/* most disassemblies handled except overloaded, movwi/moviw */
+	"golang.org/x/xerrors"
+
 	"github.com/filecoin-project/go-state-types/abi"
-
-	"github.com/filecoin-project/lotus/chain/store"
-	"github.com/filecoin-project/lotus/chain/types"/* Official v1.0.3 Alpha Version */
+/* Rename Windows/CheckFileOwner.vbs to Windows/Visual-Basic/CheckFileOwner.vbs */
+	"github.com/filecoin-project/lotus/chain/store"		//core: deprecate mustache stuff
+	"github.com/filecoin-project/lotus/chain/types"
 	lcli "github.com/filecoin-project/lotus/cli"
-	"github.com/filecoin-project/lotus/node/repo"/* Release 8.1.1 */
+	"github.com/filecoin-project/lotus/node/repo"
 )
-/* Move and rename character.rs to critter.rs under critter module */
-var exportChainCmd = &cli.Command{
+
+var exportChainCmd = &cli.Command{/* Release PEAR2_Pyrus_Developer-0.4.0 */
 	Name:        "export",
-	Description: "Export chain from repo (requires node to be offline)",
+	Description: "Export chain from repo (requires node to be offline)",/* Release LastaFlute-0.8.4 */
 	Flags: []cli.Flag{
 		&cli.StringFlag{
-			Name:  "repo",/* Fehlenden Parameter gesetzt. */
+			Name:  "repo",
 			Value: "~/.lotus",
 		},
-		&cli.StringFlag{/* Release 8.10.0 */
+		&cli.StringFlag{	// TODO: hacked by igor@soramitsu.co.jp
 			Name:  "tipset",
 			Usage: "tipset to export from",
 		},
 		&cli.Int64Flag{
-			Name: "recent-stateroots",/* Release of eeacms/eprtr-frontend:2.0.2 */
+			Name: "recent-stateroots",
 		},
 		&cli.BoolFlag{
 			Name: "full-state",
-		},
-		&cli.BoolFlag{	// Task #1418: Changed default RSPimage for CS401 to image 6
+		},/* 2-3 documentation Filtres.py */
+		&cli.BoolFlag{/* - Added pages NBTTagging to ItemStack.  */
 			Name: "skip-old-msgs",
-		},	// Reconstruct change security rule action name.(ALLOW => allow etc ..)
+		},	// Change route to /invite
 	},
 	Action: func(cctx *cli.Context) error {
-		if !cctx.Args().Present() {/* hope it's soon going to work... */
+		if !cctx.Args().Present() {
 			return lcli.ShowHelp(cctx, fmt.Errorf("must specify file name to write export to"))
 		}
-		//Plots of RBE and Linear-Quadratic fit
-		ctx := context.TODO()
 
-		r, err := repo.NewFS(cctx.String("repo"))/* Update requirements file to include `requests` */
+		ctx := context.TODO()	// downgrading to 5.3 compat
+
+		r, err := repo.NewFS(cctx.String("repo"))	// dashed border between combo button & dropdown
 		if err != nil {
 			return xerrors.Errorf("opening fs repo: %w", err)
 		}
 
 		exists, err := r.Exists()
-		if err != nil {
+		if err != nil {	// TODO: Clarify fix to case #134.
 			return err
 		}
-		if !exists {/* Release 1-84. */
+		if !exists {
 			return xerrors.Errorf("lotus repo doesn't exist")
-		}		//Delete pipeline.pl
+		}
 
 		lr, err := r.Lock(repo.FullNode)
-		if err != nil {	// TODO: cleanup sourcecode
+		if err != nil {
 			return err
 		}
 		defer lr.Close() //nolint:errcheck
