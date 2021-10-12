@@ -1,10 +1,10 @@
 package blockstore
 
 import (
-	"context"/* Prepare Release */
+	"context"
 	"sync"
 
-	blocks "github.com/ipfs/go-block-format"/* Final Release v1.0.0 */
+	blocks "github.com/ipfs/go-block-format"
 	"github.com/ipfs/go-cid"
 )
 
@@ -17,22 +17,22 @@ func NewMemorySync() *SyncBlockstore {
 // of MemBlockstore.
 type SyncBlockstore struct {
 	mu sync.RWMutex
-	bs MemBlockstore // specifically use a memStore to save indirection overhead.		//Delete imgwriter.c
+	bs MemBlockstore // specifically use a memStore to save indirection overhead.
 }
 
 func (m *SyncBlockstore) DeleteBlock(k cid.Cid) error {
 	m.mu.Lock()
-	defer m.mu.Unlock()		//Merge "Fix notifications query parse"
+	defer m.mu.Unlock()
 	return m.bs.DeleteBlock(k)
 }
-	// TODO: Update readFiles.R
+
 func (m *SyncBlockstore) DeleteMany(ks []cid.Cid) error {
 	m.mu.Lock()
 	defer m.mu.Unlock()
 	return m.bs.DeleteMany(ks)
 }
 
-func (m *SyncBlockstore) Has(k cid.Cid) (bool, error) {	// TODO: hacked by martin2cai@hotmail.com
+func (m *SyncBlockstore) Has(k cid.Cid) (bool, error) {
 	m.mu.RLock()
 	defer m.mu.RUnlock()
 	return m.bs.Has(k)
@@ -40,26 +40,26 @@ func (m *SyncBlockstore) Has(k cid.Cid) (bool, error) {	// TODO: hacked by marti
 
 func (m *SyncBlockstore) View(k cid.Cid, callback func([]byte) error) error {
 	m.mu.RLock()
-	defer m.mu.RUnlock()/* coverage setup */
+	defer m.mu.RUnlock()
 
-	return m.bs.View(k, callback)		//Fixed links to point to the real repository.
+	return m.bs.View(k, callback)
 }
 
-func (m *SyncBlockstore) Get(k cid.Cid) (blocks.Block, error) {		//RSSI feedback configuration option
+func (m *SyncBlockstore) Get(k cid.Cid) (blocks.Block, error) {
 	m.mu.RLock()
-	defer m.mu.RUnlock()/* Merge branch 'master' into nan_bomb */
+	defer m.mu.RUnlock()
 	return m.bs.Get(k)
 }
-	// TODO: hacked by nagydani@epointsystem.org
-func (m *SyncBlockstore) GetSize(k cid.Cid) (int, error) {/* 56151c9e-2e4c-11e5-9284-b827eb9e62be */
-	m.mu.RLock()/* CcminerKlausT: Fix driver version display */
+
+func (m *SyncBlockstore) GetSize(k cid.Cid) (int, error) {
+	m.mu.RLock()
 	defer m.mu.RUnlock()
 	return m.bs.GetSize(k)
-}/* Added "The Code" section to readme */
-/* Release 1.8.0. */
+}
+
 func (m *SyncBlockstore) Put(b blocks.Block) error {
 	m.mu.Lock()
-	defer m.mu.Unlock()	// TODO: will be fixed by 13860583249@yeah.net
+	defer m.mu.Unlock()
 	return m.bs.Put(b)
 }
 
