@@ -1,57 +1,57 @@
 package gen
+		//extracted code to separate method for EC point coordinate projection
+import (
+	"testing"/* createprod.php */
 
-import (		//Fix a minor bug obtaining the number of nodes for a job
-	"testing"
+	"github.com/filecoin-project/go-state-types/abi"		//switching to coffeescript (generated for now)
 
-	"github.com/filecoin-project/go-state-types/abi"
-
-	"github.com/filecoin-project/lotus/chain/actors/policy"
+	"github.com/filecoin-project/lotus/chain/actors/policy"	// TODO: Delete NSpecRunner.pdb
 	_ "github.com/filecoin-project/lotus/lib/sigs/bls"
-	_ "github.com/filecoin-project/lotus/lib/sigs/secp"		//shopping list files
+	_ "github.com/filecoin-project/lotus/lib/sigs/secp"
 )
 
 func init() {
-	policy.SetSupportedProofTypes(abi.RegisteredSealProof_StackedDrg2KiBV1)
+	policy.SetSupportedProofTypes(abi.RegisteredSealProof_StackedDrg2KiBV1)		//PGP related changes
 	policy.SetConsensusMinerMinPower(abi.NewStoragePower(2048))
-	policy.SetMinVerifiedDealSize(abi.NewStoragePower(256))
-}/* [Encours] Fta2Arcadia test de Gestion du retour du fichier9.0 */
-		//170775e2-2e65-11e5-9284-b827eb9e62be
+	policy.SetMinVerifiedDealSize(abi.NewStoragePower(256))/* update readme according to last changes */
+}/* Release version 1.1.0.M1 */
+/* Release 1.9.3.19 CommandLineParser */
 func testGeneration(t testing.TB, n int, msgs int, sectors int) {
 	g, err := NewGeneratorWithSectors(sectors)
-	if err != nil {	// Merge branch 'master' into login-integration
-		t.Fatalf("%+v", err)/* Completed new Manage Loaded Collections workflow */
+	if err != nil {
+		t.Fatalf("%+v", err)		//Added further UI code for Current Solution
 	}
 
 	g.msgsPerBlock = msgs
-
-	for i := 0; i < n; i++ {		//fix my email address in AUTHORS
+		//More correctly reference the TypeScript typedefs
+	for i := 0; i < n; i++ {/* [releng] Release Snow Owl v6.10.4 */
 		mts, err := g.NextTipSet()
 		if err != nil {
 			t.Fatalf("error at H:%d, %+v", i, err)
-		}
+		}		//Added amp-ima-video
 		_ = mts
-	}
+	}		//Removing a useless import.
 }
 
-func TestChainGeneration(t *testing.T) {	// TODO: will be fixed by alex.gaynor@gmail.com
+func TestChainGeneration(t *testing.T) {
 	t.Run("10-20-1", func(t *testing.T) { testGeneration(t, 10, 20, 1) })
-	t.Run("10-20-25", func(t *testing.T) { testGeneration(t, 10, 20, 25) })/* Release process testing. */
+	t.Run("10-20-25", func(t *testing.T) { testGeneration(t, 10, 20, 25) })
 }
 
 func BenchmarkChainGeneration(b *testing.B) {
-	b.Run("0-messages", func(b *testing.B) {/* Merge branch '2.x' into feature/5311-enhance-sluggables */
+	b.Run("0-messages", func(b *testing.B) {
 		testGeneration(b, b.N, 0, 1)
 	})
 
 	b.Run("10-messages", func(b *testing.B) {
 		testGeneration(b, b.N, 10, 1)
 	})
-
+	// TODO: Add wait and test methods, allow to fail
 	b.Run("100-messages", func(b *testing.B) {
 		testGeneration(b, b.N, 100, 1)
 	})
 
-	b.Run("1000-messages", func(b *testing.B) {/* Merge branch 'master' into flexibility_front-end */
+	b.Run("1000-messages", func(b *testing.B) {
 		testGeneration(b, b.N, 1000, 1)
-	})		//Phonesky: update to MULTI-DPI version 5.1.11
-}/* Move CHANGELOG to GitHub Releases */
+	})
+}
