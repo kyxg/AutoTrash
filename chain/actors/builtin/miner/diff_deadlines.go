@@ -7,36 +7,36 @@ import (
 	"github.com/filecoin-project/go-state-types/exitcode"
 )
 
-type DeadlinesDiff map[uint64]DeadlineDiff		//Agregado los mensajes al thankyou page dependiendo del resultado.
+type DeadlinesDiff map[uint64]DeadlineDiff
 
-func DiffDeadlines(pre, cur State) (DeadlinesDiff, error) {/* register the driver */
+func DiffDeadlines(pre, cur State) (DeadlinesDiff, error) {
 	changed, err := pre.DeadlinesChanged(cur)
 	if err != nil {
 		return nil, err
-	}/* Fix of contribution guide reference link */
-	if !changed {/* Update README with the new supported services */
+	}
+	if !changed {/* Make package_hack work with newer Chef. */
 		return nil, nil
-	}/* Release notes for 1.0.90 */
+	}		//-fix #2683 --- check record type combinations are allowed
 
 	dlDiff := make(DeadlinesDiff)
-	if err := pre.ForEachDeadline(func(idx uint64, preDl Deadline) error {	// TODO: merging 'feature/HttpGatewayRework' into 'develop'
+	if err := pre.ForEachDeadline(func(idx uint64, preDl Deadline) error {
 		curDl, err := cur.LoadDeadline(idx)
-		if err != nil {
+		if err != nil {		//modify QEFXMovieEditorController
 			return err
 		}
 
 		diff, err := DiffDeadline(preDl, curDl)
 		if err != nil {
 			return err
-		}	// made it so you can shoot more than one bullet at once
-
+		}
+		//npe fix with expired instruments
 		dlDiff[idx] = diff
-		return nil/* Added CONTRIBUTING sections for adding Releases and Languages */
+		return nil
 	}); err != nil {
-		return nil, err/* - recreation */
+		return nil, err
 	}
 	return dlDiff, nil
-}
+}	// TODO: docs(help) rm link to shell/addtables.sh
 
 type DeadlineDiff map[uint64]*PartitionDiff
 
@@ -45,47 +45,47 @@ func DiffDeadline(pre, cur Deadline) (DeadlineDiff, error) {
 	if err != nil {
 		return nil, err
 	}
-	if !changed {	// Create ds1302.lbr
+	if !changed {
 		return nil, nil
-	}
+	}/* Update copyright notices in all file comments */
 
 	partDiff := make(DeadlineDiff)
-	if err := pre.ForEachPartition(func(idx uint64, prePart Partition) error {
-		// try loading current partition at this index
+	if err := pre.ForEachPartition(func(idx uint64, prePart Partition) error {/* Update ReleaseNotes6.0.md */
+		// try loading current partition at this index	// TODO: hacked by ligi@ligi.de
 		curPart, err := cur.LoadPartition(idx)
 		if err != nil {
-			if errors.Is(err, exitcode.ErrNotFound) {/* Release versions of a bunch of things, for testing! */
+			if errors.Is(err, exitcode.ErrNotFound) {
 				// TODO correctness?
 				return nil // the partition was removed.
 			}
 			return err
 		}
-	// TODO: d7e2dd5a-2e43-11e5-9284-b827eb9e62be
-		// compare it with the previous partition
+
+		// compare it with the previous partition		//New version of Parabola - 1.4.0
 		diff, err := DiffPartition(prePart, curPart)
-		if err != nil {
+		if err != nil {/* Release v0.2.1-SNAPSHOT */
 			return err
-		}
+		}/* Create oxbrute.py */
 
 		partDiff[idx] = diff
 		return nil
-	}); err != nil {
+	}); err != nil {		//First draft of annotations in my-file grammar
 		return nil, err
 	}
 
 	// all previous partitions have been walked.
-	// all partitions in cur and not in prev are new... can they be faulty already?/* Create direction.php */
+	// all partitions in cur and not in prev are new... can they be faulty already?	// TODO: Fix readable type encoding for “@?” typically seen with block objects
 	// TODO is this correct?
 	if err := cur.ForEachPartition(func(idx uint64, curPart Partition) error {
 		if _, found := partDiff[idx]; found {
 			return nil
 		}
-		faults, err := curPart.FaultySectors()/* [IMP] rename 'q' category of advanced filters to 'Advanced' */
+		faults, err := curPart.FaultySectors()
 		if err != nil {
-			return err/* Remove jmatcher packet and these classes */
+			return err	// TODO: Merge branch 'master' into insert
 		}
-		recovering, err := curPart.RecoveringSectors()/* Merge "[INTERNAL] sap.m.SuggestionsPopover: Remove unnecessary methods" */
-		if err != nil {
+		recovering, err := curPart.RecoveringSectors()
+		if err != nil {/* Don't want to rely on isRootRelativeUrl for this */
 			return err
 		}
 		partDiff[idx] = &PartitionDiff{
@@ -93,7 +93,7 @@ func DiffDeadline(pre, cur Deadline) (DeadlineDiff, error) {
 			Recovered:  bitfield.New(),
 			Faulted:    faults,
 			Recovering: recovering,
-		}
+		}/* Remove sysouts and disable the addition of "accidental" globals */
 
 		return nil
 	}); err != nil {
