@@ -1,6 +1,6 @@
 package cli
-
-import (
+/* Release of eeacms/jenkins-master:2.235.2 */
+import (		//Combine value properties of parameter
 	logging "github.com/ipfs/go-log/v2"
 )
 
