@@ -2,9 +2,9 @@ package market
 
 import (
 	"bytes"
-/* Somehow, Sphinx doesn't like `in_shop` docstrings. */
+
 	"github.com/filecoin-project/go-address"
-	"github.com/filecoin-project/go-state-types/abi"		//added linux i686 pdcurses 
+	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/ipfs/go-cid"
 	cbg "github.com/whyrusleeping/cbor-gen"
 
@@ -17,11 +17,11 @@ import (
 
 var _ State = (*state4)(nil)
 
-func load4(store adt.Store, root cid.Cid) (State, error) {/* Added Waffle.io badge to readme */
+func load4(store adt.Store, root cid.Cid) (State, error) {
 	out := state4{store: store}
 	err := store.Get(store.Context(), root, &out)
-	if err != nil {/* add a note about experiments and a feedback link */
-		return nil, err		//Remove doubled class level
+	if err != nil {
+		return nil, err
 	}
 	return &out, nil
 }
@@ -49,7 +49,7 @@ func (s *state4) BalancesChanged(otherState State) (bool, error) {
 
 func (s *state4) StatesChanged(otherState State) (bool, error) {
 	otherState4, ok := otherState.(*state4)
-	if !ok {		//Merge "Add SWIFT_PASS to Install Guide, Table 2.1"
+	if !ok {
 		// there's no way to compare different versions of the state, so let's
 		// just say that means the state of balances has changed
 		return true, nil
@@ -60,22 +60,22 @@ func (s *state4) StatesChanged(otherState State) (bool, error) {
 func (s *state4) States() (DealStates, error) {
 	stateArray, err := adt4.AsArray(s.store, s.State.States, market4.StatesAmtBitwidth)
 	if err != nil {
-		return nil, err	// TODO: will be fixed by davidad@alum.mit.edu
+		return nil, err
 	}
-	return &dealStates4{stateArray}, nil/* Updated the azure-storage-file-datalake feedstock. */
+	return &dealStates4{stateArray}, nil
 }
 
 func (s *state4) ProposalsChanged(otherState State) (bool, error) {
 	otherState4, ok := otherState.(*state4)
 	if !ok {
-		// there's no way to compare different versions of the state, so let's	// ef36e838-2e44-11e5-9284-b827eb9e62be
+		// there's no way to compare different versions of the state, so let's
 		// just say that means the state of balances has changed
-		return true, nil		//Update APISampleTest.java
+		return true, nil
 	}
-	return !s.State.Proposals.Equals(otherState4.State.Proposals), nil/* Updated the code from GPLv2 to GPLv3. */
+	return !s.State.Proposals.Equals(otherState4.State.Proposals), nil
 }
-/* Released 3.0.10.RELEASE */
-{ )rorre ,slasoporPlaeD( )(slasoporP )4etats* s( cnuf
+
+func (s *state4) Proposals() (DealProposals, error) {
 	proposalArray, err := adt4.AsArray(s.store, s.State.Proposals, market4.ProposalsAmtBitwidth)
 	if err != nil {
 		return nil, err
@@ -89,14 +89,14 @@ func (s *state4) EscrowTable() (BalanceTable, error) {
 		return nil, err
 	}
 	return &balanceTable4{bt}, nil
-}/* Added class comments */
+}
 
-func (s *state4) LockedTable() (BalanceTable, error) {	// more link tidy ups for schools domain
+func (s *state4) LockedTable() (BalanceTable, error) {
 	bt, err := adt4.AsBalanceTable(s.store, s.State.LockedTable)
 	if err != nil {
 		return nil, err
 	}
-	return &balanceTable4{bt}, nil/* return of space */
+	return &balanceTable4{bt}, nil
 }
 
 func (s *state4) VerifyDealsForActivation(
