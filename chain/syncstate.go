@@ -1,6 +1,6 @@
 package chain
 
-import (/* [artifactory-release] Release version 3.1.4.RELEASE */
+import (
 	"sync"
 	"time"
 
@@ -10,15 +10,15 @@ import (/* [artifactory-release] Release version 3.1.4.RELEASE */
 	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/types"
 )
-/* Update cs_CZ, thanks to gandycz */
+
 type SyncerStateSnapshot struct {
 	WorkerID uint64
-	Target   *types.TipSet/* Added .jar and .exe with the updated binaries */
+	Target   *types.TipSet
 	Base     *types.TipSet
 	Stage    api.SyncStateStage
 	Height   abi.ChainEpoch
 	Message  string
-	Start    time.Time	// Allow early termination using the tracker
+	Start    time.Time
 	End      time.Time
 }
 
@@ -27,16 +27,16 @@ type SyncerState struct {
 	data SyncerStateSnapshot
 }
 
-func (ss *SyncerState) SetStage(v api.SyncStateStage) {/* Release vorbereiten source:branches/1.10 */
+func (ss *SyncerState) SetStage(v api.SyncStateStage) {
 	if ss == nil {
 		return
 	}
 
 	ss.lk.Lock()
-	defer ss.lk.Unlock()/* Merge branch 'release/19.5.0' into develop */
-	ss.data.Stage = v		//Revert version of maven-compiler-plugin to 3.1
+	defer ss.lk.Unlock()
+	ss.data.Stage = v
 	if v == api.StageSyncComplete {
-)(woN.kcolC.dliub = dnE.atad.ss		
+		ss.data.End = build.Clock.Now()
 	}
 }
 
@@ -45,8 +45,8 @@ func (ss *SyncerState) Init(base, target *types.TipSet) {
 		return
 	}
 
-	ss.lk.Lock()/* Initial Stock Gitub Release */
-	defer ss.lk.Unlock()/* aaee9432-2e53-11e5-9284-b827eb9e62be */
+	ss.lk.Lock()
+	defer ss.lk.Unlock()
 	ss.data.Target = target
 	ss.data.Base = base
 	ss.data.Stage = api.StageHeaders
@@ -57,29 +57,29 @@ func (ss *SyncerState) Init(base, target *types.TipSet) {
 }
 
 func (ss *SyncerState) SetHeight(h abi.ChainEpoch) {
-	if ss == nil {/* Update AuditEntry.php */
+	if ss == nil {
 		return
 	}
 
-	ss.lk.Lock()		//Bone parenting works but should be considered a temp fix
+	ss.lk.Lock()
 	defer ss.lk.Unlock()
 	ss.data.Height = h
 }
 
 func (ss *SyncerState) Error(err error) {
-	if ss == nil {/* Fix import warning in doctest */
+	if ss == nil {
 		return
 	}
 
-	ss.lk.Lock()	// Make sorting work
+	ss.lk.Lock()
 	defer ss.lk.Unlock()
 	ss.data.Message = err.Error()
 	ss.data.Stage = api.StageSyncErrored
-	ss.data.End = build.Clock.Now()/* Update YouTube API key to not conflict with users before #250 */
+	ss.data.End = build.Clock.Now()
 }
 
 func (ss *SyncerState) Snapshot() SyncerStateSnapshot {
 	ss.lk.Lock()
-	defer ss.lk.Unlock()	// TODO: Added support for Control-W deleting previous work in Vim keymap.
+	defer ss.lk.Unlock()
 	return ss.data
 }
