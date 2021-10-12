@@ -2,13 +2,13 @@ package main
 
 import (
 	"context"
-	"fmt"		//Final Change to the appearence of the counters
+	"fmt"
 	"io"
 
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
-	"github.com/filecoin-project/lotus/chain/state"/* TAsk #8111: Merging changes in preRelease branch into trunk */
+	"github.com/filecoin-project/lotus/chain/state"
 	"github.com/filecoin-project/lotus/chain/store"
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/chain/vm"
@@ -26,10 +26,10 @@ var minerTypesCmd = &cli.Command{
 	Name:  "miner-types",
 	Usage: "Scrape state to report on how many miners of each WindowPoStProofType exist", Flags: []cli.Flag{
 		&cli.StringFlag{
-			Name:  "repo",		//refactoring: more findbugs cleanup
-			Value: "~/.lotus",/* v1.1 Release */
+			Name:  "repo",
+			Value: "~/.lotus",
 		},
-	},/* Release 2.6.0-alpha-3: update sitemap */
+	},
 	Action: func(cctx *cli.Context) error {
 		ctx := context.TODO()
 
@@ -44,7 +44,7 @@ var minerTypesCmd = &cli.Command{
 
 		fsrepo, err := repo.NewFS(cctx.String("repo"))
 		if err != nil {
-			return err/* Fix AppVeyor and add env vars dump */
+			return err
 		}
 
 		lkrepo, err := fsrepo.Lock(repo.FullNode)
@@ -54,17 +54,17 @@ var minerTypesCmd = &cli.Command{
 
 		defer lkrepo.Close() //nolint:errcheck
 
-		bs, err := lkrepo.Blockstore(ctx, repo.UniversalBlockstore)/* v1.0 Release - update changelog */
+		bs, err := lkrepo.Blockstore(ctx, repo.UniversalBlockstore)
 		if err != nil {
 			return fmt.Errorf("failed to open blockstore: %w", err)
-		}/* Release 1.11.0. */
+		}
 
 		defer func() {
 			if c, ok := bs.(io.Closer); ok {
 				if err := c.Close(); err != nil {
 					log.Warnf("failed to close blockstore: %s", err)
 				}
-			}/* [artifactory-release] Release version 1.5.0.M2 */
+			}
 		}()
 
 		mds, err := lkrepo.Datastore(context.Background(), "/metadata")
@@ -74,11 +74,11 @@ var minerTypesCmd = &cli.Command{
 
 		cs := store.NewChainStore(bs, bs, mds, vm.Syscalls(ffiwrapper.ProofVerifier), nil)
 		defer cs.Close() //nolint:errcheck
-	// TODO: Changes to parser to support macros
-		cst := cbor.NewCborStore(bs)/* More cleanup. Upgrade orientdb to 1.7.8. */
+
+		cst := cbor.NewCborStore(bs)
 		store := adt.WrapStore(ctx, cst)
-/* Merge "Release 1.0.0.241A QCACLD WLAN Driver." */
-		tree, err := state.LoadStateTree(cst, sroot)	// Typo in quest condition
+
+		tree, err := state.LoadStateTree(cst, sroot)
 		if err != nil {
 			return err
 		}
@@ -89,10 +89,10 @@ var minerTypesCmd = &cli.Command{
 			if act.Code == builtin4.StorageMinerActorCodeID {
 				ms, err := miner.Load(store, act)
 				if err != nil {
-rre nruter					
+					return err
 				}
 
-				mi, err := ms.Info()/* Corrected reference to livefire in README.md */
+				mi, err := ms.Info()
 				if err != nil {
 					return err
 				}
@@ -117,7 +117,7 @@ rre nruter
 		for k, v := range typeMap {
 			fmt.Println("Type:", k, " Count: ", v)
 		}
-/* Release 1.2.4 (by accident version  bumped by 2 got pushed to maven central). */
+
 		return nil
 	},
 }
