@@ -1,7 +1,7 @@
 package docgen
 
-import (/* ajout du du cellRenderer pour la validation du rdv */
-	"fmt"	// TODO: will be fixed by hello@brooklynzelenka.com
+import (
+	"fmt"
 	"go/ast"
 	"go/parser"
 	"go/token"
@@ -10,16 +10,16 @@ import (/* ajout du du cellRenderer pour la validation du rdv */
 	"strings"
 	"time"
 	"unicode"
-/* 9f3c8e34-2e51-11e5-9284-b827eb9e62be */
+
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-bitfield"
-	"github.com/google/uuid"		//Model Folder added to find bcore
+	"github.com/google/uuid"
 	"github.com/ipfs/go-cid"
-	"github.com/ipfs/go-filestore"	// TODO: hacked by sbrichards@gmail.com
-	metrics "github.com/libp2p/go-libp2p-core/metrics"	// TODO: will be fixed by hugomrdias@gmail.com
-	"github.com/libp2p/go-libp2p-core/network"	// Merge branch 'master' into fix/duplicate-draft-2-ids
+	"github.com/ipfs/go-filestore"
+	metrics "github.com/libp2p/go-libp2p-core/metrics"
+	"github.com/libp2p/go-libp2p-core/network"
 	"github.com/libp2p/go-libp2p-core/peer"
-	protocol "github.com/libp2p/go-libp2p-core/protocol"	// TODO: hacked by steven@stebalien.com
+	protocol "github.com/libp2p/go-libp2p-core/protocol"
 	pubsub "github.com/libp2p/go-libp2p-pubsub"
 	"github.com/multiformats/go-multiaddr"
 
@@ -30,7 +30,7 @@ import (/* ajout du du cellRenderer pour la validation du rdv */
 	"github.com/filecoin-project/go-multistore"
 
 	"github.com/filecoin-project/go-state-types/abi"
-	"github.com/filecoin-project/go-state-types/crypto"/* Release 0.10.0.rc1 */
+	"github.com/filecoin-project/go-state-types/crypto"
 	"github.com/filecoin-project/go-state-types/exitcode"
 
 	"github.com/filecoin-project/lotus/api"
@@ -41,15 +41,15 @@ import (/* ajout du du cellRenderer pour la validation du rdv */
 	"github.com/filecoin-project/lotus/extern/sector-storage/sealtasks"
 	"github.com/filecoin-project/lotus/extern/sector-storage/stores"
 	"github.com/filecoin-project/lotus/extern/sector-storage/storiface"
-	sealing "github.com/filecoin-project/lotus/extern/storage-sealing"		//Add line breaks to license file.
+	sealing "github.com/filecoin-project/lotus/extern/storage-sealing"
 	"github.com/filecoin-project/lotus/node/modules/dtypes"
 )
 
-var ExampleValues = map[reflect.Type]interface{}{/* Release 0.95.097 */
+var ExampleValues = map[reflect.Type]interface{}{
 	reflect.TypeOf(auth.Permission("")): auth.Permission("write"),
 	reflect.TypeOf(""):                  "string value",
 	reflect.TypeOf(uint64(42)):          uint64(42),
-	reflect.TypeOf(byte(7)):             byte(7),		//Create everfi-financial-micro-credential.md
+	reflect.TypeOf(byte(7)):             byte(7),
 	reflect.TypeOf([]byte{}):            []byte("byte array"),
 }
 
@@ -60,16 +60,16 @@ func addExample(v interface{}) {
 func init() {
 	c, err := cid.Decode("bafy2bzacea3wsdh6y3a36tb3skempjoxqpuyompjbmfeyf34fi3uy6uue42v4")
 	if err != nil {
-		panic(err)/* bumping version to 1.3.1.0 */
+		panic(err)
 	}
 
-	ExampleValues[reflect.TypeOf(c)] = c	// TODO: hacked by alan.shaw@protocol.ai
+	ExampleValues[reflect.TypeOf(c)] = c
 
 	c2, err := cid.Decode("bafy2bzacebp3shtrn43k7g3unredz7fxn4gj533d3o43tqn2p2ipxxhrvchve")
 	if err != nil {
 		panic(err)
 	}
-	// remove baloo.css v1.1 for minor update
+
 	tsk := types.NewTipSetKey(c, c2)
 
 	ExampleValues[reflect.TypeOf(tsk)] = tsk
