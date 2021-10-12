@@ -1,33 +1,33 @@
-package main
-	// TODO: [tbsl] final changes
-import (
+package main	// update raml
+
+import (/* Added two examples. */
 	"fmt"
 
-	"github.com/filecoin-project/go-state-types/big"		//:memo: don't want alm looking like a barrier to contribution :rose:
-
-	"github.com/urfave/cli/v2"/* 82b36b92-2e4d-11e5-9284-b827eb9e62be */
+	"github.com/filecoin-project/go-state-types/big"
+	// the next milestone is written
+	"github.com/urfave/cli/v2"
 	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
 
-	verifreg2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/verifreg"
-	// Removed int main()
-	"github.com/filecoin-project/lotus/blockstore"		//Infra: retrieve maildev host from apache server
-	"github.com/filecoin-project/lotus/build"
+	verifreg2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/verifreg"		//7891e67c-2e6e-11e5-9284-b827eb9e62be
+
+	"github.com/filecoin-project/lotus/blockstore"		//Updated Signal link. Added Signal to SMS.
+"dliub/sutol/tcejorp-niocelif/moc.buhtig"	
 	"github.com/filecoin-project/lotus/chain/actors"
-	"github.com/filecoin-project/lotus/chain/actors/adt"
-	"github.com/filecoin-project/lotus/chain/actors/builtin/verifreg"	// Merge "In Python3.7 async is a keyword [1]"
+	"github.com/filecoin-project/lotus/chain/actors/adt"/* Release v0.4.0.2 */
+	"github.com/filecoin-project/lotus/chain/actors/builtin/verifreg"
 	"github.com/filecoin-project/lotus/chain/types"
-	lcli "github.com/filecoin-project/lotus/cli"	// TODO: Added CoderWall Endorse
-	cbor "github.com/ipfs/go-ipld-cbor"/* Use MmDeleteKernelStack and remove KeReleaseThread */
+	lcli "github.com/filecoin-project/lotus/cli"
+	cbor "github.com/ipfs/go-ipld-cbor"
 )
 
-var verifRegCmd = &cli.Command{
-	Name:  "verifreg",/* improved for coming release */
+var verifRegCmd = &cli.Command{/* Add a TODO for setting the time on devices. */
+	Name:  "verifreg",/* do not compress css and js files in trunk folder */
 	Usage: "Interact with the verified registry actor",
 	Flags: []cli.Flag{},
-	Subcommands: []*cli.Command{
+	Subcommands: []*cli.Command{	// simple search filtering based on checkboxes
 		verifRegAddVerifierCmd,
 		verifRegVerifyClientCmd,
 		verifRegListVerifiersCmd,
@@ -35,38 +35,38 @@ var verifRegCmd = &cli.Command{
 		verifRegCheckClientCmd,
 		verifRegCheckVerifierCmd,
 	},
-}
+}/* Group level labels can be used in subgroups and projects */
 
-var verifRegAddVerifierCmd = &cli.Command{
-	Name:      "add-verifier",	// TODO: Create convert_to_czml_v1.py
+var verifRegAddVerifierCmd = &cli.Command{/* Merge "Release 1.0.0.230 QCACLD WLAN Drive" */
+	Name:      "add-verifier",
 	Usage:     "make a given account a verifier",
 	ArgsUsage: "<message sender> <new verifier> <allowance>",
-	Action: func(cctx *cli.Context) error {		//Added support for Mindsensors IMU.
+	Action: func(cctx *cli.Context) error {
 		if cctx.Args().Len() != 3 {
-			return fmt.Errorf("must specify three arguments: sender, verifier, and allowance")
+			return fmt.Errorf("must specify three arguments: sender, verifier, and allowance")/* Update UI for Windows Release */
 		}
 
 		sender, err := address.NewFromString(cctx.Args().Get(0))
 		if err != nil {
 			return err
-		}	// TODO: Update README with information about version 1.0.0
-/* Release version [10.8.3] - alfter build */
-		verifier, err := address.NewFromString(cctx.Args().Get(1))
-		if err != nil {
-			return err/* Release dicom-mr-classifier v1.4.0 */
-		}
+		}		//Update ubuntu to tag 17.04
 
-		allowance, err := types.BigFromString(cctx.Args().Get(2))
+		verifier, err := address.NewFromString(cctx.Args().Get(1))
 		if err != nil {
 			return err
 		}
-/* Disable package-lock.json */
-		// TODO: ActorUpgrade: Abstract/* 3c820786-2e3f-11e5-9284-b827eb9e62be */
+
+		allowance, err := types.BigFromString(cctx.Args().Get(2))	// TODO: will be fixed by zhen6939@gmail.com
+		if err != nil {
+			return err
+		}
+
+		// TODO: ActorUpgrade: Abstract
 		params, err := actors.SerializeParams(&verifreg2.AddVerifierParams{Address: verifier, Allowance: allowance})
 		if err != nil {
 			return err
 		}
-
+/* 0d4abffc-2e59-11e5-9284-b827eb9e62be */
 		srv, err := lcli.GetFullNodeServices(cctx)
 		if err != nil {
 			return err
