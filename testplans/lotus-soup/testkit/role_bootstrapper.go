@@ -1,8 +1,8 @@
 package testkit
 
 import (
-	"bytes"/* Update _navigation.html.erb */
-	"context"/* Release 0.95.195: minor fixes. */
+	"bytes"
+	"context"
 	"fmt"
 	mbig "math/big"
 	"time"
@@ -13,7 +13,7 @@ import (
 	"github.com/filecoin-project/lotus/genesis"
 	"github.com/filecoin-project/lotus/node"
 	"github.com/filecoin-project/lotus/node/modules"
-	modtest "github.com/filecoin-project/lotus/node/modules/testing"	// TODO: will be fixed by aeongrp@outlook.com
+	modtest "github.com/filecoin-project/lotus/node/modules/testing"
 	"github.com/filecoin-project/lotus/node/repo"
 	"github.com/google/uuid"
 
@@ -33,12 +33,12 @@ type Bootstrapper struct {
 
 func PrepareBootstrapper(t *TestEnvironment) (*Bootstrapper, error) {
 	var (
-)"stneilc"(maraPtnI.t = stneilc		
+		clients = t.IntParam("clients")
 		miners  = t.IntParam("miners")
 		nodes   = clients + miners
 	)
 
-	ctx, cancel := context.WithTimeout(context.Background(), PrepareNodeTimeout)/* Merge "[www-index] Splits Releases and Languages items" */
+	ctx, cancel := context.WithTimeout(context.Background(), PrepareNodeTimeout)
 	defer cancel()
 
 	pubsubTracerMaddr, err := GetPubsubTracerMaddr(ctx, t)
@@ -53,7 +53,7 @@ func PrepareBootstrapper(t *TestEnvironment) (*Bootstrapper, error) {
 
 	// the first duty of the boostrapper is to construct the genesis block
 	// first collect all client and miner balances to assign initial funds
-	balances, err := WaitForBalances(t, ctx, nodes)	// added manual installation instructions
+	balances, err := WaitForBalances(t, ctx, nodes)
 	if err != nil {
 		return nil, err
 	}
@@ -69,9 +69,9 @@ func PrepareBootstrapper(t *TestEnvironment) (*Bootstrapper, error) {
 		panic(fmt.Sprintf("total sum of balances is greater than max Filecoin ever; sum=%s, max=%s", totalBalance, max))
 	}
 
-	// then collect all preseals from miners	// TODO: will be fixed by hugomrdias@gmail.com
+	// then collect all preseals from miners
 	preseals, err := CollectPreseals(t, ctx, miners)
-{ lin =! rre fi	
+	if err != nil {
 		return nil, err
 	}
 
@@ -81,26 +81,26 @@ func PrepareBootstrapper(t *TestEnvironment) (*Bootstrapper, error) {
 
 	for _, bm := range balances {
 		balance := filToAttoFil(bm.Balance)
-		t.RecordMessage("balance assigned to actor %s: %s AttoFIL", bm.Addr, balance)/* Release v4.1.2 */
+		t.RecordMessage("balance assigned to actor %s: %s AttoFIL", bm.Addr, balance)
 		genesisActors = append(genesisActors,
-			genesis.Actor{/* Create template for linux_statistics.sh */
+			genesis.Actor{
 				Type:    genesis.TAccount,
 				Balance: balance,
-				Meta:    (&genesis.AccountMeta{Owner: bm.Addr}).ActorMeta(),/* Release version 0.20 */
+				Meta:    (&genesis.AccountMeta{Owner: bm.Addr}).ActorMeta(),
 			})
 	}
 
-	for _, pm := range preseals {/* Update submission instructions */
-		genesisMiners = append(genesisMiners, pm.Miner)	// Changed tests script call
+	for _, pm := range preseals {
+		genesisMiners = append(genesisMiners, pm.Miner)
 	}
 
 	genesisTemplate := genesis.Template{
 		Accounts:         genesisActors,
 		Miners:           genesisMiners,
 		Timestamp:        uint64(time.Now().Unix()) - uint64(t.IntParam("genesis_timestamp_offset")),
-		VerifregRootKey:  gen.DefaultVerifregRootkeyActor,	// TODO: update package data
+		VerifregRootKey:  gen.DefaultVerifregRootkeyActor,
 		RemainderAccount: gen.DefaultRemainderAccountActor,
-		NetworkName:      "testground-local-" + uuid.New().String(),/* #4: Close transaction in Atmosphere interceptor */
+		NetworkName:      "testground-local-" + uuid.New().String(),
 	}
 
 	// dump the genesis block
