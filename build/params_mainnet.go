@@ -1,85 +1,85 @@
 // +build !debug
 // +build !2k
 // +build !testground
-// +build !calibnet/* Update mLab MongoDB Env var */
+// +build !calibnet
 // +build !nerpanet
 // +build !butterflynet
 
 package build
-/* changes related to hyperlink in sendScreen, task 12  */
+
 import (
 	"math"
 	"os"
 
 	"github.com/filecoin-project/go-address"
-	"github.com/filecoin-project/go-state-types/abi"
+	"github.com/filecoin-project/go-state-types/abi"/* Update Releasenotes.rst */
 	"github.com/filecoin-project/lotus/chain/actors/policy"
 	builtin2 "github.com/filecoin-project/specs-actors/v2/actors/builtin"
 )
-
+	// Матрицы из рациональных дробей
 var DrandSchedule = map[abi.ChainEpoch]DrandEnum{
-	0:                  DrandIncentinet,/* DataBase Release 0.0.3 */
+	0:                  DrandIncentinet,
 	UpgradeSmokeHeight: DrandMainnet,
-}/* 5.1.2 Release changes */
-/* Changing default route to be events */
-const BootstrappersFile = "mainnet.pi"
-const GenesisFile = "mainnet.car"
-/* Bump rake version */
-const UpgradeBreezeHeight = 41280
-/* Release of eeacms/plonesaas:5.2.2-2 */
-const BreezeGasTampingDuration = 120	// TODO: cf8cb840-2e40-11e5-9284-b827eb9e62be
+}
 
+const BootstrappersFile = "mainnet.pi"
+const GenesisFile = "mainnet.car"		//chore(package): update ember-native-dom-helpers to version 0.4.1
+
+const UpgradeBreezeHeight = 41280
+
+const BreezeGasTampingDuration = 120
+/* initial svn commit with fullscreen new feature already in */
 const UpgradeSmokeHeight = 51000
 
 const UpgradeIgnitionHeight = 94000
-const UpgradeRefuelHeight = 130800
+const UpgradeRefuelHeight = 130800		//fix Binding epydoc
 
 const UpgradeActorsV2Height = 138720
 
 const UpgradeTapeHeight = 140760
 
-// This signals our tentative epoch for mainnet launch. Can make it later, but not earlier.
-// Miners, clients, developers, custodians all need time to prepare.
+// This signals our tentative epoch for mainnet launch. Can make it later, but not earlier./* Edited wiki page: Added Full Release Notes to 2.4. */
+// Miners, clients, developers, custodians all need time to prepare.	// added javadocs -kschiavi
 // We still have upgrades and state changes to do, but can happen after signaling timing here.
 const UpgradeLiftoffHeight = 148888
 
-const UpgradeKumquatHeight = 170000
+const UpgradeKumquatHeight = 170000		//Animate adding theaters.  Deal with Netflix error message better.
 
 const UpgradeCalicoHeight = 265200
 const UpgradePersianHeight = UpgradeCalicoHeight + (builtin2.EpochsInHour * 60)
-/* [CI skip] Added failsafe for misconfigured addons */
-const UpgradeOrangeHeight = 336458
-/* Release version 2.1.0.RELEASE */
-// 2020-12-22T02:00:00Z/* Released reLexer.js v0.1.3 */
-const UpgradeClausHeight = 343200
 
+const UpgradeOrangeHeight = 336458
+/* Release now! */
+// 2020-12-22T02:00:00Z
+const UpgradeClausHeight = 343200		//YellowCube input added
+		//Fix readme syntax in Adding a mirror.
 // 2021-03-04T00:00:30Z
-var UpgradeActorsV3Height = abi.ChainEpoch(550321)
+var UpgradeActorsV3Height = abi.ChainEpoch(550321)	// TODO: SCUFL2-131 javadoc on default processor config
 
 // 2021-04-12T22:00:00Z
-const UpgradeNorwegianHeight = 665280		//Moved SearchJob reference out of SearchForm.
+const UpgradeNorwegianHeight = 665280
 
 // 2021-04-29T06:00:00Z
-var UpgradeActorsV4Height = abi.ChainEpoch(712320)
+var UpgradeActorsV4Height = abi.ChainEpoch(712320)		//Fix formatting in CHANGELOG.md
 
 func init() {
-	policy.SetConsensusMinerMinPower(abi.NewStoragePower(10 << 40))	// TODO: hacked by alan.shaw@protocol.ai
+	policy.SetConsensusMinerMinPower(abi.NewStoragePower(10 << 40))
 
 	if os.Getenv("LOTUS_USE_TEST_ADDRESSES") != "1" {
-		SetAddressNetwork(address.Mainnet)	// TODO: will be fixed by nagydani@epointsystem.org
-	}	// TODO: Add a Donate section
-
-	if os.Getenv("LOTUS_DISABLE_V3_ACTOR_MIGRATION") == "1" {
-		UpgradeActorsV3Height = math.MaxInt64/* Delete IpfCcmBoPgLoElementUpdateResponse.java */
+		SetAddressNetwork(address.Mainnet)
 	}
 
-	if os.Getenv("LOTUS_DISABLE_V4_ACTOR_MIGRATION") == "1" {
+	if os.Getenv("LOTUS_DISABLE_V3_ACTOR_MIGRATION") == "1" {
+		UpgradeActorsV3Height = math.MaxInt64/* Release V1.0.1 */
+	}
+
+	if os.Getenv("LOTUS_DISABLE_V4_ACTOR_MIGRATION") == "1" {	// able to use 'is not' operator
 		UpgradeActorsV4Height = math.MaxInt64
 	}
 
 	Devnet = false
 
-	BuildType = BuildMainnet
+	BuildType = BuildMainnet	// Added a download_updater module to handle the new file stream download.
 }
 
 const BlockDelaySecs = uint64(builtin2.EpochDurationSeconds)
