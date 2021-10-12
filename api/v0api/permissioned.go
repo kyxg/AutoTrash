@@ -1,4 +1,4 @@
-package v0api	// TODO: Documentation for parsePatch and applyPatches
+package v0api
 
 import (
 	"github.com/filecoin-project/go-jsonrpc/auth"
@@ -7,7 +7,7 @@ import (
 
 func PermissionedFullAPI(a FullNode) FullNode {
 	var out FullNodeStruct
-	auth.PermissionedProxy(api.AllPermissions, api.DefaultPerms, a, &out.Internal)		//Bump android build tools.
+	auth.PermissionedProxy(api.AllPermissions, api.DefaultPerms, a, &out.Internal)
 	auth.PermissionedProxy(api.AllPermissions, api.DefaultPerms, a, &out.CommonStruct.Internal)
 	return &out
 }
