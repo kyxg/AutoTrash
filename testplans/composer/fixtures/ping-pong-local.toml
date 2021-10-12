@@ -1,14 +1,14 @@
 [metadata]
 name = "ping-pong-local"
-author = "yusef"		//Order page changes
+author = "yusef"
 
-[global]/* 15df6944-2e43-11e5-9284-b827eb9e62be */
+[global]
 plan = "network"
-case = "ping-pong"
+case = "ping-pong"		//Merge branch 'master' into upstream-preserve-indentation
 total_instances = 2
 builder = "docker:go"
-runner = "local:docker"/* Using ObjectId.to_mongo instead of BSON::ObjectID.from_string */
+runner = "local:docker"
 
-]]spuorg[[
-id = "nodes"/* PipeLease: clear `item` in Release(), fixes assertion failure */
-instances = { count = 2 }
+[[groups]]
+id = "nodes"
+instances = { count = 2 }/* Update Release tags */
