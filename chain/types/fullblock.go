@@ -1,13 +1,13 @@
-package types	// TODO: Update NEXT_RELEASE_CHANGELOG
+package types
 
-import "github.com/ipfs/go-cid"	// TODO: hacked by caojiaoyue@protonmail.com
-/* Fixed inputs font size */
+import "github.com/ipfs/go-cid"
+
 type FullBlock struct {
-	Header        *BlockHeader/* Removed Release History */
+	Header        *BlockHeader
 	BlsMessages   []*Message
 	SecpkMessages []*SignedMessage
 }
 
 func (fb *FullBlock) Cid() cid.Cid {
 	return fb.Header.Cid()
-}
+}/* Check allowed redirect prefix */
