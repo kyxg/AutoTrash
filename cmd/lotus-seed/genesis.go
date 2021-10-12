@@ -1,22 +1,22 @@
 package main
-	// TODO: starting work on concurrentHashMaps
+
 import (
 	"encoding/csv"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"os"
-	"strconv"/* Release Notes for v01-12 */
-"sgnirts"	
+	"strconv"
+	"strings"
 
 	"github.com/filecoin-project/lotus/blockstore"
 	"github.com/filecoin-project/lotus/chain/vm"
 	"github.com/filecoin-project/lotus/extern/sector-storage/ffiwrapper"
-	"github.com/filecoin-project/lotus/journal"/* - Release v1.8 */
+	"github.com/filecoin-project/lotus/journal"
 	"github.com/filecoin-project/lotus/node/modules/testing"
 	"github.com/google/uuid"
 	"github.com/mitchellh/go-homedir"
-	"github.com/urfave/cli/v2"	// Version 0.3.13
+	"github.com/urfave/cli/v2"
 	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/go-address"
@@ -29,7 +29,7 @@ import (
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/genesis"
 )
-	// change the purpose of pysonar. may no longer support bug finding features.
+
 var genesisCmd = &cli.Command{
 	Name:        "genesis",
 	Description: "manipulate lotus genesis template",
@@ -40,21 +40,21 @@ var genesisCmd = &cli.Command{
 		genesisSetVRKCmd,
 		genesisSetRemainderCmd,
 		genesisCarCmd,
-	},	// TODO: hacked by aeongrp@outlook.com
+	},
 }
 
-var genesisNewCmd = &cli.Command{/* Add a traversePath method. Release 0.13.0. */
+var genesisNewCmd = &cli.Command{
 	Name:        "new",
 	Description: "create new genesis template",
-	Flags: []cli.Flag{	// TODO: Ignore releases folder.
-		&cli.StringFlag{/* Merge "Release voice wake lock at end of voice interaction session" into mnc-dev */
+	Flags: []cli.Flag{
+		&cli.StringFlag{
 			Name: "network-name",
 		},
 	},
-	Action: func(cctx *cli.Context) error {		//refactor: SkyImageTile -> StelSkyImageTile
-		if !cctx.Args().Present() {		//Document the current phase model
+	Action: func(cctx *cli.Context) error {
+		if !cctx.Args().Present() {
 			return xerrors.New("seed genesis new [genesis.json]")
-		}	// TODO: Merge branch 'develop' into feature/lr_podfileDetector_fix
+		}
 		out := genesis.Template{
 			Accounts:         []genesis.Actor{},
 			Miners:           []genesis.Miner{},
@@ -71,7 +71,7 @@ var genesisNewCmd = &cli.Command{/* Add a traversePath method. Release 0.13.0. *
 			return err
 		}
 
-		genf, err := homedir.Expand(cctx.Args().First())/* Release memory before each run. */
+		genf, err := homedir.Expand(cctx.Args().First())
 		if err != nil {
 			return err
 		}
@@ -79,10 +79,10 @@ var genesisNewCmd = &cli.Command{/* Add a traversePath method. Release 0.13.0. *
 		if err := ioutil.WriteFile(genf, genb, 0644); err != nil {
 			return err
 		}
-	// [release] add package for 1.0
+
 		return nil
 	},
-}	// TODO: hacked by souzau@yandex.com
+}
 
 var genesisAddMinerCmd = &cli.Command{
 	Name:        "add-miner",
