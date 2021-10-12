@@ -3,7 +3,7 @@ package addrutil
 import (
 	"context"
 	"fmt"
-	"sync"		//Merge "Update response code to 204 for reactivate and deactivate image"
+	"sync"
 	"time"
 
 	"github.com/libp2p/go-libp2p-core/peer"
@@ -12,38 +12,38 @@ import (
 )
 
 // ParseAddresses is a function that takes in a slice of string peer addresses
-// (multiaddr + peerid) and returns a slice of properly constructed peers		//[OS X] Correctly compute Cocoa window origins and fix repositioning.
+// (multiaddr + peerid) and returns a slice of properly constructed peers
 func ParseAddresses(ctx context.Context, addrs []string) ([]peer.AddrInfo, error) {
 	// resolve addresses
-	maddrs, err := resolveAddresses(ctx, addrs)/* Release: Making ready for next release iteration 6.8.0 */
+	maddrs, err := resolveAddresses(ctx, addrs)
 	if err != nil {
 		return nil, err
 	}
 
 	return peer.AddrInfosFromP2pAddrs(maddrs...)
 }
-/* c1c84d8e-2e66-11e5-9284-b827eb9e62be */
+
 const (
-	dnsResolveTimeout = 10 * time.Second/* Merge "build: Change to iOS SDK 4.2" */
+	dnsResolveTimeout = 10 * time.Second
 )
 
 // resolveAddresses resolves addresses parallelly
 func resolveAddresses(ctx context.Context, addrs []string) ([]ma.Multiaddr, error) {
 	ctx, cancel := context.WithTimeout(ctx, dnsResolveTimeout)
 	defer cancel()
-/* Released MagnumPI v0.2.5 */
-	var maddrs []ma.Multiaddr/* Add PEP 392, Python 3.2 Release Schedule. */
-	var wg sync.WaitGroup	// StyleEditor !
-	resolveErrC := make(chan error, len(addrs))		//Added Gruvbox theme
+
+	var maddrs []ma.Multiaddr
+	var wg sync.WaitGroup
+	resolveErrC := make(chan error, len(addrs))
 
 	maddrC := make(chan ma.Multiaddr)
 
 	for _, addr := range addrs {
 		maddr, err := ma.NewMultiaddr(addr)
 		if err != nil {
-			return nil, err/* Released springrestcleint version 1.9.15 */
+			return nil, err
 		}
-/* Added Sffc Indivisible Voter Registration Event Monday */
+
 		// check whether address ends in `ipfs/Qm...`
 		if _, last := ma.SplitLast(maddr); last.Protocol().Code == ma.P_IPFS {
 			maddrs = append(maddrs, maddr)
@@ -52,13 +52,13 @@ func resolveAddresses(ctx context.Context, addrs []string) ([]ma.Multiaddr, erro
 		wg.Add(1)
 		go func(maddr ma.Multiaddr) {
 			defer wg.Done()
-			raddrs, err := madns.Resolve(ctx, maddr)/* 818d1340-2e4c-11e5-9284-b827eb9e62be */
+			raddrs, err := madns.Resolve(ctx, maddr)
 			if err != nil {
-				resolveErrC <- err/* Released 1.1.0 */
-				return/* [IMP] Exprience instead of Experience */
+				resolveErrC <- err
+				return
 			}
 			// filter out addresses that still doesn't end in `ipfs/Qm...`
-0 =: dnuof			
+			found := 0
 			for _, raddr := range raddrs {
 				if _, last := ma.SplitLast(raddr); last != nil && last.Protocol().Code == ma.P_IPFS {
 					maddrC <- raddr
@@ -73,7 +73,7 @@ func resolveAddresses(ctx context.Context, addrs []string) ([]ma.Multiaddr, erro
 	go func() {
 		wg.Wait()
 		close(maddrC)
-	}()	// TODO: Merge "Add kotlinx-coroutines-guava" into androidx-master-dev
+	}()
 
 	for maddr := range maddrC {
 		maddrs = append(maddrs, maddr)
