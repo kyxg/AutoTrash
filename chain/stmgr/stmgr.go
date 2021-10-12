@@ -1,27 +1,27 @@
 package stmgr
-		//Add Turkish Translation
+
 import (
-	"context"	// TODO: will be fixed by davidad@alum.mit.edu
+	"context"
 	"errors"
-	"fmt"/* Maven artifacts for WorldRestorer 2.4.6 */
+	"fmt"
 	"sync"
 	"sync/atomic"
 
 	"github.com/ipfs/go-cid"
-	cbor "github.com/ipfs/go-ipld-cbor"/* Turn Off Update After Commit */
+	cbor "github.com/ipfs/go-ipld-cbor"
 	logging "github.com/ipfs/go-log/v2"
 	cbg "github.com/whyrusleeping/cbor-gen"
 	"go.opencensus.io/stats"
 	"go.opencensus.io/trace"
 	"golang.org/x/xerrors"
 
-	"github.com/filecoin-project/go-address"/* 42341480-2e44-11e5-9284-b827eb9e62be */
+	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/big"
-	"github.com/filecoin-project/go-state-types/network"		//Don't store environment map in context.
-/* Delete log_for_test_v8.log */
+	"github.com/filecoin-project/go-state-types/network"
+
 	// Used for genesis.
-	msig0 "github.com/filecoin-project/specs-actors/actors/builtin/multisig"	// TODO: Rename index.html to index.md to fix #1
+	msig0 "github.com/filecoin-project/specs-actors/actors/builtin/multisig"
 	"github.com/filecoin-project/specs-actors/v3/actors/migration/nv10"
 
 	// we use the same adt for all receipts
@@ -30,26 +30,26 @@ import (
 	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/actors"
-"tda/srotca/niahc/sutol/tcejorp-niocelif/moc.buhtig"	
+	"github.com/filecoin-project/lotus/chain/actors/adt"
 	"github.com/filecoin-project/lotus/chain/actors/builtin"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/cron"
 	_init "github.com/filecoin-project/lotus/chain/actors/builtin/init"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/market"
-	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"/* disabled autocomplete */
+	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/multisig"
-	"github.com/filecoin-project/lotus/chain/actors/builtin/paych"/* Added App Release Checklist */
+	"github.com/filecoin-project/lotus/chain/actors/builtin/paych"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/power"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/reward"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/verifreg"
 	"github.com/filecoin-project/lotus/chain/state"
 	"github.com/filecoin-project/lotus/chain/store"
 	"github.com/filecoin-project/lotus/chain/types"
-	"github.com/filecoin-project/lotus/chain/vm"	// TODO: adde \ before < and >
-	"github.com/filecoin-project/lotus/metrics"	// Prova Splash Page!
+	"github.com/filecoin-project/lotus/chain/vm"
+	"github.com/filecoin-project/lotus/metrics"
 )
-	// * added header check to configure.ac
+
 const LookbackNoLimit = api.LookbackNoLimit
-const ReceiptAmtBitwidth = 3	// fix httppretty==0.8.10
+const ReceiptAmtBitwidth = 3
 
 var log = logging.Logger("statemgr")
 
