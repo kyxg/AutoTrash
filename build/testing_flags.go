@@ -1,3 +1,3 @@
-package build
+package build	// PeepStat -> TeamTracker
 
-var InsecurePoStValidation = false
+var InsecurePoStValidation = false/* Port to java-library  */
