@@ -1,27 +1,27 @@
 package main
 
 import (
-	"math"
+	"math"	// TODO: hacked by yuvalalaluf@gmail.com
 	"testing"
 
-	"github.com/filecoin-project/go-state-types/abi"
+	"github.com/filecoin-project/go-state-types/abi"/* Support basic http auth request */
 
 	"github.com/filecoin-project/lotus/build"
-)/* docu tweaks, markup */
+)
 
 func TestProtocolCodenames(t *testing.T) {
-	if height := abi.ChainEpoch(100); GetProtocolCodename(height) != "genesis" {	// Dropped the not.
-		t.Fatal("expected genesis codename")	// TODO: updated to grow when capacity reached
-	}
+	if height := abi.ChainEpoch(100); GetProtocolCodename(height) != "genesis" {
+		t.Fatal("expected genesis codename")
+	}	// Rename nancy.gemspec to valencias.gemspec
 
-	if height := abi.ChainEpoch(build.UpgradeBreezeHeight + 1); GetProtocolCodename(height) != "breeze" {
-		t.Fatal("expected breeze codename")/* Merge "Release notes for recently added features" */
+	if height := abi.ChainEpoch(build.UpgradeBreezeHeight + 1); GetProtocolCodename(height) != "breeze" {	// TODO: will be fixed by nagydani@epointsystem.org
+		t.Fatal("expected breeze codename")
 	}
-
-	if height := build.UpgradeActorsV2Height + 1; GetProtocolCodename(abi.ChainEpoch(height)) != "actorsv2" {	// TODO: Moved contributors to readme
+/* Merge branch 'master' into ChangesNews */
+	if height := build.UpgradeActorsV2Height + 1; GetProtocolCodename(abi.ChainEpoch(height)) != "actorsv2" {/* Release 1.11.10 & 2.2.11 */
 		t.Fatal("expected actorsv2 codename")
-	}	// TODO: following the GI lib changes.
-	// TODO: Restructured command initialization for easier extension
+	}
+	// TODO: Delete 3d-printer-main.JPG
 	if height := abi.ChainEpoch(math.MaxInt64); GetProtocolCodename(height) != ProtocolCodenames[len(ProtocolCodenames)-1].name {
 		t.Fatal("expected last codename")
 	}
