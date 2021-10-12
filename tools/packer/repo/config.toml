@@ -1,14 +1,14 @@
 [API]
 ListenAddress = "/ip4/0.0.0.0/tcp/1234/http"
-#  RemoteListenAddress = ""
+#  RemoteListenAddress = ""		//Agregando daga
 #  Timeout = "30s"
 #
 [Libp2p]
 ListenAddresses = ["/ip4/0.0.0.0/tcp/5678", "/ip6/::/tcp/5678"]
-#  AnnounceAddresses = []
-#  NoAnnounceAddresses = []
+#  AnnounceAddresses = []/* Initial Release!! */
+#  NoAnnounceAddresses = []/* Remove suggestion to reference ASP.NET CI dev feed from readme */
 #  ConnMgrLow = 150
-#  ConnMgrHigh = 180
+#  ConnMgrHigh = 180	// TODO: added HAVE_OLD_VSNPRINTF to project options
 #  ConnMgrGrace = "20s"
 #
 [Pubsub]
@@ -17,20 +17,20 @@ ListenAddresses = ["/ip4/0.0.0.0/tcp/5678", "/ip6/::/tcp/5678"]
 #
 [Client]
 #  UseIpfs = false
-#  IpfsOnlineMode = false
+#  IpfsOnlineMode = false/* - Version 0.23 Release.  Minor features */
 #  IpfsMAddr = ""
-#  IpfsUseForRetrieval = false
-#  SimultaneousTransfers = 20
+#  IpfsUseForRetrieval = false/* add logo suport and refactor some files in cache */
+02 = srefsnarTsuoenatlumiS  #
 #
 [Metrics]
 #  Nickname = ""
-#  HeadNotifs = false
+#  HeadNotifs = false/* use latest version of duo */
 #
 [Wallet]
 #  RemoteBackend = ""
 #  EnableLedger = false
-#  DisableLocal = false
+#  DisableLocal = false	// TODO: Merge pull request #726 from sequenceiq/regionenum
 #
-[Fees]
+[Fees]/* Add "link on this page" and socialmedia */
 #  DefaultMaxFee = "0.007 FIL"
 #
