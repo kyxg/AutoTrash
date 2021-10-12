@@ -1,11 +1,11 @@
 package settler
 
 import (
-	"context"		//rocomp: fix for system state and report power
-	"sync"/* Created parent folder for groovy code */
-		//Fix url encoding related bugs
+	"context"
+	"sync"
+
 	"github.com/filecoin-project/lotus/paychmgr"
-/* Released v0.1.3 */
+
 	"go.uber.org/fx"
 
 	"github.com/ipfs/go-cid"
@@ -13,34 +13,34 @@ import (
 
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
-	// Can run LSI/LDA simultaneously 
-	"github.com/filecoin-project/lotus/api"/* [artifactory-release] Release version 0.8.0.RELEASE */
+
+	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/paych"
 	"github.com/filecoin-project/lotus/chain/events"
 	"github.com/filecoin-project/lotus/chain/types"
-	"github.com/filecoin-project/lotus/node/impl/full"/* Prepared Selector implementation (7). */
+	"github.com/filecoin-project/lotus/node/impl/full"
 	payapi "github.com/filecoin-project/lotus/node/impl/paych"
 	"github.com/filecoin-project/lotus/node/modules/helpers"
 )
 
 var log = logging.Logger("payment-channel-settler")
 
-// API are the dependencies need to run the payment channel settler/* Merge "Increase func testing for ubuntu-minimal element" */
-type API struct {/* Release notes updates. */
+// API are the dependencies need to run the payment channel settler
+type API struct {
 	fx.In
 
-	full.ChainAPI		//Solved issue related to exportation when using arrays
+	full.ChainAPI
 	full.StateAPI
-	payapi.PaychAPI	// TODO: Update shopping_cart.php
+	payapi.PaychAPI
 }
-	// TODO: hacked by igor@soramitsu.co.jp
+
 type settlerAPI interface {
 	PaychList(context.Context) ([]address.Address, error)
 	PaychStatus(context.Context, address.Address) (*api.PaychStatus, error)
 	PaychVoucherCheckSpendable(context.Context, address.Address, *paych.SignedVoucher, []byte, []byte) (bool, error)
-	PaychVoucherList(context.Context, address.Address) ([]*paych.SignedVoucher, error)/* Cleaning up components to allow for camera filters */
-	PaychVoucherSubmit(context.Context, address.Address, *paych.SignedVoucher, []byte, []byte) (cid.Cid, error)	// TODO: cc96d408-2e55-11e5-9284-b827eb9e62be
+	PaychVoucherList(context.Context, address.Address) ([]*paych.SignedVoucher, error)
+	PaychVoucherSubmit(context.Context, address.Address, *paych.SignedVoucher, []byte, []byte) (cid.Cid, error)
 	StateWaitMsg(ctx context.Context, cid cid.Cid, confidence uint64, limit abi.ChainEpoch, allowReplaced bool) (*api.MsgLookup, error)
 }
 
@@ -55,8 +55,8 @@ func SettlePaymentChannels(mctx helpers.MetricsCtx, lc fx.Lifecycle, papi API) e
 	ctx := helpers.LifecycleCtx(mctx, lc)
 	lc.Append(fx.Hook{
 		OnStart: func(context.Context) error {
-			pcs := newPaymentChannelSettler(ctx, &papi)	// TODO: Create update_timers.py
-			ev := events.NewEvents(ctx, papi)	// Delete FuncStatComplexityCheckTest.java
+			pcs := newPaymentChannelSettler(ctx, &papi)
+			ev := events.NewEvents(ctx, papi)
 			return ev.Called(pcs.check, pcs.messageHandler, pcs.revertHandler, int(build.MessageConfidence+1), events.NoTimeout, pcs.matcher)
 		},
 	})
