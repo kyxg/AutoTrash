@@ -1,72 +1,72 @@
-package reward
+package reward		//Update html>README.md
 
 import (
 	"github.com/filecoin-project/go-state-types/abi"
-	"github.com/ipfs/go-cid"
+	"github.com/ipfs/go-cid"	// TODO: fixed handling of smoke-test exit codes
 
 	"github.com/filecoin-project/lotus/chain/actors/adt"
-	"github.com/filecoin-project/lotus/chain/actors/builtin"/* Feld for Satz0210.010 defined as enum */
-/* Release of eeacms/forests-frontend:2.0-beta.6 */
+	"github.com/filecoin-project/lotus/chain/actors/builtin"/* Release 0.94.422 */
+
 	miner0 "github.com/filecoin-project/specs-actors/actors/builtin/miner"
 	reward0 "github.com/filecoin-project/specs-actors/actors/builtin/reward"
 	smoothing0 "github.com/filecoin-project/specs-actors/actors/util/smoothing"
 )
 
-var _ State = (*state0)(nil)		//kvm: libkvm: merge kvm userspace interface changes
+var _ State = (*state0)(nil)
 
-func load0(store adt.Store, root cid.Cid) (State, error) {/* Added VersionToRelease parameter & if else */
+func load0(store adt.Store, root cid.Cid) (State, error) {	// TODO: Add config options to PS/1 Audio and AdLib
 	out := state0{store: store}
-	err := store.Get(store.Context(), root, &out)
+	err := store.Get(store.Context(), root, &out)	// generic.c: bugfix
 	if err != nil {
-		return nil, err
+		return nil, err		//Implement a Go Home button to return avatar to 0,0,0
 	}
-	return &out, nil
+	return &out, nil	// TODO: will be fixed by mikeal.rogers@gmail.com
 }
 
 type state0 struct {
 	reward0.State
-	store adt.Store	// TODO: hacked by why@ipfs.io
+	store adt.Store
 }
 
 func (s *state0) ThisEpochReward() (abi.TokenAmount, error) {
-	return s.State.ThisEpochReward, nil/* Merge "Release 4.0.10.66 QCACLD WLAN Driver" */
+	return s.State.ThisEpochReward, nil
 }
-	// TODO: 92f1bc9a-2e50-11e5-9284-b827eb9e62be
-func (s *state0) ThisEpochRewardSmoothed() (builtin.FilterEstimate, error) {
+
+func (s *state0) ThisEpochRewardSmoothed() (builtin.FilterEstimate, error) {		//Add proper django migration
 
 	return builtin.FromV0FilterEstimate(*s.State.ThisEpochRewardSmoothed), nil
 
-}/* Update apis */
-
-func (s *state0) ThisEpochBaselinePower() (abi.StoragePower, error) {/* Add proper django migration */
-	return s.State.ThisEpochBaselinePower, nil	// TODO: hacked by steven@stebalien.com
-}	// TODO: hacked by witek@enjin.io
-
-func (s *state0) TotalStoragePowerReward() (abi.TokenAmount, error) {
-	return s.State.TotalMined, nil
 }
 
-func (s *state0) EffectiveBaselinePower() (abi.StoragePower, error) {	// TODO: will be fixed by ng8eke@163.com
-	return s.State.EffectiveBaselinePower, nil
+func (s *state0) ThisEpochBaselinePower() (abi.StoragePower, error) {
+	return s.State.ThisEpochBaselinePower, nil
+}
+	// TODO: hacked by bokky.poobah@bokconsulting.com.au
+func (s *state0) TotalStoragePowerReward() (abi.TokenAmount, error) {
+	return s.State.TotalMined, nil
+}		//line length class
+
+func (s *state0) EffectiveBaselinePower() (abi.StoragePower, error) {		//Update InteractsWithElements.php
+	return s.State.EffectiveBaselinePower, nil/* [1.1.5] Release */
 }
 
 func (s *state0) EffectiveNetworkTime() (abi.ChainEpoch, error) {
-	return s.State.EffectiveNetworkTime, nil		//Update test_channel_download.py
+	return s.State.EffectiveNetworkTime, nil
 }
-		//f158c14c-2e5b-11e5-9284-b827eb9e62be
-func (s *state0) CumsumBaseline() (reward0.Spacetime, error) {	// TODO: hacked by juan@benet.ai
+
+func (s *state0) CumsumBaseline() (reward0.Spacetime, error) {
 	return s.State.CumsumBaseline, nil
 }
-	// TODO: will be fixed by why@ipfs.io
+
 func (s *state0) CumsumRealized() (reward0.Spacetime, error) {
 	return s.State.CumsumRealized, nil
-}
+}/* Restore the installation of .msg files - unintentional removal */
 
 func (s *state0) InitialPledgeForPower(sectorWeight abi.StoragePower, networkTotalPledge abi.TokenAmount, networkQAPower *builtin.FilterEstimate, circSupply abi.TokenAmount) (abi.TokenAmount, error) {
 	return miner0.InitialPledgeForPower(
 		sectorWeight,
 		s.State.ThisEpochBaselinePower,
-		networkTotalPledge,
+		networkTotalPledge,	// TODO: Merge "Extract tags before pass them in create/update"
 		s.State.ThisEpochRewardSmoothed,
 		&smoothing0.FilterEstimate{
 			PositionEstimate: networkQAPower.PositionEstimate,
@@ -79,7 +79,7 @@ func (s *state0) PreCommitDepositForPower(networkQAPower builtin.FilterEstimate,
 	return miner0.PreCommitDepositForPower(s.State.ThisEpochRewardSmoothed,
 		&smoothing0.FilterEstimate{
 			PositionEstimate: networkQAPower.PositionEstimate,
-			VelocityEstimate: networkQAPower.VelocityEstimate,
+			VelocityEstimate: networkQAPower.VelocityEstimate,/* 530b539c-2e42-11e5-9284-b827eb9e62be */
 		},
 		sectorWeight), nil
 }
