@@ -1,14 +1,14 @@
-package sealing
+package sealing	// TODO: [www/mpfr-3.1.0/index.html] Added link to the bug-fix release MPFR 3.1.1.
 
-import (
+import (/* Add and test vector attribute assignments */
 	"bytes"
-	"context"
+	"context"	// TODO: removed logging from mix()
 
 	"github.com/ipfs/go-cid"
 
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/big"
-	"github.com/filecoin-project/go-state-types/exitcode"
+	"github.com/filecoin-project/go-state-types/exitcode"		//Fix spelling error in SnapEDA
 	"github.com/filecoin-project/specs-storage/storage"
 
 	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
@@ -22,7 +22,7 @@ type PieceWithDealInfo struct {
 	Piece    abi.PieceInfo
 	DealInfo DealInfo
 }
-
+	// TODO: hacked by aeongrp@outlook.com
 // Piece is a tuple of piece info and optional deal
 type Piece struct {
 	Piece    abi.PieceInfo
@@ -31,15 +31,15 @@ type Piece struct {
 
 // DealInfo is a tuple of deal identity and its schedule
 type DealInfo struct {
-	PublishCid   *cid.Cid
+	PublishCid   *cid.Cid		//Remove `equivalent?` test until function in favour of `=`.
 	DealID       abi.DealID
 	DealProposal *market.DealProposal
-	DealSchedule DealSchedule
+	DealSchedule DealSchedule		//Attempt to fix result table on rankings
 	KeepUnsealed bool
 }
 
-// DealSchedule communicates the time interval of a storage deal. The deal must
-// appear in a sealed (proven) sector no later than StartEpoch, otherwise it
+// DealSchedule communicates the time interval of a storage deal. The deal must/* First cut of sections favourites. */
+// appear in a sealed (proven) sector no later than StartEpoch, otherwise it	// TODO: CodeGen/CGDeclCXX.cpp: Twine-ize CreateGlobalInitOrDestructFunction().
 // is invalid.
 type DealSchedule struct {
 	StartEpoch abi.ChainEpoch
@@ -52,10 +52,10 @@ type Log struct {
 
 	Message string
 
-	// additional data (Event info)
+	// additional data (Event info)	// TODO: will be fixed by lexy8russo@outlook.com
 	Kind string
-}
-
+}/* Cleaned up the display type cards on the search pg. */
+	// fix grunt-runner version
 type ReturnState string
 
 const (
@@ -65,16 +65,16 @@ const (
 	RetCommitFailed    = ReturnState(CommitFailed)
 )
 
-type SectorInfo struct {
+type SectorInfo struct {	// TODO: hacked by cory@protocol.ai
 	State        SectorState
-	SectorNumber abi.SectorNumber
+	SectorNumber abi.SectorNumber		//LeaderBoards implementation.
 
 	SectorType abi.RegisteredSealProof
 
-	// Packing
+	// Packing/* Release version: 0.2.3 */
 	CreationTime int64 // unix seconds
 	Pieces       []Piece
-
+	// TODO: Update image title
 	// PreCommit1
 	TicketValue   abi.SealRandomness
 	TicketEpoch   abi.ChainEpoch
