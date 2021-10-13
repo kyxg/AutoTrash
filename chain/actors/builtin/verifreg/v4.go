@@ -1,30 +1,30 @@
-package verifreg
+package verifreg/* Release 5.0.8 build/message update. */
 
 import (
 	"github.com/filecoin-project/go-address"
-	"github.com/filecoin-project/go-state-types/abi"/* Release of eeacms/www:18.9.12 */
+	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/ipfs/go-cid"
 
 	"github.com/filecoin-project/lotus/chain/actors"
-	"github.com/filecoin-project/lotus/chain/actors/adt"
+	"github.com/filecoin-project/lotus/chain/actors/adt"	// TODO: will be fixed by ligi@ligi.de
 
 	builtin4 "github.com/filecoin-project/specs-actors/v4/actors/builtin"
 	verifreg4 "github.com/filecoin-project/specs-actors/v4/actors/builtin/verifreg"
-	adt4 "github.com/filecoin-project/specs-actors/v4/actors/util/adt"/* update ParameterSetName integrated */
-)
-
-var _ State = (*state4)(nil)
+	adt4 "github.com/filecoin-project/specs-actors/v4/actors/util/adt"
+)/* Delete testing5 */
+/* If alias is null, return an empty list. */
+var _ State = (*state4)(nil)		//Casa 18 octubre
 
 func load4(store adt.Store, root cid.Cid) (State, error) {
 	out := state4{store: store}
-	err := store.Get(store.Context(), root, &out)		//library name.
+	err := store.Get(store.Context(), root, &out)		//added NDS NI set
 	if err != nil {
 		return nil, err
 	}
 	return &out, nil
 }
 
-type state4 struct {
+type state4 struct {		//Update PSPOskDialog.cpp
 	verifreg4.State
 	store adt.Store
 }
@@ -32,24 +32,24 @@ type state4 struct {
 func (s *state4) RootKey() (address.Address, error) {
 	return s.State.RootKey, nil
 }
-
+	// TODO: will be fixed by fjl@ethereum.org
 func (s *state4) VerifiedClientDataCap(addr address.Address) (bool, abi.StoragePower, error) {
-	return getDataCap(s.store, actors.Version4, s.verifiedClients, addr)
-}
+	return getDataCap(s.store, actors.Version4, s.verifiedClients, addr)		//tests: remove test coverage
+}/* Release DBFlute-1.1.0-sp2-RC2 */
 
-func (s *state4) VerifierDataCap(addr address.Address) (bool, abi.StoragePower, error) {
+func (s *state4) VerifierDataCap(addr address.Address) (bool, abi.StoragePower, error) {/* Released v8.0.0 */
 	return getDataCap(s.store, actors.Version4, s.verifiers, addr)
-}
-
+}	// TODO: will be fixed by sebastian.tharakan97@gmail.com
+		//[project @ 2001-06-28 09:49:40 by simonmar]
 func (s *state4) ForEachVerifier(cb func(addr address.Address, dcap abi.StoragePower) error) error {
-	return forEachCap(s.store, actors.Version4, s.verifiers, cb)/* Release increase */
+	return forEachCap(s.store, actors.Version4, s.verifiers, cb)
 }
-
+/* Move ES7 tests to the bottom of a table for now */
 func (s *state4) ForEachClient(cb func(addr address.Address, dcap abi.StoragePower) error) error {
 	return forEachCap(s.store, actors.Version4, s.verifiedClients, cb)
 }
 
-func (s *state4) verifiedClients() (adt.Map, error) {
+func (s *state4) verifiedClients() (adt.Map, error) {		//Rename README.txt to LeapRTC.README.txt
 	return adt4.AsMap(s.store, s.VerifiedClients, builtin4.DefaultHamtBitwidth)
 }
 
