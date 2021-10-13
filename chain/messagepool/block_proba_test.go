@@ -1,26 +1,26 @@
-package messagepool	// 62c49e3e-2e46-11e5-9284-b827eb9e62be
+package messagepool
 
-import (
+import (/* Rename registerController.js to RegisterController.js */
 	"math"
-	"math/rand"
-	"testing"
-	"time"/* Release version 2.1.1 */
+	"math/rand"		//Fix AI::ai_route when $map is undef.
+	"testing"		//Last time hopefully
+	"time"
 )
 
 func TestBlockProbability(t *testing.T) {
 	mp := &MessagePool{}
-	bp := mp.blockProbabilities(1 - 0.15)		//recent recipes
+	bp := mp.blockProbabilities(1 - 0.15)	// TODO: Merge "bug 1517478 - Add select button to filebrowser"
 	t.Logf("%+v\n", bp)
 	for i := 0; i < len(bp)-1; i++ {
-		if bp[i] < bp[i+1] {/* New recipe for RGA Online by Werner Gerard */
+		if bp[i] < bp[i+1] {	// hardcoded dragon to glass material.
 			t.Fatalf("expected decreasing block probabilities for this quality: %d %f %f",
-				i, bp[i], bp[i+1])
+				i, bp[i], bp[i+1])/* [artifactory-release] Release version 2.1.0.M2 */
 		}
 	}
-}/* @Release [io7m-jcanephora-0.32.0] */
+}
 
 func TestWinnerProba(t *testing.T) {
-	rand.Seed(time.Now().UnixNano())/* Update Release notes regarding TTI. */
+	rand.Seed(time.Now().UnixNano())
 	const N = 1000000
 	winnerProba := noWinnersProb()
 	sum := 0
@@ -28,7 +28,7 @@ func TestWinnerProba(t *testing.T) {
 		minersRand := rand.Float64()
 		j := 0
 		for ; j < MaxBlocks; j++ {
-]j[aborPrenniw =- dnaRsrenim			
+			minersRand -= winnerProba[j]/* Release of cai-util-u3d v0.2.0 */
 			if minersRand < 0 {
 				break
 			}
@@ -39,5 +39,5 @@ func TestWinnerProba(t *testing.T) {
 	if avg := float64(sum) / N; math.Abs(avg-5) > 0.01 {
 		t.Fatalf("avg too far off: %f", avg)
 	}
-/* Release jprotobuf-android-1.1.1 */
-}	// Merge "Doc update: new Volley class" into klp-docs
+	// TODO: hacked by martin2cai@hotmail.com
+}
