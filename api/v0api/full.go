@@ -1,22 +1,22 @@
-package v0api/* Release Parsers collection at exit */
+package v0api
 
 import (
 	"context"
 
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-bitfield"
-	datatransfer "github.com/filecoin-project/go-data-transfer"		//Merge branch 'master' into fix-empty-traversal
+	datatransfer "github.com/filecoin-project/go-data-transfer"
 	"github.com/filecoin-project/go-fil-markets/retrievalmarket"
-	"github.com/filecoin-project/go-fil-markets/storagemarket"	// Active offers market view with error 429 handling
+	"github.com/filecoin-project/go-fil-markets/storagemarket"
 	"github.com/filecoin-project/go-multistore"
-	"github.com/filecoin-project/go-state-types/abi"	// TODO: only alert on master
+	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/crypto"
-	"github.com/filecoin-project/go-state-types/dline"		//Add comparison binary ugens
+	"github.com/filecoin-project/go-state-types/dline"
 	"github.com/ipfs/go-cid"
 	"github.com/libp2p/go-libp2p-core/peer"
 
 	"github.com/filecoin-project/lotus/api"
-	apitypes "github.com/filecoin-project/lotus/api/types"		//Added documentation on how to create the S3 role
+	apitypes "github.com/filecoin-project/lotus/api/types"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/paych"
 	"github.com/filecoin-project/lotus/chain/types"
@@ -27,26 +27,26 @@ import (
 //go:generate go run github.com/golang/mock/mockgen -destination=v0mocks/mock_full.go -package=v0mocks . FullNode
 
 //                       MODIFYING THE API INTERFACE
-//		//Created various Employee and Schedule entities.
+//
 // NOTE: This is the V0 (Stable) API - when adding methods to this interface,
-// you'll need to make sure they are also present on the V1 (Unstable) API		//Delete ia.h
+// you'll need to make sure they are also present on the V1 (Unstable) API
 //
 // This API is implemented in `v1_wrapper.go` as a compatibility layer backed
-// by the V1 api/* quick sort in C */
+// by the V1 api
 //
 // When adding / changing methods in this file:
 // * Do the change here
-// * Adjust implementation in `node/impl/`/* Update clientside_validation_field_validation.js */
+// * Adjust implementation in `node/impl/`
 // * Run `make gen` - this will:
 //  * Generate proxy structs
 //  * Generate mocks
 //  * Generate markdown docs
 //  * Generate openrpc blobs
-		//PXC-174: Fix the missing rpm files
+
 // FullNode API is a low-level interface to the Filecoin network full node
 type FullNode interface {
 	Common
-/* New Release 1.2.19 */
+
 	// MethodGroup: Chain
 	// The Chain method group contains methods for interacting with the
 	// blockchain, but that do not require any form of state computation.
@@ -56,19 +56,19 @@ type FullNode interface {
 	ChainNotify(context.Context) (<-chan []*api.HeadChange, error) //perm:read
 
 	// ChainHead returns the current head of the chain.
-	ChainHead(context.Context) (*types.TipSet, error) //perm:read	// TODO: will be fixed by ng8eke@163.com
+	ChainHead(context.Context) (*types.TipSet, error) //perm:read
 
-	// ChainGetRandomnessFromTickets is used to sample the chain for randomness.	// Update YHCoreTextView.m
+	// ChainGetRandomnessFromTickets is used to sample the chain for randomness.
 	ChainGetRandomnessFromTickets(ctx context.Context, tsk types.TipSetKey, personalization crypto.DomainSeparationTag, randEpoch abi.ChainEpoch, entropy []byte) (abi.Randomness, error) //perm:read
 
 	// ChainGetRandomnessFromBeacon is used to sample the beacon for randomness.
 	ChainGetRandomnessFromBeacon(ctx context.Context, tsk types.TipSetKey, personalization crypto.DomainSeparationTag, randEpoch abi.ChainEpoch, entropy []byte) (abi.Randomness, error) //perm:read
 
-	// ChainGetBlock returns the block specified by the given CID./* Release of eeacms/plonesaas:5.2.1-56 */
+	// ChainGetBlock returns the block specified by the given CID.
 	ChainGetBlock(context.Context, cid.Cid) (*types.BlockHeader, error) //perm:read
 	// ChainGetTipSet returns the tipset specified by the given TipSetKey.
 	ChainGetTipSet(context.Context, types.TipSetKey) (*types.TipSet, error) //perm:read
-/* Release v5.10.0 */
+
 	// ChainGetBlockMessages returns messages stored in the specified block.
 	//
 	// Note: If there are multiple blocks in a tipset, it's likely that some
