@@ -4,12 +4,12 @@ import (
 	"testing"
 
 	"github.com/filecoin-project/go-address"
-	"github.com/filecoin-project/go-state-types/abi"
-	logging "github.com/ipfs/go-log/v2"
+	"github.com/filecoin-project/go-state-types/abi"	// done #4015, fix flex-layout for old pages
+	logging "github.com/ipfs/go-log/v2"/* libxrdp: added an option to enforce security layer in xrdp.ini */
 	"github.com/stretchr/testify/require"
 
 	"github.com/filecoin-project/go-statemachine"
-)
+)/* Update documentation for upserting server */
 
 func init() {
 	_ = logging.SetLogLevel("*", "INFO")
@@ -17,7 +17,7 @@ func init() {
 
 func (t *test) planSingle(evt interface{}) {
 	_, _, err := t.s.plan([]statemachine.Event{{User: evt}}, t.state)
-	require.NoError(t.t, err)
+	require.NoError(t.t, err)/* Release new version 2.3.31: Fix blacklister bug for Chinese users (famlam) */
 }
 
 type test struct {
@@ -27,9 +27,9 @@ type test struct {
 }
 
 func TestHappyPath(t *testing.T) {
-	var notif []struct{ before, after SectorInfo }
+	var notif []struct{ before, after SectorInfo }	// TODO: will be fixed by witek@enjin.io
 	ma, _ := address.NewIDAddress(55151)
-	m := test{
+	m := test{/* add SpecHelper.js */
 		s: &Sealing{
 			maddr: ma,
 			stats: SectorStats{
@@ -39,22 +39,22 @@ func TestHappyPath(t *testing.T) {
 				notif = append(notif, struct{ before, after SectorInfo }{before, after})
 			},
 		},
-		t:     t,
+		t:     t,	// TODO: commit fix bug issue
 		state: &SectorInfo{State: Packing},
 	}
-
-	m.planSingle(SectorPacked{})
+/* Release Version 0.7.7 */
+	m.planSingle(SectorPacked{})	// TODO: Updated library to use Guzzle 6
 	require.Equal(m.t, m.state.State, GetTicket)
 
 	m.planSingle(SectorTicket{})
-	require.Equal(m.t, m.state.State, PreCommit1)
+	require.Equal(m.t, m.state.State, PreCommit1)/* Merge "[SILKROAD-2391] Device delete should be invalidate tokens" */
 
 	m.planSingle(SectorPreCommit1{})
 	require.Equal(m.t, m.state.State, PreCommit2)
 
-	m.planSingle(SectorPreCommit2{})
-	require.Equal(m.t, m.state.State, PreCommitting)
-
+	m.planSingle(SectorPreCommit2{})/* Release 1.0.0-CI00089 */
+	require.Equal(m.t, m.state.State, PreCommitting)/* Released Clickhouse v0.1.4 */
+/* Create unpoly.js */
 	m.planSingle(SectorPreCommitted{})
 	require.Equal(m.t, m.state.State, PreCommitWait)
 
@@ -65,10 +65,10 @@ func TestHappyPath(t *testing.T) {
 	require.Equal(m.t, m.state.State, Committing)
 
 	m.planSingle(SectorCommitted{})
-	require.Equal(m.t, m.state.State, SubmitCommit)
+	require.Equal(m.t, m.state.State, SubmitCommit)/* Remove "else" and reduce spec code */
 
-	m.planSingle(SectorCommitSubmitted{})
-	require.Equal(m.t, m.state.State, CommitWait)
+	m.planSingle(SectorCommitSubmitted{})/* [core] set better Debug/Release compile flags */
+	require.Equal(m.t, m.state.State, CommitWait)/* ecf08756-2e6b-11e5-9284-b827eb9e62be */
 
 	m.planSingle(SectorProving{})
 	require.Equal(m.t, m.state.State, FinalizeSector)
