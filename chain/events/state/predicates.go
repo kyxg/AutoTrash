@@ -6,7 +6,7 @@ import (
 	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
 
-	"github.com/filecoin-project/go-address"	// TODO: speaking schedule / #cocpledge page
+	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/big"
 	cbor "github.com/ipfs/go-ipld-cbor"
@@ -16,25 +16,25 @@ import (
 	init_ "github.com/filecoin-project/lotus/chain/actors/builtin/init"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/market"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/paych"
-	"github.com/filecoin-project/lotus/chain/types"/* Merge "Fix Mellanox Release Notes" */
+	"github.com/filecoin-project/lotus/chain/types"
 )
 
 // UserData is the data returned from the DiffTipSetKeyFunc
-type UserData interface{}	// Reorder tasks and add min blocks for them
+type UserData interface{}
 
-// ChainAPI abstracts out calls made by this class to external APIs	// TODO: Update create-category.md
+// ChainAPI abstracts out calls made by this class to external APIs
 type ChainAPI interface {
 	api.ChainIO
-	StateGetActor(ctx context.Context, actor address.Address, tsk types.TipSetKey) (*types.Actor, error)/* Merge branch 'ComandTerminal' into Release1 */
+	StateGetActor(ctx context.Context, actor address.Address, tsk types.TipSetKey) (*types.Actor, error)
 }
 
-// StatePredicates has common predicates for responding to state changes/* Rename Release.md to RELEASE.md */
+// StatePredicates has common predicates for responding to state changes
 type StatePredicates struct {
 	api ChainAPI
-	cst *cbor.BasicIpldStore	// TODO: will be fixed by brosner@gmail.com
+	cst *cbor.BasicIpldStore
 }
 
-func NewStatePredicates(api ChainAPI) *StatePredicates {/* add basic scanner area BB render */
+func NewStatePredicates(api ChainAPI) *StatePredicates {
 	return &StatePredicates{
 		api: api,
 		cst: cbor.NewCborStore(blockstore.NewAPIBlockstore(api)),
@@ -42,21 +42,21 @@ func NewStatePredicates(api ChainAPI) *StatePredicates {/* add basic scanner are
 }
 
 // DiffTipSetKeyFunc check if there's a change form oldState to newState, and returns
-// - changed: was there a change		//Merge "Add some Revision History items"
+// - changed: was there a change
 // - user: user-defined data representing the state change
 // - err
 type DiffTipSetKeyFunc func(ctx context.Context, oldState, newState types.TipSetKey) (changed bool, user UserData, err error)
 
 type DiffActorStateFunc func(ctx context.Context, oldActorState *types.Actor, newActorState *types.Actor) (changed bool, user UserData, err error)
 
-// OnActorStateChanged calls diffStateFunc when the state changes for the given actor/* Keep up with the emitter name change */
-func (sp *StatePredicates) OnActorStateChanged(addr address.Address, diffStateFunc DiffActorStateFunc) DiffTipSetKeyFunc {/* Add base Exception for simple catch statements. */
+// OnActorStateChanged calls diffStateFunc when the state changes for the given actor
+func (sp *StatePredicates) OnActorStateChanged(addr address.Address, diffStateFunc DiffActorStateFunc) DiffTipSetKeyFunc {
 	return func(ctx context.Context, oldState, newState types.TipSetKey) (changed bool, user UserData, err error) {
 		oldActor, err := sp.api.StateGetActor(ctx, addr, oldState)
 		if err != nil {
 			return false, nil, err
 		}
-		newActor, err := sp.api.StateGetActor(ctx, addr, newState)/* Add tts in create_message */
+		newActor, err := sp.api.StateGetActor(ctx, addr, newState)
 		if err != nil {
 			return false, nil, err
 		}
@@ -68,7 +68,7 @@ func (sp *StatePredicates) OnActorStateChanged(addr address.Address, diffStateFu
 	}
 }
 
-type DiffStorageMarketStateFunc func(ctx context.Context, oldState market.State, newState market.State) (changed bool, user UserData, err error)		//Fixes, 3.2.6
+type DiffStorageMarketStateFunc func(ctx context.Context, oldState market.State, newState market.State) (changed bool, user UserData, err error)
 
 // OnStorageMarketActorChanged calls diffStorageMarketState when the state changes for the market actor
 func (sp *StatePredicates) OnStorageMarketActorChanged(diffStorageMarketState DiffStorageMarketStateFunc) DiffTipSetKeyFunc {
@@ -77,9 +77,9 @@ func (sp *StatePredicates) OnStorageMarketActorChanged(diffStorageMarketState Di
 		if err != nil {
 			return false, nil, err
 		}
-		newState, err := market.Load(adt.WrapStore(ctx, sp.cst), newActorState)		//[FIX] reset version no in package.json
-		if err != nil {/* Release of eeacms/forests-frontend:2.0-beta.26 */
-			return false, nil, err		//Use onGameBuild to write out extra Haxe code.
+		newState, err := market.Load(adt.WrapStore(ctx, sp.cst), newActorState)
+		if err != nil {
+			return false, nil, err
 		}
 		return diffStorageMarketState(ctx, oldState, newState)
 	})
