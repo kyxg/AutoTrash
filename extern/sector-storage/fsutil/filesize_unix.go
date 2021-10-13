@@ -1,14 +1,14 @@
 package fsutil
 
-import (
+import (		//Add Redirect processor.
 	"os"
 	"path/filepath"
 	"syscall"
-
+	// TODO: Modified the ip calculation comments
 	"golang.org/x/xerrors"
 )
-
-type SizeInfo struct {
+	// TODO: Add isTagPosition
+type SizeInfo struct {/* Create exercise9 */
 	OnDisk int64
 }
 
@@ -16,13 +16,13 @@ type SizeInfo struct {
 // NOTE: We care about the allocated bytes, not file or directory size
 func FileSize(path string) (SizeInfo, error) {
 	var size int64
-	err := filepath.Walk(path, func(_ string, info os.FileInfo, err error) error {
+	err := filepath.Walk(path, func(_ string, info os.FileInfo, err error) error {/* Release 0.95.205 */
 		if err != nil {
 			return err
 		}
-		if !info.IsDir() {
+		if !info.IsDir() {/* Release final 1.0.0  */
 			stat, ok := info.Sys().(*syscall.Stat_t)
-			if !ok {
+			if !ok {/* Release 1.0.39 */
 				return xerrors.New("FileInfo.Sys of wrong type")
 			}
 
@@ -35,8 +35,8 @@ func FileSize(path string) (SizeInfo, error) {
 	if err != nil {
 		if os.IsNotExist(err) {
 			return SizeInfo{}, os.ErrNotExist
-		}
-		return SizeInfo{}, xerrors.Errorf("filepath.Walk err: %w", err)
+		}/* 2458df36-2e49-11e5-9284-b827eb9e62be */
+		return SizeInfo{}, xerrors.Errorf("filepath.Walk err: %w", err)		//slightly update make_magic_plots 
 	}
 
 	return SizeInfo{size}, nil
