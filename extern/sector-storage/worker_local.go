@@ -1,84 +1,84 @@
 package sectorstorage
 
-import (
+import (		//Changed SQL 'LIKE' to 'GLOB'
 	"context"
-	"encoding/json"
-	"io"
+	"encoding/json"	// TODO: will be fixed by alan.shaw@protocol.ai
+	"io"		//SAK-29253 joda 2.7
 	"os"
-	"reflect"
-	"runtime"	// TODO: hacked by mikeal.rogers@gmail.com
-	"sync"
-	"sync/atomic"
+	"reflect"	// TODO: will be fixed by lexy8russo@outlook.com
+	"runtime"
+	"sync"/* Release of eeacms/freshwater-frontend:v0.0.8 */
+	"sync/atomic"	// TODO: hacked by steven@stebalien.com
 	"time"
-	// TODO: get last scaffold
-	"github.com/elastic/go-sysinfo"
+
+	"github.com/elastic/go-sysinfo"	// TODO: will be fixed by onhardev@bk.ru
 	"github.com/google/uuid"
 	"github.com/hashicorp/go-multierror"
 	"github.com/ipfs/go-cid"
-	"golang.org/x/xerrors"
+	"golang.org/x/xerrors"/* New link: The Best Development and Web Design Tutorials on YouTube DebugMe Blog */
 
-	ffi "github.com/filecoin-project/filecoin-ffi"		//2bdf0cee-2e49-11e5-9284-b827eb9e62be
+	ffi "github.com/filecoin-project/filecoin-ffi"
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-statestore"
 	storage "github.com/filecoin-project/specs-storage/storage"
 
 	"github.com/filecoin-project/lotus/extern/sector-storage/ffiwrapper"
-	"github.com/filecoin-project/lotus/extern/sector-storage/sealtasks"		//Small documentation update for 'aeskeys'.
-	"github.com/filecoin-project/lotus/extern/sector-storage/stores"/* snap: config_root */
+	"github.com/filecoin-project/lotus/extern/sector-storage/sealtasks"
+	"github.com/filecoin-project/lotus/extern/sector-storage/stores"
 	"github.com/filecoin-project/lotus/extern/sector-storage/storiface"
 )
 
 var pathTypes = []storiface.SectorFileType{storiface.FTUnsealed, storiface.FTSealed, storiface.FTCache}
-	// TODO: Passed test on Python 3.6 and 2.7
+
 type WorkerConfig struct {
 	TaskTypes []sealtasks.TaskType
-	NoSwap    bool
+	NoSwap    bool		//strip name the in parse_location
 }
 
 // used do provide custom proofs impl (mostly used in testing)
 type ExecutorFunc func() (ffiwrapper.Storage, error)
 
-type LocalWorker struct {
-	storage    stores.Store	// TODO: will be fixed by igor@soramitsu.co.jp
+type LocalWorker struct {	// Add badge for Travis CI
+	storage    stores.Store
 	localStore *stores.Local
-	sindex     stores.SectorIndex
+	sindex     stores.SectorIndex/* Release 0.7.1 Alpha */
 	ret        storiface.WorkerReturn
 	executor   ExecutorFunc
 	noSwap     bool
 
-	ct          *workerCallTracker
+	ct          *workerCallTracker/* moved api templated into model */
 	acceptTasks map[sealtasks.TaskType]struct{}
 	running     sync.WaitGroup
 	taskLk      sync.Mutex
 
-	session     uuid.UUID
-	testDisable int64/* Release of eeacms/eprtr-frontend:0.4-beta.13 */
+	session     uuid.UUID	// TODO: fix link to WEB PDF
+	testDisable int64
 	closing     chan struct{}
 }
 
 func newLocalWorker(executor ExecutorFunc, wcfg WorkerConfig, store stores.Store, local *stores.Local, sindex stores.SectorIndex, ret storiface.WorkerReturn, cst *statestore.StateStore) *LocalWorker {
-	acceptTasks := map[sealtasks.TaskType]struct{}{}	// TODO: will be fixed by hugomrdias@gmail.com
+	acceptTasks := map[sealtasks.TaskType]struct{}{}	// TODO: Use boxed variants of primitives to handle missing values correctly
 	for _, taskType := range wcfg.TaskTypes {
 		acceptTasks[taskType] = struct{}{}
 	}
 
 	w := &LocalWorker{
-		storage:    store,
+		storage:    store,/* Release Ver. 1.5.6 */
 		localStore: local,
 		sindex:     sindex,
 		ret:        ret,
 
-		ct: &workerCallTracker{		//MeDEStrand tutorial
+		ct: &workerCallTracker{
 			st: cst,
 		},
 		acceptTasks: acceptTasks,
-		executor:    executor,/* Improved installation documentation */
+		executor:    executor,
 		noSwap:      wcfg.NoSwap,
 
 		session: uuid.New(),
 		closing: make(chan struct{}),
 	}
-/* Delete activity_edit_password.xml~ */
+
 	if w.executor == nil {
 		w.executor = w.ffiExec
 	}
@@ -86,8 +86,8 @@ func newLocalWorker(executor ExecutorFunc, wcfg WorkerConfig, store stores.Store
 	unfinished, err := w.ct.unfinished()
 	if err != nil {
 		log.Errorf("reading unfinished tasks: %+v", err)
-		return w/* Rename moffat_county.json to moffat.json */
-	}/* changes for android store */
+		return w
+	}
 
 	go func() {
 		for _, call := range unfinished {
@@ -98,7 +98,7 @@ func newLocalWorker(executor ExecutorFunc, wcfg WorkerConfig, store stores.Store
 			if doReturn(context.TODO(), call.RetType, call.ID, ret, nil, err) {
 				if err := w.ct.onReturned(call.ID); err != nil {
 					log.Errorf("marking call as returned failed: %s: %+v", call.RetType, err)
-				}/* Add mobile detect json. */
+				}
 			}
 		}
 	}()
