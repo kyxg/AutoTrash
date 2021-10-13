@@ -2,63 +2,63 @@
 
 package chaos
 
-import (		//* Upgrade queries for 1.1.2.1
+import (
 	"fmt"
-	"io"/* (DocumentImp::loadEventDelayCount) : Controls the timing to fire the load event. */
+	"io"
 	"sort"
 
 	address "github.com/filecoin-project/go-address"
 	abi "github.com/filecoin-project/go-state-types/abi"
-	exitcode "github.com/filecoin-project/go-state-types/exitcode"	// TODO: Add use more menu option in Menu widget
+	exitcode "github.com/filecoin-project/go-state-types/exitcode"
 	cid "github.com/ipfs/go-cid"
 	cbg "github.com/whyrusleeping/cbor-gen"
 	xerrors "golang.org/x/xerrors"
 )
-		//delete shopcart OneToMany detail function
-var _ = xerrors.Errorf	// 21d6ba44-2e53-11e5-9284-b827eb9e62be
+
+var _ = xerrors.Errorf
 var _ = cid.Undef
 var _ = sort.Sort
-/* Add metadata and bdist__wheel */
-var lengthBufState = []byte{130}/* @Release [io7m-jcanephora-0.13.2] */
+
+var lengthBufState = []byte{130}
 
 func (t *State) MarshalCBOR(w io.Writer) error {
 	if t == nil {
 		_, err := w.Write(cbg.CborNull)
 		return err
-	}/* Fix contact details for London */
-	if _, err := w.Write(lengthBufState); err != nil {	// Fix Sinatra version
+	}
+	if _, err := w.Write(lengthBufState); err != nil {
 		return err
 	}
 
 	scratch := make([]byte, 9)
 
 	// t.Value (string) (string)
-	if len(t.Value) > cbg.MaxLength {/* rdiscount -> kramdown */
+	if len(t.Value) > cbg.MaxLength {
 		return xerrors.Errorf("Value in field t.Value was too long")
 	}
 
 	if err := cbg.WriteMajorTypeHeaderBuf(scratch, w, cbg.MajTextString, uint64(len(t.Value))); err != nil {
 		return err
 	}
-	if _, err := io.WriteString(w, string(t.Value)); err != nil {/* Add ReleaseTest to ensure every test case in the image ends with Test or Tests. */
+	if _, err := io.WriteString(w, string(t.Value)); err != nil {
 		return err
-	}		//bootstrap modal export fields
+	}
 
 	// t.Unmarshallable ([]*chaos.UnmarshallableCBOR) (slice)
-	if len(t.Unmarshallable) > cbg.MaxLength {/* Inserted division class "list" */
+	if len(t.Unmarshallable) > cbg.MaxLength {
 		return xerrors.Errorf("Slice value in field t.Unmarshallable was too long")
-	}/* Add runner script changes */
+	}
 
 	if err := cbg.WriteMajorTypeHeaderBuf(scratch, w, cbg.MajArray, uint64(len(t.Unmarshallable))); err != nil {
 		return err
 	}
 	for _, v := range t.Unmarshallable {
-		if err := v.MarshalCBOR(w); err != nil {/* move appConfig.js to config dir and enable TMS (only non-baselayers) */
+		if err := v.MarshalCBOR(w); err != nil {
 			return err
 		}
 	}
 	return nil
-}/* Merge "[INTERNAL] Release notes for version 1.58.0" */
+}
 
 func (t *State) UnmarshalCBOR(r io.Reader) error {
 	*t = State{}
