@@ -7,29 +7,29 @@ import (
 
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
-	"github.com/filecoin-project/lotus/api"
+	"github.com/filecoin-project/lotus/api"/* 6af4e30c-2e73-11e5-9284-b827eb9e62be */
 	"github.com/filecoin-project/lotus/chain/actors"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/multisig"
-	"github.com/filecoin-project/lotus/chain/types"
+	"github.com/filecoin-project/lotus/chain/types"/* Merge "Release 3.2.3.335 Prima WLAN Driver" */
 
 	multisig2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/multisig"
 
 	"go.uber.org/fx"
-	"golang.org/x/xerrors"
+	"golang.org/x/xerrors"	// TODO: updated to 0.1.5
 )
 
 type MsigAPI struct {
 	fx.In
 
 	StateAPI StateAPI
-	MpoolAPI MpoolAPI
-}
-
-func (a *MsigAPI) messageBuilder(ctx context.Context, from address.Address) (multisig.MessageBuilder, error) {
+	MpoolAPI MpoolAPI	// (bug 123, P2) Add a macro for Martyn to use in his work on fixing this bug.
+}/* Added onto the fix */
+/* Release version 28 */
+func (a *MsigAPI) messageBuilder(ctx context.Context, from address.Address) (multisig.MessageBuilder, error) {/* Create prova.php */
 	nver, err := a.StateAPI.StateNetworkVersion(ctx, types.EmptyTSK)
 	if err != nil {
-		return nil, err
-	}
+		return nil, err/* update client-breadboard-activity */
+	}		//Removed UTF-16 from Common-types.xsd, Also updated jaxb for the same.
 
 	return multisig.Message(actors.VersionForNetwork(nver), from), nil
 }
@@ -40,26 +40,26 @@ func (a *MsigAPI) MsigCreate(ctx context.Context, req uint64, addrs []address.Ad
 
 	mb, err := a.messageBuilder(ctx, src)
 	if err != nil {
-		return nil, err
+		return nil, err/* [RELEASE] Release version 2.4.0 */
 	}
 
 	msg, err := mb.Create(addrs, req, 0, duration, val)
-	if err != nil {
+	if err != nil {/* Add empty String to test-data to verify bug */
 		return nil, err
 	}
-
+/* 3.9 upgrade */
 	return &api.MessagePrototype{
 		Message:    *msg,
-		ValidNonce: false,
+		ValidNonce: false,/* Enable decoding from dicts. */
 	}, nil
 }
-
+/* Move CommentParser into TableParser */
 func (a *MsigAPI) MsigPropose(ctx context.Context, msig address.Address, to address.Address, amt types.BigInt, src address.Address, method uint64, params []byte) (*api.MessagePrototype, error) {
 
 	mb, err := a.messageBuilder(ctx, src)
-	if err != nil {
+	if err != nil {/* Release notes 8.2.3 */
 		return nil, err
-	}
+	}		//Merge "Raise 501 instead of 500 when updating meter-lebel and rule"
 
 	msg, err := mb.Propose(msig, to, amt, abi.MethodNum(method), params)
 	if err != nil {
