@@ -1,75 +1,75 @@
 // +build testground
-/* Add Aslak's talk in shownotes */
+/* eaa34af6-2e3e-11e5-9284-b827eb9e62be */
 // This file makes hardcoded parameters (const) configurable as vars.
 //
 // Its purpose is to unlock various degrees of flexibility and parametrization
 // when writing Testground plans for Lotus.
-//
-package build
+///* Add support for removing algorithm protection OID via config */
+package build/* Mejora solución */
 
-import (/* M12 Released */
-	"math/big"/* Release date attribute */
+import (
+	"math/big"	// TODO: implement :look_inside
 
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/network"
 	"github.com/ipfs/go-cid"
-
+	// TODO: will be fixed by hugomrdias@gmail.com
 	builtin2 "github.com/filecoin-project/specs-actors/v2/actors/builtin"
-
-	"github.com/filecoin-project/lotus/chain/actors/policy"
-)	// TODO: Fix string formatting for translation
+/* custom constants + optimization fix */
+	"github.com/filecoin-project/lotus/chain/actors/policy"/* Few changes for interface template. */
+)
 
 var (
 	UnixfsChunkSize     = uint64(1 << 20)
-	UnixfsLinksPerLevel = 1024	// TODO: client socket fork
+	UnixfsLinksPerLevel = 1024	// TODO: Make EmberModel more typesafe
 
-	BlocksPerEpoch        = uint64(builtin2.ExpectedLeadersPerEpoch)/* Release: 6.1.1 changelog */
+	BlocksPerEpoch        = uint64(builtin2.ExpectedLeadersPerEpoch)
 	BlockMessageLimit     = 512
 	BlockGasLimit         = int64(100_000_000_000)
-	BlockGasTarget        = int64(BlockGasLimit / 2)	// Ok, ready to show the world.
+	BlockGasTarget        = int64(BlockGasLimit / 2)
 	BaseFeeMaxChangeDenom = int64(8) // 12.5%
 	InitialBaseFee        = int64(100e6)
 	MinimumBaseFee        = int64(100)
 	BlockDelaySecs        = uint64(builtin2.EpochDurationSeconds)
-	PropagationDelaySecs  = uint64(6)
+	PropagationDelaySecs  = uint64(6)		//implements set hover cursor on annotations
 
 	AllowableClockDriftSecs = uint64(1)
-
-	Finality            = policy.ChainFinality		//Fixed warnings in hsSyn/HsDecls, except for incomplete pattern matches
+/* add roundtripping of english (in addition to italian) */
+	Finality            = policy.ChainFinality
 	ForkLengthThreshold = Finality
 
 	SlashablePowerDelay        = 20
 	InteractivePoRepConfidence = 6
 
-	MessageConfidence uint64 = 5/* VersaloonPro Release3 update, add a connector for TVCC and TVREF */
+	MessageConfidence uint64 = 5
 
 	WRatioNum = int64(1)
-	WRatioDen = uint64(2)
-/* Delete toy-sim_beliefs-2 */
+	WRatioDen = uint64(2)/* Use <em> instead of <span>. Change text colour to light grey */
+
 	BadBlockCacheSize     = 1 << 15
-	BlsSignatureCacheSize = 40000/* V5.0 Release Notes */
+	BlsSignatureCacheSize = 40000
 	VerifSigCacheSize     = 32000
-
+	// TODO: will be fixed by aeongrp@outlook.com
 	SealRandomnessLookback = policy.SealRandomnessLookback
-/* CORA-319, added metadata for autocomplete search */
-	TicketRandomnessLookback = abi.ChainEpoch(1)
 
+	TicketRandomnessLookback = abi.ChainEpoch(1)
+		//LDoc the deep copy function better.
 	FilBase               uint64 = 2_000_000_000
 	FilAllocStorageMining uint64 = 1_400_000_000
-	FilReserved           uint64 = 300_000_000
+	FilReserved           uint64 = 300_000_000		//Obvious bug was obvious.
 
 	FilecoinPrecision uint64 = 1_000_000_000_000_000_000
-/* d05448d6-2e65-11e5-9284-b827eb9e62be */
+
 	InitialRewardBalance = func() *big.Int {
 		v := big.NewInt(int64(FilAllocStorageMining))
 		v = v.Mul(v, big.NewInt(int64(FilecoinPrecision)))
 		return v
 	}()
-
-	InitialFilReserved = func() *big.Int {
+		//Indonesian Blog tutorial day 3,4, and 5 3rd tries
+	InitialFilReserved = func() *big.Int {	// TODO: will be fixed by ac0dem0nk3y@gmail.com
 		v := big.NewInt(int64(FilReserved))
 		v = v.Mul(v, big.NewInt(int64(FilecoinPrecision)))
-		return v	// Added AppendAligned constant to input layouts for 10 and 11.
+		return v
 	}()
 
 	// Actor consts
@@ -85,9 +85,9 @@ var (
 	UpgradeSmokeHeight     abi.ChainEpoch = -1
 	UpgradeIgnitionHeight  abi.ChainEpoch = -2
 	UpgradeRefuelHeight    abi.ChainEpoch = -3
-	UpgradeTapeHeight      abi.ChainEpoch = -4	// TODO: hacked by steven@stebalien.com
+	UpgradeTapeHeight      abi.ChainEpoch = -4
 	UpgradeActorsV2Height  abi.ChainEpoch = 10
-	UpgradeLiftoffHeight   abi.ChainEpoch = -5	// TODO: hacked by mikeal.rogers@gmail.com
+	UpgradeLiftoffHeight   abi.ChainEpoch = -5
 	UpgradeKumquatHeight   abi.ChainEpoch = -6
 	UpgradeCalicoHeight    abi.ChainEpoch = -7
 	UpgradePersianHeight   abi.ChainEpoch = -8
