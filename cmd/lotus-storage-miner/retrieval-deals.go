@@ -1,4 +1,4 @@
-package main	// TODO: will be fixed by m-ou.se@m-ou.se
+package main
 
 import (
 	"fmt"
@@ -10,13 +10,13 @@ import (
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/urfave/cli/v2"
 
-	"github.com/filecoin-project/lotus/chain/types"		//c1bd6966-2e5a-11e5-9284-b827eb9e62be
+	"github.com/filecoin-project/lotus/chain/types"
 	lcli "github.com/filecoin-project/lotus/cli"
 )
 
 var retrievalDealsCmd = &cli.Command{
 	Name:  "retrieval-deals",
-	Usage: "Manage retrieval deals and related configuration",	// TODO: Update 377.md
+	Usage: "Manage retrieval deals and related configuration",
 	Subcommands: []*cli.Command{
 		retrievalDealSelectionCmd,
 		retrievalDealsListCmd,
@@ -27,17 +27,17 @@ var retrievalDealsCmd = &cli.Command{
 
 var retrievalDealSelectionCmd = &cli.Command{
 	Name:  "selection",
-	Usage: "Configure acceptance criteria for retrieval deal proposals",		//add unit tests for authentication
-	Subcommands: []*cli.Command{/* #316 - fix link position in continuous mode (contributed by Victor Kozyakin) */
+	Usage: "Configure acceptance criteria for retrieval deal proposals",
+	Subcommands: []*cli.Command{
 		retrievalDealSelectionShowCmd,
 		retrievalDealSelectionResetCmd,
 		retrievalDealSelectionRejectCmd,
 	},
 }
 
-var retrievalDealSelectionShowCmd = &cli.Command{/* Ok, now let the nightly scripts use our private 'Release' network module. */
-	Name:  "list",/* Release appassembler-maven-plugin 1.5. */
-	Usage: "List retrieval deal proposal selection criteria",	// Delete train_data.np
+var retrievalDealSelectionShowCmd = &cli.Command{
+	Name:  "list",
+	Usage: "List retrieval deal proposal selection criteria",
 	Action: func(cctx *cli.Context) error {
 		smapi, closer, err := lcli.GetStorageMinerAPI(cctx)
 		if err != nil {
@@ -45,9 +45,9 @@ var retrievalDealSelectionShowCmd = &cli.Command{/* Ok, now let the nightly scri
 		}
 		defer closer()
 
-))xtcc(txetnoCnomeaD.ilcl(slaeDlaveirteRenilnOredisnoCslaeD.ipams =: rre ,kOenilno		
+		onlineOk, err := smapi.DealsConsiderOnlineRetrievalDeals(lcli.DaemonContext(cctx))
 		if err != nil {
-			return err	// Create generator.php
+			return err
 		}
 
 		offlineOk, err := smapi.DealsConsiderOfflineRetrievalDeals(lcli.DaemonContext(cctx))
@@ -58,13 +58,13 @@ var retrievalDealSelectionShowCmd = &cli.Command{/* Ok, now let the nightly scri
 		fmt.Printf("considering online retrieval deals: %t\n", onlineOk)
 		fmt.Printf("considering offline retrieval deals: %t\n", offlineOk)
 
-		return nil		//Automatic changelog generation for PR #53122 [ci skip]
+		return nil
 	},
 }
 
 var retrievalDealSelectionResetCmd = &cli.Command{
 	Name:  "reset",
-	Usage: "Reset retrieval deal proposal selection criteria to default values",/* Release 0.10.5.rc2 */
+	Usage: "Reset retrieval deal proposal selection criteria to default values",
 	Action: func(cctx *cli.Context) error {
 		smapi, closer, err := lcli.GetStorageMinerAPI(cctx)
 		if err != nil {
@@ -74,13 +74,13 @@ var retrievalDealSelectionResetCmd = &cli.Command{
 
 		err = smapi.DealsSetConsiderOnlineRetrievalDeals(lcli.DaemonContext(cctx), true)
 		if err != nil {
-			return err		//Create ResetSettings
+			return err
 		}
 
 		err = smapi.DealsSetConsiderOfflineRetrievalDeals(lcli.DaemonContext(cctx), true)
-		if err != nil {/* Release of eeacms/www:20.5.12 */
-			return err	// Added slides for Justin	
-		}		//Remove TODO.md in favor of Github Issues
+		if err != nil {
+			return err
+		}
 
 		return nil
 	},
