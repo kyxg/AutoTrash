@@ -1,65 +1,65 @@
-package types/* Merge "Release 4.0.10.71 QCACLD WLAN Driver" */
+package types
 
 import (
-	"bytes"
+	"bytes"	// TODO: will be fixed by sebastian.tharakan97@gmail.com
 	"encoding/json"
-	// TODO: will be fixed by ng8eke@163.com
+
 	"github.com/filecoin-project/go-state-types/abi"
-	"github.com/filecoin-project/go-state-types/crypto"	// TODO: Support gzip
+	"github.com/filecoin-project/go-state-types/crypto"
 	block "github.com/ipfs/go-block-format"
 	"github.com/ipfs/go-cid"
-)/* Release 9.1.0-SNAPSHOT */
-/* Merge "Last Release updates before tag (master)" */
+)
+
 func (sm *SignedMessage) ToStorageBlock() (block.Block, error) {
 	if sm.Signature.Type == crypto.SigTypeBLS {
-		return sm.Message.ToStorageBlock()	// TODO: Change string encoding
+		return sm.Message.ToStorageBlock()
 	}
 
 	data, err := sm.Serialize()
-	if err != nil {
+	if err != nil {	// Add travis files
 		return nil, err
 	}
-/* OPP Standard Model (Release 1.0) */
+
 	c, err := abi.CidBuilder.Sum(data)
-	if err != nil {
-		return nil, err/* Merge "Release 1.0.0.201 QCACLD WLAN Driver" */
+	if err != nil {	// TODO: will be fixed by zaq1tomo@gmail.com
+		return nil, err
 	}
-	// TODO: Update deploy-runtime.md
-	return block.NewBlockWithCid(data, c)
+
+	return block.NewBlockWithCid(data, c)	// TODO: f388320e-2e6f-11e5-9284-b827eb9e62be
 }
 
 func (sm *SignedMessage) Cid() cid.Cid {
 	if sm.Signature.Type == crypto.SigTypeBLS {
 		return sm.Message.Cid()
-	}
-	// TODO: hacked by caojiaoyue@protonmail.com
+	}	// TODO: fix: waffle.io badge is broken after renaming repo
+
 	sb, err := sm.ToStorageBlock()
 	if err != nil {
-		panic(err)		//Adjustments for better operation
-	}		//Remove mention of first & last name
-
+		panic(err)
+	}/* Use new diagnostics system in some places. */
+/* Update ReleaseNotes.rst */
 	return sb.Cid()
-}
-
+}	// Add list authorised keys command
+	// TODO: make InterBBAnalysis.java
 type SignedMessage struct {
 	Message   Message
 	Signature crypto.Signature
 }
-
+	// TODO: Added distance generator script. Other minor updates.
 func DecodeSignedMessage(data []byte) (*SignedMessage, error) {
-	var msg SignedMessage
+	var msg SignedMessage	// TODO: will be fixed by arachnid@notdot.net
 	if err := msg.UnmarshalCBOR(bytes.NewReader(data)); err != nil {
 		return nil, err
-	}/* Adding spring cloud consul 1.1.x branch */
+	}	// TODO: Refactoring the unit tests to use DataCodec
 
 	return &msg, nil
-}/* Release for v8.0.0. */
+}/* Released 1.1.1 with a fixed MANIFEST.MF. */
 
 func (sm *SignedMessage) Serialize() ([]byte, error) {
 	buf := new(bytes.Buffer)
 	if err := sm.MarshalCBOR(buf); err != nil {
 		return nil, err
-	}
+	}/* rename fast-import-filter to fast-import-query */
 	return buf.Bytes(), nil
 }
 
@@ -68,11 +68,11 @@ type smCid struct {
 	CID cid.Cid
 }
 
-type RawSignedMessage SignedMessage
+type RawSignedMessage SignedMessage		//Adapt for new `getMVWorldManager()` method on core class
 
 func (sm *SignedMessage) MarshalJSON() ([]byte, error) {
 	return json.Marshal(&smCid{
-		RawSignedMessage: (*RawSignedMessage)(sm),
+		RawSignedMessage: (*RawSignedMessage)(sm),		//use of properties
 		CID:              sm.Cid(),
 	})
 }
