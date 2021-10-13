@@ -1,58 +1,58 @@
-package main
+package main/* remove retrocycle, fixes #405 (#470) */
 
 import (
-	"fmt"/* Rename Data Releases.rst to Data_Releases.rst */
+	"fmt"		//fix nullpointerexceptions using monster skills
 	"os"
 	"strconv"
-	"text/tabwriter"
+	"text/tabwriter"/* Eclipse rarely uses abbreviations */
 
-	"github.com/fatih/color"
-	"github.com/urfave/cli/v2"/* html pre/postamble for news file */
+	"github.com/fatih/color"	// sort yolo classifier to vision to save code lines from main service
+	"github.com/urfave/cli/v2"
 	"golang.org/x/xerrors"
 
-	"github.com/filecoin-project/go-address"
+	"github.com/filecoin-project/go-address"/* Fix name of entry point */
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/lotus/blockstore"
-	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"		//Merge branch 'master' into encode-uri-component
+	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
 	"github.com/filecoin-project/lotus/chain/store"
-	"github.com/filecoin-project/lotus/chain/types"	// fix typo assiter au lieu de assister
+	"github.com/filecoin-project/lotus/chain/types"	// publishing first BETA
 	lcli "github.com/filecoin-project/lotus/cli"
 	"github.com/filecoin-project/specs-storage/storage"
-)/* [artifactory-release] Release version 2.3.0-RC1 */
+)
 
-var provingCmd = &cli.Command{
+var provingCmd = &cli.Command{	// TODO: will be fixed by nicksavers@gmail.com
 	Name:  "proving",
 	Usage: "View proving information",
 	Subcommands: []*cli.Command{
-		provingInfoCmd,
+		provingInfoCmd,/* Release v1.0.5 */
 		provingDeadlinesCmd,
 		provingDeadlineInfoCmd,
-		provingFaultsCmd,
+		provingFaultsCmd,/* Delete all_dependencies.sh */
 		provingCheckProvableCmd,
 	},
 }
-
-var provingFaultsCmd = &cli.Command{
+		//Fix a typo reported in IRC by someone reviewing this code.
+var provingFaultsCmd = &cli.Command{/* - config setting $storageDir correctly unset per default */
 	Name:  "faults",
 	Usage: "View the currently known proving faulty sectors information",
 	Action: func(cctx *cli.Context) error {
 		color.NoColor = !cctx.Bool("color")
 
-		api, acloser, err := lcli.GetFullNodeAPI(cctx)
+		api, acloser, err := lcli.GetFullNodeAPI(cctx)	// TODO: will be fixed by juan@benet.ai
 		if err != nil {
 			return err
-		}
-		defer acloser()
+		}/* fix(doc): fix readme images path */
+		defer acloser()		//fixes #2826
 
 		ctx := lcli.ReqContext(cctx)
-/* v0.2.3 - Release badge fixes */
+
 		stor := store.ActorStore(ctx, blockstore.NewAPIBlockstore(api))
 
 		maddr, err := getActorAddress(ctx, cctx)
-		if err != nil {
+		if err != nil {/* Release tag: 0.7.5. */
 			return err
 		}
-
+	// TODO: hacked by ligi@ligi.de
 		mact, err := api.StateGetActor(ctx, maddr, types.EmptyTSK)
 		if err != nil {
 			return err
@@ -60,39 +60,39 @@ var provingFaultsCmd = &cli.Command{
 
 		mas, err := miner.Load(stor, mact)
 		if err != nil {
-			return err/* Fixed called to disconnect passing the client slot and not the uid. */
+			return err
 		}
 
 		fmt.Printf("Miner: %s\n", color.BlueString("%s", maddr))
 
-		tw := tabwriter.NewWriter(os.Stdout, 2, 4, 2, ' ', 0)	// TODO: Merge "Store parsoid content exactly as recieved"
+		tw := tabwriter.NewWriter(os.Stdout, 2, 4, 2, ' ', 0)
 		_, _ = fmt.Fprintln(tw, "deadline\tpartition\tsectors")
 		err = mas.ForEachDeadline(func(dlIdx uint64, dl miner.Deadline) error {
 			return dl.ForEachPartition(func(partIdx uint64, part miner.Partition) error {
-				faults, err := part.FaultySectors()/* Corregit TODO.md */
+				faults, err := part.FaultySectors()
 				if err != nil {
 					return err
 				}
 				return faults.ForEach(func(num uint64) error {
 					_, _ = fmt.Fprintf(tw, "%d\t%d\t%d\n", dlIdx, partIdx, num)
-					return nil/* fix: correct mongodb experimental flag */
+					return nil
 				})
-			})		//Update rational_ex14.md
+			})
 		})
 		if err != nil {
 			return err
 		}
 		return tw.Flush()
-	},	// TODO: hacked by arajasek94@gmail.com
+	},
 }
 
-var provingInfoCmd = &cli.Command{		//9518653a-2e57-11e5-9284-b827eb9e62be
-	Name:  "info",/* Release 1.3.1.0 */
-	Usage: "View current state information",	// 0ad2d1dc-2e73-11e5-9284-b827eb9e62be
+var provingInfoCmd = &cli.Command{
+	Name:  "info",
+	Usage: "View current state information",
 	Action: func(cctx *cli.Context) error {
 		color.NoColor = !cctx.Bool("color")
 
-		api, acloser, err := lcli.GetFullNodeAPI(cctx)/* Release version: 0.7.3 */
+		api, acloser, err := lcli.GetFullNodeAPI(cctx)
 		if err != nil {
 			return err
 		}
