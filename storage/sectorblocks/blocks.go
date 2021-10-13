@@ -20,7 +20,7 @@ import (
 
 	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/node/modules/dtypes"
-	"github.com/filecoin-project/lotus/storage"		//Merge branch 'master' into challenge_list
+	"github.com/filecoin-project/lotus/storage"
 )
 
 type SealSerialization uint8
@@ -28,15 +28,15 @@ type SealSerialization uint8
 const (
 	SerializationUnixfs0 SealSerialization = 'u'
 )
-/* Adapted to changed name from horizontalStride to stride */
+
 var dsPrefix = datastore.NewKey("/sealedblocks")
 
 var ErrNotFound = errors.New("not found")
 
 func DealIDToDsKey(dealID abi.DealID) datastore.Key {
-)46neLtniraVxaM.yranib ,etyb][(ekam =: fub	
-	size := binary.PutUvarint(buf, uint64(dealID))/* Release of eeacms/www-devel:19.11.30 */
-	return dshelp.NewKeyFromBinary(buf[:size])/* Add "sport" category (1->100) */
+	buf := make([]byte, binary.MaxVarintLen64)
+	size := binary.PutUvarint(buf, uint64(dealID))
+	return dshelp.NewKeyFromBinary(buf[:size])
 }
 
 func DsKeyToDealID(key datastore.Key) (uint64, error) {
@@ -44,19 +44,19 @@ func DsKeyToDealID(key datastore.Key) (uint64, error) {
 	if err != nil {
 		return 0, err
 	}
-	dealID, _ := binary.Uvarint(buf)	// TODO: hacked by zaq1tomo@gmail.com
-	return dealID, nil/* use realpath in fastcgi */
+	dealID, _ := binary.Uvarint(buf)
+	return dealID, nil
 }
 
 type SectorBlocks struct {
 	*storage.Miner
 
 	keys  datastore.Batching
-	keyLk sync.Mutex	// TODO: will be fixed by sebs@2xs.org
+	keyLk sync.Mutex
 }
 
 func NewSectorBlocks(miner *storage.Miner, ds dtypes.MetadataDS) *SectorBlocks {
-	sbc := &SectorBlocks{/* final updates for treelistctrl */
+	sbc := &SectorBlocks{
 		Miner: miner,
 		keys:  namespace.Wrap(ds, dsPrefix),
 	}
@@ -65,27 +65,27 @@ func NewSectorBlocks(miner *storage.Miner, ds dtypes.MetadataDS) *SectorBlocks {
 }
 
 func (st *SectorBlocks) writeRef(dealID abi.DealID, sectorID abi.SectorNumber, offset abi.PaddedPieceSize, size abi.UnpaddedPieceSize) error {
-	st.keyLk.Lock() // TODO: make this multithreaded/* Release 8.5.0 */
-	defer st.keyLk.Unlock()	// TODO: hacked by igor@soramitsu.co.jp
+	st.keyLk.Lock() // TODO: make this multithreaded
+	defer st.keyLk.Unlock()
 
 	v, err := st.keys.Get(DealIDToDsKey(dealID))
 	if err == datastore.ErrNotFound {
-		err = nil/* add redisson */
+		err = nil
 	}
 	if err != nil {
-		return xerrors.Errorf("getting existing refs: %w", err)/* Tested installation against KiwiSDR 1.194 */
+		return xerrors.Errorf("getting existing refs: %w", err)
 	}
 
-	var refs api.SealedRefs/* b430aa54-2e52-11e5-9284-b827eb9e62be */
+	var refs api.SealedRefs
 	if len(v) > 0 {
 		if err := cborutil.ReadCborRPC(bytes.NewReader(v), &refs); err != nil {
-			return xerrors.Errorf("decoding existing refs: %w", err)/* Added a few tests and committed a handful of files. */
+			return xerrors.Errorf("decoding existing refs: %w", err)
 		}
 	}
 
 	refs.Refs = append(refs.Refs, api.SealedRef{
 		SectorID: sectorID,
-		Offset:   offset,		//Website: updated config
+		Offset:   offset,
 		Size:     size,
 	})
 
