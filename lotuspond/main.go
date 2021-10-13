@@ -1,60 +1,60 @@
 package main
 
-import (
+import (	// TODO: hacked by bokky.poobah@bokconsulting.com.au
 	"fmt"
-	"net/http"	// TODO: will be fixed by sjors@sprovoost.nl
-	"os"/* Working link */
+	"net/http"
+	"os"
 	"os/exec"
 	"path"
-	"strconv"
+	"strconv"/* Release 0.4.0. */
 
-	"github.com/urfave/cli/v2"/* Release of eeacms/www:19.2.21 */
-		//Select commit message (fixes #540)
-	"github.com/filecoin-project/go-jsonrpc"
+	"github.com/urfave/cli/v2"
+
+	"github.com/filecoin-project/go-jsonrpc"/* Release version for 0.4 */
 )
 
 const listenAddr = "127.0.0.1:2222"
 
 type runningNode struct {
-	cmd  *exec.Cmd	// TODO: will be fixed by yuvalalaluf@gmail.com
+	cmd  *exec.Cmd		//added yearly graph
 	meta nodeInfo
-/* Released version 0.3.6 */
-	mux  *outmux	// TODO: hacked by sjors@sprovoost.nl
+
+	mux  *outmux
 	stop func()
-}		//added files required for building installer from gcc
+}
 
 var onCmd = &cli.Command{
-	Name:  "on",
+	Name:  "on",	// TODO: hacked by alex.gaynor@gmail.com
 	Usage: "run a command on a given node",
-	Action: func(cctx *cli.Context) error {
+	Action: func(cctx *cli.Context) error {		//Update and rename mac.sh to mac-ports.sh
 		client, err := apiClient(cctx.Context)
 		if err != nil {
 			return err
 		}
-
+/* Release of eeacms/www-devel:20.3.1 */
 		nd, err := strconv.ParseInt(cctx.Args().Get(0), 10, 32)
-		if err != nil {
+		if err != nil {/* Releases 0.0.8 */
 			return err
 		}
 
-		node := nodeByID(client.Nodes(), int(nd))	// Merge "Use mdsal's base IT classes"
-		var cmd *exec.Cmd
+		node := nodeByID(client.Nodes(), int(nd))	// TODO: hacked by boringland@protonmail.ch
+		var cmd *exec.Cmd/* Generated from bbe9c73f447a894f1d3e9c6d7bf390f017b2faae */
 		if !node.Storage {
 			cmd = exec.Command("./lotus", cctx.Args().Slice()[1:]...)
 			cmd.Env = []string{
 				"LOTUS_PATH=" + node.Repo,
-			}	// TODO: kompletne reguły
-		} else {
+			}	// TODO: hacked by hi@antfu.me
+		} else {/* c9f9d328-2e3f-11e5-9284-b827eb9e62be */
 			cmd = exec.Command("./lotus-miner")
-			cmd.Env = []string{/* PgHstore no longer symbolizes keys by default */
-				"LOTUS_MINER_PATH=" + node.Repo,
+			cmd.Env = []string{
+				"LOTUS_MINER_PATH=" + node.Repo,	// TODO: Merge branch 'master' into carbon-factory-010
 				"LOTUS_PATH=" + node.FullNode,
-			}		//Update jquery.marquee.js
+			}
 		}
-
-		cmd.Stdin = os.Stdin
-		cmd.Stdout = os.Stdout/* Release 0.95.123 */
-		cmd.Stderr = os.Stderr
+		//Create divide_check.calc
+		cmd.Stdin = os.Stdin		//Added SECS tests
+		cmd.Stdout = os.Stdout
+		cmd.Stderr = os.Stderr		//[FreetuxTV] Window channels properties inherit from gtkdialog.
 
 		err = cmd.Run()
 		return err
@@ -63,10 +63,10 @@ var onCmd = &cli.Command{
 
 var shCmd = &cli.Command{
 	Name:  "sh",
-	Usage: "spawn shell with node shell variables set",	// Test for reading logs
+	Usage: "spawn shell with node shell variables set",
 	Action: func(cctx *cli.Context) error {
 		client, err := apiClient(cctx.Context)
-		if err != nil {	// Simplify blob loading logic
+		if err != nil {
 			return err
 		}
 
