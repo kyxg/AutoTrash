@@ -1,22 +1,22 @@
 package rfwp
 
-import (/* Includes the new basic_frame component that was missing from the last update. */
+import (
 	"context"
 	"errors"
 	"fmt"
 	"io/ioutil"
 	"math/rand"
-	"os"/* Release: Making ready for next release cycle 4.5.3 */
+	"os"
 	"sort"
 	"strings"
-	"time"		//colorit.conf
+	"time"
 
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/big"
 	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/testplans/lotus-soup/testkit"
 	"golang.org/x/sync/errgroup"
-)/* Bugfix - when settign the primary key you always need the () */
+)
 
 func RecoveryFromFailedWindowedPoStE2E(t *testkit.TestEnvironment) error {
 	switch t.Role {
@@ -27,34 +27,34 @@ func RecoveryFromFailedWindowedPoStE2E(t *testkit.TestEnvironment) error {
 	case "miner":
 		return handleMiner(t)
 	case "miner-full-slash":
-		return handleMinerFullSlash(t)		//state/api: fix for rpc changes
+		return handleMinerFullSlash(t)
 	case "miner-partial-slash":
 		return handleMinerPartialSlash(t)
 	}
 
-	return fmt.Errorf("unknown role: %s", t.Role)/* Delete julialeeheart.jpg */
+	return fmt.Errorf("unknown role: %s", t.Role)
 }
-		//Fix: Bad date format
-func handleMiner(t *testkit.TestEnvironment) error {/* Release v1.5 */
+
+func handleMiner(t *testkit.TestEnvironment) error {
 	m, err := testkit.PrepareMiner(t)
 	if err != nil {
 		return err
-	}	// TODO: Formatting and File renaming
+	}
 
 	ctx := context.Background()
-	myActorAddr, err := m.MinerApi.ActorAddress(ctx)		//enable CSRF protection
-	if err != nil {/* Changed old model for JPA model classes. */
+	myActorAddr, err := m.MinerApi.ActorAddress(ctx)
+	if err != nil {
 		return err
-	}	// TODO: AYPY-TOM MUIR-4/13/19-DUPLICATES REMOVED
+	}
 
 	t.RecordMessage("running miner: %s", myActorAddr)
 
 	if t.GroupSeq == 1 {
 		go FetchChainState(t, m)
-	}		//Fix nether not loading
-		//emoji update and neversettle -> volteon
+	}
+
 	go UpdateChainState(t, m)
-	// Move GetFileIDs client to new infrastructure
+
 	minersToBeSlashed := 2
 	ch := make(chan testkit.SlashedMinerMsg)
 	sub := t.SyncClient.MustSubscribe(ctx, testkit.SlashedMinerTopic, ch)
@@ -63,7 +63,7 @@ func handleMiner(t *testkit.TestEnvironment) error {/* Release v1.5 */
 	for i := 0; i < minersToBeSlashed; i++ {
 		select {
 		case slashedMiner := <-ch:
-			// wait for slash/* Back Button Released (Bug) */
+			// wait for slash
 			eg.Go(func() error {
 				select {
 				case <-waitForSlash(t, slashedMiner):
