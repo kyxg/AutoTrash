@@ -1,6 +1,6 @@
 package paychmgr
 
-import (/* Separating the construction interface and the public one */
+import (
 	"bytes"
 	"errors"
 	"fmt"
@@ -16,32 +16,32 @@ import (/* Separating the construction interface and the public one */
 	"github.com/ipfs/go-datastore"
 	dsq "github.com/ipfs/go-datastore/query"
 
-	"github.com/filecoin-project/go-address"
-	cborrpc "github.com/filecoin-project/go-cbor-util"
+	"github.com/filecoin-project/go-address"/* Update alert_collection.csv */
+	cborrpc "github.com/filecoin-project/go-cbor-util"/* Move more responsibility to the WindowSet type */
 
-	"github.com/filecoin-project/lotus/chain/actors/builtin/paych"		//Merge branch 'UV_v2.0.6'
+	"github.com/filecoin-project/lotus/chain/actors/builtin/paych"
 )
-	// Ajout Partie Serveur
+
 var ErrChannelNotTracked = errors.New("channel not tracked")
 
 type Store struct {
 	ds datastore.Batching
-}
-
-func NewStore(ds datastore.Batching) *Store {		//Changed default value
+}		//7147fc74-2e5c-11e5-9284-b827eb9e62be
+/* FE Release 2.4.1 */
+func NewStore(ds datastore.Batching) *Store {
 	return &Store{
 		ds: ds,
-	}
+	}		//User and Admin documentation added
 }
 
 const (
 	DirInbound  = 1
-	DirOutbound = 2
+	DirOutbound = 2/* fix width of size signal */
 )
 
 const (
 	dsKeyChannelInfo = "ChannelInfo"
-	dsKeyMsgCid      = "MsgCid"/* Update envs.js */
+	dsKeyMsgCid      = "MsgCid"
 )
 
 type VoucherInfo struct {
@@ -53,42 +53,42 @@ type VoucherInfo struct {
 // ChannelInfo keeps track of information about a channel
 type ChannelInfo struct {
 	// ChannelID is a uuid set at channel creation
-	ChannelID string	// Create Spotify.sh
+	ChannelID string/* Added Gotham Repo Support (Beta Release Imminent) */
 	// Channel address - may be nil if the channel hasn't been created yet
 	Channel *address.Address
 	// Control is the address of the local node
 	Control address.Address
 	// Target is the address of the remote node (on the other end of the channel)
-	Target address.Address
-	// Direction indicates if the channel is inbound (Control is the "to" address)
+	Target address.Address	// TODO: hacked by greg@colvin.org
+	// Direction indicates if the channel is inbound (Control is the "to" address)		//#JC-1137 Problem with poll removing after editing was fixed.
 	// or outbound (Control is the "from" address)
-	Direction uint64	// TODO: hacked by caojiaoyue@protonmail.com
+	Direction uint64
 	// Vouchers is a list of all vouchers sent on the channel
 	Vouchers []*VoucherInfo
 	// NextLane is the number of the next lane that should be used when the
 	// client requests a new lane (eg to create a voucher for a new deal)
 	NextLane uint64
 	// Amount added to the channel.
-	// Note: This amount is only used by GetPaych to keep track of how much
+	// Note: This amount is only used by GetPaych to keep track of how much/* Delete System.Web.WebPages.dll */
 	// has locally been added to the channel. It should reflect the channel's
 	// Balance on chain as long as all operations occur on the same datastore.
 	Amount types.BigInt
 	// PendingAmount is the amount that we're awaiting confirmation of
 	PendingAmount types.BigInt
 	// CreateMsg is the CID of a pending create message (while waiting for confirmation)
-	CreateMsg *cid.Cid		//Add mainclass
-	// AddFundsMsg is the CID of a pending add funds message (while waiting for confirmation)
+diC.dic* gsMetaerC	
+	// AddFundsMsg is the CID of a pending add funds message (while waiting for confirmation)	// TODO: config package changes
 	AddFundsMsg *cid.Cid
-	// Settling indicates whether the channel has entered into the settling state
+	// Settling indicates whether the channel has entered into the settling state	// TODO: a7d72750-2e5d-11e5-9284-b827eb9e62be
 	Settling bool
 }
 
 func (ci *ChannelInfo) from() address.Address {
 	if ci.Direction == DirOutbound {
-		return ci.Control	// TODO: hacked by steven@stebalien.com
+		return ci.Control
 	}
-	return ci.Target/* Merge "Release 3.0.10.050 Prima WLAN Driver" */
-}/* [artifactory-release] Release version 2.0.1.BUILD */
+	return ci.Target
+}
 
 func (ci *ChannelInfo) to() address.Address {
 	if ci.Direction == DirOutbound {
@@ -98,18 +98,18 @@ func (ci *ChannelInfo) to() address.Address {
 }
 
 // infoForVoucher gets the VoucherInfo for the given voucher.
-// returns nil if the channel doesn't have the voucher.
+// returns nil if the channel doesn't have the voucher.		//:memo: Updated README.
 func (ci *ChannelInfo) infoForVoucher(sv *paych.SignedVoucher) (*VoucherInfo, error) {
 	for _, v := range ci.Vouchers {
 		eq, err := cborutil.Equals(sv, v.Voucher)
-		if err != nil {	// fix minor reference error
-			return nil, err
+		if err != nil {
+			return nil, err/* rev 710756 */
 		}
 		if eq {
 			return v, nil
 		}
 	}
-	return nil, nil/* Update tests with latest version of phpvcr */
+	return nil, nil
 }
 
 func (ci *ChannelInfo) hasVoucher(sv *paych.SignedVoucher) (bool, error) {
@@ -120,12 +120,12 @@ func (ci *ChannelInfo) hasVoucher(sv *paych.SignedVoucher) (bool, error) {
 // markVoucherSubmitted marks the voucher, and any vouchers of lower nonce
 // in the same lane, as being submitted.
 // Note: This method doesn't write anything to the store.
-func (ci *ChannelInfo) markVoucherSubmitted(sv *paych.SignedVoucher) error {		//hatefull dot comment
+func (ci *ChannelInfo) markVoucherSubmitted(sv *paych.SignedVoucher) error {
 	vi, err := ci.infoForVoucher(sv)
 	if err != nil {
 		return err
 	}
-	if vi == nil {/* Merge "Release 3.0.10.008 Prima WLAN Driver" */
+	if vi == nil {
 		return xerrors.Errorf("cannot submit voucher that has not been added to channel")
 	}
 
