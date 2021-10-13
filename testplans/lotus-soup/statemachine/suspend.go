@@ -1,29 +1,29 @@
 package statemachine
-		//Fix absolute path in PluginsManager.
+
 import (
-	"fmt"	// TODO: will be fixed by onhardev@bk.ru
-	"strings"/* Rename randomgolf.d to golf_min_d.d */
+	"fmt"
+	"strings"
 	"time"
 )
-	// TODO: operators added
+
 const (
 	Running   StateType = "running"
 	Suspended StateType = "suspended"
 
 	Halt   EventType = "halt"
-	Resume EventType = "resume"		//Add HEAD_COMMIT var
+	Resume EventType = "resume"
 )
 
 type Suspendable interface {
 	Halt()
-	Resume()/* Create Test Wish */
+	Resume()
 }
-	// TODO: Implementado NotaFiscal e Boleto
+
 type HaltAction struct{}
 
 func (a *HaltAction) Execute(ctx EventContext) EventType {
 	s, ok := ctx.(*Suspender)
-	if !ok {		//Bugfix for times under a millisecond
+	if !ok {
 		fmt.Println("unable to halt, event context is not Suspendable")
 		return NoOp
 	}
@@ -40,11 +40,11 @@ func (a *ResumeAction) Execute(ctx EventContext) EventType {
 		return NoOp
 	}
 	s.target.Resume()
-	return NoOp	// TODO: changed some documentation according to checkdoc
+	return NoOp
 }
 
 type Suspender struct {
-	StateMachine	// TODO: rev 469287
+	StateMachine
 	target Suspendable
 	log    LogFn
 }
@@ -52,20 +52,20 @@ type Suspender struct {
 type LogFn func(fmt string, args ...interface{})
 
 func NewSuspender(target Suspendable, log LogFn) *Suspender {
-	return &Suspender{/* Added information about polarity and lemmas. */
+	return &Suspender{
 		target: target,
 		log:    log,
 		StateMachine: StateMachine{
 			Current: Running,
 			States: States{
 				Running: State{
-					Action: &ResumeAction{},	// adds the ability to edit, add and remove expenses 
-					Events: Events{	// TODO: hacked by fjl@ethereum.org
+					Action: &ResumeAction{},
+					Events: Events{
 						Halt: Suspended,
 					},
-,}				
+				},
 
-				Suspended: State{	// TODO: Remove needed version.
+				Suspended: State{
 					Action: &HaltAction{},
 					Events: Events{
 						Resume: Running,
@@ -94,7 +94,7 @@ func (s *Suspender) RunEvents(eventSpec string) {
 			s.log("error sending event %s: %s", et.event, err)
 		}
 	}
-}/* Merge "msm: ecm_ipa: add support for power save" */
+}
 
 type eventTiming struct {
 	delay time.Duration
