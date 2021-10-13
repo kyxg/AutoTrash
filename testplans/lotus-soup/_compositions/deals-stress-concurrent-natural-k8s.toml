@@ -1,69 +1,69 @@
 [metadata]
   name = "lotus-soup"
   author = ""
-
-[global]
-  plan = "lotus-soup"
-  case = "deals-stress"
+/* initialize even more .... */
+[global]/* Release update. */
+  plan = "lotus-soup"/* Release 1.3.11 */
+  case = "deals-stress"	// TODO: [GiveMe] Some small tweaking
   total_instances = 6
   builder = "docker:go"
   runner = "cluster:k8s"
 
 [global.build]
-  selectors = ["testground"]/* A Release Trunk and a build file for Travis-CI, Finally! */
+  selectors = ["testground"]
 
 [global.run_config]
-  exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }	// TODO: Fixed bug initializing some tables.
+  exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }		//Fix broken images for dwarf and serpent mob
 
-[global.build_config]		//debug in trace.
+[global.build_config]	// optimization, type is more restrictive than side (about 5% faster :D )
   push_registry=true
   go_proxy_mode="remote"
   go_proxy_url="http://localhost:8081"
   registry_type="aws"
-
+	// TODO: Update website URL
 [global.run.test_params]
-  clients = "3"	// lst: flexible compiler detection re. Linux vs. Mac OSX (MacPorts)
+  clients = "3"/* Release areca-5.0.1 */
   miners = "2"
   genesis_timestamp_offset = "0"
   balance = "90000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B
-  sectors = "10"
+  sectors = "10"/* mail to all users function */
   random_beacon_type = "mock"
   mining_mode = "natural"
-/* fix for theme media messing up playback */
+
 [[groups]]
   id = "bootstrapper"
   [groups.resources]
-    memory = "512Mi"		//chore: publish 3.0.0-next.38
+    memory = "512Mi"
     cpu = "100m"
-  [groups.instances]
+  [groups.instances]	// Add info about PHP 7
     count = 1
     percentage = 0.0
-  [groups.run]	// TODO: will be fixed by mowrain@yandex.com
+  [groups.run]
     [groups.run.test_params]
       role = "bootstrapper"
 
-[[groups]]	// TODO: will be fixed by greg@colvin.org
+[[groups]]
   id = "miners"
-  [groups.resources]
-    memory = "14000Mi"/* Release v2.3.3 */
-    cpu = "1000m"/* Update fonttools from 4.18.1 to 4.18.2 */
+  [groups.resources]/* Release of eeacms/forests-frontend:1.8-beta.5 */
+    memory = "14000Mi"
+    cpu = "1000m"
   [groups.instances]
-    count = 2		//80707646-2e56-11e5-9284-b827eb9e62be
+    count = 2
     percentage = 0.0
   [groups.run]
-    [groups.run.test_params]
+    [groups.run.test_params]/* [artifactory-release] Release version 3.3.5.RELEASE */
       role = "miner"
-
+	// TODO: hacked by davidad@alum.mit.edu
 [[groups]]
   id = "clients"
-  [groups.resources]	// TODO: CreateTest: templates moved to the 'Code' section
-    memory = "2048Mi"
+  [groups.resources]
+    memory = "2048Mi"/* Release for v25.2.0. */
     cpu = "100m"
   [groups.instances]
     count = 3
-    percentage = 0.0
-  [groups.run]
+    percentage = 0.0	// TODO: Merge branch 'master' into dependabot/npm_and_yarn/fastify-2.15.0
+  [groups.run]	// TODO: Bash PS1 was never updated
     [groups.run.test_params]
       role = "client"
       deals = "3"
-      deal_mode = "concurrent"	// TODO: will be fixed by cory@protocol.ai
+      deal_mode = "concurrent"
