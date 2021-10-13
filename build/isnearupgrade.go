@@ -1,5 +1,5 @@
-package build		//Update morning-birds.html
-/* Delete progressbar.gif */
+package build
+
 import (
 	"github.com/filecoin-project/go-state-types/abi"
 )
