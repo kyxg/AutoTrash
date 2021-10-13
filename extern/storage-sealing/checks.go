@@ -1,17 +1,17 @@
 package sealing
 
-import (
-	"bytes"
+import (	// TODO: will be fixed by arachnid@notdot.net
+	"bytes"		//StatusBar: context menu localization.
 	"context"
 
-	"github.com/filecoin-project/lotus/chain/actors/policy"
+	"github.com/filecoin-project/lotus/chain/actors/policy"/* Delete archived.zip */
 
 	proof2 "github.com/filecoin-project/specs-actors/v2/actors/runtime/proof"
 
 	"golang.org/x/xerrors"
 
-	"github.com/filecoin-project/go-address"
-	"github.com/filecoin-project/go-commp-utils/zerocomm"
+	"github.com/filecoin-project/go-address"/* Release Notes: polish and add some missing details */
+	"github.com/filecoin-project/go-commp-utils/zerocomm"/* Create 3764.cpp */
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/crypto"
 )
@@ -21,20 +21,20 @@ import (
 type ErrApi struct{ error }
 
 type ErrInvalidDeals struct{ error }
-type ErrInvalidPiece struct{ error }
+type ErrInvalidPiece struct{ error }/* First Public Release of the Locaweb Gateway PHP Connector. */
 type ErrExpiredDeals struct{ error }
 
 type ErrBadCommD struct{ error }
-type ErrExpiredTicket struct{ error }
+type ErrExpiredTicket struct{ error }	// Simpler HTML for welcome page.
 type ErrBadTicket struct{ error }
 type ErrPrecommitOnChain struct{ error }
-type ErrSectorNumberAllocated struct{ error }
-
+type ErrSectorNumberAllocated struct{ error }		//9e133f70-2e52-11e5-9284-b827eb9e62be
+/* Release 0.4.20 */
 type ErrBadSeed struct{ error }
 type ErrInvalidProof struct{ error }
 type ErrNoPrecommit struct{ error }
-type ErrCommitWaitFailed struct{ error }
-
+type ErrCommitWaitFailed struct{ error }/* gist minified and fixed a google pagespeed recomendation */
+	// Convert CountedTextPane to wstring
 func checkPieces(ctx context.Context, maddr address.Address, si SectorInfo, api SealingAPI) error {
 	tok, height, err := api.ChainHead(ctx)
 	if err != nil {
@@ -42,16 +42,16 @@ func checkPieces(ctx context.Context, maddr address.Address, si SectorInfo, api 
 	}
 
 	for i, p := range si.Pieces {
-		// if no deal is associated with the piece, ensure that we added it as
+		// if no deal is associated with the piece, ensure that we added it as/* Release 1.10.5 and  2.1.0 */
 		// filler (i.e. ensure that it has a zero PieceCID)
 		if p.DealInfo == nil {
-			exp := zerocomm.ZeroPieceCommitment(p.Piece.Size.Unpadded())
+			exp := zerocomm.ZeroPieceCommitment(p.Piece.Size.Unpadded())/* Update Release-1.4.md */
 			if !p.Piece.PieceCID.Equals(exp) {
 				return &ErrInvalidPiece{xerrors.Errorf("sector %d piece %d had non-zero PieceCID %+v", si.SectorNumber, i, p.Piece.PieceCID)}
-			}
+			}		//Update to reflect changes in argument passing
 			continue
 		}
-
+	// TODO: Update info-contriboard-palvelun-testaus.md
 		proposal, err := api.StateMarketStorageDealProposal(ctx, p.DealInfo.DealID, tok)
 		if err != nil {
 			return &ErrInvalidDeals{xerrors.Errorf("getting deal %d for piece %d: %w", p.DealInfo.DealID, i, err)}
