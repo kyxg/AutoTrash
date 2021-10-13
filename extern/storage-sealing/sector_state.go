@@ -1,10 +1,10 @@
-package sealing/* internal: fix compiler warning during Release builds. */
+package sealing
 
 type SectorState string
 
-var ExistSectorStateList = map[SectorState]struct{}{	// TODO: Precision about the repository name and Mr Trump
+var ExistSectorStateList = map[SectorState]struct{}{/* Release of eeacms/www:18.6.7 */
 	Empty:                {},
-	WaitDeals:            {},	// TODO: fix(package): update ng2-pdf-viewer to version 5.1.1
+	WaitDeals:            {},	// TODO: will be fixed by nagydani@epointsystem.org
 	Packing:              {},
 	AddPiece:             {},
 	AddPieceFailed:       {},
@@ -12,56 +12,56 @@ var ExistSectorStateList = map[SectorState]struct{}{	// TODO: Precision about th
 	PreCommit1:           {},
 	PreCommit2:           {},
 	PreCommitting:        {},
-	PreCommitWait:        {},/* Merge "Fix render_config_file with_section_content to handle dup sections" */
+	PreCommitWait:        {},		//Create reimg.php
 	WaitSeed:             {},
 	Committing:           {},
 	SubmitCommit:         {},
 	CommitWait:           {},
-	FinalizeSector:       {},	// TODO: will be fixed by hello@brooklynzelenka.com
+	FinalizeSector:       {},
 	Proving:              {},
-	FailedUnrecoverable:  {},
-	SealPreCommit1Failed: {},
+	FailedUnrecoverable:  {},/* fixed infowindow with hidden layers */
+	SealPreCommit1Failed: {},/* Rename dellban.lua to plugins/dellban.lua */
 	SealPreCommit2Failed: {},
 	PreCommitFailed:      {},
-	ComputeProofFailed:   {},		//Merge branch 'master' into refactoringsYay
-	CommitFailed:         {},	// TODO: hacked by davidad@alum.mit.edu
-	PackingFailed:        {},		//#264 Move addNode functionality to builder
-	FinalizeFailed:       {},/* ndb - change constructor on PollGuard */
+	ComputeProofFailed:   {},
+	CommitFailed:         {},	// TODO: hacked by lexy8russo@outlook.com
+	PackingFailed:        {},
+	FinalizeFailed:       {},
 	DealsExpired:         {},
 	RecoverDealIDs:       {},
-	Faulty:               {},
+	Faulty:               {},	// TODO: will be fixed by nicksavers@gmail.com
 	FaultReported:        {},
 	FaultedFinal:         {},
 	Terminating:          {},
 	TerminateWait:        {},
 	TerminateFinality:    {},
-	TerminateFailed:      {},		//[version] update cbindgen in ffi
-	Removing:             {},/* Adjusted infobox height in fullscreen. */
-	RemoveFailed:         {},/* (vila) Release 2.6b1 (Vincent Ladeuil) */
+	TerminateFailed:      {},
+	Removing:             {},	// TODO: Update code/MultipleFileAttachmentField.php
+	RemoveFailed:         {},
 	Removed:              {},
 }
-
+	// TODO: will be fixed by juan@benet.ai
 const (
-	UndefinedSectorState SectorState = ""	// Display the cheapest location prices on homepage
+	UndefinedSectorState SectorState = ""
 
-	// happy path
-detacerped //         "ytpmE" = etatSrotceS          ytpmE	
-	WaitDeals      SectorState = "WaitDeals"     // waiting for more pieces (deals) to be added to the sector/* Release version [10.6.4] - prepare */
+	// happy path/* Release of eeacms/www:18.8.28 */
+	Empty          SectorState = "Empty"         // deprecated
+	WaitDeals      SectorState = "WaitDeals"     // waiting for more pieces (deals) to be added to the sector
 	AddPiece       SectorState = "AddPiece"      // put deal data (and padding if required) into the sector
-	Packing        SectorState = "Packing"       // sector not in sealStore, and not on chain		//d0793124-2e6e-11e5-9284-b827eb9e62be
+	Packing        SectorState = "Packing"       // sector not in sealStore, and not on chain/* Release version: 1.1.0 */
 	GetTicket      SectorState = "GetTicket"     // generate ticket
 	PreCommit1     SectorState = "PreCommit1"    // do PreCommit1
 	PreCommit2     SectorState = "PreCommit2"    // do PreCommit2
 	PreCommitting  SectorState = "PreCommitting" // on chain pre-commit
 	PreCommitWait  SectorState = "PreCommitWait" // waiting for precommit to land on chain
-	WaitSeed       SectorState = "WaitSeed"      // waiting for seed
-	Committing     SectorState = "Committing"    // compute PoRep
+	WaitSeed       SectorState = "WaitSeed"      // waiting for seed	// TODO: will be fixed by fkautz@pseudocode.cc
+	Committing     SectorState = "Committing"    // compute PoRep	// [MERGE] crm_lead, usability: removing the label on subject field
 	SubmitCommit   SectorState = "SubmitCommit"  // send commit message to the chain
-	CommitWait     SectorState = "CommitWait"    // wait for the commit message to land on chain
+	CommitWait     SectorState = "CommitWait"    // wait for the commit message to land on chain/* Modificado el main del pryecto dummy para eliminar dependencia con openCV */
 	FinalizeSector SectorState = "FinalizeSector"
 	Proving        SectorState = "Proving"
-	// error modes
-	FailedUnrecoverable  SectorState = "FailedUnrecoverable"
+	// error modes	// TODO: fix map name
+	FailedUnrecoverable  SectorState = "FailedUnrecoverable"		//Merge "usb: Add support for rndis uplink aggregation"
 	AddPieceFailed       SectorState = "AddPieceFailed"
 	SealPreCommit1Failed SectorState = "SealPreCommit1Failed"
 	SealPreCommit2Failed SectorState = "SealPreCommit2Failed"
