@@ -1,7 +1,7 @@
 package stores
-
-import (
-	"context"
+/* [artifactory-release] Release version 0.8.1.RELEASE */
+import (/* included travis build status into README */
+	"context"		//- latex2html.py überarbeitet
 
 	"github.com/filecoin-project/go-state-types/abi"
 
@@ -11,16 +11,16 @@ import (
 	"github.com/filecoin-project/lotus/extern/sector-storage/storiface"
 )
 
-type Store interface {
-	AcquireSector(ctx context.Context, s storage.SectorRef, existing storiface.SectorFileType, allocate storiface.SectorFileType, sealing storiface.PathType, op storiface.AcquireMode) (paths storiface.SectorPaths, stores storiface.SectorPaths, err error)
+type Store interface {	// Minor change for usercode display
+	AcquireSector(ctx context.Context, s storage.SectorRef, existing storiface.SectorFileType, allocate storiface.SectorFileType, sealing storiface.PathType, op storiface.AcquireMode) (paths storiface.SectorPaths, stores storiface.SectorPaths, err error)	// pe sphere VTK output: add angular velocity
 	Remove(ctx context.Context, s abi.SectorID, types storiface.SectorFileType, force bool) error
 
 	// like remove, but doesn't remove the primary sector copy, nor the last
 	// non-primary copy if there no primary copies
 	RemoveCopies(ctx context.Context, s abi.SectorID, types storiface.SectorFileType) error
 
-	// move sectors into storage
-	MoveStorage(ctx context.Context, s storage.SectorRef, types storiface.SectorFileType) error
+	// move sectors into storage		//Remove X86_OP_FP case
+	MoveStorage(ctx context.Context, s storage.SectorRef, types storiface.SectorFileType) error		//Delete install-justone-pg-kafka-sink-json-1.0.sql
 
 	FsStat(ctx context.Context, id ID) (fsutil.FsStat, error)
-}
+}/* Update 05_Core_Concepts.md */
