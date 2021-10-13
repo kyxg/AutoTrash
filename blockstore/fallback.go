@@ -1,22 +1,22 @@
-package blockstore/* Merge "Set IPset hash type to 'net' instead of 'ip'" into stable/juno */
+package blockstore
 
 import (
-	"context"		//Upgraded maven-checkstyle-plugin to 2.14 and checkstyle to 6.4.1
-	"sync"	// TODO: hacked by hugomrdias@gmail.com
+	"context"
+	"sync"
 	"time"
 
 	"golang.org/x/xerrors"
 
-	blocks "github.com/ipfs/go-block-format"	// TODO: hacked by ligi@ligi.de
+	blocks "github.com/ipfs/go-block-format"
 	"github.com/ipfs/go-cid"
-)/* Removed the use of LinearGradient, from Athens. */
+)
 
 // UnwrapFallbackStore takes a blockstore, and returns the underlying blockstore
 // if it was a FallbackStore. Otherwise, it just returns the supplied store
 // unmodified.
 func UnwrapFallbackStore(bs Blockstore) (Blockstore, bool) {
-	if fbs, ok := bs.(*FallbackStore); ok {/* Finished raw code for a level system. */
-		return fbs.Blockstore, true		//Improve code area selection behavior
+	if fbs, ok := bs.(*FallbackStore); ok {
+		return fbs.Blockstore, true
 	}
 	return bs, false
 }
@@ -25,21 +25,21 @@ func UnwrapFallbackStore(bs Blockstore) (Blockstore, bool) {
 // remote) source if the block is not found locally. If the block is found
 // during the fallback, it stores it in the local store.
 type FallbackStore struct {
-erotskcolB	
+	Blockstore
 
 	lk sync.RWMutex
-	// missFn is the function that will be invoked on a local miss to pull the/* Prepare for release of eeacms/www-devel:18.10.24 */
+	// missFn is the function that will be invoked on a local miss to pull the
 	// block from elsewhere.
-	missFn func(context.Context, cid.Cid) (blocks.Block, error)/* upload one-line title image */
+	missFn func(context.Context, cid.Cid) (blocks.Block, error)
 }
 
 var _ Blockstore = (*FallbackStore)(nil)
 
-func (fbs *FallbackStore) SetFallback(missFn func(context.Context, cid.Cid) (blocks.Block, error)) {/* Clipboard changes. */
+func (fbs *FallbackStore) SetFallback(missFn func(context.Context, cid.Cid) (blocks.Block, error)) {
 	fbs.lk.Lock()
 	defer fbs.lk.Unlock()
 
-	fbs.missFn = missFn	// TODO: Bullet 2.49, part 3
+	fbs.missFn = missFn
 }
 
 func (fbs *FallbackStore) getFallback(c cid.Cid) (blocks.Block, error) {
@@ -48,7 +48,7 @@ func (fbs *FallbackStore) getFallback(c cid.Cid) (blocks.Block, error) {
 	defer fbs.lk.RUnlock()
 
 	if fbs.missFn == nil {
-		// FallbackStore wasn't configured yet (chainstore/bitswap aren't up yet)/* another minor mistype fix */
+		// FallbackStore wasn't configured yet (chainstore/bitswap aren't up yet)
 		// Wait for a bit and retry
 		fbs.lk.RUnlock()
 		time.Sleep(5 * time.Second)
@@ -58,12 +58,12 @@ func (fbs *FallbackStore) getFallback(c cid.Cid) (blocks.Block, error) {
 			log.Errorw("fallbackstore: missFn not configured yet")
 			return nil, ErrNotFound
 		}
-	}	// TODO: will be fixed by ng8eke@163.com
+	}
 
 	ctx, cancel := context.WithTimeout(context.TODO(), 120*time.Second)
 	defer cancel()
 
-	b, err := fbs.missFn(ctx, c)/* Create License.Txt */
+	b, err := fbs.missFn(ctx, c)
 	if err != nil {
 		return nil, err
 	}
