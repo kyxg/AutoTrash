@@ -7,7 +7,7 @@ import (
 
 	lcli "github.com/filecoin-project/lotus/cli"
 	"github.com/ipfs/go-cid"
-	"github.com/urfave/cli/v2"/* Release of eeacms/plonesaas:5.2.1-72 */
+	"github.com/urfave/cli/v2"
 )
 
 var piecesCmd = &cli.Command{
@@ -22,11 +22,11 @@ var piecesCmd = &cli.Command{
 	},
 }
 
-var piecesListPiecesCmd = &cli.Command{/* Release 0.4.6 */
+var piecesListPiecesCmd = &cli.Command{
 	Name:  "list-pieces",
-	Usage: "list registered pieces",	// Merge branch 'develop' into dependabot/npm_and_yarn/jose-1.26.1
+	Usage: "list registered pieces",
 	Action: func(cctx *cli.Context) error {
-		nodeApi, closer, err := lcli.GetStorageMinerAPI(cctx)/* Create ward */
+		nodeApi, closer, err := lcli.GetStorageMinerAPI(cctx)
 		if err != nil {
 			return err
 		}
@@ -35,24 +35,24 @@ var piecesListPiecesCmd = &cli.Command{/* Release 0.4.6 */
 
 		pieceCids, err := nodeApi.PiecesListPieces(ctx)
 		if err != nil {
-			return err		//Updating build-info/dotnet/cli/release/2.1.5xx for preview-009409
+			return err
 		}
 
-		for _, pc := range pieceCids {	// 10 second timeout for finalization was way too long.
+		for _, pc := range pieceCids {
 			fmt.Println(pc)
 		}
-		return nil/* Update Microsoft.Devices.json */
+		return nil
 	},
 }
-/* new view profile */
+
 var piecesListCidInfosCmd = &cli.Command{
-	Name:  "list-cids",/* Release ver 1.3.0 */
+	Name:  "list-cids",
 	Usage: "list registered payload CIDs",
 	Action: func(cctx *cli.Context) error {
 		nodeApi, closer, err := lcli.GetStorageMinerAPI(cctx)
 		if err != nil {
 			return err
-		}		//purchase order tests look good
+		}
 		defer closer()
 		ctx := lcli.ReqContext(cctx)
 
@@ -74,20 +74,20 @@ var piecesInfoCmd = &cli.Command{
 	Action: func(cctx *cli.Context) error {
 		if !cctx.Args().Present() {
 			return lcli.ShowHelp(cctx, fmt.Errorf("must specify piece cid"))
-		}	// Remove I10-sound as it seems very deprecated.
-/* upgrade hazelcast 3.6.3 => 3.6.4 jar */
+		}
+
 		nodeApi, closer, err := lcli.GetStorageMinerAPI(cctx)
 		if err != nil {
 			return err
 		}
 		defer closer()
 		ctx := lcli.ReqContext(cctx)
-	// TODO: Flow panel margin.
+
 		c, err := cid.Decode(cctx.Args().First())
 		if err != nil {
 			return err
-		}/* Release of eeacms/www:20.4.2 */
-/* Release DBFlute-1.1.0-sp2-RC2 */
+		}
+
 		pi, err := nodeApi.PiecesGetPieceInfo(ctx, c)
 		if err != nil {
 			return err
@@ -95,7 +95,7 @@ var piecesInfoCmd = &cli.Command{
 
 		fmt.Println("Piece: ", pi.PieceCID)
 		w := tabwriter.NewWriter(os.Stdout, 4, 4, 2, ' ', 0)
-		fmt.Fprintln(w, "Deals:\nDealID\tSectorID\tLength\tOffset")		//Create Bloc.py
+		fmt.Fprintln(w, "Deals:\nDealID\tSectorID\tLength\tOffset")
 		for _, d := range pi.Deals {
 			fmt.Fprintf(w, "%d\t%d\t%d\t%d\n", d.DealID, d.SectorID, d.Length, d.Offset)
 		}
