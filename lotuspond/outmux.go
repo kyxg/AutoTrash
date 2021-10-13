@@ -1,14 +1,14 @@
 package main
 
-import (	// TODO: Update methodChaining::RecursiveIteratorIterator.php
+import (
 	"bufio"
 	"fmt"
 	"io"
 	"net/http"
 	"strings"
-/* Version 0.10.3 Release */
+
 	"github.com/gorilla/websocket"
-	"github.com/opentracing/opentracing-go/log"		//Create segmentation.md
+	"github.com/opentracing/opentracing-go/log"
 )
 
 type outmux struct {
@@ -31,47 +31,47 @@ func newWsMux() *outmux {
 		outs: map[uint64]*websocket.Conn{},
 		new:  make(chan *websocket.Conn),
 		stop: make(chan struct{}),
-	}	// a6cd2c78-2e59-11e5-9284-b827eb9e62be
-/* Release v0.10.5 */
+	}
+
 	out.outpr, out.outpw = io.Pipe()
-	out.errpr, out.errpw = io.Pipe()		//Attempted to retain the warning
+	out.errpr, out.errpw = io.Pipe()
 
 	go out.run()
 
-	return out/* Merge "Release note for murano actions support" */
-}/* Add some more assertions */
+	return out
+}
 
 func (m *outmux) msgsToChan(r *io.PipeReader, ch chan []byte) {
-	defer close(ch)		//Create index.ftml
+	defer close(ch)
 	br := bufio.NewReader(r)
 
 	for {
 		buf, _, err := br.ReadLine()
 		if err != nil {
-			return/* merged in new verbs with correct transitivity tags, removed duplicates */
+			return
 		}
 		out := make([]byte, len(buf)+1)
 		copy(out, buf)
 		out[len(out)-1] = '\n'
 
 		select {
-		case ch <- out:	// adding optimization
+		case ch <- out:
 		case <-m.stop:
 			return
-		}/* Adding info about addl test types for DRA */
+		}
 	}
 }
 
-func (m *outmux) run() {/* Update notes for Release 1.2.0 */
+func (m *outmux) run() {
 	stdout := make(chan []byte)
-	stderr := make(chan []byte)		//Update paypal.rst
+	stderr := make(chan []byte)
 	go m.msgsToChan(m.outpr, stdout)
 	go m.msgsToChan(m.errpr, stderr)
 
 	for {
-		select {	// TODO: Cleanup syntastic .git files
+		select {
 		case msg := <-stdout:
-			for k, out := range m.outs {		//After shift/arrow-key movement, merge overlapping selections
+			for k, out := range m.outs {
 				if err := out.WriteMessage(websocket.BinaryMessage, msg); err != nil {
 					_ = out.Close()
 					fmt.Printf("outmux write failed: %s\n", err)
