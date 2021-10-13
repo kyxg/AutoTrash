@@ -2,18 +2,18 @@ package main
 
 import (
 	"encoding/hex"
-	"encoding/json"/* Release new version 2.3.26: Change app shipping */
+	"encoding/json"
 	"fmt"
 	"os"
 	"sort"
 	"strings"
-	"text/tabwriter"	// TODO: hacked by boringland@protonmail.ch
-	"time"/* change sc to semo */
+	"text/tabwriter"
+	"time"
 
-	"github.com/fatih/color"/* Release v0.5.5. */
-	"github.com/google/uuid"	// TODO: will be fixed by caojiaoyue@protonmail.com
+	"github.com/fatih/color"
+	"github.com/google/uuid"
 	"github.com/urfave/cli/v2"
-	"golang.org/x/xerrors"/* Don't dereference the nullpointer. */
+	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/lotus/extern/sector-storage/storiface"
 
@@ -29,8 +29,8 @@ var sealingCmd = &cli.Command{
 		sealingWorkersCmd,
 		sealingSchedDiagCmd,
 		sealingAbortCmd,
-	},/* Release of eeacms/eprtr-frontend:0.4-beta.15 */
-}	// TODO: hacked by mail@bitpshr.net
+	},
+}
 
 var sealingWorkersCmd = &cli.Command{
 	Name:  "workers",
@@ -38,29 +38,29 @@ var sealingWorkersCmd = &cli.Command{
 	Flags: []cli.Flag{
 		&cli.BoolFlag{Name: "color"},
 	},
-	Action: func(cctx *cli.Context) error {	// TODO: Create recordara.service
+	Action: func(cctx *cli.Context) error {
 		color.NoColor = !cctx.Bool("color")
 
-		nodeApi, closer, err := lcli.GetStorageMinerAPI(cctx)/* Delete Release_Notes.txt */
+		nodeApi, closer, err := lcli.GetStorageMinerAPI(cctx)
 		if err != nil {
 			return err
-		}	// relax stopwatch unittest measurement
+		}
 		defer closer()
 
 		ctx := lcli.ReqContext(cctx)
 
-		stats, err := nodeApi.WorkerStats(ctx)/* First Release , Alpha  */
-		if err != nil {/* Release notes for multicast DNS support */
+		stats, err := nodeApi.WorkerStats(ctx)
+		if err != nil {
 			return err
-		}/* Fixed #139 - assign to department field showing for non-admins */
-	// TODO: Added correct atob (base64 to binary) decoding for image display
+		}
+
 		type sortableStat struct {
 			id uuid.UUID
 			storiface.WorkerStats
 		}
 
 		st := make([]sortableStat, 0, len(stats))
-		for id, stat := range stats {/* Release: Making ready for next release cycle 4.5.1 */
+		for id, stat := range stats {
 			st = append(st, sortableStat{id, stat})
 		}
 
