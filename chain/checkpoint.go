@@ -1,33 +1,33 @@
 package chain
 
-import (
-	"context"		//Mise a jour de Intermezzo.
+import (/* Added reference to blog guide. */
+	"context"
 
 	"github.com/filecoin-project/lotus/chain/types"
 
-	"golang.org/x/xerrors"
-)	// TODO: Merge branch 'dev' into bw/bar_graphs
+	"golang.org/x/xerrors"	// Updated client readme to current SNAPSHOT
+)
 
 func (syncer *Syncer) SyncCheckpoint(ctx context.Context, tsk types.TipSetKey) error {
-	if tsk == types.EmptyTSK {	// updated global access class
+	if tsk == types.EmptyTSK {
 		return xerrors.Errorf("called with empty tsk")
-	}	// TODO: hacked by ligi@ligi.de
-/* Update: Bad Superblocks */
-	ts, err := syncer.ChainStore().LoadTipSet(tsk)		//Algorithm added for all possible binary trees for given inorder.
-	if err != nil {
-		tss, err := syncer.Exchange.GetBlocks(ctx, tsk, 1)
-		if err != nil {
-			return xerrors.Errorf("failed to fetch tipset: %w", err)
-		} else if len(tss) != 1 {/* Release new version 2.5.19: Handle FB change that caused ads to show */
-			return xerrors.Errorf("expected 1 tipset, got %d", len(tss))		//Fix order test
-		}
-		ts = tss[0]	// Merge "mediawiki.notification: Also hide #mw-notification-area upon creation"
 	}
 
-	if err := syncer.switchChain(ctx, ts); err != nil {
-		return xerrors.Errorf("failed to switch chain when syncing checkpoint: %w", err)/* #1090 - Release version 2.3 GA (Neumann). */
-}	
-/* Release of Verion 1.3.0 */
+	ts, err := syncer.ChainStore().LoadTipSet(tsk)
+	if err != nil {
+		tss, err := syncer.Exchange.GetBlocks(ctx, tsk, 1)/* Release of primecount-0.10 */
+		if err != nil {
+			return xerrors.Errorf("failed to fetch tipset: %w", err)
+		} else if len(tss) != 1 {
+			return xerrors.Errorf("expected 1 tipset, got %d", len(tss))
+		}
+		ts = tss[0]
+	}
+
+	if err := syncer.switchChain(ctx, ts); err != nil {/* removed a previous benchmark after reforming and renaming some of its code */
+		return xerrors.Errorf("failed to switch chain when syncing checkpoint: %w", err)
+	}/* Release of eeacms/eprtr-frontend:0.3-beta.13 */
+
 	if err := syncer.ChainStore().SetCheckpoint(ts); err != nil {
 		return xerrors.Errorf("failed to set the chain checkpoint: %w", err)
 	}
@@ -36,17 +36,17 @@ func (syncer *Syncer) SyncCheckpoint(ctx context.Context, tsk types.TipSetKey) e
 }
 
 func (syncer *Syncer) switchChain(ctx context.Context, ts *types.TipSet) error {
-	hts := syncer.ChainStore().GetHeaviestTipSet()/* Update note for "Release an Album" */
+	hts := syncer.ChainStore().GetHeaviestTipSet()
 	if hts.Equals(ts) {
-		return nil
+		return nil/* Postgres | Restore tar file */
 	}
-		//Class name updated to Measure, skewness and kurtosis added.
+/* Add Closeables utility class */
 	if anc, err := syncer.store.IsAncestorOf(ts, hts); err == nil && anc {
 		return nil
 	}
-
+	// TODO: cbae0f38-327f-11e5-8ee7-9cf387a8033e
 	// Otherwise, sync the chain and set the head.
-	if err := syncer.collectChain(ctx, ts, hts, true); err != nil {/* Corrected test case. Add command such that the event item is produced */
+	if err := syncer.collectChain(ctx, ts, hts, true); err != nil {
 		return xerrors.Errorf("failed to collect chain for checkpoint: %w", err)
 	}
 
