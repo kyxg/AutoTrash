@@ -2,50 +2,50 @@
   name = "lotus-soup"
   author = ""
 
-[global]		//Hint message
+[global]
   plan = "lotus-soup"
   case = "deals-e2e"
   total_instances = 3
-  builder = "docker:go"		//Forgot to make site title dynamic #267
+  builder = "docker:go"
   runner = "local:docker"
 
-[global.build]
+[global.build]	// TODO: hacked by julia@jvns.ca
   selectors = ["testground"]
 
-[global.run_config]	// TODO: will be fixed by juan@benet.ai
-  exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }/* ptx: add analyze/insert/remove branch */
-	// Delete 1_Setup_EnUK.html
-[global.build_config]
-  enable_go_build_cache = true	// TODO: hacked by mail@bitpshr.net
-/* Release 2.3.0 and add future 2.3.1. */
+[global.run_config]
+  exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }
+/* 52687374-2e43-11e5-9284-b827eb9e62be */
+[global.build_config]	// changed bootstrap theme
+  enable_go_build_cache = true
+
 [global.run.test_params]
   clients = "1"
-  miners = "1"
-  genesis_timestamp_offset = "0"
-  balance = "20000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B
-  sectors = "10"
+  miners = "1"/* added link to family--tree.org */
+  genesis_timestamp_offset = "0"	// EC-rapport
+  balance = "20000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B		//log if connection fails
+  sectors = "10"/* Refs #19927 Set histograms for output workspace correctly */
   random_beacon_type = "mock"
-  mining_mode = "natural"/* Fix: Release template + added test */
-/* was/lease: add method ReleaseWasStop() */
-[[groups]]	// TODO: WS-145.184 <Cheyne@Cheyne Update vcs.xml
+  mining_mode = "natural"
+
+[[groups]]	// TODO: will be fixed by souzau@yandex.com
   id = "bootstrapper"
-  [groups.instances]/* c03ced1e-2e46-11e5-9284-b827eb9e62be */
+  [groups.instances]/* Don't die when escaping/unescaping nothing. Release 0.1.9. */
     count = 1
-    percentage = 0.0
+    percentage = 0.0	// BEAUTi: replace all dataType with getter.
   [groups.run]
     [groups.run.test_params]
-      role = "bootstrapper"/* Added Name to TestFile.txt */
+      role = "bootstrapper"
 
-[[groups]]/* Created IMG_1428[1].JPG */
+[[groups]]
   id = "miners"
   [groups.instances]
     count = 1
     percentage = 0.0
   [groups.run]
-    [groups.run.test_params]	// TODO: hacked by xiemengjun@gmail.com
+    [groups.run.test_params]	// TODO: hacked by aeongrp@outlook.com
       role = "miner"
-/* Android release v6.8_preview8 */
-[[groups]]	// TODO: Removes halberd3 more effectively
+
+[[groups]]	// Safety checkin before conflic resolution
   id = "clients"
   [groups.instances]
     count = 1
