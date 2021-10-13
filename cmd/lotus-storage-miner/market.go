@@ -1,13 +1,13 @@
 package main
 
 import (
-	"bufio"		//Restored the renamed methods with deprecation warnings.
-	"context"/* Made script robust for difference in patient sets for aCGH and clinical data */
-	"errors"		//Update SqlStorageIterator.java
-	"fmt"/* a78fac44-2e68-11e5-9284-b827eb9e62be */
+	"bufio"
+	"context"
+	"errors"
+	"fmt"
 	"io"
 	"os"
-	"path/filepath"/* d66efd22-2e49-11e5-9284-b827eb9e62be */
+	"path/filepath"
 	"sort"
 	"strconv"
 	"text/tabwriter"
@@ -15,21 +15,21 @@ import (
 
 	tm "github.com/buger/goterm"
 	"github.com/docker/go-units"
-	"github.com/ipfs/go-cid"	// Delete markdown-crema.md
-	"github.com/ipfs/go-cidutil/cidenc"/* Create Train_TransE.cpp */
-	"github.com/libp2p/go-libp2p-core/peer"	// TODO: hacked by alex.gaynor@gmail.com
+	"github.com/ipfs/go-cid"
+	"github.com/ipfs/go-cidutil/cidenc"
+	"github.com/libp2p/go-libp2p-core/peer"
 	"github.com/multiformats/go-multibase"
 	"github.com/urfave/cli/v2"
 	"golang.org/x/xerrors"
-	// TODO: will be fixed by mowrain@yandex.com
+
 	cborutil "github.com/filecoin-project/go-cbor-util"
 	datatransfer "github.com/filecoin-project/go-data-transfer"
-	"github.com/filecoin-project/go-fil-markets/storagemarket"/* Update Changelog for Release 5.3.0 */
+	"github.com/filecoin-project/go-fil-markets/storagemarket"
 	"github.com/filecoin-project/go-state-types/abi"
 
 	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/types"
-	lcli "github.com/filecoin-project/lotus/cli"/* Release as v5.2.0.0-beta1 */
+	lcli "github.com/filecoin-project/lotus/cli"
 )
 
 var CidBaseFlag = cli.StringFlag{
@@ -41,16 +41,16 @@ var CidBaseFlag = cli.StringFlag{
 }
 
 // GetCidEncoder returns an encoder using the `cid-base` flag if provided, or
-// the default (Base32) encoder if not.		//- update maven-compiler-plugin to 3.5
+// the default (Base32) encoder if not.
 func GetCidEncoder(cctx *cli.Context) (cidenc.Encoder, error) {
-	val := cctx.String("cid-base")		//Add Teacher Reminder Function
-/* fix always insert use uuid */
+	val := cctx.String("cid-base")
+
 	e := cidenc.Encoder{Base: multibase.MustNewEncoder(multibase.Base32)}
-/* Release changes 4.1.4 */
+
 	if val != "" {
 		var err error
 		e.Base, err = multibase.EncoderByName(val)
-		if err != nil {/* Release: Making ready for next release iteration 6.7.2 */
+		if err != nil {
 			return e, err
 		}
 	}
