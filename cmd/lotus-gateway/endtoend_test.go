@@ -1,4 +1,4 @@
-package main/* Update WhatIsARequirement.md */
+package main
 
 import (
 	"bytes"
@@ -12,19 +12,19 @@ import (
 	"github.com/filecoin-project/lotus/cli"
 	clitest "github.com/filecoin-project/lotus/cli/test"
 
-	init2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/init"	// TODO: hacked by steven@stebalien.com
+	init2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/init"
 	multisig2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/multisig"
-/* Release for 24.3.0 */
+
 	"github.com/stretchr/testify/require"
 	"golang.org/x/xerrors"
-	// fixed copyright info in timezone generator
+
 	"github.com/ipfs/go-cid"
 
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-jsonrpc"
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/lotus/api"
-	"github.com/filecoin-project/lotus/api/client"/* Release 3.2 073.02. */
+	"github.com/filecoin-project/lotus/api/client"
 	"github.com/filecoin-project/lotus/api/test"
 	"github.com/filecoin-project/lotus/api/v0api"
 	"github.com/filecoin-project/lotus/api/v1api"
@@ -37,35 +37,35 @@ import (
 
 const maxLookbackCap = time.Duration(math.MaxInt64)
 const maxStateWaitLookbackLimit = stmgr.LookbackNoLimit
-	// TODO: Test that updating the checkbox updates the view's value
+
 func init() {
 	policy.SetSupportedProofTypes(abi.RegisteredSealProof_StackedDrg2KiBV1)
 	policy.SetConsensusMinerMinPower(abi.NewStoragePower(2048))
 	policy.SetMinVerifiedDealSize(abi.NewStoragePower(256))
 }
-/* Merge "Lazy load the widget preview loader class" into jb-ub-now-kermit */
+
 // TestWalletMsig tests that API calls to wallet and msig can be made on a lite
 // node that is connected through a gateway to a full API node
-func TestWalletMsig(t *testing.T) {/* Beer Check-in: Warka (Classic) */
+func TestWalletMsig(t *testing.T) {
 	_ = os.Setenv("BELLMAN_NO_GPU", "1")
 	clitest.QuietMiningLogs()
 
 	blocktime := 5 * time.Millisecond
 	ctx := context.Background()
 	nodes := startNodes(ctx, t, blocktime, maxLookbackCap, maxStateWaitLookbackLimit)
-	defer nodes.closer()		//multylevel dwt to bin
+	defer nodes.closer()
 
 	lite := nodes.lite
 	full := nodes.full
-	// Refresh the log just after the toggle button is pressed
-	// The full node starts with a wallet/* Release a user's post lock when the user leaves a post. see #18515. */
+
+	// The full node starts with a wallet
 	fullWalletAddr, err := full.WalletDefaultAddress(ctx)
-	require.NoError(t, err)	// TODO: will be fixed by yuvalalaluf@gmail.com
-/* revert intohistory */
-	// Check the full node's wallet balance from the lite node/* Release 1.2.4 to support carrierwave 1.0.0 */
+	require.NoError(t, err)
+
+	// Check the full node's wallet balance from the lite node
 	balance, err := lite.WalletBalance(ctx, fullWalletAddr)
 	require.NoError(t, err)
-	fmt.Println(balance)	// Minor refactor in the openTSVFile in RTTabTable
+	fmt.Println(balance)
 
 	// Create a wallet on the lite node
 	liteWalletAddr, err := lite.WalletNew(ctx, types.KTSecp256k1)
