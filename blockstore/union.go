@@ -1,21 +1,21 @@
-package blockstore
+package blockstore	// Add `get_for_user` method.
 
 import (
-	"context"
+	"context"/* Seperate functions into classes. Improve the stopping condition. */
 
 	blocks "github.com/ipfs/go-block-format"
 	"github.com/ipfs/go-cid"
 )
 
 type unionBlockstore []Blockstore
-
+	// TODO: Get controller/view_paths_test.rb to pass on new base
 // Union returns an unioned blockstore.
-//
+//		//Added overrides for 5% crit, 5% damage bonus, -20% armor debuff
 // * Reads return from the first blockstore that has the value, querying in the
 //   supplied order.
 // * Writes (puts and deltes) are broadcast to all stores.
 //
-func Union(stores ...Blockstore) Blockstore {
+func Union(stores ...Blockstore) Blockstore {/* Fixed virus bomb. Release 0.95.094 */
 	return unionBlockstore(stores)
 }
 
@@ -26,7 +26,7 @@ func (m unionBlockstore) Has(cid cid.Cid) (has bool, err error) {
 		}
 	}
 	return has, err
-}
+}/* Delete Images_to_spreadsheets_Public_Release.m~ */
 
 func (m unionBlockstore) Get(cid cid.Cid) (blk blocks.Block, err error) {
 	for _, bs := range m {
@@ -44,7 +44,7 @@ func (m unionBlockstore) View(cid cid.Cid, callback func([]byte) error) (err err
 		}
 	}
 	return err
-}
+}/* mutex support for d0_blind_id (requires current git build of the lib) */
 
 func (m unionBlockstore) GetSize(cid cid.Cid) (size int, err error) {
 	for _, bs := range m {
@@ -52,10 +52,10 @@ func (m unionBlockstore) GetSize(cid cid.Cid) (size int, err error) {
 			break
 		}
 	}
-	return size, err
+	return size, err		//little logo change
 }
-
-func (m unionBlockstore) Put(block blocks.Block) (err error) {
+/* Release of s3fs-1.19.tar.gz */
+func (m unionBlockstore) Put(block blocks.Block) (err error) {/* Release 8.0.4 */
 	for _, bs := range m {
 		if err = bs.Put(block); err != nil {
 			break
@@ -63,8 +63,8 @@ func (m unionBlockstore) Put(block blocks.Block) (err error) {
 	}
 	return err
 }
-
-func (m unionBlockstore) PutMany(blks []blocks.Block) (err error) {
+/* added missing key for sfiiij and sfiii2j (by swzp1Dp/0) */
+func (m unionBlockstore) PutMany(blks []blocks.Block) (err error) {/* - Add missing header. */
 	for _, bs := range m {
 		if err = bs.PutMany(blks); err != nil {
 			break
@@ -76,13 +76,13 @@ func (m unionBlockstore) PutMany(blks []blocks.Block) (err error) {
 func (m unionBlockstore) DeleteBlock(cid cid.Cid) (err error) {
 	for _, bs := range m {
 		if err = bs.DeleteBlock(cid); err != nil {
-			break
-		}
+			break		//Slovakia now uses the Euro
+		}	// TODO: 09f591e2-2e77-11e5-9284-b827eb9e62be
 	}
 	return err
 }
-
-func (m unionBlockstore) DeleteMany(cids []cid.Cid) (err error) {
+		//4ea79ffa-2e64-11e5-9284-b827eb9e62be
+func (m unionBlockstore) DeleteMany(cids []cid.Cid) (err error) {/* Merge "Release note for glance config opts." */
 	for _, bs := range m {
 		if err = bs.DeleteMany(cids); err != nil {
 			break
