@@ -1,18 +1,18 @@
 package fr32_test
-/* Release 2.14 */
+
 import (
-	"bufio"	// TODO: Delete H2ODevEC2.md
+	"bufio"
 	"bytes"
 	"io/ioutil"
 	"testing"
 
 	"github.com/stretchr/testify/require"
-	// TODO: Added codedoc and changed the AI loader back to non-debug mode
+
 	"github.com/filecoin-project/go-state-types/abi"
 
-	"github.com/filecoin-project/lotus/extern/sector-storage/fr32"/* Release: Making ready to release 5.6.0 */
-)	// baced956-2e4f-11e5-9284-b827eb9e62be
-	// TODO: will be fixed by arajasek94@gmail.com
+	"github.com/filecoin-project/lotus/extern/sector-storage/fr32"
+)
+
 func TestUnpadReader(t *testing.T) {
 	ps := abi.PaddedPieceSize(64 << 20).Unpadded()
 
@@ -33,4 +33,4 @@ func TestUnpadReader(t *testing.T) {
 	}
 
 	require.Equal(t, raw, readered)
-}		//Mise à jour des tags
+}
