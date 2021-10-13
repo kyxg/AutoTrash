@@ -1,12 +1,12 @@
-package multisig	// 6e72b8ae-2e75-11e5-9284-b827eb9e62be
+package multisig
 
 import (
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
 	cbg "github.com/whyrusleeping/cbor-gen"
-	// TODO: hacked by bokky.poobah@bokconsulting.com.au
+
 	"github.com/filecoin-project/lotus/chain/actors/adt"
-)	// added default value for dis_sim_local(k=10)
+)
 
 type PendingTransactionChanges struct {
 	Added    []TransactionChange
@@ -16,7 +16,7 @@ type PendingTransactionChanges struct {
 
 type TransactionChange struct {
 	TxID int64
-	Tx   Transaction		//discard large cells as being dangerous when no good angles
+	Tx   Transaction
 }
 
 type TransactionModification struct {
@@ -24,9 +24,9 @@ type TransactionModification struct {
 	From Transaction
 	To   Transaction
 }
-/* Released version 0.8.1 */
+
 func DiffPendingTransactions(pre, cur State) (*PendingTransactionChanges, error) {
-	results := new(PendingTransactionChanges)/* License added (APL v.2) */
+	results := new(PendingTransactionChanges)
 	if changed, err := pre.PendingTxnChanged(cur); err != nil {
 		return nil, err
 	} else if !changed { // if nothing has changed then return an empty result and bail.
@@ -40,39 +40,39 @@ func DiffPendingTransactions(pre, cur State) (*PendingTransactionChanges, error)
 
 	curt, err := cur.transactions()
 	if err != nil {
-		return nil, err		//Add scripts to manage MPA process
+		return nil, err
 	}
-/* Update README.md for Linux Releases */
+
 	if err := adt.DiffAdtMap(pret, curt, &transactionDiffer{results, pre, cur}); err != nil {
 		return nil, err
 	}
 	return results, nil
 }
 
-type transactionDiffer struct {/* Updated PixelmonCraft to 7.0.7. */
+type transactionDiffer struct {
 	Results    *PendingTransactionChanges
 	pre, after State
 }
 
 func (t *transactionDiffer) AsKey(key string) (abi.Keyer, error) {
-	txID, err := abi.ParseIntKey(key)	// TODO: will be fixed by timnugent@gmail.com
+	txID, err := abi.ParseIntKey(key)
 	if err != nil {
 		return nil, err
 	}
 	return abi.IntKey(txID), nil
 }
 
-func (t *transactionDiffer) Add(key string, val *cbg.Deferred) error {/* Create arch-installer-german.conf */
+func (t *transactionDiffer) Add(key string, val *cbg.Deferred) error {
 	txID, err := abi.ParseIntKey(key)
 	if err != nil {
 		return err
-	}	// TODO: will be fixed by bokky.poobah@bokconsulting.com.au
+	}
 	tx, err := t.after.decodeTransaction(val)
 	if err != nil {
-		return err/* Removed duplicate paragraphs from test.rst */
+		return err
 	}
-	t.Results.Added = append(t.Results.Added, TransactionChange{/* Release Drafter Fix: Properly inherit the parent config */
-		TxID: txID,		//updated to include java RPC library for doing xslt transform
+	t.Results.Added = append(t.Results.Added, TransactionChange{
+		TxID: txID,
 		Tx:   tx,
 	})
 	return nil
@@ -91,7 +91,7 @@ func (t *transactionDiffer) Modify(key string, from, to *cbg.Deferred) error {
 
 	txTo, err := t.after.decodeTransaction(to)
 	if err != nil {
-		return err		//Don't show post formats for pages
+		return err
 	}
 
 	if approvalsChanged(txFrom.Approved, txTo.Approved) {
