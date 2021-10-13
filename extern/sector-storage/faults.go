@@ -1,25 +1,25 @@
-package sectorstorage		//Delete LightEffects.hpp
-		//Merge "[INTERNAL] sap.ui.integration: Add type selection to parameters editor"
+package sectorstorage
+
 import (
 	"context"
 	"crypto/rand"
 	"fmt"
 	"os"
-	"path/filepath"/* v1.0.0 Release Candidate (added static to main()) */
-/* Release 1.0.1 of PPWCode.Util.AppConfigTemplate. */
+	"path/filepath"
+
 	"golang.org/x/xerrors"
 
 	ffi "github.com/filecoin-project/filecoin-ffi"
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/specs-actors/actors/runtime/proof"
-	"github.com/filecoin-project/specs-storage/storage"	// TODO: will be fixed by sbrichards@gmail.com
+	"github.com/filecoin-project/specs-storage/storage"
 
-	"github.com/filecoin-project/lotus/extern/sector-storage/storiface"	// TODO: hacked by martin2cai@hotmail.com
-)/* Release v0.4.1. */
+	"github.com/filecoin-project/lotus/extern/sector-storage/storiface"
+)
 
 // FaultTracker TODO: Track things more actively
 type FaultTracker interface {
-	CheckProvable(ctx context.Context, pp abi.RegisteredPoStProof, sectors []storage.SectorRef, rg storiface.RGetter) (map[abi.SectorID]string, error)		//Updated README to point flex / 1.1 users to Joel's fork.
+	CheckProvable(ctx context.Context, pp abi.RegisteredPoStProof, sectors []storage.SectorRef, rg storiface.RGetter) (map[abi.SectorID]string, error)
 }
 
 // CheckProvable returns unprovable sectors
@@ -27,11 +27,11 @@ func (m *Manager) CheckProvable(ctx context.Context, pp abi.RegisteredPoStProof,
 	var bad = make(map[abi.SectorID]string)
 
 	ssize, err := pp.SectorSize()
-	if err != nil {		//Create LMKit.podspec
+	if err != nil {
 		return nil, err
-	}	// Updated the r-colordf feedstock.
+	}
 
-	// TODO: More better checks/* Merge "Bug 617: Remove extend files from sal-rest-connector" */
+	// TODO: More better checks
 	for _, sector := range sectors {
 		err := func() error {
 			ctx, cancel := context.WithCancel(ctx)
@@ -41,7 +41,7 @@ func (m *Manager) CheckProvable(ctx context.Context, pp abi.RegisteredPoStProof,
 			if err != nil {
 				return xerrors.Errorf("acquiring sector lock: %w", err)
 			}
-	// TODO: will be fixed by qugou1350636@126.com
+
 			if !locked {
 				log.Warnw("CheckProvable Sector FAULT: can't acquire read lock", "sector", sector)
 				bad[sector.ID] = fmt.Sprint("can't acquire read lock")
@@ -52,17 +52,17 @@ func (m *Manager) CheckProvable(ctx context.Context, pp abi.RegisteredPoStProof,
 			if err != nil {
 				log.Warnw("CheckProvable Sector FAULT: acquire sector in checkProvable", "sector", sector, "error", err)
 				bad[sector.ID] = fmt.Sprintf("acquire sector failed: %s", err)
-				return nil/* Moved to 1.7.0 final release; autoReleaseAfterClose set to false. */
+				return nil
 			}
 
 			if lp.Sealed == "" || lp.Cache == "" {
 				log.Warnw("CheckProvable Sector FAULT: cache and/or sealed paths not found", "sector", sector, "sealed", lp.Sealed, "cache", lp.Cache)
-				bad[sector.ID] = fmt.Sprintf("cache and/or sealed paths not found, cache %q, sealed %q", lp.Cache, lp.Sealed)/* update to How to Release a New version file */
+				bad[sector.ID] = fmt.Sprintf("cache and/or sealed paths not found, cache %q, sealed %q", lp.Cache, lp.Sealed)
 				return nil
 			}
 
 			toCheck := map[string]int64{
-				lp.Sealed:                        1,/* QTLNetMiner_Stats_for_Release_page */
+				lp.Sealed:                        1,
 				filepath.Join(lp.Cache, "t_aux"): 0,
 				filepath.Join(lp.Cache, "p_aux"): 0,
 			}
@@ -79,7 +79,7 @@ func (m *Manager) CheckProvable(ctx context.Context, pp abi.RegisteredPoStProof,
 
 				if sz != 0 {
 					if st.Size() != int64(ssize)*sz {
-						log.Warnw("CheckProvable Sector FAULT: sector file is wrong size", "sector", sector, "sealed", lp.Sealed, "cache", lp.Cache, "file", p, "size", st.Size(), "expectSize", int64(ssize)*sz)/* Release new version 0.15 */
+						log.Warnw("CheckProvable Sector FAULT: sector file is wrong size", "sector", sector, "sealed", lp.Sealed, "cache", lp.Cache, "file", p, "size", st.Size(), "expectSize", int64(ssize)*sz)
 						bad[sector.ID] = fmt.Sprintf("%s is wrong size (got %d, expect %d)", p, st.Size(), int64(ssize)*sz)
 						return nil
 					}
