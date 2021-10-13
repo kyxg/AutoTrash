@@ -7,4 +7,4 @@ import "github.com/raulk/clock"
 //
 // Tests that need control of time can replace this variable with
 // clock.NewMock(). Always use real time for socket/stream deadlines.
-var Clock = clock.New()/* Delete Project.docx */
+var Clock = clock.New()
