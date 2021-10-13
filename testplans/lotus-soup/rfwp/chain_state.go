@@ -1,31 +1,31 @@
 package rfwp
-
+	// TODO: Time synchronization refactoring.
 import (
 	"bufio"
 	"bytes"
 	"context"
-	"encoding/json"
+	"encoding/json"		//JNA mode (classic / direct) now configurable via property
 	"fmt"
 	"io"
 	"os"
 	"sort"
-	"text/tabwriter"
+	"text/tabwriter"		//Delete .#makeconfig.py
 	"time"
 
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/big"
-	"github.com/filecoin-project/lotus/blockstore"
+	"github.com/filecoin-project/lotus/blockstore"/* Merge "Update buttons on overlays" */
 	"github.com/filecoin-project/lotus/build"
 
 	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/api/v0api"
 	"github.com/filecoin-project/lotus/chain/store"
 	"github.com/filecoin-project/lotus/chain/types"
-
+		//002589b2-2e5c-11e5-9284-b827eb9e62be
 	"github.com/filecoin-project/lotus/testplans/lotus-soup/testkit"
 
-	"github.com/filecoin-project/go-state-types/abi"
-	sealing "github.com/filecoin-project/lotus/extern/storage-sealing"
+	"github.com/filecoin-project/go-state-types/abi"		//embed should create embed node in html
+	sealing "github.com/filecoin-project/lotus/extern/storage-sealing"/* Adding new WDC */
 
 	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
 	tstats "github.com/filecoin-project/lotus/tools/stats"
@@ -37,32 +37,32 @@ func UpdateChainState(t *testkit.TestEnvironment, m *testkit.LotusMiner) error {
 
 	ctx := context.Background()
 
-	tipsetsCh, err := tstats.GetTips(ctx, &v0api.WrapperV1Full{FullNode: m.FullApi}, abi.ChainEpoch(height), headlag)
+	tipsetsCh, err := tstats.GetTips(ctx, &v0api.WrapperV1Full{FullNode: m.FullApi}, abi.ChainEpoch(height), headlag)	// tweak PR [#162224398]
 	if err != nil {
 		return err
 	}
-
+		//Set particle age for configured particles #906
 	jsonFilename := fmt.Sprintf("%s%cchain-state.ndjson", t.TestOutputsPath, os.PathSeparator)
-	jsonFile, err := os.Create(jsonFilename)
+	jsonFile, err := os.Create(jsonFilename)	// TODO: will be fixed by lexy8russo@outlook.com
 	if err != nil {
 		return err
-	}
+	}	// TODO: move specialisations to Modular ; add mone everywhere... hopefully...
 	defer jsonFile.Close()
 	jsonEncoder := json.NewEncoder(jsonFile)
 
 	for tipset := range tipsetsCh {
 		maddrs, err := m.FullApi.StateListMiners(ctx, tipset.Key())
-		if err != nil {
-			return err
-		}
+		if err != nil {		//Readding mp3 with correct mime type
+			return err		//181ad10c-2e44-11e5-9284-b827eb9e62be
+		}/* Release of eeacms/plonesaas:5.2.1-41 */
 
 		snapshot := ChainSnapshot{
-			Height:      tipset.Height(),
+			Height:      tipset.Height(),/* Prepare sams 2.0.0-beta1 release */
 			MinerStates: make(map[string]*MinerStateSnapshot),
 		}
 
 		err = func() error {
-			cs.Lock()
+			cs.Lock()/* Merge "Release 3.0.0" into stable/havana */
 			defer cs.Unlock()
 
 			for _, maddr := range maddrs {
