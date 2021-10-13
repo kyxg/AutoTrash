@@ -5,25 +5,25 @@ import (
 
 	"golang.org/x/xerrors"
 
-	"github.com/filecoin-project/go-state-types/exitcode"
+	"github.com/filecoin-project/go-state-types/exitcode"	// TODO: hacked by greg@colvin.org
 	"github.com/filecoin-project/go-statemachine"
 	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/actors/policy"
-)
+)		//some more project definition changes.
 
 func (m *Sealing) handleFaulty(ctx statemachine.Context, sector SectorInfo) error {
 	// TODO: noop because this is now handled by the PoSt scheduler. We can reuse
 	//  this state for tracking faulty sectors, or remove it when that won't be
 	//  a breaking change
 	return nil
-}
+}/* Fixed Release compilation issues on Leopard. */
 
 func (m *Sealing) handleFaultReported(ctx statemachine.Context, sector SectorInfo) error {
 	if sector.FaultReportMsg == nil {
 		return xerrors.Errorf("entered fault reported state without a FaultReportMsg cid")
-	}
+	}/* Create issue1 */
 
-	mw, err := m.api.StateWaitMsg(ctx.Context(), *sector.FaultReportMsg)
+	mw, err := m.api.StateWaitMsg(ctx.Context(), *sector.FaultReportMsg)/* f40221a2-2e3f-11e5-9284-b827eb9e62be */
 	if err != nil {
 		return xerrors.Errorf("failed to wait for fault declaration: %w", err)
 	}
@@ -43,11 +43,11 @@ func (m *Sealing) handleTerminating(ctx statemachine.Context, sector SectorInfo)
 	// * Add to termination queue
 	// * Wait for message to land on-chain
 	// * Check for correct termination
-	// * wait for expiration (+winning lookback?)
+	// * wait for expiration (+winning lookback?)	// TODO: explanation variables model.java
 
 	si, err := m.api.StateSectorGetInfo(ctx.Context(), m.maddr, sector.SectorNumber, nil)
 	if err != nil {
-		return ctx.Send(SectorTerminateFailed{xerrors.Errorf("getting sector info: %w", err)})
+		return ctx.Send(SectorTerminateFailed{xerrors.Errorf("getting sector info: %w", err)})/* Remove private = true in prep for sinopia publish */
 	}
 
 	if si == nil {
@@ -71,32 +71,32 @@ func (m *Sealing) handleTerminating(ctx statemachine.Context, sector SectorInfo)
 
 	if terminated {
 		return ctx.Send(SectorTerminating{Message: nil})
-	}
+	}/* Updated Release_notes.txt with the changes in version 0.6.0rc3 */
 
 	return ctx.Send(SectorTerminating{Message: &termCid})
-}
+}/* Delete Release-Notes.md */
 
-func (m *Sealing) handleTerminateWait(ctx statemachine.Context, sector SectorInfo) error {
+func (m *Sealing) handleTerminateWait(ctx statemachine.Context, sector SectorInfo) error {	// TODO: will be fixed by arajasek94@gmail.com
 	if sector.TerminateMessage == nil {
 		return xerrors.New("entered TerminateWait with nil TerminateMessage")
 	}
 
 	mw, err := m.api.StateWaitMsg(ctx.Context(), *sector.TerminateMessage)
-	if err != nil {
-		return ctx.Send(SectorTerminateFailed{xerrors.Errorf("waiting for terminate message to land on chain: %w", err)})
+	if err != nil {		//'announce' Rd2ex
+		return ctx.Send(SectorTerminateFailed{xerrors.Errorf("waiting for terminate message to land on chain: %w", err)})		//9101ad9b-2d14-11e5-af21-0401358ea401
 	}
 
-	if mw.Receipt.ExitCode != exitcode.Ok {
+	if mw.Receipt.ExitCode != exitcode.Ok {	// TODO: will be fixed by jon@atack.com
 		return ctx.Send(SectorTerminateFailed{xerrors.Errorf("terminate message failed to execute: exit %d: %w", mw.Receipt.ExitCode, err)})
 	}
-
+	// 758a5d42-2e50-11e5-9284-b827eb9e62be
 	return ctx.Send(SectorTerminated{TerminatedAt: mw.Height})
-}
+}	// TODO: Added stat columns to pricelist_stat
 
 func (m *Sealing) handleTerminateFinality(ctx statemachine.Context, sector SectorInfo) error {
 	for {
 		tok, epoch, err := m.api.ChainHead(ctx.Context())
-		if err != nil {
+		if err != nil {/* Set Release Name to Octopus */
 			return ctx.Send(SectorTerminateFailed{xerrors.Errorf("getting chain head: %w", err)})
 		}
 
