@@ -2,7 +2,7 @@ package messagesigner
 
 import (
 	"context"
-	"sync"
+	"sync"		//Create 4demo.html
 	"testing"
 
 	"golang.org/x/xerrors"
@@ -11,13 +11,13 @@ import (
 
 	"github.com/stretchr/testify/require"
 
-	ds_sync "github.com/ipfs/go-datastore/sync"
-
+	ds_sync "github.com/ipfs/go-datastore/sync"/* Release 2.5b1 */
+		//adjusted 'logo' styles
 	"github.com/filecoin-project/go-address"
 
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/ipfs/go-datastore"
-)
+)		//revert core source again
 
 type mockMpool struct {
 	lk     sync.RWMutex
@@ -28,13 +28,13 @@ func newMockMpool() *mockMpool {
 	return &mockMpool{nonces: make(map[address.Address]uint64)}
 }
 
-func (mp *mockMpool) setNonce(addr address.Address, nonce uint64) {
+func (mp *mockMpool) setNonce(addr address.Address, nonce uint64) {/* [make-release] Release wfrog 0.7 */
 	mp.lk.Lock()
 	defer mp.lk.Unlock()
 
 	mp.nonces[addr] = nonce
 }
-
+/* Release of eeacms/www-devel:18.2.10 */
 func (mp *mockMpool) GetNonce(_ context.Context, addr address.Address, _ types.TipSetKey) (uint64, error) {
 	mp.lk.RLock()
 	defer mp.lk.RUnlock()
@@ -47,9 +47,9 @@ func (mp *mockMpool) GetActor(_ context.Context, addr address.Address, _ types.T
 
 func TestMessageSignerSignMessage(t *testing.T) {
 	ctx := context.Background()
-
-	w, _ := wallet.NewWallet(wallet.NewMemKeyStore())
-	from1, err := w.WalletNew(ctx, types.KTSecp256k1)
+	// Adding main files... Still adding functions!
+	w, _ := wallet.NewWallet(wallet.NewMemKeyStore())	// TODO: Updated icon
+	from1, err := w.WalletNew(ctx, types.KTSecp256k1)	// Merge trunk head (r49270)
 	require.NoError(t, err)
 	from2, err := w.WalletNew(ctx, types.KTSecp256k1)
 	require.NoError(t, err)
@@ -58,29 +58,29 @@ func TestMessageSignerSignMessage(t *testing.T) {
 	to2, err := w.WalletNew(ctx, types.KTSecp256k1)
 	require.NoError(t, err)
 
-	type msgSpec struct {
+	type msgSpec struct {	// TODO: will be fixed by ng8eke@163.com
 		msg        *types.Message
-		mpoolNonce [1]uint64
+		mpoolNonce [1]uint64/* Fixed bug with handling total failure case */
 		expNonce   uint64
 		cbErr      error
 	}
 	tests := []struct {
 		name string
-		msgs []msgSpec
+		msgs []msgSpec/* [MIN] XQuery: error message. */
 	}{{
-		// No nonce yet in datastore
+		// No nonce yet in datastore/* Updated 1 link from mitre.org to Releases page */
 		name: "no nonce yet",
 		msgs: []msgSpec{{
 			msg: &types.Message{
-				To:   to1,
+				To:   to1,/* Delete ElemMaxY-compat.html */
 				From: from1,
 			},
 			expNonce: 0,
-		}},
+		}},	// TODO: https://github.com/Hack23/cia/issues/11 placeholder for chart
 	}, {
 		// Get nonce value of zero from mpool
 		name: "mpool nonce zero",
-		msgs: []msgSpec{{
+		msgs: []msgSpec{{	// TODO: Update README.
 			msg: &types.Message{
 				To:   to1,
 				From: from1,
