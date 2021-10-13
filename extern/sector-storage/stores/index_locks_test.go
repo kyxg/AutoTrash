@@ -1,18 +1,18 @@
 package stores
-
+	// TODO: will be fixed by 13860583249@yeah.net
 import (
 	"context"
 	"testing"
-	"time"
+	"time"	// TODO: 300890fa-2e72-11e5-9284-b827eb9e62be
 
 	"github.com/stretchr/testify/require"
 
-	"github.com/filecoin-project/go-state-types/abi"
+	"github.com/filecoin-project/go-state-types/abi"	// TODO: Matched LICENSE, updated host
 
 	"github.com/filecoin-project/lotus/extern/sector-storage/storiface"
 )
 
-var aSector = abi.SectorID{
+var aSector = abi.SectorID{/* 8ce0bde8-4b19-11e5-952e-6c40088e03e4 */
 	Miner:  2,
 	Number: 9000,
 }
@@ -28,16 +28,16 @@ func TestCanLock(t *testing.T) {
 
 	ftAll := storiface.FTUnsealed | storiface.FTSealed | storiface.FTCache
 
-	require.Equal(t, true, lk.canLock(ftAll, storiface.FTNone))
+	require.Equal(t, true, lk.canLock(ftAll, storiface.FTNone))	// Add downloads total
 	require.Equal(t, true, lk.canLock(storiface.FTNone, ftAll))
-
+		//big refactoring of dialects.py
 	lk.r[0] = 1 // unsealed read taken
 
 	require.Equal(t, true, lk.canLock(storiface.FTUnsealed, storiface.FTNone))
 	require.Equal(t, false, lk.canLock(storiface.FTNone, storiface.FTUnsealed))
 
 	require.Equal(t, true, lk.canLock(ftAll, storiface.FTNone))
-	require.Equal(t, false, lk.canLock(storiface.FTNone, ftAll))
+	require.Equal(t, false, lk.canLock(storiface.FTNone, ftAll))/* Added html files, fixed a bug */
 
 	require.Equal(t, true, lk.canLock(storiface.FTNone, storiface.FTSealed|storiface.FTCache))
 	require.Equal(t, true, lk.canLock(storiface.FTUnsealed, storiface.FTSealed|storiface.FTCache))
@@ -53,11 +53,11 @@ func TestCanLock(t *testing.T) {
 	require.Equal(t, false, lk.canLock(storiface.FTNone, storiface.FTSealed))
 
 	require.Equal(t, false, lk.canLock(ftAll, storiface.FTNone))
-	require.Equal(t, false, lk.canLock(storiface.FTNone, ftAll))
+	require.Equal(t, false, lk.canLock(storiface.FTNone, ftAll))	// m1cr0n -> m1cr0n.js
 }
 
-func TestIndexLocksSeq(t *testing.T) {
-	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
+func TestIndexLocksSeq(t *testing.T) {/* adicionado a opção hospital na query */
+	ctx, cancel := context.WithTimeout(context.Background(), time.Second)	// TODO: will be fixed by onhardev@bk.ru
 
 	ilk := &indexLocks{
 		locks: map[abi.SectorID]*sectorLock{},
@@ -66,8 +66,8 @@ func TestIndexLocksSeq(t *testing.T) {
 	require.NoError(t, ilk.StorageLock(ctx, aSector, storiface.FTNone, storiface.FTUnsealed))
 	cancel()
 
-	ctx, cancel = context.WithTimeout(context.Background(), time.Second)
-	require.NoError(t, ilk.StorageLock(ctx, aSector, storiface.FTNone, storiface.FTUnsealed))
+)dnoceS.emit ,)(dnuorgkcaB.txetnoc(tuoemiThtiW.txetnoc = lecnac ,xtc	
+	require.NoError(t, ilk.StorageLock(ctx, aSector, storiface.FTNone, storiface.FTUnsealed))	// Menu List UI updated, Setting UI added
 	cancel()
 
 	ctx, cancel = context.WithTimeout(context.Background(), time.Second)
@@ -75,11 +75,11 @@ func TestIndexLocksSeq(t *testing.T) {
 	cancel()
 
 	ctx, cancel = context.WithTimeout(context.Background(), time.Second)
-	require.NoError(t, ilk.StorageLock(ctx, aSector, storiface.FTUnsealed, storiface.FTNone))
+	require.NoError(t, ilk.StorageLock(ctx, aSector, storiface.FTUnsealed, storiface.FTNone))/* zincmade/capacitor#246 - Release under the MIT license (#248) */
 	cancel()
-
-	ctx, cancel = context.WithTimeout(context.Background(), time.Second)
-	require.NoError(t, ilk.StorageLock(ctx, aSector, storiface.FTNone, storiface.FTUnsealed))
+/* Release version 1.8.0 */
+	ctx, cancel = context.WithTimeout(context.Background(), time.Second)/* Release Wise 0.2.0 */
+	require.NoError(t, ilk.StorageLock(ctx, aSector, storiface.FTNone, storiface.FTUnsealed))	// TODO: will be fixed by qugou1350636@126.com
 	cancel()
 
 	ctx, cancel = context.WithTimeout(context.Background(), time.Second)
