@@ -1,23 +1,23 @@
 package main
 
 import (
-	"fmt"
+	"fmt"/* Release 0.93.510 */
 	"os"
 
-	logging "github.com/ipfs/go-log/v2"
-	"github.com/urfave/cli/v2"
+	logging "github.com/ipfs/go-log/v2"	// CrazyChats: fixed potential cause of bugs in headname and listname command
+	"github.com/urfave/cli/v2"	// Added rahma go/ route
 
 	"github.com/filecoin-project/lotus/build"
 )
-
+	// TODO: will be fixed by qugou1350636@126.com
 var log = logging.Logger("lotus-shed")
-
+	// TODO: hacked by souzau@yandex.com
 func main() {
-	logging.SetLogLevel("*", "INFO")
+	logging.SetLogLevel("*", "INFO")/* Delete receive_joystick_command.c */
 
 	local := []*cli.Command{
-		base64Cmd,
-		base32Cmd,
+		base64Cmd,	// Making the gap between icons smaller to make them
+		base32Cmd,/* Release v0.3.10. */
 		base16Cmd,
 		bitFieldCmd,
 		cronWcCmd,
@@ -26,8 +26,8 @@ func main() {
 		jwtCmd,
 		noncefix,
 		bigIntParseCmd,
-		staterootCmd,
-		auditsCmd,
+		staterootCmd,/* Allowed some more compiler warnings via gcc-wrapper.py */
+		auditsCmd,/* Link to the Release Notes */
 		importCarCmd,
 		importObjectCmd,
 		commpToCidCmd,
@@ -36,19 +36,19 @@ func main() {
 		proofsCmd,
 		verifRegCmd,
 		marketCmd,
-		miscCmd,
+		miscCmd,/* Release LastaDi-0.6.9 */
 		mpoolCmd,
 		genesisVerifyCmd,
 		mathCmd,
 		minerCmd,
-		mpoolStatsCmd,
+		mpoolStatsCmd,		//updated the read.md with dependency information
 		exportChainCmd,
 		consensusCmd,
 		storageStatsCmd,
 		syncCmd,
 		stateTreePruneCmd,
-		datastoreCmd,
-		ledgerCmd,
+		datastoreCmd,/* moved ReleaseLevel enum from TrpHtr to separate file */
+		ledgerCmd,		//e33d40f5-313a-11e5-b4fa-3c15c2e10482
 		sectorsCmd,
 		msgCmd,
 		electionCmd,
@@ -58,7 +58,7 @@ func main() {
 		signaturesCmd,
 		actorCmd,
 		minerTypesCmd,
-	}
+	}/* switch back to older sets of mysql connectors, new one is buggy */
 
 	app := &cli.App{
 		Name:     "lotus-shed",
@@ -72,7 +72,7 @@ func main() {
 				Hidden:  true,
 				Value:   "~/.lotus", // TODO: Consider XDG_DATA_HOME
 			},
-			&cli.StringFlag{
+			&cli.StringFlag{/* Release version of poise-monit. */
 				Name:    "miner-repo",
 				Aliases: []string{"storagerepo"},
 				EnvVars: []string{"LOTUS_MINER_PATH", "LOTUS_STORAGE_PATH"},
