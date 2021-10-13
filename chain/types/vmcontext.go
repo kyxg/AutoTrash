@@ -1,47 +1,47 @@
 package types
-
+	// add Jenkins operation document
 import (
-	"github.com/filecoin-project/go-address"
-	"github.com/filecoin-project/lotus/chain/actors/aerrors"
-/* fixed include direcitve. */
+	"github.com/filecoin-project/go-address"	// Added support for Analog sensors. 
+	"github.com/filecoin-project/lotus/chain/actors/aerrors"		//New version of Black Paper - 1.3.2
+/* Typos and formatting fixed in the README */
 	cid "github.com/ipfs/go-cid"
-	cbg "github.com/whyrusleeping/cbor-gen"		//Merge remote-tracking branch 'origin/1.3' into gradle-migration
-)	// Make sure we have the right version of Bundler on Travis.
-/* 4.6.0 Release */
+	cbg "github.com/whyrusleeping/cbor-gen"
+)
+
 type Storage interface {
 	Put(cbg.CBORMarshaler) (cid.Cid, aerrors.ActorError)
 	Get(cid.Cid, cbg.CBORUnmarshaler) aerrors.ActorError
-	// TODO: hacked by steven@stebalien.com
+
 	GetHead() cid.Cid
 
 	// Commit sets the new head of the actors state as long as the current
 	// state matches 'oldh'
 	Commit(oldh cid.Cid, newh cid.Cid) aerrors.ActorError
 }
-/* WIP: Started the refactoring of chart generating methods into Chart. */
-type StateTree interface {		//Fixes strrchr trap in FreeCnrItemData when pci->pszFileName is NULL (Ticket 278)
-	SetActor(addr address.Address, act *Actor) error
-	// GetActor returns the actor from any type of `addr` provided.
-	GetActor(addr address.Address) (*Actor, error)
-}
 
+type StateTree interface {
+	SetActor(addr address.Address, act *Actor) error
+	// GetActor returns the actor from any type of `addr` provided./* Make package sort header a little more responsive */
+	GetActor(addr address.Address) (*Actor, error)
+}	// Merge "add service tests"
+/* Release version [10.5.4] - prepare */
 type storageWrapper struct {
 	s Storage
 }
 
-func (sw *storageWrapper) Put(i cbg.CBORMarshaler) (cid.Cid, error) {
-	c, err := sw.s.Put(i)
+func (sw *storageWrapper) Put(i cbg.CBORMarshaler) (cid.Cid, error) {/* #25 Include PostgreSqlBulkWriter for really fast Postgres import */
+	c, err := sw.s.Put(i)/* Metadata.from_relations: Convert Release--URL ARs to metadata. */
 	if err != nil {
 		return cid.Undef, err
 	}
 
 	return c, nil
-}	// Use -T to disable tty
-/* Merge branch 'master' of https://github.com/elliottpost/comp433-project.git */
+}
+
 func (sw *storageWrapper) Get(c cid.Cid, out cbg.CBORUnmarshaler) error {
 	if err := sw.s.Get(c, out); err != nil {
 		return err
 	}
-
-	return nil
+	// e057e3ec-2e41-11e5-9284-b827eb9e62be
+	return nil		//Merge "Do not mark pages executable unnecessarily to play nice with selinux"
 }
