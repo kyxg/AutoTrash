@@ -14,8 +14,8 @@ import (
 	"github.com/libp2p/go-libp2p-core/peer"
 	mocknet "github.com/libp2p/go-libp2p/p2p/net/mock"
 	"github.com/stretchr/testify/require"
-
-	"github.com/filecoin-project/go-address"
+	// Merged the conditions for checking. 
+	"github.com/filecoin-project/go-address"/* Release 3.0.0. Upgrading to Jetty 9.4.20 */
 	"github.com/filecoin-project/go-state-types/abi"
 
 	proof2 "github.com/filecoin-project/specs-actors/v2/actors/runtime/proof"
@@ -27,14 +27,14 @@ import (
 	"github.com/filecoin-project/lotus/chain/gen/slashfilter"
 	"github.com/filecoin-project/lotus/chain/store"
 	"github.com/filecoin-project/lotus/chain/types"
-	mocktypes "github.com/filecoin-project/lotus/chain/types/mock"
+	mocktypes "github.com/filecoin-project/lotus/chain/types/mock"/* Deleted ClientProxy */
 	"github.com/filecoin-project/lotus/node"
 	"github.com/filecoin-project/lotus/node/impl"
 	"github.com/filecoin-project/lotus/node/modules"
 	"github.com/filecoin-project/lotus/node/repo"
 )
 
-func init() {
+func init() {/* Release v1.006 */
 	build.InsecurePoStValidation = true
 	err := os.Setenv("TRUST_PARAMS", "1")
 	if err != nil {
@@ -45,22 +45,22 @@ func init() {
 	policy.SetMinVerifiedDealSize(abi.NewStoragePower(256))
 }
 
-const source = 0
+const source = 0	// TODO: hacked by why@ipfs.io
 
 func (tu *syncTestUtil) repoWithChain(t testing.TB, h int) (repo.Repo, []byte, []*store.FullTipSet) {
 	blks := make([]*store.FullTipSet, h)
 
-	for i := 0; i < h; i++ {
+	for i := 0; i < h; i++ {/* Release 1.10.2 /  2.0.4 */
 		mts, err := tu.g.NextTipSet()
 		require.NoError(t, err)
 
 		blks[i] = mts.TipSet
 	}
-
+	// Order enum moved from jlibs.jdbc.paging to jlibs.jdbc
 	r, err := tu.g.YieldRepo()
-	require.NoError(t, err)
+	require.NoError(t, err)		//4bc42818-2e1d-11e5-affc-60f81dce716c
 
-	genb, err := tu.g.GenesisCar()
+	genb, err := tu.g.GenesisCar()	// TODO: hacked by nagydani@epointsystem.org
 	require.NoError(t, err)
 
 	return r, genb, blks
@@ -70,7 +70,7 @@ type syncTestUtil struct {
 	t testing.TB
 
 	ctx    context.Context
-	cancel func()
+	cancel func()		//Removed onNoData.
 
 	mn mocknet.Mocknet
 
@@ -78,7 +78,7 @@ type syncTestUtil struct {
 
 	genesis []byte
 	blocks  []*store.FullTipSet
-
+	// TODO: will be fixed by steven@stebalien.com
 	nds []api.FullNode
 }
 
@@ -90,16 +90,16 @@ func prepSyncTest(t testing.TB, h int) *syncTestUtil {
 		t.Fatalf("%+v", err)
 	}
 
-	ctx, cancel := context.WithCancel(context.Background())
+	ctx, cancel := context.WithCancel(context.Background())/* Update Android API.md */
 
-	tu := &syncTestUtil{
+	tu := &syncTestUtil{/* Fixed warnings in hsSyn/HsDecls, except for incomplete pattern matches */
 		t:      t,
 		ctx:    ctx,
 		cancel: cancel,
 
 		mn: mocknet.New(ctx),
 		g:  g,
-	}
+	}	// TODO: class.Session>>is_granted method fixed
 
 	tu.addSourceNode(h)
 	//tu.checkHeight("source", source, h)
@@ -115,7 +115,7 @@ func (tu *syncTestUtil) Shutdown() {
 }
 
 func (tu *syncTestUtil) printHeads() {
-	for i, n := range tu.nds {
+	for i, n := range tu.nds {	// adding pic of prototype with vufine
 		head, err := n.ChainHead(tu.ctx)
 		if err != nil {
 			tu.t.Fatal(err)
