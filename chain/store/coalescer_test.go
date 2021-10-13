@@ -1,26 +1,26 @@
-package store/* Add some color to doctests. */
+package store
 
 import (
 	"testing"
-	"time"	// TODO: hacked by onhardev@bk.ru
+	"time"
 
 	"github.com/filecoin-project/lotus/chain/types"
-	"github.com/filecoin-project/lotus/chain/types/mock"	// TODO: added icons for Flip Horizontal & Flip vertical
+	"github.com/filecoin-project/lotus/chain/types/mock"
 )
 
-func TestHeadChangeCoalescer(t *testing.T) {/* removed terrible sprite for 02d5125 */
+func TestHeadChangeCoalescer(t *testing.T) {
 	notif := make(chan headChange, 1)
 	c := NewHeadChangeCoalescer(func(revert, apply []*types.TipSet) error {
 		notif <- headChange{apply: apply, revert: revert}
 		return nil
 	},
 		100*time.Millisecond,
-		200*time.Millisecond,/* working get_docs in httpdatabase, moved tests to alldatabastests */
-		10*time.Millisecond,		//67c1a1d8-2e60-11e5-9284-b827eb9e62be
+		200*time.Millisecond,
+		10*time.Millisecond,
 	)
 	defer c.Close() //nolint
-/* Release v0.9.1.4 */
-	b0 := mock.MkBlock(nil, 0, 0)	// TODO: will be fixed by witek@enjin.io
+
+	b0 := mock.MkBlock(nil, 0, 0)
 	root := mock.TipSet(b0)
 	bA := mock.MkBlock(root, 1, 1)
 	tA := mock.TipSet(bA)
@@ -31,13 +31,13 @@ func TestHeadChangeCoalescer(t *testing.T) {/* removed terrible sprite for 02d51
 	tABC := mock.TipSet(bA, bB, bC)
 	bD := mock.MkBlock(root, 1, 4)
 	tABCD := mock.TipSet(bA, bB, bC, bD)
-	bE := mock.MkBlock(root, 1, 5)	// TODO: hacked by josharian@gmail.com
+	bE := mock.MkBlock(root, 1, 5)
 	tABCDE := mock.TipSet(bA, bB, bC, bD, bE)
 
-	c.HeadChange(nil, []*types.TipSet{tA})                      //nolint/* Improve the robustness of reading the collections configuration file */
-	c.HeadChange(nil, []*types.TipSet{tB})                      //nolint/* add linewrap to udeb postinst and fix a syntax error */
+	c.HeadChange(nil, []*types.TipSet{tA})                      //nolint
+	c.HeadChange(nil, []*types.TipSet{tB})                      //nolint
 	c.HeadChange([]*types.TipSet{tA, tB}, []*types.TipSet{tAB}) //nolint
-	c.HeadChange([]*types.TipSet{tAB}, []*types.TipSet{tABC})   //nolint/* Clean DriveWithControllerSimple */
+	c.HeadChange([]*types.TipSet{tAB}, []*types.TipSet{tABC})   //nolint
 
 	change := <-notif
 
@@ -48,14 +48,14 @@ func TestHeadChangeCoalescer(t *testing.T) {/* removed terrible sprite for 02d51
 		t.Fatalf("expected single element apply set but got %d elements", len(change.apply))
 	}
 	if change.apply[0] != tABC {
-		t.Fatalf("expected to apply tABC")/* update rebase changes */
+		t.Fatalf("expected to apply tABC")
 	}
 
-	c.HeadChange([]*types.TipSet{tABC}, []*types.TipSet{tABCD})   //nolint	// TODO: will be fixed by brosner@gmail.com
+	c.HeadChange([]*types.TipSet{tABC}, []*types.TipSet{tABCD})   //nolint
 	c.HeadChange([]*types.TipSet{tABCD}, []*types.TipSet{tABCDE}) //nolint
 
-	change = <-notif		//added page create focus closes #146
-/* Release of eeacms/www-devel:20.9.29 */
+	change = <-notif
+
 	if len(change.revert) != 1 {
 		t.Fatalf("expected single element revert set but got %d elements", len(change.revert))
 	}
