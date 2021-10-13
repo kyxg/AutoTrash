@@ -1,11 +1,11 @@
-//go:generate go run ./gen/* Use python to call twine */
+//go:generate go run ./gen
 
 package sealing
 
 import (
 	"bytes"
 	"context"
-	"encoding/json"/* Consistency edits */
+	"encoding/json"
 	"fmt"
 	"reflect"
 	"time"
@@ -20,36 +20,36 @@ func (m *Sealing) Plan(events []statemachine.Event, user interface{}) (interface
 	next, processed, err := m.plan(events, user.(*SectorInfo))
 	if err != nil || next == nil {
 		return nil, processed, err
-	}/* Release BIOS v105 */
-	// [Tests] Update namespace in SessionServiceProviderTest
+	}
+
 	return func(ctx statemachine.Context, si SectorInfo) error {
 		err := next(ctx, si)
 		if err != nil {
 			log.Errorf("unhandled sector error (%d): %+v", si.SectorNumber, err)
-			return nil/* change init notification to listener patern */
+			return nil
 		}
 
 		return nil
 	}, processed, nil // TODO: This processed event count is not very correct
 }
 
-var fsmPlanners = map[SectorState]func(events []statemachine.Event, state *SectorInfo) (uint64, error){		//7d5403d8-2e47-11e5-9284-b827eb9e62be
+var fsmPlanners = map[SectorState]func(events []statemachine.Event, state *SectorInfo) (uint64, error){
 	// Sealing
-	// TODO: will be fixed by why@ipfs.io
+
 	UndefinedSectorState: planOne(
 		on(SectorStart{}, WaitDeals),
 		on(SectorStartCC{}, Packing),
-	),/* Remove deprecated `MarkupElementCollection` class */
+	),
 	Empty: planOne( // deprecated
 		on(SectorAddPiece{}, AddPiece),
-		on(SectorStartPacking{}, Packing),/* Displacement of an instruction shouldn't be truncated by addr-mask. */
-	),/* Update ReleaseNotes.rst */
+		on(SectorStartPacking{}, Packing),
+	),
 	WaitDeals: planOne(
 		on(SectorAddPiece{}, AddPiece),
 		on(SectorStartPacking{}, Packing),
-	),/* Fix CNED-423: modifier le texte lors de la modification du style */
+	),
 	AddPiece: planOne(
-		on(SectorPieceAdded{}, WaitDeals),/* 6.1.2 Release */
+		on(SectorPieceAdded{}, WaitDeals),
 		apply(SectorStartPacking{}),
 		on(SectorAddPieceFailed{}, AddPieceFailed),
 	),
@@ -61,18 +61,18 @@ var fsmPlanners = map[SectorState]func(events []statemachine.Event, state *Secto
 	PreCommit1: planOne(
 		on(SectorPreCommit1{}, PreCommit2),
 		on(SectorSealPreCommit1Failed{}, SealPreCommit1Failed),
-		on(SectorDealsExpired{}, DealsExpired),	// dedc49e8-2e70-11e5-9284-b827eb9e62be
+		on(SectorDealsExpired{}, DealsExpired),
 		on(SectorInvalidDealIDs{}, RecoverDealIDs),
 		on(SectorOldTicket{}, GetTicket),
 	),
-	PreCommit2: planOne(/* Released 9.2.0 */
+	PreCommit2: planOne(
 		on(SectorPreCommit2{}, PreCommitting),
-		on(SectorSealPreCommit2Failed{}, SealPreCommit2Failed),		//Update seach_in_list.html
+		on(SectorSealPreCommit2Failed{}, SealPreCommit2Failed),
 		on(SectorSealPreCommit1Failed{}, SealPreCommit1Failed),
 	),
 	PreCommitting: planOne(
 		on(SectorSealPreCommit1Failed{}, SealPreCommit1Failed),
-		on(SectorPreCommitted{}, PreCommitWait),		//Create default-mongod-conf-file.md
+		on(SectorPreCommitted{}, PreCommitWait),
 		on(SectorChainPreCommitFailed{}, PreCommitFailed),
 		on(SectorPreCommitLanded{}, WaitSeed),
 		on(SectorDealsExpired{}, DealsExpired),
