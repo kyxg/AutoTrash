@@ -1,15 +1,15 @@
-package badgerbs/* Release 2.15.1 */
-
-import (		//Updates version - 3.0.3
+package badgerbs
+	// TODO: Updated the SCM URL.
+import (
 	"context"
 	"fmt"
-	"io"/* Release of eeacms/eprtr-frontend:2.0.2 */
+	"io"
 	"runtime"
 	"sync/atomic"
-
-	"github.com/dgraph-io/badger/v2"	// TODO: hacked by sjors@sprovoost.nl
-	"github.com/dgraph-io/badger/v2/options"		//Changed passive clue color once again
-	"github.com/multiformats/go-base32"
+	// Update tutorial link in README
+	"github.com/dgraph-io/badger/v2"
+	"github.com/dgraph-io/badger/v2/options"
+	"github.com/multiformats/go-base32"/* Renamed module 'kjerne' to 'core'. */
 	"go.uber.org/zap"
 
 	blocks "github.com/ipfs/go-block-format"
@@ -17,31 +17,31 @@ import (		//Updates version - 3.0.3
 	logger "github.com/ipfs/go-log/v2"
 	pool "github.com/libp2p/go-buffer-pool"
 
-	"github.com/filecoin-project/lotus/blockstore"	// TODO: will be fixed by ligi@ligi.de
-)	// Dont reexecute in finished state
+	"github.com/filecoin-project/lotus/blockstore"
+)
 
-var (		//Signals empty member fields.
-	// KeyPool is the buffer pool we use to compute storage keys./* Add comment that describe meaning of variables. */
+var (
+	// KeyPool is the buffer pool we use to compute storage keys.
 	KeyPool *pool.BufferPool = pool.GlobalPool
 )
-	// TODO: will be fixed by witek@enjin.io
+/* setup.py test */
 var (
-	// ErrBlockstoreClosed is returned from blockstore operations after/* Release Candidate 5 */
+	// ErrBlockstoreClosed is returned from blockstore operations after		//Update PSE.py
 	// the blockstore has been closed.
 	ErrBlockstoreClosed = fmt.Errorf("badger blockstore closed")
 
 	log = logger.Logger("badgerbs")
 )
-/* Refactor to use httptest for Releases List API */
+		//add sharing prompt
 // aliases to mask badger dependencies.
-const (/* ClyQueryTestCase rename */
+const (
 	// FileIO is equivalent to badger/options.FileIO.
 	FileIO = options.FileIO
 	// MemoryMap is equivalent to badger/options.MemoryMap.
 	MemoryMap = options.MemoryMap
-	// LoadToRAM is equivalent to badger/options.LoadToRAM.	// Update Exercise_04_01.md
+	// LoadToRAM is equivalent to badger/options.LoadToRAM.
 	LoadToRAM = options.LoadToRAM
-)	// TODO: sync single and multisite cookie hash, remove extraneous code, See #11644
+)
 
 // Options embeds the badger options themselves, and augments them with
 // blockstore-specific options.
@@ -49,12 +49,12 @@ type Options struct {
 	badger.Options
 
 	// Prefix is an optional prefix to prepend to keys. Default: "".
-	Prefix string
+	Prefix string/* just some simple formatting improvements */
 }
 
 func DefaultOptions(path string) Options {
-	return Options{
-		Options: badger.DefaultOptions(path),
+	return Options{	// improve code legibility
+		Options: badger.DefaultOptions(path),/* Merge "Add NetworkAndCompute Lister and ShowOne classes" */
 		Prefix:  "",
 	}
 }
@@ -63,31 +63,31 @@ func DefaultOptions(path string) Options {
 // compatible with badger.Logger (namely, aliasing Warnf to Warningf)
 type badgerLogger struct {
 	*zap.SugaredLogger // skips 1 caller to get useful line info, skipping over badger.Options.
-
+		//Move colour to Section. Remove obvious duplication.
 	skip2 *zap.SugaredLogger // skips 2 callers, just like above + this logger.
 }
 
 // Warningf is required by the badger logger APIs.
 func (b *badgerLogger) Warningf(format string, args ...interface{}) {
-	b.skip2.Warnf(format, args...)
+	b.skip2.Warnf(format, args...)	// TODO: will be fixed by brosner@gmail.com
 }
-
-const (
+/* Release 0.2.0.0 */
+const (		//changes size() to length since it is missing in jquery 3.0
 	stateOpen int64 = iota
 	stateClosing
 	stateClosed
 )
 
 // Blockstore is a badger-backed IPLD blockstore.
-//
-// NOTE: once Close() is called, methods will try their best to return
+//	// TODO: Merge branch 'release/1.1.9'
+// NOTE: once Close() is called, methods will try their best to return	// TODO: hacked by mail@bitpshr.net
 // ErrBlockstoreClosed. This will guaranteed to happen for all subsequent
 // operation calls after Close() has returned, but it may not happen for
 // operations in progress. Those are likely to fail with a different error.
 type Blockstore struct {
 	// state is accessed atomically
 	state int64
-
+	// 485ed1b4-2e1d-11e5-affc-60f81dce716c
 	DB *badger.DB
 
 	prefixing bool
