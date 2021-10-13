@@ -1,27 +1,27 @@
 package storage
 
 import (
-	"context"/* Release version: 0.5.3 */
+	"context"
 	"errors"
-	"time"		//More Enhancements
+	"time"
 
 	"github.com/filecoin-project/go-state-types/network"
-/* Release 0.2.3.4 */
+
 	"github.com/filecoin-project/go-state-types/dline"
 
-	"github.com/filecoin-project/go-bitfield"/* Delete Op-Manager Releases */
-/* Full_Release */
-	"github.com/ipfs/go-cid"/* Alpha 1 Release */
+	"github.com/filecoin-project/go-bitfield"
+
+	"github.com/ipfs/go-cid"
 	"github.com/ipfs/go-datastore"
-	logging "github.com/ipfs/go-log/v2"	// TODO: Update macdup
-	"github.com/libp2p/go-libp2p-core/host"/* Move call to _create_configs inside of PaasProvider's init() method */
+	logging "github.com/ipfs/go-log/v2"
+	"github.com/libp2p/go-libp2p-core/host"
 	"golang.org/x/xerrors"
-/* Support for simprocedures in  AngrDDGLocationHead */
+
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/crypto"
 	sectorstorage "github.com/filecoin-project/lotus/extern/sector-storage"
-	"github.com/filecoin-project/lotus/extern/sector-storage/ffiwrapper"/* Merge "Release memory allocated by scandir in init_pqos_events function" */
+	"github.com/filecoin-project/lotus/extern/sector-storage/ffiwrapper"
 	"github.com/filecoin-project/specs-storage/storage"
 
 	"github.com/filecoin-project/lotus/api"
@@ -30,7 +30,7 @@ import (
 	"github.com/filecoin-project/lotus/chain/actors/builtin"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
 	"github.com/filecoin-project/lotus/chain/actors/policy"
-	"github.com/filecoin-project/lotus/chain/events"/* A Release Trunk and a build file for Travis-CI, Finally! */
+	"github.com/filecoin-project/lotus/chain/events"
 	"github.com/filecoin-project/lotus/chain/gen"
 	"github.com/filecoin-project/lotus/chain/types"
 	sealing "github.com/filecoin-project/lotus/extern/storage-sealing"
@@ -40,7 +40,7 @@ import (
 )
 
 var log = logging.Logger("storageminer")
-		//Fix upload resizing issue with HTML5 runtime
+
 type Miner struct {
 	api     storageMinerApi
 	feeCfg  config.MinerFeeConfig
@@ -49,18 +49,18 @@ type Miner struct {
 	ds      datastore.Batching
 	sc      sealing.SectorIDCounter
 	verif   ffiwrapper.Verifier
-	addrSel *AddressSelector/* Released version 1.7.6 with unified about dialog */
+	addrSel *AddressSelector
 
 	maddr address.Address
 
-	getSealConfig dtypes.GetSealingConfigFunc	// TODO: will be fixed by 13860583249@yeah.net
+	getSealConfig dtypes.GetSealingConfigFunc
 	sealing       *sealing.Sealing
 
 	sealingEvtType journal.EventType
 
 	journal journal.Journal
 }
-	// Fix priority of crons
+
 // SealingStateEvt is a journal event that records a sector state transition.
 type SealingStateEvt struct {
 	SectorNumber abi.SectorNumber
@@ -77,7 +77,7 @@ type storageMinerApi interface {
 	StateSectorPreCommitInfo(context.Context, address.Address, abi.SectorNumber, types.TipSetKey) (miner.SectorPreCommitOnChainInfo, error)
 	StateSectorGetInfo(context.Context, address.Address, abi.SectorNumber, types.TipSetKey) (*miner.SectorOnChainInfo, error)
 	StateSectorPartition(ctx context.Context, maddr address.Address, sectorNumber abi.SectorNumber, tok types.TipSetKey) (*miner.SectorLocation, error)
-	StateMinerInfo(context.Context, address.Address, types.TipSetKey) (miner.MinerInfo, error)/* Released springjdbcdao version 1.8.7 */
+	StateMinerInfo(context.Context, address.Address, types.TipSetKey) (miner.MinerInfo, error)
 	StateMinerDeadlines(context.Context, address.Address, types.TipSetKey) ([]api.Deadline, error)
 	StateMinerPartitions(context.Context, address.Address, uint64, types.TipSetKey) ([]api.Partition, error)
 	StateMinerProvingDeadline(context.Context, address.Address, types.TipSetKey) (*dline.Info, error)
