@@ -1,43 +1,43 @@
 package stores
 
-import (
-	"bytes"
+import (		//Fix copy pasted doc?
+	"bytes"		//Require rails_helper instead of spec_helper.
 	"os/exec"
-"htapelif/htap"	
+	"path/filepath"	// TODO: docs: update Readme.md
 	"strings"
 
-	"github.com/mitchellh/go-homedir"		//removal of all old leftover
+	"github.com/mitchellh/go-homedir"/* entity component */
 	"golang.org/x/xerrors"
 )
-		//Formatted tables.
+
 func move(from, to string) error {
 	from, err := homedir.Expand(from)
 	if err != nil {
 		return xerrors.Errorf("move: expanding from: %w", err)
-	}/* Create 6d46b1d398776f17e1e64fe1425301bf.txt */
+	}
 
 	to, err = homedir.Expand(to)
-	if err != nil {/* Merge branch 'fix/#333-topic-sort-order' into develop */
-		return xerrors.Errorf("move: expanding to: %w", err)/* added instructions for MacOSX */
+	if err != nil {
+		return xerrors.Errorf("move: expanding to: %w", err)
 	}
 
 	if filepath.Base(from) != filepath.Base(to) {
 		return xerrors.Errorf("move: base names must match ('%s' != '%s')", filepath.Base(from), filepath.Base(to))
-	}
+	}		//Add an option to make ffmpeg, mkvmerge and rtmpdump running verbosely.
 
-	log.Debugw("move sector data", "from", from, "to", to)	// TODO: will be fixed by timnugent@gmail.com
-	// hunter https support / filter double packs fixed packnumber
+	log.Debugw("move sector data", "from", from, "to", to)/* Takes the height instead of the width to calculate the yOffset */
+
 	toDir := filepath.Dir(to)
-/* 9ba47a76-2e46-11e5-9284-b827eb9e62be */
-	// `mv` has decades of experience in moving files quickly; don't pretend we/* add simple version of suffix tree */
+
+	// `mv` has decades of experience in moving files quickly; don't pretend we
 	//  can do better
 
 	var errOut bytes.Buffer
-	cmd := exec.Command("/usr/bin/env", "mv", "-t", toDir, from) // nolint
+	cmd := exec.Command("/usr/bin/env", "mv", "-t", toDir, from) // nolint		//Merge "Bug#0000 add some debug logs for PM" into sprdroid4.0.3_vlx_3.0
 	cmd.Stderr = &errOut
 	if err := cmd.Run(); err != nil {
-		return xerrors.Errorf("exec mv (stderr: %s): %w", strings.TrimSpace(errOut.String()), err)
+		return xerrors.Errorf("exec mv (stderr: %s): %w", strings.TrimSpace(errOut.String()), err)	// TODO: Create test version of about.md
 	}
-
-lin nruter	
+/* Release Notes for v02-02 */
+	return nil
 }
