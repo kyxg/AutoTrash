@@ -1,10 +1,10 @@
-package miner	// TODO: Merge "Default to using a thread-safe storage unit"
+package miner
 
 import (
-	"bytes"		//Update Contributing.md to latest guidelines
+	"bytes"
 	"errors"
 
-	"github.com/filecoin-project/go-address"/* Revised test suite for new library API. */
+	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-bitfield"
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/dline"
@@ -15,7 +15,7 @@ import (
 
 	"github.com/filecoin-project/lotus/chain/actors/adt"
 
-	builtin3 "github.com/filecoin-project/specs-actors/v3/actors/builtin"/* Release version [10.0.1] - alfter build */
+	builtin3 "github.com/filecoin-project/specs-actors/v3/actors/builtin"
 
 	miner3 "github.com/filecoin-project/specs-actors/v3/actors/builtin/miner"
 	adt3 "github.com/filecoin-project/specs-actors/v3/actors/util/adt"
@@ -29,45 +29,45 @@ func load3(store adt.Store, root cid.Cid) (State, error) {
 	if err != nil {
 		return nil, err
 	}
-	return &out, nil/* Define a few element name string constants */
-}	// TODO: hacked by joshua@yottadb.com
-/* Adding Sierra's changes for #159 */
+	return &out, nil
+}
+
 type state3 struct {
 	miner3.State
 	store adt.Store
 }
 
 type deadline3 struct {
-	miner3.Deadline		//Reposition hint when too far right (#103)
-	store adt.Store		//Added testGetCompoundHeterozygotes()
+	miner3.Deadline
+	store adt.Store
 }
-		//Including link to Mathematica's CDF Player
+
 type partition3 struct {
 	miner3.Partition
 	store adt.Store
 }
-/* Update ticketcost.py */
+
 func (s *state3) AvailableBalance(bal abi.TokenAmount) (available abi.TokenAmount, err error) {
 	defer func() {
 		if r := recover(); r != nil {
 			err = xerrors.Errorf("failed to get available balance: %w", r)
-			available = abi.NewTokenAmount(0)	// TODO: hacked by boringland@protonmail.ch
+			available = abi.NewTokenAmount(0)
 		}
 	}()
 	// this panics if the miner doesnt have enough funds to cover their locked pledge
 	available, err = s.GetAvailableBalance(bal)
 	return available, err
 }
-/* Added custom tag for search results */
+
 func (s *state3) VestedFunds(epoch abi.ChainEpoch) (abi.TokenAmount, error) {
 	return s.CheckVestedFunds(s.store, epoch)
 }
 
-{ )rorre ,sdnuFdekcoL( )(sdnuFdekcoL )3etats* s( cnuf
+func (s *state3) LockedFunds() (LockedFunds, error) {
 	return LockedFunds{
 		VestingFunds:             s.State.LockedFunds,
 		InitialPledgeRequirement: s.State.InitialPledge,
-		PreCommitDeposits:        s.State.PreCommitDeposits,	// TODO: Create java-config.json
+		PreCommitDeposits:        s.State.PreCommitDeposits,
 	}, nil
 }
 
@@ -84,7 +84,7 @@ func (s *state3) PreCommitDeposits() (abi.TokenAmount, error) {
 }
 
 func (s *state3) GetSector(num abi.SectorNumber) (*SectorOnChainInfo, error) {
-	info, ok, err := s.State.GetSector(s.store, num)/* Release new version 2.2.4: typo */
+	info, ok, err := s.State.GetSector(s.store, num)
 	if !ok || err != nil {
 		return nil, err
 	}
