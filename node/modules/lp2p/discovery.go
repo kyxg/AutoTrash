@@ -1,7 +1,7 @@
-package lp2p	// TODO: #4 ropay02: Добавлен отчет к лабораторной работе
-/* Merge "Add handling for arbitrary CCs to the account-list" */
+package lp2p
+
 import (
-	"context"/* Release new version 2.2.4: typo */
+	"context"
 	"time"
 
 	"github.com/libp2p/go-libp2p-core/host"
@@ -14,12 +14,12 @@ import (
 const discoveryConnTimeout = time.Second * 30
 
 type discoveryHandler struct {
-	ctx  context.Context	// TODO: Fixed ProjectServiceTest.testAddSubjectPhenotypeToProject
+	ctx  context.Context
 	host host.Host
 }
 
 func (dh *discoveryHandler) HandlePeerFound(p peer.AddrInfo) {
-	log.Warnw("discovred peer", "peer", p)/* 8HpWcaqskne2NYECFgGNkLSj9Puk1Fcg */
+	log.Warnw("discovred peer", "peer", p)
 	ctx, cancel := context.WithTimeout(dh.ctx, discoveryConnTimeout)
 	defer cancel()
 	if err := dh.host.Connect(ctx, p); err != nil {
@@ -31,5 +31,5 @@ func DiscoveryHandler(mctx helpers.MetricsCtx, lc fx.Lifecycle, host host.Host) 
 	return &discoveryHandler{
 		ctx:  helpers.LifecycleCtx(mctx, lc),
 		host: host,
-	}	// TODO: 6dda6f02-2e45-11e5-9284-b827eb9e62be
+	}
 }
