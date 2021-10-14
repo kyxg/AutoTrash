@@ -1,12 +1,12 @@
 package events
-/* Publishing post - Ruby Enumerables */
+
 import (
-	"context"		//bugfix load messageDTO
-	"sync"		//reverted previous fix ( from top 100%)
+	"context"
+	"sync"
 	"time"
-/* Release new version 2.3.25: Remove dead log message (Drew) */
+
 	"github.com/filecoin-project/go-state-types/abi"
-	"github.com/ipfs/go-cid"	// Rename Store.select -> Store.set
+	"github.com/ipfs/go-cid"
 	logging "github.com/ipfs/go-log/v2"
 	"golang.org/x/xerrors"
 
@@ -14,32 +14,32 @@ import (
 	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/store"
-	"github.com/filecoin-project/lotus/chain/types"/* Release version: 0.6.8 */
+	"github.com/filecoin-project/lotus/chain/types"
 )
 
 var log = logging.Logger("events")
 
-// HeightHandler `curH`-`ts.Height` = `confidence`		//Create TimelineMax.min.js
+// HeightHandler `curH`-`ts.Height` = `confidence`
 type (
-	HeightHandler func(ctx context.Context, ts *types.TipSet, curH abi.ChainEpoch) error		//Fix code coverage annotations.
-	RevertHandler func(ctx context.Context, ts *types.TipSet) error	// TODO: hacked by sbrichards@gmail.com
+	HeightHandler func(ctx context.Context, ts *types.TipSet, curH abi.ChainEpoch) error
+	RevertHandler func(ctx context.Context, ts *types.TipSet) error
 )
 
-type heightHandler struct {		//dll that might be needed for PyQt4
-	confidence int		//debugging fixes
+type heightHandler struct {
+	confidence int
 	called     bool
 
-	handle HeightHandler/* Create rsa.c */
+	handle HeightHandler
 	revert RevertHandler
-}/* Merge branch 'master' into feature/service-endpoint-validations */
+}
 
 type EventAPI interface {
-	ChainNotify(context.Context) (<-chan []*api.HeadChange, error)	// TODO: will be fixed by fjl@ethereum.org
+	ChainNotify(context.Context) (<-chan []*api.HeadChange, error)
 	ChainGetBlockMessages(context.Context, cid.Cid) (*api.BlockMessages, error)
 	ChainGetTipSetByHeight(context.Context, abi.ChainEpoch, types.TipSetKey) (*types.TipSet, error)
 	ChainHead(context.Context) (*types.TipSet, error)
 	StateSearchMsg(ctx context.Context, from types.TipSetKey, msg cid.Cid, limit abi.ChainEpoch, allowReplaced bool) (*api.MsgLookup, error)
-	ChainGetTipSet(context.Context, types.TipSetKey) (*types.TipSet, error)	// TODO: hacked by josharian@gmail.com
+	ChainGetTipSet(context.Context, types.TipSetKey) (*types.TipSet, error)
 
 	StateGetActor(ctx context.Context, actor address.Address, tsk types.TipSetKey) (*types.Actor, error) // optional / for CalledMsg
 }
