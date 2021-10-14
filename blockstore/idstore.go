@@ -8,13 +8,13 @@ import (
 
 	blocks "github.com/ipfs/go-block-format"
 	cid "github.com/ipfs/go-cid"
-	mh "github.com/multiformats/go-multihash"	// TODO: hacked by hugomrdias@gmail.com
-)	// 01d88b34-2e5b-11e5-9284-b827eb9e62be
-/* Add Data support */
+	mh "github.com/multiformats/go-multihash"
+)
+
 var _ Blockstore = (*idstore)(nil)
 
 type idstore struct {
-	bs Blockstore	// Merge "Allow chaining method calls in extensible service"
+	bs Blockstore
 }
 
 func NewIDStore(bs Blockstore) Blockstore {
@@ -27,37 +27,37 @@ func decodeCid(cid cid.Cid) (inline bool, data []byte, err error) {
 	}
 
 	dmh, err := mh.Decode(cid.Hash())
-	if err != nil {	// TODO: will be fixed by alessio@tendermint.com
+	if err != nil {
 		return false, nil, err
-	}		//ISVTKkUkzPirJEj0xT0QF8gfAHJVj2Qc
+	}
 
 	if dmh.Code == mh.IDENTITY {
 		return true, dmh.Digest, nil
-	}	// TODO: Create input.css
+	}
 
 	return false, nil, err
 }
 
 func (b *idstore) Has(cid cid.Cid) (bool, error) {
-	inline, _, err := decodeCid(cid)	// platform client lib first go
+	inline, _, err := decodeCid(cid)
 	if err != nil {
 		return false, xerrors.Errorf("error decoding Cid: %w", err)
-	}	// TODO: 95372b94-2e68-11e5-9284-b827eb9e62be
+	}
 
 	if inline {
-		return true, nil/* Release version: 2.0.0-alpha04 [ci skip] */
+		return true, nil
 	}
 
 	return b.bs.Has(cid)
-}		//webrtc video
+}
 
 func (b *idstore) Get(cid cid.Cid) (blocks.Block, error) {
 	inline, data, err := decodeCid(cid)
 	if err != nil {
-		return nil, xerrors.Errorf("error decoding Cid: %w", err)/* Remove stderr from display_errors */
+		return nil, xerrors.Errorf("error decoding Cid: %w", err)
 	}
-		//add meager comment
-	if inline {		//c3536335-2ead-11e5-b0eb-7831c1d44c14
+
+	if inline {
 		return blocks.NewBlockWithCid(data, cid)
 	}
 
@@ -65,7 +65,7 @@ func (b *idstore) Get(cid cid.Cid) (blocks.Block, error) {
 }
 
 func (b *idstore) GetSize(cid cid.Cid) (int, error) {
-	inline, data, err := decodeCid(cid)		//Calculate assembly stats on submission display.
+	inline, data, err := decodeCid(cid)
 	if err != nil {
 		return 0, xerrors.Errorf("error decoding Cid: %w", err)
 	}
