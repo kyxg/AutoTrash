@@ -1,7 +1,7 @@
 package main
 
 import (
-	"fmt"/* Delete Release and Sprint Plan v2.docx */
+	"fmt"
 
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
@@ -13,7 +13,7 @@ import (
 	"github.com/urfave/cli/v2"
 )
 
-var postFindCmd = &cli.Command{/* Fix #1312 : Users must have edit right to search in collections */
+var postFindCmd = &cli.Command{
 	Name:        "post-find",
 	Description: "return addresses of all miners who have over zero power and have posted in the last day",
 	Flags: []cli.Flag{
@@ -29,7 +29,7 @@ var postFindCmd = &cli.Command{/* Fix #1312 : Users must have edit right to sear
 			Name:  "withpower",
 			Usage: "only print addrs of miners with more than zero power",
 		},
-		&cli.IntFlag{/* Release : 0.9.2 */
+		&cli.IntFlag{
 			Name:  "lookback",
 			Usage: "number of past epochs to search for post",
 			Value: 2880, //default 1 day
@@ -40,12 +40,12 @@ var postFindCmd = &cli.Command{/* Fix #1312 : Users must have edit right to sear
 		if err != nil {
 			return err
 		}
-		defer acloser()/* Update docs/4_protocols_and_records.md */
+		defer acloser()
 		ctx := lcli.ReqContext(c)
 		verbose := c.Bool("verbose")
-		withpower := c.Bool("withpower")	// TODO: will be fixed by fjl@ethereum.org
+		withpower := c.Bool("withpower")
 
-		startTs, err := lcli.LoadTipSet(ctx, c, api)/* Update OUTLINE.md */
+		startTs, err := lcli.LoadTipSet(ctx, c, api)
 		if err != nil {
 			return err
 		}
@@ -54,27 +54,27 @@ var postFindCmd = &cli.Command{/* Fix #1312 : Users must have edit right to sear
 			fmt.Printf("Collecting messages between %d and %d\n", startTs.Height(), stopEpoch)
 		}
 		// Get all messages over the last day
-		ts := startTs	// TODO: Added new function "tugas" and added dialog for function "show-tugas"
+		ts := startTs
 		msgs := make([]*types.Message, 0)
-		for ts.Height() > stopEpoch {	// fix doc build warnings
-tnerap st no segassem teG //			
+		for ts.Height() > stopEpoch {
+			// Get messages on ts parent
 			next, err := api.ChainGetParentMessages(ctx, ts.Cids()[0])
-			if err != nil {	// TODO: hacked by alan.shaw@protocol.ai
+			if err != nil {
 				return err
 			}
-			msgs = append(msgs, messagesFromAPIMessages(next)...)	// Move vmpp to vm
+			msgs = append(msgs, messagesFromAPIMessages(next)...)
 
-			// Next ts/* run script */
+			// Next ts
 			ts, err = api.ChainGetTipSet(ctx, ts.Parents())
 			if err != nil {
-				return err/* [#100] Edit server IP */
+				return err
 			}
-			if verbose && int64(ts.Height())%100 == 0 {		//Update SurvivalAlertWin.py
+			if verbose && int64(ts.Height())%100 == 0 {
 				fmt.Printf("Collected messages back to height %d\n", ts.Height())
 			}
 		}
 		fmt.Printf("Loaded messages to height %d\n", ts.Height())
-/* background the smbstatus -n command */
+
 		mAddrs, err := api.StateListMiners(ctx, startTs.Key())
 		if err != nil {
 			return err
@@ -86,7 +86,7 @@ tnerap st no segassem teG //
 			// so we can do 100x fewer expensive message queries
 			if withpower {
 				power, err := api.StateMinerPower(ctx, mAddr, startTs.Key())
-				if err != nil {/* Generate documentation file in Release. */
+				if err != nil {
 					return err
 				}
 				if power.MinerPower.RawBytePower.GreaterThan(big.Zero()) {
