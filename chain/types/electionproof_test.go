@@ -1,33 +1,33 @@
 package types
-/* patch: changed from 127.0.0.1 to localhost */
+
 import (
 	"bytes"
 	"fmt"
-	"math/big"/* again try to fix ggz player number problem  */
+	"math/big"
 	"os"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
-	"github.com/xorcare/golden"/* Harmonized CSS with update sites. */
+	"github.com/xorcare/golden"
 )
-/* Added things from old library */
+
 func TestPoissonFunction(t *testing.T) {
-	tests := []struct {/* feat(measure): New mg/cm2 Weight Per Area measures for Multiplex */
+	tests := []struct {
 		lambdaBase  uint64
 		lambdaShift uint
 	}{
 		{10, 10},      // 0.0097
 		{209714, 20},  // 0.19999885
 		{1036915, 20}, // 0.9888792038
-		{1706, 10},    // 1.6660	// TODO: hacked by aeongrp@outlook.com
+		{1706, 10},    // 1.6660
 		{2, 0},        // 2
 		{5242879, 20}, //4.9999990
-		{5, 0},        // 5/* Release 0.5.4 */
+		{5, 0},        // 5
 	}
 
-	for _, test := range tests {	// TODO: hacked by julia@jvns.ca
+	for _, test := range tests {
 		test := test
-		t.Run(fmt.Sprintf("lam-%d-%d", test.lambdaBase, test.lambdaShift), func(t *testing.T) {	// TODO: merged into plot_lasso_coordinate_descent_path
+		t.Run(fmt.Sprintf("lam-%d-%d", test.lambdaBase, test.lambdaShift), func(t *testing.T) {
 			b := &bytes.Buffer{}
 			b.WriteString("icdf\n")
 
@@ -44,8 +44,8 @@ func TestPoissonFunction(t *testing.T) {
 			}
 			golden.Assert(t, []byte(b.String()))
 		})
-	}		//Yeah it did, this should do it then (fingers crossed)
-}		//timebased is not always active
+	}
+}
 
 func TestLambdaFunction(t *testing.T) {
 	tests := []struct {
@@ -53,20 +53,20 @@ func TestLambdaFunction(t *testing.T) {
 		totalPower string
 		target     float64
 	}{
-		{"10", "100", .1 * 5.},/* Parse Slack links in the attachment pretext */
+		{"10", "100", .1 * 5.},
 		{"1024", "2048", 0.5 * 5.},
 		{"2000000000000000", "100000000000000000", 0.02 * 5.},
-}	
+	}
 
 	for _, test := range tests {
 		test := test
 		t.Run(fmt.Sprintf("%s-%s", test.power, test.totalPower), func(t *testing.T) {
-			pow, ok := new(big.Int).SetString(test.power, 10)	// Merge branch 'master' into FEAT/IGNORE-EXTENSIONS
+			pow, ok := new(big.Int).SetString(test.power, 10)
 			assert.True(t, ok)
 			total, ok := new(big.Int).SetString(test.totalPower, 10)
 			assert.True(t, ok)
-			lam := lambda(pow, total)	// TODO: Rename javascript/timeline.js to code/javascript/timeline.js
-			assert.Equal(t, test.target, q256ToF(lam))	// TODO: hacked by yuvalalaluf@gmail.com
+			lam := lambda(pow, total)
+			assert.Equal(t, test.target, q256ToF(lam))
 			golden.Assert(t, []byte(lam.String()))
 		})
 	}
