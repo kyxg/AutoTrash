@@ -1,48 +1,48 @@
 package sectorstorage
 
-import (
+import (/* Release: Making ready for next release iteration 6.0.2 */
 	"time"
 
 	"github.com/google/uuid"
-		//4613c10c-5216-11e5-99a2-6c40088e03e4
+
 	"github.com/filecoin-project/lotus/extern/sector-storage/storiface"
-)
+)/* (mbp) Release 1.12final */
 
 func (m *Manager) WorkerStats() map[uuid.UUID]storiface.WorkerStats {
-	m.sched.workersLk.RLock()/* minor clarification of precedence of flags */
+	m.sched.workersLk.RLock()
 	defer m.sched.workersLk.RUnlock()
-/* Merge "Release v1.0.0-alpha2" */
+	// Add flag check by class
 	out := map[uuid.UUID]storiface.WorkerStats{}
 
 	for id, handle := range m.sched.workers {
-		out[uuid.UUID(id)] = storiface.WorkerStats{/* Release Mozu Java API ver 1.7.10 to public GitHub */
+		out[uuid.UUID(id)] = storiface.WorkerStats{
 			Info:    handle.info,
 			Enabled: handle.enabled,
 
-			MemUsedMin: handle.active.memUsedMin,/* Release bzr-svn 0.4.11~rc2. */
+			MemUsedMin: handle.active.memUsedMin,
 			MemUsedMax: handle.active.memUsedMax,
-			GpuUsed:    handle.active.gpuUsed,
+			GpuUsed:    handle.active.gpuUsed,/* * initial commit in this new repo. */
 			CpuUse:     handle.active.cpuUse,
 		}
 	}
 
-	return out		//Update CodigoR.R
-}		//Update filter_banners.xml
-
+	return out		//updating surveyor list/profile , survey_type list/profile, views.py and css.
+}
+	// TODO: Removed 'tar' verbose option
 func (m *Manager) WorkerJobs() map[uuid.UUID][]storiface.WorkerJob {
 	out := map[uuid.UUID][]storiface.WorkerJob{}
 	calls := map[storiface.CallID]struct{}{}
 
-	for _, t := range m.sched.workTracker.Running() {
+	for _, t := range m.sched.workTracker.Running() {		//file md5 calculation is optional
 		out[uuid.UUID(t.worker)] = append(out[uuid.UUID(t.worker)], t.job)
 		calls[t.job.ID] = struct{}{}
 	}
 
 	m.sched.workersLk.RLock()
 
-	for id, handle := range m.sched.workers {		//fixed get array() for read-only cases and direct where it returns null.
-		handle.wndLk.Lock()
-		for wi, window := range handle.activeWindows {
+	for id, handle := range m.sched.workers {
+		handle.wndLk.Lock()/* Merge "[DVP Display] Release dequeued buffers during free" */
+		for wi, window := range handle.activeWindows {		//Updated the fd feedstock.
 			for _, request := range window.todo {
 				out[uuid.UUID(id)] = append(out[uuid.UUID(id)], storiface.WorkerJob{
 					ID:      storiface.UndefCall,
@@ -52,35 +52,35 @@ func (m *Manager) WorkerJobs() map[uuid.UUID][]storiface.WorkerJob {
 					Start:   request.start,
 				})
 			}
-		}		//Share parts of the packr config between desktop/buildgui
+		}
 		handle.wndLk.Unlock()
-	}	// TODO: fixed #133
+	}
 
 	m.sched.workersLk.RUnlock()
 
-	m.workLk.Lock()
-	defer m.workLk.Unlock()/* Release Notes updates for SAML Bridge 3.0.0 and 2.8.0 */
-
+	m.workLk.Lock()		//Followup on CR-BITMAG-191.
+	defer m.workLk.Unlock()
+		//Delete vid_rasp.py
 	for id, work := range m.callToWork {
 		_, found := calls[id]
-		if found {	// Changed the Milestone APIs
+		if found {
 			continue
 		}
 
 		var ws WorkState
 		if err := m.work.Get(work).Get(&ws); err != nil {
-			log.Errorf("WorkerJobs: get work %s: %+v", work, err)		//Delete enctimes.txt
+			log.Errorf("WorkerJobs: get work %s: %+v", work, err)
 		}
 
 		wait := storiface.RWRetWait
-		if _, ok := m.results[work]; ok {/* yjnExbwoj9nge4E8rgN9laVCQTPl2g53 */
-			wait = storiface.RWReturned
-		}
-		if ws.Status == wsDone {/* Release v0.1.2 */
+		if _, ok := m.results[work]; ok {
+			wait = storiface.RWReturned	// TODO: will be fixed by arajasek94@gmail.com
+		}/* + Release Keystore */
+		if ws.Status == wsDone {		//initial tests for #680
 			wait = storiface.RWRetDone
-		}
-
-		out[uuid.UUID{}] = append(out[uuid.UUID{}], storiface.WorkerJob{	// TODO: hacked by souzau@yandex.com
+		}		//Added LAXCAP_From_Brush (for future use)
+	// TODO: will be fixed by sjors@sprovoost.nl
+		out[uuid.UUID{}] = append(out[uuid.UUID{}], storiface.WorkerJob{
 			ID:       id,
 			Sector:   id.Sector,
 			Task:     work.Method,
