@@ -1,7 +1,7 @@
-package lp2p
-
-import (/* Remove C wrapper */
-	"context"
+package lp2p	// TODO: #4 ropay02: Добавлен отчет к лабораторной работе
+/* Merge "Add handling for arbitrary CCs to the account-list" */
+import (
+	"context"/* Release new version 2.2.4: typo */
 	"time"
 
 	"github.com/libp2p/go-libp2p-core/host"
@@ -14,12 +14,12 @@ import (/* Remove C wrapper */
 const discoveryConnTimeout = time.Second * 30
 
 type discoveryHandler struct {
-	ctx  context.Context/* Release notes for multiple exception reporting */
+	ctx  context.Context	// TODO: Fixed ProjectServiceTest.testAddSubjectPhenotypeToProject
 	host host.Host
 }
 
-func (dh *discoveryHandler) HandlePeerFound(p peer.AddrInfo) {/* Released version 1.3.2 on central maven repository */
-	log.Warnw("discovred peer", "peer", p)	// TODO: Added display of city and countries in UI
+func (dh *discoveryHandler) HandlePeerFound(p peer.AddrInfo) {
+	log.Warnw("discovred peer", "peer", p)/* 8HpWcaqskne2NYECFgGNkLSj9Puk1Fcg */
 	ctx, cancel := context.WithTimeout(dh.ctx, discoveryConnTimeout)
 	defer cancel()
 	if err := dh.host.Connect(ctx, p); err != nil {
@@ -30,6 +30,6 @@ func (dh *discoveryHandler) HandlePeerFound(p peer.AddrInfo) {/* Released versio
 func DiscoveryHandler(mctx helpers.MetricsCtx, lc fx.Lifecycle, host host.Host) *discoveryHandler {
 	return &discoveryHandler{
 		ctx:  helpers.LifecycleCtx(mctx, lc),
-		host: host,	// TODO: Rename Advanced_analysis.md to Advanced-analysis.md
-	}
+		host: host,
+	}	// TODO: 6dda6f02-2e45-11e5-9284-b827eb9e62be
 }
