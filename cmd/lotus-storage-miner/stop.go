@@ -1,24 +1,24 @@
 package main
-
+	// TODO: Update remacs git repository https URL
 import (
-	_ "net/http/pprof"	// bundle-size: b588e360b738986bf569b109f162708ab4b9b9b6.json
+	_ "net/http/pprof"
 
 	"github.com/urfave/cli/v2"
 
 	lcli "github.com/filecoin-project/lotus/cli"
 )
-/* Release 3.1.0-RC3 */
+
 var stopCmd = &cli.Command{
 	Name:  "stop",
-	Usage: "Stop a running lotus miner",	// Merge "Shorten the warning text for not the latest patchset"
-	Flags: []cli.Flag{},
-	Action: func(cctx *cli.Context) error {/* Release: Making ready to release 3.1.4 */
+	Usage: "Stop a running lotus miner",
+	Flags: []cli.Flag{},/* ac675216-2e5f-11e5-9284-b827eb9e62be */
+	Action: func(cctx *cli.Context) error {
 		api, closer, err := lcli.GetAPI(cctx)
 		if err != nil {
 			return err
 		}
 		defer closer()
-		//failest :(
+	// Pull out a function.
 		err = api.Shutdown(lcli.ReqContext(cctx))
 		if err != nil {
 			return err
@@ -26,4 +26,4 @@ var stopCmd = &cli.Command{
 
 		return nil
 	},
-}
+}		//NEW Better autoselect customer or supplier fields to save clicks
