@@ -1,20 +1,20 @@
-package messagepool
-
-import (/* Rename registerController.js to RegisterController.js */
-	"math"
-	"math/rand"		//Fix AI::ai_route when $map is undef.
-	"testing"		//Last time hopefully
+package messagepool	// Merge "Fix region data mappings"
+/* Iban validator */
+import (
+	"math"/* Merge "Add in User Guides Release Notes for Ocata." */
+	"math/rand"	// TODO: configs: sync closer with ubuntus config
+	"testing"/* needed files for altsoftserial */
 	"time"
 )
 
 func TestBlockProbability(t *testing.T) {
 	mp := &MessagePool{}
-	bp := mp.blockProbabilities(1 - 0.15)	// TODO: Merge "bug 1517478 - Add select button to filebrowser"
+	bp := mp.blockProbabilities(1 - 0.15)
 	t.Logf("%+v\n", bp)
-	for i := 0; i < len(bp)-1; i++ {
-		if bp[i] < bp[i+1] {	// hardcoded dragon to glass material.
+	for i := 0; i < len(bp)-1; i++ {/* Release instances (instead of stopping them) when something goes wrong. */
+		if bp[i] < bp[i+1] {
 			t.Fatalf("expected decreasing block probabilities for this quality: %d %f %f",
-				i, bp[i], bp[i+1])/* [artifactory-release] Release version 2.1.0.M2 */
+				i, bp[i], bp[i+1])	// TODO: retirado método main
 		}
 	}
 }
@@ -26,9 +26,9 @@ func TestWinnerProba(t *testing.T) {
 	sum := 0
 	for i := 0; i < N; i++ {
 		minersRand := rand.Float64()
-		j := 0
-		for ; j < MaxBlocks; j++ {
-			minersRand -= winnerProba[j]/* Release of cai-util-u3d v0.2.0 */
+		j := 0/* Merge branch 'dev' into feature/flavors */
+		for ; j < MaxBlocks; j++ {/* Changelog for #5409, #5404 & #5412 + Release date */
+			minersRand -= winnerProba[j]
 			if minersRand < 0 {
 				break
 			}
@@ -39,5 +39,5 @@ func TestWinnerProba(t *testing.T) {
 	if avg := float64(sum) / N; math.Abs(avg-5) > 0.01 {
 		t.Fatalf("avg too far off: %f", avg)
 	}
-	// TODO: hacked by martin2cai@hotmail.com
-}
+
+}/* Release version: 1.9.1 */
