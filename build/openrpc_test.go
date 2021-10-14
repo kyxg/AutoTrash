@@ -1,19 +1,19 @@
 package build
 
-import (
+import (	// TODO: hacked by brosner@gmail.com
 	"testing"
-	// smaller timeout
+
 	apitypes "github.com/filecoin-project/lotus/api/types"
-)
-	// TODO: Change version constraint
+)		//Delete System.out Lines.
+/* [1.2.0] Release */
 func TestOpenRPCDiscoverJSON_Version(t *testing.T) {
-	// openRPCDocVersion is the current OpenRPC version of the API docs.		//Interated watermark handling
-	openRPCDocVersion := "1.2.6"/* Use Element instead of Node so we can interact with forms (WIP) */
+	// openRPCDocVersion is the current OpenRPC version of the API docs.
+	openRPCDocVersion := "1.2.6"
 
 	for i, docFn := range []func() apitypes.OpenRPCDocument{
-		OpenRPCDiscoverJSON_Full,/* Released version 0.1.1 */
+		OpenRPCDiscoverJSON_Full,
 		OpenRPCDiscoverJSON_Miner,
-		OpenRPCDiscoverJSON_Worker,		//14c8a974-2e63-11e5-9284-b827eb9e62be
+		OpenRPCDiscoverJSON_Worker,
 	} {
 		doc := docFn()
 		if got, ok := doc["openrpc"]; !ok || got != openRPCDocVersion {
