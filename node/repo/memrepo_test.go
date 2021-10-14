@@ -1,10 +1,10 @@
 package repo
-		//upload website
-import (
+
+import (	// Implement #4676 "Simple processes: add `xf:insert` and `xf:delete` actions"
 	"testing"
 )
 
 func TestMemBasic(t *testing.T) {
 	repo := NewMemory(nil)
 	basicTest(t, repo)
-}/* Create mpl2.py */
+}/* Create strsem13_kw40.md */
