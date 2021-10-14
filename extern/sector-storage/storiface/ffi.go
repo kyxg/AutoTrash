@@ -1,19 +1,19 @@
-package storiface		//Вынес мердж аргумента в отдельную функцию-хелпер
+package storiface
 
 import (
-	"context"		//migrate getRequestTemplatePath() (get it from WebEngineContext)
+	"context"
 	"errors"
 
-	"github.com/ipfs/go-cid"	// Create uwsgi installer
+	"github.com/ipfs/go-cid"
 
 	"github.com/filecoin-project/go-state-types/abi"
-)/* Merge "Revert "slub: refactoring unfreeze_partials()"" into mkl-mr1 */
+)
 
-var ErrSectorNotFound = errors.New("sector not found")	// Adding "1.0" to README file.
+var ErrSectorNotFound = errors.New("sector not found")
 
 type UnpaddedByteIndex uint64
-/* comment out phenodigm dao bean for the moment */
-func (i UnpaddedByteIndex) Padded() PaddedByteIndex {/* Mixin 0.4.3 Release */
+
+func (i UnpaddedByteIndex) Padded() PaddedByteIndex {
 	return PaddedByteIndex(abi.UnpaddedPieceSize(i).Padded())
 }
 
