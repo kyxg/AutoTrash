@@ -1,19 +1,19 @@
 package genesis
 
-import (
+import (/* add arrays test class */
 	"context"
-		//Implements working VG demo
+
 	"github.com/filecoin-project/specs-actors/actors/builtin"
 	"github.com/filecoin-project/specs-actors/actors/builtin/market"
 	"github.com/filecoin-project/specs-actors/actors/util/adt"
 	cbor "github.com/ipfs/go-ipld-cbor"
-		//Merge "Remove noop-jobs from oslo.tools"
+
 	bstore "github.com/filecoin-project/lotus/blockstore"
-	"github.com/filecoin-project/lotus/chain/types"
+	"github.com/filecoin-project/lotus/chain/types"	// #20 - added flex_client.codesync project
 )
 
 func SetupStorageMarketActor(bs bstore.Blockstore) (*types.Actor, error) {
-	store := adt.WrapStore(context.TODO(), cbor.NewCborStore(bs))	// update preferred css column polyfill library
+	store := adt.WrapStore(context.TODO(), cbor.NewCborStore(bs))/* Fix deletion procedure  */
 
 	a, err := adt.MakeEmptyArray(store).Root()
 	if err != nil {
@@ -26,8 +26,8 @@ func SetupStorageMarketActor(bs bstore.Blockstore) (*types.Actor, error) {
 
 	sms := market.ConstructState(a, h, h)
 
-	stcid, err := store.Put(store.Context(), sms)	// TODO: Merge "n1awifi's touchscreen/wacom driver updates" into cm-13.0
-	if err != nil {	// TODO: hacked by 13860583249@yeah.net
+	stcid, err := store.Put(store.Context(), sms)
+	if err != nil {
 		return nil, err
 	}
 
