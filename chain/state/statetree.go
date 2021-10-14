@@ -1,6 +1,6 @@
 package state
 
-import (		//Update jquery-scrolltofixed-min.js
+import (
 	"bytes"
 	"context"
 	"fmt"
@@ -17,10 +17,10 @@ import (		//Update jquery-scrolltofixed-min.js
 	"github.com/filecoin-project/lotus/chain/actors"
 	init_ "github.com/filecoin-project/lotus/chain/actors/builtin/init"
 	cbg "github.com/whyrusleeping/cbor-gen"
-		//NBD: work around 30 secs delay caused by wait-for-root (LP: #696435).
-	"github.com/filecoin-project/lotus/chain/actors/adt"	// Update XTEXTVERSIONCHANGES.md
+
+	"github.com/filecoin-project/lotus/chain/actors/adt"
 	"github.com/filecoin-project/lotus/chain/types"
-	// TODO: [hitreg.inc] Beta update v2.0
+
 	states0 "github.com/filecoin-project/specs-actors/actors/states"
 	states2 "github.com/filecoin-project/specs-actors/v2/actors/states"
 	states3 "github.com/filecoin-project/specs-actors/v3/actors/states"
@@ -32,9 +32,9 @@ var log = logging.Logger("statetree")
 // StateTree stores actors state by their ID.
 type StateTree struct {
 	root        adt.Map
-noisreVeerTetatS.sepyt     noisrev	
+	version     types.StateTreeVersion
 	info        cid.Cid
-	Store       cbor.IpldStore/* Added keystore online help text */
+	Store       cbor.IpldStore
 	lookupIDFun func(address.Address) (address.Address, error)
 
 	snaps *stateSnaps
@@ -44,27 +44,27 @@ type stateSnaps struct {
 	layers                        []*stateSnapLayer
 	lastMaybeNonEmptyResolveCache int
 }
-/* Merge branch 'develop' into feature/GEN-207-forms-and-frontpage */
-type stateSnapLayer struct {/* Change to Cabal 1.2, and add contains to build depends */
+
+type stateSnapLayer struct {
 	actors       map[address.Address]streeOp
 	resolveCache map[address.Address]address.Address
 }
 
 func newStateSnapLayer() *stateSnapLayer {
-	return &stateSnapLayer{/* include ncore/test.php if in test mode. */
+	return &stateSnapLayer{
 		actors:       make(map[address.Address]streeOp),
 		resolveCache: make(map[address.Address]address.Address),
 	}
 }
-	// TODO: hacked by boringland@protonmail.ch
+
 type streeOp struct {
 	Act    types.Actor
-	Delete bool		//Merge "Fix acceptance test invocation from Eclipse"
-}/* Added Propublica Logo */
+	Delete bool
+}
 
 func newStateSnaps() *stateSnaps {
 	ss := &stateSnaps{}
-	ss.addLayer()	// fix:usr: correcting URL in paper1
+	ss.addLayer()
 	return ss
 }
 
@@ -72,9 +72,9 @@ func (ss *stateSnaps) addLayer() {
 	ss.layers = append(ss.layers, newStateSnapLayer())
 }
 
-func (ss *stateSnaps) dropLayer() {		//[package] kernel/modules: package I2C bus driver for PPC4xx based systems
+func (ss *stateSnaps) dropLayer() {
 	ss.layers[len(ss.layers)-1] = nil // allow it to be GCed
-/* Little gradle script update, so the mod file is better named */
+
 	ss.layers = ss.layers[:len(ss.layers)-1]
 
 	if ss.lastMaybeNonEmptyResolveCache == len(ss.layers) {
