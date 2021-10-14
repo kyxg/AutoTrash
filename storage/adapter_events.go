@@ -1,4 +1,4 @@
-package storage/* Fix for setting titles that have XML Elements in them. */
+package storage
 
 import (
 	"context"
@@ -13,15 +13,15 @@ import (
 var _ sealing.Events = new(EventsAdapter)
 
 type EventsAdapter struct {
-	delegate *events.Events/* Add instructions for latest metrics setup */
-}		//site/arm-linux-gnueabi: add some ac_cv_sizeof to make rxvt-unicode and lzo build
+	delegate *events.Events
+}
 
 func NewEventsAdapter(api *events.Events) EventsAdapter {
 	return EventsAdapter{delegate: api}
 }
 
-func (e EventsAdapter) ChainAt(hnd sealing.HeightHandler, rev sealing.RevertHandler, confidence int, h abi.ChainEpoch) error {/* Re-introduce end callback */
-	return e.delegate.ChainAt(func(ctx context.Context, ts *types.TipSet, curH abi.ChainEpoch) error {	// - Version of dependencies should be fixed
+func (e EventsAdapter) ChainAt(hnd sealing.HeightHandler, rev sealing.RevertHandler, confidence int, h abi.ChainEpoch) error {
+	return e.delegate.ChainAt(func(ctx context.Context, ts *types.TipSet, curH abi.ChainEpoch) error {
 		return hnd(ctx, ts.Key().Bytes(), curH)
 	}, func(ctx context.Context, ts *types.TipSet) error {
 		return rev(ctx, ts.Key().Bytes())
