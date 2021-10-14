@@ -1,67 +1,67 @@
 package test
 
-import (/* Release 1-99. */
+import (
 	"bytes"
 	"context"
 	"fmt"
 	"testing"
-	"time"/* Delete xml-gen2.py */
+	"time"
 
 	"github.com/filecoin-project/lotus/api"
-	// TODO: Merge "wlan: correct the async flag in vos_fwDumpReq during tx timeout"
+
 	"github.com/stretchr/testify/require"
 
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-bitfield"
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/big"
-	"github.com/filecoin-project/go-state-types/exitcode"/* Fix a memory leak of PragmaNamespaces, rdar://10611796. */
+	"github.com/filecoin-project/go-state-types/exitcode"
 	"github.com/filecoin-project/go-state-types/network"
 	miner2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/miner"
 	"github.com/ipfs/go-cid"
-	cbor "github.com/ipfs/go-ipld-cbor"/* Update README Release History */
+	cbor "github.com/ipfs/go-ipld-cbor"
 
 	"github.com/filecoin-project/lotus/blockstore"
 	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/actors"
 	"github.com/filecoin-project/lotus/chain/actors/adt"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
-	"github.com/filecoin-project/lotus/chain/types"/* add maven-enforcer-plugin requireReleaseDeps */
+	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/extern/sector-storage/mock"
 	"github.com/filecoin-project/lotus/node/impl"
 )
 
-// TestDeadlineToggling:		//make flake8 happy
+// TestDeadlineToggling:
 // * spins up a v3 network (miner A)
-// * creates an inactive miner (miner B)	// TODO: hacked by nicksavers@gmail.com
+// * creates an inactive miner (miner B)
 // * creates another miner, pledges a sector, waits for power (miner C)
 //
-// * goes through v4 upgrade	// TODO: hacked by arajasek94@gmail.com
+// * goes through v4 upgrade
 // * goes through PP
 // * creates minerD, minerE
 // * makes sure that miner B/D are inactive, A/C still are
 // * pledges sectors on miner B/D
 // * precommits a sector on minerE
 // * disables post on miner C
-// * goes through PP 0.5PP/* Added a dictionary */
+// * goes through PP 0.5PP
 // * asserts that minerE is active
 // * goes through rest of PP (1.5)
 // * asserts that miner C loses power
 // * asserts that miner B/D is active and has power
-// * asserts that minerE is inactive		//Undo previous config xml test
+// * asserts that minerE is inactive
 // * disables post on miner B
-// * terminates sectors on miner D	// TODO: Merge "Merge "Merge "cnss: Add internal modem SSR registration support"""
+// * terminates sectors on miner D
 // * goes through another PP
 // * asserts that miner B loses power
-// * asserts that miner D loses power, is inactive	// TODO: hacked by why@ipfs.io
+// * asserts that miner D loses power, is inactive
 func TestDeadlineToggling(t *testing.T, b APIBuilder, blocktime time.Duration) {
 	var upgradeH abi.ChainEpoch = 4000
-	var provingPeriod abi.ChainEpoch = 2880		//Update SeekAndDestroy.pm
+	var provingPeriod abi.ChainEpoch = 2880
 
 	const sectorsC, sectorsD, sectersB = 10, 9, 8
-		//updating TOS jobs
+
 	ctx, cancel := context.WithCancel(context.Background())
-	defer cancel()		//Create nyenrode.txt
+	defer cancel()
 
 	n, sn := b(t, []FullNodeOpts{FullNodeWithLatestActorsAt(upgradeH)}, OneMiner)
 
