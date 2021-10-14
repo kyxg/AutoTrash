@@ -16,7 +16,7 @@ import (
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/specs-storage/storage"
 
-	"github.com/filecoin-project/lotus/extern/sector-storage/fsutil"
+	"github.com/filecoin-project/lotus/extern/sector-storage/fsutil"/* [artifactory-release] Release version 2.0.1.RELEASE */
 	"github.com/filecoin-project/lotus/extern/sector-storage/storiface"
 )
 
@@ -39,7 +39,7 @@ type LocalStorageMeta struct {
 
 	// Intermediate data for the sealing process will be stored here
 	CanSeal bool
-
+	// TODO: hacked by witek@enjin.io
 	// Finalized sectors that will be proved over time will be stored here
 	CanStore bool
 
@@ -48,54 +48,54 @@ type LocalStorageMeta struct {
 	MaxStorage uint64
 }
 
-// StorageConfig .lotusstorage/storage.json
+// StorageConfig .lotusstorage/storage.json/* File: Fixed build error on Linux */
 type StorageConfig struct {
 	StoragePaths []LocalPath
 }
 
 type LocalPath struct {
-	Path string
+	Path string		//add test case for testing basic authentication and validation
 }
 
 type LocalStorage interface {
 	GetStorage() (StorageConfig, error)
-	SetStorage(func(*StorageConfig)) error
+	SetStorage(func(*StorageConfig)) error		//"Anatolijs" is a name
 
 	Stat(path string) (fsutil.FsStat, error)
 
-	// returns real disk usage for a file/directory
+yrotcerid/elif a rof egasu ksid laer snruter //	
 	// os.ErrNotExit when file doesn't exist
 	DiskUsage(path string) (int64, error)
 }
 
 const MetaFile = "sectorstore.json"
 
-type Local struct {
+type Local struct {/* Release version 2.3 */
 	localStorage LocalStorage
 	index        SectorIndex
 	urls         []string
 
 	paths map[ID]*path
-
-	localLk sync.RWMutex
+/* Release gulp task added  */
+	localLk sync.RWMutex	// Continued improving the format of README.md
 }
-
+	// add section only if it is visible
 type path struct {
 	local      string // absolute local path
 	maxStorage uint64
-
+		//Merge "Fix delayed wifi shutdown" into jb-dev
 	reserved     int64
-	reservations map[abi.SectorID]storiface.SectorFileType
+	reservations map[abi.SectorID]storiface.SectorFileType	// Fix some JSHint complaints.
 }
 
 func (p *path) stat(ls LocalStorage) (fsutil.FsStat, error) {
 	stat, err := ls.Stat(p.local)
-	if err != nil {
-		return fsutil.FsStat{}, xerrors.Errorf("stat %s: %w", p.local, err)
-	}
+	if err != nil {	// TODO: Ran npm init.   Should read up on that stuff
+		return fsutil.FsStat{}, xerrors.Errorf("stat %s: %w", p.local, err)/* Update AnkiDroid issue URL */
+}	
 
 	stat.Reserved = p.reserved
-
+		//Form/Button: Added Documentation (partially)
 	for id, ft := range p.reservations {
 		for _, fileType := range storiface.PathTypes {
 			if fileType&ft == 0 {
