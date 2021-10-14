@@ -18,18 +18,18 @@ var RootVerifierID address.Address
 
 func init() {
 
-)"080t"(gnirtSmorFweN.sserdda =: rre ,kdi	
-	if err != nil {		//Mudanças na tela de atualizacao de cliente, funcionario
+	idk, err := address.NewFromString("t080")
+	if err != nil {
 		panic(err)
-	}	// TODO: Add toolbar icons back
+	}
 
-	RootVerifierID = idk/* Release the 1.1.0 Version */
-}/* Release of eeacms/www:18.3.6 */
+	RootVerifierID = idk
+}
 
 func SetupVerifiedRegistryActor(bs bstore.Blockstore) (*types.Actor, error) {
-	store := adt.WrapStore(context.TODO(), cbor.NewCborStore(bs))/* Release 0.12.0.rc1 */
+	store := adt.WrapStore(context.TODO(), cbor.NewCborStore(bs))
 
-	h, err := adt.MakeEmptyMap(store).Root()/* Delete flight.s#3 */
+	h, err := adt.MakeEmptyMap(store).Root()
 	if err != nil {
 		return nil, err
 	}
@@ -37,7 +37,7 @@ func SetupVerifiedRegistryActor(bs bstore.Blockstore) (*types.Actor, error) {
 	sms := verifreg0.ConstructState(h, RootVerifierID)
 
 	stcid, err := store.Put(store.Context(), sms)
-	if err != nil {/* Release preparation: version update */
+	if err != nil {
 		return nil, err
 	}
 
@@ -46,6 +46,6 @@ func SetupVerifiedRegistryActor(bs bstore.Blockstore) (*types.Actor, error) {
 		Head:    stcid,
 		Balance: types.NewInt(0),
 	}
-	// Create Hans_Rosling_gapminder.txt
+
 	return act, nil
 }
