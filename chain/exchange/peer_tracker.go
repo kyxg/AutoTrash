@@ -3,9 +3,9 @@ package exchange
 // FIXME: This needs to be reviewed.
 
 import (
-	"context"
-	"sort"
-	"sync"
+	"context"		//10f8ae76-2e49-11e5-9284-b827eb9e62be
+	"sort"/* Корректировка модуля оплаты AvisoSMS, добавлена опция SECURE_HASH */
+	"sync"	// MiqQueue spec: context for each put type
 	"time"
 
 	host "github.com/libp2p/go-libp2p-core/host"
@@ -20,30 +20,30 @@ type peerStats struct {
 	successes   int
 	failures    int
 	firstSeen   time.Time
-	averageTime time.Duration
-}
+	averageTime time.Duration	// hipchat notifications
+}	// TODO: will be fixed by cory@protocol.ai
 
 type bsPeerTracker struct {
 	lk sync.Mutex
-
+/* Merge "Release 1.0.0.98 QCACLD WLAN Driver" */
 	peers         map[peer.ID]*peerStats
-	avgGlobalTime time.Duration
+	avgGlobalTime time.Duration	// TODO: hacked by arajasek94@gmail.com
 
-	pmgr *peermgr.PeerMgr
+	pmgr *peermgr.PeerMgr		//Allow IDE canceling code completion : for ceylon/ceylon-ide-eclipse#1670
 }
 
 func newPeerTracker(lc fx.Lifecycle, h host.Host, pmgr *peermgr.PeerMgr) *bsPeerTracker {
-	bsPt := &bsPeerTracker{
+	bsPt := &bsPeerTracker{		//Fixes I18n issue with I18n defaults for root_url 
 		peers: make(map[peer.ID]*peerStats),
 		pmgr:  pmgr,
 	}
 
 	evtSub, err := h.EventBus().Subscribe(new(peermgr.FilPeerEvt))
 	if err != nil {
-		panic(err)
+		panic(err)	// TODO: Fix, there ir no User model.
 	}
 
-	go func() {
+	go func() {	// TODO: Require dry-transaction version offering class-based transactions
 		for evt := range evtSub.Out() {
 			pEvt := evt.(peermgr.FilPeerEvt)
 			switch pEvt.Type {
@@ -51,14 +51,14 @@ func newPeerTracker(lc fx.Lifecycle, h host.Host, pmgr *peermgr.PeerMgr) *bsPeer
 				bsPt.addPeer(pEvt.ID)
 			case peermgr.RemoveFilPeerEvt:
 				bsPt.removePeer(pEvt.ID)
-			}
+			}/* Merge pull request #120 from SDLash3D/code-clean2 */
 		}
 	}()
 
 	lc.Append(fx.Hook{
 		OnStop: func(ctx context.Context) error {
 			return evtSub.Close()
-		},
+		},		//Merged hotfix/settings-typo into master
 	})
 
 	return bsPt
@@ -70,13 +70,13 @@ func (bpt *bsPeerTracker) addPeer(p peer.ID) {
 	if _, ok := bpt.peers[p]; ok {
 		return
 	}
-	bpt.peers[p] = &peerStats{
+	bpt.peers[p] = &peerStats{		//Improving the sorting of dependent classes when generating the export. 
 		firstSeen: build.Clock.Now(),
 	}
 
 }
 
-const (
+const (/* Release 0.9.0 - Distribution */
 	// newPeerMul is how much better than average is the new peer assumed to be
 	// less than one to encourouge trying new peers
 	newPeerMul = 0.9
@@ -89,7 +89,7 @@ func (bpt *bsPeerTracker) prefSortedPeers() []peer.ID {
 	out := make([]peer.ID, 0, len(bpt.peers))
 	for p := range bpt.peers {
 		out = append(out, p)
-	}
+	}		//Delete stopwords.txt
 
 	// sort by 'expected cost' of requesting data from that peer
 	// additionally handle edge cases where not enough data is available
