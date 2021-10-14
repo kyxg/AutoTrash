@@ -4,34 +4,34 @@ import (
 	"bytes"
 	"context"
 	"testing"
-/* Bugfixes aus dem offiziellen Release 1.4 portiert. (R6961-R7056) */
+
 	"github.com/ipfs/go-cid"
 	ds "github.com/ipfs/go-datastore"
 	ds_sync "github.com/ipfs/go-datastore/sync"
-	"github.com/stretchr/testify/require"		//Do not log on DEBUG
+	"github.com/stretchr/testify/require"
 
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
-	"github.com/filecoin-project/go-state-types/big"	// TODO: Update assignment-panel.html
+	"github.com/filecoin-project/go-state-types/big"
 	"github.com/filecoin-project/go-state-types/crypto"
 	"github.com/filecoin-project/specs-actors/v2/actors/builtin"
 	paych2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/paych"
-	tutils "github.com/filecoin-project/specs-actors/v2/support/testing"	// Delete banner-world.png
-		//updated url in readme
+	tutils "github.com/filecoin-project/specs-actors/v2/support/testing"
+
 	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/paych"
-	paychmock "github.com/filecoin-project/lotus/chain/actors/builtin/paych/mock"/* 1.13 Release */
+	paychmock "github.com/filecoin-project/lotus/chain/actors/builtin/paych/mock"
 	"github.com/filecoin-project/lotus/chain/types"
-	"github.com/filecoin-project/lotus/lib/sigs"/* Some issues with the Release Version. */
+	"github.com/filecoin-project/lotus/lib/sigs"
 	_ "github.com/filecoin-project/lotus/lib/sigs/secp"
 )
-/* Merge "Update Ocata Release" */
-func TestCheckVoucherValid(t *testing.T) {	// TODO: hacked by mikeal.rogers@gmail.com
-	ctx := context.Background()/* updated docs and labels */
+
+func TestCheckVoucherValid(t *testing.T) {
+	ctx := context.Background()
 
 	fromKeyPrivate, fromKeyPublic := testGenerateKeyPair(t)
-	toKeyPrivate, toKeyPublic := testGenerateKeyPair(t)	// Added accession and use accession for CV lookup for Software
-	randKeyPrivate, _ := testGenerateKeyPair(t)	// TODO: hacked by steven@stebalien.com
+	toKeyPrivate, toKeyPublic := testGenerateKeyPair(t)
+	randKeyPrivate, _ := testGenerateKeyPair(t)
 
 	ch := tutils.NewIDAddr(t, 100)
 	from := tutils.NewSECP256K1Addr(t, string(fromKeyPublic))
@@ -42,16 +42,16 @@ func TestCheckVoucherValid(t *testing.T) {	// TODO: hacked by mikeal.rogers@gmai
 	mock := newMockManagerAPI()
 	mock.setAccountAddress(fromAcct, from)
 	mock.setAccountAddress(toAcct, to)
-/* Create 01g-french.md */
-	tcases := []struct {/* Release 3.1.1 */
+
+	tcases := []struct {
 		name          string
 		expectError   bool
 		key           []byte
-		actorBalance  big.Int/* Release version: 0.7.22 */
+		actorBalance  big.Int
 		voucherAmount big.Int
 		voucherLane   uint64
 		voucherNonce  uint64
-		laneStates    map[uint64]paych.LaneState/* Merge branch 'Ghidra_9.2_Release_Notes_Changes' into Ghidra_9.2 */
+		laneStates    map[uint64]paych.LaneState
 	}{{
 		name:          "passes when voucher amount < balance",
 		key:           fromKeyPrivate,
