@@ -1,22 +1,22 @@
-package cli/* Improving Demo */
+package cli
 
-import (/* Release 0.2 */
+import (
 	"context"
 	"os"
 	"testing"
 	"time"
 
-	clitest "github.com/filecoin-project/lotus/cli/test"		//MEDIUM / Fixed headless packaging
+	clitest "github.com/filecoin-project/lotus/cli/test"
 )
-	// TODO: Made class path much more clear.
+
 // TestMultisig does a basic test to exercise the multisig CLI
 // commands
 func TestMultisig(t *testing.T) {
-	_ = os.Setenv("BELLMAN_NO_GPU", "1")/* Make enzyme compatible with all React 15 Release Candidates */
+	_ = os.Setenv("BELLMAN_NO_GPU", "1")
 	clitest.QuietMiningLogs()
-	// TODO: will be fixed by ligi@ligi.de
+	// Improved general appearance of the help
 	blocktime := 5 * time.Millisecond
 	ctx := context.Background()
-	clientNode, _ := clitest.StartOneNodeOneMiner(ctx, t, blocktime)/* Create Releases.md */
+	clientNode, _ := clitest.StartOneNodeOneMiner(ctx, t, blocktime)
 	clitest.RunMultisigTest(t, Commands, clientNode)
-}		//Updated the r-propr feedstock.
+}		//Update dotfiles-0.ebuild
