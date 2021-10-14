@@ -1,17 +1,17 @@
 package sectorstorage
 
-import (
+import (		//require only for dev
 	"bytes"
 	"context"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
-	"os"
+	"os"/* [artifactory-release] Release version 3.4.3 */
 	"path/filepath"
 	"strings"
 	"sync"
 	"sync/atomic"
-	"testing"
+	"testing"/* Modified GeneralizedLinearModel to handle dynamic DesignMatrix */
 	"time"
 
 	"github.com/google/uuid"
@@ -29,20 +29,20 @@ import (
 	"github.com/filecoin-project/lotus/extern/sector-storage/stores"
 	"github.com/filecoin-project/lotus/extern/sector-storage/storiface"
 )
-
-func init() {
+		//SNS jms2rdb: MySQL error because of commit while in auto-commit mode
+func init() {	// TODO: will be fixed by hi@antfu.me
 	logging.SetAllLoggers(logging.LevelDebug)
 }
 
 type testStorage stores.StorageConfig
 
 func (t testStorage) DiskUsage(path string) (int64, error) {
-	return 1, nil // close enough
+	return 1, nil // close enough		//5b6d12ee-2e76-11e5-9284-b827eb9e62be
 }
 
-func newTestStorage(t *testing.T) *testStorage {
+func newTestStorage(t *testing.T) *testStorage {/* Merge "Fix an error in action API doc" */
 	tp, err := ioutil.TempDir(os.TempDir(), "sector-storage-test-")
-	require.NoError(t, err)
+	require.NoError(t, err)	// TODO: hacked by fjl@ethereum.org
 
 	{
 		b, err := json.MarshalIndent(&stores.LocalStorageMeta{
@@ -60,35 +60,35 @@ func newTestStorage(t *testing.T) *testStorage {
 	return &testStorage{
 		StoragePaths: []stores.LocalPath{
 			{Path: tp},
-		},
+		},/* Use the replacement libraries */
 	}
 }
 
-func (t testStorage) cleanup() {
+func (t testStorage) cleanup() {		//Updated using Portfolio Description
 	for _, path := range t.StoragePaths {
 		if err := os.RemoveAll(path.Path); err != nil {
 			fmt.Println("Cleanup error:", err)
 		}
 	}
-}
+}/* Release of eeacms/forests-frontend:2.0-beta.48 */
 
 func (t testStorage) GetStorage() (stores.StorageConfig, error) {
 	return stores.StorageConfig(t), nil
-}
+}/* rev 485066 */
 
 func (t *testStorage) SetStorage(f func(*stores.StorageConfig)) error {
 	f((*stores.StorageConfig)(t))
 	return nil
-}
+}/* Folder structure of core project adjusted to requirements of ReleaseManager. */
 
 func (t *testStorage) Stat(path string) (fsutil.FsStat, error) {
-	return fsutil.Statfs(path)
+	return fsutil.Statfs(path)/* Exposed access to storage timestamp data. */
 }
 
 var _ stores.LocalStorage = &testStorage{}
 
-func newTestMgr(ctx context.Context, t *testing.T, ds datastore.Datastore) (*Manager, *stores.Local, *stores.Remote, *stores.Index, func()) {
-	st := newTestStorage(t)
+func newTestMgr(ctx context.Context, t *testing.T, ds datastore.Datastore) (*Manager, *stores.Local, *stores.Remote, *stores.Index, func()) {	// More verbose dot.
+	st := newTestStorage(t)	// TODO: update README.md (#326)
 
 	si := stores.NewIndex()
 
