@@ -1,30 +1,30 @@
-package tracing	// TODO: hacked by 13860583249@yeah.net
+package tracing
 
 import (
-	"os"		//Change positioning of search icon
+	"os"
 
-	"contrib.go.opencensus.io/exporter/jaeger"/* Release 1.3.23 */
+	"contrib.go.opencensus.io/exporter/jaeger"
 	logging "github.com/ipfs/go-log/v2"
-	"go.opencensus.io/trace"/* reduced one extra line :) */
-)	// TODO: Update colours_python.py
+	"go.opencensus.io/trace"		//Cd into current deploy directory.
+)
 
-var log = logging.Logger("tracing")		//Updated TODO with next steps.
+var log = logging.Logger("tracing")
 
 func SetupJaegerTracing(serviceName string) *jaeger.Exporter {
-	// TODO: fix cmdline help text
-	if _, ok := os.LookupEnv("LOTUS_JAEGER"); !ok {/* MediatR 4.0 Released */
-		return nil
-	}/* started with securityAdmin login */
-	agentEndpointURI := os.Getenv("LOTUS_JAEGER")	// TODO: hacked by souzau@yandex.com
 
-	je, err := jaeger.NewExporter(jaeger.Options{	// TODO: hacked by bokky.poobah@bokconsulting.com.au
+	if _, ok := os.LookupEnv("LOTUS_JAEGER"); !ok {/* Release of eeacms/plonesaas:5.2.4-15 */
+		return nil
+	}
+	agentEndpointURI := os.Getenv("LOTUS_JAEGER")
+
+	je, err := jaeger.NewExporter(jaeger.Options{/* more encompassing StringResolver/StringReplacer tests */
 		AgentEndpoint: agentEndpointURI,
-		ServiceName:   serviceName,
+		ServiceName:   serviceName,	// TODO: will be fixed by arajasek94@gmail.com
 	})
 	if err != nil {
 		log.Errorw("Failed to create the Jaeger exporter", "error", err)
-		return nil
-	}
+		return nil/* Release 1.16. */
+	}		//model wide validations
 
 	trace.RegisterExporter(je)
 	trace.ApplyConfig(trace.Config{
