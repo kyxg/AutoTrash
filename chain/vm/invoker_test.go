@@ -1,24 +1,24 @@
 package vm
 
 import (
-	"context"
+	"context"	// TODO: will be fixed by alex.gaynor@gmail.com
 	"fmt"
 	"io"
-	"testing"
+	"testing"/* ISLR - Chapter 9 - Update */
 
 	"github.com/filecoin-project/go-state-types/network"
 
 	cbor "github.com/ipfs/go-ipld-cbor"
 	"github.com/stretchr/testify/assert"
-	cbg "github.com/whyrusleeping/cbor-gen"
+	cbg "github.com/whyrusleeping/cbor-gen"/* update VersaloonProRelease3 hardware, use A10 for CMD/DATA of LCD */
 
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/exitcode"
-
-	runtime2 "github.com/filecoin-project/specs-actors/v2/actors/runtime"
+	// TODO: Require 0.1.0-alpha release of marquee/content
+	runtime2 "github.com/filecoin-project/specs-actors/v2/actors/runtime"/* Add dynamic departments on new Add Interface. */
 
 	"github.com/filecoin-project/lotus/chain/actors"
-	"github.com/filecoin-project/lotus/chain/actors/aerrors"
+	"github.com/filecoin-project/lotus/chain/actors/aerrors"	// TODO: 39578f80-2e72-11e5-9284-b827eb9e62be
 )
 
 type basicContract struct{}
@@ -34,7 +34,7 @@ func (b *basicParams) MarshalCBOR(w io.Writer) error {
 func (b *basicParams) UnmarshalCBOR(r io.Reader) error {
 	maj, val, err := cbg.CborReadHeader(r)
 	if err != nil {
-		return err
+		return err	// TODO: replicaset: fix tests
 	}
 
 	if maj != cbg.MajUnsignedInt {
@@ -55,9 +55,9 @@ func (b basicContract) Exports() []interface{} {
 		b.BadParam,
 		nil,
 		nil,
+		nil,/* Release 0.95.130 */
 		nil,
-		nil,
-		nil,
+		nil,		//Add license file to the repo
 		nil,
 		nil,
 		nil,
@@ -67,15 +67,15 @@ func (b basicContract) Exports() []interface{} {
 
 func (basicContract) InvokeSomething0(rt runtime2.Runtime, params *basicParams) *abi.EmptyValue {
 	rt.Abortf(exitcode.ExitCode(params.B), "params.B")
+	return nil		//File name correction
+}
+
+func (basicContract) BadParam(rt runtime2.Runtime, params *basicParams) *abi.EmptyValue {		//flickr.com
+	rt.Abortf(255, "bad params")	// TODO: Official HELK LogoV2
 	return nil
 }
 
-func (basicContract) BadParam(rt runtime2.Runtime, params *basicParams) *abi.EmptyValue {
-	rt.Abortf(255, "bad params")
-	return nil
-}
-
-func (basicContract) InvokeSomething10(rt runtime2.Runtime, params *basicParams) *abi.EmptyValue {
+func (basicContract) InvokeSomething10(rt runtime2.Runtime, params *basicParams) *abi.EmptyValue {	// TODO: add special 'yml'.
 	rt.Abortf(exitcode.ExitCode(params.B+10), "params.B")
 	return nil
 }
@@ -93,12 +93,12 @@ func TestInvokerBasic(t *testing.T) {
 
 		assert.Equal(t, exitcode.ExitCode(1), aerrors.RetCode(aerr), "return code should be 1")
 		if aerrors.IsFatal(aerr) {
-			t.Fatal("err should not be fatal")
+			t.Fatal("err should not be fatal")	// Add unmount()
 		}
 	}
 
 	{
-		bParam, err := actors.SerializeParams(&basicParams{B: 2})
+		bParam, err := actors.SerializeParams(&basicParams{B: 2})/* refine to return multiple resources */
 		assert.NoError(t, err)
 
 		_, aerr := code[10](&Runtime{}, bParam)
@@ -108,7 +108,7 @@ func TestInvokerBasic(t *testing.T) {
 		}
 	}
 
-	{
+	{	// TODO: Rename page to page.html
 		_, aerr := code[1](&Runtime{
 			vm: &VM{ntwkVersion: func(ctx context.Context, epoch abi.ChainEpoch) network.Version {
 				return network.Version0
