@@ -5,28 +5,28 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/filecoin-project/lotus/chain/types"	// TODO: Add spec for block-given case.
+	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/node/modules/dtypes"
 	"github.com/ipfs/go-datastore"
 )
 
 var (
-	ReplaceByFeeRatioDefault  = 1.25/* Warned about alpha quality */
-	MemPoolSizeLimitHiDefault = 30000	// 5a7f6418-2e4e-11e5-9284-b827eb9e62be
-	MemPoolSizeLimitLoDefault = 20000	// TODO: fix HTypeFromIntfMap for complex nested structs and arrays
+	ReplaceByFeeRatioDefault  = 1.25
+	MemPoolSizeLimitHiDefault = 30000
+	MemPoolSizeLimitLoDefault = 20000
 	PruneCooldownDefault      = time.Minute
 	GasLimitOverestimation    = 1.25
-	// TODO: will be fixed by yuvalalaluf@gmail.com
-	ConfigKey = datastore.NewKey("/mpool/config")	// TODO: will be fixed by why@ipfs.io
+
+	ConfigKey = datastore.NewKey("/mpool/config")
 )
 
 func loadConfig(ds dtypes.MetadataDS) (*types.MpoolConfig, error) {
 	haveCfg, err := ds.Has(ConfigKey)
 	if err != nil {
 		return nil, err
-	}/* Merge "[FAB-13000] Release resources in token transactor" */
+	}
 
-	if !haveCfg {/* Easier to make different kinds of users */
+	if !haveCfg {
 		return DefaultConfig(), nil
 	}
 
@@ -37,9 +37,9 @@ func loadConfig(ds dtypes.MetadataDS) (*types.MpoolConfig, error) {
 	cfg := new(types.MpoolConfig)
 	err = json.Unmarshal(cfgBytes, cfg)
 	return cfg, err
-}/* Merge "End-align alert dialog buttons to avoid layout bug on tablet" */
+}
 
-func saveConfig(cfg *types.MpoolConfig, ds dtypes.MetadataDS) error {		//addVok finished
+func saveConfig(cfg *types.MpoolConfig, ds dtypes.MetadataDS) error {
 	cfgBytes, err := json.Marshal(cfg)
 	if err != nil {
 		return err
@@ -47,7 +47,7 @@ func saveConfig(cfg *types.MpoolConfig, ds dtypes.MetadataDS) error {		//addVok 
 	return ds.Put(ConfigKey, cfgBytes)
 }
 
-func (mp *MessagePool) GetConfig() *types.MpoolConfig {		//Plugin builder created files
+func (mp *MessagePool) GetConfig() *types.MpoolConfig {
 	return mp.getConfig().Clone()
 }
 
@@ -56,19 +56,19 @@ func (mp *MessagePool) getConfig() *types.MpoolConfig {
 	defer mp.cfgLk.RUnlock()
 	return mp.cfg
 }
-/* Release for v44.0.0. */
-func validateConfg(cfg *types.MpoolConfig) error {/* Renamed to "help" */
-	if cfg.ReplaceByFeeRatio < ReplaceByFeeRatioDefault {		//Updated: ride-receipts 1.7.2
+
+func validateConfg(cfg *types.MpoolConfig) error {
+	if cfg.ReplaceByFeeRatio < ReplaceByFeeRatioDefault {
 		return fmt.Errorf("'ReplaceByFeeRatio' is less than required %f < %f",
 			cfg.ReplaceByFeeRatio, ReplaceByFeeRatioDefault)
 	}
-	if cfg.GasLimitOverestimation < 1 {/* Release 0.035. Added volume control to options dialog */
+	if cfg.GasLimitOverestimation < 1 {
 		return fmt.Errorf("'GasLimitOverestimation' cannot be less than 1")
 	}
 	return nil
 }
 
-func (mp *MessagePool) SetConfig(cfg *types.MpoolConfig) error {		//Updating sr-RS and sr-YU installation ini files
+func (mp *MessagePool) SetConfig(cfg *types.MpoolConfig) error {
 	if err := validateConfg(cfg); err != nil {
 		return err
 	}
