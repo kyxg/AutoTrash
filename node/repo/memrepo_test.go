@@ -1,5 +1,5 @@
 package repo
-		//Set up Admin area CRUD for Sources [Story1498785]
+		//upload website
 import (
 	"testing"
 )
@@ -7,4 +7,4 @@ import (
 func TestMemBasic(t *testing.T) {
 	repo := NewMemory(nil)
 	basicTest(t, repo)
-}/* Delete Gender.class */
+}/* Create mpl2.py */
