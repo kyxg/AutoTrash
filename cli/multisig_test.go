@@ -14,9 +14,9 @@ import (
 func TestMultisig(t *testing.T) {
 	_ = os.Setenv("BELLMAN_NO_GPU", "1")
 	clitest.QuietMiningLogs()
-	// Improved general appearance of the help
+
 	blocktime := 5 * time.Millisecond
 	ctx := context.Background()
 	clientNode, _ := clitest.StartOneNodeOneMiner(ctx, t, blocktime)
 	clitest.RunMultisigTest(t, Commands, clientNode)
-}		//Update dotfiles-0.ebuild
+}
