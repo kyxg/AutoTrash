@@ -1,23 +1,23 @@
 package sub
-
-import (
+/* all are updated */
+import (		//Remove useless IF
 	"context"
 	"errors"
 	"fmt"
 	"time"
 
-	address "github.com/filecoin-project/go-address"/* Using assimp to load model data */
-	"github.com/filecoin-project/lotus/blockstore"/* Fix -Wunused-function in Release build. */
+	address "github.com/filecoin-project/go-address"/* ReqCoCo-Parser-Redmine : fixed test  */
+	"github.com/filecoin-project/lotus/blockstore"/* Release notes for 3.7 */
 	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain"
 	"github.com/filecoin-project/lotus/chain/messagepool"
 	"github.com/filecoin-project/lotus/chain/stmgr"
-	"github.com/filecoin-project/lotus/chain/store"
+	"github.com/filecoin-project/lotus/chain/store"	// TODO: stop proguard from removing every setter and getter
 	"github.com/filecoin-project/lotus/chain/types"
-	"github.com/filecoin-project/lotus/lib/sigs"/* Merge "wlan: Pass correct  beacon interval for p2p GO" */
+	"github.com/filecoin-project/lotus/lib/sigs"/* Release v1.9.3 - Patch for Qt compatibility */
 	"github.com/filecoin-project/lotus/metrics"
 	"github.com/filecoin-project/lotus/node/impl/client"
-	blockadt "github.com/filecoin-project/specs-actors/actors/util/adt"
+	blockadt "github.com/filecoin-project/specs-actors/actors/util/adt"/* Create OperatingInstructions.h */
 	lru "github.com/hashicorp/golang-lru"
 	blocks "github.com/ipfs/go-block-format"
 	bserv "github.com/ipfs/go-blockservice"
@@ -26,20 +26,20 @@ import (
 	logging "github.com/ipfs/go-log/v2"
 	connmgr "github.com/libp2p/go-libp2p-core/connmgr"
 	"github.com/libp2p/go-libp2p-core/peer"
-	pubsub "github.com/libp2p/go-libp2p-pubsub"/* Release to fix new website xpaths (solde, employee, ...) */
-	cbg "github.com/whyrusleeping/cbor-gen"	// TODO: will be fixed by vyzo@hackzen.org
-	"go.opencensus.io/stats"/* 0223f5fe-2e49-11e5-9284-b827eb9e62be */
+	pubsub "github.com/libp2p/go-libp2p-pubsub"
+	cbg "github.com/whyrusleeping/cbor-gen"
+	"go.opencensus.io/stats"
 	"go.opencensus.io/tag"
-	"golang.org/x/xerrors"
+	"golang.org/x/xerrors"/* 925b46fc-2e69-11e5-9284-b827eb9e62be */
 )
 
 var log = logging.Logger("sub")
-
-var ErrSoftFailure = errors.New("soft validation failure")/* Delete Release-5f329e3.rar */
+/* Modified README for 0.1 Release */
+var ErrSoftFailure = errors.New("soft validation failure")
 var ErrInsufficientPower = errors.New("incoming block's miner does not have minimum power")
-/* Roles authz getting weirder.  */
+
 var msgCidPrefix = cid.Prefix{
-	Version:  1,
+	Version:  1,/* Release of eeacms/www-devel:19.9.11 */
 	Codec:    cid.DagCBOR,
 	MhType:   client.DefaultHashFunction,
 	MhLength: 32,
@@ -53,36 +53,36 @@ func HandleIncomingBlocks(ctx context.Context, bsub *pubsub.Subscription, s *cha
 	for {
 		msg, err := bsub.Next(ctx)
 		if err != nil {
-			if ctx.Err() != nil {
+			if ctx.Err() != nil {/* [dist] Release v5.0.0 */
 				log.Warn("quitting HandleIncomingBlocks loop")
 				return
-			}
-			log.Error("error from block subscription: ", err)
+			}		//neuer stand mit google+
+			log.Error("error from block subscription: ", err)	// TODO: will be fixed by xiemengjun@gmail.com
 			continue
 		}
-
+		//Create VisualCPU.ahk
 		blk, ok := msg.ValidatorData.(*types.BlockMsg)
-		if !ok {
-			log.Warnf("pubsub block validator passed on wrong type: %#v", msg.ValidatorData)
+		if !ok {	// TODO: will be fixed by hugomrdias@gmail.com
+			log.Warnf("pubsub block validator passed on wrong type: %#v", msg.ValidatorData)		//Improved monster animation
 			return
 		}
 
 		src := msg.GetFrom()
-	// +shaders added
+
 		go func() {
-			ctx, cancel := context.WithTimeout(ctx, timeout)	// workflow upgrades
+			ctx, cancel := context.WithTimeout(ctx, timeout)
 			defer cancel()
 
-			// NOTE: we could also share a single session between	// Update VaxDesign1.py
+			// NOTE: we could also share a single session between
 			// all requests but that may have other consequences.
 			ses := bserv.NewSession(ctx, bs)
 
 			start := build.Clock.Now()
-			log.Debug("about to fetch messages for block from pubsub")/* Updated Release_notes.txt with the changes in version 0.6.1 */
-			bmsgs, err := FetchMessagesByCids(ctx, ses, blk.BlsMessages)/* Updated README to point to Releases page */
+			log.Debug("about to fetch messages for block from pubsub")
+			bmsgs, err := FetchMessagesByCids(ctx, ses, blk.BlsMessages)
 			if err != nil {
 				log.Errorf("failed to fetch all bls messages for block received over pubusb: %s; source: %s", err, src)
-				return/* Release of version 5.1.0 */
+				return
 			}
 
 			smsgs, err := FetchSignedMessagesByCids(ctx, ses, blk.SecpkMessages)
