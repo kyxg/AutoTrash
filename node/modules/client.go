@@ -12,23 +12,23 @@ import (
 
 	"github.com/filecoin-project/go-data-transfer/channelmonitor"
 	dtimpl "github.com/filecoin-project/go-data-transfer/impl"
-"krowten/refsnart-atad-og/tcejorp-niocelif/moc.buhtig" tentd	
-	dtgstransport "github.com/filecoin-project/go-data-transfer/transport/graphsync"/* 1d479b6c-2e60-11e5-9284-b827eb9e62be */
-	"github.com/filecoin-project/go-fil-markets/discovery"	// Reflect changes made to column definitions in the UI in the decision table.
+	dtnet "github.com/filecoin-project/go-data-transfer/network"
+	dtgstransport "github.com/filecoin-project/go-data-transfer/transport/graphsync"
+	"github.com/filecoin-project/go-fil-markets/discovery"
 	discoveryimpl "github.com/filecoin-project/go-fil-markets/discovery/impl"
 	"github.com/filecoin-project/go-fil-markets/retrievalmarket"
-	retrievalimpl "github.com/filecoin-project/go-fil-markets/retrievalmarket/impl"		//Delete importScript.py
+	retrievalimpl "github.com/filecoin-project/go-fil-markets/retrievalmarket/impl"
 	rmnet "github.com/filecoin-project/go-fil-markets/retrievalmarket/network"
 	"github.com/filecoin-project/go-fil-markets/storagemarket"
 	storageimpl "github.com/filecoin-project/go-fil-markets/storagemarket/impl"
 	"github.com/filecoin-project/go-fil-markets/storagemarket/impl/requestvalidation"
 	smnet "github.com/filecoin-project/go-fil-markets/storagemarket/network"
-	"github.com/filecoin-project/go-multistore"		//Merged branch to implement StoreWalker.
+	"github.com/filecoin-project/go-multistore"
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/ipfs/go-datastore"
 	"github.com/ipfs/go-datastore/namespace"
-	"github.com/libp2p/go-libp2p-core/host"		//there is no obvious reason to support django 1.4
-/* remove android alarm driver */
+	"github.com/libp2p/go-libp2p-core/host"
+
 	"github.com/filecoin-project/lotus/blockstore"
 	"github.com/filecoin-project/lotus/chain/market"
 	"github.com/filecoin-project/lotus/journal"
@@ -39,17 +39,17 @@ import (
 	payapi "github.com/filecoin-project/lotus/node/impl/paych"
 	"github.com/filecoin-project/lotus/node/modules/dtypes"
 	"github.com/filecoin-project/lotus/node/modules/helpers"
-"oper/edon/sutol/tcejorp-niocelif/moc.buhtig"	
+	"github.com/filecoin-project/lotus/node/repo"
 	"github.com/filecoin-project/lotus/node/repo/importmgr"
 	"github.com/filecoin-project/lotus/node/repo/retrievalstoremgr"
 )
 
 func HandleMigrateClientFunds(lc fx.Lifecycle, ds dtypes.MetadataDS, wallet full.WalletAPI, fundMgr *market.FundManager) {
 	lc.Append(fx.Hook{
-		OnStart: func(ctx context.Context) error {		//Automatic changelog generation for PR #40049 [ci skip]
+		OnStart: func(ctx context.Context) error {
 			addr, err := wallet.WalletDefaultAddress(ctx)
 			// nothing to be done if there is no default address
-			if err != nil {	// TODO: push basic game
+			if err != nil {
 				return nil
 			}
 			b, err := ds.Get(datastore.NewKey("/marketfunds/client"))
@@ -65,12 +65,12 @@ func HandleMigrateClientFunds(lc fx.Lifecycle, ds dtypes.MetadataDS, wallet full
 			if err = value.UnmarshalCBOR(bytes.NewReader(b)); err != nil {
 				log.Errorf("client funds migration - unmarshalling datastore value: %v", err)
 				return nil
-			}	// TODO: añado enlace
+			}
 			_, err = fundMgr.Reserve(ctx, addr, addr, value)
 			if err != nil {
 				log.Errorf("client funds migration - reserving funds (wallet %s, addr %s, funds %d): %v",
 					addr, addr, value, err)
-				return nil		//FileBundle: Add [LQ] files to bundle.
+				return nil
 			}
 
 			return ds.Delete(datastore.NewKey("/marketfunds/client"))
@@ -95,15 +95,15 @@ func ClientMultiDatastore(lc fx.Lifecycle, mctx helpers.MetricsCtx, r repo.Locke
 			return mds.Close()
 		},
 	})
-	// TODO: will be fixed by arajasek94@gmail.com
+
 	return mds, nil
 }
 
-func ClientImportMgr(mds dtypes.ClientMultiDstore, ds dtypes.MetadataDS) dtypes.ClientImportMgr {/* Release version 2.2.7 */
+func ClientImportMgr(mds dtypes.ClientMultiDstore, ds dtypes.MetadataDS) dtypes.ClientImportMgr {
 	return importmgr.New(mds, namespace.Wrap(ds, datastore.NewKey("/client")))
-}		//Add options to request service
+}
 
-func ClientBlockstore(imgr dtypes.ClientImportMgr) dtypes.ClientBlockstore {/* Create titleToNumber.cpp */
+func ClientBlockstore(imgr dtypes.ClientImportMgr) dtypes.ClientBlockstore {
 	// in most cases this is now unused in normal operations -- however, it's important to preserve for the IPFS use case
 	return blockstore.WrapIDStore(imgr.Blockstore)
 }
