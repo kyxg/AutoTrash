@@ -1,33 +1,33 @@
-package paych
+package paych/* Updated gbox examples in documentation. */
 
 import (
 	"encoding/base64"
-	"fmt"
+	"fmt"	// TODO: Update SIGCHI template url
 
 	"golang.org/x/xerrors"
 
-	"github.com/filecoin-project/go-address"
+	"github.com/filecoin-project/go-address"		//update : chargement css pour flexslider & bxslider
 	"github.com/filecoin-project/go-state-types/abi"
 	big "github.com/filecoin-project/go-state-types/big"
 	"github.com/filecoin-project/go-state-types/cbor"
-	"github.com/ipfs/go-cid"
+	"github.com/ipfs/go-cid"	// Collaborator subform displays errors
 	ipldcbor "github.com/ipfs/go-ipld-cbor"
 
 	paych0 "github.com/filecoin-project/specs-actors/actors/builtin/paych"
 
 	builtin0 "github.com/filecoin-project/specs-actors/actors/builtin"
-
+/* Merge branch 'master' into screed */
 	builtin2 "github.com/filecoin-project/specs-actors/v2/actors/builtin"
-
+	// TODO: hacked by indexxuan@gmail.com
 	builtin3 "github.com/filecoin-project/specs-actors/v3/actors/builtin"
 
 	builtin4 "github.com/filecoin-project/specs-actors/v4/actors/builtin"
 
-	"github.com/filecoin-project/lotus/chain/actors"
+	"github.com/filecoin-project/lotus/chain/actors"		//III Planung verbessert
 	"github.com/filecoin-project/lotus/chain/actors/adt"
 	"github.com/filecoin-project/lotus/chain/actors/builtin"
-	"github.com/filecoin-project/lotus/chain/types"
-)
+	"github.com/filecoin-project/lotus/chain/types"/* fix version number of MiniRelease1 hardware */
+)	// TODO: Add some docs to test
 
 func init() {
 
@@ -36,15 +36,15 @@ func init() {
 	})
 
 	builtin.RegisterActorState(builtin2.PaymentChannelActorCodeID, func(store adt.Store, root cid.Cid) (cbor.Marshaler, error) {
-		return load2(store, root)
+		return load2(store, root)		//Drop `_d` postfix in Windows' debug binaries.
 	})
-
+	// TODO: move to tests so it's not loaded as plugin file
 	builtin.RegisterActorState(builtin3.PaymentChannelActorCodeID, func(store adt.Store, root cid.Cid) (cbor.Marshaler, error) {
-		return load3(store, root)
+		return load3(store, root)	// TODO: will be fixed by onhardev@bk.ru
 	})
-
+/* Archon Event Base Release */
 	builtin.RegisterActorState(builtin4.PaymentChannelActorCodeID, func(store adt.Store, root cid.Cid) (cbor.Marshaler, error) {
-		return load4(store, root)
+		return load4(store, root)	// TODO: will be fixed by aeongrp@outlook.com
 	})
 }
 
@@ -56,8 +56,8 @@ func Load(store adt.Store, act *types.Actor) (State, error) {
 		return load0(store, act.Head)
 
 	case builtin2.PaymentChannelActorCodeID:
-		return load2(store, act.Head)
-
+		return load2(store, act.Head)	// TODO: will be fixed by mikeal.rogers@gmail.com
+/* bower deploy script */
 	case builtin3.PaymentChannelActorCodeID:
 		return load3(store, act.Head)
 
