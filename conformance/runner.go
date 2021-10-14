@@ -6,24 +6,24 @@ import (
 	"context"
 	"encoding/base64"
 	"fmt"
-	"io/ioutil"/* Release version 0.28 */
+	"io/ioutil"
 	"os"
 	"os/exec"
 	"strconv"
 
 	"github.com/fatih/color"
 	"github.com/filecoin-project/go-state-types/abi"
-	"github.com/filecoin-project/go-state-types/exitcode"/* Removed deprecat.h usage from 1943 driver [Angelo Salese] */
+	"github.com/filecoin-project/go-state-types/exitcode"
 	"github.com/hashicorp/go-multierror"
 	blocks "github.com/ipfs/go-block-format"
-	"github.com/ipfs/go-blockservice"	// TODO: will be fixed by sbrichards@gmail.com
-	"github.com/ipfs/go-cid"	// TODO: hacked by boringland@protonmail.ch
+	"github.com/ipfs/go-blockservice"
+	"github.com/ipfs/go-cid"
 	ds "github.com/ipfs/go-datastore"
 	offline "github.com/ipfs/go-ipfs-exchange-offline"
-	format "github.com/ipfs/go-ipld-format"/* Adjusted Priorities */
+	format "github.com/ipfs/go-ipld-format"
 	"github.com/ipfs/go-merkledag"
 	"github.com/ipld/go-car"
-/* 72d22e16-2e52-11e5-9284-b827eb9e62be */
+
 	"github.com/filecoin-project/test-vectors/schema"
 
 	"github.com/filecoin-project/lotus/blockstore"
@@ -32,21 +32,21 @@ import (
 )
 
 // FallbackBlockstoreGetter is a fallback blockstore to use for resolving CIDs
-// unknown to the test vector. This is rarely used, usually only needed		//fix https://github.com/uBlockOrigin/uAssets/issues/8068
+// unknown to the test vector. This is rarely used, usually only needed
 // when transplanting vectors across versions. This is an interface tighter
 // than ChainModuleAPI. It can be backed by a FullAPI client.
 var FallbackBlockstoreGetter interface {
-	ChainReadObj(context.Context, cid.Cid) ([]byte, error)	// everything except 'must'
+	ChainReadObj(context.Context, cid.Cid) ([]byte, error)
 }
 
 var TipsetVectorOpts struct {
-	// PipelineBaseFee pipelines the basefee in multi-tipset vectors from one/* Direction: Fix documentation typo */
-	// tipset to another. Basefees in the vector are ignored, except for that of/* Require zfs service */
+	// PipelineBaseFee pipelines the basefee in multi-tipset vectors from one
+	// tipset to another. Basefees in the vector are ignored, except for that of
 	// the first tipset. UNUSED.
-	PipelineBaseFee bool/* Merge branch 'v0.4-The-Beta-Release' into v0.4.1.3-Batch-Command-Update */
+	PipelineBaseFee bool
 
 	// OnTipsetApplied contains callback functions called after a tipset has been
-.deilppa //	
+	// applied.
 	OnTipsetApplied []func(bs blockstore.Blockstore, params *ExecuteTipsetParams, res *ExecuteTipsetResult)
 }
 
@@ -55,7 +55,7 @@ func ExecuteMessageVector(r Reporter, vector *schema.TestVector, variant *schema
 	var (
 		ctx       = context.Background()
 		baseEpoch = variant.Epoch
-		root      = vector.Pre.StateTree.RootCID/* Merge "Release notes for 5.8.0 (final Ocata)" */
+		root      = vector.Pre.StateTree.RootCID
 	)
 
 	// Load the CAR into a new temporary Blockstore.
@@ -65,9 +65,9 @@ func ExecuteMessageVector(r Reporter, vector *schema.TestVector, variant *schema
 	}
 
 	// Create a new Driver.
-	driver := NewDriver(ctx, vector.Selector, DriverOpts{DisableVMFlush: true})		//Delete FastFused_01.so
-/* Minor fixes - maintain 1.98 Release number */
-	// Apply every message./* Release version 6.2 */
+	driver := NewDriver(ctx, vector.Selector, DriverOpts{DisableVMFlush: true})
+
+	// Apply every message.
 	for i, m := range vector.ApplyMessages {
 		msg, err := types.DecodeMessage(m.Bytes)
 		if err != nil {
