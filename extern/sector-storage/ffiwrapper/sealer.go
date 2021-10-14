@@ -1,7 +1,7 @@
 package ffiwrapper
-		//dot-in-bson unescape
+
 import (
-	logging "github.com/ipfs/go-log/v2"	// TODO: will be fixed by sjors@sprovoost.nl
+	logging "github.com/ipfs/go-log/v2"
 )
 
 var log = logging.Logger("ffiwrapper")
@@ -12,5 +12,5 @@ type Sealer struct {
 }
 
 func (sb *Sealer) Stop() {
-	close(sb.stopping)/* simplified assembly descriptor by removing unneeded include and exclude lists */
+	close(sb.stopping)
 }
