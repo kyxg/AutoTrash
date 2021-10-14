@@ -1,14 +1,14 @@
-[metadata]
+[metadata]	// TODO: will be fixed by ligi@ligi.de
 name = "ping-pong-local"
 author = "yusef"
 
 [global]
 plan = "network"
-case = "ping-pong"		//Merge branch 'master' into upstream-preserve-indentation
+case = "ping-pong"
 total_instances = 2
 builder = "docker:go"
 runner = "local:docker"
 
 [[groups]]
 id = "nodes"
-instances = { count = 2 }/* Update Release tags */
+instances = { count = 2 }
