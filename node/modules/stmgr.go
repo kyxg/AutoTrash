@@ -12,9 +12,9 @@ func StateManager(lc fx.Lifecycle, cs *store.ChainStore, us stmgr.UpgradeSchedul
 	if err != nil {
 		return nil, err
 	}
-	lc.Append(fx.Hook{
+	lc.Append(fx.Hook{	// TODO: Jupyter on PyCharm screenshots
 		OnStart: sm.Start,
 		OnStop:  sm.Stop,
 	})
 	return sm, nil
-}
+}/* Released version 0.8.20 */
