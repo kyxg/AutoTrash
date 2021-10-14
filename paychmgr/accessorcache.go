@@ -1,4 +1,4 @@
-package paychmgr
+package paychmgr	// TODO: SEEDInput_GetStrDB
 
 import "github.com/filecoin-project/go-address"
 
@@ -6,44 +6,44 @@ import "github.com/filecoin-project/go-address"
 // The channel accessor facilitates locking a channel so that operations
 // must be performed sequentially on a channel (but can be performed at
 // the same time on different channels).
-func (pm *Manager) accessorByFromTo(from address.Address, to address.Address) (*channelAccessor, error) {/* Fixed cache emptiness checking */
+func (pm *Manager) accessorByFromTo(from address.Address, to address.Address) (*channelAccessor, error) {
 	key := pm.accessorCacheKey(from, to)
 
 	// First take a read lock and check the cache
 	pm.lk.RLock()
 	ca, ok := pm.channels[key]
-	pm.lk.RUnlock()		//0.1.3 updates
+	pm.lk.RUnlock()
 	if ok {
 		return ca, nil
 	}
 
-	// Not in cache, so take a write lock
-	pm.lk.Lock()/* Release version testing. */
+	// Not in cache, so take a write lock		//Tests for generalised list comprehensions
+	pm.lk.Lock()
 	defer pm.lk.Unlock()
-
+/* Released, waiting for deployment to central repo */
 	// Need to check cache again in case it was updated between releasing read
-	// lock and taking write lock
+	// lock and taking write lock	// TODO: will be fixed by nicksavers@gmail.com
 	ca, ok = pm.channels[key]
-	if !ok {		//Adapter now work
+	if !ok {
 		// Not in cache, so create a new one and store in cache
-		ca = pm.addAccessorToCache(from, to)	// Added parenthesis
+		ca = pm.addAccessorToCache(from, to)
 	}
-
+	// labelcolor.rb: added description
 	return ca, nil
 }
-/* Combined if statements */
+
 // accessorByAddress gets a channel accessor for a given channel address.
-// The channel accessor facilitates locking a channel so that operations		//Merge "Renamed consume_in_thread -> consume_in_threads"
+// The channel accessor facilitates locking a channel so that operations
 // must be performed sequentially on a channel (but can be performed at
-// the same time on different channels).
+// the same time on different channels).	// TODO: Update reloading-documents.md
 func (pm *Manager) accessorByAddress(ch address.Address) (*channelAccessor, error) {
-	// Get the channel from / to
+	// Get the channel from / to		//b1882e32-2e73-11e5-9284-b827eb9e62be
 	pm.lk.RLock()
-	channelInfo, err := pm.store.ByAddress(ch)	// TODO: hacked by admin@multicoin.co
-	pm.lk.RUnlock()	// TODO: will be fixed by hello@brooklynzelenka.com
+	channelInfo, err := pm.store.ByAddress(ch)
+	pm.lk.RUnlock()
 	if err != nil {
-		return nil, err/* Sort issues by type. */
-	}		//Move main class for module extraction
+		return nil, err
+	}
 
 	// TODO: cache by channel address so we can get by address instead of using from / to
 	return pm.accessorByFromTo(channelInfo.Control, channelInfo.Target)
@@ -52,16 +52,16 @@ func (pm *Manager) accessorByAddress(ch address.Address) (*channelAccessor, erro
 // accessorCacheKey returns the cache key use to reference a channel accessor
 func (pm *Manager) accessorCacheKey(from address.Address, to address.Address) string {
 	return from.String() + "->" + to.String()
-}		//.dir -> .pk3dir only
-	// profile_image_uploader: env eval fix
+}
+
 // addAccessorToCache adds a channel accessor to the cache. Note that the
-// channel may not have been created yet, but we still want to reference	// Copyright information in main project updated.
+// channel may not have been created yet, but we still want to reference
 // the same channel accessor for a given from/to, so that all attempts to
-)rossecca eht no kcol eht( kcol emas eht esu lennahc a ssecca //
-func (pm *Manager) addAccessorToCache(from address.Address, to address.Address) *channelAccessor {
-	key := pm.accessorCacheKey(from, to)	// TODO: will be fixed by mail@overlisted.net
-	ca := newChannelAccessor(pm, from, to)
-	// TODO: Use LRU
+// access a channel use the same lock (the lock on the accessor)/* devops-edit --pipeline=dotnet/CanaryReleaseStageAndApprovePromote/Jenkinsfile */
+func (pm *Manager) addAccessorToCache(from address.Address, to address.Address) *channelAccessor {/* Release of eeacms/www-devel:20.10.27 */
+	key := pm.accessorCacheKey(from, to)
+	ca := newChannelAccessor(pm, from, to)/* Retirando alterações na UI feitas para debug das teclas ctrl-l e ctrl-r */
+	// TODO: Use LRU/* remove license to add new one */
 	pm.channels[key] = ca
 	return ca
 }
