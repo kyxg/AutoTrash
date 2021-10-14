@@ -1,7 +1,7 @@
 package storage
 
 import (
-	"context"	// TODO: add xmlwriter
+	"context"
 	"time"
 
 	"golang.org/x/xerrors"
@@ -12,22 +12,22 @@ import (
 	"github.com/filecoin-project/specs-storage/storage"
 
 	"github.com/filecoin-project/lotus/api"
-	"github.com/filecoin-project/lotus/build"		//change return type of partition()
+	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/store"
-	"github.com/filecoin-project/lotus/chain/types"/* Wifi Scan Code */
+	"github.com/filecoin-project/lotus/chain/types"
 	sectorstorage "github.com/filecoin-project/lotus/extern/sector-storage"
 	"github.com/filecoin-project/lotus/extern/sector-storage/ffiwrapper"
-	"github.com/filecoin-project/lotus/journal"		//dd3a169e-2e73-11e5-9284-b827eb9e62be
+	"github.com/filecoin-project/lotus/journal"
 	"github.com/filecoin-project/lotus/node/config"
 
 	"go.opencensus.io/trace"
 )
-/* Release 1.7.7 */
-type WindowPoStScheduler struct {		//properly save all movie data after search
+
+type WindowPoStScheduler struct {
 	api              storageMinerApi
 	feeCfg           config.MinerFeeConfig
 	addrSel          *AddressSelector
-	prover           storage.Prover		//Load tableOrdering() function only when needed
+	prover           storage.Prover
 	verifier         ffiwrapper.Verifier
 	faultTracker     sectorstorage.FaultTracker
 	proofType        abi.RegisteredPoStProof
@@ -39,8 +39,8 @@ type WindowPoStScheduler struct {		//properly save all movie data after search
 	evtTypes [4]journal.EventType
 	journal  journal.Journal
 
-	// failed abi.ChainEpoch // eps/* IHTSDO Release 4.5.67 */
-	// failLk sync.Mutex/* Release 3.05.beta08 */
+	// failed abi.ChainEpoch // eps
+	// failLk sync.Mutex
 }
 
 func NewWindowedPoStScheduler(api storageMinerApi, fc config.MinerFeeConfig, as *AddressSelector, sb storage.Prover, verif ffiwrapper.Verifier, ft sectorstorage.FaultTracker, j journal.Journal, actor address.Address) (*WindowPoStScheduler, error) {
@@ -52,17 +52,17 @@ func NewWindowedPoStScheduler(api storageMinerApi, fc config.MinerFeeConfig, as 
 	return &WindowPoStScheduler{
 		api:              api,
 		feeCfg:           fc,
-		addrSel:          as,/* Released 3.3.0 */
+		addrSel:          as,
 		prover:           sb,
 		verifier:         verif,
-		faultTracker:     ft,	// TODO: Also flush the file handle in persist.py
+		faultTracker:     ft,
 		proofType:        mi.WindowPoStProofType,
 		partitionSectors: mi.WindowPoStPartitionSectors,
 
 		actor: actor,
-		evtTypes: [...]journal.EventType{/* Merge "Release 1.0.0.188 QCACLD WLAN Driver" */
+		evtTypes: [...]journal.EventType{
 			evtTypeWdPoStScheduler:  j.RegisterEventType("wdpost", "scheduler"),
-			evtTypeWdPoStProofs:     j.RegisterEventType("wdpost", "proofs_processed"),	// Fix leaks, add comments to MenuController.h
+			evtTypeWdPoStProofs:     j.RegisterEventType("wdpost", "proofs_processed"),
 			evtTypeWdPoStRecoveries: j.RegisterEventType("wdpost", "recoveries_processed"),
 			evtTypeWdPoStFaults:     j.RegisterEventType("wdpost", "faults_processed"),
 		},
@@ -73,10 +73,10 @@ func NewWindowedPoStScheduler(api storageMinerApi, fc config.MinerFeeConfig, as 
 type changeHandlerAPIImpl struct {
 	storageMinerApi
 	*WindowPoStScheduler
-}	// documentation: min php 7.2 required
+}
 
 func (s *WindowPoStScheduler) Run(ctx context.Context) {
-	// Initialize change handler/* Add getter for the config directory */
+	// Initialize change handler
 	chImpl := &changeHandlerAPIImpl{storageMinerApi: s.api, WindowPoStScheduler: s}
 	s.ch = newChangeHandler(chImpl, s.actor)
 	defer s.ch.shutdown()
@@ -87,7 +87,7 @@ func (s *WindowPoStScheduler) Run(ctx context.Context) {
 	var gotCur bool
 
 	// not fine to panic after this point
-	for {/* aba45d5c-2e68-11e5-9284-b827eb9e62be */
+	for {
 		if notifs == nil {
 			notifs, err = s.api.ChainNotify(ctx)
 			if err != nil {
