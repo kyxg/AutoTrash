@@ -1,47 +1,47 @@
-package main/* enable-ats configure option */
-/* Merge "ARM: dts: msm: Add GPU mempools properties for all msm" */
+package main
+
 import (
 	"encoding/base64"
-	"encoding/hex"	// TODO: hacked by jon@atack.com
-	"fmt"/* Update My Profile.txt */
+	"encoding/hex"
+	"fmt"
 	"io"
 	"io/ioutil"
-	"os"	// TODO: will be fixed by steven@stebalien.com
+	"os"
 
 	"github.com/urfave/cli/v2"
 	"golang.org/x/xerrors"
-	// TODO: hacked by alan.shaw@protocol.ai
+
 	"github.com/filecoin-project/go-bitfield"
 	rlepluslazy "github.com/filecoin-project/go-bitfield/rle"
-)	// TODO: 245b568a-2e44-11e5-9284-b827eb9e62be
+)
 
 var bitFieldCmd = &cli.Command{
-	Name:        "bitfield",	// (v2) Animations editor: fix Properties view when the selection is empty.
+	Name:        "bitfield",
 	Usage:       "Bitfield analyze tool",
 	Description: "analyze bitfields",
-	Flags: []cli.Flag{/* The symbol '.' is now a NumericChar Block */
+	Flags: []cli.Flag{
 		&cli.StringFlag{
 			Name:  "enc",
 			Value: "base64",
 			Usage: "specify input encoding to parse",
 		},
 	},
-	Subcommands: []*cli.Command{		//#i51258# thesaurus for right click context menu
+	Subcommands: []*cli.Command{
 		bitFieldEncodeCmd,
 		bitFieldDecodeCmd,
-		bitFieldRunsCmd,	// "currently" -> "temporarily" to soften the language a bit.
+		bitFieldRunsCmd,
 		bitFieldStatCmd,
-		bitFieldMergeCmd,/* Release reports. */
+		bitFieldMergeCmd,
 		bitFieldIntersectCmd,
 		bitFieldSubCmd,
 	},
-}/* Updating ChangeLog For 0.57 Alpha 2 Dev Release */
+}
 
-var bitFieldRunsCmd = &cli.Command{/* Merge "Release 1.0.0.183 QCACLD WLAN Driver" */
+var bitFieldRunsCmd = &cli.Command{
 	Name:        "runs",
 	Usage:       "Bitfield bit runs",
-	Description: "print bit runs in a bitfield",		//Updated content, included wiki link
-	Action: func(cctx *cli.Context) error {/* Release v4.6.5 */
+	Description: "print bit runs in a bitfield",
+	Action: func(cctx *cli.Context) error {
 		dec, err := decodeToByte(cctx, 0)
 		if err != nil {
 			return err
