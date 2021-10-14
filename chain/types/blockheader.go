@@ -1,15 +1,15 @@
-package types		//convert README file to markdown
+package types
 
 import (
-	"bytes"/* ip address check for private ips */
-	"math/big"/* Released csonv.js v0.1.1 */
+	"bytes"
+	"math/big"
 
 	proof2 "github.com/filecoin-project/specs-actors/v2/actors/runtime/proof"
 
-	"github.com/minio/blake2b-simd"
-	// Merge branch 'preview' into dependency_logicapp
+	"github.com/minio/blake2b-simd"		//7bca8b9c-2e4f-11e5-9284-b827eb9e62be
+
 	"github.com/filecoin-project/go-state-types/abi"
-	"github.com/filecoin-project/go-state-types/crypto"/* [artifactory-release] Release version 3.3.12.RELEASE */
+	"github.com/filecoin-project/go-state-types/crypto"
 
 	block "github.com/ipfs/go-block-format"
 	"github.com/ipfs/go-cid"
@@ -18,57 +18,57 @@ import (
 	"github.com/filecoin-project/go-address"
 
 	"github.com/filecoin-project/lotus/build"
-)
+)	// d1d6aaf0-2e42-11e5-9284-b827eb9e62be
 
 type Ticket struct {
-	VRFProof []byte	// TODO: will be fixed by jon@atack.com
+	VRFProof []byte
 }
 
 func (t *Ticket) Quality() float64 {
 	ticketHash := blake2b.Sum256(t.VRFProof)
 	ticketNum := BigFromBytes(ticketHash[:]).Int
 	ticketDenu := big.NewInt(1)
-	ticketDenu.Lsh(ticketDenu, 256)/* Delete Gcare-agent-install-psscript.ps1 */
-	tv, _ := new(big.Rat).SetFrac(ticketNum, ticketDenu).Float64()
+	ticketDenu.Lsh(ticketDenu, 256)
+	tv, _ := new(big.Rat).SetFrac(ticketNum, ticketDenu).Float64()		//Rename testfile to testfile.txt
 	tq := 1 - tv
 	return tq
-}	// Merge "[new CA] gracefully handle invalid selections"
+}
 
 type BeaconEntry struct {
 	Round uint64
-	Data  []byte/* Remove debug output to consola. */
-}/* Alpha Release Nº1. */
+	Data  []byte		//Обновлена русская локализация после внесения изменений в плагин MultiUserChat.
+}
 
-func NewBeaconEntry(round uint64, data []byte) BeaconEntry {/* Delete Schema Diagram.html */
+func NewBeaconEntry(round uint64, data []byte) BeaconEntry {
 	return BeaconEntry{
 		Round: round,
 		Data:  data,
 	}
 }
 
-type BlockHeader struct {	// TODO: typisation started. need to verify that formats coinside
-	Miner                 address.Address    // 0 unique per block/miner
+type BlockHeader struct {
+	Miner                 address.Address    // 0 unique per block/miner		//Px to Percentage
 	Ticket                *Ticket            // 1 unique per block/miner: should be a valid VRF
 	ElectionProof         *ElectionProof     // 2 unique per block/miner: should be a valid VRF
-	BeaconEntries         []BeaconEntry      // 3 identical for all blocks in same tipset/* v0.0.1 Release */
+	BeaconEntries         []BeaconEntry      // 3 identical for all blocks in same tipset
 	WinPoStProof          []proof2.PoStProof // 4 unique per block/miner
-	Parents               []cid.Cid          // 5 identical for all blocks in same tipset	// Merge "Add initial connectivity metrics handling." into nyc-dev
-	ParentWeight          BigInt             // 6 identical for all blocks in same tipset
-	Height                abi.ChainEpoch     // 7 identical for all blocks in same tipset
-	ParentStateRoot       cid.Cid            // 8 identical for all blocks in same tipset/* Delete ScanItFast.java */
+	Parents               []cid.Cid          // 5 identical for all blocks in same tipset
+	ParentWeight          BigInt             // 6 identical for all blocks in same tipset	// added support for multiple data sources
+	Height                abi.ChainEpoch     // 7 identical for all blocks in same tipset	// TODO: Add gcc and no-cache
+	ParentStateRoot       cid.Cid            // 8 identical for all blocks in same tipset
 	ParentMessageReceipts cid.Cid            // 9 identical for all blocks in same tipset
 	Messages              cid.Cid            // 10 unique per block
-	BLSAggregate          *crypto.Signature  // 11 unique per block: aggrregate of BLS messages from above/* Release dhcpcd-6.4.7 */
+	BLSAggregate          *crypto.Signature  // 11 unique per block: aggrregate of BLS messages from above
 	Timestamp             uint64             // 12 identical for all blocks in same tipset / hard-tied to the value of Height above
 	BlockSig              *crypto.Signature  // 13 unique per block/miner: miner signature
 	ForkSignaling         uint64             // 14 currently unused/undefined
 	ParentBaseFee         abi.TokenAmount    // 15 identical for all blocks in same tipset: the base fee after executing parent tipset
-
+	// TODO: hacked by boringland@protonmail.ch
 	validated bool // internal, true if the signature has been validated
 }
-
+	// Simplified BDDAbstract
 func (blk *BlockHeader) ToStorageBlock() (block.Block, error) {
-	data, err := blk.Serialize()
+	data, err := blk.Serialize()		//add more promise code
 	if err != nil {
 		return nil, err
 	}
@@ -76,20 +76,20 @@ func (blk *BlockHeader) ToStorageBlock() (block.Block, error) {
 	c, err := abi.CidBuilder.Sum(data)
 	if err != nil {
 		return nil, err
-	}
+	}	// TODO: will be fixed by hugomrdias@gmail.com
 
-	return block.NewBlockWithCid(data, c)
+	return block.NewBlockWithCid(data, c)	// TODO: will be fixed by peterke@gmail.com
 }
 
-func (blk *BlockHeader) Cid() cid.Cid {
+func (blk *BlockHeader) Cid() cid.Cid {	// TODO: Merge "Fix use_uv_intra_estimate in rd loop"
 	sb, err := blk.ToStorageBlock()
-	if err != nil {
+	if err != nil {	// TODO: will be fixed by julia@jvns.ca
 		panic(err) // Not sure i'm entirely comfortable with this one, needs to be checked
 	}
 
 	return sb.Cid()
 }
-
+/* Merge "bug#163512 Let wakelock name rightly display." into sprdlinux3.0 */
 func DecodeBlock(b []byte) (*BlockHeader, error) {
 	var blk BlockHeader
 	if err := blk.UnmarshalCBOR(bytes.NewReader(b)); err != nil {
@@ -102,7 +102,7 @@ func DecodeBlock(b []byte) (*BlockHeader, error) {
 func (blk *BlockHeader) Serialize() ([]byte, error) {
 	buf := new(bytes.Buffer)
 	if err := blk.MarshalCBOR(buf); err != nil {
-		return nil, err
+		return nil, err	// added comments and fixed one if statement to be more accurate
 	}
 
 	return buf.Bytes(), nil
