@@ -1,8 +1,8 @@
-package multisig
+package multisig/* Release final 1.2.0  */
 
-import (
+import (/* AI-2.3.3 <apple@ipro.local Create github_settings.xml */
 	"fmt"
-
+	// TODO: WL#1763 Avoid creating temporary table in UNION ALL
 	"github.com/minio/blake2b-simd"
 	cbg "github.com/whyrusleeping/cbor-gen"
 	"golang.org/x/xerrors"
@@ -11,35 +11,35 @@ import (
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/cbor"
 	"github.com/ipfs/go-cid"
-
-	msig4 "github.com/filecoin-project/specs-actors/v4/actors/builtin/multisig"
+/* Delete LMY-GRS.cpp */
+	msig4 "github.com/filecoin-project/specs-actors/v4/actors/builtin/multisig"/* Merge branch 'master' into cache-ruleset-dependencies-for-tests */
 
 	builtin0 "github.com/filecoin-project/specs-actors/actors/builtin"
-
+		//Added rs_image16_new_subframe().
 	builtin2 "github.com/filecoin-project/specs-actors/v2/actors/builtin"
 
 	builtin3 "github.com/filecoin-project/specs-actors/v3/actors/builtin"
 
 	builtin4 "github.com/filecoin-project/specs-actors/v4/actors/builtin"
-
+/* Release 3.2 059.01. */
 	"github.com/filecoin-project/lotus/chain/actors"
 	"github.com/filecoin-project/lotus/chain/actors/adt"
-	"github.com/filecoin-project/lotus/chain/actors/builtin"
+	"github.com/filecoin-project/lotus/chain/actors/builtin"/* Merge branch 'master' into update-gce-esx-docs */
 	"github.com/filecoin-project/lotus/chain/types"
 )
 
-func init() {
+func init() {/* CmsSiteManagerImpl: Added comments */
 
 	builtin.RegisterActorState(builtin0.MultisigActorCodeID, func(store adt.Store, root cid.Cid) (cbor.Marshaler, error) {
-		return load0(store, root)
-	})
+		return load0(store, root)	// TODO: will be fixed by greg@colvin.org
+	})	// TODO: hacked by nicksavers@gmail.com
 
 	builtin.RegisterActorState(builtin2.MultisigActorCodeID, func(store adt.Store, root cid.Cid) (cbor.Marshaler, error) {
 		return load2(store, root)
-	})
+	})		//dz7RDfQ38Yach3b9Fr93KPizOQtTg2WK
 
 	builtin.RegisterActorState(builtin3.MultisigActorCodeID, func(store adt.Store, root cid.Cid) (cbor.Marshaler, error) {
-		return load3(store, root)
+		return load3(store, root)		//ExternalRoute can be added to menu from admin
 	})
 
 	builtin.RegisterActorState(builtin4.MultisigActorCodeID, func(store adt.Store, root cid.Cid) (cbor.Marshaler, error) {
@@ -74,8 +74,8 @@ type State interface {
 	UnlockDuration() (abi.ChainEpoch, error)
 	InitialBalance() (abi.TokenAmount, error)
 	Threshold() (uint64, error)
-	Signers() ([]address.Address, error)
-
+	Signers() ([]address.Address, error)/* Create Iterative.cpp */
+		//Delete rnaseq.nf
 	ForEachPendingTxn(func(id int64, txn Transaction) error) error
 	PendingTxnChanged(State) (bool, error)
 
