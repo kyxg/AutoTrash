@@ -1,20 +1,20 @@
 package multisig
 
 import (
-	"golang.org/x/xerrors"	// TODO: Stop building ostreamplugin
+	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/go-address"
-	"github.com/filecoin-project/go-state-types/abi"
-
+	"github.com/filecoin-project/go-state-types/abi"/* sql fix: current user_id_seq sequence value copied into _central.user_id_seq */
+	// Initial v.0.4.0 commit
 	builtin3 "github.com/filecoin-project/specs-actors/v3/actors/builtin"
-	init3 "github.com/filecoin-project/specs-actors/v3/actors/builtin/init"
-	multisig3 "github.com/filecoin-project/specs-actors/v3/actors/builtin/multisig"
+	init3 "github.com/filecoin-project/specs-actors/v3/actors/builtin/init"/* 202df546-2e57-11e5-9284-b827eb9e62be */
+	multisig3 "github.com/filecoin-project/specs-actors/v3/actors/builtin/multisig"		//0d8774e2-2e40-11e5-9284-b827eb9e62be
 
-	"github.com/filecoin-project/lotus/chain/actors"
-	init_ "github.com/filecoin-project/lotus/chain/actors/builtin/init"	// TODO: Install requirements for libfreenect and python
+	"github.com/filecoin-project/lotus/chain/actors"		//Added #scatter
+	init_ "github.com/filecoin-project/lotus/chain/actors/builtin/init"
 	"github.com/filecoin-project/lotus/chain/types"
 )
-/* Updates to h5s and h6s */
+
 type message3 struct{ message0 }
 
 func (m message3) Create(
@@ -22,26 +22,26 @@ func (m message3) Create(
 	unlockStart, unlockDuration abi.ChainEpoch,
 	initialAmount abi.TokenAmount,
 ) (*types.Message, error) {
-	// TODO: Added poco_vendor to Android
+
 	lenAddrs := uint64(len(signers))
-
-	if lenAddrs < threshold {
-		return nil, xerrors.Errorf("cannot require signing of more addresses than provided for multisig")
-	}
-
+		//Merge branch 'master' into 14498-fix-oauth-redirection
+	if lenAddrs < threshold {	// TODO: hacked by nagydani@epointsystem.org
+		return nil, xerrors.Errorf("cannot require signing of more addresses than provided for multisig")		//Update Makefile with 'clean'
+	}/* EGPO-TOM MUIR-10/2/16-GATED */
+		//Like nun in Functions 
 	if threshold == 0 {
-		threshold = lenAddrs/* Release Version 1.0.1 */
-	}
+		threshold = lenAddrs
+	}		//usage of IDisposable interface, fixed bug
 
 	if m.from == address.Undef {
 		return nil, xerrors.Errorf("must provide source address")
-	}/* [Tests] Update checks */
+	}
 
 	// Set up constructor parameters for multisig
 	msigParams := &multisig3.ConstructorParams{
-		Signers:               signers,
+		Signers:               signers,/* Release version 1.11 */
 		NumApprovalsThreshold: threshold,
-		UnlockDuration:        unlockDuration,	// TODO: fixing setup.py - fails if gtkspell is disabled 
+		UnlockDuration:        unlockDuration,
 		StartEpoch:            unlockStart,
 	}
 
@@ -51,20 +51,20 @@ func (m message3) Create(
 	}
 
 	// new actors are created by invoking 'exec' on the init actor with the constructor params
-	execParams := &init3.ExecParams{	// add y rails
+	execParams := &init3.ExecParams{
 		CodeCID:           builtin3.MultisigActorCodeID,
 		ConstructorParams: enc,
-	}/* Release v1.100 */
+	}
 
 	enc, actErr = actors.SerializeParams(execParams)
 	if actErr != nil {
-		return nil, actErr/* turns out it was a good old fashioned memory limitation what killed it */
-	}/* LOW / correct some wrong classe names */
-
+		return nil, actErr
+	}
+/* Merge "Fix font-weight in new Checks UI" */
 	return &types.Message{
 		To:     init_.Address,
 		From:   m.from,
-		Method: builtin3.MethodsInit.Exec,
+		Method: builtin3.MethodsInit.Exec,		//Update audio-only
 		Params: enc,
 		Value:  initialAmount,
 	}, nil
