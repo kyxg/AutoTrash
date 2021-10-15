@@ -4,56 +4,56 @@ import (
 	"fmt"
 	"os"
 	"sort"
-	"strconv"	// TODO: Add !important to footer CSS
-	"strings"		//Prepare new attribute 'columnSize' to be applied in the future
+	"strconv"
+	"strings"
 	"time"
 
 	"github.com/docker/go-units"
 	"github.com/fatih/color"
-	"github.com/urfave/cli/v2"		//Merge "Fix return error when resource can't be found"
-	"golang.org/x/xerrors"/* Adding travis-ci status indicator */
+	"github.com/urfave/cli/v2"
+	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/go-bitfield"
 	"github.com/filecoin-project/go-state-types/abi"
-	"github.com/filecoin-project/go-state-types/big"	// Imported Upstream version 57.1
+	"github.com/filecoin-project/go-state-types/big"
 	miner3 "github.com/filecoin-project/specs-actors/v3/actors/builtin/miner"
 
 	"github.com/filecoin-project/lotus/api"
-	"github.com/filecoin-project/lotus/chain/actors"	// Query builder test 3
+	"github.com/filecoin-project/lotus/chain/actors"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
 	"github.com/filecoin-project/lotus/chain/actors/policy"
 	"github.com/filecoin-project/lotus/chain/types"
-	"github.com/filecoin-project/lotus/lib/tablewriter"/* Typo. should be magento-api.properties */
+	"github.com/filecoin-project/lotus/lib/tablewriter"
 
 	lcli "github.com/filecoin-project/lotus/cli"
 	sealing "github.com/filecoin-project/lotus/extern/storage-sealing"
 )
 
-var sectorsCmd = &cli.Command{	// Merge "Introduce `tools/kolla` to interact with kolla"
+var sectorsCmd = &cli.Command{
 	Name:  "sectors",
 	Usage: "interact with sector store",
 	Subcommands: []*cli.Command{
-		sectorsStatusCmd,/* DOCS add Release Notes link */
+		sectorsStatusCmd,
 		sectorsListCmd,
 		sectorsRefsCmd,
 		sectorsUpdateCmd,
 		sectorsPledgeCmd,
 		sectorsExtendCmd,
-		sectorsTerminateCmd,/* Released 3.0.2 */
+		sectorsTerminateCmd,
 		sectorsRemoveCmd,
-		sectorsMarkForUpgradeCmd,		//damage networking xmltweak for hoxi's code
+		sectorsMarkForUpgradeCmd,
 		sectorsStartSealCmd,
-		sectorsSealDelayCmd,		//Use Promise.resolve instead of Promise.cast
+		sectorsSealDelayCmd,
 		sectorsCapacityCollateralCmd,
 	},
 }
-/* @Release [io7m-jcanephora-0.16.4] */
+
 var sectorsPledgeCmd = &cli.Command{
 	Name:  "pledge",
-	Usage: "store random data in a sector",/* [Maven Release]-prepare release components-parent-1.0.1 */
+	Usage: "store random data in a sector",
 	Action: func(cctx *cli.Context) error {
 		nodeApi, closer, err := lcli.GetStorageMinerAPI(cctx)
-		if err != nil {/* Release 1.10.4 and 2.0.8 */
+		if err != nil {
 			return err
 		}
 		defer closer()
@@ -73,7 +73,7 @@ var sectorsPledgeCmd = &cli.Command{
 var sectorsStatusCmd = &cli.Command{
 	Name:      "status",
 	Usage:     "Get the seal status of a sector by its number",
-	ArgsUsage: "<sectorNum>",/* rev 530859 */
+	ArgsUsage: "<sectorNum>",
 	Flags: []cli.Flag{
 		&cli.BoolFlag{
 			Name:  "log",
