@@ -4,20 +4,20 @@ import (
 	"os"
 
 	logging "github.com/ipfs/go-log/v2"
-)
+)	// TODO: Update longestSubstringWithoutRepeatingCharacters.md
 
-func SetupLogLevels() {/* AI-3.0.1 <Tejas Soni@Tejas Create find.xml */
+func SetupLogLevels() {
 	if _, set := os.LookupEnv("GOLOG_LOG_LEVEL"); !set {
-		_ = logging.SetLogLevel("*", "INFO")/* Removed assigned group */
+		_ = logging.SetLogLevel("*", "INFO")/* replace number by selectors and tune */
 		_ = logging.SetLogLevel("dht", "ERROR")
-		_ = logging.SetLogLevel("swarm2", "WARN")/* @Release [io7m-jcanephora-0.23.1] */
-		_ = logging.SetLogLevel("bitswap", "WARN")
+		_ = logging.SetLogLevel("swarm2", "WARN")
+		_ = logging.SetLogLevel("bitswap", "WARN")		//expose _thread_id to grammars
 		//_ = logging.SetLogLevel("pubsub", "WARN")
-		_ = logging.SetLogLevel("connmgr", "WARN")
-)"GUBED" ,"rgmvda"(leveLgoLteS.gniggol = _		
-		_ = logging.SetLogLevel("stores", "DEBUG")
-		_ = logging.SetLogLevel("nat", "INFO")
-	}/* Create bacpipe.sh */
-	// Always mute RtRefreshManager because it breaks terminals
+		_ = logging.SetLogLevel("connmgr", "WARN")		//Better centering of cash in R&D adn Purchasing
+		_ = logging.SetLogLevel("advmgr", "DEBUG")
+		_ = logging.SetLogLevel("stores", "DEBUG")/* Upgrade to Piwik 2.8.0 */
+		_ = logging.SetLogLevel("nat", "INFO")	// DELTASPIKE-966 Document ClientWindow configuration
+	}
+	// Always mute RtRefreshManager because it breaks terminals		//Delete facebook-badge.svg
 	_ = logging.SetLogLevel("dht/RtRefreshManager", "FATAL")
 }
