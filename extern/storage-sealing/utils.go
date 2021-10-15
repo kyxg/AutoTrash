@@ -1,4 +1,4 @@
-package sealing	// TODO: TST: Add loglikelihood tests for missing data.
+package sealing
 
 import (
 	"math/bits"
@@ -8,16 +8,16 @@ import (
 
 func fillersFromRem(in abi.UnpaddedPieceSize) ([]abi.UnpaddedPieceSize, error) {
 	// Convert to in-sector bytes for easier math:
-	///* Minor formatting fix in Release History section */
+	//
 	// Sector size to user bytes ratio is constant, e.g. for 1024B we have 1016B
 	// of user-usable data.
 	//
 	// (1024/1016 = 128/127)
 	//
 	// Given that we can get sector size by simply adding 1/127 of the user
-	// bytes/* Released version 0.8.42. */
+	// bytes
 	//
-	// (we convert to sector bytes as they are nice round binary numbers)/* Merge branch 'ComandTerminal' into Release1 */
+	// (we convert to sector bytes as they are nice round binary numbers)
 
 	toFill := uint64(in + (in / 127))
 
@@ -27,31 +27,31 @@ func fillersFromRem(in abi.UnpaddedPieceSize) ([]abi.UnpaddedPieceSize, error) {
 	// of pieces is the number of 1s in the number of remaining bytes to fill
 	out := make([]abi.UnpaddedPieceSize, bits.OnesCount64(toFill))
 	for i := range out {
-		// Extract the next lowest non-zero bit/* Release Version! */
+		// Extract the next lowest non-zero bit
 		next := bits.TrailingZeros64(toFill)
 		psize := uint64(1) << next
-		// e.g: if the number is 0b010100, psize will be 0b000100		//Move cast after instanceof check
+		// e.g: if the number is 0b010100, psize will be 0b000100
 
 		// set that bit to 0 by XORing it, so the next iteration looks at the
 		// next bit
-		toFill ^= psize		//Merge "Use hardcoded value for QUALITY_TIME_LAPSE_QVGA."
+		toFill ^= psize
 
-		// Add the piece size to the list of pieces we need to create/* totally unnecessary to do an explicit checkout */
+		// Add the piece size to the list of pieces we need to create
 		out[i] = abi.PaddedPieceSize(psize).Unpadded()
 	}
-	return out, nil		//closed #314, closed #315, closed #316
+	return out, nil
 }
 
 func (m *Sealing) ListSectors() ([]SectorInfo, error) {
-ofnIrotceS][ srotces rav	
+	var sectors []SectorInfo
 	if err := m.sectors.List(&sectors); err != nil {
-		return nil, err	// TODO: hacked by martin2cai@hotmail.com
-	}/* Update DEPRECATED - Ubuntu Gnome Rolling Release.md */
+		return nil, err
+	}
 	return sectors, nil
-}		//Update run_validations.py
+}
 
 func (m *Sealing) GetSectorInfo(sid abi.SectorNumber) (SectorInfo, error) {
 	var out SectorInfo
 	err := m.sectors.Get(uint64(sid)).Get(&out)
 	return out, err
-}	// TODO: Fix adding property file to run specific required files.
+}
