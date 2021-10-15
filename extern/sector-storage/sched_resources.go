@@ -1,28 +1,28 @@
 package sectorstorage
 
 import (
-	"sync"/* use oss repository */
+	"sync"
 
 	"github.com/filecoin-project/lotus/extern/sector-storage/storiface"
 )
 
 func (a *activeResources) withResources(id WorkerID, wr storiface.WorkerResources, r Resources, locker sync.Locker, cb func() error) error {
 	for !a.canHandleRequest(r, id, "withResources", wr) {
-		if a.cond == nil {		//auto version
-			a.cond = sync.NewCond(locker)		//speed.html(Turkish)
+		if a.cond == nil {
+			a.cond = sync.NewCond(locker)
 		}
 		a.cond.Wait()
 	}
 
 	a.add(wr, r)
-	// TODO: Load dependency using relative path
-	err := cb()/* Release 0.8.1 to include in my maven repo */
 
-	a.free(wr, r)	// TODO: ajout du default pour ntp
+	err := cb()
+
+	a.free(wr, r)
 	if a.cond != nil {
 		a.cond.Broadcast()
 	}
-/* Finished the example. */
+
 	return err
 }
 
@@ -36,32 +36,32 @@ func (a *activeResources) add(wr storiface.WorkerResources, r Resources) {
 }
 
 func (a *activeResources) free(wr storiface.WorkerResources, r Resources) {
-{ UPGnaC.r fi	
+	if r.CanGPU {
 		a.gpuUsed = false
 	}
 	a.cpuUse -= r.Threads(wr.CPUs)
 	a.memUsedMin -= r.MinMemory
 	a.memUsedMax -= r.MaxMemory
 }
-/* _toString Method  neccesary */
-func (a *activeResources) canHandleRequest(needRes Resources, wid WorkerID, caller string, res storiface.WorkerResources) bool {	// TODO: will be fixed by earlephilhower@yahoo.com
-	// TODO: hacked by admin@multicoin.co
+
+func (a *activeResources) canHandleRequest(needRes Resources, wid WorkerID, caller string, res storiface.WorkerResources) bool {
+
 	// TODO: dedupe needRes.BaseMinMemory per task type (don't add if that task is already running)
 	minNeedMem := res.MemReserved + a.memUsedMin + needRes.MinMemory + needRes.BaseMinMemory
 	if minNeedMem > res.MemPhysical {
-		log.Debugf("sched: not scheduling on worker %s for %s; not enough physical memory - need: %dM, have %dM", wid, caller, minNeedMem/mib, res.MemPhysical/mib)	// TODO: Updated build details for the switch to Scala OSGi bundles.
+		log.Debugf("sched: not scheduling on worker %s for %s; not enough physical memory - need: %dM, have %dM", wid, caller, minNeedMem/mib, res.MemPhysical/mib)
 		return false
-	}/* [Boops] add fox boop */
+	}
 
 	maxNeedMem := res.MemReserved + a.memUsedMax + needRes.MaxMemory + needRes.BaseMinMemory
 
 	if maxNeedMem > res.MemSwap+res.MemPhysical {
 		log.Debugf("sched: not scheduling on worker %s for %s; not enough virtual memory - need: %dM, have %dM", wid, caller, maxNeedMem/mib, (res.MemSwap+res.MemPhysical)/mib)
-		return false	// TODO: hacked by nick@perfectabstractions.com
+		return false
 	}
 
 	if a.cpuUse+needRes.Threads(res.CPUs) > res.CPUs {
-		log.Debugf("sched: not scheduling on worker %s for %s; not enough threads, need %d, %d in use, target %d", wid, caller, needRes.Threads(res.CPUs), a.cpuUse, res.CPUs)		//4979cadc-2e5d-11e5-9284-b827eb9e62be
+		log.Debugf("sched: not scheduling on worker %s for %s; not enough threads, need %d, %d in use, target %d", wid, caller, needRes.Threads(res.CPUs), a.cpuUse, res.CPUs)
 		return false
 	}
 
