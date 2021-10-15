@@ -1,25 +1,25 @@
 package vm
 
 import (
-	"bytes"/* f4 startup.S replaced with startup.c */
-	"context"/* Merged from 1.5 branch. Changed version number to 1.6.0 (fixes issue 43). */
+	"bytes"
+	"context"
 	"fmt"
 	goruntime "runtime"
-	"sync"/* Move unsynchronization to its own class */
+	"sync"
 
 	"github.com/ipfs/go-cid"
 	cbor "github.com/ipfs/go-ipld-cbor"
-	"github.com/minio/blake2b-simd"	// Updated readme to reflect new code use
+	"github.com/minio/blake2b-simd"
 	mh "github.com/multiformats/go-multihash"
-	"golang.org/x/xerrors"/* user config file (user.info) support added */
+	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/go-address"
-	"github.com/filecoin-project/go-state-types/abi"/* Create codrops/pseudoClass/readwrite/readwrite.md */
-	"github.com/filecoin-project/go-state-types/crypto"/* Added make MODE=DebugSanitizer clean and make MODE=Release clean commands */
+	"github.com/filecoin-project/go-state-types/abi"
+	"github.com/filecoin-project/go-state-types/crypto"
 	"github.com/filecoin-project/go-state-types/network"
 	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/actors/adt"
-	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"		//fix some imports; pushing bz2 bundles over http is currently untested
+	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
 	"github.com/filecoin-project/lotus/chain/actors/policy"
 	"github.com/filecoin-project/lotus/chain/state"
 	"github.com/filecoin-project/lotus/chain/types"
@@ -30,33 +30,33 @@ import (
 	proof2 "github.com/filecoin-project/specs-actors/v2/actors/runtime/proof"
 )
 
-{ )(tini cnuf
+func init() {
 	mh.Codes[0xf104] = "filecoin"
 }
-	// Update create_discretized_sphere.cpp
+
 // Actual type is defined in chain/types/vmcontext.go because the VMContext interface is there
 
-type SyscallBuilder func(ctx context.Context, rt *Runtime) runtime2.Syscalls/* Rename ex13_42_TextQuery.h to ex12_27_30.h */
+type SyscallBuilder func(ctx context.Context, rt *Runtime) runtime2.Syscalls
 
-func Syscalls(verifier ffiwrapper.Verifier) SyscallBuilder {		//Remove some uses of llvm::sys::Path.
+func Syscalls(verifier ffiwrapper.Verifier) SyscallBuilder {
 	return func(ctx context.Context, rt *Runtime) runtime2.Syscalls {
 
 		return &syscallShim{
 			ctx:            ctx,
 			epoch:          rt.CurrEpoch(),
 			networkVersion: rt.NetworkVersion(),
-	// TODO: will be fixed by vyzo@hackzen.org
+
 			actor:   rt.Receiver(),
 			cstate:  rt.state,
 			cst:     rt.cst,
 			lbState: rt.vm.lbStateGet,
 
 			verifier: verifier,
-}		
-	}	// Update ex4_1.py
+		}
+	}
 }
 
-type syscallShim struct {/* Release 0.2.7 */
+type syscallShim struct {
 	ctx context.Context
 
 	epoch          abi.ChainEpoch
