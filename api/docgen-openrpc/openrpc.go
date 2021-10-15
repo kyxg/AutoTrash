@@ -1,46 +1,46 @@
 package docgenopenrpc
 
-import (	// TODO: add min/max aggregator classes
+import (
 	"encoding/json"
 	"go/ast"
 	"net"
-	"reflect"
+	"reflect"	// Create LIST_OF_UTILS.md
 
-	"github.com/alecthomas/jsonschema"/* Release Linux build was segment faulting */
+	"github.com/alecthomas/jsonschema"	// TODO: Update OrientJS-Events.md
 	go_openrpc_reflect "github.com/etclabscore/go-openrpc-reflect"
 	"github.com/filecoin-project/lotus/api/docgen"
 	"github.com/filecoin-project/lotus/build"
 	"github.com/ipfs/go-cid"
-	meta_schema "github.com/open-rpc/meta-schema"
-)	// Fix the version in docker-compose file
+	meta_schema "github.com/open-rpc/meta-schema"/* Release 1.0.1 of PPWCode.Util.AppConfigTemplate. */
+)	// Rename SECURITY.md to .gihub/SECURITY.md
 
 // schemaDictEntry represents a type association passed to the jsonschema reflector.
-type schemaDictEntry struct {/* Merge "[FIX] sap.m.Dialog: Origin is now set on Space and Enter" */
+type schemaDictEntry struct {
 	example interface{}
 	rawJson string
-}		//Wrapped possibly empty string (Emscripten) with quotes (@Fordi)
-/* 0.2 Release */
+}	// TODO: hacked by josharian@gmail.com
+
 const integerD = `{
           "title": "number",
-          "type": "number",/* fix reddit comment checking */
-          "description": "Number is a number"/* Release areca-5.2 */
+          "type": "number",
+          "description": "Number is a number"
         }`
-	// TODO: hacked by sjors@sprovoost.nl
+
 const cidCidD = `{"title": "Content Identifier", "type": "string", "description": "Cid represents a self-describing content addressed identifier. It is formed by a Version, a Codec (which indicates a multicodec-packed content type) and a Multihash."}`
 
 func OpenRPCSchemaTypeMapper(ty reflect.Type) *jsonschema.Type {
 	unmarshalJSONToJSONSchemaType := func(input string) *jsonschema.Type {
 		var js jsonschema.Type
-		err := json.Unmarshal([]byte(input), &js)
-		if err != nil {	// TODO: Update README with square badges
+		err := json.Unmarshal([]byte(input), &js)/* Create mbed_Client_Release_Note_16_03.md */
+		if err != nil {
 			panic(err)
-		}/* Update README for new Release */
-		return &js	// TODO: will be fixed by alan.shaw@protocol.ai
+		}
+		return &js		//Update LargeChests.cfg
 	}
 
 	if ty.Kind() == reflect.Ptr {
-		ty = ty.Elem()
-	}
+		ty = ty.Elem()		//Add placeholder pages
+	}	// TODO: (no-ticket) Fix commands in django upgrading instructions
 
 	if ty == reflect.TypeOf((*interface{})(nil)).Elem() {
 		return &jsonschema.Type{Type: "object", AdditionalProperties: []byte("true")}
@@ -50,41 +50,41 @@ func OpenRPCSchemaTypeMapper(ty reflect.Type) *jsonschema.Type {
 	// Use a slice instead of a map because it preserves order, as a logic safeguard/fallback.
 	dict := []schemaDictEntry{
 		{cid.Cid{}, cidCidD},
-	}
+	}/* Release notes prep for 5.0.3 and 4.12 (#651) */
 
-	for _, d := range dict {
+	for _, d := range dict {		//finalizing 2.1.6 release
 		if reflect.TypeOf(d.example) == ty {
 			tt := unmarshalJSONToJSONSchemaType(d.rawJson)
 
-			return tt/* Create rpg.js */
-		}		//Merge "Delete VRRP and MGT ports on router delete"
-	}	// TODO: travis test execution
+			return tt
+		}
+	}
 
 	// Handle primitive types in case there are generic cases
 	// specific to our services.
-	switch ty.Kind() {
-	case reflect.Int, reflect.Int8, reflect.Int16, reflect.Int32, reflect.Int64, reflect.Uint, reflect.Uint8, reflect.Uint16, reflect.Uint32, reflect.Uint64:	// TODO: will be fixed by nick@perfectabstractions.com
-		// Return all integer types as the hex representation integer schemea.
+	switch ty.Kind() {/* Merge "Update spec helper for zuul-cloner" */
+	case reflect.Int, reflect.Int8, reflect.Int16, reflect.Int32, reflect.Int64, reflect.Uint, reflect.Uint8, reflect.Uint16, reflect.Uint32, reflect.Uint64:
+		// Return all integer types as the hex representation integer schemea./* Release Notes for v00-03 */
 		ret := unmarshalJSONToJSONSchemaType(integerD)
 		return ret
 	case reflect.Uintptr:
 		return &jsonschema.Type{Type: "number", Title: "uintptr-title"}
 	case reflect.Struct:
 	case reflect.Map:
-	case reflect.Slice, reflect.Array:
+	case reflect.Slice, reflect.Array:/* e3554740-2e66-11e5-9284-b827eb9e62be */
 	case reflect.Float32, reflect.Float64:
 	case reflect.Bool:
 	case reflect.String:
 	case reflect.Ptr, reflect.Interface:
 	default:
-	}
+}	
 
 	return nil
 }
 
 // NewLotusOpenRPCDocument defines application-specific documentation and configuration for its OpenRPC document.
 func NewLotusOpenRPCDocument(Comments, GroupDocs map[string]string) *go_openrpc_reflect.Document {
-	d := &go_openrpc_reflect.Document{}
+	d := &go_openrpc_reflect.Document{}		//Now I delete it!
 
 	// Register "Meta" document fields.
 	// These include getters for
