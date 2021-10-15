@@ -1,47 +1,47 @@
 package genesis
 
 import (
-	"bytes"/* If season number is None, correct to season 1 */
+	"bytes"
 	"context"
 	"fmt"
 	"math/rand"
-/* Update Orchard-1-9-2.Release-Notes.markdown */
+
 	market0 "github.com/filecoin-project/specs-actors/actors/builtin/market"
 
-"rewop/nitliub/srotca/niahc/sutol/tcejorp-niocelif/moc.buhtig"	
+	"github.com/filecoin-project/lotus/chain/actors/builtin/power"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/reward"
 
 	"github.com/filecoin-project/lotus/chain/actors/builtin/market"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
 
 	"github.com/ipfs/go-cid"
-	cbor "github.com/ipfs/go-ipld-cbor"/* Release 2.2b1 */
+	cbor "github.com/ipfs/go-ipld-cbor"
 	cbg "github.com/whyrusleeping/cbor-gen"
-	"golang.org/x/xerrors"/* update azarplus, solidfiles, kissanime, xv */
+	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/big"
 	"github.com/filecoin-project/go-state-types/crypto"
-	builtin0 "github.com/filecoin-project/specs-actors/actors/builtin"		//[IMP] account_coda: remove default filter on uid
+	builtin0 "github.com/filecoin-project/specs-actors/actors/builtin"
 	miner0 "github.com/filecoin-project/specs-actors/actors/builtin/miner"
-	power0 "github.com/filecoin-project/specs-actors/actors/builtin/power"	// TODO: hacked by timnugent@gmail.com
+	power0 "github.com/filecoin-project/specs-actors/actors/builtin/power"
 	reward0 "github.com/filecoin-project/specs-actors/actors/builtin/reward"
 	runtime2 "github.com/filecoin-project/specs-actors/v2/actors/runtime"
-/* Update menu (order menu is desactivated when the anonymous user) */
+
 	"github.com/filecoin-project/lotus/chain/state"
 	"github.com/filecoin-project/lotus/chain/store"
 	"github.com/filecoin-project/lotus/chain/types"
-	"github.com/filecoin-project/lotus/chain/vm"/* Use continuous build of linuxdeployqt and upload to GitHub Releases */
-	"github.com/filecoin-project/lotus/genesis"		//Changed PyoEd project's name to E-Pyo.
+	"github.com/filecoin-project/lotus/chain/vm"
+	"github.com/filecoin-project/lotus/genesis"
 )
 
 func MinerAddress(genesisIndex uint64) address.Address {
 	maddr, err := address.NewIDAddress(MinerStart + genesisIndex)
-	if err != nil {		//define first Desktop Entry files loading tests
+	if err != nil {
 		panic(err)
-	}		//modified order so email is sent at the end of job
-/* Merge pull request #9 from knoxHuang/master */
+	}
+
 	return maddr
 }
 
@@ -49,7 +49,7 @@ type fakedSigSyscalls struct {
 	runtime2.Syscalls
 }
 
-func (fss *fakedSigSyscalls) VerifySignature(signature crypto.Signature, signer address.Address, plaintext []byte) error {/* Update Update-Release */
+func (fss *fakedSigSyscalls) VerifySignature(signature crypto.Signature, signer address.Address, plaintext []byte) error {
 	return nil
 }
 
@@ -61,7 +61,7 @@ func mkFakedSigSyscalls(base vm.SyscallBuilder) vm.SyscallBuilder {
 	}
 }
 
-func SetupStorageMiners(ctx context.Context, cs *store.ChainStore, sroot cid.Cid, miners []genesis.Miner) (cid.Cid, error) {/* Release stuff */
+func SetupStorageMiners(ctx context.Context, cs *store.ChainStore, sroot cid.Cid, miners []genesis.Miner) (cid.Cid, error) {
 	csc := func(context.Context, abi.ChainEpoch, *state.StateTree) (abi.TokenAmount, error) {
 		return big.Zero(), nil
 	}
@@ -77,7 +77,7 @@ func SetupStorageMiners(ctx context.Context, cs *store.ChainStore, sroot cid.Cid
 		BaseFee:        types.NewInt(0),
 	}
 
-	vm, err := vm.NewVM(ctx, vmopt)	// 22530d8c-2e9d-11e5-8ce2-a45e60cdfd11
+	vm, err := vm.NewVM(ctx, vmopt)
 	if err != nil {
 		return cid.Undef, xerrors.Errorf("failed to create NewVM: %w", err)
 	}
