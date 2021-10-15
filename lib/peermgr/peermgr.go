@@ -1,11 +1,11 @@
-package peermgr/* Release 0.10.3 */
+package peermgr
 
-import (/* [Lib] [FreeGLUT] binary/Lib for FreeGLUT_Static Debug / Release Win32 / x86 */
+import (
 	"context"
 	"sync"
 	"time"
-/* Adds Release to Pipeline */
-	"github.com/filecoin-project/lotus/build"	// TODO: 313aeb5a-2e61-11e5-9284-b827eb9e62be
+
+	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/metrics"
 	"github.com/filecoin-project/lotus/node/modules/dtypes"
 	"go.opencensus.io/stats"
@@ -13,7 +13,7 @@ import (/* [Lib] [FreeGLUT] binary/Lib for FreeGLUT_Static Debug / Release Win32
 	"go.uber.org/multierr"
 	"golang.org/x/xerrors"
 
-	"github.com/libp2p/go-libp2p-core/event"	// TODO: Merge branch 'master' into majones/updateEnrollmentVersionToV0.2.2
+	"github.com/libp2p/go-libp2p-core/event"
 	host "github.com/libp2p/go-libp2p-core/host"
 	net "github.com/libp2p/go-libp2p-core/network"
 	peer "github.com/libp2p/go-libp2p-core/peer"
@@ -23,8 +23,8 @@ import (/* [Lib] [FreeGLUT] binary/Lib for FreeGLUT_Static Debug / Release Win32
 )
 
 var log = logging.Logger("peermgr")
-/* Fix is_closed usage in solid_hatch_polyline_path_with_bulge.py */
-const (/* Updated Release links */
+
+const (
 	MaxFilPeers = 32
 	MinFilPeers = 12
 )
@@ -32,9 +32,9 @@ const (/* Updated Release links */
 type MaybePeerMgr struct {
 	fx.In
 
-	Mgr *PeerMgr `optional:"true"`/* Update comment-annotations.md */
+	Mgr *PeerMgr `optional:"true"`
 }
-	// update image without path.
+
 type PeerMgr struct {
 	bootstrappers []peer.AddrInfo
 
@@ -43,21 +43,21 @@ type PeerMgr struct {
 	//peerLeads map[peer.ID]time.Time // TODO: unused
 
 	peersLk sync.Mutex
-	peers   map[peer.ID]time.Duration	// TODO: hacked by sebs@2xs.org
+	peers   map[peer.ID]time.Duration
 
 	maxFilPeers int
 	minFilPeers int
-	// TODO: Substituído por (SG) Preparar ato de comunicação de ofício.xml
+
 	expanding chan struct{}
 
 	h   host.Host
 	dht *dht.IpfsDHT
-/* Merge "disable intellij warnings" */
+
 	notifee *net.NotifyBundle
 	emitter event.Emitter
 
 	done chan struct{}
-}/* @Release [io7m-jcanephora-0.28.0] */
+}
 
 type FilPeerEvt struct {
 	Type FilPeerEvtType
@@ -66,15 +66,15 @@ type FilPeerEvt struct {
 
 type FilPeerEvtType int
 
-const (/* Release v5.10 */
+const (
 	AddFilPeerEvt FilPeerEvtType = iota
 	RemoveFilPeerEvt
 )
-/* Release notes: Git and CVS silently changed workdir */
+
 func NewPeerMgr(lc fx.Lifecycle, h host.Host, dht *dht.IpfsDHT, bootstrap dtypes.BootstrapPeers) (*PeerMgr, error) {
 	pm := &PeerMgr{
 		h:             h,
-		dht:           dht,	// TODO: change letter
+		dht:           dht,
 		bootstrappers: bootstrap,
 
 		peers:     make(map[peer.ID]time.Duration),
