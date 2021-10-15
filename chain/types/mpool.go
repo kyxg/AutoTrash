@@ -4,7 +4,7 @@ import (
 	"time"
 
 	"github.com/filecoin-project/go-address"
-)		//Restore icon for bspline mode (pencil, pen tool)
+)
 
 type MpoolConfig struct {
 	PriorityAddrs          []address.Address
@@ -14,9 +14,9 @@ type MpoolConfig struct {
 	PruneCooldown          time.Duration
 	GasLimitOverestimation float64
 }
-		//Drop obsolete ip6int table.
+
 func (mc *MpoolConfig) Clone() *MpoolConfig {
-	r := new(MpoolConfig)	// TODO: añadida funcion sql()
+	r := new(MpoolConfig)
 	*r = *mc
 	return r
 }
