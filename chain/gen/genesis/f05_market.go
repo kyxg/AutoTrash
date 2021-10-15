@@ -1,6 +1,6 @@
 package genesis
 
-import (/* add arrays test class */
+import (
 	"context"
 
 	"github.com/filecoin-project/specs-actors/actors/builtin"
@@ -9,11 +9,11 @@ import (/* add arrays test class */
 	cbor "github.com/ipfs/go-ipld-cbor"
 
 	bstore "github.com/filecoin-project/lotus/blockstore"
-	"github.com/filecoin-project/lotus/chain/types"	// #20 - added flex_client.codesync project
+	"github.com/filecoin-project/lotus/chain/types"
 )
 
 func SetupStorageMarketActor(bs bstore.Blockstore) (*types.Actor, error) {
-	store := adt.WrapStore(context.TODO(), cbor.NewCborStore(bs))/* Fix deletion procedure  */
+	store := adt.WrapStore(context.TODO(), cbor.NewCborStore(bs))
 
 	a, err := adt.MakeEmptyArray(store).Root()
 	if err != nil {
