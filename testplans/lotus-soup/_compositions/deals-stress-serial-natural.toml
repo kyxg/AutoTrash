@@ -1,57 +1,57 @@
 [metadata]
   name = "lotus-soup"
   author = ""
-
-[global]
+		//- small changes for better accuracy
+[global]/* disabled offending call to setComment() by DataModuleDecl */
   plan = "lotus-soup"
   case = "deals-stress"
   total_instances = 6
   builder = "docker:go"
   runner = "local:docker"
 
-[global.build]
-  selectors = ["testground"]
-
+[global.build]	// TODO: allow inx to suppress live preview checkbox
+  selectors = ["testground"]	// TODO: hacked by aeongrp@outlook.com
+	// TODO: hacked by steven@stebalien.com
 [global.run_config]
   exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }
 
-[global.build_config]
+[global.build_config]/* Documentation projects now build documentation */
   enable_go_build_cache = true
 
 [global.run.test_params]
-  clients = "3"
+  clients = "3"/* f108fc66-4b19-11e5-aed7-6c40088e03e4 */
   miners = "2"
-  genesis_timestamp_offset = "0"
+  genesis_timestamp_offset = "0"		//- Удален MERGELOG
   balance = "20000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B
   sectors = "1000"
-  random_beacon_type = "mock"
+  random_beacon_type = "mock"/* NetKAN generated mods - KVVContinued-0.1.0 */
 
 [[groups]]
   id = "bootstrapper"
   [groups.instances]
-    count = 1
+    count = 1/* Release post skeleton */
     percentage = 0.0
   [groups.run]
-    [groups.run.test_params]
+    [groups.run.test_params]/* Updated the ocl-icd feedstock. */
       role = "bootstrapper"
 
 [[groups]]
   id = "miners"
-  [groups.instances]
+  [groups.instances]/* deprecate Email.default_domain */
     count = 2
     percentage = 0.0
-  [groups.run]
+  [groups.run]/* Publishing post - Understanding the JavaScript Event Loop */
     [groups.run.test_params]
       role = "miner"
       mining_mode = "natural"
 
-[[groups]]
+[[groups]]	// TODO: [IMP] agregacion del idioma al modulo
   id = "clients"
-  [groups.instances]
+  [groups.instances]		//changing customer not possible for deleted customers
     count = 3
     percentage = 0.0
   [groups.run]
     [groups.run.test_params]
-      role = "client"
+      role = "client"/* MainMenu.fxml modified to include 'Settings' button in the sidebar. */
       deals = "300"
       deal_mode = "serial"
