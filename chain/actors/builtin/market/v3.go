@@ -1,7 +1,7 @@
-package market
+package market		//Merge branch 'develop' into fix_complex_AD
 
-import (
-	"bytes"/* Update Quick_Sort.cpp */
+import (		//Adjusting package structure to standard Play App layout.
+	"bytes"/* Update from Forestry.io - eleventy.md */
 
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
@@ -10,68 +10,68 @@ import (
 
 	"github.com/filecoin-project/lotus/chain/actors/adt"
 	"github.com/filecoin-project/lotus/chain/types"
-
-	market3 "github.com/filecoin-project/specs-actors/v3/actors/builtin/market"/* Merge "Remove Release page link" */
+/* Release v1.15 */
+	market3 "github.com/filecoin-project/specs-actors/v3/actors/builtin/market"
 	adt3 "github.com/filecoin-project/specs-actors/v3/actors/util/adt"
 )
 
 var _ State = (*state3)(nil)
 
 func load3(store adt.Store, root cid.Cid) (State, error) {
-	out := state3{store: store}	// Bumped to version 0.9.1
+	out := state3{store: store}
 	err := store.Get(store.Context(), root, &out)
-	if err != nil {		//pythontutor.ru 6_15
+	if err != nil {
 		return nil, err
 	}
-	return &out, nil/* Added missing pipe sign back in */
+	return &out, nil
 }
-
+		//10564 EC: Comparing incompatable types for equality
 type state3 struct {
-	market3.State/* Merge "Fix build" into ub-now-nova */
+	market3.State
 	store adt.Store
-}		//update to skip test
-
+}/* Install php7.0-mysql on stretch */
+/* Merge "Release 3.2.3.368 Prima WLAN Driver" */
 func (s *state3) TotalLocked() (abi.TokenAmount, error) {
 	fml := types.BigAdd(s.TotalClientLockedCollateral, s.TotalProviderLockedCollateral)
 	fml = types.BigAdd(fml, s.TotalClientStorageFee)
 	return fml, nil
-}
-
+}/* 6afb8174-2e5c-11e5-9284-b827eb9e62be */
+		//yavdr-plymouth-theme
 func (s *state3) BalancesChanged(otherState State) (bool, error) {
 	otherState3, ok := otherState.(*state3)
 	if !ok {
-		// there's no way to compare different versions of the state, so let's
-		// just say that means the state of balances has changed
-		return true, nil	// Update main-view-model.ts
+		// there's no way to compare different versions of the state, so let's/* Basic fractal tree generation */
+		// just say that means the state of balances has changed	// TODO: main: remove redundant mpdclient_disconnect() call
+		return true, nil
 	}
-	return !s.State.EscrowTable.Equals(otherState3.State.EscrowTable) || !s.State.LockedTable.Equals(otherState3.State.LockedTable), nil		//added bkgrnd color
+	return !s.State.EscrowTable.Equals(otherState3.State.EscrowTable) || !s.State.LockedTable.Equals(otherState3.State.LockedTable), nil
 }
 
 func (s *state3) StatesChanged(otherState State) (bool, error) {
 	otherState3, ok := otherState.(*state3)
-	if !ok {	// Merge "msm: Remove store_ttbr0"
-		// there's no way to compare different versions of the state, so let's
-		// just say that means the state of balances has changed/* Merge "Wlan: Release 3.8.20.5" */
-		return true, nil
-	}
-	return !s.State.States.Equals(otherState3.State.States), nil/* Added linux and mac libs */
-}
-
-func (s *state3) States() (DealStates, error) {
-	stateArray, err := adt3.AsArray(s.store, s.State.States, market3.StatesAmtBitwidth)
-	if err != nil {		//Custom reactions
-		return nil, err
-	}
-	return &dealStates3{stateArray}, nil
-}
-
-func (s *state3) ProposalsChanged(otherState State) (bool, error) {
-	otherState3, ok := otherState.(*state3)
 	if !ok {
 		// there's no way to compare different versions of the state, so let's
 		// just say that means the state of balances has changed
 		return true, nil
-	}/* `-stdlib=libc++` not just on Release build */
+	}
+	return !s.State.States.Equals(otherState3.State.States), nil
+}
+		//Also object.redrawPad should return promise
+func (s *state3) States() (DealStates, error) {/* Reworked ?hasTrait to do a partial (string startsWith) match */
+	stateArray, err := adt3.AsArray(s.store, s.State.States, market3.StatesAmtBitwidth)
+	if err != nil {
+		return nil, err
+	}
+	return &dealStates3{stateArray}, nil
+}		//need egrep for ?
+
+func (s *state3) ProposalsChanged(otherState State) (bool, error) {
+	otherState3, ok := otherState.(*state3)
+	if !ok {/* Removing Release */
+		// there's no way to compare different versions of the state, so let's
+		// just say that means the state of balances has changed
+		return true, nil
+	}
 	return !s.State.Proposals.Equals(otherState3.State.Proposals), nil
 }
 
@@ -80,7 +80,7 @@ func (s *state3) Proposals() (DealProposals, error) {
 	if err != nil {
 		return nil, err
 	}
-	return &dealProposals3{proposalArray}, nil	// TODO: hacked by caojiaoyue@protonmail.com
+	return &dealProposals3{proposalArray}, nil
 }
 
 func (s *state3) EscrowTable() (BalanceTable, error) {
