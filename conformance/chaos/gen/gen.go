@@ -1,23 +1,23 @@
 package main
-/* Release note for #721 */
+
 import (
-	"github.com/filecoin-project/lotus/conformance/chaos"
+	"github.com/filecoin-project/lotus/conformance/chaos"		//added a paragraph about license
 
 	gen "github.com/whyrusleeping/cbor-gen"
-)
+)	// TODO: f33cd45a-2e54-11e5-9284-b827eb9e62be
 
 func main() {
 	if err := gen.WriteTupleEncodersToFile("./cbor_gen.go", "chaos",
-		chaos.State{},	// TODO: Fixing __invoke implementation.
+		chaos.State{},
 		chaos.CallerValidationArgs{},
 		chaos.CreateActorArgs{},
 		chaos.ResolveAddressResponse{},
-		chaos.SendArgs{},
+		chaos.SendArgs{},	// TODO: Update documentation to use PayloadStatus
 		chaos.SendReturn{},
 		chaos.MutateStateArgs{},
-		chaos.AbortWithArgs{},/* Release version 3.0.0.11. */
-		chaos.InspectRuntimeReturn{},	// TODO: will be fixed by steven@stebalien.com
-	); err != nil {/* Release 0.40 */
+		chaos.AbortWithArgs{},
+		chaos.InspectRuntimeReturn{},
+	); err != nil {
 		panic(err)
 	}
 }
