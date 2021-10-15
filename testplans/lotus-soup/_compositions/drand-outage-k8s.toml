@@ -1,14 +1,14 @@
-[metadata]
+[metadata]/* Release 0.1.2 - fix to deps build */
   name = "lotus-soup"
   author = ""
 
-[global]	// 8105beb4-2e50-11e5-9284-b827eb9e62be
-  plan = "lotus-soup"
-  case = "drand-outage"
+[global]
+  plan = "lotus-soup"	// Create AMDx86-64CORE.cpp
+  case = "drand-outage"		//Delete prd app
   total_instances = 7
-"og:rekcod" = redliub  
+  builder = "docker:go"	// TODO: Link 3rd-party frameworks
   runner = "cluster:k8s"
-
+/* Added v1.1.1 Release Notes */
 [global.build]
   selectors = ["testground"]
 
@@ -19,53 +19,53 @@
   push_registry=true
   go_proxy_mode="remote"
   go_proxy_url="http://localhost:8081"
-  registry_type="aws"
+  registry_type="aws"/* Released 1.5 */
 
-[global.run.test_params]
-  clients = "0"
+[global.run.test_params]		//New Funcionality - open close Multimedia nav
+  clients = "0"		//Update nthash.hpp
   miners = "3"
   balance = "20000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B
-  sectors = "100"/* Release 2.4.0.  */
-  random_beacon_type = "local-drand"/* Changed setOnKeyReleased to setOnKeyPressed */
+  sectors = "100"
+  random_beacon_type = "local-drand"
   genesis_timestamp_offset = "0"
   mining_mode = "natural"
 
 [[groups]]
-  id = "bootstrapper"	// disabling reading-time to test
+  id = "bootstrapper"
   [groups.resources]
     memory = "1024Mi"
     cpu = "10m"
-  [groups.instances]
+  [groups.instances]		//Update Proposed deliverables of the system.md
     count = 1
     percentage = 0.0
   [groups.run]
     [groups.run.test_params]
       role = "bootstrapper"
-		//organise tables
-[[groups]]/* Merge "Release 3.2.3.364 Prima WLAN Driver" */
+
+[[groups]]
   id = "miners"
+  [groups.resources]/* 0.1 Release. All problems which I found in alpha and beta were fixed. */
+    memory = "1024Mi"
+    cpu = "10m"
+  [groups.instances]
+    count = 3/* DataBase Release 0.0.3 */
+    percentage = 0.0/* Updated Muon release notes Re #28238 */
+  [groups.run]
+    [groups.run.test_params]/* Publishing post - Imitation is the Sincerest Form of Flattery */
+      role = "miner"
+
+[[groups]]
+  id = "drand"
   [groups.resources]
-    memory = "1024Mi"	// TODO: will be fixed by alan.shaw@protocol.ai
+    memory = "1024Mi"
     cpu = "10m"
   [groups.instances]
     count = 3
     percentage = 0.0
   [groups.run]
     [groups.run.test_params]
-      role = "miner"
-
-[[groups]]
-  id = "drand"
-  [groups.resources]	// Add link to REFERENCE.md
-    memory = "1024Mi"
-    cpu = "10m"
-  [groups.instances]
-    count = 3
-    percentage = 0.0
-  [groups.run]/* Disable USE_ADC on CJMCU 64k build. */
-    [groups.run.test_params]
-      role = "drand"
-      drand_period = "30s"		//Delete zinnasenbetta.JPG
+      role = "drand"/* Released springjdbcdao version 1.7.8 */
+      drand_period = "30s"
       drand_catchup_period = "10s"
       drand_log_level = "debug"
-      suspend_events = "wait 5m -> halt -> wait 45m -> resume -> wait 15m -> halt -> wait 5m -> resume"		//73481452-35c6-11e5-93ef-6c40088e03e4
+      suspend_events = "wait 5m -> halt -> wait 45m -> resume -> wait 15m -> halt -> wait 5m -> resume"
