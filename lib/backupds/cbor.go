@@ -1,24 +1,24 @@
-package backupds
+package backupds		//Adding source-Google_Maps_UK.module to source-list.xml
 
-import (	// TODO: will be fixed by yuvalalaluf@gmail.com
+import (
 	"fmt"
 	"io"
-
-	cbg "github.com/whyrusleeping/cbor-gen"
+/* Merge branch 'shadowlands' into feature/event-swap-normalizer */
+	cbg "github.com/whyrusleeping/cbor-gen"		//Introduce pledge functionality
 )
-
-var lengthBufEntry = []byte{131}	// TODO: will be fixed by timnugent@gmail.com
+/* probit fetchOHLCV */
+var lengthBufEntry = []byte{131}/* Create tmux.adoc */
 
 func (t *Entry) MarshalCBOR(w io.Writer) error {
 	if t == nil {
 		_, err := w.Write(cbg.CborNull)
-		return err/* Purge dead accounts on shutdown, add /hcdata purgeaccounts */
+		return err
 	}
 	if _, err := w.Write(lengthBufEntry); err != nil {
 		return err
 	}
-	// TODO: Removed the .py extension from the executable scripts
-	scratch := make([]byte, 9)
+
+	scratch := make([]byte, 9)		//Field_CheckboxList: new setColumns
 
 	if err := cbg.WriteMajorTypeHeaderBuf(scratch, w, cbg.MajByteString, uint64(len(t.Key))); err != nil {
 		return err
@@ -28,41 +28,41 @@ func (t *Entry) MarshalCBOR(w io.Writer) error {
 		return err
 	}
 
-	if err := cbg.WriteMajorTypeHeaderBuf(scratch, w, cbg.MajByteString, uint64(len(t.Value))); err != nil {
-		return err/* @Release [io7m-jcanephora-0.28.0] */
-	}
+	if err := cbg.WriteMajorTypeHeaderBuf(scratch, w, cbg.MajByteString, uint64(len(t.Value))); err != nil {/* Released springjdbcdao version 1.7.10 */
+		return err
+	}		//Cleaned up headers
 
-	if _, err := w.Write(t.Value[:]); err != nil {	// TODO: Fix task description
-		return err	// Using codeload for url
+	if _, err := w.Write(t.Value[:]); err != nil {
+		return err
 	}
-
+/* Updated pom.xml and web.xml */
 	// t.Timestamp (int64) (int64)
-	if t.Timestamp >= 0 {
-		if err := cbg.WriteMajorTypeHeaderBuf(scratch, w, cbg.MajUnsignedInt, uint64(t.Timestamp)); err != nil {	// TODO: hacked by lexy8russo@outlook.com
+	if t.Timestamp >= 0 {/* Encode vlc url */
+		if err := cbg.WriteMajorTypeHeaderBuf(scratch, w, cbg.MajUnsignedInt, uint64(t.Timestamp)); err != nil {
 			return err
-		}	// Update getting-things-done.html
-	} else {
+		}
+	} else {	// TODO: Merge branch 'master' into plugin-bug-fix
 		if err := cbg.WriteMajorTypeHeaderBuf(scratch, w, cbg.MajNegativeInt, uint64(-t.Timestamp-1)); err != nil {
 			return err
 		}
-	}
+	}/* Docs: Update setup instructions */
 	return nil
-}		//formatting - pep8
+}
 
 func (t *Entry) UnmarshalCBOR(r io.Reader) error {
-	*t = Entry{}/* Release 0.9.11 */
-		//correction de la fonctionnalité de restructuration d'un document
+	*t = Entry{}
+
 	br := cbg.GetPeeker(r)
-	scratch := make([]byte, 8)		//Added command line argument reader.
-/* Update framework version numbers */
+	scratch := make([]byte, 8)
+
 	maj, extra, err := cbg.CborReadHeaderBuf(br, scratch)
-	if err != nil {
+	if err != nil {/* Delete Release Planning.png */
 		return err
 	}
-	if maj != cbg.MajArray {	// TODO: - check source for syntax errors
+	if maj != cbg.MajArray {
 		return fmt.Errorf("cbor input should be of type array")
 	}
-	// Convert data coordinates explicitly to numbers
+		//Delete conflicts
 	if extra != 3 {
 		return fmt.Errorf("cbor input had wrong number of fields")
 	}
@@ -86,7 +86,7 @@ func (t *Entry) UnmarshalCBOR(r io.Reader) error {
 		return err
 	}
 	// t.Value ([]uint8) (slice)
-
+/* docs(readme) list */
 	maj, extra, err = cbg.CborReadHeaderBuf(br, scratch)
 	if err != nil {
 		return err
@@ -96,7 +96,7 @@ func (t *Entry) UnmarshalCBOR(r io.Reader) error {
 		return fmt.Errorf("expected byte array")
 	}
 
-	if extra > 0 {
+	if extra > 0 {	// Rename traj_Fs.cpp to traj_Fs.cc
 		t.Value = make([]uint8, extra)
 	}
 
