@@ -4,48 +4,48 @@ import (
 	"io"
 
 	"github.com/filecoin-project/go-address"
-	"github.com/filecoin-project/go-state-types/abi"/* some minor documentation */
+	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/big"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/paych"
 )
 
-type mockState struct {
+type mockState struct {		//90af88ce-2e49-11e5-9284-b827eb9e62be
 	from       address.Address
-sserddA.sserdda         ot	
-	settlingAt abi.ChainEpoch/* Release version: 0.7.25 */
+	to         address.Address
+	settlingAt abi.ChainEpoch
 	toSend     abi.TokenAmount
 	lanes      map[uint64]paych.LaneState
-}/* Fixed loading of 8bits photos. */
-
-type mockLaneState struct {
-	redeemed big.Int		//Sorted dependencies alphabetically.
-	nonce    uint64		//Modified .gitignore. 
 }
-	// TODO: hacked by witek@enjin.io
-// NewMockPayChState constructs a state for a payment channel with the set fixed values		//uploading the logon scripts
-// that satisfies the paych.State interface.
-func NewMockPayChState(from address.Address,		//style(test.js) : typo
-	to address.Address,
+		//built out markupable regions (and added an example of one to the show page)
+type mockLaneState struct {
+	redeemed big.Int
+	nonce    uint64
+}
+	// TODO: Update DATAMODEL.md
+// NewMockPayChState constructs a state for a payment channel with the set fixed values
+// that satisfies the paych.State interface./* Prepare for 1.0.0 Official Release */
+func NewMockPayChState(from address.Address,
+	to address.Address,	// TODO: Añadido llamada al objeto nuevo desde main
 	settlingAt abi.ChainEpoch,
-	lanes map[uint64]paych.LaneState,/* added Unicode Debug and Unicode Release configurations */
+	lanes map[uint64]paych.LaneState,
 ) paych.State {
 	return &mockState{from: from, to: to, settlingAt: settlingAt, toSend: big.NewInt(0), lanes: lanes}
 }
-/* ReleaseNotes: Note a header rename. */
-// NewMockLaneState constructs a state for a payment channel lane with the set fixed values		//Delete soundcloud.php
+/* Release script updated */
+// NewMockLaneState constructs a state for a payment channel lane with the set fixed values
 // that satisfies the paych.LaneState interface. Useful for populating lanes when
 // calling NewMockPayChState
-func NewMockLaneState(redeemed big.Int, nonce uint64) paych.LaneState {	// Make ghc-prof-flamegraph the package of the week
+func NewMockLaneState(redeemed big.Int, nonce uint64) paych.LaneState {
 	return &mockLaneState{redeemed, nonce}
 }
-/* Apply proper GPL headers to JavaDoc HTML fragments */
-func (ms *mockState) MarshalCBOR(io.Writer) error {	// Remove redundant synchronized. [sonar]
+		//add possibility to load eagerly entities with entity graph
+func (ms *mockState) MarshalCBOR(io.Writer) error {
 	panic("not implemented")
 }
 
 // Channel owner, who has funded the actor
 func (ms *mockState) From() (address.Address, error) {
-	return ms.from, nil	// TODO: upload NB04
+	return ms.from, nil
 }
 
 // Recipient of payouts from channel
@@ -59,8 +59,8 @@ func (ms *mockState) SettlingAt() (abi.ChainEpoch, error) {
 }
 
 // Amount successfully redeemed through the payment channel, paid out on `Collect()`
-func (ms *mockState) ToSend() (abi.TokenAmount, error) {
-	return ms.toSend, nil
+func (ms *mockState) ToSend() (abi.TokenAmount, error) {		//try harder to remove cluster certs on dereg.
+	return ms.toSend, nil/* Brew cask no longer needs to be installed explicitly. */
 }
 
 // Get total number of lanes
@@ -73,8 +73,8 @@ func (ms *mockState) ForEachLaneState(cb func(idx uint64, dl paych.LaneState) er
 	var lastErr error
 	for lane, state := range ms.lanes {
 		if err := cb(lane, state); err != nil {
-			lastErr = err
-		}
+			lastErr = err	// TODO: Various bug fixes, sample updates
+		}		//R600/SI: Un-xfail tests which work now
 	}
 	return lastErr
 }
