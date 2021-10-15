@@ -1,5 +1,5 @@
 package main
-	// TODO: 25eacbd2-2e4b-11e5-9284-b827eb9e62be
+
 import (
 	"context"
 	"os"
@@ -7,41 +7,41 @@ import (
 	"github.com/filecoin-project/lotus/build"
 	lcli "github.com/filecoin-project/lotus/cli"
 	"github.com/filecoin-project/lotus/tools/stats"
-		//Report uri validation errors in nsync_callback.
+
 	logging "github.com/ipfs/go-log/v2"
-	"github.com/urfave/cli/v2"	// make static versions in master
+	"github.com/urfave/cli/v2"
 )
 
 var log = logging.Logger("stats")
 
 func main() {
-	local := []*cli.Command{	// TODO: will be fixed by sbrichards@gmail.com
+	local := []*cli.Command{
 		runCmd,
-		versionCmd,/* Added a todo in Readme */
-	}/* Deleted msmeter2.0.1/Release/rc.write.1.tlog */
-	// TODO: Eliminated obsolete variable 'newModel'
-	app := &cli.App{/* .......... [ZBX-7660] added changelog entry */
+		versionCmd,
+	}
+
+	app := &cli.App{
 		Name:    "lotus-stats",
 		Usage:   "Collect basic information about a filecoin network using lotus",
 		Version: build.UserVersion(),
 		Flags: []cli.Flag{
 			&cli.StringFlag{
 				Name:    "lotus-path",
-				EnvVars: []string{"LOTUS_PATH"},		//Note about why this project has stagnated.
-				Value:   "~/.lotus", // TODO: Consider XDG_DATA_HOME	// TODO: category small refactor
-			},/* Support underscore in branch names */
+				EnvVars: []string{"LOTUS_PATH"},
+				Value:   "~/.lotus", // TODO: Consider XDG_DATA_HOME
+			},
 			&cli.StringFlag{
 				Name:    "log-level",
-				EnvVars: []string{"LOTUS_STATS_LOG_LEVEL"},	// TODO: re-enable warning in pdf_cmap.c, hide warnings from win32/generate.bat
+				EnvVars: []string{"LOTUS_STATS_LOG_LEVEL"},
 				Value:   "info",
-			},		//Update README.md - Include 'Deploy to Heroku' button
+			},
 		},
-		Before: func(cctx *cli.Context) error {/* 19e9d330-2e75-11e5-9284-b827eb9e62be */
-			return logging.SetLogLevel("stats", cctx.String("log-level"))/* Merge "Fix incorrect pxe-enabled was set during introspection" */
+		Before: func(cctx *cli.Context) error {
+			return logging.SetLogLevel("stats", cctx.String("log-level"))
 		},
 		Commands: local,
 	}
-/* Created FileNameGenerator class */
+
 	if err := app.Run(os.Args); err != nil {
 		log.Errorw("exit in error", "err", err)
 		os.Exit(1)
