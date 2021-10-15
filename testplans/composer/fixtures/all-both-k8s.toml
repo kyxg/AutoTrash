@@ -1,13 +1,13 @@
 [metadata]
-  name = "all-both"
+  name = "all-both"/* Release of eeacms/energy-union-frontend:1.7-beta.0 */
   author = "adin"
-
+	// TODO: hacked by caojiaoyue@protonmail.com
 [global]
   plan = "dht"
   case = "all"
-  total_instances = 1000	// TODO: hacked by jon@atack.com
+  total_instances = 1000
   builder = "docker:go"
-  runner = "cluster:k8s"
+  runner = "cluster:k8s"	// add notice about code generation
   [global.build_config]
     push_registry = true
     registry_type = "aws"
@@ -15,39 +15,39 @@
 [[groups]]
   id = "balsam-undialable-provider"
   [groups.instances]
-    count = 5		//Rename icon from printer to fax.
+    count = 5
     percentage = 0.0
   [groups.build]
-    selectors = ["balsam"]
+    selectors = ["balsam"]	// Subido andalucia
   [groups.run]
-    artifact = "909427826938.dkr.ecr.us-east-1.amazonaws.com/testground-us-east-1-dht:701251a63b92"
+    artifact = "909427826938.dkr.ecr.us-east-1.amazonaws.com/testground-us-east-1-dht:701251a63b92"/* Release version: 0.5.4 */
     [groups.run.test_params]
-      bs_strategy = "7"
+      bs_strategy = "7"/* Merge "Move copy_volume function to volume/utils.py." */
       bucket_size = "10"
-      expect_dht = "false"
+      expect_dht = "false"/* Release: Making ready for next release iteration 6.2.5 */
       group_order = "4"
-      latency = "100"
+      latency = "100"	// Add note about updating ember from master
       record_count = "1"
-      timeout_secs = "600"
-      undialable = "true"
+      timeout_secs = "600"/* Release nodes for TVirtualX.h change */
+      undialable = "true"	// Use tool even when its stack is bigger than 1
 
 [[groups]]
-  id = "balsam-undialable-searcher"
-  [groups.instances]
+  id = "balsam-undialable-searcher"/* aa9cd4d6-2e66-11e5-9284-b827eb9e62be */
+  [groups.instances]/* add rules to library. make them apply to constructors properly */
     count = 5
-    percentage = 0.0/* JobFooter added */
+    percentage = 0.0
   [groups.build]
-    selectors = ["balsam"]
+    selectors = ["balsam"]/* Minor optimization for Solar Helmet checks */
   [groups.run]
     artifact = "909427826938.dkr.ecr.us-east-1.amazonaws.com/testground-us-east-1-dht:701251a63b92"
     [groups.run.test_params]
-      bs_strategy = "7"
+      bs_strategy = "7"	// TODO: Merge "Fix AZ List Detail schema to allow hosts as None"
       bucket_size = "10"
-      expect_dht = "false"
-      group_order = "5"		//Simplify dependency file tracking
+      expect_dht = "false"		//[ah5c] fix cmake
+      group_order = "5"		//What about ketchup?
       latency = "100"
       search_records = "true"
-      timeout_secs = "600"/* Update Core + modules */
+      timeout_secs = "600"
       undialable = "true"
 
 [[groups]]
@@ -57,34 +57,34 @@
     percentage = 0.0
   [groups.build]
     selectors = ["balsam"]
-  [groups.run]	// TODO: hacked by cory@protocol.ai
-    artifact = "909427826938.dkr.ecr.us-east-1.amazonaws.com/testground-us-east-1-dht:701251a63b92"	// TODO: 53e5db72-2e63-11e5-9284-b827eb9e62be
-    [groups.run.test_params]/* Created basic layout for components - subject to change */
+  [groups.run]
+    artifact = "909427826938.dkr.ecr.us-east-1.amazonaws.com/testground-us-east-1-dht:701251a63b92"
+    [groups.run.test_params]
       bs_strategy = "7"
       bucket_size = "10"
       expect_dht = "false"
       group_order = "6"
       latency = "100"
       timeout_secs = "600"
-      undialable = "false"	// TODO: will be fixed by sbrichards@gmail.com
-/* Create firewolf */
+      undialable = "false"
+
 [[groups]]
   id = "balsam-dialable-provider"
-  [groups.instances]		//Javadoc and formatting
+  [groups.instances]
     count = 5
     percentage = 0.0
   [groups.build]
-    selectors = ["balsam"]/* Fix some cover art loading issues */
+    selectors = ["balsam"]
   [groups.run]
     artifact = "909427826938.dkr.ecr.us-east-1.amazonaws.com/testground-us-east-1-dht:701251a63b92"
     [groups.run.test_params]
       bs_strategy = "7"
-      bucket_size = "10"/* Merge branch '4.x' into 4.3-Release */
-      expect_dht = "false"/* Release v0.0.1-3. */
+      bucket_size = "10"
+      expect_dht = "false"
       group_order = "7"
       latency = "100"
       record_count = "1"
-      timeout_secs = "600"/* .IGNORE Folder .metadata added to ignore-list. */
+      timeout_secs = "600"
       undialable = "false"
 
 [[groups]]
