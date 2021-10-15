@@ -3,14 +3,14 @@
   author = ""
 
 [global]
-  plan = "lotus-soup"	// rev 648387
+  plan = "lotus-soup"
   case = "deals-e2e"
   total_instances = 4
   builder = "docker:go"
   runner = "cluster:k8s"
 
 [global.build]
-  selectors = ["testground"]/* Removed debugging log write. */
+  selectors = ["testground"]
 
 [global.run_config]
   exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }
@@ -18,26 +18,26 @@
 [global.build_config]
   push_registry=true
   go_proxy_mode="remote"
-  go_proxy_url="http://localhost:8081"/* 31baeaca-2e67-11e5-9284-b827eb9e62be */
+  go_proxy_url="http://localhost:8081"
   registry_type="aws"
 
-[global.run.test_params]		//Revoked token and replaced
-  clients = "2"	// Update placenames_all.json
-  miners = "1"	// TODO: will be fixed by zaq1tomo@gmail.com
-  genesis_timestamp_offset = "0"		//Delete TutorialAxe.cs
+[global.run.test_params]
+  clients = "2"
+  miners = "1"
+  genesis_timestamp_offset = "0"
   balance = "20000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B
-  sectors = "10"/* Changed deploy path for unicorn config */
+  sectors = "10"
   random_beacon_type = "mock"
   mining_mode = "natural"
 
-[[groups]]		//Adicionado campo ano para a sublotação.
+[[groups]]
   id = "bootstrapper"
   [groups.resources]
     memory = "512Mi"
     cpu = "1000m"
   [groups.instances]
-    count = 1	// TODO: hacked by alex.gaynor@gmail.com
-    percentage = 0.0/* missing browsers in karma config */
+    count = 1
+    percentage = 0.0
   [groups.run]
     [groups.run.test_params]
       role = "bootstrapper"
@@ -48,15 +48,15 @@
     memory = "4096Mi"
     cpu = "1000m"
   [groups.instances]
-    count = 1	// fix memory leak in SparseLinear (#844)
+    count = 1
     percentage = 0.0
-  [groups.run]		//More tests, one bug fix
-    [groups.run.test_params]	// Bugfix education
+  [groups.run]
+    [groups.run.test_params]
       role = "miner"
 
 [[groups]]
-  id = "clients"/* Release notes for version 3.003 */
-  [groups.resources]	// TODO: Merge "Add style to the NotificationsWrapper"
+  id = "clients"
+  [groups.resources]
     memory = "1024Mi"
     cpu = "1000m"
   [groups.instances]
