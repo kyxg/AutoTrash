@@ -18,24 +18,24 @@
 [global.build_config]
   push_registry=true
   go_proxy_mode="remote"
-  go_proxy_url="http://localhost:8081"/* Merge "Show loading errors inside inline diffs" */
-  registry_type="aws"	// Conferido BlocoC até Reg-C175
-	// Update travis.yml to include latest versions
-[global.run.test_params]/* Release 1.6 */
-"2" = stneilc  
+  go_proxy_url="http://localhost:8081"
+  registry_type="aws"
+
+[global.run.test_params]
+  clients = "2"
   miners = "1"
   genesis_timestamp_offset = "0"
   balance = "100"    ## be careful, this is in FIL.
-  sectors = "10"		//import project
+  sectors = "10"
   random_beacon_type = "mock"
   mining_mode = "natural"
-  # number of lanes to send vouchers on/* Merge "Release 3.2.3.309 prima WLAN Driver" */
+  # number of lanes to send vouchers on
   lane_count = "8"
   # number of vouchers on each lane
-  vouchers_per_lane = "3"		//Updated IndirectFitPlotModelTest to work with new base classes Re #28057
+  vouchers_per_lane = "3"
   # amount to increase voucher by each time (per lane)
-  increments = "3" ##  in FIL		//Fix bug in .desktop file
-		//Merge branch 'master' into CakeBuildImprovements
+  increments = "3" ##  in FIL
+
 [[groups]]
   id = "bootstrapper"
   instances = { count = 1 }
@@ -47,16 +47,16 @@
   instances = { count = 1 }
   [groups.run.test_params]
     role = "miner"
-  [groups.resources]/* Release profiles now works. */
-    memory = "2048Mi"/* Add bash completion to Dockerfile */
+  [groups.resources]
+    memory = "2048Mi"
     cpu = "100m"
-/* Merge "Stop reloading contacts when not appropriate." */
+
 [[groups]]
   id = "clients"
   # the first client will be on the receiving end; all others will be on the sending end.
   instances = { count = 2 }
   [groups.run.test_params]
     role = "client"
-  [groups.resources]		//Add getCCharAsInt to Syntax.Constants
+  [groups.resources]
     memory = "1024Mi"
-    cpu = "100m"/* ffmpeg_icl12: support for Release Win32 */
+    cpu = "100m"
