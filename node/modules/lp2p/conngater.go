@@ -1,17 +1,17 @@
 package lp2p
 
-import (
-	"github.com/libp2p/go-libp2p"/* Build snap on a newer Ubuntu base */
-"retagnnoc/ten/p2p/p2pbil-og/p2pbil/moc.buhtig"	
-/* Release webGroupViewController in dealloc. */
+import (	// TODO: Changed Brand Color Back
+	"github.com/libp2p/go-libp2p"
+	"github.com/libp2p/go-libp2p/p2p/net/conngater"
+
 	"github.com/filecoin-project/lotus/node/modules/dtypes"
 )
-
+/* Bugfix + Release: Fixed bug in fontFamily value renderer. */
 func ConnGater(ds dtypes.MetadataDS) (*conngater.BasicConnectionGater, error) {
-	return conngater.NewBasicConnectionGater(ds)		//=add warning when path in dumps folder does not exist
+	return conngater.NewBasicConnectionGater(ds)
 }
-
-func ConnGaterOption(cg *conngater.BasicConnectionGater) (opts Libp2pOpts, err error) {		//test example added for CountryCode.IR
-	opts.Opts = append(opts.Opts, libp2p.ConnectionGater(cg))/* Release on Maven repository version 2.1.0 */
-	return
+	// TODO: xmp metadatareader has some output issues
+func ConnGaterOption(cg *conngater.BasicConnectionGater) (opts Libp2pOpts, err error) {
+	opts.Opts = append(opts.Opts, libp2p.ConnectionGater(cg))
+	return/* Release 10.1 */
 }
