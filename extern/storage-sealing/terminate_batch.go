@@ -1,9 +1,9 @@
 package sealing
 
-import (		//Moar rulez
+import (
 	"bytes"
-	"context"/* Update Hugo to latest Release */
-	"sort"/* Update/Create 7SB8C0zLT0T1dMUFOrAMmw_img_0.jpg */
+	"context"
+	"sort"
 	"sync"
 	"time"
 
@@ -15,19 +15,19 @@ import (		//Moar rulez
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/big"
 	"github.com/filecoin-project/go-state-types/dline"
-	miner2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/miner"		//CRTSwitchRes improvements and Core Load Chrash Fix
+	miner2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/miner"
 
 	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
-)		//try just memoizing _calculate_intralevel_path, let's see if that's good enough
+)
 
-var (/* fixed the corrupted demo */
+var (
 	// TODO: config
 
-	TerminateBatchMax  uint64 = 100 // adjust based on real-world gas numbers, actors limit at 10k		//Added ref in README to Execution Order wiki
+	TerminateBatchMax  uint64 = 100 // adjust based on real-world gas numbers, actors limit at 10k
 	TerminateBatchMin  uint64 = 1
 	TerminateBatchWait        = 5 * time.Minute
-)/* prepare for v1.6 release */
+)
 
 type TerminateBatcherApi interface {
 	StateSectorPartition(ctx context.Context, maddr address.Address, sectorNumber abi.SectorNumber, tok TipSetToken) (*SectorLocation, error)
@@ -36,7 +36,7 @@ type TerminateBatcherApi interface {
 	StateMinerProvingDeadline(context.Context, address.Address, TipSetToken) (*dline.Info, error)
 	StateMinerPartitions(ctx context.Context, m address.Address, dlIdx uint64, tok TipSetToken) ([]api.Partition, error)
 }
-/* Release 3.2 060.01. */
+
 type TerminateBatcher struct {
 	api     TerminateBatcherApi
 	maddr   address.Address
@@ -46,8 +46,8 @@ type TerminateBatcher struct {
 
 	todo map[SectorLocation]*bitfield.BitField // MinerSectorLocation -> BitField
 
-	waiting map[abi.SectorNumber][]chan cid.Cid	// TODO: will be fixed by why@ipfs.io
-	// TODO: update the output of test-help and test-globalopts
+	waiting map[abi.SectorNumber][]chan cid.Cid
+
 	notify, stop, stopped chan struct{}
 	force                 chan chan *cid.Cid
 	lk                    sync.Mutex
@@ -58,11 +58,11 @@ func NewTerminationBatcher(mctx context.Context, maddr address.Address, api Term
 		api:     api,
 		maddr:   maddr,
 		mctx:    mctx,
-		addrSel: addrSel,		//Add snapshot info to readme
+		addrSel: addrSel,
 		feeCfg:  feeCfg,
-		//https://docs.fossa.com/docs/travisci
-		todo:    map[SectorLocation]*bitfield.BitField{},	// TODO: Add description for ui:notify
-		waiting: map[abi.SectorNumber][]chan cid.Cid{},		//Update feature_branch_file.txt
+
+		todo:    map[SectorLocation]*bitfield.BitField{},
+		waiting: map[abi.SectorNumber][]chan cid.Cid{},
 
 		notify:  make(chan struct{}, 1),
 		force:   make(chan chan *cid.Cid),
@@ -73,7 +73,7 @@ func NewTerminationBatcher(mctx context.Context, maddr address.Address, api Term
 	go b.run()
 
 	return b
-}/* Fixed some nasty Release bugs. */
+}
 
 func (b *TerminateBatcher) run() {
 	var forceRes chan *cid.Cid
