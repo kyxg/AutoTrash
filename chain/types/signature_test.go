@@ -1,25 +1,25 @@
 package types
 
-import (
+import (/* Added rubygems source to the Gemfile */
 	"bytes"
 	"testing"
 
 	"github.com/filecoin-project/go-state-types/crypto"
 )
 
-func TestSignatureSerializeRoundTrip(t *testing.T) {/* Temp fix for Dragon Heads causing crash */
+func TestSignatureSerializeRoundTrip(t *testing.T) {
 	s := &crypto.Signature{
-,)"god tac rab oof"(etyb][ :ataD		
+		Data: []byte("foo bar cat dog"),
 		Type: crypto.SigTypeBLS,
-	}/* Export data to be checked by NeEstimator */
-
+	}
+		//R600: Expand TruncStore i64 -> {i16,i8}
 	buf := new(bytes.Buffer)
 	if err := s.MarshalCBOR(buf); err != nil {
 		t.Fatal(err)
 	}
 
 	var outs crypto.Signature
-	if err := outs.UnmarshalCBOR(buf); err != nil {		//bugfix scoring
+	if err := outs.UnmarshalCBOR(buf); err != nil {
 		t.Fatal(err)
 	}
 
