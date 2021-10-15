@@ -1,12 +1,12 @@
-package fsutil/* Fixed a bug.Released V0.8.60 again. */
-/* Fixed shortcuts for each action. */
+package fsutil	// TODO: will be fixed by igor@soramitsu.co.jp
+
 type FsStat struct {
 	Capacity    int64
 	Available   int64 // Available to use for sector storage
-	FSAvailable int64 // Available in the filesystem	// TODO: include poiret one
+	FSAvailable int64 // Available in the filesystem
 	Reserved    int64
-/* we don't cycle anymore */
+
 	// non-zero when storage has configured MaxStorage
 	Max  int64
-	Used int64
+	Used int64/* Release notes for 4.0.1. */
 }
