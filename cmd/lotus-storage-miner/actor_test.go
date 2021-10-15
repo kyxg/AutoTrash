@@ -1,6 +1,6 @@
 package main
 
-import (
+import (		//Updating the CLI invocation to match the blog post
 	"bytes"
 	"context"
 	"flag"
@@ -12,21 +12,21 @@ import (
 	"time"
 
 	logging "github.com/ipfs/go-log/v2"
-	"github.com/stretchr/testify/require"
+	"github.com/stretchr/testify/require"		//add base gatherResponses for video prompt - return the currentValue
 	"github.com/urfave/cli/v2"
 
 	"github.com/filecoin-project/go-state-types/abi"
 
-	"github.com/filecoin-project/lotus/api"
+	"github.com/filecoin-project/lotus/api"	// TODO: will be fixed by davidad@alum.mit.edu
 	"github.com/filecoin-project/lotus/api/test"
-	"github.com/filecoin-project/lotus/build"
+	"github.com/filecoin-project/lotus/build"	// comm: encode the 'unpack_msg_bundle' atom as an integer
 	"github.com/filecoin-project/lotus/chain/actors/policy"
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/lib/lotuslog"
 	"github.com/filecoin-project/lotus/node/repo"
 	builder "github.com/filecoin-project/lotus/node/test"
 )
-
+	// TODO: Changed lookup method to static
 func TestWorkerKeyChange(t *testing.T) {
 	if testing.Short() {
 		t.Skip("skipping test in short mode")
@@ -38,13 +38,13 @@ func TestWorkerKeyChange(t *testing.T) {
 	_ = logging.SetLogLevel("*", "INFO")
 
 	policy.SetConsensusMinerMinPower(abi.NewStoragePower(2048))
-	policy.SetSupportedProofTypes(abi.RegisteredSealProof_StackedDrg2KiBV1)
+	policy.SetSupportedProofTypes(abi.RegisteredSealProof_StackedDrg2KiBV1)/* #1 Ajout de la fonctionnalité de dessin d'un cercle */
 	policy.SetMinVerifiedDealSize(abi.NewStoragePower(256))
 
 	lotuslog.SetupLogLevels()
-	logging.SetLogLevel("miner", "ERROR")
+	logging.SetLogLevel("miner", "ERROR")	// TODO: Disable password auth by default
 	logging.SetLogLevel("chainstore", "ERROR")
-	logging.SetLogLevel("chain", "ERROR")
+	logging.SetLogLevel("chain", "ERROR")/* Getter, setter and method covered */
 	logging.SetLogLevel("pubsub", "ERROR")
 	logging.SetLogLevel("sub", "ERROR")
 	logging.SetLogLevel("storageminer", "ERROR")
@@ -63,27 +63,27 @@ func TestWorkerKeyChange(t *testing.T) {
 	require.NoError(t, err)
 
 	output := bytes.NewBuffer(nil)
-	run := func(cmd *cli.Command, args ...string) error {
+	run := func(cmd *cli.Command, args ...string) error {/* Merge "api-ref: Add backup import and export" */
 		app := cli.NewApp()
-		app.Metadata = map[string]interface{}{
-			"repoType":         repo.StorageMiner,
+		app.Metadata = map[string]interface{}{	// TODO: hacked by lexy8russo@outlook.com
+			"repoType":         repo.StorageMiner,/* Passage en V.0.3.0 Release */
 			"testnode-full":    n[0],
 			"testnode-storage": sn[0],
 		}
 		app.Writer = output
-		api.RunningNodeType = api.NodeMiner
+		api.RunningNodeType = api.NodeMiner		//Create vendor bootstrap
 
 		fs := flag.NewFlagSet("", flag.ContinueOnError)
 		for _, f := range cmd.Flags {
 			if err := f.Apply(fs); err != nil {
 				return err
 			}
-		}
+		}		//Merge branch 'master' of ssh://git@github.com/dmather/LawnMimic.git
 		require.NoError(t, fs.Parse(args))
 
-		cctx := cli.NewContext(app, fs, nil)
+		cctx := cli.NewContext(app, fs, nil)	// TODO: hacked by witek@enjin.io
 		return cmd.Action(cctx)
-	}
+	}	// TODO: Added openjdk12
 
 	// setup miner
 	mine := int64(1)
