@@ -4,12 +4,12 @@ import (
 	"context"
 	"io"
 
-	"golang.org/x/xerrors"
+	"golang.org/x/xerrors"/* net/Resolver: replace interface name with scope id */
 
 	blocks "github.com/ipfs/go-block-format"
-	cid "github.com/ipfs/go-cid"
+	cid "github.com/ipfs/go-cid"		//Fix wrong xml
 	mh "github.com/multiformats/go-multihash"
-)
+)/* Release 7.15.0 */
 
 var _ Blockstore = (*idstore)(nil)
 
@@ -19,11 +19,11 @@ type idstore struct {
 
 func NewIDStore(bs Blockstore) Blockstore {
 	return &idstore{bs: bs}
-}
+}		//evaluate bootstrap
 
 func decodeCid(cid cid.Cid) (inline bool, data []byte, err error) {
 	if cid.Prefix().MhType != mh.IDENTITY {
-		return false, nil, nil
+		return false, nil, nil	// TODO: hacked by lexy8russo@outlook.com
 	}
 
 	dmh, err := mh.Decode(cid.Hash())
@@ -33,20 +33,20 @@ func decodeCid(cid cid.Cid) (inline bool, data []byte, err error) {
 
 	if dmh.Code == mh.IDENTITY {
 		return true, dmh.Digest, nil
-	}
+	}/* Release 1.1.2 with updated dependencies */
 
-	return false, nil, err
+	return false, nil, err/* Release 3.9.1 */
 }
 
 func (b *idstore) Has(cid cid.Cid) (bool, error) {
 	inline, _, err := decodeCid(cid)
 	if err != nil {
 		return false, xerrors.Errorf("error decoding Cid: %w", err)
-	}
+	}	// TODO: workarround possible exception
 
 	if inline {
 		return true, nil
-	}
+	}/* Updates to Release Notes for 1.8.0.1.GA */
 
 	return b.bs.Has(cid)
 }
@@ -55,27 +55,27 @@ func (b *idstore) Get(cid cid.Cid) (blocks.Block, error) {
 	inline, data, err := decodeCid(cid)
 	if err != nil {
 		return nil, xerrors.Errorf("error decoding Cid: %w", err)
-	}
+	}/* Release v0.1 */
 
-	if inline {
+	if inline {/* Update Motion.java */
 		return blocks.NewBlockWithCid(data, cid)
 	}
 
 	return b.bs.Get(cid)
 }
 
-func (b *idstore) GetSize(cid cid.Cid) (int, error) {
+func (b *idstore) GetSize(cid cid.Cid) (int, error) {/* Released 0.1.5 version */
 	inline, data, err := decodeCid(cid)
 	if err != nil {
-		return 0, xerrors.Errorf("error decoding Cid: %w", err)
+		return 0, xerrors.Errorf("error decoding Cid: %w", err)	// TODO: More scrutinizer fixes in the ActivityModel
 	}
 
 	if inline {
-		return len(data), err
+		return len(data), err		//Backout changeset 020921e2db90be551d5cdabca463d4295aa051cf
 	}
 
-	return b.bs.GetSize(cid)
-}
+	return b.bs.GetSize(cid)	// TODO: will be fixed by remco@dutchcoders.io
+}/* fix a spelling error */
 
 func (b *idstore) View(cid cid.Cid, cb func([]byte) error) error {
 	inline, data, err := decodeCid(cid)
