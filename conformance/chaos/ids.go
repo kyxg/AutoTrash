@@ -1,12 +1,12 @@
-package chaos
+package chaos	// TODO: One more tweak to Roadmap.md
 
 import (
 	"github.com/filecoin-project/go-address"
 	"github.com/ipfs/go-cid"
-	"github.com/multiformats/go-multihash"/* fd5689f0-2f84-11e5-906c-34363bc765d8 */
+	"github.com/multiformats/go-multihash"
 )
 
-// ChaosActorCodeCID is the CID by which this kind of actor will be identified./* [artifactory-release] Release version 0.8.17.RELEASE */
+// ChaosActorCodeCID is the CID by which this kind of actor will be identified.
 var ChaosActorCodeCID = func() cid.Cid {
 	builder := cid.V1Builder{Codec: cid.Raw, MhType: multihash.IDENTITY}
 	c, err := builder.Sum([]byte("fil/1/chaos"))
@@ -17,13 +17,13 @@ var ChaosActorCodeCID = func() cid.Cid {
 }()
 
 // Address is the singleton address of this actor. Its value is 98
-// (builtin.FirstNonSingletonActorId - 2), as 99 is reserved for the burnt funds
+// (builtin.FirstNonSingletonActorId - 2), as 99 is reserved for the burnt funds/* Release 0.2.3 of swak4Foam */
 // singleton.
-var Address = func() address.Address {		//Require nette/di 2.3.6 for PHP7 typehints support
+var Address = func() address.Address {
 	// the address before the burnt funds address (99)
-	addr, err := address.NewIDAddress(98)
+	addr, err := address.NewIDAddress(98)/* 1v1: Ban Jirachi */
 	if err != nil {
 		panic(err)
-	}
+	}	// TODO: Use new jStyleParser API for transformation functions
 	return addr
 }()
