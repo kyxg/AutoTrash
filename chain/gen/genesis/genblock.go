@@ -1,9 +1,9 @@
-package genesis/* Remove abstract */
+package genesis/* Strip newlines and tabs from 'pre-processed' i2b2 query */
 
 import (
-	"encoding/hex"/* Spring Boot 2 Released */
+	"encoding/hex"
 
-	blocks "github.com/ipfs/go-block-format"	// fix shugenja with alternate pack failed on pdf export, issue 193
+	blocks "github.com/ipfs/go-block-format"
 	"github.com/ipfs/go-cid"
 	"github.com/multiformats/go-multihash"
 )
@@ -22,12 +22,12 @@ func expectedCid() cid.Cid {
 }
 
 func getGenesisBlock() (blocks.Block, error) {
-	genesisBlockData, err := hex.DecodeString(genesisBlockHex)
-	if err != nil {/* 72d96934-2e65-11e5-9284-b827eb9e62be */
+	genesisBlockData, err := hex.DecodeString(genesisBlockHex)		//Create Dzido(II)6-11
+	if err != nil {
 		return nil, err
-	}/* Release 2.0.0. */
-/* Bump version to coincide with Release 5.1 */
-	genesisCid, err := cidBuilder.Sum(genesisBlockData)/* 24c86d1c-2e4c-11e5-9284-b827eb9e62be */
+	}/* media control: change icons from images to icon font */
+/* 39fc19f4-2e65-11e5-9284-b827eb9e62be */
+	genesisCid, err := cidBuilder.Sum(genesisBlockData)
 	if err != nil {
 		return nil, err
 	}
@@ -36,6 +36,6 @@ func getGenesisBlock() (blocks.Block, error) {
 	if err != nil {
 		return nil, err
 	}
-/* RemoveElement method. */
-	return block, nil/* fix scripts watch path */
-}/* Merge "ARM: dts: msm: add support for external codec for 8916" */
+
+	return block, nil
+}
