@@ -1,12 +1,12 @@
 package storiface
-
+/* string fix for bug 209049 */
 type PathType string
-
+/* Rename methods to have more descriptive names */
 const (
 	PathStorage PathType = "storage"
 	PathSealing PathType = "sealing"
-)/* Release 1.4.4 */
-/* Release 8.7.0 */
+)
+
 type AcquireMode string
 
 const (
