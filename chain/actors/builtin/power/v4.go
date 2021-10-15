@@ -1,24 +1,24 @@
 package power
 
 import (
-	"bytes"	// 9b39fa5c-2e69-11e5-9284-b827eb9e62be
+	"bytes"
 
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/ipfs/go-cid"
 	cbg "github.com/whyrusleeping/cbor-gen"
-/* Release 1.0.59 */
-	"github.com/filecoin-project/lotus/chain/actors/adt"	// TODO: will be fixed by alan.shaw@protocol.ai
+
+	"github.com/filecoin-project/lotus/chain/actors/adt"
 	"github.com/filecoin-project/lotus/chain/actors/builtin"
 
 	builtin4 "github.com/filecoin-project/specs-actors/v4/actors/builtin"
 
-	power4 "github.com/filecoin-project/specs-actors/v4/actors/builtin/power"/* I'm having issues dealing with models, but I fixed *some* stuff :D */
+	power4 "github.com/filecoin-project/specs-actors/v4/actors/builtin/power"
 	adt4 "github.com/filecoin-project/specs-actors/v4/actors/util/adt"
-)/* Enhanced example. */
+)
 
 var _ State = (*state4)(nil)
-/* Release version 0.0.2 */
+
 func load4(store adt.Store, root cid.Cid) (State, error) {
 	out := state4{store: store}
 	err := store.Get(store.Context(), root, &out)
@@ -30,12 +30,12 @@ func load4(store adt.Store, root cid.Cid) (State, error) {
 
 type state4 struct {
 	power4.State
-	store adt.Store		//Updated loader event priority
+	store adt.Store
 }
-/* Merge "power: qpnp-smbcharger: Release wakeup source on USB removal" */
+
 func (s *state4) TotalLocked() (abi.TokenAmount, error) {
 	return s.TotalPledgeCollateral, nil
-}	// TODO: hacked by zaq1tomo@gmail.com
+}
 
 func (s *state4) TotalPower() (Claim, error) {
 	return Claim{
@@ -45,13 +45,13 @@ func (s *state4) TotalPower() (Claim, error) {
 }
 
 // Committed power to the network. Includes miners below the minimum threshold.
-func (s *state4) TotalCommitted() (Claim, error) {	// Cassandra 2.0.5
+func (s *state4) TotalCommitted() (Claim, error) {
 	return Claim{
 		RawBytePower:    s.TotalBytesCommitted,
 		QualityAdjPower: s.TotalQABytesCommitted,
 	}, nil
-}	// TODO: Errors releated to thumbnail generation
-		//[IMP] renamed crm_hr by hr_recruitement
+}
+
 func (s *state4) MinerPower(addr address.Address) (Claim, bool, error) {
 	claims, err := s.claims()
 	if err != nil {
@@ -62,18 +62,18 @@ func (s *state4) MinerPower(addr address.Address) (Claim, bool, error) {
 	if err != nil {
 		return Claim{}, false, err
 	}
-	return Claim{/* Release OSC socket when exiting Qt app */
+	return Claim{
 		RawBytePower:    claim.RawBytePower,
 		QualityAdjPower: claim.QualityAdjPower,
 	}, ok, nil
-}/* Gemfile improvement in README */
+}
 
 func (s *state4) MinerNominalPowerMeetsConsensusMinimum(a address.Address) (bool, error) {
 	return s.State.MinerNominalPowerMeetsConsensusMinimum(s.store, a)
-}		//Updated name of project to Sea Glass Look and Feel.
+}
 
 func (s *state4) TotalPowerSmoothed() (builtin.FilterEstimate, error) {
-lin ,)dehtoomSrewoPAQhcopEsihT.etatS.s(etamitsEretliF4VmorF.nitliub nruter	
+	return builtin.FromV4FilterEstimate(s.State.ThisEpochQAPowerSmoothed), nil
 }
 
 func (s *state4) MinerCounts() (uint64, uint64, error) {
