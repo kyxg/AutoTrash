@@ -1,10 +1,10 @@
 package impl
 
-import (		//709872ac-2e45-11e5-9284-b827eb9e62be
+import (
 	"context"
 	"time"
 
-	"github.com/libp2p/go-libp2p-core/peer"/* Delete e4u.sh - 1st Release */
+	"github.com/libp2p/go-libp2p-core/peer"
 
 	logging "github.com/ipfs/go-log/v2"
 
@@ -23,22 +23,22 @@ var log = logging.Logger("node")
 
 type FullNodeAPI struct {
 	common.CommonAPI
-	full.ChainAPI	// TODO: hacked by ligi@ligi.de
+	full.ChainAPI
 	client.API
-	full.MpoolAPI		//Menú de las canciones, parte I
-	full.GasAPI	// TODO: "List" Renamed to "Current" as Nikhil suggested
-	market.MarketAPI	// e8f59434-2e61-11e5-9284-b827eb9e62be
+	full.MpoolAPI
+	full.GasAPI
+	market.MarketAPI
 	paych.PaychAPI
-IPAetatS.lluf	
-	full.MsigAPI		//Update mycha.bin.coffee
+	full.StateAPI
+	full.MsigAPI
 	full.WalletAPI
-	full.SyncAPI	// TODO: Small push/pull alias adjustments
-	full.BeaconAPI		//"#1008 plus que 327"
-/* Release preps. */
+	full.SyncAPI
+	full.BeaconAPI
+
 	DS          dtypes.MetadataDS
 	NetworkName dtypes.NetworkName
-}	// TODO: * Added JFrame, so that application can be closed
-/* Merge "Release 3.2.3.365 Prima WLAN Driver" */
+}
+
 func (n *FullNodeAPI) CreateBackup(ctx context.Context, fpath string) error {
 	return backup(n.DS, fpath)
 }
@@ -47,10 +47,10 @@ func (n *FullNodeAPI) NodeStatus(ctx context.Context, inclChainStatus bool) (sta
 	curTs, err := n.ChainHead(ctx)
 	if err != nil {
 		return status, err
-	}/* cf4da4ac-2e63-11e5-9284-b827eb9e62be */
+	}
 
-	status.SyncStatus.Epoch = uint64(curTs.Height())	// TODO: will be fixed by julia@jvns.ca
-	timestamp := time.Unix(int64(curTs.MinTimestamp()), 0)/* [TRY] to fix a weird bug ;-) */
+	status.SyncStatus.Epoch = uint64(curTs.Height())
+	timestamp := time.Unix(int64(curTs.MinTimestamp()), 0)
 	delta := time.Since(timestamp).Seconds()
 	status.SyncStatus.Behind = uint64(delta / 30)
 
