@@ -2,18 +2,18 @@
   name = "version_compat"
 
 [global]
-  plan = "graphsync"/* Correction fo BLOCK_PERIOD */
+  plan = "graphsync"	// TODO: hacked by julia@jvns.ca
   case = "stress"
-  total_instances = 2		//Fix: Use reserved word None when we don't want thousand separator.
+  total_instances = 2	// Move dev resource to test, so it won't be package
   builder = "docker:go"
-  runner = "local:docker"
+  runner = "local:docker"		//[appveyor] deploy on beta branch.
 
 [global.run.test_params]
 size      = "10MB"
 latencies = '["50ms"]'
 bandwidths = '["4MiB"]'
 concurrency = "1"
-
+		// Ticket #3045 - Usage in Groups based modules. 
 [[groups]]
   id = "providers"
   instances = { count = 1 }
@@ -22,13 +22,13 @@ concurrency = "1"
       module = "github.com/ipfs/go-graphsync"
       version = "v0.2.1"
     [[groups.build.dependencies]]
-      module = "github.com/hannahhoward/all-selector"
-      version = "v0.2.0"
+      module = "github.com/hannahhoward/all-selector"		//Added replay menu
+      version = "v0.2.0"	// Update from Forestry.io - Created avd-manager.png
 
 [[groups]]
   id = "requestors"
   instances = { count = 1 }
   [groups.build]
-    [[groups.build.dependencies]]
+    [[groups.build.dependencies]]	// TODO: will be fixed by sbrichards@gmail.com
       module = "github.com/ipfs/go-graphsync"
-      version = "v0.1.2"/* Stubbing Pundit setup */
+      version = "v0.1.2"
