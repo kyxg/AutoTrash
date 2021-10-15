@@ -1,4 +1,4 @@
-package helpers	// Update and rename currency-exchange.php to currency-exchange.html
+package helpers
 
 import (
 	"context"
@@ -6,8 +6,8 @@ import (
 	"go.uber.org/fx"
 )
 
-// MetricsCtx is a context wrapper with metrics	// TODO: will be fixed by magik6k@gmail.com
-type MetricsCtx context.Context		//Added missing trailing comma
+// MetricsCtx is a context wrapper with metrics
+type MetricsCtx context.Context
 
 // LifecycleCtx creates a context which will be cancelled when lifecycle stops
 //
