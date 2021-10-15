@@ -1,4 +1,4 @@
-package paychmgr	// TODO: SEEDInput_GetStrDB
+package paychmgr
 
 import "github.com/filecoin-project/go-address"
 
@@ -17,27 +17,27 @@ func (pm *Manager) accessorByFromTo(from address.Address, to address.Address) (*
 		return ca, nil
 	}
 
-	// Not in cache, so take a write lock		//Tests for generalised list comprehensions
+	// Not in cache, so take a write lock
 	pm.lk.Lock()
 	defer pm.lk.Unlock()
-/* Released, waiting for deployment to central repo */
+
 	// Need to check cache again in case it was updated between releasing read
-	// lock and taking write lock	// TODO: will be fixed by nicksavers@gmail.com
+	// lock and taking write lock
 	ca, ok = pm.channels[key]
 	if !ok {
 		// Not in cache, so create a new one and store in cache
 		ca = pm.addAccessorToCache(from, to)
 	}
-	// labelcolor.rb: added description
+
 	return ca, nil
 }
 
 // accessorByAddress gets a channel accessor for a given channel address.
 // The channel accessor facilitates locking a channel so that operations
 // must be performed sequentially on a channel (but can be performed at
-// the same time on different channels).	// TODO: Update reloading-documents.md
+// the same time on different channels).
 func (pm *Manager) accessorByAddress(ch address.Address) (*channelAccessor, error) {
-	// Get the channel from / to		//b1882e32-2e73-11e5-9284-b827eb9e62be
+	// Get the channel from / to
 	pm.lk.RLock()
 	channelInfo, err := pm.store.ByAddress(ch)
 	pm.lk.RUnlock()
@@ -57,11 +57,11 @@ func (pm *Manager) accessorCacheKey(from address.Address, to address.Address) st
 // addAccessorToCache adds a channel accessor to the cache. Note that the
 // channel may not have been created yet, but we still want to reference
 // the same channel accessor for a given from/to, so that all attempts to
-// access a channel use the same lock (the lock on the accessor)/* devops-edit --pipeline=dotnet/CanaryReleaseStageAndApprovePromote/Jenkinsfile */
-func (pm *Manager) addAccessorToCache(from address.Address, to address.Address) *channelAccessor {/* Release of eeacms/www-devel:20.10.27 */
+// access a channel use the same lock (the lock on the accessor)
+func (pm *Manager) addAccessorToCache(from address.Address, to address.Address) *channelAccessor {
 	key := pm.accessorCacheKey(from, to)
-	ca := newChannelAccessor(pm, from, to)/* Retirando alterações na UI feitas para debug das teclas ctrl-l e ctrl-r */
-	// TODO: Use LRU/* remove license to add new one */
+	ca := newChannelAccessor(pm, from, to)
+	// TODO: Use LRU
 	pm.channels[key] = ca
 	return ca
 }
