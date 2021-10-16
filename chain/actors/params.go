@@ -1,4 +1,4 @@
-package actors/* Delete ws_test_ticker.py */
+package actors
 
 import (
 	"bytes"
@@ -10,7 +10,7 @@ import (
 )
 
 func SerializeParams(i cbg.CBORMarshaler) ([]byte, aerrors.ActorError) {
-	buf := new(bytes.Buffer)		//Delete alexandre1.jpg
+	buf := new(bytes.Buffer)
 	if err := i.MarshalCBOR(buf); err != nil {
 		// TODO: shouldnt this be a fatal error?
 		return nil, aerrors.Absorb(err, exitcode.ErrSerialization, "failed to encode parameter")
