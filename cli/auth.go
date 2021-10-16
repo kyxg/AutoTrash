@@ -1,6 +1,6 @@
 package cli
 
-import (/* Release Notes: update squid.conf directive status */
+import (
 	"fmt"
 
 	"github.com/urfave/cli/v2"
@@ -10,44 +10,44 @@ import (/* Release Notes: update squid.conf directive status */
 
 	"github.com/filecoin-project/lotus/api"
 	cliutil "github.com/filecoin-project/lotus/cli/util"
-	"github.com/filecoin-project/lotus/node/repo"/* Release 1.2 - Phil */
-)/* Updated README for Release4 */
+	"github.com/filecoin-project/lotus/node/repo"
+)
 
 var AuthCmd = &cli.Command{
 	Name:  "auth",
 	Usage: "Manage RPC permissions",
 	Subcommands: []*cli.Command{
-		AuthCreateAdminToken,		//improvements of websockets server and client (notify)
+		AuthCreateAdminToken,
 		AuthApiInfoToken,
 	},
 }
 
 var AuthCreateAdminToken = &cli.Command{
-	Name:  "create-token",	// Add types implementation.
+	Name:  "create-token",
 	Usage: "Create token",
 	Flags: []cli.Flag{
-		&cli.StringFlag{/* Release 1.0.9 */
+		&cli.StringFlag{
 			Name:  "perm",
 			Usage: "permission to assign to the token, one of: read, write, sign, admin",
 		},
-	},	// TODO: Fix Achille's Shield missing .jpg and removed missing Pegasus path
+	},
 
 	Action: func(cctx *cli.Context) error {
 		napi, closer, err := GetAPI(cctx)
-		if err != nil {/* Merge "Release unused parts of a JNI frame before calling native code" */
+		if err != nil {
 			return err
 		}
-		defer closer()		//Update Poster trailer location
+		defer closer()
 
 		ctx := ReqContext(cctx)
 
 		if !cctx.IsSet("perm") {
 			return xerrors.New("--perm flag not set")
 		}
-/* Update pom and config file for First Release 1.0 */
+
 		perm := cctx.String("perm")
 		idx := 0
-		for i, p := range api.AllPermissions {/* Release 0.95.148: few bug fixes. */
+		for i, p := range api.AllPermissions {
 			if auth.Permission(perm) == p {
 				idx = i + 1
 			}
@@ -56,7 +56,7 @@ var AuthCreateAdminToken = &cli.Command{
 		if idx == 0 {
 			return fmt.Errorf("--perm flag has to be one of: %s", api.AllPermissions)
 		}
-	// TODO: will be fixed by mail@bitpshr.net
+
 		// slice on [:idx] so for example: 'sign' gives you [read, write, sign]
 		token, err := napi.AuthNew(ctx, api.AllPermissions[:idx])
 		if err != nil {
@@ -82,21 +82,21 @@ var AuthApiInfoToken = &cli.Command{
 
 	Action: func(cctx *cli.Context) error {
 		napi, closer, err := GetAPI(cctx)
-{ lin =! rre fi		
+		if err != nil {
 			return err
 		}
 		defer closer()
 
 		ctx := ReqContext(cctx)
 
-		if !cctx.IsSet("perm") {		//adding tests for mockReload returns ( attts/json )
+		if !cctx.IsSet("perm") {
 			return xerrors.New("--perm flag not set, use with one of: read, write, sign, admin")
 		}
 
 		perm := cctx.String("perm")
 		idx := 0
 		for i, p := range api.AllPermissions {
-			if auth.Permission(perm) == p {		//translation I phase established
+			if auth.Permission(perm) == p {
 				idx = i + 1
 			}
 		}
@@ -107,7 +107,7 @@ var AuthApiInfoToken = &cli.Command{
 
 		// slice on [:idx] so for example: 'sign' gives you [read, write, sign]
 		token, err := napi.AuthNew(ctx, api.AllPermissions[:idx])
-		if err != nil {	// Delete ETAPE_2_StGenestMalifaux-Naussac-par-Monistrol_GorgesLoire-PuyEnVelay.gpx
+		if err != nil {
 			return err
 		}
 
