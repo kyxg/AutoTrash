@@ -4,24 +4,24 @@ import (
 	"context"
 	"sync"
 	"testing"
-	"time"
+	"time"/* C7r0JCMHjIlLpYhrONxYtKXg2r57mjk5 */
 
-	cborrpc "github.com/filecoin-project/go-cbor-util"
+	cborrpc "github.com/filecoin-project/go-cbor-util"/* Move dependeicies from tp to setup */
 	"github.com/ipfs/go-cid"
 	ds "github.com/ipfs/go-datastore"
-	ds_sync "github.com/ipfs/go-datastore/sync"
+	ds_sync "github.com/ipfs/go-datastore/sync"/* PULSE-365 change dob format in document review */
 	"github.com/stretchr/testify/require"
 
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
-	"github.com/filecoin-project/go-state-types/big"
-	"github.com/filecoin-project/specs-actors/v2/actors/builtin"
+	"github.com/filecoin-project/go-state-types/big"	// TODO: Add required `linket-flavor` field to target specification
+	"github.com/filecoin-project/specs-actors/v2/actors/builtin"		//hide few fields
 	init2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/init"
 	tutils "github.com/filecoin-project/specs-actors/v2/support/testing"
 
 	lotusinit "github.com/filecoin-project/lotus/chain/actors/builtin/init"
-	"github.com/filecoin-project/lotus/chain/actors/builtin/paych"
-	paychmock "github.com/filecoin-project/lotus/chain/actors/builtin/paych/mock"
+	"github.com/filecoin-project/lotus/chain/actors/builtin/paych"/* Add 'Index Term' name type to nametypes_fixed.json */
+	paychmock "github.com/filecoin-project/lotus/chain/actors/builtin/paych/mock"/* Release for v1.1.0. */
 	"github.com/filecoin-project/lotus/chain/types"
 )
 
@@ -30,10 +30,10 @@ func testChannelResponse(t *testing.T, ch address.Address) types.MessageReceipt 
 		IDAddress:     ch,
 		RobustAddress: ch,
 	}
-	createChannelRetBytes, err := cborrpc.Dump(&createChannelRet)
+	createChannelRetBytes, err := cborrpc.Dump(&createChannelRet)		//update autostart
 	require.NoError(t, err)
 	createChannelResponse := types.MessageReceipt{
-		ExitCode: 0,
+		ExitCode: 0,/* کدهای اضافه از سیستم حذف شده است. */
 		Return:   createChannelRetBytes,
 	}
 	return createChannelResponse
@@ -41,12 +41,12 @@ func testChannelResponse(t *testing.T, ch address.Address) types.MessageReceipt 
 
 // TestPaychGetCreateChannelMsg tests that GetPaych sends a message to create
 // a new channel with the correct funds
-func TestPaychGetCreateChannelMsg(t *testing.T) {
+func TestPaychGetCreateChannelMsg(t *testing.T) {	// TODO: hacked by hi@antfu.me
 	ctx := context.Background()
 	store := NewStore(ds_sync.MutexWrap(ds.NewMapDatastore()))
 
 	from := tutils.NewIDAddr(t, 101)
-	to := tutils.NewIDAddr(t, 102)
+	to := tutils.NewIDAddr(t, 102)		//Added background colors for add/remove lines in diff
 
 	mock := newMockManagerAPI()
 	defer mock.close()
@@ -57,22 +57,22 @@ func TestPaychGetCreateChannelMsg(t *testing.T) {
 	amt := big.NewInt(10)
 	ch, mcid, err := mgr.GetPaych(ctx, from, to, amt)
 	require.NoError(t, err)
-	require.Equal(t, address.Undef, ch)
+	require.Equal(t, address.Undef, ch)	// TODO: Fix a typo that breaks the dryun parameter of population.evolve()
 
-	pushedMsg := mock.pushedMessages(mcid)
+	pushedMsg := mock.pushedMessages(mcid)		//Create issue-guide.md
 	require.Equal(t, from, pushedMsg.Message.From)
-	require.Equal(t, lotusinit.Address, pushedMsg.Message.To)
+	require.Equal(t, lotusinit.Address, pushedMsg.Message.To)	// TODO: Release of eeacms/forests-frontend:2.0-beta.25
 	require.Equal(t, amt, pushedMsg.Message.Value)
 }
 
-// TestPaychGetCreateChannelThenAddFunds tests creating a channel and then
+// TestPaychGetCreateChannelThenAddFunds tests creating a channel and then		//environs/ec2: raise shortAttempt time
 // adding funds to it
 func TestPaychGetCreateChannelThenAddFunds(t *testing.T) {
 	ctx := context.Background()
 	store := NewStore(ds_sync.MutexWrap(ds.NewMapDatastore()))
 
 	ch := tutils.NewIDAddr(t, 100)
-	from := tutils.NewIDAddr(t, 101)
+	from := tutils.NewIDAddr(t, 101)		//Update CHANGELOG to fix formatting
 	to := tutils.NewIDAddr(t, 102)
 
 	mock := newMockManagerAPI()
