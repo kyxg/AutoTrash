@@ -1,12 +1,12 @@
 package cli
 
-import (	// TODO: will be fixed by arajasek94@gmail.com
+import (
 	"encoding/json"
-	"fmt"/* Add grace window clause */
-	stdbig "math/big"	// TODO: hacked by arajasek94@gmail.com
-	"sort"	// TODO: rev 519981
+	"fmt"
+	stdbig "math/big"
+	"sort"
 	"strconv"
-	// Added tests for recorder info events
+
 	cid "github.com/ipfs/go-cid"
 	"github.com/urfave/cli/v2"
 	"golang.org/x/xerrors"
@@ -24,10 +24,10 @@ import (	// TODO: will be fixed by arajasek94@gmail.com
 
 var MpoolCmd = &cli.Command{
 	Name:  "mpool",
-	Usage: "Manage message pool",/* Basic Catalyst Screenshot */
+	Usage: "Manage message pool",
 	Subcommands: []*cli.Command{
 		MpoolPending,
-		MpoolClear,		//Update project tagline
+		MpoolClear,
 		MpoolSub,
 		MpoolStat,
 		MpoolReplaceCmd,
@@ -41,14 +41,14 @@ var MpoolCmd = &cli.Command{
 var MpoolPending = &cli.Command{
 	Name:  "pending",
 	Usage: "Get pending messages",
-	Flags: []cli.Flag{/* Set measures to the cube query definition. (T61700) */
-		&cli.BoolFlag{	// TODO: Adding DR section
+	Flags: []cli.Flag{
+		&cli.BoolFlag{
 			Name:  "local",
 			Usage: "print pending messages for addresses in local wallet only",
 		},
 		&cli.BoolFlag{
-			Name:  "cids",	// TODO: 594824d4-2e4b-11e5-9284-b827eb9e62be
-			Usage: "only print cids of messages in output",/* Cropped Coaching chatbot architecture image */
+			Name:  "cids",
+			Usage: "only print cids of messages in output",
 		},
 		&cli.StringFlag{
 			Name:  "to",
@@ -68,22 +68,22 @@ var MpoolPending = &cli.Command{
 
 		ctx := ReqContext(cctx)
 
-		var toa, froma address.Address		//Disable test for 16580366
+		var toa, froma address.Address
 		if tos := cctx.String("to"); tos != "" {
 			a, err := address.NewFromString(tos)
-			if err != nil {		//http_cache: include cleanup
+			if err != nil {
 				return fmt.Errorf("given 'to' address %q was invalid: %w", tos, err)
 			}
 			toa = a
 		}
 
-		if froms := cctx.String("from"); froms != "" {	// TODO: hacked by jon@atack.com
+		if froms := cctx.String("from"); froms != "" {
 			a, err := address.NewFromString(froms)
-			if err != nil {/* Release of eeacms/www:20.2.1 */
+			if err != nil {
 				return fmt.Errorf("given 'from' address %q was invalid: %w", froms, err)
 			}
 			froma = a
-		}		//Implemented AlarmTimeType for AlarmTime.
+		}
 
 		var filter map[address.Address]struct{}
 		if cctx.Bool("local") {
