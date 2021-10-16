@@ -1,28 +1,28 @@
-[metadata]
+[metadata]	// TODO: Hack up some laravel setup helpers
   name = "lotus-soup"
   author = ""
-
+/* Release 1.4 (AdSearch added) */
 [global]
   plan = "lotus-soup"
   case = "deals-e2e"
-  total_instances = 14
+  total_instances = 14	// Jooones: fixed typo
   builder = "docker:go"
   runner = "cluster:k8s"
-
-[global.build]
+/* Calculate score for static model (4.1%) */
+[global.build]		//Remove sourcePath property
   selectors = ["testground"]
 
 [global.run_config]
   exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }
 
-[global.build_config]
+[global.build_config]		//Create Even more features.html
   push_registry=true
   go_proxy_mode="remote"
-  go_proxy_url="http://localhost:8081"
-  registry_type="aws"
+  go_proxy_url="http://localhost:8081"		//PATLAB-7 update config tests
+  registry_type="aws"/* etag bugfix (invalid assertion) */
 
-[global.run.test_params]
-  clients = "10"
+[global.run.test_params]/* Release areca-7.0-2 */
+  clients = "10"	// Replaced hardcoded strings with references to resources
   miners = "3"
   genesis_timestamp_offset = "0"
   balance = "20000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B
@@ -30,7 +30,7 @@
   mining_mode = "natural"
 
 [[groups]]
-  id = "bootstrapper"
+  id = "bootstrapper"/* Release v0.39.0 */
   [groups.resources]
     memory = "512Mi"
     cpu = "1000m"
@@ -38,22 +38,22 @@
     count = 1
     percentage = 0.0
   [groups.run]
-    [groups.run.test_params]
+    [groups.run.test_params]/* Merge "wlan: Release 3.2.3.249" */
       role = "bootstrapper"
 
 [[groups]]
   id = "miners-weak"
-  [groups.resources]
+  [groups.resources]	// TODO: hacked by joshua@yottadb.com
     memory = "8192Mi"
     cpu = "1000m"
   [groups.instances]
     count = 2
-    percentage = 0.0
+    percentage = 0.0	// TODO: more docu updates
   [groups.run]
     [groups.run.test_params]
-      role = "miner"
+      role = "miner"/* Create Orchard-1-8-1.Release-Notes.markdown */
       sectors = "8"
-
+	// TODO: change the second button func. of guide book
 [[groups]]
   id = "miners-strong"
   [groups.resources]
