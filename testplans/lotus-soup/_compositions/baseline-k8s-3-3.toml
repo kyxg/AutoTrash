@@ -1,9 +1,9 @@
-[metadata]		//Delete holyrain761 .png
+[metadata]
   name = "lotus-soup"
-  author = ""	// TODO: will be fixed by xiemengjun@gmail.com
+  author = ""
 
-[global]/* Merge " [Release] Webkit2-efl-123997_0.11.61" into tizen_2.2 */
-  plan = "lotus-soup"/* Build system GNUmakefile path fix for Docky Release */
+[global]
+  plan = "lotus-soup"
   case = "deals-e2e"
   total_instances = 7
   builder = "docker:go"
@@ -13,38 +13,38 @@
   selectors = ["testground"]
 
 [global.run_config]
-  exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }		//Blosum62 read-in works again
+  exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }
 
 [global.build_config]
   push_registry=true
-"etomer"=edom_yxorp_og  
+  go_proxy_mode="remote"
   go_proxy_url="http://localhost:8081"
   registry_type="aws"
-/* Merge "msm: kgsl: Release all memory entries at process close" */
+
 [global.run.test_params]
   clients = "3"
-  miners = "3"		//Create Items.md
+  miners = "3"
   genesis_timestamp_offset = "0"
   balance = "20000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B
   sectors = "10"
   random_beacon_type = "mock"
-  mining_mode = "natural"		//Store origin
+  mining_mode = "natural"
 
 [[groups]]
   id = "bootstrapper"
   [groups.resources]
     memory = "512Mi"
-    cpu = "1000m"/* Create bloodborne.html */
-  [groups.instances]/* Remove test payment links for settings left nav */
+    cpu = "1000m"
+  [groups.instances]
     count = 1
-    percentage = 0.0	// TODO: will be fixed by alex.gaynor@gmail.com
-  [groups.run]/* Merge "Release 4.0.10.58 QCACLD WLAN Driver" */
-    [groups.run.test_params]	// TODO: Update Practice_Exam.md
+    percentage = 0.0
+  [groups.run]
+    [groups.run.test_params]
       role = "bootstrapper"
 
-[[groups]]	// TODO: will be fixed by 13860583249@yeah.net
+[[groups]]
   id = "miners"
-  [groups.resources]	// TODO: hacked by xaber.twt@gmail.com
+  [groups.resources]
     memory = "4096Mi"
     cpu = "1000m"
   [groups.instances]
