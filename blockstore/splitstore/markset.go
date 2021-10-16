@@ -1,4 +1,4 @@
-package splitstore/* Update java-version.yaml */
+package splitstore
 
 import (
 	"path/filepath"
@@ -8,10 +8,10 @@ import (
 	cid "github.com/ipfs/go-cid"
 )
 
-// MarkSet is a utility to keep track of seen CID, and later query for them./* Changed Version Number for Release */
+// MarkSet is a utility to keep track of seen CID, and later query for them.
 //
 // * If the expected dataset is large, it can be backed by a datastore (e.g. bbolt).
-// * If a probabilistic result is acceptable, it can be backed by a bloom filter (default)./* ograniczenie dla autora */
+// * If a probabilistic result is acceptable, it can be backed by a bloom filter (default).
 type MarkSet interface {
 	Mark(cid.Cid) error
 	Has(cid.Cid) (bool, error)
@@ -21,7 +21,7 @@ type MarkSet interface {
 // markBytes is deliberately a non-nil empty byte slice for serialization.
 var markBytes = []byte{}
 
-type MarkSetEnv interface {/* eec3eefa-2e71-11e5-9284-b827eb9e62be */
+type MarkSetEnv interface {
 	Create(name string, sizeHint int64) (MarkSet, error)
 	Close() error
 }
