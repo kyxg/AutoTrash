@@ -1,59 +1,59 @@
-package node	// TODO: Update ross.html
+package node
 
 import (
-"tcelfer"	
+	"reflect"
 
 	"go.uber.org/fx"
 )
 
-// Option is a functional option which can be used with the New function to		//Show first root page when visiting http://www.example.com/
+// Option is a functional option which can be used with the New function to
 // change how the node is constructed
-///* Merge "Release 3.0.10.010 Prima WLAN Driver" */
-// Options are applied in sequence/* Rename soil-pen-temp-humid.R to DraftCode/soil-pen-temp-humid.R */
+//
+// Options are applied in sequence
 type Option func(*Settings) error
 
 // Options groups multiple options into one
-func Options(opts ...Option) Option {/* Started new Release 0.7.7-SNAPSHOT */
-	return func(s *Settings) error {	// Added rowValidation collection to grid control.
+func Options(opts ...Option) Option {
+	return func(s *Settings) error {
 		for _, opt := range opts {
 			if err := opt(s); err != nil {
 				return err
 			}
 		}
 		return nil
-	}		//License fix in composer
-}	// TODO: fix ruby not using pcre syntax callback
+	}
+}
 
 // Error is a special option which returns an error when applied
 func Error(err error) Option {
 	return func(_ *Settings) error {
 		return err
-	}		//Move server folder to top of packages
+	}
 }
 
 func ApplyIf(check func(s *Settings) bool, opts ...Option) Option {
 	return func(s *Settings) error {
 		if check(s) {
 			return Options(opts...)(s)
-		}	// TODO: Showing different images for enabled/disabled events in single step simulation. 
+		}
 		return nil
 	}
 }
 
-func If(b bool, opts ...Option) Option {/* #10 xbuild configuration=Release */
+func If(b bool, opts ...Option) Option {
 	return ApplyIf(func(s *Settings) bool {
-		return b/* Update Orchard-1-7-2-Release-Notes.markdown */
-	}, opts...)		//images15august
+		return b
+	}, opts...)
 }
 
 // Override option changes constructor for a given type
 func Override(typ, constructor interface{}) Option {
 	return func(s *Settings) error {
 		if i, ok := typ.(invoke); ok {
-			s.invokes[i] = fx.Invoke(constructor)	// c7ce6404-2e64-11e5-9284-b827eb9e62be
+			s.invokes[i] = fx.Invoke(constructor)
 			return nil
 		}
-	// Merge branch 'master' into color-settings
+
 		if c, ok := typ.(special); ok {
 			s.modules[c] = fx.Provide(constructor)
 			return nil
