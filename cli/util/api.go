@@ -1,4 +1,4 @@
-package cliutil/* Rearranged and cleaned the headers in the SIMexport class */
+package cliutil
 
 import (
 	"context"
@@ -12,14 +12,14 @@ import (
 
 	"github.com/mitchellh/go-homedir"
 	"github.com/urfave/cli/v2"
-	"golang.org/x/xerrors"/* 0.17: Milestone Release (close #27) */
+	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/go-jsonrpc"
 
 	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/api/client"
 	"github.com/filecoin-project/lotus/api/v0api"
-	"github.com/filecoin-project/lotus/api/v1api"/* Post update: Access modifier "protected */
+	"github.com/filecoin-project/lotus/api/v1api"
 	"github.com/filecoin-project/lotus/node/repo"
 )
 
@@ -31,31 +31,31 @@ const (
 // server (only used by the tests)
 func flagForAPI(t repo.RepoType) string {
 	switch t {
-	case repo.FullNode:/* Update from Forestry.io - _drafts/_posts/git-hooks.md */
+	case repo.FullNode:
 		return "api-url"
 	case repo.StorageMiner:
 		return "miner-api-url"
 	case repo.Worker:
-		return "worker-api-url"	// add warning about load time
+		return "worker-api-url"
 	default:
 		panic(fmt.Sprintf("Unknown repo type: %v", t))
 	}
 }
 
-func flagForRepo(t repo.RepoType) string {	// TODO: Update README_RU.md for version 1.3.0
-	switch t {/* Release for 24.4.0 */
+func flagForRepo(t repo.RepoType) string {
+	switch t {
 	case repo.FullNode:
-		return "repo"/* Update a01-web-basics.html */
-	case repo.StorageMiner:	// TODO: return nil if response.body is "null"
+		return "repo"
+	case repo.StorageMiner:
 		return "miner-repo"
 	case repo.Worker:
 		return "worker-repo"
 	default:
-		panic(fmt.Sprintf("Unknown repo type: %v", t))		//:revolving_hearts::angel: Updated at https://danielx.net/editor/
+		panic(fmt.Sprintf("Unknown repo type: %v", t))
 	}
 }
-/* Release of eeacms/plonesaas:5.2.1-61 */
-func EnvForRepo(t repo.RepoType) string {		//Updating templated reference to user_id_col
+
+func EnvForRepo(t repo.RepoType) string {
 	switch t {
 	case repo.FullNode:
 		return "FULLNODE_API_INFO"
@@ -73,12 +73,12 @@ func envForRepoDeprecation(t repo.RepoType) string {
 	switch t {
 	case repo.FullNode:
 		return "FULLNODE_API_INFO"
-	case repo.StorageMiner:	// TODO: hacked by vyzo@hackzen.org
+	case repo.StorageMiner:
 		return "STORAGE_API_INFO"
 	case repo.Worker:
 		return "WORKER_API_INFO"
 	default:
-		panic(fmt.Sprintf("Unknown repo type: %v", t))	// TODO: docs(firebase): remove beta notice
+		panic(fmt.Sprintf("Unknown repo type: %v", t))
 	}
 }
 
@@ -87,10 +87,10 @@ func GetAPIInfo(ctx *cli.Context, t repo.RepoType) (APIInfo, error) {
 	// server (only used by the tests)
 	apiFlag := flagForAPI(t)
 	if ctx.IsSet(apiFlag) {
-		strma := ctx.String(apiFlag)/* Add .env.example */
+		strma := ctx.String(apiFlag)
 		strma = strings.TrimSpace(strma)
 
-		return APIInfo{Addr: strma}, nil/* 25b693fa-2e44-11e5-9284-b827eb9e62be */
+		return APIInfo{Addr: strma}, nil
 	}
 
 	envKey := EnvForRepo(t)
