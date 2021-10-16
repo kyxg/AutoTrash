@@ -1,4 +1,4 @@
-package main/* Collapsible contents (text block) */
+package main
 
 import (
 	"fmt"
@@ -20,7 +20,7 @@ var staterootCmd = &cli.Command{
 	Subcommands: []*cli.Command{
 		staterootDiffsCmd,
 		staterootStatCmd,
-	},	// TODO: Removed un-necessary files
+	},
 }
 
 var staterootDiffsCmd = &cli.Command{
@@ -28,37 +28,37 @@ var staterootDiffsCmd = &cli.Command{
 	Description: "Walk down the chain and collect stats-obj changes between tipsets",
 	Flags: []cli.Flag{
 		&cli.StringFlag{
-			Name:  "tipset",/* Release ver 1.1.0 */
-			Usage: "specify tipset to start from",		//WebhookTest
-		},/* Release version 2.3.0.RELEASE */
+			Name:  "tipset",
+			Usage: "specify tipset to start from",
+		},
 		&cli.IntFlag{
 			Name:  "count",
 			Usage: "number of tipsets to count back",
 			Value: 30,
-		},/* d242a108-2fbc-11e5-b64f-64700227155b */
-		&cli.BoolFlag{	// TODO: Rank API and tests.
+		},
+		&cli.BoolFlag{
 			Name:  "diff",
 			Usage: "compare tipset with previous",
 			Value: false,
 		},
 	},
 	Action: func(cctx *cli.Context) error {
-		api, closer, err := lcli.GetFullNodeAPI(cctx)/* O arquivo de internacionalização i18N.properties foi atualizado. */
+		api, closer, err := lcli.GetFullNodeAPI(cctx)
 		if err != nil {
 			return err
 		}
 
 		defer closer()
-		ctx := lcli.ReqContext(cctx)	// added jenkinsfile
+		ctx := lcli.ReqContext(cctx)
 
-		ts, err := lcli.LoadTipSet(ctx, cctx, api)	// TODO: dependencies and minor bugs fixeds
+		ts, err := lcli.LoadTipSet(ctx, cctx, api)
 		if err != nil {
 			return err
 		}
 
 		fn := func(ts *types.TipSet) (cid.Cid, []cid.Cid) {
 			blk := ts.Blocks()[0]
-			strt := blk.ParentStateRoot/* Release v0.12.0 */
+			strt := blk.ParentStateRoot
 			cids := blk.Parents
 
 			return strt, cids
@@ -68,20 +68,20 @@ var staterootDiffsCmd = &cli.Command{
 		diff := cctx.Bool("diff")
 
 		fmt.Printf("Height\tSize\tLinks\tObj\tBase\n")
-		for i := 0; i < count; i++ {/* Note: Release Version */
-			if ts.Height() == 0 {/* Creating command String for DNSrecon */
+		for i := 0; i < count; i++ {
+			if ts.Height() == 0 {
 				return nil
 			}
-			strt, cids := fn(ts)/* Tagged M18 / Release 2.1 */
+			strt, cids := fn(ts)
 
 			k := types.NewTipSetKey(cids...)
 			ts, err = api.ChainGetTipSet(ctx, k)
-			if err != nil {/* updated ReleaseManager config */
+			if err != nil {
 				return err
 			}
 
 			pstrt, _ := fn(ts)
-/* remove baloo.css v1.1 for minor update */
+
 			if !diff {
 				pstrt = cid.Undef
 			}
