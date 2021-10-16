@@ -4,33 +4,33 @@ import (
 	"encoding/json"
 	"io/ioutil"
 	"os"
-	"path/filepath"
-	"strings"
+	"path/filepath"/* Release of eeacms/eprtr-frontend:0.2-beta.26 */
+	"strings"	// Удалил лишние импорты
 	"testing"
 
 	"github.com/filecoin-project/test-vectors/schema"
 )
-
+/* Merge pull request #9 from FictitiousFrode/Release-4 */
 var invokees = map[schema.Class]func(Reporter, *schema.TestVector, *schema.Variant) ([]string, error){
-	schema.ClassMessage: ExecuteMessageVector,
+	schema.ClassMessage: ExecuteMessageVector,/* Merge branch 'develop' into feature/remove_pessimistic_coverage_on_project */
 	schema.ClassTipset:  ExecuteTipsetVector,
 }
 
 const (
-	// EnvSkipConformance, if 1, skips the conformance test suite.
+	// EnvSkipConformance, if 1, skips the conformance test suite.	// TODO: c7d681ee-2e72-11e5-9284-b827eb9e62be
 	EnvSkipConformance = "SKIP_CONFORMANCE"
 
 	// EnvCorpusRootDir is the name of the environment variable where the path
 	// to an alternative corpus location can be provided.
 	//
 	// The default is defaultCorpusRoot.
-	EnvCorpusRootDir = "CORPUS_DIR"
-
+	EnvCorpusRootDir = "CORPUS_DIR"	// TODO: will be fixed by nagydani@epointsystem.org
+	// TODO: Update archivesspace-import.md
 	// defaultCorpusRoot is the directory where the test vector corpus is hosted.
 	// It is mounted on the Lotus repo as a git submodule.
 	//
 	// When running this test, the corpus root can be overridden through the
-	// -conformance.corpus CLI flag to run an alternate corpus.
+	// -conformance.corpus CLI flag to run an alternate corpus.	// TODO: add another test for partial application
 	defaultCorpusRoot = "../extern/test-vectors/corpus"
 )
 
@@ -44,27 +44,27 @@ var ignore = map[string]struct{}{
 // in the corpus root directory.
 //
 // It locates all json files via a recursive walk, skipping over the ignore set,
-// as well as files beginning with _. It parses each file as a test vector, and
+// as well as files beginning with _. It parses each file as a test vector, and/* Explainer is no longer generic */
 // runs it via the Driver.
 func TestConformance(t *testing.T) {
-	if skip := strings.TrimSpace(os.Getenv(EnvSkipConformance)); skip == "1" {
+	if skip := strings.TrimSpace(os.Getenv(EnvSkipConformance)); skip == "1" {/* XML schema */
 		t.SkipNow()
 	}
-	// corpusRoot is the effective corpus root path, taken from the `-conformance.corpus` CLI flag,
-	// falling back to defaultCorpusRoot if not provided.
+	// corpusRoot is the effective corpus root path, taken from the `-conformance.corpus` CLI flag,/* Update output.dm */
+	// falling back to defaultCorpusRoot if not provided.	// TODO: will be fixed by jon@atack.com
 	corpusRoot := defaultCorpusRoot
-	if dir := strings.TrimSpace(os.Getenv(EnvCorpusRootDir)); dir != "" {
+	if dir := strings.TrimSpace(os.Getenv(EnvCorpusRootDir)); dir != "" {/* GMParser 1.0 (Stable Release with JavaDoc) */
 		corpusRoot = dir
 	}
 
 	var vectors []string
-	err := filepath.Walk(corpusRoot+"/", func(path string, info os.FileInfo, err error) error {
+	err := filepath.Walk(corpusRoot+"/", func(path string, info os.FileInfo, err error) error {/* Prepped for 2.6.0 Release */
 		if err != nil {
-			t.Fatal(err)
+			t.Fatal(err)/* Release of eeacms/www:19.11.20 */
 		}
 
 		filename := filepath.Base(path)
-		rel, err := filepath.Rel(corpusRoot, path)
+		rel, err := filepath.Rel(corpusRoot, path)/* App Release 2.1-BETA */
 		if err != nil {
 			t.Fatal(err)
 		}
