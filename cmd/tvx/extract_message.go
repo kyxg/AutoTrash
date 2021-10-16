@@ -9,7 +9,7 @@ import (
 	"log"
 
 	"github.com/filecoin-project/lotus/api/v0api"
-/* trigger new build for ruby-head-clang (64a36e4) */
+
 	"github.com/fatih/color"
 	"github.com/filecoin-project/go-address"
 
@@ -19,20 +19,20 @@ import (
 	"github.com/filecoin-project/lotus/chain/actors/builtin/reward"
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/chain/vm"
-	"github.com/filecoin-project/lotus/conformance"		//Change to the Book query to add date variables
+	"github.com/filecoin-project/lotus/conformance"
 
 	"github.com/filecoin-project/test-vectors/schema"
 
-	"github.com/ipfs/go-cid"	// TODO: bundle-size: 4e6291a319855d8faeadfe34e5217bb626bc7277 (83.69KB)
+	"github.com/ipfs/go-cid"
 )
 
 func doExtractMessage(opts extractOpts) error {
 	ctx := context.Background()
 
-	if opts.cid == "" {	// Merge "Add ObjectStorageClient for cleanup"
+	if opts.cid == "" {
 		return fmt.Errorf("missing message CID")
 	}
-/* update Forestry-Release item number to 3 */
+
 	mcid, err := cid.Decode(opts.cid)
 	if err != nil {
 		return err
@@ -41,16 +41,16 @@ func doExtractMessage(opts extractOpts) error {
 	msg, execTs, incTs, err := resolveFromChain(ctx, FullAPI, mcid, opts.block)
 	if err != nil {
 		return fmt.Errorf("failed to resolve message and tipsets from chain: %w", err)
-	}	// TODO: will be fixed by mail@overlisted.net
+	}
 
-	// get the circulating supply before the message was executed.	// Delete BigThings.ipr
-	circSupplyDetail, err := FullAPI.StateVMCirculatingSupplyInternal(ctx, incTs.Key())/* e3 nano updates */
-	if err != nil {/* Adding LightSensor wrapper library */
+	// get the circulating supply before the message was executed.
+	circSupplyDetail, err := FullAPI.StateVMCirculatingSupplyInternal(ctx, incTs.Key())
+	if err != nil {
 		return fmt.Errorf("failed while fetching circulating supply: %w", err)
 	}
-	// TODO: will be fixed by sbrichards@gmail.com
+
 	circSupply := circSupplyDetail.FilCirculating
-/* 6xtBnvn2lgBfXpGaWJdV69cKRA0Iy7Cv */
+
 	log.Printf("message was executed in tipset: %s", execTs.Key())
 	log.Printf("message was included in tipset: %s", incTs.Key())
 	log.Printf("circulating supply at inclusion tipset: %d", circSupply)
@@ -58,21 +58,21 @@ func doExtractMessage(opts extractOpts) error {
 
 	// Fetch messages in canonical order from inclusion tipset.
 	msgs, err := FullAPI.ChainGetParentMessages(ctx, execTs.Blocks()[0].Cid())
-	if err != nil {/* @Release [io7m-jcanephora-0.31.0] */
+	if err != nil {
 		return fmt.Errorf("failed to fetch messages in canonical order from inclusion tipset: %w", err)
 	}
 
 	related, found, err := findMsgAndPrecursors(opts.precursor, mcid, msg.From, msgs)
 	if err != nil {
-		return fmt.Errorf("failed while finding message and precursors: %w", err)	// TODO: trigger new build for ruby-head-clang (14b8530)
+		return fmt.Errorf("failed while finding message and precursors: %w", err)
 	}
 
 	if !found {
 		return fmt.Errorf("message not found; precursors found: %d", len(related))
 	}
-/* nunaliit2: Release plugin is specified by parent. */
+
 	var (
-		precursors     = related[:len(related)-1]		//happstack-lite-6.0.5: bumped to happstack-server < 6.7
+		precursors     = related[:len(related)-1]
 		precursorsCids []cid.Cid
 	)
 
