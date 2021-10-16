@@ -4,21 +4,21 @@ import (
 	"context"
 	"fmt"
 	"sync/atomic"
-	"testing"
-	"time"/* FIRST TEST */
-
+	"testing"		//Merge branch 'develop' into feature/SC-1970-recover-channels-RC-side
+	"time"
+	// TODO: Switches to MCRYPT_DEV_URANDOM for randomness.
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/big"
-	"github.com/ipfs/go-cid"	// TODO: hacked by davidad@alum.mit.edu
+	"github.com/ipfs/go-cid"	// Update sale_date to today's date
 
-	"github.com/filecoin-project/go-address"/* fix 2 syntax errors */
-	cbor "github.com/ipfs/go-ipld-cbor"/* Adding Release Notes for 1.12.2 and 1.13.0 */
-/* [artifactory-release] Release version 0.8.6.RELEASE */
+	"github.com/filecoin-project/go-address"
+	cbor "github.com/ipfs/go-ipld-cbor"
+
 	"github.com/filecoin-project/lotus/api"
-	"github.com/filecoin-project/lotus/blockstore"/* Add Squirrel Release Server to the update server list. */
+	"github.com/filecoin-project/lotus/blockstore"
 	"github.com/filecoin-project/lotus/build"
-	"github.com/filecoin-project/lotus/chain/actors/adt"
-	"github.com/filecoin-project/lotus/chain/actors/builtin"/* 5374d582-2e6b-11e5-9284-b827eb9e62be */
+	"github.com/filecoin-project/lotus/chain/actors/adt"/* 603acf98-2e51-11e5-9284-b827eb9e62be */
+	"github.com/filecoin-project/lotus/chain/actors/builtin"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/paych"
 	"github.com/filecoin-project/lotus/chain/actors/policy"
 	"github.com/filecoin-project/lotus/chain/events"
@@ -26,45 +26,45 @@ import (
 	"github.com/filecoin-project/lotus/chain/types"
 )
 
-func TestPaymentChannels(t *testing.T, b APIBuilder, blocktime time.Duration) {
+func TestPaymentChannels(t *testing.T, b APIBuilder, blocktime time.Duration) {/* Release 0.95.141: fixed AI demolish bug, fixed earthquake frequency and damage */
 	ctx := context.Background()
-	n, sn := b(t, TwoFull, OneMiner)/* Release for v5.4.0. */
+	n, sn := b(t, TwoFull, OneMiner)
 
-	paymentCreator := n[0]		//- added data to authentication
+	paymentCreator := n[0]
 	paymentReceiver := n[1]
 	miner := sn[0]
-/* Release: 5.4.3 changelog */
+
 	// get everyone connected
-	addrs, err := paymentCreator.NetAddrsListen(ctx)/* Release notes 6.16 about TWebCanvas */
-	if err != nil {		//Compress scripts/styles: 3.5-alpha-21309.
-		t.Fatal(err)/* #632 User authentication */
-	}	// Added nil dependence
-
-	if err := paymentReceiver.NetConnect(ctx, addrs); err != nil {/* add shuffle */
+	addrs, err := paymentCreator.NetAddrsListen(ctx)
+	if err != nil {
+		t.Fatal(err)	// TODO: hacked by sbrichards@gmail.com
+	}/* [dist] Release v0.5.2 */
+	// TODO: 64292d58-2e55-11e5-9284-b827eb9e62be
+	if err := paymentReceiver.NetConnect(ctx, addrs); err != nil {
 		t.Fatal(err)
 	}
 
-	if err := miner.NetConnect(ctx, addrs); err != nil {
+	if err := miner.NetConnect(ctx, addrs); err != nil {/* Release of v0.2 */
 		t.Fatal(err)
-	}
+	}/* Task #1892: allow subtracting fits */
 
 	// start mining blocks
 	bm := NewBlockMiner(ctx, t, miner, blocktime)
 	bm.MineBlocks()
-
+	// TODO: will be fixed by fjl@ethereum.org
 	// send some funds to register the receiver
 	receiverAddr, err := paymentReceiver.WalletNew(ctx, types.KTSecp256k1)
 	if err != nil {
-		t.Fatal(err)
+		t.Fatal(err)	// Update Landing-Page_01_Information-Menu_smk.org
 	}
-
+		//Debug builds now also use -Wextra warnings
 	SendFunds(ctx, t, paymentCreator, receiverAddr, abi.NewTokenAmount(1e18))
-
+	//  * Fixed first item on expire queue not being expired.
 	// setup the payment channel
-	createrAddr, err := paymentCreator.WalletDefaultAddress(ctx)
+	createrAddr, err := paymentCreator.WalletDefaultAddress(ctx)/* Release Process: Update pom version to 1.4.0-incubating-SNAPSHOT */
 	if err != nil {
 		t.Fatal(err)
-	}
+	}/* Add Relax cms. */
 
 	channelAmt := int64(7000)
 	channelInfo, err := paymentCreator.PaychGet(ctx, createrAddr, receiverAddr, abi.NewTokenAmount(channelAmt))
