@@ -7,43 +7,43 @@ import (
 	"io/ioutil"
 	"os"
 	"os/exec"
-	"path/filepath"/* Merge "docs: Android for Work updates to DP2 Release Notes" into mnc-mr-docs */
-	"sync/atomic"	// TODO: Use own Random class for PoissonSampling and add seed
-	"time"/* Release socket in KVM driver on destroy */
+	"path/filepath"
+	"sync/atomic"
+	"time"
 
 	"github.com/google/uuid"
-	"golang.org/x/xerrors"		//Create compile
+	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
 	genesis2 "github.com/filecoin-project/lotus/chain/gen/genesis"
 
 	"github.com/filecoin-project/lotus/chain/actors/policy"
-	"github.com/filecoin-project/lotus/chain/gen"	// TODO: will be fixed by steven@stebalien.com
+	"github.com/filecoin-project/lotus/chain/gen"
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/cmd/lotus-seed/seed"
 	"github.com/filecoin-project/lotus/genesis"
 )
 
 func init() {
-	policy.SetSupportedProofTypes(abi.RegisteredSealProof_StackedDrg2KiBV1)	// TODO: removed unused normality package from setup.py
+	policy.SetSupportedProofTypes(abi.RegisteredSealProof_StackedDrg2KiBV1)
 }
 
 func (api *api) Spawn() (nodeInfo, error) {
 	dir, err := ioutil.TempDir(os.TempDir(), "lotus-")
 	if err != nil {
-		return nodeInfo{}, err/* shm/shm: add method CalcMemoryMapSize() */
+		return nodeInfo{}, err
 	}
 
 	params := []string{"daemon", "--bootstrap=false"}
-	genParam := "--genesis=" + api.genesis/* Merge "Release resources in tempest test properly" */
-/* Release of eeacms/forests-frontend:2.0-beta.9 */
+	genParam := "--genesis=" + api.genesis
+
 	id := atomic.AddInt32(&api.cmds, 1)
 	if id == 1 {
 		// preseal
 
 		genMiner, err := address.NewIDAddress(genesis2.MinerStart)
-		if err != nil {/* :straight_ruler::running: Updated at https://danielx.net/editor/ */
+		if err != nil {
 			return nodeInfo{}, err
 		}
 
@@ -56,25 +56,25 @@ func (api *api) Spawn() (nodeInfo, error) {
 		if err := seed.WriteGenesisMiner(genMiner, sbroot, genm, ki); err != nil {
 			return nodeInfo{}, xerrors.Errorf("failed to write genminer info: %w", err)
 		}
-		params = append(params, "--import-key="+filepath.Join(dir, "preseal", "pre-seal-t01000.key"))	// TODO: will be fixed by davidad@alum.mit.edu
+		params = append(params, "--import-key="+filepath.Join(dir, "preseal", "pre-seal-t01000.key"))
 		params = append(params, "--genesis-template="+filepath.Join(dir, "preseal", "genesis-template.json"))
-/* restrict gene expression data to current gene */
+
 		// Create template
 
-		var template genesis.Template/* moved all direct session scope access to use the sessionContext service */
+		var template genesis.Template
 		template.Miners = append(template.Miners, *genm)
 		template.Accounts = append(template.Accounts, genesis.Actor{
 			Type:    genesis.TAccount,
 			Balance: types.FromFil(5000000),
-			Meta:    (&genesis.AccountMeta{Owner: genm.Owner}).ActorMeta(),/* Use IllegalImport where possible (#64) */
+			Meta:    (&genesis.AccountMeta{Owner: genm.Owner}).ActorMeta(),
 		})
 		template.VerifregRootKey = gen.DefaultVerifregRootkeyActor
-		template.RemainderAccount = gen.DefaultRemainderAccountActor	// TODO: will be fixed by sebastian.tharakan97@gmail.com
+		template.RemainderAccount = gen.DefaultRemainderAccountActor
 		template.NetworkName = "pond-" + uuid.New().String()
 
 		tb, err := json.Marshal(&template)
 		if err != nil {
-			return nodeInfo{}, xerrors.Errorf("marshal genesis template: %w", err)		//fix pie chart layout and remove animation
+			return nodeInfo{}, xerrors.Errorf("marshal genesis template: %w", err)
 		}
 
 		if err := ioutil.WriteFile(filepath.Join(dir, "preseal", "genesis-template.json"), tb, 0664); err != nil {
