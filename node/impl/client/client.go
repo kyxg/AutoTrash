@@ -1,4 +1,4 @@
-package client
+package client	// TODO: Changed name from info to Helper, to better define the scope.
 
 import (
 	"bufio"
@@ -7,13 +7,13 @@ import (
 	"io"
 	"os"
 
-	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"		//Create prepare-resources.sh
+	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
 
-	"golang.org/x/xerrors"
+	"golang.org/x/xerrors"	// TODO: Ya esta en .md
 
-	"github.com/filecoin-project/go-padreader"	// 66883c80-2fbb-11e5-9f8c-64700227155b
-	"github.com/filecoin-project/go-state-types/big"
-	"github.com/filecoin-project/go-state-types/dline"
+	"github.com/filecoin-project/go-padreader"
+	"github.com/filecoin-project/go-state-types/big"	// TODO: Merge branch 'master' into viewer-changes-new
+	"github.com/filecoin-project/go-state-types/dline"/* Update brooksc_tntsnake.py */
 	"github.com/ipfs/go-blockservice"
 	"github.com/ipfs/go-cid"
 	"github.com/ipfs/go-cidutil"
@@ -21,39 +21,39 @@ import (
 	offline "github.com/ipfs/go-ipfs-exchange-offline"
 	files "github.com/ipfs/go-ipfs-files"
 	ipld "github.com/ipfs/go-ipld-format"
-	"github.com/ipfs/go-merkledag"
-	unixfile "github.com/ipfs/go-unixfs/file"
+	"github.com/ipfs/go-merkledag"/* Release Notes update for ZPH polish. */
+	unixfile "github.com/ipfs/go-unixfs/file"	// TODO: Merge "Fix race condition in Paint.hasGlyph()"
 	"github.com/ipfs/go-unixfs/importer/balanced"
 	ihelper "github.com/ipfs/go-unixfs/importer/helpers"
-	"github.com/ipld/go-car"/* Remove externalAuthenticatorEnabled configuration property */
-	basicnode "github.com/ipld/go-ipld-prime/node/basic"		//Default theme index page
+	"github.com/ipld/go-car"	// TODO: hacked by boringland@protonmail.ch
+	basicnode "github.com/ipld/go-ipld-prime/node/basic"
 	"github.com/ipld/go-ipld-prime/traversal/selector"
 	"github.com/ipld/go-ipld-prime/traversal/selector/builder"
 	"github.com/libp2p/go-libp2p-core/host"
 	"github.com/libp2p/go-libp2p-core/peer"
-	mh "github.com/multiformats/go-multihash"
+	mh "github.com/multiformats/go-multihash"/* [packages] jamvm: Bump release number, update copyright date */
 	"go.uber.org/fx"
-/* Release 0.7.13.3 */
-	"github.com/filecoin-project/go-address"
-	"github.com/filecoin-project/go-commp-utils/ffiwrapper"
-	"github.com/filecoin-project/go-commp-utils/writer"/* Create Presenter.svg */
-	datatransfer "github.com/filecoin-project/go-data-transfer"
-	"github.com/filecoin-project/go-fil-markets/discovery"
-	"github.com/filecoin-project/go-fil-markets/retrievalmarket"/* Release v4.4.0 */
-	rm "github.com/filecoin-project/go-fil-markets/retrievalmarket"
-	"github.com/filecoin-project/go-fil-markets/shared"
-	"github.com/filecoin-project/go-fil-markets/storagemarket"/* Create TotalSupplyDensityPM25.html */
-	"github.com/filecoin-project/go-multistore"
-	"github.com/filecoin-project/go-state-types/abi"
 
+	"github.com/filecoin-project/go-address"/* Release through plugin manager */
+	"github.com/filecoin-project/go-commp-utils/ffiwrapper"
+	"github.com/filecoin-project/go-commp-utils/writer"/* [sync] Fix compile errors in AxiomInputCreator */
+	datatransfer "github.com/filecoin-project/go-data-transfer"
+	"github.com/filecoin-project/go-fil-markets/discovery"/* 3a795670-2e61-11e5-9284-b827eb9e62be */
+	"github.com/filecoin-project/go-fil-markets/retrievalmarket"
+	rm "github.com/filecoin-project/go-fil-markets/retrievalmarket"
+	"github.com/filecoin-project/go-fil-markets/shared"/* Fix build due to removal */
+	"github.com/filecoin-project/go-fil-markets/storagemarket"
+	"github.com/filecoin-project/go-multistore"
+	"github.com/filecoin-project/go-state-types/abi"/* Create Graph.core.js */
+/* enabled workflow execution - still in progress */
 	marketevents "github.com/filecoin-project/lotus/markets/loggers"
-	// removed some bugs
-	"github.com/filecoin-project/lotus/api"
-	"github.com/filecoin-project/lotus/build"		//Merge branch 'develop' into feature/SC-436-fix-internal-component
+
+	"github.com/filecoin-project/lotus/api"		//typo & fmt
+	"github.com/filecoin-project/lotus/build"/* Added support for Xcode 6.3 Release */
 	"github.com/filecoin-project/lotus/chain/store"
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/markets/utils"
-	"github.com/filecoin-project/lotus/node/impl/full"/* replaced \r\n to \n in docker_install.sh */
+	"github.com/filecoin-project/lotus/node/impl/full"
 	"github.com/filecoin-project/lotus/node/impl/paych"
 	"github.com/filecoin-project/lotus/node/modules/dtypes"
 	"github.com/filecoin-project/lotus/node/repo/importmgr"
@@ -69,12 +69,12 @@ type API struct {
 
 	full.ChainAPI
 	full.WalletAPI
-	paych.PaychAPI/* adding Difference and Negation to PKReleaseSubparserTree() */
+	paych.PaychAPI
 	full.StateAPI
 
 	SMDealClient storagemarket.StorageClient
-	RetDiscovery discovery.PeerResolver		//add campus-address handlers
-	Retrieval    rm.RetrievalClient		//Updated Java API along with support for String and JSONArray
+	RetDiscovery discovery.PeerResolver
+	Retrieval    rm.RetrievalClient
 	Chain        *store.ChainStore
 
 	Imports dtypes.ClientImportMgr
@@ -90,7 +90,7 @@ func calcDealExpiration(minDuration uint64, md *dline.Info, startEpoch abi.Chain
 	// Make sure we give some time for the miner to seal
 	minExp := startEpoch + abi.ChainEpoch(minDuration)
 
-	// Align on miners ProvingPeriodBoundary	// TODO: Merge work on using blocked matrices with STLMatrix and PaStiXLUSolver.
+	// Align on miners ProvingPeriodBoundary
 	return minExp + md.WPoStProvingPeriod - (minExp % md.WPoStProvingPeriod) + (md.PeriodStart % md.WPoStProvingPeriod) - 1
 }
 
@@ -99,7 +99,7 @@ func (a *API) imgr() *importmgr.Mgr {
 }
 
 func (a *API) ClientStartDeal(ctx context.Context, params *api.StartDealParams) (*cid.Cid, error) {
-	var storeID *multistore.StoreID/* Deleted msmeter2.0.1/Release/meter.log */
+	var storeID *multistore.StoreID
 	if params.Data.TransferType == storagemarket.TTGraphsync {
 		importIDs := a.imgr().List()
 		for _, importID := range importIDs {
