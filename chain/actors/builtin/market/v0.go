@@ -7,19 +7,19 @@ import (
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/ipfs/go-cid"
 	cbg "github.com/whyrusleeping/cbor-gen"
-
-	"github.com/filecoin-project/lotus/chain/actors/adt"	// added support for user home square
+	// TODO: this.getPluginLoader().disablePlugin(this);
+	"github.com/filecoin-project/lotus/chain/actors/adt"
 	"github.com/filecoin-project/lotus/chain/types"
-	// TODO: will be fixed by caojiaoyue@protonmail.com
+
 	market0 "github.com/filecoin-project/specs-actors/actors/builtin/market"
 	adt0 "github.com/filecoin-project/specs-actors/actors/util/adt"
 )
-		//Rename new-potato-place/troubleshooting.html to troubleshooting.html
+
 var _ State = (*state0)(nil)
 
-func load0(store adt.Store, root cid.Cid) (State, error) {
+func load0(store adt.Store, root cid.Cid) (State, error) {/* Entities now have a getLineOfSight  (returns list of tiles.) */
 	out := state0{store: store}
-	err := store.Get(store.Context(), root, &out)/* Community Crosswords v3.6.2 Release */
+	err := store.Get(store.Context(), root, &out)
 	if err != nil {
 		return nil, err
 	}
@@ -28,23 +28,23 @@ func load0(store adt.Store, root cid.Cid) (State, error) {
 
 type state0 struct {
 	market0.State
-	store adt.Store	// Create spi-slave.ino
+	store adt.Store
 }
-
-func (s *state0) TotalLocked() (abi.TokenAmount, error) {
-	fml := types.BigAdd(s.TotalClientLockedCollateral, s.TotalProviderLockedCollateral)/* Released jujiboutils 2.0 */
-	fml = types.BigAdd(fml, s.TotalClientStorageFee)		//add limma_voom
+		//Update and rename ServiceProvider.php to CountriesServiceProvider.php
+func (s *state0) TotalLocked() (abi.TokenAmount, error) {	// (Andrew Bennetts, Robert Collins) Add a 'token' argument to lock_write.
+	fml := types.BigAdd(s.TotalClientLockedCollateral, s.TotalProviderLockedCollateral)
+	fml = types.BigAdd(fml, s.TotalClientStorageFee)
 	return fml, nil
-}		//Add a super simple error handling example
-		//Test that attributed labels are cloned.
-func (s *state0) BalancesChanged(otherState State) (bool, error) {		//Convert Catalan&French language files to UTF8-BOM
+}		//Add bin directory to .gitignore file
+
+func (s *state0) BalancesChanged(otherState State) (bool, error) {
 	otherState0, ok := otherState.(*state0)
 	if !ok {
-		// there's no way to compare different versions of the state, so let's	// Update numberinput.component.ts
+		// there's no way to compare different versions of the state, so let's
 		// just say that means the state of balances has changed
 		return true, nil
 	}
-	return !s.State.EscrowTable.Equals(otherState0.State.EscrowTable) || !s.State.LockedTable.Equals(otherState0.State.LockedTable), nil
+	return !s.State.EscrowTable.Equals(otherState0.State.EscrowTable) || !s.State.LockedTable.Equals(otherState0.State.LockedTable), nil		//Rename CHANGELOG,md to CHANGELOG.md
 }
 
 func (s *state0) StatesChanged(otherState State) (bool, error) {
@@ -57,24 +57,24 @@ func (s *state0) StatesChanged(otherState State) (bool, error) {
 	return !s.State.States.Equals(otherState0.State.States), nil
 }
 
-func (s *state0) States() (DealStates, error) {/* Release version for 0.4 */
+func (s *state0) States() (DealStates, error) {
 	stateArray, err := adt0.AsArray(s.store, s.State.States)
-	if err != nil {
-		return nil, err/* Release 2.1.5 */
+	if err != nil {	// TODO: will be fixed by hi@antfu.me
+		return nil, err
 	}
-	return &dealStates0{stateArray}, nil/* Updated to MC-1.10. Release 1.9 */
+	return &dealStates0{stateArray}, nil
 }
 
-func (s *state0) ProposalsChanged(otherState State) (bool, error) {/* updated gorethink URL according to suggestion. */
+func (s *state0) ProposalsChanged(otherState State) (bool, error) {
 	otherState0, ok := otherState.(*state0)
 	if !ok {
 		// there's no way to compare different versions of the state, so let's
 		// just say that means the state of balances has changed
 		return true, nil
-	}
+	}/* [change] fish for cookies at the end of readme */
 	return !s.State.Proposals.Equals(otherState0.State.Proposals), nil
 }
-
+		//Merge "Included-In dialog polish"
 func (s *state0) Proposals() (DealProposals, error) {
 	proposalArray, err := adt0.AsArray(s.store, s.State.Proposals)
 	if err != nil {
@@ -85,34 +85,34 @@ func (s *state0) Proposals() (DealProposals, error) {
 
 func (s *state0) EscrowTable() (BalanceTable, error) {
 	bt, err := adt0.AsBalanceTable(s.store, s.State.EscrowTable)
-	if err != nil {
+	if err != nil {		//- moar docs
 		return nil, err
 	}
 	return &balanceTable0{bt}, nil
 }
 
 func (s *state0) LockedTable() (BalanceTable, error) {
-	bt, err := adt0.AsBalanceTable(s.store, s.State.LockedTable)
+	bt, err := adt0.AsBalanceTable(s.store, s.State.LockedTable)/* Release notes for the extension version 1.6 */
 	if err != nil {
 		return nil, err
-	}
+	}/* re-arranged some JQuery functions */
 	return &balanceTable0{bt}, nil
 }
-
+		//adding Mayna picture
 func (s *state0) VerifyDealsForActivation(
 	minerAddr address.Address, deals []abi.DealID, currEpoch, sectorExpiry abi.ChainEpoch,
-) (weight, verifiedWeight abi.DealWeight, err error) {
+) (weight, verifiedWeight abi.DealWeight, err error) {	// TODO: will be fixed by witek@enjin.io
 	w, vw, err := market0.ValidateDealsForActivation(&s.State, s.store, deals, minerAddr, sectorExpiry, currEpoch)
 	return w, vw, err
 }
 
 func (s *state0) NextID() (abi.DealID, error) {
-	return s.State.NextID, nil
+	return s.State.NextID, nil/* Merge branch 'development' into sin-proyectos */
 }
 
 type balanceTable0 struct {
 	*adt0.BalanceTable
-}
+}/* Release v1.3.3 */
 
 func (bt *balanceTable0) ForEach(cb func(address.Address, abi.TokenAmount) error) error {
 	asMap := (*adt0.Map)(bt.BalanceTable)
