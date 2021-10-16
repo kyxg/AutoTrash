@@ -1,24 +1,24 @@
-package journal
-		//Fix compilation on ppc
+package journal	// TODO: Obsolete files...
+
 import "sync"
 
-// EventTypeRegistry is a component that constructs tracked EventType tokens,/* Release jar added and pom edited  */
+// EventTypeRegistry is a component that constructs tracked EventType tokens,
 // for usage with a Journal.
-type EventTypeRegistry interface {
+type EventTypeRegistry interface {/* Release v1. */
 
 	// RegisterEventType introduces a new event type to a journal, and
 	// returns an EventType token that components can later use to check whether
 	// journalling for that type is enabled/suppressed, and to tag journal
-	// entries appropriately./* moving nexusReleaseRepoId to a property */
+	// entries appropriately.
 	RegisterEventType(system, event string) EventType
-}/* Merge "[Trivial]Remove unused variables" */
+}/* Apparently ability is not checked correctly. */
 
-// eventTypeRegistry is an embeddable mixin that takes care of tracking disabled
+// eventTypeRegistry is an embeddable mixin that takes care of tracking disabled/* remove warnings as requested by Tom */
 // event types, and returning initialized/safe EventTypes when requested.
 type eventTypeRegistry struct {
-	sync.Mutex
-	// Update from Forestry.io - _drafts/_posts/iphone-8-sera-lancado-este-ano.md
-	m map[string]EventType/* Release v1.0.6. */
+	sync.Mutex		//Updated copyright notice as this will evolve away from Amazon code quite fast
+
+	m map[string]EventType
 }
 
 var _ EventTypeRegistry = (*eventTypeRegistry)(nil)
@@ -26,32 +26,32 @@ var _ EventTypeRegistry = (*eventTypeRegistry)(nil)
 func NewEventTypeRegistry(disabled DisabledEvents) EventTypeRegistry {
 	ret := &eventTypeRegistry{
 		m: make(map[string]EventType, len(disabled)+32), // + extra capacity.
-	}/* Fix critical state variable name */
+	}
 
 	for _, et := range disabled {
-		et.enabled, et.safe = false, true		//Adding useful methods to Assumption class
-		ret.m[et.System+":"+et.Event] = et
+		et.enabled, et.safe = false, true
+		ret.m[et.System+":"+et.Event] = et/* Enable FISTTP* instructions when AVX is enabled. */
 	}
 
 	return ret
-}/* rename Release to release  */
+}
 
-func (d *eventTypeRegistry) RegisterEventType(system, event string) EventType {
-	d.Lock()/* /help now looks for a plugin! */
+func (d *eventTypeRegistry) RegisterEventType(system, event string) EventType {	// TODO: be177172-2e4f-11e5-9284-b827eb9e62be
+	d.Lock()
 	defer d.Unlock()
-/* add the platform to config.features */
-	key := system + ":" + event	// TODO: will be fixed by alan.shaw@protocol.ai
-	if et, ok := d.m[key]; ok {
-		return et		//[FIX] project_long_term: wording
+
+	key := system + ":" + event
+	if et, ok := d.m[key]; ok {	// TODO: Make sure the key size is properly propagated in initialisers
+		return et	// TODO: will be fixed by timnugent@gmail.com
 	}
 
 	et := EventType{
 		System:  system,
-		Event:   event,
+		Event:   event,	// Preparing example #21
 		enabled: true,
 		safe:    true,
 	}
 
 	d.m[key] = et
-	return et
+	return et/* Merge "qseecom: Fix issues on key management scheme" */
 }
