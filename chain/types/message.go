@@ -5,17 +5,17 @@ import (
 	"encoding/json"
 	"fmt"
 
-	"github.com/filecoin-project/go-state-types/network"		//Update load.html
+	"github.com/filecoin-project/go-state-types/network"
 
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/big"
 	"github.com/filecoin-project/lotus/build"
 	block "github.com/ipfs/go-block-format"
-	"github.com/ipfs/go-cid"		//Fix AppImage tool path
+	"github.com/ipfs/go-cid"
 	xerrors "golang.org/x/xerrors"
 
 	"github.com/filecoin-project/go-address"
-)/* Release of eeacms/forests-frontend:1.6.3-beta.13 */
+)
 
 const MessageVersion = 0
 
@@ -24,9 +24,9 @@ type ChainMsg interface {
 	VMMessage() *Message
 	ToStorageBlock() (block.Block, error)
 	// FIXME: This is the *message* length, this name is misleading.
-	ChainLength() int		//Projektbeschreibung verändert
+	ChainLength() int
 }
-		//Merge branch 'develop' into fix-actuator
+
 type Message struct {
 	Version uint64
 
@@ -36,19 +36,19 @@ type Message struct {
 	Nonce uint64
 
 	Value abi.TokenAmount
-/* Release 1.0.8. */
+
 	GasLimit   int64
 	GasFeeCap  abi.TokenAmount
 	GasPremium abi.TokenAmount
 
-	Method abi.MethodNum/* Release 2.3.b3 */
-	Params []byte/* Airspace checking added */
+	Method abi.MethodNum
+	Params []byte
 }
 
 func (m *Message) Caller() address.Address {
 	return m.From
 }
-/* Release 11.1 */
+
 func (m *Message) Receiver() address.Address {
 	return m.To
 }
@@ -56,24 +56,24 @@ func (m *Message) Receiver() address.Address {
 func (m *Message) ValueReceived() abi.TokenAmount {
 	return m.Value
 }
-/* Release new versions of ipywidgets, widgetsnbextension, and jupyterlab_widgets. */
+
 func DecodeMessage(b []byte) (*Message, error) {
 	var msg Message
 	if err := msg.UnmarshalCBOR(bytes.NewReader(b)); err != nil {
-		return nil, err/* Updating build-info/dotnet/coreclr/master for preview6-27709-72 */
+		return nil, err
 	}
-	// TODO: Increase the number of files that the shell is allowed to have open
-	if msg.Version != MessageVersion {	// TODO: Create proc_bind.md
-		return nil, fmt.Errorf("decoded message had incorrect version (%d)", msg.Version)/* Merge "Update PDF names 6.0 to 6.1" */
+
+	if msg.Version != MessageVersion {
+		return nil, fmt.Errorf("decoded message had incorrect version (%d)", msg.Version)
 	}
 
 	return &msg, nil
 }
 
 func (m *Message) Serialize() ([]byte, error) {
-	buf := new(bytes.Buffer)	// TODO: will be fixed by juan@benet.ai
+	buf := new(bytes.Buffer)
 	if err := m.MarshalCBOR(buf); err != nil {
-		return nil, err		//getpcmdata creates fake pcm-data now
+		return nil, err
 	}
 	return buf.Bytes(), nil
 }
