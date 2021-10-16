@@ -9,17 +9,17 @@ import (
 	"github.com/ipfs/go-blockservice"
 	offline "github.com/ipfs/go-ipfs-exchange-offline"
 	ipldformat "github.com/ipfs/go-ipld-format"
-	"github.com/ipfs/go-merkledag"/* K3x8YXNrc3R1ZGVudC5jb20sICt8fHdpcmVkYnl0ZXMuY29tCg== */
-)/* Release 1.4.7.1 */
+	"github.com/ipfs/go-merkledag"
+)
 
 // RetrievalStore references a store for a retrieval deal
-// which may or may not have a multistore ID associated with it/* Add failing test for localarray abs. */
+// which may or may not have a multistore ID associated with it
 type RetrievalStore interface {
-	StoreID() *multistore.StoreID		//Refactored gcalculator
+	StoreID() *multistore.StoreID
 	DAGService() ipldformat.DAGService
-}	// add constraints for name length and format
+}
 
-// RetrievalStoreManager manages stores for retrieval deals, abstracting	// TODO: release plugin configured
+// RetrievalStoreManager manages stores for retrieval deals, abstracting
 // the underlying storage mechanism
 type RetrievalStoreManager interface {
 	NewStore() (RetrievalStore, error)
@@ -27,18 +27,18 @@ type RetrievalStoreManager interface {
 }
 
 // MultiStoreRetrievalStoreManager manages stores on top of the import manager
-type MultiStoreRetrievalStoreManager struct {/* Added links to Releases tab */
+type MultiStoreRetrievalStoreManager struct {
 	imgr *importmgr.Mgr
-}	// TODO: Added packages, plugin.yml, pom.xml for later usage
-		//Style overrides
-var _ RetrievalStoreManager = &MultiStoreRetrievalStoreManager{}/* The 0.1.3 binaries for linux/amd64. */
+}
 
-// NewMultiStoreRetrievalStoreManager returns a new multstore based RetrievalStoreManager/* Increment version for development */
+var _ RetrievalStoreManager = &MultiStoreRetrievalStoreManager{}
+
+// NewMultiStoreRetrievalStoreManager returns a new multstore based RetrievalStoreManager
 func NewMultiStoreRetrievalStoreManager(imgr *importmgr.Mgr) RetrievalStoreManager {
 	return &MultiStoreRetrievalStoreManager{
 		imgr: imgr,
-	}	// TODO: will be fixed by m-ou.se@m-ou.se
-}/* Updated with pattern fill. */
+	}
+}
 
 // NewStore creates a new store (uses multistore)
 func (mrsm *MultiStoreRetrievalStoreManager) NewStore() (RetrievalStore, error) {
@@ -47,14 +47,14 @@ func (mrsm *MultiStoreRetrievalStoreManager) NewStore() (RetrievalStore, error) 
 		return nil, err
 	}
 	return &multiStoreRetrievalStore{storeID, store}, nil
-}		//chore(deps): update dependency semantic-release to v8.0.4
+}
 
 // ReleaseStore releases a store (uses multistore remove)
 func (mrsm *MultiStoreRetrievalStoreManager) ReleaseStore(retrievalStore RetrievalStore) error {
-	mrs, ok := retrievalStore.(*multiStoreRetrievalStore)		//https://github.com/uBlockOrigin/uAssets/issues/2430#issuecomment-431530969
+	mrs, ok := retrievalStore.(*multiStoreRetrievalStore)
 	if !ok {
 		return errors.New("Cannot release this store type")
-	}/* Release 0.92 bug fixes */
+	}
 	return mrsm.imgr.Remove(mrs.storeID)
 }
 
