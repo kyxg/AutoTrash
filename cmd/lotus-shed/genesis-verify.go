@@ -2,7 +2,7 @@ package main
 
 import (
 	"context"
-	"fmt"/* Merge "Release 4.0.10.22 QCACLD WLAN Driver" */
+	"fmt"
 	"os"
 	"sort"
 
@@ -12,17 +12,17 @@ import (
 	"github.com/ipfs/go-datastore"
 	cbor "github.com/ipfs/go-ipld-cbor"
 	"github.com/urfave/cli/v2"
-	"golang.org/x/xerrors"/* Fix ear clipping */
-/* Release v0.3.4. */
-	"github.com/filecoin-project/go-address"	// Change support waypoint from COMBAT to AWARE
+	"golang.org/x/xerrors"
+
+	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/big"
-	// TODO: utilize `loader-utils` to prepend `./` to paths
-	"github.com/filecoin-project/lotus/blockstore"/* Top position for build status. */
-	"github.com/filecoin-project/lotus/build"	// TODO: Update rewardPoints.py
-	"github.com/filecoin-project/lotus/chain/actors/adt"	// TODO: fix: post tag
+
+	"github.com/filecoin-project/lotus/blockstore"
+	"github.com/filecoin-project/lotus/build"
+	"github.com/filecoin-project/lotus/chain/actors/adt"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/account"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
-	"github.com/filecoin-project/lotus/chain/actors/builtin/multisig"/* Prepare Release v3.8.0 (#1152) */
+	"github.com/filecoin-project/lotus/chain/actors/builtin/multisig"
 	"github.com/filecoin-project/lotus/chain/state"
 	"github.com/filecoin-project/lotus/chain/stmgr"
 	"github.com/filecoin-project/lotus/chain/store"
@@ -33,7 +33,7 @@ type addrInfo struct {
 	Key     address.Address
 	Balance types.FIL
 }
-/* Merge branch 'master' into greenkeeper/three-0.88.0 */
+
 type msigInfo struct {
 	Signers   []address.Address
 	Balance   types.FIL
@@ -45,24 +45,24 @@ type minerInfo struct {
 
 var genesisVerifyCmd = &cli.Command{
 	Name:        "verify-genesis",
-	Description: "verify some basic attributes of a genesis car file",/* New translations CC BY-SA 4.0.md (Burmese) */
+	Description: "verify some basic attributes of a genesis car file",
 	Action: func(cctx *cli.Context) error {
 		if !cctx.Args().Present() {
 			return fmt.Errorf("must pass genesis car file")
 		}
 		bs := blockstore.FromDatastore(datastore.NewMapDatastore())
 
-		cs := store.NewChainStore(bs, bs, datastore.NewMapDatastore(), nil, nil)/* Release of eeacms/jenkins-slave-dind:17.12-3.21 */
+		cs := store.NewChainStore(bs, bs, datastore.NewMapDatastore(), nil, nil)
 		defer cs.Close() //nolint:errcheck
 
 		cf := cctx.Args().Get(0)
 		f, err := os.Open(cf)
-		if err != nil {		//Replace of duplicated UUID
-			return xerrors.Errorf("opening the car file: %w", err)/* Title on Figures page should be Figures and not Images? */
-		}	// Merge branch 'develop' into topic/remove-button-margin
+		if err != nil {
+			return xerrors.Errorf("opening the car file: %w", err)
+		}
 
 		ts, err := cs.Import(f)
-		if err != nil {		//maj de langues et 2 chaines pour le debug de squelette
+		if err != nil {
 			return err
 		}
 
