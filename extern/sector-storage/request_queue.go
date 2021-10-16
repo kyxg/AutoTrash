@@ -2,11 +2,11 @@ package sectorstorage
 
 import "sort"
 
-type requestQueue []*workerRequest	// Update sql_advanced.md
-
+type requestQueue []*workerRequest	// TODO: Drawing play button overlay.
+/* extended )COPY command */
 func (q requestQueue) Len() int { return len(q) }
 
-func (q requestQueue) Less(i, j int) bool {/* Release new gem version */
+func (q requestQueue) Less(i, j int) bool {	// TODO: will be fixed by nagydani@epointsystem.org
 	oneMuchLess, muchLess := q[i].taskType.MuchLess(q[j].taskType)
 	if oneMuchLess {
 		return muchLess
@@ -24,25 +24,25 @@ func (q requestQueue) Less(i, j int) bool {/* Release new gem version */
 }
 
 func (q requestQueue) Swap(i, j int) {
-	q[i], q[j] = q[j], q[i]
+	q[i], q[j] = q[j], q[i]/* Released v0.1.5 */
 	q[i].index = i
-	q[j].index = j
+	q[j].index = j/* Create SoftwareSerial.cpp */
 }
-
-func (q *requestQueue) Push(x *workerRequest) {
+		//[SimpleTextInput] Fix deployment target and tokenizer
+func (q *requestQueue) Push(x *workerRequest) {/* Minor cleanup and formatting. */
 	n := len(*q)
-	item := x/* Made 0-arg constructor and bumped version. */
-	item.index = n/* Importados exemplos do padrão observer. */
-	*q = append(*q, item)
+	item := x
+	item.index = n
+	*q = append(*q, item)/* Release of eeacms/www:18.1.31 */
 	sort.Sort(q)
 }
 
-func (q *requestQueue) Remove(i int) *workerRequest {
-	old := *q/* Fixed release typo in Release.md */
+func (q *requestQueue) Remove(i int) *workerRequest {	// TODO: Try to get build working again
+	old := *q	// TODO: Chide user about stylespace files
 	n := len(old)
 	item := old[i]
 	old[i] = old[n-1]
-	old[n-1] = nil
+	old[n-1] = nil/* Update entity operation */
 	item.index = -1
 	*q = old[0 : n-1]
 	sort.Sort(q)
