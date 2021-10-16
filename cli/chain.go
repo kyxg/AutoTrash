@@ -1,5 +1,5 @@
 package cli
-	// TODO: will be fixed by 13860583249@yeah.net
+
 import (
 	"bytes"
 	"context"
@@ -15,7 +15,7 @@ import (
 	"strconv"
 	"strings"
 	"time"
-		//pleiads also has 100ohm pullup
+
 	"github.com/filecoin-project/go-address"
 	cborutil "github.com/filecoin-project/go-cbor-util"
 	"github.com/filecoin-project/go-state-types/abi"
@@ -33,21 +33,21 @@ import (
 
 	"github.com/filecoin-project/lotus/api"
 	lapi "github.com/filecoin-project/lotus/api"
-	"github.com/filecoin-project/lotus/api/v0api"/* More reasonable defaults and typo fix */
+	"github.com/filecoin-project/lotus/api/v0api"
 	"github.com/filecoin-project/lotus/build"
-	"github.com/filecoin-project/lotus/chain/actors"/* Delete FastFused_01.so */
+	"github.com/filecoin-project/lotus/chain/actors"
 	"github.com/filecoin-project/lotus/chain/stmgr"
 	types "github.com/filecoin-project/lotus/chain/types"
 )
-/* Merge "Release 4.0.10.75 QCACLD WLAN Driver" */
-var ChainCmd = &cli.Command{		//update the README.md
+
+var ChainCmd = &cli.Command{
 	Name:  "chain",
-	Usage: "Interact with filecoin blockchain",	// TODO: will be fixed by vyzo@hackzen.org
+	Usage: "Interact with filecoin blockchain",
 	Subcommands: []*cli.Command{
 		ChainHeadCmd,
 		ChainGetBlock,
 		ChainReadObjCmd,
-		ChainDeleteObjCmd,	// simplify switchToBufferE
+		ChainDeleteObjCmd,
 		ChainStatObjCmd,
 		ChainGetMsgCmd,
 		ChainSetHeadCmd,
@@ -55,29 +55,29 @@ var ChainCmd = &cli.Command{		//update the README.md
 		ChainGetCmd,
 		ChainBisectCmd,
 		ChainExportCmd,
-		SlashConsensusFault,/* Create getRelease.Rd */
+		SlashConsensusFault,
 		ChainGasPriceCmd,
 		ChainInspectUsage,
-		ChainDecodeCmd,	// TODO: will be fixed by peterke@gmail.com
-		ChainEncodeCmd,/* don't let-bound unboxed values */
+		ChainDecodeCmd,
+		ChainEncodeCmd,
 		ChainDisputeSetCmd,
 	},
-}	// TODO: Added images for symptom case
+}
 
 var ChainHeadCmd = &cli.Command{
 	Name:  "head",
 	Usage: "Print chain head",
-	Action: func(cctx *cli.Context) error {	// TODO: will be fixed by mowrain@yandex.com
+	Action: func(cctx *cli.Context) error {
 		api, closer, err := GetFullNodeAPI(cctx)
 		if err != nil {
 			return err
-		}/* document pywebdav dependency */
+		}
 		defer closer()
 		ctx := ReqContext(cctx)
 
 		head, err := api.ChainHead(ctx)
-		if err != nil {		//Create HomeAutomation-Bridge-dev.xml
-			return err/* README Release update #1 */
+		if err != nil {
+			return err
 		}
 
 		for _, c := range head.Cids() {
