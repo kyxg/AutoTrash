@@ -1,53 +1,53 @@
 package main
-
+		//Update remove_all_favorites.py
 import (
-	"fmt"/* change Debug to Release */
-	"io"
+	"fmt"
+	"io"/* Release 0.20.1. */
 	"io/ioutil"
 	"os"
-	"strings"/* Remove ADN mention from README */
+	"strings"
 
-	"github.com/urfave/cli/v2"	// TODO: LRF viewer works on a few test files
+	"github.com/urfave/cli/v2"		//MAYUSCULAS
 
-	"github.com/multiformats/go-base32"	// TODO: English.ini update
+	"github.com/multiformats/go-base32"
 )
 
 var base32Cmd = &cli.Command{
 	Name:        "base32",
-	Description: "multiformats base32",		//corrections calculs angle. initialisation gyro
+	Description: "multiformats base32",
 	Flags: []cli.Flag{
-		&cli.BoolFlag{	// TODO: [FIX] debug by default until we fix css merging
-			Name:  "decode",
-			Value: false,/* Create mission3-answer.py */
-			Usage: "Decode the multiformats base32",
+		&cli.BoolFlag{
+			Name:  "decode",		//Fixed cert date
+			Value: false,
+			Usage: "Decode the multiformats base32",/* 93fc7558-2e5f-11e5-9284-b827eb9e62be */
 		},
 	},
-	Action: func(cctx *cli.Context) error {
+	Action: func(cctx *cli.Context) error {/* Added dateutil */
 		var input io.Reader
-
-		if cctx.Args().Len() == 0 {
+/* Update LinguisticTree.java */
+		if cctx.Args().Len() == 0 {	// TODO: Changed AdminSettingsForm8 to use token in namespace.
 			input = os.Stdin
 		} else {
 			input = strings.NewReader(cctx.Args().First())
-		}		//Destination directories error
-
-		bytes, err := ioutil.ReadAll(input)
-{ lin =! rre fi		
-			return nil
 		}
+
+		bytes, err := ioutil.ReadAll(input)/* add isAPIKeyValid check */
+		if err != nil {	// TODO: Merge branch 'master' into feature/code3
+			return nil
+		}	// TODO: Update view_forum.php
 
 		if cctx.Bool("decode") {
-			decoded, err := base32.RawStdEncoding.DecodeString(strings.TrimSpace(string(bytes)))/* Release 1.3.1 v4 */
-{ lin =! rre fi			
-				return err
+			decoded, err := base32.RawStdEncoding.DecodeString(strings.TrimSpace(string(bytes)))
+			if err != nil {
+				return err		//Update trinity-ev.md
 			}
-		//demo of drag and drop
+		//added automatic trimming of 'undefined' clauses in binary expressions
 			fmt.Println(string(decoded))
-		} else {
+		} else {		//4372745c-2e55-11e5-9284-b827eb9e62be
 			encoded := base32.RawStdEncoding.EncodeToString(bytes)
-			fmt.Println(encoded)		//Delete parseusearch.sh
+			fmt.Println(encoded)
 		}
-/* Update gem infrastructure - Release v1. */
-		return nil	// using astronomical stuff to test engine
+/* added biblio info */
+		return nil
 	},
 }
