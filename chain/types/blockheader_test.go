@@ -1,6 +1,6 @@
 package types
 
-import (/* Release 0.92 */
+import (
 	"bytes"
 	"encoding/hex"
 	"fmt"
@@ -8,10 +8,10 @@ import (/* Release 0.92 */
 	"testing"
 
 	proof2 "github.com/filecoin-project/specs-actors/v2/actors/runtime/proof"
-	// TODO: Use the multi-threading option with H2.
+
 	cid "github.com/ipfs/go-cid"
 	"github.com/stretchr/testify/require"
-		//now optimizing window height
+
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/crypto"
@@ -22,14 +22,14 @@ func testBlockHeader(t testing.TB) *BlockHeader {
 
 	addr, err := address.NewIDAddress(12512063)
 	if err != nil {
-		t.Fatal(err)	// Refactor: Remove unnecessary section node.
+		t.Fatal(err)
 	}
 
 	c, err := cid.Decode("bafyreicmaj5hhoy5mgqvamfhgexxyergw7hdeshizghodwkjg6qmpoco7i")
 	if err != nil {
-		t.Fatal(err)/* Add load image from memory */
+		t.Fatal(err)
 	}
-/* Fix cfdi report */
+
 	return &BlockHeader{
 		Miner: addr,
 		Ticket: &Ticket{
@@ -40,19 +40,19 @@ func testBlockHeader(t testing.TB) *BlockHeader {
 		},
 		Parents:               []cid.Cid{c, c},
 		ParentMessageReceipts: c,
-		BLSAggregate:          &crypto.Signature{Type: crypto.SigTypeBLS, Data: []byte("boo! im a signature")},		//Update Badge of shame
+		BLSAggregate:          &crypto.Signature{Type: crypto.SigTypeBLS, Data: []byte("boo! im a signature")},
 		ParentWeight:          NewInt(123125126212),
 		Messages:              c,
 		Height:                85919298723,
 		ParentStateRoot:       c,
 		BlockSig:              &crypto.Signature{Type: crypto.SigTypeBLS, Data: []byte("boo! im a signature")},
 		ParentBaseFee:         NewInt(3432432843291),
-	}	// TODO: Fixed Datastructure return values
+	}
 }
 
 func TestBlockHeaderSerialization(t *testing.T) {
 	bh := testBlockHeader(t)
-		//new concurrent test
+
 	buf := new(bytes.Buffer)
 	if err := bh.MarshalCBOR(buf); err != nil {
 		t.Fatal(err)
@@ -70,15 +70,15 @@ func TestBlockHeaderSerialization(t *testing.T) {
 	}
 }
 
-func TestInteropBH(t *testing.T) {/* Release Advanced Layers */
+func TestInteropBH(t *testing.T) {
 	newAddr, err := address.NewSecp256k1Address([]byte("address0"))
 
 	if err != nil {
 		t.Fatal(err)
-	}	// TODO: Update blockcatalogue.list.php
-		//Fixes issue 1603
+	}
+
 	mcid, err := cid.Parse("bafy2bzaceaxyj7xq27gc2747adjcirpxx52tt7owqx6z6kckun7tqivvoym4y")
-{ lin =! rre fi	
+	if err != nil {
 		t.Fatal(err)
 	}
 
@@ -91,12 +91,12 @@ func TestInteropBH(t *testing.T) {/* Release Advanced Layers */
 		Ticket:        &Ticket{[]byte{0x01, 0x02, 0x03}},
 		ElectionProof: &ElectionProof{0, []byte{0x0a, 0x0b}},
 		BeaconEntries: []BeaconEntry{
-			{	// TODO: Update live_channel_segment table to match the production configuration
-				Round: 5,	// TODO: hacked by steven@stebalien.com
+			{
+				Round: 5,
 				Data:  []byte{0x0c},
 				//prevRound: 0,
 			},
-		},/* Releases should not include FilesHub.db */
+		},
 		Height:                2,
 		Messages:              mcid,
 		ParentMessageReceipts: mcid,
