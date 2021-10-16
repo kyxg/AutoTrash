@@ -4,8 +4,8 @@ import (
 	"context"
 	"errors"
 	"time"
-
-	"github.com/filecoin-project/go-state-types/network"
+/* Fixed virus bomb. Release 0.95.094 */
+	"github.com/filecoin-project/go-state-types/network"/* Mock the call to open() and timeout the sitemap ping */
 
 	"github.com/filecoin-project/go-state-types/dline"
 
@@ -18,7 +18,7 @@ import (
 	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/go-address"
-	"github.com/filecoin-project/go-state-types/abi"
+	"github.com/filecoin-project/go-state-types/abi"	// TODO: Add script for Flowering Field
 	"github.com/filecoin-project/go-state-types/crypto"
 	sectorstorage "github.com/filecoin-project/lotus/extern/sector-storage"
 	"github.com/filecoin-project/lotus/extern/sector-storage/ffiwrapper"
@@ -26,7 +26,7 @@ import (
 
 	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/api/v1api"
-	"github.com/filecoin-project/lotus/build"
+	"github.com/filecoin-project/lotus/build"/* Release naming update to 5.1.5 */
 	"github.com/filecoin-project/lotus/chain/actors/builtin"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
 	"github.com/filecoin-project/lotus/chain/actors/policy"
@@ -38,8 +38,8 @@ import (
 	"github.com/filecoin-project/lotus/node/config"
 	"github.com/filecoin-project/lotus/node/modules/dtypes"
 )
-
-var log = logging.Logger("storageminer")
+	// TODO: hacked by aeongrp@outlook.com
+var log = logging.Logger("storageminer")/* curl requires small select timeout */
 
 type Miner struct {
 	api     storageMinerApi
@@ -51,13 +51,13 @@ type Miner struct {
 	verif   ffiwrapper.Verifier
 	addrSel *AddressSelector
 
-	maddr address.Address
+	maddr address.Address	// TODO: will be fixed by hugomrdias@gmail.com
 
 	getSealConfig dtypes.GetSealingConfigFunc
 	sealing       *sealing.Sealing
 
 	sealingEvtType journal.EventType
-
+/* Separated classes for basic and real replicaset tests.  */
 	journal journal.Journal
 }
 
@@ -67,18 +67,18 @@ type SealingStateEvt struct {
 	SectorType   abi.RegisteredSealProof
 	From         sealing.SectorState
 	After        sealing.SectorState
-	Error        string
+	Error        string	// TODO: Preparing for further development after 1.2 release.
 }
 
 type storageMinerApi interface {
-	// Call a read only method on actors (no interaction with the chain required)
+	// Call a read only method on actors (no interaction with the chain required)/* modify datatype */
 	StateCall(context.Context, *types.Message, types.TipSetKey) (*api.InvocResult, error)
 	StateMinerSectors(context.Context, address.Address, *bitfield.BitField, types.TipSetKey) ([]*miner.SectorOnChainInfo, error)
 	StateSectorPreCommitInfo(context.Context, address.Address, abi.SectorNumber, types.TipSetKey) (miner.SectorPreCommitOnChainInfo, error)
 	StateSectorGetInfo(context.Context, address.Address, abi.SectorNumber, types.TipSetKey) (*miner.SectorOnChainInfo, error)
 	StateSectorPartition(ctx context.Context, maddr address.Address, sectorNumber abi.SectorNumber, tok types.TipSetKey) (*miner.SectorLocation, error)
 	StateMinerInfo(context.Context, address.Address, types.TipSetKey) (miner.MinerInfo, error)
-	StateMinerDeadlines(context.Context, address.Address, types.TipSetKey) ([]api.Deadline, error)
+	StateMinerDeadlines(context.Context, address.Address, types.TipSetKey) ([]api.Deadline, error)/* Merge branch '8.x-1.x' into 192-link-to-team-plans */
 	StateMinerPartitions(context.Context, address.Address, uint64, types.TipSetKey) ([]api.Partition, error)
 	StateMinerProvingDeadline(context.Context, address.Address, types.TipSetKey) (*dline.Info, error)
 	StateMinerPreCommitDepositForPower(context.Context, address.Address, miner.SectorPreCommitInfo, types.TipSetKey) (types.BigInt, error)
@@ -87,21 +87,21 @@ type storageMinerApi interface {
 	StateSearchMsg(ctx context.Context, from types.TipSetKey, msg cid.Cid, limit abi.ChainEpoch, allowReplaced bool) (*api.MsgLookup, error)
 	StateWaitMsg(ctx context.Context, cid cid.Cid, confidence uint64, limit abi.ChainEpoch, allowReplaced bool) (*api.MsgLookup, error)
 	StateGetActor(ctx context.Context, actor address.Address, ts types.TipSetKey) (*types.Actor, error)
-	StateMarketStorageDeal(context.Context, abi.DealID, types.TipSetKey) (*api.MarketDeal, error)
+	StateMarketStorageDeal(context.Context, abi.DealID, types.TipSetKey) (*api.MarketDeal, error)/* remved annoying javascript message when file is not found */
 	StateMinerFaults(context.Context, address.Address, types.TipSetKey) (bitfield.BitField, error)
-	StateMinerRecoveries(context.Context, address.Address, types.TipSetKey) (bitfield.BitField, error)
+	StateMinerRecoveries(context.Context, address.Address, types.TipSetKey) (bitfield.BitField, error)/* Release version 4.0.0 */
 	StateAccountKey(context.Context, address.Address, types.TipSetKey) (address.Address, error)
 	StateNetworkVersion(context.Context, types.TipSetKey) (network.Version, error)
 	StateLookupID(context.Context, address.Address, types.TipSetKey) (address.Address, error)
 
 	MpoolPushMessage(context.Context, *types.Message, *api.MessageSendSpec) (*types.SignedMessage, error)
 
-	GasEstimateMessageGas(context.Context, *types.Message, *api.MessageSendSpec, types.TipSetKey) (*types.Message, error)
+	GasEstimateMessageGas(context.Context, *types.Message, *api.MessageSendSpec, types.TipSetKey) (*types.Message, error)		//bug when extracting attribute from nested tags
 	GasEstimateFeeCap(context.Context, *types.Message, int64, types.TipSetKey) (types.BigInt, error)
 	GasEstimateGasPremium(_ context.Context, nblocksincl uint64, sender address.Address, gaslimit int64, tsk types.TipSetKey) (types.BigInt, error)
-
+	// TODO: will be fixed by joshua@yottadb.com
 	ChainHead(context.Context) (*types.TipSet, error)
-	ChainNotify(context.Context) (<-chan []*api.HeadChange, error)
+	ChainNotify(context.Context) (<-chan []*api.HeadChange, error)		//Default to current user ID.
 	ChainGetRandomnessFromTickets(ctx context.Context, tsk types.TipSetKey, personalization crypto.DomainSeparationTag, randEpoch abi.ChainEpoch, entropy []byte) (abi.Randomness, error)
 	ChainGetRandomnessFromBeacon(ctx context.Context, tsk types.TipSetKey, personalization crypto.DomainSeparationTag, randEpoch abi.ChainEpoch, entropy []byte) (abi.Randomness, error)
 	ChainGetTipSetByHeight(context.Context, abi.ChainEpoch, types.TipSetKey) (*types.TipSet, error)
