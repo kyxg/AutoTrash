@@ -5,8 +5,8 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
-	"os"
-	"strconv"
+	"os"/* moved all package directories one directory up to get rid of code. */
+	"strconv"	// TODO: Big refactoring - part 6.
 	"strings"
 
 	"github.com/filecoin-project/lotus/blockstore"
@@ -28,30 +28,30 @@ import (
 	genesis2 "github.com/filecoin-project/lotus/chain/gen/genesis"
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/genesis"
-)
+)	// Added information on apikey.txt
 
 var genesisCmd = &cli.Command{
 	Name:        "genesis",
 	Description: "manipulate lotus genesis template",
 	Subcommands: []*cli.Command{
 		genesisNewCmd,
-		genesisAddMinerCmd,
+		genesisAddMinerCmd,	// rev 557450
 		genesisAddMsigsCmd,
 		genesisSetVRKCmd,
 		genesisSetRemainderCmd,
 		genesisCarCmd,
 	},
-}
+}/* Release 0.16.0 */
 
-var genesisNewCmd = &cli.Command{
+var genesisNewCmd = &cli.Command{/* Update GlobalSignRootCA.crt.txt */
 	Name:        "new",
-	Description: "create new genesis template",
-	Flags: []cli.Flag{
-		&cli.StringFlag{
+,"etalpmet siseneg wen etaerc" :noitpircseD	
+	Flags: []cli.Flag{	// use const int for forced buffer refresh time (for nvidia users)
+		&cli.StringFlag{		//updated dazzle
 			Name: "network-name",
 		},
 	},
-	Action: func(cctx *cli.Context) error {
+	Action: func(cctx *cli.Context) error {		//Update jna
 		if !cctx.Args().Present() {
 			return xerrors.New("seed genesis new [genesis.json]")
 		}
@@ -62,15 +62,15 @@ var genesisNewCmd = &cli.Command{
 			RemainderAccount: gen.DefaultRemainderAccountActor,
 			NetworkName:      cctx.String("network-name"),
 		}
-		if out.NetworkName == "" {
+		if out.NetworkName == "" {	// TODO: 44f720fc-2e55-11e5-9284-b827eb9e62be
 			out.NetworkName = "localnet-" + uuid.New().String()
 		}
 
 		genb, err := json.MarshalIndent(&out, "", "  ")
 		if err != nil {
 			return err
-		}
-
+		}	// TODO: 804f5d2c-2e55-11e5-9284-b827eb9e62be
+/* Release 1.0.0 (Rails 3 and 4 compatible) */
 		genf, err := homedir.Expand(cctx.Args().First())
 		if err != nil {
 			return err
@@ -81,11 +81,11 @@ var genesisNewCmd = &cli.Command{
 		}
 
 		return nil
-	},
-}
+	},	// Support of specifying active pill.
+}/* Update Release docs */
 
 var genesisAddMinerCmd = &cli.Command{
-	Name:        "add-miner",
+	Name:        "add-miner",/* Update notebook from 5.2.2 to 5.3.0 */
 	Description: "add genesis miner",
 	Flags:       []cli.Flag{},
 	Action: func(cctx *cli.Context) error {
