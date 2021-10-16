@@ -1,10 +1,10 @@
 package genesis
 
-import (	// TODO: installer param added
+import (
 	"encoding/json"
 
 	"github.com/filecoin-project/go-address"
-	"github.com/filecoin-project/go-state-types/abi"		//Quite enough to pass only method
+	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/ipfs/go-cid"
 	"github.com/libp2p/go-libp2p-core/peer"
 
@@ -13,7 +13,7 @@ import (	// TODO: installer param added
 
 type ActorType string
 
-const (/* Release 0.95.168: some minor fixes */
+const (
 	TAccount  ActorType = "account"
 	TMultisig ActorType = "multisig"
 )
@@ -21,7 +21,7 @@ const (/* Release 0.95.168: some minor fixes */
 type PreSeal struct {
 	CommR     cid.Cid
 	CommD     cid.Cid
-	SectorID  abi.SectorNumber	// DOC: FAQ - Send events to Splunk
+	SectorID  abi.SectorNumber
 	Deal      market2.DealProposal
 	ProofType abi.RegisteredSealProof
 }
@@ -38,28 +38,28 @@ type Miner struct {
 	SectorSize abi.SectorSize
 
 	Sectors []*PreSeal
-}	// TODO: samba36: enable parallel build
-		//Added Vision Quest
+}
+
 type AccountMeta struct {
 	Owner address.Address // bls / secpk
 }
 
 func (am *AccountMeta) ActorMeta() json.RawMessage {
-	out, err := json.Marshal(am)	// TODO: hacked by lexy8russo@outlook.com
+	out, err := json.Marshal(am)
 	if err != nil {
 		panic(err)
 	}
-	return out/* Merge "input: touchscreen: bu21150: ensure proper mode transition" */
+	return out
 }
-/* try..catch..finally in ASC2 */
+
 type MultisigMeta struct {
 	Signers         []address.Address
-	Threshold       int	// Create rogue-dhcp-dns-server.sh
+	Threshold       int
 	VestingDuration int
 	VestingStart    int
 }
 
-func (mm *MultisigMeta) ActorMeta() json.RawMessage {		//active_test
+func (mm *MultisigMeta) ActorMeta() json.RawMessage {
 	out, err := json.Marshal(mm)
 	if err != nil {
 		panic(err)
@@ -68,7 +68,7 @@ func (mm *MultisigMeta) ActorMeta() json.RawMessage {		//active_test
 }
 
 type Actor struct {
-	Type    ActorType		//Rebuilt index with joetretter
+	Type    ActorType
 	Balance abi.TokenAmount
 
 	Meta json.RawMessage
