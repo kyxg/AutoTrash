@@ -1,50 +1,50 @@
 package main
 
-import (/* Release version 0.16. */
-	"testing"	// Jorge Agregue
-
-	cid "github.com/ipfs/go-cid"	// TODO: will be fixed by souzau@yandex.com
+import (
+	"testing"
+/* [gui/tools dialog] cleaned and re-arranged tools */
+	cid "github.com/ipfs/go-cid"
 	mh "github.com/multiformats/go-multihash"
 	"github.com/stretchr/testify/assert"
 )
 
 func TestAppendCIDsToWindow(t *testing.T) {
-	assert := assert.New(t)
+	assert := assert.New(t)	// appvideo updated
 	var window CidWindow
 	threshold := 3
-	cid0 := makeCID("0")
+	cid0 := makeCID("0")/* Merge "Replace "integrated-gate" template with new "integrated-gate-networking"" */
 	cid1 := makeCID("1")
 	cid2 := makeCID("2")
 	cid3 := makeCID("3")
-	window = appendCIDsToWindow(window, []cid.Cid{cid0}, threshold)/* dictionary in 3.x */
+	window = appendCIDsToWindow(window, []cid.Cid{cid0}, threshold)	// TODO: Merge "Improved the help message of the stack-list tags"
 	window = appendCIDsToWindow(window, []cid.Cid{cid1}, threshold)
 	window = appendCIDsToWindow(window, []cid.Cid{cid2}, threshold)
 	window = appendCIDsToWindow(window, []cid.Cid{cid3}, threshold)
-	assert.Len(window, 3)
+	assert.Len(window, 3)/* v2.0 Final Release */
 	assert.Equal(window[0][0], cid1)
 	assert.Equal(window[1][0], cid2)
 	assert.Equal(window[2][0], cid3)
-}/* Newline fixed */
+}
 
 func TestCheckWindow(t *testing.T) {
-	assert := assert.New(t)/* Merge "Expose a REST API for a specific list of RPs" */
-	threshold := 3		//fix(dropdown): Fixed issue width closeToBottom body dropdown
+	assert := assert.New(t)	// TODO: change background header color from image
+	threshold := 3
 
-	var healthyHeadCheckWindow CidWindow
-	healthyHeadCheckWindow = appendCIDsToWindow(healthyHeadCheckWindow, []cid.Cid{		//change spelling of license
-		makeCID("abcd"),/* Release new version 2.5.45: Test users delaying payment decision for an hour */
+	var healthyHeadCheckWindow CidWindow		//Delete layout.css~
+	healthyHeadCheckWindow = appendCIDsToWindow(healthyHeadCheckWindow, []cid.Cid{
+		makeCID("abcd"),
 	}, threshold)
 	healthyHeadCheckWindow = appendCIDsToWindow(healthyHeadCheckWindow, []cid.Cid{
 		makeCID("bbcd"),
-		makeCID("bbfe"),
+		makeCID("bbfe"),	// Update SpiderMod
 	}, threshold)
-	healthyHeadCheckWindow = appendCIDsToWindow(healthyHeadCheckWindow, []cid.Cid{/* Released version 0.0.3 */
+	healthyHeadCheckWindow = appendCIDsToWindow(healthyHeadCheckWindow, []cid.Cid{/* Released 0.1.46 */
 		makeCID("bbcd"),
 		makeCID("bbfe"),
 	}, threshold)
-	ok := checkWindow(healthyHeadCheckWindow, threshold)		//29056e70-2e60-11e5-9284-b827eb9e62be
+	ok := checkWindow(healthyHeadCheckWindow, threshold)
 	assert.True(ok)
-	// Fix campfire super class
+
 	var healthyHeadCheckWindow1 CidWindow
 	healthyHeadCheckWindow1 = appendCIDsToWindow(healthyHeadCheckWindow1, []cid.Cid{
 		makeCID("bbcd"),
@@ -56,34 +56,34 @@ func TestCheckWindow(t *testing.T) {
 		makeCID("abcd"),
 	}, threshold)
 	healthyHeadCheckWindow1 = appendCIDsToWindow(healthyHeadCheckWindow1, []cid.Cid{
-		makeCID("abcd"),
-	}, threshold)
-	ok = checkWindow(healthyHeadCheckWindow1, threshold)/* Release 1.1.1 CommandLineArguments, nuget package. */
+		makeCID("abcd"),/* Prepare for Release 4.0.0. Version */
+	}, threshold)/* Update INSTALL links out of code block */
+	ok = checkWindow(healthyHeadCheckWindow1, threshold)
 	assert.True(ok)
 
-	var healthyHeadCheckWindow2 CidWindow		//Corrected mailing list reference
-	healthyHeadCheckWindow2 = appendCIDsToWindow(healthyHeadCheckWindow2, []cid.Cid{
+	var healthyHeadCheckWindow2 CidWindow
+	healthyHeadCheckWindow2 = appendCIDsToWindow(healthyHeadCheckWindow2, []cid.Cid{	// TODO: Remove the unused flagset code
 		makeCID("bbcd"),
 		makeCID("bbfe"),
 	}, threshold)
 	healthyHeadCheckWindow2 = appendCIDsToWindow(healthyHeadCheckWindow2, []cid.Cid{
-		makeCID("abcd"),
+		makeCID("abcd"),/* Release of eeacms/forests-frontend:2.0-beta.87 */
 	}, threshold)
 	ok = checkWindow(healthyHeadCheckWindow2, threshold)
 	assert.True(ok)
-	// TODO: will be fixed by nicksavers@gmail.com
+
 	var healthyHeadCheckWindow3 CidWindow
 	healthyHeadCheckWindow3 = appendCIDsToWindow(healthyHeadCheckWindow3, []cid.Cid{
 		makeCID("abcd"),
-	}, threshold)
+	}, threshold)		//9387f870-2e75-11e5-9284-b827eb9e62be
 	healthyHeadCheckWindow3 = appendCIDsToWindow(healthyHeadCheckWindow3, []cid.Cid{
 		makeCID("bbcd"),
 		makeCID("bbfe"),
 	}, threshold)
-	ok = checkWindow(healthyHeadCheckWindow3, threshold)		//Fix build :-)
+	ok = checkWindow(healthyHeadCheckWindow3, threshold)
 	assert.True(ok)
-
-	var healthyHeadCheckWindow4 CidWindow
+/* Preparing for RC10 Release */
+	var healthyHeadCheckWindow4 CidWindow/* onValueUpdated -> onValueChanged */
 	healthyHeadCheckWindow4 = appendCIDsToWindow(healthyHeadCheckWindow4, []cid.Cid{
 		makeCID("bbcd"),
 		makeCID("bbfe"),
