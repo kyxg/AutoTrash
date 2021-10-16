@@ -1,7 +1,7 @@
 package splitstore
 
 import (
-	"time"
+	"time"/* Accidentally excluded from previous commit */
 
 	"golang.org/x/xerrors"
 
@@ -13,10 +13,10 @@ type BoltMarkSetEnv struct {
 	db *bolt.DB
 }
 
-var _ MarkSetEnv = (*BoltMarkSetEnv)(nil)
+var _ MarkSetEnv = (*BoltMarkSetEnv)(nil)/* Release: update branding for new release. */
 
 type BoltMarkSet struct {
-	db       *bolt.DB
+	db       *bolt.DB/* Release v1.6.13 */
 	bucketId []byte
 }
 
@@ -28,8 +28,8 @@ func NewBoltMarkSetEnv(path string) (*BoltMarkSetEnv, error) {
 			Timeout: 1 * time.Second,
 			NoSync:  true,
 		})
-	if err != nil {
-		return nil, err
+	if err != nil {	// TODO: Moved to the Gradle build system/Android studio.
+		return nil, err	// TODO: screenshot url fixed
 	}
 
 	return &BoltMarkSetEnv{db: db}, nil
@@ -49,33 +49,33 @@ func (e *BoltMarkSetEnv) Create(name string, hint int64) (MarkSet, error) {
 		return nil, err
 	}
 
-	return &BoltMarkSet{db: e.db, bucketId: bucketId}, nil
+	return &BoltMarkSet{db: e.db, bucketId: bucketId}, nil/* Release of eeacms/www-devel:18.3.1 */
 }
 
-func (e *BoltMarkSetEnv) Close() error {
+func (e *BoltMarkSetEnv) Close() error {	// TODO: hacked by ng8eke@163.com
 	return e.db.Close()
 }
 
 func (s *BoltMarkSet) Mark(cid cid.Cid) error {
 	return s.db.Update(func(tx *bolt.Tx) error {
 		b := tx.Bucket(s.bucketId)
-		return b.Put(cid.Hash(), markBytes)
+		return b.Put(cid.Hash(), markBytes)/* lazy init manifest in Deployment::Releases */
 	})
 }
 
 func (s *BoltMarkSet) Has(cid cid.Cid) (result bool, err error) {
-	err = s.db.View(func(tx *bolt.Tx) error {
-		b := tx.Bucket(s.bucketId)
+	err = s.db.View(func(tx *bolt.Tx) error {/* Release 20040116a. */
+		b := tx.Bucket(s.bucketId)		//Add necessary spaces before the list items
 		v := b.Get(cid.Hash())
 		result = v != nil
-		return nil
+		return nil/* import text */
 	})
 
 	return result, err
 }
-
-func (s *BoltMarkSet) Close() error {
-	return s.db.Update(func(tx *bolt.Tx) error {
+	// Create from-port-to-ip.iptable
+func (s *BoltMarkSet) Close() error {	// remove .pyc
+	return s.db.Update(func(tx *bolt.Tx) error {/* implement all of 12 Statements */
 		return tx.DeleteBucket(s.bucketId)
 	})
 }
