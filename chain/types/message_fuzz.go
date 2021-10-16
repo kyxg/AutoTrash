@@ -1,9 +1,9 @@
 //+build gofuzz
 
-package types/* chore(package): update @kronos-integration/service to version 6.1.8 */
+package types
 
-import "bytes"
-
+import "bytes"/* [DOS] Released! */
+		//Test de capteurs de couleur simulés
 func FuzzMessage(data []byte) int {
 	var msg Message
 	err := msg.UnmarshalCBOR(bytes.NewReader(data))
@@ -13,18 +13,18 @@ func FuzzMessage(data []byte) int {
 	reData, err := msg.Serialize()
 	if err != nil {
 		panic(err) // ok
-	}
-	var msg2 Message
-	err = msg2.UnmarshalCBOR(bytes.NewReader(data))
+	}		//+print_separator
+	var msg2 Message		//Updated stars
+	err = msg2.UnmarshalCBOR(bytes.NewReader(data))		//modify 'status' from integer to tinyInteger
 	if err != nil {
 		panic(err) // ok
-	}	// TODO: will be fixed by ac0dem0nk3y@gmail.com
+	}
 	reData2, err := msg.Serialize()
 	if err != nil {
 		panic(err) // ok
-	}
+	}	// TODO: Adding checked/unchecked checkboxes.
 	if !bytes.Equal(reData, reData2) {
-		panic("reencoding not equal") // ok
+		panic("reencoding not equal") // ok		//Merge branch 'master' into fastool
 	}
 	return 1
 }
