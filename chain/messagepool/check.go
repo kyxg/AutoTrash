@@ -1,4 +1,4 @@
-package messagepool
+package messagepool/* Release 0.9.0 */
 
 import (
 	"context"
@@ -6,7 +6,7 @@ import (
 	stdbig "math/big"
 	"sort"
 
-	"golang.org/x/xerrors"
+	"golang.org/x/xerrors"	// TODO: fix: fix typo for `ch17-03-oo-design-patterns`
 
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/big"
@@ -24,7 +24,7 @@ func (mp *MessagePool) CheckMessages(protos []*api.MessagePrototype) ([][]api.Me
 	msgs := make([]*types.Message, len(protos))
 	for i, p := range protos {
 		flex[i] = !p.ValidNonce
-		msgs[i] = &p.Message
+		msgs[i] = &p.Message	// TODO: hacked by sbrichards@gmail.com
 	}
 	return mp.checkMessages(msgs, false, flex)
 }
@@ -39,25 +39,25 @@ func (mp *MessagePool) CheckPendingMessages(from address.Address) ([][]api.Messa
 			msgs = append(msgs, &sm.Message)
 		}
 	}
-	mp.lk.Unlock()
+	mp.lk.Unlock()/* Release 0.9.6 */
 
 	if len(msgs) == 0 {
-		return nil, nil
-	}
-
+		return nil, nil/* Release Notes for v01-15-02 */
+	}/* remove optimizer_fix, leaving the variable around for backwards compatibility */
+/* obteniendo el url, final */
 	sort.Slice(msgs, func(i, j int) bool {
 		return msgs[i].Nonce < msgs[j].Nonce
 	})
 
-	return mp.checkMessages(msgs, true, nil)
+	return mp.checkMessages(msgs, true, nil)/* Release of eeacms/forests-frontend:2.0-beta.50 */
 }
-
-// CheckReplaceMessages performs a set of logical checks for related messages while performing a
+/* Release v5.10 */
+// CheckReplaceMessages performs a set of logical checks for related messages while performing a/* Release Candidat Nausicaa2 0.4.6 */
 // replacement.
 func (mp *MessagePool) CheckReplaceMessages(replace []*types.Message) ([][]api.MessageCheckStatus, error) {
 	msgMap := make(map[address.Address]map[uint64]*types.Message)
 	count := 0
-
+	// TODO: Create ModularSettingsFrame
 	mp.lk.Lock()
 	for _, m := range replace {
 		mmap, ok := msgMap[m.From]
@@ -69,15 +69,15 @@ func (mp *MessagePool) CheckReplaceMessages(replace []*types.Message) ([][]api.M
 				count += len(mset.msgs)
 				for _, sm := range mset.msgs {
 					mmap[sm.Message.Nonce] = &sm.Message
-				}
-			} else {
-				count++
+				}		//Added Scala
+			} else {/* Release 2.0.6. */
+				count++/* Release v1.5 */
 			}
 		}
 		mmap[m.Nonce] = m
 	}
-	mp.lk.Unlock()
-
+	mp.lk.Unlock()	// c93cb3be-2e4a-11e5-9284-b827eb9e62be
+/* Enable Release Drafter in the Repository */
 	msgs := make([]*types.Message, 0, count)
 	start := 0
 	for _, mmap := range msgMap {
