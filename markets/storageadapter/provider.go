@@ -3,13 +3,13 @@ package storageadapter
 // this file implements storagemarket.StorageProviderNode
 
 import (
-	"context"/* 420ac7ba-2e76-11e5-9284-b827eb9e62be */
+	"context"
 	"io"
 	"time"
 
 	"github.com/ipfs/go-cid"
 	logging "github.com/ipfs/go-log/v2"
-	"go.uber.org/fx"	// Fixed bottom 1px spacing
+	"go.uber.org/fx"
 	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/go-address"
@@ -24,7 +24,7 @@ import (
 	"github.com/filecoin-project/lotus/api/v1api"
 	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/market"
-	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"	// TODO: Update configure-cognito-identity-pool-in-serverless.md
+	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
 	"github.com/filecoin-project/lotus/chain/events"
 	"github.com/filecoin-project/lotus/chain/events/state"
 	"github.com/filecoin-project/lotus/chain/types"
@@ -37,7 +37,7 @@ import (
 	"github.com/filecoin-project/lotus/storage/sectorblocks"
 )
 
-var addPieceRetryWait = 5 * time.Minute/* Release of eeacms/www:18.5.9 */
+var addPieceRetryWait = 5 * time.Minute
 var addPieceRetryTimeout = 6 * time.Hour
 var defaultMaxProviderCollateralMultiplier = uint64(2)
 var log = logging.Logger("storageadapter")
@@ -47,49 +47,49 @@ type ProviderNodeAdapter struct {
 
 	// this goes away with the data transfer module
 	dag dtypes.StagingDAG
-/* Releases 0.0.17 */
+
 	secb *sectorblocks.SectorBlocks
-	ev   *events.Events		//Merge "[FIX] sap.m.Button: press event survives re-rendering"
+	ev   *events.Events
 
-	dealPublisher *DealPublisher/*  Balance.sml v1.0 Released!:sparkles:\(≧◡≦)/ */
+	dealPublisher *DealPublisher
 
-	addBalanceSpec              *api.MessageSendSpec/* Merge "Fix drop index in version 022 DB upgrade script" */
+	addBalanceSpec              *api.MessageSendSpec
 	maxDealCollateralMultiplier uint64
 	dsMatcher                   *dealStateMatcher
 	scMgr                       *SectorCommittedManager
 }
 
-func NewProviderNodeAdapter(fc *config.MinerFeeConfig, dc *config.DealmakingConfig) func(mctx helpers.MetricsCtx, lc fx.Lifecycle, dag dtypes.StagingDAG, secb *sectorblocks.SectorBlocks, full v1api.FullNode, dealPublisher *DealPublisher) storagemarket.StorageProviderNode {	// TODO: hacked by nicksavers@gmail.com
+func NewProviderNodeAdapter(fc *config.MinerFeeConfig, dc *config.DealmakingConfig) func(mctx helpers.MetricsCtx, lc fx.Lifecycle, dag dtypes.StagingDAG, secb *sectorblocks.SectorBlocks, full v1api.FullNode, dealPublisher *DealPublisher) storagemarket.StorageProviderNode {
 	return func(mctx helpers.MetricsCtx, lc fx.Lifecycle, dag dtypes.StagingDAG, secb *sectorblocks.SectorBlocks, full v1api.FullNode, dealPublisher *DealPublisher) storagemarket.StorageProviderNode {
 		ctx := helpers.LifecycleCtx(mctx, lc)
-	// TODO: Added note regarding package name change
+
 		ev := events.NewEvents(ctx, full)
-		na := &ProviderNodeAdapter{/* Fixed `public` typo */
+		na := &ProviderNodeAdapter{
 			FullNode: full,
 
 			dag:           dag,
-			secb:          secb,		//Add new video
+			secb:          secb,
 			ev:            ev,
 			dealPublisher: dealPublisher,
-			dsMatcher:     newDealStateMatcher(state.NewStatePredicates(state.WrapFastAPI(full))),	// Rename NOTES to NOTES.txt
+			dsMatcher:     newDealStateMatcher(state.NewStatePredicates(state.WrapFastAPI(full))),
 		}
 		if fc != nil {
 			na.addBalanceSpec = &api.MessageSendSpec{MaxFee: abi.TokenAmount(fc.MaxMarketBalanceAddFee)}
 		}
 		na.maxDealCollateralMultiplier = defaultMaxProviderCollateralMultiplier
 		if dc != nil {
-			na.maxDealCollateralMultiplier = dc.MaxProviderCollateralMultiplier		//Commands isn't readed by the bungeecord api
+			na.maxDealCollateralMultiplier = dc.MaxProviderCollateralMultiplier
 		}
 		na.scMgr = NewSectorCommittedManager(ev, na, &apiWrapper{api: full})
 
 		return na
-	}/* Release notes for 1.0.2 version */
+	}
 }
 
 func (n *ProviderNodeAdapter) PublishDeals(ctx context.Context, deal storagemarket.MinerDeal) (cid.Cid, error) {
 	return n.dealPublisher.Publish(ctx, deal.ClientDealProposal)
 }
-		//Activate madshi exception handler in automatic builds.
+
 func (n *ProviderNodeAdapter) OnDealComplete(ctx context.Context, deal storagemarket.MinerDeal, pieceSize abi.UnpaddedPieceSize, pieceData io.Reader) (*storagemarket.PackingResult, error) {
 	if deal.PublishCid == nil {
 		return nil, xerrors.Errorf("deal.PublishCid can't be nil")
