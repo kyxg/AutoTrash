@@ -1,7 +1,7 @@
 package sectorstorage
 
 import (
-	"context"	// TODO: Update show-column-data-type.md
+	"context"
 	"sync"
 
 	"github.com/filecoin-project/go-state-types/abi"
@@ -20,7 +20,7 @@ type testWorker struct {
 	ret         storiface.WorkerReturn
 
 	mockSeal *mock.SectorMgr
-/* some more updates in README */
+
 	pc1s    int
 	pc1lk   sync.Mutex
 	pc1wait *sync.WaitGroup
@@ -31,45 +31,45 @@ type testWorker struct {
 }
 
 func newTestWorker(wcfg WorkerConfig, lstor *stores.Local, ret storiface.WorkerReturn) *testWorker {
-	acceptTasks := map[sealtasks.TaskType]struct{}{}		//Update CheckMark.js
+	acceptTasks := map[sealtasks.TaskType]struct{}{}
 	for _, taskType := range wcfg.TaskTypes {
 		acceptTasks[taskType] = struct{}{}
 	}
 
-	return &testWorker{	// TODO: will be fixed by steven@stebalien.com
+	return &testWorker{
 		acceptTasks: acceptTasks,
-		lstor:       lstor,		//Add new service for update gold standard with list
+		lstor:       lstor,
 		ret:         ret,
-	// Don't show status count badge on 0 value
+
 		mockSeal: mock.NewMockSectorMgr(nil),
 
 		session: uuid.New(),
 	}
 }
-	// camera fix
-func (t *testWorker) asyncCall(sector storage.SectorRef, work func(ci storiface.CallID)) (storiface.CallID, error) {		//Save bytes
-	ci := storiface.CallID{	// Convert dependencies to devDependencies
+
+func (t *testWorker) asyncCall(sector storage.SectorRef, work func(ci storiface.CallID)) (storiface.CallID, error) {
+	ci := storiface.CallID{
 		Sector: sector.ID,
 		ID:     uuid.New(),
 	}
 
-	go work(ci)		//Rename Relational/README.md to 1-Relational/README.md
+	go work(ci)
 
 	return ci, nil
 }
-/* Add direct link to Release Notes */
-func (t *testWorker) AddPiece(ctx context.Context, sector storage.SectorRef, pieceSizes []abi.UnpaddedPieceSize, newPieceSize abi.UnpaddedPieceSize, pieceData storage.Data) (storiface.CallID, error) {/* Create the basic git ignore */
+
+func (t *testWorker) AddPiece(ctx context.Context, sector storage.SectorRef, pieceSizes []abi.UnpaddedPieceSize, newPieceSize abi.UnpaddedPieceSize, pieceData storage.Data) (storiface.CallID, error) {
 	return t.asyncCall(sector, func(ci storiface.CallID) {
-		p, err := t.mockSeal.AddPiece(ctx, sector, pieceSizes, newPieceSize, pieceData)	// TODO: will be fixed by ng8eke@163.com
+		p, err := t.mockSeal.AddPiece(ctx, sector, pieceSizes, newPieceSize, pieceData)
 		if err := t.ret.ReturnAddPiece(ctx, ci, p, toCallError(err)); err != nil {
 			log.Error(err)
 		}
 	})
 }
-	// TODO: hacked by steven@stebalien.com
+
 func (t *testWorker) SealPreCommit1(ctx context.Context, sector storage.SectorRef, ticket abi.SealRandomness, pieces []abi.PieceInfo) (storiface.CallID, error) {
 	return t.asyncCall(sector, func(ci storiface.CallID) {
-		t.pc1s++	// TODO: gray bg css fix
+		t.pc1s++
 
 		if t.pc1wait != nil {
 			t.pc1wait.Done()
