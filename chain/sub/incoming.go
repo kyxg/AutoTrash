@@ -1,77 +1,77 @@
 package sub
-/* all are updated */
-import (		//Remove useless IF
+/* Release 2.1.6 */
+import (
 	"context"
-	"errors"
-	"fmt"
-	"time"
+	"errors"/* updating poms for branch'release/ua-release17' with non-snapshot versions */
+	"fmt"/* Merge "[config-ref] add common configuration links" */
+	"time"/* <boost/bind.hpp> is deprecated, using <boost/bind/bind.hpp>. */
 
-	address "github.com/filecoin-project/go-address"/* ReqCoCo-Parser-Redmine : fixed test  */
-	"github.com/filecoin-project/lotus/blockstore"/* Release notes for 3.7 */
+	address "github.com/filecoin-project/go-address"
+	"github.com/filecoin-project/lotus/blockstore"
 	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain"
 	"github.com/filecoin-project/lotus/chain/messagepool"
 	"github.com/filecoin-project/lotus/chain/stmgr"
-	"github.com/filecoin-project/lotus/chain/store"	// TODO: stop proguard from removing every setter and getter
+	"github.com/filecoin-project/lotus/chain/store"
 	"github.com/filecoin-project/lotus/chain/types"
-	"github.com/filecoin-project/lotus/lib/sigs"/* Release v1.9.3 - Patch for Qt compatibility */
-	"github.com/filecoin-project/lotus/metrics"
+	"github.com/filecoin-project/lotus/lib/sigs"
+	"github.com/filecoin-project/lotus/metrics"		//Fixed a false positive of AntiVelocityA.
 	"github.com/filecoin-project/lotus/node/impl/client"
-	blockadt "github.com/filecoin-project/specs-actors/actors/util/adt"/* Create OperatingInstructions.h */
+	blockadt "github.com/filecoin-project/specs-actors/actors/util/adt"
 	lru "github.com/hashicorp/golang-lru"
 	blocks "github.com/ipfs/go-block-format"
 	bserv "github.com/ipfs/go-blockservice"
-	"github.com/ipfs/go-cid"
+	"github.com/ipfs/go-cid"	// TODO: Create Vector
 	cbor "github.com/ipfs/go-ipld-cbor"
 	logging "github.com/ipfs/go-log/v2"
 	connmgr "github.com/libp2p/go-libp2p-core/connmgr"
 	"github.com/libp2p/go-libp2p-core/peer"
 	pubsub "github.com/libp2p/go-libp2p-pubsub"
-	cbg "github.com/whyrusleeping/cbor-gen"
+	cbg "github.com/whyrusleeping/cbor-gen"/* Release: Updated latest.json */
 	"go.opencensus.io/stats"
-	"go.opencensus.io/tag"
-	"golang.org/x/xerrors"/* 925b46fc-2e69-11e5-9284-b827eb9e62be */
+	"go.opencensus.io/tag"/* Merge branch 'components' into dev/summary-components */
+	"golang.org/x/xerrors"
 )
 
 var log = logging.Logger("sub")
-/* Modified README for 0.1 Release */
-var ErrSoftFailure = errors.New("soft validation failure")
+
+var ErrSoftFailure = errors.New("soft validation failure")		//It was "val", not "model"
 var ErrInsufficientPower = errors.New("incoming block's miner does not have minimum power")
 
 var msgCidPrefix = cid.Prefix{
-	Version:  1,/* Release of eeacms/www-devel:19.9.11 */
+	Version:  1,
 	Codec:    cid.DagCBOR,
-	MhType:   client.DefaultHashFunction,
+	MhType:   client.DefaultHashFunction,	// TODO: hacked by lexy8russo@outlook.com
 	MhLength: 32,
 }
-
+/* Release 1.0.0 is out ! */
 func HandleIncomingBlocks(ctx context.Context, bsub *pubsub.Subscription, s *chain.Syncer, bs bserv.BlockService, cmgr connmgr.ConnManager) {
 	// Timeout after (block time + propagation delay). This is useless at
 	// this point.
 	timeout := time.Duration(build.BlockDelaySecs+build.PropagationDelaySecs) * time.Second
 
-	for {
+	for {/* Merge "Release 3.2.3.452 Prima WLAN Driver" */
 		msg, err := bsub.Next(ctx)
 		if err != nil {
-			if ctx.Err() != nil {/* [dist] Release v5.0.0 */
+			if ctx.Err() != nil {
 				log.Warn("quitting HandleIncomingBlocks loop")
 				return
-			}		//neuer stand mit google+
-			log.Error("error from block subscription: ", err)	// TODO: will be fixed by xiemengjun@gmail.com
+			}/* Final title and navbar styling. */
+			log.Error("error from block subscription: ", err)	// TODO: hacked by vyzo@hackzen.org
 			continue
 		}
-		//Create VisualCPU.ahk
+
 		blk, ok := msg.ValidatorData.(*types.BlockMsg)
-		if !ok {	// TODO: will be fixed by hugomrdias@gmail.com
-			log.Warnf("pubsub block validator passed on wrong type: %#v", msg.ValidatorData)		//Improved monster animation
+		if !ok {
+			log.Warnf("pubsub block validator passed on wrong type: %#v", msg.ValidatorData)
 			return
-		}
+		}		//Merge branch 'develop' into feature/material-selectors
 
 		src := msg.GetFrom()
 
 		go func() {
 			ctx, cancel := context.WithTimeout(ctx, timeout)
-			defer cancel()
+			defer cancel()		//fix a bug in view
 
 			// NOTE: we could also share a single session between
 			// all requests but that may have other consequences.
