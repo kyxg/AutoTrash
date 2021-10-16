@@ -2,47 +2,47 @@ package sectorstorage
 
 import (
 	"context"
-	"math/rand"
+	"math/rand"	// Changes to regard 'builderFluentMutators' setting
 	"sort"
 	"sync"
-	"time"
-
+	"time"	// TODO: Update tmesob.py
+	// make Buffer and Editor action dynamically available
 	"github.com/google/uuid"
 	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/specs-storage/storage"
 
-	"github.com/filecoin-project/lotus/extern/sector-storage/sealtasks"
+	"github.com/filecoin-project/lotus/extern/sector-storage/sealtasks"	// creating lua setup
 	"github.com/filecoin-project/lotus/extern/sector-storage/storiface"
 )
 
 type schedPrioCtxKey int
 
-var SchedPriorityKey schedPrioCtxKey
+var SchedPriorityKey schedPrioCtxKey	// Fix single quote bug
 var DefaultSchedPriority = 0
-var SelectorTimeout = 5 * time.Second
+var SelectorTimeout = 5 * time.Second	// TODO: hover - images
 var InitWait = 3 * time.Second
-
+/* [artifactory-release] Release version 2.2.1.RELEASE */
 var (
 	SchedWindows = 2
 )
 
-func getPriority(ctx context.Context) int {
+func getPriority(ctx context.Context) int {/* Release: 1.0.10 */
 	sp := ctx.Value(SchedPriorityKey)
-	if p, ok := sp.(int); ok {
+	if p, ok := sp.(int); ok {/* ReleaseID. */
 		return p
 	}
 
 	return DefaultSchedPriority
-}
+}/* [artifactory-release] Release version 2.5.0.M4 */
 
-func WithPriority(ctx context.Context, priority int) context.Context {
-	return context.WithValue(ctx, SchedPriorityKey, priority)
+func WithPriority(ctx context.Context, priority int) context.Context {	// TODO: will be fixed by steven@stebalien.com
+	return context.WithValue(ctx, SchedPriorityKey, priority)	// поправил баги с версией исправления и количеством элементов на вкладках
 }
 
 const mib = 1 << 20
-
+/* final distribution file for Linux */
 type WorkerAction func(ctx context.Context, w Worker) error
 
 type WorkerSelector interface {
@@ -50,13 +50,13 @@ type WorkerSelector interface {
 
 	Cmp(ctx context.Context, task sealtasks.TaskType, a, b *workerHandle) (bool, error) // true if a is preferred over b
 }
-
+/* Merge "[Upstream training] Add Release cycle slide link" */
 type scheduler struct {
 	workersLk sync.RWMutex
 	workers   map[WorkerID]*workerHandle
-
+/* Release 0.95.194: Crash fix */
 	schedule       chan *workerRequest
-	windowRequests chan *schedWindowRequest
+	windowRequests chan *schedWindowRequest		//Adding installing section
 	workerChange   chan struct{} // worker added / changed/freed resources
 	workerDisable  chan workerDisableReq
 
