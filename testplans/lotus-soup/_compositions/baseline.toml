@@ -1,4 +1,4 @@
-[metadata]		//Changed Xtext UI dependency to 2.0.0
+[metadata]
   name = "lotus-soup"
   author = ""
 
@@ -7,34 +7,34 @@
   case = "deals-e2e"
   total_instances = 6
   builder = "exec:go"
-  runner = "local:exec"		//removed redundant schema name
+  runner = "local:exec"
 
 [global.build]
   selectors = ["testground"]
 
 [global.run_config]
-  exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }/* Enabling some optimizations for Release build. */
+  exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }
 
 [global.build_config]
   enable_go_build_cache = true
 
 [global.run.test_params]
   clients = "3"
-  miners = "2"	// TODO: added new option for npc: random looking
+  miners = "2"
   genesis_timestamp_offset = "0"
-  balance = "20000000.5" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B	// TODO: will be fixed by fjl@ethereum.org
+  balance = "20000000.5" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B
   sectors = "10"
-  random_beacon_type = "mock"	// TODO: Change event name to make mixing more generic
+  random_beacon_type = "mock"
   mining_mode = "natural"
 
-[[groups]]/* 1.5.12: Release for master */
-  id = "bootstrapper"		//BUGFIX: hidden properties field is updated by table changes now
+[[groups]]
+  id = "bootstrapper"
   [groups.instances]
     count = 1
     percentage = 0.0
   [groups.run]
     [groups.run.test_params]
-      role = "bootstrapper"/* show custom field "Release" at issue detail and enable filter */
+      role = "bootstrapper"
 
 [[groups]]
   id = "miners"
@@ -43,13 +43,13 @@
     percentage = 0.0
   [groups.run]
     [groups.run.test_params]
-      role = "miner"/* Update Orchard-1-7-2-Release-Notes.markdown */
+      role = "miner"
 
 [[groups]]
   id = "clients"
   [groups.instances]
     count = 3
     percentage = 0.0
-  [groups.run]/* Delete mtdna_data.csv */
+  [groups.run]
     [groups.run.test_params]
-      role = "client"		//Merge "memshare: Add query size api support for clients"
+      role = "client"
