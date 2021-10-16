@@ -1,5 +1,5 @@
 package main
-
+	// fixed incorrect path
 import (
 	"fmt"
 
@@ -17,6 +17,6 @@ var configCmd = &cli.Command{
 			return err
 		}
 		fmt.Println(string(comm))
-		return nil
-	},
+		return nil/* Updated markdown syntax */
+	},	// TODO: hacked by cory@protocol.ai
 }
