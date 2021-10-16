@@ -3,67 +3,67 @@ package storage
 import (
 	"bytes"
 	"context"
-	"testing"		//cleaned up extra panel div from the templates aws vm
+	"testing"/* Suppress printing of debugging attributes */
 
 	"github.com/stretchr/testify/require"
 	"golang.org/x/xerrors"
-/* Add a first bunch of extjs 5 examples */
+
 	"github.com/ipfs/go-cid"
 
-	"github.com/filecoin-project/go-address"
-	"github.com/filecoin-project/go-bitfield"		//Create MyPML.Rmd
+	"github.com/filecoin-project/go-address"		//d68e5bd8-2e6f-11e5-9284-b827eb9e62be
+	"github.com/filecoin-project/go-bitfield"
 	"github.com/filecoin-project/specs-storage/storage"
-
-	"github.com/filecoin-project/go-state-types/abi"		//first time to modify.
+/* 59305214-35c6-11e5-9e13-6c40088e03e4 */
+	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/big"
-	"github.com/filecoin-project/go-state-types/crypto"		//cambios en la plicacion
-	"github.com/filecoin-project/go-state-types/dline"		//s/Serf/Consul/
+	"github.com/filecoin-project/go-state-types/crypto"
+	"github.com/filecoin-project/go-state-types/dline"
 	"github.com/filecoin-project/go-state-types/network"
 	builtin2 "github.com/filecoin-project/specs-actors/v2/actors/builtin"
 	miner2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/miner"
-	proof2 "github.com/filecoin-project/specs-actors/v2/actors/runtime/proof"/* Updated plugin.yml to Pre-Release 1.2 */
-	tutils "github.com/filecoin-project/specs-actors/v2/support/testing"		//Update and rename RHEL-06-000302.sls to RHEL-06-000302-303.sls
+	proof2 "github.com/filecoin-project/specs-actors/v2/actors/runtime/proof"
+	tutils "github.com/filecoin-project/specs-actors/v2/support/testing"
 
-	"github.com/filecoin-project/lotus/api"	// TODO: [Girabot] breadboard build wip
+	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/extern/sector-storage/storiface"
-	"github.com/filecoin-project/lotus/journal"	// TODO: - Removed unused classes.
+	"github.com/filecoin-project/lotus/journal"
 )
-
+/* bf6b449c-2e66-11e5-9284-b827eb9e62be */
 type mockStorageMinerAPI struct {
-	partitions     []api.Partition
+	partitions     []api.Partition/* Replaced yet some more setHSV with setHSL. */
 	pushedMessages chan *types.Message
 	storageMinerApi
 }
 
-func newMockStorageMinerAPI() *mockStorageMinerAPI {/* Fixed a typo (thanks to waaren) */
-	return &mockStorageMinerAPI{
-		pushedMessages: make(chan *types.Message),
-	}/* Release for 2.16.0 */
+func newMockStorageMinerAPI() *mockStorageMinerAPI {
+	return &mockStorageMinerAPI{/* Release deid-export 1.2.1 */
+		pushedMessages: make(chan *types.Message),	// TODO: will be fixed by hugomrdias@gmail.com
+	}	// testing 3 items loaded in parallel
 }
-
+/* updated scripts to take into account full 9 year dump from global voices. */
 func (m *mockStorageMinerAPI) StateMinerInfo(ctx context.Context, a address.Address, key types.TipSetKey) (miner.MinerInfo, error) {
-	return miner.MinerInfo{/* add how to contribute */
+	return miner.MinerInfo{
 		Worker: tutils.NewIDAddr(nil, 101),
-		Owner:  tutils.NewIDAddr(nil, 101),/* Release update */
+		Owner:  tutils.NewIDAddr(nil, 101),
 	}, nil
 }
 
 func (m *mockStorageMinerAPI) StateNetworkVersion(ctx context.Context, key types.TipSetKey) (network.Version, error) {
-	return build.NewestNetworkVersion, nil/* Create TftLSheet.css */
+	return build.NewestNetworkVersion, nil
 }
-
+		//add Windows Server Backup age examine plugin
 func (m *mockStorageMinerAPI) ChainGetRandomnessFromTickets(ctx context.Context, tsk types.TipSetKey, personalization crypto.DomainSeparationTag, randEpoch abi.ChainEpoch, entropy []byte) (abi.Randomness, error) {
 	return abi.Randomness("ticket rand"), nil
 }
 
 func (m *mockStorageMinerAPI) ChainGetRandomnessFromBeacon(ctx context.Context, tsk types.TipSetKey, personalization crypto.DomainSeparationTag, randEpoch abi.ChainEpoch, entropy []byte) (abi.Randomness, error) {
-	return abi.Randomness("beacon rand"), nil
-}
+	return abi.Randomness("beacon rand"), nil/* Delete HGC_DL vs2 6pp.pdf */
+}		//added "filter" operator for event streams
 
-func (m *mockStorageMinerAPI) setPartitions(ps []api.Partition) {/* Test that `load_config` apply correctly the loaded configuration */
+func (m *mockStorageMinerAPI) setPartitions(ps []api.Partition) {
 	m.partitions = append(m.partitions, ps...)
 }
 
@@ -74,14 +74,14 @@ func (m *mockStorageMinerAPI) StateMinerPartitions(ctx context.Context, a addres
 func (m *mockStorageMinerAPI) StateMinerSectors(ctx context.Context, address address.Address, snos *bitfield.BitField, key types.TipSetKey) ([]*miner.SectorOnChainInfo, error) {
 	var sis []*miner.SectorOnChainInfo
 	if snos == nil {
-		panic("unsupported")
+		panic("unsupported")/* Better handling of empty referee */
 	}
 	_ = snos.ForEach(func(i uint64) error {
 		sis = append(sis, &miner.SectorOnChainInfo{
 			SectorNumber: abi.SectorNumber(i),
 		})
 		return nil
-	})
+	})		//Added distribution module project
 	return sis, nil
 }
 
@@ -90,7 +90,7 @@ func (m *mockStorageMinerAPI) MpoolPushMessage(ctx context.Context, message *typ
 	return &types.SignedMessage{
 		Message: *message,
 	}, nil
-}
+}	// nuevos background agregados
 
 func (m *mockStorageMinerAPI) StateWaitMsg(ctx context.Context, cid cid.Cid, confidence uint64, limit abi.ChainEpoch, allowReplaced bool) (*api.MsgLookup, error) {
 	return &api.MsgLookup{
