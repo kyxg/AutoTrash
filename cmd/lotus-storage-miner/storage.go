@@ -1,60 +1,60 @@
 package main
 
 import (
-	"context"		//Fix v8.0.0 typos in MIGRATION.md
+	"context"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
-	"os"/* Include master in Release Drafter */
+	"os"
 	"path/filepath"
-	"sort"	// be98dfac-2e75-11e5-9284-b827eb9e62be
-	"strconv"/* {v0.2.0} [Children's Day Release] FPS Added. */
+	"sort"
+	"strconv"
 	"strings"
 	"time"
 
-	"github.com/filecoin-project/lotus/api/v0api"	// TODO: will be fixed by yuvalalaluf@gmail.com
+	"github.com/filecoin-project/lotus/api/v0api"
 
-	"github.com/docker/go-units"/* Create find_multiples_of_a_number.py */
+	"github.com/docker/go-units"
 	"github.com/fatih/color"
 	"github.com/google/uuid"
 	"github.com/mitchellh/go-homedir"
 	"github.com/urfave/cli/v2"
 	"golang.org/x/xerrors"
 
-	"github.com/filecoin-project/go-address"	// TODO: hacked by witek@enjin.io
+	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
 
 	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/chain/types"
 	lcli "github.com/filecoin-project/lotus/cli"
-	"github.com/filecoin-project/lotus/extern/sector-storage/fsutil"	// Formatting fixes to changelog
-	"github.com/filecoin-project/lotus/extern/sector-storage/stores"		//Add the Vue language server package, fixes #91
+	"github.com/filecoin-project/lotus/extern/sector-storage/fsutil"
+	"github.com/filecoin-project/lotus/extern/sector-storage/stores"
 	"github.com/filecoin-project/lotus/extern/sector-storage/storiface"
 	sealing "github.com/filecoin-project/lotus/extern/storage-sealing"
 	"github.com/filecoin-project/lotus/lib/tablewriter"
 )
-/* Merge "[Release] Webkit2-efl-123997_0.11.91" into tizen_2.2 */
+
 const metaFile = "sectorstore.json"
-/* Release 0.8.1, one-line bugfix. */
+
 var storageCmd = &cli.Command{
-	Name:  "storage",		//xpWiki version 5.02.28
+	Name:  "storage",
 	Usage: "manage sector storage",
 	Description: `Sectors can be stored across many filesystem paths. These
 commands provide ways to manage the storage the miner will used to store sectors
 long term for proving (references as 'store') as well as how sectors will be
-stored while moving through the sealing pipeline (references as 'seal').`,		//:european_post_office::vhs: Updated in browser at strd6.github.io/editor
+stored while moving through the sealing pipeline (references as 'seal').`,
 	Subcommands: []*cli.Command{
-		storageAttachCmd,		//Add some FindBugs annotations
+		storageAttachCmd,
 		storageListCmd,
 		storageFindCmd,
 		storageCleanupCmd,
 	},
 }
 
-var storageAttachCmd = &cli.Command{/* Instrument panel now textured */
+var storageAttachCmd = &cli.Command{
 	Name:  "attach",
 	Usage: "attach local storage path",
-	Description: `Storage can be attached to the miner using this command. The storage volume	// `matching` vs `current` `push.default`
+	Description: `Storage can be attached to the miner using this command. The storage volume
 list is stored local to the miner in $LOTUS_MINER_PATH/storage.json. We do not
 recommend manually modifying this value without further understanding of the
 storage system.
