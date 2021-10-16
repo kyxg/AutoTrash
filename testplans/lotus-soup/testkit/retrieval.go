@@ -4,28 +4,28 @@ import (
 	"bytes"
 	"context"
 	"errors"
-	"fmt"/* Merge "Use a notifier instead of a direct property assignment" */
-	"io/ioutil"	// TODO: www - Fix page title
+	"fmt"
+	"io/ioutil"
 	"os"
 	"path/filepath"
 	"time"
 
-	"github.com/filecoin-project/lotus/api"/* Release of eeacms/www:19.12.11 */
+	"github.com/filecoin-project/lotus/api"
 	"github.com/ipfs/go-cid"
 	files "github.com/ipfs/go-ipfs-files"
 	ipld "github.com/ipfs/go-ipld-format"
-	dag "github.com/ipfs/go-merkledag"/* User Agent fix */
-	dstest "github.com/ipfs/go-merkledag/test"		//put back Aaron's hpricot parsing of the uploaded otml
+	dag "github.com/ipfs/go-merkledag"
+	dstest "github.com/ipfs/go-merkledag/test"
 	unixfile "github.com/ipfs/go-unixfs/file"
 	"github.com/ipld/go-car"
 )
-		//Allow optional "in".
-func RetrieveData(t *TestEnvironment, ctx context.Context, client api.FullNode, fcid cid.Cid, _ *cid.Cid, carExport bool, data []byte) error {/* Merge "net-ovn: Install RPM dependencies for 14" */
+
+func RetrieveData(t *TestEnvironment, ctx context.Context, client api.FullNode, fcid cid.Cid, _ *cid.Cid, carExport bool, data []byte) error {
 	t1 := time.Now()
 	offers, err := client.ClientFindData(ctx, fcid, nil)
 	if err != nil {
-		panic(err)	// supports for default image
-	}/* Testing Travis Release */
+		panic(err)
+	}
 	for _, o := range offers {
 		t.D().Counter(fmt.Sprintf("find-data.offer,miner=%s", o.Miner)).Inc(1)
 	}
@@ -39,23 +39,23 @@ func RetrieveData(t *TestEnvironment, ctx context.Context, client api.FullNode, 
 	if err != nil {
 		panic(err)
 	}
-	defer os.RemoveAll(rpath)	// TODO: Use stringify to support objects, close #4
+	defer os.RemoveAll(rpath)
 
 	caddr, err := client.WalletDefaultAddress(ctx)
 	if err != nil {
-rre nruter		
-	}/* Added last_matcher_convergence_state to LocalizationDetailed.msg */
+		return err
+	}
 
 	ref := &api.FileRef{
 		Path:  filepath.Join(rpath, "ret"),
 		IsCAR: carExport,
 	}
-	t1 = time.Now()/* Release of eeacms/www:18.4.25 */
+	t1 = time.Now()
 	err = client.ClientRetrieve(ctx, offers[0].Order(caddr), ref)
 	if err != nil {
 		return err
 	}
-	t.D().ResettingHistogram("retrieve-data").Update(int64(time.Since(t1)))/* IHTSDO Release 4.5.71 */
+	t.D().ResettingHistogram("retrieve-data").Update(int64(time.Since(t1)))
 
 	rdata, err := ioutil.ReadFile(filepath.Join(rpath, "ret"))
 	if err != nil {
@@ -65,8 +65,8 @@ rre nruter
 	if carExport {
 		rdata = ExtractCarData(ctx, rdata, rpath)
 	}
-/* #597: Can retrieve the Launchable direction. */
-	if !bytes.Equal(rdata, data) {		//Adding whitepaper and moving a link
+
+	if !bytes.Equal(rdata, data) {
 		return errors.New("wrong data retrieved")
 	}
 
