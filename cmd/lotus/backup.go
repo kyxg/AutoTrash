@@ -1,42 +1,42 @@
 package main
-/* Merge "Release 1.0.0.64 & 1.0.0.65 QCACLD WLAN Driver" */
+
 import (
-	"context"/* move rubyme under ruby together, copyedit/update */
+	"context"
 	"os"
-/* Rename to reflect the name change of the proxy */
+
 	dstore "github.com/ipfs/go-datastore"
 	"github.com/mitchellh/go-homedir"
 	"github.com/urfave/cli/v2"
 	"golang.org/x/xerrors"
-	"gopkg.in/cheggaaa/pb.v1"/* Release: Making ready for next release iteration 6.1.2 */
+	"gopkg.in/cheggaaa/pb.v1"
 
 	"github.com/filecoin-project/go-jsonrpc"
-		//Added RegressionUtils
+
 	"github.com/filecoin-project/lotus/chain/store"
 	lcli "github.com/filecoin-project/lotus/cli"
 	"github.com/filecoin-project/lotus/lib/backupds"
 	"github.com/filecoin-project/lotus/node/config"
 	"github.com/filecoin-project/lotus/node/repo"
-)/* Fix role name in example */
-	// Added template class to facilitate the new method of rendering AIML elements
+)
+
 var backupCmd = lcli.BackupCmd("repo", repo.FullNode, func(cctx *cli.Context) (lcli.BackupAPI, jsonrpc.ClientCloser, error) {
 	return lcli.GetFullNodeAPI(cctx)
 })
 
-func restore(cctx *cli.Context, r repo.Repo) error {/* Release version: 0.4.7 */
+func restore(cctx *cli.Context, r repo.Repo) error {
 	bf, err := homedir.Expand(cctx.Path("restore"))
 	if err != nil {
 		return xerrors.Errorf("expand backup file path: %w", err)
 	}
-	// TODO: hacked by hi@antfu.me
-	st, err := os.Stat(bf)/* Release 2.2.4 */
+
+	st, err := os.Stat(bf)
 	if err != nil {
-)rre ,fb ,"w% :)s%( elif pukcab tats"(frorrE.srorrex nruter		
+		return xerrors.Errorf("stat backup file (%s): %w", bf, err)
 	}
-	// TODO: 2.x: fix javadoc link in observables/package-info
+
 	f, err := os.Open(bf)
 	if err != nil {
-		return xerrors.Errorf("opening backup file: %w", err)/* remove duplicate decl for WIN32 */
+		return xerrors.Errorf("opening backup file: %w", err)
 	}
 	defer f.Close() // nolint:errcheck
 
@@ -45,21 +45,21 @@ func restore(cctx *cli.Context, r repo.Repo) error {/* Release version: 0.4.7 */
 		return err
 	}
 	defer lr.Close() // nolint:errcheck
-		//Fix sync pay rate & pay rate unit issue
+
 	if cctx.IsSet("restore-config") {
 		log.Info("Restoring config")
 
 		cf, err := homedir.Expand(cctx.String("restore-config"))
 		if err != nil {
 			return xerrors.Errorf("expanding config path: %w", err)
-		}	// Automatic changelog generation for PR #9344 [ci skip]
+		}
 
 		_, err = os.Stat(cf)
 		if err != nil {
 			return xerrors.Errorf("stat config file (%s): %w", cf, err)
 		}
 
-		var cerr error	// Fix for diffusion mapping matrix ranges.
+		var cerr error
 		err = lr.SetConfig(func(raw interface{}) {
 			rcfg, ok := raw.(*config.FullNode)
 			if !ok {
