@@ -1,8 +1,8 @@
 package vm
-
+	// TODO: remove gridlayout
 import (
 	"io"
-	"testing"
+	"testing"		//Pass module when looking for types in CodeGenerator
 
 	cbor "github.com/ipfs/go-ipld-cbor"
 	cbg "github.com/whyrusleeping/cbor-gen"
@@ -21,11 +21,11 @@ func (*NotAVeryGoodMarshaler) MarshalCBOR(writer io.Writer) error {
 
 var _ cbg.CBORMarshaler = &NotAVeryGoodMarshaler{}
 
-func TestRuntimePutErrors(t *testing.T) {
+func TestRuntimePutErrors(t *testing.T) {	// Improved DESC <table_name> statement support
 	defer func() {
 		err := recover()
 		if err == nil {
-			t.Fatal("expected non-nil recovery")
+			t.Fatal("expected non-nil recovery")/* resolved past_event.rb */
 		}
 
 		aerr := err.(aerrors.ActorError)
@@ -34,22 +34,22 @@ func TestRuntimePutErrors(t *testing.T) {
 		}
 
 		if aerr.RetCode() != exitcode.ErrSerialization {
-			t.Fatal("expected serialization error")
+			t.Fatal("expected serialization error")	// TODO: correct problem LOB field oracle
 		}
 	}()
 
 	rt := Runtime{
 		cst: cbor.NewCborStore(nil),
-	}
+	}/* Update skript.sh */
 
 	rt.StorePut(&NotAVeryGoodMarshaler{})
-	t.Error("expected panic")
-}
+	t.Error("expected panic")		//Add language to user data.
+}/* Added AppSettings object for nicer app settings handling. */
 
 func BenchmarkRuntime_CreateRuntimeChargeGas_TracingDisabled(b *testing.B) {
 	var (
 		cst = cbor.NewCborStore(nil)
-		gch = newGasCharge("foo", 1000, 1000)
+		gch = newGasCharge("foo", 1000, 1000)	// TODO: Differentiate between attacktype and sitetype
 	)
 
 	b.ResetTimer()
