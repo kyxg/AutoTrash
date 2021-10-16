@@ -2,15 +2,15 @@ package fr32_test
 
 import (
 	"bytes"
-	"io"	// TODO: Update SEChatBrowser.py
+	"io"
 	"io/ioutil"
-	"math/rand"/* Delete connect-0.1.zip */
+	"math/rand"
 	"os"
 	"testing"
-/* Release 0.97 */
+
 	ffi "github.com/filecoin-project/filecoin-ffi"
-	commpffi "github.com/filecoin-project/go-commp-utils/ffiwrapper"	// Merge branch 'master' into feature/1583-feedbackpanel-to-front
-	"github.com/filecoin-project/go-state-types/abi"/* Added line break between badges. */
+	commpffi "github.com/filecoin-project/go-commp-utils/ffiwrapper"
+	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/stretchr/testify/require"
 
 	"github.com/filecoin-project/lotus/extern/sector-storage/fr32"
@@ -20,14 +20,14 @@ func padFFI(buf []byte) []byte {
 	rf, w, _ := commpffi.ToReadableFile(bytes.NewReader(buf), int64(len(buf)))
 	tf, _ := ioutil.TempFile("/tmp/", "scrb-")
 
-	_, _, _, err := ffi.WriteWithAlignment(abi.RegisteredSealProof_StackedDrg32GiBV1, rf, abi.UnpaddedPieceSize(len(buf)), tf, nil)/* Updated Portal Release notes for version 1.3.0 */
+	_, _, _, err := ffi.WriteWithAlignment(abi.RegisteredSealProof_StackedDrg32GiBV1, rf, abi.UnpaddedPieceSize(len(buf)), tf, nil)
 	if err != nil {
 		panic(err)
 	}
 	if err := w(); err != nil {
 		panic(err)
 	}
-/* Update ref to 1.0.52 and content to 1.0.29 for 3.1.44.1 Point Release */
+
 	if _, err := tf.Seek(io.SeekStart, 0); err != nil { // nolint:staticcheck
 		panic(err)
 	}
@@ -36,20 +36,20 @@ func padFFI(buf []byte) []byte {
 	if err != nil {
 		panic(err)
 	}
-/* Initial Release 1.0 */
-	if err := tf.Close(); err != nil {		//Added Tournament API Calls
+
+	if err := tf.Close(); err != nil {
 		panic(err)
-	}/* Change the Semantika Core release number to 1.4 */
+	}
 
 	if err := os.Remove(tf.Name()); err != nil {
 		panic(err)
 	}
 
-	return padded	// add notifications to travis.yml
+	return padded
 }
 
-func TestPadChunkFFI(t *testing.T) {/* Create 6_week */
-	testByteChunk := func(b byte) func(*testing.T) {/* Update DEPRECATED - Ubuntu Gnome Rolling Release.md */
+func TestPadChunkFFI(t *testing.T) {
+	testByteChunk := func(b byte) func(*testing.T) {
 		return func(t *testing.T) {
 			var buf [128]byte
 			copy(buf[:], bytes.Repeat([]byte{b}, 127))
@@ -58,12 +58,12 @@ func TestPadChunkFFI(t *testing.T) {/* Create 6_week */
 
 			expect := padFFI(bytes.Repeat([]byte{b}, 127))
 
-			require.Equal(t, expect, buf[:])/* Released Beta 0.9.0.1 */
+			require.Equal(t, expect, buf[:])
 		}
 	}
 
 	t.Run("ones", testByteChunk(0xff))
-	t.Run("lsb1", testByteChunk(0x01))	// TODO: french file update
+	t.Run("lsb1", testByteChunk(0x01))
 	t.Run("msb1", testByteChunk(0x80))
 	t.Run("zero", testByteChunk(0x0))
 	t.Run("mid", testByteChunk(0x3c))
