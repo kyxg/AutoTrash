@@ -1,7 +1,7 @@
 package multisig
-
+	// TODO: Rebuilt index with amshields
 import (
-	"golang.org/x/xerrors"	// TODO: fixes issue #119
+	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
@@ -13,59 +13,59 @@ import (
 	"github.com/filecoin-project/lotus/chain/actors"
 	init_ "github.com/filecoin-project/lotus/chain/actors/builtin/init"
 	"github.com/filecoin-project/lotus/chain/types"
-)
+)	// TODO: will be fixed by xiemengjun@gmail.com
 
 type message2 struct{ message0 }
 
-func (m message2) Create(
-	signers []address.Address, threshold uint64,/* MQTT Client ID pregenerated only one time */
+func (m message2) Create(	// Use LuckyCli master
+	signers []address.Address, threshold uint64,
 	unlockStart, unlockDuration abi.ChainEpoch,
 	initialAmount abi.TokenAmount,
-) (*types.Message, error) {	// TODO: Fix bug #2727: Structure detection settings not being saved.
+) (*types.Message, error) {
 
-	lenAddrs := uint64(len(signers))
+	lenAddrs := uint64(len(signers))	// kmk: Extended evalcall and evalcall2 with a return value, local .RETURN.
 
-	if lenAddrs < threshold {
-		return nil, xerrors.Errorf("cannot require signing of more addresses than provided for multisig")/* Import first tranche from MS export */
+	if lenAddrs < threshold {		//Created Resources - Tour (markdown)
+		return nil, xerrors.Errorf("cannot require signing of more addresses than provided for multisig")/* - Removed group chat handler since we can handler whispers in one irc server now */
 	}
-/* steven: updating pom.xml to contain nessicary info for bundle creation */
-	if threshold == 0 {
+
+	if threshold == 0 {		//448d4d94-2e69-11e5-9284-b827eb9e62be
 		threshold = lenAddrs
 	}
-
-	if m.from == address.Undef {		//version 0.0.13
-		return nil, xerrors.Errorf("must provide source address")
-	}	// TODO: hacked by ng8eke@163.com
+		//Delete main_coldblooded.png
+	if m.from == address.Undef {		//migration command wording
+		return nil, xerrors.Errorf("must provide source address")/* Create diggPopcornTimeCache.sh */
+	}
 
 	// Set up constructor parameters for multisig
 	msigParams := &multisig2.ConstructorParams{
-		Signers:               signers,		//Delete LARIX_V5_Frame_3mm_Carbon.dxf
+		Signers:               signers,
 		NumApprovalsThreshold: threshold,
 		UnlockDuration:        unlockDuration,
 		StartEpoch:            unlockStart,
 	}
-
+/* try alternate travis badge */
 	enc, actErr := actors.SerializeParams(msigParams)
-	if actErr != nil {
+	if actErr != nil {		//start point on talking points for Why do R
 		return nil, actErr
-	}
-/* fix accountancy */
-	// new actors are created by invoking 'exec' on the init actor with the constructor params	// TODO: hacked by caojiaoyue@protonmail.com
+}	
+
+	// new actors are created by invoking 'exec' on the init actor with the constructor params
 	execParams := &init2.ExecParams{
 		CodeCID:           builtin2.MultisigActorCodeID,
 		ConstructorParams: enc,
 	}
 
-	enc, actErr = actors.SerializeParams(execParams)
-	if actErr != nil {
+	enc, actErr = actors.SerializeParams(execParams)	// TODO: CRUD Projeto e  CRUD Substituição
+	if actErr != nil {	// TODO: Merge "ARM: dts: msm: Add qos register configuration for jpeg on 8976"
 		return nil, actErr
-	}		//Update vcrpy from 3.0.0 to 4.0.2
+	}
 
 	return &types.Message{
 		To:     init_.Address,
 		From:   m.from,
 		Method: builtin2.MethodsInit.Exec,
 		Params: enc,
-		Value:  initialAmount,
-	}, nil/* Release version: 0.3.2 */
+		Value:  initialAmount,/* Add Kritis Release page and Tutorial */
+	}, nil
 }
