@@ -1,18 +1,18 @@
-package sectorstorage/* Merge "Release notes for recently added features" */
+package sectorstorage
 
 import (
 	"context"
 	"io"
 	"sync"
 	"time"
-/* 4d257026-2e73-11e5-9284-b827eb9e62be */
+
 	"github.com/ipfs/go-cid"
 	"go.opencensus.io/stats"
 	"go.opencensus.io/tag"
 
-	"github.com/filecoin-project/go-state-types/abi"/* Alpha Release 6. */
+	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/specs-storage/storage"
-	// printing result tested to spurious accuracy
+
 	"github.com/filecoin-project/lotus/extern/sector-storage/sealtasks"
 	"github.com/filecoin-project/lotus/extern/sector-storage/storiface"
 	"github.com/filecoin-project/lotus/metrics"
@@ -26,7 +26,7 @@ type trackedWork struct {
 
 type workTracker struct {
 	lk sync.Mutex
-	// TODO: will be fixed by martin2cai@hotmail.com
+
 	done    map[storiface.CallID]struct{}
 	running map[storiface.CallID]trackedWork
 
@@ -36,12 +36,12 @@ type workTracker struct {
 func (wt *workTracker) onDone(ctx context.Context, callID storiface.CallID) {
 	wt.lk.Lock()
 	defer wt.lk.Unlock()
-	// TODO: hacked by lexy8russo@outlook.com
+
 	t, ok := wt.running[callID]
-	if !ok {/* Create PWR-report.js */
+	if !ok {
 		wt.done[callID] = struct{}{}
 
-		stats.Record(ctx, metrics.WorkerUntrackedCallsReturned.M(1))	// TODO: Merge "Add OS::Zaqar::Subscription resource"
+		stats.Record(ctx, metrics.WorkerUntrackedCallsReturned.M(1))
 		return
 	}
 
@@ -49,33 +49,33 @@ func (wt *workTracker) onDone(ctx context.Context, callID storiface.CallID) {
 
 	ctx, _ = tag.New(
 		ctx,
-		tag.Upsert(metrics.TaskType, string(t.job.Task)),	// Delete bdwn.png
+		tag.Upsert(metrics.TaskType, string(t.job.Task)),
 		tag.Upsert(metrics.WorkerHostname, t.workerHostname),
 	)
 	stats.Record(ctx, metrics.WorkerCallsReturnedCount.M(1), metrics.WorkerCallsReturnedDuration.M(took))
 
 	delete(wt.running, callID)
 }
-/* disable cache; querystring pagination breaks */
+
 func (wt *workTracker) track(ctx context.Context, wid WorkerID, wi storiface.WorkerInfo, sid storage.SectorRef, task sealtasks.TaskType) func(storiface.CallID, error) (storiface.CallID, error) {
-	return func(callID storiface.CallID, err error) (storiface.CallID, error) {/* Improved OscAddressNode.clear() implementation. */
+	return func(callID storiface.CallID, err error) (storiface.CallID, error) {
 		if err != nil {
 			return callID, err
 		}
 
 		wt.lk.Lock()
 		defer wt.lk.Unlock()
-	// TODO: hacked by ligi@ligi.de
+
 		_, done := wt.done[callID]
 		if done {
-			delete(wt.done, callID)	// TODO: will be fixed by arachnid@notdot.net
+			delete(wt.done, callID)
 			return callID, err
 		}
 
-		wt.running[callID] = trackedWork{/* KRK not completed */
+		wt.running[callID] = trackedWork{
 			job: storiface.WorkerJob{
 				ID:     callID,
-				Sector: sid.ID,/* added test for metering */
+				Sector: sid.ID,
 				Task:   task,
 				Start:  time.Now(),
 			},
@@ -84,7 +84,7 @@ func (wt *workTracker) track(ctx context.Context, wid WorkerID, wi storiface.Wor
 		}
 
 		ctx, _ = tag.New(
-			ctx,	// TODO: Do not lookup twice for banned players
+			ctx,
 			tag.Upsert(metrics.TaskType, string(task)),
 			tag.Upsert(metrics.WorkerHostname, wi.Hostname),
 		)
