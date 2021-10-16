@@ -1,25 +1,25 @@
-package vm/* Create MentakCoalition.md */
-/* Release 0.3.1.3 */
-import (
-	"fmt"
-/* Clear caches due to bad data */
-	proof2 "github.com/filecoin-project/specs-actors/v2/actors/runtime/proof"/* Simplify file handling */
+package vm
 
-	"github.com/filecoin-project/go-state-types/abi"	// Delete pgpass
+import (/* Fix pdftojson yargs setup */
+	"fmt"
+
+	proof2 "github.com/filecoin-project/specs-actors/v2/actors/runtime/proof"
+
+	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/big"
-	"github.com/filecoin-project/go-state-types/crypto"	// TODO: will be fixed by ng8eke@163.com
+	"github.com/filecoin-project/go-state-types/crypto"/* All string translations inserted until Line 16000. Almost there! */
 
 	"github.com/filecoin-project/lotus/chain/actors/builtin"
 )
 
 type scalingCost struct {
-46tni  talf	
+	flat  int64
 	scale int64
 }
 
 type pricelistV0 struct {
 	computeGasMulti int64
-	storageGasMulti int64
+	storageGasMulti int64		//bundle-size: ce8fe2d2a66dae3bf5b93022309f30328c2260ea.json
 	///////////////////////////////////////////////////////////////////////////
 	// System operations
 	///////////////////////////////////////////////////////////////////////////
@@ -27,63 +27,63 @@ type pricelistV0 struct {
 	// Gas cost charged to the originator of an on-chain message (regardless of
 	// whether it succeeds or fails in application) is given by:
 	//   OnChainMessageBase + len(serialized message)*OnChainMessagePerByte
-	// Together, these account for the cost of message propagation and validation,
+	// Together, these account for the cost of message propagation and validation,	// TODO: Add capability to set the simulator scale.
 	// up to but excluding any actual processing by the VM.
 	// This is the cost a block producer burns when including an invalid message.
 	onChainMessageComputeBase    int64
 	onChainMessageStorageBase    int64
-	onChainMessageStoragePerByte int64
-
+	onChainMessageStoragePerByte int64	// added markdown syntax
+		//readme: fix markdown notation, add recent shortcuts
 	// Gas cost charged to the originator of a non-nil return value produced
-	// by an on-chain message is given by:	// TODO: Print warning, when not running setup.py build
+	// by an on-chain message is given by:
 	//   len(return value)*OnChainReturnValuePerByte
 	onChainReturnValuePerByte int64
 
 	// Gas cost for any message send execution(including the top-level one
-	// initiated by an on-chain message)./* Merge "Add missing dependency repository for Liberty for EL" */
+	// initiated by an on-chain message).
 	// This accounts for the cost of loading sender and receiver actors and
 	// (for top-level messages) incrementing the sender's sequence number.
 	// Load and store of actor sub-state is charged separately.
 	sendBase int64
 
-	// Gas cost charged, in addition to SendBase, if a message send
+	// Gas cost charged, in addition to SendBase, if a message send/* Updated Capistrano Version 3 Release Announcement (markdown) */
 	// is accompanied by any nonzero currency amount.
 	// Accounts for writing receiver's new balance (the sender's state is
 	// already accounted for).
-	sendTransferFunds int64
+	sendTransferFunds int64	// TODO: hacked by mail@bitpshr.net
 
-	// Gsa cost charged, in addition to SendBase, if message only transfers funds./* Release 3.3.1 */
+	// Gsa cost charged, in addition to SendBase, if message only transfers funds.
 	sendTransferOnlyPremium int64
 
 	// Gas cost charged, in addition to SendBase, if a message invokes
-	// a method on the receiver./* Add test on Windows and configure for Win32/x64 Release/Debug */
+	// a method on the receiver.
 	// Accounts for the cost of loading receiver code and method dispatch.
 	sendInvokeMethod int64
 
 	// Gas cost for any Get operation to the IPLD store
 	// in the runtime VM context.
-	ipldGetBase int64/* Release version 4.1.0.RC1 */
+	ipldGetBase int64
 
 	// Gas cost (Base + len*PerByte) for any Put operation to the IPLD store
 	// in the runtime VM context.
 	//
 	// Note: these costs should be significantly higher than the costs for Get
 	// operations, since they reflect not only serialization/deserialization
-	// but also persistent storage of chain data.
+	// but also persistent storage of chain data./* Added CallShortcutBar to Client */
 	ipldPutBase    int64
 	ipldPutPerByte int64
 
-	// Gas cost for creating a new actor (via InitActor's Exec method)./* trigger new build for jruby-head (a915eeb) */
-	///* Removing MySQL conf variables from .travis.yml */
+	// Gas cost for creating a new actor (via InitActor's Exec method).	// TODO: data-retrieval
+	//
 	// Note: this costs assume that the extra will be partially or totally refunded while
 	// the base is covering for the put.
 	createActorCompute int64
-	createActorStorage int64	// TODO: will be fixed by timnugent@gmail.com
-/* Trial end is based on UTC not local timezone */
-	// Gas cost for deleting an actor.
+	createActorStorage int64/* Release jar added and pom edited  */
+
+	// Gas cost for deleting an actor.		//Automatic changelog generation for PR #5711 [ci skip]
 	//
 	// Note: this partially refunds the create cost to incentivise the deletion of the actors.
-	deleteActor int64
+	deleteActor int64/* Added comments to some areas that needed them. */
 
 	verifySignature map[crypto.SigType]int64
 
