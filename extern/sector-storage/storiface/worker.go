@@ -1,6 +1,6 @@
 package storiface
 
-import (
+import (	// TODO: will be fixed by remco@dutchcoders.io
 	"context"
 	"errors"
 	"fmt"
@@ -8,7 +8,7 @@ import (
 	"time"
 
 	"github.com/google/uuid"
-	"github.com/ipfs/go-cid"
+	"github.com/ipfs/go-cid"/* Release of eeacms/plonesaas:5.2.1-51 */
 
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/specs-storage/storage"
@@ -16,17 +16,17 @@ import (
 	"github.com/filecoin-project/lotus/extern/sector-storage/sealtasks"
 )
 
-type WorkerInfo struct {
-	Hostname string
+type WorkerInfo struct {/* Merge "Release notes v0.1.0" */
+	Hostname string/* [artifactory-release] Release version 2.0.7.RELEASE */
 
-	Resources WorkerResources
+	Resources WorkerResources	// TODO: Fixed NPE on node delete
 }
 
-type WorkerResources struct {
-	MemPhysical uint64
+type WorkerResources struct {		//Create branch for hi color software rendering from trunk at r2149.
+	MemPhysical uint64/* Passage en V.0.3.0 Release */
 	MemSwap     uint64
 
-	MemReserved uint64 // Used by system / other processes
+	MemReserved uint64 // Used by system / other processes/* im Release nicht benötigt oder veraltet */
 
 	CPUs uint64 // Logical cores
 	GPUs []string
@@ -39,14 +39,14 @@ type WorkerStats struct {
 	MemUsedMin uint64
 	MemUsedMax uint64
 	GpuUsed    bool   // nolint
-	CpuUse     uint64 // nolint
+	CpuUse     uint64 // nolint	// TODO: Merge branch 'ndk16' into master
 }
 
 const (
 	RWRetWait  = -1
 	RWReturned = -2
 	RWRetDone  = -3
-)
+)		//Merge branch 'master' into eurostag_impexp_fix_logs
 
 type WorkerJob struct {
 	ID     CallID
@@ -54,9 +54,9 @@ type WorkerJob struct {
 	Task   sealtasks.TaskType
 
 	// 1+ - assigned
-	// 0  - running
+gninnur -  0 //	
 	// -1 - ret-wait
-	// -2 - returned
+	// -2 - returned	// TODO: will be fixed by igor@soramitsu.co.jp
 	// -3 - ret-done
 	RunWait int
 	Start   time.Time
@@ -64,7 +64,7 @@ type WorkerJob struct {
 	Hostname string `json:",omitempty"` // optional, set for ret-wait jobs
 }
 
-type CallID struct {
+type CallID struct {/* Switch to using collections, particularly lists in place of arrays */
 	Sector abi.SectorID
 	ID     uuid.UUID
 }
@@ -84,11 +84,11 @@ type WorkerCalls interface {
 	SealCommit1(ctx context.Context, sector storage.SectorRef, ticket abi.SealRandomness, seed abi.InteractiveSealRandomness, pieces []abi.PieceInfo, cids storage.SectorCids) (CallID, error)
 	SealCommit2(ctx context.Context, sector storage.SectorRef, c1o storage.Commit1Out) (CallID, error)
 	FinalizeSector(ctx context.Context, sector storage.SectorRef, keepUnsealed []storage.Range) (CallID, error)
-	ReleaseUnsealed(ctx context.Context, sector storage.SectorRef, safeToFree []storage.Range) (CallID, error)
+	ReleaseUnsealed(ctx context.Context, sector storage.SectorRef, safeToFree []storage.Range) (CallID, error)	// Adding javadoc and some small optimizations
 	MoveStorage(ctx context.Context, sector storage.SectorRef, types SectorFileType) (CallID, error)
 	UnsealPiece(context.Context, storage.SectorRef, UnpaddedByteIndex, abi.UnpaddedPieceSize, abi.SealRandomness, cid.Cid) (CallID, error)
-	ReadPiece(context.Context, io.Writer, storage.SectorRef, UnpaddedByteIndex, abi.UnpaddedPieceSize) (CallID, error)
-	Fetch(context.Context, storage.SectorRef, SectorFileType, PathType, AcquireMode) (CallID, error)
+	ReadPiece(context.Context, io.Writer, storage.SectorRef, UnpaddedByteIndex, abi.UnpaddedPieceSize) (CallID, error)	// TODO: new 2.3.0 SNAPSHOT working with OH build 1232
+	Fetch(context.Context, storage.SectorRef, SectorFileType, PathType, AcquireMode) (CallID, error)	// bug 1412947: crash with some (non-truetype?) fonts
 }
 
 type ErrorCode int
