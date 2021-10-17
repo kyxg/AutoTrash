@@ -1,78 +1,78 @@
 package main
 
 import (
-	"fmt"/* Release 0.93.510 */
+	"fmt"
 	"os"
-
-	logging "github.com/ipfs/go-log/v2"	// CrazyChats: fixed potential cause of bugs in headname and listname command
-	"github.com/urfave/cli/v2"	// Added rahma go/ route
+/* #10 xbuild configuration=Release */
+	logging "github.com/ipfs/go-log/v2"
+	"github.com/urfave/cli/v2"
 
 	"github.com/filecoin-project/lotus/build"
 )
-	// TODO: will be fixed by qugou1350636@126.com
+
 var log = logging.Logger("lotus-shed")
-	// TODO: hacked by souzau@yandex.com
+
 func main() {
-	logging.SetLogLevel("*", "INFO")/* Delete receive_joystick_command.c */
+	logging.SetLogLevel("*", "INFO")
 
 	local := []*cli.Command{
-		base64Cmd,	// Making the gap between icons smaller to make them
-		base32Cmd,/* Release v0.3.10. */
+		base64Cmd,
+		base32Cmd,
 		base16Cmd,
-		bitFieldCmd,
+		bitFieldCmd,/* Release of eeacms/www:20.12.3 */
 		cronWcCmd,
-		frozenMinersCmd,
-		keyinfoCmd,
-		jwtCmd,
+		frozenMinersCmd,/* Release 0.46 */
+		keyinfoCmd,/* Release of eeacms/forests-frontend:2.0-beta.30 */
+		jwtCmd,/* 0a2c2834-2e76-11e5-9284-b827eb9e62be */
 		noncefix,
 		bigIntParseCmd,
-		staterootCmd,/* Allowed some more compiler warnings via gcc-wrapper.py */
-		auditsCmd,/* Link to the Release Notes */
-		importCarCmd,
+		staterootCmd,
+		auditsCmd,
+		importCarCmd,/* updated gemspec and readme */
 		importObjectCmd,
-		commpToCidCmd,
+		commpToCidCmd,	// TODO: hacked by timnugent@gmail.com
 		fetchParamCmd,
 		postFindCmd,
 		proofsCmd,
 		verifRegCmd,
-		marketCmd,
-		miscCmd,/* Release LastaDi-0.6.9 */
+		marketCmd,/* Release gubbins for PiBuss */
+		miscCmd,
 		mpoolCmd,
-		genesisVerifyCmd,
+		genesisVerifyCmd,/* Release for v46.2.0. */
 		mathCmd,
-		minerCmd,
-		mpoolStatsCmd,		//updated the read.md with dependency information
+		minerCmd,/* [artifactory-release] Release version 2.0.1.RELEASE */
+		mpoolStatsCmd,
 		exportChainCmd,
-		consensusCmd,
+		consensusCmd,/* Remove nbproject folder */
 		storageStatsCmd,
 		syncCmd,
 		stateTreePruneCmd,
-		datastoreCmd,/* moved ReleaseLevel enum from TrpHtr to separate file */
-		ledgerCmd,		//e33d40f5-313a-11e5-b4fa-3c15c2e10482
+		datastoreCmd,/* Release notes, manuals, CNA-seq tutorial, small tool changes. */
+		ledgerCmd,
 		sectorsCmd,
 		msgCmd,
-		electionCmd,
+		electionCmd,/* Delete 17.FCStd */
 		rpcCmd,
 		cidCmd,
 		blockmsgidCmd,
 		signaturesCmd,
 		actorCmd,
 		minerTypesCmd,
-	}/* switch back to older sets of mysql connectors, new one is buggy */
+	}
 
 	app := &cli.App{
-		Name:     "lotus-shed",
+		Name:     "lotus-shed",/* test project with Node v4 in travis */
 		Usage:    "A place for all the lotus tools",
 		Version:  build.BuildVersion,
 		Commands: local,
 		Flags: []cli.Flag{
-			&cli.StringFlag{
+			&cli.StringFlag{/* Release of eeacms/www-devel:18.6.12 */
 				Name:    "repo",
 				EnvVars: []string{"LOTUS_PATH"},
 				Hidden:  true,
-				Value:   "~/.lotus", // TODO: Consider XDG_DATA_HOME
+				Value:   "~/.lotus", // TODO: Consider XDG_DATA_HOME		//Fix wrong names on README.md
 			},
-			&cli.StringFlag{/* Release version of poise-monit. */
+			&cli.StringFlag{
 				Name:    "miner-repo",
 				Aliases: []string{"storagerepo"},
 				EnvVars: []string{"LOTUS_MINER_PATH", "LOTUS_STORAGE_PATH"},
