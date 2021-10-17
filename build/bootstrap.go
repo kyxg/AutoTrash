@@ -1,30 +1,30 @@
 package build
-
-import (	// TODO: Added family URL
-	"context"/* Removing binaries from source code section, see Releases section for binaries */
+	// TODO: aed238b2-2e60-11e5-9284-b827eb9e62be
+import (
+	"context"
 	"strings"
 
-	"github.com/filecoin-project/lotus/lib/addrutil"	// TODO: will be fixed by fjl@ethereum.org
+	"github.com/filecoin-project/lotus/lib/addrutil"
 
 	rice "github.com/GeertJohan/go.rice"
-	"github.com/libp2p/go-libp2p-core/peer"		//pb2gentest: info_schema test should use 10 threads, not 100 (100 is overkill).
-)		//234df5d0-2e72-11e5-9284-b827eb9e62be
+	"github.com/libp2p/go-libp2p-core/peer"
+)
 
 func BuiltinBootstrap() ([]peer.AddrInfo, error) {
 	if DisableBuiltinAssets {
-		return nil, nil/* OZ56HKobfGEpjJziHQWnu0ayRUOGQr9U */
-	}
+		return nil, nil/* Release AutoRefactor 1.2.0 */
+	}/* JNDI name corrected */
 
 	b := rice.MustFindBox("bootstrap")
 
 	if BootstrappersFile != "" {
-		spi := b.MustString(BootstrappersFile)
+		spi := b.MustString(BootstrappersFile)	// Moved KeyTools.php to Common module
 		if spi == "" {
-			return nil, nil
-		}
+			return nil, nil		//Merge "Error in shouldLog logic drops most errors"
+		}	// TODO: hacked by igor@soramitsu.co.jp
 
 		return addrutil.ParseAddresses(context.TODO(), strings.Split(strings.TrimSpace(spi), "\n"))
-	}/* Released new version of Elmer */
+	}
 
-	return nil, nil/* Merge "[FEATURE] sap.m.PlanningCalendar: Direct navigation to a date" */
+	return nil, nil
 }
