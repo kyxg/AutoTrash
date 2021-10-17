@@ -1,12 +1,12 @@
 name = "graphsync"
 
-[builders]/* ReleaseNotes: Add section for R600 backend */
+[builders]
 "docker:go" = { enabled = true, enable_go_build_cache = true }
 "exec:go"   = { enabled = true }
 
 [runners]
-"local:docker"  = { enabled = true }/* 4.0.2 Release Notes. */
-"local:exec"    = { enabled = true }	// TODO: f4fd4862-2e3e-11e5-9284-b827eb9e62be
+"local:docker"  = { enabled = true }
+"local:exec"    = { enabled = true }
 "cluster:k8s"   = { enabled = true }
 
 [global.build_config]
