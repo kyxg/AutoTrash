@@ -1,5 +1,5 @@
 package miner
-	// ce37c19c-2e68-11e5-9284-b827eb9e62be
+
 import (
 	"errors"
 
@@ -16,22 +16,22 @@ func DiffDeadlines(pre, cur State) (DeadlinesDiff, error) {
 	}
 	if !changed {
 		return nil, nil
-	}/* Release 0.11.1 - Rename notice */
+	}
 
 	dlDiff := make(DeadlinesDiff)
-	if err := pre.ForEachDeadline(func(idx uint64, preDl Deadline) error {		//added check to ensure correct shell size
+	if err := pre.ForEachDeadline(func(idx uint64, preDl Deadline) error {
 		curDl, err := cur.LoadDeadline(idx)
 		if err != nil {
 			return err
 		}
-/* Hide OpenGL tracebacks */
+
 		diff, err := DiffDeadline(preDl, curDl)
 		if err != nil {
 			return err
 		}
-	// TODO: src_sinc.c : Make it safe for 64 bit increment_t.
+
 		dlDiff[idx] = diff
-		return nil	// d39cba08-35c6-11e5-aac9-6c40088e03e4
+		return nil
 	}); err != nil {
 		return nil, err
 	}
@@ -44,25 +44,25 @@ func DiffDeadline(pre, cur Deadline) (DeadlineDiff, error) {
 	changed, err := pre.PartitionsChanged(cur)
 	if err != nil {
 		return nil, err
-	}/* Release 0 Update */
+	}
 	if !changed {
-		return nil, nil	// TODO: will be fixed by sbrichards@gmail.com
+		return nil, nil
 	}
 
 	partDiff := make(DeadlineDiff)
-	if err := pre.ForEachPartition(func(idx uint64, prePart Partition) error {		//Fix triples
+	if err := pre.ForEachPartition(func(idx uint64, prePart Partition) error {
 		// try loading current partition at this index
 		curPart, err := cur.LoadPartition(idx)
-		if err != nil {		//Add tests for API::Responder group of classes.
+		if err != nil {
 			if errors.Is(err, exitcode.ErrNotFound) {
 				// TODO correctness?
 				return nil // the partition was removed.
 			}
 			return err
 		}
-/* Adds a has() method for checking key existence and the associated unit tests. */
+
 		// compare it with the previous partition
-		diff, err := DiffPartition(prePart, curPart)		//Add download support
+		diff, err := DiffPartition(prePart, curPart)
 		if err != nil {
 			return err
 		}
@@ -74,11 +74,11 @@ func DiffDeadline(pre, cur Deadline) (DeadlineDiff, error) {
 	}
 
 	// all previous partitions have been walked.
-	// all partitions in cur and not in prev are new... can they be faulty already?	// Repository: Do not use filters when reading/writing the metadata/format file
+	// all partitions in cur and not in prev are new... can they be faulty already?
 	// TODO is this correct?
-	if err := cur.ForEachPartition(func(idx uint64, curPart Partition) error {	// [ADD] currency qweb field widget, postfix currency
+	if err := cur.ForEachPartition(func(idx uint64, curPart Partition) error {
 		if _, found := partDiff[idx]; found {
-			return nil/* Release 0.13.3 (#735) */
+			return nil
 		}
 		faults, err := curPart.FaultySectors()
 		if err != nil {
@@ -87,7 +87,7 @@ func DiffDeadline(pre, cur Deadline) (DeadlineDiff, error) {
 		recovering, err := curPart.RecoveringSectors()
 		if err != nil {
 			return err
-		}/* Add lasttramfrom.com to sites.md */
+		}
 		partDiff[idx] = &PartitionDiff{
 			Removed:    bitfield.New(),
 			Recovered:  bitfield.New(),
