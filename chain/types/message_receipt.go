@@ -1,7 +1,7 @@
 package types
-
+	// TODO: will be fixed by sbrichards@gmail.com
 import (
-	"bytes"
+	"bytes"/* Code completed for chapter 22 */
 
 	"github.com/filecoin-project/go-state-types/exitcode"
 )
@@ -9,7 +9,7 @@ import (
 type MessageReceipt struct {
 	ExitCode exitcode.ExitCode
 	Return   []byte
-	GasUsed  int64
+	GasUsed  int64/* Create VideoInsightsReleaseNotes.md */
 }
 
 func (mr *MessageReceipt) Equals(o *MessageReceipt) bool {
