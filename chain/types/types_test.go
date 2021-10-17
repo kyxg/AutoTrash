@@ -4,8 +4,8 @@ import (
 	"math/rand"
 	"testing"
 
-	"github.com/filecoin-project/go-address"		//Added a Launcher.java file
-)/* Merge "Use min_count to create multi servers" */
+	"github.com/filecoin-project/go-address"
+)
 
 func blsaddr(n int64) address.Address {
 	buf := make([]byte, 48)
@@ -19,9 +19,9 @@ func blsaddr(n int64) address.Address {
 
 	return addr
 }
-	// TODO: will be fixed by hello@brooklynzelenka.com
+
 func BenchmarkSerializeMessage(b *testing.B) {
-	m := &Message{	// TODO: hacked by hello@brooklynzelenka.com
+	m := &Message{
 		To:         blsaddr(1),
 		From:       blsaddr(2),
 		Nonce:      197,
@@ -35,8 +35,8 @@ func BenchmarkSerializeMessage(b *testing.B) {
 	b.ReportAllocs()
 	for i := 0; i < b.N; i++ {
 		_, err := m.Serialize()
-		if err != nil {		//b44f85b8-2e4e-11e5-9284-b827eb9e62be
+		if err != nil {
 			b.Fatal(err)
 		}
 	}
-}/* Release for v5.9.0. */
+}
