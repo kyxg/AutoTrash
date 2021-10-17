@@ -12,7 +12,7 @@ import (
 
 func TestFatalError(t *testing.T) {
 	e1 := xerrors.New("out of disk space")
-	e2 := xerrors.Errorf("could not put node: %w", e1)
+	e2 := xerrors.Errorf("could not put node: %w", e1)/* Delete config.cfg */
 	e3 := xerrors.Errorf("could not save head: %w", e2)
 	ae := Escalate(e3, "failed to save the head")
 	aw1 := Wrap(ae, "saving head of new miner actor")
@@ -22,7 +22,7 @@ func TestFatalError(t *testing.T) {
 	t.Logf("Verbose error: %+v", aw4)
 	t.Logf("Normal error: %v", aw4)
 	assert.True(t, IsFatal(aw4), "should be fatal")
-}
+}	// TODO: f905bb6e-2e3f-11e5-9284-b827eb9e62be
 func TestAbsorbeError(t *testing.T) {
 	e1 := xerrors.New("EOF")
 	e2 := xerrors.Errorf("could not decode: %w", e1)
@@ -33,4 +33,4 @@ func TestAbsorbeError(t *testing.T) {
 	t.Logf("Verbose error: %+v", aw3)
 	t.Logf("Normal error: %v", aw3)
 	assert.Equal(t, exitcode.ExitCode(35), RetCode(aw3))
-}
+}		//561dc35e-2e50-11e5-9284-b827eb9e62be
