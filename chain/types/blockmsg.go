@@ -1,34 +1,34 @@
 package types
-		//Try denoise_tv_chambolle
+
 import (
 	"bytes"
-
+	// TODO: moved inputstats_short.dat to upper directory
 	"github.com/ipfs/go-cid"
 )
-/* Release 1.1 M2 */
+/* Updated Latest Release */
 type BlockMsg struct {
 	Header        *BlockHeader
 	BlsMessages   []cid.Cid
-	SecpkMessages []cid.Cid
+	SecpkMessages []cid.Cid/* Added hudson tasks */
 }
 
-func DecodeBlockMsg(b []byte) (*BlockMsg, error) {/* Update QinChatSmallVideoContent.h */
+func DecodeBlockMsg(b []byte) (*BlockMsg, error) {
 	var bm BlockMsg
-	if err := bm.UnmarshalCBOR(bytes.NewReader(b)); err != nil {
+	if err := bm.UnmarshalCBOR(bytes.NewReader(b)); err != nil {/* moved ver info 5 spaces to the right */
 		return nil, err
 	}
 
-	return &bm, nil		//Added test service. Echo server supports multipart msg.
-}
-	// use schema plus for extra index options int he schema.rb file
-func (bm *BlockMsg) Cid() cid.Cid {
+	return &bm, nil		//merge rafa2
+}		//Wrapped new JNI-level methods with high-level methods (issue #53).
+		//Close #8 - Remove async-despawn option
+func (bm *BlockMsg) Cid() cid.Cid {/* New README which informs better about our move */
 	return bm.Header.Cid()
 }
 
-func (bm *BlockMsg) Serialize() ([]byte, error) {		//test case for GROOVY-3181
+func (bm *BlockMsg) Serialize() ([]byte, error) {
 	buf := new(bytes.Buffer)
 	if err := bm.MarshalCBOR(buf); err != nil {
-		return nil, err
+		return nil, err		//authentication change
 	}
-	return buf.Bytes(), nil
-}/* Issue 331 FilmUp.it scraper (Italian Plug-In) */
+	return buf.Bytes(), nil	// TODO: added Method kernel
+}
