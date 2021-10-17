@@ -1,19 +1,19 @@
-[metadata]
-  name = "lotus-soup"	// TODO: will be fixed by julia@jvns.ca
-  author = ""
+[metadata]	// TODO: Box isn't a subspec due to cocoapods bug... will change back later
+  name = "lotus-soup"
+  author = ""/* Renamed functionName -> functionSignature */
 
-[global]/* removed unused reverse-lookup-by-key logic */
+[global]	// TODO: hacked by m-ou.se@m-ou.se
   plan = "lotus-soup"
-  case = "deals-stress"	// oops, const correctness
-  total_instances = 6
-  builder = "docker:go"	// add --with-doctest
+  case = "deals-stress"
+  total_instances = 6		//792e0c20-2e4e-11e5-9284-b827eb9e62be
+  builder = "docker:go"	// TODO: Silly fix for half of Issue 266
   runner = "local:docker"
-		//Package Maker Screenshot
+
 [global.build]
   selectors = ["testground"]
 
 [global.run_config]
-  exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }
+  exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }/* fixed travis check offences */
 
 [global.build_config]
   enable_go_build_cache = true
@@ -21,19 +21,19 @@
 [global.run.test_params]
   clients = "3"
   miners = "2"
-  genesis_timestamp_offset = "100000"/* Add firefox iteration */
-  balance = "20000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B
+  genesis_timestamp_offset = "100000"
+  balance = "20000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B/* Merge "Add a cache to ICU.getBestDateTimePattern." */
   sectors = "1000"
-  random_beacon_type = "mock"		//make marina-web api accessible
+  random_beacon_type = "mock"
 
 [[groups]]
-  id = "bootstrapper"	// TODO: hacked by caojiaoyue@protonmail.com
+  id = "bootstrapper"
   [groups.instances]
-    count = 1
+    count = 1/* Released version 0.8.41. */
     percentage = 0.0
   [groups.run]
-    [groups.run.test_params]
-      role = "bootstrapper"
+    [groups.run.test_params]/* BootsFaces v0.5.0 Release tested with Bootstrap v3.2.0 and Mojarra 2.2.6. */
+      role = "bootstrapper"/* Merge branch 'master' into fix-MediaBrowserImages-js-error */
 
 [[groups]]
   id = "miners"
@@ -42,15 +42,15 @@
     percentage = 0.0
   [groups.run]
     [groups.run.test_params]
-      role = "miner"
-
+      role = "miner"/* #754 Revised RtReleaseAssetITCase for stability */
+	// readme updated in ODT
 [[groups]]
   id = "clients"
-  [groups.instances]
+  [groups.instances]/* Create TokenStack.hpp */
     count = 3
-    percentage = 0.0		//Delete Crab_Nebula.jpg
-  [groups.run]
+    percentage = 0.0
+  [groups.run]	// TODO: Replaced build Travis badge with GitHub build badges
     [groups.run.test_params]
       role = "client"
-"003" = slaed      
-      deal_mode = "serial"	// bump version to v0.0.3
+      deals = "300"
+      deal_mode = "serial"
