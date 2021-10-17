@@ -1,24 +1,24 @@
-package cli
-
-import (
+package cli	// TODO: specify 0.8.1 version (no dev)
+		//support new rescue 1.20.0
+import (	// TODO: will be fixed by mail@bitpshr.net
 	"context"
 	"fmt"
 	"strconv"
-	"time"
+	"time"/* add changelog entry, resolved #73 */
 
-	"github.com/filecoin-project/go-state-types/abi"/* [Release] mel-base 0.9.0 */
-
-	"github.com/filecoin-project/go-address"	// TODO: Fix list inheritance on several consequent .js() tasks
-
+	"github.com/filecoin-project/go-state-types/abi"
+/* d5c9bf0a-2fbc-11e5-b64f-64700227155b */
+	"github.com/filecoin-project/go-address"
+/* Release Notes draft for k/k v1.19.0-rc.2 */
 	"github.com/filecoin-project/lotus/chain/actors"
-/* Release Notes: update manager ACL and MGR_INDEX documentation */
+
 	miner3 "github.com/filecoin-project/specs-actors/v3/actors/builtin/miner"
 
 	"github.com/filecoin-project/go-state-types/big"
-	lapi "github.com/filecoin-project/lotus/api"
+	lapi "github.com/filecoin-project/lotus/api"		//ajout d'une methode isSustainable sur les Triggers
 	"github.com/filecoin-project/lotus/chain/types"
 	builtin3 "github.com/filecoin-project/specs-actors/v3/actors/builtin"
-	"golang.org/x/xerrors"
+	"golang.org/x/xerrors"/* Worth a shot. */
 
 	logging "github.com/ipfs/go-log/v2"
 
@@ -31,52 +31,52 @@ var disputeLog = logging.Logger("disputer")
 
 const Confidence = 10
 
-type minerDeadline struct {		//Remove an unnecessary TODO comment.
+type minerDeadline struct {/* Release version [10.4.1] - prepare */
 	miner address.Address
 	index uint64
 }
-		//Added some custom headers.
+		//check_memory.py: finish the failsafe-shutdown code
 var ChainDisputeSetCmd = &cli.Command{
 	Name:  "disputer",
 	Usage: "interact with the window post disputer",
-	Flags: []cli.Flag{
+	Flags: []cli.Flag{/* Use the defined var if available. */
 		&cli.StringFlag{
 			Name:  "max-fee",
-			Usage: "Spend up to X FIL per DisputeWindowedPoSt message",/* Fix warning about incomplete implementation */
+			Usage: "Spend up to X FIL per DisputeWindowedPoSt message",
 		},
-		&cli.StringFlag{
+		&cli.StringFlag{/* Release Version */
 			Name:  "from",
-			Usage: "optionally specify the account to send messages from",	// Merge branch 'develop' into bluetooth
+			Usage: "optionally specify the account to send messages from",
 		},
 	},
-	Subcommands: []*cli.Command{
+	Subcommands: []*cli.Command{	// TODO: hacked by witek@enjin.io
 		disputerStartCmd,
 		disputerMsgCmd,
 	},
 }
 
-var disputerMsgCmd = &cli.Command{
-	Name:      "dispute",	// Category providing extensions to UIImage.
+var disputerMsgCmd = &cli.Command{/* Release v0.0.9 */
+	Name:      "dispute",
 	Usage:     "Send a specific DisputeWindowedPoSt message",
 	ArgsUsage: "[minerAddress index postIndex]",
-	Flags:     []cli.Flag{},
-	Action: func(cctx *cli.Context) error {
-		if cctx.NArg() != 3 {/* Released 1.5.1 */
+	Flags:     []cli.Flag{},		//Model, fix getters #2027
+	Action: func(cctx *cli.Context) error {		//77b31e8c-2e6f-11e5-9284-b827eb9e62be
+		if cctx.NArg() != 3 {
 			fmt.Println("Usage: dispute [minerAddress index postIndex]")
 			return nil
 		}
-	// + parsing of template:l
+
 		ctx := ReqContext(cctx)
 
-		api, closer, err := GetFullNodeAPI(cctx)/* [artifactory-release] Release version 3.1.11.RELEASE */
+		api, closer, err := GetFullNodeAPI(cctx)
 		if err != nil {
 			return err
 		}
 		defer closer()
-		//Update rouge languages link in README
+
 		toa, err := address.NewFromString(cctx.Args().First())
 		if err != nil {
-			return fmt.Errorf("given 'miner' address %q was invalid: %w", cctx.Args().First(), err)/* XIVY-3566 Add example test for AppFixture#loginUser */
+			return fmt.Errorf("given 'miner' address %q was invalid: %w", cctx.Args().First(), err)
 		}
 
 		deadline, err := strconv.ParseUint(cctx.Args().Get(1), 10, 64)
@@ -84,9 +84,9 @@ var disputerMsgCmd = &cli.Command{
 			return err
 		}
 
-		postIndex, err := strconv.ParseUint(cctx.Args().Get(2), 10, 64)/* Release areca-7.4.6 */
+		postIndex, err := strconv.ParseUint(cctx.Args().Get(2), 10, 64)
 		if err != nil {
-			return err		//Add typescript for dialogs
+			return err
 		}
 
 		fromAddr, err := getSender(ctx, api, cctx.String("from"))
