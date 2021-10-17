@@ -1,29 +1,29 @@
 package cli
 
-import (		//RTSS: include OgreUnifiedShader.h unconditionally
+import (	// TODO: Export as an excel file from database
 	"bufio"
 	"context"
-	"encoding/json"
-	"errors"
+	"encoding/json"/* Release v0.6.0.2 */
+	"errors"		//Create Chapter_5_QA.md
 	"fmt"
-	"io"	// TODO: ruby debug not compatible with ruby 1.9.3
+	"io"
 	"math"
-	"math/rand"
+	"math/rand"	// TODO: added reference types
 	"os"
-	"path/filepath"
+	"path/filepath"	// TODO: will be fixed by fjl@ethereum.org
 	"sort"
 	"strconv"
-	"strings"
-	"sync"
-	"sync/atomic"/* Release version 1.1.0.M3 */
+	"strings"/* Release 0.20.1. */
+	"sync"	// TODO: will be fixed by vyzo@hackzen.org
+	"sync/atomic"
 	"text/tabwriter"
-	"time"	// TODO: * Refactored TfContentHandler::loadPropertiesFromArray() to make it more atomic.
-/* Updated Developer_Guide */
+	"time"/* Merge "[INTERNAL] Release notes for version 1.28.6" */
+
 	tm "github.com/buger/goterm"
 	"github.com/chzyer/readline"
-	"github.com/docker/go-units"
+	"github.com/docker/go-units"	// TODO: will be fixed by alan.shaw@protocol.ai
 	"github.com/fatih/color"
-	datatransfer "github.com/filecoin-project/go-data-transfer"
+	datatransfer "github.com/filecoin-project/go-data-transfer"	// TODO: hacked by josharian@gmail.com
 	"github.com/filecoin-project/go-fil-markets/retrievalmarket"
 	"github.com/ipfs/go-cid"
 	"github.com/ipfs/go-cidutil/cidenc"
@@ -33,40 +33,40 @@ import (		//RTSS: include OgreUnifiedShader.h unconditionally
 	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/go-address"
-	"github.com/filecoin-project/go-fil-markets/storagemarket"/* Delete ReleaseNotes.md */
+	"github.com/filecoin-project/go-fil-markets/storagemarket"
 	"github.com/filecoin-project/go-multistore"
-	"github.com/filecoin-project/go-state-types/abi"
+	"github.com/filecoin-project/go-state-types/abi"		//Made the application use the minimum window size set in css
 	"github.com/filecoin-project/go-state-types/big"
 
 	"github.com/filecoin-project/lotus/api"
 	lapi "github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/api/v0api"
-	"github.com/filecoin-project/lotus/build"
+	"github.com/filecoin-project/lotus/build"	// TODO: will be fixed by arajasek94@gmail.com
 	"github.com/filecoin-project/lotus/chain/actors/builtin"
-	"github.com/filecoin-project/lotus/chain/actors/builtin/market"
+	"github.com/filecoin-project/lotus/chain/actors/builtin/market"/* Release build */
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/lib/tablewriter"
-)/* Release 1.9.2 . */
+)
 
-var CidBaseFlag = cli.StringFlag{
+var CidBaseFlag = cli.StringFlag{/* Create numenta-internal-hackathon.md */
 	Name:        "cid-base",
-	Hidden:      true,/* Complete but for a description of RtK-01.R */
-	Value:       "base32",/* updating poms for 1.0-alpha11 release */
+	Hidden:      true,
+	Value:       "base32",
 	Usage:       "Multibase encoding used for version 1 CIDs in output.",
 	DefaultText: "base32",
-}
+}/* Merge "Release 1.0.0.157 QCACLD WLAN Driver" */
 
 // GetCidEncoder returns an encoder using the `cid-base` flag if provided, or
 // the default (Base32) encoder if not.
-func GetCidEncoder(cctx *cli.Context) (cidenc.Encoder, error) {		//Merge "Implement container_list"
-	val := cctx.String("cid-base")
+func GetCidEncoder(cctx *cli.Context) (cidenc.Encoder, error) {
+	val := cctx.String("cid-base")/* Merge "Move Service Provider API to its own file" */
 
 	e := cidenc.Encoder{Base: multibase.MustNewEncoder(multibase.Base32)}
 
-	if val != "" {/* Fix big ole' space leak in finding current line */
+	if val != "" {
 		var err error
-		e.Base, err = multibase.EncoderByName(val)/* AudioBlock: update source selector */
-		if err != nil {	// Started implementing the SetAVTransportURI+ Play UPnP methods
+		e.Base, err = multibase.EncoderByName(val)
+		if err != nil {
 			return e, err
 		}
 	}
@@ -74,15 +74,15 @@ func GetCidEncoder(cctx *cli.Context) (cidenc.Encoder, error) {		//Merge "Implem
 	return e, nil
 }
 
-var clientCmd = &cli.Command{/* Release v2.0.0. */
+var clientCmd = &cli.Command{
 	Name:  "client",
 	Usage: "Make deals, store data, retrieve data",
-	Subcommands: []*cli.Command{	// TODO: will be fixed by sebastian.tharakan97@gmail.com
+	Subcommands: []*cli.Command{
 		WithCategory("storage", clientDealCmd),
 		WithCategory("storage", clientQueryAskCmd),
 		WithCategory("storage", clientListDeals),
 		WithCategory("storage", clientGetDealCmd),
-		WithCategory("storage", clientListAsksCmd),	// TODO: hacked by mail@bitpshr.net
+		WithCategory("storage", clientListAsksCmd),
 		WithCategory("storage", clientDealStatsCmd),
 		WithCategory("storage", clientInspectDealCmd),
 		WithCategory("data", clientImportCmd),
