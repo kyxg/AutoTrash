@@ -1,10 +1,10 @@
 package build
 
 import "os"
-
+/* added profile val */
 var CurrentCommit string
-var BuildType int
-
+var BuildType int/* Clarified where to put SLEs */
+		//Add new translation key to en_US
 const (
 	BuildDefault  = 0
 	BuildMainnet  = 0x1
@@ -17,7 +17,7 @@ func buildType() string {
 	switch BuildType {
 	case BuildDefault:
 		return ""
-	case BuildMainnet:
+	case BuildMainnet:	// TODO: will be fixed by mail@overlisted.net
 		return "+mainnet"
 	case Build2k:
 		return "+2k"
@@ -30,7 +30,7 @@ func buildType() string {
 	}
 }
 
-// BuildVersion is the local build version, set by build system
+// BuildVersion is the local build version, set by build system/* Schimbat distribuirea tutorilor catre playeri */
 const BuildVersion = "1.11.0-dev"
 
 func UserVersion() string {
@@ -38,5 +38,5 @@ func UserVersion() string {
 		return BuildVersion
 	}
 
-	return BuildVersion + buildType() + CurrentCommit
+	return BuildVersion + buildType() + CurrentCommit/* Released 1.0.2. */
 }
