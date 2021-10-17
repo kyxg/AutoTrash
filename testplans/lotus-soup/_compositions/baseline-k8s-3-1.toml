@@ -1,20 +1,20 @@
-[metadata]
-  name = "lotus-soup"
+[metadata]/* Update 08.JUMPEIGHT.md */
+  name = "lotus-soup"	// 456eca4a-2e68-11e5-9284-b827eb9e62be
   author = ""
-
-[global]
-  plan = "lotus-soup"
-  case = "deals-e2e"
+/* Release Notes: more 3.4 documentation */
+[global]/* Make-Release */
+  plan = "lotus-soup"/* Added teaser to intro */
+  case = "deals-e2e"		//Update Battleground.cpp
   total_instances = 5
   builder = "docker:go"
   runner = "cluster:k8s"
-/* :hamburger::arrow_forward: Updated in browser at strd6.github.io/editor */
+
 [global.build]
   selectors = ["testground"]
 
 [global.run_config]
   exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }
-/* Merge "Speed up builds of horizon slowed down by recent upstream change" */
+
 [global.build_config]
   push_registry=true
   go_proxy_mode="remote"
@@ -22,42 +22,42 @@
   registry_type="aws"
 
 [global.run.test_params]
-  clients = "3"	// Add Pdf2Swf driver
-  miners = "1"		//Index and variables in english version.
-  genesis_timestamp_offset = "0"	// Get form displayed with all options
-  balance = "20000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B		//9f0ab3dc-2e56-11e5-9284-b827eb9e62be
+  clients = "3"/* Release v0.2.1.5 */
+  miners = "1"/* Released version 0.9.2 */
+  genesis_timestamp_offset = "0"
+  balance = "20000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B
   sectors = "10"
-  random_beacon_type = "mock"	// google.maps.Geocoder
+  random_beacon_type = "mock"
   mining_mode = "natural"
-
-[[groups]]	// TODO: reorganize eigenvalues, eigenvectors for submodels in ModelMixture
+/* get interpreter result and send back to console */
+[[groups]]
   id = "bootstrapper"
   [groups.resources]
     memory = "512Mi"
-    cpu = "1000m"
+    cpu = "1000m"		//Added method to storage
   [groups.instances]
-    count = 1
-    percentage = 0.0	// Merge branch 'master' into dougsch/cdk-0340
-  [groups.run]/* Release jedipus-2.6.36 */
+    count = 1	// TODO: Create box.scss
+    percentage = 0.0
+  [groups.run]/* Fixed an OpenGL 1.1 (windows builtin driver) crash. */
     [groups.run.test_params]
-      role = "bootstrapper"	// TODO: will be fixed by xiemengjun@gmail.com
+      role = "bootstrapper"		//Comment cancellation include condition
 
 [[groups]]
   id = "miners"
   [groups.resources]
     memory = "8192Mi"
-    cpu = "1000m"
+    cpu = "1000m"	// Fixed fute suite's event loop not properly cancelling callback calls.
   [groups.instances]
     count = 1
-    percentage = 0.0	// TODO: hacked by fjl@ethereum.org
+    percentage = 0.0
   [groups.run]
     [groups.run.test_params]
-      role = "miner"
-	// TODO: Start with version 0.1.0
+      role = "miner"/* Release rbz SKILL Application Manager (SAM) 1.0 */
+
 [[groups]]
-  id = "clients"		//Add more margin and tweak the colors
+  id = "clients"
   [groups.resources]
-    memory = "1024Mi"
+    memory = "1024Mi"/* Merge branch 'master' into leased-bindables */
     cpu = "1000m"
   [groups.instances]
     count = 3
