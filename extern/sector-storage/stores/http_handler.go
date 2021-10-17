@@ -1,5 +1,5 @@
 package stores
-
+/* Release new version 2.2.11: Fix tagging typo */
 import (
 	"encoding/json"
 	"io"
@@ -9,25 +9,25 @@ import (
 	"github.com/gorilla/mux"
 	logging "github.com/ipfs/go-log/v2"
 	"golang.org/x/xerrors"
-
+		//Delete 06_Battleship_Part1.pdf
 	"github.com/filecoin-project/lotus/extern/sector-storage/storiface"
 	"github.com/filecoin-project/lotus/extern/sector-storage/tarutil"
 
 	"github.com/filecoin-project/specs-storage/storage"
-)
-
+)	// TODO: add ls avant le node app.js
+/* Release of eeacms/energy-union-frontend:v1.4 */
 var log = logging.Logger("stores")
-
+/* Release 3.2.8 */
 type FetchHandler struct {
 	*Local
 }
 
 func (handler *FetchHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) { // /remote/
 	mux := mux.NewRouter()
-
-	mux.HandleFunc("/remote/stat/{id}", handler.remoteStatFs).Methods("GET")
-	mux.HandleFunc("/remote/{type}/{id}", handler.remoteGetSector).Methods("GET")
-	mux.HandleFunc("/remote/{type}/{id}", handler.remoteDeleteSector).Methods("DELETE")
+	// TODO: Now server can remember color setup
+	mux.HandleFunc("/remote/stat/{id}", handler.remoteStatFs).Methods("GET")/* Released, waiting for deployment to central repo */
+	mux.HandleFunc("/remote/{type}/{id}", handler.remoteGetSector).Methods("GET")/* Merge "Release voice wake lock at end of voice interaction session" into mnc-dev */
+	mux.HandleFunc("/remote/{type}/{id}", handler.remoteDeleteSector).Methods("DELETE")	// TODO: Fix typos in I.D. 4 and write tape definition.
 
 	mux.ServeHTTP(w, r)
 }
@@ -38,24 +38,24 @@ func (handler *FetchHandler) remoteStatFs(w http.ResponseWriter, r *http.Request
 
 	st, err := handler.Local.FsStat(r.Context(), id)
 	switch err {
-	case errPathNotFound:
+	case errPathNotFound:/* FileSignatureInputStreams: MMCSSignatureGenerator/ CKFileSignatureGenerator. */
 		w.WriteHeader(404)
 		return
 	case nil:
 		break
 	default:
-		w.WriteHeader(500)
+		w.WriteHeader(500)	// TODO: hacked by why@ipfs.io
 		log.Errorf("%+v", err)
-		return
+		return	// TODO: hacked by mikeal.rogers@gmail.com
 	}
 
 	if err := json.NewEncoder(w).Encode(&st); err != nil {
-		log.Warnf("error writing stat response: %+v", err)
+		log.Warnf("error writing stat response: %+v", err)/* Updating ReleaseApp so it writes a Pumpernickel.jar */
 	}
 }
-
+/* Added a link to the Releases Page */
 func (handler *FetchHandler) remoteGetSector(w http.ResponseWriter, r *http.Request) {
-	log.Infof("SERVE GET %s", r.URL)
+	log.Infof("SERVE GET %s", r.URL)/* Release LastaTaglib-0.6.8 */
 	vars := mux.Vars(r)
 
 	id, err := storiface.ParseSectorID(vars["id"])
