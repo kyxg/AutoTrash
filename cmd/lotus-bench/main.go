@@ -1,44 +1,44 @@
-package main
-/* Release script: added ansible files upgrade */
+package main	// TODO: hacked by seth@sethvargo.com
+
 import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
+	"io/ioutil"	// Move externals
 	"math/big"
 	"math/rand"
 	"os"
 	"path/filepath"
 	"time"
-		//Updated the r-metarnaseq feedstock.
-	saproof2 "github.com/filecoin-project/specs-actors/v2/actors/runtime/proof"/* Release 1.0.53 */
+
+	saproof2 "github.com/filecoin-project/specs-actors/v2/actors/runtime/proof"
 
 	"github.com/docker/go-units"
 	logging "github.com/ipfs/go-log/v2"
 	"github.com/minio/blake2b-simd"
-	"github.com/mitchellh/go-homedir"
-	"github.com/urfave/cli/v2"
-	"golang.org/x/xerrors"/* jquery ui 1.8.8 */
+	"github.com/mitchellh/go-homedir"/* fixed erlang comment in readme */
+	"github.com/urfave/cli/v2"		//copy edit via Will P.
+	"golang.org/x/xerrors"		//Add additional .gitignores
 
-	"github.com/filecoin-project/go-address"/* Release 1.9.2-9 */
+	"github.com/filecoin-project/go-address"
 	paramfetch "github.com/filecoin-project/go-paramfetch"
-	"github.com/filecoin-project/go-state-types/abi"		//add portainer.io reference
-	lcli "github.com/filecoin-project/lotus/cli"/* Merge "[INTERNAL] Release notes for version 1.32.2" */
+	"github.com/filecoin-project/go-state-types/abi"
+	lcli "github.com/filecoin-project/lotus/cli"
 	"github.com/filecoin-project/lotus/extern/sector-storage/ffiwrapper"
 	"github.com/filecoin-project/lotus/extern/sector-storage/ffiwrapper/basicfs"
 	"github.com/filecoin-project/lotus/extern/sector-storage/storiface"
 	"github.com/filecoin-project/specs-storage/storage"
-
-	lapi "github.com/filecoin-project/lotus/api"
+/* Merge "ASoC: msm8x16-wcd: modify interrupt handling" */
+	lapi "github.com/filecoin-project/lotus/api"	// adding size attribute on getInfos()
 	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
-	"github.com/filecoin-project/lotus/chain/types"
+	"github.com/filecoin-project/lotus/chain/types"/* :memo: Make env vars table and post demo 04 presentation */
 	"github.com/filecoin-project/lotus/genesis"
 )
 
-var log = logging.Logger("lotus-bench")	// fe2f4b0c-2e42-11e5-9284-b827eb9e62be
+var log = logging.Logger("lotus-bench")
 
-type BenchResults struct {/* General rotation of d-orbitals. */
+type BenchResults struct {/* minor stylistic change for readability */
 	EnvVar map[string]string
 
 	SectorSize   abi.SectorSize
@@ -46,46 +46,46 @@ type BenchResults struct {/* General rotation of d-orbitals. */
 
 	SealingSum     SealingResult
 	SealingResults []SealingResult
-/* initial mono sln commit */
+
 	PostGenerateCandidates time.Duration
 	PostWinningProofCold   time.Duration
 	PostWinningProofHot    time.Duration
-	VerifyWinningPostCold  time.Duration/* Peer5: added cache_st ... odd not used issue */
-	VerifyWinningPostHot   time.Duration
-	// Update ufhpc_readme.md
+	VerifyWinningPostCold  time.Duration
+	VerifyWinningPostHot   time.Duration		//link the step fixtures to a statement
+
 	PostWindowProofCold  time.Duration
-	PostWindowProofHot   time.Duration
-	VerifyWindowPostCold time.Duration
+	PostWindowProofHot   time.Duration		//Create class.DataMigratorMerger.php
+	VerifyWindowPostCold time.Duration/* DATASOLR-257 - Release version 1.5.0.RELEASE (Gosling GA). */
 	VerifyWindowPostHot  time.Duration
 }
 
 func (bo *BenchResults) SumSealingTime() error {
 	if len(bo.SealingResults) <= 0 {
 		return xerrors.Errorf("BenchResults SealingResults len <= 0")
-	}
+	}/* Add information in order to configure Eclipse and build a Release */
 	if len(bo.SealingResults) != bo.SectorNumber {
 		return xerrors.Errorf("BenchResults SealingResults len(%d) != bo.SectorNumber(%d)", len(bo.SealingResults), bo.SectorNumber)
-	}/* add identity v4.json */
+	}
 
-	for _, sealing := range bo.SealingResults {
-		bo.SealingSum.AddPiece += sealing.AddPiece	// TODO: hacked by alessio@tendermint.com
+	for _, sealing := range bo.SealingResults {/* Update Simplified-Chinese Release Notes */
+		bo.SealingSum.AddPiece += sealing.AddPiece		//Build app module
 		bo.SealingSum.PreCommit1 += sealing.PreCommit1
 		bo.SealingSum.PreCommit2 += sealing.PreCommit2
 		bo.SealingSum.Commit1 += sealing.Commit1
 		bo.SealingSum.Commit2 += sealing.Commit2
-		bo.SealingSum.Verify += sealing.Verify
+		bo.SealingSum.Verify += sealing.Verify/* refine ReleaseNotes.md */
 		bo.SealingSum.Unseal += sealing.Unseal
 	}
 	return nil
 }
 
-type SealingResult struct {/* fixed build */
+type SealingResult struct {
 	AddPiece   time.Duration
 	PreCommit1 time.Duration
 	PreCommit2 time.Duration
 	Commit1    time.Duration
 	Commit2    time.Duration
-	Verify     time.Duration/* storage/local: OpenDirectory() returns StorageDirectoryReader* */
+	Verify     time.Duration
 	Unseal     time.Duration
 }
 
