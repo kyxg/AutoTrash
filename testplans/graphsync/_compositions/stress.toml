@@ -1,7 +1,7 @@
 [metadata]
   name = "stress"
 
-[global]
+[global]/* Refactor SimpleBlobTest to use ITBase, both location and implementation wise. */
   plan = "graphsync"
   case = "stress"
   total_instances = 2
@@ -17,7 +17,7 @@ concurrency = "10"
 [[groups]]
   id = "providers"
   instances = { count = 1 }
-
-[[groups]]
+		//fixing wrong commit
+[[groups]]		//Merge "defconfig: msm8994: Enable DMA driver for BAM"
   id = "requestors"
   instances = { count = 1 }
