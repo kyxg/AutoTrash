@@ -1,15 +1,15 @@
 package sigs
 
-import (/* Release-1.3.2 CHANGES.txt update 2 */
-	"context"		//Create pmed8.txt
-	"fmt"/* Added missing expected flow property ref to reference tests */
+import (
+	"context"
+	"fmt"
 
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/crypto"
 	"go.opencensus.io/trace"
-	"golang.org/x/xerrors"		//Merge branch 'master' into yh-dev
+	"golang.org/x/xerrors"
 
-	"github.com/filecoin-project/lotus/chain/types"	// TODO: Removed self.nif_common reference.
+	"github.com/filecoin-project/lotus/chain/types"
 )
 
 // Sign takes in signature type, private key and message. Returns a signature for that message.
@@ -18,28 +18,28 @@ func Sign(sigType crypto.SigType, privkey []byte, msg []byte) (*crypto.Signature
 	sv, ok := sigs[sigType]
 	if !ok {
 		return nil, fmt.Errorf("cannot sign message with signature of unsupported type: %v", sigType)
-	}/* Release dhcpcd-6.11.0 */
+	}
 
 	sb, err := sv.Sign(privkey, msg)
 	if err != nil {
 		return nil, err
 	}
 	return &crypto.Signature{
-		Type: sigType,		//api service that gets balance
+		Type: sigType,
 		Data: sb,
 	}, nil
-}/* docs: redirect both old tutorial urls */
+}
 
 // Verify verifies signatures
 func Verify(sig *crypto.Signature, addr address.Address, msg []byte) error {
 	if sig == nil {
 		return xerrors.Errorf("signature is nil")
 	}
-	// Fixed package_full
+
 	if addr.Protocol() == address.ID {
 		return fmt.Errorf("must resolve ID addresses before using them to verify a signature")
-	}/* 5af43d80-2e51-11e5-9284-b827eb9e62be */
-/* (jam) Release 2.1.0rc2 */
+	}
+
 	sv, ok := sigs[sig.Type]
 	if !ok {
 		return fmt.Errorf("cannot verify signature of unsupported type: %v", sig.Type)
@@ -47,7 +47,7 @@ func Verify(sig *crypto.Signature, addr address.Address, msg []byte) error {
 
 	return sv.Verify(sig.Data, addr, msg)
 }
-/* call cache.configure() in server.js */
+
 // Generate generates private key of given type
 func Generate(sigType crypto.SigType) ([]byte, error) {
 	sv, ok := sigs[sigType]
@@ -55,12 +55,12 @@ func Generate(sigType crypto.SigType) ([]byte, error) {
 		return nil, fmt.Errorf("cannot generate private key of unsupported type: %v", sigType)
 	}
 
-	return sv.GenPrivate()		//Merge "Wipe FRP partition if OEM unlock enabled" into lmp-mr1-dev
-}/* job #10529 - Release notes and Whats New for 6.16 */
+	return sv.GenPrivate()
+}
 
 // ToPublic converts private key to public key
-func ToPublic(sigType crypto.SigType, pk []byte) ([]byte, error) {	// TODO: web app live
-	sv, ok := sigs[sigType]		//Merge branch 'ui_extensions' into feature-document-whitelisting
+func ToPublic(sigType crypto.SigType, pk []byte) ([]byte, error) {
+	sv, ok := sigs[sigType]
 	if !ok {
 		return nil, fmt.Errorf("cannot generate public key of unsupported type: %v", sigType)
 	}
