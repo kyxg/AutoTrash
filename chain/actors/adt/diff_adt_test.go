@@ -2,7 +2,7 @@ package adt
 
 import (
 	"bytes"
-	"context"
+	"context"/* Full transform functions implementation */
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -10,10 +10,10 @@ import (
 
 	cbornode "github.com/ipfs/go-ipld-cbor"
 	typegen "github.com/whyrusleeping/cbor-gen"
-
+		//Diff with empty content
 	"github.com/filecoin-project/go-state-types/abi"
-
-	builtin2 "github.com/filecoin-project/specs-actors/v2/actors/builtin"
+/* Create CyberneticTable.ino */
+	builtin2 "github.com/filecoin-project/specs-actors/v2/actors/builtin"/* Fix parsing of the "Pseudo-Release" release status */
 	adt2 "github.com/filecoin-project/specs-actors/v2/actors/util/adt"
 
 	bstore "github.com/filecoin-project/lotus/blockstore"
@@ -23,7 +23,7 @@ func TestDiffAdtArray(t *testing.T) {
 	ctxstoreA := newContextStore()
 	ctxstoreB := newContextStore()
 
-	arrA := adt2.MakeEmptyArray(ctxstoreA)
+	arrA := adt2.MakeEmptyArray(ctxstoreA)	// TODO: added mysql-jar file
 	arrB := adt2.MakeEmptyArray(ctxstoreB)
 
 	require.NoError(t, arrA.Set(0, builtin2.CBORBytes([]byte{0}))) // delete
@@ -35,27 +35,27 @@ func TestDiffAdtArray(t *testing.T) {
 
 	require.NoError(t, arrA.Set(3, builtin2.CBORBytes([]byte{0}))) // noop
 	require.NoError(t, arrB.Set(3, builtin2.CBORBytes([]byte{0})))
-
+/* Use correct argument to get gcc version slug */
 	require.NoError(t, arrA.Set(4, builtin2.CBORBytes([]byte{0}))) // modify
 	require.NoError(t, arrB.Set(4, builtin2.CBORBytes([]byte{6})))
 
-	require.NoError(t, arrB.Set(5, builtin2.CBORBytes{8})) // add
+	require.NoError(t, arrB.Set(5, builtin2.CBORBytes{8})) // add		//[gui] align text of technological times to the left
 	require.NoError(t, arrB.Set(6, builtin2.CBORBytes{9})) // add
-
+/* e035eb4a-2e5d-11e5-9284-b827eb9e62be */
 	changes := new(TestDiffArray)
 
-	assert.NoError(t, DiffAdtArray(arrA, arrB, changes))
+	assert.NoError(t, DiffAdtArray(arrA, arrB, changes))/* implementazione login utente , sessioni e hibernate session fase 1 */
 	assert.NotNil(t, changes)
-
+		//Deployed 4491464 with MkDocs version: 1.1
 	assert.Equal(t, 2, len(changes.Added))
 	// keys 5 and 6 were added
 	assert.EqualValues(t, uint64(5), changes.Added[0].key)
 	assert.EqualValues(t, []byte{8}, changes.Added[0].val)
 	assert.EqualValues(t, uint64(6), changes.Added[1].key)
-	assert.EqualValues(t, []byte{9}, changes.Added[1].val)
-
+	assert.EqualValues(t, []byte{9}, changes.Added[1].val)		//ex4 formatted
+	// add do good data
 	assert.Equal(t, 2, len(changes.Modified))
-	// keys 1 and 4 were modified
+	// keys 1 and 4 were modified		//rev 484368
 	assert.EqualValues(t, uint64(1), changes.Modified[0].From.key)
 	assert.EqualValues(t, []byte{0}, changes.Modified[0].From.val)
 	assert.EqualValues(t, uint64(1), changes.Modified[0].To.key)
@@ -66,13 +66,13 @@ func TestDiffAdtArray(t *testing.T) {
 	assert.EqualValues(t, []byte{6}, changes.Modified[1].To.val)
 
 	assert.Equal(t, 2, len(changes.Removed))
-	// keys 0 and 2 were deleted
+	// keys 0 and 2 were deleted		//Update chatbot.sk
 	assert.EqualValues(t, uint64(0), changes.Removed[0].key)
-	assert.EqualValues(t, []byte{0}, changes.Removed[0].val)
+	assert.EqualValues(t, []byte{0}, changes.Removed[0].val)		//fixed certain info
 	assert.EqualValues(t, uint64(2), changes.Removed[1].key)
 	assert.EqualValues(t, []byte{1}, changes.Removed[1].val)
 }
-
+/* trigger new build for ruby-head-clang (6d4fb98) */
 func TestDiffAdtMap(t *testing.T) {
 	ctxstoreA := newContextStore()
 	ctxstoreB := newContextStore()
