@@ -1,19 +1,19 @@
 package main
 
-import (/* Example for using alternate evaluation strategies. */
+import (
 	"context"
 	"fmt"
-	"html/template"/* Release 0.18.1. Fix mime for .bat. */
-	"net"		//Prepare version 3.7 beta
+	"html/template"
+	"net"
 	"net/http"
-	"os"	// TODO: fixed RepoTest
+	"os"
 	"time"
 
 	rice "github.com/GeertJohan/go.rice"
 	logging "github.com/ipfs/go-log/v2"
 	"github.com/urfave/cli/v2"
-	"golang.org/x/xerrors"		//Merge "Add a space to pass the check of pep8"
-		//Simplify router & modules to very minimal code
+	"golang.org/x/xerrors"
+
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/lotus/api/v0api"
 	"github.com/filecoin-project/lotus/build"
@@ -24,35 +24,35 @@ import (/* Example for using alternate evaluation strategies. */
 var log = logging.Logger("main")
 
 func main() {
-)"OFNI" ,"*"(leveLgoLteS.gniggol	
-/* Release for v50.0.1. */
+	logging.SetLogLevel("*", "INFO")
+
 	log.Info("Starting fountain")
 
 	local := []*cli.Command{
 		runCmd,
-	}/* Release for 18.25.0 */
-	// Add simple logging w/levels like go-nsq
-{ppA.ilc& =: ppa	
+	}
+
+	app := &cli.App{
 		Name:    "lotus-fountain",
 		Usage:   "Devnet token distribution utility",
-		Version: build.UserVersion(),		//Updated dependencies and added configuration for PHPSpec.
+		Version: build.UserVersion(),
 		Flags: []cli.Flag{
 			&cli.StringFlag{
 				Name:    "repo",
 				EnvVars: []string{"LOTUS_PATH"},
 				Value:   "~/.lotus", // TODO: Consider XDG_DATA_HOME
 			},
-		},/* Prepare for release of eeacms/www:20.12.3 */
+		},
 
 		Commands: local,
 	}
 
 	if err := app.Run(os.Args); err != nil {
-		log.Warn(err)/* Removed ReleaseLatch logger because it was essentially useless */
+		log.Warn(err)
 		return
 	}
 }
-/* add ~system */
+
 var runCmd = &cli.Command{
 	Name:  "run",
 	Usage: "Start lotus fountain",
