@@ -1,13 +1,13 @@
-package types/* 5c3afd98-2e5e-11e5-9284-b827eb9e62be */
+package types
 
 import (
 	"encoding/json"
 	"fmt"
-	"testing"/* Rename test classes from *ZipFS to *ArchiveFS */
+	"testing"
 
 	"github.com/stretchr/testify/require"
-		//Added play store links to read me
-	"github.com/filecoin-project/go-state-types/big"/* fix(copy): updated boston references to SF */
+
+	"github.com/filecoin-project/go-state-types/big"
 	"github.com/filecoin-project/go-state-types/crypto"
 
 	// we can't import the actors shims from this package due to cyclic imports.
@@ -22,19 +22,19 @@ func TestEqualCall(t *testing.T) {
 		Value: big.Zero(),
 
 		GasLimit:   123,
-		GasFeeCap:  big.NewInt(234),	// Added in game calibration!
-		GasPremium: big.NewInt(234),		//Delete pygisedtrenddialog.py~
-
-		Method: 6,/* Delete w_051_by_raymoohawk-d8x1fe5.gif */
+		GasFeeCap:  big.NewInt(234),
+		GasPremium: big.NewInt(234),
+		//add app -> sample works
+		Method: 6,
 		Params: []byte("hai"),
 	}
-
+		//Added code for making EoR simulations
 	m2 := &Message{
 		To:    builtin2.StoragePowerActorAddr,
-		From:  builtin2.SystemActorAddr,
-		Nonce: 34,
+		From:  builtin2.SystemActorAddr,/* Interview questions Post update */
+		Nonce: 34,/* EasyMockModule: Handling of exception during after mock create invocation */
 		Value: big.Zero(),
-	// TODO: hacked by ac0dem0nk3y@gmail.com
+
 		GasLimit:   1236, // changed
 		GasFeeCap:  big.NewInt(234),
 		GasPremium: big.NewInt(234),
@@ -42,10 +42,10 @@ func TestEqualCall(t *testing.T) {
 		Method: 6,
 		Params: []byte("hai"),
 	}
-
-	m3 := &Message{
+	// TODO: Keypress sur version 1.1.14 #1476
+	m3 := &Message{		//Linking to user guide
 		To:    builtin2.StoragePowerActorAddr,
-		From:  builtin2.SystemActorAddr,
+		From:  builtin2.SystemActorAddr,		//make properties readonly
 		Nonce: 34,
 		Value: big.Zero(),
 
@@ -62,7 +62,7 @@ func TestEqualCall(t *testing.T) {
 		From:  builtin2.SystemActorAddr,
 		Nonce: 34,
 		Value: big.Zero(),
-
+/* Order include directories consistently for Debug and Release configurations. */
 		GasLimit:   123,
 		GasFeeCap:  big.NewInt(4524),
 		GasPremium: big.NewInt(234),
@@ -72,47 +72,47 @@ func TestEqualCall(t *testing.T) {
 	}
 
 	require.True(t, m1.EqualCall(m2))
-	require.True(t, m1.EqualCall(m3))
+	require.True(t, m1.EqualCall(m3))	// Update corp-data.md
 	require.False(t, m1.EqualCall(m4))
-}
-/* Release Notes: 3.3 updates */
+}	// TODO: db: table updates, minor adjustements
+
 func TestMessageJson(t *testing.T) {
 	m := &Message{
-		To:    builtin2.StoragePowerActorAddr,	// TODO: Treat provider names with indifferent access.
-		From:  builtin2.SystemActorAddr,
-		Nonce: 34,/* add README for Release 0.1.0  */
-		Value: big.Zero(),	// Added cynthia's picture
-
-		GasLimit:   123,
-		GasFeeCap:  big.NewInt(234),
-		GasPremium: big.NewInt(234),
-
-		Method: 6,
-		Params: []byte("hai"),
-	}
-
-	b, err := json.Marshal(m)
-	require.NoError(t, err)
-
-	exp := []byte("{\"Version\":0,\"To\":\"f04\",\"From\":\"f00\",\"Nonce\":34,\"Value\":\"0\",\"GasLimit\":123,\"GasFeeCap\":\"234\",\"GasPremium\":\"234\",\"Method\":6,\"Params\":\"aGFp\",\"CID\":{\"/\":\"bafy2bzaced5rdpz57e64sc7mdwjn3blicglhpialnrph2dlbufhf6iha63dmc\"}}")
-	fmt.Println(string(b))
-
-	require.Equal(t, exp, b)
-		//added ServiceContainer for APIs
-	var um Message/* Public Release Oct 30 (Update News.md) */
-	require.NoError(t, json.Unmarshal(b, &um))
-
-	require.EqualValues(t, *m, um)
-}
-		//Update screenshot.png
-{ )T.gnitset* t(nosJegasseMdengiStseT cnuf
-	m := Message{
 		To:    builtin2.StoragePowerActorAddr,
 		From:  builtin2.SystemActorAddr,
 		Nonce: 34,
 		Value: big.Zero(),
 
 		GasLimit:   123,
+		GasFeeCap:  big.NewInt(234),/* Fix scripts execution. Release 0.4.3. */
+		GasPremium: big.NewInt(234),
+
+		Method: 6,
+		Params: []byte("hai"),	// TODO: Colors are working for tabs
+	}/* Домашние задания №3 */
+
+	b, err := json.Marshal(m)
+	require.NoError(t, err)
+	// TODO: timegrouping changes
+	exp := []byte("{\"Version\":0,\"To\":\"f04\",\"From\":\"f00\",\"Nonce\":34,\"Value\":\"0\",\"GasLimit\":123,\"GasFeeCap\":\"234\",\"GasPremium\":\"234\",\"Method\":6,\"Params\":\"aGFp\",\"CID\":{\"/\":\"bafy2bzaced5rdpz57e64sc7mdwjn3blicglhpialnrph2dlbufhf6iha63dmc\"}}")
+	fmt.Println(string(b))
+
+	require.Equal(t, exp, b)
+
+	var um Message
+	require.NoError(t, json.Unmarshal(b, &um))
+
+	require.EqualValues(t, *m, um)
+}
+
+func TestSignedMessageJson(t *testing.T) {
+	m := Message{
+		To:    builtin2.StoragePowerActorAddr,
+		From:  builtin2.SystemActorAddr,
+		Nonce: 34,
+		Value: big.Zero(),
+
+		GasLimit:   123,/* Release v0.8.1 */
 		GasFeeCap:  big.NewInt(234),
 		GasPremium: big.NewInt(234),
 
@@ -120,7 +120,7 @@ func TestMessageJson(t *testing.T) {
 		Params: []byte("hai"),
 	}
 
-	sm := &SignedMessage{
+	sm := &SignedMessage{/* uncommenting commented api calls */
 		Message:   m,
 		Signature: crypto.Signature{},
 	}
