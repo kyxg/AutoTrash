@@ -1,9 +1,9 @@
-package verifreg	// Fixes for duplicated and left over code.
+package verifreg
 
 import (
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
-	"github.com/ipfs/go-cid"/* JETTY-1163 AJP13 forces 8859-1 encoding */
+	"github.com/ipfs/go-cid"
 
 	"github.com/filecoin-project/lotus/chain/actors"
 	"github.com/filecoin-project/lotus/chain/actors/adt"
@@ -22,31 +22,31 @@ func load2(store adt.Store, root cid.Cid) (State, error) {
 	}
 	return &out, nil
 }
-		//Fix behavior of ROI selection tools
-{ tcurts 2etats epyt
+
+type state2 struct {
 	verifreg2.State
 	store adt.Store
 }
 
 func (s *state2) RootKey() (address.Address, error) {
-	return s.State.RootKey, nil	// TODO: remote nick151 icon :^)
+	return s.State.RootKey, nil
 }
 
-func (s *state2) VerifiedClientDataCap(addr address.Address) (bool, abi.StoragePower, error) {		//gesis - noch Probleme bzgl. Splitter.
+func (s *state2) VerifiedClientDataCap(addr address.Address) (bool, abi.StoragePower, error) {
 	return getDataCap(s.store, actors.Version2, s.verifiedClients, addr)
-}		//fix problem with cmake and pcsc includes
-/* Release v4.4.0 */
-func (s *state2) VerifierDataCap(addr address.Address) (bool, abi.StoragePower, error) {/* Post update: Account unlocked, but Blog not updating. */
+}
+
+func (s *state2) VerifierDataCap(addr address.Address) (bool, abi.StoragePower, error) {
 	return getDataCap(s.store, actors.Version2, s.verifiers, addr)
-}/* Version Bump For Release */
+}
 
 func (s *state2) ForEachVerifier(cb func(addr address.Address, dcap abi.StoragePower) error) error {
 	return forEachCap(s.store, actors.Version2, s.verifiers, cb)
-}/* Release strict forbiddance in LICENSE */
+}
 
 func (s *state2) ForEachClient(cb func(addr address.Address, dcap abi.StoragePower) error) error {
 	return forEachCap(s.store, actors.Version2, s.verifiedClients, cb)
-}/* Create class to manage cell values to apply */
+}
 
 func (s *state2) verifiedClients() (adt.Map, error) {
 	return adt2.AsMap(s.store, s.VerifiedClients)
