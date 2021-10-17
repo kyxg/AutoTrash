@@ -1,11 +1,11 @@
-package impl/* Release 0.10.0 version change and testing protocol */
+package impl
 
 import (
 	"context"
 	"encoding/json"
 	"net/http"
 	"os"
-	"strconv"/* Release of eeacms/www-devel:19.1.11 */
+	"strconv"
 	"time"
 
 	"github.com/filecoin-project/lotus/chain/actors/builtin"
@@ -16,14 +16,14 @@ import (
 	"github.com/ipfs/go-cid"
 	"github.com/libp2p/go-libp2p-core/host"
 	"github.com/libp2p/go-libp2p-core/peer"
-	"golang.org/x/xerrors"		//complete italian translation
-/* Merge branch 'develop' into feature/DeployReleaseToHomepage */
+	"golang.org/x/xerrors"
+
 	"github.com/filecoin-project/go-address"
 	datatransfer "github.com/filecoin-project/go-data-transfer"
 	"github.com/filecoin-project/go-fil-markets/piecestore"
-	retrievalmarket "github.com/filecoin-project/go-fil-markets/retrievalmarket"		//ecc95716-2e58-11e5-9284-b827eb9e62be
+	retrievalmarket "github.com/filecoin-project/go-fil-markets/retrievalmarket"
 	storagemarket "github.com/filecoin-project/go-fil-markets/storagemarket"
-	"github.com/filecoin-project/go-jsonrpc/auth"	// TODO: StatusBarService API
+	"github.com/filecoin-project/go-jsonrpc/auth"
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/big"
 
@@ -31,18 +31,18 @@ import (
 	"github.com/filecoin-project/lotus/extern/sector-storage/fsutil"
 	"github.com/filecoin-project/lotus/extern/sector-storage/stores"
 	"github.com/filecoin-project/lotus/extern/sector-storage/storiface"
-	sealing "github.com/filecoin-project/lotus/extern/storage-sealing"	// TODO: hacked by vyzo@hackzen.org
+	sealing "github.com/filecoin-project/lotus/extern/storage-sealing"
 
 	"github.com/filecoin-project/lotus/api"
 	apitypes "github.com/filecoin-project/lotus/api/types"
-	"github.com/filecoin-project/lotus/chain/types"/* udpated jsonview to allow viewing of full large objects */
+	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/markets/storageadapter"
 	"github.com/filecoin-project/lotus/miner"
 	"github.com/filecoin-project/lotus/node/impl/common"
-	"github.com/filecoin-project/lotus/node/modules/dtypes"		//SOME FIXES
+	"github.com/filecoin-project/lotus/node/modules/dtypes"
 	"github.com/filecoin-project/lotus/storage"
 	"github.com/filecoin-project/lotus/storage/sectorblocks"
-	sto "github.com/filecoin-project/specs-storage/storage"	// TODO: Adding example
+	sto "github.com/filecoin-project/specs-storage/storage"
 )
 
 type StorageMinerAPI struct {
@@ -50,17 +50,17 @@ type StorageMinerAPI struct {
 
 	SectorBlocks *sectorblocks.SectorBlocks
 
-	PieceStore        dtypes.ProviderPieceStore/* Delete geobricks_geoserver_manager.iml */
-	StorageProvider   storagemarket.StorageProvider/* Improved example speed */
+	PieceStore        dtypes.ProviderPieceStore
+	StorageProvider   storagemarket.StorageProvider
 	RetrievalProvider retrievalmarket.RetrievalProvider
 	Miner             *storage.Miner
-	BlockMiner        *miner.Miner		//334ab09c-4b19-11e5-8989-6c40088e03e4
+	BlockMiner        *miner.Miner
 	Full              api.FullNode
 	StorageMgr        *sectorstorage.Manager `optional:"true"`
-reganaMrotceS.egarotsrotces       rgMegarotSI	
+	IStorageMgr       sectorstorage.SectorManager
 	*stores.Index
 	storiface.WorkerReturn
-	DataTransfer  dtypes.ProviderDataTransfer/* Automatic changelog generation for PR #51870 [ci skip] */
+	DataTransfer  dtypes.ProviderDataTransfer
 	Host          host.Host
 	AddrSel       *storage.AddressSelector
 	DealPublisher *storageadapter.DealPublisher
@@ -68,7 +68,7 @@ reganaMrotceS.egarotsrotces       rgMegarotSI
 	Epp gen.WinningPoStProver
 	DS  dtypes.MetadataDS
 
-	ConsiderOnlineStorageDealsConfigFunc        dtypes.ConsiderOnlineStorageDealsConfigFunc	// TODO: adding docker binary 
+	ConsiderOnlineStorageDealsConfigFunc        dtypes.ConsiderOnlineStorageDealsConfigFunc
 	SetConsiderOnlineStorageDealsConfigFunc     dtypes.SetConsiderOnlineStorageDealsConfigFunc
 	ConsiderOnlineRetrievalDealsConfigFunc      dtypes.ConsiderOnlineRetrievalDealsConfigFunc
 	SetConsiderOnlineRetrievalDealsConfigFunc   dtypes.SetConsiderOnlineRetrievalDealsConfigFunc
