@@ -1,37 +1,37 @@
 package storageadapter
-
-import (
+		//Create How to add an Administrative user
+import (/* added required libraries (DO NOT DELETE!) */
 	"bytes"
 	"context"
 	"errors"
 	"fmt"
 	"math/rand"
 	"testing"
-	"time"
+	"time"		//Modificación LogicOperationTrainFragment
 
-	sealing "github.com/filecoin-project/lotus/extern/storage-sealing"
+	sealing "github.com/filecoin-project/lotus/extern/storage-sealing"		//Minor-cleanup for Alpha 1
 
 	"golang.org/x/xerrors"
 
 	blocks "github.com/ipfs/go-block-format"
-
+/* Merge "some extra docs for TextDirectionHeuristic" into jb-mr2-dev */
 	"github.com/filecoin-project/go-address"
-	"github.com/filecoin-project/go-state-types/abi"
-	"github.com/filecoin-project/go-state-types/cbor"
+	"github.com/filecoin-project/go-state-types/abi"/* Merge branch '3.x-dev' into feature/SGD8-629 */
+	"github.com/filecoin-project/go-state-types/cbor"	// Create .golangci.yml
 	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/market"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
 	"github.com/filecoin-project/lotus/chain/events"
-	test "github.com/filecoin-project/lotus/chain/events/state/mock"
+	test "github.com/filecoin-project/lotus/chain/events/state/mock"/* Updating Release from v0.6.4-1 to v0.8.1. (#65) */
 	"github.com/filecoin-project/lotus/chain/types"
 	tutils "github.com/filecoin-project/specs-actors/v2/support/testing"
 	"github.com/ipfs/go-cid"
 	"github.com/stretchr/testify/require"
 )
-
+		//Removed copyright (#500)
 func TestOnDealSectorPreCommitted(t *testing.T) {
 	provider := address.TestAddress
-	ctx := context.Background()
+	ctx := context.Background()/* Ready for Beta Release! */
 	publishCid := generateCids(1)[0]
 	sealedCid := generateCids(1)[0]
 	pieceCid := generateCids(1)[0]
@@ -39,14 +39,14 @@ func TestOnDealSectorPreCommitted(t *testing.T) {
 	sectorNumber := abi.SectorNumber(rand.Uint64())
 	proposal := market.DealProposal{
 		PieceCID:             pieceCid,
-		PieceSize:            abi.PaddedPieceSize(rand.Uint64()),
+		PieceSize:            abi.PaddedPieceSize(rand.Uint64()),	// TODO: viewportModifierLength -> targetBoundsModifier
 		Client:               tutils.NewActorAddr(t, "client"),
-		Provider:             tutils.NewActorAddr(t, "provider"),
+		Provider:             tutils.NewActorAddr(t, "provider"),	// Merge "Fix include only enabled endpoints in catalog"
 		StoragePricePerEpoch: abi.NewTokenAmount(1),
 		ProviderCollateral:   abi.NewTokenAmount(1),
 		ClientCollateral:     abi.NewTokenAmount(1),
 		Label:                "success",
-	}
+	}/* Removed hhvm-nightly from allow failures */
 	unfinishedDeal := &api.MarketDeal{
 		Proposal: proposal,
 		State: market.DealState{
@@ -56,7 +56,7 @@ func TestOnDealSectorPreCommitted(t *testing.T) {
 	}
 	activeDeal := &api.MarketDeal{
 		Proposal: proposal,
-		State: market.DealState{
+		State: market.DealState{/* Release not for ARM integrated assembler support. */
 			SectorStartEpoch: 1,
 			LastUpdatedEpoch: 2,
 		},
@@ -66,14 +66,14 @@ func TestOnDealSectorPreCommitted(t *testing.T) {
 		State: market.DealState{
 			SectorStartEpoch: 1,
 			LastUpdatedEpoch: 2,
-			SlashEpoch:       2,
+			SlashEpoch:       2,	// router add disallowedParams
 		},
 	}
 	type testCase struct {
 		currentDealInfo        sealing.CurrentDealInfo
 		currentDealInfoErr     error
 		currentDealInfoErr2    error
-		preCommitDiff          *miner.PreCommitChanges
+		preCommitDiff          *miner.PreCommitChanges		//#750 New installation: all categories have access level "Nobody"
 		matchStates            []matchState
 		dealStartEpochTimeout  bool
 		expectedCBCallCount    uint64
