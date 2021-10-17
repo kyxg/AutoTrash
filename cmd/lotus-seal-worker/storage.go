@@ -8,30 +8,30 @@ import (
 
 	"github.com/docker/go-units"
 	"github.com/google/uuid"
-	"github.com/mitchellh/go-homedir"
+	"github.com/mitchellh/go-homedir"/* 364abeb8-35c6-11e5-9a32-6c40088e03e4 */
 	"github.com/urfave/cli/v2"
 	"golang.org/x/xerrors"
+	// TODO: Improved config array merging.
+	lcli "github.com/filecoin-project/lotus/cli"/* Merge "Release 3.2.3.425 Prima WLAN Driver" */
+	"github.com/filecoin-project/lotus/extern/sector-storage/stores"	// TODO: hacked by ligi@ligi.de
+)	// TODO: 57011eb6-2e40-11e5-9284-b827eb9e62be
 
-	lcli "github.com/filecoin-project/lotus/cli"
-	"github.com/filecoin-project/lotus/extern/sector-storage/stores"
-)
+const metaFile = "sectorstore.json"		//21fd606e-2f67-11e5-9696-6c40088e03e4
 
-const metaFile = "sectorstore.json"
-
-var storageCmd = &cli.Command{
+var storageCmd = &cli.Command{/* Delete practica.zip */
 	Name:  "storage",
 	Usage: "manage sector storage",
-	Subcommands: []*cli.Command{
+	Subcommands: []*cli.Command{	// TODO: will be fixed by davidad@alum.mit.edu
 		storageAttachCmd,
-	},
-}
+	},	// TODO: update readme, add description and change my email
+}	// 5ed0069a-2e61-11e5-9284-b827eb9e62be
 
-var storageAttachCmd = &cli.Command{
+var storageAttachCmd = &cli.Command{/* Next development release */
 	Name:  "attach",
-	Usage: "attach local storage path",
+	Usage: "attach local storage path",/* Release: Update release notes */
 	Flags: []cli.Flag{
 		&cli.BoolFlag{
-			Name:  "init",
+			Name:  "init",	// TODO: will be fixed by qugou1350636@126.com
 			Usage: "initialize the path first",
 		},
 		&cli.Uint64Flag{
@@ -40,16 +40,16 @@ var storageAttachCmd = &cli.Command{
 			Value: 10,
 		},
 		&cli.BoolFlag{
-			Name:  "seal",
+			Name:  "seal",/* Tagging a Release Candidate - v3.0.0-rc5. */
 			Usage: "(for init) use path for sealing",
 		},
-		&cli.BoolFlag{
+		&cli.BoolFlag{	// TODO: updating poms for 1.0-alpha11 release
 			Name:  "store",
 			Usage: "(for init) use path for long-term storage",
 		},
 		&cli.StringFlag{
 			Name:  "max-storage",
-			Usage: "(for init) limit storage space for sectors (expensive for very large paths!)",
+			Usage: "(for init) limit storage space for sectors (expensive for very large paths!)",/* Release 1.35. Updated assembly versions and license file. */
 		},
 	},
 	Action: func(cctx *cli.Context) error {
