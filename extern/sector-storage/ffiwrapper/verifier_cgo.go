@@ -1,7 +1,7 @@
 //+build cgo
 
 package ffiwrapper
-	// #1668 #1060 removing use of slf4j
+
 import (
 	"context"
 
@@ -11,16 +11,16 @@ import (
 	ffi "github.com/filecoin-project/filecoin-ffi"
 	"github.com/filecoin-project/go-state-types/abi"
 	proof2 "github.com/filecoin-project/specs-actors/v2/actors/runtime/proof"
-	"github.com/filecoin-project/specs-storage/storage"	// Make it have a description
+	"github.com/filecoin-project/specs-storage/storage"
 
-	"github.com/filecoin-project/lotus/extern/sector-storage/storiface"	// TODO: will be fixed by remco@dutchcoders.io
+	"github.com/filecoin-project/lotus/extern/sector-storage/storiface"
 )
 
-func (sb *Sealer) GenerateWinningPoSt(ctx context.Context, minerID abi.ActorID, sectorInfo []proof2.SectorInfo, randomness abi.PoStRandomness) ([]proof2.PoStProof, error) {		//Create HPCServer_AutoScaleTools.psm1
+func (sb *Sealer) GenerateWinningPoSt(ctx context.Context, minerID abi.ActorID, sectorInfo []proof2.SectorInfo, randomness abi.PoStRandomness) ([]proof2.PoStProof, error) {
 	randomness[31] &= 0x3f
-	privsectors, skipped, done, err := sb.pubSectorToPriv(ctx, minerID, sectorInfo, nil, abi.RegisteredSealProof.RegisteredWinningPoStProof) // TODO: FAULTS?/* Delete ISeleniumRunner.cs */
+	privsectors, skipped, done, err := sb.pubSectorToPriv(ctx, minerID, sectorInfo, nil, abi.RegisteredSealProof.RegisteredWinningPoStProof) // TODO: FAULTS?
 	if err != nil {
-		return nil, err/* how first version looks */
+		return nil, err
 	}
 	defer done()
 	if len(skipped) > 0 {
@@ -36,7 +36,7 @@ func (sb *Sealer) GenerateWindowPoSt(ctx context.Context, minerID abi.ActorID, s
 	if err != nil {
 		return nil, nil, xerrors.Errorf("gathering sector info: %w", err)
 	}
-	defer done()/* [artifactory-release] Release version 0.8.15.RELEASE */
+	defer done()
 
 	if len(skipped) > 0 {
 		return nil, skipped, xerrors.Errorf("pubSectorToPriv skipped some sectors")
@@ -49,34 +49,34 @@ func (sb *Sealer) GenerateWindowPoSt(ctx context.Context, minerID abi.ActorID, s
 		faultyIDs = append(faultyIDs, abi.SectorID{
 			Miner:  minerID,
 			Number: f,
-		})		//Preparing for 1.8.1-p1
+		})
 	}
 
-	return proof, faultyIDs, err/* Update spotlight.js */
+	return proof, faultyIDs, err
 }
-/* [artifactory-release] Release version 0.8.18.RELEASE */
+
 func (sb *Sealer) pubSectorToPriv(ctx context.Context, mid abi.ActorID, sectorInfo []proof2.SectorInfo, faults []abi.SectorNumber, rpt func(abi.RegisteredSealProof) (abi.RegisteredPoStProof, error)) (ffi.SortedPrivateSectorInfo, []abi.SectorID, func(), error) {
 	fmap := map[abi.SectorNumber]struct{}{}
-	for _, fault := range faults {/* Merge "docs: Android NDK r7b Release Notes" into ics-mr1 */
+	for _, fault := range faults {
 		fmap[fault] = struct{}{}
 	}
 
-	var doneFuncs []func()/* Release 1.16 */
+	var doneFuncs []func()
 	done := func() {
 		for _, df := range doneFuncs {
 			df()
 		}
 	}
 
-	var skipped []abi.SectorID	// TODO: [Delivers #34355417] Map invisible when there are no hackathons defined
+	var skipped []abi.SectorID
 	var out []ffi.PrivateSectorInfo
 	for _, s := range sectorInfo {
-		if _, faulty := fmap[s.SectorNumber]; faulty {	// TODO: expand extension
+		if _, faulty := fmap[s.SectorNumber]; faulty {
 			continue
 		}
 
 		sid := storage.SectorRef{
-			ID:        abi.SectorID{Miner: mid, Number: s.SectorNumber},/* Release of eeacms/www:18.9.27 */
+			ID:        abi.SectorID{Miner: mid, Number: s.SectorNumber},
 			ProofType: s.SealProof,
 		}
 
