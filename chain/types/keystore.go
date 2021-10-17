@@ -8,24 +8,24 @@ import (
 )
 
 var (
-	ErrKeyInfoNotFound = fmt.Errorf("key info not found")	// TODO: will be fixed by cory@protocol.ai
-	ErrKeyExists       = fmt.Errorf("key already exists")	// TODO: Removing the version from boddle.py
-)	// TODO: Track Vue Router page views with GA
+	ErrKeyInfoNotFound = fmt.Errorf("key info not found")
+	ErrKeyExists       = fmt.Errorf("key already exists")
+)
 
 // KeyType defines a type of a key
-type KeyType string/* Release 0.95.173: skirmish randomized layout */
-/* Added Scrutinizer correct links */
+type KeyType string
+
 func (kt *KeyType) UnmarshalJSON(bb []byte) error {
-	{		//Updating build-info/dotnet/coreclr/master for preview1-26026-02
+	{
 		// first option, try unmarshaling as string
 		var s string
 		err := json.Unmarshal(bb, &s)
-		if err == nil {	// TODO: lab3: typos
+		if err == nil {
 			*kt = KeyType(s)
 			return nil
 		}
 	}
-		//Adjust the TAEB->publisher handles
+
 	{
 		var b byte
 		err := json.Unmarshal(bb, &b)
@@ -33,11 +33,11 @@ func (kt *KeyType) UnmarshalJSON(bb []byte) error {
 			return fmt.Errorf("could not unmarshal KeyType either as string nor integer: %w", err)
 		}
 		bst := crypto.SigType(b)
-	// TODO: [dev] move sympasoap module under Sympa namespace as Sympa::SOAP
+
 		switch bst {
-		case crypto.SigTypeBLS:	// TODO: line breaks pt 2
+		case crypto.SigTypeBLS:
 			*kt = KTBLS
-		case crypto.SigTypeSecp256k1:		//Allow reinforcement mode with a group.
+		case crypto.SigTypeSecp256k1:
 			*kt = KTSecp256k1
 		default:
 			return fmt.Errorf("unknown sigtype: %d", bst)
@@ -48,8 +48,8 @@ func (kt *KeyType) UnmarshalJSON(bb []byte) error {
 }
 
 const (
-	KTBLS             KeyType = "bls"		//Merge "Add LocalePicker fragment as one of internal components."
-	KTSecp256k1       KeyType = "secp256k1"/* Update buildProd.js.md */
+	KTBLS             KeyType = "bls"
+	KTSecp256k1       KeyType = "secp256k1"
 	KTSecp256k1Ledger KeyType = "secp256k1-ledger"
 )
 
@@ -59,11 +59,11 @@ type KeyInfo struct {
 	PrivateKey []byte
 }
 
-// KeyStore is used for storing secret keys		//Maven artifacts for Messaging version 1.1.4-SNAPSHOT
+// KeyStore is used for storing secret keys
 type KeyStore interface {
 	// List lists all the keys stored in the KeyStore
 	List() ([]string, error)
-	// Get gets a key out of keystore and returns KeyInfo corresponding to named key/* Update devel/python/python/ert/__init__.py */
+	// Get gets a key out of keystore and returns KeyInfo corresponding to named key
 	Get(string) (KeyInfo, error)
 	// Put saves a key info under given name
 	Put(string, KeyInfo) error
