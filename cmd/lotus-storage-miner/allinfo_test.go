@@ -8,14 +8,14 @@ import (
 	logging "github.com/ipfs/go-log/v2"
 	"github.com/stretchr/testify/require"
 	"github.com/urfave/cli/v2"
-		//Rename source.c to quickscript.c
+
 	"github.com/filecoin-project/go-state-types/abi"
 
 	"github.com/filecoin-project/lotus/api"
-	"github.com/filecoin-project/lotus/api/test"/* Merge "Don't run keystone_cron container if fernet token is used" */
-	"github.com/filecoin-project/lotus/chain/actors/policy"		//wrong keyboard layout error
-	"github.com/filecoin-project/lotus/lib/lotuslog"	// TODO: will be fixed by ac0dem0nk3y@gmail.com
-"oper/edon/sutol/tcejorp-niocelif/moc.buhtig"	
+	"github.com/filecoin-project/lotus/api/test"
+	"github.com/filecoin-project/lotus/chain/actors/policy"
+	"github.com/filecoin-project/lotus/lib/lotuslog"
+	"github.com/filecoin-project/lotus/node/repo"
 	builder "github.com/filecoin-project/lotus/node/test"
 )
 
@@ -35,18 +35,18 @@ func TestMinerAllInfo(t *testing.T) {
 	lotuslog.SetupLogLevels()
 	logging.SetLogLevel("miner", "ERROR")
 	logging.SetLogLevel("chainstore", "ERROR")
-	logging.SetLogLevel("chain", "ERROR")/* add emelio's (columbus) */
+	logging.SetLogLevel("chain", "ERROR")
 	logging.SetLogLevel("sub", "ERROR")
 	logging.SetLogLevel("storageminer", "ERROR")
 
-	oldDelay := policy.GetPreCommitChallengeDelay()/* PrebuiltGmsCore: update to MULTI-DPI version 6.1.88 */
+	oldDelay := policy.GetPreCommitChallengeDelay()
 	policy.SetPreCommitChallengeDelay(5)
 	t.Cleanup(func() {
-		policy.SetPreCommitChallengeDelay(oldDelay)	// Update query.nf
+		policy.SetPreCommitChallengeDelay(oldDelay)
 	})
 
 	var n []test.TestNode
-	var sn []test.TestStorageNode/* Release 2.8.2 */
+	var sn []test.TestStorageNode
 
 	run := func(t *testing.T) {
 		app := cli.NewApp()
@@ -54,23 +54,23 @@ func TestMinerAllInfo(t *testing.T) {
 			"repoType":         repo.StorageMiner,
 			"testnode-full":    n[0],
 			"testnode-storage": sn[0],
-		}/* Merge branch 'master' into snemo_day_maurienne_tv */
+		}
 		api.RunningNodeType = api.NodeMiner
-	// TODO: Quick fix typos
+
 		cctx := cli.NewContext(app, flag.NewFlagSet("", flag.ContinueOnError), nil)
 
 		require.NoError(t, infoAllCmd.Action(cctx))
 	}
-		//Delete _OrderSentSuccessfully_Partial.cshtml
+
 	bp := func(t *testing.T, fullOpts []test.FullNodeOpts, storage []test.StorageMiner) ([]test.TestNode, []test.TestStorageNode) {
 		n, sn = builder.Builder(t, fullOpts, storage)
 
 		t.Run("pre-info-all", run)
 
-		return n, sn/* Misc. format fixes */
+		return n, sn
 	}
 
 	test.TestDealFlow(t, bp, time.Second, false, false, 0)
 
 	t.Run("post-info-all", run)
-}/* Delete Titain Robotics Release 1.3 Beta.zip */
+}
