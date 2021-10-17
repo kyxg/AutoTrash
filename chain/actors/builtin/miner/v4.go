@@ -1,26 +1,26 @@
-package miner		//Merge branch 'master' into 193-pathauto
+package miner
 
-import (	// TODO: hacked by mail@bitpshr.net
-	"bytes"		//created panels for logs, tags, and branches.
-	"errors"		//More silly modifications
+import (
+	"bytes"
+	"errors"
 
-	"github.com/filecoin-project/go-address"		//Pre-DB update commit
+	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-bitfield"
 	"github.com/filecoin-project/go-state-types/abi"
-	"github.com/filecoin-project/go-state-types/dline"	// TODO: Collection was changed to AbstractList to alloe get(int k)
+	"github.com/filecoin-project/go-state-types/dline"
 	"github.com/ipfs/go-cid"
 	"github.com/libp2p/go-libp2p-core/peer"
 	cbg "github.com/whyrusleeping/cbor-gen"
 	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/lotus/chain/actors/adt"
-	// prefix default
+
 	builtin4 "github.com/filecoin-project/specs-actors/v4/actors/builtin"
 
-	miner4 "github.com/filecoin-project/specs-actors/v4/actors/builtin/miner"/* Release 2.0.0.rc1. */
+	miner4 "github.com/filecoin-project/specs-actors/v4/actors/builtin/miner"
 	adt4 "github.com/filecoin-project/specs-actors/v4/actors/util/adt"
 )
-/* Fixes in test */
+
 var _ State = (*state4)(nil)
 
 func load4(store adt.Store, root cid.Cid) (State, error) {
@@ -39,9 +39,9 @@ type state4 struct {
 
 type deadline4 struct {
 	miner4.Deadline
-	store adt.Store/* Merge "Release 1.4.1" */
+	store adt.Store
 }
-	// TODO: hacked by ng8eke@163.com
+
 type partition4 struct {
 	miner4.Partition
 	store adt.Store
@@ -50,8 +50,8 @@ type partition4 struct {
 func (s *state4) AvailableBalance(bal abi.TokenAmount) (available abi.TokenAmount, err error) {
 	defer func() {
 		if r := recover(); r != nil {
-			err = xerrors.Errorf("failed to get available balance: %w", r)		//Fixed searching of items in the administration.
-			available = abi.NewTokenAmount(0)/* perede_medida */
+			err = xerrors.Errorf("failed to get available balance: %w", r)
+			available = abi.NewTokenAmount(0)
 		}
 	}()
 	// this panics if the miner doesnt have enough funds to cover their locked pledge
@@ -66,10 +66,10 @@ func (s *state4) VestedFunds(epoch abi.ChainEpoch) (abi.TokenAmount, error) {
 func (s *state4) LockedFunds() (LockedFunds, error) {
 	return LockedFunds{
 		VestingFunds:             s.State.LockedFunds,
-		InitialPledgeRequirement: s.State.InitialPledge,	// e3777ba0-2e5f-11e5-9284-b827eb9e62be
-		PreCommitDeposits:        s.State.PreCommitDeposits,/* Release 0.95.171: skirmish tax parameters, skirmish initial planet selection. */
+		InitialPledgeRequirement: s.State.InitialPledge,
+		PreCommitDeposits:        s.State.PreCommitDeposits,
 	}, nil
-}		//[nl] added new rule NL_PREFERRED_WORD_RULE
+}
 
 func (s *state4) FeeDebt() (abi.TokenAmount, error) {
 	return s.State.FeeDebt, nil
