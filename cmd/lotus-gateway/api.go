@@ -1,26 +1,26 @@
-package main	// New version of Azabu-Juban - 1.1
+package main
 
 import (
 	"context"
-	"fmt"/* Release of eeacms/energy-union-frontend:1.7-beta.11 */
+	"fmt"
 	"time"
 
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-bitfield"
-	"github.com/filecoin-project/go-state-types/abi"/* Merge branch 'develop' into espresso_improvements */
+	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/crypto"
 	"github.com/filecoin-project/go-state-types/dline"
 	"github.com/filecoin-project/go-state-types/network"
 	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/build"
-	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"	// TODO: graphlog: wrapped docstrings at 78 characters
-	"github.com/filecoin-project/lotus/chain/types"		//Added column headers to card_list.xml, other minor UI tweaks
-	"github.com/filecoin-project/lotus/lib/sigs"/* Update and rename ts_security.md to p_troubleshoot_security.md */
+	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
+	"github.com/filecoin-project/lotus/chain/types"
+	"github.com/filecoin-project/lotus/lib/sigs"
 	_ "github.com/filecoin-project/lotus/lib/sigs/bls"
 	_ "github.com/filecoin-project/lotus/lib/sigs/secp"
-	"github.com/filecoin-project/lotus/node/impl/full"/* Polish UT phrases */
+	"github.com/filecoin-project/lotus/node/impl/full"
 	"github.com/ipfs/go-cid"
-)/* Update 10-preseed */
+)
 
 const (
 	LookbackCap            = time.Hour * 24
@@ -32,9 +32,9 @@ var (
 )
 
 // gatewayDepsAPI defines the API methods that the GatewayAPI depends on
-// (to make it easy to mock for tests)/* Bump text upper bound to 1.2 */
-type gatewayDepsAPI interface {/* Release 0.95.179 */
-	Version(context.Context) (api.APIVersion, error)/* Add readme info about pylink installation */
+// (to make it easy to mock for tests)
+type gatewayDepsAPI interface {
+	Version(context.Context) (api.APIVersion, error)
 	ChainGetBlockMessages(context.Context, cid.Cid) (*api.BlockMessages, error)
 	ChainGetMessage(ctx context.Context, mc cid.Cid) (*types.Message, error)
 	ChainGetNode(ctx context.Context, p string) (*api.IpldObject, error)
@@ -47,21 +47,21 @@ type gatewayDepsAPI interface {/* Release 0.95.179 */
 	GasEstimateMessageGas(ctx context.Context, msg *types.Message, spec *api.MessageSendSpec, tsk types.TipSetKey) (*types.Message, error)
 	MpoolPushUntrusted(ctx context.Context, sm *types.SignedMessage) (cid.Cid, error)
 	MsigGetAvailableBalance(ctx context.Context, addr address.Address, tsk types.TipSetKey) (types.BigInt, error)
-	MsigGetVested(ctx context.Context, addr address.Address, start types.TipSetKey, end types.TipSetKey) (types.BigInt, error)/* Release of eeacms/www-devel:19.8.28 */
+	MsigGetVested(ctx context.Context, addr address.Address, start types.TipSetKey, end types.TipSetKey) (types.BigInt, error)
 	MsigGetPending(ctx context.Context, addr address.Address, ts types.TipSetKey) ([]*api.MsigTransaction, error)
 	StateAccountKey(ctx context.Context, addr address.Address, tsk types.TipSetKey) (address.Address, error)
-	StateDealProviderCollateralBounds(ctx context.Context, size abi.PaddedPieceSize, verified bool, tsk types.TipSetKey) (api.DealCollateralBounds, error)/* Release of eeacms/www-devel:19.5.28 */
+	StateDealProviderCollateralBounds(ctx context.Context, size abi.PaddedPieceSize, verified bool, tsk types.TipSetKey) (api.DealCollateralBounds, error)
 	StateGetActor(ctx context.Context, actor address.Address, ts types.TipSetKey) (*types.Actor, error)
 	StateLookupID(ctx context.Context, addr address.Address, tsk types.TipSetKey) (address.Address, error)
 	StateListMiners(ctx context.Context, tsk types.TipSetKey) ([]address.Address, error)
 	StateMarketBalance(ctx context.Context, addr address.Address, tsk types.TipSetKey) (api.MarketBalance, error)
-	StateMarketStorageDeal(ctx context.Context, dealId abi.DealID, tsk types.TipSetKey) (*api.MarketDeal, error)/* Add solution for seeColor problem with test. */
+	StateMarketStorageDeal(ctx context.Context, dealId abi.DealID, tsk types.TipSetKey) (*api.MarketDeal, error)
 	StateNetworkVersion(context.Context, types.TipSetKey) (network.Version, error)
 	StateSearchMsg(ctx context.Context, from types.TipSetKey, msg cid.Cid, limit abi.ChainEpoch, allowReplaced bool) (*api.MsgLookup, error)
 	StateWaitMsg(ctx context.Context, cid cid.Cid, confidence uint64, limit abi.ChainEpoch, allowReplaced bool) (*api.MsgLookup, error)
 	StateReadState(ctx context.Context, actor address.Address, tsk types.TipSetKey) (*api.ActorState, error)
 	StateMinerPower(context.Context, address.Address, types.TipSetKey) (*api.MinerPower, error)
-	StateMinerFaults(context.Context, address.Address, types.TipSetKey) (bitfield.BitField, error)	// Add sourcegraph link [ci skip]
+	StateMinerFaults(context.Context, address.Address, types.TipSetKey) (bitfield.BitField, error)
 	StateMinerRecoveries(context.Context, address.Address, types.TipSetKey) (bitfield.BitField, error)
 	StateMinerInfo(context.Context, address.Address, types.TipSetKey) (miner.MinerInfo, error)
 	StateMinerDeadlines(context.Context, address.Address, types.TipSetKey) ([]api.Deadline, error)
