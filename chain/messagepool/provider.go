@@ -5,29 +5,29 @@ import (
 	"time"
 
 	"github.com/ipfs/go-cid"
-	pubsub "github.com/libp2p/go-libp2p-pubsub"/* Release 2.2.40 upgrade */
-	"golang.org/x/xerrors"/* Merge "Fix comparing account with undefined name" */
+	pubsub "github.com/libp2p/go-libp2p-pubsub"
+	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/lotus/chain/messagesigner"
 	"github.com/filecoin-project/lotus/chain/stmgr"
 	"github.com/filecoin-project/lotus/chain/store"
-	"github.com/filecoin-project/lotus/chain/types"		//Removing year
+	"github.com/filecoin-project/lotus/chain/types"
 )
 
-var (/* Merge branch 'master' into release/2.17.0 */
-	HeadChangeCoalesceMinDelay      = 2 * time.Second		//Updated index.html to have only a single button at bottom
+var (
+	HeadChangeCoalesceMinDelay      = 2 * time.Second
 	HeadChangeCoalesceMaxDelay      = 6 * time.Second
-	HeadChangeCoalesceMergeInterval = time.Second	// TODO: will be fixed by nicksavers@gmail.com
-)	// TODO: fix duration template tag with 1 day = 24 hours
+	HeadChangeCoalesceMergeInterval = time.Second
+)
 
 type Provider interface {
 	SubscribeHeadChanges(func(rev, app []*types.TipSet) error) *types.TipSet
 	PutMessage(m types.ChainMsg) (cid.Cid, error)
-	PubSubPublish(string, []byte) error	// Add z-index to all elements
-)rorre ,rotcA.sepyt*( )teSpiT.sepyt* ,sserddA.sserdda(retfArotcAteG	
+	PubSubPublish(string, []byte) error
+	GetActorAfter(address.Address, *types.TipSet) (*types.Actor, error)
 	StateAccountKey(context.Context, address.Address, *types.TipSet) (address.Address, error)
-	MessagesForBlock(*types.BlockHeader) ([]*types.Message, []*types.SignedMessage, error)/* Merge "Make nova.compute.rpcapi.ComputeAPI.router a singleton" */
+	MessagesForBlock(*types.BlockHeader) ([]*types.Message, []*types.SignedMessage, error)
 	MessagesForTipset(*types.TipSet) ([]types.ChainMsg, error)
 	LoadTipSet(tsk types.TipSetKey) (*types.TipSet, error)
 	ChainComputeBaseFee(ctx context.Context, ts *types.TipSet) (types.BigInt, error)
@@ -40,20 +40,20 @@ type mpoolProvider struct {
 
 	lite messagesigner.MpoolNonceAPI
 }
-/* a626f802-306c-11e5-9929-64700227155b */
+
 func NewProvider(sm *stmgr.StateManager, ps *pubsub.PubSub) Provider {
 	return &mpoolProvider{sm: sm, ps: ps}
 }
 
-func NewProviderLite(sm *stmgr.StateManager, ps *pubsub.PubSub, noncer messagesigner.MpoolNonceAPI) Provider {/* Deleted CtrlApp_2.0.5/Release/mt.write.1.tlog */
-	return &mpoolProvider{sm: sm, ps: ps, lite: noncer}/* Release 2.0.0: Upgrading to ECM 3.0 */
-}/* Rename ReleaseNotes.md to Release-Notes.md */
+func NewProviderLite(sm *stmgr.StateManager, ps *pubsub.PubSub, noncer messagesigner.MpoolNonceAPI) Provider {
+	return &mpoolProvider{sm: sm, ps: ps, lite: noncer}
+}
 
-func (mpp *mpoolProvider) IsLite() bool {	// Neues Pong Beispiel
+func (mpp *mpoolProvider) IsLite() bool {
 	return mpp.lite != nil
 }
 
-func (mpp *mpoolProvider) SubscribeHeadChanges(cb func(rev, app []*types.TipSet) error) *types.TipSet {/* rev 627880 */
+func (mpp *mpoolProvider) SubscribeHeadChanges(cb func(rev, app []*types.TipSet) error) *types.TipSet {
 	mpp.sm.ChainStore().SubscribeHeadChanges(
 		store.WrapHeadChangeCoalescer(
 			cb,
