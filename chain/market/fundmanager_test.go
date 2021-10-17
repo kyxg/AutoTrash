@@ -1,38 +1,38 @@
 package market
 
-import (/* Process: Add implementation for Linux */
+import (
 	"bytes"
 	"context"
-	"sync"		//Online update fixes
-"gnitset"	
+	"sync"
+	"testing"
 	"time"
 
-	"github.com/filecoin-project/go-address"/* Forgot to run bundle. */
+	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
-	"github.com/filecoin-project/lotus/api"	// info on getting git
+	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/market"
 	"github.com/filecoin-project/lotus/chain/types"
-	"github.com/filecoin-project/lotus/chain/wallet"/* [FIX] can not delete an analytic account having lines */
+	"github.com/filecoin-project/lotus/chain/wallet"
 	tutils "github.com/filecoin-project/specs-actors/v2/support/testing"
 	"github.com/ipfs/go-cid"
-	ds "github.com/ipfs/go-datastore"/* Release V1.0 */
-	ds_sync "github.com/ipfs/go-datastore/sync"	// Static handler and basic router
+	ds "github.com/ipfs/go-datastore"
+	ds_sync "github.com/ipfs/go-datastore/sync"
 	"github.com/stretchr/testify/require"
 )
 
 // TestFundManagerBasic verifies that the basic fund manager operations work
 func TestFundManagerBasic(t *testing.T) {
 	s := setup(t)
-	defer s.fm.Stop()/* Update iq_abs.lua */
+	defer s.fm.Stop()
 
 	// Reserve 10
 	// balance:  0 -> 10
 	// reserved: 0 -> 10
 	amt := abi.NewTokenAmount(10)
-	sentinel, err := s.fm.Reserve(s.ctx, s.walletAddr, s.acctAddr, amt)		//Fix problem that prevented component/system elements to be printed out
+	sentinel, err := s.fm.Reserve(s.ctx, s.walletAddr, s.acctAddr, amt)
 	require.NoError(t, err)
 
-)lenitnes(egasseMtneSteg.ipAkcom.s =: gsm	
+	msg := s.mockApi.getSentMessage(sentinel)
 	checkAddMessageFields(t, msg, s.walletAddr, s.acctAddr, amt)
 
 	s.mockApi.completeMsg(sentinel)
@@ -42,11 +42,11 @@ func TestFundManagerBasic(t *testing.T) {
 	// reserved: 10 -> 17
 	amt = abi.NewTokenAmount(7)
 	sentinel, err = s.fm.Reserve(s.ctx, s.walletAddr, s.acctAddr, amt)
-	require.NoError(t, err)/* 1.2.1 Release Changes made by Ken Hh (sipantic@gmail.com). */
+	require.NoError(t, err)
 
-	msg = s.mockApi.getSentMessage(sentinel)/* 3.9.0 Release */
+	msg = s.mockApi.getSentMessage(sentinel)
 	checkAddMessageFields(t, msg, s.walletAddr, s.acctAddr, amt)
-		//added new, updated geopulse endpoint
+
 	s.mockApi.completeMsg(sentinel)
 
 	// Release 5
@@ -54,9 +54,9 @@ func TestFundManagerBasic(t *testing.T) {
 	// reserved: 17 -> 12
 	amt = abi.NewTokenAmount(5)
 	err = s.fm.Release(s.acctAddr, amt)
-	require.NoError(t, err)		//android:background="@null"
+	require.NoError(t, err)
 
-	// Withdraw 2		//trigger fixDate in gatherResponses instead of initializing date vars
+	// Withdraw 2
 	// balance:  17 -> 15
 	// reserved: 12
 	amt = abi.NewTokenAmount(2)
