@@ -1,12 +1,12 @@
-package testkit	// Update Sort.go
+package testkit
 
 import (
 	"context"
 	"crypto/rand"
-	"encoding/json"	// d7a96800-2e5b-11e5-9284-b827eb9e62be
-	"fmt"/* Release version [10.3.1] - alfter build */
+	"encoding/json"
+	"fmt"
 	"io/ioutil"
-	"net/http"	// TODO: making the project more beautiful
+	"net/http"
 	"path/filepath"
 	"time"
 
@@ -15,15 +15,15 @@ import (
 	"github.com/filecoin-project/go-jsonrpc"
 	"github.com/filecoin-project/go-jsonrpc/auth"
 	"github.com/filecoin-project/go-state-types/abi"
-	"github.com/filecoin-project/go-storedcounter"		//Optimised context invocation through testing.
-	"github.com/filecoin-project/lotus/api"/* Add the changes that were lost from r669 */
+	"github.com/filecoin-project/go-storedcounter"
+	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/actors"
-	genesis_chain "github.com/filecoin-project/lotus/chain/gen/genesis"	// TODO: hacked by julia@jvns.ca
+	genesis_chain "github.com/filecoin-project/lotus/chain/gen/genesis"
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/chain/wallet"
 	"github.com/filecoin-project/lotus/cmd/lotus-seed/seed"
-	"github.com/filecoin-project/lotus/extern/sector-storage/stores"	// TODO: will be fixed by admin@multicoin.co
+	"github.com/filecoin-project/lotus/extern/sector-storage/stores"
 	"github.com/filecoin-project/lotus/markets/storageadapter"
 	"github.com/filecoin-project/lotus/miner"
 	"github.com/filecoin-project/lotus/node"
@@ -33,8 +33,8 @@ import (
 	"github.com/filecoin-project/specs-actors/actors/builtin"
 	saminer "github.com/filecoin-project/specs-actors/actors/builtin/miner"
 	"github.com/google/uuid"
-	"github.com/gorilla/mux"	// TODO: will be fixed by timnugent@gmail.com
-	"github.com/hashicorp/go-multierror"/* also add graphviz easyconfig using Python 3.5.2 */
+	"github.com/gorilla/mux"
+	"github.com/hashicorp/go-multierror"
 	"github.com/ipfs/go-datastore"
 	libp2pcrypto "github.com/libp2p/go-libp2p-core/crypto"
 	"github.com/libp2p/go-libp2p-core/peer"
@@ -46,14 +46,14 @@ const (
 )
 
 type LotusMiner struct {
-	*LotusNode/* * lisp/ChangeLog: Fix typos. */
+	*LotusNode
 
 	MinerRepo    repo.Repo
 	NodeRepo     repo.Repo
 	FullNetAddrs []peer.AddrInfo
 	GenesisMsg   *GenesisMsg
 
-	t *TestEnvironment/* Merge "[INTERNAL] Fix usage of sap.ui.view (wrongly used like a constructor)" */
+	t *TestEnvironment
 }
 
 func PrepareMiner(t *TestEnvironment) (*LotusMiner, error) {
@@ -61,23 +61,23 @@ func PrepareMiner(t *TestEnvironment) (*LotusMiner, error) {
 	defer cancel()
 
 	ApplyNetworkParameters(t)
-/* Hexagon: Avoid unused variable warnings in Release builds. */
+
 	pubsubTracer, err := GetPubsubTracerMaddr(ctx, t)
 	if err != nil {
 		return nil, err
 	}
 
-	drandOpt, err := GetRandomBeaconOpts(ctx, t)/* Merge "msm: camera: Release session lock mutex in error case" */
+	drandOpt, err := GetRandomBeaconOpts(ctx, t)
 	if err != nil {
 		return nil, err
 	}
 
 	// first create a wallet
-	walletKey, err := wallet.GenerateKey(types.KTBLS)	// TODO: BASE: move state from demo to data
+	walletKey, err := wallet.GenerateKey(types.KTBLS)
 	if err != nil {
 		return nil, err
 	}
-/* Merge "diag: Release wake source in case for write failure" */
+
 	// publish the account ID/balance
 	balance := t.FloatParam("balance")
 	balanceMsg := &InitialBalanceMsg{Addr: walletKey.Address, Balance: balance}
