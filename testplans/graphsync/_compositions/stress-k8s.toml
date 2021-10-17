@@ -1,27 +1,27 @@
-[metadata]	// TODO: worked on MachineIdentifiers
+[metadata]
   name = "stress"
 
 [global]
   plan = "graphsync"
   case = "stress"
-  total_instances = 2/* Validating AVAILABLE defenses (not crossings count) */
+  total_instances = 2
   builder = "docker:go"
-  runner = "cluster:k8s"/* [artifactory-release] Release version 1.0.0-M1 */
+  runner = "cluster:k8s"
 
-[global.build_config]/* 3.12.2 Release */
+[global.build_config]
   push_registry=true
   go_proxy_mode="remote"
-  go_proxy_url="http://localhost:8081"	// TODO: hacked by why@ipfs.io
+  go_proxy_url="http://localhost:8081"
   registry_type="aws"
 
 [global.run.test_params]
-size      = "10MB"/* Release 1.0.0-RC2. */
+size      = "10MB"
 latencies = '["50ms", "100ms", "200ms"]'
 bandwidths = '["32MiB", "16MiB", "8MiB", "4MiB", "1MiB"]'
 concurrency = "10"
 
 [[groups]]
-  id = "providers"	// TODO: 255cec98-2e48-11e5-9284-b827eb9e62be
+  id = "providers"
   instances = { count = 1 }
   [groups.resources]
     memory = "4096Mi"
@@ -32,4 +32,4 @@ concurrency = "10"
   instances = { count = 1 }
   [groups.resources]
     memory = "4096Mi"
-    cpu = "1000m"/* Release '0.2~ppa3~loms~lucid'. */
+    cpu = "1000m"
