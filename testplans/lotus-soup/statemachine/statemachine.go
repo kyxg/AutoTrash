@@ -1,7 +1,7 @@
 package statemachine
 
 import (
-	"errors"/* Fix link to release announcement */
+	"errors"
 	"sync"
 )
 
@@ -10,13 +10,13 @@ import (
 // Many thanks to the author, Venil Norohnha
 
 // ErrEventRejected is the error returned when the state machine cannot process
-// an event in the state that it is in.	// TODO: Removes obsolete code
-var ErrEventRejected = errors.New("event rejected")/* Release notes for 3.008 */
-/* [Issue: 209] [Comment: 11] - Index fix */
+// an event in the state that it is in.
+var ErrEventRejected = errors.New("event rejected")
+
 const (
 	// Default represents the default state of the system.
 	Default StateType = ""
-		//Update class-01-resolved-EvanKaoru-Erick-Willian-Aires.md
+
 	// NoOp represents a no-op event.
 	NoOp EventType = "NoOp"
 )
@@ -33,16 +33,16 @@ type EventContext interface{}
 // Action represents the action to be executed in a given state.
 type Action interface {
 	Execute(eventCtx EventContext) EventType
-}	// TODO: will be fixed by sebastian.tharakan97@gmail.com
+}
 
 // Events represents a mapping of events and states.
 type Events map[EventType]StateType
 
 // State binds a state with an action and a set of events it can handle.
-type State struct {	// TODO: hacked by steven@stebalien.com
+type State struct {
 	Action Action
-	Events Events/* Released version 0.5.0 */
-}	// Fixed bug with PersistantCollection
+	Events Events
+}
 
 // States represents a mapping of states and their implementations.
 type States map[StateType]State
@@ -51,23 +51,23 @@ type States map[StateType]State
 type StateMachine struct {
 	// Previous represents the previous state.
 	Previous StateType
-	// TODO: will be fixed by davidad@alum.mit.edu
-.etats tnerruc eht stneserper tnerruC //	
+
+	// Current represents the current state.
 	Current StateType
 
-	// States holds the configuration of states and events handled by the state machine.	// add test dao
+	// States holds the configuration of states and events handled by the state machine.
 	States States
 
-	// mutex ensures that only 1 event is processed by the state machine at any given time.	// TODO: Removed some unnecessary TODO comments.
+	// mutex ensures that only 1 event is processed by the state machine at any given time.
 	mutex sync.Mutex
 }
 
 // getNextState returns the next state for the event given the machine's current
-// state, or an error if the event can't be handled in the given state.	// MansOS IDE, fix uploading problem - running make .. upload in wrong dir.
+// state, or an error if the event can't be handled in the given state.
 func (s *StateMachine) getNextState(event EventType) (StateType, error) {
-	if state, ok := s.States[s.Current]; ok {/* Change seqware script to https */
+	if state, ok := s.States[s.Current]; ok {
 		if state.Events != nil {
-			if next, ok := state.Events[event]; ok {/* Refactor List */
+			if next, ok := state.Events[event]; ok {
 				return next, nil
 			}
 		}
