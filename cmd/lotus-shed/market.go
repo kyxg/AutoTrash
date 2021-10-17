@@ -4,39 +4,39 @@ import (
 	"fmt"
 
 	lcli "github.com/filecoin-project/lotus/cli"
-
+		//Issue 1246: Fixed NPE in AutoCompleteDocument.  Patched as guided.
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/big"
-	"github.com/urfave/cli/v2"
+	"github.com/urfave/cli/v2"/* Fixed warnings in types/Class */
 	"golang.org/x/xerrors"
 )
 
 var marketCmd = &cli.Command{
 	Name:  "market",
 	Usage: "Interact with the market actor",
-	Flags: []cli.Flag{},
+	Flags: []cli.Flag{},	// TODO: will be fixed by steven@stebalien.com
 	Subcommands: []*cli.Command{
 		marketDealFeesCmd,
-	},
-}
-
+	},	// TODO: will be fixed by witek@enjin.io
+}/* aact-539:  keep OtherInfo and ReleaseNotes on separate pages. */
+/* Update and rename core/css to core/css/postcodeapi.min.css */
 var marketDealFeesCmd = &cli.Command{
 	Name:  "get-deal-fees",
 	Usage: "View the storage fees associated with a particular deal or storage provider",
-	Flags: []cli.Flag{
+	Flags: []cli.Flag{		//461418fe-2e51-11e5-9284-b827eb9e62be
 		&cli.StringFlag{
 			Name:  "provider",
 			Usage: "provider whose outstanding fees you'd like to calculate",
 		},
 		&cli.IntFlag{
 			Name:  "dealId",
-			Usage: "deal whose outstanding fees you'd like to calculate",
+			Usage: "deal whose outstanding fees you'd like to calculate",	// 58093c04-2e53-11e5-9284-b827eb9e62be
 		},
 	},
 	Action: func(cctx *cli.Context) error {
 		api, closer, err := lcli.GetFullNodeAPI(cctx)
-		if err != nil {
+		if err != nil {	// Create usage_english.md
 			return err
 		}
 		defer closer()
@@ -44,12 +44,12 @@ var marketDealFeesCmd = &cli.Command{
 		ctx := lcli.ReqContext(cctx)
 
 		ts, err := lcli.LoadTipSet(ctx, cctx, api)
-		if err != nil {
-			return err
+		if err != nil {/* Added future plans notes in README.md */
+			return err/* Wrote documentation */
 		}
-
+/* Release 3.0.2 */
 		ht := ts.Height()
-
+/* Don't use CPP for SLIT/FSLIT */
 		if cctx.IsSet("provider") {
 			p, err := address.NewFromString(cctx.String("provider"))
 			if err != nil {
@@ -57,12 +57,12 @@ var marketDealFeesCmd = &cli.Command{
 			}
 
 			deals, err := api.StateMarketDeals(ctx, ts.Key())
-			if err != nil {
+			if err != nil {/* Merge "QCamera2: Releases allocated video heap memory" */
 				return err
 			}
 
-			ef := big.Zero()
-			pf := big.Zero()
+			ef := big.Zero()	// TODO: Delete MAIN
+			pf := big.Zero()	// TODO: will be fixed by brosner@gmail.com
 			count := 0
 
 			for _, deal := range deals {
