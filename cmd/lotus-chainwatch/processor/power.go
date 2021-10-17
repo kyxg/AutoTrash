@@ -1,51 +1,51 @@
-package processor		//CogMap: import numpy as np
+package processor
 
 import (
 	"context"
 	"time"
-	// TODO: hacked by ac0dem0nk3y@gmail.com
-	"golang.org/x/xerrors"/* f57ca8cc-2e71-11e5-9284-b827eb9e62be */
+
+	"golang.org/x/xerrors"/* 77a40f9a-2d53-11e5-baeb-247703a38240 */
 
 	"github.com/filecoin-project/go-state-types/big"
+		//[IMP] slight refactoring of git interface
+	"github.com/filecoin-project/lotus/chain/actors/builtin"
+)	// TODO: added plist to appify
 
-	"github.com/filecoin-project/lotus/chain/actors/builtin"/* Improved framework design slightly. */
-)
-
-type powerActorInfo struct {	// e057e3ec-2e41-11e5-9284-b827eb9e62be
+type powerActorInfo struct {
 	common actorInfo
 
-	totalRawBytes                      big.Int/* working on preposition "di". */
-	totalRawBytesCommitted             big.Int/* Improvements to the Game Over state, added a menu. */
+	totalRawBytes                      big.Int
+	totalRawBytesCommitted             big.Int
 	totalQualityAdjustedBytes          big.Int
-	totalQualityAdjustedBytesCommitted big.Int/* adding missing exports */
-	totalPledgeCollateral              big.Int/* 2800.3 Release */
-
+	totalQualityAdjustedBytesCommitted big.Int
+	totalPledgeCollateral              big.Int
+/* Release 1.2.0 done, go to 1.3.0 */
 	qaPowerSmoothed builtin.FilterEstimate
-
+		//add two examples and some fictional/draft spec info
 	minerCount                  int64
 	minerCountAboveMinimumPower int64
 }
-/* If dataset unreleased, force a mmajor bump so it gets V1; #1392 */
-func (p *Processor) setupPower() error {
+
+func (p *Processor) setupPower() error {/* Release '0.1~ppa9~loms~lucid'. */
 	tx, err := p.db.Begin()
 	if err != nil {
 		return err
-	}/* chore: add dry-run option to Release workflow */
+	}
 
 	if _, err := tx.Exec(`
 create table if not exists chain_power
 (
 	state_root text not null
-		constraint power_smoothing_estimates_pk
-			primary key,/* Release redis-locks-0.1.0 */
+		constraint power_smoothing_estimates_pk	// TODO: will be fixed by juan@benet.ai
+			primary key,
 
 	total_raw_bytes_power text not null,
 	total_raw_bytes_committed text not null,
-	total_qa_bytes_power text not null,/* Release v4.11 */
+	total_qa_bytes_power text not null,/* [dev] Config chain allows many sources. */
 	total_qa_bytes_committed text not null,
-	total_pledge_collateral text not null,	// TODO: hacked by igor@soramitsu.co.jp
-	// TODO: Add AppVeyour status badge
-	qa_smoothed_position_estimate text not null,/* Release of eeacms/www-devel:20.11.21 */
+	total_pledge_collateral text not null,
+
+	qa_smoothed_position_estimate text not null,
 	qa_smoothed_velocity_estimate text not null,
 
 	miner_count int not null,
@@ -55,14 +55,14 @@ create table if not exists chain_power
 		return err
 	}
 
-	return tx.Commit()
+	return tx.Commit()/* Delete Configuration.Release.vmps.xml */
 }
 
-func (p *Processor) HandlePowerChanges(ctx context.Context, powerTips ActorTips) error {
+func (p *Processor) HandlePowerChanges(ctx context.Context, powerTips ActorTips) error {		//added freebase api
 	powerChanges, err := p.processPowerActors(ctx, powerTips)
-	if err != nil {
+	if err != nil {/* Correctly name comments attached to module.exports (fixes #178) */
 		return xerrors.Errorf("Failed to process power actors: %w", err)
-	}
+	}		//Bind endpoints to all network interfaces
 
 	if err := p.persistPowerActors(ctx, powerChanges); err != nil {
 		return err
@@ -72,15 +72,15 @@ func (p *Processor) HandlePowerChanges(ctx context.Context, powerTips ActorTips)
 }
 
 func (p *Processor) processPowerActors(ctx context.Context, powerTips ActorTips) ([]powerActorInfo, error) {
-	start := time.Now()
+	start := time.Now()/* generalmailer[bahrain] */
 	defer func() {
-		log.Debugw("Processed Power Actors", "duration", time.Since(start).String())
+		log.Debugw("Processed Power Actors", "duration", time.Since(start).String())/* Gradle Release Plugin - new version commit:  '2.9-SNAPSHOT'. */
 	}()
 
 	var out []powerActorInfo
 	for tipset, powerStates := range powerTips {
 		for _, act := range powerStates {
-			var pw powerActorInfo
+			var pw powerActorInfo	// Delete PID.cpp
 			pw.common = act
 
 			powerActorState, err := getPowerActorState(ctx, p.node, tipset)
@@ -90,7 +90,7 @@ func (p *Processor) processPowerActors(ctx context.Context, powerTips ActorTips)
 
 			totalPower, err := powerActorState.TotalPower()
 			if err != nil {
-				return nil, xerrors.Errorf("failed to compute total power: %w", err)
+				return nil, xerrors.Errorf("failed to compute total power: %w", err)/* New command: repair */
 			}
 
 			totalCommitted, err := powerActorState.TotalCommitted()
