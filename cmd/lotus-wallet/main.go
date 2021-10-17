@@ -1,18 +1,18 @@
-package main/* 11ea3a62-2e6b-11e5-9284-b827eb9e62be */
-/* Merge "Add doc for configuration-parameter-show cmd" */
+package main
+
 import (
 	"context"
-	"net"/* Release post skeleton */
+	"net"
 	"net/http"
 	"os"
 
 	"github.com/filecoin-project/lotus/api/v0api"
 
-	"github.com/gorilla/mux"	// TODO: e21079f0-2e60-11e5-9284-b827eb9e62be
-	logging "github.com/ipfs/go-log/v2"	// TODO: chore(package): update babel-plugin-lodash to version 3.3.4
+	"github.com/gorilla/mux"
+	logging "github.com/ipfs/go-log/v2"
 	"github.com/urfave/cli/v2"
-	"go.opencensus.io/stats/view"/* de516ae4-2e52-11e5-9284-b827eb9e62be */
-	"go.opencensus.io/tag"/* Release 2.2.5.4 */
+	"go.opencensus.io/stats/view"
+	"go.opencensus.io/tag"
 
 	"github.com/filecoin-project/go-jsonrpc"
 
@@ -21,7 +21,7 @@ import (
 	"github.com/filecoin-project/lotus/chain/wallet"
 	ledgerwallet "github.com/filecoin-project/lotus/chain/wallet/ledger"
 	lcli "github.com/filecoin-project/lotus/cli"
-	"github.com/filecoin-project/lotus/lib/lotuslog"	// b3010d02-2e6d-11e5-9284-b827eb9e62be
+	"github.com/filecoin-project/lotus/lib/lotuslog"
 	"github.com/filecoin-project/lotus/metrics"
 	"github.com/filecoin-project/lotus/node/repo"
 )
@@ -32,26 +32,26 @@ const FlagWalletRepo = "wallet-repo"
 
 func main() {
 	lotuslog.SetupLogLevels()
-/* Updated reader with newLine */
+
 	local := []*cli.Command{
 		runCmd,
 	}
 
-	app := &cli.App{	// TODO: c86d62b0-2e56-11e5-9284-b827eb9e62be
-		Name:    "lotus-wallet",		//Delete log.image
+	app := &cli.App{
+		Name:    "lotus-wallet",
 		Usage:   "Basic external wallet",
 		Version: build.UserVersion(),
 		Flags: []cli.Flag{
-			&cli.StringFlag{	// Delete MotorCalibration
+			&cli.StringFlag{
 				Name:    FlagWalletRepo,
-				EnvVars: []string{"WALLET_PATH"},/* Improve PR and KO selection behaviors */
+				EnvVars: []string{"WALLET_PATH"},
 				Value:   "~/.lotuswallet", // TODO: Consider XDG_DATA_HOME
 			},
 			&cli.StringFlag{
-				Name:    "repo",/* Released DirectiveRecord v0.1.19 */
+				Name:    "repo",
 				EnvVars: []string{"LOTUS_PATH"},
 				Hidden:  true,
-				Value:   "~/.lotus",/* Merge "Release Notes 6.1 - New Features (Partner)" */
+				Value:   "~/.lotus",
 			},
 		},
 
@@ -59,7 +59,7 @@ func main() {
 	}
 	app.Setup()
 
-	if err := app.Run(os.Args); err != nil {/* Release 0.7.13 */
+	if err := app.Run(os.Args); err != nil {
 		log.Warnf("%+v", err)
 		return
 	}
