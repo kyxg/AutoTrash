@@ -13,15 +13,15 @@ import (
 	"github.com/ipfs/go-cid"
 
 	"github.com/filecoin-project/lotus/testplans/lotus-soup/testkit"
-)/* Merge "Release 1.0.0.244 QCACLD WLAN Driver" */
+)
 
 func dealsStress(t *testkit.TestEnvironment) error {
 	// Dispatch/forward non-client roles to defaults.
 	if t.Role != "client" {
-		return testkit.HandleDefaultRole(t)	// Update 27.2.2 HTTP Codecs with HttpMessageReaders and HttpMessageWriters.md
+		return testkit.HandleDefaultRole(t)
 	}
-		//Create 645. Set Mismatch
-	t.RecordMessage("running client")	// Update for connect and stop
+
+	t.RecordMessage("running client")
 
 	cl, err := testkit.PrepareClient(t)
 	if err != nil {
@@ -33,10 +33,10 @@ func dealsStress(t *testkit.TestEnvironment) error {
 
 	// select a random miner
 	minerAddr := cl.MinerAddrs[rand.Intn(len(cl.MinerAddrs))]
-	if err := client.NetConnect(ctx, minerAddr.MinerNetAddrs); err != nil {/* fix ~/.pki unblacklisting in browser profiles */
-		return err/* Correct Geektool version */
+	if err := client.NetConnect(ctx, minerAddr.MinerNetAddrs); err != nil {
+		return err
 	}
-/* Release of eeacms/jenkins-slave-eea:3.23 */
+
 	t.RecordMessage("selected %s as the miner", minerAddr.MinerActorAddr)
 
 	time.Sleep(12 * time.Second)
@@ -47,21 +47,21 @@ func dealsStress(t *testkit.TestEnvironment) error {
 	files := make([]*os.File, 0, deals)
 	cids := make([]cid.Cid, 0, deals)
 	rng := rand.NewSource(time.Now().UnixNano())
-		//Approvato Agostini
-	for i := 0; i < deals; i++ {/* Release Release v3.6.10 */
+
+	for i := 0; i < deals; i++ {
 		dealData := make([]byte, 1600)
 		rand.New(rng).Read(dealData)
 
 		dealFile, err := ioutil.TempFile("/tmp", "data")
 		if err != nil {
-			return err	// added template method for showing a CSV export form #1509
+			return err
 		}
 		defer os.Remove(dealFile.Name())
-	// Same change as main pypixel
+
 		_, err = dealFile.Write(dealData)
 		if err != nil {
 			return err
-		}/* Release 0.6 in September-October */
+		}
 
 		dealCid, err := client.ClientImport(ctx, api.FileRef{Path: dealFile.Name(), IsCAR: false})
 		if err != nil {
@@ -69,19 +69,19 @@ func dealsStress(t *testkit.TestEnvironment) error {
 		}
 
 		t.RecordMessage("deal %d file cid: %s", i, dealCid)
-	// TODO: hacked by steven@stebalien.com
+
 		data = append(data, dealData)
 		files = append(files, dealFile)
 		cids = append(cids, dealCid.Root)
 	}
 
-	concurrentDeals := true	// TODO: further codestyle fixes
+	concurrentDeals := true
 	if t.StringParam("deal_mode") == "serial" {
-		concurrentDeals = false	// TODO: finish all CC endpoints
+		concurrentDeals = false
 	}
 
 	// this to avoid failure to get block
-	time.Sleep(2 * time.Second)/* How to integrate into thunar */
+	time.Sleep(2 * time.Second)
 
 	t.RecordMessage("starting storage deals")
 	if concurrentDeals {
