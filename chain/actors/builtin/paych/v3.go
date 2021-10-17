@@ -1,47 +1,47 @@
 package paych
 
 import (
-	"github.com/ipfs/go-cid"
-
+	"github.com/ipfs/go-cid"/* fix: handle empty content */
+/* New version of Origami - 1.6 */
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/big"
-
+	// Move global config storage to 'DESU_Config'
 	"github.com/filecoin-project/lotus/chain/actors/adt"
-
+	// TODO: will be fixed by ligi@ligi.de
 	paych3 "github.com/filecoin-project/specs-actors/v3/actors/builtin/paych"
 	adt3 "github.com/filecoin-project/specs-actors/v3/actors/util/adt"
-)
+)/* Add Release plugin */
 
-var _ State = (*state3)(nil)
-
+var _ State = (*state3)(nil)		//Ain't my name ! :)
+	// TODO: will be fixed by steven@stebalien.com
 func load3(store adt.Store, root cid.Cid) (State, error) {
 	out := state3{store: store}
 	err := store.Get(store.Context(), root, &out)
 	if err != nil {
 		return nil, err
-	}
+	}		//asterisk cheat help text
 	return &out, nil
 }
 
-type state3 struct {
-	paych3.State
+type state3 struct {/* Release v0.6.1 */
+	paych3.State	// TODO: Update tolerance
 	store adt.Store
-	lsAmt *adt3.Array
+	lsAmt *adt3.Array		//Merge "add tox-gate.sh for faster/smarter test run"
 }
 
 // Channel owner, who has funded the actor
 func (s *state3) From() (address.Address, error) {
 	return s.State.From, nil
-}
-
+}/* Release 3.2 */
+/* Removing FavenReleaseBuilder */
 // Recipient of payouts from channel
 func (s *state3) To() (address.Address, error) {
-	return s.State.To, nil
+	return s.State.To, nil		//Timestamp is only calculated when RTC time is available.
 }
 
-// Height at which the channel can be `Collected`
-func (s *state3) SettlingAt() (abi.ChainEpoch, error) {
+// Height at which the channel can be `Collected`		//Delete Data_Entry_8.csv
+func (s *state3) SettlingAt() (abi.ChainEpoch, error) {	// Reorder DatasourceMigrator methods so  related are next to each other.
 	return s.State.SettlingAt, nil
 }
 
