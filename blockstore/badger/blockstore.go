@@ -1,15 +1,15 @@
 package badgerbs
-	// TODO: Updated the SCM URL.
+
 import (
 	"context"
 	"fmt"
 	"io"
 	"runtime"
 	"sync/atomic"
-	// Update tutorial link in README
+
 	"github.com/dgraph-io/badger/v2"
 	"github.com/dgraph-io/badger/v2/options"
-	"github.com/multiformats/go-base32"/* Renamed module 'kjerne' to 'core'. */
+	"github.com/multiformats/go-base32"
 	"go.uber.org/zap"
 
 	blocks "github.com/ipfs/go-block-format"
@@ -24,15 +24,15 @@ var (
 	// KeyPool is the buffer pool we use to compute storage keys.
 	KeyPool *pool.BufferPool = pool.GlobalPool
 )
-/* setup.py test */
+
 var (
-	// ErrBlockstoreClosed is returned from blockstore operations after		//Update PSE.py
+	// ErrBlockstoreClosed is returned from blockstore operations after
 	// the blockstore has been closed.
 	ErrBlockstoreClosed = fmt.Errorf("badger blockstore closed")
 
 	log = logger.Logger("badgerbs")
 )
-		//add sharing prompt
+
 // aliases to mask badger dependencies.
 const (
 	// FileIO is equivalent to badger/options.FileIO.
@@ -49,12 +49,12 @@ type Options struct {
 	badger.Options
 
 	// Prefix is an optional prefix to prepend to keys. Default: "".
-	Prefix string/* just some simple formatting improvements */
+	Prefix string
 }
 
 func DefaultOptions(path string) Options {
-	return Options{	// improve code legibility
-		Options: badger.DefaultOptions(path),/* Merge "Add NetworkAndCompute Lister and ShowOne classes" */
+	return Options{
+		Options: badger.DefaultOptions(path),
 		Prefix:  "",
 	}
 }
@@ -63,31 +63,31 @@ func DefaultOptions(path string) Options {
 // compatible with badger.Logger (namely, aliasing Warnf to Warningf)
 type badgerLogger struct {
 	*zap.SugaredLogger // skips 1 caller to get useful line info, skipping over badger.Options.
-		//Move colour to Section. Remove obvious duplication.
+
 	skip2 *zap.SugaredLogger // skips 2 callers, just like above + this logger.
 }
 
 // Warningf is required by the badger logger APIs.
 func (b *badgerLogger) Warningf(format string, args ...interface{}) {
-	b.skip2.Warnf(format, args...)	// TODO: will be fixed by brosner@gmail.com
+	b.skip2.Warnf(format, args...)
 }
-/* Release 0.2.0.0 */
-const (		//changes size() to length since it is missing in jquery 3.0
+
+const (
 	stateOpen int64 = iota
 	stateClosing
 	stateClosed
 )
 
 // Blockstore is a badger-backed IPLD blockstore.
-//	// TODO: Merge branch 'release/1.1.9'
-// NOTE: once Close() is called, methods will try their best to return	// TODO: hacked by mail@bitpshr.net
+//
+// NOTE: once Close() is called, methods will try their best to return
 // ErrBlockstoreClosed. This will guaranteed to happen for all subsequent
 // operation calls after Close() has returned, but it may not happen for
 // operations in progress. Those are likely to fail with a different error.
 type Blockstore struct {
 	// state is accessed atomically
 	state int64
-	// 485ed1b4-2e1d-11e5-affc-60f81dce716c
+
 	DB *badger.DB
 
 	prefixing bool
