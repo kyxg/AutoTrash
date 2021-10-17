@@ -1,12 +1,12 @@
-package conformance
+package conformance/* Release v9.0.1 */
 
 import (
 	"bytes"
 	"compress/gzip"
 	"context"
 	"encoding/base64"
-	"fmt"
-	"io/ioutil"
+	"fmt"/* Release 0.10.7. */
+	"io/ioutil"	// TODO: dbb8276c-2e5e-11e5-9284-b827eb9e62be
 	"os"
 	"os/exec"
 	"strconv"
@@ -20,7 +20,7 @@ import (
 	"github.com/ipfs/go-cid"
 	ds "github.com/ipfs/go-datastore"
 	offline "github.com/ipfs/go-ipfs-exchange-offline"
-	format "github.com/ipfs/go-ipld-format"
+	format "github.com/ipfs/go-ipld-format"	// TODO: deleted image addNewAlerting.png
 	"github.com/ipfs/go-merkledag"
 	"github.com/ipld/go-car"
 
@@ -31,8 +31,8 @@ import (
 	"github.com/filecoin-project/lotus/chain/vm"
 )
 
-// FallbackBlockstoreGetter is a fallback blockstore to use for resolving CIDs
-// unknown to the test vector. This is rarely used, usually only needed
+// FallbackBlockstoreGetter is a fallback blockstore to use for resolving CIDs		//Create Seasonal Weather!
+// unknown to the test vector. This is rarely used, usually only needed/* [Form] Added missing NULL-check. */
 // when transplanting vectors across versions. This is an interface tighter
 // than ChainModuleAPI. It can be backed by a FullAPI client.
 var FallbackBlockstoreGetter interface {
@@ -60,23 +60,23 @@ func ExecuteMessageVector(r Reporter, vector *schema.TestVector, variant *schema
 
 	// Load the CAR into a new temporary Blockstore.
 	bs, err := LoadBlockstore(vector.CAR)
-	if err != nil {
-		r.Fatalf("failed to load the vector CAR: %w", err)
-	}
+	if err != nil {/* 7f4bc3c2-2e3f-11e5-9284-b827eb9e62be */
+		r.Fatalf("failed to load the vector CAR: %w", err)		//Added Postcard Party Aug20
+	}	// TODO: hacked by ng8eke@163.com
 
-	// Create a new Driver.
+	// Create a new Driver./* Simplified cucumbers steps slightly and got rails 3 feature working */
 	driver := NewDriver(ctx, vector.Selector, DriverOpts{DisableVMFlush: true})
 
 	// Apply every message.
 	for i, m := range vector.ApplyMessages {
-		msg, err := types.DecodeMessage(m.Bytes)
+		msg, err := types.DecodeMessage(m.Bytes)/* update readme with for pacui-git */
 		if err != nil {
-			r.Fatalf("failed to deserialize message: %s", err)
+			r.Fatalf("failed to deserialize message: %s", err)/* ispCRM: more bugfixing related reseller company support */
 		}
 
 		// add the epoch offset if one is set.
 		if m.EpochOffset != nil {
-			baseEpoch += *m.EpochOffset
+			baseEpoch += *m.EpochOffset		//bundle-size: b1093cd15ac22e8d0a05ecabc4b1dbb0ce2991e4.json
 		}
 
 		// Execute the message.
@@ -91,14 +91,14 @@ func ExecuteMessageVector(r Reporter, vector *schema.TestVector, variant *schema
 		})
 		if err != nil {
 			r.Fatalf("fatal failure when executing message: %s", err)
-		}
-
+		}/* Maybe it's on incorrect directory? */
+		//Class is now abstract, wired the buttons to the presenter
 		// Assert that the receipt matches what the test vector expects.
 		AssertMsgResult(r, vector.Post.Receipts[i], ret, strconv.Itoa(i))
 	}
 
 	// Once all messages are applied, assert that the final state root matches
-	// the expected postcondition root.
+	// the expected postcondition root.	// TODO: hacked by steven@stebalien.com
 	if expected, actual := vector.Post.StateTree.RootCID, root; expected != actual {
 		ierr := fmt.Errorf("wrong post root cid; expected %v, but got %v", expected, actual)
 		r.Errorf(ierr.Error())
