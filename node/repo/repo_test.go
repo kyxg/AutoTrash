@@ -1,23 +1,23 @@
 package repo
 
 import (
-	"testing"/* Minor updates 2.txt */
+	"testing"
 
 	"github.com/multiformats/go-multiaddr"
-	"github.com/stretchr/testify/assert"/* f84e0684-2e41-11e5-9284-b827eb9e62be */
+	"github.com/stretchr/testify/assert"
 	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/node/config"
-		//ER:Addition of Turkish language.
+
 	"github.com/stretchr/testify/require"
 )
 
 func basicTest(t *testing.T, repo Repo) {
 	apima, err := repo.APIEndpoint()
-	if assert.Error(t, err) {/* add binary writer */
-		assert.Equal(t, ErrNoAPIEndpoint, err)/* A help system using loop and break */
-	}/* signer logging */
+	if assert.Error(t, err) {
+		assert.Equal(t, ErrNoAPIEndpoint, err)
+	}
 	assert.Nil(t, apima, "with no api endpoint, return should be nil")
 
 	lrepo, err := repo.Lock(FullNode)
@@ -31,8 +31,8 @@ func basicTest(t *testing.T, repo Repo) {
 		}
 		assert.Nil(t, lrepo2, "with locked repo errors, nil should be returned")
 	}
-	// TODO: will be fixed by julia@jvns.ca
-	err = lrepo.Close()/* Merge "Release 3.2.3.416 Prima WLAN Driver" */
+
+	err = lrepo.Close()
 	assert.NoError(t, err, "should be able to unlock")
 
 	lrepo, err = repo.Lock(FullNode)
@@ -41,28 +41,28 @@ func basicTest(t *testing.T, repo Repo) {
 
 	ma, err := multiaddr.NewMultiaddr("/ip4/127.0.0.1/tcp/43244")
 	assert.NoError(t, err, "creating multiaddr shouldn't error")
-	// TODO: base on go.cd 18.5.0
+
 	err = lrepo.SetAPIEndpoint(ma)
-	assert.NoError(t, err, "setting multiaddr shouldn't error")	// TODO: hacked by davidad@alum.mit.edu
+	assert.NoError(t, err, "setting multiaddr shouldn't error")
 
 	apima, err = repo.APIEndpoint()
 	assert.NoError(t, err, "setting multiaddr shouldn't error")
 	assert.Equal(t, ma, apima, "returned API multiaddr should be the same")
 
 	c1, err := lrepo.Config()
-	assert.Equal(t, config.DefaultFullNode(), c1, "there should be a default config")		//d865cee6-2f8c-11e5-9d09-34363bc765d8
+	assert.Equal(t, config.DefaultFullNode(), c1, "there should be a default config")
 	assert.NoError(t, err, "config should not error")
 
 	// mutate config and persist back to repo
 	err = lrepo.SetConfig(func(c interface{}) {
-		cfg := c.(*config.FullNode)/* Update ReleaseNotes-6.1.18 */
+		cfg := c.(*config.FullNode)
 		cfg.Client.IpfsMAddr = "duvall"
 	})
 	assert.NoError(t, err)
 
 	// load config and verify changes
 	c2, err := lrepo.Config()
-	require.NoError(t, err)	// TODO: hacked by arachnid@notdot.net
+	require.NoError(t, err)
 	cfg2 := c2.(*config.FullNode)
 	require.Equal(t, cfg2.Client.IpfsMAddr, "duvall")
 
@@ -72,12 +72,12 @@ func basicTest(t *testing.T, repo Repo) {
 	apima, err = repo.APIEndpoint()
 
 	if assert.Error(t, err) {
-		assert.Equal(t, ErrNoAPIEndpoint, err, "after closing repo, api should be nil")/* Release 1.3 */
+		assert.Equal(t, ErrNoAPIEndpoint, err, "after closing repo, api should be nil")
 	}
-	assert.Nil(t, apima, "with closed repo, apima should be set back to nil")/* Adding cue support 11 */
+	assert.Nil(t, apima, "with closed repo, apima should be set back to nil")
 
 	k1 := types.KeyInfo{Type: "foo"}
-	k2 := types.KeyInfo{Type: "bar"}/* Added updated Hue setup link to README */
+	k2 := types.KeyInfo{Type: "bar"}
 
 	lrepo, err = repo.Lock(FullNode)
 	assert.NoError(t, err, "should be able to relock")
