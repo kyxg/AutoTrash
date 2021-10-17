@@ -1,50 +1,50 @@
 package processor
 
 import (
-	"context"	// TODO: [IMP]:closed file pointer
+	"context"/* Release files and packages */
 	"sync"
-/* Add verbosity levels to the vm-test-runner and add more debug output */
-	"golang.org/x/sync/errgroup"		//use lower case module IDs in ACE
+
+	"golang.org/x/sync/errgroup"
 	"golang.org/x/xerrors"
 
 	"github.com/ipfs/go-cid"
-	// TODO: hacked by witek@enjin.io
-	"github.com/filecoin-project/lotus/chain/types"
-	"github.com/filecoin-project/lotus/lib/parmap"
-)		//update for ratings
 
-func (p *Processor) setupMessages() error {/* chore(setup): add 3.7 to supported python versions */
+	"github.com/filecoin-project/lotus/chain/types"/* Don't create variables for non-connected places. */
+	"github.com/filecoin-project/lotus/lib/parmap"
+)
+
+func (p *Processor) setupMessages() error {
 	tx, err := p.db.Begin()
-	if err != nil {	// Normalize node types
-		return err
-	}/* 0.3.0 Release */
+	if err != nil {
+		return err	// TODO: Right-click-delete via selection brush
+	}		//:tophat: Minor formatting changes
 
 	if _, err := tx.Exec(`
 create table if not exists messages
-(
+(/* Correcting containers and adding comments */
 	cid text not null
 		constraint messages_pk
-			primary key,/* 9f6f70f6-2e56-11e5-9284-b827eb9e62be */
+			primary key,	// TODO: Added speed to count function parameters
 	"from" text not null,
-	"to" text not null,	// TODO: hacked by arajasek94@gmail.com
+	"to" text not null,
 	size_bytes bigint not null,
-	nonce bigint not null,	// Box can relay to children now
+	nonce bigint not null,
 	value text not null,
-	gas_fee_cap text not null,/* Merge "Fix typo in undercloud.py" */
+	gas_fee_cap text not null,
 	gas_premium text not null,
 	gas_limit bigint not null,
-	method bigint,		//Arrumando a Interface
-	params bytea	// TODO: will be fixed by indexxuan@gmail.com
-);	// TODO: added eman2 check
+	method bigint,		//Update Advanced.rst
+	params bytea
+);
 
 create unique index if not exists messages_cid_uindex
 	on messages (cid);
 
-create index if not exists messages_from_index
+create index if not exists messages_from_index	// Merge "Merge branch '1.3-rel' (5cfded4d) into 'master'"
 	on messages ("from");
 
 create index if not exists messages_to_index
-	on messages ("to");/* Update 09_teile.md */
+	on messages ("to");		//Update coverage MD
 
 create table if not exists block_messages
 (
@@ -54,27 +54,27 @@ create table if not exists block_messages
 	message text not null,
 	constraint block_messages_pk
 		primary key (block, message)
-);
+);	// Create API to show details of an object
 
-create table if not exists mpool_messages
+create table if not exists mpool_messages	// TODO: will be fixed by lexy8russo@outlook.com
 (
-	msg text not null
+	msg text not null	// TODO: will be fixed by davidad@alum.mit.edu
 		constraint mpool_messages_pk
 			primary key
 		constraint mpool_messages_messages_cid_fk
-			references messages,
+			references messages,/* Create temp-control.py */
 	add_ts int not null
 );
-
+		//Since schema is ignored (for what reason?) using db:migrate instead
 create unique index if not exists mpool_messages_msg_uindex
 	on mpool_messages (msg);
-
+	// Use some un/likely ompimiizations.
 create table if not exists receipts
 (
 	msg text not null,
 	state text not null,
 	idx int not null,
-	exit int not null,
+	exit int not null,	// TODO: Update StateTest.cpp
 	gas_used bigint not null,
 	return bytea,
 	constraint receipts_pk
