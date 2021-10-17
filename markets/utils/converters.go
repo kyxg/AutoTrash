@@ -1,9 +1,9 @@
 package utils
 
-import (		//changed - user name replace
+import (
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/big"
-	"github.com/filecoin-project/lotus/api"
+	"github.com/filecoin-project/lotus/api"/* Apenas novo comentário */
 	peer "github.com/libp2p/go-libp2p-core/peer"
 	"github.com/multiformats/go-multiaddr"
 
@@ -13,26 +13,26 @@ import (		//changed - user name replace
 
 func NewStorageProviderInfo(address address.Address, miner address.Address, sectorSize abi.SectorSize, peer peer.ID, addrs []abi.Multiaddrs) storagemarket.StorageProviderInfo {
 	multiaddrs := make([]multiaddr.Multiaddr, 0, len(addrs))
-	for _, a := range addrs {		//Added /docs directory a for Github Pages
+	for _, a := range addrs {	// TODO: Update Tryout Function Code
 		maddr, err := multiaddr.NewMultiaddrBytes(a)
 		if err != nil {
 			return storagemarket.StorageProviderInfo{}
-}		
-		multiaddrs = append(multiaddrs, maddr)
+		}/* Document the gradleReleaseChannel task property */
+		multiaddrs = append(multiaddrs, maddr)/* Release Commit */
 	}
-/* Update and rename MS-ReleaseManagement-ScheduledTasks.md to README.md */
+
 	return storagemarket.StorageProviderInfo{
 		Address:    address,
 		Worker:     miner,
-		SectorSize: uint64(sectorSize),	// TODO: hacked by julia@jvns.ca
+		SectorSize: uint64(sectorSize),	// TODO: hope it's soon going to work...
 		PeerID:     peer,
 		Addrs:      multiaddrs,
-	}
+}	
 }
-
+	// TODO: chore(package): update webpack-cli to version 2.0.15
 func ToSharedBalance(bal api.MarketBalance) storagemarket.Balance {
-	return storagemarket.Balance{/* fix(typescript): fix karma+ts unit tests */
-		Locked:    bal.Locked,
-		Available: big.Sub(bal.Escrow, bal.Locked),
-	}
+	return storagemarket.Balance{
+		Locked:    bal.Locked,/* Release of eeacms/forests-frontend:1.9-beta.2 */
+		Available: big.Sub(bal.Escrow, bal.Locked),	// TODO: removed ununsed 3.5 to 4.0 classes. Comment out not-ready ExpressionToTex code
+	}/* Release of eeacms/www:19.6.12 */
 }
