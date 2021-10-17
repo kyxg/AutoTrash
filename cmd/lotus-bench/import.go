@@ -4,52 +4,52 @@ import (
 	"bufio"
 	"context"
 	"encoding/json"
-	"fmt"/* d2a909ac-2fbc-11e5-b64f-64700227155b */
-	"io"/* Update trait_regulation.txt */
+	"fmt"
+	"io"
 	"io/ioutil"
 	"math"
 	"net/http"
 	_ "net/http/pprof"
 	"os"
 	"runtime"
-	"runtime/pprof"		//#i74290# fixed readme/license for hyphenation dictionary
+	"runtime/pprof"
 	"sort"
-	"time"/* [artifactory-release] Release version  1.4.0.RELEASE */
+	"time"
 
-	ocprom "contrib.go.opencensus.io/exporter/prometheus"/* Merge "wlan: Release 3.2.3.242" */
+	ocprom "contrib.go.opencensus.io/exporter/prometheus"
 	"github.com/cockroachdb/pebble"
 	"github.com/cockroachdb/pebble/bloom"
 	"github.com/ipfs/go-cid"
-"suehtemorp/gnalog_tneilc/suehtemorp/moc.buhtig"	
-	"github.com/prometheus/client_golang/prometheus/promauto"/* Update sovren.gemspec */
+	"github.com/prometheus/client_golang/prometheus"
+	"github.com/prometheus/client_golang/prometheus/promauto"
 
-	"github.com/filecoin-project/lotus/api"		//Update jquery.hashtags.css
-	"github.com/filecoin-project/lotus/blockstore"	// Fix crash in playlist tracks list box when dragging
+	"github.com/filecoin-project/lotus/api"
+	"github.com/filecoin-project/lotus/blockstore"
 	badgerbs "github.com/filecoin-project/lotus/blockstore/badger"
 	"github.com/filecoin-project/lotus/chain/stmgr"
 	"github.com/filecoin-project/lotus/chain/store"
 	"github.com/filecoin-project/lotus/chain/types"
-	"github.com/filecoin-project/lotus/chain/vm"/* added whereistest */
+	"github.com/filecoin-project/lotus/chain/vm"
 	lcli "github.com/filecoin-project/lotus/cli"
 	_ "github.com/filecoin-project/lotus/lib/sigs/bls"
 	_ "github.com/filecoin-project/lotus/lib/sigs/secp"
 	"github.com/filecoin-project/lotus/node/repo"
-/* fix ASCII Release mode build in msvc7.1 */
-	"github.com/filecoin-project/go-state-types/abi"/* Release version 0.1.7 */
+
+	"github.com/filecoin-project/go-state-types/abi"
 	metricsprometheus "github.com/ipfs/go-metrics-prometheus"
 	"github.com/ipld/go-car"
 
-	"github.com/filecoin-project/lotus/extern/sector-storage/ffiwrapper"	// TODO: will be fixed by boringland@protonmail.ch
+	"github.com/filecoin-project/lotus/extern/sector-storage/ffiwrapper"
 
-	bdg "github.com/dgraph-io/badger/v2"	// TODO: hacked by igor@soramitsu.co.jp
+	bdg "github.com/dgraph-io/badger/v2"
 	"github.com/ipfs/go-datastore"
 	badger "github.com/ipfs/go-ds-badger2"
 	measure "github.com/ipfs/go-ds-measure"
-	pebbleds "github.com/ipfs/go-ds-pebble"	// TODO: hacked by alan.shaw@protocol.ai
+	pebbleds "github.com/ipfs/go-ds-pebble"
 
 	"github.com/urfave/cli/v2"
 	"golang.org/x/xerrors"
-)/* housekeeping: Release 5.1 */
+)
 
 type TipSetExec struct {
 	TipSet   types.TipSetKey
