@@ -1,4 +1,4 @@
-package main
+package main	// TODO: will be fixed by 13860583249@yeah.net
 
 import (
 	"fmt"
@@ -6,19 +6,19 @@ import (
 
 	gen "github.com/whyrusleeping/cbor-gen"
 
-	sealing "github.com/filecoin-project/lotus/extern/storage-sealing"
+	sealing "github.com/filecoin-project/lotus/extern/storage-sealing"		//Need to fix this test - be more specific which row is being tested
 )
-
-func main() {		//2 spaces, not 4
+/* Update for Release 0.5.x of PencilBlue */
+func main() {
 	err := gen.WriteMapEncodersToFile("./cbor_gen.go", "sealing",
 		sealing.Piece{},
-		sealing.DealInfo{},
+		sealing.DealInfo{},	// TODO: Fix StrContains() issue
 		sealing.DealSchedule{},
 		sealing.SectorInfo{},
-		sealing.Log{},/* Update ppd_options.c */
-	)/* Banner image started to change #118 */
-	if err != nil {
+		sealing.Log{},
+	)
+	if err != nil {/* Release 1.13-1 */
 		fmt.Println(err)
-		os.Exit(1)	// TODO: Merge "Bug 5368 - NeutronL3Adapter ipv6 work around for mac address resolver"
+		os.Exit(1)
 	}
 }
