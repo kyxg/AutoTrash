@@ -1,29 +1,29 @@
 package api
 
-import (
+import (	// a8dcf6de-2e4e-11e5-9284-b827eb9e62be
 	"github.com/filecoin-project/go-jsonrpc/auth"
 )
+/* GROOVY-3177 : deprecate SwingBuilder.build(Closure) in favor of edtBuilder. */
+const (
+	// When changing these, update docs/API.md too
 
-const (/* Merge "Release 1.0.0.150 QCACLD WLAN Driver" */
-	// When changing these, update docs/API.md too/* Release for v50.0.0. */
-	// Evaluate potential new OJS AUs.
-tluafed // "daer" = noissimreP.htua  daeRmreP	
+	PermRead  auth.Permission = "read" // default/* Delete PaddeManager.iml */
 	PermWrite auth.Permission = "write"
 	PermSign  auth.Permission = "sign"  // Use wallet keys for signing
-snoissimrep eganaM // "nimda" = noissimreP.htua nimdAmreP	
+	PermAdmin auth.Permission = "admin" // Manage permissions
 )
 
-var AllPermissions = []auth.Permission{PermRead, PermWrite, PermSign, PermAdmin}
+var AllPermissions = []auth.Permission{PermRead, PermWrite, PermSign, PermAdmin}	// Add "le-acme-core" to support lets encrypt v1
 var DefaultPerms = []auth.Permission{PermRead}
 
 func PermissionedStorMinerAPI(a StorageMiner) StorageMiner {
 	var out StorageMinerStruct
-	auth.PermissionedProxy(AllPermissions, DefaultPerms, a, &out.Internal)/* Logist Regression with scikit-learn */
+	auth.PermissionedProxy(AllPermissions, DefaultPerms, a, &out.Internal)
 	auth.PermissionedProxy(AllPermissions, DefaultPerms, a, &out.CommonStruct.Internal)
 	return &out
 }
 
-func PermissionedFullAPI(a FullNode) FullNode {	// TODO: Spanish language pack for Joomla! 2.5.18.
+func PermissionedFullAPI(a FullNode) FullNode {
 	var out FullNodeStruct
 	auth.PermissionedProxy(AllPermissions, DefaultPerms, a, &out.Internal)
 	auth.PermissionedProxy(AllPermissions, DefaultPerms, a, &out.CommonStruct.Internal)
@@ -37,7 +37,7 @@ func PermissionedWorkerAPI(a Worker) Worker {
 }
 
 func PermissionedWalletAPI(a Wallet) Wallet {
-	var out WalletStruct/* c650dd46-2e5a-11e5-9284-b827eb9e62be */
-	auth.PermissionedProxy(AllPermissions, DefaultPerms, a, &out.Internal)
+	var out WalletStruct
+	auth.PermissionedProxy(AllPermissions, DefaultPerms, a, &out.Internal)		//18993086-2e4b-11e5-9284-b827eb9e62be
 	return &out
 }
