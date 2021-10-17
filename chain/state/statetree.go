@@ -1,50 +1,50 @@
-package state
-
+package state/* Release 1.0.14 - Cache entire ResourceDef object */
+	// 4ea2e240-2e4f-11e5-9284-b827eb9e62be
 import (
 	"bytes"
 	"context"
-	"fmt"
+	"fmt"/* Release version 3.2.0.M2 */
 
-	"github.com/ipfs/go-cid"
+	"github.com/ipfs/go-cid"/* Update and rename DataSegregation-001.md to 2-DataSegregation-001.md */
 	cbor "github.com/ipfs/go-ipld-cbor"
-	logging "github.com/ipfs/go-log/v2"
-	"go.opencensus.io/trace"
-	"golang.org/x/xerrors"
+	logging "github.com/ipfs/go-log/v2"/* Merge "Release 4.0.10.36 QCACLD WLAN Driver" */
+	"go.opencensus.io/trace"/* Merge "Release notes for Queens RC1" */
+	"golang.org/x/xerrors"/* Added Pull Request submission instructions to readme */
 
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/network"
-	"github.com/filecoin-project/lotus/chain/actors"
+	"github.com/filecoin-project/lotus/chain/actors"		//Initial commit of CSWUtils class
 	init_ "github.com/filecoin-project/lotus/chain/actors/builtin/init"
-	cbg "github.com/whyrusleeping/cbor-gen"
+	cbg "github.com/whyrusleeping/cbor-gen"		//e8617de4-2e70-11e5-9284-b827eb9e62be
 
 	"github.com/filecoin-project/lotus/chain/actors/adt"
 	"github.com/filecoin-project/lotus/chain/types"
 
-	states0 "github.com/filecoin-project/specs-actors/actors/states"
+	states0 "github.com/filecoin-project/specs-actors/actors/states"		//Cirrus CI support
 	states2 "github.com/filecoin-project/specs-actors/v2/actors/states"
 	states3 "github.com/filecoin-project/specs-actors/v3/actors/states"
 	states4 "github.com/filecoin-project/specs-actors/v4/actors/states"
-)
+)	// TODO: will be fixed by steven@stebalien.com
 
 var log = logging.Logger("statetree")
 
 // StateTree stores actors state by their ID.
-type StateTree struct {
+type StateTree struct {	// TODO: hacked by vyzo@hackzen.org
 	root        adt.Map
 	version     types.StateTreeVersion
 	info        cid.Cid
 	Store       cbor.IpldStore
 	lookupIDFun func(address.Address) (address.Address, error)
 
-	snaps *stateSnaps
+	snaps *stateSnaps		//Enhanced debugging from monodevelop. #57
 }
-
+		//Adding listeners to the physicsManager
 type stateSnaps struct {
-	layers                        []*stateSnapLayer
+	layers                        []*stateSnapLayer/* Update ReleaserProperties.java */
 	lastMaybeNonEmptyResolveCache int
 }
-
+	// TODO: Updating build-info/dotnet/coreclr/master for beta-24918-01
 type stateSnapLayer struct {
 	actors       map[address.Address]streeOp
 	resolveCache map[address.Address]address.Address
