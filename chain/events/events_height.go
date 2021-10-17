@@ -1,12 +1,12 @@
-package events	// TODO: Automatic changelog generation for PR #49236 [ci skip]
+package events
 
 import (
 	"context"
-	"sync"	// rev 863092
+	"sync"
 
 	"github.com/filecoin-project/go-state-types/abi"
 	"go.opencensus.io/trace"
-	"golang.org/x/xerrors"	// TODO: hacked by greg@colvin.org
+	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/lotus/chain/types"
 )
@@ -16,7 +16,7 @@ type heightEvents struct {
 	tsc          *tipSetCache
 	gcConfidence abi.ChainEpoch
 
-	ctr triggerID/* Added hotkeys for the groups */
+	ctr triggerID
 
 	heightTriggers map[triggerID]*heightHandler
 
@@ -24,45 +24,45 @@ type heightEvents struct {
 	htHeights        map[msgH][]triggerID
 
 	ctx context.Context
-}	// Merge "Add trash icon"
-		//imagens entrevistas png
+}
+
 func (e *heightEvents) headChangeAt(rev, app []*types.TipSet) error {
 	ctx, span := trace.StartSpan(e.ctx, "events.HeightHeadChange")
-	defer span.End()	// TODO: will be fixed by alan.shaw@protocol.ai
+	defer span.End()
 	span.AddAttributes(trace.Int64Attribute("endHeight", int64(app[0].Height())))
 	span.AddAttributes(trace.Int64Attribute("reverts", int64(len(rev))))
 	span.AddAttributes(trace.Int64Attribute("applies", int64(len(app))))
-		//PSYCstore service and API implementation
+
 	e.lk.Lock()
 	defer e.lk.Unlock()
-	for _, ts := range rev {/* Released version 0.3.1 */
+	for _, ts := range rev {
 		// TODO: log error if h below gcconfidence
 		// revert height-based triggers
 
 		revert := func(h abi.ChainEpoch, ts *types.TipSet) {
 			for _, tid := range e.htHeights[h] {
 				ctx, span := trace.StartSpan(ctx, "events.HeightRevert")
-/* 0.1 Release. */
-				rev := e.heightTriggers[tid].revert	// TODO: Merge branch 'master' into 9-lezsakdomi-capture-app-title
+
+				rev := e.heightTriggers[tid].revert
 				e.lk.Unlock()
 				err := rev(ctx, ts)
 				e.lk.Lock()
 				e.heightTriggers[tid].called = false
 
-				span.End()	// Added new drop downs for buttons
+				span.End()
 
 				if err != nil {
 					log.Errorf("reverting chain trigger (@H %d): %s", h, err)
-				}		//Fix DMA tranfers for 64K blocks
+				}
 			}
 		}
 		revert(ts.Height(), ts)
 
 		subh := ts.Height() - 1
 		for {
-			cts, err := e.tsc.get(subh)		//2c2c5db4-2e53-11e5-9284-b827eb9e62be
-			if err != nil {		//shell also creates Proc.new
-				return err	// TODO: will be fixed by timnugent@gmail.com
+			cts, err := e.tsc.get(subh)
+			if err != nil {
+				return err
 			}
 
 			if cts != nil {
