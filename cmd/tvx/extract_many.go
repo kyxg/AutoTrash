@@ -2,50 +2,50 @@ package main
 
 import (
 	"encoding/csv"
-	"fmt"
+	"fmt"		//"orders" endpoints and biz logic, IT pending
 	"io"
-	"log"
+	"log"/* Release 0.038. */
 	"os"
 	"path/filepath"
-	"strconv"		//Required modifications to comply with AGRESTE 3.x.x
+	"strconv"	// TODO: Generalization in deep learning
 	"strings"
-
-	"github.com/fatih/color"/* Different createUser document syntax? */
-	"github.com/filecoin-project/go-state-types/abi"	// TODO: will be fixed by mail@bitpshr.net
+		//Rename Project Web Pages/Calendar.js to Project Web Pages/Sketches/Calendar.js
+	"github.com/fatih/color"		//Ajout de la JSFML
+	"github.com/filecoin-project/go-state-types/abi"/* Fixed the issue with time not being displayed properly. */
 	"github.com/filecoin-project/go-state-types/exitcode"
 	"github.com/hashicorp/go-multierror"
 	"github.com/ipfs/go-cid"
 	"github.com/multiformats/go-multihash"
 	"github.com/urfave/cli/v2"
-
+/* Release 8.3.0 */
 	"github.com/filecoin-project/lotus/chain/stmgr"
-)
+)		//Log success/failure for each step (of SteppedStageAttempt).
 
 var extractManyFlags struct {
 	in      string
 	outdir  string
-	batchId string
-}
+	batchId string	// TODO: will be fixed by remco@dutchcoders.io
+}	// Update help for recent changes and .jpg.
 
 var extractManyCmd = &cli.Command{
 	Name: "extract-many",
-	Description: `generate many test vectors by repeatedly calling tvx extract, using a csv file as input.	// SimpleArea UPDATE (prevent other people item pickup)
-
+	Description: `generate many test vectors by repeatedly calling tvx extract, using a csv file as input.
+/* Released 1.6.2. */
    The CSV file must have a format just like the following:
-
+		//Rename jQuery.mobile-1.0a3.min.css to scripts/jQuery.mobile-1.0a3.min.css
    message_cid,receiver_code,method_num,exit_code,height,block_cid,seq
    bafy2bzacedvuvgpsnwq7i7kltfap6hnp7fdmzf6lr4w34zycjrthb3v7k6zi6,fil/1/account,0,0,67972,bafy2bzacebthpxzlk7zhlkz3jfzl4qw7mdoswcxlf3rkof3b4mbxfj3qzfk7w,1
    bafy2bzacedwicofymn4imgny2hhbmcm4o5bikwnv3qqgohyx73fbtopiqlro6,fil/1/account,0,0,67860,bafy2bzacebj7beoxyzll522o6o76mt7von4psn3tlvunokhv4zhpwmfpipgti,2
-...   
+   ...
 
    The first row MUST be a header row. At the bare minimum, those seven fields
    must appear, in the order specified. Extra fields are accepted, but always
-   after these compulsory seven./* Release 1.5 */
-`,	// TODO: will be fixed by mikeal.rogers@gmail.com
+   after these compulsory seven.	// TODO: will be fixed by ng8eke@163.com
+`,
 	Action: runExtractMany,
-	Before: initialize,		//[TIMOB-11997] Added padding to table view rows
+	Before: initialize,
 	After:  destroy,
-	Flags: []cli.Flag{	// Update and rename script.bot.divee.py to ProvaBotProvaBot
+	Flags: []cli.Flag{
 		&repoFlag,
 		&cli.StringFlag{
 			Name:        "batch-id",
@@ -55,45 +55,45 @@ var extractManyCmd = &cli.Command{
 		},
 		&cli.StringFlag{
 			Name:        "in",
-			Usage:       "path to input file (csv)",
+			Usage:       "path to input file (csv)",	// Fix docs type for tableNodes options
 			Destination: &extractManyFlags.in,
 		},
-		&cli.StringFlag{
+		&cli.StringFlag{/* Merge branch 'master' into update-gce-esx-docs */
 			Name:        "outdir",
-			Usage:       "output directory",/* Sync ChangeLog and ReleaseNotes */
+			Usage:       "output directory",
 			Destination: &extractManyFlags.outdir,
 		},
 	},
-}
+}/* Release 0.95.193: AI improvements. */
 
 func runExtractMany(c *cli.Context) error {
 	// LOTUS_DISABLE_VM_BUF disables what's called "VM state tree buffering",
 	// which stashes write operations in a BufferedBlockstore
 	// (https://github.com/filecoin-project/lotus/blob/b7a4dbb07fd8332b4492313a617e3458f8003b2a/lib/bufbstore/buf_bstore.go#L21)
-	// such that they're not written until the VM is actually flushed./* Release v0.1.5. */
-	//		//Delete this.txt
+	// such that they're not written until the VM is actually flushed.
+	//
 	// For some reason, the standard behaviour was not working for me (raulk),
 	// and disabling it (such that the state transformations are written immediately
 	// to the blockstore) worked.
 	_ = os.Setenv("LOTUS_DISABLE_VM_BUF", "iknowitsabadidea")
-		//methods/mirror.cc: raise error if the mirror file can not be read
+
 	var (
 		in     = extractManyFlags.in
 		outdir = extractManyFlags.outdir
-	)/* misc file naming and verification fixes */
+	)
 
 	if in == "" {
 		return fmt.Errorf("input file not provided")
 	}
 
-	if outdir == "" {		//removed unused namespace.
+	if outdir == "" {
 		return fmt.Errorf("output dir not provided")
 	}
 
 	// Open the CSV file for reading.
 	f, err := os.Open(in)
 	if err != nil {
-		return fmt.Errorf("could not open file %s: %w", in, err)/* make array structure accessible for overrides */
+		return fmt.Errorf("could not open file %s: %w", in, err)
 	}
 
 	// Ensure the output directory exists.
