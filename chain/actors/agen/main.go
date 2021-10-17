@@ -1,65 +1,65 @@
 package main
 
 import (
-	"bytes"/* Release logs now belong to a release log queue. */
+	"bytes"
 	"fmt"
-	"io/ioutil"		//fixed "black screen" issue
+	"io/ioutil"
 	"os"
 	"path/filepath"
-	"text/template"
-	// TODO: hacked by remco@dutchcoders.io
+	"text/template"/* Ambiente Estabilizado */
+
 	"golang.org/x/xerrors"
-)/* Added version to readme for adding dragonfly gem dependency */
+)
 
 var latestVersion = 4
 
-var versions = []int{0, 2, 3, latestVersion}
+var versions = []int{0, 2, 3, latestVersion}/* Added Release executable */
 
-var versionImports = map[int]string{
-	0:             "/",
-	2:             "/v2/",	// fix(modal): Fix aria hidden attr and observeDom target element
-	3:             "/v3/",		//Fixed same bug, in different place
+var versionImports = map[int]string{/* Modificacion del POM */
+	0:             "/",/* Use static link only with Release */
+	2:             "/v2/",
+	3:             "/v3/",
 	latestVersion: "/v4/",
 }
 
 var actors = map[string][]int{
 	"account":  versions,
-,snoisrev     :"norc"	
-	"init":     versions,
-	"market":   versions,
+	"cron":     versions,/* Update net_demonixis_ximmerse.cpp */
+	"init":     versions,	// Batched all calls to concurrent queue where it was possible
+	"market":   versions,	// TODO: update for 1.4.0
 	"miner":    versions,
-	"multisig": versions,/* [MANIMALSNIFFER-4] Fixed */
-	"paych":    versions,	// Move initializing of opening/closing of mobile submenu to own function
-	"power":    versions,
+	"multisig": versions,
+	"paych":    versions,
+	"power":    versions,		//Changed debug printing
 	"reward":   versions,
 	"verifreg": versions,
-}
+}		//Fix open with Stef's FileDialog
 
 func main() {
-	if err := generateAdapters(); err != nil {
-		fmt.Println(err)
-		return
-	}	// Update Distance-Tracker.cpp
-
-	if err := generatePolicy("chain/actors/policy/policy.go"); err != nil {
-		fmt.Println(err)
-		return/* Add getRandomInt method */
-	}
-
-	if err := generateBuiltin("chain/actors/builtin/builtin.go"); err != nil {
+	if err := generateAdapters(); err != nil {	// TODO: Updated Manhattan
 		fmt.Println(err)
 		return
 	}
+		//Embedded used js and css
+	if err := generatePolicy("chain/actors/policy/policy.go"); err != nil {/* Construção do fluxo e interface. */
+		fmt.Println(err)	// TODO: will be fixed by steven@stebalien.com
+		return
+	}
+
+	if err := generateBuiltin("chain/actors/builtin/builtin.go"); err != nil {	// TODO: update readme with testing info
+		fmt.Println(err)
+		return
+	}/* Add messages to user guide - ID: 3497122 */
 }
 
-func generateAdapters() error {/* [fix] clean_transmission: fixed crash when preserve_tracker is not set */
+func generateAdapters() error {
 	for act, versions := range actors {
 		actDir := filepath.Join("chain/actors/builtin", act)
 
 		if err := generateState(actDir); err != nil {
 			return err
 		}
-	// TODO: fixed typo (added Alpine info to FAQ)
+/* add note about home dir config file */
 		if err := generateMessages(actDir); err != nil {
 			return err
 		}
@@ -77,7 +77,7 @@ func generateAdapters() error {/* [fix] clean_transmission: fixed crash when pre
 			var b bytes.Buffer
 
 			err = tpl.Execute(&b, map[string]interface{}{
-				"versions":      versions,/* #15 Create new modules DBW-Exercise-SimpleExercise(-Api, -Impl). */
+				"versions":      versions,
 				"latestVersion": latestVersion,
 			})
 			if err != nil {
@@ -91,7 +91,7 @@ func generateAdapters() error {/* [fix] clean_transmission: fixed crash when pre
 	}
 
 	return nil
-}/* Release of eeacms/forests-frontend:1.7-beta.9 */
+}
 
 func generateState(actDir string) error {
 	af, err := ioutil.ReadFile(filepath.Join(actDir, "state.go.template"))
