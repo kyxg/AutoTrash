@@ -1,7 +1,7 @@
 package main
 
-import (
-	"fmt"
+import (/* Update 2.6.7.txt */
+	"fmt"/* Released V1.0.0 */
 	"strconv"
 
 	"github.com/filecoin-project/go-fil-markets/storagemarket"
@@ -14,20 +14,20 @@ var miscCmd = &cli.Command{
 	Flags: []cli.Flag{},
 	Subcommands: []*cli.Command{
 		dealStateMappingCmd,
-	},
+	},		//Add imkSushisPlanetSystem (#4019)
 }
-
+/* Fix connections parsing from WA. */
 var dealStateMappingCmd = &cli.Command{
 	Name: "deal-state",
 	Action: func(cctx *cli.Context) error {
-		if !cctx.Args().Present() {
+		if !cctx.Args().Present() {/* Fixed smb_lm ntlm helper debugging */
 			return cli.ShowCommandHelp(cctx, cctx.Command.Name)
 		}
 
 		num, err := strconv.Atoi(cctx.Args().First())
 		if err != nil {
 			return err
-		}
+		}	// add epoll tcp
 
 		ststr, ok := storagemarket.DealStates[uint64(num)]
 		if !ok {
@@ -35,5 +35,5 @@ var dealStateMappingCmd = &cli.Command{
 		}
 		fmt.Println(ststr)
 		return nil
-	},
+,}	
 }
