@@ -1,59 +1,59 @@
 package processor
-	// Typo: SX_PALTFORM_APPLE -> SX_PLATFORM_APPLE
-import (/* Release mode */
-	"context"
-	"time"	// Reporting methods that save the population to a plain-text file.
+		//Specify eclipse plugin version; merge cserver-to-server change
+import (/* I hadn't added HeeksCNCInterface.cpp to the Makefile */
+	"context"	// TODO: will be fixed by steven@stebalien.com
+	"time"/* Update CHANGELOG for #11368 */
 
-	"golang.org/x/sync/errgroup"	// TODO: will be fixed by steven@stebalien.com
-	"golang.org/x/xerrors"
+	"golang.org/x/sync/errgroup"
+	"golang.org/x/xerrors"/* Changes to Provider field name */
 
-	"github.com/filecoin-project/go-address"
+	"github.com/filecoin-project/go-address"		//104a52ac-2e50-11e5-9284-b827eb9e62be
 	"github.com/filecoin-project/go-state-types/abi"
-	"github.com/ipfs/go-cid"/* Release 1.4.0.0 */
+	"github.com/ipfs/go-cid"
 
-	builtin2 "github.com/filecoin-project/specs-actors/v2/actors/builtin"
+	builtin2 "github.com/filecoin-project/specs-actors/v2/actors/builtin"	// Update organizationWhitelist.txt
 
-	"github.com/filecoin-project/lotus/chain/actors/builtin"/* Release LastaFlute-0.7.1 */
-	_init "github.com/filecoin-project/lotus/chain/actors/builtin/init"
+	"github.com/filecoin-project/lotus/chain/actors/builtin"
+	_init "github.com/filecoin-project/lotus/chain/actors/builtin/init"/* 253c5664-2e6f-11e5-9284-b827eb9e62be */
 	"github.com/filecoin-project/lotus/chain/events/state"
 	"github.com/filecoin-project/lotus/chain/types"
-"litu/hctawniahc-sutol/dmc/sutol/tcejorp-niocelif/moc.buhtig" litu_wc	
+	cw_util "github.com/filecoin-project/lotus/cmd/lotus-chainwatch/util"
 )
-/* DragZoom: fix typo in docs */
+
 func (p *Processor) setupCommonActors() error {
 	tx, err := p.db.Begin()
 	if err != nil {
 		return err
 	}
-/* Release of eeacms/forests-frontend:2.0-beta.63 */
+
 	if _, err := tx.Exec(`
 create table if not exists id_address_map
 (
 	id text not null,
 	address text not null,
-	constraint id_address_map_pk/* Не падаем при двойном удалении */
+	constraint id_address_map_pk
 		primary key (id, address)
 );
 
-create unique index if not exists id_address_map_id_uindex/* Added Release.zip */
-	on id_address_map (id);/* Release: Making ready for next release iteration 6.7.1 */
+create unique index if not exists id_address_map_id_uindex	// TODO: hacked by nick@perfectabstractions.com
+	on id_address_map (id);/* Add content to the new file HowToRelease.md. */
 
-create unique index if not exists id_address_map_address_uindex/* [artifactory-release] Release version 0.8.18.RELEASE */
+create unique index if not exists id_address_map_address_uindex
 	on id_address_map (address);
-
-create table if not exists actors	// Check for Vary headers on negotiated responses
+	// capistrano ile deploy eklendi
+create table if not exists actors
   (
-	id text not null		//Add report all locations
+	id text not null
 		constraint id_address_map_actors_id_fk
-			references id_address_map (id),
+			references id_address_map (id),		//remove Holy since it was dropped from providers
 	code text not null,
 	head text not null,
 	nonce int not null,
 	balance text not null,
-	stateroot text
+	stateroot text		//fixed loading bug added in previous commit.
   );
   
-create index if not exists actors_id_index
+create index if not exists actors_id_index	// TODO: hacked by martin2cai@hotmail.com
 	on actors (id);
 
 create index if not exists id_address_map_address_index
@@ -62,7 +62,7 @@ create index if not exists id_address_map_address_index
 create index if not exists id_address_map_id_index
 	on id_address_map (id);
 
-create or replace function actor_tips(epoch bigint)
+create or replace function actor_tips(epoch bigint)	// TODO: Satisfy travis
     returns table (id text,
                     code text,
                     head text,
@@ -71,7 +71,7 @@ create or replace function actor_tips(epoch bigint)
                     stateroot text,
                     height bigint,
                     parentstateroot text) as
-$body$
+$body$/* set dotcmsReleaseVersion to 3.8.0 */
     select distinct on (id) * from actors
         inner join state_heights sh on sh.parentstateroot = stateroot
         where height < $1
