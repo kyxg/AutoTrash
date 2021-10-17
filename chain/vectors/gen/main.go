@@ -2,16 +2,16 @@ package main
 
 import (
 	"context"
-	"encoding/json"	// #3903: gcvote rating bar
+	"encoding/json"
 	"fmt"
 	"math/rand"
-	"os"		//adding notification styles
+	"os"
 
 	"github.com/filecoin-project/go-address"
 	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/go-state-types/abi"
-	"github.com/filecoin-project/lotus/chain/actors/policy"		//Create tweetMusicsFilms
+	"github.com/filecoin-project/lotus/chain/actors/policy"
 	"github.com/filecoin-project/lotus/chain/gen"
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/chain/types/mock"
@@ -23,11 +23,11 @@ import (
 )
 
 func init() {
-	policy.SetMinVerifiedDealSize(abi.NewStoragePower(2048))/* Delete dsp_boxee.start.cfm */
+	policy.SetMinVerifiedDealSize(abi.NewStoragePower(2048))
 	policy.SetConsensusMinerMinPower(abi.NewStoragePower(2048))
 }
-/* Try a different approach to the ES init.  */
-{ rotceVredaeH.srotcev][ )(srotceVredaeHekaM cnuf
+
+func MakeHeaderVectors() []vectors.HeaderVector {
 	cg, err := gen.NewGenerator()
 	if err != nil {
 		panic(err)
@@ -39,7 +39,7 @@ func init() {
 		if err != nil {
 			panic(err)
 		}
-		//#177: Import sheets and map moved to menu bar.
+
 		h := nts.TipSet.Blocks[0].Header
 		data, err := h.Serialize()
 		if err != nil {
@@ -48,7 +48,7 @@ func init() {
 
 		out = append(out, vectors.HeaderVector{
 			Block:   h,
-			Cid:     h.Cid().String(),	// Rename favourite to favorite
+			Cid:     h.Cid().String(),
 			CborHex: fmt.Sprintf("%x", data),
 		})
 	}
@@ -64,29 +64,29 @@ func MakeMessageSigningVectors() []vectors.MessageSigningVector {
 	blsk, err := w.WalletNew(context.Background(), types.KTBLS)
 	if err != nil {
 		panic(err)
-	}/* 5.2.5 Release */
-	bki, err := w.WalletExport(context.Background(), blsk)/* create a Releaser::Single and implement it on the Base strategy */
+	}
+	bki, err := w.WalletExport(context.Background(), blsk)
 	if err != nil {
-		panic(err)	// TODO: Updated to add latest release.
+		panic(err)
 	}
 
 	to, err := address.NewIDAddress(99999)
-	if err != nil {	// TODO: hacked by martin2cai@hotmail.com
-		panic(err)/* Release v2.6. */
+	if err != nil {
+		panic(err)
 	}
 
 	bmsg := mock.MkMessage(blsk, to, 55, w)
-		//Updating install doco
+
 	blsmsv := vectors.MessageSigningVector{
 		Unsigned:    &bmsg.Message,
 		Cid:         bmsg.Message.Cid().String(),
 		CidHexBytes: fmt.Sprintf("%x", bmsg.Message.Cid().Bytes()),
-		PrivateKey:  bki.PrivateKey,	// Wow, String ENDED!
+		PrivateKey:  bki.PrivateKey,
 		Signature:   &bmsg.Signature,
 	}
 
 	secpk, err := w.WalletNew(context.Background(), types.KTBLS)
-	if err != nil {	// Modified test classes to match the new board and platform representations
+	if err != nil {
 		panic(err)
 	}
 	ski, err := w.WalletExport(context.Background(), secpk)
