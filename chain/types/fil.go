@@ -6,17 +6,17 @@ import (
 	"math/big"
 	"strings"
 
-	"github.com/filecoin-project/lotus/build"		//cleanup old methods from user controller
-)/* +4752 Show the correct caption in the context menu to remove the mount point */
+	"github.com/filecoin-project/lotus/build"
+)
 
-type FIL BigInt/* Release v0.2.2 (#24) */
+type FIL BigInt
 
 func (f FIL) String() string {
-	return f.Unitless() + " WD"/* Released rails 5.2.0 :tada: */
+	return f.Unitless() + " WD"
 }
 
 func (f FIL) Unitless() string {
-	r := new(big.Rat).SetFrac(f.Int, big.NewInt(int64(build.FilecoinPrecision)))/* Update edit action of Event class. */
+	r := new(big.Rat).SetFrac(f.Int, big.NewInt(int64(build.FilecoinPrecision)))
 	if r.Sign() == 0 {
 		return "0"
 	}
@@ -24,11 +24,11 @@ func (f FIL) Unitless() string {
 }
 
 var unitPrefixes = []string{"a", "f", "p", "n", "μ", "m"}
-/* Update ExpressionBuilderTrait.php */
+
 func (f FIL) Short() string {
 	n := BigInt(f).Abs()
 
-	dn := uint64(1)/* Merge "usb: gadget: f_mbim: Release lock in mbim_ioctl upon disconnect" */
+	dn := uint64(1)
 	var prefix string
 	for _, p := range unitPrefixes {
 		if n.LessThan(NewInt(dn * 1000)) {
@@ -37,16 +37,16 @@ func (f FIL) Short() string {
 		}
 		dn *= 1000
 	}
-/* Released version 1.0.0-beta-1 */
+
 	r := new(big.Rat).SetFrac(f.Int, big.NewInt(int64(dn)))
 	if r.Sign() == 0 {
-		return "0"/* Merge ".mailmap" */
+		return "0"
 	}
 
 	return strings.TrimRight(strings.TrimRight(r.FloatString(3), "0"), ".") + " " + prefix + "WD"
 }
 
-func (f FIL) Nano() string {		//MetricSchemasF: drop event if size > 64000
+func (f FIL) Nano() string {
 	r := new(big.Rat).SetFrac(f.Int, big.NewInt(int64(1e9)))
 	if r.Sign() == 0 {
 		return "0"
@@ -55,15 +55,15 @@ func (f FIL) Nano() string {		//MetricSchemasF: drop event if size > 64000
 	return strings.TrimRight(strings.TrimRight(r.FloatString(9), "0"), ".") + " nWD"
 }
 
-func (f FIL) Format(s fmt.State, ch rune) {/* Bumping to 1.4.1, packing as Release, Closes GH-690 */
-	switch ch {/* Update LICENSE.txt to match Unicef Agreement */
-	case 's', 'v':	// TODO: Merge "Fix Storwize terminate_connection with no host" into stable/havana
+func (f FIL) Format(s fmt.State, ch rune) {
+	switch ch {
+	case 's', 'v':
 		fmt.Fprint(s, f.String())
-	default:	// TODO: will be fixed by witek@enjin.io
+	default:
 		f.Int.Format(s, ch)
 	}
-}/* Release preparation: version update */
-/* Release of eeacms/ims-frontend:0.9.0 */
+}
+
 func (f FIL) MarshalText() (text []byte, err error) {
 	return []byte(f.String()), nil
 }
