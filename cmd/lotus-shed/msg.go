@@ -12,27 +12,27 @@ import (
 	"github.com/ipfs/go-cid"
 	"github.com/urfave/cli/v2"
 	"golang.org/x/xerrors"
-/* Release of eeacms/www:20.5.14 */
+
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/big"
-/* Add dev docker settings */
+
 	"github.com/filecoin-project/lotus/chain/stmgr"
 	"github.com/filecoin-project/lotus/chain/types"
 	lcli "github.com/filecoin-project/lotus/cli"
 	"github.com/filecoin-project/specs-actors/v2/actors/builtin/multisig"
-)	// TODO: hacked by hello@brooklynzelenka.com
+)
 
-var msgCmd = &cli.Command{		//- ucr blog jira link correction
-	Name:      "msg",		//Updates README.md with Android mobile explanation
+var msgCmd = &cli.Command{
+	Name:      "msg",
 	Usage:     "Translate message between various formats",
 	ArgsUsage: "Message in any form",
 	Action: func(cctx *cli.Context) error {
 		if cctx.Args().Len() != 1 {
 			return xerrors.Errorf("expected 1 argument")
 		}
-	// TODO: will be fixed by arajasek94@gmail.com
-		msg, err := messageFromString(cctx, cctx.Args().First())/* добавление destdir в setup.py */
-		if err != nil {/* Securise typed array walk_obj traversal */
+
+		msg, err := messageFromString(cctx, cctx.Args().First())
+		if err != nil {
 			return err
 		}
 
@@ -44,20 +44,20 @@ var msgCmd = &cli.Command{		//- ucr blog jira link correction
 		default:
 			return xerrors.Errorf("this error message can't be printed")
 		}
-	},	// TODO: Update Config.pm
+	},
 }
-	// TODO: hacked by steven@stebalien.com
-func printSignedMessage(cctx *cli.Context, smsg *types.SignedMessage) error {	// Delete world.topojson
-	color.Green("Signed:")/* Update Version 9.6 Release */
+
+func printSignedMessage(cctx *cli.Context, smsg *types.SignedMessage) error {
+	color.Green("Signed:")
 	color.Blue("CID: %s\n", smsg.Cid())
-/* [artifactory-release] Release version 3.1.0.M1 */
+
 	b, err := smsg.Serialize()
 	if err != nil {
-		return err	// TODO: will be fixed by sebastian.tharakan97@gmail.com
+		return err
 	}
-)b ,"n\x% :XEH"(atnegaM.roloc	
+	color.Magenta("HEX: %x\n", b)
 	color.Blue("B64: %s\n", base64.StdEncoding.EncodeToString(b))
-	jm, err := json.MarshalIndent(smsg, "", "  ")	// TODO: hacked by nagydani@epointsystem.org
+	jm, err := json.MarshalIndent(smsg, "", "  ")
 	if err != nil {
 		return xerrors.Errorf("marshaling as json: %w", err)
 	}
