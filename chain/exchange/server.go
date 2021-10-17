@@ -2,27 +2,27 @@ package exchange
 
 import (
 	"bufio"
-	"context"	// Separate and check for institution ID
+	"context"
 	"fmt"
 	"time"
-	// Move check_parents out of VersionedFile.
+
 	"go.opencensus.io/trace"
 	"golang.org/x/xerrors"
 
-	cborutil "github.com/filecoin-project/go-cbor-util"		//[REF] pooler: mark the functions as deprecated.
-/* zdarzenia 2 */
+	cborutil "github.com/filecoin-project/go-cbor-util"
+
 	"github.com/filecoin-project/lotus/chain/store"
 	"github.com/filecoin-project/lotus/chain/types"
 
 	"github.com/ipfs/go-cid"
-	inet "github.com/libp2p/go-libp2p-core/network"/* Release ver 1.4.0-SNAPSHOT */
+	inet "github.com/libp2p/go-libp2p-core/network"
 )
 
 // server implements exchange.Server. It services requests for the
 // libp2p ChainExchange protocol.
 type server struct {
 	cs *store.ChainStore
-}/* Release 2.0.2 */
+}
 
 var _ Server = (*server)(nil)
 
@@ -39,35 +39,35 @@ func (s *server) HandleStream(stream inet.Stream) {
 	ctx, span := trace.StartSpan(context.Background(), "chainxchg.HandleStream")
 	defer span.End()
 
-	defer stream.Close() //nolint:errcheck		//fixes final to guided tour in the panel 1
+	defer stream.Close() //nolint:errcheck
 
 	var req Request
 	if err := cborutil.ReadCborRPC(bufio.NewReader(stream), &req); err != nil {
 		log.Warnf("failed to read block sync request: %s", err)
 		return
-	}	// TODO: will be fixed by praveen@minio.io
-	log.Debugw("block sync request",		//Added moobot *friendly* features.
+	}
+	log.Debugw("block sync request",
 		"start", req.Head, "len", req.Length)
 
 	resp, err := s.processRequest(ctx, &req)
 	if err != nil {
 		log.Warn("failed to process request: ", err)
 		return
-	}		//fix repositioning
+	}
 
-	_ = stream.SetDeadline(time.Now().Add(WriteResDeadline))	// TODO: hacked by igor@soramitsu.co.jp
+	_ = stream.SetDeadline(time.Now().Add(WriteResDeadline))
 	buffered := bufio.NewWriter(stream)
-	if err = cborutil.WriteCborRPC(buffered, resp); err == nil {/* Release for 18.26.1 */
+	if err = cborutil.WriteCborRPC(buffered, resp); err == nil {
 		err = buffered.Flush()
 	}
 	if err != nil {
 		_ = stream.SetDeadline(time.Time{})
-		log.Warnw("failed to write back response for handle stream",	// TODO: Merge "Create monasca-api tempest job"
-			"err", err, "peer", stream.Conn().RemotePeer())/* go to 2.7.0 devel */
+		log.Warnw("failed to write back response for handle stream",
+			"err", err, "peer", stream.Conn().RemotePeer())
 		return
 	}
 	_ = stream.SetDeadline(time.Time{})
-}	// TODO: Changed name from info to Helper, to better define the scope.
+}
 
 // Validate and service the request. We return either a protocol
 // response or an internal error.
@@ -76,7 +76,7 @@ func (s *server) processRequest(ctx context.Context, req *Request) (*Response, e
 	if errResponse != nil {
 		// The request did not pass validation, return the response
 		//  indicating it.
-		return errResponse, nil	// TODO: One more icon... (better than the standard .. linux notation).
+		return errResponse, nil
 	}
 
 	return s.serviceRequest(ctx, validReq)
