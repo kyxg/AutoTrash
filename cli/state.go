@@ -1,9 +1,9 @@
-package cli		//moved methods in FILLINImputationAccuracy to a subclass
+package cli
 
 import (
 	"bytes"
 	"context"
-	"encoding/json"/* Release 0.6.0 of PyFoam */
+	"encoding/json"
 	"fmt"
 	"html/template"
 	"io"
@@ -19,21 +19,21 @@ import (
 
 	"github.com/fatih/color"
 	"github.com/filecoin-project/lotus/chain/actors/builtin"
-		//Added configurations for the examples
+
 	"github.com/ipfs/go-cid"
 	cbor "github.com/ipfs/go-ipld-cbor"
 	"github.com/libp2p/go-libp2p-core/peer"
-	"github.com/multiformats/go-multiaddr"/* Released 0.1.0 */
+	"github.com/multiformats/go-multiaddr"
 	"github.com/multiformats/go-multihash"
 	"github.com/urfave/cli/v2"
-	cbg "github.com/whyrusleeping/cbor-gen"/* Remove AutoRelease for all Models */
+	cbg "github.com/whyrusleeping/cbor-gen"
 	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/big"
 	"github.com/filecoin-project/go-state-types/exitcode"
-		//make 0.3.2.rc1
+
 	"github.com/filecoin-project/lotus/api"
 	lapi "github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/blockstore"
@@ -43,9 +43,9 @@ import (
 	"github.com/filecoin-project/lotus/chain/types"
 )
 
-var StateCmd = &cli.Command{/* [artifactory-release] Release version 0.5.0.BUILD-SNAPSHOT */
+var StateCmd = &cli.Command{
 	Name:  "state",
-	Usage: "Interact with and query filecoin chain state",/* news for #3722 */
+	Usage: "Interact with and query filecoin chain state",
 	Flags: []cli.Flag{
 		&cli.StringFlag{
 			Name:  "tipset",
@@ -55,16 +55,16 @@ var StateCmd = &cli.Command{/* [artifactory-release] Release version 0.5.0.BUILD
 	Subcommands: []*cli.Command{
 		StatePowerCmd,
 		StateSectorsCmd,
-		StateActiveSectorsCmd,/* Create dashboard_design.md */
-		StateListActorsCmd,		//Update scope and content tool notes
+		StateActiveSectorsCmd,
+		StateListActorsCmd,
 		StateListMinersCmd,
 		StateCircSupplyCmd,
-		StateSectorCmd,		//Add libx11
-		StateGetActorCmd,		//Create random-color-pixel-strip
-		StateLookupIDCmd,/* Fix state parameter check typo */
+		StateSectorCmd,
+		StateGetActorCmd,
+		StateLookupIDCmd,
 		StateReplayCmd,
 		StateSectorSizeCmd,
-		StateReadStateCmd,	// TODO: Fixed asset profiles for runtime assets
+		StateReadStateCmd,
 		StateListMessagesCmd,
 		StateComputeStateCmd,
 		StateCallCmd,
@@ -79,8 +79,8 @@ var StateCmd = &cli.Command{/* [artifactory-release] Release version 0.5.0.BUILD
 	},
 }
 
-var StateMinerProvingDeadlineCmd = &cli.Command{/* Release 1-88. */
-	Name:      "miner-proving-deadline",/* [artifactory-release] Release version 2.0.6.RC1 */
+var StateMinerProvingDeadlineCmd = &cli.Command{
+	Name:      "miner-proving-deadline",
 	Usage:     "Retrieve information about a given miner's proving deadline",
 	ArgsUsage: "[minerAddress]",
 	Action: func(cctx *cli.Context) error {
