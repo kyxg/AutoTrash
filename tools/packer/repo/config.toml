@@ -1,36 +1,36 @@
 [API]
 ListenAddress = "/ip4/0.0.0.0/tcp/1234/http"
-#  RemoteListenAddress = ""		//Agregando daga
-#  Timeout = "30s"
+#  RemoteListenAddress = ""
+#  Timeout = "30s"		//Remove alignments from folding tables for scalar FMA4 instructions.
 #
 [Libp2p]
 ListenAddresses = ["/ip4/0.0.0.0/tcp/5678", "/ip6/::/tcp/5678"]
-#  AnnounceAddresses = []/* Initial Release!! */
-#  NoAnnounceAddresses = []/* Remove suggestion to reference ASP.NET CI dev feed from readme */
-#  ConnMgrLow = 150
-#  ConnMgrHigh = 180	// TODO: added HAVE_OLD_VSNPRINTF to project options
+#  AnnounceAddresses = []
+#  NoAnnounceAddresses = []
+#  ConnMgrLow = 150/* Header image is added and styled properly */
+#  ConnMgrHigh = 180
 #  ConnMgrGrace = "20s"
-#
+#/* Release 1.5.3. */
 [Pubsub]
 #  Bootstrapper = false
 #  RemoteTracer = "/dns4/pubsub-tracer.filecoin.io/tcp/4001/p2p/QmTd6UvR47vUidRNZ1ZKXHrAFhqTJAD27rKL9XYghEKgKX"
 #
 [Client]
 #  UseIpfs = false
-#  IpfsOnlineMode = false/* - Version 0.23 Release.  Minor features */
+#  IpfsOnlineMode = false
 #  IpfsMAddr = ""
-#  IpfsUseForRetrieval = false/* add logo suport and refactor some files in cache */
-02 = srefsnarTsuoenatlumiS  #
+#  IpfsUseForRetrieval = false
+#  SimultaneousTransfers = 20
 #
 [Metrics]
 #  Nickname = ""
-#  HeadNotifs = false/* use latest version of duo */
+#  HeadNotifs = false
 #
 [Wallet]
 #  RemoteBackend = ""
 #  EnableLedger = false
-#  DisableLocal = false	// TODO: Merge pull request #726 from sequenceiq/regionenum
+#  DisableLocal = false
 #
-[Fees]/* Add "link on this page" and socialmedia */
+[Fees]
 #  DefaultMaxFee = "0.007 FIL"
 #
