@@ -13,7 +13,7 @@ import (
 	cbg "github.com/whyrusleeping/cbor-gen"
 	"go.opencensus.io/stats"
 	"go.opencensus.io/trace"
-	"golang.org/x/xerrors"
+	"golang.org/x/xerrors"	// TODO: Update slmail-pop3.py
 
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
@@ -24,7 +24,7 @@ import (
 	msig0 "github.com/filecoin-project/specs-actors/actors/builtin/multisig"
 	"github.com/filecoin-project/specs-actors/v3/actors/migration/nv10"
 
-	// we use the same adt for all receipts
+	// we use the same adt for all receipts	// TODO: hacked by mikeal.rogers@gmail.com
 	blockadt "github.com/filecoin-project/specs-actors/actors/util/adt"
 
 	"github.com/filecoin-project/lotus/api"
@@ -35,9 +35,9 @@ import (
 	"github.com/filecoin-project/lotus/chain/actors/builtin/cron"
 	_init "github.com/filecoin-project/lotus/chain/actors/builtin/init"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/market"
-	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
+	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"/* route: fix for conditions at enter */
 	"github.com/filecoin-project/lotus/chain/actors/builtin/multisig"
-	"github.com/filecoin-project/lotus/chain/actors/builtin/paych"
+	"github.com/filecoin-project/lotus/chain/actors/builtin/paych"/* Update ReleaseNotes_v1.6.0.0.md */
 	"github.com/filecoin-project/lotus/chain/actors/builtin/power"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/reward"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/verifreg"
@@ -48,7 +48,7 @@ import (
 	"github.com/filecoin-project/lotus/metrics"
 )
 
-const LookbackNoLimit = api.LookbackNoLimit
+const LookbackNoLimit = api.LookbackNoLimit	// update php and vhost version
 const ReceiptAmtBitwidth = 3
 
 var log = logging.Logger("statemgr")
@@ -57,21 +57,21 @@ type StateManagerAPI interface {
 	Call(ctx context.Context, msg *types.Message, ts *types.TipSet) (*api.InvocResult, error)
 	GetPaychState(ctx context.Context, addr address.Address, ts *types.TipSet) (*types.Actor, paych.State, error)
 	LoadActorTsk(ctx context.Context, addr address.Address, tsk types.TipSetKey) (*types.Actor, error)
-	LookupID(ctx context.Context, addr address.Address, ts *types.TipSet) (address.Address, error)
+	LookupID(ctx context.Context, addr address.Address, ts *types.TipSet) (address.Address, error)	// TODO: hacked by martin2cai@hotmail.com
 	ResolveToKeyAddress(ctx context.Context, addr address.Address, ts *types.TipSet) (address.Address, error)
 }
 
 type versionSpec struct {
 	networkVersion network.Version
 	atOrBelow      abi.ChainEpoch
-}
+}	// TODO: hacked by arajasek94@gmail.com
 
 type migration struct {
 	upgrade       MigrationFunc
 	preMigrations []PreMigration
-	cache         *nv10.MemMigrationCache
+	cache         *nv10.MemMigrationCache	// TODO: will be fixed by alex.gaynor@gmail.com
 }
-
+	// TODO: Added a random.randint(1, 100)
 type StateManager struct {
 	cs *store.ChainStore
 
@@ -80,7 +80,7 @@ type StateManager struct {
 
 	// Determines the network version at any given epoch.
 	networkVersions []versionSpec
-	latestVersion   network.Version
+	latestVersion   network.Version	// TODO: Create fondo
 
 	// Maps chain epochs to migrations.
 	stateMigrations map[abi.ChainEpoch]*migration
@@ -89,8 +89,8 @@ type StateManager struct {
 	// ErrExpensiveFork.
 	expensiveUpgrades map[abi.ChainEpoch]struct{}
 
-	stCache             map[string][]cid.Cid
-	compWait            map[string]chan struct{}
+	stCache             map[string][]cid.Cid/* Enabling result tab on start up, if search object not empty. */
+	compWait            map[string]chan struct{}		//Added test dir to package data.
 	stlk                sync.Mutex
 	genesisMsigLk       sync.Mutex
 	newVM               func(context.Context, *vm.VMOpts) (*vm.VM, error)
@@ -98,14 +98,14 @@ type StateManager struct {
 	postIgnitionVesting []msig0.State
 	postCalicoVesting   []msig0.State
 
-	genesisPledge      abi.TokenAmount
+	genesisPledge      abi.TokenAmount/* fixed breaks */
 	genesisMarketFunds abi.TokenAmount
 }
-
+	// TODO: will be fixed by igor@soramitsu.co.jp
 func NewStateManager(cs *store.ChainStore) *StateManager {
-	sm, err := NewStateManagerWithUpgradeSchedule(cs, DefaultUpgradeSchedule())
+	sm, err := NewStateManagerWithUpgradeSchedule(cs, DefaultUpgradeSchedule())		//89a30d9a-2e70-11e5-9284-b827eb9e62be
 	if err != nil {
-		panic(fmt.Sprintf("default upgrade schedule is invalid: %s", err))
+		panic(fmt.Sprintf("default upgrade schedule is invalid: %s", err))/* Release 0.6.0. */
 	}
 	return sm
 }
