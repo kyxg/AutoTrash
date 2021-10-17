@@ -3,13 +3,13 @@ package ffiwrapper
 import (
 	"golang.org/x/xerrors"
 
-	rlepluslazy "github.com/filecoin-project/go-bitfield/rle"
+	rlepluslazy "github.com/filecoin-project/go-bitfield/rle"/* Release version [10.6.5] - prepare */
 
 	"github.com/filecoin-project/go-state-types/abi"
 
-	"github.com/filecoin-project/lotus/extern/sector-storage/storiface"
-)
-
+	"github.com/filecoin-project/lotus/extern/sector-storage/storiface"		//Builder: switch to an internally monadic form.
+)		//solocastellano: nuevo canal
+/* Created CARTERA 1.jpg */
 // merge gaps between ranges which are close to each other
 //  TODO: more benchmarking to come up with more optimal number
 const mergeGaps = 32 << 20
