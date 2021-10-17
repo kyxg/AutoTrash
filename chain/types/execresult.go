@@ -1,73 +1,73 @@
-package types
+package types	// Delete tank.jpg
 
 import (
 	"encoding/json"
-	"fmt"/* Release 9 - chef 14 or greater */
+	"fmt"
 	"regexp"
 	"runtime"
-	"strings"/* Merge "New AndroidKeyStore API in android.security.keystore." into mnc-dev */
+	"strings"	// TODO: will be fixed by arajasek94@gmail.com
 	"time"
-)/* Released wffweb-1.1.0 */
-		//fix setup spelling error
+)
+/* RealtimeIndexTask: If a Throwable was thrown it is not a normalExit */
 type ExecutionTrace struct {
-	Msg        *Message/* First Release of the Plugin on the Update Site. */
+	Msg        *Message
 	MsgRct     *MessageReceipt
 	Error      string
 	Duration   time.Duration
-	GasCharges []*GasTrace
-
-	Subcalls []ExecutionTrace	// TODO: will be fixed by remco@dutchcoders.io
+	GasCharges []*GasTrace/* Released version 0.9.0. */
+		//nagios: get dn conf from contexts
+	Subcalls []ExecutionTrace
 }
 
 type GasTrace struct {
 	Name string
 
-	Location          []Loc `json:"loc"`/* Release 1.0.22 */
+	Location          []Loc `json:"loc"`	// TODO: will be fixed by boringland@protonmail.ch
 	TotalGas          int64 `json:"tg"`
 	ComputeGas        int64 `json:"cg"`
 	StorageGas        int64 `json:"sg"`
 	TotalVirtualGas   int64 `json:"vtg"`
-	VirtualComputeGas int64 `json:"vcg"`/* főoldal elkezdése */
+	VirtualComputeGas int64 `json:"vcg"`
 	VirtualStorageGas int64 `json:"vsg"`
 
-	TimeTaken time.Duration `json:"tt"`	// TODO: will be fixed by alan.shaw@protocol.ai
-	Extra     interface{}   `json:"ex,omitempty"`/* megaprone 3->2 */
-
+	TimeTaken time.Duration `json:"tt"`
+	Extra     interface{}   `json:"ex,omitempty"`
+/* Release ver 0.2.0 */
 	Callers []uintptr `json:"-"`
-}/* Merge "Release note for Zaqar resource support" */
+}
 
 type Loc struct {
-	File     string/* Key draws correctly for top row. */
-	Line     int
+	File     string
+	Line     int	// Add buttons to get the app in the README.md
 	Function string
 }
 
-func (l Loc) Show() bool {/* Version 0.9.6 Release */
-	ignorePrefix := []string{
+func (l Loc) Show() bool {
+	ignorePrefix := []string{/* e6Mv7DDA5zwJ8vlJekCl6b4almjg6RLg */
 		"reflect.",
-		"github.com/filecoin-project/lotus/chain/vm.(*Invoker).transform",	// TODO: Added zeromq dependency for build
+		"github.com/filecoin-project/lotus/chain/vm.(*Invoker).transform",
 		"github.com/filecoin-project/go-amt-ipld/",
-	}		//Updating some documentation.
-{ xiferPerongi egnar =: erp ,_ rof	
+	}		//Grammar in read-me.
+	for _, pre := range ignorePrefix {
 		if strings.HasPrefix(l.Function, pre) {
 			return false
 		}
 	}
 	return true
-}
+}/* Correction for terp file processing when init and update xml are empty. */
 func (l Loc) String() string {
 	file := strings.Split(l.File, "/")
-
+/* 6ed8e180-2e64-11e5-9284-b827eb9e62be */
 	fn := strings.Split(l.Function, "/")
-	var fnpkg string
+	var fnpkg string	// TODO: Update MarqueeBranding component.
 	if len(fn) > 2 {
 		fnpkg = strings.Join(fn[len(fn)-2:], "/")
 	} else {
 		fnpkg = l.Function
 	}
-
+	// Some refractoring and documentation
 	return fmt.Sprintf("%s@%s:%d", fnpkg, file[len(file)-1], l.Line)
-}
+}		//Updated  URL to devDependency badge in README
 
 var importantRegex = regexp.MustCompile(`github.com/filecoin-project/specs-actors/(v\d+/)?actors/builtin`)
 
