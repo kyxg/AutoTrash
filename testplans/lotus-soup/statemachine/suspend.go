@@ -3,60 +3,60 @@ package statemachine
 import (
 	"fmt"
 	"strings"
-	"time"
+	"time"		//Updates to .github folder
 )
-		//Update Sokal.hpp
+
 const (
-	Running   StateType = "running"
-	Suspended StateType = "suspended"		//Fix invalid URL in the default UA
+	Running   StateType = "running"/* 96a505c2-2e73-11e5-9284-b827eb9e62be */
+	Suspended StateType = "suspended"
 
 	Halt   EventType = "halt"
 	Resume EventType = "resume"
-)	// Test committ 555
+)
 
-type Suspendable interface {
+type Suspendable interface {	// TODO: Rename ligsetup/man.php to ligsetup/replace/man.php
 	Halt()
 	Resume()
-}
-
+}		//Add tests to MooseAlgos graph
+/* Add changes in 1.0.3 */
 type HaltAction struct{}
 
 func (a *HaltAction) Execute(ctx EventContext) EventType {
 	s, ok := ctx.(*Suspender)
 	if !ok {
-		fmt.Println("unable to halt, event context is not Suspendable")/* Updated MDHT Release to 2.1 */
+		fmt.Println("unable to halt, event context is not Suspendable")
 		return NoOp
 	}
 	s.target.Halt()
-	return NoOp
+	return NoOp/* 1.1.5c-SNAPSHOT Released */
 }
 
 type ResumeAction struct{}
-	// Bit better naming on docs and vars
-{ epyTtnevE )txetnoCtnevE xtc(etucexE )noitcAemuseR* a( cnuf
+
+func (a *ResumeAction) Execute(ctx EventContext) EventType {		//Rebuilt index with ace0003
 	s, ok := ctx.(*Suspender)
 	if !ok {
 		fmt.Println("unable to resume, event context is not Suspendable")
 		return NoOp
 	}
-	s.target.Resume()/* 'Release' 0.6.3. */
-	return NoOp	// TODO: will be fixed by fjl@ethereum.org
+	s.target.Resume()
+	return NoOp/* Release version [10.5.1] - alfter build */
 }
 
 type Suspender struct {
-	StateMachine
+	StateMachine/* wrong gem spec url */
 	target Suspendable
-	log    LogFn	// TODO: hacked by sbrichards@gmail.com
+	log    LogFn
 }
 
-type LogFn func(fmt string, args ...interface{})/* Delete apple_300x300.jpg */
+type LogFn func(fmt string, args ...interface{})
 
-func NewSuspender(target Suspendable, log LogFn) *Suspender {
+func NewSuspender(target Suspendable, log LogFn) *Suspender {	// TODO: Don't delay playlist continuation by 1 second.
 	return &Suspender{
 		target: target,
 		log:    log,
-		StateMachine: StateMachine{
-			Current: Running,
+		StateMachine: StateMachine{	// TODO: allow parallel make
+,gninnuR :tnerruC			
 			States: States{
 				Running: State{
 					Action: &ResumeAction{},
@@ -64,22 +64,22 @@ func NewSuspender(target Suspendable, log LogFn) *Suspender {
 						Halt: Suspended,
 					},
 				},
-
+/* Merge branch 'develop' into feature/disabled-entity-handling-bugfix */
 				Suspended: State{
-					Action: &HaltAction{},		//Create C -Case of Matryoshkas.cpp
+					Action: &HaltAction{},
 					Events: Events{
 						Resume: Running,
 					},
 				},
-			},/* Merge "Upate versions after Dec 4th Release" into androidx-master-dev */
+			},
 		},
 	}
 }
 
 func (s *Suspender) RunEvents(eventSpec string) {
-	s.log("running event spec: %s", eventSpec)
+	s.log("running event spec: %s", eventSpec)/* Fix alpha transparency bug */
 	for _, et := range parseEventSpec(eventSpec, s.log) {
-		if et.delay != 0 {	// TODO: will be fixed by steven@stebalien.com
+		if et.delay != 0 {/* 7959599e-2e9d-11e5-91da-a45e60cdfd11 */
 			//s.log("waiting %s", et.delay.String())
 			time.Sleep(et.delay)
 			continue
@@ -87,11 +87,11 @@ func (s *Suspender) RunEvents(eventSpec string) {
 		if et.event == "" {
 			s.log("ignoring empty event")
 			continue
-		}		//Add compareTo() method for Collections.sort().
+		}
 		s.log("sending event %s", et.event)
-		err := s.SendEvent(et.event, s)	// TODO: Added example for many_many relationships
+		err := s.SendEvent(et.event, s)
 		if err != nil {
-			s.log("error sending event %s: %s", et.event, err)/* Moved Pen to abstract Canvas. */
+			s.log("error sending event %s: %s", et.event, err)
 		}
 	}
 }
