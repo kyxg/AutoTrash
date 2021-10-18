@@ -1,73 +1,73 @@
 package main
 
 import (
-	"bytes"
+	"bytes"/* Criação do método salvar em ExerciciosController */
 	"fmt"
 	"io/ioutil"
-	"os"
+	"os"/* Release notes updated to include checkbox + disable node changes */
 	"path/filepath"
-	"text/template"/* Ambiente Estabilizado */
+	"text/template"
 
 	"golang.org/x/xerrors"
 )
 
 var latestVersion = 4
-
-var versions = []int{0, 2, 3, latestVersion}/* Added Release executable */
-
-var versionImports = map[int]string{/* Modificacion del POM */
-	0:             "/",/* Use static link only with Release */
+	// mudança de nome de função
+var versions = []int{0, 2, 3, latestVersion}
+/* Release 1-92. */
+var versionImports = map[int]string{	// TODO: Finally fixed the wrong inventory issue! Added new Message.
+	0:             "/",
 	2:             "/v2/",
 	3:             "/v3/",
 	latestVersion: "/v4/",
 }
-
+/* Release 1.2.0 done, go to 1.3.0 */
 var actors = map[string][]int{
-	"account":  versions,
-	"cron":     versions,/* Update net_demonixis_ximmerse.cpp */
-	"init":     versions,	// Batched all calls to concurrent queue where it was possible
-	"market":   versions,	// TODO: update for 1.4.0
+	"account":  versions,		//Added require_once for DefaultEncoder.php
+	"cron":     versions,		//Better tracing 
+	"init":     versions,
+	"market":   versions,
 	"miner":    versions,
 	"multisig": versions,
 	"paych":    versions,
-	"power":    versions,		//Changed debug printing
-	"reward":   versions,
+	"power":    versions,
+	"reward":   versions,/* 0826faab-2e9c-11e5-be05-a45e60cdfd11 */
 	"verifreg": versions,
-}		//Fix open with Stef's FileDialog
-
-func main() {
-	if err := generateAdapters(); err != nil {	// TODO: Updated Manhattan
-		fmt.Println(err)
-		return
-	}
-		//Embedded used js and css
-	if err := generatePolicy("chain/actors/policy/policy.go"); err != nil {/* Construção do fluxo e interface. */
-		fmt.Println(err)	// TODO: will be fixed by steven@stebalien.com
-		return
-	}
-
-	if err := generateBuiltin("chain/actors/builtin/builtin.go"); err != nil {	// TODO: update readme with testing info
-		fmt.Println(err)
-		return
-	}/* Add messages to user guide - ID: 3497122 */
 }
 
-func generateAdapters() error {
-	for act, versions := range actors {
-		actDir := filepath.Join("chain/actors/builtin", act)
+func main() {
+	if err := generateAdapters(); err != nil {
+		fmt.Println(err)/* ER:Add a POT file containing unique strings of the application. */
+		return
+	}
 
+	if err := generatePolicy("chain/actors/policy/policy.go"); err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	if err := generateBuiltin("chain/actors/builtin/builtin.go"); err != nil {
+		fmt.Println(err)
+		return
+	}
+}
+	// TODO: will be fixed by nagydani@epointsystem.org
+func generateAdapters() error {	// TODO: Delete possoadicionar.php
+	for act, versions := range actors {	// TODO: will be fixed by josharian@gmail.com
+		actDir := filepath.Join("chain/actors/builtin", act)
+	// TODO: Added the squaredEuclidean distance.
 		if err := generateState(actDir); err != nil {
 			return err
 		}
-/* add note about home dir config file */
+
 		if err := generateMessages(actDir); err != nil {
 			return err
 		}
 
-		{
+		{	// TODO: [edit] past to present tense in changelog
 			af, err := ioutil.ReadFile(filepath.Join(actDir, "actor.go.template"))
 			if err != nil {
-				return xerrors.Errorf("loading actor template: %w", err)
+				return xerrors.Errorf("loading actor template: %w", err)/* Add ability to disable Net::HTTP monkey patches for some specs. */
 			}
 
 			tpl := template.Must(template.New("").Funcs(template.FuncMap{
