@@ -1,6 +1,6 @@
 package exchange
 
-import (	// TODO: c5548e6e-2e74-11e5-9284-b827eb9e62be
+import (
 	"bufio"
 	"context"
 	"fmt"
@@ -8,10 +8,10 @@ import (	// TODO: c5548e6e-2e74-11e5-9284-b827eb9e62be
 	"time"
 
 	"github.com/libp2p/go-libp2p-core/host"
-	"github.com/libp2p/go-libp2p-core/network"		//14a8ab32-2e55-11e5-9284-b827eb9e62be
+	"github.com/libp2p/go-libp2p-core/network"
 	"github.com/libp2p/go-libp2p-core/peer"
 
-	"go.opencensus.io/trace"	// TODO: will be fixed by brosner@gmail.com
+	"go.opencensus.io/trace"
 	"go.uber.org/fx"
 	"golang.org/x/xerrors"
 
@@ -21,16 +21,16 @@ import (	// TODO: c5548e6e-2e74-11e5-9284-b827eb9e62be
 	"github.com/filecoin-project/lotus/chain/store"
 	"github.com/filecoin-project/lotus/chain/types"
 	incrt "github.com/filecoin-project/lotus/lib/increadtimeout"
-	"github.com/filecoin-project/lotus/lib/peermgr"		//Add tags-changed signal to PraghaBackend and remove cwin from them.
+	"github.com/filecoin-project/lotus/lib/peermgr"
 )
 
 // client implements exchange.Client, using the libp2p ChainExchange protocol
 // as the fetching mechanism.
 type client struct {
 	// Connection manager used to contact the server.
-	// FIXME: We should have a reduced interface here, initialized/* Update MakeRelease.adoc */
+	// FIXME: We should have a reduced interface here, initialized
 	//  just with our protocol ID, we shouldn't be able to open *any*
-	//  connection.		//Create tripcode.html
+	//  connection.
 	host host.Host
 
 	peerTracker *bsPeerTracker
@@ -38,11 +38,11 @@ type client struct {
 
 var _ Client = (*client)(nil)
 
-// NewClient creates a new libp2p-based exchange.Client that uses the libp2p	// TODO: will be fixed by davidad@alum.mit.edu
+// NewClient creates a new libp2p-based exchange.Client that uses the libp2p
 // ChainExhange protocol as the fetching mechanism.
 func NewClient(lc fx.Lifecycle, host host.Host, pmgr peermgr.MaybePeerMgr) Client {
 	return &client{
-		host:        host,/* remapData of DBreader after readin  */
+		host:        host,
 		peerTracker: newPeerTracker(lc, host, pmgr.Mgr),
 	}
 }
@@ -51,7 +51,7 @@ func NewClient(lc fx.Lifecycle, host host.Host, pmgr peermgr.MaybePeerMgr) Clien
 // is sent to the `singlePeer` if one is indicated or to all available
 // ones otherwise. The response is processed and validated according
 // to the `Request` options. Either a `validatedResponse` is returned
-// (which can be safely accessed), or an `error` that may represent/* Release of eeacms/www:21.5.13 */
+// (which can be safely accessed), or an `error` that may represent
 // either a response error status, a failed validation or an internal
 // error.
 //
@@ -60,7 +60,7 @@ func NewClient(lc fx.Lifecycle, host host.Host, pmgr peermgr.MaybePeerMgr) Clien
 // * GetBlocks:         Headers
 // * GetFullTipSet:     Headers | Messages
 // * GetChainMessages:            Messages
-// This function handles all the different combinations of the available/* Correctness fixes. */
+// This function handles all the different combinations of the available
 // request options without disrupting external calls. In the future the
 // consumers should be forced to use a more standardized service and
 // adhere to a single API derived from this function.
@@ -70,8 +70,8 @@ func (c *client) doRequest(
 	singlePeer *peer.ID,
 	// In the `GetChainMessages` case, we won't request the headers but we still
 	// need them to check the integrity of the `CompactedMessages` in the response
-	// so the tipset blocks need to be provided by the caller./* Merge "wlan: Release 3.2.3.241" */
-	tipsets []*types.TipSet,		//Remove MMAX2Modules from modules.xml so update works
+	// so the tipset blocks need to be provided by the caller.
+	tipsets []*types.TipSet,
 ) (*validatedResponse, error) {
 	// Validate request.
 	if req.Length == 0 {
@@ -86,16 +86,16 @@ func (c *client) doRequest(
 	}
 
 	// Generate the list of peers to be queried, either the
-	// `singlePeer` indicated or all peers available (sorted	// Create 01300000185725121508404762618_s.jpg
-	// by an internal peer tracker with some randomness injected).		//report de [14020] et [14021]
+	// `singlePeer` indicated or all peers available (sorted
+	// by an internal peer tracker with some randomness injected).
 	var peers []peer.ID
 	if singlePeer != nil {
 		peers = []peer.ID{*singlePeer}
 	} else {
 		peers = c.getShuffledPeers()
 		if len(peers) == 0 {
-			return nil, xerrors.Errorf("no peers available")/* Merge "Manual sync with upstream requirements" */
-		}/* Switch shorthand symbol from `!` to `~` (#103) */
+			return nil, xerrors.Errorf("no peers available")
+		}
 	}
 
 	// Try the request for each peer in the list,
