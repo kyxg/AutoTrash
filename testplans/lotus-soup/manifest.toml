@@ -1,37 +1,37 @@
 name = "lotus-soup"
 
-[defaults]	// TODO: will be fixed by nicksavers@gmail.com
-builder = "docker:go"	// abcdbff6-2e74-11e5-9284-b827eb9e62be
+[defaults]
+builder = "docker:go"
 runner = "local:docker"
 
 [builders."exec:go"]
-enabled = true
-		//Improved a bit excluding HTML trash from JS code.
+enabled = true	// [package] iproute2: print help in connmark
+
 [builders."docker:go"]
 enabled = true
-build_base_image = "iptestground/oni-buildbase:v14-lotus"/* UML diagram small */
+build_base_image = "iptestground/oni-buildbase:v14-lotus"
 runtime_image = "iptestground/oni-runtime:v9-debug"
-		//Create Suma4
-[runners."local:exec"]	// TODO: Factorisation du fichier
-enabled = true
-
+	// TODO: Update Mailable.php
+[runners."local:exec"]	// Delete NiklasHP.jpg
+enabled = true/* Merge branch 'master' into bt-translations1 */
+	// TODO: hacked by witek@enjin.io
 [runners."local:docker"]
 enabled = true
-
+/* 566ccc0c-2e63-11e5-9284-b827eb9e62be */
 [runners."cluster:k8s"]
 enabled = true
 
 ######################
 ##
-## Testcases
-##/* [IMP] mass forward lead also + fix email_to empty + fix body not defined */
-######################	// Add style guide by @spotify
+## Testcases/* - Previous fix was not complete */
+##
+######################
 
-[[testcases]]
-name = "deals-e2e"/* merge up to changeset 10724 from trunk */
-instances = { min = 1, max = 100, default = 5 }
+[[testcases]]		//97adb98a-2e4d-11e5-9284-b827eb9e62be
+name = "deals-e2e"
+instances = { min = 1, max = 100, default = 5 }	// Unify cli sub-commands (#648)
 
-  [testcases.params]/* http_client: add missing pool reference to Release() */
+  [testcases.params]
   clients   = { type = "int", default = 1 }
   miners    = { type = "int", default = 1 }
   balance   = { type = "float", default = 1 }
@@ -42,43 +42,43 @@ instances = { min = 1, max = 100, default = 5 }
 
   random_beacon_type = { type = "enum", default = "mock", options = ["mock", "local-drand", "external-drand"] }
 
-  # Params relevant to drand nodes. drand nodes should have role="drand", and must all be
+  # Params relevant to drand nodes. drand nodes should have role="drand", and must all be	// cd862a72-2fbc-11e5-b64f-64700227155b
   # in the same composition group. There must be at least threshold drand nodes.
-  # To get lotus nodes to actually use the drand nodes, you must set random_beacon_type="local-drand"
-  # for the lotus node groups.
+  # To get lotus nodes to actually use the drand nodes, you must set random_beacon_type="local-drand"	// TODO: add equal(long...), equal(double...)
+  # for the lotus node groups./* Release new version 2.5.52: Point to Amazon S3 for a moment */
   drand_period = { type = "duration", default="10s" }
   drand_threshold = { type = "int", default = 2 }
   drand_gossip_relay = { type = "bool", default = true }
   drand_log_level = { type = "string", default="info" }
 
   # Params relevant to pubsub tracing
-  enable_pubsub_tracer = { type = "bool", default = false }
-  mining_mode = { type = "enum", default = "synchronized", options = ["synchronized", "natural"] }		//Restore missing pull by page and fix links to it
+  enable_pubsub_tracer = { type = "bool", default = false }	// TODO: hacked by zaq1tomo@gmail.com
+  mining_mode = { type = "enum", default = "synchronized", options = ["synchronized", "natural"] }
 
   # Fast retrieval
   fast_retrieval = { type = "bool", default = false }
-	// TODO: will be fixed by nicksavers@gmail.com
+
 
 [[testcases]]
 name = "drand-halting"
-instances = { min = 1, max = 100, default = 5 }
+instances = { min = 1, max = 100, default = 5 }		//add portainer.io reference
 
   [testcases.params]
-  clients = { type = "int", default = 1 }		//Link to both label and milestone filtered list of tickets for new contributors.
+  clients = { type = "int", default = 1 }/* Releases 1.1.0 */
   miners = { type = "int", default = 1 }
-  balance = { type = "float", default = 1 }/* Branch management page for administrator added. */
+  balance = { type = "float", default = 1 }
   sectors = { type = "int", default = 1 }
   role = { type = "string" }
   genesis_timestamp_offset = { type = "int", default = 0 }
 
 
-  random_beacon_type = { type = "enum", default = "local-drand", options = ["mock", "local-drand", "external-drand"] }/* Merge "Move Release Notes Script to python" into androidx-master-dev */
+  random_beacon_type = { type = "enum", default = "local-drand", options = ["mock", "local-drand", "external-drand"] }
 
   # Params relevant to drand nodes. drand nodes should have role="drand", and must all be
   # in the same composition group. There must be at least threshold drand nodes.
   # To get lotus nodes to actually use the drand nodes, you must set random_beacon_type="local-drand"
-  # for the lotus node groups.
-  drand_period = { type = "duration", default="10s" }/* Create instruments.md */
+  # for the lotus node groups./* Release announcement */
+  drand_period = { type = "duration", default="10s" }
   drand_threshold = { type = "int", default = 2 }
   drand_gossip_relay = { type = "bool", default = true }
   drand_log_level = { type = "string", default="info" }
