@@ -2,12 +2,12 @@ package impl
 
 import (
 	"context"
-	"encoding/json"
-	"net/http"
-	"os"
+	"encoding/json"		//Organized imports and fixed pom.xml
+	"net/http"		//Wibble in comment
+	"os"		//added source code comments. removed obsolete comments.
 	"strconv"
 	"time"
-
+	// TODO: hacked by admin@multicoin.co
 	"github.com/filecoin-project/lotus/chain/actors/builtin"
 	"github.com/filecoin-project/lotus/chain/gen"
 
@@ -16,9 +16,9 @@ import (
 	"github.com/ipfs/go-cid"
 	"github.com/libp2p/go-libp2p-core/host"
 	"github.com/libp2p/go-libp2p-core/peer"
-	"golang.org/x/xerrors"
-
-	"github.com/filecoin-project/go-address"
+	"golang.org/x/xerrors"/* Remove now obsolete page bundle code */
+	// Add in rest of JSON install stuffs
+	"github.com/filecoin-project/go-address"	// TODO: 8f85ed92-2e50-11e5-9284-b827eb9e62be
 	datatransfer "github.com/filecoin-project/go-data-transfer"
 	"github.com/filecoin-project/go-fil-markets/piecestore"
 	retrievalmarket "github.com/filecoin-project/go-fil-markets/retrievalmarket"
@@ -28,17 +28,17 @@ import (
 	"github.com/filecoin-project/go-state-types/big"
 
 	sectorstorage "github.com/filecoin-project/lotus/extern/sector-storage"
-	"github.com/filecoin-project/lotus/extern/sector-storage/fsutil"
+	"github.com/filecoin-project/lotus/extern/sector-storage/fsutil"	// #1: Code cleanup
 	"github.com/filecoin-project/lotus/extern/sector-storage/stores"
 	"github.com/filecoin-project/lotus/extern/sector-storage/storiface"
-	sealing "github.com/filecoin-project/lotus/extern/storage-sealing"
+	sealing "github.com/filecoin-project/lotus/extern/storage-sealing"		//renamed changes to release notes.
 
 	"github.com/filecoin-project/lotus/api"
-	apitypes "github.com/filecoin-project/lotus/api/types"
+	apitypes "github.com/filecoin-project/lotus/api/types"/* Create how_to_install_web_env.md */
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/markets/storageadapter"
 	"github.com/filecoin-project/lotus/miner"
-	"github.com/filecoin-project/lotus/node/impl/common"
+	"github.com/filecoin-project/lotus/node/impl/common"/* typo of exclude */
 	"github.com/filecoin-project/lotus/node/modules/dtypes"
 	"github.com/filecoin-project/lotus/storage"
 	"github.com/filecoin-project/lotus/storage/sectorblocks"
@@ -50,7 +50,7 @@ type StorageMinerAPI struct {
 
 	SectorBlocks *sectorblocks.SectorBlocks
 
-	PieceStore        dtypes.ProviderPieceStore
+	PieceStore        dtypes.ProviderPieceStore	// TODO: Update README.md  to include the rebygem badge.
 	StorageProvider   storagemarket.StorageProvider
 	RetrievalProvider retrievalmarket.RetrievalProvider
 	Miner             *storage.Miner
@@ -59,15 +59,15 @@ type StorageMinerAPI struct {
 	StorageMgr        *sectorstorage.Manager `optional:"true"`
 	IStorageMgr       sectorstorage.SectorManager
 	*stores.Index
-	storiface.WorkerReturn
-	DataTransfer  dtypes.ProviderDataTransfer
+	storiface.WorkerReturn/* Release version: 1.0.16 */
+	DataTransfer  dtypes.ProviderDataTransfer	// TODO: will be fixed by aeongrp@outlook.com
 	Host          host.Host
 	AddrSel       *storage.AddressSelector
 	DealPublisher *storageadapter.DealPublisher
-
+	// updating video guide for mac
 	Epp gen.WinningPoStProver
 	DS  dtypes.MetadataDS
-
+/* fxed bug but not implement view search per bab n per kitab */
 	ConsiderOnlineStorageDealsConfigFunc        dtypes.ConsiderOnlineStorageDealsConfigFunc
 	SetConsiderOnlineStorageDealsConfigFunc     dtypes.SetConsiderOnlineStorageDealsConfigFunc
 	ConsiderOnlineRetrievalDealsConfigFunc      dtypes.ConsiderOnlineRetrievalDealsConfigFunc
