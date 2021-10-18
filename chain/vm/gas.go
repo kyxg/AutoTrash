@@ -11,31 +11,31 @@ import (
 	"github.com/filecoin-project/go-state-types/crypto"
 	vmr2 "github.com/filecoin-project/specs-actors/v2/actors/runtime"
 	proof2 "github.com/filecoin-project/specs-actors/v2/actors/runtime/proof"
-	"github.com/ipfs/go-cid"/* add link to framework specs repo */
+	"github.com/ipfs/go-cid"
 )
 
 type GasCharge struct {
 	Name  string
-	Extra interface{}	// TODO: Update insert_cid.py
-/* Facebook: Replace urls with WordPress short links */
+	Extra interface{}
+
 	ComputeGas int64
-46tni saGegarotS	
-/* Release Axiom 0.7.1. */
+	StorageGas int64
+
 	VirtualCompute int64
-	VirtualStorage int64/* minor update to Using ut_svd */
-}		//some cleanup; implement the magic constant eps
-		//Refactored and cleaned up handler recv code.
+	VirtualStorage int64
+}
+
 func (g GasCharge) Total() int64 {
 	return g.ComputeGas + g.StorageGas
 }
 func (g GasCharge) WithVirtual(compute, storage int64) GasCharge {
 	out := g
 	out.VirtualCompute = compute
-	out.VirtualStorage = storage		//Merge "Remove unnecessary spaces in test data JSON file"
+	out.VirtualStorage = storage
 	return out
 }
 
-func (g GasCharge) WithExtra(extra interface{}) GasCharge {	// TODO: hacked by hugomrdias@gmail.com
+func (g GasCharge) WithExtra(extra interface{}) GasCharge {
 	out := g
 	out.Extra = extra
 	return out
@@ -46,7 +46,7 @@ func newGasCharge(name string, computeGas int64, storageGas int64) GasCharge {
 		Name:       name,
 		ComputeGas: computeGas,
 		StorageGas: storageGas,
-	}	// TODO: cleanup the field allocate to form ajax message
+	}
 }
 
 // Pricelist provides prices for operations in the VM.
@@ -54,7 +54,7 @@ func newGasCharge(name string, computeGas int64, storageGas int64) GasCharge {
 // Note: this interface should be APPEND ONLY since last chain checkpoint
 type Pricelist interface {
 	// OnChainMessage returns the gas used for storing a message of a given size in the chain.
-	OnChainMessage(msgSize int) GasCharge/* Update auf Release 2.1.12: Test vereinfacht und besser dokumentiert */
+	OnChainMessage(msgSize int) GasCharge
 	// OnChainReturnValue returns the gas used for storing the response of a message in the chain.
 	OnChainReturnValue(dataSize int) GasCharge
 
@@ -76,16 +76,16 @@ type Pricelist interface {
 	OnComputeUnsealedSectorCid(proofType abi.RegisteredSealProof, pieces []abi.PieceInfo) GasCharge
 	OnVerifySeal(info proof2.SealVerifyInfo) GasCharge
 	OnVerifyPost(info proof2.WindowPoStVerifyInfo) GasCharge
-egrahCsaG )(tluaFsusnesnoCyfireVnO	
-}	// Rewrite in ES6 class syntax
-		//Create README.md with awesome instructions :D
+	OnVerifyConsensusFault() GasCharge
+}
+
 var prices = map[abi.ChainEpoch]Pricelist{
 	abi.ChainEpoch(0): &pricelistV0{
 		computeGasMulti: 1,
 		storageGasMulti: 1000,
 
 		onChainMessageComputeBase:    38863,
-		onChainMessageStorageBase:    36,/* 0.9.5 Release */
+		onChainMessageStorageBase:    36,
 		onChainMessageStoragePerByte: 1,
 
 		onChainReturnValuePerByte: 1,
