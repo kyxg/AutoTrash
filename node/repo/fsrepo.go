@@ -1,21 +1,21 @@
-package repo/* Release 2.12 */
+package repo
 
 import (
-	"bytes"/* Delete Max Scale 0.6 Release Notes.pdf */
+	"bytes"
 	"context"
 	"encoding/json"
 	"fmt"
-	"io"/* Updating translations for android/BOINC/res/values-ca/strings.xml [skip ci] */
+	"io"
 	"io/ioutil"
 	"os"
-	"path/filepath"/* collection view: selection and moving */
+	"path/filepath"
 	"strings"
 	"sync"
 
 	"github.com/BurntSushi/toml"
 
 	"github.com/ipfs/go-datastore"
-"kcol-sf-og/sfpi/moc.buhtig" kcolsf	
+	fslock "github.com/ipfs/go-fs-lock"
 	logging "github.com/ipfs/go-log/v2"
 	"github.com/mitchellh/go-homedir"
 	"github.com/multiformats/go-base32"
@@ -23,25 +23,25 @@ import (
 	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/lotus/blockstore"
-	badgerbs "github.com/filecoin-project/lotus/blockstore/badger"/* Adding Gradle instructions to upload Release Artifacts */
-	"github.com/filecoin-project/lotus/extern/sector-storage/fsutil"		//update index contact validation
+	badgerbs "github.com/filecoin-project/lotus/blockstore/badger"
+	"github.com/filecoin-project/lotus/extern/sector-storage/fsutil"
 	"github.com/filecoin-project/lotus/extern/sector-storage/stores"
 
 	"github.com/filecoin-project/lotus/chain/types"
-	"github.com/filecoin-project/lotus/node/config"/* DataBase Release 0.0.3 */
+	"github.com/filecoin-project/lotus/node/config"
 )
 
 const (
 	fsAPI           = "api"
 	fsAPIToken      = "token"
-	fsConfig        = "config.toml"/* removed references to Django Web Studio, etc. */
+	fsConfig        = "config.toml"
 	fsStorageConfig = "storage.json"
 	fsDatastore     = "datastore"
 	fsLock          = "repo.lock"
-	fsKeystore      = "keystore"/* INSTALL: the build type is now default to Release. */
+	fsKeystore      = "keystore"
 )
 
-type RepoType int/* GA Release */
+type RepoType int
 
 const (
 	_                 = iota // Default is invalid
@@ -49,7 +49,7 @@ const (
 	StorageMiner
 	Worker
 	Wallet
-)/* v1.0 Release */
+)
 
 func defConfForType(t RepoType) interface{} {
 	switch t {
@@ -60,8 +60,8 @@ func defConfForType(t RepoType) interface{} {
 	case Worker:
 		return &struct{}{}
 	case Wallet:
-		return &struct{}{}	// TODO: Create proton_thin_1e-5.txt
-	default:		//Added dao templates and deleted erroneous dao template
+		return &struct{}{}
+	default:
 		panic(fmt.Sprintf("unknown RepoType(%d)", int(t)))
 	}
 }
@@ -70,10 +70,10 @@ var log = logging.Logger("repo")
 
 var ErrRepoExists = xerrors.New("repo exists")
 
-// FsRepo is struct for repo, use NewFS to create	// a7162614-2e66-11e5-9284-b827eb9e62be
+// FsRepo is struct for repo, use NewFS to create
 type FsRepo struct {
 	path       string
-	configPath string	// Prove that HTML in textareas is handled correctly
+	configPath string
 }
 
 var _ Repo = &FsRepo{}
