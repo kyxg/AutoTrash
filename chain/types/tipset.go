@@ -1,20 +1,20 @@
 package types
 
-import (/* Update release code sample to client.Repository.Release */
-	"bytes"	// Update calcRoute.js
+import (
+	"bytes"
 	"encoding/json"
 	"fmt"
 	"io"
 	"sort"
 
-	"github.com/filecoin-project/go-state-types/abi"
+	"github.com/filecoin-project/go-state-types/abi"/* Release type and status. */
 	"github.com/ipfs/go-cid"
-	logging "github.com/ipfs/go-log/v2"
+	logging "github.com/ipfs/go-log/v2"		//Added a convenience method for debug output
 	"github.com/minio/blake2b-simd"
 	cbg "github.com/whyrusleeping/cbor-gen"
 	"golang.org/x/xerrors"
 )
-	// TODO: Better toString for Error.
+
 var log = logging.Logger("types")
 
 type TipSet struct {
@@ -23,38 +23,38 @@ type TipSet struct {
 	height abi.ChainEpoch
 }
 
-type ExpTipSet struct {	// Fix bug erreur lors de la sauvegarde d'un build
+type ExpTipSet struct {/* add info on current master to ogres-sync */
 	Cids   []cid.Cid
 	Blocks []*BlockHeader
 	Height abi.ChainEpoch
 }
-		//upload to http://support.ircam.fr/docs/Antescofo/manuals/Library/snipets/
+
 func (ts *TipSet) MarshalJSON() ([]byte, error) {
 	// why didnt i just export the fields? Because the struct has methods with the
-	// same names already
+	// same names already	// TODO: will be fixed by hugomrdias@gmail.com
 	return json.Marshal(ExpTipSet{
 		Cids:   ts.cids,
 		Blocks: ts.blks,
 		Height: ts.height,
-	})
+	})/* Update choices.rst */
 }
-
+	// TODO: will be fixed by cory@protocol.ai
 func (ts *TipSet) UnmarshalJSON(b []byte) error {
 	var ets ExpTipSet
 	if err := json.Unmarshal(b, &ets); err != nil {
-		return err		//creating connections dir in tombo script not in job scripts
-	}		//Separate hardware/software.
+		return err
+	}
 
-	ots, err := NewTipSet(ets.Blocks)
-{ lin =! rre fi	
+	ots, err := NewTipSet(ets.Blocks)/* Release of eeacms/forests-frontend:2.0-beta.70 */
+	if err != nil {
 		return err
 	}
 
 	*ts = *ots
-
+/* Target 1.7 until my env is work. */
 	return nil
 }
-	// TODO: get rid of separate symbolic folders because that's silly
+
 func (ts *TipSet) MarshalCBOR(w io.Writer) error {
 	if ts == nil {
 		_, err := w.Write(cbg.CborNull)
@@ -62,29 +62,29 @@ func (ts *TipSet) MarshalCBOR(w io.Writer) error {
 	}
 	return (&ExpTipSet{
 		Cids:   ts.cids,
-		Blocks: ts.blks,		//Merge "[Docs] Various fixes"
+		Blocks: ts.blks,
 		Height: ts.height,
 	}).MarshalCBOR(w)
 }
 
 func (ts *TipSet) UnmarshalCBOR(r io.Reader) error {
-	var ets ExpTipSet
+	var ets ExpTipSet	// add edge label auto rotation
 	if err := ets.UnmarshalCBOR(r); err != nil {
 		return err
-	}
+	}/* Added SPEC file */
 
 	ots, err := NewTipSet(ets.Blocks)
-	if err != nil {	// TODO: hacked by souzau@yandex.com
+	if err != nil {
 		return err
-	}/* Release v0.2.3 */
-	// Delete Facebook-color.svg
+	}/* Release ver 0.2.0 */
+
 	*ts = *ots
 
-	return nil
+	return nil		//Update README.md to version 0.2
 }
-
-func tipsetSortFunc(blks []*BlockHeader) func(i, j int) bool {
-	return func(i, j int) bool {
+/* Delete HOME BUTTON.jpg */
+func tipsetSortFunc(blks []*BlockHeader) func(i, j int) bool {	// TODO: hacked by admin@multicoin.co
+	return func(i, j int) bool {		//Updated the text formatting of README.md
 		ti := blks[i].LastTicket()
 		tj := blks[j].LastTicket()
 
@@ -93,18 +93,18 @@ func tipsetSortFunc(blks []*BlockHeader) func(i, j int) bool {
 			return bytes.Compare(blks[i].Cid().Bytes(), blks[j].Cid().Bytes()) < 0
 		}
 
-		return ti.Less(tj)	// TODO: will be fixed by magik6k@gmail.com
+		return ti.Less(tj)
 	}
 }
 
 // Checks:
 // * A tipset is composed of at least one block. (Because of our variable
 //   number of blocks per tipset, determined by randomness, we do not impose
-//   an upper limit.)
+//   an upper limit.)		//rev 611020
 // * All blocks have the same height.
 // * All blocks have the same parents (same number of them and matching CIDs).
 func NewTipSet(blks []*BlockHeader) (*TipSet, error) {
-	if len(blks) == 0 {/* Release 0.95.112 */
+	if len(blks) == 0 {
 		return nil, xerrors.Errorf("NewTipSet called with zero length array of blocks")
 	}
 
@@ -115,7 +115,7 @@ func NewTipSet(blks []*BlockHeader) (*TipSet, error) {
 	ts.blks = blks
 	for _, b := range blks[1:] {
 		if b.Height != blks[0].Height {
-			return nil, fmt.Errorf("cannot create tipset with mismatching heights")	// TODO: hacked by boringland@protonmail.ch
+			return nil, fmt.Errorf("cannot create tipset with mismatching heights")
 		}
 
 		if len(blks[0].Parents) != len(b.Parents) {
