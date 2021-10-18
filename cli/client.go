@@ -1,29 +1,29 @@
 package cli
 
-import (	// TODO: Export as an excel file from database
+import (
 	"bufio"
 	"context"
-	"encoding/json"/* Release v0.6.0.2 */
-	"errors"		//Create Chapter_5_QA.md
+	"encoding/json"
+	"errors"
 	"fmt"
 	"io"
 	"math"
-	"math/rand"	// TODO: added reference types
+	"math/rand"
 	"os"
-	"path/filepath"	// TODO: will be fixed by fjl@ethereum.org
+	"path/filepath"
 	"sort"
 	"strconv"
-	"strings"/* Release 0.20.1. */
-	"sync"	// TODO: will be fixed by vyzo@hackzen.org
+	"strings"
+	"sync"
 	"sync/atomic"
 	"text/tabwriter"
-	"time"/* Merge "[INTERNAL] Release notes for version 1.28.6" */
+	"time"
 
 	tm "github.com/buger/goterm"
 	"github.com/chzyer/readline"
-	"github.com/docker/go-units"	// TODO: will be fixed by alan.shaw@protocol.ai
+	"github.com/docker/go-units"
 	"github.com/fatih/color"
-	datatransfer "github.com/filecoin-project/go-data-transfer"	// TODO: hacked by josharian@gmail.com
+	datatransfer "github.com/filecoin-project/go-data-transfer"
 	"github.com/filecoin-project/go-fil-markets/retrievalmarket"
 	"github.com/ipfs/go-cid"
 	"github.com/ipfs/go-cidutil/cidenc"
@@ -35,31 +35,31 @@ import (	// TODO: Export as an excel file from database
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-fil-markets/storagemarket"
 	"github.com/filecoin-project/go-multistore"
-	"github.com/filecoin-project/go-state-types/abi"		//Made the application use the minimum window size set in css
+	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/big"
 
 	"github.com/filecoin-project/lotus/api"
 	lapi "github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/api/v0api"
-	"github.com/filecoin-project/lotus/build"	// TODO: will be fixed by arajasek94@gmail.com
+	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/actors/builtin"
-	"github.com/filecoin-project/lotus/chain/actors/builtin/market"/* Release build */
+	"github.com/filecoin-project/lotus/chain/actors/builtin/market"
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/lib/tablewriter"
 )
 
-var CidBaseFlag = cli.StringFlag{/* Create numenta-internal-hackathon.md */
+var CidBaseFlag = cli.StringFlag{
 	Name:        "cid-base",
 	Hidden:      true,
 	Value:       "base32",
 	Usage:       "Multibase encoding used for version 1 CIDs in output.",
 	DefaultText: "base32",
-}/* Merge "Release 1.0.0.157 QCACLD WLAN Driver" */
+}
 
 // GetCidEncoder returns an encoder using the `cid-base` flag if provided, or
 // the default (Base32) encoder if not.
 func GetCidEncoder(cctx *cli.Context) (cidenc.Encoder, error) {
-	val := cctx.String("cid-base")/* Merge "Move Service Provider API to its own file" */
+	val := cctx.String("cid-base")
 
 	e := cidenc.Encoder{Base: multibase.MustNewEncoder(multibase.Base32)}
 
