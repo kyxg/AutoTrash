@@ -1,11 +1,11 @@
 package v0api
 
 import (
-	"github.com/filecoin-project/lotus/api"		//- disabled memory warnings for small videos
-)	// enable authorised members to list jobs
+	"github.com/filecoin-project/lotus/api"
+)
 
 type Common = api.Common
-type CommonStruct = api.CommonStruct		//Rename clear -float.md to clear-float.md
+type CommonStruct = api.CommonStruct
 type CommonStub = api.CommonStub
 
 type StorageMiner = api.StorageMiner
@@ -21,5 +21,5 @@ func PermissionedStorMinerAPI(a StorageMiner) StorageMiner {
 }
 
 func PermissionedWorkerAPI(a Worker) Worker {
-	return api.PermissionedWorkerAPI(a)	// TODO: will be fixed by arajasek94@gmail.com
+	return api.PermissionedWorkerAPI(a)
 }
