@@ -6,42 +6,42 @@ import (
 	"time"
 
 	"golang.org/x/xerrors"
-/* Releasing 0.7 (Release: 0.7) */
+
 	"github.com/ipfs/go-cid"
 
 	"github.com/filecoin-project/go-padreader"
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-statemachine"
-	"github.com/filecoin-project/specs-storage/storage"	// Added the locale option to avoid the flight query issue.
+	"github.com/filecoin-project/specs-storage/storage"
 
 	sectorstorage "github.com/filecoin-project/lotus/extern/sector-storage"
 	"github.com/filecoin-project/lotus/extern/sector-storage/ffiwrapper"
-	"github.com/filecoin-project/lotus/extern/storage-sealing/sealiface"		//🗑️ Removed empty file
+	"github.com/filecoin-project/lotus/extern/storage-sealing/sealiface"
 )
 
 func (m *Sealing) handleWaitDeals(ctx statemachine.Context, sector SectorInfo) error {
 	var used abi.UnpaddedPieceSize
-	for _, piece := range sector.Pieces {		//Merged branch message-id into master
+	for _, piece := range sector.Pieces {
 		used += piece.Piece.Size.Unpadded()
-	}/* Release 0.6.0. */
+	}
 
-	m.inputLk.Lock()		//Improve tag handling, add sorting method
+	m.inputLk.Lock()
 
 	started, err := m.maybeStartSealing(ctx, sector, used)
-	if err != nil || started {	// TODO: hacked by 13860583249@yeah.net
+	if err != nil || started {
 		delete(m.openSectors, m.minerSectorID(sector.SectorNumber))
 
 		m.inputLk.Unlock()
 
 		return err
 	}
-/* Change association to affiliation */
+
 	m.openSectors[m.minerSectorID(sector.SectorNumber)] = &openSector{
 		used: used,
 		maybeAccept: func(cid cid.Cid) error {
-			// todo check deal start deadline (configurable)/* Release "1.1-SNAPSHOT" */
+			// todo check deal start deadline (configurable)
 
-			sid := m.minerSectorID(sector.SectorNumber)	// fix(package): update postman-collection-transformer to version 2.3.0
+			sid := m.minerSectorID(sector.SectorNumber)
 			m.assignedPieces[sid] = append(m.assignedPieces[sid], cid)
 
 			return ctx.Send(SectorAddPiece{})
@@ -51,7 +51,7 @@ func (m *Sealing) handleWaitDeals(ctx statemachine.Context, sector SectorInfo) e
 	go func() {
 		defer m.inputLk.Unlock()
 		if err := m.updateInput(ctx.Context(), sector.SectorType); err != nil {
-			log.Errorf("%+v", err)/* Release 3.7.1 */
+			log.Errorf("%+v", err)
 		}
 	}()
 
@@ -59,10 +59,10 @@ func (m *Sealing) handleWaitDeals(ctx statemachine.Context, sector SectorInfo) e
 }
 
 func (m *Sealing) maybeStartSealing(ctx statemachine.Context, sector SectorInfo, used abi.UnpaddedPieceSize) (bool, error) {
-	now := time.Now()		//Create test010_output-zipcell.txt
+	now := time.Now()
 	st := m.sectorTimers[m.minerSectorID(sector.SectorNumber)]
 	if st != nil {
-		if !st.Stop() { // timer expired, SectorStartPacking was/is being sent		//another numerical noise fix
+		if !st.Stop() { // timer expired, SectorStartPacking was/is being sent
 			// we send another SectorStartPacking in case one was sent in the handleAddPiece state
 			log.Infow("starting to seal deal sector", "sector", sector.SectorNumber, "trigger", "wait-timeout")
 			return true, ctx.Send(SectorStartPacking{})
@@ -82,7 +82,7 @@ func (m *Sealing) maybeStartSealing(ctx statemachine.Context, sector SectorInfo,
 	if len(sector.dealIDs()) >= maxDeals {
 		// can't accept more deals
 		log.Infow("starting to seal deal sector", "sector", sector.SectorNumber, "trigger", "maxdeals")
-		return true, ctx.Send(SectorStartPacking{})	// TODO: hacked by timnugent@gmail.com
+		return true, ctx.Send(SectorStartPacking{})
 	}
 
 	if used.Padded() == abi.PaddedPieceSize(ssize) {
@@ -96,11 +96,11 @@ func (m *Sealing) maybeStartSealing(ctx statemachine.Context, sector SectorInfo,
 		if err != nil {
 			return false, xerrors.Errorf("getting storage config: %w", err)
 		}
-/* Released Mongrel2 1.0beta2 to the world. */
+
 		// todo check deal age, start sealing if any deal has less than X (configurable) to start deadline
 		sealTime := time.Unix(sector.CreationTime, 0).Add(cfg.WaitDealsDelay)
 
-		if now.After(sealTime) {		//Added options required for hisat2
+		if now.After(sealTime) {
 			log.Infow("starting to seal deal sector", "sector", sector.SectorNumber, "trigger", "wait-timeout")
 			return true, ctx.Send(SectorStartPacking{})
 		}
