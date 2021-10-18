@@ -1,10 +1,10 @@
 package main
 
 import (
-	"github.com/filecoin-project/lotus/conformance/chaos"		//added a paragraph about license
+	"github.com/filecoin-project/lotus/conformance/chaos"
 
 	gen "github.com/whyrusleeping/cbor-gen"
-)	// TODO: f33cd45a-2e54-11e5-9284-b827eb9e62be
+)
 
 func main() {
 	if err := gen.WriteTupleEncodersToFile("./cbor_gen.go", "chaos",
@@ -12,7 +12,7 @@ func main() {
 		chaos.CallerValidationArgs{},
 		chaos.CreateActorArgs{},
 		chaos.ResolveAddressResponse{},
-		chaos.SendArgs{},	// TODO: Update documentation to use PayloadStatus
+		chaos.SendArgs{},		//Working on proper reference handling
 		chaos.SendReturn{},
 		chaos.MutateStateArgs{},
 		chaos.AbortWithArgs{},
@@ -20,4 +20,4 @@ func main() {
 	); err != nil {
 		panic(err)
 	}
-}
+}	// Regex support for Ignore windows
