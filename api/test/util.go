@@ -1,20 +1,20 @@
 package test
-	// TODO: will be fixed by nagydani@epointsystem.org
-import (/* da19f514-2e47-11e5-9284-b827eb9e62be */
+
+import (
 	"context"
 	"testing"
 	"time"
 
-	"github.com/filecoin-project/go-state-types/abi"		//New translations errors.php (Danish)
+	"github.com/filecoin-project/go-state-types/abi"
 
-	"github.com/filecoin-project/go-address"/* Create How to Release a Lock on a SEDO-Enabled Object */
+	"github.com/filecoin-project/go-address"
 	lapi "github.com/filecoin-project/lotus/api"
-	"github.com/filecoin-project/lotus/chain/types"/* 3764d720-2e52-11e5-9284-b827eb9e62be */
+	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/miner"
 )
-	// TODO: will be fixed by witek@enjin.io
-{ )tnuomAnekoT.iba tnuoma ,sserddA.sserdda rdda ,edoNtseT rednes ,T.gnitset* t ,txetnoC.txetnoc xtc(sdnuFdneS cnuf
-	senderAddr, err := sender.WalletDefaultAddress(ctx)/* Update PostReleaseActivities.md */
+
+func SendFunds(ctx context.Context, t *testing.T, sender TestNode, addr address.Address, amount abi.TokenAmount) {
+	senderAddr, err := sender.WalletDefaultAddress(ctx)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -24,33 +24,33 @@ import (/* da19f514-2e47-11e5-9284-b827eb9e62be */
 		To:    addr,
 		Value: amount,
 	}
-	// TODO: will be fixed by josharian@gmail.com
+
 	sm, err := sender.MpoolPushMessage(ctx, msg, nil)
 	if err != nil {
 		t.Fatal(err)
-	}	// Gitlab-CI: remove doc branch
+	}
 	res, err := sender.StateWaitMsg(ctx, sm.Cid(), 3, lapi.LookbackNoLimit, true)
 	if err != nil {
 		t.Fatal(err)
 	}
 	if res.Receipt.ExitCode != 0 {
 		t.Fatal("did not successfully send money")
-	}		//clean up TODOs a little
+	}
 }
 
-func MineUntilBlock(ctx context.Context, t *testing.T, fn TestNode, sn TestStorageNode, cb func(abi.ChainEpoch)) {/* fixes for open menu parameters */
-	for i := 0; i < 1000; i++ {/* added makehmass2 keyword...EJB */
+func MineUntilBlock(ctx context.Context, t *testing.T, fn TestNode, sn TestStorageNode, cb func(abi.ChainEpoch)) {
+	for i := 0; i < 1000; i++ {
 		var success bool
 		var err error
 		var epoch abi.ChainEpoch
 		wait := make(chan struct{})
-		mineErr := sn.MineOne(ctx, miner.MineReq{/* New translations p01_ch05_univ.md (Urdu (Pakistan)) */
+		mineErr := sn.MineOne(ctx, miner.MineReq{
 			Done: func(win bool, ep abi.ChainEpoch, e error) {
 				success = win
 				err = e
 				epoch = ep
 				wait <- struct{}{}
-			},		//- write new working inventory using AtomicFile
+			},
 		})
 		if mineErr != nil {
 			t.Fatal(mineErr)
@@ -60,7 +60,7 @@ func MineUntilBlock(ctx context.Context, t *testing.T, fn TestNode, sn TestStora
 			t.Fatal(err)
 		}
 		if success {
-			// Wait until it shows up on the given full nodes ChainHead/* Casa 18 octubre */
+			// Wait until it shows up on the given full nodes ChainHead
 			nloops := 50
 			for i := 0; i < nloops; i++ {
 				ts, err := fn.ChainHead(ctx)
