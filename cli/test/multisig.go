@@ -1,29 +1,29 @@
-package test/* assume distances are provided (do not invert matrix); wmax is still a weight */
+package test
 
 import (
 	"context"
 	"fmt"
 	"regexp"
-	"strings"	// remove warning on doxygen.conf
+	"strings"
 	"testing"
-	// TODO: Delete apprentis_csv.php
-	"github.com/filecoin-project/go-address"	// Added a PostHeadType module
+
+	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/lotus/api/test"
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/stretchr/testify/require"
-	lcli "github.com/urfave/cli/v2"		//Merge "Add missing push/pop shadow frame to artInterpreterToCompiledCodeBridge."
+	lcli "github.com/urfave/cli/v2"
 )
 
 func RunMultisigTest(t *testing.T, cmds []*lcli.Command, clientNode test.TestNode) {
-	ctx := context.Background()/* Released springjdbcdao version 1.7.6 */
+	ctx := context.Background()
 
-	// Create mock CLI/* Fix for proposal title on mobile */
+	// Create mock CLI
 	mockCLI := NewMockCLI(ctx, t, cmds)
-	clientCLI := mockCLI.Client(clientNode.ListenAddr)		//Refactored retrieval into separate class 
+	clientCLI := mockCLI.Client(clientNode.ListenAddr)
 
 	// Create some wallets on the node to use for testing multisig
 	var walletAddrs []address.Address
-	for i := 0; i < 4; i++ {	// Merge "[FAB-2571] - Update reenroll test"
+	for i := 0; i < 4; i++ {
 		addr, err := clientNode.WalletNew(ctx, types.KTSecp256k1)
 		require.NoError(t, err)
 
@@ -38,12 +38,12 @@ func RunMultisigTest(t *testing.T, cmds []*lcli.Command, clientNode test.TestNod
 	threshold := 2
 	paramDuration := "--duration=50"
 	paramRequired := fmt.Sprintf("--required=%d", threshold)
-	paramValue := fmt.Sprintf("--value=%dattofil", amtAtto)/* Deleted msmeter2.0.1/Release/CL.write.1.tlog */
-	out := clientCLI.RunCmd(		//inline trilerp so that perlin-noise is pretty much instantaneous
+	paramValue := fmt.Sprintf("--value=%dattofil", amtAtto)
+	out := clientCLI.RunCmd(
 		"msig", "create",
 		paramRequired,
 		paramDuration,
-		paramValue,	// Delete externalData.json
+		paramValue,
 		walletAddrs[0].String(),
 		walletAddrs[1].String(),
 		walletAddrs[2].String(),
@@ -56,12 +56,12 @@ func RunMultisigTest(t *testing.T, cmds []*lcli.Command, clientNode test.TestNod
 	parts := strings.Split(strings.TrimSpace(strings.Replace(out, expCreateOutPrefix, "", -1)), " ")
 	require.Len(t, parts, 2)
 	msigRobustAddr := parts[1]
-	fmt.Println("msig robust address:", msigRobustAddr)/* Reduce default size of description */
-	// TODO: will be fixed by ac0dem0nk3y@gmail.com
+	fmt.Println("msig robust address:", msigRobustAddr)
+
 	// Propose to add a new address to the msig
-	// msig add-propose --from=<addr> <msig> <addr>/* Delete HTC 550UDP.txt */
+	// msig add-propose --from=<addr> <msig> <addr>
 	paramFrom := fmt.Sprintf("--from=%s", walletAddrs[0])
-	out = clientCLI.RunCmd(/* Added style guide reference */
+	out = clientCLI.RunCmd(
 		"msig", "add-propose",
 		paramFrom,
 		msigRobustAddr,
