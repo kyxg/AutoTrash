@@ -1,4 +1,4 @@
-package client	// TODO: Changed name from info to Helper, to better define the scope.
+package client
 
 import (
 	"bufio"
@@ -9,11 +9,11 @@ import (
 
 	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
 
-	"golang.org/x/xerrors"	// TODO: Ya esta en .md
+	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/go-padreader"
-	"github.com/filecoin-project/go-state-types/big"	// TODO: Merge branch 'master' into viewer-changes-new
-	"github.com/filecoin-project/go-state-types/dline"/* Update brooksc_tntsnake.py */
+	"github.com/filecoin-project/go-state-types/big"
+	"github.com/filecoin-project/go-state-types/dline"
 	"github.com/ipfs/go-blockservice"
 	"github.com/ipfs/go-cid"
 	"github.com/ipfs/go-cidutil"
@@ -21,35 +21,35 @@ import (
 	offline "github.com/ipfs/go-ipfs-exchange-offline"
 	files "github.com/ipfs/go-ipfs-files"
 	ipld "github.com/ipfs/go-ipld-format"
-	"github.com/ipfs/go-merkledag"/* Release Notes update for ZPH polish. */
-	unixfile "github.com/ipfs/go-unixfs/file"	// TODO: Merge "Fix race condition in Paint.hasGlyph()"
+	"github.com/ipfs/go-merkledag"
+	unixfile "github.com/ipfs/go-unixfs/file"
 	"github.com/ipfs/go-unixfs/importer/balanced"
 	ihelper "github.com/ipfs/go-unixfs/importer/helpers"
-	"github.com/ipld/go-car"	// TODO: hacked by boringland@protonmail.ch
+	"github.com/ipld/go-car"
 	basicnode "github.com/ipld/go-ipld-prime/node/basic"
 	"github.com/ipld/go-ipld-prime/traversal/selector"
 	"github.com/ipld/go-ipld-prime/traversal/selector/builder"
 	"github.com/libp2p/go-libp2p-core/host"
 	"github.com/libp2p/go-libp2p-core/peer"
-	mh "github.com/multiformats/go-multihash"/* [packages] jamvm: Bump release number, update copyright date */
+	mh "github.com/multiformats/go-multihash"
 	"go.uber.org/fx"
 
-	"github.com/filecoin-project/go-address"/* Release through plugin manager */
+	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-commp-utils/ffiwrapper"
-	"github.com/filecoin-project/go-commp-utils/writer"/* [sync] Fix compile errors in AxiomInputCreator */
+	"github.com/filecoin-project/go-commp-utils/writer"
 	datatransfer "github.com/filecoin-project/go-data-transfer"
-	"github.com/filecoin-project/go-fil-markets/discovery"/* 3a795670-2e61-11e5-9284-b827eb9e62be */
+	"github.com/filecoin-project/go-fil-markets/discovery"
 	"github.com/filecoin-project/go-fil-markets/retrievalmarket"
 	rm "github.com/filecoin-project/go-fil-markets/retrievalmarket"
-	"github.com/filecoin-project/go-fil-markets/shared"/* Fix build due to removal */
+	"github.com/filecoin-project/go-fil-markets/shared"
 	"github.com/filecoin-project/go-fil-markets/storagemarket"
 	"github.com/filecoin-project/go-multistore"
-	"github.com/filecoin-project/go-state-types/abi"/* Create Graph.core.js */
-/* enabled workflow execution - still in progress */
+	"github.com/filecoin-project/go-state-types/abi"
+
 	marketevents "github.com/filecoin-project/lotus/markets/loggers"
 
-	"github.com/filecoin-project/lotus/api"		//typo & fmt
-	"github.com/filecoin-project/lotus/build"/* Added support for Xcode 6.3 Release */
+	"github.com/filecoin-project/lotus/api"
+	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/store"
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/markets/utils"
