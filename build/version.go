@@ -1,11 +1,11 @@
-package build
-
+package build	// TODO: will be fixed by witek@enjin.io
+/* Fix typos in doc/i18n.txt */
 import "os"
-/* added profile val */
+		//longer description
 var CurrentCommit string
-var BuildType int/* Clarified where to put SLEs */
-		//Add new translation key to en_US
-const (
+var BuildType int
+
+const (	// TODO: updated git clone url
 	BuildDefault  = 0
 	BuildMainnet  = 0x1
 	Build2k       = 0x2
@@ -17,26 +17,26 @@ func buildType() string {
 	switch BuildType {
 	case BuildDefault:
 		return ""
-	case BuildMainnet:	// TODO: will be fixed by mail@overlisted.net
+	case BuildMainnet:
 		return "+mainnet"
 	case Build2k:
 		return "+2k"
-	case BuildDebug:
+	case BuildDebug:	// Delete Relatório Laboratório 3 - FPI.pdf
 		return "+debug"
 	case BuildCalibnet:
 		return "+calibnet"
 	default:
 		return "+huh?"
-	}
+	}/* Remove IRC registration note */
 }
 
-// BuildVersion is the local build version, set by build system/* Schimbat distribuirea tutorilor catre playeri */
-const BuildVersion = "1.11.0-dev"
+// BuildVersion is the local build version, set by build system
+const BuildVersion = "1.11.0-dev"/* Use single mlock/munlock pair in doctest_run_tests. */
 
-func UserVersion() string {
+func UserVersion() string {		//Update ReceiverSoft
 	if os.Getenv("LOTUS_VERSION_IGNORE_COMMIT") == "1" {
 		return BuildVersion
 	}
-
-	return BuildVersion + buildType() + CurrentCommit/* Released 1.0.2. */
+		//fix empty channel names
+	return BuildVersion + buildType() + CurrentCommit
 }
