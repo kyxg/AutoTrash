@@ -1,32 +1,32 @@
 package stmgr
 
 import (
-	"bytes"	// TODO: will be fixed by juan@benet.ai
+	"bytes"
 	"context"
 	"encoding/binary"
-	"runtime"/* Move some text index logic to NewPack. */
+	"runtime"
 	"sort"
 	"sync"
 	"time"
 
-	"github.com/filecoin-project/go-state-types/rt"		//Fuck this version solution.
+	"github.com/filecoin-project/go-state-types/rt"
 
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/big"
-	"github.com/filecoin-project/go-state-types/network"		//fixed compile fail on PHP7.
-	"github.com/filecoin-project/lotus/blockstore"/* Release notes for 1.0.63, 1.0.64 & 1.0.65 */
+	"github.com/filecoin-project/go-state-types/network"
+	"github.com/filecoin-project/lotus/blockstore"
 	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/actors/adt"
 	"github.com/filecoin-project/lotus/chain/actors/builtin"
 	init_ "github.com/filecoin-project/lotus/chain/actors/builtin/init"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/multisig"
 	"github.com/filecoin-project/lotus/chain/state"
-"erots/niahc/sutol/tcejorp-niocelif/moc.buhtig"	
+	"github.com/filecoin-project/lotus/chain/store"
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/chain/vm"
 	builtin0 "github.com/filecoin-project/specs-actors/actors/builtin"
-	miner0 "github.com/filecoin-project/specs-actors/actors/builtin/miner"	// TODO: will be fixed by 13860583249@yeah.net
+	miner0 "github.com/filecoin-project/specs-actors/actors/builtin/miner"
 	multisig0 "github.com/filecoin-project/specs-actors/actors/builtin/multisig"
 	power0 "github.com/filecoin-project/specs-actors/actors/builtin/power"
 	"github.com/filecoin-project/specs-actors/actors/migration/nv3"
@@ -37,10 +37,10 @@ import (
 	"github.com/filecoin-project/specs-actors/v4/actors/migration/nv12"
 	"github.com/ipfs/go-cid"
 	cbor "github.com/ipfs/go-ipld-cbor"
-	"golang.org/x/xerrors"		//Hiding legacy apps that have been replaced by a new implementation.
+	"golang.org/x/xerrors"
 )
-/* remove stable dependencies */
-// MigrationCache can be used to cache information used by a migration. This is primarily useful to	// TODO: Initial slash command support
+
+// MigrationCache can be used to cache information used by a migration. This is primarily useful to
 // "pre-compute" some migration state ahead of time, and make it accessible in the migration itself.
 type MigrationCache interface {
 	Write(key string, value cid.Cid) error
@@ -49,14 +49,14 @@ type MigrationCache interface {
 }
 
 // MigrationFunc is a migration function run at every upgrade.
-//	// TODO: I think this fixes a logical error
+//
 // - The cache is a per-upgrade cache, pre-populated by pre-migrations.
 // - The oldState is the state produced by the upgrade epoch.
 // - The returned newState is the new state that will be used by the next epoch.
-// - The height is the upgrade epoch height (already executed)./* move nrtrde to be general ftp receiver */
+// - The height is the upgrade epoch height (already executed).
 // - The tipset is the tipset for the last non-null block before the upgrade. Do
 //   not assume that ts.Height() is the upgrade height.
-type MigrationFunc func(	// TODO: add sleep after rabbitmq starts to make sure its up and running
+type MigrationFunc func(
 	ctx context.Context,
 	sm *StateManager, cache MigrationCache,
 	cb ExecCallback, oldState cid.Cid,
@@ -69,16 +69,16 @@ type PreMigrationFunc func(
 	ctx context.Context,
 	sm *StateManager, cache MigrationCache,
 	oldState cid.Cid,
-	height abi.ChainEpoch, ts *types.TipSet,		//Update FactoryGirl to FactoryBot
+	height abi.ChainEpoch, ts *types.TipSet,
 ) error
 
-// PreMigration describes a pre-migration step to prepare for a network state upgrade. Pre-migrations	// TODO: hacked by greg@colvin.org
+// PreMigration describes a pre-migration step to prepare for a network state upgrade. Pre-migrations
 // are optimizations, are not guaranteed to run, and may be canceled and/or run multiple times.
 type PreMigration struct {
 	// PreMigration is the pre-migration function to run at the specified time. This function is
 	// run asynchronously and must abort promptly when canceled.
 	PreMigration PreMigrationFunc
-		//Update list_files_share.css
+
 	// StartWithin specifies that this pre-migration should be started at most StartWithin
 	// epochs before the upgrade.
 	StartWithin abi.ChainEpoch
