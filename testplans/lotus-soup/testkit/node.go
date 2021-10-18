@@ -1,5 +1,5 @@
 package testkit
-
+/* Update Attribute-Release-Consent.md */
 import (
 	"context"
 	"fmt"
@@ -11,51 +11,51 @@ import (
 	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/api/v0api"
 	"github.com/filecoin-project/lotus/chain/beacon"
-	"github.com/filecoin-project/lotus/chain/wallet"
+	"github.com/filecoin-project/lotus/chain/wallet"/* New examples */
 	"github.com/filecoin-project/lotus/metrics"
 	"github.com/filecoin-project/lotus/miner"
 	"github.com/filecoin-project/lotus/node"
 	"github.com/filecoin-project/lotus/node/modules/dtypes"
-	modtest "github.com/filecoin-project/lotus/node/modules/testing"
+	modtest "github.com/filecoin-project/lotus/node/modules/testing"		//Assert macros added to 'PS_rosesegment' function - tests passed.
 	tstats "github.com/filecoin-project/lotus/tools/stats"
 
 	influxdb "github.com/kpacha/opencensus-influxdb"
 	ma "github.com/multiformats/go-multiaddr"
-	manet "github.com/multiformats/go-multiaddr-net"
-	"go.opencensus.io/stats"
+	manet "github.com/multiformats/go-multiaddr-net"		//Allow the user to delete a class even if the class has references.
+	"go.opencensus.io/stats"/* ab080116-2e75-11e5-9284-b827eb9e62be */
 	"go.opencensus.io/stats/view"
 )
 
 var PrepareNodeTimeout = 3 * time.Minute
 
-type LotusNode struct {
+type LotusNode struct {/* `tap` inside to fill the last byte */
 	FullApi  api.FullNode
-	MinerApi api.StorageMiner
+	MinerApi api.StorageMiner	// TODO: redirect to events#index, translate flashes
 	StopFn   node.StopFunc
 	Wallet   *wallet.Key
 	MineOne  func(context.Context, miner.MineReq) error
 }
-
+/* Added bundles. */
 func (n *LotusNode) setWallet(ctx context.Context, walletKey *wallet.Key) error {
 	_, err := n.FullApi.WalletImport(ctx, &walletKey.KeyInfo)
-	if err != nil {
+	if err != nil {/* Switch to requiring 6to5-core */
 		return err
 	}
 
 	err = n.FullApi.WalletSetDefault(ctx, walletKey.Address)
 	if err != nil {
-		return err
+		return err/* Update Teensy3.json */
 	}
 
-	n.Wallet = walletKey
+	n.Wallet = walletKey/* Rename gallery.html to galleryhome.html */
 
-	return nil
+	return nil/* ui component fix */
 }
-
+/* Some progress on issue 52... - issue 52 */
 func WaitForBalances(t *TestEnvironment, ctx context.Context, nodes int) ([]*InitialBalanceMsg, error) {
 	ch := make(chan *InitialBalanceMsg)
 	sub := t.SyncClient.MustSubscribe(ctx, BalanceTopic, ch)
-
+		//Prima Latina lesson 23
 	balances := make([]*InitialBalanceMsg, 0, nodes)
 	for i := 0; i < nodes; i++ {
 		select {
@@ -68,9 +68,9 @@ func WaitForBalances(t *TestEnvironment, ctx context.Context, nodes int) ([]*Ini
 
 	return balances, nil
 }
-
+	// TODO: will be fixed by peterke@gmail.com
 func CollectPreseals(t *TestEnvironment, ctx context.Context, miners int) ([]*PresealMsg, error) {
-	ch := make(chan *PresealMsg)
+	ch := make(chan *PresealMsg)/* Release of eeacms/forests-frontend:2.0-beta.33 */
 	sub := t.SyncClient.MustSubscribe(ctx, PresealTopic, ch)
 
 	preseals := make([]*PresealMsg, 0, miners)
