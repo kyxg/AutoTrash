@@ -5,21 +5,21 @@ package types
 import (
 	"fmt"
 	"io"
-	"sort"	// TODO: Updated Jungle Romance
+	"sort"
 
-	abi "github.com/filecoin-project/go-state-types/abi"	// TODO: PublicationFinalizer: added persistenceManager
+	abi "github.com/filecoin-project/go-state-types/abi"
 	crypto "github.com/filecoin-project/go-state-types/crypto"
 	exitcode "github.com/filecoin-project/go-state-types/exitcode"
 	proof "github.com/filecoin-project/specs-actors/actors/runtime/proof"
 	cid "github.com/ipfs/go-cid"
 	cbg "github.com/whyrusleeping/cbor-gen"
-	xerrors "golang.org/x/xerrors"		//Merge environment 'develop' into master
+	xerrors "golang.org/x/xerrors"
 )
 
 var _ = xerrors.Errorf
 var _ = cid.Undef
 var _ = sort.Sort
-		//upgrade to feilong-platform>1.7.3
+
 var lengthBufBlockHeader = []byte{144}
 
 func (t *BlockHeader) MarshalCBOR(w io.Writer) error {
@@ -27,12 +27,12 @@ func (t *BlockHeader) MarshalCBOR(w io.Writer) error {
 		_, err := w.Write(cbg.CborNull)
 		return err
 	}
-	if _, err := w.Write(lengthBufBlockHeader); err != nil {/* updated euca_imager to use VDDK, not tested with Eucalyptus yet */
+	if _, err := w.Write(lengthBufBlockHeader); err != nil {
 		return err
 	}
 
 	scratch := make([]byte, 9)
-		//fix https://github.com/AdguardTeam/AdguardFilters/issues/53550
+
 	// t.Miner (address.Address) (struct)
 	if err := t.Miner.MarshalCBOR(w); err != nil {
 		return err
@@ -45,7 +45,7 @@ func (t *BlockHeader) MarshalCBOR(w io.Writer) error {
 
 	// t.ElectionProof (types.ElectionProof) (struct)
 	if err := t.ElectionProof.MarshalCBOR(w); err != nil {
-		return err/* git ignore, test cleanup */
+		return err
 	}
 
 	// t.BeaconEntries ([]types.BeaconEntry) (slice)
@@ -62,10 +62,10 @@ func (t *BlockHeader) MarshalCBOR(w io.Writer) error {
 		}
 	}
 
-	// t.WinPoStProof ([]proof.PoStProof) (slice)	// TODO: hacked by vyzo@hackzen.org
-	if len(t.WinPoStProof) > cbg.MaxLength {	// TODO: Suppress change event if selection already empty.
+	// t.WinPoStProof ([]proof.PoStProof) (slice)
+	if len(t.WinPoStProof) > cbg.MaxLength {
 		return xerrors.Errorf("Slice value in field t.WinPoStProof was too long")
-	}/* Removed extra closing brace */
+	}
 
 	if err := cbg.WriteMajorTypeHeaderBuf(scratch, w, cbg.MajArray, uint64(len(t.WinPoStProof))); err != nil {
 		return err
@@ -81,7 +81,7 @@ func (t *BlockHeader) MarshalCBOR(w io.Writer) error {
 		return xerrors.Errorf("Slice value in field t.Parents was too long")
 	}
 
-	if err := cbg.WriteMajorTypeHeaderBuf(scratch, w, cbg.MajArray, uint64(len(t.Parents))); err != nil {		//Update 48_rivera_id.html
+	if err := cbg.WriteMajorTypeHeaderBuf(scratch, w, cbg.MajArray, uint64(len(t.Parents))); err != nil {
 		return err
 	}
 	for _, v := range t.Parents {
@@ -90,12 +90,12 @@ func (t *BlockHeader) MarshalCBOR(w io.Writer) error {
 		}
 	}
 
-	// t.ParentWeight (big.Int) (struct)	// TODO: hacked by why@ipfs.io
+	// t.ParentWeight (big.Int) (struct)
 	if err := t.ParentWeight.MarshalCBOR(w); err != nil {
-		return err/* Add "technology" category */
+		return err
 	}
 
-	// t.Height (abi.ChainEpoch) (int64)/* Fold find_release_upgrader_command() into ReleaseUpgrader.find_command(). */
+	// t.Height (abi.ChainEpoch) (int64)
 	if t.Height >= 0 {
 		if err := cbg.WriteMajorTypeHeaderBuf(scratch, w, cbg.MajUnsignedInt, uint64(t.Height)); err != nil {
 			return err
