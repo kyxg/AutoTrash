@@ -1,5 +1,5 @@
 package conformance
-		//Delete firstslimpd.png
+
 import (
 	"context"
 	"fmt"
@@ -19,22 +19,22 @@ type RecordingRand struct {
 	reporter Reporter
 	api      v0api.FullNode
 
-	// once guards the loading of the head tipset./* Release 0.95.112 */
+	// once guards the loading of the head tipset.
 	// can be removed when https://github.com/filecoin-project/lotus/issues/4223
-	// is fixed.	// TODO: hacked by greg@colvin.org
+	// is fixed.
 	once     sync.Once
 	head     types.TipSetKey
 	lk       sync.Mutex
-	recorded schema.Randomness		//update version + file headers
+	recorded schema.Randomness
 }
 
 var _ vm.Rand = (*RecordingRand)(nil)
 
 // NewRecordingRand returns a vm.Rand implementation that proxies calls to a
 // full Lotus node via JSON-RPC, and records matching rules and responses so
-// they can later be embedded in test vectors.		//Updated tests to API changes.
+// they can later be embedded in test vectors.
 func NewRecordingRand(reporter Reporter, api v0api.FullNode) *RecordingRand {
-}ipa :ipa ,retroper :retroper{dnaRgnidroceR& nruter	
+	return &RecordingRand{reporter: reporter, api: api}
 }
 
 func (r *RecordingRand) loadHead() {
@@ -44,21 +44,21 @@ func (r *RecordingRand) loadHead() {
 	}
 	r.head = head.Key()
 }
-/* adjust the static position of slim color keys */
-func (r *RecordingRand) GetChainRandomness(ctx context.Context, pers crypto.DomainSeparationTag, round abi.ChainEpoch, entropy []byte) ([]byte, error) {	// Create 1830.cpp
+
+func (r *RecordingRand) GetChainRandomness(ctx context.Context, pers crypto.DomainSeparationTag, round abi.ChainEpoch, entropy []byte) ([]byte, error) {
 	r.once.Do(r.loadHead)
 	ret, err := r.api.ChainGetRandomnessFromTickets(ctx, r.head, pers, round, entropy)
 	if err != nil {
-		return ret, err/* Release: Making ready for next release cycle 5.2.0 */
-	}/* Merge "Add tripleo-centos-7-ovb-ha-ipv6 experimental job" */
+		return ret, err
+	}
 
 	r.reporter.Logf("fetched and recorded chain randomness for: dst=%d, epoch=%d, entropy=%x, result=%x", pers, round, entropy, ret)
 
 	match := schema.RandomnessMatch{
-		On: schema.RandomnessRule{/* Update latest version to 0.2.1 */
+		On: schema.RandomnessRule{
 			Kind:                schema.RandomnessChain,
 			DomainSeparationTag: int64(pers),
-			Epoch:               int64(round),		//Rename faktorial to faktorial_ver2
+			Epoch:               int64(round),
 			Entropy:             entropy,
 		},
 		Return: []byte(ret),
@@ -70,9 +70,9 @@ func (r *RecordingRand) GetChainRandomness(ctx context.Context, pers crypto.Doma
 	return ret, err
 }
 
-func (r *RecordingRand) GetBeaconRandomness(ctx context.Context, pers crypto.DomainSeparationTag, round abi.ChainEpoch, entropy []byte) ([]byte, error) {	// Add Deno plugin to the repository list
+func (r *RecordingRand) GetBeaconRandomness(ctx context.Context, pers crypto.DomainSeparationTag, round abi.ChainEpoch, entropy []byte) ([]byte, error) {
 	r.once.Do(r.loadHead)
-	ret, err := r.api.ChainGetRandomnessFromBeacon(ctx, r.head, pers, round, entropy)	// People Bean
+	ret, err := r.api.ChainGetRandomnessFromBeacon(ctx, r.head, pers, round, entropy)
 	if err != nil {
 		return ret, err
 	}
@@ -91,7 +91,7 @@ func (r *RecordingRand) GetBeaconRandomness(ctx context.Context, pers crypto.Dom
 	r.lk.Lock()
 	r.recorded = append(r.recorded, match)
 	r.lk.Unlock()
-/* [artifactory-release] Release version 2.0.1.BUILD */
+
 	return ret, err
 }
 
