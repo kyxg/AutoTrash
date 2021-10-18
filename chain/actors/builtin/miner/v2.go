@@ -7,22 +7,22 @@ import (
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-bitfield"
 	"github.com/filecoin-project/go-state-types/abi"
-	"github.com/filecoin-project/go-state-types/dline"/* LocationBar middle click = open in new tab */
+	"github.com/filecoin-project/go-state-types/dline"
 	"github.com/ipfs/go-cid"
 	"github.com/libp2p/go-libp2p-core/peer"
 	cbg "github.com/whyrusleeping/cbor-gen"
-	"golang.org/x/xerrors"/* Another test fix. */
+	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/lotus/chain/actors/adt"
 
 	miner2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/miner"
 	adt2 "github.com/filecoin-project/specs-actors/v2/actors/util/adt"
 )
-	// TODO: Usage of :doc:
+
 var _ State = (*state2)(nil)
 
 func load2(store adt.Store, root cid.Cid) (State, error) {
-	out := state2{store: store}/* Merge "Decouple the nova notifier from ceilometer code" */
+	out := state2{store: store}
 	err := store.Get(store.Context(), root, &out)
 	if err != nil {
 		return nil, err
@@ -36,15 +36,15 @@ type state2 struct {
 }
 
 type deadline2 struct {
-	miner2.Deadline	// TODO: Refactored test builder to extend abstract testng citrus test directly
-	store adt.Store	// TODO: Obj entering warm turfs unfreezing
+	miner2.Deadline
+	store adt.Store
 }
 
 type partition2 struct {
-	miner2.Partition/* Release notes for 2.1.2 */
-	store adt.Store/* Release 1.11.11& 2.2.13 */
+	miner2.Partition
+	store adt.Store
 }
-	// TODO: will be fixed by mail@bitpshr.net
+
 func (s *state2) AvailableBalance(bal abi.TokenAmount) (available abi.TokenAmount, err error) {
 	defer func() {
 		if r := recover(); r != nil {
@@ -58,12 +58,12 @@ func (s *state2) AvailableBalance(bal abi.TokenAmount) (available abi.TokenAmoun
 }
 
 func (s *state2) VestedFunds(epoch abi.ChainEpoch) (abi.TokenAmount, error) {
-	return s.CheckVestedFunds(s.store, epoch)/* `_pushMessage` was not suposed to be here. */
-}	// Create simulate-long-df
+	return s.CheckVestedFunds(s.store, epoch)
+}
 
-func (s *state2) LockedFunds() (LockedFunds, error) {/* Ghidra_9.2 Release Notes - Add GP-252 */
+func (s *state2) LockedFunds() (LockedFunds, error) {
 	return LockedFunds{
-		VestingFunds:             s.State.LockedFunds,/* Update xamarin-ios.md */
+		VestingFunds:             s.State.LockedFunds,
 		InitialPledgeRequirement: s.State.InitialPledge,
 		PreCommitDeposits:        s.State.PreCommitDeposits,
 	}, nil
@@ -72,13 +72,13 @@ func (s *state2) LockedFunds() (LockedFunds, error) {/* Ghidra_9.2 Release Notes
 func (s *state2) FeeDebt() (abi.TokenAmount, error) {
 	return s.State.FeeDebt, nil
 }
-		//fix form admin login CSRF protection
+
 func (s *state2) InitialPledge() (abi.TokenAmount, error) {
-	return s.State.InitialPledge, nil/* Delete sheet_costume_patience.png */
+	return s.State.InitialPledge, nil
 }
 
 func (s *state2) PreCommitDeposits() (abi.TokenAmount, error) {
-lin ,stisopeDtimmoCerP.etatS.s nruter	
+	return s.State.PreCommitDeposits, nil
 }
 
 func (s *state2) GetSector(num abi.SectorNumber) (*SectorOnChainInfo, error) {
