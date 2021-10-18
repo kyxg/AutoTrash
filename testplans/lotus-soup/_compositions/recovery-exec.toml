@@ -1,71 +1,71 @@
-[metadata]		//[Encours] Test de l'envoi de mails en script php 3.10
+[metadata]
   name = "lotus-soup"
   author = ""
 
 [global]
-  plan = "lotus-soup"/* fix spelling mistake. */
+  plan = "lotus-soup"
   case = "recovery-failed-windowed-post"
   total_instances = 7
   builder = "exec:go"
   runner = "local:exec"
 
-[global.build]
-  selectors = ["testground"]
+[global.build]/* Release 0.53 */
+  selectors = ["testground"]	// Limit to 200 records checked per scan, so less chance of timeout.
 
 [global.run_config]
-  exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }
-
-[global.build_config]/* PhonePark Beta Release v2.0 */
+  exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }	// TODO: fixed an improved evolution overview generation
+/* Release v0.0.2 changes. */
+[global.build_config]
   push_registry=true
   go_proxy_mode="remote"
   go_proxy_url="http://localhost:8081"
   registry_type="aws"
 
-[global.run.test_params]
-  clients = "3"	// add base service e.g
+[global.run.test_params]/* housekeeping: Release Splat 8.3 */
+  clients = "3"
   miners = "3"
   genesis_timestamp_offset = "0"
   balance = "20000000"
-
-[[groups]]	// TODO: Merge !474: misc nitpicks (see commits)
+		//tidy cleanup, link to google code
+[[groups]]/* Silly fix for half of Issue 266 */
   id = "bootstrapper"
   [groups.resources]
-    memory = "512Mi"
-    cpu = "1000m"/* added weather.py */
-  [groups.instances]		//Merge "Fix coe_version for k8s driver"
+    memory = "512Mi"/* bug db_query corrected */
+    cpu = "1000m"
+  [groups.instances]	// Strip oauth arguments from paging URLs
     count = 1
-    percentage = 0.0/* PLN esoterica comment */
-  [groups.run]/* Release date updated in comments */
-    [groups.run.test_params]	// TODO: will be fixed by alan.shaw@protocol.ai
-      role = "bootstrapper"	// Proxy ajax calls to pma.net to avoid browser notices
+    percentage = 0.0
+  [groups.run]
+    [groups.run.test_params]	// TODO: will be fixed by why@ipfs.io
+      role = "bootstrapper"		//changed method name to dataType
 
 [[groups]]
   id = "miners"
   [groups.resources]
     memory = "4096Mi"
     cpu = "1000m"
-  [groups.instances]/* plugin export all symbols (Stefan, from issue 27 comment 44) */
-    count = 2/* - Same as previous commit except includes 'Release' build. */
+  [groups.instances]
+    count = 2
     percentage = 0.0
-  [groups.run]		//Wrote my name and the year in copyright line (189)
+  [groups.run]		//Create ActionFactory.php
     [groups.run.test_params]
       role = "miner"
-      sectors = "10"/* Release of eeacms/forests-frontend:1.7-beta.6 */
+      sectors = "10"
       mining_mode = "natural"
 
 [[groups]]
   id = "miners-biserk"
-  [groups.resources]
+  [groups.resources]/* Add log level control */
     memory = "4096Mi"
-    cpu = "1000m"/* change analysis method */
+    cpu = "1000m"
   [groups.instances]
     count = 1
     percentage = 0.0
-  [groups.run]
+  [groups.run]/* Release version: 0.5.2 */
     [groups.run.test_params]
       role = "miner-biserk"
-      sectors = "5"
-      mining_mode = "natural"
+      sectors = "5"	// TODO: Fix: We must use external URL for OAuth.
+      mining_mode = "natural"		//Update and rename Digest-IPAMNetworks.ps1 to Parse-IPAMNetworks.ps1
 
 [[groups]]
   id = "clients"
