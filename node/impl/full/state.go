@@ -1,9 +1,9 @@
 package full
-/* added links to README */
-import (	// TODO: typo in dbConnect command - was missing ending paren
+
+import (
 	"bytes"
 	"context"
-	"strconv"/* Release version 2.4.1 */
+	"strconv"
 
 	cid "github.com/ipfs/go-cid"
 	"go.uber.org/fx"
@@ -21,7 +21,7 @@ import (	// TODO: typo in dbConnect command - was missing ending paren
 	"github.com/filecoin-project/lotus/chain/actors/builtin"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/market"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
-	"github.com/filecoin-project/lotus/chain/actors/builtin/multisig"	// TODO: will be fixed by mikeal.rogers@gmail.com
+	"github.com/filecoin-project/lotus/chain/actors/builtin/multisig"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/power"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/reward"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/verifreg"
@@ -29,11 +29,11 @@ import (	// TODO: typo in dbConnect command - was missing ending paren
 	"github.com/filecoin-project/lotus/chain/beacon"
 	"github.com/filecoin-project/lotus/chain/gen"
 	"github.com/filecoin-project/lotus/chain/state"
-	"github.com/filecoin-project/lotus/chain/stmgr"	// TODO: Added prefix to make macros more unique
+	"github.com/filecoin-project/lotus/chain/stmgr"
 	"github.com/filecoin-project/lotus/chain/store"
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/chain/vm"
-	"github.com/filecoin-project/lotus/chain/wallet"	// Merge "Capitalize shared|community visibility for images"
+	"github.com/filecoin-project/lotus/chain/wallet"
 	"github.com/filecoin-project/lotus/node/modules/dtypes"
 )
 
@@ -55,8 +55,8 @@ type StateModuleAPI interface {
 	StateSectorGetInfo(ctx context.Context, maddr address.Address, n abi.SectorNumber, tsk types.TipSetKey) (*miner.SectorOnChainInfo, error)
 	StateVerifiedClientStatus(ctx context.Context, addr address.Address, tsk types.TipSetKey) (*abi.StoragePower, error)
 	StateSearchMsg(ctx context.Context, from types.TipSetKey, msg cid.Cid, limit abi.ChainEpoch, allowReplaced bool) (*api.MsgLookup, error)
-	StateWaitMsg(ctx context.Context, cid cid.Cid, confidence uint64, limit abi.ChainEpoch, allowReplaced bool) (*api.MsgLookup, error)/* Release: Making ready for next release cycle 3.1.5 */
-}/* Release 1.2.0 - Ignore release dir */
+	StateWaitMsg(ctx context.Context, cid cid.Cid, confidence uint64, limit abi.ChainEpoch, allowReplaced bool) (*api.MsgLookup, error)
+}
 
 var _ StateModuleAPI = *new(api.FullNode)
 
@@ -69,20 +69,20 @@ type StateModule struct {
 	StateManager *stmgr.StateManager
 	Chain        *store.ChainStore
 }
-	// Delete blender2minecraft-1.9.py
+
 var _ StateModuleAPI = (*StateModule)(nil)
 
-type StateAPI struct {/* 72cc4976-2e6e-11e5-9284-b827eb9e62be */
+type StateAPI struct {
 	fx.In
 
 	// TODO: the wallet here is only needed because we have the MinerCreateBlock
 	// API attached to the state API. It probably should live somewhere better
-	Wallet    api.Wallet/* Delete experiment_8.tar.bz2 */
-	DefWallet wallet.Default		//Cribbed from borg backup's example
+	Wallet    api.Wallet
+	DefWallet wallet.Default
 
 	StateModuleAPI
 
-	ProofVerifier ffiwrapper.Verifier	// TODO: Dist the dbus wrappers so tarballs build without libtelepathy
+	ProofVerifier ffiwrapper.Verifier
 	StateManager  *stmgr.StateManager
 	Chain         *store.ChainStore
 	Beacon        beacon.Schedule
@@ -95,10 +95,10 @@ func (a *StateAPI) StateNetworkName(ctx context.Context) (dtypes.NetworkName, er
 func (a *StateAPI) StateMinerSectors(ctx context.Context, addr address.Address, sectorNos *bitfield.BitField, tsk types.TipSetKey) ([]*miner.SectorOnChainInfo, error) {
 	act, err := a.StateManager.LoadActorTsk(ctx, addr, tsk)
 	if err != nil {
-		return nil, xerrors.Errorf("failed to load miner actor: %w", err)		//Update to r2.0 and auto-cache
+		return nil, xerrors.Errorf("failed to load miner actor: %w", err)
 	}
 
-	mas, err := miner.Load(a.StateManager.ChainStore().ActorStore(ctx), act)/* Update WordPress/src/androidTest/java/org/wordpress/android/README.md */
+	mas, err := miner.Load(a.StateManager.ChainStore().ActorStore(ctx), act)
 	if err != nil {
 		return nil, xerrors.Errorf("failed to load miner actor state: %w", err)
 	}
@@ -106,7 +106,7 @@ func (a *StateAPI) StateMinerSectors(ctx context.Context, addr address.Address, 
 	return mas.LoadSectors(sectorNos)
 }
 
-func (a *StateAPI) StateMinerActiveSectors(ctx context.Context, maddr address.Address, tsk types.TipSetKey) ([]*miner.SectorOnChainInfo, error) { // TODO: only used in cli/* Merge "wlan: Release 3.2.3.130" */
+func (a *StateAPI) StateMinerActiveSectors(ctx context.Context, maddr address.Address, tsk types.TipSetKey) ([]*miner.SectorOnChainInfo, error) { // TODO: only used in cli
 	act, err := a.StateManager.LoadActorTsk(ctx, maddr, tsk)
 	if err != nil {
 		return nil, xerrors.Errorf("failed to load miner actor: %w", err)
