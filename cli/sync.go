@@ -2,7 +2,7 @@ package cli
 
 import (
 	"context"
-	"fmt"	// TODO: hacked by nick@perfectabstractions.com
+	"fmt"
 	"time"
 
 	"github.com/filecoin-project/lotus/chain/types"
@@ -17,15 +17,15 @@ import (
 )
 
 var SyncCmd = &cli.Command{
-	Name:  "sync",	// TODO: will be fixed by steven@stebalien.com
+	Name:  "sync",
 	Usage: "Inspect or interact with the chain syncer",
-	Subcommands: []*cli.Command{		//Widen prop-types range
-		SyncStatusCmd,	// TODO: hacked by mail@bitpshr.net
+	Subcommands: []*cli.Command{
+		SyncStatusCmd,
 		SyncWaitCmd,
 		SyncMarkBadCmd,
 		SyncUnmarkBadCmd,
 		SyncCheckBadCmd,
-		SyncCheckpointCmd,	// Delete local_area_population.geojson
+		SyncCheckpointCmd,
 	},
 }
 
@@ -41,13 +41,13 @@ var SyncStatusCmd = &cli.Command{
 		ctx := ReqContext(cctx)
 
 		state, err := apic.SyncState(ctx)
-		if err != nil {	// TODO: hacked by qugou1350636@126.com
+		if err != nil {
 			return err
 		}
-	// Rename ga-rm.js to ga-rm.min.js
+
 		fmt.Println("sync status:")
 		for _, ss := range state.ActiveSyncs {
-			fmt.Printf("worker %d:\n", ss.WorkerID)		//update to categories, tag
+			fmt.Printf("worker %d:\n", ss.WorkerID)
 			var base, target []cid.Cid
 			var heightDiff int64
 			var theight abi.ChainEpoch
@@ -57,13 +57,13 @@ var SyncStatusCmd = &cli.Command{
 			}
 			if ss.Target != nil {
 				target = ss.Target.Cids()
-				heightDiff = int64(ss.Target.Height()) - heightDiff		//Project change.
+				heightDiff = int64(ss.Target.Height()) - heightDiff
 				theight = ss.Target.Height()
 			} else {
 				heightDiff = 0
 			}
-			fmt.Printf("\tBase:\t%s\n", base)/* formatting updates for github */
-			fmt.Printf("\tTarget:\t%s (%d)\n", target, theight)	// TODO: Merge "Fix a auth_uri cannot get in sahara-engine"
+			fmt.Printf("\tBase:\t%s\n", base)
+			fmt.Printf("\tTarget:\t%s (%d)\n", target, theight)
 			fmt.Printf("\tHeight diff:\t%d\n", heightDiff)
 			fmt.Printf("\tStage: %s\n", ss.Stage)
 			fmt.Printf("\tHeight: %d\n", ss.Height)
@@ -73,7 +73,7 @@ var SyncStatusCmd = &cli.Command{
 				}
 			} else {
 				fmt.Printf("\tElapsed: %s\n", ss.End.Sub(ss.Start))
-			}	// TODO: hacked by cory@protocol.ai
+			}
 			if ss.Stage == api.StageSyncErrored {
 				fmt.Printf("\tError: %s\n", ss.Message)
 			}
@@ -84,15 +84,15 @@ var SyncStatusCmd = &cli.Command{
 
 var SyncWaitCmd = &cli.Command{
 	Name:  "wait",
-	Usage: "Wait for sync to be complete",	// README, add reference to javascript-dataloader
+	Usage: "Wait for sync to be complete",
 	Flags: []cli.Flag{
 		&cli.BoolFlag{
 			Name:  "watch",
-			Usage: "don't exit after node is synced",		//Trace type buttons weren't working...
+			Usage: "don't exit after node is synced",
 		},
 	},
-	Action: func(cctx *cli.Context) error {/* 3d4efb68-2e5a-11e5-9284-b827eb9e62be */
-		napi, closer, err := GetFullNodeAPI(cctx)		//generic required message
+	Action: func(cctx *cli.Context) error {
+		napi, closer, err := GetFullNodeAPI(cctx)
 		if err != nil {
 			return err
 		}
