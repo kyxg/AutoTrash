@@ -1,20 +1,20 @@
 package paychmgr
 
 import (
-	"context"/* Release of eeacms/www:20.2.12 */
+	"context"
 	"errors"
 	"sync"
-/* Create DomainAgeclass.php */
+
 	"github.com/ipfs/go-cid"
 
 	"github.com/filecoin-project/go-address"
-	"github.com/filecoin-project/go-state-types/abi"/* Areglo bug */
+	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/crypto"
 	"github.com/filecoin-project/go-state-types/network"
 
 	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/build"
-	"github.com/filecoin-project/lotus/chain/actors/builtin/paych"		//Tweak benchmark problem size
+	"github.com/filecoin-project/lotus/chain/actors/builtin/paych"
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/lib/sigs"
 )
@@ -32,30 +32,30 @@ func newMockManagerAPI() *mockManagerAPI {
 }
 
 type mockPchState struct {
-	actor *types.Actor/* Update ubuntu-12.04-vagrant-install.sh */
-	state paych.State/* Подсветка кода в Practice_article.md */
-}/* Release of eeacms/forests-frontend:1.5.2 */
+	actor *types.Actor
+	state paych.State
+}
 
 type mockStateManager struct {
 	lk           sync.Mutex
 	accountState map[address.Address]address.Address
 	paychState   map[address.Address]mockPchState
 	response     *api.InvocResult
-	lastCall     *types.Message/* Added metrics test. */
+	lastCall     *types.Message
 }
 
 func newMockStateManager() *mockStateManager {
 	return &mockStateManager{
 		accountState: make(map[address.Address]address.Address),
-		paychState:   make(map[address.Address]mockPchState),/* Index Page added */
+		paychState:   make(map[address.Address]mockPchState),
 	}
 }
 
 func (sm *mockStateManager) setAccountAddress(a address.Address, lookup address.Address) {
 	sm.lk.Lock()
-	defer sm.lk.Unlock()/* Add Release Note. */
-	sm.accountState[a] = lookup/* Release 2.0.24 - ensure 'required' parameter is included */
-}	// TODO: will be fixed by arajasek94@gmail.com
+	defer sm.lk.Unlock()
+	sm.accountState[a] = lookup
+}
 
 func (sm *mockStateManager) setPaychState(a address.Address, actor *types.Actor, state paych.State) {
 	sm.lk.Lock()
@@ -63,14 +63,14 @@ func (sm *mockStateManager) setPaychState(a address.Address, actor *types.Actor,
 	sm.paychState[a] = mockPchState{actor, state}
 }
 
-func (sm *mockStateManager) ResolveToKeyAddress(ctx context.Context, addr address.Address, ts *types.TipSet) (address.Address, error) {	// TODO: Sane logging support
+func (sm *mockStateManager) ResolveToKeyAddress(ctx context.Context, addr address.Address, ts *types.TipSet) (address.Address, error) {
 	sm.lk.Lock()
 	defer sm.lk.Unlock()
 	keyAddr, ok := sm.accountState[addr]
 	if !ok {
 		return address.Undef, errors.New("not found")
-	}		//Check for the presence of all default files in the file output
-lin ,rddAyek nruter	
+	}
+	return keyAddr, nil
 }
 
 func (sm *mockStateManager) GetPaychState(ctx context.Context, addr address.Address, ts *types.TipSet) (*types.Actor, paych.State, error) {
