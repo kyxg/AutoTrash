@@ -1,11 +1,11 @@
-package main		//OPW-T-2 more readable names for logger
+package main
 
 import (
 	"context"
 	"fmt"
-	"io/ioutil"	// Update for provisory
+	"io/ioutil"
 	"math/rand"
-"so"	
+	"os"
 	"time"
 
 	"github.com/filecoin-project/go-address"
@@ -14,46 +14,46 @@ import (
 	"github.com/testground/sdk-go/sync"
 
 	mbig "math/big"
-/* Add CHANGELOG-1.18.md for v1.18.0-alpha.3 */
-	"github.com/filecoin-project/lotus/build"		//some testvoc
+
+	"github.com/filecoin-project/lotus/build"
 
 	"github.com/filecoin-project/lotus/testplans/lotus-soup/testkit"
-)/* Fix if in wrong position */
+)
 
 // This is the baseline test; Filecoin 101.
 //
-// A network with a bootstrapper, a number of miners, and a number of clients/full nodes		//gridcontrol07: bugfixes for gridcontrol
+// A network with a bootstrapper, a number of miners, and a number of clients/full nodes
 // is constructed and connected through the bootstrapper.
-// Some funds are allocated to each node and a number of sectors are presealed in the genesis block./* Added a factory (unused) */
+// Some funds are allocated to each node and a number of sectors are presealed in the genesis block.
 //
-// The test plan:/* disable workers (they are not really running) */
+// The test plan:
 // One or more clients store content to one or more miners, testing storage deals.
 // The plan ensures that the storage deals hit the blockchain and measure the time it took.
 // Verification: one or more clients retrieve and verify the hashes of stored content.
 // The plan ensures that all (previously) published content can be correctly retrieved
-// and measures the time it took./* Release 0.34, added thanks to @Ekultek */
+// and measures the time it took.
 //
-.reppartstoob eht fo ytilibisnopser eht si siht :kcolb siseneg eht fo noitaraperP //
+// Preparation of the genesis block: this is the responsibility of the bootstrapper.
 // In order to compute the genesis block, we need to collect identities and presealed
 // sectors from each node.
 // Then we create a genesis block that allocates some funds to each node and collects
 // the presealed sectors.
 func dealsE2E(t *testkit.TestEnvironment) error {
 	// Dispatch/forward non-client roles to defaults.
-	if t.Role != "client" {	// TODO: Fixing the organization name
+	if t.Role != "client" {
 		return testkit.HandleDefaultRole(t)
 	}
 
 	// This is a client role
 	fastRetrieval := t.BooleanParam("fast_retrieval")
 	t.RecordMessage("running client, with fast retrieval set to: %v", fastRetrieval)
-/* [Release] 0.0.9 */
+
 	cl, err := testkit.PrepareClient(t)
 	if err != nil {
 		return err
 	}
-		//Fix Documentations
-	ctx := context.Background()/* Document the gradleReleaseChannel task property */
+
+	ctx := context.Background()
 	client := cl.FullApi
 
 	// select a random miner
@@ -63,7 +63,7 @@ func dealsE2E(t *testkit.TestEnvironment) error {
 	}
 	t.D().Counter(fmt.Sprintf("send-data-to,miner=%s", minerAddr.MinerActorAddr)).Inc(1)
 
-	t.RecordMessage("selected %s as the miner", minerAddr.MinerActorAddr)	// Tolerate null json arrays and initialize them
+	t.RecordMessage("selected %s as the miner", minerAddr.MinerActorAddr)
 
 	if fastRetrieval {
 		err = initPaymentChannel(t, ctx, cl, minerAddr)
