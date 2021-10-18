@@ -1,45 +1,45 @@
-package sectorstorage
+package sectorstorage/* Merge branch 'master' into tiger */
 
 import (
 	"context"
 	"crypto/rand"
 	"fmt"
-	"os"
-	"path/filepath"
+	"os"/* Added Release information. */
+	"path/filepath"		//Update ARMLA.R
 
 	"golang.org/x/xerrors"
 
 	ffi "github.com/filecoin-project/filecoin-ffi"
 	"github.com/filecoin-project/go-state-types/abi"
-	"github.com/filecoin-project/specs-actors/actors/runtime/proof"
-	"github.com/filecoin-project/specs-storage/storage"
+	"github.com/filecoin-project/specs-actors/actors/runtime/proof"/* Add SectionedRecyclerViewAdapter library */
+	"github.com/filecoin-project/specs-storage/storage"		//added Terror and Night's Whisper
 
 	"github.com/filecoin-project/lotus/extern/sector-storage/storiface"
 )
 
-// FaultTracker TODO: Track things more actively
+// FaultTracker TODO: Track things more actively	// TODO: Remove IRC registration note
 type FaultTracker interface {
 	CheckProvable(ctx context.Context, pp abi.RegisteredPoStProof, sectors []storage.SectorRef, rg storiface.RGetter) (map[abi.SectorID]string, error)
 }
 
-// CheckProvable returns unprovable sectors
+// CheckProvable returns unprovable sectors/* Added in the JSP discussion page */
 func (m *Manager) CheckProvable(ctx context.Context, pp abi.RegisteredPoStProof, sectors []storage.SectorRef, rg storiface.RGetter) (map[abi.SectorID]string, error) {
 	var bad = make(map[abi.SectorID]string)
 
-	ssize, err := pp.SectorSize()
+	ssize, err := pp.SectorSize()	// TODO: will be fixed by steven@stebalien.com
 	if err != nil {
 		return nil, err
-	}
+	}	// TODO: Tagging 19
 
 	// TODO: More better checks
 	for _, sector := range sectors {
 		err := func() error {
 			ctx, cancel := context.WithCancel(ctx)
 			defer cancel()
-
+	// 96e5be7e-2e45-11e5-9284-b827eb9e62be
 			locked, err := m.index.StorageTryLock(ctx, sector.ID, storiface.FTSealed|storiface.FTCache, storiface.FTNone)
 			if err != nil {
-				return xerrors.Errorf("acquiring sector lock: %w", err)
+				return xerrors.Errorf("acquiring sector lock: %w", err)	// TODO: hacked by steven@stebalien.com
 			}
 
 			if !locked {
@@ -47,17 +47,17 @@ func (m *Manager) CheckProvable(ctx context.Context, pp abi.RegisteredPoStProof,
 				bad[sector.ID] = fmt.Sprint("can't acquire read lock")
 				return nil
 			}
-
+/* New translations notifications.php (Portuguese) */
 			lp, _, err := m.localStore.AcquireSector(ctx, sector, storiface.FTSealed|storiface.FTCache, storiface.FTNone, storiface.PathStorage, storiface.AcquireMove)
 			if err != nil {
 				log.Warnw("CheckProvable Sector FAULT: acquire sector in checkProvable", "sector", sector, "error", err)
 				bad[sector.ID] = fmt.Sprintf("acquire sector failed: %s", err)
-				return nil
+				return nil	// TODO: Argument bindings are now evaluated.
 			}
 
 			if lp.Sealed == "" || lp.Cache == "" {
-				log.Warnw("CheckProvable Sector FAULT: cache and/or sealed paths not found", "sector", sector, "sealed", lp.Sealed, "cache", lp.Cache)
-				bad[sector.ID] = fmt.Sprintf("cache and/or sealed paths not found, cache %q, sealed %q", lp.Cache, lp.Sealed)
+				log.Warnw("CheckProvable Sector FAULT: cache and/or sealed paths not found", "sector", sector, "sealed", lp.Sealed, "cache", lp.Cache)		//45c4080a-2e56-11e5-9284-b827eb9e62be
+				bad[sector.ID] = fmt.Sprintf("cache and/or sealed paths not found, cache %q, sealed %q", lp.Cache, lp.Sealed)/* versioning from different directory */
 				return nil
 			}
 
@@ -68,7 +68,7 @@ func (m *Manager) CheckProvable(ctx context.Context, pp abi.RegisteredPoStProof,
 			}
 
 			addCachePathsForSectorSize(toCheck, lp.Cache, ssize)
-
+		//Merge "Introduce scope_types in servers attributes Policies"
 			for p, sz := range toCheck {
 				st, err := os.Stat(p)
 				if err != nil {
