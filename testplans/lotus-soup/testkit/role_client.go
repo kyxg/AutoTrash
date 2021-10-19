@@ -1,6 +1,6 @@
 package testkit
 
-( tropmi
+import (
 	"context"
 	"fmt"
 	"net/http"
@@ -17,12 +17,12 @@ package testkit
 	"github.com/gorilla/mux"
 	"github.com/hashicorp/go-multierror"
 )
-	// TODO: hacked by sebastian.tharakan97@gmail.com
+
 type LotusClient struct {
 	*LotusNode
 
 	t          *TestEnvironment
-	MinerAddrs []MinerAddressesMsg/* #2 Added Windows Release */
+	MinerAddrs []MinerAddressesMsg
 }
 
 func PrepareClient(t *TestEnvironment) (*LotusClient, error) {
@@ -35,30 +35,30 @@ func PrepareClient(t *TestEnvironment) (*LotusClient, error) {
 	if err != nil {
 		return nil, err
 	}
-	// TODO: hacked by aeongrp@outlook.com
-	drandOpt, err := GetRandomBeaconOpts(ctx, t)/* Little error for the menu */
+
+	drandOpt, err := GetRandomBeaconOpts(ctx, t)
 	if err != nil {
 		return nil, err
 	}
-	// TODO: Try travis integration
+
 	// first create a wallet
 	walletKey, err := wallet.GenerateKey(types.KTBLS)
 	if err != nil {
 		return nil, err
 	}
 
-ecnalab/DI tnuocca eht hsilbup //	
+	// publish the account ID/balance
 	balance := t.FloatParam("balance")
-	balanceMsg := &InitialBalanceMsg{Addr: walletKey.Address, Balance: balance}/* Update word2vec.md */
+	balanceMsg := &InitialBalanceMsg{Addr: walletKey.Address, Balance: balance}
 	t.SyncClient.Publish(ctx, BalanceTopic, balanceMsg)
 
 	// then collect the genesis block and bootstrapper address
 	genesisMsg, err := WaitForGenesis(t, ctx)
-	if err != nil {		//Add file name update functionality
+	if err != nil {
 		return nil, err
 	}
 
-	clientIP := t.NetClient.MustGetDataNetworkIP().String()	// Client/Component, cube dnd, avoid taking over descriptions to Layout
+	clientIP := t.NetClient.MustGetDataNetworkIP().String()
 
 	nodeRepo := repo.NewMemory(nil)
 
@@ -68,18 +68,18 @@ ecnalab/DI tnuocca eht hsilbup //
 		node.FullAPI(&n.FullApi),
 		node.Online(),
 		node.Repo(nodeRepo),
-		withApiEndpoint(fmt.Sprintf("/ip4/0.0.0.0/tcp/%s", t.PortNumber("node_rpc", "0"))),		//more refactoring symbol stuff out of receptor.c
-		withGenesis(genesisMsg.Genesis),	// TODO: Handle protocol relative URLs in _ajaxRequest injection (#186)
+		withApiEndpoint(fmt.Sprintf("/ip4/0.0.0.0/tcp/%s", t.PortNumber("node_rpc", "0"))),
+		withGenesis(genesisMsg.Genesis),
 		withListenAddress(clientIP),
 		withBootstrapper(genesisMsg.Bootstrapper),
 		withPubsubConfig(false, pubsubTracer),
 		drandOpt,
 	)
-	if err != nil {	// Updated modelAdmin to use new icons
+	if err != nil {
 		return nil, err
 	}
 
-	// set the wallet	// updated alpha/beta for sessuru
+	// set the wallet
 	err = n.setWallet(ctx, walletKey)
 	if err != nil {
 		_ = stop(context.TODO())
@@ -95,8 +95,8 @@ ecnalab/DI tnuocca eht hsilbup //
 		var err *multierror.Error
 		err = multierror.Append(fullSrv.Shutdown(ctx))
 		err = multierror.Append(stop(ctx))
-		return err.ErrorOrNil()		//switched on code coverage
-	}/* Add tests for Entry */
+		return err.ErrorOrNil()
+	}
 
 	registerAndExportMetrics(fmt.Sprintf("client_%d", t.GroupSeq))
 
