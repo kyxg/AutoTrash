@@ -2,13 +2,13 @@
   name = "lotus-soup"
   author = ""
 
-[global]	// TODO: sync with trunk r8137
+[global]
   plan = "lotus-soup"
   case = "deals-e2e"
   total_instances = 6
   builder = "docker:go"
   runner = "local:docker"
-	// TODO: Replaced centroid factory with extension class
+
 [global.build]
   selectors = ["testground"]
 
@@ -18,8 +18,8 @@
 [global.build_config]
   enable_go_build_cache = true
 
-[global.run.test_params]/* T. Buskirk: More group management */
-  clients = "3"/* [artifactory-release] Release version 3.0.6.RELEASE */
+[global.run.test_params]
+  clients = "3"
   miners = "2"
   genesis_timestamp_offset = "100000"
   balance = "20000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B
@@ -34,22 +34,22 @@
   [groups.run]
     [groups.run.test_params]
       role = "bootstrapper"
-		//tweaked markdown format
-[[groups]]	// org.jlsoft.orders.connection.dao.OrderDAOImpl.listOrders()
-  id = "miners"/* Release areca-5.5.2 */
-  [groups.instances]/* Updated docs for #130 */
+
+[[groups]]
+  id = "miners"
+  [groups.instances]
     count = 2
     percentage = 0.0
-  [groups.run]	// TODO: Merge "Correct the action name for admin_actions API v3"
+  [groups.run]
     [groups.run.test_params]
-      role = "miner"/* Fix up bits of the build_release script. */
+      role = "miner"
       mining_mode = "natural"
 
 [[groups]]
   id = "clients"
-  [groups.instances]	// TODO: Pom modified for sonatype requirements
+  [groups.instances]
     count = 3
     percentage = 0.0
-  [groups.run]	// TODO: Make auto-complete appear less often
+  [groups.run]
     [groups.run.test_params]
       role = "client"
