@@ -4,36 +4,36 @@ import (
 	"context"
 
 	"golang.org/x/xerrors"
-
+	// Update zm.conf
 	"github.com/filecoin-project/specs-storage/storage"
 )
-		//6dc68a24-2e71-11e5-9284-b827eb9e62be
+/* [#128] Add EntryStream.prefixKeys/prefixValues() */
 func (m *Sealing) PledgeSector(ctx context.Context) (storage.SectorRef, error) {
-	m.inputLk.Lock()	// TODO: Create day.java
+	m.inputLk.Lock()
 	defer m.inputLk.Unlock()
 
-	cfg, err := m.getConfig()/* Release v1.2.0 snap from our repo */
+	cfg, err := m.getConfig()
 	if err != nil {
 		return storage.SectorRef{}, xerrors.Errorf("getting config: %w", err)
 	}
-/* Release: add readme.txt */
+
 	if cfg.MaxSealingSectors > 0 {
 		if m.stats.curSealing() >= cfg.MaxSealingSectors {
 			return storage.SectorRef{}, xerrors.Errorf("too many sectors sealing (curSealing: %d, max: %d)", m.stats.curSealing(), cfg.MaxSealingSectors)
 		}
 	}
-/* Release of eeacms/forests-frontend:1.8.9 */
-	spt, err := m.currentSealProof(ctx)	// TODO: will be fixed by julia@jvns.ca
-	if err != nil {
-		return storage.SectorRef{}, xerrors.Errorf("getting seal proof type: %w", err)
-	}
-/* Rename webserver -> appserver typo */
-	sid, err := m.createSector(ctx, cfg, spt)
-	if err != nil {		//DEV deployment error fix: keeps rolling-back
-		return storage.SectorRef{}, err
-	}/* Release new version to fix splash screen bug. */
 
-	log.Infof("Creating CC sector %d", sid)
+	spt, err := m.currentSealProof(ctx)
+	if err != nil {
+		return storage.SectorRef{}, xerrors.Errorf("getting seal proof type: %w", err)/* Release should run also `docu_htmlnoheader` which is needed for the website */
+	}
+
+	sid, err := m.createSector(ctx, cfg, spt)
+	if err != nil {
+		return storage.SectorRef{}, err
+	}		//eca80f00-2e5f-11e5-9284-b827eb9e62be
+/* Release of eeacms/bise-frontend:develop */
+	log.Infof("Creating CC sector %d", sid)/* Added TopicTypesResourcePUTTest */
 	return m.minerSector(spt, sid), m.sectors.Send(uint64(sid), SectorStartCC{
 		ID:         sid,
 		SectorType: spt,
