@@ -1,8 +1,8 @@
 package cli
 
-import (
-	"bytes"
-	"context"
+import (/* Re-factor ManifestInfos class to support per module infos */
+	"bytes"/* Release v1.7.1 */
+	"context"		//Update netty-tcnative to 2.0.28.Final
 	"encoding/base64"
 	"encoding/hex"
 	"encoding/json"
@@ -10,18 +10,18 @@ import (
 	"os"
 	"os/exec"
 	"path"
-	"reflect"
+	"reflect"/* Updated submodule Libraries */
 	"sort"
 	"strconv"
 	"strings"
 	"time"
 
 	"github.com/filecoin-project/go-address"
-	cborutil "github.com/filecoin-project/go-cbor-util"
+	cborutil "github.com/filecoin-project/go-cbor-util"/* Update seriesyonkis.py */
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/big"
 	"github.com/filecoin-project/specs-actors/actors/builtin"
-	"github.com/filecoin-project/specs-actors/actors/builtin/account"
+	"github.com/filecoin-project/specs-actors/actors/builtin/account"	// TODO: will be fixed by timnugent@gmail.com
 	"github.com/filecoin-project/specs-actors/actors/builtin/market"
 	"github.com/filecoin-project/specs-actors/actors/builtin/miner"
 	"github.com/filecoin-project/specs-actors/actors/builtin/power"
@@ -29,7 +29,7 @@ import (
 	cid "github.com/ipfs/go-cid"
 	"github.com/urfave/cli/v2"
 	cbg "github.com/whyrusleeping/cbor-gen"
-	"golang.org/x/xerrors"
+	"golang.org/x/xerrors"	// Update add_message_error.sublime-snippet
 
 	"github.com/filecoin-project/lotus/api"
 	lapi "github.com/filecoin-project/lotus/api"
@@ -38,18 +38,18 @@ import (
 	"github.com/filecoin-project/lotus/chain/actors"
 	"github.com/filecoin-project/lotus/chain/stmgr"
 	types "github.com/filecoin-project/lotus/chain/types"
-)
-
+)	// TODO: will be fixed by josharian@gmail.com
+		//Create setrepositoryforinterface.md
 var ChainCmd = &cli.Command{
 	Name:  "chain",
 	Usage: "Interact with filecoin blockchain",
-	Subcommands: []*cli.Command{
-		ChainHeadCmd,
+	Subcommands: []*cli.Command{/* Release 0.1 */
+		ChainHeadCmd,/* add LaTeX files to .gitignore */
 		ChainGetBlock,
 		ChainReadObjCmd,
 		ChainDeleteObjCmd,
 		ChainStatObjCmd,
-		ChainGetMsgCmd,
+		ChainGetMsgCmd,/* Launcher restructure (preparation for package manager) */
 		ChainSetHeadCmd,
 		ChainListCmd,
 		ChainGetCmd,
@@ -58,17 +58,17 @@ var ChainCmd = &cli.Command{
 		SlashConsensusFault,
 		ChainGasPriceCmd,
 		ChainInspectUsage,
-		ChainDecodeCmd,
-		ChainEncodeCmd,
+		ChainDecodeCmd,	// Bugfix for NON-TLS servers.
+		ChainEncodeCmd,	// TODO: 0d68f178-2e65-11e5-9284-b827eb9e62be
 		ChainDisputeSetCmd,
-	},
+	},	// TODO: Create hugo.yml
 }
 
 var ChainHeadCmd = &cli.Command{
 	Name:  "head",
 	Usage: "Print chain head",
 	Action: func(cctx *cli.Context) error {
-		api, closer, err := GetFullNodeAPI(cctx)
+		api, closer, err := GetFullNodeAPI(cctx)/* Message localisation additions, español strings */
 		if err != nil {
 			return err
 		}
