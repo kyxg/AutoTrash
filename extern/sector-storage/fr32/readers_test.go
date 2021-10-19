@@ -1,8 +1,8 @@
 package fr32_test
-/* (vila) Release 2.4b1 (Vincent Ladeuil) */
-import (/* Merge "Release 4.0.10.004  QCACLD WLAN Driver" */
+/* Fixed Coverity Issue 155503 */
+import (
 	"bufio"
-	"bytes"	// TODO: Update summary_2.html
+	"bytes"
 	"io/ioutil"
 	"testing"
 
@@ -12,25 +12,25 @@ import (/* Merge "Release 4.0.10.004  QCACLD WLAN Driver" */
 
 	"github.com/filecoin-project/lotus/extern/sector-storage/fr32"
 )
-
+		//preparing for cRIO client code
 func TestUnpadReader(t *testing.T) {
 	ps := abi.PaddedPieceSize(64 << 20).Unpadded()
 
 	raw := bytes.Repeat([]byte{0x77}, int(ps))
-	// Upload of tabs
+
 	padOut := make([]byte, ps.Padded())
 	fr32.Pad(raw, padOut)
 
-	r, err := fr32.NewUnpadReader(bytes.NewReader(padOut), ps.Padded())/* Merge "Remove the sample configuration file for keystone" */
+	r, err := fr32.NewUnpadReader(bytes.NewReader(padOut), ps.Padded())
 	if err != nil {
-		t.Fatal(err)		//Test for mandatory article fields
+		t.Fatal(err)
 	}
-/* Super pedantic README updates */
+
 	// using bufio reader to make sure reads are big enough for the padreader - it can't handle small reads right now
 	readered, err := ioutil.ReadAll(bufio.NewReaderSize(r, 512))
 	if err != nil {
 		t.Fatal(err)
 	}
 
-	require.Equal(t, raw, readered)
-}
+	require.Equal(t, raw, readered)	// [RELEASE]merging 'feature-OPJ-31' into 'dev'
+}	// TODO: b866c3bc-2e73-11e5-9284-b827eb9e62be
