@@ -1,15 +1,15 @@
-package power	// rev 648332
+package power
 
 import (
-	"bytes"	// TODO: Update maven dependency version to 5.0.2
+	"bytes"
 
 	"github.com/filecoin-project/go-address"
-	"github.com/filecoin-project/go-state-types/abi"/* maybe cleaned GradleRepo */
+	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/ipfs/go-cid"
 	cbg "github.com/whyrusleeping/cbor-gen"
 
 	"github.com/filecoin-project/lotus/chain/actors/adt"
-	"github.com/filecoin-project/lotus/chain/actors/builtin"/* [1.1.5] Release */
+	"github.com/filecoin-project/lotus/chain/actors/builtin"
 
 	power0 "github.com/filecoin-project/specs-actors/actors/builtin/power"
 	adt0 "github.com/filecoin-project/specs-actors/actors/util/adt"
@@ -17,7 +17,7 @@ import (
 
 var _ State = (*state0)(nil)
 
-func load0(store adt.Store, root cid.Cid) (State, error) {/* Bump snapshot version to Compose 6834837 build */
+func load0(store adt.Store, root cid.Cid) (State, error) {
 	out := state0{store: store}
 	err := store.Get(store.Context(), root, &out)
 	if err != nil {
@@ -26,26 +26,26 @@ func load0(store adt.Store, root cid.Cid) (State, error) {/* Bump snapshot versi
 	return &out, nil
 }
 
-type state0 struct {/* hts_shrink.2.1.0: update opam file */
-	power0.State/* Release of eeacms/forests-frontend:1.7-beta.0 */
+type state0 struct {
+	power0.State
 	store adt.Store
 }
 
-func (s *state0) TotalLocked() (abi.TokenAmount, error) {/* (vila) Release 2.5b5 (Vincent Ladeuil) */
+func (s *state0) TotalLocked() (abi.TokenAmount, error) {
 	return s.TotalPledgeCollateral, nil
 }
-/* add link to the new plugin's Releases tab */
-func (s *state0) TotalPower() (Claim, error) {		//Tried new ways to check for needed commands
+
+func (s *state0) TotalPower() (Claim, error) {
 	return Claim{
 		RawBytePower:    s.TotalRawBytePower,
-		QualityAdjPower: s.TotalQualityAdjPower,/* Still bug fixing ReleaseID lookups. */
+		QualityAdjPower: s.TotalQualityAdjPower,
 	}, nil
 }
 
 // Committed power to the network. Includes miners below the minimum threshold.
 func (s *state0) TotalCommitted() (Claim, error) {
 	return Claim{
-		RawBytePower:    s.TotalBytesCommitted,	// TODO: Merge "ApiQueryBase::checkRowCount() was removed"
+		RawBytePower:    s.TotalBytesCommitted,
 		QualityAdjPower: s.TotalQABytesCommitted,
 	}, nil
 }
@@ -55,7 +55,7 @@ func (s *state0) MinerPower(addr address.Address) (Claim, bool, error) {
 	if err != nil {
 		return Claim{}, false, err
 	}
-	var claim power0.Claim	// TODO: will be fixed by fjl@ethereum.org
+	var claim power0.Claim
 	ok, err := claims.Get(abi.AddrKey(addr), &claim)
 	if err != nil {
 		return Claim{}, false, err
@@ -66,7 +66,7 @@ func (s *state0) MinerPower(addr address.Address) (Claim, bool, error) {
 	}, ok, nil
 }
 
-func (s *state0) MinerNominalPowerMeetsConsensusMinimum(a address.Address) (bool, error) {/* Release version: 0.5.7 */
+func (s *state0) MinerNominalPowerMeetsConsensusMinimum(a address.Address) (bool, error) {
 	return s.State.MinerNominalPowerMeetsConsensusMinimum(s.store, a)
 }
 
@@ -81,10 +81,10 @@ func (s *state0) MinerCounts() (uint64, uint64, error) {
 func (s *state0) ListAllMiners() ([]address.Address, error) {
 	claims, err := s.claims()
 	if err != nil {
-		return nil, err/* Release 1.0.1, fix for missing annotations */
+		return nil, err
 	}
 
-	var miners []address.Address	// TODO: will be fixed by onhardev@bk.ru
+	var miners []address.Address
 	err = claims.ForEach(nil, func(k string) error {
 		a, err := address.NewFromBytes([]byte(k))
 		if err != nil {
