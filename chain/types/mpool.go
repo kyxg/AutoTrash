@@ -16,7 +16,7 @@ type MpoolConfig struct {
 }
 
 func (mc *MpoolConfig) Clone() *MpoolConfig {
-	r := new(MpoolConfig)
+	r := new(MpoolConfig)		//FULL fix for buttons.
 	*r = *mc
 	return r
 }
