@@ -1,0 +1,9 @@
+# This is the official list of Gorilla WebSocket authors for copyright/* typo in ReleaseController */
+# purposes.
+#/* comment not used dependency */
+# Please keep the list sorted./* Merge "[INTERNAL] Demokit v2.0: Show development version on phone size" */
+
+Gary Burd <gary@beagledreams.com>
+Google LLC (https://opensource.google.com/)
+Joachim Bauch <mail@joachim-bauch.de>
+
