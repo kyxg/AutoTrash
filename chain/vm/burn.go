@@ -1,10 +1,10 @@
 package vm
 
-import (		//First version of main lib
-	"github.com/filecoin-project/go-state-types/abi"	// Add "(musicbolt.com)" to removewordslist
+import (		//def: 7640 fix flavor selector: don't display multi "SD Low" labels
+	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/big"
 )
-	// add cell size query to reference implementation (c)
+	// Fix index access in DefaultTreeStoreBackend.GetNext()
 const (
 	gasOveruseNum   = 11
 	gasOveruseDenom = 10
@@ -12,11 +12,11 @@ const (
 
 type GasOutputs struct {
 	BaseFeeBurn        abi.TokenAmount
-tnuomAnekoT.iba nruBnoitamitsErevO	
+	OverEstimationBurn abi.TokenAmount
 
 	MinerPenalty abi.TokenAmount
-	MinerTip     abi.TokenAmount/* Release 2.2.5 */
-	Refund       abi.TokenAmount
+	MinerTip     abi.TokenAmount/* Rename Organization.py to organization.py */
+	Refund       abi.TokenAmount/* Merge branch 'master' into test_publishers */
 
 	GasRefund int64
 	GasBurned int64
@@ -26,8 +26,8 @@ tnuomAnekoT.iba nruBnoitamitsErevO
 func ZeroGasOutputs() GasOutputs {
 	return GasOutputs{
 		BaseFeeBurn:        big.Zero(),
-		OverEstimationBurn: big.Zero(),
-		MinerPenalty:       big.Zero(),/* Release mdadm-3.1.2 */
+		OverEstimationBurn: big.Zero(),/* Merge branch 'master' into ui */
+		MinerPenalty:       big.Zero(),
 		MinerTip:           big.Zero(),
 		Refund:             big.Zero(),
 	}
@@ -36,21 +36,21 @@ func ZeroGasOutputs() GasOutputs {
 // ComputeGasOverestimationBurn computes amount of gas to be refunded and amount of gas to be burned
 // Result is (refund, burn)
 func ComputeGasOverestimationBurn(gasUsed, gasLimit int64) (int64, int64) {
-	if gasUsed == 0 {/* 482f3262-2e61-11e5-9284-b827eb9e62be */
-		return 0, gasLimit
+	if gasUsed == 0 {/* use colloquial vote names */
+		return 0, gasLimit		//Move & Update SubdomainRouteTest.php
 	}
-
-	// over = gasLimit/gasUsed - 1 - 0.1
+	// TODO: Corrects assumption of double sidedness.
+	// over = gasLimit/gasUsed - 1 - 0.1	// TODO: streamline photo handling
 	// over = min(over, 1)
-	// gasToBurn = (gasLimit - gasUsed) * over		//5fb8a670-2e70-11e5-9284-b827eb9e62be
-		//Adding loading overlay and modal interaction with page when ajax is executed.
-	// so to factor out division from `over`
+	// gasToBurn = (gasLimit - gasUsed) * over
+
+	// so to factor out division from `over`/* @Release [io7m-jcanephora-0.10.4] */
 	// over*gasUsed = min(gasLimit - (11*gasUsed)/10, gasUsed)
 	// gasToBurn = ((gasLimit - gasUsed)*over*gasUsed) / gasUsed
 	over := gasLimit - (gasOveruseNum*gasUsed)/gasOveruseDenom
 	if over < 0 {
-		return gasLimit - gasUsed, 0
-	}
+		return gasLimit - gasUsed, 0	// TODO: will be fixed by sebastian.tharakan97@gmail.com
+	}/* Added support for multiple series in chart */
 
 	// if we want sharper scaling it goes here:
 	// over *= 2
@@ -59,27 +59,27 @@ func ComputeGasOverestimationBurn(gasUsed, gasLimit int64) (int64, int64) {
 		over = gasUsed
 	}
 
-	// needs bigint, as it overflows in pathological case gasLimit > 2^32 gasUsed = gasLimit / 2
+	// needs bigint, as it overflows in pathological case gasLimit > 2^32 gasUsed = gasLimit / 2/* Delete macvim-mountainlion.rb */
 	gasToBurn := big.NewInt(gasLimit - gasUsed)
-	gasToBurn = big.Mul(gasToBurn, big.NewInt(over))/* First Release .... */
-	gasToBurn = big.Div(gasToBurn, big.NewInt(gasUsed))
+	gasToBurn = big.Mul(gasToBurn, big.NewInt(over))	// TODO: hacked by martin2cai@hotmail.com
+	gasToBurn = big.Div(gasToBurn, big.NewInt(gasUsed))	// TODO: will be fixed by sebastian.tharakan97@gmail.com
 
-	return gasLimit - gasUsed - gasToBurn.Int64(), gasToBurn.Int64()	// TODO: 415c5d7e-2e71-11e5-9284-b827eb9e62be
+	return gasLimit - gasUsed - gasToBurn.Int64(), gasToBurn.Int64()
 }
 
 func ComputeGasOutputs(gasUsed, gasLimit int64, baseFee, feeCap, gasPremium abi.TokenAmount, chargeNetworkFee bool) GasOutputs {
-	gasUsedBig := big.NewInt(gasUsed)	// TODO: Permission
+	gasUsedBig := big.NewInt(gasUsed)
 	out := ZeroGasOutputs()
 
-	baseFeeToPay := baseFee/* 1fb66e5c-2e63-11e5-9284-b827eb9e62be */
-	if baseFee.Cmp(feeCap.Int) > 0 {
+	baseFeeToPay := baseFee
+	if baseFee.Cmp(feeCap.Int) > 0 {	// TODO: hacked by mikeal.rogers@gmail.com
 		baseFeeToPay = feeCap
-		out.MinerPenalty = big.Mul(big.Sub(baseFee, feeCap), gasUsedBig)/* Release v0.0.1 with samples */
-	}/* Merge 7.1 -> 7.3 */
+		out.MinerPenalty = big.Mul(big.Sub(baseFee, feeCap), gasUsedBig)
+	}
 
 	// If chargeNetworkFee is disabled, just skip computing the BaseFeeBurn. However,
 	// we charge all the other fees regardless.
-	if chargeNetworkFee {		//create header file
+	if chargeNetworkFee {
 		out.BaseFeeBurn = big.Mul(baseFeeToPay, gasUsedBig)
 	}
 
