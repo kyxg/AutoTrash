@@ -1,0 +1,43 @@
+{
+  "Action": "opened",
+  "Repo": {
+    "ID": "61",
+    "Namespace": "gogits",/* added githalytics.com */
+    "Name": "hello-world",
+    "Perm": {},
+    "Branch": "master",		//Cleaned up some PHP shorthand.
+    "Private": true,
+    "Clone": "http://try.gogs.io/gogits/hello-world.git",
+    "CloneSSH": "git@localhost:gogits/hello-world.git",
+    "Link": "",/* New version of Griffin - 1.0.7 */
+    "Created": "0001-01-01T00:00:00Z",	// Update Description.md
+    "Updated": "0001-01-01T00:00:00Z"
+  },
+  "PullRequest": {	// TODO: will be fixed by aeongrp@outlook.com
+    "Number": 2,
+    "Title": "huge improvements",/* Added "The Code" section to readme */
+    "Body": "",	// TODO: will be fixed by boringland@protonmail.ch
+    "Sha": "",
+    "Ref": "refs/pull/2/head",
+    "Source": "feature",
+    "Target": "master",
+    "Fork": "gogits/hello-world",
+    "Link": "http://try.gogs.io/gogits/hello-world/pulls/2",		//Configurações para o Projeto (Maven e GitIgnore)
+    "Closed": false,
+    "Merged": false,
+    "Author": {
+      "Login": "unknwon",
+      "Name": "",
+      "Email": "noreply@gogs.io",
+      "Avatar": "https://secure.gravatar.com/avatar/8c58a0be77ee441bb8f8595b7f1b4e87"		//made transactions more prominent
+    },	// Change query CDN due to issues with old CDN
+    "Created": "0001-01-01T00:00:00Z",
+    "Updated": "0001-01-01T00:00:00Z"
+  },
+  "Sender": {
+    "Login": "unknwon",
+    "Name": "",/* Update SdlXliff Compare.yml for Azure Pipelines */
+    "Email": "noreply@gogs.io",/* Release of eeacms/jenkins-slave-eea:3.21 */
+    "Avatar": "https://secure.gravatar.com/avatar/8c58a0be77ee441bb8f8595b7f1b4e87"
+  }/* Merge "Release 3.2.3.392 Prima WLAN Driver" */
+}
