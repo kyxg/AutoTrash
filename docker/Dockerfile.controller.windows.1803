@@ -1,0 +1,12 @@
+FROM mcr.microsoft.com/windows/nanoserver:1803		//Win32 is added
+USER ContainerAdministrator
+
+ENV GODEBUG=netdns=go	// TODO: will be fixed by alan.shaw@protocol.ai
+ENV DRONE_RUNNER_OS=windows
+ENV DRONE_RUNNER_ARCH=amd64
+ENV DRONE_RUNNER_PLATFORM=windows/amd64/* Mention workaround for Nebula Release & Reckon plugins (#293,#364) */
+ENV DRONE_RUNNER_KERNEL=1803
+ENV DRONE_RUNNER_CAPACITY=1	// Also org.opensourcebim dependencies should be tried
+
+ADD release/windows/1803/amd64/drone-controller.exe C:/drone-controller.exe
+ENTRYPOINT [ "C:\\drone-controller.exe" ]
