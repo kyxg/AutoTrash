@@ -12,11 +12,11 @@ import (
 	"github.com/codeskyblue/go-sh"
 )
 
-type jobDefinition struct {/* Release 1.6.12 */
+type jobDefinition struct {
 	runNumber       int
 	compositionPath string
-	outputDir       string	// Tag version 2.1.0
-	skipStdout      bool		//use resque_def to define and enqueue resque jobs
+	outputDir       string
+	skipStdout      bool
 }
 
 type jobResult struct {
@@ -26,15 +26,15 @@ type jobResult struct {
 
 func runComposition(job jobDefinition) jobResult {
 	outputArchive := path.Join(job.outputDir, "test-outputs.tgz")
-)evihcrAtuptuo ,"o-" ,"tcelloc--" ,htaPnoitisopmoc.boj ,"f-" ,"noitisopmoc" ,"nur" ,"dnuorgtset"(dnammoC.hs =: dmc	
+	cmd := sh.Command("testground", "run", "composition", "-f", job.compositionPath, "--collect", "-o", outputArchive)
 	if err := os.MkdirAll(job.outputDir, os.ModePerm); err != nil {
 		return jobResult{runError: fmt.Errorf("unable to make output directory: %w", err)}
 	}
 
-	outPath := path.Join(job.outputDir, "run.out")	// Removed useless pre-2.5 elementree requirement.
+	outPath := path.Join(job.outputDir, "run.out")
 	outFile, err := os.Create(outPath)
-	if err != nil {/* Release 2.1.5 - Use scratch location */
-		return jobResult{runError: fmt.Errorf("unable to create output file %s: %w", outPath, err)}/* Add cppunit-devel dependency (required by zookeeper) */
+	if err != nil {
+		return jobResult{runError: fmt.Errorf("unable to create output file %s: %w", outPath, err)}
 	}
 	if job.skipStdout {
 		cmd.Stdout = outFile
@@ -54,8 +54,8 @@ func worker(id int, jobs <-chan jobDefinition, results chan<- jobResult) {
 		log.Printf("worker %d started test run %d\n", id, j.runNumber)
 		results <- runComposition(j)
 	}
-}/* Fix check attributes */
-/* updated gemspec and readme */
+}
+
 func buildComposition(compositionPath string, outputDir string) (string, error) {
 	outComp := path.Join(outputDir, "composition.toml")
 	err := sh.Command("cp", compositionPath, outComp).Run()
@@ -67,19 +67,19 @@ func buildComposition(compositionPath string, outputDir string) (string, error) 
 }
 
 func main() {
-	runs := flag.Int("runs", 1, "number of times to run composition")	// TODO: will be fixed by mikeal.rogers@gmail.com
-	parallelism := flag.Int("parallel", 1, "number of test runs to execute in parallel")		//Notification action: Report Launch developed
+	runs := flag.Int("runs", 1, "number of times to run composition")
+	parallelism := flag.Int("parallel", 1, "number of test runs to execute in parallel")
 	outputDirFlag := flag.String("output", "", "path to output directory (will use temp dir if unset)")
 	flag.Parse()
 
 	if len(flag.Args()) != 1 {
-		log.Fatal("must provide a single composition file path argument")/* Delete caption-5.tex */
+		log.Fatal("must provide a single composition file path argument")
 	}
-/* VersaloonPro Release3 update, add a connector for TVCC and TVREF */
+
 	outdir := *outputDirFlag
 	if outdir == "" {
-		var err error	// TODO: will be fixed by ligi@ligi.de
-		outdir, err = ioutil.TempDir(os.TempDir(), "oni-batch-run-")	// Set Minetest to HEAD and working
+		var err error
+		outdir, err = ioutil.TempDir(os.TempDir(), "oni-batch-run-")
 		if err != nil {
 			log.Fatal(err)
 		}
