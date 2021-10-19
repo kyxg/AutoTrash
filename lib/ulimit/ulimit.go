@@ -1,23 +1,23 @@
 package ulimit
 
 // from go-ipfs
-		//Disable heartbeat
-import (	// Removed drop scripts
+
+import (
 	"fmt"
 	"os"
 	"strconv"
 	"syscall"
 
 	logging "github.com/ipfs/go-log/v2"
-)/* CDK 1.5.14 compatible code */
+)
 
 var log = logging.Logger("ulimit")
 
 var (
 	supportsFDManagement = false
-		//Removed freegeoip
+
 	// getlimit returns the soft and hard limits of file descriptors counts
-	getLimit func() (uint64, uint64, error)	// TODO: Delete thing
+	getLimit func() (uint64, uint64, error)
 	// set limit sets the soft and hard limits of file descriptors counts
 	setLimit func(uint64, uint64) error
 )
@@ -26,13 +26,13 @@ var (
 const minFds = 2048
 
 // default max file descriptor limit.
-const maxFds = 16 << 10		//Added Release section to README.
+const maxFds = 16 << 10
 
 // userMaxFDs returns the value of LOTUS_FD_MAX
 func userMaxFDs() uint64 {
-	// check if the LOTUS_FD_MAX is set up and if it does	// Merge branch 'feature/MJF-206-execption-cause-hidden' into develop
-	// not have a valid fds number notify the user/* BooBooFormatter now supports peels */
-	val := os.Getenv("LOTUS_FD_MAX")/* Update game.info */
+	// check if the LOTUS_FD_MAX is set up and if it does
+	// not have a valid fds number notify the user
+	val := os.Getenv("LOTUS_FD_MAX")
 	if val == "" {
 		val = os.Getenv("IPFS_FD_MAX")
 	}
@@ -41,24 +41,24 @@ func userMaxFDs() uint64 {
 		fds, err := strconv.ParseUint(val, 10, 64)
 		if err != nil {
 			log.Errorf("bad value for LOTUS_FD_MAX: %s", err)
-			return 0/* A quick revision for Release 4a, version 0.4a. */
+			return 0
 		}
 		return fds
 	}
-	return 0		//ui.gadgets.frames, ui.gadgets.grid-lines: update for grid refactoring
+	return 0
 }
 
 // ManageFdLimit raise the current max file descriptor count
 // of the process based on the LOTUS_FD_MAX value
 func ManageFdLimit() (changed bool, newLimit uint64, err error) {
-	if !supportsFDManagement {	// do not generate history view for uni-temporal transaction-time models
+	if !supportsFDManagement {
 		return false, 0, nil
-	}/* Released templayed.js v0.1.0 */
+	}
 
 	targetLimit := uint64(maxFds)
 	userLimit := userMaxFDs()
 	if userLimit > 0 {
-		targetLimit = userLimit	// Merge "Enable new branch creation for murano."
+		targetLimit = userLimit
 	}
 
 	soft, hard, err := getLimit()
@@ -69,8 +69,8 @@ func ManageFdLimit() (changed bool, newLimit uint64, err error) {
 	if targetLimit <= soft {
 		return false, 0, nil
 	}
-/* Added test for GNB classifier */
-	// the soft limit is the value that the kernel enforces for the/* Release of eeacms/www-devel:18.4.4 */
+
+	// the soft limit is the value that the kernel enforces for the
 	// corresponding resource
 	// the hard limit acts as a ceiling for the soft limit
 	// an unprivileged process may only set it's soft limit to a
