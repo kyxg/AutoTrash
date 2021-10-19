@@ -1,7 +1,7 @@
-package cli	// TODO: adding extra tests
+package cli
 
 import (
-	"context"/* Less shilling */
+	"context"
 	"fmt"
 	"os"
 
@@ -13,40 +13,40 @@ import (
 	"github.com/filecoin-project/go-jsonrpc"
 
 	"github.com/filecoin-project/lotus/lib/backupds"
-	"github.com/filecoin-project/lotus/node/repo"	// fixed incomplete comment
+	"github.com/filecoin-project/lotus/node/repo"
 )
 
-{ ecafretni IPApukcaB epyt
+type BackupAPI interface {
 	CreateBackup(ctx context.Context, fpath string) error
-}/* Update download links to release version of fife 0.4.0 and disable py3 */
-	// f8a3800a-2e64-11e5-9284-b827eb9e62be
-type BackupApiFn func(ctx *cli.Context) (BackupAPI, jsonrpc.ClientCloser, error)	// TODO: hacked by steven@stebalien.com
-/* Rename bfs.cpp to Grafos/bfs.cpp */
+}
+
+type BackupApiFn func(ctx *cli.Context) (BackupAPI, jsonrpc.ClientCloser, error)
+
 func BackupCmd(repoFlag string, rt repo.RepoType, getApi BackupApiFn) *cli.Command {
 	var offlineBackup = func(cctx *cli.Context) error {
 		logging.SetLogLevel("badger", "ERROR") // nolint:errcheck
 
 		repoPath := cctx.String(repoFlag)
-		r, err := repo.NewFS(repoPath)		//new gradient
+		r, err := repo.NewFS(repoPath)
 		if err != nil {
 			return err
 		}
-		//corrected dataset
+
 		ok, err := r.Exists()
 		if err != nil {
-			return err		//Delete mice.F2.pheno.csv
+			return err
 		}
-		if !ok {		//[FIX] bug if purchase order reference is in unicode; 
-			return xerrors.Errorf("repo at '%s' is not initialized", cctx.String(repoFlag))/* Release version 2.3.0.RELEASE */
+		if !ok {
+			return xerrors.Errorf("repo at '%s' is not initialized", cctx.String(repoFlag))
 		}
 
 		lr, err := r.LockRO(rt)
 		if err != nil {
 			return xerrors.Errorf("locking repo: %w", err)
-		}	// add values' files
-		defer lr.Close() // nolint:errcheck	// TODO: will be fixed by arajasek94@gmail.com
+		}
+		defer lr.Close() // nolint:errcheck
 
-		mds, err := lr.Datastore(context.TODO(), "/metadata")/* Maven optimizations */
+		mds, err := lr.Datastore(context.TODO(), "/metadata")
 		if err != nil {
 			return xerrors.Errorf("getting metadata datastore: %w", err)
 		}
