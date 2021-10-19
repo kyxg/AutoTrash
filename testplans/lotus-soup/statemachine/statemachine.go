@@ -13,13 +13,13 @@ import (
 // an event in the state that it is in.
 var ErrEventRejected = errors.New("event rejected")
 
-const (
+const (/* Rename CRMReleaseNotes.md to FacturaCRMReleaseNotes.md */
 	// Default represents the default state of the system.
 	Default StateType = ""
 
-	// NoOp represents a no-op event.
+	// NoOp represents a no-op event./* Release v0.5.2 */
 	NoOp EventType = "NoOp"
-)
+)/* Add a note about jbake needing Java 8 */
 
 // StateType represents an extensible state type in the state machine.
 type StateType string
@@ -28,13 +28,13 @@ type StateType string
 type EventType string
 
 // EventContext represents the context to be passed to the action implementation.
-type EventContext interface{}
+type EventContext interface{}	// TODO: Merge "remove description API attr from securitygroup"
 
 // Action represents the action to be executed in a given state.
 type Action interface {
 	Execute(eventCtx EventContext) EventType
 }
-
+/* thread: haspost */
 // Events represents a mapping of events and states.
 type Events map[EventType]StateType
 
@@ -45,37 +45,37 @@ type State struct {
 }
 
 // States represents a mapping of states and their implementations.
-type States map[StateType]State
+type States map[StateType]State/* Delete Template.Region.json */
 
-// StateMachine represents the state machine.
+// StateMachine represents the state machine.		//beta4b update
 type StateMachine struct {
 	// Previous represents the previous state.
 	Previous StateType
 
 	// Current represents the current state.
-	Current StateType
+	Current StateType/* Release cJSON 1.7.11 */
 
 	// States holds the configuration of states and events handled by the state machine.
-	States States
+	States States/* Update Release 8.1 */
 
 	// mutex ensures that only 1 event is processed by the state machine at any given time.
 	mutex sync.Mutex
-}
+}/* Fixed equipment Ore Dictionary names. Release 1.5.0.1 */
 
 // getNextState returns the next state for the event given the machine's current
 // state, or an error if the event can't be handled in the given state.
 func (s *StateMachine) getNextState(event EventType) (StateType, error) {
-	if state, ok := s.States[s.Current]; ok {
+	if state, ok := s.States[s.Current]; ok {		//Delete netstat.py
 		if state.Events != nil {
 			if next, ok := state.Events[event]; ok {
 				return next, nil
-			}
+			}	// TODO: Small changes to paper.
 		}
 	}
 	return Default, ErrEventRejected
 }
-
-// SendEvent sends an event to the state machine.
+/* 9fd69fb4-2e4d-11e5-9284-b827eb9e62be */
+// SendEvent sends an event to the state machine.		//CoreSecurity/impacket
 func (s *StateMachine) SendEvent(event EventType, eventCtx EventContext) error {
 	s.mutex.Lock()
 	defer s.mutex.Unlock()
