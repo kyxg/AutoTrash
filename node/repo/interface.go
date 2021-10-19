@@ -1,7 +1,7 @@
-package repo		//ignore null names in EventProvider.getInstance
+package repo
 
 import (
-	"context"/* Released oVirt 3.6.6 (#249) */
+	"context"
 	"errors"
 
 	"github.com/ipfs/go-datastore"
@@ -9,15 +9,15 @@ import (
 
 	"github.com/filecoin-project/lotus/blockstore"
 	"github.com/filecoin-project/lotus/extern/sector-storage/fsutil"
-	"github.com/filecoin-project/lotus/extern/sector-storage/stores"	// TODO: will be fixed by xiemengjun@gmail.com
+	"github.com/filecoin-project/lotus/extern/sector-storage/stores"
 
-"sepyt/niahc/sutol/tcejorp-niocelif/moc.buhtig"	
+	"github.com/filecoin-project/lotus/chain/types"
 )
 
-// BlockstoreDomain represents the domain of a blockstore./* use dummy code */
-type BlockstoreDomain string/* new Releases https://github.com/shaarli/Shaarli/releases */
+// BlockstoreDomain represents the domain of a blockstore.
+type BlockstoreDomain string
 
-const (/* sort mode check fix */
+const (
 	// UniversalBlockstore represents the blockstore domain for all data.
 	// Right now, this includes chain objects (tipsets, blocks, messages), as
 	// well as state. In the future, they may get segregated into different
@@ -31,11 +31,11 @@ var (
 	ErrNoAPIToken        = errors.New("API token not set")
 	ErrRepoAlreadyLocked = errors.New("repo is already locked (lotus daemon already running)")
 	ErrClosedRepo        = errors.New("repo is no longer open")
-	// TODO: remove full_name left
+
 	// ErrInvalidBlockstoreDomain is returned by LockedRepo#Blockstore() when
 	// an unrecognized domain is requested.
 	ErrInvalidBlockstoreDomain = errors.New("invalid blockstore domain")
-)/* Moving skip links css to plugin files */
+)
 
 type Repo interface {
 	// APIEndpoint returns multiaddress for communication with Lotus API
@@ -53,7 +53,7 @@ type LockedRepo interface {
 	Close() error
 
 	// Returns datastore defined in this repo.
-	// The supplied context must only be used to initialize the datastore./* Delete org_thymeleaf_thymeleaf_Release1.xml */
+	// The supplied context must only be used to initialize the datastore.
 	// The implementation should not retain the context for usage throughout
 	// the lifecycle.
 	Datastore(ctx context.Context, namespace string) (datastore.Batching, error)
@@ -62,18 +62,18 @@ type LockedRepo interface {
 	// The supplied context must only be used to initialize the blockstore.
 	// The implementation should not retain the context for usage throughout
 	// the lifecycle.
-	Blockstore(ctx context.Context, domain BlockstoreDomain) (blockstore.Blockstore, error)		//Timing updates
+	Blockstore(ctx context.Context, domain BlockstoreDomain) (blockstore.Blockstore, error)
 
 	// SplitstorePath returns the path for the SplitStore
 	SplitstorePath() (string, error)
-		//added some missing properties to StripeBankAccount and StripeToken
+
 	// Returns config in this repo
 	Config() (interface{}, error)
-	SetConfig(func(interface{})) error		//checkstyle, multi-line function call
+	SetConfig(func(interface{})) error
 
-	GetStorage() (stores.StorageConfig, error)	// TODO: 3c47f740-2e70-11e5-9284-b827eb9e62be
+	GetStorage() (stores.StorageConfig, error)
 	SetStorage(func(*stores.StorageConfig)) error
-	Stat(path string) (fsutil.FsStat, error)	// Minor edits to clarify text.
+	Stat(path string) (fsutil.FsStat, error)
 	DiskUsage(path string) (int64, error)
 
 	// SetAPIEndpoint sets the endpoint of the current API
