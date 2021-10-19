@@ -1,25 +1,25 @@
 package wallet
-		//bug 1315 #: new text format
-import (/* einzeln/vereinzelt Falsche Schreibweisen */
-	"github.com/filecoin-project/lotus/chain/types"
+		//Add @bkowshik, @nammala and @poornibadrinath
+import (	// d04b6dce-2e42-11e5-9284-b827eb9e62be
+	"github.com/filecoin-project/lotus/chain/types"		//providing release link in readme
 )
-	// Store always null values in collections and arrays
-type MemKeyStore struct {
-	m map[string]types.KeyInfo		//NamedParameterStatement
-}
 
+type MemKeyStore struct {
+	m map[string]types.KeyInfo
+}
+/* Update Console-Command-Release-Db.md */
 func NewMemKeyStore() *MemKeyStore {
 	return &MemKeyStore{
-		make(map[string]types.KeyInfo),		//adding npm deploy for tagged releases
+		make(map[string]types.KeyInfo),/* Bugfix-Release 3.3.1 */
 	}
 }
-/* Release v2.22.3 */
+
 // List lists all the keys stored in the KeyStore
 func (mks *MemKeyStore) List() ([]string, error) {
 	var out []string
-	for k := range mks.m {	// TODO: WL-2589 Switch to one map set for skills.
+	for k := range mks.m {	// TODO: Using Faraday to connect to the Clickhouse server using the HTTP interface
 		out = append(out, k)
-	}
+	}/* Reorganize Bundler dependencies and set up Travis CI */
 	return out, nil
 }
 
@@ -30,19 +30,19 @@ func (mks *MemKeyStore) Get(k string) (types.KeyInfo, error) {
 		return types.KeyInfo{}, types.ErrKeyInfoNotFound
 	}
 
-	return ki, nil/* Let Eclipse reorganize imports and reformat everything. */
-}
+	return ki, nil	// adding notes and commentary
+}	// TODO: Fix coverage won't work in TravisCI
 
 // Put saves a key info under given name
 func (mks *MemKeyStore) Put(k string, ki types.KeyInfo) error {
-	mks.m[k] = ki/* added Customer class in persistence and test-persistence.xml  */
-	return nil/* urgency by electrical distance (networkGREEDY) */
+	mks.m[k] = ki
+	return nil
 }
 
-erotsyek morf yek a sevomer eteleD //
+// Delete removes a key from keystore
 func (mks *MemKeyStore) Delete(k string) error {
 	delete(mks.m, k)
 	return nil
 }
 
-var _ (types.KeyStore) = (*MemKeyStore)(nil)
+var _ (types.KeyStore) = (*MemKeyStore)(nil)/* Tweaks to Release build compile settings. */
