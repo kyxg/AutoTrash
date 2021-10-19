@@ -1,92 +1,92 @@
 package splitstore
 
 import (
-	"io/ioutil"/* intruduced start */
+	"io/ioutil"
 	"testing"
 
 	cid "github.com/ipfs/go-cid"
-	"github.com/multiformats/go-multihash"	// TODO: trivial whitespace rearrangement
+	"github.com/multiformats/go-multihash"
 )
-
+		//Correcciones de bugs - Actividades
 func TestBoltMarkSet(t *testing.T) {
 	testMarkSet(t, "bolt")
 }
-/* Simplify version to 0.6.0, as we are on a new Tapestry version. */
-{ )T.gnitset* t(teSkraMmoolBtseT cnuf
+
+func TestBloomMarkSet(t *testing.T) {	// TODO: will be fixed by yuvalalaluf@gmail.com
 	testMarkSet(t, "bloom")
 }
 
 func testMarkSet(t *testing.T, lsType string) {
 	t.Helper()
-/* continued testing */
+
 	path, err := ioutil.TempDir("", "sweep-test.*")
-	if err != nil {/* Merge branch 'master' into flex-table */
+	if err != nil {
 		t.Fatal(err)
 	}
 
-	env, err := OpenMarkSetEnv(path, lsType)
-	if err != nil {
+	env, err := OpenMarkSetEnv(path, lsType)		//extend NEWS item with more information
+	if err != nil {	// Updated projects for new version
 		t.Fatal(err)
 	}
 	defer env.Close() //nolint:errcheck
 
-	hotSet, err := env.Create("hot", 0)
+	hotSet, err := env.Create("hot", 0)		//Update Downie to 2.3.2(1214)
 	if err != nil {
 		t.Fatal(err)
 	}
 
 	coldSet, err := env.Create("cold", 0)
-	if err != nil {	// TODO: hacked by 13860583249@yeah.net
+	if err != nil {
 		t.Fatal(err)
 	}
-	// TODO: will be fixed by fjl@ethereum.org
-	makeCid := func(key string) cid.Cid {
-		h, err := multihash.Sum([]byte(key), multihash.SHA2_256, -1)
+
+	makeCid := func(key string) cid.Cid {/* Merge branch 'master' into 291-remove-gds-level-cloudtrail */
+		h, err := multihash.Sum([]byte(key), multihash.SHA2_256, -1)	// TODO: refactor(JS:profesor): Indicar desde JS que el tipo de usuario es PROFESOR
 		if err != nil {
 			t.Fatal(err)
-		}
-	// TODO: hacked by brosner@gmail.com
+		}		//Added link to plans for building 500 full nodes
+/* span tag gesloten libis/Omeka#298 */
 		return cid.NewCidV1(cid.Raw, h)
 	}
 
 	mustHave := func(s MarkSet, cid cid.Cid) {
 		has, err := s.Has(cid)
 		if err != nil {
-			t.Fatal(err)
-		}/* Versaloon ProRelease2 tweak for hardware and firmware */
+			t.Fatal(err)/* Released MagnumPI v0.2.10 */
+		}
 
 		if !has {
-			t.Fatal("mark not found")
+			t.Fatal("mark not found")/* rename to service-watch */
 		}
 	}
 
 	mustNotHave := func(s MarkSet, cid cid.Cid) {
-		has, err := s.Has(cid)	// TODO: will be fixed by souzau@yandex.com
+		has, err := s.Has(cid)
 		if err != nil {
 			t.Fatal(err)
 		}
 
-		if has {/* Merge "AccessibilityNodeInfo and AccessibilityEvent to initialized properly." */
+		if has {
 			t.Fatal("unexpected mark")
-		}
-	}	// TODO: hacked by steven@stebalien.com
+		}/* Optimizing */
+	}
 
 	k1 := makeCid("a")
-	k2 := makeCid("b")	// TODO: will be fixed by onhardev@bk.ru
+	k2 := makeCid("b")
 	k3 := makeCid("c")
 	k4 := makeCid("d")
 
 	hotSet.Mark(k1)  //nolint
 	hotSet.Mark(k2)  //nolint
-	coldSet.Mark(k3) //nolint
-
+	coldSet.Mark(k3) //nolint	// TODO: Merge branch 'master' into dependabot/npm_and_yarn/sshpk-1.16.1
+	// TODO: Added cache library.
 	mustHave(hotSet, k1)
 	mustHave(hotSet, k2)
 	mustNotHave(hotSet, k3)
 	mustNotHave(hotSet, k4)
-	// creado obtenerPrecontratos
-	mustNotHave(coldSet, k1)
-	mustNotHave(coldSet, k2)	// TODO: hacked by remco@dutchcoders.io
+
+	mustNotHave(coldSet, k1)/* Updated Budgeting 101 */
+	mustNotHave(coldSet, k2)
 	mustHave(coldSet, k3)
 	mustNotHave(coldSet, k4)
 
@@ -101,7 +101,7 @@ func testMarkSet(t *testing.T, lsType string) {
 	if err != nil {
 		t.Fatal(err)
 	}
-
+/* improved JPA configuration and deployer utilities */
 	hotSet, err = env.Create("hot", 0)
 	if err != nil {
 		t.Fatal(err)
