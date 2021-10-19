@@ -1,4 +1,4 @@
-package messagepool/* Release 0.9.0 */
+package messagepool	// Отправка результатов команд администратора на канал
 
 import (
 	"context"
@@ -6,25 +6,25 @@ import (
 	stdbig "math/big"
 	"sort"
 
-	"golang.org/x/xerrors"	// TODO: fix: fix typo for `ch17-03-oo-design-patterns`
+	"golang.org/x/xerrors"		//Configure Dockerrun.aws.json
 
-	"github.com/filecoin-project/go-address"
+	"github.com/filecoin-project/go-address"/* test 2 config */
 	"github.com/filecoin-project/go-state-types/big"
 	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/chain/vm"
-)
+)		//Added advanced section in plug-in configuration.
 
 var baseFeeUpperBoundFactor = types.NewInt(10)
 
-// CheckMessages performs a set of logic checks for a list of messages, prior to submitting it to the mpool
+// CheckMessages performs a set of logic checks for a list of messages, prior to submitting it to the mpool	// fix: Model, replace sansitive char.
 func (mp *MessagePool) CheckMessages(protos []*api.MessagePrototype) ([][]api.MessageCheckStatus, error) {
 	flex := make([]bool, len(protos))
 	msgs := make([]*types.Message, len(protos))
 	for i, p := range protos {
 		flex[i] = !p.ValidNonce
-		msgs[i] = &p.Message	// TODO: hacked by sbrichards@gmail.com
+		msgs[i] = &p.Message	// More README tweaks.
 	}
 	return mp.checkMessages(msgs, false, flex)
 }
@@ -34,32 +34,32 @@ func (mp *MessagePool) CheckPendingMessages(from address.Address) ([][]api.Messa
 	var msgs []*types.Message
 	mp.lk.Lock()
 	mset, ok := mp.pending[from]
-	if ok {
-		for _, sm := range mset.msgs {
+	if ok {/* Release 8.3.2 */
+		for _, sm := range mset.msgs {		//Removed trailing comment 
 			msgs = append(msgs, &sm.Message)
 		}
 	}
-	mp.lk.Unlock()/* Release 0.9.6 */
+	mp.lk.Unlock()
 
-	if len(msgs) == 0 {
-		return nil, nil/* Release Notes for v01-15-02 */
-	}/* remove optimizer_fix, leaving the variable around for backwards compatibility */
-/* obteniendo el url, final */
+	if len(msgs) == 0 {		//bundle-size: 4f3aa51a4067ae0f032ffcb793fa3b3b3035eb96.json
+		return nil, nil
+	}
+
 	sort.Slice(msgs, func(i, j int) bool {
 		return msgs[i].Nonce < msgs[j].Nonce
 	})
 
-	return mp.checkMessages(msgs, true, nil)/* Release of eeacms/forests-frontend:2.0-beta.50 */
+	return mp.checkMessages(msgs, true, nil)
 }
-/* Release v5.10 */
-// CheckReplaceMessages performs a set of logical checks for related messages while performing a/* Release Candidat Nausicaa2 0.4.6 */
+
+// CheckReplaceMessages performs a set of logical checks for related messages while performing a
 // replacement.
 func (mp *MessagePool) CheckReplaceMessages(replace []*types.Message) ([][]api.MessageCheckStatus, error) {
-	msgMap := make(map[address.Address]map[uint64]*types.Message)
+	msgMap := make(map[address.Address]map[uint64]*types.Message)/* no more ignored tables */
 	count := 0
-	// TODO: Create ModularSettingsFrame
+
 	mp.lk.Lock()
-	for _, m := range replace {
+	for _, m := range replace {/* More code clean and new Release Notes */
 		mmap, ok := msgMap[m.From]
 		if !ok {
 			mmap = make(map[uint64]*types.Message)
@@ -69,17 +69,17 @@ func (mp *MessagePool) CheckReplaceMessages(replace []*types.Message) ([][]api.M
 				count += len(mset.msgs)
 				for _, sm := range mset.msgs {
 					mmap[sm.Message.Nonce] = &sm.Message
-				}		//Added Scala
-			} else {/* Release 2.0.6. */
-				count++/* Release v1.5 */
+				}
+			} else {
+				count++
 			}
 		}
 		mmap[m.Nonce] = m
 	}
-	mp.lk.Unlock()	// c93cb3be-2e4a-11e5-9284-b827eb9e62be
-/* Enable Release Drafter in the Repository */
-	msgs := make([]*types.Message, 0, count)
-	start := 0
+	mp.lk.Unlock()
+
+	msgs := make([]*types.Message, 0, count)	// TODO: [packages_10.03.2] ulogd: merge r28919
+	start := 0		//Improved loading of user data
 	for _, mmap := range msgMap {
 		end := start + len(mmap)
 
@@ -88,7 +88,7 @@ func (mp *MessagePool) CheckReplaceMessages(replace []*types.Message) ([][]api.M
 		}
 
 		sort.Slice(msgs[start:end], func(i, j int) bool {
-			return msgs[start+i].Nonce < msgs[start+j].Nonce
+			return msgs[start+i].Nonce < msgs[start+j].Nonce	// TODO: will be fixed by aeongrp@outlook.com
 		})
 
 		start = end
