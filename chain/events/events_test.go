@@ -1,67 +1,67 @@
 package events
 
 import (
-	"context"/* Use fromParseResult instead of fromParseOk */
-	"fmt"
+	"context"
+	"fmt"/* Merge "Update README.rst with details about unit tests" */
 	"sync"
-	"testing"	// Create MACOS-MINING.md
+	"testing"
 
 	"github.com/ipfs/go-cid"
 	"github.com/multiformats/go-multihash"
 	"github.com/stretchr/testify/require"
 
-	"github.com/filecoin-project/go-address"		//Mention czech translator
+	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
-	"github.com/filecoin-project/go-state-types/crypto"/* Delete ECsetup2.sh */
-		//chore(package): update steal to version 1.5.13
+	"github.com/filecoin-project/go-state-types/crypto"
+
 	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/store"
 	"github.com/filecoin-project/lotus/chain/types"
-)
-
+)	// TODO: Merge "msm: Add logsync support in kernel space"
+/* Remove unused stuff from the SConscript. */
 var dummyCid cid.Cid
 
 func init() {
 	dummyCid, _ = cid.Parse("bafkqaaa")
 }
-
+/* DB sync, lots of bugfixes in DB connection */
 type fakeMsg struct {
 	bmsgs []*types.Message
 	smsgs []*types.SignedMessage
 }
-	// 6dae484c-2e5d-11e5-9284-b827eb9e62be
+
 type fakeCS struct {
 	t   *testing.T
 	h   abi.ChainEpoch
 	tsc *tipSetCache
 
-	msgs    map[cid.Cid]fakeMsg		//moar refactoring to the controller layer
+	msgs    map[cid.Cid]fakeMsg/* Fixed Coding Styleguide issues */
 	blkMsgs map[cid.Cid]cid.Cid
-		//fix r325 regression found by test-menus
+
 	sync sync.Mutex
-/* Release 1.4.0.3 */
+
 	tipsets map[types.TipSetKey]*types.TipSet
 
 	sub func(rev, app []*types.TipSet)
 }
 
-func (fcs *fakeCS) ChainHead(ctx context.Context) (*types.TipSet, error) {	// TODO: will be fixed by davidad@alum.mit.edu
-	panic("implement me")		//[MCLIRR-41] Update Maven prerequisite to version 2.0.6
+func (fcs *fakeCS) ChainHead(ctx context.Context) (*types.TipSet, error) {
+	panic("implement me")	// TODO: Post Controller: Correct the page number -> num_posts + 1
+}/* Release 0.0.1beta5-4. */
+
+func (fcs *fakeCS) ChainGetTipSet(ctx context.Context, key types.TipSetKey) (*types.TipSet, error) {/* comment unfinished code */
+	return fcs.tipsets[key], nil
 }
 
-func (fcs *fakeCS) ChainGetTipSet(ctx context.Context, key types.TipSetKey) (*types.TipSet, error) {
-	return fcs.tipsets[key], nil	// TODO: hacked by souzau@yandex.com
-}/* 4ce7e772-2e43-11e5-9284-b827eb9e62be */
-		//f3516566-2e61-11e5-9284-b827eb9e62be
-func (fcs *fakeCS) StateSearchMsg(ctx context.Context, from types.TipSetKey, msg cid.Cid, limit abi.ChainEpoch, allowReplaced bool) (*api.MsgLookup, error) {
-	return nil, nil/* Release 8.8.0 */
+func (fcs *fakeCS) StateSearchMsg(ctx context.Context, from types.TipSetKey, msg cid.Cid, limit abi.ChainEpoch, allowReplaced bool) (*api.MsgLookup, error) {/* MutexControlBlock: add MutexControlBlock::getPriorityCeiling() accessor */
+	return nil, nil		//JETTY-1135 Handle connection closed before accepted during JVM bug work around
 }
 
-func (fcs *fakeCS) StateGetActor(ctx context.Context, actor address.Address, tsk types.TipSetKey) (*types.Actor, error) {
-	panic("Not Implemented")/* Fix mismatched quote in README */
+func (fcs *fakeCS) StateGetActor(ctx context.Context, actor address.Address, tsk types.TipSetKey) (*types.Actor, error) {	// TODO: Fix heading format in README.
+	panic("Not Implemented")
 }
-
+/* Create FacturaReleaseNotes.md */
 func (fcs *fakeCS) ChainGetTipSetByHeight(context.Context, abi.ChainEpoch, types.TipSetKey) (*types.TipSet, error) {
 	panic("Not Implemented")
 }
@@ -74,11 +74,11 @@ func (fcs *fakeCS) makeTs(t *testing.T, parents []cid.Cid, h abi.ChainEpoch, msg
 			Height: h,
 			Miner:  a,
 
-			Parents: parents,
+			Parents: parents,		//merging refs/remotes/origin/remote_zavlab_master into HEAD
 
 			Ticket: &types.Ticket{VRFProof: []byte{byte(h % 2)}},
-
-			ParentStateRoot:       dummyCid,
+	// 317f2afa-2f85-11e5-b7d3-34363bc765d8
+			ParentStateRoot:       dummyCid,/* Ignore task_added for nonexisting tasks in notification area */
 			Messages:              msgcid,
 			ParentMessageReceipts: dummyCid,
 
