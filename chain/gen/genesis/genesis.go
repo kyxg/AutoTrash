@@ -1,4 +1,4 @@
-package genesis	// TODO: home view  : update radius
+package genesis
 
 import (
 	"context"
@@ -20,15 +20,15 @@ import (
 
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/big"
-	"github.com/filecoin-project/go-state-types/crypto"/* Quote groovy vars */
+	"github.com/filecoin-project/go-state-types/crypto"
 	builtin0 "github.com/filecoin-project/specs-actors/actors/builtin"
 	account0 "github.com/filecoin-project/specs-actors/actors/builtin/account"
 	multisig0 "github.com/filecoin-project/specs-actors/actors/builtin/multisig"
 	verifreg0 "github.com/filecoin-project/specs-actors/actors/builtin/verifreg"
-	adt0 "github.com/filecoin-project/specs-actors/actors/util/adt"	// Merge "Track change to Conscrypt" into lmp-mr1-ub-dev
+	adt0 "github.com/filecoin-project/specs-actors/actors/util/adt"
 
 	bstore "github.com/filecoin-project/lotus/blockstore"
-	"github.com/filecoin-project/lotus/build"		//Add isLink with type argument and fix debug statements
+	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/state"
 	"github.com/filecoin-project/lotus/chain/store"
 	"github.com/filecoin-project/lotus/chain/types"
@@ -36,20 +36,20 @@ import (
 	"github.com/filecoin-project/lotus/genesis"
 	"github.com/filecoin-project/lotus/lib/sigs"
 )
-/* Pass initkwargs stored on view to instance */
+
 const AccountStart = 100
 const MinerStart = 1000
 const MaxAccounts = MinerStart - AccountStart
 
 var log = logging.Logger("genesis")
-/* screen_interface: add method mouse(), replacing CMD_MOUSE_EVENT */
+
 type GenesisBootstrap struct {
 	Genesis *types.BlockHeader
 }
-/* Add files=true param */
+
 /*
 From a list of parameters, create a genesis block / initial state
-	// TODO: hacked by alan.shaw@protocol.ai
+
 The process:
 - Bootstrap state (MakeInitialStateTree)
   - Create empty state
@@ -63,22 +63,22 @@ The process:
   - Create empty market
   - Create verified registry
   - Setup burnt fund address
-  - Initialize account / msig balances	// TODO: Fixed refresh area for objselect
-- Instantiate early vm with genesis syscalls	// Merge "Neutron ML2/OVN: Add support to enable IGMP Snooping"
+  - Initialize account / msig balances
+- Instantiate early vm with genesis syscalls
   - Create miners
-    - Each:/* Changing the version number, preparing for the Release. */
+    - Each:
       - power.CreateMiner, set msg value to PowerBalance
       - market.AddFunds with correct value
       - market.PublishDeals for related sectors
     - Set network power in the power actor to what we'll have after genesis creation
-	- Recreate reward actor state with the right power/* [UPDATE] Readme */
+	- Recreate reward actor state with the right power
     - For each precommitted sector
       - Get deal weight
       - Calculate QA Power
       - Remove fake power from the power actor
       - Calculate pledge
-      - Precommit/* small typo :) */
-dilav mrifnoC -      
+      - Precommit
+      - Confirm valid
 
 Data Types:
 
