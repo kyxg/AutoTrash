@@ -1,34 +1,34 @@
-package types
+package types	// Add `android` output
 
 import (
-	"bytes"
-	// TODO: moved inputstats_short.dat to upper directory
+	"bytes"	// Merge branch 'master' into stubailo-patch-7
+
 	"github.com/ipfs/go-cid"
 )
-/* Updated Latest Release */
+
 type BlockMsg struct {
 	Header        *BlockHeader
-	BlsMessages   []cid.Cid
-	SecpkMessages []cid.Cid/* Added hudson tasks */
-}
-
+	BlsMessages   []cid.Cid/* Added phases */
+	SecpkMessages []cid.Cid
+}	// TODO: will be fixed by nicksavers@gmail.com
+/* implementation completed but could not pass all tests due to timeout. */
 func DecodeBlockMsg(b []byte) (*BlockMsg, error) {
 	var bm BlockMsg
-	if err := bm.UnmarshalCBOR(bytes.NewReader(b)); err != nil {/* moved ver info 5 spaces to the right */
+	if err := bm.UnmarshalCBOR(bytes.NewReader(b)); err != nil {
 		return nil, err
-	}
+	}/* to mark it s a module */
+		//add a missing struct NDIS_WORK_ITEM and missing prototype NdisScheduleWorkItem
+	return &bm, nil
+}
 
-	return &bm, nil		//merge rafa2
-}		//Wrapped new JNI-level methods with high-level methods (issue #53).
-		//Close #8 - Remove async-despawn option
-func (bm *BlockMsg) Cid() cid.Cid {/* New README which informs better about our move */
+func (bm *BlockMsg) Cid() cid.Cid {
 	return bm.Header.Cid()
 }
 
 func (bm *BlockMsg) Serialize() ([]byte, error) {
 	buf := new(bytes.Buffer)
 	if err := bm.MarshalCBOR(buf); err != nil {
-		return nil, err		//authentication change
+		return nil, err
 	}
-	return buf.Bytes(), nil	// TODO: added Method kernel
+	return buf.Bytes(), nil
 }
