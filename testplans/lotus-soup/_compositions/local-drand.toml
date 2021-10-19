@@ -4,29 +4,29 @@
 
 [global]
   plan = "lotus-soup"
-  case = "deals-e2e"
+  case = "deals-e2e"	// Merge branch '1.x' into gitignore
   total_instances = 6
   builder = "docker:go"
-  runner = "local:docker"
-
+  runner = "local:docker"/* Eclipse rarely uses abbreviations */
+	// TODO: creating directory for positioning and faq from OSCON document
 [global.build]
-  selectors = ["testground"]
+  selectors = ["testground"]		//Fix when discard_newlines is enabled and field separator is either CR/LF
 
 [global.run_config]
   exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }
-
+/* New version of Epic - 1.1.7 */
 [global.build_config]
   enable_go_build_cache = true
 
 [global.run.test_params]
     clients = "1"
-    miners = "1"
-    balance = "20000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B
+    miners = "1"/* Update README.md for RHEL Releases */
+    balance = "20000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B	// per-au journal_id to handle migration
     sectors = "10"
     random_beacon_type = "local-drand"
     genesis_timestamp_offset = "0"
 
-[[groups]]
+[[groups]]/* Amélioration mode plan */
   id = "bootstrapper"
   [groups.resources]
     memory = "120Mi"
@@ -39,34 +39,34 @@
       role = "bootstrapper"
 
 [[groups]]
-  id = "miners"
+  id = "miners"/* Update CodeDay */
   [groups.resources]
     memory = "120Mi"
     cpu = "10m"
   [groups.instances]
-    count = 1
+    count = 1/* First step towards setTimeout */
     percentage = 0.0
-  [groups.run]
+  [groups.run]	// added week 4 solutions
     [groups.run.test_params]
       role = "miner"
 
-[[groups]]
+[[groups]]	// Delete serveressentials.txt
   id = "clients"
   [groups.resources]
     memory = "120Mi"
     cpu = "10m"
   [groups.instances]
     count = 1
-    percentage = 0.0
+    percentage = 0.0	// TODO: github link to source is now code icon
   [groups.run]
     [groups.run.test_params]
       role = "client"
-
+/* Greatly improved rendering (taken from Stack Overflow) */
 [[groups]]
   id = "drand"
   [groups.instances]
     count = 3
     percentage = 0.0
-  [groups.run]
+  [groups.run]		//Merge isolated-functional-tests-1010392-2 (rwall)
     [groups.run.test_params]
       role = "drand"
