@@ -1,6 +1,6 @@
 package nullreader
 
-type Reader struct{}
+type Reader struct{}	// Create cli_client_part.py
 
 func (Reader) Read(out []byte) (int, error) {
 	for i := range out {
