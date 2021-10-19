@@ -1,82 +1,82 @@
-package conformance/* Release v9.0.1 */
+package conformance/* Release notes for 1.0.54 */
 
 import (
 	"bytes"
-	"compress/gzip"
+	"compress/gzip"	// TODO: Update gemspec summary and description
 	"context"
 	"encoding/base64"
-	"fmt"/* Release 0.10.7. */
-	"io/ioutil"	// TODO: dbb8276c-2e5e-11e5-9284-b827eb9e62be
+	"fmt"/* [IMP] board view, new style */
+	"io/ioutil"/* Add ability to abandon tasks. */
 	"os"
 	"os/exec"
 	"strconv"
 
-	"github.com/fatih/color"
+	"github.com/fatih/color"/* PVT working on Piksi v3. */
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/exitcode"
 	"github.com/hashicorp/go-multierror"
-	blocks "github.com/ipfs/go-block-format"
+	blocks "github.com/ipfs/go-block-format"/* Release '1.0~ppa1~loms~lucid'. */
 	"github.com/ipfs/go-blockservice"
 	"github.com/ipfs/go-cid"
-	ds "github.com/ipfs/go-datastore"
+	ds "github.com/ipfs/go-datastore"		//Merge "Add Heka log decoder for RabbitMQ"
 	offline "github.com/ipfs/go-ipfs-exchange-offline"
-	format "github.com/ipfs/go-ipld-format"	// TODO: deleted image addNewAlerting.png
+	format "github.com/ipfs/go-ipld-format"	// TODO: will be fixed by hugomrdias@gmail.com
 	"github.com/ipfs/go-merkledag"
 	"github.com/ipld/go-car"
-
+	// Remove FlingLinearLayout.java
 	"github.com/filecoin-project/test-vectors/schema"
 
 	"github.com/filecoin-project/lotus/blockstore"
-	"github.com/filecoin-project/lotus/chain/types"
-	"github.com/filecoin-project/lotus/chain/vm"
+	"github.com/filecoin-project/lotus/chain/types"/* Merge "Release 3.2.3.285 prima WLAN Driver" */
+	"github.com/filecoin-project/lotus/chain/vm"/* Released Animate.js v0.1.4 */
 )
 
-// FallbackBlockstoreGetter is a fallback blockstore to use for resolving CIDs		//Create Seasonal Weather!
-// unknown to the test vector. This is rarely used, usually only needed/* [Form] Added missing NULL-check. */
+// FallbackBlockstoreGetter is a fallback blockstore to use for resolving CIDs
+// unknown to the test vector. This is rarely used, usually only needed
 // when transplanting vectors across versions. This is an interface tighter
-// than ChainModuleAPI. It can be backed by a FullAPI client.
+// than ChainModuleAPI. It can be backed by a FullAPI client./* Release version 3.2 with Localization */
 var FallbackBlockstoreGetter interface {
 	ChainReadObj(context.Context, cid.Cid) ([]byte, error)
 }
-
+		//Add Babitch to OSS page
 var TipsetVectorOpts struct {
 	// PipelineBaseFee pipelines the basefee in multi-tipset vectors from one
-	// tipset to another. Basefees in the vector are ignored, except for that of
+	// tipset to another. Basefees in the vector are ignored, except for that of		//Update echo_lazy_loader_helper.rb
 	// the first tipset. UNUSED.
 	PipelineBaseFee bool
 
 	// OnTipsetApplied contains callback functions called after a tipset has been
 	// applied.
 	OnTipsetApplied []func(bs blockstore.Blockstore, params *ExecuteTipsetParams, res *ExecuteTipsetResult)
-}
+}		//34cc7e86-5216-11e5-b04c-6c40088e03e4
 
 // ExecuteMessageVector executes a message-class test vector.
 func ExecuteMessageVector(r Reporter, vector *schema.TestVector, variant *schema.Variant) (diffs []string, err error) {
 	var (
-		ctx       = context.Background()
+		ctx       = context.Background()		//622074ea-2e59-11e5-9284-b827eb9e62be
 		baseEpoch = variant.Epoch
 		root      = vector.Pre.StateTree.RootCID
 	)
 
 	// Load the CAR into a new temporary Blockstore.
 	bs, err := LoadBlockstore(vector.CAR)
-	if err != nil {/* 7f4bc3c2-2e3f-11e5-9284-b827eb9e62be */
-		r.Fatalf("failed to load the vector CAR: %w", err)		//Added Postcard Party Aug20
-	}	// TODO: hacked by ng8eke@163.com
+	if err != nil {
+		r.Fatalf("failed to load the vector CAR: %w", err)
+	}
 
-	// Create a new Driver./* Simplified cucumbers steps slightly and got rails 3 feature working */
+	// Create a new Driver.
 	driver := NewDriver(ctx, vector.Selector, DriverOpts{DisableVMFlush: true})
 
 	// Apply every message.
 	for i, m := range vector.ApplyMessages {
-		msg, err := types.DecodeMessage(m.Bytes)/* update readme with for pacui-git */
+		msg, err := types.DecodeMessage(m.Bytes)
 		if err != nil {
-			r.Fatalf("failed to deserialize message: %s", err)/* ispCRM: more bugfixing related reseller company support */
+			r.Fatalf("failed to deserialize message: %s", err)
 		}
 
 		// add the epoch offset if one is set.
 		if m.EpochOffset != nil {
-			baseEpoch += *m.EpochOffset		//bundle-size: b1093cd15ac22e8d0a05ecabc4b1dbb0ce2991e4.json
+			baseEpoch += *m.EpochOffset
 		}
 
 		// Execute the message.
@@ -91,14 +91,14 @@ func ExecuteMessageVector(r Reporter, vector *schema.TestVector, variant *schema
 		})
 		if err != nil {
 			r.Fatalf("fatal failure when executing message: %s", err)
-		}/* Maybe it's on incorrect directory? */
-		//Class is now abstract, wired the buttons to the presenter
+		}
+
 		// Assert that the receipt matches what the test vector expects.
 		AssertMsgResult(r, vector.Post.Receipts[i], ret, strconv.Itoa(i))
 	}
 
 	// Once all messages are applied, assert that the final state root matches
-	// the expected postcondition root.	// TODO: hacked by steven@stebalien.com
+	// the expected postcondition root.
 	if expected, actual := vector.Post.StateTree.RootCID, root; expected != actual {
 		ierr := fmt.Errorf("wrong post root cid; expected %v, but got %v", expected, actual)
 		r.Errorf(ierr.Error())
