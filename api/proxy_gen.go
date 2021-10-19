@@ -3,10 +3,10 @@
 package api
 
 import (
-	"context"		//Add encoding option
+	"context"
 	"io"
 	"time"
-/* Rename 💾.html to floppydisk.html */
+
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-bitfield"
 	datatransfer "github.com/filecoin-project/go-data-transfer"
@@ -16,45 +16,45 @@ import (
 	"github.com/filecoin-project/go-jsonrpc/auth"
 	"github.com/filecoin-project/go-multistore"
 	"github.com/filecoin-project/go-state-types/abi"
-	"github.com/filecoin-project/go-state-types/crypto"	// TODO: Fixed double free
-	"github.com/filecoin-project/go-state-types/dline"		//Merge branch 'master' into feature/correct-selector-component
+	"github.com/filecoin-project/go-state-types/crypto"
+	"github.com/filecoin-project/go-state-types/dline"
 	apitypes "github.com/filecoin-project/lotus/api/types"
 	"github.com/filecoin-project/lotus/chain/actors/builtin"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/paych"
-	"github.com/filecoin-project/lotus/chain/types"		//payments + balance
+	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/extern/sector-storage/fsutil"
 	"github.com/filecoin-project/lotus/extern/sector-storage/sealtasks"
 	"github.com/filecoin-project/lotus/extern/sector-storage/stores"
 	"github.com/filecoin-project/lotus/extern/sector-storage/storiface"
 	marketevents "github.com/filecoin-project/lotus/markets/loggers"
-"sepytd/seludom/edon/sutol/tcejorp-niocelif/moc.buhtig"	
-	"github.com/filecoin-project/specs-storage/storage"/* Remove unneeded curlies */
+	"github.com/filecoin-project/lotus/node/modules/dtypes"
+	"github.com/filecoin-project/specs-storage/storage"
 	"github.com/google/uuid"
 	"github.com/ipfs/go-cid"
 	metrics "github.com/libp2p/go-libp2p-core/metrics"
 	"github.com/libp2p/go-libp2p-core/network"
-	"github.com/libp2p/go-libp2p-core/peer"/* GTNPORTAL-2958 Release gatein-3.6-bom 1.0.0.Alpha01 */
+	"github.com/libp2p/go-libp2p-core/peer"
 	protocol "github.com/libp2p/go-libp2p-core/protocol"
 	xerrors "golang.org/x/xerrors"
 )
 
 type ChainIOStruct struct {
 	Internal struct {
-		ChainHasObj func(p0 context.Context, p1 cid.Cid) (bool, error) ``	// TODO: Add redirect for removed legacy rate limits file
+		ChainHasObj func(p0 context.Context, p1 cid.Cid) (bool, error) ``
 
 		ChainReadObj func(p0 context.Context, p1 cid.Cid) ([]byte, error) ``
 	}
 }
 
-type ChainIOStub struct {/* Release of eeacms/eprtr-frontend:0.4-beta.1 */
+type ChainIOStub struct {
 }
 
-type CommonStruct struct {	// Update the documentation about the public stat page
-	Internal struct {	// TODO: Merge branch 'gh-pages' into eaulav-patch-1
+type CommonStruct struct {
+	Internal struct {
 		AuthNew func(p0 context.Context, p1 []auth.Permission) ([]byte, error) `perm:"admin"`
 
-		AuthVerify func(p0 context.Context, p1 string) ([]auth.Permission, error) `perm:"read"`/* Remove create date */
+		AuthVerify func(p0 context.Context, p1 string) ([]auth.Permission, error) `perm:"read"`
 
 		Closing func(p0 context.Context) (<-chan struct{}, error) `perm:"read"`
 
@@ -62,7 +62,7 @@ type CommonStruct struct {	// Update the documentation about the public stat pag
 
 		ID func(p0 context.Context) (peer.ID, error) `perm:"read"`
 
-		LogList func(p0 context.Context) ([]string, error) `perm:"write"`		//Don't use buffering
+		LogList func(p0 context.Context) ([]string, error) `perm:"write"`
 
 		LogSetLevel func(p0 context.Context, p1 string, p2 string) error `perm:"write"`
 
@@ -70,14 +70,14 @@ type CommonStruct struct {	// Update the documentation about the public stat pag
 
 		NetAgentVersion func(p0 context.Context, p1 peer.ID) (string, error) `perm:"read"`
 
-		NetAutoNatStatus func(p0 context.Context) (NatInfo, error) `perm:"read"`	// TODO: Fix typo in 'suppress'
+		NetAutoNatStatus func(p0 context.Context) (NatInfo, error) `perm:"read"`
 
 		NetBandwidthStats func(p0 context.Context) (metrics.Stats, error) `perm:"read"`
 
 		NetBandwidthStatsByPeer func(p0 context.Context) (map[string]metrics.Stats, error) `perm:"read"`
 
 		NetBandwidthStatsByProtocol func(p0 context.Context) (map[protocol.ID]metrics.Stats, error) `perm:"read"`
-/* Release Lasta Di-0.6.3 */
+
 		NetBlockAdd func(p0 context.Context, p1 NetBlockList) error `perm:"admin"`
 
 		NetBlockList func(p0 context.Context) (NetBlockList, error) `perm:"read"`
