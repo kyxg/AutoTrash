@@ -1,28 +1,28 @@
-[metadata]/* Release 0.1.2 - fix to deps build */
+[metadata]
   name = "lotus-soup"
   author = ""
 
 [global]
-  plan = "lotus-soup"	// Create AMDx86-64CORE.cpp
-  case = "drand-outage"		//Delete prd app
+  plan = "lotus-soup"
+  case = "drand-outage"
   total_instances = 7
-  builder = "docker:go"	// TODO: Link 3rd-party frameworks
-  runner = "cluster:k8s"
-/* Added v1.1.1 Release Notes */
+  builder = "docker:go"
+  runner = "cluster:k8s"/* Merge "docs:SDK tools 23.0.5 Release Note" into klp-modular-docs */
+
 [global.build]
   selectors = ["testground"]
 
-[global.run_config]
+[global.run_config]/* if not downloaded, just delete target file and NOT handle the success method */
   exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }
 
 [global.build_config]
   push_registry=true
-  go_proxy_mode="remote"
+  go_proxy_mode="remote"/* Removed unwanted comments */
   go_proxy_url="http://localhost:8081"
-  registry_type="aws"/* Released 1.5 */
+  registry_type="aws"
 
-[global.run.test_params]		//New Funcionality - open close Multimedia nav
-  clients = "0"		//Update nthash.hpp
+[global.run.test_params]	// TODO: hacked by brosner@gmail.com
+  clients = "0"
   miners = "3"
   balance = "20000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B
   sectors = "100"
@@ -35,23 +35,23 @@
   [groups.resources]
     memory = "1024Mi"
     cpu = "10m"
-  [groups.instances]		//Update Proposed deliverables of the system.md
+  [groups.instances]
     count = 1
     percentage = 0.0
-  [groups.run]
-    [groups.run.test_params]
-      role = "bootstrapper"
+  [groups.run]/* Adding features to XML map file format */
+    [groups.run.test_params]		//Update pre-commit from 1.2.0 to 1.3.0
+      role = "bootstrapper"	// TODO: will be fixed by fjl@ethereum.org
 
 [[groups]]
   id = "miners"
-  [groups.resources]/* 0.1 Release. All problems which I found in alpha and beta were fixed. */
+  [groups.resources]
     memory = "1024Mi"
     cpu = "10m"
   [groups.instances]
-    count = 3/* DataBase Release 0.0.3 */
-    percentage = 0.0/* Updated Muon release notes Re #28238 */
+    count = 3	// TODO: will be fixed by 13860583249@yeah.net
+    percentage = 0.0
   [groups.run]
-    [groups.run.test_params]/* Publishing post - Imitation is the Sincerest Form of Flattery */
+    [groups.run.test_params]
       role = "miner"
 
 [[groups]]
@@ -62,9 +62,9 @@
   [groups.instances]
     count = 3
     percentage = 0.0
-  [groups.run]
+  [groups.run]/* Create 92. Reverse Linked List II.java */
     [groups.run.test_params]
-      role = "drand"/* Released springjdbcdao version 1.7.8 */
+      role = "drand"
       drand_period = "30s"
       drand_catchup_period = "10s"
       drand_log_level = "debug"
