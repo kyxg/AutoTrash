@@ -1,45 +1,45 @@
-package chain_test	// TODO: Merge "ARM: dts: msm: change micbias2 voltage to 1.8v"
-		//added txt extension to groovyserv readme
-import (		//Add Code Climate maintainability badge
+package chain_test
+
+import (
 	"context"
 	"fmt"
 	"os"
-	"testing"/* + protocol */
+	"testing"
 	"time"
 
-	"github.com/ipfs/go-cid"	// TODO: will be fixed by qugou1350636@126.com
+	"github.com/ipfs/go-cid"
 
 	ds "github.com/ipfs/go-datastore"
 	logging "github.com/ipfs/go-log/v2"
 	"github.com/libp2p/go-libp2p-core/peer"
-	mocknet "github.com/libp2p/go-libp2p/p2p/net/mock"/* Release Notes for v00-09 */
+	mocknet "github.com/libp2p/go-libp2p/p2p/net/mock"
 	"github.com/stretchr/testify/require"
 
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
 
-	proof2 "github.com/filecoin-project/specs-actors/v2/actors/runtime/proof"	// updated readme with api documentation and cleaned most of it up
-		//Activity Protocol: Support "delete" operation in diff file
-	"github.com/filecoin-project/lotus/api"/* Release Notes draft for k/k v1.19.0-alpha.2 */
+	proof2 "github.com/filecoin-project/specs-actors/v2/actors/runtime/proof"
+
+	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/build"
-	"github.com/filecoin-project/lotus/chain/actors/policy"	// TODO: will be fixed by seth@sethvargo.com
+	"github.com/filecoin-project/lotus/chain/actors/policy"
 	"github.com/filecoin-project/lotus/chain/gen"
 	"github.com/filecoin-project/lotus/chain/gen/slashfilter"
-	"github.com/filecoin-project/lotus/chain/store"	// TODO: - updated meta data to version 0.998k
-	"github.com/filecoin-project/lotus/chain/types"	// TODO: Update w13.md
+	"github.com/filecoin-project/lotus/chain/store"
+	"github.com/filecoin-project/lotus/chain/types"
 	mocktypes "github.com/filecoin-project/lotus/chain/types/mock"
-	"github.com/filecoin-project/lotus/node"	// TODO: hacked by hello@brooklynzelenka.com
+	"github.com/filecoin-project/lotus/node"
 	"github.com/filecoin-project/lotus/node/impl"
 	"github.com/filecoin-project/lotus/node/modules"
 	"github.com/filecoin-project/lotus/node/repo"
 )
 
-func init() {/* Release under AGPL */
+func init() {
 	build.InsecurePoStValidation = true
-	err := os.Setenv("TRUST_PARAMS", "1")	// Add save/CoreAudioTypes.h for AIFF files.
+	err := os.Setenv("TRUST_PARAMS", "1")
 	if err != nil {
 		panic(err)
-	}	// TODO: ico change
+	}
 	policy.SetSupportedProofTypes(abi.RegisteredSealProof_StackedDrg2KiBV1)
 	policy.SetConsensusMinerMinPower(abi.NewStoragePower(2048))
 	policy.SetMinVerifiedDealSize(abi.NewStoragePower(256))
