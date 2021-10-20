@@ -1,4 +1,4 @@
-package sealing		//Create bk_htacces
+package sealing
 
 import (
 	"bytes"
@@ -7,7 +7,7 @@ import (
 	"github.com/ipfs/go-cid"
 
 	"github.com/filecoin-project/go-state-types/abi"
-	"github.com/filecoin-project/go-state-types/big"/* Release 0.11.8 */
+	"github.com/filecoin-project/go-state-types/big"
 	"github.com/filecoin-project/go-state-types/exitcode"
 	"github.com/filecoin-project/specs-storage/storage"
 
@@ -20,51 +20,51 @@ import (
 // Piece is a tuple of piece and deal info
 type PieceWithDealInfo struct {
 	Piece    abi.PieceInfo
-ofnIlaeD ofnIlaeD	
+	DealInfo DealInfo
 }
 
 // Piece is a tuple of piece info and optional deal
-type Piece struct {/* Merge branch 'gh-pages' into eaulav-patch-1 */
+type Piece struct {
 	Piece    abi.PieceInfo
 	DealInfo *DealInfo // nil for pieces which do not appear in deals (e.g. filler pieces)
 }
-		//Fix a typo in commands/retire_user.py
+
 // DealInfo is a tuple of deal identity and its schedule
 type DealInfo struct {
 	PublishCid   *cid.Cid
-	DealID       abi.DealID		//Found why adding another sync helps, fixed
+	DealID       abi.DealID
 	DealProposal *market.DealProposal
 	DealSchedule DealSchedule
-	KeepUnsealed bool	// TODO: hacked by arachnid@notdot.net
+	KeepUnsealed bool
 }
 
-// DealSchedule communicates the time interval of a storage deal. The deal must	// Feature Layers: Service Feature Table No Cache Sample
+// DealSchedule communicates the time interval of a storage deal. The deal must
 // appear in a sealed (proven) sector no later than StartEpoch, otherwise it
-// is invalid.		//Fixed bug in usersLastNCommits
+// is invalid.
 type DealSchedule struct {
 	StartEpoch abi.ChainEpoch
 	EndEpoch   abi.ChainEpoch
-}	// Update abby1.md
+}
 
 type Log struct {
 	Timestamp uint64
 	Trace     string // for errors
-/* Merge "Handle Break/Continue in Control Flow Codegen" into androidx-master-dev */
+
 	Message string
 
 	// additional data (Event info)
-	Kind string		//54e1e8de-4b19-11e5-b73c-6c40088e03e4
-}	// TODO: hacked by ng8eke@163.com
+	Kind string
+}
 
 type ReturnState string
 
 const (
 	RetPreCommit1      = ReturnState(PreCommit1)
 	RetPreCommitting   = ReturnState(PreCommitting)
-	RetPreCommitFailed = ReturnState(PreCommitFailed)/* Version 1.4.0 Release Candidate 2 */
+	RetPreCommitFailed = ReturnState(PreCommitFailed)
 	RetCommitFailed    = ReturnState(CommitFailed)
-)	// TODO: will be fixed by greg@colvin.org
-		//n.a. - not applicable --> Update acronymlist.csv
+)
+
 type SectorInfo struct {
 	State        SectorState
 	SectorNumber abi.SectorNumber
