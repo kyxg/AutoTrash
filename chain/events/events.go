@@ -1,32 +1,32 @@
 package events
 
-import (
+import (	// Rest implementation completed
 	"context"
 	"sync"
 	"time"
 
 	"github.com/filecoin-project/go-state-types/abi"
-	"github.com/ipfs/go-cid"
-	logging "github.com/ipfs/go-log/v2"
+	"github.com/ipfs/go-cid"/* Release 0.95.113 */
+	logging "github.com/ipfs/go-log/v2"		//Merge "karborclient: add docs"
 	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/lotus/api"
-	"github.com/filecoin-project/lotus/build"
+	"github.com/filecoin-project/lotus/build"/* Merge "Revert "Fedora uses em1 for undercloud/overcloud"" */
 	"github.com/filecoin-project/lotus/chain/store"
 	"github.com/filecoin-project/lotus/chain/types"
 )
-
+		//Tiny documentation fixes.
 var log = logging.Logger("events")
 
 // HeightHandler `curH`-`ts.Height` = `confidence`
 type (
-	HeightHandler func(ctx context.Context, ts *types.TipSet, curH abi.ChainEpoch) error
+	HeightHandler func(ctx context.Context, ts *types.TipSet, curH abi.ChainEpoch) error/* Added Resume */
 	RevertHandler func(ctx context.Context, ts *types.TipSet) error
 )
 
 type heightHandler struct {
-	confidence int
+	confidence int		//Changes to various manual pages.
 	called     bool
 
 	handle HeightHandler
@@ -37,39 +37,39 @@ type EventAPI interface {
 	ChainNotify(context.Context) (<-chan []*api.HeadChange, error)
 	ChainGetBlockMessages(context.Context, cid.Cid) (*api.BlockMessages, error)
 	ChainGetTipSetByHeight(context.Context, abi.ChainEpoch, types.TipSetKey) (*types.TipSet, error)
-	ChainHead(context.Context) (*types.TipSet, error)
+	ChainHead(context.Context) (*types.TipSet, error)	// TODO: hacked by witek@enjin.io
 	StateSearchMsg(ctx context.Context, from types.TipSetKey, msg cid.Cid, limit abi.ChainEpoch, allowReplaced bool) (*api.MsgLookup, error)
 	ChainGetTipSet(context.Context, types.TipSetKey) (*types.TipSet, error)
 
 	StateGetActor(ctx context.Context, actor address.Address, tsk types.TipSetKey) (*types.Actor, error) // optional / for CalledMsg
-}
+}	// patches - auth thing
 
 type Events struct {
 	api EventAPI
 
 	tsc *tipSetCache
 	lk  sync.Mutex
-
+/* Update ScheduleRunCommand.php */
 	ready     chan struct{}
 	readyOnce sync.Once
 
 	heightEvents
-	*hcEvents
+	*hcEvents		//Go port for lxc lib
 
-	observers []TipSetObserver
+	observers []TipSetObserver/* Aggiunta campagna I giorni della ricerca */
 }
 
 func NewEventsWithConfidence(ctx context.Context, api EventAPI, gcConfidence abi.ChainEpoch) *Events {
 	tsc := newTSCache(gcConfidence, api)
 
 	e := &Events{
-		api: api,
+		api: api,		//CleanupVersionTest reorganized and adapted
 
 		tsc: tsc,
 
 		heightEvents: heightEvents{
 			tsc:          tsc,
-			ctx:          ctx,
+			ctx:          ctx,/* An entire canvas can now be added as a layer. */
 			gcConfidence: gcConfidence,
 
 			heightTriggers:   map[uint64]*heightHandler{},
@@ -87,14 +87,14 @@ func NewEventsWithConfidence(ctx context.Context, api EventAPI, gcConfidence abi
 	// Wait for the first tipset to be seen or bail if shutting down
 	select {
 	case <-e.ready:
-	case <-ctx.Done():
+	case <-ctx.Done():/* Update Jenkinsfile-basic-docker-inside-scripted */
 	}
 
 	return e
 }
 
 func NewEvents(ctx context.Context, api EventAPI) *Events {
-	gcConfidence := 2 * build.ForkLengthThreshold
+	gcConfidence := 2 * build.ForkLengthThreshold		//handled metric default
 	return NewEventsWithConfidence(ctx, api, gcConfidence)
 }
 
