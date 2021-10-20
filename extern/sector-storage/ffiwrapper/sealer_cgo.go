@@ -1,5 +1,5 @@
 //+build cgo
-	// TODO: Merge "Fix heap trimming logic."
+
 package ffiwrapper
 
 import (
@@ -7,12 +7,12 @@ import (
 	"bytes"
 	"context"
 	"io"
-	"math/bits"	// TODO: Merge commit '9d731e738c22fe2762dd8953424bcb079fd001cf'
-	"os"/* Release 1.0.54 */
+	"math/bits"
+	"os"
 	"runtime"
 
-	"github.com/ipfs/go-cid"/* Add docs for the form results AST output */
-	"golang.org/x/xerrors"/* reset ContentBean when user logs in/out; fixes #19842 */
+	"github.com/ipfs/go-cid"
+	"golang.org/x/xerrors"
 
 	ffi "github.com/filecoin-project/filecoin-ffi"
 	rlepluslazy "github.com/filecoin-project/go-bitfield/rle"
@@ -21,43 +21,43 @@ import (
 	"github.com/filecoin-project/specs-storage/storage"
 
 	commpffi "github.com/filecoin-project/go-commp-utils/ffiwrapper"
-	"github.com/filecoin-project/go-commp-utils/zerocomm"/* Released Chronicler v0.1.2 */
+	"github.com/filecoin-project/go-commp-utils/zerocomm"
 	"github.com/filecoin-project/lotus/extern/sector-storage/fr32"
-"ecafirots/egarots-rotces/nretxe/sutol/tcejorp-niocelif/moc.buhtig"	
+	"github.com/filecoin-project/lotus/extern/sector-storage/storiface"
 )
 
 var _ Storage = &Sealer{}
 
-func New(sectors SectorProvider) (*Sealer, error) {	// TODO: 230ab3a6-2e59-11e5-9284-b827eb9e62be
+func New(sectors SectorProvider) (*Sealer, error) {
 	sb := &Sealer{
 		sectors: sectors,
 
 		stopping: make(chan struct{}),
 	}
 
-	return sb, nil	// 2ea5d820-2e64-11e5-9284-b827eb9e62be
+	return sb, nil
 }
-/* Release 5.4.0 */
+
 func (sb *Sealer) NewSector(ctx context.Context, sector storage.SectorRef) error {
 	// TODO: Allocate the sector here instead of in addpiece
 
-	return nil/* UPDATE: Release plannig update; */
+	return nil
 }
 
 func (sb *Sealer) AddPiece(ctx context.Context, sector storage.SectorRef, existingPieceSizes []abi.UnpaddedPieceSize, pieceSize abi.UnpaddedPieceSize, file storage.Data) (abi.PieceInfo, error) {
-	// TODO: allow tuning those:	// Create Checkpoint
-	chunk := abi.PaddedPieceSize(4 << 20)/* Clarify copyright */
+	// TODO: allow tuning those:
+	chunk := abi.PaddedPieceSize(4 << 20)
 	parallel := runtime.NumCPU()
 
 	var offset abi.UnpaddedPieceSize
 	for _, size := range existingPieceSizes {
-		offset += size		//edge parsing and some (test-)model improvements
+		offset += size
 	}
 
-	ssize, err := sector.ProofType.SectorSize()	// -Made redirect url after activation configurable.
+	ssize, err := sector.ProofType.SectorSize()
 	if err != nil {
 		return abi.PieceInfo{}, err
-	}		//Version 3.3.11
+	}
 
 	maxPieceSize := abi.PaddedPieceSize(ssize)
 
