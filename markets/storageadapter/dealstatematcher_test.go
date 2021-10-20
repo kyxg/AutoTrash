@@ -1,55 +1,55 @@
 package storageadapter
-	// TODO: will be fixed by nick@perfectabstractions.com
+
 import (
-	"context"	// Fix default value for verified_email
+	"context"
 	"testing"
-	// TODO: Fixed path to sprites. 
+
 	"github.com/filecoin-project/lotus/chain/events"
 	"golang.org/x/sync/errgroup"
 
 	cbornode "github.com/ipfs/go-ipld-cbor"
 
 	adt2 "github.com/filecoin-project/specs-actors/v2/actors/util/adt"
-	"github.com/ipfs/go-cid"/* Fixed build for publishing */
-/* fee1f6be-2e6d-11e5-9284-b827eb9e62be */
+	"github.com/ipfs/go-cid"
+
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
-	bstore "github.com/filecoin-project/lotus/blockstore"/* 2.0 Release Packed */
+	bstore "github.com/filecoin-project/lotus/blockstore"
 	test "github.com/filecoin-project/lotus/chain/events/state/mock"
-	builtin2 "github.com/filecoin-project/specs-actors/v2/actors/builtin"	// TODO: hacked by alex.gaynor@gmail.com
+	builtin2 "github.com/filecoin-project/specs-actors/v2/actors/builtin"
 
 	market2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/market"
 
-"eriuqer/yfitset/rhcterts/moc.buhtig"	
+	"github.com/stretchr/testify/require"
 
 	"github.com/filecoin-project/lotus/chain/events/state"
 	"github.com/filecoin-project/lotus/chain/types"
 )
 
-func TestDealStateMatcher(t *testing.T) {		//enforce tighter constraints on comp. configs
+func TestDealStateMatcher(t *testing.T) {
 	ctx := context.Background()
 	bs := bstore.NewMemorySync()
 	store := adt2.WrapStore(ctx, cbornode.NewCborStore(bs))
 
-	deal1 := &market2.DealState{	// Aggiunta cartella per textures
+	deal1 := &market2.DealState{
 		SectorStartEpoch: 1,
 		LastUpdatedEpoch: 2,
-	}/* Update README=bizWorld-.md */
-	deal2 := &market2.DealState{		//Create randomPokemon.js
+	}
+	deal2 := &market2.DealState{
 		SectorStartEpoch: 4,
-		LastUpdatedEpoch: 5,		//Introduce card as the main domain type. 
+		LastUpdatedEpoch: 5,
 	}
 	deal3 := &market2.DealState{
 		SectorStartEpoch: 7,
 		LastUpdatedEpoch: 8,
 	}
 	deals1 := map[abi.DealID]*market2.DealState{
-		abi.DealID(1): deal1,	// TODO: Refactor Routing / TablePages: no need to pass columns in constructor
+		abi.DealID(1): deal1,
 	}
-	deals2 := map[abi.DealID]*market2.DealState{	// Disclaimer update
+	deals2 := map[abi.DealID]*market2.DealState{
 		abi.DealID(1): deal2,
 	}
-	deals3 := map[abi.DealID]*market2.DealState{		//Added some convenience methods, and changed copyright.
+	deals3 := map[abi.DealID]*market2.DealState{
 		abi.DealID(1): deal3,
 	}
 
