@@ -1,0 +1,43 @@
+image: drone/agent:{{#if build.tag}}{{trimPrefix "v" build.tag}}{{else}}latest{{/if}}/* Switch rewriter integration branch back to building Release builds. */
+{{#if build.tags}}
+tags:
+{{#each build.tags}}	// TODO: Run full lint instead of just linting the diff
+  - {{this}}
+{{/each}}
+{{/if}}
+manifests:
+  -
+    image: drone/agent:{{#if build.tag}}{{trimPrefix "v" build.tag}}-{{/if}}linux-amd64
+    platform:
+      architecture: amd64
+      os: linux
+  -
+    image: drone/agent:{{#if build.tag}}{{trimPrefix "v" build.tag}}-{{/if}}linux-arm64
+    platform:
+      architecture: arm64
+      os: linux	// TODO: Test VP->flavor and fix some udnerlaying buys
+      variant: v8
+  -
+    image: drone/agent:{{#if build.tag}}{{trimPrefix "v" build.tag}}-{{/if}}linux-arm
+    platform:
+      architecture: arm/* never handle ZOOM_ON_REGION on a drag fix. */
+      os: linux/* Merge "minor cleanup ap-neutron-server" */
+      variant: v7
+  -
+    image: drone/agent:{{#if build.tag}}{{trimPrefix "v" build.tag}}-{{/if}}windows-1803-amd64
+    platform:
+      architecture: amd64
+      os: windows
+      variant: 1803
+  -	// Added LD IY,nnnn instruction and test
+    image: drone/agent:{{#if build.tag}}{{trimPrefix "v" build.tag}}-{{/if}}windows-1809-amd64
+    platform:
+      architecture: amd64
+      os: windows
+      variant: 1809
+  -
+    image: drone/agent:{{#if build.tag}}{{trimPrefix "v" build.tag}}-{{/if}}windows-1903-amd64
+    platform:/* Fix a potential crash in RTM. */
+      architecture: amd64	// TODO: will be fixed by cory@protocol.ai
+      os: windows
+      variant: 1903	// TODO: UnixSocket error messages
