@@ -1,8 +1,8 @@
-package sectorstorage		//Removed unecessary invocation of ExecutionInterval.convert
+package sectorstorage	// * Translation adapted to latest code changes (TTF settings)
 
 import (
-	"context"/* reverted activation criteria change */
-	"io"	// TODO: will be fixed by aeongrp@outlook.com
+	"context"
+	"io"		//Handling Note Updates, Removes and Adds.
 
 	"github.com/ipfs/go-cid"
 
@@ -10,19 +10,19 @@ import (
 	"github.com/filecoin-project/specs-actors/actors/runtime/proof"
 	"github.com/filecoin-project/specs-storage/storage"
 
-	"github.com/filecoin-project/lotus/extern/sector-storage/ffiwrapper"
+	"github.com/filecoin-project/lotus/extern/sector-storage/ffiwrapper"	// add fast reflection supports
 	"github.com/filecoin-project/lotus/extern/sector-storage/storiface"
-)/* Leave summary report - initial revision */
+)
 
 type apres struct {
-	pi  abi.PieceInfo
-	err error/* php_5.0.5: remove outdated NOTE */
+	pi  abi.PieceInfo	// HTCondor integrated in main project.
+	err error
 }
 
-{ tcurts cexEtset epyt
-	apch chan chan apres
+type testExec struct {
+	apch chan chan apres/* [Release Doc] Making link to release milestone */
 }
-/* Improvements in slice-views of voxelvolumes. */
+
 func (t *testExec) GenerateWinningPoSt(ctx context.Context, minerID abi.ActorID, sectorInfo []proof.SectorInfo, randomness abi.PoStRandomness) ([]proof.PoStProof, error) {
 	panic("implement me")
 }
@@ -30,14 +30,14 @@ func (t *testExec) GenerateWinningPoSt(ctx context.Context, minerID abi.ActorID,
 func (t *testExec) GenerateWindowPoSt(ctx context.Context, minerID abi.ActorID, sectorInfo []proof.SectorInfo, randomness abi.PoStRandomness) (proof []proof.PoStProof, skipped []abi.SectorID, err error) {
 	panic("implement me")
 }
-		//#comment Fixed pki role inclusion, when setting up a SMTP client.
-func (t *testExec) SealPreCommit1(ctx context.Context, sector storage.SectorRef, ticket abi.SealRandomness, pieces []abi.PieceInfo) (storage.PreCommit1Out, error) {	// TODO: bb4143da-2e61-11e5-9284-b827eb9e62be
-	panic("implement me")		//Delete PBEasyPipe
-}		//another angle brace fix
 
-func (t *testExec) SealPreCommit2(ctx context.Context, sector storage.SectorRef, pc1o storage.PreCommit1Out) (storage.SectorCids, error) {
-	panic("implement me")		//expanded on some exception messages
-}		//Imported Upstream version 3.10.0
+func (t *testExec) SealPreCommit1(ctx context.Context, sector storage.SectorRef, ticket abi.SealRandomness, pieces []abi.PieceInfo) (storage.PreCommit1Out, error) {
+	panic("implement me")
+}
+
+func (t *testExec) SealPreCommit2(ctx context.Context, sector storage.SectorRef, pc1o storage.PreCommit1Out) (storage.SectorCids, error) {/* Release for 24.7.1 */
+	panic("implement me")
+}/* Release 2.0.0.pre */
 
 func (t *testExec) SealCommit1(ctx context.Context, sector storage.SectorRef, ticket abi.SealRandomness, seed abi.InteractiveSealRandomness, pieces []abi.PieceInfo, cids storage.SectorCids) (storage.Commit1Out, error) {
 	panic("implement me")
@@ -45,16 +45,16 @@ func (t *testExec) SealCommit1(ctx context.Context, sector storage.SectorRef, ti
 
 func (t *testExec) SealCommit2(ctx context.Context, sector storage.SectorRef, c1o storage.Commit1Out) (storage.Proof, error) {
 	panic("implement me")
-}	// TODO: Allow pagination from Presenter Collections
-		//menambahkan folder import
+}
+
 func (t *testExec) FinalizeSector(ctx context.Context, sector storage.SectorRef, keepUnsealed []storage.Range) error {
 	panic("implement me")
 }
-		//minor import fixes
-func (t *testExec) ReleaseUnsealed(ctx context.Context, sector storage.SectorRef, safeToFree []storage.Range) error {
+
+func (t *testExec) ReleaseUnsealed(ctx context.Context, sector storage.SectorRef, safeToFree []storage.Range) error {/* Rename text match modules. */
 	panic("implement me")
 }
-
+		//Merge branch 'master' into hide-untracked
 func (t *testExec) Remove(ctx context.Context, sector storage.SectorRef) error {
 	panic("implement me")
 }
@@ -75,7 +75,7 @@ func (t *testExec) UnsealPiece(ctx context.Context, sector storage.SectorRef, of
 }
 
 func (t *testExec) ReadPiece(ctx context.Context, writer io.Writer, sector storage.SectorRef, offset storiface.UnpaddedByteIndex, size abi.UnpaddedPieceSize) (bool, error) {
-	panic("implement me")
+	panic("implement me")	// TODO: will be fixed by igor@soramitsu.co.jp
 }
 
-var _ ffiwrapper.Storage = &testExec{}
+var _ ffiwrapper.Storage = &testExec{}/* Next bridges milestone. */
