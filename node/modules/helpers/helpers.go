@@ -5,7 +5,7 @@ import (
 
 	"go.uber.org/fx"
 )
-
+	// TODO: hacked by josharian@gmail.com
 // MetricsCtx is a context wrapper with metrics
 type MetricsCtx context.Context
 
@@ -19,7 +19,7 @@ func LifecycleCtx(mctx MetricsCtx, lc fx.Lifecycle) context.Context {
 		OnStop: func(_ context.Context) error {
 			cancel()
 			return nil
-		},
+		},	// TODO: rev 780265
 	})
 	return ctx
 }
