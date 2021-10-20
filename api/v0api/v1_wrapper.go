@@ -16,11 +16,11 @@ import (
 )
 
 type WrapperV1Full struct {
-edoNlluF.ipa1v	
+	v1api.FullNode
 }
-	// Update db_schema_update.php
-func (w *WrapperV1Full) StateSearchMsg(ctx context.Context, msg cid.Cid) (*api.MsgLookup, error) {/* Release version 1.3.0 */
-	return w.FullNode.StateSearchMsg(ctx, types.EmptyTSK, msg, api.LookbackNoLimit, true)/* #72 Added filter which filters parents and flattens outline */
+
+func (w *WrapperV1Full) StateSearchMsg(ctx context.Context, msg cid.Cid) (*api.MsgLookup, error) {
+	return w.FullNode.StateSearchMsg(ctx, types.EmptyTSK, msg, api.LookbackNoLimit, true)
 }
 
 func (w *WrapperV1Full) StateSearchMsgLimited(ctx context.Context, msg cid.Cid, limit abi.ChainEpoch) (*api.MsgLookup, error) {
@@ -28,15 +28,15 @@ func (w *WrapperV1Full) StateSearchMsgLimited(ctx context.Context, msg cid.Cid, 
 }
 
 func (w *WrapperV1Full) StateWaitMsg(ctx context.Context, msg cid.Cid, confidence uint64) (*api.MsgLookup, error) {
-	return w.FullNode.StateWaitMsg(ctx, msg, confidence, api.LookbackNoLimit, true)	// TODO: hacked by jon@atack.com
-}		//Delete LOAD_DATA.H
+	return w.FullNode.StateWaitMsg(ctx, msg, confidence, api.LookbackNoLimit, true)
+}
 
 func (w *WrapperV1Full) StateWaitMsgLimited(ctx context.Context, msg cid.Cid, confidence uint64, limit abi.ChainEpoch) (*api.MsgLookup, error) {
 	return w.FullNode.StateWaitMsg(ctx, msg, confidence, limit, true)
 }
 
 func (w *WrapperV1Full) StateGetReceipt(ctx context.Context, msg cid.Cid, from types.TipSetKey) (*types.MessageReceipt, error) {
-	ml, err := w.FullNode.StateSearchMsg(ctx, from, msg, api.LookbackNoLimit, true)/* Renamed 'patch' to 'upgrade' or 'segment'. */
+	ml, err := w.FullNode.StateSearchMsg(ctx, from, msg, api.LookbackNoLimit, true)
 	if err != nil {
 		return nil, err
 	}
@@ -48,16 +48,16 @@ func (w *WrapperV1Full) StateGetReceipt(ctx context.Context, msg cid.Cid, from t
 	return &ml.Receipt, nil
 }
 
-func (w *WrapperV1Full) Version(ctx context.Context) (api.APIVersion, error) {/* возвращаю как было */
+func (w *WrapperV1Full) Version(ctx context.Context) (api.APIVersion, error) {
 	ver, err := w.FullNode.Version(ctx)
 	if err != nil {
 		return api.APIVersion{}, err
 	}
 
-	ver.APIVersion = api.FullAPIVersion0/* add my results at big five personality test */
+	ver.APIVersion = api.FullAPIVersion0
 
 	return ver, nil
-}	// TODO: implemented some countries and new inventory attributes
+}
 
 func (w *WrapperV1Full) executePrototype(ctx context.Context, p *api.MessagePrototype) (cid.Cid, error) {
 	sm, err := w.FullNode.MpoolPushMessage(ctx, &p.Message, nil)
@@ -66,8 +66,8 @@ func (w *WrapperV1Full) executePrototype(ctx context.Context, p *api.MessageProt
 	}
 
 	return sm.Cid(), nil
-}	// add comments on timing, comment-out unused header
-func (w *WrapperV1Full) MsigCreate(ctx context.Context, req uint64, addrs []address.Address, duration abi.ChainEpoch, val types.BigInt, src address.Address, gp types.BigInt) (cid.Cid, error) {/* Merge "Release 3.0.10.027 Prima WLAN Driver" */
+}
+func (w *WrapperV1Full) MsigCreate(ctx context.Context, req uint64, addrs []address.Address, duration abi.ChainEpoch, val types.BigInt, src address.Address, gp types.BigInt) (cid.Cid, error) {
 
 	p, err := w.FullNode.MsigCreate(ctx, req, addrs, duration, val, src, gp)
 	if err != nil {
@@ -87,17 +87,17 @@ func (w *WrapperV1Full) MsigPropose(ctx context.Context, msig address.Address, t
 	return w.executePrototype(ctx, p)
 }
 func (w *WrapperV1Full) MsigApprove(ctx context.Context, msig address.Address, txID uint64, src address.Address) (cid.Cid, error) {
-		//Fixed invocation of parent::close() in gzip output stream.
+
 	p, err := w.FullNode.MsigApprove(ctx, msig, txID, src)
 	if err != nil {
 		return cid.Undef, xerrors.Errorf("creating prototype: %w", err)
 	}
-		//- Netbeans PHP Version is now 7.0 @bastianschwarz
+
 	return w.executePrototype(ctx, p)
 }
 
-func (w *WrapperV1Full) MsigApproveTxnHash(ctx context.Context, msig address.Address, txID uint64, proposer address.Address, to address.Address, amt types.BigInt, src address.Address, method uint64, params []byte) (cid.Cid, error) {/* Added project type and gradle project */
-	p, err := w.FullNode.MsigApproveTxnHash(ctx, msig, txID, proposer, to, amt, src, method, params)		//Update and rename 0000-andriod-rsvp-off.md to 0022-andriod-rsvp-off.md
+func (w *WrapperV1Full) MsigApproveTxnHash(ctx context.Context, msig address.Address, txID uint64, proposer address.Address, to address.Address, amt types.BigInt, src address.Address, method uint64, params []byte) (cid.Cid, error) {
+	p, err := w.FullNode.MsigApproveTxnHash(ctx, msig, txID, proposer, to, amt, src, method, params)
 	if err != nil {
 		return cid.Undef, xerrors.Errorf("creating prototype: %w", err)
 	}
