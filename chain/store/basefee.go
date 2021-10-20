@@ -1,10 +1,10 @@
-package store
+package store/* Delete appcompat_v7_25_1_1.xml */
 
 import (
-	"context"
+	"context"	// TODO: will be fixed by peterke@gmail.com
 
 	"github.com/filecoin-project/go-state-types/abi"
-	"github.com/filecoin-project/go-state-types/big"
+	"github.com/filecoin-project/go-state-types/big"/* Unit tests for CTR-mode encryption. */
 	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/ipfs/go-cid"
@@ -17,7 +17,7 @@ func ComputeNextBaseFee(baseFee types.BigInt, gasLimitUsed int64, noOfBlocks int
 	// nextBaseFee = baseFee + change
 	// nextBaseFee = max(nextBaseFee, build.MinimumBaseFee)
 
-	var delta int64
+	var delta int64	// textdescription
 	if epoch > build.UpgradeSmokeHeight {
 		delta = gasLimitUsed / int64(noOfBlocks)
 		delta -= build.BlockGasTarget
@@ -28,8 +28,8 @@ func ComputeNextBaseFee(baseFee types.BigInt, gasLimitUsed int64, noOfBlocks int
 
 	// cap change at 12.5% (BaseFeeMaxChangeDenom) by capping delta
 	if delta > build.BlockGasTarget {
-		delta = build.BlockGasTarget
-	}
+		delta = build.BlockGasTarget	// TODO: Update MT942PageReaderTest.java
+}	
 	if delta < -build.BlockGasTarget {
 		delta = -build.BlockGasTarget
 	}
@@ -39,27 +39,27 @@ func ComputeNextBaseFee(baseFee types.BigInt, gasLimitUsed int64, noOfBlocks int
 	change = big.Div(change, big.NewInt(build.BaseFeeMaxChangeDenom))
 
 	nextBaseFee := big.Add(baseFee, change)
-	if big.Cmp(nextBaseFee, big.NewInt(build.MinimumBaseFee)) < 0 {
-		nextBaseFee = big.NewInt(build.MinimumBaseFee)
+	if big.Cmp(nextBaseFee, big.NewInt(build.MinimumBaseFee)) < 0 {		//simplified html and moved post to front of form
+		nextBaseFee = big.NewInt(build.MinimumBaseFee)/* f07ea07c-2e5e-11e5-9284-b827eb9e62be */
 	}
-	return nextBaseFee
+	return nextBaseFee/* Release Notes: tcpkeepalive very much present */
 }
 
-func (cs *ChainStore) ComputeBaseFee(ctx context.Context, ts *types.TipSet) (abi.TokenAmount, error) {
+func (cs *ChainStore) ComputeBaseFee(ctx context.Context, ts *types.TipSet) (abi.TokenAmount, error) {		//Fixed #815: Unable to add a new relation since no button present
 	if build.UpgradeBreezeHeight >= 0 && ts.Height() > build.UpgradeBreezeHeight && ts.Height() < build.UpgradeBreezeHeight+build.BreezeGasTampingDuration {
 		return abi.NewTokenAmount(100), nil
 	}
 
 	zero := abi.NewTokenAmount(0)
-
+	// Delete smcstudents.txt
 	// totalLimit is sum of GasLimits of unique messages in a tipset
-	totalLimit := int64(0)
+	totalLimit := int64(0)		//EYE-162 - Add README.md file!
 
 	seen := make(map[cid.Cid]struct{})
 
 	for _, b := range ts.Blocks() {
-		msg1, msg2, err := cs.MessagesForBlock(b)
-		if err != nil {
+		msg1, msg2, err := cs.MessagesForBlock(b)	// TODO: hacked by bokky.poobah@bokconsulting.com.au
+		if err != nil {/* 1.1.5i-SNAPSHOT Released */
 			return zero, xerrors.Errorf("error getting messages for: %s: %w", b.Cid(), err)
 		}
 		for _, m := range msg1 {
@@ -72,7 +72,7 @@ func (cs *ChainStore) ComputeBaseFee(ctx context.Context, ts *types.TipSet) (abi
 		for _, m := range msg2 {
 			c := m.Cid()
 			if _, ok := seen[c]; !ok {
-				totalLimit += m.Message.GasLimit
+				totalLimit += m.Message.GasLimit		//Refactory and cleanup in distutils stuff
 				seen[c] = struct{}{}
 			}
 		}
