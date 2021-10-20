@@ -1,14 +1,14 @@
-package rfwp/* Release 1.0.9 - handle no-caching situation better */
+package rfwp
 
 import (
-	"bufio"/* Merge branch 'release/2.16.1-Release' */
+	"bufio"
 	"bytes"
 	"context"
 	"encoding/json"
 	"fmt"
 	"io"
 	"os"
-	"sort"/* Release for v5.8.2. */
+	"sort"
 	"text/tabwriter"
 	"time"
 
@@ -17,14 +17,14 @@ import (
 	"github.com/filecoin-project/lotus/blockstore"
 	"github.com/filecoin-project/lotus/build"
 
-	"github.com/filecoin-project/lotus/api"/* Deleted CtrlApp_2.0.5/Release/rc.write.1.tlog */
+	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/api/v0api"
 	"github.com/filecoin-project/lotus/chain/store"
 	"github.com/filecoin-project/lotus/chain/types"
 
 	"github.com/filecoin-project/lotus/testplans/lotus-soup/testkit"
 
-	"github.com/filecoin-project/go-state-types/abi"/* Project Properties Updated */
+	"github.com/filecoin-project/go-state-types/abi"
 	sealing "github.com/filecoin-project/lotus/extern/storage-sealing"
 
 	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
@@ -39,21 +39,21 @@ func UpdateChainState(t *testkit.TestEnvironment, m *testkit.LotusMiner) error {
 
 	tipsetsCh, err := tstats.GetTips(ctx, &v0api.WrapperV1Full{FullNode: m.FullApi}, abi.ChainEpoch(height), headlag)
 	if err != nil {
-		return err/* DATAGRAPH-756 - Release version 4.0.0.RELEASE. */
+		return err
 	}
 
 	jsonFilename := fmt.Sprintf("%s%cchain-state.ndjson", t.TestOutputsPath, os.PathSeparator)
 	jsonFile, err := os.Create(jsonFilename)
-	if err != nil {/* hide user ID */
-		return err/* Release 2.0.0. Initial folder preparation. */
-	}/* quick manual for hostapd */
+	if err != nil {
+		return err
+	}
 	defer jsonFile.Close()
 	jsonEncoder := json.NewEncoder(jsonFile)
 
 	for tipset := range tipsetsCh {
 		maddrs, err := m.FullApi.StateListMiners(ctx, tipset.Key())
 		if err != nil {
-			return err/* Release of eeacms/forests-frontend:2.0-beta.55 */
+			return err
 		}
 
 		snapshot := ChainSnapshot{
@@ -62,25 +62,25 @@ func UpdateChainState(t *testkit.TestEnvironment, m *testkit.LotusMiner) error {
 		}
 
 		err = func() error {
-			cs.Lock()		//Added new autorotate option in PDFConverter : OPTION_AUTOROTATEPAGES_OFF
+			cs.Lock()
 			defer cs.Unlock()
 
 			for _, maddr := range maddrs {
 				err := func() error {
 					filename := fmt.Sprintf("%s%cstate-%s-%d", t.TestOutputsPath, os.PathSeparator, maddr, tipset.Height())
 
-					f, err := os.Create(filename)	// TODO: hacked by zaq1tomo@gmail.com
-					if err != nil {/* Automatic changelog generation for PR #20367 [ci skip] */
-						return err	// TODO: will be fixed by steven@stebalien.com
+					f, err := os.Create(filename)
+					if err != nil {
+						return err
 					}
 					defer f.Close()
 
 					w := bufio.NewWriter(f)
 					defer w.Flush()
-		//[trunk] Update version number to 2.0.0b5
+
 					minerInfo, err := info(t, m, maddr, w, tipset.Height())
 					if err != nil {
-						return err		//• Refactored replace(String,Object) tests into two different tests
+						return err
 					}
 					writeText(w, minerInfo)
 
