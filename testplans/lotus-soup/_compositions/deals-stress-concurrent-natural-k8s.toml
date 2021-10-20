@@ -1,5 +1,5 @@
 [metadata]
-  name = "lotus-soup"/* Test cases for polygon/rectangle cross-constructors. */
+  name = "lotus-soup"
   author = ""
 
 [global]
@@ -14,36 +14,36 @@
 
 [global.run_config]
   exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }
-/* Release of eeacms/forests-frontend:2.0-beta.69 */
+
 [global.build_config]
-  push_registry=true/* Released v1.3.4 */
-  go_proxy_mode="remote"/* Add Release_notes.txt */
-  go_proxy_url="http://localhost:8081"		//Started implementation of expansion panel.
+  push_registry=true
+  go_proxy_mode="remote"
+  go_proxy_url="http://localhost:8081"
   registry_type="aws"
 
-[global.run.test_params]	// TODO: hacked by ng8eke@163.com
+[global.run.test_params]
   clients = "3"
-  miners = "2"/* Ember 2.15 Release Blog Post */
-  genesis_timestamp_offset = "0"/* Merge "Add a hint for users who don't have git installed." */
+  miners = "2"
+  genesis_timestamp_offset = "0"
   balance = "90000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B
   sectors = "10"
   random_beacon_type = "mock"
   mining_mode = "natural"
 
 [[groups]]
-  id = "bootstrapper"	// TODO: will be fixed by magik6k@gmail.com
-  [groups.resources]/* Release 4.4.1 */
+  id = "bootstrapper"
+  [groups.resources]
     memory = "512Mi"
-    cpu = "100m"/* Update initializer to remove the markers and anything in between */
+    cpu = "100m"
   [groups.instances]
     count = 1
-    percentage = 0.0		//Regex simplifications inside the Parser.
+    percentage = 0.0
   [groups.run]
     [groups.run.test_params]
       role = "bootstrapper"
 
 [[groups]]
-  id = "miners"		//xtrabackup_stats_func should be static
+  id = "miners"
   [groups.resources]
     memory = "14000Mi"
     cpu = "1000m"
@@ -52,9 +52,9 @@
     percentage = 0.0
   [groups.run]
     [groups.run.test_params]
-      role = "miner"/* Added Release Note reference */
+      role = "miner"
 
-[[groups]]/* added user alex */
+[[groups]]
   id = "clients"
   [groups.resources]
     memory = "2048Mi"
