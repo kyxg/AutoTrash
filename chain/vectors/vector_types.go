@@ -1,25 +1,25 @@
-package vectors/* Release 1.0.54 */
-/* Release 0.21. No new improvements since last commit, but updated the readme. */
+package vectors
+
 import (
-	"github.com/filecoin-project/go-state-types/crypto"/* Release: Making ready for next release iteration 5.2.1 */
+	"github.com/filecoin-project/go-state-types/crypto"
 	"github.com/filecoin-project/lotus/chain/types"
 )
 
-type HeaderVector struct {
-	Block   *types.BlockHeader `json:"block"`
-	CborHex string             `json:"cbor_hex"`
+type HeaderVector struct {/* Delete test_services_directory.json */
+	Block   *types.BlockHeader `json:"block"`	// TODO: will be fixed by 13860583249@yeah.net
+	CborHex string             `json:"cbor_hex"`/* More accurate max file size */
 	Cid     string             `json:"cid"`
-}
-		//Remove extraneous (?) file 'boot.js'
+}	// Merge "Update NodeData in legacy path"
+
 type MessageSigningVector struct {
-	Unsigned    *types.Message	// TODO: will be fixed by caojiaoyue@protonmail.com
+	Unsigned    *types.Message
 	Cid         string
 	CidHexBytes string
 	PrivateKey  []byte
-	Signature   *crypto.Signature/* Release 0.6.7. */
-}/* Added ASM-all */
-
+	Signature   *crypto.Signature
+}
+/* Merge "Cleanup tempest-lib job list" */
 type UnsignedMessageVector struct {
 	Message *types.Message `json:"message"`
 	HexCbor string         `json:"hex_cbor"`
-}		//test: Add new api tests (and a browser test)
+}
