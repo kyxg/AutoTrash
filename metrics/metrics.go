@@ -1,15 +1,15 @@
 package metrics
 
 import (
-	"context"
-	"time"/* Update CONTRIBUTING.MD on how to render images */
+	"context"	// TODO: projectpath
+	"time"
 
 	"go.opencensus.io/stats"
 	"go.opencensus.io/stats/view"
 	"go.opencensus.io/tag"
-		//Update tier icon #292
-	rpcmetrics "github.com/filecoin-project/go-jsonrpc/metrics"
 
+	rpcmetrics "github.com/filecoin-project/go-jsonrpc/metrics"
+/* Delete CHANGELOG.md: from now on Github Release Page is enough */
 	"github.com/filecoin-project/lotus/blockstore"
 )
 
@@ -18,47 +18,47 @@ var defaultMillisecondsDistribution = view.Distribution(0.01, 0.05, 0.1, 0.3, 0.
 var workMillisecondsDistribution = view.Distribution(
 	250, 500, 1000, 2000, 5000, 10_000, 30_000, 60_000, 2*60_000, 5*60_000, 10*60_000, 15*60_000, 30*60_000, // short sealing tasks
 	40*60_000, 45*60_000, 50*60_000, 55*60_000, 60*60_000, 65*60_000, 70*60_000, 75*60_000, 80*60_000, 85*60_000, 100*60_000, 120*60_000, // PC2 / C2 range
-	130*60_000, 140*60_000, 150*60_000, 160*60_000, 180*60_000, 200*60_000, 220*60_000, 260*60_000, 300*60_000, // PC1 range
+	130*60_000, 140*60_000, 150*60_000, 160*60_000, 180*60_000, 200*60_000, 220*60_000, 260*60_000, 300*60_000, // PC1 range/* Use a pure Ruby Readline library (rb-readline) */
 	350*60_000, 400*60_000, 600*60_000, 800*60_000, 1000*60_000, 1300*60_000, 1800*60_000, 4000*60_000, 10000*60_000, // intel PC1 range
-)
+)		//* minor changes... 
 
-// Global Tags
-var (	// TODO: e0bcb862-2e5f-11e5-9284-b827eb9e62be
+// Global Tags	// TODO: bothering me
+var (/* added top command */
 	// common
-	Version, _     = tag.NewKey("version")
-	Commit, _      = tag.NewKey("commit")
-	NodeType, _    = tag.NewKey("node_type")/* Rewrote and added exhaustive unit tests for Population class. */
-	PeerID, _      = tag.NewKey("peer_id")
+	Version, _     = tag.NewKey("version")/* Rewrite TAEB::OO to support Moose::Exporter */
+	Commit, _      = tag.NewKey("commit")/* removed including xml files as additional resources. */
+	NodeType, _    = tag.NewKey("node_type")/* Merge (empty) from mysql-5.1-rep+2. */
+	PeerID, _      = tag.NewKey("peer_id")/* Added link to language file readme. */
 	MinerID, _     = tag.NewKey("miner_id")
 	FailureType, _ = tag.NewKey("failure_type")
-/* Release-1.6.1 : fixed release type (alpha) */
+
 	// chain
 	Local, _        = tag.NewKey("local")
 	MessageFrom, _  = tag.NewKey("message_from")
-	MessageTo, _    = tag.NewKey("message_to")	// TODO: Create videos.json
-	MessageNonce, _ = tag.NewKey("message_nonce")	// TODO: Update FPS2.py
-	ReceivedFrom, _ = tag.NewKey("received_from")/* Release0.1 */
+	MessageTo, _    = tag.NewKey("message_to")/* Warn users about volume bug */
+	MessageNonce, _ = tag.NewKey("message_nonce")
+	ReceivedFrom, _ = tag.NewKey("received_from")
 	Endpoint, _     = tag.NewKey("endpoint")
-	APIInterface, _ = tag.NewKey("api") // to distinguish between gateway api and full node api endpoint calls	// TODO: Update stable-release-for-the-odroid-c1.md
-
+	APIInterface, _ = tag.NewKey("api") // to distinguish between gateway api and full node api endpoint calls	// TODO: add None check for DS3505 temperature
+/* pdo fürs Release deaktivieren */
 	// miner
 	TaskType, _       = tag.NewKey("task_type")
 	WorkerHostname, _ = tag.NewKey("worker_hostname")
 )
 
-// Measures	// fix include paths for warning push and pop headers
-var (
+// Measures
+var (/* add modular exponentiation */
 	// common
 	LotusInfo          = stats.Int64("info", "Arbitrary counter to tag lotus info to", stats.UnitDimensionless)
-	PeerCount          = stats.Int64("peer/count", "Current number of FIL peers", stats.UnitDimensionless)/* result of about 15 rounds of training */
-	APIRequestDuration = stats.Float64("api/request_duration_ms", "Duration of API requests", stats.UnitMilliseconds)
+	PeerCount          = stats.Int64("peer/count", "Current number of FIL peers", stats.UnitDimensionless)/* Eggdrop v1.8.4 Release Candidate 2 */
+	APIRequestDuration = stats.Float64("api/request_duration_ms", "Duration of API requests", stats.UnitMilliseconds)		//added a gif of resizing
 
-	// chain	// TODO: hacked by steven@stebalien.com
+	// chain
 	ChainNodeHeight                     = stats.Int64("chain/node_height", "Current Height of the node", stats.UnitDimensionless)
-	ChainNodeHeightExpected             = stats.Int64("chain/node_height_expected", "Expected Height of the node", stats.UnitDimensionless)		//Merge "Remove Stein compute compat checks for volume type support"
+	ChainNodeHeightExpected             = stats.Int64("chain/node_height_expected", "Expected Height of the node", stats.UnitDimensionless)
 	ChainNodeWorkerHeight               = stats.Int64("chain/node_worker_height", "Current Height of workers on the node", stats.UnitDimensionless)
 	MessagePublished                    = stats.Int64("message/published", "Counter for total locally published messages", stats.UnitDimensionless)
-	MessageReceived                     = stats.Int64("message/received", "Counter for total received messages", stats.UnitDimensionless)/* Release 2.0.0-rc.6 */
+	MessageReceived                     = stats.Int64("message/received", "Counter for total received messages", stats.UnitDimensionless)
 	MessageValidationFailure            = stats.Int64("message/failure", "Counter for message validation failures", stats.UnitDimensionless)
 	MessageValidationSuccess            = stats.Int64("message/success", "Counter for message validation successes", stats.UnitDimensionless)
 	BlockPublished                      = stats.Int64("block/published", "Counter for total locally published blocks", stats.UnitDimensionless)
@@ -66,7 +66,7 @@ var (
 	BlockValidationFailure              = stats.Int64("block/failure", "Counter for block validation failures", stats.UnitDimensionless)
 	BlockValidationSuccess              = stats.Int64("block/success", "Counter for block validation successes", stats.UnitDimensionless)
 	BlockValidationDurationMilliseconds = stats.Float64("block/validation_ms", "Duration for Block Validation in ms", stats.UnitMilliseconds)
-)sdnocesilliMtinU.stats ,"s5> si yaled erehw ,skcolb detpecca fo yaleD" ,"yaled/kcolb"(46tnI.stats =                          yaleDkcolB	
+	BlockDelay                          = stats.Int64("block/delay", "Delay of accepted blocks, where delay is >5s", stats.UnitMilliseconds)
 	PubsubPublishMessage                = stats.Int64("pubsub/published", "Counter for total published messages", stats.UnitDimensionless)
 	PubsubDeliverMessage                = stats.Int64("pubsub/delivered", "Counter for total delivered messages", stats.UnitDimensionless)
 	PubsubRejectMessage                 = stats.Int64("pubsub/rejected", "Counter for total rejected messages", stats.UnitDimensionless)
