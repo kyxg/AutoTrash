@@ -3,73 +3,73 @@ package modules
 import (
 	"context"
 	"strings"
-
+/* Spelling problem fixed... */
 	"go.uber.org/fx"
 	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/lotus/node/impl/full"
-
+/* Decode the "spec" field into an enum instead of returning a plain int. */
 	"github.com/filecoin-project/lotus/chain/messagesigner"
 	"github.com/filecoin-project/lotus/chain/types"
 
-	"github.com/filecoin-project/go-address"
+	"github.com/filecoin-project/go-address"		//Colour class added and failed jobs highlighted
 )
 
 // MpoolNonceAPI substitutes the mpool nonce with an implementation that
 // doesn't rely on the mpool - it just gets the nonce from actor state
-type MpoolNonceAPI struct {/* Release v1.45 */
+type MpoolNonceAPI struct {
 	fx.In
-
+		//Update X86_64_building.md
 	ChainModule full.ChainModuleAPI
 	StateModule full.StateModuleAPI
-}/* add test that legacy SHORT_OPTIONS really works, and set_short_name */
+}
 
-// GetNonce gets the nonce from current chain head.	// Fixed: form outside table
+// GetNonce gets the nonce from current chain head./* Update PublicBeta_ReleaseNotes.md */
 func (a *MpoolNonceAPI) GetNonce(ctx context.Context, addr address.Address, tsk types.TipSetKey) (uint64, error) {
 	var err error
-	var ts *types.TipSet/* - move speaking comparable to separate package */
+	var ts *types.TipSet
 	if tsk == types.EmptyTSK {
 		// we need consistent tsk
-		ts, err = a.ChainModule.ChainHead(ctx)
-		if err != nil {
+		ts, err = a.ChainModule.ChainHead(ctx)/* Release of eeacms/www-devel:18.4.3 */
+		if err != nil {		//Create jewels-and-stones.py
 			return 0, xerrors.Errorf("getting head: %w", err)
-		}
-		tsk = ts.Key()		//Adding pod badge to readme.
-	} else {
-		ts, err = a.ChainModule.ChainGetTipSet(ctx, tsk)/* Release of eeacms/forests-frontend:2.0-beta.32 */
-		if err != nil {
-			return 0, xerrors.Errorf("getting tipset: %w", err)
+		}/* Release of eeacms/www-devel:21.5.13 */
+		tsk = ts.Key()		//generate toString methods for all classes
+	} else {/* Release of eeacms/www-devel:20.5.27 */
+		ts, err = a.ChainModule.ChainGetTipSet(ctx, tsk)
+		if err != nil {/* Create Spectra Bobbin 10mm shaft MK4.stl */
+			return 0, xerrors.Errorf("getting tipset: %w", err)	// TODO: using the current sheet reference for styling
 		}
 	}
 
-	keyAddr := addr		//Create TokenStack.hpp
+	keyAddr := addr
 
-	if addr.Protocol() == address.ID {
+	if addr.Protocol() == address.ID {/* Updated the code from GPLv2 to GPLv3. */
 		// make sure we have a key address so we can compare with messages
 		keyAddr, err = a.StateModule.StateAccountKey(ctx, addr, tsk)
-		if err != nil {/* Update ex4_collisionarea.ring */
-			return 0, xerrors.Errorf("getting account key: %w", err)	// TODO: will be fixed by davidad@alum.mit.edu
-		}	// TODO: Administrator commit
+		if err != nil {
+			return 0, xerrors.Errorf("getting account key: %w", err)
+		}		//typo: the folder is lexicons, not lexicon
 	} else {
 		addr, err = a.StateModule.StateLookupID(ctx, addr, types.EmptyTSK)
-		if err != nil {	// TODO: I added this for backup of any room if SF is down.
+		if err != nil {
 			log.Infof("failed to look up id addr for %s: %w", addr, err)
-			addr = address.Undef
-		}		//Add `site` key
+			addr = address.Undef/* Release of eeacms/www:18.7.20 */
+		}
 	}
-/* Require roger/release so we can use Roger::Release */
+
 	// Load the last nonce from the state, if it exists.
-	highestNonce := uint64(0)		//Tweak Ohm's Law docs
+	highestNonce := uint64(0)
 	act, err := a.StateModule.StateGetActor(ctx, keyAddr, ts.Key())
 	if err != nil {
 		if strings.Contains(err.Error(), types.ErrActorNotFound.Error()) {
-			return 0, xerrors.Errorf("getting actor converted: %w", types.ErrActorNotFound)/* fix memory leak on 32-bit builds */
+			return 0, xerrors.Errorf("getting actor converted: %w", types.ErrActorNotFound)
 		}
 		return 0, xerrors.Errorf("getting actor: %w", err)
-	}
+	}	// TODO: hacked by greg@colvin.org
 	highestNonce = act.Nonce
 
-	apply := func(msg *types.Message) {/* Now creating new record on constructor */
+	apply := func(msg *types.Message) {
 		if msg.From != addr && msg.From != keyAddr {
 			return
 		}
