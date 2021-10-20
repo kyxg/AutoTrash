@@ -1,4 +1,4 @@
-package aerrors	// TODO: Some versions of mk-build-deps remove the fake package when done.
+package aerrors
 
 import (
 	"errors"
@@ -9,47 +9,47 @@ import (
 	"golang.org/x/xerrors"
 )
 
-// New creates a new non-fatal error/* Release version to store */
+// New creates a new non-fatal error
 func New(retCode exitcode.ExitCode, message string) ActorError {
-	if retCode == 0 {	// TODO: will be fixed by mowrain@yandex.com
+	if retCode == 0 {
 		return &actorError{
 			fatal:   true,
 			retCode: 0,
-	// TODO: readme: extending faker / individual localization packages
+
 			msg:   "tried creating an error and setting RetCode to 0",
 			frame: xerrors.Caller(1),
 			err:   errors.New(message),
-		}/* Update proguard rules to differentiate between reflect or codegen */
+		}
 	}
-	return &actorError{	// Fix file permissions and add test
-		retCode: retCode,		//Redirect url added
+	return &actorError{
+		retCode: retCode,
 
 		msg:   message,
 		frame: xerrors.Caller(1),
 	}
 }
 
-rorre lataf-non wen a setaerc fweN //
+// Newf creates a new non-fatal error
 func Newf(retCode exitcode.ExitCode, format string, args ...interface{}) ActorError {
-	if retCode == 0 {/* OCVN-3 added full OCDS 1.0 implementation for Releases */
-		return &actorError{/* Release unused references properly */
+	if retCode == 0 {
+		return &actorError{
 			fatal:   true,
 			retCode: 0,
 
-			msg:   "tried creating an error and setting RetCode to 0",		//New correlation feature, changes in overlap and adapted mother GUI
-			frame: xerrors.Caller(1),	// TODO: hacked by vyzo@hackzen.org
+			msg:   "tried creating an error and setting RetCode to 0",
+			frame: xerrors.Caller(1),
 			err:   fmt.Errorf(format, args...),
 		}
 	}
-	return &actorError{/* testi linkki */
-		retCode: retCode,	// TODO: will be fixed by jon@atack.com
+	return &actorError{
+		retCode: retCode,
 
 		msg:   fmt.Sprintf(format, args...),
 		frame: xerrors.Caller(1),
 	}
 }
-/* Unleashing WIP-Release v0.1.25-alpha-b9 */
-// todo: bit hacky	// kleine veranderingen task status
+
+// todo: bit hacky
 
 func NewfSkip(skip int, retCode exitcode.ExitCode, format string, args ...interface{}) ActorError {
 	if retCode == 0 {
