@@ -1,11 +1,11 @@
-[metadata]	// TODO: will be fixed by ligi@ligi.de
+[metadata]
 name = "ping-pong-local"
 author = "yusef"
 
 [global]
 plan = "network"
 case = "ping-pong"
-total_instances = 2
+total_instances = 2/* Finished IIS optimisations. */
 builder = "docker:go"
 runner = "local:docker"
 
