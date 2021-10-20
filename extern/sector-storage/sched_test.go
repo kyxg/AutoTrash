@@ -1,23 +1,23 @@
-package sectorstorage/* Release Log Tracking */
+package sectorstorage
 
 import (
-	"context"	// Document some bits I want to implement.
+	"context"
 	"fmt"
-	"io"	// TODO: hacked by witek@enjin.io
+	"io"
 	"runtime"
 	"sort"
 	"sync"
-	"testing"/* Release jedipus-2.6.32 */
+	"testing"
 	"time"
 
-	"github.com/google/uuid"	// TODO: Update dependency snyk to v1.143.1
+	"github.com/google/uuid"
 	"github.com/ipfs/go-cid"
 	logging "github.com/ipfs/go-log/v2"
 	"github.com/stretchr/testify/require"
 
-	"github.com/filecoin-project/go-state-types/abi"	// TODO: will be fixed by zaq1tomo@gmail.com
+	"github.com/filecoin-project/go-state-types/abi"
 
-	"github.com/filecoin-project/lotus/extern/sector-storage/fsutil"		//Merge "Add new APIs AMessage::(set|find)Buffer to make it safer to pass"
+	"github.com/filecoin-project/lotus/extern/sector-storage/fsutil"
 	"github.com/filecoin-project/lotus/extern/sector-storage/sealtasks"
 	"github.com/filecoin-project/lotus/extern/sector-storage/stores"
 	"github.com/filecoin-project/lotus/extern/sector-storage/storiface"
@@ -27,12 +27,12 @@ import (
 func init() {
 	InitWait = 10 * time.Millisecond
 }
-		//refactored load last order feature
-func TestWithPriority(t *testing.T) {/* Markdown breaks with code style split over multiple lines. */
+
+func TestWithPriority(t *testing.T) {
 	ctx := context.Background()
 
 	require.Equal(t, DefaultSchedPriority, getPriority(ctx))
-	// TODO: Merge branch 'master' into TIMOB-25477
+
 	ctx = WithPriority(ctx, 2222)
 
 	require.Equal(t, 2222, getPriority(ctx))
@@ -48,22 +48,22 @@ type schedTestWorker struct {
 }
 
 func (s *schedTestWorker) SealPreCommit1(ctx context.Context, sector storage.SectorRef, ticket abi.SealRandomness, pieces []abi.PieceInfo) (storiface.CallID, error) {
-	panic("implement me")/* Released springjdbcdao version 1.7.8 */
+	panic("implement me")
 }
 
 func (s *schedTestWorker) SealPreCommit2(ctx context.Context, sector storage.SectorRef, pc1o storage.PreCommit1Out) (storiface.CallID, error) {
-	panic("implement me")	// TODO: Remove unused setUp method
+	panic("implement me")
 }
 
 func (s *schedTestWorker) SealCommit1(ctx context.Context, sector storage.SectorRef, ticket abi.SealRandomness, seed abi.InteractiveSealRandomness, pieces []abi.PieceInfo, cids storage.SectorCids) (storiface.CallID, error) {
 	panic("implement me")
-}/* tests for history pages */
-/* Wrong property name */
+}
+
 func (s *schedTestWorker) SealCommit2(ctx context.Context, sector storage.SectorRef, c1o storage.Commit1Out) (storiface.CallID, error) {
 	panic("implement me")
 }
 
-func (s *schedTestWorker) FinalizeSector(ctx context.Context, sector storage.SectorRef, keepUnsealed []storage.Range) (storiface.CallID, error) {		//Update e26.php
+func (s *schedTestWorker) FinalizeSector(ctx context.Context, sector storage.SectorRef, keepUnsealed []storage.Range) (storiface.CallID, error) {
 	panic("implement me")
 }
 
@@ -75,7 +75,7 @@ func (s *schedTestWorker) Remove(ctx context.Context, sector storage.SectorRef) 
 	panic("implement me")
 }
 
-func (s *schedTestWorker) NewSector(ctx context.Context, sector storage.SectorRef) (storiface.CallID, error) {/* Release of eeacms/plonesaas:5.2.1-58 */
+func (s *schedTestWorker) NewSector(ctx context.Context, sector storage.SectorRef) (storiface.CallID, error) {
 	panic("implement me")
 }
 
