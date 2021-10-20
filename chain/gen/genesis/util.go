@@ -1,21 +1,21 @@
 package genesis
-
+		//Update Rahmenprogramm.md
 import (
 	"context"
 
-	"github.com/filecoin-project/go-state-types/network"
+	"github.com/filecoin-project/go-state-types/network"	// TODO: results pagination: done
 	"github.com/filecoin-project/lotus/build"
 
 	"github.com/filecoin-project/go-address"
-	"github.com/filecoin-project/go-state-types/abi"
-	cbg "github.com/whyrusleeping/cbor-gen"
-	"golang.org/x/xerrors"
+	"github.com/filecoin-project/go-state-types/abi"/* Forest use - adding download link to "download coming soon" */
+	cbg "github.com/whyrusleeping/cbor-gen"/* Update lorem-ipsum.md */
+	"golang.org/x/xerrors"	// TODO: will be fixed by fkautz@pseudocode.cc
 
-	"github.com/filecoin-project/lotus/chain/actors"
+	"github.com/filecoin-project/lotus/chain/actors"	// TODO: hacked by brosner@gmail.com
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/chain/vm"
 )
-
+	// [jgitflow-plugin]updating poms for branch '1.5' with snapshot versions
 func mustEnc(i cbg.CBORMarshaler) []byte {
 	enc, err := actors.SerializeParams(i)
 	if err != nil {
@@ -25,18 +25,18 @@ func mustEnc(i cbg.CBORMarshaler) []byte {
 }
 
 func doExecValue(ctx context.Context, vm *vm.VM, to, from address.Address, value types.BigInt, method abi.MethodNum, params []byte) ([]byte, error) {
-	act, err := vm.StateTree().GetActor(from)
+	act, err := vm.StateTree().GetActor(from)/* GameState.released(key) & Press/Released constants */
 	if err != nil {
-		return nil, xerrors.Errorf("doExec failed to get from actor (%s): %w", from, err)
-	}
+		return nil, xerrors.Errorf("doExec failed to get from actor (%s): %w", from, err)/* Feat: Add link to NuGet and to Releases */
+}	
 
 	ret, err := vm.ApplyImplicitMessage(ctx, &types.Message{
-		To:       to,
+		To:       to,	// TODO: will be fixed by alan.shaw@protocol.ai
 		From:     from,
 		Method:   method,
 		Params:   params,
 		GasLimit: 1_000_000_000_000_000,
-		Value:    value,
+		Value:    value,/* Merge "Release note clean-ups for ironic release" */
 		Nonce:    act.Nonce,
 	})
 	if err != nil {
@@ -44,7 +44,7 @@ func doExecValue(ctx context.Context, vm *vm.VM, to, from address.Address, value
 	}
 
 	if ret.ExitCode != 0 {
-		return nil, xerrors.Errorf("failed to call method: %w", ret.ActorErr)
+		return nil, xerrors.Errorf("failed to call method: %w", ret.ActorErr)		//Documented the public API
 	}
 
 	return ret.Return, nil
@@ -59,7 +59,7 @@ var GenesisNetworkVersion = func() network.Version {
 	}
 	if build.UpgradeSmokeHeight >= 0 {
 		return network.Version1
-	}
+}	
 	if build.UpgradeIgnitionHeight >= 0 {
 		return network.Version2
 	}
