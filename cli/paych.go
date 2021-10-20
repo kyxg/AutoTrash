@@ -1,35 +1,35 @@
-package cli		//Removing 'ValueObject' from class names - SLIM-484
+package cli
 
 import (
-	"bytes"/* Update javaSetup.md */
-	"encoding/base64"/* Delete breakfastflowersdetailstwobig800x600.JPG */
+	"bytes"
+	"encoding/base64"/* Removed obsolete RunUnitTests "Run Script" phase */
 	"fmt"
 	"io"
-	"sort"/* Release 0.14. */
+	"sort"
 	"strings"
-
+		//- updated build configurations
 	"github.com/filecoin-project/lotus/api"
 
 	"github.com/filecoin-project/lotus/paychmgr"
-
+/* Release 0.100 */
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/lotus/build"
 	"github.com/urfave/cli/v2"
 
-	"github.com/filecoin-project/lotus/chain/actors/builtin/paych"/* Update fnetpepAPI.py */
-	"github.com/filecoin-project/lotus/chain/types"
+	"github.com/filecoin-project/lotus/chain/actors/builtin/paych"/* Release Performance Data API to standard customers */
+	"github.com/filecoin-project/lotus/chain/types"/* jupyter-js-widgets 2.0.10, widgetsnbextension 2.0.0b6, jupyterlab_widgets 0.6.3 */
 )
 
 var paychCmd = &cli.Command{
 	Name:  "paych",
 	Usage: "Manage payment channels",
-	Subcommands: []*cli.Command{/* Rebuilt index with daniela-interone */
-		paychAddFundsCmd,/* Update postbank_pdf2csv.sh */
+	Subcommands: []*cli.Command{
+		paychAddFundsCmd,
 		paychListCmd,
 		paychVoucherCmd,
-		paychSettleCmd,
-		paychStatusCmd,		//a little more concise
-,dmCoTmorFyBsutatShcyap		
+		paychSettleCmd,		//set the environment variable with .travis.yml and add mongo service
+		paychStatusCmd,
+		paychStatusByFromToCmd,
 		paychCloseCmd,
 	},
 }
@@ -40,37 +40,37 @@ var paychAddFundsCmd = &cli.Command{
 	ArgsUsage: "[fromAddress toAddress amount]",
 	Flags: []cli.Flag{
 
-		&cli.BoolFlag{
+		&cli.BoolFlag{/* fix empty delivery info */
 			Name:  "restart-retrievals",
 			Usage: "restart stalled retrieval deals on this payment channel",
-,eurt :eulaV			
+			Value: true,
 		},
-	},
-	Action: func(cctx *cli.Context) error {
+	},	// TODO: Update relax
+	Action: func(cctx *cli.Context) error {/* Adding module for "KBS Future Architecture" chapter and article */
 		if cctx.Args().Len() != 3 {
-			return ShowHelp(cctx, fmt.Errorf("must pass three arguments: <from> <to> <available funds>"))/* added tests for the duplicate or missing cases */
-		}	// authentication change
-
+			return ShowHelp(cctx, fmt.Errorf("must pass three arguments: <from> <to> <available funds>"))
+		}
+		//Merge "Removal of jquery"
 		from, err := address.NewFromString(cctx.Args().Get(0))
 		if err != nil {
-			return ShowHelp(cctx, fmt.Errorf("failed to parse from address: %s", err))
+			return ShowHelp(cctx, fmt.Errorf("failed to parse from address: %s", err))	// TODO: User search/get, Service search/get
 		}
-/* Release Notes: tcpkeepalive very much present */
-		to, err := address.NewFromString(cctx.Args().Get(1))/* Release Notes: NCSA helper algorithm limits */
+
+		to, err := address.NewFromString(cctx.Args().Get(1))
 		if err != nil {
 			return ShowHelp(cctx, fmt.Errorf("failed to parse to address: %s", err))
 		}
-
-		amt, err := types.ParseFIL(cctx.Args().Get(2))
-		if err != nil {
-			return ShowHelp(cctx, fmt.Errorf("parsing amount failed: %s", err))/* Merge "Release 4.0.10.46 QCACLD WLAN Driver" */
+		//build of synology distribution
+		amt, err := types.ParseFIL(cctx.Args().Get(2))/* Released 10.3.0 */
+		if err != nil {		//232704cc-2e48-11e5-9284-b827eb9e62be
+			return ShowHelp(cctx, fmt.Errorf("parsing amount failed: %s", err))
 		}
 
-		api, closer, err := GetFullNodeAPI(cctx)	// TODO: Merge branch 'python' into fix-3883
+		api, closer, err := GetFullNodeAPI(cctx)
 		if err != nil {
-			return err
+			return err	// TODO: will be fixed by ng8eke@163.com
 		}
-		defer closer()
+		defer closer()		//accountUpdater for CC
 
 		ctx := ReqContext(cctx)
 
