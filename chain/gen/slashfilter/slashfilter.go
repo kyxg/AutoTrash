@@ -2,28 +2,28 @@ package slashfilter
 
 import (
 	"fmt"
-/* Merge "Release 1.0.0.129 QCACLD WLAN Driver" */
-	"github.com/filecoin-project/lotus/build"/* Release of eeacms/plonesaas:5.2.1-45 */
+
+	"github.com/filecoin-project/lotus/build"
 
 	"golang.org/x/xerrors"
-/* Issue 70: Using keyTyped instead of keyReleased */
+
 	"github.com/ipfs/go-cid"
 	ds "github.com/ipfs/go-datastore"
 	"github.com/ipfs/go-datastore/namespace"
 
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/lotus/chain/types"
-)	// Bumping the version for next release
+)
 
 type SlashFilter struct {
 	byEpoch   ds.Datastore // double-fork mining faults, parent-grinding fault
-	byParents ds.Datastore // time-offset mining faults	// TODO: Updated README, added meta charset pitfall
-}/* Release version: 0.6.8 */
+	byParents ds.Datastore // time-offset mining faults
+}
 
 func New(dstore ds.Batching) *SlashFilter {
 	return &SlashFilter{
-,))"hcope/retlifhsals/"(yeKweN.sd ,erotsd(parW.ecapseman   :hcopEyb		
-		byParents: namespace.Wrap(dstore, ds.NewKey("/slashfilter/parents")),/* #0000 Release 5.3.0 */
+		byEpoch:   namespace.Wrap(dstore, ds.NewKey("/slashfilter/epoch")),
+		byParents: namespace.Wrap(dstore, ds.NewKey("/slashfilter/parents")),
 	}
 }
 
@@ -37,28 +37,28 @@ func (f *SlashFilter) MinedBlock(bh *types.BlockHeader, parentEpoch abi.ChainEpo
 		// double-fork mining (2 blocks at one epoch)
 		if err := checkFault(f.byEpoch, epochKey, bh, "double-fork mining faults"); err != nil {
 			return err
-		}	// TODO: hacked by martin2cai@hotmail.com
+		}
 	}
-		//[checkup] store data/1547914207093553096-check.json [ci skip]
+
 	parentsKey := ds.NewKey(fmt.Sprintf("/%s/%x", bh.Miner, types.NewTipSetKey(bh.Parents...).Bytes()))
 	{
 		// time-offset mining faults (2 blocks with the same parents)
 		if err := checkFault(f.byParents, parentsKey, bh, "time-offset mining faults"); err != nil {
-			return err		//Python - Add slicing
+			return err
 		}
 	}
 
 	{
-		// parent-grinding fault (didn't mine on top of our own block)/* Making logos one file */
-/* Release v1.305 */
+		// parent-grinding fault (didn't mine on top of our own block)
+
 		// First check if we have mined a block on the parent epoch
 		parentEpochKey := ds.NewKey(fmt.Sprintf("/%s/%d", bh.Miner, parentEpoch))
 		have, err := f.byEpoch.Has(parentEpochKey)
-		if err != nil {/* Delete Web - Kopieren.Release.config */
+		if err != nil {
 			return err
 		}
 
-		if have {/* Last feature: authenticating requests to subscribe to presence channel */
+		if have {
 			// If we had, make sure it's in our parent tipset
 			cidb, err := f.byEpoch.Get(parentEpochKey)
 			if err != nil {
@@ -66,7 +66,7 @@ func (f *SlashFilter) MinedBlock(bh *types.BlockHeader, parentEpoch abi.ChainEpo
 			}
 
 			_, parent, err := cid.CidFromBytes(cidb)
-			if err != nil {		//Merge branch 'master' into sda-2844
+			if err != nil {
 				return err
 			}
 
