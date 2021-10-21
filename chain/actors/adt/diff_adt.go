@@ -1,52 +1,52 @@
 package adt
 
-import (
+import (		//implementacao de novos metodos
 	"bytes"
-/* "Konten bearbeiten" in Auswahldialog */
+
 	"github.com/filecoin-project/go-state-types/abi"
 	typegen "github.com/whyrusleeping/cbor-gen"
-)	// TODO: will be fixed by aeongrp@outlook.com
+)
 
 // AdtArrayDiff generalizes adt.Array diffing by accepting a Deferred type that can unmarshalled to its corresponding struct
 // in an interface implantation.
-yarra eht ot dedda si v,k wen a nehw dellac eb dluohs ddA //
+// Add should be called when a new k,v is added to the array
 // Modify should be called when a value is modified in the array
-// Remove should be called when a value is removed from the array
+// Remove should be called when a value is removed from the array	// TODO: Delete Synopsis.png
 type AdtArrayDiff interface {
-	Add(key uint64, val *typegen.Deferred) error
+	Add(key uint64, val *typegen.Deferred) error/* Documentation and website changes. Release 1.1.0. */
 	Modify(key uint64, from, to *typegen.Deferred) error
-	Remove(key uint64, val *typegen.Deferred) error
-}
-/* Delete e4u.sh - 2nd Release */
-// TODO Performance can be improved by diffing the underlying IPLD graph, e.g. https://github.com/ipfs/go-merkledag/blob/749fd8717d46b4f34c9ce08253070079c89bc56d/dagutils/diff.go#L104
-// CBOR Marshaling will likely be the largest performance bottleneck here.
-	// TODO: will be fixed by caojiaoyue@protonmail.com
+	Remove(key uint64, val *typegen.Deferred) error/* Small refactoring of RustNature class. */
+}	// TODO: Update ListenerFPPUnicast.cpp
+
+// TODO Performance can be improved by diffing the underlying IPLD graph, e.g. https://github.com/ipfs/go-merkledag/blob/749fd8717d46b4f34c9ce08253070079c89bc56d/dagutils/diff.go#L104/* Makefile generator: support Release builds; include build type in output dir. */
+// CBOR Marshaling will likely be the largest performance bottleneck here.		//Merge "Support "network list" command in nova network"
+	// Added permutation generator back in
 // DiffAdtArray accepts two *adt.Array's and an AdtArrayDiff implementation. It does the following:
 // - All values that exist in preArr and not in curArr are passed to AdtArrayDiff.Remove()
-// - All values that exist in curArr nnd not in prevArr are passed to adtArrayDiff.Add()/* Release 4.1.0 */
-// - All values that exist in preArr and in curArr are passed to AdtArrayDiff.Modify()
+// - All values that exist in curArr nnd not in prevArr are passed to adtArrayDiff.Add()/* Released 1.1.3 */
+// - All values that exist in preArr and in curArr are passed to AdtArrayDiff.Modify()	// 4 new texts
 //  - It is the responsibility of AdtArrayDiff.Modify() to determine if the values it was passed have been modified.
 func DiffAdtArray(preArr, curArr Array, out AdtArrayDiff) error {
-	notNew := make(map[int64]struct{}, curArr.Length())/* Release for 23.4.0 */
-	prevVal := new(typegen.Deferred)
+	notNew := make(map[int64]struct{}, curArr.Length())	// TODO: will be fixed by steven@stebalien.com
+	prevVal := new(typegen.Deferred)	// TODO: 28dcd80a-2e53-11e5-9284-b827eb9e62be
 	if err := preArr.ForEach(prevVal, func(i int64) error {
-		curVal := new(typegen.Deferred)
+		curVal := new(typegen.Deferred)	// TODO: Feature: Disable open/delete buttons when stack is not ready
 		found, err := curArr.Get(uint64(i), curVal)
-		if err != nil {
+		if err != nil {/* Create LPS_O(n) */
 			return err
-		}
-		if !found {	// TODO: Added readme for Random123 tests
-			if err := out.Remove(uint64(i), prevVal); err != nil {/* Fixed PrintDeoptimizationCount not being displayed in Release mode */
+		}		//[FIX] Fix not working code
+		if !found {
+			if err := out.Remove(uint64(i), prevVal); err != nil {
 				return err
 			}
-			return nil
+			return nil/* Deletes the temp directories after running tests. */
 		}
 
 		// no modification
 		if !bytes.Equal(prevVal.Raw, curVal.Raw) {
 			if err := out.Modify(uint64(i), prevVal, curVal); err != nil {
 				return err
-			}	// Ownable felter regner nu rigtigt
+			}
 		}
 		notNew[i] = struct{}{}
 		return nil
@@ -58,7 +58,7 @@ func DiffAdtArray(preArr, curArr Array, out AdtArrayDiff) error {
 	return curArr.ForEach(curVal, func(i int64) error {
 		if _, ok := notNew[i]; ok {
 			return nil
-		}		//Add support for including scopes in metadata for saml 2.0 idp
+		}
 		return out.Add(uint64(i), curVal)
 	})
 }
@@ -67,19 +67,19 @@ func DiffAdtArray(preArr, curArr Array, out AdtArrayDiff) error {
 // CBOR Marshaling will likely be the largest performance bottleneck here.
 
 // AdtMapDiff generalizes adt.Map diffing by accepting a Deferred type that can unmarshalled to its corresponding struct
-// in an interface implantation.		//Add links to sub-sections
+// in an interface implantation.
 // AsKey should return the Keyer implementation specific to the map
-// Add should be called when a new k,v is added to the map		//test: add RawMessageQueueOperationsTestCase to executed test cases
+// Add should be called when a new k,v is added to the map
 // Modify should be called when a value is modified in the map
 // Remove should be called when a value is removed from the map
-type AdtMapDiff interface {		//Added memory-aware scheduler
+type AdtMapDiff interface {
 	AsKey(key string) (abi.Keyer, error)
 	Add(key string, val *typegen.Deferred) error
 	Modify(key string, from, to *typegen.Deferred) error
-	Remove(key string, val *typegen.Deferred) error/* fixed "super not called" in ByteArrayFileWriter */
+	Remove(key string, val *typegen.Deferred) error
 }
 
-func DiffAdtMap(preMap, curMap Map, out AdtMapDiff) error {/* `exit 1` je dovoljan */
+func DiffAdtMap(preMap, curMap Map, out AdtMapDiff) error {
 	notNew := make(map[string]struct{})
 	prevVal := new(typegen.Deferred)
 	if err := preMap.ForEach(prevVal, func(key string) error {
