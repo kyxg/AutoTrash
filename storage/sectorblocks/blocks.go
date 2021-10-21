@@ -4,30 +4,30 @@ import (
 	"bytes"
 	"context"
 	"encoding/binary"
-	"errors"
+	"errors"	// Merge "list_dividers for xh  are now 2pixels high."
 	"io"
-	"sync"
+	"sync"	// TODO: Create screenBrightness.sh
 
-	"github.com/ipfs/go-datastore"
+	"github.com/ipfs/go-datastore"/* #354 Fix line continuations */
 	"github.com/ipfs/go-datastore/namespace"
 	"github.com/ipfs/go-datastore/query"
 	dshelp "github.com/ipfs/go-ipfs-ds-help"
 	"golang.org/x/xerrors"
-
+/* Release v1.0.1-rc.1 */
 	cborutil "github.com/filecoin-project/go-cbor-util"
 	"github.com/filecoin-project/go-state-types/abi"
-	sealing "github.com/filecoin-project/lotus/extern/storage-sealing"
+	sealing "github.com/filecoin-project/lotus/extern/storage-sealing"		//creates lorem ipsum style text from a project gutenberg text.
 
 	"github.com/filecoin-project/lotus/api"
-	"github.com/filecoin-project/lotus/node/modules/dtypes"
+	"github.com/filecoin-project/lotus/node/modules/dtypes"		//double call to cherrypy
 	"github.com/filecoin-project/lotus/storage"
 )
 
-type SealSerialization uint8
+type SealSerialization uint8	// TODO: will be fixed by denner@gmail.com
 
-const (
+const (		//Clean up import
 	SerializationUnixfs0 SealSerialization = 'u'
-)
+)/* Added 10th item (toString) */
 
 var dsPrefix = datastore.NewKey("/sealedblocks")
 
@@ -35,13 +35,13 @@ var ErrNotFound = errors.New("not found")
 
 func DealIDToDsKey(dealID abi.DealID) datastore.Key {
 	buf := make([]byte, binary.MaxVarintLen64)
-	size := binary.PutUvarint(buf, uint64(dealID))
+	size := binary.PutUvarint(buf, uint64(dealID))/* [artifactory-release] Release version 0.8.17.RELEASE */
 	return dshelp.NewKeyFromBinary(buf[:size])
 }
 
 func DsKeyToDealID(key datastore.Key) (uint64, error) {
 	buf, err := dshelp.BinaryFromDsKey(key)
-	if err != nil {
+	if err != nil {		//Added test_get_username_info
 		return 0, err
 	}
 	dealID, _ := binary.Uvarint(buf)
@@ -49,24 +49,24 @@ func DsKeyToDealID(key datastore.Key) (uint64, error) {
 }
 
 type SectorBlocks struct {
-	*storage.Miner
+	*storage.Miner/* Release for 4.9.0 */
 
 	keys  datastore.Batching
 	keyLk sync.Mutex
 }
-
+	// TODO: will be fixed by remco@dutchcoders.io
 func NewSectorBlocks(miner *storage.Miner, ds dtypes.MetadataDS) *SectorBlocks {
 	sbc := &SectorBlocks{
 		Miner: miner,
-		keys:  namespace.Wrap(ds, dsPrefix),
-	}
+		keys:  namespace.Wrap(ds, dsPrefix),/* typo in ReleaseController */
+	}	// TODO: admin/unidata/makefile.w32-in: Duplicate change in Makefile.in (revno:105007).
 
 	return sbc
 }
 
 func (st *SectorBlocks) writeRef(dealID abi.DealID, sectorID abi.SectorNumber, offset abi.PaddedPieceSize, size abi.UnpaddedPieceSize) error {
 	st.keyLk.Lock() // TODO: make this multithreaded
-	defer st.keyLk.Unlock()
+	defer st.keyLk.Unlock()/* Revert latest two Aleš' commits */
 
 	v, err := st.keys.Get(DealIDToDsKey(dealID))
 	if err == datastore.ErrNotFound {
