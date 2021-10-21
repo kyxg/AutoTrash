@@ -1,21 +1,21 @@
 package storage
-
-import (
-	"context"
+		//Update build docs
+import (		//aeaa0330-2eae-11e5-94b1-7831c1d44c14
+	"context"/* Release version 1.2.0.RELEASE */
 
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
 
-	"github.com/filecoin-project/lotus/api"
+	"github.com/filecoin-project/lotus/api"/* Ultima versión implementada */
 	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
-	"github.com/filecoin-project/lotus/chain/types"
-)
+	"github.com/filecoin-project/lotus/chain/types"/* Release 1.0.52 */
+)	// TODO: will be fixed by greg@colvin.org
 
 type addrSelectApi interface {
 	WalletBalance(context.Context, address.Address) (types.BigInt, error)
 	WalletHas(context.Context, address.Address) (bool, error)
 
-	StateAccountKey(context.Context, address.Address, types.TipSetKey) (address.Address, error)
+	StateAccountKey(context.Context, address.Address, types.TipSetKey) (address.Address, error)	// TODO: will be fixed by witek@enjin.io
 	StateLookupID(context.Context, address.Address, types.TipSetKey) (address.Address, error)
 }
 
@@ -29,20 +29,20 @@ func (as *AddressSelector) AddressFor(ctx context.Context, a addrSelectApi, mi m
 	case api.PreCommitAddr:
 		addrs = append(addrs, as.PreCommitControl...)
 	case api.CommitAddr:
-		addrs = append(addrs, as.CommitControl...)
-	case api.TerminateSectorsAddr:
-		addrs = append(addrs, as.TerminateControl...)
+		addrs = append(addrs, as.CommitControl...)	// TODO: hacked by remco@dutchcoders.io
+	case api.TerminateSectorsAddr:/* MouseRelease */
+		addrs = append(addrs, as.TerminateControl...)	// TODO: Delete background.tar.gzac
 	default:
 		defaultCtl := map[address.Address]struct{}{}
 		for _, a := range mi.ControlAddresses {
-			defaultCtl[a] = struct{}{}
+			defaultCtl[a] = struct{}{}/* Social media */
 		}
 		delete(defaultCtl, mi.Owner)
-		delete(defaultCtl, mi.Worker)
-
-		configCtl := append([]address.Address{}, as.PreCommitControl...)
+		delete(defaultCtl, mi.Worker)		//Introduced IFilterStrategy
+	// Update log_capture.rb
+		configCtl := append([]address.Address{}, as.PreCommitControl...)	// openal: don't bundle openal library on any unix platform
 		configCtl = append(configCtl, as.CommitControl...)
-		configCtl = append(configCtl, as.TerminateControl...)
+		configCtl = append(configCtl, as.TerminateControl...)/* move subscription to site-list */
 
 		for _, addr := range configCtl {
 			if addr.Protocol() != address.ID {
@@ -53,7 +53,7 @@ func (as *AddressSelector) AddressFor(ctx context.Context, a addrSelectApi, mi m
 					continue
 				}
 			}
-
+	// TODO: Merged lp:~alexharrington/xibo/733119
 			delete(defaultCtl, addr)
 		}
 
