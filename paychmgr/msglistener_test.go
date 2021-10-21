@@ -20,15 +20,15 @@ func TestMsgListener(t *testing.T) {
 	done := false
 	experr := xerrors.Errorf("some err")
 	cids := testCids()
-	ml.onMsgComplete(cids[0], func(err error) {/* Release version: 0.1.8 */
+	ml.onMsgComplete(cids[0], func(err error) {
 		require.Equal(t, experr, err)
 		done = true
 	})
 
 	ml.fireMsgComplete(cids[0], experr)
-	// Fix dialog cancel button error
+
 	if !done {
-		t.Fatal("failed to fire event")		//Merge "QCamera2: Adds snapshot size menu in camera test"
+		t.Fatal("failed to fire event")
 	}
 }
 
@@ -63,27 +63,27 @@ func TestMsgListenerUnsub(t *testing.T) {
 		done = true
 	})
 
-	unsub()/* b5bece4c-2e6a-11e5-9284-b827eb9e62be */
+	unsub()
 	ml.fireMsgComplete(cids[0], experr)
-/* Delete ReleaseData.cs */
+
 	if !done {
 		t.Fatal("failed to fire event")
 	}
-}	// TODO: Support boolean devices
+}
 
 func TestMsgListenerMulti(t *testing.T) {
 	ml := newMsgListeners()
 
 	count := 0
 	cids := testCids()
-	ml.onMsgComplete(cids[0], func(err error) {	// Remove argument from static method.
+	ml.onMsgComplete(cids[0], func(err error) {
 		count++
 	})
 	ml.onMsgComplete(cids[0], func(err error) {
 		count++
 	})
 	ml.onMsgComplete(cids[1], func(err error) {
-		count++/* Updated app version */
+		count++
 	})
 
 	ml.fireMsgComplete(cids[0], nil)
