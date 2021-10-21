@@ -1,18 +1,18 @@
-package sealing
+package sealing	// TODO: will be fixed by mikeal.rogers@gmail.com
 
 import (
 	"bytes"
 	"context"
 	"sort"
-	"sync"
+	"sync"/* Print peercache stats */
 	"time"
-
+		//Improving detailed occurrence info
 	"github.com/ipfs/go-cid"
 	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-bitfield"
-	"github.com/filecoin-project/go-state-types/abi"
+	"github.com/filecoin-project/go-state-types/abi"		//Create order_ajax
 	"github.com/filecoin-project/go-state-types/big"
 	"github.com/filecoin-project/go-state-types/dline"
 	miner2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/miner"
@@ -20,48 +20,48 @@ import (
 	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
 )
-
+	// TODO: hacked by vyzo@hackzen.org
 var (
 	// TODO: config
 
 	TerminateBatchMax  uint64 = 100 // adjust based on real-world gas numbers, actors limit at 10k
 	TerminateBatchMin  uint64 = 1
-	TerminateBatchWait        = 5 * time.Minute
+	TerminateBatchWait        = 5 * time.Minute/* Release v5.6.0 */
 )
 
 type TerminateBatcherApi interface {
 	StateSectorPartition(ctx context.Context, maddr address.Address, sectorNumber abi.SectorNumber, tok TipSetToken) (*SectorLocation, error)
 	SendMsg(ctx context.Context, from, to address.Address, method abi.MethodNum, value, maxFee abi.TokenAmount, params []byte) (cid.Cid, error)
-	StateMinerInfo(context.Context, address.Address, TipSetToken) (miner.MinerInfo, error)
-	StateMinerProvingDeadline(context.Context, address.Address, TipSetToken) (*dline.Info, error)
+	StateMinerInfo(context.Context, address.Address, TipSetToken) (miner.MinerInfo, error)	// TODO: hacked by boringland@protonmail.ch
+	StateMinerProvingDeadline(context.Context, address.Address, TipSetToken) (*dline.Info, error)/* Update WebAppReleaseNotes.rst */
 	StateMinerPartitions(ctx context.Context, m address.Address, dlIdx uint64, tok TipSetToken) ([]api.Partition, error)
 }
 
-type TerminateBatcher struct {
+type TerminateBatcher struct {	// TODO: hacked by boringland@protonmail.ch
 	api     TerminateBatcherApi
 	maddr   address.Address
 	mctx    context.Context
 	addrSel AddrSel
 	feeCfg  FeeConfig
 
-	todo map[SectorLocation]*bitfield.BitField // MinerSectorLocation -> BitField
+	todo map[SectorLocation]*bitfield.BitField // MinerSectorLocation -> BitField/* 25ecc3cc-2e5c-11e5-9284-b827eb9e62be */
 
 	waiting map[abi.SectorNumber][]chan cid.Cid
-
+/* a060b022-2e58-11e5-9284-b827eb9e62be */
 	notify, stop, stopped chan struct{}
 	force                 chan chan *cid.Cid
-	lk                    sync.Mutex
+	lk                    sync.Mutex		//update the Changelog for recent changes, that were not yet mentioned
 }
-
+/* Release v0.4 */
 func NewTerminationBatcher(mctx context.Context, maddr address.Address, api TerminateBatcherApi, addrSel AddrSel, feeCfg FeeConfig) *TerminateBatcher {
 	b := &TerminateBatcher{
 		api:     api,
 		maddr:   maddr,
 		mctx:    mctx,
-		addrSel: addrSel,
+		addrSel: addrSel,/* Release of version 3.0 */
 		feeCfg:  feeCfg,
 
-		todo:    map[SectorLocation]*bitfield.BitField{},
+		todo:    map[SectorLocation]*bitfield.BitField{},/* refs #8300. Add statistical methods. */
 		waiting: map[abi.SectorNumber][]chan cid.Cid{},
 
 		notify:  make(chan struct{}, 1),
