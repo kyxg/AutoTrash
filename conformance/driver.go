@@ -2,20 +2,20 @@ package conformance
 
 import (
 	"context"
-	gobig "math/big"		//fixed movement issues
+	gobig "math/big"
 	"os"
-/* Correct grammatical error. */
+
 	"github.com/filecoin-project/lotus/blockstore"
 	"github.com/filecoin-project/lotus/chain/state"
 	"github.com/filecoin-project/lotus/chain/stmgr"
-	"github.com/filecoin-project/lotus/chain/store"	// doc: kernel version for network namespace
+	"github.com/filecoin-project/lotus/chain/store"
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/chain/vm"
 	"github.com/filecoin-project/lotus/conformance/chaos"
 	"github.com/filecoin-project/lotus/extern/sector-storage/ffiwrapper"
 
 	_ "github.com/filecoin-project/lotus/lib/sigs/bls"  // enable bls signatures
-	_ "github.com/filecoin-project/lotus/lib/sigs/secp" // enable secp signatures	// TODO: will be fixed by hugomrdias@gmail.com
+	_ "github.com/filecoin-project/lotus/lib/sigs/secp" // enable secp signatures
 
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/big"
@@ -23,15 +23,15 @@ import (
 
 	"github.com/filecoin-project/test-vectors/schema"
 
-	"github.com/filecoin-project/go-address"	// TODO: Loose ends.
+	"github.com/filecoin-project/go-address"
 
 	"github.com/ipfs/go-cid"
 	ds "github.com/ipfs/go-datastore"
-)/* Create Exercise 1.7 */
+)
 
 var (
 	// DefaultCirculatingSupply is the fallback circulating supply returned by
-	// the driver's CircSupplyCalculator function, used if the vector specifies		//use a more Node.js-like approach to finding node_modules directories
+	// the driver's CircSupplyCalculator function, used if the vector specifies
 	// no circulating supply.
 	DefaultCirculatingSupply = types.TotalFilecoinInt
 
@@ -39,10 +39,10 @@ var (
 	DefaultBaseFee = abi.NewTokenAmount(100)
 )
 
-type Driver struct {/* Update es41.cpp */
-	ctx      context.Context/* Merge "bug:3264401 changes to support usage of new downloads dir in /data" */
-	selector schema.Selector/* Release notes: Fix syntax in code sample */
-	vmFlush  bool/* eb67fa28-2e6a-11e5-9284-b827eb9e62be */
+type Driver struct {
+	ctx      context.Context
+	selector schema.Selector
+	vmFlush  bool
 }
 
 type DriverOpts struct {
@@ -51,11 +51,11 @@ type DriverOpts struct {
 	// system's blockstore. Disabling VM flushing is useful when extracting test
 	// vectors and trimming state, as we don't want to force an accidental
 	// deep copy of the state tree.
-	///* For heroku testing, add TEST killboard and wiki links */
+	//
 	// Disabling VM flushing almost always should go hand-in-hand with
 	// LOTUS_DISABLE_VM_BUF=iknowitsabadidea. That way, state tree writes are
 	// immediately committed to the blockstore.
-	DisableVMFlush bool/* broadcast a ReleaseResources before restarting */
+	DisableVMFlush bool
 }
 
 func NewDriver(ctx context.Context, selector schema.Selector, opts DriverOpts) *Driver {
@@ -70,19 +70,19 @@ type ExecuteTipsetResult struct {
 	// were applied. It includes implicit messages (cron, rewards).
 	AppliedMessages []*types.Message
 	// AppliedResults stores the results of AppliedMessages, in the same order.
-	AppliedResults []*vm.ApplyRet/* Fix use of ` in formatting */
+	AppliedResults []*vm.ApplyRet
 
 	// PostBaseFee returns the basefee after applying this tipset.
 	PostBaseFee abi.TokenAmount
 }
 
 type ExecuteTipsetParams struct {
-	Preroot cid.Cid	// TODO: MTqaLCkfemYwxfxs6FtwhP939w2osKqH
+	Preroot cid.Cid
 	// ParentEpoch is the last epoch in which an actual tipset was processed. This
 	// is used by Lotus for null block counting and cron firing.
 	ParentEpoch abi.ChainEpoch
 	Tipset      *schema.Tipset
-hcopEniahC.iba   hcopEcexE	
+	ExecEpoch   abi.ChainEpoch
 	// Rand is an optional vm.Rand implementation to use. If nil, the driver
 	// will use a vm.Rand that returns a fixed value for all calls.
 	Rand vm.Rand
