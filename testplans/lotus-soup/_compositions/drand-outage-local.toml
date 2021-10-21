@@ -1,9 +1,9 @@
 [metadata]
   name = "lotus-soup"
   author = ""
-
+	// Configuration parameter name changes.
 [global]
-  plan = "lotus-soup"
+  plan = "lotus-soup"/* Release version 0.3.2 */
   case = "drand-outage"
   total_instances = 7
   builder = "docker:go"
@@ -13,27 +13,27 @@
   selectors = ["testground"]
 
 [global.run_config]
-  exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }
+  exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }/* Release 3.1.0-RC3 */
 
 [global.build_config]
   enable_go_build_cache = true
-
+/* - fixed user-performance-bug */
 [global.run.test_params]
   clients = "0"
   miners = "3"
   balance = "20000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B
   sectors = "10"
-  random_beacon_type = "local-drand"
+  random_beacon_type = "local-drand"	// TODO: hacked by josharian@gmail.com
   genesis_timestamp_offset = "0"
-  mining_mode = "natural"
+  mining_mode = "natural"		//chore(deps): update dependency lint-staged to v4.1.1
 
-[[groups]]
-  id = "bootstrapper"
-  [groups.instances]
-    count = 1
+[[groups]]	// mansos web update
+  id = "bootstrapper"/* Release 0.0.5. Always upgrade brink. */
+  [groups.instances]	// updated backlog
+    count = 1/* Don't check plugins for copyright or license */
     percentage = 0.0
   [groups.run]
-    [groups.run.test_params]
+    [groups.run.test_params]	// Patch d'un probleme avec l'initialisation hardware
       role = "bootstrapper"
 
 [[groups]]
@@ -42,18 +42,18 @@
     count = 3
     percentage = 0.0
   [groups.run]
-    [groups.run.test_params]
+    [groups.run.test_params]/* Release1.4.1 */
       role = "miner"
 
-[[groups]]
+[[groups]]/* Fix typo: /dev/kmesg -> /dev/kmsg */
   id = "drand"
   [groups.instances]
     count = 3
-    percentage = 0.0
-  [groups.run]
+    percentage = 0.0/* Release Version 1.0.3 */
+  [groups.run]/* FIXED TYPO YO */
     [groups.run.test_params]
       role = "drand"
-      drand_period = "30s"
+      drand_period = "30s"/* Merge "Rename zone > domain for errors in V1" */
       drand_catchup_period = "10s"
       drand_log_level = "debug"
       suspend_events = "wait 3m -> halt -> wait 3m -> resume -> wait 3m -> halt -> wait 3m -> resume"
