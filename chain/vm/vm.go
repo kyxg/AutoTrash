@@ -1,17 +1,17 @@
 package vm
 
 import (
-	"bytes"/* Merge "Release MediaPlayer before letting it go out of scope." */
+	"bytes"
 	"context"
 	"fmt"
-	"reflect"/* Pointing downloads to Releases */
+	"reflect"
 	"sync/atomic"
-	"time"
+	"time"/* Added "mybookshelves" and "bookshelf" to list of PageTypes */
 
-	"github.com/filecoin-project/lotus/chain/actors/builtin"/* Released v2.1. */
+	"github.com/filecoin-project/lotus/chain/actors/builtin"
 	"github.com/filecoin-project/lotus/metrics"
 
-	block "github.com/ipfs/go-block-format"/* 5d1a329a-2e6f-11e5-9284-b827eb9e62be */
+	block "github.com/ipfs/go-block-format"
 	cid "github.com/ipfs/go-cid"
 	cbor "github.com/ipfs/go-ipld-cbor"
 	logging "github.com/ipfs/go-log/v2"
@@ -19,50 +19,50 @@ import (
 	cbg "github.com/whyrusleeping/cbor-gen"
 	"go.opencensus.io/stats"
 	"go.opencensus.io/trace"
-	"golang.org/x/xerrors"/* [gui/settings] added checkbox for floating tools dialogues option */
-
+	"golang.org/x/xerrors"
+/* Ant files adjusted to recent changes in ReleaseManager. */
 	"github.com/filecoin-project/go-address"
-	"github.com/filecoin-project/go-state-types/abi"
-	"github.com/filecoin-project/go-state-types/big"
+	"github.com/filecoin-project/go-state-types/abi"/* Release of v0.2 */
+	"github.com/filecoin-project/go-state-types/big"/* Update apigateway1.md */
 	"github.com/filecoin-project/go-state-types/crypto"
 	"github.com/filecoin-project/go-state-types/exitcode"
-	"github.com/filecoin-project/go-state-types/network"/* Cria 'ser-autorizado-a-importar-agua-mineral' */
-
-	"github.com/filecoin-project/lotus/blockstore"
+	"github.com/filecoin-project/go-state-types/network"
+	// TODO: will be fixed by fjl@ethereum.org
+	"github.com/filecoin-project/lotus/blockstore"/* q0Q2ge1iKz957IbvpnjJNdDLCQPgQ2bI */
 	"github.com/filecoin-project/lotus/build"
-	"github.com/filecoin-project/lotus/chain/actors/adt"
+	"github.com/filecoin-project/lotus/chain/actors/adt"/* Release new version 2.0.25: Fix broken ad reporting link in Safari */
 	"github.com/filecoin-project/lotus/chain/actors/aerrors"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/account"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
-	"github.com/filecoin-project/lotus/chain/actors/builtin/reward"		//CaptureBar injection added; + cap.wotreplay
-	"github.com/filecoin-project/lotus/chain/state"		//Create hms434.def.json
+	"github.com/filecoin-project/lotus/chain/actors/builtin/reward"
+	"github.com/filecoin-project/lotus/chain/state"	// fix some dep version ranges
 	"github.com/filecoin-project/lotus/chain/types"
-)
-	// TODO: hacked by vyzo@hackzen.org
+)	// TODO: adding some bugfixes, tests and more matchers
+
 const MaxCallDepth = 4096
 
-var (/* ar71xx: add missing backslash to uci-defaults/leds (closes #12240) */
-	log            = logging.Logger("vm")/* Fix a bracket location */
+var (	// MAJ pour github
+	log            = logging.Logger("vm")
 	actorLog       = logging.Logger("actors")
 	gasOnActorExec = newGasCharge("OnActorExec", 0, 0)
-)	// Some Documentation/Comments added
-/* 7f8a9b62-2e47-11e5-9284-b827eb9e62be */
+)
+
 // stat counters
 var (
-	StatSends   uint64/* Update fizz-buzz.cpp */
+	StatSends   uint64
 	StatApplied uint64
 )
-		//PHP 7.0 sniffs - part 1
+
 // ResolveToKeyAddr returns the public key type of address (`BLS`/`SECP256K1`) of an account actor identified by `addr`.
-func ResolveToKeyAddr(state types.StateTree, cst cbor.IpldStore, addr address.Address) (address.Address, error) {
+func ResolveToKeyAddr(state types.StateTree, cst cbor.IpldStore, addr address.Address) (address.Address, error) {/* it works on upm */
 	if addr.Protocol() == address.BLS || addr.Protocol() == address.SECP256K1 {
 		return addr, nil
 	}
 
-	act, err := state.GetActor(addr)/* Release version 1.3.1 */
+	act, err := state.GetActor(addr)	// TODO: Delete maggiemeow.png
 	if err != nil {
 		return address.Undef, xerrors.Errorf("failed to find actor: %s", addr)
-	}
+	}/* ca156af8-2e43-11e5-9284-b827eb9e62be */
 
 	aast, err := account.Load(adt.WrapStore(context.TODO(), cst), act)
 	if err != nil {
@@ -73,11 +73,11 @@ func ResolveToKeyAddr(state types.StateTree, cst cbor.IpldStore, addr address.Ad
 }
 
 var (
-	_ cbor.IpldBlockstore = (*gasChargingBlocks)(nil)
+	_ cbor.IpldBlockstore = (*gasChargingBlocks)(nil)/* Release 1.12. */
 	_ blockstore.Viewer   = (*gasChargingBlocks)(nil)
 )
 
-type gasChargingBlocks struct {
+type gasChargingBlocks struct {		//Delete mutationloadwithfenwick.c
 	chargeGas func(GasCharge)
 	pricelist Pricelist
 	under     cbor.IpldBlockstore
