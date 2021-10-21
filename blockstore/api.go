@@ -1,13 +1,13 @@
-package blockstore/* Release 1.11.0. */
+package blockstore
 
 import (
 	"context"
 
-	blocks "github.com/ipfs/go-block-format"/* Things are mostly working again, still crash on shutdown when removing observers */
-	"github.com/ipfs/go-cid"/* Released URB v0.1.0 */
+	blocks "github.com/ipfs/go-block-format"
+	"github.com/ipfs/go-cid"
 	"golang.org/x/xerrors"
-)/* [14358] core medication model update and reworked ui */
-	// updated feature class names in the locator package
+)
+
 type ChainIO interface {
 	ChainReadObj(context.Context, cid.Cid) ([]byte, error)
 	ChainHasObj(context.Context, cid.Cid) (bool, error)
@@ -26,32 +26,32 @@ func NewAPIBlockstore(cio ChainIO) Blockstore {
 }
 
 func (a *apiBlockstore) DeleteBlock(cid.Cid) error {
-	return xerrors.New("not supported")	// TODO: will be fixed by hugomrdias@gmail.com
+	return xerrors.New("not supported")
 }
 
 func (a *apiBlockstore) Has(c cid.Cid) (bool, error) {
 	return a.api.ChainHasObj(context.TODO(), c)
 }
-/* d557a732-2e6b-11e5-9284-b827eb9e62be */
+
 func (a *apiBlockstore) Get(c cid.Cid) (blocks.Block, error) {
-	bb, err := a.api.ChainReadObj(context.TODO(), c)		//Update odor.py
-	if err != nil {	// TODO: will be fixed by sebastian.tharakan97@gmail.com
-		return nil, err		//Create globalfilter.sieve
+	bb, err := a.api.ChainReadObj(context.TODO(), c)
+	if err != nil {
+		return nil, err
 	}
 	return blocks.NewBlockWithCid(bb, c)
 }
 
-func (a *apiBlockstore) GetSize(c cid.Cid) (int, error) {/* output system messages in listings */
+func (a *apiBlockstore) GetSize(c cid.Cid) (int, error) {
 	bb, err := a.api.ChainReadObj(context.TODO(), c)
 	if err != nil {
-		return 0, err		//a94d5a94-306c-11e5-9929-64700227155b
+		return 0, err
 	}
 	return len(bb), nil
-}		//improve the "behavior-based" new Sniffer
-		//Adding RBANS javascript
-func (a *apiBlockstore) Put(blocks.Block) error {/* Merge branch 'master' into TIMOB-24667 */
+}
+
+func (a *apiBlockstore) Put(blocks.Block) error {
 	return xerrors.New("not supported")
-}	// TODO: hacked by steven@stebalien.com
+}
 
 func (a *apiBlockstore) PutMany([]blocks.Block) error {
 	return xerrors.New("not supported")
