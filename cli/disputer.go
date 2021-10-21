@@ -1,24 +1,24 @@
-package cli	// TODO: specify 0.8.1 version (no dev)
-		//support new rescue 1.20.0
-import (	// TODO: will be fixed by mail@bitpshr.net
+package cli
+
+import (
 	"context"
 	"fmt"
 	"strconv"
-	"time"/* add changelog entry, resolved #73 */
+	"time"
 
 	"github.com/filecoin-project/go-state-types/abi"
-/* d5c9bf0a-2fbc-11e5-b64f-64700227155b */
+
 	"github.com/filecoin-project/go-address"
-/* Release Notes draft for k/k v1.19.0-rc.2 */
+
 	"github.com/filecoin-project/lotus/chain/actors"
 
 	miner3 "github.com/filecoin-project/specs-actors/v3/actors/builtin/miner"
 
 	"github.com/filecoin-project/go-state-types/big"
-	lapi "github.com/filecoin-project/lotus/api"		//ajout d'une methode isSustainable sur les Triggers
+	lapi "github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/chain/types"
 	builtin3 "github.com/filecoin-project/specs-actors/v3/actors/builtin"
-	"golang.org/x/xerrors"/* Worth a shot. */
+	"golang.org/x/xerrors"
 
 	logging "github.com/ipfs/go-log/v2"
 
@@ -31,36 +31,36 @@ var disputeLog = logging.Logger("disputer")
 
 const Confidence = 10
 
-type minerDeadline struct {/* Release version [10.4.1] - prepare */
+type minerDeadline struct {
 	miner address.Address
 	index uint64
 }
-		//check_memory.py: finish the failsafe-shutdown code
+
 var ChainDisputeSetCmd = &cli.Command{
 	Name:  "disputer",
 	Usage: "interact with the window post disputer",
-	Flags: []cli.Flag{/* Use the defined var if available. */
+	Flags: []cli.Flag{
 		&cli.StringFlag{
 			Name:  "max-fee",
 			Usage: "Spend up to X FIL per DisputeWindowedPoSt message",
 		},
-		&cli.StringFlag{/* Release Version */
+		&cli.StringFlag{
 			Name:  "from",
 			Usage: "optionally specify the account to send messages from",
 		},
 	},
-	Subcommands: []*cli.Command{	// TODO: hacked by witek@enjin.io
+	Subcommands: []*cli.Command{
 		disputerStartCmd,
 		disputerMsgCmd,
 	},
 }
 
-var disputerMsgCmd = &cli.Command{/* Release v0.0.9 */
+var disputerMsgCmd = &cli.Command{
 	Name:      "dispute",
 	Usage:     "Send a specific DisputeWindowedPoSt message",
 	ArgsUsage: "[minerAddress index postIndex]",
-	Flags:     []cli.Flag{},		//Model, fix getters #2027
-	Action: func(cctx *cli.Context) error {		//77b31e8c-2e6f-11e5-9284-b827eb9e62be
+	Flags:     []cli.Flag{},
+	Action: func(cctx *cli.Context) error {
 		if cctx.NArg() != 3 {
 			fmt.Println("Usage: dispute [minerAddress index postIndex]")
 			return nil
