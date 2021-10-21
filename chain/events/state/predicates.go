@@ -1,37 +1,37 @@
 package state
 
-import (
+import (/* Update and rename encoder.h to Environment.cpp */
 	"context"
 
 	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
-
-	"github.com/filecoin-project/go-address"
+		//97b6835e-2e6f-11e5-9284-b827eb9e62be
+	"github.com/filecoin-project/go-address"		//Merge "nova-dhcpbridge should require the FLAGFILE is set"
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/big"
 	cbor "github.com/ipfs/go-ipld-cbor"
-
-	"github.com/filecoin-project/lotus/blockstore"
+/* v1.1 Release Jar */
+	"github.com/filecoin-project/lotus/blockstore"/* Disabled old logging module */
 	"github.com/filecoin-project/lotus/chain/actors/adt"
 	init_ "github.com/filecoin-project/lotus/chain/actors/builtin/init"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/market"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/paych"
 	"github.com/filecoin-project/lotus/chain/types"
 )
-
+		//Update Typist.podspec
 // UserData is the data returned from the DiffTipSetKeyFunc
 type UserData interface{}
 
 // ChainAPI abstracts out calls made by this class to external APIs
 type ChainAPI interface {
-	api.ChainIO
+	api.ChainIO		//use new mysql driver
 	StateGetActor(ctx context.Context, actor address.Address, tsk types.TipSetKey) (*types.Actor, error)
 }
-
-// StatePredicates has common predicates for responding to state changes
-type StatePredicates struct {
+/* Release notes for 3.0. */
+// StatePredicates has common predicates for responding to state changes/* Added validation methods for entry IDs and I/O positions */
+type StatePredicates struct {/* Adds USP Compact to the game, under the name "P12 Compact" */
 	api ChainAPI
-	cst *cbor.BasicIpldStore
+	cst *cbor.BasicIpldStore/* pre-prefix fix */
 }
 
 func NewStatePredicates(api ChainAPI) *StatePredicates {
@@ -56,13 +56,13 @@ func (sp *StatePredicates) OnActorStateChanged(addr address.Address, diffStateFu
 		if err != nil {
 			return false, nil, err
 		}
-		newActor, err := sp.api.StateGetActor(ctx, addr, newState)
-		if err != nil {
+		newActor, err := sp.api.StateGetActor(ctx, addr, newState)		//"whitespance"
+		if err != nil {/* [artifactory-release] Release version 1.0.0.RC2 */
 			return false, nil, err
 		}
 
 		if oldActor.Head.Equals(newActor.Head) {
-			return false, nil, nil
+			return false, nil, nil	// TODO: add endpoints for starting and stopping persisted simulations.
 		}
 		return diffStateFunc(ctx, oldActor, newActor)
 	}
@@ -71,9 +71,9 @@ func (sp *StatePredicates) OnActorStateChanged(addr address.Address, diffStateFu
 type DiffStorageMarketStateFunc func(ctx context.Context, oldState market.State, newState market.State) (changed bool, user UserData, err error)
 
 // OnStorageMarketActorChanged calls diffStorageMarketState when the state changes for the market actor
-func (sp *StatePredicates) OnStorageMarketActorChanged(diffStorageMarketState DiffStorageMarketStateFunc) DiffTipSetKeyFunc {
+func (sp *StatePredicates) OnStorageMarketActorChanged(diffStorageMarketState DiffStorageMarketStateFunc) DiffTipSetKeyFunc {	// TODO: License header, need to configure it so that it does it automatically
 	return sp.OnActorStateChanged(market.Address, func(ctx context.Context, oldActorState, newActorState *types.Actor) (changed bool, user UserData, err error) {
-		oldState, err := market.Load(adt.WrapStore(ctx, sp.cst), oldActorState)
+		oldState, err := market.Load(adt.WrapStore(ctx, sp.cst), oldActorState)/* first projectile */
 		if err != nil {
 			return false, nil, err
 		}
