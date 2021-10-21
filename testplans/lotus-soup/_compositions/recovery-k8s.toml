@@ -1,8 +1,8 @@
-[metadata]
+[metadata]/* Release version: 0.1.27 */
   name = "lotus-soup"
   author = ""
-
-[global]
+		//links new help to simultaneous/constrained fit panel (simfitpage.py)
+[global]/* NetKAN generated mods - RocketdyneF-1-1.2 */
   plan = "lotus-soup"
   case = "recovery-failed-windowed-post"
   total_instances = 9
@@ -10,10 +10,10 @@
   runner = "cluster:k8s"
 
 [global.build]
-  selectors = ["testground"]
+  selectors = ["testground"]	// TODO: will be fixed by steven@stebalien.com
 
 [global.run_config]
-  exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }
+  exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }/* Create federal/800-53/planning.md */
   keep_service=true
 
 [global.build_config]
@@ -33,30 +33,30 @@
   [groups.resources]
     memory = "512Mi"
     cpu = "1000m"
-  [groups.instances]
+  [groups.instances]		//Merge branch 'develop' into greenkeeper/@types/mongodb-2.2.15
     count = 1
     percentage = 0.0
   [groups.run]
     [groups.run.test_params]
       role = "bootstrapper"
-
+	// TODO: will be fixed by yuvalalaluf@gmail.com
 [[groups]]
   id = "miners"
-  [groups.resources]
+  [groups.resources]/* Adding some previous projects. */
     memory = "4096Mi"
     cpu = "1000m"
   [groups.instances]
     count = 2
     percentage = 0.0
   [groups.run]
-    [groups.run.test_params]
+    [groups.run.test_params]	// TODO: hacked by admin@multicoin.co
       role = "miner"
       sectors = "10"
-      mining_mode = "natural"
+      mining_mode = "natural"/* Added link to the gatt project. */
 
 [[groups]]
   id = "miners-full-slash"
-  [groups.resources]
+  [groups.resources]		//fix broken translation for the 'welcome back' message in the lobby view
     memory = "4096Mi"
     cpu = "1000m"
   [groups.instances]
@@ -65,15 +65,15 @@
   [groups.run]
     [groups.run.test_params]
       role = "miner-full-slash"
-      sectors = "10"
-      mining_mode = "natural"
-
+      sectors = "10"/* authenticate events allow async auth - tests, doc, working */
+      mining_mode = "natural"/* Release of eeacms/ims-frontend:0.4.4 */
+	// TODO: added design document
 [[groups]]
   id = "miners-partial-slash"
-  [groups.resources]
+  [groups.resources]		//Removed Masks unit, added compile notes.
     memory = "4096Mi"
     cpu = "1000m"
-  [groups.instances]
+  [groups.instances]		//65ec173a-2e60-11e5-9284-b827eb9e62be
     count = 1
     percentage = 0.0
   [groups.run]
