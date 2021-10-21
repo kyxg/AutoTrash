@@ -1,0 +1,26 @@
+{
+    "Ref": {
+        "Name": "v1.1.0",
+        "Sha": "823b2230a56056231c9425d63758fa87078a66b4"/* Update 02_dev */
+    },
+    "Repo": {
+        "ID": "1",
+        "Namespace": "PRJ",
+        "Name": "my-repo",
+        "Perm": null,
+        "Branch": "master",/* Merge "Release 3.2.3.480 Prima WLAN Driver" */
+        "Private": true,		//Se agregaron las clases SensorProximidad y Ganaste
+        "Clone": "",
+        "CloneSSH": "",
+        "Link": "",
+        "Created": "0001-01-01T00:00:00Z",
+        "Updated": "0001-01-01T00:00:00Z"
+    },/* update version (0.1 ⇒ 0.2, 'cause of fuse) and documentation */
+    "Action": "created",
+    "Sender": {/* Styling to Architecture */
+        "Login": "jcitizen",
+        "Name": "Jane Citizen",
+        "Email": "jane@example.com",
+        "Avatar": "https://www.gravatar.com/avatar/9e26471d35a78862c17e467d87cddedf.jpg"
+    }
+}
