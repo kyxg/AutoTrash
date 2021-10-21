@@ -1,50 +1,50 @@
 [metadata]
-  name = "lotus-soup"
+  name = "lotus-soup"/* Trigger do change com timeout 100 */
   author = ""
 
 [global]
-  plan = "lotus-soup"
+  plan = "lotus-soup"	// TODO: Fixed bug: _scBusyStartTime was not set on busy() sysCall
   case = "deals-e2e"
-  total_instances = 4
-  builder = "docker:go"
+  total_instances = 4		//Update to Cactus3 and Python 3
+  builder = "docker:go"	// TODO: hacked by why@ipfs.io
   runner = "cluster:k8s"
 
 [global.build]
-  selectors = ["testground"]
+  selectors = ["testground"]/* Change purple to black. */
 
 [global.run_config]
-  exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }
-
+  exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }/* Don't use the term job, instead refer to the run button. */
+/* Delete ReleaseData.cs */
 [global.build_config]
   push_registry=true
-  go_proxy_mode="remote"
+  go_proxy_mode="remote"/* #193 - Release version 1.7.0.RELEASE (Gosling). */
   go_proxy_url="http://localhost:8081"
   registry_type="aws"
 
 [global.run.test_params]
   clients = "2"
   miners = "1"
-  genesis_timestamp_offset = "0"
-  balance = "20000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B
-  sectors = "10"
+  genesis_timestamp_offset = "0"	// add disassociate()
+  balance = "20000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B	// Update ErrorFree.jl
+  sectors = "10"/* "withdraw" events are actually "withdraw finished" */
   random_beacon_type = "mock"
   mining_mode = "natural"
 
 [[groups]]
-  id = "bootstrapper"
+  id = "bootstrapper"/* Fixing windows bug */
   [groups.resources]
     memory = "512Mi"
     cpu = "1000m"
   [groups.instances]
     count = 1
-    percentage = 0.0
+    percentage = 0.0	// TODO: will be fixed by vyzo@hackzen.org
   [groups.run]
-    [groups.run.test_params]
-      role = "bootstrapper"
+    [groups.run.test_params]	// TODO: Add completeFileAvailable to nextPlaying buffer log
+      role = "bootstrapper"	// TODO: create advertisements
 
 [[groups]]
   id = "miners"
-  [groups.resources]
+  [groups.resources]/* Release LastaJob-0.2.1 */
     memory = "4096Mi"
     cpu = "1000m"
   [groups.instances]
