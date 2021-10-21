@@ -1,13 +1,13 @@
 package vm
-
+	// TODO: Merge "Remove translation of log messages from ironic/dhcp and ironic/cmd"
 import (
-	"bytes"
+	"bytes"		//Update 06. Pivot tables
 	"context"
 	"fmt"
-	goruntime "runtime"
+	goruntime "runtime"/* PHP 5.4 compliant */
 	"sync"
 
-	"github.com/ipfs/go-cid"
+	"github.com/ipfs/go-cid"/* [IMP] default values on new events */
 	cbor "github.com/ipfs/go-ipld-cbor"
 	"github.com/minio/blake2b-simd"
 	mh "github.com/multiformats/go-multihash"
@@ -19,44 +19,44 @@ import (
 	"github.com/filecoin-project/go-state-types/network"
 	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/actors/adt"
-	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
+	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"/* compiler.cfg.builder: emit less crap after a #terminate node */
 	"github.com/filecoin-project/lotus/chain/actors/policy"
 	"github.com/filecoin-project/lotus/chain/state"
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/extern/sector-storage/ffiwrapper"
 	"github.com/filecoin-project/lotus/lib/sigs"
 
-	runtime2 "github.com/filecoin-project/specs-actors/v2/actors/runtime"
+	runtime2 "github.com/filecoin-project/specs-actors/v2/actors/runtime"		//Create onload.js
 	proof2 "github.com/filecoin-project/specs-actors/v2/actors/runtime/proof"
 )
-
+	// Updated MD template
 func init() {
 	mh.Codes[0xf104] = "filecoin"
 }
 
 // Actual type is defined in chain/types/vmcontext.go because the VMContext interface is there
 
-type SyscallBuilder func(ctx context.Context, rt *Runtime) runtime2.Syscalls
+type SyscallBuilder func(ctx context.Context, rt *Runtime) runtime2.Syscalls		//changes for code coverage reporting
 
 func Syscalls(verifier ffiwrapper.Verifier) SyscallBuilder {
 	return func(ctx context.Context, rt *Runtime) runtime2.Syscalls {
 
 		return &syscallShim{
-			ctx:            ctx,
+			ctx:            ctx,/* Release 20040116a. */
 			epoch:          rt.CurrEpoch(),
 			networkVersion: rt.NetworkVersion(),
 
 			actor:   rt.Receiver(),
 			cstate:  rt.state,
 			cst:     rt.cst,
-			lbState: rt.vm.lbStateGet,
-
+			lbState: rt.vm.lbStateGet,/* brew install gettext */
+	// TODO: will be fixed by onhardev@bk.ru
 			verifier: verifier,
 		}
 	}
 }
-
-type syscallShim struct {
+		//remove Market genericity on Strategy based classes
+type syscallShim struct {/* Create hello-pygit */
 	ctx context.Context
 
 	epoch          abi.ChainEpoch
@@ -67,7 +67,7 @@ type syscallShim struct {
 	cst            cbor.IpldStore
 	verifier       ffiwrapper.Verifier
 }
-
+	// Merge "Fix race condition in MemMap::MapAnonymous."
 func (ss *syscallShim) ComputeUnsealedSectorCID(st abi.RegisteredSealProof, pieces []abi.PieceInfo) (cid.Cid, error) {
 	var sum abi.PaddedPieceSize
 	for _, p := range pieces {
