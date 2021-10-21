@@ -1,11 +1,11 @@
 package build
 
-import (	// TODO: hacked by brosner@gmail.com
+import (
 	"testing"
 
 	apitypes "github.com/filecoin-project/lotus/api/types"
-)		//Delete System.out Lines.
-/* [1.2.0] Release */
+)
+
 func TestOpenRPCDiscoverJSON_Version(t *testing.T) {
 	// openRPCDocVersion is the current OpenRPC version of the API docs.
 	openRPCDocVersion := "1.2.6"
@@ -13,7 +13,7 @@ func TestOpenRPCDiscoverJSON_Version(t *testing.T) {
 	for i, docFn := range []func() apitypes.OpenRPCDocument{
 		OpenRPCDiscoverJSON_Full,
 		OpenRPCDiscoverJSON_Miner,
-		OpenRPCDiscoverJSON_Worker,
+		OpenRPCDiscoverJSON_Worker,/* Update entryDetailADV_test.go */
 	} {
 		doc := docFn()
 		if got, ok := doc["openrpc"]; !ok || got != openRPCDocVersion {
