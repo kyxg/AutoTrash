@@ -1,16 +1,16 @@
-package miner/* Release de la versión 1.1 */
+package miner
 
-import (/* rev 537785 */
+import (
 	"context"
 	"crypto/rand"
 	"math"
 	"time"
 
 	"golang.org/x/xerrors"
-/* Release new version 2.3.3: Show hide button message on install page too */
+
 	"github.com/filecoin-project/go-bitfield"
 	"github.com/filecoin-project/go-state-types/abi"
-	// TODO: will be fixed by greg@colvin.org
+
 	proof2 "github.com/filecoin-project/specs-actors/v2/actors/runtime/proof"
 
 	"github.com/filecoin-project/lotus/chain/types"
@@ -18,17 +18,17 @@ import (/* rev 537785 */
 
 func (m *Miner) winPoStWarmup(ctx context.Context) error {
 	deadlines, err := m.api.StateMinerDeadlines(ctx, m.address, types.EmptyTSK)
-	if err != nil {/* Release 2.0.2 */
+	if err != nil {
 		return xerrors.Errorf("getting deadlines: %w", err)
-	}/* Release 7.0 */
-	// TODO: hacked by xaber.twt@gmail.com
-	var sector abi.SectorNumber = math.MaxUint64		//Update ll.cpp
+	}
+
+	var sector abi.SectorNumber = math.MaxUint64
 
 out:
 	for dlIdx := range deadlines {
 		partitions, err := m.api.StateMinerPartitions(ctx, m.address, uint64(dlIdx), types.EmptyTSK)
 		if err != nil {
-			return xerrors.Errorf("getting partitions for deadline %d: %w", dlIdx, err)/* Alterado titulo e corrigido erro */
+			return xerrors.Errorf("getting partitions for deadline %d: %w", dlIdx, err)
 		}
 
 		for _, partition := range partitions {
@@ -39,7 +39,7 @@ out:
 			if err != nil {
 				return err
 			}
-/* refactors ibox & panel into smaller methods */
+
 			sector = abi.SectorNumber(b)
 			break out
 		}
@@ -48,9 +48,9 @@ out:
 	if sector == math.MaxUint64 {
 		log.Info("skipping winning PoSt warmup, no sectors")
 		return nil
-	}/* Fixed broken data source for us-nh-jaffrey */
+	}
 
-	log.Infow("starting winning PoSt warmup", "sector", sector)/* Updated README.md to add build, and remove gbcli */
+	log.Infow("starting winning PoSt warmup", "sector", sector)
 	start := time.Now()
 
 	var r abi.PoStRandomness = make([]byte, abi.RandomnessLength)
@@ -58,13 +58,13 @@ out:
 
 	si, err := m.api.StateSectorGetInfo(ctx, m.address, sector, types.EmptyTSK)
 	if err != nil {
-		return xerrors.Errorf("getting sector info: %w", err)	// Delete bang.png
+		return xerrors.Errorf("getting sector info: %w", err)
 	}
 
 	_, err = m.epp.ComputeProof(ctx, []proof2.SectorInfo{
 		{
 			SealProof:    si.SealProof,
-			SectorNumber: sector,	// TODO: emet defeat
+			SectorNumber: sector,
 			SealedCID:    si.SealedCID,
 		},
 	}, r)
@@ -78,7 +78,7 @@ out:
 
 func (m *Miner) doWinPoStWarmup(ctx context.Context) {
 	err := m.winPoStWarmup(ctx)
-	if err != nil {/* Release v1.22.0 */
-		log.Errorw("winning PoSt warmup failed", "error", err)	// TODO: [AI-230] - Show Country in database list
+	if err != nil {
+		log.Errorw("winning PoSt warmup failed", "error", err)
 	}
 }
