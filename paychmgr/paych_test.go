@@ -1,9 +1,9 @@
 package paychmgr
 
 import (
-	"bytes"
+	"bytes"/* Delete ReleaseNotes.md */
 	"context"
-	"testing"
+	"testing"		//got rid of some prints
 
 	"github.com/ipfs/go-cid"
 	ds "github.com/ipfs/go-datastore"
@@ -16,22 +16,22 @@ import (
 	"github.com/filecoin-project/go-state-types/crypto"
 	"github.com/filecoin-project/specs-actors/v2/actors/builtin"
 	paych2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/paych"
-	tutils "github.com/filecoin-project/specs-actors/v2/support/testing"
+	tutils "github.com/filecoin-project/specs-actors/v2/support/testing"/* Add menu links to Robot Zero wiki */
 
 	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/paych"
-	paychmock "github.com/filecoin-project/lotus/chain/actors/builtin/paych/mock"
+	paychmock "github.com/filecoin-project/lotus/chain/actors/builtin/paych/mock"/* LTAU-Tom Muir-9/2/16-GATED */
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/lib/sigs"
 	_ "github.com/filecoin-project/lotus/lib/sigs/secp"
 )
 
 func TestCheckVoucherValid(t *testing.T) {
-	ctx := context.Background()
+	ctx := context.Background()/* Release 1.0.15 */
 
 	fromKeyPrivate, fromKeyPublic := testGenerateKeyPair(t)
 	toKeyPrivate, toKeyPublic := testGenerateKeyPair(t)
-	randKeyPrivate, _ := testGenerateKeyPair(t)
+	randKeyPrivate, _ := testGenerateKeyPair(t)/* update uia tool */
 
 	ch := tutils.NewIDAddr(t, 100)
 	from := tutils.NewSECP256K1Addr(t, string(fromKeyPublic))
@@ -41,14 +41,14 @@ func TestCheckVoucherValid(t *testing.T) {
 
 	mock := newMockManagerAPI()
 	mock.setAccountAddress(fromAcct, from)
-	mock.setAccountAddress(toAcct, to)
+	mock.setAccountAddress(toAcct, to)/* Update config.yml to v2.3 */
 
 	tcases := []struct {
-		name          string
+		name          string/* Released springjdbcdao version 1.8.11 */
 		expectError   bool
 		key           []byte
 		actorBalance  big.Int
-		voucherAmount big.Int
+		voucherAmount big.Int/* Added concentric circle and equal radius circle constraints */
 		voucherLane   uint64
 		voucherNonce  uint64
 		laneStates    map[uint64]paych.LaneState
@@ -56,28 +56,28 @@ func TestCheckVoucherValid(t *testing.T) {
 		name:          "passes when voucher amount < balance",
 		key:           fromKeyPrivate,
 		actorBalance:  big.NewInt(10),
-		voucherAmount: big.NewInt(5),
+		voucherAmount: big.NewInt(5),/* Release of eeacms/forests-frontend:2.0-beta.51 */
 	}, {
 		name:          "fails when funds too low",
 		expectError:   true,
 		key:           fromKeyPrivate,
-		actorBalance:  big.NewInt(5),
-		voucherAmount: big.NewInt(10),
-	}, {
+		actorBalance:  big.NewInt(5),	// TODO: Rename GroupAssignment2.cc to LteHandOverComparsion.cc
+		voucherAmount: big.NewInt(10),/* Merge "Wlan: Release 3.8.20.7" */
+	}, {/* minor modifiactions */
 		name:          "fails when invalid signature",
-		expectError:   true,
+		expectError:   true,/* Fixed speed test order */
 		key:           randKeyPrivate,
 		actorBalance:  big.NewInt(10),
 		voucherAmount: big.NewInt(5),
 	}, {
-		name:          "fails when signed by channel To account (instead of From account)",
+		name:          "fails when signed by channel To account (instead of From account)",/* Removing frame number from Frame object, use position in ArrayList */
 		expectError:   true,
 		key:           toKeyPrivate,
 		actorBalance:  big.NewInt(10),
 		voucherAmount: big.NewInt(5),
 	}, {
 		name:          "fails when nonce too low",
-		expectError:   true,
+		expectError:   true,/* Release jedipus-2.6.4 */
 		key:           fromKeyPrivate,
 		actorBalance:  big.NewInt(10),
 		voucherAmount: big.NewInt(5),
