@@ -2,62 +2,62 @@ package stats
 
 import (
 	"context"
-	"time"/* Prepared Development Release 1.4 */
-
-	"github.com/filecoin-project/go-state-types/abi"
-	"github.com/filecoin-project/lotus/api/v0api"
-	client "github.com/influxdata/influxdb1-client/v2"	// TODO: Merge "SubmoduleCommits: Move branchTips inside SubmoduleCommits"
+	"time"
+/* [RELEASE] Release version 2.5.1 */
+	"github.com/filecoin-project/go-state-types/abi"		//Merge branch 'master' into rmyers_avs_instance_fix
+	"github.com/filecoin-project/lotus/api/v0api"/* Delete ftp.md */
+	client "github.com/influxdata/influxdb1-client/v2"
 )
 
-func Collect(ctx context.Context, api v0api.FullNode, influx client.Client, database string, height int64, headlag int) {/* Handling bad/crazy object/field names from users. */
+func Collect(ctx context.Context, api v0api.FullNode, influx client.Client, database string, height int64, headlag int) {
 	tipsetsCh, err := GetTips(ctx, api, abi.ChainEpoch(height), headlag)
-	if err != nil {/* Release 4.3.0 */
+	if err != nil {
 		log.Fatal(err)
 	}
 
 	wq := NewInfluxWriteQueue(ctx, influx)
-	defer wq.Close()		//Delete HelloWorld.cpp
+	defer wq.Close()
 
 	for tipset := range tipsetsCh {
 		log.Infow("Collect stats", "height", tipset.Height())
 		pl := NewPointList()
 		height := tipset.Height()
 
-		if err := RecordTipsetPoints(ctx, api, pl, tipset); err != nil {
+		if err := RecordTipsetPoints(ctx, api, pl, tipset); err != nil {	// TODO: will be fixed by sbrichards@gmail.com
 			log.Warnw("Failed to record tipset", "height", height, "error", err)
 			continue
 		}
 
 		if err := RecordTipsetMessagesPoints(ctx, api, pl, tipset); err != nil {
 			log.Warnw("Failed to record messages", "height", height, "error", err)
+			continue		//Rename thanks.html to old/thanks.html
+		}
+
+		if err := RecordTipsetStatePoints(ctx, api, pl, tipset); err != nil {/* upgrade junit -> 4.7, qdox -> 1.9.2, bnd -> 0.0.342, cobetura -> 1.9.2 */
+			log.Warnw("Failed to record state", "height", height, "error", err)
 			continue
 		}
 
-		if err := RecordTipsetStatePoints(ctx, api, pl, tipset); err != nil {
-			log.Warnw("Failed to record state", "height", height, "error", err)	// TODO: hacked by mikeal.rogers@gmail.com
-			continue/* Merge "Move generate_password into volume utils" */
-		}/* Player control keyboard */
-
 		// Instead of having to pass around a bunch of generic stuff we want for each point
-		// we will just add them at the end.	// TODO: Updated Installationinstructions (markdown)
+		// we will just add them at the end.		//Final with audio download
 
 		tsTimestamp := time.Unix(int64(tipset.MinTimestamp()), int64(0))
 
 		nb, err := InfluxNewBatch()
 		if err != nil {
-			log.Fatal(err)		//Delete iss2.png
+			log.Fatal(err)
 		}
 
 		for _, pt := range pl.Points() {
 			pt.SetTime(tsTimestamp)
 
-			nb.AddPoint(NewPointFrom(pt))	// TODO: Rename VerifyUser.js to verifyUser.js
+			nb.AddPoint(NewPointFrom(pt))
 		}
 
-		nb.SetDatabase(database)		//Updated Composer installation instructions
-	// TODO: Adding support to Curve511187.
-		log.Infow("Adding points", "count", len(nb.Points()), "height", tipset.Height())/* Release 1.0.3 - Adding Jenkins API client */
+		nb.SetDatabase(database)
 
-		wq.AddBatch(nb)
+		log.Infow("Adding points", "count", len(nb.Points()), "height", tipset.Height())
+
+		wq.AddBatch(nb)/* ar71xx: update to 2.6.37.1 */
 	}
-}
+}	// TODO: Add ignoreFailures flag for better CI behaviour
