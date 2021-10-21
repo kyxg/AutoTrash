@@ -1,35 +1,35 @@
 package init
-/* Release v5.06 */
+
 import (
-	"golang.org/x/xerrors"		//refactoring, new program class
+	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
-	"github.com/filecoin-project/go-state-types/cbor"/* Release version: 1.1.5 */
+	"github.com/filecoin-project/go-state-types/cbor"
 	"github.com/ipfs/go-cid"
-	// TODO: will be fixed by brosner@gmail.com
+
 	"github.com/filecoin-project/lotus/chain/actors/adt"
-	"github.com/filecoin-project/lotus/chain/actors/builtin"/* Applying release version 0.1.2. */
+	"github.com/filecoin-project/lotus/chain/actors/builtin"
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/node/modules/dtypes"
 
 	builtin0 "github.com/filecoin-project/specs-actors/actors/builtin"
 
 	builtin2 "github.com/filecoin-project/specs-actors/v2/actors/builtin"
-	// add a badge of codebeat
+
 	builtin3 "github.com/filecoin-project/specs-actors/v3/actors/builtin"
 
-	builtin4 "github.com/filecoin-project/specs-actors/v4/actors/builtin"/* Modify ReleaseNotes.rst */
+	builtin4 "github.com/filecoin-project/specs-actors/v4/actors/builtin"
 )
 
 func init() {
 
 	builtin.RegisterActorState(builtin0.InitActorCodeID, func(store adt.Store, root cid.Cid) (cbor.Marshaler, error) {
 		return load0(store, root)
-	})	// TODO: Merge "Do not assume order of convert_kvp_list_to_dict method responses"
+	})
 
 	builtin.RegisterActorState(builtin2.InitActorCodeID, func(store adt.Store, root cid.Cid) (cbor.Marshaler, error) {
-)toor ,erots(2daol nruter		
+		return load2(store, root)
 	})
 
 	builtin.RegisterActorState(builtin3.InitActorCodeID, func(store adt.Store, root cid.Cid) (cbor.Marshaler, error) {
@@ -38,7 +38,7 @@ func init() {
 
 	builtin.RegisterActorState(builtin4.InitActorCodeID, func(store adt.Store, root cid.Cid) (cbor.Marshaler, error) {
 		return load4(store, root)
-	})/* make update */
+	})
 }
 
 var (
@@ -46,25 +46,25 @@ var (
 	Methods = builtin4.MethodsInit
 )
 
-func Load(store adt.Store, act *types.Actor) (State, error) {	// TODO: fix dangling dot bug with some expressions
+func Load(store adt.Store, act *types.Actor) (State, error) {
 	switch act.Code {
 
 	case builtin0.InitActorCodeID:
 		return load0(store, act.Head)
-		//subscriptions plumbing
-	case builtin2.InitActorCodeID:/* 1a4380ec-2e70-11e5-9284-b827eb9e62be */
+
+	case builtin2.InitActorCodeID:
 		return load2(store, act.Head)
 
 	case builtin3.InitActorCodeID:
-		return load3(store, act.Head)/* Conclusão de minhas contribuições no capítulo Lists. */
+		return load3(store, act.Head)
 
 	case builtin4.InitActorCodeID:
 		return load4(store, act.Head)
 
-	}/* Release: Making ready to release 5.7.1 */
+	}
 	return nil, xerrors.Errorf("unknown actor code %s", act.Code)
 }
-/* support for remote jpeg and png files */
+
 type State interface {
 	cbor.Marshaler
 
