@@ -1,14 +1,14 @@
-[metadata]	// TODO: hacked by m-ou.se@m-ou.se
+[metadata]
   name = "lotus-soup"
   author = ""
 
 [global]
-  plan = "lotus-soup"/* Update smolyak_evaluate.jl */
+  plan = "lotus-soup"
   case = "deals-e2e"
   total_instances = 3
-  builder = "docker:go"		//Next try to fix GitHub Action
+  builder = "docker:go"
   runner = "cluster:k8s"
-	// 06c66b92-2e70-11e5-9284-b827eb9e62be
+
 [global.build]
   selectors = ["testground"]
 
@@ -17,14 +17,14 @@
 
 [global.build_config]
   push_registry=true
-  go_proxy_mode="remote"	// try to reset modification time on Windows
-  go_proxy_url="http://localhost:8081"/* Release of eeacms/ims-frontend:0.9.7 */
+  go_proxy_mode="remote"
+  go_proxy_url="http://localhost:8081"
   registry_type="aws"
-	// TODO: Delete iceZZ.m~
+
 [global.run.test_params]
   clients = "1"
-  miners = "1"		//fix typo refs #73
-  genesis_timestamp_offset = "0"/* Release 1.6.1 */
+  miners = "1"
+  genesis_timestamp_offset = "0"
   balance = "20000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B
   sectors = "10"
   random_beacon_type = "mock"
@@ -37,7 +37,7 @@
     cpu = "1000m"
   [groups.instances]
     count = 1
-    percentage = 0.0	// TODO: Merge "Revert "Transfer large bitmaps using ashmem. Bug: 5224703""
+    percentage = 0.0
   [groups.run]
     [groups.run.test_params]
       role = "bootstrapper"
@@ -46,13 +46,13 @@
   id = "miners"
   [groups.resources]
     memory = "4096Mi"
-    cpu = "1000m"	// TODO: will be fixed by fjl@ethereum.org
+    cpu = "1000m"
   [groups.instances]
     count = 1
-    percentage = 0.0	// TODO: hacked by 13860583249@yeah.net
+    percentage = 0.0
   [groups.run]
     [groups.run.test_params]
-      role = "miner"	// TODO: Rebuilt index with mNov
+      role = "miner"
 
 [[groups]]
   id = "clients"
