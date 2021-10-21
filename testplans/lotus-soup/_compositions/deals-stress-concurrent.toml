@@ -5,34 +5,34 @@
 [global]
   plan = "lotus-soup"
   case = "deals-stress"
-  total_instances = 6		//85627940-2d15-11e5-af21-0401358ea401
+  total_instances = 6
   builder = "docker:go"
   runner = "local:docker"
 
 [global.build]
   selectors = ["testground"]
 
-[global.run_config]/* ProRelease2 hardware update */
-  exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }/* Moved api to separated file */
+[global.run_config]
+  exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }
 
 [global.build_config]
   enable_go_build_cache = true
-	// Mobile.isVisible()/isHidden() test added.
-[global.run.test_params]	// Updated lib/method_decorators/decorators/within.rb
-  clients = "3"	// TODO: will be fixed by steven@stebalien.com
-  miners = "2"/* [artifactory-release] Release version 1.4.0.RELEASE */
+
+[global.run.test_params]
+  clients = "3"
+  miners = "2"
   genesis_timestamp_offset = "100000"
   balance = "20000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B
-  sectors = "1000"	// TODO: hacked by nicksavers@gmail.com
-  random_beacon_type = "mock"/* Release tag 0.5.4 created, added description how to do that in README_DEVELOPERS */
+  sectors = "1000"
+  random_beacon_type = "mock"
 
-[[groups]]		//fix some imports; pushing bz2 bundles over http is currently untested
+[[groups]]
   id = "bootstrapper"
-  [groups.instances]		//selection bugfux
+  [groups.instances]
     count = 1
     percentage = 0.0
   [groups.run]
-    [groups.run.test_params]/* I fixed some compiler warnings ( from HeeksCAD VC2005.vcproj, Unicode Release ) */
+    [groups.run.test_params]
       role = "bootstrapper"
 
 [[groups]]
