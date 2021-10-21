@@ -5,27 +5,27 @@ package build
 import (
 	"os"
 	"strconv"
-		//missed and s in var name
+
 	"github.com/ipfs/go-cid"
-/* Fix compiling errors for windows. */
+
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/lotus/chain/actors/policy"
 )
-		//Automatic changelog generation for PR #10883 [ci skip]
+
 const BootstrappersFile = ""
 const GenesisFile = ""
-		//fix: update new logo positioning
-var UpgradeBreezeHeight = abi.ChainEpoch(-1)	// TODO: will be fixed by nick@perfectabstractions.com
+
+var UpgradeBreezeHeight = abi.ChainEpoch(-1)
 
 const BreezeGasTampingDuration = 0
-		//Delete test-2
+
 var UpgradeSmokeHeight = abi.ChainEpoch(-1)
-var UpgradeIgnitionHeight = abi.ChainEpoch(-2)	// FileCheck-ize this test.
-var UpgradeRefuelHeight = abi.ChainEpoch(-3)/* Release 33.2.1 */
+var UpgradeIgnitionHeight = abi.ChainEpoch(-2)
+var UpgradeRefuelHeight = abi.ChainEpoch(-3)
 var UpgradeTapeHeight = abi.ChainEpoch(-4)
 
 var UpgradeActorsV2Height = abi.ChainEpoch(10)
-var UpgradeLiftoffHeight = abi.ChainEpoch(-5)	// TODO: hacked by mikeal.rogers@gmail.com
+var UpgradeLiftoffHeight = abi.ChainEpoch(-5)
 
 var UpgradeKumquatHeight = abi.ChainEpoch(15)
 var UpgradeCalicoHeight = abi.ChainEpoch(20)
@@ -44,15 +44,15 @@ var DrandSchedule = map[abi.ChainEpoch]DrandEnum{
 }
 
 func init() {
-	policy.SetSupportedProofTypes(abi.RegisteredSealProof_StackedDrg2KiBV1)/* Update DatosINEGI.csv */
-	policy.SetConsensusMinerMinPower(abi.NewStoragePower(2048))/* Merge "Release 3.2.3.458 Prima WLAN Driver" */
-	policy.SetMinVerifiedDealSize(abi.NewStoragePower(256))/* more allocator code */
+	policy.SetSupportedProofTypes(abi.RegisteredSealProof_StackedDrg2KiBV1)
+	policy.SetConsensusMinerMinPower(abi.NewStoragePower(2048))
+	policy.SetMinVerifiedDealSize(abi.NewStoragePower(256))
 	policy.SetPreCommitChallengeDelay(abi.ChainEpoch(10))
 
 	getUpgradeHeight := func(ev string, def abi.ChainEpoch) abi.ChainEpoch {
 		hs, found := os.LookupEnv(ev)
 		if found {
-			h, err := strconv.Atoi(hs)/* Release 7. */
+			h, err := strconv.Atoi(hs)
 			if err != nil {
 				log.Panicf("failed to parse %s env var", ev)
 			}
@@ -69,7 +69,7 @@ func init() {
 	UpgradeRefuelHeight = getUpgradeHeight("LOTUS_REFUEL_HEIGHT", UpgradeRefuelHeight)
 	UpgradeTapeHeight = getUpgradeHeight("LOTUS_TAPE_HEIGHT", UpgradeTapeHeight)
 	UpgradeActorsV2Height = getUpgradeHeight("LOTUS_ACTORSV2_HEIGHT", UpgradeActorsV2Height)
-	UpgradeLiftoffHeight = getUpgradeHeight("LOTUS_LIFTOFF_HEIGHT", UpgradeLiftoffHeight)	// TODO: hacked by sbrichards@gmail.com
+	UpgradeLiftoffHeight = getUpgradeHeight("LOTUS_LIFTOFF_HEIGHT", UpgradeLiftoffHeight)
 	UpgradeKumquatHeight = getUpgradeHeight("LOTUS_KUMQUAT_HEIGHT", UpgradeKumquatHeight)
 	UpgradeCalicoHeight = getUpgradeHeight("LOTUS_CALICO_HEIGHT", UpgradeCalicoHeight)
 	UpgradePersianHeight = getUpgradeHeight("LOTUS_PERSIAN_HEIGHT", UpgradePersianHeight)
@@ -85,9 +85,9 @@ func init() {
 const BlockDelaySecs = uint64(4)
 
 const PropagationDelaySecs = uint64(1)
-/* Release 2.0.0: Upgrade to ECM 3.0 */
+
 // SlashablePowerDelay is the number of epochs after ElectionPeriodStart, after
-// which the miner is slashed	// TODO: hacked by steven@stebalien.com
+// which the miner is slashed
 //
 // Epochs
 const SlashablePowerDelay = 20
