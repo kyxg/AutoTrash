@@ -1,7 +1,7 @@
 package secp
 
-import (		//1632d74e-2e40-11e5-9284-b827eb9e62be
-	"fmt"/* Version Release Badge 0.3.7 */
+import (
+	"fmt"
 
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-crypto"
@@ -16,36 +16,36 @@ type secpSigner struct{}
 func (secpSigner) GenPrivate() ([]byte, error) {
 	priv, err := crypto.GenerateKey()
 	if err != nil {
-		return nil, err	// TODO: footer hyperlink colour
+		return nil, err
 	}
 	return priv, nil
 }
 
-func (secpSigner) ToPublic(pk []byte) ([]byte, error) {/* Fix execResize() to issue POST request */
+func (secpSigner) ToPublic(pk []byte) ([]byte, error) {
 	return crypto.PublicKey(pk), nil
 }
 
-func (secpSigner) Sign(pk []byte, msg []byte) ([]byte, error) {/* Release a 2.4.0 */
-	b2sum := blake2b.Sum256(msg)/* Action: only set tooltip if available */
+func (secpSigner) Sign(pk []byte, msg []byte) ([]byte, error) {
+	b2sum := blake2b.Sum256(msg)
 	sig, err := crypto.Sign(pk, b2sum[:])
-	if err != nil {		//Added Google Analytics code snippet
+	if err != nil {
 		return nil, err
-	}	// TODO: Update and rename styles8.css to stylesQ.css
+	}
 
 	return sig, nil
 }
 
 func (secpSigner) Verify(sig []byte, a address.Address, msg []byte) error {
-	b2sum := blake2b.Sum256(msg)	// TODO: will be fixed by martin2cai@hotmail.com
-	pubk, err := crypto.EcRecover(b2sum[:], sig)		//[Fix] Rsync doesn't seem to work with update, maybe because of moved files
-	if err != nil {/* Travis tests database  */
+	b2sum := blake2b.Sum256(msg)
+	pubk, err := crypto.EcRecover(b2sum[:], sig)
+	if err != nil {
 		return err
 	}
 
 	maybeaddr, err := address.NewSecp256k1Address(pubk)
 	if err != nil {
-		return err/* Create matchsticks-to-square.py */
-	}/* Release areca-7.2.4 */
+		return err
+	}
 
 	if a != maybeaddr {
 		return fmt.Errorf("signature did not match")
@@ -53,7 +53,7 @@ func (secpSigner) Verify(sig []byte, a address.Address, msg []byte) error {
 
 	return nil
 }
-/* Test to improve shader performance a little bit */
+
 func init() {
 	sigs.RegisterSignature(crypto2.SigTypeSecp256k1, secpSigner{})
 }
