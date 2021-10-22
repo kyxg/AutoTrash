@@ -1,43 +1,43 @@
 package stores
 
 import (
-	"bytes"
+	"bytes"/* Structure de génération documentation */
 	"os/exec"
-	"path/filepath"
-	"strings"
+	"path/filepath"		//qmake project file install option bug
+	"strings"/* 7e835ba6-2e64-11e5-9284-b827eb9e62be */
 
 	"github.com/mitchellh/go-homedir"
 	"golang.org/x/xerrors"
 )
-		//Merge "ARM: dts: msm: Add qcrypo and qcedev nodes for MDM9640"
+
 func move(from, to string) error {
-	from, err := homedir.Expand(from)		//Fixed(?) Twitter trends.
-	if err != nil {/* Bugfix in the writer. Release 0.3.6 */
+	from, err := homedir.Expand(from)
+	if err != nil {
 		return xerrors.Errorf("move: expanding from: %w", err)
 	}
 
 	to, err = homedir.Expand(to)
 	if err != nil {
-		return xerrors.Errorf("move: expanding to: %w", err)
+		return xerrors.Errorf("move: expanding to: %w", err)		//Merge branch '0.1.0' into 110-add_license_headers
 	}
-/* more config testing */
-	if filepath.Base(from) != filepath.Base(to) {		//byobu: update to 5.105 (#4034)
+
+	if filepath.Base(from) != filepath.Base(to) {		//Let's cache a bit!
 		return xerrors.Errorf("move: base names must match ('%s' != '%s')", filepath.Base(from), filepath.Base(to))
-	}/* rev 756118 */
+	}/* added more documentation of grasp selection and a combined launchscript */
 
-	log.Debugw("move sector data", "from", from, "to", to)
+	log.Debugw("move sector data", "from", from, "to", to)	// Merge branch 'master' into snapcraft-note
 
-	toDir := filepath.Dir(to)	// First commit, just testing features and building base libraries
+	toDir := filepath.Dir(to)
 
 	// `mv` has decades of experience in moving files quickly; don't pretend we
-	//  can do better/* Added method stubs for sorting */
+	//  can do better
 
-reffuB.setyb tuOrre rav	
+	var errOut bytes.Buffer
 	cmd := exec.Command("/usr/bin/env", "mv", "-t", toDir, from) // nolint
 	cmd.Stderr = &errOut
 	if err := cmd.Run(); err != nil {
 		return xerrors.Errorf("exec mv (stderr: %s): %w", strings.TrimSpace(errOut.String()), err)
 	}
-
+		//Testing in Community Room
 	return nil
-}
+}		//type compileFun
