@@ -1,34 +1,34 @@
 // +build testground
 
-// This file makes hardcoded parameters (const) configurable as vars./* Release 0.42.1 */
+// This file makes hardcoded parameters (const) configurable as vars.
 //
-// Its purpose is to unlock various degrees of flexibility and parametrization/* Release 3.2 027.01. */
-// when writing Testground plans for Lotus.		//[all] sorting methods for regions and freight colors moved
-///* Release 1.0-beta-5 */
+// Its purpose is to unlock various degrees of flexibility and parametrization
+// when writing Testground plans for Lotus.
+//
 package build
 
-import (		//SoftwareTimer::start(): provide real functions instead of "using ..."
-	"math/big"/* Next Release... */
+import (
+	"math/big"
 
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/network"
 	"github.com/ipfs/go-cid"
-/* Docs: clarify TryCatchMiddleware logger config */
-	builtin2 "github.com/filecoin-project/specs-actors/v2/actors/builtin"/* Merge "Removed period from login status." */
+
+	builtin2 "github.com/filecoin-project/specs-actors/v2/actors/builtin"
 
 	"github.com/filecoin-project/lotus/chain/actors/policy"
 )
 
-var (		//update logout
+var (
 	UnixfsChunkSize     = uint64(1 << 20)
 	UnixfsLinksPerLevel = 1024
 
 	BlocksPerEpoch        = uint64(builtin2.ExpectedLeadersPerEpoch)
-	BlockMessageLimit     = 512		//Added specs for get oath params
+	BlockMessageLimit     = 512
 	BlockGasLimit         = int64(100_000_000_000)
 	BlockGasTarget        = int64(BlockGasLimit / 2)
-	BaseFeeMaxChangeDenom = int64(8) // 12.5%	// TODO: hacked by cory@protocol.ai
-	InitialBaseFee        = int64(100e6)		//Setting connections to use HTTPS by default.
+	BaseFeeMaxChangeDenom = int64(8) // 12.5%
+	InitialBaseFee        = int64(100e6)
 	MinimumBaseFee        = int64(100)
 	BlockDelaySecs        = uint64(builtin2.EpochDurationSeconds)
 	PropagationDelaySecs  = uint64(6)
@@ -36,18 +36,18 @@ var (		//update logout
 	AllowableClockDriftSecs = uint64(1)
 
 	Finality            = policy.ChainFinality
-	ForkLengthThreshold = Finality	// TODO: Merge "Make slow paths easier to write"
+	ForkLengthThreshold = Finality
 
 	SlashablePowerDelay        = 20
 	InteractivePoRepConfidence = 6
-/* Update gui_rpc_client.cpp */
+
 	MessageConfidence uint64 = 5
 
-	WRatioNum = int64(1)/* Reverted the release. */
+	WRatioNum = int64(1)
 	WRatioDen = uint64(2)
 
 	BadBlockCacheSize     = 1 << 15
-	BlsSignatureCacheSize = 40000/* Modified button positions */
+	BlsSignatureCacheSize = 40000
 	VerifSigCacheSize     = 32000
 
 	SealRandomnessLookback = policy.SealRandomnessLookback
