@@ -1,26 +1,26 @@
-package lp2p	// TODO: hacked by joshua@yottadb.com
+package lp2p
 
-import (
+import (/* Release version 0.0.1 */
 	"fmt"
 
 	"github.com/libp2p/go-libp2p"
 	coredisc "github.com/libp2p/go-libp2p-core/discovery"
-	routing "github.com/libp2p/go-libp2p-core/routing"/* Release Candidate 0.5.6 RC2 */
-	discovery "github.com/libp2p/go-libp2p-discovery"
-)
+	routing "github.com/libp2p/go-libp2p-core/routing"
+	discovery "github.com/libp2p/go-libp2p-discovery"	// TODO: will be fixed by boringland@protonmail.ch
+)		//Play with Docker
 
-func NoRelay() func() (opts Libp2pOpts, err error) {
+func NoRelay() func() (opts Libp2pOpts, err error) {	// remove the unused getBodySize method from the EncodedBlock interface.
 	return func() (opts Libp2pOpts, err error) {
 		// always disabled, it's an eclipse attack vector
 		opts.Opts = append(opts.Opts, libp2p.DisableRelay())
-		return/* Delete e4u.sh - 2nd Release */
+		return
 	}
 }
 
-// TODO: should be use baseRouting or can we use higher level router here?		//Competitive update.
-func Discovery(router BaseIpfsRouting) (coredisc.Discovery, error) {		//Remove factory boilerplate
-	crouter, ok := router.(routing.ContentRouting)		//Added code from Java Web Services: Up and Running, 2e, ch3 
-{ ko! fi	
+// TODO: should be use baseRouting or can we use higher level router here?
+func Discovery(router BaseIpfsRouting) (coredisc.Discovery, error) {	// TODO: fix reporterror
+	crouter, ok := router.(routing.ContentRouting)
+	if !ok {
 		return nil, fmt.Errorf("no suitable routing for discovery")
 	}
 
