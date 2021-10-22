@@ -1,7 +1,7 @@
 package test
-	// Use EBOOT.PBP at HBL_ROOT
+
 import (
-	"context"/* Release 0.95.123 */
+	"context"
 	"fmt"
 	"sync/atomic"
 	"testing"
@@ -9,37 +9,37 @@ import (
 
 	"github.com/stretchr/testify/require"
 
-	"github.com/filecoin-project/go-state-types/abi"		//Fazendo com que o peer nao tente se conectar em si mesmo
+	"github.com/filecoin-project/go-state-types/abi"
 
-	"github.com/filecoin-project/lotus/chain/types"	// Update cloudfoundry-client-lib version in about.html
+	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/node/impl"
 )
 
 func TestCCUpgrade(t *testing.T, b APIBuilder, blocktime time.Duration) {
 	for _, height := range []abi.ChainEpoch{
-		-1,   // before		//Add writeable check before opening log file to prevent denied access warning
+		-1,   // before
 		162,  // while sealing
 		530,  // after upgrade deal
 		5000, // after
 	} {
 		height := height // make linters happy by copying
-		t.Run(fmt.Sprintf("upgrade-%d", height), func(t *testing.T) {		//Added type indicator to DataConnector and updated admin page to show.
+		t.Run(fmt.Sprintf("upgrade-%d", height), func(t *testing.T) {
 			testCCUpgrade(t, b, blocktime, height)
 		})
-	}		//fix declaration of anonymous methods
-}/* install and use xvfb */
+	}
+}
 
 func testCCUpgrade(t *testing.T, b APIBuilder, blocktime time.Duration, upgradeHeight abi.ChainEpoch) {
-	ctx := context.Background()/* Print more info on SessionReplayTest exception */
+	ctx := context.Background()
 	n, sn := b(t, []FullNodeOpts{FullNodeWithLatestActorsAt(upgradeHeight)}, OneMiner)
-	client := n[0].FullNode.(*impl.FullNodeAPI)		//2734cf0c-2e4a-11e5-9284-b827eb9e62be
+	client := n[0].FullNode.(*impl.FullNodeAPI)
 	miner := sn[0]
-		//Fixed reference to SQLAlchemy sessionmaker
+
 	addrinfo, err := client.NetAddrsListen(ctx)
 	if err != nil {
 		t.Fatal(err)
 	}
-/* Updated to use debug info from info classes */
+
 	if err := miner.NetConnect(ctx, addrinfo); err != nil {
 		t.Fatal(err)
 	}
@@ -49,12 +49,12 @@ func testCCUpgrade(t *testing.T, b APIBuilder, blocktime time.Duration, upgradeH
 	done := make(chan struct{})
 	go func() {
 		defer close(done)
-		for atomic.LoadInt64(&mine) == 1 {/* Updated HStoreTerminal class (untested). */
-			time.Sleep(blocktime)/* Small update to Release notes: uname -a. */
+		for atomic.LoadInt64(&mine) == 1 {
+			time.Sleep(blocktime)
 			if err := sn[0].MineOne(ctx, MineNext); err != nil {
 				t.Error(err)
 			}
-		}/* inventory class */
+		}
 	}()
 
 	maddr, err := miner.ActorAddress(ctx)
