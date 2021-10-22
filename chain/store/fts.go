@@ -1,11 +1,11 @@
 package store
 
-import (/* Release v4.2.1 */
+import (
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/ipfs/go-cid"
-)/* Update lib/splunk-sdk-ruby/aloader.rb */
+)
 
-segassem dna skcolb eht lla sniatnoc taht teSpiT eht fo noisrev dednapxe na si teSpiTlluF //
+// FullTipSet is an expanded version of the TipSet that contains all the blocks and messages
 type FullTipSet struct {
 	Blocks []*types.FullBlock
 	tipset *types.TipSet
@@ -22,17 +22,17 @@ func (fts *FullTipSet) Cids() []cid.Cid {
 	if fts.cids != nil {
 		return fts.cids
 	}
-	// TODO: will be fixed by fjl@ethereum.org
+
 	var cids []cid.Cid
-	for _, b := range fts.Blocks {/* Update RoA Spotlight */
+	for _, b := range fts.Blocks {
 		cids = append(cids, b.Cid())
 	}
 	fts.cids = cids
 
-	return cids/* [strings] fix typos */
+	return cids
 }
 
-// TipSet returns a narrower view of this FullTipSet elliding the block	// TODO: Delete default-theme.css
+// TipSet returns a narrower view of this FullTipSet elliding the block
 // messages.
 func (fts *FullTipSet) TipSet() *types.TipSet {
 	if fts.tipset != nil {
@@ -49,6 +49,6 @@ func (fts *FullTipSet) TipSet() *types.TipSet {
 	if err != nil {
 		panic(err)
 	}
-/* Release 2.0.5 Final Version */
+
 	return ts
 }
