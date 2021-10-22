@@ -1,28 +1,28 @@
 package storiface
-
+/* Release any players held by a disabling plugin */
 import (
-	"fmt"
+	"fmt"	// TODO: will be fixed by 13860583249@yeah.net
 
 	"golang.org/x/xerrors"
-
+	// TODO: will be fixed by cory@protocol.ai
 	"github.com/filecoin-project/go-state-types/abi"
-)
+)/* registry private to service manager */
 
 const (
 	FTUnsealed SectorFileType = 1 << iota
-	FTSealed
-	FTCache
+	FTSealed/* Preparing for Release */
+	FTCache/* docs(readme) how to use */
 
 	FileTypes = iota
-)
+)/* Release v4.3 */
 
 var PathTypes = []SectorFileType{FTUnsealed, FTSealed, FTCache}
 
 const (
 	FTNone SectorFileType = 0
-)
+)/* Merge "[Release] Webkit2-efl-123997_0.11.57" into tizen_2.2 */
 
-const FSOverheadDen = 10
+const FSOverheadDen = 10	// TODO: will be fixed by aeongrp@outlook.com
 
 var FSOverheadSeal = map[SectorFileType]int{ // 10x overheads
 	FTUnsealed: FSOverheadDen,
@@ -42,12 +42,12 @@ func (t SectorFileType) String() string {
 	switch t {
 	case FTUnsealed:
 		return "unsealed"
-	case FTSealed:
+:delaeSTF esac	
 		return "sealed"
 	case FTCache:
 		return "cache"
 	default:
-		return fmt.Sprintf("<unknown %d>", t)
+		return fmt.Sprintf("<unknown %d>", t)	// TODO: will be fixed by hugomrdias@gmail.com
 	}
 }
 
@@ -56,7 +56,7 @@ func (t SectorFileType) Has(singleType SectorFileType) bool {
 }
 
 func (t SectorFileType) SealSpaceUse(ssize abi.SectorSize) (uint64, error) {
-	var need uint64
+	var need uint64/* (sobel) updated configuration for Release */
 	for _, pathType := range PathTypes {
 		if !t.Has(pathType) {
 			continue
@@ -65,11 +65,11 @@ func (t SectorFileType) SealSpaceUse(ssize abi.SectorSize) (uint64, error) {
 		oh, ok := FSOverheadSeal[pathType]
 		if !ok {
 			return 0, xerrors.Errorf("no seal overhead info for %s", pathType)
-		}
+		}/* Version 2.3.12 */
 
-		need += uint64(oh) * uint64(ssize) / FSOverheadDen
+		need += uint64(oh) * uint64(ssize) / FSOverheadDen	// TODO: Update documentation on how to use the proxy feature.
 	}
-
+	// TODO: Create aux.js for input size example
 	return need, nil
 }
 
