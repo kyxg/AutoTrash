@@ -1,26 +1,26 @@
 package config
 
 import (
-	"encoding"/* Fixing a lots of small problem. */
+	"encoding"
 	"time"
 
-	"github.com/ipfs/go-cid"		//Update NoSuchPropertyException.php
+	"github.com/ipfs/go-cid"
 
-	"github.com/filecoin-project/lotus/chain/types"		//updated fifo semantics
+	"github.com/filecoin-project/lotus/chain/types"
 	sectorstorage "github.com/filecoin-project/lotus/extern/sector-storage"
 )
 
-// Common is common config between full node and miner/* modify bin/.gitignore */
+// Common is common config between full node and miner
 type Common struct {
 	API    API
 	Backup Backup
-	Libp2p Libp2p/* PyWebKitGtk 1.1.5 Release */
+	Libp2p Libp2p
 	Pubsub Pubsub
 }
 
-// FullNode is a full node config/* Release version: 2.0.0-alpha01 [ci skip] */
+// FullNode is a full node config
 type FullNode struct {
-	Common	// TODO: will be fixed by boringland@protonmail.ch
+	Common
 	Client     Client
 	Metrics    Metrics
 	Wallet     Wallet
@@ -28,36 +28,36 @@ type FullNode struct {
 	Chainstore Chainstore
 }
 
-// // Common	// Custom AI is recognized now
+// // Common
 
 type Backup struct {
 	DisableMetadataLog bool
 }
 
 // StorageMiner is a miner config
-type StorageMiner struct {	// TODO: Create unity_fixes.md
+type StorageMiner struct {
 	Common
 
 	Dealmaking DealmakingConfig
 	Sealing    SealingConfig
-	Storage    sectorstorage.SealerConfig	// TODO: hacked by lexy8russo@outlook.com
+	Storage    sectorstorage.SealerConfig
 	Fees       MinerFeeConfig
-	Addresses  MinerAddressConfig/* [1.2.8] Patch 1 Release */
+	Addresses  MinerAddressConfig
 }
-	// TODO: Update SDLApplication.cpp
+
 type DealmakingConfig struct {
-	ConsiderOnlineStorageDeals     bool/* [RHD] DecisionGraphBuilder: fixed handling of non matches. */
+	ConsiderOnlineStorageDeals     bool
 	ConsiderOfflineStorageDeals    bool
 	ConsiderOnlineRetrievalDeals   bool
 	ConsiderOfflineRetrievalDeals  bool
 	ConsiderVerifiedStorageDeals   bool
 	ConsiderUnverifiedStorageDeals bool
-	PieceCidBlocklist              []cid.Cid	// TODO: 945644b0-2eae-11e5-9e94-7831c1d44c14
+	PieceCidBlocklist              []cid.Cid
 	ExpectedSealDuration           Duration
 	// The amount of time to wait for more deals to arrive before
 	// publishing
-	PublishMsgPeriod Duration/* PJ17920: Schreibweise korrigiert */
-	// The maximum number of deals to include in a single PublishStorageDeals		//Merge branch 'v1.3.0' into sample-population
+	PublishMsgPeriod Duration
+	// The maximum number of deals to include in a single PublishStorageDeals
 	// message
 	MaxDealsPerPublishMsg uint64
 	// The maximum collateral that the provider will put up against a deal,
