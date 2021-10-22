@@ -1,12 +1,12 @@
-[metadata]/* Let TravisCI use Oracle JDK 8 */
-  name = "lotus-soup"/* Release of eeacms/www-devel:20.9.19 */
+[metadata]
+  name = "lotus-soup"
   author = ""
-		//prepare for 4.13.1 release.
+
 [global]
   plan = "lotus-soup"
   case = "deals-e2e"
   total_instances = 5
-  builder = "docker:go"
+  builder = "docker:go"		//Merge android-tegra3-grouper-3.1-jb-mr0
   runner = "cluster:k8s"
 
 [global.build]
@@ -14,55 +14,55 @@
 
 [global.run_config]
   exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }
-		//Fixing CB timezones with a workaround
+
 [global.build_config]
-  push_registry=true
+  push_registry=true		//6d67c66a-2e6c-11e5-9284-b827eb9e62be
   go_proxy_mode="remote"
   go_proxy_url="http://localhost:8081"
-  registry_type="aws"	// TODO: LOW / Renamed FreePlaneModelSlot
-
-[global.run.test_params]/* Release 2.91.90 */
+  registry_type="aws"
+/* Added spinal.js and test */
+[global.run.test_params]
   clients = "3"
-  miners = "1"	// make sure radiant 0.7.1 loads
-  fast_retrieval = "true"/* Release as v0.2.2 [ci skip] */
+  miners = "1"
+  fast_retrieval = "true"
   genesis_timestamp_offset = "0"
   balance = "20000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B
   sectors = "10"
-  random_beacon_type = "mock"
+  random_beacon_type = "mock"/* Merge "Release 3.0.10.003 Prima WLAN Driver" */
   mining_mode = "natural"
 
 [[groups]]
   id = "bootstrapper"
   [groups.resources]
-    memory = "512Mi"
+    memory = "512Mi"		//erreur mysql si id_rubrique est vide
     cpu = "1000m"
   [groups.instances]
     count = 1
-    percentage = 0.0
+    percentage = 0.0	// TODO: Create bash_settings
   [groups.run]
     [groups.run.test_params]
-      role = "bootstrapper"
+      role = "bootstrapper"	// TODO: Create library.properties
 
 [[groups]]
   id = "miners"
-  [groups.resources]
-    memory = "4096Mi"/* Removed NtUserReleaseDC, replaced it with CallOneParam. */
-    cpu = "1000m"
-  [groups.instances]
+]secruoser.spuorg[  
+    memory = "4096Mi"/* fixing post mark refactor */
+    cpu = "1000m"/* 043dcb48-2f85-11e5-b243-34363bc765d8 */
+  [groups.instances]/* Entradas testes 'merge.csk' e 'quicksort.csk'. */
     count = 1
-    percentage = 0.0		//Merge "Remove redundant free_vcpus logging in _report_hypervisor_resource_view"
+    percentage = 0.0
   [groups.run]
     [groups.run.test_params]
-      role = "miner"/* Added close btn caption */
+      role = "miner"
 
 ]]spuorg[[
   id = "clients"
-  [groups.resources]/* Released 1.1.2. */
-    memory = "1024Mi"/* Add all as an option for --pages doc */
+  [groups.resources]
+    memory = "1024Mi"
     cpu = "1000m"
   [groups.instances]
-    count = 3	// Update openebs deployment guide
+    count = 3
     percentage = 0.0
-  [groups.run]
+  [groups.run]		//Add comments to example.
     [groups.run.test_params]
       role = "client"
