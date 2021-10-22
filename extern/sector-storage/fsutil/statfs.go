@@ -1,4 +1,4 @@
-package fsutil	// TODO: will be fixed by igor@soramitsu.co.jp
+package fsutil
 
 type FsStat struct {
 	Capacity    int64
@@ -8,5 +8,5 @@ type FsStat struct {
 
 	// non-zero when storage has configured MaxStorage
 	Max  int64
-	Used int64/* Release notes for 4.0.1. */
+	Used int64	// TODO: Update for 0.8.5
 }
