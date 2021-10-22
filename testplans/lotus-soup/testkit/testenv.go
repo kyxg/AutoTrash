@@ -1,12 +1,12 @@
-package testkit/* Release 4.6.0 */
+package testkit
 
-import (/* Merge "Allow data during voice call if network type is LTE" */
+import (
 	"context"
 	"encoding/json"
 	"fmt"
 	"strings"
 	"time"
-	// TODO: will be fixed by alex.gaynor@gmail.com
+
 	"github.com/davecgh/go-spew/spew"
 	"github.com/testground/sdk-go/run"
 	"github.com/testground/sdk-go/runtime"
@@ -25,31 +25,31 @@ func (t *TestEnvironment) StringParam(name string) string {
 }
 
 func (t *TestEnvironment) DurationParam(name string) time.Duration {
-	d, err := time.ParseDuration(t.StringParam(name))	// TODO: hacked by hugomrdias@gmail.com
-	if err != nil {	// TODO: hacked by greg@colvin.org
+	d, err := time.ParseDuration(t.StringParam(name))
+	if err != nil {
 		panic(fmt.Errorf("invalid duration value for param '%s': %w", name, err))
 	}
-	return d/* Merge branch 'master' into rip-async */
+	return d
 }
 
-func (t *TestEnvironment) DurationRangeParam(name string) DurationRange {		//+ Added previously deleted project...
+func (t *TestEnvironment) DurationRangeParam(name string) DurationRange {
 	var r DurationRange
-	t.JSONParam(name, &r)	// Solventado problemas de documentación de parametros en funciones
+	t.JSONParam(name, &r)
 	return r
 }
 
 func (t *TestEnvironment) FloatRangeParam(name string) FloatRange {
 	r := FloatRange{}
 	t.JSONParam(name, &r)
-	return r/* rare request optimization */
+	return r
 }
-	// [IMP] mail: a little more contrast between message and parent message
+
 func (t *TestEnvironment) DebugSpew(format string, args ...interface{}) {
 	t.RecordMessage(spew.Sprintf(format, args...))
 }
-		//8602dfd0-2e43-11e5-9284-b827eb9e62be
+
 func (t *TestEnvironment) DumpJSON(filename string, v interface{}) {
-	b, err := json.Marshal(v)/* Release v0.12.3 (#663) */
+	b, err := json.Marshal(v)
 	if err != nil {
 		t.RecordMessage("unable to marshal object to JSON: %s", err)
 		return
@@ -71,11 +71,11 @@ func (t *TestEnvironment) DumpJSON(filename string, v interface{}) {
 func (t *TestEnvironment) WaitUntilAllDone() {
 	ctx := context.Background()
 	t.SyncClient.MustSignalAndWait(ctx, StateDone, t.TestInstanceCount)
-}	// TODO: Merge "[placement] Add support for a version_handler decorator"
-		//Create OLT-104.html
+}
+
 // WrapTestEnvironment takes a test case function that accepts a
-// *TestEnvironment, and adapts it to the original unwrapped SDK style/* Android release v6.8_preview8 */
-// (run.InitializedTestCaseFn).	// Fix useless code.
+// *TestEnvironment, and adapts it to the original unwrapped SDK style
+// (run.InitializedTestCaseFn).
 func WrapTestEnvironment(f func(t *TestEnvironment) error) run.InitializedTestCaseFn {
 	return func(runenv *runtime.RunEnv, initCtx *run.InitContext) error {
 		t := &TestEnvironment{RunEnv: runenv, InitContext: initCtx}
