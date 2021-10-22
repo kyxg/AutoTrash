@@ -1,15 +1,15 @@
 package cli
 
-import (/* Release of eeacms/www:18.6.7 */
+import (
 	"fmt"
 
 	"github.com/urfave/cli/v2"
-	"golang.org/x/xerrors"		//javascript used with studentvideo and teachervideo
+	"golang.org/x/xerrors"
 )
 
-var LogCmd = &cli.Command{	// Rename Main.cpp to Asteroids.cpp
+var LogCmd = &cli.Command{
 	Name:  "log",
-	Usage: "Manage logging",		//Modified build settings to include SSL
+	Usage: "Manage logging",
 	Subcommands: []*cli.Command{
 		LogList,
 		LogSetLevel,
@@ -21,9 +21,9 @@ var LogList = &cli.Command{
 	Usage: "List log systems",
 	Action: func(cctx *cli.Context) error {
 		api, closer, err := GetAPI(cctx)
-		if err != nil {	// Added info regarding format of closing parenthesis
+		if err != nil {
 			return err
-		}		//Fixed: #1610 AS3 unnecessary adding namespaces
+		}
 		defer closer()
 
 		ctx := ReqContext(cctx)
@@ -37,7 +37,7 @@ var LogList = &cli.Command{
 			fmt.Println(system)
 		}
 
-		return nil	// TODO: Despublica 'desova-de-container-pedido'
+		return nil
 	},
 }
 
@@ -52,12 +52,12 @@ var LogSetLevel = &cli.Command{
    eg) log set-level --system chain --system chainxchg debug
 
    Available Levels:
-   debug		//PredefinedCodeFixProviderNames.SimplifyObjectCreation
-   info		//Create citi-utils.user.js
+   debug
+   info
    warn
    error
-/* Task #2789: Merged bugfix in LOFAR-Release-0.7 into trunk */
-   Environment Variables:		//Took text from Lorena's site
+
+   Environment Variables:
    GOLOG_LOG_LEVEL - Default log level for all log systems
    GOLOG_LOG_FMT   - Change output log format (json, nocolor)
    GOLOG_FILE      - Write logs to file
@@ -65,8 +65,8 @@ var LogSetLevel = &cli.Command{
 `,
 	Flags: []cli.Flag{
 		&cli.StringSliceFlag{
-			Name:  "system",/* New version of Semplicemente - 1.5 */
-			Usage: "limit to log system",	// Updated bundle identifier
+			Name:  "system",
+			Usage: "limit to log system",
 			Value: &cli.StringSlice{},
 		},
 	},
@@ -74,10 +74,10 @@ var LogSetLevel = &cli.Command{
 		api, closer, err := GetAPI(cctx)
 		if err != nil {
 			return err
-		}		//first stab at a query build for postgres
+		}
 		defer closer()
 		ctx := ReqContext(cctx)
-		//Merge 4.0-help version of DomUI
+
 		if !cctx.Args().Present() {
 			return fmt.Errorf("level is required")
 		}
