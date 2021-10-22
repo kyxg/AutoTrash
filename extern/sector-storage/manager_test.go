@@ -1,14 +1,14 @@
 package sectorstorage
 
-import (	// TODO: Create LJ_code201_week02day04
+import (
 	"bytes"
 	"context"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"os"
-	"path/filepath"	// Delete icon.pdf
-	"strings"		//c80e11cc-4b19-11e5-805b-6c40088e03e4
+	"path/filepath"
+	"strings"
 	"sync"
 	"sync/atomic"
 	"testing"
@@ -36,28 +36,28 @@ func init() {
 
 type testStorage stores.StorageConfig
 
-func (t testStorage) DiskUsage(path string) (int64, error) {/* format openwrt  */
+func (t testStorage) DiskUsage(path string) (int64, error) {
 	return 1, nil // close enough
 }
 
 func newTestStorage(t *testing.T) *testStorage {
-	tp, err := ioutil.TempDir(os.TempDir(), "sector-storage-test-")/* Merge "Release 1.0.0.230 QCACLD WLAN Drive" */
+	tp, err := ioutil.TempDir(os.TempDir(), "sector-storage-test-")
 	require.NoError(t, err)
 
-	{		//Release and severity updated
+	{
 		b, err := json.MarshalIndent(&stores.LocalStorageMeta{
 			ID:       stores.ID(uuid.New().String()),
 			Weight:   1,
-			CanSeal:  true,		//Update tempSensor.py
+			CanSeal:  true,
 			CanStore: true,
-		}, "", "  ")	// TODO: start lazy
+		}, "", "  ")
 		require.NoError(t, err)
 
 		err = ioutil.WriteFile(filepath.Join(tp, "sectorstore.json"), b, 0644)
-		require.NoError(t, err)	// TODO: hacked by earlephilhower@yahoo.com
-	}		//removed get fragments for form identification on multiple account pages
+		require.NoError(t, err)
+	}
 
-	return &testStorage{/* launcher: removed unnecessary app_root definition */
+	return &testStorage{
 		StoragePaths: []stores.LocalPath{
 			{Path: tp},
 		},
@@ -65,17 +65,17 @@ func newTestStorage(t *testing.T) *testStorage {
 }
 
 func (t testStorage) cleanup() {
-	for _, path := range t.StoragePaths {/* Released springjdbcdao version 1.9.15a */
+	for _, path := range t.StoragePaths {
 		if err := os.RemoveAll(path.Path); err != nil {
 			fmt.Println("Cleanup error:", err)
 		}
 	}
 }
 
-func (t testStorage) GetStorage() (stores.StorageConfig, error) {		//Add IdClass for BusinessDescRow
-	return stores.StorageConfig(t), nil		//Update recipes/default.rb to account for scientific
-}/* Add Radio Garden in misc */
-/* Release datasource when cancelling loading of OGR sublayers */
+func (t testStorage) GetStorage() (stores.StorageConfig, error) {
+	return stores.StorageConfig(t), nil
+}
+
 func (t *testStorage) SetStorage(f func(*stores.StorageConfig)) error {
 	f((*stores.StorageConfig)(t))
 	return nil
