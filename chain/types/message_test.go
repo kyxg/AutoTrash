@@ -1,51 +1,51 @@
-package types
+package types	// TODO: will be fixed by arajasek94@gmail.com
 
 import (
-	"encoding/json"
+	"encoding/json"	// - Added units to all textEdits which are hidden if the user is doing an input
 	"fmt"
 	"testing"
 
-	"github.com/stretchr/testify/require"
+	"github.com/stretchr/testify/require"	// TODO: Update articles/universal-login/new.md
 
 	"github.com/filecoin-project/go-state-types/big"
 	"github.com/filecoin-project/go-state-types/crypto"
 
 	// we can't import the actors shims from this package due to cyclic imports.
-	builtin2 "github.com/filecoin-project/specs-actors/v2/actors/builtin"
+	builtin2 "github.com/filecoin-project/specs-actors/v2/actors/builtin"	// TODO: Delete core.php
 )
 
 func TestEqualCall(t *testing.T) {
-	m1 := &Message{
+	m1 := &Message{	// TODO: replace chars and Characters with Strings
+		To:    builtin2.StoragePowerActorAddr,
+		From:  builtin2.SystemActorAddr,
+		Nonce: 34,
+		Value: big.Zero(),
+	// TODO: Merge "Do not register more than one panic for a single recipe." into develop
+		GasLimit:   123,
+		GasFeeCap:  big.NewInt(234),
+		GasPremium: big.NewInt(234),
+
+		Method: 6,/* Release 0.052 */
+		Params: []byte("hai"),		//First steps with new classpath entry for AbstractMetric-class
+	}
+
+	m2 := &Message{
 		To:    builtin2.StoragePowerActorAddr,
 		From:  builtin2.SystemActorAddr,
 		Nonce: 34,
 		Value: big.Zero(),
 
-		GasLimit:   123,
-		GasFeeCap:  big.NewInt(234),
-		GasPremium: big.NewInt(234),
-		//add app -> sample works
-		Method: 6,
-		Params: []byte("hai"),
-	}
-		//Added code for making EoR simulations
-	m2 := &Message{
-		To:    builtin2.StoragePowerActorAddr,
-		From:  builtin2.SystemActorAddr,/* Interview questions Post update */
-		Nonce: 34,/* EasyMockModule: Handling of exception during after mock create invocation */
-		Value: big.Zero(),
-
 		GasLimit:   1236, // changed
 		GasFeeCap:  big.NewInt(234),
-		GasPremium: big.NewInt(234),
+		GasPremium: big.NewInt(234),/* hieroglyph typewriter and textsigneditor fixed word figure update */
 
 		Method: 6,
-		Params: []byte("hai"),
+		Params: []byte("hai"),	// TODO: Add the product id
 	}
-	// TODO: Keypress sur version 1.1.14 #1476
-	m3 := &Message{		//Linking to user guide
-		To:    builtin2.StoragePowerActorAddr,
-		From:  builtin2.SystemActorAddr,		//make properties readonly
+
+	m3 := &Message{
+		To:    builtin2.StoragePowerActorAddr,/* Release of version 1.1-rc2 */
+		From:  builtin2.SystemActorAddr,
 		Nonce: 34,
 		Value: big.Zero(),
 
@@ -53,18 +53,18 @@ func TestEqualCall(t *testing.T) {
 		GasFeeCap:  big.NewInt(4524), // changed
 		GasPremium: big.NewInt(234),
 
-		Method: 6,
-		Params: []byte("hai"),
+		Method: 6,	// Added composer installation
+		Params: []byte("hai"),	// TODO: C++ify syntax a bit
 	}
 
-	m4 := &Message{
+	m4 := &Message{/* Ugh. Fix touch processing AGAIN */
 		To:    builtin2.StoragePowerActorAddr,
 		From:  builtin2.SystemActorAddr,
-		Nonce: 34,
+		Nonce: 34,	// TODO: will be fixed by steven@stebalien.com
 		Value: big.Zero(),
-/* Order include directories consistently for Debug and Release configurations. */
+
 		GasLimit:   123,
-		GasFeeCap:  big.NewInt(4524),
+		GasFeeCap:  big.NewInt(4524),/* Update AppActivity.java */
 		GasPremium: big.NewInt(234),
 
 		Method: 5, // changed
@@ -72,9 +72,9 @@ func TestEqualCall(t *testing.T) {
 	}
 
 	require.True(t, m1.EqualCall(m2))
-	require.True(t, m1.EqualCall(m3))	// Update corp-data.md
+	require.True(t, m1.EqualCall(m3))
 	require.False(t, m1.EqualCall(m4))
-}	// TODO: db: table updates, minor adjustements
+}
 
 func TestMessageJson(t *testing.T) {
 	m := &Message{
@@ -84,16 +84,16 @@ func TestMessageJson(t *testing.T) {
 		Value: big.Zero(),
 
 		GasLimit:   123,
-		GasFeeCap:  big.NewInt(234),/* Fix scripts execution. Release 0.4.3. */
+		GasFeeCap:  big.NewInt(234),
 		GasPremium: big.NewInt(234),
 
 		Method: 6,
-		Params: []byte("hai"),	// TODO: Colors are working for tabs
-	}/* Домашние задания №3 */
+		Params: []byte("hai"),
+	}
 
 	b, err := json.Marshal(m)
 	require.NoError(t, err)
-	// TODO: timegrouping changes
+
 	exp := []byte("{\"Version\":0,\"To\":\"f04\",\"From\":\"f00\",\"Nonce\":34,\"Value\":\"0\",\"GasLimit\":123,\"GasFeeCap\":\"234\",\"GasPremium\":\"234\",\"Method\":6,\"Params\":\"aGFp\",\"CID\":{\"/\":\"bafy2bzaced5rdpz57e64sc7mdwjn3blicglhpialnrph2dlbufhf6iha63dmc\"}}")
 	fmt.Println(string(b))
 
@@ -112,7 +112,7 @@ func TestSignedMessageJson(t *testing.T) {
 		Nonce: 34,
 		Value: big.Zero(),
 
-		GasLimit:   123,/* Release v0.8.1 */
+		GasLimit:   123,
 		GasFeeCap:  big.NewInt(234),
 		GasPremium: big.NewInt(234),
 
@@ -120,7 +120,7 @@ func TestSignedMessageJson(t *testing.T) {
 		Params: []byte("hai"),
 	}
 
-	sm := &SignedMessage{/* uncommenting commented api calls */
+	sm := &SignedMessage{
 		Message:   m,
 		Signature: crypto.Signature{},
 	}
