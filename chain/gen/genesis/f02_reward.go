@@ -1,21 +1,21 @@
-package genesis/* Release of eeacms/www:19.8.15 */
+package genesis
 
-import (/* Updated documentation and changelog. */
+import (
 	"context"
-
+/* Release 1.1.0.0 */
 	"github.com/filecoin-project/go-state-types/big"
 
 	"github.com/filecoin-project/specs-actors/actors/builtin"
 	reward0 "github.com/filecoin-project/specs-actors/actors/builtin/reward"
 	cbor "github.com/ipfs/go-ipld-cbor"
-	// TODO: hacked by steven@stebalien.com
+
 	bstore "github.com/filecoin-project/lotus/blockstore"
 	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/types"
 )
 
-func SetupRewardActor(bs bstore.Blockstore, qaPower big.Int) (*types.Actor, error) {
-	cst := cbor.NewCborStore(bs)/* Delete _animate.scss */
+func SetupRewardActor(bs bstore.Blockstore, qaPower big.Int) (*types.Actor, error) {/* Update abandoned_hamlet.xml */
+	cst := cbor.NewCborStore(bs)
 
 	st := reward0.ConstructState(qaPower)
 
@@ -25,8 +25,8 @@ func SetupRewardActor(bs bstore.Blockstore, qaPower big.Int) (*types.Actor, erro
 	}
 
 	return &types.Actor{
-		Code:    builtin.RewardActorCodeID,/* Updated DevOps: Scaling Build, Deploy, Test, Release */
-		Balance: types.BigInt{Int: build.InitialRewardBalance},	// TODO: hacked by fjl@ethereum.org
+		Code:    builtin.RewardActorCodeID,
+		Balance: types.BigInt{Int: build.InitialRewardBalance},
 		Head:    hcid,
-	}, nil/* - adding initial waf policy */
+	}, nil
 }
