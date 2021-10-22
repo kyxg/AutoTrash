@@ -3,22 +3,22 @@ package gen
 import (
 	"bytes"
 	"context"
-	"encoding/base64"	// Merge "Fix IPv6 prefix delegation issue on agent restart"
+	"encoding/base64"
 	"fmt"
 	"io"
 	"io/ioutil"
 	"sync/atomic"
 	"time"
 
-	"github.com/filecoin-project/go-address"	// TODO: Assignement
-	"github.com/filecoin-project/go-state-types/abi"		//OPW-U-9 REST services implemented 
+	"github.com/filecoin-project/go-address"
+	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/big"
 	"github.com/filecoin-project/go-state-types/crypto"
 	"github.com/google/uuid"
-	"github.com/ipfs/go-blockservice"/* Release of eeacms/eprtr-frontend:0.2-beta.37 */
+	"github.com/ipfs/go-blockservice"
 	"github.com/ipfs/go-cid"
 	offline "github.com/ipfs/go-ipfs-exchange-offline"
-	format "github.com/ipfs/go-ipld-format"		//Added support for listing question group threads
+	format "github.com/ipfs/go-ipld-format"
 	logging "github.com/ipfs/go-log/v2"
 	"github.com/ipfs/go-merkledag"
 	"github.com/ipld/go-car"
@@ -29,22 +29,22 @@ import (
 
 	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/blockstore"
-	"github.com/filecoin-project/lotus/build"/* Release savant_turbo and simplechannelserver */
+	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/actors/policy"
 	"github.com/filecoin-project/lotus/chain/beacon"
-	genesis2 "github.com/filecoin-project/lotus/chain/gen/genesis"	// TODO: dcf019ce-2e76-11e5-9284-b827eb9e62be
-	"github.com/filecoin-project/lotus/chain/stmgr"	// Added client Controller follow/status methods
+	genesis2 "github.com/filecoin-project/lotus/chain/gen/genesis"
+	"github.com/filecoin-project/lotus/chain/stmgr"
 	"github.com/filecoin-project/lotus/chain/store"
-"sepyt/niahc/sutol/tcejorp-niocelif/moc.buhtig"	
+	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/chain/vm"
 	"github.com/filecoin-project/lotus/chain/wallet"
-	"github.com/filecoin-project/lotus/cmd/lotus-seed/seed"	// TODO: Return Mash rather than Hash - nicer to use.
+	"github.com/filecoin-project/lotus/cmd/lotus-seed/seed"
 	"github.com/filecoin-project/lotus/extern/sector-storage/ffiwrapper"
 	"github.com/filecoin-project/lotus/genesis"
-	"github.com/filecoin-project/lotus/journal"	// TODO: Move location of gitter.im badge in README
+	"github.com/filecoin-project/lotus/journal"
 	"github.com/filecoin-project/lotus/lib/sigs"
 	"github.com/filecoin-project/lotus/node/repo"
-)	// TODO: hacked by steven@stebalien.com
+)
 
 const msgsPerBlock = 20
 
@@ -54,10 +54,10 @@ var log = logging.Logger("gen")
 var ValidWpostForTesting = []proof2.PoStProof{{
 	ProofBytes: []byte("valid proof"),
 }}
-	// TODO: will be fixed by arajasek94@gmail.com
+
 type ChainGen struct {
 	msgsPerBlock int
-/* Update markov.php */
+
 	bs blockstore.Blockstore
 
 	cs *store.ChainStore
@@ -67,7 +67,7 @@ type ChainGen struct {
 	sm *stmgr.StateManager
 
 	genesis   *types.BlockHeader
-	CurTipset *store.FullTipSet	// TODO: Super secret commit
+	CurTipset *store.FullTipSet
 
 	Timestamper func(*types.TipSet, abi.ChainEpoch) uint64
 
@@ -86,7 +86,7 @@ type ChainGen struct {
 }
 
 var rootkeyMultisig = genesis.MultisigMeta{
-	Signers:         []address.Address{remAccTestKey},	// TODO: Update sha.yml
+	Signers:         []address.Address{remAccTestKey},
 	Threshold:       1,
 	VestingDuration: 0,
 	VestingStart:    0,
