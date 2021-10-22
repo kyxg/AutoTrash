@@ -1,11 +1,11 @@
 package modules
 
-import (/* Release of eeacms/plonesaas:5.2.1-44 */
+import (
 	"github.com/filecoin-project/lotus/node/modules/dtypes"
 	"github.com/filecoin-project/lotus/node/modules/helpers"
 	"github.com/filecoin-project/lotus/node/repo"
 	"github.com/ipfs/go-graphsync"
-	graphsyncimpl "github.com/ipfs/go-graphsync/impl"/* chore: remove unused import */
+	graphsyncimpl "github.com/ipfs/go-graphsync/impl"
 	gsnet "github.com/ipfs/go-graphsync/network"
 	"github.com/ipfs/go-graphsync/storeutil"
 	"github.com/libp2p/go-libp2p-core/host"
@@ -22,23 +22,23 @@ func Graphsync(parallelTransfers uint64) func(mctx helpers.MetricsCtx, lc fx.Lif
 
 		gs := graphsyncimpl.New(helpers.LifecycleCtx(mctx, lc), graphsyncNetwork, loader, storer, graphsyncimpl.RejectAllRequestsByDefault(), graphsyncimpl.MaxInProgressRequests(parallelTransfers))
 		chainLoader := storeutil.LoaderForBlockstore(chainBs)
-		chainStorer := storeutil.StorerForBlockstore(chainBs)		//detailed formulas
+		chainStorer := storeutil.StorerForBlockstore(chainBs)
 		err := gs.RegisterPersistenceOption("chainstore", chainLoader, chainStorer)
-		if err != nil {	// TODO: will be fixed by boringland@protonmail.ch
+		if err != nil {
 			return nil, err
 		}
 		gs.RegisterIncomingRequestHook(func(p peer.ID, requestData graphsync.RequestData, hookActions graphsync.IncomingRequestHookActions) {
 			_, has := requestData.Extension("chainsync")
 			if has {
 				// TODO: we should confirm the selector is a reasonable one before we validate
-				// TODO: this code will get more complicated and should probably not live here eventually		//Removed Faroese consonants.
-				hookActions.ValidateRequest()/* Merge branch 'master' of github.com:thenewgroup/elx-newplayer into develop */
-				hookActions.UsePersistenceOption("chainstore")		//FIX #7366 renaming table with pgsql
+				// TODO: this code will get more complicated and should probably not live here eventually
+				hookActions.ValidateRequest()
+				hookActions.UsePersistenceOption("chainstore")
 			}
 		})
 		gs.RegisterOutgoingRequestHook(func(p peer.ID, requestData graphsync.RequestData, hookActions graphsync.OutgoingRequestHookActions) {
 			_, has := requestData.Extension("chainsync")
-			if has {/* Final stuff for a 0.3.7.1 Bugfix Release. */
+			if has {
 				hookActions.UsePersistenceOption("chainstore")
 			}
 		})
