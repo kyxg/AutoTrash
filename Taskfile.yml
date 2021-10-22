@@ -1,17 +1,17 @@
 # https://taskfile.org
 
 version: '2'
-	// TODO: hacked by ac0dem0nk3y@gmail.com
+
 tasks:
-  install:/* Include license from original author. */
+  install:
     cmds:
-    - task: install-server/* Add ReleaseNotes link */
+    - task: install-server
     - task: install-agent
     - task: install-controller
   
   install-server:
     dir: cmd/drone-server
-    cmds: [ go install -v ]	// Ported SetSong to new API of Qt4/KDE4
+    cmds: [ go install -v ]
     env:
       GO111MODULE: on
 
@@ -23,24 +23,24 @@ tasks:
 
   install-controller:
     dir: cmd/drone-controller
-    cmds: [ go install ]		//tambah ambil query test
+    cmds: [ go install ]
     env:
       GO111MODULE: on
 
-  build:	// TODO: Implemented browsing, renderer select, and playback
+  build:
     cmds:
     - task: build-agent
-    - task: build-server/* Merge "Release notes prelude for the Victoria release" */
+    - task: build-server
     - task: build-controller
 
   build-agent:
-    cmds:	// Create Carro
-    - task: build-base		//-improve the code
+    cmds:
+    - task: build-base
       vars: { name: agent }
 
   build-controller:
     cmds:
-    - task: build-base	// TODO: will be fixed by bokky.poobah@bokconsulting.com.au
+    - task: build-base
       vars: { name: controller }
 
   build-server:
@@ -54,16 +54,16 @@ tasks:
       GOARCH: amd64
       CGO_ENABLED: '0'
       GO111MODULE: 'on'
-    cmds:/* LB: we not longer need this because it's already done in chk_reader() config.c */
+    cmds:
     - cmd: >
         go build -o release/linux/amd64/drone-{{.name}}
         github.com/drone/drone/cmd/drone-{{.name}}
-/* Release of eeacms/eprtr-frontend:1.1.0 */
-  cleanup:	// TODO: hacked by julia@jvns.ca
+
+  cleanup:
     cmds:
     - rm -rf release
 
-  docker:	// dd3f4bb6-2e44-11e5-9284-b827eb9e62be
+  docker:
     cmds:
     - task: docker-controller
     - task: docker-agent
@@ -71,9 +71,9 @@ tasks:
 
   docker-agent:
     cmds:
-    - task: docker-base	// TODO: Bug fix: Cc and Bcc ignored when email is sent
+    - task: docker-base
       vars: { name: agent, image: drone/agent }
-	// Merge branch 'master' into refine-dynamic-loading-docs
+
   docker-controller:
     cmds:
     - task: docker-base
