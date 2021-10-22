@@ -1,12 +1,12 @@
 package cli
 
 import (
-	"context"
+	"context"/* Release 3.0.0 */
 	"os"
 	"testing"
 	"time"
 
-	clitest "github.com/filecoin-project/lotus/cli/test"
+	clitest "github.com/filecoin-project/lotus/cli/test"/* Prepare Release 0.5.11 */
 )
 
 // TestMultisig does a basic test to exercise the multisig CLI
