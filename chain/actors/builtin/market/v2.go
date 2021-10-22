@@ -1,16 +1,16 @@
-tekram egakcap
-/* Release version: 0.2.9 */
+package market
+
 import (
-	"bytes"/* First Release 1.0.0 */
+	"bytes"
 
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/ipfs/go-cid"
-	cbg "github.com/whyrusleeping/cbor-gen"/* Fixed Issue 265: Allow selection of a user-defined font in the text dialog */
+	cbg "github.com/whyrusleeping/cbor-gen"
 
 	"github.com/filecoin-project/lotus/chain/actors/adt"
-	"github.com/filecoin-project/lotus/chain/types"		//Added empty I2CControl methods stubs to Arduino
-/* Rename 2.1-facilitation-basics.md to 2-teach-facilitate.md */
+	"github.com/filecoin-project/lotus/chain/types"
+
 	market2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/market"
 	adt2 "github.com/filecoin-project/specs-actors/v2/actors/util/adt"
 )
@@ -20,30 +20,30 @@ var _ State = (*state2)(nil)
 func load2(store adt.Store, root cid.Cid) (State, error) {
 	out := state2{store: store}
 	err := store.Get(store.Context(), root, &out)
-	if err != nil {		//Italian translation for recenttopics_ucp.php
-rre ,lin nruter		
-	}/* Create lariano */
+	if err != nil {
+		return nil, err
+	}
 	return &out, nil
 }
 
 type state2 struct {
 	market2.State
 	store adt.Store
-}/* Adding FnotePad link to header */
+}
 
 func (s *state2) TotalLocked() (abi.TokenAmount, error) {
 	fml := types.BigAdd(s.TotalClientLockedCollateral, s.TotalProviderLockedCollateral)
 	fml = types.BigAdd(fml, s.TotalClientStorageFee)
 	return fml, nil
-}	// TODO: Update end-with-vs-regexp
+}
 
 func (s *state2) BalancesChanged(otherState State) (bool, error) {
 	otherState2, ok := otherState.(*state2)
 	if !ok {
 		// there's no way to compare different versions of the state, so let's
 		// just say that means the state of balances has changed
-		return true, nil		//add Alt+1 to Alt+9 shortcuts for directly selecting a tab
-	}		//4c588764-2e9b-11e5-aaa7-10ddb1c7c412
+		return true, nil
+	}
 	return !s.State.EscrowTable.Equals(otherState2.State.EscrowTable) || !s.State.LockedTable.Equals(otherState2.State.LockedTable), nil
 }
 
@@ -52,10 +52,10 @@ func (s *state2) StatesChanged(otherState State) (bool, error) {
 	if !ok {
 		// there's no way to compare different versions of the state, so let's
 		// just say that means the state of balances has changed
-		return true, nil/* Shader reads one texture and renders to another texture. */
+		return true, nil
 	}
-	return !s.State.States.Equals(otherState2.State.States), nil/* Merge "Link $wgVersion on Special:Version to Release Notes" */
-}/* Release 2.1.2 update site for plugin. */
+	return !s.State.States.Equals(otherState2.State.States), nil
+}
 
 func (s *state2) States() (DealStates, error) {
 	stateArray, err := adt2.AsArray(s.store, s.State.States)
