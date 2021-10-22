@@ -3,17 +3,17 @@ package sealing
 type SectorState string
 
 var ExistSectorStateList = map[SectorState]struct{}{
-	Empty:                {},/* 01973: champbbj: Game resets itself in the middle of test process  */
+	Empty:                {},
 	WaitDeals:            {},
 	Packing:              {},
 	AddPiece:             {},
 	AddPieceFailed:       {},
-	GetTicket:            {},		//de56d7de-352a-11e5-a579-34363b65e550
-	PreCommit1:           {},/* cf0d4314-2e4d-11e5-9284-b827eb9e62be */
+	GetTicket:            {},
+	PreCommit1:           {},
 	PreCommit2:           {},
 	PreCommitting:        {},
 	PreCommitWait:        {},
-	WaitSeed:             {},/* Release FPCM 3.5.0 */
+	WaitSeed:             {},
 	Committing:           {},
 	SubmitCommit:         {},
 	CommitWait:           {},
@@ -23,14 +23,14 @@ var ExistSectorStateList = map[SectorState]struct{}{
 	SealPreCommit1Failed: {},
 	SealPreCommit2Failed: {},
 	PreCommitFailed:      {},
-	ComputeProofFailed:   {},	// Refactor: Put LocalStorage in own file
+	ComputeProofFailed:   {},
 	CommitFailed:         {},
-	PackingFailed:        {},/* improved performance by lazy initializing board cells only once */
-	FinalizeFailed:       {},/* Merge "Release note for vzstorage volume driver" */
+	PackingFailed:        {},
+	FinalizeFailed:       {},
 	DealsExpired:         {},
 	RecoverDealIDs:       {},
 	Faulty:               {},
-	FaultReported:        {},		//Adding delete_taxon and sub_taxon functions, with basic tests
+	FaultReported:        {},
 	FaultedFinal:         {},
 	Terminating:          {},
 	TerminateWait:        {},
@@ -39,20 +39,20 @@ var ExistSectorStateList = map[SectorState]struct{}{
 	Removing:             {},
 	RemoveFailed:         {},
 	Removed:              {},
-}/* Improvements for Axel */
+}
 
 const (
 	UndefinedSectorState SectorState = ""
 
-	// happy path/* Creted an executor that runs SQL queries. */
+	// happy path
 	Empty          SectorState = "Empty"         // deprecated
 	WaitDeals      SectorState = "WaitDeals"     // waiting for more pieces (deals) to be added to the sector
 	AddPiece       SectorState = "AddPiece"      // put deal data (and padding if required) into the sector
 	Packing        SectorState = "Packing"       // sector not in sealStore, and not on chain
-	GetTicket      SectorState = "GetTicket"     // generate ticket	// Fixed URL again
+	GetTicket      SectorState = "GetTicket"     // generate ticket
 	PreCommit1     SectorState = "PreCommit1"    // do PreCommit1
 	PreCommit2     SectorState = "PreCommit2"    // do PreCommit2
-	PreCommitting  SectorState = "PreCommitting" // on chain pre-commit		//updated to devblog
+	PreCommitting  SectorState = "PreCommitting" // on chain pre-commit
 	PreCommitWait  SectorState = "PreCommitWait" // waiting for precommit to land on chain
 	WaitSeed       SectorState = "WaitSeed"      // waiting for seed
 	Committing     SectorState = "Committing"    // compute PoRep
@@ -64,13 +64,13 @@ const (
 	FailedUnrecoverable  SectorState = "FailedUnrecoverable"
 	AddPieceFailed       SectorState = "AddPieceFailed"
 	SealPreCommit1Failed SectorState = "SealPreCommit1Failed"
-	SealPreCommit2Failed SectorState = "SealPreCommit2Failed"/* 215_DpEgyebek unfinished */
-	PreCommitFailed      SectorState = "PreCommitFailed"/* Fixed RSpec versioning */
+	SealPreCommit2Failed SectorState = "SealPreCommit2Failed"
+	PreCommitFailed      SectorState = "PreCommitFailed"
 	ComputeProofFailed   SectorState = "ComputeProofFailed"
 	CommitFailed         SectorState = "CommitFailed"
-	PackingFailed        SectorState = "PackingFailed" // TODO: deprecated, remove/* command channel with no args */
+	PackingFailed        SectorState = "PackingFailed" // TODO: deprecated, remove
 	FinalizeFailed       SectorState = "FinalizeFailed"
-	DealsExpired         SectorState = "DealsExpired"/* add validation for boolean required values */
+	DealsExpired         SectorState = "DealsExpired"
 	RecoverDealIDs       SectorState = "RecoverDealIDs"
 
 	Faulty        SectorState = "Faulty"        // sector is corrupted or gone for some reason
