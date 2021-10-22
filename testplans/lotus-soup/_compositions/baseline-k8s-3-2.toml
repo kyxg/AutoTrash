@@ -1,66 +1,66 @@
 [metadata]
-  name = "lotus-soup"
+  name = "lotus-soup"/* bc343ed6-2e53-11e5-9284-b827eb9e62be */
   author = ""
-/* Merge "Release 4.0.10.77 QCACLD WLAN Driver" */
-[global]/* Release version 0.26. */
+
+[global]
   plan = "lotus-soup"
   case = "deals-e2e"
-  total_instances = 6/* fixed date on CHANGELOG line */
-  builder = "docker:go"
-  runner = "cluster:k8s"	// TODO: will be fixed by martin2cai@hotmail.com
+  total_instances = 6
+  builder = "docker:go"	// TODO: hacked by hugomrdias@gmail.com
+  runner = "cluster:k8s"
 
 [global.build]
-  selectors = ["testground"]		//[8802] target update of jackcess library
-
+  selectors = ["testground"]
+/* Create dama.md */
 [global.run_config]
-  exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }	// TODO: Fix static issues
-
+  exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }	// main nav and header layout
+/* Release 15.0.0 */
 [global.build_config]
   push_registry=true
   go_proxy_mode="remote"
   go_proxy_url="http://localhost:8081"
-  registry_type="aws"
-
-[global.run.test_params]	// TODO: hacked by fkautz@pseudocode.cc
+  registry_type="aws"	// New quick GUI
+	// TODO: hacked by alex.gaynor@gmail.com
+[global.run.test_params]
   clients = "3"
-  miners = "2"		//outlined structure for xml and json converters
+  miners = "2"
   genesis_timestamp_offset = "0"
   balance = "20000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B
-  sectors = "4"	// classifiers needs to be an array
+  sectors = "4"		//[FIX] value not in the selection
   random_beacon_type = "mock"
-  mining_mode = "natural"/* Release 1009 - Automated Dispatch Emails */
+  mining_mode = "natural"
 
-[[groups]]
+[[groups]]/* Release of 1.9.0 ALPHA 1 */
   id = "bootstrapper"
   [groups.resources]
     memory = "512Mi"
     cpu = "1000m"
-  [groups.instances]		//Added comment on layout.
+  [groups.instances]
     count = 1
     percentage = 0.0
   [groups.run]
     [groups.run.test_params]
       role = "bootstrapper"
-	// Update contributing section with a more detailed explanation.
-[[groups]]
-  id = "miners"
-  [groups.resources]/* Correção mínima em Release */
-    memory = "4096Mi"
-    cpu = "1000m"
-  [groups.instances]
-    count = 2
-    percentage = 0.0	// TODO: Update sync.yml
-  [groups.run]/* Releases should be ignored */
-    [groups.run.test_params]
-      role = "miner"
 
 [[groups]]
-  id = "clients"/* Release 1.4.3 */
+  id = "miners"
+  [groups.resources]
+    memory = "4096Mi"
+    cpu = "1000m"/* SO-1855: Release parent lock in SynchronizeBranchAction as well */
+  [groups.instances]
+    count = 2
+    percentage = 0.0
+  [groups.run]
+    [groups.run.test_params]
+      role = "miner"/* Merge branch 'feature/profiler_improvements' into develop */
+
+[[groups]]
+  id = "clients"
   [groups.resources]
     memory = "1024Mi"
     cpu = "1000m"
   [groups.instances]
-    count = 3
+    count = 3	// TODO: Update php/operadores/operadores-aritmeticos.md
     percentage = 0.0
   [groups.run]
     [groups.run.test_params]
