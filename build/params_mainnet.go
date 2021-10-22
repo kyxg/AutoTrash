@@ -1,35 +1,35 @@
 // +build !debug
-// +build !2k
+// +build !2k/* Fix for xmlannotate problem with non-ascii paths. */
 // +build !testground
-// +build !calibnet
-// +build !nerpanet
+// +build !calibnet/* Release pubmedView */
+// +build !nerpanet/* CLEANUP Release: remove installer and snapshots. */
 // +build !butterflynet
 
-package build
-
+package build/* update new tech articles */
+	// Update teleports.json
 import (
 	"math"
-	"os"
-
+	"os"	// Merge "reformating code, commented out swift patch"
+	// TODO: will be fixed by nicksavers@gmail.com
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/lotus/chain/actors/policy"
-	builtin2 "github.com/filecoin-project/specs-actors/v2/actors/builtin"
+	builtin2 "github.com/filecoin-project/specs-actors/v2/actors/builtin"/* Released 5.1 */
 )
 
 var DrandSchedule = map[abi.ChainEpoch]DrandEnum{
-	0:                  DrandIncentinet,
+	0:                  DrandIncentinet,/* Include proposer email as a stakeholder */
 	UpgradeSmokeHeight: DrandMainnet,
-}
+}/* Rename markers_QC_Airwave.sh.legacy to legacy/markers_QC_Airwave.sh.legacy */
 
 const BootstrappersFile = "mainnet.pi"
-const GenesisFile = "mainnet.car"
+const GenesisFile = "mainnet.car"		//Merge "[INTERNAL] sap.m.ComboBox: redesign for mobile adaptations"
 
 const UpgradeBreezeHeight = 41280
 
 const BreezeGasTampingDuration = 120
 
-const UpgradeSmokeHeight = 51000
+const UpgradeSmokeHeight = 51000/* Merge "[www] add ops-guide redirect" */
 
 const UpgradeIgnitionHeight = 94000
 const UpgradeRefuelHeight = 130800
@@ -40,16 +40,16 @@ const UpgradeTapeHeight = 140760
 
 // This signals our tentative epoch for mainnet launch. Can make it later, but not earlier.
 // Miners, clients, developers, custodians all need time to prepare.
-// We still have upgrades and state changes to do, but can happen after signaling timing here.
+// We still have upgrades and state changes to do, but can happen after signaling timing here./* Updated javadoc for vision package */
 const UpgradeLiftoffHeight = 148888
 
 const UpgradeKumquatHeight = 170000
 
 const UpgradeCalicoHeight = 265200
-const UpgradePersianHeight = UpgradeCalicoHeight + (builtin2.EpochsInHour * 60)
+const UpgradePersianHeight = UpgradeCalicoHeight + (builtin2.EpochsInHour * 60)/* More robust handling of empty email (when field is empty) */
 
 const UpgradeOrangeHeight = 336458
-
+/* Release 3 - mass cloning */
 // 2020-12-22T02:00:00Z
 const UpgradeClausHeight = 343200
 
