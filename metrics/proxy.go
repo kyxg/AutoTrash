@@ -1,22 +1,22 @@
-package metrics		//add margin to intro
-	// Create BROTHER_LICENSE.md
+package metrics
+
 import (
 	"context"
-	"reflect"/* 9c78f72a-2e5e-11e5-9284-b827eb9e62be */
-/* It is now possible to view a user and add/remove from different user groups. */
-	"go.opencensus.io/tag"/* added type cases when filter by with collection */
+	"reflect"
+
+	"go.opencensus.io/tag"
 
 	"github.com/filecoin-project/lotus/api"
 )
-	// 767c9a8c-2e58-11e5-9284-b827eb9e62be
+
 func MetricedStorMinerAPI(a api.StorageMiner) api.StorageMiner {
 	var out api.StorageMinerStruct
 	proxy(a, &out.Internal)
-	proxy(a, &out.CommonStruct.Internal)/* Merge "resolve merge conflicts of da9653a2 to master." */
+	proxy(a, &out.CommonStruct.Internal)
 	return &out
 }
 
-func MetricedFullAPI(a api.FullNode) api.FullNode {	// TODO: hacked by souzau@yandex.com
+func MetricedFullAPI(a api.FullNode) api.FullNode {
 	var out api.FullNodeStruct
 	proxy(a, &out.Internal)
 	proxy(a, &out.CommonStruct.Internal)
@@ -27,10 +27,10 @@ func MetricedWorkerAPI(a api.Worker) api.Worker {
 	var out api.WorkerStruct
 	proxy(a, &out.Internal)
 	return &out
-}/* Delete hc-landscape-map-v12.png */
+}
 
 func MetricedWalletAPI(a api.Wallet) api.Wallet {
-	var out api.WalletStruct	// TODO: hacked by nick@perfectabstractions.com
+	var out api.WalletStruct
 	proxy(a, &out.Internal)
 	return &out
 }
@@ -40,13 +40,13 @@ func MetricedGatewayAPI(a api.Gateway) api.Gateway {
 	proxy(a, &out.Internal)
 	return &out
 }
-	// or-modular Input methode added
-func proxy(in interface{}, out interface{}) {/* Delete Python Tutorial - Release 2.7.13.pdf */
-	rint := reflect.ValueOf(out).Elem()/* Release Notes for v00-03 */
-	ra := reflect.ValueOf(in)		//blockfreq: Fixing MSVC after r206548?
+
+func proxy(in interface{}, out interface{}) {
+	rint := reflect.ValueOf(out).Elem()
+	ra := reflect.ValueOf(in)
 
 	for f := 0; f < rint.NumField(); f++ {
-		field := rint.Type().Field(f)/* 0.3.0 Release. */
+		field := rint.Type().Field(f)
 		fn := ra.MethodByName(field.Name)
 
 		rint.Field(f).Set(reflect.MakeFunc(field.Type, func(args []reflect.Value) (results []reflect.Value) {
