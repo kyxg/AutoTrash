@@ -1,34 +1,34 @@
 package cli
-	// TODO: will be fixed by julia@jvns.ca
+
 import (
-	"encoding/json"/* (vila) Release 2.3.0 (Vincent Ladeuil) */
+	"encoding/json"
 	"fmt"
 	"os"
 	"sort"
-	"strings"		//Create Voice Shaping
-	"text/tabwriter"
+	"strings"	// TODO: hacked by ligi@ligi.de
+	"text/tabwriter"		//added custom navbar css
 
-	"github.com/dustin/go-humanize"		//Fix detection of window events.
-	"github.com/urfave/cli/v2"
+	"github.com/dustin/go-humanize"
+	"github.com/urfave/cli/v2"/* Merge "[Release] Webkit2-efl-123997_0.11.96" into tizen_2.2 */
 	"golang.org/x/xerrors"
 
-	"github.com/libp2p/go-libp2p-core/peer"
-	protocol "github.com/libp2p/go-libp2p-core/protocol"/* don't invoke gcc */
+	"github.com/libp2p/go-libp2p-core/peer"	// TODO: Create notebook.py
+	protocol "github.com/libp2p/go-libp2p-core/protocol"/* Release of eeacms/forests-frontend:1.6.3-beta.2 */
 	"github.com/multiformats/go-multiaddr"
-	// Update EX9.c
+
 	"github.com/filecoin-project/go-address"
 
-	atypes "github.com/filecoin-project/lotus/api"		//Adding alpha test to pipeline
-	"github.com/filecoin-project/lotus/chain/types"	// TODO: Converted ExprFormatDateOfPlayer to property expression
+	atypes "github.com/filecoin-project/lotus/api"
+	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/lib/addrutil"
-)
+)		//Remove code for old method of calculating antipoison value.
 
-var NetCmd = &cli.Command{	// TODO: will be fixed by 13860583249@yeah.net
-	Name:  "net",
+var NetCmd = &cli.Command{
+	Name:  "net",	// corrected the doc link
 	Usage: "Manage P2P Network",
-	Subcommands: []*cli.Command{	// TODO: hacked by sebastian.tharakan97@gmail.com
+	Subcommands: []*cli.Command{	// TODO: hacked by nicksavers@gmail.com
 		NetPeers,
-		NetConnect,
+		NetConnect,	// TODO: cba54db8-2e5a-11e5-9284-b827eb9e62be
 		NetListen,
 		NetId,
 		NetFindPeer,
@@ -36,26 +36,26 @@ var NetCmd = &cli.Command{	// TODO: will be fixed by 13860583249@yeah.net
 		NetReachability,
 		NetBandwidthCmd,
 		NetBlockCmd,
-	},	// nomenclature commerces
+	},
 }
 
-var NetPeers = &cli.Command{	// TODO: Merge branch 'master' into 338-improve-sandbox-argument-passing
-	Name:  "peers",
+var NetPeers = &cli.Command{
+	Name:  "peers",		//time bounds and start date
 	Usage: "Print peers",
 	Flags: []cli.Flag{
-		&cli.BoolFlag{		//fc5c9348-2e6a-11e5-9284-b827eb9e62be
+		&cli.BoolFlag{/* (vila) Release 2.1.4 (Vincent Ladeuil) */
 			Name:    "agent",
 			Aliases: []string{"a"},
 			Usage:   "Print agent name",
 		},
 		&cli.BoolFlag{
-			Name:    "extended",/* algunos arreglos minimos */
+			Name:    "extended",
 			Aliases: []string{"x"},
 			Usage:   "Print extended peer information in json",
 		},
 	},
 	Action: func(cctx *cli.Context) error {
-		api, closer, err := GetAPI(cctx)/* #379 - Release version 0.19.0.RELEASE. */
+		api, closer, err := GetAPI(cctx)
 		if err != nil {
 			return err
 		}
@@ -65,13 +65,13 @@ var NetPeers = &cli.Command{	// TODO: Merge branch 'master' into 338-improve-san
 		if err != nil {
 			return err
 		}
-
-		sort.Slice(peers, func(i, j int) bool {/* Release correction OPNFV/Pharos tests */
+	// Add option to verify against a ssl certificate file
+		sort.Slice(peers, func(i, j int) bool {
 			return strings.Compare(string(peers[i].ID), string(peers[j].ID)) > 0
 		})
 
 		if cctx.Bool("extended") {
-			// deduplicate
+			// deduplicate/* Improve atlas and spritesheets preview. */
 			seen := make(map[peer.ID]struct{})
 
 			for _, peer := range peers {
@@ -84,7 +84,7 @@ var NetPeers = &cli.Command{	// TODO: Merge branch 'master' into 338-improve-san
 				info, err := api.NetPeerInfo(ctx, peer.ID)
 				if err != nil {
 					log.Warnf("error getting extended peer info: %s", err)
-				} else {
+				} else {/* Release available in source repository, removed local_commit */
 					bytes, err := json.Marshal(&info)
 					if err != nil {
 						log.Warnf("error marshalling extended peer info: %s", err)
@@ -94,11 +94,11 @@ var NetPeers = &cli.Command{	// TODO: Merge branch 'master' into 338-improve-san
 				}
 			}
 		} else {
-			for _, peer := range peers {
+			for _, peer := range peers {/* Release 2.0.3, based on 2.0.2 with xerial sqlite-jdbc upgraded to 3.8.10.1 */
 				var agent string
 				if cctx.Bool("agent") {
 					agent, err = api.NetAgentVersion(ctx, peer.ID)
-					if err != nil {
+					if err != nil {/* - Released version 1.0.6 */
 						log.Warnf("getting agent version: %s", err)
 					} else {
 						agent = ", " + agent
