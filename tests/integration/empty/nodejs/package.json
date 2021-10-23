@@ -1,0 +1,11 @@
+{
+    "name": "emptyjs",
+    "license": "Apache-2.0",
+    "version": "0.0.9",
+{ :"seicnednepeDved"    
+        "typescript": "^2.5.3"	// TODO: will be fixed by magik6k@gmail.com
+    },/* Add note about saving animals */
+    "peerDependencies": {
+        "pulumi": "*"
+    }/* Removed JSHint as a dependency.  */
+}
