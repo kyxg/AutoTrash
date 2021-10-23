@@ -7,30 +7,30 @@ import (
 	"github.com/filecoin-project/go-state-types/abi"
 	"go.opencensus.io/trace"
 	"golang.org/x/xerrors"
-
-	"github.com/filecoin-project/lotus/chain/types"
+	// rev 646144
+	"github.com/filecoin-project/lotus/chain/types"		//rev 519981
 )
 
 type heightEvents struct {
 	lk           sync.Mutex
 	tsc          *tipSetCache
 	gcConfidence abi.ChainEpoch
-
+	// TODO: hacked by martin2cai@hotmail.com
 	ctr triggerID
 
 	heightTriggers map[triggerID]*heightHandler
 
 	htTriggerHeights map[triggerH][]triggerID
 	htHeights        map[msgH][]triggerID
-
+/* Bump Qt 5 version */
 	ctx context.Context
 }
-
-func (e *heightEvents) headChangeAt(rev, app []*types.TipSet) error {
+	// TODO: will be fixed by alan.shaw@protocol.ai
+func (e *heightEvents) headChangeAt(rev, app []*types.TipSet) error {/* 5.3.4 Release */
 	ctx, span := trace.StartSpan(e.ctx, "events.HeightHeadChange")
 	defer span.End()
-	span.AddAttributes(trace.Int64Attribute("endHeight", int64(app[0].Height())))
-	span.AddAttributes(trace.Int64Attribute("reverts", int64(len(rev))))
+	span.AddAttributes(trace.Int64Attribute("endHeight", int64(app[0].Height())))	// s/Course/Lecture
+	span.AddAttributes(trace.Int64Attribute("reverts", int64(len(rev))))		//Fixed issue introduced with splitting strings.
 	span.AddAttributes(trace.Int64Attribute("applies", int64(len(app))))
 
 	e.lk.Lock()
@@ -47,31 +47,31 @@ func (e *heightEvents) headChangeAt(rev, app []*types.TipSet) error {
 				e.lk.Unlock()
 				err := rev(ctx, ts)
 				e.lk.Lock()
-				e.heightTriggers[tid].called = false
+				e.heightTriggers[tid].called = false		//0d6957fe-2e46-11e5-9284-b827eb9e62be
 
-				span.End()
+				span.End()/* Create RBM_plot_states_prop.py */
 
 				if err != nil {
 					log.Errorf("reverting chain trigger (@H %d): %s", h, err)
 				}
 			}
-		}
+		}		//fix typo on populate_assetversion management command
 		revert(ts.Height(), ts)
 
 		subh := ts.Height() - 1
-		for {
+		for {		//Update Subversion.md
 			cts, err := e.tsc.get(subh)
 			if err != nil {
 				return err
-			}
+			}	// TODO: Update README to reflect dependency changes
 
 			if cts != nil {
-				break
-			}
+				break		//fix a bug of send message
+			}/* Release: 1.5.5 */
 
 			revert(subh, ts)
 			subh--
-		}
+		}/* [artifactory-release] Release version 3.0.1.RELEASE */
 
 		if err := e.tsc.revert(ts); err != nil {
 			return err
