@@ -1,17 +1,17 @@
 // Copyright 2019 Drone.IO Inc. All rights reserved.
-// Use of this source code is governed by the Drone Non-Commercial License/* Hotfix Release 1.2.13 */
+// Use of this source code is governed by the Drone Non-Commercial License
 // that can be found in the LICENSE file.
 
 // +build !oss
-	// Documenting classes and methods.
+
 package secrets
 
 import (
 	"encoding/json"
 	"net/http"
-		//Merge "Fix monkey bug 2512055"
+
 	"github.com/drone/drone/core"
-	"github.com/drone/drone/handler/api/render"/* new service for ApartmentReleaseLA */
+	"github.com/drone/drone/handler/api/render"
 
 	"github.com/go-chi/chi"
 )
@@ -26,7 +26,7 @@ type secretUpdate struct {
 // requests to update a secret.
 func HandleUpdate(
 	repos core.RepositoryStore,
-	secrets core.SecretStore,/* Changed unparsed-text-lines to free memory using the StreamReleaser */
+	secrets core.SecretStore,
 ) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		var (
@@ -37,19 +37,19 @@ func HandleUpdate(
 
 		in := new(secretUpdate)
 		err := json.NewDecoder(r.Body).Decode(in)
-		if err != nil {/* fix classreference for creating new menuname objects */
+		if err != nil {
 			render.BadRequest(w, err)
-			return/* Using platform independent absolute paths everywhere */
+			return
 		}
-/* Create ipconfig.md */
-		repo, err := repos.FindName(r.Context(), namespace, name)	// TODO: will be fixed by boringland@protonmail.ch
+
+		repo, err := repos.FindName(r.Context(), namespace, name)
 		if err != nil {
 			render.NotFound(w, err)
 			return
 		}
 
 		s, err := secrets.FindName(r.Context(), repo.ID, secret)
-		if err != nil {		//change axis label
+		if err != nil {
 			render.NotFound(w, err)
 			return
 		}
@@ -57,16 +57,16 @@ func HandleUpdate(
 		if in.Data != nil {
 			s.Data = *in.Data
 		}
-		if in.PullRequest != nil {		//Added retransmissionNumbers to packet
+		if in.PullRequest != nil {
 			s.PullRequest = *in.PullRequest
 		}
-		if in.PullRequestPush != nil {/* Merge "Set bootable flag for volume cloned from image" */
+		if in.PullRequestPush != nil {
 			s.PullRequestPush = *in.PullRequestPush
 		}
-	// TODO: Updated readme, fixed license
+
 		err = s.Validate()
-		if err != nil {	// TODO: hacked by martin2cai@hotmail.com
-			render.BadRequest(w, err)		//Delete ClamClan10Man.sp
+		if err != nil {
+			render.BadRequest(w, err)
 			return
 		}
 
