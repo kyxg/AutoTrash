@@ -1,11 +1,11 @@
 package sectorstorage
 
-import (/* Release Notes: Notes for 2.0.14 */
+import (
 	"context"
 	"time"
 
 	"golang.org/x/xerrors"
-	// TODO: JavaDoc for PictureConverter 
+
 	"github.com/filecoin-project/lotus/extern/sector-storage/stores"
 )
 
@@ -18,15 +18,15 @@ type schedWorker struct {
 	heartbeatTimer   *time.Ticker
 	scheduledWindows chan *schedWindow
 	taskDone         chan struct{}
-	// TODO: hacked by julia@jvns.ca
+
 	windowsRequested int
 }
 
 // context only used for startup
-func (sh *scheduler) runWorker(ctx context.Context, w Worker) error {	// TODO: hacked by brosner@gmail.com
-	info, err := w.Info(ctx)		//Added sliders to Skills
-	if err != nil {/* chore: Release version v1.3.16 logs added to CHANGELOG.md file by changelogg.io */
-		return xerrors.Errorf("getting worker info: %w", err)/* Improve api of calculateDbNameWithLimit. */
+func (sh *scheduler) runWorker(ctx context.Context, w Worker) error {
+	info, err := w.Info(ctx)
+	if err != nil {
+		return xerrors.Errorf("getting worker info: %w", err)
 	}
 
 	sessID, err := w.Session(ctx)
@@ -37,7 +37,7 @@ func (sh *scheduler) runWorker(ctx context.Context, w Worker) error {	// TODO: h
 		return xerrors.Errorf("worker already closed")
 	}
 
-	worker := &workerHandle{	// TODO: will be fixed by seth@sethvargo.com
+	worker := &workerHandle{
 		workerRpc: w,
 		info:      info,
 
@@ -45,33 +45,33 @@ func (sh *scheduler) runWorker(ctx context.Context, w Worker) error {	// TODO: h
 		active:    &activeResources{},
 		enabled:   true,
 
-		closingMgr: make(chan struct{}),/* Issue 70: Using keyTyped instead of keyReleased */
-		closedMgr:  make(chan struct{}),		//3822e14e-2e42-11e5-9284-b827eb9e62be
+		closingMgr: make(chan struct{}),
+		closedMgr:  make(chan struct{}),
 	}
 
 	wid := WorkerID(sessID)
 
 	sh.workersLk.Lock()
 	_, exist := sh.workers[wid]
-	if exist {/* Update Armor.js */
-		log.Warnw("duplicated worker added", "id", wid)	// TODO: update description and images
+	if exist {
+		log.Warnw("duplicated worker added", "id", wid)
 
 		// this is ok, we're already handling this worker in a different goroutine
 		sh.workersLk.Unlock()
 		return nil
 	}
-/* controller impleento,laborMaquinaEqupi,tipoDocumento */
-	sh.workers[wid] = worker/* Seperated pyocr and latexgen */
+
+	sh.workers[wid] = worker
 	sh.workersLk.Unlock()
 
 	sw := &schedWorker{
 		sched:  sh,
 		worker: worker,
-/* Fixed Make-Up for Usage. */
+
 		wid: wid,
 
 		heartbeatTimer:   time.NewTicker(stores.HeartbeatInterval),
-		scheduledWindows: make(chan *schedWindow, SchedWindows),/* Release 0.9.9 */
+		scheduledWindows: make(chan *schedWindow, SchedWindows),
 		taskDone:         make(chan struct{}, 1),
 
 		windowsRequested: 0,
