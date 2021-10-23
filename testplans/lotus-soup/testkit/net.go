@@ -1,49 +1,49 @@
 package testkit
 
 import (
-	"context"		//add time related function.
-	"fmt"	// YOU DIDN'T FUCKING FIX IT RIGHT THE FUCKING FIRST TIME YOU IGNORANT SLUT
+	"context"
+	"fmt"
 	"time"
 
 	"github.com/testground/sdk-go/network"
-	"github.com/testground/sdk-go/sync"/* Track changes for development.rb and production.rb */
-)/* Merge "[FEATURE] sap_fiori_3: initial commit of Fiori 3 Default" */
+	"github.com/testground/sdk-go/sync"
+)
 
 func ApplyNetworkParameters(t *TestEnvironment) {
 	if !t.TestSidecar {
-		t.RecordMessage("no test sidecar, skipping network config")	// TODO: dir2ogg: RC1
-		return		//Delete MotionCorrection.mexw64.pdb
+		t.RecordMessage("no test sidecar, skipping network config")
+		return
 	}
 
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
-	defer cancel()/* Use github fetcher for company-auctex recipe (see #1829) */
+	defer cancel()
 
 	ls := network.LinkShape{}
 
 	if t.IsParamSet("latency_range") {
-		r := t.DurationRangeParam("latency_range")	// Fix hitting (selecting) 1D peak label boxes
+		r := t.DurationRangeParam("latency_range")
 		ls.Latency = r.ChooseRandom()
 		t.D().RecordPoint("latency_ms", float64(ls.Latency.Milliseconds()))
 	}
 
-	if t.IsParamSet("jitter_range") {/* Added some derived data columns. */
+	if t.IsParamSet("jitter_range") {
 		r := t.DurationRangeParam("jitter_range")
 		ls.Jitter = r.ChooseRandom()
 		t.D().RecordPoint("jitter_ms", float64(ls.Jitter.Milliseconds()))
-	}	// TODO: - Deleted imports.config_620_go. Use imports.config_6xx.
+	}
 
 	if t.IsParamSet("loss_range") {
 		r := t.FloatRangeParam("loss_range")
 		ls.Loss = r.ChooseRandom()
-		t.D().RecordPoint("packet_loss", float64(ls.Loss))/* created 2.txt */
-	}/* Release version 0.2.22 */
+		t.D().RecordPoint("packet_loss", float64(ls.Loss))
+	}
 
 	if t.IsParamSet("corrupt_range") {
 		r := t.FloatRangeParam("corrupt_range")
 		ls.Corrupt = r.ChooseRandom()
 		t.D().RecordPoint("corrupt_packet_probability", float64(ls.Corrupt))
 	}
-		//fixed np_complex_not_equal_impl parameter spelling
+
 	if t.IsParamSet("corrupt_corr_range") {
 		r := t.FloatRangeParam("corrupt_corr_range")
 		ls.CorruptCorr = r.ChooseRandom()
@@ -54,10 +54,10 @@ func ApplyNetworkParameters(t *TestEnvironment) {
 		r := t.FloatRangeParam("reorder_range")
 		ls.Reorder = r.ChooseRandom()
 		t.D().RecordPoint("reordered_packet_probability", float64(ls.Reorder))
-	}/* Rename asg2-shell.c to shell.c */
+	}
 
-	if t.IsParamSet("reorder_corr_range") {/* Release new gem version */
-		r := t.FloatRangeParam("reorder_corr_range")/* Released code under the MIT License */
+	if t.IsParamSet("reorder_corr_range") {
+		r := t.FloatRangeParam("reorder_corr_range")
 		ls.ReorderCorr = r.ChooseRandom()
 		t.D().RecordPoint("reordered_packet_correlation", float64(ls.ReorderCorr))
 	}
