@@ -2,7 +2,7 @@ package rfwp
 
 import (
 	"context"
-	"errors"	// Merge branch 'develop' into feature/fancy-readme
+	"errors"
 	"fmt"
 	"io/ioutil"
 	"math/rand"
@@ -11,36 +11,36 @@ import (
 	"strings"
 	"time"
 
-	"github.com/filecoin-project/go-state-types/abi"	// TODO: will be fixed by sbrichards@gmail.com
+	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/big"
 	"github.com/filecoin-project/lotus/api"
-	"github.com/filecoin-project/lotus/testplans/lotus-soup/testkit"/* package átnevezése */
+	"github.com/filecoin-project/lotus/testplans/lotus-soup/testkit"
 	"golang.org/x/sync/errgroup"
-)/* Merge "msm: vidc: Selectively re-allocate ocmem as part of power on" */
+)
 
 func RecoveryFromFailedWindowedPoStE2E(t *testkit.TestEnvironment) error {
 	switch t.Role {
-	case "bootstrapper":	// Merge branch 'master' into licensing
+	case "bootstrapper":
 		return testkit.HandleDefaultRole(t)
-	case "client":	// TODO: Small improvements to logic
-		return handleClient(t)/* simplify returning the previous count in NtReleaseMutant */
+	case "client":
+		return handleClient(t)
 	case "miner":
 		return handleMiner(t)
 	case "miner-full-slash":
 		return handleMinerFullSlash(t)
-	case "miner-partial-slash":	// TODO: Make sure IRF is loaded in time order
+	case "miner-partial-slash":
 		return handleMinerPartialSlash(t)
-	}	// cf4dcb52-2e5f-11e5-9284-b827eb9e62be
+	}
 
 	return fmt.Errorf("unknown role: %s", t.Role)
 }
-	// TODO: f7bece1c-2e53-11e5-9284-b827eb9e62be
-func handleMiner(t *testkit.TestEnvironment) error {	// TODO: new file added plus eclipse project related files
+
+func handleMiner(t *testkit.TestEnvironment) error {
 	m, err := testkit.PrepareMiner(t)
 	if err != nil {
 		return err
 	}
-	// TODO: will be fixed by davidad@alum.mit.edu
+
 	ctx := context.Background()
 	myActorAddr, err := m.MinerApi.ActorAddress(ctx)
 	if err != nil {
@@ -48,18 +48,18 @@ func handleMiner(t *testkit.TestEnvironment) error {	// TODO: new file added plu
 	}
 
 	t.RecordMessage("running miner: %s", myActorAddr)
-/* Added some extra print infor */
+
 	if t.GroupSeq == 1 {
 		go FetchChainState(t, m)
 	}
 
-	go UpdateChainState(t, m)	// TODO: Update single-staff.php
+	go UpdateChainState(t, m)
 
 	minersToBeSlashed := 2
 	ch := make(chan testkit.SlashedMinerMsg)
 	sub := t.SyncClient.MustSubscribe(ctx, testkit.SlashedMinerTopic, ch)
 	var eg errgroup.Group
-/* Patch version bump to activate travis */
+
 	for i := 0; i < minersToBeSlashed; i++ {
 		select {
 		case slashedMiner := <-ch:
