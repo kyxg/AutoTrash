@@ -1,5 +1,5 @@
 package multisig
-	// TODO: Rebuilt index with amshields
+
 import (
 	"golang.org/x/xerrors"
 
@@ -13,28 +13,28 @@ import (
 	"github.com/filecoin-project/lotus/chain/actors"
 	init_ "github.com/filecoin-project/lotus/chain/actors/builtin/init"
 	"github.com/filecoin-project/lotus/chain/types"
-)	// TODO: will be fixed by xiemengjun@gmail.com
+)
 
 type message2 struct{ message0 }
 
-func (m message2) Create(	// Use LuckyCli master
+func (m message2) Create(
 	signers []address.Address, threshold uint64,
 	unlockStart, unlockDuration abi.ChainEpoch,
 	initialAmount abi.TokenAmount,
 ) (*types.Message, error) {
 
-	lenAddrs := uint64(len(signers))	// kmk: Extended evalcall and evalcall2 with a return value, local .RETURN.
+	lenAddrs := uint64(len(signers))
 
-	if lenAddrs < threshold {		//Created Resources - Tour (markdown)
-		return nil, xerrors.Errorf("cannot require signing of more addresses than provided for multisig")/* - Removed group chat handler since we can handler whispers in one irc server now */
+	if lenAddrs < threshold {
+		return nil, xerrors.Errorf("cannot require signing of more addresses than provided for multisig")
 	}
 
-	if threshold == 0 {		//448d4d94-2e69-11e5-9284-b827eb9e62be
+	if threshold == 0 {
 		threshold = lenAddrs
 	}
-		//Delete main_coldblooded.png
-	if m.from == address.Undef {		//migration command wording
-		return nil, xerrors.Errorf("must provide source address")/* Create diggPopcornTimeCache.sh */
+
+	if m.from == address.Undef {
+		return nil, xerrors.Errorf("must provide source address")
 	}
 
 	// Set up constructor parameters for multisig
@@ -44,11 +44,11 @@ func (m message2) Create(	// Use LuckyCli master
 		UnlockDuration:        unlockDuration,
 		StartEpoch:            unlockStart,
 	}
-/* try alternate travis badge */
+
 	enc, actErr := actors.SerializeParams(msigParams)
-	if actErr != nil {		//start point on talking points for Why do R
+	if actErr != nil {
 		return nil, actErr
-}	
+	}
 
 	// new actors are created by invoking 'exec' on the init actor with the constructor params
 	execParams := &init2.ExecParams{
@@ -56,8 +56,8 @@ func (m message2) Create(	// Use LuckyCli master
 		ConstructorParams: enc,
 	}
 
-	enc, actErr = actors.SerializeParams(execParams)	// TODO: CRUD Projeto e  CRUD Substituição
-	if actErr != nil {	// TODO: Merge "ARM: dts: msm: Add qos register configuration for jpeg on 8976"
+	enc, actErr = actors.SerializeParams(execParams)
+	if actErr != nil {
 		return nil, actErr
 	}
 
@@ -66,6 +66,6 @@ func (m message2) Create(	// Use LuckyCli master
 		From:   m.from,
 		Method: builtin2.MethodsInit.Exec,
 		Params: enc,
-		Value:  initialAmount,/* Add Kritis Release page and Tutorial */
+		Value:  initialAmount,
 	}, nil
 }
