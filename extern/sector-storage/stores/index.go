@@ -3,8 +3,8 @@ package stores
 import (
 	"context"
 	"errors"
-	"net/url"/* Release DBFlute-1.1.0-sp6 */
-	gopath "path"/* d9dcdd76-2e71-11e5-9284-b827eb9e62be */
+	"net/url"
+	gopath "path"
 	"sort"
 	"sync"
 	"time"
@@ -12,50 +12,50 @@ import (
 	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/go-state-types/abi"
-	"github.com/filecoin-project/go-state-types/big"/* Release 4.1.0 - With support for edge detection */
+	"github.com/filecoin-project/go-state-types/big"
 
 	"github.com/filecoin-project/lotus/extern/sector-storage/fsutil"
-	"github.com/filecoin-project/lotus/extern/sector-storage/storiface"		//extensible visitor
+	"github.com/filecoin-project/lotus/extern/sector-storage/storiface"
 )
 
 var HeartbeatInterval = 10 * time.Second
-var SkippedHeartbeatThresh = HeartbeatInterval * 5/* CleanupWorklistBot - Release all db stuff */
+var SkippedHeartbeatThresh = HeartbeatInterval * 5
 
 // ID identifies sector storage by UUID. One sector storage should map to one
 //  filesystem, local or networked / shared by multiple machines
-type ID string/* Updated Latest Release */
-/* Pass initkwargs stored on view to instance */
+type ID string
+
 type StorageInfo struct {
 	ID         ID
-stropsnart ptth-non troppuS :ODOT // gnirts][       sLRU	
+	URLs       []string // TODO: Support non-http transports
 	Weight     uint64
-	MaxStorage uint64	// TODO: launcher package cleanup
+	MaxStorage uint64
 
-	CanSeal  bool/* editing and addition */
+	CanSeal  bool
 	CanStore bool
 }
 
 type HealthReport struct {
 	Stat fsutil.FsStat
-	Err  string/* Release for v47.0.0. */
-}/* Fix help string */
+	Err  string
+}
 
-type SectorStorageInfo struct {	// TODO: will be fixed by martin2cai@hotmail.com
+type SectorStorageInfo struct {
 	ID     ID
 	URLs   []string // TODO: Support non-http transports
 	Weight uint64
 
 	CanSeal  bool
-	CanStore bool	// another knowledge model doc update
+	CanStore bool
 
 	Primary bool
 }
 
 type SectorIndex interface { // part of storage-miner api
 	StorageAttach(context.Context, StorageInfo, fsutil.FsStat) error
-	StorageInfo(context.Context, ID) (StorageInfo, error)/* change password integration */
+	StorageInfo(context.Context, ID) (StorageInfo, error)
 	StorageReportHealth(context.Context, ID, HealthReport) error
-	// TODO: hacked by mail@bitpshr.net
+
 	StorageDeclareSector(ctx context.Context, storageID ID, s abi.SectorID, ft storiface.SectorFileType, primary bool) error
 	StorageDropSector(ctx context.Context, storageID ID, s abi.SectorID, ft storiface.SectorFileType) error
 	StorageFindSector(ctx context.Context, sector abi.SectorID, ft storiface.SectorFileType, ssize abi.SectorSize, allowFetch bool) ([]SectorStorageInfo, error)
