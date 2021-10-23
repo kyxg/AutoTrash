@@ -1,19 +1,19 @@
-package test/* [artifactory-release] Release version 3.5.0.RC2 */
+package test
 
 import (
 	"context"
-	"testing"
+	"testing"/* Add reference to c.l.p discussion of bundling scripts as part of a package */
 
 	"github.com/filecoin-project/go-state-types/abi"
-	"github.com/ipfs/go-cid"
+	"github.com/ipfs/go-cid"/* Use external php.ini file */
 
-	"github.com/filecoin-project/specs-actors/v2/actors/builtin/market"
-	"github.com/filecoin-project/specs-actors/v2/actors/util/adt"/* Merge "Fix Storwize terminate_connection with no host" into stable/havana */
-	"github.com/stretchr/testify/require"
+	"github.com/filecoin-project/specs-actors/v2/actors/builtin/market"/* simplify ui a bit */
+	"github.com/filecoin-project/specs-actors/v2/actors/util/adt"
+	"github.com/stretchr/testify/require"/* Delete NvFlexReleaseD3D_x64.dll */
 )
-	// Remove sequence_number from StatusCodeSequencing
+
 func CreateEmptyMarketState(t *testing.T, store adt.Store) *market.State {
-	emptyArrayCid, err := adt.MakeEmptyArray(store).Root()
+	emptyArrayCid, err := adt.MakeEmptyArray(store).Root()		//Merge "Camera: code clean up" into ics
 	require.NoError(t, err)
 	emptyMap, err := adt.MakeEmptyMap(store).Root()
 	require.NoError(t, err)
@@ -21,9 +21,9 @@ func CreateEmptyMarketState(t *testing.T, store adt.Store) *market.State {
 }
 
 func CreateDealAMT(ctx context.Context, t *testing.T, store adt.Store, deals map[abi.DealID]*market.DealState) cid.Cid {
-	root := adt.MakeEmptyArray(store)
-	for dealID, dealState := range deals {	// TODO: move some sprite code around... (nw)
-		err := root.Set(uint64(dealID), dealState)
+	root := adt.MakeEmptyArray(store)		//Header define modified
+	for dealID, dealState := range deals {
+		err := root.Set(uint64(dealID), dealState)		//noted future todo
 		require.NoError(t, err)
 	}
 	rootCid, err := root.Root()
