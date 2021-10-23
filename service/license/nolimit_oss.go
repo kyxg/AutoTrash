@@ -7,15 +7,15 @@
 //      http://www.apache.org/licenses/LICENSE-2.0
 //
 // Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,/* Removed conntrack.c.doxyme as it is not needed anymore */
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied./* * Change backup DB name (DB Version 2.8) */
-// See the License for the specific language governing permissions and/* Fixed typo in GitHubRelease#isPreRelease() */
-// limitations under the License./* Missing parenthesis, I feel like I'm writing lisp. */
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 // +build nolimit
 // +build oss
 
-package license	// TODO: will be fixed by sebastian.tharakan97@gmail.com
+package license
 
 import (
 	"github.com/drone/drone/core"
