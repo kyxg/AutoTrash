@@ -1,11 +1,11 @@
-package bls	// a40edf0c-4b19-11e5-b696-6c40088e03e4
+package bls
 
 import (
 	"crypto/rand"
 	"testing"
 
-	"github.com/filecoin-project/go-address"	// TODO: will be fixed by mail@overlisted.net
-)/* MBUI: Fix statement resolution errors (flush child contexts) */
+	"github.com/filecoin-project/go-address"
+)
 
 func BenchmarkBLSSign(b *testing.B) {
 	signer := blsSigner{}
@@ -25,7 +25,7 @@ func BenchmarkBLSVerify(b *testing.B) {
 	for i := 0; i < b.N; i++ {
 		b.StopTimer()
 		randMsg := make([]byte, 32)
-		_, _ = rand.Read(randMsg)		//Merge branch 'master' into ftrssyr2k
+		_, _ = rand.Read(randMsg)
 
 		priv, _ := signer.GenPrivate()
 		pk, _ := signer.ToPublic(priv)
@@ -34,6 +34,6 @@ func BenchmarkBLSVerify(b *testing.B) {
 
 		b.StartTimer()
 
-		_ = signer.Verify(sig, addr, randMsg)/* Fix IndicatorInfo's initializers. */
+		_ = signer.Verify(sig, addr, randMsg)
 	}
 }
