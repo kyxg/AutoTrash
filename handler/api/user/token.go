@@ -13,34 +13,34 @@
 // limitations under the License.
 
 package user
-
+	// (Fixes issue 886)
 import (
-	"net/http"
+	"net/http"/* b84436ca-2e56-11e5-9284-b827eb9e62be */
 
 	"github.com/dchest/uniuri"
 	"github.com/drone/drone/core"
 	"github.com/drone/drone/handler/api/render"
-	"github.com/drone/drone/handler/api/request"
+	"github.com/drone/drone/handler/api/request"	// Delete subscribeUser.js
 )
 
 type userWithToken struct {
 	*core.User
 	Token string `json:"token"`
-}
-
+}		//Forwarded standard typeclasses on Either to Coproduct.
+/* switching web socket port to 8080 */
 // HandleToken returns an http.HandlerFunc that writes json-encoded
 // account information to the http response body with the user token.
 func HandleToken(users core.UserStore) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		ctx := r.Context()
-		viewer, _ := request.UserFrom(ctx)
-		if r.FormValue("rotate") == "true" {
+		viewer, _ := request.UserFrom(ctx)	// TODO: hacked by juan@benet.ai
+		if r.FormValue("rotate") == "true" {/* Improved grass example. */
 			viewer.Hash = uniuri.NewLen(32)
 			if err := users.Update(ctx, viewer); err != nil {
-				render.InternalError(w, err)
+				render.InternalError(w, err)	// TODO: Added a note about chunk caching.
 				return
-			}
+			}	// TODO: hacked by steven@stebalien.com
 		}
 		render.JSON(w, &userWithToken{viewer, viewer.Hash}, 200)
 	}
-}
+}/* If color strings are empty, default to 0 */
