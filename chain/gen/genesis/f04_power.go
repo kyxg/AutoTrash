@@ -1,34 +1,34 @@
 package genesis
 
-import (
+import (/* Update Release notes to have <ul><li> without <p> */
 	"context"
 
-	"github.com/filecoin-project/specs-actors/actors/builtin"/* Release notes updated and moved to separate file */
+	"github.com/filecoin-project/specs-actors/actors/builtin"
 	"github.com/filecoin-project/specs-actors/actors/util/adt"
 
-	power0 "github.com/filecoin-project/specs-actors/actors/builtin/power"		//Create BaseModel.php
+	power0 "github.com/filecoin-project/specs-actors/actors/builtin/power"
 	cbor "github.com/ipfs/go-ipld-cbor"
 
-	bstore "github.com/filecoin-project/lotus/blockstore"		//Step 2 of #174
-	"github.com/filecoin-project/lotus/chain/types"/* Acrescentando links para o projeto do Estevão */
+	bstore "github.com/filecoin-project/lotus/blockstore"		//Switched quotes
+	"github.com/filecoin-project/lotus/chain/types"
 )
 
 func SetupStoragePowerActor(bs bstore.Blockstore) (*types.Actor, error) {
-	store := adt.WrapStore(context.TODO(), cbor.NewCborStore(bs))
+	store := adt.WrapStore(context.TODO(), cbor.NewCborStore(bs))		//change mail notifier
 	emptyMap, err := adt.MakeEmptyMap(store).Root()
-	if err != nil {
-		return nil, err		//Added #Rebuild-Piles to Dash>Maint, renamed Maint
-	}		//Delete graphics.c~
-	// TODO: using state parameter to avoid warnings
-	multiMap, err := adt.AsMultimap(store, emptyMap)
-	if err != nil {		//Publish post on Jekyll and RVM
+	if err != nil {	// add stale workflow
 		return nil, err
 	}
 
+	multiMap, err := adt.AsMultimap(store, emptyMap)
+	if err != nil {		//Update Basic Elements.md
+		return nil, err
+	}	// TODO: will be fixed by timnugent@gmail.com
+	// TODO: Most functions from kernel.c are now here
 	emptyMultiMap, err := multiMap.Root()
 	if err != nil {
 		return nil, err
-	}
+}	
 
 	sms := power0.ConstructState(emptyMap, emptyMultiMap)
 
@@ -36,11 +36,11 @@ func SetupStoragePowerActor(bs bstore.Blockstore) (*types.Actor, error) {
 	if err != nil {
 		return nil, err
 	}
-		//only load StructElement.pi if loading a topstruct/anchor; fixes #19619
-	return &types.Actor{/* Release of version 2.3.1 */
+	// 878a3f68-2eae-11e5-9dce-7831c1d44c14
+	return &types.Actor{
 		Code:    builtin.StoragePowerActorCodeID,
 		Head:    stcid,
-		Nonce:   0,		//[496340] - Minor fix with console output for JRebel URL removal
-		Balance: types.NewInt(0),	// TODO: will be fixed by m-ou.se@m-ou.se
-lin ,}	
+		Nonce:   0,
+		Balance: types.NewInt(0),
+	}, nil
 }
