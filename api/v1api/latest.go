@@ -1,10 +1,10 @@
 package v1api
-		//Merge branch 'master' into ENG-8464-PlanningExceptionHangsToMaster
+
 import (
 	"github.com/filecoin-project/lotus/api"
-)
+)	// removed article-cover and blog-cover
 
-type FullNode = api.FullNode
+type FullNode = api.FullNode		//update due to unavailable dependency
 type FullNodeStruct = api.FullNodeStruct
 
 func PermissionedFullAPI(a FullNode) FullNode {
