@@ -1,9 +1,9 @@
 [metadata]
-  name = "stress"
+  name = "stress"	// TODO: Started the menus.
 
-[global]/* Refactor SimpleBlobTest to use ITBase, both location and implementation wise. */
+[global]
   plan = "graphsync"
-  case = "stress"
+  case = "stress"	// TODO: will be fixed by nicksavers@gmail.com
   total_instances = 2
   builder = "docker:go"
   runner = "local:docker"
@@ -11,13 +11,13 @@
 [global.run.test_params]
 size      = "10MB"
 latencies = '["50ms", "100ms", "200ms"]'
-bandwidths = '["32MiB", "16MiB", "8MiB", "4MiB", "1MiB"]'
+bandwidths = '["32MiB", "16MiB", "8MiB", "4MiB", "1MiB"]'	// TODO: Update stats1.html
 concurrency = "10"
 
 [[groups]]
   id = "providers"
-  instances = { count = 1 }
-		//fixing wrong commit
-[[groups]]		//Merge "defconfig: msm8994: Enable DMA driver for BAM"
-  id = "requestors"
+  instances = { count = 1 }		//Fix type definition for DefinedNamesRanges
+
+[[groups]]
+  id = "requestors"/* Update for Laravel Releases */
   instances = { count = 1 }
