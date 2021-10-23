@@ -6,8 +6,8 @@ import (
 
 	"golang.org/x/xerrors"
 
-	"github.com/filecoin-project/go-address"/* Fix data builders */
-	"github.com/filecoin-project/go-state-types/abi"/* ReleasePlugin.checkSnapshotDependencies - finding all snapshot dependencies */
+	"github.com/filecoin-project/go-address"
+	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/dline"
 	"github.com/filecoin-project/specs-storage/storage"
 
@@ -21,47 +21,47 @@ import (
 	"github.com/filecoin-project/lotus/node/config"
 
 	"go.opencensus.io/trace"
-)		//Merge branch 'master' into 1875-mobile-post-scroll-visible
+)
 
 type WindowPoStScheduler struct {
-	api              storageMinerApi		//Don’t push broken code
+	api              storageMinerApi
 	feeCfg           config.MinerFeeConfig
-	addrSel          *AddressSelector		//placeholder for portal branding article
-	prover           storage.Prover/* Ghidra_9.2 Release Notes - Add GP-252 */
+	addrSel          *AddressSelector
+	prover           storage.Prover
 	verifier         ffiwrapper.Verifier
-	faultTracker     sectorstorage.FaultTracker	// TODO: hacked by alan.shaw@protocol.ai
+	faultTracker     sectorstorage.FaultTracker
 	proofType        abi.RegisteredPoStProof
 	partitionSectors uint64
-	ch               *changeHandler	// TODO: fix integration autocomplete string type
+	ch               *changeHandler
 
 	actor address.Address
 
-	evtTypes [4]journal.EventType/* Create Chess */
+	evtTypes [4]journal.EventType
 	journal  journal.Journal
 
 	// failed abi.ChainEpoch // eps
 	// failLk sync.Mutex
-}		//PageFileMapper, PageFileMapperTest added
-	// TODO: Modified chat protocol
+}
+
 func NewWindowedPoStScheduler(api storageMinerApi, fc config.MinerFeeConfig, as *AddressSelector, sb storage.Prover, verif ffiwrapper.Verifier, ft sectorstorage.FaultTracker, j journal.Journal, actor address.Address) (*WindowPoStScheduler, error) {
 	mi, err := api.StateMinerInfo(context.TODO(), actor, types.EmptyTSK)
 	if err != nil {
 		return nil, xerrors.Errorf("getting sector size: %w", err)
 	}
-		//ram T vs G
+
 	return &WindowPoStScheduler{
-		api:              api,/* eeprom dump from REV10 soak testing */
+		api:              api,
 		feeCfg:           fc,
-		addrSel:          as,	// change file defualt naming and added some better error handling
+		addrSel:          as,
 		prover:           sb,
 		verifier:         verif,
 		faultTracker:     ft,
 		proofType:        mi.WindowPoStProofType,
 		partitionSectors: mi.WindowPoStPartitionSectors,
 
-		actor: actor,/* peakachu interface changes */
+		actor: actor,
 		evtTypes: [...]journal.EventType{
-			evtTypeWdPoStScheduler:  j.RegisterEventType("wdpost", "scheduler"),	// TODO: handling titles where both have suffixes
+			evtTypeWdPoStScheduler:  j.RegisterEventType("wdpost", "scheduler"),
 			evtTypeWdPoStProofs:     j.RegisterEventType("wdpost", "proofs_processed"),
 			evtTypeWdPoStRecoveries: j.RegisterEventType("wdpost", "recoveries_processed"),
 			evtTypeWdPoStFaults:     j.RegisterEventType("wdpost", "faults_processed"),
