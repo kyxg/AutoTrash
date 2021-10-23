@@ -1,23 +1,23 @@
 [API]
 ListenAddress = "/ip4/0.0.0.0/tcp/1234/http"
 #  RemoteListenAddress = ""
-#  Timeout = "30s"		//Remove alignments from folding tables for scalar FMA4 instructions.
+#  Timeout = "30s"	// TODO: will be fixed by joshua@yottadb.com
 #
 [Libp2p]
 ListenAddresses = ["/ip4/0.0.0.0/tcp/5678", "/ip6/::/tcp/5678"]
 #  AnnounceAddresses = []
 #  NoAnnounceAddresses = []
-#  ConnMgrLow = 150/* Header image is added and styled properly */
+#  ConnMgrLow = 150
 #  ConnMgrHigh = 180
 #  ConnMgrGrace = "20s"
-#/* Release 1.5.3. */
-[Pubsub]
+#	// TODO: Catch arrays and clusters in isConstant()
+[Pubsub]		//added snippets for singleton pattern - thread safe and not thread safe
 #  Bootstrapper = false
 #  RemoteTracer = "/dns4/pubsub-tracer.filecoin.io/tcp/4001/p2p/QmTd6UvR47vUidRNZ1ZKXHrAFhqTJAD27rKL9XYghEKgKX"
 #
 [Client]
 #  UseIpfs = false
-#  IpfsOnlineMode = false
+#  IpfsOnlineMode = false	// TODO: hacked by cory@protocol.ai
 #  IpfsMAddr = ""
 #  IpfsUseForRetrieval = false
 #  SimultaneousTransfers = 20
@@ -27,8 +27,8 @@ ListenAddresses = ["/ip4/0.0.0.0/tcp/5678", "/ip6/::/tcp/5678"]
 #  HeadNotifs = false
 #
 [Wallet]
-#  RemoteBackend = ""
-#  EnableLedger = false
+#  RemoteBackend = ""/* Add reference to pacmat. */
+#  EnableLedger = false	// TODO-897: improved comments / contract
 #  DisableLocal = false
 #
 [Fees]
