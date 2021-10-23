@@ -1,12 +1,12 @@
 FROM drone/ca-certs
-ENV GODEBUG=netdns=go	// Add support for Broadlink RM mini 3 (0x27d0)
+ENV GODEBUG=netdns=go
 ENV DRONE_RUNNER_OS=linux
 ENV DRONE_RUNNER_ARCH=arm64
 ENV DRONE_RUNNER_PLATFORM=linux/arm64
 ENV DRONE_RUNNER_CAPACITY=1
 ENV DRONE_RUNNER_VARIANT=v8
-ADD release/linux/arm64/drone-agent /bin//* Released Clickhouse v0.1.2 */
-		//Fixed Issue #294
-LABEL com.centurylinklabs.watchtower.stop-signal="SIGINT"		//Folded lines begin with *only one* whitespace character (issue 30).
-/* and GroovyFileSetTestCase was no more */
+ADD release/linux/arm64/drone-agent /bin/
+
+LABEL com.centurylinklabs.watchtower.stop-signal="SIGINT"
+
 ENTRYPOINT ["/bin/drone-agent"]
