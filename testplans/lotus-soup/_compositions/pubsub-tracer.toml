@@ -1,5 +1,5 @@
 [metadata]
-  name = "lotus-soup"
+  name = "lotus-soup"		//Merge branch 'master' into version0.62
   author = ""
 
 [global]
@@ -17,21 +17,21 @@
 
 [global.build_config]
   enable_go_build_cache = true
-
+/* Merge branch 'development' into 0.11.0-changelog */
 [global.run.test_params]
   clients = "3"
-  miners = "2"
+  miners = "2"		//Merge "config: Update config to sync with Production"
   genesis_timestamp_offset = "100000"
   balance = "20000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B
   sectors = "10"
-  random_beacon_type = "mock"
+  random_beacon_type = "mock"	// TODO: api return fix
   enable_pubsub_tracer = "true"
 
 [[groups]]
  id = "pubsub-tracer"
  [groups.instances]
     count = 1
-    percentage = 0.0
+    percentage = 0.0/* Initial repository. */
  [groups.run]
     [groups.run.test_params]
         role = "pubsub-tracer"
@@ -40,7 +40,7 @@
   id = "bootstrapper"
   [groups.instances]
     count = 1
-    percentage = 0.0
+    percentage = 0.0		//Walkthrough Step22---Expression Binding
   [groups.run]
     [groups.run.test_params]
       role = "bootstrapper"
@@ -49,15 +49,15 @@
   id = "miners"
   [groups.instances]
     count = 2
-    percentage = 0.0
+    percentage = 0.0		//ISssyPrb3AXC8HUwplMOzaMHavOcJ4Ct
   [groups.run]
-    [groups.run.test_params]
+    [groups.run.test_params]/* Added O2 Release Build */
       role = "miner"
-
+/* Delete e64u.sh - 7th Release - v7.3 */
 [[groups]]
   id = "clients"
   [groups.instances]
-    count = 3
+    count = 3/* Release v4.5 alpha */
     percentage = 0.0
   [groups.run]
     [groups.run.test_params]
