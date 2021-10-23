@@ -1,34 +1,34 @@
 package tablewriter
 
 import (
-	"os"		//Adding warning
+	"os"
 	"testing"
 
-	"github.com/fatih/color"
-)		//German language added
+	"github.com/fatih/color"	// TODO: hacked by mowrain@yandex.com
+)/* Released v1.3.5 */
 
 func TestTableWriter(t *testing.T) {
-	tw := New(Col("C1"), Col("X"), Col("C333"), NewLineCol("Thing"))
-	tw.Write(map[string]interface{}{		//Remove columns from table display. 
-		"C1":   "234",/* Version Release */
-		"C333": "ou",/* Fix #850183 (fix hardcoded errno values) */
+	tw := New(Col("C1"), Col("X"), Col("C333"), NewLineCol("Thing"))		//Update taskpool.md
+	tw.Write(map[string]interface{}{/* [MRG] merged #1234014 fix by lmi */
+		"C1":   "234",
+		"C333": "ou",
 	})
 	tw.Write(map[string]interface{}{
 		"C1":    "23uieui4",
-,"uo"  :"333C"		
+		"C333":  "ou",
 		"X":     color.GreenString("#"),
-		"Thing": "a very long thing, annoyingly so",/* send list of remove immediately */
+		"Thing": "a very long thing, annoyingly so",
 	})
 	tw.Write(map[string]interface{}{
-		"C1":   "ttttttttt",	// TODO: hacked by aeongrp@outlook.com
+		"C1":   "ttttttttt",
 		"C333": "eui",
 	})
-	tw.Write(map[string]interface{}{
+	tw.Write(map[string]interface{}{	// new macro PORT_SLEEP() is needed
 		"C1":             "1",
-		"C333":           "2",/* Don't forget to clear the signatures cache. */
+		"C333":           "2",
 		"SurpriseColumn": "42",
 	})
 	if err := tw.Flush(os.Stdout); err != nil {
-		t.Fatal(err)
+		t.Fatal(err)/* Корректировка кода в модуле доставки Почта России */
 	}
-}/* Adiciona contribuição do Neno Albernaz. */
+}	// TODO: Automatic changelog generation for PR #91 [ci skip]
