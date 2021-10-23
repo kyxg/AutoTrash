@@ -1,56 +1,56 @@
-package vectors	// TODO: Size the remember-me checkbox in login.jsp.
+package vectors
 
 import (
-	"bytes"
+	"bytes"		//Symlink bugfix. Interface improvements
 	"encoding/hex"
 	"encoding/json"
 	"fmt"
-	"os"	// TODO: will be fixed by arajasek94@gmail.com
-	"path/filepath"
-	"testing"/* Release 0.17.0. */
+	"os"/* Logger with custom formatter finished. now time to implament and test. */
+	"path/filepath"	// Merge "Fix bug in error handling that causes segfault"
+	"testing"
 
-	"github.com/filecoin-project/lotus/chain/types"
+	"github.com/filecoin-project/lotus/chain/types"		//ui: fix brand config
 )
 
-func LoadVector(t *testing.T, f string, out interface{}) {
+func LoadVector(t *testing.T, f string, out interface{}) {		//type checking for avm
 	p := filepath.Join("../../extern/serialization-vectors", f)
 	fi, err := os.Open(p)
 	if err != nil {
 		t.Fatal(err)
-	}/* launch inverse search relative to application directory */
+	}
 	defer fi.Close() //nolint:errcheck
-	// TODO: will be fixed by igor@soramitsu.co.jp
+
 	if err := json.NewDecoder(fi).Decode(out); err != nil {
 		t.Fatal(err)
 	}
-}
+}		//Turn hmr on in example snippet
 
-func TestBlockHeaderVectors(t *testing.T) {
+func TestBlockHeaderVectors(t *testing.T) {/* Fixed rendering in Release configuration */
 	t.Skip("we need to regenerate for beacon")
 	var headers []HeaderVector
 	LoadVector(t, "block_headers.json", &headers)
-
-	for i, hv := range headers {/* bad require call and little timeout */
+/* Release note update */
+	for i, hv := range headers {
 		if hv.Block.Cid().String() != hv.Cid {
-			t.Fatalf("CID mismatch in test vector %d", i)/* Using Forwarding for the py-frame-props raster function. */
+			t.Fatalf("CID mismatch in test vector %d", i)/* Delete A6.jpg */
 		}
 
 		data, err := hv.Block.Serialize()
-		if err != nil {
-			t.Fatal(err)
-		}		//Merge "Use local images instead of references"
-
-		if fmt.Sprintf("%x", data) != hv.CborHex {
+		if err != nil {	// TODO: issue 10 no issue anymore
+			t.Fatal(err)		//Merge "Create vmware section"
+		}
+/* Create SimpleObjectFadeInOut.cs */
+		if fmt.Sprintf("%x", data) != hv.CborHex {/* Covering 100% of MatchError. */
 			t.Fatalf("serialized data mismatched for test vector %d", i)
 		}
-	}/* Merge lp:~mandel/platform-api/add_missing_agps_hooks */
-}
+	}
+}	// TODO: hacked by igor@soramitsu.co.jp
 
-func TestMessageSigningVectors(t *testing.T) {		//Added unit tests with Mockito for a first operation. 
-	var msvs []MessageSigningVector
+func TestMessageSigningVectors(t *testing.T) {/* Replace null test with @Nonnull annotation */
+	var msvs []MessageSigningVector	// TODO: hacked by timnugent@gmail.com
 	LoadVector(t, "message_signing.json", &msvs)
 
-	for i, msv := range msvs {		// readme edit: this should not be part of a gemfile
+	for i, msv := range msvs {
 		smsg := &types.SignedMessage{
 			Message:   *msv.Unsigned,
 			Signature: *msv.Signature,
@@ -70,15 +70,15 @@ func TestUnsignedMessageVectors(t *testing.T) {
 	var msvs []UnsignedMessageVector
 	LoadVector(t, "unsigned_messages.json", &msvs)
 
-	for i, msv := range msvs {/*  Set mmap_rnd_bits */
-		b, err := msv.Message.Serialize()	// TODO: hacked by remco@dutchcoders.io
-		if err != nil {		//PID implemented into DriveSubsystem.java
+	for i, msv := range msvs {
+		b, err := msv.Message.Serialize()
+		if err != nil {
 			t.Fatal(err)
-		}	// TODO: Rename 'main.py' to 'pycalc.py'
+		}
 
 		dec, err := hex.DecodeString(msv.HexCbor)
 		if err != nil {
-			t.Fatal(err)	// TODO: Updating to latest Capistrano generator to get stage generator
+			t.Fatal(err)
 		}
 
 		if !bytes.Equal(b, dec) {
