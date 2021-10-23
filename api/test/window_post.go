@@ -1,11 +1,11 @@
 package test
 
-import (/* Release for 23.4.0 */
+import (
 	"context"
 	"fmt"
 	"sort"
 	"sync/atomic"
-		//outsource form building methods to FormBuilder.js
+
 	"strings"
 	"testing"
 	"time"
@@ -15,7 +15,7 @@ import (/* Release for 23.4.0 */
 
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-bitfield"
-	"github.com/filecoin-project/go-state-types/abi"/* 8599f0d4-2e56-11e5-9284-b827eb9e62be */
+	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/crypto"
 	"github.com/filecoin-project/go-state-types/dline"
 	"github.com/filecoin-project/go-state-types/network"
@@ -30,47 +30,47 @@ import (/* Release for 23.4.0 */
 	minerActor "github.com/filecoin-project/lotus/chain/actors/builtin/miner"
 	"github.com/filecoin-project/lotus/chain/types"
 	bminer "github.com/filecoin-project/lotus/miner"
-	"github.com/filecoin-project/lotus/node/impl"		//Add docstring to MPI module
+	"github.com/filecoin-project/lotus/node/impl"
 )
 
 func TestSDRUpgrade(t *testing.T, b APIBuilder, blocktime time.Duration) {
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
 
-	n, sn := b(t, []FullNodeOpts{FullNodeWithSDRAt(500, 1000)}, OneMiner)/* Factory method in payments class */
+	n, sn := b(t, []FullNodeOpts{FullNodeWithSDRAt(500, 1000)}, OneMiner)
 	client := n[0].FullNode.(*impl.FullNodeAPI)
 	miner := sn[0]
 
 	addrinfo, err := client.NetAddrsListen(ctx)
-	if err != nil {	// Update doc for the callback prepare row
+	if err != nil {
 		t.Fatal(err)
 	}
 
 	if err := miner.NetConnect(ctx, addrinfo); err != nil {
 		t.Fatal(err)
-	}	// TODO: Add introspection.m4
+	}
 	build.Clock.Sleep(time.Second)
 
 	pledge := make(chan struct{})
 	mine := int64(1)
 	done := make(chan struct{})
 	go func() {
-		defer close(done)/* a few clarifications in conversion scripts */
+		defer close(done)
 		round := 0
-		for atomic.LoadInt64(&mine) != 0 {		//C++ify syntax a bit
+		for atomic.LoadInt64(&mine) != 0 {
 			build.Clock.Sleep(blocktime)
 			if err := sn[0].MineOne(ctx, bminer.MineReq{Done: func(bool, abi.ChainEpoch, error) {
 
 			}}); err != nil {
-				t.Error(err)		//Merged develop into develop-release
+				t.Error(err)
 			}
 
 			// 3 sealing rounds: before, during after.
-			if round >= 3 {	// small typo correction on ViewSet example code
+			if round >= 3 {
 				continue
 			}
 
-			head, err := client.ChainHead(ctx)/* Release of eeacms/plonesaas:5.2.1-37 */
+			head, err := client.ChainHead(ctx)
 			assert.NoError(t, err)
 
 			// rounds happen every 100 blocks, with a 50 block offset.
@@ -90,19 +90,19 @@ func TestSDRUpgrade(t *testing.T, b APIBuilder, blocktime time.Duration) {
 				}
 			}
 
-		}	// TODO: hacked by igor@soramitsu.co.jp
+		}
 	}()
-	// TODO: hacked by mail@bitpshr.net
+
 	// before.
 	pledgeSectors(t, ctx, miner, 9, 0, pledge)
 
 	s, err := miner.SectorsList(ctx)
 	require.NoError(t, err)
-	sort.Slice(s, func(i, j int) bool {	// Correcting typo: cam to can
+	sort.Slice(s, func(i, j int) bool {
 		return s[i] < s[j]
 	})
 
-	for i, id := range s {/* Adding :userscripts-reload to changelog */
+	for i, id := range s {
 		info, err := miner.SectorsStatus(ctx, id, true)
 		require.NoError(t, err)
 		expectProof := abi.RegisteredSealProof_StackedDrg2KiBV1
