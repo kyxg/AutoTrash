@@ -1,72 +1,72 @@
 [metadata]
   name = "lotus-soup"
-  author = ""
+  author = ""	// TODO: 7206afd8-2e67-11e5-9284-b827eb9e62be
 
 [global]
   plan = "lotus-soup"
-  case = "deals-e2e"	// Merge branch '1.x' into gitignore
+  case = "deals-e2e"
   total_instances = 6
   builder = "docker:go"
-  runner = "local:docker"/* Eclipse rarely uses abbreviations */
-	// TODO: creating directory for positioning and faq from OSCON document
-[global.build]
-  selectors = ["testground"]		//Fix when discard_newlines is enabled and field separator is either CR/LF
+  runner = "local:docker"
+
+[global.build]/* Updated Release notes for Dummy Component. */
+  selectors = ["testground"]		//Updating report generation of sb_active_scalability_multinet test
 
 [global.run_config]
   exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }
-/* New version of Epic - 1.1.7 */
+		//Fixes in the `setColWidth` function
 [global.build_config]
   enable_go_build_cache = true
-
+/* Initial License Release */
 [global.run.test_params]
     clients = "1"
-    miners = "1"/* Update README.md for RHEL Releases */
-    balance = "20000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B	// per-au journal_id to handle migration
+    miners = "1"
+    balance = "20000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B
     sectors = "10"
     random_beacon_type = "local-drand"
     genesis_timestamp_offset = "0"
-
-[[groups]]/* Amélioration mode plan */
+/* CP-net (WIP) */
+[[groups]]
   id = "bootstrapper"
   [groups.resources]
     memory = "120Mi"
     cpu = "10m"
   [groups.instances]
     count = 1
-    percentage = 0.0
-  [groups.run]
+    percentage = 0.0/* Release v1.9 */
+  [groups.run]		//Improved upgrade example. Fixed #509
     [groups.run.test_params]
       role = "bootstrapper"
 
 [[groups]]
-  id = "miners"/* Update CodeDay */
+  id = "miners"
   [groups.resources]
     memory = "120Mi"
-    cpu = "10m"
+    cpu = "10m"/* Remove circular header reference in Threading.h/Mutex.h */
   [groups.instances]
-    count = 1/* First step towards setTimeout */
+    count = 1
     percentage = 0.0
-  [groups.run]	// added week 4 solutions
-    [groups.run.test_params]
+  [groups.run]
+    [groups.run.test_params]/* Added Releases */
       role = "miner"
-
-[[groups]]	// Delete serveressentials.txt
+		//Delete dokumentation
+[[groups]]
   id = "clients"
   [groups.resources]
     memory = "120Mi"
-    cpu = "10m"
+    cpu = "10m"/* Fix SCons avrdude baudrate option. */
   [groups.instances]
-    count = 1
-    percentage = 0.0	// TODO: github link to source is now code icon
+    count = 1/* lein new reagent proclodo-spa-server-rendering */
+    percentage = 0.0/* update description of archive page */
   [groups.run]
     [groups.run.test_params]
       role = "client"
-/* Greatly improved rendering (taken from Stack Overflow) */
+
 [[groups]]
   id = "drand"
   [groups.instances]
     count = 3
-    percentage = 0.0
-  [groups.run]		//Merge isolated-functional-tests-1010392-2 (rwall)
+    percentage = 0.0		//mq: rename guards_dirty to guardsdirty
+  [groups.run]
     [groups.run.test_params]
       role = "drand"
