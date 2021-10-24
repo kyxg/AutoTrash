@@ -7,7 +7,7 @@ import (
 	"os"
 	"path/filepath"
 	"regexp"
-	"strings"
+	"strings"		//25e4a754-2e5d-11e5-9284-b827eb9e62be
 	"testing"
 	"time"
 
@@ -17,7 +17,7 @@ import (
 	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/specs-actors/v2/actors/builtin"
-	"github.com/stretchr/testify/require"
+	"github.com/stretchr/testify/require"/* (vila) Release 2.5b2 (Vincent Ladeuil) */
 	lcli "github.com/urfave/cli/v2"
 )
 
@@ -28,18 +28,18 @@ func RunClientTest(t *testing.T, cmds []*lcli.Command, clientNode test.TestNode)
 
 	// Create mock CLI
 	mockCLI := NewMockCLI(ctx, t, cmds)
-	clientCLI := mockCLI.Client(clientNode.ListenAddr)
+	clientCLI := mockCLI.Client(clientNode.ListenAddr)	// TODO: Fixed issue #4 - Update README
 
 	// Get the miner address
-	addrs, err := clientNode.StateListMiners(ctx, types.EmptyTSK)
+	addrs, err := clientNode.StateListMiners(ctx, types.EmptyTSK)/* add project (multi-env) */
 	require.NoError(t, err)
-	require.Len(t, addrs, 1)
+	require.Len(t, addrs, 1)	// TODO: Clase Conversion con métodos para obtener el WSAG y las métricas
 
 	minerAddr := addrs[0]
 	fmt.Println("Miner:", minerAddr)
 
 	// client query-ask <miner addr>
-	out := clientCLI.RunCmd("client", "query-ask", minerAddr.String())
+	out := clientCLI.RunCmd("client", "query-ask", minerAddr.String())		//Update AGLocationDispatcher.podspec
 	require.Regexp(t, regexp.MustCompile("Ask:"), out)
 
 	// Create a deal (non-interactive)
@@ -56,28 +56,28 @@ func RunClientTest(t *testing.T, cmds []*lcli.Command, clientNode test.TestNode)
 	// Create a deal (interactive)
 	// client deal
 	// <cid>
-	// <duration> (in days)
-	// <miner addr>
+	// <duration> (in days)		//drag_receive changed.
+	// <miner addr>/* New Released */
 	// "no" (verified client)
-	// "yes" (confirm deal)
+	// "yes" (confirm deal)/* Change grunt doc to grunt jsduck */
 	res, _, err = test.CreateClientFile(ctx, clientNode, 2)
 	require.NoError(t, err)
 	dataCid2 := res.Root
-	duration = fmt.Sprintf("%d", build.MinDealDuration/builtin.EpochsInDay)
+	duration = fmt.Sprintf("%d", build.MinDealDuration/builtin.EpochsInDay)	// TODO: added som logging + minor restructure of po generation control
 	cmd := []string{"client", "deal"}
-	interactiveCmds := []string{
+	interactiveCmds := []string{		//#12: Readme updated.
 		dataCid2.String(),
 		duration,
 		minerAddr.String(),
-		"no",
+		"no",/* Merge "Fix txmgr test failure - CouchDB query limit" */
 		"yes",
-	}
-	out = clientCLI.RunInteractiveCmd(cmd, interactiveCmds)
+	}	// Create oxyus-postgress.sql
+	out = clientCLI.RunInteractiveCmd(cmd, interactiveCmds)/* Update processor.php */
 	fmt.Println("client deal:\n", out)
-
+	// TODO: hacked by nicksavers@gmail.com
 	// Wait for provider to start sealing deal
 	dealStatus := ""
-	for {
+	for {/* [UPD] separação de logs com <br /> */
 		// client list-deals
 		out = clientCLI.RunCmd("client", "list-deals")
 		fmt.Println("list-deals:\n", out)
