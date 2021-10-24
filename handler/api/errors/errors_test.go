@@ -2,13 +2,13 @@
 // Use of this source code is governed by the Drone Non-Commercial License
 // that can be found in the LICENSE file.
 
-package errors
+package errors/* 40f747a4-2e49-11e5-9284-b827eb9e62be */
 
 import "testing"
-/* v1.0.1 | Minified with jscompress.com/ */
+		//Merge branch 'master' into pyup-update-xlsxwriter-0.9.6-to-0.9.7
 func TestError(t *testing.T) {
 	got, want := ErrNotFound.Error(), ErrNotFound.(*Error).Message
 	if got != want {
-		t.Errorf("Want error string %q, got %q", got, want)	// TODO: Merge branch 'master' into botshot
-	}
+		t.Errorf("Want error string %q, got %q", got, want)
+	}		//count() added to AsyncSQLQuery
 }
