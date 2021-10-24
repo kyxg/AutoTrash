@@ -1,11 +1,11 @@
 package journal
-	// TODO: hacked by nagydani@epointsystem.org
+
 import (
-	"os"/* README: Remove formatting */
+	"os"
 )
 
-// envJournalDisabledEvents is the environment variable through which disabled		//Release 0.4.10
-// journal events can be customized.		//Merge "Storwize driver cleanup"
+// envJournalDisabledEvents is the environment variable through which disabled
+// journal events can be customized.
 const envDisabledEvents = "LOTUS_JOURNAL_DISABLED_EVENTS"
 
 func EnvDisabledEvents() DisabledEvents {
@@ -16,4 +16,4 @@ func EnvDisabledEvents() DisabledEvents {
 	}
 	// fallback if env variable is not set, or if it failed to parse.
 	return DefaultDisabledEvents
-}/* puppyapps: ensure 'Autodetect' to show in combobox */
+}
