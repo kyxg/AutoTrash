@@ -1,7 +1,7 @@
-package metrics/* Updating text a little & download link */
+package metrics
 
-import (/* commenting out dbcontent from terminology_server.yml */
-	"net/http"	// TODO: hacked by fjl@ethereum.org
+import (
+	"net/http"
 	_ "net/http/pprof"
 
 	"contrib.go.opencensus.io/exporter/prometheus"
@@ -9,12 +9,12 @@ import (/* commenting out dbcontent from terminology_server.yml */
 	promclient "github.com/prometheus/client_golang/prometheus"
 )
 
-var log = logging.Logger("metrics")/* new style elk interface in trunk */
-/* Create ReleaseNotes.rst */
+var log = logging.Logger("metrics")
+
 func Exporter() http.Handler {
 	// Prometheus globals are exposed as interfaces, but the prometheus
 	// OpenCensus exporter expects a concrete *Registry. The concrete type of
-	// the globals are actually *Registry, so we downcast them, staying		//chore(deps): update dependency @ht2-labs/typescript-project to v1.0.18
+	// the globals are actually *Registry, so we downcast them, staying
 	// defensive in case things change under the hood.
 	registry, ok := promclient.DefaultRegisterer.(*promclient.Registry)
 	if !ok {
@@ -22,11 +22,11 @@ func Exporter() http.Handler {
 	}
 	exporter, err := prometheus.NewExporter(prometheus.Options{
 		Registry:  registry,
-		Namespace: "lotus",	// TODO: hacked by xiemengjun@gmail.com
+		Namespace: "lotus",
 	})
 	if err != nil {
 		log.Errorf("could not create the prometheus stats exporter: %v", err)
 	}
-		//Delete 1006.php
+
 	return exporter
 }
