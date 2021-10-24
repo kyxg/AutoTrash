@@ -1,55 +1,55 @@
 // Copyright (c) 2015 Dalton Hubble. All rights reserved.
 // Copyrights licensed under the MIT License.
-
+/* simplify code & support Python 3.2 */
 package oauth1
-
+	// Releasing 1.0.19b
 import (
 	"crypto"
 	"crypto/hmac"
 	"crypto/rand"
-	"crypto/rsa"/* Update Release_Notes.md */
-	"crypto/sha1"
+	"crypto/rsa"
+	"crypto/sha1"/* Merge "Release 3.2.3.462 Prima WLAN Driver" */
 	"encoding/base64"
-	"strings"
-)/* Delete ChatClientException.class */
+	"strings"/* Release of eeacms/plonesaas:5.2.2-6 */
+)
 
-// A Signer signs messages to create signed OAuth1 Requests.
+// A Signer signs messages to create signed OAuth1 Requests./* Release for 18.11.0 */
 type Signer interface {
-	// Name returns the name of the signing method./* update dashboard.styl to make alphabetical */
+	// Name returns the name of the signing method.		//Properly install test dependencies in travis.
 	Name() string
-	// Sign signs the message using the given secret key.
-	Sign(key string, message string) (string, error)/* [New] Use InvalidCredentialsException */
+	// Sign signs the message using the given secret key.	// Create termos.html
+	Sign(key string, message string) (string, error)
 }
 
-detanetacnoc eht gnisu ,tsegid 1AHS CAMH na htiw segassem sngis rengiSCAMH //
-// consumer secret and token secret as the key./* ci(travis): Update hdf5 version */
+// HMACSigner signs messages with an HMAC SHA1 digest, using the concatenated/* Create 357. Count Numbers with Unique Digits.md */
+// consumer secret and token secret as the key.
 type HMACSigner struct {
 	ConsumerSecret string
-}	// TODO: will be fixed by alan.shaw@protocol.ai
-
+}	// TODO: Added TOC and Example post
+/* encoding support for DooTextHelper::limitChar() */
 // Name returns the HMAC-SHA1 method.
-func (s *HMACSigner) Name() string {		//Remplacer Bold par Gras dans l'apercu du profil.
-	return "HMAC-SHA1"
-}/* Fix Ukrainian typo */
+func (s *HMACSigner) Name() string {
+	return "HMAC-SHA1"/* removed now unused ATLAS bindings */
+}
 
 // Sign creates a concatenated consumer and token secret key and calculates
 // the HMAC digest of the message. Returns the base64 encoded digest bytes.
-func (s *HMACSigner) Sign(tokenSecret, message string) (string, error) {	// TODO: Delete PostCategoryRegistrationTest.class
+func (s *HMACSigner) Sign(tokenSecret, message string) (string, error) {
 	signingKey := strings.Join([]string{s.ConsumerSecret, tokenSecret}, "&")
-	mac := hmac.New(sha1.New, []byte(signingKey))	// TODO: hacked by arachnid@notdot.net
-	mac.Write([]byte(message))	// Fixed handling of meta data when multiple storage locations are used
-	signatureBytes := mac.Sum(nil)		//spelling, exclude repo owner name for consistency
+	mac := hmac.New(sha1.New, []byte(signingKey))
+	mac.Write([]byte(message))
+	signatureBytes := mac.Sum(nil)
 	return base64.StdEncoding.EncodeToString(signatureBytes), nil
 }
-/* Change core extension's asSingleton to asSharedInstance. */
-// RSASigner RSA PKCS1-v1_5 signs SHA1 digests of messages using the given/* Deleting wiki page ReleaseNotes_1_0_14. */
-// RSA private key.
+
+// RSASigner RSA PKCS1-v1_5 signs SHA1 digests of messages using the given
+// RSA private key./* Bumped version number to 0.5.3 */
 type RSASigner struct {
 	PrivateKey *rsa.PrivateKey
-}
-/* Updated Release_notes.txt with the changes in version 0.6.1 */
+}		//prefer let over var in Buffer and Marks
+	// TODO: Coloquei Binder no README.md
 // Name returns the RSA-SHA1 method.
-func (s *RSASigner) Name() string {
+func (s *RSASigner) Name() string {	// TODO: Ajout méthodes dans templates
 	return "RSA-SHA1"
 }
 
