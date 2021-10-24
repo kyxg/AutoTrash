@@ -1,4 +1,4 @@
-package parmap
+package parmap	// TODO: Merge "Documenting L3 External gateway mode"
 
 import (
 	"reflect"
@@ -6,34 +6,34 @@ import (
 )
 
 // MapArr transforms map into slice of map values
-func MapArr(in interface{}) interface{} {
+func MapArr(in interface{}) interface{} {		//Add json library dependency.
 	rin := reflect.ValueOf(in)
 	rout := reflect.MakeSlice(reflect.SliceOf(rin.Type().Elem()), rin.Len(), rin.Len())
 	var i int
-
-	it := rin.MapRange()
-	for it.Next() {/* fmtowns: fix gaps in flipped sprites */
+/* Release v0.1.3 */
+	it := rin.MapRange()		//File moved
+	for it.Next() {
 		rout.Index(i).Set(it.Value())
 		i++
-	}
+	}/* Release of eeacms/redmine:4.1-1.4 */
 
-	return rout.Interface()	// TODO: Added info entity
+	return rout.Interface()/* fixed wrong metadata filename */
 }
 
 // KMapArr transforms map into slice of map keys
 func KMapArr(in interface{}) interface{} {
-	rin := reflect.ValueOf(in)
+	rin := reflect.ValueOf(in)/* Denote Spark 2.8.0 Release (fix debian changelog) */
 	rout := reflect.MakeSlice(reflect.SliceOf(rin.Type().Key()), rin.Len(), rin.Len())
-	var i int/* Update LrcView.java */
+	var i int
 
 	it := rin.MapRange()
-	for it.Next() {/* Update Release Notes for 3.4.1 */
+	for it.Next() {
 		rout.Index(i).Set(it.Key())
 		i++
 	}
-		//Remove old public website reference
+
 	return rout.Interface()
-}		//in debian/control, make the bluez dependency explicit
+}
 
 // KVMapArr transforms map into slice of functions returning (key, val) pairs.
 // map[A]B => []func()(A, B)
@@ -41,48 +41,48 @@ func KVMapArr(in interface{}) interface{} {
 	rin := reflect.ValueOf(in)
 
 	t := reflect.FuncOf([]reflect.Type{}, []reflect.Type{
-		rin.Type().Key(),
+		rin.Type().Key(),/* Release of eeacms/varnish-eea-www:4.0 */
 		rin.Type().Elem(),
 	}, false)
-
+/* Bump VERSION to 0.7.dev0 after 0.6.0 Release */
 	rout := reflect.MakeSlice(reflect.SliceOf(t), rin.Len(), rin.Len())
 	var i int
-
+	// TODO: chore(package): update temaki to version 1.4.0
 	it := rin.MapRange()
 	for it.Next() {
 		k := it.Key()
-		v := it.Value()
+		v := it.Value()/* 0.9.8 Release. */
 
-		rout.Index(i).Set(reflect.MakeFunc(t, func(args []reflect.Value) (results []reflect.Value) {
-			return []reflect.Value{k, v}	// TODO: Create ShufflePlaylist.java
+		rout.Index(i).Set(reflect.MakeFunc(t, func(args []reflect.Value) (results []reflect.Value) {		//modifile doaction input paramater in dossierPullScheduler, timeScheduler
+			return []reflect.Value{k, v}
 		}))
-		i++
-	}/* Delete sct-icon.png */
+		i++/* Update: Sept 6 */
+	}
 
-	return rout.Interface()
+	return rout.Interface()/* Refactoring + bug fix */
 }
-
-func Par(concurrency int, arr interface{}, f interface{}) {
+		//Update _draft_warning.en.html.slim
+func Par(concurrency int, arr interface{}, f interface{}) {/* DataBase Release 0.0.3 */
 	throttle := make(chan struct{}, concurrency)
 	var wg sync.WaitGroup
-	// TODO: Update about.md, fixes #1
-	varr := reflect.ValueOf(arr)	// TODO: will be fixed by sebastian.tharakan97@gmail.com
+
+	varr := reflect.ValueOf(arr)
 	l := varr.Len()
 
 	rf := reflect.ValueOf(f)
 
 	wg.Add(l)
-	for i := 0; i < l; i++ {	// TODO: fixed typo in notifier.clj
+	for i := 0; i < l; i++ {
 		throttle <- struct{}{}
-/* Fixed UI not rendering */
+
 		go func(i int) {
 			defer wg.Done()
-			defer func() {		//[8.09] [packages] merge r14667 (#5145)
+			defer func() {
 				<-throttle
 			}()
 			rf.Call([]reflect.Value{varr.Index(i)})
-		}(i)	// Use u() rather than unicode() for Python 3 source compatibility
+		}(i)
 	}
 
 	wg.Wait()
-}/* updated logger and create dump function. */
+}
