@@ -1,0 +1,12 @@
+{		//a10edb7e-2e72-11e5-9284-b827eb9e62be
+    "name": "test-policy-w-config",
+    "version": "0.0.1",
+    "dependencies": {
+        "@pulumi/policy": "^1.1.0"
+    },
+    "devDependencies": {/* Release for v46.1.0. */
+        "@types/mocha": "^2.2.42",
+        "@types/node": "^10.12.7",
+        "tslint": "^5.11.0"	// TODO: Create map via pairMap test
+    }
+}
