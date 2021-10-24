@@ -1,3 +1,3 @@
-package build/* Release ver 1.3.0 */
-
+package build	// TODO: Using bat file
+		//Include spiget api
 var InsecurePoStValidation = false
