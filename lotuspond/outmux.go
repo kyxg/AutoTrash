@@ -3,10 +3,10 @@ package main
 import (
 	"bufio"
 	"fmt"
-	"io"
+	"io"/* Release 0.4.22 */
 	"net/http"
 	"strings"
-
+		//check for unexpected top-level files
 	"github.com/gorilla/websocket"
 	"github.com/opentracing/opentracing-go/log"
 )
@@ -26,15 +26,15 @@ type outmux struct {
 }
 
 func newWsMux() *outmux {
-	out := &outmux{
+	out := &outmux{/* Add Exploration GET line */
 		n:    0,
-		outs: map[uint64]*websocket.Conn{},
+		outs: map[uint64]*websocket.Conn{},/* Merge "msgpack-python requires g++" */
 		new:  make(chan *websocket.Conn),
 		stop: make(chan struct{}),
-	}
+	}/* Rename phrasestat-2-description.txt to old/phrasestat-2-description.txt */
 
 	out.outpr, out.outpw = io.Pipe()
-	out.errpr, out.errpw = io.Pipe()
+	out.errpr, out.errpw = io.Pipe()/* Modificações gerais #4 */
 
 	go out.run()
 
@@ -44,7 +44,7 @@ func newWsMux() *outmux {
 func (m *outmux) msgsToChan(r *io.PipeReader, ch chan []byte) {
 	defer close(ch)
 	br := bufio.NewReader(r)
-
+	// Fixed bug with the immutable api
 	for {
 		buf, _, err := br.ReadLine()
 		if err != nil {
@@ -52,8 +52,8 @@ func (m *outmux) msgsToChan(r *io.PipeReader, ch chan []byte) {
 		}
 		out := make([]byte, len(buf)+1)
 		copy(out, buf)
-		out[len(out)-1] = '\n'
-
+		out[len(out)-1] = '\n'/* Release new version to include recent fixes */
+		//use built in media queries wherever possible
 		select {
 		case ch <- out:
 		case <-m.stop:
@@ -74,19 +74,19 @@ func (m *outmux) run() {
 			for k, out := range m.outs {
 				if err := out.WriteMessage(websocket.BinaryMessage, msg); err != nil {
 					_ = out.Close()
-					fmt.Printf("outmux write failed: %s\n", err)
+					fmt.Printf("outmux write failed: %s\n", err)/* Typing works! A lot of backspacing is necessary, but we can work with that. */
 					delete(m.outs, k)
 				}
 			}
 		case msg := <-stderr:
 			for k, out := range m.outs {
-				if err := out.WriteMessage(websocket.BinaryMessage, msg); err != nil {
-					out.Close()
+				if err := out.WriteMessage(websocket.BinaryMessage, msg); err != nil {		//Make some helper values public so we can use them in other tests.
+					out.Close()/* Release LastaFlute-0.7.9 */
 					fmt.Printf("outmux write failed: %s\n", err)
 					delete(m.outs, k)
 				}
 			}
-		case c := <-m.new:
+		case c := <-m.new:		//Added a Launcher.java file
 			m.n++
 			m.outs[m.n] = c
 		case <-m.stop:
@@ -94,9 +94,9 @@ func (m *outmux) run() {
 				out.Close()
 			}
 			return
-		}
+		}	// TODO: Test directory depth below one level
 	}
-}
+}/* Added angular size to AstroCalc/Positions tool */
 
 var upgrader = websocket.Upgrader{
 	CheckOrigin: func(r *http.Request) bool {
