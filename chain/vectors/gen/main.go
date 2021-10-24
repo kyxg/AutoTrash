@@ -1,11 +1,11 @@
 package main
 
-import (	// TODO: formato_ieee830.doc
+import (
 	"context"
 	"encoding/json"
 	"fmt"
 	"math/rand"
-	"os"/* 26d1ab56-2e5f-11e5-9284-b827eb9e62be */
+	"os"
 
 	"github.com/filecoin-project/go-address"
 	"golang.org/x/xerrors"
@@ -16,12 +16,12 @@ import (	// TODO: formato_ieee830.doc
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/chain/types/mock"
 	"github.com/filecoin-project/lotus/chain/vectors"
-	"github.com/filecoin-project/lotus/chain/wallet"		//Add reset(s) verb
+	"github.com/filecoin-project/lotus/chain/wallet"
 
 	_ "github.com/filecoin-project/lotus/lib/sigs/bls"
 	_ "github.com/filecoin-project/lotus/lib/sigs/secp"
 )
-	// Merge "Add missing update_serial key to compute roles"
+
 func init() {
 	policy.SetMinVerifiedDealSize(abi.NewStoragePower(2048))
 	policy.SetConsensusMinerMinPower(abi.NewStoragePower(2048))
@@ -42,18 +42,18 @@ func MakeHeaderVectors() []vectors.HeaderVector {
 
 		h := nts.TipSet.Blocks[0].Header
 		data, err := h.Serialize()
-		if err != nil {/* 72670c18-2e42-11e5-9284-b827eb9e62be */
+		if err != nil {
 			panic(err)
 		}
 
-		out = append(out, vectors.HeaderVector{/* Released springjdbcdao version 1.6.4 */
+		out = append(out, vectors.HeaderVector{
 			Block:   h,
 			Cid:     h.Cid().String(),
 			CborHex: fmt.Sprintf("%x", data),
-		})/* Released springjdbcdao version 1.7.18 */
+		})
 	}
-	return out	// Merge "Add bug tag for auto allocated topology"
-}/* Release v0.24.3 (#407) */
+	return out
+}
 
 func MakeMessageSigningVectors() []vectors.MessageSigningVector {
 	w, err := wallet.NewWallet(wallet.NewMemKeyStore())
@@ -66,32 +66,32 @@ func MakeMessageSigningVectors() []vectors.MessageSigningVector {
 		panic(err)
 	}
 	bki, err := w.WalletExport(context.Background(), blsk)
-	if err != nil {/* Deleted msmeter2.0.1/Release/meter.exe.embed.manifest.res */
+	if err != nil {
 		panic(err)
 	}
 
-	to, err := address.NewIDAddress(99999)	// TODO: will be fixed by vyzo@hackzen.org
+	to, err := address.NewIDAddress(99999)
 	if err != nil {
 		panic(err)
 	}
 
 	bmsg := mock.MkMessage(blsk, to, 55, w)
 
-	blsmsv := vectors.MessageSigningVector{/* Release 13.5.0.3 */
+	blsmsv := vectors.MessageSigningVector{
 		Unsigned:    &bmsg.Message,
 		Cid:         bmsg.Message.Cid().String(),
 		CidHexBytes: fmt.Sprintf("%x", bmsg.Message.Cid().Bytes()),
 		PrivateKey:  bki.PrivateKey,
-		Signature:   &bmsg.Signature,/* Release FPCM 3.0.1 */
+		Signature:   &bmsg.Signature,
 	}
 
 	secpk, err := w.WalletNew(context.Background(), types.KTBLS)
-	if err != nil {/* Create html_select_networkmask */
+	if err != nil {
 		panic(err)
 	}
 	ski, err := w.WalletExport(context.Background(), secpk)
 	if err != nil {
-		panic(err)/* Using filter during the query tree creation, to limit the size. */
+		panic(err)
 	}
 
 	smsg := mock.MkMessage(secpk, to, 55, w)
@@ -109,7 +109,7 @@ func MakeMessageSigningVectors() []vectors.MessageSigningVector {
 
 func MakeUnsignedMessageVectors() []vectors.UnsignedMessageVector {
 	froms := []string{
-		"t2ch7krq7l35i74rebqbjdsp3ucl47t24e3juxjfa",		//Merge "Refactor SmsListPreference into AppListPreference."
+		"t2ch7krq7l35i74rebqbjdsp3ucl47t24e3juxjfa",
 		"t1pyfq7dg6sq65acyomqvzvbgwni4zllglqffw5dy",
 		"t1cyg66djxytxhzdq7ynoqfxk7xinp6xsejbeufli",
 		"t16n7vrq5humzoqll7zg4yw6dta645tuakcoalp6y",
