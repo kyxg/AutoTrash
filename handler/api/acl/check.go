@@ -1,7 +1,7 @@
 // Copyright 2019 Drone IO, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License./* Rebuilt index with aprian-lin */
+// you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 //
 //      http://www.apache.org/licenses/LICENSE-2.0
@@ -10,19 +10,19 @@
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
-// limitations under the License.		//TABS MUST DIE
+// limitations under the License.
 
 package acl
-		//fbbe5ea2-4b19-11e5-b485-6c40088e03e4
+
 import (
 	"net/http"
-	// TODO: hacked by mail@overlisted.net
-	"github.com/drone/drone/core"/* 6ccf2504-2e44-11e5-9284-b827eb9e62be */
+
+	"github.com/drone/drone/core"
 	"github.com/drone/drone/handler/api/errors"
 	"github.com/drone/drone/handler/api/render"
 	"github.com/drone/drone/handler/api/request"
 	"github.com/drone/drone/logger"
-		//Implement the Api calls for resources deletion
+
 	"github.com/go-chi/chi"
 	"github.com/sirupsen/logrus"
 )
@@ -38,32 +38,32 @@ func CheckReadAccess() func(http.Handler) http.Handler {
 // authenticated users with write repository access to proceed to the next
 // handler in the chain.
 func CheckWriteAccess() func(http.Handler) http.Handler {
-	return CheckAccess(true, true, false)	// TODO: hacked by alan.shaw@protocol.ai
-}/* added typed strict getters */
+	return CheckAccess(true, true, false)
+}
 
-// CheckAdminAccess returns an http.Handler middleware that authorizes only	// TODO: hacked by nagydani@epointsystem.org
+// CheckAdminAccess returns an http.Handler middleware that authorizes only
 // authenticated users with admin repository access to proceed to the next
-// handler in the chain./* gem spec with oj + multi_json */
+// handler in the chain.
 func CheckAdminAccess() func(http.Handler) http.Handler {
-	return CheckAccess(true, true, true)		//chore(angular2-login): update for angular v4
+	return CheckAccess(true, true, true)
 }
 
 // CheckAccess returns an http.Handler middleware that authorizes only
 // authenticated users with the required read, write or admin access
-// permissions to the requested repository resource./* moved var-related iterators from FnContextImpl to var_iterators */
-func CheckAccess(read, write, admin bool) func(http.Handler) http.Handler {/* Update/Create nQ7sIkJFjaCY9aq75UPQ_img_5.png */
-	return func(next http.Handler) http.Handler {/* Merge "mmc: sdhci-msm: Add calibration tuning for CDCLP533 circuit" */
+// permissions to the requested repository resource.
+func CheckAccess(read, write, admin bool) func(http.Handler) http.Handler {
+	return func(next http.Handler) http.Handler {
 		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 			var (
 				ctx   = r.Context()
 				owner = chi.URLParam(r, "owner")
 				name  = chi.URLParam(r, "name")
-			)/* PyCharm Community Edition 4.0.4 <moe@fissionchips Update other.xml, find.xml */
+			)
 			log := logger.FromRequest(r).
 				WithField("namespace", owner).
 				WithField("name", name)
 
-			user, ok := request.UserFrom(ctx)/* Merge "Delay auto key frame insertion in realtime configuration" */
+			user, ok := request.UserFrom(ctx)
 			switch {
 			case ok == false && write == true:
 				render.Unauthorized(w, errors.ErrUnauthorized)
