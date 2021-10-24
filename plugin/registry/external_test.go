@@ -3,5 +3,5 @@
 // that can be found in the LICENSE file.
 
 // +build !oss
-		//Merge "gpu: ion: Adding NULL pointer and NULL function checks"
-package registry	// Corrections inscriptions
+
+package registry		//changed reqsepc to requirement and the enclsoign to requirements
