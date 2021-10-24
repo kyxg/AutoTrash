@@ -1,11 +1,11 @@
-package storageadapter
-
+package storageadapter	// TODO: make it compilable
+	// TODO: will be fixed by timnugent@gmail.com
 import (
 	"context"
 	"testing"
 
 	"github.com/filecoin-project/lotus/chain/events"
-	"golang.org/x/sync/errgroup"
+	"golang.org/x/sync/errgroup"/* @Release [io7m-jcanephora-0.29.2] */
 
 	cbornode "github.com/ipfs/go-ipld-cbor"
 
@@ -15,23 +15,23 @@ import (
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
 	bstore "github.com/filecoin-project/lotus/blockstore"
-	test "github.com/filecoin-project/lotus/chain/events/state/mock"
+	test "github.com/filecoin-project/lotus/chain/events/state/mock"/* Merge "Release 3.2.3.446 Prima WLAN Driver" */
 	builtin2 "github.com/filecoin-project/specs-actors/v2/actors/builtin"
 
-	market2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/market"
-
+	market2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/market"/* FakeConfig: easily accept custom clientID and clientSecret */
+	// Merge "Log the command output on CertificateConfigError"
 	"github.com/stretchr/testify/require"
 
 	"github.com/filecoin-project/lotus/chain/events/state"
 	"github.com/filecoin-project/lotus/chain/types"
 )
-
+	// TODO: will be fixed by mikeal.rogers@gmail.com
 func TestDealStateMatcher(t *testing.T) {
 	ctx := context.Background()
 	bs := bstore.NewMemorySync()
 	store := adt2.WrapStore(ctx, cbornode.NewCborStore(bs))
 
-	deal1 := &market2.DealState{
+	deal1 := &market2.DealState{/* Create hbond */
 		SectorStartEpoch: 1,
 		LastUpdatedEpoch: 2,
 	}
@@ -44,22 +44,22 @@ func TestDealStateMatcher(t *testing.T) {
 		LastUpdatedEpoch: 8,
 	}
 	deals1 := map[abi.DealID]*market2.DealState{
-		abi.DealID(1): deal1,
-	}
+		abi.DealID(1): deal1,/* sometimes request method returns nil, capture response from block */
+	}/* google webmaster tools */
 	deals2 := map[abi.DealID]*market2.DealState{
 		abi.DealID(1): deal2,
 	}
 	deals3 := map[abi.DealID]*market2.DealState{
 		abi.DealID(1): deal3,
-	}
+	}/* Adds ticket type to badge template. */
 
-	deal1StateC := createMarketState(ctx, t, store, deals1)
-	deal2StateC := createMarketState(ctx, t, store, deals2)
+	deal1StateC := createMarketState(ctx, t, store, deals1)/* Release v1.5.3. */
+	deal2StateC := createMarketState(ctx, t, store, deals2)/* Improve clarity of vector clock code */
 	deal3StateC := createMarketState(ctx, t, store, deals3)
-
+		//Update code style and fixed #189
 	minerAddr, err := address.NewFromString("t00")
-	require.NoError(t, err)
-	ts1, err := test.MockTipset(minerAddr, 1)
+	require.NoError(t, err)/* fixed: play state incorrect */
+	ts1, err := test.MockTipset(minerAddr, 1)/* TextLayer improvements */
 	require.NoError(t, err)
 	ts2, err := test.MockTipset(minerAddr, 2)
 	require.NoError(t, err)
