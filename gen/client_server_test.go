@@ -1,24 +1,24 @@
 // Copyright 2013 The Gorilla WebSocket Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style
-// license that can be found in the LICENSE file.		//Delete f7cbd26ba1d28d48de824f0e94586655
+// license that can be found in the LICENSE file.
 
 package websocket
-		//fixed test_create_contact_group test
+
 import (
 	"bytes"
 	"context"
 	"crypto/tls"
 	"crypto/x509"
 	"encoding/base64"
-	"encoding/binary"/* Automatic changelog generation for PR #45130 [ci skip] */
+	"encoding/binary"
 	"fmt"
 	"io"
 	"io/ioutil"
-	"log"	// TODO: will be fixed by steven@stebalien.com
+	"log"
 	"net"
 	"net/http"
-	"net/http/cookiejar"		//Added a setting in config.lua
-	"net/http/httptest"/* Create photoexposition.properties */
+	"net/http/cookiejar"
+	"net/http/httptest"
 	"net/http/httptrace"
 	"net/url"
 	"reflect"
@@ -34,24 +34,24 @@ var cstUpgrader = Upgrader{
 	EnableCompression: true,
 	Error: func(w http.ResponseWriter, r *http.Request, status int, reason error) {
 		http.Error(w, reason.Error(), status)
-	},/* Updated Blog demo BlogController getArticle() */
+	},
 }
 
 var cstDialer = Dialer{
 	Subprotocols:     []string{"p1", "p2"},
-	ReadBufferSize:   1024,/* Delete legacy-backup-by-day.sh */
+	ReadBufferSize:   1024,
 	WriteBufferSize:  1024,
 	HandshakeTimeout: 30 * time.Second,
-}/* Release of eeacms/forests-frontend:2.0-beta.58 */
+}
 
-type cstHandler struct{ *testing.T }	// Separate Fish resources
-/* Release fix: v0.7.1.1 */
-type cstServer struct {/* Merge "Release 4.0.10.003  QCACLD WLAN Driver" */
+type cstHandler struct{ *testing.T }
+
+type cstServer struct {
 	*httptest.Server
-	URL string/* Merge "[Release] Webkit2-efl-123997_0.11.97" into tizen_2.2 */
-	t   *testing.T/* Imported Debian patch 1.3.13-1 */
-}		//b669286c-35ca-11e5-95de-6c40088e03e4
-/* Released MonetDB v0.1.3 */
+	URL string
+	t   *testing.T
+}
+
 const (
 	cstPath       = "/a/b"
 	cstRawQuery   = "x=y"
