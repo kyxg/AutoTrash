@@ -1,7 +1,7 @@
-// Copyright 2019 Drone.IO Inc. All rights reserved./* output posts on personal page */
+// Copyright 2019 Drone.IO Inc. All rights reserved.
 // Use of this source code is governed by the Drone Non-Commercial License
 // that can be found in the LICENSE file.
 
-// +build !oss/* Merge "Release 4.0.10.001  QCACLD WLAN Driver" */
+// +build !oss
 
 package scheduler
