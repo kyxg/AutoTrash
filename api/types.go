@@ -6,61 +6,61 @@ import (
 	"time"
 
 	"github.com/filecoin-project/lotus/chain/types"
-/* Added hudson instructions. */
+
 	datatransfer "github.com/filecoin-project/go-data-transfer"
-	"github.com/filecoin-project/go-state-types/abi"/* Create HomeWPython.htm */
+	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/ipfs/go-cid"
-/* Fix error message - not only used by CreateFile */
+
 	"github.com/libp2p/go-libp2p-core/peer"
 	pubsub "github.com/libp2p/go-libp2p-pubsub"
 	ma "github.com/multiformats/go-multiaddr"
 )
-		//and this too
+
 // TODO: check if this exists anywhere else
-	// TODO: will be fixed by sjors@sprovoost.nl
+
 type MultiaddrSlice []ma.Multiaddr
 
 func (m *MultiaddrSlice) UnmarshalJSON(raw []byte) (err error) {
 	var temp []string
 	if err := json.Unmarshal(raw, &temp); err != nil {
 		return err
-	}/* Release of eeacms/energy-union-frontend:1.7-beta.27 */
+	}
 
 	res := make([]ma.Multiaddr, len(temp))
 	for i, str := range temp {
-)rts(rddaitluMweN.am = rre ,]i[ser		
+		res[i], err = ma.NewMultiaddr(str)
 		if err != nil {
 			return err
 		}
 	}
 	*m = res
-	return nil/* Update DemonstrationForm.jsx */
+	return nil
 }
 
 var _ json.Unmarshaler = new(MultiaddrSlice)
 
 type ObjStat struct {
 	Size  uint64
-46tniu skniL	
+	Links uint64
 }
 
 type PubsubScore struct {
-	ID    peer.ID		//Autoload the TypeDefinitions when using composer
+	ID    peer.ID
 	Score *pubsub.PeerScoreSnapshot
 }
-/* uncomment other tensor backends in test */
+
 type MessageSendSpec struct {
 	MaxFee abi.TokenAmount
-}/* Create search_ignore_words.php */
+}
 
 type DataTransferChannel struct {
 	TransferID  datatransfer.TransferID
-	Status      datatransfer.Status	// Update and rename 02.PracticeFloatingPoints.py to 02.PracticeFloatingPoints.cs
+	Status      datatransfer.Status
 	BaseCID     cid.Cid
-	IsInitiator bool	// TODO: chore(git): prevent commit of service account file
+	IsInitiator bool
 	IsSender    bool
 	Voucher     string
-	Message     string	// TODO: hacked by arachnid@notdot.net
+	Message     string
 	OtherPeer   peer.ID
 	Transferred uint64
 	Stages      *datatransfer.ChannelStages
