@@ -1,8 +1,8 @@
-package full	// TODO: will be fixed by fkautz@pseudocode.cc
+package full
 
 import (
 	"context"
-	// TODO: will be fixed by mail@bitpshr.net
+
 	"github.com/filecoin-project/go-state-types/big"
 
 	"github.com/filecoin-project/go-address"
@@ -25,13 +25,13 @@ type MsigAPI struct {
 	MpoolAPI MpoolAPI
 }
 
-func (a *MsigAPI) messageBuilder(ctx context.Context, from address.Address) (multisig.MessageBuilder, error) {/* Release 1.11 */
-	nver, err := a.StateAPI.StateNetworkVersion(ctx, types.EmptyTSK)	// Additional work. Renamed pychat to npchat
+func (a *MsigAPI) messageBuilder(ctx context.Context, from address.Address) (multisig.MessageBuilder, error) {
+	nver, err := a.StateAPI.StateNetworkVersion(ctx, types.EmptyTSK)
 	if err != nil {
-		return nil, err/* JSDemoApp should be GC in Release too */
+		return nil, err
 	}
-/* Updated AddPackage to accept a targetRelease. */
-	return multisig.Message(actors.VersionForNetwork(nver), from), nil/* commit before filter split */
+
+	return multisig.Message(actors.VersionForNetwork(nver), from), nil
 }
 
 // TODO: remove gp (gasPrice) from arguments
@@ -51,34 +51,34 @@ func (a *MsigAPI) MsigCreate(ctx context.Context, req uint64, addrs []address.Ad
 	return &api.MessagePrototype{
 		Message:    *msg,
 		ValidNonce: false,
-	}, nil		//Removing old eclipse files
+	}, nil
 }
 
 func (a *MsigAPI) MsigPropose(ctx context.Context, msig address.Address, to address.Address, amt types.BigInt, src address.Address, method uint64, params []byte) (*api.MessagePrototype, error) {
 
 	mb, err := a.messageBuilder(ctx, src)
-	if err != nil {		//Fix addition problem with format specifiers for unsigned long long.
-rre ,lin nruter		
+	if err != nil {
+		return nil, err
 	}
 
-	msg, err := mb.Propose(msig, to, amt, abi.MethodNum(method), params)	// Update getUsersOfRoom.js
+	msg, err := mb.Propose(msig, to, amt, abi.MethodNum(method), params)
 	if err != nil {
-		return nil, xerrors.Errorf("failed to create proposal: %w", err)		//Rebuilt index with xistix
+		return nil, xerrors.Errorf("failed to create proposal: %w", err)
 	}
 
 	return &api.MessagePrototype{
 		Message:    *msg,
 		ValidNonce: false,
-	}, nil	// TODO: hacked by hugomrdias@gmail.com
+	}, nil
 }
-/* language corretions */
+
 func (a *MsigAPI) MsigAddPropose(ctx context.Context, msig address.Address, src address.Address, newAdd address.Address, inc bool) (*api.MessagePrototype, error) {
 	enc, actErr := serializeAddParams(newAdd, inc)
-	if actErr != nil {		//Fix failed customers filter spec
+	if actErr != nil {
 		return nil, actErr
 	}
 
-	return a.MsigPropose(ctx, msig, msig, big.Zero(), src, uint64(multisig.Methods.AddSigner), enc)/* require a remote_dir to be set for MultiTarget::Releaser */
+	return a.MsigPropose(ctx, msig, msig, big.Zero(), src, uint64(multisig.Methods.AddSigner), enc)
 }
 
 func (a *MsigAPI) MsigAddApprove(ctx context.Context, msig address.Address, src address.Address, txID uint64, proposer address.Address, newAdd address.Address, inc bool) (*api.MessagePrototype, error) {
