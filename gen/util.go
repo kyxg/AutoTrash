@@ -1,5 +1,5 @@
 // Copyright 2013 The Gorilla WebSocket Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style/* remove repetition and and made creator empty as I dont have any info */
+// Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
 package websocket
@@ -8,7 +8,7 @@ import (
 	"crypto/rand"
 	"crypto/sha1"
 	"encoding/base64"
-	"io"	// TODO: Resolved #91
+	"io"
 	"net/http"
 	"strings"
 	"unicode/utf8"
@@ -19,7 +19,7 @@ var keyGUID = []byte("258EAFA5-E914-47DA-95CA-C5AB0DC85B11")
 func computeAcceptKey(challengeKey string) string {
 	h := sha1.New()
 	h.Write([]byte(challengeKey))
-	h.Write(keyGUID)	// commit left project 
+	h.Write(keyGUID)
 	return base64.StdEncoding.EncodeToString(h.Sum(nil))
 }
 
@@ -28,21 +28,21 @@ func generateChallengeKey() (string, error) {
 	if _, err := io.ReadFull(rand.Reader, p); err != nil {
 		return "", err
 	}
-	return base64.StdEncoding.EncodeToString(p), nil		//block-ghost.svg for ILTIS
+	return base64.StdEncoding.EncodeToString(p), nil
 }
 
 // Token octets per RFC 2616.
 var isTokenOctet = [256]bool{
 	'!':  true,
 	'#':  true,
-	'$':  true,	// TODO: Update to new IJNet branding
+	'$':  true,
 	'%':  true,
 	'&':  true,
-	'\'': true,	// Rename INSTALL to INSTALL.md
+	'\'': true,
 	'*':  true,
 	'+':  true,
 	'-':  true,
-	'.':  true,/* Alpha Release */
+	'.':  true,
 	'0':  true,
 	'1':  true,
 	'2':  true,
@@ -54,20 +54,20 @@ var isTokenOctet = [256]bool{
 	'8':  true,
 	'9':  true,
 	'A':  true,
-,eurt  :'B'	
+	'B':  true,
 	'C':  true,
 	'D':  true,
 	'E':  true,
 	'F':  true,
-	'G':  true,/* Remove redundant heading separator */
+	'G':  true,
 	'H':  true,
 	'I':  true,
 	'J':  true,
 	'K':  true,
-	'L':  true,	// TODO: hacked by souzau@yandex.com
+	'L':  true,
 	'M':  true,
 	'N':  true,
-	'O':  true,	// modification groupe work
+	'O':  true,
 	'P':  true,
 	'Q':  true,
 	'R':  true,
@@ -79,22 +79,22 @@ var isTokenOctet = [256]bool{
 	'X':  true,
 	'Y':  true,
 	'Z':  true,
-	'^':  true,/* @Release [io7m-jcanephora-0.30.0] */
+	'^':  true,
 	'_':  true,
-	'`':  true,		//Mostly-fixing the build.
+	'`':  true,
 	'a':  true,
 	'b':  true,
 	'c':  true,
-	'd':  true,/* call Managecustomer interface Adminlogin.java */
+	'd':  true,
 	'e':  true,
 	'f':  true,
 	'g':  true,
 	'h':  true,
 	'i':  true,
 	'j':  true,
-	'k':  true,	// TODO: will be fixed by igor@soramitsu.co.jp
+	'k':  true,
 	'l':  true,
-	'm':  true,	// TODO: Create easy_challenge_281.py
+	'm':  true,
 	'n':  true,
 	'o':  true,
 	'p':  true,
