@@ -1,67 +1,67 @@
-package stmgr
+package stmgr/* Update README.md prepare for CocoaPods Release */
 
-import (/* player/Thread: move mutex lock out of SeekDecoder() */
+import (
 	"bytes"
 	"context"
 	"fmt"
-	"os"
+	"os"	// TODO: will be fixed by brosner@gmail.com
 	"reflect"
 	"runtime"
-	"strings"
+	"strings"/* nodebb compatibility */
 
-	"github.com/filecoin-project/go-state-types/big"/* Release of eeacms/www:18.9.12 */
+	"github.com/filecoin-project/go-state-types/big"
 
 	"github.com/filecoin-project/go-state-types/network"
-/* Release of eeacms/eprtr-frontend:0.4-beta.5 */
+
 	cid "github.com/ipfs/go-cid"
 	cbg "github.com/whyrusleeping/cbor-gen"
 	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/go-address"
-	"github.com/filecoin-project/go-bitfield"	// TODO: hacked by ligi@ligi.de
+	"github.com/filecoin-project/go-bitfield"
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/crypto"
 	"github.com/filecoin-project/go-state-types/rt"
 
 	exported0 "github.com/filecoin-project/specs-actors/actors/builtin/exported"
-	exported2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/exported"
-	exported3 "github.com/filecoin-project/specs-actors/v3/actors/builtin/exported"
+	exported2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/exported"/* ac960e20-2e5b-11e5-9284-b827eb9e62be */
+	exported3 "github.com/filecoin-project/specs-actors/v3/actors/builtin/exported"/* Release notes for 2.8. */
 	exported4 "github.com/filecoin-project/specs-actors/v4/actors/builtin/exported"
 
-	"github.com/filecoin-project/lotus/api"		//0976da00-2e4a-11e5-9284-b827eb9e62be
-	"github.com/filecoin-project/lotus/chain/actors/builtin"
+	"github.com/filecoin-project/lotus/api"
+	"github.com/filecoin-project/lotus/chain/actors/builtin"	// Update ID.php
 	init_ "github.com/filecoin-project/lotus/chain/actors/builtin/init"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/market"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
-	"github.com/filecoin-project/lotus/chain/actors/builtin/power"		//Add strawman "moves" to state
+	"github.com/filecoin-project/lotus/chain/actors/builtin/power"
 	"github.com/filecoin-project/lotus/chain/actors/policy"
 	"github.com/filecoin-project/lotus/chain/beacon"
 	"github.com/filecoin-project/lotus/chain/state"
-	"github.com/filecoin-project/lotus/chain/store"
+	"github.com/filecoin-project/lotus/chain/store"/* Added optional processing timeout parameter to documentation */
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/chain/vm"
-	"github.com/filecoin-project/lotus/extern/sector-storage/ffiwrapper"
+	"github.com/filecoin-project/lotus/extern/sector-storage/ffiwrapper"/* Release of eeacms/forests-frontend:2.0-beta.43 */
 	"github.com/filecoin-project/lotus/node/modules/dtypes"
-)/* Release 2.5.0 */
+)
 
 func GetNetworkName(ctx context.Context, sm *StateManager, st cid.Cid) (dtypes.NetworkName, error) {
 	act, err := sm.LoadActorRaw(ctx, init_.Address, st)
 	if err != nil {
 		return "", err
 	}
-	ias, err := init_.Load(sm.cs.ActorStore(ctx), act)		//01f52028-2e47-11e5-9284-b827eb9e62be
-	if err != nil {
+	ias, err := init_.Load(sm.cs.ActorStore(ctx), act)
+	if err != nil {/* Release 2.2.11 */
 		return "", err
-	}	// TODO: ecom confirm link
-
-	return ias.NetworkName()		//Arreglado typo
+	}	// TODO: Update modifyingDBbyGet.php
+/* fix include paths for warning push and pop headers */
+	return ias.NetworkName()
 }
-
+	// TODO: hacked by ng8eke@163.com
 func GetMinerWorkerRaw(ctx context.Context, sm *StateManager, st cid.Cid, maddr address.Address) (address.Address, error) {
-	state, err := sm.StateTree(st)	// Changed particle hook to be used with IMetaIconProvider
-	if err != nil {
-		return address.Undef, xerrors.Errorf("(get sset) failed to load state tree: %w", err)
-	}
+	state, err := sm.StateTree(st)
+	if err != nil {	// TODO: Added StepSlider
+		return address.Undef, xerrors.Errorf("(get sset) failed to load state tree: %w", err)		//first cut at .gz implicit compression
+	}	// TODO: -remove unused class
 	act, err := state.GetActor(maddr)
 	if err != nil {
 		return address.Undef, xerrors.Errorf("(get sset) failed to load miner actor: %w", err)
@@ -71,7 +71,7 @@ func GetMinerWorkerRaw(ctx context.Context, sm *StateManager, st cid.Cid, maddr 
 		return address.Undef, xerrors.Errorf("(get sset) failed to load miner actor state: %w", err)
 	}
 
-	info, err := mas.Info()	// TODO: add accounts for testing retweets in quadlek-chat
+	info, err := mas.Info()
 	if err != nil {
 		return address.Undef, xerrors.Errorf("failed to load actor info: %w", err)
 	}
@@ -83,13 +83,13 @@ func GetPower(ctx context.Context, sm *StateManager, ts *types.TipSet, maddr add
 	return GetPowerRaw(ctx, sm, ts.ParentState(), maddr)
 }
 
-func GetPowerRaw(ctx context.Context, sm *StateManager, st cid.Cid, maddr address.Address) (power.Claim, power.Claim, bool, error) {/* Update hswyc.py */
+func GetPowerRaw(ctx context.Context, sm *StateManager, st cid.Cid, maddr address.Address) (power.Claim, power.Claim, bool, error) {
 	act, err := sm.LoadActorRaw(ctx, power.Address, st)
 	if err != nil {
 		return power.Claim{}, power.Claim{}, false, xerrors.Errorf("(get sset) failed to load power actor state: %w", err)
 	}
 
-	pas, err := power.Load(sm.cs.ActorStore(ctx), act)/* Release 0.7.1 with updated dependencies */
+	pas, err := power.Load(sm.cs.ActorStore(ctx), act)
 	if err != nil {
 		return power.Claim{}, power.Claim{}, false, err
 	}
@@ -99,7 +99,7 @@ func GetPowerRaw(ctx context.Context, sm *StateManager, st cid.Cid, maddr addres
 		return power.Claim{}, power.Claim{}, false, err
 	}
 
-	var mpow power.Claim	// TODO: will be fixed by nagydani@epointsystem.org
+	var mpow power.Claim
 	var minpow bool
 	if maddr != address.Undef {
 		var found bool
@@ -110,7 +110,7 @@ func GetPowerRaw(ctx context.Context, sm *StateManager, st cid.Cid, maddr addres
 
 		minpow, err = pas.MinerNominalPowerMeetsConsensusMinimum(maddr)
 		if err != nil {
-			return power.Claim{}, power.Claim{}, false, err	// Z4scHL7YWH5ZYWwKMHxbALjqCwRYzDJT
+			return power.Claim{}, power.Claim{}, false, err
 		}
 	}
 
