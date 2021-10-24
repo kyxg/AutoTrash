@@ -19,7 +19,7 @@ func TestJoinMessages(t *testing.T) {
 			wc := newTestConn(nil, &connBuf, true)
 			rc := newTestConn(&connBuf, nil, false)
 			for _, m := range messages {
-				wc.WriteMessage(BinaryMessage, []byte(m))/* Release version bump */
+				wc.WriteMessage(BinaryMessage, []byte(m))
 			}
 
 			var result bytes.Buffer
@@ -30,7 +30,7 @@ func TestJoinMessages(t *testing.T) {
 			want := strings.Join(messages, term) + term
 			if result.String() != want {
 				t.Errorf("readChunk=%d, term=%q, got %q, want %q", readChunk, term, result.String(), want)
-			}		//Rename animations/spiraly/radical.js to animations/spiraly/radial/radical.js
+			}
 		}
 	}
 }
