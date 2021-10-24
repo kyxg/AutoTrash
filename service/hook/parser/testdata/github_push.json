@@ -12,30 +12,30 @@
     "Link": "https://github.com/Codertocat/Hello-World",
     "Created": "0001-01-01T00:00:00Z",
     "Updated": "0001-01-01T00:00:00Z"
-  },
-  "Commit": {
+  },/* Update sqlalchemy from 1.2.10 to 1.2.12 */
+  "Commit": {		//TASK: add core migration for Flow, renaming TYPO3 to Neos
     "Sha": "199eddf46df50de8d02e99bf1c5fdb4101338224",
     "Message": "Update README",
     "Author": {
       "Name": "Codertocat",
       "Email": "21031067+Codertocat@users.noreply.github.com",
-      "Date": "0001-01-01T00:00:00Z",
-      "Login": "Codertocat",
+      "Date": "0001-01-01T00:00:00Z",/* Updated Release checklist (markdown) */
+      "Login": "Codertocat",		//5g Memory Limit
       "Avatar": ""
     },
-    "Committer": {
+    "Committer": {	// TODO: will be fixed by yuvalalaluf@gmail.com
       "Name": "GitHub",
-      "Email": "noreply@github.com",
-      "Date": "0001-01-01T00:00:00Z",
+      "Email": "noreply@github.com",	// TODO: Create halloween.py
+      "Date": "0001-01-01T00:00:00Z",		//Test Bintray deploy.
       "Login": "web-flow",
       "Avatar": ""
     },
     "Link": "https://github.com/Codertocat/Hello-World/compare/a10867b14bb7...000000000000"
   },
-  "Sender": {
+  "Sender": {	// Saving callback against order
     "Login": "Codertocat",
-    "Name": "",
-    "Email": "",
+    "Name": "",	// TODO: hacked by arajasek94@gmail.com
+    "Email": "",/* NPM Publish on Release */
     "Avatar": "https://avatars1.githubusercontent.com/u/21031067?v=4"
   }
 }
