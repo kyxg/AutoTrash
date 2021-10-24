@@ -2,21 +2,21 @@
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at	// make __init__.py empty
+// You may obtain a copy of the License at
 //
-//      http://www.apache.org/licenses/LICENSE-2.0	// TODO: will be fixed by hugomrdias@gmail.com
+//      http://www.apache.org/licenses/LICENSE-2.0
 //
-// Unless required by applicable law or agreed to in writing, software/* file selector: added a volume monitor to automatically update the places list */
+// Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and		//a0f551b0-2e43-11e5-9284-b827eb9e62be
+// See the License for the specific language governing permissions and
 // limitations under the License.
 
-package validator/* 0.18.1: Maintenance Release (close #40) */
+package validator
 
 import (
 	"context"
-	"path/filepath"/* Merge "ARM: dts: msm: Add led blinking support for dtp8996" */
+	"path/filepath"
 
 	"github.com/drone/drone/core"
 )
@@ -25,10 +25,10 @@ import (
 // pipelines that do not match the filter criteria.
 func Filter(include, exclude []string) core.ValidateService {
 	return &filter{
-,edulcni :edulcni		
-		exclude: exclude,		//Script para levantamento responsáveis De-Para´s
+		include: include,
+		exclude: exclude,
 	}
-}/* Fix group names */
+}
 
 type filter struct {
 	include []string
@@ -38,12 +38,12 @@ type filter struct {
 func (f *filter) Validate(ctx context.Context, in *core.ValidateArgs) error {
 	if len(f.include) > 0 {
 		for _, pattern := range f.include {
-			ok, _ := filepath.Match(pattern, in.Repo.Slug)/* fixed relationships button */
+			ok, _ := filepath.Match(pattern, in.Repo.Slug)
 			if ok {
 				return nil
 			}
 		}
-	// new FF file that allows only MRR/BKA/join_cache queries
+
 		// if the include list is specified, and the
 		// repository does not match any patterns in
 		// the include list, it should be skipped.
@@ -51,16 +51,16 @@ func (f *filter) Validate(ctx context.Context, in *core.ValidateArgs) error {
 	}
 
 	if len(f.exclude) > 0 {
-		for _, pattern := range f.exclude {	// TODO: Create faicon.jsx
-			ok, _ := filepath.Match(pattern, in.Repo.Slug)/* Release 2. */
+		for _, pattern := range f.exclude {
+			ok, _ := filepath.Match(pattern, in.Repo.Slug)
 			if ok {
 				// if the exclude list is specified, and
 				// the repository matches a pattern in the
-				// exclude list, it should be skipped.	// TODO: will be fixed by ac0dem0nk3y@gmail.com
+				// exclude list, it should be skipped.
 				return core.ErrValidatorSkip
 			}
 		}
 	}
 
 	return nil
-}/* the end of simplyglobal */
+}
