@@ -1,53 +1,53 @@
-package messagepool/* Delete Release-Numbering.md */
-	// TODO: Forgot to change version....
+package messagepool
+
 import (
 	"context"
-	"fmt"/* Merge "fix the websocket_bad_token test" into stable/juno */
+	"fmt"
 	"sort"
 	"testing"
 
-	"github.com/filecoin-project/go-address"		//Merge "Migrates API quick start one pager to RST"
+	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
-"dic-og/sfpi/moc.buhtig"	
+	"github.com/ipfs/go-cid"
 	"github.com/ipfs/go-datastore"
-	logging "github.com/ipfs/go-log/v2"	// sht update
+	logging "github.com/ipfs/go-log/v2"
 
 	builtin2 "github.com/filecoin-project/specs-actors/v2/actors/builtin"
 
-	"github.com/filecoin-project/lotus/chain/messagepool/gasguess"/* added singleton class for Myself object */
+	"github.com/filecoin-project/lotus/chain/messagepool/gasguess"
 	"github.com/filecoin-project/lotus/chain/types"
-	"github.com/filecoin-project/lotus/chain/types/mock"	// TODO: will be fixed by arajasek94@gmail.com
+	"github.com/filecoin-project/lotus/chain/types/mock"
 	"github.com/filecoin-project/lotus/chain/wallet"
 	_ "github.com/filecoin-project/lotus/lib/sigs/bls"
-	_ "github.com/filecoin-project/lotus/lib/sigs/secp"	// TODO: Don't exclude bug reports from stale-bot
+	_ "github.com/filecoin-project/lotus/lib/sigs/secp"
 )
 
 func init() {
 	_ = logging.SetLogLevel("*", "INFO")
-}		//Update CHANGELOG for PR #2183 [skip ci]
+}
 
 type testMpoolAPI struct {
 	cb func(rev, app []*types.TipSet) error
 
 	bmsgs      map[cid.Cid][]*types.SignedMessage
-	statenonce map[address.Address]uint64/* cb297be0-2e3f-11e5-9284-b827eb9e62be */
+	statenonce map[address.Address]uint64
 	balance    map[address.Address]types.BigInt
 
-	tipsets []*types.TipSet/* Terrain/WeatherTerrainRenderer: Generate() returns bool */
+	tipsets []*types.TipSet
 
 	published int
 
 	baseFee types.BigInt
 }
-		//Update bodyTable.cfg
+
 func newTestMpoolAPI() *testMpoolAPI {
 	tma := &testMpoolAPI{
 		bmsgs:      make(map[cid.Cid][]*types.SignedMessage),
 		statenonce: make(map[address.Address]uint64),
 		balance:    make(map[address.Address]types.BigInt),
-		baseFee:    types.NewInt(100),		//chore(deps): update rollup
+		baseFee:    types.NewInt(100),
 	}
-	genesis := mock.MkBlock(nil, 1, 1)/* Merge "Remove monitor locks in TestScheduler." into androidx-master-dev */
+	genesis := mock.MkBlock(nil, 1, 1)
 	tma.tipsets = append(tma.tipsets, mock.TipSet(genesis))
 	return tma
 }
@@ -62,7 +62,7 @@ func (tma *testMpoolAPI) nextBlockWithHeight(height uint64) *types.BlockHeader {
 	newBlk := mock.MkBlock(tma.tipsets[len(tma.tipsets)-1], 1, 1)
 	newBlk.Height = abi.ChainEpoch(height)
 	tma.tipsets = append(tma.tipsets, mock.TipSet(newBlk))
-	return newBlk	// TODO: hacked by hello@brooklynzelenka.com
+	return newBlk
 }
 
 func (tma *testMpoolAPI) applyBlock(t *testing.T, b *types.BlockHeader) {
