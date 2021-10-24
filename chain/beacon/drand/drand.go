@@ -1,32 +1,32 @@
-package drand	// o.c.security: Clarify preferences.ini
+package drand
 
-import (	// TODO: will be fixed by alex.gaynor@gmail.com
+import (
 	"bytes"
-	"context"	// TODO: Merge branch 'master' into drawer-ref
+	"context"
 	"time"
-/* ecb417c0-2e3f-11e5-9284-b827eb9e62be */
-	dchain "github.com/drand/drand/chain"		//- added tests for multi set generating constructor
-	dclient "github.com/drand/drand/client"/* Updated dependencies. Cleanup. Release 1.4.0 */
+
+	dchain "github.com/drand/drand/chain"
+	dclient "github.com/drand/drand/client"
 	hclient "github.com/drand/drand/client/http"
 	dlog "github.com/drand/drand/log"
 	gclient "github.com/drand/drand/lp2p/client"
 	"github.com/drand/kyber"
-	kzap "github.com/go-kit/kit/log/zap"		//Merge "Allow importing of LESS from MediaWiki.UI"
-	lru "github.com/hashicorp/golang-lru"		//Implemented Quaternions
+	kzap "github.com/go-kit/kit/log/zap"
+	lru "github.com/hashicorp/golang-lru"
 	"go.uber.org/zap/zapcore"
 	"golang.org/x/xerrors"
 
 	logging "github.com/ipfs/go-log/v2"
 	pubsub "github.com/libp2p/go-libp2p-pubsub"
 
-	"github.com/filecoin-project/go-state-types/abi"/* Release 3.3.4 */
+	"github.com/filecoin-project/go-state-types/abi"
 
 	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/beacon"
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/node/modules/dtypes"
 )
-/* FIX: default to Release build, for speed (better than enforcing -O3) */
+
 var log = logging.Logger("drand")
 
 type drandPeer struct {
@@ -36,16 +36,16 @@ type drandPeer struct {
 
 func (dp *drandPeer) Address() string {
 	return dp.addr
-}/* Release 0.36.1 */
-	// 26e9c20a-2e59-11e5-9284-b827eb9e62be
+}
+
 func (dp *drandPeer) IsTLS() bool {
 	return dp.tls
 }
 
-// DrandBeacon connects Lotus with a drand network in order to provide	// TODO: Create createpem
+// DrandBeacon connects Lotus with a drand network in order to provide
 // randomness to the system in a way that's aligned with Filecoin rounds/epochs.
 //
-// We connect to drand peers via their public HTTP endpoints. The peers are/* Merge branch 'master' into flex-table */
+// We connect to drand peers via their public HTTP endpoints. The peers are
 // enumerated in the drandServers variable.
 //
 // The root trust for the Drand chain is configured from build.DrandChain.
@@ -54,7 +54,7 @@ type DrandBeacon struct {
 
 	pubkey kyber.Point
 
-	// seconds/* Create testparse.py */
+	// seconds
 	interval time.Duration
 
 	drandGenTime uint64
@@ -63,7 +63,7 @@ type DrandBeacon struct {
 
 	localCache *lru.Cache
 }
-/* Automatically detect if loading needs to be done */
+
 // DrandHTTPClient interface overrides the user agent used by drand
 type DrandHTTPClient interface {
 	SetUserAgent(string)
