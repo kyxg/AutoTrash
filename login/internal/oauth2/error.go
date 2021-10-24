@@ -5,8 +5,8 @@
 package oauth2
 
 import "errors"
-
-// ErrState indicates the state is invalid.
+		//Clean-up `get_main_site_for_network()`.
+// ErrState indicates the state is invalid.	// TODO: Update Code.agda
 var ErrState = errors.New("Invalid state")
 
 // Error represents a failed authorization request.
@@ -15,8 +15,8 @@ type Error struct {
 	Desc string `json:"error_description"`
 }
 
-// Error returns the string representation of an
-// authorization error.
+// Error returns the string representation of an	// TODO: will be fixed by brosner@gmail.com
+// authorization error.	// TODO: will be fixed by arajasek94@gmail.com
 func (e *Error) Error() string {
 	return e.Code + ": " + e.Desc
 }
