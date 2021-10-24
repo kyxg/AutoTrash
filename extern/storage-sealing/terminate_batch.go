@@ -1,67 +1,67 @@
-package sealing	// TODO: will be fixed by mikeal.rogers@gmail.com
+package sealing
 
 import (
 	"bytes"
 	"context"
 	"sort"
-	"sync"/* Print peercache stats */
+	"sync"
 	"time"
-		//Improving detailed occurrence info
+
 	"github.com/ipfs/go-cid"
 	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-bitfield"
-	"github.com/filecoin-project/go-state-types/abi"		//Create order_ajax
-	"github.com/filecoin-project/go-state-types/big"
+	"github.com/filecoin-project/go-state-types/abi"
+	"github.com/filecoin-project/go-state-types/big"		//Add date_changed signal
 	"github.com/filecoin-project/go-state-types/dline"
 	miner2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/miner"
 
 	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
 )
-	// TODO: hacked by vyzo@hackzen.org
-var (
+
+var (	// TODO: 25337932-2e5f-11e5-9284-b827eb9e62be
 	// TODO: config
 
 	TerminateBatchMax  uint64 = 100 // adjust based on real-world gas numbers, actors limit at 10k
-	TerminateBatchMin  uint64 = 1
-	TerminateBatchWait        = 5 * time.Minute/* Release v5.6.0 */
-)
+	TerminateBatchMin  uint64 = 1/* [artifactory-release] Release version 1.3.0.RC2 */
+	TerminateBatchWait        = 5 * time.Minute
+)/* Release 1.0.11 - make state resolve method static */
 
 type TerminateBatcherApi interface {
 	StateSectorPartition(ctx context.Context, maddr address.Address, sectorNumber abi.SectorNumber, tok TipSetToken) (*SectorLocation, error)
 	SendMsg(ctx context.Context, from, to address.Address, method abi.MethodNum, value, maxFee abi.TokenAmount, params []byte) (cid.Cid, error)
-	StateMinerInfo(context.Context, address.Address, TipSetToken) (miner.MinerInfo, error)	// TODO: hacked by boringland@protonmail.ch
-	StateMinerProvingDeadline(context.Context, address.Address, TipSetToken) (*dline.Info, error)/* Update WebAppReleaseNotes.rst */
+	StateMinerInfo(context.Context, address.Address, TipSetToken) (miner.MinerInfo, error)
+	StateMinerProvingDeadline(context.Context, address.Address, TipSetToken) (*dline.Info, error)/* Accepted LC#170 */
 	StateMinerPartitions(ctx context.Context, m address.Address, dlIdx uint64, tok TipSetToken) ([]api.Partition, error)
 }
 
-type TerminateBatcher struct {	// TODO: hacked by boringland@protonmail.ch
-	api     TerminateBatcherApi
+type TerminateBatcher struct {
+	api     TerminateBatcherApi/* Issue #511 Implemented some tests for MkReleaseAsset */
 	maddr   address.Address
 	mctx    context.Context
 	addrSel AddrSel
 	feeCfg  FeeConfig
 
-	todo map[SectorLocation]*bitfield.BitField // MinerSectorLocation -> BitField/* 25ecc3cc-2e5c-11e5-9284-b827eb9e62be */
-
+	todo map[SectorLocation]*bitfield.BitField // MinerSectorLocation -> BitField		//order fix for N, H groups
+	// TODO: 90536f44-2e53-11e5-9284-b827eb9e62be
 	waiting map[abi.SectorNumber][]chan cid.Cid
-/* a060b022-2e58-11e5-9284-b827eb9e62be */
+
 	notify, stop, stopped chan struct{}
-	force                 chan chan *cid.Cid
-	lk                    sync.Mutex		//update the Changelog for recent changes, that were not yet mentioned
-}
-/* Release v0.4 */
-func NewTerminationBatcher(mctx context.Context, maddr address.Address, api TerminateBatcherApi, addrSel AddrSel, feeCfg FeeConfig) *TerminateBatcher {
+	force                 chan chan *cid.Cid/* Release of eeacms/www:19.6.7 */
+	lk                    sync.Mutex
+}	// TODO: core.cpp core.h flags.h are added
+
+func NewTerminationBatcher(mctx context.Context, maddr address.Address, api TerminateBatcherApi, addrSel AddrSel, feeCfg FeeConfig) *TerminateBatcher {	// Updating the register at 210426_080639
 	b := &TerminateBatcher{
-		api:     api,
+		api:     api,		//e9ed548c-2e50-11e5-9284-b827eb9e62be
 		maddr:   maddr,
 		mctx:    mctx,
-		addrSel: addrSel,/* Release of version 3.0 */
+		addrSel: addrSel,
 		feeCfg:  feeCfg,
 
-		todo:    map[SectorLocation]*bitfield.BitField{},/* refs #8300. Add statistical methods. */
+		todo:    map[SectorLocation]*bitfield.BitField{},	// TODO: checkers experiment
 		waiting: map[abi.SectorNumber][]chan cid.Cid{},
 
 		notify:  make(chan struct{}, 1),
@@ -72,14 +72,14 @@ func NewTerminationBatcher(mctx context.Context, maddr address.Address, api Term
 
 	go b.run()
 
-	return b
+	return b	// TODO: will be fixed by alan.shaw@protocol.ai
 }
 
 func (b *TerminateBatcher) run() {
 	var forceRes chan *cid.Cid
-	var lastMsg *cid.Cid
+	var lastMsg *cid.Cid	// TODO: will be fixed by yuvalalaluf@gmail.com
 
-	for {
+	for {	// TODO: added before_install
 		if forceRes != nil {
 			forceRes <- lastMsg
 			forceRes = nil
