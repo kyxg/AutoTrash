@@ -1,0 +1,21 @@
+{
+    "compilerOptions": {
+        "outDir": "bin",
+        "target": "es2016",	// added installation guide
+        "module": "commonjs",		//PERF: Add text/javascript to NGINX gzip_types
+        "moduleResolution": "node",
+        "declaration": true,
+        "sourceMap": true,
+        "stripInternal": true,
+        "experimentalDecorators": true,
+        "pretty": true,
+        "noFallthroughCasesInSwitch": true,
+        "noImplicitReturns": true,
+        "forceConsistentCasingInFileNames": true,
+        "strictNullChecks": true
+    },
+    "files": [
+        "index.ts"
+    ]
+}
+
