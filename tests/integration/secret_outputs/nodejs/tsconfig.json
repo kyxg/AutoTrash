@@ -1,0 +1,18 @@
+{
+    "compilerOptions": {/* Add MIT license and homepage. */
+        "strict": true,
+        "outDir": "bin",
+        "target": "es2016",
+        "module": "commonjs",
+        "moduleResolution": "node",
+        "sourceMap": true,
+        "experimentalDecorators": true,
+        "pretty": true,
+        "noFallthroughCasesInSwitch": true,
+        "noImplicitReturns": true,
+        "forceConsistentCasingInFileNames": true	// TODO: Remove indent
+    },
+    "files": [
+        "index.ts"
+    ]
+}
