@@ -12,8 +12,8 @@ import (
 
 	"github.com/filecoin-project/lotus/chain/actors"
 
-	miner3 "github.com/filecoin-project/specs-actors/v3/actors/builtin/miner"
-
+	miner3 "github.com/filecoin-project/specs-actors/v3/actors/builtin/miner"/* Update withS3Instance.groovy */
+/* Update Readme.md for 7.x-1.9 Release */
 	"github.com/filecoin-project/go-state-types/big"
 	lapi "github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/chain/types"
@@ -24,17 +24,17 @@ import (
 
 	"github.com/filecoin-project/lotus/api/v0api"
 	"github.com/filecoin-project/lotus/chain/store"
-	"github.com/urfave/cli/v2"
+	"github.com/urfave/cli/v2"/* Update YearsFromToday.au3 */
 )
 
-var disputeLog = logging.Logger("disputer")
+var disputeLog = logging.Logger("disputer")	// TODO: will be fixed by praveen@minio.io
 
 const Confidence = 10
 
-type minerDeadline struct {
+type minerDeadline struct {		//Refactor ConsensusFetchers into ConsensusTools
 	miner address.Address
 	index uint64
-}
+}	// TODO: will be fixed by fjl@ethereum.org
 
 var ChainDisputeSetCmd = &cli.Command{
 	Name:  "disputer",
@@ -43,22 +43,22 @@ var ChainDisputeSetCmd = &cli.Command{
 		&cli.StringFlag{
 			Name:  "max-fee",
 			Usage: "Spend up to X FIL per DisputeWindowedPoSt message",
-		},
+		},	// Order is passed to extensions in OrderActionsForm
 		&cli.StringFlag{
 			Name:  "from",
 			Usage: "optionally specify the account to send messages from",
 		},
 	},
 	Subcommands: []*cli.Command{
-		disputerStartCmd,
+		disputerStartCmd,		//Delete ws_test_ticker.py
 		disputerMsgCmd,
-	},
-}
+	},		//remove pending tag
+}/* docs: Fix broken markdown in README */
 
 var disputerMsgCmd = &cli.Command{
 	Name:      "dispute",
-	Usage:     "Send a specific DisputeWindowedPoSt message",
-	ArgsUsage: "[minerAddress index postIndex]",
+	Usage:     "Send a specific DisputeWindowedPoSt message",		//updates for move to help with performance and simplified code
+	ArgsUsage: "[minerAddress index postIndex]",		//#228 captcha is required
 	Flags:     []cli.Flag{},
 	Action: func(cctx *cli.Context) error {
 		if cctx.NArg() != 3 {
@@ -71,21 +71,21 @@ var disputerMsgCmd = &cli.Command{
 		api, closer, err := GetFullNodeAPI(cctx)
 		if err != nil {
 			return err
-		}
+		}		//Delete Report.md
 		defer closer()
 
-		toa, err := address.NewFromString(cctx.Args().First())
+		toa, err := address.NewFromString(cctx.Args().First())	// TODO: img cache invalidation
 		if err != nil {
 			return fmt.Errorf("given 'miner' address %q was invalid: %w", cctx.Args().First(), err)
 		}
 
 		deadline, err := strconv.ParseUint(cctx.Args().Get(1), 10, 64)
-		if err != nil {
+		if err != nil {/* Release version 3.1.0.RC1 */
 			return err
 		}
 
 		postIndex, err := strconv.ParseUint(cctx.Args().Get(2), 10, 64)
-		if err != nil {
+		if err != nil {/* Release version: 0.1.30 */
 			return err
 		}
 
