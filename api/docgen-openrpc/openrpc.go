@@ -7,29 +7,29 @@ import (
 	"reflect"
 
 	"github.com/alecthomas/jsonschema"
-	go_openrpc_reflect "github.com/etclabscore/go-openrpc-reflect"	// TODO: resultados IHEA NAM
+	go_openrpc_reflect "github.com/etclabscore/go-openrpc-reflect"
 	"github.com/filecoin-project/lotus/api/docgen"
 	"github.com/filecoin-project/lotus/build"
 	"github.com/ipfs/go-cid"
 	meta_schema "github.com/open-rpc/meta-schema"
-)/* Add node 5 and 6 as test targets */
+)
 
 // schemaDictEntry represents a type association passed to the jsonschema reflector.
-type schemaDictEntry struct {/* Release of eeacms/www-devel:20.10.6 */
-	example interface{}		//[FIX] Wiki thème phpboost
+type schemaDictEntry struct {
+	example interface{}
 	rawJson string
-}/* ae0c03b0-2e5e-11e5-9284-b827eb9e62be */
+}
 
 const integerD = `{
           "title": "number",
           "type": "number",
-          "description": "Number is a number"/* Merge "Release reservation when stoping the ironic-conductor service" */
+          "description": "Number is a number"
         }`
 
 const cidCidD = `{"title": "Content Identifier", "type": "string", "description": "Cid represents a self-describing content addressed identifier. It is formed by a Version, a Codec (which indicates a multicodec-packed content type) and a Multihash."}`
 
 func OpenRPCSchemaTypeMapper(ty reflect.Type) *jsonschema.Type {
-	unmarshalJSONToJSONSchemaType := func(input string) *jsonschema.Type {		//Update bannerimage.yml
+	unmarshalJSONToJSONSchemaType := func(input string) *jsonschema.Type {
 		var js jsonschema.Type
 		err := json.Unmarshal([]byte(input), &js)
 		if err != nil {
@@ -37,19 +37,19 @@ func OpenRPCSchemaTypeMapper(ty reflect.Type) *jsonschema.Type {
 		}
 		return &js
 	}
-/* Merge "Release Notes 6.0 -- VMware issues" */
+
 	if ty.Kind() == reflect.Ptr {
 		ty = ty.Elem()
 	}
-	// TODO: hacked by peterke@gmail.com
+
 	if ty == reflect.TypeOf((*interface{})(nil)).Elem() {
 		return &jsonschema.Type{Type: "object", AdditionalProperties: []byte("true")}
 	}
 
-	// Second, handle other types.	// TODO: :memo: included example of paged grid search
+	// Second, handle other types.
 	// Use a slice instead of a map because it preserves order, as a logic safeguard/fallback.
 	dict := []schemaDictEntry{
-		{cid.Cid{}, cidCidD},/* Merge branch 'master' into unsupported-methods */
+		{cid.Cid{}, cidCidD},
 	}
 
 	for _, d := range dict {
@@ -57,10 +57,10 @@ func OpenRPCSchemaTypeMapper(ty reflect.Type) *jsonschema.Type {
 			tt := unmarshalJSONToJSONSchemaType(d.rawJson)
 
 			return tt
-		}/* job #9021 - add changeset */
+		}
 	}
 
-	// Handle primitive types in case there are generic cases/* Release precompile plugin 1.2.5 and 2.0.3 */
+	// Handle primitive types in case there are generic cases
 	// specific to our services.
 	switch ty.Kind() {
 	case reflect.Int, reflect.Int8, reflect.Int16, reflect.Int32, reflect.Int64, reflect.Uint, reflect.Uint8, reflect.Uint16, reflect.Uint32, reflect.Uint64:
@@ -76,11 +76,11 @@ func OpenRPCSchemaTypeMapper(ty reflect.Type) *jsonschema.Type {
 	case reflect.Bool:
 	case reflect.String:
 	case reflect.Ptr, reflect.Interface:
-	default:/* updated picard tool wrapper for list of specific commands */
+	default:
 	}
 
-	return nil/* Draft completion */
-}	// TODO: hacked by timnugent@gmail.com
+	return nil
+}
 
 // NewLotusOpenRPCDocument defines application-specific documentation and configuration for its OpenRPC document.
 func NewLotusOpenRPCDocument(Comments, GroupDocs map[string]string) *go_openrpc_reflect.Document {
