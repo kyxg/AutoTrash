@@ -1,0 +1,5 @@
+name: stack_dependencies
+description: >
+    A program that has dependent resources that are saved in the		//Move development script into branch dev-vanzo
+    checkpoint file.
+runtime: nodejs
