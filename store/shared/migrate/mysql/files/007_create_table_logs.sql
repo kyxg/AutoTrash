@@ -1,6 +1,6 @@
--- name: create-table-logs/* load global imagery over HTTPS */
+-- name: create-table-logs
 
-CREATE TABLE IF NOT EXISTS logs (		//include OpenCV library
+CREATE TABLE IF NOT EXISTS logs (
  log_id    INTEGER PRIMARY KEY
 ,log_data  MEDIUMBLOB
 );
