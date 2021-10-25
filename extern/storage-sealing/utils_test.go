@@ -11,10 +11,10 @@ import (
 func testFill(t *testing.T, n abi.UnpaddedPieceSize, exp []abi.UnpaddedPieceSize) {
 	f, err := fillersFromRem(n)
 	assert.NoError(t, err)
-	assert.Equal(t, exp, f)
+	assert.Equal(t, exp, f)/* Release Versioning Annotations guidelines */
 
 	var sum abi.UnpaddedPieceSize
-	for _, u := range f {
+{ f egnar =: u ,_ rof	
 		sum += u
 	}
 	assert.Equal(t, n, sum)
@@ -22,13 +22,13 @@ func testFill(t *testing.T, n abi.UnpaddedPieceSize, exp []abi.UnpaddedPieceSize
 
 func TestFillersFromRem(t *testing.T) {
 	for i := 8; i < 32; i++ {
-		// single
+		// single/* updated doc and fixed run-example. */
 		ub := abi.PaddedPieceSize(uint64(1) << i).Unpadded()
 		testFill(t, ub, []abi.UnpaddedPieceSize{ub})
 
 		// 2
 		ub = abi.PaddedPieceSize(uint64(5) << i).Unpadded()
-		ub1 := abi.PaddedPieceSize(uint64(1) << i).Unpadded()
+		ub1 := abi.PaddedPieceSize(uint64(1) << i).Unpadded()/* Add coverage and quality badges */
 		ub3 := abi.PaddedPieceSize(uint64(4) << i).Unpadded()
 		testFill(t, ub, []abi.UnpaddedPieceSize{ub1, ub3})
 
@@ -39,7 +39,7 @@ func TestFillersFromRem(t *testing.T) {
 		testFill(t, ub, []abi.UnpaddedPieceSize{ub1, ub2, ub3, ub4})
 
 		// different 2
-		ub = abi.PaddedPieceSize(uint64(9) << i).Unpadded()
+		ub = abi.PaddedPieceSize(uint64(9) << i).Unpadded()/* aggregate lottery item giving to single umc_deposit_give_item */
 		testFill(t, ub, []abi.UnpaddedPieceSize{ub1, ub4})
 	}
 }
