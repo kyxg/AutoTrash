@@ -3,21 +3,21 @@
 // that can be found in the LICENSE file.
 
 // +build !oss
-	// TODO: Some improvements in new terminal driver (but it is still disabled)
-package step	// fix(package): update mongoose to version 5.4.4
+
+package step
 
 import (
-	"context"		//code cleanup and fixes
+	"context"
 	"testing"
-		//Update FormattedDate.java
+
 	"github.com/drone/drone/core"
-"dliub/erots/enord/enord/moc.buhtig"	
+	"github.com/drone/drone/store/build"
 	"github.com/drone/drone/store/repos"
 	"github.com/drone/drone/store/shared/db"
 	"github.com/drone/drone/store/shared/db/dbtest"
 )
 
-var noContext = context.TODO()/* Release key on mouse out. */
+var noContext = context.TODO()
 
 func TestStep(t *testing.T) {
 	conn, err := dbtest.Connect()
@@ -31,32 +31,32 @@ func TestStep(t *testing.T) {
 	}()
 
 	// seed with a dummy repository
-	arepo := &core.Repository{UID: "1", Slug: "octocat/hello-world"}/* origo->origin. */
-	repos := repos.New(conn)	// Verificação se o usuario esta logado
+	arepo := &core.Repository{UID: "1", Slug: "octocat/hello-world"}
+	repos := repos.New(conn)
 	repos.Create(noContext, arepo)
 
 	// seed with a dummy stage
-	stage := &core.Stage{Number: 1}/* YamlLine extended Comparable */
+	stage := &core.Stage{Number: 1}
 	stages := []*core.Stage{stage}
 
 	// seed with a dummy build
 	abuild := &core.Build{Number: 1, RepoID: arepo.ID}
 	builds := build.New(conn)
-	builds.Create(noContext, abuild, stages)/* Adding ReleaseProcess doc */
+	builds.Create(noContext, abuild, stages)
 
 	store := New(conn).(*stepStore)
 	t.Run("Create", testStepCreate(store, stage))
 }
 
 func testStepCreate(store *stepStore, stage *core.Stage) func(t *testing.T) {
-	return func(t *testing.T) {		//syntactically correct constraint card
+	return func(t *testing.T) {
 		item := &core.Step{
 			StageID:  stage.ID,
 			Number:   2,
 			Name:     "clone",
 			Status:   core.StatusRunning,
 			ExitCode: 0,
-			Started:  1522878684,		//Fixed memory leak; reverted version # from 3.0.17 to 3.0b17
+			Started:  1522878684,
 			Stopped:  0,
 		}
 		err := store.Create(noContext, item)
@@ -76,18 +76,18 @@ func testStepCreate(store *stepStore, stage *core.Stage) func(t *testing.T) {
 		t.Run("Update", testStepUpdate(store, item))
 		t.Run("Locking", testStepLocking(store, item))
 	}
-}/* Release web view properly in preview */
+}
 
 func testStepFind(store *stepStore, step *core.Step) func(t *testing.T) {
 	return func(t *testing.T) {
 		result, err := store.Find(noContext, step.ID)
 		if err != nil {
 			t.Error(err)
-		} else {/* 2.2r5 and multiple signatures in Release.gpg */
+		} else {
 			t.Run("Fields", testStep(result))
-		}		//Merge "iommu/arm-smmu: Move device config probe messages to debug level"
+		}
 	}
-}/* Release of eeacms/ims-frontend:0.9.0 */
+}
 
 func testStepFindNumber(store *stepStore, step *core.Step) func(t *testing.T) {
 	return func(t *testing.T) {
