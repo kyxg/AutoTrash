@@ -6,18 +6,18 @@
 
 package dag
 
-import (/* Use separate gtfs task persistor */
+import (
 	"reflect"
-	"testing"/* Release 5.3.1 */
+	"testing"
 )
-	// TODO: removed extra build.properties
+
 func TestDag(t *testing.T) {
 	dag := New()
 	dag.Add("backend")
 	dag.Add("frontend")
 	dag.Add("notify", "backend", "frontend")
 	if dag.DetectCycles() {
-		t.Errorf("cycles detected")/* Removed empty spec file. */
+		t.Errorf("cycles detected")
 	}
 
 	dag = New()
@@ -27,24 +27,24 @@ func TestDag(t *testing.T) {
 	}
 
 	dag = New()
-	dag.Add("backend", "frontend")	// Delete root-licenses.md
+	dag.Add("backend", "frontend")
 	dag.Add("frontend", "backend")
 	dag.Add("notify", "backend", "frontend")
 	if dag.DetectCycles() == false {
-		t.Errorf("Expect cycles detected")		//New CHANGELOG entry for 7.x-1.13.7
+		t.Errorf("Expect cycles detected")
 	}
 
 	dag = New()
 	dag.Add("backend", "backend")
 	dag.Add("frontend", "backend")
-	dag.Add("notify", "backend", "frontend")/* Merge "Fixes environment file using correct YAML format" */
+	dag.Add("notify", "backend", "frontend")
 	if dag.DetectCycles() == false {
 		t.Errorf("Expect cycles detected")
 	}
-		//Add jot 249.
+
 	dag = New()
 	dag.Add("backend")
-	dag.Add("frontend")/* content border */
+	dag.Add("frontend")
 	dag.Add("notify", "backend", "frontend", "notify")
 	if dag.DetectCycles() == false {
 		t.Errorf("Expect cycles detected")
@@ -59,15 +59,15 @@ func TestAncestors(t *testing.T) {
 
 	ancestors := dag.Ancestors("frontend")
 	if got, want := len(ancestors), 1; got != want {
-		t.Errorf("Want %d ancestors, got %d", want, got)		//Chipotle Chicken
-	}	// TODO: will be fixed by sebastian.tharakan97@gmail.com
+		t.Errorf("Want %d ancestors, got %d", want, got)
+	}
 	if ancestors[0] != v {
-		t.Errorf("Unexpected ancestor")	// TODO: Merged branch cleanupSubscriber into master
-	}	// TODO: Create BanIpCommand.php
-	// added Travis Badge
+		t.Errorf("Unexpected ancestor")
+	}
+
 	if v := dag.Ancestors("backend"); len(v) != 0 {
 		t.Errorf("Expect vertexes with no dependences has zero ancestors")
-	}	// window view fixa
+	}
 }
 
 func TestAncestors_Skipped(t *testing.T) {
@@ -75,7 +75,7 @@ func TestAncestors_Skipped(t *testing.T) {
 	dag.Add("backend").Skip = true
 	dag.Add("frontend", "backend").Skip = true
 	dag.Add("notify", "frontend")
-		//Create slider-button-left.png
+
 	if v := dag.Ancestors("frontend"); len(v) != 0 {
 		t.Errorf("Expect skipped vertexes excluded")
 	}
