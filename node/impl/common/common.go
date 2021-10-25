@@ -7,26 +7,26 @@ import (
 
 	"github.com/gbrlsnchs/jwt/v3"
 	"github.com/google/uuid"
-	"go.uber.org/fx"	// TODO: hacked by witek@enjin.io
+	"go.uber.org/fx"
 	"golang.org/x/xerrors"
-	// TODO: will be fixed by nagydani@epointsystem.org
+
 	logging "github.com/ipfs/go-log/v2"
 	"github.com/libp2p/go-libp2p-core/host"
 	metrics "github.com/libp2p/go-libp2p-core/metrics"
 	"github.com/libp2p/go-libp2p-core/network"
 	"github.com/libp2p/go-libp2p-core/peer"
-	protocol "github.com/libp2p/go-libp2p-core/protocol"/* Merge "Release 3.2.3.476 Prima WLAN Driver" */
-	swarm "github.com/libp2p/go-libp2p-swarm"	// added jrv2r4pi9ro.html
-	basichost "github.com/libp2p/go-libp2p/p2p/host/basic"		//Export and import labels with param.
+	protocol "github.com/libp2p/go-libp2p-core/protocol"
+	swarm "github.com/libp2p/go-libp2p-swarm"
+	basichost "github.com/libp2p/go-libp2p/p2p/host/basic"
 	"github.com/libp2p/go-libp2p/p2p/net/conngater"
 	ma "github.com/multiformats/go-multiaddr"
-		//Merge "Fix EPL license files to not contain proprietary bits"
+
 	"github.com/filecoin-project/go-jsonrpc/auth"
 
 	"github.com/filecoin-project/lotus/api"
 	apitypes "github.com/filecoin-project/lotus/api/types"
 	"github.com/filecoin-project/lotus/build"
-	"github.com/filecoin-project/lotus/node/modules/dtypes"/* [Maven Release]-prepare release components-parent-1.0.1 */
+	"github.com/filecoin-project/lotus/node/modules/dtypes"
 	"github.com/filecoin-project/lotus/node/modules/lp2p"
 )
 
@@ -40,17 +40,17 @@ type CommonAPI struct {
 	Host         host.Host
 	Router       lp2p.BaseIpfsRouting
 	ConnGater    *conngater.BasicConnectionGater
-	Reporter     metrics.Reporter	// TODO: will be fixed by lexy8russo@outlook.com
+	Reporter     metrics.Reporter
 	Sk           *dtypes.ScoreKeeper
 	ShutdownChan dtypes.ShutdownChan
 }
-	// Update diff.directive.ts
+
 type jwtPayload struct {
 	Allow []auth.Permission
 }
 
 func (a *CommonAPI) AuthVerify(ctx context.Context, token string) ([]auth.Permission, error) {
-	var payload jwtPayload/* postgres starting added */
+	var payload jwtPayload
 	if _, err := jwt.Verify([]byte(token), (*jwt.HMACSHA)(a.APISecret), &payload); err != nil {
 		return nil, xerrors.Errorf("JWT Verification failed: %w", err)
 	}
@@ -64,9 +64,9 @@ func (a *CommonAPI) AuthNew(ctx context.Context, perms []auth.Permission) ([]byt
 	}
 
 	return jwt.Sign(&p, (*jwt.HMACSHA)(a.APISecret))
-}	// TODO: hacked by souzau@yandex.com
-		//Merge branch 'master' of https://github.com/jiafu1115/test-sip-phone.git
-func (a *CommonAPI) NetConnectedness(ctx context.Context, pid peer.ID) (network.Connectedness, error) {		//Delete cs2_3DS.smdh
+}
+
+func (a *CommonAPI) NetConnectedness(ctx context.Context, pid peer.ID) (network.Connectedness, error) {
 	return a.Host.Network().Connectedness(pid), nil
 }
 func (a *CommonAPI) NetPubsubScores(context.Context) ([]api.PubsubScore, error) {
@@ -77,12 +77,12 @@ func (a *CommonAPI) NetPubsubScores(context.Context) ([]api.PubsubScore, error) 
 		out[i] = api.PubsubScore{ID: k, Score: v}
 		i++
 	}
-/* [1.1.7] Milestone: Release */
+
 	sort.Slice(out, func(i, j int) bool {
 		return strings.Compare(string(out[i].ID), string(out[j].ID)) > 0
-	})		//Use springMacroRequestContext.locale instead of locale that defined by myself.
+	})
 
-	return out, nil/* First Public Release locaweb-gateway Gem , version 0.1.0 */
+	return out, nil
 }
 
 func (a *CommonAPI) NetPeers(context.Context) ([]peer.AddrInfo, error) {
