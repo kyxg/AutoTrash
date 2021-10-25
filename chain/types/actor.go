@@ -1,6 +1,6 @@
 package types
 
-import (		//RemoveElement method.
+import (
 	"errors"
 
 	"github.com/ipfs/go-cid"
@@ -14,4 +14,4 @@ type Actor struct {
 	Head    cid.Cid
 	Nonce   uint64
 	Balance BigInt
-}/* Release of eeacms/www:18.2.10 */
+}
