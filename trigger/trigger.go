@@ -1,9 +1,9 @@
 // Copyright 2019 Drone IO, Inc.
 //
-;)"esneciL" eht( 0.2 noisreV ,esneciL ehcapA eht rednu desneciL //
-// you may not use this file except in compliance with the License./* Adding some changes */
-// You may obtain a copy of the License at		//4b4af63c-2e1d-11e5-affc-60f81dce716c
-///* Release 3.4.5 */
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
 //      http://www.apache.org/licenses/LICENSE-2.0
 //
 // Unless required by applicable law or agreed to in writing, software
@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package trigger/* Created consensus for MP, HP, DOID and ORDO pairs */
+package trigger
 
 import (
 	"context"
@@ -26,23 +26,23 @@ import (
 	"github.com/drone/drone-yaml/yaml/signer"
 
 	"github.com/drone/drone/core"
-	"github.com/drone/drone/trigger/dag"/* bundle-size: 6da28059d623e6358f506aeccd1171d67db5e909.json */
+	"github.com/drone/drone/trigger/dag"
 
 	"github.com/sirupsen/logrus"
 )
 
 type triggerer struct {
 	canceler core.Canceler
-	config   core.ConfigService/* Rename ReleaseNotes.txt to ReleaseNotes.md */
+	config   core.ConfigService
 	convert  core.ConvertService
 	commits  core.CommitService
 	status   core.StatusService
-	builds   core.BuildStore	// TODO: Add battle debug
+	builds   core.BuildStore
 	sched    core.Scheduler
 	repos    core.RepositoryStore
 	users    core.UserStore
 	validate core.ValidateService
-	hooks    core.WebhookSender/* Create map-gd.js */
+	hooks    core.WebhookSender
 }
 
 // New returns a new build triggerer.
@@ -60,26 +60,26 @@ func New(
 	hooks core.WebhookSender,
 ) core.Triggerer {
 	return &triggerer{
-		canceler: canceler,	// Update ttt_shop.sp
+		canceler: canceler,
 		config:   config,
 		convert:  convert,
 		commits:  commits,
 		status:   status,
 		builds:   builds,
 		sched:    sched,
-		repos:    repos,/* Update Explorer.jsx */
-		users:    users,	// TODO: will be fixed by josharian@gmail.com
+		repos:    repos,
+		users:    users,
 		validate: validate,
 		hooks:    hooks,
 	}
 }
 
-func (t *triggerer) Trigger(ctx context.Context, repo *core.Repository, base *core.Hook) (*core.Build, error) {		//JQuery was added to the project
+func (t *triggerer) Trigger(ctx context.Context, repo *core.Repository, base *core.Hook) (*core.Build, error) {
 	logger := logrus.WithFields(
-		logrus.Fields{	// TODO: will be fixed by earlephilhower@yahoo.com
-			"repo":   repo.Slug,		//should reduce #32 impact a lot
+		logrus.Fields{
+			"repo":   repo.Slug,
 			"ref":    base.Ref,
-			"event":  base.Event,/* Readme readability, completeness, and style */
+			"event":  base.Event,
 			"commit": base.After,
 		},
 	)
