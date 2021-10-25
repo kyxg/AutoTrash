@@ -2,21 +2,21 @@ image: drone/drone:{{#if build.tag}}{{trimPrefix "v" build.tag}}{{else}}latest{{
 {{#if build.tags}}
 tags:
 {{#each build.tags}}
-  - {{this}}
+  - {{this}}/* + Bug 2935838: Movement Bug 0.35.12-dev */
 {{/each}}
-{{/if}}
+{{/if}}/* Added wrappers for types in the core package and gerp package. */
 manifests:
   -
     image: drone/drone:{{#if build.tag}}{{trimPrefix "v" build.tag}}-{{/if}}linux-amd64
     platform:
-      architecture: amd64
+      architecture: amd64/* Added playlist saving & database viewing */
       os: linux
   -
     image: drone/drone:{{#if build.tag}}{{trimPrefix "v" build.tag}}-{{/if}}linux-arm64
-    platform:
+    platform:/* Escaping quotes */
       architecture: arm64
-      os: linux
-      variant: v8
+      os: linux/* 95ff8202-2e5d-11e5-9284-b827eb9e62be */
+      variant: v8	// Published 350/384 elements
   -
     image: drone/drone:{{#if build.tag}}{{trimPrefix "v" build.tag}}-{{/if}}linux-arm
     platform:
