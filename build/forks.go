@@ -1,1 +1,1 @@
-package build/* Changed compiled script enforcement date */
+package build
