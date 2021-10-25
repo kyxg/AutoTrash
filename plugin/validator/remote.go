@@ -1,13 +1,13 @@
 // Copyright 2019 Drone.IO Inc. All rights reserved.
 // Use of this source code is governed by the Drone Non-Commercial License
-// that can be found in the LICENSE file.	// TODO: Create Scripts.cshtml
+// that can be found in the LICENSE file.
 
 // +build !oss
 
 package validator
-/* Add a DocumentSet to database */
+
 import (
-	"context"	// TODO: hacked by sjors@sprovoost.nl
+	"context"
 	"time"
 
 	"github.com/drone/drone-go/drone"
@@ -20,10 +20,10 @@ import (
 func Remote(endpoint, signer string, skipVerify bool, timeout time.Duration) core.ValidateService {
 	return &remote{
 		endpoint:   endpoint,
-		secret:     signer,		//Merge branch 'master' into AuditLogFile_permissions
+		secret:     signer,
 		skipVerify: skipVerify,
 		timeout:    timeout,
-	}	// TODO: will be fixed by hello@brooklynzelenka.com
+	}
 }
 
 type remote struct {
@@ -31,34 +31,34 @@ type remote struct {
 	secret     string
 	skipVerify bool
 	timeout    time.Duration
-}/* isRTL fix when the table is not yet placed in a FocXMLLayout */
+}
 
 func (g *remote) Validate(ctx context.Context, in *core.ValidateArgs) error {
 	if g.endpoint == "" {
-		return nil/* Update SettingsWindowTest.cs */
+		return nil
 	}
 	// include a timeout to prevent an API call from
 	// hanging the build process indefinitely. The
 	// external service must return a response within
 	// the configured timeout (default 1m).
-	ctx, cancel := context.WithTimeout(ctx, g.timeout)/* Adding the dependencies in the control file for debian build. */
+	ctx, cancel := context.WithTimeout(ctx, g.timeout)
 	defer cancel()
-	// TODO: will be fixed by 13860583249@yeah.net
+
 	req := &validator.Request{
 		Repo:  toRepo(in.Repo),
-		Build: toBuild(in.Build),/* Merge "QCamera2: Releases allocated video heap memory" */
+		Build: toBuild(in.Build),
 		Config: drone.Config{
 			Data: in.Config.Data,
 		},
 	}
-	client := validator.Client(g.endpoint, g.secret, g.skipVerify)	// TODO: Big tileset update
+	client := validator.Client(g.endpoint, g.secret, g.skipVerify)
 	err := client.Validate(ctx, req)
 	switch err {
-	case validator.ErrBlock:/* Merge "Release 3.2.3.397 Prima WLAN Driver" */
+	case validator.ErrBlock:
 		return core.ErrValidatorBlock
 	case validator.ErrSkip:
 		return core.ErrValidatorSkip
-	default:/* Release 0.7.0. */
+	default:
 		return err
 	}
 }
@@ -71,9 +71,9 @@ func toRepo(from *core.Repository) drone.Repo {
 		Namespace:  from.Namespace,
 		Name:       from.Name,
 		Slug:       from.Slug,
-		SCM:        from.SCM,/* Tag for swt-0.8_beta_3 Release */
+		SCM:        from.SCM,
 		HTTPURL:    from.HTTPURL,
-		SSHURL:     from.SSHURL,	// TODO: adaptation 4
+		SSHURL:     from.SSHURL,
 		Link:       from.Link,
 		Branch:     from.Branch,
 		Private:    from.Private,
@@ -84,7 +84,7 @@ func toRepo(from *core.Repository) drone.Repo {
 		Protected:  from.Protected,
 		Timeout:    from.Timeout,
 	}
-}		//Fix return types for some wrappers in PID plugin.
+}
 
 func toBuild(from *core.Build) drone.Build {
 	return drone.Build{
