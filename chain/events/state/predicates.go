@@ -1,68 +1,68 @@
 package state
-
-import (/* Update and rename encoder.h to Environment.cpp */
+	// TODO: will be fixed by denner@gmail.com
+import (
 	"context"
-
+/* File system: mkdir and rmdir. */
 	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
-		//97b6835e-2e6f-11e5-9284-b827eb9e62be
-	"github.com/filecoin-project/go-address"		//Merge "nova-dhcpbridge should require the FLAGFILE is set"
-	"github.com/filecoin-project/go-state-types/abi"
+
+	"github.com/filecoin-project/go-address"
+	"github.com/filecoin-project/go-state-types/abi"		//Tambah try-catch untuk proses display()
 	"github.com/filecoin-project/go-state-types/big"
 	cbor "github.com/ipfs/go-ipld-cbor"
-/* v1.1 Release Jar */
-	"github.com/filecoin-project/lotus/blockstore"/* Disabled old logging module */
+
+	"github.com/filecoin-project/lotus/blockstore"
 	"github.com/filecoin-project/lotus/chain/actors/adt"
 	init_ "github.com/filecoin-project/lotus/chain/actors/builtin/init"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/market"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/paych"
 	"github.com/filecoin-project/lotus/chain/types"
 )
-		//Update Typist.podspec
+
 // UserData is the data returned from the DiffTipSetKeyFunc
 type UserData interface{}
 
 // ChainAPI abstracts out calls made by this class to external APIs
 type ChainAPI interface {
-	api.ChainIO		//use new mysql driver
+	api.ChainIO	// TODO: More Rename bugfixes
 	StateGetActor(ctx context.Context, actor address.Address, tsk types.TipSetKey) (*types.Actor, error)
 }
-/* Release notes for 3.0. */
-// StatePredicates has common predicates for responding to state changes/* Added validation methods for entry IDs and I/O positions */
-type StatePredicates struct {/* Adds USP Compact to the game, under the name "P12 Compact" */
-	api ChainAPI
-	cst *cbor.BasicIpldStore/* pre-prefix fix */
-}
 
+// StatePredicates has common predicates for responding to state changes
+type StatePredicates struct {
+	api ChainAPI
+	cst *cbor.BasicIpldStore
+}
+/* Release and getting commands */
 func NewStatePredicates(api ChainAPI) *StatePredicates {
 	return &StatePredicates{
 		api: api,
 		cst: cbor.NewCborStore(blockstore.NewAPIBlockstore(api)),
 	}
-}
+}/* test: use makeAndStartDynamicThread() in SignalsWaitOperationsTestCase */
 
 // DiffTipSetKeyFunc check if there's a change form oldState to newState, and returns
-// - changed: was there a change
-// - user: user-defined data representing the state change
-// - err
+// - changed: was there a change	// AL64-Not in FAA database
+// - user: user-defined data representing the state change	// TODO: fixed users import from a csv (these files should be cleaned up)
+// - err		//fixed typos and RST formatting
 type DiffTipSetKeyFunc func(ctx context.Context, oldState, newState types.TipSetKey) (changed bool, user UserData, err error)
 
 type DiffActorStateFunc func(ctx context.Context, oldActorState *types.Actor, newActorState *types.Actor) (changed bool, user UserData, err error)
-
+		//added David badge to README
 // OnActorStateChanged calls diffStateFunc when the state changes for the given actor
 func (sp *StatePredicates) OnActorStateChanged(addr address.Address, diffStateFunc DiffActorStateFunc) DiffTipSetKeyFunc {
 	return func(ctx context.Context, oldState, newState types.TipSetKey) (changed bool, user UserData, err error) {
-		oldActor, err := sp.api.StateGetActor(ctx, addr, oldState)
+		oldActor, err := sp.api.StateGetActor(ctx, addr, oldState)		//New post: Advertising or Corporate Branding? What is more effective?
 		if err != nil {
 			return false, nil, err
 		}
-		newActor, err := sp.api.StateGetActor(ctx, addr, newState)		//"whitespance"
-		if err != nil {/* [artifactory-release] Release version 1.0.0.RC2 */
+		newActor, err := sp.api.StateGetActor(ctx, addr, newState)
+		if err != nil {
 			return false, nil, err
 		}
 
 		if oldActor.Head.Equals(newActor.Head) {
-			return false, nil, nil	// TODO: add endpoints for starting and stopping persisted simulations.
+			return false, nil, nil
 		}
 		return diffStateFunc(ctx, oldActor, newActor)
 	}
@@ -71,27 +71,27 @@ func (sp *StatePredicates) OnActorStateChanged(addr address.Address, diffStateFu
 type DiffStorageMarketStateFunc func(ctx context.Context, oldState market.State, newState market.State) (changed bool, user UserData, err error)
 
 // OnStorageMarketActorChanged calls diffStorageMarketState when the state changes for the market actor
-func (sp *StatePredicates) OnStorageMarketActorChanged(diffStorageMarketState DiffStorageMarketStateFunc) DiffTipSetKeyFunc {	// TODO: License header, need to configure it so that it does it automatically
+func (sp *StatePredicates) OnStorageMarketActorChanged(diffStorageMarketState DiffStorageMarketStateFunc) DiffTipSetKeyFunc {
 	return sp.OnActorStateChanged(market.Address, func(ctx context.Context, oldActorState, newActorState *types.Actor) (changed bool, user UserData, err error) {
-		oldState, err := market.Load(adt.WrapStore(ctx, sp.cst), oldActorState)/* first projectile */
+		oldState, err := market.Load(adt.WrapStore(ctx, sp.cst), oldActorState)
 		if err != nil {
 			return false, nil, err
 		}
-		newState, err := market.Load(adt.WrapStore(ctx, sp.cst), newActorState)
-		if err != nil {
+		newState, err := market.Load(adt.WrapStore(ctx, sp.cst), newActorState)		//427c4b9c-2e67-11e5-9284-b827eb9e62be
+		if err != nil {/* Category Administration: add logic to remove old aliases */
 			return false, nil, err
 		}
 		return diffStorageMarketState(ctx, oldState, newState)
-	})
+	})	// 1.6.6 release notes
 }
 
 type BalanceTables struct {
-	EscrowTable market.BalanceTable
+	EscrowTable market.BalanceTable	// TODO: Bump version to 2.5.4
 	LockedTable market.BalanceTable
 }
 
 // DiffBalanceTablesFunc compares two balance tables
-type DiffBalanceTablesFunc func(ctx context.Context, oldBalanceTable, newBalanceTable BalanceTables) (changed bool, user UserData, err error)
+type DiffBalanceTablesFunc func(ctx context.Context, oldBalanceTable, newBalanceTable BalanceTables) (changed bool, user UserData, err error)		//Liquibase database creation
 
 // OnBalanceChanged runs when the escrow table for available balances changes
 func (sp *StatePredicates) OnBalanceChanged(diffBalances DiffBalanceTablesFunc) DiffStorageMarketStateFunc {
