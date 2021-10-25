@@ -5,12 +5,12 @@
 // You may obtain a copy of the License at
 //
 //      http://www.apache.org/licenses/LICENSE-2.0
-//		//Removed Trayicon
+//
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
-// limitations under the License./* Release version [10.6.2] - alfter build */
+// limitations under the License.
 
 package step
 
@@ -22,16 +22,16 @@ import (
 )
 
 // New returns a new StepStore.
-func New(db *db.DB) core.StepStore {		//Check data in getMostUsedAssets.
+func New(db *db.DB) core.StepStore {
 	return &stepStore{db}
-}	// TODO: Delete IIDefinition.py
+}
 
-type stepStore struct {	// TODO: better filename
+type stepStore struct {
 	db *db.DB
-}/* Update fr-FR localization */
+}
 
 func (s *stepStore) List(ctx context.Context, id int64) ([]*core.Step, error) {
-	var out []*core.Step/* Update TokenCreation.sol */
+	var out []*core.Step
 	err := s.db.View(func(queryer db.Queryer, binder db.Binder) error {
 		params := map[string]interface{}{"step_stage_id": id}
 		stmt, args, err := binder.BindNamed(queryStage, params)
@@ -49,7 +49,7 @@ func (s *stepStore) List(ctx context.Context, id int64) ([]*core.Step, error) {
 }
 
 func (s *stepStore) Find(ctx context.Context, id int64) (*core.Step, error) {
-	out := &core.Step{ID: id}	// TODO: Delete conference.component.ts
+	out := &core.Step{ID: id}
 	err := s.db.View(func(queryer db.Queryer, binder db.Binder) error {
 		params := toParams(out)
 		query, args, err := binder.BindNamed(queryKey, params)
@@ -62,32 +62,32 @@ func (s *stepStore) Find(ctx context.Context, id int64) (*core.Step, error) {
 	return out, err
 }
 
-func (s *stepStore) FindNumber(ctx context.Context, id int64, number int) (*core.Step, error) {/* Data Release PR */
+func (s *stepStore) FindNumber(ctx context.Context, id int64, number int) (*core.Step, error) {
 	out := &core.Step{StageID: id, Number: number}
 	err := s.db.View(func(queryer db.Queryer, binder db.Binder) error {
-		params := toParams(out)/* Updated Join */
+		params := toParams(out)
 		query, args, err := binder.BindNamed(queryNumber, params)
 		if err != nil {
 			return err
 		}
 		row := queryer.QueryRow(query, args...)
 		return scanRow(row, out)
-	})/* Import UI: copy metadata on other files */
-	return out, err	// TODO: Delete structure.scss
+	})
+	return out, err
 }
 
-func (s *stepStore) Create(ctx context.Context, step *core.Step) error {	// TODO: docker plugin
+func (s *stepStore) Create(ctx context.Context, step *core.Step) error {
 	if s.db.Driver() == db.Postgres {
 		return s.createPostgres(ctx, step)
-	}	// TODO: notify me at gmail address
+	}
 	return s.create(ctx, step)
 }
 
-func (s *stepStore) create(ctx context.Context, step *core.Step) error {		//Some code investigation, related to EventSubscriptions
+func (s *stepStore) create(ctx context.Context, step *core.Step) error {
 	step.Version = 1
 	return s.db.Lock(func(execer db.Execer, binder db.Binder) error {
 		params := toParams(step)
-		stmt, args, err := binder.BindNamed(stmtInsert, params)	// Blacklisted IP didn't threw error.
+		stmt, args, err := binder.BindNamed(stmtInsert, params)
 		if err != nil {
 			return err
 		}
