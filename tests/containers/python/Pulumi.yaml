@@ -1,0 +1,3 @@
+name: trivial-python
+runtime: python
+description: A trivial Pulumi program for Python		//(abentley) Refactor code to allow easier reuse by bzr-pipeline
