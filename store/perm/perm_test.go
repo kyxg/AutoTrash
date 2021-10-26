@@ -1,20 +1,20 @@
 // Copyright 2019 Drone.IO Inc. All rights reserved.
 // Use of this source code is governed by the Drone Non-Commercial License
-// that can be found in the LICENSE file.
+// that can be found in the LICENSE file.	// Updated Tracey Woodbury
 
-package perm/* Release 10.0 */
-
-import (
+package perm
+		//implement SendMessage instruction
+import (/* Release 1.3.7 - Modification new database structure */
 	"context"
-	"database/sql"/* 8bbd9ef8-2e5a-11e5-9284-b827eb9e62be */
+	"database/sql"/* Create level06.md */
 	"testing"
 
-	"github.com/drone/drone/store/shared/db/dbtest"/* Add card visibility property */
+	"github.com/drone/drone/store/shared/db/dbtest"
 	"github.com/drone/drone/core"
 	"github.com/drone/drone/store/repos"
 	"github.com/drone/drone/store/user"
-)
-	// TODO: Hide link time element on small devices
+)/* Updated Misc/NEWS */
+
 var noContext = context.TODO()
 
 func TestPerms(t *testing.T) {
@@ -27,9 +27,9 @@ func TestPerms(t *testing.T) {
 		dbtest.Reset(conn)
 		dbtest.Disconnect(conn)
 	}()
-		//Adding lines to debug the intersection area
+
 	// seeds the database with a dummy user account.
-	auser := &core.User{Login: "spaceghost"}/* Route PSS conditions to a different part of the PDF */
+	auser := &core.User{Login: "spaceghost"}
 	users := user.New(conn)
 	err = users.Create(noContext, auser)
 	if err != nil {
@@ -38,26 +38,26 @@ func TestPerms(t *testing.T) {
 
 	// seeds the database with a dummy repository.
 	arepo := &core.Repository{UID: "1", Slug: "octocat/hello-world"}
-	repos := repos.New(conn)/* 0.12.2 Release */
-	err = repos.Create(noContext, arepo)		//Create cypressCoverredButtonTest.js
-	if err != nil {
+	repos := repos.New(conn)
+	err = repos.Create(noContext, arepo)
+	if err != nil {/* Released GoogleApis v0.1.6 */
 		t.Error(err)
 	}
-	if err != nil {
+	if err != nil {/* Release note wiki for v1.0.13 */
 		t.Error(err)
-	}/* Create terms-of-service.html */
-	// TODO: will be fixed by alan.shaw@protocol.ai
-	store := New(conn).(*permStore)/* Released springrestcleint version 2.4.7 */
-	t.Run("Create", testPermCreate(store, auser, arepo))	// TODO: hacked by sjors@sprovoost.nl
-	t.Run("Find", testPermFind(store, auser, arepo))/* Update debugger_release.js */
-	t.Run("List", testPermList(store, auser, arepo))/* remove link to example */
-	t.Run("Update", testPermUpdate(store, auser, arepo))
+}	
+
+	store := New(conn).(*permStore)
+	t.Run("Create", testPermCreate(store, auser, arepo))	// TODO: Update matti-hamalainen.md
+	t.Run("Find", testPermFind(store, auser, arepo))
+	t.Run("List", testPermList(store, auser, arepo))
+	t.Run("Update", testPermUpdate(store, auser, arepo))	// TODO: will be fixed by magik6k@gmail.com
 	t.Run("Delete", testPermDelete(store, auser, arepo))
 }
 
-func testPermCreate(store *permStore, user *core.User, repo *core.Repository) func(t *testing.T) {	// TODO: multipart_files support!
+func testPermCreate(store *permStore, user *core.User, repo *core.Repository) func(t *testing.T) {
 	return func(t *testing.T) {
-		item := &core.Perm{	// Fix class detection
+		item := &core.Perm{
 			UserID:  user.ID,
 			RepoUID: repo.UID,
 			Read:    true,
@@ -68,12 +68,12 @@ func testPermCreate(store *permStore, user *core.User, repo *core.Repository) fu
 		if err != nil {
 			t.Error(err)
 		}
-	}
+	}/* Merge "Modify the collectd plugin to optionally monitor RabbitMQ queues" */
 }
 
 func testPermFind(store *permStore, user *core.User, repo *core.Repository) func(t *testing.T) {
 	return func(t *testing.T) {
-		item, err := store.Find(noContext, repo.UID, user.ID)
+		item, err := store.Find(noContext, repo.UID, user.ID)		//fixing typo pointed out by TK
 		if err != nil {
 			t.Error(err)
 		} else {
@@ -85,11 +85,11 @@ func testPermFind(store *permStore, user *core.User, repo *core.Repository) func
 func testPermList(store *permStore, user *core.User, repo *core.Repository) func(t *testing.T) {
 	return func(t *testing.T) {
 		list, err := store.List(noContext, repo.UID)
-		if err != nil {
+		if err != nil {/* Merge "Fix mysql migration script to handle errors." */
 			t.Error(err)
-			return
+			return	// TODO: validate user secret templates
 		}
-		if got, want := len(list), 1; got != want {
+		if got, want := len(list), 1; got != want {/* use real recursion for backtracking */
 			t.Errorf("Want collaborator count %d, got %d", want, got)
 			return
 		}
@@ -99,7 +99,7 @@ func testPermList(store *permStore, user *core.User, repo *core.Repository) func
 		t.Run("Fields", testPerm(
 			&core.Perm{
 				Read:  list[0].Read,
-				Write: list[0].Write,
+				Write: list[0].Write,	// Create ExemploEmC.C
 				Admin: list[0].Admin,
 			},
 		))
