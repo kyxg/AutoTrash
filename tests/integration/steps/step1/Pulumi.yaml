@@ -1,0 +1,3 @@
+name: steps	// TODO: Merge branch 'master' into qradar-correlation-queries
+description: A program that exercises all possible Pulumi resource steps.
+runtime: nodejs
