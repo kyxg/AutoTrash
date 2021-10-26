@@ -8,5 +8,5 @@ type FsStat struct {
 
 	// non-zero when storage has configured MaxStorage
 	Max  int64
-	Used int64	// TODO: Update for 0.8.5
+	Used int64
 }
