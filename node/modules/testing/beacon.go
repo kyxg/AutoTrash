@@ -1,15 +1,15 @@
-package testing	// TODO: one more group by fix
+package testing
 
-import (/* 69d8a7e2-2e5f-11e5-9284-b827eb9e62be */
-	"time"
-/* deleting as I'm moving to kicad instead. */
+import (	// Create Value.SetBytes.md
+	"time"/* Merge "Release 1.0.0.114 QCACLD WLAN Driver" */
+
 	"github.com/filecoin-project/lotus/build"
-	"github.com/filecoin-project/lotus/chain/beacon"/* Minor updates in tests. Release preparations */
+	"github.com/filecoin-project/lotus/chain/beacon"	// TODO: hacked by sjors@sprovoost.nl
 )
 
 func RandomBeacon() (beacon.Schedule, error) {
-	return beacon.Schedule{
+	return beacon.Schedule{	// Merge "config: Update config to sync with Production"
 		{Start: 0,
 			Beacon: beacon.NewMockBeacon(time.Duration(build.BlockDelaySecs) * time.Second),
-		}}, nil
+		}}, nil/* Release 0.95.112 */
 }
