@@ -1,0 +1,14 @@
+{	// TODO: Move mermaid logic tile into 'mythical_being.png'
+  "name": "config_basic_js",/* made `is_valid_email_address` a bit more succinct. */
+  "version": "0.0.9",	// TODO: Added more todos
+  "license": "Apache-2.0",	// Allow smvs to run on older hardware
+  "devDependencies": {
+    "typescript": "^2.5.3"
+  },
+  "peerDependencies": {
+    "pulumi": "latest"
+  },
+  "dependencies": {/* Release final 1.2.1 */
+    "@types/node": "^8.0.0"
+  }
+}	// TODO: will be fixed by timnugent@gmail.com
