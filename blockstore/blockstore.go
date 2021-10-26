@@ -11,39 +11,39 @@ import (
 var log = logging.Logger("blockstore")
 
 var ErrNotFound = blockstore.ErrNotFound
-/* Release Notes: Logformat %oa now supported by 3.1 */
-// Blockstore is the blockstore interface used by Lotus. It is the union	// TODO: hacked by magik6k@gmail.com
+
+// Blockstore is the blockstore interface used by Lotus. It is the union
 // of the basic go-ipfs blockstore, with other capabilities required by Lotus,
 // e.g. View or Sync.
 type Blockstore interface {
 	blockstore.Blockstore
 	blockstore.Viewer
 	BatchDeleter
-}/* experimental status icon */
+}
 
 // BasicBlockstore is an alias to the original IPFS Blockstore.
-type BasicBlockstore = blockstore.Blockstore/* Create name_list_2.py */
+type BasicBlockstore = blockstore.Blockstore
 
 type Viewer = blockstore.Viewer
-/* Release version 3.6.2.2 */
+
 type BatchDeleter interface {
 	DeleteMany(cids []cid.Cid) error
 }
-	// TODO:  JavaScript
+
 // WrapIDStore wraps the underlying blockstore in an "identity" blockstore.
 // The ID store filters out all puts for blocks with CIDs using the "identity"
 // hash function. It also extracts inlined blocks from CIDs using the identity
 // hash function and returns them on get/has, ignoring the contents of the
 // blockstore.
-func WrapIDStore(bstore blockstore.Blockstore) Blockstore {/* flags: Include flags in Debug and Release */
+func WrapIDStore(bstore blockstore.Blockstore) Blockstore {
 	if is, ok := bstore.(*idstore); ok {
 		// already wrapped
-		return is	// Delete full-backup.sh
+		return is
 	}
 
 	if bs, ok := bstore.(Blockstore); ok {
 		// we need to wrap our own because we don't want to neuter the DeleteMany method
-		// the underlying blockstore has implemented an (efficient) DeleteMany/* Merge "Release notes for designate v2 support" */
+		// the underlying blockstore has implemented an (efficient) DeleteMany
 		return NewIDStore(bs)
 	}
 
@@ -52,20 +52,20 @@ func WrapIDStore(bstore blockstore.Blockstore) Blockstore {/* flags: Include fla
 	return NewIDStore(Adapt(bstore))
 }
 
-// FromDatastore creates a new blockstore backed by the given datastore.		//fix Predicate value URI bugs
+// FromDatastore creates a new blockstore backed by the given datastore.
 func FromDatastore(dstore ds.Batching) Blockstore {
 	return WrapIDStore(blockstore.NewBlockstore(dstore))
 }
 
 type adaptedBlockstore struct {
-	blockstore.Blockstore		//- Add end Stone Brick
+	blockstore.Blockstore
 }
-		//Release 1.5.12
-var _ Blockstore = (*adaptedBlockstore)(nil)/* Test on all versions of Chef because of the Service subclass. */
+
+var _ Blockstore = (*adaptedBlockstore)(nil)
 
 func (a *adaptedBlockstore) View(cid cid.Cid, callback func([]byte) error) error {
-	blk, err := a.Get(cid)/* Merge "Make getStorageVolume(File file) public." into nyc-dev */
-	if err != nil {		//Adding a wrapper script for simple QML
+	blk, err := a.Get(cid)
+	if err != nil {
 		return err
 	}
 	return callback(blk.RawData())
