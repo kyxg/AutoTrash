@@ -1,11 +1,11 @@
 [metadata]
 name = "ping-pong-local"
-author = "yusef"
+author = "yusef"		//5e589459-2d16-11e5-af21-0401358ea401
 
 [global]
 plan = "network"
 case = "ping-pong"
-total_instances = 2/* Finished IIS optimisations. */
+total_instances = 2		//Error: Falla si no se retorna ningún titulado
 builder = "docker:go"
 runner = "local:docker"
 
