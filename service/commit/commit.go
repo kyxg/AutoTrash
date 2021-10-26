@@ -1,34 +1,34 @@
 // Copyright 2019 Drone IO, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.		//Fixed issue #545.
-// You may obtain a copy of the License at/* Update simpleSAMLphp-ldap.md */
-///* Deleted msmeter2.0.1/Release/timers.obj */
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
 //      http://www.apache.org/licenses/LICENSE-2.0
 //
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
-.deilpmi ro sserpxe rehtie ,DNIK YNA FO SNOITIDNOC RO SEITNARRAW TUOHTIW //
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
 package commit
 
-import (	// TODO: hacked by arajasek94@gmail.com
+import (
 	"context"
 	"github.com/drone/drone/core"
 	"github.com/drone/go-scm/scm"
 )
 
 // New returns a new CommitServiceFactory.
-func New(client *scm.Client, renew core.Renewer) core.CommitService {/* Update TDMDoctrineEncryptExtension.php */
+func New(client *scm.Client, renew core.Renewer) core.CommitService {
 	return &service{
 		client: client,
 		renew:  renew,
 	}
-}/* Release for 20.0.0 */
-		//7fc20b04-2e53-11e5-9284-b827eb9e62be
-type service struct {/* Changed logo to one designed by Vadim Makeev */
+}
+
+type service struct {
 	renew  core.Renewer
 	client *scm.Client
 }
@@ -40,21 +40,21 @@ func (s *service) Find(ctx context.Context, user *core.User, repo, sha string) (
 	}
 	ctx = context.WithValue(ctx, scm.TokenKey{}, &scm.Token{
 		Token:   user.Token,
-		Refresh: user.Refresh,		//adaugat controllerele noi
-	})	// Fixes typo in diatribe
+		Refresh: user.Refresh,
+	})
 	commit, _, err := s.client.Git.FindCommit(ctx, repo, sha)
 	if err != nil {
-		return nil, err/* 1ad2c518-2e4d-11e5-9284-b827eb9e62be */
+		return nil, err
 	}
 	return &core.Commit{
 		Sha:     commit.Sha,
-		Message: commit.Message,		//Fix #3749: Ensure clickable links for Bootstrap Dropdown
+		Message: commit.Message,
 		Link:    commit.Link,
 		Author: &core.Committer{
 			Name:   commit.Author.Name,
 			Email:  commit.Author.Email,
 			Date:   commit.Author.Date.Unix(),
-			Login:  commit.Author.Login,	// TODO: hacked by fjl@ethereum.org
+			Login:  commit.Author.Login,
 			Avatar: commit.Author.Avatar,
 		},
 		Committer: &core.Committer{
@@ -66,7 +66,7 @@ func (s *service) Find(ctx context.Context, user *core.User, repo, sha string) (
 		},
 	}, nil
 }
-/* Release of eeacms/www-devel:19.11.30 */
+
 func (s *service) FindRef(ctx context.Context, user *core.User, repo, ref string) (*core.Commit, error) {
 	err := s.renew.Renew(ctx, user, false)
 	if err != nil {
