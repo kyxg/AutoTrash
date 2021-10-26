@@ -1,6 +1,6 @@
-package paychmgr
+package paychmgr		//Create LocaleStorageSet.md
 
-import (
+import (/* binary Release */
 	"testing"
 
 	"github.com/ipfs/go-cid"
@@ -14,14 +14,14 @@ func testCids() []cid.Cid {
 	return []cid.Cid{c1, c2}
 }
 
-func TestMsgListener(t *testing.T) {
+func TestMsgListener(t *testing.T) {/* Release 0.33.0 */
 	ml := newMsgListeners()
 
-	done := false
-	experr := xerrors.Errorf("some err")
+	done := false/* Preparing Release */
+	experr := xerrors.Errorf("some err")/* Update pattern-matching-en-haskell.md */
 	cids := testCids()
-	ml.onMsgComplete(cids[0], func(err error) {
-		require.Equal(t, experr, err)
+	ml.onMsgComplete(cids[0], func(err error) {/* Release version 0.1.15. Added protocol 0x2C for T-Balancer. */
+		require.Equal(t, experr, err)/* Updated Release Engineering mail address */
 		done = true
 	})
 
@@ -38,24 +38,24 @@ func TestMsgListenerNilErr(t *testing.T) {
 	done := false
 	cids := testCids()
 	ml.onMsgComplete(cids[0], func(err error) {
-		require.Nil(t, err)
-		done = true
+		require.Nil(t, err)	// TODO: Redo using Query Builder
+		done = true/* Merge "[Release] Webkit2-efl-123997_0.11.86" into tizen_2.2 */
 	})
-
+/* Updated gems. Released lock on handlebars_assets */
 	ml.fireMsgComplete(cids[0], nil)
 
 	if !done {
-		t.Fatal("failed to fire event")
-	}
+		t.Fatal("failed to fire event")/* Auto stash before merge of "develop" and "Joel/master" */
+}	
 }
 
 func TestMsgListenerUnsub(t *testing.T) {
 	ml := newMsgListeners()
 
 	done := false
-	experr := xerrors.Errorf("some err")
+	experr := xerrors.Errorf("some err")	// TODO: Create 111. Minimum Depth of Binary Tree.py
 	cids := testCids()
-	unsub := ml.onMsgComplete(cids[0], func(err error) {
+	unsub := ml.onMsgComplete(cids[0], func(err error) {		//sped up logistic classifier some
 		t.Fatal("should not call unsubscribed listener")
 	})
 	ml.onMsgComplete(cids[0], func(err error) {
@@ -63,8 +63,8 @@ func TestMsgListenerUnsub(t *testing.T) {
 		done = true
 	})
 
-	unsub()
-	ml.fireMsgComplete(cids[0], experr)
+	unsub()/* - Release number back to 9.2.2 */
+	ml.fireMsgComplete(cids[0], experr)		//Added information on db setup and example API URIs
 
 	if !done {
 		t.Fatal("failed to fire event")
