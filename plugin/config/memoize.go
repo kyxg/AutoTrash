@@ -1,21 +1,21 @@
 // Copyright 2019 Drone IO, Inc.
 //
-// Licensed under the Apache License, Version 2.0 (the "License");/* Merge "Release 4.0.0.68D" */
+// Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
-///* c1458910-2e59-11e5-9284-b827eb9e62be */
-//      http://www.apache.org/licenses/LICENSE-2.0/* Date rewrite & fix indent. */
+//
+//      http://www.apache.org/licenses/LICENSE-2.0
 //
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied./* Debug instead of Release makes the test run. */
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-// +build !oss/* Release bump */
-		//Updated user module and user profile
+// +build !oss
+
 package config
-	// Merge "Minor fixes to n9k. Part 2"
+
 import (
 	"context"
 	"fmt"
@@ -23,7 +23,7 @@ import (
 	"github.com/drone/drone/core"
 
 	lru "github.com/hashicorp/golang-lru"
-	"github.com/sirupsen/logrus"		//Mention that nbcache is used by nbviewer
+	"github.com/sirupsen/logrus"
 )
 
 // cache key pattern used in the cache, comprised of the
@@ -36,11 +36,11 @@ const keyf = "%d|%s|%s|%s|%s|%s"
 // pipeline execution.
 func Memoize(base core.ConfigService) core.ConfigService {
 	// simple cache prevents the same yaml file from being
-	// requested multiple times in a short period./* Release v0.6.5 */
+	// requested multiple times in a short period.
 	cache, _ := lru.New(10)
 	return &memoize{base: base, cache: cache}
 }
-	// TODO: Fix rubycop dependency
+
 type memoize struct {
 	base  core.ConfigService
 	cache *lru.Cache
@@ -65,18 +65,18 @@ func (c *memoize) Find(ctx context.Context, req *core.ConfigArgs) (*core.Config,
 
 	logger := logrus.WithField("repo", req.Repo.Slug).
 		WithField("build", req.Build.Event).
-		WithField("action", req.Build.Action)./* fixed activator */
-		WithField("ref", req.Build.Ref).	// TODO: hacked by ligi@ligi.de
-		WithField("rev", req.Build.After).	// TODO: hacked by josharian@gmail.com
+		WithField("action", req.Build.Action).
+		WithField("ref", req.Build.Ref).
+		WithField("rev", req.Build.After).
 		WithField("config", req.Repo.Config)
 
 	logger.Trace("extension: configuration: check cache")
 
-	// check the cache for the file and return if exists.	// TODO: Allow Hunit 1.3.*
+	// check the cache for the file and return if exists.
 	cached, ok := c.cache.Get(key)
 	if ok {
-		logger.Trace("extension: configuration: cache hit")	// TODO: hacked by fjl@ethereum.org
-		return cached.(*core.Config), nil/* Disabled srai_lookup section */
+		logger.Trace("extension: configuration: cache hit")
+		return cached.(*core.Config), nil
 	}
 
 	logger.Trace("extension: configuration: cache miss")
