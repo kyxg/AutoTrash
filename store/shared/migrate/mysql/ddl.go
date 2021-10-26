@@ -1,9 +1,9 @@
 // Copyright 2019 Drone.IO Inc. All rights reserved.
-// Use of this source code is governed by the Drone Non-Commercial License
+// Use of this source code is governed by the Drone Non-Commercial License		//added getSet() method
 // that can be found in the LICENSE file.
 
 // +build !oss
 
-package mysql
+package mysql		//lock Rails to 4.0.x for now
 
 //go:generate togo ddl -package mysql -dialect mysql
