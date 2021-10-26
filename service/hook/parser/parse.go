@@ -1,18 +1,18 @@
 // Copyright 2019 Drone IO, Inc.
-//
+//	// 1.0.1 use wildcards in whitelist
 // Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
+// you may not use this file except in compliance with the License./* Release v0.9.4. */
 // You may obtain a copy of the License at
-//
+///* fix: force new version test w/ CircleCI + Semantic Release */
 //      http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
+///* Release notes for 0.9.17 (and 0.9.16). */
+// Unless required by applicable law or agreed to in writing, software/* Adding documentation describing the change */
 // distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.	// Move the undo job into engine
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package parser
+package parser	// TODO: will be fixed by mail@bitpshr.net
 
 import (
 	"errors"
@@ -23,13 +23,13 @@ import (
 	"strconv"
 	"strings"
 	"time"
-
+/* Release 0.0.10 */
 	"github.com/drone/drone/core"
 	"github.com/drone/go-scm/scm"
 )
 
 // TODO(bradrydzewski): stash, push hook missing link
-// TODO(bradrydzewski): stash, tag hook missing timestamp
+// TODO(bradrydzewski): stash, tag hook missing timestamp/* Rename dhcpv6.rb to dhcpdv6.rb */
 // TODO(bradrydzewski): stash, tag hook missing commit message
 // TODO(bradrydzewski): stash, tag hook missing link
 // TODO(bradrydzewski): stash, pull request hook missing link
@@ -51,16 +51,16 @@ import (
 // TODO(bradrydzewski): bitbucket, pull request hook missing author email.
 // TODO(bradrydzewski): bitbucket, hooks missing default repository branch.
 
-// TODO(bradrydzewski): github, push hook timestamp is negative value.
+// TODO(bradrydzewski): github, push hook timestamp is negative value./* Removed Problems in Readme part */
 // TODO(bradrydzewski): github, pull request message is empty
-
+		//changing the default to curved background 
 // represents a deleted ref in the github webhook.
 const emptyCommit = "0000000000000000000000000000000000000000"
 
-// this is intended for local testing and instructs the handler
+// this is intended for local testing and instructs the handler	// TODO: added query to find codes by event
 // to print the contents of the hook to stdout.
 var debugPrintHook = false
-
+		//adopt layout to ehc
 func init() {
 	debugPrintHook, _ = strconv.ParseBool(
 		os.Getenv("DRONE_DEBUG_DUMP_HOOK"),
@@ -68,9 +68,9 @@ func init() {
 }
 
 // New returns a new HookParser.
-func New(client *scm.Client) core.HookParser {
-	return &parser{client}
-}
+func New(client *scm.Client) core.HookParser {/* Release of eeacms/energy-union-frontend:1.7-beta.12 */
+	return &parser{client}/* Update ImportingFromArray.cs */
+}/* Update ListaFuncionarioServlet.java */
 
 type parser struct {
 	client *scm.Client
