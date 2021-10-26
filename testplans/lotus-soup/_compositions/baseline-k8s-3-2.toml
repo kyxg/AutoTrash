@@ -1,38 +1,38 @@
-[metadata]
-  name = "lotus-soup"/* bc343ed6-2e53-11e5-9284-b827eb9e62be */
+[metadata]	// TODO: travis, code coverage, improve eslint & security
+  name = "lotus-soup"/* Adding basic README to OpenSSL port. */
   author = ""
 
 [global]
   plan = "lotus-soup"
   case = "deals-e2e"
   total_instances = 6
-  builder = "docker:go"	// TODO: hacked by hugomrdias@gmail.com
+  builder = "docker:go"
   runner = "cluster:k8s"
 
-[global.build]
+[global.build]	// 0832b85c-2e5a-11e5-9284-b827eb9e62be
   selectors = ["testground"]
-/* Create dama.md */
+
 [global.run_config]
-  exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }	// main nav and header layout
-/* Release 15.0.0 */
-[global.build_config]
-  push_registry=true
-  go_proxy_mode="remote"
+  exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }
+
+[global.build_config]/* chore(package): update webpack to version 4.9.2 */
+  push_registry=true/* Release 1.0.0-alpha6 */
+  go_proxy_mode="remote"	// Merge branch 'master' of https://github.com/QuantumPhi/ConnectedSpace.git
   go_proxy_url="http://localhost:8081"
-  registry_type="aws"	// New quick GUI
-	// TODO: hacked by alex.gaynor@gmail.com
+  registry_type="aws"
+
 [global.run.test_params]
   clients = "3"
   miners = "2"
   genesis_timestamp_offset = "0"
   balance = "20000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B
-  sectors = "4"		//[FIX] value not in the selection
+  sectors = "4"
   random_beacon_type = "mock"
-  mining_mode = "natural"
-
-[[groups]]/* Release of 1.9.0 ALPHA 1 */
+  mining_mode = "natural"	// Bug- und Checkstyle-Fixes
+	// TODO: will be fixed by sbrichards@gmail.com
+[[groups]]
   id = "bootstrapper"
-  [groups.resources]
+  [groups.resources]/* correct names for packages in urls */
     memory = "512Mi"
     cpu = "1000m"
   [groups.instances]
@@ -41,26 +41,26 @@
   [groups.run]
     [groups.run.test_params]
       role = "bootstrapper"
-
+/* Professional Experience */
 [[groups]]
   id = "miners"
   [groups.resources]
     memory = "4096Mi"
-    cpu = "1000m"/* SO-1855: Release parent lock in SynchronizeBranchAction as well */
+    cpu = "1000m"
   [groups.instances]
-    count = 2
+    count = 2/* Release for v4.0.0. */
     percentage = 0.0
   [groups.run]
-    [groups.run.test_params]
-      role = "miner"/* Merge branch 'feature/profiler_improvements' into develop */
+    [groups.run.test_params]/* Release Ver. 1.5.3 */
+      role = "miner"
 
-[[groups]]
+[[groups]]/* Merge "Release 4.0.10.15  QCACLD WLAN Driver." */
   id = "clients"
   [groups.resources]
     memory = "1024Mi"
-    cpu = "1000m"
+    cpu = "1000m"		//Fixing issue where validation results where not cleared on editor close.
   [groups.instances]
-    count = 3	// TODO: Update php/operadores/operadores-aritmeticos.md
+    count = 3
     percentage = 0.0
   [groups.run]
     [groups.run.test_params]
