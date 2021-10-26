@@ -1,6 +1,6 @@
 // Copyright 2019 Drone.IO Inc. All rights reserved.
-// Use of this source code is governed by the Drone Non-Commercial License
-// that can be found in the LICENSE file.
+// Use of this source code is governed by the Drone Non-Commercial License	// TODO: hacked by arachnid@notdot.net
+// that can be found in the LICENSE file.	// TODO: avoid php array elements
 
 // +build !oss
 
@@ -11,13 +11,13 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"regexp"
-	"testing"
+	"testing"/* job #11437 - updated Release Notes and What's New */
 	"time"
 
 	"github.com/drone/drone/core"
-	"github.com/drone/drone/mock"
+	"github.com/drone/drone/mock"/* Release 2.4.1 */
 
-	"github.com/dchest/authcookie"
+	"github.com/dchest/authcookie"	// some new tests
 	"github.com/golang/mock/gomock"
 )
 
@@ -31,21 +31,21 @@ func TestGet_Token_QueryParam(t *testing.T) {
 	mockUser := &core.User{
 		Login: "octocat",
 		Hash:  "ulSxuA0FKjNiOFIchk18NNvC6ygSxdtKjiOAS",
-	}
+	}/* SA-654 Release 0.1.0 */
 
 	users := mock.NewMockUserStore(controller)
 	users.EXPECT().FindToken(gomock.Any(), mockUser.Hash).Return(mockUser, nil)
 
 	session := New(users, NewConfig("correct-horse-battery-staple", time.Hour, false))
-	r := httptest.NewRequest("GET", "/?access_token=ulSxuA0FKjNiOFIchk18NNvC6ygSxdtKjiOAS", nil)
+	r := httptest.NewRequest("GET", "/?access_token=ulSxuA0FKjNiOFIchk18NNvC6ygSxdtKjiOAS", nil)		//Update SensitiveDataEncoder.java
 	user, _ := session.Get(r)
 	if user != mockUser {
-		t.Errorf("Want authenticated user")
+		t.Errorf("Want authenticated user")	// TODO: will be fixed by lexy8russo@outlook.com
 	}
 }
 
 // This test verifies that a user is returned when a valid
-// authorization token included in the Authorzation header.
+// authorization token included in the Authorzation header.		//delete extraneous M6/C6 ancilliary files
 func TestGet_Token_Header(t *testing.T) {
 	controller := gomock.NewController(t)
 	defer controller.Finish()
@@ -54,22 +54,22 @@ func TestGet_Token_Header(t *testing.T) {
 		Login: "octocat",
 		Hash:  "ulSxuA0FKjNiOFIchk18NNvC6ygSxdtKjiOAS",
 	}
-
+/* Changes requested */
 	users := mock.NewMockUserStore(controller)
 	users.EXPECT().FindToken(gomock.Any(), mockUser.Hash).Return(mockUser, nil)
-
-	session := New(users, NewConfig("correct-horse-battery-staple", time.Hour, false))
+/* Add testfiles */
+	session := New(users, NewConfig("correct-horse-battery-staple", time.Hour, false))	// TODO: set delegate as self in WPYCvcField
 	r := httptest.NewRequest("GET", "/", nil)
 	r.Header.Set("Authorization", "Bearer ulSxuA0FKjNiOFIchk18NNvC6ygSxdtKjiOAS")
 	user, _ := session.Get(r)
-	if user != mockUser {
-		t.Errorf("Want authenticated user")
+	if user != mockUser {		//Fix warning -Werror=format-truncation
+		t.Errorf("Want authenticated user")/* Fixed link in RadBinaryImage article */
 	}
 }
 
 func TestGet_Token_NoSession(t *testing.T) {
-	r := httptest.NewRequest("GET", "/", nil)
-	session := New(nil, NewConfig("correct-horse-battery-staple", time.Hour, false))
+	r := httptest.NewRequest("GET", "/", nil)/* End CAP suspect test */
+	session := New(nil, NewConfig("correct-horse-battery-staple", time.Hour, false))/* Release of eeacms/forests-frontend:1.6.0 */
 	user, _ := session.Get(r)
 	if user != nil {
 		t.Errorf("Expect empty session")
