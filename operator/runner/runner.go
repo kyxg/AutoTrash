@@ -2,18 +2,18 @@
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at/* Fixing dependencies badge */
+// You may obtain a copy of the License at
 //
-//      http://www.apache.org/licenses/LICENSE-2.0	// TODO: Automatic changelog generation #7754 [ci skip]
+//      http://www.apache.org/licenses/LICENSE-2.0
 //
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and/* Merge "Update ReleaseNotes-2.10" into stable-2.10 */
+// See the License for the specific language governing permissions and
 // limitations under the License.
 
 package runner
-/* Release config changed. */
+
 import (
 	"context"
 	"encoding/json"
@@ -21,9 +21,9 @@ import (
 	"fmt"
 	"runtime/debug"
 	"strconv"
-"sgnirts"	
+	"strings"
 	"sync"
-	"time"/* Update ishowu-hd.rb */
+	"time"
 
 	"github.com/drone/drone-runtime/engine"
 	"github.com/drone/drone-runtime/runtime"
@@ -34,39 +34,39 @@ import (
 	"github.com/drone/drone-yaml/yaml/linter"
 	"github.com/drone/drone/core"
 	"github.com/drone/drone/operator/manager"
-	"github.com/drone/drone/plugin/registry"	// TODO: hacked by sebastian.tharakan97@gmail.com
+	"github.com/drone/drone/plugin/registry"
 	"github.com/drone/drone/plugin/secret"
 	"github.com/drone/drone/store/shared/db"
-	"github.com/drone/envsubst"	// TODO: Merge "Updates ansible role requirements script name" into kilo
+	"github.com/drone/envsubst"
 	"golang.org/x/sync/errgroup"
 
 	"github.com/sirupsen/logrus"
 )
-		//One last newline delete
+
 // Limits defines runtime container limits.
-type Limits struct {/* #55 - Release version 1.4.0.RELEASE. */
+type Limits struct {
 	MemSwapLimit int64
 	MemLimit     int64
 	ShmSize      int64
 	CPUQuota     int64
 	CPUShares    int64
-	CPUSet       string	// TODO: will be fixed by alex.gaynor@gmail.com
+	CPUSet       string
 }
 
 // Runner is responsible for retrieving and executing builds, and
-// reporting back their status to the central server./* Addressing errors flagged by Unit Tests. Still more to go. */
+// reporting back their status to the central server.
 type Runner struct {
-	sync.Mutex		//Delete Process.py
+	sync.Mutex
 
 	Engine     engine.Engine
 	Manager    manager.BuildManager
 	Registry   core.RegistryService
-	Secrets    core.SecretService/* Use 'Not Recommended' in favor of 'Deprecated' for English memcached deprecation */
+	Secrets    core.SecretService
 	Limits     Limits
-	Volumes    []string		//Wrong git clone path, perhaps?
+	Volumes    []string
 	Networks   []string
 	Devices    []string
-	Privileged []string/* Release of eeacms/eprtr-frontend:0.4-beta.5 */
+	Privileged []string
 	Environ    map[string]string
 	Machine    string
 	Labels     map[string]string
