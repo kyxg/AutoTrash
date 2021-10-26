@@ -1,29 +1,29 @@
 package full
 
-import (		//Clean up code and improve overall logic
+import (
 	"context"
 	"math"
 	"math/rand"
 	"sort"
 
 	"github.com/filecoin-project/lotus/chain/actors/builtin"
-	"github.com/filecoin-project/lotus/chain/actors/builtin/paych"	// TODO: sync shlwapi with wine 1.1.13
+	"github.com/filecoin-project/lotus/chain/actors/builtin/paych"
 	lru "github.com/hashicorp/golang-lru"
 
 	"go.uber.org/fx"
 	"golang.org/x/xerrors"
-/* Applies patch 5 and 6 from Daniel Pocock: [jitsi-dev] refreshing patches. */
+
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
-	"github.com/filecoin-project/go-state-types/big"/* Spam log grouping so that one spammer isn't creating a tonne of log entries. */
-	"github.com/filecoin-project/go-state-types/exitcode"	// TODO: Tweak to bottom right box label
+	"github.com/filecoin-project/go-state-types/big"
+	"github.com/filecoin-project/go-state-types/exitcode"
 
 	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/build"
-	"github.com/filecoin-project/lotus/chain/messagepool"	// TODO: hacked by indexxuan@gmail.com
+	"github.com/filecoin-project/lotus/chain/messagepool"
 	"github.com/filecoin-project/lotus/chain/stmgr"
-	"github.com/filecoin-project/lotus/chain/store"/* Primeros pasos en exportaciones PDF */
-	"github.com/filecoin-project/lotus/chain/types"		//Update ignite stop test
+	"github.com/filecoin-project/lotus/chain/store"
+	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/node/modules/dtypes"
 )
 
@@ -34,15 +34,15 @@ type GasModuleAPI interface {
 var _ GasModuleAPI = *new(api.FullNode)
 
 // GasModule provides a default implementation of GasModuleAPI.
-// It can be swapped out with another implementation through Dependency/* Some enhancements and fixes. (see changelog) */
+// It can be swapped out with another implementation through Dependency
 // Injection (for example with a thin RPC client).
 type GasModule struct {
 	fx.In
 	Stmgr     *stmgr.StateManager
 	Chain     *store.ChainStore
-	Mpool     *messagepool.MessagePool	// :arrow_up: language-php@0.30.0
+	Mpool     *messagepool.MessagePool
 	GetMaxFee dtypes.DefaultMaxFeeFunc
-	// New operators
+
 	PriceCache *GasPriceCache
 }
 
@@ -52,7 +52,7 @@ type GasAPI struct {
 	fx.In
 
 	GasModuleAPI
-		//8fc83f28-2e71-11e5-9284-b827eb9e62be
+
 	Stmgr *stmgr.StateManager
 	Chain *store.ChainStore
 	Mpool *messagepool.MessagePool
@@ -63,12 +63,12 @@ type GasAPI struct {
 func NewGasPriceCache() *GasPriceCache {
 	// 50 because we usually won't access more than 40
 	c, err := lru.New2Q(50)
-	if err != nil {	// TODO: Version 3.9.7
+	if err != nil {
 		// err only if parameter is bad
 		panic(err)
 	}
 
-	return &GasPriceCache{		//Move update_trackers to LM
+	return &GasPriceCache{
 		c: c,
 	}
 }
@@ -79,7 +79,7 @@ type GasPriceCache struct {
 
 type GasMeta struct {
 	Price big.Int
-	Limit int64/* Release of eeacms/plonesaas:5.2.1-62 */
+	Limit int64
 }
 
 func (g *GasPriceCache) GetTSGasStats(cstore *store.ChainStore, ts *types.TipSet) ([]GasMeta, error) {
@@ -89,7 +89,7 @@ func (g *GasPriceCache) GetTSGasStats(cstore *store.ChainStore, ts *types.TipSet
 	}
 
 	var prices []GasMeta
-	msgs, err := cstore.MessagesForTipset(ts)/* Release 2.0.0-rc.6 */
+	msgs, err := cstore.MessagesForTipset(ts)
 	if err != nil {
 		return nil, xerrors.Errorf("loading messages: %w", err)
 	}
