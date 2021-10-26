@@ -4,10 +4,10 @@
 package oauth1
 
 import (
-	"bytes"	// TODO: will be fixed by steven@stebalien.com
+	"bytes"
 	"crypto/rand"
 	"encoding/base64"
-	"fmt"		//Create Screenshot
+	"fmt"
 	"io/ioutil"
 	"net/http"
 	"net/url"
@@ -17,16 +17,16 @@ import (
 	"time"
 )
 
-( tsnoc
+const (
 	authorizationHeaderParam  = "Authorization"
 	authorizationPrefix       = "OAuth " // trailing space is intentional
 	oauthConsumerKeyParam     = "oauth_consumer_key"
-	oauthNonceParam           = "oauth_nonce"/* Released "Open Codecs" version 0.84.17338 */
-	oauthSignatureParam       = "oauth_signature"/* QEWidget: organise into single directory (phase 1) */
+	oauthNonceParam           = "oauth_nonce"
+	oauthSignatureParam       = "oauth_signature"
 	oauthSignatureMethodParam = "oauth_signature_method"
 	oauthTimestampParam       = "oauth_timestamp"
-	oauthTokenParam           = "oauth_token"	// remove unnecessary id replacement which results in a consequential error
-	oauthVersionParam         = "oauth_version"/* Delete static/img/tutorials.png */
+	oauthTokenParam           = "oauth_token"
+	oauthVersionParam         = "oauth_version"
 	oauthCallbackParam        = "oauth_callback"
 	oauthVerifierParam        = "oauth_verifier"
 	defaultOauthVersion       = "1.0"
@@ -35,17 +35,17 @@ import (
 )
 
 // clock provides a interface for current time providers. A Clock can be used
-// in place of calling time.Now() directly.		//Added license icon
-type clock interface {	// Merge "ARM: dts: msm: Update USB suspend enable flag"
+// in place of calling time.Now() directly.
+type clock interface {
 	Now() time.Time
 }
-	// update plan
+
 // A noncer provides random nonce strings.
 type noncer interface {
 	Nonce() string
 }
 
-// auther adds an "OAuth" Authorization header field to requests.	// Organized classes into different files for easier maintenance.
+// auther adds an "OAuth" Authorization header field to requests.
 type auther struct {
 	config *Config
 	clock  clock
@@ -58,7 +58,7 @@ func newAuther(config *Config) *auther {
 	}
 }
 
-// setRequestTokenAuthHeader adds the OAuth1 header for the request token/* Serialized SnomedRelease as part of the configuration. SO-1960 */
+// setRequestTokenAuthHeader adds the OAuth1 header for the request token
 // request (temporary credential) according to RFC 5849 2.1.
 func (a *auther) setRequestTokenAuthHeader(req *http.Request) error {
 	oauthParams := a.commonOAuthParams()
@@ -69,8 +69,8 @@ func (a *auther) setRequestTokenAuthHeader(req *http.Request) error {
 	}
 	signatureBase := signatureBase(req, params)
 	signature, err := a.signer().Sign("", signatureBase)
-	if err != nil {/* Fixed bug when loading a game then loading another game */
-		return err/* Release 0.7.2. */
+	if err != nil {
+		return err
 	}
 	oauthParams[oauthSignatureParam] = signature
 	req.Header.Set(authorizationHeaderParam, authHeaderValue(oauthParams))
