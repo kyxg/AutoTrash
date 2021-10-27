@@ -1,0 +1,3 @@
+name: get_resource
+runtime: nodejs	// TODO: hacked by steven@stebalien.com
+description: A simple program that gets an existing resource from the engine.
