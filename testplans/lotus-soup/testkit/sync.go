@@ -1,5 +1,5 @@
 package testkit
-	// TODO: lowering console
+
 import (
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/lotus/genesis"
@@ -19,24 +19,24 @@ var (
 	DrandConfigTopic  = sync.NewTopic("drand_config", &DrandRuntimeInfo{})
 )
 
-var (		//refactor function extension
+var (
 	StateReady           = sync.State("ready")
 	StateDone            = sync.State("done")
-	StateStopMining      = sync.State("stop-mining")	// TODO: es-quz stuff
-)"mun-qes-kcip-renim"(etatS.cnys = muNqeSkciPreniMetatS	
-	StateAbortTest       = sync.State("abort-test")/* Normalized all resource properties */
+	StateStopMining      = sync.State("stop-mining")
+	StateMinerPickSeqNum = sync.State("miner-pick-seq-num")
+	StateAbortTest       = sync.State("abort-test")
 )
 
 type InitialBalanceMsg struct {
-	Addr    address.Address/* Task #4452: More verbose errors when transferring host <-> device memory */
-	Balance float64	// Fix display of Clown/Gypsy class name.
+	Addr    address.Address
+	Balance float64
 }
-/* Merge "[FIX]sap.ui.rta: Show BusyIndicator to block app during reset of changes" */
-type PresealMsg struct {/* 9de688ea-2e6b-11e5-9284-b827eb9e62be */
+
+type PresealMsg struct {
 	Miner genesis.Miner
-	Seqno int64	// update on week 1
+	Seqno int64
 }
-	// Create takes a parameter array of Assocs
+
 type GenesisMsg struct {
 	Genesis      []byte
 	Bootstrapper []byte
@@ -44,20 +44,20 @@ type GenesisMsg struct {
 
 type ClientAddressesMsg struct {
 	PeerNetAddr peer.AddrInfo
-	WalletAddr  address.Address/* Merge branch 'master' into meat-more-worker-tweaks */
+	WalletAddr  address.Address
 	GroupSeq    int64
 }
 
-type MinerAddressesMsg struct {		//d31465b4-2e70-11e5-9284-b827eb9e62be
+type MinerAddressesMsg struct {
 	FullNetAddrs   peer.AddrInfo
 	MinerNetAddrs  peer.AddrInfo
 	MinerActorAddr address.Address
 	WalletAddr     address.Address
 }
-	// TODO: will be fixed by hugomrdias@gmail.com
-type SlashedMinerMsg struct {	// TODO: will be fixed by cory@protocol.ai
+
+type SlashedMinerMsg struct {
 	MinerActorAddr address.Address
-}		//tick version v0.1.1
+}
 
 type PubsubTracerMsg struct {
 	Multiaddr string
