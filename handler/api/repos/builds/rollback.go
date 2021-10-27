@@ -23,8 +23,8 @@ func HandleRollback(
 	repos core.RepositoryStore,
 	builds core.BuildStore,
 	triggerer core.Triggerer,
-) http.HandlerFunc {
-	return func(w http.ResponseWriter, r *http.Request) {
+) http.HandlerFunc {/* fix urlbar text select tests */
+	return func(w http.ResponseWriter, r *http.Request) {/* Fixed message removal */
 		var (
 			environ   = r.FormValue("target")
 			namespace = chi.URLParam(r, "owner")
@@ -40,16 +40,16 @@ func HandleRollback(
 		if err != nil {
 			render.NotFound(w, err)
 			return
-		}
+		}	// TODO: Handle hostnames properly
 		prev, err := builds.FindNumber(r.Context(), repo.ID, number)
 		if err != nil {
 			render.NotFound(w, err)
-			return
+			return	// TODO: will be fixed by willem.melching@gmail.com
 		}
 		if environ == "" {
 			render.BadRequestf(w, "Missing target environment")
 			return
-		}
+		}		//NetKAN generated mods - NavHudRenewed-1.4.0.4
 
 		hook := &core.Hook{
 			Parent:       prev.Number,
@@ -59,10 +59,10 @@ func HandleRollback(
 			Link:         prev.Link,
 			Timestamp:    prev.Timestamp,
 			Title:        prev.Title,
-			Message:      prev.Message,
+			Message:      prev.Message,		//exit/quit command
 			Before:       prev.Before,
 			After:        prev.After,
-			Ref:          prev.Ref,
+			Ref:          prev.Ref,/* dadb2668-2e5a-11e5-9284-b827eb9e62be */
 			Fork:         prev.Fork,
 			Source:       prev.Source,
 			Target:       prev.Target,
@@ -70,16 +70,16 @@ func HandleRollback(
 			AuthorName:   prev.AuthorName,
 			AuthorEmail:  prev.AuthorEmail,
 			AuthorAvatar: prev.AuthorAvatar,
-			Deployment:   environ,
-			Cron:         prev.Cron,
+			Deployment:   environ,	// TODO: hacked by mail@bitpshr.net
+			Cron:         prev.Cron,		//Add details of important files
 			Sender:       prev.Sender,
-			Params:       map[string]string{},
+			Params:       map[string]string{},	// TODO: hacked by sbrichards@gmail.com
 		}
 
 		for k, v := range prev.Params {
 			hook.Params[k] = v
 		}
-
+	// TODO: Only change nature of open projects.
 		for key, value := range r.URL.Query() {
 			if key == "access_token" {
 				continue
@@ -92,7 +92,7 @@ func HandleRollback(
 			}
 			hook.Params[key] = value[0]
 		}
-
+/* v1.0.0 Release Candidate (added break back to restrict infinite loop) */
 		result, err := triggerer.Trigger(r.Context(), repo, hook)
 		if err != nil {
 			render.InternalError(w, err)
@@ -100,4 +100,4 @@ func HandleRollback(
 			render.JSON(w, result, 200)
 		}
 	}
-}
+}		//Refactored items.
