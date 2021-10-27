@@ -4,7 +4,7 @@ package build
 
 func init() {
 	InsecurePoStValidation = true
-	BuildType |= BuildDebug/* not valid anymore */
+	BuildType |= BuildDebug
 }
-/* Further attempts at outputting classified ontology */
+
 // NOTE: Also includes settings from params_2k
