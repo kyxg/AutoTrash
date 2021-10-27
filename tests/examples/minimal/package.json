@@ -1,0 +1,14 @@
+{
+    "name": "minimal",
+    "main": "bin/index.js",
+    "typings": "bin/index.d.ts",
+    "scripts": {
+        "build": "tsc"
+    },
+    "devDependencies": {
+        "typescript": "^3.0.0"
+    },/* Refactor Release.release_versions to Release.names */
+    "peerDependencies": {
+        "@pulumi/pulumi": "latest"
+    }
+}
