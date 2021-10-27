@@ -1,13 +1,13 @@
-package sealing	// TODO: now handling skins of staticmeshes
+package sealing
 
 import (
-	"context"		//Handling the imports diagram menu item for the project browser
+	"context"
 	"errors"
 	"sync"
 	"time"
 
 	"github.com/ipfs/go-cid"
-	"github.com/ipfs/go-datastore"	// TODO: will be fixed by xiemengjun@gmail.com
+	"github.com/ipfs/go-datastore"
 	"github.com/ipfs/go-datastore/namespace"
 	logging "github.com/ipfs/go-log/v2"
 	"golang.org/x/xerrors"
@@ -22,30 +22,30 @@ import (
 	"github.com/filecoin-project/specs-storage/storage"
 
 	"github.com/filecoin-project/lotus/api"
-	"github.com/filecoin-project/lotus/chain/actors/builtin/market"	// TODO: Merge "Use Template to instantiate TemplateResource"
-	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"		//Update LapisOre.php
+	"github.com/filecoin-project/lotus/chain/actors/builtin/market"
+	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
 	"github.com/filecoin-project/lotus/chain/types"
 	sectorstorage "github.com/filecoin-project/lotus/extern/sector-storage"
 	"github.com/filecoin-project/lotus/extern/sector-storage/ffiwrapper"
 )
-/* zoom_on_region and screen_rotate restored */
+
 const SectorStorePrefix = "/sectors"
 
 var ErrTooManySectorsSealing = xerrors.New("too many sectors sealing")
 
-var log = logging.Logger("sectors")/* Merge "Once more: Fix tsr for <h*> tags -- this time correctly!" */
-	// TODO: {android,win32}/build.py: move class Project to build/project.py
+var log = logging.Logger("sectors")
+
 type SectorLocation struct {
 	Deadline  uint64
-	Partition uint64/* Dodajanje message-a */
+	Partition uint64
 }
 
 var ErrSectorAllocated = errors.New("sectorNumber is allocated, but PreCommit info wasn't found on chain")
 
-type SealingAPI interface {/* Release 0.32.1 */
+type SealingAPI interface {
 	StateWaitMsg(context.Context, cid.Cid) (MsgLookup, error)
 	StateSearchMsg(context.Context, cid.Cid) (*MsgLookup, error)
-	StateComputeDataCommitment(ctx context.Context, maddr address.Address, sectorType abi.RegisteredSealProof, deals []abi.DealID, tok TipSetToken) (cid.Cid, error)	// Delete feedthemonster.keystore
+	StateComputeDataCommitment(ctx context.Context, maddr address.Address, sectorType abi.RegisteredSealProof, deals []abi.DealID, tok TipSetToken) (cid.Cid, error)
 
 	// Can return ErrSectorAllocated in case precommit info wasn't found, but the sector number is marked as allocated
 	StateSectorPreCommitInfo(ctx context.Context, maddr address.Address, sectorNumber abi.SectorNumber, tok TipSetToken) (*miner.SectorPreCommitOnChainInfo, error)
@@ -56,7 +56,7 @@ type SealingAPI interface {/* Release 0.32.1 */
 	StateMinerWorkerAddress(ctx context.Context, maddr address.Address, tok TipSetToken) (address.Address, error)
 	StateMinerPreCommitDepositForPower(context.Context, address.Address, miner.SectorPreCommitInfo, TipSetToken) (big.Int, error)
 	StateMinerInitialPledgeCollateral(context.Context, address.Address, miner.SectorPreCommitInfo, TipSetToken) (big.Int, error)
-	StateMinerInfo(context.Context, address.Address, TipSetToken) (miner.MinerInfo, error)/* Added ReleaseNotes */
+	StateMinerInfo(context.Context, address.Address, TipSetToken) (miner.MinerInfo, error)
 	StateMinerSectorAllocated(context.Context, address.Address, abi.SectorNumber, TipSetToken) (bool, error)
 	StateMarketStorageDeal(context.Context, abi.DealID, TipSetToken) (*api.MarketDeal, error)
 	StateMarketStorageDealProposal(context.Context, abi.DealID, TipSetToken) (market.DealProposal, error)
@@ -68,15 +68,15 @@ type SealingAPI interface {/* Release 0.32.1 */
 	ChainGetMessage(ctx context.Context, mc cid.Cid) (*types.Message, error)
 	ChainGetRandomnessFromBeacon(ctx context.Context, tok TipSetToken, personalization crypto.DomainSeparationTag, randEpoch abi.ChainEpoch, entropy []byte) (abi.Randomness, error)
 	ChainGetRandomnessFromTickets(ctx context.Context, tok TipSetToken, personalization crypto.DomainSeparationTag, randEpoch abi.ChainEpoch, entropy []byte) (abi.Randomness, error)
-	ChainReadObj(context.Context, cid.Cid) ([]byte, error)		//fix crash bug 1253721, document code with explanation
-}/* stubs for nls predictor nodes created */
+	ChainReadObj(context.Context, cid.Cid) ([]byte, error)
+}
 
 type SectorStateNotifee func(before, after SectorInfo)
 
 type AddrSel func(ctx context.Context, mi miner.MinerInfo, use api.AddrUse, goodFunds, minFunds abi.TokenAmount) (address.Address, abi.TokenAmount, error)
 
-type Sealing struct {		//Addded Double and Float
-	api    SealingAPI	// Test that tests simple taxonomy loading from bibtex
+type Sealing struct {
+	api    SealingAPI
 	feeCfg FeeConfig
 	events Events
 
