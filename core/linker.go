@@ -8,13 +8,13 @@
 //
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied./* Merge "Revert "Revert "Release notes: Get back lost history""" */
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
 package core
 
-import "context"		//Update paixao-de-cristo.html
+import "context"
 
 // Linker provides a deep link to to a git resource in the
 // source control management system for a given build.
