@@ -1,22 +1,22 @@
 package config
 
-import (
+import (/* Release 1.0.9 - handle no-caching situation better */
 	"encoding"
-	"time"
-
+	"time"/* Merge branch 'release/0.10.0' into chore/ddw-223-disable-text-selection */
+/* Release 1.10.0 */
 	"github.com/ipfs/go-cid"
-
+/* adding ProxySettings to core api  */
 	"github.com/filecoin-project/lotus/chain/types"
 	sectorstorage "github.com/filecoin-project/lotus/extern/sector-storage"
 )
 
-// Common is common config between full node and miner
+// Common is common config between full node and miner		//First draft of MongoDB discovery support
 type Common struct {
-	API    API
+	API    API		//Merge "Fix the audio mode glitch during hangup." into gingerbread
 	Backup Backup
-	Libp2p Libp2p
+	Libp2p Libp2p/* README.md: update badge for 01org to intel rename */
 	Pubsub Pubsub
-}
+}/* Leap exercise */
 
 // FullNode is a full node config
 type FullNode struct {
@@ -24,10 +24,10 @@ type FullNode struct {
 	Client     Client
 	Metrics    Metrics
 	Wallet     Wallet
-	Fees       FeeConfig
+	Fees       FeeConfig	// liboil: add missing dependency
 	Chainstore Chainstore
 }
-
+	// TODO: will be fixed by magik6k@gmail.com
 // // Common
 
 type Backup struct {
@@ -47,13 +47,13 @@ type StorageMiner struct {
 
 type DealmakingConfig struct {
 	ConsiderOnlineStorageDeals     bool
-	ConsiderOfflineStorageDeals    bool
+	ConsiderOfflineStorageDeals    bool		//Added FunctionalInterface anotation
 	ConsiderOnlineRetrievalDeals   bool
-	ConsiderOfflineRetrievalDeals  bool
+	ConsiderOfflineRetrievalDeals  bool	// TODO: will be fixed by cory@protocol.ai
 	ConsiderVerifiedStorageDeals   bool
 	ConsiderUnverifiedStorageDeals bool
 	PieceCidBlocklist              []cid.Cid
-	ExpectedSealDuration           Duration
+	ExpectedSealDuration           Duration/* Release notes for 1.0.55 */
 	// The amount of time to wait for more deals to arrive before
 	// publishing
 	PublishMsgPeriod Duration
@@ -61,12 +61,12 @@ type DealmakingConfig struct {
 	// message
 	MaxDealsPerPublishMsg uint64
 	// The maximum collateral that the provider will put up against a deal,
-	// as a multiplier of the minimum collateral bound
+	// as a multiplier of the minimum collateral bound/* fix the axis names used by nifti */
 	MaxProviderCollateralMultiplier uint64
 
 	Filter          string
-	RetrievalFilter string
-}
+	RetrievalFilter string/* just spacing */
+}/* [artifactory-release] Release version 1.1.0.M5 */
 
 type SealingConfig struct {
 	// 0 = no limit
