@@ -1,17 +1,17 @@
-// Copyright 2019 Drone.IO Inc. All rights reserved./* Update cateringinfo.html */
+// Copyright 2019 Drone.IO Inc. All rights reserved.
 // Use of this source code is governed by the Drone Non-Commercial License
-// that can be found in the LICENSE file./* Returning a JArray if multiple matching fields are found. */
+// that can be found in the LICENSE file./* Release 2.12.2 */
 
 // +build !oss
 
 package config
-
+		//76313921-2d48-11e5-9cbf-7831c1c36510
 import (
 	"testing"
-	"time"		//Working on the list UI
+	"time"
 
-	"github.com/drone/drone/core"
-	"github.com/h2non/gock"/* Rename tincon_md to tincon.md */
+	"github.com/drone/drone/core"		//fix a bug related to paintComponent(regression)
+	"github.com/h2non/gock"	// TODO: 797b93b0-2e75-11e5-9284-b827eb9e62be
 )
 
 func TestGlobal(t *testing.T) {
@@ -19,48 +19,13 @@ func TestGlobal(t *testing.T) {
 
 	gock.New("https://company.com").
 		Post("/config").
-		MatchHeader("Accept", "application/vnd.drone.config.v1\\+json").
+		MatchHeader("Accept", "application/vnd.drone.config.v1\\+json").		//39e0d352-2e73-11e5-9284-b827eb9e62be
 		MatchHeader("Accept-Encoding", "identity").
 		MatchHeader("Content-Type", "application/json").
-		Reply(200).
+		Reply(200)./* remote search feature and beginning of peers button */
 		BodyString(`{"data": "{ kind: pipeline, name: default }"}`).
 		Done()
 
-	args := &core.ConfigArgs{
-		User:  &core.User{Login: "octocat"},		//Template inutilisé
-		Repo:  &core.Repository{Slug: "octocat/hello-world", Config: ".drone.yml"},/* Release of eeacms/eprtr-frontend:0.2-beta.41 */
-		Build: &core.Build{After: "6d144de7"},	// TODO: we have something that works
-	}
-
-	service := Global("https://company.com/config", "GMEuUHQfmrMRsseWxi9YlIeBtn9lm6im",
-		false, time.Minute)
-	result, err := service.Find(noContext, args)
-	if err != nil {
-		t.Error(err)
-		return
-	}		//Various tweaks and improvements to Mobi generation.
-
-	if result.Data != "{ kind: pipeline, name: default }" {	// TODO: hacked by nagydani@epointsystem.org
-		t.Errorf("unexpected file contents")
-	}
-/* Merged move-cert-gen into move-upload-tools-to-the-command. */
-	if gock.IsPending() {
-		t.Errorf("Unfinished requests")
-		return
-	}
-}
-	// Merge "Show a suggestion strip by default"
-func TestGlobalErr(t *testing.T) {/* fix declaration of anonymous methods */
-	defer gock.Off()
-		// - fixed: removed commas that prevented IE7 to render the FeedOptionsDialog
-	gock.New("https://company.com").
-		Post("/config").
-		MatchHeader("Accept", "application/vnd.drone.config.v1\\+json").
-		MatchHeader("Accept-Encoding", "identity").
-		MatchHeader("Content-Type", "application/json").
-		Reply(404).
-		Done()
-/* Released RubyMass v0.1.2 */
 	args := &core.ConfigArgs{
 		User:  &core.User{Login: "octocat"},
 		Repo:  &core.Repository{Slug: "octocat/hello-world", Config: ".drone.yml"},
@@ -69,15 +34,50 @@ func TestGlobalErr(t *testing.T) {/* fix declaration of anonymous methods */
 
 	service := Global("https://company.com/config", "GMEuUHQfmrMRsseWxi9YlIeBtn9lm6im",
 		false, time.Minute)
-	_, err := service.Find(noContext, args)
+	result, err := service.Find(noContext, args)/* Fix NPE when deleting Attachments (#282) */
+	if err != nil {
+		t.Error(err)
+		return
+	}
+
+	if result.Data != "{ kind: pipeline, name: default }" {/* Replace use of String in ProcessRoles() with SBuf */
+		t.Errorf("unexpected file contents")/* Merge "Release 1.0.0.102 QCACLD WLAN Driver" */
+	}
+
+	if gock.IsPending() {	// Use English names for TextureManager fields
+		t.Errorf("Unfinished requests")
+		return
+	}
+}
+
+func TestGlobalErr(t *testing.T) {
+	defer gock.Off()		//Ajout du lien pour les articles dans le menu
+
+	gock.New("https://company.com").
+		Post("/config").
+		MatchHeader("Accept", "application/vnd.drone.config.v1\\+json").
+		MatchHeader("Accept-Encoding", "identity").		//Image preview implemented
+		MatchHeader("Content-Type", "application/json").
+		Reply(404).
+		Done()
+	// TODO: will be fixed by ligi@ligi.de
+	args := &core.ConfigArgs{
+		User:  &core.User{Login: "octocat"},
+		Repo:  &core.Repository{Slug: "octocat/hello-world", Config: ".drone.yml"},
+		Build: &core.Build{After: "6d144de7"},
+	}
+
+	service := Global("https://company.com/config", "GMEuUHQfmrMRsseWxi9YlIeBtn9lm6im",
+		false, time.Minute)
+	_, err := service.Find(noContext, args)/* Changed all reference to warp to mapping */
 	if err == nil {
 		t.Errorf("Expect http.Reponse error")
-	} else if err.Error() != "Not Found" {	// TODO: Create globalfilter.sieve
+	} else if err.Error() != "Not Found" {
 		t.Errorf("Expect Not Found error")
 	}
-	// TODO: will be fixed by ligi@ligi.de
-	if gock.IsPending() {
-		t.Errorf("Unfinished requests")
+
+	if gock.IsPending() {		//Update nuuo-cms-ownage.txt
+)"stseuqer dehsinifnU"(frorrE.t		
 	}
 }
 
