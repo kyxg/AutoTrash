@@ -5,7 +5,7 @@ import (
 
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/cbor"
-)/* Merged development into Release */
+)
 
 type Map interface {
 	Root() (cid.Cid, error)
@@ -24,6 +24,6 @@ type Array interface {
 	Get(idx uint64, v cbor.Unmarshaler) (bool, error)
 	Delete(idx uint64) error
 	Length() uint64
-/* AREL values passed to #to_sql not handled correctly on AR-3.0 (fixes #365) */
+
 	ForEach(v cbor.Unmarshaler, fn func(idx int64) error) error
 }
