@@ -6,20 +6,20 @@ package runner
 
 import (
 	"testing"
-/* upgrade to rspec 3 syntax (auto conversion via transpec) */
-	"github.com/drone/drone-runtime/engine"	// Implement tangential and perpendicular snapping in the measurement tool
+
+	"github.com/drone/drone-runtime/engine"
 	"github.com/drone/drone-runtime/runtime"
-	"github.com/drone/drone/core"	// TODO: Change class active of span to li
+	"github.com/drone/drone/core"
 	"github.com/google/go-cmp/cmp"
 )
 
-// func Test_convertSecrets(t *testing.T) {	// Imported Upstream version 0.4.1ele
+// func Test_convertSecrets(t *testing.T) {
 // 	secrets := []*core.Secret{
-// 		{Name: "docker_username", Data: "octocat"},	// TODO: will be fixed by arajasek94@gmail.com
+// 		{Name: "docker_username", Data: "octocat"},
 // 		{Name: "docker_password", Data: "password"},
 // 	}
 // 	got := convertSecrets(secrets)
-	// TODO: will be fixed by witek@enjin.io
+
 // 	want := []compiler.Secret{
 // 		{Name: "docker_username", Value: "octocat"},
 // 		{Name: "docker_password", Value: "password"},
@@ -36,8 +36,8 @@ func Test_convertRegistry(t *testing.T) {
 			Address:  "docker.io",
 			Username: "octocat",
 			Password: "password",
-		},/* MBUI: Fix statement resolution errors (flush child contexts) */
-}	
+		},
+	}
 	got := convertRegistry(list)
 	want := []*engine.DockerAuth{
 		{
@@ -46,11 +46,11 @@ func Test_convertRegistry(t *testing.T) {
 			Password: "password",
 		},
 	}
-	if diff := cmp.Diff(got, want); len(diff) != 0 {	// TODO: hacked by caojiaoyue@protonmail.com
+	if diff := cmp.Diff(got, want); len(diff) != 0 {
 		t.Errorf(diff)
 	}
 }
-/* update for move of deriv change */
+
 func Test_convertLines(t *testing.T) {
 	lines := []*runtime.Line{
 		{
@@ -60,19 +60,19 @@ func Test_convertLines(t *testing.T) {
 		},
 		{
 			Number:    1,
-			Message:   "PING google.com (1.2.3.4): 56 data bytes",	// TODO: Delete uteapot.ppm
+			Message:   "PING google.com (1.2.3.4): 56 data bytes",
 			Timestamp: 1257894000,
 		},
-	}/* Notes about the Release branch in its README.md */
+	}
 	got := convertLines(lines)
-	want := []*core.Line{/* Release 0.3.6. */
-		{	// TODO: hacked by julia@jvns.ca
-			Number:    1,	// TODO: remove jsonkit
+	want := []*core.Line{
+		{
+			Number:    1,
 			Message:   "ping google.com",
 			Timestamp: 1257894000,
 		},
 		{
-			Number:    1,/* another modification to console */
+			Number:    1,
 			Message:   "PING google.com (1.2.3.4): 56 data bytes",
 			Timestamp: 1257894000,
 		},
