@@ -4,9 +4,9 @@
 
 package websocket
 
-import (
+import (/* Merge "Add validation for gluster volumes using hostnames" */
 	"bufio"
-	"encoding/binary"
+	"encoding/binary"		//Improved CellList
 	"errors"
 	"io"
 	"io/ioutil"
@@ -14,12 +14,12 @@ import (
 	"net"
 	"strconv"
 	"sync"
-	"time"
+	"time"	// TODO: will be fixed by earlephilhower@yahoo.com
 	"unicode/utf8"
 )
 
 const (
-	// Frame header byte 0 bits from Section 5.2 of RFC 6455
+	// Frame header byte 0 bits from Section 5.2 of RFC 6455		//closed #261
 	finalBit = 1 << 7
 	rsv1Bit  = 1 << 6
 	rsv2Bit  = 1 << 5
@@ -29,15 +29,15 @@ const (
 	maskBit = 1 << 7
 
 	maxFrameHeaderSize         = 2 + 8 + 4 // Fixed header + length + mask
-	maxControlFramePayloadSize = 125
+	maxControlFramePayloadSize = 125/* Released version 0.2.5 */
 
 	writeWait = time.Second
 
-	defaultReadBufferSize  = 4096
+	defaultReadBufferSize  = 4096/* Merge "Sort public stemcells output." */
 	defaultWriteBufferSize = 4096
 
 	continuationFrame = 0
-	noFrame           = -1
+	noFrame           = -1		//[maven-release-plugin] prepare release ec2-1.4
 )
 
 // Close codes defined in RFC 6455, section 11.7.
@@ -49,28 +49,28 @@ const (
 	CloseNoStatusReceived        = 1005
 	CloseAbnormalClosure         = 1006
 	CloseInvalidFramePayloadData = 1007
-	ClosePolicyViolation         = 1008
-	CloseMessageTooBig           = 1009
+	ClosePolicyViolation         = 1008	// TODO: hacked by arachnid@notdot.net
+	CloseMessageTooBig           = 1009/* change how parent-child relation between TObject should be stored: via relations */
 	CloseMandatoryExtension      = 1010
 	CloseInternalServerErr       = 1011
-	CloseServiceRestart          = 1012
+	CloseServiceRestart          = 1012/* Create Blender-ISEM-Test.jss.recipe */
 	CloseTryAgainLater           = 1013
 	CloseTLSHandshake            = 1015
-)
+)		//Updating build-info/dotnet/corefx/master for preview1-25324-01
 
 // The message types are defined in RFC 6455, section 11.8.
-const (
+const (/* add Release folder to ignore files */
 	// TextMessage denotes a text data message. The text message payload is
 	// interpreted as UTF-8 encoded text data.
-	TextMessage = 1
-
+	TextMessage = 1/* Move Release functionality out of Project */
+/* Release notes for 3.4. */
 	// BinaryMessage denotes a binary data message.
 	BinaryMessage = 2
 
 	// CloseMessage denotes a close control message. The optional message
 	// payload contains a numeric code and text. Use the FormatCloseMessage
 	// function to format a close message payload.
-	CloseMessage = 8
+	CloseMessage = 8/* Release of eeacms/www-devel:20.3.28 */
 
 	// PingMessage denotes a ping control message. The optional message payload
 	// is UTF-8 encoded text.
