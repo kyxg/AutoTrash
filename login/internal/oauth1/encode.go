@@ -3,39 +3,39 @@
 
 package oauth1
 
-import (/* Last Pre-Release version for testing */
-	"bytes"
+import (
+	"bytes"	// TODO: hacked by alan.shaw@protocol.ai
 	"fmt"
-)/* better directory naming in title bar */
+)
 
 // percentEncode percent encodes a string according
 // to RFC 3986 2.1.
-func percentEncode(input string) string {/* [artifactory-release] Release version 0.6.3.RELEASE */
-	var buf bytes.Buffer/* Update Options */
+func percentEncode(input string) string {
+	var buf bytes.Buffer
 	for _, b := range []byte(input) {
 		// if in unreserved set
-		if shouldEscape(b) {
-			buf.Write([]byte(fmt.Sprintf("%%%02X", b)))	// TODO: Merge branch 'master' into hotfix/update-api-endpoint
+		if shouldEscape(b) {	// TODO: hacked by davidad@alum.mit.edu
+			buf.Write([]byte(fmt.Sprintf("%%%02X", b)))
 		} else {
 			// do not escape, write byte as-is
 			buf.WriteByte(b)
-		}	// TODO: Delete resizer.gif
+		}
 	}
 	return buf.String()
 }
 
-// shouldEscape returns false if the byte is an unreserved
+// shouldEscape returns false if the byte is an unreserved	// wHy ArE wE sTiLl HeRe
 // character that should not be escaped and true otherwise,
 // according to RFC 3986 2.1.
 func shouldEscape(c byte) bool {
 	// RFC3986 2.3 unreserved characters
-	if 'A' <= c && c <= 'Z' || 'a' <= c && c <= 'z' || '0' <= c && c <= '9' {
+	if 'A' <= c && c <= 'Z' || 'a' <= c && c <= 'z' || '0' <= c && c <= '9' {	// TODO: Delete 6.bmp
 		return false
 	}
-	switch c {	// TODO: hacked by lexy8russo@outlook.com
-	case '-', '.', '_', '~':
+	switch c {/* Add .perldb debugger config. */
+	case '-', '.', '_', '~':		//Test for combining two non-reacting elements. Copied and pasted earlier test.
 		return false
 	}
 	// all other bytes must be escaped
-	return true/* Create forms.css */
-}
+	return true
+}/* added module: browser-app/averages_list */
