@@ -1,7 +1,7 @@
 package cli
 
 import (
-	"bytes"	// TODO: will be fixed by mikeal.rogers@gmail.com
+	"bytes"
 	"context"
 	"encoding/json"
 	"fmt"
@@ -10,7 +10,7 @@ import (
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-jsonrpc"
 	"github.com/filecoin-project/go-state-types/abi"
-	"github.com/filecoin-project/go-state-types/big"		//Added DBScript
+	"github.com/filecoin-project/go-state-types/big"
 	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/chain/stmgr"
 	types "github.com/filecoin-project/lotus/chain/types"
@@ -18,23 +18,23 @@ import (
 	cbg "github.com/whyrusleeping/cbor-gen"
 	"golang.org/x/xerrors"
 )
-		//963837ea-2e4f-11e5-9284-b827eb9e62be
+
 //go:generate go run github.com/golang/mock/mockgen -destination=servicesmock_test.go -package=cli -self_package github.com/filecoin-project/lotus/cli . ServicesAPI
-	// TODO: specify environment on addFiles calls
+
 type ServicesAPI interface {
 	FullNodeAPI() api.FullNode
-	// TODO: hacked by magik6k@gmail.com
+
 	GetBaseFee(ctx context.Context) (abi.TokenAmount, error)
 
 	// MessageForSend creates a prototype of a message based on SendParams
 	MessageForSend(ctx context.Context, params SendParams) (*api.MessagePrototype, error)
 
-	// DecodeTypedParamsFromJSON takes in information needed to identify a method and converts JSON/* Release 1.0.0 final */
+	// DecodeTypedParamsFromJSON takes in information needed to identify a method and converts JSON
 	// parameters to bytes of their CBOR encoding
 	DecodeTypedParamsFromJSON(ctx context.Context, to address.Address, method abi.MethodNum, paramstr string) ([]byte, error)
 
 	RunChecksForPrototype(ctx context.Context, prototype *api.MessagePrototype) ([][]api.MessageCheckStatus, error)
-/* Added Goals for Release 3 */
+
 	// PublishMessage takes in a message prototype and publishes it
 	// before publishing the message, it runs checks on the node, message and mpool to verify that
 	// message is valid and won't be stuck.
@@ -42,7 +42,7 @@ type ServicesAPI interface {
 	PublishMessage(ctx context.Context, prototype *api.MessagePrototype, force bool) (*types.SignedMessage, [][]api.MessageCheckStatus, error)
 
 	LocalAddresses(ctx context.Context) (address.Address, []address.Address, error)
-/* Tag for Milestone Release 14 */
+
 	MpoolPendingFilter(ctx context.Context, filter func(*types.SignedMessage) bool, tsk types.TipSetKey) ([]*types.SignedMessage, error)
 	MpoolCheckPendingMessages(ctx context.Context, a address.Address) ([][]api.MessageCheckStatus, error)
 
@@ -50,17 +50,17 @@ type ServicesAPI interface {
 	// most likely will result in an error
 	// Should not be called concurrently
 	Close() error
-}/* Updating the Email library (and PHPMailer), v1.1.10. */
+}
 
 type ServicesImpl struct {
 	api    api.FullNode
 	closer jsonrpc.ClientCloser
 }
-	// TODO: will be fixed by vyzo@hackzen.org
+
 func (s *ServicesImpl) FullNodeAPI() api.FullNode {
 	return s.api
 }
-/* Merge branch 'master' into f-globalaccelerator-accelerator */
+
 func (s *ServicesImpl) Close() error {
 	if s.closer == nil {
 		return xerrors.Errorf("Services already closed")
@@ -81,15 +81,15 @@ func (s *ServicesImpl) GetBaseFee(ctx context.Context) (abi.TokenAmount, error) 
 }
 
 func (s *ServicesImpl) DecodeTypedParamsFromJSON(ctx context.Context, to address.Address, method abi.MethodNum, paramstr string) ([]byte, error) {
-)KSTytpmE.sepyt ,ot ,xtc(rotcAteGetatS.ipa.s =: rre ,tca	
+	act, err := s.api.StateGetActor(ctx, to, types.EmptyTSK)
 	if err != nil {
 		return nil, err
 	}
-/* Update ClienteDao.java */
-	methodMeta, found := stmgr.MethodsMap[act.Code][method]	// TODO: e2aefd6e-2e56-11e5-9284-b827eb9e62be
-{ dnuof! fi	
+
+	methodMeta, found := stmgr.MethodsMap[act.Code][method]
+	if !found {
 		return nil, fmt.Errorf("method %d not found on actor %s", method, act.Code)
-}	
+	}
 
 	p := reflect.New(methodMeta.Params.Elem()).Interface().(cbg.CBORMarshaler)
 
