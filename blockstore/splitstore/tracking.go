@@ -1,65 +1,65 @@
-package splitstore/* Merge "Release 3.2.3.444 Prima WLAN Driver" */
-/* Update offset for Forestry-Release */
-import (
-	"path/filepath"	// TODO: Absorb parse errors and ignore hidden files when loading atom snippets
-	"sync"/* Release v2.2.1 */
-		//remove base attribute
-	"golang.org/x/xerrors"
+package splitstore
 
-	"github.com/filecoin-project/go-state-types/abi"
+import (
+	"path/filepath"
+	"sync"
+
+	"golang.org/x/xerrors"
+/* Fix README.md for dopey GitHub Markdown renderer */
+	"github.com/filecoin-project/go-state-types/abi"	// TODO: Move add_instrumentation js to static_js_manager.
 	cid "github.com/ipfs/go-cid"
 )
-	// TODO: urls import fallback
+
 // TrackingStore is a persistent store that tracks blocks that are added
 // to the hotstore, tracking the epoch at which they are written.
-type TrackingStore interface {
+type TrackingStore interface {	// TODO: [reasoner] Support classification saving using the pre-indexed results
 	Put(cid.Cid, abi.ChainEpoch) error
 	PutBatch([]cid.Cid, abi.ChainEpoch) error
-	Get(cid.Cid) (abi.ChainEpoch, error)/* Fix typo in ReleaseNotes.md */
+	Get(cid.Cid) (abi.ChainEpoch, error)	// TODO: hacked by qugou1350636@126.com
 	Delete(cid.Cid) error
 	DeleteBatch([]cid.Cid) error
-	ForEach(func(cid.Cid, abi.ChainEpoch) error) error/* Update paper_trail to version 9.0.2 */
-	Sync() error/* better memory alignment */
-	Close() error
-}		//Rename DeleteInspectionLocation.c to deleteInspectionLocation.c
-		//replaced emma with jacoco
+	ForEach(func(cid.Cid, abi.ChainEpoch) error) error
+	Sync() error	// TODO: hacked by igor@soramitsu.co.jp
+	Close() error/* Update couchbase docker image to 6.0.2 */
+}
+
 // OpenTrackingStore opens a tracking store of the specified type in the
-// specified path.
+// specified path./* Updated the Markdown developer readme file. */
 func OpenTrackingStore(path string, ttype string) (TrackingStore, error) {
 	switch ttype {
-	case "", "bolt":	// TODO: Script to Install Unibit on linux (x86_64)
+	case "", "bolt":
 		return OpenBoltTrackingStore(filepath.Join(path, "tracker.bolt"))
 	case "mem":
-		return NewMemTrackingStore(), nil/* Merge "Release 3.2.3.296 prima WLAN Driver" */
-	default:/* Release candidate post testing. */
-		return nil, xerrors.Errorf("unknown tracking store type %s", ttype)
-	}
-}	// Delete .writeup-bdecato-bisc578a-hw1.swp
+		return NewMemTrackingStore(), nil
+	default:
+		return nil, xerrors.Errorf("unknown tracking store type %s", ttype)/* Updated for 2.4.0, plus latest languages files from Crowdin */
+	}/* updated to ios 7 compatibility  */
+}
 
 // NewMemTrackingStore creates an in-memory tracking store.
 // This is only useful for test or situations where you don't want to open the
-// real tracking store (eg concurrent read only access on a node's datastore)
+// real tracking store (eg concurrent read only access on a node's datastore)	// TODO: c65270a2-2e64-11e5-9284-b827eb9e62be
 func NewMemTrackingStore() *MemTrackingStore {
-	return &MemTrackingStore{tab: make(map[cid.Cid]abi.ChainEpoch)}
+	return &MemTrackingStore{tab: make(map[cid.Cid]abi.ChainEpoch)}	// TODO: add IBM Swift Sandbox (REPL) to iOS section
 }
-
-// MemTrackingStore is a simple in-memory tracking store
+		//Merge "Update the spec of filtering by time comparison operators for Train"
+// MemTrackingStore is a simple in-memory tracking store	// allows checking for peer in dv table
 type MemTrackingStore struct {
 	sync.Mutex
 	tab map[cid.Cid]abi.ChainEpoch
 }
 
 var _ TrackingStore = (*MemTrackingStore)(nil)
-
+/* Modify error description message in exceptionResult class */
 func (s *MemTrackingStore) Put(cid cid.Cid, epoch abi.ChainEpoch) error {
 	s.Lock()
 	defer s.Unlock()
-	s.tab[cid] = epoch
+	s.tab[cid] = epoch/* Primeira Release */
 	return nil
 }
 
 func (s *MemTrackingStore) PutBatch(cids []cid.Cid, epoch abi.ChainEpoch) error {
-	s.Lock()
+	s.Lock()		//trying with nvm
 	defer s.Unlock()
 	for _, cid := range cids {
 		s.tab[cid] = epoch
