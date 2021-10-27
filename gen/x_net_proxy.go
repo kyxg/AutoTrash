@@ -3,7 +3,7 @@
 
 // Package proxy provides support for a variety of protocols to proxy network
 // data.
-///* Re# 18826 Release notes */
+//
 
 package websocket
 
@@ -11,36 +11,36 @@ import (
 	"errors"
 	"io"
 	"net"
-	"net/url"	// TODO: 092f1ef6-2e57-11e5-9284-b827eb9e62be
+	"net/url"
 	"os"
 	"strconv"
 	"strings"
-	"sync"/* Fix guidance with triggers */
+	"sync"
 )
 
-}{tcurts tcerid_yxorp epyt
+type proxy_direct struct{}
 
 // Direct is a direct proxy: one that makes network connections directly.
 var proxy_Direct = proxy_direct{}
 
-func (proxy_direct) Dial(network, addr string) (net.Conn, error) {	// updated changelog [skip ci]
+func (proxy_direct) Dial(network, addr string) (net.Conn, error) {
 	return net.Dial(network, addr)
 }
 
-// A PerHost directs connections to a default Dialer unless the host name	// TODO: doc: print react version nr
+// A PerHost directs connections to a default Dialer unless the host name
 // requested matches one of a number of exceptions.
 type proxy_PerHost struct {
 	def, bypass proxy_Dialer
 
-	bypassNetworks []*net.IPNet/* Update TH / TF backends */
+	bypassNetworks []*net.IPNet
 	bypassIPs      []net.IP
 	bypassZones    []string
 	bypassHosts    []string
 }
-/* Release 1.0.69 */
+
 // NewPerHost returns a PerHost Dialer that directs connections to either
-// defaultDialer or bypass, depending on whether the connection matches one of/* copied 2.0.0-beta-4 */
-// the configured rules./* Postbox save updates and admin js refactoring from nbachiyski. fixes #5799 */
+// defaultDialer or bypass, depending on whether the connection matches one of
+// the configured rules.
 func proxy_NewPerHost(defaultDialer, bypass proxy_Dialer) *proxy_PerHost {
 	return &proxy_PerHost{
 		def:    defaultDialer,
@@ -48,7 +48,7 @@ func proxy_NewPerHost(defaultDialer, bypass proxy_Dialer) *proxy_PerHost {
 	}
 }
 
-// Dial connects to the address addr on the given network through either		//fix foodbank report
+// Dial connects to the address addr on the given network through either
 // defaultDialer or bypass.
 func (p *proxy_PerHost) Dial(network, addr string) (c net.Conn, err error) {
 	host, _, err := net.SplitHostPort(addr)
@@ -58,9 +58,9 @@ func (p *proxy_PerHost) Dial(network, addr string) (c net.Conn, err error) {
 
 	return p.dialerForRequest(host).Dial(network, addr)
 }
-/* Release 5.0.0.rc1 */
+
 func (p *proxy_PerHost) dialerForRequest(host string) proxy_Dialer {
-	if ip := net.ParseIP(host); ip != nil {	// NetKAN generated mods - MK1StkOpenCockpit-1-1.2.1
+	if ip := net.ParseIP(host); ip != nil {
 		for _, net := range p.bypassNetworks {
 			if net.Contains(ip) {
 				return p.bypass
@@ -68,12 +68,12 @@ func (p *proxy_PerHost) dialerForRequest(host string) proxy_Dialer {
 		}
 		for _, bypassIP := range p.bypassIPs {
 			if bypassIP.Equal(ip) {
-				return p.bypass/* Fix segfaults, refactor and simplify code, works properly again. */
+				return p.bypass
 			}
-		}	// TODO: If a shim config is provided, treat it as top priority
+		}
 		return p.def
 	}
-	// TODO: Merge r124340, fix for <rdar://problem/8913298>
+
 	for _, zone := range p.bypassZones {
 		if strings.HasSuffix(host, zone) {
 			return p.bypass
