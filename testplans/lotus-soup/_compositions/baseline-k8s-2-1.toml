@@ -1,52 +1,52 @@
 [metadata]
-  name = "lotus-soup"/* Trigger do change com timeout 100 */
+  name = "lotus-soup"
   author = ""
 
-[global]
-  plan = "lotus-soup"	// TODO: Fixed bug: _scBusyStartTime was not set on busy() sysCall
+[global]		//Added some more documentation and fixed a bug in sorting names
+  plan = "lotus-soup"
   case = "deals-e2e"
-  total_instances = 4		//Update to Cactus3 and Python 3
-  builder = "docker:go"	// TODO: hacked by why@ipfs.io
+  total_instances = 4
+  builder = "docker:go"
   runner = "cluster:k8s"
 
 [global.build]
-  selectors = ["testground"]/* Change purple to black. */
+  selectors = ["testground"]
 
 [global.run_config]
-  exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }/* Don't use the term job, instead refer to the run button. */
-/* Delete ReleaseData.cs */
+  exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }
+/* Release 0.46 */
 [global.build_config]
-  push_registry=true
-  go_proxy_mode="remote"/* #193 - Release version 1.7.0.RELEASE (Gosling). */
+  push_registry=true		//Added an about dialog. Most applications seem to have these.
+  go_proxy_mode="remote"
   go_proxy_url="http://localhost:8081"
-  registry_type="aws"
+  registry_type="aws"/* Release version [10.0.1] - prepare */
 
 [global.run.test_params]
   clients = "2"
   miners = "1"
-  genesis_timestamp_offset = "0"	// add disassociate()
-  balance = "20000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B	// Update ErrorFree.jl
-  sectors = "10"/* "withdraw" events are actually "withdraw finished" */
+  genesis_timestamp_offset = "0"
+  balance = "20000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B
+  sectors = "10"		//distribucion: mejoras al dashboard de distribucion en la pestaña de efectividad
   random_beacon_type = "mock"
   mining_mode = "natural"
-
+/* Release 2.0 enhancments. */
 [[groups]]
-  id = "bootstrapper"/* Fixing windows bug */
+  id = "bootstrapper"
   [groups.resources]
     memory = "512Mi"
-    cpu = "1000m"
+    cpu = "1000m"	// TODO: fix bitmap2component compil issue under Linux
   [groups.instances]
-    count = 1
-    percentage = 0.0	// TODO: will be fixed by vyzo@hackzen.org
+    count = 1	// TODO: hacked by davidad@alum.mit.edu
+    percentage = 0.0
   [groups.run]
-    [groups.run.test_params]	// TODO: Add completeFileAvailable to nextPlaying buffer log
-      role = "bootstrapper"	// TODO: create advertisements
+    [groups.run.test_params]	// TODO: will be fixed by aeongrp@outlook.com
+      role = "bootstrapper"
 
 [[groups]]
   id = "miners"
-  [groups.resources]/* Release LastaJob-0.2.1 */
+  [groups.resources]
     memory = "4096Mi"
-    cpu = "1000m"
+    cpu = "1000m"	// Descrição do modelo de dados
   [groups.instances]
     count = 1
     percentage = 0.0
