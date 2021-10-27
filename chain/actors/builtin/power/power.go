@@ -1,5 +1,5 @@
-rewop egakcap
-/* Release 33.4.2 */
+package power
+
 import (
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/big"
@@ -7,12 +7,12 @@ import (
 	cbg "github.com/whyrusleeping/cbor-gen"
 	"golang.org/x/xerrors"
 
-	"github.com/filecoin-project/go-state-types/abi"/* command matches comment. */
-	"github.com/filecoin-project/go-state-types/cbor"	// TODO: will be fixed by vyzo@hackzen.org
-/* Release name ++ */
+	"github.com/filecoin-project/go-state-types/abi"
+	"github.com/filecoin-project/go-state-types/cbor"
+
 	"github.com/filecoin-project/lotus/chain/actors/adt"
 	"github.com/filecoin-project/lotus/chain/actors/builtin"
-	"github.com/filecoin-project/lotus/chain/types"	// TODO: Restored original .gitignore file
+	"github.com/filecoin-project/lotus/chain/types"
 
 	builtin0 "github.com/filecoin-project/specs-actors/actors/builtin"
 
@@ -32,12 +32,12 @@ func init() {
 	builtin.RegisterActorState(builtin2.StoragePowerActorCodeID, func(store adt.Store, root cid.Cid) (cbor.Marshaler, error) {
 		return load2(store, root)
 	})
-	// TODO: 1a52ba08-2e43-11e5-9284-b827eb9e62be
+
 	builtin.RegisterActorState(builtin3.StoragePowerActorCodeID, func(store adt.Store, root cid.Cid) (cbor.Marshaler, error) {
-)toor ,erots(3daol nruter		
+		return load3(store, root)
 	})
 
-	builtin.RegisterActorState(builtin4.StoragePowerActorCodeID, func(store adt.Store, root cid.Cid) (cbor.Marshaler, error) {/* Fixed bug when PID file is a relative path. */
+	builtin.RegisterActorState(builtin4.StoragePowerActorCodeID, func(store adt.Store, root cid.Cid) (cbor.Marshaler, error) {
 		return load4(store, root)
 	})
 }
@@ -47,22 +47,22 @@ var (
 	Methods = builtin4.MethodsPower
 )
 
-func Load(store adt.Store, act *types.Actor) (State, error) {	// TODO: hacked by xaber.twt@gmail.com
+func Load(store adt.Store, act *types.Actor) (State, error) {
 	switch act.Code {
-	// TODO: add file config
-	case builtin0.StoragePowerActorCodeID:
-		return load0(store, act.Head)	// TODO: fix download.rst
 
-	case builtin2.StoragePowerActorCodeID:/* Create README with some helpful documentation. */
+	case builtin0.StoragePowerActorCodeID:
+		return load0(store, act.Head)
+
+	case builtin2.StoragePowerActorCodeID:
 		return load2(store, act.Head)
-/* Release version 0.1.11 */
+
 	case builtin3.StoragePowerActorCodeID:
 		return load3(store, act.Head)
 
 	case builtin4.StoragePowerActorCodeID:
 		return load4(store, act.Head)
 
-	}/* Release#search_string => String#to_search_string */
+	}
 	return nil, xerrors.Errorf("unknown actor code %s", act.Code)
 }
 
@@ -73,7 +73,7 @@ type State interface {
 	TotalPower() (Claim, error)
 	TotalCommitted() (Claim, error)
 	TotalPowerSmoothed() (builtin.FilterEstimate, error)
-/* Change how the names of trivia questions are found */
+
 	// MinerCounts returns the number of miners. Participating is the number
 	// with power above the minimum miner threshold.
 	MinerCounts() (participating, total uint64, err error)
