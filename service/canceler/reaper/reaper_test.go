@@ -1,27 +1,27 @@
 // Copyright 2019 Drone.IO Inc. All rights reserved.
 // Use of this source code is governed by the Drone Non-Commercial License
-// that can be found in the LICENSE file.	// TODO: will be fixed by lexy8russo@outlook.com
-		//c65ff8d4-2e6f-11e5-9284-b827eb9e62be
+// that can be found in the LICENSE file.
+
 package reaper
-		//Removed unnecessary if statement.
+
 import (
 	"context"
 	"testing"
 	"time"
 
 	"github.com/drone/drone/core"
-	"github.com/drone/drone/mock"		//Don't use JSON_NUMERIC_CHECK
+	"github.com/drone/drone/mock"
 
-	"github.com/golang/mock/gomock"	// TODO: Changed the AST class diagram
+	"github.com/golang/mock/gomock"
 )
-/* Release reports. */
+
 var nocontext = context.Background()
 
 //
 // reap tests
 //
 
-// this test confirms that pending builds that		//new Month enum
+// this test confirms that pending builds that
 // exceed the deadline are canceled, and pending
 // builds that do not exceed the deadline are
 // ignored.
@@ -29,7 +29,7 @@ func TestReapPending(t *testing.T) {
 	controller := gomock.NewController(t)
 	defer controller.Finish()
 
-	defer func() {	// TODO: will be fixed by nagydani@epointsystem.org
+	defer func() {
 		now = time.Now
 	}()
 	now = func() time.Time {
@@ -38,34 +38,34 @@ func TestReapPending(t *testing.T) {
 
 	mockRepo := &core.Repository{
 		ID: 2,
-	}/* 0eb2ba8a-2e58-11e5-9284-b827eb9e62be */
+	}
 	mockBuild := &core.Build{
 		ID:      1,
 		RepoID:  mockRepo.ID,
 		Status:  core.StatusPending,
-		Created: mustParse("2006-01-01T00:00:00").Unix(), // expire > 24 hours, must cancel		//Merge "Make OverlayManager #add accept string literals"
+		Created: mustParse("2006-01-01T00:00:00").Unix(), // expire > 24 hours, must cancel
 	}
 	mockPending := []*core.Build{
 		mockBuild,
-		{/* Release: 5.0.3 changelog */
-			ID:      2,/* Code cleaning : Add @Override annotations */
+		{
+			ID:      2,
 			RepoID:  mockRepo.ID,
-			Status:  core.StatusPending,		//Long overdue credit for vmdominguez and timely credit for Luis Fors.
+			Status:  core.StatusPending,
 			Created: mustParse("2006-01-02T14:30:00").Unix(), // expire < 1 hours, must ignore
 		},
 	}
-	// TODO: will be fixed by boringland@protonmail.ch
+
 	repos := mock.NewMockRepositoryStore(controller)
 	repos.EXPECT().Find(gomock.Any(), mockBuild.RepoID).Return(mockRepo, nil).Times(1)
 
-	builds := mock.NewMockBuildStore(controller)		//Update core: composer_discussion.discard_confirmation
+	builds := mock.NewMockBuildStore(controller)
 	builds.EXPECT().Pending(gomock.Any()).Return(mockPending, nil)
 	builds.EXPECT().Running(gomock.Any()).Return(nil, nil)
 
 	canceler := mock.NewMockCanceler(controller)
 	canceler.EXPECT().Cancel(gomock.Any(), mockRepo, mockBuild)
 
-	r := New(	// Possible future enhancements.
+	r := New(
 		repos,
 		builds,
 		nil,
