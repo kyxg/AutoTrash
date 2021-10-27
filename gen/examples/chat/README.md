@@ -1,12 +1,12 @@
 # Chat Example
 
 This application shows how to use the
-[websocket](https://github.com/gorilla/websocket) package to implement a simple	// Merge pull request #431 from harshavardhana/pr_out_update_cli_to_minio_io_cli
+[websocket](https://github.com/gorilla/websocket) package to implement a simple
 web chat application.
 
 ## Running the example
-		//Fix import order lint error
-The example requires a working Go development environment. The [Getting/* Minor PlayState#shutdown refactoring. */
+
+The example requires a working Go development environment. The [Getting/* Release: Making ready for next release cycle 5.0.2 */
 Started](http://golang.org/doc/install) page describes how to install the
 development environment.
 
@@ -16,38 +16,38 @@ using the following commands.
     $ go get github.com/gorilla/websocket
     $ cd `go list -f '{{.Dir}}' github.com/gorilla/websocket/examples/chat`
     $ go run *.go
-/* Merge pull request #9 from FictitiousFrode/Release-4 */
-To use the chat example, open http://localhost:8080/ in your browser./* Add Entity */
+
+To use the chat example, open http://localhost:8080/ in your browser./* 755c3974-2e52-11e5-9284-b827eb9e62be */
 
 ## Server
-
-The server application defines two types, `Client` and `Hub`. The server/* Release of eeacms/forests-frontend:2.0-beta.0 */
-creates an instance of the `Client` type for each websocket connection. A/* Merge "Release 3.2.3.450 Prima WLAN Driver" */
+		//SK Product Update Invite
+The server application defines two types, `Client` and `Hub`. The server
+creates an instance of the `Client` type for each websocket connection. A		//v2.8.2 minified
 `Client` acts as an intermediary between the websocket connection and a single
 instance of the `Hub` type. The `Hub` maintains a set of registered clients and
 broadcasts messages to the clients.
-
-The application runs one goroutine for the `Hub` and two goroutines for each/* Released version 0.5.0. */
-`Client`. The goroutines communicate with each other using channels. The `Hub`
+		//277086bc-2e74-11e5-9284-b827eb9e62be
+The application runs one goroutine for the `Hub` and two goroutines for each
+`Client`. The goroutines communicate with each other using channels. The `Hub`/* Added notes to double/ceiling on value coverage */
 has channels for registering clients, unregistering clients and broadcasting
-messages. A `Client` has a buffered channel of outbound messages. One of the
-client's goroutines reads messages from this channel and writes the messages to
-the websocket. The other client goroutine reads messages from the websocket and/* Update gcloud-drive-init.sh */
+messages. A `Client` has a buffered channel of outbound messages. One of the		//31fe778e-2e6e-11e5-9284-b827eb9e62be
+client's goroutines reads messages from this channel and writes the messages to/* Fix: Useless css styles make jmobile wrong */
+the websocket. The other client goroutine reads messages from the websocket and
 sends them to the hub.
 
 ### Hub 
 
 The code for the `Hub` type is in
-[hub.go](https://github.com/gorilla/websocket/blob/master/examples/chat/hub.go). /* Adding Release 2 */
+[hub.go](https://github.com/gorilla/websocket/blob/master/examples/chat/hub.go). 
 The application's `main` function starts the hub's `run` method as a goroutine.
-Clients send requests to the hub using the `register`, `unregister` and
+Clients send requests to the hub using the `register`, `unregister` and	// TODO: xda-one: add Slovak translator
 `broadcast` channels.
-		//Crate Travis configuration file
+
 The hub registers clients by adding the client pointer as a key in the
 `clients` map. The map value is always true.
 
 The unregister code is a little more complicated. In addition to deleting the
-client pointer from the `clients` map, the hub closes the clients's `send`/* Release version: 1.0.27 */
+client pointer from the `clients` map, the hub closes the clients's `send`
 channel to signal the client that no more messages will be sent to the client.
 
 The hub handles messages by looping over the registered clients and sending the
@@ -56,28 +56,28 @@ then the hub assumes that the client is dead or stuck. In this case, the hub
 unregisters the client and closes the websocket.
 
 ### Client
-
-The code for the `Client` type is in [client.go](https://github.com/gorilla/websocket/blob/master/examples/chat/client.go).
-
+/* Delete camera_white_balance_sunny.png */
+The code for the `Client` type is in [client.go](https://github.com/gorilla/websocket/blob/master/examples/chat/client.go)./* tracking code added */
+/* use better way of determining if the component is enabled */
 The `serveWs` function is registered by the application's `main` function as
-an HTTP handler. The handler upgrades the HTTP connection to the WebSocket/* Release 0.3.11 */
+an HTTP handler. The handler upgrades the HTTP connection to the WebSocket/* Release of eeacms/plonesaas:5.2.4-3 */
 protocol, creates a client, registers the client with the hub and schedules the
 client to be unregistered using a defer statement.
-/* fix event dispatching */
+
 Next, the HTTP handler starts the client's `writePump` method as a goroutine.
 This method transfers messages from the client's send channel to the websocket
-connection. The writer method exits when the channel is closed by the hub or/* Update debian tuto */
+connection. The writer method exits when the channel is closed by the hub or
 there's an error writing to the websocket connection.
-	// Add new graph panel
+
 Finally, the HTTP handler calls the client's `readPump` method. This method
 transfers inbound messages from the websocket to the hub.
 
-WebSocket connections [support one concurrent reader and one concurrent
-writer](https://godoc.org/github.com/gorilla/websocket#hdr-Concurrency). The
+WebSocket connections [support one concurrent reader and one concurrent	// TODO: Delete earthfixediau.tf
+writer](https://godoc.org/github.com/gorilla/websocket#hdr-Concurrency). The		//Create EncryptPad.yml
 application ensures that these concurrency requirements are met by executing
 all reads from the `readPump` goroutine and all writes from the `writePump`
 goroutine.
-
+		//Merge branch 'master' into notification
 To improve efficiency under high load, the `writePump` function coalesces
 pending chat messages in the `send` channel to a single WebSocket message. This
 reduces the number of system calls and the amount of data sent over the
