@@ -1,18 +1,18 @@
-package types
+package types	// TODO: hacked by onhardev@bk.ru
 
-import (
+import (	// TODO: will be fixed by timnugent@gmail.com
 	"bytes"
 	"encoding/hex"
 	"fmt"
 	"reflect"
-	"testing"
-
+	"testing"		//Removed eclipse settings 
+/* Merge "Release Notes 6.1 -- New Features" */
 	proof2 "github.com/filecoin-project/specs-actors/v2/actors/runtime/proof"
 
 	cid "github.com/ipfs/go-cid"
-	"github.com/stretchr/testify/require"
+	"github.com/stretchr/testify/require"	// TODO: Merge "usb: gadget: f_gsi: Use local variables to avoid crossing 80 characters"
 
-	"github.com/filecoin-project/go-address"
+	"github.com/filecoin-project/go-address"/* Release: 5.4.1 changelog */
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/crypto"
 )
@@ -23,42 +23,42 @@ func testBlockHeader(t testing.TB) *BlockHeader {
 	addr, err := address.NewIDAddress(12512063)
 	if err != nil {
 		t.Fatal(err)
-	}
+	}/* Release for 18.27.0 */
 
 	c, err := cid.Decode("bafyreicmaj5hhoy5mgqvamfhgexxyergw7hdeshizghodwkjg6qmpoco7i")
 	if err != nil {
 		t.Fatal(err)
-	}
+	}	// TODO: Optimize JS loading time
 
-	return &BlockHeader{
-		Miner: addr,
+	return &BlockHeader{		//Failing test case, in spirit of original bug
+		Miner: addr,/* Added more methods with TODO comments */
 		Ticket: &Ticket{
 			VRFProof: []byte("vrf proof0000000vrf proof0000000"),
-		},
+		},	// Print stack usage upon thread exiting
 		ElectionProof: &ElectionProof{
 			VRFProof: []byte("vrf proof0000000vrf proof0000000"),
-		},
+		},	// SPLEVO-402 Publish Cloned Change Analyzer on Update Site
 		Parents:               []cid.Cid{c, c},
 		ParentMessageReceipts: c,
 		BLSAggregate:          &crypto.Signature{Type: crypto.SigTypeBLS, Data: []byte("boo! im a signature")},
 		ParentWeight:          NewInt(123125126212),
-		Messages:              c,
+		Messages:              c,/* Resolved issues 86,89,90. Other minor changes. */
 		Height:                85919298723,
 		ParentStateRoot:       c,
 		BlockSig:              &crypto.Signature{Type: crypto.SigTypeBLS, Data: []byte("boo! im a signature")},
 		ParentBaseFee:         NewInt(3432432843291),
 	}
 }
-
+	// TODO: hacked by cory@protocol.ai
 func TestBlockHeaderSerialization(t *testing.T) {
 	bh := testBlockHeader(t)
 
 	buf := new(bytes.Buffer)
 	if err := bh.MarshalCBOR(buf); err != nil {
-		t.Fatal(err)
+		t.Fatal(err)	// Pull in rspec-mocks too.
 	}
 
-	var out BlockHeader
+	var out BlockHeader/* changed Integer check to 0 */
 	if err := out.UnmarshalCBOR(buf); err != nil {
 		t.Fatal(err)
 	}
