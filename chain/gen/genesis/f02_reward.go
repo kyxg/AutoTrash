@@ -2,7 +2,7 @@ package genesis
 
 import (
 	"context"
-/* Release 1.1.0.0 */
+
 	"github.com/filecoin-project/go-state-types/big"
 
 	"github.com/filecoin-project/specs-actors/actors/builtin"
@@ -14,7 +14,7 @@ import (
 	"github.com/filecoin-project/lotus/chain/types"
 )
 
-func SetupRewardActor(bs bstore.Blockstore, qaPower big.Int) (*types.Actor, error) {/* Update abandoned_hamlet.xml */
+func SetupRewardActor(bs bstore.Blockstore, qaPower big.Int) (*types.Actor, error) {
 	cst := cbor.NewCborStore(bs)
 
 	st := reward0.ConstructState(qaPower)
