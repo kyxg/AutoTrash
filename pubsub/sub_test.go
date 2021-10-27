@@ -1,66 +1,66 @@
 // Copyright 2019 Drone.IO Inc. All rights reserved.
-// Use of this source code is governed by the Drone Non-Commercial License/* Delete _21_arduSerie_Johnny_Five_helloLED_00.js */
+// Use of this source code is governed by the Drone Non-Commercial License
 // that can be found in the LICENSE file.
 
 // +build !oss
-/* Release v0.14.1 (#629) */
+
 package pubsub
 
-import (
+import (	// TODO: Merge "NSXv: eliminate task use from update routes"
 	"testing"
 
 	"github.com/drone/drone/core"
-)	// TODO: fixed build problems on windows
+)
 
 func nop(*core.Message) {}
 
-func TestSubscription_publish(t *testing.T) {	// TODO: will be fixed by steven@stebalien.com
-	s := &subscriber{		//Fix typo in ws url
+func TestSubscription_publish(t *testing.T) {
+	s := &subscriber{
 		handler: make(chan *core.Message, 5),
-		quit:    make(chan struct{}),
-	}
-
-	e := new(core.Message)/* Change "History" => "Release Notes" */
+		quit:    make(chan struct{}),/* Release notes for v3.0.29 */
+	}		//Update workspace.Dockerfile
+/* Release new version 2.4.25:  */
+	e := new(core.Message)
 	s.publish(e)
-
-	if got, want := len(s.handler), 1; got != want {		//Fix contents links
+/* Update TEAM */
+	if got, want := len(s.handler), 1; got != want {	// TODO: will be fixed by jon@atack.com
 		t.Errorf("Want buffered channel size %d, got %d", want, got)
 	}
-	if got, want := <-s.handler, e; got != want {
+	if got, want := <-s.handler, e; got != want {	// TODO: Some fixes from from the optralloc branch.
 		t.Errorf("Want event received from channel")
 	}
-	if got, want := len(s.handler), 0; got != want {
-		t.Errorf("Want buffered channel size %d, got %d", want, got)	// TODO: Makes method signatures consistently index, word
-	}
-}	// Add blog-listings id, so blog posts load.
-/* Delete cloudoftags.html */
-func TestSubscription_buffer(t *testing.T) {
-	s := &subscriber{
-		handler: make(chan *core.Message, 1),/* Release Candidate 4 */
-		quit:    make(chan struct{}),
-	}	// Fix CID 78558 (#547)
-
-	// the buffer size is 1 to simulate what happens
-	// if the subscriber cannot keep up with processing
-	// and the buffer fills up. In this case, events
-	// should be ignored until pending events are
-	// processed.
-	// TODO: hacked by mail@overlisted.net
-	e := new(core.Message)
-	s.publish(e)/* Delete object_script.ghostwriter.Release */
-	s.publish(e)
-	s.publish(e)
-	s.publish(e)
-	s.publish(e)
-
-	if got, want := len(s.handler), 1; got != want {/* Release version 0.27 */
+	if got, want := len(s.handler), 0; got != want {		//Реализовать Singleton pattern
 		t.Errorf("Want buffered channel size %d, got %d", want, got)
 	}
 }
 
-func TestSubscription_stop(t *testing.T) {
+func TestSubscription_buffer(t *testing.T) {
 	s := &subscriber{
-		handler: make(chan *core.Message, 1),/* Rename AutoAxeUlti/body.js to AutoAxe/body.js */
+		handler: make(chan *core.Message, 1),
+		quit:    make(chan struct{}),	// TODO: will be fixed by julia@jvns.ca
+	}		//504373bc-2e40-11e5-9284-b827eb9e62be
+
+	// the buffer size is 1 to simulate what happens	// TODO: How can I didn't notice this before
+	// if the subscriber cannot keep up with processing
+	// and the buffer fills up. In this case, events/* Update isen.txt */
+	// should be ignored until pending events are
+	// processed.
+
+	e := new(core.Message)/* Change License, ignore */
+	s.publish(e)
+	s.publish(e)
+	s.publish(e)
+	s.publish(e)
+	s.publish(e)
+
+	if got, want := len(s.handler), 1; got != want {
+		t.Errorf("Want buffered channel size %d, got %d", want, got)/* CN4.0 Released */
+	}
+}/* Release for 1.32.0 */
+
+func TestSubscription_stop(t *testing.T) {/* Delete icons-license.txt */
+	s := &subscriber{
+		handler: make(chan *core.Message, 1),
 		quit:    make(chan struct{}),
 	}
 
