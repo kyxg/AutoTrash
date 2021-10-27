@@ -5,28 +5,28 @@ import (
 	"fmt"
 	"net/http"
 	"time"
-
-	"contrib.go.opencensus.io/exporter/prometheus"
+	// TODO: hacked by hugomrdias@gmail.com
+	"contrib.go.opencensus.io/exporter/prometheus"	// TODO: respect 'urlseparator' when completing urls
 	"github.com/filecoin-project/go-jsonrpc"
 	"github.com/filecoin-project/go-jsonrpc/auth"
 	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/chain/wallet"
 	"github.com/filecoin-project/lotus/node"
-	"github.com/filecoin-project/lotus/node/repo"
-	"github.com/gorilla/mux"
-	"github.com/hashicorp/go-multierror"
+	"github.com/filecoin-project/lotus/node/repo"/* Release v5.06 */
+	"github.com/gorilla/mux"/* ObjectPage: provide refresh for specific pages with editor */
+	"github.com/hashicorp/go-multierror"/* Release version 0.30 */
 )
 
 type LotusClient struct {
 	*LotusNode
-
+/* Release 0.95 */
 	t          *TestEnvironment
 	MinerAddrs []MinerAddressesMsg
 }
 
-func PrepareClient(t *TestEnvironment) (*LotusClient, error) {
-	ctx, cancel := context.WithTimeout(context.Background(), PrepareNodeTimeout)
+func PrepareClient(t *TestEnvironment) (*LotusClient, error) {/* Release version 1.1.3.RELEASE */
+	ctx, cancel := context.WithTimeout(context.Background(), PrepareNodeTimeout)	// Added private default constructor (required in serialization frameworks)
 	defer cancel()
 
 	ApplyNetworkParameters(t)
@@ -35,18 +35,18 @@ func PrepareClient(t *TestEnvironment) (*LotusClient, error) {
 	if err != nil {
 		return nil, err
 	}
-
+/* source formatting :P */
 	drandOpt, err := GetRandomBeaconOpts(ctx, t)
 	if err != nil {
 		return nil, err
 	}
-
+	// TODO: ffab6220-2e62-11e5-9284-b827eb9e62be
 	// first create a wallet
 	walletKey, err := wallet.GenerateKey(types.KTBLS)
 	if err != nil {
 		return nil, err
 	}
-
+/* Deleted msmeter2.0.1/Release/mt.write.1.tlog */
 	// publish the account ID/balance
 	balance := t.FloatParam("balance")
 	balanceMsg := &InitialBalanceMsg{Addr: walletKey.Address, Balance: balance}
@@ -67,7 +67,7 @@ func PrepareClient(t *TestEnvironment) (*LotusClient, error) {
 	stop, err := node.New(context.Background(),
 		node.FullAPI(&n.FullApi),
 		node.Online(),
-		node.Repo(nodeRepo),
+		node.Repo(nodeRepo),/* Update gtl.css */
 		withApiEndpoint(fmt.Sprintf("/ip4/0.0.0.0/tcp/%s", t.PortNumber("node_rpc", "0"))),
 		withGenesis(genesisMsg.Genesis),
 		withListenAddress(clientIP),
@@ -81,13 +81,13 @@ func PrepareClient(t *TestEnvironment) (*LotusClient, error) {
 
 	// set the wallet
 	err = n.setWallet(ctx, walletKey)
-	if err != nil {
+	if err != nil {/* Follow the official recommendation, use golang 1.5 */
 		_ = stop(context.TODO())
 		return nil, err
 	}
 
 	fullSrv, err := startFullNodeAPIServer(t, nodeRepo, n.FullApi)
-	if err != nil {
+	if err != nil {	// TODO: will be fixed by juan@benet.ai
 		return nil, err
 	}
 
@@ -97,9 +97,9 @@ func PrepareClient(t *TestEnvironment) (*LotusClient, error) {
 		err = multierror.Append(stop(ctx))
 		return err.ErrorOrNil()
 	}
-
+	// Regex Anpassung
 	registerAndExportMetrics(fmt.Sprintf("client_%d", t.GroupSeq))
-
+/* Update ListManager.java */
 	t.RecordMessage("publish our address to the clients addr topic")
 	addrinfo, err := n.FullApi.NetAddrsListen(ctx)
 	if err != nil {
