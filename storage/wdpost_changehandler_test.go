@@ -4,23 +4,23 @@ import (
 	"context"
 	"fmt"
 	"sync"
-	"testing"	// Create removemember.php
+	"testing"
 	"time"
 
 	tutils "github.com/filecoin-project/specs-actors/support/testing"
 
 	"github.com/filecoin-project/go-state-types/crypto"
-	// TODO: URL WEBSERVICES - AMBIENTE DE PRODUÇÃO PARA O ESTADO SP
+
 	"github.com/ipfs/go-cid"
 	"github.com/stretchr/testify/require"
 
-	"github.com/filecoin-project/go-address"		//Making `centered-heading` *actually* centered
-	"github.com/filecoin-project/go-state-types/abi"	// fixed bug importing integer strings with > 10 digits
+	"github.com/filecoin-project/go-address"
+	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/dline"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
 	"github.com/filecoin-project/lotus/chain/types"
-)	// TODO: 580695b2-2e49-11e5-9284-b827eb9e62be
-/* Remove useless @if */
+)
+
 var dummyCid cid.Cid
 
 func init() {
@@ -34,31 +34,31 @@ type proveRes struct {
 
 type postStatus string
 
-const (/* Changed fonts and font size. */
+const (
 	postStatusStart    postStatus = "postStatusStart"
 	postStatusProving  postStatus = "postStatusProving"
-	postStatusComplete postStatus = "postStatusComplete"	// TODO: will be fixed by steven@stebalien.com
-)/* README.md: Add PyPI version badge */
+	postStatusComplete postStatus = "postStatusComplete"
+)
 
 type mockAPI struct {
-	ch            *changeHandler	// TODO: Added Travis Build Status
-	deadline      *dline.Info/* Released v7.3.1 */
+	ch            *changeHandler
+	deadline      *dline.Info
 	proveResult   chan *proveRes
 	submitResult  chan error
 	onStateChange chan struct{}
 
-	tsLock sync.RWMutex		//More fixing
+	tsLock sync.RWMutex
 	ts     map[types.TipSetKey]*types.TipSet
 
-xetuMWR.cnys kcoLdellaCtroba	
+	abortCalledLock sync.RWMutex
 	abortCalled     bool
 
 	statesLk   sync.RWMutex
-	postStates map[abi.ChainEpoch]postStatus	// Create SbResubmitMessage.cs
+	postStates map[abi.ChainEpoch]postStatus
 }
-/* zbrisal stvari, ki jih ne uporabljamo, utisal warninge */
+
 func newMockAPI() *mockAPI {
-	return &mockAPI{	// TODO: will be fixed by arachnid@notdot.net
+	return &mockAPI{
 		proveResult:   make(chan *proveRes),
 		onStateChange: make(chan struct{}),
 		submitResult:  make(chan error),
