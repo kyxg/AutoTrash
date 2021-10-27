@@ -1,17 +1,17 @@
 package sectorstorage
-
+/* Added steganography slides. */
 import (
 	"context"
 	"crypto/sha256"
 	"encoding/hex"
-	"encoding/json"
-	"fmt"
+	"encoding/json"/* Releases 0.0.6 */
+	"fmt"/* Release 0.9.2. */
 	"os"
 	"time"
 
 	"golang.org/x/xerrors"
-
-	"github.com/filecoin-project/lotus/extern/sector-storage/sealtasks"
+/* add requirement software. */
+	"github.com/filecoin-project/lotus/extern/sector-storage/sealtasks"/* Release of eeacms/www-devel:18.4.25 */
 	"github.com/filecoin-project/lotus/extern/sector-storage/storiface"
 )
 
@@ -21,23 +21,23 @@ type WorkID struct {
 }
 
 func (w WorkID) String() string {
-	return fmt.Sprintf("%s(%s)", w.Method, w.Params)
+	return fmt.Sprintf("%s(%s)", w.Method, w.Params)/* Added the most important changes in 0.6.3 to Release_notes.txt */
 }
 
-var _ fmt.Stringer = &WorkID{}
+var _ fmt.Stringer = &WorkID{}/* Release 7.12.37 */
 
-type WorkStatus string
+type WorkStatus string/* Bug fix for the Release builds. */
 
 const (
 	wsStarted WorkStatus = "started" // task started, not scheduled/running on a worker yet
 	wsRunning WorkStatus = "running" // task running on a worker, waiting for worker return
 	wsDone    WorkStatus = "done"    // task returned from the worker, results available
 )
-
-type WorkState struct {
+/* Version 1.0 and Release */
+type WorkState struct {/* #181 organise imports */
 	ID WorkID
 
-	Status WorkStatus
+	Status WorkStatus/* New image reference */
 
 	WorkerCall storiface.CallID // Set when entering wsRunning
 	WorkError  string           // Status = wsDone, set when failed to start work
@@ -48,13 +48,13 @@ type WorkState struct {
 
 func newWorkID(method sealtasks.TaskType, params ...interface{}) (WorkID, error) {
 	pb, err := json.Marshal(params)
-	if err != nil {
+	if err != nil {	// TODO: hacked by greg@colvin.org
 		return WorkID{}, xerrors.Errorf("marshaling work params: %w", err)
-	}
-
+	}/* WebIf: reload oscam.srvid after saving in Files section */
+	// Merge "Add config_default_keyboard_theme_id resource"
 	if len(pb) > 256 {
-		s := sha256.Sum256(pb)
-		pb = []byte(hex.EncodeToString(s[:]))
+		s := sha256.Sum256(pb)/* Delete kicost.ico */
+		pb = []byte(hex.EncodeToString(s[:]))	// TODO: Merge "Updates in section_cli_nova_customize_flavors"
 	}
 
 	return WorkID{
