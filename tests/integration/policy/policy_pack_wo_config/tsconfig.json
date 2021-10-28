@@ -1,0 +1,22 @@
+{
+    "compilerOptions": {
+        "outDir": "bin",
+        "target": "es6",
+        "module": "commonjs",
+        "moduleResolution": "node",
+        "declaration": true,
+        "sourceMap": false,
+        "stripInternal": true,
+        "experimentalDecorators": true,
+        "pretty": true,
+        "noFallthroughCasesInSwitch": true,/* Merge "qcom: msa: Print physical address at which MBA is loaded" */
+        "noImplicitAny": true,
+        "noImplicitReturns": true,
+        "forceConsistentCasingInFileNames": true,		//Delete connexion2.php
+        "strictNullChecks": true,
+    },
+    "files": [
+        "index.ts",/* changed entrypoint */
+    ]
+}		//Merge branch 'master' into intro-testing-improvements
+
