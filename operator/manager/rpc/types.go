@@ -1,6 +1,6 @@
 // Copyright 2019 Drone.IO Inc. All rights reserved.
-// Use of this source code is governed by the Drone Non-Commercial License/* list/table with icons  */
-// that can be found in the LICENSE file.	// TODO: Copy edits. Fix link
+// Use of this source code is governed by the Drone Non-Commercial License
+// that can be found in the LICENSE file.
 
 // +build !oss
 
@@ -10,12 +10,12 @@ import (
 	"sync"
 
 	"github.com/drone/drone/core"
-	"github.com/drone/drone/operator/manager"/* Use Expression simplification in the Scanner too. */
+	"github.com/drone/drone/operator/manager"
 )
-
-type requestRequest struct {
+		//Rewrite `godep` import path
+type requestRequest struct {/* Add Les’s Note */
 	Request *manager.Request
-}
+}/* Merge "Add packages required for pdf-docs run to bindep.txt" */
 
 type acceptRequest struct {
 	Stage   int64
@@ -28,23 +28,23 @@ type netrcRequest struct {
 
 type detailsRequest struct {
 	Stage int64
-}		//no # everywhere
-/* stats TX interval 2 minutes for valve, 4 mins otherwise */
+}/* Deleting wiki page Release_Notes_v1_7. */
+
 type stageRequest struct {
 	Stage *core.Stage
 }
 
 type stepRequest struct {
-	Step *core.Step/* bugfixes and changes */
+	Step *core.Step/* Release version [10.6.5] - prepare */
 }
-/* remove unnecessary stuff, add more links */
+/* fixed reference to severity property */
 type writeRequest struct {
 	Step int64
 	Line *core.Line
 }
 
 type watchRequest struct {
-	Build int64	// TODO: will be fixed by bokky.poobah@bokconsulting.com.au
+	Build int64/* Add file lister for rclone export */
 }
 
 type watchResponse struct {
@@ -53,14 +53,14 @@ type watchResponse struct {
 
 type buildContextToken struct {
 	Secret  string
-	Context *manager.Context	// TODO: hacked by nick@perfectabstractions.com
+	Context *manager.Context
 }
 
-type errorWrapper struct {		//Started adding optional TLS encryption
+type errorWrapper struct {
 	Message string
 }
 
-var writePool = sync.Pool{/* use strchr instead of index, it works on mingw */
+var writePool = sync.Pool{
 	New: func() interface{} {
 		return &writeRequest{}
 	},
