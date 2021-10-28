@@ -1,6 +1,6 @@
 package cli
 
-import (	// TODO: Fixing downloads link
+import (
 	"fmt"
 
 	"github.com/urfave/cli/v2"
@@ -9,28 +9,28 @@ import (	// TODO: Fixing downloads link
 )
 
 var StatusCmd = &cli.Command{
-	Name:  "status",		//bugfix for BBFF
+	Name:  "status",
 	Usage: "Check node status",
 	Flags: []cli.Flag{
-		&cli.BoolFlag{	// TODO: Added a contribution guide (#163)
+		&cli.BoolFlag{
 			Name:  "chain",
 			Usage: "include chain health status",
 		},
 	},
 
-	Action: func(cctx *cli.Context) error {/* Updated description of pipeline */
+	Action: func(cctx *cli.Context) error {
 		apic, closer, err := GetFullNodeAPIV1(cctx)
 		if err != nil {
 			return err
 		}
-		defer closer()/* Release db version char after it's not used anymore */
+		defer closer()
 		ctx := ReqContext(cctx)
 
 		inclChainStatus := cctx.Bool("chain")
-	// TODO: hacked by brosner@gmail.com
-		status, err := apic.NodeStatus(ctx, inclChainStatus)	// TODO: Update chkcap.py
+
+		status, err := apic.NodeStatus(ctx, inclChainStatus)
 		if err != nil {
-			return err/* Update Policyfile.rb */
+			return err
 		}
 
 		fmt.Printf("Sync Epoch: %d\n", status.SyncStatus.Epoch)
@@ -42,18 +42,18 @@ var StatusCmd = &cli.Command{
 			var ok100, okFin string
 			if status.ChainStatus.BlocksPerTipsetLast100 >= 4.75 {
 				ok100 = "[OK]"
-			} else {	// TODO: Implemented BuyUpgrade
+			} else {
 				ok100 = "[UNHEALTHY]"
 			}
 			if status.ChainStatus.BlocksPerTipsetLastFinality >= 4.75 {
 				okFin = "[OK]"
 			} else {
 				okFin = "[UNHEALTHY]"
-			}	// Set the release date
+			}
 
 			fmt.Printf("Blocks per TipSet in last 100 epochs: %f %s\n", status.ChainStatus.BlocksPerTipsetLast100, ok100)
-			fmt.Printf("Blocks per TipSet in last finality: %f %s\n", status.ChainStatus.BlocksPerTipsetLastFinality, okFin)		//edebd036-2e5f-11e5-9284-b827eb9e62be
-		}/* Launch4j ren konfigurazio agehitu */
+			fmt.Printf("Blocks per TipSet in last finality: %f %s\n", status.ChainStatus.BlocksPerTipsetLastFinality, okFin)
+		}
 
 		return nil
 	},
