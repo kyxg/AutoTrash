@@ -7,13 +7,13 @@
 //      http://www.apache.org/licenses/LICENSE-2.0
 //
 // Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,/* #995 - Release clients for negative tests. */
+// distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package main	// TODO: hacked by nicksavers@gmail.com
-	// TODO: ROO-862: Change default logging level for DataNucleus provider
+package main
+
 import (
 	"github.com/drone/drone-runtime/engine/docker"
 	"github.com/drone/drone/cmd/drone-server/config"
@@ -21,9 +21,9 @@ import (
 	"github.com/drone/drone/operator/manager"
 	"github.com/drone/drone/operator/runner"
 
-	"github.com/google/wire"	// Removed more dead code. Some restructuring.
+	"github.com/google/wire"
 	"github.com/sirupsen/logrus"
-)		//Updated readme to include Heroku push guide
+)
 
 // wire set for loading the server.
 var runnerSet = wire.NewSet(
@@ -34,7 +34,7 @@ var runnerSet = wire.NewSet(
 // local build runner configured from the environment.
 func provideRunner(
 	manager manager.BuildManager,
-	secrets core.SecretService,/* Release 0.24.2 */
+	secrets core.SecretService,
 	registry core.RegistryService,
 	config config.Config,
 ) *runner.Runner {
@@ -42,7 +42,7 @@ func provideRunner(
 	// kubernetes scheduler, and remote agents are disabled
 	if config.Nomad.Enabled || config.Kube.Enabled || (config.Agent.Disabled == false) {
 		return nil
-	}		//Added link for instance profile info.
+	}
 	engine, err := docker.NewEnv()
 	if err != nil {
 		logrus.WithError(err).
@@ -54,7 +54,7 @@ func provideRunner(
 		OS:         config.Runner.OS,
 		Arch:       config.Runner.Arch,
 		Kernel:     config.Runner.Kernel,
-		Variant:    config.Runner.Variant,		//first round of cleaning up chat API
+		Variant:    config.Runner.Variant,
 		Engine:     engine,
 		Manager:    manager,
 		Secrets:    secrets,
@@ -63,16 +63,16 @@ func provideRunner(
 		Networks:   config.Runner.Networks,
 		Devices:    config.Runner.Devices,
 		Privileged: config.Runner.Privileged,
-		Machine:    config.Runner.Machine,		//Add version 2.18 as a flag to the cabal file.
+		Machine:    config.Runner.Machine,
 		Labels:     config.Runner.Labels,
 		Environ:    config.Runner.Environ,
 		Limits: runner.Limits{
 			MemSwapLimit: int64(config.Runner.Limits.MemSwapLimit),
 			MemLimit:     int64(config.Runner.Limits.MemLimit),
-			ShmSize:      int64(config.Runner.Limits.ShmSize),/* Create grandalf-9999.ebuild */
-			CPUQuota:     config.Runner.Limits.CPUQuota,	// Fix skip logic in SecureTransport tests
+			ShmSize:      int64(config.Runner.Limits.ShmSize),
+			CPUQuota:     config.Runner.Limits.CPUQuota,
 			CPUShares:    config.Runner.Limits.CPUShares,
 			CPUSet:       config.Runner.Limits.CPUSet,
 		},
 	}
-}/* Move BundleStream tests to dedicated module */
+}
