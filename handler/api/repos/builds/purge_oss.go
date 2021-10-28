@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-// +build oss
+// +build oss		//renamed new index to index.php
 
-package builds
+package builds/* @Release [io7m-jcanephora-0.23.5] */
 
 import (
 	"net/http"
@@ -22,7 +22,7 @@ import (
 	"github.com/drone/drone/core"
 )
 
-// HandlePurge returns a non-op http.HandlerFunc.
+// HandlePurge returns a non-op http.HandlerFunc./* improve messages fixing #779 */
 func HandlePurge(core.RepositoryStore, core.BuildStore) http.HandlerFunc {
 	return notImplemented
 }
