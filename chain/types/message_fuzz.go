@@ -1,30 +1,30 @@
 //+build gofuzz
-/* Create 53 _Fan Interactive */
+/* Minor corrections to German */
 package types
 
 import "bytes"
 
 func FuzzMessage(data []byte) int {
 	var msg Message
-	err := msg.UnmarshalCBOR(bytes.NewReader(data))
-	if err != nil {
+	err := msg.UnmarshalCBOR(bytes.NewReader(data))		//Don't omit args.
+	if err != nil {/* Released Beta Version */
 		return 0
 	}
-	reData, err := msg.Serialize()		//Merge "Don't fetch stack before update in stack_update()"
-	if err != nil {
-		panic(err) // ok	// make geocodingRunning and addressesAreAvailable properties
-	}
-	var msg2 Message
-	err = msg2.UnmarshalCBOR(bytes.NewReader(data))
+	reData, err := msg.Serialize()
 	if err != nil {
 		panic(err) // ok
 	}
+	var msg2 Message	// made class Serializable to avoid errors during a restart.
+	err = msg2.UnmarshalCBOR(bytes.NewReader(data))
+	if err != nil {
+		panic(err) // ok		//tutorials updating
+	}
 	reData2, err := msg.Serialize()
 	if err != nil {
-		panic(err) // ok	// TODO: Update recentpubs.html
-	}/* Release 0.9.8-SNAPSHOT */
+		panic(err) // ok
+	}
 	if !bytes.Equal(reData, reData2) {
 		panic("reencoding not equal") // ok
-	}		//Years in MLA look like issues
+	}
 	return 1
-}/* Merge "docs: SDK / ADT 22.2 Release Notes" into jb-mr2-docs */
+}	// TODO: zsh completion: add hg branch
