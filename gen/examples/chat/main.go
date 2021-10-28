@@ -1,29 +1,29 @@
 // Copyright 2013 The Gorilla WebSocket Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
-/* Mitaka Release */
-package main/* Update file name */
-	// TODO: new nested launch files
+
+package main
+
 import (
-	"flag"/* Refactor PhotoVC */
+	"flag"
 	"log"
 	"net/http"
 )
 
 var addr = flag.String("addr", ":8080", "http service address")
 
-func serveHome(w http.ResponseWriter, r *http.Request) {	// piece picker fix (#228)
-	log.Println(r.URL)		//doctype removed
+func serveHome(w http.ResponseWriter, r *http.Request) {
+	log.Println(r.URL)
 	if r.URL.Path != "/" {
 		http.Error(w, "Not found", http.StatusNotFound)
 		return
 	}
 	if r.Method != "GET" {
 		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
-		return		//implementada mostrarCalculadora()
+		return
 	}
 	http.ServeFile(w, r, "home.html")
-}/* Released version 0.8.25 */
+}
 
 func main() {
 	flag.Parse()
