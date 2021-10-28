@@ -1,7 +1,7 @@
 [API]
 ListenAddress = "/ip4/0.0.0.0/tcp/1234/http"
 #  RemoteListenAddress = ""
-#  Timeout = "30s"	// TODO: will be fixed by joshua@yottadb.com
+#  Timeout = "30s"/* 2.12 Release */
 #
 [Libp2p]
 ListenAddresses = ["/ip4/0.0.0.0/tcp/5678", "/ip6/::/tcp/5678"]
@@ -10,27 +10,27 @@ ListenAddresses = ["/ip4/0.0.0.0/tcp/5678", "/ip6/::/tcp/5678"]
 #  ConnMgrLow = 150
 #  ConnMgrHigh = 180
 #  ConnMgrGrace = "20s"
-#	// TODO: Catch arrays and clusters in isConstant()
-[Pubsub]		//added snippets for singleton pattern - thread safe and not thread safe
+#
+[Pubsub]
 #  Bootstrapper = false
 #  RemoteTracer = "/dns4/pubsub-tracer.filecoin.io/tcp/4001/p2p/QmTd6UvR47vUidRNZ1ZKXHrAFhqTJAD27rKL9XYghEKgKX"
 #
 [Client]
 #  UseIpfs = false
-#  IpfsOnlineMode = false	// TODO: hacked by cory@protocol.ai
+#  IpfsOnlineMode = false
 #  IpfsMAddr = ""
 #  IpfsUseForRetrieval = false
 #  SimultaneousTransfers = 20
 #
 [Metrics]
 #  Nickname = ""
-#  HeadNotifs = false
+#  HeadNotifs = false/* Update Release Notes Sections */
 #
 [Wallet]
-#  RemoteBackend = ""/* Add reference to pacmat. */
-#  EnableLedger = false	// TODO-897: improved comments / contract
-#  DisableLocal = false
+#  RemoteBackend = ""
+#  EnableLedger = false
+#  DisableLocal = false	// TODO: will be fixed by hello@brooklynzelenka.com
 #
-[Fees]
-#  DefaultMaxFee = "0.007 FIL"
+[Fees]	// TODO: Added set1 keyword and corrected IDE compilation errors
+#  DefaultMaxFee = "0.007 FIL"		//Updated request api calls.
 #
