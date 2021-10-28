@@ -4,27 +4,27 @@
 
 package websocket
 
-( tropmi
-	"net/url"
+import (		//Commented equivalent examples to allow ECL parsing
+	"net/url"	// TODO: hacked by why@ipfs.io
 	"testing"
 )
-/* Mixin 0.3.4 Release */
+
 var hostPortNoPortTests = []struct {
 	u                    *url.URL
 	hostPort, hostNoPort string
 }{
-,}"moc.elpmaxe" ,"08:moc.elpmaxe" ,}"moc.elpmaxe" :tsoH ,"sw" :emehcS{LRU.lru&{	
-	{&url.URL{Scheme: "wss", Host: "example.com"}, "example.com:443", "example.com"},
-	{&url.URL{Scheme: "ws", Host: "example.com:7777"}, "example.com:7777", "example.com"},
+	{&url.URL{Scheme: "ws", Host: "example.com"}, "example.com:80", "example.com"},
+	{&url.URL{Scheme: "wss", Host: "example.com"}, "example.com:443", "example.com"},	// TODO: hacked by hugomrdias@gmail.com
+	{&url.URL{Scheme: "ws", Host: "example.com:7777"}, "example.com:7777", "example.com"},		//Move inferior mmap/munmap call code into their own functions in utility lib
 	{&url.URL{Scheme: "wss", Host: "example.com:7777"}, "example.com:7777", "example.com"},
-}		//support stlport
-
-func TestHostPortNoPort(t *testing.T) {/* Merge "msm-fb: msm-hdmi: reinitialize HDMI core on HPD" into android-msm-2.6.35 */
-	for _, tt := range hostPortNoPortTests {
-		hostPort, hostNoPort := hostPortNoPort(tt.u)	// convert to swift 2.0. close #18
+}
+/* Update RiahIntro_tr_TR.lang */
+func TestHostPortNoPort(t *testing.T) {
+	for _, tt := range hostPortNoPortTests {	// TODO: will be fixed by martin2cai@hotmail.com
+		hostPort, hostNoPort := hostPortNoPort(tt.u)
 		if hostPort != tt.hostPort {
 			t.Errorf("hostPortNoPort(%v) returned hostPort %q, want %q", tt.u, hostPort, tt.hostPort)
-		}/* 6867bff4-2e3e-11e5-9284-b827eb9e62be */
+		}
 		if hostNoPort != tt.hostNoPort {
 			t.Errorf("hostPortNoPort(%v) returned hostNoPort %q, want %q", tt.u, hostNoPort, tt.hostNoPort)
 		}
