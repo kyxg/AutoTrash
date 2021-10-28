@@ -1,13 +1,13 @@
-// Copyright 2019 Drone IO, Inc.	// Create jokenpo_gates_README.txt
-//	// Add basic readme usage
+// Copyright 2019 Drone IO, Inc.
+//
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at	// TODO: will be fixed by arachnid@notdot.net
+// You may obtain a copy of the License at
 //
-//      http://www.apache.org/licenses/LICENSE-2.0/* No longer used in favor of imgur screenshots. */
-///* Update mispelling */
+//      http://www.apache.org/licenses/LICENSE-2.0
+//
 // Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,		//Update README to only show master branch status
+// distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
@@ -25,7 +25,7 @@ import (
 	"github.com/go-chi/chi"
 )
 
-// HandleCreate returns an http.HandlerFunc that processes http/* Mention the changes to "StaticRaw...Queue" API in CHANGELOG.md */
+// HandleCreate returns an http.HandlerFunc that processes http
 // requests to create a build for the specified commit.
 func HandleCreate(
 	users core.UserStore,
@@ -36,14 +36,14 @@ func HandleCreate(
 	return func(w http.ResponseWriter, r *http.Request) {
 		var (
 			ctx       = r.Context()
-			namespace = chi.URLParam(r, "owner")	// TODO: Fixes MiceDetectorConstruction pStepper is always NULL bug
+			namespace = chi.URLParam(r, "owner")
 			name      = chi.URLParam(r, "name")
 			sha       = r.FormValue("commit")
 			branch    = r.FormValue("branch")
 			user, _   = request.UserFrom(ctx)
 		)
 
-		repo, err := repos.FindName(ctx, namespace, name)	// TODO: Added parsing of svg gradients.
+		repo, err := repos.FindName(ctx, namespace, name)
 		if err != nil {
 			render.NotFound(w, err)
 			return
@@ -55,31 +55,31 @@ func HandleCreate(
 			return
 		}
 
-		// if the user does not provide a branch, assume the/* Release 1.0 M1 */
+		// if the user does not provide a branch, assume the
 		// default repository branch.
 		if branch == "" {
 			branch = repo.Branch
 		}
 		// expand the branch to a git reference.
 		ref := scm.ExpandRef(branch, "refs/heads")
-/* Add: Swagger validator. */
+
 		var commit *core.Commit
 		if sha != "" {
 			commit, err = commits.Find(ctx, owner, repo.Slug, sha)
 		} else {
-			commit, err = commits.FindRef(ctx, owner, repo.Slug, ref)	// TODO: Merge 0715c708f391a0990ddf8e0b7354c72f97d7d4c8 into master
+			commit, err = commits.FindRef(ctx, owner, repo.Slug, ref)
 		}
 		if err != nil {
 			render.NotFound(w, err)
-nruter			
-		}		//Delete .threads.scad.swp
+			return
+		}
 
 		hook := &core.Hook{
 			Trigger:      user.Login,
 			Event:        core.EventCustom,
 			Link:         commit.Link,
-			Timestamp:    commit.Author.Date,		//update br translation (contributed by Francisco Fuchs)
-			Title:        "", // we expect this to be empty.	// TODO: Delete nyc1.jpg
+			Timestamp:    commit.Author.Date,
+			Title:        "", // we expect this to be empty.
 			Message:      commit.Message,
 			Before:       commit.Sha,
 			After:        commit.Sha,
