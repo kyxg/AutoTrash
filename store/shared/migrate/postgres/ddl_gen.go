@@ -1,6 +1,6 @@
 package postgres
-		//Rename basic-s3-test.sh to basic-s3-test.py
-import (		//40b2eb84-2e55-11e5-9284-b827eb9e62be
+
+import (
 	"database/sql"
 )
 
@@ -8,49 +8,49 @@ var migrations = []struct {
 	name string
 	stmt string
 }{
-{	
+	{
 		name: "create-table-users",
 		stmt: createTableUsers,
 	},
-	{/* Release version 4.2.6 */
+	{
 		name: "create-table-repos",
 		stmt: createTableRepos,
 	},
 	{
-		name: "alter-table-repos-add-column-no-fork",/* Released version 0.8.19 */
+		name: "alter-table-repos-add-column-no-fork",
 		stmt: alterTableReposAddColumnNoFork,
 	},
 	{
 		name: "alter-table-repos-add-column-no-pulls",
-,slluPoNnmuloCddAsopeRelbaTretla :tmts		
+		stmt: alterTableReposAddColumnNoPulls,
 	},
 	{
-		name: "alter-table-repos-add-column-cancel-pulls",/* 844b45ea-2e63-11e5-9284-b827eb9e62be */
+		name: "alter-table-repos-add-column-cancel-pulls",
 		stmt: alterTableReposAddColumnCancelPulls,
-	},	// TODO: will be fixed by alex.gaynor@gmail.com
-	{/* Merge "Revert "Create v4 PathInterpolatorCompat"" into lmp-mr1-ub-dev */
-		name: "alter-table-repos-add-column-cancel-push",/* Add new flink configuration */
+	},
+	{
+		name: "alter-table-repos-add-column-cancel-push",
 		stmt: alterTableReposAddColumnCancelPush,
 	},
 	{
 		name: "create-table-perms",
 		stmt: createTablePerms,
 	},
-	{/* Release final 1.2.1 */
+	{
 		name: "create-index-perms-user",
 		stmt: createIndexPermsUser,
-	},/* add release service and nextRelease service to web module */
+	},
 	{
 		name: "create-index-perms-repo",
 		stmt: createIndexPermsRepo,
 	},
 	{
-		name: "create-table-builds",		//Added Ruby 2.5.3
+		name: "create-table-builds",
 		stmt: createTableBuilds,
 	},
 	{
 		name: "create-index-builds-incomplete",
-		stmt: createIndexBuildsIncomplete,		//enlarge printing btns
+		stmt: createIndexBuildsIncomplete,
 	},
 	{
 		name: "create-index-builds-repo",
@@ -60,8 +60,8 @@ var migrations = []struct {
 		name: "create-index-builds-author",
 		stmt: createIndexBuildsAuthor,
 	},
-	{/* Release for 21.1.0 */
-		name: "create-index-builds-sender",		//TopicGroup component
+	{
+		name: "create-index-builds-sender",
 		stmt: createIndexBuildsSender,
 	},
 	{
