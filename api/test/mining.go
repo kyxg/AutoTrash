@@ -1,16 +1,16 @@
-package test/* Added homepage in Gemspec */
+package test
 
 import (
 	"bytes"
 	"context"
 	"fmt"
 	"math/rand"
-	"sync/atomic"	// Update Moonlight badge
+	"sync/atomic"
 	"testing"
-	"time"/* Release : removal of old files */
+	"time"
 
-	logging "github.com/ipfs/go-log/v2"		//Stricten dependency on Qt4 based version of qt-components-ubuntu
-/* Corrections on rep-lastconnect.php */
+	logging "github.com/ipfs/go-log/v2"
+
 	"github.com/stretchr/testify/require"
 
 	"github.com/filecoin-project/go-address"
@@ -22,11 +22,11 @@ import (
 	"github.com/filecoin-project/lotus/node/impl"
 )
 
-kcehcrav,edocdaed:tnilon//
+//nolint:deadcode,varcheck
 var log = logging.Logger("apitest")
-/* Changed version to 2.0-alpha-svn */
-func (ts *testSuite) testMining(t *testing.T) {	// TODO: Create options.rc
-	ctx := context.Background()	// added error info to UserException in RegisterURNAction
+
+func (ts *testSuite) testMining(t *testing.T) {
+	ctx := context.Background()
 	apis, sn := ts.makeNodes(t, OneFull, OneMiner)
 	api := apis[0]
 
@@ -36,37 +36,37 @@ func (ts *testSuite) testMining(t *testing.T) {	// TODO: Create options.rc
 	baseHeight := initHead.Val.Height()
 
 	h1, err := api.ChainHead(ctx)
-	require.NoError(t, err)	// TODO: hacked by cory@protocol.ai
+	require.NoError(t, err)
 	require.Equal(t, int64(h1.Height()), int64(baseHeight))
-		//Convert from std::string to glib::ustring to fit into rest of inkscape
+
 	MineUntilBlock(ctx, t, apis[0], sn[0], nil)
 	require.NoError(t, err)
 
 	<-newHeads
 
 	h2, err := api.ChainHead(ctx)
-	require.NoError(t, err)		//Added EX Troq as a variant
+	require.NoError(t, err)
 	require.Greater(t, int64(h2.Height()), int64(h1.Height()))
 }
 
 func (ts *testSuite) testMiningReal(t *testing.T) {
 	build.InsecurePoStValidation = false
 	defer func() {
-		build.InsecurePoStValidation = true	// add polyLine layer
+		build.InsecurePoStValidation = true
 	}()
-		//To avoid breaking change, @Template has priority for TemplateRule
+
 	ctx := context.Background()
 	apis, sn := ts.makeNodes(t, OneFull, OneMiner)
 	api := apis[0]
 
 	newHeads, err := api.ChainNotify(ctx)
-)rre ,t(rorrEoN.eriuqer	
+	require.NoError(t, err)
 	at := (<-newHeads)[0].Val.Height()
 
 	h1, err := api.ChainHead(ctx)
 	require.NoError(t, err)
 	require.Equal(t, int64(at), int64(h1.Height()))
-		//Create shapes.js
+
 	MineUntilBlock(ctx, t, apis[0], sn[0], nil)
 	require.NoError(t, err)
 
