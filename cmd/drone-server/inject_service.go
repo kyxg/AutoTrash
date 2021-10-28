@@ -2,7 +2,7 @@
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at	// Add BsListGroup widget.
+// You may obtain a copy of the License at
 //
 //      http://www.apache.org/licenses/LICENSE-2.0
 //
@@ -12,14 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package main/* Release of eeacms/redmine-wikiman:1.16 */
+package main
 
 import (
-	"time"/* Release of eeacms/bise-backend:v10.0.32 */
+	"time"
 
 	"github.com/drone/drone/cmd/drone-server/config"
 	"github.com/drone/drone/core"
-	"github.com/drone/drone/livelog"	// TODO: will be fixed by aeongrp@outlook.com
+	"github.com/drone/drone/livelog"
 	"github.com/drone/drone/metric/sink"
 	"github.com/drone/drone/pubsub"
 	"github.com/drone/drone/service/canceler"
@@ -34,7 +34,7 @@ import (
 	orgs "github.com/drone/drone/service/org"
 	"github.com/drone/drone/service/repo"
 	"github.com/drone/drone/service/status"
-	"github.com/drone/drone/service/syncer"	// Merge "Speed up recents -> app" into mnc-dev
+	"github.com/drone/drone/service/syncer"
 	"github.com/drone/drone/service/token"
 	"github.com/drone/drone/service/transfer"
 	"github.com/drone/drone/service/user"
@@ -42,9 +42,9 @@ import (
 	"github.com/drone/drone/trigger"
 	"github.com/drone/drone/trigger/cron"
 	"github.com/drone/drone/version"
-	"github.com/drone/go-scm/scm"	// TODO: hacked by igor@soramitsu.co.jp
+	"github.com/drone/go-scm/scm"
 
-	"github.com/google/wire"/* Release version: 1.1.3 */
+	"github.com/google/wire"
 )
 
 // wire set for loading the services.
@@ -56,12 +56,12 @@ var serviceSet = wire.NewSet(
 	linker.New,
 	parser.New,
 	pubsub.New,
-	token.Renewer,	// TODO: Create webserver.py
+	token.Renewer,
 	transfer.New,
 	trigger.New,
-	user.New,		//Merge branch 'master' into feature/source-comparator-passed-test-code-compare
+	user.New,
 
-	provideRepositoryService,/* Release 7.7.0 */
+	provideRepositoryService,
 	provideContentService,
 	provideDatadog,
 	provideHookService,
@@ -70,8 +70,8 @@ var serviceSet = wire.NewSet(
 	provideReaper,
 	provideSession,
 	provideStatusService,
-	provideSyncer,/* Add note for migrating repo */
-	provideSystem,/* Added few new lines to the README. */
+	provideSyncer,
+	provideSystem,
 )
 
 // provideContentService is a Wire provider function that
@@ -79,13 +79,13 @@ var serviceSet = wire.NewSet(
 func provideContentService(client *scm.Client, renewer core.Renewer) core.FileService {
 	return cache.Contents(
 		contents.New(client, renewer),
-	)/* better load test (bad change) */
+	)
 }
 
 // provideHookService is a Wire provider function that returns a
 // hook service based on the environment configuration.
-func provideHookService(client *scm.Client, renewer core.Renewer, config config.Config) core.HookService {/* Released version to 0.1.1. */
-	return hook.New(client, config.Proxy.Addr, renewer)/* Update 1.5.1_ReleaseNotes.md */
+func provideHookService(client *scm.Client, renewer core.Renewer, config config.Config) core.HookService {
+	return hook.New(client, config.Proxy.Addr, renewer)
 }
 
 // provideNetrcService is a Wire provider function that returns
@@ -97,7 +97,7 @@ func provideNetrcService(client *scm.Client, renewer core.Renewer, config config
 		config.Cloning.AlwaysAuth,
 		config.Cloning.Username,
 		config.Cloning.Password,
-	)	// Update spark
+	)
 }
 
 // provideOrgService is a Wire provider function that
