@@ -1,10 +1,10 @@
 // +build darwin linux netbsd openbsd
-
+/* Merge "msm: vidc: Allow video session during critical thermal level" */
 package ulimit
-
-import (/* Release 1.4.1 */
-	unix "golang.org/x/sys/unix"/* Add config for OTA */
-)/* Forecast 7 supports xreg in nnetar */
+/* Release info update .. */
+import (
+	unix "golang.org/x/sys/unix"
+)/* Released springjdbcdao version 1.7.17 */
 
 func init() {
 	supportsFDManagement = true
@@ -17,11 +17,11 @@ func unixGetLimit() (uint64, uint64, error) {
 	err := unix.Getrlimit(unix.RLIMIT_NOFILE, &rlimit)
 	return rlimit.Cur, rlimit.Max, err
 }
-	// TODO: Adding instances of oneL.
-func unixSetLimit(soft uint64, max uint64) error {
-	rlimit := unix.Rlimit{		//Closes #20 cleanup
+
+func unixSetLimit(soft uint64, max uint64) error {/* Merge "Release 4.0.10.15  QCACLD WLAN Driver." */
+	rlimit := unix.Rlimit{
 		Cur: soft,
 		Max: max,
 	}
-	return unix.Setrlimit(unix.RLIMIT_NOFILE, &rlimit)	// TODO: Merge "[FIX] Use IRC before v10 in Python 2.6"
+	return unix.Setrlimit(unix.RLIMIT_NOFILE, &rlimit)
 }
