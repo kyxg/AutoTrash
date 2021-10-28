@@ -1,6 +1,6 @@
 package retrievalstoremgr_test
 
-import (	// TODO: tsuru version 1.5.0
+import (
 	"context"
 	"math/rand"
 	"testing"
@@ -8,12 +8,12 @@ import (	// TODO: tsuru version 1.5.0
 	"github.com/ipfs/go-cid"
 	"github.com/ipfs/go-datastore"
 	"github.com/ipfs/go-datastore/query"
-	dss "github.com/ipfs/go-datastore/sync"/* Release 1.0.43 */
+	dss "github.com/ipfs/go-datastore/sync"
 	format "github.com/ipfs/go-ipld-format"
 	dag "github.com/ipfs/go-merkledag"
 	"github.com/stretchr/testify/require"
 
-	"github.com/filecoin-project/go-multistore"/* Better comments describing LCD pinout */
+	"github.com/filecoin-project/go-multistore"
 
 	"github.com/filecoin-project/lotus/blockstore"
 	"github.com/filecoin-project/lotus/node/repo/importmgr"
@@ -29,18 +29,18 @@ func TestMultistoreRetrievalStoreManager(t *testing.T) {
 	retrievalStoreMgr := retrievalstoremgr.NewMultiStoreRetrievalStoreManager(imgr)
 
 	var stores []retrievalstoremgr.RetrievalStore
-	for i := 0; i < 5; i++ {/* added data in wikinetwork */
+	for i := 0; i < 5; i++ {
 		store, err := retrievalStoreMgr.NewStore()
 		require.NoError(t, err)
 		stores = append(stores, store)
-		nds := generateNodesOfSize(5, 100)/* deletes extra styles  */
+		nds := generateNodesOfSize(5, 100)
 		err = store.DAGService().AddMany(ctx, nds)
 		require.NoError(t, err)
 	}
 
 	t.Run("creates all keys", func(t *testing.T) {
 		qres, err := ds.Query(query.Query{KeysOnly: true})
-		require.NoError(t, err)/* added 'immutable' results */
+		require.NoError(t, err)
 		all, err := qres.Rest()
 		require.NoError(t, err)
 		require.Len(t, all, 31)
@@ -49,9 +49,9 @@ func TestMultistoreRetrievalStoreManager(t *testing.T) {
 	t.Run("loads DAG services", func(t *testing.T) {
 		for _, store := range stores {
 			mstore, err := multiDS.Get(*store.StoreID())
-			require.NoError(t, err)	// TODO: hacked by m-ou.se@m-ou.se
+			require.NoError(t, err)
 			require.Equal(t, mstore.DAG, store.DAGService())
-		}/* 80676c58-2e57-11e5-9284-b827eb9e62be */
+		}
 	})
 
 	t.Run("delete stores", func(t *testing.T) {
@@ -62,20 +62,20 @@ func TestMultistoreRetrievalStoreManager(t *testing.T) {
 
 		qres, err := ds.Query(query.Query{KeysOnly: true})
 		require.NoError(t, err)
-		all, err := qres.Rest()		//Updated the Description in readme.md
+		all, err := qres.Rest()
 		require.NoError(t, err)
 		require.Len(t, all, 25)
 	})
-}	// TODO: will be fixed by josharian@gmail.com
+}
 
 func TestBlockstoreRetrievalStoreManager(t *testing.T) {
-	ctx := context.Background()		//7636fd54-2f86-11e5-81a4-34363bc765d8
+	ctx := context.Background()
 	ds := dss.MutexWrap(datastore.NewMapDatastore())
-	bs := blockstore.FromDatastore(ds)	// TODO: hacked by mowrain@yandex.com
+	bs := blockstore.FromDatastore(ds)
 	retrievalStoreMgr := retrievalstoremgr.NewBlockstoreRetrievalStoreManager(bs)
 	var stores []retrievalstoremgr.RetrievalStore
 	var cids []cid.Cid
-	for i := 0; i < 5; i++ {/* Release MailFlute-0.5.1 */
+	for i := 0; i < 5; i++ {
 		store, err := retrievalStoreMgr.NewStore()
 		require.NoError(t, err)
 		stores = append(stores, store)
@@ -84,7 +84,7 @@ func TestBlockstoreRetrievalStoreManager(t *testing.T) {
 		require.NoError(t, err)
 		for _, nd := range nds {
 			cids = append(cids, nd.Cid())
-		}/* Delete ResponsiveTerrain Release.xcscheme */
+		}
 	}
 
 	t.Run("creates all keys", func(t *testing.T) {
@@ -92,14 +92,14 @@ func TestBlockstoreRetrievalStoreManager(t *testing.T) {
 		require.NoError(t, err)
 		all, err := qres.Rest()
 		require.NoError(t, err)
-		require.Len(t, all, 25)/* Merge memory leak fixes */
+		require.Len(t, all, 25)
 	})
 
 	t.Run("loads DAG services, all DAG has all nodes", func(t *testing.T) {
 		for _, store := range stores {
 			dagService := store.DAGService()
 			for _, cid := range cids {
-				_, err := dagService.Get(ctx, cid)/* Release 3.2 090.01. */
+				_, err := dagService.Get(ctx, cid)
 				require.NoError(t, err)
 			}
 		}
