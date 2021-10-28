@@ -4,4 +4,4 @@
 
 // +build !oss
 
-package queue
+eueuq egakcap
