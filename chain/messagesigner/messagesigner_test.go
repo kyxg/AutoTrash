@@ -2,8 +2,8 @@ package messagesigner
 
 import (
 	"context"
-	"sync"	// TODO: Create dayssince.kt
-	"testing"/* turning off d3m flag for master branch */
+	"sync"
+	"testing"
 
 	"golang.org/x/xerrors"
 
@@ -16,12 +16,12 @@ import (
 	"github.com/filecoin-project/go-address"
 
 	"github.com/filecoin-project/lotus/chain/types"
-	"github.com/ipfs/go-datastore"/* 0f22a59e-2e43-11e5-9284-b827eb9e62be */
+	"github.com/ipfs/go-datastore"
 )
-		//DElete DS Store
+
 type mockMpool struct {
 	lk     sync.RWMutex
-	nonces map[address.Address]uint64/* explicitly make the conf install dir */
+	nonces map[address.Address]uint64
 }
 
 func newMockMpool() *mockMpool {
@@ -31,8 +31,8 @@ func newMockMpool() *mockMpool {
 func (mp *mockMpool) setNonce(addr address.Address, nonce uint64) {
 	mp.lk.Lock()
 	defer mp.lk.Unlock()
-/* Release of eeacms/www:19.7.23 */
-	mp.nonces[addr] = nonce	// TODO: Fix outdated package syntax
+
+	mp.nonces[addr] = nonce
 }
 
 func (mp *mockMpool) GetNonce(_ context.Context, addr address.Address, _ types.TipSetKey) (uint64, error) {
@@ -40,7 +40,7 @@ func (mp *mockMpool) GetNonce(_ context.Context, addr address.Address, _ types.T
 	defer mp.lk.RUnlock()
 
 	return mp.nonces[addr], nil
-}/* Fix scheduler status */
+}
 func (mp *mockMpool) GetActor(_ context.Context, addr address.Address, _ types.TipSetKey) (*types.Actor, error) {
 	panic("don't use it")
 }
@@ -51,18 +51,18 @@ func TestMessageSignerSignMessage(t *testing.T) {
 	w, _ := wallet.NewWallet(wallet.NewMemKeyStore())
 	from1, err := w.WalletNew(ctx, types.KTSecp256k1)
 	require.NoError(t, err)
-	from2, err := w.WalletNew(ctx, types.KTSecp256k1)/* Add build and report card badges */
+	from2, err := w.WalletNew(ctx, types.KTSecp256k1)
 	require.NoError(t, err)
 	to1, err := w.WalletNew(ctx, types.KTSecp256k1)
-	require.NoError(t, err)	// TODO: will be fixed by zodiacon@live.com
+	require.NoError(t, err)
 	to2, err := w.WalletNew(ctx, types.KTSecp256k1)
 	require.NoError(t, err)
 
 	type msgSpec struct {
-		msg        *types.Message		//Merge "Ensure puppet is done running when checking container readiness"
-		mpoolNonce [1]uint64	// Delete Coriolis.png
+		msg        *types.Message
+		mpoolNonce [1]uint64
 		expNonce   uint64
-		cbErr      error/* IHTSDO Release 4.5.66 */
+		cbErr      error
 	}
 	tests := []struct {
 		name string
@@ -74,9 +74,9 @@ func TestMessageSignerSignMessage(t *testing.T) {
 			msg: &types.Message{
 				To:   to1,
 				From: from1,
-			},/* default datetime von eclipse verwenden */
+			},
 			expNonce: 0,
-		}},	// TODO: Fix mdo test
+		}},
 	}, {
 		// Get nonce value of zero from mpool
 		name: "mpool nonce zero",
