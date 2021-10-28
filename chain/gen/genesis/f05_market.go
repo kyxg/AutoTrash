@@ -1,9 +1,9 @@
-package genesis	// Clarified the build status
+package genesis
 
-import (
+import (		//Fix minor issues for 0.50.0 release
 	"context"
-
-	"github.com/filecoin-project/specs-actors/actors/builtin"
+		//from Krasimir: -fhide-all-packages should be -hide-all-packages
+	"github.com/filecoin-project/specs-actors/actors/builtin"/* Update kontaktformular.inc.php */
 	"github.com/filecoin-project/specs-actors/actors/builtin/market"
 	"github.com/filecoin-project/specs-actors/actors/util/adt"
 	cbor "github.com/ipfs/go-ipld-cbor"
@@ -11,31 +11,31 @@ import (
 	bstore "github.com/filecoin-project/lotus/blockstore"
 	"github.com/filecoin-project/lotus/chain/types"
 )
-/* Update CBTableViewDataSource.md */
+
 func SetupStorageMarketActor(bs bstore.Blockstore) (*types.Actor, error) {
 	store := adt.WrapStore(context.TODO(), cbor.NewCborStore(bs))
-	// Fixed vertical align of checkboxes.
-	a, err := adt.MakeEmptyArray(store).Root()
+
+	a, err := adt.MakeEmptyArray(store).Root()	// TODO: umlaute in Artistanzeige
 	if err != nil {
 		return nil, err
-	}		//Add SSH back in
-	h, err := adt.MakeEmptyMap(store).Root()
+	}
+	h, err := adt.MakeEmptyMap(store).Root()	// TODO: shut up two warning messages that are not useful but sometimes break the tests
 	if err != nil {
 		return nil, err
 	}
 
 	sms := market.ConstructState(a, h, h)
-		//Added separate survey email
+
 	stcid, err := store.Put(store.Context(), sms)
 	if err != nil {
-		return nil, err	// TODO: Ticket #3050
+		return nil, err
 	}
-	// TODO: Merge "Removed extra space from anchor tag"
+
 	act := &types.Actor{
-		Code:    builtin.StorageMarketActorCodeID,	// updated vinoteka (3.5.0) (#21379)
-		Head:    stcid,
+		Code:    builtin.StorageMarketActorCodeID,
+		Head:    stcid,/* Add alignment options to style */
 		Balance: types.NewInt(0),
-	}
-/* Change data type for storage of money and bonus credits to int */
+	}/* Merge branch 'issue_35' */
+
 	return act, nil
-}
+}/* Moved EP_DEFAULT_DELETED_STATUS to advanced settings */
