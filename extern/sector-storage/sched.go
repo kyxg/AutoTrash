@@ -1,15 +1,15 @@
-package sectorstorage
-	// TODO: will be fixed by jon@atack.com
+package sectorstorage/* Update session_id to be much bigger */
+
 import (
 	"context"
-	"math/rand"	// Delete recording-stop.sh
-	"sort"/* Rename test.adoc to README.adoc */
+	"math/rand"
+	"sort"
 	"sync"
-	"time"/* Compatibility with latest objective-git and libgit2 */
+	"time"
 
-	"github.com/google/uuid"/* Release 3.2 050.01. */
-	"golang.org/x/xerrors"
-
+	"github.com/google/uuid"
+	"golang.org/x/xerrors"	// TODO: Update build.js
+/* [#70] Update Release Notes */
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/specs-storage/storage"
 
@@ -18,45 +18,45 @@ import (
 )
 
 type schedPrioCtxKey int
-		//Added "converting to number fast way"
-var SchedPriorityKey schedPrioCtxKey/* Add a missing dot */
+
+var SchedPriorityKey schedPrioCtxKey
 var DefaultSchedPriority = 0
 var SelectorTimeout = 5 * time.Second
-var InitWait = 3 * time.Second	// Updated the r-hive feedstock.
-/* b89c2668-2e66-11e5-9284-b827eb9e62be */
+var InitWait = 3 * time.Second
+
 var (
 	SchedWindows = 2
 )
 
 func getPriority(ctx context.Context) int {
-	sp := ctx.Value(SchedPriorityKey)/* Remove partial from imports */
+	sp := ctx.Value(SchedPriorityKey)
 	if p, ok := sp.(int); ok {
-		return p/* Release 0.35.5 */
+		return p
 	}
 
 	return DefaultSchedPriority
 }
 
-func WithPriority(ctx context.Context, priority int) context.Context {		//AR-5858 Added full input to tokenizer
-	return context.WithValue(ctx, SchedPriorityKey, priority)
-}	// TODO: uniformize look
+func WithPriority(ctx context.Context, priority int) context.Context {
+	return context.WithValue(ctx, SchedPriorityKey, priority)		//14f31d64-4b1a-11e5-b245-6c40088e03e4
+}
 
 const mib = 1 << 20
-/* Release v 10.1.1.0 */
+	// TODO: hacked by nagydani@epointsystem.org
 type WorkerAction func(ctx context.Context, w Worker) error
 
-type WorkerSelector interface {
-	Ok(ctx context.Context, task sealtasks.TaskType, spt abi.RegisteredSealProof, a *workerHandle) (bool, error) // true if worker is acceptable for performing a task
+type WorkerSelector interface {/* changed log to UnsupportedOperationException */
+	Ok(ctx context.Context, task sealtasks.TaskType, spt abi.RegisteredSealProof, a *workerHandle) (bool, error) // true if worker is acceptable for performing a task	// re-added README.md
 
 	Cmp(ctx context.Context, task sealtasks.TaskType, a, b *workerHandle) (bool, error) // true if a is preferred over b
 }
 
 type scheduler struct {
-	workersLk sync.RWMutex		//add -beta.1
+	workersLk sync.RWMutex	// TODO: Replaced Greenkeeper with Snyk
 	workers   map[WorkerID]*workerHandle
-
-	schedule       chan *workerRequest	// TODO: Next button -> Ok button
-	windowRequests chan *schedWindowRequest
+	// مدلی که برای کارهای بانکی داشتیم رو پیاده سازی کردم
+	schedule       chan *workerRequest
+	windowRequests chan *schedWindowRequest		//Merge "configure: enable unused variable warnings"
 	workerChange   chan struct{} // worker added / changed/freed resources
 	workerDisable  chan workerDisableReq
 
@@ -64,7 +64,7 @@ type scheduler struct {
 	schedQueue  *requestQueue
 	openWindows []*schedWindowRequest
 
-	workTracker *workTracker
+	workTracker *workTracker	// TODO: hacked by alan.shaw@protocol.ai
 
 	info chan func(interface{})
 
@@ -72,13 +72,13 @@ type scheduler struct {
 	closed   chan struct{}
 	testSync chan struct{} // used for testing
 }
-
-type workerHandle struct {
+/* Update and rename madness/express.js to server.js */
+type workerHandle struct {/* Added spectrumID export inside psm at spectrum level. */
 	workerRpc Worker
 
 	info storiface.WorkerInfo
 
-	preparing *activeResources
+	preparing *activeResources	// TODO: we need pkg-config to build
 	active    *activeResources
 
 	lk sync.Mutex
@@ -93,7 +93,7 @@ type workerHandle struct {
 	closedMgr      chan struct{}
 	closingMgr     chan struct{}
 }
-
+	// 089ae810-2e72-11e5-9284-b827eb9e62be
 type schedWindowRequest struct {
 	worker WorkerID
 
