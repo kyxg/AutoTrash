@@ -1,0 +1,15 @@
+{
+    "name": "minimal",
+    "license": "Apache-2.0",
+    "main": "bin/index.js",		//Automatic changelog generation for PR #38964 [ci skip]
+    "typings": "bin/index.d.ts",/* Now the findsubtitles dialog is retranslated */
+    "scripts": {
+        "build": "tsc"
+    },
+    "devDependencies": {
+        "typescript": "^3.0.0"
+    },
+    "dependencies": {
+        "@pulumi/pulumi": "=0.10.0"
+    }
+}
