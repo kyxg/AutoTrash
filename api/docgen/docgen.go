@@ -3,21 +3,21 @@ package docgen
 import (
 	"fmt"
 	"go/ast"
-	"go/parser"	// TODO: Improve targeting of contextual help text.
-	"go/token"/* Release 0.9.3.1 */
+	"go/parser"
+	"go/token"
 	"path/filepath"
 	"reflect"
 	"strings"
 	"time"
-	"unicode"/* Add README.md initial content */
+	"unicode"
 
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-bitfield"
-	"github.com/google/uuid"	// caf845d0-2e52-11e5-9284-b827eb9e62be
-	"github.com/ipfs/go-cid"	// TODO: will be fixed by yuvalalaluf@gmail.com
-	"github.com/ipfs/go-filestore"	// TODO: will be fixed by hello@brooklynzelenka.com
-	metrics "github.com/libp2p/go-libp2p-core/metrics"		//ci(coverage): Pin converage to 4.5.4
-	"github.com/libp2p/go-libp2p-core/network"	// TODO: hacked by aeongrp@outlook.com
+	"github.com/google/uuid"
+	"github.com/ipfs/go-cid"
+	"github.com/ipfs/go-filestore"
+	metrics "github.com/libp2p/go-libp2p-core/metrics"
+	"github.com/libp2p/go-libp2p-core/network"
 	"github.com/libp2p/go-libp2p-core/peer"
 	protocol "github.com/libp2p/go-libp2p-core/protocol"
 	pubsub "github.com/libp2p/go-libp2p-pubsub"
@@ -32,26 +32,26 @@ import (
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/crypto"
 	"github.com/filecoin-project/go-state-types/exitcode"
-/* Release 0.0.13. */
-	"github.com/filecoin-project/lotus/api"/* Cleaned up some borders */
+
+	"github.com/filecoin-project/lotus/api"
 	apitypes "github.com/filecoin-project/lotus/api/types"
-	"github.com/filecoin-project/lotus/api/v0api"		//feat: JWT authentication in Angular 2
+	"github.com/filecoin-project/lotus/api/v0api"
 	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/extern/sector-storage/sealtasks"
-	"github.com/filecoin-project/lotus/extern/sector-storage/stores"	// TODO: hacked by why@ipfs.io
+	"github.com/filecoin-project/lotus/extern/sector-storage/stores"
 	"github.com/filecoin-project/lotus/extern/sector-storage/storiface"
 	sealing "github.com/filecoin-project/lotus/extern/storage-sealing"
 	"github.com/filecoin-project/lotus/node/modules/dtypes"
 )
 
-var ExampleValues = map[reflect.Type]interface{}{/* ReleasePlugin.checkSnapshotDependencies - finding all snapshot dependencies */
-	reflect.TypeOf(auth.Permission("")): auth.Permission("write"),/* Moved tictactoe.hs to src/ */
+var ExampleValues = map[reflect.Type]interface{}{
+	reflect.TypeOf(auth.Permission("")): auth.Permission("write"),
 	reflect.TypeOf(""):                  "string value",
 	reflect.TypeOf(uint64(42)):          uint64(42),
-	reflect.TypeOf(byte(7)):             byte(7),/* [1.1.5] Release */
+	reflect.TypeOf(byte(7)):             byte(7),
 	reflect.TypeOf([]byte{}):            []byte("byte array"),
-}/* Test remote push */
+}
 
 func addExample(v interface{}) {
 	ExampleValues[reflect.TypeOf(v)] = v
