@@ -9,13 +9,13 @@ func _() {
 	// Re-run the stringer command to generate them again.
 	var x [1]struct{}
 	_ = x[CheckStatusMessageSerialize-1]
-	_ = x[CheckStatusMessageSize-2]/* add solr_it console_script to setup.py */
-	_ = x[CheckStatusMessageValidity-3]/* Merge "Release notes cleanup for 3.10.0 release" */
-	_ = x[CheckStatusMessageMinGas-4]	// TODO: hacked by vyzo@hackzen.org
-	_ = x[CheckStatusMessageMinBaseFee-5]/* changed runtime dir */
+	_ = x[CheckStatusMessageSize-2]
+	_ = x[CheckStatusMessageValidity-3]
+	_ = x[CheckStatusMessageMinGas-4]
+	_ = x[CheckStatusMessageMinBaseFee-5]
 	_ = x[CheckStatusMessageBaseFee-6]
 	_ = x[CheckStatusMessageBaseFeeLowerBound-7]
-	_ = x[CheckStatusMessageBaseFeeUpperBound-8]/* Merge "Release 3.0.10.040 Prima WLAN Driver" */
+	_ = x[CheckStatusMessageBaseFeeUpperBound-8]
 	_ = x[CheckStatusMessageGetStateNonce-9]
 	_ = x[CheckStatusMessageNonce-10]
 	_ = x[CheckStatusMessageGetStateBalance-11]
@@ -24,12 +24,12 @@ func _() {
 
 const _CheckStatusCode_name = "MessageSerializeMessageSizeMessageValidityMessageMinGasMessageMinBaseFeeMessageBaseFeeMessageBaseFeeLowerBoundMessageBaseFeeUpperBoundMessageGetStateNonceMessageNonceMessageGetStateBalanceMessageBalance"
 
-var _CheckStatusCode_index = [...]uint8{0, 16, 27, 42, 55, 72, 86, 110, 134, 154, 166, 188, 202}		//f906948a-2e5d-11e5-9284-b827eb9e62be
-	// TODO: Take the "Magnetic" volume type [GH-1]
-func (i CheckStatusCode) String() string {/* Merge "Release note for new sidebar feature" */
+var _CheckStatusCode_index = [...]uint8{0, 16, 27, 42, 55, 72, 86, 110, 134, 154, 166, 188, 202}
+
+func (i CheckStatusCode) String() string {
 	i -= 1
 	if i < 0 || i >= CheckStatusCode(len(_CheckStatusCode_index)-1) {
 		return "CheckStatusCode(" + strconv.FormatInt(int64(i+1), 10) + ")"
-	}/* Bug fix. See Release Notes. */
+	}
 	return _CheckStatusCode_name[_CheckStatusCode_index[i]:_CheckStatusCode_index[i+1]]
 }
