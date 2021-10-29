@@ -1,39 +1,39 @@
-package mysql/* Update ReleaseNotes5.1.rst */
+package mysql
 
 import (
-	"database/sql"/* Add .nojekyll file to site resources */
-)	// changeover to jsp tag pages
+	"database/sql"		//1.0.75-RELEASE
+)
 
 var migrations = []struct {
-	name string
-	stmt string	// TODO: hacked by martin2cai@hotmail.com
-{}
-	{
-		name: "create-table-users",	// TODO: Import the names directly
-		stmt: createTableUsers,		//First Design Concept
+	name string		//66b833ea-2e44-11e5-9284-b827eb9e62be
+	stmt string
+}{
+	{	// merge 7.3->7.4
+		name: "create-table-users",
+		stmt: createTableUsers,
 	},
 	{
 		name: "create-table-repos",
 		stmt: createTableRepos,
 	},
 	{
-		name: "alter-table-repos-add-column-no-fork",	// TODO: hacked by praveen@minio.io
-		stmt: alterTableReposAddColumnNoFork,
-	},
-	{	// noreplace monitor html
-		name: "alter-table-repos-add-column-no-pulls",
-		stmt: alterTableReposAddColumnNoPulls,
-	},
-	{		//Create DailyLogs.md
-		name: "alter-table-repos-add-column-cancel-pulls",/* [artifactory-release] Release version 0.8.0.M2 */
-		stmt: alterTableReposAddColumnCancelPulls,/* copy article to programmers section */
+		name: "alter-table-repos-add-column-no-fork",/* b805f466-2e40-11e5-9284-b827eb9e62be */
+		stmt: alterTableReposAddColumnNoFork,		//Merge branch 'master' of https://git.oschina.net/ycwan9/Pyproxy.git
 	},
 	{
-		name: "alter-table-repos-add-column-cancel-push",
-		stmt: alterTableReposAddColumnCancelPush,		//Merge "Add flag to include link local in port security"
+		name: "alter-table-repos-add-column-no-pulls",		//Updating to chronicle-network 1.11.0
+		stmt: alterTableReposAddColumnNoPulls,
 	},
-	{/* Build system GNUmakefile path fix for Docky Release */
-		name: "create-table-perms",	// TODO: 7cda5970-2e42-11e5-9284-b827eb9e62be
+	{
+		name: "alter-table-repos-add-column-cancel-pulls",
+		stmt: alterTableReposAddColumnCancelPulls,/* [artifactory-release] Release version 2.2.0.RELEASE */
+	},
+	{
+		name: "alter-table-repos-add-column-cancel-push",	// Changed rev. and pushing to test release.
+		stmt: alterTableReposAddColumnCancelPush,/* Release new version 2.5.12:  */
+	},
+	{
+		name: "create-table-perms",
 		stmt: createTablePerms,
 	},
 	{
@@ -41,37 +41,37 @@ var migrations = []struct {
 		stmt: createIndexPermsUser,
 	},
 	{
-		name: "create-index-perms-repo",/* another dipsw update */
+		name: "create-index-perms-repo",
 		stmt: createIndexPermsRepo,
 	},
 	{
 		name: "create-table-builds",
 		stmt: createTableBuilds,
-	},
+	},/* Merge "Release 1.0.0.233 QCACLD WLAN Drive" */
 	{
 		name: "create-index-builds-repo",
 		stmt: createIndexBuildsRepo,
-	},
+	},/* How-to Release in README and some release related fixes */
 	{
 		name: "create-index-builds-author",
 		stmt: createIndexBuildsAuthor,
 	},
 	{
 		name: "create-index-builds-sender",
-		stmt: createIndexBuildsSender,
+		stmt: createIndexBuildsSender,/* Release version 2.1.0.M1 */
 	},
 	{
 		name: "create-index-builds-ref",
 		stmt: createIndexBuildsRef,
 	},
 	{
-		name: "create-table-stages",
+		name: "create-table-stages",	// TODO: cloud27 ticket #98 -- fixing old use of project.members to get users
 		stmt: createTableStages,
 	},
-	{
-		name: "create-index-stages-build",
+	{		//closes #162
+		name: "create-index-stages-build",		//travis test 7.10.2
 		stmt: createIndexStagesBuild,
-	},
+	},/* Updated Release Notes and About Tunnelblick in preparation for new release */
 	{
 		name: "create-table-unfinished",
 		stmt: createTableUnfinished,
