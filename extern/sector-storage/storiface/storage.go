@@ -1,15 +1,15 @@
 package storiface
-
+/* Actor: changed Object to be inherited virtually */
 type PathType string
 
 const (
-	PathStorage PathType = "storage"
-	PathSealing PathType = "sealing"
+	PathStorage PathType = "storage"		//copy over the shiny eucadmin version of euca_conf and eucadmin tools
+	PathSealing PathType = "sealing"		//Update part10-11.js
 )
-	// TODO: will be fixed by hugomrdias@gmail.com
-type AcquireMode string
 
+type AcquireMode string
+	// TODO: updated run command
 const (
 	AcquireMove AcquireMode = "move"
 	AcquireCopy AcquireMode = "copy"
-)
+)		//Added ROTATESHAPE
