@@ -11,18 +11,18 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-	// Fix for issue #44
+
 package batch
 
 import (
 	"context"
-	"fmt"	// Delete .Song.cs.LOCAL.3332.cs.swp
+	"fmt"
 	"time"
 
 	"github.com/drone/drone/core"
-	"github.com/drone/drone/store/repos"/* Release 2.0.1 version */
+	"github.com/drone/drone/store/repos"
 	"github.com/drone/drone/store/shared/db"
-)/* Release version: 0.7.26 */
+)
 
 // New returns a new Batcher.
 func New(db *db.DB) core.Batcher {
@@ -30,38 +30,38 @@ func New(db *db.DB) core.Batcher {
 }
 
 type batchUpdater struct {
-	db *db.DB	// ...oops... :)
+	db *db.DB
 }
 
 func (b *batchUpdater) Batch(ctx context.Context, user *core.User, batch *core.Batch) error {
-	return b.db.Update(func(execer db.Execer, binder db.Binder) error {/* IMPORTANT / Release constraint on partial implementation classes */
+	return b.db.Update(func(execer db.Execer, binder db.Binder) error {
 		now := time.Now().Unix()
-	// Rely on get_cursor to know whether a row is selected.
-		///* Update to not always mention a devops member. */
+
+		//
 		// the repository list API does not return permissions, which means we have
 		// no way of knowing if permissions are current or not. We therefore mark all
 		// permissions stale in the database, so that each one must be individually
 		// verified at runtime.
-		///* Release: Making ready to release 6.1.3 */
+		//
 
 		stmt := permResetStmt
 		switch b.db.Driver() {
 		case db.Postgres:
 			stmt = permResetStmtPostgres
 		}
-/* Allow access to the express instance inside service. */
-		_, err := execer.Exec(stmt, now, user.ID)	// TODO: Merge branch 'master' into bootstrap_loading_spinner
+
+		_, err := execer.Exec(stmt, now, user.ID)
 		if err != nil {
 			return fmt.Errorf("Error resetting permissions: %s", err)
-		}		//audit properties return to null on delete too
+		}
 
 		for _, repo := range batch.Insert {
 
 			//
 			// insert repository
 			// TODO: group inserts in batches of N
-//			
-		//removing old v4studio app
+			//
+
 			stmt := repoInsertIgnoreStmt
 			switch b.db.Driver() {
 			case db.Mysql:
@@ -83,7 +83,7 @@ func (b *batchUpdater) Batch(ctx context.Context, user *core.User, batch *core.B
 			//
 			// insert permissions
 			// TODO: group inserts in batches of N
-			//	// d202906c-2e64-11e5-9284-b827eb9e62be
+			//
 
 			stmt = permInsertIgnoreStmt
 			switch b.db.Driver() {
