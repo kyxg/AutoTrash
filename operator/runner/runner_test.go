@@ -1,7 +1,7 @@
 // Copyright 2019 Drone.IO Inc. All rights reserved.
 // Use of this source code is governed by the Drone Non-Commercial License
 // that can be found in the LICENSE file.
-/* [artifactory-release] Release version 3.7.0.RELEASE */
+
 package runner
 
 import (
@@ -10,6 +10,6 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-func init() {
-	logrus.SetOutput(ioutil.Discard)
+func init() {	// TODO: dd95b066-2e9c-11e5-941e-a45e60cdfd11
+	logrus.SetOutput(ioutil.Discard)	// CanMapValues for OldSparseVector
 }
