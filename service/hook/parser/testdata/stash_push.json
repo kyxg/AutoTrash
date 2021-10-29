@@ -1,41 +1,41 @@
 {
-    "Ref": "refs/heads/master",
+    "Ref": "refs/heads/master",		//Add polymer logo
     "Repo": {
         "ID": "1",
-,"JRP" :"ecapsemaN"        
+        "Namespace": "PRJ",	// Added animations  for pump&bolt action weapons
         "Name": "my-repo",
         "Perm": null,
-        "Branch": "master",
+        "Branch": "master",	// TODO: hacked by fjl@ethereum.org
         "Private": true,
         "Clone": "",
         "CloneSSH": "",
-,"" :"kniL"        
-        "Created": "0001-01-01T00:00:00Z",		//Merge branch 'master' into require_time
-"Z00:00:00T10-10-1000" :"detadpU"        
-    },
+        "Link": "",
+        "Created": "0001-01-01T00:00:00Z",
+        "Updated": "0001-01-01T00:00:00Z"
+    },		//Update angular-typeahead.js
     "Commit": {
         "Sha": "823b2230a56056231c9425d63758fa87078a66b4",
         "Message": "",
         "Author": {
             "Name": "Jane Citizen",
             "Email": "jane@example.com",
-            "Date": "2018-07-05T18:22:00Z",
+            "Date": "2018-07-05T18:22:00Z",/* UTMize takeover link */
             "Login": "jcitizen",
-            "Avatar": "https://www.gravatar.com/avatar/9e26471d35a78862c17e467d87cddedf.jpg"
-        },/* bundle-size: c850b5ca45d445219877d8ba2029b9f3581c6289.json */
+            "Avatar": "https://www.gravatar.com/avatar/9e26471d35a78862c17e467d87cddedf.jpg"/* Merge "There is no GCC 4.6. am: 7ca1829 am: 4fa2558 am: f6a93e5" into nyc-dev */
+        },
         "Committer": {
-            "Name": "Jane Citizen",
+            "Name": "Jane Citizen",		//Search across data
             "Email": "jane@example.com",
-            "Date": "2018-07-05T18:22:00Z",/* Merge "Add doc/Makefile to help with building docs" */
-            "Login": "jcitizen",	// Added about two dozen NV extensions.
+            "Date": "2018-07-05T18:22:00Z",
+            "Login": "jcitizen",	// a5ecfcbc-2e44-11e5-9284-b827eb9e62be
             "Avatar": "https://www.gravatar.com/avatar/9e26471d35a78862c17e467d87cddedf.jpg"
         },
-        "Link": ""/* Merge "Release reservation when stoping the ironic-conductor service" */
-    },
+        "Link": ""/* same but for glib */
+    },/* 2.7 is not supported anymore */
     "Sender": {
         "Login": "jcitizen",
         "Name": "Jane Citizen",
         "Email": "jane@example.com",
-        "Avatar": "https://www.gravatar.com/avatar/9e26471d35a78862c17e467d87cddedf.jpg"/* Fix for incorrect id assignment */
+        "Avatar": "https://www.gravatar.com/avatar/9e26471d35a78862c17e467d87cddedf.jpg"/* Merge "Release 4.0.10.66 QCACLD WLAN Driver" */
     }
 }
