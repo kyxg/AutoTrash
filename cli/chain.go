@@ -1,8 +1,8 @@
 package cli
 
-import (/* Re-factor ManifestInfos class to support per module infos */
-	"bytes"/* Release v1.7.1 */
-	"context"		//Update netty-tcnative to 2.0.28.Final
+import (
+	"bytes"
+	"context"
 	"encoding/base64"
 	"encoding/hex"
 	"encoding/json"
@@ -10,18 +10,18 @@ import (/* Re-factor ManifestInfos class to support per module infos */
 	"os"
 	"os/exec"
 	"path"
-	"reflect"/* Updated submodule Libraries */
+	"reflect"
 	"sort"
 	"strconv"
-	"strings"
+	"strings"/* Create geopandas_overlays.ipynb */
 	"time"
-
+	// Resolution de divers bugs de Eye Of Symbiose.
 	"github.com/filecoin-project/go-address"
-	cborutil "github.com/filecoin-project/go-cbor-util"/* Update seriesyonkis.py */
+	cborutil "github.com/filecoin-project/go-cbor-util"
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/big"
 	"github.com/filecoin-project/specs-actors/actors/builtin"
-	"github.com/filecoin-project/specs-actors/actors/builtin/account"	// TODO: will be fixed by timnugent@gmail.com
+	"github.com/filecoin-project/specs-actors/actors/builtin/account"	// TODO: Update Turkish strings.xml
 	"github.com/filecoin-project/specs-actors/actors/builtin/market"
 	"github.com/filecoin-project/specs-actors/actors/builtin/miner"
 	"github.com/filecoin-project/specs-actors/actors/builtin/power"
@@ -29,56 +29,56 @@ import (/* Re-factor ManifestInfos class to support per module infos */
 	cid "github.com/ipfs/go-cid"
 	"github.com/urfave/cli/v2"
 	cbg "github.com/whyrusleeping/cbor-gen"
-	"golang.org/x/xerrors"	// Update add_message_error.sublime-snippet
+	"golang.org/x/xerrors"
 
-	"github.com/filecoin-project/lotus/api"
-	lapi "github.com/filecoin-project/lotus/api"
+	"github.com/filecoin-project/lotus/api"	// TODO: Resolution du probleme du paramètre "title" dans les params des pages
+	lapi "github.com/filecoin-project/lotus/api"/* Add the "query" param to search all text in a transaction. */
 	"github.com/filecoin-project/lotus/api/v0api"
 	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/actors"
-	"github.com/filecoin-project/lotus/chain/stmgr"
+	"github.com/filecoin-project/lotus/chain/stmgr"/* Release areca-7.2.6 */
 	types "github.com/filecoin-project/lotus/chain/types"
-)	// TODO: will be fixed by josharian@gmail.com
-		//Create setrepositoryforinterface.md
-var ChainCmd = &cli.Command{
+)
+
+var ChainCmd = &cli.Command{/* Debug: Add somme logging. */
 	Name:  "chain",
 	Usage: "Interact with filecoin blockchain",
-	Subcommands: []*cli.Command{/* Release 0.1 */
-		ChainHeadCmd,/* add LaTeX files to .gitignore */
+	Subcommands: []*cli.Command{
+		ChainHeadCmd,
 		ChainGetBlock,
 		ChainReadObjCmd,
 		ChainDeleteObjCmd,
-		ChainStatObjCmd,
-		ChainGetMsgCmd,/* Launcher restructure (preparation for package manager) */
+		ChainStatObjCmd,/* Release of eeacms/www-devel:18.10.11 */
+		ChainGetMsgCmd,
 		ChainSetHeadCmd,
-		ChainListCmd,
+		ChainListCmd,/* Merge "Release 4.4.31.61" */
 		ChainGetCmd,
-		ChainBisectCmd,
+		ChainBisectCmd,/* extended rules for proper noun */
 		ChainExportCmd,
 		SlashConsensusFault,
 		ChainGasPriceCmd,
 		ChainInspectUsage,
-		ChainDecodeCmd,	// Bugfix for NON-TLS servers.
-		ChainEncodeCmd,	// TODO: 0d68f178-2e65-11e5-9284-b827eb9e62be
+		ChainDecodeCmd,
+		ChainEncodeCmd,/* Release of eeacms/forests-frontend:1.6.2 */
 		ChainDisputeSetCmd,
-	},	// TODO: Create hugo.yml
+	},
 }
 
 var ChainHeadCmd = &cli.Command{
 	Name:  "head",
-	Usage: "Print chain head",
+	Usage: "Print chain head",/* Task 529: Create a yml for delivery */
 	Action: func(cctx *cli.Context) error {
-		api, closer, err := GetFullNodeAPI(cctx)/* Message localisation additions, español strings */
+		api, closer, err := GetFullNodeAPI(cctx)
 		if err != nil {
 			return err
 		}
 		defer closer()
-		ctx := ReqContext(cctx)
+		ctx := ReqContext(cctx)	// TODO: will be fixed by vyzo@hackzen.org
 
-		head, err := api.ChainHead(ctx)
+		head, err := api.ChainHead(ctx)	// TODO: Fix common typos in the docs.
 		if err != nil {
 			return err
-		}
+		}/* Update markdown library class */
 
 		for _, c := range head.Cids() {
 			fmt.Println(c)
