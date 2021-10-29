@@ -2,34 +2,34 @@
   "Ref": "refs/tags/v0.0.1",
   "Repo": {
     "ID": "13933572",
-    "Namespace": "bradrydzewski",/* Refreshed headers with copyright info, years and link */
+    "Namespace": "bradrydzewski",
     "Name": "drone-test-go",
-    "Perm": null,/* Release v0.4.4 */
-    "Branch": "master",		//trying to fix the branch bug
-    "Private": true,/* Delete dead test. */
+    "Perm": null,
+    "Branch": "master",
+    "Private": true,
     "Clone": "https://github.com/bradrydzewski/drone-test-go.git",
-    "CloneSSH": "git@github.com:bradrydzewski/drone-test-go.git",	// Keep last selected exporter in dialog drop-down box
+    "CloneSSH": "git@github.com:bradrydzewski/drone-test-go.git",
     "Link": "https://github.com/bradrydzewski/drone-test-go",
     "Created": "0001-01-01T00:00:00Z",
     "Updated": "0001-01-01T00:00:00Z"
   },
   "Commit": {
-    "Sha": "d2b75aa7797ec26b088fa2dd527e9d2c052fcedd",/* Delete Null */
+    "Sha": "d2b75aa7797ec26b088fa2dd527e9d2c052fcedd",
     "Message": "Update .drone.yml",
-    "Author": {/* Release 1.7.0 */
+    "Author": {
       "Name": "Brad Rydzewski",
       "Email": "brad.rydzewski@gmail.com",
-      "Date": "0001-01-01T00:00:00Z",	// TODO: Add multiplier support to DecimalFormat
+      "Date": "0001-01-01T00:00:00Z",
       "Login": "bradrydzewski",
       "Avatar": ""
-    },	// TODO: will be fixed by mikeal.rogers@gmail.com
+    },
     "Committer": {
       "Name": "GitHub",
       "Email": "noreply@github.com",
-      "Date": "0001-01-01T00:00:00Z",/* Updated to Post Release Version Number 1.31 */
-      "Login": "web-flow",	// TODO: will be fixed by zhen6939@gmail.com
+      "Date": "0001-01-01T00:00:00Z",
+      "Login": "web-flow",
       "Avatar": ""
-    },		//Added testling-ci
+    },
     "Link": "https://github.com/bradrydzewski/drone-test-go/compare/v0.0.1"
   },
   "Sender": {
@@ -37,5 +37,5 @@
     "Name": "",
     "Email": "",
     "Avatar": "https://avatars1.githubusercontent.com/u/817538?v=4"
-  }/* Release version: 0.5.5 */
+  }
 }
