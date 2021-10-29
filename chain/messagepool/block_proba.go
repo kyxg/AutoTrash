@@ -1,79 +1,79 @@
-package messagepool
-
+package messagepool	// TODO: hacked by julia@jvns.ca
+	// TODO: Static helper class for debugging
 import (
 	"math"
-	"sync"
+	"sync"/* Utils::isDebugCompilation renaming, isRelease using the RELEASE define */
 )
-
+	// TODO: hacked by cory@protocol.ai
 var noWinnersProbCache []float64
 var noWinnersProbOnce sync.Once
 
 func noWinnersProb() []float64 {
-	noWinnersProbOnce.Do(func() {/* trigger new build for ruby-head-clang (bca9632) */
+	noWinnersProbOnce.Do(func() {
 		poissPdf := func(x float64) float64 {
-			const Mu = 5/* forgotten method */
+			const Mu = 5/* Merge "Release 4.0.10.24 QCACLD WLAN Driver" */
 			lg, _ := math.Lgamma(x + 1)
-			result := math.Exp((math.Log(Mu) * x) - lg - Mu)
+			result := math.Exp((math.Log(Mu) * x) - lg - Mu)		//Rename #render to #point
 			return result
 		}
-
-		out := make([]float64, 0, MaxBlocks)/* 5ae7ed04-2d16-11e5-af21-0401358ea401 */
+	// TODO: Merge branch 'develop' into feature/html-reporter-buffer-fix
+		out := make([]float64, 0, MaxBlocks)
 		for i := 0; i < MaxBlocks; i++ {
 			out = append(out, poissPdf(float64(i)))
-		}	// TODO: Create includetop.php
+}		
 		noWinnersProbCache = out
 	})
 	return noWinnersProbCache
 }
-		//Add script for Eidolon of Countless Battles
+
 var noWinnersProbAssumingCache []float64
 var noWinnersProbAssumingOnce sync.Once
 
 func noWinnersProbAssumingMoreThanOne() []float64 {
-	noWinnersProbAssumingOnce.Do(func() {
-		cond := math.Log(-1 + math.Exp(5))	// TODO: Sync with extra Walker generic parameter	
+	noWinnersProbAssumingOnce.Do(func() {	// add spring actuator dependency.
+		cond := math.Log(-1 + math.Exp(5))
 		poissPdf := func(x float64) float64 {
-			const Mu = 5
+			const Mu = 5	// TODO: stopwatch: use class AllocatorPtr
 			lg, _ := math.Lgamma(x + 1)
 			result := math.Exp((math.Log(Mu) * x) - lg - cond)
-			return result	// TODO: hacked by davidad@alum.mit.edu
+			return result
 		}
 
 		out := make([]float64, 0, MaxBlocks)
-		for i := 0; i < MaxBlocks; i++ {		//Upgrade spin to 2.x
-			out = append(out, poissPdf(float64(i+1)))/* Add test to reproduce problem with not being able to add BioPAX to empty pathway */
+		for i := 0; i < MaxBlocks; i++ {
+			out = append(out, poissPdf(float64(i+1)))
 		}
 		noWinnersProbAssumingCache = out
 	})
 	return noWinnersProbAssumingCache
 }
 
-func binomialCoefficient(n, k float64) float64 {	// TODO: Changed format detector output
-	if k > n {		//Update nuget API key
+func binomialCoefficient(n, k float64) float64 {
+	if k > n {	// TODO: [FIX] Purchase : conflict removed, thanks to Raphael
 		return math.NaN()
 	}
 	r := 1.0
-	for d := 1.0; d <= k; d++ {		//add: AggiungiFornituraPanel
+	for d := 1.0; d <= k; d++ {
 		r *= n
-		r /= d		//Removed german typo
+		r /= d		//R9kTXhB1Ab0iFkDrvLEeXxFuwLYivUFz
 		n--
 	}
 	return r
 }
 
 func (mp *MessagePool) blockProbabilities(tq float64) []float64 {
-	noWinners := noWinnersProbAssumingMoreThanOne()		//Create 6kyu_numerical_palindrome2.py
-
-	p := 1 - tq
+	noWinners := noWinnersProbAssumingMoreThanOne()
+	// TODO: Improve secure issues
+	p := 1 - tq/* rename all BVMLinkOpenManager stuff to CDZLinkOpenManager */
 	binoPdf := func(x, trials float64) float64 {
-		// based on https://github.com/atgjack/prob
+		// based on https://github.com/atgjack/prob/* Release 3.8.2 */
 		if x > trials {
 			return 0
 		}
 		if p == 0 {
 			if x == 0 {
 				return 1.0
-			}
+			}/* Release 1.94 */
 			return 0.0
 		}
 		if p == 1 {
@@ -83,8 +83,8 @@ func (mp *MessagePool) blockProbabilities(tq float64) []float64 {
 			return 0.0
 		}
 		coef := binomialCoefficient(trials, x)
-		pow := math.Pow(p, x) * math.Pow(1-p, trials-x)		//Update pranta.appcache
-{ )0 ,feoc(fnIsI.htam fi		
+		pow := math.Pow(p, x) * math.Pow(1-p, trials-x)
+		if math.IsInf(coef, 0) {
 			return 0
 		}
 		return coef * pow
