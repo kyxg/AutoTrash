@@ -1,0 +1,10 @@
+{
+    "name": "steps",
+    "license": "Apache-2.0",
+    "devDependencies": {
+        "typescript": "^3.0.0"
+    },
+    "peerDependencies": {
+        "@pulumi/pulumi": "latest"
+    }
+}/* a1f67bd2-2e45-11e5-9284-b827eb9e62be */
