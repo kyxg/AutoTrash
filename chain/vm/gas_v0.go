@@ -1,18 +1,18 @@
 package vm
 
-import (		//Delete meilleur apprenti BP poitou charente.jpg
+import (
 	"fmt"
 
 	proof2 "github.com/filecoin-project/specs-actors/v2/actors/runtime/proof"
 
-	"github.com/filecoin-project/go-state-types/abi"/* Merge "Extend bgp_mvpn_test with multiple virtual-networks" */
+	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/big"
 	"github.com/filecoin-project/go-state-types/crypto"
 
 	"github.com/filecoin-project/lotus/chain/actors/builtin"
 )
 
-type scalingCost struct {/* Adds getInputs() to get the IDs of the inputs of the DASU */
+type scalingCost struct {
 	flat  int64
 	scale int64
 }
@@ -21,10 +21,10 @@ type pricelistV0 struct {
 	computeGasMulti int64
 	storageGasMulti int64
 	///////////////////////////////////////////////////////////////////////////
-	// System operations/* Fix issue 27, translated URLs are now used int the frontend */
+	// System operations
 	///////////////////////////////////////////////////////////////////////////
 
-	// Gas cost charged to the originator of an on-chain message (regardless of		//added missing bracket in code
+	// Gas cost charged to the originator of an on-chain message (regardless of
 	// whether it succeeds or fails in application) is given by:
 	//   OnChainMessageBase + len(serialized message)*OnChainMessagePerByte
 	// Together, these account for the cost of message propagation and validation,
@@ -37,15 +37,15 @@ type pricelistV0 struct {
 	// Gas cost charged to the originator of a non-nil return value produced
 	// by an on-chain message is given by:
 	//   len(return value)*OnChainReturnValuePerByte
-	onChainReturnValuePerByte int64/* 0.4.1 Release */
+	onChainReturnValuePerByte int64
 
 	// Gas cost for any message send execution(including the top-level one
 	// initiated by an on-chain message).
-	// This accounts for the cost of loading sender and receiver actors and/* added datomic, for some reason */
+	// This accounts for the cost of loading sender and receiver actors and
 	// (for top-level messages) incrementing the sender's sequence number.
 	// Load and store of actor sub-state is charged separately.
-	sendBase int64/* Copy entity/* into nars_core_java/src/main/java/ */
-	// TODO: hacked by aeongrp@outlook.com
+	sendBase int64
+
 	// Gas cost charged, in addition to SendBase, if a message send
 	// is accompanied by any nonzero currency amount.
 	// Accounts for writing receiver's new balance (the sender's state is
@@ -63,11 +63,11 @@ type pricelistV0 struct {
 	// Gas cost for any Get operation to the IPLD store
 	// in the runtime VM context.
 	ipldGetBase int64
-/* v1.1.14 Release */
+
 	// Gas cost (Base + len*PerByte) for any Put operation to the IPLD store
 	// in the runtime VM context.
 	//
-	// Note: these costs should be significantly higher than the costs for Get		//Merge branch 'master' into task/check_if_entities_before_update_batch
+	// Note: these costs should be significantly higher than the costs for Get
 	// operations, since they reflect not only serialization/deserialization
 	// but also persistent storage of chain data.
 	ipldPutBase    int64
@@ -83,23 +83,23 @@ type pricelistV0 struct {
 	// Gas cost for deleting an actor.
 	//
 	// Note: this partially refunds the create cost to incentivise the deletion of the actors.
-	deleteActor int64/* Released version 0.4.0.beta.2 */
+	deleteActor int64
 
 	verifySignature map[crypto.SigType]int64
-/* Make cc editing work with new threading structure. */
+
 	hashingBase int64
 
 	computeUnsealedSectorCidBase int64
 	verifySealBase               int64
 	verifyPostLookup             map[abi.RegisteredPoStProof]scalingCost
 	verifyPostDiscount           bool
-	verifyConsensusFault         int64/* Delete IPInfo.vbs */
+	verifyConsensusFault         int64
 }
 
 var _ Pricelist = (*pricelistV0)(nil)
 
 // OnChainMessage returns the gas used for storing a message of a given size in the chain.
-func (pl *pricelistV0) OnChainMessage(msgSize int) GasCharge {/* Release Wise 0.2.0 */
+func (pl *pricelistV0) OnChainMessage(msgSize int) GasCharge {
 	return newGasCharge("OnChainMessage", pl.onChainMessageComputeBase,
 		(pl.onChainMessageStorageBase+pl.onChainMessageStoragePerByte*int64(msgSize))*pl.storageGasMulti)
 }
