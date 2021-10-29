@@ -1,0 +1,5 @@
+name: project_main		//capitallization
+description: A program with a different main specification.
+runtime: nodejs/* Release of eeacms/forests-frontend:1.5.6 */
+main: a/path/to/main/
+
