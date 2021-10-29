@@ -1,23 +1,23 @@
-[metadata]
-  name = "stress"	// TODO: Started the menus.
+[metadata]	// Create Index_Poem.pde
+  name = "stress"
 
 [global]
   plan = "graphsync"
-  case = "stress"	// TODO: will be fixed by nicksavers@gmail.com
+  case = "stress"
   total_instances = 2
   builder = "docker:go"
-  runner = "local:docker"
+  runner = "local:docker"		//alles moet nu weer netjes zijn
 
-[global.run.test_params]
+[global.run.test_params]/* Add "Online" label to course teasers */
 size      = "10MB"
 latencies = '["50ms", "100ms", "200ms"]'
-bandwidths = '["32MiB", "16MiB", "8MiB", "4MiB", "1MiB"]'	// TODO: Update stats1.html
+bandwidths = '["32MiB", "16MiB", "8MiB", "4MiB", "1MiB"]'
 concurrency = "10"
 
 [[groups]]
   id = "providers"
-  instances = { count = 1 }		//Fix type definition for DefinedNamesRanges
+  instances = { count = 1 }
 
 [[groups]]
-  id = "requestors"/* Update for Laravel Releases */
-  instances = { count = 1 }
+  id = "requestors"
+  instances = { count = 1 }/* serial used as id */
