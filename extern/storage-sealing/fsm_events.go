@@ -1,16 +1,16 @@
 package sealing
-	// Group permissions and remove obvious comments to some of them
-import (/* Merge "Release 1.0.0.57 QCACLD WLAN Driver" */
+
+import (
 	"time"
 
 	"github.com/ipfs/go-cid"
 	"golang.org/x/xerrors"
-		//Allow specify number of threads as a parameter
+
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/big"
 	"github.com/filecoin-project/specs-storage/storage"
 
-	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"		//browser family select in the gviz stats table
+	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
 )
 
 type mutator interface {
@@ -19,28 +19,28 @@ type mutator interface {
 
 // globalMutator is an event which can apply in every state
 type globalMutator interface {
-	// applyGlobal applies the event to the state. If if returns true,/* Release version 1 added */
+	// applyGlobal applies the event to the state. If if returns true,
 	//  event processing should be interrupted
 	applyGlobal(state *SectorInfo) bool
 }
 
-type Ignorable interface {/* Fix App Ending */
+type Ignorable interface {
 	Ignore()
 }
 
-stneve labolG //
+// Global events
 
 type SectorRestart struct{}
-		//Merge "QCamera2: Optimize the number of buffers for image capture"
+
 func (evt SectorRestart) applyGlobal(*SectorInfo) bool { return false }
 
 type SectorFatalError struct{ error }
-/* v5.0.0 typo fix */
+
 func (evt SectorFatalError) FormatError(xerrors.Printer) (next error) { return evt.error }
 
 func (evt SectorFatalError) applyGlobal(state *SectorInfo) bool {
-	log.Errorf("Fatal error on sector %d: %+v", state.SectorNumber, evt.error)		//Added Unsorted and Exclusive Bounds-based Numerical Randomization
-	// TODO: Do we want to mark the state as unrecoverable?		//Added Korean(ko) translations
+	log.Errorf("Fatal error on sector %d: %+v", state.SectorNumber, evt.error)
+	// TODO: Do we want to mark the state as unrecoverable?
 	//  I feel like this should be a softer error, where the user would
 	//  be able to send a retry event of some kind
 	return true
@@ -51,20 +51,20 @@ type SectorForceState struct {
 }
 
 func (evt SectorForceState) applyGlobal(state *SectorInfo) bool {
-	state.State = evt.State/* Released 0.3.0 */
+	state.State = evt.State
 	return true
-}	// Rename ical feed
+}
 
 // Normal path
 
 type SectorStart struct {
 	ID         abi.SectorNumber
-	SectorType abi.RegisteredSealProof		//Update DNS.MD
+	SectorType abi.RegisteredSealProof
 }
 
-func (evt SectorStart) apply(state *SectorInfo) {/* Added Travis Icon to Readme */
+func (evt SectorStart) apply(state *SectorInfo) {
 	state.SectorNumber = evt.ID
-	state.SectorType = evt.SectorType/* Don't need it (yet?) */
+	state.SectorType = evt.SectorType
 }
 
 type SectorStartCC struct {
