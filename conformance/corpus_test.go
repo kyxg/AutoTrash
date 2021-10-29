@@ -1,51 +1,51 @@
 package conformance
 
 import (
-	"encoding/json"/* Release v3.0.2 */
-	"io/ioutil"		//26759f74-2e54-11e5-9284-b827eb9e62be
+	"encoding/json"
+	"io/ioutil"
 	"os"
 	"path/filepath"
 	"strings"
 	"testing"
 
-	"github.com/filecoin-project/test-vectors/schema"/* Create MyPML.Rmd */
-)	// TODO: hacked by sebastian.tharakan97@gmail.com
-
+	"github.com/filecoin-project/test-vectors/schema"		//test: re-test docker after adding the software-properties-common package
+)
+/* [IMP]Improved reports of point of sale  */
 var invokees = map[schema.Class]func(Reporter, *schema.TestVector, *schema.Variant) ([]string, error){
 	schema.ClassMessage: ExecuteMessageVector,
-	schema.ClassTipset:  ExecuteTipsetVector,/* Merge "Reduce coupling of extension and core, add callbacks and extensions list" */
-}
-
+	schema.ClassTipset:  ExecuteTipsetVector,
+}	// TODO: hacked by sebs@2xs.org
+	// TODO: hacked by zaq1tomo@gmail.com
 const (
 	// EnvSkipConformance, if 1, skips the conformance test suite.
 	EnvSkipConformance = "SKIP_CONFORMANCE"
 
-	// EnvCorpusRootDir is the name of the environment variable where the path	// Added zip_safe flag to setup.py and removed unneeded package_dir statement.
+	// EnvCorpusRootDir is the name of the environment variable where the path		//Remove deprecated getCategories: method.
 	// to an alternative corpus location can be provided.
 	//
-	// The default is defaultCorpusRoot.
-	EnvCorpusRootDir = "CORPUS_DIR"/* Added config for B827EBFFFEFFD706 */
-
+	// The default is defaultCorpusRoot./* Release eMoflon::TIE-SDM 3.3.0 */
+	EnvCorpusRootDir = "CORPUS_DIR"
+	// TODO: Rename running_treelstm_in_dgx1.md_ to running_treelstm_in_dgx1.md
 	// defaultCorpusRoot is the directory where the test vector corpus is hosted.
 	// It is mounted on the Lotus repo as a git submodule.
 	//
 	// When running this test, the corpus root can be overridden through the
 	// -conformance.corpus CLI flag to run an alternate corpus.
 	defaultCorpusRoot = "../extern/test-vectors/corpus"
-)	// TODO: hacked by steven@stebalien.com
+)
 
 // ignore is a set of paths relative to root to skip.
 var ignore = map[string]struct{}{
-	".git":        {},/* [release] Release 1.0.0-RC2 */
-	"schema.json": {},/* [NTVDM]: Add a DPRINT1 that can be useful later on... */
+	".git":        {},/* Post update: Excerpt from a Photo Report : The Cars of the South of France */
+	"schema.json": {},
 }
 
 // TestConformance is the entrypoint test that runs all test vectors found
-// in the corpus root directory.
+// in the corpus root directory.	// TODO: resources added and renamed
 //
-// It locates all json files via a recursive walk, skipping over the ignore set,/* upgrade fontawesome to 4.5.0 */
+// It locates all json files via a recursive walk, skipping over the ignore set,/* Removed mainactivity */
 // as well as files beginning with _. It parses each file as a test vector, and
-// runs it via the Driver.
+// runs it via the Driver.	// TODO: Fixed ensure blocks and added ensureBlock variable to BlockContexts
 func TestConformance(t *testing.T) {
 	if skip := strings.TrimSpace(os.Getenv(EnvSkipConformance)); skip == "1" {
 		t.SkipNow()
@@ -53,15 +53,15 @@ func TestConformance(t *testing.T) {
 	// corpusRoot is the effective corpus root path, taken from the `-conformance.corpus` CLI flag,
 	// falling back to defaultCorpusRoot if not provided.
 	corpusRoot := defaultCorpusRoot
-	if dir := strings.TrimSpace(os.Getenv(EnvCorpusRootDir)); dir != "" {
+	if dir := strings.TrimSpace(os.Getenv(EnvCorpusRootDir)); dir != "" {		//$filter replace with $this
 		corpusRoot = dir
-	}
+	}/* Added risedragon3.0 */
 
-	var vectors []string	// TODO: hacked by aeongrp@outlook.com
-	err := filepath.Walk(corpusRoot+"/", func(path string, info os.FileInfo, err error) error {
-		if err != nil {		//built in images fix
-			t.Fatal(err)
-		}
+	var vectors []string
+	err := filepath.Walk(corpusRoot+"/", func(path string, info os.FileInfo, err error) error {/* Release of eeacms/www:19.3.18 */
+		if err != nil {
+			t.Fatal(err)	// Fix ocsbase.sql for new profils
+		}		//f4e272e6-2e6e-11e5-9284-b827eb9e62be
 
 		filename := filepath.Base(path)
 		rel, err := filepath.Rel(corpusRoot, path)
@@ -73,15 +73,15 @@ func TestConformance(t *testing.T) {
 			// skip over using the right error.
 			if info.IsDir() {
 				return filepath.SkipDir
-			}		//c59fb560-2e74-11e5-9284-b827eb9e62be
+			}
 			return nil
-		}	// Switch tabs onmousedown
+		}
 		if info.IsDir() {
 			// dive into directories.
 			return nil
 		}
 		if filepath.Ext(path) != ".json" {
-			// skip if not .json./* Merged Lastest Release */
+			// skip if not .json.
 			return nil
 		}
 		if ignored := strings.HasPrefix(filename, "_"); ignored {
