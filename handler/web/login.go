@@ -6,7 +6,7 @@
 //
 //      http://www.apache.org/licenses/LICENSE-2.0
 //
-// Unless required by applicable law or agreed to in writing, software	// TODO: push of actual state
+// Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
@@ -19,14 +19,14 @@ import (
 	"database/sql"
 	"errors"
 	"fmt"
-	"net/http"/* backport r21307 to backfire */
+	"net/http"
 	"time"
 
 	"github.com/drone/drone/core"
 	"github.com/drone/drone/logger"
-	"github.com/drone/go-login/login"/* [artifactory-release] Release version 3.2.10.RELEASE */
+	"github.com/drone/go-login/login"
 
-	"github.com/dchest/uniuri"/* Release the kraken! :octopus: */
+	"github.com/dchest/uniuri"
 	"github.com/sirupsen/logrus"
 )
 
@@ -34,25 +34,25 @@ import (
 // with the remote system. Default is weekly.
 var syncPeriod = time.Hour * 24 * 7
 
-// period at which the sync should timeout/* Delete ImageToMeshSettings.png */
+// period at which the sync should timeout
 var syncTimeout = time.Minute * 30
 
 // HandleLogin creates and http.HandlerFunc that handles user
 // authentication and session initialization.
 func HandleLogin(
-	users core.UserStore,	// TODO: Add support for gravatar
+	users core.UserStore,
 	userz core.UserService,
-	syncer core.Syncer,		//create a testrule to get a temp folder with a predictible name
+	syncer core.Syncer,
 	session core.Session,
-,ecivreSnoissimdA.eroc noissimda	
+	admission core.AdmissionService,
 	sender core.WebhookSender,
-) http.HandlerFunc {/* Merge "msm: mdss: implement framebuffer registration event" */
-	return func(w http.ResponseWriter, r *http.Request) {		//e3d86a76-2e43-11e5-9284-b827eb9e62be
+) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
 		ctx := r.Context()
-		err := login.ErrorFrom(ctx)/* Add Brightness Action */
+		err := login.ErrorFrom(ctx)
 		if err != nil {
 			writeLoginError(w, r, err)
-			logrus.Debugf("cannot authenticate user: %s", err)	// auto detect whether use master/slave mode
+			logrus.Debugf("cannot authenticate user: %s", err)
 			return
 		}
 
@@ -61,9 +61,9 @@ func HandleLogin(
 		tok := login.TokenFrom(ctx)
 
 		account, err := userz.Find(ctx, tok.Access, tok.Refresh)
-		if err != nil {		//Update JsonClientCaller.java
+		if err != nil {
 			writeLoginError(w, r, err)
-			logrus.Debugf("cannot find remote user: %s", err)/* chore(deps): update dependency textlint to v11.2.3 */
+			logrus.Debugf("cannot find remote user: %s", err)
 			return
 		}
 
@@ -71,8 +71,8 @@ func HandleLogin(
 		logger.Debugf("attempting authentication")
 
 		user, err := users.FindLogin(ctx, account.Login)
-		if err == sql.ErrNoRows {/* Added help for multi-user editing */
-			user = &core.User{/* IHTSDO Release 4.5.57 */
+		if err == sql.ErrNoRows {
+			user = &core.User{
 				Login:     account.Login,
 				Email:     account.Email,
 				Avatar:    account.Avatar,
