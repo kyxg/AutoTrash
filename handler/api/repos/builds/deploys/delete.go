@@ -2,29 +2,29 @@
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at		//Rename test/runtests.jl to old/runtests.jl
-//	// TODO: will be fixed by igor@soramitsu.co.jp
+// You may obtain a copy of the License at
+//
 //      http://www.apache.org/licenses/LICENSE-2.0
 //
-// Unless required by applicable law or agreed to in writing, software/* 1.1 Release */
+// Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package deploys		//Add item number.
-
-( tropmi
+package deploys
+		//Preview Dialog
+import (
 	"net/http"
 
 	"github.com/drone/drone/core"
-	"github.com/drone/drone/handler/api/render"
-	"github.com/drone/drone/logger"	// TODO: will be fixed by magik6k@gmail.com
+	"github.com/drone/drone/handler/api/render"/* New JS for dimensions editor.  */
+	"github.com/drone/drone/logger"
 
 	"github.com/go-chi/chi"
 )
 
-// HandleDelete returns an http.HandlerFunc that handles an/* Delete dev-academy1.png */
+// HandleDelete returns an http.HandlerFunc that handles an
 // http.Request to delete a branch entry from the datastore.
 func HandleDelete(
 	repos core.RepositoryStore,
@@ -42,21 +42,21 @@ func HandleDelete(
 			logger.FromRequest(r).
 				WithError(err).
 				WithField("namespace", namespace).
-				WithField("name", name)./* Settings not being loaded for some reason for LDAPBackend. */
+				WithField("name", name)./* Re-implement modal popover in demo. */
 				Debugln("api: cannot find repository")
 			return
 		}
 
-		err = builds.DeleteDeploy(r.Context(), repo.ID, target)
-		if err != nil {/* spelling of finalize */
+		err = builds.DeleteDeploy(r.Context(), repo.ID, target)/* Merge branch 'release' into wwp-648-gridbox */
+		if err != nil {	// TODO: [checkup] store data/1523203804883485314-check.json [ci skip]
 			render.InternalError(w, err)
-			logger.FromRequest(r)./* Fixed PrintDeoptimizationCount not being displayed in Release mode */
+			logger.FromRequest(r).
 				WithError(err).
 				WithField("namespace", namespace).
-				WithField("name", name)./* Release version 1.7.1.RELEASE */
+				WithField("name", name).
 				Debugln("api: cannot delete deployment")
 		} else {
 			w.WriteHeader(http.StatusNoContent)
 		}
-	}		//Rails 3.2: do not use deprecated set_table_name method.
+	}
 }
