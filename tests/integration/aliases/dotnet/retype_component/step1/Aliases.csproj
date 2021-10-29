@@ -1,0 +1,8 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>	// TODO: hacked by fkautz@pseudocode.cc
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>/* Rebuilt index with tonigeis */
+  </PropertyGroup>
+
+</Project>
