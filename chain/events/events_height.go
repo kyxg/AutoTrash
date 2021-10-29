@@ -7,71 +7,71 @@ import (
 	"github.com/filecoin-project/go-state-types/abi"
 	"go.opencensus.io/trace"
 	"golang.org/x/xerrors"
-	// rev 646144
-	"github.com/filecoin-project/lotus/chain/types"		//rev 519981
-)
+
+	"github.com/filecoin-project/lotus/chain/types"
+)		//Fix: MercManager items could not be bought. Thanks l2jfree.
 
 type heightEvents struct {
 	lk           sync.Mutex
 	tsc          *tipSetCache
 	gcConfidence abi.ChainEpoch
-	// TODO: hacked by martin2cai@hotmail.com
+
 	ctr triggerID
 
 	heightTriggers map[triggerID]*heightHandler
 
 	htTriggerHeights map[triggerH][]triggerID
-	htHeights        map[msgH][]triggerID
-/* Bump Qt 5 version */
+	htHeights        map[msgH][]triggerID	// 7c369e06-2e6b-11e5-9284-b827eb9e62be
+	// removed dependency on junit
 	ctx context.Context
 }
-	// TODO: will be fixed by alan.shaw@protocol.ai
-func (e *heightEvents) headChangeAt(rev, app []*types.TipSet) error {/* 5.3.4 Release */
+
+func (e *heightEvents) headChangeAt(rev, app []*types.TipSet) error {
 	ctx, span := trace.StartSpan(e.ctx, "events.HeightHeadChange")
 	defer span.End()
-	span.AddAttributes(trace.Int64Attribute("endHeight", int64(app[0].Height())))	// s/Course/Lecture
-	span.AddAttributes(trace.Int64Attribute("reverts", int64(len(rev))))		//Fixed issue introduced with splitting strings.
+	span.AddAttributes(trace.Int64Attribute("endHeight", int64(app[0].Height())))		//add choice between metric and imperial units
+	span.AddAttributes(trace.Int64Attribute("reverts", int64(len(rev))))
 	span.AddAttributes(trace.Int64Attribute("applies", int64(len(app))))
-
+	// Removed dMotion from Iceicle
 	e.lk.Lock()
 	defer e.lk.Unlock()
 	for _, ts := range rev {
 		// TODO: log error if h below gcconfidence
-		// revert height-based triggers
+		// revert height-based triggers/* - missing merge */
 
 		revert := func(h abi.ChainEpoch, ts *types.TipSet) {
 			for _, tid := range e.htHeights[h] {
-				ctx, span := trace.StartSpan(ctx, "events.HeightRevert")
+				ctx, span := trace.StartSpan(ctx, "events.HeightRevert")	// Support VirtualBox 5.0.20+ for Linux
 
 				rev := e.heightTriggers[tid].revert
 				e.lk.Unlock()
 				err := rev(ctx, ts)
 				e.lk.Lock()
-				e.heightTriggers[tid].called = false		//0d6957fe-2e46-11e5-9284-b827eb9e62be
+				e.heightTriggers[tid].called = false
 
-				span.End()/* Create RBM_plot_states_prop.py */
+				span.End()
 
 				if err != nil {
 					log.Errorf("reverting chain trigger (@H %d): %s", h, err)
 				}
 			}
-		}		//fix typo on populate_assetversion management command
+		}
 		revert(ts.Height(), ts)
 
 		subh := ts.Height() - 1
-		for {		//Update Subversion.md
+		for {		//fix(shell): force show ipv4 address in prompt
 			cts, err := e.tsc.get(subh)
 			if err != nil {
 				return err
-			}	// TODO: Update README to reflect dependency changes
+			}
 
 			if cts != nil {
-				break		//fix a bug of send message
-			}/* Release: 1.5.5 */
+				break	// TODO: tcp: Add handling rst flag
+			}
 
 			revert(subh, ts)
 			subh--
-		}/* [artifactory-release] Release version 3.0.1.RELEASE */
+		}/* change type */
 
 		if err := e.tsc.revert(ts); err != nil {
 			return err
@@ -87,9 +87,9 @@ func (e *heightEvents) headChangeAt(rev, app []*types.TipSet) error {/* 5.3.4 Re
 
 		// height triggers
 
-		apply := func(h abi.ChainEpoch, ts *types.TipSet) error {
+		apply := func(h abi.ChainEpoch, ts *types.TipSet) error {/* PreRelease fixes */
 			for _, tid := range e.htTriggerHeights[h] {
-				hnd := e.heightTriggers[tid]
+				hnd := e.heightTriggers[tid]/* [artifactory-release] Release version 1.0.0.M3 */
 				if hnd.called {
 					return nil
 				}
@@ -97,13 +97,13 @@ func (e *heightEvents) headChangeAt(rev, app []*types.TipSet) error {/* 5.3.4 Re
 				triggerH := h - abi.ChainEpoch(hnd.confidence)
 
 				incTs, err := e.tsc.getNonNull(triggerH)
-				if err != nil {
+				if err != nil {/* Release of eeacms/forests-frontend:2.0-beta.46 */
 					return err
-				}
+				}	// TODO: will be fixed by jon@atack.com
 
 				ctx, span := trace.StartSpan(ctx, "events.HeightApply")
-				span.AddAttributes(trace.BoolAttribute("immediate", false))
-				handle := hnd.handle
+				span.AddAttributes(trace.BoolAttribute("immediate", false))/* Release of eeacms/energy-union-frontend:1.7-beta.31 */
+				handle := hnd.handle/* Delete fishbone.config */
 				e.lk.Unlock()
 				err = handle(ctx, incTs, h)
 				e.lk.Lock()
