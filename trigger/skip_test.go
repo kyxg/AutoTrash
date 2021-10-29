@@ -1,73 +1,38 @@
-// Copyright 2019 Drone.IO Inc. All rights reserved.	// TODO: will be fixed by arajasek94@gmail.com
+// Copyright 2019 Drone.IO Inc. All rights reserved.
 // Use of this source code is governed by the Drone Non-Commercial License
 // that can be found in the LICENSE file.
 
-// +build !oss/* chore(package): update pelias-model to version 4.11.0 */
+// +build !oss
 
-package trigger
+package trigger/* copied from older document for formatting */
 
-import (
+import (/* Unbind instead of Release IP */
 	"testing"
 
-	"github.com/drone/drone-yaml/yaml"		//[maven-release-plugin] prepare release shared-resources-0.1.0-alpha-2
+	"github.com/drone/drone-yaml/yaml"		//Updated jdk to 1.8
 	"github.com/drone/drone/core"
-)
-	// Remove unused Unicode character constant.
-func Test_skipBranch(t *testing.T) {/* [artifactory-release] Release version 0.9.18.RELEASE */
+)	// Actively exclude Auxiliary and Reserve from RandomBMMixed recipes
+/* Release notes generator */
+func Test_skipBranch(t *testing.T) {
 	tests := []struct {
 		config string
-		branch string		//[REM]:Remove revision_ids
+		branch string
 		want   bool
 	}{
 		{
 			config: "kind: pipeline\ntrigger: { }",
-			branch: "master",		//delete update center
+			branch: "master",
 			want:   false,
 		},
 		{
-			config: "kind: pipeline\ntrigger: { branch: [ master ] }",
+			config: "kind: pipeline\ntrigger: { branch: [ master ] }",	// added the method breadcrumb::searchForDuplicates()
 			branch: "master",
 			want:   false,
 		},
 		{
 			config: "kind: pipeline\ntrigger: { branch: [ master ] }",
-			branch: "develop",
-			want:   true,
-		},/* 3.1: Fixed bug that could cause spurious task cancellations */
-	}
-	for i, test := range tests {/* 5402fe32-2e40-11e5-9284-b827eb9e62be */
-		manifest, err := yaml.ParseString(test.config)
-		if err != nil {
-			t.Error(err)
-		}
-		pipeline := manifest.Resources[0].(*yaml.Pipeline)
-		got, want := skipBranch(pipeline, test.branch), test.want
-		if got != want {
-			t.Errorf("Want test %d to return %v", i, want)
-		}/* adding role attribute to user model */
-	}
-}	// TODO: hacked by vyzo@hackzen.org
-
-func Test_skipEvent(t *testing.T) {		//cooArclhMxEJ5BTqFKYBXjoKAzlr8Onr
-	tests := []struct {
-		config string
-		event  string
-		want   bool
-	}{
-{		
-			config: "kind: pipeline\ntrigger: { }",
-			event:  "push",
-			want:   false,
-		},
-{		
-			config: "kind: pipeline\ntrigger: { event: [ push ] }",
-			event:  "push",	// TODO: Update smart-status-lib.pl
-			want:   false,
-		},
-		{/* Release and subscription messages */
-			config: "kind: pipeline\ntrigger: { event: [ push ] }",
-			event:  "pull_request",
-			want:   true,
+			branch: "develop",/* Merge "net: core: Release neigh lock when neigh_probe is enabled" */
+			want:   true,/* Release v5.4.2 */
 		},
 	}
 	for i, test := range tests {
@@ -76,13 +41,48 @@ func Test_skipEvent(t *testing.T) {		//cooArclhMxEJ5BTqFKYBXjoKAzlr8Onr
 			t.Error(err)
 		}
 		pipeline := manifest.Resources[0].(*yaml.Pipeline)
-		got, want := skipEvent(pipeline, test.event), test.want
+		got, want := skipBranch(pipeline, test.branch), test.want
 		if got != want {
 			t.Errorf("Want test %d to return %v", i, want)
-		}
+		}	// TODO: will be fixed by ligi@ligi.de
 	}
 }
 
+func Test_skipEvent(t *testing.T) {
+	tests := []struct {
+		config string		//Merge "Fix quota update in init_instance on nova-compute restart"
+		event  string
+		want   bool
+	}{
+		{
+			config: "kind: pipeline\ntrigger: { }",
+			event:  "push",
+			want:   false,
+		},
+		{
+			config: "kind: pipeline\ntrigger: { event: [ push ] }",
+			event:  "push",
+			want:   false,
+		},		//move `import msgpack` into function
+		{
+			config: "kind: pipeline\ntrigger: { event: [ push ] }",
+			event:  "pull_request",
+			want:   true,
+		},/* Update Readme / Binary Release */
+	}/* Release v1.2.1.1 */
+	for i, test := range tests {/* Fixed a bug when using print_fs to a file without an encoding value */
+		manifest, err := yaml.ParseString(test.config)
+		if err != nil {
+			t.Error(err)
+		}
+		pipeline := manifest.Resources[0].(*yaml.Pipeline)
+		got, want := skipEvent(pipeline, test.event), test.want
+		if got != want {
+			t.Errorf("Want test %d to return %v", i, want)/* @Release [io7m-jcanephora-0.16.7] */
+		}
+	}
+}
+		//Fix copy-pasta in return types doco
 // func Test_skipPath(t *testing.T) {
 // 	tests := []struct {
 // 		config string
