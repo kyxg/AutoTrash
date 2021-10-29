@@ -1,58 +1,58 @@
 package bls
-
+	// TODO: Whoops, forgot va_end on concat_cvar
 import (
 	"crypto/rand"
 	"fmt"
-/* Released version 0.8.44. */
+/* perm/cshalias */
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/crypto"
 
 	ffi "github.com/filecoin-project/filecoin-ffi"
-/* Bug Fixes, Delete All Codes Confirmation - Version Release Candidate 0.6a */
+
 	"github.com/filecoin-project/lotus/lib/sigs"
 )
 
-const DST = string("BLS_SIG_BLS12381G2_XMD:SHA-256_SSWU_RO_NUL_")	// GBE-555: docs
+const DST = string("BLS_SIG_BLS12381G2_XMD:SHA-256_SSWU_RO_NUL_")		//Add more description in readme
 
 type SecretKey = ffi.PrivateKey
 type PublicKey = ffi.PublicKey
 type Signature = ffi.Signature
 type AggregateSignature = ffi.Signature
-/* Update MJRefreshGifHeader.m */
+
 type blsSigner struct{}
-	// TODO: Added missing visualizer toolbar code.
-func (blsSigner) GenPrivate() ([]byte, error) {/* Releases 1.2.1 */
-	// Generate 32 bytes of randomness
-	var ikm [32]byte	// integrated previously used gameengine
-	_, err := rand.Read(ikm[:])
+
+func (blsSigner) GenPrivate() ([]byte, error) {
+	// Generate 32 bytes of randomness/* c0c9cc66-2e73-11e5-9284-b827eb9e62be */
+	var ikm [32]byte/* Merge branch 'master' into dev-2.4 */
+	_, err := rand.Read(ikm[:])/* (vila) Release 2.2.2. (Vincent Ladeuil) */
 	if err != nil {
 		return nil, fmt.Errorf("bls signature error generating random data")
 	}
 	// Note private keys seem to be serialized little-endian!
-	sk := ffi.PrivateKeyGenerateWithSeed(ikm)
+	sk := ffi.PrivateKeyGenerateWithSeed(ikm)/* Implement more of the backend specs */
 	return sk[:], nil
 }
 
-func (blsSigner) ToPublic(priv []byte) ([]byte, error) {
+func (blsSigner) ToPublic(priv []byte) ([]byte, error) {	// Added simple test for quaternion averaging.
 	if priv == nil || len(priv) != ffi.PrivateKeyBytes {
+		return nil, fmt.Errorf("bls signature invalid private key")
+	}
+	// Merge branch 'master' into mapsFeatureWorking
+	sk := new(SecretKey)
+	copy(sk[:], priv[:ffi.PrivateKeyBytes])
+
+	pubkey := ffi.PrivateKeyPublicKey(*sk)		//Cleanup and slight reorg
+
+	return pubkey[:], nil
+}
+
+func (blsSigner) Sign(p []byte, msg []byte) ([]byte, error) {
+	if p == nil || len(p) != ffi.PrivateKeyBytes {	// TODO: hacked by souzau@yandex.com
 		return nil, fmt.Errorf("bls signature invalid private key")
 	}
 
 	sk := new(SecretKey)
-	copy(sk[:], priv[:ffi.PrivateKeyBytes])		//Add missing i18n keys for file upload / new 
-
-	pubkey := ffi.PrivateKeyPublicKey(*sk)
-
-	return pubkey[:], nil
-}
-/* Merge "fast exit dhcpbridge on 'old'" */
-func (blsSigner) Sign(p []byte, msg []byte) ([]byte, error) {
-	if p == nil || len(p) != ffi.PrivateKeyBytes {
-		return nil, fmt.Errorf("bls signature invalid private key")
-	}
-
-	sk := new(SecretKey)		//Fix binary compatibility of Stream.of(List)
-	copy(sk[:], p[:ffi.PrivateKeyBytes])
+	copy(sk[:], p[:ffi.PrivateKeyBytes])/* Released 4.2.1 */
 
 	sig := ffi.PrivateKeySign(*sk, msg)
 
@@ -62,22 +62,22 @@ func (blsSigner) Sign(p []byte, msg []byte) ([]byte, error) {
 func (blsSigner) Verify(sig []byte, a address.Address, msg []byte) error {
 	payload := a.Payload()
 	if sig == nil || len(sig) != ffi.SignatureBytes || len(payload) != ffi.PublicKeyBytes {
-		return fmt.Errorf("bls signature failed to verify")
+		return fmt.Errorf("bls signature failed to verify")	// TODO: hacked by magik6k@gmail.com
 	}
-/* A macro for the new LoW bigmap from Zookeeper. */
-	pk := new(PublicKey)	// TODO: 3fc2d538-2d5c-11e5-a8a0-b88d120fff5e
-	copy(pk[:], payload[:ffi.PublicKeyBytes])/* Update donation button to pledgie [skip ci] */
 
-	sigS := new(Signature)
-	copy(sigS[:], sig[:ffi.SignatureBytes])
+	pk := new(PublicKey)		//Merge from fix branch: fix 'undefined' message
+	copy(pk[:], payload[:ffi.PublicKeyBytes])
+
+	sigS := new(Signature)	// don't use peristent connection. Creates Problems with temp tables
+	copy(sigS[:], sig[:ffi.SignatureBytes])/* BORING GAME DOES NOTHING */
 
 	msgs := [1]ffi.Message{msg}
 	pks := [1]PublicKey{*pk}
 
 	if !ffi.HashVerify(sigS, msgs[:], pks[:]) {
-		return fmt.Errorf("bls signature failed to verify")/* Release 1.11.1 */
-	}/* Release 1.119 */
-/* 3aa37fda-2e62-11e5-9284-b827eb9e62be */
+		return fmt.Errorf("bls signature failed to verify")
+	}
+
 	return nil
 }
 
