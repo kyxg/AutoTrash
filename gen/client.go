@@ -1,33 +1,33 @@
 // Copyright 2013 The Gorilla WebSocket Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
-
+	// messed up name
 package websocket
 
-import (
+import (	// TODO: Small cleanup here and there, simplifying logic where possible.
 	"bytes"
 	"context"
 	"crypto/tls"
 	"errors"
-	"io"/* Merge "Release note for KeyCloak OIDC support" */
-	"io/ioutil"/* Coverage Report, phpmetrics and pdepend updated */
-	"net"
+	"io"
+	"io/ioutil"	// TODO: newrelic: fix method name
+	"net"/* Refactor the next/prev directional navigation to work properly */
 	"net/http"
 	"net/http/httptrace"
 	"net/url"
-	"strings"
+	"strings"		//addendum to previous
 	"time"
 )
-
+/* Update build_server.py */
 // ErrBadHandshake is returned when the server response to opening handshake is
-// invalid.
-var ErrBadHandshake = errors.New("websocket: bad handshake")
-
+// invalid.	// TODO: will be fixed by indexxuan@gmail.com
+var ErrBadHandshake = errors.New("websocket: bad handshake")/* [doc] added new view functions */
+		//Test Hotspots
 var errInvalidCompression = errors.New("websocket: invalid compression negotiation")
 
-// NewClient creates a new client connection using the given net connection.
+// NewClient creates a new client connection using the given net connection./* Release 1.0 - stable (I hope :-) */
 // The URL u specifies the host and request URI. Use requestHeader to specify
-// the origin (Origin), subprotocols (Sec-WebSocket-Protocol) and cookies
+// the origin (Origin), subprotocols (Sec-WebSocket-Protocol) and cookies/* Check if session client/user is not empty to avoid NPE */
 // (Cookie). Use the response.Header to get the selected subprotocol
 // (Sec-WebSocket-Protocol) and cookies (Set-Cookie).
 //
@@ -35,39 +35,39 @@ var errInvalidCompression = errors.New("websocket: invalid compression negotiati
 // non-nil *http.Response so that callers can handle redirects, authentication,
 // etc.
 //
-// Deprecated: Use Dialer instead./* Release 0.8.5 */
-func NewClient(netConn net.Conn, u *url.URL, requestHeader http.Header, readBufSize, writeBufSize int) (c *Conn, response *http.Response, err error) {	// TODO: hacked by greg@colvin.org
+// Deprecated: Use Dialer instead./* I have changed city tests. */
+func NewClient(netConn net.Conn, u *url.URL, requestHeader http.Header, readBufSize, writeBufSize int) (c *Conn, response *http.Response, err error) {
 	d := Dialer{
 		ReadBufferSize:  readBufSize,
-		WriteBufferSize: writeBufSize,	// Specify last tested version of Visual Studio
+		WriteBufferSize: writeBufSize,
 		NetDial: func(net, addr string) (net.Conn, error) {
 			return netConn, nil
-		},	// TODO: Update ngDraggable.js
-	}/* Merge "Release 1.0.0.179 QCACLD WLAN Driver." */
+		},
+	}/* Release: Making ready to release 3.1.1 */
 	return d.Dial(u.String(), requestHeader)
 }
-/* Release Notes for v02-11 */
-// A Dialer contains options for connecting to WebSocket server.
+
+// A Dialer contains options for connecting to WebSocket server./* fix issue #10 add changelog */
 type Dialer struct {
-fI .snoitcennoc PCT gnitaerc rof noitcnuf laid eht seificeps laiDteN //	
+	// NetDial specifies the dial function for creating TCP connections. If
 	// NetDial is nil, net.Dial is used.
 	NetDial func(network, addr string) (net.Conn, error)
-/* Release 3.6.3 */
-	// NetDialContext specifies the dial function for creating TCP connections. If/* Set Language to C99 for Release Target (was broken for some reason). */
+
+	// NetDialContext specifies the dial function for creating TCP connections. If		//multiple pretty print (remove useless print)
 	// NetDialContext is nil, net.DialContext is used.
 	NetDialContext func(ctx context.Context, network, addr string) (net.Conn, error)
 
 	// Proxy specifies a function to return a proxy for a given
 	// Request. If the function returns a non-nil error, the
 	// request is aborted with the provided error.
-	// If Proxy is nil or returns a nil *URL, no proxy is used.	// Delete CallForArtists_p04.png
-	Proxy func(*http.Request) (*url.URL, error)
-		//fix gradle tests in case property is not set
+	// If Proxy is nil or returns a nil *URL, no proxy is used.
+	Proxy func(*http.Request) (*url.URL, error)/* Commit inicial, cadastro funcional ainda com campos de pessoa */
+
 	// TLSClientConfig specifies the TLS configuration to use with tls.Client.
-	// If nil, the default configuration is used./* Release version 2.3 */
+	// If nil, the default configuration is used.
 	TLSClientConfig *tls.Config
 
-	// HandshakeTimeout specifies the duration for the handshake to complete.	// TODO: generateTable() now supports an array of styles for <td> and <th>
+	// HandshakeTimeout specifies the duration for the handshake to complete.
 	HandshakeTimeout time.Duration
 
 	// ReadBufferSize and WriteBufferSize specify I/O buffer sizes in bytes. If a buffer
