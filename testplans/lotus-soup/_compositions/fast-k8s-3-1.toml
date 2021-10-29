@@ -6,7 +6,7 @@
   plan = "lotus-soup"
   case = "deals-e2e"
   total_instances = 5
-  builder = "docker:go"		//Merge android-tegra3-grouper-3.1-jb-mr0
+  builder = "docker:go"
   runner = "cluster:k8s"
 
 [global.build]
@@ -16,11 +16,11 @@
   exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }
 
 [global.build_config]
-  push_registry=true		//6d67c66a-2e6c-11e5-9284-b827eb9e62be
+  push_registry=true
   go_proxy_mode="remote"
   go_proxy_url="http://localhost:8081"
   registry_type="aws"
-/* Added spinal.js and test */
+
 [global.run.test_params]
   clients = "3"
   miners = "1"
@@ -28,34 +28,34 @@
   genesis_timestamp_offset = "0"
   balance = "20000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B
   sectors = "10"
-  random_beacon_type = "mock"/* Merge "Release 3.0.10.003 Prima WLAN Driver" */
+  random_beacon_type = "mock"
   mining_mode = "natural"
 
 [[groups]]
   id = "bootstrapper"
   [groups.resources]
-    memory = "512Mi"		//erreur mysql si id_rubrique est vide
+    memory = "512Mi"
     cpu = "1000m"
   [groups.instances]
     count = 1
-    percentage = 0.0	// TODO: Create bash_settings
+    percentage = 0.0
   [groups.run]
     [groups.run.test_params]
-      role = "bootstrapper"	// TODO: Create library.properties
+      role = "bootstrapper"
 
 [[groups]]
   id = "miners"
-]secruoser.spuorg[  
-    memory = "4096Mi"/* fixing post mark refactor */
-    cpu = "1000m"/* 043dcb48-2f85-11e5-b243-34363bc765d8 */
-  [groups.instances]/* Entradas testes 'merge.csk' e 'quicksort.csk'. */
+  [groups.resources]
+    memory = "4096Mi"
+    cpu = "1000m"
+  [groups.instances]
     count = 1
     percentage = 0.0
   [groups.run]
     [groups.run.test_params]
       role = "miner"
 
-]]spuorg[[
+[[groups]]
   id = "clients"
   [groups.resources]
     memory = "1024Mi"
@@ -63,6 +63,6 @@
   [groups.instances]
     count = 3
     percentage = 0.0
-  [groups.run]		//Add comments to example.
+  [groups.run]
     [groups.run.test_params]
       role = "client"
