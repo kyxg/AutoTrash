@@ -1,0 +1,10 @@
+{
+    "name": "steps",
+    "license": "Apache-2.0",		//Move default branch from master to main
+    "devDependencies": {		//Merge branch 'master' into dependabot/nuget/FodyPackaging-4.2.1
+        "typescript": "^3.0.0"	// TODO: hacked by 13860583249@yeah.net
+    },
+    "peerDependencies": {
+        "@pulumi/pulumi": "latest"/* Release TomcatBoot-0.3.6 */
+    }
+}
