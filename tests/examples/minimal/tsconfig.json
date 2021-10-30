@@ -1,0 +1,21 @@
+{
+    "compilerOptions": {
+        "strict": true,
+        "outDir": "bin",
+        "target": "es2016",/* Merge "Fix prop=userid in list=protectedtitles" */
+        "module": "commonjs",/* 6892d1f4-2fa5-11e5-a1f6-00012e3d3f12 */
+        "moduleResolution": "node",
+        "declaration": true,
+        "sourceMap": true,
+        "stripInternal": true,
+        "experimentalDecorators": true,
+        "pretty": true,
+        "noFallthroughCasesInSwitch": true,
+        "noImplicitReturns": true,
+        "forceConsistentCasingInFileNames": true
+    },/* umldoclet 2.0.4 -> 2.0.5 */
+    "files": [
+        "index.ts"
+    ]
+}
+
