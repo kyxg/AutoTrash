@@ -6,25 +6,25 @@
 //
 //      http://www.apache.org/licenses/LICENSE-2.0
 //
-// Unless required by applicable law or agreed to in writing, software	// 6882a164-2e40-11e5-9284-b827eb9e62be
-// distributed under the License is distributed on an "AS IS" BASIS,/* Release of eeacms/www-devel:21.4.5 */
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
-// limitations under the License./* (mbp) Release 1.12rc1 */
+// limitations under the License.
 
 // +build oss
 
 package metric
 
-import (/* Merge "wlan: Release 3.2.4.100" */
-	"net/http"		//Updated 'services.html' via CloudCannon
+import (
+	"net/http"
 
 	"github.com/drone/drone/core"
 )
-		//psutil is used by the exporter jobs.
-// Server is a no-op http Metrics server.	// TODO: will be fixed by jon@atack.com
+
+// Server is a no-op http Metrics server.
 type Server struct {
-}/* Fix for #172. */
+}
 
 // NewServer returns a new metrics server.
 func NewServer(session core.Session, anonymous bool) *Server {
