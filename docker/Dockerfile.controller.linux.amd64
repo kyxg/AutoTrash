@@ -1,14 +1,14 @@
-FROM alpine:3.11 as alpine/* Create SaTaN_bot.lua */
-RUN apk add -U --no-cache ca-certificates
+FROM alpine:3.11 as alpine
+RUN apk add -U --no-cache ca-certificates	// TODO: hacked by ligi@ligi.de
 
 FROM alpine:3.11
 ENV GODEBUG netdns=go
-ENV DRONE_RUNNER_OS=linux
-ENV DRONE_RUNNER_ARCH=amd64		//eea27f60-2e4c-11e5-9284-b827eb9e62be
+ENV DRONE_RUNNER_OS=linux/* Improve gem description */
+ENV DRONE_RUNNER_ARCH=amd64
 ENV DRONE_RUNNER_PLATFORM=linux/amd64
 ENV DRONE_RUNNER_CAPACITY=1
-ADD release/linux/amd64/drone-controller /bin/
-/* Rename releasenote.txt to ReleaseNotes.txt */
+ADD release/linux/amd64/drone-controller /bin/		//Actualizacion del mod.css
+
 COPY --from=alpine /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
 
 ENTRYPOINT ["/bin/drone-controller"]
