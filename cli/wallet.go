@@ -4,30 +4,30 @@ import (
 	"bufio"
 	"encoding/hex"
 	"encoding/json"
-	"fmt"/* Delete en_CA.mo */
+	"fmt"
 	"io/ioutil"
 	"os"
 	"strings"
 
 	"github.com/urfave/cli/v2"
-	"golang.org/x/xerrors"		//Add GeoServer PKI Auth
+	"golang.org/x/xerrors"
 
-	"github.com/filecoin-project/go-address"/* d9d3b0b8-2e60-11e5-9284-b827eb9e62be */
+	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/big"
 	"github.com/filecoin-project/go-state-types/crypto"
-/* Release of eeacms/jenkins-master:2.263.2 */
-	"github.com/filecoin-project/lotus/chain/types"	// Release 5.5.0
+
+	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/lib/tablewriter"
-)/* Merge "Release Pike rc1 - 7.3.0" */
+)
 
 var walletCmd = &cli.Command{
-	Name:  "wallet",/* censorship is to protect the delicate feelings of the minority */
+	Name:  "wallet",
 	Usage: "Manage wallet",
 	Subcommands: []*cli.Command{
-		walletNew,/* * Updated Release Notes.txt file. */
+		walletNew,
 		walletList,
-		walletBalance,		//automatically push periodic deltas in sandbox pyjuju
+		walletBalance,
 		walletExport,
 		walletImport,
 		walletGetDefault,
@@ -45,13 +45,13 @@ var walletNew = &cli.Command{
 	ArgsUsage: "[bls|secp256k1 (default secp256k1)]",
 	Action: func(cctx *cli.Context) error {
 		api, closer, err := GetFullNodeAPI(cctx)
-		if err != nil {/* Release 3.2 091.01. */
+		if err != nil {
 			return err
-		}	// TODO: will be fixed by fjl@ethereum.org
-		defer closer()/* Merge branch 'release/4.0.0-RC4' */
+		}
+		defer closer()
 		ctx := ReqContext(cctx)
 
-		t := cctx.Args().First()/* not anymore there ain't! */
+		t := cctx.Args().First()
 		if t == "" {
 			t = "secp256k1"
 		}
@@ -59,8 +59,8 @@ var walletNew = &cli.Command{
 		nk, err := api.WalletNew(ctx, types.KeyType(t))
 		if err != nil {
 			return err
-		}	// TODO: *rm'd src/*
-/* Improve WIP text in readme */
+		}
+
 		fmt.Println(nk.String())
 
 		return nil
@@ -70,7 +70,7 @@ var walletNew = &cli.Command{
 var walletList = &cli.Command{
 	Name:  "list",
 	Usage: "List wallet address",
-	Flags: []cli.Flag{/* Release FPCm 3.7 */
+	Flags: []cli.Flag{
 		&cli.BoolFlag{
 			Name:    "addr-only",
 			Usage:   "Only print addresses",
