@@ -1,0 +1,154 @@
+{
+  "version": "0.0.1",
+  "name": "plant-provider",
+  "resources": {
+    "plant-provider:tree/v1:RubberTree": {
+      "inputProperties": {
+        "container": {
+          "$ref": "#/types/plant-provider::Container"
+        },
+        "type": {
+          "$ref": "#/types/plant-provider:tree/v1:RubberTreeVariety"
+        },
+        "farm": {
+          "oneOf": [
+            {"$ref": "#/types/plant-provider:tree/v1:Farm"},
+            {"type": "string"}
+          ]
+        }
+      },
+      "properties": {
+        "container": {
+          "$ref": "#/types/plant-provider::Container"
+        },
+        "type": {
+          "$ref": "#/types/plant-provider:tree/v1:RubberTreeVariety"
+        },
+        "farm": {
+          "oneOf": [
+            {"$ref": "#/types/plant-provider:tree/v1:Farm"},
+            {"type": "string"}
+          ]
+        }
+      },
+      "required": ["type"],
+      "requiredInputs": ["type"]
+    }
+  },
+  "types": {
+    "plant-provider::Container": {
+      "type": "object",
+      "properties": {
+        "size": {
+          "$ref": "#/types/plant-provider::ContainerSize"
+        },
+        "material": {
+          "type": "string"
+        },
+        "color": {
+          "oneOf": [
+            {"$ref": "#/types/plant-provider::ContainerColor"},
+            {"type": "string"}
+          ]
+        },
+        "brightness": {
+          "$ref": "#/types/plant-provider::ContainerBrightness"
+        }
+      },
+      "required": ["size"]
+    },
+    "plant-provider::ContainerSize": {
+      "type": "integer",
+      "description": "plant container sizes",
+      "enum": [
+        {
+          "value": 4,
+          "name": "FourInch"
+        },
+        {
+          "value": 6,
+          "name": "SixInch"
+        },
+        {
+          "value": 8,
+          "name": "EightInch",
+          "deprecationMessage": "Eight inch pots are no longer supported."
+        }
+      ]
+    },
+    "plant-provider::ContainerColor": {
+      "type": "string",
+      "description": "plant container colors",
+      "enum": [
+        {
+          "value": "red"
+        },
+        {
+          "value": "blue"
+        },
+        {
+          "value": "yellow"
+        }
+      ]
+    },
+    "plant-provider::ContainerBrightness": {
+      "type": "number",
+      "enum": [
+        {
+          "name": "ZeroPointOne",
+          "value": 0.1
+        },
+        {
+          "name": "One",
+          "value": 1.0
+        }
+      ]
+    },
+    "plant-provider:tree/v1:RubberTreeVariety": {
+      "type": "string",
+      "description": "types of rubber trees",
+      "enum": [
+        {
+          "value": "Burgundy",
+          "description": "A burgundy rubber tree."
+        },
+        {
+          "value": "Ruby",
+          "description": "A ruby rubber tree."
+        },
+        {
+          "value": "Tineke",
+          "description": "A tineke rubber tree."
+        }
+      ]
+    },
+    "plant-provider:tree/v1:Farm": {
+      "type": "string",
+      "enum": [
+        {
+          "value": "Pulumi Planters Inc."
+        },
+        {
+          "value": "Plants'R'Us"
+        }
+      ]
+    }
+  },
+  "language": {
+    "csharp": {
+      "namespaces": {
+        "plant-provider": "PlantProvider",
+        "tree/v1": "Tree.V1"
+      }
+    },
+    "go": {
+      "importBasePath": "github.com/pulumi/pulumi/pkg/v2/codegen/internal/test/testdata/simple-enum-schema/go/plant"
+    },
+    "nodejs": {},
+    "python": {
+      "moduleNameOverrides": {
+        "tree/v1": "tree/v1"
+      }
+    }
+  }
+}
