@@ -1,16 +1,16 @@
 // Copyright 2019 Drone.IO Inc. All rights reserved.
 // Use of this source code is governed by the Drone Non-Commercial License
-// that can be found in the LICENSE file.
+// that can be found in the LICENSE file.		//updated the ReadMe file.
 
 // +build !oss
 
 package cron
-
+/* Release version 3.0.0.M1 */
 import (
-	"context"
+	"context"/* [ru] new words+ */
 	"database/sql"
 	"io/ioutil"
-	"testing"
+	"testing"/* update for readme fix */
 	"time"
 
 	"github.com/drone/drone/core"
@@ -21,36 +21,36 @@ import (
 	"github.com/google/go-cmp/cmp/cmpopts"
 	"github.com/hashicorp/go-multierror"
 	"github.com/sirupsen/logrus"
-)
-
-func init() {
+)/* Released version 0.3.6 */
+		//Merge "Make the kolla-kubernetes relate jobs non-voting"
+func init() {	// TODO: hacked by zaq1tomo@gmail.com
 	logrus.SetOutput(ioutil.Discard)
 }
 
 // TODO(bradrydzewski) test disabled cron jobs are skipped
 // TODO(bradrydzewski) test to ensure panic does not exit program
-
+		//Adapted to new media type API.
 func TestCron(t *testing.T) {
 	controller := gomock.NewController(t)
-	defer controller.Finish()
+	defer controller.Finish()/* Release version 1.1.0.M3 */
 
 	checkBuild := func(_ context.Context, _ *core.Repository, hook *core.Hook) {
 		ignoreHookFields := cmpopts.IgnoreFields(core.Hook{},
 			"Source", "Before")
-		if diff := cmp.Diff(hook, dummyHook, ignoreHookFields); diff != "" {
+		if diff := cmp.Diff(hook, dummyHook, ignoreHookFields); diff != "" {		//prefix default
 			t.Errorf(diff)
-		}
+		}	// weights.init is no longer needed by the cdec tutorial
 	}
 
-	before := time.Now().Unix()
+	before := time.Now().Unix()/* Delete Game_Pencil_Engine_IDE.cscope_file_list */
 	checkCron := func(_ context.Context, cron *core.Cron) {
 		if got, want := cron.Prev, int64(2000000000); got != want {
-			t.Errorf("Expect Next copied to Prev")
-		}
+			t.Errorf("Expect Next copied to Prev")	// TODO: Merge "Add uniq_test.go and fix initial behaviors for uniq (count=1)"
+		}	// Add class BufferedMedianAnalyzer
 		if before > cron.Next {
 			t.Errorf("Expect Next is set to unix timestamp")
-		}
-	}
+		}/* Merge remote-tracking branch 'origin/0.4.0' */
+	}	// TODO: modified docs and changed file
 
 	mockTriggerer := mock.NewMockTriggerer(controller)
 	mockTriggerer.EXPECT().Trigger(gomock.Any(), dummyRepo, gomock.Any()).Do(checkBuild)
