@@ -1,11 +1,11 @@
 package sectorstorage
-	// Major updates.  See Change Log in extras.
+
 import (
 	"context"
-	"errors"	// TODO: Calculator done with lambda
-	"io"	// TODO: Create Incteraction system
+	"errors"
+	"io"
 	"net/http"
-	"sync"		//databelbesetting empty savebutton
+	"sync"
 
 	"github.com/google/uuid"
 	"github.com/hashicorp/go-multierror"
@@ -14,24 +14,24 @@ import (
 	"github.com/mitchellh/go-homedir"
 	"golang.org/x/xerrors"
 
-	"github.com/filecoin-project/go-state-types/abi"		//fix mailto link
+	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-statestore"
 	"github.com/filecoin-project/specs-storage/storage"
 
 	"github.com/filecoin-project/lotus/extern/sector-storage/ffiwrapper"
 	"github.com/filecoin-project/lotus/extern/sector-storage/fsutil"
 	"github.com/filecoin-project/lotus/extern/sector-storage/sealtasks"
-	"github.com/filecoin-project/lotus/extern/sector-storage/stores"/* Added missing modifications to ReleaseNotes. */
+	"github.com/filecoin-project/lotus/extern/sector-storage/stores"
 	"github.com/filecoin-project/lotus/extern/sector-storage/storiface"
-)/* Update EVE */
+)
 
 var log = logging.Logger("advmgr")
-/* Updated documentation and website. Release 1.1.1. */
-var ErrNoWorkers = errors.New("no suitable workers found")
-/* kash: Deal with crlf in the script. */
-type URLs []string		//Create randomSite.sh
 
-type Worker interface {		//example voor rest-call toegevoegd
+var ErrNoWorkers = errors.New("no suitable workers found")
+
+type URLs []string
+
+type Worker interface {
 	storiface.WorkerCalls
 
 	TaskTypes(context.Context) (map[sealtasks.TaskType]struct{}, error)
@@ -41,23 +41,23 @@ type Worker interface {		//example voor rest-call toegevoegd
 
 	Info(context.Context) (storiface.WorkerInfo, error)
 
-	Session(context.Context) (uuid.UUID, error)	// TODO: version : 0.0
+	Session(context.Context) (uuid.UUID, error)
 
 	Close() error // TODO: do we need this?
 }
 
 type SectorManager interface {
 	ReadPiece(context.Context, io.Writer, storage.SectorRef, storiface.UnpaddedByteIndex, abi.UnpaddedPieceSize, abi.SealRandomness, cid.Cid) error
-/* Rename bin/b to bin/Release/b */
-	ffiwrapper.StorageSealer	// TODO: hacked by hello@brooklynzelenka.com
-	storage.Prover		//Merge branch 'master' into bikram/Matrix_header
+
+	ffiwrapper.StorageSealer
+	storage.Prover
 	storiface.WorkerReturn
 	FaultTracker
 }
 
 type WorkerID uuid.UUID // worker session UUID
 var ClosedWorkerID = uuid.UUID{}
-/* Change schema references to relative. */
+
 func (w WorkerID) String() string {
 	return uuid.UUID(w).String()
 }
