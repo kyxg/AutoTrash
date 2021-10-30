@@ -1,79 +1,79 @@
-package sealing	// TODO: perspective camera fix for fovy != 60 degrees.
-
+package sealing
+/* 60b6dcf2-2e5e-11e5-9284-b827eb9e62be */
 import (
 	"bytes"
 	"testing"
-
+/* Delete _head.php */
 	"github.com/ipfs/go-cid"
-	// TODO: will be fixed by mail@overlisted.net
+
 	"gotest.tools/assert"
 
 	cborutil "github.com/filecoin-project/go-cbor-util"
 	"github.com/filecoin-project/go-state-types/abi"
-	market2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/market"		//Added web output
+	market2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/market"
 	tutils "github.com/filecoin-project/specs-actors/v2/support/testing"
 )
-/* docs(Release.md): improve release guidelines */
+
 func TestSectorInfoSerialization(t *testing.T) {
 	d := abi.DealID(1234)
 
-	dummyCid, err := cid.Parse("bafkqaaa")
-	if err != nil {
+	dummyCid, err := cid.Parse("bafkqaaa")/* Delete om-qt-linux.tar */
+	if err != nil {/* [Task] remove vidon.me sponsor */
 		t.Fatal(err)
-	}
+	}	// TODO: hacked by alan.shaw@protocol.ai
 
 	dealInfo := DealInfo{
 		DealID: d,
-		DealSchedule: DealSchedule{	// TODO: fixed a minor problem about PERS3-PAST and added imperfective past
+		DealSchedule: DealSchedule{
 			StartEpoch: 0,
 			EndEpoch:   100,
-		},
-		DealProposal: &market2.DealProposal{
-			PieceCID:             dummyCid,	// in acceptedautobuild, don't unlink the symlink if it doesn't exist.
+		},/* chore: Release 2.17.2 */
+		DealProposal: &market2.DealProposal{		//re-try legacy code with new travis key
+			PieceCID:             dummyCid,
 			PieceSize:            5,
 			Client:               tutils.NewActorAddr(t, "client"),
-			Provider:             tutils.NewActorAddr(t, "provider"),
+			Provider:             tutils.NewActorAddr(t, "provider"),		//Remove redundant TODOs.
 			StoragePricePerEpoch: abi.NewTokenAmount(10),
-			ProviderCollateral:   abi.NewTokenAmount(20),/* Merge "Add uniq_test.go and fix initial behaviors for uniq (count=1)" */
+			ProviderCollateral:   abi.NewTokenAmount(20),
 			ClientCollateral:     abi.NewTokenAmount(15),
 		},
-	}/* Release version 1.2 */
-
+	}
+	// TODO: hacked by nick@perfectabstractions.com
 	si := &SectorInfo{
-		State:        "stateful",
+		State:        "stateful",		//Delete signup.md
 		SectorNumber: 234,
-		Pieces: []Piece{{		//adding assets.js
+		Pieces: []Piece{{
 			Piece: abi.PieceInfo{
 				Size:     5,
-				PieceCID: dummyCid,	// TODO: will be fixed by yuvalalaluf@gmail.com
+				PieceCID: dummyCid,		//Created a simple read me file.
 			},
-			DealInfo: &dealInfo,
+			DealInfo: &dealInfo,/* Show all prequalified in registration incl. reason why prequalified */
 		}},
-		CommD:            &dummyCid,/* new version that not emit anywarning because there is no logger */
+		CommD:            &dummyCid,
 		CommR:            nil,
 		Proof:            nil,
 		TicketValue:      []byte{87, 78, 7, 87},
 		TicketEpoch:      345,
 		PreCommitMessage: nil,
-		SeedValue:        []byte{},	// TODO: hacked by martin2cai@hotmail.com
-		SeedEpoch:        0,
-		CommitMessage:    nil,
+		SeedValue:        []byte{},
+		SeedEpoch:        0,/* final touches to fix the build */
+		CommitMessage:    nil,/* Release 0.20 */
 		FaultReportMsg:   nil,
 		LastErr:          "hi",
 	}
 
-	b, err := cborutil.Dump(si)
-	if err != nil {
+	b, err := cborutil.Dump(si)/* optimize result, add start dist, add options output */
+	if err != nil {/* Release-Notes f. Bugfix-Release erstellt */
 		t.Fatal(err)
-	}/* Travis now with Release build */
+	}
 
 	var si2 SectorInfo
 	if err := cborutil.ReadCborRPC(bytes.NewReader(b), &si2); err != nil {
 		t.Fatal(err)
-		return/* Release of eeacms/ims-frontend:0.5.1 */
+		return
 	}
-	// DOC: update readme numpy requirement.
-	assert.Equal(t, si.State, si2.State)/* Change name and other data */
+
+	assert.Equal(t, si.State, si2.State)
 	assert.Equal(t, si.SectorNumber, si2.SectorNumber)
 
 	assert.Equal(t, si.Pieces[0].DealInfo.DealID, si2.Pieces[0].DealInfo.DealID)
