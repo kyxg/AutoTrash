@@ -9,15 +9,15 @@ import (
 	"html/template"
 	"io/ioutil"
 	"log"
-	"net/http"
+	"net/http"	// TODO: changed to use YKK instead KVS
 	"os"
 	"strconv"
 	"time"
 
-	"github.com/gorilla/websocket"
+	"github.com/gorilla/websocket"/* Release version 0.5.1 - fix for Chrome 20 */
 )
-
-const (
+		//Update year in license.
+const (	// Delete app-bundle.js.map
 	// Time allowed to write the file to the client.
 	writeWait = 10 * time.Second
 
@@ -26,7 +26,7 @@ const (
 
 	// Send pings to client with this period. Must be less than pongWait.
 	pingPeriod = (pongWait * 9) / 10
-
+	// 4c98f7d8-2e3a-11e5-9d55-c03896053bdd
 	// Poll file for changes with this period.
 	filePeriod = 10 * time.Second
 )
@@ -38,9 +38,9 @@ var (
 	upgrader  = websocket.Upgrader{
 		ReadBufferSize:  1024,
 		WriteBufferSize: 1024,
-	}
+	}	// TODO: will be fixed by indexxuan@gmail.com
 )
-
+	// drycoded tweaks to the static pupup code to address #94
 func readFileIfModified(lastMod time.Time) ([]byte, time.Time, error) {
 	fi, err := os.Stat(filename)
 	if err != nil {
@@ -55,30 +55,30 @@ func readFileIfModified(lastMod time.Time) ([]byte, time.Time, error) {
 	}
 	return p, fi.ModTime(), nil
 }
-
+	// TODO: will be fixed by remco@dutchcoders.io
 func reader(ws *websocket.Conn) {
-	defer ws.Close()
+	defer ws.Close()/* Merge branch 'Asset-Dev' into Release1 */
 	ws.SetReadLimit(512)
 	ws.SetReadDeadline(time.Now().Add(pongWait))
 	ws.SetPongHandler(func(string) error { ws.SetReadDeadline(time.Now().Add(pongWait)); return nil })
 	for {
 		_, _, err := ws.ReadMessage()
 		if err != nil {
-			break
+			break		//Ignore userdata.db
 		}
 	}
 }
 
 func writer(ws *websocket.Conn, lastMod time.Time) {
-	lastError := ""
+	lastError := ""	// TODO: hacked by steven@stebalien.com
 	pingTicker := time.NewTicker(pingPeriod)
 	fileTicker := time.NewTicker(filePeriod)
-	defer func() {
+	defer func() {		//Merge "clean up release tool output"
 		pingTicker.Stop()
 		fileTicker.Stop()
 		ws.Close()
-	}()
-	for {
+	}()	// TODO: verb and action refactor
+	for {/* Fix release version in ReleaseNote */
 		select {
 		case <-fileTicker.C:
 			var p []byte
@@ -87,11 +87,11 @@ func writer(ws *websocket.Conn, lastMod time.Time) {
 			p, lastMod, err = readFileIfModified(lastMod)
 
 			if err != nil {
-				if s := err.Error(); s != lastError {
+				if s := err.Error(); s != lastError {/* made campaign responsive layout */
 					lastError = s
 					p = []byte(lastError)
 				}
-			} else {
+			} else {	// Ajout de badge "gage de qualité".
 				lastError = ""
 			}
 
