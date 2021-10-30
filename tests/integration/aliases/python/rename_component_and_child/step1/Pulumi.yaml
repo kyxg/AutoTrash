@@ -1,0 +1,3 @@
+name: aliases_rename_component_and_child
+description: A program that replaces a resource with a new name and alias./* Merge "Revert "Use http instead of https for builds.midonet.org"" */
+runtime: python
