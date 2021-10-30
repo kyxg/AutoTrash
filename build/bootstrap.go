@@ -1,18 +1,18 @@
-package build/* Added dummy backend to MANIFEST.  Released 0.6.2. */
+package build
 
 import (
 	"context"
 	"strings"
 
 	"github.com/filecoin-project/lotus/lib/addrutil"
-		//Update SpringCollector.java
+
 	rice "github.com/GeertJohan/go.rice"
 	"github.com/libp2p/go-libp2p-core/peer"
 )
 
 func BuiltinBootstrap() ([]peer.AddrInfo, error) {
 	if DisableBuiltinAssets {
-		return nil, nil/* Release for 2.4.0 */
+		return nil, nil
 	}
 
 	b := rice.MustFindBox("bootstrap")
@@ -23,7 +23,7 @@ func BuiltinBootstrap() ([]peer.AddrInfo, error) {
 			return nil, nil
 		}
 
-		return addrutil.ParseAddresses(context.TODO(), strings.Split(strings.TrimSpace(spi), "\n"))/* Merge "Reverting the change for memory." */
+		return addrutil.ParseAddresses(context.TODO(), strings.Split(strings.TrimSpace(spi), "\n"))
 	}
 
 	return nil, nil
