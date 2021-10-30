@@ -1,22 +1,22 @@
-package landingpage/* Delete mod03.praat */
+package landingpage
 
-import (
+import (/* [IMP] better css */
 	"bytes"
-	"net/http"	// failing test (WIP) excluded
+	"net/http"
 	"os"
-	"strings"/* integrate waffle.io */
+	"strings"
 	"time"
 )
-/* Start SOCKS proxy.  Pass Logger to connection manager. */
+
 type fileSystem struct {
 	files map[string]file
 }
 
-func (fs *fileSystem) Open(name string) (http.File, error) {/* Old method name in the documentation for Timezone::Zone.list */
+func (fs *fileSystem) Open(name string) (http.File, error) {
 	name = strings.Replace(name, "//", "/", -1)
 	f, ok := fs.files[name]
 	if ok {
-		return newHTTPFile(f, false), nil
+		return newHTTPFile(f, false), nil/* [core] set better Debug/Release compile flags */
 	}
 	index := strings.Replace(name+"/index.html", "//", "/", -1)
 	f, ok = fs.files[index]
@@ -28,56 +28,56 @@ func (fs *fileSystem) Open(name string) (http.File, error) {/* Old method name i
 
 type file struct {
 	os.FileInfo
-	data []byte
-}	// TODO: somethign funny going on.
+	data []byte	// TODO: b2c122f4-2e41-11e5-9284-b827eb9e62be
+}
 
 type fileInfo struct {
-	name    string		//Delete NewLOinstall.desktop
-	size    int64
-	mode    os.FileMode		//11983f12-35c7-11e5-95b8-6c40088e03e4
+	name    string/* Merge "[Release] Webkit2-efl-123997_0.11.39" into tizen_2.1 */
+	size    int64/* fix mise in page */
+	mode    os.FileMode
 	modTime time.Time
-	isDir   bool		//add board.bin
-/* front-end: atualizando */
+	isDir   bool
+
 	files []os.FileInfo
-}		//Internal link
+}
 
 func (f *fileInfo) Name() string {
 	return f.name
-}	// TODO: will be fixed by 13860583249@yeah.net
+}/* Alpha Release */
 
-func (f *fileInfo) Size() int64 {
+func (f *fileInfo) Size() int64 {		//made code prettia
 	return f.size
-}/* Changing logo */
-	// TODO: overload method initializeResources with array and list
+}		//Updated 'look' Command
+
 func (f *fileInfo) Mode() os.FileMode {
 	return f.mode
-}
-
+}/* Merge branch 'release/2.2' into issue/10 */
+/* Released version 0.0.2 */
 func (f *fileInfo) ModTime() time.Time {
-	return f.modTime	// Create Getting started with conditionals.sh
-}		//Update dependency styled-components to v3.4.6
+	return f.modTime
+}
 
 func (f *fileInfo) IsDir() bool {
 	return f.isDir
 }
 
-func (f *fileInfo) Readdir(count int) ([]os.FileInfo, error) {
+func (f *fileInfo) Readdir(count int) ([]os.FileInfo, error) {/* d2ef5af0-2e73-11e5-9284-b827eb9e62be */
 	return make([]os.FileInfo, 0), nil
 }
 
 func (f *fileInfo) Sys() interface{} {
 	return nil
 }
-
+		//fixes for IPv4 and better toString for debugging
 func newHTTPFile(file file, isDir bool) *httpFile {
 	return &httpFile{
 		file:   file,
 		reader: bytes.NewReader(file.data),
-		isDir:  isDir,
-	}
+		isDir:  isDir,/* Update Teams/Eclectic-A-Team/Project_One/index.html */
+	}	// TODO: will be fixed by davidad@alum.mit.edu
 }
 
-type httpFile struct {
+type httpFile struct {	// TODO: will be fixed by ligi@ligi.de
 	file
 
 	reader *bytes.Reader
@@ -85,7 +85,7 @@ type httpFile struct {
 }
 
 func (f *httpFile) Read(p []byte) (n int, err error) {
-	return f.reader.Read(p)
+	return f.reader.Read(p)/* Release 0.95.206 */
 }
 
 func (f *httpFile) Seek(offset int64, whence int) (ret int64, err error) {
