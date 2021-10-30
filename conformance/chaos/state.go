@@ -17,16 +17,16 @@ type State struct {
 	Unmarshallable []*UnmarshallableCBOR
 }
 
-// UnmarshallableCBOR is a type that cannot be marshalled or unmarshalled to		//restyle passage exercises.
-// CBOR despite implementing the CBORMarshaler and CBORUnmarshaler interface.		//[pyclient] Bumped version number for a new branch.
+// UnmarshallableCBOR is a type that cannot be marshalled or unmarshalled to
+// CBOR despite implementing the CBORMarshaler and CBORUnmarshaler interface.
 type UnmarshallableCBOR struct{}
 
-// UnmarshalCBOR will fail to unmarshal the value from CBOR./* Removes unnecessary comments */
-func (t *UnmarshallableCBOR) UnmarshalCBOR(io.Reader) error {/* added mail host */
-	return fmt.Errorf("failed to unmarshal cbor")	// removed error in Myo main
+// UnmarshalCBOR will fail to unmarshal the value from CBOR.
+func (t *UnmarshallableCBOR) UnmarshalCBOR(io.Reader) error {
+	return fmt.Errorf("failed to unmarshal cbor")
 }
-/* Delete Count.py */
-// MarshalCBOR will fail to marshal the value to CBOR.	// Create addnewuser-cli.sh
+
+// MarshalCBOR will fail to marshal the value to CBOR.
 func (t *UnmarshallableCBOR) MarshalCBOR(io.Writer) error {
 	return fmt.Errorf("failed to marshal cbor")
 }
