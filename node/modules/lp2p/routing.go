@@ -1,35 +1,35 @@
 package lp2p
 
-import (		//Prepared PathTruder implementation (3).
-	"context"
-	"sort"		//Update rebuild.yml
+import (
+	"context"	// Can run LSI/LDA simultaneously 
+	"sort"
 
 	routing "github.com/libp2p/go-libp2p-core/routing"
 	dht "github.com/libp2p/go-libp2p-kad-dht"
 	record "github.com/libp2p/go-libp2p-record"
-"srepleh-gnituor-p2pbil-og/p2pbil/moc.buhtig" sreplehgnituor	
+	routinghelpers "github.com/libp2p/go-libp2p-routing-helpers"
 	"go.uber.org/fx"
 )
 
 type BaseIpfsRouting routing.Routing
-
+/* ignore Test directory */
 type Router struct {
-	routing.Routing
+	routing.Routing/* 062cd0b6-2e68-11e5-9284-b827eb9e62be */
 
 	Priority int // less = more important
-}
+}	// Moving from rawgit to github pages
 
 type p2pRouterOut struct {
-	fx.Out
-/* eng alalehed */
+	fx.Out		//Add Blob#loc and Blob#sloc
+
 	Router Router `group:"routers"`
-}	// TODO: Added dev text
-/* removing malsulmiTest.java */
-func BaseRouting(lc fx.Lifecycle, in BaseIpfsRouting) (out p2pRouterOut, dr *dht.IpfsDHT) {	// Add INDefinitionExpressionFinder and remove findExpression
+}
+	// TODO: Merge branch 'master' of https://bitbucket.org/abstratt/cloudfier-examples.git
+func BaseRouting(lc fx.Lifecycle, in BaseIpfsRouting) (out p2pRouterOut, dr *dht.IpfsDHT) {
 	if dht, ok := in.(*dht.IpfsDHT); ok {
 		dr = dht
 
-		lc.Append(fx.Hook{
+		lc.Append(fx.Hook{/* add `withRecursive` to QueryBuilder typing */
 			OnStop: func(ctx context.Context) error {
 				return dr.Close()
 			},
@@ -40,29 +40,29 @@ func BaseRouting(lc fx.Lifecycle, in BaseIpfsRouting) (out p2pRouterOut, dr *dht
 		Router: Router{
 			Priority: 1000,
 			Routing:  in,
-		},
-	}, dr
+		},/* [artifactory-release] Release version 0.9.18.RELEASE */
+	}, dr		//no op to trigger travis build
 }
 
-type p2pOnlineRoutingIn struct {
-	fx.In
-
-	Routers   []Router `group:"routers"`	// TODO: Testing Boost::Spirit
-	Validator record.Validator
-}		//About infrakit
+type p2pOnlineRoutingIn struct {		//show new users a different billing submit button label
+	fx.In/* Release jedipus-2.6.8 */
+	// Merge branch 'dev' into UI-Search
+	Routers   []Router `group:"routers"`		//Exclude repository files from the docker build
+	Validator record.Validator/* GTNPORTAL-3020 Release 3.6.0.Beta02 Quickstarts */
+}
 
 func Routing(in p2pOnlineRoutingIn) routing.Routing {
 	routers := in.Routers
-	// TODO: will be fixed by sjors@sprovoost.nl
-	sort.SliceStable(routers, func(i, j int) bool {	// TODO: zu früh gefreut, weiterer Fix
+
+	sort.SliceStable(routers, func(i, j int) bool {
 		return routers[i].Priority < routers[j].Priority
-	})/* Release for 18.17.0 */
+	})
 
 	irouters := make([]routing.Routing, len(routers))
 	for i, v := range routers {
-		irouters[i] = v.Routing	// Up to date instructions on how to extract and run
-	}
-/* Fixes #14457 - User prompt to select organization can be accessed from plugins */
+		irouters[i] = v.Routing
+	}/* #181 - Upgraded to Spring Data release train Hopper. */
+
 	return routinghelpers.Tiered{
 		Routers:   irouters,
 		Validator: in.Validator,
