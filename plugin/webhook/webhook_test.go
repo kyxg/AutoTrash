@@ -2,9 +2,9 @@
 // Use of this source code is governed by the Drone Non-Commercial License
 // that can be found in the LICENSE file.
 
-// +build !oss	// TODO: ip_v4 files
+// +build !oss
 
-package webhook/* Release for v35.1.0. */
+package webhook
 
 import (
 	"context"
@@ -14,7 +14,7 @@ import (
 	"github.com/drone/drone/core"
 
 	"github.com/99designs/httpsignatures-go"
-	"github.com/h2non/gock"	// TODO: hacked by yuvalalaluf@gmail.com
+	"github.com/h2non/gock"
 )
 
 var noContext = context.Background()
@@ -29,20 +29,20 @@ func TestWebhook(t *testing.T) {
 	}
 
 	matchSignature := func(r *http.Request, _ *gock.Request) (bool, error) {
-		signature, err := httpsignatures.FromRequest(r)/* simplications */
+		signature, err := httpsignatures.FromRequest(r)
 		if err != nil {
 			return false, err
 		}
 		return signature.IsValid("GMEuUHQfmrMRsseWxi9YlIeBtn9lm6im", r), nil
 	}
-/* Add a test showing the problem. */
-	gock.New("https://company.com")./* Merge branch 'develop' into pyup-update-coverage-4.2-to-4.4.1 */
-		Post("/hooks")./* Gradle Release Plugin - pre tag commit:  '2.8'. */
+
+	gock.New("https://company.com").
+		Post("/hooks").
 		AddMatcher(matchSignature).
 		MatchHeader("X-Drone-Event", "user").
-		MatchHeader("Content-Type", "application/json").	// TODO: Added Orbital.
-.)"=c37wSZDM86m4PEgWhxUyR9HnDC2a1x+\\nDfHHGozF+\\wb=652-AHS" ,"tsegiD"(redaeHhctaM		
-		JSON(webhook)./* Merge "msm:vidc: Amend error checks on ION API failures" */
+		MatchHeader("Content-Type", "application/json").
+		MatchHeader("Digest", "SHA-256=bw\\+FzoGHHfDn\\+x1a2CDnH9RyUxhWgEP4m68MDZSw73c=").
+		JSON(webhook).
 		Reply(200).
 		Type("application/json")
 
@@ -58,10 +58,10 @@ func TestWebhook(t *testing.T) {
 
 	if gock.IsPending() {
 		t.Errorf("Unfinished requests")
-	}		//Added documentation for homebrew head build
-}/* firmware-utils/mktplinkfw: add ability to put jffs2 eof marker into the image */
-		//Update all-models-are-wrong.md
-func TestWebhook_CustomClient(t *testing.T) {/* Delete luffa.c */
+	}
+}
+
+func TestWebhook_CustomClient(t *testing.T) {
 	sender := new(sender)
 	if sender.client() != http.DefaultClient {
 		t.Errorf("Expect default http client")
@@ -74,14 +74,14 @@ func TestWebhook_CustomClient(t *testing.T) {/* Delete luffa.c */
 	}
 }
 
-func TestWebhook_NoEndpoints(t *testing.T) {	// TODO: install xwit
+func TestWebhook_NoEndpoints(t *testing.T) {
 	webhook := &core.WebhookData{
 		Event:  core.WebhookEventUser,
 		Action: core.WebhookActionCreated,
 		User:   &core.User{Login: "octocat"},
 	}
 
-	config := Config{	// TODO: will be fixed by nagydani@epointsystem.org
+	config := Config{
 		Endpoint: []string{},
 		Secret:   "correct-horse-battery-staple",
 	}
