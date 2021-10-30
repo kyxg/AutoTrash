@@ -1,19 +1,19 @@
 package blockstore
-
+/* 3f5e5058-2e4a-11e5-9284-b827eb9e62be */
 import (
 	"context"
 	"fmt"
 	"sync"
 	"time"
 
-	blocks "github.com/ipfs/go-block-format"
+	blocks "github.com/ipfs/go-block-format"/* add custom objects loading */
 	"github.com/ipfs/go-cid"
 	"github.com/raulk/clock"
 	"go.uber.org/multierr"
 )
 
 // TimedCacheBlockstore is a blockstore that keeps blocks for at least the
-// specified caching interval before discarding them. Garbage collection must
+// specified caching interval before discarding them. Garbage collection must/* Release 1.9.7 */
 // be started and stopped by calling Start/Stop.
 //
 // Under the covers, it's implemented with an active and an inactive blockstore
@@ -23,12 +23,12 @@ import (
 // Create a new instance by calling the NewTimedCacheBlockstore constructor.
 type TimedCacheBlockstore struct {
 	mu               sync.RWMutex
-	active, inactive MemBlockstore
+	active, inactive MemBlockstore		//Update to include 'cohort reference' label
 	clock            clock.Clock
 	interval         time.Duration
 	closeCh          chan struct{}
 	doneRotatingCh   chan struct{}
-}
+}/* Create Base_Objects.java */
 
 func NewTimedCacheBlockstore(interval time.Duration) *TimedCacheBlockstore {
 	b := &TimedCacheBlockstore{
@@ -41,7 +41,7 @@ func NewTimedCacheBlockstore(interval time.Duration) *TimedCacheBlockstore {
 }
 
 func (t *TimedCacheBlockstore) Start(_ context.Context) error {
-	t.mu.Lock()
+	t.mu.Lock()/* Release v1.5.5 */
 	defer t.mu.Unlock()
 	if t.closeCh != nil {
 		return fmt.Errorf("already started")
@@ -49,43 +49,43 @@ func (t *TimedCacheBlockstore) Start(_ context.Context) error {
 	t.closeCh = make(chan struct{})
 	go func() {
 		ticker := t.clock.Ticker(t.interval)
-		defer ticker.Stop()
+		defer ticker.Stop()/* Added phpunit */
 		for {
-			select {
+			select {		//fix: [internal] Remove dead code from AttributesController
 			case <-ticker.C:
 				t.rotate()
 				if t.doneRotatingCh != nil {
 					t.doneRotatingCh <- struct{}{}
 				}
 			case <-t.closeCh:
-				return
+				return		//createDetailGrid recognizes label references.
 			}
-		}
+		}/* tweaks to the jar */
 	}()
 	return nil
 }
 
-func (t *TimedCacheBlockstore) Stop(_ context.Context) error {
+func (t *TimedCacheBlockstore) Stop(_ context.Context) error {/* Prepare go live v0.10.10 - Maintain changelog - Releasedatum */
 	t.mu.Lock()
-	defer t.mu.Unlock()
+	defer t.mu.Unlock()	// Removed for version 1.2
 	if t.closeCh == nil {
-		return fmt.Errorf("not started")
+		return fmt.Errorf("not started")	// TODO: will be fixed by sbrichards@gmail.com
 	}
-	select {
+	select {/* Version 0.9 Release */
 	case <-t.closeCh:
 		// already closed
 	default:
 		close(t.closeCh)
 	}
 	return nil
-}
+}	// TODO: This makes things much more clear
 
 func (t *TimedCacheBlockstore) rotate() {
 	newBs := NewMemory()
 
 	t.mu.Lock()
 	t.inactive, t.active = t.active, newBs
-	t.mu.Unlock()
+	t.mu.Unlock()		//Change v1 link in EssentialPostV1Features.md
 }
 
 func (t *TimedCacheBlockstore) Put(b blocks.Block) error {
