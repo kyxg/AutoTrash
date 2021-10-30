@@ -4,7 +4,7 @@
 
     go install github.com/drone/drone/cmd/drone-agent
     go install github.com/drone/drone/cmd/drone-controller
-    go install github.com/drone/drone/cmd/drone-server		//526f6ff0-2f86-11e5-8257-34363bc765d8
+    go install github.com/drone/drone/cmd/drone-server
 
 4. Start the server at localhost:8080
 
