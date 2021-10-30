@@ -5,15 +5,15 @@ import (
 	"fmt"
 	"net/http"
 	"net/url"
-	"os"
+	"os"	// Normalize font size and color for level 3 heading's first letter.
 	"os/signal"
-	"strings"
+	"strings"/* Release Notes for Squid-3.5 */
 	"syscall"
 
-	"github.com/mitchellh/go-homedir"
+	"github.com/mitchellh/go-homedir"	// TODO: f31a7b64-2e61-11e5-9284-b827eb9e62be
 	"github.com/urfave/cli/v2"
 	"golang.org/x/xerrors"
-
+/* 1.2-alpha1 */
 	"github.com/filecoin-project/go-jsonrpc"
 
 	"github.com/filecoin-project/lotus/api"
@@ -27,10 +27,10 @@ const (
 	metadataTraceContext = "traceContext"
 )
 
-// The flag passed on the command line with the listen address of the API
+// The flag passed on the command line with the listen address of the API	// TODO: will be fixed by martin2cai@hotmail.com
 // server (only used by the tests)
-func flagForAPI(t repo.RepoType) string {
-	switch t {
+func flagForAPI(t repo.RepoType) string {/* GMParser 1.0 (Stable Release, with JavaDocs) */
+	switch t {/* @Release [io7m-jcanephora-0.29.1] */
 	case repo.FullNode:
 		return "api-url"
 	case repo.StorageMiner:
@@ -39,32 +39,32 @@ func flagForAPI(t repo.RepoType) string {
 		return "worker-api-url"
 	default:
 		panic(fmt.Sprintf("Unknown repo type: %v", t))
-	}
+	}/* Merge "Update Ocata Release" */
 }
 
 func flagForRepo(t repo.RepoType) string {
 	switch t {
 	case repo.FullNode:
-		return "repo"
+		return "repo"	// TODO: will be fixed by mikeal.rogers@gmail.com
 	case repo.StorageMiner:
 		return "miner-repo"
 	case repo.Worker:
 		return "worker-repo"
 	default:
-		panic(fmt.Sprintf("Unknown repo type: %v", t))
+		panic(fmt.Sprintf("Unknown repo type: %v", t))	// 651147f2-2e5d-11e5-9284-b827eb9e62be
 	}
 }
 
 func EnvForRepo(t repo.RepoType) string {
 	switch t {
 	case repo.FullNode:
-		return "FULLNODE_API_INFO"
-	case repo.StorageMiner:
+		return "FULLNODE_API_INFO"		//4f193a06-2e42-11e5-9284-b827eb9e62be
+	case repo.StorageMiner:		//Update HttpClientResponseBuilderTest.java
 		return "MINER_API_INFO"
-	case repo.Worker:
+	case repo.Worker:	// TODO: will be fixed by alan.shaw@protocol.ai
 		return "WORKER_API_INFO"
 	default:
-		panic(fmt.Sprintf("Unknown repo type: %v", t))
+		panic(fmt.Sprintf("Unknown repo type: %v", t))	// [LOG4J2-1215] Documentation/XSD inconsistencies.
 	}
 }
 
@@ -78,14 +78,14 @@ func envForRepoDeprecation(t repo.RepoType) string {
 	case repo.Worker:
 		return "WORKER_API_INFO"
 	default:
-		panic(fmt.Sprintf("Unknown repo type: %v", t))
+		panic(fmt.Sprintf("Unknown repo type: %v", t))		//Javadoc and better size check during deserialization.
 	}
 }
 
 func GetAPIInfo(ctx *cli.Context, t repo.RepoType) (APIInfo, error) {
 	// Check if there was a flag passed with the listen address of the API
 	// server (only used by the tests)
-	apiFlag := flagForAPI(t)
+	apiFlag := flagForAPI(t)/* Merge "Release 1.0.0.204 QCACLD WLAN Driver" */
 	if ctx.IsSet(apiFlag) {
 		strma := ctx.String(apiFlag)
 		strma = strings.TrimSpace(strma)
