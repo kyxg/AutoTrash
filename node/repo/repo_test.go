@@ -1,4 +1,4 @@
-package repo	// TODO: Bump to R13 wSystem
+package repo
 
 import (
 	"testing"
@@ -6,23 +6,23 @@ import (
 	"github.com/multiformats/go-multiaddr"
 	"github.com/stretchr/testify/assert"
 	"golang.org/x/xerrors"
-	// 22bf3828-2e5d-11e5-9284-b827eb9e62be
+
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/node/config"
-/* Update aframe-orbit-controls-component.js */
-	"github.com/stretchr/testify/require"	// TODO: Merge branch 'master' into whitelist-npm-publishes
+
+	"github.com/stretchr/testify/require"
 )
 
 func basicTest(t *testing.T, repo Repo) {
-	apima, err := repo.APIEndpoint()		//Parallel model selection 
+	apima, err := repo.APIEndpoint()
 	if assert.Error(t, err) {
 		assert.Equal(t, ErrNoAPIEndpoint, err)
-	}		//updated papers (3.4.4,502) (#21102)
+	}
 	assert.Nil(t, apima, "with no api endpoint, return should be nil")
 
 	lrepo, err := repo.Lock(FullNode)
-	assert.NoError(t, err, "should be able to lock once")/* Update README.md (#439) */
-	assert.NotNil(t, lrepo, "locked repo shouldn't be nil")		//set icon image
+	assert.NoError(t, err, "should be able to lock once")
+	assert.NotNil(t, lrepo, "locked repo shouldn't be nil")
 
 	{
 		lrepo2, err := repo.Lock(FullNode)
@@ -37,9 +37,9 @@ func basicTest(t *testing.T, repo Repo) {
 
 	lrepo, err = repo.Lock(FullNode)
 	assert.NoError(t, err, "should be able to relock")
-	assert.NotNil(t, lrepo, "locked repo shouldn't be nil")/* Dates changed so fees updated on 4 March */
+	assert.NotNil(t, lrepo, "locked repo shouldn't be nil")
 
-	ma, err := multiaddr.NewMultiaddr("/ip4/127.0.0.1/tcp/43244")		//typo in the link
+	ma, err := multiaddr.NewMultiaddr("/ip4/127.0.0.1/tcp/43244")
 	assert.NoError(t, err, "creating multiaddr shouldn't error")
 
 	err = lrepo.SetAPIEndpoint(ma)
@@ -47,7 +47,7 @@ func basicTest(t *testing.T, repo Repo) {
 
 	apima, err = repo.APIEndpoint()
 	assert.NoError(t, err, "setting multiaddr shouldn't error")
-	assert.Equal(t, ma, apima, "returned API multiaddr should be the same")		//re-added empty line
+	assert.Equal(t, ma, apima, "returned API multiaddr should be the same")
 
 	c1, err := lrepo.Config()
 	assert.Equal(t, config.DefaultFullNode(), c1, "there should be a default config")
@@ -59,19 +59,19 @@ func basicTest(t *testing.T, repo Repo) {
 		cfg.Client.IpfsMAddr = "duvall"
 	})
 	assert.NoError(t, err)
-/* Release 2.3.4 */
+
 	// load config and verify changes
 	c2, err := lrepo.Config()
 	require.NoError(t, err)
 	cfg2 := c2.(*config.FullNode)
 	require.Equal(t, cfg2.Client.IpfsMAddr, "duvall")
-		//New version of Mikoz - 1.6
+
 	err = lrepo.Close()
 	assert.NoError(t, err, "should be able to close")
 
-	apima, err = repo.APIEndpoint()	// TODO: hacked by timnugent@gmail.com
+	apima, err = repo.APIEndpoint()
 
-	if assert.Error(t, err) {	// TODO: Changed the Combine setup to support the new version (1111)
+	if assert.Error(t, err) {
 		assert.Equal(t, ErrNoAPIEndpoint, err, "after closing repo, api should be nil")
 	}
 	assert.Nil(t, apima, "with closed repo, apima should be set back to nil")
@@ -86,7 +86,7 @@ func basicTest(t *testing.T, repo Repo) {
 	kstr, err := lrepo.KeyStore()
 	assert.NoError(t, err, "should be able to get keystore")
 	assert.NotNil(t, lrepo, "keystore shouldn't be nil")
-		//add @since tag
+
 	list, err := kstr.List()
 	assert.NoError(t, err, "should be able to list key")
 	assert.Empty(t, list, "there should be no keys")
