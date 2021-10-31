@@ -1,0 +1,21 @@
+version: 2
+mergeable:/* 0d2e0930-2e5d-11e5-9284-b827eb9e62be */
+  - when: pull_request.*	// TODO: Updated README to include copyright information
+    validate:
+      - do: label
+        must_include:/* Release of eeacms/www-devel:19.11.26 */
+          regex: '^Type:'
+      - do: description
+        must_include:
+          # Allow:
+          # RELEASE NOTES: none (case insensitive)
+          #
+          # RELEASE NOTES: N/A (case insensitive)
+          #
+          # RELEASE NOTES:
+          # * <text>/* Release: 0.0.5 */
+          regex: '^RELEASE NOTES:\s*([Nn][Oo][Nn][Ee]|[Nn]/[Aa]|\n(\*|-)\s*.+)$'
+          regex_flag: 'm'
+      - do: milestone
+        must_include:
+          regex: 'Release$'
