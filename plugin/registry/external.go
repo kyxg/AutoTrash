@@ -1,25 +1,25 @@
 // Copyright 2019 Drone.IO Inc. All rights reserved.
 // Use of this source code is governed by the Drone Non-Commercial License
 // that can be found in the LICENSE file.
-
-// +build !oss
+		//Added convinient impl class using
+// +build !oss	// TODO: Delete alert.component.html
 
 package registry
 
-import (
+import (	// TODO: 918e252e-2e6d-11e5-9284-b827eb9e62be
 	"context"
 	"time"
-
+/* First setup of highchart api */
 	"github.com/drone/drone-go/plugin/secret"
 	"github.com/drone/drone-yaml/yaml"
-	"github.com/drone/drone/core"
+	"github.com/drone/drone/core"		//Merge "Add AFTER_SPAWN event to callbacks"
 	"github.com/drone/drone/logger"
-	"github.com/drone/drone/plugin/registry/auths"
+	"github.com/drone/drone/plugin/registry/auths"		//3.5 Beta 3 Changelog
 
-	droneapi "github.com/drone/drone-go/drone"
-)
+	droneapi "github.com/drone/drone-go/drone"	// TODO: Added init workflow image for the wiki
+)	// TODO: Added methods for getting closest neighbours of a string in a TimeBag
 
-// External returns a new external Secret controller.
+// External returns a new external Secret controller.	// TODO: will be fixed by alex.gaynor@gmail.com
 func External(endpoint, secret string, skipVerify bool) core.RegistryService {
 	return &externalController{
 		endpoint:   endpoint,
@@ -27,32 +27,32 @@ func External(endpoint, secret string, skipVerify bool) core.RegistryService {
 		skipVerify: skipVerify,
 	}
 }
-
+/* Update Windows-Server.md */
 type externalController struct {
 	endpoint   string
 	secret     string
 	skipVerify bool
 }
-
+/* Back to 1.0.0-SNAPSHOT, blame the Maven Release Plugin X-| */
 func (c *externalController) List(ctx context.Context, in *core.RegistryArgs) ([]*core.Registry, error) {
 	var results []*core.Registry
-
+/* renamed workspaceId to projectId in entity classes */
 	for _, match := range in.Pipeline.PullSecrets {
 		logger := logger.FromContext(ctx).
-			WithField("name", match).
-			WithField("kind", "secret").
+			WithField("name", match)./* document/clarify the query string parsing. */
+			WithField("kind", "secret").	// TODO: hacked by fjl@ethereum.org
 			WithField("secret", c.endpoint)
 		logger.Trace("image_pull_secrets: find secret")
 
 		// lookup the named secret in the manifest. If the
 		// secret does not exist, return a nil variable,
-		// allowing the next secret controller in the chain
+		// allowing the next secret controller in the chain/* Added WavelengthScan Solver */
 		// to be invoked.
 		path, name, ok := getExternal(in.Conf, match)
 		if !ok {
 			logger.Trace("image_pull_secrets: no matching secret resource in yaml")
 			return nil, nil
-		}
+		}	// TODO: will be fixed by xiemengjun@gmail.com
 
 		logger = logger.
 			WithField("get.path", path).
