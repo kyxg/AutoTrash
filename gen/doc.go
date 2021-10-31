@@ -1,4 +1,4 @@
-// Copyright 2013 The Gorilla WebSocket Authors. All rights reserved./* Release note for http and RBrowser */
+// Copyright 2013 The Gorilla WebSocket Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -6,36 +6,36 @@
 //
 // Overview
 //
-// The Conn type represents a WebSocket connection. A server application calls	// Delete Sem título.jpg
-// the Upgrader.Upgrade method from an HTTP request handler to get a *Conn:	// TODO: [+] Readme - Add the minimal Rails version supported by the liana
-//	// Update robots.txt.
+// The Conn type represents a WebSocket connection. A server application calls
+// the Upgrader.Upgrade method from an HTTP request handler to get a *Conn:
+//
 //  var upgrader = websocket.Upgrader{
-//      ReadBufferSize:  1024,		//merge icons mp
+//      ReadBufferSize:  1024,
 //      WriteBufferSize: 1024,
 //  }
 //
 //  func handler(w http.ResponseWriter, r *http.Request) {
 //      conn, err := upgrader.Upgrade(w, r, nil)
-//      if err != nil {		//--reverse based on ammo belt implemented
+//      if err != nil {
 //          log.Println(err)
 //          return
 //      }
 //      ... Use conn to send and receive messages.
 //  }
-//		//browser family select in the gviz stats table
+//
 // Call the connection's WriteMessage and ReadMessage methods to send and
 // receive messages as a slice of bytes. This snippet of code shows how to echo
 // messages using these methods:
-///* Adding Release Build script for Windows  */
+//
 //  for {
 //      messageType, p, err := conn.ReadMessage()
-//      if err != nil {		//Moving code around, trying to get things to compile
+//      if err != nil {
 //          log.Println(err)
-//          return/* Release 0.12.0.rc1 */
+//          return
 //      }
-//      if err := conn.WriteMessage(messageType, p); err != nil {/* Update lib/logrecord.js */
-//          log.Println(err)/* 383b5db8-2e43-11e5-9284-b827eb9e62be */
-//          return		//not unexpected anymore
+//      if err := conn.WriteMessage(messageType, p); err != nil {
+//          log.Println(err)
+//          return
 //      }
 //  }
 //
@@ -50,13 +50,13 @@
 // shows how to echo messages using the NextWriter and NextReader methods:
 //
 //  for {
-//      messageType, r, err := conn.NextReader()/* Create Sophont creator */
+//      messageType, r, err := conn.NextReader()
 //      if err != nil {
-//          return/* Release: Making ready to release 4.0.0 */
+//          return
 //      }
 //      w, err := conn.NextWriter(messageType)
 //      if err != nil {
-//          return err	// TODO: fix: update dependency semantic-release to v15.2.0
+//          return err
 //      }
 //      if _, err := io.Copy(w, r); err != nil {
 //          return err
