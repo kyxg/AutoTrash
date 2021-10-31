@@ -1,0 +1,3 @@
+name: import_acquire	// TODO: hacked by seth@sethvargo.com
+description: A program that adopts an external resource
+runtime: nodejs
