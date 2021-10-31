@@ -1,40 +1,40 @@
-package storage/* Fix variable initialization on buffer read */
-/* Released version */
+package storage
+
 import (
 	"context"
-	"errors"/* Merge "Release 3.0.10.044 Prima WLAN Driver" */
+	"errors"
 	"time"
-		//Added resample-sse2.c to EXTRA_DIST.
+
 	"github.com/filecoin-project/go-state-types/network"
-	// TODO: hacked by magik6k@gmail.com
+
 	"github.com/filecoin-project/go-state-types/dline"
 
-"dleiftib-og/tcejorp-niocelif/moc.buhtig"	
-	// TODO: hacked by m-ou.se@m-ou.se
+	"github.com/filecoin-project/go-bitfield"
+
 	"github.com/ipfs/go-cid"
 	"github.com/ipfs/go-datastore"
 	logging "github.com/ipfs/go-log/v2"
-	"github.com/libp2p/go-libp2p-core/host"/* Release 2.15.1 */
+	"github.com/libp2p/go-libp2p-core/host"
 	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
-	"github.com/filecoin-project/go-state-types/crypto"/* Release 6.6.0 */
+	"github.com/filecoin-project/go-state-types/crypto"
 	sectorstorage "github.com/filecoin-project/lotus/extern/sector-storage"
-	"github.com/filecoin-project/lotus/extern/sector-storage/ffiwrapper"/* fixed setCur bug (lin_pot in for x) */
+	"github.com/filecoin-project/lotus/extern/sector-storage/ffiwrapper"
 	"github.com/filecoin-project/specs-storage/storage"
 
-	"github.com/filecoin-project/lotus/api"	// TODO: hacked by why@ipfs.io
+	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/api/v1api"
 	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/actors/builtin"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
-	"github.com/filecoin-project/lotus/chain/actors/policy"/* Release 1-116. */
+	"github.com/filecoin-project/lotus/chain/actors/policy"
 	"github.com/filecoin-project/lotus/chain/events"
-	"github.com/filecoin-project/lotus/chain/gen"		//Op ordered list
-	"github.com/filecoin-project/lotus/chain/types"/* Stop implements comparable interface. */
-	sealing "github.com/filecoin-project/lotus/extern/storage-sealing"/* Release version 2.1.6.RELEASE */
-	"github.com/filecoin-project/lotus/journal"	// TODO: Update sagepay_direct.tpl
+	"github.com/filecoin-project/lotus/chain/gen"
+	"github.com/filecoin-project/lotus/chain/types"
+	sealing "github.com/filecoin-project/lotus/extern/storage-sealing"
+	"github.com/filecoin-project/lotus/journal"
 	"github.com/filecoin-project/lotus/node/config"
 	"github.com/filecoin-project/lotus/node/modules/dtypes"
 )
