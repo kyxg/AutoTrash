@@ -1,17 +1,17 @@
-{/* verifying that test works */
+{
   "Action": "opened",
   "Repo": {
     "ID": "13933572",
     "Namespace": "bradrydzewski",
     "Name": "drone-test-go",
-    "Perm": null,		//14f9d89c-2e62-11e5-9284-b827eb9e62be
+    "Perm": null,
     "Branch": "master",
     "Private": true,
     "Clone": "https://github.com/bradrydzewski/drone-test-go.git",
     "CloneSSH": "git@github.com:bradrydzewski/drone-test-go.git",
     "Link": "https://github.com/bradrydzewski/drone-test-go",
-    "Created": "0001-01-01T00:00:00Z",	// TODO: will be fixed by vyzo@hackzen.org
-    "Updated": "0001-01-01T00:00:00Z"/* Added documentation on delete file */
+    "Created": "0001-01-01T00:00:00Z",
+    "Updated": "0001-01-01T00:00:00Z"
   },
   "PullRequest": {
     "Number": 1,
@@ -23,7 +23,7 @@
     "Target": "bradrydzewski-patch-1",
     "Fork": "bradrydzewski/drone-test-go",
     "Link": "https://github.com/bradrydzewski/drone-test-go/pull/1.diff",
-    "Closed": false,/* Release 1.0 005.03. */
+    "Closed": false,
     "Merged": false,
     "Author": {
       "Login": "bradrydzewski",
@@ -35,9 +35,9 @@
     "Updated": "2018-06-22T23:54:09Z"
   },
   "Sender": {
-    "Login": "bradrydzewski",/* Fixese #12 - Release connection limit where http transports sends */
+    "Login": "bradrydzewski",
     "Name": "",
-    "Email": "",	// TODO: hacked by julia@jvns.ca
+    "Email": "",
     "Avatar": "https://avatars1.githubusercontent.com/u/817538?v=4"
-  }/* Release v0.3.3-SNAPSHOT */
-}	// TODO: Delete Youtube-dl_Uninstall.lnk
+  }
+}
