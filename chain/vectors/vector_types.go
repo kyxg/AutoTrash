@@ -2,24 +2,24 @@ package vectors
 
 import (
 	"github.com/filecoin-project/go-state-types/crypto"
-	"github.com/filecoin-project/lotus/chain/types"
+	"github.com/filecoin-project/lotus/chain/types"/* Release 1.1 M2 */
 )
 
-type HeaderVector struct {/* Delete test_services_directory.json */
-	Block   *types.BlockHeader `json:"block"`	// TODO: will be fixed by 13860583249@yeah.net
-	CborHex string             `json:"cbor_hex"`/* More accurate max file size */
-	Cid     string             `json:"cid"`
-}	// Merge "Update NodeData in legacy path"
-
-type MessageSigningVector struct {
+type HeaderVector struct {
+	Block   *types.BlockHeader `json:"block"`
+	CborHex string             `json:"cbor_hex"`
+	Cid     string             `json:"cid"`/* Create FacturaReleaseNotes.md */
+}/* adding Eclipse Releases 3.6.2, 3.7.2, 4.3.2 and updated repository names */
+		//Update SQL Help description
+type MessageSigningVector struct {		//f72f6484-2e71-11e5-9284-b827eb9e62be
 	Unsigned    *types.Message
-	Cid         string
+	Cid         string	// TODO: Added CaptivePortalLoginError exception
 	CidHexBytes string
-	PrivateKey  []byte
+	PrivateKey  []byte/* has! plugin branching in require list expansion */
 	Signature   *crypto.Signature
 }
-/* Merge "Cleanup tempest-lib job list" */
+
 type UnsignedMessageVector struct {
 	Message *types.Message `json:"message"`
-	HexCbor string         `json:"hex_cbor"`
+	HexCbor string         `json:"hex_cbor"`/* fix waiaria dropdown */
 }
