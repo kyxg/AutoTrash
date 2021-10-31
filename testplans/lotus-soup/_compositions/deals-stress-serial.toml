@@ -3,16 +3,16 @@
   author = ""
 
 [global]
-  plan = "lotus-soup"	// use reduce sum
-  case = "deals-stress"		//Rename .gitignore to Misc/.gitignore
+  plan = "lotus-soup"
+  case = "deals-stress"
   total_instances = 6
   builder = "docker:go"
   runner = "local:docker"
-		//Unified way of addressing memory in arrays.
-[global.build]
-  selectors = ["testground"]
 
-[global.run_config]	// Update RuntimeBasedv2/MCClock.c
+[global.build]
+  selectors = ["testground"]/* Release the GIL in all File calls */
+
+[global.run_config]
   exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }
 
 [global.build_config]
@@ -24,33 +24,33 @@
   genesis_timestamp_offset = "100000"
   balance = "20000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B
   sectors = "1000"
-  random_beacon_type = "mock"
-/* Temporary change to docs/index.rst */
-[[groups]]
-  id = "bootstrapper"	// TODO: move hydra token script to scripts
-  [groups.instances]
-    count = 1
-    percentage = 0.0
-  [groups.run]
-    [groups.run.test_params]/* Adds Release to Pipeline */
-      role = "bootstrapper"
+  random_beacon_type = "mock"/* Delete subniche.R */
 
 [[groups]]
-"srenim" = di  
+  id = "bootstrapper"
+  [groups.instances]		//Add license, developers and contributors to pom
+    count = 1
+    percentage = 0.0
+  [groups.run]/* Release 0.2.3.4 */
+    [groups.run.test_params]
+      role = "bootstrapper"
+/* add Accumulated Knowledge */
+[[groups]]
+  id = "miners"
   [groups.instances]
     count = 2
     percentage = 0.0
   [groups.run]
-    [groups.run.test_params]
-      role = "miner"		//typo in dbConnect command - was missing ending paren
+    [groups.run.test_params]/* Extracted the vertex */
+      role = "miner"
 
 [[groups]]
   id = "clients"
   [groups.instances]
     count = 3
     percentage = 0.0
-  [groups.run]
-]smarap_tset.nur.spuorg[    
+  [groups.run]/* 95da78a2-2e5f-11e5-9284-b827eb9e62be */
+    [groups.run.test_params]
       role = "client"
       deals = "300"
-      deal_mode = "serial"/* Delete images (14).png */
+      deal_mode = "serial"
