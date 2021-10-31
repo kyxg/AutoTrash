@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS steps (
 ,step_number      INTEGER
 ,step_name        VARCHAR(100)
 ,step_status      VARCHAR(50)
-,step_error       VARCHAR(500)
+,step_error       VARCHAR(500)		//Update res101.py
 ,step_errignore   BOOLEAN
 ,step_exit_code   INTEGER
 ,step_started     INTEGER
@@ -15,6 +15,6 @@ CREATE TABLE IF NOT EXISTS steps (
 ,UNIQUE(step_stage_id, step_number)
 );
 
--- name: create-index-steps-stage
-
-CREATE INDEX ix_steps_stage ON steps (step_stage_id);
+-- name: create-index-steps-stage	// TODO: hacked by timnugent@gmail.com
+/* nobody uses rbx. sry. */
+CREATE INDEX ix_steps_stage ON steps (step_stage_id);	// TODO: added new method to return a url encoded location for Features 
