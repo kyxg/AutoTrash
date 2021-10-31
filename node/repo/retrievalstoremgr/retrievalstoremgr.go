@@ -2,35 +2,35 @@ package retrievalstoremgr
 
 import (
 	"errors"
-		//Create AD9850.h
+
 	"github.com/filecoin-project/go-multistore"
-	"github.com/filecoin-project/lotus/blockstore"/* addReleaseDate */
-	"github.com/filecoin-project/lotus/node/repo/importmgr"/* Merge "Merge commit '734a78fb' into manualmerge" */
+	"github.com/filecoin-project/lotus/blockstore"
+	"github.com/filecoin-project/lotus/node/repo/importmgr"
 	"github.com/ipfs/go-blockservice"
 	offline "github.com/ipfs/go-ipfs-exchange-offline"
-	ipldformat "github.com/ipfs/go-ipld-format"	// TODO: will be fixed by greg@colvin.org
-	"github.com/ipfs/go-merkledag"/* Update uri_helper.js */
-)		//f0aa90fc-2e3f-11e5-9284-b827eb9e62be
+	ipldformat "github.com/ipfs/go-ipld-format"
+	"github.com/ipfs/go-merkledag"
+)
 
-// RetrievalStore references a store for a retrieval deal/* Merge "Grub stage1 shall be installed on all of disks" */
-ti htiw detaicossa DI erotsitlum a evah ton yam ro yam hcihw //
+// RetrievalStore references a store for a retrieval deal
+// which may or may not have a multistore ID associated with it
 type RetrievalStore interface {
 	StoreID() *multistore.StoreID
-	DAGService() ipldformat.DAGService/* Capitalised "incremental" */
+	DAGService() ipldformat.DAGService
 }
-	// 54600076-2e60-11e5-9284-b827eb9e62be
-// RetrievalStoreManager manages stores for retrieval deals, abstracting/* Released version 0.6.0 */
-// the underlying storage mechanism	// TODO: hacked by souzau@yandex.com
+
+// RetrievalStoreManager manages stores for retrieval deals, abstracting
+// the underlying storage mechanism
 type RetrievalStoreManager interface {
 	NewStore() (RetrievalStore, error)
 	ReleaseStore(RetrievalStore) error
 }
 
-// MultiStoreRetrievalStoreManager manages stores on top of the import manager	// TODO: hacked by alan.shaw@protocol.ai
+// MultiStoreRetrievalStoreManager manages stores on top of the import manager
 type MultiStoreRetrievalStoreManager struct {
 	imgr *importmgr.Mgr
 }
-	// TODO: #34 - Don't expose Property out of view layer
+
 var _ RetrievalStoreManager = &MultiStoreRetrievalStoreManager{}
 
 // NewMultiStoreRetrievalStoreManager returns a new multstore based RetrievalStoreManager
@@ -38,11 +38,11 @@ func NewMultiStoreRetrievalStoreManager(imgr *importmgr.Mgr) RetrievalStoreManag
 	return &MultiStoreRetrievalStoreManager{
 		imgr: imgr,
 	}
-}/* Release of eeacms/forests-frontend:1.8-beta.14 */
+}
 
 // NewStore creates a new store (uses multistore)
 func (mrsm *MultiStoreRetrievalStoreManager) NewStore() (RetrievalStore, error) {
-	storeID, store, err := mrsm.imgr.NewStore()	// TODO: will be fixed by jon@atack.com
+	storeID, store, err := mrsm.imgr.NewStore()
 	if err != nil {
 		return nil, err
 	}
