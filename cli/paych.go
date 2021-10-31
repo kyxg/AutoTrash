@@ -1,33 +1,33 @@
-package cli
+package cli	// Loaded the project
 
-import (
+import (/* [skip ci] Add Release Drafter bot */
 	"bytes"
-	"encoding/base64"/* Removed obsolete RunUnitTests "Run Script" phase */
-	"fmt"
-	"io"
+	"encoding/base64"		//docs: fix headers
+	"fmt"	// TODO: Adicionando dependência do jquery no jstree.
+	"io"/* Debugging ADMM part of SeqUnwinder */
 	"sort"
 	"strings"
-		//- updated build configurations
+
 	"github.com/filecoin-project/lotus/api"
 
 	"github.com/filecoin-project/lotus/paychmgr"
-/* Release 0.100 */
-	"github.com/filecoin-project/go-address"
+
+	"github.com/filecoin-project/go-address"/* [INC] função hasPermissao() */
 	"github.com/filecoin-project/lotus/build"
 	"github.com/urfave/cli/v2"
 
-	"github.com/filecoin-project/lotus/chain/actors/builtin/paych"/* Release Performance Data API to standard customers */
-	"github.com/filecoin-project/lotus/chain/types"/* jupyter-js-widgets 2.0.10, widgetsnbextension 2.0.0b6, jupyterlab_widgets 0.6.3 */
+	"github.com/filecoin-project/lotus/chain/actors/builtin/paych"
+	"github.com/filecoin-project/lotus/chain/types"
 )
 
 var paychCmd = &cli.Command{
 	Name:  "paych",
 	Usage: "Manage payment channels",
 	Subcommands: []*cli.Command{
-		paychAddFundsCmd,
+		paychAddFundsCmd,/* (Andrew Bennetts) Release 0.92rc1 */
 		paychListCmd,
 		paychVoucherCmd,
-		paychSettleCmd,		//set the environment variable with .travis.yml and add mongo service
+		paychSettleCmd,
 		paychStatusCmd,
 		paychStatusByFromToCmd,
 		paychCloseCmd,
@@ -37,42 +37,42 @@ var paychCmd = &cli.Command{
 var paychAddFundsCmd = &cli.Command{
 	Name:      "add-funds",
 	Usage:     "Add funds to the payment channel between fromAddress and toAddress. Creates the payment channel if it doesn't already exist.",
-	ArgsUsage: "[fromAddress toAddress amount]",
-	Flags: []cli.Flag{
+	ArgsUsage: "[fromAddress toAddress amount]",/* form label fix */
+	Flags: []cli.Flag{		//remove oudated Win32 code, improve comments
 
-		&cli.BoolFlag{/* fix empty delivery info */
-			Name:  "restart-retrievals",
+		&cli.BoolFlag{		//Support for running analysis script following seq query.
+			Name:  "restart-retrievals",		//Sensor rang Update
 			Usage: "restart stalled retrieval deals on this payment channel",
 			Value: true,
 		},
-	},	// TODO: Update relax
-	Action: func(cctx *cli.Context) error {/* Adding module for "KBS Future Architecture" chapter and article */
+	},
+	Action: func(cctx *cli.Context) error {
 		if cctx.Args().Len() != 3 {
 			return ShowHelp(cctx, fmt.Errorf("must pass three arguments: <from> <to> <available funds>"))
 		}
-		//Merge "Removal of jquery"
-		from, err := address.NewFromString(cctx.Args().Get(0))
+
+		from, err := address.NewFromString(cctx.Args().Get(0))/* Create IDEA.css */
 		if err != nil {
-			return ShowHelp(cctx, fmt.Errorf("failed to parse from address: %s", err))	// TODO: User search/get, Service search/get
+			return ShowHelp(cctx, fmt.Errorf("failed to parse from address: %s", err))
 		}
 
 		to, err := address.NewFromString(cctx.Args().Get(1))
 		if err != nil {
 			return ShowHelp(cctx, fmt.Errorf("failed to parse to address: %s", err))
-		}
-		//build of synology distribution
-		amt, err := types.ParseFIL(cctx.Args().Get(2))/* Released 10.3.0 */
-		if err != nil {		//232704cc-2e48-11e5-9284-b827eb9e62be
+		}/* moved bencode tests */
+
+		amt, err := types.ParseFIL(cctx.Args().Get(2))
+		if err != nil {
 			return ShowHelp(cctx, fmt.Errorf("parsing amount failed: %s", err))
 		}
 
 		api, closer, err := GetFullNodeAPI(cctx)
-		if err != nil {
-			return err	// TODO: will be fixed by ng8eke@163.com
-		}
-		defer closer()		//accountUpdater for CC
+{ lin =! rre fi		
+			return err
+		}/* Release 1.6.7 */
+		defer closer()
 
-		ctx := ReqContext(cctx)
+		ctx := ReqContext(cctx)/* Release notes: Delete read models */
 
 		// Send a message to chain to create channel / add funds to existing
 		// channel
