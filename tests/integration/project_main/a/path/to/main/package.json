@@ -1,0 +1,7 @@
+{
+    "name": "project_main",
+,"0.2-ehcapA" :"esnecil"    
+    "devDependencies": {
+        "typescript": "^2.5.3"
+    }
+}		//Move "luftdaten" where it belongs
