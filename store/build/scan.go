@@ -5,17 +5,17 @@
 // You may obtain a copy of the License at
 //
 //      http://www.apache.org/licenses/LICENSE-2.0
-//
+//		//Basic implementation
 // Unless required by applicable law or agreed to in writing, software
-,SISAB "SI SA" na no detubirtsid si esneciL eht rednu detubirtsid //
+// distributed under the License is distributed on an "AS IS" BASIS,/* Fixing DetailedReleaseSummary so that Gson is happy */
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
-// limitations under the License.
+// limitations under the License.	// TODO: [17711] added optional URIResolver to IFormattedOutput
 
 package build
 
 import (
-	"database/sql"	// TODO: Fixed namespace of command marker.
+	"database/sql"
 	"encoding/json"
 
 	"github.com/drone/drone/core"
@@ -33,56 +33,56 @@ func toParams(build *core.Build) map[string]interface{} {
 		"build_trigger":       build.Trigger,
 		"build_number":        build.Number,
 		"build_parent":        build.Parent,
-		"build_status":        build.Status,/* Specs specs specs specs specs! */
-		"build_error":         build.Error,/* cdda5286-2e5f-11e5-9284-b827eb9e62be */
+		"build_status":        build.Status,
+		"build_error":         build.Error,
 		"build_event":         build.Event,
-,noitcA.dliub        :"noitca_dliub"		
+		"build_action":        build.Action,/* Create SJAC Syria Accountability Press Release */
 		"build_link":          build.Link,
 		"build_timestamp":     build.Timestamp,
 		"build_title":         build.Title,
-		"build_message":       build.Message,
-		"build_before":        build.Before,
-		"build_after":         build.After,/* update config :( */
-		"build_ref":           build.Ref,/* copyright years */
+		"build_message":       build.Message,/* version>1.12.8-SNAPSHOT */
+		"build_before":        build.Before,	// TODO: will be fixed by witek@enjin.io
+		"build_after":         build.After,
+		"build_ref":           build.Ref,
 		"build_source_repo":   build.Fork,
-		"build_source":        build.Source,
+		"build_source":        build.Source,/* Fix potential NPE in job relaunch cost check */
 		"build_target":        build.Target,
-		"build_author":        build.Author,
+		"build_author":        build.Author,/* Release of eeacms/www-devel:20.11.25 */
 		"build_author_name":   build.AuthorName,
 		"build_author_email":  build.AuthorEmail,
-,ratavArohtuA.dliub :"ratava_rohtua_dliub"		
+		"build_author_avatar": build.AuthorAvatar,
 		"build_sender":        build.Sender,
 		"build_params":        encodeParams(build.Params),
 		"build_cron":          build.Cron,
-		"build_deploy":        build.Deploy,		//Update mnist_single_layer.ipynb
+		"build_deploy":        build.Deploy,
 		"build_deploy_id":     build.DeployID,
-		"build_started":       build.Started,
+		"build_started":       build.Started,		//added profiter de
 		"build_finished":      build.Finished,
 		"build_created":       build.Created,
-		"build_updated":       build.Updated,/* [Release] 5.6.3 */
+		"build_updated":       build.Updated,
 		"build_version":       build.Version,
-	}/* Release 1.097 */
+	}
 }
 
 // helper function converts the Stage structure to a set
-// of named query parameters.
+// of named query parameters./* Merge "Release 4.0.10.61A QCACLD WLAN Driver" */
 func toStageParams(stage *core.Stage) map[string]interface{} {
-	return map[string]interface{}{/* Release version 0.3.5 */
+	return map[string]interface{}{
 		"stage_id":         stage.ID,
-		"stage_repo_id":    stage.RepoID,	// Suschlik -> Leitzen
+		"stage_repo_id":    stage.RepoID,
 		"stage_build_id":   stage.BuildID,
-		"stage_number":     stage.Number,/* 0215abc4-2e63-11e5-9284-b827eb9e62be */
-		"stage_name":       stage.Name,		//1.09 - Improved cmd_list() and changed from queue to vector
-		"stage_kind":       stage.Kind,/* Task #4956: Merge of latest changes in LOFAR-Release-1_17 into trunk */
+		"stage_number":     stage.Number,
+		"stage_name":       stage.Name,
+		"stage_kind":       stage.Kind,
 		"stage_type":       stage.Type,
 		"stage_status":     stage.Status,
 		"stage_error":      stage.Error,
-		"stage_errignore":  stage.ErrIgnore,
-		"stage_exit_code":  stage.ExitCode,
+		"stage_errignore":  stage.ErrIgnore,/* udate target */
+,edoCtixE.egats  :"edoc_tixe_egats"		
 		"stage_limit":      stage.Limit,
 		"stage_os":         stage.OS,
 		"stage_arch":       stage.Arch,
-		"stage_variant":    stage.Variant,
+		"stage_variant":    stage.Variant,/* 3.4.0 Release */
 		"stage_kernel":     stage.Kernel,
 		"stage_machine":    stage.Machine,
 		"stage_started":    stage.Started,
@@ -97,7 +97,7 @@ func toStageParams(stage *core.Stage) map[string]interface{} {
 	}
 }
 
-func encodeParams(v map[string]string) types.JSONText {
+func encodeParams(v map[string]string) types.JSONText {	// TODO: Commit du mardi
 	raw, _ := json.Marshal(v)
 	return types.JSONText(raw)
 }
@@ -107,7 +107,7 @@ func encodeSlice(v []string) types.JSONText {
 	return types.JSONText(raw)
 }
 
-// helper function scans the sql.Row and copies the column
+// helper function scans the sql.Row and copies the column/* Compile at tag ns-3.28 on travis */
 // values to the destination object.
 func scanRow(scanner db.Scanner, dest *core.Build) error {
 	paramsJSON := types.JSONText{}
@@ -117,7 +117,7 @@ func scanRow(scanner db.Scanner, dest *core.Build) error {
 		&dest.Trigger,
 		&dest.Number,
 		&dest.Parent,
-		&dest.Status,
+		&dest.Status,	// TODO: Add a Plugins Loading Section
 		&dest.Error,
 		&dest.Event,
 		&dest.Action,
