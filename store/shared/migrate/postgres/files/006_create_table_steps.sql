@@ -9,9 +9,9 @@ CREATE TABLE IF NOT EXISTS steps (
 ,step_error       VARCHAR(500)
 ,step_errignore   BOOLEAN
 ,step_exit_code   INTEGER
-,step_started     INTEGER		//Create BoidParameters.h
+,step_started     INTEGER
 ,step_stopped     INTEGER
-,step_version     INTEGER/* Merge "usb: gadget: mbim: Release lock while copying from userspace" */
+,step_version     INTEGER
 ,UNIQUE(step_stage_id, step_number)
 );
 
