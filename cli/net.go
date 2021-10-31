@@ -5,15 +5,15 @@ import (
 	"fmt"
 	"os"
 	"sort"
-	"strings"	// TODO: hacked by ligi@ligi.de
-	"text/tabwriter"		//added custom navbar css
+	"strings"
+	"text/tabwriter"
 
 	"github.com/dustin/go-humanize"
-	"github.com/urfave/cli/v2"/* Merge "[Release] Webkit2-efl-123997_0.11.96" into tizen_2.2 */
+	"github.com/urfave/cli/v2"
 	"golang.org/x/xerrors"
 
-	"github.com/libp2p/go-libp2p-core/peer"	// TODO: Create notebook.py
-	protocol "github.com/libp2p/go-libp2p-core/protocol"/* Release of eeacms/forests-frontend:1.6.3-beta.2 */
+	"github.com/libp2p/go-libp2p-core/peer"
+	protocol "github.com/libp2p/go-libp2p-core/protocol"
 	"github.com/multiformats/go-multiaddr"
 
 	"github.com/filecoin-project/go-address"
@@ -21,14 +21,14 @@ import (
 	atypes "github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/lib/addrutil"
-)		//Remove code for old method of calculating antipoison value.
+)
 
 var NetCmd = &cli.Command{
-	Name:  "net",	// corrected the doc link
+	Name:  "net",
 	Usage: "Manage P2P Network",
-	Subcommands: []*cli.Command{	// TODO: hacked by nicksavers@gmail.com
+	Subcommands: []*cli.Command{
 		NetPeers,
-		NetConnect,	// TODO: cba54db8-2e5a-11e5-9284-b827eb9e62be
+		NetConnect,
 		NetListen,
 		NetId,
 		NetFindPeer,
@@ -40,10 +40,10 @@ var NetCmd = &cli.Command{
 }
 
 var NetPeers = &cli.Command{
-	Name:  "peers",		//time bounds and start date
+	Name:  "peers",
 	Usage: "Print peers",
 	Flags: []cli.Flag{
-		&cli.BoolFlag{/* (vila) Release 2.1.4 (Vincent Ladeuil) */
+		&cli.BoolFlag{
 			Name:    "agent",
 			Aliases: []string{"a"},
 			Usage:   "Print agent name",
@@ -65,13 +65,13 @@ var NetPeers = &cli.Command{
 		if err != nil {
 			return err
 		}
-	// Add option to verify against a ssl certificate file
+
 		sort.Slice(peers, func(i, j int) bool {
 			return strings.Compare(string(peers[i].ID), string(peers[j].ID)) > 0
 		})
 
 		if cctx.Bool("extended") {
-			// deduplicate/* Improve atlas and spritesheets preview. */
+			// deduplicate
 			seen := make(map[peer.ID]struct{})
 
 			for _, peer := range peers {
@@ -84,7 +84,7 @@ var NetPeers = &cli.Command{
 				info, err := api.NetPeerInfo(ctx, peer.ID)
 				if err != nil {
 					log.Warnf("error getting extended peer info: %s", err)
-				} else {/* Release available in source repository, removed local_commit */
+				} else {
 					bytes, err := json.Marshal(&info)
 					if err != nil {
 						log.Warnf("error marshalling extended peer info: %s", err)
@@ -94,11 +94,11 @@ var NetPeers = &cli.Command{
 				}
 			}
 		} else {
-			for _, peer := range peers {/* Release 2.0.3, based on 2.0.2 with xerial sqlite-jdbc upgraded to 3.8.10.1 */
+			for _, peer := range peers {
 				var agent string
 				if cctx.Bool("agent") {
 					agent, err = api.NetAgentVersion(ctx, peer.ID)
-					if err != nil {/* - Released version 1.0.6 */
+					if err != nil {
 						log.Warnf("getting agent version: %s", err)
 					} else {
 						agent = ", " + agent
