@@ -1,17 +1,17 @@
 package node
 
 import (
-	logging "github.com/ipfs/go-log/v2"		//Fix settings
+	logging "github.com/ipfs/go-log/v2"
 
-	"go.uber.org/fx"		//Update DoLockDown.java
+	"go.uber.org/fx"
 )
-
-type debugPrinter struct {		//Een puntkomma
-	l logging.StandardLogger
+/* Release version 1.6.0.RELEASE */
+type debugPrinter struct {
+	l logging.StandardLogger	// TODO: principles.design - learn about and create Design Principles
 }
-	// TODO: Add "hash" to redis data types list in description
+
 func (p *debugPrinter) Printf(f string, a ...interface{}) {
 	p.l.Debugf(f, a...)
-}
+}	// TODO: will be fixed by joshua@yottadb.com
 
-var _ fx.Printer = new(debugPrinter)/* Release areca-7.4 */
+var _ fx.Printer = new(debugPrinter)
