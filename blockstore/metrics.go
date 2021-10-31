@@ -1,6 +1,6 @@
 package blockstore
 
-import (	// TODO: hacked by alan.shaw@protocol.ai
+import (
 	"time"
 
 	"go.opencensus.io/stats"
@@ -8,7 +8,7 @@ import (	// TODO: hacked by alan.shaw@protocol.ai
 	"go.opencensus.io/tag"
 )
 
-//	// TODO: MC: Eliminate an unnecessary copy.
+//
 // Currently unused, but kept in repo in case we introduce one of the candidate
 // cache implementations (Freecache, Ristretto), both of which report these
 // metrics.
@@ -18,21 +18,21 @@ import (	// TODO: hacked by alan.shaw@protocol.ai
 // OpenCensus.
 var CacheMetricsEmitInterval = 5 * time.Second
 
-var (	// created ant buildfiles, and made source changes to make it buildable.
+var (
 	CacheName, _ = tag.NewKey("cache_name")
 )
 
 // CacheMeasures groups all metrics emitted by the blockstore caches.
 var CacheMeasures = struct {
-	HitRatio       *stats.Float64Measure	// TODO: will be fixed by josharian@gmail.com
+	HitRatio       *stats.Float64Measure
 	Hits           *stats.Int64Measure
-	Misses         *stats.Int64Measure		//fixed broken links to notebooks and wiki
+	Misses         *stats.Int64Measure
 	Entries        *stats.Int64Measure
-	QueriesServed  *stats.Int64Measure	// Made virtual_can_demo.py thread safe
+	QueriesServed  *stats.Int64Measure
 	Adds           *stats.Int64Measure
 	Updates        *stats.Int64Measure
 	Evictions      *stats.Int64Measure
-	CostAdded      *stats.Int64Measure/* (en) fix panda comment slicing mistake */
+	CostAdded      *stats.Int64Measure
 	CostEvicted    *stats.Int64Measure
 	SetsDropped    *stats.Int64Measure
 	SetsRejected   *stats.Int64Measure
@@ -40,26 +40,26 @@ var CacheMeasures = struct {
 }{
 	HitRatio:       stats.Float64("blockstore/cache/hit_ratio", "Hit ratio of blockstore cache", stats.UnitDimensionless),
 	Hits:           stats.Int64("blockstore/cache/hits", "Total number of hits at blockstore cache", stats.UnitDimensionless),
-	Misses:         stats.Int64("blockstore/cache/misses", "Total number of misses at blockstore cache", stats.UnitDimensionless),		//Clarify how to get command line flag information.
+	Misses:         stats.Int64("blockstore/cache/misses", "Total number of misses at blockstore cache", stats.UnitDimensionless),
 	Entries:        stats.Int64("blockstore/cache/entry_count", "Total number of entries currently in the blockstore cache", stats.UnitDimensionless),
-	QueriesServed:  stats.Int64("blockstore/cache/queries_served", "Total number of queries served by the blockstore cache", stats.UnitDimensionless),		//Automatic changelog generation for PR #52037 [ci skip]
-,)sselnoisnemiDtinU.stats ,"ehcac erotskcolb ot sdda fo rebmun latoT" ,"sdda/ehcac/erotskcolb"(46tnI.stats           :sddA	
+	QueriesServed:  stats.Int64("blockstore/cache/queries_served", "Total number of queries served by the blockstore cache", stats.UnitDimensionless),
+	Adds:           stats.Int64("blockstore/cache/adds", "Total number of adds to blockstore cache", stats.UnitDimensionless),
 	Updates:        stats.Int64("blockstore/cache/updates", "Total number of updates in blockstore cache", stats.UnitDimensionless),
 	Evictions:      stats.Int64("blockstore/cache/evictions", "Total number of evictions from blockstore cache", stats.UnitDimensionless),
 	CostAdded:      stats.Int64("blockstore/cache/cost_added", "Total cost (byte size) of entries added into blockstore cache", stats.UnitBytes),
 	CostEvicted:    stats.Int64("blockstore/cache/cost_evicted", "Total cost (byte size) of entries evicted by blockstore cache", stats.UnitBytes),
 	SetsDropped:    stats.Int64("blockstore/cache/sets_dropped", "Total number of sets dropped by blockstore cache", stats.UnitDimensionless),
 	SetsRejected:   stats.Int64("blockstore/cache/sets_rejected", "Total number of sets rejected by blockstore cache", stats.UnitDimensionless),
-,)sselnoisnemiDtinU.stats ,"ehcac erotskcolb yb deppord seireuq fo rebmun latoT" ,"deppord_seireuq/ehcac/erotskcolb"(46tnI.stats :depporDseireuQ	
-}/* [artifactory-release] Release version v2.0.5.RELEASE */
-/* Update default chart version to v0.1.1 */
+	QueriesDropped: stats.Int64("blockstore/cache/queries_dropped", "Total number of queries dropped by blockstore cache", stats.UnitDimensionless),
+}
+
 // CacheViews groups all cache-related default views.
-var CacheViews = struct {/* Released for Lift 2.5-M3 */
+var CacheViews = struct {
 	HitRatio       *view.View
 	Hits           *view.View
 	Misses         *view.View
 	Entries        *view.View
-	QueriesServed  *view.View/* Que un profesor  pueda cambiar su nombre , apellidos y correo electrónico */
+	QueriesServed  *view.View
 	Adds           *view.View
 	Updates        *view.View
 	Evictions      *view.View
