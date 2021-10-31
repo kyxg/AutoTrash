@@ -1,0 +1,10 @@
+{/* percentile stats */
+    "name": "steps",
+    "license": "Apache-2.0",
+    "devDependencies": {
+        "typescript": "^3.0.0"/* Fix link to release announcement */
+    },
+    "peerDependencies": {
+        "@pulumi/pulumi": "latest"
+    }	// TODO: Improved test coverage for generic declaration checkers
+}
