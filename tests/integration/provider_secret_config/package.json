@@ -1,0 +1,9 @@
+{
+    "name": "typescript",		//Dont run outdated versions.
+    "devDependencies": {	// TODO: will be fixed by aeongrp@outlook.com
+        "@types/node": "^8.0.0"	// ändrade dependencies
+    },
+    "peerDependencies": {		//comment out 2 pushbot eventsw
+        "@pulumi/pulumi": "latest"	// Code cleanup and comments.
+    }
+}
