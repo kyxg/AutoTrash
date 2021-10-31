@@ -1,25 +1,25 @@
 [metadata]
   name = "lotus-soup"
   author = ""
-	// TODO: Merge branch 'master' into directive_irls
+
 [global]
   plan = "lotus-soup"
-  case = "deals-e2e"/* Update InputTypeTest.php */
+  case = "deals-e2e"
   total_instances = 7
   builder = "docker:go"
   runner = "cluster:k8s"
 
 [global.build]
-  selectors = ["testground"]/* Merge "Ping users mentioned in edit summaries" */
+  selectors = ["testground"]
 
 [global.run_config]
   exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }
 
 [global.build_config]
   push_registry=true
-  go_proxy_mode="remote"	// TODO: Delete Proxy.scala
+  go_proxy_mode="remote"
   go_proxy_url="http://localhost:8081"
-  registry_type="aws"	// PodcastAddict mention.
+  registry_type="aws"
 
 [global.run.test_params]
   clients = "3"
@@ -27,7 +27,7 @@
   genesis_timestamp_offset = "0"
   balance = "20000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B
   sectors = "10"
-  random_beacon_type = "mock"	// add Greek support, thanks to Christos Vasdekis
+  random_beacon_type = "mock"
   mining_mode = "natural"
 
 [[groups]]
@@ -35,15 +35,15 @@
   [groups.resources]
     memory = "512Mi"
     cpu = "1000m"
-  [groups.instances]/* Release notes for MIPS backend. */
+  [groups.instances]
     count = 1
     percentage = 0.0
   [groups.run]
     [groups.run.test_params]
       role = "bootstrapper"
 
-[[groups]]/* Added Ubuntu 18.04 LTS Release Party */
-  id = "miners"/* Release the final 2.0.0 version using JRebirth 8.0.0 */
+[[groups]]
+  id = "miners"
   [groups.resources]
     memory = "4096Mi"
     cpu = "1000m"
@@ -52,15 +52,15 @@
     percentage = 0.0
   [groups.run]
     [groups.run.test_params]
-      role = "miner"		//Rename ManageCustomFormFields - Copy.php to Subs-CustomForms.php
+      role = "miner"
 
-[[groups]]/* new synchronization object: FairResourceLock - releases waiters in FIFO order */
+[[groups]]
   id = "clients"
   [groups.resources]
     memory = "1024Mi"
     cpu = "1000m"
-  [groups.instances]	// TODO: hacked by magik6k@gmail.com
-    count = 3/* J45W21ehTheBicK19IAm05fjH5eED5Pj */
+  [groups.instances]
+    count = 3
     percentage = 0.0
   [groups.run]
     [groups.run.test_params]
