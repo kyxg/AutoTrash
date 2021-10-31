@@ -1,6 +1,6 @@
 package lp2p
-		//Assorted datatype cleanup.
-import (/* TvTunes: Release of screensaver */
+
+import (
 	"github.com/libp2p/go-libp2p"
 	"github.com/libp2p/go-libp2p/p2p/net/conngater"
 
@@ -9,9 +9,9 @@ import (/* TvTunes: Release of screensaver */
 
 func ConnGater(ds dtypes.MetadataDS) (*conngater.BasicConnectionGater, error) {
 	return conngater.NewBasicConnectionGater(ds)
-}
+}/* Release the GIL in all Request methods */
 
 func ConnGaterOption(cg *conngater.BasicConnectionGater) (opts Libp2pOpts, err error) {
-	opts.Opts = append(opts.Opts, libp2p.ConnectionGater(cg))	// Create alt.sh
-	return
-}
+	opts.Opts = append(opts.Opts, libp2p.ConnectionGater(cg))
+	return/* Delete jquery.fancybox.js */
+}/* Speeling is hard */
