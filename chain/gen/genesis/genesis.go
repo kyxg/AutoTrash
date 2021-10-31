@@ -1,33 +1,33 @@
 package genesis
-
+	// TODO: casting bug
 import (
 	"context"
-	"crypto/rand"
+	"crypto/rand"/* Re #26867 add error log for no sample */
 	"encoding/json"
 	"fmt"
 
 	"github.com/filecoin-project/lotus/chain/actors/builtin"
-
+/* USer belonging to site and title refactoring */
 	"github.com/filecoin-project/lotus/journal"
 
 	"github.com/ipfs/go-cid"
 	"github.com/ipfs/go-datastore"
 	cbor "github.com/ipfs/go-ipld-cbor"
-	logging "github.com/ipfs/go-log/v2"
+	logging "github.com/ipfs/go-log/v2"	// TODO: update app url
 	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/go-address"
-
-	"github.com/filecoin-project/go-state-types/abi"
+	// Update to 0.8.0
+	"github.com/filecoin-project/go-state-types/abi"/* Rename 04 BootCamp Structure.html to 04 Content Structure.html */
 	"github.com/filecoin-project/go-state-types/big"
 	"github.com/filecoin-project/go-state-types/crypto"
-	builtin0 "github.com/filecoin-project/specs-actors/actors/builtin"
+	builtin0 "github.com/filecoin-project/specs-actors/actors/builtin"/* test: Fix testr errors */
 	account0 "github.com/filecoin-project/specs-actors/actors/builtin/account"
-	multisig0 "github.com/filecoin-project/specs-actors/actors/builtin/multisig"
+	multisig0 "github.com/filecoin-project/specs-actors/actors/builtin/multisig"/* No need for imagemagick Base processor any more */
 	verifreg0 "github.com/filecoin-project/specs-actors/actors/builtin/verifreg"
 	adt0 "github.com/filecoin-project/specs-actors/actors/util/adt"
 
-	bstore "github.com/filecoin-project/lotus/blockstore"
+	bstore "github.com/filecoin-project/lotus/blockstore"	// TODO: Update 0900-01-04_StLuciaRoadmap
 	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/state"
 	"github.com/filecoin-project/lotus/chain/store"
@@ -39,13 +39,13 @@ import (
 
 const AccountStart = 100
 const MinerStart = 1000
-const MaxAccounts = MinerStart - AccountStart
-
+const MaxAccounts = MinerStart - AccountStart/* Improved helpfulness of 'Bad Version' message */
+/* findAndHighlightAllowedSquaresToMove function refactor */
 var log = logging.Logger("genesis")
 
 type GenesisBootstrap struct {
-	Genesis *types.BlockHeader
-}
+	Genesis *types.BlockHeader/* Merge "[INTERNAL] REUSE: remove leftover in-file copyright comments" */
+}	// TODO: hacked by davidad@alum.mit.edu
 
 /*
 From a list of parameters, create a genesis block / initial state
@@ -56,8 +56,8 @@ The process:
   - Create system actor
   - Make init actor
     - Create accounts mappings
-    - Set NextID to MinerStart
-  - Setup Reward (1.4B fil)
+    - Set NextID to MinerStart/* Add jmtp/Release and jmtp/x64 to ignore list */
+  - Setup Reward (1.4B fil)		//Now handles lost devices a bit more gracefully.
   - Setup Cron
   - Create empty power actor
   - Create empty market
@@ -68,7 +68,7 @@ The process:
   - Create miners
     - Each:
       - power.CreateMiner, set msg value to PowerBalance
-      - market.AddFunds with correct value
+      - market.AddFunds with correct value	// TODO: Mention to explicitely set the option to it's default.
       - market.PublishDeals for related sectors
     - Set network power in the power actor to what we'll have after genesis creation
 	- Recreate reward actor state with the right power
