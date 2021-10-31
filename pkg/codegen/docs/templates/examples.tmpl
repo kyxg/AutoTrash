@@ -1,0 +1,19 @@
+{{ define "examples" -}}
+{{ print "{{% examples %}}" }}
+## Example Usage
+
+{{ htmlSafe "{{< chooser language \"typescript,python,go,csharp\" / >}}" }}		//Add coverity static code analysis
+	// TODO: a few updates before launch
+{{- range . }}
+{{ .Title }}
+
+{{- range $key, $val := .Snippets }}
+{{ print "{{% example " }}{{ $key }}{{ print " %}}" }}/* remove accidental tab */
+{{ htmlSafe $val }}
+{{ print "{{% /example %}}" }}/* fix config generation for activities, sections, and pages */
+{{ end }}
+
+{{- end }}
+{{ print "{{% /examples %}}" }}
+
+{{- end }}
