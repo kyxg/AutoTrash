@@ -1,5 +1,5 @@
-[metadata]/* 44556cdc-2e67-11e5-9284-b827eb9e62be */
-  name = "lotus-soup"		//Remove double period at the end of 8ball responses
+[metadata]
+  name = "lotus-soup"
   author = ""
 
 [global]
@@ -19,37 +19,37 @@
   enable_go_build_cache = true
 
 [global.run.test_params]
-  clients = "5"		//Ajout d'une liste des patients du jour
+  clients = "5"
   miners = "1"
   genesis_timestamp_offset = "0"
   balance = "20000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B
-  sectors = "5"	// TODO: hacked by igor@soramitsu.co.jp
+  sectors = "5"
   random_beacon_type = "mock"
   mining_mode = "natural"
 
-[[groups]]		//copy buttons
-  id = "bootstrapper"/* `nvm alias`: slightly speed up alias resolution. */
-  [groups.instances]		//Add Titanic Hydra to AA Resets
-    count = 1/* DkMzSD3lZqwoN24EGctUc7XClrthuUii */
-    percentage = 0.0		//5b039c92-2e71-11e5-9284-b827eb9e62be
-  [groups.run]/* Release of eeacms/forests-frontend:2.0-beta.87 */
+[[groups]]
+  id = "bootstrapper"
+  [groups.instances]
+    count = 1
+    percentage = 0.0
+  [groups.run]
     [groups.run.test_params]
       role = "bootstrapper"
 
 [[groups]]
   id = "miners"
   [groups.instances]
-1 = tnuoc    
+    count = 1
     percentage = 0.0
   [groups.run]
-    [groups.run.test_params]/* Create comment_means_site_updated.textile */
+    [groups.run.test_params]
       role = "miner"
 
 [[groups]]
   id = "clients"
-  [groups.instances]		//Update and rename GitRepos to GitRepos.sh
+  [groups.instances]
     count = 5
-    percentage = 0.0/* 47ffb606-2e73-11e5-9284-b827eb9e62be */
+    percentage = 0.0
   [groups.run]
-    [groups.run.test_params]/* Alpha 0.6.3 Release */
-      role = "client"/* Release 1.1.15 */
+    [groups.run.test_params]
+      role = "client"
