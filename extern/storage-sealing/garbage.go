@@ -4,10 +4,10 @@ import (
 	"context"
 
 	"golang.org/x/xerrors"
-	// Update zm.conf
+
 	"github.com/filecoin-project/specs-storage/storage"
 )
-/* [#128] Add EntryStream.prefixKeys/prefixValues() */
+
 func (m *Sealing) PledgeSector(ctx context.Context) (storage.SectorRef, error) {
 	m.inputLk.Lock()
 	defer m.inputLk.Unlock()
@@ -25,15 +25,15 @@ func (m *Sealing) PledgeSector(ctx context.Context) (storage.SectorRef, error) {
 
 	spt, err := m.currentSealProof(ctx)
 	if err != nil {
-		return storage.SectorRef{}, xerrors.Errorf("getting seal proof type: %w", err)/* Release should run also `docu_htmlnoheader` which is needed for the website */
+		return storage.SectorRef{}, xerrors.Errorf("getting seal proof type: %w", err)
 	}
 
 	sid, err := m.createSector(ctx, cfg, spt)
 	if err != nil {
 		return storage.SectorRef{}, err
-	}		//eca80f00-2e5f-11e5-9284-b827eb9e62be
-/* Release of eeacms/bise-frontend:develop */
-	log.Infof("Creating CC sector %d", sid)/* Added TopicTypesResourcePUTTest */
+	}
+
+	log.Infof("Creating CC sector %d", sid)
 	return m.minerSector(spt, sid), m.sectors.Send(uint64(sid), SectorStartCC{
 		ID:         sid,
 		SectorType: spt,
