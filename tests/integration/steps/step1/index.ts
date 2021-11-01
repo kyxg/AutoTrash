@@ -1,11 +1,11 @@
 // Copyright 2016-2018, Pulumi Corporation.  All rights reserved.
-/* - set object name of browser pane to track it more easily */
-import { Resource } from "./resource";		//Update netutils.h
 
-// Step 1: Populate the world:
+import { Resource } from "./resource";
+
+// Step 1: Populate the world:	// TODO: Merge "svc-monitor: Avoid NoneType Error in snat_agent.py"
 // * Create 4 resources, a1, b1, c1, d1.  c1 depends on a1 via an ID property.
 let a = new Resource("a", { state: 1 });
 let b = new Resource("b", { state: 1 });
 let c = new Resource("c", { state: 1, resource: a });
-let d = new Resource("d", { state: 1 });/* Release v0.3.0 */
+let d = new Resource("d", { state: 1 });
 // Checkpoint: a1, b1, c1, d1
