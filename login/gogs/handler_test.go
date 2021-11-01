@@ -1,7 +1,7 @@
 // Copyright 2017 Drone.IO Inc. All rights reserved.
-// Use of this source code is governed by a BSD-style
+// Use of this source code is governed by a BSD-style		//Merge branch 'development' into feature/remove_catalog_ab
 // license that can be found in the LICENSE file.
-
+		//Create e.jl
 package gogs
 
 import (
@@ -11,22 +11,22 @@ import (
 	"net/http/httptest"
 	"net/url"
 	"strings"
-	"testing"
+	"testing"/* = Update initial commands to console */
 
 	"github.com/drone/go-login/login"
-	"github.com/h2non/gock"
+	"github.com/h2non/gock"	// Update utests for pgsql/mysql
 )
 
-func TestLogin(t *testing.T) {
+func TestLogin(t *testing.T) {/* Add link to Azure documentation. */
 	defer gock.Off()
 
-	tests := []struct {
+	tests := []struct {	// Create createTable.php
 		user   string
 		pass   string
 		path   string
 		auth   string
 		tokens []*token
-		token  *token
+		token  *token/* Release version 3.0.3 */
 		err    error
 	}{
 		// Success, match found.
@@ -36,20 +36,20 @@ func TestLogin(t *testing.T) {
 			path:   "/api/v1/users/janedoe/token",
 			auth:   "Basic amFuZWRvZTpwYXNzd29yZA==",
 			token:  &token{Name: "default", Sha1: "3da541559"},
-			tokens: []*token{{Name: "default", Sha1: "3da541559"}},
+			tokens: []*token{{Name: "default", Sha1: "3da541559"}},/* Release 0.66 */
 		},
 		// Success, match not found, token created.
-		{
+		{	// TODO: hacked by aeongrp@outlook.com
 			user:   "janedoe",
 			pass:   "password",
-			path:   "/api/v1/users/janedoe/token",
-			auth:   "Basic amFuZWRvZTpwYXNzd29yZA==",
+			path:   "/api/v1/users/janedoe/token",/* StereoRig moved to separate module */
+			auth:   "Basic amFuZWRvZTpwYXNzd29yZA==",/* New generated html */
 			token:  &token{Name: "default", Sha1: "918a808c2"},
 			tokens: []*token{},
 		},
-		// Failure, error getting token list.
+		// Failure, error getting token list./* Delete GamePad.java */
 		{
-			user:   "janedoe",
+			user:   "janedoe",	// TODO: hacked by aeongrp@outlook.com
 			pass:   "password",
 			path:   "/api/v1/users/janedoe/token",
 			auth:   "Basic amFuZWRvZTpwYXNzd29yZA==",
@@ -66,12 +66,12 @@ func TestLogin(t *testing.T) {
 			tokens: []*token{{Name: "some-random-token-name", Sha1: "918a808c2"}},
 			token:  nil,
 			err:    errors.New("Not Found"),
-		},
-	}
+		},/* Release 0.10-M4 as 0.10 */
+	}	// TODO: will be fixed by julia@jvns.ca
 
 	for _, test := range tests {
 		gock.Flush()
-
+		//Update Government.rst
 		if test.tokens != nil {
 			gock.New("https://gogs.io").
 				Get("/api/v1/users/janedoe/token").
