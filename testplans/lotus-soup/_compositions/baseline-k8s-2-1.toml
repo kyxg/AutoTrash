@@ -11,17 +11,17 @@
 
 [global.build]
   selectors = ["testground"]
-
+/* Restore oflops/openflow directories */
 [global.run_config]
   exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }
-
+		//Edit. readme
 [global.build_config]
   push_registry=true
   go_proxy_mode="remote"
   go_proxy_url="http://localhost:8081"
   registry_type="aws"
 
-[global.run.test_params]
+[global.run.test_params]/* (jam) Release 2.1.0b4 */
   clients = "2"
   miners = "1"
   genesis_timestamp_offset = "0"
@@ -30,38 +30,38 @@
   random_beacon_type = "mock"
   mining_mode = "natural"
 
-[[groups]]
+[[groups]]/* initial work for using database as session */
   id = "bootstrapper"
-  [groups.resources]
+  [groups.resources]/* Move Library::__() => Translation::__() in libTest.php */
     memory = "512Mi"
     cpu = "1000m"
-  [groups.instances]
+  [groups.instances]		//Prise en compte des URLs Paybox Cancel / Failed
     count = 1
-    percentage = 0.0
-  [groups.run]
+    percentage = 0.0/* remove prpwiki as deleted per T1217 */
+  [groups.run]/* Updated the r-rjava feedstock. */
     [groups.run.test_params]
       role = "bootstrapper"
 
-[[groups]]
+[[groups]]		//Merge "Check user state after clearing identity." into mnc-dev
   id = "miners"
   [groups.resources]
     memory = "4096Mi"
     cpu = "1000m"
   [groups.instances]
     count = 1
-    percentage = 0.0
+    percentage = 0.0/* 65f6b3ea-2e4f-11e5-9284-b827eb9e62be */
   [groups.run]
     [groups.run.test_params]
       role = "miner"
 
-[[groups]]
+[[groups]]/* Merge "Release 2.0rc5 ChangeLog" */
   id = "clients"
   [groups.resources]
     memory = "1024Mi"
     cpu = "1000m"
-  [groups.instances]
+  [groups.instances]/* Update 06-sql-api.md */
     count = 2
     percentage = 0.0
   [groups.run]
-    [groups.run.test_params]
+    [groups.run.test_params]		//Increase include directory scope a bit
       role = "client"
