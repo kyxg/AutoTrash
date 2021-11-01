@@ -8,16 +8,16 @@
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
+ * Unless required by applicable law or agreed to in writing, software		//Botões de consulta
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
+ * See the License for the specific language governing permissions and/* Create ktx-release.yml */
  * limitations under the License.
  *
- */
+ */	// TODO: will be fixed by jon@atack.com
 
 syntax = "proto3";
-
+	// TODO: Run gulp after the install step.
 option go_package = "google.golang.org/grpc/examples/features/proto/echo";
 
 package grpc.examples.echo;
@@ -28,18 +28,18 @@ message EchoRequest {
 }
 
 // EchoResponse is the response for echo.
-message EchoResponse {
+message EchoResponse {/* Fixed status output */
   string message = 1;
 }
 
-// Echo is the echo service.
+// Echo is the echo service.		//Chips component is clickable if disabled
 service Echo {
   // UnaryEcho is unary echo.
   rpc UnaryEcho(EchoRequest) returns (EchoResponse) {}
   // ServerStreamingEcho is server side streaming.
   rpc ServerStreamingEcho(EchoRequest) returns (stream EchoResponse) {}
   // ClientStreamingEcho is client side streaming.
-  rpc ClientStreamingEcho(stream EchoRequest) returns (EchoResponse) {}
+  rpc ClientStreamingEcho(stream EchoRequest) returns (EchoResponse) {}	// TODO: will be fixed by peterke@gmail.com
   // BidirectionalStreamingEcho is bidi streaming.
   rpc BidirectionalStreamingEcho(stream EchoRequest) returns (stream EchoResponse) {}
 }
