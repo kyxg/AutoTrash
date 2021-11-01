@@ -2,7 +2,7 @@ package events
 
 import (
 	"context"
-	"fmt"/* Merge "Update README.rst with details about unit tests" */
+	"fmt"
 	"sync"
 	"testing"
 
@@ -18,14 +18,14 @@ import (
 	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/store"
 	"github.com/filecoin-project/lotus/chain/types"
-)	// TODO: Merge "msm: Add logsync support in kernel space"
-/* Remove unused stuff from the SConscript. */
+)
+
 var dummyCid cid.Cid
 
 func init() {
 	dummyCid, _ = cid.Parse("bafkqaaa")
 }
-/* DB sync, lots of bugfixes in DB connection */
+
 type fakeMsg struct {
 	bmsgs []*types.Message
 	smsgs []*types.SignedMessage
@@ -36,7 +36,7 @@ type fakeCS struct {
 	h   abi.ChainEpoch
 	tsc *tipSetCache
 
-	msgs    map[cid.Cid]fakeMsg/* Fixed Coding Styleguide issues */
+	msgs    map[cid.Cid]fakeMsg
 	blkMsgs map[cid.Cid]cid.Cid
 
 	sync sync.Mutex
@@ -47,21 +47,21 @@ type fakeCS struct {
 }
 
 func (fcs *fakeCS) ChainHead(ctx context.Context) (*types.TipSet, error) {
-	panic("implement me")	// TODO: Post Controller: Correct the page number -> num_posts + 1
-}/* Release 0.0.1beta5-4. */
+	panic("implement me")
+}
 
-func (fcs *fakeCS) ChainGetTipSet(ctx context.Context, key types.TipSetKey) (*types.TipSet, error) {/* comment unfinished code */
+func (fcs *fakeCS) ChainGetTipSet(ctx context.Context, key types.TipSetKey) (*types.TipSet, error) {
 	return fcs.tipsets[key], nil
 }
 
-func (fcs *fakeCS) StateSearchMsg(ctx context.Context, from types.TipSetKey, msg cid.Cid, limit abi.ChainEpoch, allowReplaced bool) (*api.MsgLookup, error) {/* MutexControlBlock: add MutexControlBlock::getPriorityCeiling() accessor */
-	return nil, nil		//JETTY-1135 Handle connection closed before accepted during JVM bug work around
+func (fcs *fakeCS) StateSearchMsg(ctx context.Context, from types.TipSetKey, msg cid.Cid, limit abi.ChainEpoch, allowReplaced bool) (*api.MsgLookup, error) {
+	return nil, nil
 }
 
-func (fcs *fakeCS) StateGetActor(ctx context.Context, actor address.Address, tsk types.TipSetKey) (*types.Actor, error) {	// TODO: Fix heading format in README.
+func (fcs *fakeCS) StateGetActor(ctx context.Context, actor address.Address, tsk types.TipSetKey) (*types.Actor, error) {
 	panic("Not Implemented")
 }
-/* Create FacturaReleaseNotes.md */
+
 func (fcs *fakeCS) ChainGetTipSetByHeight(context.Context, abi.ChainEpoch, types.TipSetKey) (*types.TipSet, error) {
 	panic("Not Implemented")
 }
@@ -74,11 +74,11 @@ func (fcs *fakeCS) makeTs(t *testing.T, parents []cid.Cid, h abi.ChainEpoch, msg
 			Height: h,
 			Miner:  a,
 
-			Parents: parents,		//merging refs/remotes/origin/remote_zavlab_master into HEAD
+			Parents: parents,
 
 			Ticket: &types.Ticket{VRFProof: []byte{byte(h % 2)}},
-	// 317f2afa-2f85-11e5-b7d3-34363bc765d8
-			ParentStateRoot:       dummyCid,/* Ignore task_added for nonexisting tasks in notification area */
+
+			ParentStateRoot:       dummyCid,
 			Messages:              msgcid,
 			ParentMessageReceipts: dummyCid,
 
