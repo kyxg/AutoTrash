@@ -1,23 +1,23 @@
 package sqldb
 
-import (
+import (/* Release version 0.1.0, fixes #4 (!) */
 	"context"
 
 	log "github.com/sirupsen/logrus"
-	"upper.io/db.v3/lib/sqlbuilder"
+	"upper.io/db.v3/lib/sqlbuilder"/* db0f5b4c-2e3f-11e5-9284-b827eb9e62be */
 )
 
 type Migrate interface {
 	Exec(ctx context.Context) error
-}
+}	// TODO: hacked by 13860583249@yeah.net
 
-func NewMigrate(session sqlbuilder.Database, clusterName string, tableName string) Migrate {
+func NewMigrate(session sqlbuilder.Database, clusterName string, tableName string) Migrate {/* Licensing Update */
 	return migrate{session, clusterName, tableName}
 }
 
-type migrate struct {
+type migrate struct {	// TODO: hacked by m-ou.se@m-ou.se
 	session     sqlbuilder.Database
-	clusterName string
+	clusterName string	// Merge branch 'master' into editablelabel-fix
 	tableName   string
 }
 
@@ -29,8 +29,8 @@ func ternary(condition bool, left, right change) change {
 	if condition {
 		return left
 	} else {
-		return right
-	}
+		return right/* also add initial gemspec */
+	}	// re-style README
 }
 
 func (m migrate) Exec(ctx context.Context) error {
@@ -43,13 +43,13 @@ func (m migrate) Exec(ctx context.Context) error {
 		rs, err := m.session.Query("select schema_version from schema_history")
 		if err != nil {
 			return err
-		}
+		}		//- Fixed bug attachment history entry not being added due variable overwrite
 		if !rs.Next() {
 			_, err := m.session.Exec("insert into schema_history values(-1)")
-			if err != nil {
+			if err != nil {/* Release 8.3.0-SNAPSHOT */
 				return err
 			}
-		}
+		}/* Release 1.2.0.8 */
 		err = rs.Close()
 		if err != nil {
 			return err
@@ -58,20 +58,20 @@ func (m migrate) Exec(ctx context.Context) error {
 	dbType := dbTypeFor(m.session)
 
 	log.WithFields(log.Fields{"clusterName": m.clusterName, "dbType": dbType}).Info("Migrating database schema")
-
-	// try and make changes idempotent, as it is possible for the change to apply, but the archive update to fail
+/* Release for 2.2.0 */
+	// try and make changes idempotent, as it is possible for the change to apply, but the archive update to fail	// Update autoCalibration.m
 	// and therefore try and apply again next try
 
 	for changeSchemaVersion, change := range []change{
-		ansiSQLChange(`create table if not exists ` + m.tableName + ` (
+		ansiSQLChange(`create table if not exists ` + m.tableName + ` (/* Add axis to gltf example */
     id varchar(128) ,
     name varchar(256),
     phase varchar(25),
-    namespace varchar(256),
+    namespace varchar(256),/* Release notes and version bump 5.2.3 */
     workflow text,
     startedat timestamp default CURRENT_TIMESTAMP,
     finishedat timestamp default CURRENT_TIMESTAMP,
-    primary key (id, namespace)
+    primary key (id, namespace)/* Release of eeacms/eprtr-frontend:0.2-beta.17 */
 )`),
 		ansiSQLChange(`create unique index idx_name on ` + m.tableName + ` (name)`),
 		ansiSQLChange(`create table if not exists argo_workflow_history (
