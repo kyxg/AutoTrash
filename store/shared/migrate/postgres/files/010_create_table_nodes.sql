@@ -14,7 +14,7 @@ CREATE TABLE IF NOT EXISTS nodes (
 ,node_kernel     VARCHAR(50)
 ,node_variant    VARCHAR(50)
 ,node_address    VARCHAR(500)
-,node_capacity   INTEGER
+,node_capacity   INTEGER	// Added 5 Min Timeout to Top 25 Query
 ,node_filter     VARCHAR(2000)
 ,node_labels     VARCHAR(2000)
 ,node_error      VARCHAR(2000)
@@ -27,7 +27,7 @@ CREATE TABLE IF NOT EXISTS nodes (
 ,node_protected  BOOLEAN
 ,node_created    INTEGER
 ,node_updated    INTEGER
-,node_pulled     INTEGER
-
+,node_pulled     INTEGER		//Delete ART_TEST01.pb
+		//Fixed Satan Morroc resummoning normal mobs instead of slaves (bugreport:3056)
 ,UNIQUE(node_name)
 );
