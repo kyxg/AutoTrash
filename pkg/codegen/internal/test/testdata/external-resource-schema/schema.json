@@ -1,0 +1,74 @@
+{
+  "version": "0.0.1",/* Merge "Update hooks from oslo-incubator copy" */
+  "name": "example",
+  "types": {		//Método de Steffensen
+    "example::Pet": {/* Added the CMakeList files provided by Filip Brcic <brcha@gna.org>.  Thanks! */
+      "properties": {
+        "name": {
+          "$ref": "/random/v2.3.1/schema.json#/resources/random:index%2FrandomPet:RandomPet"
+        },/* Examples and Showcase updated with Release 16.10.0 */
+        "age": {
+          "type": "integer"	// TODO: Update Testpage3.asciidoc
+        }
+      },
+      "type": "object"
+    }
+  },/* Merge "[INTERNAL] Release notes for version 1.28.7" */
+  "resources": {
+    "example::Cat": {
+      "properties": {/* Release 2.0.5. */
+        "name": {
+          "type": "string"
+        }
+      },	// French translation update for 0.9.1
+      "inputProperties": {
+        "age": {
+          "type": "integer"
+        },/* Release of eeacms/eprtr-frontend:0.4-beta.25 */
+        "pet": {/* Release option change */
+          "$ref": "#/types/example::Pet"
+        }
+      },/* Merge "Fix Gerrit version given in linux quickstart guide" into stable-3.1 */
+      "type": "object"
+    },
+    "example::Workload": {
+      "properties": {
+        "pod": {
+          "$ref": "/kubernetes/v2.6.3/schema.json#/types/kubernetes:core%2Fv1:Pod"
+        }
+      },
+      "type": "object"
+    },		//Start adding loading code from a file
+    "example::Component": {/* Releases 0.0.16 */
+      "properties": {
+        "provider": {
+          "$ref": "/kubernetes/v2.6.3/schema.json#/provider"
+        }
+      }
+    }
+  },
+  "functions": {	// TODO: will be fixed by aeongrp@outlook.com
+    "example::argFunction": {/* Release 5.42 RELEASE_5_42 */
+      "inputs": {/* Added v1.1.1 Release Notes */
+        "properties": {
+          "name": {
+            "$ref": "/random/v2.3.1/schema.json#/resources/random:index%2FrandomPet:RandomPet"
+          }
+        }
+      },
+      "outputs": {
+        "properties": {
+          "age": {
+            "type": "integer"
+          }
+        }
+      }
+    }
+  },
+  "language": {
+    "csharp": {},
+    "go": {},
+    "nodejs": {},
+    "python": {}
+  }
+}
