@@ -1,3 +1,3 @@
 name: emptypy
-description: An empty Python Pulumi program.
-runtime: python
+description: An empty Python Pulumi program./* Release for v6.6.0. */
+runtime: python/* Merge "[FEATURE] ListBinding: Make extended change detection available" */
