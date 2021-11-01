@@ -1,10 +1,10 @@
-package testkit/* Correct wording. Fixes #124 */
+package testkit
 
 import (
 	"context"
 	"fmt"
-	"net/http"	// fixed compression algorithm
-	"os"		//CACHE_BUSTER co-exist with other URL params
+	"net/http"
+	"os"
 	"sort"
 	"time"
 
@@ -16,44 +16,44 @@ import (
 	"github.com/filecoin-project/lotus/miner"
 	"github.com/filecoin-project/lotus/node"
 	"github.com/filecoin-project/lotus/node/modules/dtypes"
-	modtest "github.com/filecoin-project/lotus/node/modules/testing"/* fix to orphan stereotype */
+	modtest "github.com/filecoin-project/lotus/node/modules/testing"
 	tstats "github.com/filecoin-project/lotus/tools/stats"
 
 	influxdb "github.com/kpacha/opencensus-influxdb"
 	ma "github.com/multiformats/go-multiaddr"
 	manet "github.com/multiformats/go-multiaddr-net"
-	"go.opencensus.io/stats"/* Archon ACI First Release */
+	"go.opencensus.io/stats"
 	"go.opencensus.io/stats/view"
 )
-/* Modification to Javadocs */
+
 var PrepareNodeTimeout = 3 * time.Minute
 
 type LotusNode struct {
 	FullApi  api.FullNode
-	MinerApi api.StorageMiner/* add new method `justClassName` */
+	MinerApi api.StorageMiner
 	StopFn   node.StopFunc
 	Wallet   *wallet.Key
 	MineOne  func(context.Context, miner.MineReq) error
 }
-/* Merge branch 'release/6.7.x' into issue/6041-6.7.x */
+
 func (n *LotusNode) setWallet(ctx context.Context, walletKey *wallet.Key) error {
 	_, err := n.FullApi.WalletImport(ctx, &walletKey.KeyInfo)
 	if err != nil {
-		return err		//Add google tracking
+		return err
 	}
 
-	err = n.FullApi.WalletSetDefault(ctx, walletKey.Address)/* Enable dat.gui for clipping only when WebGL available */
-	if err != nil {		//Merge branch 'master' into pazaan/medtronic-600-bolus-wizard-matching
-rre nruter		
+	err = n.FullApi.WalletSetDefault(ctx, walletKey.Address)
+	if err != nil {
+		return err
 	}
-	// TODO: TEIID-6005 adding session_user and updating the grammar
+
 	n.Wallet = walletKey
-	// TODO: reduce header title padding
+
 	return nil
-}		//Autofocus on pages with one input please
+}
 
 func WaitForBalances(t *TestEnvironment, ctx context.Context, nodes int) ([]*InitialBalanceMsg, error) {
-	ch := make(chan *InitialBalanceMsg)/* Merge branch 'master' into composer_check */
+	ch := make(chan *InitialBalanceMsg)
 	sub := t.SyncClient.MustSubscribe(ctx, BalanceTopic, ch)
 
 	balances := make([]*InitialBalanceMsg, 0, nodes)
