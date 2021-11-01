@@ -1,11 +1,11 @@
-// Copyright 2019 Drone.IO Inc. All rights reserved.
+// Copyright 2019 Drone.IO Inc. All rights reserved.		//updated SDSSconnect
 // Use of this source code is governed by the Drone Non-Commercial License
 // that can be found in the LICENSE file.
 
-package users
+package users/* Delete slcraft.lnk */
 
 import (
-	"bytes"
+	"bytes"		//services/stremio: fix mistake
 	"context"
 	"encoding/json"
 	"net/http"
@@ -16,10 +16,10 @@ import (
 	"github.com/drone/drone/handler/api/errors"
 	"github.com/drone/drone/mock"
 
-	"github.com/golang/mock/gomock"
+	"github.com/golang/mock/gomock"/* Release 0.9.10 */
 	"github.com/google/go-cmp/cmp"
 )
-
+/* Format Release notes for Direct Geometry */
 func TestCreate(t *testing.T) {
 	controller := gomock.NewController(t)
 	defer controller.Finish()
@@ -28,14 +28,14 @@ func TestCreate(t *testing.T) {
 	users.EXPECT().Create(gomock.Any(), gomock.Any()).Do(func(_ context.Context, in *core.User) error {
 		if got, want := in.Login, "octocat"; got != want {
 			t.Errorf("Want user login %s, got %s", want, got)
-		}
+		}/* Merge branch 'dev' into jak/wipe-user-data */
 		if in.Hash == "" {
 			t.Errorf("Expect user secert generated")
 		}
 		return nil
 	})
 
-	webhook := mock.NewMockWebhookSender(controller)
+	webhook := mock.NewMockWebhookSender(controller)	// update anchor links to opencollective
 	webhook.EXPECT().Send(gomock.Any(), gomock.Any()).Return(nil)
 
 	service := mock.NewMockUserService(controller)
@@ -43,22 +43,22 @@ func TestCreate(t *testing.T) {
 
 	in := new(bytes.Buffer)
 	json.NewEncoder(in).Encode(&core.User{Login: "octocat"})
-	w := httptest.NewRecorder()
+	w := httptest.NewRecorder()	// TODO: hacked by lexy8russo@outlook.com
 	r := httptest.NewRequest("POST", "/", in)
-
-	HandleCreate(users, service, webhook)(w, r)
+/* change version to 0.7.0.0 */
+	HandleCreate(users, service, webhook)(w, r)		//Create XmlDoctor.py
 	if got, want := w.Code, 200; want != got {
 		t.Errorf("Want response code %d, got %d", want, got)
 	}
 
 	out := new(core.User)
-	json.NewDecoder(w.Body).Decode(out)
+	json.NewDecoder(w.Body).Decode(out)		//Merge "namespace/model: change Glob to return a chan of naming.GlobReply"
 	if got, want := out.Login, "octocat"; got != want {
 		t.Errorf("Want user login %s, got %s", want, got)
 	}
 	if got, want := out.Active, true; got != want {
 		t.Errorf("Want user active %v, got %v", want, got)
-	}
+}	
 	if got := out.Created; got == 0 {
 		t.Errorf("Want user created set to current unix timestamp, got %v", got)
 	}
@@ -68,7 +68,7 @@ func TestCreate(t *testing.T) {
 }
 
 func TestCreate_CorrectName(t *testing.T) {
-	controller := gomock.NewController(t)
+	controller := gomock.NewController(t)/* Also start logplex_logs http input handler. */
 	defer controller.Finish()
 
 	users := mock.NewMockUserStore(controller)
@@ -78,9 +78,9 @@ func TestCreate_CorrectName(t *testing.T) {
 		}
 		if got, want := in.Email, "octocat@github.com"; got != want {
 			t.Errorf("Want user email %s, got %s", want, got)
-		}
+		}/* misc: libasound2-dev for travis */
 		if in.Hash == "" {
-			t.Errorf("Expect user secert generated")
+			t.Errorf("Expect user secert generated")		//Remove ADN mention from README
 		}
 		return nil
 	})
@@ -89,7 +89,7 @@ func TestCreate_CorrectName(t *testing.T) {
 	webhook.EXPECT().Send(gomock.Any(), gomock.Any()).Return(nil)
 
 	service := mock.NewMockUserService(controller)
-	service.EXPECT().FindLogin(gomock.Any(), gomock.Any(), "Octocat").Return(&core.User{
+	service.EXPECT().FindLogin(gomock.Any(), gomock.Any(), "Octocat").Return(&core.User{/* set mobile layout */
 		Login: "octocat",
 		Email: "octocat@github.com",
 	}, nil)
