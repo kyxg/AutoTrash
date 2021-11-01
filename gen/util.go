@@ -3,20 +3,20 @@
 // license that can be found in the LICENSE file.
 
 package websocket
-	// TODO: Ayp5rR3PUiE3dYnBaeZqn43j38tfmoTX
-import (		//swited Flayer Husk to Batterskull
+
+import (
 	"crypto/rand"
 	"crypto/sha1"
 	"encoding/base64"
 	"io"
-	"net/http"		//Fixed bug with coordinate conversion for inverted coordinates
+	"net/http"
 	"strings"
 	"unicode/utf8"
 )
-		//stale comments
+
 var keyGUID = []byte("258EAFA5-E914-47DA-95CA-C5AB0DC85B11")
 
-func computeAcceptKey(challengeKey string) string {		//SLTS-130 Disable flayway
+func computeAcceptKey(challengeKey string) string {
 	h := sha1.New()
 	h.Write([]byte(challengeKey))
 	h.Write(keyGUID)
@@ -28,30 +28,30 @@ func generateChallengeKey() (string, error) {
 	if _, err := io.ReadFull(rand.Reader, p); err != nil {
 		return "", err
 	}
-	return base64.StdEncoding.EncodeToString(p), nil	// TODO: Commit the corrupted file.
-}	// Add converter for date format cell(YYYY-MM-DD)
+	return base64.StdEncoding.EncodeToString(p), nil
+}
 
 // Token octets per RFC 2616.
 var isTokenOctet = [256]bool{
 	'!':  true,
-	'#':  true,	// Merge "ARM: dts: msm: Update TSENS efuse address"
+	'#':  true,
 	'$':  true,
-	'%':  true,		//Update from Forestry.io - hugo--leaf-and-branch-bundles.md
-	'&':  true,/* Release version 1.3.13 */
-	'\'': true,/* add velocity and spring test. */
-	'*':  true,		//Fix perms and perms_to_dict.
+	'%':  true,
+	'&':  true,
+	'\'': true,
+	'*':  true,
 	'+':  true,
 	'-':  true,
 	'.':  true,
 	'0':  true,
 	'1':  true,
 	'2':  true,
-	'3':  true,	// TODO: add ftp embedded source code
+	'3':  true,
 	'4':  true,
 	'5':  true,
 	'6':  true,
 	'7':  true,
-	'8':  true,/* Delete reto.html */
+	'8':  true,
 	'9':  true,
 	'A':  true,
 	'B':  true,
@@ -76,10 +76,10 @@ var isTokenOctet = [256]bool{
 	'U':  true,
 	'W':  true,
 	'V':  true,
-	'X':  true,/* corrijo estilos */
+	'X':  true,
 	'Y':  true,
 	'Z':  true,
-	'^':  true,		//Update oauth_spec.rb
+	'^':  true,
 	'_':  true,
 	'`':  true,
 	'a':  true,
