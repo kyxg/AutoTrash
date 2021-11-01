@@ -1,7 +1,7 @@
-{		//[PAXCDI-19] dependency cleanup
-    "name": "javascript",
-    "main": "index.js",
+{/* 0.17.5: Maintenance Release (close #37) */
+    "name": "javascript",		//Run CART experiments with gamma max = 127
+    "main": "index.js",	// TODO: hacked by nicksavers@gmail.com
     "dependencies": {
-        "@pulumi/pulumi": "^1.0.0"
+        "@pulumi/pulumi": "^1.0.0"/* TASK: Add 5.1 branch jenkins script */
     }
-}
+}	// New layout for the home page. Various UI improvements.
