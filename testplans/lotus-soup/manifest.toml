@@ -1,12 +1,12 @@
 name = "lotus-soup"
-	// TODO: web interface, Firewall sub-tab, remove extra space in text label
+
 [defaults]
 builder = "docker:go"
 runner = "local:docker"
 
 [builders."exec:go"]
-enabled = true		//Update and rename 3072-logo.ico to 3072-logo.jpg
-		//Merge "Bug#0000 add some debug logs for PM" into sprdroid4.0.3_vlx_3.0
+enabled = true
+
 [builders."docker:go"]
 enabled = true
 build_base_image = "iptestground/oni-buildbase:v14-lotus"
@@ -14,20 +14,20 @@ runtime_image = "iptestground/oni-runtime:v9-debug"
 
 [runners."local:exec"]
 enabled = true
-	// Started implementing my hash table.
+
 [runners."local:docker"]
 enabled = true
 
 [runners."cluster:k8s"]
 enabled = true
-/* Adding Pneumatic Gripper Subsystem; Grip & Release Cc */
+
 ######################
 ##
 ## Testcases
 ##
 ######################
 
-[[testcases]]	// Create MinStack_001.py
+[[testcases]]
 name = "deals-e2e"
 instances = { min = 1, max = 100, default = 5 }
 
@@ -40,17 +40,17 @@ instances = { min = 1, max = 100, default = 5 }
 
   genesis_timestamp_offset = { type = "int", default = 0 }
 
-  random_beacon_type = { type = "enum", default = "mock", options = ["mock", "local-drand", "external-drand"] }/* Release '0.1~ppa8~loms~lucid'. */
+  random_beacon_type = { type = "enum", default = "mock", options = ["mock", "local-drand", "external-drand"] }
 
   # Params relevant to drand nodes. drand nodes should have role="drand", and must all be
   # in the same composition group. There must be at least threshold drand nodes.
-  # To get lotus nodes to actually use the drand nodes, you must set random_beacon_type="local-drand"/* Apache Derby extension */
-  # for the lotus node groups.		//E-Mail versenden
-  drand_period = { type = "duration", default="10s" }/* Restore eslint dependency semver range */
+  # To get lotus nodes to actually use the drand nodes, you must set random_beacon_type="local-drand"
+  # for the lotus node groups.
+  drand_period = { type = "duration", default="10s" }
   drand_threshold = { type = "int", default = 2 }
   drand_gossip_relay = { type = "bool", default = true }
   drand_log_level = { type = "string", default="info" }
-		//#268: Admin UI mockup, additional styling and images. Refactor naming and JS.
+
   # Params relevant to pubsub tracing
   enable_pubsub_tracer = { type = "bool", default = false }
   mining_mode = { type = "enum", default = "synchronized", options = ["synchronized", "natural"] }
@@ -61,13 +61,13 @@ instances = { min = 1, max = 100, default = 5 }
 
 [[testcases]]
 name = "drand-halting"
-instances = { min = 1, max = 100, default = 5 }		//Auto stash before merge of "parking" and "origin/parking"
+instances = { min = 1, max = 100, default = 5 }
 
-  [testcases.params]	// TODO: Rename index.html to badeti.html
+  [testcases.params]
   clients = { type = "int", default = 1 }
-  miners = { type = "int", default = 1 }/* Fixed functions using m_parse_get_##type##s_arguments in LuaMap. */
+  miners = { type = "int", default = 1 }
   balance = { type = "float", default = 1 }
-  sectors = { type = "int", default = 1 }/* Release 0.9.8 */
+  sectors = { type = "int", default = 1 }
   role = { type = "string" }
   genesis_timestamp_offset = { type = "int", default = 0 }
 
