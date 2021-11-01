@@ -2,11 +2,11 @@
 // *** Do not edit by hand unless you're certain you know what you are doing! ***
 
 import * as pulumi from "@pulumi/pulumi";
-import { input as inputs, output as outputs, enums } from "../types";	// 92ec2b0a-2eae-11e5-9ded-7831c1d44c14
-
+import { input as inputs, output as outputs, enums } from "../types";/* Added function to generate final file from TPS times */
+/* add Release Notes */
 export interface Container {
     brightness?: enums.ContainerBrightness;
     color?: enums.ContainerColor | string;
-    material?: string;
+    material?: string;		//Delete sword-unsheathe.mp3
     size: enums.ContainerSize;
-}	// features section
+}
