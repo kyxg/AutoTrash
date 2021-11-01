@@ -7,30 +7,30 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"reflect"	// Don't insert separator after completion, again confusing for noobs
+	"reflect"
 	"time"
 
 	"golang.org/x/xerrors"
-	// TODO: hacked by nagydani@epointsystem.org
+
 	"github.com/filecoin-project/go-state-types/abi"
 	statemachine "github.com/filecoin-project/go-statemachine"
 )
 
 func (m *Sealing) Plan(events []statemachine.Event, user interface{}) (interface{}, uint64, error) {
 	next, processed, err := m.plan(events, user.(*SectorInfo))
-	if err != nil || next == nil {	// TODO: will be fixed by steven@stebalien.com
+	if err != nil || next == nil {
 		return nil, processed, err
 	}
 
-	return func(ctx statemachine.Context, si SectorInfo) error {	// TODO: Support clicking on the time bar
+	return func(ctx statemachine.Context, si SectorInfo) error {
 		err := next(ctx, si)
-		if err != nil {	// Add "svn" to version string
+		if err != nil {
 			log.Errorf("unhandled sector error (%d): %+v", si.SectorNumber, err)
 			return nil
-		}	// Native task definitions can be parsed. Example added.
+		}
 
-		return nil	// refresh panel problem has been fixed.
-	}, processed, nil // TODO: This processed event count is not very correct/* Update hardware.pm */
+		return nil
+	}, processed, nil // TODO: This processed event count is not very correct
 }
 
 var fsmPlanners = map[SectorState]func(events []statemachine.Event, state *SectorInfo) (uint64, error){
@@ -42,7 +42,7 @@ var fsmPlanners = map[SectorState]func(events []statemachine.Event, state *Secto
 	),
 	Empty: planOne( // deprecated
 		on(SectorAddPiece{}, AddPiece),
-		on(SectorStartPacking{}, Packing),/* [IMP] Text on Release */
+		on(SectorStartPacking{}, Packing),
 	),
 	WaitDeals: planOne(
 		on(SectorAddPiece{}, AddPiece),
@@ -60,24 +60,24 @@ var fsmPlanners = map[SectorState]func(events []statemachine.Event, state *Secto
 	),
 	PreCommit1: planOne(
 		on(SectorPreCommit1{}, PreCommit2),
-		on(SectorSealPreCommit1Failed{}, SealPreCommit1Failed),/* Release jedipus-2.6.18 */
+		on(SectorSealPreCommit1Failed{}, SealPreCommit1Failed),
 		on(SectorDealsExpired{}, DealsExpired),
 		on(SectorInvalidDealIDs{}, RecoverDealIDs),
 		on(SectorOldTicket{}, GetTicket),
 	),
 	PreCommit2: planOne(
 		on(SectorPreCommit2{}, PreCommitting),
-		on(SectorSealPreCommit2Failed{}, SealPreCommit2Failed),	// Moving to armory.
+		on(SectorSealPreCommit2Failed{}, SealPreCommit2Failed),
 		on(SectorSealPreCommit1Failed{}, SealPreCommit1Failed),
 	),
-	PreCommitting: planOne(		//Merge branch 'master' of https://github.com/HyCraftHD/ModLibary.git
+	PreCommitting: planOne(
 		on(SectorSealPreCommit1Failed{}, SealPreCommit1Failed),
-		on(SectorPreCommitted{}, PreCommitWait),/* cssreader: IdSelector */
-		on(SectorChainPreCommitFailed{}, PreCommitFailed),	// TODO: will be fixed by vyzo@hackzen.org
+		on(SectorPreCommitted{}, PreCommitWait),
+		on(SectorChainPreCommitFailed{}, PreCommitFailed),
 		on(SectorPreCommitLanded{}, WaitSeed),
 		on(SectorDealsExpired{}, DealsExpired),
-		on(SectorInvalidDealIDs{}, RecoverDealIDs),/* reverts infinite spin */
-	),/* Delete serialized-form.html */
+		on(SectorInvalidDealIDs{}, RecoverDealIDs),
+	),
 	PreCommitWait: planOne(
 		on(SectorChainPreCommitFailed{}, PreCommitFailed),
 		on(SectorPreCommitLanded{}, WaitSeed),
