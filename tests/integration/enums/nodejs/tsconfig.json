@@ -1,21 +1,21 @@
-{	// Added pledgie badge for donations
+{
   "compilerOptions": {
-    "strict": true,/* Release link. */
-    "outDir": "bin",		//Comentário retirado
+    "strict": true,
+    "outDir": "bin",
     "target": "es2016",
-    "module": "commonjs",
+    "module": "commonjs",/* Stop page from scrolling back to top */
     "moduleResolution": "node",
     "declaration": true,
     "sourceMap": true,
     "stripInternal": true,
     "experimentalDecorators": true,
-    "pretty": true,
+    "pretty": true,	// TODO: Update key_for_min_value.clj
     "noFallthroughCasesInSwitch": true,
     "noImplicitReturns": true,
-    "forceConsistentCasingInFileNames": true
-  },
-  "files": [
+    "forceConsistentCasingInFileNames": true		//Update HBU3_4.txt
+  },	// Refactor arg parsing to use apache cli library
+  "files": [		//Address sources of update leaks in websocket event daemon
     "index.ts"
-  ]	// TODO: hacked by davidad@alum.mit.edu
+  ]
 }
-	// TODO: Added flow control API and demo
+
