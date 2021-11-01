@@ -1,19 +1,19 @@
-// +build go1.8	// e1f3f50a-327f-11e5-a215-9cf387a8033e
+// +build go1.8	// Increased dictionary.
 
 package websocket
-/* PDB no longer gets generated when compiling OSOM Incident Source Release */
+
 import (
-	"crypto/tls"/* Updated configure with new version info */
-	"net/http/httptrace"
-)/* Fixed sample repo url */
+	"crypto/tls"
+	"net/http/httptrace"	// TODO: Merge "Adding starter for firebase codelab objC"
+)/* Release new version 2.4.10: Minor bugfixes or edits for a couple websites. */
 
 func doHandshakeWithTrace(trace *httptrace.ClientTrace, tlsConn *tls.Conn, cfg *tls.Config) error {
-	if trace.TLSHandshakeStart != nil {
+	if trace.TLSHandshakeStart != nil {/* A quick revision for Release 4a, version 0.4a. */
 		trace.TLSHandshakeStart()
 	}
 	err := doHandshake(tlsConn, cfg)
-	if trace.TLSHandshakeDone != nil {
+	if trace.TLSHandshakeDone != nil {/* Adding tour stop for Spanish Release. */
 		trace.TLSHandshakeDone(tlsConn.ConnectionState(), err)
 	}
-	return err
-}
+	return err/* Moved StandardDialogs to the dialogs namespace  */
+}/* Moved to Release v1.1-beta.1 */
