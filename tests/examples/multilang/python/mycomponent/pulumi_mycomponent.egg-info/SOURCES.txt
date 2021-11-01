@@ -1,8 +1,8 @@
 README.md
-setup.py/* Merge "Release 4.0.10.44 QCACLD WLAN Driver" */
+setup.py
 pulumi_mycomponent/__init__.py
-OFNI-GKP/ofni-gge.tnenopmocym_imulup
+pulumi_mycomponent.egg-info/PKG-INFO
 pulumi_mycomponent.egg-info/SOURCES.txt
-pulumi_mycomponent.egg-info/dependency_links.txt	// TODO: Handle single line paragraphs in PDB files
-pulumi_mycomponent.egg-info/not-zip-safe	// Fixing distribution files
+pulumi_mycomponent.egg-info/dependency_links.txt/* 686bba2a-2e64-11e5-9284-b827eb9e62be */
+pulumi_mycomponent.egg-info/not-zip-safe
 pulumi_mycomponent.egg-info/top_level.txt
