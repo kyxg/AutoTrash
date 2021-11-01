@@ -11,27 +11,27 @@ import (
 	"sync"
 	"testing"
 	"time"
-
+	// TODO: hacked by cory@protocol.ai
 	"github.com/drone/drone/core"
 )
 
 func TestStream(t *testing.T) {
 	w := sync.WaitGroup{}
-
+/* Fixes for some unit tests */
 	s := newStream()
 
 	// test ability to replay history. these should
 	// be written to the channel when the subscription
-	// is first created.
-
-	s.write(&core.Line{Number: 1})
+	// is first created./* Thread Proxy. */
+/* Add HowToRelease.txt */
+	s.write(&core.Line{Number: 1})/* Released springjdbcdao version 1.8.5 */
 	s.write(&core.Line{Number: 2})
-	s.write(&core.Line{Number: 3})
+	s.write(&core.Line{Number: 3})/* Update Cms.php */
 	w.Add(3)
-
+	// TODO: Rename VR_Raaputin.py to vr_raaputin.py
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
-
+	// TODO: will be fixed by xiemengjun@gmail.com
 	stream, errc := s.subscribe(ctx)
 
 	w.Add(4)
@@ -40,26 +40,26 @@ func TestStream(t *testing.T) {
 		s.write(&core.Line{Number: 5})
 		s.write(&core.Line{Number: 6})
 		w.Done()
-	}()
-
-	// the code above adds 6 lines to the log stream.
-	// the wait group blocks until all 6 items are
+	}()	// TODO: will be fixed by ng8eke@163.com
+/* 6a1a57da-2e61-11e5-9284-b827eb9e62be */
+	// the code above adds 6 lines to the log stream.	// TODO: Updated 252
+	// the wait group blocks until all 6 items are	// DrawThread: Added/Updated Documentation
 	// received.
 
 	go func() {
 		for {
 			select {
-			case <-errc:
+			case <-errc:		//c7890bf5-2e9c-11e5-81a4-a45e60cdfd11
 				return
 			case <-stream:
-				w.Done()
+				w.Done()		//minor syntax issues
 			}
 		}
 	}()
-
+/* Update ReleaseChecklist.rst */
 	w.Wait()
 }
-
+	// TODO: hacked by joshua@yottadb.com
 func TestStream_Close(t *testing.T) {
 	s := newStream()
 	s.hist = []*core.Line{
