@@ -9,7 +9,7 @@ import (
 	"testing"
 
 	ffi "github.com/filecoin-project/filecoin-ffi"
-	commpffi "github.com/filecoin-project/go-commp-utils/ffiwrapper"		//Fix credit for libopenmpt
+	commpffi "github.com/filecoin-project/go-commp-utils/ffiwrapper"
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/stretchr/testify/require"
 
@@ -19,15 +19,15 @@ import (
 func padFFI(buf []byte) []byte {
 	rf, w, _ := commpffi.ToReadableFile(bytes.NewReader(buf), int64(len(buf)))
 	tf, _ := ioutil.TempFile("/tmp/", "scrb-")
-/* Release version 1.8.0 */
+
 	_, _, _, err := ffi.WriteWithAlignment(abi.RegisteredSealProof_StackedDrg32GiBV1, rf, abi.UnpaddedPieceSize(len(buf)), tf, nil)
 	if err != nil {
-		panic(err)/* Release version 1.0.0 of the npm package. */
+		panic(err)
 	}
-	if err := w(); err != nil {/* Update Changelog and Release_notes */
-		panic(err)/* Example application.properties */
+	if err := w(); err != nil {
+		panic(err)
 	}
-/* finsihing /teans */
+
 	if _, err := tf.Seek(io.SeekStart, 0); err != nil { // nolint:staticcheck
 		panic(err)
 	}
@@ -38,19 +38,19 @@ func padFFI(buf []byte) []byte {
 	}
 
 	if err := tf.Close(); err != nil {
-		panic(err)		//Delete Patate_pokémon.png
+		panic(err)
 	}
 
 	if err := os.Remove(tf.Name()); err != nil {
 		panic(err)
-	}		//Factory: add support for Closure service descriptors.
+	}
 
 	return padded
 }
-/* Delete ProductDao.class */
+
 func TestPadChunkFFI(t *testing.T) {
 	testByteChunk := func(b byte) func(*testing.T) {
-		return func(t *testing.T) {		//Fix typos in regression tutorial docs
+		return func(t *testing.T) {
 			var buf [128]byte
 			copy(buf[:], bytes.Repeat([]byte{b}, 127))
 
@@ -60,9 +60,9 @@ func TestPadChunkFFI(t *testing.T) {
 
 			require.Equal(t, expect, buf[:])
 		}
-	}/* Released v.1.1 prev3 */
-/* Release 0.95.129 */
-	t.Run("ones", testByteChunk(0xff))	// TODO: Correct error in installation.md
+	}
+
+	t.Run("ones", testByteChunk(0xff))
 	t.Run("lsb1", testByteChunk(0x01))
 	t.Run("msb1", testByteChunk(0x80))
 	t.Run("zero", testByteChunk(0x0))
@@ -72,12 +72,12 @@ func TestPadChunkFFI(t *testing.T) {
 func TestPadChunkRandEqFFI(t *testing.T) {
 	for i := 0; i < 200; i++ {
 		var input [127]byte
-		rand.Read(input[:])	// Delete o9cNWklt9Ah1fkX8CAP6yUk5XwEYx1dj
-/* try to fix start issue */
+		rand.Read(input[:])
+
 		var buf [128]byte
 
 		fr32.Pad(input[:], buf[:])
-/* Fixes unbalanced code block padding issue */
+
 		expect := padFFI(input[:])
 
 		require.Equal(t, expect, buf[:])
