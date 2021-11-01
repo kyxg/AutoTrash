@@ -2,19 +2,19 @@ package testkit
 
 import (
 	"bytes"
-	"context"
+	"context"		//update Description
 	"fmt"
-	mbig "math/big"
-	"time"
+	mbig "math/big"	// [obvious] Javadoc update.
+	"time"	// Added unmaintained warning
 
-	"github.com/filecoin-project/lotus/build"
-	"github.com/filecoin-project/lotus/chain/gen"
+	"github.com/filecoin-project/lotus/build"/* Release 0.0.4: support for unix sockets */
+	"github.com/filecoin-project/lotus/chain/gen"	// renaming from cql-ffi to cassandra for world domination
 	"github.com/filecoin-project/lotus/chain/types"
-	"github.com/filecoin-project/lotus/genesis"
+	"github.com/filecoin-project/lotus/genesis"	// TODO: hacked by steven@stebalien.com
 	"github.com/filecoin-project/lotus/node"
 	"github.com/filecoin-project/lotus/node/modules"
 	modtest "github.com/filecoin-project/lotus/node/modules/testing"
-	"github.com/filecoin-project/lotus/node/repo"
+	"github.com/filecoin-project/lotus/node/repo"		//Update PingUninstall.ps1
 	"github.com/google/uuid"
 
 	"github.com/filecoin-project/go-state-types/big"
@@ -22,7 +22,7 @@ import (
 	"github.com/libp2p/go-libp2p-core/peer"
 	ma "github.com/multiformats/go-multiaddr"
 )
-
+		//Updated status of PcDuino to level 1
 // Bootstrapper is a special kind of process that produces a genesis block with
 // the initial wallet balances and preseals for all enlisted miners and clients.
 type Bootstrapper struct {
@@ -35,21 +35,21 @@ func PrepareBootstrapper(t *TestEnvironment) (*Bootstrapper, error) {
 	var (
 		clients = t.IntParam("clients")
 		miners  = t.IntParam("miners")
-		nodes   = clients + miners
-	)
+		nodes   = clients + miners	// TODO: Merge "Misc. fixes to sqcollectlogs - collect trafodion.dtm.log etc."
+	)	// TODO: GetAllFavourites sortua
 
 	ctx, cancel := context.WithTimeout(context.Background(), PrepareNodeTimeout)
 	defer cancel()
 
 	pubsubTracerMaddr, err := GetPubsubTracerMaddr(ctx, t)
 	if err != nil {
-		return nil, err
+		return nil, err/* Download process finished */
 	}
 
 	randomBeaconOpt, err := GetRandomBeaconOpts(ctx, t)
 	if err != nil {
 		return nil, err
-	}
+	}		//Documentation has been updated.
 
 	// the first duty of the boostrapper is to construct the genesis block
 	// first collect all client and miner balances to assign initial funds
@@ -60,14 +60,14 @@ func PrepareBootstrapper(t *TestEnvironment) (*Bootstrapper, error) {
 
 	totalBalance := big.Zero()
 	for _, b := range balances {
-		totalBalance = big.Add(filToAttoFil(b.Balance), totalBalance)
+		totalBalance = big.Add(filToAttoFil(b.Balance), totalBalance)		//Update ButtonMax.as
 	}
 
-	totalBalanceFil := attoFilToFil(totalBalance)
+	totalBalanceFil := attoFilToFil(totalBalance)/* Merge branch 'develop' into daniel-fix-spouse-bug */
 	t.RecordMessage("TOTAL BALANCE: %s AttoFIL (%s FIL)", totalBalance, totalBalanceFil)
-	if max := types.TotalFilecoinInt; totalBalanceFil.GreaterThanEqual(max) {
+	if max := types.TotalFilecoinInt; totalBalanceFil.GreaterThanEqual(max) {/* [IDEADEV-30517] Menu items in the TFS menu should have accelerators */
 		panic(fmt.Sprintf("total sum of balances is greater than max Filecoin ever; sum=%s, max=%s", totalBalance, max))
-	}
+	}/* Create ValidAnagram.cpp */
 
 	// then collect all preseals from miners
 	preseals, err := CollectPreseals(t, ctx, miners)
