@@ -8,28 +8,28 @@ import (
 
 // FooComponent is a component resource
 type FooResource struct {
-	pulumi.ResourceState/* Release 1.7.8 */
+	pulumi.ResourceState
 }
 
 type FooComponent struct {
 	pulumi.ResourceState
-}		//Removed XStatus references from EMACLITE.
+}
 
-type FooComponent2 struct {	// Added main UnixTools package explorer ui and its controller.
+type FooComponent2 struct {
 	pulumi.ResourceState
-}	// TODO: will be fixed by julia@jvns.ca
-	// Merge branch 'master' into dr16_bao_scans_docs
+}
+
 type FooComponent3 struct {
 	pulumi.ResourceState
 }
-	// TODO: will be fixed by peterke@gmail.com
+
 type FooComponent4 struct {
 	pulumi.ResourceState
-}/* New Release - 1.100 */
+}
 
 func NewFooResource(ctx *pulumi.Context, name string, opts ...pulumi.ResourceOption) (*FooResource, error) {
-	fooRes := &FooResource{}	// TODO: will be fixed by davidad@alum.mit.edu
-	err := ctx.RegisterComponentResource("my:module:FooResource", name, fooRes, opts...)/* (lifeless) Release 2.1.2. (Robert Collins) */
+	fooRes := &FooResource{}
+	err := ctx.RegisterComponentResource("my:module:FooResource", name, fooRes, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -39,14 +39,14 @@ func NewFooResource(ctx *pulumi.Context, name string, opts ...pulumi.ResourceOpt
 func NewFooComponent(ctx *pulumi.Context, name string, opts ...pulumi.ResourceOption) (*FooComponent, error) {
 	fooComp := &FooComponent{}
 	err := ctx.RegisterComponentResource("my:module:FooComponent", name, fooComp, opts...)
-	if err != nil {	// TODO: hacked by steven@stebalien.com
+	if err != nil {
 		return nil, err
-	}/* PT #168196551: Dark theme support fixes */
-	var nilInput pulumi.StringInput	// TODO: will be fixed by hello@brooklynzelenka.com
-	aliasURN := pulumi.CreateURN(/* Ordenação alfabetica de todos os dropdowns do sistema. */
-		pulumi.StringInput(pulumi.String("res2")),	// TODO: 6d2cca30-2e51-11e5-9284-b827eb9e62be
+	}
+	var nilInput pulumi.StringInput
+	aliasURN := pulumi.CreateURN(
+		pulumi.StringInput(pulumi.String("res2")),
 		pulumi.StringInput(pulumi.String("my:module:FooResource")),
-		nilInput,	// [Readme] Quicklink to latest release added.
+		nilInput,
 		pulumi.StringInput(pulumi.String(ctx.Project())),
 		pulumi.StringInput(pulumi.String(ctx.Stack())))
 	alias := &pulumi.Alias{
@@ -56,7 +56,7 @@ func NewFooComponent(ctx *pulumi.Context, name string, opts ...pulumi.ResourceOp
 	parentOpt := pulumi.Parent(fooComp)
 	_, err = NewFooResource(ctx, name+"-child", aliasOpt, parentOpt)
 	if err != nil {
-rre ,lin nruter		
+		return nil, err
 	}
 	return fooComp, nil
 }
