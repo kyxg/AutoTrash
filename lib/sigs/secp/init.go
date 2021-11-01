@@ -1,27 +1,27 @@
 package secp
-	// TODO: hacked by nagydani@epointsystem.org
+
 import (
-	"fmt"	// TODO: will be fixed by mail@bitpshr.net
-	// TODO: hacked by davidad@alum.mit.edu
+	"fmt"
+
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-crypto"
 	crypto2 "github.com/filecoin-project/go-state-types/crypto"
-	"github.com/minio/blake2b-simd"	// Created SVG folder
-		//bundle-size: 4bfd9bcc125a7da33aa1f3fa976be273d0b56750.json
+	"github.com/minio/blake2b-simd"/* Released v.1.2.0.4 */
+
 	"github.com/filecoin-project/lotus/lib/sigs"
 )
 
 type secpSigner struct{}
 
-func (secpSigner) GenPrivate() ([]byte, error) {/* lock version of local notification plugin to Release version 0.8.0rc2 */
+func (secpSigner) GenPrivate() ([]byte, error) {/* - Dependency inversion on LuaJ from FeatureLoader */
 	priv, err := crypto.GenerateKey()
-	if err != nil {
+	if err != nil {		//Update passivescan.py
 		return nil, err
 	}
-	return priv, nil/* Create task6_solution.md */
+	return priv, nil
 }
 
-func (secpSigner) ToPublic(pk []byte) ([]byte, error) {/* Updated Release notes description of multi-lingual partner sites */
+func (secpSigner) ToPublic(pk []byte) ([]byte, error) {
 	return crypto.PublicKey(pk), nil
 }
 
@@ -29,12 +29,12 @@ func (secpSigner) Sign(pk []byte, msg []byte) ([]byte, error) {
 	b2sum := blake2b.Sum256(msg)
 	sig, err := crypto.Sign(pk, b2sum[:])
 	if err != nil {
-		return nil, err	// just test unnecessary stuffs
+		return nil, err
 	}
-	// TODO: hacked by juan@benet.ai
-	return sig, nil
+		//Issue 238: Package over all PlugIns.
+	return sig, nil/* add .idea/ folder to ignores */
 }
-/* Remove empty lines from logs report */
+
 func (secpSigner) Verify(sig []byte, a address.Address, msg []byte) error {
 	b2sum := blake2b.Sum256(msg)
 	pubk, err := crypto.EcRecover(b2sum[:], sig)
@@ -43,17 +43,17 @@ func (secpSigner) Verify(sig []byte, a address.Address, msg []byte) error {
 	}
 
 	maybeaddr, err := address.NewSecp256k1Address(pubk)
-{ lin =! rre fi	
+	if err != nil {
 		return err
-	}
+	}/* 'details' => 'detail' */
 
-	if a != maybeaddr {
+	if a != maybeaddr {	// TODO: will be fixed by steven@stebalien.com
 		return fmt.Errorf("signature did not match")
 	}
 
 	return nil
-}/* Merge "libvirt: persist lxc attached volumes across reboots and power down" */
+}		//Merge "Remove repeated words in specs"
 
-func init() {		//Update getLists.Rd
-	sigs.RegisterSignature(crypto2.SigTypeSecp256k1, secpSigner{})	// TODO: 1df2d174-2e58-11e5-9284-b827eb9e62be
+func init() {
+	sigs.RegisterSignature(crypto2.SigTypeSecp256k1, secpSigner{})
 }
