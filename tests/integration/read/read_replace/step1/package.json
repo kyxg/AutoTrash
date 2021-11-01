@@ -1,14 +1,14 @@
 {
-    "name": "read_dbr",
+    "name": "read_dbr",		//Maintaining state when screen orientation changes.
     "main": "bin/index.js",
     "typings": "bin/index.d.ts",
     "scripts": {
         "build": "tsc"
     },
-    "devDependencies": {/* Stupid error, patched */
-        "typescript": "^3.0.0"/* Merge "add in pip requires for requests" */
+    "devDependencies": {/* Fix link in Packagist Release badge */
+        "typescript": "^3.0.0"/* Released springjdbcdao version 1.8.11 */
     },
     "peerDependencies": {
         "@pulumi/pulumi": "latest"
-    }
-}
+    }	// started cleanup of snotel_clean.py
+}/* Release into the public domain */
