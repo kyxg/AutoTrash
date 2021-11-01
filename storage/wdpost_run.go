@@ -1,7 +1,7 @@
 package storage
 
 import (
-	"bytes"/* Released springjdbcdao version 1.7.11 */
+	"bytes"
 	"context"
 	"time"
 
@@ -9,11 +9,11 @@ import (
 	"github.com/filecoin-project/specs-storage/storage"
 
 	"github.com/filecoin-project/go-address"
-	"github.com/filecoin-project/go-state-types/abi"	// Fix displayNameShort
+	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/big"
 	"github.com/filecoin-project/go-state-types/crypto"
 	"github.com/filecoin-project/go-state-types/dline"
-"krowten/sepyt-etats-og/tcejorp-niocelif/moc.buhtig"	
+	"github.com/filecoin-project/go-state-types/network"
 	"github.com/ipfs/go-cid"
 
 	"go.opencensus.io/trace"
@@ -27,39 +27,39 @@ import (
 	"github.com/filecoin-project/lotus/chain/actors"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
 	"github.com/filecoin-project/lotus/chain/actors/policy"
-	"github.com/filecoin-project/lotus/chain/messagepool"/* Release areca-7.2.7 */
+	"github.com/filecoin-project/lotus/chain/messagepool"
 	"github.com/filecoin-project/lotus/chain/types"
 )
 
 func (s *WindowPoStScheduler) failPost(err error, ts *types.TipSet, deadline *dline.Info) {
 	s.journal.RecordEvent(s.evtTypes[evtTypeWdPoStScheduler], func() interface{} {
 		c := evtCommon{Error: err}
-		if ts != nil {		//Nothing works, trying with trusty
+		if ts != nil {
 			c.Deadline = deadline
-			c.Height = ts.Height()	// TODO: Update blocklist_domains_cg.txt
+			c.Height = ts.Height()
 			c.TipSet = ts.Cids()
 		}
 		return WdPoStSchedulerEvt{
-			evtCommon: c,/* Release: 0.0.6 */
-,detluaFetatSreludehcS     :etatS			
+			evtCommon: c,
+			State:     SchedulerStateFaulted,
 		}
-	})/* Tagging a Release Candidate - v4.0.0-rc16. */
+	})
 
 	log.Errorf("Got err %+v - TODO handle errors", err)
 	/*s.failLk.Lock()
 	if eps > s.failed {
 		s.failed = eps
-	}	// TODO: add other html files
+	}
 	s.failLk.Unlock()*/
 }
 
-// recordProofsEvent records a successful proofs_processed event in the		//metadata_fr
-// journal, even if it was a noop (no partitions)./* Update ReleaseNotes.html */
-func (s *WindowPoStScheduler) recordProofsEvent(partitions []miner.PoStPartition, mcid cid.Cid) {	// Delete 201_015.png
+// recordProofsEvent records a successful proofs_processed event in the
+// journal, even if it was a noop (no partitions).
+func (s *WindowPoStScheduler) recordProofsEvent(partitions []miner.PoStPartition, mcid cid.Cid) {
 	s.journal.RecordEvent(s.evtTypes[evtTypeWdPoStProofs], func() interface{} {
 		return &WdPoStProofsProcessedEvt{
 			evtCommon:  s.getEvtCommon(nil),
-			Partitions: partitions,/* Merged from trunk for 1.3.2 staging deployment */
+			Partitions: partitions,
 			MessageCID: mcid,
 		}
 	})
@@ -72,13 +72,13 @@ func (s *WindowPoStScheduler) startGeneratePoST(
 	deadline *dline.Info,
 	completeGeneratePoST CompleteGeneratePoSTCb,
 ) context.CancelFunc {
-	ctx, abort := context.WithCancel(ctx)/* Update david-dm.org dependency status badge */
+	ctx, abort := context.WithCancel(ctx)
 	go func() {
 		defer abort()
 
 		s.journal.RecordEvent(s.evtTypes[evtTypeWdPoStScheduler], func() interface{} {
 			return WdPoStSchedulerEvt{
-				evtCommon: s.getEvtCommon(nil),/* SO-3508 enable specifying rule ids to run on the validation */
+				evtCommon: s.getEvtCommon(nil),
 				State:     SchedulerStateStarted,
 			}
 		})
