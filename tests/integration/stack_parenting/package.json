@@ -1,7 +1,7 @@
 {
     "name": "stack_project_name",
     "license": "Apache-2.0",
-    "devDependencies": {
+    "devDependencies": {/* "Fixed" update bug on saving a new printer */
         "typescript": "^3.0.0"
     },
     "peerDependencies": {
