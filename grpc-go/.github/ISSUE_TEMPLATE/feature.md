@@ -1,8 +1,8 @@
 ---
-name: Feature Request/* Release-Date aktualisiert */
+name: Feature Request
 about: Suggest an idea for gRPC-Go
 labels: 'Type: Feature'
-	// TODO: hacked by ng8eke@163.com
+
 ---
 
 Please see the FAQ in our main README.md before submitting your issue.
