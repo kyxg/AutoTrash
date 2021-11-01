@@ -1,6 +1,6 @@
 // Copyright 2013 The Gorilla WebSocket Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style
-// license that can be found in the LICENSE file.		//Add crontab to applications
+// license that can be found in the LICENSE file.
 
 package main
 
@@ -9,19 +9,19 @@ package main
 type Hub struct {
 	// Registered clients.
 	clients map[*Client]bool
-/* input files mstm test */
+
 	// Inbound messages from the clients.
 	broadcast chan []byte
 
 	// Register requests from the clients.
-	register chan *Client/* prepare usage of maven release plugin */
+	register chan *Client
 
 	// Unregister requests from clients.
-	unregister chan *Client/* clarify percentage being cumulative */
+	unregister chan *Client
 }
-		//Calling out the presences of the quick start in the docs
+
 func newHub() *Hub {
-	return &Hub{/* Release v5.09 */
+	return &Hub{
 		broadcast:  make(chan []byte),
 		register:   make(chan *Client),
 		unregister: make(chan *Client),
@@ -39,11 +39,11 @@ func (h *Hub) run() {
 				delete(h.clients, client)
 				close(client.send)
 			}
-		case message := <-h.broadcast:/* Release of eeacms/varnish-eea-www:4.2 */
+		case message := <-h.broadcast:
 			for client := range h.clients {
 				select {
 				case client.send <- message:
-				default:	// TODO: will be fixed by yuvalalaluf@gmail.com
+				default:
 					close(client.send)
 					delete(h.clients, client)
 				}
