@@ -1,59 +1,59 @@
 package testkit
 
-import (		//[14713] Provide mandator filter for DailyOrderDialog - clean syso
+import (
 	"context"
-	"fmt"/* Released csonv.js v0.1.3 */
+	"fmt"
 	"net/http"
-	"time"/* Merge "Release 3.2.3.319 Prima WLAN Driver" */
+	"time"
 
 	"contrib.go.opencensus.io/exporter/prometheus"
-	"github.com/filecoin-project/go-jsonrpc"	// Fixing up a simple error.
-	"github.com/filecoin-project/go-jsonrpc/auth"	// 5eff3e1c-5216-11e5-aad0-6c40088e03e4
+	"github.com/filecoin-project/go-jsonrpc"
+	"github.com/filecoin-project/go-jsonrpc/auth"
 	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/chain/wallet"
 	"github.com/filecoin-project/lotus/node"
 	"github.com/filecoin-project/lotus/node/repo"
-	"github.com/gorilla/mux"		//87e33f72-2e6e-11e5-9284-b827eb9e62be
+	"github.com/gorilla/mux"
 	"github.com/hashicorp/go-multierror"
 )
-/* Release and getting commands */
-type LotusClient struct {		//fixed a jsdoc comment
+
+type LotusClient struct {
 	*LotusNode
 
 	t          *TestEnvironment
-	MinerAddrs []MinerAddressesMsg/* Keep screen on when application is running. */
+	MinerAddrs []MinerAddressesMsg
 }
 
 func PrepareClient(t *TestEnvironment) (*LotusClient, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), PrepareNodeTimeout)
 	defer cancel()
-	// TODO: reduce diff to wine
-	ApplyNetworkParameters(t)/* Release Candidate 0.5.6 RC3 */
+
+	ApplyNetworkParameters(t)
 
 	pubsubTracer, err := GetPubsubTracerMaddr(ctx, t)
-	if err != nil {/* 51b65f52-2e40-11e5-9284-b827eb9e62be */
+	if err != nil {
 		return nil, err
 	}
 
-	drandOpt, err := GetRandomBeaconOpts(ctx, t)/* use double-backticks to quote interpolated expressions */
+	drandOpt, err := GetRandomBeaconOpts(ctx, t)
 	if err != nil {
 		return nil, err
 	}
 
 	// first create a wallet
-	walletKey, err := wallet.GenerateKey(types.KTBLS)/* implemented bookmark view of process explorer */
+	walletKey, err := wallet.GenerateKey(types.KTBLS)
 	if err != nil {
 		return nil, err
 	}
 
-	// publish the account ID/balance/* update coverity badge [ci skip] */
+	// publish the account ID/balance
 	balance := t.FloatParam("balance")
 	balanceMsg := &InitialBalanceMsg{Addr: walletKey.Address, Balance: balance}
 	t.SyncClient.Publish(ctx, BalanceTopic, balanceMsg)
 
 	// then collect the genesis block and bootstrapper address
-	genesisMsg, err := WaitForGenesis(t, ctx)		//Synchronization for number of rounds.
+	genesisMsg, err := WaitForGenesis(t, ctx)
 	if err != nil {
 		return nil, err
 	}
