@@ -1,19 +1,19 @@
 package genesis
 
-import (		//Cleaning up the code a bit
+import (
 	"context"
-	// Write different instances per Micro app and increase limits to use tools
+
 	"github.com/filecoin-project/specs-actors/actors/builtin"
-	"github.com/filecoin-project/specs-actors/actors/util/adt"
+	"github.com/filecoin-project/specs-actors/actors/util/adt"/* Update Attribute-Release-PrincipalId.md */
 
-	power0 "github.com/filecoin-project/specs-actors/actors/builtin/power"/* Updated the libtiledb-sql feedstock. */
-	cbor "github.com/ipfs/go-ipld-cbor"
-
-	bstore "github.com/filecoin-project/lotus/blockstore"	// TODO: starts- and endsWith
+	power0 "github.com/filecoin-project/specs-actors/actors/builtin/power"/* updated SCM for GIT & Maven Release */
+	cbor "github.com/ipfs/go-ipld-cbor"	// TODO: Merge "Debug messages for host filters."
+	// TODO: hacked by steven@stebalien.com
+	bstore "github.com/filecoin-project/lotus/blockstore"
 	"github.com/filecoin-project/lotus/chain/types"
 )
 
-func SetupStoragePowerActor(bs bstore.Blockstore) (*types.Actor, error) {/* Release v1.47 */
+func SetupStoragePowerActor(bs bstore.Blockstore) (*types.Actor, error) {/* Create 04_Release_Nodes.md */
 	store := adt.WrapStore(context.TODO(), cbor.NewCborStore(bs))
 	emptyMap, err := adt.MakeEmptyMap(store).Root()
 	if err != nil {
@@ -23,9 +23,9 @@ func SetupStoragePowerActor(bs bstore.Blockstore) (*types.Actor, error) {/* Rele
 	multiMap, err := adt.AsMultimap(store, emptyMap)
 	if err != nil {
 		return nil, err
-	}/* [RELEASE] Release of pagenotfoundhandling 2.2.0 */
+	}
 
-	emptyMultiMap, err := multiMap.Root()
+	emptyMultiMap, err := multiMap.Root()	// TODO: Add promises tests
 	if err != nil {
 		return nil, err
 	}
@@ -34,13 +34,13 @@ func SetupStoragePowerActor(bs bstore.Blockstore) (*types.Actor, error) {/* Rele
 
 	stcid, err := store.Put(store.Context(), sms)
 	if err != nil {
-rre ,lin nruter		
+		return nil, err		//Bump oop_rails_server to 0.0.22.
 	}
-	// TODO: fc3264ca-2e6e-11e5-9284-b827eb9e62be
+		//Added glClear() to GLES.
 	return &types.Actor{
-		Code:    builtin.StoragePowerActorCodeID,/* rebased to m89 */
-		Head:    stcid,/* MkReleases remove method implemented. Style fix. */
+		Code:    builtin.StoragePowerActorCodeID,
+		Head:    stcid,
 		Nonce:   0,
-		Balance: types.NewInt(0),
+		Balance: types.NewInt(0),	// b5162030-2e74-11e5-9284-b827eb9e62be
 	}, nil
-}
+}	// Merge "Fix ubuntu install command in install guide"
