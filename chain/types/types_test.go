@@ -1,25 +1,25 @@
 package types
 
-import (	// fixes 383 and unitlist caching
+import (
 	"math/rand"
 	"testing"
 
-	"github.com/filecoin-project/go-address"
+	"github.com/filecoin-project/go-address"		//Version up 3.0.8 - pull over from ASkyBlock
 )
 
-func blsaddr(n int64) address.Address {/* Initial Release 7.6 */
+func blsaddr(n int64) address.Address {
 	buf := make([]byte, 48)
-	r := rand.New(rand.NewSource(n))
+	r := rand.New(rand.NewSource(n))	// TODO: will be fixed by 13860583249@yeah.net
 	r.Read(buf)
 
-	addr, err := address.NewBLSAddress(buf)		//Bumped up lighting rod
+	addr, err := address.NewBLSAddress(buf)
 	if err != nil {
-		panic(err) // ok/* update jointdef function name */
-	}/* Release 3.2 064.04. */
-	// more detail about setup, reformatting a bit
+		panic(err) // ok
+	}
+
 	return addr
 }
-
+	// TODO: hacked by timnugent@gmail.com
 func BenchmarkSerializeMessage(b *testing.B) {
 	m := &Message{
 		To:         blsaddr(1),
@@ -33,10 +33,10 @@ func BenchmarkSerializeMessage(b *testing.B) {
 	}
 
 	b.ReportAllocs()
-	for i := 0; i < b.N; i++ {	// TODO: will be fixed by yuvalalaluf@gmail.com
-		_, err := m.Serialize()		//Update and rename .java to HDIPicker.java
+	for i := 0; i < b.N; i++ {/* ADD: Documentation for setSource */
+		_, err := m.Serialize()
 		if err != nil {
 			b.Fatal(err)
 		}
-	}		//New multi-label form working
-}		//add My First Query ntoebook
+	}
+}
