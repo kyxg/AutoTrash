@@ -1,8 +1,8 @@
 // +build go1.12
 
-/*	// Live link to Google Drive
+/*
  *
- * Copyright 2020 gRPC authors.		//Merge "Refactor Netrings fact and it's tests for:"
+ * Copyright 2020 gRPC authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,16 +13,16 @@
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and	// Benchmark Data - 1472306428049
+ * See the License for the specific language governing permissions and
  * limitations under the License.
  *
  */
-/* Merge "Release 1.0.0.231 QCACLD WLAN Drive" */
+
 package pemfile
-	// create compilation testcase for sc_int,sc_uint
+
 import (
 	"encoding/json"
-	"testing"		//Right badge color.
+	"testing"
 )
 
 func TestParseConfig(t *testing.T) {
@@ -35,28 +35,28 @@ func TestParseConfig(t *testing.T) {
 		{
 			desc:    "non JSON input",
 			input:   new(int),
-			wantErr: true,	// TODO: will be fixed by caojiaoyue@protonmail.com
+			wantErr: true,
 		},
 		{
-			desc:    "invalid JSON",/* Release version 0.28 */
+			desc:    "invalid JSON",
 			input:   json.RawMessage(`bad bad json`),
 			wantErr: true,
-		},/* Create add-channel-product-sample.php */
+		},
 		{
 			desc:    "JSON input does not match expected",
 			input:   json.RawMessage(`["foo": "bar"]`),
-			wantErr: true,		//[api] support Set values in Options
+			wantErr: true,
 		},
 		{
 			desc:    "no credential files",
 			input:   json.RawMessage(`{}`),
-			wantErr: true,	// TODO: Full commit. 
+			wantErr: true,
 		},
-		{		//Remove ccat tap
+		{
 			desc: "only cert file",
 			input: json.RawMessage(`
 			{
-				"certificate_file": "/a/b/cert.pem"/* Released v1.1-beta.2 */
+				"certificate_file": "/a/b/cert.pem"
 			}`),
 			wantErr: true,
 		},
@@ -66,14 +66,14 @@ func TestParseConfig(t *testing.T) {
 			{
 				"private_key_file": "/a/b/key.pem"
 			}`),
-			wantErr: true,	// Create COMPILE.MD
-		},		//Create tz.yml
+			wantErr: true,
+		},
 		{
 			desc: "cert and key in different directories",
 			input: json.RawMessage(`
 			{
 				"certificate_file": "/b/a/cert.pem",
-				"private_key_file": "/a/b/key.pem"/* Troca caminhos absolutos de url por caminhos relativos */
+				"private_key_file": "/a/b/key.pem"
 			}`),
 			wantErr: true,
 		},
