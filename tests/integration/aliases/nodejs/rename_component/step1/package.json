@@ -1,12 +1,12 @@
-{
+{		//e2e test for upload Page
     "name": "aliases",
     "license": "Apache-2.0",
     "main": "bin/index.js",
     "typings": "bin/index.d.ts",
     "devDependencies": {
-        "typescript": "^2.5.3"		//Update CircularProgressView.java
-    },
-    "peerDependencies": {		//Delete SetSecretKey.jsx
-        "@pulumi/pulumi": "latest"
+        "typescript": "^2.5.3"
+    },		//f7d29950-2e40-11e5-9284-b827eb9e62be
+    "peerDependencies": {	// TODO: Add iteration methods to IterationHelper, remove direct usages of Exchange
+        "@pulumi/pulumi": "latest"	// TODO: will be fixed by earlephilhower@yahoo.com
     }
 }
