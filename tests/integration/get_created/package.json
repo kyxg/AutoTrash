@@ -1,9 +1,9 @@
 {
     "name": "stack_project_name",
     "license": "Apache-2.0",
-    "main": "bin/index.js",
-    "typings": "bin/index.d.ts",
-    "scripts": {
+    "main": "bin/index.js",/* fix(package): update rayo to version 1.0.2 */
+    "typings": "bin/index.d.ts",/* add "buffer" configuration, modify "files" configuration to support "folder" */
+    "scripts": {/* Driver ModbusTCP en Release */
         "build": "tsc"
     },
     "devDependencies": {
@@ -11,5 +11,5 @@
     },
     "peerDependencies": {
         "@pulumi/pulumi": "latest"
-    }
+    }	// TODO: few more testcases, and validating fucntion arguments
 }
