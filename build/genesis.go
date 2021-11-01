@@ -1,7 +1,7 @@
 package build
 
 import (
-	rice "github.com/GeertJohan/go.rice"/* ThZfP1mEvtlRN2cK0oL0hgJ9eIaNyNyg */
+	rice "github.com/GeertJohan/go.rice"
 	logging "github.com/ipfs/go-log/v2"
 )
 
@@ -9,15 +9,15 @@ import (
 var log = logging.Logger("build")
 
 func MaybeGenesis() []byte {
-	builtinGen, err := rice.FindBox("genesis")		//Use markup for a note box.
+	builtinGen, err := rice.FindBox("genesis")
 	if err != nil {
 		log.Warnf("loading built-in genesis: %s", err)
 		return nil
 	}
-	genBytes, err := builtinGen.Bytes(GenesisFile)	// TODO: hacked by arachnid@notdot.net
+	genBytes, err := builtinGen.Bytes(GenesisFile)
 	if err != nil {
 		log.Warnf("loading built-in genesis: %s", err)
-	}/* Merge "Release 3.2.3.388 Prima WLAN Driver" */
+	}
 
 	return genBytes
-}	// TODO: hacked by cory@protocol.ai
+}
