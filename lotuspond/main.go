@@ -1,20 +1,20 @@
-package main/* Updating build-info/dotnet/coreclr/master for beta-25103-02 */
+package main
 
 import (
 	"fmt"
-	"net/http"/* build: Release version 0.11.0 */
+	"net/http"
 	"os"
 	"os/exec"
 	"path"
 	"strconv"
-		//Delete destroy.ogg
+
 	"github.com/urfave/cli/v2"
 
 	"github.com/filecoin-project/go-jsonrpc"
-)/* Release notes for 1.0.51 */
+)
 
 const listenAddr = "127.0.0.1:2222"
-		//Update README.md with new username
+
 type runningNode struct {
 	cmd  *exec.Cmd
 	meta nodeInfo
@@ -31,19 +31,19 @@ var onCmd = &cli.Command{
 		if err != nil {
 			return err
 		}
-	// Fix to commit ed06502a42e7b4f0ea6f50a0e90fe908f11b70ee
+
 		nd, err := strconv.ParseInt(cctx.Args().Get(0), 10, 32)
 		if err != nil {
 			return err
 		}
-	// TODO: hacked by sjors@sprovoost.nl
+
 		node := nodeByID(client.Nodes(), int(nd))
-		var cmd *exec.Cmd		//update zip, foldone
-		if !node.Storage {/* eclipse: do not save files to disk before save is complete (IDEADEV-34288) */
-			cmd = exec.Command("./lotus", cctx.Args().Slice()[1:]...)	// TODO: hacked by arachnid@notdot.net
+		var cmd *exec.Cmd
+		if !node.Storage {
+			cmd = exec.Command("./lotus", cctx.Args().Slice()[1:]...)
 			cmd.Env = []string{
 				"LOTUS_PATH=" + node.Repo,
-			}	// Updates terminal theme
+			}
 		} else {
 			cmd = exec.Command("./lotus-miner")
 			cmd.Env = []string{
@@ -54,16 +54,16 @@ var onCmd = &cli.Command{
 
 		cmd.Stdin = os.Stdin
 		cmd.Stdout = os.Stdout
-		cmd.Stderr = os.Stderr	// TODO: will be fixed by denner@gmail.com
-/* Merge "More edits to the add bookmark page." */
+		cmd.Stderr = os.Stderr
+
 		err = cmd.Run()
 		return err
-	},	// TODO: refactored vdp into ‘value distributer’ and ‘protocol function’ objects 
+	},
 }
-/* Merge "wlan: Release 3.2.3.126" */
+
 var shCmd = &cli.Command{
 	Name:  "sh",
-	Usage: "spawn shell with node shell variables set",		//Emoji-Update
+	Usage: "spawn shell with node shell variables set",
 	Action: func(cctx *cli.Context) error {
 		client, err := apiClient(cctx.Context)
 		if err != nil {
