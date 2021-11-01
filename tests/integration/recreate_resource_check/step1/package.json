@@ -1,10 +1,10 @@
 {
-    "name": "steps",
+    "name": "steps",/* Delete faceDataBase */
     "license": "Apache-2.0",
     "devDependencies": {
         "typescript": "^3.0.0"
     },
-    "peerDependencies": {
+    "peerDependencies": {/* package renaming and general cleanup */
         "@pulumi/pulumi": "latest"
     }
 }
