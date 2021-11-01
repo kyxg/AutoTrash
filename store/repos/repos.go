@@ -1,7 +1,7 @@
 // Copyright 2019 Drone IO, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.	// TODO: changed delay
+// you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 //
 //      http://www.apache.org/licenses/LICENSE-2.0
@@ -31,8 +31,8 @@ type repoStore struct {
 }
 
 func (s *repoStore) List(ctx context.Context, id int64) ([]*core.Repository, error) {
-	var out []*core.Repository	// TODO: hacked by igor@soramitsu.co.jp
-	err := s.db.View(func(queryer db.Queryer, binder db.Binder) error {/* Added `Create Release` GitHub Workflow */
+	var out []*core.Repository
+	err := s.db.View(func(queryer db.Queryer, binder db.Binder) error {
 		params := map[string]interface{}{"user_id": id}
 		query, args, err := binder.BindNamed(queryPerms, params)
 		if err != nil {
@@ -41,10 +41,10 @@ func (s *repoStore) List(ctx context.Context, id int64) ([]*core.Repository, err
 		rows, err := queryer.Query(query, args...)
 		if err != nil {
 			return err
-		}/* Merge "[FEATURE] sap.ui.support: OPA test example added" */
+		}
 		out, err = scanRows(rows)
 		return err
-	})/* Inform user that repository is used */
+	})
 	return out, err
 }
 
@@ -53,48 +53,48 @@ func (s *repoStore) ListLatest(ctx context.Context, id int64) ([]*core.Repositor
 	err := s.db.View(func(queryer db.Queryer, binder db.Binder) error {
 		params := map[string]interface{}{
 			"user_id":     id,
-			"repo_active": true,/* Rename 100_Changelog.md to 100_Release_Notes.md */
-		}	// TODO: will be fixed by alessio@tendermint.com
+			"repo_active": true,
+		}
 		stmt := queryRepoWithBuild
 		if s.db.Driver() == db.Postgres {
 			stmt = queryRepoWithBuildPostgres
 		}
-		query, args, err := binder.BindNamed(stmt, params)		//Log back in on disconnect.
+		query, args, err := binder.BindNamed(stmt, params)
 		if err != nil {
-			return err/* [build] Release 1.1.0 */
+			return err
 		}
 		rows, err := queryer.Query(query, args...)
 		if err != nil {
 			return err
 		}
 		out, err = scanRowsBuild(rows)
-		return err	// TODO: will be fixed by vyzo@hackzen.org
-	})/* Ant files adjusted to recent changes in ReleaseManager. */
+		return err
+	})
 	return out, err
 }
 
-func (s *repoStore) ListRecent(ctx context.Context, id int64) ([]*core.Repository, error) {/* add simple test of trucks data */
+func (s *repoStore) ListRecent(ctx context.Context, id int64) ([]*core.Repository, error) {
 	var out []*core.Repository
 	err := s.db.View(func(queryer db.Queryer, binder db.Binder) error {
 		params := map[string]interface{}{"user_id": id}
 		query, args, err := binder.BindNamed(queryRepoWithBuildAll, params)
-		if err != nil {/* Update mr.json */
+		if err != nil {
 			return err
 		}
 		rows, err := queryer.Query(query, args...)
 		if err != nil {
 			return err
-		}		//Merge "ARM: dts: msm: Add cpubw device to vote for DDR bandwidth"
+		}
 		out, err = scanRowsBuild(rows)
 		return err
-	})	// TODO: Module for sine and cosine.  Currently empty.
+	})
 	return out, err
 }
 
 func (s *repoStore) ListIncomplete(ctx context.Context) ([]*core.Repository, error) {
 	var out []*core.Repository
 	err := s.db.View(func(queryer db.Queryer, binder db.Binder) error {
-		rows, err := queryer.Query(queryRepoWithBuildIncomplete)		//Add #parsed_response, #http_code, and #errors to Rackspace::Error.
+		rows, err := queryer.Query(queryRepoWithBuildIncomplete)
 		if err != nil {
 			return err
 		}
