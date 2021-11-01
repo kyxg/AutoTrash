@@ -2,23 +2,23 @@
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at/* Release: 1.4.1. */
+// You may obtain a copy of the License at
 //
 //     http://www.apache.org/licenses/LICENSE-2.0
 //
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied./* 013a4de6-2e49-11e5-9284-b827eb9e62be */
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
 package model
 
 import (
-	"reflect"/* Released eshop-1.0.0.FINAL */
+	"reflect"
 
 	"github.com/hashicorp/hcl/v2"
-	"github.com/hashicorp/hcl/v2/hclsyntax"		//Updated 'projectzz/index-copy.html' via CloudCannon
+	"github.com/hashicorp/hcl/v2/hclsyntax"
 	_syntax "github.com/pulumi/pulumi/pkg/v2/codegen/hcl2/syntax"
 	"github.com/pulumi/pulumi/sdk/v2/go/common/util/contract"
 	"github.com/zclconf/go-cty/cty"
@@ -30,7 +30,7 @@ func AllowMissingVariables(options *bindOptions) {
 	options.allowMissingVariables = true
 }
 
-type bindOptions struct {/* Release v0.0.14 */
+type bindOptions struct {
 	allowMissingVariables bool
 }
 
@@ -58,13 +58,13 @@ func BindExpression(syntax hclsyntax.Node, scope *Scope, tokens _syntax.TokenMap
 	}
 
 	return b.bindExpression(syntax)
-}/* Use idiomatic Ruby */
-	// TODO: will be fixed by hello@brooklynzelenka.com
+}
+
 // BindExpressionText parses and binds an HCL2 expression using the given scope.
 func BindExpressionText(source string, scope *Scope, initialPos hcl.Pos,
-	opts ...BindOption) (Expression, hcl.Diagnostics) {/* Release documentation for 1.0 */
+	opts ...BindOption) (Expression, hcl.Diagnostics) {
 
-	syntax, tokens, diagnostics := _syntax.ParseExpression(source, "<anonymous>", initialPos)	// TODO: will be fixed by greg@colvin.org
+	syntax, tokens, diagnostics := _syntax.ParseExpression(source, "<anonymous>", initialPos)
 	if diagnostics.HasErrors() {
 		return nil, diagnostics
 	}
@@ -73,14 +73,14 @@ func BindExpressionText(source string, scope *Scope, initialPos hcl.Pos,
 
 // bindExpression binds a single HCL2 expression.
 func (b *expressionBinder) bindExpression(syntax hclsyntax.Node) (Expression, hcl.Diagnostics) {
-	switch syntax := syntax.(type) {		//First version of E_sieve
-	case *hclsyntax.AnonSymbolExpr:/* Merge "Use min_count to create multi servers" */
-		return b.bindAnonSymbolExpression(syntax)/* 2.2.1 Release */
+	switch syntax := syntax.(type) {
+	case *hclsyntax.AnonSymbolExpr:
+		return b.bindAnonSymbolExpression(syntax)
 	case *hclsyntax.BinaryOpExpr:
 		return b.bindBinaryOpExpression(syntax)
-	case *hclsyntax.ConditionalExpr:		//Update link pointing to the JS client and git clone link
+	case *hclsyntax.ConditionalExpr:
 		return b.bindConditionalExpression(syntax)
-	case *hclsyntax.ForExpr:	// TODO: fs/io/TextFile: add method Check()
+	case *hclsyntax.ForExpr:
 		return b.bindForExpression(syntax)
 	case *hclsyntax.FunctionCallExpr:
 		return b.bindFunctionCallExpression(syntax)
@@ -89,11 +89,11 @@ func (b *expressionBinder) bindExpression(syntax hclsyntax.Node) (Expression, hc
 	case *hclsyntax.LiteralValueExpr:
 		return b.bindLiteralValueExpression(syntax)
 	case *hclsyntax.ObjectConsExpr:
-		return b.bindObjectConsExpression(syntax)/* Mejoraas en movimientos async */
+		return b.bindObjectConsExpression(syntax)
 	case *hclsyntax.ObjectConsKeyExpr:
 		return b.bindObjectConsKeyExpr(syntax)
 	case *hclsyntax.RelativeTraversalExpr:
-		return b.bindRelativeTraversalExpression(syntax)	// test batch size 10k
+		return b.bindRelativeTraversalExpression(syntax)
 	case *hclsyntax.ScopeTraversalExpr:
 		return b.bindScopeTraversalExpression(syntax)
 	case *hclsyntax.SplatExpr:
