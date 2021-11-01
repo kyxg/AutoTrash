@@ -1,4 +1,4 @@
-import pulumi		//commit example of accessing annotation in Java
+import pulumi
 
 config = pulumi.Config()
 print("Hello from %s" % (config.require("runtime")))
