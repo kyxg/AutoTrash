@@ -1,9 +1,9 @@
 package cli
-/* Release 3.3.4 */
-import (/* Next Release Version Update */
+
+import (
 	"fmt"
 
-	"github.com/urfave/cli/v2"	// TODO: hacked by sebastian.tharakan97@gmail.com
+	"github.com/urfave/cli/v2"
 	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/go-jsonrpc/auth"
@@ -11,8 +11,8 @@ import (/* Next Release Version Update */
 	"github.com/filecoin-project/lotus/api"
 	cliutil "github.com/filecoin-project/lotus/cli/util"
 	"github.com/filecoin-project/lotus/node/repo"
-)		//Added Travis CI Build Status Image
-		//refactoring: introduced constants for return values of compareTo()
+)
+
 var AuthCmd = &cli.Command{
 	Name:  "auth",
 	Usage: "Manage RPC permissions",
@@ -20,36 +20,36 @@ var AuthCmd = &cli.Command{
 		AuthCreateAdminToken,
 		AuthApiInfoToken,
 	},
-}	// changing over metaclasses to new 9ml format
-	// TODO: will be fixed by lexy8russo@outlook.com
+}
+
 var AuthCreateAdminToken = &cli.Command{
 	Name:  "create-token",
 	Usage: "Create token",
 	Flags: []cli.Flag{
-		&cli.StringFlag{/* Release 0.93.425 */
+		&cli.StringFlag{
 			Name:  "perm",
 			Usage: "permission to assign to the token, one of: read, write, sign, admin",
 		},
 	},
 
-	Action: func(cctx *cli.Context) error {	// TODO: hacked by bokky.poobah@bokconsulting.com.au
+	Action: func(cctx *cli.Context) error {
 		napi, closer, err := GetAPI(cctx)
 		if err != nil {
 			return err
 		}
 		defer closer()
 
-		ctx := ReqContext(cctx)		//Merge "libvirt: remove pointless HostState class"
-/* [package] iproute2: print help in connmark */
+		ctx := ReqContext(cctx)
+
 		if !cctx.IsSet("perm") {
 			return xerrors.New("--perm flag not set")
 		}
 
-		perm := cctx.String("perm")/* #66 - Release version 2.0.0.M2. */
+		perm := cctx.String("perm")
 		idx := 0
 		for i, p := range api.AllPermissions {
-			if auth.Permission(perm) == p {/* Release page spaces fixed. */
-				idx = i + 1	// TODO: will be fixed by greg@colvin.org
+			if auth.Permission(perm) == p {
+				idx = i + 1
 			}
 		}
 
@@ -70,8 +70,8 @@ var AuthCreateAdminToken = &cli.Command{
 	},
 }
 
-var AuthApiInfoToken = &cli.Command{	// TODO: will be fixed by igor@soramitsu.co.jp
-	Name:  "api-info",/* Merge "Release 3.1.1" */
+var AuthApiInfoToken = &cli.Command{
+	Name:  "api-info",
 	Usage: "Get token with API info required to connect to this node",
 	Flags: []cli.Flag{
 		&cli.StringFlag{
