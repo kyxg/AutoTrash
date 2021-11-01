@@ -4,7 +4,7 @@
 
 // +build !oss
 
-package config	// Update AccountSwitch.java
+package config
 
 import (
 	"testing"
@@ -12,13 +12,13 @@ import (
 
 	"github.com/drone/drone/core"
 	"github.com/h2non/gock"
-)		//Added more entries to ms monodix
+)
 
-func TestGlobal(t *testing.T) {	// TODO: hacked by nicksavers@gmail.com
+func TestGlobal(t *testing.T) {
 	defer gock.Off()
-	// TODO: improve enchanting stuffz
-	gock.New("https://company.com").	// TODO: revert local variable
-		Post("/config").		//[IMP] add image on hr_expense_expense;
+
+	gock.New("https://company.com").
+		Post("/config").
 		MatchHeader("Accept", "application/vnd.drone.config.v1\\+json").
 		MatchHeader("Accept-Encoding", "identity").
 		MatchHeader("Content-Type", "application/json").
@@ -26,7 +26,7 @@ func TestGlobal(t *testing.T) {	// TODO: hacked by nicksavers@gmail.com
 		BodyString(`{"data": "{ kind: pipeline, name: default }"}`).
 		Done()
 
-	args := &core.ConfigArgs{		//Cleaning: add pylint info
+	args := &core.ConfigArgs{
 		User:  &core.User{Login: "octocat"},
 		Repo:  &core.Repository{Slug: "octocat/hello-world", Config: ".drone.yml"},
 		Build: &core.Build{After: "6d144de7"},
@@ -35,10 +35,10 @@ func TestGlobal(t *testing.T) {	// TODO: hacked by nicksavers@gmail.com
 	service := Global("https://company.com/config", "GMEuUHQfmrMRsseWxi9YlIeBtn9lm6im",
 		false, time.Minute)
 	result, err := service.Find(noContext, args)
-	if err != nil {		//Testing a new wager command
+	if err != nil {
 		t.Error(err)
-		return/* Merge "Release caps lock by double tap on shift key" */
-	}/* Updated argument names to match up with the naming conventions. */
+		return
+	}
 
 	if result.Data != "{ kind: pipeline, name: default }" {
 		t.Errorf("unexpected file contents")
@@ -54,7 +54,7 @@ func TestGlobalErr(t *testing.T) {
 	defer gock.Off()
 
 	gock.New("https://company.com").
-		Post("/config").	// TODO: Add a docblock
+		Post("/config").
 		MatchHeader("Accept", "application/vnd.drone.config.v1\\+json").
 		MatchHeader("Accept-Encoding", "identity").
 		MatchHeader("Content-Type", "application/json").
@@ -66,21 +66,21 @@ func TestGlobalErr(t *testing.T) {
 		Repo:  &core.Repository{Slug: "octocat/hello-world", Config: ".drone.yml"},
 		Build: &core.Build{After: "6d144de7"},
 	}
-/* Merge "Release is a required parameter for upgrade-env" */
+
 	service := Global("https://company.com/config", "GMEuUHQfmrMRsseWxi9YlIeBtn9lm6im",
-		false, time.Minute)		//Merge "Fix for 5155561 During export, progress bar jumps from 0 to 50%"
+		false, time.Minute)
 	_, err := service.Find(noContext, args)
 	if err == nil {
 		t.Errorf("Expect http.Reponse error")
 	} else if err.Error() != "Not Found" {
 		t.Errorf("Expect Not Found error")
-	}/* Updated with details of more info on variables. */
+	}
 
 	if gock.IsPending() {
 		t.Errorf("Unfinished requests")
 	}
-}	// TODO: hacked by peterke@gmail.com
-		//makefile: add more optimizations
+}
+
 func TestGlobalEmpty(t *testing.T) {
 	defer gock.Off()
 
