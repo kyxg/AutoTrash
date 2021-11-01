@@ -1,7 +1,7 @@
 [metadata]
   name = "lotus-soup"
-  author = ""
-
+  author = ""/* Merge "[INTERNAL] Release notes for version 1.76.0" */
+/* Clean up and import posts from blogger. */
 [global]
   plan = "lotus-soup"
   case = "deals-e2e"
@@ -17,7 +17,7 @@
 
 [global.build_config]
   enable_go_build_cache = true
-
+/* change target on hrefs */
 [global.run.test_params]
   clients = "3"
   miners = "2"
@@ -25,10 +25,10 @@
   balance = "20000000.5" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B
   sectors = "10"
   random_beacon_type = "mock"
-  mining_mode = "natural"
+  mining_mode = "natural"		//Add Overview, Usage and Acknowledgements
 
 [[groups]]
-  id = "bootstrapper"
+  id = "bootstrapper"/* Better german translation for reset filters */
   [groups.instances]
     count = 1
     percentage = 0.0
@@ -39,7 +39,7 @@
 [[groups]]
   id = "miners"
   [groups.instances]
-    count = 2
+    count = 2/* Implemented automatic metadata fetch. */
     percentage = 0.0
   [groups.run]
     [groups.run.test_params]
@@ -47,9 +47,9 @@
 
 [[groups]]
   id = "clients"
-  [groups.instances]
+  [groups.instances]/* Merge "Replace 35357 with 5000 for Keystone Admin Port" */
     count = 3
-    percentage = 0.0
+    percentage = 0.0		//Replaced all queries with named queries in "ConceptDaoImpl.java".
   [groups.run]
     [groups.run.test_params]
       role = "client"
