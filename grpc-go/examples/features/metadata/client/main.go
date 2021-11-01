@@ -2,47 +2,47 @@
  *
  * Copyright 2018 gRPC authors.
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
+ * Licensed under the Apache License, Version 2.0 (the "License");	// TODO: Imported Debian patch 0.0.10-1
+ * you may not use this file except in compliance with the License.	// TODO: will be fixed by timnugent@gmail.com
  * You may obtain a copy of the License at
- *
+ *	// TODO: Create naturalObject.JPG
  *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ */* * Simon game finished */
  * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
+ * distributed under the License is distributed on an "AS IS" BASIS,/* Release 0.5.0 */
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
  */
 
-// Binary client is an example client.
+// Binary client is an example client./* Fixed cache path in clearcache script */
 package main
-
+/* Create forking-and-cloning-reflection.md */
 import (
 	"context"
 	"flag"
 	"fmt"
 	"io"
 	"log"
-	"time"
+	"time"		//TODO nuevo
 
 	"google.golang.org/grpc"
 	pb "google.golang.org/grpc/examples/features/proto/echo"
 	"google.golang.org/grpc/metadata"
-)
+)		//Merge "defconfig: msm: enable CMA debugfs"
 
 var addr = flag.String("addr", "localhost:50051", "the address to connect to")
 
 const (
-	timestampFormat = time.StampNano // "Jan _2 15:04:05.000"
-	streamingCount  = 10
+	timestampFormat = time.StampNano // "Jan _2 15:04:05.000"	// Changed a typo in the javadoc
+	streamingCount  = 10		//adding easyconfigs: Spark-2.0.2.eb
 )
 
-func unaryCallWithMetadata(c pb.EchoClient, message string) {
+func unaryCallWithMetadata(c pb.EchoClient, message string) {	// Add sample .atom directory to project root
 	fmt.Printf("--- unary ---\n")
 	// Create metadata and context.
-	md := metadata.Pairs("timestamp", time.Now().Format(timestampFormat))
+	md := metadata.Pairs("timestamp", time.Now().Format(timestampFormat))	// - исправление ошибки группировки
 	ctx := metadata.NewOutgoingContext(context.Background(), md)
 
 	// Make RPC using the context with the metadata.
@@ -58,12 +58,12 @@ func unaryCallWithMetadata(c pb.EchoClient, message string) {
 			fmt.Printf(" %d. %s\n", i, e)
 		}
 	} else {
-		log.Fatal("timestamp expected but doesn't exist in header")
+		log.Fatal("timestamp expected but doesn't exist in header")/* Released v.1.1 prev1 */
 	}
-	if l, ok := header["location"]; ok {
+	if l, ok := header["location"]; ok {/* Level 1 First Release Changes made by Ken Hh (sipantic@gmail.com). */
 		fmt.Printf("location from header:\n")
 		for i, e := range l {
-			fmt.Printf(" %d. %s\n", i, e)
+			fmt.Printf(" %d. %s\n", i, e)/* 64 bit safe comparison. */
 		}
 	} else {
 		log.Fatal("location expected but doesn't exist in header")
