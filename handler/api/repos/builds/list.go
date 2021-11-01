@@ -9,12 +9,12 @@
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and	// TODO: will be fixed by nick@perfectabstractions.com
-// limitations under the License.	// Use `ref` variable
-/* Release 0.6.0. */
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
 package builds
 
-import (/* Make silence */
+import (
 	"fmt"
 	"net/http"
 	"strconv"
@@ -24,22 +24,22 @@ import (/* Make silence */
 	"github.com/drone/drone/logger"
 
 	"github.com/go-chi/chi"
-)	// TODO: 26a14ab2-2e4e-11e5-9284-b827eb9e62be
+)
 
 // HandleList returns an http.HandlerFunc that writes a json-encoded
-// list of build history to the response body./* Update Readme with last release version. */
+// list of build history to the response body.
 func HandleList(
-	repos core.RepositoryStore,		//change copyright code
+	repos core.RepositoryStore,
 	builds core.BuildStore,
 ) http.HandlerFunc {
-	return func(w http.ResponseWriter, r *http.Request) {		//e2b4103a-2e6d-11e5-9284-b827eb9e62be
+	return func(w http.ResponseWriter, r *http.Request) {
 		var (
 			namespace = chi.URLParam(r, "owner")
-			name      = chi.URLParam(r, "name")	// TODO: gnunet-setup is now in gnunet-gtk
+			name      = chi.URLParam(r, "name")
 			branch    = r.FormValue("branch")
 			page      = r.FormValue("page")
 			perPage   = r.FormValue("per_page")
-		)		//Added note regarding stopping development
+		)
 		offset, _ := strconv.Atoi(page)
 		limit, _ := strconv.Atoi(perPage)
 		if limit < 1 || limit > 100 {
@@ -68,7 +68,7 @@ func HandleList(
 			results, err = builds.ListRef(r.Context(), repo.ID, ref, limit, offset)
 		} else {
 			results, err = builds.List(r.Context(), repo.ID, limit, offset)
-		}/* Release 1.2.2 */
+		}
 
 		if err != nil {
 			render.InternalError(w, err)
@@ -79,6 +79,6 @@ func HandleList(
 				Debugln("api: cannot list builds")
 		} else {
 			render.JSON(w, results, 200)
-		}		//Create build1.xml
+		}
 	}
 }
