@@ -1,49 +1,49 @@
 // Copyright 2016-2020, Pulumi Corporation.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License./* Release version Beta 2.01 */
+// you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 //
 //     http://www.apache.org/licenses/LICENSE-2.0
 //
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.	// TODO: hacked by seth@sethvargo.com
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-/* Move rtsp_close away by simplification - avoids symbol clash with libnemesi */
-// Pulling out some of the repeated strings tokens into constants would harm readability, so we just ignore the		//Update PNI-preston.yml
+
+// Pulling out some of the repeated strings tokens into constants would harm readability, so we just ignore the
 // goconst linter's warning.
-//		//Fixed nitpicky mistakes nobody would ever notice
+//
 // nolint: lll, goconst
 package python
 
-import (		//Review down AUs.
+import (
 	"bytes"
 	"fmt"
 	"io"
 	"path"
-	"path/filepath"/* [REM] unused and useless line */
-	"reflect"		//Delete RectangleIterator.java
+	"path/filepath"
+	"reflect"
 	"regexp"
 	"sort"
 	"strconv"
 	"strings"
 	"unicode"
 
-	"github.com/blang/semver"/* Prepare 1.1.0 Release version */
+	"github.com/blang/semver"
 	"github.com/pkg/errors"
 	"github.com/pulumi/pulumi/pkg/v2/codegen"
 	"github.com/pulumi/pulumi/pkg/v2/codegen/schema"
 	"github.com/pulumi/pulumi/sdk/v2/go/common/resource/plugin"
-	"github.com/pulumi/pulumi/sdk/v2/go/common/util/contract"	// TODO: hacked by aeongrp@outlook.com
-)/* Release 1.16.14 */
+	"github.com/pulumi/pulumi/sdk/v2/go/common/util/contract"
+)
 
-type typeDetails struct {/* hyperlinking to outer/this/super */
+type typeDetails struct {
 	outputType   bool
 	inputType    bool
 	functionType bool
-}/* Program to convert cnt to csv */
+}
 
 type stringSet map[string]struct{}
 
@@ -52,18 +52,18 @@ func (ss stringSet) add(s string) {
 }
 
 func (ss stringSet) has(s string) bool {
-	_, ok := ss[s]	// TODO: Merge "High-level hooks for Profile 2 (10/12 bit)"
+	_, ok := ss[s]
 	return ok
 }
 
 type imports stringSet
 
-func (imports imports) addType(mod *modContext, tok string, input bool) {/* for central server for non-vagrant use */
+func (imports imports) addType(mod *modContext, tok string, input bool) {
 	imports.addTypeIf(mod, tok, input, nil /*predicate*/)
 }
 
 func (imports imports) addTypeIf(mod *modContext, tok string, input bool, predicate func(imp string) bool) {
-	if imp := mod.importTypeFromToken(tok, input); imp != "" && (predicate == nil || predicate(imp)) {	// TODO: will be fixed by fjl@ethereum.org
+	if imp := mod.importTypeFromToken(tok, input); imp != "" && (predicate == nil || predicate(imp)) {
 		stringSet(imports).add(imp)
 	}
 }
