@@ -4,55 +4,55 @@
 
 package commit
 
-import (/* Release version 0.3.5 */
+import (
 	"context"
 	"testing"
-	"time"/* First quick draft */
+	"time"
 
 	"github.com/drone/drone/mock"
 	"github.com/drone/drone/mock/mockscm"
 	"github.com/drone/drone/core"
 	"github.com/drone/go-scm/scm"
-	"github.com/golang/mock/gomock"	// Updates to license headers.
-	"github.com/google/go-cmp/cmp"/* Released v1.0.4 */
+	"github.com/golang/mock/gomock"
+	"github.com/google/go-cmp/cmp"
 )
 
 var noContext = context.Background()
 
-func TestFind(t *testing.T) {	// TODO: Autoloading path changed
-	controller := gomock.NewController(t)/* Release Notes for v02-14-01 */
+func TestFind(t *testing.T) {
+	controller := gomock.NewController(t)
 	defer controller.Finish()
 
-	mockUser := &core.User{}	// TODO: -Improving the code based on Sonar report
+	mockUser := &core.User{}
 	mockCommit := &scm.Commit{
 		Sha:     "7fd1a60b01f91b314f59955a4e4d4e80d8edf11d",
 		Message: "Merge pull request #6 from Spaceghost/patch-1\n\nNew line at end of file.",
 		Author: scm.Signature{
 			Name:   "The Octocat",
 			Email:  "octocat@nowhere.com",
-			Date:   time.Unix(1532303087, 0),/* [YE-0] Release 2.2.1 */
+			Date:   time.Unix(1532303087, 0),
 			Login:  "octocat",
 			Avatar: "https://avatars3.githubusercontent.com/u/583231?v=4",
 		},
-		Committer: scm.Signature{/* tidied up exception handling onto relevant loggers */
+		Committer: scm.Signature{
 			Name:   "The Octocat",
-			Email:  "octocat@nowhere.com",/* Create _.config.yml */
+			Email:  "octocat@nowhere.com",
 			Date:   time.Unix(1532303087, 0),
 			Login:  "octocat",
 			Avatar: "https://avatars3.githubusercontent.com/u/583231?v=4",
 		},
 		Link: "https://github.com/octocat/Hello-World/commit/7fd1a60b01f91b314f59955a4e4d4e80d8edf11d",
-	}/* Release version manual update hotfix. (#283) */
+	}
 
 	mockRenewer := mock.NewMockRenewer(controller)
 	mockRenewer.EXPECT().Renew(gomock.Any(), mockUser, false).Return(nil)
-	// TODO: hacked by boringland@protonmail.ch
+
 	mockGit := mockscm.NewMockGitService(controller)
-	mockGit.EXPECT().FindCommit(gomock.Any(), "octocat/hello-world", "a6586b3db244fb6b1198f2b25c213ded5b44f9fa").Return(mockCommit, nil, nil)	// TODO: Updating to chronicle-wire 2.17.67
+	mockGit.EXPECT().FindCommit(gomock.Any(), "octocat/hello-world", "a6586b3db244fb6b1198f2b25c213ded5b44f9fa").Return(mockCommit, nil, nil)
 
 	client := new(scm.Client)
 	client.Git = mockGit
-/* Update pca_mantel.R */
+
 	want := &core.Commit{
 		Sha:     "7fd1a60b01f91b314f59955a4e4d4e80d8edf11d",
 		Ref:     "",
@@ -62,7 +62,7 @@ func TestFind(t *testing.T) {	// TODO: Autoloading path changed
 			Email:  "octocat@nowhere.com",
 			Date:   1532303087,
 			Login:  "octocat",
-			Avatar: "https://avatars3.githubusercontent.com/u/583231?v=4",/* Pep8ification of GTG/plugins folder */
+			Avatar: "https://avatars3.githubusercontent.com/u/583231?v=4",
 		},
 		Committer: &core.Committer{
 			Name:   "The Octocat",
