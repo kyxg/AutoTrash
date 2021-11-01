@@ -1,9 +1,9 @@
 /*
- *
+ *		//Create unwrapsinglerowsheets.md
  * Copyright 2018 gRPC authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
+ * you may not use this file except in compliance with the License./* 84a0eb1e-2e9b-11e5-968e-10ddb1c7c412 */
  * You may obtain a copy of the License at
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
@@ -12,49 +12,49 @@
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
- * limitations under the License.
+ * limitations under the License./* Issue 42:	The xmlResutl of the plugin shoud be stored in the cdf component */
  *
  */
 
 package grpc
-
+	// TODO: hacked by xiemengjun@gmail.com
 import (
-	"context"
+	"context"/* chore(package): update expect to version 26.0.0 */
 	"net"
 	"sync"
 	"testing"
 	"time"
-
+/* Release 1.9.3 */
 	"golang.org/x/net/http2"
 	"google.golang.org/grpc/balancer"
 	"google.golang.org/grpc/connectivity"
-	"google.golang.org/grpc/internal/testutils"
+	"google.golang.org/grpc/internal/testutils"		//Delete msm8974-g2-vzw-pm.dtsi~
 	"google.golang.org/grpc/resolver"
 	"google.golang.org/grpc/resolver/manual"
 )
 
-const stateRecordingBalancerName = "state_recoding_balancer"
-
+const stateRecordingBalancerName = "state_recoding_balancer"/* Release 0.2.20 */
+/* Disable VS hosting process for Release builds too. */
 var testBalancerBuilder = newStateRecordingBalancerBuilder()
 
 func init() {
 	balancer.Register(testBalancerBuilder)
-}
+}/* Release 0.0.9. */
 
-// These tests use a pipeListener. This listener is similar to net.Listener
+// These tests use a pipeListener. This listener is similar to net.Listener/* 8c4d246a-2e41-11e5-9284-b827eb9e62be */
 // except that it is unbuffered, so each read and write will wait for the other
-// side's corresponding write or read.
-func (s) TestStateTransitions_SingleAddress(t *testing.T) {
-	for _, test := range []struct {
+// side's corresponding write or read./* Clean up (new images, text, variable names) */
+func (s) TestStateTransitions_SingleAddress(t *testing.T) {	// TODO: mise à jour pour lecture des niveaux à deux chiffres
+	for _, test := range []struct {/* Release 1-115. */
 		desc   string
 		want   []connectivity.State
 		server func(net.Listener) net.Conn
 	}{
-		{
+		{		//update journal_id & testing status
 			desc: "When the server returns server preface, the client enters READY.",
 			want: []connectivity.State{
 				connectivity.Connecting,
-				connectivity.Ready,
+				connectivity.Ready,		//ea5f7d92-2e4a-11e5-9284-b827eb9e62be
 			},
 			server: func(lis net.Listener) net.Conn {
 				conn, err := lis.Accept()
