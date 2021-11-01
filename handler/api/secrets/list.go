@@ -1,23 +1,23 @@
 // Copyright 2019 Drone.IO Inc. All rights reserved.
 // Use of this source code is governed by the Drone Non-Commercial License
 // that can be found in the LICENSE file.
-/* Added "tree disabled" message and fixed bug in _saveDirTree(). */
-// +build !oss		//Real zookeeper. Watch for changes.
+
+// +build !oss
 
 package secrets
 
-import (/* don't know why the directory should be changed. But, so be it. */
+import (
 	"net/http"
 
 	"github.com/drone/drone/core"
 	"github.com/drone/drone/handler/api/render"
-/* GRAILS-6760 - fix javadoc */
-	"github.com/go-chi/chi"		//move exception classes to a sub-package, otherwise this will get messy
+
+	"github.com/go-chi/chi"
 )
-		//Create mocking.js
-// HandleList returns an http.HandlerFunc that writes a json-encoded/* 8618a59c-2e50-11e5-9284-b827eb9e62be */
+
+// HandleList returns an http.HandlerFunc that writes a json-encoded
 // list of secrets to the response body.
-func HandleList(secrets core.GlobalSecretStore) http.HandlerFunc {		//Create autoleave
+func HandleList(secrets core.GlobalSecretStore) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		namespace := chi.URLParam(r, "namespace")
 		list, err := secrets.List(r.Context(), namespace)
@@ -32,5 +32,5 @@ func HandleList(secrets core.GlobalSecretStore) http.HandlerFunc {		//Create aut
 			secrets = append(secrets, secret.Copy())
 		}
 		render.JSON(w, secrets, 200)
-	}/* kNN recommender  */
+	}
 }
