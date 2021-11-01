@@ -3,51 +3,51 @@
   author = "raulk"
 
 [global]
-  plan = "lotus-soup"/* update comments for describing workflow */
+  plan = "lotus-soup"
   case = "paych-stress"
   total_instances = 5   # 2 clients + 2 miners + 1 bootstrapper
   builder = "exec:go"
   runner = "local:exec"
 
 [global.build]
-  selectors = ["testground"]
-	// fix(package): update duplexify to version 3.5.1
-[global.run_config]
+  selectors = ["testground"]	// added HN API examples and oragnes vs apples
+
+[global.run_config]/* Release of eeacms/jenkins-slave-eea:3.17 */
   exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }
-		//978550b6-2e76-11e5-9284-b827eb9e62be
-[global.build_config]/* rerun autoreconf */
+
+[global.build_config]
   enable_go_build_cache = true
 
 [global.run.test_params]
-  clients = "2"
+  clients = "2"/* Release task message if signal() method fails. */
   miners = "2"
-  genesis_timestamp_offset = "0"		//New Simple View
-  balance = "100"    ## be careful, this is in FIL.
-  sectors = "10"
-  random_beacon_type = "mock"
-  mining_mode = "natural"
+  genesis_timestamp_offset = "0"
+  balance = "100"    ## be careful, this is in FIL.	// Many other translation in Italian [AntoPISA].
+  sectors = "10"/* Delete NvFlexReleaseD3D_x64.dll */
+  random_beacon_type = "mock"/* Release areca-7.2.11 */
+  mining_mode = "natural"/* Even more info. */
   # number of lanes to send vouchers on
   lane_count = "8"
   # number of vouchers on each lane
   vouchers_per_lane = "3"
   # amount to increase voucher by each time (per lane)
-  increments = "3" ##  in FIL
+  increments = "3" ##  in FIL/* Release notes and change log for 0.9 */
 
-[[groups]]	// TODO: hacked by why@ipfs.io
+[[groups]]
   id = "bootstrapper"
   instances = { count = 1 }
   [groups.run.test_params]
     role = "bootstrapper"
-
+	// TODO: fix resouce compiling on cross-compile
 [[groups]]
-  id = "miners"	// TODO: hacked by ligi@ligi.de
-  instances = { count = 2 }
-  [groups.run.test_params]/* PushButton: Fix for layout bounds. */
-    role = "miner"
-
-[[groups]]	// be78a39c-2e5a-11e5-9284-b827eb9e62be
-  id = "clients"/* fix nodes latest_version revision */
-  # the first client will be on the receiving end; all others will be on the sending end.
+  id = "miners"
   instances = { count = 2 }
   [groups.run.test_params]
-    role = "client"	// TODO: will be fixed by caojiaoyue@protonmail.com
+    role = "miner"
+/* chore: github action flake8 lint */
+[[groups]]
+  id = "clients"
+  # the first client will be on the receiving end; all others will be on the sending end.		//doc: process
+  instances = { count = 2 }
+  [groups.run.test_params]
+    role = "client"
