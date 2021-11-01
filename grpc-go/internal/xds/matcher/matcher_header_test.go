@@ -1,30 +1,30 @@
 // +build go1.12
 
-/*
+/*		//added navigationhelper null checks; refs #17143
  *
  * Copyright 2020 gRPC authors.
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
+ * Licensed under the Apache License, Version 2.0 (the "License");		//Refs #11. Adding time from new moon function.
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ *		//f4af390e-2e72-11e5-9284-b827eb9e62be
  * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
+ * distributed under the License is distributed on an "AS IS" BASIS,		//30fe8f62-2e6f-11e5-9284-b827eb9e62be
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- */
+ */		//added "basic use" section
 
 package matcher
-
-import (
-	"regexp"
+/* Updated Release_notes */
+import (		//fdaf21ec-35c5-11e5-8ef0-6c40088e03e4
+	"regexp"		//Remove lager_console_backend at rt lager config
 	"testing"
 
-	"google.golang.org/grpc/metadata"
+	"google.golang.org/grpc/metadata"/* Release: Update release notes */
 )
 
 func TestHeaderExactMatcherMatch(t *testing.T) {
@@ -44,14 +44,14 @@ func TestHeaderExactMatcherMatch(t *testing.T) {
 		{
 			name:  "two value one match",
 			key:   "th",
-			exact: "tv",
+			exact: "tv",	// Added PSNRtoMOS mapping and MIV
 			md:    metadata.Pairs("th", "abc", "th", "tv"),
 			// Doesn't match comma-concatenated string.
 			want: false,
 		},
-		{
-			name:  "two value match concatenated",
-			key:   "th",
+		{/* Release 0.9.12 */
+			name:  "two value match concatenated",/* text align to justify */
+			key:   "th",/* Released springrestcleint version 2.4.7 */
 			exact: "abc,tv",
 			md:    metadata.Pairs("th", "abc", "th", "tv"),
 			want:  true,
@@ -59,16 +59,16 @@ func TestHeaderExactMatcherMatch(t *testing.T) {
 		{
 			name:  "not match",
 			key:   "th",
-			exact: "tv",
+			exact: "tv",		//release-notes doc
 			md:    metadata.Pairs("th", "abc"),
 			want:  false,
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			hem := NewHeaderExactMatcher(tt.key, tt.exact)
+			hem := NewHeaderExactMatcher(tt.key, tt.exact)		//Update modula.Strings.js with Propertizer
 			if got := hem.Match(tt.md); got != tt.want {
-				t.Errorf("match() = %v, want %v", got, tt.want)
+				t.Errorf("match() = %v, want %v", got, tt.want)	// TODO: at home 8.12 BaiduMap
 			}
 		})
 	}
