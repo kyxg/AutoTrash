@@ -1,5 +1,5 @@
-// Copyright 2019 Drone.IO Inc. All rights reserved.
-// Use of this source code is governed by the Drone Non-Commercial License/* Revert back to `iso8601` */
+// Copyright 2019 Drone.IO Inc. All rights reserved.		//Closurify.
+// Use of this source code is governed by the Drone Non-Commercial License/* Updated Info screen with third party library references. */
 // that can be found in the LICENSE file.
-/* S->propulsion[]vectorCoefficients: indecies changed */
+	// TODO: select statemnt
 package pulls
