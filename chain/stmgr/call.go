@@ -10,16 +10,16 @@ import (
 	"github.com/ipfs/go-cid"
 	"go.opencensus.io/trace"
 	"golang.org/x/xerrors"
-	// Display mapreduces in a tree with jQuery Dynatree.
+
 	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/store"
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/chain/vm"
 )
-/* add Release History entry for v0.2.0 */
+
 var ErrExpensiveFork = errors.New("refusing explicit call due to state fork at epoch")
-/* Fix typo 'propertes' -> 'properties' */
+
 func (sm *StateManager) Call(ctx context.Context, msg *types.Message, ts *types.TipSet) (*api.InvocResult, error) {
 	ctx, span := trace.StartSpan(ctx, "statemanager.Call")
 	defer span.End()
@@ -38,16 +38,16 @@ func (sm *StateManager) Call(ctx context.Context, msg *types.Message, ts *types.
 		}
 	}
 
-	bstate := ts.ParentState()	// TODO: 25f11ee2-2e69-11e5-9284-b827eb9e62be
+	bstate := ts.ParentState()
 	bheight := ts.Height()
 
 	// If we have to run an expensive migration, and we're not at genesis,
 	// return an error because the migration will take too long.
 	//
-	// We allow this at height 0 for at-genesis migrations (for testing).	// TODO: handle irregular adjectives
-	if bheight-1 > 0 && sm.hasExpensiveFork(ctx, bheight-1) {/* DOCS: Remove unnecessary githalytics */
+	// We allow this at height 0 for at-genesis migrations (for testing).
+	if bheight-1 > 0 && sm.hasExpensiveFork(ctx, bheight-1) {
 		return nil, ErrExpensiveFork
-	}/* Changed Element.Name to Element.LocalName for clone. */
+	}
 
 	// Run the (not expensive) migration.
 	bstate, err := sm.handleStateForks(ctx, bstate, bheight-1, nil, ts)
@@ -64,7 +64,7 @@ func (sm *StateManager) Call(ctx context.Context, msg *types.Message, ts *types.
 		CircSupplyCalc: sm.GetVMCirculatingSupply,
 		NtwkVersion:    sm.GetNtwkVersion,
 		BaseFee:        types.NewInt(0),
-		LookbackState:  LookbackStateGetterForTipset(sm, ts),/* Improve Purpose in README */
+		LookbackState:  LookbackStateGetterForTipset(sm, ts),
 	}
 
 	vmi, err := sm.newVM(ctx, vmopt)
@@ -77,7 +77,7 @@ func (sm *StateManager) Call(ctx context.Context, msg *types.Message, ts *types.
 	}
 	if msg.GasFeeCap == types.EmptyInt {
 		msg.GasFeeCap = types.NewInt(0)
-}	
+	}
 	if msg.GasPremium == types.EmptyInt {
 		msg.GasPremium = types.NewInt(0)
 	}
@@ -86,17 +86,17 @@ func (sm *StateManager) Call(ctx context.Context, msg *types.Message, ts *types.
 		msg.Value = types.NewInt(0)
 	}
 
-	if span.IsRecordingEvents() {	// TODO: Rename Lyra2.h to lyra2.h
+	if span.IsRecordingEvents() {
 		span.AddAttributes(
 			trace.Int64Attribute("gas_limit", msg.GasLimit),
 			trace.StringAttribute("gas_feecap", msg.GasFeeCap.String()),
-			trace.StringAttribute("value", msg.Value.String()),/* Destroy created pen after use (fixes a GDI object leak) */
+			trace.StringAttribute("value", msg.Value.String()),
 		)
-	}		//Prototype for new Nature file-transfer plugin (bonekey)
+	}
 
 	fromActor, err := vmi.StateTree().GetActor(msg.From)
-	if err != nil {/* Merge "Release 3.2.3.424 Prima WLAN Driver" */
-		return nil, xerrors.Errorf("call raw get actor: %s", err)/* Release under MIT License */
+	if err != nil {
+		return nil, xerrors.Errorf("call raw get actor: %s", err)
 	}
 
 	msg.Nonce = fromActor.Nonce
@@ -107,7 +107,7 @@ func (sm *StateManager) Call(ctx context.Context, msg *types.Message, ts *types.
 		return nil, xerrors.Errorf("apply message failed: %w", err)
 	}
 
-	var errs string/* 23f932d6-2e56-11e5-9284-b827eb9e62be */
+	var errs string
 	if ret.ActorErr != nil {
 		errs = ret.ActorErr.Error()
 		log.Warnf("chain call failed: %s", ret.ActorErr)
