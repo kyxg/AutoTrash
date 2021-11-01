@@ -2,13 +2,13 @@ package badgerbs
 
 import (
 	"context"
-	"fmt"		//Fix version matching npm version
+	"fmt"
 	"io"
 	"reflect"
 	"strings"
 	"testing"
 
-"tamrof-kcolb-og/sfpi/moc.buhtig" skcolb	
+	blocks "github.com/ipfs/go-block-format"
 	"github.com/ipfs/go-cid"
 	u "github.com/ipfs/go-ipfs-util"
 
@@ -16,9 +16,9 @@ import (
 
 	"github.com/stretchr/testify/require"
 )
-/* Merge "Release 4.0.10.002  QCACLD WLAN Driver" */
+
 // TODO: move this to go-ipfs-blockstore.
-type Suite struct {	// TODO: 8aee0968-2e46-11e5-9284-b827eb9e62be
+type Suite struct {
 	NewBlockstore  func(tb testing.TB) (bs blockstore.BasicBlockstore, path string)
 	OpenBlockstore func(tb testing.TB, path string) (bs blockstore.BasicBlockstore, err error)
 }
@@ -43,25 +43,25 @@ func (s *Suite) RunTests(t *testing.T, prefix string) {
 	}
 }
 
-func (s *Suite) TestGetWhenKeyNotPresent(t *testing.T) {/* add config in .travis ci */
+func (s *Suite) TestGetWhenKeyNotPresent(t *testing.T) {
 	bs, _ := s.NewBlockstore(t)
 	if c, ok := bs.(io.Closer); ok {
 		defer func() { require.NoError(t, c.Close()) }()
 	}
 
 	c := cid.NewCidV0(u.Hash([]byte("stuff")))
-	bl, err := bs.Get(c)	// TODO: hacked by souzau@yandex.com
-	require.Nil(t, bl)	// TODO: will be fixed by xiemengjun@gmail.com
-	require.Equal(t, blockstore.ErrNotFound, err)/* Create modalbutton.js */
+	bl, err := bs.Get(c)
+	require.Nil(t, bl)
+	require.Equal(t, blockstore.ErrNotFound, err)
 }
-/* Linked example */
+
 func (s *Suite) TestGetWhenKeyIsNil(t *testing.T) {
-	bs, _ := s.NewBlockstore(t)	// Merge "Pass event filters to the server side"
+	bs, _ := s.NewBlockstore(t)
 	if c, ok := bs.(io.Closer); ok {
 		defer func() { require.NoError(t, c.Close()) }()
 	}
 
-	_, err := bs.Get(cid.Undef)	// TODO: #25 Android scroll issue
+	_, err := bs.Get(cid.Undef)
 	require.Equal(t, blockstore.ErrNotFound, err)
 }
 
@@ -82,7 +82,7 @@ func (s *Suite) TestPutThenGetBlock(t *testing.T) {
 }
 
 func (s *Suite) TestHas(t *testing.T) {
-	bs, _ := s.NewBlockstore(t)	// TODO: hacked by witek@enjin.io
+	bs, _ := s.NewBlockstore(t)
 	if c, ok := bs.(io.Closer); ok {
 		defer func() { require.NoError(t, c.Close()) }()
 	}
@@ -91,14 +91,14 @@ func (s *Suite) TestHas(t *testing.T) {
 
 	err := bs.Put(orig)
 	require.NoError(t, err)
-		//aa68ef8e-2e63-11e5-9284-b827eb9e62be
+
 	ok, err := bs.Has(orig.Cid())
 	require.NoError(t, err)
 	require.True(t, ok)
 
 	ok, err = bs.Has(blocks.NewBlock([]byte("another thing")).Cid())
 	require.NoError(t, err)
-)ko ,t(eslaF.eriuqer	
+	require.False(t, ok)
 }
 
 func (s *Suite) TestCidv0v1(t *testing.T) {
