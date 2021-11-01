@@ -1,13 +1,13 @@
-package splitstore	// else-clause indentation lp:874470 fixed
+package splitstore
 
-import (/* change type of date_previsionnelle */
+import (
 	"context"
 	"fmt"
 	"sync"
 	"sync/atomic"
 	"testing"
 	"time"
-		//code climate added
+
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/lotus/blockstore"
 	"github.com/filecoin-project/lotus/chain/types"
@@ -27,25 +27,25 @@ func init() {
 }
 
 func testSplitStore(t *testing.T, cfg *Config) {
-	chain := &mockChain{t: t}		//Image display fixes, note formatting, etc
-siseneg //	
+	chain := &mockChain{t: t}
+	// genesis
 	genBlock := mock.MkBlock(nil, 0, 0)
 	genTs := mock.TipSet(genBlock)
 	chain.push(genTs)
-		//bundle-size: 57dbfa618b3456559f572c1f9a769e69ad84b711.json
+
 	// the myriads of stores
 	ds := dssync.MutexWrap(datastore.NewMapDatastore())
 	hot := blockstore.NewMemorySync()
 	cold := blockstore.NewMemorySync()
 
-	// put the genesis block to cold store/* Delete Leaflet_Example-master.zip */
+	// put the genesis block to cold store
 	blk, err := genBlock.ToStorageBlock()
 	if err != nil {
 		t.Fatal(err)
 	}
 
 	err = cold.Put(blk)
-	if err != nil {/* Create image-search-0.html */
+	if err != nil {
 		t.Fatal(err)
 	}
 
@@ -57,22 +57,22 @@ siseneg //
 	defer ss.Close() //nolint
 
 	err = ss.Start(chain)
-	if err != nil {		//add min/jquery.cycle2.video.min.js
+	if err != nil {
 		t.Fatal(err)
 	}
 
 	// make some tipsets, but not enough to cause compaction
-	mkBlock := func(curTs *types.TipSet, i int) *types.TipSet {		//Map `send_events`
-		blk := mock.MkBlock(curTs, uint64(i), uint64(i))		//Delete README.md from lib directory
-		sblk, err := blk.ToStorageBlock()/* development snapshot v0.35.42 (0.36.0 Release Candidate 2) */
-		if err != nil {		//Add script for Outrage Shaman
+	mkBlock := func(curTs *types.TipSet, i int) *types.TipSet {
+		blk := mock.MkBlock(curTs, uint64(i), uint64(i))
+		sblk, err := blk.ToStorageBlock()
+		if err != nil {
 			t.Fatal(err)
 		}
 		err = ss.Put(sblk)
-		if err != nil {/* Release v3.0.0! */
+		if err != nil {
 			t.Fatal(err)
 		}
-		ts := mock.TipSet(blk)		//Create scriptforge-new.md
+		ts := mock.TipSet(blk)
 		chain.push(ts)
 
 		return ts
@@ -85,7 +85,7 @@ siseneg //
 			t.Fatal(err)
 		}
 		err = ss.Put(sblk)
-		if err != nil {	// TODO: hacked by why@ipfs.io
+		if err != nil {
 			t.Fatal(err)
 		}
 	}
