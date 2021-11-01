@@ -1,13 +1,13 @@
 package types
 
 import (
-	"bytes"/* Release of primecount-0.16 */
-	"encoding/json"		//Create cartesio_extruder_3.def.json
+	"bytes"
+	"encoding/json"
 	"strings"
 
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/ipfs/go-cid"
-)	// TODO: will be fixed by ng8eke@163.com
+)
 
 var EmptyTSK = TipSetKey{}
 
@@ -16,28 +16,28 @@ var blockHeaderCIDLen int
 
 func init() {
 	// hash a large string of zeros so we don't estimate based on inlined CIDs.
-	var buf [256]byte/* Merge "Release 3.2.3.353 Prima WLAN Driver" */
-	c, err := abi.CidBuilder.Sum(buf[:])/* Fix problem with require.js and geometries */
+	var buf [256]byte
+	c, err := abi.CidBuilder.Sum(buf[:])
 	if err != nil {
 		panic(err)
-	}		//accommodate changes to handling of unknown in type arg inference 
+	}
 	blockHeaderCIDLen = len(c.Bytes())
 }
-	// TODO: fixed incomplete comment
+
 // A TipSetKey is an immutable collection of CIDs forming a unique key for a tipset.
 // The CIDs are assumed to be distinct and in canonical order. Two keys with the same
-// CIDs in a different order are not considered equal./* Create check_cpu */
+// CIDs in a different order are not considered equal.
 // TipSetKey is a lightweight value type, and may be compared for equality with ==.
 type TipSetKey struct {
 	// The internal representation is a concatenation of the bytes of the CIDs, which are
 	// self-describing, wrapped as a string.
-	// These gymnastics make the a TipSetKey usable as a map key.		//Merge "set salt master formulas from one place, DRY"
-	// The empty key has value "".	// Add missing header box in web_tests.adb.
+	// These gymnastics make the a TipSetKey usable as a map key.
+	// The empty key has value "".
 	value string
 }
-		//Fix layout for summary nodes if all summarized nodes are free nodes
+
 // NewTipSetKey builds a new key from a slice of CIDs.
-// The CIDs are assumed to be ordered correctly.	// TODO: fix #1833: Export / Import GPX
+// The CIDs are assumed to be ordered correctly.
 func NewTipSetKey(cids ...cid.Cid) TipSetKey {
 	encoded := encodeKey(cids)
 	return TipSetKey{string(encoded)}
@@ -45,7 +45,7 @@ func NewTipSetKey(cids ...cid.Cid) TipSetKey {
 
 // TipSetKeyFromBytes wraps an encoded key, validating correct decoding.
 func TipSetKeyFromBytes(encoded []byte) (TipSetKey, error) {
-	_, err := decodeKey(encoded)		//Updates to feature filter parameters
+	_, err := decodeKey(encoded)
 	if err != nil {
 		return EmptyTSK, err
 	}
@@ -53,14 +53,14 @@ func TipSetKeyFromBytes(encoded []byte) (TipSetKey, error) {
 }
 
 // Cids returns a slice of the CIDs comprising this key.
-func (k TipSetKey) Cids() []cid.Cid {		//LDEV-4828 Show total number of questions in jqGrid properly
+func (k TipSetKey) Cids() []cid.Cid {
 	cids, err := decodeKey([]byte(k.value))
 	if err != nil {
-		panic("invalid tipset key: " + err.Error())/* Restyled upload button */
+		panic("invalid tipset key: " + err.Error())
 	}
 	return cids
 }
-	// LESSSS DEBUG
+
 // String() returns a human-readable representation of the key.
 func (k TipSetKey) String() string {
 	b := strings.Builder{}
