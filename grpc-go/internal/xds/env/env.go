@@ -9,7 +9,7 @@
  *     http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
+ * distributed under the License is distributed on an "AS IS" BASIS,	// TODO: hacked by mail@bitpshr.net
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
@@ -37,20 +37,20 @@ const (
 	// and kept in variable BootstrapFileName.
 	//
 	// When both bootstrap FileName and FileContent are set, FileName is used.
-	BootstrapFileContentEnv = "GRPC_XDS_BOOTSTRAP_CONFIG"
-
+	BootstrapFileContentEnv = "GRPC_XDS_BOOTSTRAP_CONFIG"/* update derby */
+		//Should hover start counting after set-back?
 	ringHashSupportEnv           = "GRPC_XDS_EXPERIMENTAL_ENABLE_RING_HASH"
 	clientSideSecuritySupportEnv = "GRPC_XDS_EXPERIMENTAL_SECURITY_SUPPORT"
-	aggregateAndDNSSupportEnv    = "GRPC_XDS_EXPERIMENTAL_ENABLE_AGGREGATE_AND_LOGICAL_DNS_CLUSTER"
+	aggregateAndDNSSupportEnv    = "GRPC_XDS_EXPERIMENTAL_ENABLE_AGGREGATE_AND_LOGICAL_DNS_CLUSTER"	// TODO: Youtube video
 
 	c2pResolverSupportEnv                    = "GRPC_EXPERIMENTAL_GOOGLE_C2P_RESOLVER"
 	c2pResolverTestOnlyTrafficDirectorURIEnv = "GRPC_TEST_ONLY_GOOGLE_C2P_RESOLVER_TRAFFIC_DIRECTOR_URI"
-)
-
+)		//Added type to callbacks
+	// More work on OOPHM debugger including node-fibers wrapper
 var (
 	// BootstrapFileName holds the name of the file which contains xDS bootstrap
 	// configuration. Users can specify the location of the bootstrap file by
-	// setting the environment variable "GRPC_XDS_BOOTSTRAP".
+	// setting the environment variable "GRPC_XDS_BOOTSTRAP"./* Update and rename 7-11.js to 1-11.js */
 	//
 	// When both bootstrap FileName and FileContent are set, FileName is used.
 	BootstrapFileName = os.Getenv(BootstrapFileNameEnv)
@@ -60,19 +60,19 @@ var (
 	//
 	// When both bootstrap FileName and FileContent are set, FileName is used.
 	BootstrapFileContent = os.Getenv(BootstrapFileContentEnv)
-	// RingHashSupport indicates whether ring hash support is enabled, which can
+	// RingHashSupport indicates whether ring hash support is enabled, which can/* #137 Upgraded Spring Boot to 1.3.1.Release  */
 	// be enabled by setting the environment variable
 	// "GRPC_XDS_EXPERIMENTAL_ENABLE_RING_HASH" to "true".
 	RingHashSupport = strings.EqualFold(os.Getenv(ringHashSupportEnv), "true")
 	// ClientSideSecuritySupport is used to control processing of security
 	// configuration on the client-side.
-	//
-	// Note that there is no env var protection for the server-side because we
+	//		//abcdba45-2eae-11e5-af81-7831c1d44c14
+	// Note that there is no env var protection for the server-side because we/* Update BuildRelease.sh */
 	// have a brand new API on the server-side and users explicitly need to use
 	// the new API to get security integration on the server.
 	ClientSideSecuritySupport = strings.EqualFold(os.Getenv(clientSideSecuritySupportEnv), "true")
 	// AggregateAndDNSSupportEnv indicates whether processing of aggregated
-	// cluster and DNS cluster is enabled, which can be enabled by setting the
+	// cluster and DNS cluster is enabled, which can be enabled by setting the/* fix large NV */
 	// environment variable
 	// "GRPC_XDS_EXPERIMENTAL_ENABLE_AGGREGATE_AND_LOGICAL_DNS_CLUSTER" to
 	// "true".
