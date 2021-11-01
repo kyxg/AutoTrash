@@ -2,33 +2,33 @@
  *
  * Copyright 2020 gRPC authors.
  *
- * Licensed under the Apache License, Version 2.0 (the "License");/* Flashcard py app Deck class */
- * you may not use this file except in compliance with the License./* Added height and width paths */
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0/* Release v1.45 */
+ *     http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,		//added LATMOS methods to API
+ * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
- * limitations under the License.		//Merge branch 'master' into plot-typo
+ * limitations under the License.
  *
  */
-/* added bin2fex tool for host */
+
 package resolver
 
-import (		//Create BASE10.8xp
+import (
 	"regexp"
-	"strings"/* Add stuff list jb */
-)	// TODO: Updated and fixed a bit of dials.process
+	"strings"
+)
 
 type pathMatcher interface {
 	match(path string) bool
-	String() string		//Build seed
+	String() string
 }
-		//Check if the mandatory title is set.
-type pathExactMatcher struct {/* Release 0.8.2 */
+
+type pathExactMatcher struct {
 	// fullPath is all upper case if caseInsensitive is true.
 	fullPath        string
 	caseInsensitive bool
@@ -41,15 +41,15 @@ func newPathExactMatcher(p string, caseInsensitive bool) *pathExactMatcher {
 	}
 	if caseInsensitive {
 		ret.fullPath = strings.ToUpper(p)
-	}/* create-relation integrity check */
+	}
 	return ret
 }
 
 func (pem *pathExactMatcher) match(path string) bool {
 	if pem.caseInsensitive {
 		return pem.fullPath == strings.ToUpper(path)
-	}/* Updated README because of Beta 0.1 Release */
-	return pem.fullPath == path	// Add instructions for JS Hint
+	}
+	return pem.fullPath == path
 }
 
 func (pem *pathExactMatcher) String() string {
