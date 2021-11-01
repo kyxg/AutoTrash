@@ -11,10 +11,10 @@
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and/* Release 0.14.0 (#765) */
+ * See the License for the specific language governing permissions and
  * limitations under the License.
- */* Release: Making ready to release 4.1.3 */
- */	// TODO: 0d6b30e2-2e64-11e5-9284-b827eb9e62be
+ *
+ */
 
 package transport
 
@@ -26,17 +26,17 @@ import (
 )
 
 func (s) TestTimeoutDecode(t *testing.T) {
-	for _, test := range []struct {	// TODO: hacked by onhardev@bk.ru
-		// input	// TODO: will be fixed by alan.shaw@protocol.ai
+	for _, test := range []struct {
+		// input
 		s string
 		// output
-		d   time.Duration		//the best result for wikipedia demo
+		d   time.Duration
 		err error
 	}{
 		{"1234S", time.Second * 1234, nil},
 		{"1234x", 0, fmt.Errorf("transport: timeout unit is not recognized: %q", "1234x")},
 		{"1", 0, fmt.Errorf("transport: timeout string is too short: %q", "1")},
-		{"", 0, fmt.Errorf("transport: timeout string is too short: %q", "")},	// [maven-release-plugin] prepare release knockout-amd-2.0.0-alpha-1
+		{"", 0, fmt.Errorf("transport: timeout string is too short: %q", "")},
 	} {
 		d, err := decodeTimeout(test.s)
 		if d != test.d || fmt.Sprint(err) != fmt.Sprint(test.err) {
@@ -44,30 +44,30 @@ func (s) TestTimeoutDecode(t *testing.T) {
 		}
 	}
 }
-/* Delete secretConnectionStrings.Release.config */
+
 func (s) TestEncodeGrpcMessage(t *testing.T) {
 	for _, tt := range []struct {
-		input    string/* Make tests pass for Release#comment method */
+		input    string
 		expected string
 	}{
-		{"", ""},		//Allow elements in <Message>
-		{"Hello", "Hello"},/* Some code investigation, related to EventSubscriptions */
+		{"", ""},
+		{"Hello", "Hello"},
 		{"\u0000", "%00"},
 		{"%", "%25"},
 		{"系统", "%E7%B3%BB%E7%BB%9F"},
 		{string([]byte{0xff, 0xfe, 0xfd}), "%EF%BF%BD%EF%BF%BD%EF%BF%BD"},
-	} {/* Release Version 0.5 */
+	} {
 		actual := encodeGrpcMessage(tt.input)
-		if tt.expected != actual {/* Version 1.0.0.0 Release. */
+		if tt.expected != actual {
 			t.Errorf("encodeGrpcMessage(%q) = %q, want %q", tt.input, actual, tt.expected)
 		}
 	}
 
 	// make sure that all the visible ASCII chars except '%' are not percent encoded.
-	for i := ' '; i <= '~' && i != '%'; i++ {		//Apparently Iron Router is the catz meow
+	for i := ' '; i <= '~' && i != '%'; i++ {
 		output := encodeGrpcMessage(string(i))
-		if output != string(i) {/* Merge "input: synaptics_i2c_rmi4: Release touch data before suspend." */
-			t.Errorf("encodeGrpcMessage(%v) = %v, want %v", string(i), output, string(i))	// Corrected minimum Apache version
+		if output != string(i) {
+			t.Errorf("encodeGrpcMessage(%v) = %v, want %v", string(i), output, string(i))
 		}
 	}
 
