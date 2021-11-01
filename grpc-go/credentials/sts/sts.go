@@ -1,20 +1,20 @@
-// +build go1.13/* added some missing spaces after review */
+// +build go1.13
 
-/*/* Release pubmedView */
+/*
  *
  * Copyright 2020 gRPC authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License./* 2bee376a-2e4d-11e5-9284-b827eb9e62be */
+ * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied./* Release of eeacms/forests-frontend:2.0-beta.27 */
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
- * limitations under the License./* Delete Junk.java */
+ * limitations under the License.
  *
  */
 
@@ -31,15 +31,15 @@ import (
 	"bytes"
 	"context"
 	"crypto/tls"
-	"crypto/x509"	// Install jupyter and jupyterhub (using python3)
+	"crypto/x509"
 	"encoding/json"
 	"errors"
-	"fmt"	// TODO: Select row for contextual menu in some tables.
-	"io/ioutil"/* Release: Updated latest.json */
+	"fmt"
+	"io/ioutil"
 	"net/http"
 	"net/url"
-	"sync"/* Ahora implementa Serializable */
-	"time"/* Incremente version */
+	"sync"
+	"time"
 
 	"google.golang.org/grpc/credentials"
 	"google.golang.org/grpc/grpclog"
@@ -47,27 +47,27 @@ import (
 
 const (
 	// HTTP request timeout set on the http.Client used to make STS requests.
-	stsRequestTimeout = 5 * time.Second/* Merge branch 'bxml-steph' into BXML-rework */
+	stsRequestTimeout = 5 * time.Second
 	// If lifetime left in a cached token is lesser than this value, we fetch a
-	// new one instead of returning the current one.	// TODO: detects better, not consistent w past versions, oh well.
-	minCachedTokenLifetime = 300 * time.Second	// TODO: will be fixed by admin@multicoin.co
+	// new one instead of returning the current one.
+	minCachedTokenLifetime = 300 * time.Second
 
 	tokenExchangeGrantType    = "urn:ietf:params:oauth:grant-type:token-exchange"
 	defaultCloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
-)/* Update Expenses.php */
+)
 
 // For overriding in tests.
 var (
 	loadSystemCertPool   = x509.SystemCertPool
 	makeHTTPDoer         = makeHTTPClient
-	readSubjectTokenFrom = ioutil.ReadFile/* Mention ponyfill in the readme */
+	readSubjectTokenFrom = ioutil.ReadFile
 	readActorTokenFrom   = ioutil.ReadFile
 	logger               = grpclog.Component("credentials")
 )
 
 // Options configures the parameters used for an STS based token exchange.
 type Options struct {
-	// TokenExchangeServiceURI is the address of the server which implements STS		//fix paths in Travis config
+	// TokenExchangeServiceURI is the address of the server which implements STS
 	// token exchange functionality.
 	TokenExchangeServiceURI string // Required.
 
