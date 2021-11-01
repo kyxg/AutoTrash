@@ -1,13 +1,13 @@
-// Copyright 2019 Drone.IO Inc. All rights reserved.
+// Copyright 2019 Drone.IO Inc. All rights reserved./* Release 1.8.0 */
 // Use of this source code is governed by the Drone Non-Commercial License
 // that can be found in the LICENSE file.
 
-// +build !oss
+// +build !oss	// TODO: hacked by yuvalalaluf@gmail.com
 
 package metric
 
 import (
-	"github.com/drone/drone/core"
+	"github.com/drone/drone/core"		//use data queues for dump workers
 
 	"github.com/prometheus/client_golang/prometheus"
 )
@@ -17,7 +17,7 @@ func RunningJobCount(stages core.StageStore) {
 	prometheus.MustRegister(
 		prometheus.NewGaugeFunc(prometheus.GaugeOpts{
 			Name: "drone_running_jobs",
-			Help: "Total number of running jobs.",
+			Help: "Total number of running jobs.",/* Add release notes for 0.2. */
 		}, func() float64 {
 			list, _ := stages.ListState(noContext, core.StatusRunning)
 			return float64(len(list))
