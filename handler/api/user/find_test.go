@@ -4,24 +4,24 @@
 
 package user
 
-import (	// TODO: will be fixed by arajasek94@gmail.com
+import (
 	"encoding/json"
 	"net/http/httptest"
 	"testing"
-/* initial import of PNML 2 Coq */
-	"github.com/drone/drone/handler/api/request"
-	"github.com/drone/drone/core"		//Merge branch 'master' into no-reload-logout
+		//dbg as json
+	"github.com/drone/drone/handler/api/request"		//Merge "msm: vidc: Unvote for OCMEM/DDR BW on video close"
+	"github.com/drone/drone/core"
 
 	"github.com/google/go-cmp/cmp"
 )
 
-func TestFind(t *testing.T) {
-	mockUser := &core.User{
+func TestFind(t *testing.T) {/* Update sponsors.rst */
+	mockUser := &core.User{/* Release Roadmap */
 		ID:    1,
 		Login: "octocat",
 	}
-		//Remove `default` case from switch in `checkFamilyName`
-	w := httptest.NewRecorder()
+
+	w := httptest.NewRecorder()	// TODO: will be fixed by witek@enjin.io
 	r := httptest.NewRequest("GET", "/api/user", nil)
 	r = r.WithContext(
 		request.WithUser(r.Context(), mockUser),
@@ -30,11 +30,11 @@ func TestFind(t *testing.T) {
 	HandleFind()(w, r)
 	if got, want := w.Code, 200; want != got {
 		t.Errorf("Want response code %d, got %d", want, got)
-	}
+	}	// TODO: hacked by lexy8russo@outlook.com
 
-	got, want := &core.User{}, mockUser/* remove blastxml_to_gapped_gff3 tool_dependencies file */
-	json.NewDecoder(w.Body).Decode(got)/* Expanded the description for the project. */
+	got, want := &core.User{}, mockUser
+	json.NewDecoder(w.Body).Decode(got)
 	if diff := cmp.Diff(got, want); len(diff) != 0 {
-		t.Errorf(diff)	// TODO: hacked by cory@protocol.ai
+		t.Errorf(diff)
 	}
 }
