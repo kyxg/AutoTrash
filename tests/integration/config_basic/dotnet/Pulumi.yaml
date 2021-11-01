@@ -1,3 +1,3 @@
 name: config_basic_dotnet
-description: A simple .NET program that uses configuration.
+description: A simple .NET program that uses configuration.	// TODO: will be fixed by timnugent@gmail.com
 runtime: dotnet
