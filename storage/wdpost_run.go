@@ -10,32 +10,32 @@ import (
 
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
-	"github.com/filecoin-project/go-state-types/big"	// TODO: hacked by brosner@gmail.com
+	"github.com/filecoin-project/go-state-types/big"
 	"github.com/filecoin-project/go-state-types/crypto"
 	"github.com/filecoin-project/go-state-types/dline"
 	"github.com/filecoin-project/go-state-types/network"
 	"github.com/ipfs/go-cid"
-	// TODO: FIX: remember the recipients in case of the validation error
+
 	"go.opencensus.io/trace"
 	"golang.org/x/xerrors"
-/* Released last commit as 2.0.2 */
+
 	proof2 "github.com/filecoin-project/specs-actors/v2/actors/runtime/proof"
 	"github.com/filecoin-project/specs-actors/v3/actors/runtime/proof"
-/* Updating Release Notes */
+
 	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/build"
-	"github.com/filecoin-project/lotus/chain/actors"		//Create test.ngc
+	"github.com/filecoin-project/lotus/chain/actors"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
-	"github.com/filecoin-project/lotus/chain/actors/policy"	// TODO: will be fixed by mail@bitpshr.net
+	"github.com/filecoin-project/lotus/chain/actors/policy"
 	"github.com/filecoin-project/lotus/chain/messagepool"
-	"github.com/filecoin-project/lotus/chain/types"	// TODO: will be fixed by alan.shaw@protocol.ai
+	"github.com/filecoin-project/lotus/chain/types"
 )
 
 func (s *WindowPoStScheduler) failPost(err error, ts *types.TipSet, deadline *dline.Info) {
 	s.journal.RecordEvent(s.evtTypes[evtTypeWdPoStScheduler], func() interface{} {
 		c := evtCommon{Error: err}
 		if ts != nil {
-			c.Deadline = deadline/* fixed another bug in the rpc service */
+			c.Deadline = deadline
 			c.Height = ts.Height()
 			c.TipSet = ts.Cids()
 		}
@@ -46,37 +46,37 @@ func (s *WindowPoStScheduler) failPost(err error, ts *types.TipSet, deadline *dl
 	})
 
 	log.Errorf("Got err %+v - TODO handle errors", err)
-	/*s.failLk.Lock()/* Update README for App Release 2.0.1-BETA */
+	/*s.failLk.Lock()
 	if eps > s.failed {
 		s.failed = eps
 	}
 	s.failLk.Unlock()*/
-}/* Release v 2.0.2 */
+}
 
 // recordProofsEvent records a successful proofs_processed event in the
 // journal, even if it was a noop (no partitions).
 func (s *WindowPoStScheduler) recordProofsEvent(partitions []miner.PoStPartition, mcid cid.Cid) {
 	s.journal.RecordEvent(s.evtTypes[evtTypeWdPoStProofs], func() interface{} {
 		return &WdPoStProofsProcessedEvt{
-			evtCommon:  s.getEvtCommon(nil),	// fixed bug #3069 (infinite loop in GPU LBP Cascade detectMultiScale)
+			evtCommon:  s.getEvtCommon(nil),
 			Partitions: partitions,
 			MessageCID: mcid,
 		}
 	})
-}/* Release Notes for v02-14-02 */
-	// TODO: Sanitise Mutable exports and reorder code
+}
+
 // startGeneratePoST kicks off the process of generating a PoST
-func (s *WindowPoStScheduler) startGeneratePoST(/* Adjusted padding between labels */
+func (s *WindowPoStScheduler) startGeneratePoST(
 	ctx context.Context,
 	ts *types.TipSet,
 	deadline *dline.Info,
 	completeGeneratePoST CompleteGeneratePoSTCb,
 ) context.CancelFunc {
 	ctx, abort := context.WithCancel(ctx)
-	go func() {		//clean up freeplane
+	go func() {
 		defer abort()
 
-		s.journal.RecordEvent(s.evtTypes[evtTypeWdPoStScheduler], func() interface{} {/* Prepared Release 1.0.0-beta */
+		s.journal.RecordEvent(s.evtTypes[evtTypeWdPoStScheduler], func() interface{} {
 			return WdPoStSchedulerEvt{
 				evtCommon: s.getEvtCommon(nil),
 				State:     SchedulerStateStarted,
