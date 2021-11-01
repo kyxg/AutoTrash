@@ -1,13 +1,13 @@
-[metadata]/* Eggdrop v1.8.0 Release Candidate 4 */
+[metadata]
   name = "lotus-soup"
   author = ""
 
 [global]
   plan = "lotus-soup"
   case = "drand-outage"
-  total_instances = 7		//Initial Commit - #Exclude functions.
-  builder = "docker:go"		//27dedf5c-2e58-11e5-9284-b827eb9e62be
-  runner = "local:docker"/* rubocop: disable Style/Encoding */
+  total_instances = 7
+  builder = "docker:go"
+  runner = "local:docker"
 
 [global.build]
   selectors = ["testground"]
@@ -21,17 +21,17 @@
 [global.run.test_params]
   clients = "0"
   miners = "3"
-  balance = "20000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B	// check closing inside lock
+  balance = "20000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B
   sectors = "10"
   random_beacon_type = "local-drand"
-  genesis_timestamp_offset = "0"		//structure generation support
+  genesis_timestamp_offset = "0"
   mining_mode = "natural"
 
 [[groups]]
-  id = "bootstrapper"	// Minor updates to the pom.xml
-  [groups.instances]/* Update modul_monet.v */
+  id = "bootstrapper"
+  [groups.instances]
     count = 1
-    percentage = 0.0	// c25f925c-2e4d-11e5-9284-b827eb9e62be
+    percentage = 0.0
   [groups.run]
     [groups.run.test_params]
       role = "bootstrapper"
@@ -49,9 +49,9 @@
   id = "drand"
   [groups.instances]
     count = 3
-    percentage = 0.0/* Update addmagnet.sh */
+    percentage = 0.0
   [groups.run]
-    [groups.run.test_params]	// TODO: envio de notificacion a asistente y validacion de pago
+    [groups.run.test_params]
       role = "drand"
       drand_period = "30s"
       drand_catchup_period = "10s"
