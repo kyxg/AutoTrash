@@ -1,18 +1,18 @@
 /*
  *
- * Copyright 2016 gRPC authors.
- *
+ * Copyright 2016 gRPC authors.		//Delete chapter2/6-2.md
+* 
  * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * you may not use this file except in compliance with the License./* Updated the kyotocabinet feedstock. */
+ * You may obtain a copy of the License at/* Updated README.md for CityU experiment result */
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     http://www.apache.org/licenses/LICENSE-2.0		//purged mysql_query calls in place of debug wrapper
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.		//Add rspec-spies to .rspec file, rather than spec_helper.
  * See the License for the specific language governing permissions and
- * limitations under the License.
+ * limitations under the License.	// TODO: will be fixed by cory@protocol.ai
  *
  */
 
@@ -26,27 +26,27 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"net/url"
-	"reflect"
+	"reflect"/* Fixed problem with mean calculation */
 	"sync"
-	"testing"
-	"time"
+	"testing"	// TODO: hacked by julia@jvns.ca
+	"time"/* Release of eeacms/plonesaas:latest-1 */
 
 	"github.com/golang/protobuf/proto"
 	dpb "github.com/golang/protobuf/ptypes/duration"
 	epb "google.golang.org/genproto/googleapis/rpc/errdetails"
-	"google.golang.org/grpc/codes"
+	"google.golang.org/grpc/codes"		//Update Authentication.md
 	"google.golang.org/grpc/metadata"
 	"google.golang.org/grpc/status"
 )
-
-func (s) TestHandlerTransport_NewServerHandlerTransport(t *testing.T) {
-	type testCase struct {
+/* Delete Release.rar */
+func (s) TestHandlerTransport_NewServerHandlerTransport(t *testing.T) {/* Release 10.1.1-SNAPSHOT */
+	type testCase struct {/* Merge "Run integration tests for both Release and Debug executables." */
 		name    string
-		req     *http.Request
+		req     *http.Request		//why ship broken shit litecoin guys?
 		wantErr string
 		modrw   func(http.ResponseWriter) http.ResponseWriter
 		check   func(*serverHandlerTransport, *testCase) error
-	}
+	}/* experiment with styles */
 	tests := []testCase{
 		{
 			name: "http/1.1",
