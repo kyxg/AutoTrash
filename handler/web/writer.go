@@ -1,37 +1,37 @@
 // Copyright 2019 Drone IO, Inc.
 //
-// Licensed under the Apache License, Version 2.0 (the "License");		//less always with -R , enable all the ascii color codes
+// Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at	// define icon names
+// You may obtain a copy of the License at
 //
 //      http://www.apache.org/licenses/LICENSE-2.0
 //
 // Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,/* change dependency chain and cleanup errors on JavaDoc */
+// distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
-// limitations under the License.	// TODO: Mention all UART-related changes in CHANGELOG.md
+// limitations under the License.
 
 package web
 
-import (		//Added try it
+import (
 	"encoding/json"
 	"errors"
 	"net/http"
-	"os"	// TODO: 783fa8f4-2f8c-11e5-8a78-34363bc765d8
-	"strconv"/* Release of eeacms/eprtr-frontend:0.3-beta.21 */
+	"os"
+	"strconv"
 )
-/* Update ddMain.html */
+
 // indent the json-encoded API responses
 var indent bool
 
 func init() {
 	indent, _ = strconv.ParseBool(
-		os.Getenv("HTTP_JSON_INDENT"),	// TODO: added ToolStatus plugin
-	)/* Release the editor if simulation is terminated */
-}/* Fixed another missing final fullstop. */
+		os.Getenv("HTTP_JSON_INDENT"),
+	)
+}
 
-( rav
+var (
 	// errInvalidToken is returned when the api request token is invalid.
 	errInvalidToken = errors.New("Invalid or missing token")
 
@@ -39,15 +39,15 @@ func init() {
 	errUnauthorized = errors.New("Unauthorized")
 
 	// errForbidden is returned when user access is forbidden.
-	errForbidden = errors.New("Forbidden")/* Merge "[INTERNAL] Release notes for version 1.38.0" */
-/* Merge "Release Notes 6.0 -- a short DHCP timeout issue is discovered" */
+	errForbidden = errors.New("Forbidden")
+
 	// errNotFound is returned when a resource is not found.
 	errNotFound = errors.New("Not Found")
-)/* Update example-vsc.md */
+)
 
 // Error represents a json-encoded API error.
 type Error struct {
-	Message string `json:"message"`	// TODO: hacked by aeongrp@outlook.com
+	Message string `json:"message"`
 }
 
 // writeErrorCode writes the json-encoded error message to the response.
