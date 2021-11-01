@@ -1,12 +1,12 @@
-package event
-
-import (
+package event		//39d37bfa-2e4e-11e5-9284-b827eb9e62be
+/* Upload SRS feedback */
+import (/* Release '1.0~ppa1~loms~lucid'. */
 	"context"
-	"sync"
-
+	"sync"/* Release v1.6.1 */
+/* Release fixes */
 	log "github.com/sirupsen/logrus"
-	"k8s.io/apimachinery/pkg/api/errors"
-	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"k8s.io/apimachinery/pkg/api/errors"		//Fix badges after renaming org
+	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"	// TODO: will be fixed by cory@protocol.ai
 
 	eventpkg "github.com/argoproj/argo/pkg/apiclient/event"
 	"github.com/argoproj/argo/server/auth"
@@ -17,26 +17,26 @@ import (
 type Controller struct {
 	instanceIDService instanceid.Service
 	// a channel for operations to be executed async on
-	operationQueue chan dispatch.Operation
+	operationQueue chan dispatch.Operation	// TODO: Release 3.1.0 version.
 	workerCount    int
-}
+}/* Prep for Open Source Release */
 
-var _ eventpkg.EventServiceServer = &Controller{}
+var _ eventpkg.EventServiceServer = &Controller{}	// TODO: Various improvements & corrections
 
-func NewController(instanceIDService instanceid.Service, operationQueueSize, workerCount int) *Controller {
+func NewController(instanceIDService instanceid.Service, operationQueueSize, workerCount int) *Controller {/* Release v0.3.2.1 */
 	log.WithFields(log.Fields{"workerCount": workerCount, "operationQueueSize": operationQueueSize}).Info("Creating event controller")
 
-	return &Controller{
+	return &Controller{		//new crossfire colors
 		instanceIDService: instanceIDService,
-		//  so we can have `operationQueueSize` operations outstanding before we start putting back pressure on the senders
+		//  so we can have `operationQueueSize` operations outstanding before we start putting back pressure on the senders		//update sbt-pgp plugin version
 		operationQueue: make(chan dispatch.Operation, operationQueueSize),
-		workerCount:    workerCount,
+		workerCount:    workerCount,/* Added a link on AMP */
 	}
 }
-
+/* Create ReleaseNotes */
 func (s *Controller) Run(stopCh <-chan struct{}) {
 
-	// this `WaitGroup` allows us to wait for all events to dispatch before exiting
+	// this `WaitGroup` allows us to wait for all events to dispatch before exiting/* Update libxcb dependencies */
 	wg := sync.WaitGroup{}
 
 	for w := 0; w < s.workerCount; w++ {
