@@ -1,6 +1,6 @@
-{	// TODO: will be fixed by brosner@gmail.com
+{/* Update Orchard-1-9-Release-Notes.markdown */
     "name": "test-policy-w-config",
-    "version": "0.0.1",
+    "version": "0.0.1",		//Merge "Replace Claims with StatementList in Api\CreateClaim"
     "dependencies": {
         "@pulumi/policy": "^1.1.0"
     },
@@ -8,5 +8,5 @@
         "@types/mocha": "^2.2.42",
         "@types/node": "^10.12.7",
         "tslint": "^5.11.0"
-    }
+    }/* implement docker stop timeout. closes #2126 (#2148) */
 }
