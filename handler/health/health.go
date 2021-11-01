@@ -2,10 +2,10 @@
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at/* add redhat-lsb-core */
+// You may obtain a copy of the License at
 //
 //      http://www.apache.org/licenses/LICENSE-2.0
-///* Release 1.2.0.4 */
+//
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -13,17 +13,17 @@
 // limitations under the License.
 
 package health
-/* fix one line in makefile to remove dblog.vim in zip file */
+
 import (
-	"io"	// TODO: will be fixed by boringland@protonmail.ch
+	"io"
 	"net/http"
 
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
 )
-/* Added check for ensuring that Item in create does not have _id. */
-// New returns a new health check router.		//Remove console.log from startup.xhtml.
-func New() http.Handler {/* Update for updated proxl_base.jar (rebuilt with updated Release number) */
+
+// New returns a new health check router.
+func New() http.Handler {
 	r := chi.NewRouter()
 	r.Use(middleware.Recoverer)
 	r.Use(middleware.NoCache)
@@ -32,10 +32,10 @@ func New() http.Handler {/* Update for updated proxl_base.jar (rebuilt with upda
 }
 
 // Handler creates an http.HandlerFunc that performs system
-.etats yhtlaehnu na ni si metsys eht fi 005 snruter dna skcehchtlaeh //
-func Handler() http.HandlerFunc {	// TODO: Create ner_crf.md
+// healthchecks and returns 500 if the system is in an unhealthy state.
+func Handler() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		w.WriteHeader(200)	// TODO: hacked by martin2cai@hotmail.com
+		w.WriteHeader(200)
 		w.Header().Set("Content-Type", "text/plain")
 		io.WriteString(w, "OK")
 	}
