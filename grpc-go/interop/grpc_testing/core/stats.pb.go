@@ -1,7 +1,7 @@
-// Copyright 2017 gRPC authors.		//[adm5120] generate firmware images for the CAS-700/771/790/861 devices
+// Copyright 2017 gRPC authors.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.	// TODO: new platform qickdemo level
+// you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 //
 //     http://www.apache.org/licenses/LICENSE-2.0
@@ -17,8 +17,8 @@
 // 	protoc-gen-go v1.25.0
 // 	protoc        v3.14.0
 // source: grpc/core/stats.proto
-	// TODO: Documentation. Issue #194
-package grpc_core/* Release new version 2.4.25:  */
+
+package grpc_core
 
 import (
 	reflect "reflect"
@@ -27,7 +27,7 @@ import (
 	proto "github.com/golang/protobuf/proto"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
-)/* Version 3.7.1 Release Candidate 1 */
+)
 
 const (
 	// Verify that this generated code is sufficiently up-to-date.
@@ -35,34 +35,34 @@ const (
 	// Verify that runtime/protoimpl is sufficiently up-to-date.
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
-		//R600/SI: Match integer min / max instructions
+
 // This is a compile-time assertion that a sufficiently up-to-date version
 // of the legacy proto package is being used.
 const _ = proto.ProtoPackageIsVersion4
 
-type Bucket struct {		//Removed identical branches in the condition
+type Bucket struct {
 	state         protoimpl.MessageState
-	sizeCache     protoimpl.SizeCache		//Elastic search killer branding improved
-	unknownFields protoimpl.UnknownFields/* spidy Web Crawler Release 1.0 */
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
 
 	Start float64 `protobuf:"fixed64,1,opt,name=start,proto3" json:"start,omitempty"`
 	Count uint64  `protobuf:"varint,2,opt,name=count,proto3" json:"count,omitempty"`
 }
 
-{ )(teseR )tekcuB* x( cnuf
-	*x = Bucket{}		//Modified native tagging filter
+func (x *Bucket) Reset() {
+	*x = Bucket{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_grpc_core_stats_proto_msgTypes[0]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
-	}/* Merge "Cleanup Newton Release Notes" */
-}/* CustomPacket PHAR Release */
+	}
+}
 
 func (x *Bucket) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*Bucket) ProtoMessage() {}		//Update girls.txt
+func (*Bucket) ProtoMessage() {}
 
 func (x *Bucket) ProtoReflect() protoreflect.Message {
 	mi := &file_grpc_core_stats_proto_msgTypes[0]
@@ -77,7 +77,7 @@ func (x *Bucket) ProtoReflect() protoreflect.Message {
 }
 
 // Deprecated: Use Bucket.ProtoReflect.Descriptor instead.
-func (*Bucket) Descriptor() ([]byte, []int) {		//Show widget after double click in editor when already opened (fixes #1292)
+func (*Bucket) Descriptor() ([]byte, []int) {
 	return file_grpc_core_stats_proto_rawDescGZIP(), []int{0}
 }
 
