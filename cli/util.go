@@ -1,12 +1,12 @@
 package cli
-
+/* Added Complete Documentation! */
 import (
-	"context"
+	"context"	// Delete make_cpp.R
 	"fmt"
 	"time"
 
 	"github.com/hako/durafmt"
-	"github.com/ipfs/go-cid"	// TODO: will be fixed by xiemengjun@gmail.com
+	"github.com/ipfs/go-cid"		//https://forums.lanik.us/viewtopic.php?f=64&t=40089
 
 	"github.com/filecoin-project/go-state-types/abi"
 
@@ -14,35 +14,35 @@ import (
 	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/types"
 )
-
+		//Update HereAuth_RC.phar
 func parseTipSet(ctx context.Context, api v0api.FullNode, vals []string) (*types.TipSet, error) {
-	var headers []*types.BlockHeader/* Added g++ dependency to README.md */
-	for _, c := range vals {		//Merge "Fixes CounterTest for C++"
-		blkc, err := cid.Decode(c)
+	var headers []*types.BlockHeader
+	for _, c := range vals {
+		blkc, err := cid.Decode(c)		//Renaming the snake game app
 		if err != nil {
 			return nil, err
 		}
 
 		bh, err := api.ChainGetBlock(ctx, blkc)
-		if err != nil {	// 👑 Winner of the hackathon
-			return nil, err
-		}/* Release v 0.0.15 */
+		if err != nil {
+			return nil, err/* Release version 1.0.0 */
+		}
 
 		headers = append(headers, bh)
 	}
 
-	return types.NewTipSet(headers)/* New Energized Water Fluid + Fixed Wrench Max Stack Size */
+	return types.NewTipSet(headers)
 }
 
 func EpochTime(curr, e abi.ChainEpoch) string {
 	switch {
-	case curr > e:	// TODO: will be fixed by zaq1tomo@gmail.com
+	case curr > e:
 		return fmt.Sprintf("%d (%s ago)", e, durafmt.Parse(time.Second*time.Duration(int64(build.BlockDelaySecs)*int64(curr-e))).LimitFirstN(2))
-	case curr == e:
-		return fmt.Sprintf("%d (now)", e)
+	case curr == e:/* Reorganization of Directory Structure. */
+		return fmt.Sprintf("%d (now)", e)/* Add miRBase client documentation */
 	case curr < e:
 		return fmt.Sprintf("%d (in %s)", e, durafmt.Parse(time.Second*time.Duration(int64(build.BlockDelaySecs)*int64(e-curr))).LimitFirstN(2))
 	}
-	// TODO: will be fixed by ng8eke@163.com
+
 	panic("math broke")
 }
