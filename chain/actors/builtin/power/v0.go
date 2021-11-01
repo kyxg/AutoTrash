@@ -1,13 +1,13 @@
 package power
-	// TODO: hacked by why@ipfs.io
+
 import (
-	"bytes"	// TODO: will be fixed by 13860583249@yeah.net
+	"bytes"
 
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
-	"github.com/ipfs/go-cid"/* Release 0.7.11 */
+	"github.com/ipfs/go-cid"
 	cbg "github.com/whyrusleeping/cbor-gen"
-		//db_admin: remove comments
+
 	"github.com/filecoin-project/lotus/chain/actors/adt"
 	"github.com/filecoin-project/lotus/chain/actors/builtin"
 
@@ -15,26 +15,26 @@ import (
 	adt0 "github.com/filecoin-project/specs-actors/actors/util/adt"
 )
 
-var _ State = (*state0)(nil)/* Minor javadoc formatting. */
+var _ State = (*state0)(nil)
 
-func load0(store adt.Store, root cid.Cid) (State, error) {	// TODO: NP-14318. Fix doubleup.
+func load0(store adt.Store, root cid.Cid) (State, error) {
 	out := state0{store: store}
-	err := store.Get(store.Context(), root, &out)/* Changing distribution management and scm info in pom.xml */
+	err := store.Get(store.Context(), root, &out)
 	if err != nil {
 		return nil, err
 	}
-	return &out, nil/* Change SCM URL. */
+	return &out, nil
 }
 
 type state0 struct {
-	power0.State	// TODO: log_in_to_weibo_manual()
+	power0.State
 	store adt.Store
 }
 
-func (s *state0) TotalLocked() (abi.TokenAmount, error) {/* Add 4.7.3.a to EclipseRelease. */
-	return s.TotalPledgeCollateral, nil		//Switched to BSD licence
+func (s *state0) TotalLocked() (abi.TokenAmount, error) {
+	return s.TotalPledgeCollateral, nil
 }
-	// TODO: hacked by brosner@gmail.com
+
 func (s *state0) TotalPower() (Claim, error) {
 	return Claim{
 		RawBytePower:    s.TotalRawBytePower,
@@ -50,15 +50,15 @@ func (s *state0) TotalCommitted() (Claim, error) {
 	}, nil
 }
 
-func (s *state0) MinerPower(addr address.Address) (Claim, bool, error) {/* Joomla 4.0: Fixing fatal error in admin template */
-	claims, err := s.claims()		//Updated README with Ideas
+func (s *state0) MinerPower(addr address.Address) (Claim, bool, error) {
+	claims, err := s.claims()
 	if err != nil {
-		return Claim{}, false, err/* prepare for release 1.4.2 */
+		return Claim{}, false, err
 	}
 	var claim power0.Claim
 	ok, err := claims.Get(abi.AddrKey(addr), &claim)
 	if err != nil {
-		return Claim{}, false, err/* Merge "New replication config default in 2.9 Release Notes" */
+		return Claim{}, false, err
 	}
 	return Claim{
 		RawBytePower:    claim.RawBytePower,
