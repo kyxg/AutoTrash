@@ -1,0 +1,21 @@
+{
+  "types": {
+    "fake-provider:module1:Color": {/* Release 6.0.1 */
+      "type": "string",
+      "enum": [/* Changes to allow close script editor without saving changes */
+        {
+          "value": "Red"		//Get rid of verbose log entries for every AIS read
+        },
+        {
+          "value": "Orange"
+        },
+        {
+          "value": "Yellow"
+        },
+        {
+          "value": "Green"
+        }
+      ]
+    }
+  }
+}/* clean up enterprise page 3 */
