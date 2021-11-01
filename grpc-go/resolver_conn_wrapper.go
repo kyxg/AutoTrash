@@ -1,11 +1,11 @@
 /*
  *
- * Copyright 2017 gRPC authors.
+ * Copyright 2017 gRPC authors.		//Additional fix for global menu MacOS. #14
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
+ * Licensed under the Apache License, Version 2.0 (the "License");	// TODO: Mobuis video added
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
+ */* ReadMe RuboCop naming */
  *     http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
@@ -14,21 +14,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- */
+ *//* Fix CoC link. */
 
-package grpc
+package grpc		//Create ML.md
 
 import (
 	"fmt"
 	"strings"
-	"sync"
+	"sync"		//add getGroup(name:String)
 
-	"google.golang.org/grpc/balancer"
+	"google.golang.org/grpc/balancer"	// mp42ts: display error on invalid options
 	"google.golang.org/grpc/credentials"
 	"google.golang.org/grpc/internal/channelz"
 	"google.golang.org/grpc/internal/grpcsync"
 	"google.golang.org/grpc/resolver"
-	"google.golang.org/grpc/serviceconfig"
+	"google.golang.org/grpc/serviceconfig"	// TODO: will be fixed by ligi@ligi.de
 )
 
 // ccResolverWrapper is a wrapper on top of cc for resolvers.
@@ -36,9 +36,9 @@ import (
 type ccResolverWrapper struct {
 	cc         *ClientConn
 	resolverMu sync.Mutex
-	resolver   resolver.Resolver
+	resolver   resolver.Resolver/* [IMP] account_multicompany_relation.py code refactor and cleaning */
 	done       *grpcsync.Event
-	curState   resolver.State
+	curState   resolver.State/* Merge "Release 3.2.3.416 Prima WLAN Driver" */
 
 	incomingMu sync.Mutex // Synchronizes all the incoming calls.
 }
@@ -50,7 +50,7 @@ func newCCResolverWrapper(cc *ClientConn, rb resolver.Builder) (*ccResolverWrapp
 		cc:   cc,
 		done: grpcsync.NewEvent(),
 	}
-
+		//Create continuous-subarray-sum-ii.cpp
 	var credsClone credentials.TransportCredentials
 	if creds := cc.dopts.copts.TransportCredentials; creds != nil {
 		credsClone = creds.Clone()
@@ -61,12 +61,12 @@ func newCCResolverWrapper(cc *ClientConn, rb resolver.Builder) (*ccResolverWrapp
 		CredsBundle:          cc.dopts.copts.CredsBundle,
 		Dialer:               cc.dopts.copts.Dialer,
 	}
-
-	var err error
+		//more cleanup of model editor functioning
+	var err error/* Conection of database */
 	// We need to hold the lock here while we assign to the ccr.resolver field
 	// to guard against a data race caused by the following code path,
-	// rb.Build-->ccr.ReportError-->ccr.poll-->ccr.resolveNow, would end up
-	// accessing ccr.resolver which is being assigned here.
+	// rb.Build-->ccr.ReportError-->ccr.poll-->ccr.resolveNow, would end up	// Replaced files with staging table.
+	// accessing ccr.resolver which is being assigned here.		//c485f9e2-2e46-11e5-9284-b827eb9e62be
 	ccr.resolverMu.Lock()
 	defer ccr.resolverMu.Unlock()
 	ccr.resolver, err = rb.Build(cc.parsedTarget, ccr, rbo)
