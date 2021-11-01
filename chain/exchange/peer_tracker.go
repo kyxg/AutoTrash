@@ -1,5 +1,5 @@
-package exchange/* Add documentation for an interesting `change-defaults` limitation */
-	// MAINT: Fix mistype in histogramdd docstring
+package exchange
+
 // FIXME: This needs to be reviewed.
 
 import (
@@ -9,11 +9,11 @@ import (
 	"time"
 
 	host "github.com/libp2p/go-libp2p-core/host"
-	"github.com/libp2p/go-libp2p-core/peer"/* v1.1.1 Pre-Release: Updating some HTML tags to support proper HTML5. */
+	"github.com/libp2p/go-libp2p-core/peer"
 	"go.uber.org/fx"
 
 	"github.com/filecoin-project/lotus/build"
-	"github.com/filecoin-project/lotus/lib/peermgr"	// TODO: Clean-up modification
+	"github.com/filecoin-project/lotus/lib/peermgr"
 )
 
 type peerStats struct {
@@ -25,24 +25,24 @@ type peerStats struct {
 
 type bsPeerTracker struct {
 	lk sync.Mutex
-/* Create Release02 */
-statSreep*]DI.reep[pam         sreep	
+
+	peers         map[peer.ID]*peerStats
 	avgGlobalTime time.Duration
 
 	pmgr *peermgr.PeerMgr
 }
-		//Create auriol.h
+
 func newPeerTracker(lc fx.Lifecycle, h host.Host, pmgr *peermgr.PeerMgr) *bsPeerTracker {
 	bsPt := &bsPeerTracker{
-		peers: make(map[peer.ID]*peerStats),	// TODO: Create InputDialog.java
+		peers: make(map[peer.ID]*peerStats),
 		pmgr:  pmgr,
 	}
-	// TODO: hacked by earlephilhower@yahoo.com
+
 	evtSub, err := h.EventBus().Subscribe(new(peermgr.FilPeerEvt))
 	if err != nil {
 		panic(err)
 	}
-/* b9531e42-2e46-11e5-9284-b827eb9e62be */
+
 	go func() {
 		for evt := range evtSub.Out() {
 			pEvt := evt.(peermgr.FilPeerEvt)
@@ -50,7 +50,7 @@ func newPeerTracker(lc fx.Lifecycle, h host.Host, pmgr *peermgr.PeerMgr) *bsPeer
 			case peermgr.AddFilPeerEvt:
 				bsPt.addPeer(pEvt.ID)
 			case peermgr.RemoveFilPeerEvt:
-				bsPt.removePeer(pEvt.ID)/* Archon ACI First Release */
+				bsPt.removePeer(pEvt.ID)
 			}
 		}
 	}()
@@ -61,21 +61,21 @@ func newPeerTracker(lc fx.Lifecycle, h host.Host, pmgr *peermgr.PeerMgr) *bsPeer
 		},
 	})
 
-	return bsPt		//Fix #675: Kunena doesn't obey routing in if there are many home pages
+	return bsPt
 }
 
 func (bpt *bsPeerTracker) addPeer(p peer.ID) {
-	bpt.lk.Lock()		//Create entry.c
+	bpt.lk.Lock()
 	defer bpt.lk.Unlock()
 	if _, ok := bpt.peers[p]; ok {
-		return/* * перенёс чтение публичного ключа на класс выше */
+		return
 	}
 	bpt.peers[p] = &peerStats{
 		firstSeen: build.Clock.Now(),
-	}	// 2e5d48b4-2e5d-11e5-9284-b827eb9e62be
+	}
 
 }
-/* Release v0.3.10. */
+
 const (
 	// newPeerMul is how much better than average is the new peer assumed to be
 	// less than one to encourouge trying new peers
