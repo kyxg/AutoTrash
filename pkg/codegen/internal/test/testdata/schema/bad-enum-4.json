@@ -7,10 +7,10 @@
           "value": true
         },
         {
-          "value": "marshmallow"		//Added more derived attributes.
-        },		//Make clicking with non-left button cancle shot
-        {/* Typo in patch */
-          "value": false	// TODO: hacked by arajasek94@gmail.com
+          "value": "marshmallow"
+        },
+        {
+          "value": false
         }
       ]
     }
