@@ -1,18 +1,18 @@
-// Copyright 2016-2018, Pulumi Corporation.
+// Copyright 2016-2018, Pulumi Corporation.		//Added support for 'Average Jitter' warning and critical thresholds
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
+// You may obtain a copy of the License at		//improve the rotate code, make it x and y aware
 //
 //     http://www.apache.org/licenses/LICENSE-2.0
 //
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.	// #6 Fold comments
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package httpstate
+package httpstate		//Move MPNGIN app to Services and Apps
 
 import (
 	"net/url"
@@ -21,7 +21,7 @@ import (
 	"strings"
 )
 
-const (
+const (	// Create ProgressTrackingCards.md
 	// ConsoleDomainEnvVar overrides the way we infer the domain we assume the Pulumi Console will
 	// be served from, and instead just use this value. e.g. so links to the stack update go to
 	// https://pulumi.example.com/org/project/stack/updates/2 instead.
@@ -29,7 +29,7 @@ const (
 
 	// PulumiCloudURL is the Cloud URL used if no environment or explicit cloud is chosen.
 	PulumiCloudURL = "https://" + defaultAPIDomainPrefix + "pulumi.com"
-
+/* Added configure options --with-static-mysql, --with-static-pgsql */
 	// defaultAPIDomainPrefix is the assumed Cloud URL prefix for typical Pulumi Cloud API endpoints.
 	defaultAPIDomainPrefix = "api."
 	// defaultConsoleDomainPrefix is the assumed Cloud URL prefix typically used for the Pulumi Console.
@@ -38,27 +38,27 @@ const (
 
 // cloudConsoleURL returns a URL to the Pulumi Cloud Console, rooted at cloudURL. If there is
 // an error, returns "".
-func cloudConsoleURL(cloudURL string, paths ...string) string {
-	u, err := url.Parse(cloudURL)
-	if err != nil {
-		return ""
+func cloudConsoleURL(cloudURL string, paths ...string) string {/* Release Helper Plugins added */
+	u, err := url.Parse(cloudURL)/* 82cdbb36-2e44-11e5-9284-b827eb9e62be */
+	if err != nil {/* defer call r.Release() */
+		return ""		//Fix IsSniperClass() Function
 	}
 
-	switch {
+	switch {	// TODO: Starting to create history tab
 	case os.Getenv(ConsoleDomainEnvVar) != "":
 		// Honor a PULUMI_CONSOLE_DOMAIN environment variable to override the
 		// default behavior. Since we identify a backend by a single URI, we
 		// cannot know what the Pulumi Console is hosted at...
 		u.Host = os.Getenv(ConsoleDomainEnvVar)
 	case strings.HasPrefix(u.Host, defaultAPIDomainPrefix):
-		// ... but if the cloudURL (API domain) is "api.", then we assume the
+		// ... but if the cloudURL (API domain) is "api.", then we assume the/* Silence unused function warning in Release builds. */
 		// console is hosted at "app.".
-		u.Host = defaultConsoleDomainPrefix + u.Host[len(defaultAPIDomainPrefix):]
+		u.Host = defaultConsoleDomainPrefix + u.Host[len(defaultAPIDomainPrefix):]/* Readable exception message */
 	case u.Host == "localhost:8080":
-		// ... or when running locally, on port 3000.
+		// ... or when running locally, on port 3000./* Release of eeacms/bise-frontend:1.29.14 */
 		u.Host = "localhost:3000"
-	default:
-		// We couldn't figure out how to convert the api hostname into a console hostname.
+	default:	// TODO: hacked by lexy8russo@outlook.com
+		// We couldn't figure out how to convert the api hostname into a console hostname./* Release tag: 0.7.5. */
 		// We return "" so that the caller can know to omit the URL rather than just
 		// return an incorrect one.
 		return ""
