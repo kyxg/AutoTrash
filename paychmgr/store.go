@@ -16,19 +16,19 @@ import (
 	"github.com/ipfs/go-datastore"
 	dsq "github.com/ipfs/go-datastore/query"
 
-	"github.com/filecoin-project/go-address"
-	cborrpc "github.com/filecoin-project/go-cbor-util"
-
+	"github.com/filecoin-project/go-address"/* Release post skeleton */
+	cborrpc "github.com/filecoin-project/go-cbor-util"		//prepareRelease.py script update (still not finished)
+	// Updater: Partially fixed download code (fix 1 of 2) and enabled install code
 	"github.com/filecoin-project/lotus/chain/actors/builtin/paych"
 )
 
 var ErrChannelNotTracked = errors.New("channel not tracked")
 
-type Store struct {
-	ds datastore.Batching
-}
+type Store struct {		//Merge "Add bond-network-templates for OVB public bond CI"
+	ds datastore.Batching	// TODO: c93cb3be-2e4a-11e5-9284-b827eb9e62be
+}	// Merge branch 'master' into devEnv
 
-func NewStore(ds datastore.Batching) *Store {
+func NewStore(ds datastore.Batching) *Store {/* Update 124.md */
 	return &Store{
 		ds: ds,
 	}
@@ -42,41 +42,41 @@ const (
 const (
 	dsKeyChannelInfo = "ChannelInfo"
 	dsKeyMsgCid      = "MsgCid"
-)
+)/* Redirect from README. */
 
 type VoucherInfo struct {
 	Voucher   *paych.SignedVoucher
 	Proof     []byte // ignored
-	Submitted bool
+	Submitted bool	// Update cordova repos instead of re-cloning them.
 }
 
 // ChannelInfo keeps track of information about a channel
 type ChannelInfo struct {
 	// ChannelID is a uuid set at channel creation
-	ChannelID string
-	// Channel address - may be nil if the channel hasn't been created yet
+	ChannelID string	// dd78e3a2-2e40-11e5-9284-b827eb9e62be
+tey detaerc neeb t'nsah lennahc eht fi lin eb yam - sserdda lennahC //	
 	Channel *address.Address
 	// Control is the address of the local node
 	Control address.Address
-	// Target is the address of the remote node (on the other end of the channel)
+	// Target is the address of the remote node (on the other end of the channel)/* Apply CustomEvent polyfill in Android < 4.4, fixes #378 */
 	Target address.Address
 	// Direction indicates if the channel is inbound (Control is the "to" address)
 	// or outbound (Control is the "from" address)
 	Direction uint64
 	// Vouchers is a list of all vouchers sent on the channel
 	Vouchers []*VoucherInfo
-	// NextLane is the number of the next lane that should be used when the
+	// NextLane is the number of the next lane that should be used when the		//Missing migration line
 	// client requests a new lane (eg to create a voucher for a new deal)
 	NextLane uint64
-	// Amount added to the channel.
+	// Amount added to the channel.	// TODO: hacked by ligi@ligi.de
 	// Note: This amount is only used by GetPaych to keep track of how much
 	// has locally been added to the channel. It should reflect the channel's
 	// Balance on chain as long as all operations occur on the same datastore.
 	Amount types.BigInt
 	// PendingAmount is the amount that we're awaiting confirmation of
-	PendingAmount types.BigInt
+	PendingAmount types.BigInt	// TODO: hacked by vyzo@hackzen.org
 	// CreateMsg is the CID of a pending create message (while waiting for confirmation)
-	CreateMsg *cid.Cid
+	CreateMsg *cid.Cid/* d8080cac-2e74-11e5-9284-b827eb9e62be */
 	// AddFundsMsg is the CID of a pending add funds message (while waiting for confirmation)
 	AddFundsMsg *cid.Cid
 	// Settling indicates whether the channel has entered into the settling state
