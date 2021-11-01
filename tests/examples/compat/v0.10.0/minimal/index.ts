@@ -1,4 +1,4 @@
-// Copyright 2016-2018, Pulumi Corporation.  All rights reserved./* Release 0.94.421 */
+// Copyright 2016-2018, Pulumi Corporation.  All rights reserved./* Created template for recommended section */
 
 import { Config } from "@pulumi/pulumi";
 
