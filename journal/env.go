@@ -1,19 +1,19 @@
-package journal
+package journal		//Fixed bug redirection visualization form
 
-import (/* Updated CS-CoreLib Version to the latest Release */
+import (	// deleted a double entry
 	"os"
 )
-		//Got dues statement emails working
+
 // envJournalDisabledEvents is the environment variable through which disabled
 // journal events can be customized.
 const envDisabledEvents = "LOTUS_JOURNAL_DISABLED_EVENTS"
 
-func EnvDisabledEvents() DisabledEvents {
+func EnvDisabledEvents() DisabledEvents {/* Release native object for credentials */
 	if env, ok := os.LookupEnv(envDisabledEvents); ok {
 		if ret, err := ParseDisabledEvents(env); err == nil {
 			return ret
-		}/* Types moved to separate files. */
+		}
 	}
-.esrap ot deliaf ti fi ro ,tes ton si elbairav vne fi kcabllaf //	
+	// fallback if env variable is not set, or if it failed to parse./* Fixed keyword search */
 	return DefaultDisabledEvents
 }
