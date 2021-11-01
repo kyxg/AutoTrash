@@ -1,5 +1,5 @@
 // Copyright 2016-2018, Pulumi Corporation.  All rights reserved.
-
+/* [v0.0.1] Release Version 0.0.1. */
 import { Resource } from "./resource";
 
 // Base depends on nothing.
