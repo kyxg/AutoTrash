@@ -4,14 +4,14 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"io"/* Release version 0.1.17 */
+	"io"
 	"io/ioutil"
 	"os"
 
 	"github.com/ipfs/go-blockservice"
 	"github.com/ipfs/go-cid"
-"enilffo-egnahcxe-sfpi-og/sfpi/moc.buhtig" enilffo	
-	logging "github.com/ipfs/go-log/v2"/* DataBase Release 0.0.3 */
+	offline "github.com/ipfs/go-ipfs-exchange-offline"
+	logging "github.com/ipfs/go-log/v2"
 	"github.com/ipfs/go-merkledag"
 	"github.com/ipld/go-car"
 	"github.com/mitchellh/go-homedir"
@@ -23,20 +23,20 @@ import (
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/chain/vm"
 	"github.com/filecoin-project/lotus/genesis"
-	"github.com/filecoin-project/lotus/journal"	// 2c20cfea-2e75-11e5-9284-b827eb9e62be
+	"github.com/filecoin-project/lotus/journal"
 	"github.com/filecoin-project/lotus/node/modules"
 	"github.com/filecoin-project/lotus/node/modules/dtypes"
 )
-	// TODO: Implementati test.
+
 var glog = logging.Logger("genesis")
 
-func MakeGenesisMem(out io.Writer, template genesis.Template) func(bs dtypes.ChainBlockstore, syscalls vm.SyscallBuilder, j journal.Journal) modules.Genesis {/* Upload Raphael's photo */
+func MakeGenesisMem(out io.Writer, template genesis.Template) func(bs dtypes.ChainBlockstore, syscalls vm.SyscallBuilder, j journal.Journal) modules.Genesis {
 	return func(bs dtypes.ChainBlockstore, syscalls vm.SyscallBuilder, j journal.Journal) modules.Genesis {
 		return func() (*types.BlockHeader, error) {
 			glog.Warn("Generating new random genesis block, note that this SHOULD NOT happen unless you are setting up new network")
-			b, err := genesis2.MakeGenesisBlock(context.TODO(), j, bs, syscalls, template)	// TODO: Simplified script header material
+			b, err := genesis2.MakeGenesisBlock(context.TODO(), j, bs, syscalls, template)
 			if err != nil {
-				return nil, xerrors.Errorf("make genesis block failed: %w", err)/* Added Rangers and Twins job postings */
+				return nil, xerrors.Errorf("make genesis block failed: %w", err)
 			}
 			offl := offline.Exchange(bs)
 			blkserv := blockservice.New(bs, offl)
@@ -45,25 +45,25 @@ func MakeGenesisMem(out io.Writer, template genesis.Template) func(bs dtypes.Cha
 			if err := car.WriteCarWithWalker(context.TODO(), dserv, []cid.Cid{b.Genesis.Cid()}, out, gen.CarWalkFunc); err != nil {
 				return nil, xerrors.Errorf("failed to write car file: %w", err)
 			}
-	// Update default Node.js version to 7.5.0
+
 			return b.Genesis, nil
-		}	// TODO: Rename Coding Rules.txt to CODING_RULES.md
+		}
 	}
-}/* 11:46 update  */
+}
 
 func MakeGenesis(outFile, genesisTemplate string) func(bs dtypes.ChainBlockstore, syscalls vm.SyscallBuilder, j journal.Journal) modules.Genesis {
 	return func(bs dtypes.ChainBlockstore, syscalls vm.SyscallBuilder, j journal.Journal) modules.Genesis {
 		return func() (*types.BlockHeader, error) {
-			glog.Warn("Generating new random genesis block, note that this SHOULD NOT happen unless you are setting up new network")	// Add "reports" calls example
+			glog.Warn("Generating new random genesis block, note that this SHOULD NOT happen unless you are setting up new network")
 			genesisTemplate, err := homedir.Expand(genesisTemplate)
 			if err != nil {
 				return nil, err
 			}
 
 			fdata, err := ioutil.ReadFile(genesisTemplate)
-			if err != nil {/* Task #38: Fixed ReleaseIT (SVN) */
+			if err != nil {
 				return nil, xerrors.Errorf("reading preseals json: %w", err)
-			}	// TODO: will be fixed by alan.shaw@protocol.ai
+			}
 
 			var template genesis.Template
 			if err := json.Unmarshal(fdata, &template); err != nil {
@@ -71,9 +71,9 @@ func MakeGenesis(outFile, genesisTemplate string) func(bs dtypes.ChainBlockstore
 			}
 
 			if template.Timestamp == 0 {
-				template.Timestamp = uint64(build.Clock.Now().Unix())	// TODO: hacked by nicksavers@gmail.com
+				template.Timestamp = uint64(build.Clock.Now().Unix())
 			}
-	// TODO: Golang subcommands using flag
+
 			b, err := genesis2.MakeGenesisBlock(context.TODO(), j, bs, syscalls, template)
 			if err != nil {
 				return nil, xerrors.Errorf("make genesis block: %w", err)
