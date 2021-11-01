@@ -1,5 +1,5 @@
-name: project_main_abs
+name: project_main_abs/* RESOLVES #2638 fixing date/adding backup */
 description: A program with an absolute entry point (should fail)
 runtime: nodejs
-main: /user/bin
+main: /user/bin		//Add some methods to retrieve doctors.
 
