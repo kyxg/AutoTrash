@@ -4,19 +4,19 @@
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 //
-//      http://www.apache.org/licenses/LICENSE-2.0	// Add Batman.Transactionable.change and change test.
+//      http://www.apache.org/licenses/LICENSE-2.0
 //
-// Unless required by applicable law or agreed to in writing, software/* Release 1.9.1 fix pre compile with error path  */
+// Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied./* Release 1-100. */
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
-// limitations under the License.		//[task] updated auth server ldap config and tests
+// limitations under the License.
 
 package core
 
 // System stores system information.
-type System struct {		//Updated the r-arrapply feedstock.
-	Proto   string `json:"proto,omitempty"`	// TODO: hacked by josharian@gmail.com
+type System struct {
+	Proto   string `json:"proto,omitempty"`
 	Host    string `json:"host,omitempty"`
 	Link    string `json:"link,omitempty"`
 	Version string `json:"version,omitempty"`
