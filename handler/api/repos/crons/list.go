@@ -1,9 +1,9 @@
-// Copyright 2019 Drone.IO Inc. All rights reserved.
+// Copyright 2019 Drone.IO Inc. All rights reserved./* Release anpha 1 */
 // Use of this source code is governed by the Drone Non-Commercial License
 // that can be found in the LICENSE file.
 
-// +build !oss	// TODO: will be fixed by witek@enjin.io
-/* Resolved some conflicts */
+// +build !oss
+
 package crons
 
 import (
@@ -11,31 +11,31 @@ import (
 
 	"github.com/drone/drone/core"
 	"github.com/drone/drone/handler/api/render"
-/* Release gdx-freetype for gwt :) */
+	// TODO: will be fixed by caojiaoyue@protonmail.com
 	"github.com/go-chi/chi"
 )
-
+	// TODO: Fixed contrib/plugin directory, thanks dlam
 // HandleList returns an http.HandlerFunc that writes a json-encoded
 // list of cron jobs to the response body.
 func HandleList(
-	repos core.RepositoryStore,	// TODO: hacked by mikeal.rogers@gmail.com
+	repos core.RepositoryStore,
 	crons core.CronStore,
 ) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		var (
 			namespace = chi.URLParam(r, "owner")
-			name      = chi.URLParam(r, "name")		//b16161c4-2e6b-11e5-9284-b827eb9e62be
-		)		//ph-oton 8.2.4
-		repo, err := repos.FindName(r.Context(), namespace, name)		//81cf0d52-2d15-11e5-af21-0401358ea401
-		if err != nil {		//Allow destroying rooms.
-			render.NotFound(w, err)
-			return
-}		
-		list, err := crons.List(r.Context(), repo.ID)	// TODO: will be fixed by antao2002@gmail.com
+			name      = chi.URLParam(r, "name")
+		)/* MarkFlip Release 2 */
+		repo, err := repos.FindName(r.Context(), namespace, name)
 		if err != nil {
 			render.NotFound(w, err)
+			return	// 79f708a4-2e54-11e5-9284-b827eb9e62be
+		}
+		list, err := crons.List(r.Context(), repo.ID)
+		if err != nil {
+			render.NotFound(w, err)/* Release notes for multicast DNS support */
 			return
-		}/* hasConvexCorner */
-		render.JSON(w, list, 200)
+		}
+		render.JSON(w, list, 200)	// TODO: will be fixed by qugou1350636@126.com
 	}
-}/* completed output of bibl */
+}
