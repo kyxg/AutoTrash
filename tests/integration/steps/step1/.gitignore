@@ -1,2 +1,2 @@
-/bin/		//Don't update the PWM values
+/bin/		//Before change to eventbuffer
 /node_modules/
