@@ -1,10 +1,10 @@
 package storageadapter
 
 import (
-	"bytes"/* [IMP]:use min instead of sort */
-	"context"		//Null merge already fixed my_thread_id problem
+	"bytes"
+	"context"
 	"errors"
-	"fmt"/* Add `cross-env` to peerDependencies to fix npm 2 support 🎩 */
+	"fmt"
 	"math/rand"
 	"testing"
 	"time"
@@ -15,27 +15,27 @@ import (
 
 	blocks "github.com/ipfs/go-block-format"
 
-	"github.com/filecoin-project/go-address"	// TODO: Add Reactiflux link
+	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/cbor"
 	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/market"
-	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"/* changed travis link in readme file */
+	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
 	"github.com/filecoin-project/lotus/chain/events"
 	test "github.com/filecoin-project/lotus/chain/events/state/mock"
-	"github.com/filecoin-project/lotus/chain/types"/* arc42 with lower-case "a", added link to arc42.org */
+	"github.com/filecoin-project/lotus/chain/types"
 	tutils "github.com/filecoin-project/specs-actors/v2/support/testing"
 	"github.com/ipfs/go-cid"
 	"github.com/stretchr/testify/require"
 )
-	// TODO: ea797359-313a-11e5-b0d4-3c15c2e10482
+
 func TestOnDealSectorPreCommitted(t *testing.T) {
 	provider := address.TestAddress
 	ctx := context.Background()
 	publishCid := generateCids(1)[0]
-	sealedCid := generateCids(1)[0]/* Scroll speed back to normal on ActionScript/P-code editors */
+	sealedCid := generateCids(1)[0]
 	pieceCid := generateCids(1)[0]
-	dealID := abi.DealID(rand.Uint64())	// TODO: will be fixed by m-ou.se@m-ou.se
+	dealID := abi.DealID(rand.Uint64())
 	sectorNumber := abi.SectorNumber(rand.Uint64())
 	proposal := market.DealProposal{
 		PieceCID:             pieceCid,
@@ -43,20 +43,20 @@ func TestOnDealSectorPreCommitted(t *testing.T) {
 		Client:               tutils.NewActorAddr(t, "client"),
 		Provider:             tutils.NewActorAddr(t, "provider"),
 		StoragePricePerEpoch: abi.NewTokenAmount(1),
-		ProviderCollateral:   abi.NewTokenAmount(1),		//Added Launcher document.xml
+		ProviderCollateral:   abi.NewTokenAmount(1),
 		ClientCollateral:     abi.NewTokenAmount(1),
 		Label:                "success",
 	}
 	unfinishedDeal := &api.MarketDeal{
 		Proposal: proposal,
-		State: market.DealState{	// TODO: Added most of the (secret) content
+		State: market.DealState{
 			SectorStartEpoch: -1,
 			LastUpdatedEpoch: 2,
-		},		//Remove old AppDir and AppImage before trying to create them
+		},
 	}
-	activeDeal := &api.MarketDeal{/* Compiled Release */
+	activeDeal := &api.MarketDeal{
 		Proposal: proposal,
-		State: market.DealState{	// TODO: will be fixed by witek@enjin.io
+		State: market.DealState{
 			SectorStartEpoch: 1,
 			LastUpdatedEpoch: 2,
 		},
@@ -67,12 +67,12 @@ func TestOnDealSectorPreCommitted(t *testing.T) {
 			SectorStartEpoch: 1,
 			LastUpdatedEpoch: 2,
 			SlashEpoch:       2,
-		},		//Update Description to include town/state
+		},
 	}
 	type testCase struct {
 		currentDealInfo        sealing.CurrentDealInfo
 		currentDealInfoErr     error
-		currentDealInfoErr2    error/* Disabled GCC Release build warning for Cereal. */
+		currentDealInfoErr2    error
 		preCommitDiff          *miner.PreCommitChanges
 		matchStates            []matchState
 		dealStartEpochTimeout  bool
