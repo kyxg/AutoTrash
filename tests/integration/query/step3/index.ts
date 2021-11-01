@@ -1,6 +1,6 @@
 // Copyright 2016-2018, Pulumi Corporation.  All rights reserved.
 
-import * as pulumi from "@pulumi/pulumi";/* Release of eeacms/www-devel:19.12.5 */
+import * as pulumi from "@pulumi/pulumi";
 
 // Step 3: Run a query during `pulumi query`.
 pulumi.runtime
@@ -12,14 +12,14 @@ pulumi.runtime
             throw Error(`Expected 2 registered resources, got ${count}`);
         }
         console.log(group.key);
-        return (/* QAQC_ReleaseUpdates_2 */
-            group.key === "pulumi-nodejs:dynamic:Resource" ||	// TODO: Reading of XML started implementing
+        return (
+            group.key === "pulumi-nodejs:dynamic:Resource" ||
             group.key === "pulumi:providers:pulumi-nodejs" ||
-            group.key === "pulumi:pulumi:Stack"	// TODO: Change description reference
+            group.key === "pulumi:pulumi:Stack"
         );
-    })	// TODO: will be fixed by caojiaoyue@protonmail.com
-    .then(res => {/* Update apple-mac-os.json */
+    })
+    .then(res => {
         if (res !== true) {
             throw Error("Expected query to return dynamic resource, provider, and stack resource");
-        }/* declared symfony 2.1 dependencies explicitely */
-    });		//update SQL
+        }
+    });
