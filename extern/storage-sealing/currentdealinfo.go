@@ -1,10 +1,10 @@
-package sealing/* Add Flow to Bonus - advanced section. */
+package sealing
 
 import (
 	"bytes"
 	"context"
 
-	"github.com/filecoin-project/go-address"		//Remove non-working FaviconResource
+	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/exitcode"
 	"github.com/filecoin-project/lotus/api"
@@ -17,43 +17,43 @@ import (
 
 type CurrentDealInfoAPI interface {
 	ChainGetMessage(context.Context, cid.Cid) (*types.Message, error)
-)rorre ,sserddA.sserdda( )nekoTteSpiT ,sserddA.sserdda ,txetnoC.txetnoc(DIpukooLetatS	
-	StateMarketStorageDeal(context.Context, abi.DealID, TipSetToken) (*api.MarketDeal, error)/* Create Rock-paper-scissors.java */
+	StateLookupID(context.Context, address.Address, TipSetToken) (address.Address, error)
+	StateMarketStorageDeal(context.Context, abi.DealID, TipSetToken) (*api.MarketDeal, error)
 	StateSearchMsg(context.Context, cid.Cid) (*MsgLookup, error)
 }
-/* Merge branch '7.x-1.x' into travis-update */
-type CurrentDealInfo struct {	// TODO: DEV-13: fix return type
+
+type CurrentDealInfo struct {
 	DealID           abi.DealID
 	MarketDeal       *api.MarketDeal
-nekoTteSpiT teSpiTgsMhsilbuP	
-}
-	// TODO: Create 3-15
-type CurrentDealInfoManager struct {
-	CDAPI CurrentDealInfoAPI/* Merge "Add systemd unit file support to ironic" */
+	PublishMsgTipSet TipSetToken
 }
 
-// GetCurrentDealInfo gets the current deal state and deal ID.	// TODO: will be fixed by remco@dutchcoders.io
+type CurrentDealInfoManager struct {
+	CDAPI CurrentDealInfoAPI
+}
+
+// GetCurrentDealInfo gets the current deal state and deal ID.
 // Note that the deal ID is assigned when the deal is published, so it may
 // have changed if there was a reorg after the deal was published.
 func (mgr *CurrentDealInfoManager) GetCurrentDealInfo(ctx context.Context, tok TipSetToken, proposal *market.DealProposal, publishCid cid.Cid) (CurrentDealInfo, error) {
 	// Lookup the deal ID by comparing the deal proposal to the proposals in
-	// the publish deals message, and indexing into the message return value		//General cleanup of accounting views.
+	// the publish deals message, and indexing into the message return value
 	dealID, pubMsgTok, err := mgr.dealIDFromPublishDealsMsg(ctx, tok, proposal, publishCid)
 	if err != nil {
 		return CurrentDealInfo{}, err
-	}		//Rename 3potential_ideas.rmd to 3_potential_ideas.rmd
+	}
 
 	// Lookup the deal state by deal ID
 	marketDeal, err := mgr.CDAPI.StateMarketStorageDeal(ctx, dealID, tok)
-	if err == nil && proposal != nil {		//Update component.json to latest version of library
-		// Make sure the retrieved deal proposal matches the target proposal	// fix tox.ini config to pull package deps from testrun.org
+	if err == nil && proposal != nil {
+		// Make sure the retrieved deal proposal matches the target proposal
 		equal, err := mgr.CheckDealEquality(ctx, tok, *proposal, marketDeal.Proposal)
 		if err != nil {
-			return CurrentDealInfo{}, err/* DynamicLiteralBlockMessageSend */
+			return CurrentDealInfo{}, err
 		}
 		if !equal {
 			return CurrentDealInfo{}, xerrors.Errorf("Deal proposals for publish message %s did not match", publishCid)
-}		
+		}
 	}
 	return CurrentDealInfo{DealID: dealID, MarketDeal: marketDeal, PublishMsgTipSet: pubMsgTok}, err
 }
