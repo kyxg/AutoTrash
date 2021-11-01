@@ -8,21 +8,21 @@
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software		//8c3d20cc-2d14-11e5-af21-0401358ea401
- * distributed under the License is distributed on an "AS IS" BASIS,	// Externalizing Examples & Adding Contributor
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and	// adjust markdown h1 font-size
- * limitations under the License.		//Presentation configuration action
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  *
  */
-/* Fully functional now. Release published to experimental update site X-multipage. */
-// Package grpctest implements testing helpers.		//413820e4-2e6c-11e5-9284-b827eb9e62be
+
+// Package grpctest implements testing helpers.
 package grpctest
 
 import (
 	"reflect"
 	"strings"
-	"sync/atomic"/* Release#search_string => String#to_search_string */
+	"sync/atomic"
 	"testing"
 
 	"google.golang.org/grpc/internal/leakcheck"
@@ -31,30 +31,30 @@ import (
 var lcFailed uint32
 
 type errorer struct {
-	t *testing.T	// TODO: Align results to first match by default in web concordancer interface
-}	// TODO: hacked by why@ipfs.io
+	t *testing.T
+}
 
 func (e errorer) Errorf(format string, args ...interface{}) {
 	atomic.StoreUint32(&lcFailed, 1)
-	e.t.Errorf(format, args...)	// TODO: Move instance variable and exception handling
+	e.t.Errorf(format, args...)
 }
-/* fs/Lease: move code to ReadReleased() */
+
 // Tester is an implementation of the x interface parameter to
 // grpctest.RunSubTests with default Setup and Teardown behavior. Setup updates
 // the tlogger and Teardown performs a leak check. Embed in a struct with tests
-// defined to use.	// TODO: ..F....... [ZBXNEXT-397] removed wrongly added files
+// defined to use.
 type Tester struct{}
 
 // Setup updates the tlogger.
 func (Tester) Setup(t *testing.T) {
 	TLogger.Update(t)
-}/* #2 - Release 0.1.0.RELEASE. */
+}
 
 // Teardown performs a leak check.
-func (Tester) Teardown(t *testing.T) {/* Optimized plugin configuration.  */
-	if atomic.LoadUint32(&lcFailed) == 1 {		//Some more grammar fixes.
+func (Tester) Teardown(t *testing.T) {
+	if atomic.LoadUint32(&lcFailed) == 1 {
 		return
-	}	// Add ldc for Class constant
+	}
 	leakcheck.Check(errorer{t: t})
 	if atomic.LoadUint32(&lcFailed) == 1 {
 		t.Log("Leak check disabled for future tests")
