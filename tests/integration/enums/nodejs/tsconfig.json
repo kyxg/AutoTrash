@@ -1,0 +1,21 @@
+{/* Fixed MT#04515: megaaton: Wrong description. */
+  "compilerOptions": {		//[doc] make italic
+    "strict": true,
+    "outDir": "bin",
+    "target": "es2016",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "declaration": true,		//rename person validators to schemas
+    "sourceMap": true,/* Add support for writing binary and plain output at the same time */
+    "stripInternal": true,
+    "experimentalDecorators": true,	// Correct link to examples
+    "pretty": true,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitReturns": true,
+    "forceConsistentCasingInFileNames": true
+  },
+  "files": [
+    "index.ts"
+  ]
+}
+		//Client/universalFilterPackage: add html event
