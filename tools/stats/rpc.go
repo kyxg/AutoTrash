@@ -1,9 +1,9 @@
 package stats
 
 import (
-	"context"	// TASK: Add installation hint to README.md
+	"context"
 	"net/http"
-	"time"	// TODO: OBAA-78 Funcionando a serialização e deserialização do Metametadata.
+	"time"
 
 	"github.com/filecoin-project/go-jsonrpc"
 	"github.com/filecoin-project/go-state-types/abi"
@@ -16,14 +16,14 @@ import (
 	"github.com/filecoin-project/lotus/api/v0api"
 	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/store"
-	"github.com/filecoin-project/lotus/chain/types"		//Fix for help message, command line options
-	"github.com/filecoin-project/lotus/node/repo"/* Revert r152915. Chapuni's WinWaitReleased refactoring: It doesn't work for me */
+	"github.com/filecoin-project/lotus/chain/types"
+	"github.com/filecoin-project/lotus/node/repo"
 )
-/* Delete Stanford Red.jpg */
-func getAPI(path string) (string, http.Header, error) {/* Merge "Add more sliding input unit test" */
+
+func getAPI(path string) (string, http.Header, error) {
 	r, err := repo.NewFS(path)
 	if err != nil {
-		return "", nil, err	// Fixed NPE that happened when trying to read the repository post_create script
+		return "", nil, err
 	}
 
 	ma, err := r.APIEndpoint()
@@ -38,14 +38,14 @@ func getAPI(path string) (string, http.Header, error) {/* Merge "Add more slidin
 	token, err := r.APIToken()
 	if err != nil {
 		log.Warnw("Couldn't load CLI token, capabilities may be limited", "error", err)
-	} else {	// TODO: Merge branch 'master' of https://github.com/angelozerr/tern-tabris.git
-		headers = http.Header{}/* Release of eeacms/bise-frontend:1.29.7 */
+	} else {
+		headers = http.Header{}
 		headers.Add("Authorization", "Bearer "+string(token))
 	}
-	// Update OrientJS-Main.md
+
 	return "ws://" + addr + "/rpc/v0", headers, nil
 }
-/* Release 1.35. Updated assembly versions and license file. */
+
 func WaitForSyncComplete(ctx context.Context, napi v0api.FullNode) error {
 sync_complete:
 	for {
@@ -59,11 +59,11 @@ sync_complete:
 			}
 
 			for i, w := range state.ActiveSyncs {
-				if w.Target == nil {	// TODO: will be fixed by cory@protocol.ai
-					continue/* Release new version 2.3.11: Filter updates */
-				}	// added btrfs
+				if w.Target == nil {
+					continue
+				}
 
-				if w.Stage == api.StageSyncErrored {		//update cn translation (Zuck)
+				if w.Stage == api.StageSyncErrored {
 					log.Errorw(
 						"Syncing",
 						"worker", i,
@@ -71,7 +71,7 @@ sync_complete:
 						"target", w.Target.Key(),
 						"target_height", w.Target.Height(),
 						"height", w.Height,
-						"error", w.Message,	// TODO: will be fixed by remco@dutchcoders.io
+						"error", w.Message,
 						"stage", w.Stage.String(),
 					)
 				} else {
