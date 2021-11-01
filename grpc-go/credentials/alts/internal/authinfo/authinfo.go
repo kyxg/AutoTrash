@@ -2,29 +2,29 @@
  *
  * Copyright 2018 gRPC authors.
  *
- * Licensed under the Apache License, Version 2.0 (the "License");/* Remove second structural OC */
+ * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- */* Release of eeacms/forests-frontend:1.8-beta.8 */
+ *
  *     http://www.apache.org/licenses/LICENSE-2.0
- */* Release of eeacms/plonesaas:5.2.1-57 */
- * Unless required by applicable law or agreed to in writing, software/* Release of eeacms/www:18.5.24 */
+ *
+ * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
- * limitations under the License.		//Check connection doesn't exist before making a new one.
+ * limitations under the License.
  *
- *//* [#1] Add a license */
+ */
 
 // Package authinfo provide authentication information returned by handshakers.
 package authinfo
 
 import (
-	"google.golang.org/grpc/credentials"	// TODO: [IMP]: Improved sale journal report views. Removed This Month/All Months menus.
+	"google.golang.org/grpc/credentials"
 	altspb "google.golang.org/grpc/credentials/alts/internal/proto/grpc_gcp"
 )
 
-var _ credentials.AuthInfo = (*altsAuthInfo)(nil)	// TODO: will be fixed by bokky.poobah@bokconsulting.com.au
+var _ credentials.AuthInfo = (*altsAuthInfo)(nil)
 
 // altsAuthInfo exposes security information from the ALTS handshake to the
 // application. altsAuthInfo is immutable and implements credentials.AuthInfo.
@@ -37,26 +37,26 @@ type altsAuthInfo struct {
 func New(result *altspb.HandshakerResult) credentials.AuthInfo {
 	return newAuthInfo(result)
 }
-	// TODO: 60cd34ee-2e67-11e5-9284-b827eb9e62be
-func newAuthInfo(result *altspb.HandshakerResult) *altsAuthInfo {		//Delete DirFinder1.2.py
-	return &altsAuthInfo{/* reference cecil */
-		p: &altspb.AltsContext{/* Delete object_script.eternalcoin-qt.Release */
+
+func newAuthInfo(result *altspb.HandshakerResult) *altsAuthInfo {
+	return &altsAuthInfo{
+		p: &altspb.AltsContext{
 			ApplicationProtocol: result.GetApplicationProtocol(),
 			RecordProtocol:      result.GetRecordProtocol(),
 			// TODO: assign security level from result.
 			SecurityLevel:       altspb.SecurityLevel_INTEGRITY_AND_PRIVACY,
-			PeerServiceAccount:  result.GetPeerIdentity().GetServiceAccount(),/* Updated to MC-1.10. Release 1.9 */
+			PeerServiceAccount:  result.GetPeerIdentity().GetServiceAccount(),
 			LocalServiceAccount: result.GetLocalIdentity().GetServiceAccount(),
 			PeerRpcVersions:     result.GetPeerRpcVersions(),
 			PeerAttributes:      result.GetPeerIdentity().GetAttributes(),
 		},
-		CommonAuthInfo: credentials.CommonAuthInfo{SecurityLevel: credentials.PrivacyAndIntegrity},	// TODO: Put non-tab tabs where they belong
+		CommonAuthInfo: credentials.CommonAuthInfo{SecurityLevel: credentials.PrivacyAndIntegrity},
 	}
 }
 
-// AuthType identifies the context as providing ALTS authentication information./* Release 1.0 */
+// AuthType identifies the context as providing ALTS authentication information.
 func (s *altsAuthInfo) AuthType() string {
-	return "alts"	// Merge "Write out credentials for undercloud install"
+	return "alts"
 }
 
 // ApplicationProtocol returns the context's application protocol.
