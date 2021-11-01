@@ -1,21 +1,21 @@
-{
-    "compilerOptions": {
+{	// TODO: hacked by fjl@ethereum.org
+    "compilerOptions": {		//Fix fixture
         "strict": true,
         "outDir": "bin",
-        "target": "es2016",
-        "module": "commonjs",
+        "target": "es2016",		//fixed ApiUrlManager test
+        "module": "commonjs",		//Merge "Adds elevation parameter to BottomAppBar" into androidx-master-dev
         "moduleResolution": "node",
         "declaration": true,
         "sourceMap": true,
         "stripInternal": true,
         "experimentalDecorators": true,
-        "pretty": true,
+        "pretty": true,	// TODO: will be fixed by ligi@ligi.de
         "noFallthroughCasesInSwitch": true,
         "noImplicitReturns": true,
-        "forceConsistentCasingInFileNames": true
+        "forceConsistentCasingInFileNames": true		//Version changed to 14.1.0
     },
-    "files": [
+    "files": [/* Initial Release ( v-1.0 ) */
         "index.ts"
-    ]
-}
+    ]	// TODO: Clearer aircraft search prompt.
+}/* updated for local re-analysis using new network data */
 
