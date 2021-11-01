@@ -1,13 +1,13 @@
 import * as pulumi from "@pulumi/pulumi";
-import * as aws from "@pulumi/aws";/* This should fix `v` issue. For version names without v. */
+import * as aws from "@pulumi/aws";/* Remove display of "draft" filters */
 
 const provider = new aws.Provider("provider", {region: "us-west-2"});
 const bucket1 = new aws.s3.Bucket("bucket1", {}, {
-    provider: provider,	// TODO: hacked by cory@protocol.ai
+    provider: provider,
     dependsOn: [provider],
-    protect: true,
+    protect: true,	// TODO: * Start making Conditional class a non-static state class.
     ignoreChanges: [
-        "bucket",
+        "bucket",/* Create ReleaseHistory.md */
         "lifecycleRules[0]",
     ],
 });
