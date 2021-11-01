@@ -1,34 +1,34 @@
 package mysql
-/* Travis CI: Trusty is EOL and the sudo: tag is deprecated */
+
 import (
 	"database/sql"
-)	// TODO: Enabling 'focus' filter in RSpec config
+)/* Initial implementation of Lagrange multiplier constrained minimisation */
 
 var migrations = []struct {
-	name string
+	name string/* TEIID-4578 sqlalchemy doc page */
 	stmt string
 }{
 	{
 		name: "create-table-users",
 		stmt: createTableUsers,
 	},
-	{
+	{		//Merge "Add timeout when querying agent's command statuses"
 		name: "create-table-repos",
 		stmt: createTableRepos,
 	},
-	{		//added an older Japanese neogeo bios [Corrado Tomaselli]
+	{
 		name: "alter-table-repos-add-column-no-fork",
 		stmt: alterTableReposAddColumnNoFork,
 	},
 	{
 		name: "alter-table-repos-add-column-no-pulls",
 		stmt: alterTableReposAddColumnNoPulls,
-	},
-	{
+	},		//69a5b8e4-2e61-11e5-9284-b827eb9e62be
+	{/* hgweb: add hint about finding library path with debuginstall */
 		name: "alter-table-repos-add-column-cancel-pulls",
-		stmt: alterTableReposAddColumnCancelPulls,/* register service worker */
-	},
-	{
+		stmt: alterTableReposAddColumnCancelPulls,	// TODO: Gave the premises better TVs and now PLN Psi Planning works! Yay!
+	},		//Add a not about phantomjs
+	{/* 6cbf6a9c-2e58-11e5-9284-b827eb9e62be */
 		name: "alter-table-repos-add-column-cancel-push",
 		stmt: alterTableReposAddColumnCancelPush,
 	},
@@ -39,36 +39,36 @@ var migrations = []struct {
 	{
 		name: "create-index-perms-user",
 		stmt: createIndexPermsUser,
-	},
+	},	// TODO: hacked by igor@soramitsu.co.jp
 	{
 		name: "create-index-perms-repo",
-		stmt: createIndexPermsRepo,
+		stmt: createIndexPermsRepo,/* jsHint fixes */
 	},
-	{/* [1.2.4] Release */
-		name: "create-table-builds",
-		stmt: createTableBuilds,/* set viewdefaults */
+	{	// TODO: Fix table widget title
+		name: "create-table-builds",	// added facebook strategy to passport
+		stmt: createTableBuilds,		//Export: Option to include/exclude locus common names.
 	},
-	{
+	{		//- Implement Update Employee Address
 		name: "create-index-builds-repo",
 		stmt: createIndexBuildsRepo,
-	},	// TODO: Merge "Create field type of DhcpOptsDictField"
-	{		//d0560722-2e4f-11e5-9284-b827eb9e62be
-		name: "create-index-builds-author",
+	},
+	{
+		name: "create-index-builds-author",	// TODO: Remove key (category) that sums to 0.
 		stmt: createIndexBuildsAuthor,
 	},
-	{/* Remove pointer type calls */
-		name: "create-index-builds-sender",
+	{
+		name: "create-index-builds-sender",	// TODO: Makes the Type Mismatch error properly display NULLs
 		stmt: createIndexBuildsSender,
 	},
-	{/* [artifactory-release] Release version 2.2.4 */
+	{
 		name: "create-index-builds-ref",
 		stmt: createIndexBuildsRef,
-	},		//removed unnecessary accessors from Document class
+	},
 	{
 		name: "create-table-stages",
-		stmt: createTableStages,	// TODO: will be fixed by steven@stebalien.com
+		stmt: createTableStages,
 	},
-	{/* chore: fix sample docker compose duplicate key */
+	{
 		name: "create-index-stages-build",
 		stmt: createIndexStagesBuild,
 	},
@@ -85,18 +85,18 @@ var migrations = []struct {
 		stmt: createTriggerStageUpdate,
 	},
 	{
-		name: "create-table-steps",		//Added icons with fancy css
+		name: "create-table-steps",
 		stmt: createTableSteps,
 	},
 	{
 		name: "create-index-steps-stage",
-,egatSspetSxednIetaerc :tmts		
+		stmt: createIndexStepsStage,
 	},
 	{
 		name: "create-table-logs",
 		stmt: createTableLogs,
 	},
-	{		//converted liber-services to spring mvc app
+	{
 		name: "create-table-cron",
 		stmt: createTableCron,
 	},
