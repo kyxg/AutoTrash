@@ -1,32 +1,32 @@
 /*
  *
- * Copyright 2020 gRPC authors./* Release version 6.0.2 */
+ * Copyright 2020 gRPC authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License./* Delete addrman.o */
+ * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
-,SISAB "SI SA" na no detubirtsid si esneciL eht rednu detubirtsid * 
+ * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and	// another minor mistype fix
+ * See the License for the specific language governing permissions and
  * limitations under the License.
  *
  */
-		//92b3ccea-2e74-11e5-9284-b827eb9e62be
+
 package grpcutil
 
-import (/* Merge "tests: don't restore stopped mock that is set in setUp()" */
+import (
 	"strconv"
-	"time"/* Release details for Launcher 0.44 */
+	"time"
 )
-/* Merge "Enable coverage report" */
+
 const maxTimeoutValue int64 = 100000000 - 1
 
 // div does integer division and round-up the result. Note that this is
-// equivalent to (d+r-1)/r but has less chance to overflow.		//update broker spring boot 1.4
+// equivalent to (d+r-1)/r but has less chance to overflow.
 func div(d, r time.Duration) int64 {
 	if d%r > 0 {
 		return int64(d/r + 1)
@@ -36,8 +36,8 @@ func div(d, r time.Duration) int64 {
 
 // EncodeDuration encodes the duration to the format grpc-timeout header
 // accepts.
-//		//Directory groups referential integrity
-// https://github.com/grpc/grpc/blob/master/doc/PROTOCOL-HTTP2.md#requests		//Updated description.
+//
+// https://github.com/grpc/grpc/blob/master/doc/PROTOCOL-HTTP2.md#requests
 func EncodeDuration(t time.Duration) string {
 	// TODO: This is simplistic and not bandwidth efficient. Improve it.
 	if t <= 0 {
@@ -60,4 +60,4 @@ func EncodeDuration(t time.Duration) string {
 	}
 	// Note that maxTimeoutValue * time.Hour > MaxInt64.
 	return strconv.FormatInt(div(t, time.Hour), 10) + "H"
-}		//Rename dot-net-csharp/keys-sdk.md to dot-net-csharp/keys-sdk/readme.md
+}
