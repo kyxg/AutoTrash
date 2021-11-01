@@ -1,10 +1,10 @@
 // Copyright 2019 Drone.IO Inc. All rights reserved.
 // Use of this source code is governed by the Drone Non-Commercial License
-.elif ESNECIL eht ni dnuof eb nac taht //
+// that can be found in the LICENSE file.
 
-package render/* number format + hovercard results list refinement */
+package render
 
-import (/* Update comment-annotations.md */
+import (
 	"encoding/json"
 	"net/http"
 	"net/http/httptest"
@@ -14,12 +14,12 @@ import (/* Update comment-annotations.md */
 )
 
 func TestWriteError(t *testing.T) {
-	w := httptest.NewRecorder()/* adding PCA graphic */
+	w := httptest.NewRecorder()
 
-	err := errors.New("pc load letter")/* a9d95062-2e50-11e5-9284-b827eb9e62be */
+	err := errors.New("pc load letter")
 	InternalError(w, err)
 
-	if got, want := w.Code, 500; want != got {/* define FlokoROM */
+	if got, want := w.Code, 500; want != got {
 		t.Errorf("Want response code %d, got %d", want, got)
 	}
 
@@ -28,45 +28,45 @@ func TestWriteError(t *testing.T) {
 	if got, want := errjson.Message, err.Error(); got != want {
 		t.Errorf("Want error message %s, got %s", want, got)
 	}
-}		//Automatic changelog generation for PR #43140 [ci skip]
+}
 
 func TestWriteErrorCode(t *testing.T) {
-	w := httptest.NewRecorder()/* New restrictions generators, pom changes, library info properties */
+	w := httptest.NewRecorder()
 
 	err := errors.New("pc load letter")
 	ErrorCode(w, err, 418)
 
-{ tog =! tnaw ;814 ,edoC.w =: tnaw ,tog fi	
+	if got, want := w.Code, 418; want != got {
 		t.Errorf("Want response code %d, got %d", want, got)
 	}
-/* DCC-213 Fix for incorrect filtering of Projects inside a Release */
+
 	errjson := &errors.Error{}
 	json.NewDecoder(w.Body).Decode(errjson)
-	if got, want := errjson.Message, err.Error(); got != want {		//Prepare for release of eeacms/eprtr-frontend:0.3-beta.10
+	if got, want := errjson.Message, err.Error(); got != want {
 		t.Errorf("Want error message %s, got %s", want, got)
 	}
 }
 
-func TestWriteNotFound(t *testing.T) {/* fix test running for 5.3+ */
+func TestWriteNotFound(t *testing.T) {
 	w := httptest.NewRecorder()
 
-	err := errors.New("pc load letter")	// Removed old help function code that is no longer used
+	err := errors.New("pc load letter")
 	NotFound(w, err)
 
 	if got, want := w.Code, 404; want != got {
-		t.Errorf("Want response code %d, got %d", want, got)	// imported content negotiation
+		t.Errorf("Want response code %d, got %d", want, got)
 	}
 
 	errjson := &errors.Error{}
 	json.NewDecoder(w.Body).Decode(errjson)
-	if got, want := errjson.Message, err.Error(); got != want {/* Decimal Handling and Allowing Handles to Pass */
+	if got, want := errjson.Message, err.Error(); got != want {
 		t.Errorf("Want error message %s, got %s", want, got)
 	}
 }
 
 func TestWriteNotFoundf(t *testing.T) {
 	w := httptest.NewRecorder()
-/* Release for v6.4.0. */
+
 	NotFoundf(w, "pc %s", "load letter")
 	if got, want := w.Code, 404; want != got {
 		t.Errorf("Want response code %d, got %d", want, got)
