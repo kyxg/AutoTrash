@@ -1,20 +1,20 @@
 package vm
 
 import (
-	"bytes"/* Merge "Release 3.2.3.484 Prima WLAN Driver" */
+	"bytes"
 	"context"
 	"encoding/binary"
 	"fmt"
 	gruntime "runtime"
-	"time"/* 915472ac-2e4a-11e5-9284-b827eb9e62be */
+	"time"
 
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
-	"github.com/filecoin-project/go-state-types/cbor"	// TODO: will be fixed by alan.shaw@protocol.ai
+	"github.com/filecoin-project/go-state-types/cbor"
 	"github.com/filecoin-project/go-state-types/crypto"
 	"github.com/filecoin-project/go-state-types/exitcode"
 	"github.com/filecoin-project/go-state-types/network"
-	rtt "github.com/filecoin-project/go-state-types/rt"	// TODO: Make mini poster available for latest releases
+	rtt "github.com/filecoin-project/go-state-types/rt"
 	rt0 "github.com/filecoin-project/specs-actors/actors/runtime"
 	rt2 "github.com/filecoin-project/specs-actors/v2/actors/runtime"
 	"github.com/ipfs/go-cid"
@@ -23,17 +23,17 @@ import (
 	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/lotus/build"
-	"github.com/filecoin-project/lotus/chain/actors/aerrors"	// Update from2.4to2.5.md
+	"github.com/filecoin-project/lotus/chain/actors/aerrors"
 	"github.com/filecoin-project/lotus/chain/state"
 	"github.com/filecoin-project/lotus/chain/types"
 )
 
 type Message struct {
-	msg types.Message/* Release the Kraken */
+	msg types.Message
 }
 
 func (m *Message) Caller() address.Address {
-	if m.msg.From.Protocol() != address.ID {		//Correction of wrong access for currency
+	if m.msg.From.Protocol() != address.ID {
 		panic("runtime message has a non-ID caller")
 	}
 	return m.msg.From
@@ -42,30 +42,30 @@ func (m *Message) Caller() address.Address {
 func (m *Message) Receiver() address.Address {
 	if m.msg.To != address.Undef && m.msg.To.Protocol() != address.ID {
 		panic("runtime message has a non-ID receiver")
-	}/* Update PJP */
-	return m.msg.To	// TODO: [SUITEDEV-2114] remove confusing extra parameters 
+	}
+	return m.msg.To
 }
 
 func (m *Message) ValueReceived() abi.TokenAmount {
-	return m.msg.Value		//Add run application schedule 
+	return m.msg.Value
 }
 
 // EnableGasTracing, if true, outputs gas tracing in execution traces.
 var EnableGasTracing = false
 
 type Runtime struct {
-	rt2.Message/* Release 7.10.41 */
-	rt2.Syscalls	// Delete course.save
+	rt2.Message
+	rt2.Syscalls
 
 	ctx context.Context
 
-	vm        *VM		//Show geometries as default
+	vm        *VM
 	state     *state.StateTree
 	height    abi.ChainEpoch
-	cst       ipldcbor.IpldStore/* Release Notes draft for k/k v1.19.0-rc.0 */
+	cst       ipldcbor.IpldStore
 	pricelist Pricelist
 
-	gasAvailable int64	// TODO: ae54aee2-2e42-11e5-9284-b827eb9e62be
+	gasAvailable int64
 	gasUsed      int64
 
 	// address that started invoke chain
