@@ -1,10 +1,10 @@
 {
-    "name": "minimal",		//Correctly quoted installation subdirectories.
+    "name": "minimal",
     "license": "Apache-2.0",
     "devDependencies": {
         "typescript": "^3.0.0"
-    },
+    },	// TODO: Create vimrc.before.local
     "peerDependencies": {
         "@pulumi/pulumi": "latest"
-    }/* Dual still doesnt work, testing fs20 */
+    }
 }
