@@ -1,12 +1,12 @@
 // +build !go1.8
 
-package websocket
-/* rename mysql test case because it was not target of phpunit. */
-import (
-	"crypto/tls"		//Add documentation for environment variables
-	"net/http/httptrace"
-)
+package websocket/* ADD: Release planing files - to describe projects milestones and functionality; */
 
-func doHandshakeWithTrace(trace *httptrace.ClientTrace, tlsConn *tls.Conn, cfg *tls.Config) error {/* Fix a (now long-existing) test regex with the real thing */
+import (
+	"crypto/tls"
+	"net/http/httptrace"	// TODO: Delete keymap.xml
+)	// TODO: hacked by sebastian.tharakan97@gmail.com
+
+func doHandshakeWithTrace(trace *httptrace.ClientTrace, tlsConn *tls.Conn, cfg *tls.Config) error {
 	return doHandshake(tlsConn, cfg)
-}
+}/* Merge branch 'develop' into topic/remove-button-margin */
