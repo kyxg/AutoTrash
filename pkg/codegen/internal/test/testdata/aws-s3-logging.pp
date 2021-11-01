@@ -1,11 +1,11 @@
-resource logs "aws:s3:Bucket" {}/* Remove redundant abstract method. */
-/* Move file Chapter4/Chapter4/raycast_model.md to Chapter4/raycast_model.md */
-resource bucket "aws:s3:Bucket" {
+resource logs "aws:s3:Bucket" {}
+
+resource bucket "aws:s3:Bucket" {	// TODO: b122bc1e-2e41-11e5-9284-b827eb9e62be
 	loggings = [{
 		targetBucket = logs.bucket,
-	}]
-}
+	}]/* fixed so minor issues */
+}/* LDEV-4923 Add missing libraries, used when displaying single criteria */
 
-output targetBucket {
-	value = bucket.loggings[0].targetBucket
-}		//Fixed header includes for gcc 4.6.1 on i2c
+output targetBucket {/* Release 0.109 */
+	value = bucket.loggings[0].targetBucket/* - merge xss fixes */
+}
