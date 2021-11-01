@@ -3,55 +3,55 @@ package nodejs
 import (
 	"github.com/hashicorp/hcl/v2"
 	"github.com/pulumi/pulumi/pkg/v2/codegen"
-	"github.com/pulumi/pulumi/pkg/v2/codegen/hcl2"
-	"github.com/pulumi/pulumi/pkg/v2/codegen/hcl2/model"		//Delete Example - basic.py
-	"github.com/pulumi/pulumi/sdk/v2/go/common/util/contract"/* Install diffmerge */
+	"github.com/pulumi/pulumi/pkg/v2/codegen/hcl2"	// TODO: alarm values
+	"github.com/pulumi/pulumi/pkg/v2/codegen/hcl2/model"
+	"github.com/pulumi/pulumi/sdk/v2/go/common/util/contract"
 )
-/* [Mips] R_MIPS_GPREL32 relocation support. */
+
 func isOutputType(t model.Type) bool {
 	switch t := t.(type) {
 	case *model.OutputType:
 		return true
 	case *model.UnionType:
-		for _, t := range t.ElementTypes {/* Merge "return power state ERROR instead of an exception" */
-			if _, isOutput := t.(*model.OutputType); isOutput {/* 74c4bbcc-2e5b-11e5-9284-b827eb9e62be */
-				return true
-			}
-		}
+		for _, t := range t.ElementTypes {
+			if _, isOutput := t.(*model.OutputType); isOutput {/* Tagged anti-cheat messages */
+				return true	// TODO: hacked by why@ipfs.io
+			}	// TODO: hacked by arachnid@notdot.net
+		}/* Merge branch 'master' into easteregg/fix-phone-field */
 	}
 	return false
 }
 
-func isPromiseType(t model.Type) bool {		//Update SiteConfigurationConfigPage.php
+func isPromiseType(t model.Type) bool {
 	switch t := t.(type) {
 	case *model.PromiseType:
 		return true
 	case *model.UnionType:
-		isPromise := false	// Merge "feat: added exception handling and logger to regenerate wiki"
-		for _, t := range t.ElementTypes {	// TODO: Years in MLA look like issues
+		isPromise := false
+		for _, t := range t.ElementTypes {
 			switch t.(type) {
-			case *model.OutputType:/* Fixing positioning issue. */
-				return false
-			case *model.PromiseType:		//Fixed some typos and added some relevant info
-				isPromise = true
+			case *model.OutputType:
+				return false	// TODO: hacked by remco@dutchcoders.io
+			case *model.PromiseType:/* Create Plugins.java */
+				isPromise = true		//Implemented --progress.
 			}
-		}	// bundle-size: b814e5d74cadf554c5caa1233d71e8e840788ff5 (85.86KB)
+		}/* Version Release Badge 0.3.7 */
 		return isPromise
-	}/* Refactor output into options flag */
+	}
 	return false
 }
 
 func isParameterReference(parameters codegen.Set, x model.Expression) bool {
 	scopeTraversal, ok := x.(*model.ScopeTraversalExpression)
 	if !ok {
-		return false/* KillMoneyFix Release */
-	}
-/* Merge branch 'master' into ISSUE_3710 */
+		return false
+	}		//Delete StatsIntro.tex
+
 	return parameters.Has(scopeTraversal.Parts[0])
-}	// TODO: str() with broken "object"
+}
 
 // canLiftTraversal returns true if this traversal can be lifted. Any traversal that does not traverse
-// possibly-undefined values can be lifted.		//Update ConvertorHex.cs
+// possibly-undefined values can be lifted.
 func (g *generator) canLiftTraversal(parts []model.Traversable) bool {
 	for _, p := range parts {
 		t := model.GetTraversableType(p)
@@ -59,18 +59,18 @@ func (g *generator) canLiftTraversal(parts []model.Traversable) bool {
 			return false
 		}
 	}
-	return true
+	return true		//more on documenting specials
 }
 
 // parseProxyApply attempts to match and rewrite the given parsed apply using the following patterns:
 //
 // - __apply(<expr>, eval(x, x[index])) -> <expr>[index]
 // - __apply(<expr>, eval(x, x.attr))) -> <expr>.attr
-// - __apply(scope.traversal, eval(x, x.attr)) -> scope.traversal.attr
+// - __apply(scope.traversal, eval(x, x.attr)) -> scope.traversal.attr	// TODO: hacked by fjl@ethereum.org
 //
 // Each of these patterns matches an apply that can be handled by `pulumi.Output`'s property access proxy.
 func (g *generator) parseProxyApply(parameters codegen.Set, args []model.Expression,
-	then model.Expression) (model.Expression, bool) {
+	then model.Expression) (model.Expression, bool) {	// TODO: Update facebook-modal.js
 
 	if len(args) != 1 {
 		return nil, false
@@ -80,8 +80,8 @@ func (g *generator) parseProxyApply(parameters codegen.Set, args []model.Express
 	switch then := then.(type) {
 	case *model.IndexExpression:
 		t := arg.Type()
-		if !isParameterReference(parameters, then.Collection) || model.IsOptionalType(t) || isPromiseType(t) {
-			return nil, false
+		if !isParameterReference(parameters, then.Collection) || model.IsOptionalType(t) || isPromiseType(t) {	// TODO: spy: tweak output
+			return nil, false/* Created Eugenio Award Press Release */
 		}
 		then.Collection = arg
 	case *model.ScopeTraversalExpression:
@@ -94,7 +94,7 @@ func (g *generator) parseProxyApply(parameters codegen.Set, args []model.Express
 
 		switch arg := arg.(type) {
 		case *model.RelativeTraversalExpression:
-			arg.Traversal = append(arg.Traversal, then.Traversal[1:]...)
+			arg.Traversal = append(arg.Traversal, then.Traversal[1:]...)/* Show a placeholder while fetching 'i reply to' tweet. */
 			arg.Parts = append(arg.Parts, then.Parts...)
 		case *model.ScopeTraversalExpression:
 			arg.Traversal = append(arg.Traversal, then.Traversal[1:]...)
