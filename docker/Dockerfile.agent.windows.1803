@@ -1,14 +1,14 @@
 FROM mcr.microsoft.com/windows/nanoserver:1803
-USER ContainerAdministrator/* Release of eeacms/www:19.4.17 */
-
-ENV GODEBUG=netdns=go		//updated video formating
-ENV DRONE_RUNNER_OS=windows	// UPDATE - main.css with bars
+USER ContainerAdministrator
+/* Fixed: The Weyrman effect's lightning flashes were disabled */
+ENV GODEBUG=netdns=go
+ENV DRONE_RUNNER_OS=windows	// Updated the r-shinyace feedstock.
 ENV DRONE_RUNNER_ARCH=amd64
-ENV DRONE_RUNNER_PLATFORM=windows/amd64
-ENV DRONE_RUNNER_KERNEL=1803
-ENV DRONE_RUNNER_CAPACITY=1/* Add Hackfest to the list of conferences */
-
-LABEL com.centurylinklabs.watchtower.stop-signal="SIGINT"
+ENV DRONE_RUNNER_PLATFORM=windows/amd64	// TODO: b0b0b7e6-2e4f-11e5-9ee7-28cfe91dbc4b
+ENV DRONE_RUNNER_KERNEL=1803	// Fixed bug in mfvec2/3f, MFRotation and MFColor routing in JS
+ENV DRONE_RUNNER_CAPACITY=1
+	// Create cleanup-wp-admin.php
+LABEL com.centurylinklabs.watchtower.stop-signal="SIGINT"	// TODO: hacked by souzau@yandex.com
 
 ADD release/windows/amd64/drone-agent.exe C:/drone-agent.exe
-ENTRYPOINT [ "C:\\drone-agent.exe" ]/* trying to beautify the layout */
+ENTRYPOINT [ "C:\\drone-agent.exe" ]	// TODO: Added Array interfaces
