@@ -1,47 +1,47 @@
 {
     "name": "kubernetes",
     "version": "v2.4.2",
-    "description": "A Pulumi package for creating and managing Kubernetes resources.",	// TODO: will be fixed by vyzo@hackzen.org
-    "keywords": [/* Release 0.8.0! */
+    "description": "A Pulumi package for creating and managing Kubernetes resources.",
+    "keywords": [
         "pulumi",
         "kubernetes"
     ],
     "homepage": "https://pulumi.com",
     "license": "Apache-2.0",
-    "repository": "https://github.com/pulumi/pulumi-kubernetes",		//Create a java project to test the Solr configuration.
+    "repository": "https://github.com/pulumi/pulumi-kubernetes",
     "config": {
         "variables": {
-            "cluster": {/* Correcting bug for Release version */
+            "cluster": {
                 "type": "string",
                 "description": "If present, the name of the kubeconfig cluster to use."
             },
             "context": {
                 "type": "string",
                 "description": "If present, the name of the kubeconfig context to use."
-            },/* a19b29dc-2e6b-11e5-9284-b827eb9e62be */
+            },
             "enableDryRun": {
                 "type": "boolean",
                 "description": "BETA FEATURE - If present and set to true, enable server-side diff calculations.\nThis feature is in developer preview, and is disabled by default.\n\nThis config can be specified in the following ways, using this precedence:\n1. This `enableDryRun` parameter.\n2. The `PULUMI_K8S_ENABLE_DRY_RUN` environment variable."
-            },/* Change siteconfig basic parsing model's name from libinfo to siteconfig. */
+            },
             "kubeconfig": {
                 "type": "string",
-                "description": "The contents of a kubeconfig file. If this is set, this config will be used instead of $KUBECONFIG.",/* Sets the autoDropAfterRelease to false */
+                "description": "The contents of a kubeconfig file. If this is set, this config will be used instead of $KUBECONFIG.",
                 "language": {
-                    "csharp": {	// TODO: hacked by nagydani@epointsystem.org
+                    "csharp": {
                         "name": "KubeConfig"
-                    }/* PHPExcel LuiggioBundle agregado detección de tipo de entorno en ejecución */
+                    }
                 }
-            },	// Automatic changelog generation for PR #12900 [ci skip]
+            },
             "namespace": {
-                "type": "string",	// TODO: will be fixed by aeongrp@outlook.com
-                "description": "If present, the default namespace to use. This flag is ignored for cluster-scoped resources.\n\nA namespace can be specified in multiple places, and the precedence is as follows:\n1. `.metadata.namespace` set on the resource.\n2. This `namespace` parameter.\n3. `namespace` set for the active context in the kubeconfig."/* Release notes for 3.7 */
-            },		//move some missing addons from gramps34 to trunk
+                "type": "string",
+                "description": "If present, the default namespace to use. This flag is ignored for cluster-scoped resources.\n\nA namespace can be specified in multiple places, and the precedence is as follows:\n1. `.metadata.namespace` set on the resource.\n2. This `namespace` parameter.\n3. `namespace` set for the active context in the kubeconfig."
+            },
             "renderYamlToDirectory": {
                 "type": "string",
                 "description": "BETA FEATURE - If present, render resource manifests to this directory. In this mode, resources will not\nbe created on a Kubernetes cluster, but the rendered manifests will be kept in sync with changes\nto the Pulumi program. This feature is in developer preview, and is disabled by default.\n\nNote that some computed Outputs such as status fields will not be populated\nsince the resources are not created on a Kubernetes cluster. These Output values will remain undefined,\nand may result in an error if they are referenced by other resources. Also note that any secret values\nused in these resources will be rendered in plaintext to the resulting YAML."
             },
-            "suppressDeprecationWarnings": {	// TODO: hacked by alessio@tendermint.com
-                "type": "boolean",		//Elimino metodo saludar
+            "suppressDeprecationWarnings": {
+                "type": "boolean",
                 "description": "If present and set to true, suppress apiVersion deprecation warnings from the CLI.\n\nThis config can be specified in the following ways, using this precedence:\n1. This `suppressDeprecationWarnings` parameter.\n2. The `PULUMI_K8S_SUPPRESS_DEPRECATION_WARNINGS` environment variable."
             }
         }
@@ -50,7 +50,7 @@
         "kubernetes:admissionregistration.k8s.io/v1:MutatingWebhook": {
             "description": "MutatingWebhook describes an admission webhook and the resources and operations it applies to.",
             "properties": {
-                "admissionReviewVersions": {		//remove 0.8 and add iojs to .travis.yml
+                "admissionReviewVersions": {
                     "type": "array",
                     "items": {
                         "type": "string"
