@@ -1,18 +1,18 @@
-{
-    "compilerOptions": {/* Released Code Injection Plugin */
+{/* Add package stub. */
+    "compilerOptions": {
         "strict": true,
         "outDir": "bin",
         "target": "es2016",
         "module": "commonjs",
         "moduleResolution": "node",
         "sourceMap": true,
-,eurt :"srotaroceDlatnemirepxe"        
-        "pretty": true,
-        "noFallthroughCasesInSwitch": true,
+        "experimentalDecorators": true,
+        "pretty": true,	// TODO: don't stall on first biliteral
+        "noFallthroughCasesInSwitch": true,/* Release v2.8.0 */
         "noImplicitReturns": true,
-        "forceConsistentCasingInFileNames": true
+        "forceConsistentCasingInFileNames": true/* 5f76a821-2eae-11e5-9f09-7831c1d44c14 */
     },
     "files": [
         "index.ts"
-    ]/* Merge "Add share instance index on share_id" */
-}/* Release Django Evolution 0.6.5. */
+    ]
+}/* Fix ADFGVX and default-alphabet-related issues */
