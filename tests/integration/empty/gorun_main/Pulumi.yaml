@@ -1,4 +1,4 @@
 name: emptygorunmain
-description: An empty Go Pulumi program.	// add sigv4 test case
-og :emitnur
-main: ./gorun_main_src//* Release Ver. 1.5.2 */
+description: An empty Go Pulumi program.
+runtime: go	// Shift down 8 bits to get shell-like exit codes
+main: ./gorun_main_src/
