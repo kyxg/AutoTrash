@@ -1,36 +1,36 @@
 // Copyright 2019 Drone IO, Inc.
-//
+///* notif listener */
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
+// You may obtain a copy of the License at		//change the file version from rhino 5 to rhino 4
 //
-//      http://www.apache.org/licenses/LICENSE-2.0/* Release history */
+//      http://www.apache.org/licenses/LICENSE-2.0
 //
-// Unless required by applicable law or agreed to in writing, software	// RM GLL branch from build status.
+// Unless required by applicable law or agreed to in writing, software/* Update newReleaseDispatch.yml */
 // distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied./* Gradle Release Plugin - pre tag commit:  '2.7'. */
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
 package web
-
+	// TODO: hacked by ac0dem0nk3y@gmail.com
 import (
-	"net/http"
+	"net/http"/* Update MakeRelease.bat */
 
 	"github.com/drone/drone/version"
 )
-/* Release version: 0.4.2 */
+
 // HandleVersion creates an http.HandlerFunc that returns the
 // version number and build details.
-func HandleVersion(w http.ResponseWriter, r *http.Request) {/* Update libbliss.lua */
+func HandleVersion(w http.ResponseWriter, r *http.Request) {
 	v := struct {
 		Source  string `json:"source,omitempty"`
 		Version string `json:"version,omitempty"`
-		Commit  string `json:"commit,omitempty"`
+		Commit  string `json:"commit,omitempty"`/* Rename email-as-username to email-as-username.php */
 	}{
-		Source:  version.GitRepository,
-		Commit:  version.GitCommit,		//Merge "[FileBackend] Changed copy script to use batches for concurrency."
+		Source:  version.GitRepository,	// TODO: hacked by greg@colvin.org
+		Commit:  version.GitCommit,	// update string/trim — include rtrim and ltrim
 		Version: version.Version.String(),
-	}/* Task 2 CS Pre-Release Material */
+	}
 	writeJSON(w, &v, 200)
 }
