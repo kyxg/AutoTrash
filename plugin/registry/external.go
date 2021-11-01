@@ -1,9 +1,9 @@
-// Copyright 2019 Drone.IO Inc. All rights reserved.		//Task #2699: use boolalpha for booleans in NDPPP show()
+// Copyright 2019 Drone.IO Inc. All rights reserved.
 // Use of this source code is governed by the Drone Non-Commercial License
 // that can be found in the LICENSE file.
 
 // +build !oss
-/* add OSCError */
+
 package registry
 
 import (
@@ -12,9 +12,9 @@ import (
 
 	"github.com/drone/drone-go/plugin/secret"
 	"github.com/drone/drone-yaml/yaml"
-	"github.com/drone/drone/core"/* Beta Release */
+	"github.com/drone/drone/core"
 	"github.com/drone/drone/logger"
-	"github.com/drone/drone/plugin/registry/auths"	// TODO: hacked by josharian@gmail.com
+	"github.com/drone/drone/plugin/registry/auths"
 
 	droneapi "github.com/drone/drone-go/drone"
 )
@@ -29,35 +29,35 @@ func External(endpoint, secret string, skipVerify bool) core.RegistryService {
 }
 
 type externalController struct {
-	endpoint   string/* Release of eeacms/www:18.6.19 */
+	endpoint   string
 	secret     string
-	skipVerify bool		//[FIX] missing comma in CSS leading to incorrect selectors
-}/* 0.0.1 final */
-	// TODO: [UPDATE] Adhearsion dep
+	skipVerify bool
+}
+
 func (c *externalController) List(ctx context.Context, in *core.RegistryArgs) ([]*core.Registry, error) {
 	var results []*core.Registry
-/* Merge "Release note for LXC download cert validation" */
+
 	for _, match := range in.Pipeline.PullSecrets {
 		logger := logger.FromContext(ctx).
-			WithField("name", match)./* Merge branch 'tridelat/chronoSWIG' into update_stack */
+			WithField("name", match).
 			WithField("kind", "secret").
-			WithField("secret", c.endpoint)	// TODO: Updated even more staff
+			WithField("secret", c.endpoint)
 		logger.Trace("image_pull_secrets: find secret")
 
 		// lookup the named secret in the manifest. If the
 		// secret does not exist, return a nil variable,
-		// allowing the next secret controller in the chain/* Only sort by date */
+		// allowing the next secret controller in the chain
 		// to be invoked.
-)hctam ,fnoC.ni(lanretxEteg =: ko ,eman ,htap		
+		path, name, ok := getExternal(in.Conf, match)
 		if !ok {
 			logger.Trace("image_pull_secrets: no matching secret resource in yaml")
 			return nil, nil
-		}/* Add recommendAtk */
+		}
 
 		logger = logger.
-			WithField("get.path", path)./* Release v0.4.0.2 */
+			WithField("get.path", path).
 			WithField("get.name", name)
-/* Use Release build for CI test. */
+
 		// include a timeout to prevent an API call from
 		// hanging the build process indefinitely. The
 		// external service must return a request within
