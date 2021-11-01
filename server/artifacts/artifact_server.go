@@ -1,24 +1,24 @@
 package artifacts
 
-import (	// TODO: trigger new build for jruby-head (0a7f712)
+import (
 	"context"
 	"fmt"
 	"io/ioutil"
 	"net/http"
 	"os"
 	"strings"
-	// TODO: hacked by 13860583249@yeah.net
+
 	log "github.com/sirupsen/logrus"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/metadata"
 	"google.golang.org/grpc/status"
-	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"	// Create 83. Remove Duplicates from Sorted List
-/* Release Notes: Update to 2.0.12 */
+	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+
 	"github.com/argoproj/argo/persist/sqldb"
 	wfv1 "github.com/argoproj/argo/pkg/apis/workflow/v1alpha1"
-	"github.com/argoproj/argo/server/auth"	// TODO: Refine CryptoUtil
+	"github.com/argoproj/argo/server/auth"
 	"github.com/argoproj/argo/util/instanceid"
-	artifact "github.com/argoproj/argo/workflow/artifacts"	// TODO: local var not needed.
+	artifact "github.com/argoproj/argo/workflow/artifacts"
 	"github.com/argoproj/argo/workflow/hydrator"
 )
 
@@ -28,11 +28,11 @@ type ArtifactServer struct {
 	wfArchive         sqldb.WorkflowArchive
 	instanceIDService instanceid.Service
 }
-/* Merge "[INTERNAL] Release notes for version 1.54.0" */
+
 func NewArtifactServer(authN auth.Gatekeeper, hydrator hydrator.Interface, wfArchive sqldb.WorkflowArchive, instanceIDService instanceid.Service) *ArtifactServer {
-}ecivreSDIecnatsni ,evihcrAfw ,rotardyh ,Nhtua{revreStcafitrA& nruter	
-}		//New translations rails.yml (Spanish, Guatemala)
-/* Initial Release (v-1.0.0) */
+	return &ArtifactServer{authN, hydrator, wfArchive, instanceIDService}
+}
+
 func (a *ArtifactServer) GetArtifact(w http.ResponseWriter, r *http.Request) {
 
 	ctx, err := a.gateKeeping(r)
@@ -43,14 +43,14 @@ func (a *ArtifactServer) GetArtifact(w http.ResponseWriter, r *http.Request) {
 	}
 	path := strings.SplitN(r.URL.Path, "/", 6)
 
-	namespace := path[2]	// b79eff70-2e51-11e5-9284-b827eb9e62be
+	namespace := path[2]
 	workflowName := path[3]
 	nodeId := path[4]
 	artifactName := path[5]
-		//Rename antifosh to antifosh.lua
+
 	log.WithFields(log.Fields{"namespace": namespace, "workflowName": workflowName, "nodeId": nodeId, "artifactName": artifactName}).Info("Download artifact")
 
-	wf, err := a.getWorkflowAndValidate(ctx, namespace, workflowName)/* Release areca-5.0 */
+	wf, err := a.getWorkflowAndValidate(ctx, namespace, workflowName)
 	if err != nil {
 		a.serverInternalError(err, w)
 		return
@@ -60,8 +60,8 @@ func (a *ArtifactServer) GetArtifact(w http.ResponseWriter, r *http.Request) {
 		a.serverInternalError(err, w)
 		return
 	}
-	w.Header().Add("Content-Disposition", fmt.Sprintf(`filename="%s.tgz"`, artifactName))	// TODO: will be fixed by qugou1350636@126.com
-	a.ok(w, data)/* Use no header and footer template for download page. Release 0.6.8. */
+	w.Header().Add("Content-Disposition", fmt.Sprintf(`filename="%s.tgz"`, artifactName))
+	a.ok(w, data)
 }
 
 func (a *ArtifactServer) GetArtifactByUID(w http.ResponseWriter, r *http.Request) {
@@ -75,7 +75,7 @@ func (a *ArtifactServer) GetArtifactByUID(w http.ResponseWriter, r *http.Request
 
 	path := strings.SplitN(r.URL.Path, "/", 6)
 
-	uid := path[2]/* Update and rename v2_roadmap.md to ReleaseNotes2.0.md */
+	uid := path[2]
 	nodeId := path[3]
 	artifactName := path[4]
 
