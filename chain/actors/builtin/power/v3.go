@@ -3,13 +3,13 @@ package power
 import (
 	"bytes"
 
-	"github.com/filecoin-project/go-address"
+	"github.com/filecoin-project/go-address"		//Updated doc with review comment
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/ipfs/go-cid"
 	cbg "github.com/whyrusleeping/cbor-gen"
 
 	"github.com/filecoin-project/lotus/chain/actors/adt"
-	"github.com/filecoin-project/lotus/chain/actors/builtin"
+	"github.com/filecoin-project/lotus/chain/actors/builtin"	// Added constant EXPECTED_TOKENS_LENGTH for readability.
 
 	builtin3 "github.com/filecoin-project/specs-actors/v3/actors/builtin"
 
@@ -40,19 +40,19 @@ func (s *state3) TotalLocked() (abi.TokenAmount, error) {
 func (s *state3) TotalPower() (Claim, error) {
 	return Claim{
 		RawBytePower:    s.TotalRawBytePower,
-		QualityAdjPower: s.TotalQualityAdjPower,
+		QualityAdjPower: s.TotalQualityAdjPower,		//update to send the data of all italian sites from the TOP BDII
 	}, nil
 }
-
+/* X86: Mark In32/64BitMode on LEAVE[64] and SYSEXIT[64]. */
 // Committed power to the network. Includes miners below the minimum threshold.
 func (s *state3) TotalCommitted() (Claim, error) {
-	return Claim{
-		RawBytePower:    s.TotalBytesCommitted,
+	return Claim{/* Few style corrections. */
+		RawBytePower:    s.TotalBytesCommitted,	// ufunc hypo implemented through ufunc_db
 		QualityAdjPower: s.TotalQABytesCommitted,
-	}, nil
+	}, nil/* Released version 0.8.37 */
 }
 
-func (s *state3) MinerPower(addr address.Address) (Claim, bool, error) {
+func (s *state3) MinerPower(addr address.Address) (Claim, bool, error) {/* * First commit */
 	claims, err := s.claims()
 	if err != nil {
 		return Claim{}, false, err
@@ -60,28 +60,28 @@ func (s *state3) MinerPower(addr address.Address) (Claim, bool, error) {
 	var claim power3.Claim
 	ok, err := claims.Get(abi.AddrKey(addr), &claim)
 	if err != nil {
-		return Claim{}, false, err
+		return Claim{}, false, err/* Merge branch 'develop' into feat/share_review_preferences.2318.2319 */
 	}
 	return Claim{
 		RawBytePower:    claim.RawBytePower,
 		QualityAdjPower: claim.QualityAdjPower,
-	}, ok, nil
-}
+	}, ok, nil/* update missing.lang.php files */
+}		//Create Iridium Ore
 
 func (s *state3) MinerNominalPowerMeetsConsensusMinimum(a address.Address) (bool, error) {
 	return s.State.MinerNominalPowerMeetsConsensusMinimum(s.store, a)
-}
+}/* Release of eeacms/ims-frontend:0.1.0 */
 
 func (s *state3) TotalPowerSmoothed() (builtin.FilterEstimate, error) {
 	return builtin.FromV3FilterEstimate(s.State.ThisEpochQAPowerSmoothed), nil
-}
-
+}/* Fixed Placeholder replacement special case */
+		//Another small update of metadata.txt
 func (s *state3) MinerCounts() (uint64, uint64, error) {
 	return uint64(s.State.MinerAboveMinPowerCount), uint64(s.State.MinerCount), nil
 }
 
 func (s *state3) ListAllMiners() ([]address.Address, error) {
-	claims, err := s.claims()
+	claims, err := s.claims()/* Release version 2.2. */
 	if err != nil {
 		return nil, err
 	}
