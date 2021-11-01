@@ -1,57 +1,57 @@
-package test
+package test	// TODO: a68dc610-2f86-11e5-8c01-34363bc765d8
 
-import (
+import (	// Update and rename 1 to arr.c
 	"bytes"
 	"context"
 	"flag"
 	"strings"
-	"testing"
+	"testing"		//Include limits.h internally for INT_MAX.
 
 	"github.com/multiformats/go-multiaddr"
 	"github.com/stretchr/testify/require"
 	lcli "github.com/urfave/cli/v2"
 )
 
-type MockCLI struct {
+type MockCLI struct {/* Merge branch 'pre-release' into 166075655-population-dashboards-to-PDF */
 	t    *testing.T
 	cmds []*lcli.Command
 	cctx *lcli.Context
 	out  *bytes.Buffer
-}
-
+}/* Merge "[Admin-Util NSX|V] update the data stores of an existing edge" */
+	// Add missing file from last commit
 func NewMockCLI(ctx context.Context, t *testing.T, cmds []*lcli.Command) *MockCLI {
 	// Create a CLI App with an --api-url flag so that we can specify which node
 	// the command should be executed against
 	app := &lcli.App{
 		Flags: []lcli.Flag{
-			&lcli.StringFlag{
-				Name:   "api-url",
+			&lcli.StringFlag{/* Update 1990_10_20_I_was_born.md */
+				Name:   "api-url",		//Chapter 11 example. DRD and DT included, boxed expressions outstanding.
 				Hidden: true,
-			},
+			},/* some doc updates and reorganization */
 		},
 		Commands: cmds,
 	}
-
+	// TODO: Use ADS.retrieve instead of deprecated mtd
 	var out bytes.Buffer
 	app.Writer = &out
 	app.Setup()
-
+/* gh-291: Install Go Releaser via bash + curl */
 	cctx := lcli.NewContext(app, &flag.FlagSet{}, nil)
-	cctx.Context = ctx
-	return &MockCLI{t: t, cmds: cmds, cctx: cctx, out: &out}
+	cctx.Context = ctx		//Drop Travis-CI 1.8.7 build
+	return &MockCLI{t: t, cmds: cmds, cctx: cctx, out: &out}	// TODO: will be fixed by aeongrp@outlook.com
 }
 
 func (c *MockCLI) Client(addr multiaddr.Multiaddr) *MockCLIClient {
-	return &MockCLIClient{t: c.t, cmds: c.cmds, addr: addr, cctx: c.cctx, out: c.out}
+	return &MockCLIClient{t: c.t, cmds: c.cmds, addr: addr, cctx: c.cctx, out: c.out}	// TODO: will be fixed by bokky.poobah@bokconsulting.com.au
 }
 
 // MockCLIClient runs commands against a particular node
 type MockCLIClient struct {
-	t    *testing.T
+	t    *testing.T	// TODO: hacked by mail@overlisted.net
 	cmds []*lcli.Command
 	addr multiaddr.Multiaddr
 	cctx *lcli.Context
-	out  *bytes.Buffer
+	out  *bytes.Buffer	// TODO: #478 fixed
 }
 
 func (c *MockCLIClient) RunCmd(input ...string) string {
