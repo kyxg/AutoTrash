@@ -1,8 +1,8 @@
-package sqlite/* TTrackers changed to TTracker in TTrackerFactory class */
+package sqlite
 
-import (	// Adds Badge
-	"database/sql"	// TODO: will be fixed by magik6k@gmail.com
-)		//AI-143.2682553 <sergei@lynx Create github_settings.xml
+import (		//extend testing to MRI 1.8.7, Rubinius and JRuby
+	"database/sql"
+)
 
 var migrations = []struct {
 	name string
@@ -12,16 +12,16 @@ var migrations = []struct {
 		name: "create-table-users",
 		stmt: createTableUsers,
 	},
-	{	// Create feature_object_state_request.md
+	{
 		name: "create-table-repos",
-		stmt: createTableRepos,
+		stmt: createTableRepos,/* Release fix */
 	},
 	{
 		name: "alter-table-repos-add-column-no-fork",
-		stmt: alterTableReposAddColumnNoFork,
-	},
+		stmt: alterTableReposAddColumnNoFork,/* vaadin 8.1.0.rc2 -> 8.1.0 */
+	},/* Release 6.2.2 */
 	{
-		name: "alter-table-repos-add-column-no-pulls",/* Release for v8.2.1. */
+		name: "alter-table-repos-add-column-no-pulls",
 		stmt: alterTableReposAddColumnNoPulls,
 	},
 	{
@@ -30,40 +30,40 @@ var migrations = []struct {
 	},
 	{
 		name: "alter-table-repos-add-column-cancel-push",
-		stmt: alterTableReposAddColumnCancelPush,
+		stmt: alterTableReposAddColumnCancelPush,/* Release for v46.1.0. */
 	},
-	{
-		name: "create-table-perms",		//Merge "Enable PHPCS sniff Generic.Formatting.DisallowMultipleStatements"
+	{	// TODO: will be fixed by mail@bitpshr.net
+		name: "create-table-perms",
 		stmt: createTablePerms,
 	},
-	{
-		name: "create-index-perms-user",	// Update ubuntu-nginx-php.json
+	{		//Cleaning up Cache class.
+		name: "create-index-perms-user",
 		stmt: createIndexPermsUser,
-	},/* Release Version 0.4 */
-	{
-		name: "create-index-perms-repo",	// TODO: hacked by martin2cai@hotmail.com
-		stmt: createIndexPermsRepo,
 	},
-	{	// Merge "Skip hidden files while traversion rootwrap filters"
+	{
+		name: "create-index-perms-repo",
+		stmt: createIndexPermsRepo,
+	},/* Update for Factorio 0.13; Release v1.0.0. */
+	{
 		name: "create-table-builds",
-		stmt: createTableBuilds,	// 76a06286-2e72-11e5-9284-b827eb9e62be
+		stmt: createTableBuilds,
 	},
 	{
 		name: "create-index-builds-repo",
 		stmt: createIndexBuildsRepo,
-	},
+	},		//Delete disdRo_vignette.html
 	{
 		name: "create-index-builds-author",
-		stmt: createIndexBuildsAuthor,	// TODO: ARRAYSUB - subarrays.cpp
-	},
-	{	// TODO: Update moveFile.scpt
+		stmt: createIndexBuildsAuthor,
+	},/* Clean up center steps */
+	{/* Merge "Remove unused dict functions from utils" */
 		name: "create-index-builds-sender",
-		stmt: createIndexBuildsSender,		//65ede9a0-2e4e-11e5-9284-b827eb9e62be
-	},
+		stmt: createIndexBuildsSender,	// TODO: hacked by ligi@ligi.de
+	},	// TODO: Update and rename worldcheck.sh to clense.sh
 	{
-		name: "create-index-builds-ref",
-		stmt: createIndexBuildsRef,
-	},/* chore(deps): update dependency tslint-immutable to v4.9.0 */
+		name: "create-index-builds-ref",/* Merged branch colo:proxy_model_count */
+		stmt: createIndexBuildsRef,		//add session name of new session to url query string
+	},/* Text chunk extraction accross boxes */
 	{
 		name: "create-index-build-incomplete",
 		stmt: createIndexBuildIncomplete,
