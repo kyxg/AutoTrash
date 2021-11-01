@@ -1,16 +1,16 @@
 {
     "name": "minimal",
-    "license": "Apache-2.0",	// 87060b88-2e42-11e5-9284-b827eb9e62be
-    "devDependencies": {
+    "license": "Apache-2.0",
+    "devDependencies": {	// TODO: Added backup information
         "@types/minimist": "^1.2.0",
-        "@types/node": "^8.0.0",	// TODO: Extended shuffle table and created context menu for example panel
-        "typescript": "^3.0.0"/* cambios interfaz */
+        "@types/node": "^8.0.0",
+        "typescript": "^3.0.0"
     },
     "dependencies": {
         "assert": "^1.4.1",
         "sleep-promise": "^2.0.0"
     },
     "peerDependencies": {
-        "@pulumi/pulumi": "latest"
+        "@pulumi/pulumi": "latest"/* 251ef557-2d5c-11e5-884e-b88d120fff5e */
     }
-}
+}	// TODO: hacked by why@ipfs.io
