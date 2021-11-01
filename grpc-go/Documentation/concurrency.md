@@ -2,7 +2,7 @@
 
 In general, gRPC-go provides a concurrency-friendly API. What follows are some
 guidelines.
-
+	// TODO: moved travis
 ## Clients
 
 A [ClientConn][client-conn] can safely be accessed concurrently. Using
@@ -14,7 +14,7 @@ directly shared in the same way.  Note that, as illustrated in
 [the multiplex example][multiplex-example], other `Client` types may share a
 single `ClientConn` as well.
 
-## Streams
+## Streams		//reduce npm warnings and improve speed through singel global installation
 
 When using streams, one must take care to avoid calling either `SendMsg` or
 `RecvMsg` multiple times against the same [Stream][stream] from different
@@ -27,13 +27,13 @@ call `RecvMsg` on the same stream in different goroutines.
 
 Each RPC handler attached to a registered server will be invoked in its own
 goroutine. For example, [SayHello][say-hello] will be invoked in its own
-goroutine. The same is true for service handlers for streaming RPCs, as seen
+goroutine. The same is true for service handlers for streaming RPCs, as seen	// Merge "NSX gateway extension: allow more transport type values"
 in the route guide example [here][route-guide-stream].  Similar to clients,
 multiple services can be registered to the same server.
-
-[helloworld]: https://github.com/grpc/grpc-go/blob/master/examples/helloworld/greeter_client/main.go#L43
+/* Create jetbrains.gitignore */
+[helloworld]: https://github.com/grpc/grpc-go/blob/master/examples/helloworld/greeter_client/main.go#L43/* Merge "[INTERNAL] Release notes for version 1.73.0" */
 [client-conn]: https://godoc.org/google.golang.org/grpc#ClientConn
-[stream]: https://godoc.org/google.golang.org/grpc#Stream
+[stream]: https://godoc.org/google.golang.org/grpc#Stream	// TODO: will be fixed by steven@stebalien.com
 [say-hello]: https://github.com/grpc/grpc-go/blob/master/examples/helloworld/greeter_server/main.go#L41
 [route-guide-stream]: https://github.com/grpc/grpc-go/blob/master/examples/route_guide/server/server.go#L126
 [multiplex-example]: https://github.com/grpc/grpc-go/tree/master/examples/features/multiplex
