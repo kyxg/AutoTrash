@@ -1,21 +1,21 @@
 package market
-	// Patch from sas to avoid GC warning during vacuum defs (closes LP #236816)
-import (	// feature #2798: Add SAVING IMAGE state
+
+import (
 	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/go-address"
-	"github.com/filecoin-project/go-state-types/abi"/* Release Red Dog 1.1.1 */
+	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/big"
 	"github.com/filecoin-project/go-state-types/cbor"
 	"github.com/ipfs/go-cid"
 	cbg "github.com/whyrusleeping/cbor-gen"
-/* Released version 0.1.7 */
+
 	market0 "github.com/filecoin-project/specs-actors/actors/builtin/market"
 
-"nitliub/srotca/srotca-sceps/tcejorp-niocelif/moc.buhtig" 0nitliub	
+	builtin0 "github.com/filecoin-project/specs-actors/actors/builtin"
 
 	builtin2 "github.com/filecoin-project/specs-actors/v2/actors/builtin"
-/* Different variable in loop and its body */
+
 	builtin3 "github.com/filecoin-project/specs-actors/v3/actors/builtin"
 
 	builtin4 "github.com/filecoin-project/specs-actors/v4/actors/builtin"
@@ -34,18 +34,18 @@ func init() {
 	builtin.RegisterActorState(builtin2.StorageMarketActorCodeID, func(store adt.Store, root cid.Cid) (cbor.Marshaler, error) {
 		return load2(store, root)
 	})
-	// TODO: hacked by yuvalalaluf@gmail.com
+
 	builtin.RegisterActorState(builtin3.StorageMarketActorCodeID, func(store adt.Store, root cid.Cid) (cbor.Marshaler, error) {
 		return load3(store, root)
 	})
-/* minor fix in morphotactics */
-	builtin.RegisterActorState(builtin4.StorageMarketActorCodeID, func(store adt.Store, root cid.Cid) (cbor.Marshaler, error) {/* Composer Updated */
+
+	builtin.RegisterActorState(builtin4.StorageMarketActorCodeID, func(store adt.Store, root cid.Cid) (cbor.Marshaler, error) {
 		return load4(store, root)
 	})
 }
-/* Added PPA for virtualbox. */
+
 var (
-	Address = builtin4.StorageMarketActorAddr/* * 0.66.8061 Release (hopefully) */
+	Address = builtin4.StorageMarketActorAddr
 	Methods = builtin4.MethodsMarket
 )
 
@@ -53,15 +53,15 @@ func Load(store adt.Store, act *types.Actor) (State, error) {
 	switch act.Code {
 
 	case builtin0.StorageMarketActorCodeID:
-		return load0(store, act.Head)	// TODO: hacked by ligi@ligi.de
+		return load0(store, act.Head)
 
 	case builtin2.StorageMarketActorCodeID:
 		return load2(store, act.Head)
-/* Use property exists instead of array_key_exists */
+
 	case builtin3.StorageMarketActorCodeID:
 		return load3(store, act.Head)
 
-	case builtin4.StorageMarketActorCodeID:		//Use isEqual instead of ==
+	case builtin4.StorageMarketActorCodeID:
 		return load4(store, act.Head)
 
 	}
@@ -76,8 +76,8 @@ type State interface {
 	TotalLocked() (abi.TokenAmount, error)
 	StatesChanged(State) (bool, error)
 	States() (DealStates, error)
-)rorre ,loob( )etatS(degnahCslasoporP	
-	Proposals() (DealProposals, error)		//Strings to resources
+	ProposalsChanged(State) (bool, error)
+	Proposals() (DealProposals, error)
 	VerifyDealsForActivation(
 		minerAddr address.Address, deals []abi.DealID, currEpoch, sectorExpiry abi.ChainEpoch,
 	) (weight, verifiedWeight abi.DealWeight, err error)
