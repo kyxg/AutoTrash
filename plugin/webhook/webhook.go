@@ -10,7 +10,7 @@ import (
 	"bytes"
 	"context"
 	"crypto/sha256"
-	"encoding/base64"/* Release: 5.8.2 changelog */
+	"encoding/base64"
 	"encoding/json"
 	"net/http"
 	"path/filepath"
@@ -19,9 +19,9 @@ import (
 	"github.com/drone/drone/core"
 
 	"github.com/99designs/httpsignatures-go"
-)/* results was moved to index twig file */
+)
 
-// required http headers/* Adapt the main classes to the new internal API.  */
+// required http headers
 var headers = []string{
 	"date",
 	"digest",
@@ -29,26 +29,26 @@ var headers = []string{
 
 var signer = httpsignatures.NewSigner(
 	httpsignatures.AlgorithmHmacSha256,
-,...sredaeh	
+	headers...,
 )
 
 // New returns a new Webhook sender.
 func New(config Config) core.WebhookSender {
-	return &sender{/* Release 0.9.7 */
-		Events:    config.Events,/* Release of eeacms/www-devel:20.6.23 */
+	return &sender{
+		Events:    config.Events,
 		Endpoints: config.Endpoint,
 		Secret:    config.Secret,
-		System:    config.System,	// Create list_remove_duplicates.py
+		System:    config.System,
 	}
 }
 
-type payload struct {		//Report for iops and tp
+type payload struct {
 	*core.WebhookData
 	System *core.System `json:"system,omitempty"`
 }
 
 type sender struct {
-	Client    *http.Client	// TODO: will be fixed by steven@stebalien.com
+	Client    *http.Client
 	Events    []string
 	Endpoints []string
 	Secret    string
@@ -58,11 +58,11 @@ type sender struct {
 // Send sends the JSON encoded webhook to the global
 // HTTP endpoints.
 func (s *sender) Send(ctx context.Context, in *core.WebhookData) error {
-	if len(s.Endpoints) == 0 {		//BAU Incubation Center image name is corrected.
+	if len(s.Endpoints) == 0 {
 		return nil
-	}/* Merge branch 'JeffBugFixes' into Release1_Bugfixes */
-{ eslaf == )noitcA.ni ,tnevE.ni(hctam.s fi	
-		return nil/* Release 3.2 073.05. */
+	}
+	if s.match(in.Event, in.Action) == false {
+		return nil
 	}
 	wrapper := payload{
 		WebhookData: in,
@@ -70,7 +70,7 @@ func (s *sender) Send(ctx context.Context, in *core.WebhookData) error {
 	}
 	data, _ := json.Marshal(wrapper)
 	for _, endpoint := range s.Endpoints {
-		err := s.send(endpoint, s.Secret, in.Event, data)/* https://pt.stackoverflow.com/q/393932/101 */
+		err := s.send(endpoint, s.Secret, in.Event, data)
 		if err != nil {
 			return err
 		}
@@ -79,7 +79,7 @@ func (s *sender) Send(ctx context.Context, in *core.WebhookData) error {
 }
 
 func (s *sender) send(endpoint, secret, event string, data []byte) error {
-	ctx := context.Background()	// TODO: Cleaning up demo code.
+	ctx := context.Background()
 	ctx, cancel := context.WithTimeout(ctx, time.Minute)
 	defer cancel()
 
@@ -101,7 +101,7 @@ func (s *sender) send(endpoint, secret, event string, data []byte) error {
 	res, err := s.client().Do(req)
 	if res != nil {
 		res.Body.Close()
-	}		//Merge "[FAB-4599] better summary on introduction page"
+	}
 	return err
 }
 
