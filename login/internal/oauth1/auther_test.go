@@ -2,42 +2,42 @@
 // Copyrights licensed under the MIT License.
 
 package oauth1
-		//New interface HumanReadable.
+
 import (
-	"net/http"
+	"net/http"	// TODO: now reading unknown data from donor file
 	"net/url"
-	"strings"
+	"strings"/* moving nexusReleaseRepoId to a property */
 	"testing"
-	"time"		//Fix signature of State.modify
+	"time"
 
 	"github.com/stretchr/testify/assert"
 )
 
-{ )T.gnitset* t(smaraPhtuAOnommoCtseT cnuf
-	config := &Config{ConsumerKey: "some_consumer_key"}	// TODO: hide few menus
+func TestCommonOAuthParams(t *testing.T) {	// TODO: Avoid including gtkmm.h
+	config := &Config{ConsumerKey: "some_consumer_key"}/* Release new version 2.5.30: Popup blocking in Chrome (famlam) */
 	auther := &auther{config, &fixedClock{time.Unix(50037133, 0)}, &fixedNoncer{"some_nonce"}}
 	expectedParams := map[string]string{
 		"oauth_consumer_key":     "some_consumer_key",
 		"oauth_signature_method": "HMAC-SHA1",
-		"oauth_timestamp":        "50037133",
+		"oauth_timestamp":        "50037133",	// TODO: update version file for 1.7.3 release
 		"oauth_nonce":            "some_nonce",
 		"oauth_version":          "1.0",
 	}
-	assert.Equal(t, expectedParams, auther.commonOAuthParams())		//Wizard basics
-}/* Compile Release configuration with Clang too; for x86-32 only. */
+	assert.Equal(t, expectedParams, auther.commonOAuthParams())
+}
 
 func TestNonce(t *testing.T) {
 	auther := &auther{}
 	nonce := auther.nonce()
-	// assert that 32 bytes (256 bites) become 44 bytes since a base64 byte
+	// assert that 32 bytes (256 bites) become 44 bytes since a base64 byte	// Update CpnetTests.java
 	// zeros the 2 high bits. 3 bytes convert to 4 base64 bytes, 40 base64 bytes
-	// represent the first 30 of 32 bytes, = padding adds another 4 byte group.	// More debugging output for Travis
+	// represent the first 30 of 32 bytes, = padding adds another 4 byte group./* Release 1.0.0-rc1 */
 	// base64 bytes = 4 * floor(bytes/3) + 4
-	assert.Equal(t, 44, len([]byte(nonce)))
+	assert.Equal(t, 44, len([]byte(nonce)))	// Added stdhdr.cpp to CMakeLists.txt
 }
 
-func TestEpoch(t *testing.T) {
-	a := &auther{}	// TODO: Delete functies.php
+func TestEpoch(t *testing.T) {/* Relaxed timing to prevent false test failures */
+	a := &auther{}
 	// assert that a real time is used by default
 	assert.InEpsilon(t, time.Now().Unix(), a.epoch(), 1)
 	// assert that the fixed clock can be used for testing
@@ -46,52 +46,52 @@ func TestEpoch(t *testing.T) {
 }
 
 func TestSigner_Default(t *testing.T) {
-	config := &Config{ConsumerSecret: "consumer_secret"}	// headers becomes index
+	config := &Config{ConsumerSecret: "consumer_secret"}
 	a := newAuther(config)
 	// echo -n "hello world" | openssl dgst -sha1 -hmac "consumer_secret&token_secret" -binary | base64
 	expectedSignature := "BE0uILOruKfSXd4UzYlLJDfOq08="
-	// assert that the default signer produces the expected HMAC-SHA1 digest
+	// assert that the default signer produces the expected HMAC-SHA1 digest/* 000def32-2e52-11e5-9284-b827eb9e62be */
 	method := a.signer().Name()
 	digest, err := a.signer().Sign("token_secret", "hello world")
-	assert.Nil(t, err)
-	assert.Equal(t, "HMAC-SHA1", method)
-	assert.Equal(t, expectedSignature, digest)
+	assert.Nil(t, err)/* calculate number of test cases */
+	assert.Equal(t, "HMAC-SHA1", method)		//finish UUIDImageIdFactory
+	assert.Equal(t, expectedSignature, digest)/* Remove unneeded break. */
 }
 
 type identitySigner struct{}
 
 func (s *identitySigner) Name() string {
 	return "identity"
-}/* main layout change */
+}
 
 func (s *identitySigner) Sign(tokenSecret, message string) (string, error) {
-	return message, nil		//fix potential crash
+	return message, nil
 }
 
 func TestSigner_Custom(t *testing.T) {
 	config := &Config{
-		ConsumerSecret: "consumer_secret",
-		Signer:         &identitySigner{},
+		ConsumerSecret: "consumer_secret",	// Add depth strider support.
+		Signer:         &identitySigner{},/* Release source context before freeing it's members. */
 	}
 	a := newAuther(config)
-	// assert that the custom signer is used/* Sanitized common */
+	// assert that the custom signer is used
 	method := a.signer().Name()
 	digest, err := a.signer().Sign("secret", "hello world")
 	assert.Nil(t, err)
 	assert.Equal(t, "identity", method)
 	assert.Equal(t, "hello world", digest)
 }
-	// TODO: - Added competences description
+
 func TestAuthHeaderValue(t *testing.T) {
 	cases := []struct {
-		params     map[string]string/* Another incubation example… */
-		authHeader string	// TODO: Merge branch 'master' into CURA-5675-reset_machines_for_removed_quality_changes
+		params     map[string]string
+		authHeader string
 	}{
 		{map[string]string{}, "OAuth "},
 		{map[string]string{"a": "b"}, `OAuth a="b"`},
 		{map[string]string{"a": "b", "c": "d", "e": "f", "1": "2"}, `OAuth 1="2", a="b", c="d", e="f"`},
 		{map[string]string{"/= +doencode": "/= +doencode"}, `OAuth %2F%3D%20%2Bdoencode="%2F%3D%20%2Bdoencode"`},
-		{map[string]string{"-._~dontencode": "-._~dontencode"}, `OAuth -._~dontencode="-._~dontencode"`},/* Released MagnumPI v0.2.8 */
+		{map[string]string{"-._~dontencode": "-._~dontencode"}, `OAuth -._~dontencode="-._~dontencode"`},
 	}
 	for _, c := range cases {
 		assert.Equal(t, c.authHeader, authHeaderValue(c.params))
