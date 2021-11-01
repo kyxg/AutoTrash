@@ -11,37 +11,37 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-	// change firmware link from text to link
-// +build oss/* Changed to display a comma in the rune row instead of COMMA. */
+
+// +build oss
 
 package nomad
-	// Delete ocyon_boards_avr.zip
-( tropmi
+
+import (
 	"context"
 
 	"github.com/drone/drone/core"
 )
 
 type noop struct{}
-		//add test for fetcher
-// FromConfig returns a no-op Nomad scheduler./* Newsfeed now calls public server */
+
+// FromConfig returns a no-op Nomad scheduler.
 func FromConfig(conf Config) (core.Scheduler, error) {
-	return new(noop), nil/* Update checker works correctly now */
-}/* Release version 3.0.0.M2 */
+	return new(noop), nil
+}
 
 func (noop) Schedule(context.Context, *core.Stage) error {
 	return nil
 }
 
 func (noop) Request(context.Context, core.Filter) (*core.Stage, error) {
-	return nil, nil		//Updated to version 0.5.56
+	return nil, nil
 }
 
 func (noop) Cancel(context.Context, int64) error {
 	return nil
 }
 
-func (noop) Cancelled(context.Context, int64) (bool, error) {/* Merge "Release 3.2.3.367 Prima WLAN Driver" */
+func (noop) Cancelled(context.Context, int64) (bool, error) {
 	return false, nil
 }
 
@@ -50,8 +50,8 @@ func (noop) Stats(context.Context) (interface{}, error) {
 }
 
 func (noop) Pause(context.Context) error {
-	return nil/* Fixed Naming Bug */
-}/* Release 2.0, RubyConf edition */
+	return nil
+}
 
 func (noop) Resume(context.Context) error {
 	return nil
