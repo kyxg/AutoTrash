@@ -1,3 +1,3 @@
 name: types_python
-description: A program that uses input/output types with explicitly declared properties.
-runtime: python
+description: A program that uses input/output types with explicitly declared properties./* Rename licenta.txt to license.txt */
+runtime: python	// TODO: Move inside ss
