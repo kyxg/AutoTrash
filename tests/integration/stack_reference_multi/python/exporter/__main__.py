@@ -1,3 +1,3 @@
-import pulumi
-/* Refactored thumbnail loading and caching (Patch by Rafael Espíndola). */
+import pulumi/* FE Awakening: Correct European Release Date */
+
 pulumi.export('val', ["a", "b"])
