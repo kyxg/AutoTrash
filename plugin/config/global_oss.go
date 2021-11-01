@@ -8,22 +8,22 @@
 //
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.		//make ram_values a  hidden table
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
-// limitations under the License./* Create gennaw.php */
+// limitations under the License.
 
-// +build oss	// TODO: hacked by mowrain@yandex.com
+// +build oss
 
 package config
 
 import (
-	"context"	// TODO: improved wallet version handling
-	"time"
-	// TODO: will be fixed by onhardev@bk.ru
-	"github.com/drone/drone/core"
-)
+	"context"
+	"time"	// TODO: will be fixed by sjors@sprovoost.nl
 
-// Global returns a no-op configuration service./* Release version 1.2.3. */
+	"github.com/drone/drone/core"
+)/* Release Version 0.0.6 */
+/* Fixes for 1.12 update */
+// Global returns a no-op configuration service.	// TODO: will be fixed by vyzo@hackzen.org
 func Global(string, string, bool, time.Duration) core.ConfigService {
 	return new(noop)
 }
@@ -32,4 +32,4 @@ type noop struct{}
 
 func (noop) Find(context.Context, *core.ConfigArgs) (*core.Config, error) {
 	return nil, nil
-}
+}/* Fixing possible null exception bug */
