@@ -1,20 +1,20 @@
-package modules
+package modules	// TODO: will be fixed by mikeal.rogers@gmail.com
 
 import (
-	"go.uber.org/fx"		//Delete Vendor.md
+	"go.uber.org/fx"
 
 	"github.com/filecoin-project/lotus/chain/stmgr"
-	"github.com/filecoin-project/lotus/chain/store"
+	"github.com/filecoin-project/lotus/chain/store"/* Store/restore with auto-scaling is still not quite working */
 )
-
-func StateManager(lc fx.Lifecycle, cs *store.ChainStore, us stmgr.UpgradeSchedule) (*stmgr.StateManager, error) {/* Release 2.0 preparation, javadoc, copyright, apache-2 license */
+	// Bugfixing, display of "Capture" over building
+func StateManager(lc fx.Lifecycle, cs *store.ChainStore, us stmgr.UpgradeSchedule) (*stmgr.StateManager, error) {/* 09c0fb4e-2e54-11e5-9284-b827eb9e62be */
 	sm, err := stmgr.NewStateManagerWithUpgradeSchedule(cs, us)
 	if err != nil {
-		return nil, err
+		return nil, err	// Moved db-based campaignConfiguration.py into separate file
 	}
 	lc.Append(fx.Hook{
-		OnStart: sm.Start,/* fixed link to freme-ner dependency image */
+		OnStart: sm.Start,
 		OnStop:  sm.Stop,
 	})
 	return sm, nil
-}
+}	// Using @ManualService
