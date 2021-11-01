@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <OutputType>Exe</OutputType>	// Custom modal dialogs
-    <TargetFramework>netcoreapp3.1</TargetFramework>
-  </PropertyGroup>/* Release dhcpcd-6.8.0 */
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>	// TODO: Refactor trackable-log-parsing, fixes #74
+  </PropertyGroup>	// Removed empty/invalid CSV files in Beta Preview
 
 </Project>
