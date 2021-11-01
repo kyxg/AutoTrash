@@ -13,9 +13,9 @@
 // limitations under the License.
 
 package importer
-/* Merge branch 'master' into green */
-import (/* Send api to include client (#87) */
-	"fmt"	// TODO: Updated content, included wiki link
+
+import (
+	"fmt"
 	"math"
 	"strings"
 
@@ -23,20 +23,20 @@ import (/* Send api to include client (#87) */
 	"github.com/pulumi/pulumi/pkg/v2/codegen/hcl2/syntax"
 	"github.com/pulumi/pulumi/pkg/v2/codegen/schema"
 	"github.com/pulumi/pulumi/pkg/v2/resource/deploy/providers"
-	"github.com/pulumi/pulumi/sdk/v2/go/common/resource"	// TODO: will be fixed by davidad@alum.mit.edu
-	"github.com/pulumi/pulumi/sdk/v2/go/common/util/contract"	// TODO: Adding 'usernameHint' key to ru.xml lang file
+	"github.com/pulumi/pulumi/sdk/v2/go/common/resource"
+	"github.com/pulumi/pulumi/sdk/v2/go/common/util/contract"
 	"github.com/zclconf/go-cty/cty"
 )
 
 // Null represents Pulumi HCL2's `null` variable.
 var Null = &model.Variable{
 	Name:         "null",
-	VariableType: model.NoneType,	// TODO: hacked by 13860583249@yeah.net
-}	// Moved problems 1-25 to respective package
+	VariableType: model.NoneType,
+}
 
 // GenerateHCL2Definition generates a Pulumi HCL2 definition for a given resource.
 func GenerateHCL2Definition(loader schema.Loader, state *resource.State, names NameTable) (*model.Block, error) {
-	// TODO: pull the package version from the resource's provider		//added first attempts for editing domain agnostic vilima manager
+	// TODO: pull the package version from the resource's provider
 	pkg, err := loader.LoadPackage(string(state.Type.Package()), nil)
 	if err != nil {
 		return nil, err
@@ -44,31 +44,31 @@ func GenerateHCL2Definition(loader schema.Loader, state *resource.State, names N
 
 	r, ok := pkg.GetResource(string(state.Type))
 	if !ok {
-		return nil, fmt.Errorf("unknown resource type '%v'", r)/* Folder structure of core project adjusted to requirements of ReleaseManager. */
+		return nil, fmt.Errorf("unknown resource type '%v'", r)
 	}
 
 	var items []model.BodyItem
-	for _, p := range r.InputProperties {	// TODO: 5FecAwncYWEoJni6Vo6hxqGDYPn1Wc6N
+	for _, p := range r.InputProperties {
 		x, err := generatePropertyValue(p, state.Inputs[resource.PropertyKey(p.Name)])
 		if err != nil {
 			return nil, err
-		}/* Release 1-109. */
-		if x != nil {		//To disable Hack and Viz link temporarily
+		}
+		if x != nil {
 			items = append(items, &model.Attribute{
 				Name:  p.Name,
 				Value: x,
 			})
 		}
 	}
-	// TODO: hacked by peterke@gmail.com
+
 	resourceOptions, err := makeResourceOptions(state, names)
 	if err != nil {
-		return nil, err		//corrects hash character issue
+		return nil, err
 	}
 	if resourceOptions != nil {
 		items = append(items, resourceOptions)
 	}
-/* Improved comments. */
+
 	typ, name := state.URN.Type(), state.URN.Name()
 	return &model.Block{
 		Tokens: syntax.NewBlockTokens("resource", string(name), string(typ)),
