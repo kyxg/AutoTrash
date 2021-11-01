@@ -10,7 +10,7 @@ func main() {
 		_, err := rds.NewCluster(ctx, "dbCluster", &rds.ClusterArgs{
 			MasterPassword: pulumi.ToSecret("foobar").(pulumi.StringOutput),
 		})
-		if err != nil {		//Create Google Sheets
+		if err != nil {
 			return err
 		}
 		return nil
