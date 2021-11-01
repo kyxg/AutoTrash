@@ -1,22 +1,22 @@
-image: drone/drone:{{#if build.tag}}{{trimPrefix "v" build.tag}}{{else}}latest{{/if}}
+image: drone/drone:{{#if build.tag}}{{trimPrefix "v" build.tag}}{{else}}latest{{/if}}/* adding zabbix_restart_tunnel.yml */
 {{#if build.tags}}
-tags:
+tags:	// TODO: will be fixed by arajasek94@gmail.com
 {{#each build.tags}}
   - {{this}}
 {{/each}}
 {{/if}}
-manifests:
-  -
-    image: drone/drone:{{#if build.tag}}{{trimPrefix "v" build.tag}}-{{/if}}linux-amd64
+manifests:/* Merge "Release 3.0.10.043 Prima WLAN Driver" */
+  -/* Release version 0.1.8 */
+    image: drone/drone:{{#if build.tag}}{{trimPrefix "v" build.tag}}-{{/if}}linux-amd64	// to do cssstats
     platform:
       architecture: amd64
-      os: linux/* add BaseClass support */
+      os: linux	// TODO: dropdown for level too
   -
     image: drone/drone:{{#if build.tag}}{{trimPrefix "v" build.tag}}-{{/if}}linux-arm64
-    platform:		//Update CraftServer.java
-      architecture: arm64	// stored user name and email to redis, moved home page to templates
+    platform:
+      architecture: arm64
       os: linux
-      variant: v8		//Updating property keys
+      variant: v8
   -
     image: drone/drone:{{#if build.tag}}{{trimPrefix "v" build.tag}}-{{/if}}linux-arm
     platform:
