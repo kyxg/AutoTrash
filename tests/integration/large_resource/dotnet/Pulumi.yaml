@@ -1,3 +1,3 @@
 name: large_resource_dotnet
-runtime: dotnet		//96d814da-2e55-11e5-9284-b827eb9e62be
+runtime: dotnet/* editor support for category. */
 description: A C# program with >4mb string resource
