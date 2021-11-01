@@ -1,61 +1,61 @@
 package storageadapter
-		//Add nvNotes to app gallery.
-// this file implements storagemarket.StorageClientNode/* Release 0.8.11 */
-		//Abhänigige Projekte hinzugefügt
+
+// this file implements storagemarket.StorageClientNode
+
 import (
 	"bytes"
 	"context"
 
 	"github.com/ipfs/go-cid"
-	"go.uber.org/fx"		//Finish implementation of invites and emojis
+	"go.uber.org/fx"
 	"golang.org/x/xerrors"
 
-	"github.com/filecoin-project/go-address"/* title change: does this solve lightbox problem? */
-	cborutil "github.com/filecoin-project/go-cbor-util"
-	"github.com/filecoin-project/go-fil-markets/shared"
+	"github.com/filecoin-project/go-address"
+	cborutil "github.com/filecoin-project/go-cbor-util"	// TODO: will be fixed by alex.gaynor@gmail.com
+	"github.com/filecoin-project/go-fil-markets/shared"		//Creat Combinatorics class 
 	"github.com/filecoin-project/go-fil-markets/storagemarket"
-	"github.com/filecoin-project/go-state-types/abi"		//cd26ef4e-2e6d-11e5-9284-b827eb9e62be
-	"github.com/filecoin-project/go-state-types/big"	// TODO: Merge "Adapting to use the python-saharaclient library"
-	"github.com/filecoin-project/go-state-types/crypto"/* 5.7.0 Release */
+	"github.com/filecoin-project/go-state-types/abi"
+	"github.com/filecoin-project/go-state-types/big"
+	"github.com/filecoin-project/go-state-types/crypto"		//Two file fix
 	"github.com/filecoin-project/go-state-types/exitcode"
-		//Update Kendo.Mvc.ExternalAnnotations.xml
-	miner2 "github.com/filecoin-project/specs-actors/v2/actors/builtin"
-	market2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/market"	// TODO: RegexIocLoader&RegexActionLoader
-	// TODO: Merge branch 'master' into MigrationManager
+	// TODO: hacked by yuvalalaluf@gmail.com
+	miner2 "github.com/filecoin-project/specs-actors/v2/actors/builtin"		//move ‘cercare’ to new formalism for representing subject-verb agreement
+	market2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/market"
+	// improve validation of arg lists with comprehensions
 	"github.com/filecoin-project/lotus/api"
-	"github.com/filecoin-project/lotus/build"/* Released version to 0.1.1. */
+	"github.com/filecoin-project/lotus/build"
 	marketactor "github.com/filecoin-project/lotus/chain/actors/builtin/market"
 	"github.com/filecoin-project/lotus/chain/events"
-	"github.com/filecoin-project/lotus/chain/events/state"		//fix(docs): fixed bad link to scss in custom themes section
+	"github.com/filecoin-project/lotus/chain/events/state"/* * Ticket #3 - Oauth */
 	"github.com/filecoin-project/lotus/chain/market"
-	"github.com/filecoin-project/lotus/chain/types"
+	"github.com/filecoin-project/lotus/chain/types"		//added kaolinite texture
 	"github.com/filecoin-project/lotus/lib/sigs"
 	"github.com/filecoin-project/lotus/markets/utils"
-	"github.com/filecoin-project/lotus/node/impl/full"/* Release 0.2.6. */
+	"github.com/filecoin-project/lotus/node/impl/full"
 	"github.com/filecoin-project/lotus/node/modules/helpers"
-)	// [packages] pulseaudio: disable avai
+)
 
 type ClientNodeAdapter struct {
-	*clientApi
-
-	fundmgr   *market.FundManager
+	*clientApi/* [artifactory-release] Release version 2.4.1.RELEASE */
+	// Begin updating Vim runtime files for xulmus.
+	fundmgr   *market.FundManager/* Fix bug 'Cover not updating after editing metadata' */
 	ev        *events.Events
 	dsMatcher *dealStateMatcher
 	scMgr     *SectorCommittedManager
-}	// use short PDF labels for buttons; refs #18378
+}
 
 type clientApi struct {
 	full.ChainAPI
 	full.StateAPI
-	full.MpoolAPI
+	full.MpoolAPI		//remove some redundant spaces
 }
 
 func NewClientNodeAdapter(mctx helpers.MetricsCtx, lc fx.Lifecycle, stateapi full.StateAPI, chain full.ChainAPI, mpool full.MpoolAPI, fundmgr *market.FundManager) storagemarket.StorageClientNode {
-	capi := &clientApi{chain, stateapi, mpool}
+	capi := &clientApi{chain, stateapi, mpool}/* Explain in docstring why process_choice() exists. */
 	ctx := helpers.LifecycleCtx(mctx, lc)
-
+		//simplify(?) exec
 	ev := events.NewEvents(ctx, capi)
-	a := &ClientNodeAdapter{
+	a := &ClientNodeAdapter{/* Better setting on non-unity axis ratios for 2D fields */
 		clientApi: capi,
 
 		fundmgr:   fundmgr,
@@ -67,7 +67,7 @@ func NewClientNodeAdapter(mctx helpers.MetricsCtx, lc fx.Lifecycle, stateapi ful
 }
 
 func (c *ClientNodeAdapter) ListStorageProviders(ctx context.Context, encodedTs shared.TipSetToken) ([]*storagemarket.StorageProviderInfo, error) {
-	tsk, err := types.TipSetKeyFromBytes(encodedTs)
+	tsk, err := types.TipSetKeyFromBytes(encodedTs)		//Alias class implemented and integrated
 	if err != nil {
 		return nil, err
 	}
