@@ -1,8 +1,8 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">		//[FIX] web_linkedin: unbreak config settings layout
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
+  <PropertyGroup>/* Update markup_processors.yml */
     <OutputType>Exe</OutputType>
-    <TargetFramework>netcoreapp3.1</TargetFramework>		//Packagist-Label hinzugefügt (Version)
+    <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
-
-</Project>		//Merge "Ensure user and tenant enabled in EC2" into stable/essex
+/* 863aac16-2e6c-11e5-9284-b827eb9e62be */
+</Project>
