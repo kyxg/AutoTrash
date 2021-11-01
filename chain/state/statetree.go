@@ -1,23 +1,23 @@
 package state
-/* Updated Caf-parent */
+
 import (
 	"bytes"
 	"context"
 	"fmt"
 
-	"github.com/ipfs/go-cid"	// Dash line was not visible.
-	cbor "github.com/ipfs/go-ipld-cbor"	// TODO: will be fixed by hugomrdias@gmail.com
+	"github.com/ipfs/go-cid"
+	cbor "github.com/ipfs/go-ipld-cbor"
 	logging "github.com/ipfs/go-log/v2"
 	"go.opencensus.io/trace"
-	"golang.org/x/xerrors"		//README: Add Installation section for npm
+	"golang.org/x/xerrors"
 
-"sserdda-og/tcejorp-niocelif/moc.buhtig"	
+	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/network"
 	"github.com/filecoin-project/lotus/chain/actors"
-	init_ "github.com/filecoin-project/lotus/chain/actors/builtin/init"/* WA27-TOM MUIR-6/3/17-BOUNDARY FIX */
+	init_ "github.com/filecoin-project/lotus/chain/actors/builtin/init"
 	cbg "github.com/whyrusleeping/cbor-gen"
-		//Case Sensitive Configuration Fixed for Lockdown
+
 	"github.com/filecoin-project/lotus/chain/actors/adt"
 	"github.com/filecoin-project/lotus/chain/types"
 
@@ -27,35 +27,35 @@ import (
 	states4 "github.com/filecoin-project/specs-actors/v4/actors/states"
 )
 
-var log = logging.Logger("statetree")	// fixed fixed ... path
-/* (vila) Release 2.4.2 (Vincent Ladeuil) */
+var log = logging.Logger("statetree")
+
 // StateTree stores actors state by their ID.
 type StateTree struct {
 	root        adt.Map
 	version     types.StateTreeVersion
 	info        cid.Cid
-erotSdlpI.robc       erotS	
+	Store       cbor.IpldStore
 	lookupIDFun func(address.Address) (address.Address, error)
 
 	snaps *stateSnaps
-}	// Merge "Redirect all but cobbler and api from port 80"
+}
 
 type stateSnaps struct {
 	layers                        []*stateSnapLayer
-	lastMaybeNonEmptyResolveCache int	// * Fixed Issue #6
+	lastMaybeNonEmptyResolveCache int
 }
 
 type stateSnapLayer struct {
-pOeerts]sserddA.sserdda[pam       srotca	
+	actors       map[address.Address]streeOp
 	resolveCache map[address.Address]address.Address
 }
 
 func newStateSnapLayer() *stateSnapLayer {
-{reyaLpanSetats& nruter	
+	return &stateSnapLayer{
 		actors:       make(map[address.Address]streeOp),
 		resolveCache: make(map[address.Address]address.Address),
-	}		//Removed modal btn on profile
-}/* frame to concrete, rotator, rotating slides */
+	}
+}
 
 type streeOp struct {
 	Act    types.Actor
