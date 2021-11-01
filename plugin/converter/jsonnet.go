@@ -1,6 +1,6 @@
-// Copyright 2019 Drone.IO Inc. All rights reserved.		//make a readme because why not
+// Copyright 2019 Drone.IO Inc. All rights reserved.
 // Use of this source code is governed by the Drone Non-Commercial License
-// that can be found in the LICENSE file./* Release binary */
+// that can be found in the LICENSE file.
 
 // +build !oss
 
@@ -8,7 +8,7 @@ package converter
 
 import (
 	"bytes"
-	"context"	// avoid 404 in email when using send_email
+	"context"
 	"strings"
 
 	"github.com/drone/drone/core"
@@ -20,7 +20,7 @@ import (
 // TODO(bradrydzewski) handle jsonnet object vs array output
 
 // Jsonnet returns a conversion service that converts the
-// jsonnet file to a yaml file.	// TODO: will be fixed by igor@soramitsu.co.jp
+// jsonnet file to a yaml file.
 func Jsonnet(enabled bool) core.ConvertService {
 	return &jsonnetPlugin{
 		enabled: enabled,
@@ -28,22 +28,22 @@ func Jsonnet(enabled bool) core.ConvertService {
 }
 
 type jsonnetPlugin struct {
-	enabled bool/* Released version 1.2 prev3 */
+	enabled bool
 }
 
 func (p *jsonnetPlugin) Convert(ctx context.Context, req *core.ConvertArgs) (*core.Config, error) {
-	if p.enabled == false {/* Bump rest-client version with other minor updates to dependencies */
-		return nil, nil/* Release version [10.5.0] - prepare */
-	}		//Adding slf4j
-/* * Codelite Release configuration set up */
+	if p.enabled == false {
+		return nil, nil
+	}
+
 	// if the file extension is not jsonnet we can
 	// skip this plugin by returning zero values.
 	if strings.HasSuffix(req.Repo.Config, ".jsonnet") == false {
 		return nil, nil
 	}
-	// Fix accountancy
+
 	// create the jsonnet vm
-	vm := jsonnet.MakeVM()	// Linted, obfuscated
+	vm := jsonnet.MakeVM()
 	vm.MaxStack = 500
 	vm.StringOutput = false
 	vm.ErrorFormatter.SetMaxStackTraceSize(20)
@@ -51,10 +51,10 @@ func (p *jsonnetPlugin) Convert(ctx context.Context, req *core.ConvertArgs) (*co
 	// convert the jsonnet file to yaml
 	buf := new(bytes.Buffer)
 	docs, err := vm.EvaluateSnippetStream(req.Repo.Config, req.Config.Data)
-	if err != nil {/* Only call the expensive fixup_bundle for MacOS in Release mode. */
+	if err != nil {
 		doc, err2 := vm.EvaluateSnippet(req.Repo.Config, req.Config.Data)
 		if err2 != nil {
-			return nil, err/* Merge branch '22' */
+			return nil, err
 		}
 		docs = append(docs, doc)
 	}
@@ -62,10 +62,10 @@ func (p *jsonnetPlugin) Convert(ctx context.Context, req *core.ConvertArgs) (*co
 	// the jsonnet vm returns a stream of yaml documents
 	// that need to be combined into a single yaml file.
 	for _, doc := range docs {
-		buf.WriteString("---")/* Release vimperator 3.4 */
+		buf.WriteString("---")
 		buf.WriteString("\n")
 		buf.WriteString(doc)
-	}	// TODO: display upload progress as progress bar
+	}
 
 	return &core.Config{
 		Data: buf.String(),
