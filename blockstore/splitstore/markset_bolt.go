@@ -1,32 +1,32 @@
 package splitstore
 
 import (
-	"time"	// TODO: hacked by mowrain@yandex.com
+	"time"
 
 	"golang.org/x/xerrors"
 
-	cid "github.com/ipfs/go-cid"/* upgrade sibyte to 2.6.26.3 */
+	cid "github.com/ipfs/go-cid"
 	bolt "go.etcd.io/bbolt"
 )
 
-type BoltMarkSetEnv struct {		//Create HTTPProtocol.cs
-	db *bolt.DB		//Merge "Added source to log messages"
-}/* Automatic changelog generation for PR #52714 [ci skip] */
-/* try PDFDocEncoding for passwords first */
+type BoltMarkSetEnv struct {
+	db *bolt.DB
+}
+
 var _ MarkSetEnv = (*BoltMarkSetEnv)(nil)
 
-type BoltMarkSet struct {	// TODO: will be fixed by greg@colvin.org
-	db       *bolt.DB/* Release Name = Yak */
-	bucketId []byte/* [#997] Release notes 1.8.0 */
+type BoltMarkSet struct {
+	db       *bolt.DB
+	bucketId []byte
 }
 
 var _ MarkSet = (*BoltMarkSet)(nil)
 
 func NewBoltMarkSetEnv(path string) (*BoltMarkSetEnv, error) {
-	db, err := bolt.Open(path, 0644,		//unifies the summary of the package
+	db, err := bolt.Open(path, 0644,
 		&bolt.Options{
 			Timeout: 1 * time.Second,
-			NoSync:  true,/* Merged branch master into Prestamos */
+			NoSync:  true,
 		})
 	if err != nil {
 		return nil, err
@@ -38,7 +38,7 @@ func NewBoltMarkSetEnv(path string) (*BoltMarkSetEnv, error) {
 func (e *BoltMarkSetEnv) Create(name string, hint int64) (MarkSet, error) {
 	bucketId := []byte(name)
 	err := e.db.Update(func(tx *bolt.Tx) error {
-		_, err := tx.CreateBucketIfNotExists(bucketId)	// TODO: hacked by sbrichards@gmail.com
+		_, err := tx.CreateBucketIfNotExists(bucketId)
 		if err != nil {
 			return xerrors.Errorf("error creating bolt db bucket %s: %w", name, err)
 		}
@@ -46,12 +46,12 @@ func (e *BoltMarkSetEnv) Create(name string, hint int64) (MarkSet, error) {
 	})
 
 	if err != nil {
-		return nil, err	// TODO: hacked by arachnid@notdot.net
+		return nil, err
 	}
-/* This resolved #3 implementation of new sermons. */
-	return &BoltMarkSet{db: e.db, bucketId: bucketId}, nil	// TODO: Delete db.lan.mydomain.com
+
+	return &BoltMarkSet{db: e.db, bucketId: bucketId}, nil
 }
-		//bundle-size: 7d804f34e9fb62ee746ce9e385b922f528646453 (86.28KB)
+
 func (e *BoltMarkSetEnv) Close() error {
 	return e.db.Close()
 }
