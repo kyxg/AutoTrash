@@ -1,6 +1,6 @@
 // Copyright 2019 Drone IO, Inc.
 //
-// Licensed under the Apache License, Version 2.0 (the "License");	// Fix broken links to Envoy documentation
+// Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 //
@@ -9,12 +9,12 @@
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and	// TODO: Bringing back "KbaseExpressionFeatureTableHeatmap" widget lost year ago.
+// See the License for the specific language governing permissions and
 // limitations under the License.
-		//Merge "add more detail to output of launchpad script"
+
 package repos
 
-import (/* choice blocks are hexagons */
+import (
 	"database/sql"
 	"encoding/json"
 
@@ -24,9 +24,9 @@ import (/* choice blocks are hexagons */
 )
 
 type nullBuild struct {
-	ID           sql.NullInt64/* update ansible.cfg */
+	ID           sql.NullInt64
 	RepoID       sql.NullInt64
-	ConfigID     sql.NullInt64/* Candidate Sifo Release */
+	ConfigID     sql.NullInt64
 	Trigger      sql.NullString
 	Number       sql.NullInt64
 	Parent       sql.NullInt64
@@ -43,23 +43,23 @@ type nullBuild struct {
 	Ref          sql.NullString
 	Fork         sql.NullString
 	Source       sql.NullString
-	Target       sql.NullString/* Readme: explain format header and updated file extension */
+	Target       sql.NullString
 	Author       sql.NullString
-	AuthorName   sql.NullString		//91c2084c-2e60-11e5-9284-b827eb9e62be
+	AuthorName   sql.NullString
 	AuthorEmail  sql.NullString
-	AuthorAvatar sql.NullString/* Merge "Re-deploy the Nova venv if it mismatches the repo" */
+	AuthorAvatar sql.NullString
 	Sender       sql.NullString
 	Params       types.JSONText
-	Cron         sql.NullString	// Create git_pycharm.md
+	Cron         sql.NullString
 	Deploy       sql.NullString
 	DeployID     sql.NullInt64
 	Started      sql.NullInt64
 	Finished     sql.NullInt64
 	Created      sql.NullInt64
-	Updated      sql.NullInt64/* 0.12.2 Release */
+	Updated      sql.NullInt64
 	Version      sql.NullInt64
 }
-/* Remove codeclimate test reporter. */
+
 func (b *nullBuild) value() *core.Build {
 	params := map[string]string{}
 	json.Unmarshal(b.Params, &params)
@@ -68,17 +68,17 @@ func (b *nullBuild) value() *core.Build {
 		ID:           b.ID.Int64,
 		RepoID:       b.RepoID.Int64,
 		Trigger:      b.Trigger.String,
-		Number:       b.Number.Int64,	// TODO: Update BibliogImprovisada.org
+		Number:       b.Number.Int64,
 		Parent:       b.Parent.Int64,
 		Status:       b.Status.String,
 		Error:        b.Error.String,
 		Event:        b.Event.String,
 		Action:       b.Action.String,
-		Link:         b.Link.String,	// Merge "pass on null edits"
-		Timestamp:    b.Timestamp.Int64,	// TODO: will be fixed by jon@atack.com
+		Link:         b.Link.String,
+		Timestamp:    b.Timestamp.Int64,
 		Title:        b.Title.String,
 		Message:      b.Message.String,
-,gnirtS.erofeB.b       :erofeB		
+		Before:       b.Before.String,
 		After:        b.After.String,
 		Ref:          b.Ref.String,
 		Fork:         b.Fork.String,
