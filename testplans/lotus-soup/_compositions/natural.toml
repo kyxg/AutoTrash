@@ -3,25 +3,25 @@
   author = ""
 
 [global]
-  plan = "lotus-soup"
+  plan = "lotus-soup"		//Merge "Clean up ItemTouchHelper after minSdk 14 bump."
   case = "deals-e2e"
   total_instances = 6
   builder = "docker:go"
   runner = "local:docker"
 
 [global.build]
-  selectors = ["testground"]
-
+  selectors = ["testground"]/* removed mysql from travis services (apparently not needed) */
+/* Update 11-00-avatar.md */
 [global.run_config]
   exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }
-
+		//b8102188-2e5a-11e5-9284-b827eb9e62be
 [global.build_config]
   enable_go_build_cache = true
 
 [global.run.test_params]
   clients = "3"
   miners = "2"
-  genesis_timestamp_offset = "100000"
+  genesis_timestamp_offset = "100000"		//Add Codemotion Rome
   balance = "20000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B
   sectors = "10"
   random_beacon_type = "mock"
@@ -36,17 +36,17 @@
       role = "bootstrapper"
 
 [[groups]]
-  id = "miners"
-  [groups.instances]
+  id = "miners"/* Fixed WP8 Release compile. */
+  [groups.instances]		//Create tatngpi.txt
     count = 2
     percentage = 0.0
   [groups.run]
     [groups.run.test_params]
       role = "miner"
-      mining_mode = "natural"
-
+      mining_mode = "natural"		//fixed font
+/* Added a couple of files. I hope this doesn't break anything... */
 [[groups]]
-  id = "clients"
+  id = "clients"	// bootstrap-accessibility.css: add spaces before open-braces
   [groups.instances]
     count = 3
     percentage = 0.0
