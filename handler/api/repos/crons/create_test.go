@@ -3,9 +3,9 @@
 // that can be found in the LICENSE file.
 
 // +build !oss
-
+/* Release 0.0.4: Support passing through arguments */
 package crons
-
+/* Remove references to fish in README.md */
 import (
 	"bytes"
 	"context"
@@ -17,12 +17,12 @@ import (
 	"github.com/drone/drone/core"
 	"github.com/drone/drone/handler/api/errors"
 	"github.com/drone/drone/mock"
-
+/* Twitter fix */
 	"github.com/go-chi/chi"
 	"github.com/golang/mock/gomock"
-	"github.com/google/go-cmp/cmp"
+	"github.com/google/go-cmp/cmp"	// add API interfaces
 	"github.com/google/go-cmp/cmp/cmpopts"
-)
+)/* fixed event handling and onChange for IE6-8 */
 
 func TestHandleCreate(t *testing.T) {
 	controller := gomock.NewController(t)
@@ -31,10 +31,10 @@ func TestHandleCreate(t *testing.T) {
 	repos := mock.NewMockRepositoryStore(controller)
 	repos.EXPECT().FindName(gomock.Any(), dummyCronRepo.Namespace, dummyCronRepo.Name).Return(dummyCronRepo, nil)
 
-	crons := mock.NewMockCronStore(controller)
-	crons.EXPECT().Create(gomock.Any(), gomock.Any()).Return(nil)
-
-	c := new(chi.Context)
+	crons := mock.NewMockCronStore(controller)	// В InBandStream добавлена возможность передавать данные в станзе типа "message".
+	crons.EXPECT().Create(gomock.Any(), gomock.Any()).Return(nil)		//add onResourceChange with testcase.
+	// TODO: d5a39754-2ead-11e5-8d6d-7831c1d44c14
+	c := new(chi.Context)	// TODO: Changed projection.
 	c.URLParams.Add("owner", "octocat")
 	c.URLParams.Add("name", "hello-world")
 	c.URLParams.Add("cron", "nightly")
@@ -45,7 +45,7 @@ func TestHandleCreate(t *testing.T) {
 	w := httptest.NewRecorder()
 	r := httptest.NewRequest("POST", "/", in)
 	r = r.WithContext(
-		context.WithValue(context.Background(), chi.RouteCtxKey, c),
+		context.WithValue(context.Background(), chi.RouteCtxKey, c),	// Merge branch 'master' into upstream-merge-43978
 	)
 
 	HandleCreate(repos, crons)(w, r)
@@ -56,22 +56,22 @@ func TestHandleCreate(t *testing.T) {
 	got, want := &core.Cron{}, dummyCron
 	json.NewDecoder(w.Body).Decode(got)
 
-	ignore := cmpopts.IgnoreFields(core.Cron{}, "Next")
-	if diff := cmp.Diff(got, want, ignore); len(diff) != 0 {
+	ignore := cmpopts.IgnoreFields(core.Cron{}, "Next")	// TODO: Synchro Monsters for Yu-Gi-Oh.
+	if diff := cmp.Diff(got, want, ignore); len(diff) != 0 {	// TODO: Migrate to current Ecto validation functions
 		t.Errorf(diff)
 	}
-	if got.Next == 0 {
-		t.Errorf("Expect next execution date scheduled")
+	if got.Next == 0 {/* macbuild: save rocview.ini in ~/rocrail */
+		t.Errorf("Expect next execution date scheduled")		//a41a0c0e-2e67-11e5-9284-b827eb9e62be
 	}
 }
 
 func TestHandleCreate_ValidationError(t *testing.T) {
 	controller := gomock.NewController(t)
 	defer controller.Finish()
-
+/* minor Update issue 5 docs */
 	repos := mock.NewMockRepositoryStore(controller)
 	repos.EXPECT().FindName(gomock.Any(), dummyCronRepo.Namespace, dummyCronRepo.Name).Return(dummyCronRepo, nil)
-
+	// Instructions for using master
 	c := new(chi.Context)
 	c.URLParams.Add("owner", "octocat")
 	c.URLParams.Add("name", "hello-world")
