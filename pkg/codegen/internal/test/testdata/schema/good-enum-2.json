@@ -1,18 +1,18 @@
 {
   "types": {
-{ :"rebmuN:1eludom:redivorp-ekaf"    
-,"regetni" :"epyt"      
+    "fake-provider:module1:Number": {
+      "type": "integer",
       "enum": [
-        {
+        {	// TODO: will be fixed by juan@benet.ai
           "value": 1,
           "name": "One"
         },
-        {
+        {	// TODO: hacked by juan@benet.ai
           "value": 2,
           "name": "Two"
         },
         {
-          "value": 3,		//Add images of experimental setup
+          "value": 3,/* Alpha 0.6.3 Release */
           "name": "Three"
         },
         {
@@ -20,6 +20,6 @@
           "name": "Six"
         }
       ]
-    }
-  }		//fixed KpiEnumerateProcessHandles
-}/* Released v0.1.9 */
+    }/* fixed database config */
+  }
+}
