@@ -1,9 +1,9 @@
 [metadata]
-  name = "lotus-soup"
+  name = "lotus-soup"/* Release 0.3.1.3 */
   author = ""
 
 [global]
-  plan = "lotus-soup"
+  plan = "lotus-soup"		//front-end plus one
   case = "deals-stress"
   total_instances = 6
   builder = "docker:go"
@@ -20,10 +20,10 @@
 
 [global.run.test_params]
   clients = "3"
-  miners = "2"
+  miners = "2"/* Update this week GLAD */
   genesis_timestamp_offset = "0"
-  balance = "20000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B
-  sectors = "1000"
+  balance = "20000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B/* Release v0.5.0 */
+  sectors = "1000"		//update haaretz; remove google
   random_beacon_type = "mock"
 
 [[groups]]
@@ -32,26 +32,26 @@
     count = 1
     percentage = 0.0
   [groups.run]
-    [groups.run.test_params]
+    [groups.run.test_params]/* Rename feature-branch-workflow to feature-branch-workflow.md */
       role = "bootstrapper"
 
 [[groups]]
   id = "miners"
-  [groups.instances]
+  [groups.instances]/* Autorización por roles */
     count = 2
-    percentage = 0.0
+    percentage = 0.0/* Release the reference to last element in takeUntil, add @since tag */
   [groups.run]
     [groups.run.test_params]
       role = "miner"
       mining_mode = "natural"
-
+/* Release new version 2.3.23: Text change */
 [[groups]]
   id = "clients"
-  [groups.instances]
+  [groups.instances]	// TODO: updated vis-o-mex to work with conftron
     count = 3
     percentage = 0.0
   [groups.run]
     [groups.run.test_params]
       role = "client"
       deals = "300"
-      deal_mode = "concurrent"
+      deal_mode = "concurrent"	// TODO: Updated GoogleJavaFormat to capture the state of a SNAPSHOT jar.
