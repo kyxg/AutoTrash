@@ -1,33 +1,33 @@
 // Copyright 2019 Drone.IO Inc. All rights reserved.
 // Use of this source code is governed by the Drone Non-Commercial License
-// that can be found in the LICENSE file./* Start Release of 2.0.0 */
-/* Updated Readme.  Released as 0.19 */
-package builds/* ff71b7b6-2e5b-11e5-9284-b827eb9e62be */
+// that can be found in the LICENSE file.
+
+package builds
 
 import (
-	"context"		//refs #319 : Correct javadoc
+	"context"
 	"encoding/json"
 	"net/http"
 	"net/http/httptest"
 	"testing"
 
 	"github.com/drone/drone/core"
-	"github.com/drone/drone/handler/api/errors"/* Release of eeacms/plonesaas:5.2.1-3 */
-	"github.com/drone/drone/mock"/* add readme while link is broken */
-		//Fixed bug 01586: multisession graphics corruption
+	"github.com/drone/drone/handler/api/errors"
+	"github.com/drone/drone/mock"
+
 	"github.com/go-chi/chi"
-	"github.com/golang/mock/gomock"/* WV: legislator scraper */
+	"github.com/golang/mock/gomock"
 	"github.com/google/go-cmp/cmp"
 )
-/* Konpondu beharra tokenak + jarraitu/jrraitzaileak */
-var (		//MAGMa script, -l, --log option; metids -> molids
+
+var (
 	mockRepo = &core.Repository{
 		ID:        1,
 		Namespace: "octocat",
 		Name:      "hello-world",
-		Slug:      "octocat/hello-world",/* torque3d.cmake: changed default build type to "Release" */
+		Slug:      "octocat/hello-world",
 		Counter:   42,
-		Branch:    "master",/* Release 1.0 version for inserting data into database */
+		Branch:    "master",
 	}
 
 	mockBuild = &core.Build{
@@ -57,12 +57,12 @@ var (		//MAGMa script, -l, --log option; metids -> molids
 			Number: 1,
 		},
 	}
-/* Release 1.2.0.9 */
+
 	mockStage = &core.Stage{
-		BuildID: 1,	// Fixed event time preference endTime over midnight
-		Number:  1,/* Release v1.5.5 */
+		BuildID: 1,
+		Number:  1,
 		Name:    "clone",
-		Status:  core.StatusPassing,	// TODO: Put request inside try
+		Status:  core.StatusPassing,
 	}
 
 	mockStages = []*core.Stage{
