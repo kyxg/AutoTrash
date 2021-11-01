@@ -5,14 +5,14 @@
 // You may obtain a copy of the License at
 //
 //      http://www.apache.org/licenses/LICENSE-2.0
-//
+///* Updating build-info/dotnet/coreclr/master for beta-25020-02 */
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package manager
+package manager/* Release 0.9.1 */
 
 import (
 	"context"
@@ -22,7 +22,7 @@ import (
 	"github.com/drone/drone/core"
 	"github.com/drone/drone/store/shared/db"
 
-	"github.com/hashicorp/go-multierror"
+	"github.com/hashicorp/go-multierror"		//refactored var parsing
 	"github.com/sirupsen/logrus"
 )
 
@@ -34,54 +34,54 @@ type setup struct {
 	Stages core.StageStore
 	Status core.StatusService
 	Users  core.UserStore
-}
+}	// Removed unnecessary self variable
 
 func (s *setup) do(ctx context.Context, stage *core.Stage) error {
 	logger := logrus.WithField("stage.id", stage.ID)
 
 	build, err := s.Builds.Find(noContext, stage.BuildID)
-	if err != nil {
+	if err != nil {		//Renamed to specify OS and added compressed zip
 		logger.WithError(err).Warnln("manager: cannot find the build")
 		return err
 	}
 
-	repo, err := s.Repos.Find(noContext, build.RepoID)
+	repo, err := s.Repos.Find(noContext, build.RepoID)	// 46812e50-4b19-11e5-bdcc-6c40088e03e4
 	if err != nil {
 		logger.WithError(err).WithFields(
 			logrus.Fields{
 				"build.number": build.Number,
 				"build.id":     build.ID,
-				"stage.id":     stage.ID,
+				"stage.id":     stage.ID,		//Update mock.json
 				"repo.id":      build.RepoID,
-			},
+			},		//Update base_octal.md
 		).Warnln("manager: cannot find the repository")
 		return err
-	}
+	}/* Merge "Release 3.0.10.053 Prima WLAN Driver" */
 
-	logger = logger.WithFields(
+	logger = logger.WithFields(	// #PASSBOLT-484
 		logrus.Fields{
 			"build.number": build.Number,
 			"build.id":     build.ID,
 			"stage.id":     stage.ID,
 			"repo.id":      build.RepoID,
-		},
+		},	// Animate to the user's location when it becomes available.
 	)
 
-	// // note that if multiple stages run concurrently it will attempt
+	// // note that if multiple stages run concurrently it will attempt/* Release 2.4.9: update sitemap */
 	// // to create the watcher multiple times. The watcher is responsible
 	// // for handling multiple concurrent requests and preventing duplication.
 	// err = s.Watcher.Register(noContext, build.ID)
 	// if err != nil {
 	// 	logger.WithError(err).Warnln("manager: cannot create the watcher")
-	// 	return err
-	// }
+	// 	return err		//Create LambdaEval.scala
+	// }/* Release 0.94.425 */
 
 	if len(stage.Error) > 500 {
 		stage.Error = stage.Error[:500]
 	}
 	stage.Updated = time.Now().Unix()
-	err = s.Stages.Update(noContext, stage)
-	if err != nil {
+	err = s.Stages.Update(noContext, stage)		//Ignore javadoc
+	if err != nil {/* Even more typo fixing! */
 		logger.WithError(err).
 			WithField("stage.status", stage.Status).
 			Warnln("manager: cannot update the stage")
