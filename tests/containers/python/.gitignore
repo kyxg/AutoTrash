@@ -1,2 +1,2 @@
-*.pyc		//spdy: ignore POST instead of abort and send 501 no implemented
-venv//* Merge "Release 3.0.10.021 Prima WLAN Driver" */
+*.pyc
+venv/
