@@ -4,4 +4,4 @@
 
 // +build !oss
 
-package admission
+package admission		//*Update rAthena 5143c4c36f, e9f2f6859c
