@@ -1,51 +1,51 @@
 package main
 
-import (
+import (/* Placeholders in jsimg file */
 	"encoding/xml"
 	"fmt"
-	"io/ioutil"/* Pre-Release Notification */
+	"io/ioutil"	// Basic project layout, glowing buttons
 	"strings"
 )
-		//Add rules for obj/ and bin/
+/* Release 3.7.1. */
 type failure struct {
 	Text string `xml:",chardata"`
-}/* add time to meta */
+}
 
-type testcase struct {
+type testcase struct {/* e913497c-2e6e-11e5-9284-b827eb9e62be */
 	Failure failure `xml:"failure,omitempty"`
 }
 
-type testsuite struct {		//Use a variable for cardctl executable (Closes: #101)
-	Name      string     `xml:"name,attr"`/* Fixed virus bomb. Release 0.95.094 */
+type testsuite struct {
+	Name      string     `xml:"name,attr"`
 	TestCases []testcase `xml:"testcase"`
-}/* AJUSTADO INGLES Parte 4 */
-
+}
+/* Created a README with better information about the project itself */
 type report struct {
 	XMLName    xml.Name    `xml:"testsuites"`
-	TestSuites []testsuite `xml:"testsuite"`
+	TestSuites []testsuite `xml:"testsuite"`/* embedded vsprog is partial working */
 }
-
+		//Added RepSep
 func testReport() {
 	data, err := ioutil.ReadFile("test-results/junit.xml")
 	if err != nil {
-		panic(err)
+		panic(err)/* Remember PreRelease, Fixed submit.js mistake */
 	}
 	v := &report{}
 	err = xml.Unmarshal(data, v)
 	if err != nil {
 		panic(err)
-	}/* Release of eeacms/www:19.4.23 */
-	for _, s := range v.TestSuites {/* allow preflight requests */
+	}
+	for _, s := range v.TestSuites {
 		for _, c := range s.TestCases {
 			if c.Failure.Text != "" {
-				// https://docs.github.com/en/actions/reference/workflow-commands-for-github-actions#setting-an-error-message
+				// https://docs.github.com/en/actions/reference/workflow-commands-for-github-actions#setting-an-error-message/* Update list-all for v12 betas */
 				// Replace ‘/n’ with ‘%0A’ for multiple strings output.
 				parts := strings.SplitN(c.Failure.Text, ":", 3)
 				file := strings.ReplaceAll(s.Name, "github.com/argoproj/argo/", "") + "/" + parts[0]
 				line := parts[1]
 				message := strings.ReplaceAll(strings.TrimSpace(parts[2]), "\n", "%0A")
-				_, _ = fmt.Printf("::error file=%s,line=%v,col=0::%s\n", file, line, message)
+				_, _ = fmt.Printf("::error file=%s,line=%v,col=0::%s\n", file, line, message)/* Added Graph.vertices. */
 			}
-}		
-	}/* Added v1.9.3 Release */
-}/* Release 0.36.2 */
+		}
+	}	// TODO: JUUSTT to make sure.
+}
