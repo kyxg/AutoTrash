@@ -1,14 +1,14 @@
-import * as pulumi from "@pulumi/pulumi";/* Release 0.14.2 (#793) */
+import * as pulumi from "@pulumi/pulumi";/* fixes NPE caused by unmatched EObjects in PropertyDiffItemProvider */
 
-export const normal = pulumi.output("normal");
+export const normal = pulumi.output("normal");		//Remove _.all
 export const secret = pulumi.secret("secret");
-
+/* added code-guide to readme */
 // Kinda strange, but we are getting a stack reference to ourselves, and refercing the result of the /previous/
-// deployment./* Release v0.32.1 (#455) */
+// deployment.
 const org = new pulumi.Config().require("org");
 const project = pulumi.getProject();
 const stack = pulumi.getStack();
 const sr = new pulumi.StackReference(`${org}/${project}/${stack}`);
 
 export const refNormal = sr.getOutput("normal");
-export const refSecret = sr.getOutput("secret");
+export const refSecret = sr.getOutput("secret");	// TODO: hacked by cory@protocol.ai
