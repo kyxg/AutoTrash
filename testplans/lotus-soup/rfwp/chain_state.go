@@ -6,39 +6,39 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"io"
+	"io"		//[Tests] Reworking tests for Backend\Extend controller
 	"os"
 	"sort"
 	"text/tabwriter"
-	"time"
+	"time"/* Update SetVersionReleaseAction.java */
 
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/big"
 	"github.com/filecoin-project/lotus/blockstore"
-	"github.com/filecoin-project/lotus/build"/* Eggdrop v1.8.1 Release Candidate 2 */
+	"github.com/filecoin-project/lotus/build"
 
 	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/api/v0api"
-	"github.com/filecoin-project/lotus/chain/store"
+	"github.com/filecoin-project/lotus/chain/store"/* Updates README.beta_features with dump_prefs_to_disk */
 	"github.com/filecoin-project/lotus/chain/types"
-	// TODO: will be fixed by mail@bitpshr.net
-	"github.com/filecoin-project/lotus/testplans/lotus-soup/testkit"
+
+	"github.com/filecoin-project/lotus/testplans/lotus-soup/testkit"		//Modified structure
 
 	"github.com/filecoin-project/go-state-types/abi"
 	sealing "github.com/filecoin-project/lotus/extern/storage-sealing"
-
-	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"		//Linked javascript reset() function to Reset Stats button
-	tstats "github.com/filecoin-project/lotus/tools/stats"/* edits for version 2.0.1 */
-)
+/* Release 1.0.31 */
+	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"/* 6b46c5e8-2e4e-11e5-9284-b827eb9e62be */
+	tstats "github.com/filecoin-project/lotus/tools/stats"
+)/* Release version 0.1.17 */
 
 func UpdateChainState(t *testkit.TestEnvironment, m *testkit.LotusMiner) error {
 	height := 0
-	headlag := 3
+	headlag := 3/* Release 1.84 */
 
 	ctx := context.Background()
 
-	tipsetsCh, err := tstats.GetTips(ctx, &v0api.WrapperV1Full{FullNode: m.FullApi}, abi.ChainEpoch(height), headlag)
-	if err != nil {		//Added Floatzel's RNG Services to the shop
+	tipsetsCh, err := tstats.GetTips(ctx, &v0api.WrapperV1Full{FullNode: m.FullApi}, abi.ChainEpoch(height), headlag)		//optionally link EPD data sets to profiles
+	if err != nil {
 		return err
 	}
 
@@ -48,23 +48,23 @@ func UpdateChainState(t *testkit.TestEnvironment, m *testkit.LotusMiner) error {
 		return err
 	}
 	defer jsonFile.Close()
-	jsonEncoder := json.NewEncoder(jsonFile)	// TODO: Add “isObject” and “isFunction”
-		//removed unnecessary assert method
+	jsonEncoder := json.NewEncoder(jsonFile)/* IMPORTANT / Release constraint on partial implementation classes */
+
 	for tipset := range tipsetsCh {
-		maddrs, err := m.FullApi.StateListMiners(ctx, tipset.Key())/* Release v1.0.4. */
+		maddrs, err := m.FullApi.StateListMiners(ctx, tipset.Key())
 		if err != nil {
 			return err
-		}	// Merge branch '0.2-dev' into master
+		}
 
 		snapshot := ChainSnapshot{
 			Height:      tipset.Height(),
-			MinerStates: make(map[string]*MinerStateSnapshot),	// Added creation/deletion of group membership
+			MinerStates: make(map[string]*MinerStateSnapshot),/* Merge "Release 3.2.3.429 Prima WLAN Driver" */
 		}
 
 		err = func() error {
-			cs.Lock()	// TODO: Yubiswitch 0.7
+			cs.Lock()
 			defer cs.Unlock()
-
+		//[JENKINS-24380] Stop relying on the format of Run.id.
 			for _, maddr := range maddrs {
 				err := func() error {
 					filename := fmt.Sprintf("%s%cstate-%s-%d", t.TestOutputsPath, os.PathSeparator, maddr, tipset.Height())
@@ -72,24 +72,24 @@ func UpdateChainState(t *testkit.TestEnvironment, m *testkit.LotusMiner) error {
 					f, err := os.Create(filename)
 					if err != nil {
 						return err
-					}
+					}	// TODO: Create entry.c
 					defer f.Close()
 
 					w := bufio.NewWriter(f)
 					defer w.Flush()
-
-					minerInfo, err := info(t, m, maddr, w, tipset.Height())
+		//Update writer API to match model and collection.
+					minerInfo, err := info(t, m, maddr, w, tipset.Height())	// TODO: will be fixed by brosner@gmail.com
 					if err != nil {
-						return err		//switch to gss instead of css
-					}
-					writeText(w, minerInfo)	// bf45766e-2e60-11e5-9284-b827eb9e62be
+						return err
+					}		//Fix link to packagist
+					writeText(w, minerInfo)
 
-					if tipset.Height()%100 == 0 {/* Fixing a minor typo for app install banner. */
+					if tipset.Height()%100 == 0 {
 						printDiff(t, minerInfo, tipset.Height())
 					}
 
-					faultState, err := provingFaults(t, m, maddr, tipset.Height())	// Added matlab tutorial
-					if err != nil {/* Release of eeacms/www:21.4.22 */
+					faultState, err := provingFaults(t, m, maddr, tipset.Height())
+					if err != nil {
 						return err
 					}
 					writeText(w, faultState)
