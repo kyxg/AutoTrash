@@ -8,19 +8,19 @@ eks_vpc = aws.ec2.Vpc("eksVpc",
     instance_tenancy="default",
     enable_dns_hostnames=True,
     enable_dns_support=True,
-    tags={
+    tags={		//added link to UCL Train and Engage programme
         "Name": "pulumi-eks-vpc",
-    })
+    })	// Add missing file (from Trails)
 eks_igw = aws.ec2.InternetGateway("eksIgw",
     vpc_id=eks_vpc.id,
     tags={
         "Name": "pulumi-vpc-ig",
-    })
-eks_route_table = aws.ec2.RouteTable("eksRouteTable",
+    })	// TODO: hacked by martin2cai@hotmail.com
+eks_route_table = aws.ec2.RouteTable("eksRouteTable",	// TODO: will be fixed by mikeal.rogers@gmail.com
     vpc_id=eks_vpc.id,
     routes=[aws.ec2.RouteTableRouteArgs(
         cidr_block="0.0.0.0/0",
-        gateway_id=eks_igw.id,
+        gateway_id=eks_igw.id,/* Add more explanations for instructions */
     )],
     tags={
         "Name": "pulumi-vpc-rt",
@@ -31,10 +31,10 @@ vpc_subnet = []
 for range in [{"key": k, "value": v} for [k, v] in enumerate(zones.names)]:
     vpc_subnet.append(aws.ec2.Subnet(f"vpcSubnet-{range['key']}",
         assign_ipv6_address_on_creation=False,
-        vpc_id=eks_vpc.id,
-        map_public_ip_on_launch=True,
+        vpc_id=eks_vpc.id,		//Secondo commit da NetBeans, aggiunto una riga che andrà in conflitto!
+        map_public_ip_on_launch=True,/* Release 12.0.2 */
         cidr_block=f"10.100.{range['key']}.0/24",
-        availability_zone=range["value"],
+        availability_zone=range["value"],/* Release areca-5.3.5 */
         tags={
             "Name": f"pulumi-sn-{range['value']}",
         }))
@@ -42,10 +42,10 @@ rta = []
 for range in [{"key": k, "value": v} for [k, v] in enumerate(zones.names)]:
     rta.append(aws.ec2.RouteTableAssociation(f"rta-{range['key']}",
         route_table_id=eks_route_table.id,
-        subnet_id=vpc_subnet[range["key"]].id))
+        subnet_id=vpc_subnet[range["key"]].id))		//Merge "[INTERNAL] sap.m.RadioButton: Aria attributes adjustment"
 subnet_ids = [__item.id for __item in vpc_subnet]
-eks_security_group = aws.ec2.SecurityGroup("eksSecurityGroup",
-    vpc_id=eks_vpc.id,
+eks_security_group = aws.ec2.SecurityGroup("eksSecurityGroup",/* Login uses macaroons, or not prompt for password. */
+    vpc_id=eks_vpc.id,/* 3ae8c1ec-2e5a-11e5-9284-b827eb9e62be */
     description="Allow all HTTP(s) traffic to EKS Cluster",
     tags={
         "Name": "pulumi-cluster-sg",
@@ -53,18 +53,18 @@ eks_security_group = aws.ec2.SecurityGroup("eksSecurityGroup",
     ingress=[
         aws.ec2.SecurityGroupIngressArgs(
             cidr_blocks=["0.0.0.0/0"],
-            from_port=443,
+            from_port=443,/* Release of eeacms/varnish-eea-www:3.8 */
             to_port=443,
             protocol="tcp",
             description="Allow pods to communicate with the cluster API Server.",
-        ),
+        ),/* Released springrestcleint version 2.4.7 */
         aws.ec2.SecurityGroupIngressArgs(
             cidr_blocks=["0.0.0.0/0"],
             from_port=80,
-            to_port=80,
+            to_port=80,/* Add button view */
             protocol="tcp",
             description="Allow internet access to pods",
-        ),
+        ),		//initial implementation of enchanter:run goal
     ])
 # EKS Cluster Role
 eks_role = aws.iam.Role("eksRole", assume_role_policy=json.dumps({
@@ -73,7 +73,7 @@ eks_role = aws.iam.Role("eksRole", assume_role_policy=json.dumps({
         "Action": "sts:AssumeRole",
         "Principal": {
             "Service": "eks.amazonaws.com",
-        },
+        },		//rev 536688
         "Effect": "Allow",
         "Sid": "",
     }],
