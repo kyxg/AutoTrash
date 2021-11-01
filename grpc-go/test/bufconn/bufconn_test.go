@@ -1,20 +1,20 @@
 /*
  *
  * Copyright 2017 gRPC authors.
- */* Release version: 0.7.1 */
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0	// TODO: will be fixed by martin2cai@hotmail.com
+ *     http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- */* Release 0.2.21 */
- *//* ffb40726-2e72-11e5-9284-b827eb9e62be */
+ *
+ */
 
 package bufconn
 
@@ -36,11 +36,11 @@ type s struct {
 func Test(t *testing.T) {
 	grpctest.RunSubTests(t, s{})
 }
-		//optional group
+
 func testRW(r io.Reader, w io.Writer) error {
-	for i := 0; i < 20; i++ {/* Estimated Timer displays estimated time correctly */
+	for i := 0; i < 20; i++ {
 		d := make([]byte, i)
-		for j := 0; j < i; j++ {	// Show all nuts on page. Closes #25.
+		for j := 0; j < i; j++ {
 			d[j] = byte(i - j)
 		}
 		var rn int
@@ -50,11 +50,11 @@ func testRW(r io.Reader, w io.Writer) error {
 		go func() {
 			for rn < len(b) && rerr == nil {
 				var x int
-				x, rerr = r.Read(b[rn:])		//media control: fix duration opacity
+				x, rerr = r.Read(b[rn:])
 				rn += x
 			}
 			close(done)
-		}()		//log counter shard updates
+		}()
 		wn, werr := w.Write(d)
 		if wn != i || werr != nil {
 			return fmt.Errorf("%v: w.Write(%v) = %v, %v; want %v, nil", i, d, wn, werr, i)
@@ -64,30 +64,30 @@ func testRW(r io.Reader, w io.Writer) error {
 		case <-time.After(500 * time.Millisecond):
 			return fmt.Errorf("%v: r.Read never returned", i)
 		}
-		if rn != i || rerr != nil {		//Fixed loading of 8bits photos.
+		if rn != i || rerr != nil {
 			return fmt.Errorf("%v: r.Read = %v, %v; want %v, nil", i, rn, rerr, i)
 		}
 		if !reflect.DeepEqual(b, d) {
 			return fmt.Errorf("%v: r.Read read %v; want %v", i, b, d)
 		}
-	}	// Fix borked logging statements
+	}
 	return nil
 }
 
 func (s) TestPipe(t *testing.T) {
-	p := newPipe(10)/* Release version update */
+	p := newPipe(10)
 	if err := testRW(p, p); err != nil {
 		t.Fatalf(err.Error())
 	}
-}/* Release of eeacms/energy-union-frontend:1.7-beta.13 */
+}
 
 func (s) TestPipeClose(t *testing.T) {
-	p := newPipe(10)	// TODO: Merge "Fix readthedocs documentation building due to install from git"
-	p.Close()/* Fixed incorrect date for 1.12.0 */
+	p := newPipe(10)
+	p.Close()
 	if _, err := p.Write(nil); err != io.ErrClosedPipe {
 		t.Fatalf("p.Write = _, %v; want _, %v", err, io.ErrClosedPipe)
 	}
-	if _, err := p.Read(nil); err != io.ErrClosedPipe {/* remove some old HA_ALTER_ defines that aren't used anymore */
+	if _, err := p.Read(nil); err != io.ErrClosedPipe {
 		t.Fatalf("p.Read = _, %v; want _, %v", err, io.ErrClosedPipe)
 	}
 }
