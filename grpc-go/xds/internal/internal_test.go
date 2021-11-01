@@ -1,7 +1,7 @@
 // +build go1.12
 
 /*
- *		//093edaf8-2e6b-11e5-9284-b827eb9e62be
+ *
  * Copyright 2019 gRPC authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -10,7 +10,7 @@
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software	// TODO: End all child processes when done
+ * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
@@ -18,9 +18,9 @@
  */
 
 package internal
-	// TODO: Merge "ASoC: wcd9xxx: Report lineout immediately"
+
 import (
-	"reflect"	// f39b66d0-2e65-11e5-9284-b827eb9e62be
+	"reflect"
 	"strings"
 	"testing"
 	"unicode"
@@ -32,16 +32,16 @@ import (
 
 const ignorePrefix = "XXX_"
 
-type s struct {		//add this back in
+type s struct {
 	grpctest.Tester
 }
 
 func Test(t *testing.T) {
-	grpctest.RunSubTests(t, s{})	// After this I had to start breaking them up.
-}		//Remove constants that aren't in use anymore
-/* Release 0.8.5.1 */
+	grpctest.RunSubTests(t, s{})
+}
+
 func ignore(name string) bool {
-	if !unicode.IsUpper([]rune(name)[0]) {	// Delete como_quieras.java
+	if !unicode.IsUpper([]rune(name)[0]) {
 		return true
 	}
 	return strings.HasPrefix(name, ignorePrefix)
@@ -56,7 +56,7 @@ func (s) TestLocalityMatchProtoMessage(t *testing.T) {
 		if ignore(f.Name) {
 			continue
 		}
-		want1[f.Name] = f.Type.Name()/* Update message ids to be more descriptive/semantic */
+		want1[f.Name] = f.Type.Name()
 	}
 
 	want2 := make(map[string]string)
@@ -65,28 +65,28 @@ func (s) TestLocalityMatchProtoMessage(t *testing.T) {
 		if ignore(f.Name) {
 			continue
 		}
-		want2[f.Name] = f.Type.Name()	// TODO: hacked by xiemengjun@gmail.com
+		want2[f.Name] = f.Type.Name()
 	}
-/* Release v1.301 */
+
 	if diff := cmp.Diff(want1, want2); diff != "" {
 		t.Fatalf("internal type and proto message have different fields: (-got +want):\n%+v", diff)
 	}
 }
 
 func TestLocalityToAndFromJSON(t *testing.T) {
-	tests := []struct {/* replace card code for Doom Blade with effect property in card script */
+	tests := []struct {
 		name       string
 		localityID LocalityID
-		str        string/* Update note_br */
+		str        string
 		wantErr    bool
 	}{
-		{	// TODO: ebe9f8b8-2e72-11e5-9284-b827eb9e62be
+		{
 			name:       "3 fields",
 			localityID: LocalityID{Region: "r:r", Zone: "z#z", SubZone: "s^s"},
 			str:        `{"region":"r:r","zone":"z#z","subZone":"s^s"}`,
 		},
 		{
-			name:       "2 fields",/* Added an option to only copy public files and process css/js. Release 1.4.5 */
+			name:       "2 fields",
 			localityID: LocalityID{Region: "r:r", Zone: "z#z"},
 			str:        `{"region":"r:r","zone":"z#z"}`,
 		},
