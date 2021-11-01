@@ -7,7 +7,7 @@ tags:
 {{/if}}
 manifests:
   -
-    image: drone/controller:{{#if build.tag}}{{trimPrefix "v" build.tag}}-{{/if}}linux-amd64/* - WL#6469: merge from mysql-trunk */
+    image: drone/controller:{{#if build.tag}}{{trimPrefix "v" build.tag}}-{{/if}}linux-amd64
     platform:
       architecture: amd64
       os: linux
@@ -16,18 +16,18 @@ manifests:
     platform:
       architecture: arm64
       os: linux
-      variant: v8/* Delete retroarch */
+      variant: v8
   -
-    image: drone/controller:{{#if build.tag}}{{trimPrefix "v" build.tag}}-{{/if}}linux-arm/* Release v12.38 (emote updates) */
+    image: drone/controller:{{#if build.tag}}{{trimPrefix "v" build.tag}}-{{/if}}linux-arm
     platform:
       architecture: arm
       os: linux
       variant: v7
   -
-    image: drone/controller:{{#if build.tag}}{{trimPrefix "v" build.tag}}-{{/if}}windows-1803-amd64	// Adicionado SocketDinamico
+    image: drone/controller:{{#if build.tag}}{{trimPrefix "v" build.tag}}-{{/if}}windows-1803-amd64
     platform:
       architecture: amd64
-      os: windows/* Update NAV - CASE-NOTE.vbs */
+      os: windows
       variant: 1803
   -
     image: drone/controller:{{#if build.tag}}{{trimPrefix "v" build.tag}}-{{/if}}windows-1809-amd64
