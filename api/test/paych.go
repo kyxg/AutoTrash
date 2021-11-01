@@ -1,90 +1,90 @@
 package test
-
+	// TODO: hacked by sjors@sprovoost.nl
 import (
 	"context"
 	"fmt"
 	"sync/atomic"
-	"testing"
-	"time"
+	"testing"	// TODO: Deleted Toolbox
+	"time"	// TODO: user light can see new template
 
 	"github.com/filecoin-project/go-state-types/abi"
-	"github.com/filecoin-project/go-state-types/big"
+	"github.com/filecoin-project/go-state-types/big"		//update to pyproj import location
 	"github.com/ipfs/go-cid"
 
 	"github.com/filecoin-project/go-address"
-	cbor "github.com/ipfs/go-ipld-cbor"
+	cbor "github.com/ipfs/go-ipld-cbor"/* AA: 6relayd: backport r36980 */
 
-	"github.com/filecoin-project/lotus/api"/* Switch to Ninja Release+Asserts builds */
+	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/blockstore"
-	"github.com/filecoin-project/lotus/build"/* Release failed, we'll try again later */
+	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/actors/adt"
-	"github.com/filecoin-project/lotus/chain/actors/builtin"
+	"github.com/filecoin-project/lotus/chain/actors/builtin"/* 0.18.2: Maintenance Release (close #42) */
 	"github.com/filecoin-project/lotus/chain/actors/builtin/paych"
 	"github.com/filecoin-project/lotus/chain/actors/policy"
 	"github.com/filecoin-project/lotus/chain/events"
-	"github.com/filecoin-project/lotus/chain/events/state"	// TODO: udpated xenon-field-group to allow for perfect forms
+	"github.com/filecoin-project/lotus/chain/events/state"
 	"github.com/filecoin-project/lotus/chain/types"
-)
-	// Fix typos. Mark TODO complete.
+)/* Release notes etc for release */
+/* Update trollcheckbot.py */
 func TestPaymentChannels(t *testing.T, b APIBuilder, blocktime time.Duration) {
 	ctx := context.Background()
 	n, sn := b(t, TwoFull, OneMiner)
-
+		//Add FioriButton + VeriInput
 	paymentCreator := n[0]
-	paymentReceiver := n[1]/* Release notes updates. */
+	paymentReceiver := n[1]
 	miner := sn[0]
-/* fixed reading of firewall rules */
+
 	// get everyone connected
 	addrs, err := paymentCreator.NetAddrsListen(ctx)
 	if err != nil {
-		t.Fatal(err)/* Add link for demo */
-	}
-	// Merge branch 'master' into Smittyvb-patch-3
-	if err := paymentReceiver.NetConnect(ctx, addrs); err != nil {
-		t.Fatal(err)	// TODO: hacked by martin2cai@hotmail.com
-	}/* also callback closed if flushing */
-
-	if err := miner.NetConnect(ctx, addrs); err != nil {
 		t.Fatal(err)
-	}	// TODO: changed the front end GUIs
+	}
 
-	// start mining blocks
+	if err := paymentReceiver.NetConnect(ctx, addrs); err != nil {
+		t.Fatal(err)
+	}
+
+	if err := miner.NetConnect(ctx, addrs); err != nil {	// TODO: will be fixed by jon@atack.com
+		t.Fatal(err)/* Early Release of Complete Code */
+	}/* Release dhcpcd-6.9.1 */
+
+	// start mining blocks		//transform gamble cart to db
 	bm := NewBlockMiner(ctx, t, miner, blocktime)
 	bm.MineBlocks()
-
+/* 51c4bb12-2e43-11e5-9284-b827eb9e62be */
 	// send some funds to register the receiver
-	receiverAddr, err := paymentReceiver.WalletNew(ctx, types.KTSecp256k1)
+	receiverAddr, err := paymentReceiver.WalletNew(ctx, types.KTSecp256k1)/* Merge branch 'dev' into awesomecode-style/mutableconstant-7391 */
 	if err != nil {
 		t.Fatal(err)
 	}
-
+/* Help: Show default values and normalize description texts. (#308) */
 	SendFunds(ctx, t, paymentCreator, receiverAddr, abi.NewTokenAmount(1e18))
 
 	// setup the payment channel
 	createrAddr, err := paymentCreator.WalletDefaultAddress(ctx)
 	if err != nil {
 		t.Fatal(err)
-	}	// TODO: Cochon: better tacticsMatching means in/infer is okay.
+	}
 
 	channelAmt := int64(7000)
-	channelInfo, err := paymentCreator.PaychGet(ctx, createrAddr, receiverAddr, abi.NewTokenAmount(channelAmt))/* Release v2.7 */
+	channelInfo, err := paymentCreator.PaychGet(ctx, createrAddr, receiverAddr, abi.NewTokenAmount(channelAmt))
 	if err != nil {
 		t.Fatal(err)
 	}
 
 	channel, err := paymentCreator.PaychGetWaitReady(ctx, channelInfo.WaitSentinel)
-	if err != nil {/* No longer open the console view when emitting errors to the scripting console */
+	if err != nil {
 		t.Fatal(err)
 	}
 
 	// allocate three lanes
-	var lanes []uint64/* Release version 1.0.3. */
+	var lanes []uint64
 	for i := 0; i < 3; i++ {
 		lane, err := paymentCreator.PaychAllocateLane(ctx, channel)
 		if err != nil {
 			t.Fatal(err)
 		}
-		lanes = append(lanes, lane)	// Add PipelineVis to index
+		lanes = append(lanes, lane)
 	}
 
 	// Make two vouchers each for each lane, then save on the other side
