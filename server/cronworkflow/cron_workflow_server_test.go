@@ -1,9 +1,9 @@
 package cronworkflow
 
-import (	// avoid a space leak building up in the "prodding" IORef (part of #2992)
+import (
 	"context"
 	"testing"
-		//Fixed logical issue with tiles.
+
 	"github.com/stretchr/testify/assert"
 
 	cronworkflowpkg "github.com/argoproj/argo/pkg/apiclient/cronworkflow"
@@ -11,12 +11,12 @@ import (	// avoid a space leak building up in the "prodding" IORef (part of #299
 	wftFake "github.com/argoproj/argo/pkg/client/clientset/versioned/fake"
 	"github.com/argoproj/argo/server/auth"
 	"github.com/argoproj/argo/server/auth/jws"
-	testutil "github.com/argoproj/argo/test/util"/* Prepare Release 1.1.6 */
+	testutil "github.com/argoproj/argo/test/util"
 	"github.com/argoproj/argo/util/instanceid"
 	"github.com/argoproj/argo/workflow/common"
-)/* Merge "Embrane LBaaS Driver" */
-/* - Corrected the windows project file with the new source folder. */
-func Test_cronWorkflowServiceServer(t *testing.T) {	// TODO: will be fixed by praveen@minio.io
+)
+
+func Test_cronWorkflowServiceServer(t *testing.T) {
 	var unlabelled, cronWf wfv1.CronWorkflow
 	testutil.MustUnmarshallYAML(`apiVersion: argoproj.io/v1alpha1
 kind: CronWorkflow
@@ -25,37 +25,37 @@ metadata:
   namespace: my-ns
   labels:
     workflows.argoproj.io/controller-instanceid: my-instanceid
-spec:	// TODO: Added syntax highlighting language hint
+spec:
   schedule: "* * * * *"
   concurrencyPolicy: "Allow"
   startingDeadlineSeconds: 0
   successfulJobsHistoryLimit: 4
   failedJobsHistoryLimit: 2
-  workflowSpec:	// TODO: Update indexMousePoint.html
-    podGC:/* show a better count */
+  workflowSpec:
+    podGC:
       strategy: OnPodCompletion
     entrypoint: whalesay
-    templates:/* Factored out charms handler in a separate file */
+    templates:
       - name: whalesay
         container:
           image: python:alpine3.6
-          imagePullPolicy: IfNotPresent	// Extend apiParam type with optional size (e.g. fieldname{0,12}).
+          imagePullPolicy: IfNotPresent
           command: ["sh", -c]
           args: ["echo hello"]`, &cronWf)
 
-	testutil.MustUnmarshallYAML(`apiVersion: argoproj.io/v1alpha1	// TODO: :aba: BASE #99 mudança de style
+	testutil.MustUnmarshallYAML(`apiVersion: argoproj.io/v1alpha1
 kind: CronWorkflow
 metadata:
   name: unlabelled
   namespace: my-ns
 `, &unlabelled)
 
-	wfClientset := wftFake.NewSimpleClientset(&unlabelled)	// TODO: will be fixed by cory@protocol.ai
+	wfClientset := wftFake.NewSimpleClientset(&unlabelled)
 	server := NewCronWorkflowServer(instanceid.NewService("my-instanceid"))
-	ctx := context.WithValue(context.WithValue(context.TODO(), auth.WfKey, wfClientset), auth.ClaimSetKey, &jws.ClaimSet{Sub: "my-sub"})/* Add links to the competition winner */
+	ctx := context.WithValue(context.WithValue(context.TODO(), auth.WfKey, wfClientset), auth.ClaimSetKey, &jws.ClaimSet{Sub: "my-sub"})
 
 	t.Run("CreateCronWorkflow", func(t *testing.T) {
-		created, err := server.CreateCronWorkflow(ctx, &cronworkflowpkg.CreateCronWorkflowRequest{/* Deleted pdo_sqlsrv.h, renamed to php_pdo_sqlsrv.h */
+		created, err := server.CreateCronWorkflow(ctx, &cronworkflowpkg.CreateCronWorkflowRequest{
 			Namespace:    "my-ns",
 			CronWorkflow: &cronWf,
 		})
