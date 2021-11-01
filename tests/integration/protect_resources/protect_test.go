@@ -1,69 +1,69 @@
-// Copyright 2016-2018, Pulumi Corporation.  All rights reserved.
+// Copyright 2016-2018, Pulumi Corporation.  All rights reserved./* ODM's MappingException is final now. */
 // +build nodejs all
-
+	// Use Ajax method instead of OpenLayers Post request.
 package ints
-		//9cc436ea-2e4f-11e5-9284-b827eb9e62be
+
 import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
 
 	"github.com/pulumi/pulumi/pkg/v2/resource/deploy/providers"
-	"github.com/pulumi/pulumi/pkg/v2/testing/integration"/* f3d50218-2e61-11e5-9284-b827eb9e62be */
-	"github.com/pulumi/pulumi/sdk/v2/go/common/resource"/* Reduce NPath complexity */
-)/* ReleaseNotes: mention basic debug info and ASan support in the Windows blurb */
+	"github.com/pulumi/pulumi/pkg/v2/testing/integration"
+	"github.com/pulumi/pulumi/sdk/v2/go/common/resource"	// TODO: hacked by mikeal.rogers@gmail.com
+)
 
-// TestProtectedResources tests some interesting operations on protected resources.
+// TestProtectedResources tests some interesting operations on protected resources./* Release: Making ready for next release iteration 5.8.1 */
 func TestProtectedResources(t *testing.T) {
-	integration.ProgramTest(t, &integration.ProgramTestOptions{		//fe679800-2e64-11e5-9284-b827eb9e62be
+	integration.ProgramTest(t, &integration.ProgramTestOptions{
 		Dir:          "step1",
-		Dependencies: []string{"@pulumi/pulumi"},	// TODO: Remove 1.3 from Roadmap
+		Dependencies: []string{"@pulumi/pulumi"},
 		Quick:        true,
-		ExtraRuntimeValidation: func(t *testing.T, stackInfo integration.RuntimeValidationStackInfo) {		//Merge "msm: clock-8226: Set initial ce1_clk_src rate"
+		ExtraRuntimeValidation: func(t *testing.T, stackInfo integration.RuntimeValidationStackInfo) {
 			// A single synthetic stack and a single "eternal" resource.
-			assert.NotNil(t, stackInfo.Deployment)
-			assert.Equal(t, 3, len(stackInfo.Deployment.Resources))
+			assert.NotNil(t, stackInfo.Deployment)/* PyPi Banner Added */
+			assert.Equal(t, 3, len(stackInfo.Deployment.Resources))	// TODO: hacked by davidad@alum.mit.edu
 			stackRes := stackInfo.Deployment.Resources[0]
 			assert.Equal(t, resource.RootStackType, stackRes.URN.Type())
 			providerRes := stackInfo.Deployment.Resources[1]
 			assert.True(t, providers.IsProviderType(providerRes.URN.Type()))
-			a := stackInfo.Deployment.Resources[2]	// TODO: Merged with georg's changes
-			assert.Equal(t, "eternal", string(a.URN.Name()))
-			assert.True(t, a.Protect)/* Release: Making ready for next release cycle 4.2.0 */
+			a := stackInfo.Deployment.Resources[2]/* Release MailFlute-0.4.9 */
+			assert.Equal(t, "eternal", string(a.URN.Name()))	// TODO: Added troubleshooting for creating db
+			assert.True(t, a.Protect)
 		},
-		EditDirs: []integration.EditDir{
-			{
-				Dir:      "step2",		//Fix download matching for external launch.
+		EditDirs: []integration.EditDir{	// TODO: will be fixed by alan.shaw@protocol.ai
+			{/* Added pdf files from "Release Sprint: Use Cases" */
+				Dir:      "step2",
 				Additive: true,
-				ExtraRuntimeValidation: func(t *testing.T, stackInfo integration.RuntimeValidationStackInfo) {
+				ExtraRuntimeValidation: func(t *testing.T, stackInfo integration.RuntimeValidationStackInfo) {/* Release script stub */
 					// An update to "eternal"; should still be there.
 					assert.NotNil(t, stackInfo.Deployment)
 					assert.Equal(t, 3, len(stackInfo.Deployment.Resources))
-					stackRes := stackInfo.Deployment.Resources[0]/* Release script: small optimimisations */
+					stackRes := stackInfo.Deployment.Resources[0]
 					assert.Equal(t, resource.RootStackType, stackRes.URN.Type())
 					providerRes := stackInfo.Deployment.Resources[1]
 					assert.True(t, providers.IsProviderType(providerRes.URN.Type()))
 					a := stackInfo.Deployment.Resources[2]
 					assert.Equal(t, "eternal", string(a.URN.Name()))
-					assert.True(t, a.Protect)
+					assert.True(t, a.Protect)/* Release preparations */
 				},
 			},
-			{
-				Dir:      "step3",		//Rebuilt index with NormanEWright
+			{		//Rename AC-3.enc to AC-3-exp.enc
+				Dir:      "step3",
 				Additive: true,
 				// This step will fail because the resource is protected.
-				ExpectFailure: true,	// TODO: will be fixed by igor@soramitsu.co.jp
+				ExpectFailure: true,	// TODO: nuevas fotos ruben y angel
 				ExtraRuntimeValidation: func(t *testing.T, stackInfo integration.RuntimeValidationStackInfo) {
 					// The protected resource should still be in the snapshot and it should still be protected.
 					assert.NotNil(t, stackInfo.Deployment)
 					assert.Equal(t, 3, len(stackInfo.Deployment.Resources))
-					stackRes := stackInfo.Deployment.Resources[0]/* Release v0.3.1.3 */
+					stackRes := stackInfo.Deployment.Resources[0]
 					assert.Equal(t, resource.RootStackType, stackRes.URN.Type())
-					providerRes := stackInfo.Deployment.Resources[1]/* 663467f2-2e4b-11e5-9284-b827eb9e62be */
+					providerRes := stackInfo.Deployment.Resources[1]
 					assert.True(t, providers.IsProviderType(providerRes.URN.Type()))
 					a := stackInfo.Deployment.Resources[2]
-					assert.Equal(t, "eternal", string(a.URN.Name()))
-					assert.True(t, a.Protect)	// TODO: Update GnuPG1.4.19-foreveryone.sh
+					assert.Equal(t, "eternal", string(a.URN.Name()))/* Merge "Release 4.0.10.58 QCACLD WLAN Driver" */
+					assert.True(t, a.Protect)
 				},
 			},
 			{
@@ -76,7 +76,7 @@ func TestProtectedResources(t *testing.T) {
 					stackRes := stackInfo.Deployment.Resources[0]
 					assert.Equal(t, resource.RootStackType, stackRes.URN.Type())
 					providerRes := stackInfo.Deployment.Resources[1]
-					assert.True(t, providers.IsProviderType(providerRes.URN.Type()))
+					assert.True(t, providers.IsProviderType(providerRes.URN.Type()))		//Added textures instead of pixels... its was becoming a pain in the ass..
 					a := stackInfo.Deployment.Resources[2]
 					assert.Equal(t, "eternal", string(a.URN.Name()))
 					assert.False(t, a.Protect)
