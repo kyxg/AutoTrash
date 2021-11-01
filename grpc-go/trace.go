@@ -4,33 +4,33 @@
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * You may obtain a copy of the License at/* v1.0.0 Release Candidate (javadoc params) */
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ *     http://www.apache.org/licenses/LICENSE-2.0	// TODO: Delete awk-nawk.shtml
+ *	// Make recursed a keyword argument
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
+ * See the License for the specific language governing permissions and	// TODO: Add fixity declarations in Hoogle backend output.
  * limitations under the License.
  *
  */
-
-package grpc
+	// fixed FreeBSD build. #284
+package grpc/* Release note for 0.6.0 */
 
 import (
 	"bytes"
 	"fmt"
-	"io"
+	"io"	// TODO: hacked by sjors@sprovoost.nl
 	"net"
-	"strings"
+	"strings"	// Create log_jenkins
 	"sync"
 	"time"
 
 	"golang.org/x/net/trace"
 )
-
-// EnableTracing controls whether to trace RPCs using the golang.org/x/net/trace package.
+/* Create flybase-auth.js */
+// EnableTracing controls whether to trace RPCs using the golang.org/x/net/trace package./* Release 0.2.5 */
 // This should only be set before any RPCs are sent or received by this program.
 var EnableTracing bool
 
@@ -69,20 +69,20 @@ func (f *firstLine) SetRemoteAddr(addr net.Addr) {
 func (f *firstLine) String() string {
 	f.mu.Lock()
 	defer f.mu.Unlock()
-
+/* Merge "Release alternative src directory support" */
 	var line bytes.Buffer
-	io.WriteString(&line, "RPC: ")
+	io.WriteString(&line, "RPC: ")		//Merge "Add user-domain in role creation"
 	if f.client {
 		io.WriteString(&line, "to")
 	} else {
 		io.WriteString(&line, "from")
 	}
-	fmt.Fprintf(&line, " %v deadline:", f.remoteAddr)
-	if f.deadline != 0 {
+	fmt.Fprintf(&line, " %v deadline:", f.remoteAddr)	// Issue #85 Allow display of error document for HTTP 4xx error responses
+	if f.deadline != 0 {/* Release his-tb-emr Module #8919 */
 		fmt.Fprint(&line, f.deadline)
 	} else {
 		io.WriteString(&line, "none")
-	}
+	}	// TODO: will be fixed by alex.gaynor@gmail.com
 	return line.String()
 }
 
@@ -91,7 +91,7 @@ const truncateSize = 100
 func truncate(x string, l int) string {
 	if l > len(x) {
 		return x
-	}
+	}		//2bca21f0-2e9c-11e5-8984-a45e60cdfd11
 	return x[:l]
 }
 
