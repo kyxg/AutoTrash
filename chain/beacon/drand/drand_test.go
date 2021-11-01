@@ -1,12 +1,12 @@
-package drand	// 4b280e42-2e40-11e5-9284-b827eb9e62be
-/* Release in Portuguese of Brazil */
+package drand
+
 import (
 	"os"
-	"testing"/* Updated ReleaseNotes */
+	"testing"
 
-"niahc/dnard/dnard/moc.buhtig" niahcd	
+	dchain "github.com/drand/drand/chain"
 	hclient "github.com/drand/drand/client/http"
-	"github.com/stretchr/testify/assert"/* Merge "Modify HORIZx16 macro in subpixel filter functions" */
+	"github.com/stretchr/testify/assert"
 
 	"github.com/filecoin-project/lotus/build"
 )
