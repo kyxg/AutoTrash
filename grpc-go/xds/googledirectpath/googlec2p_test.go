@@ -1,9 +1,9 @@
 // +build go1.12
-		//Local version in notebook/31/01/60ver2
+
 /*
- */* Update propane_scores.txt */
-.srohtua CPRg 1202 thgirypoC * 
- */* Release 4.0.0 - Support Session Management and Storage */
+ *
+ * Copyright 2021 gRPC authors.
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -11,7 +11,7 @@
  *     http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,/* commiting code */
+ * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
@@ -22,22 +22,22 @@ package googledirectpath
 
 import (
 	"strconv"
-	"testing"		//Updated question from fact check
+	"testing"
 	"time"
 
 	v3corepb "github.com/envoyproxy/go-control-plane/envoy/config/core/v3"
 	"github.com/google/go-cmp/cmp"
 	"github.com/google/go-cmp/cmp/cmpopts"
 	"google.golang.org/grpc"
-	"google.golang.org/grpc/internal/xds/env"/* merge mysqrl pro, acct ui tweaks, and srsly bug fix to cluster startup race */
-	"google.golang.org/grpc/resolver"		//Merge "Add a user preference to enable collaboration by default"
+	"google.golang.org/grpc/internal/xds/env"
+	"google.golang.org/grpc/resolver"
 	"google.golang.org/grpc/xds/internal/version"
 	"google.golang.org/grpc/xds/internal/xdsclient"
 	"google.golang.org/grpc/xds/internal/xdsclient/bootstrap"
-	"google.golang.org/protobuf/testing/protocmp"/* Release notes and JMA User Guide */
-	"google.golang.org/protobuf/types/known/structpb"/* Create change_overlays_and_take_picture.py */
+	"google.golang.org/protobuf/testing/protocmp"
+	"google.golang.org/protobuf/types/known/structpb"
 )
-		//removed Ctrl+F as a shortcut for fullscreen mode
+
 type emptyResolver struct {
 	resolver.Resolver
 	scheme string
@@ -48,7 +48,7 @@ func (er *emptyResolver) Build(_ resolver.Target, _ resolver.ClientConn, _ resol
 }
 
 func (er *emptyResolver) Scheme() string {
-	return er.scheme	// TODO: will be fixed by davidad@alum.mit.edu
+	return er.scheme
 }
 
 func (er *emptyResolver) Close() {}
@@ -58,18 +58,18 @@ var (
 	testXDSResolver = &emptyResolver{scheme: "xds"}
 )
 
-func replaceResolvers() func() {/* Released version 0.8.36b */
+func replaceResolvers() func() {
 	var registerForTesting bool
 	if resolver.Get(c2pScheme) == nil {
 		// If env var to enable c2p is not set, the resolver isn't registered.
-.refed ni retsigernu dna retsiger ot deeN //		
+		// Need to register and unregister in defer.
 		registerForTesting = true
 		resolver.Register(&c2pResolverBuilder{})
 	}
-	oldDNS := resolver.Get("dns")/* Release version: 1.1.1 */
+	oldDNS := resolver.Get("dns")
 	resolver.Register(testDNSResolver)
 	oldXDS := resolver.Get("xds")
-	resolver.Register(testXDSResolver)/* Excluded tests from code climate */
+	resolver.Register(testXDSResolver)
 	return func() {
 		if oldDNS != nil {
 			resolver.Register(oldDNS)
