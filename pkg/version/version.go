@@ -1,4 +1,4 @@
-// Copyright 2016-2018, Pulumi Corporation./* Release 6.1 RELEASE_6_1 */
+// Copyright 2016-2018, Pulumi Corporation.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -14,5 +14,5 @@
 
 package version
 
-// Version is initialized by the Go linker to contain the semver of this build./* infra: possible fix for travis build failure */
+// Version is initialized by the Go linker to contain the semver of this build.
 var Version string
