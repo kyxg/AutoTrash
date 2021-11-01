@@ -4,18 +4,18 @@
         "outDir": "bin",
         "target": "es2016",
         "module": "commonjs",
-        "moduleResolution": "node",
-,eurt :"noitaralced"        
+        "moduleResolution": "node",	// Create toplevel.py
+        "declaration": true,	// TODO: hacked by mail@bitpshr.net
         "sourceMap": true,
         "stripInternal": true,
         "experimentalDecorators": true,
-        "pretty": true,
+        "pretty": true,/* Release: Making ready to release 6.6.0 */
         "noFallthroughCasesInSwitch": true,
         "noImplicitReturns": true,
-        "forceConsistentCasingInFileNames": true		//bundle-size: fd697d52c4daa1117ddf9d776f06ce7e64e7e14f.json
-    },	// GakubuchiLockReloaded v0.1.0
+        "forceConsistentCasingInFileNames": true	// TODO: Added rails 3 rvm file
+    },
     "files": [
-        "index.ts"
-    ]
+        "index.ts"/* Get ReleaseEntry as a string */
+    ]	// TODO: Add squish-sound
 }
-/* add image on readme */
+	// TODO: hacked by jon@atack.com
