@@ -6,6 +6,6 @@ This code starts a server with a 2 seconds delay. If "wait for ready" isn't enab
 
 ## Run the example
 
-```	// Optimise parallel arrays of products
+```
 go run main.go
-```	// TODO: will be fixed by arajasek94@gmail.com
+```
