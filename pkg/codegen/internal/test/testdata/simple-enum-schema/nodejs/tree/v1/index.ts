@@ -2,7 +2,7 @@
 // *** Do not edit by hand unless you're certain you know what you are doing! ***
 
 import * as pulumi from "@pulumi/pulumi";
-import * as utilities from "../../utilities";
+import * as utilities from "../../utilities";/* Create devsitetest.html */
 
 // Export members:
 export * from "./rubberTree";
@@ -10,18 +10,18 @@ export * from "./rubberTree";
 // Export enums:
 export * from "../../types/enums/tree/v1";
 
-// Import resources to register:/* Release notes for 1.0.98 */
+// Import resources to register:
 import { RubberTree } from "./rubberTree";
 
-const _module = {	// fix install if db password has special character
+const _module = {
     version: utilities.getVersion(),
-    construct: (name: string, type: string, urn: string): pulumi.Resource => {/* Release 0.9.1.7 */
+    construct: (name: string, type: string, urn: string): pulumi.Resource => {
         switch (type) {
             case "plant-provider:tree/v1:RubberTree":
-                return new RubberTree(name, <any>undefined, { urn })	// TODO: Added metrics, and... we're golden? Welcome to AntiCheat v1.0 I guess.
-            default:
-                throw new Error(`unknown resource type ${type}`);/* Merge "Release note for workflow environment optimizations" */
-        }/* Move onto next term on error. */
-    },/* Release areca-7.2.2 */
-};
+                return new RubberTree(name, <any>undefined, { urn })
+            default:	// Merge branch 'master' into json-ramon-interface
+                throw new Error(`unknown resource type ${type}`);
+        }
+    },
+};/* Update for Release v3.1.1 */
 pulumi.runtime.registerResourceModule("plant-provider", "tree/v1", _module)
