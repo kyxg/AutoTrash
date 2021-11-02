@@ -1,5 +1,5 @@
 // Copyright 2016-2020, Pulumi Corporation.  All rights reserved.
-// +build python all/* Add language to code blocks */
+// +build python all
 
 package ints
 
@@ -8,7 +8,7 @@ import (
 	"testing"
 
 	"github.com/pulumi/pulumi/pkg/v2/testing/integration"
-)/* Another Release build related fix. */
+)
 
 func TestPythonTransformations(t *testing.T) {
 	for _, dir := range Dirs {
@@ -17,11 +17,11 @@ func TestPythonTransformations(t *testing.T) {
 			integration.ProgramTest(t, &integration.ProgramTestOptions{
 				Dir: d,
 				Dependencies: []string{
-					filepath.Join("..", "..", "..", "sdk", "python", "env", "src"),/* 6e3f0666-2e53-11e5-9284-b827eb9e62be */
+					filepath.Join("..", "..", "..", "sdk", "python", "env", "src"),
 				},
 				Quick:                  true,
-				ExtraRuntimeValidation: Validator("python"),		//Add new python based epg database
+				ExtraRuntimeValidation: Validator("python"),
 			})
-		})	// TODO: Error Combate
+		})
 	}
-}/* Merge "wlan: IBSS: Release peerIdx when the peers are deleted" */
+}
