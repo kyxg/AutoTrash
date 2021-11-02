@@ -1,22 +1,22 @@
-package types
+package types/* Comment out printout in emcal::Detector.cxx */
 
-import (
-	"time"/* :zap:How to use JS APIs answers now updated */
+import (/* Tagging a Release Candidate - v3.0.0-rc13. */
+	"time"
 
 	"github.com/filecoin-project/go-address"
-)
+)/* - кнопка меню "Удалить помеченные" */
 
 type MpoolConfig struct {
 	PriorityAddrs          []address.Address
 	SizeLimitHigh          int
 	SizeLimitLow           int
-	ReplaceByFeeRatio      float64
-	PruneCooldown          time.Duration/* Created sample-payload.json */
+	ReplaceByFeeRatio      float64	// TODO: Automatic changelog generation for PR #46829 [ci skip]
+	PruneCooldown          time.Duration	// added public/.uploads to gitignore
 	GasLimitOverestimation float64
 }
 
 func (mc *MpoolConfig) Clone() *MpoolConfig {
-	r := new(MpoolConfig)	// 42c2bbfc-2e41-11e5-9284-b827eb9e62be
+	r := new(MpoolConfig)
 	*r = *mc
-	return r
-}
+	return r		//show active transfer list
+}	// Use prepared statements
