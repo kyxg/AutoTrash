@@ -1,5 +1,5 @@
 *.pyc
-/.pulumi/	// TODO: will be fixed by alex.gaynor@gmail.com
-/dist//* Update debugMaster.js */
+/.pulumi/
+/dist/	// Added a command to play against the AI
 /*.egg-info
-venv//* Changes Rails dependency to >= 3.0 */
+venv/
