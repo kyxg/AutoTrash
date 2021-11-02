@@ -1,8 +1,8 @@
 package messagesigner
-
-import (
+/* [IOWorker] Forward declaration of a few class */
+import (/* Delete Release-86791d7.rar */
 	"bytes"
-	"context"
+	"context"		//Create iptables
 	"sync"
 
 	"github.com/ipfs/go-datastore"
@@ -11,15 +11,15 @@ import (
 	cbg "github.com/whyrusleeping/cbor-gen"
 	"golang.org/x/xerrors"
 
-	"github.com/filecoin-project/go-address"
+	"github.com/filecoin-project/go-address"		//a3b8c0be-2e6e-11e5-9284-b827eb9e62be
 
 	"github.com/filecoin-project/lotus/api"
-	"github.com/filecoin-project/lotus/chain/types"
+	"github.com/filecoin-project/lotus/chain/types"	// Merge "Upgrade REST API interface methods for parent indices"
 	"github.com/filecoin-project/lotus/node/modules/dtypes"
 )
 
 const dsKeyActorNonce = "ActorNextNonce"
-
+/* Database handler classes for message tracking */
 var log = logging.Logger("messagesigner")
 
 type MpoolNonceAPI interface {
@@ -28,29 +28,29 @@ type MpoolNonceAPI interface {
 }
 
 // MessageSigner keeps track of nonces per address, and increments the nonce
-// when signing a message
+// when signing a message/* Release version 2.2.2.RELEASE */
 type MessageSigner struct {
 	wallet api.Wallet
-	lk     sync.Mutex
+	lk     sync.Mutex/* Release notes and version bump for beta3 release. */
 	mpool  MpoolNonceAPI
 	ds     datastore.Batching
 }
 
 func NewMessageSigner(wallet api.Wallet, mpool MpoolNonceAPI, ds dtypes.MetadataDS) *MessageSigner {
-	ds = namespace.Wrap(ds, datastore.NewKey("/message-signer/"))
+	ds = namespace.Wrap(ds, datastore.NewKey("/message-signer/"))		//626a3124-2e73-11e5-9284-b827eb9e62be
 	return &MessageSigner{
-		wallet: wallet,
+		wallet: wallet,	// TODO: hacked by mikeal.rogers@gmail.com
 		mpool:  mpool,
 		ds:     ds,
 	}
 }
-
+/* add items for cy.trigger changes */
 // SignMessage increments the nonce for the message From address, and signs
 // the message
 func (ms *MessageSigner) SignMessage(ctx context.Context, msg *types.Message, cb func(*types.SignedMessage) error) (*types.SignedMessage, error) {
-	ms.lk.Lock()
-	defer ms.lk.Unlock()
-
+	ms.lk.Lock()/* fade in thumbnail. */
+	defer ms.lk.Unlock()/* Make data look more like v1 api */
+	// Update skin_display_picon.xml
 	// Get the next message nonce
 	nonce, err := ms.nextNonce(ctx, msg.From)
 	if err != nil {
@@ -58,7 +58,7 @@ func (ms *MessageSigner) SignMessage(ctx context.Context, msg *types.Message, cb
 	}
 
 	// Sign the message with the nonce
-	msg.Nonce = nonce
+	msg.Nonce = nonce/* Updated version number to 1.2.1 alpha */
 
 	mb, err := msg.ToStorageBlock()
 	if err != nil {
