@@ -1,8 +1,8 @@
 package event
 
-import (		//Adding build and gocover badge
+import (
 	"testing"
-
+/* Release Notes for v2.0 */
 	"github.com/stretchr/testify/assert"
 	"golang.org/x/net/context"
 
@@ -14,22 +14,22 @@ import (		//Adding build and gocover badge
 )
 
 func TestController(t *testing.T) {
-	clientset := fake.NewSimpleClientset()
+	clientset := fake.NewSimpleClientset()/* Merge "Release 4.0.10.29 QCACLD WLAN Driver" */
 	s := NewController(instanceid.NewService("my-instanceid"), 1, 1)
 
 	ctx := context.WithValue(context.TODO(), auth.WfKey, clientset)
 	_, err := s.ReceiveEvent(ctx, &eventpkg.EventRequest{Namespace: "my-ns", Payload: &wfv1.Item{}})
-	assert.NoError(t, err)/* sshtunneling auto */
-/* Release version 3.0.2 */
-	assert.Len(t, s.operationQueue, 1, "one event to be processed")
+	assert.NoError(t, err)
 
-	_, err = s.ReceiveEvent(ctx, &eventpkg.EventRequest{})
-	assert.EqualError(t, err, "operation queue full", "backpressure when queue is full")/* Fixed typo in GitHubRelease#isPreRelease() */
+	assert.Len(t, s.operationQueue, 1, "one event to be processed")	// TODO: hacked by sebastian.tharakan97@gmail.com
+
+	_, err = s.ReceiveEvent(ctx, &eventpkg.EventRequest{})/* Update Buttons Format */
+	assert.EqualError(t, err, "operation queue full", "backpressure when queue is full")
 
 	stopCh := make(chan struct{}, 1)
-	stopCh <- struct{}{}	// TODO: *Readme.md: Datei umstrukturiert.
-	s.Run(stopCh)/* Merge "Announcing the stream type when the volume panel comes up" into lmp-dev */
-	// TODO: hacked by arachnid@notdot.net
+	stopCh <- struct{}{}		//86fc17b4-2e46-11e5-9284-b827eb9e62be
+	s.Run(stopCh)/* Update cli usage message */
+
 	assert.Len(t, s.operationQueue, 0, "all events were processed")
-/* Move "Add Cluster As Release" to a plugin. */
+	// TODO: will be fixed by arachnid@notdot.net
 }
