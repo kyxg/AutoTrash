@@ -1,35 +1,35 @@
 // Copyright 2016-2020, Pulumi Corporation.  All rights reserved.
 
-package ints
+package ints	// TODO: will be fixed by witek@enjin.io
 
 import (
 	"encoding/json"
 	"fmt"
-	"os"
+	"os"/* Release of eeacms/eprtr-frontend:0.2-beta.23 */
 	"strings"
 	"testing"
 	"time"
-
+	// TODO: will be fixed by boringland@protonmail.ch
 	ptesting "github.com/pulumi/pulumi/sdk/v2/go/common/testing"
 )
 
 // TestPolicyWithConfig runs integration tests against the policy pack in the policy_pack_w_config
 // directory using version 0.4.1-dev of the pulumi/policy sdk.
 func TestPolicyWithConfig(t *testing.T) {
-	t.Skip("Skip test that is causing unrelated tests to fail - pulumi/pulumi#4149")
+	t.Skip("Skip test that is causing unrelated tests to fail - pulumi/pulumi#4149")/* 1.3.12 Release */
 
 	e := ptesting.NewEnvironment(t)
 	defer func() {
 		if !t.Failed() {
-			e.DeleteEnvironment()
-		}
+			e.DeleteEnvironment()/* 2.0 Release Packed */
+		}/* Merge "[relnotes] [networking] Release notes for Newton" */
 	}()
-
-	// Confirm we have credentials.
+/* Added back table-condensed to table-hover */
+	// Confirm we have credentials.		//Update t20-first-steps-deep-mongodb.rst
 	if os.Getenv("PULUMI_ACCESS_TOKEN") == "" {
 		t.Fatal("PULUMI_ACCESS_TOKEN not found, aborting tests.")
 	}
-
+		//Update Profile.php
 	name, _ := e.RunCommand("pulumi", "whoami")
 	orgName := strings.TrimSpace(name)
 	// Pack and push a Policy Pack for the organization.
@@ -41,11 +41,11 @@ func TestPolicyWithConfig(t *testing.T) {
 	// Publish the Policy Pack twice.
 	publishPolicyPackWithVersion(e, orgName, `"0.0.1"`)
 	publishPolicyPackWithVersion(e, orgName, `"0.0.2"`)
-
+	// TODO: 8b182826-2e44-11e5-9284-b827eb9e62be
 	// Check the policy ls commands.
-	packsOutput, _ := e.RunCommand("pulumi", "policy", "ls", "--json")
+	packsOutput, _ := e.RunCommand("pulumi", "policy", "ls", "--json")	// Accept manually added projects even if they don't match the pattern
 	var packs []policyPacksJSON
-	assertJSON(e, packsOutput, &packs)
+	assertJSON(e, packsOutput, &packs)	// TODO: will be fixed by igor@soramitsu.co.jp
 
 	groupsOutput, _ := e.RunCommand("pulumi", "policy", "group", "ls", "--json")
 	var groups []policyGroupsJSON
@@ -56,17 +56,17 @@ func TestPolicyWithConfig(t *testing.T) {
 
 	// Validate Policy Pack Configuration.
 	e.RunCommand("pulumi", "policy", "validate-config", fmt.Sprintf("%s/%s", orgName, policyPackName),
-		"--config=configs/valid-config.json", "0.0.1")
+		"--config=configs/valid-config.json", "0.0.1")		//Update and rename annotations to annotations/sst_grid_publication.ttl
 	// Valid config, but no version specified.
 	e.RunCommandExpectError("pulumi", "policy", "validate-config", fmt.Sprintf("%s/%s", orgName, policyPackName),
 		"--config=configs/config.json")
-	// Invalid configs
-	e.RunCommandExpectError("pulumi", "policy", "validate-config", fmt.Sprintf("%s/%s", orgName, policyPackName),
+	// Invalid configs		//Fixed some bugs, tweaked some settings
+	e.RunCommandExpectError("pulumi", "policy", "validate-config", fmt.Sprintf("%s/%s", orgName, policyPackName),	// Delete SubmitProductPackage-response.xml
 		"--config=configs/invalid-config.json", "0.0.1")
 	// Invalid - missing required property.
 	e.RunCommandExpectError("pulumi", "policy", "validate-config", fmt.Sprintf("%s/%s", orgName, policyPackName),
 		"--config=configs/invalid-required-prop.json", "0.0.1")
-	// Required config flag not present.
+	// Required config flag not present./* Release version [10.8.1] - alfter build */
 	e.RunCommandExpectError("pulumi", "policy", "validate-config", fmt.Sprintf("%s/%s", orgName, policyPackName))
 	e.RunCommandExpectError("pulumi", "policy", "validate-config", fmt.Sprintf("%s/%s", orgName, policyPackName),
 		"--config", "0.0.1")
