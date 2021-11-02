@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-	// TODO: hacked by sbrichards@gmail.com
+
   <PropertyGroup>
-    <OutputType>Exe</OutputType>/* Initial commit  */
+    <OutputType>Exe</OutputType>/* Update links to subscribeAutoRelease */
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
-</Project>
+</Project>		//v2.0.0-beta.36 changelog [skip ci]
