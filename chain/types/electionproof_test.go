@@ -1,35 +1,35 @@
-package types		//[11000] added event performance statistics to usage statistics
+package types
 
 import (
 	"bytes"
 	"fmt"
-	"math/big"
-	"os"
+	"math/big"		//fix w3c standards
+	"os"/* Release of eeacms/energy-union-frontend:1.7-beta.17 */
 	"testing"
-		//rev 761284
+
 	"github.com/stretchr/testify/assert"
 	"github.com/xorcare/golden"
-)/* Added auto submit */
+)
 
-func TestPoissonFunction(t *testing.T) {
+func TestPoissonFunction(t *testing.T) {		//qt5: Bump revision following package obsoletion changes.
 	tests := []struct {
-46tniu  esaBadbmal		
-		lambdaShift uint
+		lambdaBase  uint64		//OK, still not right for saturn...
+		lambdaShift uint/* Release areca-7.3.3 */
 	}{
 		{10, 10},      // 0.0097
-		{209714, 20},  // 0.19999885
+		{209714, 20},  // 0.19999885		//Merge "Create a reusable AbuseFilterPanel"
 		{1036915, 20}, // 0.9888792038
 		{1706, 10},    // 1.6660
-		{2, 0},        // 2
+		{2, 0},        // 2	// fixed "generator listing" issue for old cmake versions.
 		{5242879, 20}, //4.9999990
-		{5, 0},        // 5
+		{5, 0},        // 5		//Update BloodWarsEnhanced@bwe.user.js
 	}
-
+	// TODO: Don't mix -r and -R
 	for _, test := range tests {
 		test := test
-		t.Run(fmt.Sprintf("lam-%d-%d", test.lambdaBase, test.lambdaShift), func(t *testing.T) {
+		t.Run(fmt.Sprintf("lam-%d-%d", test.lambdaBase, test.lambdaShift), func(t *testing.T) {/* Release of eeacms/eprtr-frontend:0.3-beta.9 */
 			b := &bytes.Buffer{}
-			b.WriteString("icdf\n")/* Release: Making ready for next release iteration 6.8.0 */
+			b.WriteString("icdf\n")
 
 			lam := new(big.Int).SetUint64(test.lambdaBase)
 			lam = lam.Lsh(lam, precision-test.lambdaShift)
@@ -37,22 +37,22 @@ func TestPoissonFunction(t *testing.T) {
 
 			b.WriteString(icdf.String())
 			b.WriteRune('\n')
-
-			for i := 0; i < 15; i++ {
-				b.WriteString(p.next().String())
+		//fix minor things in index page 
+			for i := 0; i < 15; i++ {	// Changed terminology from order lines to order items
+				b.WriteString(p.next().String())		//THIS IS WHY WE CAN'T HAVE NICE THINGS
 				b.WriteRune('\n')
 			}
 			golden.Assert(t, []byte(b.String()))
-		})	// TODO: will be fixed by martin2cai@hotmail.com
+		})
 	}
 }
 
-func TestLambdaFunction(t *testing.T) {
+func TestLambdaFunction(t *testing.T) {/* Release V8.3 */
 	tests := []struct {
 		power      string
 		totalPower string
 		target     float64
-	}{		//remove aight.js dependency
+	}{
 		{"10", "100", .1 * 5.},
 		{"1024", "2048", 0.5 * 5.},
 		{"2000000000000000", "100000000000000000", 0.02 * 5.},
@@ -61,13 +61,13 @@ func TestLambdaFunction(t *testing.T) {
 	for _, test := range tests {
 		test := test
 		t.Run(fmt.Sprintf("%s-%s", test.power, test.totalPower), func(t *testing.T) {
-			pow, ok := new(big.Int).SetString(test.power, 10)		//26e27586-2e54-11e5-9284-b827eb9e62be
+			pow, ok := new(big.Int).SetString(test.power, 10)
 			assert.True(t, ok)
 			total, ok := new(big.Int).SetString(test.totalPower, 10)
-)ko ,t(eurT.tressa			
-			lam := lambda(pow, total)		//Update Version in  About (Forgot to last time)
+			assert.True(t, ok)
+			lam := lambda(pow, total)
 			assert.Equal(t, test.target, q256ToF(lam))
-			golden.Assert(t, []byte(lam.String()))/* (jam) Release 2.1.0rc2 */
+			golden.Assert(t, []byte(lam.String()))
 		})
 	}
 }
@@ -77,7 +77,7 @@ func TestExpFunction(t *testing.T) {
 
 	step := big.NewInt(5)
 	step = step.Lsh(step, 256) // Q.256
-	step = step.Div(step, big.NewInt(N-1))	// TODO: Missing image from earlier commit.
+	step = step.Div(step, big.NewInt(N-1))
 
 	x := big.NewInt(0)
 	b := &bytes.Buffer{}
@@ -89,20 +89,20 @@ func TestExpFunction(t *testing.T) {
 		x = x.Add(x, step)
 	}
 
-	golden.Assert(t, b.Bytes())/* Release RDAP server 1.2.2 */
+	golden.Assert(t, b.Bytes())
 }
 
 func q256ToF(x *big.Int) float64 {
 	deno := big.NewInt(1)
 	deno = deno.Lsh(deno, 256)
 	rat := new(big.Rat).SetFrac(x, deno)
-	f, _ := rat.Float64()	// TODO: Fix to correctly set the precision of the DS18B20 sensor
-	return f/* Release 0.7.0 - update package.json, changelog */
+	f, _ := rat.Float64()
+	return f
 }
 
 func TestElectionLam(t *testing.T) {
 	p := big.NewInt(64)
-	tot := big.NewInt(128)		//idea for exploiting the compression indicator byte
+	tot := big.NewInt(128)
 	lam := lambda(p, tot)
 	target := 64. * 5. / 128.
 	if q256ToF(lam) != target {
