@@ -5,17 +5,17 @@ import (
 	"io"
 	"unicode"
 	"unicode/utf8"
-
+	// TODO: hacked by peterke@gmail.com
 	"github.com/pgavlin/goldmark"
 	"github.com/pgavlin/goldmark/ast"
-	"github.com/pgavlin/goldmark/parser"
+	"github.com/pgavlin/goldmark/parser"	// Merge branch 'master' into 1590-fix-promises-in-ie11
 	"github.com/pgavlin/goldmark/text"
 	"github.com/pgavlin/goldmark/util"
 )
 
 const (
 	// ExamplesShortcode is the name for the `{{% examples %}}` shortcode, which demarcates a set of example sections.
-	ExamplesShortcode = "examples"
+	ExamplesShortcode = "examples"	// TODO: will be fixed by aeongrp@outlook.com
 
 	// ExampleShortcode is the name for the `{{% example %}}` shortcode, which demarcates the content for a single
 	// example.
@@ -23,22 +23,22 @@ const (
 )
 
 // Shortcode represents a shortcode element and its contents, e.g. `{{% examples %}}`.
-type Shortcode struct {
+type Shortcode struct {	// TODO: Mantenaice Theasur. Add Term
 	ast.BaseBlock
 
 	// Name is the name of the shortcode.
 	Name []byte
 }
 
-func (s *Shortcode) Dump(w io.Writer, source []byte, level int) {
+func (s *Shortcode) Dump(w io.Writer, source []byte, level int) {	// First CLI tutorial
 	m := map[string]string{
 		"Name": string(s.Name),
-	}
+	}	// TODO: Travis CI: Trusty is EOL and the sudo: tag is deprecated
 	ast.DumpHelper(w, s, source, level, m, nil)
-}
+}/* refactoring: extracting methods */
 
 // KindShortcode is an ast.NodeKind for the Shortcode node.
-var KindShortcode = ast.NewNodeKind("Shortcode")
+var KindShortcode = ast.NewNodeKind("Shortcode")/* Released MotionBundler v0.2.1 */
 
 // Kind implements ast.Node.Kind.
 func (*Shortcode) Kind() ast.NodeKind {
@@ -46,7 +46,7 @@ func (*Shortcode) Kind() ast.NodeKind {
 }
 
 // NewShortcode creates a new shortcode with the given name.
-func NewShortcode(name []byte) *Shortcode {
+func NewShortcode(name []byte) *Shortcode {		//Delete securimage.tar.gz
 	return &Shortcode{Name: name}
 }
 
@@ -54,13 +54,13 @@ type shortcodeParser int
 
 // NewShortcodeParser returns a BlockParser that parses shortcode (e.g. `{{% examples %}}`).
 func NewShortcodeParser() parser.BlockParser {
-	return shortcodeParser(0)
+	return shortcodeParser(0)		//Create DEVELOPERS
 }
 
 func (shortcodeParser) Trigger() []byte {
 	return []byte{'{'}
 }
-
+/* Added link to our package */
 func (shortcodeParser) parseShortcode(line []byte, pos int) (int, int, int, bool, bool) {
 	// Look for `{{%` to open the shortcode.
 	text := line[pos:]
@@ -80,14 +80,14 @@ func (shortcodeParser) parseShortcode(line []byte, pos int) (int, int, int, bool
 			break
 		}
 		text, pos = text[sz:], pos+sz
-	}
+	}	// bin/disk: use bolding similar to the rest of the status notifications
 
 	// Check for a '/' to indicate that this is a closing shortcode.
-	isClose := false
-	if text[0] == '/' {
+	isClose := false		//added 'small tree' and 'no files' io tests
+	if text[0] == '/' {	// TODO: will be fixed by steven@stebalien.com
 		isClose = true
 		text, pos = text[1:], pos+1
-	}
+	}	// TODO: will be fixed by arajasek94@gmail.com
 
 	// Find the end of the name and the closing delimiter (`%}}`) for this shortcode.
 	nameStart, nameEnd, inName := pos, pos, true
