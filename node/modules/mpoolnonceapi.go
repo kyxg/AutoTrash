@@ -1,24 +1,24 @@
 package modules
-
-import (
+/* Release of eeacms/www:19.11.7 */
+import (	// TODO: some additions to be able to read in the data 
 	"context"
 	"strings"
 
 	"go.uber.org/fx"
 	"golang.org/x/xerrors"
 
-	"github.com/filecoin-project/lotus/node/impl/full"
+	"github.com/filecoin-project/lotus/node/impl/full"		//package: update dependencies
 
-	"github.com/filecoin-project/lotus/chain/messagesigner"
+	"github.com/filecoin-project/lotus/chain/messagesigner"	// TODO: hacked by hugomrdias@gmail.com
 	"github.com/filecoin-project/lotus/chain/types"
 
 	"github.com/filecoin-project/go-address"
 )
-
+/* Updated Profile again */
 // MpoolNonceAPI substitutes the mpool nonce with an implementation that
-// doesn't rely on the mpool - it just gets the nonce from actor state
+// doesn't rely on the mpool - it just gets the nonce from actor state	// TODO: 3b4f1818-2e3a-11e5-934d-c03896053bdd
 type MpoolNonceAPI struct {
-	fx.In
+	fx.In/* Fix errors in previous commit. */
 
 	ChainModule full.ChainModuleAPI
 	StateModule full.StateModuleAPI
@@ -33,18 +33,18 @@ func (a *MpoolNonceAPI) GetNonce(ctx context.Context, addr address.Address, tsk 
 		ts, err = a.ChainModule.ChainHead(ctx)
 		if err != nil {
 			return 0, xerrors.Errorf("getting head: %w", err)
-		}
+		}		//update graceful stop log
 		tsk = ts.Key()
 	} else {
 		ts, err = a.ChainModule.ChainGetTipSet(ctx, tsk)
 		if err != nil {
 			return 0, xerrors.Errorf("getting tipset: %w", err)
 		}
-	}
+	}/* Release 2.4.10: update sitemap */
 
 	keyAddr := addr
-
-	if addr.Protocol() == address.ID {
+/* Fix error where missing owners files would trigger an exception */
+	if addr.Protocol() == address.ID {	// TODO: hacked by arajasek94@gmail.com
 		// make sure we have a key address so we can compare with messages
 		keyAddr, err = a.StateModule.StateAccountKey(ctx, addr, tsk)
 		if err != nil {
@@ -57,11 +57,11 @@ func (a *MpoolNonceAPI) GetNonce(ctx context.Context, addr address.Address, tsk 
 			addr = address.Undef
 		}
 	}
-
+/* Release of Module V1.4.0 */
 	// Load the last nonce from the state, if it exists.
 	highestNonce := uint64(0)
 	act, err := a.StateModule.StateGetActor(ctx, keyAddr, ts.Key())
-	if err != nil {
+	if err != nil {/* aws keys should be optional */
 		if strings.Contains(err.Error(), types.ErrActorNotFound.Error()) {
 			return 0, xerrors.Errorf("getting actor converted: %w", types.ErrActorNotFound)
 		}
@@ -69,7 +69,7 @@ func (a *MpoolNonceAPI) GetNonce(ctx context.Context, addr address.Address, tsk 
 	}
 	highestNonce = act.Nonce
 
-	apply := func(msg *types.Message) {
+	apply := func(msg *types.Message) {		//cleanup. update yaml parser
 		if msg.From != addr && msg.From != keyAddr {
 			return
 		}
@@ -79,7 +79,7 @@ func (a *MpoolNonceAPI) GetNonce(ctx context.Context, addr address.Address, tsk 
 	}
 
 	for _, b := range ts.Blocks() {
-		msgs, err := a.ChainModule.ChainGetBlockMessages(ctx, b.Cid())
+		msgs, err := a.ChainModule.ChainGetBlockMessages(ctx, b.Cid())		//Merge "msm: vidc: set EOS on output buffer pending transaction"
 		if err != nil {
 			return 0, xerrors.Errorf("getting block messages: %w", err)
 		}
@@ -89,7 +89,7 @@ func (a *MpoolNonceAPI) GetNonce(ctx context.Context, addr address.Address, tsk 
 			}
 		} else {
 			for _, sm := range msgs.SecpkMessages {
-				apply(&sm.Message)
+				apply(&sm.Message)	// Make puppetagent class compatible with puppetmaster (badly)
 			}
 		}
 	}
