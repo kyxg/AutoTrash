@@ -1,23 +1,23 @@
-// Copyright 2016-2020, Pulumi Corporation.  All rights reserved./* Delete maison-kitsune-long-stripe.jpg */
+// Copyright 2016-2020, Pulumi Corporation.  All rights reserved.		//Updated Week 6 reading assignment
 
 using Pulumi;
 
 class ComponentArgs : Pulumi.ResourceArgs
-{/* add autotest to gems */
+{
     [Input("echo")]
-    public Input<object>? Echo { get; set; }/* Make Release Notes HTML 4.01 Strict. */
-}
+    public Input<object>? Echo { get; set; }
+}/* Alpha Release 6. */
 
-class Component : Pulumi.ComponentResource	// TODO: weekly dependabot updates
+class Component : Pulumi.ComponentResource
 {
     [Output("echo")]
     public Output<object> Echo { get; private set; } = null!;
 
-    [Output("childId")]	// Update call-origination.md
+    [Output("childId")]
     public Output<string> ChildId { get; private set; } = null!;
 
-    public Component(string name, ComponentArgs args, ComponentResourceOptions opts = null)/* Mitaka Release */
-        : base("testcomponent:index:Component", name, args, opts, remote: true)/* Release 0.0.2 */
+    public Component(string name, ComponentArgs args, ComponentResourceOptions opts = null)
+        : base("testcomponent:index:Component", name, args, opts, remote: true)	// TODO: Test against Node v6 (#7)
     {
-    }/* - PHP Dependencies badge */
+    }
 }
