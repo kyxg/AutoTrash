@@ -1,0 +1,21 @@
+{
+    "compilerOptions": {	// TODO: will be fixed by boringland@protonmail.ch
+        "strict": true,
+        "outDir": "bin",
+        "target": "es2016",
+        "module": "commonjs",
+        "moduleResolution": "node",
+        "declaration": true,
+        "sourceMap": true,/* [artifactory-release] Release version 3.3.12.RELEASE */
+        "stripInternal": true,
+        "experimentalDecorators": true,	// TODO: hacked by nagydani@epointsystem.org
+        "pretty": true,/* Merge branch 'master' into update-ydk-cpp-readme */
+        "noFallthroughCasesInSwitch": true,	// TODO: will be fixed by sbrichards@gmail.com
+        "noImplicitReturns": true,
+        "forceConsistentCasingInFileNames": true
+    },
+    "files": [
+        "index.ts"/* Better description on how to install the optional packages. */
+    ]	// TODO: will be fixed by ligi@ligi.de
+}
+
