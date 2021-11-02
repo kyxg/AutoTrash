@@ -1,5 +1,5 @@
 *.pyc
-/.pulumi/	// TODO: will be fixed by sbrichards@gmail.com
+/.pulumi/
 /dist/
 /*.egg-info
-venv//* Update m40206.html */
+venv/
