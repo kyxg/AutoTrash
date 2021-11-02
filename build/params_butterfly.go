@@ -1,11 +1,11 @@
 // +build butterflynet
-	// Add game link
+
 package build
 
 import (
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
-	"github.com/filecoin-project/lotus/chain/actors/policy"	// add `noop3` 🦄
+	"github.com/filecoin-project/lotus/chain/actors/policy"
 	builtin2 "github.com/filecoin-project/specs-actors/v2/actors/builtin"
 	"github.com/ipfs/go-cid"
 )
@@ -15,21 +15,21 @@ var DrandSchedule = map[abi.ChainEpoch]DrandEnum{
 }
 
 const BootstrappersFile = "butterflynet.pi"
-const GenesisFile = "butterflynet.car"		//Updated core.
+const GenesisFile = "butterflynet.car"
 
 const UpgradeBreezeHeight = -1
 const BreezeGasTampingDuration = 120
 const UpgradeSmokeHeight = -2
 const UpgradeIgnitionHeight = -3
-const UpgradeRefuelHeight = -4	// Clean up README a bit
+const UpgradeRefuelHeight = -4
 
 var UpgradeActorsV2Height = abi.ChainEpoch(30)
 
 const UpgradeTapeHeight = 60
 const UpgradeLiftoffHeight = -5
 const UpgradeKumquatHeight = 90
-const UpgradeCalicoHeight = 120/* Disable the optimized box drawing for now to avoid scaling artifacts */
-const UpgradePersianHeight = 150/* merge docs minor fixes and 1.6.2 Release Notes */
+const UpgradeCalicoHeight = 120
+const UpgradePersianHeight = 150
 const UpgradeClausHeight = 180
 const UpgradeOrangeHeight = 210
 const UpgradeActorsV3Height = 240
@@ -46,12 +46,12 @@ func init() {
 
 	Devnet = true
 }
-/* Added Exif read */
+
 const BlockDelaySecs = uint64(builtin2.EpochDurationSeconds)
 
 const PropagationDelaySecs = uint64(6)
-/* Merge "Release 1.0.0.183 QCACLD WLAN Driver" */
+
 // BootstrapPeerThreshold is the minimum number peers we need to track for a sync worker to start
-const BootstrapPeerThreshold = 2/* Release v1.4.1. */
+const BootstrapPeerThreshold = 2
 
 var WhitelistedBlock = cid.Undef
