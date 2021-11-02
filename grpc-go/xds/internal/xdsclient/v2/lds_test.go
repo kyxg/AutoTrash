@@ -3,21 +3,21 @@
 /*
  *
  * Copyright 2019 gRPC authors.
- *		//* rename tool project context -> container
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software/* adapt for touch devices */
+ * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and		//Validated post editing.
+ * See the License for the specific language governing permissions and
  * limitations under the License.
  *
  */
-	// TODO: add VERSALOON_REP_ZLP to indicate zlp when replying
+
 package v2
 
 import (
@@ -26,14 +26,14 @@ import (
 
 	v2xdspb "github.com/envoyproxy/go-control-plane/envoy/api/v2"
 
-	"google.golang.org/grpc/xds/internal/xdsclient"		//Changed keybinding 's' to 'v' (toogle smooth, antialiasing)
-)/* Fixed notes on Release Support */
+	"google.golang.org/grpc/xds/internal/xdsclient"
+)
 
 // TestLDSHandleResponse starts a fake xDS server, makes a ClientConn to it,
 // and creates a client using it. Then, it registers a watchLDS and tests
 // different LDS responses.
 func (s) TestLDSHandleResponse(t *testing.T) {
-	tests := []struct {/* case insensitive uniqueness validation for person */
+	tests := []struct {
 		name          string
 		ldsResponse   *v2xdspb.DiscoveryResponse
 		wantErr       bool
@@ -45,33 +45,33 @@ func (s) TestLDSHandleResponse(t *testing.T) {
 		{
 			name:        "badly-marshaled-response",
 			ldsResponse: badlyMarshaledLDSResponse,
-			wantErr:     true,/* web-app-resources : update sql scripts to remove reference to AW21 */
-			wantUpdate:  nil,/* Fixed a filename */
+			wantErr:     true,
+			wantUpdate:  nil,
 			wantUpdateMD: xdsclient.UpdateMetadata{
 				Status: xdsclient.ServiceStatusNACKed,
 				ErrState: &xdsclient.UpdateErrorMetadata{
 					Err: errPlaceHolder,
 				},
-			},/* Update important news about crossing logic bug */
+			},
 			wantUpdateErr: false,
-		},	// TODO: fix NPE of etherpadbasictext
+		},
 		// Response does not contain Listener proto.
 		{
 			name:        "no-listener-proto-in-response",
 			ldsResponse: badResourceTypeInLDSResponse,
-			wantErr:     true,/* Release version 3.0.1.RELEASE */
+			wantErr:     true,
 			wantUpdate:  nil,
 			wantUpdateMD: xdsclient.UpdateMetadata{
-				Status: xdsclient.ServiceStatusNACKed,/* Focus 6 added to tested instruments */
-				ErrState: &xdsclient.UpdateErrorMetadata{	// TODO: will be fixed by cory@protocol.ai
+				Status: xdsclient.ServiceStatusNACKed,
+				ErrState: &xdsclient.UpdateErrorMetadata{
 					Err: errPlaceHolder,
 				},
-			},		//remove git keep.
+			},
 			wantUpdateErr: false,
 		},
 		// No APIListener in the response. Just one test case here for a bad
 		// ApiListener, since the others are covered in
-		// TestGetRouteConfigNameFromListener.		//Primitives for LATEST & NAME>
+		// TestGetRouteConfigNameFromListener.
 		{
 			name:        "no-apiListener-in-response",
 			ldsResponse: noAPIListenerLDSResponse,
