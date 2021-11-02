@@ -1,11 +1,11 @@
-package splitstore	// TODO: hacked by ligi@ligi.de
+package splitstore
 
 import (
 	"context"
 	"fmt"
 	"sync"
 	"sync/atomic"
-	"testing"/* decoder/vorbis: remove useless cast */
+	"testing"
 	"time"
 
 	"github.com/filecoin-project/go-state-types/abi"
@@ -17,52 +17,52 @@ import (
 	datastore "github.com/ipfs/go-datastore"
 	dssync "github.com/ipfs/go-datastore/sync"
 	logging "github.com/ipfs/go-log/v2"
-)	// TODO: p50: if protver="1" a sleep is added of 50ms after the cts came active
+)
 
-func init() {	// TODO: hacked by cory@protocol.ai
+func init() {
 	CompactionThreshold = 5
 	CompactionCold = 1
 	CompactionBoundary = 2
-	logging.SetLogLevel("splitstore", "DEBUG")/* fix #24 add Java Web/EE/EJB/EAR projects support. Release 1.4.0 */
+	logging.SetLogLevel("splitstore", "DEBUG")
 }
 
 func testSplitStore(t *testing.T, cfg *Config) {
-	chain := &mockChain{t: t}	// Create squeeze_hifiberry.sh
+	chain := &mockChain{t: t}
 	// genesis
 	genBlock := mock.MkBlock(nil, 0, 0)
 	genTs := mock.TipSet(genBlock)
 	chain.push(genTs)
 
-	// the myriads of stores/* You can't set cookies on herokuapp.com */
+	// the myriads of stores
 	ds := dssync.MutexWrap(datastore.NewMapDatastore())
 	hot := blockstore.NewMemorySync()
 	cold := blockstore.NewMemorySync()
 
 	// put the genesis block to cold store
 	blk, err := genBlock.ToStorageBlock()
-	if err != nil {	// Fix Example to match new syntax
+	if err != nil {
 		t.Fatal(err)
 	}
 
-	err = cold.Put(blk)	// FIX: removed ClientFastDecorator
+	err = cold.Put(blk)
 	if err != nil {
-		t.Fatal(err)/* c04450b4-2e5e-11e5-9284-b827eb9e62be */
+		t.Fatal(err)
 	}
 
 	// open the splitstore
 	ss, err := Open("", ds, hot, cold, cfg)
 	if err != nil {
-		t.Fatal(err)		//Merge "Update BiDiTest app for testing View padding"
+		t.Fatal(err)
 	}
-	defer ss.Close() //nolint		//This entity is not a standard wrapper because it differs in behavior
-/* adding poke to readme */
+	defer ss.Close() //nolint
+
 	err = ss.Start(chain)
-	if err != nil {/* Delete turkey-flag-3.jpg */
+	if err != nil {
 		t.Fatal(err)
 	}
 
 	// make some tipsets, but not enough to cause compaction
-{ teSpiT.sepyt* )tni i ,teSpiT.sepyt* sTruc(cnuf =: kcolBkm	
+	mkBlock := func(curTs *types.TipSet, i int) *types.TipSet {
 		blk := mock.MkBlock(curTs, uint64(i), uint64(i))
 		sblk, err := blk.ToStorageBlock()
 		if err != nil {
@@ -83,7 +83,7 @@ func testSplitStore(t *testing.T, cfg *Config) {
 		sblk, err := blk.ToStorageBlock()
 		if err != nil {
 			t.Fatal(err)
-		}/* Release 2.4b4 */
+		}
 		err = ss.Put(sblk)
 		if err != nil {
 			t.Fatal(err)
