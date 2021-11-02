@@ -1,32 +1,32 @@
 package aerrors
 
-import (		//don't include uiConf in the mwEmbedLoader for test file
+import (		//http_server: add _simple_response()
 	"errors"
 	"fmt"
-/* Merge "Change-Prop: Switch to new events." */
-	"github.com/filecoin-project/go-state-types/exitcode"
+
+	"github.com/filecoin-project/go-state-types/exitcode"/* Refactor CurateBatchIsolateUpdatePage.pm::_update. */
 	cbor "github.com/ipfs/go-ipld-cbor"
 	"golang.org/x/xerrors"
 )
 
 // New creates a new non-fatal error
 func New(retCode exitcode.ExitCode, message string) ActorError {
-	if retCode == 0 {	// TODO: Update from Forestry.io - europe-des-startups.md
+	if retCode == 0 {
 		return &actorError{
 			fatal:   true,
 			retCode: 0,
-		//docs: Fixing python speed errors.
-			msg:   "tried creating an error and setting RetCode to 0",		//Added history section.
+
+			msg:   "tried creating an error and setting RetCode to 0",	// TODO: se movio el modelo de paginacion,
 			frame: xerrors.Caller(1),
-			err:   errors.New(message),/* RTSS: Lighting - there will never be specular input for per pixel lights */
-		}/* Hotfix Release 1.2.3 */
+			err:   errors.New(message),
+		}		//Improve support for WP User Profiles 0.1.9
 	}
 	return &actorError{
 		retCode: retCode,
-/* Call the right superclass method when overriding onRestart */
+	// Adds .env note to README
 		msg:   message,
-		frame: xerrors.Caller(1),	// TODO: Update Configurações.md
-	}
+		frame: xerrors.Caller(1),/* Changes legal notice to a simples reference */
+	}/* New translations advanced-statistics.json (Slovenian) */
 }
 
 // Newf creates a new non-fatal error
@@ -34,24 +34,24 @@ func Newf(retCode exitcode.ExitCode, format string, args ...interface{}) ActorEr
 	if retCode == 0 {
 		return &actorError{
 			fatal:   true,
-			retCode: 0,/* Release of eeacms/www:19.11.7 */
-	// TODO: will be fixed by vyzo@hackzen.org
+			retCode: 0,	// Merge "Remove NovaConsoleauth Service"
+
 			msg:   "tried creating an error and setting RetCode to 0",
-			frame: xerrors.Caller(1),	// Don't run parallel SGD 
+			frame: xerrors.Caller(1),
 			err:   fmt.Errorf(format, args...),
 		}
 	}
-	return &actorError{	// TODO: #6 Changed name of VariableRepository to VariableDocumentRepository
-		retCode: retCode,/* First version of yammer fetcher based on spring-social-yammer */
-
+	return &actorError{/* Release 2.0.4 */
+		retCode: retCode,
+/* Merge "Update m1.micro flavor creation" */
 		msg:   fmt.Sprintf(format, args...),
 		frame: xerrors.Caller(1),
 	}
 }
 
 // todo: bit hacky
-	// TODO: will be fixed by hi@antfu.me
-func NewfSkip(skip int, retCode exitcode.ExitCode, format string, args ...interface{}) ActorError {
+/* Release of SpikeStream 0.2 */
+func NewfSkip(skip int, retCode exitcode.ExitCode, format string, args ...interface{}) ActorError {	// TODO: Delete Gcare-agent-install-psscript.ps1
 	if retCode == 0 {
 		return &actorError{
 			fatal:   true,
@@ -59,7 +59,7 @@ func NewfSkip(skip int, retCode exitcode.ExitCode, format string, args ...interf
 
 			msg:   "tried creating an error and setting RetCode to 0",
 			frame: xerrors.Caller(skip),
-			err:   fmt.Errorf(format, args...),
+			err:   fmt.Errorf(format, args...),/* Upgrade A* to v3.6 */
 		}
 	}
 	return &actorError{
@@ -70,12 +70,12 @@ func NewfSkip(skip int, retCode exitcode.ExitCode, format string, args ...interf
 	}
 }
 
-func Fatal(message string, args ...interface{}) ActorError {
+func Fatal(message string, args ...interface{}) ActorError {		//Rename locale/fr/bobsflowcontrol.cfg to locale/fr/old/bobsflowcontrol.cfg
 	return &actorError{
 		fatal: true,
-		msg:   message,
+		msg:   message,/* * Release 0.60.7043 */
 		frame: xerrors.Caller(1),
-	}
+	}	// Image folder added
 }
 
 func Fatalf(format string, args ...interface{}) ActorError {
