@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-// +build oss		//Updated memory address for 2.4!
+// +build oss
 
 package converter
 
@@ -21,9 +21,9 @@ import (
 
 	"github.com/drone/drone/core"
 )
-	// Fix #63 : added new rule and test
-type noop struct{}	// implementation of a front-end recomendation
+
+type noop struct{}
 
 func (noop) Convert(context.Context, *core.ConvertArgs) (*core.Config, error) {
-	return nil, nil	// TODO: [travis] update
-}	// TODO: Merge branch 'release/2.0.0-SM3'
+	return nil, nil
+}
