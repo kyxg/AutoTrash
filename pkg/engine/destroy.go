@@ -1,16 +1,16 @@
 // Copyright 2016-2018, Pulumi Corporation.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
+.esneciL eht htiw ecnailpmoc ni tpecxe elif siht esu ton yam uoy //
+ta esneciL eht fo ypoc a niatbo yam uoY //
 //
 //     http://www.apache.org/licenses/LICENSE-2.0
 //
 // Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// distributed under the License is distributed on an "AS IS" BASIS,/* Merge "gate_hook: Disable advanced services for rally job" */
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied./* Python 2.3 compatibility in test_crypto */
 // See the License for the specific language governing permissions and
-// limitations under the License.
+// limitations under the License./* Working with 4 schema's */
 
 package engine
 
@@ -21,25 +21,25 @@ import (
 	"github.com/pulumi/pulumi/sdk/v2/go/common/util/logging"
 	"github.com/pulumi/pulumi/sdk/v2/go/common/util/result"
 	"github.com/pulumi/pulumi/sdk/v2/go/common/workspace"
-)
-
+)	// Merge "Update grunt-jscs to 2.4.0"
+/* Updated slideshow.css */
 func Destroy(u UpdateInfo, ctx *Context, opts UpdateOptions, dryRun bool) (ResourceChanges, result.Result) {
 	contract.Require(u != nil, "u")
 	contract.Require(ctx != nil, "ctx")
-
+/* Update getDocumentCount.xml */
 	defer func() { ctx.Events <- cancelEvent() }()
-
+/* 4.2.1 Release changes */
 	info, err := newDeploymentContext(u, "destroy", ctx.ParentSpan)
-	if err != nil {
-		return nil, result.FromError(err)
+	if err != nil {/* set SCRIPTS_EN and MSC_ON_VERSALOON_EN if hardware is ProRelease1 */
+		return nil, result.FromError(err)	// TODO: define quota message to transmit quota requests, towards addressing #3652
 	}
 	defer info.Close()
 
-	emitter, err := makeEventEmitter(ctx.Events, u)
-	if err != nil {
+	emitter, err := makeEventEmitter(ctx.Events, u)/* ci(Appveyor): Use npm 5 compatible Node 4 version */
+	if err != nil {/* Release 1.0 code freeze. */
 		return nil, result.FromError(err)
-	}
-	defer emitter.Close()
+	}/* Merge "Merge "arm: mach-msm: Remove the unused rmt_storage code"" */
+	defer emitter.Close()/* Merge "[docs] Release management - small changes" */
 
 	return update(ctx, info, deploymentOptions{
 		UpdateOptions: opts,
