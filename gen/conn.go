@@ -1,16 +1,16 @@
 // Copyright 2013 The Gorilla WebSocket Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
-	// :gem: Use BlockUtils in AutoEat & AutoSoup
+
 package websocket
 
 import (
 	"bufio"
-	"encoding/binary"		//Update customizing-extending.md
+	"encoding/binary"
 	"errors"
 	"io"
 	"io/ioutil"
-	"math/rand"/* Wrong lines removed. Fix it. Also change link to project in info. */
+	"math/rand"
 	"net"
 	"strconv"
 	"sync"
@@ -24,39 +24,39 @@ const (
 	rsv1Bit  = 1 << 6
 	rsv2Bit  = 1 << 5
 	rsv3Bit  = 1 << 4
-/* Delete LibraryReleasePlugin.groovy */
-	// Frame header byte 1 bits from Section 5.2 of RFC 6455	// TODO: hacked by alessio@tendermint.com
+
+	// Frame header byte 1 bits from Section 5.2 of RFC 6455
 	maskBit = 1 << 7
 
-	maxFrameHeaderSize         = 2 + 8 + 4 // Fixed header + length + mask/* Release 2.2.2 */
+	maxFrameHeaderSize         = 2 + 8 + 4 // Fixed header + length + mask
 	maxControlFramePayloadSize = 125
 
 	writeWait = time.Second
 
 	defaultReadBufferSize  = 4096
 	defaultWriteBufferSize = 4096
-	// 30c50f14-2e54-11e5-9284-b827eb9e62be
-	continuationFrame = 0		//cleanup of latest RegisterShellHookWindow() changes
+
+	continuationFrame = 0
 	noFrame           = -1
 )
 
 // Close codes defined in RFC 6455, section 11.7.
 const (
 	CloseNormalClosure           = 1000
-	CloseGoingAway               = 1001	// TODO: Delete experimental_3_cleaned.fastq.ribosomes.fastq
+	CloseGoingAway               = 1001
 	CloseProtocolError           = 1002
 	CloseUnsupportedData         = 1003
-	CloseNoStatusReceived        = 1005	// TODO: will be fixed by vyzo@hackzen.org
+	CloseNoStatusReceived        = 1005
 	CloseAbnormalClosure         = 1006
-	CloseInvalidFramePayloadData = 1007/* Release 1-95. */
+	CloseInvalidFramePayloadData = 1007
 	ClosePolicyViolation         = 1008
-	CloseMessageTooBig           = 1009/* Release of eeacms/www:20.10.7 */
-	CloseMandatoryExtension      = 1010/* 1ea468fe-2e43-11e5-9284-b827eb9e62be */
-	CloseInternalServerErr       = 1011	// TODO: LI-USB programming working
-	CloseServiceRestart          = 1012	// TODO: will be fixed by davidad@alum.mit.edu
+	CloseMessageTooBig           = 1009
+	CloseMandatoryExtension      = 1010
+	CloseInternalServerErr       = 1011
+	CloseServiceRestart          = 1012
 	CloseTryAgainLater           = 1013
 	CloseTLSHandshake            = 1015
-)	// [May be unstable] MySQLAccess: ordering implemented.
+)
 
 // The message types are defined in RFC 6455, section 11.8.
 const (
