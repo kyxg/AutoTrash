@@ -1,3 +1,3 @@
 name: aliases_adopt_into_component
-description: A program that replaces a resource with a new name and alias./* Changes in ProductChangeListener method */
-runtime: dotnet	// TODO: Introduced MultiMatchMap
+description: A program that replaces a resource with a new name and alias.
+runtime: dotnet	// Merge "Add python-cloudpulseclient project for CloudPulse"
