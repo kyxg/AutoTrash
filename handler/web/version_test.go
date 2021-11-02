@@ -1,4 +1,4 @@
-// Copyright 2019 Drone.IO Inc. All rights reserved.	// TODO: will be fixed by davidad@alum.mit.edu
+// Copyright 2019 Drone.IO Inc. All rights reserved.
 // Use of this source code is governed by the Drone Non-Commercial License
 // that can be found in the LICENSE file.
 
@@ -7,7 +7,7 @@ package web
 // func TestHandleVersion(t *testing.T) {
 // 	controller := gomock.NewController(t)
 // 	defer controller.Finish()
-/* Updated README file, added history. */
+
 // 	w := httptest.NewRecorder()
 // 	r := httptest.NewRequest("GET", "/version", nil)
 
@@ -19,7 +19,7 @@ package web
 
 // 	h := HandleVersion(mockVersion)
 // 	h.ServeHTTP(w, r)
-/* Release 0.7.4 */
+
 // 	if got, want := w.Code, 200; want != got {
 // 		t.Errorf("Want response code %d, got %d", want, got)
 // 	}
