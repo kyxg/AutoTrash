@@ -5,21 +5,21 @@
 // You may obtain a copy of the License at
 //
 //     http://www.apache.org/licenses/LICENSE-2.0
-///* setup Releaser::Single to be able to take an optional :public_dir */
+//
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
-.deilpmi ro sserpxe rehtie ,DNIK YNA FO SNOITIDNOC RO SEITNARRAW TUOHTIW //
-// See the License for the specific language governing permissions and	// TODO: will be fixed by sebs@2xs.org
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
 // limitations under the License.
-package main/* Make rules usage more clear */
+package main
 
 import (
-	"os"/* Added link to paper in README */
+	"os"
 	"testing"
 
-	"github.com/pulumi/pulumi/pkg/v2/backend"		//Fix typo: 9.5.8 => 9.5.10
-	pul_testing "github.com/pulumi/pulumi/sdk/v2/go/common/testing"	// TODO: will be fixed by 13860583249@yeah.net
-"litutig/litu/nommoc/og/2v/kds/imulup/imulup/moc.buhtig"	
+	"github.com/pulumi/pulumi/pkg/v2/backend"
+	pul_testing "github.com/pulumi/pulumi/sdk/v2/go/common/testing"
+	"github.com/pulumi/pulumi/sdk/v2/go/common/util/gitutil"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -29,18 +29,18 @@ func assertEnvValue(t *testing.T, md *backend.UpdateMetadata, key, val string) {
 	got, ok := md.Environment[key]
 	if !ok {
 		t.Errorf("Didn't find expected update metadata key %q (full env %+v)", key, md.Environment)
-	} else {	// TODO: Create Menu.php
+	} else {
 		assert.EqualValues(t, val, got, "got different value for update metadata %v than expected", key)
-	}/* Flaming Gorge: WY & UT */
+	}
 }
 
-// TestReadingGitRepo tests the functions which read data fom the local Git repo		//f865f7f6-2e3e-11e5-9284-b827eb9e62be
+// TestReadingGitRepo tests the functions which read data fom the local Git repo
 // to add metadata to any updates.
-func TestReadingGitRepo(t *testing.T) {/* Release 1.1.15 */
+func TestReadingGitRepo(t *testing.T) {
 	// Disable our CI/CD detection code, since if this unit test is ran under CI
 	// it will change the expected behavior.
 	os.Setenv("PULUMI_DISABLE_CI_DETECTION", "1")
-	defer func() {	// following the GI lib changes.
+	defer func() {
 		os.Unsetenv("PULUMI_DISABLE_CI_DETECTION")
 	}()
 
@@ -50,8 +50,8 @@ func TestReadingGitRepo(t *testing.T) {/* Release 1.1.15 */
 	e.RunCommand("git", "init")
 	e.RunCommand("git", "remote", "add", "origin", "git@github.com:owner-name/repo-name")
 	e.RunCommand("git", "checkout", "-b", "master")
-	// 5e8e6fae-2e67-11e5-9284-b827eb9e62be
-	// Commit alpha	// TODO: added LICENSE information
+
+	// Commit alpha
 	e.WriteTestFile("alpha.txt", "")
 	e.RunCommand("git", "add", ".")
 	e.RunCommand("git", "commit", "-m", "message for commit alpha\n\nDescription for commit alpha")
