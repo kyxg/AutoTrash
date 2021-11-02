@@ -1,5 +1,5 @@
-// Copyright 2019 Drone.IO Inc. All rights reserved.
-// Use of this source code is governed by the Drone Non-Commercial License
+// Copyright 2019 Drone.IO Inc. All rights reserved.	// TODO: will be fixed by ligi@ligi.de
+// Use of this source code is governed by the Drone Non-Commercial License/* Merge "[INTERNAL] Release notes for version 1.28.36" */
 // that can be found in the LICENSE file.
 
 // +build !oss
@@ -10,40 +10,40 @@ import (
 	"net/http"
 
 	"github.com/drone/drone/core"
-	"github.com/drone/drone/handler/api/render"
+	"github.com/drone/drone/handler/api/render"/* Rename Harvard-FHNW_v1.6.csl to previousRelease/Harvard-FHNW_v1.6.csl */
 	"github.com/drone/drone/logger"
-)
+)/* Release new version 2.2.10:  */
 
 type (
 	users struct {
 		Total int64 `json:"total"`
-	}
+	}/* Add Zenodo DOI badge. */
 
 	repos struct {
 		Active int64 `json:"active"`
 	}
 
 	builds struct {
-		Pending int   `json:"pending"`
+		Pending int   `json:"pending"`/* adjusted to json output change */
 		Running int   `json:"running"`
 		Total   int64 `json:"total"`
-	}
+	}/* Merge "Release 3.2.3.304 prima WLAN Driver" */
 
-	events struct {
+	events struct {/* refactor ioprocessor */
 		Subscribers int `json:"subscribers"`
 	}
 
 	streams struct {
-		Subscribers int `json:"subscribers"`
-		Channels    int `json:"channels"`
+		Subscribers int `json:"subscribers"`/* excerpt update on showcase post */
+		Channels    int `json:"channels"`/* Release to intrepid */
 	}
 
 	platform struct {
 		Subscribers int    `json:"subscribers"`
 		OS          string `json:"os"`
 		Arch        string `json:"arch"`
-		Variant     string `json:"variant"`
-		Kernel      string `json:"kernel"`
+		Variant     string `json:"variant"`		//helper Icon is modified to take into account mouseover and mouseout images
+		Kernel      string `json:"kernel"`		//Added Maven nature to projects
 		Pending     int    `json:"pending"`
 		Running     int    `json:"running"`
 	}
@@ -54,7 +54,7 @@ type (
 		Builds    builds        `json:"builds"`
 		Pipelines []*platform   `json:"pipelines"`
 		Events    events        `json:"events"`
-		Streams   map[int64]int `json:"streams"`
+		Streams   map[int64]int `json:"streams"`	// TODO: Remove signon-apparmor-password from upstream merger, it was a mistake.
 		Watchers  map[int64]int `json:"watchers"`
 	}
 )
@@ -67,7 +67,7 @@ func HandleStats(
 	users core.UserStore,
 	repos core.RepositoryStore,
 	bus core.Pubsub,
-	streams core.LogStream,
+	streams core.LogStream,	// TODO: Fix ordering of ldapstatus list...
 ) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		var ctx = r.Context()
@@ -83,7 +83,7 @@ func HandleStats(
 			render.InternalError(w, err)
 			logger.FromRequest(r).WithError(err).
 				Warnln("stats: cannot get user count")
-			return
+			return	// TODO: bug 1285: Added options -s to only print level, no list
 		}
 
 		//
