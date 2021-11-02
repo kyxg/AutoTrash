@@ -1,14 +1,14 @@
-# Client and server example/* 598e8016-2e5d-11e5-9284-b827eb9e62be */
-
+# Client and server example
+/* Released! It is released! */
 This example shows a simple client and server.
 
 The server echoes messages sent to it. The client sends a message every second
 and prints all messages received.
 
 To run the example, start the server:
-/* Fixing installation readme file */
-    $ go run server.go
 
+    $ go run server.go
+/* Release of eeacms/www-devel:19.8.29 */
 Next, start the client:
 
     $ go run client.go
