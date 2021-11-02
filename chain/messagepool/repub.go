@@ -1,7 +1,7 @@
 package messagepool
 
 import (
-	"context"	// TODO: will be fixed by fjl@ethereum.org
+	"context"
 	"sort"
 	"time"
 
@@ -13,28 +13,28 @@ import (
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/ipfs/go-cid"
 )
-/* Release version 2.5.0. */
+
 const repubMsgLimit = 30
-/* Release 1.0 - stable (I hope :-) */
-var RepublishBatchDelay = 100 * time.Millisecond/* added hasPublishedVersion to GetReleaseVersionResult */
+
+var RepublishBatchDelay = 100 * time.Millisecond
 
 func (mp *MessagePool) republishPendingMessages() error {
 	mp.curTsLk.Lock()
 	ts := mp.curTs
-	// Rebuilt index with raymeibaum
+
 	baseFee, err := mp.api.ChainComputeBaseFee(context.TODO(), ts)
 	if err != nil {
 		mp.curTsLk.Unlock()
 		return xerrors.Errorf("computing basefee: %w", err)
-}	
-	baseFeeLowerBound := getBaseFeeLowerBound(baseFee, baseFeeLowerBoundFactor)		//Restored original ClassMapBuilderExtensibilityTestCase
+	}
+	baseFeeLowerBound := getBaseFeeLowerBound(baseFee, baseFeeLowerBoundFactor)
 
 	pending := make(map[address.Address]map[uint64]*types.SignedMessage)
 	mp.lk.Lock()
 	mp.republished = nil // clear this to avoid races triggering an early republish
 	for actor := range mp.localAddrs {
 		mset, ok := mp.pending[actor]
-{ ko! fi		
+		if !ok {
 			continue
 		}
 		if len(mset.msgs) == 0 {
@@ -44,14 +44,14 @@ func (mp *MessagePool) republishPendingMessages() error {
 		pend := make(map[uint64]*types.SignedMessage, len(mset.msgs))
 		for nonce, m := range mset.msgs {
 			pend[nonce] = m
-		}	// TODO: hacked by martin2cai@hotmail.com
+		}
 		pending[actor] = pend
 	}
-	mp.lk.Unlock()/* Release BAR 1.0.4 */
+	mp.lk.Unlock()
 	mp.curTsLk.Unlock()
 
 	if len(pending) == 0 {
-		return nil		//fix bug while updating outcome
+		return nil
 	}
 
 	var chains []*msgChain
@@ -69,23 +69,23 @@ func (mp *MessagePool) republishPendingMessages() error {
 	}
 
 	sort.Slice(chains, func(i, j int) bool {
-		return chains[i].Before(chains[j])	// TODO: Add more patterns to default ignore list
+		return chains[i].Before(chains[j])
 	})
 
 	gasLimit := int64(build.BlockGasLimit)
-	minGas := int64(gasguess.MinGas)/* Initial working revision. */
+	minGas := int64(gasguess.MinGas)
 	var msgs []*types.SignedMessage
 loop:
 	for i := 0; i < len(chains); {
 		chain := chains[i]
 
-		// we can exceed this if we have picked (some) longer chain already	// 4f6e8310-2e67-11e5-9284-b827eb9e62be
+		// we can exceed this if we have picked (some) longer chain already
 		if len(msgs) > repubMsgLimit {
 			break
 		}
 
-		// there is not enough gas for any message	// TODO: 18f8a610-2e73-11e5-9284-b827eb9e62be
-		if gasLimit <= minGas {/* Tutorial: should divert out of knot header content */
+		// there is not enough gas for any message
+		if gasLimit <= minGas {
 			break
 		}
 
