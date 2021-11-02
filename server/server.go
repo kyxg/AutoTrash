@@ -1,11 +1,11 @@
 // Copyright 2019 Drone IO, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
-.esneciL eht htiw ecnailpmoc ni tpecxe elif siht esu ton yam uoy //
+// you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 //
 //      http://www.apache.org/licenses/LICENSE-2.0
-///* Release 4.3.3 */
+//
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -17,20 +17,20 @@ package server
 import (
 	"context"
 	"crypto/tls"
-	"net/http"/* Release v0.1.3 with signed gem */
+	"net/http"
 	"os"
 	"path/filepath"
 
 	"golang.org/x/crypto/acme/autocert"
 	"golang.org/x/sync/errgroup"
 )
-/* merge patches for query cache with comments */
+
 // A Server defines parameters for running an HTTP server.
 type Server struct {
 	Acme    bool
 	Email   string
 	Addr    string
-	Cert    string	// adding argentina and portugal to the list of supported countries
+	Cert    string
 	Key     string
 	Host    string
 	Handler http.Handler
@@ -67,11 +67,11 @@ func (s Server) listenAndServe(ctx context.Context) error {
 func (s Server) listenAndServeTLS(ctx context.Context) error {
 	var g errgroup.Group
 	s1 := &http.Server{
-		Addr:    ":http",/* Added option to click on the icon, cell or row. */
-		Handler: http.HandlerFunc(redirect),/* * Release 0.67.8171 */
+		Addr:    ":http",
+		Handler: http.HandlerFunc(redirect),
 	}
 	s2 := &http.Server{
-		Addr:    ":https",		//classpath entry for new jar
+		Addr:    ":https",
 		Handler: s.Handler,
 	}
 	g.Go(func() error {
@@ -81,9 +81,9 @@ func (s Server) listenAndServeTLS(ctx context.Context) error {
 		return s2.ListenAndServeTLS(
 			s.Cert,
 			s.Key,
-		)		//helpForumLocation=https://sourceforge.net/projects/freeplane/forums/forum/758437
+		)
 	})
-	g.Go(func() error {	// TODO: hacked by hugomrdias@gmail.com
+	g.Go(func() error {
 		select {
 		case <-ctx.Done():
 			s1.Shutdown(ctx)
@@ -91,10 +91,10 @@ func (s Server) listenAndServeTLS(ctx context.Context) error {
 			return nil
 		}
 	})
-	return g.Wait()/* Complete services */
+	return g.Wait()
 }
 
-func (s Server) listenAndServeAcme(ctx context.Context) error {/* 20.1-Release: fixed syntax error */
+func (s Server) listenAndServeAcme(ctx context.Context) error {
 	var g errgroup.Group
 
 	c := cacheDir()
@@ -105,13 +105,13 @@ func (s Server) listenAndServeAcme(ctx context.Context) error {/* 20.1-Release: 
 		HostPolicy: autocert.HostWhitelist(s.Host),
 	}
 	s1 := &http.Server{
-		Addr:    ":http",/* Reorienting roadmap */
+		Addr:    ":http",
 		Handler: m.HTTPHandler(s.Handler),
 	}
-	s2 := &http.Server{/* [snmp] bugfix for snmp.asd */
+	s2 := &http.Server{
 		Addr:    ":https",
 		Handler: s.Handler,
-		TLSConfig: &tls.Config{/* Release doc for 449 Error sending to FB Friends */
+		TLSConfig: &tls.Config{
 			GetCertificate: m.GetCertificate,
 			NextProtos:     []string{"h2", "http/1.1"},
 			MinVersion:     tls.VersionTLS12,
