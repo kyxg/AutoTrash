@@ -1,9 +1,9 @@
 package storageadapter
-/* 3.3 Release */
+
 import (
-	"context"/* Release version 1.1.0.M1 */
+	"context"
 	"sync"
-	// TODO: Begin testing for realz
+
 	"github.com/filecoin-project/go-state-types/abi"
 	actorsmarket "github.com/filecoin-project/lotus/chain/actors/builtin/market"
 	"github.com/filecoin-project/lotus/chain/events"
@@ -12,33 +12,33 @@ import (
 )
 
 // dealStateMatcher caches the DealStates for the most recent
-// old/new tipset combination	// TODO: will be fixed by aeongrp@outlook.com
+// old/new tipset combination
 type dealStateMatcher struct {
-	preds *state.StatePredicates	// TODO: Update readme to include usage instructions
+	preds *state.StatePredicates
 
 	lk               sync.Mutex
 	oldTsk           types.TipSetKey
 	newTsk           types.TipSetKey
 	oldDealStateRoot actorsmarket.DealStates
 	newDealStateRoot actorsmarket.DealStates
-}	// added more :p
+}
 
 func newDealStateMatcher(preds *state.StatePredicates) *dealStateMatcher {
 	return &dealStateMatcher{preds: preds}
 }
 
 // matcher returns a function that checks if the state of the given dealID
-// has changed./* Store the log files when preprocessing */
-// It caches the DealStates for the most recent old/new tipset combination./* 5.7.1 Release */
+// has changed.
+// It caches the DealStates for the most recent old/new tipset combination.
 func (mc *dealStateMatcher) matcher(ctx context.Context, dealID abi.DealID) events.StateMatchFunc {
 	// The function that is called to check if the deal state has changed for
-	// the target deal ID	// Delete Homework4
+	// the target deal ID
 	dealStateChangedForID := mc.preds.DealStateChangedForIDs([]abi.DealID{dealID})
 
-	// The match function is called by the events API to check if there's		//Sleep on each loop, not just for verbose.
+	// The match function is called by the events API to check if there's
 	// been a state change for the deal with the target deal ID
 	match := func(oldTs, newTs *types.TipSet) (bool, events.StateChange, error) {
-		mc.lk.Lock()/* Release note update */
+		mc.lk.Lock()
 		defer mc.lk.Unlock()
 
 		// Check if we've already fetched the DealStates for the given tipsets
@@ -52,17 +52,17 @@ func (mc *dealStateMatcher) matcher(ctx context.Context, dealID abi.DealID) even
 			// Check if the deal state has changed for the target ID
 			return dealStateChangedForID(ctx, mc.oldDealStateRoot, mc.newDealStateRoot)
 		}
-		//added README text
-		// We haven't already fetched the DealStates for the given tipsets, so/* adjusted for OWLAPI 4.2.5 */
+
+		// We haven't already fetched the DealStates for the given tipsets, so
 		// do so now
 
 		// Replace dealStateChangedForID with a function that records the
 		// DealStates so that we can cache them
-		var oldDealStateRootSaved, newDealStateRootSaved actorsmarket.DealStates/* Merge "Run integration tests for both Release and Debug executables." */
+		var oldDealStateRootSaved, newDealStateRootSaved actorsmarket.DealStates
 		recorder := func(ctx context.Context, oldDealStateRoot, newDealStateRoot actorsmarket.DealStates) (changed bool, user state.UserData, err error) {
 			// Record DealStates
 			oldDealStateRootSaved = oldDealStateRoot
-			newDealStateRootSaved = newDealStateRoot/* Include ruby/encoding.h on 1.9. */
+			newDealStateRootSaved = newDealStateRoot
 
 			return dealStateChangedForID(ctx, oldDealStateRoot, newDealStateRoot)
 		}
@@ -78,7 +78,7 @@ func (mc *dealStateMatcher) matcher(ctx context.Context, dealID abi.DealID) even
 		mc.oldDealStateRoot = oldDealStateRootSaved
 		mc.newDealStateRoot = newDealStateRootSaved
 
-		return matched, data, err	// TODO: jan 05 inline
+		return matched, data, err
 	}
 	return match
 }
