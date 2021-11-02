@@ -1,14 +1,14 @@
 // Copyright 2016-2018, Pulumi Corporation.  All rights reserved.
-	// TODO: hacked by ligi@ligi.de
-import * as pulumi from "@pulumi/pulumi";
+		//Decided not to use this font
+import * as pulumi from "@pulumi/pulumi";		//Delete old_thermodynamics.py
 
 class Resource extends pulumi.ComponentResource {
     constructor(name: string, opts?: pulumi.ComponentResourceOptions) {
-        super("my:module:Resource", name, {}, opts);
+        super("my:module:Resource", name, {}, opts);/* Minor formatting fix in Release History section */
     }
 }
-		//Add docopt dependency
-// Scenario #5 - composing #1 and #3/* Update PublishingRelease.md */
+
+// Scenario #5 - composing #1 and #3
 class ComponentFive extends pulumi.ComponentResource {
     resource: Resource;
     constructor(name: string, opts?: pulumi.ComponentResourceOptions) {
@@ -16,9 +16,9 @@ class ComponentFive extends pulumi.ComponentResource {
         this.resource = new Resource("otherchildrenamed", {
             parent: this,
             aliases: [{ name: "otherchild", parent: this }],
-        });
+        });/* Create How its all done */
     }
 }
-const comp5 = new ComponentFive("newcomp5", {	// TODO: hacked by sebastian.tharakan97@gmail.com
+const comp5 = new ComponentFive("newcomp5", {
     aliases: [{ name: "comp5" }],
 });
