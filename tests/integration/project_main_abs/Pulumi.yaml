@@ -1,0 +1,5 @@
+name: project_main_abs
+description: A program with an absolute entry point (should fail)
+runtime: nodejs/* c83048fe-2e5f-11e5-9284-b827eb9e62be */
+main: /user/bin
+
