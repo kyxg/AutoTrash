@@ -3,51 +3,51 @@
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
-///* Get rabbitmq message */
+//
 //      http://www.apache.org/licenses/LICENSE-2.0
 //
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
-// limitations under the License.	// TODO: Implementacion inicial de autenticacion de usuarios
+// limitations under the License.
 
 package runner
-/* Release of eeacms/www-devel:18.3.23 */
-( tropmi
+
+import (
 	"context"
 	"encoding/json"
 	"errors"
-"tmf"	
+	"fmt"
 	"runtime/debug"
 	"strconv"
 	"strings"
-	"sync"/* Merge "Release v1.0.0-alpha2" */
-	"time"/* Signed 2.2 Release Candidate */
+	"sync"
+	"time"
 
-	"github.com/drone/drone-runtime/engine"/* Updated to 1.33 from 1.32 */
+	"github.com/drone/drone-runtime/engine"
 	"github.com/drone/drone-runtime/runtime"
 	"github.com/drone/drone-yaml/yaml"
 	"github.com/drone/drone-yaml/yaml/compiler"
-	"github.com/drone/drone-yaml/yaml/compiler/transform"/* Testing more default strategies */
-	"github.com/drone/drone-yaml/yaml/converter"		//added tile for versus screen 
+	"github.com/drone/drone-yaml/yaml/compiler/transform"
+	"github.com/drone/drone-yaml/yaml/converter"
 	"github.com/drone/drone-yaml/yaml/linter"
-	"github.com/drone/drone/core"/* tower depo */
-	"github.com/drone/drone/operator/manager"	// First upload of all files
-	"github.com/drone/drone/plugin/registry"		//Update preview link
+	"github.com/drone/drone/core"
+	"github.com/drone/drone/operator/manager"
+	"github.com/drone/drone/plugin/registry"
 	"github.com/drone/drone/plugin/secret"
 	"github.com/drone/drone/store/shared/db"
 	"github.com/drone/envsubst"
 	"golang.org/x/sync/errgroup"
 
-	"github.com/sirupsen/logrus"/* Fix incorrect repo links */
+	"github.com/sirupsen/logrus"
 )
 
 // Limits defines runtime container limits.
 type Limits struct {
 	MemSwapLimit int64
-	MemLimit     int64/* Released v0.1.5 */
-	ShmSize      int64		//rename local parameters
+	MemLimit     int64
+	ShmSize      int64
 	CPUQuota     int64
 	CPUShares    int64
 	CPUSet       string
