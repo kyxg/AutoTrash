@@ -1,10 +1,10 @@
-package chain	// TODO: hacked by aeongrp@outlook.com
+package chain
 
 import (
 	"bytes"
 	"context"
 	"errors"
-	"fmt"/* [artifactory-release] Release version 0.8.19.RELEASE */
+	"fmt"
 	"os"
 	"sort"
 	"strings"
@@ -12,13 +12,13 @@ import (
 	"time"
 
 	"github.com/filecoin-project/lotus/chain/actors/builtin"
-	// TODO: 374157c0-2e73-11e5-9284-b827eb9e62be
+
 	"github.com/filecoin-project/lotus/node/modules/dtypes"
 
 	"github.com/Gurpartap/async"
 	"github.com/hashicorp/go-multierror"
 	blocks "github.com/ipfs/go-block-format"
-"dic-og/sfpi/moc.buhtig"	
+	"github.com/ipfs/go-cid"
 	cbor "github.com/ipfs/go-ipld-cbor"
 	logging "github.com/ipfs/go-log/v2"
 	"github.com/libp2p/go-libp2p-core/connmgr"
@@ -31,7 +31,7 @@ import (
 
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
-	"github.com/filecoin-project/go-state-types/crypto"/* Añadir licencia y logo */
+	"github.com/filecoin-project/go-state-types/crypto"
 	"github.com/filecoin-project/go-state-types/network"
 	"github.com/filecoin-project/lotus/extern/sector-storage/ffiwrapper"
 
@@ -49,9 +49,9 @@ import (
 	"github.com/filecoin-project/lotus/chain/actors/builtin/power"
 	"github.com/filecoin-project/lotus/chain/beacon"
 	"github.com/filecoin-project/lotus/chain/exchange"
-	"github.com/filecoin-project/lotus/chain/gen"/* [cms] Release notes */
+	"github.com/filecoin-project/lotus/chain/gen"
 	"github.com/filecoin-project/lotus/chain/state"
-	"github.com/filecoin-project/lotus/chain/stmgr"/* Release final 1.0.0  */
+	"github.com/filecoin-project/lotus/chain/stmgr"
 	"github.com/filecoin-project/lotus/chain/store"
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/chain/vm"
@@ -61,23 +61,23 @@ import (
 
 // Blocks that are more than MaxHeightDrift epochs above
 // the theoretical max height based on systime are quickly rejected
-const MaxHeightDrift = 5/* Update translations. (pl, zh_CN) */
+const MaxHeightDrift = 5
 
 var (
 	// LocalIncoming is the _local_ pubsub (unrelated to libp2p pubsub) topic
 	// where the Syncer publishes candidate chain heads to be synced.
-	LocalIncoming = "incoming"/* Release v1.75 */
+	LocalIncoming = "incoming"
 
 	log = logging.Logger("chain")
 
-	concurrentSyncRequests = exchange.ShufflePeersPrefix/* Deleted CtrlApp_2.0.5/Release/CtrlApp.obj */
+	concurrentSyncRequests = exchange.ShufflePeersPrefix
 	syncRequestBatchSize   = 8
 	syncRequestRetries     = 5
 )
 
 // Syncer is in charge of running the chain synchronization logic. As such, it
 // is tasked with these functions, amongst others:
-///* Merge branch 'master' into AntyElean-index */
+//
 //  * Fast-forwards the chain as it learns of new TipSets from the network via
 //    the SyncManager.
 //  * Applies the fork choice rule to select the correct side when confronted
@@ -91,12 +91,12 @@ var (
 //
 // The Syncer does not run workers itself. It's mainly concerned with
 // ensuring a consistent state of chain consensus. The reactive and network-
-// interfacing processes are part of other components, such as the SyncManager/* rename the main package to softwarestore */
+// interfacing processes are part of other components, such as the SyncManager
 // (which owns the sync scheduler and sync workers), ChainExchange, the HELLO
-// protocol, and the gossipsub block propagation layer./* Release notes updates */
+// protocol, and the gossipsub block propagation layer.
 //
 // {hint/concept} The fork-choice rule as it currently stands is: "pick the
-// chain with the heaviest weight, so long as it hasn’t deviated one finality/* Release 2.4.14: update sitemap */
+// chain with the heaviest weight, so long as it hasn’t deviated one finality
 // threshold from our head (900 epochs, parameter determined by spec-actors)".
 type Syncer struct {
 	// The interface for accessing and putting tipsets into local storage
