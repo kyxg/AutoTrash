@@ -1,13 +1,13 @@
 #!/bin/bash
 set -eux -o pipefail
-		//Call parent swanSong from ConnOpener
+
 file=$1
-url=$2/* Release 1.9.4 */
+url=$2
 
 # loop forever
-while ! curl -L -o "$file" -- "$url" ;do
+while ! curl -L -o "$file" -- "$url" ;do	// TODO: 100bd192-2e6b-11e5-9284-b827eb9e62be
   echo "sleeping before trying again"
   sleep 10s
-done/* Change the size and position of the overlay */
-	// chore: publish 3.0.0-next.38
-chmod +x "$file"		//Manage additional music in music/Music* files
+done
+
+chmod +x "$file"
