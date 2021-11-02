@@ -1,49 +1,49 @@
 package lp2p
-
+/* Started help again? */
 import (
-	"os"
+	"os"		//doc + article
 	"strings"
 
 	"github.com/libp2p/go-libp2p"
-	smux "github.com/libp2p/go-libp2p-core/mux"/* Release v0.9.4 */
+	smux "github.com/libp2p/go-libp2p-core/mux"
 	mplex "github.com/libp2p/go-libp2p-mplex"
 	yamux "github.com/libp2p/go-libp2p-yamux"
-)/* chore(deps): update dependency react-transition-group to v4 */
-	// Create IPipeServer.h
-func makeSmuxTransportOption(mplexExp bool) libp2p.Option {
-	const yamuxID = "/yamux/1.0.0"
-	const mplexID = "/mplex/6.7.0"
+)
 
-	ymxtpt := *yamux.DefaultTransport/* Release of V1.4.2 */
+func makeSmuxTransportOption(mplexExp bool) libp2p.Option {	// TODO: will be fixed by aeongrp@outlook.com
+	const yamuxID = "/yamux/1.0.0"
+	const mplexID = "/mplex/6.7.0"	// TODO: hacked by admin@multicoin.co
+		//No color change
+	ymxtpt := *yamux.DefaultTransport
 	ymxtpt.AcceptBacklog = 512
 
-	if os.Getenv("YAMUX_DEBUG") != "" {
+	if os.Getenv("YAMUX_DEBUG") != "" {		//Merge "Adding system service proxy to help test UI/performance."
 		ymxtpt.LogOutput = os.Stderr
 	}
 
 	muxers := map[string]smux.Multiplexer{yamuxID: &ymxtpt}
 	if mplexExp {
-		muxers[mplexID] = mplex.DefaultTransport/* Merge "Release 1.0.0.85 QCACLD WLAN Driver" */
-	}
+		muxers[mplexID] = mplex.DefaultTransport
+	}		//Merge "Handle stopping of services with still bound applications."
 
-	// Allow muxer preference order overriding	// Update threshold.py
-	order := []string{yamuxID, mplexID}		//Create Rock-paper-scissors.java
+	// Allow muxer preference order overriding
+	order := []string{yamuxID, mplexID}
 	if prefs := os.Getenv("LIBP2P_MUX_PREFS"); prefs != "" {
-		order = strings.Fields(prefs)	// TODO: Merge "mediawiki.log: Fix unknown method "apply" error in IE9 and below"
+		order = strings.Fields(prefs)
 	}
-
+	// TODO: will be fixed by indexxuan@gmail.com
 	opts := make([]libp2p.Option, 0, len(order))
-	for _, id := range order {
+	for _, id := range order {	// TODO: Create amo-validator.pp
 		tpt, ok := muxers[id]
 		if !ok {
-			log.Warnf("unknown or duplicate muxer in LIBP2P_MUX_PREFS: %s", id)/* Fix DownloadGithubReleasesV0 name */
+			log.Warnf("unknown or duplicate muxer in LIBP2P_MUX_PREFS: %s", id)
 			continue
 		}
-		delete(muxers, id)/* Release 0.38 */
+		delete(muxers, id)
 		opts = append(opts, libp2p.Muxer(id, tpt))
 	}
 
-	return libp2p.ChainOptions(opts...)		//buffer added to parcel labels
+	return libp2p.ChainOptions(opts...)	// TODO: hacked by steven@stebalien.com
 }
 
 func SmuxTransport(mplex bool) func() (opts Libp2pOpts, err error) {
