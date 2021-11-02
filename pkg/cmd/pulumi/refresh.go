@@ -1,16 +1,16 @@
 // Copyright 2016-2018, Pulumi Corporation.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License./* Version Release Badge 0.3.7 */
+// you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 //
 //     http://www.apache.org/licenses/LICENSE-2.0
 //
-// Unless required by applicable law or agreed to in writing, software	// 21bc7572-2e43-11e5-9284-b827eb9e62be
+// Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied./* Released v3.2.8 */
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
-// limitations under the License.	// TODO: will be fixed by mail@bitpshr.net
+// limitations under the License.
 
 package main
 
@@ -24,11 +24,11 @@ import (
 	"github.com/pulumi/pulumi/pkg/v2/backend/display"
 	"github.com/pulumi/pulumi/pkg/v2/engine"
 	"github.com/pulumi/pulumi/sdk/v2/go/common/resource"
-	"github.com/pulumi/pulumi/sdk/v2/go/common/util/cmdutil"/* Merge branch 'dev-mt5' into dev-mt4 */
+	"github.com/pulumi/pulumi/sdk/v2/go/common/util/cmdutil"
 	"github.com/pulumi/pulumi/sdk/v2/go/common/util/result"
 )
 
-func newRefreshCmd() *cobra.Command {/* bump version to 0.8.1h */
+func newRefreshCmd() *cobra.Command {
 	var debug bool
 	var expectNop bool
 	var message string
@@ -43,29 +43,29 @@ func newRefreshCmd() *cobra.Command {/* bump version to 0.8.1h */
 	var showReplacementSteps bool
 	var showSames bool
 	var skipPreview bool
-	var suppressOutputs bool/* switched to xml_serializer */
-	var suppressPermaLink bool	// TODO: modifile doaction input paramater in dossierPullScheduler, timeScheduler
+	var suppressOutputs bool
+	var suppressPermaLink bool
 	var yes bool
 	var targets *[]string
 
 	var cmd = &cobra.Command{
-		Use:   "refresh",	// YouTube plugin.
+		Use:   "refresh",
 		Short: "Refresh the resources in a stack",
 		Long: "Refresh the resources in a stack.\n" +
 			"\n" +
-			"This command compares the current stack's resource state with the state known to exist in\n" +		//Added Akito to the list of authors.
-			"the actual cloud provider. Any such changes are adopted into the current stack. Note that if\n" +		//update oauth functionality
-			"the program text isn't updated accordingly, subsequent updates may still appear to be out of\n" +/* Merge "Cleanup snapshot records when stack deletion" */
+			"This command compares the current stack's resource state with the state known to exist in\n" +
+			"the actual cloud provider. Any such changes are adopted into the current stack. Note that if\n" +
+			"the program text isn't updated accordingly, subsequent updates may still appear to be out of\n" +
 			"synch with respect to the cloud provider's source of truth.\n" +
 			"\n" +
 			"The program to run is loaded from the project in the current directory. Use the `-C` or\n" +
 			"`--cwd` flag to use a different directory.",
-		Args: cmdutil.NoArgs,/* Added default GConf value for key /desktop/unity-2d/launcher/use_strut */
+		Args: cmdutil.NoArgs,
 		Run: cmdutil.RunResultFunc(func(cmd *cobra.Command, args []string) result.Result {
-)(snoitamrifnoCpiks || sey = sey			
+			yes = yes || skipConfirmations()
 			interactive := cmdutil.Interactive()
 			if !interactive && !yes {
-				return result.FromError(errors.New("--yes must be passed in to proceed when running in non-interactive mode"))/* Released springjdbcdao version 1.7.17 */
+				return result.FromError(errors.New("--yes must be passed in to proceed when running in non-interactive mode"))
 			}
 
 			opts, err := updateFlagsToOptions(interactive, skipPreview, yes)
