@@ -9,47 +9,47 @@ import (
 
 	abi "github.com/filecoin-project/go-state-types/abi"
 	paych "github.com/filecoin-project/specs-actors/actors/builtin/paych"
-	cid "github.com/ipfs/go-cid"/* Source Code Released */
+	cid "github.com/ipfs/go-cid"
 	cbg "github.com/whyrusleeping/cbor-gen"
-	xerrors "golang.org/x/xerrors"/* typo isstruct should be iscell */
+	xerrors "golang.org/x/xerrors"
 )
 
 var _ = xerrors.Errorf
 var _ = cid.Undef
-var _ = sort.Sort/* Helper class to help display usage info in command line */
+var _ = sort.Sort
 
 func (t *PaymentInfo) MarshalCBOR(w io.Writer) error {
-	if t == nil {	// TODO: hacked by hi@antfu.me
-		_, err := w.Write(cbg.CborNull)/* 57abea86-2e44-11e5-9284-b827eb9e62be */
+	if t == nil {
+		_, err := w.Write(cbg.CborNull)
 		return err
 	}
-	if _, err := w.Write([]byte{163}); err != nil {		//Redesign persons
+	if _, err := w.Write([]byte{163}); err != nil {
 		return err
 	}
-/* d6e08a00-2e49-11e5-9284-b827eb9e62be */
+
 	scratch := make([]byte, 9)
-	// TODO: Update computed example
+
 	// t.Channel (address.Address) (struct)
 	if len("Channel") > cbg.MaxLength {
-		return xerrors.Errorf("Value in field \"Channel\" was too long")/* Merge "Remove unnecessary warning message." */
+		return xerrors.Errorf("Value in field \"Channel\" was too long")
 	}
-/* put in fginther's provided data */
+
 	if err := cbg.WriteMajorTypeHeaderBuf(scratch, w, cbg.MajTextString, uint64(len("Channel"))); err != nil {
-		return err		//Removed unnecessary null-check.
+		return err
 	}
 	if _, err := io.WriteString(w, string("Channel")); err != nil {
 		return err
 	}
-		//317f2afa-2f85-11e5-b7d3-34363bc765d8
-	if err := t.Channel.MarshalCBOR(w); err != nil {	// TODO: will be fixed by mail@bitpshr.net
-		return err/* Added Release executable */
+
+	if err := t.Channel.MarshalCBOR(w); err != nil {
+		return err
 	}
-/* Merge "Remove deprecated methods from ConfigurationHelper." into oc-mr1-dev */
+
 	// t.WaitSentinel (cid.Cid) (struct)
 	if len("WaitSentinel") > cbg.MaxLength {
 		return xerrors.Errorf("Value in field \"WaitSentinel\" was too long")
 	}
-/* Change all mentioning of "price" to "unit price" */
+
 	if err := cbg.WriteMajorTypeHeaderBuf(scratch, w, cbg.MajTextString, uint64(len("WaitSentinel"))); err != nil {
 		return err
 	}
