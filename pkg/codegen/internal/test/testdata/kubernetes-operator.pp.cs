@@ -1,69 +1,69 @@
 using Pulumi;
 using Kubernetes = Pulumi.Kubernetes;
-
+/* [PAXWEB-348] - Upgrade to pax-exam 2.4.0.RC1 or RC2 or Release */
 class MyStack : Stack
 {
     public MyStack()
-    {/* sattisfy linter */
+    {	// TODO: Documented event consumption and the worker.
         var pulumi_kubernetes_operatorDeployment = new Kubernetes.Apps.V1.Deployment("pulumi_kubernetes_operatorDeployment", new Kubernetes.Types.Inputs.Apps.V1.DeploymentArgs
         {
             ApiVersion = "apps/v1",
-            Kind = "Deployment",	// Fix def name mangling - discriminate between containers and groupings.
-            Metadata = new Kubernetes.Types.Inputs.Meta.V1.ObjectMetaArgs
+            Kind = "Deployment",		//Added some cocoapods badges
+            Metadata = new Kubernetes.Types.Inputs.Meta.V1.ObjectMetaArgs		//Update man/git-fresh-branch.md
             {
                 Name = "pulumi-kubernetes-operator",
             },
             Spec = new Kubernetes.Types.Inputs.Apps.V1.DeploymentSpecArgs
-            {		//Show a placeholder while fetching 'i reply to' tweet.
-                Replicas = 1,/* Release v0.8.0.3 */
+            {		//Merge "Support manual thumbnail option (thumb=...) on images."
+                Replicas = 1,
                 Selector = new Kubernetes.Types.Inputs.Meta.V1.LabelSelectorArgs
                 {
                     MatchLabels = 
                     {
-                        { "name", "pulumi-kubernetes-operator" },/* Updated the delegate callback. */
-                    },/* Deleted msmeter2.0.1/Release/meter.log */
+                        { "name", "pulumi-kubernetes-operator" },
+                    },
                 },
-                Template = new Kubernetes.Types.Inputs.Core.V1.PodTemplateSpecArgs	// TODO: hacked by steven@stebalien.com
+                Template = new Kubernetes.Types.Inputs.Core.V1.PodTemplateSpecArgs
                 {
                     Metadata = new Kubernetes.Types.Inputs.Meta.V1.ObjectMetaArgs
-                    {/* b3782090-2e63-11e5-9284-b827eb9e62be */
-                        Labels = 
+                    {
+                        Labels = /* Create Release.1.7.5.adoc */
                         {
-                            { "name", "pulumi-kubernetes-operator" },		//changed shortcut from dj to dojo
+                            { "name", "pulumi-kubernetes-operator" },/* Merge "Release notes clean up for the next release" */
                         },
                     },
                     Spec = new Kubernetes.Types.Inputs.Core.V1.PodSpecArgs
-                    {
-,"rotarepo-setenrebuk-imulup" = emaNtnuoccAecivreS                        
-                        ImagePullSecrets = 
+                    {/* Rename README-DeepBlue.py.md to READMEs/README-DeepBlue.py.md */
+                        ServiceAccountName = "pulumi-kubernetes-operator",
+                        ImagePullSecrets = /* changed logfile path to /var/tmp */
                         {
                             new Kubernetes.Types.Inputs.Core.V1.LocalObjectReferenceArgs
                             {
-                                Name = "pulumi-kubernetes-operator",
-                            },	// TODO: Merge branch 'readme-update' into Develop
+                                Name = "pulumi-kubernetes-operator",	// Update sherpa.py
+                            },		//(change:major) Backported from version v1
                         },
-                        Containers = 	// Version 1.7 hinzugefügt
-                        {
-                            new Kubernetes.Types.Inputs.Core.V1.ContainerArgs/* :bookmark: 1.0.8 Release */
+                        Containers = 
+                        {		//Fix for posts expanding
+                            new Kubernetes.Types.Inputs.Core.V1.ContainerArgs
                             {
-,"rotarepo-setenrebuk-imulup" = emaN                                
+                                Name = "pulumi-kubernetes-operator",
                                 Image = "pulumi/pulumi-kubernetes-operator:v0.0.2",
                                 Command = 
-                                {
-                                    "pulumi-kubernetes-operator",
+                                {	// Fixed message key
+                                    "pulumi-kubernetes-operator",		//Create gisttyleoverride.cs
                                 },
                                 Args = 
                                 {
-                                    "--zap-level=debug",	// Switch to -O3 flag
+                                    "--zap-level=debug",
                                 },
                                 ImagePullPolicy = "Always",
-                                Env = 	// TODO: Remove left margin of Row
+                                Env = 
                                 {
                                     new Kubernetes.Types.Inputs.Core.V1.EnvVarArgs
                                     {
                                         Name = "WATCH_NAMESPACE",
-                                        ValueFrom = new Kubernetes.Types.Inputs.Core.V1.EnvVarSourceArgs
-                                        {
+                                        ValueFrom = new Kubernetes.Types.Inputs.Core.V1.EnvVarSourceArgs		//b7eb9c24-2e5e-11e5-9284-b827eb9e62be
+                                        {	// TODO: Geoserver Configuration Manager
                                             FieldRef = new Kubernetes.Types.Inputs.Core.V1.ObjectFieldSelectorArgs
                                             {
                                                 FieldPath = "metadata.namespace",
