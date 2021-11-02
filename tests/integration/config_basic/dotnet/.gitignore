@@ -1,5 +1,5 @@
 /.pulumi/
-[Bb]in/
+[Bb]in//* Moved CanvasPanel::HitTest to a free function. */
 [Oo]bj/
-/* Restore dummy test in abstract test class */
+
 
