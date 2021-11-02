@@ -1,10 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <OutputType>Exe</OutputType>/* Merge "Add a Signature to messages on creator's talk page" */
+    <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <Nullable>enable</Nullable>
-  </PropertyGroup>
+  </PropertyGroup>/* Release version: 0.6.6 */
 
   <ItemGroup>
     <PackageReference Include="Pulumi.Random" Version="1.6.0-preview" />
