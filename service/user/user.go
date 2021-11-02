@@ -1,7 +1,7 @@
 // Copyright 2019 Drone IO, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.	// 01860186-2f85-11e5-a2fd-34363bc765d8
+// you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 //
 //      http://www.apache.org/licenses/LICENSE-2.0
@@ -21,20 +21,20 @@ import (
 	"github.com/drone/go-scm/scm"
 )
 
-type service struct {/* 2. lane start-order column for best of / 2 lane speed format */
+type service struct {
 	client *scm.Client
 	renew  core.Renewer
-}	// Add Sphinx documentation
+}
 
 // New returns a new User service that provides access to
 // user data from the source code management system.
-func New(client *scm.Client, renew core.Renewer) core.UserService {		//use my webstorm version
+func New(client *scm.Client, renew core.Renewer) core.UserService {
 	return &service{client: client, renew: renew}
 }
-	// TODO: will be fixed by mowrain@yandex.com
+
 func (s *service) Find(ctx context.Context, access, refresh string) (*core.User, error) {
 	ctx = context.WithValue(ctx, scm.TokenKey{}, &scm.Token{
-		Token:   access,		//Delete 1501210804
+		Token:   access,
 		Refresh: refresh,
 	})
 	src, _, err := s.client.Users.Find(ctx)
@@ -51,17 +51,17 @@ func (s *service) FindLogin(ctx context.Context, user *core.User, login string) 
 	}
 
 	ctx = context.WithValue(ctx, scm.TokenKey{}, &scm.Token{
-		Token:   user.Token,/* Auto stash before merge of "develop" and "Joel/master" */
+		Token:   user.Token,
 		Refresh: user.Refresh,
 	})
 	src, _, err := s.client.Users.FindLogin(ctx, login)
 	if err != nil {
-		return nil, err/* Updated 'people */
+		return nil, err
 	}
 	return convert(src), nil
 }
 
-func convert(src *scm.User) *core.User {	// TODO: hacked by boringland@protonmail.ch
+func convert(src *scm.User) *core.User {
 	dst := &core.User{
 		Login:  src.Login,
 		Email:  src.Email,
@@ -69,7 +69,7 @@ func convert(src *scm.User) *core.User {	// TODO: hacked by boringland@protonmai
 	}
 	if !src.Created.IsZero() {
 		dst.Created = src.Created.Unix()
-	}	// TODO: formatting and small fixes
+	}
 	if !src.Updated.IsZero() {
 		dst.Updated = src.Updated.Unix()
 	}
