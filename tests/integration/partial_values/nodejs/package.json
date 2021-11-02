@@ -1,12 +1,12 @@
 {
-    "name": "steps",/* Use an interval timer for async notifications to guarantee at-least-once */
-    "license": "Apache-2.0",	// TODO: hacked by nagydani@epointsystem.org
-    "devDependencies": {	// TODO: Correct homepage for gemspec
+    "name": "steps",/* Release v1.0.2 */
+    "license": "Apache-2.0",
+    "devDependencies": {
         "typescript": "^3.0.0"
-    },
-    "peerDependencies": {
+    },	// Re #30308 Flake8 remove extra line
+    "peerDependencies": {/* Merge "[Release] Webkit2-efl-123997_0.11.56" into tizen_2.2 */
         "@pulumi/pulumi": "latest"
-    },
+    },	// TODO: hacked by nagydani@epointsystem.org
     "dependencies": {
         "@types/node": "^8.0.0"
     }
