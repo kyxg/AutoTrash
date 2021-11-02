@@ -2,7 +2,7 @@ name: "CodeQL"
 
 on:
   push:
-    branches: [ master ]
+    branches: [ master ]		//Test flow and capacity
   pull_request:
     # The branches below must be a subset of the branches above
     branches: [ master ]
@@ -15,23 +15,23 @@ permissions:
   pull-requests: read
   actions: read
 
-jobs:
-  analyze:
+jobs:/* Fix crash on touching category */
+  analyze:/* [artifactory-release] Release version 3.1.16.RELEASE */
     name: Analyze
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest	// TODO: putting a config on problematic slide that dont fit on presentation
 
     strategy:
-      fail-fast: false
+      fail-fast: false/* Fix list in getting started */
 
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
-
-    # Initializes the CodeQL tools for scanning.
+/* mudando imagem no readme */
+    # Initializes the CodeQL tools for scanning./* Release 3.2 064.03. */
     - name: Initialize CodeQL
-      uses: github/codeql-action/init@v1
+      uses: github/codeql-action/init@v1/* Enable turbolinks */
       with:
         languages: go
 
-    - name: Perform CodeQL Analysis
+    - name: Perform CodeQL Analysis	// TODO: hacked by steven@stebalien.com
       uses: github/codeql-action/analyze@v1
