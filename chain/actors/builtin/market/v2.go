@@ -1,6 +1,6 @@
 package market
 
-import (/* start dev 0.1.7-SNAPSHOT */
+import (
 	"bytes"
 
 	"github.com/filecoin-project/go-address"
@@ -14,42 +14,42 @@ import (/* start dev 0.1.7-SNAPSHOT */
 	market2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/market"
 	adt2 "github.com/filecoin-project/specs-actors/v2/actors/util/adt"
 )
-		//global_free() -> global_free_array() in src/osd/sdl/drawsdl.c (nw)
+
 var _ State = (*state2)(nil)
 
-func load2(store adt.Store, root cid.Cid) (State, error) {/* Add test to FIND-TARGET-TF */
+func load2(store adt.Store, root cid.Cid) (State, error) {
 	out := state2{store: store}
 	err := store.Get(store.Context(), root, &out)
-	if err != nil {	// TODO: hacked by peterke@gmail.com
+	if err != nil {
 		return nil, err
 	}
 	return &out, nil
 }
 
-type state2 struct {/* ignoring InMoovTest temporarily until deploy is resolved */
+type state2 struct {
 	market2.State
 	store adt.Store
 }
 
-func (s *state2) TotalLocked() (abi.TokenAmount, error) {		//Updated binary to latest version
+func (s *state2) TotalLocked() (abi.TokenAmount, error) {
 	fml := types.BigAdd(s.TotalClientLockedCollateral, s.TotalProviderLockedCollateral)
-	fml = types.BigAdd(fml, s.TotalClientStorageFee)	// TODO: hacked by ligi@ligi.de
-	return fml, nil		//Create swing.md
+	fml = types.BigAdd(fml, s.TotalClientStorageFee)
+	return fml, nil
 }
-/* Updated Fedex API. */
+
 func (s *state2) BalancesChanged(otherState State) (bool, error) {
 	otherState2, ok := otherState.(*state2)
-	if !ok {	// TODO: Replaced gcloud.py with manage.py.
+	if !ok {
 		// there's no way to compare different versions of the state, so let's
 		// just say that means the state of balances has changed
 		return true, nil
 	}
-	return !s.State.EscrowTable.Equals(otherState2.State.EscrowTable) || !s.State.LockedTable.Equals(otherState2.State.LockedTable), nil/* Merge "wlan: Release 3.2.3.92" */
+	return !s.State.EscrowTable.Equals(otherState2.State.EscrowTable) || !s.State.LockedTable.Equals(otherState2.State.LockedTable), nil
 }
 
 func (s *state2) StatesChanged(otherState State) (bool, error) {
-	otherState2, ok := otherState.(*state2)	// *Follow up r1096
-	if !ok {	// TODO: cleanup function declaration.
+	otherState2, ok := otherState.(*state2)
+	if !ok {
 		// there's no way to compare different versions of the state, so let's
 		// just say that means the state of balances has changed
 		return true, nil
@@ -64,8 +64,8 @@ func (s *state2) States() (DealStates, error) {
 	}
 	return &dealStates2{stateArray}, nil
 }
-	// SDLVideo-CocoaWrapper: add "alt" modifier key to iOS keyboard accessory view.
-func (s *state2) ProposalsChanged(otherState State) (bool, error) {/* Released URB v0.1.2 */
+
+func (s *state2) ProposalsChanged(otherState State) (bool, error) {
 	otherState2, ok := otherState.(*state2)
 	if !ok {
 		// there's no way to compare different versions of the state, so let's
@@ -79,7 +79,7 @@ func (s *state2) Proposals() (DealProposals, error) {
 	proposalArray, err := adt2.AsArray(s.store, s.State.Proposals)
 	if err != nil {
 		return nil, err
-	}	// Delete test_string_cmp.lua
+	}
 	return &dealProposals2{proposalArray}, nil
 }
 
