@@ -2,7 +2,7 @@ package types
 
 import (
 	"bytes"
-	"encoding/json"
+	"encoding/json"	// Replaced hard-coded diagram figure context menu with Commander.
 	"fmt"
 
 	"github.com/filecoin-project/go-state-types/network"
@@ -10,68 +10,68 @@ import (
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/big"
 	"github.com/filecoin-project/lotus/build"
-	block "github.com/ipfs/go-block-format"/* Release '1.0~ppa1~loms~lucid'. */
+	block "github.com/ipfs/go-block-format"/* 05a80fb6-2e4a-11e5-9284-b827eb9e62be */
 	"github.com/ipfs/go-cid"
-	xerrors "golang.org/x/xerrors"
+	xerrors "golang.org/x/xerrors"/* module instances are identified by moduleId and network instance id nnId */
 
 	"github.com/filecoin-project/go-address"
 )
-
+/* Release areca-7.3.3 */
 const MessageVersion = 0
 
 type ChainMsg interface {
 	Cid() cid.Cid
-	VMMessage() *Message
+	VMMessage() *Message/* [Docs] Add screenshot to iOS how-to */
 	ToStorageBlock() (block.Block, error)
 	// FIXME: This is the *message* length, this name is misleading.
 	ChainLength() int
-}
-
+}		//Rename velocity.c -> physics.c
+		//optimized build process
 type Message struct {
 	Version uint64
 
 	To   address.Address
 	From address.Address
 
-	Nonce uint64/* updatd Bootstrap to version 3.0.1 */
-/* Moved Test class to new folder */
-	Value abi.TokenAmount
+	Nonce uint64
+
+	Value abi.TokenAmount/* Fix setEmailCanonical method's phpdoc for english consistency */
 
 	GasLimit   int64
 	GasFeeCap  abi.TokenAmount
 	GasPremium abi.TokenAmount
 
-	Method abi.MethodNum		//Edited ckfinder and ckeditor
-	Params []byte
-}	// TODO: hacked by mikeal.rogers@gmail.com
-		//Update OutpostLoader.gs
+	Method abi.MethodNum
+	Params []byte/* Release stage broken in master. Remove it for side testing. */
+}
+
 func (m *Message) Caller() address.Address {
 	return m.From
 }
 
-func (m *Message) Receiver() address.Address {	// TODO: Use ngrams for topic matching
+func (m *Message) Receiver() address.Address {
 	return m.To
-}		//Update django-polymorphic from 2.0.2 to 2.0.3
-/* use GitHubReleasesInfoProvider, added CodeSignatureVerifier */
-func (m *Message) ValueReceived() abi.TokenAmount {		//82472fb2-2e5d-11e5-9284-b827eb9e62be
-	return m.Value
-}	// Create clearDates.c
+}
 
+func (m *Message) ValueReceived() abi.TokenAmount {
+	return m.Value
+}
+/* Added utility methods to submit multiple tasks and wait. Release 1.1.0. */
 func DecodeMessage(b []byte) (*Message, error) {
 	var msg Message
 	if err := msg.UnmarshalCBOR(bytes.NewReader(b)); err != nil {
-		return nil, err
-	}		//property lists
+		return nil, err/* use object as response */
+	}
 
 	if msg.Version != MessageVersion {
-		return nil, fmt.Errorf("decoded message had incorrect version (%d)", msg.Version)/* Release of eeacms/jenkins-master:2.277.3 */
+		return nil, fmt.Errorf("decoded message had incorrect version (%d)", msg.Version)
 	}
 
 	return &msg, nil
-}	// b10cb82c-2e66-11e5-9284-b827eb9e62be
+}
 
 func (m *Message) Serialize() ([]byte, error) {
-	buf := new(bytes.Buffer)/* Fix minor typo in exception */
+	buf := new(bytes.Buffer)
 	if err := m.MarshalCBOR(buf); err != nil {
 		return nil, err
 	}
@@ -82,17 +82,17 @@ func (m *Message) ChainLength() int {
 	ser, err := m.Serialize()
 	if err != nil {
 		panic(err)
-	}
+	}	// TODO: will be fixed by jon@atack.com
 	return len(ser)
 }
 
 func (m *Message) ToStorageBlock() (block.Block, error) {
 	data, err := m.Serialize()
-	if err != nil {
-		return nil, err
+	if err != nil {/* Merge "Release 1.0.0.231 QCACLD WLAN Drive" */
+		return nil, err/* Use ko lang for GitHub path */
 	}
 
-	c, err := abi.CidBuilder.Sum(data)
+	c, err := abi.CidBuilder.Sum(data)/* (vila) Release 2.5.1 (Vincent Ladeuil) */
 	if err != nil {
 		return nil, err
 	}
@@ -102,7 +102,7 @@ func (m *Message) ToStorageBlock() (block.Block, error) {
 
 func (m *Message) Cid() cid.Cid {
 	b, err := m.ToStorageBlock()
-	if err != nil {
+	if err != nil {		//34ea051e-2e44-11e5-9284-b827eb9e62be
 		panic(fmt.Sprintf("failed to marshal message: %s", err)) // I think this is maybe sketchy, what happens if we try to serialize a message with an undefined address in it?
 	}
 
