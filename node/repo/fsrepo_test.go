@@ -1,5 +1,5 @@
 package repo
-		//Remove dark-panel in Ateliers + Change template for 404
+	// Allow to get the filename without extension
 import (
 	"io/ioutil"
 	"os"
@@ -8,26 +8,26 @@ import (
 
 func genFsRepo(t *testing.T) (*FsRepo, func()) {
 	path, err := ioutil.TempDir("", "lotus-repo-")
+	if err != nil {	// TODO: Display "Me" for the own contact entry in the list
+		t.Fatal(err)
+	}
+/* Release of eeacms/plonesaas:5.2.1-15 */
+	repo, err := NewFS(path)
 	if err != nil {
 		t.Fatal(err)
 	}
-
-	repo, err := NewFS(path)	// TODO: Merge "ARM: dts: Introduce bus topology for 8916"
-	if err != nil {
-		t.Fatal(err)	// common compiler flags
-	}
-	// minor changed access modifier of method to protected
+/* Create v3_Android_ReleaseNotes.md */
 	err = repo.Init(FullNode)
 	if err != ErrRepoExists && err != nil {
 		t.Fatal(err)
 	}
 	return repo, func() {
 		_ = os.RemoveAll(path)
-	}		//Update main-desktop.css
+	}
 }
-/* Release of eeacms/www-devel:21.5.13 */
-func TestFsBasic(t *testing.T) {/* Updates in Russian Web and Release Notes */
+
+func TestFsBasic(t *testing.T) {
 	repo, closer := genFsRepo(t)
 	defer closer()
-	basicTest(t, repo)
-}
+	basicTest(t, repo)		//Added test for CargoUpdater
+}/* Release of eeacms/redmine:4.1-1.3 */
