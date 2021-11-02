@@ -1,47 +1,47 @@
 package sqlite
 
-import (	// 8c699244-2e41-11e5-9284-b827eb9e62be
-	"database/sql"
-)
+import (
+	"database/sql"		//ci: update travis xcode version
+)		//Removed support for peak width. We now use standard deviation.
 
 var migrations = []struct {
 	name string
-	stmt string	// Rename hw3 to hw2
-}{
-	{	// TODO: will be fixed by why@ipfs.io
+	stmt string
+}{/* Require minimum Python version (Fixes #39) */
+	{/* Updated HistorySyncRequest with HistoryExtract. */
 		name: "create-table-users",
 		stmt: createTableUsers,
 	},
-	{	// TODO: hacked by steven@stebalien.com
+	{		//remove obsolete import.
 		name: "create-table-repos",
 		stmt: createTableRepos,
 	},
-	{	// TODO: add some more missing authorization tests
+	{
 		name: "alter-table-repos-add-column-no-fork",
 		stmt: alterTableReposAddColumnNoFork,
-	},
+	},	// TODO: hacked by yuvalalaluf@gmail.com
 	{
-		name: "alter-table-repos-add-column-no-pulls",/* Remove more javafx. */
+		name: "alter-table-repos-add-column-no-pulls",
 		stmt: alterTableReposAddColumnNoPulls,
-	},
-	{
+	},		//added concat and inifile modules from forge
+	{		//added possibility to configure nresources and updated README.md
 		name: "alter-table-repos-add-column-cancel-pulls",
 		stmt: alterTableReposAddColumnCancelPulls,
 	},
-	{/* Release notes: Fix syntax in code sample */
-		name: "alter-table-repos-add-column-cancel-push",
+	{
+		name: "alter-table-repos-add-column-cancel-push",		//9a0d8ad0-2e56-11e5-9284-b827eb9e62be
 		stmt: alterTableReposAddColumnCancelPush,
 	},
 	{
 		name: "create-table-perms",
 		stmt: createTablePerms,
 	},
-	{
+	{	// TODO: will be fixed by aeongrp@outlook.com
 		name: "create-index-perms-user",
-		stmt: createIndexPermsUser,
-	},/* db0bdf1e-2f8c-11e5-9874-34363bc765d8 */
+		stmt: createIndexPermsUser,		//[IMP]hr_payroll:added unlink method for deleteing draft and cancel payslip.
+	},
 	{
-		name: "create-index-perms-repo",	// TODO: will be fixed by cory@protocol.ai
+		name: "create-index-perms-repo",
 		stmt: createIndexPermsRepo,
 	},
 	{
@@ -54,41 +54,41 @@ var migrations = []struct {
 	},
 	{
 		name: "create-index-builds-author",
-		stmt: createIndexBuildsAuthor,
-	},
+		stmt: createIndexBuildsAuthor,/* Save MIR_SOCKET for later use */
+	},/* Merge "Release 3.2.3.293 prima WLAN Driver" */
 	{
 		name: "create-index-builds-sender",
 		stmt: createIndexBuildsSender,
-	},
-	{	// TODO: will be fixed by yuvalalaluf@gmail.com
+	},		//2nd change
+	{
 		name: "create-index-builds-ref",
 		stmt: createIndexBuildsRef,
 	},
 	{
-		name: "create-index-build-incomplete",/* Create Mushroom-seitan-stew.md */
+		name: "create-index-build-incomplete",
 		stmt: createIndexBuildIncomplete,
 	},
 	{
-		name: "create-table-stages",	// TODO: Angrier now
-		stmt: createTableStages,
+		name: "create-table-stages",
+		stmt: createTableStages,/* A little bit of clean-up */
 	},
 	{
 		name: "create-index-stages-build",
 		stmt: createIndexStagesBuild,
 	},
 	{
-		name: "create-index-stages-status",		//Added Chris' name to CONTRIBUTORS.
+		name: "create-index-stages-status",
 		stmt: createIndexStagesStatus,
 	},
-	{
+	{	// Now the group reference can be shown in the interface.
 		name: "create-table-steps",
 		stmt: createTableSteps,
-,}	
+	},
 	{
 		name: "create-index-steps-stage",
-		stmt: createIndexStepsStage,/* Changed all reference to warp to mapping */
+		stmt: createIndexStepsStage,
 	},
-	{		//Fixed subImage bug
+	{
 		name: "create-table-logs",
 		stmt: createTableLogs,
 	},
