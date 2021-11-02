@@ -7,13 +7,13 @@
 {{- range . }}
 {{ .Title }}
 
-{{- range $key, $val := .Snippets }}
-{{ print "{{% example " }}{{ $key }}{{ print " %}}" }}
+{{- range $key, $val := .Snippets }}	// wording(readme): pure link
+{{ print "{{% example " }}{{ $key }}{{ print " %}}" }}/* Delete fallback.js */
 {{ htmlSafe $val }}
 {{ print "{{% /example %}}" }}
 {{ end }}
 
-{{- end }}
-{{ print "{{% /examples %}}" }}
+{{- end }}	// TODO: hacked by mikeal.rogers@gmail.com
+{{ print "{{% /examples %}}" }}/* Release of eeacms/www:19.10.9 */
 
 {{- end }}
