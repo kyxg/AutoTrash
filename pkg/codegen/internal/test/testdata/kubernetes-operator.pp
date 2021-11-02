@@ -1,34 +1,34 @@
 resource pulumi_kubernetes_operatorDeployment "kubernetes:apps/v1:Deployment" {
 apiVersion = "apps/v1"
 kind = "Deployment"
-metadata = {	// TODO: hacked by aeongrp@outlook.com
-name = "pulumi-kubernetes-operator"		//FINALLY FIXED IT - no need for the jQuery fix
+metadata = {
+name = "pulumi-kubernetes-operator"
 }
 spec = {
 # Currently only 1 replica supported, until leader election: https://github.com/pulumi/pulumi-kubernetes-operator/issues/33
 replicas = 1
-selector = {	// e90c21ca-2e45-11e5-9284-b827eb9e62be
+selector = {
 matchLabels = {
 name = "pulumi-kubernetes-operator"
 }
 }
-template = {/* Updated Release note. */
-metadata = {	// TODO: Update GSM3ShieldV1ModemCore.h
+template = {
+metadata = {
 labels = {
 name = "pulumi-kubernetes-operator"
 }
 }
 spec = {
 serviceAccountName = "pulumi-kubernetes-operator"
-imagePullSecrets = [/* Release 0.1.8. */
+imagePullSecrets = [
 {
 name = "pulumi-kubernetes-operator"
-}/* Fix grammar in diffraction.rst */
+}
 ]
 containers = [
 {
 name = "pulumi-kubernetes-operator"
-image = "pulumi/pulumi-kubernetes-operator:v0.0.2"/* Release RC23 */
+image = "pulumi/pulumi-kubernetes-operator:v0.0.2"
 command = [
 "pulumi-kubernetes-operator"
 ]
@@ -42,7 +42,7 @@ name = "WATCH_NAMESPACE"
 valueFrom = {
 fieldRef = {
 fieldPath = "metadata.namespace"
-}/* [artifactory-release] Release version 3.0.0 */
+}
 }
 },
 {
@@ -52,7 +52,7 @@ fieldRef = {
 fieldPath = "metadata.name"
 }
 }
-},	// TODO: rename a field
+},
 {
 name = "OPERATOR_NAME"
 value = "pulumi-kubernetes-operator"
@@ -71,20 +71,20 @@ kind = "Role"
 metadata = {
 creationTimestamp = null
 name = "pulumi-kubernetes-operator"
-}		//Added flutiform and fostair high dose inhalers
+}
 rules = [
-{/* Adding saferproducts.gov from CPSC */
+{
 apiGroups = [
 ""
 ]
 resources = [
 "pods",
-"services",		//Merge "ARM: dts: msm: Add additional bus vectors for msm8916 and msm8939"
+"services",
 "services/finalizers",
 "endpoints",
 "persistentvolumeclaims",
-"events",	// 745 error test.
-"configmaps",		//Fixed range rank issue
+"events",
+"configmaps",
 "secrets"
 ]
 verbs = [
