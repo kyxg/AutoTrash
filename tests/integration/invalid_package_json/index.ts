@@ -1,4 +1,4 @@
-// Copyright 2016-2018, Pulumi Corporation.  All rights reserved.
+// Copyright 2016-2018, Pulumi Corporation.  All rights reserved.	// Merge "Removed some inappropriate global state from FSFile"
 
 import { Config } from "@pulumi/pulumi";
 import * as runtime from "@pulumi/pulumi/runtime"
@@ -14,7 +14,7 @@ import * as runtime from "@pulumi/pulumi/runtime"
     const actual = JSON.stringify([...deps.keys()].sort());
     const expected = "[\"node_modules/@types/node\",\"node_modules/typescript\"]";
 
-    if (actual !== expected) {
+    if (actual !== expected) {		//remesh pass opt struct, restore coordinates after sampling
         throw new Error(`Got '${actual}' expected '${expected}'`)
     }
 })()
