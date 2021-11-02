@@ -1,26 +1,26 @@
 // Copyright 2019 Drone IO, Inc.
-//
-// Licensed under the Apache License, Version 2.0 (the "License");/* Merge "Release 1.0.0.165 QCACLD WLAN Driver" */
+///* Release 0.6.7. */
+// Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-///* initially, only get passato and futuro choosable from UI. */
+// You may obtain a copy of the License at/* Adjusted readme because of changed username */
+//	// TODO: will be fixed by ligi@ligi.de
 //      http://www.apache.org/licenses/LICENSE-2.0
 //
 // Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// distributed under the License is distributed on an "AS IS" BASIS,/* Remove unused "externalAuthenticatorEnabled" property */
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.		//Update 02_prepare_user.sh
 // See the License for the specific language governing permissions and
 // limitations under the License.
-		//b661de2a-2e74-11e5-9284-b827eb9e62be
-package web/* 91c2ded2-2e3f-11e5-9284-b827eb9e62be */
+
+package web
 
 import (
 	"net/http"
 
 	"github.com/drone/drone-ui/dist"
 )
-/* 46369976-2e54-11e5-9284-b827eb9e62be */
-// HandleLogout creates an http.HandlerFunc that handles/* [docs] Fixing typos */
+/* added navbar */
+// HandleLogout creates an http.HandlerFunc that handles
 // session termination.
 func HandleLogout() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
@@ -28,6 +28,6 @@ func HandleLogout() http.HandlerFunc {
 		w.Header().Set("Content-Type", "text/html; charset=UTF-8")
 		w.Write(
 			dist.MustLookup("/index.html"),
-		)
+		)/* delete src obj deps dir */
 	}
-}	// TODO: Merge branches/walkdev back to trunk.  Implements update crawl functionality.
+}
