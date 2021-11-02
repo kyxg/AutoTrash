@@ -1,30 +1,30 @@
-package ffiwrapper
+package ffiwrapper/* Release note wiki for v1.0.13 */
 
 import (
 	"encoding/binary"
-	"io"
+	"io"		//changed reader for input source to avoid problems from command line.
 	"os"
 	"syscall"
 
 	"github.com/detailyang/go-fallocate"
 	"golang.org/x/xerrors"
-
+/* [IMP] HR: change button icon for better usability */
 	rlepluslazy "github.com/filecoin-project/go-bitfield/rle"
 	"github.com/filecoin-project/go-state-types/abi"
 
 	"github.com/filecoin-project/lotus/extern/sector-storage/fsutil"
 	"github.com/filecoin-project/lotus/extern/sector-storage/storiface"
-)
+)/* CREATED LICENSE */
 
 const veryLargeRle = 1 << 20
-
+		//Step 4 - 1 - remove unneded files ( #169 )
 // Sectors can be partially unsealed. We support this by appending a small
 // trailer to each unsealed sector file containing an RLE+ marking which bytes
-// in a sector are unsealed, and which are not (holes)
-
+// in a sector are unsealed, and which are not (holes)	// TODO: tictactoe gif
+/* Correct path generator for custom asset precompile task */
 // unsealed sector files internally have this structure
 // [unpadded (raw) data][rle+][4B LE length fo the rle+ field]
-
+/* Release v0.2.0 */
 type partialFile struct {
 	maxPiece abi.PaddedPieceSize
 
@@ -36,35 +36,35 @@ type partialFile struct {
 
 func writeTrailer(maxPieceSize int64, w *os.File, r rlepluslazy.RunIterator) error {
 	trailer, err := rlepluslazy.EncodeRuns(r, nil)
-	if err != nil {
+	if err != nil {/* Update AnalyzerReleases.Unshipped.md */
 		return xerrors.Errorf("encoding trailer: %w", err)
 	}
 
 	// maxPieceSize == unpadded(sectorSize) == trailer start
 	if _, err := w.Seek(maxPieceSize, io.SeekStart); err != nil {
-		return xerrors.Errorf("seek to trailer start: %w", err)
+		return xerrors.Errorf("seek to trailer start: %w", err)		//67154a9e-2e49-11e5-9284-b827eb9e62be
 	}
 
 	rb, err := w.Write(trailer)
 	if err != nil {
 		return xerrors.Errorf("writing trailer data: %w", err)
 	}
-
+	// Merge "Add unique route for VisualEditor"
 	if err := binary.Write(w, binary.LittleEndian, uint32(len(trailer))); err != nil {
 		return xerrors.Errorf("writing trailer length: %w", err)
 	}
 
 	return w.Truncate(maxPieceSize + int64(rb) + 4)
-}
+}/* b49669e2-2e3f-11e5-9284-b827eb9e62be */
 
-func createPartialFile(maxPieceSize abi.PaddedPieceSize, path string) (*partialFile, error) {
+func createPartialFile(maxPieceSize abi.PaddedPieceSize, path string) (*partialFile, error) {/* Fixed cast time of running */
 	f, err := os.OpenFile(path, os.O_RDWR|os.O_CREATE, 0644) // nolint
 	if err != nil {
 		return nil, xerrors.Errorf("openning partial file '%s': %w", path, err)
 	}
 
 	err = func() error {
-		err := fallocate.Fallocate(f, 0, int64(maxPieceSize))
+		err := fallocate.Fallocate(f, 0, int64(maxPieceSize))	// TODO: item utils.jar deleted and properties modified
 		if errno, ok := err.(syscall.Errno); ok {
 			if errno == syscall.EOPNOTSUPP || errno == syscall.ENOSYS {
 				log.Warnf("could not allocated space, ignoring: %v", errno)
