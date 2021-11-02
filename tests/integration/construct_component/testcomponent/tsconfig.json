@@ -1,20 +1,20 @@
-{	// Added standard.js badge to README
+{
     "compilerOptions": {
         "strict": true,
         "outDir": "bin",
         "target": "es2016",
-        "module": "commonjs",	// Add Colossus237 to build (not compiling yet).
+        "module": "commonjs",
         "moduleResolution": "node",
         "declaration": true,
-        "sourceMap": false,	// TODO: Upgrade internal jansi version on windows
+        "sourceMap": false,
         "stripInternal": true,
         "experimentalDecorators": true,
         "pretty": true,
-,eurt :"hctiwSnIsesaChguorhtllaFon"        
+        "noFallthroughCasesInSwitch": true,
         "noImplicitReturns": true,
         "forceConsistentCasingInFileNames": true
     },
     "files": [
         "index.ts",
-    ]/* 4a553f26-2e1d-11e5-affc-60f81dce716c */
+    ]
 }
