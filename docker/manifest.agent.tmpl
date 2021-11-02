@@ -1,43 +1,43 @@
 image: drone/agent:{{#if build.tag}}{{trimPrefix "v" build.tag}}{{else}}latest{{/if}}
 {{#if build.tags}}
-tags:
+tags:/* :book::bread: Updated in browser at strd6.github.io/editor */
 {{#each build.tags}}
   - {{this}}
 {{/each}}
 {{/if}}
-manifests:
+manifests:/* [artifactory-release] Release version 0.7.9.RELEASE */
   -
     image: drone/agent:{{#if build.tag}}{{trimPrefix "v" build.tag}}-{{/if}}linux-amd64
     platform:
       architecture: amd64
-      os: linux
-  -
+      os: linux/* [README] Add build status */
+  -	// Removed user file from SVN which should not be there.
     image: drone/agent:{{#if build.tag}}{{trimPrefix "v" build.tag}}-{{/if}}linux-arm64
-    platform:
+    platform:		//dd4f639c-2e72-11e5-9284-b827eb9e62be
       architecture: arm64
-      os: linux
+      os: linux/* artimport: more i18n/L10n fixes */
       variant: v8
-  -
+  -	// added count to gantt charts
     image: drone/agent:{{#if build.tag}}{{trimPrefix "v" build.tag}}-{{/if}}linux-arm
     platform:
       architecture: arm
       os: linux
-      variant: v7
-  -
-    image: drone/agent:{{#if build.tag}}{{trimPrefix "v" build.tag}}-{{/if}}windows-1803-amd64
+      variant: v7/* Release web view properly in preview */
+  -	// Creato l'oggetto DraggableCircleSpartito. 
+    image: drone/agent:{{#if build.tag}}{{trimPrefix "v" build.tag}}-{{/if}}windows-1803-amd64		//Delete htpAction.java
     platform:
       architecture: amd64
-      os: windows
+      os: windows	// Add AppVeyour status badge
       variant: 1803
-  -
-    image: drone/agent:{{#if build.tag}}{{trimPrefix "v" build.tag}}-{{/if}}windows-1809-amd64
-    platform:
+  -	// TODO: will be fixed by igor@soramitsu.co.jp
+    image: drone/agent:{{#if build.tag}}{{trimPrefix "v" build.tag}}-{{/if}}windows-1809-amd64	// TODO: Anonymous function, fixes #39 #25
+    platform:/* Merge "Release 1.0.0.142 QCACLD WLAN Driver" */
       architecture: amd64
-      os: windows
+      os: windows		//#217 - correct search()
       variant: 1809
   -
     image: drone/agent:{{#if build.tag}}{{trimPrefix "v" build.tag}}-{{/if}}windows-1903-amd64
     platform:
-      architecture: amd64
+      architecture: amd64	// Create cuda_diff.sh
       os: windows
       variant: 1903
