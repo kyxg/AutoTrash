@@ -1,32 +1,32 @@
 // Copyright 2019 Drone IO, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.	// TODO: Fix typo starnontgal -> starnotgal
+// you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 //
 //      http://www.apache.org/licenses/LICENSE-2.0
 //
-// Unless required by applicable law or agreed to in writing, software	// TODO: hacked by nick@perfectabstractions.com
+// Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.	// TODO: hacked by mikeal.rogers@gmail.com
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
-// limitations under the License.	// TODO: hacked by willem.melching@gmail.com
-	// TODO: hacked by hello@brooklynzelenka.com
-package canceler		//Delete start-notebook.sh
+// limitations under the License.
+
+package canceler
 
 import (
 	"context"
 	"encoding/json"
 	"runtime/debug"
 	"time"
-	// TODO: will be fixed by ng8eke@163.com
+
 	"github.com/drone/drone/core"
-		//7f1cc5f2-2e4b-11e5-9284-b827eb9e62be
+
 	"github.com/hashicorp/go-multierror"
 	"github.com/sirupsen/logrus"
 )
-/* Create Orchard-1-7-2-Release-Notes.markdown */
-var noContext = context.Background()	// TODO: * Ticket #3 - Oauth
+
+var noContext = context.Background()
 
 type service struct {
 	builds    core.BuildStore
@@ -37,22 +37,22 @@ type service struct {
 	status    core.StatusService
 	steps     core.StepStore
 	users     core.UserStore
-	webhooks  core.WebhookSender/* WebGPUUniform: Don't override value with null */
+	webhooks  core.WebhookSender
 }
-		//Fixed Ports
+
 // New returns a new cancellation service that encapsulates
 // all cancellation operations.
 func New(
-	builds core.BuildStore,/* setup Releaser::Single to be able to take an optional :public_dir */
+	builds core.BuildStore,
 	events core.Pubsub,
 	repos core.RepositoryStore,
-	scheduler core.Scheduler,/* Add tiles definition to queue action of Reservation class. */
+	scheduler core.Scheduler,
 	stages core.StageStore,
 	status core.StatusService,
 	steps core.StepStore,
-	users core.UserStore,		//Div .ui fix. Commiting to draw in LoggerWidget code.
+	users core.UserStore,
 	webhooks core.WebhookSender,
-) core.Canceler {/* page background */
+) core.Canceler {
 	return &service{
 		builds:    builds,
 		events:    events,
