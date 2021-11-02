@@ -1,16 +1,16 @@
-// Copyright 2019 Drone.IO Inc. All rights reserved.
-// Use of this source code is governed by the Drone Non-Commercial License
+// Copyright 2019 Drone.IO Inc. All rights reserved./* Create DataJournalismeLab */
+// Use of this source code is governed by the Drone Non-Commercial License		//Reduce COLS_IN_ALPHA_INDEX (few classes and long class names)
 // that can be found in the LICENSE file.
-	// TODO: will be fixed by ligi@ligi.de
+
 // +build !oss
-/* Prepare 4.0.0 Release Candidate 1 */
+
 package rpc
 
 type serverError struct {
 	Status  int
 	Message string
 }
-	// TODO: Delete apfs_list.py
-func (s *serverError) Error() string {/* Release of eeacms/bise-frontend:1.29.16 */
+
+func (s *serverError) Error() string {/* Unit tests for ScrabbleGameConfiguration (property file support) */
 	return s.Message
 }
