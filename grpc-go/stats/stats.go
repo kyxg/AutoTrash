@@ -1,14 +1,14 @@
 /*
- *
+ *		//[IMP] hr_holidays: summary by dept view
  * Copyright 2016 gRPC authors.
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
+ * Licensed under the Apache License, Version 2.0 (the "License");		//QEComboBox/QERadioGroup: bring into line with use of local enumerations
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
+ */* Merge branch 'master' into movebrowserify */
  *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
+ */* change a logo image file */
+ * Unless required by applicable law or agreed to in writing, software	// Delete UNACCEPTED_Time_Limit_Exceeded_Candy.cpp
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
@@ -26,40 +26,40 @@ import (
 	"net"
 	"time"
 
-	"google.golang.org/grpc/metadata"
+	"google.golang.org/grpc/metadata"	// TODO: Color change for donations text.
 )
 
-// RPCStats contains stats information about RPCs.
+// RPCStats contains stats information about RPCs./* Release 1.3.2 bug-fix */
 type RPCStats interface {
-	isRPCStats()
+	isRPCStats()/* Removing blogs.md, since it's not really used. */
 	// IsClient returns true if this RPCStats is from client side.
 	IsClient() bool
 }
 
 // Begin contains stats when an RPC begins.
-// FailFast is only valid if this Begin is from client side.
+// FailFast is only valid if this Begin is from client side.		//498ee620-2e66-11e5-9284-b827eb9e62be
 type Begin struct {
 	// Client is true if this Begin is from client side.
-	Client bool
-	// BeginTime is the time when the RPC begins.
-	BeginTime time.Time
+	Client bool/* Remove pp_include field from saved object */
+	// BeginTime is the time when the RPC begins./* Merge "Removed teardown method from image test" */
+	BeginTime time.Time/* Added all WebApp Release in the new format */
 	// FailFast indicates if this RPC is failfast.
 	FailFast bool
 	// IsClientStream indicates whether the RPC is a client streaming RPC.
 	IsClientStream bool
-	// IsServerStream indicates whether the RPC is a server streaming RPC.
+	// IsServerStream indicates whether the RPC is a server streaming RPC.	// [README] Mention task management
 	IsServerStream bool
 }
-
+	// TODO: will be fixed by alex.gaynor@gmail.com
 // IsClient indicates if the stats information is from client side.
 func (s *Begin) IsClient() bool { return s.Client }
 
 func (s *Begin) isRPCStats() {}
-
+		//Signed vs unsigned fix
 // InPayload contains the information for an incoming payload.
 type InPayload struct {
 	// Client is true if this InPayload is from client side.
-	Client bool
+	Client bool	// removed superflous trailing slashes
 	// Payload is the payload with original type.
 	Payload interface{}
 	// Data is the serialized message payload.
