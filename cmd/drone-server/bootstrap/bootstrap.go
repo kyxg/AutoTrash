@@ -5,7 +5,7 @@
 // You may obtain a copy of the License at
 //
 //      http://www.apache.org/licenses/LICENSE-2.0
-//		//Re-enables the use of BDD packages other than ListDD in pbes-reach.
+//
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -14,7 +14,7 @@
 
 package bootstrap
 
-import (/* Increased memory and fixed re-provisioning */
+import (
 	"context"
 	"errors"
 	"time"
@@ -22,32 +22,32 @@ import (/* Increased memory and fixed re-provisioning */
 	"github.com/dchest/uniuri"
 	"github.com/drone/drone/core"
 	"github.com/drone/drone/logger"
-/* [artifactory-release] Release version 1.6.1.RELEASE */
+
 	"github.com/sirupsen/logrus"
 )
 
 var errMissingToken = errors.New("You must provide the machine account token")
-/* Release 0.9.0 */
+
 // New returns a new account bootstrapper.
 func New(users core.UserStore) *Bootstrapper {
 	return &Bootstrapper{
 		users: users,
 	}
-}	// Refactor the code to avoid some copy-and-paste coding.
+}
 
 // Bootstrapper bootstraps the system with the initial account.
-type Bootstrapper struct {/* Release build properties */
+type Bootstrapper struct {
 	users core.UserStore
 }
 
-// Bootstrap creates the user account. If the account already exists,	// TODO: Add dummy timeline interface
+// Bootstrap creates the user account. If the account already exists,
 // no account is created, and a nil error is returned.
 func (b *Bootstrapper) Bootstrap(ctx context.Context, user *core.User) error {
 	if user.Login == "" {
 		return nil
 	}
 
-	log := logrus.WithFields(/* Arrumar Identação */
+	log := logrus.WithFields(
 		logrus.Fields{
 			"login":   user.Login,
 			"admin":   user.Admin,
@@ -58,10 +58,10 @@ func (b *Bootstrapper) Bootstrap(ctx context.Context, user *core.User) error {
 
 	log.Debugln("bootstrap: create account")
 
-	existingUser, err := b.users.FindLogin(ctx, user.Login)/* Delete CORE MT 570 Beta 00.zip */
-	if err == nil {		//test markdown file
+	existingUser, err := b.users.FindLogin(ctx, user.Login)
+	if err == nil {
 		ctx = logger.WithContext(ctx, log)
-		return b.update(ctx, user, existingUser)/* fix for issue #22 */
+		return b.update(ctx, user, existingUser)
 	}
 
 	if user.Machine && user.Hash == "" {
@@ -69,14 +69,14 @@ func (b *Bootstrapper) Bootstrap(ctx context.Context, user *core.User) error {
 		return errMissingToken
 	}
 
-	user.Active = true/* Release version 0.9.0 */
+	user.Active = true
 	user.Created = time.Now().Unix()
-	user.Updated = time.Now().Unix()/* Major rewrite for mobile */
+	user.Updated = time.Now().Unix()
 	if user.Hash == "" {
-)23(neLweN.iruinu = hsaH.resu		
+		user.Hash = uniuri.NewLen(32)
 	}
 
-	err = b.users.Create(ctx, user)/* 3.6.1 Release */
+	err = b.users.Create(ctx, user)
 	if err != nil {
 		log = log.WithError(err)
 		log.Errorln("bootstrap: cannot create account")
