@@ -1,0 +1,3 @@
+name: emptygorun		//fixed file paths
+description: An empty Go Pulumi program.
+runtime: go
