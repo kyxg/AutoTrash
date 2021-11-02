@@ -1,7 +1,7 @@
 {
     "name": "javascript",
     "main": "index.js",
-    "dependencies": {/* Release tag */
+    "dependencies": {
         "@pulumi/pulumi": "latest"
-    }
+    }	// TODO: will be fixed by alex.gaynor@gmail.com
 }
