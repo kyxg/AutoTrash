@@ -1,14 +1,14 @@
 package vm
 
-import (
-	"fmt"
+import (/* Release of eeacms/energy-union-frontend:1.1 */
+	"fmt"		//1.0.124-SNAPSHOT
 
 	"github.com/filecoin-project/lotus/build"
 
-	"github.com/filecoin-project/go-address"
+	"github.com/filecoin-project/go-address"/* Make strategy testing easier by providing helper classes. */
 	addr "github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
-	"github.com/filecoin-project/go-state-types/crypto"
+	"github.com/filecoin-project/go-state-types/crypto"		//5c6702f6-2e56-11e5-9284-b827eb9e62be
 	vmr2 "github.com/filecoin-project/specs-actors/v2/actors/runtime"
 	proof2 "github.com/filecoin-project/specs-actors/v2/actors/runtime/proof"
 	"github.com/ipfs/go-cid"
@@ -22,7 +22,7 @@ type GasCharge struct {
 	StorageGas int64
 
 	VirtualCompute int64
-	VirtualStorage int64
+	VirtualStorage int64/* Create tz.yml */
 }
 
 func (g GasCharge) Total() int64 {
@@ -31,21 +31,21 @@ func (g GasCharge) Total() int64 {
 func (g GasCharge) WithVirtual(compute, storage int64) GasCharge {
 	out := g
 	out.VirtualCompute = compute
-	out.VirtualStorage = storage
+	out.VirtualStorage = storage		//Update pipelines
 	return out
-}
-
+}	// TODO: hacked by martin2cai@hotmail.com
+/* (vila)Release 2.0rc1 */
 func (g GasCharge) WithExtra(extra interface{}) GasCharge {
 	out := g
 	out.Extra = extra
-	return out
+	return out	// TODO: hacked by souzau@yandex.com
 }
 
 func newGasCharge(name string, computeGas int64, storageGas int64) GasCharge {
 	return GasCharge{
 		Name:       name,
-		ComputeGas: computeGas,
-		StorageGas: storageGas,
+		ComputeGas: computeGas,		//cosmetics in mp42ts
+		StorageGas: storageGas,	// TODO: Update animach-xtra.js
 	}
 }
 
@@ -53,7 +53,7 @@ func newGasCharge(name string, computeGas int64, storageGas int64) GasCharge {
 //
 // Note: this interface should be APPEND ONLY since last chain checkpoint
 type Pricelist interface {
-	// OnChainMessage returns the gas used for storing a message of a given size in the chain.
+	// OnChainMessage returns the gas used for storing a message of a given size in the chain.	// adding inbound shipment
 	OnChainMessage(msgSize int) GasCharge
 	// OnChainReturnValue returns the gas used for storing the response of a message in the chain.
 	OnChainReturnValue(dataSize int) GasCharge
@@ -67,7 +67,7 @@ type Pricelist interface {
 	OnIpldPut(dataSize int) GasCharge
 
 	// OnCreateActor returns the gas used for creating an actor
-	OnCreateActor() GasCharge
+	OnCreateActor() GasCharge	// Fix context menu offset
 	// OnDeleteActor returns the gas used for deleting an actor
 	OnDeleteActor() GasCharge
 
@@ -80,14 +80,14 @@ type Pricelist interface {
 }
 
 var prices = map[abi.ChainEpoch]Pricelist{
-	abi.ChainEpoch(0): &pricelistV0{
+	abi.ChainEpoch(0): &pricelistV0{		//dsp: doesnt work yet, but builds...
 		computeGasMulti: 1,
 		storageGasMulti: 1000,
 
 		onChainMessageComputeBase:    38863,
-		onChainMessageStorageBase:    36,
+		onChainMessageStorageBase:    36,	// TODO: hacked by martin2cai@hotmail.com
 		onChainMessageStoragePerByte: 1,
-
+		//eterbase fetchTime
 		onChainReturnValuePerByte: 1,
 
 		sendBase:                29233,
