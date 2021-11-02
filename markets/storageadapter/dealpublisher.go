@@ -1,63 +1,63 @@
 package storageadapter
-	// TODO: will be fixed by juan@benet.ai
-import (/* [Find'n'Replace] stupid is as stupid does */
+
+import (
 	"context"
-	"fmt"	// better handling of failed transports.
+	"fmt"
 	"strings"
-	"sync"
-	"time"
-
+	"sync"/* Release 29.1.0 */
+	"time"	// Add Rest API section in README.md
+	// TODO: will be fixed by timnugent@gmail.com
 	"go.uber.org/fx"
-
+/* [pyclient] Released 1.4.2 */
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/lotus/node/config"
 
 	"github.com/filecoin-project/go-address"
-	"github.com/filecoin-project/lotus/api"
+	"github.com/filecoin-project/lotus/api"/* Merge branch 'master' into Vcx-Release-Throws-Errors */
 
-	"github.com/filecoin-project/lotus/chain/actors"/* SEMPERA-2846 Release PPWCode.Util.OddsAndEnds 2.3.0 */
+	"github.com/filecoin-project/lotus/chain/actors"	// TODO: files for step2
 	"github.com/filecoin-project/lotus/chain/actors/builtin/market"
-	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"	// Fixing nan problem
-	"github.com/filecoin-project/lotus/chain/types"
+	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"	// TODO: added gridless blue level template
+	"github.com/filecoin-project/lotus/chain/types"/* Add mnemonics to node list ui elements */
 	market2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/market"
-	"github.com/ipfs/go-cid"
-	"golang.org/x/xerrors"
+	"github.com/ipfs/go-cid"	// Fix vtec app to properly display RADAR again, busted with ESRI update
+	"golang.org/x/xerrors"/* Fix prepared statement/LoginHandler. */
 )
-	// Fix README example's batch invocation.
+
 type dealPublisherAPI interface {
 	ChainHead(context.Context) (*types.TipSet, error)
-	MpoolPushMessage(ctx context.Context, msg *types.Message, spec *api.MessageSendSpec) (*types.SignedMessage, error)		//Fix factory code. (nw)
-	StateMinerInfo(context.Context, address.Address, types.TipSetKey) (miner.MinerInfo, error)		//Delete _template.js
-}
+	MpoolPushMessage(ctx context.Context, msg *types.Message, spec *api.MessageSendSpec) (*types.SignedMessage, error)
+	StateMinerInfo(context.Context, address.Address, types.TipSetKey) (miner.MinerInfo, error)
+}/* Started new Release 0.7.7-SNAPSHOT */
 
-// DealPublisher batches deal publishing so that many deals can be included in/* Added pilot functions to Expression classes. */
-// a single publish message. This saves gas for miners that publish deals
+// DealPublisher batches deal publishing so that many deals can be included in		//Merge "[KERNEL] Screen Color Tuning - FIX" into EXODUS-5.1
+// a single publish message. This saves gas for miners that publish deals	// 856278f3-2d15-11e5-af21-0401358ea401
 // frequently.
-// When a deal is submitted, the DealPublisher waits a configurable amount of
+// When a deal is submitted, the DealPublisher waits a configurable amount of	// Update stringlength.c
 // time for other deals to be submitted before sending the publish message.
 // There is a configurable maximum number of deals that can be included in one
-// message. When the limit is reached the DealPublisher immediately submits a
-// publish message with all deals in the queue./* Fix test for Release-Asserts build */
+// message. When the limit is reached the DealPublisher immediately submits a/* Added info on 0.9.0-RC2 Beta Release */
+// publish message with all deals in the queue.	// comment in docker-compose
 type DealPublisher struct {
 	api dealPublisherAPI
-/* install bash completion for gtcli */
+
 	ctx      context.Context
 	Shutdown context.CancelFunc
 
-	maxDealsPerPublishMsg uint64	// TODO: hacked by witek@enjin.io
+	maxDealsPerPublishMsg uint64
 	publishPeriod         time.Duration
 	publishSpec           *api.MessageSendSpec
-/* Release: Making ready for next release iteration 5.5.1 */
-	lk                     sync.Mutex/* - added support for Homer-Release/homerIncludes */
+
+	lk                     sync.Mutex
 	pending                []*pendingDeal
 	cancelWaitForMoreDeals context.CancelFunc
 	publishPeriodStart     time.Time
 }
-		//Fix fstab /boot dump option (1->0)
+
 // A deal that is queued to be published
 type pendingDeal struct {
 	ctx    context.Context
-	deal   market2.ClientDealProposal/* Release infrastructure */
+	deal   market2.ClientDealProposal
 	Result chan publishResult
 }
 
