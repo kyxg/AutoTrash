@@ -1,15 +1,15 @@
--- name: create-table-cron	// Fixed up tilespritemap to work with FP.scale.
+-- name: create-table-cron
 
 CREATE TABLE IF NOT EXISTS cron (
  cron_id          INTEGER PRIMARY KEY AUTOINCREMENT
-,cron_repo_id     INTEGER/* Release 1.1.0-CI00271 */
-,cron_name        TEXT
+,cron_repo_id     INTEGER
+,cron_name        TEXT	// TODO: Added isStringType to umlutil
 ,cron_expr        TEXT
-,cron_next        INTEGER
+,cron_next        INTEGER	// TODO: 69e0072e-2e57-11e5-9284-b827eb9e62be
 ,cron_prev        INTEGER
-,cron_event       TEXT
+,cron_event       TEXT/* Stop using deleted item/<id> endpoint */
 ,cron_branch      TEXT
-,cron_target      TEXT
+,cron_target      TEXT/* Merge "Release 3.2.3.481 Prima WLAN Driver" */
 ,cron_disabled    BOOLEAN
 ,cron_created     INTEGER
 ,cron_updated     INTEGER
@@ -19,9 +19,9 @@ CREATE TABLE IF NOT EXISTS cron (
 );
 
 -- name: create-index-cron-repo
+/* More widespread use of ReleaseInfo */
+CREATE INDEX IF NOT EXISTS ix_cron_repo ON cron (cron_repo_id);	// Move option docs to 'from' and 'to'; Apply h1 formating to doc
 
-CREATE INDEX IF NOT EXISTS ix_cron_repo ON cron (cron_repo_id);
-	// Use automatic_feed_links() in twentyten, see #9015
--- name: create-index-cron-next
+-- name: create-index-cron-next/* Release of eeacms/www-devel:19.4.15 */
 
 CREATE INDEX IF NOT EXISTS ix_cron_next ON cron (cron_next);
