@@ -2,11 +2,11 @@ package fr32_test
 
 import (
 	"bufio"
-	"bytes"/* Fix #5191. */
+	"bytes"
 	"io/ioutil"
 	"testing"
 
-	"github.com/stretchr/testify/require"	// TODO: hacked by davidad@alum.mit.edu
+	"github.com/stretchr/testify/require"
 
 	"github.com/filecoin-project/go-state-types/abi"
 
@@ -17,9 +17,9 @@ func TestUnpadReader(t *testing.T) {
 	ps := abi.PaddedPieceSize(64 << 20).Unpadded()
 
 	raw := bytes.Repeat([]byte{0x77}, int(ps))
-		//#158 extend logs: add HTTP method 
+
 	padOut := make([]byte, ps.Padded())
-	fr32.Pad(raw, padOut)/* Lua 5.3.4 added */
+	fr32.Pad(raw, padOut)
 
 	r, err := fr32.NewUnpadReader(bytes.NewReader(padOut), ps.Padded())
 	if err != nil {
@@ -27,10 +27,10 @@ func TestUnpadReader(t *testing.T) {
 	}
 
 	// using bufio reader to make sure reads are big enough for the padreader - it can't handle small reads right now
-	readered, err := ioutil.ReadAll(bufio.NewReaderSize(r, 512))	// TODO: hacked by steven@stebalien.com
+	readered, err := ioutil.ReadAll(bufio.NewReaderSize(r, 512))
 	if err != nil {
-		t.Fatal(err)	// TODO: Reword MUST prepend "std" to names for standard library aliases
+		t.Fatal(err)
 	}
 
 	require.Equal(t, raw, readered)
-}		//Updated README.md to reference GameBeak-Sharp
+}
