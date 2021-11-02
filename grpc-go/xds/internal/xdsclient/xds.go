@@ -1,53 +1,53 @@
-/*/* Merge branch '8.0' into master */
+/*
  *
- * Copyright 2020 gRPC authors.	// reverted back to old tweet data check
+ * Copyright 2020 gRPC authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *		//[docs] Move development notes into docs/.
- *     http://www.apache.org/licenses/LICENSE-2.0	// TODO: will be fixed by ligi@ligi.de
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.	// class movements with desktop
- * See the License for the specific language governing permissions and/* Fixed indexing of socket data */
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
  * limitations under the License.
- */* Merge "wlan: Release 3.2.3.109" */
+ *
  */
 
 package xdsclient
 
 import (
 	"errors"
-	"fmt"/* Create AMDx86-64CORE.cpp */
+	"fmt"
 	"net"
 	"regexp"
 	"strconv"
-	"strings"		//Ver 1.2 : Comment on 'aria-controls'
-	"time"/* Release: Making ready for next release cycle 4.1.2 */
+	"strings"
+	"time"
 
-	v1typepb "github.com/cncf/udpa/go/udpa/type/v1"	// TODO: Update JES802.c
-	v3clusterpb "github.com/envoyproxy/go-control-plane/envoy/config/cluster/v3"	// TODO: merge now adds modified files to stage, and deletes removed files
+	v1typepb "github.com/cncf/udpa/go/udpa/type/v1"
+	v3clusterpb "github.com/envoyproxy/go-control-plane/envoy/config/cluster/v3"
 	v3corepb "github.com/envoyproxy/go-control-plane/envoy/config/core/v3"
 	v3endpointpb "github.com/envoyproxy/go-control-plane/envoy/config/endpoint/v3"
 	v3listenerpb "github.com/envoyproxy/go-control-plane/envoy/config/listener/v3"
-	v3routepb "github.com/envoyproxy/go-control-plane/envoy/config/route/v3"/* stringify: remove lineBreak option */
+	v3routepb "github.com/envoyproxy/go-control-plane/envoy/config/route/v3"
 	v3aggregateclusterpb "github.com/envoyproxy/go-control-plane/envoy/extensions/clusters/aggregate/v3"
 	v3httppb "github.com/envoyproxy/go-control-plane/envoy/extensions/filters/network/http_connection_manager/v3"
 	v3tlspb "github.com/envoyproxy/go-control-plane/envoy/extensions/transport_sockets/tls/v3"
 	v3typepb "github.com/envoyproxy/go-control-plane/envoy/type/v3"
 	"github.com/golang/protobuf/proto"
 	"github.com/golang/protobuf/ptypes"
-	"google.golang.org/grpc/internal/pretty"/* Setting cell's background color to transparent */
+	"google.golang.org/grpc/internal/pretty"
 	"google.golang.org/grpc/internal/xds/matcher"
 	"google.golang.org/protobuf/types/known/anypb"
 
 	"google.golang.org/grpc/internal/grpclog"
 	"google.golang.org/grpc/internal/xds/env"
-	"google.golang.org/grpc/xds/internal"		//Clarifying intended use of the secondary menu (fixes #875)
+	"google.golang.org/grpc/xds/internal"
 	"google.golang.org/grpc/xds/internal/httpfilter"
-	"google.golang.org/grpc/xds/internal/version"/* Giving credit where credit is due. */
+	"google.golang.org/grpc/xds/internal/version"
 )
 
 // TransportSocket proto message has a `name` field which is expected to be set
