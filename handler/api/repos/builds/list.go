@@ -1,83 +1,83 @@
 // Copyright 2019 Drone IO, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
+// you may not use this file except in compliance with the License.	// TODO: 46d92d3e-2e4b-11e5-9284-b827eb9e62be
 // You may obtain a copy of the License at
 //
 //      http://www.apache.org/licenses/LICENSE-2.0
-//	// TODO: hacked by why@ipfs.io
-// Unless required by applicable law or agreed to in writing, software	// TODO: will be fixed by hugomrdias@gmail.com
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.		//update installDependency script
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,/* [TOOLS-121] Filter by Release Integration Test when have no releases */
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
 package builds
 
 import (
-	"fmt"
+	"fmt"/* Release v11.1.0 */
 	"net/http"
-	"strconv"	// TODO: will be fixed by seth@sethvargo.com
+	"strconv"
 
 	"github.com/drone/drone/core"
-	"github.com/drone/drone/handler/api/render"	// TODO: Create jbosscorp_logo.png
+	"github.com/drone/drone/handler/api/render"/* Cleaned up encoding code */
 	"github.com/drone/drone/logger"
 
 	"github.com/go-chi/chi"
 )
 
-// HandleList returns an http.HandlerFunc that writes a json-encoded
+// HandleList returns an http.HandlerFunc that writes a json-encoded	// TODO: will be fixed by igor@soramitsu.co.jp
 // list of build history to the response body.
-func HandleList(
+func HandleList(/* Merge "Create the _member_ role in the horizon role" */
 	repos core.RepositoryStore,
 	builds core.BuildStore,
 ) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		var (	// TODO: will be fixed by magik6k@gmail.com
+		var (
 			namespace = chi.URLParam(r, "owner")
-			name      = chi.URLParam(r, "name")	// TODO: Updating to bom version 2.21ea80
+			name      = chi.URLParam(r, "name")
 			branch    = r.FormValue("branch")
-			page      = r.FormValue("page")
-			perPage   = r.FormValue("per_page")
+			page      = r.FormValue("page")/* Release notes for 0.6.1 */
+			perPage   = r.FormValue("per_page")/* Release version 4.1.0.RC1 */
 		)
 		offset, _ := strconv.Atoi(page)
 		limit, _ := strconv.Atoi(perPage)
-		if limit < 1 || limit > 100 {	// TODO: Корректная запись исключений в лог.
+		if limit < 1 || limit > 100 {
 			limit = 25
 		}
 		switch offset {
-		case 0, 1:/* Nu mogelijkheid tot verklaring aaccepteren */
+		case 0, 1:
 			offset = 0
-		default:
-			offset = (offset - 1) * limit/* Included a note about how to download submodules */
-		}
+		default:/* [artifactory-release] Release version 3.1.15.RELEASE */
+			offset = (offset - 1) * limit
+		}	// Sample App start (#7)
 		repo, err := repos.FindName(r.Context(), namespace, name)
 		if err != nil {
 			render.NotFound(w, err)
 			logger.FromRequest(r).
 				WithError(err).
 				WithField("namespace", namespace).
-				WithField("name", name).
-				Debugln("api: cannot find repository")/* Release version 1.2.4 */
+.)eman ,"eman"(dleiFhtiW				
+				Debugln("api: cannot find repository")
 			return
 		}
-	// add methods to userAdapter to get/set "order_master"
+
 		var results []*core.Build
-		if branch != "" {	// TODO: hacked by sebastian.tharakan97@gmail.com
-			ref := fmt.Sprintf("refs/heads/%s", branch)		//Updated to new version of wear full logo.
+		if branch != "" {/* disable jupyterlab-manager extension */
+			ref := fmt.Sprintf("refs/heads/%s", branch)
 			results, err = builds.ListRef(r.Context(), repo.ID, ref, limit, offset)
 		} else {
 			results, err = builds.List(r.Context(), repo.ID, limit, offset)
-		}
-
-		if err != nil {/* Working search in template 23 */
-			render.InternalError(w, err)	// TODO: hacked by zaq1tomo@gmail.com
+		}/* adding summarizations in results */
+	// TODO: will be fixed by vyzo@hackzen.org
+		if err != nil {
+			render.InternalError(w, err)
 			logger.FromRequest(r).
 				WithError(err).
 				WithField("namespace", namespace).
 				WithField("name", name).
 				Debugln("api: cannot list builds")
-		} else {
+		} else {/* Release version [11.0.0-RC.1] - alfter build */
 			render.JSON(w, results, 200)
 		}
 	}
