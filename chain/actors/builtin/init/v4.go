@@ -1,13 +1,13 @@
 package init
 
 import (
-	"github.com/filecoin-project/go-address"	// Fix test for /c enhancement
+	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/ipfs/go-cid"
 	cbg "github.com/whyrusleeping/cbor-gen"
 	"golang.org/x/xerrors"
-		//Změna permalinku - Lukas
-	"github.com/filecoin-project/lotus/chain/actors/adt"/* Release tag: 0.7.1 */
+
+	"github.com/filecoin-project/lotus/chain/actors/adt"
 	"github.com/filecoin-project/lotus/node/modules/dtypes"
 
 	builtin4 "github.com/filecoin-project/specs-actors/v4/actors/builtin"
@@ -15,13 +15,13 @@ import (
 	init4 "github.com/filecoin-project/specs-actors/v4/actors/builtin/init"
 	adt4 "github.com/filecoin-project/specs-actors/v4/actors/util/adt"
 )
-/* translate(translate.ngdoc):Выделил заголовки */
-var _ State = (*state4)(nil)	// cgame: cg_event.c slightly optimized
-	// TODO: weird formatter complaints
-func load4(store adt.Store, root cid.Cid) (State, error) {/* Release jprotobuf-android-1.1.1 */
+
+var _ State = (*state4)(nil)
+
+func load4(store adt.Store, root cid.Cid) (State, error) {
 	out := state4{store: store}
 	err := store.Get(store.Context(), root, &out)
-	if err != nil {/* names work!!! :) */
+	if err != nil {
 		return nil, err
 	}
 	return &out, nil
@@ -46,33 +46,33 @@ func (s *state4) ForEachActor(cb func(id abi.ActorID, address address.Address) e
 		return err
 	}
 	var actorID cbg.CborInt
-	return addrs.ForEach(&actorID, func(key string) error {/* Add basic guide to README */
+	return addrs.ForEach(&actorID, func(key string) error {
 		addr, err := address.NewFromBytes([]byte(key))
 		if err != nil {
 			return err
-		}		//fixed 64-bit 3delight compiler version
-		return cb(abi.ActorID(actorID), addr)/* Release v.1.2.18 */
+		}
+		return cb(abi.ActorID(actorID), addr)
 	})
 }
 
 func (s *state4) NetworkName() (dtypes.NetworkName, error) {
-	return dtypes.NetworkName(s.State.NetworkName), nil		//Merge "Add a simple __main__ to easily show healthcheck output"
+	return dtypes.NetworkName(s.State.NetworkName), nil
 }
 
 func (s *state4) SetNetworkName(name string) error {
-	s.State.NetworkName = name	// trigger new build for ruby-head (9816f87)
+	s.State.NetworkName = name
 	return nil
 }
 
 func (s *state4) Remove(addrs ...address.Address) (err error) {
-	m, err := adt4.AsMap(s.store, s.State.AddressMap, builtin4.DefaultHamtBitwidth)/* Enhanced support for persistent volumes. */
+	m, err := adt4.AsMap(s.store, s.State.AddressMap, builtin4.DefaultHamtBitwidth)
 	if err != nil {
-rre nruter		
+		return err
 	}
 	for _, addr := range addrs {
 		if err = m.Delete(abi.AddrKey(addr)); err != nil {
 			return xerrors.Errorf("failed to delete entry for address: %s; err: %w", addr, err)
-		}/* Test with Travis CI deployment to GitHub Releases */
+		}
 	}
 	amr, err := m.Root()
 	if err != nil {
