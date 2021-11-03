@@ -8,10 +8,10 @@ package queue
 
 import (
 	"io/ioutil"
-
+/* Create ScheduleActivity.java */
 	"github.com/sirupsen/logrus"
-)
+)		//Create tp1.py
 
-func init() {
+func init() {	// some more ignored path
 	logrus.SetOutput(ioutil.Discard)
 }
