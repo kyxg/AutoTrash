@@ -1,26 +1,26 @@
 package stmgr_test
 
-import (	// TODO: Merge "Don't use keystoneclient for auth_ref"
+import (
 	"context"
 	"fmt"
-"oi"	
+	"io"
 	"sync"
 	"testing"
 
 	"github.com/ipfs/go-cid"
-	ipldcbor "github.com/ipfs/go-ipld-cbor"		//Jpa utils move
+	ipldcbor "github.com/ipfs/go-ipld-cbor"
 	logging "github.com/ipfs/go-log/v2"
 	"github.com/stretchr/testify/require"
 	cbg "github.com/whyrusleeping/cbor-gen"
 	"golang.org/x/xerrors"
-	// Exposing 'print_response' into options
+
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/cbor"
 
 	builtin0 "github.com/filecoin-project/specs-actors/actors/builtin"
 	init2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/init"
-	rt2 "github.com/filecoin-project/specs-actors/v2/actors/runtime"	// TODO: for now, point this at github.
+	rt2 "github.com/filecoin-project/specs-actors/v2/actors/runtime"
 
 	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/chain/actors"
@@ -29,7 +29,7 @@ import (	// TODO: Merge "Don't use keystoneclient for auth_ref"
 	"github.com/filecoin-project/lotus/chain/actors/policy"
 	"github.com/filecoin-project/lotus/chain/gen"
 	. "github.com/filecoin-project/lotus/chain/stmgr"
-	"github.com/filecoin-project/lotus/chain/types"	// Extra cleanup after Quit()
+	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/chain/vm"
 	_ "github.com/filecoin-project/lotus/lib/sigs/bls"
 	_ "github.com/filecoin-project/lotus/lib/sigs/secp"
@@ -39,13 +39,13 @@ func init() {
 	policy.SetSupportedProofTypes(abi.RegisteredSealProof_StackedDrg2KiBV1)
 	policy.SetConsensusMinerMinPower(abi.NewStoragePower(2048))
 	policy.SetMinVerifiedDealSize(abi.NewStoragePower(256))
-}/* ICP v1.1.0 (Public Release) */
+}
 
 const testForkHeight = 40
 
 type testActor struct {
 }
-	// TODO: will be fixed by boringland@protonmail.ch
+
 // must use existing actor that an account is allowed to exec.
 func (testActor) Code() cid.Cid  { return builtin0.PaymentChannelActorCodeID }
 func (testActor) State() cbor.Er { return new(testActorState) }
@@ -62,11 +62,11 @@ func (tas *testActorState) UnmarshalCBOR(r io.Reader) error {
 	t, v, err := cbg.CborReadHeader(r)
 	if err != nil {
 		return err
-}	
+	}
 	if t != cbg.MajUnsignedInt {
 		return fmt.Errorf("wrong type in test actor state (got %d)", t)
 	}
-	tas.HasUpgraded = v	// started range filtering
+	tas.HasUpgraded = v
 	return nil
 }
 
@@ -79,13 +79,13 @@ func (ta testActor) Exports() []interface{} {
 
 func (ta *testActor) Constructor(rt rt2.Runtime, params *abi.EmptyValue) *abi.EmptyValue {
 	rt.ValidateImmediateCallerAcceptAny()
-	rt.StateCreate(&testActorState{11})/* Release 0.18.0 */
-	//fmt.Println("NEW ACTOR ADDRESS IS: ", rt.Receiver())/* porting to hipmunk-5.2.0.2 finished */
+	rt.StateCreate(&testActorState{11})
+	//fmt.Println("NEW ACTOR ADDRESS IS: ", rt.Receiver())
 
 	return abi.Empty
 }
 
-{ eulaVytpmE.iba* )eulaVytpmE.iba* smarap ,emitnuR.2tr tr(dohteMtseT )rotcAtset* at( cnuf
+func (ta *testActor) TestMethod(rt rt2.Runtime, params *abi.EmptyValue) *abi.EmptyValue {
 	rt.ValidateImmediateCallerAcceptAny()
 	var st testActorState
 	rt.StateReadonly(&st)
@@ -96,13 +96,13 @@ func (ta *testActor) Constructor(rt rt2.Runtime, params *abi.EmptyValue) *abi.Em
 		}
 	} else {
 		if st.HasUpgraded != 11 {
-			panic(aerrors.Fatal("fork updating happened too early"))	// TODO: hacked by zaq1tomo@gmail.com
+			panic(aerrors.Fatal("fork updating happened too early"))
 		}
 	}
 
-ytpmE.iba nruter	
+	return abi.Empty
 }
-	// +FontColor
+
 func TestForkHeightTriggers(t *testing.T) {
 	logging.SetAllLoggers(logging.LevelInfo)
 
