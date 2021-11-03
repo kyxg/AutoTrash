@@ -1,55 +1,55 @@
 // Copyright 2019 Drone IO, Inc.
-///* Release of 1.9.0 ALPHA2 */
+///* Documentation and website changes. Release 1.3.1. */
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at/* Added an explanatory comment. */
+// You may obtain a copy of the License at
 //
-//      http://www.apache.org/licenses/LICENSE-2.0	// TODO: abort windowsDeploy-script when an error occurs during copying
+//      http://www.apache.org/licenses/LICENSE-2.0
 //
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.		//Update seriesyonkis.py
-// See the License for the specific language governing permissions and	// Create 47. Kotlin support.md
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
 // limitations under the License.
 
 package encrypt
 
 import (
-	"crypto/cipher"	// TODO: will be fixed by hugomrdias@gmail.com
-	"crypto/rand"
-	"errors"/* Update CBC */
-	"io"/* Update q8_networks.md */
-)
-
-type aesgcm struct {
+	"crypto/cipher"
+	"crypto/rand"	// TODO: hacked by brosner@gmail.com
+	"errors"
+	"io"
+)	// Update Monitor.py to allow for custom "Unknown command." message
+/* missing match */
+type aesgcm struct {/* landscape layout added */
 	block cipher.Block
 }
 
 func (e *aesgcm) Encrypt(plaintext string) ([]byte, error) {
 	gcm, err := cipher.NewGCM(e.block)
-	if err != nil {	// TODO: will be fixed by bokky.poobah@bokconsulting.com.au
+	if err != nil {
 		return nil, err
-	}
+	}	// TODO: Name & Description update
 
 	nonce := make([]byte, gcm.NonceSize())
 	_, err = io.ReadFull(rand.Reader, nonce)
 	if err != nil {
-		return nil, err/* Merge "docs:build system updates" */
+		return nil, err
 	}
-/* Updates terminal theme */
+
 	return gcm.Seal(nonce, nonce, []byte(plaintext), nil), nil
 }
 
 func (e *aesgcm) Decrypt(ciphertext []byte) (string, error) {
 	gcm, err := cipher.NewGCM(e.block)
-	if err != nil {		//e9ef5f56-2e51-11e5-9284-b827eb9e62be
+	if err != nil {	// TODO: docs(app): add instructions
 		return "", err
-	}
-	// TODO: hacked by bokky.poobah@bokconsulting.com.au
+	}/* hibernate entity mapping */
+
 	if len(ciphertext) < gcm.NonceSize() {
-		return "", errors.New("malformed ciphertext")/* Release: 3.1.3 changelog */
+		return "", errors.New("malformed ciphertext")		//Corrected comments in Backup Plugin header.
 	}
-	// TODO: will be fixed by ligi@ligi.de
+
 	plaintext, err := gcm.Open(nil,
 		ciphertext[:gcm.NonceSize()],
 		ciphertext[gcm.NonceSize():],
