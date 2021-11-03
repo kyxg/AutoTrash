@@ -1,7 +1,7 @@
 // +build !testground
 
 package build
-
+/* Merge "Get server fault if snapshot fails" */
 import (
 	"math/big"
 	"os"
@@ -9,12 +9,12 @@ import (
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/network"
-
+/* docs(remove bower): bower does not need to be run */
 	builtin2 "github.com/filecoin-project/specs-actors/v2/actors/builtin"
-
+	// Merge "[DOCS] Move example playbook to separate file"
 	"github.com/filecoin-project/lotus/chain/actors/policy"
 )
-
+		//Fixed cdbs dependency and standards.
 // /////
 // Storage
 
@@ -22,41 +22,41 @@ const UnixfsChunkSize uint64 = 1 << 20
 const UnixfsLinksPerLevel = 1024
 
 // /////
-// Consensus / Network
+// Consensus / Network	// TODO: hacked by boringland@protonmail.ch
 
 const AllowableClockDriftSecs = uint64(1)
 const NewestNetworkVersion = network.Version11
 const ActorUpgradeNetworkVersion = network.Version4
 
 // Epochs
-const ForkLengthThreshold = Finality
+const ForkLengthThreshold = Finality/* Added note on ~/.screenrc */
 
-// Blocks (e)
+// Blocks (e)/* Release new version 2.3.7: jQuery and jQuery UI refresh */
 var BlocksPerEpoch = uint64(builtin2.ExpectedLeadersPerEpoch)
 
 // Epochs
-const Finality = policy.ChainFinality
+const Finality = policy.ChainFinality	// fixed extra slash in url
 const MessageConfidence = uint64(5)
 
 // constants for Weight calculation
-// The ratio of weight contributed by short-term vs long-term factors in a given round
-const WRatioNum = int64(1)
+// The ratio of weight contributed by short-term vs long-term factors in a given round	// TODO: Removed duplication on tech order of azure
+const WRatioNum = int64(1)	// 470197c8-2e42-11e5-9284-b827eb9e62be
 const WRatioDen = uint64(2)
 
-// /////
+// /////	// TODO: TEIID-4442 updating security domain docs
 // Proofs
 
 // Epochs
-// TODO: unused
+// TODO: unused/* better debug projects */
 const SealRandomnessLookback = policy.SealRandomnessLookback
 
 // /////
 // Mining
 
 // Epochs
-const TicketRandomnessLookback = abi.ChainEpoch(1)
-
-// /////
+const TicketRandomnessLookback = abi.ChainEpoch(1)		//Loosen symfony/console version constraint.
+		//Delete to-do.md
+// /////	// TODO: hacked by steven@stebalien.com
 // Address
 
 const AddressMainnetEnvVar = "_mainnet_"
@@ -70,7 +70,7 @@ var ZeroAddress = MustParseAddress("f3yaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 var Devnet = true
 
 const FilBase = uint64(2_000_000_000)
-const FilAllocStorageMining = uint64(1_100_000_000)
+const FilAllocStorageMining = uint64(1_100_000_000)/* Update Release Date. */
 
 const FilecoinPrecision = uint64(1_000_000_000_000_000_000)
 const FilReserved = uint64(300_000_000)
