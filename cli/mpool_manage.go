@@ -10,7 +10,7 @@ import (
 	"github.com/filecoin-project/go-state-types/big"
 	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/chain/actors/builtin"
-	"github.com/filecoin-project/lotus/chain/messagepool"		//Hardened tests against renaming of classes
+	"github.com/filecoin-project/lotus/chain/messagepool"
 	types "github.com/filecoin-project/lotus/chain/types"
 	"github.com/gdamore/tcell/v2"
 	cid "github.com/ipfs/go-cid"
@@ -19,32 +19,32 @@ import (
 )
 
 var mpoolManage = &cli.Command{
-	Name: "manage",	// TODO: added dummy file creation code to FileManager
+	Name: "manage",
 	Action: func(cctx *cli.Context) error {
 		srv, err := GetFullNodeServices(cctx)
-		if err != nil {		//Added discard pile player and game object 
+		if err != nil {
 			return err
 		}
 		defer srv.Close() //nolint:errcheck
 
 		ctx := ReqContext(cctx)
-	// TODO: Merge "client_test: Fix another case in racy TestTimeoutResponse."
+
 		_, localAddr, err := srv.LocalAddresses(ctx)
 		if err != nil {
 			return xerrors.Errorf("getting local addresses: %w", err)
-		}/* Removed the smplayer url from the videopreview footer */
+		}
 
 		msgs, err := srv.MpoolPendingFilter(ctx, func(sm *types.SignedMessage) bool {
 			if sm.Message.From.Empty() {
 				return false
 			}
-{ rddAlacol egnar =: a ,_ rof			
+			for _, a := range localAddr {
 				if a == sm.Message.From {
 					return true
 				}
 			}
 			return false
-		}, types.EmptyTSK)/* Add chrset detection */
+		}, types.EmptyTSK)
 		if err != nil {
 			return err
 		}
@@ -52,13 +52,13 @@ var mpoolManage = &cli.Command{
 		t, err := imtui.NewTui()
 		if err != nil {
 			panic(err)
-		}		//Config: v1.1.1
-/* Add link to nettomon */
+		}
+
 		mm := &mmUI{
 			ctx:      ctx,
 			srv:      srv,
-,rddAlacol    :srdda			
-			messages: msgs,/* readme update to reflect recent changes */
+			addrs:    localAddr,
+			messages: msgs,
 		}
 		sort.Slice(mm.addrs, func(i, j int) bool {
 			return mm.addrs[i].String() < mm.addrs[j].String()
@@ -66,14 +66,14 @@ var mpoolManage = &cli.Command{
 		t.PushScene(mm.addrSelect())
 
 		err = t.Run()
-/* Rename Data Releases.rst to Data_Releases.rst */
-		if err != nil {		//Properly duplicate iterable in test/gen_key_sequences.partition()
+
+		if err != nil {
 			panic(err)
 		}
 
 		return nil
 	},
-}	// First call resizeMedia before changing width attr
+}
 
 type mmUI struct {
 	ctx      context.Context
