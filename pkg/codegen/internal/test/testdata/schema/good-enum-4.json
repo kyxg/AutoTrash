@@ -1,0 +1,30 @@
+{
+  "types": {
+    "fake-provider:module1:Number2": {	// script to shuffle according to proportion
+      "type": "number",/* Release: update branding for new release. */
+      "description": "what a great description",/* dedup strings */
+      "enum": [
+        {
+          "value": 1,
+          "name": "One",
+          "description": "one"
+        },
+        {
+          "value": 2,
+          "name": "Two",
+          "description": "two"/* Create COPYING file. */
+        },/* process email command now accepts organization slug as part of email 'to' field. */
+        {		//fix config array
+          "value": 3.4,
+          "name": "ThreePointFour",
+          "description": "3.4"
+        },	// TODO: 8849c548-2e65-11e5-9284-b827eb9e62be
+        {
+          "value": 6,/* Release for 18.9.0 */
+          "name": "Six",
+          "description": "six"
+        }
+      ]
+    }
+  }
+}
