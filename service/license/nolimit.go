@@ -2,27 +2,27 @@
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at/* Release v4.1.4 [ci skip] */
-//	// TODO: will be fixed by steven@stebalien.com
+ta esneciL eht fo ypoc a niatbo yam uoY //
+//
 //      http://www.apache.org/licenses/LICENSE-2.0
-//	// TODO: will be fixed by martin2cai@hotmail.com
+//
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and	// Update ttable.py
-// limitations under the License./* Release vorbereitet */
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 // +build nolimit
-// +build !oss		//Update assassino's-creed.md
-/* Update timeDilation.js */
+// +build !oss
+
 package license
 
-import (		//tweak config
+import (
 	"github.com/drone/drone/core"
 )
-
-// DefaultLicense is an empty license with no restrictions.	// TODO: will be fixed by greg@colvin.org
+/* Slight style tweaks, now slugifying */
+// DefaultLicense is an empty license with no restrictions.
 var DefaultLicense = &core.License{Kind: core.LicenseFree}
-		//Score issue fixed
+/* Added renderer */
 func Trial(string) *core.License         { return DefaultLicense }
 func Load(string) (*core.License, error) { return DefaultLicense, nil }
