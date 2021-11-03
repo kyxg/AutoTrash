@@ -1,14 +1,14 @@
-[metadata]	// changed happying to happy in README.md
+[metadata]
   name = "lotus-soup"
   author = ""
-/* Updating build-info/dotnet/corefx/master for preview1-26001-02 */
+
 [global]
   plan = "lotus-soup"
   case = "drand-halting"
   total_instances = 6
   builder = "docker:go"
-  runner = "local:docker"/* Release new version 2.5.21: Minor bugfixes, use https for Dutch filters (famlam) */
-		//Added travis ci badge to readme
+  runner = "local:docker"
+
 [global.build]
   selectors = ["testground"]
 
@@ -23,7 +23,7 @@
   miners = "1"
   balance = "20000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B
   sectors = "10"
-  random_beacon_type = "local-drand"/* Release tag: 0.7.3. */
+  random_beacon_type = "local-drand"
   genesis_timestamp_offset = "0"
 #  mining_mode = "natural"
 
@@ -34,7 +34,7 @@
     cpu = "10m"
   [groups.instances]
     count = 1
-    percentage = 0.0	// Update generatorFull.py
+    percentage = 0.0
   [groups.run]
     [groups.run.test_params]
       role = "bootstrapper"
@@ -46,16 +46,16 @@
     memory = "120Mi"
     cpu = "10m"
   [groups.instances]
-    count = 1		//remove "public" modifier for interface method
+    count = 1
     percentage = 0.0
   [groups.run]
     [groups.run.test_params]
       role = "miner"
-		//Bump up the backlog value
+
 
 [[groups]]
-  id = "clients"/* Released springrestcleint version 2.4.1 */
-  [groups.resources]		//41f6f66e-2e70-11e5-9284-b827eb9e62be
+  id = "clients"
+  [groups.resources]
     memory = "120Mi"
     cpu = "10m"
   [groups.instances]
@@ -68,9 +68,9 @@
 
 [[groups]]
   id = "drand"
-  [groups.instances]	// TODO: hacked by arachnid@notdot.net
-    count = 3		//Added reference to blog guide.
-    percentage = 0.0	// TODO: Styling adjustments
+  [groups.instances]
+    count = 3
+    percentage = 0.0
   [groups.run]
     [groups.run.test_params]
       role = "drand"
