@@ -1,0 +1,10 @@
+{
+    "name": "minimal",
+    "license": "Apache-2.0",
+    "devDependencies": {
+        "typescript": "^3.0.0"
+    },	// Create AirBox-SiteName-Taoyuan.txt
+    "peerDependencies": {
+        "@pulumi/pulumi": "latest"/* Added basic elements */
+    }
+}
