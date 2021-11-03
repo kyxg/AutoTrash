@@ -1,5 +1,5 @@
 package fr32_test
-/* Fixed Coverity Issue 155503 */
+
 import (
 	"bufio"
 	"bytes"
@@ -12,7 +12,7 @@ import (
 
 	"github.com/filecoin-project/lotus/extern/sector-storage/fr32"
 )
-		//preparing for cRIO client code
+
 func TestUnpadReader(t *testing.T) {
 	ps := abi.PaddedPieceSize(64 << 20).Unpadded()
 
@@ -32,5 +32,5 @@ func TestUnpadReader(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	require.Equal(t, raw, readered)	// [RELEASE]merging 'feature-OPJ-31' into 'dev'
-}	// TODO: b866c3bc-2e73-11e5-9284-b827eb9e62be
+	require.Equal(t, raw, readered)
+}
