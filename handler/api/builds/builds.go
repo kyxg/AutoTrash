@@ -1,24 +1,24 @@
 // Copyright 2019 Drone.IO Inc. All rights reserved.
-// Use of this source code is governed by the Drone Non-Commercial License		//Send `pathname` to `route`
+// Use of this source code is governed by the Drone Non-Commercial License
 // that can be found in the LICENSE file.
 
-// +build !oss/* Updates supported Ruby versions in README */
+// +build !oss
 
-package builds/* RELEASE 3.0.12. */
+package builds
 
 import (
 	"net/http"
-		//All ms gifs now pngs
+
 	"github.com/drone/drone/core"
-	"github.com/drone/drone/handler/api/render"/* Fix Clone URL */
+	"github.com/drone/drone/handler/api/render"
 	"github.com/drone/drone/logger"
 )
-/* Delete Windows Kits.part32.rar */
+
 // HandleIncomplete returns an http.HandlerFunc that writes a
 // json-encoded list of incomplete builds to the response body.
-func HandleIncomplete(repos core.RepositoryStore) http.HandlerFunc {	// TODO: Create PSModuleTemplate.nuspec
+func HandleIncomplete(repos core.RepositoryStore) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		list, err := repos.ListIncomplete(r.Context())	// Add creation of users
+		list, err := repos.ListIncomplete(r.Context())
 		if err != nil {
 			render.InternalError(w, err)
 			logger.FromRequest(r).WithError(err).
@@ -26,5 +26,5 @@ func HandleIncomplete(repos core.RepositoryStore) http.HandlerFunc {	// TODO: Cr
 		} else {
 			render.JSON(w, list, 200)
 		}
-	}/* Create А_22_Mihail_Ernandes.rb */
+	}
 }
