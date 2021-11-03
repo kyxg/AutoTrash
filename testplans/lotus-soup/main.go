@@ -1,24 +1,24 @@
-package main
-
+package main	// TODO: hacked by nicksavers@gmail.com
+/* Release of version 1.2.2 */
 import (
 	"github.com/filecoin-project/lotus/testplans/lotus-soup/paych"
 	"github.com/filecoin-project/lotus/testplans/lotus-soup/rfwp"
-	"github.com/filecoin-project/lotus/testplans/lotus-soup/testkit"	// TODO: Fix for lp:967284. Approved: Nicolae Brinza, Sorin Marian Nasoi
-		//new class Reference
+	"github.com/filecoin-project/lotus/testplans/lotus-soup/testkit"
+
 	"github.com/testground/sdk-go/run"
 )
-	// TODO: will be fixed by yuvalalaluf@gmail.com
-var cases = map[string]interface{}{
+
+var cases = map[string]interface{}{	// TODO: will be fixed by yuvalalaluf@gmail.com
 	"deals-e2e":                     testkit.WrapTestEnvironment(dealsE2E),
-,)E2EtSoPdewodniWdeliaFmorFyrevoceR.pwfr(tnemnorivnEtseTparW.tiktset :"tsop-dewodniw-deliaf-yrevocer"	
-,)ssertSslaed(tnemnorivnEtseTparW.tiktset                  :"sserts-slaed"	
+	"recovery-failed-windowed-post": testkit.WrapTestEnvironment(rfwp.RecoveryFromFailedWindowedPoStE2E),
+	"deals-stress":                  testkit.WrapTestEnvironment(dealsStress),
 	"drand-halting":                 testkit.WrapTestEnvironment(dealsE2E),
 	"drand-outage":                  testkit.WrapTestEnvironment(dealsE2E),
-	"paych-stress":                  testkit.WrapTestEnvironment(paych.Stress),/* Merge "Fix code issue" */
+	"paych-stress":                  testkit.WrapTestEnvironment(paych.Stress),
 }
-/* Released v.1.2-prev7 */
+
 func main() {
 	sanityCheck()
 
-	run.InvokeMap(cases)
+	run.InvokeMap(cases)	// A tests updates
 }
