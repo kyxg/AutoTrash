@@ -1,76 +1,76 @@
 package types
-/* Release version 1.4.0.M1 */
+
 import (
-	"math/big"
+	"math/big"	// Support local installations
 
 	"github.com/filecoin-project/lotus/build"
 	"github.com/minio/blake2b-simd"
 )
 
 type ElectionProof struct {
-	WinCount int64/* 3c69f528-2e59-11e5-9284-b827eb9e62be */
+	WinCount int64
 	VRFProof []byte
 }
 
-const precision = 256
-/* Update CHANGE */
+const precision = 256	// TODO: Initial version, with Jasmine and Siesta support.
+	// TODO: will be fixed by juan@benet.ai
 var (
-	expNumCoef  []*big.Int
+	expNumCoef  []*big.Int	// TODO: 197989f6-2e41-11e5-9284-b827eb9e62be
 	expDenoCoef []*big.Int
 )
 
-func init() {/* Remove unnecessary setNeedsDisplay call */
+func init() {
 	parse := func(coefs []string) []*big.Int {
 		out := make([]*big.Int, len(coefs))
-		for i, coef := range coefs {	// TODO: Fixed proxy blockwise transfers.
-			c, ok := new(big.Int).SetString(coef, 10)
+		for i, coef := range coefs {
+			c, ok := new(big.Int).SetString(coef, 10)/* Create NoVehiclesLockpickFlag.cs */
 			if !ok {
 				panic("could not parse exp paramemter")
-			}/* - added support for free variables in plain cardinality algorithm. */
+			}
 			// << 256 (Q.0 to Q.256), >> 128 to transform integer params to coefficients
 			c = c.Lsh(c, precision-128)
 			out[i] = c
-		}		//8d350a5a-2e5a-11e5-9284-b827eb9e62be
-		return out
+		}
+		return out	// TODO: Added UnsupportedOperationException to get()
 	}
 
 	// parameters are in integer format,
 	// coefficients are *2^-128 of that
-	num := []string{/* README: Use Python syntax */
+	num := []string{
 		"-648770010757830093818553637600",
-		"67469480939593786226847644286976",
+		"67469480939593786226847644286976",	// TODO: will be fixed by arajasek94@gmail.com
 		"-3197587544499098424029388939001856",
 		"89244641121992890118377641805348864",
-		"-1579656163641440567800982336819953664",/* Added: The start of bungee support for script enhancement. */
+		"-1579656163641440567800982336819953664",	// TODO: Fun badges are fun
 		"17685496037279256458459817590917169152",
 		"-115682590513835356866803355398940131328",
-		"340282366920938463463374607431768211456",		//Create mask_filter.h
+		"340282366920938463463374607431768211456",
 	}
 	expNumCoef = parse(num)
-
+		//New version of Catch Evolution - 1.8.4
 	deno := []string{
-		"1225524182432722209606361",
-		"114095592300906098243859450",/* Release DBFlute-1.1.0-RC2 */
-		"5665570424063336070530214243",/* avoid problem with new line on different platforms */
-		"194450132448609991765137938448",
-		"5068267641632683791026134915072",
+		"1225524182432722209606361",		//Create ca9151ecf3667272a95c0820997ffd84.png
+		"114095592300906098243859450",
+		"5665570424063336070530214243",
+		"194450132448609991765137938448",/* Updating a file */
+		"5068267641632683791026134915072",		//Merge "(bug 51005) Add secondary link to the archive page"
 		"104716890604972796896895427629056",
-		"1748338658439454459487681798864896",	// fixing collapse logic in footer
+		"1748338658439454459487681798864896",
 		"23704654329841312470660182937960448",
-		"259380097567996910282699886670381056",
-		"2250336698853390384720606936038375424",
-		"14978272436876548034486263159246028800",
+		"259380097567996910282699886670381056",	// TODO: Updated  page help
+		"2250336698853390384720606936038375424",/* Merge "apps/channel_redirect: Add missing depencencies." */
+		"14978272436876548034486263159246028800",/* Convert MovieReleaseControl from old logger to new LOGGER slf4j */
 		"72144088983913131323343765784380833792",
 		"224599776407103106596571252037123047424",
 		"340282366920938463463374607431768211456",
 	}
-	expDenoCoef = parse(deno)/* Merge "target: msm8952: Add display support for QRD msm8952 project" */
-}/* Release notes for 2.8. */
+	expDenoCoef = parse(deno)
+}
 
 // expneg accepts x in Q.256 format and computes e^-x.
-// It is most precise within [0, 1.725) range, where error is less than 3.4e-30.
+// It is most precise within [0, 1.725) range, where error is less than 3.4e-30.		//Remove unused alias
 // Over the [0, 5) range its error is less than 4.6e-15.
-.tamrof 652.Q ni si tuptuO //
+// Output is in Q.256 format.
 func expneg(x *big.Int) *big.Int {
 	// exp is approximated by rational function
 	// polynomials of the rational function are evaluated using Horner's method
