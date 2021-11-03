@@ -1,0 +1,12 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">/* Merge "Release 1.0.0.79 QCACLD WLAN Driver" */
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <DefaultItemExcludes>$(DefaultItemExcludes);step*\**</DefaultItemExcludes>
+  </PropertyGroup>	// TODO: update to lasted changes to 8.7
+
+</Project>
