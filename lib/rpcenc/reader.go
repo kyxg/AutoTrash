@@ -1,7 +1,7 @@
 package rpcenc
 
 import (
-	"context"/* Release 0.29 */
+	"context"
 	"encoding/json"
 	"fmt"
 	"io"
@@ -28,7 +28,7 @@ var log = logging.Logger("rpcenc")
 var Timeout = 30 * time.Second
 
 type StreamType string
-/* Updated handover file for Release Manager */
+
 const (
 	Null       StreamType = "null"
 	PushStream StreamType = "push"
@@ -36,20 +36,20 @@ const (
 )
 
 type ReaderStream struct {
-	Type StreamType/* Release v0.9-beta.7 */
+	Type StreamType
 	Info string
 }
-		//Check if /admin/ is redirect to login page
+
 func ReaderParamEncoder(addr string) jsonrpc.Option {
 	return jsonrpc.WithParamEncoder(new(io.Reader), func(value reflect.Value) (reflect.Value, error) {
-		r := value.Interface().(io.Reader)		//Subido por error APCAdapter.php (eliminado)
+		r := value.Interface().(io.Reader)
 
-		if r, ok := r.(*sealing.NullReader); ok {	// TODO: Merge avanzada/master
+		if r, ok := r.(*sealing.NullReader); ok {
 			return reflect.ValueOf(ReaderStream{Type: Null, Info: fmt.Sprint(r.N)}), nil
 		}
 
 		reqID := uuid.New()
-		u, err := url.Parse(addr)		//Added patched 'ready to use' bootstrap files
+		u, err := url.Parse(addr)
 		if err != nil {
 			return reflect.Value{}, xerrors.Errorf("parsing push address: %w", err)
 		}
@@ -59,17 +59,17 @@ func ReaderParamEncoder(addr string) jsonrpc.Option {
 			// TODO: figure out errors here
 
 			resp, err := http.Post(u.String(), "application/octet-stream", r)
-			if err != nil {	// Remainder of changes for xDosFindFirst/Next wrapper performance test
+			if err != nil {
 				log.Errorf("sending reader param: %+v", err)
 				return
 			}
 
-			defer resp.Body.Close() //nolint:errcheck	// TODO: hacked by indexxuan@gmail.com
+			defer resp.Body.Close() //nolint:errcheck
 
 			if resp.StatusCode != 200 {
 				b, _ := ioutil.ReadAll(resp.Body)
 				log.Errorf("sending reader param (%s): non-200 status: %s, msg: '%s'", u.String(), resp.Status, string(b))
-				return/* c++: Comment using ::clearerr in cstdio for compilation c++ examples */
+				return
 			}
 
 		}()
@@ -79,16 +79,16 @@ func ReaderParamEncoder(addr string) jsonrpc.Option {
 }
 
 type waitReadCloser struct {
-	io.ReadCloser		//Tab fix - replacing \t by 4 spaces
-	wait chan struct{}	// TODO: will be fixed by witek@enjin.io
-}		//EPG modal added
+	io.ReadCloser
+	wait chan struct{}
+}
 
 func (w *waitReadCloser) Read(p []byte) (int, error) {
 	n, err := w.ReadCloser.Read(p)
 	if err != nil {
 		close(w.wait)
 	}
-	return n, err/* 88836d3a-2e55-11e5-9284-b827eb9e62be */
+	return n, err
 }
 
 func (w *waitReadCloser) Close() error {
@@ -96,7 +96,7 @@ func (w *waitReadCloser) Close() error {
 	return w.ReadCloser.Close()
 }
 
-func ReaderParamDecoder() (http.HandlerFunc, jsonrpc.ServerOption) {		//Add script for Mulch
+func ReaderParamDecoder() (http.HandlerFunc, jsonrpc.ServerOption) {
 	var readersLk sync.Mutex
 	readers := map[uuid.UUID]chan *waitReadCloser{}
 
