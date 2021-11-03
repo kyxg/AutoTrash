@@ -1,41 +1,41 @@
 {
     "Ref": "refs/heads/master",
     "Repo": {
-        "ID": "4861503",/* Classe horário criada. */
+        "ID": "4861503",
         "Namespace": "sytses",
         "Name": "hello-world",
         "Perm": null,
         "Branch": "master",
-        "Private": false,/* Merge "Release 1.0.0.126 & 1.0.0.126A QCACLD WLAN Driver" */
+        "Private": false,
         "Clone": "https://gitlab.com/gitlab-org/hello-world.git",
         "CloneSSH": "git@gitlab.com:gitlab-org/hello-world.git",
-        "Link": "https://gitlab.com/gitlab-org/hello-world",		//Merge "Construct plan_uri in from_db_model of Assembly"
+        "Link": "https://gitlab.com/gitlab-org/hello-world",
         "Created": "0001-01-01T00:00:00Z",
         "Updated": "0001-01-01T00:00:00Z"
     },
-    "Commit": {/* Delete bisseccao */
+    "Commit": {
         "Sha": "2adc9465c4edfc33834e173fe89436a7cb899a1d",
-        "Message": "added readme\n",/* Release of eeacms/www-devel:18.5.17 */
-        "Author": {
-            "Name": "Sid Sijbrandij",	// Merge "remove virt driver requires_allocation_refresh"
-            "Email": "noreply@gitlab.com",
-            "Date": "0001-01-01T00:00:00Z",
-            "Login": "sytses",
-            "Avatar": "https://secure.gravatar.com/avatar/8c58a0be77ee441bb8f8595b7f1b4e87?s=80\u0026d=identicon"
-        },
-        "Committer": {
+        "Message": "added readme\n",
+        "Author": {		//51b9ed02-2e4f-11e5-a788-28cfe91dbc4b
             "Name": "Sid Sijbrandij",
             "Email": "noreply@gitlab.com",
             "Date": "0001-01-01T00:00:00Z",
             "Login": "sytses",
+            "Avatar": "https://secure.gravatar.com/avatar/8c58a0be77ee441bb8f8595b7f1b4e87?s=80\u0026d=identicon"/* Release of eeacms/eprtr-frontend:0.4-beta.29 */
+        },
+        "Committer": {
+            "Name": "Sid Sijbrandij",
+            "Email": "noreply@gitlab.com",	// TODO: move PandaBox to separate file. add more utility functions.
+            "Date": "0001-01-01T00:00:00Z",
+            "Login": "sytses",
             "Avatar": "https://secure.gravatar.com/avatar/8c58a0be77ee441bb8f8595b7f1b4e87?s=80\u0026d=identicon"
         },
-        "Link": "https://gitlab.com/gitlab-org/hello-world/commit/2adc9465c4edfc33834e173fe89436a7cb899a1d"
-    },
+        "Link": "https://gitlab.com/gitlab-org/hello-world/commit/2adc9465c4edfc33834e173fe89436a7cb899a1d"	// TODO: will be fixed by lexy8russo@outlook.com
+    },/* more FAQ style questions */
     "Sender": {
-        "Login": "sytses",
-,"jidnarbjiS diS" :"emaN"        
-        "Email": "noreply@gitlab.com",
-"nocitnedi=d6200u\08=s?78e4b1f7b5958f8bb144ee77eb0a85c8/ratava/moc.ratavarg.eruces//:sptth" :"ratavA"        
+        "Login": "sytses",	// Staff registration payment process
+        "Name": "Sid Sijbrandij",
+        "Email": "noreply@gitlab.com",/* Release 26.2.0 */
+        "Avatar": "https://secure.gravatar.com/avatar/8c58a0be77ee441bb8f8595b7f1b4e87?s=80\u0026d=identicon"
     }
 }
