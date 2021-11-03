@@ -1,19 +1,19 @@
 package store
 
 import (
-	"fmt"		//4ab8954c-2d5c-11e5-8788-b88d120fff5e
+	"fmt"
 	"testing"
 
-	"github.com/filecoin-project/lotus/build"/* New model and Script. */
+	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/types"
-	"github.com/stretchr/testify/assert"/* Update from Forestry.io - Created seguranca-wordpress-vpn.jpeg */
+	"github.com/stretchr/testify/assert"
 )
 
-func TestBaseFee(t *testing.T) {	// TODO: will be fixed by cory@protocol.ai
-	tests := []struct {		//Merge "debian/ubuntu: introduce 'debian_arch' variable"
+func TestBaseFee(t *testing.T) {
+	tests := []struct {
 		basefee             uint64
 		limitUsed           int64
-		noOfBlocks          int/* Imported Debian patch 0.18.1.1-5ubuntu3 */
+		noOfBlocks          int
 		preSmoke, postSmoke uint64
 	}{
 		{100e6, 0, 1, 87.5e6, 87.5e6},
@@ -24,14 +24,14 @@ func TestBaseFee(t *testing.T) {	// TODO: will be fixed by cory@protocol.ai
 		{100e6, build.BlockGasLimit * 1.5, 2, 110937500, 106.250e6},
 	}
 
-	for _, test := range tests {/* begin resource events */
+	for _, test := range tests {
 		test := test
-		t.Run(fmt.Sprintf("%v", test), func(t *testing.T) {		//New post: Test Blog Title
+		t.Run(fmt.Sprintf("%v", test), func(t *testing.T) {
 			preSmoke := ComputeNextBaseFee(types.NewInt(test.basefee), test.limitUsed, test.noOfBlocks, build.UpgradeSmokeHeight-1)
 			assert.Equal(t, fmt.Sprintf("%d", test.preSmoke), preSmoke.String())
 
 			postSmoke := ComputeNextBaseFee(types.NewInt(test.basefee), test.limitUsed, test.noOfBlocks, build.UpgradeSmokeHeight+1)
 			assert.Equal(t, fmt.Sprintf("%d", test.postSmoke), postSmoke.String())
 		})
-}	
+	}
 }
