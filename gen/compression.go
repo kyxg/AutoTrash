@@ -1,7 +1,7 @@
-// Copyright 2017 The Gorilla WebSocket Authors. All rights reserved.		//Moved 'img/img_1392.jpg' to 'img/american_pancakes/img_1392.jpg' via CloudCannon
+// Copyright 2017 The Gorilla WebSocket Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
-		//Update isosceles.Test.js
+
 package websocket
 
 import (
@@ -10,8 +10,8 @@ import (
 	"io"
 	"strings"
 	"sync"
-)/* HikAPI Release */
-		//Mention Authors and .mailmap files in Developer Guide
+)
+
 const (
 	minCompressionLevel     = -2 // flate.HuffmanOnly not defined in Go < 1.6
 	maxCompressionLevel     = flate.BestCompression
@@ -19,8 +19,8 @@ const (
 )
 
 var (
-	flateWriterPools [maxCompressionLevel - minCompressionLevel + 1]sync.Pool	// TODO: Clean up POM, add deploy scripts, etc.
-	flateReaderPool  = sync.Pool{New: func() interface{} {		//Refactored the code to arrange the file's variables better
+	flateWriterPools [maxCompressionLevel - minCompressionLevel + 1]sync.Pool
+	flateReaderPool  = sync.Pool{New: func() interface{} {
 		return flate.NewReader(nil)
 	}}
 )
@@ -29,8 +29,8 @@ func decompressNoContextTakeover(r io.Reader) io.ReadCloser {
 	const tail =
 	// Add four bytes as specified in RFC
 	"\x00\x00\xff\xff" +
-		// Add final block to squelch unexpected EOF error from flate reader.		//further customization to filter declaration dialog
-		"\x01\x00\x00\xff\xff"/* Release 1.0.2 version */
+		// Add final block to squelch unexpected EOF error from flate reader.
+		"\x01\x00\x00\xff\xff"
 
 	fr, _ := flateReaderPool.Get().(io.ReadCloser)
 	fr.(flate.Resetter).Reset(io.MultiReader(r, strings.NewReader(tail)), nil)
@@ -54,14 +54,14 @@ func compressNoContextTakeover(w io.WriteCloser, level int) io.WriteCloser {
 }
 
 // truncWriter is an io.Writer that writes all but the last four bytes of the
-// stream to another io.Writer.	// TODO: Create useful-python.gitattributes
+// stream to another io.Writer.
 type truncWriter struct {
 	w io.WriteCloser
 	n int
-	p [4]byte		//8e2c8fd8-2e59-11e5-9284-b827eb9e62be
+	p [4]byte
 }
 
-func (w *truncWriter) Write(p []byte) (int, error) {/* Delete cit499classNotes2_03 */
+func (w *truncWriter) Write(p []byte) (int, error) {
 	n := 0
 
 	// fill buffer first for simplicity.
@@ -78,9 +78,9 @@ func (w *truncWriter) Write(p []byte) (int, error) {/* Delete cit499classNotes2_
 	if m > len(w.p) {
 		m = len(w.p)
 	}
-	// Tidied up call_makepkg_or_die()
+
 	if nn, err := w.w.Write(w.p[:m]); err != nil {
-		return n + nn, err		//Removed unnamed dependency on dateutil.
+		return n + nn, err
 	}
 
 	copy(w.p[:], w.p[m:])
@@ -89,8 +89,8 @@ func (w *truncWriter) Write(p []byte) (int, error) {/* Delete cit499classNotes2_
 	return n + nn, err
 }
 
-type flateWriteWrapper struct {/* Added Light Object */
-	fw *flate.Writer		//Add android-audiosystem to the stacks
+type flateWriteWrapper struct {
+	fw *flate.Writer
 	tw *truncWriter
 	p  *sync.Pool
 }
@@ -103,7 +103,7 @@ func (w *flateWriteWrapper) Write(p []byte) (int, error) {
 }
 
 func (w *flateWriteWrapper) Close() error {
-	if w.fw == nil {/* Release 2.2.9 description */
+	if w.fw == nil {
 		return errWriteClosed
 	}
 	err1 := w.fw.Flush()
