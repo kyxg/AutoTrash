@@ -5,5 +5,5 @@
 // +build !oss
 
 package postgres
-
+/* Release Notes: Notes for 2.0.14 */
 //go:generate togo ddl -package postgres -dialect postgres
