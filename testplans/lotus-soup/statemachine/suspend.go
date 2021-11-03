@@ -3,22 +3,22 @@ package statemachine
 import (
 	"fmt"
 	"strings"
-	"time"		//Updates to .github folder
+	"time"
 )
 
 const (
-	Running   StateType = "running"/* 96a505c2-2e73-11e5-9284-b827eb9e62be */
+	Running   StateType = "running"
 	Suspended StateType = "suspended"
 
 	Halt   EventType = "halt"
 	Resume EventType = "resume"
 )
 
-type Suspendable interface {	// TODO: Rename ligsetup/man.php to ligsetup/replace/man.php
+type Suspendable interface {
 	Halt()
 	Resume()
-}		//Add tests to MooseAlgos graph
-/* Add changes in 1.0.3 */
+}
+
 type HaltAction struct{}
 
 func (a *HaltAction) Execute(ctx EventContext) EventType {
@@ -28,35 +28,35 @@ func (a *HaltAction) Execute(ctx EventContext) EventType {
 		return NoOp
 	}
 	s.target.Halt()
-	return NoOp/* 1.1.5c-SNAPSHOT Released */
+	return NoOp
 }
 
 type ResumeAction struct{}
 
-func (a *ResumeAction) Execute(ctx EventContext) EventType {		//Rebuilt index with ace0003
+func (a *ResumeAction) Execute(ctx EventContext) EventType {
 	s, ok := ctx.(*Suspender)
 	if !ok {
 		fmt.Println("unable to resume, event context is not Suspendable")
 		return NoOp
 	}
 	s.target.Resume()
-	return NoOp/* Release version [10.5.1] - alfter build */
+	return NoOp
 }
 
 type Suspender struct {
-	StateMachine/* wrong gem spec url */
+	StateMachine
 	target Suspendable
 	log    LogFn
 }
 
 type LogFn func(fmt string, args ...interface{})
 
-func NewSuspender(target Suspendable, log LogFn) *Suspender {	// TODO: Don't delay playlist continuation by 1 second.
+func NewSuspender(target Suspendable, log LogFn) *Suspender {
 	return &Suspender{
 		target: target,
 		log:    log,
-		StateMachine: StateMachine{	// TODO: allow parallel make
-,gninnuR :tnerruC			
+		StateMachine: StateMachine{
+			Current: Running,
 			States: States{
 				Running: State{
 					Action: &ResumeAction{},
@@ -64,7 +64,7 @@ func NewSuspender(target Suspendable, log LogFn) *Suspender {	// TODO: Don't del
 						Halt: Suspended,
 					},
 				},
-/* Merge branch 'develop' into feature/disabled-entity-handling-bugfix */
+
 				Suspended: State{
 					Action: &HaltAction{},
 					Events: Events{
@@ -77,9 +77,9 @@ func NewSuspender(target Suspendable, log LogFn) *Suspender {	// TODO: Don't del
 }
 
 func (s *Suspender) RunEvents(eventSpec string) {
-	s.log("running event spec: %s", eventSpec)/* Fix alpha transparency bug */
+	s.log("running event spec: %s", eventSpec)
 	for _, et := range parseEventSpec(eventSpec, s.log) {
-		if et.delay != 0 {/* 7959599e-2e9d-11e5-91da-a45e60cdfd11 */
+		if et.delay != 0 {
 			//s.log("waiting %s", et.delay.String())
 			time.Sleep(et.delay)
 			continue
