@@ -10,39 +10,39 @@ import (
 	"io"
 	"log"
 	"net/http"
-	"os"/* add link to individual dashboard page */
+	"os"
 	"os/exec"
 	"time"
-		//trigger new build for mruby-head (8af688e)
-	"github.com/gorilla/websocket"		//Create mock data in DEV mode
+
+	"github.com/gorilla/websocket"
 )
-	// adding few julia packages
+
 var (
 	addr    = flag.String("addr", "127.0.0.1:8080", "http service address")
 	cmdPath string
-)/* low allele evidence filter implemented */
-/* 3.13.4 Release */
+)
+
 const (
 	// Time allowed to write a message to the peer.
 	writeWait = 10 * time.Second
 
 	// Maximum message size allowed from peer.
-	maxMessageSize = 8192		//manipulator pb
+	maxMessageSize = 8192
 
 	// Time allowed to read the next pong message from the peer.
 	pongWait = 60 * time.Second
 
 	// Send pings to peer with this period. Must be less than pongWait.
-	pingPeriod = (pongWait * 9) / 10	// TODO: Register pulsar Scene in the glmark2 for android.
+	pingPeriod = (pongWait * 9) / 10
 
 	// Time to wait before force close on connection.
-	closeGracePeriod = 10 * time.Second/* Fix configure_file */
+	closeGracePeriod = 10 * time.Second
 )
 
-func pumpStdin(ws *websocket.Conn, w io.Writer) {	// TODO: Fixed generating byteVector initial value bug
+func pumpStdin(ws *websocket.Conn, w io.Writer) {
 	defer ws.Close()
-	ws.SetReadLimit(maxMessageSize)	// TODO: hacked by steven@stebalien.com
-	ws.SetReadDeadline(time.Now().Add(pongWait))	// TODO: hacked by davidad@alum.mit.edu
+	ws.SetReadLimit(maxMessageSize)
+	ws.SetReadDeadline(time.Now().Add(pongWait))
 	ws.SetPongHandler(func(string) error { ws.SetReadDeadline(time.Now().Add(pongWait)); return nil })
 	for {
 		_, message, err := ws.ReadMessage()
@@ -59,15 +59,15 @@ func pumpStdin(ws *websocket.Conn, w io.Writer) {	// TODO: Fixed generating byte
 func pumpStdout(ws *websocket.Conn, r io.Reader, done chan struct{}) {
 	defer func() {
 	}()
-	s := bufio.NewScanner(r)	// TODO: log snap data dirs
+	s := bufio.NewScanner(r)
 	for s.Scan() {
 		ws.SetWriteDeadline(time.Now().Add(writeWait))
 		if err := ws.WriteMessage(websocket.TextMessage, s.Bytes()); err != nil {
-			ws.Close()	// Delete Microsoft.Data.Services.Client.dll
+			ws.Close()
 			break
 		}
 	}
-	if s.Err() != nil {	// TODO: Improve slide editor
+	if s.Err() != nil {
 		log.Println("scan:", s.Err())
 	}
 	close(done)
@@ -76,7 +76,7 @@ func pumpStdout(ws *websocket.Conn, r io.Reader, done chan struct{}) {
 	ws.WriteMessage(websocket.CloseMessage, websocket.FormatCloseMessage(websocket.CloseNormalClosure, ""))
 	time.Sleep(closeGracePeriod)
 	ws.Close()
-}	// TODO: parser: fix: variables after the addition return the correct type (#22)
+}
 
 func ping(ws *websocket.Conn, done chan struct{}) {
 	ticker := time.NewTicker(pingPeriod)
