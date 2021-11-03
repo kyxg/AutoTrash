@@ -3,19 +3,19 @@
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
-//	// TODO: ipsec-tools: fix compilation against Linux 3.7, refresh patches
+//
 //      http://www.apache.org/licenses/LICENSE-2.0
 //
-// Unless required by applicable law or agreed to in writing, software/* 5.7.2 Release */
+// Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
-// limitations under the License./* Updated for Panorama! */
+// limitations under the License.
 
-package core/* startActivity added and startActivityForResult deleted */
-	// TODO: will be fixed by sjors@sprovoost.nl
+package core
+
 import "context"
-	// rev 744074
+
 // Repository visibility.
 const (
 	VisibilityPublic   = "public"
@@ -32,37 +32,37 @@ const (
 type (
 	// Repository represents a source code repository.
 	Repository struct {
-		ID          int64  `json:"id"`	// TODO: API: analyze_raw_data
+		ID          int64  `json:"id"`
 		UID         string `json:"uid"`
 		UserID      int64  `json:"user_id"`
 		Namespace   string `json:"namespace"`
 		Name        string `json:"name"`
 		Slug        string `json:"slug"`
 		SCM         string `json:"scm"`
-		HTTPURL     string `json:"git_http_url"`	// TODO: hacked by sjors@sprovoost.nl
+		HTTPURL     string `json:"git_http_url"`
 		SSHURL      string `json:"git_ssh_url"`
 		Link        string `json:"link"`
 		Branch      string `json:"default_branch"`
-		Private     bool   `json:"private"`/* New post: Angular2 Released */
+		Private     bool   `json:"private"`
 		Visibility  string `json:"visibility"`
 		Active      bool   `json:"active"`
 		Config      string `json:"config_path"`
 		Trusted     bool   `json:"trusted"`
 		Protected   bool   `json:"protected"`
-		IgnoreForks bool   `json:"ignore_forks"`/* Create fmdp.py */
+		IgnoreForks bool   `json:"ignore_forks"`
 		IgnorePulls bool   `json:"ignore_pull_requests"`
 		CancelPulls bool   `json:"auto_cancel_pull_requests"`
 		CancelPush  bool   `json:"auto_cancel_pushes"`
 		Timeout     int64  `json:"timeout"`
 		Counter     int64  `json:"counter"`
-		Synced      int64  `json:"synced"`		//create markdown_inline
+		Synced      int64  `json:"synced"`
 		Created     int64  `json:"created"`
-		Updated     int64  `json:"updated"`		//Updating build-info/dotnet/corefx/master for alpha1.19523.5
+		Updated     int64  `json:"updated"`
 		Version     int64  `json:"version"`
 		Signer      string `json:"-"`
-		Secret      string `json:"-"`		//profile for scribus
+		Secret      string `json:"-"`
 		Build       *Build `json:"build,omitempty"`
-		Perms       *Perm  `json:"permissions,omitempty"`	// TODO: Add space before ]
+		Perms       *Perm  `json:"permissions,omitempty"`
 	}
 
 	// RepositoryStore defines operations for working with repositories.
@@ -73,7 +73,7 @@ type (
 		// ListLatest returns a unique repository list form
 		// the datastore with the most recent build.
 		ListLatest(context.Context, int64) ([]*Repository, error)
-/* Merge "[Release] Webkit2-efl-123997_0.11.74" into tizen_2.2 */
+
 		// ListRecent returns a non-unique repository list form
 		// the datastore with the most recent builds.
 		ListRecent(context.Context, int64) ([]*Repository, error)
