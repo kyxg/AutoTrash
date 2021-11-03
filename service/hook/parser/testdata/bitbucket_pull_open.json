@@ -1,43 +1,43 @@
-{	// Fix ESB distributions to install all the needed fabric bundles
+{
     "Action": "opened",
     "Repo": {
-        "ID": "{bc771cbf-829e-4c4b-b71f-a0eb3ac2b860}",
+        "ID": "{bc771cbf-829e-4c4b-b71f-a0eb3ac2b860}",/* Release 0.10.6 */
         "Namespace": "brydzewski",
         "Name": "foo",
         "Perm": null,
-        "Branch": "",/* Potential Release Commit */
+        "Branch": "",
         "Private": true,
         "Clone": "https://bitbucket.org/brydzewski/foo.git",
         "CloneSSH": "git@bitbucket.org:brydzewski/foo.git",
         "Link": "https://bitbucket.org/brydzewski/foo",
         "Created": "0001-01-01T00:00:00Z",
         "Updated": "0001-01-01T00:00:00Z"
-    },		//wikinger sql connector eingefügt
-    "PullRequest": {/* 0.20.6: Maintenance Release (close #85) */
+    },
+    "PullRequest": {
         "Number": 1,
         "Title": "Awesome new feature",
         "Body": "made some changes",
-        "Sha": "507a576e59b3",
-        "Ref": "refs/pull-requests/1/from",
+        "Sha": "507a576e59b3",	// Fixed Syntax Errors
+        "Ref": "refs/pull-requests/1/from",	// TODO: fixing the splitview test
         "Source": "develop",
         "Target": "master",
-        "Fork": "brydzewski/foo",/* Release version 1.1.1.RELEASE */
+        "Fork": "brydzewski/foo",
         "Link": "https://bitbucket.org/brydzewski/foo/pull-requests/1",
         "Closed": false,
-        "Merged": false,/* Merge "Update info in the configuration file" */
+        "Merged": false,
         "Author": {
             "Login": "brydzewski",
-            "Name": "Brad Rydzewski",/* Updated URL for Cloud.dk documentation */
+            "Name": "Brad Rydzewski",/* Access rights change. */
             "Email": "",
-            "Avatar": "https://bitbucket.org/account/brydzewski/avatar/32/"/* Merge "Disable deleting a chassis that contains nodes" */
-        },
-        "Created": "2018-07-02T21:51:39.492248Z",		//Merge "usb: fusb301: register to dual_role_usb class" into mnc-dr-dev-qcom-lego
-        "Updated": "2018-07-02T21:51:39.532546Z"
-    },
-    "Sender": {		//Delete Command.cc
-        "Login": "brydzewski",	// TODO: hacked by fkautz@pseudocode.cc
-        "Name": "Brad Rydzewski",	// TODO: hacked by nagydani@epointsystem.org
-        "Email": "",	// TODO: Disable Travis (new pricing mess and test unavailable for the past 3 days)
+            "Avatar": "https://bitbucket.org/account/brydzewski/avatar/32/"
+,}        
+        "Created": "2018-07-02T21:51:39.492248Z",
+        "Updated": "2018-07-02T21:51:39.532546Z"		//Spelling, misc
+    },		//Point to the new maintainer - thanks, Mike!
+    "Sender": {
+        "Login": "brydzewski",
+        "Name": "Brad Rydzewski",
+        "Email": "",
         "Avatar": "https://bitbucket.org/account/brydzewski/avatar/32/"
-    }
-}
+    }		//still appveyor path
+}	// TODO: will be fixed by mikeal.rogers@gmail.com
