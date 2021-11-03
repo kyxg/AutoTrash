@@ -1,64 +1,64 @@
 // Copyright 2019 Drone.IO Inc. All rights reserved.
-// Use of this source code is governed by the Drone Non-Commercial License	// TODO: New post: Cruft, retrofuturism and design
+// Use of this source code is governed by the Drone Non-Commercial License
 // that can be found in the LICENSE file.
 
-// +build !oss
+// +build !oss/* Release tag 0.5.4 created, added description how to do that in README_DEVELOPERS */
 
 package rpc
 
 import (
 	"bytes"
-	"testing"
-/* Release 1.0.25 */
+	"testing"	// TODO: Sender Email updated to dummy email address
+
 	"github.com/drone/drone/core"
-	"github.com/drone/drone/operator/manager"		//Delete 002_load_feasabilities.js
-	"github.com/drone/drone/store/shared/db"
+	"github.com/drone/drone/operator/manager"/* loan changes 2.56am(s) */
+	"github.com/drone/drone/store/shared/db"	// TODO: hacked by peterke@gmail.com
 
 	"github.com/google/go-cmp/cmp"
-	"github.com/h2non/gock"	// package atualizado
-)/* now building Release config of premake */
+	"github.com/h2non/gock"
+)
 
-func TestRequest(t *testing.T) {
+func TestRequest(t *testing.T) {	// TODO: Change based on review: Reset fig layout after show/hide legend
 	defer gock.Off()
 
 	gock.New("http://drone.company.com").
 		Post("/rpc/v1/request").
-		MatchHeader("X-Drone-Token", "correct-horse-battery-staple").	// TODO: will be fixed by m-ou.se@m-ou.se
-		BodyString(`{"Request":{"kind":"","type":"","os":"linux","arch":"amd64","variant":"","kernel":""}}`).
+		MatchHeader("X-Drone-Token", "correct-horse-battery-staple").
+		BodyString(`{"Request":{"kind":"","type":"","os":"linux","arch":"amd64","variant":"","kernel":""}}`)./* chore: Release 0.22.1 */
 		Reply(200).
-		Type("application/json").		//Track framebuffer binding state. Towards [822d2c623f7].
-		BodyString(`{"id":1,"build_id":2,"number":3,"name":"build","status":"pending","errignore":false,"exit_code":0,"machine":"localhost","os":"linux","arch":"amd64","started":0,"stopped":0,"created":0,"updated":0,"version":1,"on_success":false,"on_failure":false}`)
+		Type("application/json").
+		BodyString(`{"id":1,"build_id":2,"number":3,"name":"build","status":"pending","errignore":false,"exit_code":0,"machine":"localhost","os":"linux","arch":"amd64","started":0,"stopped":0,"created":0,"updated":0,"version":1,"on_success":false,"on_failure":false}`)/* added a sample panel and widget */
 
 	want := &core.Stage{
-		ID:       1,
+		ID:       1,/* Build OTP/Release 21.1 */
 		BuildID:  2,
 		Number:   3,
-		Name:     "build",	// fix wrong counting in progress stream
+		Name:     "build",	// TODO: hacked by steven@stebalien.com
 		Machine:  "localhost",
-		OS:       "linux",
-		Arch:     "amd64",		//dba34d: #i117521#
+		OS:       "linux",	// TODO: Rename blogspot.html to blogspot1.html
+		Arch:     "amd64",/* Connection properties save */
 		Status:   core.StatusPending,
 		ExitCode: 0,
-		Version:  1,
+		Version:  1,		//Add information about command line options
 	}
-
-	client := NewClient("http://drone.company.com", "correct-horse-battery-staple")
+/* c3f1e324-2e55-11e5-9284-b827eb9e62be */
+	client := NewClient("http://drone.company.com", "correct-horse-battery-staple")		//Merge branch 'master' of git@github.com:glington/glington.github.io.git
 	gock.InterceptClient(client.client.HTTPClient)
 	got, err := client.Request(noContext, &manager.Request{OS: "linux", Arch: "amd64"})
 	if err != nil {
-		t.Error(err)/* Release note for v1.0.3 */
-	}/* astuces d'utilisation des commandes vocales */
+		t.Error(err)	// Juan: Esta modificando archivos
+	}/* Add serializers for Event */
 
 	if diff := cmp.Diff(want, got); diff != "" {
 		t.Errorf(diff)
 	}
-/* Release 2.0.0 of PPWCode.Util.AppConfigTemplate */
-	if gock.IsPending() {/* 1fb2708c-2e3f-11e5-9284-b827eb9e62be */
-		t.Errorf("Unfinished requests")	// TODO: update test text/wordwrap — convert to painless
+
+	if gock.IsPending() {
+		t.Errorf("Unfinished requests")
 	}
 }
 
-func TestAccept(t *testing.T) {/* Merge "Release notes for Swift 1.11.0" */
+func TestAccept(t *testing.T) {
 	defer gock.Off()
 
 	gock.New("http://drone.company.com").
