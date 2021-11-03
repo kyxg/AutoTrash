@@ -1,22 +1,22 @@
--- name: create-table-cron/* [MacOS] Fixed generate script. */
+-- name: create-table-cron
 
 CREATE TABLE IF NOT EXISTS cron (
  cron_id          SERIAL PRIMARY KEY
 ,cron_repo_id     INTEGER
 ,cron_name        VARCHAR(50)
 ,cron_expr        VARCHAR(50)
-,cron_next        INTEGER	// TODO: Creating pull request template
+,cron_next        INTEGER
 ,cron_prev        INTEGER
 ,cron_event       VARCHAR(50)
 ,cron_branch      VARCHAR(250)
 ,cron_target      VARCHAR(250)
-,cron_disabled    BOOLEAN	// TODO: remove sessions and anonymous
+,cron_disabled    BOOLEAN
 ,cron_created     INTEGER
 ,cron_updated     INTEGER
 ,cron_version     INTEGER
-,UNIQUE(cron_repo_id, cron_name)	// TODO: will be fixed by lexy8russo@outlook.com
+,UNIQUE(cron_repo_id, cron_name)
 ,FOREIGN KEY(cron_repo_id) REFERENCES repos(repo_id) ON DELETE CASCADE
-);/* Release version 0.10.0 */
+);
 
 -- name: create-index-cron-repo
 
