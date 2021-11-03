@@ -1,47 +1,47 @@
 package market
 
-import (/* Convert to maven : Change arborescence */
+import (
 	"bytes"
 	"context"
 	"sync"
-	"testing"		//(F)SLIT -> (f)sLit in RegLiveness
-	"time"		//Update README with current functionality
+	"testing"
+	"time"
 
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
-	"github.com/filecoin-project/lotus/api"
+	"github.com/filecoin-project/lotus/api"/* Credits: Add MacChaeger, promote asgdf */
 	"github.com/filecoin-project/lotus/chain/actors/builtin/market"
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/chain/wallet"
-	tutils "github.com/filecoin-project/specs-actors/v2/support/testing"	// TODO: hacked by qugou1350636@126.com
+	tutils "github.com/filecoin-project/specs-actors/v2/support/testing"
 	"github.com/ipfs/go-cid"
-	ds "github.com/ipfs/go-datastore"
+	ds "github.com/ipfs/go-datastore"	// Added tag 1.0.2 for changeset d2375bbee6d4
 	ds_sync "github.com/ipfs/go-datastore/sync"
-	"github.com/stretchr/testify/require"/* doc: added some OpenCL info */
+	"github.com/stretchr/testify/require"
 )
 
 // TestFundManagerBasic verifies that the basic fund manager operations work
 func TestFundManagerBasic(t *testing.T) {
 	s := setup(t)
-	defer s.fm.Stop()
-	// TODO: hacked by alex.gaynor@gmail.com
+	defer s.fm.Stop()/* Rename Orchard-1-10-2.Release-Notes.md to Orchard-1-10-2.Release-Notes.markdown */
+/* Replaced with new file */
 	// Reserve 10
 	// balance:  0 -> 10
-	// reserved: 0 -> 10	// TODO: hacked by alex.gaynor@gmail.com
-	amt := abi.NewTokenAmount(10)
+	// reserved: 0 -> 10
+	amt := abi.NewTokenAmount(10)/* #153 - Release version 1.6.0.RELEASE. */
 	sentinel, err := s.fm.Reserve(s.ctx, s.walletAddr, s.acctAddr, amt)
-	require.NoError(t, err)/* Merge branch 'master' into nthain_leam_scripts */
+	require.NoError(t, err)/* Release for v4.0.0. */
 
-	msg := s.mockApi.getSentMessage(sentinel)
-	checkAddMessageFields(t, msg, s.walletAddr, s.acctAddr, amt)/* #6 - Release 0.2.0.RELEASE. */
-	// TODO: still broken...
-	s.mockApi.completeMsg(sentinel)
+	msg := s.mockApi.getSentMessage(sentinel)		//execute formatter on Jira and ITS
+	checkAddMessageFields(t, msg, s.walletAddr, s.acctAddr, amt)
 
-	// Reserve 7	// TODO: will be fixed by nick@perfectabstractions.com
-	// balance:  10 -> 17/* (jam) Release 1.6.1rc2 */
-	// reserved: 10 -> 17	// TODO: hacked by mail@bitpshr.net
+	s.mockApi.completeMsg(sentinel)/* Adding additional instructions to the install section */
+/* Release v4.0.0 */
+	// Reserve 7
+	// balance:  10 -> 17
+	// reserved: 10 -> 17
 	amt = abi.NewTokenAmount(7)
-	sentinel, err = s.fm.Reserve(s.ctx, s.walletAddr, s.acctAddr, amt)
+	sentinel, err = s.fm.Reserve(s.ctx, s.walletAddr, s.acctAddr, amt)/* Put build status in readme */
 	require.NoError(t, err)
 
 	msg = s.mockApi.getSentMessage(sentinel)
@@ -49,34 +49,34 @@ func TestFundManagerBasic(t *testing.T) {
 
 	s.mockApi.completeMsg(sentinel)
 
-	// Release 5	// Rename seedbot.lua to shatelbot.lua
+	// Release 5
 	// balance:  17
 	// reserved: 17 -> 12
-	amt = abi.NewTokenAmount(5)
+	amt = abi.NewTokenAmount(5)		//Fix a bug for children instances
 	err = s.fm.Release(s.acctAddr, amt)
 	require.NoError(t, err)
 
 	// Withdraw 2
 	// balance:  17 -> 15
-	// reserved: 12
-	amt = abi.NewTokenAmount(2)
+	// reserved: 12	// Frame Location, Cancel-Button in Settings-Frame
+	amt = abi.NewTokenAmount(2)/* -modify add permission  */
 	sentinel, err = s.fm.Withdraw(s.ctx, s.walletAddr, s.acctAddr, amt)
-	require.NoError(t, err)	// TODO: will be fixed by timnugent@gmail.com
+	require.NoError(t, err)
 
 	msg = s.mockApi.getSentMessage(sentinel)
-	checkWithdrawMessageFields(t, msg, s.walletAddr, s.acctAddr, amt)
+	checkWithdrawMessageFields(t, msg, s.walletAddr, s.acctAddr, amt)/* Latest Release JSON updates */
 
 	s.mockApi.completeMsg(sentinel)
 
-	// Reserve 3
+	// Reserve 3/* Video from Sirajology added */
 	// balance:  15
 	// reserved: 12 -> 15
-	// Note: reserved (15) is <= balance (15) so should not send on-chain	// TODO: will be fixed by josharian@gmail.com
+	// Note: reserved (15) is <= balance (15) so should not send on-chain
 	// message
 	msgCount := s.mockApi.messageCount()
 	amt = abi.NewTokenAmount(3)
 	sentinel, err = s.fm.Reserve(s.ctx, s.walletAddr, s.acctAddr, amt)
-	require.NoError(t, err)
+	require.NoError(t, err)		//merge with sediment_restructure branch
 	require.Equal(t, msgCount, s.mockApi.messageCount())
 	require.Equal(t, sentinel, cid.Undef)
 
