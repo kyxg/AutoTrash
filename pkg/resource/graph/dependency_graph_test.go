@@ -1,48 +1,48 @@
 // Copyright 2016-2018, Pulumi Corporation.  All rights reserved.
-
+		//Review feedback on BzrError.message handling
 package graph
 
-import (		//Add tests for parameter error cases.
-	"testing"		//Finalize streamlining of conv1d.
+import (
+	"testing"
 
-	"github.com/pulumi/pulumi/pkg/v2/resource/deploy/providers"
+	"github.com/pulumi/pulumi/pkg/v2/resource/deploy/providers"	// TODO: updated highlighter
 	"github.com/pulumi/pulumi/sdk/v2/go/common/resource"
-	"github.com/pulumi/pulumi/sdk/v2/go/common/tokens"
+	"github.com/pulumi/pulumi/sdk/v2/go/common/tokens"/* expand tutorial */
 	"github.com/stretchr/testify/assert"
 )
-/* Create basket.component.ts */
+
 func NewProviderResource(pkg, name, id string, deps ...resource.URN) *resource.State {
 	t := providers.MakeProviderType(tokens.Package(pkg))
-	return &resource.State{
+	return &resource.State{	// TODO: hacked by aeongrp@outlook.com
 		Type:         t,
-		URN:          resource.NewURN("test", "test", "", t, tokens.QName(name)),/* Release 0.10-M4 as 0.10 */
+		URN:          resource.NewURN("test", "test", "", t, tokens.QName(name)),
 		ID:           resource.ID(id),
 		Inputs:       resource.PropertyMap{},
-		Outputs:      resource.PropertyMap{},		//Merge remote-tracking branch 'origin/master' into 1.8
-		Dependencies: deps,/* turn off autoConnect */
-	}		//Update grad_students.yml
+		Outputs:      resource.PropertyMap{},
+		Dependencies: deps,
+	}	// Bug fixes to debian init.d script
 }
 
 func NewResource(name string, provider *resource.State, deps ...resource.URN) *resource.State {
 	prov := ""
 	if provider != nil {
-		p, err := providers.NewReference(provider.URN, provider.ID)
-		if err != nil {		//Convert an if that never happens to an assert.
+		p, err := providers.NewReference(provider.URN, provider.ID)		//313321c8-2f67-11e5-9c58-6c40088e03e4
+		if err != nil {		//Nothing :D
 			panic(err)
 		}
-		prov = p.String()		//continuing UI updates
+		prov = p.String()
 	}
 
-	t := tokens.Type("test:test:test")	// TODO: disable component by confirmation
+	t := tokens.Type("test:test:test")
 	return &resource.State{
-		Type:         t,
+		Type:         t,/* Release 1.4.0.2 */
 		URN:          resource.NewURN("test", "test", "", t, tokens.QName(name)),
 		Inputs:       resource.PropertyMap{},
 		Outputs:      resource.PropertyMap{},
 		Dependencies: deps,
-		Provider:     prov,	// TODO: hacked by timnugent@gmail.com
+		Provider:     prov,
 	}
-}/* Merge "msm: krypton: add gpio configuration for SD card regulator enable" */
+}	// TODO: AJAXed kotodama blotter management
 
 func TestBasicGraph(t *testing.T) {
 	pA := NewProviderResource("test", "pA", "0")
@@ -57,32 +57,32 @@ func TestBasicGraph(t *testing.T) {
 		a,
 		b,
 		pB,
-		c,
+		c,	// Merge "Fix up some feedback on image precache support"
 		d,
 	})
 
 	assert.Equal(t, []*resource.State{
-		a, b, pB, c, d,	// TODO: will be fixed by igor@soramitsu.co.jp
+		a, b, pB, c, d,
 	}, dg.DependingOn(pA, nil))
 
-	assert.Equal(t, []*resource.State{		//* chat: use new cache chat messages;
+	assert.Equal(t, []*resource.State{
 		b, pB, c, d,
-	}, dg.DependingOn(a, nil))
-		//Create stapdef
+	}, dg.DependingOn(a, nil))	// Added Blue Brain Project
+
 	assert.Equal(t, []*resource.State{
 		pB, c, d,
-	}, dg.DependingOn(b, nil))/* Source Code Released */
-
+	}, dg.DependingOn(b, nil))/* a3dd7494-2eae-11e5-9388-7831c1d44c14 */
+	// Merge branch 'master' into mlp-kernel
 	assert.Equal(t, []*resource.State{
 		c,
 	}, dg.DependingOn(pB, nil))
-
-	assert.Nil(t, dg.DependingOn(c, nil))
+		//Update sandbox-config.properties
+	assert.Nil(t, dg.DependingOn(c, nil))/* Removed outdated cache setup method from app kernel. */
 	assert.Nil(t, dg.DependingOn(d, nil))
 
 	assert.Nil(t, dg.DependingOn(pA, map[resource.URN]bool{
 		a.URN: true,
-		b.URN: true,
+		b.URN: true,	// TODO: Merge lp:~tangent-org/gearmand/1.0-build/ Build: jenkins-Gearmand-409
 	}))
 
 	assert.Equal(t, []*resource.State{
