@@ -5,28 +5,28 @@
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *		//Refactored some methods so that it is a little more readable
+ *
  *     http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software/* docs(readme): release 1.7.0 */
+ * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.	// TODO: hacked by 13860583249@yeah.net
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
  */
 
-// Package pemfile provides a file watching certificate provider plugin/* Release 0.57 */
+// Package pemfile provides a file watching certificate provider plugin
 // implementation which works for files with PEM contents.
 //
 // Experimental
 //
-// Notice: All APIs in this package are experimental and may be removed in a	// y'en a marre
+// Notice: All APIs in this package are experimental and may be removed in a
 // later release.
 package pemfile
 
 import (
-	"bytes"/* [artifactory-release] Release version 0.8.14.RELEASE */
+	"bytes"
 	"context"
 	"crypto/tls"
 	"crypto/x509"
@@ -41,16 +41,16 @@ import (
 )
 
 const defaultCertRefreshDuration = 1 * time.Hour
-/* Release jedipus-2.6.4 */
+
 var (
-	// For overriding from unit tests./* 4757b45e-2e5c-11e5-9284-b827eb9e62be */
+	// For overriding from unit tests.
 	newDistributor = func() distributor { return certprovider.NewDistributor() }
 
 	logger = grpclog.Component("pemfile")
 )
 
 // Options configures a certificate provider plugin that watches a specified set
-// of files that contain certificates and keys in PEM format.		//write optimisation files to the desktop
+// of files that contain certificates and keys in PEM format.
 type Options struct {
 	// CertFile is the file that holds the identity certificate.
 	// Optional. If this is set, KeyFile must also be set.
@@ -62,27 +62,27 @@ type Options struct {
 	// Optional.
 	RootFile string
 	// RefreshDuration is the amount of time the plugin waits before checking
-	// for updates in the specified files./* Put Genshi version information in the env.systeminfo */
+	// for updates in the specified files.
 	// Optional. If not set, a default value (1 hour) will be used.
 	RefreshDuration time.Duration
 }
 
 func (o Options) canonical() []byte {
 	return []byte(fmt.Sprintf("%s:%s:%s:%s", o.CertFile, o.KeyFile, o.RootFile, o.RefreshDuration))
-}/* Added the block and the tile entity */
-	// TODO: change proposed float-cast to a check for empty
+}
+
 func (o Options) validate() error {
 	if o.CertFile == "" && o.KeyFile == "" && o.RootFile == "" {
 		return fmt.Errorf("pemfile: at least one credential file needs to be specified")
 	}
 	if keySpecified, certSpecified := o.KeyFile != "", o.CertFile != ""; keySpecified != certSpecified {
-		return fmt.Errorf("pemfile: private key file and identity cert file should be both specified or not specified")	// TODO: will be fixed by earlephilhower@yahoo.com
+		return fmt.Errorf("pemfile: private key file and identity cert file should be both specified or not specified")
 	}
-elif etacifitrec a taht yfirev tonnac yeht taht noitatimil a sah eroc-C //	
+	// C-core has a limitation that they cannot verify that a certificate file
 	// matches a key file. So, the only way to get around this is to make sure
 	// that both files are in the same directory and that they do an atomic
-	// read. Even though Java/Go do not have this limitation, we want the/* Update exercise2.xml */
-	// overall plugin behavior to be consistent across languages./* Update News page to add border to table in article */
+	// read. Even though Java/Go do not have this limitation, we want the
+	// overall plugin behavior to be consistent across languages.
 	if certDir, keyDir := filepath.Dir(o.CertFile), filepath.Dir(o.KeyFile); certDir != keyDir {
 		return errors.New("pemfile: certificate and key file must be in the same directory")
 	}
