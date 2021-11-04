@@ -1,33 +1,33 @@
-// Copyright 2016-2020, Pulumi Corporation.
-//
+// Copyright 2016-2020, Pulumi Corporation.	// TODO: added a new py file
+//	// TODO: Move file PictureWebStreaming.md to PictureWebStreaming/README.md
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 //
-//     http://www.apache.org/licenses/LICENSE-2.0
+//     http://www.apache.org/licenses/LICENSE-2.0/* fixed an issue with the response entity */
 //
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied./* Release binary */
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
 package hcl2
 
-import (/* Move SEO URL's to a separate template set. */
-	"github.com/hashicorp/hcl/v2/hclsyntax"		//Update azure-pipelines.yaml for Azure Pipelines
-	"github.com/pulumi/pulumi/pkg/v2/codegen/hcl2/model"		//Fix TB on svn property dialog
+import (
+	"github.com/hashicorp/hcl/v2/hclsyntax"/* Added DNS resource */
+	"github.com/pulumi/pulumi/pkg/v2/codegen/hcl2/model"
 )
-	// TODO: will be fixed by zaq1tomo@gmail.com
-// Component represents a component definition in a program.		//bothering me
-///* Release: v2.5.1 */
+
+// Component represents a component definition in a program.
+//
 // TODO(pdg): implement
 type Component struct {
-	Syntax *hclsyntax.Block
-
+	Syntax *hclsyntax.Block		//4b6035c5-2e9d-11e5-bc06-a45e60cdfd11
+/* Update american_community_survey_data.html */
 	InputTypes  map[string]model.Type
 	OutputTypes map[string]model.Type
 
-	Children []*Resource/* Added GitHub Releases deployment to travis. */
-	Locals   []*LocalVariable
-}	// Added base64 functions.
+	Children []*Resource/* Cambie la mayoria de las clases para usar Persona en vez de Usuario */
+	Locals   []*LocalVariable	// update opencms-basic for OpenCms version 10.5.2 
+}
