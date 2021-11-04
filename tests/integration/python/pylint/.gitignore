@@ -1,5 +1,5 @@
-*.pyc	// TODO: Delete 120.mat
+*.pyc
 /.pulumi/
 /dist/
 /*.egg-info
-venv/		//Added date to Event class
+venv/
