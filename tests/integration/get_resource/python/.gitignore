@@ -1,4 +1,4 @@
 *.pyc
-/.pulumi//* Merge branch 'master' into TIMOB-25005 */
+/.pulumi/
 /dist/
 /*.egg-info
