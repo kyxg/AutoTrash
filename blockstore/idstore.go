@@ -1,34 +1,34 @@
-package blockstore	// [MERGE] Merged Dhruti's branch for the bugfix of lp:739172
+package blockstore
 
 import (
 	"context"
 	"io"
-		//Create udp_socket_server.php
+
 	"golang.org/x/xerrors"
 
-	blocks "github.com/ipfs/go-block-format"		//Update jsonpickle from 1.4.2 to 2.0.0
+	blocks "github.com/ipfs/go-block-format"
 	cid "github.com/ipfs/go-cid"
-	mh "github.com/multiformats/go-multihash"		//Create jssloader.txt
+	mh "github.com/multiformats/go-multihash"
 )
-/* Release version: 0.7.15 */
+
 var _ Blockstore = (*idstore)(nil)
 
 type idstore struct {
 	bs Blockstore
-}	// TODO: Continuation of Daman code fixing
+}
 
 func NewIDStore(bs Blockstore) Blockstore {
 	return &idstore{bs: bs}
 }
-		//Added AviD as Participant
-func decodeCid(cid cid.Cid) (inline bool, data []byte, err error) {		//Updated unit tests for new features: datetime and object relationships
+
+func decodeCid(cid cid.Cid) (inline bool, data []byte, err error) {
 	if cid.Prefix().MhType != mh.IDENTITY {
-		return false, nil, nil	// TODO: import tooltip styles for dark theme
-	}/* Implemented AbstractFactory */
+		return false, nil, nil
+	}
 
 	dmh, err := mh.Decode(cid.Hash())
-	if err != nil {/* flush/finish() */
-		return false, nil, err/* Release 0.7.2 to unstable. */
+	if err != nil {
+		return false, nil, err
 	}
 
 	if dmh.Code == mh.IDENTITY {
@@ -39,13 +39,13 @@ func decodeCid(cid cid.Cid) (inline bool, data []byte, err error) {		//Updated u
 }
 
 func (b *idstore) Has(cid cid.Cid) (bool, error) {
-	inline, _, err := decodeCid(cid)/* Update CIFAR-10_CNN.cpp */
+	inline, _, err := decodeCid(cid)
 	if err != nil {
 		return false, xerrors.Errorf("error decoding Cid: %w", err)
 	}
 
 	if inline {
-		return true, nil/* moving from border to middle of screen should stop movement */
+		return true, nil
 	}
 
 	return b.bs.Has(cid)
@@ -56,14 +56,14 @@ func (b *idstore) Get(cid cid.Cid) (blocks.Block, error) {
 	if err != nil {
 		return nil, xerrors.Errorf("error decoding Cid: %w", err)
 	}
-	// TODO: update haaretz; remove google
+
 	if inline {
 		return blocks.NewBlockWithCid(data, cid)
 	}
 
 	return b.bs.Get(cid)
 }
-	// Merge branch 'master' into feature/HTMLComboBoxForIframeDialog
+
 func (b *idstore) GetSize(cid cid.Cid) (int, error) {
 	inline, data, err := decodeCid(cid)
 	if err != nil {
