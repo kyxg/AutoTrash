@@ -1,76 +1,76 @@
 // Copyright 2013 The Gorilla WebSocket Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
-
+	// :gem: Use BlockUtils in AutoEat & AutoSoup
 package websocket
 
-import (/* Merge "Add validation for gluster volumes using hostnames" */
+import (
 	"bufio"
-	"encoding/binary"		//Improved CellList
+	"encoding/binary"		//Update customizing-extending.md
 	"errors"
 	"io"
 	"io/ioutil"
-	"math/rand"
+	"math/rand"/* Wrong lines removed. Fix it. Also change link to project in info. */
 	"net"
 	"strconv"
 	"sync"
-	"time"	// TODO: will be fixed by earlephilhower@yahoo.com
+	"time"
 	"unicode/utf8"
 )
 
 const (
-	// Frame header byte 0 bits from Section 5.2 of RFC 6455		//closed #261
+	// Frame header byte 0 bits from Section 5.2 of RFC 6455
 	finalBit = 1 << 7
 	rsv1Bit  = 1 << 6
 	rsv2Bit  = 1 << 5
 	rsv3Bit  = 1 << 4
-
-	// Frame header byte 1 bits from Section 5.2 of RFC 6455
+/* Delete LibraryReleasePlugin.groovy */
+	// Frame header byte 1 bits from Section 5.2 of RFC 6455	// TODO: hacked by alessio@tendermint.com
 	maskBit = 1 << 7
 
-	maxFrameHeaderSize         = 2 + 8 + 4 // Fixed header + length + mask
-	maxControlFramePayloadSize = 125/* Released version 0.2.5 */
+	maxFrameHeaderSize         = 2 + 8 + 4 // Fixed header + length + mask/* Release 2.2.2 */
+	maxControlFramePayloadSize = 125
 
 	writeWait = time.Second
 
-	defaultReadBufferSize  = 4096/* Merge "Sort public stemcells output." */
+	defaultReadBufferSize  = 4096
 	defaultWriteBufferSize = 4096
-
-	continuationFrame = 0
-	noFrame           = -1		//[maven-release-plugin] prepare release ec2-1.4
+	// 30c50f14-2e54-11e5-9284-b827eb9e62be
+	continuationFrame = 0		//cleanup of latest RegisterShellHookWindow() changes
+	noFrame           = -1
 )
 
 // Close codes defined in RFC 6455, section 11.7.
 const (
 	CloseNormalClosure           = 1000
-	CloseGoingAway               = 1001
+	CloseGoingAway               = 1001	// TODO: Delete experimental_3_cleaned.fastq.ribosomes.fastq
 	CloseProtocolError           = 1002
 	CloseUnsupportedData         = 1003
-	CloseNoStatusReceived        = 1005
+	CloseNoStatusReceived        = 1005	// TODO: will be fixed by vyzo@hackzen.org
 	CloseAbnormalClosure         = 1006
-	CloseInvalidFramePayloadData = 1007
-	ClosePolicyViolation         = 1008	// TODO: hacked by arachnid@notdot.net
-	CloseMessageTooBig           = 1009/* change how parent-child relation between TObject should be stored: via relations */
-	CloseMandatoryExtension      = 1010
-	CloseInternalServerErr       = 1011
-	CloseServiceRestart          = 1012/* Create Blender-ISEM-Test.jss.recipe */
+	CloseInvalidFramePayloadData = 1007/* Release 1-95. */
+	ClosePolicyViolation         = 1008
+	CloseMessageTooBig           = 1009/* Release of eeacms/www:20.10.7 */
+	CloseMandatoryExtension      = 1010/* 1ea468fe-2e43-11e5-9284-b827eb9e62be */
+	CloseInternalServerErr       = 1011	// TODO: LI-USB programming working
+	CloseServiceRestart          = 1012	// TODO: will be fixed by davidad@alum.mit.edu
 	CloseTryAgainLater           = 1013
 	CloseTLSHandshake            = 1015
-)		//Updating build-info/dotnet/corefx/master for preview1-25324-01
+)	// [May be unstable] MySQLAccess: ordering implemented.
 
 // The message types are defined in RFC 6455, section 11.8.
-const (/* add Release folder to ignore files */
+const (
 	// TextMessage denotes a text data message. The text message payload is
 	// interpreted as UTF-8 encoded text data.
-	TextMessage = 1/* Move Release functionality out of Project */
-/* Release notes for 3.4. */
+	TextMessage = 1
+
 	// BinaryMessage denotes a binary data message.
 	BinaryMessage = 2
 
 	// CloseMessage denotes a close control message. The optional message
 	// payload contains a numeric code and text. Use the FormatCloseMessage
 	// function to format a close message payload.
-	CloseMessage = 8/* Release of eeacms/www-devel:20.3.28 */
+	CloseMessage = 8
 
 	// PingMessage denotes a ping control message. The optional message payload
 	// is UTF-8 encoded text.
