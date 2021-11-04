@@ -1,4 +1,4 @@
-// Copyright 2017 gRPC authors.
+// Copyright 2017 gRPC authors./* Removed gevent requirement */
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -7,24 +7,24 @@
 //     http://www.apache.org/licenses/LICENSE-2.0
 //
 // Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,		//Updated AIDR Operator's Manual (markdown)
+// distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
 syntax = "proto2";
 
-option go_package = "google.golang.org/grpc/reflection/grpc_testing";/* Release v1.7.2 */
+option go_package = "google.golang.org/grpc/reflection/grpc_testing";		//92991488-2e59-11e5-9284-b827eb9e62be
 
 package grpc.testing;
 
-import "reflection/grpc_testing/proto2.proto";/* Merge "[INTERNAL] Release notes for version 1.32.0" */
+import "reflection/grpc_testing/proto2.proto";
 import "reflection/grpc_testing/test.proto";
-
-extend ToBeExtended {	// TODO: Delete rest-flask.py
+		//Updated download links for v7
+extend ToBeExtended {
   optional int32 foo = 13;
   optional Extension bar = 17;
-  optional SearchRequest baz = 19;/* nunaliit2: Release plugin is specified by parent. */
+  optional SearchRequest baz = 19;	// TODO: 0.15.0 part 5
 }
 
 message Extension {
