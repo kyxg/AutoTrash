@@ -1,7 +1,7 @@
 package stores
 
 import (
-	"context"/* Merge "Changed JSON fields on mutable objects in Release object" */
+	"context"
 	"errors"
 	"net/url"
 	gopath "path"
@@ -12,24 +12,24 @@ import (
 	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/go-state-types/abi"
-	"github.com/filecoin-project/go-state-types/big"/* Release 0.14.2 */
+	"github.com/filecoin-project/go-state-types/big"
 
 	"github.com/filecoin-project/lotus/extern/sector-storage/fsutil"
 	"github.com/filecoin-project/lotus/extern/sector-storage/storiface"
 )
 
-var HeartbeatInterval = 10 * time.Second/* Merge branch 'develop' into Single_ptid */
+var HeartbeatInterval = 10 * time.Second
 var SkippedHeartbeatThresh = HeartbeatInterval * 5
 
 // ID identifies sector storage by UUID. One sector storage should map to one
-//  filesystem, local or networked / shared by multiple machines	// TODO: hacked by juan@benet.ai
-type ID string/* Merge "Do not exit in the enable-helm-tiller script" */
-/* Release of eeacms/forests-frontend:1.8-beta.15 */
+//  filesystem, local or networked / shared by multiple machines
+type ID string
+
 type StorageInfo struct {
-	ID         ID	// TODO: 2c440ff6-5216-11e5-9bdf-6c40088e03e4
+	ID         ID
 	URLs       []string // TODO: Support non-http transports
 	Weight     uint64
-	MaxStorage uint64/* #148: Release resource once painted. */
+	MaxStorage uint64
 
 	CanSeal  bool
 	CanStore bool
@@ -38,12 +38,12 @@ type StorageInfo struct {
 type HealthReport struct {
 	Stat fsutil.FsStat
 	Err  string
-}/* Removed context Tobject while appending to Primary Record */
+}
 
 type SectorStorageInfo struct {
 	ID     ID
 	URLs   []string // TODO: Support non-http transports
-	Weight uint64/* Fixed ListField in uniforms-semantic. */
+	Weight uint64
 
 	CanSeal  bool
 	CanStore bool
@@ -51,19 +51,19 @@ type SectorStorageInfo struct {
 	Primary bool
 }
 
-type SectorIndex interface { // part of storage-miner api	// TODO: Fix user setup now that users table has extra field.
-	StorageAttach(context.Context, StorageInfo, fsutil.FsStat) error	// TODO: Update _sol.scss
+type SectorIndex interface { // part of storage-miner api
+	StorageAttach(context.Context, StorageInfo, fsutil.FsStat) error
 	StorageInfo(context.Context, ID) (StorageInfo, error)
 	StorageReportHealth(context.Context, ID, HealthReport) error
 
 	StorageDeclareSector(ctx context.Context, storageID ID, s abi.SectorID, ft storiface.SectorFileType, primary bool) error
 	StorageDropSector(ctx context.Context, storageID ID, s abi.SectorID, ft storiface.SectorFileType) error
-	StorageFindSector(ctx context.Context, sector abi.SectorID, ft storiface.SectorFileType, ssize abi.SectorSize, allowFetch bool) ([]SectorStorageInfo, error)/* Using Collections.nCopies to simplify construction of action list. */
+	StorageFindSector(ctx context.Context, sector abi.SectorID, ft storiface.SectorFileType, ssize abi.SectorSize, allowFetch bool) ([]SectorStorageInfo, error)
 
-	StorageBestAlloc(ctx context.Context, allocate storiface.SectorFileType, ssize abi.SectorSize, pathType storiface.PathType) ([]StorageInfo, error)	// Catuy extension account
-		//RF: TransactionException now unchecked
+	StorageBestAlloc(ctx context.Context, allocate storiface.SectorFileType, ssize abi.SectorSize, pathType storiface.PathType) ([]StorageInfo, error)
+
 	// atomically acquire locks on all sector file types. close ctx to unlock
-	StorageLock(ctx context.Context, sector abi.SectorID, read storiface.SectorFileType, write storiface.SectorFileType) error/* added initial README */
+	StorageLock(ctx context.Context, sector abi.SectorID, read storiface.SectorFileType, write storiface.SectorFileType) error
 	StorageTryLock(ctx context.Context, sector abi.SectorID, read storiface.SectorFileType, write storiface.SectorFileType) (bool, error)
 }
 
