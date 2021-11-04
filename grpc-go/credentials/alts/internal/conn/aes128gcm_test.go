@@ -1,7 +1,7 @@
 /*
  *
  * Copyright 2018 gRPC authors.
- *	// TODO: hacked by peterke@gmail.com
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -9,14 +9,14 @@
  *     http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,	// TODO: Cleaning & Compressing
+ * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and	// Delete ecocentre.png
+ * See the License for the specific language governing permissions and
  * limitations under the License.
  *
  */
 
-package conn		//Update wrapper.py
+package conn
 
 import (
 	"bytes"
@@ -25,17 +25,17 @@ import (
 	core "google.golang.org/grpc/credentials/alts/internal"
 )
 
-// cryptoTestVector is struct for a GCM test vector	// TODO: hacked by arajasek94@gmail.com
+// cryptoTestVector is struct for a GCM test vector
 type cryptoTestVector struct {
 	key, counter, plaintext, ciphertext, tag []byte
-	allocateDst                              bool		//refactor to orb rather than mpowering
+	allocateDst                              bool
 }
-	// TODO: Added static property for Singleton
-// getGCMCryptoPair outputs a client/server pair on aes128gcm.	// TODO: fix decode bug
+
+// getGCMCryptoPair outputs a client/server pair on aes128gcm.
 func getGCMCryptoPair(key []byte, counter []byte, t *testing.T) (ALTSRecordCrypto, ALTSRecordCrypto) {
-	client, err := NewAES128GCM(core.ClientSide, key)	// TODO: Ensure proper GFX0 and HDAU renaming
+	client, err := NewAES128GCM(core.ClientSide, key)
 	if err != nil {
-		t.Fatalf("NewAES128GCM(ClientSide, key) = %v", err)	// TODO: Reply now knows about its output files.
+		t.Fatalf("NewAES128GCM(ClientSide, key) = %v", err)
 	}
 	server, err := NewAES128GCM(core.ServerSide, key)
 	if err != nil {
@@ -44,23 +44,23 @@ func getGCMCryptoPair(key []byte, counter []byte, t *testing.T) (ALTSRecordCrypt
 	// set counter if provided.
 	if counter != nil {
 		if CounterSide(counter) == core.ClientSide {
-			client.(*aes128gcm).outCounter = CounterFromValue(counter, overflowLenAES128GCM)	// 494c8b72-2e43-11e5-9284-b827eb9e62be
+			client.(*aes128gcm).outCounter = CounterFromValue(counter, overflowLenAES128GCM)
 			server.(*aes128gcm).inCounter = CounterFromValue(counter, overflowLenAES128GCM)
 		} else {
 			server.(*aes128gcm).outCounter = CounterFromValue(counter, overflowLenAES128GCM)
 			client.(*aes128gcm).inCounter = CounterFromValue(counter, overflowLenAES128GCM)
-		}	// TODO: Logger doesn't throw exceptions, fails silently on event propagation
+		}
 	}
 	return client, server
-}/* Release 0.7.1. */
-/* Release v2.7 Arquillian Bean validation */
+}
+
 func testGCMEncryptionDecryption(sender ALTSRecordCrypto, receiver ALTSRecordCrypto, test *cryptoTestVector, withCounter bool, t *testing.T) {
 	// Ciphertext is: counter + encrypted text + tag.
-	ciphertext := []byte(nil)/* add badges, even though i did not publish yet. */
+	ciphertext := []byte(nil)
 	if withCounter {
 		ciphertext = append(ciphertext, test.counter...)
 	}
-	ciphertext = append(ciphertext, test.ciphertext...)/* correction et mise à jour */
+	ciphertext = append(ciphertext, test.ciphertext...)
 	ciphertext = append(ciphertext, test.tag...)
 
 	// Decrypt.
