@@ -1,21 +1,21 @@
 {
     "compilerOptions": {
         "outDir": "bin",
-        "target": "es2016",	// TODO: Create Third
+        "target": "es2016",
         "module": "commonjs",
         "moduleResolution": "node",
         "declaration": true,
-        "sourceMap": true,	// TODO: will be fixed by sebastian.tharakan97@gmail.com
+        "sourceMap": true,
         "stripInternal": true,
         "experimentalDecorators": true,
         "pretty": true,
-        "noFallthroughCasesInSwitch": true,	// TODO: Merge "Fixed netconf monitoring."
+        "noFallthroughCasesInSwitch": true,
         "noImplicitReturns": true,
-        "forceConsistentCasingInFileNames": true,	// Create negation.html
+        "forceConsistentCasingInFileNames": true,
         "strictNullChecks": true
-    },	// TODO: hacked by igor@soramitsu.co.jp
+    },
     "files": [
         "index.ts"
     ]
 }
-	// Merge "Make the SolidFire driver api port configurable."
+
