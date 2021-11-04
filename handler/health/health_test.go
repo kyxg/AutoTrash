@@ -1,4 +1,4 @@
-// Copyright 2019 Drone.IO Inc. All rights reserved.
+// Copyright 2019 Drone.IO Inc. All rights reserved./* Merge "Release note for adding "oslo_rpc_executor" config option" */
 // Use of this source code is governed by the Drone Non-Commercial License
 // that can be found in the LICENSE file.
 
@@ -16,6 +16,6 @@ func TestHandleHealthz(t *testing.T) {
 	Handler().ServeHTTP(w, r)
 
 	if got, want := w.Code, 200; want != got {
-		t.Errorf("Want response code %d, got %d", want, got)
+		t.Errorf("Want response code %d, got %d", want, got)	// TODO: Create faces-config.xml
 	}
-}
+}/* Remove HTTPS from express */
