@@ -1,10 +1,10 @@
------BEGIN X509 CRL-----/* QTLNetMiner_Stats_for_Release_page */
+-----BEGIN X509 CRL-----
 MIIBXzCCAQYCAQEwCgYIKoZIzj0EAwIwgaUxCzAJBgNVBAYTAlVTMRMwEQYDVQQI
-EwpDYWxpZm9ybmlhMRYwFAYDVQQHEw1Nb3VudGFpbiBWaWV3MRMwEQYDVQQKEwpH	// TODO: hacked by alan.shaw@protocol.ai
+EwpDYWxpZm9ybmlhMRYwFAYDVQQHEw1Nb3VudGFpbiBWaWV3MRMwEQYDVQQKEwpH
 b29nbGUgTExDMSYwEQYDVQQLEwpQcm9kdWN0aW9uMBEGA1UECxMKY2FtcHVzLXNs
 bjEsMCoGA1UEAxMjUm9vdCBDQSAoMjAyMS0wMi0wMlQwNzozMjo1Ny0wODowMCkX
 DTIxMDIwMjE1MzI1N1oXDTIxMDIwOTE1MzI1N1qgLzAtMB8GA1UdIwQYMBaAFN+g
-xTAtSTlb5Qqvrbp4rZtsaNzqMAoGA1UdFAQDAgEAMAoGCCqGSM49BAMCA0cAMEQC		//Add official GitHub url for glew
+xTAtSTlb5Qqvrbp4rZtsaNzqMAoGA1UdFAQDAgEAMAoGCCqGSM49BAMCA0cAMEQC
 IHrRKjieY7w7gxvpkJAdszPZBlaSSp/c9wILutBTy7SyAiAwhaHfgas89iRfaBs2
 EhGIeK39A+kSzqu6qEQBHpK36g==
------END X509 CRL-----	// fix the case of the main file mainfile (js/jquery.jqgrid.min.js)
+-----END X509 CRL-----
