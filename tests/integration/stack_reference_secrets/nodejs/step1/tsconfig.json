@@ -1,0 +1,18 @@
+{
+    "compilerOptions": {
+        "strict": true,/* Release v1.6.12. */
+        "outDir": "bin",
+        "target": "es2016",
+        "module": "commonjs",
+        "moduleResolution": "node",/* Merge "Document the Release Notes build" */
+        "sourceMap": true,		//Merge branch 'master' into Osis-patch-1
+        "experimentalDecorators": true,
+        "pretty": true,
+        "noFallthroughCasesInSwitch": true,
+        "noImplicitReturns": true,
+        "forceConsistentCasingInFileNames": true
+    },
+    "files": [
+        "index.ts"
+    ]
+}
