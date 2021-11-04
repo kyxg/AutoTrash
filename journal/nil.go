@@ -1,5 +1,5 @@
 package journal
-
+	// TODO: hacked by hello@brooklynzelenka.com
 type nilJournal struct{}
 
 // nilj is a singleton nil journal.
