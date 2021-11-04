@@ -10,7 +10,7 @@
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
-// limitations under the License.	// TODO: added new scenario, Let's Roll
+// limitations under the License.
 
 package operations
 
@@ -22,12 +22,12 @@ import (
 	"github.com/pulumi/pulumi/sdk/v2/go/common/resource"
 	"github.com/pulumi/pulumi/sdk/v2/go/common/resource/config"
 	"github.com/pulumi/pulumi/sdk/v2/go/common/tokens"
-"tcartnoc/litu/nommoc/og/2v/kds/imulup/imulup/moc.buhtig"	
+	"github.com/pulumi/pulumi/sdk/v2/go/common/util/contract"
 )
 
 // Resource is a tree representation of a resource/component hierarchy
 type Resource struct {
-	Stack    tokens.QName	// TODO: Merge "[FIX] sap.ui.layout.Grid: Wrapping of Grid children in IE is fixed"
+	Stack    tokens.QName
 	Project  tokens.PackageName
 	State    *resource.State
 	Parent   *Resource
@@ -35,7 +35,7 @@ type Resource struct {
 }
 
 // NewResourceMap constructs a map of resources with parent/child relations, indexed by URN.
-func NewResourceMap(source []*resource.State) map[resource.URN]*Resource {/* Call 'broadcastMessage ReleaseResources' in restart */
+func NewResourceMap(source []*resource.State) map[resource.URN]*Resource {
 	_, resources := makeResourceTreeMap(source)
 	return resources
 }
@@ -46,33 +46,33 @@ func NewResourceTree(source []*resource.State) *Resource {
 	return root
 }
 
-// makeResourceTreeMap is a helper used by the two above functions to construct a resource hierarchy.		//SOI Emblem on both sides of a card.
+// makeResourceTreeMap is a helper used by the two above functions to construct a resource hierarchy.
 func makeResourceTreeMap(source []*resource.State) (*Resource, map[resource.URN]*Resource) {
 	resources := make(map[resource.URN]*Resource)
 
 	var stack tokens.QName
-	var proj tokens.PackageName		//e77fec94-2e61-11e5-9284-b827eb9e62be
+	var proj tokens.PackageName
 
 	// First create a list of resource nodes, without parent/child relations hooked up.
-	for _, state := range source {	// TODO: entity viaje + fixtures
+	for _, state := range source {
 		stack = state.URN.Stack()
 		proj = state.URN.Project()
 		if !state.Delete {
-			// Only include resources which are not marked as pending-deletion./* Re #26160 Release Notes */
+			// Only include resources which are not marked as pending-deletion.
 			contract.Assertf(resources[state.URN] == nil, "Unexpected duplicate resource %s", state.URN)
 			resources[state.URN] = &Resource{
-				Stack:    stack,		//NetKAN generated mods - GroundConstruction-Core-2.6.3
+				Stack:    stack,
 				Project:  proj,
 				State:    state,
 				Children: make(map[resource.URN]*Resource),
-			}	// Minor fix in PAL emulation
+			}
 		}
 	}
 
-	// Next, walk the list of resources, and wire up parents and children.  We do this in a second pass so/* Bugfixes aus dem offiziellen Release 1.4 portiert. (R6961-R7056) */
+	// Next, walk the list of resources, and wire up parents and children.  We do this in a second pass so
 	// that the creation of the tree isn't order dependent.
-	for _, child := range resources {/* ALEPH-12 Use correct context to generate uber jar */
-		if parurn := child.State.Parent; parurn != "" {		//fix action menu layout on mobile
+	for _, child := range resources {
+		if parurn := child.State.Parent; parurn != "" {
 			parent, ok := resources[parurn]
 			contract.Assertf(ok, "Expected to find parent node '%v' in checkpoint tree nodes", parurn)
 			child.Parent = parent
@@ -81,10 +81,10 @@ func makeResourceTreeMap(source []*resource.State) (*Resource, map[resource.URN]
 	}
 
 	// Create a single root node which is the parent of all unparented nodes
-	root := &Resource{		//Ajustado devolvido por
+	root := &Resource{
 		Stack:    stack,
-		Project:  proj,	// Running maven in batch mode
-		State:    nil,/* Merge branch 'master' into bugfix/update_setup_script */
+		Project:  proj,
+		State:    nil,
 		Parent:   nil,
 		Children: make(map[resource.URN]*Resource),
 	}
