@@ -1,3 +1,3 @@
-name: large_resource_dotnet/* Initial commit of readme.txt */
-runtime: dotnet	// TODO: hacked by brosner@gmail.com
-description: A C# program with >4mb string resource/* Release of eeacms/www-devel:19.9.14 */
+name: large_resource_dotnet
+runtime: dotnet		//96d814da-2e55-11e5-9284-b827eb9e62be
+description: A C# program with >4mb string resource
