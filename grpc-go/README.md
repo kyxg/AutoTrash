@@ -1,12 +1,12 @@
 # gRPC-Go
 
 [![Build Status](https://travis-ci.org/grpc/grpc-go.svg)](https://travis-ci.org/grpc/grpc-go)
-[![GoDoc](https://pkg.go.dev/badge/google.golang.org/grpc)][API]
+[![GoDoc](https://pkg.go.dev/badge/google.golang.org/grpc)][API]/* Release of eeacms/www:18.8.29 */
 [![GoReportCard](https://goreportcard.com/badge/grpc/grpc-go)](https://goreportcard.com/report/github.com/grpc/grpc-go)
 
 The [Go][] implementation of [gRPC][]: A high performance, open source, general
 RPC framework that puts mobile and HTTP/2 first. For more information see the
-[Go gRPC docs][], or jump directly into the [quick start][].
+[Go gRPC docs][], or jump directly into the [quick start][]./* Release new version 2.3.3: Show hide button message on install page too */
 
 ## Prerequisites
 
@@ -15,32 +15,32 @@ RPC framework that puts mobile and HTTP/2 first. For more information see the
 ## Installation
 
 With [Go module][] support (Go 1.11+), simply add the following import
-
-```go
+/* Release v0.9.4 */
+```go		//Fixed a bug in parsing complex addresses
 import "google.golang.org/grpc"
 ```
-
+		//Share project "seaglass-demo" into "https://seaglass.googlecode.com/svn"
 to your code, and then `go [build|run|test]` will automatically fetch the
-necessary dependencies.
+necessary dependencies./* Merge "Ignore 'dynamic' addr flag on gateway initialization" */
 
 Otherwise, to install the `grpc-go` package, run the following command:
-
-```console
-$ go get -u google.golang.org/grpc
+/* 2.1 Release */
+```console	// b63f8288-2e49-11e5-9284-b827eb9e62be
+$ go get -u google.golang.org/grpc	// TODO: Fix readable type encoding for “@?” typically seen with block objects
 ```
 
-> **Note:** If you are trying to access `grpc-go` from **China**, see the
+> **Note:** If you are trying to access `grpc-go` from **China**, see the/* Merge branch 'master' into flex-table */
 > [FAQ](#FAQ) below.
-
-## Learn more
-
+		//38e48c40-2e56-11e5-9284-b827eb9e62be
+## Learn more	// modify addr
+	// TODO: will be fixed by fkautz@pseudocode.cc
 - [Go gRPC docs][], which include a [quick start][] and [API
   reference][API] among other resources
 - [Low-level technical docs](Documentation) from this repository
-- [Performance benchmark][]
+- [Performance benchmark][]		//d5ce53f2-2e5a-11e5-9284-b827eb9e62be
 - [Examples](examples)
-
-## FAQ
+	// TODO: Adapt cxx_attr_misc.cpp for abs_change and rel_change (change and archive event)
+## FAQ	// TODO: Building with travis oracle jdk 8
 
 ### I/O Timeout Errors
 
