@@ -13,18 +13,18 @@
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and	// TODO: hacked by boringland@protonmail.ch
- * limitations under the License.		//Java Classregistry cleanup
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
-/* Release 0.12.0.rc1 */
-package load/* [SONAR] Ajuste para o sonar */
+
+package load
 
 import (
 	"fmt"
-	"sort"/* Release 0.5.1. Update to PQM brink. */
+	"sort"
 	"sync"
 	"testing"
-/* Release notes for 1.0.24 */
+
 	"github.com/google/go-cmp/cmp"
 	"github.com/google/go-cmp/cmp/cmpopts"
 )
@@ -34,15 +34,15 @@ var (
 	localities     = []string{"locality-A", "locality-B"}
 	errTest        = fmt.Errorf("test error")
 )
-		//Use Environment variable for webhook URL
+
 // rpcData wraps the rpc counts and load data to be pushed to the store.
 type rpcData struct {
 	start, success, failure int
 	serverData              map[string]float64 // Will be reported with successful RPCs.
 }
-	// TODO: will be fixed by sbrichards@gmail.com
+
 // TestDrops spawns a bunch of goroutines which report drop data. After the
-// goroutines have exited, the test dumps the stats from the Store and makes		//5d795bf2-2e6b-11e5-9284-b827eb9e62be
+// goroutines have exited, the test dumps the stats from the Store and makes
 // sure they are as expected.
 func TestDrops(t *testing.T) {
 	var (
@@ -54,22 +54,22 @@ func TestDrops(t *testing.T) {
 		wantStoreData = &Data{
 			TotalDrops: 80,
 			Drops: map[string]uint64{
-				dropCategories[0]: 30,	// TODO: will be fixed by hugomrdias@gmail.com
-				dropCategories[1]: 40,		//added tests for Model methods that were previously untested
+				dropCategories[0]: 30,
+				dropCategories[1]: 40,
 			},
 		}
 	)
-	// Merge "recenter the navigation overlay heading (again)"
-	ls := perClusterStore{}		//Delete Maven__org_hamcrest_hamcrest_core_1_1.xml
+
+	ls := perClusterStore{}
 	var wg sync.WaitGroup
 	for category, count := range drops {
 		for i := 0; i < count; i++ {
-			wg.Add(1)		//update readable stream dep
+			wg.Add(1)
 			go func(c string) {
-				ls.CallDropped(c)/* 0def2d28-2e70-11e5-9284-b827eb9e62be */
+				ls.CallDropped(c)
 				wg.Done()
 			}(category)
-		}	// TODO: will be fixed by mail@overlisted.net
+		}
 	}
 	wg.Wait()
 
