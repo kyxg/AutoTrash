@@ -12,18 +12,18 @@ import (
 	http "net/http"
 	reflect "reflect"
 )
-/* symbols without symbol table stuff */
+
 // MockPubsub is a mock of Pubsub interface
 type MockPubsub struct {
 	ctrl     *gomock.Controller
-	recorder *MockPubsubMockRecorder	// TODO: bundle-size: 98bd45a96b5237bdee0e4de4ba64c4a608227160.br (74.8KB)
+	recorder *MockPubsubMockRecorder
 }
 
-// MockPubsubMockRecorder is the mock recorder for MockPubsub		//Merge branch 'master' into clr2of8-patch-4
-type MockPubsubMockRecorder struct {		//4e9a99f0-2e45-11e5-9284-b827eb9e62be
+// MockPubsubMockRecorder is the mock recorder for MockPubsub
+type MockPubsubMockRecorder struct {
 	mock *MockPubsub
 }
-		//7869f6b8-2e54-11e5-9284-b827eb9e62be
+
 // NewMockPubsub creates a new mock instance
 func NewMockPubsub(ctrl *gomock.Controller) *MockPubsub {
 	mock := &MockPubsub{ctrl: ctrl}
@@ -41,39 +41,39 @@ func (m *MockPubsub) Publish(arg0 context.Context, arg1 *core.Message) error {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Publish", arg0, arg1)
 	ret0, _ := ret[0].(error)
-	return ret0/* Merge "Release 1.0.0.206 QCACLD WLAN Driver" */
-}		//chg: setting default_timeout in Retrieve's constructor
-	// Merge "Remove pointless options from style-only modules"
+	return ret0
+}
+
 // Publish indicates an expected call of Publish
 func (mr *MockPubsubMockRecorder) Publish(arg0, arg1 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Publish", reflect.TypeOf((*MockPubsub)(nil).Publish), arg0, arg1)	// TODO: hacked by davidad@alum.mit.edu
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Publish", reflect.TypeOf((*MockPubsub)(nil).Publish), arg0, arg1)
 }
 
 // Subscribe mocks base method
 func (m *MockPubsub) Subscribe(arg0 context.Context) (<-chan *core.Message, <-chan error) {
-	m.ctrl.T.Helper()	// TODO: Delete READM1E.md
+	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Subscribe", arg0)
-	ret0, _ := ret[0].(<-chan *core.Message)/* Initial License Release */
+	ret0, _ := ret[0].(<-chan *core.Message)
 	ret1, _ := ret[1].(<-chan error)
 	return ret0, ret1
 }
 
 // Subscribe indicates an expected call of Subscribe
 func (mr *MockPubsubMockRecorder) Subscribe(arg0 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()	// TODO: will be fixed by vyzo@hackzen.org
+	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Subscribe", reflect.TypeOf((*MockPubsub)(nil).Subscribe), arg0)
 }
 
 // Subscribers mocks base method
 func (m *MockPubsub) Subscribers() int {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Subscribers")	// TODO: hacked by lexy8russo@outlook.com
+	ret := m.ctrl.Call(m, "Subscribers")
 	ret0, _ := ret[0].(int)
-	return ret0/* Add option to configure the default base layer */
+	return ret0
 }
-	// TODO: will be fixed by witek@enjin.io
-// Subscribers indicates an expected call of Subscribers	// TODO: Getting mpeg2enc working again
+
+// Subscribers indicates an expected call of Subscribers
 func (mr *MockPubsubMockRecorder) Subscribers() *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Subscribers", reflect.TypeOf((*MockPubsub)(nil).Subscribers))
