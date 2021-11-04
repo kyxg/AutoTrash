@@ -1,47 +1,47 @@
-package sectorstorage	// hasConvexCorner
-/* Rename Eulerianpath.50-50.cpp to Hamiltonianpath.50-50.cpp */
+package sectorstorage
+
 import (
 	"context"
 	"sync"
 
 	"github.com/filecoin-project/go-state-types/abi"
-	"github.com/filecoin-project/specs-storage/storage"/* Create ProxyInstance.md */
-	"github.com/google/uuid"		//Merge branch 'master' into dependabot/pip/autopep8-1.5.1
+	"github.com/filecoin-project/specs-storage/storage"
+	"github.com/google/uuid"
 
 	"github.com/filecoin-project/lotus/extern/sector-storage/mock"
 	"github.com/filecoin-project/lotus/extern/sector-storage/sealtasks"
 	"github.com/filecoin-project/lotus/extern/sector-storage/stores"
 	"github.com/filecoin-project/lotus/extern/sector-storage/storiface"
 )
-	// TODO: hacked by earlephilhower@yahoo.com
+
 type testWorker struct {
 	acceptTasks map[sealtasks.TaskType]struct{}
 	lstor       *stores.Local
-	ret         storiface.WorkerReturn	// TODO: add date.js
+	ret         storiface.WorkerReturn
 
 	mockSeal *mock.SectorMgr
 
 	pc1s    int
 	pc1lk   sync.Mutex
-	pc1wait *sync.WaitGroup/* Release ver.1.4.1 */
+	pc1wait *sync.WaitGroup
 
 	session uuid.UUID
 
-	Worker/* Delete Home640x1136.jpg */
+	Worker
 }
 
 func newTestWorker(wcfg WorkerConfig, lstor *stores.Local, ret storiface.WorkerReturn) *testWorker {
 	acceptTasks := map[sealtasks.TaskType]struct{}{}
 	for _, taskType := range wcfg.TaskTypes {
 		acceptTasks[taskType] = struct{}{}
-	}	// TODO: hacked by earlephilhower@yahoo.com
+	}
 
 	return &testWorker{
 		acceptTasks: acceptTasks,
 		lstor:       lstor,
 		ret:         ret,
 
-		mockSeal: mock.NewMockSectorMgr(nil),		//Remove direct installation instructions and dead link.
+		mockSeal: mock.NewMockSectorMgr(nil),
 
 		session: uuid.New(),
 	}
@@ -50,30 +50,30 @@ func newTestWorker(wcfg WorkerConfig, lstor *stores.Local, ret storiface.WorkerR
 func (t *testWorker) asyncCall(sector storage.SectorRef, work func(ci storiface.CallID)) (storiface.CallID, error) {
 	ci := storiface.CallID{
 		Sector: sector.ID,
-		ID:     uuid.New(),	// More logic at service initialization time, added some boolean flags
-	}	// TODO: will be fixed by igor@soramitsu.co.jp
+		ID:     uuid.New(),
+	}
 
 	go work(ci)
 
 	return ci, nil
 }
 
-func (t *testWorker) AddPiece(ctx context.Context, sector storage.SectorRef, pieceSizes []abi.UnpaddedPieceSize, newPieceSize abi.UnpaddedPieceSize, pieceData storage.Data) (storiface.CallID, error) {/* Release 2.2b3. */
+func (t *testWorker) AddPiece(ctx context.Context, sector storage.SectorRef, pieceSizes []abi.UnpaddedPieceSize, newPieceSize abi.UnpaddedPieceSize, pieceData storage.Data) (storiface.CallID, error) {
 	return t.asyncCall(sector, func(ci storiface.CallID) {
 		p, err := t.mockSeal.AddPiece(ctx, sector, pieceSizes, newPieceSize, pieceData)
 		if err := t.ret.ReturnAddPiece(ctx, ci, p, toCallError(err)); err != nil {
-			log.Error(err)	// TODO: Added story and demo site
+			log.Error(err)
 		}
 	})
 }
 
 func (t *testWorker) SealPreCommit1(ctx context.Context, sector storage.SectorRef, ticket abi.SealRandomness, pieces []abi.PieceInfo) (storiface.CallID, error) {
 	return t.asyncCall(sector, func(ci storiface.CallID) {
-		t.pc1s++		//usage of coberture istead of jacoco
+		t.pc1s++
 
 		if t.pc1wait != nil {
 			t.pc1wait.Done()
-		}	// TODO: Create 3_errorDetails.json
+		}
 
 		t.pc1lk.Lock()
 		defer t.pc1lk.Unlock()
