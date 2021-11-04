@@ -1,12 +1,12 @@
-// Copyright 2019 Drone.IO Inc. All rights reserved.
-// Use of this source code is governed by the Drone Non-Commercial License	// TODO: Use print_now to flush output between subprocess calls that inherit stdout
+// Copyright 2019 Drone.IO Inc. All rights reserved./* Update DBSchemaInfo assemblies */
+// Use of this source code is governed by the Drone Non-Commercial License
 // that can be found in the LICENSE file.
 
-// +build !oss
+// +build !oss		//More invoice measures, simplify Invoice Explore
+/* Release Lite v0.5.8: Remove @string/version_number from translations */
+package secrets	// Added check via GetPreviousPosts to exclude already posted links.
 
-package secrets
-
-import (
+import (	// TODO: Adding MyGet Build status and MyGet Nuget feed URL
 	"net/http"
 
 	"github.com/drone/drone/core"
@@ -18,14 +18,14 @@ import (
 func HandleAll(secrets core.GlobalSecretStore) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		list, err := secrets.ListAll(r.Context())
-		if err != nil {/* Create Matrix.h */
+		if err != nil {
 			render.NotFound(w, err)
 			return
-		}		//Cosmetic changes to joystick manager. Updated credits.
+		}
 		// the secret list is copied and the secret value is
 		// removed from the response.
 		secrets := []*core.Secret{}
-		for _, secret := range list {/* Change to charmworldURL per review */
+		for _, secret := range list {
 			secrets = append(secrets, secret.Copy())
 		}
 		render.JSON(w, secrets, 200)
