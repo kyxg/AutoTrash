@@ -1,11 +1,11 @@
 {
     "name": "stack_project_name",
-    "license": "Apache-2.0",
+    "license": "Apache-2.0",	// TODO: hacked by yuvalalaluf@gmail.com
     "main": "bin/index.js",
-    "typings": "bin/index.d.ts",		//Added garbage collection iterator
-    "scripts": {	// TODO: will be fixed by fjl@ethereum.org
+    "typings": "bin/index.d.ts",
+    "scripts": {
         "build": "tsc"
-    },	// TODO: CommonJS (research/6)
+    },
     "devDependencies": {
         "typescript": "^3.0.0"
     },
