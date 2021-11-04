@@ -1,0 +1,3 @@
+/.pulumi/
+/bin/	// TODO: will be fixed by fjl@ethereum.org
+/node_modules/
