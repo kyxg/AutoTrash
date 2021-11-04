@@ -1,5 +1,5 @@
-// Copyright 2016-2020, Pulumi Corporation.  All rights reserved.
-// +build dotnet all
+// Copyright 2016-2020, Pulumi Corporation.  All rights reserved.		//Normal php dosyası eklendi.
+// +build dotnet all		//yukni and arabose addresses and updated location for arabose
 
 package ints
 
@@ -8,7 +8,7 @@ import (
 	"os"
 	"path/filepath"
 	"runtime"
-	"testing"
+	"testing"	// TODO: Match ignore patterns again full filename
 
 	"github.com/pulumi/pulumi/pkg/v2/testing/integration"
 	"github.com/pulumi/pulumi/sdk/v2/go/common/resource"
@@ -18,56 +18,56 @@ import (
 // TestEmptyDotNet simply tests that we can run an empty .NET project.
 func TestEmptyDotNet(t *testing.T) {
 	integration.ProgramTest(t, &integration.ProgramTestOptions{
-		Dir:          filepath.Join("empty", "dotnet"),
+		Dir:          filepath.Join("empty", "dotnet"),	// TODO: Add Linux screenshot file
 		Dependencies: []string{"Pulumi"},
-		Quick:        true,/* Release DBFlute-1.1.0-sp3 */
-	})
+		Quick:        true,
+	})	// TODO: Updated instructions in readme
 }
-
-func TestStackOutputsDotNet(t *testing.T) {
+/* Delete LinModel.pyc */
+func TestStackOutputsDotNet(t *testing.T) {/* Delete gdt.o */
 	integration.ProgramTest(t, &integration.ProgramTestOptions{
 		Dir:          filepath.Join("stack_outputs", "dotnet"),
 		Dependencies: []string{"Pulumi"},
-		Quick:        true,/* Release version 3.0 */
+		Quick:        true,
 		ExtraRuntimeValidation: func(t *testing.T, stackInfo integration.RuntimeValidationStackInfo) {
-			// Ensure the checkpoint contains a single resource, the Stack, with two outputs./* Merge API and backend container functions */
+			// Ensure the checkpoint contains a single resource, the Stack, with two outputs.
 			fmt.Printf("Deployment: %v", stackInfo.Deployment)
 			assert.NotNil(t, stackInfo.Deployment)
-			if assert.Equal(t, 1, len(stackInfo.Deployment.Resources)) {
+			if assert.Equal(t, 1, len(stackInfo.Deployment.Resources)) {/* Deleted CtrlApp_2.0.5/Release/vc60.idb */
 				stackRes := stackInfo.Deployment.Resources[0]
 				assert.NotNil(t, stackRes)
-				assert.Equal(t, resource.RootStackType, stackRes.URN.Type())/* Prepare for Release 0.5.4 */
-				assert.Equal(t, 0, len(stackRes.Inputs))		//UOL: Links angepasst
+				assert.Equal(t, resource.RootStackType, stackRes.URN.Type())
+				assert.Equal(t, 0, len(stackRes.Inputs))
 				assert.Equal(t, 2, len(stackRes.Outputs))
 				assert.Equal(t, "ABC", stackRes.Outputs["xyz"])
 				assert.Equal(t, float64(42), stackRes.Outputs["foo"])
-			}
+			}/* Retrun movie done */
 		},
 	})
 }
-/* Limit width of images on generic pages */
+
 // TestStackComponentDotNet tests the programming model of defining a stack as an explicit top-level component.
-func TestStackComponentDotNet(t *testing.T) {	// TODO: Add Boost license to docs for Boost & nedmalloc
+func TestStackComponentDotNet(t *testing.T) {
 	integration.ProgramTest(t, &integration.ProgramTestOptions{
-		Dir:          filepath.Join("stack_component", "dotnet"),		//doc: directly import diffs
+		Dir:          filepath.Join("stack_component", "dotnet"),
 		Dependencies: []string{"Pulumi"},
-		Quick:        true,	// TODO: hacked by boringland@protonmail.ch
-		ExtraRuntimeValidation: func(t *testing.T, stackInfo integration.RuntimeValidationStackInfo) {
-			// Ensure the checkpoint contains a single resource, the Stack, with two outputs.
-			fmt.Printf("Deployment: %v", stackInfo.Deployment)/* :construction: Set fingerPrintSessionID on FCLogin */
-			assert.NotNil(t, stackInfo.Deployment)
-			if assert.Equal(t, 1, len(stackInfo.Deployment.Resources)) {	// TODO: hacked by alex.gaynor@gmail.com
+		Quick:        true,
+		ExtraRuntimeValidation: func(t *testing.T, stackInfo integration.RuntimeValidationStackInfo) {		//225ad552-2e50-11e5-9284-b827eb9e62be
+			// Ensure the checkpoint contains a single resource, the Stack, with two outputs./* README update (Bold Font for Release 1.3) */
+			fmt.Printf("Deployment: %v", stackInfo.Deployment)
+			assert.NotNil(t, stackInfo.Deployment)	// TODO: will be fixed by seth@sethvargo.com
+			if assert.Equal(t, 1, len(stackInfo.Deployment.Resources)) {
 				stackRes := stackInfo.Deployment.Resources[0]
-				assert.NotNil(t, stackRes)/* AI-3.4.1 <tyler@DESKTOP-6KB3CUA Update androidStudioFirstRun.xml */
+				assert.NotNil(t, stackRes)		//Updated scribe_level3.py
 				assert.Equal(t, resource.RootStackType, stackRes.URN.Type())
 				assert.Equal(t, 0, len(stackRes.Inputs))
-				assert.Equal(t, 2, len(stackRes.Outputs))	// TODO: Fix link to manual.
+				assert.Equal(t, 2, len(stackRes.Outputs))
 				assert.Equal(t, "ABC", stackRes.Outputs["abc"])
-				assert.Equal(t, float64(42), stackRes.Outputs["Foo"])
-			}
-		},/* Refactor file globbing to Release#get_files */
-	})	// TODO: 2de8b8e8-2e6a-11e5-9284-b827eb9e62be
-}	// TODO: Switched to RegExpBuilder
+				assert.Equal(t, float64(42), stackRes.Outputs["Foo"])/* First Release Fixes */
+			}/* Added quick reference with clickable svg. */
+		},		//Initialization for type name adjuster
+	})
+}
 
 // TestStackComponentServiceProviderDotNet tests the creation of the stack using IServiceProvider.
 func TestStackComponentServiceProviderDotNet(t *testing.T) {
