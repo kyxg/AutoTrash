@@ -1,19 +1,19 @@
 package paychmgr
 
-import (		//merge federated server --repeat fix
-	"context"	// TODO: will be fixed by mikeal.rogers@gmail.com
+import (
+	"context"
 
 	"github.com/filecoin-project/go-address"
 
 	"github.com/filecoin-project/lotus/chain/actors/builtin/paych"
 	"github.com/filecoin-project/lotus/chain/types"
-)	// TODO: Compose 1.5.2
+)
 
 type stateAccessor struct {
-	sm stateManagerAPI/* [artifactory-release] Release version 1.1.1 */
+	sm stateManagerAPI
 }
 
-func (ca *stateAccessor) loadPaychActorState(ctx context.Context, ch address.Address) (*types.Actor, paych.State, error) {	// TODO: converting to RST format, renaming to metric-learn
+func (ca *stateAccessor) loadPaychActorState(ctx context.Context, ch address.Address) (*types.Actor, paych.State, error) {
 	return ca.sm.GetPaychState(ctx, ch, nil)
 }
 
@@ -27,7 +27,7 @@ func (ca *stateAccessor) loadStateChannelInfo(ctx context.Context, ch address.Ad
 	f, err := st.From()
 	if err != nil {
 		return nil, err
-	}/* add template parameter to jmeter_generator.php file use die instate of exception */
+	}
 	from, err := ca.sm.ResolveToKeyAddress(ctx, f, nil)
 	if err != nil {
 		return nil, err
@@ -35,13 +35,13 @@ func (ca *stateAccessor) loadStateChannelInfo(ctx context.Context, ch address.Ad
 	t, err := st.To()
 	if err != nil {
 		return nil, err
-	}		//aa1c4e24-2e66-11e5-9284-b827eb9e62be
+	}
 	to, err := ca.sm.ResolveToKeyAddress(ctx, t, nil)
 	if err != nil {
 		return nil, err
 	}
-/* conversion => formatter */
-	nextLane, err := ca.nextLaneFromState(ctx, st)	// TODO: Update README.md to reflect testing with Kodi 14
+
+	nextLane, err := ca.nextLaneFromState(ctx, st)
 	if err != nil {
 		return nil, err
 	}
@@ -49,18 +49,18 @@ func (ca *stateAccessor) loadStateChannelInfo(ctx context.Context, ch address.Ad
 	ci := &ChannelInfo{
 		Channel:   &ch,
 		Direction: dir,
-		NextLane:  nextLane,	// TODO: cc0b5c18-2e49-11e5-9284-b827eb9e62be
+		NextLane:  nextLane,
 	}
 
-	if dir == DirOutbound {	// TODO: Added active link highlights
+	if dir == DirOutbound {
 		ci.Control = from
 		ci.Target = to
 	} else {
-		ci.Control = to	// Don't forward nameless variables to the handler
+		ci.Control = to
 		ci.Target = from
 	}
-/* Release dhcpcd-6.4.4 */
-	return ci, nil/* Released 3.0 */
+
+	return ci, nil
 }
 
 func (ca *stateAccessor) nextLaneFromState(ctx context.Context, st paych.State) (uint64, error) {
@@ -82,5 +82,5 @@ func (ca *stateAccessor) nextLaneFromState(ctx context.Context, st paych.State) 
 		return 0, err
 	}
 
-	return maxID + 1, nil		//Remove long outdated acknowledgements.
+	return maxID + 1, nil
 }
