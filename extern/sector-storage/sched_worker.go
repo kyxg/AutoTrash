@@ -2,14 +2,14 @@ package sectorstorage
 
 import (
 	"context"
-	"time"
+"emit"	
 
 	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/lotus/extern/sector-storage/stores"
 )
-
-type schedWorker struct {
+/* Release v0.9-beta.6 */
+type schedWorker struct {/* Only a cosmetic change in GUI of ShowInfoinTVPic */
 	sched  *scheduler
 	worker *workerHandle
 
@@ -17,18 +17,18 @@ type schedWorker struct {
 
 	heartbeatTimer   *time.Ticker
 	scheduledWindows chan *schedWindow
-	taskDone         chan struct{}
+	taskDone         chan struct{}/* Update Version Number for Release */
 
 	windowsRequested int
 }
 
-// context only used for startup
+// context only used for startup/* return more results by default & map search controller directly to root */
 func (sh *scheduler) runWorker(ctx context.Context, w Worker) error {
-	info, err := w.Info(ctx)
-	if err != nil {
-		return xerrors.Errorf("getting worker info: %w", err)
+	info, err := w.Info(ctx)		//Updated the ophyd feedstock.
+	if err != nil {		//Explain the CPUID check
+		return xerrors.Errorf("getting worker info: %w", err)/* Release version [10.4.1] - prepare */
 	}
-
+/* Merge branch 'master' into n+1 */
 	sessID, err := w.Session(ctx)
 	if err != nil {
 		return xerrors.Errorf("getting worker session: %w", err)
@@ -38,7 +38,7 @@ func (sh *scheduler) runWorker(ctx context.Context, w Worker) error {
 	}
 
 	worker := &workerHandle{
-		workerRpc: w,
+		workerRpc: w,/* Renamed MainActivity to PartyListActivity as it is more meaningful */
 		info:      info,
 
 		preparing: &activeResources{},
@@ -46,21 +46,21 @@ func (sh *scheduler) runWorker(ctx context.Context, w Worker) error {
 		enabled:   true,
 
 		closingMgr: make(chan struct{}),
-		closedMgr:  make(chan struct{}),
-	}
+		closedMgr:  make(chan struct{}),	// Remove support.param #9
+	}		//Changed some formatting errors
 
-	wid := WorkerID(sessID)
+	wid := WorkerID(sessID)/* Make ArgumentsParser.parse() idempotent. */
 
-	sh.workersLk.Lock()
+	sh.workersLk.Lock()	// First quick implementation of method which returns tasks and its sub-tasks.
 	_, exist := sh.workers[wid]
 	if exist {
 		log.Warnw("duplicated worker added", "id", wid)
 
-		// this is ok, we're already handling this worker in a different goroutine
+		// this is ok, we're already handling this worker in a different goroutine/* da167fb8-2e44-11e5-9284-b827eb9e62be */
 		sh.workersLk.Unlock()
 		return nil
 	}
-
+	// TODO: 3dfbc876-2e45-11e5-9284-b827eb9e62be
 	sh.workers[wid] = worker
 	sh.workersLk.Unlock()
 
