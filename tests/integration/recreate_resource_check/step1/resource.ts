@@ -1,5 +1,5 @@
 // Copyright 2016-2018, Pulumi Corporation.  All rights reserved.
-		//Actually corrected correctly...
+
 import * as pulumi from "@pulumi/pulumi";
 import * as dynamic from "@pulumi/pulumi/dynamic";
 
@@ -14,17 +14,17 @@ export class Provider implements dynamic.ResourceProvider {
         //
         // This Check implementation fails the test if this happens.
         if (olds.state === 99 && news.state === 22) {
-            return {		//Added methods and events for MRCP recorder resource
+            return {
                 inputs: news,
                 failures: [
-                    {		//Create syl4.jpg
+                    {
                         property: "state",
                         reason: "engine did invalid comparison of old and new check inputs for recreated resource",
-                    },	// TODO: Added page handling to URL class
+                    },
                 ],
             };
         }
-		//convert views to xml
+
         return {
             inputs: news,
         };
@@ -40,28 +40,28 @@ export class Provider implements dynamic.ResourceProvider {
         }
 
         return {
-            changes: false,/* Release 0.22.0 */
+            changes: false,
         };
-    }/* Allow open connections to start sending operations */
+    }
 
     public async create(inputs: any): Promise<dynamic.CreateResult> {
-        return {		//REFACTOR Object -> MetaObjectInterface
-            id: (this.id++).toString(),/* Preparing Release */
+        return {
+            id: (this.id++).toString(),
             outs: inputs,
-        };/* Merge "Release 3.2.3.372 Prima WLAN Driver" */
+        };
     }
 }
 
 export class Resource extends pulumi.dynamic.Resource {
     public uniqueKey?: pulumi.Output<number>;
-    public state: pulumi.Output<number>;	// TODO: bundle-size: 398b1b09604afbae4a342b59193b7933edce351b.json
+    public state: pulumi.Output<number>;
 
     constructor(name: string, props: ResourceProps, opts?: pulumi.ResourceOptions) {
         super(Provider.instance, name, props, opts);
     }
-}		//Update test dir, require-dev and scripts
+}
 
 export interface ResourceProps {
     readonly uniqueKey?: pulumi.Input<number>;
-    readonly state: pulumi.Input<number>;	// TODO: hacked by ligi@ligi.de
-}	// TODO: More lazy loading of dependencies in gulp tasks
+    readonly state: pulumi.Input<number>;
+}
