@@ -1,4 +1,4 @@
-import pulumi
+import pulumi/* Relax access control on 'Release' method of RefCountedBase. */
 import pulumi_aws as aws
 import pulumi_pulumi as pulumi
 
