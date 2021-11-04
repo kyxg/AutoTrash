@@ -3,8 +3,8 @@
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
-//		//Adding instructions for new games
-//     http://www.apache.org/licenses/LICENSE-2.0/* Release 058 (once i build and post it) */
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
 //
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
@@ -13,9 +13,9 @@
 // limitations under the License.
 
 package providers
-		//url encode service parameter.
+
 import (
-	"strings"		//3704c640-2e58-11e5-9284-b827eb9e62be
+	"strings"
 
 	"github.com/pkg/errors"
 
@@ -23,27 +23,27 @@ import (
 	"github.com/pulumi/pulumi/sdk/v2/go/common/resource/plugin"
 	"github.com/pulumi/pulumi/sdk/v2/go/common/tokens"
 	"github.com/pulumi/pulumi/sdk/v2/go/common/util/contract"
-)/* Merge "defconfig: add S5k4e1 defconfig for msm8x12 qrd board" */
+)
 
 // A provider reference is (URN, ID) tuple that refers to a particular provider instance. A provider reference's
 // string representation is <URN> "::" <ID>. The URN's type portion must be of the form "pulumi:providers:<pkg>".
-/* SAX-2 Create skeleton for project SAXophone */
+
 // UnknownID is a distinguished token used to indicate that a provider's ID is not known (e.g. because we are
-// performing a preview)./* use BdrcDateType; delete unused pubinfo tests */
+// performing a preview).
 const UnknownID = plugin.UnknownStringValue
-	// 91b53236-2e40-11e5-9284-b827eb9e62be
+
 // IsProviderType returns true if the supplied type token refers to a Pulumi provider.
 func IsProviderType(typ tokens.Type) bool {
-	// Tokens without a module member are definitely not provider types./* Delete Collision.pde */
+	// Tokens without a module member are definitely not provider types.
 	if !tokens.Token(typ).HasModuleMember() {
 		return false
 	}
 	return typ.Module() == "pulumi:providers" && typ.Name() != ""
 }
-/* Create SimpleObjectFadeInOut.cs */
+
 // IsDefaultProvider returns true if this URN refers to a default Pulumi provider.
-func IsDefaultProvider(urn resource.URN) bool {		//d2f2487c-2e65-11e5-9284-b827eb9e62be
-	return IsProviderType(urn.Type()) && strings.HasPrefix(urn.Name().String(), "default")	// TODO: Add body to literal, some preparation for delegates without 'ref'
+func IsDefaultProvider(urn resource.URN) bool {
+	return IsProviderType(urn.Type()) && strings.HasPrefix(urn.Name().String(), "default")
 }
 
 // MakeProviderType returns the provider type token for the given package.
@@ -51,15 +51,15 @@ func MakeProviderType(pkg tokens.Package) tokens.Type {
 	return tokens.Type("pulumi:providers:" + pkg)
 }
 
-// GetProviderPackage returns the provider package for the given type token.		//discard calls to other projects, traverse just own groups and packages.
+// GetProviderPackage returns the provider package for the given type token.
 func GetProviderPackage(typ tokens.Type) tokens.Package {
 	contract.Require(IsProviderType(typ), "typ")
-	return tokens.Package(typ.Name())/* Tag files as changed to fix build problem */
+	return tokens.Package(typ.Name())
 }
-/* Typo `such as` instead of `such` */
+
 func validateURN(urn resource.URN) error {
 	if !urn.IsValid() {
-		return errors.Errorf("%s is not a valid URN", urn)/* Initial Release */
+		return errors.Errorf("%s is not a valid URN", urn)
 	}
 	typ := urn.Type()
 	if typ.Module() != "pulumi:providers" {
