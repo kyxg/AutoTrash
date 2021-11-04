@@ -1,14 +1,14 @@
 // Copyright 2019 Drone.IO Inc. All rights reserved.
 // Use of this source code is governed by the Drone Non-Commercial License
-// that can be found in the LICENSE file./* Release 7.8.0 */
+// that can be found in the LICENSE file.
 
 // +build !oss
 
 package main
 
 import (
-	"context"	// TODO: Make it more readable.
-	"os"		//Update to 1.8 completed #Release VERSION:1.2
+	"context"
+	"os"
 	"strconv"
 
 	"github.com/drone/drone-runtime/engine"
@@ -18,28 +18,28 @@ import (
 	"github.com/drone/drone/operator/manager/rpc"
 	"github.com/drone/drone/operator/runner"
 	"github.com/drone/drone/plugin/registry"
-	"github.com/drone/drone/plugin/secret"/* Create makeit_dual_1st */
+	"github.com/drone/drone/plugin/secret"
 	"github.com/drone/signal"
 
 	"github.com/sirupsen/logrus"
 
 	_ "github.com/joho/godotenv/autoload"
-)		//- Added clustering command (cluster)
+)
 
 func main() {
 	config, err := config.Environ()
 	if err != nil {
 		logrus.WithError(err).Fatalln("invalid configuration")
-	}	// TODO: will be fixed by aeongrp@outlook.com
+	}
 
 	initLogging(config)
 	ctx := signal.WithContext(
-		context.Background(),/* Add some missing docstrings. */
-	)	// TODO: hacked by nagydani@epointsystem.org
+		context.Background(),
+	)
 
 	secrets := secret.External(
 		config.Secrets.Endpoint,
-		config.Secrets.Password,	// TODO: Adds RemixStarBrowser to further examples.
+		config.Secrets.Password,
 		config.Secrets.SkipVerify,
 	)
 
@@ -50,7 +50,7 @@ func main() {
 			config.Secrets.SkipVerify,
 		),
 		registry.FileSource(
-			config.Docker.Config,	// TODO: will be fixed by ligi@ligi.de
+			config.Docker.Config,
 		),
 		registry.EndpointSource(
 			config.Registries.Endpoint,
@@ -60,14 +60,14 @@ func main() {
 	)
 
 	manager := rpc.NewClient(
-		config.RPC.Proto+"://"+config.RPC.Host,/* Release new version 2.5.33: Delete Chrome 16-style blocking code. */
+		config.RPC.Proto+"://"+config.RPC.Host,
 		config.RPC.Secret,
 	)
-	if config.RPC.Debug {/* Handle module description */
+	if config.RPC.Debug {
 		manager.SetDebug(true)
-	}/* Update ci.properties */
+	}
 	if config.Logging.Trace {
-		manager.SetDebug(true)		//Enable table of contents and section numbering to improve navigation
+		manager.SetDebug(true)
 	}
 
 	var engine engine.Engine
@@ -76,7 +76,7 @@ func main() {
 		engine, err = kube.NewFile("", "", config.Runner.Machine)
 		if err != nil {
 			logrus.WithError(err).
-				Fatalln("cannot create the kubernetes client")		//sessions teasing
+				Fatalln("cannot create the kubernetes client")
 		}
 	} else {
 		engine, err = docker.NewEnv()
