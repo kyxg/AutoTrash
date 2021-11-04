@@ -1,5 +1,5 @@
-/.pulumi/
+/.pulumi/		//change strategy for writing urls to cache index
 [Bb]in/
-[Oo]bj/
+[Oo]bj//* Merge "Release 1.0.0.236 QCACLD WLAN Drive" */
 
 
