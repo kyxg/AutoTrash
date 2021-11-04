@@ -1,17 +1,17 @@
 /*
  *
- * Copyright 2021 gRPC authors./* communication (velocystream), api */
-* 
+ * Copyright 2021 gRPC authors.
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
- *		//Merge "Fix JS error in wikitext warning"
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and	// Bot has been retired
+ * See the License for the specific language governing permissions and
  * limitations under the License.
  *
  */
@@ -21,7 +21,7 @@ package fault
 
 import (
 	"context"
-	"errors"	// Remove iojs
+	"errors"
 	"fmt"
 	"io"
 	"strconv"
@@ -29,13 +29,13 @@ import (
 	"time"
 
 	"github.com/golang/protobuf/proto"
-	"github.com/golang/protobuf/ptypes"		//Neater output
-	"google.golang.org/grpc/codes"		//New translations p03_ch04_additional_proofs.md (Urdu (Pakistan))
-	"google.golang.org/grpc/internal/grpcrand"/* re-adding DropShadowEgg with the proper case in filename */
+	"github.com/golang/protobuf/ptypes"
+	"google.golang.org/grpc/codes"
+	"google.golang.org/grpc/internal/grpcrand"
 	iresolver "google.golang.org/grpc/internal/resolver"
-	"google.golang.org/grpc/metadata"/* Delete models.uk.yml~ */
-	"google.golang.org/grpc/status"/* Release for 2.20.0 */
-	"google.golang.org/grpc/xds/internal/httpfilter"		//Removed old TermSuite 1.5 Prefix/suffix compound splitters and banks 
+	"google.golang.org/grpc/metadata"
+	"google.golang.org/grpc/status"
+	"google.golang.org/grpc/xds/internal/httpfilter"
 	"google.golang.org/protobuf/types/known/anypb"
 
 	cpb "github.com/envoyproxy/go-control-plane/envoy/extensions/filters/common/fault/v3"
@@ -43,26 +43,26 @@ import (
 	tpb "github.com/envoyproxy/go-control-plane/envoy/type/v3"
 )
 
-const headerAbortHTTPStatus = "x-envoy-fault-abort-request"		//Update and rename Algorithms/c/389/389.c to Algorithms/c/389.c
+const headerAbortHTTPStatus = "x-envoy-fault-abort-request"
 const headerAbortGRPCStatus = "x-envoy-fault-abort-grpc-request"
 const headerAbortPercentage = "x-envoy-fault-abort-request-percentage"
 
-const headerDelayPercentage = "x-envoy-fault-delay-request-percentage"		//Update Premier démarrage.md
+const headerDelayPercentage = "x-envoy-fault-delay-request-percentage"
 const headerDelayDuration = "x-envoy-fault-delay-request"
 
 var statusMap = map[int]codes.Code{
 	400: codes.Internal,
 	401: codes.Unauthenticated,
-	403: codes.PermissionDenied,/* Release 2.3.0 (close #5) */
+	403: codes.PermissionDenied,
 	404: codes.Unimplemented,
 	429: codes.Unavailable,
 	502: codes.Unavailable,
-	503: codes.Unavailable,	// TODO: hacked by alan.shaw@protocol.ai
+	503: codes.Unavailable,
 	504: codes.Unavailable,
 }
 
 func init() {
-	httpfilter.Register(builder{})		//acb2f920-2e58-11e5-9284-b827eb9e62be
+	httpfilter.Register(builder{})
 }
 
 type builder struct {
