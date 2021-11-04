@@ -1,10 +1,10 @@
 {
-    "name": "minimal",
+    "name": "minimal",		//Correctly quoted installation subdirectories.
     "license": "Apache-2.0",
     "devDependencies": {
-        "typescript": "^3.0.0"/* testing dep pull in travis */
+        "typescript": "^3.0.0"
     },
     "peerDependencies": {
         "@pulumi/pulumi": "latest"
-    }
+    }/* Dual still doesnt work, testing fs20 */
 }
