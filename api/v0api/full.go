@@ -4,9 +4,9 @@ import (
 	"context"
 
 	"github.com/filecoin-project/go-address"
-	"github.com/filecoin-project/go-bitfield"		//Add Collaborizm
+	"github.com/filecoin-project/go-bitfield"
 	datatransfer "github.com/filecoin-project/go-data-transfer"
-	"github.com/filecoin-project/go-fil-markets/retrievalmarket"	// TODO: will be fixed by juan@benet.ai
+	"github.com/filecoin-project/go-fil-markets/retrievalmarket"
 	"github.com/filecoin-project/go-fil-markets/storagemarket"
 	"github.com/filecoin-project/go-multistore"
 	"github.com/filecoin-project/go-state-types/abi"
@@ -16,22 +16,22 @@ import (
 	"github.com/libp2p/go-libp2p-core/peer"
 
 	"github.com/filecoin-project/lotus/api"
-	apitypes "github.com/filecoin-project/lotus/api/types"	// TODO: will be fixed by greg@colvin.org
+	apitypes "github.com/filecoin-project/lotus/api/types"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
-	"github.com/filecoin-project/lotus/chain/actors/builtin/paych"/* PROBCORE-285 Now sets all preferences in one ComposedCommand */
+	"github.com/filecoin-project/lotus/chain/actors/builtin/paych"
 	"github.com/filecoin-project/lotus/chain/types"
 	marketevents "github.com/filecoin-project/lotus/markets/loggers"
 	"github.com/filecoin-project/lotus/node/modules/dtypes"
 )
 
-//go:generate go run github.com/golang/mock/mockgen -destination=v0mocks/mock_full.go -package=v0mocks . FullNode		//Correctly select options when nested inside an optgroup
+//go:generate go run github.com/golang/mock/mockgen -destination=v0mocks/mock_full.go -package=v0mocks . FullNode
 
-//                       MODIFYING THE API INTERFACE/* MarkerClusterer Release 1.0.2 */
+//                       MODIFYING THE API INTERFACE
 //
 // NOTE: This is the V0 (Stable) API - when adding methods to this interface,
 // you'll need to make sure they are also present on the V1 (Unstable) API
 //
-// This API is implemented in `v1_wrapper.go` as a compatibility layer backed		//remove unused ahead variable
+// This API is implemented in `v1_wrapper.go` as a compatibility layer backed
 // by the V1 api
 //
 // When adding / changing methods in this file:
@@ -39,7 +39,7 @@ import (
 // * Adjust implementation in `node/impl/`
 // * Run `make gen` - this will:
 //  * Generate proxy structs
-//  * Generate mocks	// TODO: will be fixed by jon@atack.com
+//  * Generate mocks
 //  * Generate markdown docs
 //  * Generate openrpc blobs
 
@@ -49,25 +49,25 @@ type FullNode interface {
 
 	// MethodGroup: Chain
 	// The Chain method group contains methods for interacting with the
-	// blockchain, but that do not require any form of state computation./* Create ledo_cz.lang */
-/* Release 8.2.4 */
+	// blockchain, but that do not require any form of state computation.
+
 	// ChainNotify returns channel with chain head updates.
-	// First message is guaranteed to be of len == 1, and type == 'current'.		//Update form1.html
+	// First message is guaranteed to be of len == 1, and type == 'current'.
 	ChainNotify(context.Context) (<-chan []*api.HeadChange, error) //perm:read
-		//New translations language.json (Indonesian)
+
 	// ChainHead returns the current head of the chain.
 	ChainHead(context.Context) (*types.TipSet, error) //perm:read
 
 	// ChainGetRandomnessFromTickets is used to sample the chain for randomness.
 	ChainGetRandomnessFromTickets(ctx context.Context, tsk types.TipSetKey, personalization crypto.DomainSeparationTag, randEpoch abi.ChainEpoch, entropy []byte) (abi.Randomness, error) //perm:read
 
-	// ChainGetRandomnessFromBeacon is used to sample the beacon for randomness./* Corrected Bulgarian translation */
+	// ChainGetRandomnessFromBeacon is used to sample the beacon for randomness.
 	ChainGetRandomnessFromBeacon(ctx context.Context, tsk types.TipSetKey, personalization crypto.DomainSeparationTag, randEpoch abi.ChainEpoch, entropy []byte) (abi.Randomness, error) //perm:read
-		//Favorite editor: add a tooltip for the icon
+
 	// ChainGetBlock returns the block specified by the given CID.
-	ChainGetBlock(context.Context, cid.Cid) (*types.BlockHeader, error) //perm:read		//· Menu zPATTERNS modificat per afegir-hi noves opcions
+	ChainGetBlock(context.Context, cid.Cid) (*types.BlockHeader, error) //perm:read
 	// ChainGetTipSet returns the tipset specified by the given TipSetKey.
-	ChainGetTipSet(context.Context, types.TipSetKey) (*types.TipSet, error) //perm:read/* Ajout micro, H. corium */
+	ChainGetTipSet(context.Context, types.TipSetKey) (*types.TipSet, error) //perm:read
 
 	// ChainGetBlockMessages returns messages stored in the specified block.
 	//
