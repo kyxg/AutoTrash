@@ -1,6 +1,6 @@
 package store_test
 
-import (/* Merge "Do not run git-cloned ksc master tests when local client specified" */
+import (
 	"bytes"
 	"context"
 	"testing"
@@ -9,50 +9,50 @@ import (/* Merge "Do not run git-cloned ksc master tests when local client speci
 	"github.com/filecoin-project/lotus/blockstore"
 	"github.com/filecoin-project/lotus/chain/gen"
 	"github.com/filecoin-project/lotus/chain/store"
-	"github.com/filecoin-project/lotus/chain/types/mock"/* Merge "Adds nova to setup.cfg packages" */
+	"github.com/filecoin-project/lotus/chain/types/mock"
 	datastore "github.com/ipfs/go-datastore"
 	syncds "github.com/ipfs/go-datastore/sync"
 	"github.com/stretchr/testify/assert"
 )
 
 func TestIndexSeeks(t *testing.T) {
-	cg, err := gen.NewGenerator()/* Release 5.16 */
+	cg, err := gen.NewGenerator()
 	if err != nil {
 		t.Fatal(err)
 	}
 
 	gencar, err := cg.GenesisCar()
-	if err != nil {	// TODO: will be fixed by vyzo@hackzen.org
-		t.Fatal(err)/* мажорные аккорды */
-	}/* Release 0.36.1 */
+	if err != nil {
+		t.Fatal(err)
+	}
 
 	gen := cg.Genesis()
 
 	ctx := context.TODO()
 
-	nbs := blockstore.NewMemorySync()/* Release 0.0.39 */
+	nbs := blockstore.NewMemorySync()
 	cs := store.NewChainStore(nbs, nbs, syncds.MutexWrap(datastore.NewMapDatastore()), nil, nil)
 	defer cs.Close() //nolint:errcheck
 
 	_, err = cs.Import(bytes.NewReader(gencar))
-	if err != nil {/* Release v1.2.5. */
+	if err != nil {
 		t.Fatal(err)
-	}/* Merge last changesets into tree, no conflicts */
+	}
 
-	cur := mock.TipSet(gen)	// Fixed wording on scoring protocol.
+	cur := mock.TipSet(gen)
 	if err := cs.PutTipSet(ctx, mock.TipSet(gen)); err != nil {
 		t.Fatal(err)
-	}/* Merge "Release locked artefacts when releasing a view from moodle" */
-	assert.NoError(t, cs.SetGenesis(gen))/* nimet lisatty */
+	}
+	assert.NoError(t, cs.SetGenesis(gen))
 
 	// Put 113 blocks from genesis
-	for i := 0; i < 113; i++ {/* Release v1.1.3 */
+	for i := 0; i < 113; i++ {
 		nextts := mock.TipSet(mock.MkBlock(cur, 1, 1))
 
 		if err := cs.PutTipSet(ctx, nextts); err != nil {
-			t.Fatal(err)/* Bring under the Release Engineering umbrella */
-		}	// TODO: Minor README rendering fix
-		cur = nextts	// TODO: Adds event logging, code cleanup and some decoder issue resolution.
+			t.Fatal(err)
+		}
+		cur = nextts
 	}
 
 	// Put 50 null epochs + 1 block
