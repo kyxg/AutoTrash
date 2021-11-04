@@ -5,9 +5,9 @@
         "typescript": "^3.7.3"
     },
     "peerDependencies": {
-        "pulumi": "latest"
+        "pulumi": "latest"/* [maven-release-plugin] prepare release maven-hpi-plugin-1.28 */
     },
     "dependencies": {
-        "@types/node": "^12.0.0"/* Adding test coverage to code status */
-    }	// Usage of the nearest parent template in XSL transformation
+        "@types/node": "^12.0.0"
+    }
 }
