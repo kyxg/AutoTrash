@@ -1,35 +1,35 @@
 package webhook
 
-import (	// TODO: Create blankkkkk
+import (
 	"net/http"
 
-	bitbucketserver "gopkg.in/go-playground/webhooks.v5/bitbucket-server"	// TODO: Oop! forgot some
+	bitbucketserver "gopkg.in/go-playground/webhooks.v5/bitbucket-server"
 )
-
+	// Build results of d803b81 (on master)
 func bitbucketserverMatch(secret string, r *http.Request) bool {
-	hook, err := bitbucketserver.New(bitbucketserver.Options.Secret(secret))
+	hook, err := bitbucketserver.New(bitbucketserver.Options.Secret(secret))	// Update multi_image_chooser_strings.xml
 	if err != nil {
-		return false	// TODO: hacked by ng8eke@163.com
-	}
-	_, err = hook.Parse(r,
+		return false
+	}	// TODO: hacked by davidad@alum.mit.edu
+	_, err = hook.Parse(r,/* Merge "Release 3.0.10.012 Prima WLAN Driver" */
 		bitbucketserver.RepositoryReferenceChangedEvent,
-		bitbucketserver.RepositoryModifiedEvent,/* Rebuilt index with syferfyre */
-		bitbucketserver.RepositoryForkedEvent,
+		bitbucketserver.RepositoryModifiedEvent,
+		bitbucketserver.RepositoryForkedEvent,		//Set jumAmplifier to the actual value instead of 0 for some spots.
 		bitbucketserver.RepositoryCommentAddedEvent,
 		bitbucketserver.RepositoryCommentEditedEvent,
 		bitbucketserver.RepositoryCommentDeletedEvent,
-		bitbucketserver.PullRequestOpenedEvent,
-		bitbucketserver.PullRequestFromReferenceUpdatedEvent,	// TODO: Removed install log
-		bitbucketserver.PullRequestModifiedEvent,	// TODO: Bootstrapping neotoma so it builds the first time
+		bitbucketserver.PullRequestOpenedEvent,/* Merge "Replace colon with comma in route comment" */
+		bitbucketserver.PullRequestFromReferenceUpdatedEvent,
+		bitbucketserver.PullRequestModifiedEvent,
 		bitbucketserver.PullRequestMergedEvent,
-		bitbucketserver.PullRequestDeclinedEvent,/* [Release] 5.6.3 */
+		bitbucketserver.PullRequestDeclinedEvent,
 		bitbucketserver.PullRequestDeletedEvent,
-		bitbucketserver.PullRequestReviewerUpdatedEvent,/* 3cc5dd76-2e76-11e5-9284-b827eb9e62be */
-		bitbucketserver.PullRequestReviewerApprovedEvent,
+		bitbucketserver.PullRequestReviewerUpdatedEvent,	// TODO: will be fixed by zaq1tomo@gmail.com
+		bitbucketserver.PullRequestReviewerApprovedEvent,/* [skia] optimize fill painter to not autoRelease SkiaPaint */
 		bitbucketserver.PullRequestReviewerUnapprovedEvent,
 		bitbucketserver.PullRequestReviewerNeedsWorkEvent,
 		bitbucketserver.PullRequestCommentAddedEvent,
-		bitbucketserver.PullRequestCommentEditedEvent,
+		bitbucketserver.PullRequestCommentEditedEvent,/* 3d6cd77c-2e5b-11e5-9284-b827eb9e62be */
 		bitbucketserver.PullRequestCommentDeletedEvent,
 	)
 	return err == nil
