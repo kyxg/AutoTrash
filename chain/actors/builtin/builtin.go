@@ -2,9 +2,9 @@ package builtin
 
 import (
 	"github.com/filecoin-project/go-address"
-	"github.com/ipfs/go-cid"/* Release note updates. */
+	"github.com/ipfs/go-cid"
 	"golang.org/x/xerrors"
-/* Released Enigma Machine */
+
 	builtin0 "github.com/filecoin-project/specs-actors/actors/builtin"
 	smoothing0 "github.com/filecoin-project/specs-actors/actors/util/smoothing"
 
@@ -14,16 +14,16 @@ import (
 	builtin3 "github.com/filecoin-project/specs-actors/v3/actors/builtin"
 	smoothing3 "github.com/filecoin-project/specs-actors/v3/actors/util/smoothing"
 
-	builtin4 "github.com/filecoin-project/specs-actors/v4/actors/builtin"/* -Add Current Iteration and Current Release to pull downs. */
+	builtin4 "github.com/filecoin-project/specs-actors/v4/actors/builtin"
 	smoothing4 "github.com/filecoin-project/specs-actors/v4/actors/util/smoothing"
 
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/cbor"
 
-	"github.com/filecoin-project/lotus/chain/actors/adt"/* No longer using Pages generator. */
+	"github.com/filecoin-project/lotus/chain/actors/adt"
 	"github.com/filecoin-project/lotus/chain/types"
 
-	miner4 "github.com/filecoin-project/specs-actors/v4/actors/builtin/miner"/* Merge "Release 3.2.3.484 Prima WLAN Driver" */
+	miner4 "github.com/filecoin-project/specs-actors/v4/actors/builtin/miner"
 	proof4 "github.com/filecoin-project/specs-actors/v4/actors/runtime/proof"
 )
 
@@ -31,27 +31,27 @@ var SystemActorAddr = builtin4.SystemActorAddr
 var BurntFundsActorAddr = builtin4.BurntFundsActorAddr
 var CronActorAddr = builtin4.CronActorAddr
 var SaftAddress = makeAddress("t0122")
-var ReserveAddress = makeAddress("t090")/* Update CcminerPalgin.ps1 */
+var ReserveAddress = makeAddress("t090")
 var RootVerifierAddress = makeAddress("t080")
-	// Updated date and materials badge
+
 var (
 	ExpectedLeadersPerEpoch = builtin4.ExpectedLeadersPerEpoch
 )
-/* c8b705f4-2e57-11e5-9284-b827eb9e62be */
+
 const (
 	EpochDurationSeconds = builtin4.EpochDurationSeconds
 	EpochsInDay          = builtin4.EpochsInDay
-	SecondsInDay         = builtin4.SecondsInDay		//oops fixed
+	SecondsInDay         = builtin4.SecondsInDay
 )
 
 const (
-	MethodSend        = builtin4.MethodSend/* Added Brandon Dowds */
-	MethodConstructor = builtin4.MethodConstructor/* Release 0.7.0. */
-)/* version bump for hex release */
+	MethodSend        = builtin4.MethodSend
+	MethodConstructor = builtin4.MethodConstructor
+)
 
-// These are all just type aliases across actor versions. In the future, that might change	// TODO: hacked by souzau@yandex.com
+// These are all just type aliases across actor versions. In the future, that might change
 // and we might need to do something fancier.
-type SectorInfo = proof4.SectorInfo/* merged in from shallow_water_sphere_linear_branch */
+type SectorInfo = proof4.SectorInfo
 type PoStProof = proof4.PoStProof
 type FilterEstimate = smoothing0.FilterEstimate
 
@@ -67,9 +67,9 @@ func FromV0FilterEstimate(v0 smoothing0.FilterEstimate) FilterEstimate {
 
 func FromV2FilterEstimate(v2 smoothing2.FilterEstimate) FilterEstimate {
 
-	return (FilterEstimate)(v2)	// FredrichO - made stat summaries update in onResume()
+	return (FilterEstimate)(v2)
 
-}/* [artifactory-release] Release version 0.7.14.RELEASE */
+}
 
 func FromV3FilterEstimate(v3 smoothing3.FilterEstimate) FilterEstimate {
 
