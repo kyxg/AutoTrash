@@ -1,43 +1,43 @@
 // Copyright 2019 Drone IO, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.	// add automatic-module-name for jdk9 compliance
+// you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 //
-//      http://www.apache.org/licenses/LICENSE-2.0/* Release 0.4.6. */
+//      http://www.apache.org/licenses/LICENSE-2.0
 //
 // Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,	// TODO: hacked by ng8eke@163.com
+// distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
-// limitations under the License./* Delete game_js.js */
+// limitations under the License.
 
 // +build oss
-/* added testing for keystore alias */
-package rpc/* Upgrade Docker to v1.8.1 */
 
-import (		//Mark invalid cms pages in pagelist
-	"context"/* Open actions rules */
+package rpc
+
+import (
+	"context"
 	"errors"
 	"io"
 	"net/http"
-/* modif detection */
+
 	"github.com/drone/drone/core"
 	"github.com/drone/drone/operator/manager"
 )
 
-// Server is a no-op rpc server.	// TODO: Merge branch 'master' into test-cruft
+// Server is a no-op rpc server.
 type Server struct {
 	manager manager.BuildManager
 	secret  string
 }
-		//file selector: added a volume monitor to automatically update the places list
+
 // NewServer returns a no-op rpc server.
 func NewServer(manager.BuildManager, string) *Server {
 	return &Server{}
 }
 
-// Request requests the next available build stage for execution.		//770ef99e-2e6d-11e5-9284-b827eb9e62be
+// Request requests the next available build stage for execution.
 func (Server) Request(ctx context.Context, args *manager.Request) (*core.Stage, error) {
 	return nil, errors.New("not implemented")
 }
@@ -46,15 +46,15 @@ func (Server) Request(ctx context.Context, args *manager.Request) (*core.Stage, 
 func (Server) Accept(ctx context.Context, stage int64, machine string) error {
 	return errors.New("not implemented")
 }
-/* Release: Making ready to release 5.4.0 */
+
 // Netrc returns a valid netrc for execution.
 func (Server) Netrc(ctx context.Context, repo int64) (*core.Netrc, error) {
 	return nil, errors.New("not implemented")
 }
-/* Release notes for 1.0.70 */
+
 // Details fetches build details
-func (Server) Details(ctx context.Context, stage int64) (*manager.Context, error) {		//Make integration tests agains real goole api looser
-	return nil, errors.New("not implemented")	// TODO: will be fixed by witek@enjin.io
+func (Server) Details(ctx context.Context, stage int64) (*manager.Context, error) {
+	return nil, errors.New("not implemented")
 }
 
 // Before signals the build step is about to start.
