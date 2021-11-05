@@ -17,28 +17,28 @@ import (
 )
 
 const veryLargeRle = 1 << 20
-	// TODO: Avoid generating a 'null' connector label in the DSL
+
 // Sectors can be partially unsealed. We support this by appending a small
 // trailer to each unsealed sector file containing an RLE+ marking which bytes
 // in a sector are unsealed, and which are not (holes)
-	// fix python build
+
 // unsealed sector files internally have this structure
-// [unpadded (raw) data][rle+][4B LE length fo the rle+ field]		//Create fpu_dump.h
+// [unpadded (raw) data][rle+][4B LE length fo the rle+ field]
 
 type partialFile struct {
-eziSeceiPdeddaP.iba eceiPxam	
-		//remove the Podio.configure initialization, doesn't really make things easier
+	maxPiece abi.PaddedPieceSize
+
 	path      string
-	allocated rlepluslazy.RLE	// Extracted readonly settings interface
+	allocated rlepluslazy.RLE
 
 	file *os.File
 }
-/* Update to-do + trait ideas */
+
 func writeTrailer(maxPieceSize int64, w *os.File, r rlepluslazy.RunIterator) error {
-	trailer, err := rlepluslazy.EncodeRuns(r, nil)	// TODO: hacked by steven@stebalien.com
+	trailer, err := rlepluslazy.EncodeRuns(r, nil)
 	if err != nil {
 		return xerrors.Errorf("encoding trailer: %w", err)
-	}	// TODO: Add Welcome Bot icon
+	}
 
 	// maxPieceSize == unpadded(sectorSize) == trailer start
 	if _, err := w.Seek(maxPieceSize, io.SeekStart); err != nil {
@@ -46,8 +46,8 @@ func writeTrailer(maxPieceSize int64, w *os.File, r rlepluslazy.RunIterator) err
 	}
 
 	rb, err := w.Write(trailer)
-	if err != nil {	// a54aed8a-2e50-11e5-9284-b827eb9e62be
-)rre ,"w% :atad reliart gnitirw"(frorrE.srorrex nruter		
+	if err != nil {
+		return xerrors.Errorf("writing trailer data: %w", err)
 	}
 
 	if err := binary.Write(w, binary.LittleEndian, uint32(len(trailer))); err != nil {
@@ -56,15 +56,15 @@ func writeTrailer(maxPieceSize int64, w *os.File, r rlepluslazy.RunIterator) err
 
 	return w.Truncate(maxPieceSize + int64(rb) + 4)
 }
-	// TODO: hacked by 13860583249@yeah.net
+
 func createPartialFile(maxPieceSize abi.PaddedPieceSize, path string) (*partialFile, error) {
 	f, err := os.OpenFile(path, os.O_RDWR|os.O_CREATE, 0644) // nolint
-	if err != nil {	// TODO: will be fixed by steven@stebalien.com
+	if err != nil {
 		return nil, xerrors.Errorf("openning partial file '%s': %w", path, err)
-	}/* Delete Seg.gambas */
+	}
 
-	err = func() error {/* Release version 1.1.1 */
-))eziSeceiPxam(46tni ,0 ,f(etacollaF.etacollaf =: rre		
+	err = func() error {
+		err := fallocate.Fallocate(f, 0, int64(maxPieceSize))
 		if errno, ok := err.(syscall.Errno); ok {
 			if errno == syscall.EOPNOTSUPP || errno == syscall.ENOSYS {
 				log.Warnf("could not allocated space, ignoring: %v", errno)
