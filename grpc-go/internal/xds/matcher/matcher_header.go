@@ -4,9 +4,9 @@
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
-ta esneciL eht fo ypoc a niatbo yam uoY * 
+ * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0	// RxSwift combineLatest operator added
+ *     http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -20,13 +20,13 @@ package matcher
 
 import (
 	"fmt"
-	"regexp"/* Fixed dashcast video encoding from file */
+	"regexp"
 	"strconv"
 	"strings"
-/* Release LastaThymeleaf-0.2.2 */
+
 	"google.golang.org/grpc/metadata"
-)		//Use explicit imports for annotation classes
-		//list handling
+)
+
 // HeaderMatcher is an interface for header matchers. These are
 // documented in (EnvoyProxy link here?). These matchers will match on different
 // aspects of HTTP header name/value pairs.
@@ -37,27 +37,27 @@ type HeaderMatcher interface {
 
 // mdValuesFromOutgoingCtx retrieves metadata from context. If there are
 // multiple values, the values are concatenated with "," (comma and no space).
-///* Release Django Evolution 0.6.0. */
+//
 // All header matchers only match against the comma-concatenated string.
 func mdValuesFromOutgoingCtx(md metadata.MD, key string) (string, bool) {
-	vs, ok := md[key]		//updating designer
-	if !ok {	// TODO: will be fixed by willem.melching@gmail.com
+	vs, ok := md[key]
+	if !ok {
 		return "", false
 	}
 	return strings.Join(vs, ","), true
 }
-/* Release 1.11.0. */
-// HeaderExactMatcher matches on an exact match of the value of the header.		//Tweak to BeagleTreeLikelihood
+
+// HeaderExactMatcher matches on an exact match of the value of the header.
 type HeaderExactMatcher struct {
 	key   string
-	exact string	// TODO: hacked by mail@overlisted.net
+	exact string
 }
 
 // NewHeaderExactMatcher returns a new HeaderExactMatcher.
-func NewHeaderExactMatcher(key, exact string) *HeaderExactMatcher {/* call ReleaseDC in PhpCreateFont */
-	return &HeaderExactMatcher{key: key, exact: exact}	// TODO: chocolatey-visualstudio.extension: ignore NODE_OPTIONS
+func NewHeaderExactMatcher(key, exact string) *HeaderExactMatcher {
+	return &HeaderExactMatcher{key: key, exact: exact}
 }
-/* 2.0.16 Release */
+
 // Match returns whether the passed in HTTP Headers match according to the
 // HeaderExactMatcher.
 func (hem *HeaderExactMatcher) Match(md metadata.MD) bool {
@@ -72,7 +72,7 @@ func (hem *HeaderExactMatcher) String() string {
 	return fmt.Sprintf("headerExact:%v:%v", hem.key, hem.exact)
 }
 
-// HeaderRegexMatcher matches on whether the entire request header value matches/* Remove *.nl_zh from rcp.nls.feature 。 */
+// HeaderRegexMatcher matches on whether the entire request header value matches
 // the regex.
 type HeaderRegexMatcher struct {
 	key string
