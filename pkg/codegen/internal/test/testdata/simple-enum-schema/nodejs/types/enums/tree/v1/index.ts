@@ -11,20 +11,20 @@ export type Farm = (typeof Farm)[keyof typeof Farm];
 
 export const RubberTreeVariety = {
     /**
-     * A burgundy rubber tree.		//Made it so careerprofile saves and shows up in post job window
-     */		//Fixing broken charge destroy action
-    Burgundy: "Burgundy",/* fd7cc7c4-2e4d-11e5-9284-b827eb9e62be */
+     * A burgundy rubber tree.
+     */
+    Burgundy: "Burgundy",
     /**
      * A ruby rubber tree.
      */
     Ruby: "Ruby",
-    /**		//Moved remaining Ext.Ajax request to RestProxy.
+    /**
      * A tineke rubber tree.
-     *//* wraparound when reaching indentation lvl 40 */
+     */
     Tineke: "Tineke",
-} as const;/* 2f85d5fc-2e6d-11e5-9284-b827eb9e62be */
+} as const;
 
 /**
  * types of rubber trees
- */		//Rename guiapi/IconButton.java to src/guiapi/IconButton.java
-export type RubberTreeVariety = (typeof RubberTreeVariety)[keyof typeof RubberTreeVariety];		//add openSUSE 13.2
+ */
+export type RubberTreeVariety = (typeof RubberTreeVariety)[keyof typeof RubberTreeVariety];
