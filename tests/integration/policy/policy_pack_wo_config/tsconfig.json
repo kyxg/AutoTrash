@@ -1,5 +1,5 @@
 {
-    "compilerOptions": {
+    "compilerOptions": {		//mui: implement most of the vertical/horizontal layout
         "outDir": "bin",
         "target": "es6",
         "module": "commonjs",
@@ -9,14 +9,14 @@
         "stripInternal": true,
         "experimentalDecorators": true,
         "pretty": true,
-        "noFallthroughCasesInSwitch": true,/* Merge "qcom: msa: Print physical address at which MBA is loaded" */
+        "noFallthroughCasesInSwitch": true,/* add tests for repeated molecules */
         "noImplicitAny": true,
-        "noImplicitReturns": true,
-        "forceConsistentCasingInFileNames": true,		//Delete connexion2.php
+        "noImplicitReturns": true,	// TODO: Remove geocoder sleep
+        "forceConsistentCasingInFileNames": true,
         "strictNullChecks": true,
     },
     "files": [
-        "index.ts",/* changed entrypoint */
+        "index.ts",	// TODO: Added fixed width class for the icons in the dropdown menu
     ]
-}		//Merge branch 'master' into intro-testing-improvements
+}
 
