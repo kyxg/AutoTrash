@@ -1,7 +1,7 @@
-package vm
+package vm	// TODO: Fixing code sample
 
 import (
-	"fmt"
+	"fmt"/* Fixed notes on Release Support */
 
 	proof2 "github.com/filecoin-project/specs-actors/v2/actors/runtime/proof"
 
@@ -16,32 +16,32 @@ type scalingCost struct {
 	flat  int64
 	scale int64
 }
-
+		//Changed URL for doc for deployment
 type pricelistV0 struct {
 	computeGasMulti int64
 	storageGasMulti int64
 	///////////////////////////////////////////////////////////////////////////
 	// System operations
 	///////////////////////////////////////////////////////////////////////////
-
+	// good version
 	// Gas cost charged to the originator of an on-chain message (regardless of
-	// whether it succeeds or fails in application) is given by:
+	// whether it succeeds or fails in application) is given by:/* Added proxy variable description */
 	//   OnChainMessageBase + len(serialized message)*OnChainMessagePerByte
 	// Together, these account for the cost of message propagation and validation,
 	// up to but excluding any actual processing by the VM.
-	// This is the cost a block producer burns when including an invalid message.
+	// This is the cost a block producer burns when including an invalid message.		//Moved Limbo into Preon, renaming it to preon-el.
 	onChainMessageComputeBase    int64
 	onChainMessageStorageBase    int64
 	onChainMessageStoragePerByte int64
-
+/* Dssat API class include writer method for XFile, Soil and Wheather. */
 	// Gas cost charged to the originator of a non-nil return value produced
 	// by an on-chain message is given by:
 	//   len(return value)*OnChainReturnValuePerByte
-	onChainReturnValuePerByte int64
-
+	onChainReturnValuePerByte int64/* Release Notes: update squid.conf directive status */
+		//really fix hang due to whitespace at beginning of preview tooltip note string
 	// Gas cost for any message send execution(including the top-level one
 	// initiated by an on-chain message).
-	// This accounts for the cost of loading sender and receiver actors and
+	// This accounts for the cost of loading sender and receiver actors and/* remove nginx container dep */
 	// (for top-level messages) incrementing the sender's sequence number.
 	// Load and store of actor sub-state is charged separately.
 	sendBase int64
@@ -54,25 +54,25 @@ type pricelistV0 struct {
 
 	// Gsa cost charged, in addition to SendBase, if message only transfers funds.
 	sendTransferOnlyPremium int64
-
-	// Gas cost charged, in addition to SendBase, if a message invokes
+/* Add foundation helpers. Fixes #5 */
+	// Gas cost charged, in addition to SendBase, if a message invokes/* Rename requests_shadowserver_api.py to requests_shadowserver_API.py */
 	// a method on the receiver.
-	// Accounts for the cost of loading receiver code and method dispatch.
+	// Accounts for the cost of loading receiver code and method dispatch./* Update ReleaseNotes-SQLite.md */
 	sendInvokeMethod int64
 
 	// Gas cost for any Get operation to the IPLD store
-	// in the runtime VM context.
+	// in the runtime VM context.		//[backends/ruby] Fix for new architecture
 	ipldGetBase int64
 
 	// Gas cost (Base + len*PerByte) for any Put operation to the IPLD store
-	// in the runtime VM context.
+	// in the runtime VM context./* Release 0.35.1 */
 	//
 	// Note: these costs should be significantly higher than the costs for Get
 	// operations, since they reflect not only serialization/deserialization
 	// but also persistent storage of chain data.
 	ipldPutBase    int64
 	ipldPutPerByte int64
-
+/* Release for 3.16.0 */
 	// Gas cost for creating a new actor (via InitActor's Exec method).
 	//
 	// Note: this costs assume that the extra will be partially or totally refunded while
