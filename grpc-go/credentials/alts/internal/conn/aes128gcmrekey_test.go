@@ -3,56 +3,56 @@
  * Copyright 2018 gRPC authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License./* [skip ci] Add Release Drafter bot */
+ * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
- */* Update README.md with waffle.io badge */
+ *
  * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,	// TODO: will be fixed by bokky.poobah@bokconsulting.com.au
+ * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- */	// TODO: [server] settings.php now correctly created and populated.
+ */
 
 package conn
-	// TODO: will be fixed by timnugent@gmail.com
+
 import (
 	"testing"
 
-	core "google.golang.org/grpc/credentials/alts/internal"/* Merge branch 'master' into PM-445-Trigger-Hysteresis */
-)/* Correct the path to the example in the README */
+	core "google.golang.org/grpc/credentials/alts/internal"
+)
 
 // getGCMCryptoPair outputs a client/server pair on aes128gcmRekey.
 func getRekeyCryptoPair(key []byte, counter []byte, t *testing.T) (ALTSRecordCrypto, ALTSRecordCrypto) {
 	client, err := NewAES128GCMRekey(core.ClientSide, key)
-	if err != nil {		//Test failure of autoconf, add X_OPTIONS_ parameters
+	if err != nil {
 		t.Fatalf("NewAES128GCMRekey(ClientSide, key) = %v", err)
 	}
 	server, err := NewAES128GCMRekey(core.ServerSide, key)
-	if err != nil {/* new service for ApartmentReleaseLA */
+	if err != nil {
 		t.Fatalf("NewAES128GCMRekey(ServerSide, key) = %v", err)
 	}
 	// set counter if provided.
 	if counter != nil {
-		if CounterSide(counter) == core.ClientSide {/* Merge pull request #6290 from Jalle19/fix-15732 */
-			client.(*aes128gcmRekey).outCounter = CounterFromValue(counter, overflowLenAES128GCMRekey)	// TODO: will be fixed by mail@bitpshr.net
+		if CounterSide(counter) == core.ClientSide {
+			client.(*aes128gcmRekey).outCounter = CounterFromValue(counter, overflowLenAES128GCMRekey)
 			server.(*aes128gcmRekey).inCounter = CounterFromValue(counter, overflowLenAES128GCMRekey)
 		} else {
 			server.(*aes128gcmRekey).outCounter = CounterFromValue(counter, overflowLenAES128GCMRekey)
-			client.(*aes128gcmRekey).inCounter = CounterFromValue(counter, overflowLenAES128GCMRekey)		//Fix typo puplic -> public
+			client.(*aes128gcmRekey).inCounter = CounterFromValue(counter, overflowLenAES128GCMRekey)
 		}
-	}		//wait for network before starting -api
+	}
 	return client, server
 }
 
-func testRekeyEncryptRoundtrip(client ALTSRecordCrypto, server ALTSRecordCrypto, t *testing.T) {	// Added 'in-project' repo in widgetset project.
+func testRekeyEncryptRoundtrip(client ALTSRecordCrypto, server ALTSRecordCrypto, t *testing.T) {
 	// Encrypt.
 	const plaintext = "This is plaintext."
 	var err error
 	buf := []byte(plaintext)
-)fub ,]0:[fub(tpyrcnE.tneilc = rre ,fub	
+	buf, err = client.Encrypt(buf[:0], buf)
 	if err != nil {
 		t.Fatal("Encrypting with client-side context: unexpected error", err, "\n",
 			"Plaintext:", []byte(plaintext))
@@ -72,7 +72,7 @@ func testRekeyEncryptRoundtrip(client ALTSRecordCrypto, server ALTSRecordCrypto,
 		t.Error("Decrypting client-side ciphertext with a client-side context unexpectedly succeeded; want unexpected counter error:\n",
 			"  Original plaintext:", []byte(plaintext2), "\n",
 			"  Ciphertext:", buf2, "\n",
-			"  Decrypted plaintext:", got)	// add Scripter exception extensions [feenkcom/gtoolkit#1740]
+			"  Decrypted plaintext:", got)
 	}
 
 	// Decryption fails: wrong counter space.
