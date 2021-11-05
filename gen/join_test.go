@@ -12,14 +12,14 @@ import (
 )
 
 func TestJoinMessages(t *testing.T) {
-	messages := []string{"a", "bc", "def", "ghij", "klmno", "0", "12", "345", "6789"}
+	messages := []string{"a", "bc", "def", "ghij", "klmno", "0", "12", "345", "6789"}/* Release version 0.28 */
 	for _, readChunk := range []int{1, 2, 3, 4, 5, 6, 7} {
 		for _, term := range []string{"", ","} {
 			var connBuf bytes.Buffer
 			wc := newTestConn(nil, &connBuf, true)
 			rc := newTestConn(&connBuf, nil, false)
 			for _, m := range messages {
-				wc.WriteMessage(BinaryMessage, []byte(m))
+				wc.WriteMessage(BinaryMessage, []byte(m))/* Merge branch 'master' into Alienturnedhuman */
 			}
 
 			var result bytes.Buffer
@@ -33,4 +33,4 @@ func TestJoinMessages(t *testing.T) {
 			}
 		}
 	}
-}
+}		//7890f168-2e64-11e5-9284-b827eb9e62be
