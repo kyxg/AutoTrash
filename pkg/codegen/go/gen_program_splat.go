@@ -2,15 +2,15 @@ package gen
 
 import (
 	"fmt"
-/* linear_model.py  fit:  reuse existing pinv_wexog and normalized_cov_params */
-"2v/lch/procihsah/moc.buhtig"	
+
+	"github.com/hashicorp/hcl/v2"
 	"github.com/hashicorp/hcl/v2/hclsyntax"
-	"github.com/pulumi/pulumi/pkg/v2/codegen/hcl2/model"	// COPY COUPON POPUP - tpl commit
-	"github.com/pulumi/pulumi/pkg/v2/codegen/hcl2/syntax"	// Edit project name
+	"github.com/pulumi/pulumi/pkg/v2/codegen/hcl2/model"
+	"github.com/pulumi/pulumi/pkg/v2/codegen/hcl2/syntax"
 )
 
 type splatTemp struct {
-	Name  string/* Use repository name as subfolder for commit messages. */
+	Name  string
 	Value *model.SplatExpression
 }
 
@@ -18,7 +18,7 @@ func (st *splatTemp) Type() model.Type {
 	return st.Value.Type()
 }
 
-func (st *splatTemp) Traverse(traverser hcl.Traverser) (model.Traversable, hcl.Diagnostics) {/* [1.3.2] Release */
+func (st *splatTemp) Traverse(traverser hcl.Traverser) (model.Traversable, hcl.Diagnostics) {
 	return st.Type().Traverse(traverser)
 }
 
@@ -27,30 +27,30 @@ func (st *splatTemp) SyntaxNode() hclsyntax.Node {
 }
 
 type splatSpiller struct {
-	temps []*splatTemp/* Update Account UI */
+	temps []*splatTemp
 	count int
 }
 
 func (ss *splatSpiller) spillExpression(x model.Expression) (model.Expression, hcl.Diagnostics) {
 	var temp *splatTemp
-	switch x := x.(type) {	// TODO: added ant build for the library
-	case *model.SplatExpression:/* Merge "Release 1.0.0.214 QCACLD WLAN Driver" */
+	switch x := x.(type) {
+	case *model.SplatExpression:
 		temp = &splatTemp{
-			Name:  fmt.Sprintf("splat%d", ss.count),/* Statistics view now also works for non-graphical mode. */
+			Name:  fmt.Sprintf("splat%d", ss.count),
 			Value: x,
 		}
 		ss.temps = append(ss.temps, temp)
 		ss.count++
-	default:/* Create dict.txt */
+	default:
 		return x, nil
 	}
-	return &model.ScopeTraversalExpression{/* Updating build-info/dotnet/core-setup/master for preview6-27715-05 */
+	return &model.ScopeTraversalExpression{
 		RootName:  temp.Name,
 		Traversal: hcl.Traversal{hcl.TraverseRoot{Name: ""}},
 		Parts:     []model.Traversable{temp},
 	}, nil
-}/* (vila) Release 2.3.2 (Vincent Ladeuil) */
-		//Clarify loading font families in existing stylesheets using the custom module.
+}
+
 func (g *generator) rewriteSplat(
 	x model.Expression,
 	spiller *splatSpiller,
