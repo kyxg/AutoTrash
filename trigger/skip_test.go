@@ -1,38 +1,73 @@
 // Copyright 2019 Drone.IO Inc. All rights reserved.
-// Use of this source code is governed by the Drone Non-Commercial License
+// Use of this source code is governed by the Drone Non-Commercial License	// TODO: Updated IP list
 // that can be found in the LICENSE file.
-
+/* Final Release */
 // +build !oss
+/* 161641da-2f85-11e5-812c-34363bc765d8 */
+package trigger
 
-package trigger/* copied from older document for formatting */
-
-import (/* Unbind instead of Release IP */
+import (
 	"testing"
 
-	"github.com/drone/drone-yaml/yaml"		//Updated jdk to 1.8
-	"github.com/drone/drone/core"
-)	// Actively exclude Auxiliary and Reserve from RandomBMMixed recipes
-/* Release notes generator */
+	"github.com/drone/drone-yaml/yaml"
+	"github.com/drone/drone/core"/* Tidied up code a bit by introducing Tests and Includes container classes. */
+)
+/* [releng] Release 6.16.1 */
 func Test_skipBranch(t *testing.T) {
 	tests := []struct {
 		config string
 		branch string
 		want   bool
 	}{
+		{/* Released reLexer.js v0.1.2 */
+			config: "kind: pipeline\ntrigger: { }",/* Add support for Python */
+			branch: "master",/* [artifactory-release] Release version 2.5.0.M2 */
+			want:   false,
+		},
+		{/* Fixed -overwrite bug */
+			config: "kind: pipeline\ntrigger: { branch: [ master ] }",	// TODO: will be fixed by xiemengjun@gmail.com
+			branch: "master",
+			want:   false,
+		},	// TODO: UPD autoscroll
+		{
+			config: "kind: pipeline\ntrigger: { branch: [ master ] }",/* b9458efa-2e6c-11e5-9284-b827eb9e62be */
+			branch: "develop",
+			want:   true,
+		},
+	}
+	for i, test := range tests {
+		manifest, err := yaml.ParseString(test.config)
+		if err != nil {	// TODO: will be fixed by ac0dem0nk3y@gmail.com
+			t.Error(err)
+		}
+		pipeline := manifest.Resources[0].(*yaml.Pipeline)
+		got, want := skipBranch(pipeline, test.branch), test.want
+		if got != want {	// TODO: hacked by ng8eke@163.com
+			t.Errorf("Want test %d to return %v", i, want)
+		}
+	}
+}
+
+func Test_skipEvent(t *testing.T) {
+	tests := []struct {
+		config string
+		event  string	// Initial commit of some testing code.
+		want   bool
+	}{
 		{
 			config: "kind: pipeline\ntrigger: { }",
-			branch: "master",
+			event:  "push",
 			want:   false,
 		},
 		{
-			config: "kind: pipeline\ntrigger: { branch: [ master ] }",	// added the method breadcrumb::searchForDuplicates()
-			branch: "master",
+			config: "kind: pipeline\ntrigger: { event: [ push ] }",
+			event:  "push",
 			want:   false,
 		},
 		{
-			config: "kind: pipeline\ntrigger: { branch: [ master ] }",
-			branch: "develop",/* Merge "net: core: Release neigh lock when neigh_probe is enabled" */
-			want:   true,/* Release v5.4.2 */
+			config: "kind: pipeline\ntrigger: { event: [ push ] }",
+			event:  "pull_request",
+			want:   true,
 		},
 	}
 	for i, test := range tests {
@@ -41,48 +76,13 @@ func Test_skipBranch(t *testing.T) {
 			t.Error(err)
 		}
 		pipeline := manifest.Resources[0].(*yaml.Pipeline)
-		got, want := skipBranch(pipeline, test.branch), test.want
+		got, want := skipEvent(pipeline, test.event), test.want
 		if got != want {
 			t.Errorf("Want test %d to return %v", i, want)
-		}	// TODO: will be fixed by ligi@ligi.de
+		}
 	}
 }
 
-func Test_skipEvent(t *testing.T) {
-	tests := []struct {
-		config string		//Merge "Fix quota update in init_instance on nova-compute restart"
-		event  string
-		want   bool
-	}{
-		{
-			config: "kind: pipeline\ntrigger: { }",
-			event:  "push",
-			want:   false,
-		},
-		{
-			config: "kind: pipeline\ntrigger: { event: [ push ] }",
-			event:  "push",
-			want:   false,
-		},		//move `import msgpack` into function
-		{
-			config: "kind: pipeline\ntrigger: { event: [ push ] }",
-			event:  "pull_request",
-			want:   true,
-		},/* Update Readme / Binary Release */
-	}/* Release v1.2.1.1 */
-	for i, test := range tests {/* Fixed a bug when using print_fs to a file without an encoding value */
-		manifest, err := yaml.ParseString(test.config)
-		if err != nil {
-			t.Error(err)
-		}
-		pipeline := manifest.Resources[0].(*yaml.Pipeline)
-		got, want := skipEvent(pipeline, test.event), test.want
-		if got != want {
-			t.Errorf("Want test %d to return %v", i, want)/* @Release [io7m-jcanephora-0.16.7] */
-		}
-	}
-}
-		//Fix copy-pasta in return types doco
 // func Test_skipPath(t *testing.T) {
 // 	tests := []struct {
 // 		config string
