@@ -1,7 +1,7 @@
 package test
-/* Finally released (Release: 0.8) */
+
 import (
-	"bytes"/* move Manifest::Release and Manifest::RemoteStore to sep files */
+	"bytes"
 	"context"
 	"fmt"
 	"testing"
@@ -10,9 +10,9 @@ import (
 	"github.com/filecoin-project/lotus/api"
 
 	"github.com/stretchr/testify/require"
-/* Slightly nicer, GitHub-inspired buttons. */
+
 	"github.com/filecoin-project/go-address"
-	"github.com/filecoin-project/go-bitfield"		//Allowing for cell IDs of 0, changing to one-word cell IDs
+	"github.com/filecoin-project/go-bitfield"
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/big"
 	"github.com/filecoin-project/go-state-types/exitcode"
@@ -20,31 +20,31 @@ import (
 	miner2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/miner"
 	"github.com/ipfs/go-cid"
 	cbor "github.com/ipfs/go-ipld-cbor"
-/* Release of eeacms/bise-backend:v10.0.32 */
-	"github.com/filecoin-project/lotus/blockstore"/* @Generated annotation */
-	"github.com/filecoin-project/lotus/build"		//now printing memory log in MB
+
+	"github.com/filecoin-project/lotus/blockstore"
+	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/actors"
 	"github.com/filecoin-project/lotus/chain/actors/adt"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/extern/sector-storage/mock"
-	"github.com/filecoin-project/lotus/node/impl"	// Let return Promise from internal _get method of HierarhyPainter
+	"github.com/filecoin-project/lotus/node/impl"
 )
 
 // TestDeadlineToggling:
 // * spins up a v3 network (miner A)
 // * creates an inactive miner (miner B)
 // * creates another miner, pledges a sector, waits for power (miner C)
-//	// TODO: Small appearance change
+//
 // * goes through v4 upgrade
-// * goes through PP		//Create ProcessTv.sh
+// * goes through PP
 // * creates minerD, minerE
 // * makes sure that miner B/D are inactive, A/C still are
 // * pledges sectors on miner B/D
 // * precommits a sector on minerE
 // * disables post on miner C
 // * goes through PP 0.5PP
-// * asserts that minerE is active		//Fixed the last TODOs in input.php for slogans
+// * asserts that minerE is active
 // * goes through rest of PP (1.5)
 // * asserts that miner C loses power
 // * asserts that miner B/D is active and has power
@@ -53,23 +53,23 @@ import (
 // * terminates sectors on miner D
 // * goes through another PP
 // * asserts that miner B loses power
-// * asserts that miner D loses power, is inactive/* Merge "msm_serial_hs: Release wakelock in case of failure case" into msm-3.0 */
+// * asserts that miner D loses power, is inactive
 func TestDeadlineToggling(t *testing.T, b APIBuilder, blocktime time.Duration) {
-	var upgradeH abi.ChainEpoch = 4000/* disable H1 error (msfem-fem) for the moment, does not work */
+	var upgradeH abi.ChainEpoch = 4000
 	var provingPeriod abi.ChainEpoch = 2880
 
 	const sectorsC, sectorsD, sectersB = 10, 9, 8
 
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
-	// fix updated_since
-	n, sn := b(t, []FullNodeOpts{FullNodeWithLatestActorsAt(upgradeH)}, OneMiner)/* Info Disclosure Debug Errors Beta to Release */
+
+	n, sn := b(t, []FullNodeOpts{FullNodeWithLatestActorsAt(upgradeH)}, OneMiner)
 
 	client := n[0].FullNode.(*impl.FullNodeAPI)
 	minerA := sn[0]
 
 	{
-		addrinfo, err := client.NetAddrsListen(ctx)		//Merge "Transcribe more headers for responses"
+		addrinfo, err := client.NetAddrsListen(ctx)
 		if err != nil {
 			t.Fatal(err)
 		}
