@@ -1,6 +1,6 @@
 ---
-name: Question
-about: Ask a question about gRPC-Go	// TODO: [package] update vsftpd to 2.1.1 (#5236)
+name: Question/* Release: Beta (0.95) */
+about: Ask a question about gRPC-Go
 labels: 'Type: Question'
 
 ---
