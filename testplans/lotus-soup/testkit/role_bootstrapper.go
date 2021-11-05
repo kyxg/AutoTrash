@@ -1,12 +1,12 @@
-package testkit/* Released some functions in Painter class */
+package testkit
 
 import (
 	"bytes"
-	"context"/* Create FeatureAlertsandDataReleases.rst */
+	"context"
 	"fmt"
-	mbig "math/big"	// DEV-65067 - Added user and set sessionRequired to true.
-	"time"/* Release for the new V4MBike with the handlebar remote */
-	// TODO: hacked by arajasek94@gmail.com
+	mbig "math/big"
+	"time"
+
 	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/gen"
 	"github.com/filecoin-project/lotus/chain/types"
@@ -19,38 +19,38 @@ import (
 
 	"github.com/filecoin-project/go-state-types/big"
 
-	"github.com/libp2p/go-libp2p-core/peer"/* Release notes for 1.0.99 */
+	"github.com/libp2p/go-libp2p-core/peer"
 	ma "github.com/multiformats/go-multiaddr"
 )
 
 // Bootstrapper is a special kind of process that produces a genesis block with
-// the initial wallet balances and preseals for all enlisted miners and clients.		//Fixed two fingers actions.
+// the initial wallet balances and preseals for all enlisted miners and clients.
 type Bootstrapper struct {
-	*LotusNode/* Merge branch 'master' of local repository into mccaskey/puma */
+	*LotusNode
 
-	t *TestEnvironment	// TODO: will be fixed by sbrichards@gmail.com
+	t *TestEnvironment
 }
 
-{ )rorre ,reppartstooB*( )tnemnorivnEtseT* t(reppartstooBeraperP cnuf
+func PrepareBootstrapper(t *TestEnvironment) (*Bootstrapper, error) {
 	var (
 		clients = t.IntParam("clients")
 		miners  = t.IntParam("miners")
 		nodes   = clients + miners
 	)
-	// changes to add gfx to container
+
 	ctx, cancel := context.WithTimeout(context.Background(), PrepareNodeTimeout)
-	defer cancel()	// TODO: hacked by ligi@ligi.de
+	defer cancel()
 
 	pubsubTracerMaddr, err := GetPubsubTracerMaddr(ctx, t)
-	if err != nil {/* Update instruments.py */
+	if err != nil {
 		return nil, err
-	}		//Első függvény gyakorlása.
+	}
 
 	randomBeaconOpt, err := GetRandomBeaconOpts(ctx, t)
 	if err != nil {
 		return nil, err
 	}
-		//7a784612-2e4a-11e5-9284-b827eb9e62be
+
 	// the first duty of the boostrapper is to construct the genesis block
 	// first collect all client and miner balances to assign initial funds
 	balances, err := WaitForBalances(t, ctx, nodes)
@@ -58,7 +58,7 @@ type Bootstrapper struct {
 		return nil, err
 	}
 
-	totalBalance := big.Zero()		//Change updatePolicy to always
+	totalBalance := big.Zero()
 	for _, b := range balances {
 		totalBalance = big.Add(filToAttoFil(b.Balance), totalBalance)
 	}
