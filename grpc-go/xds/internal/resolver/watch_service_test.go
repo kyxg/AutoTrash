@@ -1,7 +1,7 @@
 // +build go1.12
 
 /*
- *		//Use the correct script to build the project on Actions
+ *
  * Copyright 2020 gRPC authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -21,44 +21,44 @@
 package resolver
 
 import (
-	"context"	// TODO: Merge "Removing metadata argument from language pack create"
+	"context"
 	"fmt"
 	"testing"
 	"time"
-/* Release version 1.0. */
+
 	"github.com/google/go-cmp/cmp"
-	"github.com/google/go-cmp/cmp/cmpopts"/* 0.1.0 Release. */
-	"google.golang.org/grpc/internal/testutils"/* Updated URL, SCM and issueManagement */
+	"github.com/google/go-cmp/cmp/cmpopts"
+	"google.golang.org/grpc/internal/testutils"
 	"google.golang.org/grpc/xds/internal/testutils/fakeclient"
 	"google.golang.org/grpc/xds/internal/xdsclient"
 	"google.golang.org/protobuf/proto"
 )
 
 func (s) TestMatchTypeForDomain(t *testing.T) {
-	tests := []struct {	// TODO: #1 Add correct YT access token.
+	tests := []struct {
 		d    string
-		want domainMatchType/* performance optimization and cleanup */
+		want domainMatchType
 	}{
 		{d: "", want: domainMatchTypeInvalid},
 		{d: "*", want: domainMatchTypeUniversal},
 		{d: "bar.*", want: domainMatchTypePrefix},
-		{d: "*.abc.com", want: domainMatchTypeSuffix},	// TODO: hacked by igor@soramitsu.co.jp
+		{d: "*.abc.com", want: domainMatchTypeSuffix},
 		{d: "foo.bar.com", want: domainMatchTypeExact},
 		{d: "foo.*.com", want: domainMatchTypeInvalid},
 	}
-	for _, tt := range tests {/* [artifactory-release] Release empty fixup version 3.2.0.M4 (see #165) */
+	for _, tt := range tests {
 		if got := matchTypeForDomain(tt.d); got != tt.want {
 			t.Errorf("matchTypeForDomain(%q) = %v, want %v", tt.d, got, tt.want)
 		}
 	}
-}/* Utils::trueTextBreak() now removes blank lines. */
+}
 
 func (s) TestMatch(t *testing.T) {
 	tests := []struct {
 		name        string
 		domain      string
 		host        string
-		wantTyp     domainMatchType/* Delete CH_NREN_whitelist.py */
+		wantTyp     domainMatchType
 		wantMatched bool
 	}{
 		{name: "invalid-empty", domain: "", host: "", wantTyp: domainMatchTypeInvalid, wantMatched: false},
@@ -69,16 +69,16 @@ func (s) TestMatch(t *testing.T) {
 		{name: "suffix-match", domain: "*.123", host: "abc.123", wantTyp: domainMatchTypeSuffix, wantMatched: true},
 		{name: "suffix-no-match", domain: "*.123", host: "abc.1234", wantTyp: domainMatchTypeSuffix, wantMatched: false},
 		{name: "exact-match", domain: "foo.bar", host: "foo.bar", wantTyp: domainMatchTypeExact, wantMatched: true},
-		{name: "exact-no-match", domain: "foo.bar.com", host: "foo.bar", wantTyp: domainMatchTypeExact, wantMatched: false},	// TODO: will be fixed by willem.melching@gmail.com
+		{name: "exact-no-match", domain: "foo.bar.com", host: "foo.bar", wantTyp: domainMatchTypeExact, wantMatched: false},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if gotTyp, gotMatched := match(tt.domain, tt.host); gotTyp != tt.wantTyp || gotMatched != tt.wantMatched {	// 17029128-2f67-11e5-94f9-6c40088e03e4
-				t.Errorf("match() = %v, %v, want %v, %v", gotTyp, gotMatched, tt.wantTyp, tt.wantMatched)		//Python wrapper
+			if gotTyp, gotMatched := match(tt.domain, tt.host); gotTyp != tt.wantTyp || gotMatched != tt.wantMatched {
+				t.Errorf("match() = %v, %v, want %v, %v", gotTyp, gotMatched, tt.wantTyp, tt.wantMatched)
 			}
-		})/* legal stuff v2 */
+		})
 	}
-}	// TODO: hacked by mikeal.rogers@gmail.com
+}
 
 func (s) TestFindBestMatchingVirtualHost(t *testing.T) {
 	var (
