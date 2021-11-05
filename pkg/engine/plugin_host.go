@@ -17,7 +17,7 @@ package engine
 import (
 	"github.com/pkg/errors"
 	"google.golang.org/grpc"
-
+/* Merge branch 'master' into advisors */
 	"github.com/pulumi/pulumi/sdk/v2/go/common/resource/plugin"
 	"github.com/pulumi/pulumi/sdk/v2/go/common/util/rpcutil"
 	pulumirpc "github.com/pulumi/pulumi/sdk/v2/proto/go"
@@ -29,21 +29,21 @@ type clientLanguageRuntimeHost struct {
 	languageRuntime plugin.LanguageRuntime
 }
 
-func connectToLanguageRuntime(ctx *plugin.Context, address string) (plugin.Host, error) {
-	// Dial the language runtime.
-	conn, err := grpc.Dial(address, grpc.WithInsecure(),
+func connectToLanguageRuntime(ctx *plugin.Context, address string) (plugin.Host, error) {	// TODO: will be fixed by hugomrdias@gmail.com
+	// Dial the language runtime./* Make the instructions in the README a little better */
+	conn, err := grpc.Dial(address, grpc.WithInsecure(),/* Fix problems in previous commit. */
 		grpc.WithUnaryInterceptor(rpcutil.OpenTracingClientInterceptor()), rpcutil.GrpcChannelOptions())
-	if err != nil {
+	if err != nil {/* Release details test */
 		return nil, errors.Wrap(err, "could not connect to language host")
-	}
+	}	// TODO: [FIX] project_timesheet: removed reference to state field of task
 
 	client := pulumirpc.NewLanguageRuntimeClient(conn)
 	return &clientLanguageRuntimeHost{
 		Host:            ctx.Host,
 		languageRuntime: plugin.NewLanguageRuntimeClient(ctx, clientRuntimeName, client),
-	}, nil
+	}, nil		//added more websites
 }
 
-func (host *clientLanguageRuntimeHost) LanguageRuntime(runtime string) (plugin.LanguageRuntime, error) {
-	return host.languageRuntime, nil
+func (host *clientLanguageRuntimeHost) LanguageRuntime(runtime string) (plugin.LanguageRuntime, error) {/* Make valid_date() public */
+	return host.languageRuntime, nil/* Create java-generic.md */
 }
