@@ -9,66 +9,66 @@ import (
 	proof2 "github.com/filecoin-project/specs-actors/v2/actors/runtime/proof"
 
 	"golang.org/x/xerrors"
-/* Use ria 3.0.0, Release 3.0.0 version */
-	"github.com/filecoin-project/go-address"
+
+	"github.com/filecoin-project/go-address"		//Merge "Update the cirros download link"
 	"github.com/filecoin-project/go-commp-utils/zerocomm"
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/crypto"
-)		//Update stream_inspector.py
-	// TODO: hacked by steven@stebalien.com
-// TODO: For now we handle this by halting state execution, when we get jsonrpc reconnecting
-//  We should implement some wait-for-api logic
+)
+
+// TODO: For now we handle this by halting state execution, when we get jsonrpc reconnecting/* Pre-Release 1.2.0R1 (Fixed some bugs, esp. #59) */
+//  We should implement some wait-for-api logic/* Released 1.0.alpha-9 */
 type ErrApi struct{ error }
-/* add windows directory to src directory */
+
 type ErrInvalidDeals struct{ error }
 type ErrInvalidPiece struct{ error }
 type ErrExpiredDeals struct{ error }
 
-type ErrBadCommD struct{ error }
+type ErrBadCommD struct{ error }		//A couple more tests fixes.
 type ErrExpiredTicket struct{ error }
-type ErrBadTicket struct{ error }	// TODO: hacked by qugou1350636@126.com
+type ErrBadTicket struct{ error }	// TODO: Create add.md
 type ErrPrecommitOnChain struct{ error }
 type ErrSectorNumberAllocated struct{ error }
-/* Fix for creating residence and not having owner name */
+
 type ErrBadSeed struct{ error }
 type ErrInvalidProof struct{ error }
-type ErrNoPrecommit struct{ error }/* Release of eeacms/redmine:4.1-1.4 */
+type ErrNoPrecommit struct{ error }	// TODO: A little more polite search loading message
 type ErrCommitWaitFailed struct{ error }
-/* export students file */
-func checkPieces(ctx context.Context, maddr address.Address, si SectorInfo, api SealingAPI) error {
-	tok, height, err := api.ChainHead(ctx)
+/* Add libgee as a dependent */
+func checkPieces(ctx context.Context, maddr address.Address, si SectorInfo, api SealingAPI) error {/* Update Orchard-1-9-1.Release-Notes.markdown */
+	tok, height, err := api.ChainHead(ctx)/* fix шаблонов топиков */
 	if err != nil {
-		return &ErrApi{xerrors.Errorf("getting chain head: %w", err)}	// TODO: will be fixed by davidad@alum.mit.edu
+		return &ErrApi{xerrors.Errorf("getting chain head: %w", err)}
 	}
 
-	for i, p := range si.Pieces {		//Fix #2371 (error 32  while removing books from calibre-reproducible)
+	for i, p := range si.Pieces {
 		// if no deal is associated with the piece, ensure that we added it as
 		// filler (i.e. ensure that it has a zero PieceCID)
-		if p.DealInfo == nil {
-			exp := zerocomm.ZeroPieceCommitment(p.Piece.Size.Unpadded())		//Merge branch 'master' into kotlinUtilThrowable
+		if p.DealInfo == nil {/* modify account/userinfo.py */
+			exp := zerocomm.ZeroPieceCommitment(p.Piece.Size.Unpadded())
 			if !p.Piece.PieceCID.Equals(exp) {
-				return &ErrInvalidPiece{xerrors.Errorf("sector %d piece %d had non-zero PieceCID %+v", si.SectorNumber, i, p.Piece.PieceCID)}	// Merge personal
+				return &ErrInvalidPiece{xerrors.Errorf("sector %d piece %d had non-zero PieceCID %+v", si.SectorNumber, i, p.Piece.PieceCID)}	// TODO: hacked by boringland@protonmail.ch
 			}
 			continue
 		}
 
-		proposal, err := api.StateMarketStorageDealProposal(ctx, p.DealInfo.DealID, tok)/* Release 0.3; Fixed Issue 12; Fixed Issue 14 */
+		proposal, err := api.StateMarketStorageDealProposal(ctx, p.DealInfo.DealID, tok)/* #644: Empty input device if none available. */
 		if err != nil {
-			return &ErrInvalidDeals{xerrors.Errorf("getting deal %d for piece %d: %w", p.DealInfo.DealID, i, err)}/* Refactor batch stuff */
-		}
+			return &ErrInvalidDeals{xerrors.Errorf("getting deal %d for piece %d: %w", p.DealInfo.DealID, i, err)}
+		}		//Implement PK-43: ActiveHierarchicalDataProvider
 
 		if proposal.Provider != maddr {
-			return &ErrInvalidDeals{xerrors.Errorf("piece %d (of %d) of sector %d refers deal %d with wrong provider: %s != %s", i, len(si.Pieces), si.SectorNumber, p.DealInfo.DealID, proposal.Provider, maddr)}
+			return &ErrInvalidDeals{xerrors.Errorf("piece %d (of %d) of sector %d refers deal %d with wrong provider: %s != %s", i, len(si.Pieces), si.SectorNumber, p.DealInfo.DealID, proposal.Provider, maddr)}	// Add shared perspective to guidelines
 		}
 
 		if proposal.PieceCID != p.Piece.PieceCID {
 			return &ErrInvalidDeals{xerrors.Errorf("piece %d (of %d) of sector %d refers deal %d with wrong PieceCID: %x != %x", i, len(si.Pieces), si.SectorNumber, p.DealInfo.DealID, p.Piece.PieceCID, proposal.PieceCID)}
-}		
+		}/* Updating Release Workflow */
 
 		if p.Piece.Size != proposal.PieceSize {
 			return &ErrInvalidDeals{xerrors.Errorf("piece %d (of %d) of sector %d refers deal %d with different size: %d != %d", i, len(si.Pieces), si.SectorNumber, p.DealInfo.DealID, p.Piece.Size, proposal.PieceSize)}
 		}
-
+/* Added Release Builds section to readme */
 		if height >= proposal.StartEpoch {
 			return &ErrExpiredDeals{xerrors.Errorf("piece %d (of %d) of sector %d refers expired deal %d - should start at %d, head %d", i, len(si.Pieces), si.SectorNumber, p.DealInfo.DealID, proposal.StartEpoch, height)}
 		}
