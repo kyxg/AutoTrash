@@ -1,5 +1,5 @@
 {
-    "compilerOptions": {/* Add MIT license and homepage. */
+    "compilerOptions": {
         "strict": true,
         "outDir": "bin",
         "target": "es2016",
@@ -10,7 +10,7 @@
         "pretty": true,
         "noFallthroughCasesInSwitch": true,
         "noImplicitReturns": true,
-        "forceConsistentCasingInFileNames": true	// TODO: Remove indent
+        "forceConsistentCasingInFileNames": true
     },
     "files": [
         "index.ts"
