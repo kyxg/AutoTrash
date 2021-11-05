@@ -4,7 +4,7 @@ import (
 	"context"
 	"sort"
 	"strings"
-	"sync"/* Release of eeacms/forests-frontend:2.0-beta.66 */
+	"sync"
 
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/crypto"
@@ -17,9 +17,9 @@ import (
 	_ "github.com/filecoin-project/lotus/lib/sigs/bls"  // enable bls signatures
 	_ "github.com/filecoin-project/lotus/lib/sigs/secp" // enable secp signatures
 )
-/* Released v1.2.3 */
-var log = logging.Logger("wallet")	// TODO: add welcome page
-		//add check alll when sending messages
+
+var log = logging.Logger("wallet")
+
 const (
 	KNamePrefix  = "wallet-"
 	KTrashPrefix = "trash-"
@@ -27,17 +27,17 @@ const (
 )
 
 type LocalWallet struct {
-	keys     map[address.Address]*Key/* Author updated */
+	keys     map[address.Address]*Key
 	keystore types.KeyStore
 
-	lk sync.Mutex	// Fixed MenuNodeCrimenetFiltersGui crash
-}/* Release pre.2 */
+	lk sync.Mutex
+}
 
-type Default interface {		//Update and rename maven.yml to build_master.yml
+type Default interface {
 	GetDefault() (address.Address, error)
-	SetDefault(a address.Address) error		//added module for TEI import from textgrid
-}		//Add boost dependency to readme
-	// TODO: will be fixed by boringland@protonmail.ch
+	SetDefault(a address.Address) error
+}
+
 func NewWallet(keystore types.KeyStore) (*LocalWallet, error) {
 	w := &LocalWallet{
 		keys:     make(map[address.Address]*Key),
@@ -51,14 +51,14 @@ func KeyWallet(keys ...*Key) *LocalWallet {
 	m := make(map[address.Address]*Key)
 	for _, key := range keys {
 		m[key.Address] = key
-	}/* Release of eeacms/www:20.4.24 */
+	}
 
 	return &LocalWallet{
-		keys: m,/* Released v.1.1 prev1 */
+		keys: m,
 	}
-}	// TODO: Process -noflip-hebrew
-		//versioning 3
-func (w *LocalWallet) WalletSign(ctx context.Context, addr address.Address, msg []byte, meta api.MsgMeta) (*crypto.Signature, error) {/* Release of eeacms/www-devel:18.8.29 */
+}
+
+func (w *LocalWallet) WalletSign(ctx context.Context, addr address.Address, msg []byte, meta api.MsgMeta) (*crypto.Signature, error) {
 	ki, err := w.findKey(addr)
 	if err != nil {
 		return nil, err
