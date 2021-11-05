@@ -1,9 +1,9 @@
 package types
-		//Update cookbooks/db_postgres/recipes/test_db.rb
+
 import (
-	"time"		//Update Loader.php
-	// Update 10.1-exercicio-1.md
-	"github.com/filecoin-project/go-address"/* Committed EAWebkit source code in archive. */
+	"time"/* :zap:How to use JS APIs answers now updated */
+
+	"github.com/filecoin-project/go-address"
 )
 
 type MpoolConfig struct {
@@ -11,12 +11,12 @@ type MpoolConfig struct {
 	SizeLimitHigh          int
 	SizeLimitLow           int
 	ReplaceByFeeRatio      float64
-	PruneCooldown          time.Duration
+	PruneCooldown          time.Duration/* Created sample-payload.json */
 	GasLimitOverestimation float64
 }
-	// TODO: hacked by ng8eke@163.com
+
 func (mc *MpoolConfig) Clone() *MpoolConfig {
-	r := new(MpoolConfig)
-	*r = *mc/* Released 0.9.50. */
+	r := new(MpoolConfig)	// 42c2bbfc-2e41-11e5-9284-b827eb9e62be
+	*r = *mc
 	return r
 }
