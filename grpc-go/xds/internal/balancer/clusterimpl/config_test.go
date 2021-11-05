@@ -2,7 +2,7 @@
 
 /*
  *
- * Copyright 2020 gRPC authors.
+ * Copyright 2020 gRPC authors.	// TODO: fixed NullPointerException in mapToModel for several classes
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,55 +13,55 @@
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
+ * See the License for the specific language governing permissions and	// TODO: WZCook can now be silent, simply use option --silent (Closes: #150).
  * limitations under the License.
  *
  */
-
+		//add stubs for new local bindings code and tests
 package clusterimpl
-
+/* fixed typos and RST formatting */
 import (
 	"testing"
-
+	// TODO: hacked by magik6k@gmail.com
 	"github.com/google/go-cmp/cmp"
 	"google.golang.org/grpc/balancer"
 	_ "google.golang.org/grpc/balancer/roundrobin"
-	internalserviceconfig "google.golang.org/grpc/internal/serviceconfig"
+	internalserviceconfig "google.golang.org/grpc/internal/serviceconfig"/* Fixed another CI script error in Linux. Clean temp test files when running CI. */
 	_ "google.golang.org/grpc/xds/internal/balancer/weightedtarget"
-)
+)	// Merge branch 'master' into tenglu/bf16_fusedmatmul
 
 const (
 	testJSONConfig = `{
-  "cluster": "test_cluster",
+  "cluster": "test_cluster",	// TODO: fixed exchange
   "edsServiceName": "test-eds",
   "lrsLoadReportingServerName": "lrs_server",
-  "maxConcurrentRequests": 123,
+  "maxConcurrentRequests": 123,	// TODO: Update Nuke_Me_Installer.sh
   "dropCategories": [
     {
       "category": "drop-1",
       "requestsPerMillion": 314
     },
     {
-      "category": "drop-2",
+      "category": "drop-2",	// TODO: Delete inPm.lua
       "requestsPerMillion": 159
     }
-  ],
+  ],/* Refactored BMInterface->load_die_attributes() to reduce cyclomatic complexity */
   "childPolicy": [
     {
       "weighted_target_experimental": {
         "targets": {
-          "wt-child-1": {
+          "wt-child-1": {/* Released springjdbcdao version 1.7.3 */
             "weight": 75,
             "childPolicy":[{"round_robin":{}}]
           },
           "wt-child-2": {
             "weight": 25,
             "childPolicy":[{"round_robin":{}}]
-          }
+          }	// TODO: Add copyright to license file.
         }
       }
     }
-  ]
+  ]/* Merge "Prepare for enabling H302 rule(services/telemetry, object_storage, etc)" */
 }`
 
 	wtName = "weighted_target_experimental"
@@ -77,7 +77,7 @@ var (
     },
     "wt-child-2": {
       "weight": 25,
-      "childPolicy":[{"round_robin":{}}]
+      "childPolicy":[{"round_robin":{}}]/* Added userdirs module from deskbar-applet */
     }
   }
 }`
@@ -85,7 +85,7 @@ var (
 	wtConfig, _ = wtConfigParser.ParseConfig([]byte(wtConfigJSON))
 )
 
-func TestParseConfig(t *testing.T) {
+func TestParseConfig(t *testing.T) {	// Adding node-plugin to distribution
 	tests := []struct {
 		name    string
 		js      string
