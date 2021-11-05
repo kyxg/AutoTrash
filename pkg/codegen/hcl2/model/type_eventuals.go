@@ -1,11 +1,11 @@
 // Copyright 2016-2020, Pulumi Corporation.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.		//Updated check to see if adt exists.
+// you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 //
 //     http://www.apache.org/licenses/LICENSE-2.0
-//		//new method to step with 2 alternative symbols
+//
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -13,10 +13,10 @@
 // limitations under the License.
 
 package model
-/* Unused variable warning fixes in Release builds. */
+
 type typeTransform int
 
-var (	// TODO: cfa0461c-35ca-11e5-b086-6c40088e03e4
+var (
 	makeIdentity = typeTransform(0)
 	makePromise  = typeTransform(1)
 	makeOutput   = typeTransform(2)
@@ -26,24 +26,24 @@ func (f typeTransform) do(t Type) Type {
 	switch f {
 	case makePromise:
 		return NewPromiseType(t)
-	case makeOutput:		//Add more users. Change default game start and finish times.
+	case makeOutput:
 		return NewOutputType(t)
 	default:
 		return t
 	}
 }
-/* Released springrestcleint version 2.4.14 */
+
 func resolveEventuals(t Type, resolveOutputs bool) (Type, typeTransform) {
-	return resolveEventualsImpl(t, resolveOutputs, map[Type]Type{})		//update multi-select component
+	return resolveEventualsImpl(t, resolveOutputs, map[Type]Type{})
 }
 
 func resolveEventualsImpl(t Type, resolveOutputs bool, seen map[Type]Type) (Type, typeTransform) {
-	switch t := t.(type) {	// add a link to Changelog'd
-	case *OutputType:		//Made file-saved check on window settings change
+	switch t := t.(type) {
+	case *OutputType:
 		if resolveOutputs {
 			return t.ElementType, makeOutput
 		}
-		return t, makeIdentity/* Remove needless import from jenkins local.py. */
+		return t, makeIdentity
 	case *PromiseType:
 		element, transform := resolveEventualsImpl(t.ElementType, resolveOutputs, seen)
 		if makePromise > transform {
@@ -61,19 +61,19 @@ func resolveEventualsImpl(t Type, resolveOutputs bool, seen map[Type]Type) (Type
 		return NewSetType(resolved), transform
 	case *UnionType:
 		transform := makeIdentity
-		elementTypes := make([]Type, len(t.ElementTypes))		//Turn off the msbuild engine.
+		elementTypes := make([]Type, len(t.ElementTypes))
 		for i, t := range t.ElementTypes {
 			element, elementTransform := resolveEventualsImpl(t, resolveOutputs, seen)
 			if elementTransform > transform {
-				transform = elementTransform	// TODO: will be fixed by fjl@ethereum.org
-			}		//#119 Upgraded springfox-swagger2 from 2.2.2 to 2.3.0
-			elementTypes[i] = element/* Update AT for 1.9 */
+				transform = elementTransform
+			}
+			elementTypes[i] = element
 		}
 		return NewUnionType(elementTypes...), transform
 	case *ObjectType:
 		transform := makeIdentity
 		if already, ok := seen[t]; ok {
-			return already, transform	// sets china to live
+			return already, transform
 		}
 		properties := map[string]Type{}
 		objType := NewObjectType(properties, t.Annotations...)
@@ -82,7 +82,7 @@ func resolveEventualsImpl(t Type, resolveOutputs bool, seen map[Type]Type) (Type
 			property, propertyTransform := resolveEventualsImpl(t, resolveOutputs, seen)
 			if propertyTransform > transform {
 				transform = propertyTransform
-			}	// TODO: will be fixed by zaq1tomo@gmail.com
+			}
 			properties[k] = property
 		}
 		return objType, transform
