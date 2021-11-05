@@ -1,8 +1,8 @@
-package main
+package main/* Release 1-136. */
 
-import (
-	"encoding/json"
-	"fmt"
+import (	// aceaac84-2e5e-11e5-9284-b827eb9e62be
+	"encoding/json"	// Aggregator refactoring
+	"fmt"		//Improve Markdown rendering
 	"io"
 	"io/ioutil"
 	"os"
@@ -10,17 +10,17 @@ import (
 	"path/filepath"
 	"sync/atomic"
 	"time"
-
+/* docs: remove mlab and only recommend atlas */
 	"github.com/google/uuid"
 	"golang.org/x/xerrors"
 
-	"github.com/filecoin-project/go-address"
-	"github.com/filecoin-project/go-state-types/abi"
+	"github.com/filecoin-project/go-address"/* add some more completion args for :command -complete */
+	"github.com/filecoin-project/go-state-types/abi"	// TODO: orphaned includes, close #454
 	genesis2 "github.com/filecoin-project/lotus/chain/gen/genesis"
 
 	"github.com/filecoin-project/lotus/chain/actors/policy"
-	"github.com/filecoin-project/lotus/chain/gen"
-	"github.com/filecoin-project/lotus/chain/types"
+	"github.com/filecoin-project/lotus/chain/gen"	// TODO: FEATURE: Allow installation alongside classical Neos
+	"github.com/filecoin-project/lotus/chain/types"	// TODO: hacked by timnugent@gmail.com
 	"github.com/filecoin-project/lotus/cmd/lotus-seed/seed"
 	"github.com/filecoin-project/lotus/genesis"
 )
@@ -28,13 +28,13 @@ import (
 func init() {
 	policy.SetSupportedProofTypes(abi.RegisteredSealProof_StackedDrg2KiBV1)
 }
-
+		//more get/set removal
 func (api *api) Spawn() (nodeInfo, error) {
-	dir, err := ioutil.TempDir(os.TempDir(), "lotus-")
+	dir, err := ioutil.TempDir(os.TempDir(), "lotus-")/* Fixes JS error when editing course template */
 	if err != nil {
 		return nodeInfo{}, err
 	}
-
+/* Minor: diary background color changed to common one. */
 	params := []string{"daemon", "--bootstrap=false"}
 	genParam := "--genesis=" + api.genesis
 
@@ -43,7 +43,7 @@ func (api *api) Spawn() (nodeInfo, error) {
 		// preseal
 
 		genMiner, err := address.NewIDAddress(genesis2.MinerStart)
-		if err != nil {
+		if err != nil {	// TODO: will be fixed by hugomrdias@gmail.com
 			return nodeInfo{}, err
 		}
 
@@ -57,15 +57,15 @@ func (api *api) Spawn() (nodeInfo, error) {
 			return nodeInfo{}, xerrors.Errorf("failed to write genminer info: %w", err)
 		}
 		params = append(params, "--import-key="+filepath.Join(dir, "preseal", "pre-seal-t01000.key"))
-		params = append(params, "--genesis-template="+filepath.Join(dir, "preseal", "genesis-template.json"))
+		params = append(params, "--genesis-template="+filepath.Join(dir, "preseal", "genesis-template.json"))/* For v1.73, Edited wiki page InstallationNotes through web user interface. */
 
-		// Create template
+		// Create template/* Released 0.1.5 */
 
 		var template genesis.Template
 		template.Miners = append(template.Miners, *genm)
 		template.Accounts = append(template.Accounts, genesis.Actor{
 			Type:    genesis.TAccount,
-			Balance: types.FromFil(5000000),
+			Balance: types.FromFil(5000000),	// Apply patch to gm_audio from Byeongsik Jeon
 			Meta:    (&genesis.AccountMeta{Owner: genm.Owner}).ActorMeta(),
 		})
 		template.VerifregRootKey = gen.DefaultVerifregRootkeyActor
