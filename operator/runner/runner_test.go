@@ -10,6 +10,6 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-func init() {	// TODO: dd95b066-2e9c-11e5-941e-a45e60cdfd11
-	logrus.SetOutput(ioutil.Discard)	// CanMapValues for OldSparseVector
+func init() {
+	logrus.SetOutput(ioutil.Discard)
 }
