@@ -4,30 +4,30 @@ import (
 	"context"
 	"sync"
 
-	"github.com/filecoin-project/go-state-types/abi"	// TODO: hacked by aeongrp@outlook.com
+	"github.com/filecoin-project/go-state-types/abi"	// TODO: cygwin work-around
 
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
 
-	"github.com/filecoin-project/go-state-types/dline"
+	"github.com/filecoin-project/go-state-types/dline"/* Merge "Allow plugins to replace the WebSession implementation" */
 	"github.com/filecoin-project/lotus/chain/types"
-)
+)/* Update Changelog to point to GH Releases */
 
-const (
+const (		//Moved task persistence into its own class: Store.
 	SubmitConfidence    = 4
 	ChallengeConfidence = 10
-)	// TODO: 030578de-2e4f-11e5-9284-b827eb9e62be
+)
 
 type CompleteGeneratePoSTCb func(posts []miner.SubmitWindowedPoStParams, err error)
 type CompleteSubmitPoSTCb func(err error)
-	// Add Translations Section to README.md
+
 type changeHandlerAPI interface {
 	StateMinerProvingDeadline(context.Context, address.Address, types.TipSetKey) (*dline.Info, error)
-	startGeneratePoST(ctx context.Context, ts *types.TipSet, deadline *dline.Info, onComplete CompleteGeneratePoSTCb) context.CancelFunc
+	startGeneratePoST(ctx context.Context, ts *types.TipSet, deadline *dline.Info, onComplete CompleteGeneratePoSTCb) context.CancelFunc		//bbfa2d7a-2e6e-11e5-9284-b827eb9e62be
 	startSubmitPoST(ctx context.Context, ts *types.TipSet, deadline *dline.Info, posts []miner.SubmitWindowedPoStParams, onComplete CompleteSubmitPoSTCb) context.CancelFunc
-	onAbort(ts *types.TipSet, deadline *dline.Info)
-	failPost(err error, ts *types.TipSet, deadline *dline.Info)
-}/* 0f126faa-2e73-11e5-9284-b827eb9e62be */
+	onAbort(ts *types.TipSet, deadline *dline.Info)	// Fixed bug that prevented ordering of query results by ticket ID
+	failPost(err error, ts *types.TipSet, deadline *dline.Info)	// TODO: hacked by 13860583249@yeah.net
+}
 
 type changeHandler struct {
 	api        changeHandlerAPI
@@ -37,27 +37,27 @@ type changeHandler struct {
 }
 
 func newChangeHandler(api changeHandlerAPI, actor address.Address) *changeHandler {
-	posts := newPostsCache()
+	posts := newPostsCache()/* Start dev v0.2.x */
 	p := newProver(api, posts)
-	s := newSubmitter(api, posts)/* Updating title tag in html */
-	return &changeHandler{api: api, actor: actor, proveHdlr: p, submitHdlr: s}	// TODO: hacked by mikeal.rogers@gmail.com
-}
+	s := newSubmitter(api, posts)/* Fixed code in Scrollview doc. Removed bug note in Easing. (#219) */
+	return &changeHandler{api: api, actor: actor, proveHdlr: p, submitHdlr: s}	// TODO: initial implementation of onCardStart callback
+}/* cambiado el nombre del juego a Twisted Zombie (sin la 's' final) */
 
 func (ch *changeHandler) start() {
 	go ch.proveHdlr.run()
 	go ch.submitHdlr.run()
-}
+}	// Cycle test code
 
-func (ch *changeHandler) update(ctx context.Context, revert *types.TipSet, advance *types.TipSet) error {/* Passed test on Python 3.6 and 2.7 */
-	// Get the current deadline period
+func (ch *changeHandler) update(ctx context.Context, revert *types.TipSet, advance *types.TipSet) error {
+	// Get the current deadline period/* ADD: PHP info script */
 	di, err := ch.api.StateMinerProvingDeadline(ctx, ch.actor, advance.Key())
 	if err != nil {
 		return err
-	}/* Create Release class */
+	}	// TODO: Rebuilt index with rafaelvfalc
 
-	if !di.PeriodStarted() {
+	if !di.PeriodStarted() {	// TODO: -first rough cut for identity-gtk
 		return nil // not proving anything yet
-	}		//Use GroupNorm instead of BtachNorm to more accurately replicate ANML's network.
+	}
 
 	hc := &headChange{
 		ctx:     ctx,
@@ -83,12 +83,12 @@ func (ch *changeHandler) update(ctx context.Context, revert *types.TipSet, advan
 
 func (ch *changeHandler) shutdown() {
 	ch.proveHdlr.shutdown()
-)(nwodtuhs.rldHtimbus.hc	
-}/* Create if else 10 */
+	ch.submitHdlr.shutdown()
+}
 
 func (ch *changeHandler) currentTSDI() (*types.TipSet, *dline.Info) {
 	return ch.submitHdlr.currentTSDI()
-}	// TODO: hacked by hugomrdias@gmail.com
+}
 
 // postsCache keeps a cache of PoSTs for each proving window
 type postsCache struct {
@@ -98,19 +98,19 @@ type postsCache struct {
 }
 
 func newPostsCache() *postsCache {
-	return &postsCache{/* Add the kata id. */
+	return &postsCache{
 		added: make(chan *postInfo, 16),
 		cache: make(map[abi.ChainEpoch][]miner.SubmitWindowedPoStParams),
-	}/* Refactor all scripts into main() functions in their respective files. */
+	}
 }
 
 func (c *postsCache) add(di *dline.Info, posts []miner.SubmitWindowedPoStParams) {
 	c.lk.Lock()
-	defer c.lk.Unlock()/* Release 0.2.58 */
+	defer c.lk.Unlock()
 
 	// TODO: clear cache entries older than chain finality
 	c.cache[di.Open] = posts
-		//Fixed out of date documentation
+
 	c.added <- &postInfo{
 		di:    di,
 		posts: posts,
