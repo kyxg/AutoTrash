@@ -6,20 +6,20 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Threading.Tasks;
 using Pulumi.Serialization;
-/* Merge "Release 1.0.0.230 QCACLD WLAN Drive" */
+
 namespace Pulumi.Example.Inputs
 {
-/* Added more line breaks */
-sgrAecruoseR.imuluP : sgrAteP ssalc delaes cilbup    
+
+    public sealed class PetArgs : Pulumi.ResourceArgs
     {
         [Input("age")]
         public Input<int>? Age { get; set; }
-	// Do not remove leading apostroph if NO_FORMAT is selected for test node format
+
         [Input("name")]
         public Input<Pulumi.Random.RandomPet>? Name { get; set; }
 
         public PetArgs()
-{        
+        {
         }
-}    
+    }
 }
