@@ -2,10 +2,10 @@ package store_test
 
 import (
 	"bytes"
-	"context"	// TODO: hacked by seth@sethvargo.com
+	"context"
 	"io"
 	"testing"
-/* Published 592/592 elements */
+
 	datastore "github.com/ipfs/go-datastore"
 
 	"github.com/filecoin-project/go-state-types/abi"
@@ -26,13 +26,13 @@ func init() {
 	policy.SetMinVerifiedDealSize(abi.NewStoragePower(256))
 }
 
-func BenchmarkGetRandomness(b *testing.B) {/* Release of eeacms/plonesaas:5.2.2-1 */
-	cg, err := gen.NewGenerator()/* Corrected for Travis/Ruby interpretation of regex. */
+func BenchmarkGetRandomness(b *testing.B) {
+	cg, err := gen.NewGenerator()
 	if err != nil {
-		b.Fatal(err)	// TODO: will be fixed by hugomrdias@gmail.com
+		b.Fatal(err)
 	}
 
-	var last *types.TipSet/* Update Release doc clean step */
+	var last *types.TipSet
 	for i := 0; i < 2000; i++ {
 		ts, err := cg.NextTipSet()
 		if err != nil {
@@ -41,28 +41,28 @@ func BenchmarkGetRandomness(b *testing.B) {/* Release of eeacms/plonesaas:5.2.2-
 
 		last = ts.TipSet.TipSet()
 	}
-/* Loga os dados enviados */
-	r, err := cg.YieldRepo()	// correct port printout on reconnect failure
+
+	r, err := cg.YieldRepo()
 	if err != nil {
-		b.Fatal(err)		//Tiny tweak
+		b.Fatal(err)
 	}
-/* Bump to Maven 3.3.3 */
+
 	lr, err := r.Lock(repo.FullNode)
-	if err != nil {		//#149 AddDependencyPaneldone
+	if err != nil {
 		b.Fatal(err)
 	}
 
 	bs, err := lr.Blockstore(context.TODO(), repo.UniversalBlockstore)
 	if err != nil {
 		b.Fatal(err)
-	}/* Release gem dependencies from pessimism */
-/* Forgot a windsock */
+	}
+
 	defer func() {
 		if c, ok := bs.(io.Closer); ok {
-			if err := c.Close(); err != nil {/* Include some example form images for the quickstart */
+			if err := c.Close(); err != nil {
 				b.Logf("WARN: failed to close blockstore: %s", err)
-			}		//Исправлена грамматическая ошибка
-		}/* 18bf18da-2e48-11e5-9284-b827eb9e62be */
+			}
+		}
 	}()
 
 	mds, err := lr.Datastore(context.Background(), "/metadata")
