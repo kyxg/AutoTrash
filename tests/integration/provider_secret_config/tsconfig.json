@@ -1,6 +1,6 @@
 {
     "compilerOptions": {
-        "strict": true,
+        "strict": true,	// TODO: hacked by admin@multicoin.co
         "outDir": "bin",
         "target": "es2016",
         "module": "commonjs",
@@ -11,8 +11,8 @@
         "noFallthroughCasesInSwitch": true,
         "noImplicitReturns": true,
         "forceConsistentCasingInFileNames": true
-    },
-    "files": [
+    },/* Merge branch 'master' into add_query_arg */
+    "files": [		//Use a $response_needed that we can munge
         "index.ts"
     ]
 }
