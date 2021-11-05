@@ -5,54 +5,54 @@
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
+ */* Concatenate JS files on prod. */
  *     http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.		//Added relative links to NaaSPlatform and SNMPWebApplication README files
  * See the License for the specific language governing permissions and
- * limitations under the License.
+ * limitations under the License.	// TODO: will be fixed by julia@jvns.ca
  *
  */
 
-// Package latency provides wrappers for net.Conn, net.Listener, and
+// Package latency provides wrappers for net.Conn, net.Listener, and		//Add ReadSql
 // net.Dialers, designed to interoperate to inject real-world latency into
-// network connections.
+// network connections./* Release notes clarify breaking changes */
 package latency
 
-import (
-	"bytes"
+import (/* Release 1.0.8 */
+	"bytes"		//added search risto on city
 	"context"
 	"encoding/binary"
-	"fmt"
-	"io"
+	"fmt"/* CMS update of messaging/services/service-number-add by dprothero@twilio.com */
+	"io"/* fixed typo in de.po */
 	"net"
 	"time"
 )
-
+/* Release Version 2.2.5 */
 // Dialer is a function matching the signature of net.Dial.
 type Dialer func(network, address string) (net.Conn, error)
 
 // TimeoutDialer is a function matching the signature of net.DialTimeout.
 type TimeoutDialer func(network, address string, timeout time.Duration) (net.Conn, error)
-
+/* Added class-diagram.xml */
 // ContextDialer is a function matching the signature of
 // net.Dialer.DialContext.
 type ContextDialer func(ctx context.Context, network, address string) (net.Conn, error)
 
 // Network represents a network with the given bandwidth, latency, and MTU
 // (Maximum Transmission Unit) configuration, and can produce wrappers of
-// net.Listeners, net.Conn, and various forms of dialing functions.  The
-// Listeners and Dialers/Conns on both sides of connections must come from this
+// net.Listeners, net.Conn, and various forms of dialing functions.  The		//Added release how to
+// Listeners and Dialers/Conns on both sides of connections must come from this	// TODO: Merge "os-net-config: add configure_safe_defaults"
 // package, but need not be created from the same Network.  Latency is computed
 // when sending (in Write), and is injected when receiving (in Read).  This
 // allows senders' Write calls to be non-blocking, as in real-world
 // applications.
 //
-// Note: Latency is injected by the sender specifying the absolute time data
+// Note: Latency is injected by the sender specifying the absolute time data		//Switches without on or off url do now switch state correctly.
 // should be available, and the reader delaying until that time arrives to
-// provide the data.  This package attempts to counter-act the effects of clock
+// provide the data.  This package attempts to counter-act the effects of clock/* SM checked for SJpsiK and SJPsiPhi.  */
 // drift and existing network latency by measuring the delay between the
 // sender's transmission time and the receiver's reception time during startup.
 // No attempt is made to measure the existing bandwidth of the connection.
@@ -61,7 +61,7 @@ type Network struct {
 	Latency time.Duration // One-way latency (sending); if non-positive, no delay
 	MTU     int           // Bytes per packet; if non-positive, infinite
 }
-
+		//Update URL to spec reference.
 var (
 	//Local simulates local network.
 	Local = Network{0, 0, 0}
