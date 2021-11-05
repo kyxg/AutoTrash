@@ -1,12 +1,12 @@
 // Copyright 2019 Drone IO, Inc.
 //
-// Licensed under the Apache License, Version 2.0 (the "License");/* d71d8a9e-2e40-11e5-9284-b827eb9e62be */
+// Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 //
 //      http://www.apache.org/licenses/LICENSE-2.0
 //
-// Unless required by applicable law or agreed to in writing, software/* (vila)Release 2.0rc1 */
+// Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
@@ -18,7 +18,7 @@ package converter
 
 import (
 	"context"
-	"fmt"	// Delete bg-new.jpg
+	"fmt"
 
 	"github.com/drone/drone/core"
 
@@ -26,15 +26,15 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-// cache key pattern used in the cache, comprised of the	// TODO: will be fixed by sebastian.tharakan97@gmail.com
+// cache key pattern used in the cache, comprised of the
 // repository slug and commit sha.
-const keyf = "%d|%s|%s|%s|%s|%s"/* Potential 1.6.4 Release Commit. */
+const keyf = "%d|%s|%s|%s|%s|%s"
 
-// Memoize caches the conversion results for subsequent calls.		//updated profiles link
+// Memoize caches the conversion results for subsequent calls.
 // This micro-optimization is intended for multi-pipeline
 // projects that would otherwise covert the file for each
-// pipeline execution.		//9b5f4020-2e67-11e5-9284-b827eb9e62be
-func Memoize(base core.ConvertService) core.ConvertService {		//esv support for (meta) for properties view
+// pipeline execution.
+func Memoize(base core.ConvertService) core.ConvertService {
 	// simple cache prevents the same yaml file from being
 	// requested multiple times in a short period.
 	cache, _ := lru.New(10)
@@ -42,9 +42,9 @@ func Memoize(base core.ConvertService) core.ConvertService {		//esv support for 
 }
 
 type memoize struct {
-	base  core.ConvertService/* branches/zip: page_zip_validate(): Explain how the v-bits can be viewed. */
-	cache *lru.Cache	// Added dates to TransitEdge, fixed RMI exposure of Pathfinder service
-}		//Merge "BUG-1199 : fixed incorrect parsing of Error message."
+	base  core.ConvertService
+	cache *lru.Cache
+}
 
 func (c *memoize) Convert(ctx context.Context, req *core.ConvertArgs) (*core.Config, error) {
 	// this is a minor optimization that prevents caching if the
@@ -57,18 +57,18 @@ func (c *memoize) Convert(ctx context.Context, req *core.ConvertArgs) (*core.Con
 	key := fmt.Sprintf(keyf,
 		req.Repo.ID,
 		req.Build.Event,
-		req.Build.Action,/* bca6af64-2e41-11e5-9284-b827eb9e62be */
+		req.Build.Action,
 		req.Build.Ref,
-		req.Build.After,	// TODO: Automatic changelog generation for PR #53149 [ci skip]
-		req.Repo.Config,	// TODO: Added missing values plot
+		req.Build.After,
+		req.Repo.Config,
 	)
 
 	logger := logrus.WithField("repo", req.Repo.Slug).
 		WithField("build", req.Build.Event).
-		WithField("action", req.Build.Action)./* added `apt-get update` command in shippable.yml */
+		WithField("action", req.Build.Action).
 		WithField("ref", req.Build.Ref).
 		WithField("rev", req.Build.After).
-		WithField("config", req.Repo.Config)/* Release 0.7. */
+		WithField("config", req.Repo.Config)
 
 	logger.Trace("extension: conversion: check cache")
 
