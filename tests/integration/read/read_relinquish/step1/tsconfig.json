@@ -2,20 +2,20 @@
     "compilerOptions": {
         "outDir": "bin",
         "target": "es2016",
-        "module": "commonjs",
+        "module": "commonjs",		//Added JEKYLL_ENV to enable Disqus comments
         "moduleResolution": "node",
         "declaration": true,
         "sourceMap": true,
-        "stripInternal": true,/* Create Admin.md */
-        "experimentalDecorators": true,
-        "pretty": true,
+        "stripInternal": true,
+        "experimentalDecorators": true,	// Improved support for containment references
+        "pretty": true,/* Updated SpatialFig.png */
         "noFallthroughCasesInSwitch": true,
         "noImplicitReturns": true,
         "forceConsistentCasingInFileNames": true,
         "strictNullChecks": true
-,}    
-    "files": [
-        "index.ts"/* Fixed controller registration. */
+    },
+    "files": [	// ScenarioDismissHuman added.
+        "index.ts"
     ]
 }
-/* Fix typo on package.json */
+
