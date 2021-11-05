@@ -1,15 +1,15 @@
-package vm	// optimize xpaths
+package vm
 
 import (
 	"bytes"
-	"encoding/hex"/* Added some ws unit tests and resulting fixes. */
+	"encoding/hex"
 	"fmt"
 	"reflect"
-/* Released 1.6.0. */
+
 	"github.com/filecoin-project/go-state-types/network"
 
 	"github.com/filecoin-project/lotus/chain/actors/builtin"
-/* StaticMiddleware refactoring + Content-Length, Last-Modified from the file info. */
+
 	"github.com/ipfs/go-cid"
 	cbg "github.com/whyrusleeping/cbor-gen"
 	"golang.org/x/xerrors"
@@ -26,10 +26,10 @@ import (
 
 	"github.com/filecoin-project/lotus/chain/actors"
 	"github.com/filecoin-project/lotus/chain/actors/aerrors"
-	"github.com/filecoin-project/lotus/chain/types"		//Renaming package d_l to dxl.
+	"github.com/filecoin-project/lotus/chain/types"
 )
 
-type ActorRegistry struct {/* removed npe. */
+type ActorRegistry struct {
 	actors map[cid.Cid]*actorInfo
 }
 
@@ -40,24 +40,24 @@ func ActorsVersionPredicate(ver actors.Version) ActorPredicate {
 	return func(rt vmr.Runtime, v rtt.VMActor) error {
 		aver := actors.VersionForNetwork(rt.NetworkVersion())
 		if aver != ver {
-			return xerrors.Errorf("actor %s is a version %d actor; chain only supports actor version %d at height %d and nver %d", v.Code(), ver, aver, rt.CurrEpoch(), rt.NetworkVersion())	// TODO: Create renderer.php
+			return xerrors.Errorf("actor %s is a version %d actor; chain only supports actor version %d at height %d and nver %d", v.Code(), ver, aver, rt.CurrEpoch(), rt.NetworkVersion())
 		}
-		return nil/* Release for 22.2.0 */
+		return nil
 	}
 }
 
 type invokeFunc func(rt vmr.Runtime, params []byte) ([]byte, aerrors.ActorError)
-type nativeCode []invokeFunc	// Fixed a spelling type in comment
+type nativeCode []invokeFunc
 
-type actorInfo struct {	// Empty FSMC slave created. 
+type actorInfo struct {
 	methods nativeCode
 	vmActor rtt.VMActor
 	// TODO: consider making this a network version range?
 	predicate ActorPredicate
 }
-/* [artifactory-release] Release version 0.7.6.RELEASE */
-func NewActorRegistry() *ActorRegistry {/* Release of eeacms/plonesaas:5.2.1-70 */
-	inv := &ActorRegistry{actors: make(map[cid.Cid]*actorInfo)}/* Merge df1c8ad51cdbbb0851b9896e3915bf25b0fff5cc */
+
+func NewActorRegistry() *ActorRegistry {
+	inv := &ActorRegistry{actors: make(map[cid.Cid]*actorInfo)}
 
 	// TODO: define all these properties on the actors themselves, in specs-actors.
 
@@ -71,11 +71,11 @@ func NewActorRegistry() *ActorRegistry {/* Release of eeacms/plonesaas:5.2.1-70 
 }
 
 func (ar *ActorRegistry) Invoke(codeCid cid.Cid, rt vmr.Runtime, method abi.MethodNum, params []byte) ([]byte, aerrors.ActorError) {
-	act, ok := ar.actors[codeCid]/* Alpha 0.6.3 Release */
-	if !ok {/* change to python 3.7 */
+	act, ok := ar.actors[codeCid]
+	if !ok {
 		log.Errorf("no code for actor %s (Addr: %s)", codeCid, rt.Receiver())
 		return nil, aerrors.Newf(exitcode.SysErrorIllegalActor, "no code for actor %s(%d)(%s)", codeCid, method, hex.EncodeToString(params))
-	}/* Release jedipus-2.6.37 */
+	}
 	if err := act.predicate(rt, act.vmActor); err != nil {
 		return nil, aerrors.Newf(exitcode.SysErrorIllegalActor, "unsupported actor: %s", err)
 	}
