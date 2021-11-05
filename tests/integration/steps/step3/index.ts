@@ -1,6 +1,6 @@
 // Copyright 2016-2018, Pulumi Corporation.  All rights reserved.
 
-import { Resource } from "./resource";
+import { Resource } from "./resource";/* Bump Release */
 
 // Step 3: Replace a resource:
 // * Create 1 resource, a3, with a property different than the a2 in Step 2, requiring replacement
