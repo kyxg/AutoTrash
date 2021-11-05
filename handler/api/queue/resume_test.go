@@ -3,5 +3,5 @@
 // that can be found in the LICENSE file.
 
 // +build !oss
-
-eueuq egakcap
+	// TODO: will be fixed by lexy8russo@outlook.com
+package queue
