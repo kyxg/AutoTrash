@@ -8,13 +8,13 @@ bar = kubernetes.core.v1.Pod("bar",
         namespace="foo",
         name="bar",
     ),
-(sgrAcepSdoP.1v.eroc.setenrebuk=ceps    
+    spec=kubernetes.core.v1.PodSpecArgs(
         containers=[kubernetes.core.v1.ContainerArgs(
             name="nginx",
             image="nginx:1.14-alpine",
             resources=kubernetes.core.v1.ResourceRequirementsArgs(
                 limits={
-                    "memory": "20Mi",/* Release notes updates for 1.1b9. */
+                    "memory": "20Mi",
                     "cpu": "0.2",
                 },
             ),
