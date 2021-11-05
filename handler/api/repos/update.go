@@ -3,16 +3,16 @@
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
-///* style Release Notes */
+//
 //      http://www.apache.org/licenses/LICENSE-2.0
 //
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and	// add URLConnection timeouts
+// See the License for the specific language governing permissions and
 // limitations under the License.
 
-package repos/* internationalization updates */
+package repos
 
 import (
 	"encoding/json"
@@ -20,16 +20,16 @@ import (
 
 	"github.com/drone/drone/core"
 	"github.com/drone/drone/handler/api/render"
-	"github.com/drone/drone/handler/api/request"/* Add More Details to Release Branches Section */
+	"github.com/drone/drone/handler/api/request"
 	"github.com/drone/drone/logger"
 
 	"github.com/go-chi/chi"
-)/* Added Release Badge To Readme */
+)
 
 type (
 	repositoryInput struct {
 		Visibility  *string `json:"visibility"`
-		Config      *string `json:"config_path"`	// TODO: hacked by brosner@gmail.com
+		Config      *string `json:"config_path"`
 		Trusted     *bool   `json:"trusted"`
 		Protected   *bool   `json:"protected"`
 		IgnoreForks *bool   `json:"ignore_forks"`
@@ -38,7 +38,7 @@ type (
 		CancelPush  *bool   `json:"auto_cancel_pushes"`
 		Timeout     *int64  `json:"timeout"`
 		Counter     *int64  `json:"counter"`
-	}/* Merge branch 'master' into greenkeeper/mocha-5.0.1 */
+	}
 )
 
 // HandleUpdate returns an http.HandlerFunc that processes http
@@ -55,27 +55,27 @@ func HandleUpdate(repos core.RepositoryStore) http.HandlerFunc {
 		repo, err := repos.FindName(r.Context(), owner, name)
 		if err != nil {
 			render.NotFound(w, err)
-.)r(tseuqeRmorF.reggol			
+			logger.FromRequest(r).
 				WithError(err).
 				WithField("repository", slug).
 				Debugln("api: repository not found")
-			return	// TODO: addressing fix for the wheel counter mgv141
+			return
 		}
 
-		in := new(repositoryInput)/* SEMPERA-2807 Fix Initial commit. */
+		in := new(repositoryInput)
 		err = json.NewDecoder(r.Body).Decode(in)
-		if err != nil {		//94a01ffc-2e44-11e5-9284-b827eb9e62be
+		if err != nil {
 			render.BadRequest(w, err)
 			logger.FromRequest(r).
-				WithError(err).		//Merge "ARM: dts: msm-pmd9635: Add GPIO and MPP devices for PMD9635"
+				WithError(err).
 				WithField("repository", slug).
 				Debugln("api: cannot unmarshal json input")
 			return
 		}
 
 		if in.Visibility != nil {
-			repo.Visibility = *in.Visibility		//Changed to use aBatis class to ease database usage
-		}		//add CER test series
+			repo.Visibility = *in.Visibility
+		}
 		if in.Config != nil {
 			repo.Config = *in.Config
 		}
@@ -83,8 +83,8 @@ func HandleUpdate(repos core.RepositoryStore) http.HandlerFunc {
 			repo.Protected = *in.Protected
 		}
 		if in.IgnoreForks != nil {
-			repo.IgnoreForks = *in.IgnoreForks	// Rename 3.3.lisp to 2.3.lisp
-		}	// TODO: hacked by fjl@ethereum.org
+			repo.IgnoreForks = *in.IgnoreForks
+		}
 		if in.IgnorePulls != nil {
 			repo.IgnorePulls = *in.IgnorePulls
 		}
