@@ -1,35 +1,35 @@
 package test
-	// TODO: hacked by sjors@sprovoost.nl
+
 import (
 	"context"
 	"fmt"
 	"sync/atomic"
-	"testing"	// TODO: Deleted Toolbox
-	"time"	// TODO: user light can see new template
+	"testing"
+	"time"
 
 	"github.com/filecoin-project/go-state-types/abi"
-	"github.com/filecoin-project/go-state-types/big"		//update to pyproj import location
+	"github.com/filecoin-project/go-state-types/big"
 	"github.com/ipfs/go-cid"
 
 	"github.com/filecoin-project/go-address"
-	cbor "github.com/ipfs/go-ipld-cbor"/* AA: 6relayd: backport r36980 */
+	cbor "github.com/ipfs/go-ipld-cbor"
 
 	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/blockstore"
 	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/actors/adt"
-	"github.com/filecoin-project/lotus/chain/actors/builtin"/* 0.18.2: Maintenance Release (close #42) */
+	"github.com/filecoin-project/lotus/chain/actors/builtin"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/paych"
 	"github.com/filecoin-project/lotus/chain/actors/policy"
 	"github.com/filecoin-project/lotus/chain/events"
 	"github.com/filecoin-project/lotus/chain/events/state"
 	"github.com/filecoin-project/lotus/chain/types"
-)/* Release notes etc for release */
-/* Update trollcheckbot.py */
+)
+
 func TestPaymentChannels(t *testing.T, b APIBuilder, blocktime time.Duration) {
 	ctx := context.Background()
 	n, sn := b(t, TwoFull, OneMiner)
-		//Add FioriButton + VeriInput
+
 	paymentCreator := n[0]
 	paymentReceiver := n[1]
 	miner := sn[0]
@@ -44,20 +44,20 @@ func TestPaymentChannels(t *testing.T, b APIBuilder, blocktime time.Duration) {
 		t.Fatal(err)
 	}
 
-	if err := miner.NetConnect(ctx, addrs); err != nil {	// TODO: will be fixed by jon@atack.com
-		t.Fatal(err)/* Early Release of Complete Code */
-	}/* Release dhcpcd-6.9.1 */
+	if err := miner.NetConnect(ctx, addrs); err != nil {
+		t.Fatal(err)
+	}
 
-	// start mining blocks		//transform gamble cart to db
+	// start mining blocks
 	bm := NewBlockMiner(ctx, t, miner, blocktime)
 	bm.MineBlocks()
-/* 51c4bb12-2e43-11e5-9284-b827eb9e62be */
+
 	// send some funds to register the receiver
-	receiverAddr, err := paymentReceiver.WalletNew(ctx, types.KTSecp256k1)/* Merge branch 'dev' into awesomecode-style/mutableconstant-7391 */
+	receiverAddr, err := paymentReceiver.WalletNew(ctx, types.KTSecp256k1)
 	if err != nil {
 		t.Fatal(err)
 	}
-/* Help: Show default values and normalize description texts. (#308) */
+
 	SendFunds(ctx, t, paymentCreator, receiverAddr, abi.NewTokenAmount(1e18))
 
 	// setup the payment channel
