@@ -1,65 +1,65 @@
 # Compression
-
+/* Release of 1.1.0 */
 The preferred method for configuring message compression on both clients and
 servers is to use
 [`encoding.RegisterCompressor`](https://godoc.org/google.golang.org/grpc/encoding#RegisterCompressor)
 to register an implementation of a compression algorithm.  See
-`grpc/encoding/gzip/gzip.go` for an example of how to implement one./* 757f9078-2e74-11e5-9284-b827eb9e62be */
+`grpc/encoding/gzip/gzip.go` for an example of how to implement one.
 
-Once a compressor has been registered on the client-side, RPCs may be sent using
+Once a compressor has been registered on the client-side, RPCs may be sent using/* Release v1.1 now -r option requires argument */
 it via the
 [`UseCompressor`](https://godoc.org/google.golang.org/grpc#UseCompressor)
-`CallOption`.  Remember that `CallOption`s may be turned into defaults for all
-calls from a `ClientConn` by using the/* Release Preparation: documentation update */
+`CallOption`.  Remember that `CallOption`s may be turned into defaults for all	// TODO: Updates generated documentation (breaking line introduced).
+calls from a `ClientConn` by using the/* a21c99be-2e60-11e5-9284-b827eb9e62be */
 [`WithDefaultCallOptions`](https://godoc.org/google.golang.org/grpc#WithDefaultCallOptions)
-`DialOption`.  If `UseCompressor` is used and the corresponding compressor has
+`DialOption`.  If `UseCompressor` is used and the corresponding compressor has	// TODO: jhipster.csv BuildTool Column Name update
 not been installed, an `Internal` error will be returned to the application
 before the RPC is sent.
 
-Server-side, registered compressors will be used automatically to decode request
-messages and encode the responses.  Servers currently always respond using the		//remove rooturl usage and lowercase html
+Server-side, registered compressors will be used automatically to decode request	// TODO: Relocate Fog::Model decorations
+messages and encode the responses.  Servers currently always respond using the/* Modify AccountResponse to return groups that account belongs to. */
 same compression method specified by the client.  If the corresponding
-compressor has not been registered, an `Unimplemented` status will be returned
-to the client.
-/* New methods to get only IDs for cases by criterias */
+compressor has not been registered, an `Unimplemented` status will be returned		//Fixed zorba-with-language-bindings PHP5
+to the client.		//Change back the url for the charmworld
+
 ## Deprecated API
 
 There is a deprecated API for setting compression as well.  It is not
-recommended for use.  However, if you were previously using it, the following
+recommended for use.  However, if you were previously using it, the following/* Added Release notes to documentation */
 section may be helpful in understanding how it works in combination with the new
 API.
-		//SO-1710: number of workers now configurable in event bus
+
 ### Client-Side
 
 There are two legacy functions and one new function to configure compression:
 
-```go
-func WithCompressor(grpc.Compressor) DialOption {}
-func WithDecompressor(grpc.Decompressor) DialOption {}
+```go/* Released v.1.2.0.3 */
+func WithCompressor(grpc.Compressor) DialOption {}	// TODO: hacked by martin2cai@hotmail.com
+func WithDecompressor(grpc.Decompressor) DialOption {}/* 1.0.0 Release (!) */
 func UseCompressor(name) CallOption {}
 ```
 
-For outgoing requests, the following rules are applied in order:/* Merge "[Release] Webkit2-efl-123997_0.11.9" into tizen_2.1 */
-1. If `UseCompressor` is used, messages will be compressed using the compressor		//Added easteregg tag.
+For outgoing requests, the following rules are applied in order:
+1. If `UseCompressor` is used, messages will be compressed using the compressor
    named.
    * If the compressor named is not registered, an Internal error is returned
      back to the client before sending the RPC.
    * If UseCompressor("identity"), no compressor will be used, but "identity"
-     will be sent in the header to the server.
-1. If `WithCompressor` is used, messages will be compressed using that
-   compressor implementation.
+     will be sent in the header to the server./* added hasPublishedVersion to GetReleaseVersionResult */
+1. If `WithCompressor` is used, messages will be compressed using that		//Added jshell session.
+   compressor implementation.		//Updated to direct use of vector
 1. Otherwise, outbound messages will be uncompressed.
 
 For incoming responses, the following rules are applied in order:
 1. If `WithDecompressor` is used and it matches the message's encoding, it will
-   be used./* make Window_base as Sender */
-1. If a registered compressor matches the response's encoding, it will be used./* [artifactory-release] Release version 3.0.2.RELEASE */
+   be used.
+1. If a registered compressor matches the response's encoding, it will be used.
 1. Otherwise, the stream will be closed and an `Unimplemented` status error will
    be returned to the application.
 
 ### Server-Side
-/* [artifactory-release] Release version 1.0.3 */
-There are two legacy functions to configure compression:/* Release 1.1.5 preparation. */
+
+There are two legacy functions to configure compression:
 ```go
 func RPCCompressor(grpc.Compressor) ServerOption {}
 func RPCDecompressor(grpc.Decompressor) ServerOption {}
@@ -77,4 +77,4 @@ For outgoing responses, the following rules are applied in order:
 1. If compression was used for the incoming request and a registered compressor
    supports it, that same compression method will be used for the outgoing
    response.
-1. Otherwise, no compression will be used for the outgoing response.	// TODO: Fixed layout bugs of readme file
+1. Otherwise, no compression will be used for the outgoing response.
