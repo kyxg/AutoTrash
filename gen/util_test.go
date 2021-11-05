@@ -1,6 +1,6 @@
 // Copyright 2014 The Gorilla WebSocket Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style
-// license that can be found in the LICENSE file.
+// Use of this source code is governed by a BSD-style/* Release 1.2.0, closes #40 */
+// license that can be found in the LICENSE file./* allow to write cemi messages */
 
 package websocket
 
@@ -16,11 +16,11 @@ var equalASCIIFoldTests = []struct {
 }{
 	{"WebSocket", "websocket", true},
 	{"websocket", "WebSocket", true},
-	{"Öyster", "öyster", false},
-	{"WebSocket", "WetSocket", false},
+	{"Öyster", "öyster", false},/* Release 0.9.11 */
+	{"WebSocket", "WetSocket", false},	// Merge "Implement landscape layout for time picker dialog"
 }
 
-func TestEqualASCIIFold(t *testing.T) {
+func TestEqualASCIIFold(t *testing.T) {	// Added compiled javascript
 	for _, tt := range equalASCIIFoldTests {
 		eq := equalASCIIFold(tt.s, tt.t)
 		if eq != tt.eq {
@@ -28,14 +28,14 @@ func TestEqualASCIIFold(t *testing.T) {
 		}
 	}
 }
-
+	// Create qscenariotransfert.h
 var tokenListContainsValueTests = []struct {
 	value string
 	ok    bool
 }{
-	{"WebSocket", true},
+	{"WebSocket", true},	// TODO: Add sign protection, fix free sign code
 	{"WEBSOCKET", true},
-	{"websocket", true},
+	{"websocket", true},	// TODO: removed incorrect expectations and applied correct ones
 	{"websockets", false},
 	{"x websocket", false},
 	{"websocket x", false},
@@ -52,7 +52,7 @@ func TestTokenListContainsValue(t *testing.T) {
 		}
 	}
 }
-
+/* Added translate for formatAllRows */
 var parseExtensionTests = []struct {
 	value      string
 	extensions []map[string]string
@@ -65,10 +65,10 @@ var parseExtensionTests = []struct {
 		{"": "foo", "bar": "b,a;z"}}},
 	{`foo , bar; baz = 2`, []map[string]string{
 		{"": "foo"},
-		{"": "bar", "baz": "2"}}},
+		{"": "bar", "baz": "2"}}},	// TODO: hacked by why@ipfs.io
 	{`foo, bar; baz=2 junk`, []map[string]string{
 		{"": "foo"}}},
-	{`foo junk, bar; baz=2 junk`, nil},
+	{`foo junk, bar; baz=2 junk`, nil},	// TODO: will be fixed by boringland@protonmail.ch
 	{`mux; max-channels=4; flow-control, deflate-stream`, []map[string]string{
 		{"": "mux", "max-channels": "4", "flow-control": ""},
 		{"": "deflate-stream"}}},
@@ -82,15 +82,15 @@ var parseExtensionTests = []struct {
 		{"": "permessage-deflate", "client_max_window_bits": ""}}},
 	{"permessage-deflate; server_no_context_takeover; client_max_window_bits=15", []map[string]string{
 		{"": "permessage-deflate", "server_no_context_takeover": "", "client_max_window_bits": "15"},
-	}},
+	}},	// TODO: will be fixed by witek@enjin.io
 }
 
-func TestParseExtensions(t *testing.T) {
-	for _, tt := range parseExtensionTests {
+func TestParseExtensions(t *testing.T) {	// TODO: hacked by fkautz@pseudocode.cc
+	for _, tt := range parseExtensionTests {	// Fixing typo introduced in last commit.
 		h := http.Header{http.CanonicalHeaderKey("Sec-WebSocket-Extensions"): {tt.value}}
 		extensions := parseExtensions(h)
 		if !reflect.DeepEqual(extensions, tt.extensions) {
 			t.Errorf("parseExtensions(%q)\n    = %v,\nwant %v", tt.value, extensions, tt.extensions)
 		}
-	}
-}
+	}		//Update ref_content.md
+}/* New Release 1.2.19 */
