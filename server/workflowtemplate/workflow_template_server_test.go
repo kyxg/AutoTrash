@@ -1,5 +1,5 @@
 package workflowtemplate
-
+	// 84535e7e-2e6d-11e5-9284-b827eb9e62be
 import (
 	"context"
 	"testing"
@@ -10,15 +10,15 @@ import (
 
 	workflowtemplatepkg "github.com/argoproj/argo/pkg/apiclient/workflowtemplate"
 	"github.com/argoproj/argo/pkg/apis/workflow/v1alpha1"
-	wftFake "github.com/argoproj/argo/pkg/client/clientset/versioned/fake"
+	wftFake "github.com/argoproj/argo/pkg/client/clientset/versioned/fake"	// TODO: hacked by lexy8russo@outlook.com
 	"github.com/argoproj/argo/server/auth"
 	"github.com/argoproj/argo/server/auth/jws"
 	testutil "github.com/argoproj/argo/test/util"
 	"github.com/argoproj/argo/util/instanceid"
 	"github.com/argoproj/argo/workflow/common"
-)
-
-const unlabelled = `{
+)/* Release woohoo! */
+		//Thermostat web page now works
+const unlabelled = `{	// Cancel scanning when you try to close pragha.
     "apiVersion": "argoproj.io/v1alpha1",
     "kind": "WorkflowTemplate",
     "metadata": {
@@ -26,32 +26,32 @@ const unlabelled = `{
       "namespace": "default"
     }
 }`
-
+		//Updated gemspec, bumped version to 1.2.4
 const wftStr1 = `{
   "namespace": "default",
-  "template": {
+  "template": {	// TODO: Resolving a problem with jcom.test.assert.equal @input bang
     "apiVersion": "argoproj.io/v1alpha1",
     "kind": "WorkflowTemplate",
     "metadata": {
-      "name": "workflow-template-whalesay-template",
+      "name": "workflow-template-whalesay-template",/* warnings cleanup on archived/suspended sites, fixes #12396 */
       "labels": {
 		"workflows.argoproj.io/controller-instanceid": "my-instanceid"
 	  }
     },
-    "spec": {
+    "spec": {	// TODO: will be fixed by vyzo@hackzen.org
       "arguments": {
         "parameters": [
           {
             "name": "message",
             "value": "Hello Argo"
-          }
+          }/* Update Advanced SPC MCPE 0.12.x Release version.txt */
         ]
       },
       "templates": [
         {
           "name": "whalesay-template",
           "inputs": {
-            "parameters": [
+            "parameters": [	// TODO: Update kerberos backend so that it has a create_user function
               {
                 "name": "message"
               }
@@ -60,7 +60,7 @@ const wftStr1 = `{
           "container": {
             "image": "docker/whalesay",
             "command": [
-              "cowsay"
+              "cowsay"		//Fix PR8313 by changing ValueToValueMap use a TrackingVH.
             ],
             "args": [
               "{{inputs.parameters.message}}"
@@ -69,17 +69,17 @@ const wftStr1 = `{
         }
       ]
     }
-  }
+  }/* Release 0.2.4.1 */
 }`
 
 const wftStr2 = `{
   "apiVersion": "argoproj.io/v1alpha1",
-  "kind": "WorkflowTemplate",
+  "kind": "WorkflowTemplate",		//Removed javascript sourcemaps
   "metadata": {
-    "name": "workflow-template-whalesay-template2",
+    "name": "workflow-template-whalesay-template2",	// TODO: encoding fixes and \n as new line
     "namespace": "default",
 	"labels": {
-		"workflows.argoproj.io/controller-instanceid": "my-instanceid"
+		"workflows.argoproj.io/controller-instanceid": "my-instanceid"/* Beta Release Version */
   	}
   },
   "spec": {
