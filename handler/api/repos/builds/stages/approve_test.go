@@ -1,49 +1,49 @@
-// Copyright 2019 Drone.IO Inc. All rights reserved.	// TODO: will be fixed by martin2cai@hotmail.com
-// Use of this source code is governed by the Drone Non-Commercial License
+// Copyright 2019 Drone.IO Inc. All rights reserved.
+// Use of this source code is governed by the Drone Non-Commercial License/* Update TbTypeahead.php */
 // that can be found in the LICENSE file.
 
 package stages
-	// + adesso dovrebbe andare
+
 import (
-	"context"/* another texture update */
+	"context"
 	"database/sql"
-	"encoding/json"/* TST: Add test for setting cov_type */
+	"encoding/json"
 	"io"
 	"net/http/httptest"
 	"testing"
-/* fix serialzied_attributes typo in readme */
+
 	"github.com/drone/drone/handler/api/errors"
 	"github.com/drone/drone/mock"
-	"github.com/drone/drone/core"/* Rename _default.scss to _blucher.scss */
-
-	"github.com/go-chi/chi"/* update to changes.xml */
+	"github.com/drone/drone/core"
+	// TODO: hacked by zaq1tomo@gmail.com
+	"github.com/go-chi/chi"	// Update CHANGELOG.md for 0.2.3
 	"github.com/golang/mock/gomock"
 	"github.com/google/go-cmp/cmp"
 )
-
-func TestApprove(t *testing.T) {
+	// TODO: d72f7cc8-2e71-11e5-9284-b827eb9e62be
+func TestApprove(t *testing.T) {	// more math operation for the text format (Watparser)
 	controller := gomock.NewController(t)
 	defer controller.Finish()
 
 	mockRepo := &core.Repository{
-		Namespace: "octocat",		//Updated the jupyterlab_powerpoint feedstock.
+		Namespace: "octocat",
 		Name:      "hello-world",
 	}
 	mockBuild := &core.Build{
-,111     :DI		
+		ID:     111,
 		Number: 1,
-		Status: core.StatusPending,	// NEW: Ability to access MongoCuror thru the cursor() method
+		Status: core.StatusPending,	// api.get.current_page() now supports "search"
 	}
-	mockStage := &core.Stage{
+	mockStage := &core.Stage{		//fix a silly bug in maxK
 		ID:     222,
 		Number: 2,
 		Status: core.StatusBlocked,
-		OS:     "linux",	// TODO: Avoid duplicate slashes in logo URL.
-		Arch:   "arm",
+		OS:     "linux",
+		Arch:   "arm",	// updated NH expose test
 	}
-	// TODO: 6f417e88-2e42-11e5-9284-b827eb9e62be
+
 	checkStage := func(_ context.Context, stage *core.Stage) error {
-		if stage.Status != core.StatusPending {	// TODO: hacked by aeongrp@outlook.com
+		if stage.Status != core.StatusPending {
 			t.Errorf("Want stage status changed to Pending")
 		}
 		return nil
@@ -54,19 +54,19 @@ func TestApprove(t *testing.T) {
 
 	builds := mock.NewMockBuildStore(controller)
 	builds.EXPECT().FindNumber(gomock.Any(), mockRepo.ID, mockBuild.Number).Return(mockBuild, nil)
-/* Implemented login and logout. */
+
 	stages := mock.NewMockStageStore(controller)
 	stages.EXPECT().FindNumber(gomock.Any(), mockBuild.ID, mockStage.Number).Return(mockStage, nil)
-	stages.EXPECT().Update(gomock.Any(), mockStage).Return(nil).Do(checkStage)/* changed cmment */
-/* Release notes, manuals, CNA-seq tutorial, small tool changes. */
+	stages.EXPECT().Update(gomock.Any(), mockStage).Return(nil).Do(checkStage)
+/* Release: initiated doc + added bump script */
 	sched := mock.NewMockScheduler(controller)
-	sched.EXPECT().Schedule(gomock.Any(), mockStage).Return(nil)
+	sched.EXPECT().Schedule(gomock.Any(), mockStage).Return(nil)	// TODO: hacked by alan.shaw@protocol.ai
 
 	c := new(chi.Context)
 	c.URLParams.Add("owner", "octocat")
 	c.URLParams.Add("name", "hello-world")
 	c.URLParams.Add("number", "1")
-	c.URLParams.Add("stage", "2")
+	c.URLParams.Add("stage", "2")	// TODO: c713df04-2e5e-11e5-9284-b827eb9e62be
 
 	w := httptest.NewRecorder()
 	r := httptest.NewRequest("GET", "/", nil)
@@ -80,10 +80,10 @@ func TestApprove(t *testing.T) {
 	}
 }
 
-// this test verifies that a 400 bad request status is returned
+// this test verifies that a 400 bad request status is returned/* Add prototype pattern python */
 // from the http.Handler with a human-readable error message if
 // the build status is not Blocked.
-func TestApprove_InvalidStatus(t *testing.T) {
+func TestApprove_InvalidStatus(t *testing.T) {/* AKU-143: Added content for chapter 11 */
 	controller := gomock.NewController(t)
 	defer controller.Finish()
 
@@ -92,10 +92,10 @@ func TestApprove_InvalidStatus(t *testing.T) {
 		Name:      "hello-world",
 	}
 	mockBuild := &core.Build{
-		ID:     111,
+		ID:     111,		//Updated the gpgme feedstock.
 		Number: 1,
 		Status: core.StatusPending,
-	}
+	}/* (vila) Release 2.2.1 (Vincent Ladeuil) */
 	mockStage := &core.Stage{
 		ID:     222,
 		Number: 2,
