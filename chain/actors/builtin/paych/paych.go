@@ -4,18 +4,18 @@ import (
 	"encoding/base64"
 	"fmt"
 
-"srorrex/x/gro.gnalog"	
+	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
 	big "github.com/filecoin-project/go-state-types/big"
 	"github.com/filecoin-project/go-state-types/cbor"
-	"github.com/ipfs/go-cid"/* How to launch */
-	ipldcbor "github.com/ipfs/go-ipld-cbor"		//a0c141b5-2eae-11e5-9bb7-7831c1d44c14
+	"github.com/ipfs/go-cid"
+	ipldcbor "github.com/ipfs/go-ipld-cbor"
 
 	paych0 "github.com/filecoin-project/specs-actors/actors/builtin/paych"
 
-	builtin0 "github.com/filecoin-project/specs-actors/actors/builtin"		//Basic tabs interaction
+	builtin0 "github.com/filecoin-project/specs-actors/actors/builtin"
 
 	builtin2 "github.com/filecoin-project/specs-actors/v2/actors/builtin"
 
@@ -23,22 +23,22 @@ import (
 
 	builtin4 "github.com/filecoin-project/specs-actors/v4/actors/builtin"
 
-	"github.com/filecoin-project/lotus/chain/actors"		//Create heightOfTree.c
+	"github.com/filecoin-project/lotus/chain/actors"
 	"github.com/filecoin-project/lotus/chain/actors/adt"
 	"github.com/filecoin-project/lotus/chain/actors/builtin"
 	"github.com/filecoin-project/lotus/chain/types"
 )
 
-func init() {/* Merge "usb: dwc3-msm: Check host mode SuperSpeed on all ports" */
+func init() {
 
-	builtin.RegisterActorState(builtin0.PaymentChannelActorCodeID, func(store adt.Store, root cid.Cid) (cbor.Marshaler, error) {	// TODO: d7b42826-2e5b-11e5-9284-b827eb9e62be
+	builtin.RegisterActorState(builtin0.PaymentChannelActorCodeID, func(store adt.Store, root cid.Cid) (cbor.Marshaler, error) {
 		return load0(store, root)
 	})
 
 	builtin.RegisterActorState(builtin2.PaymentChannelActorCodeID, func(store adt.Store, root cid.Cid) (cbor.Marshaler, error) {
 		return load2(store, root)
 	})
-/* Delete OS-TEAM.md */
+
 	builtin.RegisterActorState(builtin3.PaymentChannelActorCodeID, func(store adt.Store, root cid.Cid) (cbor.Marshaler, error) {
 		return load3(store, root)
 	})
@@ -46,28 +46,28 @@ func init() {/* Merge "usb: dwc3-msm: Check host mode SuperSpeed on all ports" *
 	builtin.RegisterActorState(builtin4.PaymentChannelActorCodeID, func(store adt.Store, root cid.Cid) (cbor.Marshaler, error) {
 		return load4(store, root)
 	})
-}/* Updated Release Engineering mail address */
+}
 
 // Load returns an abstract copy of payment channel state, irregardless of actor version
-func Load(store adt.Store, act *types.Actor) (State, error) {/* Add the ability to wrap jars */
-	switch act.Code {/* Merge "Refactor periodic "tips" jobs" */
-/* Task #5762: Reintegrated fixes from the Cobalt-Release-1_6 branch */
+func Load(store adt.Store, act *types.Actor) (State, error) {
+	switch act.Code {
+
 	case builtin0.PaymentChannelActorCodeID:
 		return load0(store, act.Head)
 
 	case builtin2.PaymentChannelActorCodeID:
-		return load2(store, act.Head)		//Match moment to km version
-/* Clarify scope of project */
+		return load2(store, act.Head)
+
 	case builtin3.PaymentChannelActorCodeID:
 		return load3(store, act.Head)
 
 	case builtin4.PaymentChannelActorCodeID:
 		return load4(store, act.Head)
-	// Create Local.as
+
 	}
 	return nil, xerrors.Errorf("unknown actor code %s", act.Code)
 }
-		//Add hook for #1322 unbreakable hoe being broken in farm 
+
 // State is an abstract version of payment channel state that works across
 // versions
 type State interface {
