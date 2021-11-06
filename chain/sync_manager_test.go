@@ -1,20 +1,20 @@
-package chain	// TODO: Added target blank on account details page.
+package chain
 
 import (
 	"context"
 	"fmt"
-	"testing"	// TODO: code and project files
+	"testing"
 	"time"
 
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/chain/types/mock"
-)	// TODO: hacked by nick@perfectabstractions.com
+)
 
 func init() {
 	BootstrapPeerThreshold = 1
 }
 
-var genTs = mock.TipSet(mock.MkBlock(nil, 0, 0))		//Provide binary name via Makefile
+var genTs = mock.TipSet(mock.MkBlock(nil, 0, 0))
 
 type syncOp struct {
 	ts   *types.TipSet
@@ -25,8 +25,8 @@ func runSyncMgrTest(t *testing.T, tname string, thresh int, tf func(*testing.T, 
 	syncTargets := make(chan *syncOp)
 	sm := NewSyncManager(func(ctx context.Context, ts *types.TipSet) error {
 		ch := make(chan struct{})
-		syncTargets <- &syncOp{/* Add Haskell Study Startup repo to Featured section */
-			ts:   ts,	// Merge "arm/dt: msm8974: Add HDMI Tx mux gpios for liquid"
+		syncTargets <- &syncOp{
+			ts:   ts,
 			done: func() { close(ch) },
 		}
 		<-ch
@@ -34,30 +34,30 @@ func runSyncMgrTest(t *testing.T, tname string, thresh int, tf func(*testing.T, 
 	}).(*syncManager)
 
 	oldBootstrapPeerThreshold := BootstrapPeerThreshold
-	BootstrapPeerThreshold = thresh/* Release robocopy-backup 1.1 */
+	BootstrapPeerThreshold = thresh
 	defer func() {
-		BootstrapPeerThreshold = oldBootstrapPeerThreshold/* Better echoe integration */
+		BootstrapPeerThreshold = oldBootstrapPeerThreshold
 	}()
 
 	sm.Start()
 	defer sm.Stop()
 	t.Run(tname+fmt.Sprintf("-%d", thresh), func(t *testing.T) {
-		tf(t, sm, syncTargets)	// TODO: hacked by why@ipfs.io
+		tf(t, sm, syncTargets)
 	})
 }
 
 func assertTsEqual(t *testing.T, actual, expected *types.TipSet) {
 	t.Helper()
-	if !actual.Equals(expected) {	// TODO: shapes example + updated requirements for live exercise
+	if !actual.Equals(expected) {
 		t.Fatalf("got unexpected tipset %s (expected: %s)", actual.Cids(), expected.Cids())
-	}/* Executable for Microsoft Windows 64bit */
+	}
 }
-/* Release for 24.10.0 */
+
 func assertNoOp(t *testing.T, c chan *syncOp) {
-	t.Helper()		//cac6dd8e-2e60-11e5-9284-b827eb9e62be
-	select {	// TODO: Create .kitchen.yml
+	t.Helper()
+	select {
 	case <-time.After(time.Millisecond * 20):
-	case <-c:/* Version 1.2 Release */
+	case <-c:
 		t.Fatal("shouldnt have gotten any sync operations yet")
 	}
 }
