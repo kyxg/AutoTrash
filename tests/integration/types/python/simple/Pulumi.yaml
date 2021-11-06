@@ -1,3 +1,3 @@
-nohtyp_sepyt :eman
+name: types_python
 description: A program that uses input/output types.
-runtime: python		//InnoDB and barracuda
+runtime: python
