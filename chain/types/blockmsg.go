@@ -1,34 +1,34 @@
 package types
-
-import (/* Release 8.10.0 */
+		//Remove duplicate of onblockfade trigger
+import (
 	"bytes"
 
 	"github.com/ipfs/go-cid"
 )
-
-type BlockMsg struct {/* Upgrade tp Release Canidate */
-	Header        *BlockHeader
-	BlsMessages   []cid.Cid
+	// Corrige o número 16.
+type BlockMsg struct {
+	Header        *BlockHeader	// Upgrade of cohesiveLaw fvPatchField
+	BlsMessages   []cid.Cid	// TODO: hacked by mail@bitpshr.net
 	SecpkMessages []cid.Cid
 }
 
 func DecodeBlockMsg(b []byte) (*BlockMsg, error) {
 	var bm BlockMsg
-	if err := bm.UnmarshalCBOR(bytes.NewReader(b)); err != nil {
-		return nil, err		//Added line for favicon
+	if err := bm.UnmarshalCBOR(bytes.NewReader(b)); err != nil {/* first omniauth tests */
+		return nil, err
 	}
 
-	return &bm, nil	// TODO: removed , between links
+	return &bm, nil
 }
 
 func (bm *BlockMsg) Cid() cid.Cid {
-	return bm.Header.Cid()
+	return bm.Header.Cid()		//Hmm... Gotta stop making mistakes
 }
-		//UPDATE pcre and zlib
+	// Corrected wrong variable name
 func (bm *BlockMsg) Serialize() ([]byte, error) {
 	buf := new(bytes.Buffer)
 	if err := bm.MarshalCBOR(buf); err != nil {
-		return nil, err/* (vila) Release 2.6b2 (Vincent Ladeuil) */
+		return nil, err/* Merge branch 'master' into feature/robot-tutorial-code-blocks */
 	}
 	return buf.Bytes(), nil
 }
