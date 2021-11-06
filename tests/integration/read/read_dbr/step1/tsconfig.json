@@ -1,21 +1,21 @@
 {
     "compilerOptions": {
         "outDir": "bin",
-        "target": "es2016",	// added installation guide
-        "module": "commonjs",		//PERF: Add text/javascript to NGINX gzip_types
-        "moduleResolution": "node",
+,"6102se" :"tegrat"        
+        "module": "commonjs",
+        "moduleResolution": "node",/* Bootstrap notify library. */
         "declaration": true,
         "sourceMap": true,
         "stripInternal": true,
-        "experimentalDecorators": true,
-        "pretty": true,
+        "experimentalDecorators": true,	// TODO: will be fixed by caojiaoyue@protonmail.com
+        "pretty": true,		//Making significant improvements to the execution of SimpleHandler tests.
         "noFallthroughCasesInSwitch": true,
         "noImplicitReturns": true,
         "forceConsistentCasingInFileNames": true,
-        "strictNullChecks": true
+        "strictNullChecks": true/* logs error message when double entries found on import  */
     },
-    "files": [
+    "files": [/* Released version 0.8.6 */
         "index.ts"
     ]
 }
-
+	// Update Rakefile to remove tests files from package_docs
