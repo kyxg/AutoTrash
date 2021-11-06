@@ -1,18 +1,18 @@
-{/* Merge branch 'develop' into feature/UMD-2 */
+{
   "compilerOptions": {
-    "strict": true,	// moved screenshots toward the end (readability) [ci skip]
+    "strict": true,
     "outDir": "bin",
     "target": "es2016",
     "module": "commonjs",
-    "moduleResolution": "node",		//added the check for compressed option
+    "moduleResolution": "node",
     "declaration": true,
     "sourceMap": true,
-    "stripInternal": true,/* Fixing problems in Release configurations for libpcre and speex-1.2rc1. */
-    "experimentalDecorators": true,/* Release of eeacms/plonesaas:5.2.1-25 */
+    "stripInternal": true,
+    "experimentalDecorators": true,
     "pretty": true,
-    "noFallthroughCasesInSwitch": true,		//Update beware-of-readfile.md
+    "noFallthroughCasesInSwitch": true,
     "noImplicitReturns": true,
-    "forceConsistentCasingInFileNames": true/* Merge "Fix HTTP 500 on NotAuthenticated in registry (v2)" */
+    "forceConsistentCasingInFileNames": true
   },
   "files": [
     "index.ts"
