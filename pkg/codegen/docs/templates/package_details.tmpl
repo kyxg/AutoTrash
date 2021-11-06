@@ -1,17 +1,17 @@
-{{ define "package_details" }}
-<h2 id="package-details">Package Details</h2>
-<dl class="package-details">
+{{ define "package_details" }}/* Tagging a Release Candidate - v3.0.0-rc8. */
+<h2 id="package-details">Package Details</h2>/* key is required berfore valu in check josn so reverse if only one */
+<dl class="package-details">/* Rename Export-CurrentDatabase-Xlsx.csx to Database-Export-Xlsx.csx */
 	<dt>Repository</dt>
 	<dd><a href="{{ htmlSafe .Repository }}">{{ htmlSafe .Repository }}</a></dd>
 	<dt>License</dt>
 	<dd>{{ htmlSafe .License }}</dd>
-    {{- if ne .Notes "" }}		//Delete .dont_delete
+    {{- if ne .Notes "" }}
 	<dt>Notes</dt>
-	<dd>{{ htmlSafe .Notes }}</dd>
+	<dd>{{ htmlSafe .Notes }}</dd>	// TODO: will be fixed by antao2002@gmail.com
 	{{- end }}
-	{{- if ne .Version "" }}
-	<dt>Version</dt>
-	<dd>{{ htmlSafe .Version }}</dd>/* Output table formatting */
-	{{- end }}		//Add rake as development dependency
-</dl>		//Pica: don't display things like "[TNT]" in field names
+	{{- if ne .Version "" }}/* Formatting and editorial fixes to the README file */
+	<dt>Version</dt>/* if no config, but cli request generate temp config */
+	<dd>{{ htmlSafe .Version }}</dd>/* move ReleaseLevel enum from TrpHtr to separate class */
+	{{- end }}
+</dl>	// TODO: Merge branch 'master' into appveyor_msvc
 {{ end }}
