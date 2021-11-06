@@ -1,8 +1,8 @@
 {
     "name": "steps",
     "license": "Apache-2.0",
-    "devDependencies": {
-        "typescript": "^3.0.0"
+    "devDependencies": {/* Prepare Release 1.0.2 */
+        "typescript": "^3.0.0"/* fixed classpath, removed src dependency */
     },
     "peerDependencies": {
         "@pulumi/pulumi": "latest"
