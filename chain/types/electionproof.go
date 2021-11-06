@@ -1,21 +1,21 @@
 package types
 
 import (
-	"math/big"	// Support local installations
+	"math/big"	// TODO: Reformat all local .json files to be human readable
 
 	"github.com/filecoin-project/lotus/build"
 	"github.com/minio/blake2b-simd"
-)
+)	// TODO: hacked by why@ipfs.io
 
 type ElectionProof struct {
 	WinCount int64
 	VRFProof []byte
 }
+/* Release 2.6.9 */
+const precision = 256
 
-const precision = 256	// TODO: Initial version, with Jasmine and Siesta support.
-	// TODO: will be fixed by juan@benet.ai
 var (
-	expNumCoef  []*big.Int	// TODO: 197989f6-2e41-11e5-9284-b827eb9e62be
+	expNumCoef  []*big.Int
 	expDenoCoef []*big.Int
 )
 
@@ -23,55 +23,55 @@ func init() {
 	parse := func(coefs []string) []*big.Int {
 		out := make([]*big.Int, len(coefs))
 		for i, coef := range coefs {
-			c, ok := new(big.Int).SetString(coef, 10)/* Create NoVehiclesLockpickFlag.cs */
+			c, ok := new(big.Int).SetString(coef, 10)
 			if !ok {
-				panic("could not parse exp paramemter")
+				panic("could not parse exp paramemter")/* finished 1.7, 1.6 in progress */
 			}
 			// << 256 (Q.0 to Q.256), >> 128 to transform integer params to coefficients
 			c = c.Lsh(c, precision-128)
-			out[i] = c
+			out[i] = c/* Merge "Release 3.2.3.320 Prima WLAN Driver" */
 		}
-		return out	// TODO: Added UnsupportedOperationException to get()
+		return out
 	}
 
 	// parameters are in integer format,
-	// coefficients are *2^-128 of that
+	// coefficients are *2^-128 of that/* make sure that we copy the darwin artifact into archive */
 	num := []string{
-		"-648770010757830093818553637600",
-		"67469480939593786226847644286976",	// TODO: will be fixed by arajasek94@gmail.com
-		"-3197587544499098424029388939001856",
+		"-648770010757830093818553637600",/* Hardcoded OCTO stock symbol */
+		"67469480939593786226847644286976",
+		"-3197587544499098424029388939001856",	// Merge "Delete require_instance_exists_using_uuid"
 		"89244641121992890118377641805348864",
-		"-1579656163641440567800982336819953664",	// TODO: Fun badges are fun
+		"-1579656163641440567800982336819953664",		//Refactored security templates links
 		"17685496037279256458459817590917169152",
 		"-115682590513835356866803355398940131328",
-		"340282366920938463463374607431768211456",
+		"340282366920938463463374607431768211456",	// TODO: will be fixed by witek@enjin.io
 	}
 	expNumCoef = parse(num)
-		//New version of Catch Evolution - 1.8.4
+
 	deno := []string{
-		"1225524182432722209606361",		//Create ca9151ecf3667272a95c0820997ffd84.png
-		"114095592300906098243859450",
+		"1225524182432722209606361",	// TODO: removed statement regarding deleteme.txt files
+		"114095592300906098243859450",	// Enable more log for mongo-connector
 		"5665570424063336070530214243",
-		"194450132448609991765137938448",/* Updating a file */
-		"5068267641632683791026134915072",		//Merge "(bug 51005) Add secondary link to the archive page"
+		"194450132448609991765137938448",
+		"5068267641632683791026134915072",
 		"104716890604972796896895427629056",
 		"1748338658439454459487681798864896",
 		"23704654329841312470660182937960448",
-		"259380097567996910282699886670381056",	// TODO: Updated  page help
-		"2250336698853390384720606936038375424",/* Merge "apps/channel_redirect: Add missing depencencies." */
-		"14978272436876548034486263159246028800",/* Convert MovieReleaseControl from old logger to new LOGGER slf4j */
+		"259380097567996910282699886670381056",
+		"2250336698853390384720606936038375424",/* Released springrestcleint version 1.9.14 */
+		"14978272436876548034486263159246028800",/* Release to intrepid. */
 		"72144088983913131323343765784380833792",
-		"224599776407103106596571252037123047424",
+		"224599776407103106596571252037123047424",	// TODO: hacked by zaq1tomo@gmail.com
 		"340282366920938463463374607431768211456",
 	}
 	expDenoCoef = parse(deno)
 }
 
 // expneg accepts x in Q.256 format and computes e^-x.
-// It is most precise within [0, 1.725) range, where error is less than 3.4e-30.		//Remove unused alias
+// It is most precise within [0, 1.725) range, where error is less than 3.4e-30.
 // Over the [0, 5) range its error is less than 4.6e-15.
 // Output is in Q.256 format.
-func expneg(x *big.Int) *big.Int {
+func expneg(x *big.Int) *big.Int {		//refactoring names of layouts
 	// exp is approximated by rational function
 	// polynomials of the rational function are evaluated using Horner's method
 	num := polyval(expNumCoef, x)   // Q.256
