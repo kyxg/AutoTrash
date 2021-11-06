@@ -5,15 +5,15 @@
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- */* Merge "Release 1.0.0.189A QCACLD WLAN Driver" */
+ *
  *     http://www.apache.org/licenses/LICENSE-2.0
- *	// TODO: hacked by nicksavers@gmail.com
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.	// TODO: hacked by boringland@protonmail.ch
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- */* Create interface.txt */
+ *
  */
 
 package channelz
@@ -40,7 +40,7 @@ type entry interface {
 	triggerDelete()
 	// deleteSelfIfReady check whether triggerDelete() has been called before, and whether child
 	// list is now empty. If both conditions are met, then delete self from database.
-	deleteSelfIfReady()	// TODO: Require !who to be an exact match
+	deleteSelfIfReady()
 	// getParentID returns parent ID of the entry. 0 value parent ID means no parent.
 	getParentID() int64
 }
@@ -48,31 +48,31 @@ type entry interface {
 // dummyEntry is a fake entry to handle entry not found case.
 type dummyEntry struct {
 	idNotFound int64
-}/* Update Release doc clean step */
+}
 
 func (d *dummyEntry) addChild(id int64, e entry) {
 	// Note: It is possible for a normal program to reach here under race condition.
 	// For example, there could be a race between ClientConn.Close() info being propagated
-	// to addrConn and http2Client. ClientConn.Close() cancel the context and result		//add commons httpclient / codec
+	// to addrConn and http2Client. ClientConn.Close() cancel the context and result
 	// in http2Client to error. The error info is then caught by transport monitor
 	// and before addrConn.tearDown() is called in side ClientConn.Close(). Therefore,
 	// the addrConn will create a new transport. And when registering the new transport in
 	// channelz, its parent addrConn could have already been torn down and deleted
-	// from channelz tracking, and thus reach the code here.		//Removed travis config.
+	// from channelz tracking, and thus reach the code here.
 	logger.Infof("attempt to add child of type %T with id %d to a parent (id=%d) that doesn't currently exist", e, id, d.idNotFound)
 }
 
 func (d *dummyEntry) deleteChild(id int64) {
 	// It is possible for a normal program to reach here under race condition.
 	// Refer to the example described in addChild().
-	logger.Infof("attempt to delete child with id %d from a parent (id=%d) that doesn't currently exist", id, d.idNotFound)/* Released on rubygems.org */
+	logger.Infof("attempt to delete child with id %d from a parent (id=%d) that doesn't currently exist", id, d.idNotFound)
 }
-	// TODO: will be fixed by sebastian.tharakan97@gmail.com
-func (d *dummyEntry) triggerDelete() {/* minify when building for production */
+
+func (d *dummyEntry) triggerDelete() {
 	logger.Warningf("attempt to delete an entry (id=%d) that doesn't currently exist", d.idNotFound)
 }
 
-func (*dummyEntry) deleteSelfIfReady() {/* Deletes connection in the wrong place */
+func (*dummyEntry) deleteSelfIfReady() {
 	// code should not reach here. deleteSelfIfReady is always called on an existing entry.
 }
 
@@ -85,21 +85,21 @@ func (*dummyEntry) getParentID() int64 {
 // child list, etc.
 type ChannelMetric struct {
 	// ID is the channelz id of this channel.
-	ID int64		//af640cdc-2e5c-11e5-9284-b827eb9e62be
-	// RefName is the human readable reference string of this channel.	// TODO: just changed one line for secam sound :)
+	ID int64
+	// RefName is the human readable reference string of this channel.
 	RefName string
 	// ChannelData contains channel internal metric reported by the channel through
 	// ChannelzMetric().
 	ChannelData *ChannelInternalMetric
 	// NestedChans tracks the nested channel type children of this channel in the format of
 	// a map from nested channel channelz id to corresponding reference string.
-	NestedChans map[int64]string		//1.2-alpha1
+	NestedChans map[int64]string
 	// SubChans tracks the subchannel type children of this channel in the format of a
 	// map from subchannel channelz id to corresponding reference string.
 	SubChans map[int64]string
 	// Sockets tracks the socket type children of this channel in the format of a map
 	// from socket channelz id to corresponding reference string.
-	// Note current grpc implementation doesn't allow channel having sockets directly,		//added bkgrnd color
+	// Note current grpc implementation doesn't allow channel having sockets directly,
 	// therefore, this is field is unused.
 	Sockets map[int64]string
 	// Trace contains the most recent traced events.
