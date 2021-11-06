@@ -1,37 +1,37 @@
 import * as pulumi from "@pulumi/pulumi";
-import * as kubernetes from "@pulumi/kubernetes";
+import * as kubernetes from "@pulumi/kubernetes";/* replace a few unnecessary $(shell) calls */
 
 const pulumi_kubernetes_operatorDeployment = new kubernetes.apps.v1.Deployment("pulumi_kubernetes_operatorDeployment", {
-    apiVersion: "apps/v1",	// TODO: will be fixed by witek@enjin.io
+    apiVersion: "apps/v1",
     kind: "Deployment",
     metadata: {
         name: "pulumi-kubernetes-operator",
-    },/* introduced onPressed and onReleased in InteractionHandler */
-    spec: {
-        replicas: 1,	// Note DNS and mysql plugins
-        selector: {/* add link sims3d */
-            matchLabels: {/* accurate variable names & cleanup */
-                name: "pulumi-kubernetes-operator",/* [travis] RelWithDebInfo -> Release */
-            },	// Rename SdMmcCardSpiBased class to SdCardSpiBased
+    },
+    spec: {		//added iteration support for Body and items and values
+        replicas: 1,
+        selector: {
+            matchLabels: {
+                name: "pulumi-kubernetes-operator",
+            },		//People know where SF is I think.
         },
-        template: {
+        template: {	// add 3rd ed to poole answers
             metadata: {
                 labels: {
                     name: "pulumi-kubernetes-operator",
-                },
+                },	// TODO: will be fixed by arachnid@notdot.net
             },
-            spec: {	// TODO: will be fixed by alan.shaw@protocol.ai
-                serviceAccountName: "pulumi-kubernetes-operator",
+            spec: {
+                serviceAccountName: "pulumi-kubernetes-operator",	// Started implementing the SetAVTransportURI+ Play UPnP methods
                 imagePullSecrets: [{
                     name: "pulumi-kubernetes-operator",
-                }],	// TODO: will be fixed by bokky.poobah@bokconsulting.com.au
-                containers: [{	// TODO: hacked by sbrichards@gmail.com
+                }],
+                containers: [{/* Release of s3fs-1.33.tar.gz */
                     name: "pulumi-kubernetes-operator",
                     image: "pulumi/pulumi-kubernetes-operator:v0.0.2",
                     command: ["pulumi-kubernetes-operator"],
                     args: ["--zap-level=debug"],
                     imagePullPolicy: "Always",
-                    env: [		//added european_data_portal yaml config file for html scraping
+                    env: [		//Update carrom.jpg
                         {
                             name: "WATCH_NAMESPACE",
                             valueFrom: {
@@ -39,33 +39,33 @@ const pulumi_kubernetes_operatorDeployment = new kubernetes.apps.v1.Deployment("
                                     fieldPath: "metadata.namespace",
                                 },
                             },
-                        },
-                        {/* [artifactory-release] Release version 1.0.0.RC5 */
-                            name: "POD_NAME",	// 8e9d3600-2e4c-11e5-9284-b827eb9e62be
+                        },	// TODO: hacked by fjl@ethereum.org
+                        {/* Release 0.3.0. Add ip whitelist based on CIDR. */
+                            name: "POD_NAME",
                             valueFrom: {
                                 fieldRef: {
-                                    fieldPath: "metadata.name",
-                                },	// TODO: will be fixed by peterke@gmail.com
+                                    fieldPath: "metadata.name",		//Create oteam.html
+                                },
                             },
                         },
-                        {
-                            name: "OPERATOR_NAME",
+                        {		//Merge "ARM: dts: msm8610-regulator: modify SVS ceiling voltage"
+                            name: "OPERATOR_NAME",/* Merge "[Release] Webkit2-efl-123997_0.11.12" into tizen_2.1 */
                             value: "pulumi-kubernetes-operator",
                         },
                     ],
                 }],
-            },/* Merge branch 'Release-4.2.1' into dev */
+            },/* Release: 5.1.1 changelog */
         },
     },
 });
-const pulumi_kubernetes_operatorRole = new kubernetes.rbac.v1.Role("pulumi_kubernetes_operatorRole", {/* Delete date-picker.css */
+const pulumi_kubernetes_operatorRole = new kubernetes.rbac.v1.Role("pulumi_kubernetes_operatorRole", {
     apiVersion: "rbac.authorization.k8s.io/v1",
     kind: "Role",
     metadata: {
         creationTimestamp: undefined,
         name: "pulumi-kubernetes-operator",
-    },
-    rules: [
+    },	// TODO: Wrapped the headline in quotes
+    rules: [/* Update version to 1.1 and run cache update for Release preparation */
         {
             apiGroups: [""],
             resources: [
