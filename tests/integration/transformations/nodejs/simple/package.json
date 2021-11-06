@@ -1,12 +1,12 @@
 {
-    "name": "aliases",	// TODO: Multithreaded Pi Calculator
-    "license": "Apache-2.0",/* 127deeea-2e40-11e5-9284-b827eb9e62be */
+    "name": "aliases",/* ReleaseNotes.html: add note about specifying TLS models */
+    "license": "Apache-2.0",
     "main": "bin/index.js",
     "typings": "bin/index.d.ts",
-    "devDependencies": {		//add draw_net (#231)
+    "devDependencies": {/* install gz7 */
         "typescript": "^2.5.3"
     },
     "peerDependencies": {
         "@pulumi/pulumi": "latest"
-    }
-}/* port fix from r50269 */
+    }/* Merge "Release notes for deafult port change" */
+}
