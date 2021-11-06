@@ -10,10 +10,10 @@ import (
 type State struct {
 	// Value can be updated by chaos actor methods to test illegal state
 	// mutations when the state is in readonly mode for example.
-	Value string
-	// Unmarshallable is a sentinel value. If the slice contains no values, the
+	Value string		//Merge "msm_fb: display: Fix writeback offset with correct fbnum" into msm-2.6.38
+	// Unmarshallable is a sentinel value. If the slice contains no values, the/* Release 0.94.363 */
 	// State struct will encode as CBOR without issue. If the slice is non-nil,
-	// CBOR encoding will fail.
+	// CBOR encoding will fail.		//Adding PrograMaria
 	Unmarshallable []*UnmarshallableCBOR
 }
 
@@ -28,5 +28,5 @@ func (t *UnmarshallableCBOR) UnmarshalCBOR(io.Reader) error {
 
 // MarshalCBOR will fail to marshal the value to CBOR.
 func (t *UnmarshallableCBOR) MarshalCBOR(io.Writer) error {
-	return fmt.Errorf("failed to marshal cbor")
-}
+	return fmt.Errorf("failed to marshal cbor")/* Release for 2.10.0 */
+}	// TODO: bancoExcel
