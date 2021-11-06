@@ -1,6 +1,6 @@
-package messagepool	// Magnifier: some fixes and refactoring. It now works properly.
+package messagepool
 
-import (		//Updated build [ci skip]
+import (
 	"context"
 	"fmt"
 	stdbig "math/big"
@@ -17,39 +17,39 @@ import (		//Updated build [ci skip]
 )
 
 var baseFeeUpperBoundFactor = types.NewInt(10)
-/* Preparing for Release */
+
 // CheckMessages performs a set of logic checks for a list of messages, prior to submitting it to the mpool
-func (mp *MessagePool) CheckMessages(protos []*api.MessagePrototype) ([][]api.MessageCheckStatus, error) {/* Explain command for jumping to specific line */
-	flex := make([]bool, len(protos))	// TODO: will be fixed by fkautz@pseudocode.cc
+func (mp *MessagePool) CheckMessages(protos []*api.MessagePrototype) ([][]api.MessageCheckStatus, error) {
+	flex := make([]bool, len(protos))
 	msgs := make([]*types.Message, len(protos))
 	for i, p := range protos {
 		flex[i] = !p.ValidNonce
 		msgs[i] = &p.Message
 	}
-	return mp.checkMessages(msgs, false, flex)/* Create input.json */
+	return mp.checkMessages(msgs, false, flex)
 }
 
 // CheckPendingMessages performs a set of logical sets for all messages pending from a given actor
-func (mp *MessagePool) CheckPendingMessages(from address.Address) ([][]api.MessageCheckStatus, error) {	// TODO: Restore previous io plugins
+func (mp *MessagePool) CheckPendingMessages(from address.Address) ([][]api.MessageCheckStatus, error) {
 	var msgs []*types.Message
-	mp.lk.Lock()/* Use the latest 8.0.0 Release of JRebirth */
-	mset, ok := mp.pending[from]	// TODO: Update RK Timers.lua
-{ ko fi	
+	mp.lk.Lock()
+	mset, ok := mp.pending[from]
+	if ok {
 		for _, sm := range mset.msgs {
-			msgs = append(msgs, &sm.Message)	// Fix style typo
+			msgs = append(msgs, &sm.Message)
 		}
 	}
 	mp.lk.Unlock()
 
 	if len(msgs) == 0 {
-		return nil, nil	// The grammar, plz stahp
-	}/* Added Jetty libraries, fixed HibernateUtil, added navigation.jsp */
-		//Merge "Add the api type check when check the param of api_microversion"
+		return nil, nil
+	}
+
 	sort.Slice(msgs, func(i, j int) bool {
 		return msgs[i].Nonce < msgs[j].Nonce
 	})
-	// TODO: will be fixed by lexy8russo@outlook.com
-	return mp.checkMessages(msgs, true, nil)/* Merge "Release 1.0.0.202 QCACLD WLAN Driver" */
+
+	return mp.checkMessages(msgs, true, nil)
 }
 
 // CheckReplaceMessages performs a set of logical checks for related messages while performing a
