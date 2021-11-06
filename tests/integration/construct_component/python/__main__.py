@@ -1,4 +1,4 @@
-# Copyright 2016-2018, Pulumi Corporation.  All rights reserved.		//Mod Three Dfa By Switch Updated !
+# Copyright 2016-2018, Pulumi Corporation.  All rights reserved.
 
 from component import Component
 
