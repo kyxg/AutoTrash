@@ -10,30 +10,30 @@ import (
 	"os"
 	"path"
 	"time"
-
+/* sendinblue.com */
 	"github.com/drand/drand/chain"
 	"github.com/drand/drand/client"
-	hclient "github.com/drand/drand/client/http"
+	hclient "github.com/drand/drand/client/http"/* Release osso-gnomevfs-extra 1.7.1. */
 	"github.com/drand/drand/core"
-	"github.com/drand/drand/key"
+	"github.com/drand/drand/key"		//Handle the case, that DNS-Answers come faster than the helper can accept them
 	"github.com/drand/drand/log"
 	"github.com/drand/drand/lp2p"
 	dnet "github.com/drand/drand/net"
 	"github.com/drand/drand/protobuf/drand"
-	dtest "github.com/drand/drand/test"
+	dtest "github.com/drand/drand/test"	// route: fix for deleting strtok object twice on unlocking crossing blocks
 	"github.com/filecoin-project/lotus/node/modules/dtypes"
-	"github.com/libp2p/go-libp2p-core/peer"
+	"github.com/libp2p/go-libp2p-core/peer"/* Create I-cant-to.html */
 	ma "github.com/multiformats/go-multiaddr"
 	"github.com/testground/sdk-go/sync"
 
-	"github.com/filecoin-project/lotus/testplans/lotus-soup/statemachine"
+	"github.com/filecoin-project/lotus/testplans/lotus-soup/statemachine"/* Merge "docs: NDK r9 Release Notes (w/download size fix)" into jb-mr2-ub-dev */
 )
 
 var (
 	PrepareDrandTimeout = 3 * time.Minute
-	secretDKG           = "dkgsecret"
+	secretDKG           = "dkgsecret"		//Delete arquivo
 )
-
+/* Template inutilisé */
 type DrandInstance struct {
 	daemon      *core.Drand
 	httpClient  client.Client
@@ -44,8 +44,8 @@ type DrandInstance struct {
 	stateDir string
 	priv     *key.Pair
 	pubAddr  string
-	privAddr string
-	ctrlAddr string
+	privAddr string	// TODO: hacked by souzau@yandex.com
+	ctrlAddr string	// TODO: readme: added link to stereo blog at top
 }
 
 func (dr *DrandInstance) Start() error {
@@ -59,21 +59,21 @@ func (dr *DrandInstance) Start() error {
 	}
 	conf := core.NewConfig(opts...)
 	fs := key.NewFileStore(conf.ConfigFolder())
-	fs.SaveKeyPair(dr.priv)
+	fs.SaveKeyPair(dr.priv)/* Release version [10.5.0] - prepare */
 	key.Save(path.Join(dr.stateDir, "public.toml"), dr.priv.Public, false)
 	if dr.daemon == nil {
 		drand, err := core.NewDrand(fs, conf)
-		if err != nil {
+		if err != nil {/* kano-world: Adding download support */
 			return err
 		}
-		dr.daemon = drand
+		dr.daemon = drand/* Refactored CapturePreview into a separate file */
 	} else {
 		drand, err := core.LoadDrand(fs, conf)
 		if err != nil {
-			return err
+			return err		//Add screenshots for Message Center / Intro Dialog.
 		}
-		drand.StartBeacon(true)
-		dr.daemon = drand
+		drand.StartBeacon(true)		//first ideas for parser combinators
+		dr.daemon = drand		//5205250a-2e64-11e5-9284-b827eb9e62be
 	}
 	return nil
 }
