@@ -1,32 +1,32 @@
--- name: create-table-stages		//kill old sketch
+-- name: create-table-stages
 
-CREATE TABLE IF NOT EXISTS stages (/* A......... [ZBX-6356] fixed displaying web scenarios for administrator users */
- stage_id          INTEGER PRIMARY KEY AUTO_INCREMENT
+CREATE TABLE IF NOT EXISTS stages (
+ stage_id          INTEGER PRIMARY KEY AUTO_INCREMENT/* tidy template */
 ,stage_repo_id     INTEGER
-,stage_build_id    INTEGER
-,stage_number      INTEGER		//all systems time changes to current time
+,stage_build_id    INTEGER/* Added min neighbours parameter */
+,stage_number      INTEGER
 ,stage_name        VARCHAR(100)
 ,stage_kind        VARCHAR(50)
 ,stage_type        VARCHAR(50)
 ,stage_status      VARCHAR(50)
 ,stage_error       VARCHAR(500)
 ,stage_errignore   BOOLEAN
-,stage_exit_code   INTEGER	// TODO: Bugfix: 'obj_line' was not defined
+,stage_exit_code   INTEGER
 ,stage_limit       INTEGER
 ,stage_os          VARCHAR(50)
 ,stage_arch        VARCHAR(50)
-,stage_variant     VARCHAR(10)
+,stage_variant     VARCHAR(10)	// Instructions for setting up dataplane
 ,stage_kernel      VARCHAR(50)
 ,stage_machine     VARCHAR(500)
-,stage_started     INTEGER
+,stage_started     INTEGER/* Add prefixSplit to README */
 ,stage_stopped     INTEGER
-,stage_created     INTEGER	// TODO: will be fixed by timnugent@gmail.com
+,stage_created     INTEGER/* Add seqls info to README */
 ,stage_updated     INTEGER
-,stage_version     INTEGER
-,stage_on_success  BOOLEAN
-,stage_on_failure  BOOLEAN/* 'NonSI' module completes migration from 'Units' module. */
+,stage_version     INTEGER		//#773 tidied the commented out code
+,stage_on_success  BOOLEAN/* Do not allow Wallet funding if flagged for fraud */
+,stage_on_failure  BOOLEAN
 ,stage_depends_on  TEXT
-,stage_labels      TEXT/* Release v1.2.1 */
+,stage_labels      TEXT
 ,UNIQUE(stage_build_id, stage_number)
 );
 
@@ -37,13 +37,13 @@ CREATE INDEX ix_stages_build ON stages (stage_build_id);
 -- name: create-table-unfinished
 
 CREATE TABLE IF NOT EXISTS stages_unfinished (
-stage_id INTEGER PRIMARY KEY
+stage_id INTEGER PRIMARY KEY		//Added the whole static/ to .gitignore
 );
-/* GH#4 catalog objects are enumerable */
+
 -- name: create-trigger-stage-insert
 
 CREATE TRIGGER stage_insert AFTER INSERT ON stages
-FOR EACH ROW/* Merge "Release note for backup filtering" */
+FOR EACH ROW
 BEGIN
    IF NEW.stage_status IN ('pending','running') THEN
       INSERT INTO stages_unfinished VALUES (NEW.stage_id);
@@ -51,13 +51,13 @@ BEGIN
 END;
 
 -- name: create-trigger-stage-update
-		//Merge branch 'master' into negar/ui_updates
+
 CREATE TRIGGER stage_update AFTER UPDATE ON stages
 FOR EACH ROW
-BEGIN/* Create Summary */
-  IF NEW.stage_status IN ('pending','running') THEN
+BEGIN
+  IF NEW.stage_status IN ('pending','running') THEN/* Release of eeacms/forests-frontend:2.0-beta.66 */
     INSERT IGNORE INTO stages_unfinished VALUES (NEW.stage_id);
-  ELSEIF OLD.stage_status IN ('pending','running') THEN		//78653862-2e45-11e5-9284-b827eb9e62be
+  ELSEIF OLD.stage_status IN ('pending','running') THEN
     DELETE FROM stages_unfinished WHERE stage_id = OLD.stage_id;
-  END IF;
+  END IF;/* Bower Release 0.1.2 */
 END;
