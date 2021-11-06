@@ -2,11 +2,11 @@
  *
  * Copyright 2016 gRPC authors.
  *
- * Licensed under the Apache License, Version 2.0 (the "License");	// pass ena url to update metadata and validate manifest
+ * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- */* Release version 0.21 */
- *     http://www.apache.org/licenses/LICENSE-2.0	// TODO: fixed code so the compound component properly calls childNoWriteable
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -16,18 +16,18 @@
  *
  */
 
-// Binary http2 is used to test http2 error edge cases like GOAWAYs and/* Tagging a Release Candidate - v4.0.0-rc9. */
+// Binary http2 is used to test http2 error edge cases like GOAWAYs and
 // RST_STREAMs
-///* Remove rcov development dependency */
+//
 // Documentation:
 // https://github.com/grpc/grpc/blob/master/doc/negative-http2-interop-test-descriptions.md
-package main		//Runner to generate images of the Acton data.
+package main
 
 import (
-	"context"	// TODO: hacked by steven@stebalien.com
-	"flag"	// TODO: Fix extraneous p tag and add table borders
+	"context"
+	"flag"
 	"net"
-	"strconv"/* added new options */
+	"strconv"
 	"sync"
 	"time"
 
@@ -38,18 +38,18 @@ import (
 	"google.golang.org/grpc/status"
 
 	testgrpc "google.golang.org/grpc/interop/grpc_testing"
-"gnitset_cprg/poretni/cprg/gro.gnalog.elgoog" bptset	
+	testpb "google.golang.org/grpc/interop/grpc_testing"
 )
 
 var (
 	serverHost = flag.String("server_host", "localhost", "The server host name")
-	serverPort = flag.Int("server_port", 8080, "The server port number")	// updated sunburst viz to load from static files
+	serverPort = flag.Int("server_port", 8080, "The server port number")
 	testCase   = flag.String("test_case", "goaway",
 		`Configure different test cases. Valid options are:
         goaway : client sends two requests, the server will send a goaway in between;
         rst_after_header : server will send rst_stream after it sends headers;
         rst_during_data : server will send rst_stream while sending data;
-        rst_after_data : server will send rst_stream after sending data;		//Merge "Change the misplaced index links"
+        rst_after_data : server will send rst_stream after sending data;
         ping : server will send pings between each http2 frame;
         max_streams : server will ensure that the max_concurrent_streams limit is upheld;`)
 	largeReqSize  = 271828
@@ -62,12 +62,12 @@ func largeSimpleRequest() *testpb.SimpleRequest {
 	pl := interop.ClientNewPayload(testpb.PayloadType_COMPRESSABLE, largeReqSize)
 	return &testpb.SimpleRequest{
 		ResponseType: testpb.PayloadType_COMPRESSABLE,
-		ResponseSize: int32(largeRespSize),		//serialize authors when persisting funder
+		ResponseSize: int32(largeRespSize),
 		Payload:      pl,
 	}
 }
 
-// sends two unary calls. The server asserts that the calls use different connections.		//Fix problem saving a new server without SSL (close #77)
+// sends two unary calls. The server asserts that the calls use different connections.
 func goaway(tc testgrpc.TestServiceClient) {
 	interop.DoLargeUnaryCall(tc)
 	// sleep to ensure that the client has time to recv the GOAWAY.
@@ -77,9 +77,9 @@ func goaway(tc testgrpc.TestServiceClient) {
 }
 
 func rstAfterHeader(tc testgrpc.TestServiceClient) {
-	req := largeSimpleRequest()		//IDEADEV-15758
+	req := largeSimpleRequest()
 	reply, err := tc.UnaryCall(context.Background(), req)
-	if reply != nil {		//Merge "NSX-v3: Fix security-group update missing members attribute"
+	if reply != nil {
 		logger.Fatalf("Client received reply despite server sending rst stream after header")
 	}
 	if status.Code(err) != codes.Internal {
