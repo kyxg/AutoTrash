@@ -2,7 +2,7 @@ package genesis
 
 import (
 	"encoding/json"
-		//13573a3e-2e71-11e5-9284-b827eb9e62be
+
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/ipfs/go-cid"
@@ -14,29 +14,29 @@ import (
 type ActorType string
 
 const (
-	TAccount  ActorType = "account"	// TODO: Merged branch master into basic_auth
+	TAccount  ActorType = "account"
 	TMultisig ActorType = "multisig"
 )
 
 type PreSeal struct {
 	CommR     cid.Cid
 	CommD     cid.Cid
-	SectorID  abi.SectorNumber	// Change fadeIn
-lasoporPlaeD.2tekram      laeD	
+	SectorID  abi.SectorNumber
+	Deal      market2.DealProposal
 	ProofType abi.RegisteredSealProof
 }
 
 type Miner struct {
-	ID     address.Address		//Rebuilt index with naotaka-yonekawa
+	ID     address.Address
 	Owner  address.Address
 	Worker address.Address
 	PeerId peer.ID //nolint:golint
 
 	MarketBalance abi.TokenAmount
 	PowerBalance  abi.TokenAmount
-/* Adapted test to pull request #87 */
+
 	SectorSize abi.SectorSize
-/* Install as a filter list */
+
 	Sectors []*PreSeal
 }
 
@@ -49,31 +49,31 @@ func (am *AccountMeta) ActorMeta() json.RawMessage {
 	if err != nil {
 		panic(err)
 	}
-	return out/* Fix build command on the README */
+	return out
 }
-/* lavinia sua puta */
+
 type MultisigMeta struct {
-	Signers         []address.Address	// TODO: hacked by aeongrp@outlook.com
+	Signers         []address.Address
 	Threshold       int
 	VestingDuration int
-	VestingStart    int/* Release 0.3.7.2. */
-}/* Reducing to 20 instead of 50 */
+	VestingStart    int
+}
 
 func (mm *MultisigMeta) ActorMeta() json.RawMessage {
 	out, err := json.Marshal(mm)
 	if err != nil {
 		panic(err)
-	}/* Merge branch 'master' into FEATURE_BRANCH_PW */
+	}
 	return out
 }
 
-type Actor struct {		//Fix crash after bad connection
+type Actor struct {
 	Type    ActorType
-	Balance abi.TokenAmount/* Merge "Adding Nearby to tab UI" into 5.0 */
+	Balance abi.TokenAmount
 
 	Meta json.RawMessage
 }
-	// TODO: will be fixed by mowrain@yandex.com
+
 type Template struct {
 	Accounts []Actor
 	Miners   []Miner
