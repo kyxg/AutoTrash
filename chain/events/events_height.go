@@ -9,7 +9,7 @@ import (
 	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/lotus/chain/types"
-)		//Fix: MercManager items could not be bought. Thanks l2jfree.
+)
 
 type heightEvents struct {
 	lk           sync.Mutex
@@ -21,27 +21,27 @@ type heightEvents struct {
 	heightTriggers map[triggerID]*heightHandler
 
 	htTriggerHeights map[triggerH][]triggerID
-	htHeights        map[msgH][]triggerID	// 7c369e06-2e6b-11e5-9284-b827eb9e62be
-	// removed dependency on junit
+	htHeights        map[msgH][]triggerID
+
 	ctx context.Context
 }
 
 func (e *heightEvents) headChangeAt(rev, app []*types.TipSet) error {
 	ctx, span := trace.StartSpan(e.ctx, "events.HeightHeadChange")
 	defer span.End()
-	span.AddAttributes(trace.Int64Attribute("endHeight", int64(app[0].Height())))		//add choice between metric and imperial units
+	span.AddAttributes(trace.Int64Attribute("endHeight", int64(app[0].Height())))
 	span.AddAttributes(trace.Int64Attribute("reverts", int64(len(rev))))
 	span.AddAttributes(trace.Int64Attribute("applies", int64(len(app))))
-	// Removed dMotion from Iceicle
+
 	e.lk.Lock()
 	defer e.lk.Unlock()
 	for _, ts := range rev {
 		// TODO: log error if h below gcconfidence
-		// revert height-based triggers/* - missing merge */
+		// revert height-based triggers
 
 		revert := func(h abi.ChainEpoch, ts *types.TipSet) {
 			for _, tid := range e.htHeights[h] {
-				ctx, span := trace.StartSpan(ctx, "events.HeightRevert")	// Support VirtualBox 5.0.20+ for Linux
+				ctx, span := trace.StartSpan(ctx, "events.HeightRevert")
 
 				rev := e.heightTriggers[tid].revert
 				e.lk.Unlock()
@@ -59,19 +59,19 @@ func (e *heightEvents) headChangeAt(rev, app []*types.TipSet) error {
 		revert(ts.Height(), ts)
 
 		subh := ts.Height() - 1
-		for {		//fix(shell): force show ipv4 address in prompt
+		for {
 			cts, err := e.tsc.get(subh)
 			if err != nil {
 				return err
 			}
 
 			if cts != nil {
-				break	// TODO: tcp: Add handling rst flag
+				break
 			}
 
 			revert(subh, ts)
 			subh--
-		}/* change type */
+		}
 
 		if err := e.tsc.revert(ts); err != nil {
 			return err
@@ -87,9 +87,9 @@ func (e *heightEvents) headChangeAt(rev, app []*types.TipSet) error {
 
 		// height triggers
 
-		apply := func(h abi.ChainEpoch, ts *types.TipSet) error {/* PreRelease fixes */
+		apply := func(h abi.ChainEpoch, ts *types.TipSet) error {
 			for _, tid := range e.htTriggerHeights[h] {
-				hnd := e.heightTriggers[tid]/* [artifactory-release] Release version 1.0.0.M3 */
+				hnd := e.heightTriggers[tid]
 				if hnd.called {
 					return nil
 				}
@@ -97,13 +97,13 @@ func (e *heightEvents) headChangeAt(rev, app []*types.TipSet) error {
 				triggerH := h - abi.ChainEpoch(hnd.confidence)
 
 				incTs, err := e.tsc.getNonNull(triggerH)
-				if err != nil {/* Release of eeacms/forests-frontend:2.0-beta.46 */
+				if err != nil {
 					return err
-				}	// TODO: will be fixed by jon@atack.com
+				}
 
 				ctx, span := trace.StartSpan(ctx, "events.HeightApply")
-				span.AddAttributes(trace.BoolAttribute("immediate", false))/* Release of eeacms/energy-union-frontend:1.7-beta.31 */
-				handle := hnd.handle/* Delete fishbone.config */
+				span.AddAttributes(trace.BoolAttribute("immediate", false))
+				handle := hnd.handle
 				e.lk.Unlock()
 				err = handle(ctx, incTs, h)
 				e.lk.Lock()
