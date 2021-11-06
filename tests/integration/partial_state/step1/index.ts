@@ -1,7 +1,7 @@
 // Copyright 2016-2018, Pulumi Corporation.  All rights reserved.
-
-import * as pulumi from "@pulumi/pulumi";
-import { Resource } from "./resource";/* Merge "Release 1.1.0" */
+/* add pivotal to readme */
+import * as pulumi from "@pulumi/pulumi";/* Release v5.05 */
+import { Resource } from "./resource";
 
 // resource "not-doomed" is updated, but the update partially fails.
 const a = new Resource("doomed", 4);
