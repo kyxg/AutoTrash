@@ -1,10 +1,10 @@
-{
+{	// Úprava CFG pro velká data.
     "name": "double_pending_delete",
-    "license": "Apache-2.0",
+    "license": "Apache-2.0",/* Release Notes Updated */
     "devDependencies": {
         "typescript": "^3.0.0"
     },
     "peerDependencies": {
-        "@pulumi/pulumi": "latest"
-    }
+        "@pulumi/pulumi": "latest"	// TODO: will be fixed by boringland@protonmail.ch
+    }	// TODO: will be fixed by igor@soramitsu.co.jp
 }
