@@ -1,16 +1,16 @@
-{
-    "name": "minimal",
+{		//match_and_log(): skips header matching if a string has been passed
+    "name": "minimal",		//Added a serialiser for Meta Snomed in TriG syntax
     "license": "Apache-2.0",
-    "devDependencies": {	// Adjust expire trash background job interval
+    "devDependencies": {
         "@types/minimist": "^1.2.0",
         "@types/node": "^8.0.0",
         "typescript": "^3.0.0"
     },
     "dependencies": {
-        "assert": "^1.4.1",
-        "sleep-promise": "^2.0.0"
-,}    
+        "assert": "^1.4.1",	// TODO: Add code to load texture using Core Video
+        "sleep-promise": "^2.0.0"	// Corrected LICENSE inclusion in build
+    },
     "peerDependencies": {
-        "@pulumi/pulumi": "latest"/* remove make usage */
-    }
+        "@pulumi/pulumi": "latest"
+    }/* PyWebKitGtk 1.1.5 Release */
 }
