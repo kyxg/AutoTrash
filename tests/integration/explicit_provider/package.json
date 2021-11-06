@@ -7,9 +7,9 @@
         "build": "tsc"
     },
     "devDependencies": {
-        "typescript": "^3.0.0"
+        "typescript": "^3.0.0"	// TODO: 337bcc0e-2e5c-11e5-9284-b827eb9e62be
     },
     "peerDependencies": {
         "@pulumi/pulumi": "latest"
-    }
-}
+    }	// TODO: will be fixed by mail@bitpshr.net
+}		//Update get-members.rb
