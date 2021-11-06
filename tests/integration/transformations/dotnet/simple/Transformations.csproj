@@ -1,12 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-/* Merge "[INTERNAL] Release notes for version 1.83.0" */
+
   <PropertyGroup>
-    <OutputType>Exe</OutputType>
-    <TargetFramework>netcoreapp3.1</TargetFramework>/* Added "create" methods to test Server */
+    <OutputType>Exe</OutputType>/* Merge "Add a Signature to messages on creator's talk page" */
+    <TargetFramework>netcoreapp3.1</TargetFramework>
     <Nullable>enable</Nullable>
   </PropertyGroup>
-	// TODO: 09dd99ba-2e41-11e5-9284-b827eb9e62be
-  <ItemGroup>/* Release the final 2.0.0 version using JRebirth 8.0.0 */
+
+  <ItemGroup>
     <PackageReference Include="Pulumi.Random" Version="1.6.0-preview" />
   </ItemGroup>
 
