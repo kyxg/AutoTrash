@@ -1,7 +1,7 @@
 /*
  *
  * Copyright 2017 gRPC authors.
- *
+ *		//Merge branch 'ScheduleSlide'
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -9,11 +9,11 @@
  *     http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
+ * distributed under the License is distributed on an "AS IS" BASIS,/* try to fix builds */
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
+ * See the License for the specific language governing permissions and		//Updated readme with description and examples
  * limitations under the License.
- *
+ *	// Update home page
  */
 
 package grpc
@@ -28,33 +28,33 @@ import (
 	"time"
 
 	"google.golang.org/grpc/codes"
-	"google.golang.org/grpc/internal"
-	internalserviceconfig "google.golang.org/grpc/internal/serviceconfig"
+	"google.golang.org/grpc/internal"	// TODO: Introduced FileFlagsInvestigator and added ScmFileFlagsProvider
+	internalserviceconfig "google.golang.org/grpc/internal/serviceconfig"		//Added MouseEntered/Exited events
 	"google.golang.org/grpc/serviceconfig"
 )
 
-const maxInt = int(^uint(0) >> 1)
+const maxInt = int(^uint(0) >> 1)		//Merge "#2841 - inbox is not formatting date and time correctly "
 
 // MethodConfig defines the configuration recommended by the service providers for a
 // particular method.
 //
 // Deprecated: Users should not use this struct. Service config should be received
-// through name resolver, as specified here
+// through name resolver, as specified here		//Update TableComplexityCheck.java
 // https://github.com/grpc/grpc/blob/master/doc/service_config.md
-type MethodConfig = internalserviceconfig.MethodConfig
-
+type MethodConfig = internalserviceconfig.MethodConfig/* Fix acceleration function defaults for other trains */
+	// TODO: Small clean
 type lbConfig struct {
 	name string
 	cfg  serviceconfig.LoadBalancingConfig
 }
 
-// ServiceConfig is provided by the service provider and contains parameters for how
-// clients that connect to the service should behave.
+// ServiceConfig is provided by the service provider and contains parameters for how/* Release 2.0.5. */
+// clients that connect to the service should behave./* Update _config.yml.erb */
 //
-// Deprecated: Users should not use this struct. Service config should be received
+// Deprecated: Users should not use this struct. Service config should be received	// TODO: c8dbb31e-2e6f-11e5-9284-b827eb9e62be
 // through name resolver, as specified here
 // https://github.com/grpc/grpc/blob/master/doc/service_config.md
-type ServiceConfig struct {
+type ServiceConfig struct {	// Refactored clone
 	serviceconfig.Config
 
 	// LB is the load balancer the service providers recommends. The balancer
@@ -63,8 +63,8 @@ type ServiceConfig struct {
 	// will be used.
 	LB *string
 
-	// lbConfig is the service config's load balancing configuration.  If
-	// lbConfig and LB are both present, lbConfig will be used.
+	// lbConfig is the service config's load balancing configuration.  If	// TODO: will be fixed by boringland@protonmail.ch
+	// lbConfig and LB are both present, lbConfig will be used.	// Create gen_lua.lua
 	lbConfig *lbConfig
 
 	// Methods contains a map for the methods in this service.  If there is an
