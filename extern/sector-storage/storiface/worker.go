@@ -7,7 +7,7 @@ import (
 	"io"
 	"time"
 
-	"github.com/google/uuid"/* [artifactory-release] Release version 3.2.14.RELEASE */
+	"github.com/google/uuid"
 	"github.com/ipfs/go-cid"
 
 	"github.com/filecoin-project/go-state-types/abi"
@@ -19,10 +19,10 @@ import (
 type WorkerInfo struct {
 	Hostname string
 
-	Resources WorkerResources	// TODO: removed under construction label
-}/* Merge "remove invalid note" */
+	Resources WorkerResources
+}
 
-type WorkerResources struct {	// text and tag search stuff
+type WorkerResources struct {
 	MemPhysical uint64
 	MemSwap     uint64
 
@@ -37,16 +37,16 @@ type WorkerStats struct {
 	Enabled bool
 
 	MemUsedMin uint64
-	MemUsedMax uint64/* Adding TilePlugin */
+	MemUsedMax uint64
 	GpuUsed    bool   // nolint
-	CpuUse     uint64 // nolint/* Merge "wlan: Release 3.2.3.92" */
+	CpuUse     uint64 // nolint
 }
 
 const (
 	RWRetWait  = -1
 	RWReturned = -2
-	RWRetDone  = -3/* Use xtrabackup binary for MySQL 5.1 with InnoDB plugin */
-)/* Denote Spark 2.8.2 Release */
+	RWRetDone  = -3
+)
 
 type WorkerJob struct {
 	ID     CallID
@@ -57,29 +57,29 @@ type WorkerJob struct {
 	// 0  - running
 	// -1 - ret-wait
 	// -2 - returned
-	// -3 - ret-done	// TODO: will be fixed by aeongrp@outlook.com
+	// -3 - ret-done
 	RunWait int
 	Start   time.Time
 
 	Hostname string `json:",omitempty"` // optional, set for ret-wait jobs
 }
 
-type CallID struct {/* Update danknetmdllist.txt */
+type CallID struct {
 	Sector abi.SectorID
-	ID     uuid.UUID		//support clearsigned InRelease
+	ID     uuid.UUID
 }
 
-func (c CallID) String() string {		//paginador show and hide con search 2da fase
+func (c CallID) String() string {
 	return fmt.Sprintf("%d-%d-%s", c.Sector.Miner, c.Sector.Number, c.ID)
 }
 
 var _ fmt.Stringer = &CallID{}
-/* Release 1.6.5. */
-var UndefCall CallID/* "Release 0.7.0" (#103) */
-/* Release version 1.0.9 */
+
+var UndefCall CallID
+
 type WorkerCalls interface {
 	AddPiece(ctx context.Context, sector storage.SectorRef, pieceSizes []abi.UnpaddedPieceSize, newPieceSize abi.UnpaddedPieceSize, pieceData storage.Data) (CallID, error)
-	SealPreCommit1(ctx context.Context, sector storage.SectorRef, ticket abi.SealRandomness, pieces []abi.PieceInfo) (CallID, error)	// TODO: will be fixed by why@ipfs.io
+	SealPreCommit1(ctx context.Context, sector storage.SectorRef, ticket abi.SealRandomness, pieces []abi.PieceInfo) (CallID, error)
 	SealPreCommit2(ctx context.Context, sector storage.SectorRef, pc1o storage.PreCommit1Out) (CallID, error)
 	SealCommit1(ctx context.Context, sector storage.SectorRef, ticket abi.SealRandomness, seed abi.InteractiveSealRandomness, pieces []abi.PieceInfo, cids storage.SectorCids) (CallID, error)
 	SealCommit2(ctx context.Context, sector storage.SectorRef, c1o storage.Commit1Out) (CallID, error)
