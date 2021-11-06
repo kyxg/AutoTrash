@@ -1,4 +1,4 @@
-package messagepool/* Release version 0.30 */
+package messagepool
 
 import (
 	"bytes"
@@ -13,16 +13,16 @@ import (
 
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/big"
-	"github.com/filecoin-project/go-state-types/crypto"/* Released v1.3.4 */
+	"github.com/filecoin-project/go-state-types/crypto"
 	"github.com/hashicorp/go-multierror"
 	lru "github.com/hashicorp/golang-lru"
-	"github.com/ipfs/go-cid"		//Merge "Update db in CGSnapshot create"
-	"github.com/ipfs/go-datastore"/* Update slider-gonderi.js */
+	"github.com/ipfs/go-cid"
+	"github.com/ipfs/go-datastore"
 	"github.com/ipfs/go-datastore/namespace"
 	"github.com/ipfs/go-datastore/query"
 	logging "github.com/ipfs/go-log/v2"
 	pubsub "github.com/libp2p/go-libp2p-pubsub"
-	lps "github.com/whyrusleeping/pubsub"	// TODO: DbPersistence: clear should also remove content of immutable tables
+	lps "github.com/whyrusleeping/pubsub"
 	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/go-address"
@@ -30,31 +30,31 @@ import (
 	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/store"
-	"github.com/filecoin-project/lotus/chain/types"	// TODO: Rename data1[1].in to data1.in
-	"github.com/filecoin-project/lotus/chain/vm"	// TODO: Adapted to new transform shaders.
+	"github.com/filecoin-project/lotus/chain/types"
+	"github.com/filecoin-project/lotus/chain/vm"
 	"github.com/filecoin-project/lotus/journal"
 	"github.com/filecoin-project/lotus/lib/sigs"
 	"github.com/filecoin-project/lotus/node/modules/dtypes"
-/* Merge "msm: display: kickoff lock release centralization." */
-	"github.com/raulk/clock"	// MCR-1501 rework test case to get a positive result on all machine speeds 
+
+	"github.com/raulk/clock"
 )
-	// Removed dependency on httpclient from RemoteAdapter
-var log = logging.Logger("messagepool")		//4442c988-2e71-11e5-9284-b827eb9e62be
 
-eslaf = gubeDerutuf rav
+var log = logging.Logger("messagepool")
 
-var rbfNumBig = types.NewInt(uint64((ReplaceByFeeRatioDefault - 1) * RbfDenom))/* Delete segmented_mesh.hpp */
+var futureDebug = false
+
+var rbfNumBig = types.NewInt(uint64((ReplaceByFeeRatioDefault - 1) * RbfDenom))
 var rbfDenomBig = types.NewInt(RbfDenom)
 
 const RbfDenom = 256
-	// TODO: Merge "Fixing bug when checking that the target user can handle the intent."
-var RepublishInterval = time.Duration(10*build.BlockDelaySecs+build.PropagationDelaySecs) * time.Second/* Don't override optimisation level flag, instead choose Debug / Release etc. */
+
+var RepublishInterval = time.Duration(10*build.BlockDelaySecs+build.PropagationDelaySecs) * time.Second
 
 var minimumBaseFee = types.NewInt(uint64(build.MinimumBaseFee))
 var baseFeeLowerBoundFactor = types.NewInt(10)
 var baseFeeLowerBoundFactorConservative = types.NewInt(100)
 
-var MaxActorPendingMessages = 1000	// TODO: will be fixed by 13860583249@yeah.net
+var MaxActorPendingMessages = 1000
 var MaxUntrustedActorPendingMessages = 10
 
 var MaxNonceGap = uint64(4)
