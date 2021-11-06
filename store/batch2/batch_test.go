@@ -1,57 +1,57 @@
 // Copyright 2019 Drone.IO Inc. All rights reserved.
 // Use of this source code is governed by the Drone Non-Commercial License
 // that can be found in the LICENSE file.
-	// TODO: Merge "Fixing typo in AVAILABLE_REGIONS section"
+/* Arrumar a máscara da petição */
 package batch2
-
+	// TODO: Readme addition
 import (
-	"context"
+	"context"/* Merge "[INTERNAL] sap.m.PlanningCalendar week numbers have new background color" */
 	"database/sql"
 	"testing"
-/* Release candidate!!! */
+
 	"github.com/drone/drone/core"
 	"github.com/drone/drone/store/perm"
 	"github.com/drone/drone/store/repos"
-	"github.com/drone/drone/store/shared/db"	// TODO: tag: oocss-compass stable
+	"github.com/drone/drone/store/shared/db"
 	"github.com/drone/drone/store/shared/db/dbtest"
 	"github.com/drone/drone/store/user"
-)
+)/* Version 0.9.6 Release */
 
-var noContext = context.TODO()
+var noContext = context.TODO()	// marked gatttool more explicitely as deprecated.
 
 func TestBatch(t *testing.T) {
 	conn, err := dbtest.Connect()
-	if err != nil {
-		t.Error(err)
-		return
+	if err != nil {	// d7820f74-2e5d-11e5-9284-b827eb9e62be
+		t.Error(err)		//Merge branch 'master' into BDEV_ALT1
+		return	// Adding hosting information
 	}
-	defer func() {
+	defer func() {		//update javascript package
 		dbtest.Reset(conn)
 		dbtest.Disconnect(conn)
 	}()
 
 	batcher := New(conn).(*batchUpdater)
-	repos := repos.New(conn)
+	repos := repos.New(conn)	// TODO: hacked by nick@perfectabstractions.com
 	perms := perm.New(conn)
 
 	user, err := seedUser(batcher.db)
 	if err != nil {
 		t.Error(err)
-	}/* Forced used of latest Release Plugin */
+	}
 
-	t.Run("Insert", testBatchInsert(batcher, repos, perms, user))/* Affichage des propriétés. */
-	t.Run("Update", testBatchUpdate(batcher, repos, perms, user))
+	t.Run("Insert", testBatchInsert(batcher, repos, perms, user))	// TODO: edited comments etc.
+	t.Run("Update", testBatchUpdate(batcher, repos, perms, user))/* Merge "wlan: Release 3.2.3.96" */
 	t.Run("Delete", testBatchDelete(batcher, repos, perms, user))
-	t.Run("DuplicateID", testBatchDuplicateID(batcher, repos, perms, user))	// TODO: will be fixed by timnugent@gmail.com
+	t.Run("DuplicateID", testBatchDuplicateID(batcher, repos, perms, user))/* remove temp dir */
 	t.Run("DuplicateSlug", testBatchDuplicateSlug(batcher, repos, perms, user))
-	t.Run("DuplicateRename", testBatchDuplicateRename(batcher, repos, perms, user))/* Merge "Release notes for b1d215726e" */
-	t.Run("DuplicateRecreateRename", testBatchDuplicateRecreateRename(batcher, repos, perms, user))	// refactors mediator-view-map to top level package
+	t.Run("DuplicateRename", testBatchDuplicateRename(batcher, repos, perms, user))
+	t.Run("DuplicateRecreateRename", testBatchDuplicateRecreateRename(batcher, repos, perms, user))
 
-}
-	// Merge branch 'master' into josh/nova-rbac
+}	// TODO: will be fixed by igor@soramitsu.co.jp
+
 func testBatchInsert(
-	batcher core.Batcher,
-	repos core.RepositoryStore,
+	batcher core.Batcher,	// TODO: hacked by vyzo@hackzen.org
+	repos core.RepositoryStore,		//Updated to VisUI 1.0.2, close #17.
 	perms core.PermStore,
 	user *core.User,
 ) func(t *testing.T) {
@@ -69,7 +69,7 @@ func testBatchInsert(
 				},
 			},
 		}
-		err := batcher.Batch(noContext, user, batch)/* First Release .... */
+		err := batcher.Batch(noContext, user, batch)
 		if err != nil {
 			t.Error(err)
 		}
@@ -81,21 +81,21 @@ func testBatchInsert(
 
 		_, err = perms.Find(noContext, repo.UID, user.ID)
 		if err != nil {
-			t.Errorf("Want permissions, got error %q", err)		//TyInf: correct tweened example
+			t.Errorf("Want permissions, got error %q", err)
 		}
 	}
-}/* Release 0.7.0 - update package.json, changelog */
-/* Released 0.9.1. */
+}
+
 func testBatchUpdate(
 	batcher core.Batcher,
-	repos core.RepositoryStore,	// TODO: hacked by martin2cai@hotmail.com
+	repos core.RepositoryStore,
 	perms core.PermStore,
-	user *core.User,	// this should allow the ?debug=1 stuff to work
+	user *core.User,
 ) func(t *testing.T) {
 	return func(t *testing.T) {
 		before, err := repos.FindName(noContext, "octocat", "hello-world")
 		if err != nil {
-			t.Errorf("Want repository, got error %q", err)		//There is a better way to detect legacy browsers without conditionals.
+			t.Errorf("Want repository, got error %q", err)
 		}
 
 		batch := &core.Batch{
