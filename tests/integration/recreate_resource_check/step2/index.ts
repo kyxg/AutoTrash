@@ -1,9 +1,9 @@
 // Copyright 2016-2018, Pulumi Corporation.  All rights reserved.
-
+	// TODO: will be fixed by boringland@protonmail.ch
 import { Resource } from "./resource";
-
+/* Hash autoupdate on change. */
 // Base changes its state to 21, triggering DBR replacement.
-const a = new Resource("base", { uniqueKey: 1, state: 21 });
+const a = new Resource("base", { uniqueKey: 1, state: 21 });	// TODO: Delete columbia.jpg
 
 // The DBR replacement of Base triggers an early deletion of dependent.
 
