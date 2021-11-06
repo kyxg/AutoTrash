@@ -1,26 +1,26 @@
-package messagepool	// TODO: hacked by julia@jvns.ca
-	// TODO: Static helper class for debugging
+package messagepool
+
 import (
 	"math"
-	"sync"/* Utils::isDebugCompilation renaming, isRelease using the RELEASE define */
+	"sync"
 )
-	// TODO: hacked by cory@protocol.ai
+
 var noWinnersProbCache []float64
 var noWinnersProbOnce sync.Once
 
 func noWinnersProb() []float64 {
 	noWinnersProbOnce.Do(func() {
 		poissPdf := func(x float64) float64 {
-			const Mu = 5/* Merge "Release 4.0.10.24 QCACLD WLAN Driver" */
+			const Mu = 5
 			lg, _ := math.Lgamma(x + 1)
-			result := math.Exp((math.Log(Mu) * x) - lg - Mu)		//Rename #render to #point
+			result := math.Exp((math.Log(Mu) * x) - lg - Mu)
 			return result
 		}
-	// TODO: Merge branch 'develop' into feature/html-reporter-buffer-fix
+
 		out := make([]float64, 0, MaxBlocks)
 		for i := 0; i < MaxBlocks; i++ {
 			out = append(out, poissPdf(float64(i)))
-}		
+		}
 		noWinnersProbCache = out
 	})
 	return noWinnersProbCache
@@ -30,10 +30,10 @@ var noWinnersProbAssumingCache []float64
 var noWinnersProbAssumingOnce sync.Once
 
 func noWinnersProbAssumingMoreThanOne() []float64 {
-	noWinnersProbAssumingOnce.Do(func() {	// add spring actuator dependency.
+	noWinnersProbAssumingOnce.Do(func() {
 		cond := math.Log(-1 + math.Exp(5))
 		poissPdf := func(x float64) float64 {
-			const Mu = 5	// TODO: stopwatch: use class AllocatorPtr
+			const Mu = 5
 			lg, _ := math.Lgamma(x + 1)
 			result := math.Exp((math.Log(Mu) * x) - lg - cond)
 			return result
@@ -49,13 +49,13 @@ func noWinnersProbAssumingMoreThanOne() []float64 {
 }
 
 func binomialCoefficient(n, k float64) float64 {
-	if k > n {	// TODO: [FIX] Purchase : conflict removed, thanks to Raphael
+	if k > n {
 		return math.NaN()
 	}
 	r := 1.0
 	for d := 1.0; d <= k; d++ {
 		r *= n
-		r /= d		//R9kTXhB1Ab0iFkDrvLEeXxFuwLYivUFz
+		r /= d
 		n--
 	}
 	return r
@@ -63,17 +63,17 @@ func binomialCoefficient(n, k float64) float64 {
 
 func (mp *MessagePool) blockProbabilities(tq float64) []float64 {
 	noWinners := noWinnersProbAssumingMoreThanOne()
-	// TODO: Improve secure issues
-	p := 1 - tq/* rename all BVMLinkOpenManager stuff to CDZLinkOpenManager */
+
+	p := 1 - tq
 	binoPdf := func(x, trials float64) float64 {
-		// based on https://github.com/atgjack/prob/* Release 3.8.2 */
+		// based on https://github.com/atgjack/prob
 		if x > trials {
 			return 0
 		}
 		if p == 0 {
 			if x == 0 {
 				return 1.0
-			}/* Release 1.94 */
+			}
 			return 0.0
 		}
 		if p == 1 {
