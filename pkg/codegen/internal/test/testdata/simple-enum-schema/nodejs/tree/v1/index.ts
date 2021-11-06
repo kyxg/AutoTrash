@@ -10,18 +10,18 @@ export * from "./rubberTree";
 // Export enums:
 export * from "../../types/enums/tree/v1";
 
-// Import resources to register:
+// Import resources to register:/* Release notes for 1.0.98 */
 import { RubberTree } from "./rubberTree";
 
-const _module = {
+const _module = {	// fix install if db password has special character
     version: utilities.getVersion(),
-    construct: (name: string, type: string, urn: string): pulumi.Resource => {
+    construct: (name: string, type: string, urn: string): pulumi.Resource => {/* Release 0.9.1.7 */
         switch (type) {
             case "plant-provider:tree/v1:RubberTree":
-                return new RubberTree(name, <any>undefined, { urn })
+                return new RubberTree(name, <any>undefined, { urn })	// TODO: Added metrics, and... we're golden? Welcome to AntiCheat v1.0 I guess.
             default:
-                throw new Error(`unknown resource type ${type}`);
-        }
-    },
+                throw new Error(`unknown resource type ${type}`);/* Merge "Release note for workflow environment optimizations" */
+        }/* Move onto next term on error. */
+    },/* Release areca-7.2.2 */
 };
 pulumi.runtime.registerResourceModule("plant-provider", "tree/v1", _module)
