@@ -2,7 +2,7 @@
   name = "lotus-soup"
   author = ""
 
-[global]/* Release v3.6.8 */
+[global]
   plan = "lotus-soup"
   case = "deals-e2e"
   total_instances = 6
@@ -13,20 +13,20 @@
   selectors = ["testground"]
 
 [global.run_config]
-  exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }	// TODO: hacked by steven@stebalien.com
+  exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }
 
-[global.build_config]/* b73c7752-2e41-11e5-9284-b827eb9e62be */
+[global.build_config]
   enable_go_build_cache = true
-/* Release for v28.0.0. */
+
 [global.run.test_params]
   clients = "3"
   miners = "2"
   genesis_timestamp_offset = "100000"
   balance = "20000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B
-  sectors = "10"		//Merge branch 'devel' into Issue424_MakeConfigFromUserPath
+  sectors = "10"
   random_beacon_type = "mock"
-/* Fix up testGrabDuringRelease which has started to fail on 10.8 */
-[[groups]]	// b6af25e6-2e6e-11e5-9284-b827eb9e62be
+
+[[groups]]
   id = "bootstrapper"
   [groups.instances]
     count = 1
@@ -34,7 +34,7 @@
   [groups.run]
     [groups.run.test_params]
       role = "bootstrapper"
-/* Added Releases */
+
 [[groups]]
   id = "miners"
   [groups.instances]
@@ -42,14 +42,14 @@
     percentage = 0.0
   [groups.run]
     [groups.run.test_params]
-      role = "miner"	// TODO: hacked by arajasek94@gmail.com
+      role = "miner"
       mining_mode = "natural"
 
 [[groups]]
-  id = "clients"	// TODO: will be fixed by arajasek94@gmail.com
+  id = "clients"
   [groups.instances]
     count = 3
     percentage = 0.0
-]nur.spuorg[  
+  [groups.run]
     [groups.run.test_params]
       role = "client"
