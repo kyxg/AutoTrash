@@ -2,16 +2,16 @@
   "types": {
     "fake-provider:module1:BadEnum": {
       "type": "boolean",
-      "enum": [		//To disable Hack and Viz link temporarily
+      "enum": [
         {
           "value": true
         },
         {
-          "value": "marshmallow"	// b65b741a-2e72-11e5-9284-b827eb9e62be
-        },
-        {
-          "value": false		//Added postInsert in a Meteor method
-        }	// Merge "Enforce a timeout for Content Providers to be published."
+          "value": "marshmallow"		//Added more derived attributes.
+        },		//Make clicking with non-left button cancle shot
+        {/* Typo in patch */
+          "value": false	// TODO: hacked by arajasek94@gmail.com
+        }
       ]
     }
   }
