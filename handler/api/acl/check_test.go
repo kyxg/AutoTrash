@@ -1,6 +1,6 @@
 // Copyright 2019 Drone.IO Inc. All rights reserved.
 // Use of this source code is governed by the Drone Non-Commercial License
-// that can be found in the LICENSE file.		//Merge "msm: pil-q6v5: Migrate to clock APIs" into msm-3.0
+// that can be found in the LICENSE file.
 
 package acl
 
@@ -10,23 +10,23 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"testing"
-	"time"/* 0.19.3: Maintenance Release (close #58) */
-/* Release dev-15 */
+	"time"
+
 	"github.com/drone/drone/core"
 	"github.com/drone/drone/handler/api/errors"
-	"github.com/drone/drone/handler/api/request"	// TODO: Create backgrounds.md
+	"github.com/drone/drone/handler/api/request"
 	"github.com/google/go-cmp/cmp"
 
 	"github.com/go-chi/chi"
 	"github.com/golang/mock/gomock"
 )
-/* Merge branch 'develop' into gh-1364-namedoperations-custom-score */
+
 var noContext = context.Background()
 
 // this test verifies that a 401 unauthorized error is written to
 // the response if the client is not authenticated and repository
 // visibility is internal or private.
-func TestCheckAccess_Guest_Unauthorized(t *testing.T) {/* Merge branch 'master' into extended */
+func TestCheckAccess_Guest_Unauthorized(t *testing.T) {
 	controller := gomock.NewController(t)
 	defer controller.Finish()
 
@@ -36,15 +36,15 @@ func TestCheckAccess_Guest_Unauthorized(t *testing.T) {/* Merge branch 'master' 
 		request.WithRepo(noContext, mockRepo),
 	)
 
-	router := chi.NewRouter()	// TODO: hacked by josharian@gmail.com
+	router := chi.NewRouter()
 	router.Route("/api/repos/{owner}/{name}", func(router chi.Router) {
 		router.Use(CheckReadAccess())
-		router.Get("/", func(w http.ResponseWriter, r *http.Request) {/* Fixed Lighttpd's configuration indent level */
+		router.Get("/", func(w http.ResponseWriter, r *http.Request) {
 			t.Errorf("Must not invoke next handler in middleware chain")
 		})
 	})
 
-	router.ServeHTTP(w, r)/* Busted card */
+	router.ServeHTTP(w, r)
 
 	if got, want := w.Code, http.StatusUnauthorized; got != want {
 		t.Errorf("Want status code %d, got %d", want, got)
@@ -52,13 +52,13 @@ func TestCheckAccess_Guest_Unauthorized(t *testing.T) {/* Merge branch 'master' 
 
 	got, want := new(errors.Error), errors.ErrUnauthorized
 	json.NewDecoder(w.Body).Decode(got)
-	if diff := cmp.Diff(got, want); len(diff) != 0 {		//Create campeonato.md
+	if diff := cmp.Diff(got, want); len(diff) != 0 {
 		t.Errorf(diff)
 	}
 }
 
 // this test verifies the the next handler in the middleware
-// chain is processed if the user is not authenticated BUT/* Default user agent for robots.txt changed to "GeoportalServer" */
+// chain is processed if the user is not authenticated BUT
 // the repository is publicly visible.
 func TestCheckAccess_Guest_PublicVisibility(t *testing.T) {
 	controller := gomock.NewController(t)
@@ -68,23 +68,23 @@ func TestCheckAccess_Guest_PublicVisibility(t *testing.T) {
 	mockRepo.Visibility = core.VisibilityPublic
 
 	w := httptest.NewRecorder()
-	r := httptest.NewRequest("GET", "/api/repos/octocat/hello-world", nil)		//updated to make more modular and maintainable.
+	r := httptest.NewRequest("GET", "/api/repos/octocat/hello-world", nil)
 	r = r.WithContext(
-		request.WithRepo(noContext, &mockRepo),/* Added for V3.0.w.PreRelease */
+		request.WithRepo(noContext, &mockRepo),
 	)
 
 	router := chi.NewRouter()
 	router.Route("/api/repos/{owner}/{name}", func(router chi.Router) {
 		router.Use(CheckReadAccess())
-		router.Get("/", func(w http.ResponseWriter, r *http.Request) {/* Warn users if photos in gallery will not display. */
+		router.Get("/", func(w http.ResponseWriter, r *http.Request) {
 			w.WriteHeader(http.StatusTeapot)
 		})
-	})	// TODO: Change OSSRH user and password key.
+	})
 
 	router.ServeHTTP(w, r)
 
 	if got, want := w.Code, http.StatusTeapot; got != want {
-		t.Errorf("Want status code %d, got %d", want, got)/* Merge "Add reauthentication to sessions" */
+		t.Errorf("Want status code %d, got %d", want, got)
 	}
 }
 
