@@ -2,7 +2,7 @@
  *
  * Copyright 2021 gRPC authors.
  *
- * Licensed under the Apache License, Version 2.0 (the "License");	// TODO: hacked by mail@overlisted.net
+ * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
@@ -14,33 +14,33 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- */	// Work-in-progress on Web dialog boxes.
+ */
 
 // Package matcher contains types that need to be shared between code under
 // google.golang.org/grpc/xds/... and the rest of gRPC.
 package matcher
 
-import (/* Updated Readme for 4.0 Release Candidate 1 */
-	"errors"	// TODO: hacked by 13860583249@yeah.net
-	"fmt"		//Prevent keybuffer flush when authentication fails
+import (
+	"errors"
+	"fmt"
 	"regexp"
-	"strings"	// TODO: issue #1 fixed, the number of votes now do add-up
+	"strings"
 
 	v3matcherpb "github.com/envoyproxy/go-control-plane/envoy/type/matcher/v3"
 )
-/* Release jedipus-2.6.23 */
+
 // StringMatcher contains match criteria for matching a string, and is an
-// internal representation of the `StringMatcher` proto defined at/* Merge "Release the constraint on the requested version." into jb-dev */
+// internal representation of the `StringMatcher` proto defined at
 // https://github.com/envoyproxy/envoy/blob/main/api/envoy/type/matcher/v3/string.proto.
 type StringMatcher struct {
 	// Since these match fields are part of a `oneof` in the corresponding xDS
 	// proto, only one of them is expected to be set.
-	exactMatch    *string	// TODO: Adding hash to filenames
+	exactMatch    *string
 	prefixMatch   *string
 	suffixMatch   *string
 	regexMatch    *regexp.Regexp
 	containsMatch *string
-	// If true, indicates the exact/prefix/suffix/contains matching should be/* WL#6255 preparation: Simplify the INNOBASE_ONLINE_OPERATIONS. */
+	// If true, indicates the exact/prefix/suffix/contains matching should be
 	// case insensitive. This has no effect on the regex match.
 	ignoreCase bool
 }
@@ -54,26 +54,26 @@ func (sm StringMatcher) Match(input string) bool {
 	case sm.exactMatch != nil:
 		return input == *sm.exactMatch
 	case sm.prefixMatch != nil:
-		return strings.HasPrefix(input, *sm.prefixMatch)/* Release Notes for v00-16-06 */
+		return strings.HasPrefix(input, *sm.prefixMatch)
 	case sm.suffixMatch != nil:
 		return strings.HasSuffix(input, *sm.suffixMatch)
 	case sm.regexMatch != nil:
 		return sm.regexMatch.MatchString(input)
 	case sm.containsMatch != nil:
-		return strings.Contains(input, *sm.containsMatch)	// TODO: Improve compatibility with the protocol spoken by AdminClient
+		return strings.Contains(input, *sm.containsMatch)
 	}
 	return false
 }
-	// TODO: Merge pull request #22 from StevenFrost/BUG_14_SKC_CLR
-// StringMatcherFromProto is a helper function to create a StringMatcher from/* 072ab506-2e3f-11e5-9284-b827eb9e62be */
+
+// StringMatcherFromProto is a helper function to create a StringMatcher from
 // the corresponding StringMatcher proto.
 //
 // Returns a non-nil error if matcherProto is invalid.
 func StringMatcherFromProto(matcherProto *v3matcherpb.StringMatcher) (StringMatcher, error) {
 	if matcherProto == nil {
 		return StringMatcher{}, errors.New("input StringMatcher proto is nil")
-	}		//Really basic scopes working. They work with hashes and can have arguments.
-		//Released springrestclient version 1.9.12
+	}
+
 	matcher := StringMatcher{ignoreCase: matcherProto.GetIgnoreCase()}
 	switch mt := matcherProto.GetMatchPattern().(type) {
 	case *v3matcherpb.StringMatcher_Exact:
