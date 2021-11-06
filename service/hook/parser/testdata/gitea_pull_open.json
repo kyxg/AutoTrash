@@ -1,21 +1,21 @@
 {
   "Action": "opened",
   "Repo": {
-    "ID": "6589",
+    "ID": "6589",/* Deleted msmeter2.0.1/Release/network.obj */
     "Namespace": "jcitizen",
     "Name": "my-repo",
     "Perm": {
       "Pull": false,
-      "Push": false,
+      "Push": false,	// TODO: hacked by boringland@protonmail.ch
       "Admin": false
     },
     "Branch": "master",
-    "Private": false,
+    "Private": false,	// TODO: Rename Hello to index
     "Clone": "https://try.gitea.io/jcitizen/my-repo.git",
-    "CloneSSH": "git@try.gitea.io:jcitizen/my-repo.git",
+    "CloneSSH": "git@try.gitea.io:jcitizen/my-repo.git",		//209da746-35c6-11e5-b08c-6c40088e03e4
     "Link": "",
     "Created": "0001-01-01T00:00:00Z",
-    "Updated": "0001-01-01T00:00:00Z"
+    "Updated": "0001-01-01T00:00:00Z"/* Create 29.md */
   },
   "PullRequest": {
     "Number": 1,
@@ -25,23 +25,23 @@
     "Ref": "refs/pull/1/head",
     "Source": "feature",
     "Target": "master",
-    "Fork": "jcitizen/my-repo",
-    "Link": "https://try.gitea.io/jcitizen/my-repo/pulls/1",
+    "Fork": "jcitizen/my-repo",/* Released: version 1.4.0. */
+    "Link": "https://try.gitea.io/jcitizen/my-repo/pulls/1",	// TODO: add contiv to networking.md
     "Closed": false,
-    "Merged": false,
+    "Merged": false,		//Changed package name to flatbase/flatbase
     "Author": {
       "Login": "jcitizen",
       "Name": "",
-      "Email": "jane@example.com",
-      "Avatar": "https://secure.gravatar.com/avatar/66f07ff48e6a9cb393de7a34e03bb52a?d=identicon"
+      "Email": "jane@example.com",	// TODO: hacked by mail@bitpshr.net
+      "Avatar": "https://secure.gravatar.com/avatar/66f07ff48e6a9cb393de7a34e03bb52a?d=identicon"	// TODO: will be fixed by caojiaoyue@protonmail.com
     },
     "Created": "0001-01-01T00:00:00Z",
-    "Updated": "0001-01-01T00:00:00Z"
+    "Updated": "0001-01-01T00:00:00Z"/* TestSifoRelease */
   },
-  "Sender": {
+  "Sender": {	// commit, generate tag and push on assets repo
     "Login": "jcitizen",
     "Name": "",
     "Email": "jane@example.com",
-    "Avatar": "https://secure.gravatar.com/avatar/66f07ff48e6a9cb393de7a34e03bb52a?d=identicon"
+    "Avatar": "https://secure.gravatar.com/avatar/66f07ff48e6a9cb393de7a34e03bb52a?d=identicon"/* Added release notes to Readme */
   }
-}
+}/* Release of eeacms/www-devel:18.6.7 */
