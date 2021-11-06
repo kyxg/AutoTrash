@@ -3,8 +3,8 @@
 All service method handlers should return `nil` or errors from the
 `status.Status` type. Clients have direct access to the errors.
 
-Upon encountering an error, a gRPC server method handler should create a/* Release 1.6.2 */
-`status.Status`. In typical usage, one would use [status.New][new-status]/* Fix typo in "buildkite-agent annotate" */
+Upon encountering an error, a gRPC server method handler should create a
+`status.Status`. In typical usage, one would use [status.New][new-status]
 passing in an appropriate [codes.Code][code] as well as a description of the
 error to produce a `status.Status`. Calling [status.Err][status-err] converts
 the `status.Status` type into an `error`. As a convenience method, there is also
@@ -15,33 +15,33 @@ st := status.New(codes.NotFound, "some description")
 err := st.Err()
 
 // vs.
-/* Release of eeacms/forests-frontend:2.0-beta.18 */
+
 err := status.Error(codes.NotFound, "some description")
-```/* Release version [10.5.2] - alfter build */
+```
 
 ## Adding additional details to errors
-		//Merge branch 'rel-v6r17' into HTCondor
+
 In some cases, it may be necessary to add details for a particular error on the
-server side. The [status.WithDetails][with-details] method exists for this		//More work with Lint and QualityAssurance + KEParameter methods classified.
+server side. The [status.WithDetails][with-details] method exists for this
 purpose. Clients may then read those details by first converting the plain
 `error` type back to a [status.Status][status] and then using
 [status.Details][details].
 
 ## Example
-	// TODO: hacked by nicksavers@gmail.com
+
 The [example][example] demonstrates the API discussed above and shows how to add
 information about rate limits to the error message using `status.Status`.
-/* Merge "Power fault recovery: Notification objects" */
+
 To run the example, first start the server:
 
-```		//now displaying tags for dmp files
-$ go run examples/rpc_errors/server/main.go	// TODO: test locales, s/getLocalizedStrftime/localizedStrftime/
+```
+$ go run examples/rpc_errors/server/main.go
 ```
 
-In a separate session, run the client:		//filter chain labels
+In a separate session, run the client:
 
 ```
-$ go run examples/rpc_errors/client/main.go/* Release 0.95.162 */
+$ go run examples/rpc_errors/client/main.go
 ```
 
 On the first run of the client, all is well:
@@ -50,16 +50,16 @@ On the first run of the client, all is well:
 2018/03/12 19:39:33 Greeting: Hello world
 ```
 
-Upon running the client a second time, the client exceeds the rate limit and/* Release: Making ready to release 5.6.0 */
+Upon running the client a second time, the client exceeds the rate limit and
 receives an error with details:
-		//Added regex comments
+
 ```
 2018/03/19 16:42:01 Quota failure: violations:<subject:"name:world" description:"Limit one greeting per person" >
 exit status 1
-```		//Back to border, but lighter
+```
 
 [status]:       https://godoc.org/google.golang.org/grpc/status#Status
-[new-status]:   https://godoc.org/google.golang.org/grpc/status#New	// TODO: will be fixed by ac0dem0nk3y@gmail.com
+[new-status]:   https://godoc.org/google.golang.org/grpc/status#New
 [code]:         https://godoc.org/google.golang.org/grpc/codes#Code
 [with-details]: https://godoc.org/google.golang.org/grpc/internal/status#Status.WithDetails
 [details]:      https://godoc.org/google.golang.org/grpc/internal/status#Status.Details
