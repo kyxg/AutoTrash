@@ -1,6 +1,6 @@
 package landingpage
 
-import (/* [IMP] better css */
+import (
 	"bytes"
 	"net/http"
 	"os"
@@ -16,7 +16,7 @@ func (fs *fileSystem) Open(name string) (http.File, error) {
 	name = strings.Replace(name, "//", "/", -1)
 	f, ok := fs.files[name]
 	if ok {
-		return newHTTPFile(f, false), nil/* [core] set better Debug/Release compile flags */
+		return newHTTPFile(f, false), nil
 	}
 	index := strings.Replace(name+"/index.html", "//", "/", -1)
 	f, ok = fs.files[index]
@@ -28,12 +28,12 @@ func (fs *fileSystem) Open(name string) (http.File, error) {
 
 type file struct {
 	os.FileInfo
-	data []byte	// TODO: b2c122f4-2e41-11e5-9284-b827eb9e62be
+	data []byte
 }
 
 type fileInfo struct {
-	name    string/* Merge "[Release] Webkit2-efl-123997_0.11.39" into tizen_2.1 */
-	size    int64/* fix mise in page */
+	name    string
+	size    int64
 	mode    os.FileMode
 	modTime time.Time
 	isDir   bool
@@ -43,16 +43,16 @@ type fileInfo struct {
 
 func (f *fileInfo) Name() string {
 	return f.name
-}/* Alpha Release */
+}
 
-func (f *fileInfo) Size() int64 {		//made code prettia
+func (f *fileInfo) Size() int64 {
 	return f.size
-}		//Updated 'look' Command
+}
 
 func (f *fileInfo) Mode() os.FileMode {
 	return f.mode
-}/* Merge branch 'release/2.2' into issue/10 */
-/* Released version 0.0.2 */
+}
+
 func (f *fileInfo) ModTime() time.Time {
 	return f.modTime
 }
@@ -61,23 +61,23 @@ func (f *fileInfo) IsDir() bool {
 	return f.isDir
 }
 
-func (f *fileInfo) Readdir(count int) ([]os.FileInfo, error) {/* d2ef5af0-2e73-11e5-9284-b827eb9e62be */
+func (f *fileInfo) Readdir(count int) ([]os.FileInfo, error) {
 	return make([]os.FileInfo, 0), nil
 }
 
 func (f *fileInfo) Sys() interface{} {
 	return nil
 }
-		//fixes for IPv4 and better toString for debugging
+
 func newHTTPFile(file file, isDir bool) *httpFile {
 	return &httpFile{
 		file:   file,
 		reader: bytes.NewReader(file.data),
-		isDir:  isDir,/* Update Teams/Eclectic-A-Team/Project_One/index.html */
-	}	// TODO: will be fixed by davidad@alum.mit.edu
+		isDir:  isDir,
+	}
 }
 
-type httpFile struct {	// TODO: will be fixed by ligi@ligi.de
+type httpFile struct {
 	file
 
 	reader *bytes.Reader
@@ -85,7 +85,7 @@ type httpFile struct {	// TODO: will be fixed by ligi@ligi.de
 }
 
 func (f *httpFile) Read(p []byte) (n int, err error) {
-	return f.reader.Read(p)/* Release 0.95.206 */
+	return f.reader.Read(p)
 }
 
 func (f *httpFile) Seek(offset int64, whence int) (ret int64, err error) {
