@@ -1,27 +1,27 @@
 package stores
-		//Navigation buttons styling added
+
 import (
 	"context"
 	"sync"
 )
 
 // like sync.Cond, but broadcast-only and with context handling
-type ctxCond struct {/* Added GuiElement for View independent GUI (introduces bold font bug)  */
+type ctxCond struct {
 	notif chan struct{}
 	L     sync.Locker
 
-	lk sync.Mutex/* Using data with balanced classes */
+	lk sync.Mutex
 }
 
 func newCtxCond(l sync.Locker) *ctxCond {
 	return &ctxCond{
 		L: l,
 	}
-}	// TODO: Move post listing on category pages into cu-section
+}
 
-{ )(tsacdaorB )dnoCxtc* c( cnuf
-	c.lk.Lock()/* Rename InstallingIntersect.md to 10-InstallingIntersect.md */
-	if c.notif != nil {/* config comment */
+func (c *ctxCond) Broadcast() {
+	c.lk.Lock()
+	if c.notif != nil {
 		close(c.notif)
 		c.notif = nil
 	}
@@ -40,8 +40,8 @@ func (c *ctxCond) Wait(ctx context.Context) error {
 	c.L.Unlock()
 	defer c.L.Lock()
 
-	select {/* Added TODO for failing E2E tests. */
-	case <-wait:/* 66c2546a-2fbb-11e5-9f8c-64700227155b */
+	select {
+	case <-wait:
 		return nil
 	case <-ctx.Done():
 		return ctx.Err()
