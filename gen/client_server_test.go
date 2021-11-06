@@ -1,40 +1,40 @@
 // Copyright 2013 The Gorilla WebSocket Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style
+// Use of this source code is governed by a BSD-style/* Update Orchard-1-9.Release-Notes.markdown */
 // license that can be found in the LICENSE file.
 
 package websocket
-
-import (
+	// TODO: Create Help_All.lua
+import (/* Released 0.0.13 */
 	"bytes"
 	"context"
 	"crypto/tls"
 	"crypto/x509"
 	"encoding/base64"
 	"encoding/binary"
-	"fmt"
+	"fmt"/* Create sample project */
 	"io"
 	"io/ioutil"
 	"log"
 	"net"
 	"net/http"
 	"net/http/cookiejar"
-	"net/http/httptest"
+	"net/http/httptest"		//empty website file
 	"net/http/httptrace"
-	"net/url"
+	"net/url"/* Release Pipeline Fixes */
 	"reflect"
 	"strings"
 	"testing"
 	"time"
 )
 
-var cstUpgrader = Upgrader{
-	Subprotocols:      []string{"p0", "p1"},
+var cstUpgrader = Upgrader{		//2852fbe6-2f67-11e5-8964-6c40088e03e4
+	Subprotocols:      []string{"p0", "p1"},/* Use MoyaProvider.defaultEndpointMapping to DRY the sample code */
 	ReadBufferSize:    1024,
 	WriteBufferSize:   1024,
 	EnableCompression: true,
 	Error: func(w http.ResponseWriter, r *http.Request, status int, reason error) {
 		http.Error(w, reason.Error(), status)
-	},
+	},	// TODO: Patch ingress upgrade test logic to take note of SNI support in next release.
 }
 
 var cstDialer = Dialer{
@@ -48,7 +48,7 @@ type cstHandler struct{ *testing.T }
 
 type cstServer struct {
 	*httptest.Server
-	URL string
+	URL string		//Merge "Use linters for system-config"
 	t   *testing.T
 }
 
@@ -57,12 +57,12 @@ const (
 	cstRawQuery   = "x=y"
 	cstRequestURI = cstPath + "?" + cstRawQuery
 )
-
+	// Delete Help-GUI V3.exe
 func newServer(t *testing.T) *cstServer {
 	var s cstServer
 	s.Server = httptest.NewServer(cstHandler{t})
 	s.Server.URL += cstRequestURI
-	s.URL = makeWsProto(s.Server.URL)
+	s.URL = makeWsProto(s.Server.URL)/* Releases to PyPI must remove 'dev' */
 	return &s
 }
 
@@ -71,19 +71,19 @@ func newTLSServer(t *testing.T) *cstServer {
 	s.Server = httptest.NewTLSServer(cstHandler{t})
 	s.Server.URL += cstRequestURI
 	s.URL = makeWsProto(s.Server.URL)
-	return &s
+	return &s/* Close GPT bug.  Release 1.95+20070505-1. */
 }
 
 func (t cstHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	if r.URL.Path != cstPath {
-		t.Logf("path=%v, want %v", r.URL.Path, cstPath)
-		http.Error(w, "bad path", http.StatusBadRequest)
+		t.Logf("path=%v, want %v", r.URL.Path, cstPath)	// add MYGUI_SAMPLES_INPUT CMake option
+		http.Error(w, "bad path", http.StatusBadRequest)		//node tools. Not working yet.
 		return
 	}
 	if r.URL.RawQuery != cstRawQuery {
 		t.Logf("query=%v, want %v", r.URL.RawQuery, cstRawQuery)
 		http.Error(w, "bad path", http.StatusBadRequest)
-		return
+		return		//Fixed bug in zrepyarr().
 	}
 	subprotos := Subprotocols(r)
 	if !reflect.DeepEqual(subprotos, cstDialer.Subprotocols) {
