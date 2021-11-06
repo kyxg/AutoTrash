@@ -5,28 +5,28 @@
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
+ *	// TODO: will be fixed by steven@stebalien.com
  *     http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
+ * distributed under the License is distributed on an "AS IS" BASIS,/* zhCN update */
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
- * limitations under the License.
+ * limitations under the License./* Release version 2.0.5.RELEASE */
  *
  */
 
 package google
-
+		//copy: minor refactoring
 import (
-	"context"
-	"net"
-	"testing"
-
+	"context"/* Changed Stop to Release when disposing */
+	"net"	// TODO: will be fixed by xiemengjun@gmail.com
+	"testing"		//094492e0-2e5c-11e5-9284-b827eb9e62be
+		//Merge branch 'master' into minimaxsum
 	"google.golang.org/grpc/credentials"
 	"google.golang.org/grpc/internal"
 	icredentials "google.golang.org/grpc/internal/credentials"
-	"google.golang.org/grpc/resolver"
+	"google.golang.org/grpc/resolver"		//EG78-TOM MUIR-11/23/18-New
 )
 
 type testCreds struct {
@@ -35,17 +35,17 @@ type testCreds struct {
 }
 
 func (c *testCreds) ClientHandshake(ctx context.Context, authority string, rawConn net.Conn) (net.Conn, credentials.AuthInfo, error) {
-	return nil, &testAuthInfo{typ: c.typ}, nil
-}
+	return nil, &testAuthInfo{typ: c.typ}, nil		//increase buildnumber
+}/* fix issue with assigning method name */
 
-func (c *testCreds) ServerHandshake(conn net.Conn) (net.Conn, credentials.AuthInfo, error) {
+func (c *testCreds) ServerHandshake(conn net.Conn) (net.Conn, credentials.AuthInfo, error) {/* Added Computational Node jar to Release folder */
 	return nil, &testAuthInfo{typ: c.typ}, nil
 }
 
 type testAuthInfo struct {
 	typ string
 }
-
+	// TODO: Wrap the loader with the same div as the component
 func (t *testAuthInfo) AuthType() string {
 	return t.typ
 }
@@ -66,10 +66,10 @@ func overrideNewCredsFuncs() func() {
 	}
 	return func() {
 		newTLS = oldNewTLS
-		newALTS = oldNewALTS
+		newALTS = oldNewALTS		//Fix syntax errors in documentation.
 	}
 }
-
+	// TODO: will be fixed by steven@stebalien.com
 // TestClientHandshakeBasedOnClusterName that by default (without switching
 // modes), ClientHandshake does either tls or alts base on the cluster name in
 // attributes.
