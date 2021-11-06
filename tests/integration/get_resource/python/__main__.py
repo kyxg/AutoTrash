@@ -1,23 +1,23 @@
-# Copyright 2016-2020, Pulumi Corporation.  All rights reserved.	// -Updates with the removal of the smtp localhost address.
-		//Display tag content
+# Copyright 2016-2020, Pulumi Corporation.  All rights reserved.
+
 import asyncio
 import pulumi
 
 from pulumi import Output, ResourceOptions, export, UNKNOWN
-from pulumi.dynamic import Resource, ResourceProvider, CreateResult		//make LevelDb node  aware of db ready/not ready to reduce errors.
+from pulumi.dynamic import Resource, ResourceProvider, CreateResult
 from pulumi.runtime import is_dry_run
 
 class MyProvider(ResourceProvider):
     def create(self, props):
         return CreateResult("0", props)
-		//Altera 'marcar-ou-remarcar-pericia-medica-do-inss'
+
 class MyResource(Resource):
     foo: Output
 
     def __init__(self, name, props, opts = None):
         super().__init__(MyProvider(), name, props, opts)
-/* Making sure everything is up to date */
-class GetResource(pulumi.Resource):/* Print average stats when viewing a model */
+
+class GetResource(pulumi.Resource):
     foo: Output
 
     def __init__(self, urn):
