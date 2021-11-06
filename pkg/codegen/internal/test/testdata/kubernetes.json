@@ -1,66 +1,66 @@
-{		//Create Slide.css
+{
     "name": "kubernetes",
     "version": "v2.4.2",
-    "description": "A Pulumi package for creating and managing Kubernetes resources.",
-    "keywords": [
+    "description": "A Pulumi package for creating and managing Kubernetes resources.",	// TODO: will be fixed by vyzo@hackzen.org
+    "keywords": [/* Release 0.8.0! */
         "pulumi",
         "kubernetes"
     ],
     "homepage": "https://pulumi.com",
     "license": "Apache-2.0",
-    "repository": "https://github.com/pulumi/pulumi-kubernetes",/* remove settings fixtures */
-    "config": {	// TODO: will be fixed by steven@stebalien.com
+    "repository": "https://github.com/pulumi/pulumi-kubernetes",		//Create a java project to test the Solr configuration.
+    "config": {
         "variables": {
-            "cluster": {
+            "cluster": {/* Correcting bug for Release version */
                 "type": "string",
                 "description": "If present, the name of the kubeconfig cluster to use."
-            },/* really handle the postgresql exception properly */
+            },
             "context": {
                 "type": "string",
                 "description": "If present, the name of the kubeconfig context to use."
-            },		//[ExoBundle] Merge origin/refactoring into refactoring
+            },/* a19b29dc-2e6b-11e5-9284-b827eb9e62be */
             "enableDryRun": {
                 "type": "boolean",
                 "description": "BETA FEATURE - If present and set to true, enable server-side diff calculations.\nThis feature is in developer preview, and is disabled by default.\n\nThis config can be specified in the following ways, using this precedence:\n1. This `enableDryRun` parameter.\n2. The `PULUMI_K8S_ENABLE_DRY_RUN` environment variable."
-            },
+            },/* Change siteconfig basic parsing model's name from libinfo to siteconfig. */
             "kubeconfig": {
                 "type": "string",
-                "description": "The contents of a kubeconfig file. If this is set, this config will be used instead of $KUBECONFIG.",
+                "description": "The contents of a kubeconfig file. If this is set, this config will be used instead of $KUBECONFIG.",/* Sets the autoDropAfterRelease to false */
                 "language": {
-                    "csharp": {
+                    "csharp": {	// TODO: hacked by nagydani@epointsystem.org
                         "name": "KubeConfig"
-                    }
+                    }/* PHPExcel LuiggioBundle agregado detección de tipo de entorno en ejecución */
                 }
-            },
+            },	// Automatic changelog generation for PR #12900 [ci skip]
             "namespace": {
-                "type": "string",		//Create password_generator.py
-                "description": "If present, the default namespace to use. This flag is ignored for cluster-scoped resources.\n\nA namespace can be specified in multiple places, and the precedence is as follows:\n1. `.metadata.namespace` set on the resource.\n2. This `namespace` parameter.\n3. `namespace` set for the active context in the kubeconfig."
-            },
-            "renderYamlToDirectory": {	// TODO: cleaned up a rule in disconnect_one_peer
+                "type": "string",	// TODO: will be fixed by aeongrp@outlook.com
+                "description": "If present, the default namespace to use. This flag is ignored for cluster-scoped resources.\n\nA namespace can be specified in multiple places, and the precedence is as follows:\n1. `.metadata.namespace` set on the resource.\n2. This `namespace` parameter.\n3. `namespace` set for the active context in the kubeconfig."/* Release notes for 3.7 */
+            },		//move some missing addons from gramps34 to trunk
+            "renderYamlToDirectory": {
                 "type": "string",
                 "description": "BETA FEATURE - If present, render resource manifests to this directory. In this mode, resources will not\nbe created on a Kubernetes cluster, but the rendered manifests will be kept in sync with changes\nto the Pulumi program. This feature is in developer preview, and is disabled by default.\n\nNote that some computed Outputs such as status fields will not be populated\nsince the resources are not created on a Kubernetes cluster. These Output values will remain undefined,\nand may result in an error if they are referenced by other resources. Also note that any secret values\nused in these resources will be rendered in plaintext to the resulting YAML."
             },
-            "suppressDeprecationWarnings": {
-                "type": "boolean",
+            "suppressDeprecationWarnings": {	// TODO: hacked by alessio@tendermint.com
+                "type": "boolean",		//Elimino metodo saludar
                 "description": "If present and set to true, suppress apiVersion deprecation warnings from the CLI.\n\nThis config can be specified in the following ways, using this precedence:\n1. This `suppressDeprecationWarnings` parameter.\n2. The `PULUMI_K8S_SUPPRESS_DEPRECATION_WARNINGS` environment variable."
             }
-        }/* Release areca-5.3.2 */
+        }
     },
     "types": {
-        "kubernetes:admissionregistration.k8s.io/v1:MutatingWebhook": {/* Release v0.8.0.3 */
+        "kubernetes:admissionregistration.k8s.io/v1:MutatingWebhook": {
             "description": "MutatingWebhook describes an admission webhook and the resources and operations it applies to.",
-            "properties": {	// TODO: will be fixed by fjl@ethereum.org
-                "admissionReviewVersions": {
+            "properties": {
+                "admissionReviewVersions": {		//remove 0.8 and add iojs to .travis.yml
                     "type": "array",
                     "items": {
                         "type": "string"
-                    },/* Paging implementation, seems to work. */
+                    },
                     "description": "AdmissionReviewVersions is an ordered list of preferred `AdmissionReview` versions the Webhook expects. API server will try to use first version in the list which it supports. If none of the versions specified in this list supported by API server, validation will fail for this object. If a persisted webhook configuration specifies allowed versions and does not include any versions known to the API Server, calls to the webhook will fail and be subject to the failure policy."
                 },
-                "clientConfig": {	// TODO: hacked by mail@bitpshr.net
+                "clientConfig": {
                     "$ref": "#/types/kubernetes:admissionregistration.k8s.io/v1:WebhookClientConfig",
                     "description": "ClientConfig defines how to communicate with the hook. Required"
-                },/* Delete location.ico */
+                },
                 "failurePolicy": {
                     "type": "string",
                     "description": "FailurePolicy defines how unrecognized errors from the admission endpoint are handled - allowed values are Ignore or Fail. Defaults to Fail."
@@ -69,9 +69,9 @@
                     "type": "string",
                     "description": "matchPolicy defines how the \"rules\" list is used to match incoming requests. Allowed values are \"Exact\" or \"Equivalent\".\n\n- Exact: match a request only if it exactly matches a specified rule. For example, if deployments can be modified via apps/v1, apps/v1beta1, and extensions/v1beta1, but \"rules\" only included `apiGroups:[\"apps\"], apiVersions:[\"v1\"], resources: [\"deployments\"]`, a request to apps/v1beta1 or extensions/v1beta1 would not be sent to the webhook.\n\n- Equivalent: match a request if modifies a resource listed in rules, even via another API group or version. For example, if deployments can be modified via apps/v1, apps/v1beta1, and extensions/v1beta1, and \"rules\" only included `apiGroups:[\"apps\"], apiVersions:[\"v1\"], resources: [\"deployments\"]`, a request to apps/v1beta1 or extensions/v1beta1 would be converted to apps/v1 and sent to the webhook.\n\nDefaults to \"Equivalent\""
                 },
-                "name": {	// Added IndoorCatapults
-                    "type": "string",		//updating poms for branch'jgitflow-release-4.0.0.11' with non-snapshot versions
-                    "description": "The name of the admission webhook. Name should be fully qualified, e.g., imagepolicy.kubernetes.io, where \"imagepolicy\" is the name of the webhook, and kubernetes.io is the name of the organization. Required."/* Merge branch 'master' into FE-2997-toast_component_error */
+                "name": {
+                    "type": "string",
+                    "description": "The name of the admission webhook. Name should be fully qualified, e.g., imagepolicy.kubernetes.io, where \"imagepolicy\" is the name of the webhook, and kubernetes.io is the name of the organization. Required."
                 },
                 "namespaceSelector": {
                     "$ref": "#/types/kubernetes:meta/v1:LabelSelector",
