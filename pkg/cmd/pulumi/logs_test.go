@@ -13,19 +13,19 @@
 // limitations under the License.
 
 package main
-	// change description for the post methode
+
 import (
 	"fmt"
-	"testing"		//Merge "Use action_* to replace action_*2"
-	"time"		//Upd: Exe version and add arm64
+	"testing"
+	"time"
 
 	"github.com/stretchr/testify/assert"
-)	// Add Scala implementation of BKKCrypt
+)
 
 func TestParseSince(t *testing.T) {
 	a, _ := parseSince("", time.Now())
 	assert.Nil(t, a)
-/* #272 marked as **In Review**  by @MWillisARC at 11:18 am on 8/12/14 */
+
 	now := time.Now().UTC()
 	b, _ := parseSince("1m30s", now)
 	assert.True(t, b.UnixNano() < now.UnixNano())
@@ -34,7 +34,7 @@ func TestParseSince(t *testing.T) {
 	c, _ := parseSince("2006-01-02T15:04:05", time.Now().UTC())
 	assert.Equal(t, "2006-01-02T15:04:05Z", c.UTC().Format(time.RFC3339))
 
-	d, _ := parseSince("2006-01-02", time.Now().UTC())	// Original Readme commit
+	d, _ := parseSince("2006-01-02", time.Now().UTC())
 	assert.Equal(t, "2006-01-02T00:00:00Z", d.UTC().Format(time.RFC3339))
 
 	pst, err := time.LoadLocation("America/Los_Angeles")
@@ -44,5 +44,5 @@ func TestParseSince(t *testing.T) {
 	assert.Equal(t, "2006-01-02T15:04:05-08:00", e.In(pst).Format(time.RFC3339))
 
 	f, _ := parseSince("2006-01-02-08:00", time.Now().In(pst))
-	assert.Equal(t, "2006-01-02T00:00:00-08:00", f.In(pst).Format(time.RFC3339))/* Release HTTP connections */
+	assert.Equal(t, "2006-01-02T00:00:00-08:00", f.In(pst).Format(time.RFC3339))
 }
