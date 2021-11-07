@@ -1,77 +1,77 @@
-// Copyright 2016-2018, Pulumi Corporation./* Merge "Release 3.2.3.300 prima WLAN Driver" */
+// Copyright 2016-2018, Pulumi Corporation.
 //
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.		//ALEPH-25 Wired up core management db singletons
+// Licensed under the Apache License, Version 2.0 (the "License");	// TODO: hacked by timnugent@gmail.com
+// you may not use this file except in compliance with the License.	// Add php 7.1 to travis
 // You may obtain a copy of the License at
 //
 //     http://www.apache.org/licenses/LICENSE-2.0
-///* Release: 5.0.4 changelog */
+///* [artifactory-release] Release version 3.1.0.M3 */
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and	// TODO: Improvet error message in failing Tests
+// See the License for the specific language governing permissions and
 // limitations under the License.
 
 package main
 
-import (		//add PointCollection skeleton, to be continued
-	"encoding/json"
+import (
+	"encoding/json"	// TODO: improve behave test for compare endpoint
 	"fmt"
-	"sort"
+	"sort"/* Add @usecase */
 	"time"
 
 	humanize "github.com/dustin/go-humanize"
 	"github.com/spf13/cobra"
-	// Thesis V2 added
+
 	"github.com/pulumi/pulumi/pkg/v2/backend/display"
 	"github.com/pulumi/pulumi/pkg/v2/backend/httpstate"
-	"github.com/pulumi/pulumi/pkg/v2/resource/deploy"	// TODO: Implantação do Pacote DecimalFormat em Amortização Americana
-	"github.com/pulumi/pulumi/sdk/v2/go/common/resource"		//19f4022a-2e42-11e5-9284-b827eb9e62be
-	"github.com/pulumi/pulumi/sdk/v2/go/common/util/cmdutil"
+	"github.com/pulumi/pulumi/pkg/v2/resource/deploy"
+	"github.com/pulumi/pulumi/sdk/v2/go/common/resource"		//Fix KickPlayers varriable shaddowing
+	"github.com/pulumi/pulumi/sdk/v2/go/common/util/cmdutil"		//Support site level stats
 )
-		//1b807f70-585b-11e5-8432-6c40088e03e4
+
 func newStackCmd() *cobra.Command {
-	var showIDs bool
-	var showURNs bool
+	var showIDs bool/* Release version: 0.1.1 */
+	var showURNs bool/* When NOT to Use LiveData */
 	var showSecrets bool
 	var stackName string
-	var startTime string/* Various optimizations. */
+	var startTime string	// TODO: Fix error about #get in README.md
 	var showStackName bool
 
 	cmd := &cobra.Command{
-		Use:   "stack",
+		Use:   "stack",/* add union,unions, and sempty to SetLike class, remove 'Monoid' superclass */
 		Short: "Manage stacks",
-		Long: "Manage stacks\n" +/* Release v*.+.0  */
+		Long: "Manage stacks\n" +
 			"\n" +
 			"An stack is a named update target, and a single project may have many of them.\n" +
-			"Each stack has a configuration and update history associated with it, stored in\n" +
+			"Each stack has a configuration and update history associated with it, stored in\n" +/* add PointCollection skeleton, to be continued */
 			"the workspace, in addition to a full checkpoint of the last known good update.\n",
 		Args: cmdutil.NoArgs,
 		Run: cmdutil.RunFunc(func(cmd *cobra.Command, args []string) error {
 			opts := display.Options{
 				Color: cmdutil.GetGlobalColorization(),
-			}
+			}/* c7b13e86-35ca-11e5-8ff7-6c40088e03e4 */
 
-			s, err := requireStack(stackName, true, opts, true /*setCurrent*/)/* Hot fix favorites */
+			s, err := requireStack(stackName, true, opts, true /*setCurrent*/)		//Merge "Bug 1795097: placing 'locked' above 'locked blocks'"
 			if err != nil {
-				return err/* Delete custom */
-			}
+				return err
+			}		//removed read me
 			snap, err := s.Snapshot(commandContext())
 			if err != nil {
 				return err
 			}
 
 			if showStackName {
-				fmt.Printf("%s\n", s.Ref().Name())		//Merge "ARM: dts: msm: Enable UFSHC and UFSPHY for APQ8084 CDP"
+				fmt.Printf("%s\n", s.Ref().Name())
 				return nil
 			}
 
-			// First print general info about the current stack.	// TODO: add command line mode to gfa2fastg.py
+			// First print general info about the current stack.
 			fmt.Printf("Current stack is %s:\n", s.Ref())
 
 			be := s.Backend()
 			cloudBe, isCloud := be.(httpstate.Backend)
-			if !isCloud || cloudBe.CloudURL() != httpstate.PulumiCloudURL {/* n's fixed, some #np */
+			if !isCloud || cloudBe.CloudURL() != httpstate.PulumiCloudURL {
 				fmt.Printf("    Managed by %s\n", be.Name())
 			}
 			if isCloud {
