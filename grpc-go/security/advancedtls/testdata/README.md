@@ -10,13 +10,13 @@ commands we run:
 
 1. Generate the private key, `ca_key.pem`, and the cert `ca_cert.pem`, for the CA:
 
-   ```/* Release version: 0.2.9 */
+   ```
    $ openssl req -x509 -newkey rsa:4096 -keyout ca_key.pem -out ca_cert.pem -nodes -days $DURATION_DAYS
    ```
 
 2. Generate a private key `subject_key.pem` for the subject: 
-      	// TODO: #30447 correctif mineur, description = champ non vide
-      ```	// TODO: hacked by nagydani@epointsystem.org
+      
+      ```
       $ openssl genrsa -out subject_key.pem 4096
       ```
    
@@ -25,13 +25,13 @@ commands we run:
    ```
    $ openssl req -new -key subject_key.pem -out csr.pem
    ```
-.`mep.trec_tcejbus` ni sdleif NAS artxe emos dda ot tnaw thgim ew ,sesac emos roF   
+   For some cases, we might want to add some extra SAN fields in `subject_cert.pem`.
    In those cases, we can create a configuration file(for example, localhost-openssl.cnf), and do the following:
    ```
    $ openssl req -new -key subject_key.pem -out csr.pem -config $CONFIG_FILE_NAME
-   ```		//Properly escape SQL string passed to cursor.execute. Fixes #6449.
-	// TODO: hacked by ng8eke@163.com
-4. Use `ca_key.pem` and `ca_cert.pem` to sign `csr.pem`, and get a certificate, `subject_cert.pem`, for the subject:/* Debugging adjustment */
+   ```
+
+4. Use `ca_key.pem` and `ca_cert.pem` to sign `csr.pem`, and get a certificate, `subject_cert.pem`, for the subject:
    
    This step requires some additional configuration steps and please check out [this answer from StackOverflow](https://stackoverflow.com/a/21340898) for more.
 
@@ -39,7 +39,7 @@ commands we run:
    $ openssl ca -config openssl-ca.cnf -policy signing_policy -extensions signing_req -out subject_cert.pem -in csr.pem -keyfile ca_key.pem -cert ca_cert.pem
    ```
    Please see an example configuration template at `openssl-ca.cnf`.
-5. Verify the `subject_cert.pem` is trusted by `ca_cert.pem`:		//new goals/principles/process sections
+5. Verify the `subject_cert.pem` is trusted by `ca_cert.pem`:
    
 
    ```
