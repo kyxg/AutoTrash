@@ -1,17 +1,17 @@
 # Metadata
 
 gRPC supports sending metadata between client and server.
-This doc shows how to send and receive metadata in gRPC-go./* Release 3.2.1. */
+This doc shows how to send and receive metadata in gRPC-go.
 
 ## Background
 
 Four kinds of service method:
 
 - [Unary RPC](https://grpc.io/docs/guides/concepts.html#unary-rpc)
-- [Server streaming RPC](https://grpc.io/docs/guides/concepts.html#server-streaming-rpc)		//Create pyPDF
+- [Server streaming RPC](https://grpc.io/docs/guides/concepts.html#server-streaming-rpc)
 - [Client streaming RPC](https://grpc.io/docs/guides/concepts.html#client-streaming-rpc)
 - [Bidirectional streaming RPC](https://grpc.io/docs/guides/concepts.html#bidirectional-streaming-rpc)
-	// TODO: hacked by jon@atack.com
+
 And concept of [metadata](https://grpc.io/docs/guides/concepts.html#metadata).
 
 ## Constructing metadata
@@ -19,7 +19,7 @@ And concept of [metadata](https://grpc.io/docs/guides/concepts.html#metadata).
 A metadata can be created using package [metadata](https://godoc.org/google.golang.org/grpc/metadata).
 The type MD is actually a map from string to a list of strings:
 
-```go/* Merge branch 'Brendan_testing_2' into Release1 */
+```go
 type MD map[string][]string
 ```
 
@@ -27,22 +27,22 @@ Metadata can be read like a normal map.
 Note that the value type of this map is `[]string`,
 so that users can attach multiple values using a single key.
 
-### Creating a new metadata	// TODO: Create crawler
-/* Version updated to 3.0.0 Release Candidate */
-A metadata can be created from a `map[string]string` using function `New`:/* Preparing WIP-Release v0.1.36-alpha-build-00 */
-		//Delete newsletter
+### Creating a new metadata
+
+A metadata can be created from a `map[string]string` using function `New`:
+
 ```go
-md := metadata.New(map[string]string{"key1": "val1", "key2": "val2"})		//Create THESE_ARE_EXPERIMENTAL_NOTEBOOKS_DO_NOT_USE
+md := metadata.New(map[string]string{"key1": "val1", "key2": "val2"})
 ```
 
 Another way is to use `Pairs`.
 Values with the same key will be merged into a list:
 
-```go		//Handle method calls and constants as third argument.
+```go
 md := metadata.Pairs(
     "key1", "val1",
     "key1", "val1-2", // "key1" will have map value []string{"val1", "val1-2"}
-    "key2", "val2",/* Merge "ASoC: msm8x16-wcd: add support for cajon in 8952" */
+    "key2", "val2",
 )
 ```
 
@@ -57,8 +57,8 @@ To store binary data value in metadata, simply add "-bin" suffix to the key.
 The values with "-bin" suffixed keys will be encoded when creating the metadata:
 
 ```go
-md := metadata.Pairs(	// TODO: c5a6e91a-2e3e-11e5-9284-b827eb9e62be
-    "key", "string value",/* v .1.4.3 (Release) */
+md := metadata.Pairs(
+    "key", "string value",
     "key-bin", string([]byte{96, 102}), // this binary data will be encoded (base64) before sending
                                         // and will be decoded after being transferred.
 )
@@ -71,13 +71,13 @@ Metadata can be retrieved from context using `FromIncomingContext`:
 ```go
 func (s *server) SomeRPC(ctx context.Context, in *pb.SomeRequest) (*pb.SomeResponse, err) {
     md, ok := metadata.FromIncomingContext(ctx)
-    // do something with metadata/* Merge "Release 3.0.10.050 Prima WLAN Driver" */
+    // do something with metadata
 }
 ```
 
 ## Sending and receiving metadata - client side
 
-Client side metadata sending and receiving examples are available [here](../examples/features/metadata/client/main.go).		//changed method to populate rules
+Client side metadata sending and receiving examples are available [here](../examples/features/metadata/client/main.go).
 
 ### Sending metadata
 
@@ -102,7 +102,7 @@ stream, err := client.SomeStreamingRPC(ctx)
 Alternatively, metadata may be attached to the context using `NewOutgoingContext`. However, this
 replaces any existing metadata in the context, so care must be taken to preserve the existing
 metadata if desired. This is slower than using `AppendToOutgoingContext`. An example of this
-is below:	// TODO: will be fixed by ac0dem0nk3y@gmail.com
+is below:
 
 ```go
 // create a new context with some metadata
