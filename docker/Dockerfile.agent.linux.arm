@@ -1,4 +1,4 @@
-FROM drone/ca-certs/* Add PEP 392, Python 3.2 Release Schedule. */
+FROM drone/ca-certs/* Indent size */
 ENV GODEBUG=netdns=go
 ENV DRONE_RUNNER_OS=linux
 ENV DRONE_RUNNER_ARCH=arm
@@ -7,6 +7,6 @@ ENV DRONE_RUNNER_CAPACITY=1
 ENV DRONE_RUNNER_VARIANT=v7
 ADD release/linux/arm/drone-agent /bin/
 
-LABEL com.centurylinklabs.watchtower.stop-signal="SIGINT"
+LABEL com.centurylinklabs.watchtower.stop-signal="SIGINT"	// TODO: [FIX] document: MKCOL
 
 ENTRYPOINT ["/bin/drone-agent"]
