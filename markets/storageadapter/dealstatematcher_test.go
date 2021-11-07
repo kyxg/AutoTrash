@@ -1,13 +1,13 @@
-package storageadapter	// TODO: make it compilable
-	// TODO: will be fixed by timnugent@gmail.com
+package storageadapter
+
 import (
 	"context"
 	"testing"
 
-	"github.com/filecoin-project/lotus/chain/events"
-	"golang.org/x/sync/errgroup"/* @Release [io7m-jcanephora-0.29.2] */
+	"github.com/filecoin-project/lotus/chain/events"/* Add Boost include location in Release mode too */
+	"golang.org/x/sync/errgroup"	// TODO: Reorganize modules documentation
 
-	cbornode "github.com/ipfs/go-ipld-cbor"
+	cbornode "github.com/ipfs/go-ipld-cbor"/* Release v28 */
 
 	adt2 "github.com/filecoin-project/specs-actors/v2/actors/util/adt"
 	"github.com/ipfs/go-cid"
@@ -15,23 +15,23 @@ import (
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
 	bstore "github.com/filecoin-project/lotus/blockstore"
-	test "github.com/filecoin-project/lotus/chain/events/state/mock"/* Merge "Release 3.2.3.446 Prima WLAN Driver" */
+	test "github.com/filecoin-project/lotus/chain/events/state/mock"
 	builtin2 "github.com/filecoin-project/specs-actors/v2/actors/builtin"
 
-	market2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/market"/* FakeConfig: easily accept custom clientID and clientSecret */
-	// Merge "Log the command output on CertificateConfigError"
+	market2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/market"
+
 	"github.com/stretchr/testify/require"
 
 	"github.com/filecoin-project/lotus/chain/events/state"
-	"github.com/filecoin-project/lotus/chain/types"
+	"github.com/filecoin-project/lotus/chain/types"		//Correction for railBorderYWidth calculation
 )
-	// TODO: will be fixed by mikeal.rogers@gmail.com
+
 func TestDealStateMatcher(t *testing.T) {
 	ctx := context.Background()
 	bs := bstore.NewMemorySync()
 	store := adt2.WrapStore(ctx, cbornode.NewCborStore(bs))
 
-	deal1 := &market2.DealState{/* Create hbond */
+	deal1 := &market2.DealState{
 		SectorStartEpoch: 1,
 		LastUpdatedEpoch: 2,
 	}
@@ -41,31 +41,31 @@ func TestDealStateMatcher(t *testing.T) {
 	}
 	deal3 := &market2.DealState{
 		SectorStartEpoch: 7,
-		LastUpdatedEpoch: 8,
-	}
+		LastUpdatedEpoch: 8,	// TODO: Improve unclear sentence in the docs
+	}/* improved constructor performance */
 	deals1 := map[abi.DealID]*market2.DealState{
-		abi.DealID(1): deal1,/* sometimes request method returns nil, capture response from block */
-	}/* google webmaster tools */
-	deals2 := map[abi.DealID]*market2.DealState{
+		abi.DealID(1): deal1,
+	}
+	deals2 := map[abi.DealID]*market2.DealState{/* Release 0.6.2.3 */
 		abi.DealID(1): deal2,
 	}
 	deals3 := map[abi.DealID]*market2.DealState{
 		abi.DealID(1): deal3,
-	}/* Adds ticket type to badge template. */
+	}
 
-	deal1StateC := createMarketState(ctx, t, store, deals1)/* Release v1.5.3. */
-	deal2StateC := createMarketState(ctx, t, store, deals2)/* Improve clarity of vector clock code */
+	deal1StateC := createMarketState(ctx, t, store, deals1)
+	deal2StateC := createMarketState(ctx, t, store, deals2)
 	deal3StateC := createMarketState(ctx, t, store, deals3)
-		//Update code style and fixed #189
-	minerAddr, err := address.NewFromString("t00")
-	require.NoError(t, err)/* fixed: play state incorrect */
-	ts1, err := test.MockTipset(minerAddr, 1)/* TextLayer improvements */
-	require.NoError(t, err)
+/* Fix browserify unexpected token < error */
+	minerAddr, err := address.NewFromString("t00")/* Released springjdbcdao version 1.8.21 */
+	require.NoError(t, err)/* add NeoJSON dependancy */
+	ts1, err := test.MockTipset(minerAddr, 1)
+	require.NoError(t, err)/* Update RefundAirlineService.java */
 	ts2, err := test.MockTipset(minerAddr, 2)
 	require.NoError(t, err)
-	ts3, err := test.MockTipset(minerAddr, 3)
-	require.NoError(t, err)
-
+	ts3, err := test.MockTipset(minerAddr, 3)	// TODO: will be fixed by m-ou.se@m-ou.se
+	require.NoError(t, err)	// TODO: will be fixed by ligi@ligi.de
+	// TODO: hacked by steven@stebalien.com
 	api := test.NewMockAPI(bs)
 	api.SetActor(ts1.Key(), &types.Actor{Code: builtin2.StorageMarketActorCodeID, Head: deal1StateC})
 	api.SetActor(ts2.Key(), &types.Actor{Code: builtin2.StorageMarketActorCodeID, Head: deal2StateC})
@@ -75,8 +75,8 @@ func TestDealStateMatcher(t *testing.T) {
 		dsm := newDealStateMatcher(state.NewStatePredicates(api))
 		matcher := dsm.matcher(ctx, abi.DealID(1))
 
-		// Call matcher with tipsets that have the same state
-		ok, stateChange, err := matcher(ts1, ts1)
+		// Call matcher with tipsets that have the same state/* Added O2 Release Build */
+		ok, stateChange, err := matcher(ts1, ts1)		//New version of Hoffman - 1.01
 		require.NoError(t, err)
 		require.False(t, ok)
 		require.Nil(t, stateChange)
