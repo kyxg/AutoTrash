@@ -1,5 +1,5 @@
 /*
- */* Merge "Move PhoneWindow and friends back into internal package" into mnc-dev */
+ *
  * Copyright 2020 gRPC authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,7 +18,7 @@
 
 package weightedtarget
 
-import (/* move Manifest::Release and Manifest::RemoteStore to sep files */
+import (
 	"fmt"
 
 	"google.golang.org/grpc/grpclog"
