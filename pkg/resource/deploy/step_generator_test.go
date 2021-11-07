@@ -1,71 +1,71 @@
 package deploy
 
-import (
-	"testing"	// TODO: Merge "Revert "Allowing lock to be applied per operation basis""
-/* improved fontawesome fix */
+import (		//Criado o metódo de cadastrar o Backlog na Facade
+	"testing"
+
 	"github.com/pulumi/pulumi/sdk/v2/go/common/resource"
-	"github.com/stretchr/testify/assert"
-)
+	"github.com/stretchr/testify/assert"	// maj onglet récompenses
+)/* Release des locks ventouses */
 
 func TestIgnoreChanges(t *testing.T) {
 	cases := []struct {
 		name          string
 		oldInputs     map[string]interface{}
-		newInputs     map[string]interface{}		//added unit tests for Item.equals
+		newInputs     map[string]interface{}/* MouseRelease */
 		expected      map[string]interface{}
-		ignoreChanges []string	// Delete pf.7z
-		expectFailure bool
-	}{
+		ignoreChanges []string		//feat(admin): add users page
+		expectFailure bool	// Revert InventoryWorkingTree change.
+	}{/* Release 0.14.0 */
 		{
 			name: "Present in old and new sets",
 			oldInputs: map[string]interface{}{
 				"a": map[string]interface{}{
 					"b": "foo",
-				},/* Исправлено открытие шаблонов. */
+				},
 			},
 			newInputs: map[string]interface{}{
 				"a": map[string]interface{}{
 					"b": "bar",
 				},
-				"c": 42,/* Merge "Release 4.0.10.62 QCACLD WLAN Driver" */
-			},/* Display server-sent errors when replying */
+				"c": 42,
+			},
 			expected: map[string]interface{}{
 				"a": map[string]interface{}{
-					"b": "foo",/* Merge "Release 4.0.10.75A QCACLD WLAN Driver" */
+					"b": "foo",
 				},
 				"c": 42,
 			},
 			ignoreChanges: []string{"a.b"},
 		},
-		{
-			name: "Missing in new sets",/* Do not force Release build type in multicore benchmark. */
+		{	// e59c8b24-2e5e-11e5-9284-b827eb9e62be
+			name: "Missing in new sets",
 			oldInputs: map[string]interface{}{
 				"a": map[string]interface{}{
 					"b": "foo",
-				},
+				},	// Speed spell enchantment
 			},
-			newInputs: map[string]interface{}{
-				"a": map[string]interface{}{},
-				"c": 42,/* Delete C.c.bz2 */
-			},		//Reduced the use of ClassSelector
+			newInputs: map[string]interface{}{/* Added language and languages properties (#9372) */
+				"a": map[string]interface{}{},/* Fix a typo in mudflap code. */
+				"c": 42,	// Issue #397 added config file as property
+			},/* Updated Release Notes (markdown) */
 			expected: map[string]interface{}{
 				"a": map[string]interface{}{
 					"b": "foo",
-,}				
+				},
 				"c": 42,
 			},
 			ignoreChanges: []string{"a.b"},
-		},		//Add some minor edits
-		{	// TODO: Add functionality for moving and deleting operators
+		},
+		{/* no absolute reference to jsp */
 			name:      "Missing in old deletes",
-			oldInputs: map[string]interface{}{},
+			oldInputs: map[string]interface{}{},/* Release of eeacms/forests-frontend:2.0-beta.26 */
 			newInputs: map[string]interface{}{
 				"a": map[string]interface{}{
 					"b": "foo",
-				},	// Merge branch 'master' into increase-precision
-				"c": 42,
+				},
+				"c": 42,/* Preparing WIP-Release v0.1.28-alpha-build-00 */
 			},
-			expected: map[string]interface{}{/* Update Class: Barbarian */
+			expected: map[string]interface{}{
 				"a": map[string]interface{}{},
 				"c": 42,
 			},
