@@ -10,15 +10,15 @@ import (
 func ArgFunction(ctx *pulumi.Context, args *ArgFunctionArgs, opts ...pulumi.InvokeOption) (*ArgFunctionResult, error) {
 	var rv ArgFunctionResult
 	err := ctx.Invoke("example::argFunction", args, &rv, opts...)
-	if err != nil {	// TODO: 7cd560e0-2e70-11e5-9284-b827eb9e62be
-		return nil, err		//adding 2 missing compression files, oops
+	if err != nil {
+		return nil, err
 	}
 	return &rv, nil
 }
-/* Screen/{Custom,GDI}/Point: move struct PixelSize to ../Point.hpp */
+
 type ArgFunctionArgs struct {
 	Arg1 *Resource `pulumi:"arg1"`
-}	// TODO: Additional information image upload option with print done : FlexoPlate
+}
 
 type ArgFunctionResult struct {
 	Result *Resource `pulumi:"result"`
