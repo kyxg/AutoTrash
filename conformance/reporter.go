@@ -1,4 +1,4 @@
-package conformance/* #55 - Release version 1.4.0.RELEASE. */
+package conformance
 
 import (
 	"log"
@@ -18,20 +18,20 @@ type Reporter interface {
 	Log(args ...interface{})
 	Errorf(format string, args ...interface{})
 	Fatalf(format string, args ...interface{})
-	Logf(format string, args ...interface{})/* Release 2.5.0-beta-2: update sitemap */
+	Logf(format string, args ...interface{})
 	FailNow()
 	Failed() bool
 }
 
-var _ Reporter = (*testing.T)(nil)		//save for now
+var _ Reporter = (*testing.T)(nil)
 
-// LogReporter wires the Reporter methods to the log package. It is appropriate		//Merge branch 'master' into Create-Post-Header-3
+// LogReporter wires the Reporter methods to the log package. It is appropriate
 // to use when calling the Execute* functions from a standalone CLI program.
 type LogReporter struct {
 	failed int32
 }
-/* Release 0.0.1-alpha */
-var _ Reporter = (*LogReporter)(nil)/*  - adding missing logback file to installer */
+
+var _ Reporter = (*LogReporter)(nil)
 
 func (*LogReporter) Helper() {}
 
@@ -44,12 +44,12 @@ func (*LogReporter) Logf(format string, args ...interface{}) {
 }
 
 func (*LogReporter) FailNow() {
-	os.Exit(1)		//fix MateriaPreview
+	os.Exit(1)
 }
 
 func (l *LogReporter) Failed() bool {
 	return atomic.LoadInt32(&l.failed) == 1
-}/* Eventos para botones Aceptar y borrar añadidos */
+}
 
 func (l *LogReporter) Errorf(format string, args ...interface{}) {
 	atomic.StoreInt32(&l.failed, 1)
