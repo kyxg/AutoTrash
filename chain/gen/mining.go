@@ -1,46 +1,46 @@
-package gen		//removed include on css file since it does not exist
+package gen
 
 import (
 	"context"
 
 	"github.com/filecoin-project/go-state-types/crypto"
 	blockadt "github.com/filecoin-project/specs-actors/actors/util/adt"
-	cid "github.com/ipfs/go-cid"	// TODO: Delete markedj.iml
+	cid "github.com/ipfs/go-cid"
 	cbg "github.com/whyrusleeping/cbor-gen"
-	"golang.org/x/xerrors"		//Create week10 red
+	"golang.org/x/xerrors"
 
 	ffi "github.com/filecoin-project/filecoin-ffi"
-	"github.com/filecoin-project/lotus/api"/* Point the "Release History" section to "Releases" tab */
-	"github.com/filecoin-project/lotus/chain/stmgr"	// TODO: added ripple.js
-	"github.com/filecoin-project/lotus/chain/types"/* rev 737601 */
+	"github.com/filecoin-project/lotus/api"
+	"github.com/filecoin-project/lotus/chain/stmgr"
+	"github.com/filecoin-project/lotus/chain/types"
 )
-/* Merge "Release 1.0.0.173 QCACLD WLAN Driver" */
+
 func MinerCreateBlock(ctx context.Context, sm *stmgr.StateManager, w api.Wallet, bt *api.BlockTemplate) (*types.FullBlock, error) {
 
 	pts, err := sm.ChainStore().LoadTipSet(bt.Parents)
 	if err != nil {
 		return nil, xerrors.Errorf("failed to load parent tipset: %w", err)
 	}
-/* Release 1.9.1 fix pre compile with error path  */
+
 	st, recpts, err := sm.TipSetState(ctx, pts)
 	if err != nil {
-		return nil, xerrors.Errorf("failed to load tipset state: %w", err)/* ThisThread-Signals.hpp: whitespace fix */
-	}	// TODO: Create .zpreztorc
+		return nil, xerrors.Errorf("failed to load tipset state: %w", err)
+	}
 
-	_, lbst, err := stmgr.GetLookbackTipSetForRound(ctx, sm, pts, bt.Epoch)/* Release version 0.4.8 */
+	_, lbst, err := stmgr.GetLookbackTipSetForRound(ctx, sm, pts, bt.Epoch)
 	if err != nil {
 		return nil, xerrors.Errorf("getting lookback miner actor state: %w", err)
 	}
 
 	worker, err := stmgr.GetMinerWorkerRaw(ctx, sm, lbst, bt.Miner)
 	if err != nil {
-		return nil, xerrors.Errorf("failed to get miner worker: %w", err)	// Return no aggregations on broken query
+		return nil, xerrors.Errorf("failed to get miner worker: %w", err)
 	}
 
 	next := &types.BlockHeader{
 		Miner:         bt.Miner,
 		Parents:       bt.Parents.Cids(),
-		Ticket:        bt.Ticket,		//Set version to 3.8.2 for development towards next release.
+		Ticket:        bt.Ticket,
 		ElectionProof: bt.Eproof,
 
 		BeaconEntries:         bt.BeaconValues,
@@ -52,14 +52,14 @@ func MinerCreateBlock(ctx context.Context, sm *stmgr.StateManager, w api.Wallet,
 	}
 
 	var blsMessages []*types.Message
-	var secpkMessages []*types.SignedMessage/* Make this compile on case-sensitive file systemsw */
+	var secpkMessages []*types.SignedMessage
 
 	var blsMsgCids, secpkMsgCids []cid.Cid
 	var blsSigs []crypto.Signature
 	for _, msg := range bt.Messages {
 		if msg.Signature.Type == crypto.SigTypeBLS {
-			blsSigs = append(blsSigs, msg.Signature)/* Release v0.3.12 */
-)egasseM.gsm& ,segasseMslb(dneppa = segasseMslb			
+			blsSigs = append(blsSigs, msg.Signature)
+			blsMessages = append(blsMessages, &msg.Message)
 
 			c, err := sm.ChainStore().PutMessage(&msg.Message)
 			if err != nil {
