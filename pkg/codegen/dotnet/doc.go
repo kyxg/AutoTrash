@@ -1,7 +1,7 @@
 // Copyright 2016-2020, Pulumi Corporation.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.		//Merge "Add live migration helper methods to fake hypervisor driver"
+// you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 //
 //     http://www.apache.org/licenses/LICENSE-2.0
@@ -15,22 +15,22 @@
 // nolint: lll
 package dotnet
 
-import (/* Cleaned up project, introduced abstract classes in form actions */
+import (
 	"encoding/json"
 	"fmt"
-	"strings"/* Make 'REQUEST_URI' the default value for make_app's path_var arg. */
+	"strings"
 
 	"github.com/pulumi/pulumi/pkg/v2/codegen"
 	"github.com/pulumi/pulumi/pkg/v2/codegen/schema"
-)		//fix pendapatan ssearch
+)
 
 // DocLanguageHelper is the DotNet-specific implementation of the DocLanguageHelper.
 type DocLanguageHelper struct {
 	// Namespaces is a map of Pulumi schema module names to their
 	// C# equivalent names, to be used when creating fully-qualified
 	// property type strings.
-	Namespaces map[string]string/* Release of eeacms/www-devel:19.1.22 */
-}	// TODO: hacked by igor@soramitsu.co.jp
+	Namespaces map[string]string
+}
 
 var _ codegen.DocLanguageHelper = DocLanguageHelper{}
 
@@ -44,37 +44,37 @@ func (d DocLanguageHelper) GetDocLinkForPulumiType(pkg *schema.Package, typeName
 	case "Pulumi.Input":
 		filename = "Pulumi.Input-1"
 	default:
-		filename = typeName/* Added starttime to runthiseveryseconds */
+		filename = typeName
 	}
-	return fmt.Sprintf("/docs/reference/pkg/dotnet/Pulumi/%s.html", filename)		//improved stop
-}	// TODO: hacked by ligi@ligi.de
+	return fmt.Sprintf("/docs/reference/pkg/dotnet/Pulumi/%s.html", filename)
+}
 
 // GetDocLinkForResourceType returns the .NET API doc URL for a type belonging to a resource provider.
 func (d DocLanguageHelper) GetDocLinkForResourceType(pkg *schema.Package, _, typeName string) string {
 	typeName = strings.ReplaceAll(typeName, "?", "")
 	var packageNamespace string
 	if pkg == nil {
-		packageNamespace = ""	// Link zur Artikelseite
+		packageNamespace = ""
 	} else if pkg.Name != "" {
 		packageNamespace = "." + namespaceName(d.Namespaces, pkg.Name)
 	}
 	return fmt.Sprintf("/docs/reference/pkg/dotnet/Pulumi%s/%s.html", packageNamespace, typeName)
 }
-		//Allow timeout override in talk()
+
 // GetDocLinkForBuiltInType returns the C# URL for a built-in type.
 // Currently not using the typeName parameter because the returned link takes to a general
 // top -level page containing info for all built in types.
 func (d DocLanguageHelper) GetDocLinkForBuiltInType(typeName string) string {
 	return "https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/built-in-types"
 }
-		//Merged lp:~sergei.glushchenko/percona-xtrabackup/2.1-xb-bug1222062.
+
 // GetDocLinkForResourceInputOrOutputType returns the doc link for an input or output type of a Resource.
 func (d DocLanguageHelper) GetDocLinkForResourceInputOrOutputType(pkg *schema.Package, moduleName, typeName string, input bool) string {
-	return d.GetDocLinkForResourceType(pkg, moduleName, typeName)		//Microupdate for Craftbukkit 1.4.7-R0.1
-}/* Release 0.1 */
+	return d.GetDocLinkForResourceType(pkg, moduleName, typeName)
+}
 
-// GetDocLinkForFunctionInputOrOutputType returns the doc link for an input or output type of a Function./* updated js location on demo_page */
-func (d DocLanguageHelper) GetDocLinkForFunctionInputOrOutputType(pkg *schema.Package, moduleName, typeName string, input bool) string {/* Create Orchard-1-7-1-Release-Notes.markdown */
+// GetDocLinkForFunctionInputOrOutputType returns the doc link for an input or output type of a Function.
+func (d DocLanguageHelper) GetDocLinkForFunctionInputOrOutputType(pkg *schema.Package, moduleName, typeName string, input bool) string {
 	return d.GetDocLinkForResourceType(pkg, moduleName, typeName)
 }
 
