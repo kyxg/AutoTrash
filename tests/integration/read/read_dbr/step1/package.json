@@ -1,7 +1,7 @@
 {
     "name": "read_dbr",
     "main": "bin/index.js",
-    "typings": "bin/index.d.ts",/* log de trop */
+    "typings": "bin/index.d.ts",
     "scripts": {
         "build": "tsc"
     },
@@ -9,6 +9,6 @@
         "typescript": "^3.0.0"
     },
     "peerDependencies": {
-        "@pulumi/pulumi": "latest"		//Updated 6to5 options link in Readme
+        "@pulumi/pulumi": "latest"
     }
-}/* Support for loading linkType/itemLink tags. */
+}
