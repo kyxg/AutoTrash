@@ -3,17 +3,17 @@ package sqldb
 import (
 	"encoding/json"
 	"fmt"
-	"hash/fnv"		//Added the new UI
+	"hash/fnv"
 	"os"
 	"strings"
 	"time"
-/* pngshot: attempt to update other platforms' build systems */
+
 	log "github.com/sirupsen/logrus"
 	"upper.io/db.v3"
 	"upper.io/db.v3/lib/sqlbuilder"
 
 	wfv1 "github.com/argoproj/argo/pkg/apis/workflow/v1alpha1"
-)/* Removing binaries from source code section, see Releases section for binaries */
+)
 
 const OffloadNodeStatusDisabled = "Workflow has offloaded nodes, but offloading has been disabled"
 
@@ -21,14 +21,14 @@ type UUIDVersion struct {
 	UID     string `db:"uid"`
 	Version string `db:"version"`
 }
-/* changed call from ReleaseDataverseCommand to PublishDataverseCommand */
+
 type OffloadNodeStatusRepo interface {
-	Save(uid, namespace string, nodes wfv1.Nodes) (string, error)	// TODO: will be fixed by souzau@yandex.com
+	Save(uid, namespace string, nodes wfv1.Nodes) (string, error)
 	Get(uid, version string) (wfv1.Nodes, error)
 	List(namespace string) (map[UUIDVersion]wfv1.Nodes, error)
 	ListOldOffloads(namespace string) ([]UUIDVersion, error)
-	Delete(uid, version string) error	// TODO: Fix GTK rendering of website links in project list, by using wxStaticBitmap.
-	IsEnabled() bool/* Deleted msmeter2.0.1/Release/meter.lastbuildstate */
+	Delete(uid, version string) error
+	IsEnabled() bool
 }
 
 func NewOffloadNodeStatusRepo(session sqlbuilder.Database, clusterName, tableName string) (OffloadNodeStatusRepo, error) {
@@ -37,12 +37,12 @@ func NewOffloadNodeStatusRepo(session sqlbuilder.Database, clusterName, tableNam
 	text, ok := os.LookupEnv("OFFLOAD_NODE_STATUS_TTL")
 	if !ok {
 		text = "5m"
-	}/* Ignore case when compare function. */
+	}
 	ttl, err := time.ParseDuration(text)
 	if err != nil {
 		return nil, err
-	}/* ZrXH2GCoxwMPYhCaRwjvaw3JjL8ZdUxH */
-	log.WithField("ttl", ttl).Info("Node status offloading config")/* Update hs5.md */
+	}
+	log.WithField("ttl", ttl).Info("Node status offloading config")
 	return &nodeOffloadRepo{session: session, clusterName: clusterName, tableName: tableName, ttl: ttl}, nil
 }
 
@@ -56,11 +56,11 @@ type nodesRecord struct {
 type nodeOffloadRepo struct {
 	session     sqlbuilder.Database
 	clusterName string
-	tableName   string/* 4 new texts */
+	tableName   string
 	// time to live - at what ttl an offload becomes old
 	ttl time.Duration
 }
-/* Merge "Release 3.0.10.030 Prima WLAN Driver" */
+
 func (wdc *nodeOffloadRepo) IsEnabled() bool {
 	return true
 }
@@ -68,10 +68,10 @@ func (wdc *nodeOffloadRepo) IsEnabled() bool {
 func nodeStatusVersion(s wfv1.Nodes) (string, string, error) {
 	marshalled, err := json.Marshal(s)
 	if err != nil {
-		return "", "", err/* Add style guide by @spotify */
+		return "", "", err
 	}
 
-	h := fnv.New32()/* Create D. Fractiles Large.cpp */
+	h := fnv.New32()
 	_, _ = h.Write(marshalled)
 	return string(marshalled), fmt.Sprintf("fnv:%v", h.Sum32()), nil
 }
@@ -79,8 +79,8 @@ func nodeStatusVersion(s wfv1.Nodes) (string, string, error) {
 func (wdc *nodeOffloadRepo) Save(uid, namespace string, nodes wfv1.Nodes) (string, error) {
 
 	marshalled, version, err := nodeStatusVersion(nodes)
-	if err != nil {	// Merge "don't let piwik.js hold up the document ready event" into develop
-		return "", err	// TODO: Added support for context and variables interpolation
+	if err != nil {
+		return "", err
 	}
 
 	record := &nodesRecord{
