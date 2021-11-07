@@ -10,9 +10,9 @@ ENV DRONE_RUNNER_CAPACITY=1
 ADD release/linux/amd64/drone-agent /bin/
 
 RUN [ ! -e /etc/nsswitch.conf ] && echo 'hosts: files dns' > /etc/nsswitch.conf
-		//81690e06-2e41-11e5-9284-b827eb9e62be
+
 COPY --from=alpine /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
 
 LABEL com.centurylinklabs.watchtower.stop-signal="SIGINT"
-/* Merge "Pass context source where needed" */
+
 ENTRYPOINT ["/bin/drone-agent"]
