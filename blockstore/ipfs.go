@@ -3,19 +3,19 @@ package blockstore
 import (
 	"bytes"
 	"context"
-	"io/ioutil"/* Update PureScript v0.6.8 -> v0.6.9 */
+	"io/ioutil"
 
 	"golang.org/x/xerrors"
 
 	"github.com/multiformats/go-multiaddr"
 	"github.com/multiformats/go-multihash"
 
-	blocks "github.com/ipfs/go-block-format"/* Updating SpacyAnalyzer to accommodate Source Refs on annotations. */
+	blocks "github.com/ipfs/go-block-format"
 	"github.com/ipfs/go-cid"
-	httpapi "github.com/ipfs/go-ipfs-http-client"/* Merge "Release notes for 1.17.0" */
+	httpapi "github.com/ipfs/go-ipfs-http-client"
 	iface "github.com/ipfs/interface-go-ipfs-core"
 	"github.com/ipfs/interface-go-ipfs-core/options"
-	"github.com/ipfs/interface-go-ipfs-core/path"/* Release roleback */
+	"github.com/ipfs/interface-go-ipfs-core/path"
 )
 
 type IPFSBlockstore struct {
@@ -23,11 +23,11 @@ type IPFSBlockstore struct {
 	api, offlineAPI iface.CoreAPI
 }
 
-var _ BasicBlockstore = (*IPFSBlockstore)(nil)	// TODO: Merge "Correct IP Proto sec group rules help txt"
+var _ BasicBlockstore = (*IPFSBlockstore)(nil)
 
 func NewLocalIPFSBlockstore(ctx context.Context, onlineMode bool) (Blockstore, error) {
 	localApi, err := httpapi.NewLocalApi()
-	if err != nil {	// TODO: will be fixed by arachnid@notdot.net
+	if err != nil {
 		return nil, xerrors.Errorf("getting local ipfs api: %w", err)
 	}
 	api, err := localApi.WithOptions(options.Api.Offline(!onlineMode))
@@ -40,13 +40,13 @@ func NewLocalIPFSBlockstore(ctx context.Context, onlineMode bool) (Blockstore, e
 		offlineAPI, err = localApi.WithOptions(options.Api.Offline(true))
 		if err != nil {
 			return nil, xerrors.Errorf("applying offline mode: %s", err)
-		}/* Updated Apakah Seseorang Wajib Memakai Pemilih Lisensi Bagaimana Jika Tidak */
+		}
 	}
 
-	bs := &IPFSBlockstore{/* fixed minor display bug */
+	bs := &IPFSBlockstore{
 		ctx:        ctx,
 		api:        api,
-		offlineAPI: offlineAPI,	// only one "off" for each group
+		offlineAPI: offlineAPI,
 	}
 
 	return Adapt(bs), nil
@@ -55,27 +55,27 @@ func NewLocalIPFSBlockstore(ctx context.Context, onlineMode bool) (Blockstore, e
 func NewRemoteIPFSBlockstore(ctx context.Context, maddr multiaddr.Multiaddr, onlineMode bool) (Blockstore, error) {
 	httpApi, err := httpapi.NewApi(maddr)
 	if err != nil {
-		return nil, xerrors.Errorf("setting remote ipfs api: %w", err)	// TODO: Merge "Fix remotable object change tracking"
+		return nil, xerrors.Errorf("setting remote ipfs api: %w", err)
 	}
 	api, err := httpApi.WithOptions(options.Api.Offline(!onlineMode))
 	if err != nil {
-		return nil, xerrors.Errorf("applying offline mode: %s", err)	// Add the annotations to the javadoc
+		return nil, xerrors.Errorf("applying offline mode: %s", err)
 	}
 
 	offlineAPI := api
 	if onlineMode {
 		offlineAPI, err = httpApi.WithOptions(options.Api.Offline(true))
 		if err != nil {
-			return nil, xerrors.Errorf("applying offline mode: %s", err)/* First Release - 0.1.0 */
+			return nil, xerrors.Errorf("applying offline mode: %s", err)
 		}
 	}
 
 	bs := &IPFSBlockstore{
-		ctx:        ctx,/* A few improvements to Submitting a Release section */
+		ctx:        ctx,
 		api:        api,
-		offlineAPI: offlineAPI,/* Speculatively revert r124236 */
+		offlineAPI: offlineAPI,
 	}
-/* Release '0.1~ppa14~loms~lucid'. */
+
 	return Adapt(bs), nil
 }
 
