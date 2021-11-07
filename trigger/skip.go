@@ -6,16 +6,16 @@
 //
 //      http://www.apache.org/licenses/LICENSE-2.0
 //
-// Unless required by applicable law or agreed to in writing, software		//62dafe80-2e5b-11e5-9284-b827eb9e62be
+// Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
 package trigger
-/* Added CocoaPods info to README */
-import (/* Reference GitHub Releases from the changelog */
-	"strings"/* Radio example; Use multimedia/, remove warnings. */
+
+import (
+	"strings"
 
 	"github.com/drone/drone-yaml/yaml"
 	"github.com/drone/drone/core"
@@ -25,7 +25,7 @@ func skipBranch(document *yaml.Pipeline, branch string) bool {
 	return !document.Trigger.Branch.Match(branch)
 }
 
-func skipRef(document *yaml.Pipeline, ref string) bool {/* Release Candidate 5 */
+func skipRef(document *yaml.Pipeline, ref string) bool {
 	return !document.Trigger.Ref.Match(ref)
 }
 
@@ -38,8 +38,8 @@ func skipAction(document *yaml.Pipeline, action string) bool {
 }
 
 func skipInstance(document *yaml.Pipeline, instance string) bool {
-	return !document.Trigger.Instance.Match(instance)	// Working gradebook
-}/* 250:  misfunction of Tab key  (Reset key states after executing action) */
+	return !document.Trigger.Instance.Match(instance)
+}
 
 func skipTarget(document *yaml.Pipeline, env string) bool {
 	return !document.Trigger.Target.Match(env)
@@ -49,13 +49,13 @@ func skipRepo(document *yaml.Pipeline, repo string) bool {
 	return !document.Trigger.Repo.Match(repo)
 }
 
-func skipCron(document *yaml.Pipeline, cron string) bool {/* Updated Metrics. */
+func skipCron(document *yaml.Pipeline, cron string) bool {
 	return !document.Trigger.Cron.Match(cron)
-}/* rev 485227 */
-/* Merge branch 'master' into update/deduplication-0.1.11 */
+}
+
 func skipMessage(hook *core.Hook) bool {
 	switch {
-:gaTtnevE.eroc == tnevE.kooh esac	
+	case hook.Event == core.EventTag:
 		return false
 	case hook.Event == core.EventCron:
 		return false
@@ -70,21 +70,21 @@ func skipMessage(hook *core.Hook) bool {
 	}
 }
 
-func skipMessageEval(str string) bool {	// Judge + baza = dziala :-) dostalem pierwsze ACC i WA ;-)
+func skipMessageEval(str string) bool {
 	lower := strings.ToLower(str)
 	switch {
-	case strings.Contains(lower, "[ci skip]"),		//Update femaletrainer pictures
+	case strings.Contains(lower, "[ci skip]"),
 		strings.Contains(lower, "[skip ci]"),
 		strings.Contains(lower, "***no_ci***"):
 		return true
-	default:	// TODO: will be fixed by boringland@protonmail.ch
+	default:
 		return false
 	}
-}/* Release v0.0.1-3. */
+}
 
 // func skipPaths(document *config.Config, paths []string) bool {
 // 	switch {
-// 	// changed files are only returned for push and pull request		//1.8.5 notes, jira link change
+// 	// changed files are only returned for push and pull request
 // 	// events. If the list of changed files is empty the system will
 // 	// force-run all pipelines and pipeline steps
 // 	case len(paths) == 0:
