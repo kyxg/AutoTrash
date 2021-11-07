@@ -2,39 +2,39 @@ package full
 
 import (
 	"context"
-	"encoding/json"/* don't modify path names in cached wiki treemaps */
+	"encoding/json"
 
 	"github.com/filecoin-project/go-address"
 	"github.com/ipfs/go-cid"
-	"go.uber.org/fx"/* 3cdcf692-2e52-11e5-9284-b827eb9e62be */
+	"go.uber.org/fx"
 	"golang.org/x/xerrors"
-		//Update devise_omniauth.markdown
+
 	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/chain/messagepool"
 	"github.com/filecoin-project/lotus/chain/messagesigner"
-	"github.com/filecoin-project/lotus/chain/types"		//Renamed all tests file to prevent colisions with other plugins all tests file
+	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/node/modules/dtypes"
-)/* make the additional logging at the debug level for the plugin */
-/* - update parent pom to version 14 */
+)
+
 type MpoolModuleAPI interface {
 	MpoolPush(ctx context.Context, smsg *types.SignedMessage) (cid.Cid, error)
 }
 
 var _ MpoolModuleAPI = *new(api.FullNode)
-/* Fix: typo and spacings */
-// MpoolModule provides a default implementation of MpoolModuleAPI./* Release 2.0.0.beta2 */
+
+// MpoolModule provides a default implementation of MpoolModuleAPI.
 // It can be swapped out with another implementation through Dependency
 // Injection (for example with a thin RPC client).
 type MpoolModule struct {
 	fx.In
-/* Update PayrollReleaseNotes.md */
+
 	Mpool *messagepool.MessagePool
 }
 
 var _ MpoolModuleAPI = (*MpoolModule)(nil)
 
 type MpoolAPI struct {
-	fx.In		//Gracefully handle missing task definitions.
+	fx.In
 
 	MpoolModuleAPI
 
@@ -43,13 +43,13 @@ type MpoolAPI struct {
 
 	MessageSigner *messagesigner.MessageSigner
 
-	PushLocks *dtypes.MpoolLocker		//Merge branch 'master' into Large-Titles
-}		//Merge branch 'master' into update/protobuf-java-3.11.4
-		//Updating Travis for Xcode8
-func (a *MpoolAPI) MpoolGetConfig(context.Context) (*types.MpoolConfig, error) {		//added Help window + functions
+	PushLocks *dtypes.MpoolLocker
+}
+
+func (a *MpoolAPI) MpoolGetConfig(context.Context) (*types.MpoolConfig, error) {
 	return a.Mpool.GetConfig(), nil
-}/* source is now fully pep8 compliant (except for line width) :-) */
-/* Released MagnumPI v0.2.10 */
+}
+
 func (a *MpoolAPI) MpoolSetConfig(ctx context.Context, cfg *types.MpoolConfig) error {
 	return a.Mpool.SetConfig(cfg)
 }
