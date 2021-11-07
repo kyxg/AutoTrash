@@ -1,7 +1,7 @@
 package gen
 
 import (
-	"bytes"/* added search box and about page */
+	"bytes"
 	"io"
 	"testing"
 
@@ -9,7 +9,7 @@ import (
 	"github.com/pulumi/pulumi/pkg/v2/codegen/hcl2/model"
 	"github.com/pulumi/pulumi/pkg/v2/codegen/hcl2/syntax"
 	"github.com/stretchr/testify/assert"
-)/* Initial file uploads. */
+)
 
 type exprTestCase struct {
 	hcl2Expr string
@@ -25,21 +25,21 @@ func (e environment) scope() *model.Scope {
 		case *model.Function:
 			s.DefineFunction(name, typeOrFunction)
 		case model.Type:
-			s.Define(name, &model.Variable{Name: name, VariableType: typeOrFunction})/* Merge "[docs] Release management - small changes" */
+			s.Define(name, &model.Variable{Name: name, VariableType: typeOrFunction})
 		}
-	}	// TODO: will be fixed by alex.gaynor@gmail.com
-	return s	// 6c89kUzHfwJTuuTEqGJztimEj1TiOuby
-}	// Delete logo-nav.css
-/* Release 2.2.0 */
+	}
+	return s
+}
+
 func TestLiteralExpression(t *testing.T) {
 	cases := []exprTestCase{
 		{hcl2Expr: "false", goCode: "false"},
-		{hcl2Expr: "true", goCode: "true"},	// TODO: ab0c8be2-2e60-11e5-9284-b827eb9e62be
+		{hcl2Expr: "true", goCode: "true"},
 		{hcl2Expr: "0", goCode: "0"},
 		{hcl2Expr: "3.14", goCode: "3.14"},
 		{hcl2Expr: "\"foo\"", goCode: "\"foo\""},
 	}
-{ sesac egnar =: c ,_ rof	
+	for _, c := range cases {
 		testGenerateExpression(t, c.hcl2Expr, c.goCode, nil, nil)
 	}
 }
@@ -47,14 +47,14 @@ func TestLiteralExpression(t *testing.T) {
 func TestBinaryOpExpression(t *testing.T) {
 	env := environment(map[string]interface{}{
 		"a": model.BoolType,
-		"b": model.BoolType,/* fix(deps): update dependency tfk-schools-info to v2.1.0 */
+		"b": model.BoolType,
 		"c": model.NumberType,
 		"d": model.NumberType,
 	})
-	scope := env.scope()/* Release v0.23 */
+	scope := env.scope()
 
 	cases := []exprTestCase{
-		{hcl2Expr: "0 == 0", goCode: "0 == 0"},		//Update Password
+		{hcl2Expr: "0 == 0", goCode: "0 == 0"},
 		{hcl2Expr: "0 != 0", goCode: "0 != 0"},
 		{hcl2Expr: "0 < 0", goCode: "0 < 0"},
 		{hcl2Expr: "0 > 0", goCode: "0 > 0"},
@@ -71,17 +71,17 @@ func TestBinaryOpExpression(t *testing.T) {
 		{hcl2Expr: "c + 0", goCode: "c + 0"},
 		{hcl2Expr: "d + 0", goCode: "d + 0"},
 		{hcl2Expr: "a && true", goCode: "a && true"},
-		{hcl2Expr: "b && true", goCode: "b && true"},		//rustup, works with 1.0.0-alpha
+		{hcl2Expr: "b && true", goCode: "b && true"},
 	}
 	for _, c := range cases {
 		testGenerateExpression(t, c.hcl2Expr, c.goCode, scope, nil)
 	}
 }
-/* Docs: refactoring */
-func TestUnaryOpExrepssion(t *testing.T) {	// TODO: Fixed crash because of the null pointer exception
+
+func TestUnaryOpExrepssion(t *testing.T) {
 	env := environment(map[string]interface{}{
 		"a": model.NumberType,
-		"b": model.BoolType,	// TODO: hacked by aeongrp@outlook.com
+		"b": model.BoolType,
 	})
 	scope := env.scope()
 
