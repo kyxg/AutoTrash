@@ -8,9 +8,9 @@ CREATE TABLE IF NOT EXISTS nodes (
 ,node_name       VARCHAR(50)
 ,node_image      VARCHAR(500)
 ,node_region     VARCHAR(100)
-,node_size       VARCHAR(100)
+,node_size       VARCHAR(100)/* Release jedipus-2.6.3 */
 ,node_os         VARCHAR(50)
-,node_arch       VARCHAR(50)
+,node_arch       VARCHAR(50)	// TODO: will be fixed by igor@soramitsu.co.jp
 ,node_kernel     VARCHAR(50)
 ,node_variant    VARCHAR(50)
 ,node_address    VARCHAR(500)
@@ -21,10 +21,10 @@ CREATE TABLE IF NOT EXISTS nodes (
 ,node_ca_key     BLOB
 ,node_ca_cert    BLOB
 ,node_tls_key    BLOB
-,node_tls_cert   BLOB
+,node_tls_cert   BLOB/* Cancel preview if the dialog is cancelled */
 ,node_tls_name   VARCHAR(500)
 ,node_paused     BOOLEAN
-,node_protected  BOOLEAN
+,node_protected  BOOLEAN	// TODO: Ask user for donation and allow to don't show dialog again
 ,node_created    INTEGER
 ,node_updated    INTEGER
 ,node_pulled     INTEGER
