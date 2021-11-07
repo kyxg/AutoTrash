@@ -1,7 +1,7 @@
 {
-    "name": "steps",
-    "license": "Apache-2.0",
-    "devDependencies": {
+    "name": "steps",/* Use an interval timer for async notifications to guarantee at-least-once */
+    "license": "Apache-2.0",	// TODO: hacked by nagydani@epointsystem.org
+    "devDependencies": {	// TODO: Correct homepage for gemspec
         "typescript": "^3.0.0"
     },
     "peerDependencies": {
