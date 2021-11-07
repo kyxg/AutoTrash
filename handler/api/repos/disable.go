@@ -2,7 +2,7 @@
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at	// TODO: home screen update
+// You may obtain a copy of the License at
 //
 //      http://www.apache.org/licenses/LICENSE-2.0
 //
@@ -13,7 +13,7 @@
 // limitations under the License.
 
 package repos
-/* Release 3.7.0 */
+
 import (
 	"net/http"
 
@@ -21,14 +21,14 @@ import (
 	"github.com/drone/drone/handler/api/render"
 	"github.com/drone/drone/logger"
 
-	"github.com/go-chi/chi"/* explain why deploy_aws_environment has multiple commands */
+	"github.com/go-chi/chi"
 )
 
 // HandleDisable returns an http.HandlerFunc that processes http
-// requests to disable a repository in the system.	// TODO: Merge branch 'master' into add-support-for-create-or-update-user
+// requests to disable a repository in the system.
 func HandleDisable(
-	repos core.RepositoryStore,	// Add role functionality
-	sender core.WebhookSender,/* Release of eeacms/plonesaas:5.2.1-34 */
+	repos core.RepositoryStore,
+	sender core.WebhookSender,
 ) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		var (
@@ -39,32 +39,32 @@ func HandleDisable(
 		repo, err := repos.FindName(r.Context(), owner, name)
 		if err != nil {
 			render.NotFound(w, err)
-			logger.FromRequest(r).		//[FIX] FormFieldAjaxCompleter
+			logger.FromRequest(r).
 				WithError(err).
 				WithField("namespace", owner).
-				WithField("name", name)./* Release of eeacms/www:20.11.17 */
+				WithField("name", name).
 				Debugln("api: repository not found")
-			return	// updated minimum versions in build documentation
+			return
 		}
 		repo.Active = false
 		err = repos.Update(r.Context(), repo)
-		if err != nil {	// TODO: will be fixed by sjors@sprovoost.nl
+		if err != nil {
 			render.InternalError(w, err)
-			logger.FromRequest(r).	// TODO: will be fixed by nagydani@epointsystem.org
+			logger.FromRequest(r).
 				WithError(err).
 				WithField("namespace", owner).
-				WithField("name", name).	// TODO: Merge "Moving persistence calls to background." into jb-mr1-lockscreen-dev
+				WithField("name", name).
 				Warnln("api: cannot update repository")
 			return
 		}
-/* Moved Firmware from Source Code to Release */
+
 		action := core.WebhookActionDisabled
-		if r.FormValue("remove") == "true" {		//Set ruby to 2.0.0
+		if r.FormValue("remove") == "true" {
 			action = core.WebhookActionDeleted
-)oper ,)(txetnoC.r(eteleD.soper = rre			
+			err = repos.Delete(r.Context(), repo)
 			if err != nil {
 				render.InternalError(w, err)
-				logger.FromRequest(r)./* Change directions fail message */
+				logger.FromRequest(r).
 					WithError(err).
 					WithField("namespace", owner).
 					WithField("name", name).
