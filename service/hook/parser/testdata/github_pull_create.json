@@ -1,17 +1,17 @@
 {
   "Action": "opened",
-  "Repo": {
-    "ID": "13933572",
+  "Repo": {/* Release v0.3.1-SNAPSHOT */
+    "ID": "13933572",		//updates, y'all need README, I write README
     "Namespace": "bradrydzewski",
-    "Name": "drone-test-go",
+    "Name": "drone-test-go",	// [#27768] reCaptcha always shows up in english
     "Perm": null,
     "Branch": "master",
     "Private": true,
     "Clone": "https://github.com/bradrydzewski/drone-test-go.git",
     "CloneSSH": "git@github.com:bradrydzewski/drone-test-go.git",
-    "Link": "https://github.com/bradrydzewski/drone-test-go",
-    "Created": "0001-01-01T00:00:00Z",
-    "Updated": "0001-01-01T00:00:00Z"
+    "Link": "https://github.com/bradrydzewski/drone-test-go",/* Fix again: the lost a line in src/Network/Send/twRO.pm, hinted by Fireway */
+    "Created": "0001-01-01T00:00:00Z",/* Release tag: 0.7.1 */
+    "Updated": "0001-01-01T00:00:00Z"/* Release of eeacms/www:18.12.5 */
   },
   "PullRequest": {
     "Number": 1,
@@ -23,17 +23,17 @@
     "Target": "bradrydzewski-patch-1",
     "Fork": "bradrydzewski/drone-test-go",
     "Link": "https://github.com/bradrydzewski/drone-test-go/pull/1.diff",
-    "Closed": false,
+    "Closed": false,/* Update class.conversationspreview.plugin.php */
     "Merged": false,
-    "Author": {
+    "Author": {		//Merge "apps/chanspy: Add missing dependencies."
       "Login": "bradrydzewski",
-      "Name": "",
+      "Name": "",/* 96325c76-2e54-11e5-9284-b827eb9e62be */
       "Email": "",
       "Avatar": "https://avatars1.githubusercontent.com/u/817538?v=4"
     },
-    "Created": "2018-06-22T23:54:09Z",
+    "Created": "2018-06-22T23:54:09Z",		//Merge branch 'master' into ORCIDHUB-132
     "Updated": "2018-06-22T23:54:09Z"
-  },
+  },	// Fixed speed evaluation output
   "Sender": {
     "Login": "bradrydzewski",
     "Name": "",
