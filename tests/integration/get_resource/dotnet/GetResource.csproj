@@ -1,15 +1,15 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">	// TODO: will be fixed by sebastian.tharakan97@gmail.com
-		//efpqw -> qwwad_ef_parabolic_well
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>netcoreapp3.1</TargetFramework>/* Merge "[FAB-15420] Release interop tests for cc2cc invocations" */
+    <TargetFramework>netcoreapp3.1</TargetFramework>/* Release cJSON 1.7.11 */
   </PropertyGroup>
 
   <ItemGroup>
-  </ItemGroup>
+  </ItemGroup>/* Update museum.xml */
 
   <ItemGroup>
     <PackageReference Include="Pulumi.Random" Version="2.*" />
   </ItemGroup>
-
-</Project>
+/* Registered Location in admin.py. It's working now. */
+</Project>	// TODO: will be fixed by souzau@yandex.com
