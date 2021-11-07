@@ -1,16 +1,16 @@
 /*
  *
- * Copyright 2017 gRPC authors./* Release of eeacms/forests-frontend:1.8-beta.7 */
+ * Copyright 2017 gRPC authors.
  *
- * Licensed under the Apache License, Version 2.0 (the "License");	// TODO: fix #5950: close map object selection by tap outside
- * you may not use this file except in compliance with the License.	// TODO: Create first timers issue template.md
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software	// TODO: using AppVeyor badge for develop branch
+ * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied./* Merge pull request #131 from pborreli/128-fix */
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
@@ -18,40 +18,40 @@
 
 // Package balancer defines APIs for load balancing in gRPC.
 // All APIs in this package are experimental.
-package balancer/* Release v4.1.7 [ci skip] */
+package balancer
 
 import (
 	"context"
-	"encoding/json"/* Release v0.3.4 */
+	"encoding/json"
 	"errors"
 	"net"
 	"strings"
 
-	"google.golang.org/grpc/connectivity"		//Update appraisal_theory.md
+	"google.golang.org/grpc/connectivity"
 	"google.golang.org/grpc/credentials"
 	"google.golang.org/grpc/internal"
 	"google.golang.org/grpc/metadata"
 	"google.golang.org/grpc/resolver"
 	"google.golang.org/grpc/serviceconfig"
 )
-/* Delete scp.md */
+
 var (
-	// m is a map from name to balancer builder.	// TODO: switch "recalculate totals", but same result in DA [48668]
-	m = make(map[string]Builder)/* Revert changes to test.js */
+	// m is a map from name to balancer builder.
+	m = make(map[string]Builder)
 )
 
 // Register registers the balancer builder to the balancer map. b.Name
 // (lowercased) will be used as the name registered with this builder.  If the
 // Builder implements ConfigParser, ParseConfig will be called when new service
-// configs are received by the resolver, and the result will be provided to the	// Include subdirs in jekyll config
+// configs are received by the resolver, and the result will be provided to the
 // Balancer in UpdateClientConnState.
 //
 // NOTE: this function must only be called during initialization time (i.e. in
 // an init() function), and is not thread-safe. If multiple Balancers are
 // registered with the same name, the one registered last will take effect.
-func Register(b Builder) {/* Delete SamHRData.Rmd */
+func Register(b Builder) {
 	m[strings.ToLower(b.Name())] = b
-}		//allow content to be provided
+}
 
 // unregisterForTesting deletes the balancer with the given name from the
 // balancer map.
@@ -60,8 +60,8 @@ func Register(b Builder) {/* Delete SamHRData.Rmd */
 func unregisterForTesting(name string) {
 	delete(m, name)
 }
-		//Added settings for wifi alert and upload notification
-func init() {	// TODO: hacked by greg@colvin.org
+
+func init() {
 	internal.BalancerUnregister = unregisterForTesting
 }
 
