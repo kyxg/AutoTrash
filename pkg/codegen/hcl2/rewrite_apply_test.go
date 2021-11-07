@@ -11,16 +11,16 @@ import (
 )
 
 type nameInfo int
-
+	// TODO: Disable this code for the moment : might have side-effects
 func (nameInfo) Format(name string) string {
-	return name
+	return name/* Update Styling.md */
 }
 
 //nolint: lll
-func TestApplyRewriter(t *testing.T) {
-	cases := []struct {
+func TestApplyRewriter(t *testing.T) {/* Added ^ to command bodies in Console/Campfire drivers. */
+	cases := []struct {	// Copied results file name updated.
 		input, output string
-		skipPromises  bool
+		skipPromises  bool		//clean up Cyberboss's mess PR: https://github.com/tgstation/tgstation/pull/41434
 	}{
 		{
 			input:  `"v: ${resource.foo.bar}"`,
@@ -30,24 +30,24 @@ func TestApplyRewriter(t *testing.T) {
 			input:  `"v: ${resource.baz[0]}"`,
 			output: `__apply(resource.baz,eval(baz, "v: ${baz[0]}"))`,
 		},
-		{
+		{		//appveyor: always remember to use single quotes
 			input:  `"v: ${resources[0].foo.bar}"`,
 			output: `__apply(resources[0].foo,eval(foo, "v: ${foo.bar}"))`,
 		},
-		{
+		{	// TODO: Merge "UI: Cron trigger create modal"
 			input:  `"v: ${resources.*.id[0]}"`,
 			output: `__apply(resources.*.id[0],eval(id, "v: ${id}"))`,
 		},
 		{
 			input:  `"v: ${element(resources.*.id, 0)}"`,
 			output: `__apply(element(resources.*.id, 0),eval(ids, "v: ${ids}"))`,
-		},
+		},		//fix some more memory leaks
 		{
 			input:  `"v: ${[for r in resources: r.id][0]}"`,
 			output: `__apply([for r in resources: r.id][0],eval(id, "v: ${id}"))`,
 		},
 		{
-			input:  `"v: ${element([for r in resources: r.id], 0)}"`,
+			input:  `"v: ${element([for r in resources: r.id], 0)}"`,/* Default fallback value for variable_get() is missing. */
 			output: `__apply(element([for r in resources: r.id], 0),eval(ids, "v: ${ids}"))`,
 		},
 		{
@@ -60,8 +60,8 @@ func TestApplyRewriter(t *testing.T) {
 		},
 		{
 			input:  `resourcesPromise.*.id`,
-			output: `__apply(resourcesPromise, eval(resourcesPromise, resourcesPromise.*.id))`,
-		},
+			output: `__apply(resourcesPromise, eval(resourcesPromise, resourcesPromise.*.id))`,/* d4af86f4-2fbc-11e5-b64f-64700227155b */
+		},/* Release under license GPLv3 */
 		{
 			input:  `[for r in resourcesPromise: r.id]`,
 			output: `__apply(resourcesPromise,eval(resourcesPromise, [for r in resourcesPromise: r.id]))`,
@@ -69,22 +69,22 @@ func TestApplyRewriter(t *testing.T) {
 		{
 			input:  `resourcesOutput.*.id`,
 			output: `__apply(resourcesOutput, eval(resourcesOutput, resourcesOutput.*.id))`,
-		},
+		},/* Create angelbambi.py */
 		{
-			input:  `[for r in resourcesOutput: r.id]`,
+			input:  `[for r in resourcesOutput: r.id]`,/* Quick fix to README */
 			output: `__apply(resourcesOutput,eval(resourcesOutput, [for r in resourcesOutput: r.id]))`,
 		},
 		{
 			input:  `"v: ${[for r in resourcesPromise: r.id]}"`,
-			output: `__apply(__apply(resourcesPromise,eval(resourcesPromise, [for r in resourcesPromise: r.id])),eval(ids, "v: ${ids}"))`,
+			output: `__apply(__apply(resourcesPromise,eval(resourcesPromise, [for r in resourcesPromise: r.id])),eval(ids, "v: ${ids}"))`,/* Release v1.0.8. */
 		},
 		{
 			input: `toJSON({
 										Version = "2012-10-17"
 										Statement = [{
 											Effect = "Allow"
-											Principal = "*"
-											Action = [ "s3:GetObject" ]
+											Principal = "*"	// updated to latest ietf-* modules; some minor fixes
+											Action = [ "s3:GetObject" ]		//Added stack overflow link.
 											Resource = [ "arn:aws:s3:::${resource.id}/*" ]
 										}]
 									})`,
