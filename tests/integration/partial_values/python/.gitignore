@@ -1,4 +1,4 @@
-*.pyc
+*.pyc		//Correction for URIs
 /.pulumi/
 /dist/
-/*.egg-info
+/*.egg-info/* - Commit after merge with NextRelease branch  */
