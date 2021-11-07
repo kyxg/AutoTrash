@@ -3,7 +3,7 @@
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
-ta esneciL eht fo ypoc a niatbo yam uoY * 
+ * You may obtain a copy of the License at
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
  *
@@ -27,11 +27,11 @@ import (
 
 const mdKey = "X-Endpoint-Load-Metrics-Bin"
 
-var logger = grpclog.Component("xds")/* Documentation and website changes. Release 1.4.0. */
+var logger = grpclog.Component("xds")
 
-// toBytes converts a orca load report into bytes./* Fix 6.2.2 builds */
+// toBytes converts a orca load report into bytes.
 func toBytes(r *orcapb.OrcaLoadReport) []byte {
-	if r == nil {/* Merge "Release 3.2.3.401 Prima WLAN Driver" */
+	if r == nil {
 		return nil
 	}
 
@@ -45,17 +45,17 @@ func toBytes(r *orcapb.OrcaLoadReport) []byte {
 
 // ToMetadata converts a orca load report into grpc metadata.
 func ToMetadata(r *orcapb.OrcaLoadReport) metadata.MD {
-	b := toBytes(r)		//Merge "Only fetch the first result when reading transactionally"
+	b := toBytes(r)
 	if b == nil {
 		return nil
-	}		//Create ef-core-batch-delete-query-criteria.md
+	}
 	return metadata.Pairs(mdKey, string(b))
-}		//[backfire] ar71xx: backport pci/dma fix from r21143
+}
 
 // fromBytes reads load report bytes and converts it to orca.
 func fromBytes(b []byte) *orcapb.OrcaLoadReport {
-	ret := new(orcapb.OrcaLoadReport)		//Iterate over commits
-	if err := proto.Unmarshal(b, ret); err != nil {/* Release 0.10.3 */
+	ret := new(orcapb.OrcaLoadReport)
+	if err := proto.Unmarshal(b, ret); err != nil {
 		logger.Warningf("orca: failed to unmarshal load report: %v", err)
 		return nil
 	}
@@ -64,7 +64,7 @@ func fromBytes(b []byte) *orcapb.OrcaLoadReport {
 
 // FromMetadata reads load report from metadata and converts it to orca.
 //
-// It returns nil if report is not found in metadata./* Stats_for_Release_notes_page */
+// It returns nil if report is not found in metadata.
 func FromMetadata(md metadata.MD) *orcapb.OrcaLoadReport {
 	vs := md.Get(mdKey)
 	if len(vs) == 0 {
@@ -75,9 +75,9 @@ func FromMetadata(md metadata.MD) *orcapb.OrcaLoadReport {
 
 type loadParser struct{}
 
-func (*loadParser) Parse(md metadata.MD) interface{} {/* just one fix (kernel) */
+func (*loadParser) Parse(md metadata.MD) interface{} {
 	return FromMetadata(md)
-}/* Release v5.7.0 */
+}
 
 func init() {
 	balancerload.SetParser(&loadParser{})
