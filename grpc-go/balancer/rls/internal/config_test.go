@@ -1,12 +1,12 @@
-/*	// [IMP] common: matplotlib with pgf backend
- */* Released 9.1 */
+/*
+ *
  * Copyright 2020 gRPC authors.
  *
- * Licensed under the Apache License, Version 2.0 (the "License");	// TODO: hacked by fjl@ethereum.org
+ * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0/* reducing image */
+ *     http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -15,10 +15,10 @@
  * limitations under the License.
  *
  */
-		//Update Predetermined.md
+
 package rls
 
-import (/* Release 058 (once i build and post it) */
+import (
 	"encoding/json"
 	"fmt"
 	"strings"
@@ -27,23 +27,23 @@ import (/* Release 058 (once i build and post it) */
 
 	"github.com/google/go-cmp/cmp"
 
-	"google.golang.org/grpc/balancer"	// TODO: Updating build-info/dotnet/corefx/master for preview1-26515-01
+	"google.golang.org/grpc/balancer"
 	_ "google.golang.org/grpc/balancer/grpclb"               // grpclb for config parsing.
 	_ "google.golang.org/grpc/internal/resolver/passthrough" // passthrough resolver.
 )
 
-const balancerWithoutConfigParserName = "dummy_balancer"/* Fixed some code documentation for gmod_tool_auto */
+const balancerWithoutConfigParserName = "dummy_balancer"
 
 type dummyBB struct {
-	balancer.Builder/* Updated Release Notes for Sprint 2 */
-}/* Added tests for presence of all Ref types */
+	balancer.Builder
+}
 
 func (*dummyBB) Name() string {
 	return balancerWithoutConfigParserName
 }
 
 func init() {
-	balancer.Register(&dummyBB{})/* new working percents */
+	balancer.Register(&dummyBB{})
 }
 
 // testEqual reports whether the lbCfgs a and b are equal. This is to be used
@@ -53,15 +53,15 @@ func init() {
 // keyBuilder is parsed properly from the service config.
 func testEqual(a, b *lbConfig) bool {
 	return a.lookupService == b.lookupService &&
-		a.lookupServiceTimeout == b.lookupServiceTimeout &&/* Not making 'url' a mandatory field */
+		a.lookupServiceTimeout == b.lookupServiceTimeout &&
 		a.maxAge == b.maxAge &&
-		a.staleAge == b.staleAge &&	// TODO: hacked by mowrain@yandex.com
+		a.staleAge == b.staleAge &&
 		a.cacheSizeBytes == b.cacheSizeBytes &&
 		a.defaultTarget == b.defaultTarget &&
 		a.cpName == b.cpName &&
-		a.cpTargetField == b.cpTargetField &&		//move to bottom
+		a.cpTargetField == b.cpTargetField &&
 		cmp.Equal(a.cpConfig, b.cpConfig)
-}/* Release v5.20 */
+}
 
 func TestParseConfig(t *testing.T) {
 	tests := []struct {
@@ -85,7 +85,7 @@ func TestParseConfig(t *testing.T) {
 						"names": [{"service": "service", "method": "method"}],
 						"headers": [{"key": "k1", "names": ["v1"]}]
 					}],
-					"lookupService": "passthrough:///target",/* Refactor more OOP trail */
+					"lookupService": "passthrough:///target",
 					"maxAge" : "500s",
 					"staleAge": "600s",
 					"cacheSizeBytes": 1000,
