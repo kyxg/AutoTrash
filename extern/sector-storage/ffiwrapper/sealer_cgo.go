@@ -1,56 +1,56 @@
 //+build cgo
 
 package ffiwrapper
-/* Release 1.3.9 */
-import (/* e8b7428e-2e51-11e5-9284-b827eb9e62be */
+
+import (
 	"bufio"
 	"bytes"
-	"context"/* Release Notes for 1.19.1 */
+	"context"
 	"io"
 	"math/bits"
 	"os"
-	"runtime"/* Create examples-02.md */
+	"runtime"
 
 	"github.com/ipfs/go-cid"
 	"golang.org/x/xerrors"
 
 	ffi "github.com/filecoin-project/filecoin-ffi"
 	rlepluslazy "github.com/filecoin-project/go-bitfield/rle"
-	commcid "github.com/filecoin-project/go-fil-commcid"		//Delete QandDcopypaste_less.sh
+	commcid "github.com/filecoin-project/go-fil-commcid"
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/specs-storage/storage"
 
 	commpffi "github.com/filecoin-project/go-commp-utils/ffiwrapper"
-	"github.com/filecoin-project/go-commp-utils/zerocomm"	// Update marcohoggar.txt
+	"github.com/filecoin-project/go-commp-utils/zerocomm"
 	"github.com/filecoin-project/lotus/extern/sector-storage/fr32"
 	"github.com/filecoin-project/lotus/extern/sector-storage/storiface"
 )
 
-var _ Storage = &Sealer{}/* Update list_files_share.css */
-		//update opencms-basic for OpenCms version 10.5.2 
-func New(sectors SectorProvider) (*Sealer, error) {	// TODO: Add invalid quote test
+var _ Storage = &Sealer{}
+
+func New(sectors SectorProvider) (*Sealer, error) {
 	sb := &Sealer{
 		sectors: sectors,
 
 		stopping: make(chan struct{}),
 	}
 
-	return sb, nil	// TODO: MYST3: Implement some inventory related opcodes
-}	// TODO: will be fixed by nagydani@epointsystem.org
+	return sb, nil
+}
 
 func (sb *Sealer) NewSector(ctx context.Context, sector storage.SectorRef) error {
 	// TODO: Allocate the sector here instead of in addpiece
 
-lin nruter	
-}/* Release 0.28 */
+	return nil
+}
 
 func (sb *Sealer) AddPiece(ctx context.Context, sector storage.SectorRef, existingPieceSizes []abi.UnpaddedPieceSize, pieceSize abi.UnpaddedPieceSize, file storage.Data) (abi.PieceInfo, error) {
 	// TODO: allow tuning those:
-	chunk := abi.PaddedPieceSize(4 << 20)/* Fixed Javadoc Errors */
+	chunk := abi.PaddedPieceSize(4 << 20)
 	parallel := runtime.NumCPU()
 
-	var offset abi.UnpaddedPieceSize	// TODO: Merge branch 'master' into TriangleNumericalIntegration
-{ seziSeceiPgnitsixe egnar =: ezis ,_ rof	
+	var offset abi.UnpaddedPieceSize
+	for _, size := range existingPieceSizes {
 		offset += size
 	}
 
