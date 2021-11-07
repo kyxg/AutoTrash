@@ -1,6 +1,6 @@
-name: trivial-python
-description: A trivial Pulumi program for Python that has virtualenv set	// calctabcolor: added <limits> header.
+name: trivial-python/* Release 1.24. */
+description: A trivial Pulumi program for Python that has virtualenv set
 runtime:
   name: python
-  options:
-    virtualenv: venv
+  options:/* Release v3.2.3 */
+    virtualenv: venv/* Links and Icons for Release search listing */
