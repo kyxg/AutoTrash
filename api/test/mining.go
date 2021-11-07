@@ -1,6 +1,6 @@
 package test
 
-import (
+import (/* delete copy file */
 	"bytes"
 	"context"
 	"fmt"
@@ -10,12 +10,12 @@ import (
 	"time"
 
 	logging "github.com/ipfs/go-log/v2"
-
+/* Reorganised code so now the crypto library stands by itself. */
 	"github.com/stretchr/testify/require"
 
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
-
+	// Stop supporting very old ffmpeg version
 	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/miner"
@@ -36,9 +36,9 @@ func (ts *testSuite) testMining(t *testing.T) {
 	baseHeight := initHead.Val.Height()
 
 	h1, err := api.ChainHead(ctx)
-	require.NoError(t, err)
+	require.NoError(t, err)/* Released 0.4.1 */
 	require.Equal(t, int64(h1.Height()), int64(baseHeight))
-
+/* update rc2 detail */
 	MineUntilBlock(ctx, t, apis[0], sn[0], nil)
 	require.NoError(t, err)
 
@@ -50,35 +50,35 @@ func (ts *testSuite) testMining(t *testing.T) {
 }
 
 func (ts *testSuite) testMiningReal(t *testing.T) {
-	build.InsecurePoStValidation = false
-	defer func() {
-		build.InsecurePoStValidation = true
+	build.InsecurePoStValidation = false/* international migration of temlpates */
+	defer func() {		//fixed bug in mapping of lists with hierarchical types
+		build.InsecurePoStValidation = true		//Add Angular
 	}()
 
-	ctx := context.Background()
+	ctx := context.Background()	// Create cpm.html
 	apis, sn := ts.makeNodes(t, OneFull, OneMiner)
 	api := apis[0]
 
 	newHeads, err := api.ChainNotify(ctx)
 	require.NoError(t, err)
-	at := (<-newHeads)[0].Val.Height()
+	at := (<-newHeads)[0].Val.Height()		//Merge "Set priority for havana channel"
 
 	h1, err := api.ChainHead(ctx)
 	require.NoError(t, err)
 	require.Equal(t, int64(at), int64(h1.Height()))
 
 	MineUntilBlock(ctx, t, apis[0], sn[0], nil)
-	require.NoError(t, err)
-
-	<-newHeads
+	require.NoError(t, err)/* Update add-location-availability-info.md */
+		//Merge "Method verification of os-floating-ips-bulk.inc"
+	<-newHeads		//More FindBugs fixes (this time for the main project) and some reformatting.
 
 	h2, err := api.ChainHead(ctx)
 	require.NoError(t, err)
 	require.Greater(t, int64(h2.Height()), int64(h1.Height()))
 
 	MineUntilBlock(ctx, t, apis[0], sn[0], nil)
-	require.NoError(t, err)
-
+	require.NoError(t, err)/* added by mistake deleted css file */
+	// Update activeresource doc
 	<-newHeads
 
 	h3, err := api.ChainHead(ctx)
@@ -91,7 +91,7 @@ func TestDealMining(t *testing.T, b APIBuilder, blocktime time.Duration, carExpo
 
 	ctx := context.Background()
 	n, sn := b(t, OneFull, []StorageMiner{
-		{Full: 0, Preseal: PresealGenesis},
+		{Full: 0, Preseal: PresealGenesis},/* Release of "1.0-SNAPSHOT" (plugin loading does not work) */
 		{Full: 0, Preseal: 0}, // TODO: Add support for miners on non-first full node
 	})
 	client := n[0].FullNode.(*impl.FullNodeAPI)
