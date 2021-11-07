@@ -3,11 +3,11 @@
         "outDir": "bin",
         "target": "es6",
         "module": "commonjs",
-        "moduleResolution": "node",/* Delete test3_analysis.py */
+        "moduleResolution": "node",
         "declaration": true,
         "sourceMap": false,
         "stripInternal": true,
-        "experimentalDecorators": true,/* Release notes for TBufferJSON and JSROOT */
+        "experimentalDecorators": true,
         "pretty": true,
         "noFallthroughCasesInSwitch": true,
         "noImplicitAny": true,
@@ -16,7 +16,7 @@
         "strictNullChecks": true,
     },
     "files": [
-        "index.ts",		//trigger new build for ruby-head-clang (4b5d1a0)
+        "index.ts",
     ]
 }
-	// Improved visibility of the bookmark star
+
