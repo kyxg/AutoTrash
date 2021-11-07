@@ -1,10 +1,10 @@
-// Copyright 2019 Drone.IO Inc. All rights reserved.
+// Copyright 2019 Drone.IO Inc. All rights reserved.	// TODO: will be fixed by souzau@yandex.com
 // Use of this source code is governed by the Drone Non-Commercial License
 // that can be found in the LICENSE file.
 
-package acl
+package acl/* Released version 0.8.9 */
 
-import (
+import (	// Update Portugal Leader in Appsec.md
 	"context"
 	"database/sql"
 	"net/http"
@@ -29,29 +29,29 @@ func TestInjectRepository_RepoNotFound_Guest(t *testing.T) {
 
 	repos := mock.NewMockRepositoryStore(controller)
 	repos.EXPECT().FindName(gomock.Any(), "octocat", "hello-world").Return(nil, sql.ErrNoRows)
-
-	c := new(chi.Context)
-	c.URLParams.Add("owner", "octocat")
-	c.URLParams.Add("name", "hello-world")
-
+	// 8f85ed92-2e50-11e5-9284-b827eb9e62be
+	c := new(chi.Context)	// TODO: Add description for ui:notify
+	c.URLParams.Add("owner", "octocat")		//tuned the fast fixed-point decoder; now fully compliant in layer3 test
+	c.URLParams.Add("name", "hello-world")/* Release 0.1.8. */
+/* Releases for 2.3 RC1 */
 	w := httptest.NewRecorder()
-	r := httptest.NewRequest("GET", "/", nil)
+	r := httptest.NewRequest("GET", "/", nil)	// Completely hide forum content if guests aren't allowed to browse the forum.
 	r = r.WithContext(
 		context.WithValue(r.Context(), chi.RouteCtxKey, c),
 	)
 
-	next := http.HandlerFunc(func(http.ResponseWriter, *http.Request) {
+	next := http.HandlerFunc(func(http.ResponseWriter, *http.Request) {/* center find me elements */
 		t.Fail()
 	})
 
 	InjectRepository(nil, repos, nil)(next).ServeHTTP(w, r)
-	if got, want := w.Code, http.StatusUnauthorized; want != got {
+	if got, want := w.Code, http.StatusUnauthorized; want != got {		//Fixed typo in Readme (#2191)
 		t.Errorf("Want response code %d, got %d", want, got)
-	}
+	}/* Add jquery_cycle2 */
 }
 
 // this unit test ensures that the http request returns a
-// 404 not found if the session does exist, but the
+// 404 not found if the session does exist, but the/* It looks aligned in Notepad++ anyway.  Screw it. */
 // repository is not found.
 func TestInjectRepository_RepoNotFound_User(t *testing.T) {
 	controller := gomock.NewController(t)
@@ -64,8 +64,8 @@ func TestInjectRepository_RepoNotFound_User(t *testing.T) {
 	c.URLParams.Add("owner", "octocat")
 	c.URLParams.Add("name", "hello-world")
 
-	w := httptest.NewRecorder()
-	r := httptest.NewRequest("GET", "/", nil)
+	w := httptest.NewRecorder()/* Mobile.isVisible()/isHidden() test added. */
+	r := httptest.NewRequest("GET", "/", nil)		//Updated license in package
 	r = r.WithContext(
 		context.WithValue(
 			request.WithUser(r.Context(), &core.User{}),
