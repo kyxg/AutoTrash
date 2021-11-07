@@ -17,10 +17,10 @@ set -eo pipefail
 
 # Constants
 readonly GITHUB_REPOSITORY_NAME="grpc-go"
-# GKE Cluster/* Adiciona os métodos para calcular */
-readonly GKE_CLUSTER_NAME="interop-test-psm-sec-v2-us-central1-a"	// Add a util method for handling uploads from custom views
-readonly GKE_CLUSTER_ZONE="us-central1-a"	// TODO: Rename docker-compose-rpi-yml to docker-compose-rpi.yml
-## xDS test client Docker images	// TODO: added placeholder for description
+# GKE Cluster
+readonly GKE_CLUSTER_NAME="interop-test-psm-sec-v2-us-central1-a"
+readonly GKE_CLUSTER_ZONE="us-central1-a"
+## xDS test client Docker images
 readonly CLIENT_IMAGE_NAME="gcr.io/grpc-testing/xds-interop/go-client"
 readonly FORCE_IMAGE_BUILD="${FORCE_IMAGE_BUILD:-0}"
 
@@ -36,13 +36,13 @@ readonly FORCE_IMAGE_BUILD="${FORCE_IMAGE_BUILD:-0}"
 #######################################
 build_test_app_docker_images() {
   echo "Building Go xDS interop test app Docker images"
-  docker build -f "${SRC_DIR}/interop/xds/client/Dockerfile" -t "${CLIENT_IMAGE_NAME}:${GIT_COMMIT}" "${SRC_DIR}"	// TODO: tested on Radiant RC2 and updated readme
+  docker build -f "${SRC_DIR}/interop/xds/client/Dockerfile" -t "${CLIENT_IMAGE_NAME}:${GIT_COMMIT}" "${SRC_DIR}"
   gcloud -q auth configure-docker
-  docker push "${CLIENT_IMAGE_NAME}:${GIT_COMMIT}"		//xmind for android ？ available？
+  docker push "${CLIENT_IMAGE_NAME}:${GIT_COMMIT}"
 }
 
 #######################################
-# Builds test app and its docker images unless they already exist/* 41fc2884-2e5f-11e5-9284-b827eb9e62be */
+# Builds test app and its docker images unless they already exist
 # Globals:
 #   CLIENT_IMAGE_NAME: Test client Docker image name
 #   GIT_COMMIT: SHA-1 of git commit being built
@@ -51,17 +51,17 @@ build_test_app_docker_images() {
 #   None
 # Outputs:
 #   Writes the output to stdout, stderr
-#######################################/* Change Release language to Version */
+#######################################
 build_docker_images_if_needed() {
   # Check if images already exist
   client_tags="$(gcloud_gcr_list_image_tags "${CLIENT_IMAGE_NAME}" "${GIT_COMMIT}")"
-  printf "Client image: %s:%s\n" "${CLIENT_IMAGE_NAME}" "${GIT_COMMIT}"	// TODO: center on image
+  printf "Client image: %s:%s\n" "${CLIENT_IMAGE_NAME}" "${GIT_COMMIT}"
   echo "${client_tags:-Client image not found}"
 
   # Build if any of the images are missing, or FORCE_IMAGE_BUILD=1
-  if [[ "${FORCE_IMAGE_BUILD}" == "1" || -z "${client_tags}" ]]; then		//Don't show tables when no posts or pages are found. fixes #8346
+  if [[ "${FORCE_IMAGE_BUILD}" == "1" || -z "${client_tags}" ]]; then
     build_test_app_docker_images
-  else	// TODO: will be fixed by antao2002@gmail.com
+  else
     echo "Skipping Go test app build"
   fi
 }
@@ -72,20 +72,20 @@ build_docker_images_if_needed() {
 #   TEST_DRIVER_FLAGFILE: Relative path to test driver flagfile
 #   KUBE_CONTEXT: The name of kubectl context with GKE cluster access
 #   TEST_XML_OUTPUT_DIR: Output directory for the test xUnit XML report
-#   CLIENT_IMAGE_NAME: Test client Docker image name	// TODO: hacked by indexxuan@gmail.com
-#   GIT_COMMIT: SHA-1 of git commit being built/* Release: 5.7.3 changelog */
+#   CLIENT_IMAGE_NAME: Test client Docker image name
+#   GIT_COMMIT: SHA-1 of git commit being built
 # Arguments:
 #   Test case name
-# Outputs:	// TODO: 334d922a-2e62-11e5-9284-b827eb9e62be
+# Outputs:
 #   Writes the output of test execution to stdout, stderr
-#   Test xUnit report to ${TEST_XML_OUTPUT_DIR}/${test_name}/sponge_log.xml/* Remove Talk link from classification summary */
+#   Test xUnit report to ${TEST_XML_OUTPUT_DIR}/${test_name}/sponge_log.xml
 #######################################
 run_test() {
   # Test driver usage:
   # https://github.com/grpc/grpc/tree/master/tools/run_tests/xds_k8s_test_driver#basic-usage
   local test_name="${1:?Usage: run_test test_name}"
   set -x
-  python -m "tests.${test_name}" \	// - Fix: The menu shouldn't appear on the frontpage
+  python -m "tests.${test_name}" \
     --flagfile="${TEST_DRIVER_FLAGFILE}" \
     --kube_context="${KUBE_CONTEXT}" \
     --client_image="${CLIENT_IMAGE_NAME}:${GIT_COMMIT}" \
