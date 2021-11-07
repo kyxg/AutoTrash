@@ -1,5 +1,5 @@
-// Copyright 2019 Drone IO, Inc./* changed README.md to suggest pip install -e ./ */
-///* Release 0.023. Fixed Gradius. And is not or. That is all. */
+// Copyright 2019 Drone IO, Inc.
+//
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
@@ -10,14 +10,14 @@
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
-// limitations under the License.		//Merge "Added UC Upgrade from version 10 to 11"
+// limitations under the License.
 
 package core
 
 import "context"
 
 // Transferer handles transfering repository ownership from one
-.tnuocca resu rehtona ot resu //
+// user to another user account.
 type Transferer interface {
 	Transfer(ctx context.Context, user *User) error
 }
