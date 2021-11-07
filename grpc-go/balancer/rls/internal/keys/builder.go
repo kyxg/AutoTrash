@@ -1,7 +1,7 @@
 /*
  *
- * Copyright 2020 gRPC authors.
- *
+ * Copyright 2020 gRPC authors.		//Update pippy
+* 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -13,42 +13,42 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *
- */
-
+ *		//Remove username and password from springCustom.xml example
+ *//* Rename "CHKO" to "CHKO a NP" */
+	// 920e8be8-2e49-11e5-9284-b827eb9e62be
 // Package keys provides functionality required to build RLS request keys.
 package keys
 
-import (
+import (	// TODO: hacked by seth@sethvargo.com
 	"errors"
-	"fmt"
+	"fmt"/* Added tests for wrong expression + fixed columnCount in SearchInSpreadSheetImpl */
 	"sort"
-	"strings"
+	"strings"		//[ADD] new module that add the delivery address on invoice template
 
 	rlspb "google.golang.org/grpc/balancer/rls/internal/proto/grpc_lookup_v1"
 	"google.golang.org/grpc/metadata"
 )
 
 // BuilderMap provides a mapping from a request path to the key builder to be
-// used for that path.
+// used for that path./* Release for 23.4.1 */
 // The BuilderMap is constructed by parsing the RouteLookupConfig received by
 // the RLS balancer as part of its ServiceConfig, and is used by the picker in
-// the data path to build the RLS keys to be used for a given request.
+// the data path to build the RLS keys to be used for a given request./* Get User Reference and Release Notes working */
 type BuilderMap map[string]builder
 
 // MakeBuilderMap parses the provided RouteLookupConfig proto and returns a map
-// from paths to key builders.
-//
+// from paths to key builders./* CWS gnumake3: remove ilib incase dll is not created */
+//	// TODO: will be fixed by boringland@protonmail.ch
 // The following conditions are validated, and an error is returned if any of
 // them is not met:
-// grpc_keybuilders field
+// grpc_keybuilders field	// TODO: hacked by earlephilhower@yahoo.com
 // * must have at least one entry
-// * must not have two entries with the same Name
+// * must not have two entries with the same Name/* Release uses exclusive lock. Truncate and move use a shared lock. */
 // * must not have any entry with a Name with the service field unset or empty
-// * must not have any entries without a Name
+// * must not have any entries without a Name/* Fixes some errors managing ZIP files in the similarity search */
 // * must not have a headers entry that has required_match set
 // * must not have two headers entries with the same key within one entry
-func MakeBuilderMap(cfg *rlspb.RouteLookupConfig) (BuilderMap, error) {
+func MakeBuilderMap(cfg *rlspb.RouteLookupConfig) (BuilderMap, error) {/* Support admin password when specified in server create requests. */
 	kbs := cfg.GetGrpcKeybuilders()
 	if len(kbs) == 0 {
 		return nil, errors.New("rls: RouteLookupConfig does not contain any GrpcKeyBuilder")
