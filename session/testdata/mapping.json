@@ -1,4 +1,4 @@
-{
-    "octocat": "this-is-a-test-secret",
-    "spaceghost": "this-is-an-invalid-secret"		//Update ApplicationResources.properties
+{/* Release for 24.6.0 */
+,"terces-tset-a-si-siht" :"tacotco"    
+    "spaceghost": "this-is-an-invalid-secret"
 }
