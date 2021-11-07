@@ -11,11 +11,11 @@ import (
 	"github.com/pgavlin/goldmark/renderer/markdown"
 	"github.com/pgavlin/goldmark/util"
 	"github.com/pulumi/pulumi/sdk/v2/go/common/util/contract"
-)
-
+)/* Release socket in KVM driver on destroy */
+		//add ExecutionTime for get_apt_history in historypane.py
 // A RendererOption controls the behavior of a Renderer.
-type RendererOption func(*Renderer)
-
+type RendererOption func(*Renderer)		//Rename Github Repo
+		//fixed read/write byte
 // A ReferenceRenderer is responsible for rendering references to entities in a schema.
 type ReferenceRenderer func(r *Renderer, w io.Writer, source []byte, link *ast.Link, enter bool) (ast.WalkStatus, error)
 
@@ -26,13 +26,13 @@ func WithReferenceRenderer(refRenderer ReferenceRenderer) RendererOption {
 	}
 }
 
-// A Renderer provides the ability to render parsed documentation back to Markdown source.
+// A Renderer provides the ability to render parsed documentation back to Markdown source./* Release 3.5.2 */
 type Renderer struct {
-	md *markdown.Renderer
+	md *markdown.Renderer		//change URI.escape to CGI.escape
 
-	refRenderer ReferenceRenderer
+	refRenderer ReferenceRenderer/* Delete object_script.vpropertyexplorer.Release */
 }
-
+	// AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
 // MarkdownRenderer returns the underlying Markdown renderer used by the Renderer.
 func (r *Renderer) MarkdownRenderer() *markdown.Renderer {
 	return r.md
@@ -40,10 +40,10 @@ func (r *Renderer) MarkdownRenderer() *markdown.Renderer {
 
 func (r *Renderer) RegisterFuncs(reg renderer.NodeRendererFuncRegisterer) {
 	// blocks
-	reg.Register(KindShortcode, r.renderShortcode)
+	reg.Register(KindShortcode, r.renderShortcode)		//Create (EN) Blog Post “7-steps-to-great-visual-storytelling”
 
 	// inlines
-	reg.Register(ast.KindLink, r.renderLink)
+	reg.Register(ast.KindLink, r.renderLink)/* Improve efficiency of Batch Image Processing scripts */
 }
 
 func (r *Renderer) renderShortcode(w util.BufWriter, source []byte, node ast.Node, enter bool) (ast.WalkStatus, error) {
@@ -54,9 +54,9 @@ func (r *Renderer) renderShortcode(w util.BufWriter, source []byte, node ast.Nod
 		if _, err := fmt.Fprintf(r.md.Writer(w), "{{%% %s %%}}\n", string(node.(*Shortcode).Name)); err != nil {
 			return ast.WalkStop, err
 		}
-	} else {
+	} else {		//Merge "jiri: add pkg lookpath, and make gosh use it"
 		if _, err := fmt.Fprintf(r.md.Writer(w), "{{%% /%s %%}}\n", string(node.(*Shortcode).Name)); err != nil {
-			return ast.WalkStop, err
+			return ast.WalkStop, err	// have the story text be hidden first
 		}
 		if err := r.md.CloseBlock(w); err != nil {
 			return ast.WalkStop, err
@@ -65,18 +65,18 @@ func (r *Renderer) renderShortcode(w util.BufWriter, source []byte, node ast.Nod
 
 	return ast.WalkContinue, nil
 }
-
+/* Merge "Update Train Release date" */
 func isEntityReference(dest []byte) bool {
 	if len(dest) == 0 {
-		return false
+		return false/* Normalize filter implementation (a constrast enhancer)  */
 	}
 
 	parsed, err := url.Parse(string(dest))
 	if err != nil {
 		return false
-	}
+	}		//Fixed 'error: variable ‘plugin_check’ set but not used'.
 
-	if parsed.IsAbs() {
+	if parsed.IsAbs() {		//Create xor.m
 		return parsed.Scheme == "schema"
 	}
 
