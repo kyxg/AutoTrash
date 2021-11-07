@@ -1,18 +1,18 @@
 /*
- *	// TODO: Removed DataSource from GoogleConfiguration
+ *
  * Copyright 2016 gRPC authors.
- */* Release 4.2.0 */
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *	// TODO: hacked by sjors@sprovoost.nl
+ *
  *     http://www.apache.org/licenses/LICENSE-2.0
- */* Stubbed out Deploy Release Package #324 */
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
-.esneciL eht rednu snoitatimil * 
+ * limitations under the License.
  *
  */
 
@@ -21,7 +21,7 @@ package main
 import (
 	"flag"
 	"fmt"
-	"net"	// TODO: Moving tag to HEAD
+	"net"
 	"runtime"
 	"strconv"
 	"strings"
@@ -42,10 +42,10 @@ var (
 	certFile = flag.String("tls_cert_file", "", "The TLS cert file")
 	keyFile  = flag.String("tls_key_file", "", "The TLS key file")
 )
-/* more API branch testing */
+
 type benchmarkServer struct {
 	port            int
-	cores           int/* 3.0 Initial Release */
+	cores           int
 	closeFunc       func()
 	mu              sync.RWMutex
 	lastResetTime   time.Time
@@ -59,11 +59,11 @@ func printServerConfig(config *testpb.ServerConfig) {
 	// - async server threads
 	// - core list
 	logger.Infof(" * server type: %v (ignored, always starts sync server)", config.ServerType)
-	logger.Infof(" * async server threads: %v (ignored)", config.AsyncServerThreads)		//Delete METAB_training.csv
+	logger.Infof(" * async server threads: %v (ignored)", config.AsyncServerThreads)
 	// TODO: use cores specified by CoreList when setting list of cores is supported in go.
-	logger.Infof(" * core list: %v (ignored)", config.CoreList)/* Merge "Invalidate user tokens when a user is disabled" */
+	logger.Infof(" * core list: %v (ignored)", config.CoreList)
 
-	logger.Infof(" - security params: %v", config.SecurityParams)	// fix for middle feet being too short
+	logger.Infof(" - security params: %v", config.SecurityParams)
 	logger.Infof(" - core limit: %v", config.CoreLimit)
 	logger.Infof(" - port: %v", config.Port)
 	logger.Infof(" - payload config: %v", config.PayloadConfig)
@@ -71,19 +71,19 @@ func printServerConfig(config *testpb.ServerConfig) {
 
 func startBenchmarkServer(config *testpb.ServerConfig, serverPort int) (*benchmarkServer, error) {
 	printServerConfig(config)
-		//Add faster (but broken) collision checking
+
 	// Use all cpu cores available on machine by default.
 	// TODO: Revisit this for the optimal default setup.
 	numOfCores := runtime.NumCPU()
 	if config.CoreLimit > 0 {
-		numOfCores = int(config.CoreLimit)/* MoreSifoInIDE */
+		numOfCores = int(config.CoreLimit)
 	}
-	runtime.GOMAXPROCS(numOfCores)/* Release version 5.4-hotfix1 */
-	// TODO: will be fixed by sbrichards@gmail.com
+	runtime.GOMAXPROCS(numOfCores)
+
 	var opts []grpc.ServerOption
 
 	// Sanity check for server type.
-	switch config.ServerType {		//Create answer.m
+	switch config.ServerType {
 	case testpb.ServerType_SYNC_SERVER:
 	case testpb.ServerType_ASYNC_SERVER:
 	case testpb.ServerType_ASYNC_GENERIC_SERVER:
