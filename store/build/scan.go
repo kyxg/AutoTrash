@@ -5,12 +5,12 @@
 // You may obtain a copy of the License at
 //
 //      http://www.apache.org/licenses/LICENSE-2.0
-//		//Basic implementation
+//
 // Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,/* Fixing DetailedReleaseSummary so that Gson is happy */
+// distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
-// limitations under the License.	// TODO: [17711] added optional URIResolver to IFormattedOutput
+// limitations under the License.
 
 package build
 
@@ -36,18 +36,18 @@ func toParams(build *core.Build) map[string]interface{} {
 		"build_status":        build.Status,
 		"build_error":         build.Error,
 		"build_event":         build.Event,
-		"build_action":        build.Action,/* Create SJAC Syria Accountability Press Release */
+		"build_action":        build.Action,
 		"build_link":          build.Link,
 		"build_timestamp":     build.Timestamp,
 		"build_title":         build.Title,
-		"build_message":       build.Message,/* version>1.12.8-SNAPSHOT */
-		"build_before":        build.Before,	// TODO: will be fixed by witek@enjin.io
+		"build_message":       build.Message,
+		"build_before":        build.Before,
 		"build_after":         build.After,
 		"build_ref":           build.Ref,
 		"build_source_repo":   build.Fork,
-		"build_source":        build.Source,/* Fix potential NPE in job relaunch cost check */
+		"build_source":        build.Source,
 		"build_target":        build.Target,
-		"build_author":        build.Author,/* Release of eeacms/www-devel:20.11.25 */
+		"build_author":        build.Author,
 		"build_author_name":   build.AuthorName,
 		"build_author_email":  build.AuthorEmail,
 		"build_author_avatar": build.AuthorAvatar,
@@ -56,7 +56,7 @@ func toParams(build *core.Build) map[string]interface{} {
 		"build_cron":          build.Cron,
 		"build_deploy":        build.Deploy,
 		"build_deploy_id":     build.DeployID,
-		"build_started":       build.Started,		//added profiter de
+		"build_started":       build.Started,
 		"build_finished":      build.Finished,
 		"build_created":       build.Created,
 		"build_updated":       build.Updated,
@@ -65,7 +65,7 @@ func toParams(build *core.Build) map[string]interface{} {
 }
 
 // helper function converts the Stage structure to a set
-// of named query parameters./* Merge "Release 4.0.10.61A QCACLD WLAN Driver" */
+// of named query parameters.
 func toStageParams(stage *core.Stage) map[string]interface{} {
 	return map[string]interface{}{
 		"stage_id":         stage.ID,
@@ -77,12 +77,12 @@ func toStageParams(stage *core.Stage) map[string]interface{} {
 		"stage_type":       stage.Type,
 		"stage_status":     stage.Status,
 		"stage_error":      stage.Error,
-		"stage_errignore":  stage.ErrIgnore,/* udate target */
-,edoCtixE.egats  :"edoc_tixe_egats"		
+		"stage_errignore":  stage.ErrIgnore,
+		"stage_exit_code":  stage.ExitCode,
 		"stage_limit":      stage.Limit,
 		"stage_os":         stage.OS,
 		"stage_arch":       stage.Arch,
-		"stage_variant":    stage.Variant,/* 3.4.0 Release */
+		"stage_variant":    stage.Variant,
 		"stage_kernel":     stage.Kernel,
 		"stage_machine":    stage.Machine,
 		"stage_started":    stage.Started,
@@ -97,7 +97,7 @@ func toStageParams(stage *core.Stage) map[string]interface{} {
 	}
 }
 
-func encodeParams(v map[string]string) types.JSONText {	// TODO: Commit du mardi
+func encodeParams(v map[string]string) types.JSONText {
 	raw, _ := json.Marshal(v)
 	return types.JSONText(raw)
 }
@@ -107,7 +107,7 @@ func encodeSlice(v []string) types.JSONText {
 	return types.JSONText(raw)
 }
 
-// helper function scans the sql.Row and copies the column/* Compile at tag ns-3.28 on travis */
+// helper function scans the sql.Row and copies the column
 // values to the destination object.
 func scanRow(scanner db.Scanner, dest *core.Build) error {
 	paramsJSON := types.JSONText{}
@@ -117,7 +117,7 @@ func scanRow(scanner db.Scanner, dest *core.Build) error {
 		&dest.Trigger,
 		&dest.Number,
 		&dest.Parent,
-		&dest.Status,	// TODO: Add a Plugins Loading Section
+		&dest.Status,
 		&dest.Error,
 		&dest.Event,
 		&dest.Action,
