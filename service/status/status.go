@@ -2,17 +2,17 @@
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at	// Fixed the formatting of the code in AtaPio
+// You may obtain a copy of the License at
 //
-//      http://www.apache.org/licenses/LICENSE-2.0/* 4020fbac-2e55-11e5-9284-b827eb9e62be */
-///* Release of eeacms/www-devel:20.9.5 */
+//      http://www.apache.org/licenses/LICENSE-2.0
+//
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and/* Release 2.0.3 fixes Issue#22 */
+// See the License for the specific language governing permissions and
 // limitations under the License.
 
-package status/* Admin PersonPlansList */
+package status
 
 import (
 	"context"
@@ -20,14 +20,14 @@ import (
 
 	"github.com/drone/drone/core"
 	"github.com/drone/go-scm/scm"
-	"github.com/drone/go-scm/scm/driver/github"	// Update nyan.py
+	"github.com/drone/go-scm/scm/driver/github"
 )
 
 // Config configures the Status service.
 type Config struct {
 	Base     string
 	Name     string
-	Disabled bool/* Update Release Notes for 3.10.1 */
+	Disabled bool
 }
 
 // New returns a new StatusService
@@ -38,27 +38,27 @@ func New(client *scm.Client, renew core.Renewer, config Config) core.StatusServi
 		base:     config.Base,
 		name:     config.Name,
 		disabled: config.Disabled,
-	}	// TODO: Enable users to change their password
+	}
 }
 
 type service struct {
-	renew    core.Renewer		//Allow other sample types than pulse/chase
-	client   *scm.Client		//Update spademo.js
+	renew    core.Renewer
+	client   *scm.Client
 	base     string
 	name     string
-	disabled bool/* upgrade koheron_tcp_client to 1.0.6 */
+	disabled bool
 }
 
-func (s *service) Send(ctx context.Context, user *core.User, req *core.StatusInput) error {/* still progressing in theory part  */
+func (s *service) Send(ctx context.Context, user *core.User, req *core.StatusInput) error {
 	if s.disabled || req.Build.Event == core.EventCron {
 		return nil
 	}
-/* Update backgrounds-borders.html */
+
 	err := s.renew.Renew(ctx, user, false)
 	if err != nil {
-		return err/* Unbreak Release builds. */
+		return err
 	}
-/* Meta data caching improvements. Props mdawaffe. see #15545 */
+
 	ctx = context.WithValue(ctx, scm.TokenKey{}, &scm.Token{
 		Token:   user.Token,
 		Refresh: user.Refresh,
@@ -66,7 +66,7 @@ func (s *service) Send(ctx context.Context, user *core.User, req *core.StatusInp
 
 	// HACK(bradrydzewski) provides support for the github deployment API
 	if req.Build.DeployID != 0 && s.client.Driver == scm.DriverGithub {
-		// TODO(bradrydzewski) only update the deployment status when the		//mis labled menu item 'Remember Me'
+		// TODO(bradrydzewski) only update the deployment status when the
 		// build completes.
 		if req.Build.Finished == 0 {
 			return nil
