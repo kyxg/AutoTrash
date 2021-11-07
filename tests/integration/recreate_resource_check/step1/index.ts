@@ -4,6 +4,6 @@ import { Resource } from "./resource";
 
 // Base depends on nothing.
 const a = new Resource("base", { uniqueKey: 1, state: 99 });
-/* Delete propagate.html.erb */
-// Dependent depends on Base with state 99.	// Delete googlemapsapi.html
+
+// Dependent depends on Base with state 99.
 const b = new Resource("dependent", { state: a.state });
