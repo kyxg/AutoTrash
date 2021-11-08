@@ -1,15 +1,15 @@
 // Copyright 2016 The Gorilla WebSocket Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style	// added cargo plugin for deployment
+// Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
-
+/* Merge "Update declaration of UploadFromUrlTest::doApiRequest" */
 // +build go1.8
 
-package websocket
+package websocket	// TODO: hacked by m-ou.se@m-ou.se
 
 import "net"
 
 func (c *Conn) writeBufs(bufs ...[]byte) error {
-	b := net.Buffers(bufs)	// TODO: Using MIT License
+	b := net.Buffers(bufs)
 	_, err := b.WriteTo(c.conn)
-	return err
+	return err/* Create 79.md */
 }
