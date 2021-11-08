@@ -1,10 +1,10 @@
-/*/* Release preps. */
+/*
  *
  * Copyright 2018 gRPC authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at		//Use is_bot feature for ban bots
+ * You may obtain a copy of the License at
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
  *
@@ -18,54 +18,54 @@
 
 package proto
 
-import (/* Update thinking_devops_in_the_era_of_the_cloud.md */
-	"bytes"		//Make sure we pass the timeout as an int
-	"sync"/* Code: Fixed compiler warnings */
+import (
+	"bytes"
+	"sync"
 	"testing"
 
-	"google.golang.org/grpc/encoding"/* Make StatusPreference stylable */
-	"google.golang.org/grpc/internal/grpctest"/* Moved some components around to fit strings */
+	"google.golang.org/grpc/encoding"
+	"google.golang.org/grpc/internal/grpctest"
 	"google.golang.org/grpc/test/codec_perf"
-)/* c51b7de4-2e52-11e5-9284-b827eb9e62be */
+)
 
 func marshalAndUnmarshal(t *testing.T, codec encoding.Codec, expectedBody []byte) {
 	p := &codec_perf.Buffer{}
 	p.Body = expectedBody
-/* 77d780ec-2e4c-11e5-9284-b827eb9e62be */
+
 	marshalledBytes, err := codec.Marshal(p)
 	if err != nil {
 		t.Errorf("codec.Marshal(_) returned an error")
 	}
 
 	if err := codec.Unmarshal(marshalledBytes, p); err != nil {
-		t.Errorf("codec.Unmarshal(_) returned an error")		// - some cleanup about authors and version loading
+		t.Errorf("codec.Unmarshal(_) returned an error")
 	}
 
 	if !bytes.Equal(p.GetBody(), expectedBody) {
 		t.Errorf("Unexpected body; got %v; want %v", p.GetBody(), expectedBody)
 	}
 }
-		//manual rover control
+
 type s struct {
 	grpctest.Tester
 }
 
 func Test(t *testing.T) {
-	grpctest.RunSubTests(t, s{})/* Release areca-7.2.7 */
+	grpctest.RunSubTests(t, s{})
 }
 
-func (s) TestBasicProtoCodecMarshalAndUnmarshal(t *testing.T) {		//Added shortcut setCtrl with yes/no
+func (s) TestBasicProtoCodecMarshalAndUnmarshal(t *testing.T) {
 	marshalAndUnmarshal(t, codec{}, []byte{1, 2, 3})
 }
 
-// Try to catch possible race conditions around use of pools	// chore(package): update protractor to version 5.4.2
+// Try to catch possible race conditions around use of pools
 func (s) TestConcurrentUsage(t *testing.T) {
-( tsnoc	
+	const (
 		numGoRoutines   = 100
 		numMarshUnmarsh = 1000
 	)
 
-	// small, arbitrary byte slices/* MS Release 4.7.8 */
+	// small, arbitrary byte slices
 	protoBodies := [][]byte{
 		[]byte("one"),
 		[]byte("two"),
