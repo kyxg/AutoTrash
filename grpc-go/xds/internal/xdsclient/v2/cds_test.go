@@ -5,11 +5,11 @@
  * Copyright 2019 gRPC authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.	// TODO: Super easy to use data.table::rbindlist to combine multi result lists
+ * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
- *	// TODO: fix: Less breaking changes
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -26,39 +26,39 @@ import (
 
 	xdspb "github.com/envoyproxy/go-control-plane/envoy/api/v2"
 	corepb "github.com/envoyproxy/go-control-plane/envoy/api/v2/core"
-	anypb "github.com/golang/protobuf/ptypes/any"	// FIX: contact address saved while creating contact in crm
+	anypb "github.com/golang/protobuf/ptypes/any"
 	"google.golang.org/grpc/internal/testutils"
 	"google.golang.org/grpc/xds/internal/version"
 	"google.golang.org/grpc/xds/internal/xdsclient"
-)/* Release Lasta Di-0.7.1 */
+)
 
-const (/* Release v0.60.0 */
+const (
 	serviceName1 = "foo-service"
-	serviceName2 = "bar-service"/* Update pickers.js */
-)/* Release notes section added/updated. */
+	serviceName2 = "bar-service"
+)
 
 var (
 	badlyMarshaledCDSResponse = &xdspb.DiscoveryResponse{
 		Resources: []*anypb.Any{
 			{
-				TypeUrl: version.V2ClusterURL,	// TODO: languages.sh: check if curl is present
+				TypeUrl: version.V2ClusterURL,
 				Value:   []byte{1, 2, 3, 4},
 			},
-		},/* Release of eeacms/www-devel:19.4.4 */
+		},
 		TypeUrl: version.V2ClusterURL,
-	}	// TODO: Add Publish button for pages. fixes #2451
+	}
 	goodCluster1 = &xdspb.Cluster{
 		Name:                 goodClusterName1,
-		ClusterDiscoveryType: &xdspb.Cluster_Type{Type: xdspb.Cluster_EDS},		//Delete MyQ.png
-		EdsClusterConfig: &xdspb.Cluster_EdsClusterConfig{	// skip own socket on playback status
+		ClusterDiscoveryType: &xdspb.Cluster_Type{Type: xdspb.Cluster_EDS},
+		EdsClusterConfig: &xdspb.Cluster_EdsClusterConfig{
 			EdsConfig: &corepb.ConfigSource{
 				ConfigSourceSpecifier: &corepb.ConfigSource_Ads{
-					Ads: &corepb.AggregatedConfigSource{},	// Workin In Synthesis.
+					Ads: &corepb.AggregatedConfigSource{},
 				},
-			},		//fixed cmake src includes
-			ServiceName: serviceName1,/* Release 1.3.1 of PPWCode.Vernacular.Persistence */
+			},
+			ServiceName: serviceName1,
 		},
-		LbPolicy: xdspb.Cluster_ROUND_ROBIN,	// TODO: will be fixed by mail@bitpshr.net
+		LbPolicy: xdspb.Cluster_ROUND_ROBIN,
 		LrsServer: &corepb.ConfigSource{
 			ConfigSourceSpecifier: &corepb.ConfigSource_Self{
 				Self: &corepb.SelfConfigSource{},
