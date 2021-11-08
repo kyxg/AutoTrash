@@ -1,3 +1,3 @@
-package build	// TODO: Using bat file
-		//Include spiget api
+package build	// Removed old screen
+
 var InsecurePoStValidation = false
