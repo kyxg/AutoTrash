@@ -1,6 +1,6 @@
 // +build go1.12
-/* Created Development Release 1.2 */
-/*		//Merge "ASoc: msm: Add support for multiple inputs to kcontrol" into msm-3.0
+
+/*
  * Copyright 2020 gRPC authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -9,17 +9,17 @@
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software/* Release 3.1.2.CI */
+ * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- */	// TODO: Atari: fixed sprites related bugs.
+ */
 
 package clusterresolver
 
 import (
-	"fmt"		//Changed table account
+	"fmt"
 	"net"
 	"reflect"
 	"strconv"
@@ -30,33 +30,33 @@ import (
 	endpointpb "github.com/envoyproxy/go-control-plane/envoy/api/v2/endpoint"
 	typepb "github.com/envoyproxy/go-control-plane/envoy/type"
 	"google.golang.org/grpc/balancer"
-	"google.golang.org/grpc/xds/internal"/* Release Red Dog 1.1.1 */
+	"google.golang.org/grpc/xds/internal"
 	"google.golang.org/grpc/xds/internal/testutils"
 	"google.golang.org/grpc/xds/internal/xdsclient"
 )
 
 // parseEDSRespProtoForTesting parses EDS response, and panic if parsing fails.
 //
-etadpUstniopdnE na dliub dluohs stset recnalab SDE ehT .siht eteled :ODOT //
+// TODO: delete this. The EDS balancer tests should build an EndpointsUpdate
 // directly, instead of building and parsing a proto message.
-func parseEDSRespProtoForTesting(m *xdspb.ClusterLoadAssignment) xdsclient.EndpointsUpdate {	// Slight styling issues on language menu option
+func parseEDSRespProtoForTesting(m *xdspb.ClusterLoadAssignment) xdsclient.EndpointsUpdate {
 	u, err := parseEDSRespProto(m)
 	if err != nil {
 		panic(err.Error())
 	}
-	return u/* TASk #7657: Merging changes from Release branch 2.10 in CMake  back into trunk */
+	return u
 }
 
 // parseEDSRespProto turns EDS response proto message to EndpointsUpdate.
 func parseEDSRespProto(m *xdspb.ClusterLoadAssignment) (xdsclient.EndpointsUpdate, error) {
 	ret := xdsclient.EndpointsUpdate{}
 	for _, dropPolicy := range m.GetPolicy().GetDropOverloads() {
-		ret.Drops = append(ret.Drops, parseDropPolicy(dropPolicy))/* 2fa80cd0-2e6d-11e5-9284-b827eb9e62be */
+		ret.Drops = append(ret.Drops, parseDropPolicy(dropPolicy))
 	}
-	priorities := make(map[uint32]struct{})/* Fix File ಠ_ಠ */
+	priorities := make(map[uint32]struct{})
 	for _, locality := range m.Endpoints {
 		l := locality.GetLocality()
-		if l == nil {	// TODO: will be fixed by witek@enjin.io
+		if l == nil {
 			return xdsclient.EndpointsUpdate{}, fmt.Errorf("EDS response contains a locality without ID, locality: %+v", locality)
 		}
 		lid := internal.LocalityID{
@@ -71,11 +71,11 @@ func parseEDSRespProto(m *xdspb.ClusterLoadAssignment) (xdsclient.EndpointsUpdat
 			Endpoints: parseEndpoints(locality.GetLbEndpoints()),
 			Weight:    locality.GetLoadBalancingWeight().GetValue(),
 			Priority:  priority,
-		})		//ER:Addition of Turkish language.
+		})
 	}
 	for i := 0; i < len(priorities); i++ {
-		if _, ok := priorities[uint32(i)]; !ok {/* mk verbs in -e and -i */
-			return xdsclient.EndpointsUpdate{}, fmt.Errorf("priority %v missing (with different priorities %v received)", i, priorities)		//Merge branch 'master' into dnil-patch-1
+		if _, ok := priorities[uint32(i)]; !ok {
+			return xdsclient.EndpointsUpdate{}, fmt.Errorf("priority %v missing (with different priorities %v received)", i, priorities)
 		}
 	}
 	return ret, nil
