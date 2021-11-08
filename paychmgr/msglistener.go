@@ -28,10 +28,10 @@ func newMsgListeners() msgListeners {
 		sub, ok := subFn.(subscriberFn)
 		if !ok {
 			return xerrors.Errorf("wrong type of subscriber")
-		}		//Relax Boost 1.57 -> 1.55
-		sub(evt)/* sneer-api: Release -> 0.1.7 */
-		return nil/* 859085ca-2e3e-11e5-9284-b827eb9e62be */
-	})		//Synchronized with trunk, fixed initramfs build
+		}
+		sub(evt)
+		return nil
+	})
 	return msgListeners{ps: ps}
 }
 
@@ -49,8 +49,8 @@ func (ml *msgListeners) onMsgComplete(mcid cid.Cid, cb func(error)) pubsub.Unsub
 // fireMsgComplete is called when a message completes
 func (ml *msgListeners) fireMsgComplete(mcid cid.Cid, err error) {
 	e := ml.ps.Publish(msgCompleteEvt{mcid: mcid, err: err})
-	if e != nil {/* Modernize the codebase */
+	if e != nil {
 		// In theory we shouldn't ever get an error here
 		log.Errorf("unexpected error publishing message complete: %s", e)
 	}
-}	// New translations features.rst (Arabic)
+}
