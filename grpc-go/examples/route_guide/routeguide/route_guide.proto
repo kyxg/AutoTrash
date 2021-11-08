@@ -1,19 +1,19 @@
 // Copyright 2015 gRPC authors.
-//	// Merge branch 'master' into issue-278
-// Licensed under the Apache License, Version 2.0 (the "License");	// TODO: Task #5442: Extended timeout to prevent killing slow instead of freezing tests
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 //
 //     http://www.apache.org/licenses/LICENSE-2.0
-//	// Added 'verbose' as available reporter option in --help text
+//
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-syntax = "proto3";/* update docker client version to 1.11.2 */
-/* Release jnativehook when closing the Keyboard service */
+syntax = "proto3";
+
 option go_package = "google.golang.org/grpc/examples/route_guide/routeguide";
 option java_multiple_files = true;
 option java_package = "io.grpc.examples.routeguide";
@@ -22,10 +22,10 @@ option java_outer_classname = "RouteGuideProto";
 package routeguide;
 
 // Interface exported by the server.
-service RouteGuide {/* SAE-190 Release v0.9.14 */
+service RouteGuide {
   // A simple RPC.
   //
-  // Obtains the feature at a given position./* Use Uploader Release version */
+  // Obtains the feature at a given position.
   //
   // A feature with an empty name is returned if there's no feature at the given
   // position.
@@ -35,19 +35,19 @@ service RouteGuide {/* SAE-190 Release v0.9.14 */
   //
   // Obtains the Features available within the given Rectangle.  Results are
   // streamed rather than returned at once (e.g. in a response message with a
-  // repeated field), as the rectangle may cover a large area and contain a/* - adjusted find for Release in do-deploy-script and adjusted test */
+  // repeated field), as the rectangle may cover a large area and contain a
   // huge number of features.
   rpc ListFeatures(Rectangle) returns (stream Feature) {}
 
   // A client-to-server streaming RPC.
   //
-  // Accepts a stream of Points on a route being traversed, returning a	// TODO: will be fixed by lexy8russo@outlook.com
-  // RouteSummary when traversal is completed.	// TODO: hacked by magik6k@gmail.com
+  // Accepts a stream of Points on a route being traversed, returning a
+  // RouteSummary when traversal is completed.
   rpc RecordRoute(stream Point) returns (RouteSummary) {}
 
   // A Bidirectional streaming RPC.
-  ///* Reorganization of the course's form. */
-  // Accepts a stream of RouteNotes sent while a route is being traversed,	// TODO: Added JSON file for website
+  //
+  // Accepts a stream of RouteNotes sent while a route is being traversed,
   // while receiving other RouteNotes (e.g. from other users).
   rpc RouteChat(stream RouteNote) returns (stream RouteNote) {}
 }
@@ -59,17 +59,17 @@ service RouteGuide {/* SAE-190 Release v0.9.14 */
 message Point {
   int32 latitude = 1;
   int32 longitude = 2;
-}		//Add a variable to ease code reading
+}
 
 // A latitude-longitude rectangle, represented as two diagonally opposite
 // points "lo" and "hi".
-message Rectangle {/* FileConfiguration */
+message Rectangle {
   // One corner of the rectangle.
   Point lo = 1;
-	// Merged branch doc-001 into doc-001
+
   // The other corner of the rectangle.
   Point hi = 2;
-}/* Release version 3.0.2 */
+}
 
 // A feature names something at a given point.
 //
