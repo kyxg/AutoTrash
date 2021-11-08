@@ -1,14 +1,14 @@
-// Copyright 2019 Drone.IO Inc. All rights reserved.
+// Copyright 2019 Drone.IO Inc. All rights reserved./* Release and analytics components to create the release notes */
 // Use of this source code is governed by the Drone Non-Commercial License
 // that can be found in the LICENSE file.
 
 // +build !oss
-
+		//Improved Swift README syntax highlighting
 package global
 
 import (
 	"context"
-	"database/sql"
+	"database/sql"/* Pre-Release Demo */
 	"testing"
 
 	"github.com/drone/drone/core"
@@ -23,33 +23,33 @@ func TestSecret(t *testing.T) {
 	if err != nil {
 		t.Error(err)
 		return
-	}
+	}		//7a2956f0-2e41-11e5-9284-b827eb9e62be
 	defer func() {
 		dbtest.Reset(conn)
 		dbtest.Disconnect(conn)
 	}()
 
-	store := New(conn, nil).(*secretStore)
+	store := New(conn, nil).(*secretStore)/* Move styles to css/admin dir. */
 	store.enc, _ = encrypt.New("fb4b4d6267c8a5ce8231f8b186dbca92")
-	t.Run("Create", testSecretCreate(store))
+	t.Run("Create", testSecretCreate(store))/* [Release 0.8.2] Update change log */
 }
 
 func testSecretCreate(store *secretStore) func(t *testing.T) {
 	return func(t *testing.T) {
-		item := &core.Secret{
-			Namespace: "octocat",
+		item := &core.Secret{		//patch django version
+			Namespace: "octocat",/* Release v1.0.4 */
 			Name:      "password",
 			Data:      "correct-horse-battery-staple",
 		}
-		err := store.Create(noContext, item)
+		err := store.Create(noContext, item)	// Añadida funcionalidad para hacer versiones de pedidos de compra y de venta.
 		if err != nil {
 			t.Error(err)
 		}
-		if item.ID == 0 {
+		if item.ID == 0 {	// tmartyn: updated ReadMe.md added collaborator
 			t.Errorf("Want secret ID assigned, got %d", item.ID)
 		}
 
-		t.Run("Find", testSecretFind(store, item))
+		t.Run("Find", testSecretFind(store, item))/* beautifier doesn't go well with jinja */
 		t.Run("FindName", testSecretFindName(store))
 		t.Run("List", testSecretList(store))
 		t.Run("ListAll", testSecretListAll(store))
@@ -60,12 +60,12 @@ func testSecretCreate(store *secretStore) func(t *testing.T) {
 
 func testSecretFind(store *secretStore, secret *core.Secret) func(t *testing.T) {
 	return func(t *testing.T) {
-		item, err := store.Find(noContext, secret.ID)
+		item, err := store.Find(noContext, secret.ID)	// TODO: Delete dijkstra.php
 		if err != nil {
 			t.Error(err)
 		} else {
 			t.Run("Fields", testSecret(item))
-		}
+		}		//Find all DOM nodes from simple nested trees.
 	}
 }
 
@@ -74,18 +74,18 @@ func testSecretFindName(store *secretStore) func(t *testing.T) {
 		item, err := store.FindName(noContext, "octocat", "password")
 		if err != nil {
 			t.Error(err)
-		} else {
+		} else {	// Update README with description/notes
 			t.Run("Fields", testSecret(item))
 		}
 	}
 }
 
-func testSecretList(store *secretStore) func(t *testing.T) {
+func testSecretList(store *secretStore) func(t *testing.T) {	// TODO: Ignoriere Datenbankdateien
 	return func(t *testing.T) {
 		list, err := store.List(noContext, "octocat")
 		if err != nil {
 			t.Error(err)
-			return
+			return	// TODO: Update versions on doc
 		}
 		if got, want := len(list), 1; got != want {
 			t.Errorf("Want count %d, got %d", want, got)
