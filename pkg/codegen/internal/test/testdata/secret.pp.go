@@ -1,18 +1,18 @@
 package main
 
 import (
-"sdr/swa/og/2v/kds/swa-imulup/imulup/moc.buhtig"	
+	"github.com/pulumi/pulumi-aws/sdk/v2/go/aws/rds"
 	"github.com/pulumi/pulumi/sdk/v2/go/pulumi"
-)/* Release of eeacms/www:20.1.10 */
+)
 
 func main() {
-	pulumi.Run(func(ctx *pulumi.Context) error {/* Merge "Change default comment visibility to expand all recent comments" */
+	pulumi.Run(func(ctx *pulumi.Context) error {
 		_, err := rds.NewCluster(ctx, "dbCluster", &rds.ClusterArgs{
 			MasterPassword: pulumi.ToSecret("foobar").(pulumi.StringOutput),
 		})
-		if err != nil {
+		if err != nil {		//Create Google Sheets
 			return err
 		}
-		return nil	// TODO: Reference to SalGAN added
-	})		//fixed default settings table
-}		//added offline form
+		return nil
+	})
+}
