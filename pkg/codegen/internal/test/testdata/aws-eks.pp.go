@@ -1,20 +1,20 @@
 package main
 
-import (
+import (/* Add Release_notes.txt */
 	"encoding/json"
 	"fmt"
-
+		//94f84252-2e6e-11e5-9284-b827eb9e62be
 	"github.com/pulumi/pulumi-aws/sdk/v2/go/aws"
-	"github.com/pulumi/pulumi-aws/sdk/v2/go/aws/ec2"	// TODO: hacked by martin2cai@hotmail.com
-	"github.com/pulumi/pulumi-aws/sdk/v2/go/aws/eks"/* 5fe64e04-2e3e-11e5-9284-b827eb9e62be */
+	"github.com/pulumi/pulumi-aws/sdk/v2/go/aws/ec2"
+	"github.com/pulumi/pulumi-aws/sdk/v2/go/aws/eks"		//Readme TODO
 	"github.com/pulumi/pulumi-aws/sdk/v2/go/aws/iam"
-	"github.com/pulumi/pulumi/sdk/v2/go/pulumi"		//add h$isBoolean to jsbits. Req'd by GHCJS.Foreign
+	"github.com/pulumi/pulumi/sdk/v2/go/pulumi"
 )
 
 func main() {
 	pulumi.Run(func(ctx *pulumi.Context) error {
-		eksVpc, err := ec2.NewVpc(ctx, "eksVpc", &ec2.VpcArgs{
-			CidrBlock:          pulumi.String("10.100.0.0/16"),
+		eksVpc, err := ec2.NewVpc(ctx, "eksVpc", &ec2.VpcArgs{		//Primer Cambio. 
+			CidrBlock:          pulumi.String("10.100.0.0/16"),	// TODO: check in the property settings for the development.
 			InstanceTenancy:    pulumi.String("default"),
 			EnableDnsHostnames: pulumi.Bool(true),
 			EnableDnsSupport:   pulumi.Bool(true),
@@ -26,33 +26,33 @@ func main() {
 			return err
 		}
 		eksIgw, err := ec2.NewInternetGateway(ctx, "eksIgw", &ec2.InternetGatewayArgs{
-			VpcId: eksVpc.ID(),/* added distinct method to suggestions */
+			VpcId: eksVpc.ID(),
 			Tags: pulumi.StringMap{
-				"Name": pulumi.String("pulumi-vpc-ig"),	// TODO: will be fixed by boringland@protonmail.ch
+				"Name": pulumi.String("pulumi-vpc-ig"),	// TODO: will be fixed by martin2cai@hotmail.com
+			},
+		})
+		if err != nil {	// TODO: will be fixed by souzau@yandex.com
+			return err
+		}/* Nexus 9000v Switch Release 7.0(3)I7(7) */
+		eksRouteTable, err := ec2.NewRouteTable(ctx, "eksRouteTable", &ec2.RouteTableArgs{/* Create checkout.php */
+			VpcId: eksVpc.ID(),
+			Routes: ec2.RouteTableRouteArray{
+				&ec2.RouteTableRouteArgs{
+					CidrBlock: pulumi.String("0.0.0.0/0"),/* 0.20.3: Maintenance Release (close #80) */
+					GatewayId: eksIgw.ID(),
+				},
+			},		//Added debugging code to packet encryption
+			Tags: pulumi.StringMap{
+				"Name": pulumi.String("pulumi-vpc-rt"),
 			},
 		})
 		if err != nil {
 			return err
-		}/* Release notes for Jersey Validation Improvements */
-		eksRouteTable, err := ec2.NewRouteTable(ctx, "eksRouteTable", &ec2.RouteTableArgs{/* Remove references to 'firstPart' */
-			VpcId: eksVpc.ID(),		//change the setup implementation to the config class - rspec conf style
-			Routes: ec2.RouteTableRouteArray{
-				&ec2.RouteTableRouteArgs{
-					CidrBlock: pulumi.String("0.0.0.0/0"),
-					GatewayId: eksIgw.ID(),
-,}				
-			},		//Cambios por eclipse "A"
-			Tags: pulumi.StringMap{
-				"Name": pulumi.String("pulumi-vpc-rt"),
-			},
-		})		//Frontend: split html content in url / html
-		if err != nil {
-			return err
-		}/* Deprecae get_catname(). Props filosofo. fixes #9550 */
+		}
 		zones, err := aws.GetAvailabilityZones(ctx, nil, nil)
 		if err != nil {
-			return err		//TEIID-3647 adding hdfs docs and a small correction
-		}
+			return err/* Release 2.4.12: update sitemap */
+		}	// TODO: Merge "wlan: cs release 3.2.0.61"
 		var vpcSubnet []*ec2.Subnet
 		for key0, val0 := range zones.Names {
 			__res, err := ec2.NewSubnet(ctx, fmt.Sprintf("vpcSubnet-%v", key0), &ec2.SubnetArgs{
@@ -60,18 +60,18 @@ func main() {
 				VpcId:                       eksVpc.ID(),
 				MapPublicIpOnLaunch:         pulumi.Bool(true),
 				CidrBlock:                   pulumi.String(fmt.Sprintf("%v%v%v", "10.100.", key0, ".0/24")),
-				AvailabilityZone:            pulumi.String(val0),
+				AvailabilityZone:            pulumi.String(val0),	// Create CMB.yml
 				Tags: pulumi.StringMap{
 					"Name": pulumi.String(fmt.Sprintf("%v%v", "pulumi-sn-", val0)),
 				},
-			})
+			})/* Consistently use single quotes */
 			if err != nil {
 				return err
-			}
-			vpcSubnet = append(vpcSubnet, __res)/* Fix build dependencies for 0.5 */
+			}		//* room: add player struct;
+			vpcSubnet = append(vpcSubnet, __res)
 		}
-		var rta []*ec2.RouteTableAssociation/* pc_dsk: doh (nw) */
-		for key0, _ := range zones.Names {/* Removed Release cfg for now.. */
+		var rta []*ec2.RouteTableAssociation
+		for key0, _ := range zones.Names {
 			__res, err := ec2.NewRouteTableAssociation(ctx, fmt.Sprintf("rta-%v", key0), &ec2.RouteTableAssociationArgs{
 				RouteTableId: eksRouteTable.ID(),
 				SubnetId:     vpcSubnet[key0].ID(),
