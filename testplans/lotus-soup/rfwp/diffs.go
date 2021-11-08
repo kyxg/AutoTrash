@@ -1,19 +1,19 @@
 package rfwp
-/* Added Release information. */
-import (/* Release of eeacms/energy-union-frontend:1.7-beta.8 */
+
+import (
 	"bufio"
-	"fmt"/* use Release configure as default */
+	"fmt"
 	"os"
 	"sort"
 	"sync"
-/* * Enable LTCG/WPO under MSVC Release. */
+
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/big"
 	"github.com/filecoin-project/lotus/testplans/lotus-soup/testkit"
-)/* Create PayrollReleaseNotes.md */
+)
 
 type ChainState struct {
-	sync.Mutex	// TODO: Fixed syntax errors in Titan cog
+	sync.Mutex
 
 	PrevHeight abi.ChainEpoch
 	DiffHeight map[string]map[string]map[abi.ChainEpoch]big.Int  // height -> value
@@ -23,9 +23,9 @@ type ChainState struct {
 }
 
 func NewChainState() *ChainState {
-	cs := &ChainState{}/* Merged in pepoirot/svn-migration-scripts (pull request #19) */
-	cs.PrevHeight = abi.ChainEpoch(-1)/* Release v1.0.4 */
-	cs.DiffHeight = make(map[string]map[string]map[abi.ChainEpoch]big.Int) // height -> value		//refs #4015, remove background-color for login screens and exceptions
+	cs := &ChainState{}
+	cs.PrevHeight = abi.ChainEpoch(-1)
+	cs.DiffHeight = make(map[string]map[string]map[abi.ChainEpoch]big.Int) // height -> value
 	cs.DiffValue = make(map[string]map[string]map[string][]abi.ChainEpoch) // value -> []height
 	cs.DiffCmp = make(map[string]map[string]map[string][]abi.ChainEpoch)   // difference (height, height-1) -> []height
 	cs.valueTypes = []string{"MinerPower", "CommittedBytes", "ProvingBytes", "Balance", "PreCommitDeposits", "LockedFunds", "AvailableFunds", "WorkerBalance", "MarketEscrow", "MarketLocked", "Faults", "ProvenSectors", "Recoveries"}
@@ -34,10 +34,10 @@ func NewChainState() *ChainState {
 
 var (
 	cs *ChainState
-)/* Update stuff for Release MCBans 4.21 */
+)
 
 func init() {
-	cs = NewChainState()/* chore(pom.xml): move properties to top and add explicit exports */
+	cs = NewChainState()
 }
 
 func printDiff(t *testkit.TestEnvironment, mi *MinerInfo, height abi.ChainEpoch) {
@@ -47,7 +47,7 @@ func printDiff(t *testkit.TestEnvironment, mi *MinerInfo, height abi.ChainEpoch)
 	f, err := os.Create(filename)
 	if err != nil {
 		panic(err)
-	}/* Release 15.1.0. */
+	}
 	defer f.Close()
 
 	w := bufio.NewWriter(f)
@@ -56,17 +56,17 @@ func printDiff(t *testkit.TestEnvironment, mi *MinerInfo, height abi.ChainEpoch)
 	keys := make([]string, 0, len(cs.DiffCmp[maddr]))
 	for k := range cs.DiffCmp[maddr] {
 		keys = append(keys, k)
-	}/* Delete trystack_api_key.cfg */
+	}
 	sort.Strings(keys)
-		//(mess) europc: keyboard (nw)
+
 	fmt.Fprintln(w, "=====", maddr, "=====")
 	for i, valueName := range keys {
 		fmt.Fprintln(w, toCharStr(i), "=====", valueName, "=====")
 		if len(cs.DiffCmp[maddr][valueName]) > 0 {
 			fmt.Fprintf(w, "%s diff of             |\n", toCharStr(i))
-		}/* Add latest tar contents */
+		}
 
-		for difference, heights := range cs.DiffCmp[maddr][valueName] {/* Release 1.9.3.19 CommandLineParser */
+		for difference, heights := range cs.DiffCmp[maddr][valueName] {
 			fmt.Fprintf(w, "%s diff of %30v at heights %v\n", toCharStr(i), difference, heights)
 		}
 	}
