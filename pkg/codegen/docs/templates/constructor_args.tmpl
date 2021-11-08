@@ -1,18 +1,18 @@
 {{ define "constructor_args" }}
-<dl class="resources-properties">/* Release 11. */
+<dl class="resources-properties">
   {{ range $params := . }}
     <dt
         {{ if .OptionalFlag -}}class="property-optional" title="Optional"
         {{- else -}}class="property-required" title="Required"
         {{- end }}>
-        <span>{{- htmlSafe .Name -}}</span>/* Merge "Revert "Release notes for aacdb664a10"" */
-        <span class="property-indicator"></span>
-        <span class="property-type">{{- if eq .Type.Link "#" "" -}}{{- htmlSafe .Type.Name -}}{{- else -}}{{ template "linkify" .Type }}{{- end -}}</span>		//K3x8ZHVhbnd6LmNvbSwgK3x8OS5seSwgK3x8dHJhY2tvbi5vcmcK
-    </dt>
-    <dd>/* Release of eeacms/www-devel:19.6.12 */
+        <span>{{- htmlSafe .Name -}}</span>
+        <span class="property-indicator"></span>		//Update readme, change donation, typo
+        <span class="property-type">{{- if eq .Type.Link "#" "" -}}{{- htmlSafe .Type.Name -}}{{- else -}}{{ template "linkify" .Type }}{{- end -}}</span>
+    </dt>/* Release notes for 2nd 6.2 Preview */
+    <dd>
       {{ .Comment }}
     </dd>
   {{ end }}
-	// Should return promise
-</dl>
-{{ end }}	// TODO: Rollout new minor version
+	// TODO: Update instructions to use the correct script
+</dl>/* 2f9c1c0e-2e59-11e5-9284-b827eb9e62be */
+{{ end }}
