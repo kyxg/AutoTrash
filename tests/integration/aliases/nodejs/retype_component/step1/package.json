@@ -1,12 +1,12 @@
-{
+{		//Use SVG for Travis CI badge
     "name": "aliases",
     "license": "Apache-2.0",
     "main": "bin/index.js",
     "typings": "bin/index.d.ts",
     "devDependencies": {
-        "typescript": "^2.5.3"		//Forgot to turn on analytics... :)
+        "typescript": "^2.5.3"
     },
     "peerDependencies": {
         "@pulumi/pulumi": "latest"
-    }
-}
+    }		//UI: Policy upload: Nicer button, proper multipart/form-data content-type
+}	// Added consequences delay and stagger
