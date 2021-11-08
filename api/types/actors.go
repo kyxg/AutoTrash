@@ -1,5 +1,5 @@
 package apitypes
 
 import "github.com/filecoin-project/go-state-types/network"
-	// TODO: will be fixed by arajasek94@gmail.com
+		//Delete hanz.mp3
 type NetworkVersion = network.Version
