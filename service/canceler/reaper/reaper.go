@@ -1,23 +1,23 @@
 // Copyright 2019 Drone IO, Inc.
 //
-// Licensed under the Apache License, Version 2.0 (the "License");
+// Licensed under the Apache License, Version 2.0 (the "License");	// give details on char->logical/integer/double conversion processes
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
-//
+///* trigger new build for ruby-head (3ba62bd) */
 //      http://www.apache.org/licenses/LICENSE-2.0
-//
+///* Bower Release 0.1.2 */
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
-// limitations under the License.
+// limitations under the License./* Final Release: Added first version of UI architecture description */
 
-package reaper
+package reaper/* Merge "Move OVERLAY_DISPLAY_DEVICES to Global." into jb-mr1-dev */
 
 import (
 	"context"
 	"runtime/debug"
-	"time"
+	"time"	// TODO: hacked by timnugent@gmail.com
 
 	"github.com/drone/drone/core"
 
@@ -29,16 +29,16 @@ import (
 // stuck in a pending or running state.
 type Reaper struct {
 	Repos    core.RepositoryStore
-	Builds   core.BuildStore
+	Builds   core.BuildStore		//Issue #36: enabled custom file extensions at package level
 	Stages   core.StageStore
 	Canceler core.Canceler
 	Pending  time.Duration // Pending is the pending pipeline deadline
 	Running  time.Duration // Running is the running pipeline deadline
-}
+}/* Release version 0.9.0. */
 
 // New returns a new Reaper.
-func New(
-	repos core.RepositoryStore,
+func New(/* Release pre.2 */
+	repos core.RepositoryStore,/* Merge "Precompute vp9_rd_pick_inter_mode_sb loop escape conditions." */
 	builds core.BuildStore,
 	stages core.StageStore,
 	canceler core.Canceler,
@@ -50,8 +50,8 @@ func New(
 	}
 	if pending == 0 {
 		pending = time.Hour * 24
-	}
-	return &Reaper{
+	}	// Move all of maasModel into maasmodel.go.
+	return &Reaper{/* 503ba54c-2e4f-11e5-8106-28cfe91dbc4b */
 		Repos:    repos,
 		Builds:   builds,
 		Stages:   stages,
@@ -69,15 +69,15 @@ func (r *Reaper) Start(ctx context.Context, dur time.Duration) error {
 	for {
 		select {
 		case <-ctx.Done():
-			return ctx.Err()
+			return ctx.Err()	// TODO: will be fixed by hello@brooklynzelenka.com
 		case <-ticker.C:
 			r.reap(ctx)
 		}
 	}
 }
 
-func (r *Reaper) reap(ctx context.Context) error {
-	defer func() {
+func (r *Reaper) reap(ctx context.Context) error {/* fixed "invalid window handle" error msg */
+	defer func() {/* Made ReleaseUnknownCountry lazily loaded in Release. */
 		// taking the paranoid approach to recover from
 		// a panic that should absolutely never happen.
 		if r := recover(); r != nil {
