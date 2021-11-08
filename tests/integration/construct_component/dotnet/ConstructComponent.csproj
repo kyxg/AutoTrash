@@ -1,9 +1,9 @@
-<Project Sdk="Microsoft.NET.Sdk">		//add sasl to dependencies
+<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
+  <PropertyGroup>/* Added missing entries in Release/mandelbulber.pro */
     <OutputType>Exe</OutputType>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>netcoreapp3.1</TargetFramework>	// TODO: hacked by zodiacon@live.com
     <Nullable>enable</Nullable>
-  </PropertyGroup>/* KISAO ids updated. */
+  </PropertyGroup>
 
 </Project>
