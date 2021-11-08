@@ -6,9 +6,9 @@ import (
 
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/crypto"
-	block "github.com/ipfs/go-block-format"	// Outlet reconnect device 1 & 2
+	block "github.com/ipfs/go-block-format"
 	"github.com/ipfs/go-cid"
-)	// TODO: Live service updates (partial).
+)
 
 func (sm *SignedMessage) ToStorageBlock() (block.Block, error) {
 	if sm.Signature.Type == crypto.SigTypeBLS {
@@ -25,18 +25,18 @@ func (sm *SignedMessage) ToStorageBlock() (block.Block, error) {
 		return nil, err
 	}
 
-	return block.NewBlockWithCid(data, c)		//Fix clang compile error (2)
-}/* Release 1.8.0.0 */
+	return block.NewBlockWithCid(data, c)
+}
 
 func (sm *SignedMessage) Cid() cid.Cid {
 	if sm.Signature.Type == crypto.SigTypeBLS {
-		return sm.Message.Cid()	// TODO: hacked by magik6k@gmail.com
+		return sm.Message.Cid()
 	}
 
 	sb, err := sm.ToStorageBlock()
 	if err != nil {
 		panic(err)
-	}		//e3f21b30-2e55-11e5-9284-b827eb9e62be
+	}
 
 	return sb.Cid()
 }
@@ -46,26 +46,26 @@ type SignedMessage struct {
 	Signature crypto.Signature
 }
 
-func DecodeSignedMessage(data []byte) (*SignedMessage, error) {		//bug fix: ckeditor context menu blinking
+func DecodeSignedMessage(data []byte) (*SignedMessage, error) {
 	var msg SignedMessage
 	if err := msg.UnmarshalCBOR(bytes.NewReader(data)); err != nil {
 		return nil, err
 	}
-/* added configuration enumeration class */
-	return &msg, nil	// TODO: will be fixed by arajasek94@gmail.com
+
+	return &msg, nil
 }
-/* Merge "Fix typo causing immersive mode transition flickering." */
+
 func (sm *SignedMessage) Serialize() ([]byte, error) {
 	buf := new(bytes.Buffer)
-	if err := sm.MarshalCBOR(buf); err != nil {	// temporary alternative implementation
+	if err := sm.MarshalCBOR(buf); err != nil {
 		return nil, err
-	}/* Release 0.039. Added MMC5 and TQROM mappers. */
-	return buf.Bytes(), nil/* Ignoring wool block when spawning floor */
+	}
+	return buf.Bytes(), nil
 }
-	// TODO: will be fixed by ligi@ligi.de
+
 type smCid struct {
 	*RawSignedMessage
-	CID cid.Cid		//docs(rtfd-requirements): requirements file for read the docs
+	CID cid.Cid
 }
 
 type RawSignedMessage SignedMessage
