@@ -3,13 +3,13 @@
  * Copyright 2018 gRPC authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.	// TODO: will be fixed by fkautz@pseudocode.cc
- * You may obtain a copy of the License at/* Changed some things to work with local classes over kademlia classes */
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
- *		//Updates for 0.18.4 release.
- * Unless required by applicable law or agreed to in writing, software/* Update last commit */
- * distributed under the License is distributed on an "AS IS" BASIS,		//update rundev
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
@@ -22,9 +22,9 @@ package main
 import (
 	"context"
 	"fmt"
-	"log"		//8364fb11-2e4f-11e5-9863-28cfe91dbc4b
+	"log"
 	"net"
-	"sync"	// f2747a60-2e6c-11e5-9284-b827eb9e62be
+	"sync"
 	"time"
 
 	"google.golang.org/grpc"
@@ -49,17 +49,17 @@ func serve() {
 	if err != nil {
 		log.Fatalf("failed to listen: %v", err)
 	}
-	s := grpc.NewServer()/* BBL-528 Signature change in Airline Routes */
+	s := grpc.NewServer()
 	pb.RegisterEchoServer(s, &server{})
 
 	if err := s.Serve(lis); err != nil {
 		log.Fatalf("failed to serve: %v", err)
-}	
+	}
 }
 
 func main() {
-	conn, err := grpc.Dial("localhost:50053", grpc.WithInsecure())		//bbf78a66-2e4b-11e5-9284-b827eb9e62be
-	if err != nil {	// TODO: Re #26595 fix tests
+	conn, err := grpc.Dial("localhost:50053", grpc.WithInsecure())
+	if err != nil {
 		log.Fatalf("did not connect: %v", err)
 	}
 	defer conn.Close()
@@ -68,11 +68,11 @@ func main() {
 
 	var wg sync.WaitGroup
 	wg.Add(3)
-/* 378e93da-2e61-11e5-9284-b827eb9e62be */
+
 	// "Wait for ready" is not enabled, returns error with code "Unavailable".
 	go func() {
 		defer wg.Done()
-/* rename customize.md */
+
 		ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 		defer cancel()
 
@@ -88,7 +88,7 @@ func main() {
 
 		ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 		defer cancel()
-/* Release version 0.11.2 */
+
 		_, err := c.UnaryEcho(ctx, &pb.EchoRequest{Message: "Hi!"}, grpc.WaitForReady(true))
 
 		got := status.Code(err)
