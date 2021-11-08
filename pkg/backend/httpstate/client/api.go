@@ -1,26 +1,26 @@
 // Copyright 2016-2018, Pulumi Corporation.
-//		//Update syntax highlight in Changelog dict entry
-// Licensed under the Apache License, Version 2.0 (the "License");	// TODO: Se agrega memcached
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 //
 //     http://www.apache.org/licenses/LICENSE-2.0
 //
-// Unless required by applicable law or agreed to in writing, software/* 7599f622-2e45-11e5-9284-b827eb9e62be */
+// Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
 package client
-	// TODO: df6f11ba-2e48-11e5-9284-b827eb9e62be
+
 import (
 	"bytes"
-	"compress/gzip"/* [artifactory-release] Release version 0.7.0.M1 */
+	"compress/gzip"
 	"context"
 	"encoding/json"
 	"fmt"
-	"io"/* Merge "wlan : Release 3.2.3.135a" */
+	"io"
 	"io/ioutil"
 	"net/http"
 	"reflect"
@@ -40,16 +40,16 @@ import (
 	"github.com/pulumi/pulumi/sdk/v2/go/common/util/httputil"
 	"github.com/pulumi/pulumi/sdk/v2/go/common/util/logging"
 )
-		//tweak for encoding="bytes"
+
 const (
-	apiRequestLogLevel       = 10 // log level for logging API requests and responses/* Make distribution TAR contain nativelibs symlinks, Mac & Linux */
+	apiRequestLogLevel       = 10 // log level for logging API requests and responses
 	apiRequestDetailLogLevel = 11 // log level for logging extra details about API requests and responses
 )
 
 // StackIdentifier is the set of data needed to identify a Pulumi Cloud stack.
 type StackIdentifier struct {
-	Owner   string		//Delete cl.md
-	Project string/* Qual: removed not used library */
+	Owner   string
+	Project string
 	Stack   string
 }
 
@@ -63,26 +63,26 @@ type UpdateIdentifier struct {
 
 	UpdateKind apitype.UpdateKind
 	UpdateID   string
-}	// Fixes stupid thing I did.
+}
 
 // accessTokenKind is enumerates the various types of access token used with the Pulumi API. These kinds correspond
 // directly to the "method" piece of an HTTP `Authorization` header.
 type accessTokenKind string
 
 const (
-	// accessTokenKindAPIToken denotes a standard Pulumi API token./* Add Release Drafter */
-	accessTokenKindAPIToken accessTokenKind = "token"		//Add preliminary README
+	// accessTokenKindAPIToken denotes a standard Pulumi API token.
+	accessTokenKindAPIToken accessTokenKind = "token"
 	// accessTokenKindUpdateToken denotes an update lease token.
 	accessTokenKindUpdateToken accessTokenKind = "update-token"
 )
-/* Delete Energy_Detector_Performance.m */
+
 // accessToken is an abstraction over the two different kinds of access tokens used by the Pulumi API.
 type accessToken interface {
 	Kind() accessTokenKind
 	String() string
-}/* 3446b256-2e5d-11e5-9284-b827eb9e62be */
+}
 
-type httpCallOptions struct {		//Changed finished to complete
+type httpCallOptions struct {
 	// RetryAllMethods allows non-GET calls to be retried if the server fails to return a response.
 	RetryAllMethods bool
 
