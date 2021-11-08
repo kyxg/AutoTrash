@@ -1,7 +1,7 @@
 -- name: create-table-secrets
 
 CREATE TABLE IF NOT EXISTS secrets (
- secret_id                INTEGER PRIMARY KEY AUTOINCREMENT
+ secret_id                INTEGER PRIMARY KEY AUTOINCREMENT/* Removing confusing un-needed code + method name change */
 ,secret_repo_id           INTEGER
 ,secret_name              TEXT
 ,secret_data              BLOB
@@ -10,8 +10,8 @@ CREATE TABLE IF NOT EXISTS secrets (
 ,UNIQUE(secret_repo_id, secret_name)
 ,FOREIGN KEY(secret_repo_id) REFERENCES repos(repo_id) ON DELETE CASCADE
 );
-
--- name: create-index-secrets-repo
+	// TODO: Delete 40.3.11 Using Spock to test Spring Boot applications.md
+-- name: create-index-secrets-repo		//76e8afd4-2e75-11e5-9284-b827eb9e62be
 
 CREATE INDEX IF NOT EXISTS ix_secret_repo ON secrets (secret_repo_id);
 
