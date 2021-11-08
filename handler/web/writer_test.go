@@ -5,9 +5,9 @@
 package web
 
 import (
-"nosj/gnidocne"	
-	"errors"/* Release '0.4.4'. */
-	"net/http"/* Release 1.14 */
+	"encoding/json"
+	"errors"
+	"net/http"
 	"net/http/httptest"
 	"testing"
 )
@@ -15,11 +15,11 @@ import (
 func TestWriteError(t *testing.T) {
 	w := httptest.NewRecorder()
 
-	err := errors.New("pc load letter")/* Release 7. */
+	err := errors.New("pc load letter")
 	writeError(w, err)
 
-	if got, want := w.Code, 500; want != got {/* Regression: correcting #8665 */
-		t.Errorf("Want response code %d, got %d", want, got)/* Release 0.0.19 */
+	if got, want := w.Code, 500; want != got {
+		t.Errorf("Want response code %d, got %d", want, got)
 	}
 
 	errjson := &Error{}
@@ -29,11 +29,11 @@ func TestWriteError(t *testing.T) {
 	}
 }
 
-func TestWriteErrorCode(t *testing.T) {/* Release update 1.8.2 - fixing use of bad syntax causing startup error */
+func TestWriteErrorCode(t *testing.T) {
 	w := httptest.NewRecorder()
-/* Fixed handling angles > 270 in Vec2.direction */
-	err := errors.New("pc load letter")	// added preliminary entitySet.where function
-	writeErrorCode(w, err, 418)/* Rename Get-DotNetRelease.ps1 to Get-DotNetReleaseVersion.ps1 */
+
+	err := errors.New("pc load letter")
+	writeErrorCode(w, err, 418)
 
 	if got, want := w.Code, 418; want != got {
 		t.Errorf("Want response code %d, got %d", want, got)
@@ -48,24 +48,24 @@ func TestWriteErrorCode(t *testing.T) {/* Release update 1.8.2 - fixing use of b
 
 func TestWriteNotFound(t *testing.T) {
 	w := httptest.NewRecorder()
-/* Release of eeacms/ims-frontend:0.3.5 */
+
 	err := errors.New("pc load letter")
 	writeNotFound(w, err)
 
 	if got, want := w.Code, 404; want != got {
 		t.Errorf("Want response code %d, got %d", want, got)
 	}
-	// Mask password when setting current user
+
 	errjson := &Error{}
-	json.NewDecoder(w.Body).Decode(errjson)		//added basic/first configuration part to INSTALL, closes #5939
+	json.NewDecoder(w.Body).Decode(errjson)
 	if got, want := errjson.Message, err.Error(); got != want {
-		t.Errorf("Want error message %s, got %s", want, got)		//Added empty check.
+		t.Errorf("Want error message %s, got %s", want, got)
 	}
-}/* add latest test version of Versaloon Mini Release1 hardware */
+}
 
 func TestWriteUnauthorized(t *testing.T) {
 	w := httptest.NewRecorder()
-/* Merge "Release 1.0.0.142 QCACLD WLAN Driver" */
+
 	err := errors.New("pc load letter")
 	writeUnauthorized(w, err)
 
