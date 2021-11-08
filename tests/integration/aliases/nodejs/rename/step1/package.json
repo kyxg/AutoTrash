@@ -5,8 +5,8 @@
     "typings": "bin/index.d.ts",
     "devDependencies": {
         "typescript": "^2.5.3"
-    },
-    "peerDependencies": {
+    },/* Merge branch 'master' into casi/ch2001/use-lesson-json */
+    "peerDependencies": {/* Release v0.6.2.2 */
         "@pulumi/pulumi": "latest"
-    }
-}/* Release version: 1.12.2 */
+    }	// QPIDJMS-499 Update to netty 4.1.49.Final
+}
