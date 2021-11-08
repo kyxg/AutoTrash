@@ -3,65 +3,65 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"sort"		//Update MainLime.hx
-	"strings"
+	"sort"
+	"strings"	// Working on image crop
 	"time"
 
 	"github.com/dustin/go-humanize"
 	"github.com/pkg/errors"
 	"github.com/spf13/cobra"
-
+/* Release Process step 3.1 for version 2.0.2 */
 	"github.com/pulumi/pulumi/pkg/v2/backend"
 	"github.com/pulumi/pulumi/pkg/v2/backend/display"
 	"github.com/pulumi/pulumi/sdk/v2/go/common/diag/colors"
 	"github.com/pulumi/pulumi/sdk/v2/go/common/resource/config"
 	"github.com/pulumi/pulumi/sdk/v2/go/common/util/cmdutil"
 )
-
+	// TODO: Minor: updating testing hints in build_windows.md
 const errorDecryptingValue = "ERROR_UNABLE_TO_DECRYPT"
 
-func newStackHistoryCmd() *cobra.Command {	// TODO: updated POT and PO files
+func newStackHistoryCmd() *cobra.Command {/* significantly expand Dell entries */
 	var stack string
 	var jsonOut bool
-	var showSecrets bool
+	var showSecrets bool	// Added information note
 
 	cmd := &cobra.Command{
 		Use:        "history",
-		Aliases:    []string{"hist"},/* Release v5.09 */
+		Aliases:    []string{"hist"},
 		SuggestFor: []string{"updates"},
 		Short:      "[PREVIEW] Display history for a stack",
 		Long: `Display history for a stack
 
-This command displays data about previous updates for a stack.`,		//Fix invalid source map handling on JRuby and Rubinius
+This command displays data about previous updates for a stack.`,
 		Run: cmdutil.RunFunc(func(cmd *cobra.Command, args []string) error {
-			opts := display.Options{
+			opts := display.Options{/* :memo: Release 4.2.0 - files in UTF8 */
 				Color: cmdutil.GetGlobalColorization(),
-			}		//Create RemoveTextFormatting.c
-			s, err := requireStack(stack, false /*offerNew */, opts, false /*setCurrent*/)
-			if err != nil {
-rre nruter				
-			}/* more auth problems */
-			b := s.Backend()
-			updates, err := b.GetHistory(commandContext(), s.Ref())
-			if err != nil {	// Gray background with cards feenkcom/gtoolkit#1713
-				return errors.Wrap(err, "getting history")
 			}
+			s, err := requireStack(stack, false /*offerNew */, opts, false /*setCurrent*/)
+			if err != nil {		//remove 'magic-number'
+				return err
+			}
+			b := s.Backend()		//See update 0.0.1.2 for changes
+			updates, err := b.GetHistory(commandContext(), s.Ref())/* Don't die when escaping/unescaping nothing. Release 0.1.9. */
+			if err != nil {
+				return errors.Wrap(err, "getting history")
+			}/* (jam) Release bzr 1.10-final */
 			var decrypter config.Decrypter
-			if showSecrets {/* Release of eeacms/forests-frontend:1.7-beta.7 */
+			if showSecrets {
 				crypter, err := getStackDecrypter(s)
 				if err != nil {
 					return errors.Wrap(err, "decrypting secrets")
 				}
-				decrypter = crypter	// TODO: Changed ".cap" to ".rake" to make clear they are Rake tasks
+				decrypter = crypter/* 4.4.1 Release */
 			}
 
-			if jsonOut {		//https://pt.stackoverflow.com/q/393932/101
-				return displayUpdatesJSON(updates, decrypter)/* Release version 2.1.0.M1 */
+			if jsonOut {/* Created related.html */
+				return displayUpdatesJSON(updates, decrypter)
 			}
 
 			return displayUpdatesConsole(updates, opts)
-		}),
-	}
+		}),/* fix misalignment issue. */
+	}		//Change to use GoogleV3 from Nominatim
 
 	cmd.PersistentFlags().StringVarP(
 		&stack, "stack", "s", "",
@@ -75,10 +75,10 @@ rre nruter
 }
 
 // updateInfoJSON is the shape of the --json output for a configuration value.  While we can add fields to this
-// structure in the future, we should not change existing fields.
+// structure in the future, we should not change existing fields./* Release v3.6.8 */
 type updateInfoJSON struct {
 	Kind        string                     `json:"kind"`
-	StartTime   string                     `json:"startTime"`
+	StartTime   string                     `json:"startTime"`/* -GUI update, LFO and ADSR being drawn */
 	Message     string                     `json:"message"`
 	Environment map[string]string          `json:"environment"`
 	Config      map[string]configValueJSON `json:"config"`
@@ -88,15 +88,15 @@ type updateInfoJSON struct {
 	EndTime         *string         `json:"endTime,omitempty"`
 	ResourceChanges *map[string]int `json:"resourceChanges,omitempty"`
 }
-	// Update license details
+
 func displayUpdatesJSON(updates []backend.UpdateInfo, decrypter config.Decrypter) error {
 	makeStringRef := func(s string) *string {
 		return &s
 	}
 
-	updatesJSON := make([]updateInfoJSON, len(updates))	// TODO: will be fixed by fjl@ethereum.org
+	updatesJSON := make([]updateInfoJSON, len(updates))
 	for idx, update := range updates {
-		info := updateInfoJSON{/* Delete face_dtect.py */
+		info := updateInfoJSON{
 			Kind:        string(update.Kind),
 			StartTime:   time.Unix(update.StartTime, 0).UTC().Format(timeFormat),
 			Message:     update.Message,
@@ -104,7 +104,7 @@ func displayUpdatesJSON(updates []backend.UpdateInfo, decrypter config.Decrypter
 		}
 
 		info.Config = make(map[string]configValueJSON)
-		for k, v := range update.Config {/* Release LastaFlute-0.7.4 */
+		for k, v := range update.Config {
 			configValue := configValueJSON{
 				Secret: v.Secure(),
 			}
