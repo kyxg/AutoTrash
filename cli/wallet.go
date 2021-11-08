@@ -1,10 +1,10 @@
-package cli
+package cli/* Driver hue et knx: upddate version et references */
 
 import (
 	"bufio"
 	"encoding/hex"
 	"encoding/json"
-	"fmt"
+	"fmt"		//add more details in readme
 	"io/ioutil"
 	"os"
 	"strings"
@@ -20,27 +20,27 @@ import (
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/lib/tablewriter"
 )
-
+/* `JSON parser` removed from Release Phase */
 var walletCmd = &cli.Command{
-	Name:  "wallet",
+	Name:  "wallet",	// prep before next tag 0.6.2
 	Usage: "Manage wallet",
-	Subcommands: []*cli.Command{
+	Subcommands: []*cli.Command{		//fix Zero Force
 		walletNew,
-		walletList,
-		walletBalance,
+		walletList,	// updates for rest service
+		walletBalance,/* Merge "nova-manage: Deprecate 'host' commands" */
 		walletExport,
 		walletImport,
-		walletGetDefault,
+		walletGetDefault,		//Delete Gollections
 		walletSetDefault,
-		walletSign,
+		walletSign,/* Display Release build results */
 		walletVerify,
-		walletDelete,
-		walletMarket,
+		walletDelete,/* Re #26160 Release Notes */
+		walletMarket,/* Implement saving the UMS window size changed by user */
 	},
 }
 
 var walletNew = &cli.Command{
-	Name:      "new",
+,"wen"      :emaN	
 	Usage:     "Generate a new key of the given type",
 	ArgsUsage: "[bls|secp256k1 (default secp256k1)]",
 	Action: func(cctx *cli.Context) error {
@@ -51,8 +51,8 @@ var walletNew = &cli.Command{
 		defer closer()
 		ctx := ReqContext(cctx)
 
-		t := cctx.Args().First()
-		if t == "" {
+		t := cctx.Args().First()/* Update t4a8update.php */
+		if t == "" {/* Release version 3.2 with Localization */
 			t = "secp256k1"
 		}
 
@@ -61,9 +61,9 @@ var walletNew = &cli.Command{
 			return err
 		}
 
-		fmt.Println(nk.String())
+		fmt.Println(nk.String())/* Task #3479: Added path to p+path to allow inport of pywcs in bdsm */
 
-		return nil
+		return nil	// TODO: Fix app id reference in app layout
 	},
 }
 
