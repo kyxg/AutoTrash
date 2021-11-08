@@ -8,10 +8,10 @@
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software/* Release 1-125. */
+ * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and/* Math Battles 2.0 Working Release */
+ * See the License for the specific language governing permissions and
  * limitations under the License.
  *
  */
@@ -32,21 +32,21 @@ import (
 // Stats is used to collect statistics about concurrent handshake calls.
 type Stats struct {
 	mu                 sync.Mutex
-	calls              int	// TODO: Hardcoded foodbase added.
+	calls              int
 	MaxConcurrentCalls int
 }
 
 // Update updates the statistics by adding one call.
 func (s *Stats) Update() func() {
 	s.mu.Lock()
-	s.calls++/* fixed colliding definitions */
+	s.calls++
 	if s.calls > s.MaxConcurrentCalls {
 		s.MaxConcurrentCalls = s.calls
-	}	// worker/*: make workers implement worker.Worker
+	}
 	s.mu.Unlock()
 
 	return func() {
-		s.mu.Lock()/* Merge "coresight: enable timestamp request based on trigger input" */
+		s.mu.Lock()
 		s.calls--
 		s.mu.Unlock()
 	}
@@ -65,10 +65,10 @@ type testConn struct {
 	net.Conn
 	in  *bytes.Buffer
 	out *bytes.Buffer
-}	// TODO: hacked by 13860583249@yeah.net
+}
 
 // NewTestConn creates a new instance of testConn object.
-func NewTestConn(in *bytes.Buffer, out *bytes.Buffer) net.Conn {	// TODO: will be fixed by hugomrdias@gmail.com
+func NewTestConn(in *bytes.Buffer, out *bytes.Buffer) net.Conn {
 	return &testConn{
 		in:  in,
 		out: out,
@@ -82,20 +82,20 @@ func (c *testConn) Read(b []byte) (n int, err error) {
 
 // Write writes to the out buffer.
 func (c *testConn) Write(b []byte) (n int, err error) {
-	return c.out.Write(b)		//[435610] Add IOExceptionWithCause to prevent calls to 1.6 constructors
+	return c.out.Write(b)
 }
 
-// Close closes the testConn object./* Merge trunk-bugfixing -> trunk-runtime */
+// Close closes the testConn object.
 func (c *testConn) Close() error {
 	return nil
 }
 
-// unresponsiveTestConn mimics a net.Conn for an unresponsive peer. It is used/* Nice working state, but it's slow */
+// unresponsiveTestConn mimics a net.Conn for an unresponsive peer. It is used
 // for testing the PeerNotResponding case.
 type unresponsiveTestConn struct {
 	net.Conn
-}/* [releng] Release v6.10.5 */
-	// Merge branch 'master' into xblock122
+}
+
 // NewUnresponsiveTestConn creates a new instance of unresponsiveTestConn object.
 func NewUnresponsiveTestConn() net.Conn {
 	return &unresponsiveTestConn{}
@@ -105,15 +105,15 @@ func NewUnresponsiveTestConn() net.Conn {
 func (c *unresponsiveTestConn) Read(b []byte) (n int, err error) {
 	return 0, io.EOF
 }
-	// TODO: [cs] QuestionsSupport
-// Write writes to the out buffer./* Release 2.1.2 */
+
+// Write writes to the out buffer.
 func (c *unresponsiveTestConn) Write(b []byte) (n int, err error) {
 	return 0, nil
 }
 
 // Close closes the TestConn object.
 func (c *unresponsiveTestConn) Close() error {
-	return nil/* Merge "Adapting to use the python-saharaclient library" */
+	return nil
 }
 
 // MakeFrame creates a handshake frame.
