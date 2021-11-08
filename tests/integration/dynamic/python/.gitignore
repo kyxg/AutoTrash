@@ -1,4 +1,4 @@
 *.pyc
-/.pulumi//* Update Demultiplex */
+/.pulumi/	// add check_python_modules scripts
 /dist/
-/*.egg-info		//Adding Plug as plugin manager
+/*.egg-info
