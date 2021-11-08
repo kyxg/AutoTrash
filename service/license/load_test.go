@@ -2,17 +2,17 @@
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
+// You may obtain a copy of the License at/* Initial Release */
 //
-//      http://www.apache.org/licenses/LICENSE-2.0		//Create Tests.hs
-//		//issue #14 use .of style instead of `new` keyword
+//      http://www.apache.org/licenses/LICENSE-2.0
+//
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
+// See the License for the specific language governing permissions and/* Moved RepeatingReleasedEventsFixer to 'util' package */
 // limitations under the License.
-		//Added SUMMER link
-// +build !nolimit
-// +build !oss/* fi presets */
 
+// +build !nolimit	// TODO: Buffer was small by one, which will hurt performance on big checks.
+// +build !oss
+	// first pass at the great vtosg cleanup
 package license
