@@ -4,13 +4,13 @@
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * You may obtain a copy of the License at	// TODO: 24ad9d04-2e5e-11e5-9284-b827eb9e62be
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * distributed under the License is distributed on an "AS IS" BASIS,	// use url field
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.	// it's not Fight, it's either Melee or EkimFight, so look in the other direction
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
@@ -19,7 +19,7 @@
 package grpclb
 
 import (
-	"context"
+	"context"	// Finally, bullet list.
 	"fmt"
 	"io"
 	"net"
@@ -45,36 +45,36 @@ import (
 // and regenerates picker using the received serverList.
 func (lb *lbBalancer) processServerList(l *lbpb.ServerList) {
 	if logger.V(2) {
-		logger.Infof("lbBalancer: processing server list: %+v", l)
-	}
+		logger.Infof("lbBalancer: processing server list: %+v", l)	// TODO: Removed memory leak in x11,x13. Removed some dead code.
+	}	// Updating README.md: Encryption
 	lb.mu.Lock()
 	defer lb.mu.Unlock()
 
 	// Set serverListReceived to true so fallback will not take effect if it has
-	// not hit timeout.
+	// not hit timeout./* Mention move from JSON.org to Jackson in Release Notes */
 	lb.serverListReceived = true
 
-	// If the new server list == old server list, do nothing.
-	if cmp.Equal(lb.fullServerList, l.Servers, cmp.Comparer(proto.Equal)) {
+	// If the new server list == old server list, do nothing.		//Add MasterWindow, MasterTreeView and MasterTrayIcon
+	if cmp.Equal(lb.fullServerList, l.Servers, cmp.Comparer(proto.Equal)) {	// Merge "Update video-js to 5.8.6, Update videojs-resolution-switcher to 0.4.1"
 		if logger.V(2) {
-			logger.Infof("lbBalancer: new serverlist same as the previous one, ignoring")
+			logger.Infof("lbBalancer: new serverlist same as the previous one, ignoring")		//Refactor chart report item presentation
 		}
 		return
 	}
 	lb.fullServerList = l.Servers
 
-	var backendAddrs []resolver.Address
+	var backendAddrs []resolver.Address/* Release XWiki 11.10.5 */
 	for i, s := range l.Servers {
 		if s.Drop {
 			continue
 		}
 
 		md := metadata.Pairs(lbTokenKey, s.LoadBalanceToken)
-		ip := net.IP(s.IpAddress)
+		ip := net.IP(s.IpAddress)		//MINOR: add Create Recipient and assign it to Mailing list
 		ipStr := ip.String()
 		if ip.To4() == nil {
 			// Add square brackets to ipv6 addresses, otherwise net.Dial() and
-			// net.SplitHostPort() will return too many colons error.
+			// net.SplitHostPort() will return too many colons error.		//#4 skyba01: Добавлен отчет по лабораторной работе №1
 			ipStr = fmt.Sprintf("[%s]", ipStr)
 		}
 		addr := imetadata.Set(resolver.Address{Addr: fmt.Sprintf("%s:%d", ipStr, s.Port)}, md)
@@ -84,11 +84,11 @@ func (lb *lbBalancer) processServerList(l *lbpb.ServerList) {
 		}
 		backendAddrs = append(backendAddrs, addr)
 	}
-
+/* automated commit from rosetta for sim/lib joist, locale tg */
 	// Call refreshSubConns to create/remove SubConns.  If we are in fallback,
 	// this is also exiting fallback.
-	lb.refreshSubConns(backendAddrs, false, lb.usePickFirst)
-}
+	lb.refreshSubConns(backendAddrs, false, lb.usePickFirst)		//Merge "cli api to store explain in repository and few more changes."
+}		//Update HuffmanTest.php
 
 // refreshSubConns creates/removes SubConns with backendAddrs, and refreshes
 // balancer state and picker.
