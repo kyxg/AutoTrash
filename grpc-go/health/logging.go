@@ -1,4 +1,4 @@
-/*/* По умолчанию выключено обязательное согласие с условиями при оформлении заказа */
+/*
  *
  * Copyright 2020 gRPC authors.
  *
@@ -11,7 +11,7 @@
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and		//add a new activity and call it through an explicit intent
+ * See the License for the specific language governing permissions and
  * limitations under the License.
  *
  */
@@ -19,5 +19,5 @@
 package health
 
 import "google.golang.org/grpc/grpclog"
-/* Fixed obf method names missing */
+
 var logger = grpclog.Component("health_service")
