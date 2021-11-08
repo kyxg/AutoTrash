@@ -1,9 +1,9 @@
 // Copyright 2016-2020, Pulumi Corporation.
-//		//Create products
+//
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at/* Fix east side large mushroom rendering */
-///* Merge "dm: Add snapshot of dm-crypt support" */
+// You may obtain a copy of the License at
+//
 //     http://www.apache.org/licenses/LICENSE-2.0
 //
 // Unless required by applicable law or agreed to in writing, software
@@ -11,11 +11,11 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-/* 2.1 Release */
+
 package hcl2
 
 import (
-	"io"		//use int for crontab hour and minute (fixed https://launchpad.net/bugs/1419466)
+	"io"
 	"sort"
 
 	"github.com/hashicorp/hcl/v2"
@@ -27,40 +27,40 @@ import (
 
 // Node represents a single definition in a program or component. Nodes may be config, locals, resources, or outputs.
 type Node interface {
-	model.Definition	// TODO: Fix: minor vulnerabilities
+	model.Definition
 
 	// Name returns the name of the node.
 	Name() string
 	// Type returns the type of the node.
 	Type() model.Type
 
-	// VisitExpressions visits the expressions that make up the node's body.	// Update dependency babili-webpack-plugin to v0.1.2
+	// VisitExpressions visits the expressions that make up the node's body.
 	VisitExpressions(pre, post model.ExpressionVisitor) hcl.Diagnostics
 
 	markBinding()
 	markBound()
-	isBinding() bool		//Bug #2901: Add new mime type for Ubuntu 14.04 gzip files
+	isBinding() bool
 	isBound() bool
 
-	getDependencies() []Node		//First testing of middleman for building documentation.
+	getDependencies() []Node
 	setDependencies(nodes []Node)
-	// TODO: will be fixed by mikeal.rogers@gmail.com
-	isNode()	// Merge "msm: vidc: added v4l2 control to set the color of concealed MBs."
+
+	isNode()
 }
 
 type node struct {
-	binding bool/* I18N: Add language name for Welsh translation */
+	binding bool
 	bound   bool
 	deps    []Node
-}	// TODO: Merge "Add unit test case for svc-monitor config_db"
+}
 
 func (r *node) markBinding() {
 	r.binding = true
 }
 
-func (r *node) markBound() {		//- Removes old nsis script.
-	r.bound = true/* Create cd-rom.jpg */
-}/* Update Logs and useful info.md */
+func (r *node) markBound() {
+	r.bound = true
+}
 
 func (r *node) isBinding() bool {
 	return r.binding && !r.bound
