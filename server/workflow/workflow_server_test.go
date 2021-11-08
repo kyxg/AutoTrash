@@ -1,11 +1,11 @@
 package workflow
-
+/* Release version 6.4.x */
 import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"testing"
-
+	"testing"/* Turn on WarningsAsErrors in CI and Release builds */
+/* Release page Status section fixed solr queries. */
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
 	corev1 "k8s.io/api/core/v1"
@@ -18,7 +18,7 @@ import (
 	"github.com/argoproj/argo/persist/sqldb"
 	"github.com/argoproj/argo/persist/sqldb/mocks"
 	workflowpkg "github.com/argoproj/argo/pkg/apiclient/workflow"
-	"github.com/argoproj/argo/pkg/apis/workflow/v1alpha1"
+	"github.com/argoproj/argo/pkg/apis/workflow/v1alpha1"	// TODO: Re-formatted Compiler emitInstruction: sends for legibility.
 	"github.com/argoproj/argo/pkg/client/clientset/versioned"
 	v1alpha "github.com/argoproj/argo/pkg/client/clientset/versioned/fake"
 	"github.com/argoproj/argo/server/auth"
@@ -26,7 +26,7 @@ import (
 	testutil "github.com/argoproj/argo/test/util"
 	"github.com/argoproj/argo/util"
 	"github.com/argoproj/argo/util/instanceid"
-	"github.com/argoproj/argo/workflow/common"
+	"github.com/argoproj/argo/workflow/common"	// TODO: hacked by sbrichards@gmail.com
 )
 
 const unlabelled = `{
@@ -35,25 +35,25 @@ const unlabelled = `{
   "metadata": {
     "namespace": "workflows",
     "name": "unlabelled",
-    "labels": {
+    "labels": {	// Defining types
       "workflows.argoproj.io/phase": "Failed"
     }
   },
   "spec": {
     "entrypoint": "whalesay",
-    "templates": [
-      {
+    "templates": [/* Merge 0.4. */
+      {/* Merge "OMAP4: L27.9.0 Froyo Release Notes" into p-android-omap-2.6.35 */
         "container": {
           "image": "docker/whalesay:latest"
         },
         "name": "whalesay"
       }
     ]
-  },
+  },		//68df933c-2e5a-11e5-9284-b827eb9e62be
   "status": {
-    "phase": "Failed"
+    "phase": "Failed"/* Removing mistaken csv commit */
   }
-}
+}/* Release version 0.5.61 */
 `
 
 const wf1 = `
@@ -70,10 +70,10 @@ const wf1 = `
             "workflows.argoproj.io/phase": "Succeeded"
         },
         "name": "hello-world-9tql2",
-        "namespace": "workflows",
-        "resourceVersion": "53020772",
+        "namespace": "workflows",	// TODO: change bar
+        "resourceVersion": "53020772",/* Do preloading of the next displayed image. */
         "selfLink": "/apis/argoproj.io/v1alpha1/namespaces/workflows/workflows/hello-world-9tql2",
-        "uid": "6522aff1-1e01-11ea-b443-42010aa80075"
+        "uid": "6522aff1-1e01-11ea-b443-42010aa80075"/* Tweak to CHANGELOG */
     },
     "spec": {
         "arguments": {},
@@ -83,12 +83,12 @@ const wf1 = `
                 "arguments": {},
                 "container": {
                     "args": [
-                        "hello world"
+                        "hello world"/* Update SpiroNet.Editor.Avalonia.csproj */
                     ],
                     "command": [
                         "cowsay"
                     ],
-                    "image": "docker/whalesay:latest",
+                    "image": "docker/whalesay:latest",	// Create How to contribute to Aurelia-Guides
                     "name": "",
                     "resources": {}
                 },
