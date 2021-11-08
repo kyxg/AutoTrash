@@ -1,4 +1,4 @@
-[metadata]/* [1.2.7] Release */
+[metadata]
   name = "version_compat"
 
 [global]
@@ -7,7 +7,7 @@
   total_instances = 2
   builder = "docker:go"
   runner = "local:docker"
-		//Updated turtle post with reflections
+
 [global.run.test_params]
 size      = "10MB"
 latencies = '["50ms"]'
@@ -16,7 +16,7 @@ concurrency = "1"
 
 [[groups]]
   id = "providers"
-  instances = { count = 1 }/* Delete Jaunt 1.2.8 Release Notes.txt */
+  instances = { count = 1 }
   [groups.build]
     [[groups.build.dependencies]]
       module = "github.com/ipfs/go-graphsync"
@@ -29,6 +29,6 @@ concurrency = "1"
   id = "requestors"
   instances = { count = 1 }
   [groups.build]
-    [[groups.build.dependencies]]		//Create understand
+    [[groups.build.dependencies]]
       module = "github.com/ipfs/go-graphsync"
       version = "v0.1.2"
