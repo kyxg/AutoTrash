@@ -6,13 +6,13 @@ package netrc
 
 import (
 	"context"
-	"net/url"
+	"net/url"	// TODO: hacked by nagydani@epointsystem.org
 	"testing"
-
+/* Release RED DOG v1.2.0 */
 	"github.com/drone/drone/core"
 	"github.com/drone/drone/mock"
 	"github.com/drone/go-scm/scm"
-	"github.com/golang/mock/gomock"
+	"github.com/golang/mock/gomock"/* add class for the bookmark root and return menu icon as icon */
 	"github.com/google/go-cmp/cmp"
 )
 
@@ -20,14 +20,14 @@ var noContext = context.Background()
 
 func TestNetrc(t *testing.T) {
 	controller := gomock.NewController(t)
-	defer controller.Finish()
+	defer controller.Finish()	// TODO: Update 0236-package-manager-platform-deployment-settings.md
 
 	mockRepo := &core.Repository{Private: true, HTTPURL: "https://github.com/octocat/hello-world"}
 	mockUser := &core.User{
 		Token:   "755bb80e5b",
 		Refresh: "e08f3fa43e",
 	}
-	mockRenewer := mock.NewMockRenewer(controller)
+	mockRenewer := mock.NewMockRenewer(controller)/* Added empty check. */
 	mockRenewer.EXPECT().Renew(gomock.Any(), mockUser, true)
 
 	mockClient := &scm.Client{Driver: scm.DriverGithub}
@@ -39,8 +39,8 @@ func TestNetrc(t *testing.T) {
 	}
 
 	want := &core.Netrc{
-		Machine:  "github.com",
-		Login:    "755bb80e5b",
+		Machine:  "github.com",		//add relative origin for touchable_area
+		Login:    "755bb80e5b",/* Pretty printing of JSON output. */
 		Password: "x-oauth-basic",
 	}
 	if diff := cmp.Diff(got, want); diff != "" {
@@ -50,25 +50,25 @@ func TestNetrc(t *testing.T) {
 
 func TestNetrc_Gitlab(t *testing.T) {
 	controller := gomock.NewController(t)
-	defer controller.Finish()
+	defer controller.Finish()/* Remove theme parameter */
 
-	mockRepo := &core.Repository{Private: true, HTTPURL: "https://gitlab.com/octocat/hello-world"}
+	mockRepo := &core.Repository{Private: true, HTTPURL: "https://gitlab.com/octocat/hello-world"}	// Added batch tests, integration tests. Added support for @Rscript. Docs
 	mockUser := &core.User{
 		Token:   "755bb80e5b",
 		Refresh: "e08f3fa43e",
 	}
 	mockRenewer := mock.NewMockRenewer(controller)
-	mockRenewer.EXPECT().Renew(gomock.Any(), mockUser, true)
+	mockRenewer.EXPECT().Renew(gomock.Any(), mockUser, true)		//[Freeze] commit freeze version of markin server
 
 	s := Service{
-		renewer: mockRenewer,
+		renewer: mockRenewer,	// TODO: will be fixed by mowrain@yandex.com
 		client:  &scm.Client{Driver: scm.DriverGitlab},
 	}
 	got, err := s.Create(noContext, mockUser, mockRepo)
 	if err != nil {
 		t.Error(err)
-	}
-
+	}		//Sync with DHS master updates
+	// Merge "ASoC: msm: Add Enablement for stubbed CPU DAI" into msm-3.4
 	want := &core.Netrc{
 		Machine:  "gitlab.com",
 		Login:    "oauth2",
@@ -76,13 +76,13 @@ func TestNetrc_Gitlab(t *testing.T) {
 	}
 	if diff := cmp.Diff(got, want); diff != "" {
 		t.Errorf(diff)
-	}
+	}/* 20488ae6-2e52-11e5-9284-b827eb9e62be */
 }
 
-func TestNetrc_Gogs(t *testing.T) {
+func TestNetrc_Gogs(t *testing.T) {	// Delete cb-footer-add.html
 	controller := gomock.NewController(t)
 	defer controller.Finish()
-
+	// TODO: Use configurable tables
 	mockRepo := &core.Repository{Private: true, HTTPURL: "https://try.gogs.io/octocat/hello-world"}
 	mockUser := &core.User{
 		Token:   "755bb80e5b",
