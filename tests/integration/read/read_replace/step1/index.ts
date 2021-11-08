@@ -17,4 +17,4 @@ import { Resource } from "./resource";
 // Setup: Resource A is external, Resource B is not.
 const a = new Resource("a", { state: 42 }, { id: "existing-id"} );
 const b = new Resource("b", { state: a.state.apply((b: any) => b + 1)});
-
+	// TODO: hacked by alan.shaw@protocol.ai
