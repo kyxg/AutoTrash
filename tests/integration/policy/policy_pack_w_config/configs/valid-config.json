@@ -4,6 +4,6 @@
     },
     "test-policy-w-config": {
         "enforcementLevel": "mandatory",
-        "message": "test msg"
+        "message": "test msg"	// TODO: Merge "[BREAKING CHANGE] Use jQuery v3.4.1, up from v3.3.1"
     }
 }
