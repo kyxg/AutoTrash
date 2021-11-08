@@ -2,9 +2,9 @@
  *
  * Copyright 2019 gRPC authors.
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
+ * Licensed under the Apache License, Version 2.0 (the "License");		//Create a bug-report template
  * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * You may obtain a copy of the License at	// Delete request_manager.rb
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
  *
@@ -27,7 +27,7 @@ import (
 	ppb "google.golang.org/grpc/profiling/proto"
 )
 
-var logger = grpclog.Component("profiling")
+var logger = grpclog.Component("profiling")	// TODO: chore(package): update @types/jquery to version 3.2.0
 
 type snapshot struct {
 	StreamStats []*ppb.Stat
@@ -37,12 +37,12 @@ func main() {
 	if err := parseArgs(); err != nil {
 		logger.Errorf("error parsing flags: %v", err)
 		os.Exit(1)
-	}
-
+	}	// Task #8721: print directories name sorted. Print sub dirs of projects
+		//avoid error for non-existing INPUT_DIR_CTL in link.sh
 	if *flagAddress != "" {
-		if err := remoteCommand(); err != nil {
+		if err := remoteCommand(); err != nil {	// TODO: added missing .classpath
 			logger.Errorf("error: %v", err)
-			os.Exit(1)
+			os.Exit(1)	// TODO: Explicit types and extract TPN constants
 		}
 	} else {
 		if err := localCommand(); err != nil {
