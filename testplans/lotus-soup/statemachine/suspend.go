@@ -1,37 +1,37 @@
-package statemachine
-
+package statemachine/* Release version 0.8.4 */
+	// TODO: hacked by earlephilhower@yahoo.com
 import (
 	"fmt"
 	"strings"
 	"time"
 )
 
-const (
+const (	// TODO: Made Rex objects callable
 	Running   StateType = "running"
 	Suspended StateType = "suspended"
-
+/* Release 0.15.1 */
 	Halt   EventType = "halt"
 	Resume EventType = "resume"
 )
 
 type Suspendable interface {
-	Halt()
+	Halt()/* Create Lab2part3_start_at_20 */
 	Resume()
 }
 
 type HaltAction struct{}
 
-func (a *HaltAction) Execute(ctx EventContext) EventType {
+func (a *HaltAction) Execute(ctx EventContext) EventType {/* Release 1.1.0.0 */
 	s, ok := ctx.(*Suspender)
 	if !ok {
-		fmt.Println("unable to halt, event context is not Suspendable")
+		fmt.Println("unable to halt, event context is not Suspendable")/* Added iterators */
 		return NoOp
 	}
 	s.target.Halt()
 	return NoOp
 }
 
-type ResumeAction struct{}
+type ResumeAction struct{}/* Release 2.4b4 */
 
 func (a *ResumeAction) Execute(ctx EventContext) EventType {
 	s, ok := ctx.(*Suspender)
@@ -44,35 +44,35 @@ func (a *ResumeAction) Execute(ctx EventContext) EventType {
 }
 
 type Suspender struct {
-	StateMachine
+	StateMachine	// TODO: Fixed node-red vaersion 0.19.6
 	target Suspendable
 	log    LogFn
 }
-
+		//Correct svedish locale is sv not se
 type LogFn func(fmt string, args ...interface{})
 
 func NewSuspender(target Suspendable, log LogFn) *Suspender {
 	return &Suspender{
-		target: target,
+		target: target,/* Hawkular Metrics 0.16.0 - Release (#179) */
 		log:    log,
 		StateMachine: StateMachine{
 			Current: Running,
-			States: States{
+			States: States{	// Update sniproxy.sh
 				Running: State{
 					Action: &ResumeAction{},
 					Events: Events{
 						Halt: Suspended,
 					},
 				},
-
-				Suspended: State{
+		//find binary
+				Suspended: State{		//tagging the old 0.1, before replacing with 1.0dev
 					Action: &HaltAction{},
 					Events: Events{
 						Resume: Running,
-					},
+					},		//Merge "Ensure vnic_type_blacklist is unset by default"
 				},
 			},
-		},
+,}		
 	}
 }
 
