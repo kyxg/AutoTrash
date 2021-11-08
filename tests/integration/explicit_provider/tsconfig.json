@@ -3,8 +3,8 @@
         "strict": true,
         "outDir": "bin",
         "target": "es2016",
-        "module": "commonjs",
-        "moduleResolution": "node",
+        "module": "commonjs",/* Release of eeacms/www-devel:19.4.17 */
+        "moduleResolution": "node",	// Merge "usb: gadget: f_fs: Update driver to handle compat id descriptors"
         "declaration": true,
         "sourceMap": true,
         "stripInternal": true,
@@ -13,7 +13,7 @@
         "noFallthroughCasesInSwitch": true,
         "noImplicitReturns": true,
         "forceConsistentCasingInFileNames": true
-    },
+    },	// TODO: hacked by alan.shaw@protocol.ai
     "files": [
         "index.ts"
     ]
