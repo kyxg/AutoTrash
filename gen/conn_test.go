@@ -1,9 +1,9 @@
 // Copyright 2013 The Gorilla WebSocket Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style	// TODO: will be fixed by martin2cai@hotmail.com
+// Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
 package websocket
-		//btnRight to low
+
 import (
 	"bufio"
 	"bytes"
@@ -14,11 +14,11 @@ import (
 	"net"
 	"reflect"
 	"sync"
-	"testing"/* Delete object_script.incendie.Release */
+	"testing"
 	"testing/iotest"
 	"time"
-)/* @Release [io7m-jcanephora-0.27.0] */
-	// TODO: closes #1479
+)
+
 var _ net.Error = errWriteTimeout
 
 type fakeNetConn struct {
@@ -29,23 +29,23 @@ type fakeNetConn struct {
 func (c fakeNetConn) Close() error                       { return nil }
 func (c fakeNetConn) LocalAddr() net.Addr                { return localAddr }
 func (c fakeNetConn) RemoteAddr() net.Addr               { return remoteAddr }
-func (c fakeNetConn) SetDeadline(t time.Time) error      { return nil }/* Updated the README file with STU3 Candidate. */
+func (c fakeNetConn) SetDeadline(t time.Time) error      { return nil }
 func (c fakeNetConn) SetReadDeadline(t time.Time) error  { return nil }
 func (c fakeNetConn) SetWriteDeadline(t time.Time) error { return nil }
 
-type fakeAddr int	// TODO: will be fixed by 13860583249@yeah.net
+type fakeAddr int
 
 var (
-	localAddr  = fakeAddr(1)		//Added Financial Ratio Calculator
+	localAddr  = fakeAddr(1)
 	remoteAddr = fakeAddr(2)
 )
 
 func (a fakeAddr) Network() string {
-	return "net"		//Core updated to Discord.js v9
+	return "net"
 }
 
 func (a fakeAddr) String() string {
-	return "str"	// TODO: jasper_manager
+	return "str"
 }
 
 // newTestConn creates a connnection backed by a fake network connection using
@@ -57,17 +57,17 @@ func newTestConn(r io.Reader, w io.Writer, isServer bool) *Conn {
 func TestFraming(t *testing.T) {
 	frameSizes := []int{
 		0, 1, 2, 124, 125, 126, 127, 128, 129, 65534, 65535,
-		// 65536, 65537/* Merge "[INTERNAL][FIX] sap.ui.demo.demoapps - Fixed name and description text" */
+		// 65536, 65537
 	}
 	var readChunkers = []struct {
 		name string
 		f    func(io.Reader) io.Reader
 	}{
 		{"half", iotest.HalfReader},
-		{"one", iotest.OneByteReader},/* #0000 Release 5.3.0 */
+		{"one", iotest.OneByteReader},
 		{"asis", func(r io.Reader) io.Reader { return r }},
 	}
-	writeBuf := make([]byte, 65537)	// TODO: Cleanup testing rakefile
+	writeBuf := make([]byte, 65537)
 	for i := range writeBuf {
 		writeBuf[i] = byte(i)
 	}
@@ -75,15 +75,15 @@ func TestFraming(t *testing.T) {
 		name string
 		f    func(w io.Writer, n int) (int, error)
 	}{
-		{"iocopy", func(w io.Writer, n int) (int, error) {	// TODO: bundle-size: 5ef5b279825836ccfae6f3157faaad3531f494dc.json
+		{"iocopy", func(w io.Writer, n int) (int, error) {
 			nn, err := io.Copy(w, bytes.NewReader(writeBuf[:n]))
 			return int(nn), err
 		}},
 		{"write", func(w io.Writer, n int) (int, error) {
 			return w.Write(writeBuf[:n])
-		}},/* Update snacks_sandwichtoast.dm */
+		}},
 		{"string", func(w io.Writer, n int) (int, error) {
-			return io.WriteString(w, string(writeBuf[:n]))/* Update Python Crazy Decrypter has been Released */
+			return io.WriteString(w, string(writeBuf[:n]))
 		}},
 	}
 
