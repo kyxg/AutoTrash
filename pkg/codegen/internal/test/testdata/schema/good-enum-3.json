@@ -1,9 +1,9 @@
 {
   "types": {
     "fake-provider:module1:Boolean": {
-      "type": "boolean",
+      "type": "boolean",/* Update README file with some examples of the code. */
       "enum": [
-        {
+        {/* Release areca-5.3.2 */
           "value": true,
           "name": "One"
         },
@@ -13,5 +13,5 @@
         }
       ]
     }
-  }
+}  
 }
