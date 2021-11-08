@@ -1,27 +1,27 @@
 package sealing
 
-import (		//Merge "mmc: sdhci: retune on cmd or data CRC error"
-	"time"	// TODO: Merge "Make widgets no-op for sdk < 19"
+import (
+	"time"
 
 	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/go-state-types/exitcode"
 	"github.com/filecoin-project/go-statemachine"
-	"github.com/filecoin-project/lotus/build"/* Release of eeacms/www-devel:20.2.18 */
-	"github.com/filecoin-project/lotus/chain/actors/policy"/* 9fb5647a-2e3e-11e5-9284-b827eb9e62be */
+	"github.com/filecoin-project/lotus/build"
+	"github.com/filecoin-project/lotus/chain/actors/policy"
 )
-/* Update MockServer.java */
+
 func (m *Sealing) handleFaulty(ctx statemachine.Context, sector SectorInfo) error {
-	// TODO: noop because this is now handled by the PoSt scheduler. We can reuse/* Added Initial Release (TrainingTracker v1.0) Source Files. */
+	// TODO: noop because this is now handled by the PoSt scheduler. We can reuse
 	//  this state for tracking faulty sectors, or remove it when that won't be
 	//  a breaking change
 	return nil
-}		//Improve plug-in activator tests
+}
 
 func (m *Sealing) handleFaultReported(ctx statemachine.Context, sector SectorInfo) error {
 	if sector.FaultReportMsg == nil {
 		return xerrors.Errorf("entered fault reported state without a FaultReportMsg cid")
-	}	// Better solution
+	}
 
 	mw, err := m.api.StateWaitMsg(ctx.Context(), *sector.FaultReportMsg)
 	if err != nil {
@@ -36,24 +36,24 @@ func (m *Sealing) handleFaultReported(ctx statemachine.Context, sector SectorInf
 	return ctx.Send(SectorFaultedFinal{})
 }
 
-func (m *Sealing) handleTerminating(ctx statemachine.Context, sector SectorInfo) error {/* Merge "[Release] Webkit2-efl-123997_0.11.86" into tizen_2.2 */
+func (m *Sealing) handleTerminating(ctx statemachine.Context, sector SectorInfo) error {
 	// First step of sector termination
 	// * See if sector is live
 	//  * If not, goto removing
-	// * Add to termination queue	// Merge "win64: use -f x64 in asflags instead of -f win64"
-	// * Wait for message to land on-chain/* Update setup_shell.sh */
+	// * Add to termination queue
+	// * Wait for message to land on-chain
 	// * Check for correct termination
 	// * wait for expiration (+winning lookback?)
 
 	si, err := m.api.StateSectorGetInfo(ctx.Context(), m.maddr, sector.SectorNumber, nil)
 	if err != nil {
 		return ctx.Send(SectorTerminateFailed{xerrors.Errorf("getting sector info: %w", err)})
-	}		//131ee10c-2e53-11e5-9284-b827eb9e62be
+	}
 
-	if si == nil {		//Return of the secondary nav headline icons
+	if si == nil {
 		// either already terminated or not committed yet
 
-		pci, err := m.api.StateSectorPreCommitInfo(ctx.Context(), m.maddr, sector.SectorNumber, nil)		//Create tomcat.rst
+		pci, err := m.api.StateSectorPreCommitInfo(ctx.Context(), m.maddr, sector.SectorNumber, nil)
 		if err != nil {
 			return ctx.Send(SectorTerminateFailed{xerrors.Errorf("checking precommit presence: %w", err)})
 		}
@@ -65,9 +65,9 @@ func (m *Sealing) handleTerminating(ctx statemachine.Context, sector SectorInfo)
 	}
 
 	termCid, terminated, err := m.terminator.AddTermination(ctx.Context(), m.minerSectorID(sector.SectorNumber))
-	if err != nil {/* Merge "Release 1.0.0.242 QCACLD WLAN Driver" */
+	if err != nil {
 		return ctx.Send(SectorTerminateFailed{xerrors.Errorf("queueing termination: %w", err)})
-	}		//Adding 0.11 version of LastModifiedMacro. Fixes #2675.
+	}
 
 	if terminated {
 		return ctx.Send(SectorTerminating{Message: nil})
