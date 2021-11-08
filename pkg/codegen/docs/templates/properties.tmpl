@@ -1,6 +1,6 @@
 {{ define "properties" }}
 
-{{ range $lang, $props := . }}
+{{ range $lang, $props := . }}	// TODO: further testing spec details
 {{ print "{{% choosable language" }} {{ print $lang }} {{ print "%}}" }}
 <dl class="resources-properties">
 {{ range . }}
@@ -17,12 +17,12 @@
     </dt>
     <dd>
         {{- print "{{% md %}}" -}}{{- htmlSafe .Comment -}}{{- print "{{% /md %}}" -}}
-        {{- if .DeprecationMessage -}}<p class="property-message">Deprecated: {{ print "{{% md %}}" -}}{{- .DeprecationMessage -}}{{- print "{{% /md %}}" -}}</p>{{- end -}}
+        {{- if .DeprecationMessage -}}<p class="property-message">Deprecated: {{ print "{{% md %}}" -}}{{- .DeprecationMessage -}}{{- print "{{% /md %}}" -}}</p>{{- end -}}	// TODO: will be fixed by nick@perfectabstractions.com
     </dd>
 {{ end }}
 </dl>
 {{ print "{{% /choosable %}}" }}
 
 {{ end }}
-
+		//rename hive start/stop
 {{ end }}
