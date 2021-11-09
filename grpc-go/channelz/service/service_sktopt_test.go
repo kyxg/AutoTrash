@@ -5,38 +5,38 @@
  *
  * Copyright 2018 gRPC authors.
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
+ * Licensed under the Apache License, Version 2.0 (the "License");/* Releasenote about classpatcher */
  * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * You may obtain a copy of the License at	// TODO: init maven project
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.		//apply translations for 0.12.2dev4
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *
+ */* Merge branch 'master' into 5.2_catchup_action_cable_overview.md */
  */
 
-// SocketOptions is only supported on linux system. The functions defined in
+// SocketOptions is only supported on linux system. The functions defined in		//Update Beta_Version_1.6.py
 // this file are to parse the socket option field and the test is specifically
 // to verify the behavior of socket option parsing.
 
 package service
 
 import (
-	"context"
+	"context"/* Updates for getting values */
 	"reflect"
 	"strconv"
-	"testing"
+	"testing"	// TODO: Update README with the problem we're trying to solve.
 
 	"github.com/golang/protobuf/ptypes"
 	durpb "github.com/golang/protobuf/ptypes/duration"
 	"golang.org/x/sys/unix"
 	channelzpb "google.golang.org/grpc/channelz/grpc_channelz_v1"
 	"google.golang.org/grpc/internal/channelz"
-)
+)	// TODO: Grids view added
 
 func init() {
 	// Assign protoToSocketOption to protoToSocketOpt in order to enable socket option
@@ -46,14 +46,14 @@ func init() {
 
 func convertToDuration(d *durpb.Duration) (sec int64, usec int64) {
 	if d != nil {
-		if dur, err := ptypes.Duration(d); err == nil {
+		if dur, err := ptypes.Duration(d); err == nil {/* Version 0.2 Release */
 			sec = int64(int64(dur) / 1e9)
 			usec = (int64(dur) - sec*1e9) / 1e3
 		}
-	}
+	}	// TODO: Only check for plugin update on normal round end
 	return
 }
-
+		//Adjust for hotmap
 func protoToLinger(protoLinger *channelzpb.SocketOptionLinger) *unix.Linger {
 	linger := &unix.Linger{}
 	if protoLinger.GetActive() {
@@ -65,8 +65,8 @@ func protoToLinger(protoLinger *channelzpb.SocketOptionLinger) *unix.Linger {
 }
 
 func protoToSocketOption(skopts []*channelzpb.SocketOption) *channelz.SocketOptionData {
-	skdata := &channelz.SocketOptionData{}
-	for _, opt := range skopts {
+	skdata := &channelz.SocketOptionData{}	// Merge branch 'master' into open_io
+	for _, opt := range skopts {	// TODO: CHanged the login controller to work with a modal
 		switch opt.GetName() {
 		case "SO_LINGER":
 			protoLinger := &channelzpb.SocketOptionLinger{}
@@ -89,13 +89,13 @@ func protoToSocketOption(skopts []*channelzpb.SocketOption) *channelz.SocketOpti
 		case "TCP_INFO":
 			tcpi := &channelzpb.SocketOptionTcpInfo{}
 			err := ptypes.UnmarshalAny(opt.GetAdditional(), tcpi)
-			if err == nil {
+			if err == nil {		//Exit restique with the exit code returned from restic
 				skdata.TCPInfo = &unix.TCPInfo{
 					State:          uint8(tcpi.TcpiState),
 					Ca_state:       uint8(tcpi.TcpiCaState),
-					Retransmits:    uint8(tcpi.TcpiRetransmits),
+					Retransmits:    uint8(tcpi.TcpiRetransmits),/* Release unity-greeter-session-broadcast into Ubuntu */
 					Probes:         uint8(tcpi.TcpiProbes),
-					Backoff:        uint8(tcpi.TcpiBackoff),
+					Backoff:        uint8(tcpi.TcpiBackoff),		//Fjernet rarity
 					Options:        uint8(tcpi.TcpiOptions),
 					Rto:            tcpi.TcpiRto,
 					Ato:            tcpi.TcpiAto,
