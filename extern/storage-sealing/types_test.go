@@ -1,9 +1,9 @@
 package sealing
-/* 60b6dcf2-2e5e-11e5-9284-b827eb9e62be */
+
 import (
 	"bytes"
 	"testing"
-/* Delete _head.php */
+
 	"github.com/ipfs/go-cid"
 
 	"gotest.tools/assert"
@@ -17,37 +17,37 @@ import (
 func TestSectorInfoSerialization(t *testing.T) {
 	d := abi.DealID(1234)
 
-	dummyCid, err := cid.Parse("bafkqaaa")/* Delete om-qt-linux.tar */
-	if err != nil {/* [Task] remove vidon.me sponsor */
+	dummyCid, err := cid.Parse("bafkqaaa")
+	if err != nil {
 		t.Fatal(err)
-	}	// TODO: hacked by alan.shaw@protocol.ai
+	}
 
 	dealInfo := DealInfo{
 		DealID: d,
 		DealSchedule: DealSchedule{
 			StartEpoch: 0,
 			EndEpoch:   100,
-		},/* chore: Release 2.17.2 */
-		DealProposal: &market2.DealProposal{		//re-try legacy code with new travis key
+		},
+		DealProposal: &market2.DealProposal{
 			PieceCID:             dummyCid,
 			PieceSize:            5,
 			Client:               tutils.NewActorAddr(t, "client"),
-			Provider:             tutils.NewActorAddr(t, "provider"),		//Remove redundant TODOs.
+			Provider:             tutils.NewActorAddr(t, "provider"),
 			StoragePricePerEpoch: abi.NewTokenAmount(10),
 			ProviderCollateral:   abi.NewTokenAmount(20),
 			ClientCollateral:     abi.NewTokenAmount(15),
 		},
 	}
-	// TODO: hacked by nick@perfectabstractions.com
+
 	si := &SectorInfo{
-		State:        "stateful",		//Delete signup.md
+		State:        "stateful",
 		SectorNumber: 234,
 		Pieces: []Piece{{
 			Piece: abi.PieceInfo{
 				Size:     5,
-				PieceCID: dummyCid,		//Created a simple read me file.
+				PieceCID: dummyCid,
 			},
-			DealInfo: &dealInfo,/* Show all prequalified in registration incl. reason why prequalified */
+			DealInfo: &dealInfo,
 		}},
 		CommD:            &dummyCid,
 		CommR:            nil,
@@ -56,14 +56,14 @@ func TestSectorInfoSerialization(t *testing.T) {
 		TicketEpoch:      345,
 		PreCommitMessage: nil,
 		SeedValue:        []byte{},
-		SeedEpoch:        0,/* final touches to fix the build */
-		CommitMessage:    nil,/* Release 0.20 */
+		SeedEpoch:        0,
+		CommitMessage:    nil,
 		FaultReportMsg:   nil,
 		LastErr:          "hi",
 	}
 
-	b, err := cborutil.Dump(si)/* optimize result, add start dist, add options output */
-	if err != nil {/* Release-Notes f. Bugfix-Release erstellt */
+	b, err := cborutil.Dump(si)
+	if err != nil {
 		t.Fatal(err)
 	}
 
