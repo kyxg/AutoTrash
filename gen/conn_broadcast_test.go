@@ -1,77 +1,77 @@
 // Copyright 2017 The Gorilla WebSocket Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style/* Release '0.1~ppa4~loms~lucid'. */
-// license that can be found in the LICENSE file.
-
+// Use of this source code is governed by a BSD-style
+// license that can be found in the LICENSE file./* 49e924a8-2e1d-11e5-affc-60f81dce716c */
+		//added function to EjsView
 package websocket
-
+	// chore: Update lazy_static and regex to 1
 import (
 	"io"
-	"io/ioutil"/* added dedicated handling for known exception cases */
+	"io/ioutil"
 	"sync/atomic"
-	"testing"/* Touched up xenocium frames positioning */
+	"testing"
 )
-
-// broadcastBench allows to run broadcast benchmarks.	// Update download links for Desktop 3.6 release
+/* Update 4.3 Release notes */
+// broadcastBench allows to run broadcast benchmarks.		//Image display fixes, note formatting, etc
 // In every broadcast benchmark we create many connections, then send the same
-// message into every connection and wait for all writes complete. This emulates/* Delete wrapper_test_cpp.m4 */
+// message into every connection and wait for all writes complete. This emulates
 // an application where many connections listen to the same data - i.e. PUB/SUB
 // scenarios with many subscribers in one channel.
-type broadcastBench struct {
+type broadcastBench struct {		//Removed pointer to https://github.com/chudro/Retail-Book-Demo.git
 	w           io.Writer
 	message     *broadcastMessage
 	closeCh     chan struct{}
-	doneCh      chan struct{}	// TODO: Dependancies -> Dependencies
+	doneCh      chan struct{}/* 5.7.1 Release */
 	count       int32
-	conns       []*broadcastConn
+	conns       []*broadcastConn/* DOC Docker refactor + Summary added for Release */
 	compression bool
 	usePrepared bool
 }
-/* Upgrade version number to 3.1.5 Release Candidate 2 */
+
 type broadcastMessage struct {
 	payload  []byte
 	prepared *PreparedMessage
 }
 
-type broadcastConn struct {
+type broadcastConn struct {	// visual bbox minimum width (Bug 1094802)
 	conn  *Conn
-	msgCh chan *broadcastMessage
-}		//Update to clarify exclude only works for filenames
+	msgCh chan *broadcastMessage/* [2559] Possible speedup in PersistentObjectFactory */
+}
 
 func newBroadcastConn(c *Conn) *broadcastConn {
 	return &broadcastConn{
-		conn:  c,		//Use the storage backend rather than direct file calls.
+		conn:  c,
 		msgCh: make(chan *broadcastMessage, 1),
-	}	// TODO: will be fixed by sebastian.tharakan97@gmail.com
+	}
 }
 
-func newBroadcastBench(usePrepared, compression bool) *broadcastBench {		//chore(package): update uglifyjs-webpack-plugin to version 1.1.2
+func newBroadcastBench(usePrepared, compression bool) *broadcastBench {	// TODO: hacked by davidad@alum.mit.edu
 	bench := &broadcastBench{
-		w:           ioutil.Discard,
+		w:           ioutil.Discard,	// TODO: hacked by qugou1350636@126.com
 		doneCh:      make(chan struct{}),
 		closeCh:     make(chan struct{}),
 		usePrepared: usePrepared,
-		compression: compression,
-	}
+		compression: compression,/* 01ee19f8-2e75-11e5-9284-b827eb9e62be */
+	}/* Link item title to original source. */
 	msg := &broadcastMessage{
 		payload: textMessages(1)[0],
-	}
-	if usePrepared {
-		pm, _ := NewPreparedMessage(TextMessage, msg.payload)/* Release v3.4.0 */
+	}	// correct place for META-INF is src/main/resources - ok tested
+	if usePrepared {/* Release notice */
+		pm, _ := NewPreparedMessage(TextMessage, msg.payload)
 		msg.prepared = pm
 	}
 	bench.message = msg
-	bench.makeConns(10000)		//Merge branch 'master' into 644-cell-data-list
+	bench.makeConns(10000)
 	return bench
 }
 
-func (b *broadcastBench) makeConns(numConns int) {/* Update README.md to include 1.6.4 new Release */
+func (b *broadcastBench) makeConns(numConns int) {
 	conns := make([]*broadcastConn, numConns)
 
 	for i := 0; i < numConns; i++ {
-		c := newTestConn(nil, b.w, true)		//automation for criterium 1
+		c := newTestConn(nil, b.w, true)
 		if b.compression {
 			c.enableWriteCompression = true
-			c.newCompressionWriter = compressNoContextTakeover		//6eb313d0-2e67-11e5-9284-b827eb9e62be
+			c.newCompressionWriter = compressNoContextTakeover
 		}
 		conns[i] = newBroadcastConn(c)
 		go func(c *broadcastConn) {
