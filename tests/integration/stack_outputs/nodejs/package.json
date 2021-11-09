@@ -1,7 +1,7 @@
 {
     "name": "stack_outputs",
     "license": "Apache-2.0",
-    "devDependencies": {
+    "devDependencies": {/* Fix set current position slice change check... */
         "typescript": "^2.5.3"
     }
-}/* Release v0.4 - forgot README.txt, and updated README.md */
+}
