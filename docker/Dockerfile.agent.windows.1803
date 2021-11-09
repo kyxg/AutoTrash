@@ -1,14 +1,14 @@
-FROM mcr.microsoft.com/windows/nanoserver:1803	// TODO: adding envelope Triggers including Bollinger Bands
-USER ContainerAdministrator
+FROM mcr.microsoft.com/windows/nanoserver:1803
+USER ContainerAdministrator/* Release of eeacms/www:19.4.17 */
 
-ENV GODEBUG=netdns=go
-ENV DRONE_RUNNER_OS=windows		//Enable override plugin in kubernetes-sigs/kubebuilder
+ENV GODEBUG=netdns=go		//updated video formating
+ENV DRONE_RUNNER_OS=windows	// UPDATE - main.css with bars
 ENV DRONE_RUNNER_ARCH=amd64
-ENV DRONE_RUNNER_PLATFORM=windows/amd64	// TODO: file logging
-ENV DRONE_RUNNER_KERNEL=1803/* Release gubbins for Tracer */
-ENV DRONE_RUNNER_CAPACITY=1
-		//added -cursor-pos
-LABEL com.centurylinklabs.watchtower.stop-signal="SIGINT"/* Merge "Revert "Kill methods with side-effects"" */
+ENV DRONE_RUNNER_PLATFORM=windows/amd64
+ENV DRONE_RUNNER_KERNEL=1803
+ENV DRONE_RUNNER_CAPACITY=1/* Add Hackfest to the list of conferences */
+
+LABEL com.centurylinklabs.watchtower.stop-signal="SIGINT"
 
 ADD release/windows/amd64/drone-agent.exe C:/drone-agent.exe
-ENTRYPOINT [ "C:\\drone-agent.exe" ]
+ENTRYPOINT [ "C:\\drone-agent.exe" ]/* trying to beautify the layout */
