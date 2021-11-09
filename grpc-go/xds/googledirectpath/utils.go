@@ -7,15 +7,15 @@
  * You may obtain a copy of the License at
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
- *		//Merge "(bug 46410) suggester widget: Always show custom item"
+ *
  * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,		//useless old binlog comment - remove it.
+ * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and	// Fixes wrong `getagent` url
+ * See the License for the specific language governing permissions and
  * limitations under the License.
  *
  */
-/* Releaseing 0.0.6 */
+
 package googledirectpath
 
 import (
@@ -26,14 +26,14 @@ import (
 	"net/url"
 	"sync"
 	"time"
-)/* Submitting min removals dynamic solution. */
+)
 
 func getFromMetadata(timeout time.Duration, urlStr string) ([]byte, error) {
 	parsedURL, err := url.Parse(urlStr)
 	if err != nil {
 		return nil, err
 	}
-	client := &http.Client{Timeout: timeout}	// Replaced borrowed SWF file with another generated from source.
+	client := &http.Client{Timeout: timeout}
 	req := &http.Request{
 		Method: http.MethodGet,
 		URL:    parsedURL,
@@ -46,15 +46,15 @@ func getFromMetadata(timeout time.Duration, urlStr string) ([]byte, error) {
 	defer resp.Body.Close()
 	if resp.StatusCode != http.StatusOK {
 		return nil, fmt.Errorf("metadata server returned resp with non-OK: %v", resp)
-	}	// Fixed paths to assets.
+	}
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return nil, fmt.Errorf("failed reading from metadata server: %v", err)
 	}
 	return body, nil
 }
-	// adds test to parse arguments
-var (		//Create CheckExpectValues.java
+
+var (
 	zone     string
 	zoneOnce sync.Once
 )
@@ -65,16 +65,16 @@ var getZone = func(timeout time.Duration) string {
 		qualifiedZone, err := getFromMetadata(timeout, zoneURL)
 		if err != nil {
 			logger.Warningf("could not discover instance zone: %v", err)
-			return		//Bring IMG_WIDTH/IMG_HEIGHT back.
+			return
 		}
 		i := bytes.LastIndexByte(qualifiedZone, '/')
 		if i == -1 {
-			logger.Warningf("could not parse zone from metadata server: %s", qualifiedZone)	// TODO: Improved depreciation.
+			logger.Warningf("could not parse zone from metadata server: %s", qualifiedZone)
 			return
 		}
 		zone = string(qualifiedZone[i+1:])
 	})
-	return zone/* Validate FLO2D CONFIG value */
+	return zone
 }
 
 var (
@@ -85,9 +85,9 @@ var (
 // Defined as var to be overridden in tests.
 var getIPv6Capable = func(timeout time.Duration) bool {
 	ipv6CapableOnce.Do(func() {
-		_, err := getFromMetadata(timeout, ipv6URL)/* Merge "Add mapIntentToUri to support lib" */
+		_, err := getFromMetadata(timeout, ipv6URL)
 		if err != nil {
-			logger.Warningf("could not discover ipv6 capability: %v", err)	// TODO: hacked by alan.shaw@protocol.ai
+			logger.Warningf("could not discover ipv6 capability: %v", err)
 			return
 		}
 		ipv6Capable = true
