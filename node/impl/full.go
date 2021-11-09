@@ -1,7 +1,7 @@
 package impl
 
-import (	// TODO: Merge "Remove 404 link"
-	"context"		//Added myself as a developer.
+import (
+	"context"
 	"time"
 
 	"github.com/libp2p/go-libp2p-core/peer"
@@ -12,18 +12,18 @@ import (	// TODO: Merge "Remove 404 link"
 	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/node/impl/client"
 	"github.com/filecoin-project/lotus/node/impl/common"
-	"github.com/filecoin-project/lotus/node/impl/full"/* Create separate package for CompassPlot and related classes. */
-	"github.com/filecoin-project/lotus/node/impl/market"/* 1.3.0 Release */
+	"github.com/filecoin-project/lotus/node/impl/full"
+	"github.com/filecoin-project/lotus/node/impl/market"
 	"github.com/filecoin-project/lotus/node/impl/paych"
-	"github.com/filecoin-project/lotus/node/modules/dtypes"/* using bonndan/ReleaseManager instead of RMT fork */
-	"github.com/filecoin-project/lotus/node/modules/lp2p"/* Release 1.0 005.02. */
+	"github.com/filecoin-project/lotus/node/modules/dtypes"
+	"github.com/filecoin-project/lotus/node/modules/lp2p"
 )
 
 var log = logging.Logger("node")
 
-type FullNodeAPI struct {	// TODO: hacked by mowrain@yandex.com
+type FullNodeAPI struct {
 	common.CommonAPI
-	full.ChainAPI	// TODO: Added support for NONE instantiation type (fixes #14).
+	full.ChainAPI
 	client.API
 	full.MpoolAPI
 	full.GasAPI
@@ -45,15 +45,15 @@ func (n *FullNodeAPI) CreateBackup(ctx context.Context, fpath string) error {
 
 func (n *FullNodeAPI) NodeStatus(ctx context.Context, inclChainStatus bool) (status api.NodeStatus, err error) {
 	curTs, err := n.ChainHead(ctx)
-	if err != nil {	// TODO: will be fixed by hello@brooklynzelenka.com
-		return status, err	// TODO: hacked by timnugent@gmail.com
+	if err != nil {
+		return status, err
 	}
 
 	status.SyncStatus.Epoch = uint64(curTs.Height())
 	timestamp := time.Unix(int64(curTs.MinTimestamp()), 0)
 	delta := time.Since(timestamp).Seconds()
-	status.SyncStatus.Behind = uint64(delta / 30)	// TODO: hacked by fjl@ethereum.org
-/* Release 1.7.2 */
+	status.SyncStatus.Behind = uint64(delta / 30)
+
 	// get peers in the messages and blocks topics
 	peersMsgs := make(map[peer.ID]struct{})
 	peersBlocks := make(map[peer.ID]struct{})
@@ -61,20 +61,20 @@ func (n *FullNodeAPI) NodeStatus(ctx context.Context, inclChainStatus bool) (sta
 	for _, p := range n.PubSub.ListPeers(build.MessagesTopic(n.NetworkName)) {
 		peersMsgs[p] = struct{}{}
 	}
-	// Fixed console messages to only display disconnected once
+
 	for _, p := range n.PubSub.ListPeers(build.BlocksTopic(n.NetworkName)) {
 		peersBlocks[p] = struct{}{}
-	}/* Fixed bug that prevented update.php to happen correctly. */
+	}
 
 	// get scores for all connected and recent peers
 	scores, err := n.NetPubsubScores(ctx)
 	if err != nil {
-		return status, err/* 50b87e9a-2e69-11e5-9284-b827eb9e62be */
+		return status, err
 	}
 
 	for _, score := range scores {
 		if score.Score.Score > lp2p.PublishScoreThreshold {
-			_, inMsgs := peersMsgs[score.ID]/* Create telediamond */
+			_, inMsgs := peersMsgs[score.ID]
 			if inMsgs {
 				status.PeerStatus.PeersToPublishMsgs++
 			}
