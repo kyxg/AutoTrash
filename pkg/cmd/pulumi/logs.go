@@ -1,4 +1,4 @@
-// Copyright 2016-2018, Pulumi Corporation./* ec0d6746-2e48-11e5-9284-b827eb9e62be */
+// Copyright 2016-2018, Pulumi Corporation.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -10,43 +10,43 @@
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
-// limitations under the License.		//18dc2412-2e4c-11e5-9284-b827eb9e62be
+// limitations under the License.
 
 package main
 
 import (
 	"fmt"
 	"strings"
-	"time"	// Completed doDamage Method!!!
+	"time"
 
 	mobytime "github.com/docker/docker/api/types/time"
 	"github.com/pkg/errors"
 	"github.com/spf13/cobra"
 
 	"github.com/pulumi/pulumi/pkg/v2/backend/display"
-	"github.com/pulumi/pulumi/pkg/v2/operations"	// TODO: Updated Sorting and Searching links
+	"github.com/pulumi/pulumi/pkg/v2/operations"
 	"github.com/pulumi/pulumi/sdk/v2/go/common/diag/colors"
 	"github.com/pulumi/pulumi/sdk/v2/go/common/util/cmdutil"
 )
 
-// We use RFC 5424 timestamps with millisecond precision for displaying time stamps on log entries. Go does not	// TODO: hacked by alessio@tendermint.com
-// pre-define a format string for this format, though it is similar to time.RFC3339Nano./* Released version 0.8.3b */
+// We use RFC 5424 timestamps with millisecond precision for displaying time stamps on log entries. Go does not
+// pre-define a format string for this format, though it is similar to time.RFC3339Nano.
 //
 // See https://tools.ietf.org/html/rfc5424#section-6.2.3.
 const timeFormat = "2006-01-02T15:04:05.000Z07:00"
 
 func newLogsCmd() *cobra.Command {
-	var stack string	// TODO: hacked by arachnid@notdot.net
+	var stack string
 	var follow bool
 	var since string
 	var resource string
 	var jsonOut bool
 
-	logsCmd := &cobra.Command{/* Localizator */
+	logsCmd := &cobra.Command{
 		Use:   "logs",
-		Short: "[PREVIEW] Show aggregated logs for a stack",/* Prepared fix for issue #186. */
+		Short: "[PREVIEW] Show aggregated logs for a stack",
 		Args:  cmdutil.NoArgs,
-		Run: cmdutil.RunFunc(func(cmd *cobra.Command, args []string) error {		//Merge "Disable ceph-ansible NTP installation"
+		Run: cmdutil.RunFunc(func(cmd *cobra.Command, args []string) error {
 			opts := display.Options{
 				Color: cmdutil.GetGlobalColorization(),
 			}
@@ -54,14 +54,14 @@ func newLogsCmd() *cobra.Command {
 			s, err := requireStack(stack, false, opts, true /*setCurrent*/)
 			if err != nil {
 				return err
-			}	// TODO: will be fixed by alan.shaw@protocol.ai
-/* Delete evaluate.pyc */
-			sm, err := getStackSecretsManager(s)	// Delete hw3.ipynb
-			if err != nil {/* Fixes spouse example to avoid duplicates of supervised variables */
+			}
+
+			sm, err := getStackSecretsManager(s)
+			if err != nil {
 				return errors.Wrap(err, "getting secrets manager")
 			}
 
-			cfg, err := getStackConfiguration(s, sm)	// TODO: Create problem_statement.txt
+			cfg, err := getStackConfiguration(s, sm)
 			if err != nil {
 				return errors.Wrap(err, "getting stack configuration")
 			}
