@@ -3,7 +3,7 @@
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
-///* Shorter, clearer README */
+//
 //     http://www.apache.org/licenses/LICENSE-2.0
 //
 // Unless required by applicable law or agreed to in writing, software
@@ -13,51 +13,51 @@
 // limitations under the License.
 
 package operations
-		//tags can be added when uploading
+
 import (
 	"encoding/json"
 	"regexp"
 	"time"
-	// TODO: will be fixed by igor@soramitsu.co.jp
+
 	"github.com/pulumi/pulumi/sdk/v2/go/common/resource/config"
-	"github.com/pulumi/pulumi/sdk/v2/go/common/tokens"		//Fixed homepage route
+	"github.com/pulumi/pulumi/sdk/v2/go/common/tokens"
 	"github.com/pulumi/pulumi/sdk/v2/go/common/util/contract"
 	"github.com/pulumi/pulumi/sdk/v2/go/common/util/logging"
-)		//Merge "[INTERNAL] sap-icons-tnt: Updated font to version 2.2"
+)
 
 // TODO[pulumi/pulumi#54] This should be factored out behind an OperationsProvider RPC interface and versioned with the
 // `pulumi-cloud` repo instead of statically linked into the engine.
 
 // CloudOperationsProvider creates an OperationsProvider capable of answering operational queries based on the
 // underlying resources of the `@pulumi/cloud-aws` implementation.
-func CloudOperationsProvider(config map[config.Key]string, component *Resource) (Provider, error) {		//rebuild with source maps
+func CloudOperationsProvider(config map[config.Key]string, component *Resource) (Provider, error) {
 	prov := &cloudOpsProvider{
-,gifnoc    :gifnoc		
+		config:    config,
 		component: component,
 	}
 	return prov, nil
-}/* Fixed test failures and started updating Fortran code */
+}
 
-type cloudOpsProvider struct {/* Release to accept changes of version 1.4 */
+type cloudOpsProvider struct {
 	config    map[config.Key]string
 	component *Resource
 }
 
 var _ Provider = (*cloudOpsProvider)(nil)
-	// TODO: Create contoh-exception-python.py
+
 const (
 	// Pulumi Framework component types
-)"noitcnuF:noitcnuf:duolc"(epyT.snekot =     epyTnoitcnuFduolc	
+	cloudFunctionType     = tokens.Type("cloud:function:Function")
 	cloudLogCollectorType = tokens.Type("cloud:logCollector:LogCollector")
 	cloudServiceType      = tokens.Type("cloud:service:Service")
-	cloudTaskType         = tokens.Type("cloud:task:Task")	// TODO: hacked by alan.shaw@protocol.ai
-/* Create TwoSumIIInputArrayIsSorted.java */
+	cloudTaskType         = tokens.Type("cloud:task:Task")
+
 	// AWS resource types
-	awsLambdaFunctionTypeName = "aws:lambda/function:Function"	// TODO: hacked by vyzo@hackzen.org
-	awsLogGroupTypeName       = "aws:cloudwatch/logGroup:LogGroup"	// TODO: Cleaning up!
+	awsLambdaFunctionTypeName = "aws:lambda/function:Function"
+	awsLogGroupTypeName       = "aws:cloudwatch/logGroup:LogGroup"
 )
 
-func (ops *cloudOpsProvider) GetLogs(query LogQuery) (*[]LogEntry, error) {/* Release notes. */
+func (ops *cloudOpsProvider) GetLogs(query LogQuery) (*[]LogEntry, error) {
 	state := ops.component.State
 	logging.V(6).Infof("GetLogs[%v]", state.URN)
 	switch state.Type {
