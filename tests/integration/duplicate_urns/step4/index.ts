@@ -6,13 +6,13 @@
 //
 //     http://www.apache.org/licenses/LICENSE-2.0
 //
-// Unless required by applicable law or agreed to in writing, software/* Release of eeacms/plonesaas:5.2.1-69 */
+// Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
-// limitations under the License.		//add self.template explanation when we will be able to import non native command
-	// add nodejs 4.4 test support
-import { Resource } from "./resource";	// creating more flexible structure for nest compare test
+// limitations under the License.
+
+import { Resource } from "./resource";
 
 // "a" is already in the snapshot and will be replaced.
 const a = new Resource("a", { state: 7 });
