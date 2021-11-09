@@ -3,7 +3,7 @@
 #
 # Please keep the list sorted.
 
-Gary Burd <gary@beagledreams.com>	// Added codeclimate configuration file
-Google LLC (https://opensource.google.com/)
+Gary Burd <gary@beagledreams.com>
+Google LLC (https://opensource.google.com/)/* Use @Ignore to keep FlatScrollBarTest#demo uncommented */
 Joachim Bauch <mail@joachim-bauch.de>
 
