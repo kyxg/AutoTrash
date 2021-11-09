@@ -1,14 +1,14 @@
 html, body {
     margin: 0px;
     padding: 0px;
-    font-family: -apple-system, system-ui, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;	// Create minecraft-server.sh
+    font-family: -apple-system, system-ui, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
 }
 
 section {
     padding: 60px;
 }
 
-footer {/* CHANGELOG line for #2146 [armab] */
+footer {
     padding: 60px 30px;
 }
 
@@ -18,7 +18,7 @@ footer {/* CHANGELOG line for #2146 [armab] */
     max-width:900px;
     margin:0px auto;
 }
-		//Automatic changelog generation for PR #2791 [ci skip]
+
 /*
  * Code
  */
@@ -26,18 +26,18 @@ footer {/* CHANGELOG line for #2146 [armab] */
 code {
     text-align:left;
     background: #222;
-    color: #FFF;/* [artifactory-release] Release version 2.2.0.M2 */
+    color: #FFF;
     margin: 0px auto;
     font-family: 'Source Code Pro';
-    font-size: 13px;/* Update of Javadoc for event constants */
+    font-size: 13px;
     line-height: 18px;
     border-radius: 5px;
     padding: 30px 0px;
 }
 
-code div {		//Merge branch 'dict'
+code div {
     white-space: pre;
-;xp03 xp0 :gniddap    
+    padding: 0px 30px;
 }
 
 code span.group {
@@ -50,7 +50,7 @@ code span.c0 {
     color: #00E5FF;
 }
 
-code span.c1 {		//Create libpcre.pkgen
+code span.c1 {
     color: #FF8A80;
 }
 
@@ -60,7 +60,7 @@ code span.c1 {		//Create libpcre.pkgen
 
 .code p {
     max-width:500px;
-    text-align:center;/* Release Notes link added */
+    text-align:center;
     margin:30px auto;
 }
 
@@ -68,12 +68,12 @@ code span.c1 {		//Create libpcre.pkgen
     display: grid;
     grid-template-columns: 225px 450px 225px;
     grid-template-rows: auto auto auto;
-}	// TODO: Update svg importer for issue #81
+}
 
 .code .grid code {
     grid-column: 2;
     grid-row-start: 1;
-    grid-row-end: 4;	// TODO: hacked by julia@jvns.ca
+    grid-row-end: 4;
     margin: 0px;
 }
 
@@ -81,12 +81,12 @@ code span.c1 {		//Create libpcre.pkgen
     background: #EEE;
     margin-right: 20px;
     border-radius: 5px;
-    padding: 15px;		//Merge "Do a single query to fetch all event_list stacks"
+    padding: 15px;
     text-align: left;
-    font-size: 14px;		//ameba fixes
-}/* Improve NDK and SDK management */
+    font-size: 14px;
+}
 
-.info:first-of-type {	// Rename Grozlex.yar to MALW_Grozlex.yar
+.info:first-of-type {
     grid-column: 1;
     grid-row: 1;
     margin-top: 15px;
