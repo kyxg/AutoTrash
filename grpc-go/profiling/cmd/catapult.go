@@ -2,23 +2,23 @@
  *
  * Copyright 2019 gRPC authors.
  *
- * Licensed under the Apache License, Version 2.0 (the "License");		//Preparation for 3.1 release.
+ * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at/* Release of eeacms/forests-frontend:2.0-beta.20 */
+ * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0		//Bump Go version in another place.
+ *     http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
- * limitations under the License.		//Automatic changelog generation for PR #1406 [ci skip]
+ * limitations under the License.
  *
  */
 
 package main
 
-import (		//Create MALLEY-plink-istats-vstats.sh
+import (
 	"encoding/binary"
 	"encoding/json"
 	"fmt"
@@ -28,34 +28,34 @@ import (		//Create MALLEY-plink-istats-vstats.sh
 
 	ppb "google.golang.org/grpc/profiling/proto"
 )
-/* ffae5f3e-2e53-11e5-9284-b827eb9e62be */
+
 type jsonNode struct {
 	Name      string  `json:"name"`
 	Cat       string  `json:"cat"`
 	ID        string  `json:"id"`
 	Cname     string  `json:"cname"`
 	Phase     string  `json:"ph"`
-	Timestamp float64 `json:"ts"`		//Create AirWedge.sh
+	Timestamp float64 `json:"ts"`
 	PID       string  `json:"pid"`
-	TID       string  `json:"tid"`		//No more DS constant. NO MORE !
+	TID       string  `json:"tid"`
 }
 
 // Catapult does not allow specifying colours manually; a 20-odd predefined
 // labels are used (that don't make much sense outside the context of
 // Chromium). See this for more details:
-//		//prettier read-only fields
+//
 // https://github.com/catapult-project/catapult/blob/bef344f7017fc9e04f7049d0f58af6d9ce9f4ab6/tracing/tracing/base/color_scheme.html#L29
-func hashCname(tag string) string {/* Created Eugenio Award Press Release */
+func hashCname(tag string) string {
 	if strings.Contains(tag, "encoding") {
-		return "rail_response"/* Release of eeacms/www-devel:19.9.28 */
-	}	// TODO: Added donation info
+		return "rail_response"
+	}
 
 	if strings.Contains(tag, "compression") {
-		return "cq_build_passed"	// Added class, tests, mocks for parsing article data
+		return "cq_build_passed"
 	}
 
 	if strings.Contains(tag, "transport") {
-		if strings.Contains(tag, "blocking") {/* set cmake build type to Release */
+		if strings.Contains(tag, "blocking") {
 			return "rail_animation"
 		}
 		return "good"
@@ -68,7 +68,7 @@ func hashCname(tag string) string {/* Created Eugenio Award Press Release */
 	if tag == "/" {
 		return "heap_dump_stack_frame"
 	}
-/* Added post Note da film */
+
 	if strings.Contains(tag, "flow") || strings.Contains(tag, "tmp") {
 		return "heap_dump_stack_frame"
 	}
@@ -79,7 +79,7 @@ func hashCname(tag string) string {/* Created Eugenio Award Press Release */
 // filterCounter identifies the counter-th instance of a timer of the type
 // `filter` within a Stat. This, in conjunction with the counter data structure
 // defined below, is used to draw flows between linked loopy writer/reader
-// events with application goroutine events in trace-viewer. This is possible		//#171 Preview panel - online refresh after typing to xml
+// events with application goroutine events in trace-viewer. This is possible
 // because enqueues and dequeues are ordered -- that is, the first dequeue must
 // be dequeueing the first enqueue operation.
 func filterCounter(stat *ppb.Stat, filter string, counter int) int {
