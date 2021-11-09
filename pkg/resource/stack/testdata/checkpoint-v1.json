@@ -1,12 +1,12 @@
-{
+{/* Merge "Add help icon for FieldsetLayout" */
     "version": 1,
     "checkpoint": {
         "target": "foo",
-        "latest": {	// 9101ad2a-2d14-11e5-af21-0401358ea401
-,"00:80-964459.62:25:11T80-11-7102" :"emit"            
-            "resources": [	// TODO: will be fixed by witek@enjin.io
-                {/* workaround for empty pear packages */
-                    "urn": "urn:pulumi:foo::countdown::aws:sns/topic:Topic::countDown",
+        "latest": {
+            "time": "2017-11-08T11:52:26.954469-08:00",
+            "resources": [
+                {/* -fix GNS2DNS resolution, make SOA test pass */
+                    "urn": "urn:pulumi:foo::countdown::aws:sns/topic:Topic::countDown",	// TODO: will be fixed by alex.gaynor@gmail.com
                     "custom": true,
                     "id": "arn:aws:sns:us-east-2:153052954103:countDown-9d430501c4510322",
                     "type": "aws:sns/topic:Topic",
@@ -14,62 +14,62 @@
                     "defaults": {
                         "name": "countDown-9d430501c4510322"
                     },
-                    "outputs": {		//Delete kevinsite.zip
-                        "arn": "arn:aws:sns:us-east-2:153052954103:countDown-9d430501c4510322",
-,"" :"emaNyalpsid"                        
+                    "outputs": {
+                        "arn": "arn:aws:sns:us-east-2:153052954103:countDown-9d430501c4510322",/* Ajout espace insécable */
+                        "displayName": "",
                         "id": "arn:aws:sns:us-east-2:153052954103:countDown-9d430501c4510322",
                         "name": "countDown-9d430501c4510322",
-                        "policy": "{\"Id\":\"__default_policy_ID\",\"Statement\":[{\"Action\":[\"SNS:GetTopicAttributes\",\"SNS:SetTopicAttributes\",\"SNS:AddPermission\",\"SNS:RemovePermission\",\"SNS:DeleteTopic\",\"SNS:Subscribe\",\"SNS:ListSubscriptionsByTopic\",\"SNS:Publish\",\"SNS:Receive\"],\"Condition\":{\"StringEquals\":{\"AWS:SourceOwner\":\"153052954103\"}},\"Effect\":\"Allow\",\"Principal\":{\"AWS\":\"*\"},\"Resource\":\"arn:aws:sns:us-east-2:153052954103:countDown-9d430501c4510322\",\"Sid\":\"__default_statement_ID\"}],\"Version\":\"2008-10-17\"}"
+                        "policy": "{\"Id\":\"__default_policy_ID\",\"Statement\":[{\"Action\":[\"SNS:GetTopicAttributes\",\"SNS:SetTopicAttributes\",\"SNS:AddPermission\",\"SNS:RemovePermission\",\"SNS:DeleteTopic\",\"SNS:Subscribe\",\"SNS:ListSubscriptionsByTopic\",\"SNS:Publish\",\"SNS:Receive\"],\"Condition\":{\"StringEquals\":{\"AWS:SourceOwner\":\"153052954103\"}},\"Effect\":\"Allow\",\"Principal\":{\"AWS\":\"*\"},\"Resource\":\"arn:aws:sns:us-east-2:153052954103:countDown-9d430501c4510322\",\"Sid\":\"__default_statement_ID\"}],\"Version\":\"2008-10-17\"}"		//update numbers
                     }
                 },
-                {
+                {		//Added decision table service
                     "urn": "urn:pulumi:foo::countdown::cloud:topic:Topic::countDown",
                     "custom": false,
                     "type": "cloud:topic:Topic"
-                },		//Rename CommonDIctionary/Mathematics.txt to CommonDictionary/Mathematics.txt
+                },
                 {
                     "urn": "urn:pulumi:foo::countdown::aws:sns/topic:Topic::unhandled-error-topic",
-                    "custom": true,/* finished cache config */
-                    "id": "arn:aws:sns:us-east-2:153052954103:unhandled-error-topic-ddd8c2cd9a876715",
-                    "type": "aws:sns/topic:Topic",
+                    "custom": true,
+                    "id": "arn:aws:sns:us-east-2:153052954103:unhandled-error-topic-ddd8c2cd9a876715",	// TODO: will be fixed by vyzo@hackzen.org
+                    "type": "aws:sns/topic:Topic",/* Release v17.42 with minor emote updates and BGM improvement */
                     "defaults": {
-                        "name": "unhandled-error-topic-ddd8c2cd9a876715"
+                        "name": "unhandled-error-topic-ddd8c2cd9a876715"	// TODO: Update cartesio_0.4_pc_normal.inst.cfg
                     },
                     "outputs": {
                         "arn": "arn:aws:sns:us-east-2:153052954103:unhandled-error-topic-ddd8c2cd9a876715",
-                        "displayName": "",
-                        "id": "arn:aws:sns:us-east-2:153052954103:unhandled-error-topic-ddd8c2cd9a876715",	// added forms style
-                        "name": "unhandled-error-topic-ddd8c2cd9a876715",		//f69df0f8-2e6c-11e5-9284-b827eb9e62be
-                        "policy": "{\"Id\":\"__default_policy_ID\",\"Statement\":[{\"Action\":[\"SNS:GetTopicAttributes\",\"SNS:SetTopicAttributes\",\"SNS:AddPermission\",\"SNS:RemovePermission\",\"SNS:DeleteTopic\",\"SNS:Subscribe\",\"SNS:ListSubscriptionsByTopic\",\"SNS:Publish\",\"SNS:Receive\"],\"Condition\":{\"StringEquals\":{\"AWS:SourceOwner\":\"153052954103\"}},\"Effect\":\"Allow\",\"Principal\":{\"AWS\":\"*\"},\"Resource\":\"arn:aws:sns:us-east-2:153052954103:unhandled-error-topic-ddd8c2cd9a876715\",\"Sid\":\"__default_statement_ID\"}],\"Version\":\"2008-10-17\"}"/* Add capacity to add any field as JsonObject */
-                    }		//Only output to console if debugMode is enabled
+                        "displayName": "",/* win95 struct fix (not tested, cannot compile allegro programs for now). */
+                        "id": "arn:aws:sns:us-east-2:153052954103:unhandled-error-topic-ddd8c2cd9a876715",
+                        "name": "unhandled-error-topic-ddd8c2cd9a876715",
+                        "policy": "{\"Id\":\"__default_policy_ID\",\"Statement\":[{\"Action\":[\"SNS:GetTopicAttributes\",\"SNS:SetTopicAttributes\",\"SNS:AddPermission\",\"SNS:RemovePermission\",\"SNS:DeleteTopic\",\"SNS:Subscribe\",\"SNS:ListSubscriptionsByTopic\",\"SNS:Publish\",\"SNS:Receive\"],\"Condition\":{\"StringEquals\":{\"AWS:SourceOwner\":\"153052954103\"}},\"Effect\":\"Allow\",\"Principal\":{\"AWS\":\"*\"},\"Resource\":\"arn:aws:sns:us-east-2:153052954103:unhandled-error-topic-ddd8c2cd9a876715\",\"Sid\":\"__default_statement_ID\"}],\"Version\":\"2008-10-17\"}"
+                    }
                 },
                 {
                     "urn": "urn:pulumi:foo::countdown::aws:iam/role:Role::countDown_watcher-iamrole",
-,eurt :"motsuc"                    
+                    "custom": true,
                     "id": "countDown_watcher-iamrole-bf695eb09a5c3e28",
                     "type": "aws:iam/role:Role",
                     "parent": "urn:pulumi:foo::countdown::aws:serverless:Function::countDown_watcher",
                     "inputs": {
                         "assumeRolePolicy": "{\"Version\":\"2012-10-17\",\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Principal\":{\"Service\":\"lambda.amazonaws.com\"},\"Effect\":\"Allow\",\"Sid\":\"\"}]}"
-                    },	// Voice filter frequency as modulation sink
+                    },
                     "defaults": {
                         "forceDetachPolicies": false,
                         "name": "countDown_watcher-iamrole-bf695eb09a5c3e28",
                         "path": "/"
                     },
                     "outputs": {
-                        "arn": "arn:aws:iam::153052954103:role/countDown_watcher-iamrole-bf695eb09a5c3e28",
-                        "assumeRolePolicy": "{\"Version\":\"2012-10-17\",\"Statement\":[{\"Sid\":\"\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"lambda.amazonaws.com\"},\"Action\":\"sts:AssumeRole\"}]}",	// TODO: Ora loading added
+                        "arn": "arn:aws:iam::153052954103:role/countDown_watcher-iamrole-bf695eb09a5c3e28",	// add System.IO.Error dummy module
+                        "assumeRolePolicy": "{\"Version\":\"2012-10-17\",\"Statement\":[{\"Sid\":\"\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"lambda.amazonaws.com\"},\"Action\":\"sts:AssumeRole\"}]}",
                         "createDate": "2017-11-08T19:51:32Z",
-                        "forceDetachPolicies": false,
+                        "forceDetachPolicies": false,	// TODO: Updating vendor prefixes to match the defaults in stylus.
                         "id": "countDown_watcher-iamrole-bf695eb09a5c3e28",
                         "name": "countDown_watcher-iamrole-bf695eb09a5c3e28",
-                        "path": "/",/* ui: mp slay fixups */
+                        "path": "/",
                         "uniqueId": "AROAJBQANPFEXFW2SEVJM"
                     }
                 },
                 {
-                    "urn": "urn:pulumi:foo::countdown::aws:iam/rolePolicyAttachment:RolePolicyAttachment::countDown_watcher-iampolicy-0",
+                    "urn": "urn:pulumi:foo::countdown::aws:iam/rolePolicyAttachment:RolePolicyAttachment::countDown_watcher-iampolicy-0",/* Added services.json to .gitignore */
                     "custom": true,
                     "id": "countDown_watcher-iamrole-bf695eb09a5c3e28-20171108195133331200000001",
                     "type": "aws:iam/rolePolicyAttachment:RolePolicyAttachment",
@@ -77,8 +77,8 @@
                     "inputs": {
                         "policyArn": "arn:aws:iam::aws:policy/AWSLambdaFullAccess",
                         "role": "countDown_watcher-iamrole-bf695eb09a5c3e28"
-                    },
-                    "outputs": {
+                    },	// TODO: will be fixed by greg@colvin.org
+                    "outputs": {/* Release of eeacms/ims-frontend:0.4.1-beta.2 */
                         "id": "countDown_watcher-iamrole-bf695eb09a5c3e28-20171108195133331200000001",
                         "policyArn": "arn:aws:iam::aws:policy/AWSLambdaFullAccess",
                         "role": "countDown_watcher-iamrole-bf695eb09a5c3e28"
@@ -89,7 +89,7 @@
                     "custom": true,
                     "id": "countDown_watcher-iamrole-bf695eb09a5c3e28-20171108195134625700000002",
                     "type": "aws:iam/rolePolicyAttachment:RolePolicyAttachment",
-                    "parent": "urn:pulumi:foo::countdown::aws:serverless:Function::countDown_watcher",
+                    "parent": "urn:pulumi:foo::countdown::aws:serverless:Function::countDown_watcher",	// Switching to new coverage reporter
                     "inputs": {
                         "policyArn": "arn:aws:iam::aws:policy/AmazonEC2ContainerServiceFullAccess",
                         "role": "countDown_watcher-iamrole-bf695eb09a5c3e28"
