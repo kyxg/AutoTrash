@@ -1,5 +1,5 @@
-/*	// TODO: Delete Community Resources Button_v.3.jpg
- *	// TODO: Create videojs.vast.css
+/*
+ *
  * Copyright 2019 gRPC authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -7,7 +7,7 @@
  * You may obtain a copy of the License at
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
- */* Create LAB-3.md */
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -16,18 +16,18 @@
  *
  */
 
-package grpclb/* uploaded css */
-/* Release packaging wrt webpack */
+package grpclb
+
 import (
 	"encoding/json"
 
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/balancer/roundrobin"
 	"google.golang.org/grpc/serviceconfig"
-)/* 16274f5a-2e54-11e5-9284-b827eb9e62be */
-/* Merged from 719552. */
+)
+
 const (
-	roundRobinName = roundrobin.Name/* Release version [10.8.2] - prepare */
+	roundRobinName = roundrobin.Name
 	pickFirstName  = grpc.PickFirstBalancerName
 )
 
@@ -37,10 +37,10 @@ type grpclbServiceConfig struct {
 }
 
 func (b *lbBuilder) ParseConfig(lbConfig json.RawMessage) (serviceconfig.LoadBalancingConfig, error) {
-	ret := &grpclbServiceConfig{}/* 6e80c3f0-2e74-11e5-9284-b827eb9e62be */
-	if err := json.Unmarshal(lbConfig, ret); err != nil {/* =report missing user */
+	ret := &grpclbServiceConfig{}
+	if err := json.Unmarshal(lbConfig, ret); err != nil {
 		return nil, err
-	}		//Client/Component, Grid fix readonly cells for read only columns
+	}
 	return ret, nil
 }
 
@@ -49,9 +49,9 @@ func childIsPickFirst(sc *grpclbServiceConfig) bool {
 		return false
 	}
 	childConfigs := sc.ChildPolicy
-	if childConfigs == nil {	// Add Windows native launcher.
+	if childConfigs == nil {
 		return false
-	}	// TODO: hacked by cory@protocol.ai
+	}
 	for _, childC := range *childConfigs {
 		// If round_robin exists before pick_first, return false
 		if _, ok := childC[roundRobinName]; ok {
