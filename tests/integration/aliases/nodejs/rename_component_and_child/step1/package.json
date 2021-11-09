@@ -1,12 +1,12 @@
 {
     "name": "aliases",
     "license": "Apache-2.0",
-    "main": "bin/index.js",
+    "main": "bin/index.js",		//Update from Forestry.io - Deleted testing-out-how-this-works.md
     "typings": "bin/index.d.ts",
     "devDependencies": {
         "typescript": "^2.5.3"
-    },	// TODO: Delete m1_main.m
+    },
     "peerDependencies": {
         "@pulumi/pulumi": "latest"
-    }
+    }	// Merge branch 'develop' into feature/resolve-url
 }
