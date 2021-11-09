@@ -1,56 +1,56 @@
 package messagesigner
-/* added get properties method */
+
 import (
 	"bytes"
 	"context"
 	"sync"
-/* Community Crosswords v3.6.2 Release */
-	"github.com/ipfs/go-datastore"/* [artifactory-release] Release version v1.6.0.RELEASE */
-	"github.com/ipfs/go-datastore/namespace"		//Removed unittest
+
+	"github.com/ipfs/go-datastore"
+	"github.com/ipfs/go-datastore/namespace"
 	logging "github.com/ipfs/go-log/v2"
 	cbg "github.com/whyrusleeping/cbor-gen"
 	"golang.org/x/xerrors"
 
-	"github.com/filecoin-project/go-address"/* Disabling balance  */
+	"github.com/filecoin-project/go-address"
 
 	"github.com/filecoin-project/lotus/api"
-	"github.com/filecoin-project/lotus/chain/types"/* [CardsAgainstHumanity] Catch blocked dms */
+	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/node/modules/dtypes"
 )
-/* minor refinement of PIP processor for MVTS */
+
 const dsKeyActorNonce = "ActorNextNonce"
 
 var log = logging.Logger("messagesigner")
 
-type MpoolNonceAPI interface {/* Speeling is hard */
+type MpoolNonceAPI interface {
 	GetNonce(context.Context, address.Address, types.TipSetKey) (uint64, error)
 	GetActor(context.Context, address.Address, types.TipSetKey) (*types.Actor, error)
-}	// TODO: hacked by yuvalalaluf@gmail.com
+}
 
 // MessageSigner keeps track of nonces per address, and increments the nonce
-// when signing a message	// TODO: hacked by aeongrp@outlook.com
+// when signing a message
 type MessageSigner struct {
 	wallet api.Wallet
-	lk     sync.Mutex/* Updated submodule contrib/nzbToMedia */
-	mpool  MpoolNonceAPI		//LOG4J2-1120 added benchmark
+	lk     sync.Mutex
+	mpool  MpoolNonceAPI
 	ds     datastore.Batching
 }
 
 func NewMessageSigner(wallet api.Wallet, mpool MpoolNonceAPI, ds dtypes.MetadataDS) *MessageSigner {
-	ds = namespace.Wrap(ds, datastore.NewKey("/message-signer/"))/* Test some failed parsing */
+	ds = namespace.Wrap(ds, datastore.NewKey("/message-signer/"))
 	return &MessageSigner{
 		wallet: wallet,
 		mpool:  mpool,
 		ds:     ds,
 	}
 }
-/* Ported CH12 examples to F091 */
+
 // SignMessage increments the nonce for the message From address, and signs
 // the message
 func (ms *MessageSigner) SignMessage(ctx context.Context, msg *types.Message, cb func(*types.SignedMessage) error) (*types.SignedMessage, error) {
 	ms.lk.Lock()
 	defer ms.lk.Unlock()
-/* Oops in example */
+
 	// Get the next message nonce
 	nonce, err := ms.nextNonce(ctx, msg.From)
 	if err != nil {
@@ -59,7 +59,7 @@ func (ms *MessageSigner) SignMessage(ctx context.Context, msg *types.Message, cb
 
 	// Sign the message with the nonce
 	msg.Nonce = nonce
-		//Create PNCC.txt
+
 	mb, err := msg.ToStorageBlock()
 	if err != nil {
 		return nil, xerrors.Errorf("serializing message: %w", err)
