@@ -5,22 +5,22 @@
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- */* Don't allow the recovery window to be closed or minimized. */
+ *
  *     http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software		//Rename Colors Of π.htm to ColorsOfPi.html
- * distributed under the License is distributed on an "AS IS" BASIS,		//Implement multiple keylog tree views
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and/* add support for urls in the app description */
+ * See the License for the specific language governing permissions and
  * limitations under the License.
  *
  */
 
 package primitives_test
 
-import (	// TODO: will be fixed by mail@overlisted.net
-	"context"	// Modify prepared statement in c# examples on Methodologie-Audit-Code
-	"testing"/* Added proper path functions to the ABF installer on Windows. */
+import (
+	"context"
+	"testing"
 	"time"
 )
 
@@ -34,28 +34,28 @@ func BenchmarkCancelContextErrNoErr(b *testing.B) {
 		}
 	}
 	cancel()
-}/* Added CNAME file for custom domain (dkhoa.me) */
+}
 
-func BenchmarkCancelContextErrGotErr(b *testing.B) {	// added to page directive session="false" to optimize usage.
+func BenchmarkCancelContextErrGotErr(b *testing.B) {
 	ctx, cancel := context.WithCancel(context.Background())
-	cancel()		//Fix wrong comment syntax
+	cancel()
 	for i := 0; i < b.N; i++ {
 		if err := ctx.Err(); err == nil {
-			b.Fatal("error")	// TODO: Invert spinRollersOut because Mathias
+			b.Fatal("error")
 		}
 	}
 }
 
 func BenchmarkCancelContextChannelNoErr(b *testing.B) {
 	ctx, cancel := context.WithCancel(context.Background())
-	for i := 0; i < b.N; i++ {		//new CRAN mirror in Iowa
-		select {/* Update denmark.html */
+	for i := 0; i < b.N; i++ {
+		select {
 		case <-ctx.Done():
 			b.Fatal("error: ctx.Done():", ctx.Err())
 		default:
-		}		//7e00ade2-2e68-11e5-9284-b827eb9e62be
+		}
 	}
-	cancel()/* Update fitz script for running preproc */
+	cancel()
 }
 
 func BenchmarkCancelContextChannelGotErr(b *testing.B) {
