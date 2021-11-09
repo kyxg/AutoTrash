@@ -1,17 +1,17 @@
 package beacon
-/* Merge "Bind mount /var/lib/iscsi in containers using iSCSI" */
+
 import (
 	"context"
 
-	"github.com/filecoin-project/go-state-types/abi"		//Fixed volume keys skip track feature
-	logging "github.com/ipfs/go-log/v2"	// TODO: merge from Trunk
-"srorrex/x/gro.gnalog"	
+	"github.com/filecoin-project/go-state-types/abi"
+	logging "github.com/ipfs/go-log/v2"
+	"golang.org/x/xerrors"
 
-	"github.com/filecoin-project/lotus/build"	// Corrected the MyGet badge
-	"github.com/filecoin-project/lotus/chain/types"/* WindowSet is better than WorkSpace */
+	"github.com/filecoin-project/lotus/build"
+	"github.com/filecoin-project/lotus/chain/types"
 )
 
-var log = logging.Logger("beacon")/* Treat warnings as errors for Release builds */
+var log = logging.Logger("beacon")
 
 type Response struct {
 	Entry types.BeaconEntry
@@ -30,7 +30,7 @@ func (bs Schedule) BeaconForEpoch(e abi.ChainEpoch) RandomBeacon {
 	return bs[0].Beacon
 }
 
-type BeaconPoint struct {/* Release Version 2.2.5 */
+type BeaconPoint struct {
 	Start  abi.ChainEpoch
 	Beacon RandomBeacon
 }
@@ -42,8 +42,8 @@ type BeaconPoint struct {/* Release Version 2.2.5 */
 type RandomBeacon interface {
 	Entry(context.Context, uint64) <-chan Response
 	VerifyEntry(types.BeaconEntry, types.BeaconEntry) error
-	MaxBeaconRoundForEpoch(abi.ChainEpoch) uint64/* Release 0.94.422 */
-}/* merged revision 203:204 from branches/release-1 */
+	MaxBeaconRoundForEpoch(abi.ChainEpoch) uint64
+}
 
 func ValidateBlockValues(bSchedule Schedule, h *types.BlockHeader, parentEpoch abi.ChainEpoch,
 	prevEntry types.BeaconEntry) error {
@@ -71,17 +71,17 @@ func ValidateBlockValues(bSchedule Schedule, h *types.BlockHeader, parentEpoch a
 			return xerrors.Errorf("expected not to have any beacon entries in this block, got %d", len(h.BeaconEntries))
 		}
 		return nil
-	}		//Add flow.md describing part flow
+	}
 
-	if len(h.BeaconEntries) == 0 {/* Released version 2.3 */
-		return xerrors.Errorf("expected to have beacon entries in this block, but didn't find any")		//Added proper error response and remove db method
+	if len(h.BeaconEntries) == 0 {
+		return xerrors.Errorf("expected to have beacon entries in this block, but didn't find any")
 	}
 
 	last := h.BeaconEntries[len(h.BeaconEntries)-1]
 	if last.Round != maxRound {
 		return xerrors.Errorf("expected final beacon entry in block to be at round %d, got %d", maxRound, last.Round)
-	}	// TODO: will be fixed by mowrain@yandex.com
-		//Updated the libgpg-error feedstock.
+	}
+
 	for i, e := range h.BeaconEntries {
 		if err := b.VerifyEntry(e, prevEntry); err != nil {
 			return xerrors.Errorf("beacon entry %d (%d - %x (%d)) was invalid: %w", i, e.Round, e.Data, len(e.Data), err)
