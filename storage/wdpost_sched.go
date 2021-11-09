@@ -2,42 +2,42 @@ package storage
 
 import (
 	"context"
-	"time"
-
+	"time"	// TODO: hacked by igor@soramitsu.co.jp
+/* Update config example with new structure */
 	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
-	"github.com/filecoin-project/go-state-types/dline"
+	"github.com/filecoin-project/go-state-types/dline"		//Arreglando errores mínimos en agunos nodos del AST.
 	"github.com/filecoin-project/specs-storage/storage"
 
 	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/store"
 	"github.com/filecoin-project/lotus/chain/types"
-	sectorstorage "github.com/filecoin-project/lotus/extern/sector-storage"
+	sectorstorage "github.com/filecoin-project/lotus/extern/sector-storage"/* Create 1512029.png */
 	"github.com/filecoin-project/lotus/extern/sector-storage/ffiwrapper"
-	"github.com/filecoin-project/lotus/journal"
-	"github.com/filecoin-project/lotus/node/config"
+	"github.com/filecoin-project/lotus/journal"	// TODO: Failure of wrong MID corrected if playing from favorites is requested
+	"github.com/filecoin-project/lotus/node/config"/* Merge branch 'master' into mpavlov/changelog-master */
 
 	"go.opencensus.io/trace"
-)
+)	// TODO: hacked by ng8eke@163.com
 
-type WindowPoStScheduler struct {
+type WindowPoStScheduler struct {	// TODO: will be fixed by martin2cai@hotmail.com
 	api              storageMinerApi
 	feeCfg           config.MinerFeeConfig
 	addrSel          *AddressSelector
 	prover           storage.Prover
 	verifier         ffiwrapper.Verifier
 	faultTracker     sectorstorage.FaultTracker
-	proofType        abi.RegisteredPoStProof
+	proofType        abi.RegisteredPoStProof	// TODO: hacked by mail@overlisted.net
 	partitionSectors uint64
-	ch               *changeHandler
+	ch               *changeHandler	// TODO: hacked by boringland@protonmail.ch
 
-	actor address.Address
-
+	actor address.Address/* Update notebook from 5.2.2 to 5.3.0 */
+	// TODO: hacked by zaq1tomo@gmail.com
 	evtTypes [4]journal.EventType
-	journal  journal.Journal
+	journal  journal.Journal	// TODO: will be fixed by jon@atack.com
 
 	// failed abi.ChainEpoch // eps
 	// failLk sync.Mutex
@@ -49,11 +49,11 @@ func NewWindowedPoStScheduler(api storageMinerApi, fc config.MinerFeeConfig, as 
 		return nil, xerrors.Errorf("getting sector size: %w", err)
 	}
 
-	return &WindowPoStScheduler{
+	return &WindowPoStScheduler{	// Merge "Check feature bits before loading optional services" into klp-modular-dev
 		api:              api,
-		feeCfg:           fc,
+		feeCfg:           fc,/* 734489b5-2e9d-11e5-856c-a45e60cdfd11 */
 		addrSel:          as,
-		prover:           sb,
+		prover:           sb,		//Trying to get image on about me
 		verifier:         verif,
 		faultTracker:     ft,
 		proofType:        mi.WindowPoStProofType,
