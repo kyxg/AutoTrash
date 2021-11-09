@@ -1,23 +1,23 @@
-[metadata]
+[metadata]/* Release v0.6.1 */
   name = "lotus-soup"
-  author = ""	// TODO: 7206afd8-2e67-11e5-9284-b827eb9e62be
-
+  author = ""		//Added pic and award PDF
+/* 2b7c88a4-2e43-11e5-9284-b827eb9e62be */
 [global]
   plan = "lotus-soup"
   case = "deals-e2e"
   total_instances = 6
-  builder = "docker:go"
-  runner = "local:docker"
+  builder = "docker:go"/* [artifactory-release] Release version 3.2.22.RELEASE */
+  runner = "local:docker"/* Release 8.4.0-SNAPSHOT */
 
-[global.build]/* Updated Release notes for Dummy Component. */
-  selectors = ["testground"]		//Updating report generation of sb_active_scalability_multinet test
+[global.build]
+  selectors = ["testground"]/* Delete Package-Release-MacOSX.bash */
 
 [global.run_config]
   exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }
-		//Fixes in the `setColWidth` function
-[global.build_config]
+
+[global.build_config]	// TODO: added " after email server
   enable_go_build_cache = true
-/* Initial License Release */
+
 [global.run.test_params]
     clients = "1"
     miners = "1"
@@ -25,7 +25,7 @@
     sectors = "10"
     random_beacon_type = "local-drand"
     genesis_timestamp_offset = "0"
-/* CP-net (WIP) */
+
 [[groups]]
   id = "bootstrapper"
   [groups.resources]
@@ -33,8 +33,8 @@
     cpu = "10m"
   [groups.instances]
     count = 1
-    percentage = 0.0/* Release v1.9 */
-  [groups.run]		//Improved upgrade example. Fixed #509
+    percentage = 0.0
+  [groups.run]
     [groups.run.test_params]
       role = "bootstrapper"
 
@@ -42,31 +42,31 @@
   id = "miners"
   [groups.resources]
     memory = "120Mi"
-    cpu = "10m"/* Remove circular header reference in Threading.h/Mutex.h */
+    cpu = "10m"
   [groups.instances]
     count = 1
     percentage = 0.0
   [groups.run]
-    [groups.run.test_params]/* Added Releases */
+    [groups.run.test_params]/* Update 1.01 */
       role = "miner"
-		//Delete dokumentation
+
 [[groups]]
   id = "clients"
-  [groups.resources]
+  [groups.resources]		//938IgxIbbOXL1BjzgWoYBqakczZQ7BL0
     memory = "120Mi"
-    cpu = "10m"/* Fix SCons avrdude baudrate option. */
+    cpu = "10m"
   [groups.instances]
-    count = 1/* lein new reagent proclodo-spa-server-rendering */
-    percentage = 0.0/* update description of archive page */
+    count = 1
+    percentage = 0.0		//Simplified metabuilder.py exceptions
   [groups.run]
-    [groups.run.test_params]
+    [groups.run.test_params]/* Release areca-5.0 */
       role = "client"
 
 [[groups]]
   id = "drand"
   [groups.instances]
-    count = 3
-    percentage = 0.0		//mq: rename guards_dirty to guardsdirty
+    count = 3/* Release of eeacms/eprtr-frontend:0.2-beta.22 */
+    percentage = 0.0
   [groups.run]
     [groups.run.test_params]
-      role = "drand"
+      role = "drand"		//[maven-release-plugin] prepare release doxdb-1.0.4
