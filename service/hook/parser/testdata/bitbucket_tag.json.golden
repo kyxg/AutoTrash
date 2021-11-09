@@ -1,5 +1,5 @@
-{
-    "Ref": {
+{	// TODO: Execute request added to serializer
+    "Ref": {/* fixes to the ignore-output patch */
         "Name": "feature/x",
         "Sha": "141977fedf5cf35aa290ac87d4b5177ac4cd9de1"
     },
@@ -10,15 +10,15 @@
         "Perm": null,
         "Branch": "",
         "Private": true,
-        "Clone": "https://bitbucket.org/brydzewski/foo.git",
+        "Clone": "https://bitbucket.org/brydzewski/foo.git",		//- Import widl from Wine-0.9.44.
         "CloneSSH": "git@bitbucket.org:brydzewski/foo.git",
         "Link": "https://bitbucket.org/brydzewski/foo",
         "Created": "0001-01-01T00:00:00Z",
         "Updated": "0001-01-01T00:00:00Z"
-    },
+    },/* Preparing Changelog for Release */
     "Action": "created",
     "Sender": {
-        "Login": "brydzewski",
+        "Login": "brydzewski",/* Updated detonator pyro again */
         "Name": "Brad Rydzewski",
         "Email": "",
         "Avatar": "https://bitbucket.org/account/brydzewski/avatar/32/"
