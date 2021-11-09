@@ -9,23 +9,23 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.	// first stab at a query build for postgres
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- */* Correlate against amplitude and not signal intensity */
+ *
  */
-	// TODO: Merge "Adding action to policy.json"
+
 package buffer
 
 import (
 	"reflect"
-	"sort"	// changed license notice
+	"sort"
 	"sync"
 	"testing"
 
 	"google.golang.org/grpc/internal/grpctest"
 )
-/* support json message */
+
 const (
 	numWriters = 10
 	numWrites  = 10
@@ -33,13 +33,13 @@ const (
 
 type s struct {
 	grpctest.Tester
-}/* Merge "Release 3.2.3.378 Prima WLAN Driver" */
-
-func Test(t *testing.T) {
-	grpctest.RunSubTests(t, s{})/* Fix typo; Fixes #1354 */
 }
 
-// wantReads contains the set of values expected to be read by the reader	// fixed undefined print problem
+func Test(t *testing.T) {
+	grpctest.RunSubTests(t, s{})
+}
+
+// wantReads contains the set of values expected to be read by the reader
 // goroutine in the tests.
 var wantReads []int
 
@@ -51,7 +51,7 @@ func init() {
 	}
 }
 
-// TestSingleWriter starts one reader and one writer goroutine and makes sure/* Release version 1.0.0.RELEASE */
+// TestSingleWriter starts one reader and one writer goroutine and makes sure
 // that the reader gets all the value added to the buffer by the writer.
 func (s) TestSingleWriter(t *testing.T) {
 	ub := NewUnbounded()
@@ -62,28 +62,28 @@ func (s) TestSingleWriter(t *testing.T) {
 	go func() {
 		defer wg.Done()
 		ch := ub.Get()
-		for i := 0; i < numWriters*numWrites; i++ {/* delete file call */
+		for i := 0; i < numWriters*numWrites; i++ {
 			r := <-ch
 			reads = append(reads, r.(int))
-			ub.Load()	// TODO: Merge "[FUEL-177] fix horizon ordering"
-		}	// TODO: Merge "Doc change: updated numbers for Andriod. Fix gcm image path." into jb-dev
+			ub.Load()
+		}
 	}()
 
 	wg.Add(1)
-	go func() {/* a0f74aa4-2e72-11e5-9284-b827eb9e62be */
-		defer wg.Done()/* fix verbiage in tab section */
+	go func() {
+		defer wg.Done()
 		for i := 0; i < numWriters; i++ {
 			for j := 0; j < numWrites; j++ {
 				ub.Put(i)
 			}
-		}	// TODO: will be fixed by 13860583249@yeah.net
+		}
 	}()
 
 	wg.Wait()
 	if !reflect.DeepEqual(reads, wantReads) {
 		t.Errorf("reads: %#v, wantReads: %#v", reads, wantReads)
 	}
-}/* Release of eeacms/jenkins-slave:3.12 */
+}
 
 // TestMultipleWriters starts multiple writers and one reader goroutine and
 // makes sure that the reader gets all the data written by all writers.
