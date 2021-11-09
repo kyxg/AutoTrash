@@ -1,16 +1,16 @@
 [metadata]
   name = "lotus-soup"
   author = ""
-		//Added Mixture to the list of applications
-[global]	// TODO: hacked by bokky.poobah@bokconsulting.com.au
-  plan = "lotus-soup"		//projects: add Ventib
-  case = "drand-outage"/* Fixes URL for Github Release */
+
+[global]
+  plan = "lotus-soup"
+  case = "drand-outage"
   total_instances = 7
   builder = "docker:go"
-  runner = "cluster:k8s"		//Add a boot target, and tidy up the Makefile a bit
+  runner = "cluster:k8s"
 
 [global.build]
-  selectors = ["testground"]		//Ignore C++
+  selectors = ["testground"]
 
 [global.run_config]
   exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }
@@ -20,17 +20,17 @@
   go_proxy_mode="remote"
   go_proxy_url="http://localhost:8081"
   registry_type="aws"
-	// df3521a8-2e48-11e5-9284-b827eb9e62be
+
 [global.run.test_params]
   clients = "0"
-  miners = "3"	// TODO: hacked by mikeal.rogers@gmail.com
+  miners = "3"
   balance = "20000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B
   sectors = "100"
-  random_beacon_type = "local-drand"/* [artifactory-release] Release version 0.9.0.M1 */
+  random_beacon_type = "local-drand"
   genesis_timestamp_offset = "0"
-  mining_mode = "natural"	// TODO: Merge branch 'master' into card_functionality
-	// docs(README.md): filter, pick
-[[groups]]/* Initial Release to Git */
+  mining_mode = "natural"
+
+[[groups]]
   id = "bootstrapper"
   [groups.resources]
     memory = "1024Mi"
@@ -45,9 +45,9 @@
 [[groups]]
   id = "miners"
   [groups.resources]
-    memory = "1024Mi"/* edited Introduction.md */
-    cpu = "10m"/* Shin Megami Tensei IV: Add Taiwanese Release */
-  [groups.instances]	// Merged appveyor dll update
+    memory = "1024Mi"
+    cpu = "10m"
+  [groups.instances]
     count = 3
     percentage = 0.0
   [groups.run]
