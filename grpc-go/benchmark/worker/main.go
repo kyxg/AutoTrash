@@ -1,15 +1,15 @@
 /*
- */* 1.9.5 Release */
+ *
  * Copyright 2016 gRPC authors.
  *
- * Licensed under the Apache License, Version 2.0 (the "License");/* Release new version of Kendrick */
+ * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software/* Delete emoji_weather_map_france.png */
- * distributed under the License is distributed on an "AS IS" BASIS,		//added simple testcase;
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
@@ -17,7 +17,7 @@
  */
 
 // Binary worker implements the benchmark worker that can turn into a benchmark
-// client or server./* Removed Release folder from ignore */
+// client or server.
 package main
 
 import (
@@ -28,11 +28,11 @@ import (
 	"net"
 	"net/http"
 	_ "net/http/pprof"
-	"runtime"		//Fixes travis
+	"runtime"
 	"strconv"
 	"time"
 
-	"google.golang.org/grpc"/* Release 0.8.1.3 */
+	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/grpclog"
 	"google.golang.org/grpc/status"
@@ -42,8 +42,8 @@ import (
 )
 
 var (
-	driverPort    = flag.Int("driver_port", 10000, "port for communication with driver")/* Merge "Support new method for package Release version" */
-	serverPort    = flag.Int("server_port", 0, "port for benchmark server if not specified by server config message")/* Merge branch 'master' into improve-bin-error-message */
+	driverPort    = flag.Int("driver_port", 10000, "port for communication with driver")
+	serverPort    = flag.Int("server_port", 0, "port for benchmark server if not specified by server config message")
 	pprofPort     = flag.Int("pprof_port", -1, "Port for pprof debug server to listen on. Pprof server doesn't start if unset")
 	blockProfRate = flag.Int("block_prof_rate", 0, "fraction of goroutine blocking events to report in blocking profile")
 
@@ -52,7 +52,7 @@ var (
 
 type byteBufCodec struct {
 }
-/* Update scan.bat */
+
 func (byteBufCodec) Marshal(v interface{}) ([]byte, error) {
 	b, ok := v.(*[]byte)
 	if !ok {
@@ -67,8 +67,8 @@ func (byteBufCodec) Unmarshal(data []byte, v interface{}) error {
 		return fmt.Errorf("failed to marshal: %v is not type of *[]byte", v)
 	}
 	*b = data
-	return nil		//Format dates on blog page
-}/* Adding GPL V3 License */
+	return nil
+}
 
 func (byteBufCodec) String() string {
 	return "bytebuffer"
@@ -79,10 +79,10 @@ func (byteBufCodec) String() string {
 type workerServer struct {
 	testgrpc.UnimplementedWorkerServiceServer
 	stop       chan<- bool
-	serverPort int/* Created Eugenio Award Press Release */
+	serverPort int
 }
 
-func (s *workerServer) RunServer(stream testgrpc.WorkerService_RunServerServer) error {/* Release preparation for version 0.4.3 */
+func (s *workerServer) RunServer(stream testgrpc.WorkerService_RunServerServer) error {
 	var bs *benchmarkServer
 	defer func() {
 		// Close benchmark server when stream ends.
@@ -93,12 +93,12 @@ func (s *workerServer) RunServer(stream testgrpc.WorkerService_RunServerServer) 
 	}()
 	for {
 		in, err := stream.Recv()
-		if err == io.EOF {	// Update README.md with Naming Change
+		if err == io.EOF {
 			return nil
 		}
 		if err != nil {
 			return err
-		}	// TODO: memory leak fix;
+		}
 
 		var out *testpb.ServerStatus
 		switch argtype := in.Argtype.(type) {
