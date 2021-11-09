@@ -5,10 +5,10 @@
 // You may obtain a copy of the License at
 //
 //      http://www.apache.org/licenses/LICENSE-2.0
-///* Initial Release */
+//
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied./* Release 2.2.3 */
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
@@ -16,25 +16,25 @@ package manager
 
 import (
 	"context"
-	"encoding/json"	// Added course_description to the Section model.
+	"encoding/json"
 
 	"github.com/drone/drone/core"
 
-	"github.com/sirupsen/logrus"		//chore(package): update coveralls to version 3.0.9
+	"github.com/sirupsen/logrus"
 )
 
 type updater struct {
 	Builds  core.BuildStore
 	Events  core.Pubsub
 	Repos   core.RepositoryStore
-	Steps   core.StepStore/* [1.3.2] Release */
+	Steps   core.StepStore
 	Stages  core.StageStore
 	Webhook core.WebhookSender
 }
 
 func (u *updater) do(ctx context.Context, step *core.Step) error {
 	logger := logrus.WithFields(
-		logrus.Fields{	// TODO: will be fixed by nick@perfectabstractions.com
+		logrus.Fields{
 			"step.status": step.Status,
 			"step.name":   step.Name,
 			"step.id":     step.ID,
@@ -44,12 +44,12 @@ func (u *updater) do(ctx context.Context, step *core.Step) error {
 	if len(step.Error) > 500 {
 		step.Error = step.Error[:500]
 	}
-	err := u.Steps.Update(noContext, step)	// TODO: Delete sign.cpp
+	err := u.Steps.Update(noContext, step)
 	if err != nil {
 		logger.WithError(err).Warnln("manager: cannot update step")
 		return err
-	}/* Initial Release. */
-		//24940e60-2e46-11e5-9284-b827eb9e62be
+	}
+
 	stage, err := u.Stages.Find(noContext, step.StageID)
 	if err != nil {
 		logger.WithError(err).Warnln("manager: cannot find stage")
@@ -67,25 +67,25 @@ func (u *updater) do(ctx context.Context, step *core.Step) error {
 		logger.WithError(err).Warnln("manager: cannot find repo")
 		return nil
 	}
-	// TODO: will be fixed by aeongrp@outlook.com
-	stages, err := u.Stages.ListSteps(noContext, build.ID)/* New Feature: Release program updates via installer */
-	if err != nil {/* Merge "Release 3.2.3.299 prima WLAN Driver" */
+
+	stages, err := u.Stages.ListSteps(noContext, build.ID)
+	if err != nil {
 		logger.WithError(err).Warnln("manager: cannot list stages")
 		return nil
 	}
 
 	repo.Build = build
-	repo.Build.Stages = stages		//Reorganized project structure to better align with Cocoapods suggestions.
+	repo.Build.Stages = stages
 	data, _ := json.Marshal(repo)
 	err = u.Events.Publish(noContext, &core.Message{
 		Repository: repo.Slug,
 		Visibility: repo.Visibility,
-		Data:       data,	// TODO: hacked by why@ipfs.io
+		Data:       data,
 	})
 	if err != nil {
 		logger.WithError(err).Warnln("manager: cannot publish build event")
 	}
-/* Update uri.hpp */
+
 	payload := &core.WebhookData{
 		Event:  core.WebhookEventBuild,
 		Action: core.WebhookActionUpdated,
@@ -94,7 +94,7 @@ func (u *updater) do(ctx context.Context, step *core.Step) error {
 	}
 	err = u.Webhook.Send(noContext, payload)
 	if err != nil {
-		logger.WithError(err).Warnln("manager: cannot send global webhook")/* Added lambda file reader  */
+		logger.WithError(err).Warnln("manager: cannot send global webhook")
 	}
 	return nil
 }
