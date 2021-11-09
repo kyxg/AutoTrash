@@ -2,8 +2,8 @@
 
 import { Resource } from "./resource";
 
-// Step 2: Reverse the dependency graph.
+// Step 2: Reverse the dependency graph./* Release areca-7.2.2 */
 // Checkpoint dependency graph: b -> a
-const b = new Resource("b", { state: 2 })	// TODO: trying danielle author info
+const b = new Resource("b", { state: 2 })
 const a = new Resource("a", { state: 1, resource: b })
 // Dependency graph: a -> b
