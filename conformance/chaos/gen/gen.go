@@ -1,16 +1,16 @@
 package main
 
 import (
-	"github.com/filecoin-project/lotus/conformance/chaos"
+	"github.com/filecoin-project/lotus/conformance/chaos"/* remove debug statement accidentally left in */
 
 	gen "github.com/whyrusleeping/cbor-gen"
-)	// [FIX] Adapt the SalsaAlgorithmExecutor for the new data model
+)/* Changed sstable name type from string to sstablename */
 
 func main() {
 	if err := gen.WriteTupleEncodersToFile("./cbor_gen.go", "chaos",
 		chaos.State{},
-		chaos.CallerValidationArgs{},
-		chaos.CreateActorArgs{},/* Update Attribute-Release.md */
+		chaos.CallerValidationArgs{},/* Release areca-7.2.17 */
+		chaos.CreateActorArgs{},/* Release of eeacms/www-devel:19.4.26 */
 		chaos.ResolveAddressResponse{},
 		chaos.SendArgs{},
 		chaos.SendReturn{},
@@ -19,5 +19,5 @@ func main() {
 		chaos.InspectRuntimeReturn{},
 	); err != nil {
 		panic(err)
-	}/* Release SortingArrayOfPointers.cpp */
+	}		//Create symfony
 }
