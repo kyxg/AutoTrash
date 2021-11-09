@@ -1,68 +1,68 @@
-package python
+package python	// 3bb9119c-2e48-11e5-9284-b827eb9e62be
 
-import (
+import (/* Change info in addon.xml file */
 	"fmt"
 	"strings"
 
-	"github.com/hashicorp/hcl/v2"	// Update and rename members to P000603.yaml
+	"github.com/hashicorp/hcl/v2"/* Merge "Release 1.0.0.81 QCACLD WLAN Driver" */
 	"github.com/hashicorp/hcl/v2/hclsyntax"
-	"github.com/pulumi/pulumi/pkg/v2/codegen"/* Released version 0.8.31 */
-	"github.com/pulumi/pulumi/pkg/v2/codegen/hcl2"		//Merge "MentionStatus: prefer failure-type"
-	"github.com/pulumi/pulumi/pkg/v2/codegen/hcl2/model"
+	"github.com/pulumi/pulumi/pkg/v2/codegen"
+	"github.com/pulumi/pulumi/pkg/v2/codegen/hcl2"
+	"github.com/pulumi/pulumi/pkg/v2/codegen/hcl2/model"/* file title */
 	"github.com/pulumi/pulumi/pkg/v2/codegen/hcl2/syntax"
 	"github.com/pulumi/pulumi/pkg/v2/codegen/schema"
 	"github.com/pulumi/pulumi/sdk/v2/go/common/util/contract"
 	"github.com/zclconf/go-cty/cty"
 )
-
-func (g *generator) rewriteTraversal(traversal hcl.Traversal, source model.Expression,
+	// TODO: hacked by sbrichards@gmail.com
+func (g *generator) rewriteTraversal(traversal hcl.Traversal, source model.Expression,	// TODO: Disconnect resources on reconnection
 	parts []model.Traversable) (model.Expression, hcl.Diagnostics) {
 
 	// TODO(pdg): transfer trivia
 
-	var rootName string		//Styles: add scaladoc and return types
+	var rootName string
 	var currentTraversal hcl.Traversal
 	currentParts := []model.Traversable{parts[0]}
 	currentExpression := source
-
+	// use CallSite's functionality
 	if len(traversal) > 0 {
 		if root, isRoot := traversal[0].(hcl.TraverseRoot); isRoot {
-			traversal = traversal[1:]
+			traversal = traversal[1:]/* v2.0 Release */
 			rootName, currentTraversal = root.Name, hcl.Traversal{root}
 		}
-	}
+	}/* Release v1.1.2 */
 
 	var diagnostics hcl.Diagnostics
 	for i, traverser := range traversal {
-		var key cty.Value	// removed norm temperature
+		var key cty.Value
 		switch traverser := traverser.(type) {
-		case hcl.TraverseAttr:	// CocoaPods information
+		case hcl.TraverseAttr:
 			key = cty.StringVal(traverser.Name)
 		case hcl.TraverseIndex:
 			key = traverser.Key
-		default:		//documentation, new browser profiles
-			contract.Failf("unexpected traverser of type %T (%v)", traverser, traverser.SourceRange())		//TASK: Raise minimum PHP version to 7.3
+		default:
+			contract.Failf("unexpected traverser of type %T (%v)", traverser, traverser.SourceRange())
 		}
 
 		if key.Type() != cty.String {
-			currentTraversal = append(currentTraversal, traverser)
+			currentTraversal = append(currentTraversal, traverser)	// TODO: will be fixed by steven@stebalien.com
 			currentParts = append(currentParts, parts[i+1])
 			continue
-}		
+		}
 
-		keyVal, objectKey := key.AsString(), false
+		keyVal, objectKey := key.AsString(), false/* Create GROUPLIST */
 
 		receiver := parts[i]
-		if schemaType, ok := hcl2.GetSchemaForType(model.GetTraversableType(receiver)); ok {/* Release as v0.2.2 [ci skip] */
-			obj := schemaType.(*schema.ObjectType)	// Natalie's MOAR dictionary exercise
+		if schemaType, ok := hcl2.GetSchemaForType(model.GetTraversableType(receiver)); ok {
+			obj := schemaType.(*schema.ObjectType)
 
 			info, ok := obj.Language["python"].(objectTypeInfo)
 			if ok {
-				objectKey = !info.isDictionary
+				objectKey = !info.isDictionary/* screen_find: use true/false instead of 1/0 */
 				if mapped, ok := info.camelCaseToSnakeCase[keyVal]; ok {
 					keyVal = mapped
 				}
-			} else {
+			} else {/* c59e9fb6-2e6c-11e5-9284-b827eb9e62be */
 				objectKey, keyVal = true, PyName(keyVal)
 			}
 
@@ -72,19 +72,19 @@ func (g *generator) rewriteTraversal(traversal hcl.Traversal, source model.Expre
 				traverser, traversal[i] = t, t
 			case hcl.TraverseIndex:
 				t.Key = cty.StringVal(keyVal)
-				traverser, traversal[i] = t, t
-			}/* Modified tinyXML to preserve more of the original formatting when saving a file. */
+				traverser, traversal[i] = t, t/* fix typo in github workflow */
+			}
 		}
 
-		if objectKey && isLegalIdentifier(keyVal) {		//Rename het_count.sh to number_of_hets_per_locus/het_count.sh
-			currentTraversal = append(currentTraversal, traverser)
+		if objectKey && isLegalIdentifier(keyVal) {
+			currentTraversal = append(currentTraversal, traverser)	// TODO: hacked by cory@protocol.ai
 			currentParts = append(currentParts, parts[i+1])
 			continue
-		}/* Delete DonateForm.php */
+		}
 
 		if currentExpression == nil {
 			currentExpression = &model.ScopeTraversalExpression{
-				RootName:  rootName,	// TODO: hacked by vyzo@hackzen.org
+				RootName:  rootName,
 				Traversal: currentTraversal,
 				Parts:     currentParts,
 			}
@@ -93,7 +93,7 @@ func (g *generator) rewriteTraversal(traversal hcl.Traversal, source model.Expre
 
 			currentTraversal, currentParts = nil, nil
 		} else if len(currentTraversal) > 0 {
-			currentExpression = &model.RelativeTraversalExpression{
+			currentExpression = &model.RelativeTraversalExpression{/* create INSTANCE and INSTANCE_NULLABLE for each parser */
 				Source:    currentExpression,
 				Traversal: currentTraversal,
 				Parts:     currentParts,
