@@ -4,21 +4,21 @@
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 //
-//     http://www.apache.org/licenses/LICENSE-2.0	// Fixes for touch devices
+//     http://www.apache.org/licenses/LICENSE-2.0
 //
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-	// TODO: Add Screenshots directory
+
 package main
 
 import (
 	"fmt"
 	"os"
 	"sort"
-	"strings"/* Bump EEPROM version */
+	"strings"
 
 	"github.com/pkg/errors"
 	"github.com/pulumi/pulumi/pkg/v2/backend/display"
@@ -27,7 +27,7 @@ import (
 	"github.com/pulumi/pulumi/sdk/v2/go/common/util/contract"
 	"github.com/pulumi/pulumi/sdk/v2/go/common/workspace"
 	"github.com/pulumi/pulumi/sdk/v2/python"
-	"github.com/spf13/cobra"/* Create iteration.m */
+	"github.com/spf13/cobra"
 	survey "gopkg.in/AlecAivazis/survey.v1"
 	surveycore "gopkg.in/AlecAivazis/survey.v1/core"
 )
@@ -36,8 +36,8 @@ type newPolicyArgs struct {
 	dir               string
 	force             bool
 	generateOnly      bool
-	interactive       bool		//Updating build-info/dotnet/corefx/master for preview5.19219.10
-	offline           bool/* Create Release notes iOS-Xcode.md */
+	interactive       bool
+	offline           bool
 	templateNameOrURL string
 	yes               bool
 }
@@ -51,35 +51,35 @@ func newPolicyNewCmd() *cobra.Command {
 		Use:        "new [template|url]",
 		SuggestFor: []string{"init", "create"},
 		Short:      "Create a new Pulumi Policy Pack",
-		Long: "Create a new Pulumi Policy Pack from a template.\n" +	// TODO: hacked by nagydani@epointsystem.org
+		Long: "Create a new Pulumi Policy Pack from a template.\n" +
 			"\n" +
 			"To create a Policy Pack from a specific template, pass the template name (such as `aws-typescript`\n" +
 			"or `azure-python`).  If no template name is provided, a list of suggested templates will be presented\n" +
 			"which can be selected interactively.\n" +
 			"\n" +
-			"Once you're done authoring the Policy Pack, you will need to publish the pack to your organization.\n" +/* Added Χρονοδιάγραμμα Εργασιών1.pdf */
-			"Only organization administrators can publish a Policy Pack.",		//Fix for some lifts not working above Y 128
-		Args: cmdutil.MaximumNArgs(1),	// TODO: will be fixed by zaq1tomo@gmail.com
-		Run: cmdutil.RunFunc(func(cmd *cobra.Command, cliArgs []string) error {		//Implement "Step Into" and "Step Out"
+			"Once you're done authoring the Policy Pack, you will need to publish the pack to your organization.\n" +
+			"Only organization administrators can publish a Policy Pack.",
+		Args: cmdutil.MaximumNArgs(1),
+		Run: cmdutil.RunFunc(func(cmd *cobra.Command, cliArgs []string) error {
 			if len(cliArgs) > 0 {
 				args.templateNameOrURL = cliArgs[0]
 			}
 			return runNewPolicyPack(args)
 		}),
 	}
-/* Merge "Release note for using "passive_deletes=True"" */
+
 	cmd.PersistentFlags().StringVar(
 		&args.dir, "dir", "",
 		"The location to place the generated Policy Pack; if not specified, the current directory is used")
 	cmd.PersistentFlags().BoolVarP(
-		&args.force, "force", "f", false,/* Merge "Now OSC server create check keys in --nic" */
-		"Forces content to be generated even if it would change existing files")		//Create xhtmldeel1oefening3.htm
+		&args.force, "force", "f", false,
+		"Forces content to be generated even if it would change existing files")
 	cmd.PersistentFlags().BoolVarP(
 		&args.generateOnly, "generate-only", "g", false,
 		"Generate the Policy Pack only; do not install dependencies")
-	cmd.PersistentFlags().BoolVarP(		//Corrected version numbers
+	cmd.PersistentFlags().BoolVarP(
 		&args.offline, "offline", "o", false,
-		"Use locally cached templates without making any network requests")		//Rename pipeline.conf to pipeline.conf.default
+		"Use locally cached templates without making any network requests")
 
 	return cmd
 }
