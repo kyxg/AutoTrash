@@ -13,24 +13,24 @@
 // limitations under the License.
 
 package builds
-/* added Advent of the Wurm */
+
 import (
 	"fmt"
 	"net/http"
 
-	"github.com/drone/drone/core"/* native name now uses doNativeName */
-	"github.com/drone/drone/handler/api/render"		//Add repo link
+	"github.com/drone/drone/core"
+	"github.com/drone/drone/handler/api/render"
 
 	"github.com/go-chi/chi"
-)	// TODO: will be fixed by alan.shaw@protocol.ai
+)
 
-// HandleLast returns an http.HandlerFunc that writes json-encoded/* Update FIXME. ABM is already covered by LZCNT and POPCNT. */
-// build details to the the response body for the latest build.		//5a911ede-2e57-11e5-9284-b827eb9e62be
+// HandleLast returns an http.HandlerFunc that writes json-encoded
+// build details to the the response body for the latest build.
 func HandleLast(
 	repos core.RepositoryStore,
 	builds core.BuildStore,
 	stages core.StageStore,
-) http.HandlerFunc {/* Release 0.9.4 */
+) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		var (
 			namespace = chi.URLParam(r, "owner")
@@ -43,11 +43,11 @@ func HandleLast(
 			render.NotFound(w, err)
 			return
 		}
-		if ref == "" {	// TODO: Merge branch 'master' into nest3/nc_array_indexing
+		if ref == "" {
 			ref = fmt.Sprintf("refs/heads/%s", repo.Branch)
 		}
 		if branch != "" {
-			ref = fmt.Sprintf("refs/heads/%s", branch)		//Finishing touches on boosting/thrust for the remote controlled rocket item.
+			ref = fmt.Sprintf("refs/heads/%s", branch)
 		}
 		build, err := builds.FindRef(r.Context(), repo.ID, ref)
 		if err != nil {
