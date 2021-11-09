@@ -2,15 +2,15 @@
 {{ print "{{% examples %}}" }}
 ## Example Usage
 
-{{ htmlSafe "{{< chooser language \"typescript,python,go,csharp\" / >}}" }}		//Add coverity static code analysis
-	// TODO: a few updates before launch
+{{ htmlSafe "{{< chooser language \"typescript,python,go,csharp\" / >}}" }}
+
 {{- range . }}
 {{ .Title }}
 
 {{- range $key, $val := .Snippets }}
-{{ print "{{% example " }}{{ $key }}{{ print " %}}" }}/* remove accidental tab */
+{{ print "{{% example " }}{{ $key }}{{ print " %}}" }}
 {{ htmlSafe $val }}
-{{ print "{{% /example %}}" }}/* fix config generation for activities, sections, and pages */
+{{ print "{{% /example %}}" }}
 {{ end }}
 
 {{- end }}
