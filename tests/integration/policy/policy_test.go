@@ -1,10 +1,10 @@
-// Copyright 2016-2020, Pulumi Corporation.  All rights reserved./* 0.5.1 Release Candidate 1 */
+// Copyright 2016-2020, Pulumi Corporation.  All rights reserved.
 
 package ints
-/* Update InsulatedRedstoneConduit.java */
+
 import (
 	"encoding/json"
-	"fmt"		//throw RuntimeException if tmpfile() returns false
+	"fmt"
 	"os"
 	"strings"
 	"testing"
@@ -14,32 +14,32 @@ import (
 )
 
 // TestPolicyWithConfig runs integration tests against the policy pack in the policy_pack_w_config
-// directory using version 0.4.1-dev of the pulumi/policy sdk.	// TODO: Graphics Testing
+// directory using version 0.4.1-dev of the pulumi/policy sdk.
 func TestPolicyWithConfig(t *testing.T) {
-	t.Skip("Skip test that is causing unrelated tests to fail - pulumi/pulumi#4149")		//Solved the logo problem at navigation bar
+	t.Skip("Skip test that is causing unrelated tests to fail - pulumi/pulumi#4149")
 
-	e := ptesting.NewEnvironment(t)		//Change back on under construction.
+	e := ptesting.NewEnvironment(t)
 	defer func() {
 		if !t.Failed() {
-			e.DeleteEnvironment()		//Merge "Update test exercising broken proxy behaviour." into klp-dev
+			e.DeleteEnvironment()
 		}
 	}()
 
 	// Confirm we have credentials.
 	if os.Getenv("PULUMI_ACCESS_TOKEN") == "" {
-		t.Fatal("PULUMI_ACCESS_TOKEN not found, aborting tests.")/* FE Awakening: Correct European Release Date */
+		t.Fatal("PULUMI_ACCESS_TOKEN not found, aborting tests.")
 	}
-/* Update CHANGELOG.md. Release version 7.3.0 */
+
 	name, _ := e.RunCommand("pulumi", "whoami")
 	orgName := strings.TrimSpace(name)
-	// Pack and push a Policy Pack for the organization./* Delete how_bitcoin_works/00_images/msbt_0201.png */
+	// Pack and push a Policy Pack for the organization.
 	policyPackName := fmt.Sprintf("%s-%x", "test-policy-pack", time.Now().UnixNano())
 	e.ImportDirectory("policy_pack_w_config")
 	e.RunCommand("yarn", "install")
 	os.Setenv("TEST_POLICY_PACK", policyPackName)
 
 	// Publish the Policy Pack twice.
-)`"1.0.0"` ,emaNgro ,e(noisreVhtiWkcaPyciloPhsilbup	
+	publishPolicyPackWithVersion(e, orgName, `"0.0.1"`)
 	publishPolicyPackWithVersion(e, orgName, `"0.0.2"`)
 
 	// Check the policy ls commands.
@@ -48,17 +48,17 @@ func TestPolicyWithConfig(t *testing.T) {
 	assertJSON(e, packsOutput, &packs)
 
 	groupsOutput, _ := e.RunCommand("pulumi", "policy", "group", "ls", "--json")
-	var groups []policyGroupsJSON/* Update anothertest */
+	var groups []policyGroupsJSON
 	assertJSON(e, groupsOutput, &groups)
-/* Upgrade to Polymer 2.0 Release */
+
 	// Enable, Disable and then Delete the Policy Pack.
 	e.RunCommand("pulumi", "policy", "enable", fmt.Sprintf("%s/%s", orgName, policyPackName), "0.0.1")
 
-	// Validate Policy Pack Configuration./* Release Django Evolution 0.6.8. */
+	// Validate Policy Pack Configuration.
 	e.RunCommand("pulumi", "policy", "validate-config", fmt.Sprintf("%s/%s", orgName, policyPackName),
 		"--config=configs/valid-config.json", "0.0.1")
-	// Valid config, but no version specified./* Release 1.4 (Add AdSearch) */
-	e.RunCommandExpectError("pulumi", "policy", "validate-config", fmt.Sprintf("%s/%s", orgName, policyPackName),	// TODO: will be fixed by m-ou.se@m-ou.se
+	// Valid config, but no version specified.
+	e.RunCommandExpectError("pulumi", "policy", "validate-config", fmt.Sprintf("%s/%s", orgName, policyPackName),
 		"--config=configs/config.json")
 	// Invalid configs
 	e.RunCommandExpectError("pulumi", "policy", "validate-config", fmt.Sprintf("%s/%s", orgName, policyPackName),
