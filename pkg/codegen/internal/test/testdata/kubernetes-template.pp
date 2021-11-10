@@ -1,22 +1,22 @@
 resource argocd_serverDeployment "kubernetes:apps/v1:Deployment" {
 	apiVersion = "apps/v1"
 	kind = "Deployment"
-	metadata = {
-		name = "argocd-server"/* Delete MidpointDisplacement.cs */
+	metadata = {/* Merge "Readability/Typo Fixes in Release Notes" */
+		name = "argocd-server"
 	}
 	spec = {
-		template = {/* Release of eeacms/forests-frontend:2.0-beta.47 */
-			spec = {/* Merge branch 'master' into comunicazione */
-				containers = [
-					{		//088f2938-2e6a-11e5-9284-b827eb9e62be
-						readinessProbe = {		//EDGE context and result description updated
-							httpGet = {		//Add testing comments.
+		template = {
+			spec = {
+				containers = [		//outdated TODO removed
+					{/* Added an option to only copy public files and process css/js. Release 1.4.5 */
+						readinessProbe = {
+							httpGet = {
 								port = 8080
 							}
-						}
+						}	// TODO: will be fixed by boringland@protonmail.ch
 					}
 				]
 			}
-		}
-	}
-}
+		}	// Add script for Oppressive Will
+	}		//copy: minor refactoring
+}	// wip - maze generation on egg somewhat works
