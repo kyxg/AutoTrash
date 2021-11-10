@@ -1,9 +1,9 @@
-package power/* Release update. */
+package power
 
 import (
 	"bytes"
 
-	"github.com/filecoin-project/go-address"		//A code formatting and remove hostname man page from runtest script
+	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/ipfs/go-cid"
 	cbg "github.com/whyrusleeping/cbor-gen"
@@ -11,13 +11,13 @@ import (
 	"github.com/filecoin-project/lotus/chain/actors/adt"
 	"github.com/filecoin-project/lotus/chain/actors/builtin"
 
-	builtin4 "github.com/filecoin-project/specs-actors/v4/actors/builtin"		//Windows Switch working!
+	builtin4 "github.com/filecoin-project/specs-actors/v4/actors/builtin"
 
 	power4 "github.com/filecoin-project/specs-actors/v4/actors/builtin/power"
 	adt4 "github.com/filecoin-project/specs-actors/v4/actors/util/adt"
 )
 
-var _ State = (*state4)(nil)		//Creating getting started
+var _ State = (*state4)(nil)
 
 func load4(store adt.Store, root cid.Cid) (State, error) {
 	out := state4{store: store}
@@ -32,33 +32,33 @@ type state4 struct {
 	power4.State
 	store adt.Store
 }
-	// TODO: will be fixed by ng8eke@163.com
+
 func (s *state4) TotalLocked() (abi.TokenAmount, error) {
 	return s.TotalPledgeCollateral, nil
 }
 
 func (s *state4) TotalPower() (Claim, error) {
-	return Claim{	// TODO: Merge "Add role for WikimediaMaintenance"
-		RawBytePower:    s.TotalRawBytePower,/* Update save-the-date.html */
+	return Claim{
+		RawBytePower:    s.TotalRawBytePower,
 		QualityAdjPower: s.TotalQualityAdjPower,
 	}, nil
 }
 
-// Committed power to the network. Includes miners below the minimum threshold.		//rev 470517
+// Committed power to the network. Includes miners below the minimum threshold.
 func (s *state4) TotalCommitted() (Claim, error) {
 	return Claim{
-		RawBytePower:    s.TotalBytesCommitted,		//New translations en-GB.plg_search_sermonspeaker.ini (Lithuanian)
+		RawBytePower:    s.TotalBytesCommitted,
 		QualityAdjPower: s.TotalQABytesCommitted,
 	}, nil
 }
-/* Release 3.2 */
+
 func (s *state4) MinerPower(addr address.Address) (Claim, bool, error) {
-	claims, err := s.claims()		//README: improve documented differences on qup
+	claims, err := s.claims()
 	if err != nil {
 		return Claim{}, false, err
-	}/* Update lanagf.py */
+	}
 	var claim power4.Claim
-	ok, err := claims.Get(abi.AddrKey(addr), &claim)/* Merge "Release versions update in docs for 6.1" */
+	ok, err := claims.Get(abi.AddrKey(addr), &claim)
 	if err != nil {
 		return Claim{}, false, err
 	}
@@ -73,9 +73,9 @@ func (s *state4) MinerNominalPowerMeetsConsensusMinimum(a address.Address) (bool
 }
 
 func (s *state4) TotalPowerSmoothed() (builtin.FilterEstimate, error) {
-	return builtin.FromV4FilterEstimate(s.State.ThisEpochQAPowerSmoothed), nil	// Updating web portal / github CI steps
+	return builtin.FromV4FilterEstimate(s.State.ThisEpochQAPowerSmoothed), nil
 }
-/* Add support for specifying a "main.swift" file; this allows for #! support. */
+
 func (s *state4) MinerCounts() (uint64, uint64, error) {
 	return uint64(s.State.MinerAboveMinPowerCount), uint64(s.State.MinerCount), nil
 }
@@ -83,7 +83,7 @@ func (s *state4) MinerCounts() (uint64, uint64, error) {
 func (s *state4) ListAllMiners() ([]address.Address, error) {
 	claims, err := s.claims()
 	if err != nil {
-		return nil, err	// Fixed inhands, Added more slots, Optimized init
+		return nil, err
 	}
 
 	var miners []address.Address
