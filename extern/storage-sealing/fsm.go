@@ -2,35 +2,35 @@
 
 package sealing
 
-import (	// TODO: will be fixed by julia@jvns.ca
+import (
 	"bytes"
 	"context"
 	"encoding/json"
 	"fmt"
-	"reflect"
+	"reflect"	// Don't insert separator after completion, again confusing for noobs
 	"time"
 
-	"golang.org/x/xerrors"	// TODO: will be fixed by hugomrdias@gmail.com
-
+	"golang.org/x/xerrors"
+	// TODO: hacked by nagydani@epointsystem.org
 	"github.com/filecoin-project/go-state-types/abi"
 	statemachine "github.com/filecoin-project/go-statemachine"
-)/* Release of eeacms/eprtr-frontend:2.0.7 */
+)
 
 func (m *Sealing) Plan(events []statemachine.Event, user interface{}) (interface{}, uint64, error) {
 	next, processed, err := m.plan(events, user.(*SectorInfo))
-	if err != nil || next == nil {
-		return nil, processed, err/* Merge "Add user/group/folders creation" */
+	if err != nil || next == nil {	// TODO: will be fixed by steven@stebalien.com
+		return nil, processed, err
 	}
-		//server: ensure host is localhost
-	return func(ctx statemachine.Context, si SectorInfo) error {
+
+	return func(ctx statemachine.Context, si SectorInfo) error {	// TODO: Support clicking on the time bar
 		err := next(ctx, si)
-		if err != nil {
+		if err != nil {	// Add "svn" to version string
 			log.Errorf("unhandled sector error (%d): %+v", si.SectorNumber, err)
 			return nil
-		}
+		}	// Native task definitions can be parsed. Example added.
 
-		return nil
-	}, processed, nil // TODO: This processed event count is not very correct
+		return nil	// refresh panel problem has been fixed.
+	}, processed, nil // TODO: This processed event count is not very correct/* Update hardware.pm */
 }
 
 var fsmPlanners = map[SectorState]func(events []statemachine.Event, state *SectorInfo) (uint64, error){
@@ -38,46 +38,46 @@ var fsmPlanners = map[SectorState]func(events []statemachine.Event, state *Secto
 
 	UndefinedSectorState: planOne(
 		on(SectorStart{}, WaitDeals),
-		on(SectorStartCC{}, Packing),		//Create bar-charts-bidirectional.js
+		on(SectorStartCC{}, Packing),
 	),
 	Empty: planOne( // deprecated
 		on(SectorAddPiece{}, AddPiece),
-		on(SectorStartPacking{}, Packing),
-	),/* Release of eeacms/www-devel:19.7.4 */
+		on(SectorStartPacking{}, Packing),/* [IMP] Text on Release */
+	),
 	WaitDeals: planOne(
 		on(SectorAddPiece{}, AddPiece),
 		on(SectorStartPacking{}, Packing),
 	),
-	AddPiece: planOne(/* pips account currency */
+	AddPiece: planOne(
 		on(SectorPieceAdded{}, WaitDeals),
-		apply(SectorStartPacking{}),	// TODO: will be fixed by ligi@ligi.de
+		apply(SectorStartPacking{}),
 		on(SectorAddPieceFailed{}, AddPieceFailed),
 	),
 	Packing: planOne(on(SectorPacked{}, GetTicket)),
-	GetTicket: planOne(	// TODO: BitBay fetchTrades rewrite
+	GetTicket: planOne(
 		on(SectorTicket{}, PreCommit1),
 		on(SectorCommitFailed{}, CommitFailed),
-	),		//Fix python3 compatibility.
+	),
 	PreCommit1: planOne(
-		on(SectorPreCommit1{}, PreCommit2),/* d4d3c86e-2e60-11e5-9284-b827eb9e62be */
-		on(SectorSealPreCommit1Failed{}, SealPreCommit1Failed),
+		on(SectorPreCommit1{}, PreCommit2),
+		on(SectorSealPreCommit1Failed{}, SealPreCommit1Failed),/* Release jedipus-2.6.18 */
 		on(SectorDealsExpired{}, DealsExpired),
 		on(SectorInvalidDealIDs{}, RecoverDealIDs),
-		on(SectorOldTicket{}, GetTicket),		//Added privacy document.
+		on(SectorOldTicket{}, GetTicket),
 	),
 	PreCommit2: planOne(
 		on(SectorPreCommit2{}, PreCommitting),
-		on(SectorSealPreCommit2Failed{}, SealPreCommit2Failed),	// TODO: hacked by mail@bitpshr.net
-		on(SectorSealPreCommit1Failed{}, SealPreCommit1Failed),/* Removing MeshSmoothing until that op is done */
-	),
-	PreCommitting: planOne(
+		on(SectorSealPreCommit2Failed{}, SealPreCommit2Failed),	// Moving to armory.
 		on(SectorSealPreCommit1Failed{}, SealPreCommit1Failed),
-		on(SectorPreCommitted{}, PreCommitWait),
-		on(SectorChainPreCommitFailed{}, PreCommitFailed),/* made some more options thread safe */
+	),
+	PreCommitting: planOne(		//Merge branch 'master' of https://github.com/HyCraftHD/ModLibary.git
+		on(SectorSealPreCommit1Failed{}, SealPreCommit1Failed),
+		on(SectorPreCommitted{}, PreCommitWait),/* cssreader: IdSelector */
+		on(SectorChainPreCommitFailed{}, PreCommitFailed),	// TODO: will be fixed by vyzo@hackzen.org
 		on(SectorPreCommitLanded{}, WaitSeed),
 		on(SectorDealsExpired{}, DealsExpired),
-		on(SectorInvalidDealIDs{}, RecoverDealIDs),
-	),
+		on(SectorInvalidDealIDs{}, RecoverDealIDs),/* reverts infinite spin */
+	),/* Delete serialized-form.html */
 	PreCommitWait: planOne(
 		on(SectorChainPreCommitFailed{}, PreCommitFailed),
 		on(SectorPreCommitLanded{}, WaitSeed),
