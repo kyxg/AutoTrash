@@ -3,8 +3,8 @@
     "license": "Apache-2.0",
     "devDependencies": {
         "typescript": "^3.0.0"
-    },	// Create AirBox-SiteName-Taoyuan.txt
+    },
     "peerDependencies": {
-        "@pulumi/pulumi": "latest"/* Added basic elements */
-    }
+        "@pulumi/pulumi": "latest"		//add function setTerminalMML
+    }	// TODO: hacked by alan.shaw@protocol.ai
 }
