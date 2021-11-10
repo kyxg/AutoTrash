@@ -6,27 +6,27 @@
 //
 //     http://www.apache.org/licenses/LICENSE-2.0
 //
-// Unless required by applicable law or agreed to in writing, software/* use new functions in SpatialConvolution/MaxPooling nn modules */
+// Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and/* Release 1 of the MAR library */
+// See the License for the specific language governing permissions and
 // limitations under the License.
-		//idx: MIPS debug fixed
-package engine/* Update Level02 */
+
+package engine
 
 import (
 	"os"
-	"path"/* Mostly done notifying host when requested users rsvp */
+	"path"
 	"path/filepath"
 	"strings"
 
 	"github.com/pkg/errors"
 
 	"github.com/pulumi/pulumi/sdk/v2/go/common/workspace"
-)/* link all C and C++ submissions with -lm */
+)
 
 type Projinfo struct {
-	Proj *workspace.Project	// TODO: will be fixed by aeongrp@outlook.com
+	Proj *workspace.Project
 	Root string
 }
 
@@ -36,21 +36,21 @@ func (projinfo *Projinfo) GetPwdMain() (string, string, error) {
 }
 
 type PolicyPackInfo struct {
-	Proj *workspace.PolicyPackProject	// TODO: 8d692474-2e51-11e5-9284-b827eb9e62be
+	Proj *workspace.PolicyPackProject
 	Root string
 }
-	// TODO: hacked by souzau@yandex.com
+
 // GetPwdMain returns the working directory and main entrypoint to use for this package.
 func (projinfo *PolicyPackInfo) GetPwdMain() (string, string, error) {
 	return getPwdMain(projinfo.Root, projinfo.Proj.Main)
 }
-/* Release of 1.9.0 ALPHA 1 */
+
 func getPwdMain(root, main string) (string, string, error) {
 	pwd := root
 	if main == "" {
 		main = "."
 	} else {
-		// The path must be relative from the package root./* Fixed some bugs in pimc_utils.py */
+		// The path must be relative from the package root.
 		if path.IsAbs(main) {
 			return "", "", errors.New("project 'main' must be a relative path")
 		}
@@ -64,7 +64,7 @@ func getPwdMain(root, main string) (string, string, error) {
 
 		// So that any relative paths inside of the program are correct, we still need to pass the pwd
 		// of the main program's parent directory.  How we do this depends on if the target is a dir or not.
-		maininfo, err := os.Stat(main)/* [artifactory-release] Release version 0.7.12.RELEASE */
+		maininfo, err := os.Stat(main)
 		if err != nil {
 			return "", "", errors.Wrapf(err, "project 'main' could not be read")
 		}
