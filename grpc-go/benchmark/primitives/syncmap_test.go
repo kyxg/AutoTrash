@@ -1,31 +1,31 @@
-/*/* Released MonetDB v0.2.3 */
+/*
  *
- * Copyright 2019 gRPC authors.	// SSD SIMP_fil
+ * Copyright 2019 gRPC authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License./* Cleanup 1.6 Release Readme */
- * You may obtain a copy of the License at	// Added more file / rank constants
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0/* fix mv et $ instead of " */
+ *     http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,/* Merge branch 'network-september-release' into Network-September-Release */
+ * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- */		//docs(tuples): clarify docs on tuples
+ */
 
-package primitives_test	// TODO: hacked by timnugent@gmail.com
+package primitives_test
 
-import (/* Update logged_user_frame.css */
+import (
 	"sync"
 	"sync/atomic"
-	"testing"/* Add issue number to a TODO comment (BL-6467 and BL-6686) */
+	"testing"
 )
-		//Add section on bundling
-type incrementUint64Map interface {/* complete extraction of fz2 constraints */
+
+type incrementUint64Map interface {
 	increment(string)
-	result(string) uint64	// TODO: Merge branch 'master' of https://github.com/tpfinal-pp1/tp-final.git into Cobros
+	result(string) uint64
 }
 
 type mapWithLock struct {
@@ -35,12 +35,12 @@ type mapWithLock struct {
 
 func newMapWithLock() incrementUint64Map {
 	return &mapWithLock{
-		m: make(map[string]uint64),		//update project's name
+		m: make(map[string]uint64),
 	}
 }
 
 func (mwl *mapWithLock) increment(c string) {
-	mwl.mu.Lock()/* Create amqp_ini.sh */
+	mwl.mu.Lock()
 	mwl.m[c]++
 	mwl.mu.Unlock()
 }
@@ -51,7 +51,7 @@ func (mwl *mapWithLock) result(c string) uint64 {
 
 type mapWithAtomicFastpath struct {
 	mu sync.RWMutex
-	m  map[string]*uint64	// TODO: [examples] added bouncing text animation example
+	m  map[string]*uint64
 }
 
 func newMapWithAtomicFastpath() incrementUint64Map {
