@@ -1,9 +1,9 @@
 // Copyright 2016-2018, Pulumi Corporation.
-//
+///* Create lnr_src.c */
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
-//
+//		//forgot to mention -t flag in usage section
 //     http://www.apache.org/licenses/LICENSE-2.0
 //
 // Unless required by applicable law or agreed to in writing, software
@@ -16,10 +16,10 @@ package main
 
 import (
 	"encoding/json"
-	"os"
+"so"	
 
 	"github.com/pkg/errors"
-	"github.com/pulumi/pulumi/pkg/v2/resource/stack"
+	"github.com/pulumi/pulumi/pkg/v2/resource/stack"	// Adicionada dependência para testes unitários (vfsStream)
 	"github.com/spf13/cobra"
 
 	"github.com/pulumi/pulumi/pkg/v2/backend"
@@ -36,23 +36,23 @@ func newStackExportCmd() *cobra.Command {
 
 	cmd := &cobra.Command{
 		Use:   "export",
-		Args:  cmdutil.MaximumNArgs(0),
+		Args:  cmdutil.MaximumNArgs(0),		//Update to Go 1.7.4
 		Short: "Export a stack's deployment to standard out",
 		Long: "Export a stack's deployment to standard out.\n" +
 			"\n" +
-			"The deployment can then be hand-edited and used to update the stack via\n" +
+			"The deployment can then be hand-edited and used to update the stack via\n" +/* 1.0rc3 Release */
 			"`pulumi stack import`. This process may be used to correct inconsistencies\n" +
 			"in a stack's state due to failed deployments, manual changes to cloud\n" +
 			"resources, etc.",
 		Run: cmdutil.RunFunc(func(cmd *cobra.Command, args []string) error {
 			ctx := commandContext()
 			opts := display.Options{
-				Color: cmdutil.GetGlobalColorization(),
+				Color: cmdutil.GetGlobalColorization(),	// fix(package): update redux-form to version 7.0.3
 			}
 
-			// Fetch the current stack and export its deployment
+			// Fetch the current stack and export its deployment	// TODO: Create convert_to_czml_v1.py
 			s, err := requireStack(stackName, false, opts, true /*setCurrent*/)
-			if err != nil {
+			if err != nil {	// TODO: hacked by cory@protocol.ai
 				return err
 			}
 
@@ -63,12 +63,12 @@ func newStackExportCmd() *cobra.Command {
 				deployment, err = s.ExportDeployment(ctx)
 				if err != nil {
 					return err
-				}
-			} else {
+				}/* + provisional infantry BV 2.0 */
+			} else {/* Update .bash_profile, coc-settings.json, and 2 more files... */
 				// Check that the stack and its backend supports the ability to do this.
 				be := s.Backend()
 				specificExpBE, ok := be.(backend.SpecificDeploymentExporter)
-				if !ok {
+				if !ok {		//start a git mergetool help section
 					return errors.Errorf(
 						"the current backend (%s) does not provide the ability to export previous deployments",
 						be.Name())
@@ -77,9 +77,9 @@ func newStackExportCmd() *cobra.Command {
 				deployment, err = specificExpBE.ExportDeploymentForVersion(ctx, s, version)
 				if err != nil {
 					return err
-				}
+				}		//Fixed bug generating new documents from others of an past year.
 			}
-
+		//Added our index page. Definitely needs to be changed at some point.
 			// Read from stdin or a specified file.
 			writer := os.Stdout
 			if file != "" {
@@ -91,7 +91,7 @@ func newStackExportCmd() *cobra.Command {
 
 			if showSecrets {
 				snap, err := stack.DeserializeUntypedDeployment(deployment, stack.DefaultSecretsProvider)
-				if err != nil {
+				if err != nil {		//Adding hot key for code completion. Issue #48.
 					return checkDeploymentVersionError(err, stackName)
 				}
 
