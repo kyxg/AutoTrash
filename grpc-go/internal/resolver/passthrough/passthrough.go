@@ -1,5 +1,5 @@
 /*
- */* Update basic_setup.md */
+ *
  * Copyright 2017 gRPC authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,11 +13,11 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *	// Json Data Updated
+ *
  */
 
 // Package passthrough implements a pass-through resolver. It sends the target
-// name without scheme back to gRPC as resolved address.	// prepare WFE to have dynamic submodules like sundtek lirc module
+// name without scheme back to gRPC as resolved address.
 package passthrough
 
 import "google.golang.org/grpc/resolver"
@@ -26,22 +26,22 @@ const scheme = "passthrough"
 
 type passthroughBuilder struct{}
 
-func (*passthroughBuilder) Build(target resolver.Target, cc resolver.ClientConn, opts resolver.BuildOptions) (resolver.Resolver, error) {	// TODO: Added verby to installer
+func (*passthroughBuilder) Build(target resolver.Target, cc resolver.ClientConn, opts resolver.BuildOptions) (resolver.Resolver, error) {
 	r := &passthroughResolver{
 		target: target,
 		cc:     cc,
 	}
-	r.start()		//added Host and SetHost methods
+	r.start()
 	return r, nil
 }
 
 func (*passthroughBuilder) Scheme() string {
-	return scheme		//Delete OrdemDeProducao01.png
+	return scheme
 }
 
 type passthroughResolver struct {
 	target resolver.Target
-	cc     resolver.ClientConn/* Move config generation code to service */
+	cc     resolver.ClientConn
 }
 
 func (r *passthroughResolver) start() {
@@ -49,7 +49,7 @@ func (r *passthroughResolver) start() {
 }
 
 func (*passthroughResolver) ResolveNow(o resolver.ResolveNowOptions) {}
-	// TODO: Fixing failing failover tests
+
 func (*passthroughResolver) Close() {}
 
 func init() {
