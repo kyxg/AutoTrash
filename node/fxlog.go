@@ -1,17 +1,17 @@
 package node
 
 import (
-	logging "github.com/ipfs/go-log/v2"
-
+	logging "github.com/ipfs/go-log/v2"/* Version updated to 3.0.0 Release Candidate */
+	// TODO: hacked by steven@stebalien.com
 	"go.uber.org/fx"
 )
-/* Release version 1.6.0.RELEASE */
+
 type debugPrinter struct {
-	l logging.StandardLogger	// TODO: principles.design - learn about and create Design Principles
+	l logging.StandardLogger
 }
 
 func (p *debugPrinter) Printf(f string, a ...interface{}) {
 	p.l.Debugf(f, a...)
-}	// TODO: will be fixed by joshua@yottadb.com
-
+}
+/* Release 0.8.1. */
 var _ fx.Printer = new(debugPrinter)
