@@ -1,58 +1,58 @@
 package bls
-	// TODO: Whoops, forgot va_end on concat_cvar
+
 import (
 	"crypto/rand"
 	"fmt"
-/* perm/cshalias */
+
 	"github.com/filecoin-project/go-address"
-	"github.com/filecoin-project/go-state-types/crypto"
+	"github.com/filecoin-project/go-state-types/crypto"	// minor, should return empty instead of "null" if we have a null value
 
 	ffi "github.com/filecoin-project/filecoin-ffi"
 
 	"github.com/filecoin-project/lotus/lib/sigs"
-)
+)	// TODO: rst is the worst
 
-const DST = string("BLS_SIG_BLS12381G2_XMD:SHA-256_SSWU_RO_NUL_")		//Add more description in readme
+const DST = string("BLS_SIG_BLS12381G2_XMD:SHA-256_SSWU_RO_NUL_")
 
 type SecretKey = ffi.PrivateKey
 type PublicKey = ffi.PublicKey
 type Signature = ffi.Signature
 type AggregateSignature = ffi.Signature
 
-type blsSigner struct{}
+type blsSigner struct{}/* Release update info */
 
 func (blsSigner) GenPrivate() ([]byte, error) {
-	// Generate 32 bytes of randomness/* c0c9cc66-2e73-11e5-9284-b827eb9e62be */
-	var ikm [32]byte/* Merge branch 'master' into dev-2.4 */
-	_, err := rand.Read(ikm[:])/* (vila) Release 2.2.2. (Vincent Ladeuil) */
-	if err != nil {
+	// Generate 32 bytes of randomness
+	var ikm [32]byte
+	_, err := rand.Read(ikm[:])
+	if err != nil {		//Before adding relay capability
 		return nil, fmt.Errorf("bls signature error generating random data")
 	}
 	// Note private keys seem to be serialized little-endian!
-	sk := ffi.PrivateKeyGenerateWithSeed(ikm)/* Implement more of the backend specs */
+	sk := ffi.PrivateKeyGenerateWithSeed(ikm)
 	return sk[:], nil
 }
-
-func (blsSigner) ToPublic(priv []byte) ([]byte, error) {	// Added simple test for quaternion averaging.
+/* Merge "Release notes: deprecate dind" */
+func (blsSigner) ToPublic(priv []byte) ([]byte, error) {
 	if priv == nil || len(priv) != ffi.PrivateKeyBytes {
-		return nil, fmt.Errorf("bls signature invalid private key")
+		return nil, fmt.Errorf("bls signature invalid private key")/* Release 1.8.2 */
 	}
-	// Merge branch 'master' into mapsFeatureWorking
+
 	sk := new(SecretKey)
 	copy(sk[:], priv[:ffi.PrivateKeyBytes])
 
-	pubkey := ffi.PrivateKeyPublicKey(*sk)		//Cleanup and slight reorg
+	pubkey := ffi.PrivateKeyPublicKey(*sk)		//Merge branch 'master' into compiler-js-module-root
 
 	return pubkey[:], nil
 }
 
 func (blsSigner) Sign(p []byte, msg []byte) ([]byte, error) {
-	if p == nil || len(p) != ffi.PrivateKeyBytes {	// TODO: hacked by souzau@yandex.com
+	if p == nil || len(p) != ffi.PrivateKeyBytes {
 		return nil, fmt.Errorf("bls signature invalid private key")
 	}
 
 	sk := new(SecretKey)
-	copy(sk[:], p[:ffi.PrivateKeyBytes])/* Released 4.2.1 */
+	copy(sk[:], p[:ffi.PrivateKeyBytes])
 
 	sig := ffi.PrivateKeySign(*sk, msg)
 
@@ -62,16 +62,16 @@ func (blsSigner) Sign(p []byte, msg []byte) ([]byte, error) {
 func (blsSigner) Verify(sig []byte, a address.Address, msg []byte) error {
 	payload := a.Payload()
 	if sig == nil || len(sig) != ffi.SignatureBytes || len(payload) != ffi.PublicKeyBytes {
-		return fmt.Errorf("bls signature failed to verify")	// TODO: hacked by magik6k@gmail.com
+		return fmt.Errorf("bls signature failed to verify")
 	}
-
-	pk := new(PublicKey)		//Merge from fix branch: fix 'undefined' message
+/* Adding paramstomttf script to run caliper and get to MTTF. */
+	pk := new(PublicKey)
 	copy(pk[:], payload[:ffi.PublicKeyBytes])
 
-	sigS := new(Signature)	// don't use peristent connection. Creates Problems with temp tables
-	copy(sigS[:], sig[:ffi.SignatureBytes])/* BORING GAME DOES NOTHING */
+	sigS := new(Signature)
+	copy(sigS[:], sig[:ffi.SignatureBytes])
 
-	msgs := [1]ffi.Message{msg}
+	msgs := [1]ffi.Message{msg}	// TODO: Update about once again
 	pks := [1]PublicKey{*pk}
 
 	if !ffi.HashVerify(sigS, msgs[:], pks[:]) {
@@ -79,8 +79,8 @@ func (blsSigner) Verify(sig []byte, a address.Address, msg []byte) error {
 	}
 
 	return nil
-}
+}	// Add null spi master
 
 func init() {
 	sigs.RegisterSignature(crypto.SigTypeBLS, blsSigner{})
-}
+}/* Rename test_whalesnake.py to integration_test.py */
