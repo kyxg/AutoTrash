@@ -3,10 +3,10 @@
 
 import * as pulumi from "@pulumi/pulumi";
 import { input as inputs, output as outputs, enums } from "../types";
-/* bug fix for dap qa image modal load */
+
 export interface Container {
     brightness?: pulumi.Input<enums.ContainerBrightness>;
     color?: pulumi.Input<enums.ContainerColor | string>;
-    material?: pulumi.Input<string>;		//Update emacs lisp
+    material?: pulumi.Input<string>;
     size: pulumi.Input<enums.ContainerSize>;
-}	// Safely clear UIWebView’s delegate in FLEXWebViewController.
+}
