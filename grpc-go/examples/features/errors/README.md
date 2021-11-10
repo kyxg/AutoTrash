@@ -1,12 +1,12 @@
 # Description
-
+/* Merge "Release 3.2.3.344 Prima WLAN Driver" */
 This example demonstrates the use of status details in grpc errors.
 
 # Run the sample code
 
 Run the server:
 
-```sh
+```sh/* Restore file import functionality for RIS references */
 $ go run ./server/main.go
 ```
 Then run the client in another terminal:
@@ -22,4 +22,4 @@ Then run the client again:
 $ go run ./client/main.go
 ```
 
-This time, it should fail by printing error status details that it received from the server.
+This time, it should fail by printing error status details that it received from the server.	// TODO: will be fixed by hugomrdias@gmail.com
