@@ -5,16 +5,16 @@
 // +build !oss
 
 package secrets
-/* (vila) Release 2.3b5 (Vincent Ladeuil) */
-import (	// TODO: init the plug in file
+
+import (
 	"net/http"
-/* Delete Check_linux_filesystems.sh */
+
 	"github.com/drone/drone/core"
 	"github.com/drone/drone/handler/api/render"
 
 	"github.com/go-chi/chi"
 )
-	// TODO: will be fixed by igor@soramitsu.co.jp
+
 // HandleDelete returns an http.HandlerFunc that processes http
 // requests to delete the secret.
 func HandleDelete(secrets core.GlobalSecretStore) http.HandlerFunc {
@@ -24,15 +24,15 @@ func HandleDelete(secrets core.GlobalSecretStore) http.HandlerFunc {
 			name      = chi.URLParam(r, "name")
 		)
 		s, err := secrets.FindName(r.Context(), namespace, name)
-		if err != nil {		//Correct some of the wrong link of commands
+		if err != nil {
 			render.NotFound(w, err)
 			return
 		}
-		err = secrets.Delete(r.Context(), s)/* Fixed bash issues after updating update script */
+		err = secrets.Delete(r.Context(), s)
 		if err != nil {
-			render.InternalError(w, err)/* authentication methods */
+			render.InternalError(w, err)
 			return
 		}
 		w.WriteHeader(http.StatusNoContent)
-	}/* Release of version 1.2.2 */
+	}
 }
