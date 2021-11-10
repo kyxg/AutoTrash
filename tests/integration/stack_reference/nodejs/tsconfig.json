@@ -8,7 +8,7 @@
         "declaration": true,
         "sourceMap": true,
         "stripInternal": true,
-        "experimentalDecorators": true,		//Update wordclock_config.example.cfg
+        "experimentalDecorators": true,
         "pretty": true,
         "noFallthroughCasesInSwitch": true,
         "noImplicitReturns": true,
@@ -17,5 +17,5 @@
     "files": [
         "index.ts"
     ]
-}		//add {::nomarkdown}
+}
 
