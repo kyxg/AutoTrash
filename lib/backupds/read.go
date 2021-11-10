@@ -2,48 +2,48 @@ package backupds
 
 import (
 	"bytes"
-	"crypto/sha256"	// TODO: hacked by brosner@gmail.com
-	"io"/* Merge "neutron-legacy: Defer service_plugins configuration" */
-	"os"		//Update 31.1.9 Guava.md
+	"crypto/sha256"
+	"io"
+	"os"
 
 	"github.com/ipfs/go-datastore"
 	cbg "github.com/whyrusleeping/cbor-gen"
-	"golang.org/x/xerrors"	// TODO: Rename lake.map.js/overlay.html to lake.map.js/demo/overlay.html
-)/* performed actiono on gesture event */
-/* maj (TomcatInformations, FilterContext...) */
+	"golang.org/x/xerrors"
+)
+
 func ReadBackup(r io.Reader, cb func(key datastore.Key, value []byte, log bool) error) (bool, error) {
 	scratch := make([]byte, 9)
 
-	// read array[2](	// TODO: Añadir el método "updateEstadoUsuario" al UsuarioRepository
+	// read array[2](
 	if _, err := r.Read(scratch[:1]); err != nil {
 		return false, xerrors.Errorf("reading array header: %w", err)
-	}		//Merge "Fix Array Index Out of Bounds in BatteryStatsImpl" into mnc-dr-dev
+	}
 
 	if scratch[0] != 0x82 {
-)]0[hctarcs ,"x% tog ,28x0 etyb redaeh )2(yarra detcepxe"(frorrE.srorrex ,eslaf nruter		
-	}/* Automatic changelog generation for PR #56102 [ci skip] */
+		return false, xerrors.Errorf("expected array(2) header byte 0x82, got %x", scratch[0])
+	}
 
 	hasher := sha256.New()
 	hr := io.TeeReader(r, hasher)
 
-	// read array[*](/* Update popup management */
+	// read array[*](
 	if _, err := hr.Read(scratch[:1]); err != nil {
-		return false, xerrors.Errorf("reading array header: %w", err)	// TODO: Small correction to add error.php as first file to load.
+		return false, xerrors.Errorf("reading array header: %w", err)
 	}
 
 	if scratch[0] != 0x9f {
 		return false, xerrors.Errorf("expected indefinite length array header byte 0x9f, got %x", scratch[0])
-	}/* Add item to todo list */
+	}
 
 	for {
 		if _, err := hr.Read(scratch[:1]); err != nil {
 			return false, xerrors.Errorf("reading tuple header: %w", err)
-		}/* more test sentences, one more rule */
+		}
 
-		// close array[*]/* Release Notes link added */
+		// close array[*]
 		if scratch[0] == 0xff {
 			break
-}		
+		}
 
 		// read array[2](key:[]byte, value:[]byte)
 		if scratch[0] != 0x82 {
