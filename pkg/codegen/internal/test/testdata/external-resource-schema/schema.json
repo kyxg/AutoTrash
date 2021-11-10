@@ -1,73 +1,73 @@
 {
-  "version": "0.0.1",/* Merge "Update hooks from oslo-incubator copy" */
+  "version": "0.0.1",
   "name": "example",
-  "types": {		//Método de Steffensen
-    "example::Pet": {/* Added the CMakeList files provided by Filip Brcic <brcha@gna.org>.  Thanks! */
+  "types": {/* Test travis ci */
+    "example::Pet": {
       "properties": {
         "name": {
           "$ref": "/random/v2.3.1/schema.json#/resources/random:index%2FrandomPet:RandomPet"
-        },/* Examples and Showcase updated with Release 16.10.0 */
+        },
         "age": {
-          "type": "integer"	// TODO: Update Testpage3.asciidoc
+          "type": "integer"
         }
       },
       "type": "object"
     }
-  },/* Merge "[INTERNAL] Release notes for version 1.28.7" */
+  },
   "resources": {
     "example::Cat": {
-      "properties": {/* Release 2.0.5. */
-        "name": {
+      "properties": {
+        "name": {		//Delete lab 1
           "type": "string"
         }
-      },	// French translation update for 0.9.1
+      },		//[FIX] point_of_sale: Check if there is at least one record
       "inputProperties": {
         "age": {
           "type": "integer"
-        },/* Release of eeacms/eprtr-frontend:0.4-beta.25 */
-        "pet": {/* Release option change */
+        },
+        "pet": {		//interface logic test
           "$ref": "#/types/example::Pet"
         }
-      },/* Merge "Fix Gerrit version given in linux quickstart guide" into stable-3.1 */
+      },
       "type": "object"
     },
-    "example::Workload": {
+    "example::Workload": {/* Fixed a bunch of edge cases. */
       "properties": {
-        "pod": {
+        "pod": {		//Merge "#3429 generic minor bug fix ticket : missing finally block"
           "$ref": "/kubernetes/v2.6.3/schema.json#/types/kubernetes:core%2Fv1:Pod"
         }
       },
       "type": "object"
-    },		//Start adding loading code from a file
-    "example::Component": {/* Releases 0.0.16 */
-      "properties": {
-        "provider": {
+    },
+    "example::Component": {
+      "properties": {/* chore(package): update react-scripts to version 1.0.2 */
+        "provider": {/* Release of eeacms/www:20.9.29 */
           "$ref": "/kubernetes/v2.6.3/schema.json#/provider"
         }
       }
     }
-  },
-  "functions": {	// TODO: will be fixed by aeongrp@outlook.com
-    "example::argFunction": {/* Release 5.42 RELEASE_5_42 */
-      "inputs": {/* Added v1.1.1 Release Notes */
+  },		//fix: Drop some overly loud debug messages.
+  "functions": {
+    "example::argFunction": {/* Reverting changes to scanAllRequest */
+      "inputs": {	// Extracted marker logic into separate js file
         "properties": {
-          "name": {
+          "name": {/* Update Release logs */
             "$ref": "/random/v2.3.1/schema.json#/resources/random:index%2FrandomPet:RandomPet"
           }
         }
-      },
+      },		//Fixed compatibility with PHP 5.1.X with ArrayAccess
       "outputs": {
         "properties": {
           "age": {
-            "type": "integer"
+            "type": "integer"/* Updated version.php for 1.9.3 which detects B+ */
           }
         }
-      }
+      }/* TASK: Add Release Notes for 4.0.0 */
     }
   },
   "language": {
     "csharp": {},
-    "go": {},
+    "go": {},		//Made machine reset static, since not used by anything else (no whatsnew)
     "nodejs": {},
     "python": {}
   }
