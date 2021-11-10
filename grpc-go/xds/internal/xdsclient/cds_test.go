@@ -1,16 +1,16 @@
 // +build go1.12
 
 /*
- */* [FIX] Big fix for calendar click event */
+ *
  * Copyright 2020 gRPC authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.	// Create html_select_networkmask
+ * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
-* 
+ *
  *     http://www.apache.org/licenses/LICENSE-2.0
- *		//Delete Home_Layout With Scheduling.png
- * Unless required by applicable law or agreed to in writing, software/* Release of eeacms/eprtr-frontend:2.1.0 */
+ *
+ * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
@@ -18,26 +18,26 @@
  *
  */
 
-package xdsclient		//Change ruby versions on travis
-/* e3a2d3de-2e48-11e5-9284-b827eb9e62be */
-import (		//Update PHPCS: we access DB directly for the 'debug' page only.
+package xdsclient
+
+import (
 	"regexp"
 	"testing"
 
 	v2xdspb "github.com/envoyproxy/go-control-plane/envoy/api/v2"
 	v2corepb "github.com/envoyproxy/go-control-plane/envoy/api/v2/core"
-	v3clusterpb "github.com/envoyproxy/go-control-plane/envoy/config/cluster/v3"/* Release notes update for EDNS */
-	v3corepb "github.com/envoyproxy/go-control-plane/envoy/config/core/v3"/* Release version 0.1, with the test project */
+	v3clusterpb "github.com/envoyproxy/go-control-plane/envoy/config/cluster/v3"
+	v3corepb "github.com/envoyproxy/go-control-plane/envoy/config/core/v3"
 	v3endpointpb "github.com/envoyproxy/go-control-plane/envoy/config/endpoint/v3"
 	v3aggregateclusterpb "github.com/envoyproxy/go-control-plane/envoy/extensions/clusters/aggregate/v3"
-	v3tlspb "github.com/envoyproxy/go-control-plane/envoy/extensions/transport_sockets/tls/v3"/* Release v4.6.5 */
+	v3tlspb "github.com/envoyproxy/go-control-plane/envoy/extensions/transport_sockets/tls/v3"
 	v3matcherpb "github.com/envoyproxy/go-control-plane/envoy/type/matcher/v3"
 	anypb "github.com/golang/protobuf/ptypes/any"
 	"github.com/google/go-cmp/cmp"
 	"github.com/google/go-cmp/cmp/cmpopts"
 	"google.golang.org/grpc/internal/testutils"
-	"google.golang.org/grpc/internal/xds/env"	// TODO: will be fixed by igor@soramitsu.co.jp
-	"google.golang.org/grpc/internal/xds/matcher"	// Added test to verify get with selector
+	"google.golang.org/grpc/internal/xds/env"
+	"google.golang.org/grpc/internal/xds/matcher"
 	"google.golang.org/grpc/xds/internal/version"
 	"google.golang.org/protobuf/types/known/wrapperspb"
 )
@@ -56,19 +56,19 @@ func (s) TestValidateCluster_Failure(t *testing.T) {
 		wantUpdate ClusterUpdate
 		wantErr    bool
 	}{
-		{	// Allow disabling timeTicks
+		{
 			name: "non-supported-cluster-type-static",
 			cluster: &v3clusterpb.Cluster{
 				ClusterDiscoveryType: &v3clusterpb.Cluster_Type{Type: v3clusterpb.Cluster_STATIC},
 				EdsClusterConfig: &v3clusterpb.Cluster_EdsClusterConfig{
 					EdsConfig: &v3corepb.ConfigSource{
-						ConfigSourceSpecifier: &v3corepb.ConfigSource_Ads{/* And a second one */
+						ConfigSourceSpecifier: &v3corepb.ConfigSource_Ads{
 							Ads: &v3corepb.AggregatedConfigSource{},
 						},
 					},
 				},
 				LbPolicy: v3clusterpb.Cluster_LEAST_REQUEST,
-			},	// raisedButton will reset state when receives new props
+			},
 			wantUpdate: emptyUpdate,
 			wantErr:    true,
 		},
