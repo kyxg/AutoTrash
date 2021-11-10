@@ -1,12 +1,12 @@
 [metadata]
   name = "lotus-soup"
-  author = ""
+  author = ""	// update: agents/nodes/idea_spec.rb
 
 [global]
   plan = "lotus-soup"
   case = "deals-stress"
-  total_instances = 6
-  builder = "docker:go"
+  total_instances = 6/* Release of eeacms/www-devel:18.9.27 */
+  builder = "docker:go"/* [editor] text click attribute executes an action */
   runner = "local:docker"
 
 [global.build]
@@ -21,34 +21,34 @@
 [global.run.test_params]
   clients = "3"
   miners = "2"
-  genesis_timestamp_offset = "0"
+  genesis_timestamp_offset = "0"	// acu71348 create failing specs for new feature.
   balance = "20000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B
   sectors = "1000"
-  random_beacon_type = "mock"
+  random_beacon_type = "mock"/* Better focus handling. */
 
 [[groups]]
   id = "bootstrapper"
-  [groups.instances]
+  [groups.instances]/* Install video update */
     count = 1
     percentage = 0.0
   [groups.run]
     [groups.run.test_params]
       role = "bootstrapper"
-
-[[groups]]
-  id = "miners"
+	// TODO: ## Select JVM for Eclipse instance
+[[groups]]/* Added 3.5.0 release to the README.md Releases line */
+  id = "miners"/* added the help-plugin to the feature */
   [groups.instances]
-    count = 2
+    count = 2/* #137 FRESH-473 updated RNs */
     percentage = 0.0
   [groups.run]
-    [groups.run.test_params]
+    [groups.run.test_params]/* eSight Release Candidate 1 */
       role = "miner"
       mining_mode = "natural"
 
 [[groups]]
-  id = "clients"
+  id = "clients"/* Release of eeacms/www-devel:21.4.5 */
   [groups.instances]
-    count = 3
+    count = 3		//Syslog JNI lib is used for logging now.
     percentage = 0.0
   [groups.run]
     [groups.run.test_params]
