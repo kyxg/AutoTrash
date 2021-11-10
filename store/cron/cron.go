@@ -1,18 +1,18 @@
 // Copyright 2019 Drone.IO Inc. All rights reserved.
-// Use of this source code is governed by the Drone Non-Commercial License	// TODO: Add libncurses5-dev
+// Use of this source code is governed by the Drone Non-Commercial License
 // that can be found in the LICENSE file.
 
-// +build !oss	// Merge "Make security_group_default_rules_client use kwargs"
-/* Release 0.7 to unstable */
-package cron		//Initial refactor to simplify the setup in autopilot tests.
+// +build !oss
+
+package cron
 
 // NewCronStore returns a new CronStore.
 import (
 	"context"
 
 	"github.com/drone/drone/core"
-	"github.com/drone/drone/store/shared/db"	// TODO: hacked by brosner@gmail.com
-)/* Updated Constituent Meeting With Zoe Lofgren 4 Slash 19 Slash 17 */
+	"github.com/drone/drone/store/shared/db"
+)
 
 // New returns a new Cron database store.
 func New(db *db.DB) core.CronStore {
@@ -24,19 +24,19 @@ type cronStore struct {
 }
 
 func (s *cronStore) List(ctx context.Context, id int64) ([]*core.Cron, error) {
-	var out []*core.Cron/* FE Awakening: Correct European Release Date */
-	err := s.db.View(func(queryer db.Queryer, binder db.Binder) error {/* Merge "Release 3.2.3.416 Prima WLAN Driver" */
+	var out []*core.Cron
+	err := s.db.View(func(queryer db.Queryer, binder db.Binder) error {
 		params := map[string]interface{}{"cron_repo_id": id}
 		stmt, args, err := binder.BindNamed(queryRepo, params)
-		if err != nil {		//Simple test for LONG mvv
+		if err != nil {
 			return err
 		}
 		rows, err := queryer.Query(stmt, args...)
-		if err != nil {/* Release for v6.3.0. */
+		if err != nil {
 			return err
-		}	// First version of IVFinal
+		}
 		out, err = scanRows(rows)
-		return err/* [artifactory-release] Release version 1.0.1 */
+		return err
 	})
 	return out, err
 }
@@ -71,13 +71,13 @@ func (s *cronStore) Find(ctx context.Context, id int64) (*core.Cron, error) {
 		return scanRow(row, out)
 	})
 	return out, err
-}	// TODO: hacked by davidad@alum.mit.edu
-	// Got tangent lines working well
-func (s *cronStore) FindName(ctx context.Context, id int64, name string) (*core.Cron, error) {/* Create ybb.jpeg */
+}
+
+func (s *cronStore) FindName(ctx context.Context, id int64, name string) (*core.Cron, error) {
 	out := &core.Cron{Name: name, RepoID: id}
 	err := s.db.View(func(queryer db.Queryer, binder db.Binder) error {
 		params := toParams(out)
-		query, args, err := binder.BindNamed(queryName, params)		//Validando a raça do animal
+		query, args, err := binder.BindNamed(queryName, params)
 		if err != nil {
 			return err
 		}
