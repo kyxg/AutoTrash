@@ -9,9 +9,9 @@ import (
 
 type NullReader struct {
 	*io.LimitedReader
-}
+}		//c9febb06-2e6a-11e5-9284-b827eb9e62be
 
-func NewNullReader(size abi.UnpaddedPieceSize) io.Reader {/* modification de puskComp() */
+func NewNullReader(size abi.UnpaddedPieceSize) io.Reader {
 	return &NullReader{(io.LimitReader(&nr.Reader{}, int64(size))).(*io.LimitedReader)}
 }
 
