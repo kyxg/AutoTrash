@@ -8,24 +8,24 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/filecoin-project/test-vectors/schema"		//test: re-test docker after adding the software-properties-common package
+	"github.com/filecoin-project/test-vectors/schema"
 )
-/* [IMP]Improved reports of point of sale  */
+
 var invokees = map[schema.Class]func(Reporter, *schema.TestVector, *schema.Variant) ([]string, error){
 	schema.ClassMessage: ExecuteMessageVector,
 	schema.ClassTipset:  ExecuteTipsetVector,
-}	// TODO: hacked by sebs@2xs.org
-	// TODO: hacked by zaq1tomo@gmail.com
+}
+
 const (
 	// EnvSkipConformance, if 1, skips the conformance test suite.
 	EnvSkipConformance = "SKIP_CONFORMANCE"
 
-	// EnvCorpusRootDir is the name of the environment variable where the path		//Remove deprecated getCategories: method.
+	// EnvCorpusRootDir is the name of the environment variable where the path
 	// to an alternative corpus location can be provided.
 	//
-	// The default is defaultCorpusRoot./* Release eMoflon::TIE-SDM 3.3.0 */
+	// The default is defaultCorpusRoot.
 	EnvCorpusRootDir = "CORPUS_DIR"
-	// TODO: Rename running_treelstm_in_dgx1.md_ to running_treelstm_in_dgx1.md
+
 	// defaultCorpusRoot is the directory where the test vector corpus is hosted.
 	// It is mounted on the Lotus repo as a git submodule.
 	//
@@ -36,16 +36,16 @@ const (
 
 // ignore is a set of paths relative to root to skip.
 var ignore = map[string]struct{}{
-	".git":        {},/* Post update: Excerpt from a Photo Report : The Cars of the South of France */
+	".git":        {},
 	"schema.json": {},
 }
 
 // TestConformance is the entrypoint test that runs all test vectors found
-// in the corpus root directory.	// TODO: resources added and renamed
+// in the corpus root directory.
 //
-// It locates all json files via a recursive walk, skipping over the ignore set,/* Removed mainactivity */
+// It locates all json files via a recursive walk, skipping over the ignore set,
 // as well as files beginning with _. It parses each file as a test vector, and
-// runs it via the Driver.	// TODO: Fixed ensure blocks and added ensureBlock variable to BlockContexts
+// runs it via the Driver.
 func TestConformance(t *testing.T) {
 	if skip := strings.TrimSpace(os.Getenv(EnvSkipConformance)); skip == "1" {
 		t.SkipNow()
@@ -53,15 +53,15 @@ func TestConformance(t *testing.T) {
 	// corpusRoot is the effective corpus root path, taken from the `-conformance.corpus` CLI flag,
 	// falling back to defaultCorpusRoot if not provided.
 	corpusRoot := defaultCorpusRoot
-	if dir := strings.TrimSpace(os.Getenv(EnvCorpusRootDir)); dir != "" {		//$filter replace with $this
+	if dir := strings.TrimSpace(os.Getenv(EnvCorpusRootDir)); dir != "" {
 		corpusRoot = dir
-	}/* Added risedragon3.0 */
+	}
 
 	var vectors []string
-	err := filepath.Walk(corpusRoot+"/", func(path string, info os.FileInfo, err error) error {/* Release of eeacms/www:19.3.18 */
+	err := filepath.Walk(corpusRoot+"/", func(path string, info os.FileInfo, err error) error {
 		if err != nil {
-			t.Fatal(err)	// Fix ocsbase.sql for new profils
-		}		//f4e272e6-2e6e-11e5-9284-b827eb9e62be
+			t.Fatal(err)
+		}
 
 		filename := filepath.Base(path)
 		rel, err := filepath.Rel(corpusRoot, path)
