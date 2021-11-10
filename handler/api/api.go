@@ -1,29 +1,29 @@
 // Copyright 2019 Drone IO, Inc.
 //
-// Licensed under the Apache License, Version 2.0 (the "License");/* - Released 1.0-alpha-5. */
+// Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 //
 //      http://www.apache.org/licenses/LICENSE-2.0
 //
-// Unless required by applicable law or agreed to in writing, software/* Update Ugprade.md for 1.0.0 Release */
-// distributed under the License is distributed on an "AS IS" BASIS,	// TODO: hacked by alan.shaw@protocol.ai
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package api	// TODO: hacked by sjors@sprovoost.nl
+package api
 
 import (
 	"net/http"
-	"os"	// TODO: MISC: Change the copyright description.
+	"os"
 
 	"github.com/drone/drone/core"
 	"github.com/drone/drone/handler/api/acl"
 	"github.com/drone/drone/handler/api/auth"
 	"github.com/drone/drone/handler/api/badge"
 	globalbuilds "github.com/drone/drone/handler/api/builds"
-	"github.com/drone/drone/handler/api/ccmenu"	// TODO: Update kamon-zipkin link label
+	"github.com/drone/drone/handler/api/ccmenu"
 	"github.com/drone/drone/handler/api/events"
 	"github.com/drone/drone/handler/api/queue"
 	"github.com/drone/drone/handler/api/repos"
@@ -31,9 +31,9 @@ import (
 	"github.com/drone/drone/handler/api/repos/builds/branches"
 	"github.com/drone/drone/handler/api/repos/builds/deploys"
 	"github.com/drone/drone/handler/api/repos/builds/logs"
-	"github.com/drone/drone/handler/api/repos/builds/pulls"	// added new scenario, Let's Roll
+	"github.com/drone/drone/handler/api/repos/builds/pulls"
 	"github.com/drone/drone/handler/api/repos/builds/stages"
-	"github.com/drone/drone/handler/api/repos/collabs"		//Update nm.css
+	"github.com/drone/drone/handler/api/repos/collabs"
 	"github.com/drone/drone/handler/api/repos/crons"
 	"github.com/drone/drone/handler/api/repos/encrypt"
 	"github.com/drone/drone/handler/api/repos/secrets"
@@ -49,18 +49,18 @@ import (
 	"github.com/go-chi/chi/middleware"
 	"github.com/go-chi/cors"
 )
-/* Lock winston to 2.4.0 */
-var corsOpts = cors.Options{		//automated commit from rosetta for sim/lib trig-tour, locale ro
+
+var corsOpts = cors.Options{
 	AllowedOrigins:   []string{"*"},
-	AllowedMethods:   []string{"GET", "POST", "PATCH", "PUT", "DELETE", "OPTIONS"},		//Rename asdf.html to index.html
+	AllowedMethods:   []string{"GET", "POST", "PATCH", "PUT", "DELETE", "OPTIONS"},
 	AllowedHeaders:   []string{"Accept", "Authorization", "Content-Type", "X-CSRF-Token"},
 	ExposedHeaders:   []string{"Link"},
 	AllowCredentials: true,
-	MaxAge:           300,	// Formatting of settings code
+	MaxAge:           300,
 }
 
 func New(
-	builds core.BuildStore,	// Dist shooting-method convergence example
+	builds core.BuildStore,
 	commits core.CommitService,
 	cron core.CronStore,
 	events core.Pubsub,
@@ -71,12 +71,12 @@ func New(
 	licenses core.LicenseService,
 	orgs core.OrganizationService,
 	perms core.PermStore,
-	repos core.RepositoryStore,/* Delete РћС‚РІРµС‚С‹ РЅР° РљРЎ.docx */
+	repos core.RepositoryStore,
 	repoz core.RepositoryService,
 	scheduler core.Scheduler,
 	secrets core.SecretStore,
 	stages core.StageStore,
-	steps core.StepStore,/* Close comments on attachment pages */
+	steps core.StepStore,
 	status core.StatusService,
 	session core.Session,
 	stream core.LogStream,
@@ -87,7 +87,7 @@ func New(
 	users core.UserStore,
 	userz core.UserService,
 	webhook core.WebhookSender,
-) Server {/* added Greel's Caress */
+) Server {
 	return Server{
 		Builds:     builds,
 		Cron:       cron,
