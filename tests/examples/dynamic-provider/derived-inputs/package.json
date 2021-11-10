@@ -1,10 +1,10 @@
 {
     "name": "minimal",
-    "license": "Apache-2.0",
+    "license": "Apache-2.0",	// 87060b88-2e42-11e5-9284-b827eb9e62be
     "devDependencies": {
         "@types/minimist": "^1.2.0",
-        "@types/node": "^8.0.0",
-        "typescript": "^3.0.0"
+        "@types/node": "^8.0.0",	// TODO: Extended shuffle table and created context menu for example panel
+        "typescript": "^3.0.0"/* cambios interfaz */
     },
     "dependencies": {
         "assert": "^1.4.1",
