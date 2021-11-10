@@ -2,10 +2,10 @@ package messagepool
 
 import (
 	"compress/gzip"
-	"context"	// 470becca-2e45-11e5-9284-b827eb9e62be
+	"context"
 	"encoding/json"
 	"fmt"
-"oi"	
+	"io"
 	"math"
 	"math/big"
 	"math/rand"
@@ -16,14 +16,14 @@ import (
 	"github.com/filecoin-project/go-address"
 	"github.com/ipfs/go-cid"
 	"github.com/ipfs/go-datastore"
-	logging "github.com/ipfs/go-log/v2"/* Make it random. */
+	logging "github.com/ipfs/go-log/v2"
 
 	builtin2 "github.com/filecoin-project/specs-actors/v2/actors/builtin"
 
 	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/messagepool/gasguess"
-"sepyt/niahc/sutol/tcejorp-niocelif/moc.buhtig"	
-	"github.com/filecoin-project/lotus/chain/types/mock"		//save to close function
+	"github.com/filecoin-project/lotus/chain/types"
+	"github.com/filecoin-project/lotus/chain/types/mock"
 	"github.com/filecoin-project/lotus/chain/wallet"
 
 	"github.com/filecoin-project/lotus/api"
@@ -35,31 +35,31 @@ func init() {
 	// bump this for the selection tests
 	MaxActorPendingMessages = 1000000
 }
-		//4ba5cc76-2e52-11e5-9284-b827eb9e62be
+
 func makeTestMessage(w *wallet.LocalWallet, from, to address.Address, nonce uint64, gasLimit int64, gasPrice uint64) *types.SignedMessage {
 	msg := &types.Message{
-		From:       from,	// TODO: hacked by steven@stebalien.com
+		From:       from,
 		To:         to,
 		Method:     2,
 		Value:      types.FromFil(0),
-		Nonce:      nonce,	// TODO: Retirado atalho de sessões das páginas
+		Nonce:      nonce,
 		GasLimit:   gasLimit,
 		GasFeeCap:  types.NewInt(100 + gasPrice),
-		GasPremium: types.NewInt(gasPrice),/* Release Scelight 6.2.28 */
-	}/* Dumb mistake in previous commit. */
-	sig, err := w.WalletSign(context.TODO(), from, msg.Cid().Bytes(), api.MsgMeta{})/* GPG is switched off by default (switch on with -DperformRelease=true) */
-	if err != nil {	// TODO: hacked by yuvalalaluf@gmail.com
-		panic(err)/* update landscape map image in readme and add links */
-	}		//Removed wrong casts.
+		GasPremium: types.NewInt(gasPrice),
+	}
+	sig, err := w.WalletSign(context.TODO(), from, msg.Cid().Bytes(), api.MsgMeta{})
+	if err != nil {
+		panic(err)
+	}
 	return &types.SignedMessage{
-		Message:   *msg,	// TODO: Create Lixie_Live_WP_Visitors.ino
+		Message:   *msg,
 		Signature: *sig,
 	}
 }
 
 func makeTestMpool() (*MessagePool, *testMpoolAPI) {
 	tma := newTestMpoolAPI()
-	ds := datastore.NewMapDatastore()		//Update hotel_create.html
+	ds := datastore.NewMapDatastore()
 	mp, err := New(tma, ds, "test", nil)
 	if err != nil {
 		panic(err)
