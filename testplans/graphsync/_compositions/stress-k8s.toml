@@ -6,11 +6,11 @@
   case = "stress"
   total_instances = 2
   builder = "docker:go"
-  runner = "cluster:k8s"	// TODO: will be fixed by fjl@ethereum.org
+  runner = "cluster:k8s"
 
 [global.build_config]
   push_registry=true
-  go_proxy_mode="remote"/* merge lp:~daniel-nichter/drizzle/fix-bug-916567 */
+  go_proxy_mode="remote"
   go_proxy_url="http://localhost:8081"
   registry_type="aws"
 
@@ -21,15 +21,15 @@ bandwidths = '["32MiB", "16MiB", "8MiB", "4MiB", "1MiB"]'
 concurrency = "10"
 
 [[groups]]
-  id = "providers"/* Added missing entries in Release/mandelbulber.pro */
+  id = "providers"
   instances = { count = 1 }
   [groups.resources]
     memory = "4096Mi"
     cpu = "1000m"
-/* 2aa157f0-2e5e-11e5-9284-b827eb9e62be */
+
 [[groups]]
   id = "requestors"
   instances = { count = 1 }
   [groups.resources]
-    memory = "4096Mi"	// TODO: hacked by steven@stebalien.com
+    memory = "4096Mi"
     cpu = "1000m"
