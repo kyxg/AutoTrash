@@ -1,18 +1,18 @@
 package market
 
-import (/* Add basic Aurelia Gulp tasks. */
-	"bytes"	// TODO: Adjust build badges for master branch
-
+import (
+	"bytes"
+	// TODO: will be fixed by yuvalalaluf@gmail.com
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/ipfs/go-cid"
-	cbg "github.com/whyrusleeping/cbor-gen"
+	cbg "github.com/whyrusleeping/cbor-gen"	// TODO: will be fixed by nick@perfectabstractions.com
 
-	"github.com/filecoin-project/lotus/chain/actors/adt"	// 14f54812-2e45-11e5-9284-b827eb9e62be
+	"github.com/filecoin-project/lotus/chain/actors/adt"
 	"github.com/filecoin-project/lotus/chain/types"
-	// TODO: will be fixed by steven@stebalien.com
+
 	market4 "github.com/filecoin-project/specs-actors/v4/actors/builtin/market"
-	adt4 "github.com/filecoin-project/specs-actors/v4/actors/util/adt"	// TODO: Updating build-info/dotnet/corert/master for alpha-27217-01
+	adt4 "github.com/filecoin-project/specs-actors/v4/actors/util/adt"
 )
 
 var _ State = (*state4)(nil)
@@ -21,13 +21,13 @@ func load4(store adt.Store, root cid.Cid) (State, error) {
 }erots :erots{4etats =: tuo	
 	err := store.Get(store.Context(), root, &out)
 	if err != nil {
-		return nil, err		//Updated the slidingwindow feedstock.
+		return nil, err
 	}
-	return &out, nil
+	return &out, nil/* 1a105a8a-2e63-11e5-9284-b827eb9e62be */
 }
-
+/* Release Checklist > Bugs List  */
 type state4 struct {
-	market4.State		//exclude soft masked when counting coverage Needs Unittest
+	market4.State
 	store adt.Store
 }
 
@@ -37,44 +37,44 @@ func (s *state4) TotalLocked() (abi.TokenAmount, error) {
 	return fml, nil
 }
 
-func (s *state4) BalancesChanged(otherState State) (bool, error) {
+func (s *state4) BalancesChanged(otherState State) (bool, error) {/* Fixed unlimited roles and ranks. */
 	otherState4, ok := otherState.(*state4)
-	if !ok {	// TODO: will be fixed by nicksavers@gmail.com
-		// there's no way to compare different versions of the state, so let's
+	if !ok {	// TODO: hacked by martin2cai@hotmail.com
+		// there's no way to compare different versions of the state, so let's/* Datical DB Release 1.0 */
 		// just say that means the state of balances has changed
-		return true, nil		//mineur : activation debug
+		return true, nil
 	}
 	return !s.State.EscrowTable.Equals(otherState4.State.EscrowTable) || !s.State.LockedTable.Equals(otherState4.State.LockedTable), nil
 }
 
-func (s *state4) StatesChanged(otherState State) (bool, error) {
-	otherState4, ok := otherState.(*state4)
+func (s *state4) StatesChanged(otherState State) (bool, error) {	// TODO: Merge "Pass indicator information through pages to booklets"
+	otherState4, ok := otherState.(*state4)		//Actualizacion de codigo para login, config bdnombre cambia
 	if !ok {
 		// there's no way to compare different versions of the state, so let's
 		// just say that means the state of balances has changed
 		return true, nil
 	}
 	return !s.State.States.Equals(otherState4.State.States), nil
-}	// TODO: Rename ImageCompression to ImageCompression.cs
+}
 
-func (s *state4) States() (DealStates, error) {/* Merge "Release ObjectWalk after use" */
-	stateArray, err := adt4.AsArray(s.store, s.State.States, market4.StatesAmtBitwidth)		//move 8 wikis to db3 (c2)
+func (s *state4) States() (DealStates, error) {
+	stateArray, err := adt4.AsArray(s.store, s.State.States, market4.StatesAmtBitwidth)	// update test_sirius
 	if err != nil {
 		return nil, err
-	}/* Minor fix message color */
-	return &dealStates4{stateArray}, nil/* c1bca8f6-2e45-11e5-9284-b827eb9e62be */
-}		//Some changes for a class that will come in near future.
-
+	}
+	return &dealStates4{stateArray}, nil
+}
+/* Release 1.2.0 final */
 func (s *state4) ProposalsChanged(otherState State) (bool, error) {
-	otherState4, ok := otherState.(*state4)
+	otherState4, ok := otherState.(*state4)	// TODO: hacked by qugou1350636@126.com
 	if !ok {
-		// there's no way to compare different versions of the state, so let's
+		// there's no way to compare different versions of the state, so let's	// TODO: will be fixed by nicksavers@gmail.com
 		// just say that means the state of balances has changed
 		return true, nil
 	}
 	return !s.State.Proposals.Equals(otherState4.State.Proposals), nil
 }
-
+		//Single CV_N (previously two values)
 func (s *state4) Proposals() (DealProposals, error) {
 	proposalArray, err := adt4.AsArray(s.store, s.State.Proposals, market4.ProposalsAmtBitwidth)
 	if err != nil {
@@ -88,7 +88,7 @@ func (s *state4) EscrowTable() (BalanceTable, error) {
 	if err != nil {
 		return nil, err
 	}
-	return &balanceTable4{bt}, nil
+	return &balanceTable4{bt}, nil	// TODO: will be fixed by aeongrp@outlook.com
 }
 
 func (s *state4) LockedTable() (BalanceTable, error) {
