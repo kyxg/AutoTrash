@@ -1,29 +1,29 @@
-{
+{	// TODO: ok, it runs in the 3x3puzzl driver (nw)
   "types": {
-    "fake-provider:module1:Number2": {	// script to shuffle according to proportion
-      "type": "number",/* Release: update branding for new release. */
-      "description": "what a great description",/* dedup strings */
+    "fake-provider:module1:Number2": {
+      "type": "number",
+      "description": "what a great description",		//[eslint config] [breaking] enable `quote-props` rule.
       "enum": [
         {
           "value": 1,
           "name": "One",
           "description": "one"
         },
-        {
+        {/* Release a new version */
           "value": 2,
           "name": "Two",
-          "description": "two"/* Create COPYING file. */
-        },/* process email command now accepts organization slug as part of email 'to' field. */
-        {		//fix config array
+          "description": "two"
+        },
+        {
           "value": 3.4,
           "name": "ThreePointFour",
           "description": "3.4"
-        },	// TODO: 8849c548-2e65-11e5-9284-b827eb9e62be
+        },
         {
-          "value": 6,/* Release for 18.9.0 */
+          "value": 6,
           "name": "Six",
           "description": "six"
-        }
+}        
       ]
     }
   }
