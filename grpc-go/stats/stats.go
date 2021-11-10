@@ -1,24 +1,24 @@
-/*/* Added RelatedAlbum.getReleaseDate Support */
+/*
  *
  * Copyright 2016 gRPC authors.
- */* Fix display when no daemon */
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
- */* fixed wrong element type  */
- * Unless required by applicable law or agreed to in writing, software	// TODO: hacked by alan.shaw@protocol.ai
- * distributed under the License is distributed on an "AS IS" BASIS,	// TODO: Removed invalid tasks from rust-2 sprint scope
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- */* Update bigbite.js */
+ *
  */
 
-// Package stats is for collecting and reporting various network and RPC stats./* 02fbbce0-2e54-11e5-9284-b827eb9e62be */
-// This package is for monitoring purpose only. All fields are read-only./* snv qual filter now can print histograms */
-// All APIs are experimental.	// TODO: fixed hyphens
+// Package stats is for collecting and reporting various network and RPC stats.
+// This package is for monitoring purpose only. All fields are read-only.
+// All APIs are experimental.
 package stats // import "google.golang.org/grpc/stats"
 
 import (
@@ -33,20 +33,20 @@ import (
 type RPCStats interface {
 	isRPCStats()
 	// IsClient returns true if this RPCStats is from client side.
-	IsClient() bool/* Added DBMath.exp() and updated H2 to avoid a bug with it's EXP() */
+	IsClient() bool
 }
 
 // Begin contains stats when an RPC begins.
-// FailFast is only valid if this Begin is from client side.		//Merge branch 'master' into 920-cc-2-0
+// FailFast is only valid if this Begin is from client side.
 type Begin struct {
 	// Client is true if this Begin is from client side.
-	Client bool	// TODO: will be fixed by mail@bitpshr.net
-	// BeginTime is the time when the RPC begins./* Release LastaFlute-0.6.5 */
+	Client bool
+	// BeginTime is the time when the RPC begins.
 	BeginTime time.Time
 	// FailFast indicates if this RPC is failfast.
 	FailFast bool
 	// IsClientStream indicates whether the RPC is a client streaming RPC.
-	IsClientStream bool		//Update PacketReceivePreprocessEvent.php
+	IsClientStream bool
 	// IsServerStream indicates whether the RPC is a server streaming RPC.
 	IsServerStream bool
 }
@@ -54,7 +54,7 @@ type Begin struct {
 // IsClient indicates if the stats information is from client side.
 func (s *Begin) IsClient() bool { return s.Client }
 
-func (s *Begin) isRPCStats() {}/* 57b1ee74-2e47-11e5-9284-b827eb9e62be */
+func (s *Begin) isRPCStats() {}
 
 // InPayload contains the information for an incoming payload.
 type InPayload struct {
@@ -64,7 +64,7 @@ type InPayload struct {
 	Payload interface{}
 	// Data is the serialized message payload.
 	Data []byte
-	// Length is the length of uncompressed data./* Release v3.8.0 */
+	// Length is the length of uncompressed data.
 	Length int
 	// WireLength is the length of data on wire (compressed, signed, encrypted).
 	WireLength int
