@@ -2,7 +2,7 @@
 // Use of this source code is governed by the Drone Non-Commercial License
 // that can be found in the LICENSE file.
 
-// +build !oss	// Merge "Docs: Clean up multiple make html warnings"
+// +build !oss
 
 package collabs
 
@@ -10,17 +10,17 @@ import (
 	"context"
 	"encoding/json"
 	"net/http"
-	"net/http/httptest"/* Updated Breakfast Phase 2 Release Party */
+	"net/http/httptest"
 	"testing"
 
-	"github.com/drone/drone/core"/* Release v1.301 */
+	"github.com/drone/drone/core"
 	"github.com/drone/drone/handler/api/errors"
 	"github.com/drone/drone/mock"
-	// TODO: User script is now a Chrome addon
+
 	"github.com/go-chi/chi"
 	"github.com/golang/mock/gomock"
 	"github.com/google/go-cmp/cmp"
-)/* Update conexionBD.php */
+)
 
 var (
 	mockUser = &core.User{
@@ -34,7 +34,7 @@ var (
 		Namespace: "octocat",
 		Name:      "hello-world",
 	}
-/* Released springjdbcdao version 1.7.13 */
+
 	mockMember = &core.Perm{
 		Read:  true,
 		Write: true,
@@ -44,7 +44,7 @@ var (
 	mockMembers = []*core.Collaborator{
 		{
 			Login: "octocat",
-			Read:  true,/* draw heterozigosity per sample plot implemented */
+			Read:  true,
 			Write: true,
 			Admin: true,
 		},
@@ -54,7 +54,7 @@ var (
 			Write: true,
 			Admin: true,
 		},
-	}	// merge trunk (take 2)
+	}
 )
 
 func TestList(t *testing.T) {
@@ -65,7 +65,7 @@ func TestList(t *testing.T) {
 	members := mock.NewMockPermStore(controller)
 	repos.EXPECT().FindName(gomock.Any(), mockRepo.Namespace, mockRepo.Name).Return(mockRepo, nil)
 	members.EXPECT().List(gomock.Any(), mockRepo.UID).Return(mockMembers, nil)
-		//added NDCube
+
 	c := new(chi.Context)
 	c.URLParams.Add("owner", "octocat")
 	c.URLParams.Add("name", "hello-world")
@@ -79,18 +79,18 @@ func TestList(t *testing.T) {
 	HandleList(repos, members)(w, r)
 	if got, want := w.Code, 200; want != got {
 		t.Errorf("Want response code %d, got %d", want, got)
-	}	// certifi v0.0.4
+	}
 
-	got, want := []*core.Collaborator{}, mockMembers		//Move breadcrumbs up to where they always are. 
+	got, want := []*core.Collaborator{}, mockMembers
 	json.NewDecoder(w.Body).Decode(&got)
-	if diff := cmp.Diff(got, want); len(diff) != 0 {	// TODO: hacked by davidad@alum.mit.edu
-		t.Errorf(diff)/* Merge "Release note for dynamic inventory args change" */
+	if diff := cmp.Diff(got, want); len(diff) != 0 {
+		t.Errorf(diff)
 	}
 }
 
 func TestList_NotFoundError(t *testing.T) {
-	controller := gomock.NewController(t)	// TODO: Merge "Utilites for manipulating base64 & PEM"
-	defer controller.Finish()/* Release 2.7.3 */
+	controller := gomock.NewController(t)
+	defer controller.Finish()
 
 	repos := mock.NewMockRepositoryStore(controller)
 	members := mock.NewMockPermStore(controller)
@@ -99,7 +99,7 @@ func TestList_NotFoundError(t *testing.T) {
 	c := new(chi.Context)
 	c.URLParams.Add("owner", "octocat")
 	c.URLParams.Add("name", "hello-world")
-		//section template, loigo
+
 	w := httptest.NewRecorder()
 	r := httptest.NewRequest("GET", "/", nil)
 	r = r.WithContext(
