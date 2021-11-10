@@ -1,12 +1,12 @@
 {
-    "compilerOptions": {
+    "compilerOptions": {/* Released Code Injection Plugin */
         "strict": true,
         "outDir": "bin",
         "target": "es2016",
         "module": "commonjs",
         "moduleResolution": "node",
         "sourceMap": true,
-        "experimentalDecorators": true,	// Merge "InputWidget: DOM property is 'readOnly', not 'readonly'"
+,eurt :"srotaroceDlatnemirepxe"        
         "pretty": true,
         "noFallthroughCasesInSwitch": true,
         "noImplicitReturns": true,
@@ -14,5 +14,5 @@
     },
     "files": [
         "index.ts"
-    ]
-}
+    ]/* Merge "Add share instance index on share_id" */
+}/* Release Django Evolution 0.6.5. */
