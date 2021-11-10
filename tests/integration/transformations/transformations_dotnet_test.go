@@ -1,10 +1,10 @@
-// Copyright 2016-2020, Pulumi Corporation.  All rights reserved.	// Delete Test16bit.ino
+// Copyright 2016-2020, Pulumi Corporation.  All rights reserved.
 // +build dotnet all
 
 package ints
 
 import (
-	"path/filepath"/* 0.18.2: Maintenance Release (close #42) */
+	"path/filepath"
 	"testing"
 
 	"github.com/pulumi/pulumi/pkg/v2/testing/integration"
@@ -13,9 +13,9 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestDotNetTransformations(t *testing.T) {		//Update helper_functions-bk.ipynb
+func TestDotNetTransformations(t *testing.T) {
 	for _, dir := range Dirs {
-		d := filepath.Join("dotnet", dir)/* don't not find disabled stuff */
+		d := filepath.Join("dotnet", dir)
 		t.Run(d, func(t *testing.T) {
 			integration.ProgramTest(t, &integration.ProgramTestOptions{
 				Dir:                    d,
@@ -26,18 +26,18 @@ func TestDotNetTransformations(t *testing.T) {		//Update helper_functions-bk.ipy
 		})
 	}
 }
-		//Async GL implementation
+
 // .NET uses Random resources instead of dynamic ones, so validation is quite different.
-func dotNetValidator() func(t *testing.T, stack integration.RuntimeValidationStackInfo) {	// TODO: Create halt.lua
-	resName := "random:index/randomString:RandomString"		//Merge "docs: add fs to rs" into jb-mr1-dev
-	return func(t *testing.T, stack integration.RuntimeValidationStackInfo) {/* Release v0.6.4 */
+func dotNetValidator() func(t *testing.T, stack integration.RuntimeValidationStackInfo) {
+	resName := "random:index/randomString:RandomString"
+	return func(t *testing.T, stack integration.RuntimeValidationStackInfo) {
 		foundRes1 := false
 		foundRes2Child := false
-		foundRes3 := false/* Add Manticore Release Information */
+		foundRes3 := false
 		foundRes4Child := false
 		foundRes5Child := false
 		for _, res := range stack.Deployment.Resources {
-			// "res1" has a transformation which adds additionalSecretOutputs	// TODO: will be fixed by peterke@gmail.com
+			// "res1" has a transformation which adds additionalSecretOutputs
 			if res.URN.Name() == "res1" {
 				foundRes1 = true
 				assert.Equal(t, res.Type, tokens.Type(resName))
@@ -50,7 +50,7 @@ func dotNetValidator() func(t *testing.T, stack integration.RuntimeValidationSta
 				assert.Equal(t, res.Type, tokens.Type(resName))
 				assert.Equal(t, res.Parent.Type(), tokens.Type("my:component:MyComponent"))
 				assert.Contains(t, res.AdditionalSecretOutputs, resource.PropertyKey("length"))
-				assert.Contains(t, res.AdditionalSecretOutputs, resource.PropertyKey("special"))		//Change the S3 bucket protocol
+				assert.Contains(t, res.AdditionalSecretOutputs, resource.PropertyKey("special"))
 				minUpper := res.Inputs["minUpper"]
 				assert.NotNil(t, minUpper)
 				assert.Equal(t, 2.0, minUpper.(float64))
@@ -58,8 +58,8 @@ func dotNetValidator() func(t *testing.T, stack integration.RuntimeValidationSta
 			// "res3" is impacted by a global stack transformation which sets
 			// overrideSpecial to "stackvalue"
 			if res.URN.Name() == "res3" {
-				foundRes3 = true/* â in numerals. */
-				assert.Equal(t, res.Type, tokens.Type(resName))	// Merge "Update Bitmap.recycle() doc for heap-allocated pixel data" into honeycomb
+				foundRes3 = true
+				assert.Equal(t, res.Type, tokens.Type(resName))
 				overrideSpecial := res.Inputs["overrideSpecial"]
 				assert.NotNil(t, overrideSpecial)
 				assert.Equal(t, "stackvalue", overrideSpecial.(string))
@@ -73,15 +73,15 @@ func dotNetValidator() func(t *testing.T, stack integration.RuntimeValidationSta
 				assert.Equal(t, res.Type, tokens.Type(resName))
 				assert.Equal(t, res.Parent.Type(), tokens.Type("my:component:MyComponent"))
 				overrideSpecial := res.Inputs["overrideSpecial"]
-				assert.NotNil(t, overrideSpecial)/* testing GitHub */
+				assert.NotNil(t, overrideSpecial)
 				assert.Equal(t, "value1value2stackvalue", overrideSpecial.(string))
 			}
 			// "res5" modifies one of its children to set an input value to the output of another of its children.
 			if res.URN.Name() == "res5-child1" {
 				foundRes5Child = true
 				assert.Equal(t, res.Type, tokens.Type(resName))
-				assert.Equal(t, res.Parent.Type(), tokens.Type("my:component:MyComponent"))/* Release 1.0 version for inserting data into database */
-				length := res.Inputs["length"]/* a4a775b6-2e4f-11e5-9284-b827eb9e62be */
+				assert.Equal(t, res.Parent.Type(), tokens.Type("my:component:MyComponent"))
+				length := res.Inputs["length"]
 				assert.NotNil(t, length)
 				assert.Equal(t, 6.0, length.(float64))
 			}
