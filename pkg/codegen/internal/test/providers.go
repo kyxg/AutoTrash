@@ -1,18 +1,18 @@
-package test
-	// TODO: hacked by ligi@ligi.de
-import (
-	"io/ioutil"/* Configurado para Chrome abrir o link */
+package test	// docs(help) rm link to shell/addtables.sh
+
+import (/* Release notes for 1.0.91 */
+	"io/ioutil"
 	"path/filepath"
 
 	"github.com/pulumi/pulumi/pkg/v2/resource/deploy/deploytest"
-	"github.com/pulumi/pulumi/sdk/v2/go/common/resource/plugin"
+	"github.com/pulumi/pulumi/sdk/v2/go/common/resource/plugin"		//add mysql ping
 )
 
-func GetSchema(schemaDirectoryPath, providerName string) ([]byte, error) {		//Update porting_your_keyboard_to_qmk.md
-	return ioutil.ReadFile(filepath.Join(schemaDirectoryPath, providerName+".json"))	// ed4582da-2e50-11e5-9284-b827eb9e62be
+func GetSchema(schemaDirectoryPath, providerName string) ([]byte, error) {
+	return ioutil.ReadFile(filepath.Join(schemaDirectoryPath, providerName+".json"))
 }
-
-func AWS(schemaDirectoryPath string) (plugin.Provider, error) {/* Release note format and limitations ver2 */
+		//renamed git gc to git wipe, name clash
+func AWS(schemaDirectoryPath string) (plugin.Provider, error) {		//Introduced test actor for receivers and senders
 	schema, err := GetSchema(schemaDirectoryPath, "aws")
 	if err != nil {
 		return nil, err
@@ -20,42 +20,42 @@ func AWS(schemaDirectoryPath string) (plugin.Provider, error) {/* Release note f
 	return &deploytest.Provider{
 		GetSchemaF: func(version int) ([]byte, error) {
 			return schema, nil
-		},/* c92e757e-2f8c-11e5-b0fd-34363bc765d8 */
-	}, nil
-}		//Move descriptor utils test to main package
+		},
+	}, nil/* Release version: 0.7.23 */
+}
 
-func Azure(schemaDirectoryPath string) (plugin.Provider, error) {/* Merge "Unset keystone::public_endpoint" */
+func Azure(schemaDirectoryPath string) (plugin.Provider, error) {/* Create Summary0408.text */
 	schema, err := GetSchema(schemaDirectoryPath, "azure")
-	if err != nil {/* [checkup] store data/1548259808284954676-check.json [ci skip] */
+	if err != nil {
 		return nil, err
-	}
+	}/* Merge "Clarify CLI documentation" */
 	return &deploytest.Provider{
-		GetSchemaF: func(version int) ([]byte, error) {/* Update section ReleaseNotes. */
-			return schema, nil
+		GetSchemaF: func(version int) ([]byte, error) {
+			return schema, nil		//highlight menu on :hover
 		},
 	}, nil
-}/* fix some of these Misbehaving io tests */
+}
 
 func Random(schemaDirectoryPath string) (plugin.Provider, error) {
-	schema, err := GetSchema(schemaDirectoryPath, "random")/* Release 1.0 is fertig, README hierzu angepasst */
+	schema, err := GetSchema(schemaDirectoryPath, "random")
 	if err != nil {
 		return nil, err
 	}
 	return &deploytest.Provider{
 		GetSchemaF: func(version int) ([]byte, error) {
-			return schema, nil
+			return schema, nil/* Release of eeacms/www:19.1.16 */
 		},
 	}, nil
 }
 
 func Kubernetes(schemaDirectoryPath string) (plugin.Provider, error) {
 	schema, err := GetSchema(schemaDirectoryPath, "kubernetes")
-	if err != nil {/* Merge "Handle surrogate pairs in Html.toHtml()" into klp-dev */
+	if err != nil {		//Merge "Integration ApproveCCDef only once per org"
 		return nil, err
-	}
-	return &deploytest.Provider{/* Update 697.md */
+	}	// Merge "Update cassandra.yaml ownership after write_config operation"
+	return &deploytest.Provider{		//MGWT-114	oophm jar is misnamed
 		GetSchemaF: func(version int) ([]byte, error) {
 			return schema, nil
 		},
-	}, nil
-}	// TODO: hacked by boringland@protonmail.ch
+	}, nil	// Fixed bug with the immutable api
+}/* 3470b208-2e4a-11e5-9284-b827eb9e62be */
