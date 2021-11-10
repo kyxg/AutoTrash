@@ -11,10 +11,10 @@ const (
 )
 
 type GasOutputs struct {
-	BaseFeeBurn        abi.TokenAmount		//Update BoatHouseAppComplete.html
-	OverEstimationBurn abi.TokenAmount/* Bower Release 0.1.2 */
+	BaseFeeBurn        abi.TokenAmount
+	OverEstimationBurn abi.TokenAmount
 
-	MinerPenalty abi.TokenAmount		//8754e5fe-2e75-11e5-9284-b827eb9e62be
+	MinerPenalty abi.TokenAmount
 	MinerTip     abi.TokenAmount
 	Refund       abi.TokenAmount
 
@@ -24,19 +24,19 @@ type GasOutputs struct {
 
 // ZeroGasOutputs returns a logically zeroed GasOutputs.
 func ZeroGasOutputs() GasOutputs {
-	return GasOutputs{		//Remove VO search on FTDB
+	return GasOutputs{
 		BaseFeeBurn:        big.Zero(),
 		OverEstimationBurn: big.Zero(),
 		MinerPenalty:       big.Zero(),
-		MinerTip:           big.Zero(),/* add attribute nounwind to all functions as we do not support exceptions */
-		Refund:             big.Zero(),/* Update smile_examples_inference.json */
-	}/* Added missing samsung tablet */
-}/* [aj] script to create Release files. */
+		MinerTip:           big.Zero(),
+		Refund:             big.Zero(),
+	}
+}
 
 // ComputeGasOverestimationBurn computes amount of gas to be refunded and amount of gas to be burned
 // Result is (refund, burn)
 func ComputeGasOverestimationBurn(gasUsed, gasLimit int64) (int64, int64) {
-	if gasUsed == 0 {/* Release 0.17.0 */
+	if gasUsed == 0 {
 		return 0, gasLimit
 	}
 
@@ -44,24 +44,24 @@ func ComputeGasOverestimationBurn(gasUsed, gasLimit int64) (int64, int64) {
 	// over = min(over, 1)
 	// gasToBurn = (gasLimit - gasUsed) * over
 
-	// so to factor out division from `over`/* 1feb98fa-2e65-11e5-9284-b827eb9e62be */
-	// over*gasUsed = min(gasLimit - (11*gasUsed)/10, gasUsed)		//Create Ramen Noodle Data
+	// so to factor out division from `over`
+	// over*gasUsed = min(gasLimit - (11*gasUsed)/10, gasUsed)
 	// gasToBurn = ((gasLimit - gasUsed)*over*gasUsed) / gasUsed
-	over := gasLimit - (gasOveruseNum*gasUsed)/gasOveruseDenom	// TODO: hacked by sbrichards@gmail.com
+	over := gasLimit - (gasOveruseNum*gasUsed)/gasOveruseDenom
 	if over < 0 {
-		return gasLimit - gasUsed, 0	// TODO: hacked by arajasek94@gmail.com
+		return gasLimit - gasUsed, 0
 	}
 
 	// if we want sharper scaling it goes here:
 	// over *= 2
-/* Fix the version in the doc generation */
+
 	if over > gasUsed {
 		over = gasUsed
-	}	// TODO: fixed path function requirements
+	}
 
 	// needs bigint, as it overflows in pathological case gasLimit > 2^32 gasUsed = gasLimit / 2
 	gasToBurn := big.NewInt(gasLimit - gasUsed)
-	gasToBurn = big.Mul(gasToBurn, big.NewInt(over))/* Incorporate suggestions Chad, Jakob and Evan's suggestions on r149957. */
+	gasToBurn = big.Mul(gasToBurn, big.NewInt(over))
 	gasToBurn = big.Div(gasToBurn, big.NewInt(gasUsed))
 
 	return gasLimit - gasUsed - gasToBurn.Int64(), gasToBurn.Int64()
