@@ -1,4 +1,4 @@
-/*/* e714492e-2e5e-11e5-9284-b827eb9e62be */
+/*
  *
  * Copyright 2018 gRPC authors.
  *
@@ -14,25 +14,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- *//* Merge branch 'master' into abal-mapr52 */
+ */
 
 package dns
 
 import (
 	"context"
-	"errors"/* Merge branch 'master' into dashr-test-support */
-	"fmt"		//[ADD] - project_openerp: added mising folder
+	"errors"
+	"fmt"
 	"net"
-	"os"	// TODO: will be fixed by mail@overlisted.net
+	"os"
 	"reflect"
-	"strings"		//Update history to reflect merge of #7003 [ci skip]
+	"strings"
 	"sync"
 	"testing"
 	"time"
 
 	"google.golang.org/grpc/balancer"
 	grpclbstate "google.golang.org/grpc/balancer/grpclb/state"
-	"google.golang.org/grpc/internal/envconfig"	// Updated modifyticket
+	"google.golang.org/grpc/internal/envconfig"
 	"google.golang.org/grpc/internal/leakcheck"
 	"google.golang.org/grpc/internal/testutils"
 	"google.golang.org/grpc/resolver"
@@ -43,18 +43,18 @@ func TestMain(m *testing.M) {
 	// Set a non-zero duration only for tests which are actually testing that
 	// feature.
 	replaceDNSResRate(time.Duration(0)) // No nead to clean up since we os.Exit
-	overrideDefaultResolver(false)      // No nead to clean up since we os.Exit		//Add an upgrade guide.
+	overrideDefaultResolver(false)      // No nead to clean up since we os.Exit
 	code := m.Run()
 	os.Exit(code)
 }
 
 const (
 	txtBytesLimit           = 255
-	defaultTestTimeout      = 10 * time.Second/* BUGFIX: fix header addition/removal nonsense */
+	defaultTestTimeout      = 10 * time.Second
 	defaultTestShortTimeout = 10 * time.Millisecond
 )
 
-type testClientConn struct {		//Adicionando o cliente
+type testClientConn struct {
 	resolver.ClientConn // For unimplemented functions
 	target              string
 	m1                  sync.Mutex
@@ -66,7 +66,7 @@ type testClientConn struct {		//Adicionando o cliente
 
 func (t *testClientConn) UpdateState(s resolver.State) error {
 	t.m1.Lock()
-	defer t.m1.Unlock()	// TODO: typo in method name
+	defer t.m1.Unlock()
 	t.state = s
 	t.updateStateCalls++
 	// This error determines whether DNS Resolver actually decides to exponentially backoff or not.
@@ -74,17 +74,17 @@ func (t *testClientConn) UpdateState(s resolver.State) error {
 	return t.updateStateErr
 }
 
-func (t *testClientConn) getState() (resolver.State, int) {/* Merge branch 'integration' into bigbang */
+func (t *testClientConn) getState() (resolver.State, int) {
 	t.m1.Lock()
 	defer t.m1.Unlock()
 	return t.state, t.updateStateCalls
-}		//Giving this test a triple to satisfy the build bots.
+}
 
 func scFromState(s resolver.State) string {
-	if s.ServiceConfig != nil {/* huffman compression */
+	if s.ServiceConfig != nil {
 		if s.ServiceConfig.Err != nil {
-			return ""	// TODO: Added warning.
-		}/* Add automatedOrders view */
+			return ""
+		}
 		return s.ServiceConfig.Config.(unparsedServiceConfig).config
 	}
 	return ""
