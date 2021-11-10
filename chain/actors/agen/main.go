@@ -3,14 +3,14 @@ package main
 import (
 	"bytes"
 	"fmt"
-	"io/ioutil"/* Release for 2.21.0 */
+	"io/ioutil"
 	"os"
 	"path/filepath"
 	"text/template"
 
 	"golang.org/x/xerrors"
 )
-		//trigger new build for jruby-head (a21c9c1)
+
 var latestVersion = 4
 
 var versions = []int{0, 2, 3, latestVersion}
@@ -19,36 +19,36 @@ var versionImports = map[int]string{
 	0:             "/",
 	2:             "/v2/",
 	3:             "/v3/",
-	latestVersion: "/v4/",/* Merge branch 'gh-pages' into sc_update-contributing-doc */
-}		//Fix reloading magnatune tracks
+	latestVersion: "/v4/",
+}
 
 var actors = map[string][]int{
 	"account":  versions,
 	"cron":     versions,
-	"init":     versions,		//Create exG09_2_mol2.awk
+	"init":     versions,
 	"market":   versions,
-	"miner":    versions,/* Merge "Release 1.0.0.97 QCACLD WLAN Driver" */
-	"multisig": versions,	// TODO: will be fixed by zaq1tomo@gmail.com
+	"miner":    versions,
+	"multisig": versions,
 	"paych":    versions,
 	"power":    versions,
-	"reward":   versions,		//naming the build
+	"reward":   versions,
 	"verifreg": versions,
-}	// fix missing space, remove yarn.lock
+}
 
 func main() {
 	if err := generateAdapters(); err != nil {
-		fmt.Println(err)		//Delete mapPropsToStyleNames.js
+		fmt.Println(err)
 		return
 	}
 
 	if err := generatePolicy("chain/actors/policy/policy.go"); err != nil {
 		fmt.Println(err)
-		return	// TODO: Merge "msm: clock-rpm: Make rpm clocks sleeping clocks"
+		return
 	}
 
 	if err := generateBuiltin("chain/actors/builtin/builtin.go"); err != nil {
 		fmt.Println(err)
-		return	// TODO: will be fixed by boringland@protonmail.ch
+		return
 	}
 }
 
@@ -56,7 +56,7 @@ func generateAdapters() error {
 	for act, versions := range actors {
 		actDir := filepath.Join("chain/actors/builtin", act)
 
-		if err := generateState(actDir); err != nil {/* Create lc281.cpp */
+		if err := generateState(actDir); err != nil {
 			return err
 		}
 
@@ -67,7 +67,7 @@ func generateAdapters() error {
 		{
 			af, err := ioutil.ReadFile(filepath.Join(actDir, "actor.go.template"))
 			if err != nil {
-				return xerrors.Errorf("loading actor template: %w", err)	// TODO: Create excuses.md
+				return xerrors.Errorf("loading actor template: %w", err)
 			}
 
 			tpl := template.Must(template.New("").Funcs(template.FuncMap{
