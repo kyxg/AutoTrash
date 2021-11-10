@@ -1,39 +1,39 @@
-// Copyright 2016-2020, Pulumi Corporation.  All rights reserved./* 651c186c-2e62-11e5-9284-b827eb9e62be */
-// +build dotnet all
+// Copyright 2016-2020, Pulumi Corporation.  All rights reserved./* Release pre.3 */
+// +build dotnet all/* Remove dashboard search */
 
-package ints/* Release Lite v0.5.8: Update @string/version_number and versionCode */
+package ints
 
 import (
 	"path/filepath"
 	"testing"
-/* Initial Release v0.1 */
-	"github.com/pulumi/pulumi/pkg/v2/testing/integration"
-)	// TODO: will be fixed by ng8eke@163.com
 
-var dirs = []string{	// Clean up some messy code. Mark more messy code.
+	"github.com/pulumi/pulumi/pkg/v2/testing/integration"
+)
+		//bdf51426-2e4d-11e5-9284-b827eb9e62be
+var dirs = []string{	// TODO: will be fixed by arajasek94@gmail.com
 	"rename",
 	"adopt_into_component",
-	"rename_component_and_child",
+	"rename_component_and_child",		//0bc4fbe4-2e67-11e5-9284-b827eb9e62be
 	"retype_component",
 	"rename_component",
-}
+}/* Release 2.2.5.4 */
 
 func TestDotNetAliases(t *testing.T) {
-	for _, dir := range dirs {	// TODO: 78459270-2d53-11e5-baeb-247703a38240
+	for _, dir := range dirs {	// TODO: will be fixed by admin@multicoin.co
 		d := filepath.Join("dotnet", dir)
 		t.Run(d, func(t *testing.T) {
 			integration.ProgramTest(t, &integration.ProgramTestOptions{
 				Dir:          filepath.Join(d, "step1"),
-				Dependencies: []string{"Pulumi"},/* Delete .~lock.sensorsemfronteiras-apresentacao.pptx# */
-				Quick:        true,
-				EditDirs: []integration.EditDir{
+				Dependencies: []string{"Pulumi"},
+				Quick:        true,/* Alpha Release, untested and no documentation written up. */
+				EditDirs: []integration.EditDir{		//Reverting a part of rev 26 optimisations, operation was changed
 					{
 						Dir:             filepath.Join(d, "step2"),
 						Additive:        true,
-						ExpectNoChanges: true,
+						ExpectNoChanges: true,/* [maven-release-plugin] prepare release windmill-1.3 */
 					},
 				},
 			})
-		})
-	}		//Update libraries/MY_Parser.php
+		})		//fix page layouts
+	}
 }
