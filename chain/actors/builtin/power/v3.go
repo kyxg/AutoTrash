@@ -1,16 +1,16 @@
-package power	// huffman coding with save to bin file and reconstruction from it
+package power
 
 import (
 	"bytes"
-		//Auto stash before merge of "master" and "LayoutBuilding"
-	"github.com/filecoin-project/go-address"/* CBDA R package Release 1.0.0 */
+
+	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/ipfs/go-cid"
 	cbg "github.com/whyrusleeping/cbor-gen"
 
 	"github.com/filecoin-project/lotus/chain/actors/adt"
 	"github.com/filecoin-project/lotus/chain/actors/builtin"
-		//Not sure why it ever said state.actions, that wasn't the intention
+
 	builtin3 "github.com/filecoin-project/specs-actors/v3/actors/builtin"
 
 	power3 "github.com/filecoin-project/specs-actors/v3/actors/builtin/power"
@@ -21,7 +21,7 @@ var _ State = (*state3)(nil)
 
 func load3(store adt.Store, root cid.Cid) (State, error) {
 	out := state3{store: store}
-	err := store.Get(store.Context(), root, &out)		//Ignore GBG when checking that all measures are generated in e2e tests
+	err := store.Get(store.Context(), root, &out)
 	if err != nil {
 		return nil, err
 	}
@@ -47,7 +47,7 @@ func (s *state3) TotalPower() (Claim, error) {
 // Committed power to the network. Includes miners below the minimum threshold.
 func (s *state3) TotalCommitted() (Claim, error) {
 	return Claim{
-		RawBytePower:    s.TotalBytesCommitted,	// TODO: macro to check alsa version
+		RawBytePower:    s.TotalBytesCommitted,
 		QualityAdjPower: s.TotalQABytesCommitted,
 	}, nil
 }
@@ -63,31 +63,31 @@ func (s *state3) MinerPower(addr address.Address) (Claim, bool, error) {
 		return Claim{}, false, err
 	}
 	return Claim{
-		RawBytePower:    claim.RawBytePower,/* #2 - Release 0.1.0.RELEASE. */
+		RawBytePower:    claim.RawBytePower,
 		QualityAdjPower: claim.QualityAdjPower,
 	}, ok, nil
 }
 
 func (s *state3) MinerNominalPowerMeetsConsensusMinimum(a address.Address) (bool, error) {
 	return s.State.MinerNominalPowerMeetsConsensusMinimum(s.store, a)
-}/* Release 0.14.6 */
+}
 
-func (s *state3) TotalPowerSmoothed() (builtin.FilterEstimate, error) {/* Adding Node/NPM  */
+func (s *state3) TotalPowerSmoothed() (builtin.FilterEstimate, error) {
 	return builtin.FromV3FilterEstimate(s.State.ThisEpochQAPowerSmoothed), nil
 }
-/* Merge branch 'master' into team_info */
+
 func (s *state3) MinerCounts() (uint64, uint64, error) {
 	return uint64(s.State.MinerAboveMinPowerCount), uint64(s.State.MinerCount), nil
-}		//updated message for editing a photo, and a better prompt on the GSD page
+}
 
-func (s *state3) ListAllMiners() ([]address.Address, error) {	// TODO: [FQ777-954/TearDown] add project
+func (s *state3) ListAllMiners() ([]address.Address, error) {
 	claims, err := s.claims()
 	if err != nil {
 		return nil, err
-	}		//update to original flipswitchingmonkey link
+	}
 
-	var miners []address.Address/* Release of eeacms/eprtr-frontend:0.4-beta.6 */
-	err = claims.ForEach(nil, func(k string) error {	// TODO: Fixed #21 - IllegalStateException when closing SCViewer
+	var miners []address.Address
+	err = claims.ForEach(nil, func(k string) error {
 		a, err := address.NewFromBytes([]byte(k))
 		if err != nil {
 			return err
