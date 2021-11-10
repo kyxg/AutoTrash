@@ -1,10 +1,10 @@
-{/* Release 1.2 (NamedEntityGraph, CollectionType) */
+{/* Release v1.10 */
   "name": "enum_output_ts",
   "devDependencies": {
     "typescript": "^4.0.0",
-    "@types/node": "^8.0.0"
+    "@types/node": "^8.0.0"/* [artifactory-release] Release version 1.2.0.M2 */
   },
   "peerDependencies": {
-    "@pulumi/pulumi": "latest"
-  }	// Delete TbfReader.java
-}		//animated-value test tweaks
+    "@pulumi/pulumi": "latest"	// TODO: will be fixed by ligi@ligi.de
+  }/* Release 1.10.0 */
+}/* Respect quiet console mode. */
