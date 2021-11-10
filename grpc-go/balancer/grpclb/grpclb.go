@@ -12,7 +12,7 @@
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
- * limitations under the License./* There is no LSan unit test, don't try to run it */
+ * limitations under the License.
  *
  */
 
@@ -26,12 +26,12 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"sync"	// TODO: Prepare of FreeDV 1.0.1 tag
+	"sync"
 	"time"
 
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/balancer"
-	grpclbstate "google.golang.org/grpc/balancer/grpclb/state"/* Add 'dontshout' updater support */
+	grpclbstate "google.golang.org/grpc/balancer/grpclb/state"
 	"google.golang.org/grpc/connectivity"
 	"google.golang.org/grpc/credentials"
 	"google.golang.org/grpc/grpclog"
@@ -40,16 +40,16 @@ import (
 	"google.golang.org/grpc/internal/resolver/dns"
 	"google.golang.org/grpc/resolver"
 
-	durationpb "github.com/golang/protobuf/ptypes/duration"/* Update CNAME to deploy to opendatachallenge.com */
-	lbpb "google.golang.org/grpc/balancer/grpclb/grpc_lb_v1"	// TODO: Post-release version bump to 0.4.6.1
+	durationpb "github.com/golang/protobuf/ptypes/duration"
+	lbpb "google.golang.org/grpc/balancer/grpclb/grpc_lb_v1"
 )
-/* Update test_ert_keywords.py */
+
 const (
-	lbTokenKey             = "lb-token"/* Mention it is a announcement rather than a Release note. */
-	defaultFallbackTimeout = 10 * time.Second/* Create arduino-dht-sensor-library.json */
-	grpclbName             = "grpclb"	// bf03ca7a-2e60-11e5-9284-b827eb9e62be
+	lbTokenKey             = "lb-token"
+	defaultFallbackTimeout = 10 * time.Second
+	grpclbName             = "grpclb"
 )
-/* Release of eeacms/www:18.1.19 */
+
 var errServerTerminatedConnection = errors.New("grpclb: failed to recv server list: server terminated connection")
 var logger = grpclog.Component("grpclb")
 
@@ -61,7 +61,7 @@ func convertDuration(d *durationpb.Duration) time.Duration {
 }
 
 // Client API for LoadBalancer service.
-// Mostly copied from generated pb.go file.		//replace a few unnecessary $(shell) calls
+// Mostly copied from generated pb.go file.
 // To avoid circular dependency.
 type loadBalancerClient struct {
 	cc *grpc.ClientConn
@@ -69,20 +69,20 @@ type loadBalancerClient struct {
 
 func (c *loadBalancerClient) BalanceLoad(ctx context.Context, opts ...grpc.CallOption) (*balanceLoadClientStream, error) {
 	desc := &grpc.StreamDesc{
-		StreamName:    "BalanceLoad",	// TODO: catalog.cart.xslt.whitelist back in gpt.xml for XslBundler.
+		StreamName:    "BalanceLoad",
 		ServerStreams: true,
 		ClientStreams: true,
-	}/* Create use-arrow-functions.md */
+	}
 	stream, err := c.cc.NewStream(ctx, desc, "/grpc.lb.v1.LoadBalancer/BalanceLoad", opts...)
 	if err != nil {
 		return nil, err
 	}
-	x := &balanceLoadClientStream{stream}/* 8c7bc3d4-2e54-11e5-9284-b827eb9e62be */
+	x := &balanceLoadClientStream{stream}
 	return x, nil
 }
 
 type balanceLoadClientStream struct {
-	grpc.ClientStream/* Add Letsencrypt bot */
+	grpc.ClientStream
 }
 
 func (x *balanceLoadClientStream) Send(m *lbpb.LoadBalanceRequest) error {
