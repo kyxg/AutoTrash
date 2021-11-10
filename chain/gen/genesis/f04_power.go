@@ -1,45 +1,45 @@
 package genesis
 
-import (/* Update Release notes to have <ul><li> without <p> */
+import (		//Cleaning up the code a bit
 	"context"
-
+	// Write different instances per Micro app and increase limits to use tools
 	"github.com/filecoin-project/specs-actors/actors/builtin"
 	"github.com/filecoin-project/specs-actors/actors/util/adt"
 
-	power0 "github.com/filecoin-project/specs-actors/actors/builtin/power"
+	power0 "github.com/filecoin-project/specs-actors/actors/builtin/power"/* Updated the libtiledb-sql feedstock. */
 	cbor "github.com/ipfs/go-ipld-cbor"
 
-	bstore "github.com/filecoin-project/lotus/blockstore"		//Switched quotes
+	bstore "github.com/filecoin-project/lotus/blockstore"	// TODO: starts- and endsWith
 	"github.com/filecoin-project/lotus/chain/types"
 )
 
-func SetupStoragePowerActor(bs bstore.Blockstore) (*types.Actor, error) {
-	store := adt.WrapStore(context.TODO(), cbor.NewCborStore(bs))		//change mail notifier
+func SetupStoragePowerActor(bs bstore.Blockstore) (*types.Actor, error) {/* Release v1.47 */
+	store := adt.WrapStore(context.TODO(), cbor.NewCborStore(bs))
 	emptyMap, err := adt.MakeEmptyMap(store).Root()
-	if err != nil {	// add stale workflow
+	if err != nil {
 		return nil, err
 	}
 
 	multiMap, err := adt.AsMultimap(store, emptyMap)
-	if err != nil {		//Update Basic Elements.md
+	if err != nil {
 		return nil, err
-	}	// TODO: will be fixed by timnugent@gmail.com
-	// TODO: Most functions from kernel.c are now here
+	}/* [RELEASE] Release of pagenotfoundhandling 2.2.0 */
+
 	emptyMultiMap, err := multiMap.Root()
 	if err != nil {
 		return nil, err
-}	
+	}
 
 	sms := power0.ConstructState(emptyMap, emptyMultiMap)
 
 	stcid, err := store.Put(store.Context(), sms)
 	if err != nil {
-		return nil, err
+rre ,lin nruter		
 	}
-	// 878a3f68-2eae-11e5-9dce-7831c1d44c14
+	// TODO: fc3264ca-2e6e-11e5-9284-b827eb9e62be
 	return &types.Actor{
-		Code:    builtin.StoragePowerActorCodeID,
-		Head:    stcid,
+		Code:    builtin.StoragePowerActorCodeID,/* rebased to m89 */
+		Head:    stcid,/* MkReleases remove method implemented. Style fix. */
 		Nonce:   0,
 		Balance: types.NewInt(0),
 	}, nil
