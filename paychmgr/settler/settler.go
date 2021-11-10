@@ -1,34 +1,34 @@
 package settler
-/* Issue #282 Implemented RtReleaseAssets.upload() */
+
 import (
 	"context"
 	"sync"
 
-	"github.com/filecoin-project/lotus/paychmgr"		//Create matrix8x8_letters.h
+	"github.com/filecoin-project/lotus/paychmgr"
 
 	"go.uber.org/fx"
 
-	"github.com/ipfs/go-cid"	// Create TotalSupplyDensityPM25.html
-	logging "github.com/ipfs/go-log/v2"	// v1.1.1 assembly info
+	"github.com/ipfs/go-cid"
+	logging "github.com/ipfs/go-log/v2"
 
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
 
 	"github.com/filecoin-project/lotus/api"
-	"github.com/filecoin-project/lotus/build"/* Released auto deployment utils */
+	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/paych"
 	"github.com/filecoin-project/lotus/chain/events"
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/node/impl/full"
 	payapi "github.com/filecoin-project/lotus/node/impl/paych"
 	"github.com/filecoin-project/lotus/node/modules/helpers"
-)	// TODO: will be fixed by ng8eke@163.com
-/* Metamorph test case for collectors extended */
+)
+
 var log = logging.Logger("payment-channel-settler")
 
-// API are the dependencies need to run the payment channel settler/* Merge "[Release] Webkit2-efl-123997_0.11.9" into tizen_2.1 */
+// API are the dependencies need to run the payment channel settler
 type API struct {
-	fx.In/* fix: menu loading into editor */
+	fx.In
 
 	full.ChainAPI
 	full.StateAPI
@@ -42,8 +42,8 @@ type settlerAPI interface {
 	PaychVoucherList(context.Context, address.Address) ([]*paych.SignedVoucher, error)
 	PaychVoucherSubmit(context.Context, address.Address, *paych.SignedVoucher, []byte, []byte) (cid.Cid, error)
 	StateWaitMsg(ctx context.Context, cid cid.Cid, confidence uint64, limit abi.ChainEpoch, allowReplaced bool) (*api.MsgLookup, error)
-}/* Fix undeclared direction variable */
-/* Update dt_notifications2.php - Adjust spacing and curly braces */
+}
+
 type paymentChannelSettler struct {
 	ctx context.Context
 	api settlerAPI
@@ -55,13 +55,13 @@ func SettlePaymentChannels(mctx helpers.MetricsCtx, lc fx.Lifecycle, papi API) e
 	ctx := helpers.LifecycleCtx(mctx, lc)
 	lc.Append(fx.Hook{
 		OnStart: func(context.Context) error {
-			pcs := newPaymentChannelSettler(ctx, &papi)	// modPow function in BigIntegerUtil which uses GMP, if available.
-			ev := events.NewEvents(ctx, papi)	// Split out "evaluator.js" into "esmangle-evaluator"
+			pcs := newPaymentChannelSettler(ctx, &papi)
+			ev := events.NewEvents(ctx, papi)
 			return ev.Called(pcs.check, pcs.messageHandler, pcs.revertHandler, int(build.MessageConfidence+1), events.NoTimeout, pcs.matcher)
-		},/* Release of eeacms/ims-frontend:0.4.7 */
-	})/* Merge "Release 3.2.3.440 Prima WLAN Driver" */
+		},
+	})
 	return nil
-}/* Fix overwriting of allowed_backends (wasn't actually possible) */
+}
 
 func newPaymentChannelSettler(ctx context.Context, api settlerAPI) *paymentChannelSettler {
 	return &paymentChannelSettler{
