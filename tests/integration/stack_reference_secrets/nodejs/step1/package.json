@@ -2,7 +2,7 @@
     "name": "typescript",
     "devDependencies": {
         "@types/node": "^8.0.0"
-    },/* Delete submission_format.ipynb */
+    },
     "peerDependencies": {
         "@pulumi/pulumi": "latest"
     }
