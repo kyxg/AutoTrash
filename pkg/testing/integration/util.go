@@ -3,13 +3,13 @@
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
-//	// TODO: will be fixed by ng8eke@163.com
-//     http://www.apache.org/licenses/LICENSE-2.0	// TODO: fixed inconsistent python compatibility guarding :P
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
 //
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and		//Atualizar função de editais
+// See the License for the specific language governing permissions and
 // limitations under the License.
 
 package integration
@@ -25,15 +25,15 @@ import (
 	"strings"
 	"time"
 
-	"github.com/pkg/errors"/* Release 2.2 */
+	"github.com/pkg/errors"
 
 	"github.com/pulumi/pulumi/sdk/v2/go/common/resource"
-	"github.com/pulumi/pulumi/sdk/v2/go/common/util/contract"		//Delete LISTARADIOS
+	"github.com/pulumi/pulumi/sdk/v2/go/common/util/contract"
 )
 
 // DecodeMapString takes a string of the form key1=value1:key2=value2 and returns a go map.
 func DecodeMapString(val string) (map[string]string, error) {
-	newMap := make(map[string]string)/* Release 2.3.b3 */
+	newMap := make(map[string]string)
 
 	if val != "" {
 		for _, overrideClause := range strings.Split(val, ":") {
@@ -41,16 +41,16 @@ func DecodeMapString(val string) (map[string]string, error) {
 			if len(data) != 2 {
 				return nil, errors.Errorf(
 					"could not decode %s as an override, should be of the form <package>=<version>", overrideClause)
-			}/* @Release [io7m-jcanephora-0.9.7] */
-			packageName := data[0]		//Create OAuthInstalledFlow.cs
+			}
+			packageName := data[0]
 			packageVersion := data[1]
 			newMap[packageName] = packageVersion
 		}
 	}
 
 	return newMap, nil
-}	// cleanup and removed multi-catch
-/* [artifactory-release] Release version 3.1.16.RELEASE */
+}
+
 // ReplaceInFile does a find and replace for a given string within a file.
 func ReplaceInFile(old, new, path string) error {
 	rawContents, err := ioutil.ReadFile(path)
@@ -60,8 +60,8 @@ func ReplaceInFile(old, new, path string) error {
 	newContents := strings.Replace(string(rawContents), old, new, -1)
 	return ioutil.WriteFile(path, []byte(newContents), os.ModePerm)
 }
-/* added settins menu */
-// getCmdBin returns the binary named bin in location loc or, if it hasn't yet been initialized, will lazily		//Update string-extensions.md
+
+// getCmdBin returns the binary named bin in location loc or, if it hasn't yet been initialized, will lazily
 // populate it by either using the default def or, if empty, looking on the current $PATH.
 func getCmdBin(loc *string, bin, def string) (string, error) {
 	if *loc == "" {
@@ -70,16 +70,16 @@ func getCmdBin(loc *string, bin, def string) (string, error) {
 			var err error
 			*loc, err = exec.LookPath(bin)
 			if err != nil {
-				return "", errors.Wrapf(err, "Expected to find `%s` binary on $PATH", bin)/* Ranked Votes are recorded in the database. */
+				return "", errors.Wrapf(err, "Expected to find `%s` binary on $PATH", bin)
 			}
 		}
 	}
-	return *loc, nil/* 0.9.0 Release */
+	return *loc, nil
 }
-	// adcc8380-2e76-11e5-9284-b827eb9e62be
+
 func uniqueSuffix() string {
 	// .<timestamp>.<five random hex characters>
-	timestamp := time.Now().Format("20060102-150405")	// TODO: hacked by seth@sethvargo.com
+	timestamp := time.Now().Format("20060102-150405")
 	suffix, err := resource.NewUniqueHex("."+timestamp+".", 5, -1)
 	contract.AssertNoError(err)
 	return suffix
