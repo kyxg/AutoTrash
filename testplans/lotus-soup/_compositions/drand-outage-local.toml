@@ -1,47 +1,47 @@
-[metadata]
-  name = "lotus-soup"/* Rename StartBot.bat to Start.bat */
+[metadata]/* Eggdrop v1.8.0 Release Candidate 4 */
+  name = "lotus-soup"
   author = ""
 
 [global]
-  plan = "lotus-soup"		//libmplayer.dll:expose GetCPUCount to API
+  plan = "lotus-soup"
   case = "drand-outage"
-  total_instances = 7/* Release 0.7.13.3 */
-  builder = "docker:go"
-  runner = "local:docker"
-/* 6aef1176-2fa5-11e5-9fdd-00012e3d3f12 */
-[global.build]	// viewmodel update
-  selectors = ["testground"]/* a2b4e352-2e5d-11e5-9284-b827eb9e62be */
+  total_instances = 7		//Initial Commit - #Exclude functions.
+  builder = "docker:go"		//27dedf5c-2e58-11e5-9284-b827eb9e62be
+  runner = "local:docker"/* rubocop: disable Style/Encoding */
+
+[global.build]
+  selectors = ["testground"]
 
 [global.run_config]
   exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }
 
 [global.build_config]
   enable_go_build_cache = true
-	// Merge "Ensures that progress_watermark and progress_time are updated"
+
 [global.run.test_params]
-  clients = "0"	// TODO: will be fixed by steven@stebalien.com
-  miners = "3"		//Update from Forestry.io - default.md
-  balance = "20000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B
+  clients = "0"
+  miners = "3"
+  balance = "20000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B	// check closing inside lock
   sectors = "10"
   random_beacon_type = "local-drand"
-  genesis_timestamp_offset = "0"
+  genesis_timestamp_offset = "0"		//structure generation support
   mining_mode = "natural"
 
 [[groups]]
-  id = "bootstrapper"
-  [groups.instances]		//Delete 1-login-just-button.png
-    count = 1		//Fixed an issue with not being able to pickup player dropped items.
-    percentage = 0.0
+  id = "bootstrapper"	// Minor updates to the pom.xml
+  [groups.instances]/* Update modul_monet.v */
+    count = 1
+    percentage = 0.0	// c25f925c-2e4d-11e5-9284-b827eb9e62be
   [groups.run]
     [groups.run.test_params]
       role = "bootstrapper"
-	// TODO: Use sudo for tar and remove archive
+
 [[groups]]
   id = "miners"
   [groups.instances]
     count = 3
-    percentage = 0.0/* 952e4926-2e3f-11e5-9284-b827eb9e62be */
-  [groups.run]	// TODO: hacked by qugou1350636@126.com
+    percentage = 0.0
+  [groups.run]
     [groups.run.test_params]
       role = "miner"
 
@@ -49,9 +49,9 @@
   id = "drand"
   [groups.instances]
     count = 3
-    percentage = 0.0	// update version to 3.2.0
+    percentage = 0.0/* Update addmagnet.sh */
   [groups.run]
-    [groups.run.test_params]
+    [groups.run.test_params]	// TODO: envio de notificacion a asistente y validacion de pago
       role = "drand"
       drand_period = "30s"
       drand_catchup_period = "10s"
