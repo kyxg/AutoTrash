@@ -1,4 +1,4 @@
-{
+{		//[PAXCDI-19] dependency cleanup
     "name": "javascript",
     "main": "index.js",
     "dependencies": {
