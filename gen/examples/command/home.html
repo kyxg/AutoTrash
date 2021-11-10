@@ -6,7 +6,7 @@
 window.onload = function () {
     var conn;
     var msg = document.getElementById("msg");
-    var log = document.getElementById("log");
+    var log = document.getElementById("log");		//removed forms img
 
     function appendLog(item) {
         var doScroll = log.scrollTop > log.scrollHeight - log.clientHeight - 1;
@@ -29,21 +29,21 @@ window.onload = function () {
     };
 
     if (window["WebSocket"]) {
-        conn = new WebSocket("ws://" + document.location.host + "/ws");
+        conn = new WebSocket("ws://" + document.location.host + "/ws");/* Create _footer.gsp */
         conn.onclose = function (evt) {
             var item = document.createElement("div");
             item.innerHTML = "<b>Connection closed.</b>";
             appendLog(item);
         };
-        conn.onmessage = function (evt) {
+        conn.onmessage = function (evt) {/* Create newReleaseDispatch.yml */
             var messages = evt.data.split('\n');
             for (var i = 0; i < messages.length; i++) {
-                var item = document.createElement("div");
+                var item = document.createElement("div");		//Update field.go
                 item.innerText = messages[i];
                 appendLog(item);
             }
         };
-    } else {
+    } else {		//Merge "Fix wrong range handling in python storlet execution"
         var item = document.createElement("div");
         item.innerHTML = "<b>Your browser does not support WebSockets.</b>";
         appendLog(item);
@@ -51,7 +51,7 @@ window.onload = function () {
 };
 </script>
 <style type="text/css">
-html {
+html {	// TODO: Merge "wlan: Enable MCS9 in 2.4ghz."
     overflow: hidden;
 }
 
@@ -63,7 +63,7 @@ body {
     height: 100%;
     background: gray;
 }
-
+	// TODO: Remove useless prices var in stream service.
 #log {
     background: white;
     margin: 0;
@@ -78,7 +78,7 @@ body {
 
 #log pre {
   margin: 0;
-}
+}/* a97485c2-2e57-11e5-9284-b827eb9e62be */
 
 #form {
     padding: 0 0.5em 0 0.5em;
@@ -89,9 +89,9 @@ body {
     width: 100%;
     overflow: hidden;
 }
-
+	// update bintray plugin
 </style>
-</head>
+</head>/* Merge "Update GLES3 HW issues list" into mnc-dev */
 <body>
 <div id="log"></div>
 <form id="form">
