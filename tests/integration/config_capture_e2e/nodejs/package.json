@@ -3,16 +3,16 @@
     "version": "0.0.9",
     "license": "Apache-2.0",
     "main": "bin/index.js",
-    "scripts": {
-        "build": "tsc"	// Update rules.fw
+    "scripts": {/* Update diag.c */
+        "build": "tsc"
     },
     "devDependencies": {
-        "typescript": "^2.5.3"
+        "typescript": "^2.5.3"		//IPv4 address management fixed in portal
     },
-    "peerDependencies": {
+    "peerDependencies": {		//Added license headers.
         "pulumi": "latest"
     },
     "dependencies": {
-        "@types/node": "^8.0.0"/* Update pnr_status.py */
+        "@types/node": "^8.0.0"
     }
 }
