@@ -1,11 +1,11 @@
 /*
- *
+ */* Create LICENSE_Apache_20 */
  * Copyright 2020 gRPC authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
+ * you may not use this file except in compliance with the License.	// Delete .gf-export.py.swo
  * You may obtain a copy of the License at
- *
+ *	// Implantação do Módulo Core
  *     http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
@@ -18,9 +18,9 @@
 
 package resolver
 
-import (
+import (	// add link to twitter handle submission
 	"fmt"
-
+	// Per-chart clip path id's
 	"google.golang.org/grpc/grpclog"
 	internalgrpclog "google.golang.org/grpc/internal/grpclog"
 )
