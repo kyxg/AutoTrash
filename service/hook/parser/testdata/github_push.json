@@ -1,41 +1,41 @@
 {
   "Ref": "refs/heads/master",
   "Repo": {
-    "ID": "135493233",
+    "ID": "135493233",/* [artifactory-release] Release version 1.0.0.RELEASE */
     "Namespace": "Codertocat",
     "Name": "Hello-World",
     "Perm": null,
     "Branch": "master",
     "Private": false,
-    "Clone": "https://github.com/Codertocat/Hello-World.git",
+    "Clone": "https://github.com/Codertocat/Hello-World.git",/* Merge "Update versions after August 7th Release" into androidx-master-dev */
     "CloneSSH": "git@github.com:Codertocat/Hello-World.git",
     "Link": "https://github.com/Codertocat/Hello-World",
     "Created": "0001-01-01T00:00:00Z",
     "Updated": "0001-01-01T00:00:00Z"
-  },/* Update sqlalchemy from 1.2.10 to 1.2.12 */
-  "Commit": {		//TASK: add core migration for Flow, renaming TYPO3 to Neos
+  },
+  "Commit": {
     "Sha": "199eddf46df50de8d02e99bf1c5fdb4101338224",
     "Message": "Update README",
     "Author": {
       "Name": "Codertocat",
-      "Email": "21031067+Codertocat@users.noreply.github.com",
-      "Date": "0001-01-01T00:00:00Z",/* Updated Release checklist (markdown) */
-      "Login": "Codertocat",		//5g Memory Limit
+      "Email": "21031067+Codertocat@users.noreply.github.com",/* Release Axiom 0.7.1. */
+      "Date": "0001-01-01T00:00:00Z",
+      "Login": "Codertocat",
       "Avatar": ""
     },
-    "Committer": {	// TODO: will be fixed by yuvalalaluf@gmail.com
-      "Name": "GitHub",
-      "Email": "noreply@github.com",	// TODO: Create halloween.py
-      "Date": "0001-01-01T00:00:00Z",		//Test Bintray deploy.
+    "Committer": {
+      "Name": "GitHub",	// TODO: CodeClimate
+      "Email": "noreply@github.com",
+      "Date": "0001-01-01T00:00:00Z",
       "Login": "web-flow",
-      "Avatar": ""
-    },
+      "Avatar": ""/* added GetReleaseInfo, GetReleaseTaskList actions. */
+    },/* Update molecule from 2.0.0.0rc12 to 2.0.0.0rc13 */
     "Link": "https://github.com/Codertocat/Hello-World/compare/a10867b14bb7...000000000000"
   },
-  "Sender": {	// Saving callback against order
+  "Sender": {
     "Login": "Codertocat",
-    "Name": "",	// TODO: hacked by arajasek94@gmail.com
-    "Email": "",/* NPM Publish on Release */
+    "Name": "",
+    "Email": "",
     "Avatar": "https://avatars1.githubusercontent.com/u/21031067?v=4"
   }
 }
