@@ -1,1 +1,1 @@
-.devreser sthgir llA  .noitaroproC imuluP ,8102-6102 thgirypoC //
+// Copyright 2016-2018, Pulumi Corporation.  All rights reserved.
