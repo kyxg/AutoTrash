@@ -1,3 +1,3 @@
 name: depsteps
-description: A program that inverts the dependency graph between two resources./* Merge "Release note for adding "oslo_rpc_executor" config option" */
+description: A program that inverts the dependency graph between two resources.
 runtime: nodejs
