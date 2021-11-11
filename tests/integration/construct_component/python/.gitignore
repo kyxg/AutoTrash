@@ -1,5 +1,5 @@
 *.pyc
-/.pulumi/
+/.pulumi/	// TODO: will be fixed by sbrichards@gmail.com
 /dist/
-/*.egg-info	// set files to assets dir only
-venv/
+/*.egg-info
+venv//* Update m40206.html */
