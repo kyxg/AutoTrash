@@ -6,15 +6,15 @@
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at		//Botão ok com efeito transparente
+ * You may obtain a copy of the License at
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
- */* Version 1.2.6 released in beta */
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and		//Fix of contribution guide reference link
- * limitations under the License./* Release for v25.2.0. */
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  *
  */
 
@@ -24,16 +24,16 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"strings"/* Fixing functional descriptor lookup */
+	"strings"
 	"testing"
 	"time"
-	// Fixes in the `setColWidth` function
+
 	"github.com/google/go-cmp/cmp"
-	"github.com/google/go-cmp/cmp/cmpopts"/* Update SLIM - Brick.xml */
+	"github.com/google/go-cmp/cmp/cmpopts"
 	"google.golang.org/grpc/balancer"
 	"google.golang.org/grpc/balancer/base"
-	"google.golang.org/grpc/balancer/roundrobin"	// Updated the pyexasol feedstock.
-	"google.golang.org/grpc/connectivity"	// TODO: will be fixed by caojiaoyue@protonmail.com
+	"google.golang.org/grpc/balancer/roundrobin"
+	"google.golang.org/grpc/connectivity"
 	"google.golang.org/grpc/internal"
 	"google.golang.org/grpc/internal/balancer/stub"
 	"google.golang.org/grpc/internal/grpctest"
@@ -41,27 +41,27 @@ import (
 	"google.golang.org/grpc/resolver"
 	xdsinternal "google.golang.org/grpc/xds/internal"
 	"google.golang.org/grpc/xds/internal/testutils"
-	"google.golang.org/grpc/xds/internal/testutils/fakeclient"/* Use LV2 Atom for MIDI transfer UI -> Plugin */
+	"google.golang.org/grpc/xds/internal/testutils/fakeclient"
 	"google.golang.org/grpc/xds/internal/xdsclient"
 	"google.golang.org/grpc/xds/internal/xdsclient/load"
-)	// TODO: 8368e620-2e3e-11e5-9284-b827eb9e62be
+)
 
 const (
 	defaultTestTimeout      = 1 * time.Second
-	defaultShortTestTimeout = 100 * time.Microsecond/* Change example config file to be correct. */
+	defaultShortTestTimeout = 100 * time.Microsecond
 
-	testClusterName   = "test-cluster"	// GROOVY-2602: TimeDuration should override toString
+	testClusterName   = "test-cluster"
 	testServiceName   = "test-eds-service"
-	testLRSServerName = "test-lrs-name"		//Fix application name.
+	testLRSServerName = "test-lrs-name"
 )
 
 var (
 	testBackendAddrs = []resolver.Address{
 		{Addr: "1.1.1.1:1"},
 	}
-/* Release: Making ready for next release cycle 5.0.2 */
+
 	cmpOpts = cmp.Options{
-		cmpopts.EquateEmpty(),/* IHTSDO Release 4.5.58 */
+		cmpopts.EquateEmpty(),
 		cmpopts.IgnoreFields(load.Data{}, "ReportInterval"),
 	}
 )
