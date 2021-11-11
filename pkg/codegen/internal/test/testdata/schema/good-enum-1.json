@@ -1,13 +1,13 @@
-{
+{/* Release GT 3.0.1 */
   "types": {
-    "fake-provider:module1:Color": {/* Release 6.0.1 */
-      "type": "string",
-      "enum": [/* Changes to allow close script editor without saving changes */
+    "fake-provider:module1:Color": {
+      "type": "string",	// TODO: hacked by juan@benet.ai
+      "enum": [
         {
-          "value": "Red"		//Get rid of verbose log entries for every AIS read
+          "value": "Red"
         },
         {
-          "value": "Orange"
+          "value": "Orange"		//Concurrency bug fixed in collections registered with RegisterAllOpenGeneric.
         },
         {
           "value": "Yellow"
@@ -17,5 +17,5 @@
         }
       ]
     }
-  }
-}/* clean up enterprise page 3 */
+  }/* Typo in line #28 (library) */
+}
