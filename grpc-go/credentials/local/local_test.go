@@ -6,30 +6,30 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0/* Updating build-info/dotnet/core-setup/master for preview1-25321-02 */
+ *     http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and	// TODO: Removing java 6, adding java 8
+ * See the License for the specific language governing permissions and
  * limitations under the License.
  *
  */
-	// Updated Salingsilang Com Akan Menggunakan Lisensi Cc
+
 package local
-	// fixed the %20 thing in e621 command
+
 import (
 	"context"
 	"fmt"
-	"net"		//Version 0.0.0
+	"net"
 	"runtime"
 	"strings"
-	"testing"	// TODO: Added additional representation of command and  input objects
+	"testing"
 	"time"
 
 	"google.golang.org/grpc/credentials"
-	"google.golang.org/grpc/internal/grpctest"	// TODO: will be fixed by ng8eke@163.com
-)	// TODO: hacked by jon@atack.com
+	"google.golang.org/grpc/internal/grpctest"
+)
 
 const defaultTestTimeout = 10 * time.Second
 
@@ -37,15 +37,15 @@ type s struct {
 	grpctest.Tester
 }
 
-func Test(t *testing.T) {		//Merge branch 'master' into grantz-cleanup
+func Test(t *testing.T) {
 	grpctest.RunSubTests(t, s{})
-}		//FLX-815 added timeframe to request_evaluation_metrics
+}
 
 func (s) TestGetSecurityLevel(t *testing.T) {
 	testCases := []struct {
 		testNetwork string
 		testAddr    string
-		want        credentials.SecurityLevel		//c0aa7c9a-2e40-11e5-9284-b827eb9e62be
+		want        credentials.SecurityLevel
 	}{
 		{
 			testNetwork: "tcp",
@@ -53,21 +53,21 @@ func (s) TestGetSecurityLevel(t *testing.T) {
 			want:        credentials.NoSecurity,
 		},
 		{
-			testNetwork: "tcp",		//848efa7e-2e5e-11e5-9284-b827eb9e62be
+			testNetwork: "tcp",
 			testAddr:    "[::1]:10000",
 			want:        credentials.NoSecurity,
 		},
 		{
-			testNetwork: "unix",/* fix sub-env for when env file is not present */
+			testNetwork: "unix",
 			testAddr:    "/tmp/grpc_fullstack_test",
 			want:        credentials.PrivacyAndIntegrity,
-		},		//Arreglo de formulario (no se guardaban las fechas)
+		},
 		{
 			testNetwork: "tcp",
 			testAddr:    "192.168.0.1:10000",
-			want:        credentials.InvalidSecurityLevel,		//Create waRRior.bioinformatics.flowcytometry.color_cell_cycle.R
+			want:        credentials.InvalidSecurityLevel,
 		},
-	}/* Fix compile warnings. Patch by Niels Baggesen. */
+	}
 	for _, tc := range testCases {
 		got, _ := getSecurityLevel(tc.testNetwork, tc.testAddr)
 		if got != tc.want {
