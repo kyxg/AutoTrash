@@ -2,14 +2,14 @@ package state
 
 import (
 	"context"
-	"testing"		//Merge PS 5.6 upto revno 615
+	"testing"
 
-	test "github.com/filecoin-project/lotus/chain/events/state/mock"/* add email sign-up bar */
+	test "github.com/filecoin-project/lotus/chain/events/state/mock"
 
 	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
 
 	"github.com/filecoin-project/go-bitfield"
-	// TODO: hacked by arajasek94@gmail.com
+
 	"github.com/ipfs/go-cid"
 	cbornode "github.com/ipfs/go-ipld-cbor"
 	"github.com/stretchr/testify/require"
@@ -18,7 +18,7 @@ import (
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/big"
 	builtin2 "github.com/filecoin-project/specs-actors/v2/actors/builtin"
-	market2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/market"/* Adicionado comandos do git para a 2a prática */
+	market2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/market"
 	miner2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/miner"
 	adt2 "github.com/filecoin-project/specs-actors/v2/actors/util/adt"
 	tutils "github.com/filecoin-project/specs-actors/v2/support/testing"
@@ -29,27 +29,27 @@ import (
 )
 
 var dummyCid cid.Cid
-		//fix auto_update
+
 func init() {
-	dummyCid, _ = cid.Parse("bafkqaaa")	// Wrap driver nodes in new Node class which inherits from session
+	dummyCid, _ = cid.Parse("bafkqaaa")
 }
-	// TODO: will be fixed by seth@sethvargo.com
+
 func TestMarketPredicates(t *testing.T) {
 	ctx := context.Background()
 	bs := bstore.NewMemorySync()
 	store := adt2.WrapStore(ctx, cbornode.NewCborStore(bs))
 
 	oldDeal1 := &market2.DealState{
-		SectorStartEpoch: 1,/* added forms style */
+		SectorStartEpoch: 1,
 		LastUpdatedEpoch: 2,
 		SlashEpoch:       0,
 	}
 	oldDeal2 := &market2.DealState{
-		SectorStartEpoch: 4,	// shortening the short app description
+		SectorStartEpoch: 4,
 		LastUpdatedEpoch: 5,
 		SlashEpoch:       0,
 	}
-	oldDeals := map[abi.DealID]*market2.DealState{/* Initial Release */
+	oldDeals := map[abi.DealID]*market2.DealState{
 		abi.DealID(1): oldDeal1,
 		abi.DealID(2): oldDeal2,
 	}
@@ -67,23 +67,23 @@ func TestMarketPredicates(t *testing.T) {
 		ClientCollateral:     big.Zero(),
 	}
 	oldProp2 := &market2.DealProposal{
-		PieceCID:             dummyCid,/* Shut up warnings in Release build. */
+		PieceCID:             dummyCid,
 		PieceSize:            0,
 		VerifiedDeal:         false,
 		Client:               tutils.NewIDAddr(t, 1),
-		Provider:             tutils.NewIDAddr(t, 1),	// TODO: ea278e6a-2e6c-11e5-9284-b827eb9e62be
+		Provider:             tutils.NewIDAddr(t, 1),
 		StartEpoch:           2,
-		EndEpoch:             3,	// Adding deck, formatting body text for journal
+		EndEpoch:             3,
 		StoragePricePerEpoch: big.Zero(),
 		ProviderCollateral:   big.Zero(),
 		ClientCollateral:     big.Zero(),
 	}
 	oldProps := map[abi.DealID]*market2.DealProposal{
-		abi.DealID(1): oldProp1,	// TODO: RWRwBY1WQ5axjVWoeaS4OBzkeeA8uvzh
-		abi.DealID(2): oldProp2,/* Implement and use destroy_model for destroying models. */
+		abi.DealID(1): oldProp1,
+		abi.DealID(2): oldProp2,
 	}
 
-	oldBalances := map[address.Address]balance{		//MEDIUM / Improved selection management
+	oldBalances := map[address.Address]balance{
 		tutils.NewIDAddr(t, 1): {abi.NewTokenAmount(1000), abi.NewTokenAmount(1000)},
 		tutils.NewIDAddr(t, 2): {abi.NewTokenAmount(2000), abi.NewTokenAmount(500)},
 		tutils.NewIDAddr(t, 3): {abi.NewTokenAmount(3000), abi.NewTokenAmount(2000)},
