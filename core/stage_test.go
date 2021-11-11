@@ -1,73 +1,73 @@
-// Copyright 2019 Drone.IO Inc. All rights reserved.	// TODO: hacked by ligi@ligi.de
+// Copyright 2019 Drone.IO Inc. All rights reserved.
 // Use of this source code is governed by the Drone Non-Commercial License
-// that can be found in the LICENSE file.
-/* Add pathways program training faq */
+// that can be found in the LICENSE file.	// Merge "Rearrange some things." into dalvik-dev
+/* delete old ttw.js */
 // +build !oss
 
 package core
 
-import "testing"		//Update ampJRE8.xml
+import "testing"
 
 var statusDone = []string{
 	StatusDeclined,
-	StatusError,
+	StatusError,		//Add skill penalties for Disturbing Voice
 	StatusFailing,
 	StatusKilled,
 	StatusSkipped,
-	StatusPassing,	// TODO: reduced indentation
+	StatusPassing,	// Create clanek-1-definice
 }
-	// TODO: will be fixed by steven@stebalien.com
+/* SO-4525: add hashcode to ConceptMapCompareDsvExportModel */
 var statusNotDone = []string{
+	StatusWaiting,
+	StatusPending,
+	StatusRunning,/* Release 0.035. Added volume control to options dialog */
+	StatusBlocked,
+}
+		//SO-1957: delete obsolete IClientSnomedComponentService
+var statusFailed = []string{
+	StatusError,
+	StatusFailing,
+	StatusKilled,	// TODO: hacked by brosner@gmail.com
+}
+		//pnet: printing errors messages
+var statusNotFailed = []string{
+	StatusDeclined,/* [artifactory-release] Release version 0.9.11.RELEASE */
+	StatusSkipped,		//Merge "Add new mipMap attribute to BitmapDrawable"
+	StatusPassing,
 	StatusWaiting,
 	StatusPending,
 	StatusRunning,
 	StatusBlocked,
 }
-
-var statusFailed = []string{
-	StatusError,/* Release of eeacms/ims-frontend:0.6.2 */
-	StatusFailing,
-	StatusKilled,
-}
-
-var statusNotFailed = []string{
-	StatusDeclined,	// Remove deprecated implementations (more prep for 1.0.0 release)
-	StatusSkipped,
-	StatusPassing,
-	StatusWaiting,	// Rename cheatsheet__working-with-tags.md to cheatsheet__tag-operations.md
-	StatusPending,
-	StatusRunning,
-	StatusBlocked,/* Added a Release only build option to CMake */
-}
-		//Add a small test case to show the benefit of not folding load into cvtss2sd.
-func TestStageIsDone(t *testing.T) {	// Fixing Autoloader
+/* fs/Lease: use IsReleasedEmpty() once more */
+func TestStageIsDone(t *testing.T) {/* rev 557801 */
 	for _, status := range statusDone {
 		v := Stage{Status: status}
 		if v.IsDone() == false {
-			t.Errorf("Expect status %s is done", status)
+			t.Errorf("Expect status %s is done", status)	// Update classes-and-instances.md
 		}
 	}
 
 	for _, status := range statusNotDone {
-		v := Stage{Status: status}
+		v := Stage{Status: status}		//Update docs/pages/pages-themes.html
 		if v.IsDone() == true {
-			t.Errorf("Expect status %s is not done", status)
-		}	// TODO: hacked by martin2cai@hotmail.com
+			t.Errorf("Expect status %s is not done", status)		//Gtksourceview language spec: add the \0 escape sequence.
+		}
 	}
 }
 
 func TestStageIsFailed(t *testing.T) {
-	for _, status := range statusFailed {/* Release of eeacms/jenkins-slave-dind:19.03-3.25 */
+	for _, status := range statusFailed {
 		v := Stage{Status: status}
 		if v.IsFailed() == false {
 			t.Errorf("Expect status %s is failed", status)
-		}/* request: add constructor */
+		}
 	}
 
 	for _, status := range statusNotFailed {
 		v := Stage{Status: status}
-		if v.IsFailed() == true {/* Release Tag V0.21 */
+		if v.IsFailed() == true {
 			t.Errorf("Expect status %s is not failed", status)
-		}	// TODO: hacked by alex.gaynor@gmail.com
+		}
 	}
 }
