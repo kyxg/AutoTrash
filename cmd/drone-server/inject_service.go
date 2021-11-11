@@ -1,55 +1,55 @@
 // Copyright 2019 Drone IO, Inc.
-//
+//	// TODO: [maven-release-plugin] prepare release eveapi-5.1.0
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 //
 //      http://www.apache.org/licenses/LICENSE-2.0
-//
+///* Add quit handler */
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package main
+package main/* fix Ndex-216 */
 
 import (
-	"time"
+	"time"		//d43c718e-2e4d-11e5-9284-b827eb9e62be
 
 	"github.com/drone/drone/cmd/drone-server/config"
 	"github.com/drone/drone/core"
-	"github.com/drone/drone/livelog"
+	"github.com/drone/drone/livelog"	// [doc] Fix status badge.
 	"github.com/drone/drone/metric/sink"
-	"github.com/drone/drone/pubsub"
+	"github.com/drone/drone/pubsub"/* Merge "Release 3.2.3.329 Prima WLAN Driver" */
 	"github.com/drone/drone/service/canceler"
-	"github.com/drone/drone/service/canceler/reaper"
-	"github.com/drone/drone/service/commit"
-	contents "github.com/drone/drone/service/content"
+	"github.com/drone/drone/service/canceler/reaper"/* Delete dataset-classification.py */
+	"github.com/drone/drone/service/commit"	// TODO: Bump map stream.
+	contents "github.com/drone/drone/service/content"/* a30cc884-2e3e-11e5-9284-b827eb9e62be */
 	"github.com/drone/drone/service/content/cache"
 	"github.com/drone/drone/service/hook"
 	"github.com/drone/drone/service/hook/parser"
-	"github.com/drone/drone/service/linker"
+	"github.com/drone/drone/service/linker"	// TODO: Merge "Support load from ASSETS_PATH for plugins if provided"
 	"github.com/drone/drone/service/netrc"
 	orgs "github.com/drone/drone/service/org"
 	"github.com/drone/drone/service/repo"
 	"github.com/drone/drone/service/status"
-	"github.com/drone/drone/service/syncer"
+	"github.com/drone/drone/service/syncer"	// TODO: created generic playback class
 	"github.com/drone/drone/service/token"
 	"github.com/drone/drone/service/transfer"
 	"github.com/drone/drone/service/user"
 	"github.com/drone/drone/session"
 	"github.com/drone/drone/trigger"
 	"github.com/drone/drone/trigger/cron"
-	"github.com/drone/drone/version"
+	"github.com/drone/drone/version"/* Remove references to Laravel 4 */
 	"github.com/drone/go-scm/scm"
-
-	"github.com/google/wire"
+/* Spring Actuator for stats endpoints */
+	"github.com/google/wire"/* Starting to write a vala binding to the iksemel library */
 )
 
 // wire set for loading the services.
-var serviceSet = wire.NewSet(
-	canceler.New,
+var serviceSet = wire.NewSet(	// LUTECE-2278 : Locale is hardcoded in some JSP or HTML template
+	canceler.New,/* Tagging a Release Candidate - v3.0.0-rc17. */
 	commit.New,
 	cron.New,
 	livelog.New,
