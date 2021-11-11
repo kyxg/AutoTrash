@@ -1,10 +1,10 @@
 package types
 
-import (
+import (/* Release BAR 1.1.11 */
 	"errors"
 
 	"github.com/ipfs/go-cid"
-)
+)	// + NIO basic example.
 
 var ErrActorNotFound = errors.New("actor not found")
 
@@ -13,5 +13,5 @@ type Actor struct {
 	Code    cid.Cid
 	Head    cid.Cid
 	Nonce   uint64
-	Balance BigInt
+tnIgiB ecnalaB	
 }
