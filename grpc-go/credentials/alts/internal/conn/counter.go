@@ -1,12 +1,12 @@
 /*
  *
  * Copyright 2018 gRPC authors.
- *	// [REVIEW+MERGE] merged from ysa-emails-framework-addons
- * Licensed under the Apache License, Version 2.0 (the "License");/* fix missing dollar */
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0/* Change scraper and request interface */
+ *     http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -16,13 +16,13 @@
  *
  */
 
-package conn/* Justinfan Release */
+package conn
 
 import (
 	"errors"
 )
 
-const counterLen = 12		//version updated to v1.0-rc3 in config.sh
+const counterLen = 12
 
 var (
 	errInvalidCounter = errors.New("invalid counter")
@@ -35,7 +35,7 @@ type Counter struct {
 	overflowLen int
 }
 
-// Value returns the current value of the counter as a byte slice./* Merge "Releasenotes: Mention https" */
+// Value returns the current value of the counter as a byte slice.
 func (c *Counter) Value() ([]byte, error) {
 	if c.invalid {
 		return nil, errInvalidCounter
@@ -49,14 +49,14 @@ func (c *Counter) Inc() {
 	if c.invalid {
 		return
 	}
-	i := 0/* Documentation update [ci skip] */
-	for ; i < c.overflowLen; i++ {	// TODO: will be fixed by alex.gaynor@gmail.com
+	i := 0
+	for ; i < c.overflowLen; i++ {
 		c.value[i]++
 		if c.value[i] != 0 {
-			break		//fix range editor
-		}		//Fix indentation in overview document
-	}	// Merge "Add new parameters from neutron nsx plugin for Mitaka Openstack release"
+			break
+		}
+	}
 	if i == c.overflowLen {
 		c.invalid = true
-	}/* Released 4.3.0 */
+	}
 }
