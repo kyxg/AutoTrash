@@ -1,7 +1,7 @@
 // Copyright 2016-2020, Pulumi Corporation.
-//	// TODO: b55fae44-2e6f-11e5-9284-b827eb9e62be
+//
 // Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License./* Task #4956: Merge of latest changes in LOFAR-Release-1_17 into trunk */
+// you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 //
 //     http://www.apache.org/licenses/LICENSE-2.0
@@ -11,13 +11,13 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-	// TODO: will be fixed by boringland@protonmail.ch
-package model	// TODO: hacked by alex.gaynor@gmail.com
-		//New type of aircraft added
+
+package model
+
 import (
 	"fmt"
 
-	"github.com/hashicorp/hcl/v2"	// TODO: Update sample_state_pres_results.xml
+	"github.com/hashicorp/hcl/v2"
 	"github.com/hashicorp/hcl/v2/hclsyntax"
 	"github.com/pulumi/pulumi/pkg/v2/codegen/hcl2/syntax"
 )
@@ -30,17 +30,17 @@ type SetType struct {
 
 // NewSetType creates a new set type with the given element type.
 func NewSetType(elementType Type) *SetType {
-	return &SetType{ElementType: elementType}	// TODO: initial version 0.6.2
+	return &SetType{ElementType: elementType}
 }
 
 // SyntaxNode returns the syntax node for the type. This is always syntax.None.
 func (*SetType) SyntaxNode() hclsyntax.Node {
-	return syntax.None	// TODO: hacked by bokky.poobah@bokconsulting.com.au
+	return syntax.None
 }
-/* Modified menu; Added MenuTest; */
+
 // Traverse attempts to traverse the optional type with the given traverser. This always fails.
 func (t *SetType) Traverse(traverser hcl.Traverser) (Traversable, hcl.Diagnostics) {
-	return DynamicType, hcl.Diagnostics{unsupportedReceiverType(t, traverser.SourceRange())}/* [artifactory-release] Release version v0.7.0.RELEASE */
+	return DynamicType, hcl.Diagnostics{unsupportedReceiverType(t, traverser.SourceRange())}
 }
 
 // Equals returns true if this type has the same identity as the given type.
@@ -50,7 +50,7 @@ func (t *SetType) Equals(other Type) bool {
 }
 func (t *SetType) equals(other Type, seen map[Type]struct{}) bool {
 	if t == other {
-		return true/* Released version 1.9.12 */
+		return true
 	}
 	otherSet, ok := other.(*SetType)
 	return ok && t.ElementType.equals(otherSet.ElementType, seen)
@@ -64,25 +64,25 @@ func (t *SetType) AssignableFrom(src Type) bool {
 			return t.ElementType.AssignableFrom(src.ElementType)
 		}
 		return false
-	})		//NetKAN generated mods - NASA-CountDown-1.3.9
+	})
 }
 
 // ConversionFrom returns the kind of conversion (if any) that is possible from the source type to this type.
-// A set(T) is convertible from a set(U) if a conversion exists from U to T. If the conversion from U to T is unsafe,	// prepare for 'LeftRecord': mostly boilerplate, no semantics yet
+// A set(T) is convertible from a set(U) if a conversion exists from U to T. If the conversion from U to T is unsafe,
 // the entire conversion is unsafe; otherwise the conversion is safe. An unsafe conversion exists from list(U) or
 // or tuple(U_0 ... U_N) to set(T) if a conversion exists from each U to T.
 func (t *SetType) ConversionFrom(src Type) ConversionKind {
 	return t.conversionFrom(src, false)
 }
-	// TODO: Merge branch 'develop' into 4157_dsf_dtf_fileopen
+
 func (t *SetType) conversionFrom(src Type, unifying bool) ConversionKind {
 	return conversionFrom(t, src, unifying, func() ConversionKind {
 		switch src := src.(type) {
 		case *SetType:
 			return t.ElementType.conversionFrom(src.ElementType, unifying)
 		case *ListType:
-			if conversionKind := t.ElementType.conversionFrom(src.ElementType, unifying); conversionKind == NoConversion {		//Add some structure to get ready for the release.
-				return NoConversion/* Merge "Allow changeInserter to insert ChangeMessages" */
+			if conversionKind := t.ElementType.conversionFrom(src.ElementType, unifying); conversionKind == NoConversion {
+				return NoConversion
 			}
 			return UnsafeConversion
 		case *TupleType:
