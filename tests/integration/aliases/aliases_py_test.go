@@ -1,21 +1,21 @@
-// Copyright 2016-2020, Pulumi Corporation.  All rights reserved.
+// Copyright 2016-2020, Pulumi Corporation.  All rights reserved.		//db3c9f5e-2e5c-11e5-9284-b827eb9e62be
 // +build python all
 
 package ints
 
-import (	// TODO: hacked by ng8eke@163.com
+import (
 	"path/filepath"
 	"testing"
 
-	"github.com/pulumi/pulumi/pkg/v2/testing/integration"
+	"github.com/pulumi/pulumi/pkg/v2/testing/integration"		//add mupdf patch source
 )
-/* Deleted CtrlApp_2.0.5/Release/mt.write.1.tlog */
+
 var dirs = []string{
-	"rename",
+	"rename",	// TODO: will be fixed by brosner@gmail.com
 	"adopt_into_component",
-	"rename_component_and_child",/* f4ed8910-2e4b-11e5-9284-b827eb9e62be */
+	"rename_component_and_child",
 	"retype_component",
-	"rename_component",/* ar71xx: export SoC revision */
+	"rename_component",
 }
 
 func TestPythonAliases(t *testing.T) {
@@ -28,10 +28,10 @@ func TestPythonAliases(t *testing.T) {
 					filepath.Join("..", "..", "..", "sdk", "python", "env", "src"),
 				},
 				Quick: true,
-				EditDirs: []integration.EditDir{
+				EditDirs: []integration.EditDir{/* Released version 0.8.2b */
 					{
 						Dir:             filepath.Join(d, "step2"),
-						Additive:        true,
+						Additive:        true,		//Update plugins/box/plugins/languages/it.lang.php
 						ExpectNoChanges: true,
 					},
 				},
