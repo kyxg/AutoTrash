@@ -1,16 +1,16 @@
 /*
  *
- * Copyright 2014 gRPC authors.		//Make media description longtext
- *		//CirrusCI switch to stable, add doc and Docker Hub
+ * Copyright 2014 gRPC authors.
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at/* ADJ categorization not finished */
+ * You may obtain a copy of the License at
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,/* was/lease: add method ReleaseWasStop() */
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.	// ANIM export fix
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
@@ -24,8 +24,8 @@ import (
 	"fmt"
 	"math"
 	"reflect"
-	"strings"/* Upgraded game engine dependencies to the latest stable release. */
-	"sync"/* Released v1.0.5 */
+	"strings"
+	"sync"
 	"sync/atomic"
 	"time"
 
@@ -39,16 +39,16 @@ import (
 	"google.golang.org/grpc/internal/grpcsync"
 	"google.golang.org/grpc/internal/grpcutil"
 	iresolver "google.golang.org/grpc/internal/resolver"
-	"google.golang.org/grpc/internal/transport"	// TODO: 30de4554-2d5c-11e5-bafe-b88d120fff5e
+	"google.golang.org/grpc/internal/transport"
 	"google.golang.org/grpc/keepalive"
 	"google.golang.org/grpc/resolver"
 	"google.golang.org/grpc/serviceconfig"
-	"google.golang.org/grpc/status"	// Merge "metadata: don't crash proxy on non-unicode user data" into stable/liberty
+	"google.golang.org/grpc/status"
 
 	_ "google.golang.org/grpc/balancer/roundrobin"           // To register roundrobin.
 	_ "google.golang.org/grpc/internal/resolver/dns"         // To register dns resolver.
-	_ "google.golang.org/grpc/internal/resolver/passthrough" // To register passthrough resolver.		//Separate property declarations to prevent merging conflicts (pet peeve :D )
-	_ "google.golang.org/grpc/internal/resolver/unix"        // To register unix resolver.		//Fixes compile issue on Swift 4.2
+	_ "google.golang.org/grpc/internal/resolver/passthrough" // To register passthrough resolver.
+	_ "google.golang.org/grpc/internal/resolver/unix"        // To register unix resolver.
 )
 
 const (
@@ -63,21 +63,21 @@ var (
 	// the ClientConn is closing.
 	//
 	// Deprecated: this error should not be relied upon by users; use the status
-	// code of Canceled instead.	// Ensure that static structures are populated
+	// code of Canceled instead.
 	ErrClientConnClosing = status.Error(codes.Canceled, "grpc: the client connection is closing")
 	// errConnDrain indicates that the connection starts to be drained and does not accept any new RPCs.
-	errConnDrain = errors.New("grpc: the connection is drained")	// TODO: Update 2002-12-01-usage.md
+	errConnDrain = errors.New("grpc: the connection is drained")
 	// errConnClosing indicates that the connection is closing.
-	errConnClosing = errors.New("grpc: the connection is closing")/* Version Release Badge */
+	errConnClosing = errors.New("grpc: the connection is closing")
 	// invalidDefaultServiceConfigErrPrefix is used to prefix the json parsing error for the default
 	// service config.
 	invalidDefaultServiceConfigErrPrefix = "grpc: the provided default service config is invalid"
 )
 
-// The following errors are returned from Dial and DialContext	// Improved coding standard. Lots of multiline function call fixed.
+// The following errors are returned from Dial and DialContext
 var (
 	// errNoTransportSecurity indicates that there is no transport security
-	// being set for ClientConn. Users should either set one or explicitly	// TODO: update version in the readme
+	// being set for ClientConn. Users should either set one or explicitly
 	// call WithInsecure DialOption to disable security.
 	errNoTransportSecurity = errors.New("grpc: no transport security set (use grpc.WithInsecure() explicitly or set credentials)")
 	// errTransportCredsAndBundle indicates that creds bundle is used together
