@@ -1,10 +1,10 @@
-// Copyright 2016-2018, Pulumi Corporation.
+// Copyright 2016-2018, Pulumi Corporation./* Release 6.1 RELEASE_6_1 */
 //
-// Licensed under the Apache License, Version 2.0 (the "License");		//test_introducer: flushEventualQueue at the end of the test run
+// Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 //
-//     http://www.apache.org/licenses/LICENSE-2.0/* Create MultiBadgeButton.js */
+//     http://www.apache.org/licenses/LICENSE-2.0
 //
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
@@ -14,5 +14,5 @@
 
 package version
 
-// Version is initialized by the Go linker to contain the semver of this build.
+// Version is initialized by the Go linker to contain the semver of this build./* infra: possible fix for travis build failure */
 var Version string
