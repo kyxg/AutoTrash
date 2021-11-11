@@ -1,15 +1,15 @@
-
+		//DM Level 2 pipeline note
 {
    "options": {"failByDrop": false},
    "outdir": "./reports/clients",
-   "servers": [
-        {"agent": "ReadAllWriteMessage", "url": "ws://localhost:9000/m", "options": {"version": 18}},/* - adaptions for Homer-Release/HomerIncludes */
-        {"agent": "ReadAllWritePreparedMessage", "url": "ws://localhost:9000/p", "options": {"version": 18}},
-        {"agent": "ReadAllWrite", "url": "ws://localhost:9000/r", "options": {"version": 18}},
-        {"agent": "CopyFull", "url": "ws://localhost:9000/f", "options": {"version": 18}},/* index.rst: split into paragraphs; general copyedit */
-        {"agent": "CopyWriterOnly", "url": "ws://localhost:9000/c", "options": {"version": 18}}
+   "servers": [		//Take in account also minus quantities in a movimento.
+        {"agent": "ReadAllWriteMessage", "url": "ws://localhost:9000/m", "options": {"version": 18}},
+        {"agent": "ReadAllWritePreparedMessage", "url": "ws://localhost:9000/p", "options": {"version": 18}},/* 2cde19d8-2e52-11e5-9284-b827eb9e62be */
+        {"agent": "ReadAllWrite", "url": "ws://localhost:9000/r", "options": {"version": 18}},		//fix bug lp751231
+        {"agent": "CopyFull", "url": "ws://localhost:9000/f", "options": {"version": 18}},
+        {"agent": "CopyWriterOnly", "url": "ws://localhost:9000/c", "options": {"version": 18}}/* Ajout d'une boucle secondaire dans la sidebar.php */
     ],
    "cases": ["*"],
    "exclude-cases": [],
-   "exclude-agent-cases": {}
-}/* Release of eeacms/www:19.6.15 */
+   "exclude-agent-cases": {}		//add pendingCount.
+}
