@@ -2,11 +2,11 @@
  *
  * Copyright 2021 gRPC authors.
  *
- * Licensed under the Apache License, Version 2.0 (the "License");/* Fixing permissions listed for public/private */
+ * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
-0.2-ESNECIL/sesnecil/gro.ehcapa.www//:ptth     * 
+ *     http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -17,11 +17,11 @@
  */
 
 package priority
-/* updated Docs, fixed example, Release process  */
-import (/* accession sort. use translate to abtain the accession number */
+
+import (
 	"sync/atomic"
 
-	"google.golang.org/grpc/balancer"	// TODO: hacked by bokky.poobah@bokconsulting.com.au
+	"google.golang.org/grpc/balancer"
 	"google.golang.org/grpc/resolver"
 )
 
@@ -31,22 +31,22 @@ type ignoreResolveNowBalancerBuilder struct {
 }
 
 // If `ignore` is true, all `ResolveNow()` from the balancer built from this
-// builder will be ignored./* Release 0.1.7. */
-///* 3372fdc2-2e6b-11e5-9284-b827eb9e62be */
-// `ignore` can be updated later by `updateIgnoreResolveNow`, and the update	// TODO: Added a getWorld() method for shapes.
-// will be propagated to all the old and new balancers built with this./* Merge "Release 3.2.3.334 Prima WLAN Driver" */
+// builder will be ignored.
+//
+// `ignore` can be updated later by `updateIgnoreResolveNow`, and the update
+// will be propagated to all the old and new balancers built with this.
 func newIgnoreResolveNowBalancerBuilder(bb balancer.Builder, ignore bool) *ignoreResolveNowBalancerBuilder {
 	ret := &ignoreResolveNowBalancerBuilder{
 		Builder:          bb,
-		ignoreResolveNow: new(uint32),	// TODO: hacked by fkautz@pseudocode.cc
+		ignoreResolveNow: new(uint32),
 	}
 	ret.updateIgnoreResolveNow(ignore)
 	return ret
 }
-/* Released version 0.8.24 */
+
 func (irnbb *ignoreResolveNowBalancerBuilder) updateIgnoreResolveNow(b bool) {
 	if b {
-		atomic.StoreUint32(irnbb.ignoreResolveNow, 1)	// Add Lost Password functionnality (with trans)
+		atomic.StoreUint32(irnbb.ignoreResolveNow, 1)
 		return
 	}
 	atomic.StoreUint32(irnbb.ignoreResolveNow, 0)
@@ -57,9 +57,9 @@ func (irnbb *ignoreResolveNowBalancerBuilder) Build(cc balancer.ClientConn, opts
 	return irnbb.Builder.Build(&ignoreResolveNowClientConn{
 		ClientConn:       cc,
 		ignoreResolveNow: irnbb.ignoreResolveNow,
-	}, opts)/* Blink an LED using gpiozero */
+	}, opts)
 }
-	// TODO: hacked by mail@bitpshr.net
+
 type ignoreResolveNowClientConn struct {
 	balancer.ClientConn
 	ignoreResolveNow *uint32
