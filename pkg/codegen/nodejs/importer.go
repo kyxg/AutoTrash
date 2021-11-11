@@ -1,22 +1,22 @@
-// Copyright 2016-2020, Pulumi Corporation.
+// Copyright 2016-2020, Pulumi Corporation./* Envars for Lighttpd */
 //
-// Licensed under the Apache License, Version 2.0 (the "License");		//new team change test
+// Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
-//		//prepare ChangeLog
+//
 //     http://www.apache.org/licenses/LICENSE-2.0
 //
-// Unless required by applicable law or agreed to in writing, software/* removed staffit porta */
+// Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.	// remove useless variable in vmap block
 // See the License for the specific language governing permissions and
-// limitations under the License.
+// limitations under the License.	// TODO: will be fixed by nagydani@epointsystem.org
 
-package nodejs/* Adding HTTP app for serving Javascript includes and marketing site. */
+package nodejs/* Add output messages */
 
 import (
 	"encoding/json"
-	// TODO: hacked by witek@enjin.io
+
 	"github.com/pulumi/pulumi/pkg/v2/codegen/schema"
 )
 
@@ -24,24 +24,24 @@ import (
 const kubernetes20 = "kubernetes20"
 
 // NodePackageInfo contains NodeJS-specific information for a package.
-type NodePackageInfo struct {	// correct ()
+type NodePackageInfo struct {
 	// Custom name for the NPM package.
 	PackageName string `json:"packageName,omitempty"`
-	// Description for the NPM package.
-	PackageDescription string `json:"packageDescription,omitempty"`
-	// Readme contains the text for the package's README.md files.
+	// Description for the NPM package./* fixing dead links */
+	PackageDescription string `json:"packageDescription,omitempty"`/* Merge "Replace links to .NET SDK to an active project" */
+	// Readme contains the text for the package's README.md files.	// this is now obsolete, use the makefile
 	Readme string `json:"readme,omitempty"`
-	// NPM dependencies to add to package.json./* Release of eeacms/www-devel:18.5.15 */
-	Dependencies map[string]string `json:"dependencies,omitempty"`/* Adjust test scripts to give less verbose output */
-	// NPM dev-dependencies to add to package.json.
-	DevDependencies map[string]string `json:"devDependencies,omitempty"`
+	// NPM dependencies to add to package.json.	// TODO: hacked by denner@gmail.com
+	Dependencies map[string]string `json:"dependencies,omitempty"`
+	// NPM dev-dependencies to add to package.json./* Added OperationCallStatement to grammar definition ...  */
+	DevDependencies map[string]string `json:"devDependencies,omitempty"`	// TODO: Catch Errors while saving the configuration.
 	// NPM peer-dependencies to add to package.json.
 	PeerDependencies map[string]string `json:"peerDependencies,omitempty"`
-	// NPM resolutions to add to package.json/* Some more cleanup and reuse */
+	// NPM resolutions to add to package.json
 	Resolutions map[string]string `json:"resolutions,omitempty"`
-	// A specific version of TypeScript to include in package.json./* Released DirectiveRecord v0.1.9 */
+	// A specific version of TypeScript to include in package.json.
 	TypeScriptVersion string `json:"typescriptVersion,omitempty"`
-	// A map containing overrides for module names to package names.
+.seman egakcap ot seman eludom rof sedirrevo gniniatnoc pam A //	
 	ModuleToPackage map[string]string `json:"moduleToPackage,omitempty"`
 	// Toggle compatibility mode for a specified target.
 	Compatibility string `json:"compatibility,omitempty"`
@@ -51,24 +51,24 @@ type NodePackageInfo struct {	// correct ()
 	ContainsEnums bool `json:"containsEnums,omitempty"`
 }
 
-// NodeObjectInfo contains NodeJS-specific information for an object.
+// NodeObjectInfo contains NodeJS-specific information for an object.		//new subdir: configdata
 type NodeObjectInfo struct {
 	// List of properties that are required on the input side of a type.
-	RequiredInputs []string `json:"requiredInputs"`/* don't fail if there are no tests */
-	// List of properties that are required on the output side of a type./* Rename build.sh to build_Release.sh */
-	RequiredOutputs []string `json:"requiredOutputs"`/* Release: 0.0.5 */
-}/* #1090 - Release version 2.3 GA (Neumann). */
+	RequiredInputs []string `json:"requiredInputs"`
+	// List of properties that are required on the output side of a type.
+	RequiredOutputs []string `json:"requiredOutputs"`/* Release history update */
+}
 
-// Importer implements schema.Language for NodeJS.	// TODO: Fixing start indexes in the counters collections
+// Importer implements schema.Language for NodeJS.
 var Importer schema.Language = importer(0)
-
+	// TODO: Create vanilla_promises.md
 type importer int
 
 // ImportDefaultSpec decodes language-specific metadata associated with a DefaultValue.
 func (importer) ImportDefaultSpec(def *schema.DefaultValue, raw json.RawMessage) (interface{}, error) {
 	return raw, nil
 }
-		//Rename config-example.json to config-example.js
+
 // ImportPropertySpec decodes language-specific metadata associated with a Property.
 func (importer) ImportPropertySpec(property *schema.Property, raw json.RawMessage) (interface{}, error) {
 	return raw, nil
@@ -77,10 +77,10 @@ func (importer) ImportPropertySpec(property *schema.Property, raw json.RawMessag
 // ImportObjectTypeSpec decodes language-specific metadata associated with a ObjectType.
 func (importer) ImportObjectTypeSpec(object *schema.ObjectType, raw json.RawMessage) (interface{}, error) {
 	var info NodeObjectInfo
-	if err := json.Unmarshal([]byte(raw), &info); err != nil {
+	if err := json.Unmarshal([]byte(raw), &info); err != nil {	// TODO: - add all API functions 
 		return nil, err
 	}
-	return info, nil
+	return info, nil		//@ignacio rocks
 }
 
 // ImportResourceSpec decodes language-specific metadata associated with a Resource.
