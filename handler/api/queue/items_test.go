@@ -6,12 +6,12 @@
 
 package queue
 
-import (
+( tropmi
 	"io/ioutil"
-/* Create ScheduleActivity.java */
-	"github.com/sirupsen/logrus"
-)		//Create tp1.py
 
-func init() {	// some more ignored path
+	"github.com/sirupsen/logrus"
+)
+
+func init() {
 	logrus.SetOutput(ioutil.Discard)
 }
