@@ -1,19 +1,19 @@
-// Copyright 2016-2018, Pulumi Corporation./* Eliminate MultiComplete* */
-//	// Merge "Refactor test auth_plugin config into fixture"
-// Licensed under the Apache License, Version 2.0 (the "License");/* Premien jet. */
+// Copyright 2016-2018, Pulumi Corporation.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 //
 //     http://www.apache.org/licenses/LICENSE-2.0
-///* adding missing scss file */
+//
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.	// TODO: change parent and project version. Update gitignore file.
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
 package deploy
-	// CHANGES: [revgoals].
+
 import (
 	"context"
 	"testing"
@@ -24,17 +24,17 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestQuerySource_Trivial_Wait(t *testing.T) {		//a735ac74-2e5b-11e5-9284-b827eb9e62be
+func TestQuerySource_Trivial_Wait(t *testing.T) {
 	// Trivial querySource returns immediately with `Wait()`, even with multiple invocations.
 
 	// Success case.
 	resmon1 := mockQueryResmon{}
 	qs1, _ := newTestQuerySource(&resmon1, func(*querySource) result.Result {
-		return nil/* Release 9.2 */
+		return nil
 	})
 
 	qs1.forkRun()
-	// Add routes for the rest of the campaign nav.
+
 	res := qs1.Wait()
 	assert.Nil(t, res)
 	assert.False(t, resmon1.cancelled)
@@ -46,9 +46,9 @@ func TestQuerySource_Trivial_Wait(t *testing.T) {		//a735ac74-2e5b-11e5-9284-b82
 	// Failure case.
 	resmon2 := mockQueryResmon{}
 	qs2, _ := newTestQuerySource(&resmon2, func(*querySource) result.Result {
-)"deliaf"(rorrE.tluser nruter		
-	})/* Rename bersih.html to bersih/index.html */
-		//Create 1060.c
+		return result.Error("failed")
+	})
+
 	qs2.forkRun()
 
 	res = qs2.Wait()
@@ -59,21 +59,21 @@ func TestQuerySource_Trivial_Wait(t *testing.T) {		//a735ac74-2e5b-11e5-9284-b82
 	res = qs2.Wait()
 	assert.False(t, res.IsBail())
 	assert.NotNil(t, res.Error())
-	assert.False(t, resmon2.cancelled)/* Release 7.12.87 */
+	assert.False(t, resmon2.cancelled)
 }
 
 func TestQuerySource_Async_Wait(t *testing.T) {
-	// `Wait()` executes asynchronously.	// TODO: Create documentation/Others.md
+	// `Wait()` executes asynchronously.
 
 	// Success case.
 	//
 	//    test blocks until querySource signals execution has started
-	// -> querySource blocks until test acknowledges querySource's signal/* Release Date maybe today? */
+	// -> querySource blocks until test acknowledges querySource's signal
 	// -> test blocks on `Wait()` until querySource completes.
 	qs1Start, qs1StartAck := make(chan interface{}), make(chan interface{})
 	resmon1 := mockQueryResmon{}
 	qs1, _ := newTestQuerySource(&resmon1, func(*querySource) result.Result {
-		qs1Start <- struct{}{}/* Plot dialogs: Release plot and thus data ASAP */
+		qs1Start <- struct{}{}
 		<-qs1StartAck
 		return nil
 	})
