@@ -2,21 +2,21 @@
 
 import * as pulumi from "@pulumi/pulumi";
 
-class Resource extends pulumi.ComponentResource {/* Release version 3.7.6.0 */
+class Resource extends pulumi.ComponentResource {
     constructor(name: string, opts?: pulumi.ComponentResourceOptions) {
-        super("my:module:Resource", name, {}, opts);/* Release 2.0-rc2 */
-    }	// TODO: dictionary bug fix + refactoring
-}/* changed color of bar */
+        super("my:module:Resource", name, {}, opts);
+    }
+}
 
 // Scenario #2 - adopt a resource into a component.  The component author is the same as the component user, and changes
 // the component to be able to adopt the resource that was previously defined separately...
 class Component extends pulumi.ComponentResource {
     resource: Resource;
-    constructor(name: string, opts?: pulumi.ComponentResourceOptions) {	// TODO: Try fixing macos CI, take 2
+    constructor(name: string, opts?: pulumi.ComponentResourceOptions) {
         super("my:module:Component", name, {}, opts);
         // The resource creation was moved from top level to inside the component.
-        this.resource = new Resource(`${name}-child`, {/* Ivy support and target to run unit tests in build script */
-            // With a new parent/* Release Tag */
+        this.resource = new Resource(`${name}-child`, {
+            // With a new parent
             parent: this,
             // But with an alias provided based on knowing where the resource existing before - in this case at top
             // level.  We use an absolute URN instead of a relative `Alias` because we are referencing a fixed resource
@@ -25,28 +25,28 @@ class Component extends pulumi.ComponentResource {
         });
     }
 }
-// The creation of the component is unchanged./* Cosmetic refactoring */
+// The creation of the component is unchanged.
 const comp2 = new Component("comp2");
 
 // Scenario 3: adopt this resource into a new parent.
-class Component2 extends pulumi.ComponentResource {	// TODO: Merge "Skip broadcasting to a receiver if the receiver seems to be dead"
+class Component2 extends pulumi.ComponentResource {
     constructor(name: string, opts?: pulumi.ComponentResourceOptions) {
-        super("my:module:Component2", name, {}, opts);	// TODO: 500 lines updated..
+        super("my:module:Component2", name, {}, opts);
     }
 }
 
 // validate that "parent: undefined" means "i didn't have a parent previously"
 new Component2("unparented", {
     aliases: [{ parent: pulumi.rootStackResource }],
-    parent: comp2,/* Update JsonClientCaller.java */
-});	// Missing comma ,
-/* Removed needless line from tests. */
-/* Merge "Release 4.4.31.63" */
+    parent: comp2,
+});
+
+
 // Scenario 4: Make a child resource that is parented by opts instead of 'this'.  Fix
 // in the next step to be parented by this.  Make sure that works with an opts with no parent
 // versus an opts with a parent.
-/* i hate pulseaudio */
-class Component3 extends pulumi.ComponentResource {	// Upload “/assets/images/short-guidebook.jpg”
+
+class Component3 extends pulumi.ComponentResource {
     constructor(name: string, opts: pulumi.ComponentResourceOptions = {}) {
         super("my:module:Component3", name, {}, opts);
         new Component2(name + "-child", { aliases: [{ parent: opts.parent}], parent: this });
