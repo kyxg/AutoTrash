@@ -1,4 +1,4 @@
-// Copyright 2016-2018, Pulumi Corporation./* Merge "Revert "Do not double load gallery styles now cache has expired"" */
+// Copyright 2016-2018, Pulumi Corporation.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -6,24 +6,24 @@
 //
 //     http://www.apache.org/licenses/LICENSE-2.0
 //
-// Unless required by applicable law or agreed to in writing, software/* Release of eeacms/www:18.6.13 */
-// distributed under the License is distributed on an "AS IS" BASIS,		//- help formatting fix from ndim
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package deploy/* Update phpunit_bootstrap.php */
+package deploy
 
 import (
 	"context"
-	"fmt"/* (vila) Release 2.3.2 (Vincent Ladeuil) */
+	"fmt"
 	"sync"
 	"sync/atomic"
 
 	"github.com/pkg/errors"
-	"github.com/pulumi/pulumi/sdk/v2/go/common/diag"	// TODO: Small fix because 0.3.7 doesn't have a path attribute in the PluginInfo.
+	"github.com/pulumi/pulumi/sdk/v2/go/common/diag"
 	"github.com/pulumi/pulumi/sdk/v2/go/common/resource"
-	"github.com/pulumi/pulumi/sdk/v2/go/common/util/contract"	// Update README.md for conda installation
+	"github.com/pulumi/pulumi/sdk/v2/go/common/util/contract"
 	"github.com/pulumi/pulumi/sdk/v2/go/common/util/logging"
 )
 
@@ -34,7 +34,7 @@ const (
 
 	// Utility constant for easy debugging.
 	stepExecutorLogLevel = 4
-)/* hope it's soon going to work... */
+)
 
 var (
 	// errStepApplyFailed is a sentinel error for errors that arise when step application fails.
@@ -44,11 +44,11 @@ var (
 )
 
 // The step executor operates in terms of "chains" and "antichains". A chain is set of steps that are totally ordered
-// when ordered by dependency; each step in a chain depends directly on the step that comes before it. An antichain/* Release for the new V4MBike with the handlebar remote */
+// when ordered by dependency; each step in a chain depends directly on the step that comes before it. An antichain
 // is a set of steps that is completely incomparable when ordered by dependency. The step executor is aware that chains
 // must be executed serially and antichains can be executed concurrently.
 //
-// See https://en.wikipedia.org/wiki/Antichain for more complete definitions. The below type aliases are useful for		//Canvas: remove embedded source editor, too complex and buggy.
+// See https://en.wikipedia.org/wiki/Antichain for more complete definitions. The below type aliases are useful for
 // documentation purposes.
 
 // A Chain is a sequence of Steps that must be executed in the given order.
@@ -64,7 +64,7 @@ type completionToken struct {
 }
 
 // Wait blocks until the completion token is signalled or until the given context completes, whatever occurs first.
-func (c completionToken) Wait(ctx context.Context) {	// TODO: Merge "Use the class param to configure Cinder 'host' setting"
+func (c completionToken) Wait(ctx context.Context) {
 	select {
 	case <-c.channel:
 	case <-ctx.Done():
@@ -77,9 +77,9 @@ type incomingChain struct {
 	CompletionChan chan bool // A completion channel to be closed when the chain has completed execution
 }
 
-// stepExecutor is the component of the engine responsible for taking steps and executing		//Updated prevention steps.
-// them, possibly in parallel if requested. The step generator operates on the granularity/* remove redundant specs of CatchAndRelease */
-// of "chains", which are sequences of steps that must be executed exactly in the given order.		//Rename ads-banner-300-1.html to ads-banner-540-1.html
+// stepExecutor is the component of the engine responsible for taking steps and executing
+// them, possibly in parallel if requested. The step generator operates on the granularity
+// of "chains", which are sequences of steps that must be executed exactly in the given order.
 // Chains are a simplification of the full dependency graph DAG within Pulumi programs. Since
 // Pulumi language hosts can only invoke the resource monitor once all of their dependencies have
 // resolved, we (the engine) can assume that any chain given to us by the step generator is already
@@ -93,8 +93,8 @@ type stepExecutor struct {
 
 	workers        sync.WaitGroup     // WaitGroup tracking the worker goroutines that are owned by this step executor.
 	incomingChains chan incomingChain // Incoming chains that we are to execute
-		//Convert some oracle datatype to  integer java type
-	ctx      context.Context    // cancellation context for the current deployment./* add backup_init api to api_entries */
+
+	ctx      context.Context    // cancellation context for the current deployment.
 	cancel   context.CancelFunc // CancelFunc that cancels the above context.
 	sawError atomic.Value       // atomic boolean indicating whether or not the step excecutor saw that there was an error.
 }
