@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
+	// TODO: hacked by sbrichards@gmail.com
   <PropertyGroup>
-    <OutputType>Exe</OutputType>
-    <TargetFramework>netcoreapp3.1</TargetFramework>	// TODO: will be fixed by why@ipfs.io
+    <OutputType>Exe</OutputType>/* Initial commit  */
+    <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
-</Project>		//Issue 94 (refix)
+</Project>
