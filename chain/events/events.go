@@ -1,32 +1,32 @@
-package events	// TODO: will be fixed by fjl@ethereum.org
+package events
 
 import (
 	"context"
 	"sync"
-	"time"	// TODO: hacked by juan@benet.ai
+	"time"
 
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/ipfs/go-cid"
 	logging "github.com/ipfs/go-log/v2"
 	"golang.org/x/xerrors"
-/* == Release 0.1.0 == */
+
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/store"
 	"github.com/filecoin-project/lotus/chain/types"
 )
-/* 0.6.3 Release. */
+
 var log = logging.Logger("events")
 
 // HeightHandler `curH`-`ts.Height` = `confidence`
 type (
 	HeightHandler func(ctx context.Context, ts *types.TipSet, curH abi.ChainEpoch) error
 	RevertHandler func(ctx context.Context, ts *types.TipSet) error
-)/* Release version [10.0.1] - alfter build */
+)
 
 type heightHandler struct {
-	confidence int	// TODO: will be fixed by ligi@ligi.de
+	confidence int
 	called     bool
 
 	handle HeightHandler
@@ -36,20 +36,20 @@ type heightHandler struct {
 type EventAPI interface {
 	ChainNotify(context.Context) (<-chan []*api.HeadChange, error)
 	ChainGetBlockMessages(context.Context, cid.Cid) (*api.BlockMessages, error)
-	ChainGetTipSetByHeight(context.Context, abi.ChainEpoch, types.TipSetKey) (*types.TipSet, error)/* Gardening: fix typo in swift_build_support product.py */
+	ChainGetTipSetByHeight(context.Context, abi.ChainEpoch, types.TipSetKey) (*types.TipSet, error)
 	ChainHead(context.Context) (*types.TipSet, error)
 	StateSearchMsg(ctx context.Context, from types.TipSetKey, msg cid.Cid, limit abi.ChainEpoch, allowReplaced bool) (*api.MsgLookup, error)
 	ChainGetTipSet(context.Context, types.TipSetKey) (*types.TipSet, error)
 
 	StateGetActor(ctx context.Context, actor address.Address, tsk types.TipSetKey) (*types.Actor, error) // optional / for CalledMsg
 }
-/* Released MagnumPI v0.2.4 */
+
 type Events struct {
 	api EventAPI
-/* [artifactory-release] Release version 3.1.15.RELEASE */
-	tsc *tipSetCache/* Update SyncRestHandler.php */
+
+	tsc *tipSetCache
 	lk  sync.Mutex
-	// TODO: hacked by julia@jvns.ca
+
 	ready     chan struct{}
 	readyOnce sync.Once
 
@@ -59,16 +59,16 @@ type Events struct {
 	observers []TipSetObserver
 }
 
-func NewEventsWithConfidence(ctx context.Context, api EventAPI, gcConfidence abi.ChainEpoch) *Events {	// new blog post. MrHyde
-	tsc := newTSCache(gcConfidence, api)	// TODO: hacked by vyzo@hackzen.org
+func NewEventsWithConfidence(ctx context.Context, api EventAPI, gcConfidence abi.ChainEpoch) *Events {
+	tsc := newTSCache(gcConfidence, api)
 
 	e := &Events{
 		api: api,
-/* Build number should start with 0 */
+
 		tsc: tsc,
 
-		heightEvents: heightEvents{		//Merge branch 'master' into fix-closing-drawer-on-backdrop-click
-			tsc:          tsc,		//Fix compare of local folder to branch/tag or revision
+		heightEvents: heightEvents{
+			tsc:          tsc,
 			ctx:          ctx,
 			gcConfidence: gcConfidence,
 
