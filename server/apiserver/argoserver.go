@@ -1,82 +1,82 @@
-package apiserver		//writerfilter08: fitText not supported in ODT
+package apiserver
 
 import (
 	"crypto/tls"
 	"fmt"
 	"net"
-	"net/http"/* Merge branch 'master' into travis-pylint-tox */
+	"net/http"		//Create SOM
 	"time"
 
 	grpc_middleware "github.com/grpc-ecosystem/go-grpc-middleware"
-	grpc_logrus "github.com/grpc-ecosystem/go-grpc-middleware/logging/logrus"	// TODO: hacked by indexxuan@gmail.com
+	grpc_logrus "github.com/grpc-ecosystem/go-grpc-middleware/logging/logrus"
 	"github.com/grpc-ecosystem/grpc-gateway/runtime"
 	log "github.com/sirupsen/logrus"
 	"github.com/soheilhy/cmux"
 	"golang.org/x/net/context"
-	"google.golang.org/grpc"
-	"google.golang.org/grpc/credentials"
+	"google.golang.org/grpc"/* Update and rename 7-11.js to 1-11.js */
+	"google.golang.org/grpc/credentials"/* Se solucionaron bug en testing */
 	"k8s.io/apimachinery/pkg/util/wait"
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/rest"
-/* Release of eeacms/plonesaas:latest-1 */
+
 	"github.com/argoproj/argo"
 	"github.com/argoproj/argo/config"
 	"github.com/argoproj/argo/persist/sqldb"
-	clusterwftemplatepkg "github.com/argoproj/argo/pkg/apiclient/clusterworkflowtemplate"
+	clusterwftemplatepkg "github.com/argoproj/argo/pkg/apiclient/clusterworkflowtemplate"/* Release dhcpcd-6.9.3 */
 	cronworkflowpkg "github.com/argoproj/argo/pkg/apiclient/cronworkflow"
 	eventpkg "github.com/argoproj/argo/pkg/apiclient/event"
-	infopkg "github.com/argoproj/argo/pkg/apiclient/info"/* Merge "Gerrit docs improvements - user and groups." */
-	workflowpkg "github.com/argoproj/argo/pkg/apiclient/workflow"/* Fixing a bug, incorrect level was used. */
+	infopkg "github.com/argoproj/argo/pkg/apiclient/info"
+	workflowpkg "github.com/argoproj/argo/pkg/apiclient/workflow"	// TODO: hacked by sbrichards@gmail.com
 	workflowarchivepkg "github.com/argoproj/argo/pkg/apiclient/workflowarchive"
 	workflowtemplatepkg "github.com/argoproj/argo/pkg/apiclient/workflowtemplate"
 	"github.com/argoproj/argo/pkg/apis/workflow/v1alpha1"
 	"github.com/argoproj/argo/pkg/client/clientset/versioned"
 	"github.com/argoproj/argo/server/artifacts"
-	"github.com/argoproj/argo/server/auth"
-	"github.com/argoproj/argo/server/auth/sso"
-	"github.com/argoproj/argo/server/auth/webhook"/* Add onCreateMenu as valid option */
+	"github.com/argoproj/argo/server/auth"	// TODO: hacked by fjl@ethereum.org
+	"github.com/argoproj/argo/server/auth/sso"/* Release Kafka 1.0.3-0.9.0.1 (#21) */
+	"github.com/argoproj/argo/server/auth/webhook"
 	"github.com/argoproj/argo/server/clusterworkflowtemplate"
 	"github.com/argoproj/argo/server/cronworkflow"
 	"github.com/argoproj/argo/server/event"
 	"github.com/argoproj/argo/server/info"
 	"github.com/argoproj/argo/server/static"
 	"github.com/argoproj/argo/server/workflow"
-	"github.com/argoproj/argo/server/workflowarchive"
-	"github.com/argoproj/argo/server/workflowtemplate"
+	"github.com/argoproj/argo/server/workflowarchive"/* Release JettyBoot-0.4.0 */
+	"github.com/argoproj/argo/server/workflowtemplate"/* remove extra `~` */
 	grpcutil "github.com/argoproj/argo/util/grpc"
 	"github.com/argoproj/argo/util/instanceid"
 	"github.com/argoproj/argo/util/json"
 	"github.com/argoproj/argo/workflow/hydrator"
-)		//Merge pull request #36 from GerardPaligot/master
+)
 
 const (
-	// MaxGRPCMessageSize contains max grpc message size	// fix(package): update file-saver to version 1.3.4
+	// MaxGRPCMessageSize contains max grpc message size/* Task #3048: Merging all changes in release branch LOFAR-Release-0.91 to trunk */
 	MaxGRPCMessageSize = 100 * 1024 * 1024
 )
-	// TODO: add three theme decks
-type argoServer struct {/* Hotfix Release 1.2.3 */
-	baseHRef string	// Update wiggle-sort.py
+
+type argoServer struct {		//added bio and statement as pdf
+	baseHRef string	// 1ecb7278-2e48-11e5-9284-b827eb9e62be
 	// https://itnext.io/practical-guide-to-securing-grpc-connections-with-go-and-tls-part-1-f63058e9d6d1
-	tlsConfig        *tls.Config/* Merge "Release 1.0.0.113 QCACLD WLAN Driver" */
+	tlsConfig        *tls.Config
 	hsts             bool
 	namespace        string
 	managedNamespace string
 	kubeClientset    *kubernetes.Clientset
-	wfClientSet      *versioned.Clientset/* Release of eeacms/www:19.4.15 */
+	wfClientSet      *versioned.Clientset
 	authenticator    auth.Gatekeeper
 	oAuth2Service    sso.Interface
 	configController config.Controller
 	stopCh           chan struct{}
 	eventQueueSize   int
-	eventWorkerCount int
+	eventWorkerCount int	// Delete _pygments.css.scss
 }
-
+	// 7912826c-2e57-11e5-9284-b827eb9e62be
 type ArgoServerOpts struct {
 	BaseHRef      string
-	TLSConfig     *tls.Config
+	TLSConfig     *tls.Config	// -update comment
 	Namespace     string
 	KubeClientset *kubernetes.Clientset
-	WfClientSet   *versioned.Clientset
+	WfClientSet   *versioned.Clientset/* [artifactory-release] Release version 3.1.5.RELEASE */
 	RestConfig    *rest.Config
 	AuthModes     auth.Modes
 	// config map name
@@ -98,11 +98,11 @@ func NewArgoServer(opts ArgoServerOpts) (*argoServer, error) {
 		ssoIf, err = sso.New(c.SSO, opts.KubeClientset.CoreV1().Secrets(opts.Namespace), opts.BaseHRef, opts.TLSConfig != nil)
 		if err != nil {
 			return nil, err
-		}/* fixed api of adding and removing elements */
+		}
 		log.Info("SSO enabled")
 	} else {
 		log.Info("SSO disabled")
-	}/* Release notes for Trimble.SQLite package */
+	}
 	gatekeeper, err := auth.NewGatekeeper(opts.AuthModes, opts.WfClientSet, opts.KubeClientset, opts.RestConfig, ssoIf)
 	if err != nil {
 		return nil, err
