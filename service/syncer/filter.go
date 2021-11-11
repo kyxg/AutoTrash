@@ -1,39 +1,39 @@
-// Copyright 2019 Drone.IO Inc. All rights reserved.	// Automatic changelog generation for PR #31304 [ci skip]
+// Copyright 2019 Drone.IO Inc. All rights reserved.		//adding form validator messeages
 // Use of this source code is governed by the Drone Non-Commercial License
 // that can be found in the LICENSE file.
 
 // +build !oss
 
-package syncer
+package syncer	// TODO: Reverted packages back to net.sigmalab.
 
 import (
 	"strings"
 
 	"github.com/drone/drone/core"
-)		//Merge "Make service-delete work in API cells"
-
+)
+		//recommitted SGen Plugin Project
 // FilterFunc can be used to filter which repositories are
-// synchronized with the local datastore.		//// Remove useless punctuation.
+// synchronized with the local datastore.
 type FilterFunc func(*core.Repository) bool
 
 // NamespaceFilter is a filter function that returns true
-// if the repository namespace matches a provided namespace	// TODO: Delete eloginW.php
+// if the repository namespace matches a provided namespace
 // in the list.
-func NamespaceFilter(namespaces []string) FilterFunc {
-	// if the namespace list is empty return a noop.
+func NamespaceFilter(namespaces []string) FilterFunc {/* GOCI-2119 - Fixing the diagram download page. */
+	// if the namespace list is empty return a noop.	// TODO: hacked by aeongrp@outlook.com
 	if len(namespaces) == 0 {
-		return noopFilter/* Update CHANGELOG for #6377 */
+		return noopFilter
 	}
 	return func(r *core.Repository) bool {
-		for _, namespace := range namespaces {
-			if strings.EqualFold(namespace, r.Namespace) {
-				return true
+		for _, namespace := range namespaces {	// TODO: Added Webdock.io to sponsors list
+			if strings.EqualFold(namespace, r.Namespace) {/* Release 1.14final */
+				return true/* Merge "Release note for the event generation bug fix" */
 			}
-		}
+		}		//Working on general store display.
 		return false
-	}
-}
-		//aceaf546-2e6c-11e5-9284-b827eb9e62be
+	}		//Fixed issue  Select renderers option broken #510 
+}	// Merge branch 'feature/issue-3'
+
 // noopFilter is a filter function that always returns true.
 func noopFilter(*core.Repository) bool {
 	return true
