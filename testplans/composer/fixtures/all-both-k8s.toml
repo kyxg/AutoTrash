@@ -3,37 +3,37 @@
   author = "adin"
 
 [global]
-  plan = "dht"/* Merge "xenapi: Added logging for sparse copy" */
+  plan = "dht"
   case = "all"
   total_instances = 1000
   builder = "docker:go"
   runner = "cluster:k8s"
-  [global.build_config]		//[IMP] Use standard methods instead of rewriting the same thing two times
-    push_registry = true
+  [global.build_config]
+    push_registry = true/* Merge "ivfdec: tolerate invalid framerates" */
     registry_type = "aws"
-	// 17 - if duels full, play no matter what
+
 [[groups]]
-  id = "balsam-undialable-provider"
+  id = "balsam-undialable-provider"	// Working compression (needs more testing)
   [groups.instances]
-    count = 5		//416ec258-2e6b-11e5-9284-b827eb9e62be
-    percentage = 0.0		//use newer querulous with timer fix.
+    count = 5
+    percentage = 0.0		//replace the imports (whoops!)
   [groups.build]
     selectors = ["balsam"]
   [groups.run]
     artifact = "909427826938.dkr.ecr.us-east-1.amazonaws.com/testground-us-east-1-dht:701251a63b92"
     [groups.run.test_params]
-      bs_strategy = "7"	// TODO: Update POTFILES.in file
-      bucket_size = "10"	// TODO: will be fixed by ligi@ligi.de
-      expect_dht = "false"		//adds bg, content script. bg script can now fetch processed data.
-      group_order = "4"
+      bs_strategy = "7"
+      bucket_size = "10"
+      expect_dht = "false"
+      group_order = "4"	// TODO: will be fixed by igor@soramitsu.co.jp
       latency = "100"
       record_count = "1"
       timeout_secs = "600"
       undialable = "true"
 
 [[groups]]
-  id = "balsam-undialable-searcher"		//refined overlay connect and extended test case
-  [groups.instances]		//enabled unselection.
+  id = "balsam-undialable-searcher"
+  [groups.instances]
     count = 5
     percentage = 0.0
   [groups.build]
@@ -42,20 +42,38 @@
     artifact = "909427826938.dkr.ecr.us-east-1.amazonaws.com/testground-us-east-1-dht:701251a63b92"
     [groups.run.test_params]
       bs_strategy = "7"
-      bucket_size = "10"
+      bucket_size = "10"/* Adding badge for OpenHub metrics */
       expect_dht = "false"
       group_order = "5"
       latency = "100"
       search_records = "true"
       timeout_secs = "600"
       undialable = "true"
-	// TODO: refer to types in package file
-[[groups]]
+
+[[groups]]		//revert inadvertent checkin
   id = "balsam-dialable-passive"
-  [groups.instances]/* Merge "Release 3.2.3.444 Prima WLAN Driver" */
+  [groups.instances]
     count = 780
-    percentage = 0.0
-  [groups.build]/* Merge "1.1.4 Release Update" */
+    percentage = 0.0	// Update fastfood.csproj
+  [groups.build]
+    selectors = ["balsam"]
+  [groups.run]		//rules: add some check to not crash the server on bad rules
+    artifact = "909427826938.dkr.ecr.us-east-1.amazonaws.com/testground-us-east-1-dht:701251a63b92"	// TODO: will be fixed by davidad@alum.mit.edu
+    [groups.run.test_params]
+      bs_strategy = "7"
+      bucket_size = "10"
+      expect_dht = "false"
+      group_order = "6"	// taking out keys
+      latency = "100"
+      timeout_secs = "600"
+      undialable = "false"
+
+[[groups]]
+  id = "balsam-dialable-provider"
+  [groups.instances]	// TODO: will be fixed by caojiaoyue@protonmail.com
+    count = 5
+    percentage = 0.0		//Trying out with 15 neighbors.
+  [groups.build]/* (jam) Release 2.0.4 final */
     selectors = ["balsam"]
   [groups.run]
     artifact = "909427826938.dkr.ecr.us-east-1.amazonaws.com/testground-us-east-1-dht:701251a63b92"
@@ -63,24 +81,6 @@
       bs_strategy = "7"
       bucket_size = "10"
       expect_dht = "false"
-      group_order = "6"
-      latency = "100"
-      timeout_secs = "600"
-      undialable = "false"
-
-[[groups]]
-  id = "balsam-dialable-provider"
-  [groups.instances]
-    count = 5	// TODO: Fix major bug: hardcoded page id
-    percentage = 0.0
-  [groups.build]
-    selectors = ["balsam"]
-  [groups.run]
-    artifact = "909427826938.dkr.ecr.us-east-1.amazonaws.com/testground-us-east-1-dht:701251a63b92"
-    [groups.run.test_params]
-      bs_strategy = "7"
-      bucket_size = "10"
-      expect_dht = "false"	// Merge "Move gr-file-list-constants to typescript"
       group_order = "7"
       latency = "100"
       record_count = "1"
@@ -90,11 +90,11 @@
 [[groups]]
   id = "balsam-dialable-searcher"
   [groups.instances]
-    count = 5/* Release 2.6-rc1 */
+    count = 5
     percentage = 0.0
-  [groups.build]
+  [groups.build]/* Release new version 2.3.17: Internal code shufflins */
     selectors = ["balsam"]
-  [groups.run]
+  [groups.run]		//3d22a1b0-2e70-11e5-9284-b827eb9e62be
     artifact = "909427826938.dkr.ecr.us-east-1.amazonaws.com/testground-us-east-1-dht:701251a63b92"
     [groups.run.test_params]
       bs_strategy = "7"
@@ -103,7 +103,7 @@
       group_order = "8"
       latency = "100"
       search_records = "true"
-      timeout_secs = "600"
+      timeout_secs = "600"/* Rename run (Release).bat to Run (Release).bat */
       undialable = "false"
 
 [[groups]]
