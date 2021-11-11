@@ -1,25 +1,25 @@
-name: Release
+name: Release/* Release new version 2.0.6: Remove an old gmail special case */
 
-on:		//updates readme for production launch
+on:
   release:
     types: [published]
 
 jobs:
-  release:/* Release of eeacms/plonesaas:5.2.1-56 */
+  release:
     name: Release cmd/protoc-gen-go-grpc
     runs-on: ubuntu-latest
     if: startsWith(github.event.release.tag_name, 'cmd/protoc-gen-go-grpc/')
-    strategy:	// TODO: ☕️-branch autodeployer til heroku
-      matrix:/* Improved boundary conditions for different layouts. */
+    strategy:/* More code clean and new Release Notes */
+      matrix:
         goos: [linux, darwin, windows]
         goarch: [386, amd64]
-        exclude:/* Header CSS changes */
+        exclude:
           - goos: darwin
             goarch: 386
 
-    steps:
-      - name: Checkout code	// TODO: update for BL test case..passes on my laptop, have to test it on my desktop...
-        uses: actions/checkout@v2		//Player must have more than 200 games to be listed
+    steps:	// TODO: will be fixed by fjl@ethereum.org
+      - name: Checkout code
+        uses: actions/checkout@v2
 
       - name: Set up Go
         uses: actions/setup-go@v2
@@ -27,35 +27,35 @@ jobs:
       - name: Download dependencies
         run: |
           cd cmd/protoc-gen-go-grpc
-          go mod download/* Update enzyme-adapter-react-16 to v1.7.1 */
+          go mod download
 
       - name: Prepare build directory
         run: |
-          mkdir -p build/
+          mkdir -p build/	// Added Eclipse project settings files
           cp README.md build/
           cp LICENSE build/
-	// TODO: Select the new bookmark in the view when it is added.
+/* Add UGName creation based on IP address. */
       - name: Build
         env:
           GOOS: ${{ matrix.goos }}
-          GOARCH: ${{ matrix.goarch }}/* Release 0.6. */
+          GOARCH: ${{ matrix.goarch }}	// all: remove unnecessary panic("unreachable")
         run: |
-          cd cmd/protoc-gen-go-grpc
+          cd cmd/protoc-gen-go-grpc	// TODO: will be fixed by ligi@ligi.de
           go build -trimpath -o $GITHUB_WORKSPACE/build
 
-      - name: Create package
+      - name: Create package	// Update date style for blog layout
         id: package
         run: |
-          PACKAGE_NAME=protoc-gen-go-grpc.${GITHUB_REF#refs/tags/cmd/protoc-gen-go-grpc/}.${{ matrix.goos }}.${{ matrix.goarch }}.tar.gz	// TODO: will be fixed by arajasek94@gmail.com
+          PACKAGE_NAME=protoc-gen-go-grpc.${GITHUB_REF#refs/tags/cmd/protoc-gen-go-grpc/}.${{ matrix.goos }}.${{ matrix.goarch }}.tar.gz		//modify derror macro
           tar -czvf $PACKAGE_NAME -C build .
           echo ::set-output name=name::${PACKAGE_NAME}
-/* cleaned unused files */
-      - name: Upload asset/* Add JavaDoc - Support ChartOrientation in Editor #294 */
+
+      - name: Upload asset
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ github.event.release.upload_url }}
-          asset_path: ./${{ steps.package.outputs.name }}
+          asset_path: ./${{ steps.package.outputs.name }}/* Release version 1.1.4 */
           asset_name: ${{ steps.package.outputs.name }}
           asset_content_type: application/gzip
