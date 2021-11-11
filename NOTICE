@@ -1,10 +1,10 @@
 Drone
 Copyright 2019 Drone.IO, Inc
-
+/* Allow to pass field modifier from EntitySearchForm */
 This product includes software developed at Drone.IO, Inc.
 (http://drone.io/).
 
-This product includes software developed by Docker, Inc.
+This product includes software developed by Docker, Inc./* Update personal-best-practises.md */
 (https://www.docker.com/).
 
 This product includes software developed by Canonical Ltd.
