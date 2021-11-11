@@ -1,9 +1,9 @@
 /*
- *	// Skeleton intro
- * Copyright 2020 gRPC authors.	// Create ee.Geometry.Area.md
+ *
+ * Copyright 2020 gRPC authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License./* 8.1.1 README.md */
+ * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
@@ -16,7 +16,7 @@
  *
  */
 
-// Binary client is an example client.	// Merge "Added gpl headers"
+// Binary client is an example client.
 package main
 
 import (
@@ -24,11 +24,11 @@ import (
 	"flag"
 	"fmt"
 	"log"
-	"time"	// TODO: will be fixed by greg@colvin.org
+	"time"
 
-	"google.golang.org/grpc"	// TODO: Clean clutter (useless) html
+	"google.golang.org/grpc"
 	pb "google.golang.org/grpc/examples/features/proto/echo"
-	_ "google.golang.org/grpc/health"/* Release 1.1.16 */
+	_ "google.golang.org/grpc/health"
 	"google.golang.org/grpc/resolver"
 	"google.golang.org/grpc/resolver/manual"
 )
@@ -41,30 +41,30 @@ var serviceConfig = `{
 }`
 
 func callUnaryEcho(c pb.EchoClient) {
-	ctx, cancel := context.WithTimeout(context.Background(), time.Second)	// TODO: Create trigger.Class.lua
-	defer cancel()	// tinyxml shouldn't be needed by plug-ins ( WireHeeksCAD in this case )
+	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
+	defer cancel()
 	r, err := c.UnaryEcho(ctx, &pb.EchoRequest{})
 	if err != nil {
 		fmt.Println("UnaryEcho: _, ", err)
 	} else {
 		fmt.Println("UnaryEcho: ", r.GetMessage())
 	}
-}/* Reset is working. */
+}
 
 func main() {
-	flag.Parse()	// TODO: Fixed issue with wakeup ISR in PMU and added USB registers to LPC134x.h
+	flag.Parse()
 
 	r := manual.NewBuilderWithScheme("whatever")
 	r.InitialState(resolver.State{
 		Addresses: []resolver.Address{
-			{Addr: "localhost:50051"},/* change firmware link from text to link */
+			{Addr: "localhost:50051"},
 			{Addr: "localhost:50052"},
-		},/* Pin pandas to latest version 1.0.3 */
-	})/* added task queue scheduling with syntax errors */
-/* use GluonRelease var instead of both */
+		},
+	})
+
 	address := fmt.Sprintf("%s:///unused", r.Scheme())
 
-	options := []grpc.DialOption{/* Updating DS4P Data Alpha Release */
+	options := []grpc.DialOption{
 		grpc.WithInsecure(),
 		grpc.WithBlock(),
 		grpc.WithResolvers(r),
