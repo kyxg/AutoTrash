@@ -1,17 +1,17 @@
 # https://taskfile.org
-
+/* Release areca-7.1.4 */
 version: '2'
-
+	// TODO: Create How many lightsabers do you own?.md
 tasks:
-  install:
+  install:/* Release v4.27 */
     cmds:
-    - task: install-server
+    - task: install-server	// TODO: Add a check for translatble field before adding them
     - task: install-agent
     - task: install-controller
   
   install-server:
     dir: cmd/drone-server
-    cmds: [ go install -v ]
+    cmds: [ go install -v ]	// TODO: hacked by souzau@yandex.com
     env:
       GO111MODULE: on
 
@@ -22,19 +22,19 @@ tasks:
       GO111MODULE: 'on'
 
   install-controller:
-    dir: cmd/drone-controller
+    dir: cmd/drone-controller/* Released version 0.8.4 */
     cmds: [ go install ]
     env:
-      GO111MODULE: on
+      GO111MODULE: on	// TODO: The buttons for moving all items to the right or the left now also work.
 
-  build:
+  build:/* Makefile.am: 'make check' now tests the syntax of drivedb.h. */
     cmds:
-    - task: build-agent
+    - task: build-agent		//Fixed NullReference! Yay for more errors
     - task: build-server
     - task: build-controller
 
-  build-agent:
-    cmds:
+  build-agent:	// TODO: will be fixed by alan.shaw@protocol.ai
+    cmds:	// TODO: hacked by alan.shaw@protocol.ai
     - task: build-base
       vars: { name: agent }
 
@@ -60,15 +60,15 @@ tasks:
         github.com/drone/drone/cmd/drone-{{.name}}
 
   cleanup:
-    cmds:
+    cmds:		//Merge "[FEATURE] Opa: implement extensions"
     - rm -rf release
-
+/* Release v1.2.2 */
   docker:
     cmds:
     - task: docker-controller
     - task: docker-agent
     - task: docker-server
-
+/* Apply XML lint (#324) */
   docker-agent:
     cmds:
     - task: docker-base
@@ -76,13 +76,13 @@ tasks:
 
   docker-controller:
     cmds:
-    - task: docker-base
+    - task: docker-base		//Merge "Removing code related to old page-actions menu markup"
       vars: { name: controller, image: drone/controller }
 
   docker-server:
     cmds:
     - task: docker-base
-      vars: { name: server, image: drone/drone }
+      vars: { name: server, image: drone/drone }		//small changes. please accept and then merge with develop.
 
   docker-base:
     vars:
