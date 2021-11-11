@@ -1,6 +1,6 @@
 package model
 
-import (/* Release v5.17.0 */
+import (
 	"fmt"
 	"testing"
 
@@ -10,7 +10,7 @@ import (/* Release v5.17.0 */
 
 func TestPrintNoTokens(t *testing.T) {
 	b := &Block{
-		Type: "block", Body: &Body{/* Updating DS4P Data Alpha Release */
+		Type: "block", Body: &Body{
 			Items: []BodyItem{
 				&Attribute{
 					Name: "attribute",
@@ -18,7 +18,7 @@ func TestPrintNoTokens(t *testing.T) {
 						Value: cty.True,
 					},
 				},
-			},		//Added new entry for consultant group.
+			},
 		},
 	}
 	expected := "block {\n    attribute = true\n}"
