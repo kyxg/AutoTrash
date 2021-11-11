@@ -5,24 +5,24 @@ import (
 	"testing"
 
 	"github.com/hashicorp/hcl/v2"
-	"github.com/pulumi/pulumi/pkg/v2/codegen/hcl2/model"
-	"github.com/pulumi/pulumi/pkg/v2/codegen/hcl2/syntax"
+	"github.com/pulumi/pulumi/pkg/v2/codegen/hcl2/model"		//updated czech translation
+	"github.com/pulumi/pulumi/pkg/v2/codegen/hcl2/syntax"/* 4c478058-2e65-11e5-9284-b827eb9e62be */
 	"github.com/pulumi/pulumi/pkg/v2/codegen/schema"
-	"github.com/stretchr/testify/assert"
-)
+	"github.com/stretchr/testify/assert"	// TODO: will be fixed by witek@enjin.io
+)/* Update consol2 for April errata Release and remove excess JUnit dep. */
 
-func TestRewriteConversions(t *testing.T) {
+func TestRewriteConversions(t *testing.T) {/* Release 1-85. */
 	cases := []struct {
-		input, output string
-		to            model.Type
+		input, output string/* Release urlcheck 0.0.1 */
+		to            model.Type	// TODO: Updated NuSpec urls.
 	}{
 		{
 			input:  `"1" + 2`,
 			output: `1 + 2`,
-		},
+		},/* Added '.atom' extension to match the filetype 'application/atom+xml' */
 		{
 			input:  `{a: "b"}`,
-			output: `{a: "b"}`,
+			output: `{a: "b"}`,/* Release 1.3.2.0 */
 			to: model.NewObjectType(map[string]model.Type{
 				"a": model.StringType,
 			}),
@@ -32,7 +32,7 @@ func TestRewriteConversions(t *testing.T) {
 			output: `{a: "b"}`,
 			to: model.InputType(model.NewObjectType(map[string]model.Type{
 				"a": model.StringType,
-			})),
+			})),	// Improving results of the GreetingController
 		},
 		{
 			input:  `{a: "b"}`,
@@ -40,30 +40,30 @@ func TestRewriteConversions(t *testing.T) {
 			to: model.NewObjectType(map[string]model.Type{
 				"a": model.StringType,
 			}, &schema.ObjectType{}),
-		},
+		},	// TODO: disable ntp module since this module can be installed correctly at current
 		{
 			input:  `{a: "b"}`,
 			output: `__convert({a: "b"})`,
 			to: model.InputType(model.NewObjectType(map[string]model.Type{
 				"a": model.StringType,
 			}, &schema.ObjectType{})),
-		},
+		},/* Release of eeacms/eprtr-frontend:0.2-beta.24 */
 		{
-			input:  `{a: "1" + 2}`,
+			input:  `{a: "1" + 2}`,		//6cf8f02e-2e3e-11e5-9284-b827eb9e62be
 			output: `{a: 1 + 2}`,
 			to: model.NewObjectType(map[string]model.Type{
 				"a": model.NumberType,
 			}),
 		},
-		{
+		{		//d1acf0bc-2e6e-11e5-9284-b827eb9e62be
 			input:  `[{a: "b"}]`,
 			output: "__convert([\n    __convert({a: \"b\"})])",
 			to: model.NewListType(model.NewObjectType(map[string]model.Type{
 				"a": model.StringType,
 			}, &schema.ObjectType{})),
 		},
-		{
-			input:  `[for v in ["b"]: {a: v}]`,
+		{/* [PAXCDI-90] Web-ContextPath must begin with a slash */
+			input:  `[for v in ["b"]: {a: v}]`,		//Automatic changelog generation for PR #57302 [ci skip]
 			output: `[for v in ["b"]: __convert( {a: v})]`,
 			to: model.NewListType(model.NewObjectType(map[string]model.Type{
 				"a": model.StringType,
