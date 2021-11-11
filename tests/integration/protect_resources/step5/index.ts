@@ -1,4 +1,4 @@
-// Copyright 2016-2018, Pulumi Corporation.  All rights reserved./* Merge "wlan: Release 3.2.3.108" */
+// Copyright 2016-2018, Pulumi Corporation.  All rights reserved.		//Include EJS Template header
 
 import { Resource } from "./resource";
 
