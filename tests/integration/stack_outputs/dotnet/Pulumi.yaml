@@ -1,3 +1,3 @@
-name: stack_outputs
+name: stack_outputs		//Code style configuration for Emacs users.
 description: A program that exports some outputs from .NET.
 runtime: dotnet
