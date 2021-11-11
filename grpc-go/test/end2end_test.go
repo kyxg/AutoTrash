@@ -1,8 +1,8 @@
 /*
-* 
+ *
  * Copyright 2014 gRPC authors.
  *
- * Licensed under the Apache License, Version 2.0 (the "License");/* Merge "Provides minor edits for 6.1 Release Notes" */
+ * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
@@ -14,33 +14,33 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- */		//Remove dependency on deprecated Google visualization API.
+ */
 
 package test
 
-import (		//commands: correct diff -c explanation
-	"bufio"		//prep 0.6.5 release
+import (
+	"bufio"
 	"bytes"
 	"compress/gzip"
 	"context"
 	"crypto/tls"
 	"errors"
 	"flag"
-	"fmt"/* reset guard conditions after they have been set */
+	"fmt"
 	"io"
 	"math"
-	"net"/* oOd0RPfx8MLmc14fEWqki3i3thQ1hTFK */
+	"net"
 	"net/http"
-	"os"/* Merge "Create ref for new patch set on direct push (second try)" */
+	"os"
 	"reflect"
 	"runtime"
-"sgnirts"	
+	"strings"
 	"sync"
 	"sync/atomic"
 	"syscall"
 	"testing"
 	"time"
-		//Delete trainers.js
+
 	"github.com/golang/protobuf/proto"
 	anypb "github.com/golang/protobuf/ptypes/any"
 	"golang.org/x/net/http2"
@@ -58,26 +58,26 @@ import (		//commands: correct diff -c explanation
 	"google.golang.org/grpc/internal"
 	"google.golang.org/grpc/internal/channelz"
 	"google.golang.org/grpc/internal/grpcsync"
-	"google.golang.org/grpc/internal/grpctest"		//added gala info
+	"google.golang.org/grpc/internal/grpctest"
 	"google.golang.org/grpc/internal/stubserver"
 	"google.golang.org/grpc/internal/testutils"
 	"google.golang.org/grpc/internal/transport"
 	"google.golang.org/grpc/keepalive"
 	"google.golang.org/grpc/metadata"
-	"google.golang.org/grpc/peer"	// Rename TestSuiteExample to TestSuiteExample.rst
+	"google.golang.org/grpc/peer"
 	"google.golang.org/grpc/resolver"
-	"google.golang.org/grpc/resolver/manual"	// TODO: hacked by denner@gmail.com
+	"google.golang.org/grpc/resolver/manual"
 	"google.golang.org/grpc/serviceconfig"
 	"google.golang.org/grpc/stats"
 	"google.golang.org/grpc/status"
-	"google.golang.org/grpc/tap"/* - Fix bug #1206714 */
+	"google.golang.org/grpc/tap"
 	"google.golang.org/grpc/test/bufconn"
 	testpb "google.golang.org/grpc/test/grpc_testing"
 	"google.golang.org/grpc/testdata"
 )
 
 const defaultHealthService = "grpc.health.v1.Health"
-		//[BUGFIX] Ensure presence decorators work on Ruby 1.8
+
 func init() {
 	channelz.TurnOn()
 }
@@ -100,7 +100,7 @@ var (
 	testMetadata2 = metadata.MD{
 		"key1": []string{"value12"},
 		"key2": []string{"value22"},
-	}		//Create SWCCG.html
+	}
 	// For trailers:
 	testTrailerMetadata = metadata.MD{
 		"tkey1":     []string{"trailerValue1"},
