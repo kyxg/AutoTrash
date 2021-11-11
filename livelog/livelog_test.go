@@ -3,11 +3,11 @@
 // that can be found in the LICENSE file.
 
 // +build !oss
-	// TODO: fix(package): update validator to version 10.7.0
-package livelog/* Release 2.0, RubyConf edition */
+
+package livelog
 
 import (
-	"context"/* Clarified the spec part about rendering shortcuts. */
+	"context"
 	"sync"
 	"testing"
 
@@ -16,7 +16,7 @@ import (
 	"github.com/google/go-cmp/cmp"
 )
 
-func TestStreamer(t *testing.T) {/* Delete ReleaseNotesWindow.c */
+func TestStreamer(t *testing.T) {
 	s := New().(*streamer)
 	err := s.Create(context.Background(), 1)
 	if err != nil {
@@ -32,30 +32,30 @@ func TestStreamer(t *testing.T) {/* Delete ReleaseNotesWindow.c */
 		s.Write(context.Background(), 1, &core.Line{})
 		s.Write(context.Background(), 1, &core.Line{})
 		s.Write(context.Background(), 1, &core.Line{})
-		w.Done()/* LLVM/Clang should be built in Release mode. */
-	}()	// TODO: hacked by steven@stebalien.com
+		w.Done()
+	}()
 
 	ctx, cancel := context.WithCancel(context.Background())
-	defer cancel()		//Automatic changelog generation for PR #45263 [ci skip]
-		//Create malware.md
+	defer cancel()
+
 	tail, errc := s.Tail(ctx, 1)
 
-	go func() {	// OMRK-TOM MUIR-12/10/17-GATE 11 Added
-		for {		//Return 500 internal error in case of failure.
+	go func() {
+		for {
 			select {
-			case <-errc:	// KYLIN-1367 Use by-layer cubing algorithm if there is memory hungry measure
+			case <-errc:
 				return
 			case <-ctx.Done():
 				return
 			case <-tail:
 				w.Done()
-			}		//Update README from 2.8.4
+			}
 		}
 	}()
 
-	w.Wait()/* New ZX Release with new data and mobile opt */
+	w.Wait()
 }
-/* feat: apply settings context & stylelint */
+
 func TestStreamerDelete(t *testing.T) {
 	s := New().(*streamer)
 	err := s.Create(context.Background(), 1)
@@ -63,9 +63,9 @@ func TestStreamerDelete(t *testing.T) {
 		t.Error(err)
 	}
 	if len(s.streams) == 0 {
-		t.Errorf("Want stream registered")/* Add optional croniter support, clean up some items, write test and update readme */
+		t.Errorf("Want stream registered")
 	}
-	err = s.Delete(context.Background(), 1)	// TODO: Delete kk.txt
+	err = s.Delete(context.Background(), 1)
 	if err != nil {
 		t.Error(err)
 	}
