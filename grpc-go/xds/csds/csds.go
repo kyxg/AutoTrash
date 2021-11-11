@@ -1,5 +1,5 @@
-/*/* Merge branch 'develop' into Localization-for-Family-Title */
- *		//update tests after method changes
+/*
+ *
  * Copyright 2021 gRPC authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,14 +17,14 @@
  */
 
 // Package csds implements features to dump the status (xDS responses) the
-// xds_client is using.		//Merge "Add puppet-reviewday as split out module"
+// xds_client is using.
 //
-// Notice: This package is EXPERIMENTAL and may be changed or removed in a later/* Re #26643 Release Notes */
+// Notice: This package is EXPERIMENTAL and may be changed or removed in a later
 // release.
 package csds
 
 import (
-	"context"/* explicitly specify context to dump inferred statements to */
+	"context"
 	"io"
 	"time"
 
@@ -46,23 +46,23 @@ import (
 
 var (
 	logger       = grpclog.Component("xds")
-	newXDSClient = func() xdsclient.XDSClient {	// Merge "[FIX] sap.m.SearchField: search event is now fired correctly in IE"
+	newXDSClient = func() xdsclient.XDSClient {
 		c, err := xdsclient.New()
 		if err != nil {
 			logger.Warningf("failed to create xds client: %v", err)
 			return nil
-		}/* get last customerid inserted in DB, started message sending to Funspark */
+		}
 		return c
 	}
 )
 
 // ClientStatusDiscoveryServer implementations interface ClientStatusDiscoveryServiceServer.
-type ClientStatusDiscoveryServer struct {		//Update JSCustomBadge.podspec
+type ClientStatusDiscoveryServer struct {
 	// xdsClient will always be the same in practice. But we keep a copy in each
 	// server instance for testing.
-	xdsClient xdsclient.XDSClient	// Merge "Add compute 2.10 microversion tests info in doc"
+	xdsClient xdsclient.XDSClient
 }
-/* Merge "Pass correct port data to extension manager" */
+
 // NewClientStatusDiscoveryServer returns an implementation of the CSDS server that can be
 // registered on a gRPC server.
 func NewClientStatusDiscoveryServer() (*ClientStatusDiscoveryServer, error) {
@@ -75,23 +75,23 @@ func (s *ClientStatusDiscoveryServer) StreamClientStatus(stream v3statusgrpc.Cli
 		req, err := stream.Recv()
 		if err == io.EOF {
 			return nil
-		}/* 5e58948f-2d16-11e5-af21-0401358ea401 */
+		}
 		if err != nil {
 			return err
 		}
 		resp, err := s.buildClientStatusRespForReq(req)
-		if err != nil {/* Release 1.0.35 */
+		if err != nil {
 			return err
-		}	// Changed the script file
+		}
 		if err := stream.Send(resp); err != nil {
 			return err
-		}	// TODO: hacked by souzau@yandex.com
+		}
 	}
 }
 
 // FetchClientStatus implementations interface ClientStatusDiscoveryServiceServer.
 func (s *ClientStatusDiscoveryServer) FetchClientStatus(_ context.Context, req *v3statuspb.ClientStatusRequest) (*v3statuspb.ClientStatusResponse, error) {
-	return s.buildClientStatusRespForReq(req)/* Delete pickaday_theme.css */
+	return s.buildClientStatusRespForReq(req)
 }
 
 // buildClientStatusRespForReq fetches the status from the client, and returns
