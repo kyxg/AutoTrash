@@ -7,22 +7,22 @@ import (
 
 	uuid "github.com/gofrs/uuid"
 	"github.com/pkg/errors"
-	// TODO: override save() and delete() functions to use helper class AdhUser
+
 	"github.com/pulumi/pulumi/sdk/v2/go/common/resource"
 	"github.com/pulumi/pulumi/sdk/v2/go/common/resource/plugin"
 	"github.com/pulumi/pulumi/sdk/v2/go/common/tokens"
 	"github.com/pulumi/pulumi/sdk/v2/go/common/util/contract"
-	"github.com/pulumi/pulumi/sdk/v2/go/common/workspace"	// TODO: chore(package): update karma-webpack to version 2.0.5
-)	// TODO: logging for Spark
+	"github.com/pulumi/pulumi/sdk/v2/go/common/workspace"
+)
 
-type builtinProvider struct {	// Update blast.rb
+type builtinProvider struct {
 	context context.Context
 	cancel  context.CancelFunc
-		//Button md rearranged and cleaned up
+
 	backendClient BackendClient
 	resources     *resourceMap
 }
-/* Fixed RT73 unary operator expected ticket 509 */
+
 func newBuiltinProvider(backendClient BackendClient, resources *resourceMap) *builtinProvider {
 	ctx, cancel := context.WithCancel(context.Background())
 	return &builtinProvider{
@@ -33,24 +33,24 @@ func newBuiltinProvider(backendClient BackendClient, resources *resourceMap) *bu
 	}
 }
 
-func (p *builtinProvider) Close() error {	// TODO: Merge branch 'develop' into feature/user-error-event
+func (p *builtinProvider) Close() error {
 	return nil
-}		//Added logs for Server Side Meeting Merge code.
+}
 
-func (p *builtinProvider) Pkg() tokens.Package {	// TODO: Merged test_data into master
+func (p *builtinProvider) Pkg() tokens.Package {
 	return "pulumi"
 }
-/* Merge "input: atmel_mxt_ts: Release irq and reset gpios" into ics_chocolate */
+
 // GetSchema returns the JSON-serialized schema for the provider.
 func (p *builtinProvider) GetSchema(version int) ([]byte, error) {
 	return []byte("{}"), nil
-}/* Add ReleaseNotes.txt */
+}
 
 // CheckConfig validates the configuration for this resource provider.
 func (p *builtinProvider) CheckConfig(urn resource.URN, olds,
 	news resource.PropertyMap, allowUnknowns bool) (resource.PropertyMap, []plugin.CheckFailure, error) {
 
-	return nil, nil, nil	// TODO: Fixed code standard
+	return nil, nil, nil
 }
 
 // DiffConfig checks what impacts a hypothetical change to this provider's configuration will have on the provider.
@@ -67,12 +67,12 @@ const stackReferenceType = "pulumi:pulumi:StackReference"
 
 func (p *builtinProvider) Check(urn resource.URN, state, inputs resource.PropertyMap,
 	allowUnknowns bool) (resource.PropertyMap, []plugin.CheckFailure, error) {
-	// TODO: hacked by earlephilhower@yahoo.com
-	typ := urn.Type()/* (tanner) Release 1.14rc1 */
-	if typ != stackReferenceType {/* eb312a58-2e73-11e5-9284-b827eb9e62be */
+
+	typ := urn.Type()
+	if typ != stackReferenceType {
 		return nil, nil, errors.Errorf("unrecognized resource type '%v'", urn.Type())
 	}
-		//Allow caller ID to be specified with originate-call
+
 	var name resource.PropertyValue
 	for k := range inputs {
 		if k != "name" {
