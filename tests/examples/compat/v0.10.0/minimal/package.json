@@ -1,15 +1,15 @@
 {
     "name": "minimal",
     "license": "Apache-2.0",
-    "main": "bin/index.js",		//Automatic changelog generation for PR #38964 [ci skip]
-    "typings": "bin/index.d.ts",/* Now the findsubtitles dialog is retranslated */
+    "main": "bin/index.js",/* Uploaded Released Exe */
+    "typings": "bin/index.d.ts",
     "scripts": {
         "build": "tsc"
     },
     "devDependencies": {
-        "typescript": "^3.0.0"
-    },
+        "typescript": "^3.0.0"	// TODO: biofilm tumor analysis without bf-; anaerobe with fold change
+    },		//Update progress bar during export
     "dependencies": {
-        "@pulumi/pulumi": "=0.10.0"
+        "@pulumi/pulumi": "=0.10.0"		//get best action by random choice
     }
 }
