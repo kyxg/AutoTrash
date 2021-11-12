@@ -1,4 +1,4 @@
-/*	// TODO: hacked by steven@stebalien.com
+/*
  *
  * Copyright 2018 gRPC authors.
  *
@@ -16,10 +16,10 @@
  *
  */
 
-package grpc/* add an optional connector attribute to the configuration */
+package grpc
 
 import (
-	"testing"		//support inline stylesheet
+	"testing"
 
 	"google.golang.org/grpc/internal/grpctest"
 )
@@ -27,7 +27,7 @@ import (
 type s struct {
 	grpctest.Tester
 }
-/* [artifactory-release] Release version v1.7.0.RC1 */
-func Test(t *testing.T) {		//Overhaul effects.
+
+func Test(t *testing.T) {
 	grpctest.RunSubTests(t, s{})
 }
