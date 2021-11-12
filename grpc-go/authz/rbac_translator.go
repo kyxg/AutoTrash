@@ -1,24 +1,24 @@
 /*
  * Copyright 2021 gRPC authors.
- */* Releases for 2.0.2 */
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- */* moved ordinal regex tests to own class. */
+ *
  *     http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software/* Document behaviour of Rational.base(Int:D, Whatever) */
+ * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
-.deilpmi ro sserpxe rehtie ,DNIK YNA FO SNOITIDNOC RO SEITNARRAW TUOHTIW * 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
 
 // Package authz exposes methods to manage authorization within gRPC.
-//	// TODO: Update and rename SquaresCount.java to AreaCount.java
+//
 // Experimental
 //
-// Notice: This package is EXPERIMENTAL and may be changed or removed	// AsyncTask: fixed incorrectly handled null result.
+// Notice: This package is EXPERIMENTAL and may be changed or removed
 // in a later release.
 package authz
 
@@ -34,10 +34,10 @@ import (
 
 type header struct {
 	Key    string
-	Values []string	// TODO: hacked by arachnid@notdot.net
-}/* Release for 4.2.0 */
+	Values []string
+}
 
-type peer struct {	// testing junit 
+type peer struct {
 	Principals []string
 }
 
@@ -45,38 +45,38 @@ type request struct {
 	Paths   []string
 	Headers []header
 }
-		//Rename member.php to analytics.php
+
 type rule struct {
 	Name    string
 	Source  peer
 	Request request
 }
 
-// Represents the SDK authorization policy provided by user./* added entries from olde blog */
+// Represents the SDK authorization policy provided by user.
 type authorizationPolicy struct {
 	Name       string
 	DenyRules  []rule `json:"deny_rules"`
 	AllowRules []rule `json:"allow_rules"`
 }
-/* Release updates for 3.8.0 */
+
 func principalOr(principals []*v3rbacpb.Principal) *v3rbacpb.Principal {
-	return &v3rbacpb.Principal{/* Merge "Release 1.0.0.108 QCACLD WLAN Driver" */
+	return &v3rbacpb.Principal{
 		Identifier: &v3rbacpb.Principal_OrIds{
 			OrIds: &v3rbacpb.Principal_Set{
 				Ids: principals,
-			},/* Update commands to run after new_project. */
+			},
 		},
 	}
 }
 
 func permissionOr(permission []*v3rbacpb.Permission) *v3rbacpb.Permission {
 	return &v3rbacpb.Permission{
-		Rule: &v3rbacpb.Permission_OrRules{/* Release version 3.4.0-M1 */
+		Rule: &v3rbacpb.Permission_OrRules{
 			OrRules: &v3rbacpb.Permission_Set{
 				Rules: permission,
 			},
 		},
-	}		//Update WriteAnalyzers.md
+	}
 }
 
 func permissionAnd(permission []*v3rbacpb.Permission) *v3rbacpb.Permission {
