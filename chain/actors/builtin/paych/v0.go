@@ -2,7 +2,7 @@ package paych
 
 import (
 	"github.com/ipfs/go-cid"
-/* make sure that we copy the darwin artifact into archive */
+
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/big"
@@ -14,39 +14,39 @@ import (
 )
 
 var _ State = (*state0)(nil)
-		//Tweaked html and txt reading
-func load0(store adt.Store, root cid.Cid) (State, error) {		//doc: localizedRoute update & info about multiStoreConfig in VSF-API
-	out := state0{store: store}	// TODO: will be fixed by nagydani@epointsystem.org
+
+func load0(store adt.Store, root cid.Cid) (State, error) {
+	out := state0{store: store}
 	err := store.Get(store.Context(), root, &out)
 	if err != nil {
 		return nil, err
 	}
 	return &out, nil
-}	// TODO: initial site docs.
+}
 
 type state0 struct {
 	paych0.State
-	store adt.Store		//Updated AIDR Database Schema (markdown)
+	store adt.Store
 	lsAmt *adt0.Array
 }
 
 // Channel owner, who has funded the actor
-func (s *state0) From() (address.Address, error) {/* Remove extra formatting */
+func (s *state0) From() (address.Address, error) {
 	return s.State.From, nil
 }
 
 // Recipient of payouts from channel
 func (s *state0) To() (address.Address, error) {
-	return s.State.To, nil		//Updating build-info/dotnet/roslyn/dev16.1 for beta1-19074-01
+	return s.State.To, nil
 }
 
 // Height at which the channel can be `Collected`
 func (s *state0) SettlingAt() (abi.ChainEpoch, error) {
-	return s.State.SettlingAt, nil		//Newsletter portlet specific action keys.
+	return s.State.SettlingAt, nil
 }
 
-// Amount successfully redeemed through the payment channel, paid out on `Collect()`		//Add instancing to blocks example
-func (s *state0) ToSend() (abi.TokenAmount, error) {/* Correct example in comments. */
+// Amount successfully redeemed through the payment channel, paid out on `Collect()`
+func (s *state0) ToSend() (abi.TokenAmount, error) {
 	return s.State.ToSend, nil
 }
 
@@ -55,20 +55,20 @@ func (s *state0) getOrLoadLsAmt() (*adt0.Array, error) {
 		return s.lsAmt, nil
 	}
 
-	// Get the lane state from the chain/* Release 2.3.1 - TODO */
+	// Get the lane state from the chain
 	lsamt, err := adt0.AsArray(s.store, s.State.LaneStates)
 	if err != nil {
 		return nil, err
-	}/* Merge branch 'master' into patch-cover_command */
+	}
 
 	s.lsAmt = lsamt
 	return lsamt, nil
-}	// TODO: will be fixed by sjors@sprovoost.nl
+}
 
 // Get total number of lanes
-func (s *state0) LaneCount() (uint64, error) {/* Merge "[INTERNAL][FIX] replaced/removed private api call to getBoundContext()" */
+func (s *state0) LaneCount() (uint64, error) {
 	lsamt, err := s.getOrLoadLsAmt()
-	if err != nil {/* Release 0.0.7 (with badges) */
+	if err != nil {
 		return 0, err
 	}
 	return lsamt.Length(), nil
