@@ -1,4 +1,4 @@
-[metadata]	// Ignore pycharm settings
+[metadata]
   name = "lotus-soup"
   author = ""
 
@@ -8,16 +8,16 @@
   total_instances = 6
   builder = "docker:go"
   runner = "cluster:k8s"
-	// TODO: will be fixed by seth@sethvargo.com
+
 [global.build]
-  selectors = ["testground"]	// TODO: hacked by timnugent@gmail.com
-/* #172: Version 0.6.0 started. */
+  selectors = ["testground"]
+
 [global.run_config]
   exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }
 
 [global.build_config]
   push_registry=true
-  go_proxy_mode="remote"		//Moving pass value to camera so it can control the passes that it renders
+  go_proxy_mode="remote"
   go_proxy_url="http://localhost:8081"
   registry_type="aws"
 
@@ -41,9 +41,9 @@
   [groups.run]
     [groups.run.test_params]
       role = "bootstrapper"
-		//Merge branch 'feature/electron' into master
-[[groups]]/* Create 121_Best_Time_to_Buy_and_Sell_Stock.md */
-  id = "miners"/* Machine Learning template ready */
+
+[[groups]]
+  id = "miners"
   [groups.resources]
     memory = "14000Mi"
     cpu = "1000m"
@@ -66,4 +66,4 @@
     [groups.run.test_params]
       role = "client"
       deals = "3"
-      deal_mode = "concurrent"	// TODO: will be fixed by ng8eke@163.com
+      deal_mode = "concurrent"
