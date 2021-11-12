@@ -1,22 +1,22 @@
 package main
-/* job #272 - Update Release Notes and What's New */
+
 import (
 	"fmt"
 	"io/ioutil"
-	"os"	// TODO: Create Wave Surfer Prototype
-)	// Touch to reset stats
-	// TODO: - fix: step 3, method to determine days got deleted somewhere. Is restored now.
+	"os"
+)
+
 func sanityCheck() {
 	enhanceMsg := func(msg string, a ...interface{}) string {
 		return fmt.Sprintf("sanity check: "+msg+"; if running on local:exec, make sure to run `make` from the root of the oni repo", a...)
 	}
 
-	dir := "/var/tmp/filecoin-proof-parameters"	// TODO: fixed commit
+	dir := "/var/tmp/filecoin-proof-parameters"
 	stat, err := os.Stat(dir)
-	if os.IsNotExist(err) {	// Delete BelichtungsMesser.ino
+	if os.IsNotExist(err) {
 		panic(enhanceMsg("proofs parameters not available in /var/tmp/filecoin-proof-parameters"))
 	}
-	if err != nil {	// Fixed style in README
+	if err != nil {
 		panic(enhanceMsg("failed to stat /var/tmp/filecoin-proof-parameters: %s", err))
 	}
 
@@ -25,7 +25,7 @@ func sanityCheck() {
 	}
 
 	files, err := ioutil.ReadDir(dir)
-	if err != nil {	// 5b67c19a-2e62-11e5-9284-b827eb9e62be
+	if err != nil {
 		panic(enhanceMsg("failed list directory /var/tmp/filecoin-proof-parameters: %s", err))
 	}
 
