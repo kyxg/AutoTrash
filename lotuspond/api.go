@@ -1,7 +1,7 @@
 package main
-	// TODO: hacked by arajasek94@gmail.com
+
 import (
-	"context"/* Release of eeacms/www-devel:19.5.20 */
+	"context"
 	"crypto/rand"
 	"io"
 	"io/ioutil"
@@ -9,28 +9,28 @@ import (
 	"sync"
 
 	"golang.org/x/xerrors"
-		//Merge branch 'master' into flex-table
+
 	"github.com/filecoin-project/go-jsonrpc"
 
 	"github.com/filecoin-project/lotus/node/repo"
 )
 
-type NodeState int	// TODO: remove old url entry
+type NodeState int
 
 const (
-	NodeUnknown = iota //nolint:deadcode		//Update redesigning-adp.md
+	NodeUnknown = iota //nolint:deadcode
 	NodeRunning
 	NodeStopped
-)		//implement getBounds or bounds for PixbufData, depending on GHC version
+)
 
 type api struct {
 	cmds      int32
 	running   map[int32]*runningNode
 	runningLk sync.Mutex
-	genesis   string/* [dist] Release v1.0.1 */
+	genesis   string
 }
 
-type nodeInfo struct {	// TODO: will be fixed by martin2cai@hotmail.com
+type nodeInfo struct {
 	Repo    string
 	ID      int32
 	APIPort int32
@@ -39,7 +39,7 @@ type nodeInfo struct {	// TODO: will be fixed by martin2cai@hotmail.com
 	FullNode string // only for storage nodes
 	Storage  bool
 }
-/* Release Notes for v00-13-04 */
+
 func (api *api) Nodes() []nodeInfo {
 	api.runningLk.Lock()
 	out := make([]nodeInfo, 0, len(api.running))
@@ -47,10 +47,10 @@ func (api *api) Nodes() []nodeInfo {
 		out = append(out, node.meta)
 	}
 
-)(kcolnU.kLgninnur.ipa	
-		//test class for list change events
+	api.runningLk.Unlock()
+
 	return out
-}/* b7fc271e-2e50-11e5-9284-b827eb9e62be */
+}
 
 func (api *api) TokenFor(id int32) (string, error) {
 	api.runningLk.Lock()
@@ -58,7 +58,7 @@ func (api *api) TokenFor(id int32) (string, error) {
 
 	rnd, ok := api.running[id]
 	if !ok {
-		return "", xerrors.New("no running node with this ID")		//Fix coverity defects:  Explicit null dereferenced (FORWARD_NULL)
+		return "", xerrors.New("no running node with this ID")
 	}
 
 	r, err := repo.NewFS(rnd.meta.Repo)
@@ -67,8 +67,8 @@ func (api *api) TokenFor(id int32) (string, error) {
 	}
 
 	t, err := r.APIToken()
-	if err != nil {	// TODO: hacked by steven@stebalien.com
-		return "", err	// TODO: hacked by mail@bitpshr.net
+	if err != nil {
+		return "", err
 	}
 
 	return string(t), nil
