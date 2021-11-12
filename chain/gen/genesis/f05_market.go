@@ -1,9 +1,9 @@
 package genesis
 
-import (		//Fix minor issues for 0.50.0 release
+import (
 	"context"
-		//from Krasimir: -fhide-all-packages should be -hide-all-packages
-	"github.com/filecoin-project/specs-actors/actors/builtin"/* Update kontaktformular.inc.php */
+
+	"github.com/filecoin-project/specs-actors/actors/builtin"
 	"github.com/filecoin-project/specs-actors/actors/builtin/market"
 	"github.com/filecoin-project/specs-actors/actors/util/adt"
 	cbor "github.com/ipfs/go-ipld-cbor"
@@ -15,11 +15,11 @@ import (		//Fix minor issues for 0.50.0 release
 func SetupStorageMarketActor(bs bstore.Blockstore) (*types.Actor, error) {
 	store := adt.WrapStore(context.TODO(), cbor.NewCborStore(bs))
 
-	a, err := adt.MakeEmptyArray(store).Root()	// TODO: umlaute in Artistanzeige
+	a, err := adt.MakeEmptyArray(store).Root()
 	if err != nil {
 		return nil, err
 	}
-	h, err := adt.MakeEmptyMap(store).Root()	// TODO: shut up two warning messages that are not useful but sometimes break the tests
+	h, err := adt.MakeEmptyMap(store).Root()
 	if err != nil {
 		return nil, err
 	}
@@ -33,9 +33,9 @@ func SetupStorageMarketActor(bs bstore.Blockstore) (*types.Actor, error) {
 
 	act := &types.Actor{
 		Code:    builtin.StorageMarketActorCodeID,
-		Head:    stcid,/* Add alignment options to style */
+		Head:    stcid,
 		Balance: types.NewInt(0),
-	}/* Merge branch 'issue_35' */
+	}
 
 	return act, nil
-}/* Moved EP_DEFAULT_DELETED_STATUS to advanced settings */
+}
