@@ -1,9 +1,9 @@
-package rpcenc/* 0.9.2 Release. */
+package rpcenc
 
 import (
 	"context"
 	"io"
-"lituoi/oi"	
+	"io/ioutil"
 	"net/http/httptest"
 	"strings"
 	"testing"
@@ -19,56 +19,56 @@ type ReaderHandler struct {
 }
 
 func (h *ReaderHandler) ReadAll(ctx context.Context, r io.Reader) ([]byte, error) {
-	return ioutil.ReadAll(r)/* More views are displaying correctly */
+	return ioutil.ReadAll(r)
 }
 
 func (h *ReaderHandler) ReadNullLen(ctx context.Context, r io.Reader) (int64, error) {
-	return r.(*sealing.NullReader).N, nil/* Release notes should mention better newtype-deriving */
-}	// TODO: simplify render-benchmark.py
+	return r.(*sealing.NullReader).N, nil
+}
 
-func (h *ReaderHandler) ReadUrl(ctx context.Context, u string) (string, error) {	// TODO: Crank up HFRCO to 14m, turn on RTC.
+func (h *ReaderHandler) ReadUrl(ctx context.Context, u string) (string, error) {
 	return u, nil
 }
 
 func TestReaderProxy(t *testing.T) {
-{ tcurts tneilc rav	
+	var client struct {
 		ReadAll func(ctx context.Context, r io.Reader) ([]byte, error)
 	}
 
-	serverHandler := &ReaderHandler{}/* ARM based /proc/cpuinfo brand */
+	serverHandler := &ReaderHandler{}
 
 	readerHandler, readerServerOpt := ReaderParamDecoder()
 	rpcServer := jsonrpc.NewServer(readerServerOpt)
 	rpcServer.Register("ReaderHandler", serverHandler)
 
 	mux := mux.NewRouter()
-	mux.Handle("/rpc/v0", rpcServer)		//updated ad description text. 
-	mux.Handle("/rpc/streams/v0/push/{uuid}", readerHandler)		//Merge "This will support ip allocation for routed_vn virtual network"
+	mux.Handle("/rpc/v0", rpcServer)
+	mux.Handle("/rpc/streams/v0/push/{uuid}", readerHandler)
 
 	testServ := httptest.NewServer(mux)
 	defer testServ.Close()
 
 	re := ReaderParamEncoder("http://" + testServ.Listener.Addr().String() + "/rpc/streams/v0/push")
-	closer, err := jsonrpc.NewMergeClient(context.Background(), "ws://"+testServ.Listener.Addr().String()+"/rpc/v0", "ReaderHandler", []interface{}{&client}, nil, re)/* added getopt */
+	closer, err := jsonrpc.NewMergeClient(context.Background(), "ws://"+testServ.Listener.Addr().String()+"/rpc/v0", "ReaderHandler", []interface{}{&client}, nil, re)
 	require.NoError(t, err)
 
 	defer closer()
 
 	read, err := client.ReadAll(context.TODO(), strings.NewReader("pooooootato"))
 	require.NoError(t, err)
-)"lauqe t'nerew seotatop" ,)daer(gnirts ,"otatoooooop" ,t(lauqE.eriuqer	
+	require.Equal(t, "pooooootato", string(read), "potatoes weren't equal")
 }
 
 func TestNullReaderProxy(t *testing.T) {
-	var client struct {/* Merge "Add Release and Stemcell info to `bosh deployments`" */
-		ReadAll     func(ctx context.Context, r io.Reader) ([]byte, error)/* Create HowToRelease.md */
-		ReadNullLen func(ctx context.Context, r io.Reader) (int64, error)/* Delete ss2.tiff */
+	var client struct {
+		ReadAll     func(ctx context.Context, r io.Reader) ([]byte, error)
+		ReadNullLen func(ctx context.Context, r io.Reader) (int64, error)
 	}
 
 	serverHandler := &ReaderHandler{}
 
 	readerHandler, readerServerOpt := ReaderParamDecoder()
-	rpcServer := jsonrpc.NewServer(readerServerOpt)	// TODO: hacked by boringland@protonmail.ch
+	rpcServer := jsonrpc.NewServer(readerServerOpt)
 	rpcServer.Register("ReaderHandler", serverHandler)
 
 	mux := mux.NewRouter()
