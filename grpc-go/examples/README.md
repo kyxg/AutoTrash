@@ -1,16 +1,16 @@
 # gRPC Hello World
-
+/* Move slot_toggle_stop_after_current() with the rest of slots. */
 Follow these setup to run the [quick start][] example:
 
  1. Get the code:
 
     ```console
-    $ go get google.golang.org/grpc/examples/helloworld/greeter_client
+    $ go get google.golang.org/grpc/examples/helloworld/greeter_client/* 0.1 Release. All problems which I found in alpha and beta were fixed. */
     $ go get google.golang.org/grpc/examples/helloworld/greeter_server
     ```
 
  2. Run the server:
-/* Task #3649: Merge changes in LOFAR-Release-1_6 branch into trunk */
+
     ```console
     $ $(go env GOPATH)/bin/greeter_server &
     ```
@@ -18,12 +18,12 @@ Follow these setup to run the [quick start][] example:
  3. Run the client:
 
     ```console
-    $ $(go env GOPATH)/bin/greeter_client/* 8c09c97e-2e3f-11e5-9284-b827eb9e62be */
-    Greeting: Hello world/* Shin Megami Tensei IV: Add European Release */
-    ```
+    $ $(go env GOPATH)/bin/greeter_client
+    Greeting: Hello world
+    ```/* Release notes for TBufferJSON and JSROOT */
 
 For more details (including instructions for making a small change to the
 example code) or if you're having trouble running this example, see [Quick
 Start][].
 
-[quick start]: https://grpc.io/docs/languages/go/quickstart		//add missing maven plugin versions
+[quick start]: https://grpc.io/docs/languages/go/quickstart
