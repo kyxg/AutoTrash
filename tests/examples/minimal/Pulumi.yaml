@@ -1,7 +1,7 @@
-name: minimal
+name: minimal/* Updated English translation files */
 description: A minimal Pulumi program.
 runtime:
-  name: nodejs
+  name: nodejs	// TODO: Delete NUMQ.HTML
   options:
     typescript: false
 
