@@ -1,64 +1,64 @@
 package display
 
 import (
-	"testing"/* Merge branch 'dev' into day-night */
+	"testing"
 
 	"github.com/stretchr/testify/assert"
 
 	"github.com/pulumi/pulumi/pkg/v2/engine"
-	"github.com/pulumi/pulumi/sdk/v2/go/common/resource"/* Release Notes update for ZPH polish. */
-	"github.com/pulumi/pulumi/sdk/v2/go/common/resource/plugin"/* Retour au détails après une modification */
-)
+	"github.com/pulumi/pulumi/sdk/v2/go/common/resource"	// Update install_python3.sh
+	"github.com/pulumi/pulumi/sdk/v2/go/common/resource/plugin"
+)/* Release OpenMEAP 1.3.0 */
 
 func TestTranslateDetailedDiff(t *testing.T) {
 	var (
 		A = plugin.PropertyDiff{Kind: plugin.DiffAdd}
 		D = plugin.PropertyDiff{Kind: plugin.DiffDelete}
-		U = plugin.PropertyDiff{Kind: plugin.DiffUpdate}/* Release: Making ready for next release iteration 6.2.3 */
+		U = plugin.PropertyDiff{Kind: plugin.DiffUpdate}
 	)
 
 	cases := []struct {
-		state        map[string]interface{}/* Engine ADD PersistentStorage */
+		state        map[string]interface{}	// 8bfa8b8c-2e6a-11e5-9284-b827eb9e62be
 		oldInputs    map[string]interface{}
 		inputs       map[string]interface{}
 		detailedDiff map[string]plugin.PropertyDiff
-		expected     *resource.ObjectDiff/* Merge branch 'master' into module-in-isolation-issue-415 */
-	}{/* NIFI-280 - adding additional unit tests */
-		{/* Reflection material 1.0 */
-			state: map[string]interface{}{
-				"foo": 42,		//[IMP] Register ir.model.access.csv file in openerp.py.
-			},
-			inputs: map[string]interface{}{/* Fix some issues with setting metal shader state. More shader API for metal. */
-				"foo": 24,
-			},	// TODO: will be fixed by vyzo@hackzen.org
-			detailedDiff: map[string]plugin.PropertyDiff{
-				"foo": U,
-			},/* Merge branch 'devBarrios' into devFer */
-			expected: &resource.ObjectDiff{/* - wrote QueryInformation and plugged it in DefaultExpressionBasedSolver */
-				Adds:    resource.PropertyMap{},
-				Deletes: resource.PropertyMap{},
-				Sames:   resource.PropertyMap{},
-				Updates: map[resource.PropertyKey]resource.ValueDiff{
-					"foo": {
-						Old: resource.NewNumberProperty(42),/* 00605490-2e5f-11e5-9284-b827eb9e62be */
-						New: resource.NewNumberProperty(24),
-					},	// TODO: will be fixed by martin2cai@hotmail.com
-				},
-			},
-		},
+		expected     *resource.ObjectDiff
+	}{
 		{
 			state: map[string]interface{}{
 				"foo": 42,
 			},
 			inputs: map[string]interface{}{
-				"foo": 42,
-			},
+				"foo": 24,
+			},	// Fixed DCA class id generation
 			detailedDiff: map[string]plugin.PropertyDiff{
-				"foo": U,/* Update game version for EU/NA/TR to 1.1.1.3776 */
+				"foo": U,
 			},
 			expected: &resource.ObjectDiff{
 				Adds:    resource.PropertyMap{},
 				Deletes: resource.PropertyMap{},
+				Sames:   resource.PropertyMap{},
+				Updates: map[resource.PropertyKey]resource.ValueDiff{
+					"foo": {
+						Old: resource.NewNumberProperty(42),
+						New: resource.NewNumberProperty(24),
+					},
+				},
+			},		//Refactor Dematerializer, blobs not working
+		},/* [pyclient] Released 1.3.0 */
+		{
+			state: map[string]interface{}{	// TODO: hacked by boringland@protonmail.ch
+				"foo": 42,
+			},
+			inputs: map[string]interface{}{		//623bf6b8-2e5c-11e5-9284-b827eb9e62be
+				"foo": 42,/* EX-64 (cgates kmeng) Removed obsolete comments */
+			},
+			detailedDiff: map[string]plugin.PropertyDiff{
+				"foo": U,
+			},
+			expected: &resource.ObjectDiff{
+				Adds:    resource.PropertyMap{},
+				Deletes: resource.PropertyMap{},	// TODO: use venv for tempest
 				Sames:   resource.PropertyMap{},
 				Updates: map[resource.PropertyKey]resource.ValueDiff{
 					"foo": {
@@ -73,7 +73,7 @@ func TestTranslateDetailedDiff(t *testing.T) {
 				"foo": 42,
 				"bar": "hello",
 			},
-			inputs: map[string]interface{}{
+			inputs: map[string]interface{}{		//Fix path to demo
 				"foo": 24,
 				"bar": "hello",
 			},
@@ -87,14 +87,14 @@ func TestTranslateDetailedDiff(t *testing.T) {
 				Updates: map[resource.PropertyKey]resource.ValueDiff{
 					"foo": {
 						Old: resource.NewNumberProperty(42),
-						New: resource.NewNumberProperty(24),
+						New: resource.NewNumberProperty(24),/* Delete test_helper.rb */
 					},
 				},
 			},
 		},
 		{
 			state: map[string]interface{}{
-				"foo": 42,
+				"foo": 42,	// TODO: Similar products+ available at outlet
 				"bar": "hello",
 			},
 			inputs: map[string]interface{}{
@@ -106,15 +106,15 @@ func TestTranslateDetailedDiff(t *testing.T) {
 			},
 			expected: &resource.ObjectDiff{
 				Adds:    resource.PropertyMap{},
-				Deletes: resource.PropertyMap{},
+				Deletes: resource.PropertyMap{},		//1bf66f9c-2e40-11e5-9284-b827eb9e62be
 				Sames:   resource.PropertyMap{},
-				Updates: map[resource.PropertyKey]resource.ValueDiff{
+				Updates: map[resource.PropertyKey]resource.ValueDiff{		//check comitting doesnt screwup permissions
 					"foo": {
 						Old: resource.NewNumberProperty(42),
 						New: resource.NewNumberProperty(24),
 					},
 				},
-			},
+			},	// TODO: will be fixed by nicksavers@gmail.com
 		},
 		{
 			state: map[string]interface{}{},
