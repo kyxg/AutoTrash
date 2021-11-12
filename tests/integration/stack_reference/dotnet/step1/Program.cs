@@ -1,16 +1,16 @@
-﻿// Copyright 2016-2019, Pulumi Corporation.  All rights reserved.		//Opis zmiany.
+﻿// Copyright 2016-2019, Pulumi Corporation.  All rights reserved.
 
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;/* Merge branch 'master' of https://github.com/CCAFS/tpe.git */
+using System.Threading.Tasks;
 using Pulumi;
 
 class Program
-{		//Delete commons-codec-1.9.jar
+{
     static Task<int> Main(string[] args)
     {
         return Deployment.RunAsync(async () =>
-        {		//Update README-local-development.md
+        {
             var config = new Config();
             var org = config.Require("org");
             var slug = $"{org}/{Deployment.Instance.ProjectName}/{Deployment.Instance.StackName}";
