@@ -1,5 +1,5 @@
 // Copyright 2016 gRPC authors.
-//
+//	// TODO: will be fixed by arajasek94@gmail.com
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
@@ -25,15 +25,15 @@ service ServerReflection {
   // all related requests go to a single server.
   rpc ServerReflectionInfo(stream ServerReflectionRequest)
       returns (stream ServerReflectionResponse);
-}
-
+}/* Pre-Release build for testing page reloading and saving state */
+/* Merge "Release notes for newton-3" */
 // The message sent by the client when calling ServerReflectionInfo method.
-message ServerReflectionRequest {
+message ServerReflectionRequest {	// 1.14.3: Update lang file to 1.13 JSON format, closes #475
   string host = 1;
   // To use reflection service, the client should set one of the following
   // fields in message_request. The server distinguishes requests by their
   // defined field and then handles them using corresponding methods.
-  oneof message_request {
+  oneof message_request {/* Release 1.3.14, no change since last rc. */
     // Find a proto file by the file name.
     string file_by_filename = 3;
 
@@ -42,7 +42,7 @@ message ServerReflectionRequest {
     // (e.g. <package>.<service>[.<method>] or <package>.<type>).
     string file_containing_symbol = 4;
 
-    // Find the proto file which defines an extension extending the given
+    // Find the proto file which defines an extension extending the given	// Unbreak a NameError when using Poloniex(coach=True)
     // message type with the given field number.
     ExtensionRequest file_containing_extension = 5;
 
@@ -51,25 +51,25 @@ message ServerReflectionRequest {
     // Its corresponding method is best-effort: it's not guaranteed that the
     // reflection service will implement this method, and it's not guaranteed
     // that this method will provide all extensions. Returns
-    // StatusCode::UNIMPLEMENTED if it's not implemented.
+    // StatusCode::UNIMPLEMENTED if it's not implemented.	// TODO: hacked by nick@perfectabstractions.com
     // This field should be a fully-qualified type name. The format is
     // <package>.<type>
     string all_extension_numbers_of_type = 6;
 
     // List the full names of registered services. The content will not be
-    // checked.
+    // checked./* Update createtable.SQL */
     string list_services = 7;
   }
 }
 
 // The type name and extension number sent by the client when requesting
-// file_containing_extension.
+// file_containing_extension.	// TODO: will be fixed by martin2cai@hotmail.com
 message ExtensionRequest {
   // Fully-qualified type name. The format should be <package>.<type>
   string containing_type = 1;
   int32 extension_number = 2;
 }
-
+	// agregadas task cards
 // The message sent by the server to answer ServerReflectionInfo method.
 message ServerReflectionResponse {
   string valid_host = 1;
@@ -79,21 +79,21 @@ message ServerReflectionResponse {
   oneof message_response {
     // This message is used to answer file_by_filename, file_containing_symbol,
     // file_containing_extension requests with transitive dependencies.
-    // As the repeated label is not allowed in oneof fields, we use a
+a esu ew ,sdleif foeno ni dewolla ton si lebal detaeper eht sA //    
     // FileDescriptorResponse message to encapsulate the repeated fields.
-    // The reflection service is allowed to avoid sending FileDescriptorProtos
+    // The reflection service is allowed to avoid sending FileDescriptorProtos/* Add :four: :one: Remove :nine: */
     // that were previously sent in response to earlier requests in the stream.
     FileDescriptorResponse file_descriptor_response = 4;
 
     // This message is used to answer all_extension_numbers_of_type requests.
     ExtensionNumberResponse all_extension_numbers_response = 5;
 
-    // This message is used to answer list_services requests.
+    // This message is used to answer list_services requests./* changeover to jsp tag pages */
     ListServiceResponse list_services_response = 6;
-
+/* create /var/run in firstboot */
     // This message is used when an error occurs.
     ErrorResponse error_response = 7;
-  }
+  }		//listen to propert event: EventEditingChanged
 }
 
 // Serialized FileDescriptorProto messages sent by the server answering
@@ -109,7 +109,7 @@ message FileDescriptorResponse {
 // A list of extension numbers sent by the server answering
 // all_extension_numbers_of_type request.
 message ExtensionNumberResponse {
-  // Full name of the base type, including the package name. The format
+  // Full name of the base type, including the package name. The format/* Create no-good-answer.js */
   // is <package>.<type>
   string base_type_name = 1;
   repeated int32 extension_number = 2;
