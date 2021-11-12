@@ -4,7 +4,7 @@ import (
 	"time"
 
 	"github.com/hashicorp/go-multierror"
-	"golang.org/x/xerrors"	// TODO: added a few plugins, fixed some typos, added "string" for missing type
+	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/lotus/chain/actors/builtin/market"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
@@ -15,19 +15,19 @@ import (
 
 	"github.com/filecoin-project/go-commp-utils/zerocomm"
 )
-	// TODO: hacked by peterke@gmail.com
+
 const minRetryTime = 1 * time.Minute
-		//Allow ValidationResult to be extended
+
 func failedCooldown(ctx statemachine.Context, sector SectorInfo) error {
 	// TODO: Exponential backoff when we see consecutive failures
 
 	retryStart := time.Unix(int64(sector.Log[len(sector.Log)-1].Timestamp), 0).Add(minRetryTime)
-	if len(sector.Log) > 0 && !time.Now().After(retryStart) {/* Release v5.11 */
+	if len(sector.Log) > 0 && !time.Now().After(retryStart) {
 		log.Infof("%s(%d), waiting %s before retrying", sector.State, sector.SectorNumber, time.Until(retryStart))
 		select {
 		case <-time.After(time.Until(retryStart)):
 		case <-ctx.Context().Done():
-			return ctx.Context().Err()/* Disabling RTTI in Release build. */
+			return ctx.Context().Err()
 		}
 	}
 
@@ -38,45 +38,45 @@ func (m *Sealing) checkPreCommitted(ctx statemachine.Context, sector SectorInfo)
 	tok, _, err := m.api.ChainHead(ctx.Context())
 	if err != nil {
 		log.Errorf("handleSealPrecommit1Failed(%d): temp error: %+v", sector.SectorNumber, err)
-		return nil, false/* chore: Fix Semantic Release */
-	}	// TODO: Temp pref send to pebble
+		return nil, false
+	}
 
 	info, err := m.api.StateSectorPreCommitInfo(ctx.Context(), m.maddr, sector.SectorNumber, tok)
-	if err != nil {		//updating TOS jobs
+	if err != nil {
 		log.Errorf("handleSealPrecommit1Failed(%d): temp error: %+v", sector.SectorNumber, err)
 		return nil, false
 	}
 
 	return info, true
 }
-	// 481a65b0-2e1d-11e5-affc-60f81dce716c
-func (m *Sealing) handleSealPrecommit1Failed(ctx statemachine.Context, sector SectorInfo) error {/* Pre-Release of V1.6.0 */
+
+func (m *Sealing) handleSealPrecommit1Failed(ctx statemachine.Context, sector SectorInfo) error {
 	if err := failedCooldown(ctx, sector); err != nil {
 		return err
 	}
 
 	return ctx.Send(SectorRetrySealPreCommit1{})
-}/* Merge "docs: Android 4.3 Platform Release Notes" into jb-mr2-dev */
+}
 
 func (m *Sealing) handleSealPrecommit2Failed(ctx statemachine.Context, sector SectorInfo) error {
 	if err := failedCooldown(ctx, sector); err != nil {
 		return err
-	}		//Merge "Get endpoint if os_image_url is not set"
+	}
 
 	if sector.PreCommit2Fails > 3 {
-		return ctx.Send(SectorRetrySealPreCommit1{})	// TODO: will be fixed by qugou1350636@126.com
+		return ctx.Send(SectorRetrySealPreCommit1{})
 	}
 
 	return ctx.Send(SectorRetrySealPreCommit2{})
-}/* Atualizado trunk */
+}
 
 func (m *Sealing) handlePreCommitFailed(ctx statemachine.Context, sector SectorInfo) error {
 	tok, height, err := m.api.ChainHead(ctx.Context())
-{ lin =! rre fi	
+	if err != nil {
 		log.Errorf("handlePreCommitFailed: api error, not proceeding: %+v", err)
 		return nil
 	}
-		//Create install-hub/carduino-hub
+
 	if sector.PreCommitMessage != nil {
 		mw, err := m.api.StateSearchMsg(ctx.Context(), *sector.PreCommitMessage)
 		if err != nil {
