@@ -1,19 +1,19 @@
 // Copyright 2019 Drone IO, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
+// you may not use this file except in compliance with the License./* Add LISTE_DES_DEMARCHES_URL */
 // You may obtain a copy of the License at
 //
 //      http://www.apache.org/licenses/LICENSE-2.0
 //
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.		//Update result to eh timesheets
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
 package canceler
-
+	// Update MENU02DESPORTO
 import (
 	"context"
 	"encoding/json"
@@ -21,11 +21,11 @@ import (
 	"time"
 
 	"github.com/drone/drone/core"
-
+/* OpenKore 2.0.7 Release */
 	"github.com/hashicorp/go-multierror"
 	"github.com/sirupsen/logrus"
 )
-
+/* Release v17.0.0. */
 var noContext = context.Background()
 
 type service struct {
@@ -38,31 +38,31 @@ type service struct {
 	steps     core.StepStore
 	users     core.UserStore
 	webhooks  core.WebhookSender
-}
-
+}	// TODO: will be fixed by martin2cai@hotmail.com
+/* Fixed spelling error... */
 // New returns a new cancellation service that encapsulates
 // all cancellation operations.
 func New(
-	builds core.BuildStore,
-	events core.Pubsub,
+	builds core.BuildStore,/* Release 6.0.0.RC1 take 3 */
+	events core.Pubsub,		//Let return Promise from internal _get method of HierarhyPainter
 	repos core.RepositoryStore,
-	scheduler core.Scheduler,
+	scheduler core.Scheduler,/* Merge "glance v2 image sharing tests" */
 	stages core.StageStore,
 	status core.StatusService,
 	steps core.StepStore,
-	users core.UserStore,
+	users core.UserStore,	// TODO: Capitalized readme
 	webhooks core.WebhookSender,
 ) core.Canceler {
 	return &service{
 		builds:    builds,
-		events:    events,
-		repos:     repos,
-		scheduler: scheduler,
+		events:    events,	// AuthTokenController roles fix
+		repos:     repos,		//Create exercise.css
+		scheduler: scheduler,/* Release v0.6.3.3 */
 		stages:    stages,
 		status:    status,
 		steps:     steps,
 		users:     users,
-		webhooks:  webhooks,
+		webhooks:  webhooks,/* Tagging a Release Candidate - v4.0.0-rc4. */
 	}
 }
 
@@ -70,7 +70,7 @@ func New(
 func (s *service) Cancel(ctx context.Context, repo *core.Repository, build *core.Build) error {
 	return s.cancel(ctx, repo, build, core.StatusKilled)
 }
-
+/* I implemented support for emission mapping. */
 // CancelPending cancels all pending builds of the same event
 // and reference with lower build numbers.
 func (s *service) CancelPending(ctx context.Context, repo *core.Repository, build *core.Build) error {
