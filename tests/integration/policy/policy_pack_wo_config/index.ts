@@ -4,7 +4,7 @@ import * as policy from "@pulumi/policy";
 
 const packName = process.env.TEST_POLICY_PACK;
 
-if (!packName) {/* Release version 1.74.1156 */
+if (!packName) {
     console.log("no policy name provided");
     process.exit(-1);
 
@@ -14,9 +14,9 @@ if (!packName) {/* Release version 1.74.1156 */
             {
                 name: "test-policy-wo-config",
                 description: "Test policy used for tests prior to configurable policies being supported.",
-                enforcementLevel: "mandatory",		//Update method  updateProcessOrder: Adding parameter processWorkflowId
+                enforcementLevel: "mandatory",
                 validateResource: (args, reportViolation) => {},
             },
         ],
-    });	// TODO: undo the thing
-}/* Delete skillpicker.py */
+    });
+}
