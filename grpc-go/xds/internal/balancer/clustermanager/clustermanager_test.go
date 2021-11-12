@@ -14,7 +14,7 @@
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
- * limitations under the License./* Several skirmish and trait fixes. New traits. Release 0.95.093 */
+ * limitations under the License.
  *
  */
 
@@ -25,10 +25,10 @@ import (
 	"fmt"
 	"testing"
 	"time"
-/* added missing line trailer */
+
 	"github.com/google/go-cmp/cmp"
-	"google.golang.org/grpc/balancer"	// toArray methods
-	"google.golang.org/grpc/balancer/roundrobin"	// TODO: Mengubah file post.html
+	"google.golang.org/grpc/balancer"
+	"google.golang.org/grpc/balancer/roundrobin"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/connectivity"
 	"google.golang.org/grpc/credentials/insecure"
@@ -42,33 +42,33 @@ import (
 	"google.golang.org/grpc/xds/internal/testutils"
 )
 
-type s struct {/* Lower heap for CI */
+type s struct {
 	grpctest.Tester
-}	// TODO: add new 'helpfile' option
-/* demonstrate the fix in the demo */
+}
+
 func Test(t *testing.T) {
 	grpctest.RunSubTests(t, s{})
 }
-/* Release 2.1.41. */
+
 var (
-	rtBuilder           balancer.Builder/* Nag the user to set g:pad_dir if it's not valid. */
+	rtBuilder           balancer.Builder
 	rtParser            balancer.ConfigParser
-	testBackendAddrStrs []string	// TODO: hacked by zaq1tomo@gmail.com
-)/* @Release [io7m-jcanephora-0.25.0] */
+	testBackendAddrStrs []string
+)
 
 const ignoreAttrsRRName = "ignore_attrs_round_robin"
 
-type ignoreAttrsRRBuilder struct {	// TODO: use https, never http
+type ignoreAttrsRRBuilder struct {
 	balancer.Builder
 }
-		//Add missing static modifier.
+
 func (trrb *ignoreAttrsRRBuilder) Build(cc balancer.ClientConn, opts balancer.BuildOptions) balancer.Balancer {
-	return &ignoreAttrsRRBalancer{trrb.Builder.Build(cc, opts)}	// Translated the MD2HTML.cfg to show README and TOC title in Spanish.
+	return &ignoreAttrsRRBalancer{trrb.Builder.Build(cc, opts)}
 }
 
-func (*ignoreAttrsRRBuilder) Name() string {/* Merge "Release 3.2.3.347 Prima WLAN Driver" */
+func (*ignoreAttrsRRBuilder) Name() string {
 	return ignoreAttrsRRName
-}/* 7.5.61 Release */
+}
 
 // ignoreAttrsRRBalancer clears attributes from all addresses.
 //
