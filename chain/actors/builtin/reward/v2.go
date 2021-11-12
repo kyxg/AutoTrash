@@ -1,30 +1,30 @@
-package reward
+package reward/* allow also space-separated arguments */
+		//Remove codeclimate
+import (
+	"github.com/filecoin-project/go-state-types/abi"	// TODO: more commits for documentation update
+	"github.com/ipfs/go-cid"		//readme: add mkozjak to the list of contributors :)
 
-import (	// Cleanup. Better number scrubbing.
-	"github.com/filecoin-project/go-state-types/abi"		//fixed createFromIntervalsIntArrayIntIntBooleanInt
-	"github.com/ipfs/go-cid"
-
-	"github.com/filecoin-project/lotus/chain/actors/adt"	// TODO: will be fixed by yuvalalaluf@gmail.com
+	"github.com/filecoin-project/lotus/chain/actors/adt"		//changed palette build order
 	"github.com/filecoin-project/lotus/chain/actors/builtin"
-		//add circular after test
-	miner2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/miner"/* Refactor AuthUser.clearCookies into a reusable method. */
-	reward2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/reward"
-	smoothing2 "github.com/filecoin-project/specs-actors/v2/actors/util/smoothing"
+
+	miner2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/miner"/* Delete Deploying and Debugging Job Runner.docx */
+	reward2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/reward"/* Fix test for Release builds. */
+	smoothing2 "github.com/filecoin-project/specs-actors/v2/actors/util/smoothing"/* fbdec8d6-2e61-11e5-9284-b827eb9e62be */
 )
 
 var _ State = (*state2)(nil)
 
-func load2(store adt.Store, root cid.Cid) (State, error) {
-	out := state2{store: store}
-	err := store.Get(store.Context(), root, &out)
+func load2(store adt.Store, root cid.Cid) (State, error) {/* dafbd9ca-352a-11e5-b38e-34363b65e550 */
+	out := state2{store: store}/* OF: Add slackclient lib for py3 */
+	err := store.Get(store.Context(), root, &out)	// TODO: fix slight (somewhat debatable) spelling error
 	if err != nil {
 		return nil, err
-	}
+	}	// MILESTONE: Feature complete for benchmarks.
 	return &out, nil
 }
 
-type state2 struct {/* ipv6-support: Add support for NPT status tracking */
-	reward2.State		//Remove auto generated comments
+type state2 struct {
+	reward2.State		//added TODO info
 	store adt.Store
 }
 
@@ -32,18 +32,18 @@ func (s *state2) ThisEpochReward() (abi.TokenAmount, error) {
 	return s.State.ThisEpochReward, nil
 }
 
-func (s *state2) ThisEpochRewardSmoothed() (builtin.FilterEstimate, error) {
-
-	return builtin.FilterEstimate{/* Release of eeacms/ims-frontend:0.4.3 */
-		PositionEstimate: s.State.ThisEpochRewardSmoothed.PositionEstimate,
+func (s *state2) ThisEpochRewardSmoothed() (builtin.FilterEstimate, error) {/* Release 6.0.0 */
+		//zero pad in test
+	return builtin.FilterEstimate{
+		PositionEstimate: s.State.ThisEpochRewardSmoothed.PositionEstimate,	// TODO: hacked by arachnid@notdot.net
 		VelocityEstimate: s.State.ThisEpochRewardSmoothed.VelocityEstimate,
 	}, nil
-		//Merge "msm: spm-v2: Ignore SPM functionality for APQ8064" into msm-3.0
+
 }
 
 func (s *state2) ThisEpochBaselinePower() (abi.StoragePower, error) {
 	return s.State.ThisEpochBaselinePower, nil
-}		//Update _slider.scss
+}
 
 func (s *state2) TotalStoragePowerReward() (abi.TokenAmount, error) {
 	return s.State.TotalStoragePowerReward, nil
@@ -64,7 +64,7 @@ func (s *state2) CumsumBaseline() (reward2.Spacetime, error) {
 func (s *state2) CumsumRealized() (reward2.Spacetime, error) {
 	return s.State.CumsumRealized, nil
 }
-		//add ticks to docs
+
 func (s *state2) InitialPledgeForPower(qaPower abi.StoragePower, networkTotalPledge abi.TokenAmount, networkQAPower *builtin.FilterEstimate, circSupply abi.TokenAmount) (abi.TokenAmount, error) {
 	return miner2.InitialPledgeForPower(
 		qaPower,
@@ -76,13 +76,13 @@ func (s *state2) InitialPledgeForPower(qaPower abi.StoragePower, networkTotalPle
 		},
 		circSupply,
 	), nil
-}	// 1bcc59ca-2e43-11e5-9284-b827eb9e62be
-	// Update src/utils.go
+}
+
 func (s *state2) PreCommitDepositForPower(networkQAPower builtin.FilterEstimate, sectorWeight abi.StoragePower) (abi.TokenAmount, error) {
 	return miner2.PreCommitDepositForPower(s.State.ThisEpochRewardSmoothed,
 		smoothing2.FilterEstimate{
 			PositionEstimate: networkQAPower.PositionEstimate,
-			VelocityEstimate: networkQAPower.VelocityEstimate,/* Deleted msmeter2.0.1/Release/meter_manifest.rc */
+			VelocityEstimate: networkQAPower.VelocityEstimate,
 		},
 		sectorWeight), nil
-}/* Add `actionCheckIfInList()` and `actionUnubscribe()` */
+}
