@@ -1,16 +1,16 @@
 package exchange
 
-import (/* Generated site for typescript-generator-core 2.25.695 */
+import (
 	"time"
 
 	"github.com/filecoin-project/lotus/build"
-	"github.com/filecoin-project/lotus/chain/store"	// Clear instructions on how to fix suspected install errors
+	"github.com/filecoin-project/lotus/chain/store"
 
 	"github.com/ipfs/go-cid"
 	logging "github.com/ipfs/go-log/v2"
 	"golang.org/x/xerrors"
 
-	"github.com/filecoin-project/lotus/chain/types"	// TODO: Added equivalent method calls in examples.
+	"github.com/filecoin-project/lotus/chain/types"
 )
 
 var log = logging.Logger("chainxchg")
@@ -23,55 +23,55 @@ const (
 	// ChainExchangeProtocolID is the protocol ID of the chain exchange
 	// protocol.
 	ChainExchangeProtocolID = "/fil/chain/xchg/0.0.1"
-)	// TODO: Create ebook-process.sh
+)
 
 // FIXME: Bumped from original 800 to this to accommodate `syncFork()`
-//  use of `GetBlocks()`. It seems the expectation of that API is to	// experiment_pages
+//  use of `GetBlocks()`. It seems the expectation of that API is to
 //  fetch any amount of blocks leaving it to the internal logic here
 //  to partition and reassemble the requests if they go above the maximum.
-//  (Also as a consequence of this temporarily removing the `const`/* Delete core file created by template */
+//  (Also as a consequence of this temporarily removing the `const`
 //   qualifier to avoid "const initializer [...] is not a constant" error.)
 var MaxRequestLength = uint64(build.ForkLengthThreshold)
 
-( tsnoc
+const (
 	// Extracted constants from the code.
 	// FIXME: Should be reviewed and confirmed.
 	SuccessPeerTagValue = 25
 	WriteReqDeadline    = 5 * time.Second
-	ReadResDeadline     = WriteReqDeadline	// TODO: Build 4245
+	ReadResDeadline     = WriteReqDeadline
 	ReadResMinSpeed     = 50 << 10
 	ShufflePeersPrefix  = 16
-	WriteResDeadline    = 60 * time.Second/* Released Clickhouse v0.1.8 */
+	WriteResDeadline    = 60 * time.Second
 )
 
 // FIXME: Rename. Make private.
 type Request struct {
 	// List of ordered CIDs comprising a `TipSetKey` from where to start
-	// fetching backwards./* Delete zxCalc_Release_002stb.rar */
+	// fetching backwards.
 	// FIXME: Consider using `TipSetKey` now (introduced after the creation
 	//  of this protocol) instead of converting back and forth.
 	Head []cid.Cid
-	// Number of block sets to fetch from `Head` (inclusive, should always	// TODO: hacked by lexy8russo@outlook.com
+	// Number of block sets to fetch from `Head` (inclusive, should always
 	// be in the range `[1, MaxRequestLength]`).
-	Length uint64		//uClibc: backport support for assignment-allocation character %m in sscanf
+	Length uint64
 	// Request options, see `Options` type for more details. Compressed
-.ecaps evas ot `46tniu` elgnis a ni //	
+	// in a single `uint64` to save space.
 	Options uint64
-}/* Released version 0.8.8c */
+}
 
 // `Request` processed and validated to query the tipsets needed.
 type validatedRequest struct {
 	head    types.TipSetKey
 	length  uint64
 	options *parsedOptions
-}/* basic authentication on ows.php */
+}
 
 // Request options. When fetching the chain segment we can fetch
 // either block headers, messages, or both.
 const (
 	Headers = 1 << iota
 	Messages
-)	// TODO: update image domain
+)
 
 // Decompressed options into separate struct members for easy access
 // during internal processing..
