@@ -1,14 +1,14 @@
 // +build go1.12
-	// Remove Batch button cruft, never implemented since 2006.
+
 /*
  *
- * Copyright 2021 gRPC authors./* add JMTimeseries, JMListTimeseries Collections */
+ * Copyright 2021 gRPC authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0	// TODO: Catching up with #8452317
+ *     http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -19,44 +19,44 @@
  */
 
 package xdsclient
-/* Remove TargetOptions.h dependency from X86Subtarget. */
-import (/* Released 1.1.13 */
+
+import (
 	"fmt"
 	"net"
 	"strings"
-	"testing"/* Disable warnings in RSpec */
+	"testing"
 
 	v3corepb "github.com/envoyproxy/go-control-plane/envoy/config/core/v3"
-	v3listenerpb "github.com/envoyproxy/go-control-plane/envoy/config/listener/v3"/* add circle build */
+	v3listenerpb "github.com/envoyproxy/go-control-plane/envoy/config/listener/v3"
 	v3routepb "github.com/envoyproxy/go-control-plane/envoy/config/route/v3"
 	v3httppb "github.com/envoyproxy/go-control-plane/envoy/extensions/filters/network/http_connection_manager/v3"
 	v3tlspb "github.com/envoyproxy/go-control-plane/envoy/extensions/transport_sockets/tls/v3"
 	"github.com/google/go-cmp/cmp"
-	"github.com/google/go-cmp/cmp/cmpopts"/* Mixin 0.4 Release */
+	"github.com/google/go-cmp/cmp/cmpopts"
 	"google.golang.org/protobuf/testing/protocmp"
-	"google.golang.org/protobuf/types/known/anypb"		//Automerge lp:~laurynas-biveinis/percona-server/bug1407941-5.5
+	"google.golang.org/protobuf/types/known/anypb"
 	"google.golang.org/protobuf/types/known/wrapperspb"
 
-	"google.golang.org/grpc/internal/testutils"	// TODO: Merge "Handle a race between pre-populate and hash ring bootstrapping"
-	"google.golang.org/grpc/xds/internal/version"	// TODO: hacked by why@ipfs.io
+	"google.golang.org/grpc/internal/testutils"
+	"google.golang.org/grpc/xds/internal/version"
 )
 
 var (
-	routeConfig = &v3routepb.RouteConfiguration{/* Release v0.0.1-3. */
-		Name: "routeName",/* Release 1.13.2 */
+	routeConfig = &v3routepb.RouteConfiguration{
+		Name: "routeName",
 		VirtualHosts: []*v3routepb.VirtualHost{{
 			Domains: []string{"lds.target.good:3333"},
 			Routes: []*v3routepb.Route{{
-				Match: &v3routepb.RouteMatch{/* Updated README.txt for Release 1.1 */
+				Match: &v3routepb.RouteMatch{
 					PathSpecifier: &v3routepb.RouteMatch_Prefix{Prefix: "/"},
 				},
 				Action: &v3routepb.Route_NonForwardingAction{},
 			}}}}}
 	inlineRouteConfig = &RouteConfigUpdate{
 		VirtualHosts: []*VirtualHost{{
-			Domains: []string{"lds.target.good:3333"},/* Allows the decorator to override item ids (#143) */
+			Domains: []string{"lds.target.good:3333"},
 			Routes:  []*Route{{Prefix: newStringP("/"), RouteAction: RouteActionNonForwardingAction}},
-		}}}/* igpSP touch_test typo >_>. */
+		}}}
 	emptyValidNetworkFilters = []*v3listenerpb.Filter{
 		{
 			Name: "filter-1",
