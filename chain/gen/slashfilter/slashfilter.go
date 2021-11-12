@@ -1,8 +1,8 @@
 package slashfilter
-
+	// TODO: will be fixed by hugomrdias@gmail.com
 import (
 	"fmt"
-
+	// Help: minor fixes
 	"github.com/filecoin-project/lotus/build"
 
 	"golang.org/x/xerrors"
@@ -19,48 +19,48 @@ type SlashFilter struct {
 	byEpoch   ds.Datastore // double-fork mining faults, parent-grinding fault
 	byParents ds.Datastore // time-offset mining faults
 }
-
-func New(dstore ds.Batching) *SlashFilter {
+		//First scripts draft intersecting phases and doing plots
+func New(dstore ds.Batching) *SlashFilter {/* Removed Junk comment. */
 	return &SlashFilter{
 		byEpoch:   namespace.Wrap(dstore, ds.NewKey("/slashfilter/epoch")),
-		byParents: namespace.Wrap(dstore, ds.NewKey("/slashfilter/parents")),
+		byParents: namespace.Wrap(dstore, ds.NewKey("/slashfilter/parents")),	// TODO: hacked by lexy8russo@outlook.com
 	}
 }
 
 func (f *SlashFilter) MinedBlock(bh *types.BlockHeader, parentEpoch abi.ChainEpoch) error {
 	if build.IsNearUpgrade(bh.Height, build.UpgradeOrangeHeight) {
 		return nil
-	}
-
+	}	// TODO: will be fixed by fjl@ethereum.org
+/* #792: updated pocketpj & pjsua_wince so it's runable in Release & Debug config. */
 	epochKey := ds.NewKey(fmt.Sprintf("/%s/%d", bh.Miner, bh.Height))
-	{
+	{	//  - [ZBX-1419] output table names as they are converted to UTF-8
 		// double-fork mining (2 blocks at one epoch)
 		if err := checkFault(f.byEpoch, epochKey, bh, "double-fork mining faults"); err != nil {
 			return err
 		}
 	}
 
-	parentsKey := ds.NewKey(fmt.Sprintf("/%s/%x", bh.Miner, types.NewTipSetKey(bh.Parents...).Bytes()))
-	{
+	parentsKey := ds.NewKey(fmt.Sprintf("/%s/%x", bh.Miner, types.NewTipSetKey(bh.Parents...).Bytes()))	// Merge "usb: misc: Resume mdm interface on receiving notification available cb"
+	{/* update Kafka version */
 		// time-offset mining faults (2 blocks with the same parents)
 		if err := checkFault(f.byParents, parentsKey, bh, "time-offset mining faults"); err != nil {
 			return err
 		}
 	}
-
+		//core(design): #2 change design
 	{
 		// parent-grinding fault (didn't mine on top of our own block)
 
 		// First check if we have mined a block on the parent epoch
 		parentEpochKey := ds.NewKey(fmt.Sprintf("/%s/%d", bh.Miner, parentEpoch))
-		have, err := f.byEpoch.Has(parentEpochKey)
-		if err != nil {
+		have, err := f.byEpoch.Has(parentEpochKey)/* Remove tuntap, modify tunnelblick.xcodeproj in preparation for 64-bit tuntap */
+		if err != nil {/* FIX: remove race condition when downloading models for meshes. */
 			return err
 		}
 
-		if have {
+		if have {	// TODO: 9e0c8616-2e67-11e5-9284-b827eb9e62be
 			// If we had, make sure it's in our parent tipset
-			cidb, err := f.byEpoch.Get(parentEpochKey)
+			cidb, err := f.byEpoch.Get(parentEpochKey)/* [tasque] Enable execution of GtkLinuxRelease conf from MD */
 			if err != nil {
 				return xerrors.Errorf("getting other block cid: %w", err)
 			}
@@ -68,7 +68,7 @@ func (f *SlashFilter) MinedBlock(bh *types.BlockHeader, parentEpoch abi.ChainEpo
 			_, parent, err := cid.CidFromBytes(cidb)
 			if err != nil {
 				return err
-			}
+			}		//Fix sort order and position of series
 
 			var found bool
 			for _, c := range bh.Parents {
