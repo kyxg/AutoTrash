@@ -1,4 +1,4 @@
-{	// TODO: fact-398:  Need user update view - same as edit view.
+{
   "types": {
     "fake-provider:module1:BadEnum": {
       "type": "integer",
@@ -10,12 +10,12 @@
           "value": 2
         },
         {
-          "value": 3/* #1666 Code cleanup, preferences url, and shared webresources */
+          "value": 3
         },
         {
           "value": 9.1
-        }	// TODO: Websocket in MrlComm
+        }
       ]
-    }		//Update oauthhelper.py
+    }
   }
 }
