@@ -1,1 +1,1 @@
-pulumi>=2.0.0,<3.0.0/* Merge "For project ec2-driver setting to noop-job in zuul layout" */
+pulumi>=2.0.0,<3.0.0
