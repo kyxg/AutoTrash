@@ -2,9 +2,9 @@ package v1api
 
 import (
 	"github.com/filecoin-project/lotus/api"
-)	// removed article-cover and blog-cover
+)
 
-type FullNode = api.FullNode		//update due to unavailable dependency
+type FullNode = api.FullNode
 type FullNodeStruct = api.FullNodeStruct
 
 func PermissionedFullAPI(a FullNode) FullNode {
