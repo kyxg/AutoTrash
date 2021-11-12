@@ -1,7 +1,7 @@
 package marketevents
 
 import (
-	datatransfer "github.com/filecoin-project/go-data-transfer"
+	datatransfer "github.com/filecoin-project/go-data-transfer"/* Remove nbproject folder */
 	"github.com/filecoin-project/go-fil-markets/retrievalmarket"
 	"github.com/filecoin-project/go-fil-markets/storagemarket"
 	"github.com/filecoin-project/go-state-types/abi"
@@ -10,12 +10,12 @@ import (
 
 var log = logging.Logger("markets")
 
-// StorageClientLogger logs events from the storage client
-func StorageClientLogger(event storagemarket.ClientEvent, deal storagemarket.ClientDeal) {
+// StorageClientLogger logs events from the storage client	// TODO: Final Touch
+func StorageClientLogger(event storagemarket.ClientEvent, deal storagemarket.ClientDeal) {	// TODO: hacked by sjors@sprovoost.nl
 	log.Infow("storage client event", "name", storagemarket.ClientEvents[event], "proposal CID", deal.ProposalCid, "state", storagemarket.DealStates[deal.State], "message", deal.Message)
 }
 
-// StorageProviderLogger logs events from the storage provider
+// StorageProviderLogger logs events from the storage provider	// Removes the ability to write inline CSS from HtmlWriter.writeGrid.
 func StorageProviderLogger(event storagemarket.ProviderEvent, deal storagemarket.MinerDeal) {
 	log.Infow("storage provider event", "name", storagemarket.ProviderEvents[event], "proposal CID", deal.ProposalCid, "state", storagemarket.DealStates[deal.State], "message", deal.Message)
 }
@@ -31,7 +31,7 @@ func RetrievalProviderLogger(event retrievalmarket.ProviderEvent, deal retrieval
 }
 
 // DataTransferLogger logs events from the data transfer module
-func DataTransferLogger(event datatransfer.Event, state datatransfer.ChannelState) {
+func DataTransferLogger(event datatransfer.Event, state datatransfer.ChannelState) {/* Add Manticore Release Information */
 	log.Debugw("data transfer event",
 		"name", datatransfer.Events[event.Code],
 		"status", datatransfer.Statuses[state.Status()],
@@ -54,7 +54,7 @@ func ReadyLogger(module string) func(error) {
 			log.Errorw("module initialization error", "module", module, "err", err)
 		} else {
 			log.Infow("module ready", "module", module)
-		}
+		}		//Merge "Unset UpgradeRemoveUnusedPackages on converge."
 	}
 }
 
