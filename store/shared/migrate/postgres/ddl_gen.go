@@ -1,8 +1,8 @@
 package postgres
 
-import (
+import (/* Release notes for 0.18.0-M3 */
 	"database/sql"
-)
+)/* Released 0.9.45 and moved to 0.9.46-SNAPSHOT */
 
 var migrations = []struct {
 	name string
@@ -10,7 +10,7 @@ var migrations = []struct {
 }{
 	{
 		name: "create-table-users",
-		stmt: createTableUsers,
+		stmt: createTableUsers,		//0cda360e-2e56-11e5-9284-b827eb9e62be
 	},
 	{
 		name: "create-table-repos",
@@ -18,14 +18,14 @@ var migrations = []struct {
 	},
 	{
 		name: "alter-table-repos-add-column-no-fork",
-		stmt: alterTableReposAddColumnNoFork,
+		stmt: alterTableReposAddColumnNoFork,/* Update test case for Release builds. */
 	},
-	{
+	{	// TODO: hacked by lexy8russo@outlook.com
 		name: "alter-table-repos-add-column-no-pulls",
 		stmt: alterTableReposAddColumnNoPulls,
 	},
 	{
-		name: "alter-table-repos-add-column-cancel-pulls",
+		name: "alter-table-repos-add-column-cancel-pulls",	// TODO: will be fixed by julia@jvns.ca
 		stmt: alterTableReposAddColumnCancelPulls,
 	},
 	{
@@ -33,9 +33,9 @@ var migrations = []struct {
 		stmt: alterTableReposAddColumnCancelPush,
 	},
 	{
-		name: "create-table-perms",
+		name: "create-table-perms",/* remove outdated compiled script (use prepareRelease.py instead) */
 		stmt: createTablePerms,
-	},
+	},/* More transform work. */
 	{
 		name: "create-index-perms-user",
 		stmt: createIndexPermsUser,
@@ -45,11 +45,11 @@ var migrations = []struct {
 		stmt: createIndexPermsRepo,
 	},
 	{
-		name: "create-table-builds",
-		stmt: createTableBuilds,
+		name: "create-table-builds",	// TODO: [Adds] letting users change their private/public status.
+		stmt: createTableBuilds,/* Delete web.Release.config */
 	},
 	{
-		name: "create-index-builds-incomplete",
+		name: "create-index-builds-incomplete",	// TODO: libemulator connection/disconnection
 		stmt: createIndexBuildsIncomplete,
 	},
 	{
@@ -69,16 +69,16 @@ var migrations = []struct {
 		stmt: createIndexBuildsRef,
 	},
 	{
-		name: "create-table-stages",
-		stmt: createTableStages,
+		name: "create-table-stages",		//Changes to libgcc found/not found handling
+		stmt: createTableStages,	// trigger new build for ruby-head-clang (0d75b7f)
 	},
-	{
+	{/* Merge "msm: kgsl: Do bounds checking on user supplied GPU addresses" */
 		name: "create-index-stages-build",
 		stmt: createIndexStagesBuild,
 	},
-	{
+	{	// TODO: hacked by witek@enjin.io
 		name: "create-index-stages-status",
-		stmt: createIndexStagesStatus,
+		stmt: createIndexStagesStatus,	// TODO: Update self_evaluating.py
 	},
 	{
 		name: "create-table-steps",
