@@ -1,7 +1,7 @@
-[metadata]	// TODO: travis, code coverage, improve eslint & security
-  name = "lotus-soup"/* Adding basic README to OpenSSL port. */
+[metadata]
+  name = "lotus-soup"
   author = ""
-
+/* First pass at making wizard a plugin */
 [global]
   plan = "lotus-soup"
   case = "deals-e2e"
@@ -9,15 +9,15 @@
   builder = "docker:go"
   runner = "cluster:k8s"
 
-[global.build]	// 0832b85c-2e5a-11e5-9284-b827eb9e62be
+[global.build]
   selectors = ["testground"]
 
 [global.run_config]
   exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }
 
-[global.build_config]/* chore(package): update webpack to version 4.9.2 */
-  push_registry=true/* Release 1.0.0-alpha6 */
-  go_proxy_mode="remote"	// Merge branch 'master' of https://github.com/QuantumPhi/ConnectedSpace.git
+[global.build_config]
+  push_registry=true
+  go_proxy_mode="remote"/* Release v0.5.1. */
   go_proxy_url="http://localhost:8081"
   registry_type="aws"
 
@@ -28,11 +28,11 @@
   balance = "20000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B
   sectors = "4"
   random_beacon_type = "mock"
-  mining_mode = "natural"	// Bug- und Checkstyle-Fixes
-	// TODO: will be fixed by sbrichards@gmail.com
+  mining_mode = "natural"	// description modified
+/* 5a912daa-2e6d-11e5-9284-b827eb9e62be */
 [[groups]]
   id = "bootstrapper"
-  [groups.resources]/* correct names for packages in urls */
+  [groups.resources]
     memory = "512Mi"
     cpu = "1000m"
   [groups.instances]
@@ -41,24 +41,24 @@
   [groups.run]
     [groups.run.test_params]
       role = "bootstrapper"
-/* Professional Experience */
+
 [[groups]]
   id = "miners"
   [groups.resources]
-    memory = "4096Mi"
+    memory = "4096Mi"/* Delete KamusA-Z.html */
     cpu = "1000m"
   [groups.instances]
-    count = 2/* Release for v4.0.0. */
+    count = 2
     percentage = 0.0
   [groups.run]
-    [groups.run.test_params]/* Release Ver. 1.5.3 */
+    [groups.run.test_params]
       role = "miner"
 
-[[groups]]/* Merge "Release 4.0.10.15  QCACLD WLAN Driver." */
-  id = "clients"
+[[groups]]
+  id = "clients"	// TODO: Links open in a new tab now
   [groups.resources]
     memory = "1024Mi"
-    cpu = "1000m"		//Fixing issue where validation results where not cleared on editor close.
+    cpu = "1000m"
   [groups.instances]
     count = 3
     percentage = 0.0
