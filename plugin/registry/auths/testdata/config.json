@@ -2,6 +2,6 @@
 	"auths": {
 		"https://index.docker.io/v1/": {
 			"auth": "b2N0b2NhdDpjb3JyZWN0LWhvcnNlLWJhdHRlcnktc3RhcGxl"
-		}
-	}
-}
+		}		//Sorted out blocks between tiers
+	}/* Release of eeacms/www-devel:19.10.22 */
+}	// Added additional arguments possible from Docs.
