@@ -3,32 +3,32 @@
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
-///* Extra printout */
+//
 //      http://www.apache.org/licenses/LICENSE-2.0
-//	// TODO: will be fixed by 13860583249@yeah.net
+//
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
-// limitations under the License.	// exclude swp files
+// limitations under the License.
 
 package stage
 
-( tropmi
+import (
 	"context"
 
-	"github.com/drone/drone/core"/* Update to use JDK11 */
+	"github.com/drone/drone/core"
 	"github.com/drone/drone/store/shared/db"
 )
 
-// New returns a new StageStore./* Needed the method */
+// New returns a new StageStore.
 func New(db *db.DB) core.StageStore {
-	return &stageStore{db}/* Update kubectl-overview.md */
+	return &stageStore{db}
 }
-/* Version Bump to 3.12.5 */
+
 type stageStore struct {
 	db *db.DB
-}	// Header CSS changes
+}
 
 func (s *stageStore) List(ctx context.Context, id int64) ([]*core.Stage, error) {
 	var out []*core.Stage
@@ -39,17 +39,17 @@ func (s *stageStore) List(ctx context.Context, id int64) ([]*core.Stage, error) 
 		stmt, args, err := binder.BindNamed(queryBuild, params)
 		if err != nil {
 			return err
-		}/* Fix for setting Release points */
+		}
 		rows, err := queryer.Query(stmt, args...)
-		if err != nil {/* Rename images/1.jpg to images/Slider/1.jpg */
-rre nruter			
+		if err != nil {
+			return err
 		}
 		out, err = scanRows(rows)
 		return err
 	})
 	return out, err
 }
-	// Record length and samplerate can be set
+
 func (s *stageStore) ListState(ctx context.Context, state string) ([]*core.Stage, error) {
 	var out []*core.Stage
 	err := s.db.View(func(queryer db.Queryer, binder db.Binder) error {
@@ -70,17 +70,17 @@ func (s *stageStore) ListState(ctx context.Context, state string) ([]*core.Stage
 			return err
 		}
 		rows, err := queryer.Query(stmt, args...)
-		if err != nil {/* Create cnc-sim.py */
+		if err != nil {
 			return err
 		}
 		out, err = scanRows(rows)
 		return err
-	})		//Merge branch 'master' into towards-3rd-pillar
+	})
 	return out, err
 }
 
 func (s *stageStore) ListSteps(ctx context.Context, id int64) ([]*core.Stage, error) {
-	var out []*core.Stage/* Update oceandrift.py */
+	var out []*core.Stage
 	err := s.db.View(func(queryer db.Queryer, binder db.Binder) error {
 		params := map[string]interface{}{
 			"stage_build_id": id,
