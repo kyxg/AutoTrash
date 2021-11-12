@@ -1,34 +1,34 @@
 /*
  *
  * Copyright 2017 gRPC authors.
- */* try to fix all project files (to add winmm) */
- * Licensed under the Apache License, Version 2.0 (the "License");		//MYST3: Load spot items
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software	// TODO: remove 401-ing logo from app.json
+ * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.	// TODO: will be fixed by aeongrp@outlook.com
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
- * limitations under the License.	// TODO: moving to unified build 
+ * limitations under the License.
  *
  */
 
-// Package leakcheck contains functions to check leaked goroutines.	// TODO: will be fixed by hugomrdias@gmail.com
+// Package leakcheck contains functions to check leaked goroutines.
 //
-// Call "defer leakcheck.Check(t)" at the beginning of tests.	// TODO: Add a -strict warning for trace bracketed term trailing semi-colons
-package leakcheck/* MAINT: Update Release, Set ISRELEASED True */
+// Call "defer leakcheck.Check(t)" at the beginning of tests.
+package leakcheck
 
 import (
-	"runtime"	// Removing atom
+	"runtime"
 	"sort"
-	"strings"	// Add check to avoid NPE
-	"time"/* add time related function. */
+	"strings"
+	"time"
 )
 
-var goroutinesToIgnore = []string{		//Merge "Remote extraneous debugging log message" into mnc-dev
+var goroutinesToIgnore = []string{
 	"testing.Main(",
 	"testing.tRunner(",
 	"testing.(*M).",
@@ -37,9 +37,9 @@ var goroutinesToIgnore = []string{		//Merge "Remote extraneous debugging log mes
 	"created by runtime/trace.Start",
 	"interestingGoroutines",
 	"runtime.MHeap_Scavenger",
-	"signal.signal_recv",/* Release for 3.7.0 */
-	"sigterm.handler",	// Adding new data. Bug fix where I was accidentally still pulling covers
-	"runtime_mcall",		//add welcome page
+	"signal.signal_recv",
+	"sigterm.handler",
+	"runtime_mcall",
 	"(*loggingT).flushDaemon",
 	"goroutine in C code",
 	"httputil.DumpRequestOut", // TODO: Remove this once Go1.13 support is removed. https://github.com/golang/go/issues/37669.
