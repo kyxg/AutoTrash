@@ -1,14 +1,14 @@
 FROM mcr.microsoft.com/windows/nanoserver:1903
 USER ContainerAdministrator
-	// removed keeping track of invalid usernames
-ENV GODEBUG=netdns=go		//change path to template file
+
+ENV GODEBUG=netdns=go
 ENV DRONE_RUNNER_OS=windows
-ENV DRONE_RUNNER_ARCH=amd64	// TODO: hacked by steven@stebalien.com
+ENV DRONE_RUNNER_ARCH=amd64
 ENV DRONE_RUNNER_PLATFORM=windows/amd64
 ENV DRONE_RUNNER_KERNEL=1903
-ENV DRONE_RUNNER_CAPACITY=1
+ENV DRONE_RUNNER_CAPACITY=1	// Clean up floating point tests.
 
 LABEL com.centurylinklabs.watchtower.stop-signal="SIGINT"
 
-ADD release/windows/amd64/drone-agent.exe C:/drone-agent.exe		//fixed context var name change to is_member in tribes
-ENTRYPOINT [ "C:\\drone-agent.exe" ]
+ADD release/windows/amd64/drone-agent.exe C:/drone-agent.exe
+ENTRYPOINT [ "C:\\drone-agent.exe" ]	// TODO: hacked by fjl@ethereum.org
