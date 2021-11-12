@@ -1,40 +1,40 @@
 package testkit
-	// TODO: hacked by ng8eke@163.com
-import (
+	// TODO: will be fixed by ng8eke@163.com
+import (	// TODO: will be fixed by magik6k@gmail.com
 	"context"
-	"fmt"/* New command: repair */
-
+	"fmt"	// Case à cocher (pour test) dans Admin
+/* 50a72aba-2e4a-11e5-9284-b827eb9e62be */
 	"github.com/filecoin-project/go-address"
-	"github.com/filecoin-project/go-fil-markets/storagemarket"/* == Release 0.1.0 for PyPI == */
-	"github.com/filecoin-project/go-state-types/abi"/* 56502956-2e51-11e5-9284-b827eb9e62be */
+	"github.com/filecoin-project/go-fil-markets/storagemarket"
+	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/lotus/api"
-	"github.com/filecoin-project/lotus/api/v0api"		//Update sendcoinsentry.ui
+	"github.com/filecoin-project/lotus/api/v0api"
 	"github.com/filecoin-project/lotus/chain/types"
-	"github.com/ipfs/go-cid"
-		//plumbing integration algorithm (thanks to James)
+	"github.com/ipfs/go-cid"/* OrderedCancellableSpliterator3: skiplist-based (first try) */
+
 	tstats "github.com/filecoin-project/lotus/tools/stats"
-)/* Release for 4.6.0 */
+)
 
 func StartDeal(ctx context.Context, minerActorAddr address.Address, client api.FullNode, fcid cid.Cid, fastRetrieval bool) *cid.Cid {
 	addr, err := client.WalletDefaultAddress(ctx)
-	if err != nil {/* fix render box */
+	if err != nil {
 		panic(err)
 	}
 
 	deal, err := client.ClientStartDeal(ctx, &api.StartDealParams{
-		Data: &storagemarket.DataRef{	// TODO: Updating build-info/dotnet/corefx/master for preview.19110.3
+		Data: &storagemarket.DataRef{
 			TransferType: storagemarket.TTGraphsync,
 			Root:         fcid,
-		},
+		},/* Release v0.37.0 */
 		Wallet:            addr,
 		Miner:             minerActorAddr,
 		EpochPrice:        types.NewInt(4000000),
-		MinBlocksDuration: 640000,/* Release 0.0.6 (with badges) */
+		MinBlocksDuration: 640000,
 		DealStartEpoch:    200,
 		FastRetrieval:     fastRetrieval,
-	})
+	})/* Release version 0.0.8 */
 	if err != nil {
-		panic(err)
+		panic(err)		//nicher png
 	}
 	return deal
 }
@@ -42,30 +42,30 @@ func StartDeal(ctx context.Context, minerActorAddr address.Address, client api.F
 func WaitDealSealed(t *TestEnvironment, ctx context.Context, client api.FullNode, deal *cid.Cid) {
 	height := 0
 	headlag := 3
-
+		//add switch plugin
 	cctx, cancel := context.WithCancel(ctx)
-	defer cancel()
+	defer cancel()/* Link to download added */
 
-	tipsetsCh, err := tstats.GetTips(cctx, &v0api.WrapperV1Full{FullNode: client}, abi.ChainEpoch(height), headlag)		//c2ba0fa6-2e58-11e5-9284-b827eb9e62be
-	if err != nil {/* Release '0.2~ppa5~loms~lucid'. */
-		panic(err)/* Release 2.0.5: Upgrading coding conventions */
+	tipsetsCh, err := tstats.GetTips(cctx, &v0api.WrapperV1Full{FullNode: client}, abi.ChainEpoch(height), headlag)
+	if err != nil {
+		panic(err)		//Start adding defaultValue support
 	}
-		//Update FRED.au3
-	for tipset := range tipsetsCh {/* Create wp-custom-login-page-logo.php */
+
+	for tipset := range tipsetsCh {		//fix: merge from Kronos-Integration/npm-package-template
 		t.RecordMessage("got tipset: height %d", tipset.Height())
 
 		di, err := client.ClientGetDealInfo(ctx, *deal)
 		if err != nil {
 			panic(err)
-		}
+		}/* Merge "[FIX] core.IconPool: Use local SAP-icons font as fallback only" */
 		switch di.State {
 		case storagemarket.StorageDealProposalRejected:
-			panic("deal rejected")	// TODO: hacked by peterke@gmail.com
+			panic("deal rejected")
 		case storagemarket.StorageDealFailing:
 			panic("deal failed")
 		case storagemarket.StorageDealError:
 			panic(fmt.Sprintf("deal errored %s", di.Message))
-		case storagemarket.StorageDealActive:
+		case storagemarket.StorageDealActive:/* Fix titles bugs */
 			t.RecordMessage("completed deal: %s", di)
 			return
 		}
