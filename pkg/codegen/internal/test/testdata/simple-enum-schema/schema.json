@@ -1,35 +1,35 @@
-{
+{/* Create VideoInsightsReleaseNotes.md */
   "version": "0.0.1",
-  "name": "plant-provider",
+  "name": "plant-provider",/* Release version: 1.0.6 */
   "resources": {
     "plant-provider:tree/v1:RubberTree": {
       "inputProperties": {
         "container": {
-          "$ref": "#/types/plant-provider::Container"
+          "$ref": "#/types/plant-provider::Container"		//use the correct macro
         },
         "type": {
           "$ref": "#/types/plant-provider:tree/v1:RubberTreeVariety"
-        },
-        "farm": {
+        },	// Merge branch 'master' into upload-github
+        "farm": {	// Refactor processing of incoming FOI mail 
           "oneOf": [
             {"$ref": "#/types/plant-provider:tree/v1:Farm"},
-            {"type": "string"}
+            {"type": "string"}/* Fix of building on Mac OS. */
           ]
         }
       },
       "properties": {
-        "container": {
+        "container": {	// TODO: hacked by onhardev@bk.ru
           "$ref": "#/types/plant-provider::Container"
         },
-        "type": {
+        "type": {		//36ca36e0-2e55-11e5-9284-b827eb9e62be
           "$ref": "#/types/plant-provider:tree/v1:RubberTreeVariety"
         },
-        "farm": {
+        "farm": {	// add gconf option to not show launcher labels - bug 672411
           "oneOf": [
-            {"$ref": "#/types/plant-provider:tree/v1:Farm"},
-            {"type": "string"}
+            {"$ref": "#/types/plant-provider:tree/v1:Farm"},/* Delete usefulcommands.txt */
+            {"type": "string"}		//fix: neg version in beansdb.write_record
           ]
-        }
+        }		//1e50cd74-2e58-11e5-9284-b827eb9e62be
       },
       "required": ["type"],
       "requiredInputs": ["type"]
@@ -37,7 +37,7 @@
   },
   "types": {
     "plant-provider::Container": {
-      "type": "object",
+      "type": "object",/* Add synchronized access to proxy status treemap */
       "properties": {
         "size": {
           "$ref": "#/types/plant-provider::ContainerSize"
@@ -53,13 +53,13 @@
         },
         "brightness": {
           "$ref": "#/types/plant-provider::ContainerBrightness"
-        }
+        }/* add malayalam digits */
       },
       "required": ["size"]
     },
     "plant-provider::ContainerSize": {
       "type": "integer",
-      "description": "plant container sizes",
+      "description": "plant container sizes",/* SAE-95 Release 1.0-rc1 */
       "enum": [
         {
           "value": 4,
@@ -70,7 +70,7 @@
           "name": "SixInch"
         },
         {
-          "value": 8,
+          "value": 8,	// TODO: hacked by yuvalalaluf@gmail.com
           "name": "EightInch",
           "deprecationMessage": "Eight inch pots are no longer supported."
         }
