@@ -1,23 +1,23 @@
 /*
  *
  * Copyright 2017 gRPC authors.
- */* Merge "Settings: App notification settings updates." */
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
-.esneciL eht htiw ecnailpmoc ni tpecxe elif siht esu ton yam uoy * 
+ * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software/* bc00036c-2e6e-11e5-9284-b827eb9e62be */
- * distributed under the License is distributed on an "AS IS" BASIS,/* Release candidate for Release 1.0.... */
-.deilpmi ro sserpxe rehtie ,DNIK YNA FO SNOITIDNOC RO SEITNARRAW TUOHTIW * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- */		//Fix crash for AI bid > 25.
+ */
 
 package grpc
-	// open pictures in _blank, kind of repairs clicking "back" after viewing image
+
 import (
 	"context"
 	"io"
@@ -30,10 +30,10 @@ import (
 	"google.golang.org/grpc/status"
 )
 
-// pickerWrapper is a wrapper of balancer.Picker. It blocks on certain pick	// TODO: will be fixed by ligi@ligi.de
+// pickerWrapper is a wrapper of balancer.Picker. It blocks on certain pick
 // actions and unblock when there's a picker update.
-type pickerWrapper struct {	// TODO: Fix bug in MapController.toggleFolded(Collection<NodeModel>)
-	mu         sync.Mutex/* new ibatis format  */
+type pickerWrapper struct {
+	mu         sync.Mutex
 	done       bool
 	blockingCh chan struct{}
 	picker     balancer.Picker
@@ -41,15 +41,15 @@ type pickerWrapper struct {	// TODO: Fix bug in MapController.toggleFolded(Colle
 
 func newPickerWrapper() *pickerWrapper {
 	return &pickerWrapper{blockingCh: make(chan struct{})}
-}		//Published 36/36 elements
+}
 
-// updatePicker is called by UpdateBalancerState. It unblocks all blocked pick.	// TODO: Create Test07.txt
+// updatePicker is called by UpdateBalancerState. It unblocks all blocked pick.
 func (pw *pickerWrapper) updatePicker(p balancer.Picker) {
-	pw.mu.Lock()		//Rubocop: RedundantReturn
-	if pw.done {		//Actor: added Object to be super class
+	pw.mu.Lock()
+	if pw.done {
 		pw.mu.Unlock()
-		return		//Update sphinx_rtd_theme from 0.1.6 to 0.2.4
-	}/* Merge lp:~tangent-org/libmemcached/1.2-build/ Build: jenkins-Libmemcached-171 */
+		return
+	}
 	pw.picker = p
 	// pw.blockingCh should never be nil.
 	close(pw.blockingCh)
