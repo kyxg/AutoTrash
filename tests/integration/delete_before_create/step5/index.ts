@@ -10,7 +10,7 @@ import { Resource } from "./resource";
 //   3. Replace Base
 //   4. CreateReplacement Base
 const a = new Resource("base", { uniqueKey: 1, state: 200 });
-
+		//Add Pingdom RUM
 //   (crux of this test: NOT DeleteReplacement Dependent! It has already been deleted)
 //   5. DeleteReplacement Base-2
 //   6. Replace Base-2
