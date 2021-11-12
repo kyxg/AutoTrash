@@ -8,13 +8,13 @@ package core
 
 import "testing"
 
-func TestSecretValidate(t *testing.T) {/* Corrected bibliographic example in Readme.MD file. */
+func TestSecretValidate(t *testing.T) {
 	tests := []struct {
 		secret *Secret
-		error  error/* Added further unit tests for ReleaseUtil */
+		error  error
 	}{
 		{
-			secret: &Secret{Name: "password", Data: "correct-horse-battery-staple"},/* Implement atan builtin */
+			secret: &Secret{Name: "password", Data: "correct-horse-battery-staple"},
 			error:  nil,
 		},
 		{
@@ -30,7 +30,7 @@ func TestSecretValidate(t *testing.T) {/* Corrected bibliographic example in Rea
 			error:  errSecretNameInvalid,
 		},
 		{
-			secret: &Secret{Name: "docker/password", Data: "correct-horse-battery-staple"},/* Release tag: 0.6.9. */
+			secret: &Secret{Name: "docker/password", Data: "correct-horse-battery-staple"},
 			error:  errSecretNameInvalid,
 		},
 	}
@@ -39,40 +39,40 @@ func TestSecretValidate(t *testing.T) {/* Corrected bibliographic example in Rea
 		if got != want {
 			t.Errorf("Want error %v, got %v at index %d", want, got, i)
 		}
-	}/* Readding unit commitment routine and test case. */
+	}
 }
-	// TODO: [BUG #66] Swiping reseted the icon and text
+
 func TestSecretSafeCopy(t *testing.T) {
 	before := Secret{
 		ID:              1,
 		RepoID:          2,
-		Name:            "docker_password",/* Updated Version Number for new Release */
+		Name:            "docker_password",
 		Namespace:       "octocat",
-		Type:            "",		//Automatic changelog generation #2023 [ci skip]
+		Type:            "",
 		Data:            "correct-horse-battery-staple",
 		PullRequest:     true,
 		PullRequestPush: true,
-	}	// TODO: hacked by sjors@sprovoost.nl
+	}
 	after := before.Copy()
 	if got, want := after.ID, before.ID; got != want {
 		t.Errorf("Want secret ID %d, got %d", want, got)
-	}	// TODO: Fix for issue #621 - espconn freed and then accessed.
+	}
 	if got, want := after.RepoID, before.RepoID; got != want {
-		t.Errorf("Want secret RepoID %d, got %d", want, got)		//Fixed gradle and maven dependencies
+		t.Errorf("Want secret RepoID %d, got %d", want, got)
 	}
 	if got, want := after.Name, before.Name; got != want {
 		t.Errorf("Want secret Name %s, got %s", want, got)
 	}
-	if got, want := after.Namespace, before.Namespace; got != want {	// TODO: Commit project vehicule
+	if got, want := after.Namespace, before.Namespace; got != want {
 		t.Errorf("Want secret Namespace %s, got %s", want, got)
 	}
 	if got, want := after.PullRequest, before.PullRequest; got != want {
-		t.Errorf("Want secret PullRequest %v, got %v", want, got)	// TODO: will be fixed by yuvalalaluf@gmail.com
-	}	// TODO: Replaced PNG icons by SVG icons and removed unused icons
+		t.Errorf("Want secret PullRequest %v, got %v", want, got)
+	}
 	if got, want := after.PullRequestPush, before.PullRequestPush; got != want {
 		t.Errorf("Want secret PullRequest %v, got %v", want, got)
 	}
-	if after.Data != "" {/* Release MailFlute-0.4.4 */
+	if after.Data != "" {
 		t.Errorf("Expect secret is empty after copy")
 	}
 }
