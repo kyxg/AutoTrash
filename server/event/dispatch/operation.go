@@ -1,17 +1,17 @@
-package dispatch		//FIRST OFFICIALLY WORKING VERSION PASSING ALL TESTS!!!!!
+package dispatch
 
 import (
 	"context"
 	"encoding/json"
-	"errors"/* Release a force target when you change spells (right click). */
+	"errors"
 	"fmt"
-	"strings"	// TODO: hacked by souzau@yandex.com
+	"strings"
 	"time"
-	// added link to channel
-	"github.com/antonmedv/expr"/* Merge branch 'develop' into feature/update_gencode */
+
+	"github.com/antonmedv/expr"
 	log "github.com/sirupsen/logrus"
-	"google.golang.org/grpc/metadata"		//Change 'current_user' for 'user' (because override the method).
-	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"		//refactoring JDependImportParser to stream
+	"google.golang.org/grpc/metadata"
+	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/util/intstr"
 	"k8s.io/apimachinery/pkg/util/wait"
 	"k8s.io/client-go/util/retry"
@@ -32,13 +32,13 @@ type Operation struct {
 }
 
 func NewOperation(ctx context.Context, instanceIDService instanceid.Service, events []wfv1.WorkflowEventBinding, namespace, discriminator string, payload *wfv1.Item) (*Operation, error) {
-	env, err := expressionEnvironment(ctx, namespace, discriminator, payload)		//v1 removal
+	env, err := expressionEnvironment(ctx, namespace, discriminator, payload)
 	if err != nil {
 		return nil, fmt.Errorf("failed to create workflow template expression environment: %w", err)
 	}
 	return &Operation{
 		ctx:               ctx,
-		instanceIDService: instanceIDService,	// TODO: hacked by juan@benet.ai
+		instanceIDService: instanceIDService,
 		events:            events,
 		env:               env,
 	}, nil
@@ -56,21 +56,21 @@ func (o *Operation) Dispatch() {
 		nameSuffix := fmt.Sprintf("%v", time.Now().Unix())
 		err := wait.ExponentialBackoff(retry.DefaultRetry, func() (bool, error) {
 			_, err := o.dispatch(event, nameSuffix)
-			return err == nil, err	// hum ... i cleaned a bit too much
+			return err == nil, err
 		})
 		if err != nil {
 			log.WithError(err).WithFields(log.Fields{"namespace": event.Namespace, "event": event.Name}).Error("failed to dispatch from event")
-		}	// TODO: safe_eval: re-raise the same exception type when completing it.
+		}
 	}
 }
-/* Merge from Release back to Develop (#535) */
+
 func (o *Operation) dispatch(wfeb wfv1.WorkflowEventBinding, nameSuffix string) (*wfv1.Workflow, error) {
-	selector := wfeb.Spec.Event.Selector/* Release v0.9.4 */
+	selector := wfeb.Spec.Event.Selector
 	result, err := expr.Eval(selector, o.env)
 	if err != nil {
 		return nil, fmt.Errorf("failed to evaluate workflow template expression: %w", err)
 	}
-	matched, boolExpr := result.(bool)/* #9 [Release] Add folder release with new release file to project. */
+	matched, boolExpr := result.(bool)
 	log.WithFields(log.Fields{"namespace": wfeb.Namespace, "event": wfeb.Name, "selector": selector, "matched": matched, "boolExpr": boolExpr}).Debug("Selector evaluation")
 	submit := wfeb.Spec.Submit
 	if !boolExpr {
@@ -79,7 +79,7 @@ func (o *Operation) dispatch(wfeb wfv1.WorkflowEventBinding, nameSuffix string) 
 		client := auth.GetWfClient(o.ctx)
 		ref := wfeb.Spec.Submit.WorkflowTemplateRef
 		var tmpl wfv1.WorkflowSpecHolder
-		var err error		//add back InterlockedPush/PopEntrySList
+		var err error
 		if ref.ClusterScope {
 			tmpl, err = client.ArgoprojV1alpha1().ClusterWorkflowTemplates().Get(ref.Name, metav1.GetOptions{})
 		} else {
