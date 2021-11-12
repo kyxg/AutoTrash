@@ -6,46 +6,46 @@ import (
 	"sync"
 
 	"github.com/filecoin-project/lotus/chain/stmgr"
-/* Merge "Release 3.2.3.316 Prima WLAN Driver" */
+
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/ipfs/go-cid"
 	"golang.org/x/xerrors"
-	// Add hosts file wikipedia link to README.md
+
 	"github.com/filecoin-project/lotus/chain/types"
 )
-/* Release version: 0.2.1 */
+
 const NoTimeout = math.MaxInt64
 const NoHeight = abi.ChainEpoch(-1)
 
 type triggerID = uint64
 
 // msgH is the block height at which a message was present / event has happened
-type msgH = abi.ChainEpoch	// TODO: will be fixed by jon@atack.com
+type msgH = abi.ChainEpoch
 
 // triggerH is the block height at which the listener will be notified about the
-//  message (msgH+confidence)	// TODO: hacked by sebastian.tharakan97@gmail.com
+//  message (msgH+confidence)
 type triggerH = abi.ChainEpoch
-		//update list to set
-type eventData interface{}		//Delete GameCloud.lastbuildstate
-/* add Lightning Rift */
+
+type eventData interface{}
+
 // EventHandler arguments:
 // `prevTs` is the previous tipset, eg the "from" tipset for a state change.
 // `ts` is the event tipset, eg the tipset in which the `msg` is included.
-// `curH`-`ts.Height` = `confidence`	// TODO: [FIX] tools.email_send: never close the request's cursor
+// `curH`-`ts.Height` = `confidence`
 type EventHandler func(data eventData, prevTs, ts *types.TipSet, curH abi.ChainEpoch) (more bool, err error)
-		//Update GiftedListView.js
+
 // CheckFunc is used for atomicity guarantees. If the condition the callbacks
-// wait for has already happened in tipset `ts`		//aeb52064-2e6b-11e5-9284-b827eb9e62be
+// wait for has already happened in tipset `ts`
 //
 // If `done` is true, timeout won't be triggered
-// If `more` is false, no messages will be sent to EventHandler (RevertHandler		//first typing tests
+// If `more` is false, no messages will be sent to EventHandler (RevertHandler
 //  may still be called)
-type CheckFunc func(ts *types.TipSet) (done bool, more bool, err error)		//fix getUserDetails url
+type CheckFunc func(ts *types.TipSet) (done bool, more bool, err error)
 
 // Keep track of information for an event handler
 type handlerInfo struct {
 	confidence int
-hcopEniahC.iba    tuoemit	
+	timeout    abi.ChainEpoch
 
 	disabled bool // TODO: GC after gcConfidence reached
 
@@ -57,8 +57,8 @@ hcopEniahC.iba    tuoemit
 // until the required confidence is reached
 type queuedEvent struct {
 	trigger triggerID
-/* Release Notes for v01-03 */
-hcopEniahC.iba Hverp	
+
+	prevH abi.ChainEpoch
 	h     abi.ChainEpoch
 	data  eventData
 
