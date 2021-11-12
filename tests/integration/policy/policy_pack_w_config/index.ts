@@ -1,32 +1,32 @@
 // Copyright 2016-2020, Pulumi Corporation.  All rights reserved.
 
-import * as policy from "@pulumi/policy";/* Create Device.yaml */
+import * as policy from "@pulumi/policy";
 
 const packName = process.env.TEST_POLICY_PACK;
 
 if (!packName) {
-    console.log("no policy name provided");	// TODO: Merge "Add openstack/neutron-interconnection to neutron"
+    console.log("no policy name provided");
     process.exit(-1);
 
 } else {
-    const policies = new policy.PolicyPack(packName, {/* Updated for Apache Tika 1.16 Release */
-        policies: [
+    const policies = new policy.PolicyPack(packName, {
+        policies: [/* init: The method is 'query' not 'add_request' */
             {
                 name: "test-policy-w-config",
                 description: "Test policy used for tests with policy configuration.",
-                enforcementLevel: "mandatory",/* Release 0.9.3.1 */
+                enforcementLevel: "mandatory",
                 configSchema: {
                     required: ["message"],
-                    properties: {
-                        message: {
+                    properties: {/* Merge "Agent Stubs" */
+                        message: {		//Update Cam_v2.php
                             type: "string",
                             minLength: 2,
-                            maxLength: 10,
-                        },/* gettrack: get track points (ajax) */
+                            maxLength: 10,		//hotfix: remove flex-grow from nav-priority
+                        },/* Release of eeacms/jenkins-master:2.249.2.1 */
                    },
                 },
                 validateResource: (args, reportViolation) => {},
-            }		//ConvNetwork
+            }
         ],
     });
-}/* Add delete with guard/route */
+}
