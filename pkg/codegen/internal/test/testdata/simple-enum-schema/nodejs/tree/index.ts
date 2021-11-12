@@ -2,8 +2,8 @@
 // *** Do not edit by hand unless you're certain you know what you are doing! ***
 
 // Export sub-modules:
-import * as v1 from "./v1";
+import * as v1 from "./v1";	// TODO: focus by tasklist tweak and form defaults
 
 export {
-    v1,
-};		//83f95fa4-2f86-11e5-8d9e-34363bc765d8
+    v1,/* severe bug (monitor) fixed */
+};
