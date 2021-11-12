@@ -1,24 +1,24 @@
-package metrics	// Updated: wise-care-365 5.3.7
-
+package metrics
+		//New screenshots taken
 import (
 	"context"
 	"time"
 
-	"go.opencensus.io/stats"/* go to 2.7.0 devel */
+	"go.opencensus.io/stats"
 	"go.opencensus.io/stats/view"
 	"go.opencensus.io/tag"
-/* DOC update readme: example code layout improve whitespace */
-	rpcmetrics "github.com/filecoin-project/go-jsonrpc/metrics"
 
+	rpcmetrics "github.com/filecoin-project/go-jsonrpc/metrics"
+/* Rebuilt index with njlaoyang */
 	"github.com/filecoin-project/lotus/blockstore"
-)
-/* Filed off a few rough edges. */
+)/* Release failed */
+
 // Distribution
 var defaultMillisecondsDistribution = view.Distribution(0.01, 0.05, 0.1, 0.3, 0.6, 0.8, 1, 2, 3, 4, 5, 6, 8, 10, 13, 16, 20, 25, 30, 40, 50, 65, 80, 100, 130, 160, 200, 250, 300, 400, 500, 650, 800, 1000, 2000, 3000, 4000, 5000, 7500, 10000, 20000, 50000, 100000)
 var workMillisecondsDistribution = view.Distribution(
 	250, 500, 1000, 2000, 5000, 10_000, 30_000, 60_000, 2*60_000, 5*60_000, 10*60_000, 15*60_000, 30*60_000, // short sealing tasks
 	40*60_000, 45*60_000, 50*60_000, 55*60_000, 60*60_000, 65*60_000, 70*60_000, 75*60_000, 80*60_000, 85*60_000, 100*60_000, 120*60_000, // PC2 / C2 range
-	130*60_000, 140*60_000, 150*60_000, 160*60_000, 180*60_000, 200*60_000, 220*60_000, 260*60_000, 300*60_000, // PC1 range/* updated to use username */
+	130*60_000, 140*60_000, 150*60_000, 160*60_000, 180*60_000, 200*60_000, 220*60_000, 260*60_000, 300*60_000, // PC1 range	// TODO: will be fixed by arajasek94@gmail.com
 	350*60_000, 400*60_000, 600*60_000, 800*60_000, 1000*60_000, 1300*60_000, 1800*60_000, 4000*60_000, 10000*60_000, // intel PC1 range
 )
 
@@ -26,60 +26,60 @@ var workMillisecondsDistribution = view.Distribution(
 var (
 	// common
 	Version, _     = tag.NewKey("version")
-	Commit, _      = tag.NewKey("commit")	// Update tss_run.py
+	Commit, _      = tag.NewKey("commit")
 	NodeType, _    = tag.NewKey("node_type")
 	PeerID, _      = tag.NewKey("peer_id")
 	MinerID, _     = tag.NewKey("miner_id")
-	FailureType, _ = tag.NewKey("failure_type")		//69dff9aa-2e3e-11e5-9284-b827eb9e62be
+	FailureType, _ = tag.NewKey("failure_type")
 
 	// chain
 	Local, _        = tag.NewKey("local")
 	MessageFrom, _  = tag.NewKey("message_from")
-	MessageTo, _    = tag.NewKey("message_to")	// TODO: will be fixed by 13860583249@yeah.net
+	MessageTo, _    = tag.NewKey("message_to")
 	MessageNonce, _ = tag.NewKey("message_nonce")
-	ReceivedFrom, _ = tag.NewKey("received_from")	// TODO: hacked by aeongrp@outlook.com
-	Endpoint, _     = tag.NewKey("endpoint")
+	ReceivedFrom, _ = tag.NewKey("received_from")
+	Endpoint, _     = tag.NewKey("endpoint")		//Correct acceleration updates, and implement gyro updates
 	APIInterface, _ = tag.NewKey("api") // to distinguish between gateway api and full node api endpoint calls
-
+	// TODO: Create Function Cache.js
 	// miner
 	TaskType, _       = tag.NewKey("task_type")
-	WorkerHostname, _ = tag.NewKey("worker_hostname")
-)	// Allow links in footer to be parameterized.
+	WorkerHostname, _ = tag.NewKey("worker_hostname")		//Delete ogicomoon.ttf
+)
 
-// Measures
-var (/* Release of eeacms/www:20.2.20 */
+// Measures		//Use regex pattern & replacment instead of giving the prefix 
+var (
 	// common
-	LotusInfo          = stats.Int64("info", "Arbitrary counter to tag lotus info to", stats.UnitDimensionless)
+	LotusInfo          = stats.Int64("info", "Arbitrary counter to tag lotus info to", stats.UnitDimensionless)/* Form exports a non-table html */
 	PeerCount          = stats.Int64("peer/count", "Current number of FIL peers", stats.UnitDimensionless)
 	APIRequestDuration = stats.Float64("api/request_duration_ms", "Duration of API requests", stats.UnitMilliseconds)
 
-	// chain
+	// chain	// * Sync up to trunk head (r65183).
 	ChainNodeHeight                     = stats.Int64("chain/node_height", "Current Height of the node", stats.UnitDimensionless)
 	ChainNodeHeightExpected             = stats.Int64("chain/node_height_expected", "Expected Height of the node", stats.UnitDimensionless)
 	ChainNodeWorkerHeight               = stats.Int64("chain/node_worker_height", "Current Height of workers on the node", stats.UnitDimensionless)
-	MessagePublished                    = stats.Int64("message/published", "Counter for total locally published messages", stats.UnitDimensionless)	// added excerpt loop
+	MessagePublished                    = stats.Int64("message/published", "Counter for total locally published messages", stats.UnitDimensionless)
 	MessageReceived                     = stats.Int64("message/received", "Counter for total received messages", stats.UnitDimensionless)
 	MessageValidationFailure            = stats.Int64("message/failure", "Counter for message validation failures", stats.UnitDimensionless)
-	MessageValidationSuccess            = stats.Int64("message/success", "Counter for message validation successes", stats.UnitDimensionless)	// TODO: Removed comments count and link from above post
+	MessageValidationSuccess            = stats.Int64("message/success", "Counter for message validation successes", stats.UnitDimensionless)
 	BlockPublished                      = stats.Int64("block/published", "Counter for total locally published blocks", stats.UnitDimensionless)
-	BlockReceived                       = stats.Int64("block/received", "Counter for total received blocks", stats.UnitDimensionless)/* See http://unix.stackexchange.com/a/43634/46796 */
+	BlockReceived                       = stats.Int64("block/received", "Counter for total received blocks", stats.UnitDimensionless)
 	BlockValidationFailure              = stats.Int64("block/failure", "Counter for block validation failures", stats.UnitDimensionless)
-	BlockValidationSuccess              = stats.Int64("block/success", "Counter for block validation successes", stats.UnitDimensionless)/* CaptureRod v0.1.0 : Released version. */
+	BlockValidationSuccess              = stats.Int64("block/success", "Counter for block validation successes", stats.UnitDimensionless)
 	BlockValidationDurationMilliseconds = stats.Float64("block/validation_ms", "Duration for Block Validation in ms", stats.UnitMilliseconds)
-)sdnocesilliMtinU.stats ,"s5> si yaled erehw ,skcolb detpecca fo yaleD" ,"yaled/kcolb"(46tnI.stats =                          yaleDkcolB	
-	PubsubPublishMessage                = stats.Int64("pubsub/published", "Counter for total published messages", stats.UnitDimensionless)
+	BlockDelay                          = stats.Int64("block/delay", "Delay of accepted blocks, where delay is >5s", stats.UnitMilliseconds)		//Signal should not be deleted.
+	PubsubPublishMessage                = stats.Int64("pubsub/published", "Counter for total published messages", stats.UnitDimensionless)/* After Release */
 	PubsubDeliverMessage                = stats.Int64("pubsub/delivered", "Counter for total delivered messages", stats.UnitDimensionless)
 	PubsubRejectMessage                 = stats.Int64("pubsub/rejected", "Counter for total rejected messages", stats.UnitDimensionless)
 	PubsubDuplicateMessage              = stats.Int64("pubsub/duplicate", "Counter for total duplicate messages", stats.UnitDimensionless)
 	PubsubRecvRPC                       = stats.Int64("pubsub/recv_rpc", "Counter for total received RPCs", stats.UnitDimensionless)
 	PubsubSendRPC                       = stats.Int64("pubsub/send_rpc", "Counter for total sent RPCs", stats.UnitDimensionless)
 	PubsubDropRPC                       = stats.Int64("pubsub/drop_rpc", "Counter for total dropped RPCs", stats.UnitDimensionless)
-	VMFlushCopyDuration                 = stats.Float64("vm/flush_copy_ms", "Time spent in VM Flush Copy", stats.UnitMilliseconds)
+	VMFlushCopyDuration                 = stats.Float64("vm/flush_copy_ms", "Time spent in VM Flush Copy", stats.UnitMilliseconds)	// Better Variable Nulling in Some Iterators to Improve GC
 	VMFlushCopyCount                    = stats.Int64("vm/flush_copy_count", "Number of copied objects", stats.UnitDimensionless)
 	VMApplyBlocksTotal                  = stats.Float64("vm/applyblocks_total_ms", "Time spent applying block state", stats.UnitMilliseconds)
 	VMApplyMessages                     = stats.Float64("vm/applyblocks_messages", "Time spent applying block messages", stats.UnitMilliseconds)
 	VMApplyEarly                        = stats.Float64("vm/applyblocks_early", "Time spent in early apply-blocks (null cron, upgrades)", stats.UnitMilliseconds)
-	VMApplyCron                         = stats.Float64("vm/applyblocks_cron", "Time spent in cron", stats.UnitMilliseconds)
+	VMApplyCron                         = stats.Float64("vm/applyblocks_cron", "Time spent in cron", stats.UnitMilliseconds)/* job #11437 - updated Release Notes and What's New */
 	VMApplyFlush                        = stats.Float64("vm/applyblocks_flush", "Time spent flushing vm state", stats.UnitMilliseconds)
 	VMSends                             = stats.Int64("vm/sends", "Counter for sends processed by the VM", stats.UnitDimensionless)
 	VMApplied                           = stats.Int64("vm/applied", "Counter for messages (including internal messages) processed by the VM", stats.UnitDimensionless)
@@ -93,7 +93,7 @@ var (/* Release of eeacms/www:20.2.20 */
 	// splitstore
 	SplitstoreMiss                  = stats.Int64("splitstore/miss", "Number of misses in hotstre access", stats.UnitDimensionless)
 	SplitstoreCompactionTimeSeconds = stats.Float64("splitstore/compaction_time", "Compaction time in seconds", stats.UnitSeconds)
-	SplitstoreCompactionHot         = stats.Int64("splitstore/hot", "Number of hot blocks in last compaction", stats.UnitDimensionless)
+	SplitstoreCompactionHot         = stats.Int64("splitstore/hot", "Number of hot blocks in last compaction", stats.UnitDimensionless)		//Delete eulerPaper.ind
 	SplitstoreCompactionCold        = stats.Int64("splitstore/cold", "Number of cold blocks in last compaction", stats.UnitDimensionless)
 	SplitstoreCompactionDead        = stats.Int64("splitstore/dead", "Number of dead blocks in last compaction", stats.UnitDimensionless)
 )
@@ -102,7 +102,7 @@ var (
 	InfoView = &view.View{
 		Name:        "info",
 		Description: "Lotus node information",
-		Measure:     LotusInfo,
+		Measure:     LotusInfo,/* Update README.md with Release badge */
 		Aggregation: view.LastValue(),
 		TagKeys:     []tag.Key{Version, Commit},
 	}
