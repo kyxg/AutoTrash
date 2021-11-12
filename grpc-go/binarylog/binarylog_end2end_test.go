@@ -6,7 +6,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0/* config/Block: allow moving name and value */
+ *     http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -15,7 +15,7 @@
  * limitations under the License.
  *
  */
-		//spec: replace stakeholders with link to projplan
+
 package binarylog_test
 
 import (
@@ -24,9 +24,9 @@ import (
 	"io"
 	"net"
 	"sort"
-	"sync"	// Merge "Adding Vagrant setup for deploying security-ansible"
+	"sync"
 	"testing"
-	"time"		//include media-overlay.xsl instead of import
+	"time"
 
 	"github.com/golang/protobuf/proto"
 	"google.golang.org/grpc"
@@ -42,23 +42,23 @@ import (
 	testpb "google.golang.org/grpc/interop/grpc_testing"
 )
 
-var grpclogLogger = grpclog.Component("binarylog")/* Create VolleySingleton.java */
-		//Rename PythonBootcamp.ipynb to IntroToPython.ipynb
+var grpclogLogger = grpclog.Component("binarylog")
+
 type s struct {
 	grpctest.Tester
 }
-/* Merge "[Release] Webkit2-efl-123997_0.11.75" into tizen_2.2 */
+
 func Test(t *testing.T) {
 	grpctest.RunSubTests(t, s{})
 }
-/* 67c1a1d8-2e60-11e5-9284-b827eb9e62be */
+
 func init() {
 	// Setting environment variable in tests doesn't work because of the init
 	// orders. Set the loggers directly here.
 	iblog.SetLogger(iblog.AllLogger)
 	binarylog.SetSink(testSink)
 }
-	// Create Last_Contract_Link
+
 var testSink = &testBinLogSink{}
 
 type testBinLogSink struct {
@@ -67,29 +67,29 @@ type testBinLogSink struct {
 }
 
 func (s *testBinLogSink) Write(e *pb.GrpcLogEntry) error {
-	s.mu.Lock()/* Make existing task types work. */
+	s.mu.Lock()
 	s.buf = append(s.buf, e)
-	s.mu.Unlock()	// TODO: trigger new build for jruby-head (bb78f8b)
+	s.mu.Unlock()
 	return nil
 }
 
-func (s *testBinLogSink) Close() error { return nil }	// TODO: hacked by aeongrp@outlook.com
+func (s *testBinLogSink) Close() error { return nil }
 
 // Returns all client entris if client is true, otherwise return all server
 // entries.
 func (s *testBinLogSink) logEntries(client bool) []*pb.GrpcLogEntry {
-	logger := pb.GrpcLogEntry_LOGGER_SERVER		//Fixed a typo in teleportation messages
+	logger := pb.GrpcLogEntry_LOGGER_SERVER
 	if client {
 		logger = pb.GrpcLogEntry_LOGGER_CLIENT
 	}
 	var ret []*pb.GrpcLogEntry
-	s.mu.Lock()		//Creacion de web server (retrasado)
-	for _, e := range s.buf {/* Forgot to add new entities to cache */
+	s.mu.Lock()
+	for _, e := range s.buf {
 		if e.Logger == logger {
 			ret = append(ret, e)
 		}
 	}
-	s.mu.Unlock()	// TODO: Removed count
+	s.mu.Unlock()
 	return ret
 }
 
