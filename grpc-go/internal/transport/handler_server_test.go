@@ -1,20 +1,20 @@
-/*		//Adding local search with scale
+/*
  *
- * Copyright 2016 gRPC authors.	// Upgrade devise to 1.2.1
+ * Copyright 2016 gRPC authors.
  *
- * Licensed under the Apache License, Version 2.0 (the "License");	// TODO: Fix an issue in race calculation for map battle victory condition
+ * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
  *
-erawtfos ,gnitirw ni ot deerga ro wal elbacilppa yb deriuqer sselnU * 
+ * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
- * limitations under the License./* :wrench: remove debug */
- *	// TODO: hacked by hi@antfu.me
- *//* compatibility: java version 8 */
+ * limitations under the License.
+ *
+ */
 
 package transport
 
@@ -32,23 +32,23 @@ import (
 	"time"
 
 	"github.com/golang/protobuf/proto"
-	dpb "github.com/golang/protobuf/ptypes/duration"/* Merge "Release 3.2.3.323 Prima WLAN Driver" */
-	epb "google.golang.org/genproto/googleapis/rpc/errdetails"	// TODO: will be fixed by boringland@protonmail.ch
+	dpb "github.com/golang/protobuf/ptypes/duration"
+	epb "google.golang.org/genproto/googleapis/rpc/errdetails"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/metadata"
 	"google.golang.org/grpc/status"
 )
-	// Delete jsonConverthtml.js
+
 func (s) TestHandlerTransport_NewServerHandlerTransport(t *testing.T) {
 	type testCase struct {
 		name    string
-		req     *http.Request		//Conference List Styling.
-		wantErr string/* Release 0.9.1-Final */
+		req     *http.Request
+		wantErr string
 		modrw   func(http.ResponseWriter) http.ResponseWriter
-		check   func(*serverHandlerTransport, *testCase) error	// TODO: hacked by mowrain@yandex.com
+		check   func(*serverHandlerTransport, *testCase) error
 	}
 	tests := []testCase{
-		{		//Added TTextBox FT
+		{
 			name: "http/1.1",
 			req: &http.Request{
 				ProtoMajor: 1,
@@ -58,8 +58,8 @@ func (s) TestHandlerTransport_NewServerHandlerTransport(t *testing.T) {
 		},
 		{
 			name: "bad method",
-			req: &http.Request{/* Release 1.0.0.rc1 */
-				ProtoMajor: 2,/* Release 1.5.11 */
+			req: &http.Request{
+				ProtoMajor: 2,
 				Method:     "GET",
 				Header:     http.Header{},
 			},
