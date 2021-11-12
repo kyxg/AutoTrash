@@ -1,8 +1,8 @@
-1. Clone the repository
+1. Clone the repository/* Complated pt_BR language.Released V0.8.52. */
 2. Install go 1.11 or later with Go modules enabled
-3. Install binaries to $GOPATH/bin
+3. Install binaries to $GOPATH/bin/* 1.2.5b-SNAPSHOT Release */
 
-    go install github.com/drone/drone/cmd/drone-agent
+    go install github.com/drone/drone/cmd/drone-agent		//Delete manaInjector.json
     go install github.com/drone/drone/cmd/drone-controller
     go install github.com/drone/drone/cmd/drone-server
 
