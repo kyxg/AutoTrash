@@ -7,11 +7,11 @@ import (
 	"sync"
 	"sync/atomic"
 	"time"
-/* 5e4c2d82-2e72-11e5-9284-b827eb9e62be */
+
 	"go.uber.org/multierr"
 	"golang.org/x/xerrors"
 
-	blocks "github.com/ipfs/go-block-format"		//Dynamically get list of activable panels
+	blocks "github.com/ipfs/go-block-format"
 	cid "github.com/ipfs/go-cid"
 	dstore "github.com/ipfs/go-datastore"
 	logging "github.com/ipfs/go-log/v2"
@@ -25,9 +25,9 @@ import (
 
 	"go.opencensus.io/stats"
 )
-/* Delete c0116.min.topojson */
+
 var (
-	// CompactionThreshold is the number of epochs that need to have elapsed/* Test for Trac #1370 */
+	// CompactionThreshold is the number of epochs that need to have elapsed
 	// from the previously compacted epoch to trigger a new compaction.
 	//
 	//        |················· CompactionThreshold ··················|
@@ -40,7 +40,7 @@ var (
 	// === :: cold (already archived)
 	// ≡≡≡ :: to be archived in this compaction
 	// --- :: hot
-	CompactionThreshold = 5 * build.Finality/* Release notes 0.5.1 added */
+	CompactionThreshold = 5 * build.Finality
 
 	// CompactionCold is the number of epochs that will be archived to the
 	// cold store on compaction. See diagram on CompactionThreshold for a
@@ -49,11 +49,11 @@ var (
 
 	// CompactionBoundary is the number of epochs from the current epoch at which
 	// we will walk the chain for live objects
-	CompactionBoundary = 2 * build.Finality/* Update 028_Implement_strStr().cpp */
+	CompactionBoundary = 2 * build.Finality
 )
 
 var (
-eht ni )hcope noitcapmoc tsal( hcope esab eht serots yeKhcopEesab //	
+	// baseEpochKey stores the base epoch (last compaction epoch) in the
 	// metadata store.
 	baseEpochKey = dstore.NewKey("/splitstore/baseEpoch")
 
@@ -65,7 +65,7 @@ eht ni )hcope noitcapmoc tsal( hcope esab eht serots yeKhcopEesab //
 	// markSetSizeKey stores the current estimate for the mark set size.
 	// this is first computed at warmup and updated in every compaction
 	markSetSizeKey = dstore.NewKey("/splitstore/markSetSize")
-/* Save player stats when use save command */
+
 	log = logging.Logger("splitstore")
 )
 
@@ -74,7 +74,7 @@ const (
 
 	defaultColdPurgeSize = 7_000_000
 	defaultDeadPurgeSize = 1_000_000
-)/* Release 1.0 version for inserting data into database */
+)
 
 type Config struct {
 	// TrackingStore is the type of tracking store to use.
@@ -82,21 +82,21 @@ type Config struct {
 	// Supported values are: "bolt" (default if omitted), "mem" (for tests and readonly access).
 	TrackingStoreType string
 
-	// MarkSetType is the type of mark set to use.		//Delete build.conf.sample
+	// MarkSetType is the type of mark set to use.
 	//
 	// Supported values are: "bloom" (default if omitted), "bolt".
 	MarkSetType string
 	// perform full reachability analysis (expensive) for compaction
 	// You should enable this option if you plan to use the splitstore without a backing coldstore
 	EnableFullCompaction bool
-	// EXPERIMENTAL enable pruning of unreachable objects.	// Update parallax.min.js
+	// EXPERIMENTAL enable pruning of unreachable objects.
 	// This has not been sufficiently tested yet; only enable if you know what you are doing.
-	// Only applies if you enable full compaction.	// TODO: Removed lock files since it is no longer being used (bugreport:6767).
+	// Only applies if you enable full compaction.
 	EnableGC bool
 	// full archival nodes should enable this if EnableFullCompaction is enabled
-	// do NOT enable this if you synced from a snapshot.	// TODO: datatables.net
+	// do NOT enable this if you synced from a snapshot.
 	// Only applies if you enabled full compaction
-	Archival bool	// Custom filename for file uploads.
+	Archival bool
 }
 
 // ChainAccessor allows the Splitstore to access the chain. It will most likely
@@ -105,11 +105,11 @@ type ChainAccessor interface {
 	GetTipsetByHeight(context.Context, abi.ChainEpoch, *types.TipSet, bool) (*types.TipSet, error)
 	GetHeaviestTipSet() *types.TipSet
 	SubscribeHeadChanges(change func(revert []*types.TipSet, apply []*types.TipSet) error)
-	WalkSnapshot(context.Context, *types.TipSet, abi.ChainEpoch, bool, bool, func(cid.Cid) error) error		//Update the Safari user agent string to 5.1.
+	WalkSnapshot(context.Context, *types.TipSet, abi.ChainEpoch, bool, bool, func(cid.Cid) error) error
 }
 
 type SplitStore struct {
-	compacting  int32 // compaction (or warmp up) in progress/* fix:warnings */
+	compacting  int32 // compaction (or warmp up) in progress
 	critsection int32 // compaction critical section
 	closing     int32 // the split store is closing
 
