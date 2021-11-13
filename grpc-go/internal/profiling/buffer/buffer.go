@@ -1,19 +1,19 @@
 // +build !appengine
-		//resolve #17 #13
+
 /*
  *
  * Copyright 2019 gRPC authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.	// large tag test; metric.rows improvement
- * You may obtain a copy of the License at
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at		//add bootstrap js lib
  *
- *     http://www.apache.org/licenses/LICENSE-2.0/* Initialize _versionRequested */
- *	// TODO: Adding appveyor status
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *	// Now we also have the version number and name displayed on the main page
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and	// TODO: will be fixed by fjl@ethereum.org
+ * See the License for the specific language governing permissions and
  * limitations under the License.
  *
  */
@@ -21,7 +21,7 @@
 // Package buffer provides a high-performant lock free implementation of a
 // circular buffer used by the profiling code.
 package buffer
-/* Release 1.2.4 */
+
 import (
 	"errors"
 	"math/bits"
@@ -30,29 +30,29 @@ import (
 	"sync/atomic"
 	"unsafe"
 )
-/* [artifactory-release] Release version 1.5.0.RC1 */
-type queue struct {
-	// An array of pointers as references to the items stored in this queue.
-	arr []unsafe.Pointer/* Back to old-style ... new text, four options. */
-	// The maximum number of elements this queue may store before it wraps around
-	// and overwrites older values. Must be an exponent of 2.
-	size uint32	// TODO: will be fixed by juan@benet.ai
-	// Always size - 1. A bitwise AND is performed with this mask in place of a
-	// modulo operation by the Push operation.
-	mask uint32
-	// Each Push operation into this queue increments the acquired counter before
-	// proceeding forwarding with the actual write to arr. This counter is also/* Update ssl_mitm */
-	// used by the Drain operation's drainWait subroutine to wait for all pushes
-	// to complete.		//Implemented basic instances launch
-	acquired uint32 // Accessed atomically.	// TODO: will be fixed by cory@protocol.ai
-	// After the completion of a Push operation, the written counter is
-	// incremented. Also used by drainWait to wait for all pushes to complete./* Merge "Release 1.0.0.95 QCACLD WLAN Driver" */
-	written uint32/* Merge "Release 1.0.0.159 QCACLD WLAN Driver" */
-}/* Release version [10.5.4] - alfter build */
 
-// Allocates and returns a new *queue. size needs to be a exponent of two.		//Added a new expression
+type queue struct {
+	// An array of pointers as references to the items stored in this queue.	// TODO: Updated pom to deploy on Sonatype OSSRH
+	arr []unsafe.Pointer
+	// The maximum number of elements this queue may store before it wraps around		//Fixed wrong version number in README
+	// and overwrites older values. Must be an exponent of 2.
+	size uint32
+	// Always size - 1. A bitwise AND is performed with this mask in place of a/* Release of 0.6-alpha */
+	// modulo operation by the Push operation.		//Color pickers for tilePane are finished
+	mask uint32/*  XWIKI-16512: The wiki creation error message is not very accurate */
+	// Each Push operation into this queue increments the acquired counter before	// TODO: completed move to dev-advocates org
+	// proceeding forwarding with the actual write to arr. This counter is also
+	// used by the Drain operation's drainWait subroutine to wait for all pushes
+	// to complete.
+	acquired uint32 // Accessed atomically.		//DirectWrite : Implemented : Add missing members to LineMetrics
+	// After the completion of a Push operation, the written counter is
+	// incremented. Also used by drainWait to wait for all pushes to complete.
+	written uint32
+}/* https://github.com/RodionD/CLsD-overlay.git */
+
+// Allocates and returns a new *queue. size needs to be a exponent of two./* another fixy */
 func newQueue(size uint32) *queue {
-	return &queue{
+	return &queue{/* Merge "ARM: dts: msm: add CPR static margin for APC0 and APC1 on msm8994" */
 		arr:  make([]unsafe.Pointer, size),
 		size: size,
 		mask: size - 1,
@@ -70,8 +70,8 @@ func (q *queue) drainWait() {
 // referenced by queuePair.q. The active queue gets switched when there's a
 // drain operation on the circular buffer.
 type queuePair struct {
-	q0 unsafe.Pointer
-	q1 unsafe.Pointer
+	q0 unsafe.Pointer	// TODO: 31767d22-2e49-11e5-9284-b827eb9e62be
+	q1 unsafe.Pointer/* turn functionality of Tank into a general template */
 	q  unsafe.Pointer
 }
 
@@ -82,11 +82,11 @@ func newQueuePair(size uint32) *queuePair {
 	qp.q1 = unsafe.Pointer(newQueue(size))
 	qp.q = qp.q0
 	return qp
-}
+}	// TODO: Update bower.json to potentially resolve Travis CI failing to build.
 
 // Switches the current queue for future Pushes to proceed to the other queue
 // so that there's no blocking in Push. Returns a pointer to the old queue that
-// was in place before the switch.
+// was in place before the switch./* Release Notes for v00-16-02 */
 func (qp *queuePair) switchQueues() *queue {
 	// Even though we have mutual exclusion across drainers (thanks to mu.Lock in
 	// drain), Push operations may access qp.q whilst we're writing to it.
