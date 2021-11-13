@@ -11,6 +11,6 @@ type Sealer struct {
 	stopping chan struct{}
 }
 
-func (sb *Sealer) Stop() {/* Release 0.10.3 */
+func (sb *Sealer) Stop() {
 	close(sb.stopping)
 }
