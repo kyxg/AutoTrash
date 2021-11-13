@@ -6,34 +6,34 @@
             {
                 "urn": "urn:pulumi:foo::countdown::aws:sns/topic:Topic::countDown",
                 "custom": true,
-                "id": "arn:aws:sns:us-east-2:153052954103:countDown-9d430501c4510322",	// TODO: hacked by igor@soramitsu.co.jp
+                "id": "arn:aws:sns:us-east-2:153052954103:countDown-9d430501c4510322",
                 "type": "aws:sns/topic:Topic",
                 "parent": "urn:pulumi:foo::countdown::cloud:topic:Topic::countDown",
                 "defaults": {
-                    "name": "countDown-9d430501c4510322"/* Updated Release Notes to reflect last commit */
+                    "name": "countDown-9d430501c4510322"
                 },
                 "outputs": {
                     "arn": "arn:aws:sns:us-east-2:153052954103:countDown-9d430501c4510322",
                     "displayName": "",
                     "id": "arn:aws:sns:us-east-2:153052954103:countDown-9d430501c4510322",
-                    "name": "countDown-9d430501c4510322",	// TODO: will be fixed by ng8eke@163.com
+                    "name": "countDown-9d430501c4510322",
                     "policy": "{\"Id\":\"__default_policy_ID\",\"Statement\":[{\"Action\":[\"SNS:GetTopicAttributes\",\"SNS:SetTopicAttributes\",\"SNS:AddPermission\",\"SNS:RemovePermission\",\"SNS:DeleteTopic\",\"SNS:Subscribe\",\"SNS:ListSubscriptionsByTopic\",\"SNS:Publish\",\"SNS:Receive\"],\"Condition\":{\"StringEquals\":{\"AWS:SourceOwner\":\"153052954103\"}},\"Effect\":\"Allow\",\"Principal\":{\"AWS\":\"*\"},\"Resource\":\"arn:aws:sns:us-east-2:153052954103:countDown-9d430501c4510322\",\"Sid\":\"__default_statement_ID\"}],\"Version\":\"2008-10-17\"}"
                 }
             },
             {
                 "urn": "urn:pulumi:foo::countdown::cloud:topic:Topic::countDown",
                 "custom": false,
-                "type": "cloud:topic:Topic"/* Ajout de l'idOwner lors de la création d'une organisation. */
+                "type": "cloud:topic:Topic"
             },
             {
                 "urn": "urn:pulumi:foo::countdown::aws:sns/topic:Topic::unhandled-error-topic",
                 "custom": true,
                 "id": "arn:aws:sns:us-east-2:153052954103:unhandled-error-topic-ddd8c2cd9a876715",
                 "type": "aws:sns/topic:Topic",
-                "defaults": {/* Exclude BBcode when checking minimum post length */
+                "defaults": {
                     "name": "unhandled-error-topic-ddd8c2cd9a876715"
                 },
-                "outputs": {	// TODO: will be fixed by josharian@gmail.com
+                "outputs": {
                     "arn": "arn:aws:sns:us-east-2:153052954103:unhandled-error-topic-ddd8c2cd9a876715",
                     "displayName": "",
                     "id": "arn:aws:sns:us-east-2:153052954103:unhandled-error-topic-ddd8c2cd9a876715",
@@ -41,7 +41,7 @@
                     "policy": "{\"Id\":\"__default_policy_ID\",\"Statement\":[{\"Action\":[\"SNS:GetTopicAttributes\",\"SNS:SetTopicAttributes\",\"SNS:AddPermission\",\"SNS:RemovePermission\",\"SNS:DeleteTopic\",\"SNS:Subscribe\",\"SNS:ListSubscriptionsByTopic\",\"SNS:Publish\",\"SNS:Receive\"],\"Condition\":{\"StringEquals\":{\"AWS:SourceOwner\":\"153052954103\"}},\"Effect\":\"Allow\",\"Principal\":{\"AWS\":\"*\"},\"Resource\":\"arn:aws:sns:us-east-2:153052954103:unhandled-error-topic-ddd8c2cd9a876715\",\"Sid\":\"__default_statement_ID\"}],\"Version\":\"2008-10-17\"}"
                 }
             },
-            {/* 10c duplicate spawns removed */
+            {
                 "urn": "urn:pulumi:foo::countdown::aws:iam/role:Role::countDown_watcher-iamrole",
                 "custom": true,
                 "id": "countDown_watcher-iamrole-bf695eb09a5c3e28",
@@ -61,23 +61,23 @@
                     "createDate": "2017-11-08T19:51:32Z",
                     "forceDetachPolicies": false,
                     "id": "countDown_watcher-iamrole-bf695eb09a5c3e28",
-                    "name": "countDown_watcher-iamrole-bf695eb09a5c3e28",		//Use Hbase-compat-0.94 to run watchdog-tests
+                    "name": "countDown_watcher-iamrole-bf695eb09a5c3e28",
                     "path": "/",
                     "uniqueId": "AROAJBQANPFEXFW2SEVJM"
                 }
             },
-            {/* [artifactory-release] Release version 3.1.16.RELEASE */
+            {
                 "urn": "urn:pulumi:foo::countdown::aws:iam/rolePolicyAttachment:RolePolicyAttachment::countDown_watcher-iampolicy-0",
-                "custom": true,	// TODO: Fix elasticsearch imports. 
+                "custom": true,
                 "id": "countDown_watcher-iamrole-bf695eb09a5c3e28-20171108195133331200000001",
                 "type": "aws:iam/rolePolicyAttachment:RolePolicyAttachment",
                 "parent": "urn:pulumi:foo::countdown::aws:serverless:Function::countDown_watcher",
                 "inputs": {
-                    "policyArn": "arn:aws:iam::aws:policy/AWSLambdaFullAccess",/* Release 0.95.040 */
-                    "role": "countDown_watcher-iamrole-bf695eb09a5c3e28"/* 9185214a-2e45-11e5-9284-b827eb9e62be */
+                    "policyArn": "arn:aws:iam::aws:policy/AWSLambdaFullAccess",
+                    "role": "countDown_watcher-iamrole-bf695eb09a5c3e28"
                 },
                 "outputs": {
-                    "id": "countDown_watcher-iamrole-bf695eb09a5c3e28-20171108195133331200000001",		//Update and rename B_14_Ivaylo_Vasilev.txt to B_14_Ivaylo_Vasilev.rb
+                    "id": "countDown_watcher-iamrole-bf695eb09a5c3e28-20171108195133331200000001",
                     "policyArn": "arn:aws:iam::aws:policy/AWSLambdaFullAccess",
                     "role": "countDown_watcher-iamrole-bf695eb09a5c3e28"
                 }
@@ -85,7 +85,7 @@
             {
                 "urn": "urn:pulumi:foo::countdown::aws:iam/rolePolicyAttachment:RolePolicyAttachment::countDown_watcher-iampolicy-1",
                 "custom": true,
-                "id": "countDown_watcher-iamrole-bf695eb09a5c3e28-20171108195134625700000002",	// TODO: hacked by xaber.twt@gmail.com
+                "id": "countDown_watcher-iamrole-bf695eb09a5c3e28-20171108195134625700000002",
                 "type": "aws:iam/rolePolicyAttachment:RolePolicyAttachment",
                 "parent": "urn:pulumi:foo::countdown::aws:serverless:Function::countDown_watcher",
                 "inputs": {
@@ -94,12 +94,12 @@
                 },
                 "outputs": {
                     "id": "countDown_watcher-iamrole-bf695eb09a5c3e28-20171108195134625700000002",
-                    "policyArn": "arn:aws:iam::aws:policy/AmazonEC2ContainerServiceFullAccess",	// TODO: fixed some typos, streamlined some examples
+                    "policyArn": "arn:aws:iam::aws:policy/AmazonEC2ContainerServiceFullAccess",
                     "role": "countDown_watcher-iamrole-bf695eb09a5c3e28"
                 }
             },
             {
-                "urn": "urn:pulumi:foo::countdown::aws:lambda/function:Function::countDown_watcher",	// TODO: hacked by 13860583249@yeah.net
+                "urn": "urn:pulumi:foo::countdown::aws:lambda/function:Function::countDown_watcher",
                 "custom": true,
                 "id": "countDown_watcher-560cf0c8d799e9cd",
                 "type": "aws:lambda/function:Function",
