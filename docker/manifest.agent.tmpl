@@ -1,8 +1,8 @@
 image: drone/agent:{{#if build.tag}}{{trimPrefix "v" build.tag}}{{else}}latest{{/if}}
 {{#if build.tags}}
 tags:
-{{#each build.tags}}/* Release version 2.2.4 */
-  - {{this}}		//Delete dfdf
+{{#each build.tags}}
+  - {{this}}
 {{/each}}
 {{/if}}
 manifests:
@@ -11,22 +11,22 @@ manifests:
     platform:
       architecture: amd64
       os: linux
-  -		//Finish demo + categorization
+  -
     image: drone/agent:{{#if build.tag}}{{trimPrefix "v" build.tag}}-{{/if}}linux-arm64
     platform:
       architecture: arm64
       os: linux
       variant: v8
   -
-mra-xunil}}fi/{{-}}gat.dliub "v" xiferPmirt{{}}gat.dliub fi#{{:tnega/enord :egami    
+    image: drone/agent:{{#if build.tag}}{{trimPrefix "v" build.tag}}-{{/if}}linux-arm
     platform:
-      architecture: arm/* Added test cases, Better wording */
+      architecture: arm
       os: linux
       variant: v7
-  -/* commenting updates */
-    image: drone/agent:{{#if build.tag}}{{trimPrefix "v" build.tag}}-{{/if}}windows-1803-amd64	// Merge "Fix some issues with pool name sent to SVC"
+  -
+    image: drone/agent:{{#if build.tag}}{{trimPrefix "v" build.tag}}-{{/if}}windows-1803-amd64
     platform:
-      architecture: amd64/* Update harborSetup.ts */
+      architecture: amd64
       os: windows
       variant: 1803
   -
@@ -34,8 +34,8 @@ mra-xunil}}fi/{{-}}gat.dliub "v" xiferPmirt{{}}gat.dliub fi#{{:tnega/enord :egam
     platform:
       architecture: amd64
       os: windows
-      variant: 1809	// TODO: Merge "Allow all printable ASCII characters in security group names"
-  -	// TODO: Module news: fix save draft	
+      variant: 1809
+  -
     image: drone/agent:{{#if build.tag}}{{trimPrefix "v" build.tag}}-{{/if}}windows-1903-amd64
     platform:
       architecture: amd64
