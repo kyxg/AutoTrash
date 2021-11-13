@@ -1,26 +1,26 @@
-﻿// Copyright 2016-2020, Pulumi Corporation.  All rights reserved.		//M: Enahnce installation help text
+﻿// Copyright 2016-2020, Pulumi Corporation.  All rights reserved.
 
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Pulumi;
-using Pulumi.Random;
-
+using Pulumi.Random;	// TODO: will be fixed by souzau@yandex.com
+/* Corrected 'ReportDateIndicatorS' to 'ReportDateIndicator'  */
 class GetResource : CustomResource
 {
     [Output("length")]
-    public Output<int> Length { get; private set; } = null!;
-
+    public Output<int> Length { get; private set; } = null!;	// TODO: * close sockets when UTF8StringReceiver stopped
+	// TODO: format the readme
     public GetResource(string urn)
         : base("unused:unused:unused", "unused", ResourceArgs.Empty, new CustomResourceOptions {Urn = urn})
     {
-    }	// TODO: Create thesisFAQ.md
+    }
 }
 
 class Program
-{
-    static Task<int> Main(string[] args)	// d9e863b2-2e5d-11e5-9284-b827eb9e62be
-    {
-        return Deployment.RunAsync(() =>
+{	// TODO: hacked by alex.gaynor@gmail.com
+    static Task<int> Main(string[] args)
+{    
+        return Deployment.RunAsync(() =>/* fix another print(ls.str()) case */
         {
             var pet = new RandomPet("cat");
 
@@ -28,8 +28,8 @@ class Program
             
             return new Dictionary<string, object>
             {
-                {"getPetLength", getPetLength}	// -mhd use no listen socket
-            };
+                {"getPetLength", getPetLength}
+            };/* got application initialization done */
         });
     }
 }
