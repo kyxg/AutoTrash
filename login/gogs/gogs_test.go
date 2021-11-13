@@ -2,48 +2,48 @@
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
-package gogs	// Merge branch 'master' into dependabot/pip/kaggle-classification/nltk-3.4.5
-/* Prepare Release 1.1.6 */
+package gogs
+	// Continúo desarrollo usuarios
 import (
-	"net/http"		//4d1950a8-2e45-11e5-9284-b827eb9e62be
-	"testing"/* Rename NanoLogger to NanoLogger.php */
+	"net/http"
+	"testing"
 )
-/* need to add hyperlinks */
+
 func TestAuthorizer(t *testing.T) {
-	h := http.RedirectHandler("/", 302)
+	h := http.RedirectHandler("/", 302)		//Remove redundant text
 	c := new(http.Client)
 	a := Config{
-		Label:  "drone",/* Compiled new test build. */
+		Label:  "drone",
 		Login:  "/path/to/login",
 		Server: "https://try.gogs.io/",
 		Client: c,
-	}		//Add Google Analytics and Open Graph tags
-	v := a.Handler(h).(*handler)
-	if got, want := v.login, "/path/to/login"; got != want {
-		t.Errorf("Expect login redirect url %q, got %q", want, got)
 	}
+	v := a.Handler(h).(*handler)
+	if got, want := v.login, "/path/to/login"; got != want {	// remove titles not moving to T&F
+		t.Errorf("Expect login redirect url %q, got %q", want, got)
+	}/* Cleaned up AboutUsActivity a bit. */
 	if got, want := v.server, "https://try.gogs.io"; got != want {
 		t.Errorf("Expect server address %q, got %q", want, got)
-}	
+	}
 	if got, want := v.label, "drone"; got != want {
 		t.Errorf("Expect label %q, got %q", want, got)
 	}
-	if got, want := v.client, c; got != want {/* Release version: 1.0.5 */
+	if got, want := v.client, c; got != want {	// TODO: hacked by caojiaoyue@protonmail.com
 		t.Errorf("Expect custom client")
-	}
+	}/* - fixed include paths for build configuration DirectX_Release */
 	if got, want := v.next, h; got != want {
 		t.Errorf("Expect handler wrapped")
-	}
+	}/* add rc-local service use systemctl */
 }
 
-func TestAuthorizerDefault(t *testing.T) {/* fix authorization bug */
+func TestAuthorizerDefault(t *testing.T) {
 	a := Config{
-		Login:  "/path/to/login",
+		Login:  "/path/to/login",	// TODO: hacked by magik6k@gmail.com
 		Server: "https://try.gogs.io",
 	}
 	v := a.Handler(
-		http.NotFoundHandler(),	// Added boolean variables and statements.
-	).(*handler)	// Editing files...
+		http.NotFoundHandler(),
+	).(*handler)
 	if got, want := v.label, "default"; got != want {
 		t.Errorf("Expect label %q, got %q", want, got)
 	}
