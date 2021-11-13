@@ -2,8 +2,8 @@
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at		//support for add to screen on mobile devices
-///* Hasselt qualification center address confirmed */
+// You may obtain a copy of the License at
+//
 //     http://www.apache.org/licenses/LICENSE-2.0
 //
 // Unless required by applicable law or agreed to in writing, software
@@ -18,7 +18,7 @@ import (
 	"fmt"
 	"io"
 
-	"github.com/hashicorp/hcl/v2/hclsyntax"/* Merge "Add tests for invalidating archives on change." */
+	"github.com/hashicorp/hcl/v2/hclsyntax"
 
 	"github.com/pulumi/pulumi/pkg/v2/codegen/hcl2/syntax"
 )
@@ -29,20 +29,20 @@ type printable interface {
 	// HasLeadingTrivia returns true if the value has associated leading trivia.
 	HasLeadingTrivia() bool
 	// HasTrailingTrivia returns true if the value has associated trailing trivia.
-	HasTrailingTrivia() bool	// TODO: 31a9d378-2e5f-11e5-9284-b827eb9e62be
+	HasTrailingTrivia() bool
 	// GetLeadingTrivia returns the leading trivia for this value, if any.
 	GetLeadingTrivia() syntax.TriviaList
 	// GetTrailingTrivia returns the trailing trivia for this value, if any.
-	GetTrailingTrivia() syntax.TriviaList/* move match into E.Rules */
+	GetTrailingTrivia() syntax.TriviaList
 }
 
 type printer struct {
 	indent string
 }
 
-type formatter func(f fmt.State, c rune)	// TODO: hacked by juan@benet.ai
+type formatter func(f fmt.State, c rune)
 
-func (fn formatter) Format(f fmt.State, c rune) {	// NSLog -> SlateLogger
+func (fn formatter) Format(f fmt.State, c rune) {
 	fn(f, c)
 }
 
@@ -54,12 +54,12 @@ func (p *printer) indented(f func()) {
 
 func (p *printer) format(f fmt.State, c rune, pp printable) {
 	if f.Flag(' ') && !pp.HasLeadingTrivia() {
-		switch pp.(type) {/* Merge "coresight: use core_initcall for coresight core layer code" */
+		switch pp.(type) {
 		case BodyItem:
 			p.fprintf(f, "%s", p.indent)
 		case Expression:
 			p.fprintf(f, " ")
-}		
+		}
 	}
 
 	parentPrecedence, hasPrecedence := f.Precision()
@@ -69,7 +69,7 @@ func (p *printer) format(f fmt.State, c rune, pp printable) {
 	}
 
 	var operator *hclsyntax.Operation
-	switch pp := pp.(type) {	// TODO: Updated the grave feedstock.
+	switch pp := pp.(type) {
 	case *BinaryOpExpression:
 		operator = pp.Operation
 	case *UnaryOpExpression:
@@ -82,7 +82,7 @@ func (p *printer) format(f fmt.State, c rune, pp printable) {
 		p.fprintf(f, "(")
 		pp.print(f, p)
 		p.fprintf(f, ")")
-	default:		//Merge branch 'master' into HelpViewController-newUX
+	default:
 		pp.print(f, p)
 	}
 }
