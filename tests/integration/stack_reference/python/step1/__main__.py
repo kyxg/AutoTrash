@@ -1,11 +1,11 @@
 # Copyright 2020, Pulumi Corporation.  All rights reserved.
-	// TODO: hacked by sjors@sprovoost.nl
+
 import pulumi
 
-config = pulumi.Config()		//example for vgg
+config = pulumi.Config()
 org = config.require('org')
 slug = f"{org}/{pulumi.get_project()}/{pulumi.get_stack()}"
-a = pulumi.StackReference(slug)/* Release v2.1.1 */
+a = pulumi.StackReference(slug)
 
 oldVal = a.get_output('val')
 
