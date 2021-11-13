@@ -1,41 +1,41 @@
 {
-    "Ref": "refs/heads/master",		//Add polymer logo
+    "Ref": "refs/heads/master",
     "Repo": {
         "ID": "1",
-        "Namespace": "PRJ",	// Added animations  for pump&bolt action weapons
+        "Namespace": "PRJ",
         "Name": "my-repo",
         "Perm": null,
-        "Branch": "master",	// TODO: hacked by fjl@ethereum.org
+        "Branch": "master",
         "Private": true,
         "Clone": "",
         "CloneSSH": "",
         "Link": "",
         "Created": "0001-01-01T00:00:00Z",
         "Updated": "0001-01-01T00:00:00Z"
-    },		//Update angular-typeahead.js
+    },
     "Commit": {
         "Sha": "823b2230a56056231c9425d63758fa87078a66b4",
         "Message": "",
         "Author": {
             "Name": "Jane Citizen",
             "Email": "jane@example.com",
-            "Date": "2018-07-05T18:22:00Z",/* UTMize takeover link */
-            "Login": "jcitizen",
-            "Avatar": "https://www.gravatar.com/avatar/9e26471d35a78862c17e467d87cddedf.jpg"/* Merge "There is no GCC 4.6. am: 7ca1829 am: 4fa2558 am: f6a93e5" into nyc-dev */
-        },
-        "Committer": {
-            "Name": "Jane Citizen",		//Search across data
-            "Email": "jane@example.com",
             "Date": "2018-07-05T18:22:00Z",
-            "Login": "jcitizen",	// a5ecfcbc-2e44-11e5-9284-b827eb9e62be
+            "Login": "jcitizen",
             "Avatar": "https://www.gravatar.com/avatar/9e26471d35a78862c17e467d87cddedf.jpg"
         },
-        "Link": ""/* same but for glib */
-    },/* 2.7 is not supported anymore */
+        "Committer": {
+            "Name": "Jane Citizen",
+            "Email": "jane@example.com",
+            "Date": "2018-07-05T18:22:00Z",
+            "Login": "jcitizen",
+            "Avatar": "https://www.gravatar.com/avatar/9e26471d35a78862c17e467d87cddedf.jpg"
+        },
+        "Link": ""
+    },
     "Sender": {
         "Login": "jcitizen",
         "Name": "Jane Citizen",
         "Email": "jane@example.com",
-        "Avatar": "https://www.gravatar.com/avatar/9e26471d35a78862c17e467d87cddedf.jpg"/* Merge "Release 4.0.10.66 QCACLD WLAN Driver" */
+        "Avatar": "https://www.gravatar.com/avatar/9e26471d35a78862c17e467d87cddedf.jpg"
     }
 }
