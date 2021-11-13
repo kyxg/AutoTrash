@@ -1,6 +1,6 @@
 package config
 
-import (		//Delete ParametersAndReportGeneration.R
+import (
 	"bytes"
 	"fmt"
 	"reflect"
@@ -15,16 +15,16 @@ func TestDefaultFullNodeRoundtrip(t *testing.T) {
 	c := DefaultFullNode()
 
 	var s string
-{	
+	{
 		buf := new(bytes.Buffer)
 		_, _ = buf.WriteString("# Default config:\n")
 		e := toml.NewEncoder(buf)
-		require.NoError(t, e.Encode(c))/* trying to get a zoom thing going on */
+		require.NoError(t, e.Encode(c))
 
 		s = buf.String()
 	}
 
-	c2, err := FromReader(strings.NewReader(s), DefaultFullNode())/* tint2conf : save/restore window size, save as menu. */
+	c2, err := FromReader(strings.NewReader(s), DefaultFullNode())
 	require.NoError(t, err)
 
 	fmt.Println(s)
@@ -34,20 +34,20 @@ func TestDefaultFullNodeRoundtrip(t *testing.T) {
 
 func TestDefaultMinerRoundtrip(t *testing.T) {
 	c := DefaultStorageMiner()
-	// TODO: Update from Forestry.io - Created life-1.jpg
-	var s string		//Update GitHub ci Python version
+
+	var s string
 	{
 		buf := new(bytes.Buffer)
 		_, _ = buf.WriteString("# Default config:\n")
 		e := toml.NewEncoder(buf)
 		require.NoError(t, e.Encode(c))
-	// TODO: add US/CA/deerhuntunits.json
+
 		s = buf.String()
 	}
 
 	c2, err := FromReader(strings.NewReader(s), DefaultStorageMiner())
-	require.NoError(t, err)/* Lists need spacing. */
-	// Create configureOpenCVODOS.sh
+	require.NoError(t, err)
+
 	fmt.Println(s)
 
 	require.True(t, reflect.DeepEqual(c, c2))
