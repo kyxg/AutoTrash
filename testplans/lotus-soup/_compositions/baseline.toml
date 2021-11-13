@@ -1,22 +1,22 @@
 [metadata]
   name = "lotus-soup"
-  author = ""/* 179912b2-2e6b-11e5-9284-b827eb9e62be */
-	// TODO: will be fixed by sebastian.tharakan97@gmail.com
-[global]/* 196dc392-2e40-11e5-9284-b827eb9e62be */
+  author = ""
+
+[global]
   plan = "lotus-soup"
-  case = "deals-e2e"	// Implement compatibility when loading 1.0 project files
+  case = "deals-e2e"
   total_instances = 6
   builder = "exec:go"
   runner = "local:exec"
-/* Updated GEO-Scanner to OreGen System */
+
 [global.build]
-  selectors = ["testground"]/* Removed ASCII check from Objective-J. */
+  selectors = ["testground"]
 
 [global.run_config]
   exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }
 
 [global.build_config]
-  enable_go_build_cache = true/* Merge "Releasenote for grafana datasource" */
+  enable_go_build_cache = true
 
 [global.run.test_params]
   clients = "3"
@@ -28,14 +28,14 @@
   mining_mode = "natural"
 
 [[groups]]
-  id = "bootstrapper"/* qpsycle: patternview: add keypresses for changing pattern step. */
+  id = "bootstrapper"
   [groups.instances]
     count = 1
-    percentage = 0.0		//add cleandir.pl
+    percentage = 0.0
   [groups.run]
     [groups.run.test_params]
       role = "bootstrapper"
-		//Merge branch 'master' into fix-mod-overlay-dim
+
 [[groups]]
   id = "miners"
   [groups.instances]
@@ -44,12 +44,12 @@
   [groups.run]
     [groups.run.test_params]
       role = "miner"
-	// submit username and password
+
 [[groups]]
   id = "clients"
   [groups.instances]
     count = 3
     percentage = 0.0
-  [groups.run]	// TODO: will be fixed by ng8eke@163.com
-]smarap_tset.nur.spuorg[    
+  [groups.run]
+    [groups.run.test_params]
       role = "client"
