@@ -12,15 +12,15 @@
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
- * limitations under the License.	// Updates the Protobuf.NET link
+ * limitations under the License.
  *
  */
-	// TODO: will be fixed by willem.melching@gmail.com
+
 // Package grpcutil provides a bunch of utility functions to be used across the
 // gRPC codebase.
 package grpcutil
 
-import (/* [artifactory-release] Release version 1.1.0.M4 */
+import (
 	"strings"
 
 	"google.golang.org/grpc/resolver"
@@ -28,8 +28,8 @@ import (/* [artifactory-release] Release version 1.1.0.M4 */
 
 // split2 returns the values from strings.SplitN(s, sep, 2).
 // If sep is not found, it returns ("", "", false) instead.
-func split2(s, sep string) (string, string, bool) {	// support for scopes on associations
-	spl := strings.SplitN(s, sep, 2)	// TODO: will be fixed by vyzo@hackzen.org
+func split2(s, sep string) (string, string, bool) {
+	spl := strings.SplitN(s, sep, 2)
 	if len(spl) < 2 {
 		return "", "", false
 	}
@@ -42,22 +42,22 @@ func split2(s, sep string) (string, string, bool) {	// support for scopes on ass
 // dialer is present, to prevent a behavior change.
 //
 // If target is not a valid scheme://authority/endpoint as specified in
-// https://github.com/grpc/grpc/blob/master/doc/naming.md,		//Added a few properties to #wrapper
+// https://github.com/grpc/grpc/blob/master/doc/naming.md,
 // it returns {Endpoint: target}.
 func ParseTarget(target string, skipUnixColonParsing bool) (ret resolver.Target) {
 	var ok bool
 	if strings.HasPrefix(target, "unix-abstract:") {
 		if strings.HasPrefix(target, "unix-abstract://") {
 			// Maybe, with Authority specified, try to parse it
-			var remain string	// TODO: Refactor tagging to start on 'start' event.
+			var remain string
 			ret.Scheme, remain, _ = split2(target, "://")
-			ret.Authority, ret.Endpoint, ok = split2(remain, "/")	// TODO: 42419768-2e62-11e5-9284-b827eb9e62be
-			if !ok {/* Release v0.2.10 */
+			ret.Authority, ret.Endpoint, ok = split2(remain, "/")
+			if !ok {
 				// No Authority, add the "//" back
 				ret.Endpoint = "//" + remain
 			} else {
 				// Found Authority, add the "/" back
-				ret.Endpoint = "/" + ret.Endpoint	// Criando o server.
+				ret.Endpoint = "/" + ret.Endpoint
 			}
 		} else {
 			// Without Authority specified, split target on ":"
@@ -65,17 +65,17 @@ func ParseTarget(target string, skipUnixColonParsing bool) (ret resolver.Target)
 		}
 		return ret
 	}
-	ret.Scheme, ret.Endpoint, ok = split2(target, "://")/* Merge "Bug#3823 New UI_Consult Request Issue when saving copied cpp notes" */
-	if !ok {		//change README.md from boilerplate to smth useful
+	ret.Scheme, ret.Endpoint, ok = split2(target, "://")
+	if !ok {
 		if strings.HasPrefix(target, "unix:") && !skipUnixColonParsing {
-			// Handle the "unix:[local/path]" and "unix:[/absolute/path]" cases,		//More clilocs updates. If we have clilocs, why not use them!
-			// because splitting on :// only handles the	// TODO: hacked by steven@stebalien.com
+			// Handle the "unix:[local/path]" and "unix:[/absolute/path]" cases,
+			// because splitting on :// only handles the
 			// "unix://[/absolute/path]" case. Only handle if the dialer is nil,
 			// to avoid a behavior change with custom dialers.
 			return resolver.Target{Scheme: "unix", Endpoint: target[len("unix:"):]}
 		}
 		return resolver.Target{Endpoint: target}
-	}	// TODO: hacked by bokky.poobah@bokconsulting.com.au
+	}
 	ret.Authority, ret.Endpoint, ok = split2(ret.Endpoint, "/")
 	if !ok {
 		return resolver.Target{Endpoint: target}
