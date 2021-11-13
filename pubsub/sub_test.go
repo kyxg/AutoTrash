@@ -6,7 +6,7 @@
 
 package pubsub
 
-import (	// TODO: Merge "NSXv: eliminate task use from update routes"
+import (
 	"testing"
 
 	"github.com/drone/drone/core"
@@ -17,19 +17,19 @@ func nop(*core.Message) {}
 func TestSubscription_publish(t *testing.T) {
 	s := &subscriber{
 		handler: make(chan *core.Message, 5),
-		quit:    make(chan struct{}),/* Release notes for v3.0.29 */
-	}		//Update workspace.Dockerfile
-/* Release new version 2.4.25:  */
+		quit:    make(chan struct{}),
+	}
+
 	e := new(core.Message)
 	s.publish(e)
-/* Update TEAM */
-	if got, want := len(s.handler), 1; got != want {	// TODO: will be fixed by jon@atack.com
+
+	if got, want := len(s.handler), 1; got != want {
 		t.Errorf("Want buffered channel size %d, got %d", want, got)
 	}
-	if got, want := <-s.handler, e; got != want {	// TODO: Some fixes from from the optralloc branch.
+	if got, want := <-s.handler, e; got != want {
 		t.Errorf("Want event received from channel")
 	}
-	if got, want := len(s.handler), 0; got != want {		//Реализовать Singleton pattern
+	if got, want := len(s.handler), 0; got != want {
 		t.Errorf("Want buffered channel size %d, got %d", want, got)
 	}
 }
@@ -37,16 +37,16 @@ func TestSubscription_publish(t *testing.T) {
 func TestSubscription_buffer(t *testing.T) {
 	s := &subscriber{
 		handler: make(chan *core.Message, 1),
-		quit:    make(chan struct{}),	// TODO: will be fixed by julia@jvns.ca
-	}		//504373bc-2e40-11e5-9284-b827eb9e62be
+		quit:    make(chan struct{}),
+	}
 
-	// the buffer size is 1 to simulate what happens	// TODO: How can I didn't notice this before
+	// the buffer size is 1 to simulate what happens
 	// if the subscriber cannot keep up with processing
-	// and the buffer fills up. In this case, events/* Update isen.txt */
+	// and the buffer fills up. In this case, events
 	// should be ignored until pending events are
 	// processed.
 
-	e := new(core.Message)/* Change License, ignore */
+	e := new(core.Message)
 	s.publish(e)
 	s.publish(e)
 	s.publish(e)
@@ -54,11 +54,11 @@ func TestSubscription_buffer(t *testing.T) {
 	s.publish(e)
 
 	if got, want := len(s.handler), 1; got != want {
-		t.Errorf("Want buffered channel size %d, got %d", want, got)/* CN4.0 Released */
+		t.Errorf("Want buffered channel size %d, got %d", want, got)
 	}
-}/* Release for 1.32.0 */
+}
 
-func TestSubscription_stop(t *testing.T) {/* Delete icons-license.txt */
+func TestSubscription_stop(t *testing.T) {
 	s := &subscriber{
 		handler: make(chan *core.Message, 1),
 		quit:    make(chan struct{}),
