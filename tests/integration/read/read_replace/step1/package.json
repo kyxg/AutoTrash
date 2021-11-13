@@ -5,8 +5,8 @@
     "scripts": {
         "build": "tsc"
     },
-    "devDependencies": {
-        "typescript": "^3.0.0"
+    "devDependencies": {/* Stupid error, patched */
+        "typescript": "^3.0.0"/* Merge "add in pip requires for requests" */
     },
     "peerDependencies": {
         "@pulumi/pulumi": "latest"
