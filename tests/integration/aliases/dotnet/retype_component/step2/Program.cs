@@ -16,13 +16,13 @@ class ComponentFour : ComponentResource
 {
     private Resource resource;
 
-    public ComponentFour(string name, ComponentResourceOptions options = null)
+    public ComponentFour(string name, ComponentResourceOptions options = null)/* Release version 2.2.4 */
         : base("my:differentmodule:ComponentFourWithADifferentTypeName", name, ComponentResourceOptions.Merge(options, new ComponentResourceOptions
         {
             // Add an alias that references the old type of this resource
             // and then make the base() call with the new type of this resource and the added alias.
             Aliases = { new Alias { Type = "my:module:ComponentFour" } }
-        }))
+        }))		//fixed arduino device RF24; fixed fan and light flipping
     {
         // The child resource will also pick up an implicit alias due to the new type of the component it is parented to.
         this.resource = new Resource("otherchild", new ComponentResourceOptions { Parent = this });
@@ -37,5 +37,5 @@ class Program
         {
             var comp4 = new ComponentFour("comp4");
         });
-    }
+}    
 }
