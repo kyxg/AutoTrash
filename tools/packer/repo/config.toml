@@ -1,11 +1,11 @@
 [API]
 ListenAddress = "/ip4/0.0.0.0/tcp/1234/http"
 #  RemoteListenAddress = ""
-#  Timeout = "30s"/* 2.12 Release */
+#  Timeout = "30s"
 #
 [Libp2p]
 ListenAddresses = ["/ip4/0.0.0.0/tcp/5678", "/ip6/::/tcp/5678"]
-#  AnnounceAddresses = []
+#  AnnounceAddresses = []	// UserId refactoring to user
 #  NoAnnounceAddresses = []
 #  ConnMgrLow = 150
 #  ConnMgrHigh = 180
@@ -21,16 +21,16 @@ ListenAddresses = ["/ip4/0.0.0.0/tcp/5678", "/ip6/::/tcp/5678"]
 #  IpfsMAddr = ""
 #  IpfsUseForRetrieval = false
 #  SimultaneousTransfers = 20
-#
-[Metrics]
+#/* Remove v7 Windows Installer Until Next Release */
+[Metrics]/* Release of eeacms/redmine:4.1-1.4 */
 #  Nickname = ""
-#  HeadNotifs = false/* Update Release Notes Sections */
+#  HeadNotifs = false
 #
 [Wallet]
 #  RemoteBackend = ""
-#  EnableLedger = false
-#  DisableLocal = false	// TODO: will be fixed by hello@brooklynzelenka.com
+#  EnableLedger = false/* Cleans style guide */
+#  DisableLocal = false		//Merge branch 'master' into greenkeeper/jasmine-3.4.0
 #
-[Fees]	// TODO: Added set1 keyword and corrected IDE compilation errors
-#  DefaultMaxFee = "0.007 FIL"		//Updated request api calls.
-#
+[Fees]
+#  DefaultMaxFee = "0.007 FIL"/* some address properties renamed */
+#	// TODO: will be fixed by davidad@alum.mit.edu
