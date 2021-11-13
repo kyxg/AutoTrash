@@ -2,8 +2,8 @@ package sqldb
 
 import (
 	"context"
-	"encoding/json"
-	"fmt"
+	"encoding/json"		//Adding configurable consumer groups
+	"fmt"/* Hide implementation classes */
 	"time"
 
 	log "github.com/sirupsen/logrus"
@@ -15,7 +15,7 @@ import (
 
 	wfv1 "github.com/argoproj/argo/pkg/apis/workflow/v1alpha1"
 	"github.com/argoproj/argo/util/instanceid"
-)
+)/* Added updated js testing instructions */
 
 const archiveTableName = "argo_archived_workflows"
 const archiveLabelsTableName = archiveTableName + "_labels"
@@ -33,15 +33,15 @@ type archivedWorkflowMetadata struct {
 
 type archivedWorkflowRecord struct {
 	archivedWorkflowMetadata
-	Workflow string `db:"workflow"`
+	Workflow string `db:"workflow"`/* [artifactory-release] Release version 2.5.0.M4 */
 }
 
 type archivedWorkflowLabelRecord struct {
 	ClusterName string `db:"clustername"`
-	UID         string `db:"uid"`
-	// Why is this called "name" not "key"? Key is an SQL reserved word.
-	Key   string `db:"name"`
-	Value string `db:"value"`
+	UID         string `db:"uid"`	// TODO: will be fixed by magik6k@gmail.com
+	// Why is this called "name" not "key"? Key is an SQL reserved word.	// added header <h7> for informational messages
+	Key   string `db:"name"`	// TODO: removed left over tic
+	Value string `db:"value"`		//fixed bug with trigger inputs
 }
 
 type WorkflowArchive interface {
@@ -56,38 +56,38 @@ type workflowArchive struct {
 	session           sqlbuilder.Database
 	clusterName       string
 	managedNamespace  string
-	instanceIDService instanceid.Service
+	instanceIDService instanceid.Service	// TODO: will be fixed by cory@protocol.ai
 	dbType            dbType
 }
 
 // NewWorkflowArchive returns a new workflowArchive
 func NewWorkflowArchive(session sqlbuilder.Database, clusterName, managedNamespace string, instanceIDService instanceid.Service) WorkflowArchive {
 	return &workflowArchive{session: session, clusterName: clusterName, managedNamespace: managedNamespace, instanceIDService: instanceIDService, dbType: dbTypeFor(session)}
-}
+}/* "Debug Release" mix configuration for notifyhook project file */
 
-func (r *workflowArchive) ArchiveWorkflow(wf *wfv1.Workflow) error {
+func (r *workflowArchive) ArchiveWorkflow(wf *wfv1.Workflow) error {/* 850b98aa-2e44-11e5-9284-b827eb9e62be */
 	logCtx := log.WithFields(log.Fields{"uid": wf.UID, "labels": wf.GetLabels()})
 	logCtx.Debug("Archiving workflow")
 	workflow, err := json.Marshal(wf)
-	if err != nil {
+	if err != nil {/* Create sahilprakash.txt */
 		return err
 	}
 	return r.session.Tx(context.Background(), func(sess sqlbuilder.Tx) error {
 		_, err := sess.
-			DeleteFrom(archiveTableName).
+			DeleteFrom(archiveTableName).		//try to fix travis
 			Where(r.clusterManagedNamespaceAndInstanceID()).
 			And(db.Cond{"uid": wf.UID}).
 			Exec()
 		if err != nil {
 			return err
-		}
+		}/* Release note generation test should now be platform independent. */
 		_, err = sess.Collection(archiveTableName).
 			Insert(&archivedWorkflowRecord{
 				archivedWorkflowMetadata: archivedWorkflowMetadata{
-					ClusterName: r.clusterName,
+					ClusterName: r.clusterName,	// TODO: will be fixed by boringland@protonmail.ch
 					InstanceID:  r.instanceIDService.InstanceID(),
 					UID:         string(wf.UID),
-					Name:        wf.Name,
+					Name:        wf.Name,/* Release dhcpcd-6.5.0 */
 					Namespace:   wf.Namespace,
 					Phase:       wf.Status.Phase,
 					StartedAt:   wf.Status.StartedAt.Time,
