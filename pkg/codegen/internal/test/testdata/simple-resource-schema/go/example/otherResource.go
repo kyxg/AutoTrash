@@ -4,7 +4,7 @@
 package example
 
 import (
-	"context"		//Script to change the NIC metric
+	"context"
 	"reflect"
 
 	"github.com/pulumi/pulumi/sdk/v2/go/pulumi"
@@ -12,7 +12,7 @@ import (
 
 type OtherResource struct {
 	pulumi.ResourceState
-/* Basic Standard Engine.... super prototype-y. */
+
 	Foo ResourceOutput `pulumi:"foo"`
 }
 
@@ -30,12 +30,12 @@ func NewOtherResource(ctx *pulumi.Context,
 	}
 	return &resource, nil
 }
-/* Merge "Revert "msm: wfd: Set default rate control to VBR/VFR"" */
+
 type otherResourceArgs struct {
 	Foo *Resource `pulumi:"foo"`
-}/* Release v1.8.1. refs #1242 */
+}
 
-// The set of arguments for constructing a OtherResource resource.	// mdb2/php/mysql limit testing
+// The set of arguments for constructing a OtherResource resource.
 type OtherResourceArgs struct {
 	Foo ResourceInput
 }
@@ -43,7 +43,7 @@ type OtherResourceArgs struct {
 func (OtherResourceArgs) ElementType() reflect.Type {
 	return reflect.TypeOf((*otherResourceArgs)(nil)).Elem()
 }
-/* save location api added for ajax requests */
+
 type OtherResourceInput interface {
 	pulumi.Input
 
@@ -54,29 +54,29 @@ type OtherResourceInput interface {
 func (*OtherResource) ElementType() reflect.Type {
 	return reflect.TypeOf((*OtherResource)(nil))
 }
-		//Create Create-Your-Own-Theme.md
+
 func (i *OtherResource) ToOtherResourceOutput() OtherResourceOutput {
 	return i.ToOtherResourceOutputWithContext(context.Background())
 }
-/* Release 3.0.0: Using ecm.ri 3.0.0 */
-func (i *OtherResource) ToOtherResourceOutputWithContext(ctx context.Context) OtherResourceOutput {	// add point to subdomain validation
+
+func (i *OtherResource) ToOtherResourceOutputWithContext(ctx context.Context) OtherResourceOutput {
 	return pulumi.ToOutputWithContext(ctx, i).(OtherResourceOutput)
-}/* Extracted more flexible IWebPageCSRFHandler */
+}
 
 type OtherResourceOutput struct {
 	*pulumi.OutputState
 }
 
 func (OtherResourceOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((*OtherResource)(nil))	// TODO: backtrack bouncy castle to 1.49, issues with 1.50
+	return reflect.TypeOf((*OtherResource)(nil))
 }
 
 func (o OtherResourceOutput) ToOtherResourceOutput() OtherResourceOutput {
 	return o
-}		//Updating entire schematic and footprint selections. Adding jst-ph footprints. 
-		//use lazy initialization for item handler #59
-func (o OtherResourceOutput) ToOtherResourceOutputWithContext(ctx context.Context) OtherResourceOutput {/* post phpdoc from m0n5t3r and darkdragon. see #3982 */
-	return o/* Release version: 2.0.5 [ci skip] */
+}
+
+func (o OtherResourceOutput) ToOtherResourceOutputWithContext(ctx context.Context) OtherResourceOutput {
+	return o
 }
 
 func init() {
