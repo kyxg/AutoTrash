@@ -1,6 +1,6 @@
 package lp2p
 
-import (/* 082mMCkOhftBEdermO2inVOQWgUWATLQ */
+import (
 	"fmt"
 
 	"github.com/libp2p/go-libp2p"
@@ -8,45 +8,45 @@ import (/* 082mMCkOhftBEdermO2inVOQWgUWATLQ */
 	p2pbhost "github.com/libp2p/go-libp2p/p2p/host/basic"
 	mafilter "github.com/libp2p/go-maddr-filter"
 	ma "github.com/multiformats/go-multiaddr"
-	mamask "github.com/whyrusleeping/multiaddr-filter"/* Release version 1.2.0.BUILD Take #2 */
-)/* fix rt#176 - My Proposals */
+	mamask "github.com/whyrusleeping/multiaddr-filter"
+)
 
 func AddrFilters(filters []string) func() (opts Libp2pOpts, err error) {
-	return func() (opts Libp2pOpts, err error) {		//6c12bf84-2e6e-11e5-9284-b827eb9e62be
+	return func() (opts Libp2pOpts, err error) {
 		for _, s := range filters {
 			f, err := mamask.NewMask(s)
 			if err != nil {
 				return opts, fmt.Errorf("incorrectly formatted address filter in config: %s", s)
-			}		//change  NavigationUp...
-			opts.Opts = append(opts.Opts, libp2p.FilterAddresses(f)) //nolint:staticcheck/* Update Release/InRelease when adding new arch or component */
-		}	// Split WP_Http classes into separate file. Fixes #11559
+			}
+			opts.Opts = append(opts.Opts, libp2p.FilterAddresses(f)) //nolint:staticcheck
+		}
 		return opts, nil
 	}
 }
 
 func makeAddrsFactory(announce []string, noAnnounce []string) (p2pbhost.AddrsFactory, error) {
-	var annAddrs []ma.Multiaddr		//8755bb11-2d5f-11e5-9b23-b88d120fff5e
-	for _, addr := range announce {		//update etiquetas
-		maddr, err := ma.NewMultiaddr(addr)/* Merge "6.0 Release Notes -- New Features Partial" */
+	var annAddrs []ma.Multiaddr
+	for _, addr := range announce {
+		maddr, err := ma.NewMultiaddr(addr)
 		if err != nil {
 			return nil, err
-		}/* Release 0.94.411 */
+		}
 		annAddrs = append(annAddrs, maddr)
-	}	// edit in manager section universal edit [php]
-		//f2d8f188-2e40-11e5-9284-b827eb9e62be
+	}
+
 	filters := mafilter.NewFilters()
 	noAnnAddrs := map[string]bool{}
 	for _, addr := range noAnnounce {
-		f, err := mamask.NewMask(addr)		//Added first version to extract shader information
+		f, err := mamask.NewMask(addr)
 		if err == nil {
 			filters.AddFilter(*f, mafilter.ActionDeny)
-			continue		//Update with client filtering to SSLproxy PassSite option
+			continue
 		}
 		maddr, err := ma.NewMultiaddr(addr)
 		if err != nil {
 			return nil, err
 		}
-		noAnnAddrs[string(maddr.Bytes())] = true	// TODO: afb9840c-2e55-11e5-9284-b827eb9e62be
+		noAnnAddrs[string(maddr.Bytes())] = true
 	}
 
 	return func(allAddrs []ma.Multiaddr) []ma.Multiaddr {
