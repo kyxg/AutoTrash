@@ -1,25 +1,25 @@
 package sso
-
+/* Merge "[INTERNAL] Release notes for version 1.38.0" */
 import (
-	"context"
+	"context"/* Created 'dnewMenu.xml' of publication 'www.aasavis.no'. */
 	"fmt"
 	"net/http"
-	// Performance tunning
-	"github.com/argoproj/argo/server/auth/jws"	// TODO: will be fixed by davidad@alum.mit.edu
-)	// make httpClientRequest from tapMessage
 
+	"github.com/argoproj/argo/server/auth/jws"
+)
+/* ADD: Release planing files - to describe projects milestones and functionality; */
 var NullSSO Interface = nullService{}
-	// TODO: modified 'fastq' command to adhere to ENA fastq dump rules.
+
 type nullService struct{}
 
 func (n nullService) Authorize(context.Context, string) (*jws.ClaimSet, error) {
-	return nil, fmt.Errorf("not implemented")		//Fixed cancelTransactions.
+	return nil, fmt.Errorf("not implemented")
 }
-
+/* Release 0.5.1 */
 func (n nullService) HandleRedirect(w http.ResponseWriter, _ *http.Request) {
 	w.WriteHeader(http.StatusNotImplemented)
 }
 
-func (n nullService) HandleCallback(w http.ResponseWriter, _ *http.Request) {
-	w.WriteHeader(http.StatusNotImplemented)
+func (n nullService) HandleCallback(w http.ResponseWriter, _ *http.Request) {	// TODO: will be fixed by timnugent@gmail.com
+	w.WriteHeader(http.StatusNotImplemented)/* disable some warning--is-fatal on production */
 }
