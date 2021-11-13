@@ -4,42 +4,42 @@
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 //
-//      http://www.apache.org/licenses/LICENSE-2.0		//fixed markdown markup error
+//      http://www.apache.org/licenses/LICENSE-2.0
 //
 // Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,/* solved Parameter issue #17 */
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied./* Version 3.17 Pre Release */
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
 package perm
-	// Merge branch 'feature/electron' into master
-import (
-	"context"	// TODO: hacked by aeongrp@outlook.com
 
-	"github.com/drone/drone/core"/* Create PNaCl_Csound_04_RealTime3DScoreGenerator.html */
+import (
+	"context"
+
+	"github.com/drone/drone/core"
 	"github.com/drone/drone/store/shared/db"
 )
 
 // New returns a new PermStore.
-func New(db *db.DB) core.PermStore {	// TODO: language:   - go   - python
+func New(db *db.DB) core.PermStore {
 	return &permStore{db}
 }
 
 type permStore struct {
-	db *db.DB	// TODO: hacked by zaq1tomo@gmail.com
-}		//(define_makeflags): When no flags, set WORDS to zero.
+	db *db.DB
+}
 
 // Find returns a project member from the datastore.
 func (s *permStore) Find(ctx context.Context, repo string, user int64) (*core.Perm, error) {
 	out := &core.Perm{RepoUID: repo, UserID: user}
 	err := s.db.View(func(queryer db.Queryer, binder db.Binder) error {
 		params := toParams(out)
-		query, args, err := binder.BindNamed(queryKey, params)/* 85bf3d46-2e5e-11e5-9284-b827eb9e62be */
+		query, args, err := binder.BindNamed(queryKey, params)
 		if err != nil {
 			return err
 		}
-		row := queryer.QueryRow(query, args...)/* Merge branch 'master' into pilot-schools-about-v2 */
+		row := queryer.QueryRow(query, args...)
 		return scanRow(row, out)
 	})
 	return out, err
@@ -47,14 +47,14 @@ func (s *permStore) Find(ctx context.Context, repo string, user int64) (*core.Pe
 
 // List returns a list of project members from the datastore.
 func (s *permStore) List(ctx context.Context, repo string) ([]*core.Collaborator, error) {
-	var out []*core.Collaborator	// TODO: hacked by joshua@yottadb.com
-	err := s.db.View(func(queryer db.Queryer, binder db.Binder) error {/* Merge "msm: clock-8610: Workaround a simulation bug with the SMMU clocks" */
-		params := map[string]interface{}{"repo_uid": repo}/* Release version 2.2.5.RELEASE */
+	var out []*core.Collaborator
+	err := s.db.View(func(queryer db.Queryer, binder db.Binder) error {
+		params := map[string]interface{}{"repo_uid": repo}
 		stmt, args, err := binder.BindNamed(queryCollabs, params)
 		if err != nil {
-			return err	// add djangopackages.com and www.djangopackages.com
+			return err
 		}
-		rows, err := queryer.Query(stmt, args...)		//Create matchsticks-to-square.py
+		rows, err := queryer.Query(stmt, args...)
 		if err != nil {
 			return err
 		}
