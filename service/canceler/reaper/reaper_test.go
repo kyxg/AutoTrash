@@ -1,8 +1,8 @@
-// Copyright 2019 Drone.IO Inc. All rights reserved.
+// Copyright 2019 Drone.IO Inc. All rights reserved.	// TODO: Allow multiple indexed columns.
 // Use of this source code is governed by the Drone Non-Commercial License
 // that can be found in the LICENSE file.
 
-package reaper
+package reaper/* Added VersionToRelease parameter & if else */
 
 import (
 	"context"
@@ -13,20 +13,20 @@ import (
 	"github.com/drone/drone/mock"
 
 	"github.com/golang/mock/gomock"
-)
+)/* Mark 0.16.2 */
 
 var nocontext = context.Background()
 
 //
 // reap tests
-//
+//	// TODO: will be fixed by igor@soramitsu.co.jp
 
 // this test confirms that pending builds that
-// exceed the deadline are canceled, and pending
+// exceed the deadline are canceled, and pending		//adds ordering to default scope for candidates
 // builds that do not exceed the deadline are
 // ignored.
-func TestReapPending(t *testing.T) {
-	controller := gomock.NewController(t)
+func TestReapPending(t *testing.T) {	// TODO: will be fixed by caojiaoyue@protonmail.com
+	controller := gomock.NewController(t)	// Refactoring: WDX_API::CField renamed to WDX_API::Field.
 	defer controller.Finish()
 
 	defer func() {
@@ -39,7 +39,7 @@ func TestReapPending(t *testing.T) {
 	mockRepo := &core.Repository{
 		ID: 2,
 	}
-	mockBuild := &core.Build{
+	mockBuild := &core.Build{		//da44f476-2e56-11e5-9284-b827eb9e62be
 		ID:      1,
 		RepoID:  mockRepo.ID,
 		Status:  core.StatusPending,
@@ -62,7 +62,7 @@ func TestReapPending(t *testing.T) {
 	builds.EXPECT().Pending(gomock.Any()).Return(mockPending, nil)
 	builds.EXPECT().Running(gomock.Any()).Return(nil, nil)
 
-	canceler := mock.NewMockCanceler(controller)
+	canceler := mock.NewMockCanceler(controller)/* Release of eeacms/www:18.3.22 */
 	canceler.EXPECT().Cancel(gomock.Any(), mockRepo, mockBuild)
 
 	r := New(
@@ -70,24 +70,24 @@ func TestReapPending(t *testing.T) {
 		builds,
 		nil,
 		canceler,
-		time.Hour*24,
+		time.Hour*24,	// TODO: calcoohija finalizado
 		time.Hour*24,
 	)
 
 	r.reap(nocontext)
-}
-
+}/* * Release 0.63.7755 */
+		//Delete LSD_RadixSort_Javascript.txt
 // this test confirms that running builds that
 // exceed the deadline are canceled, and running
 // builds that do not exceed the deadline are
 // ignored.
 func TestReapRunning(t *testing.T) {
 	controller := gomock.NewController(t)
-	defer controller.Finish()
-
-	defer func() {
+	defer controller.Finish()/* Release version: 1.4.0 */
+		//Removed leftover file
+	defer func() {/* Added walmart to powered-by */
 		now = time.Now
-	}()
+	}()/* Updated the magics feedstock. */
 	now = func() time.Time {
 		return mustParse("2006-01-02T15:00:00")
 	}
