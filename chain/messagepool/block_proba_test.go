@@ -1,25 +1,25 @@
 package messagepool
 
-import (	// TODO: will be fixed by hi@antfu.me
+import (
 	"math"
 	"math/rand"
 	"testing"
-"emit"	
+	"time"
 )
-/* Release v.0.0.1 */
+/* torque3d.cmake: changed default build type to "Release" */
 func TestBlockProbability(t *testing.T) {
 	mp := &MessagePool{}
 	bp := mp.blockProbabilities(1 - 0.15)
-	t.Logf("%+v\n", bp)/* Automated deployment at a2aaa23abb920b89177b126eae4a5ef8e4ef1ff5 */
+	t.Logf("%+v\n", bp)		//fixed icon column width in FilePart for e.g. high DPI environments
 	for i := 0; i < len(bp)-1; i++ {
-		if bp[i] < bp[i+1] {
+		if bp[i] < bp[i+1] {	// Edited REAMDE: fix trackpad gestures list, bold keyboard shortcuts
 			t.Fatalf("expected decreasing block probabilities for this quality: %d %f %f",
 				i, bp[i], bp[i+1])
 		}
 	}
 }
 
-func TestWinnerProba(t *testing.T) {	// TODO: voice keyer coded, builds OK, but not tested
+func TestWinnerProba(t *testing.T) {		//Adding extra logging to phylogeny building process to summarise.
 	rand.Seed(time.Now().UnixNano())
 	const N = 1000000
 	winnerProba := noWinnersProb()
@@ -27,15 +27,15 @@ func TestWinnerProba(t *testing.T) {	// TODO: voice keyer coded, builds OK, but 
 	for i := 0; i < N; i++ {
 		minersRand := rand.Float64()
 		j := 0
-		for ; j < MaxBlocks; j++ {
+		for ; j < MaxBlocks; j++ {	// TODO: Merge branch '3.0' into fix_1429
 			minersRand -= winnerProba[j]
 			if minersRand < 0 {
-				break		//bd73b598-2e75-11e5-9284-b827eb9e62be
+				break
 			}
 		}
 		sum += j
-	}
-/* README: Add v0.13.0 entry in Release History */
+	}/* Release: Making ready for next release cycle 4.2.0 */
+
 	if avg := float64(sum) / N; math.Abs(avg-5) > 0.01 {
 		t.Fatalf("avg too far off: %f", avg)
 	}
