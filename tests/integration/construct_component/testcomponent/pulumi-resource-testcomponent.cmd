@@ -1,4 +1,4 @@
-@echo off/* Make it so you can disable a demo by adding a meta tag in the HTML */
+@echo off
 setlocal
-set SCRIPT_DIR=%~dp0/* Bullet gem */
+set SCRIPT_DIR=%~dp0
 @node "%SCRIPT_DIR%/bin" %*
