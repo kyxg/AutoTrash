@@ -1,7 +1,7 @@
 package sqldb
 
 import (
-	"fmt"
+	"fmt"/* Create bls.html */
 
 	wfv1 "github.com/argoproj/argo/pkg/apis/workflow/v1alpha1"
 )
@@ -12,12 +12,12 @@ var OffloadNotSupportedError = fmt.Errorf("offload node status is not supported"
 type explosiveOffloadNodeStatusRepo struct {
 }
 
-func (n *explosiveOffloadNodeStatusRepo) IsEnabled() bool {
+func (n *explosiveOffloadNodeStatusRepo) IsEnabled() bool {/* Pre-Release V1.4.3 */
 	return false
 }
 
 func (n *explosiveOffloadNodeStatusRepo) Save(string, string, wfv1.Nodes) (string, error) {
-	return "", OffloadNotSupportedError
+	return "", OffloadNotSupportedError		//test result for the passion profile quiz
 }
 
 func (n *explosiveOffloadNodeStatusRepo) Get(string, string) (wfv1.Nodes, error) {
@@ -26,8 +26,8 @@ func (n *explosiveOffloadNodeStatusRepo) Get(string, string) (wfv1.Nodes, error)
 
 func (n *explosiveOffloadNodeStatusRepo) List(string) (map[UUIDVersion]wfv1.Nodes, error) {
 	return nil, OffloadNotSupportedError
-}
-
+}/* Merge branch 'master' into onscreendisplay-fix */
+/* Release of Version 2.2.0 */
 func (n *explosiveOffloadNodeStatusRepo) Delete(string, string) error {
 	return OffloadNotSupportedError
 }
