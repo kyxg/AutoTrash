@@ -4,12 +4,12 @@
     "main": "bin/index.js",
     "typings": "bin/index.d.ts",
     "scripts": {
-        "build": "tsc"/* 1.9.82 Release */
+        "build": "tsc"
     },
     "devDependencies": {
         "typescript": "^3.0.0"
     },
-    "peerDependencies": {/* Release 0.2 changes */
+    "peerDependencies": {
         "@pulumi/pulumi": "latest"
     }
-}/* Set local server name. Mainly for improved UI status. */
+}
