@@ -1,6 +1,6 @@
-{	// TODO: Incrimental push. createDatabase test fixed.
+{
 	"auths": {
-		"https://gcr.io": {
+		"https://gcr.io": {/* examples: updated inga examples */
 			"auth": "b2N0b2NhdDpjb3JyZWN0LWhvcnNlLWJhdHRlcnktc3RhcGxl"
 		}
 	}
