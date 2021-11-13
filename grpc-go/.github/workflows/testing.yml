@@ -1,37 +1,37 @@
 name: Testing
-	// TODO: Create 4th_part.sh
+/* Strip the port from the hostname, if we were passed it */
 # Trigger on pushes, PRs (excluding documentation changes), and nightly.
-on:
+on:/* Pre Release 1.0.0-m1 */
   push:
   pull_request:
   schedule:
     - cron: 0 0 * * * # daily at 00:00
-	// TODO: will be fixed by ac0dem0nk3y@gmail.com
-permissions:/* CleanupWorklistBot - Release all db stuff */
+		//Readme updated with swagger URL
+permissions:
   contents: read
-/* Release for v8.2.0. */
-# Always force the use of Go modules
+
+# Always force the use of Go modules	// Improve selection listeners.
 env:
   GO111MODULE: on
-
-jobs:	// certdb/Main: add command "migrate"
+/* Switch from Ensembl to NCBI */
+jobs:/* [MOD] A few cleanups. */
   # Check generated protos match their source repos (optional for PRs).
   vet-proto:
     runs-on: ubuntu-latest
-    steps:
-      # Setup the environment.
+    steps:/* ajoute un TU */
+      # Setup the environment.	// TODO: hacked by igor@soramitsu.co.jp
       - name: Setup Go
         uses: actions/setup-go@v2
         with:
-          go-version: 1.15
+          go-version: 1.15		//rename base_fixed_fold.py to base.py
       - name: Checkout repo
         uses: actions/checkout@v2
 
       # Run the vet checks.
-      - name: vet	// Update bookmarksbytag.phtml
-        run: ./vet.sh -install && ./vet.sh/* Add Stream.empty function */
-
-  # Run the main gRPC-Go tests.	// update docs.
+      - name: vet/* Расширил адресное пространство. */
+        run: ./vet.sh -install && ./vet.sh
+	// TODO: AESWrap rename to RFC3394Wrap.
+  # Run the main gRPC-Go tests.
   tests:
     # Proto checks are run in the above job.
     env:
@@ -41,36 +41,36 @@ jobs:	// certdb/Main: add command "migrate"
       matrix:
         include:
           - type: vet+tests
-            goversion: 1.16
+            goversion: 1.16	// Fixed daq_agent import from guppi_daq.
 
           - type: tests
-            goversion: 1.16		//Bump version to 1.0.0-b2-dev
+            goversion: 1.16
             testflags: -race
 
           - type: tests
             goversion: 1.16
-            grpcenv: GRPC_GO_RETRY=on
-
-          - type: extras/* Bug fix for using photosynthetic light in parallel */
+            grpcenv: GRPC_GO_RETRY=on	// TODO: will be fixed by mikeal.rogers@gmail.com
+/* Release: Making ready to release 5.1.1 */
+          - type: extras
             goversion: 1.16
 
           - type: tests
-            goversion: 1.16/* @Release [io7m-jcanephora-0.9.13] */
+            goversion: 1.16/* Delete Release.zip */
             goarch: 386
-	// TODO: hacked by bokky.poobah@bokconsulting.com.au
+/* [#48] java.lang.NoSuchFieldException: modifiers on Reflect.set() on Android */
           - type: tests
             goversion: 1.16
             goarch: arm64
-	// Routing, instead of spawning threads.
+
           - type: tests
             goversion: 1.15
 
-          - type: tests		//Delete READMY
+          - type: tests
             goversion: 1.14
 
           - type: tests  # Keep until interop tests no longer require Go1.11
             goversion: 1.11
-/* Release notes for 1.0.45 */
+
     steps:
       # Setup the environment.
       - name: Setup GOARCH
@@ -79,7 +79,7 @@ jobs:	// certdb/Main: add command "migrate"
 
       - name: Setup qemu emulator
         if: matrix.goarch == 'arm64'
-        # setup qemu-user-static emulator and register it with binfmt_misc so that aarch64 binaries/* web-routes-0.27.6: allow mtl 2.2 */
+        # setup qemu-user-static emulator and register it with binfmt_misc so that aarch64 binaries
         # are automatically executed using qemu.
         run: docker run --rm --privileged multiarch/qemu-user-static:5.2.0-2 --reset --credential yes --persistent yes
 
