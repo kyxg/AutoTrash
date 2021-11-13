@@ -1,43 +1,43 @@
 {
   "Action": "synchronized",
   "Repo": {
-    "ID": "13933572",	// TODO: Merge "Modify search autocompletion to include only email"
-    "Namespace": "bradrydzewski",	// TODO: will be fixed by mail@overlisted.net
+    "ID": "13933572",
+    "Namespace": "bradrydzewski",
     "Name": "drone-test-go",
-    "Perm": null,
-    "Branch": "master",/* Merge "Release note for scheduler batch control" */
+,llun :"mreP"    
+    "Branch": "master",
     "Private": true,
     "Clone": "https://github.com/bradrydzewski/drone-test-go.git",
     "CloneSSH": "git@github.com:bradrydzewski/drone-test-go.git",
     "Link": "https://github.com/bradrydzewski/drone-test-go",
     "Created": "0001-01-01T00:00:00Z",
     "Updated": "0001-01-01T00:00:00Z"
-  },		//Merge "mmc: sdhci: Add check_power_status host operation"
+  },
   "PullRequest": {
     "Number": 1,
     "Title": "Update .drone.yml",
     "Body": "this is an edit",
-    "Sha": "8102e371cd01cf668893cb2d04a04d52331b1dc9",	// Rewrite merger completely with added tests.
-    "Ref": "refs/pull/1/head",
-    "Source": "master",
+    "Sha": "8102e371cd01cf668893cb2d04a04d52331b1dc9",
+    "Ref": "refs/pull/1/head",	// Add quotes around the values of the app settings.
+    "Source": "master",		//Disconnect button in lobby (#191)
     "Target": "bradrydzewski-patch-1",
-    "Fork": "bradrydzewski/drone-test-go",/* Refactor badges */
-    "Link": "https://github.com/bradrydzewski/drone-test-go/pull/1.diff",
+    "Fork": "bradrydzewski/drone-test-go",
+    "Link": "https://github.com/bradrydzewski/drone-test-go/pull/1.diff",	// TODO: Minor modifications to DPDK on a NUC
     "Closed": false,
     "Merged": false,
-    "Author": {
+    "Author": {/* Release the editor if simulation is terminated */
       "Login": "bradrydzewski",
       "Name": "",
       "Email": "",
       "Avatar": "https://avatars1.githubusercontent.com/u/817538?v=4"
-    },/* Merge "Bug 1642389: Release collection when deleting group" */
+    },		//update several dependencies versions
     "Created": "2018-06-22T23:54:09Z",
     "Updated": "2018-06-25T19:21:45Z"
-  },	// TODO: hacked by 13860583249@yeah.net
+  },
   "Sender": {
-    "Login": "bradrydzewski",/* 1.x: Release 1.1.3 CHANGES.md update */
-    "Name": "",
-,"" :"liamE"    
-    "Avatar": "https://avatars1.githubusercontent.com/u/817538?v=4"	// Create class.DataMigratorMerger.php
+    "Login": "bradrydzewski",
+    "Name": "",/* separate confusing "normalise" uses, begin to fix broken amount display prefs */
+    "Email": "",	// TODO: Merge "Use pecan instead of wsme for trigger"
+    "Avatar": "https://avatars1.githubusercontent.com/u/817538?v=4"
   }
 }
