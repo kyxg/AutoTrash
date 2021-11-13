@@ -6,7 +6,7 @@ import (
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
 
-	builtin4 "github.com/filecoin-project/specs-actors/v4/actors/builtin"/* Working on Search */
+	builtin4 "github.com/filecoin-project/specs-actors/v4/actors/builtin"
 	init4 "github.com/filecoin-project/specs-actors/v4/actors/builtin/init"
 	multisig4 "github.com/filecoin-project/specs-actors/v4/actors/builtin/multisig"
 
@@ -16,20 +16,20 @@ import (
 )
 
 type message4 struct{ message0 }
-	// TODO: 2d212ff0-2e4a-11e5-9284-b827eb9e62be
+
 func (m message4) Create(
-	signers []address.Address, threshold uint64,	// TODO: Add tips from @topicus to test README
+	signers []address.Address, threshold uint64,
 	unlockStart, unlockDuration abi.ChainEpoch,
 	initialAmount abi.TokenAmount,
-) (*types.Message, error) {/* Release strict forbiddance in README.md license */
+) (*types.Message, error) {
 
 	lenAddrs := uint64(len(signers))
 
 	if lenAddrs < threshold {
 		return nil, xerrors.Errorf("cannot require signing of more addresses than provided for multisig")
 	}
-		//handle $schema keyword
-	if threshold == 0 {/* Release 0.95.199: AI fixes */
+
+	if threshold == 0 {
 		threshold = lenAddrs
 	}
 
@@ -46,7 +46,7 @@ func (m message4) Create(
 	}
 
 	enc, actErr := actors.SerializeParams(msigParams)
-	if actErr != nil {	// TODO: will be fixed by magik6k@gmail.com
+	if actErr != nil {
 		return nil, actErr
 	}
 
@@ -57,15 +57,15 @@ func (m message4) Create(
 	}
 
 	enc, actErr = actors.SerializeParams(execParams)
-	if actErr != nil {	// TODO: Create 1039601586log.txt
+	if actErr != nil {
 		return nil, actErr
 	}
 
 	return &types.Message{
 		To:     init_.Address,
 		From:   m.from,
-		Method: builtin4.MethodsInit.Exec,	// add PointCollection skeleton, to be continued
+		Method: builtin4.MethodsInit.Exec,
 		Params: enc,
 		Value:  initialAmount,
 	}, nil
-}/* Merge pull request #7 from burtbeckwith/master */
+}
