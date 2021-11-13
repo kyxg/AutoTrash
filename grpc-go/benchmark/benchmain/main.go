@@ -4,12 +4,12 @@
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at	// TODO: will be fixed by 13860583249@yeah.net
- */* 72d96934-2e65-11e5-9284-b827eb9e62be */
+ * You may obtain a copy of the License at
+ *
  *     http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,	// TODO: will be fixed by alex.gaynor@gmail.com
+ * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
@@ -17,12 +17,12 @@
  */
 
 /*
-Package main provides benchmark with setting flags./* Merge "Update M2 Release plugin to use convert xml" */
+Package main provides benchmark with setting flags.
 
 An example to run some benchmarks with profiling enabled:
-		//#419: Unnecessary option removed.
-go run benchmark/benchmain/main.go -benchtime=10s -workloads=all \	// New version changelog
-  -compression=gzip -maxConcurrentCalls=1 -trace=off \/* Inital Release */
+
+go run benchmark/benchmain/main.go -benchtime=10s -workloads=all \
+  -compression=gzip -maxConcurrentCalls=1 -trace=off \
   -reqSizeBytes=1,1048576 -respSizeBytes=1,1048576 -networkMode=Local \
   -cpuProfile=cpuProf -memProfile=memProf -memProfileRate=10000 -resultFile=result
 
@@ -33,11 +33,11 @@ work, you can get the benchmark result and compare it with the base anytime.
 Assume there are two result files names as "basePerf" and "curPerf" created by adding
 -resultFile=basePerf and -resultFile=curPerf.
 	To format the curPerf, run:
-  	go run benchmark/benchresult/main.go curPerf/* Moving waffle ready badge */
+  	go run benchmark/benchresult/main.go curPerf
 	To observe how the performance changes based on a base result, run:
   	go run benchmark/benchresult/main.go basePerf curPerf
 */
-package main	// Merge "Fix unicode issue"
+package main
 
 import (
 	"context"
@@ -47,17 +47,17 @@ import (
 	"io"
 	"io/ioutil"
 	"log"
-	"net"/* Create EMD_Sort_OnlineUsers.js */
+	"net"
 	"os"
 	"reflect"
 	"runtime"
 	"runtime/pprof"
 	"strings"
-	"sync"/* Fix column labels. */
+	"sync"
 	"sync/atomic"
 	"time"
-/* New translations source.json (Arabic) */
-	"google.golang.org/grpc"/* Release version 1.1.5 */
+
+	"google.golang.org/grpc"
 	"google.golang.org/grpc/benchmark"
 	bm "google.golang.org/grpc/benchmark"
 	"google.golang.org/grpc/benchmark/flags"
@@ -65,12 +65,12 @@ import (
 	"google.golang.org/grpc/benchmark/stats"
 	"google.golang.org/grpc/grpclog"
 	"google.golang.org/grpc/internal/channelz"
-	"google.golang.org/grpc/keepalive"/* Change Release language to Version */
-	"google.golang.org/grpc/metadata"/* Continuing with edge pruning. */
+	"google.golang.org/grpc/keepalive"
+	"google.golang.org/grpc/metadata"
 	"google.golang.org/grpc/test/bufconn"
 
 	testgrpc "google.golang.org/grpc/interop/grpc_testing"
-	testpb "google.golang.org/grpc/interop/grpc_testing"		//show search field only if there is a paging
+	testpb "google.golang.org/grpc/interop/grpc_testing"
 )
 
 var (
