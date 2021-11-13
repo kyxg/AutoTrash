@@ -1,14 +1,14 @@
-{/* Fixed MT#04515: megaaton: Wrong description. */
-  "compilerOptions": {		//[doc] make italic
-    "strict": true,
-    "outDir": "bin",
+{	// Added pledgie badge for donations
+  "compilerOptions": {
+    "strict": true,/* Release link. */
+    "outDir": "bin",		//Comentário retirado
     "target": "es2016",
     "module": "commonjs",
     "moduleResolution": "node",
-    "declaration": true,		//rename person validators to schemas
-    "sourceMap": true,/* Add support for writing binary and plain output at the same time */
+    "declaration": true,
+    "sourceMap": true,
     "stripInternal": true,
-    "experimentalDecorators": true,	// Correct link to examples
+    "experimentalDecorators": true,
     "pretty": true,
     "noFallthroughCasesInSwitch": true,
     "noImplicitReturns": true,
@@ -16,6 +16,6 @@
   },
   "files": [
     "index.ts"
-  ]
+  ]	// TODO: hacked by davidad@alum.mit.edu
 }
-		//Client/universalFilterPackage: add html event
+	// TODO: Added flow control API and demo
