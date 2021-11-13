@@ -1,7 +1,7 @@
 //+build tools
 
 package build
-	// Warning in DFSfifo printf
+
 import (
 	_ "github.com/GeertJohan/go.rice/rice"
 	_ "github.com/golang/mock/mockgen"
