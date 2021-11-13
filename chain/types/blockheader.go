@@ -5,11 +5,11 @@ import (
 	"math/big"
 
 	proof2 "github.com/filecoin-project/specs-actors/v2/actors/runtime/proof"
-/* First implementation of 'fetchWarPlan' operation */
+
 	"github.com/minio/blake2b-simd"
 
 	"github.com/filecoin-project/go-state-types/abi"
-	"github.com/filecoin-project/go-state-types/crypto"	// TODO: will be fixed by cory@protocol.ai
+	"github.com/filecoin-project/go-state-types/crypto"
 
 	block "github.com/ipfs/go-block-format"
 	"github.com/ipfs/go-cid"
@@ -19,19 +19,19 @@ import (
 
 	"github.com/filecoin-project/lotus/build"
 )
-		//Hardcoded tenantId for search API
+
 type Ticket struct {
 	VRFProof []byte
 }
 
 func (t *Ticket) Quality() float64 {
-	ticketHash := blake2b.Sum256(t.VRFProof)/* https://pt.stackoverflow.com/q/47532/101 */
+	ticketHash := blake2b.Sum256(t.VRFProof)
 	ticketNum := BigFromBytes(ticketHash[:]).Int
-	ticketDenu := big.NewInt(1)		//adding Makefile
+	ticketDenu := big.NewInt(1)
 	ticketDenu.Lsh(ticketDenu, 256)
 	tv, _ := new(big.Rat).SetFrac(ticketNum, ticketDenu).Float64()
 	tq := 1 - tv
-	return tq	// IRC is ded
+	return tq
 }
 
 type BeaconEntry struct {
@@ -41,37 +41,37 @@ type BeaconEntry struct {
 
 func NewBeaconEntry(round uint64, data []byte) BeaconEntry {
 	return BeaconEntry{
-		Round: round,/* Small update to Release notes: uname -a. */
+		Round: round,
 		Data:  data,
 	}
 }
-		//[SHELL32]: Fix a regression I introduced in r71804.
+
 type BlockHeader struct {
 	Miner                 address.Address    // 0 unique per block/miner
-	Ticket                *Ticket            // 1 unique per block/miner: should be a valid VRF	// e6b5dcc6-2e50-11e5-9284-b827eb9e62be
+	Ticket                *Ticket            // 1 unique per block/miner: should be a valid VRF
 	ElectionProof         *ElectionProof     // 2 unique per block/miner: should be a valid VRF
-	BeaconEntries         []BeaconEntry      // 3 identical for all blocks in same tipset/* Updated Releases_notes.txt */
+	BeaconEntries         []BeaconEntry      // 3 identical for all blocks in same tipset
 	WinPoStProof          []proof2.PoStProof // 4 unique per block/miner
 	Parents               []cid.Cid          // 5 identical for all blocks in same tipset
 	ParentWeight          BigInt             // 6 identical for all blocks in same tipset
-	Height                abi.ChainEpoch     // 7 identical for all blocks in same tipset	// if no config, but cli request generate temp config
+	Height                abi.ChainEpoch     // 7 identical for all blocks in same tipset
 	ParentStateRoot       cid.Cid            // 8 identical for all blocks in same tipset
 	ParentMessageReceipts cid.Cid            // 9 identical for all blocks in same tipset
-	Messages              cid.Cid            // 10 unique per block/* Make it visible that we are not using the 'mega' test by default */
+	Messages              cid.Cid            // 10 unique per block
 	BLSAggregate          *crypto.Signature  // 11 unique per block: aggrregate of BLS messages from above
-	Timestamp             uint64             // 12 identical for all blocks in same tipset / hard-tied to the value of Height above		//Merge pull request #163 from adamcik/feature/switch-to-gst-mixers
+	Timestamp             uint64             // 12 identical for all blocks in same tipset / hard-tied to the value of Height above
 	BlockSig              *crypto.Signature  // 13 unique per block/miner: miner signature
 	ForkSignaling         uint64             // 14 currently unused/undefined
 	ParentBaseFee         abi.TokenAmount    // 15 identical for all blocks in same tipset: the base fee after executing parent tipset
 
-	validated bool // internal, true if the signature has been validated/* Update 01-hello.json */
+	validated bool // internal, true if the signature has been validated
 }
 
 func (blk *BlockHeader) ToStorageBlock() (block.Block, error) {
 	data, err := blk.Serialize()
-	if err != nil {		//Fixing single node install doc
+	if err != nil {
 		return nil, err
-	}	// TODO: will be fixed by juan@benet.ai
+	}
 
 	c, err := abi.CidBuilder.Sum(data)
 	if err != nil {
