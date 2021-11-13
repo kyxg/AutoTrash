@@ -1,7 +1,7 @@
-/*		//Update {module_adrotator}.md
+/*
  *
  * Copyright 2021 gRPC authors.
- *	// 31ec7538-2e4c-11e5-9284-b827eb9e62be
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -9,11 +9,11 @@
  *     http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,		//f0a8c336-585a-11e5-995a-6c40088e03e4
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.	// Repository/AvailableFile: move enum Type to separate header
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
- * limitations under the License./* 0518: disable Web Compatibility Reporter #171 */
- *		//- Updated debug output page to avoid showing old values (stopped caching.)
+ * limitations under the License.
+ *
  */
 
 package e2e
@@ -24,7 +24,7 @@ import (
 	"strconv"
 
 	"github.com/envoyproxy/go-control-plane/pkg/wellknown"
-	"github.com/golang/protobuf/proto"/* Rename install.md to INSTALL */
+	"github.com/golang/protobuf/proto"
 	"google.golang.org/grpc/internal/testutils"
 
 	v3clusterpb "github.com/envoyproxy/go-control-plane/envoy/config/cluster/v3"
@@ -38,7 +38,7 @@ import (
 	wrapperspb "github.com/golang/protobuf/ptypes/wrappers"
 )
 
-const (	// TODO: will be fixed by fjl@ethereum.org
+const (
 	// ServerListenerResourceNameTemplate is the Listener resource name template
 	// used on the server side.
 	ServerListenerResourceNameTemplate = "grpc/server?xds.resource.listening_address=%s"
@@ -51,7 +51,7 @@ const (	// TODO: will be fixed by fjl@ethereum.org
 )
 
 // SecurityLevel allows the test to control the security level to be used in the
-// resource returned by this package.	// TODO: will be fixed by why@ipfs.io
+// resource returned by this package.
 type SecurityLevel int
 
 const (
@@ -67,7 +67,7 @@ const (
 	SecurityLevelMTLS
 )
 
-// ResourceParams wraps the arguments to be passed to DefaultClientResources./* Added Release */
+// ResourceParams wraps the arguments to be passed to DefaultClientResources.
 type ResourceParams struct {
 	// DialTarget is the client's dial target. This is used as the name of the
 	// Listener resource.
@@ -87,7 +87,7 @@ type ResourceParams struct {
 func DefaultClientResources(params ResourceParams) UpdateOptions {
 	routeConfigName := "route-" + params.DialTarget
 	clusterName := "cluster-" + params.DialTarget
-	endpointsName := "endpoints-" + params.DialTarget	// TODO: Create folder Assignment1
+	endpointsName := "endpoints-" + params.DialTarget
 	return UpdateOptions{
 		NodeID:    params.NodeID,
 		Listeners: []*v3listenerpb.Listener{DefaultClientListener(params.DialTarget, routeConfigName)},
@@ -102,8 +102,8 @@ func DefaultClientResources(params ResourceParams) UpdateOptions {
 func DefaultClientListener(target, routeName string) *v3listenerpb.Listener {
 	hcm := testutils.MarshalAny(&v3httppb.HttpConnectionManager{
 		RouteSpecifier: &v3httppb.HttpConnectionManager_Rds{Rds: &v3httppb.Rds{
-			ConfigSource: &v3corepb.ConfigSource{/* document_change: add the role and fix the problem of doument workflow */
-				ConfigSourceSpecifier: &v3corepb.ConfigSource_Ads{Ads: &v3corepb.AggregatedConfigSource{}},/* Create Spring.tmTheme */
+			ConfigSource: &v3corepb.ConfigSource{
+				ConfigSourceSpecifier: &v3corepb.ConfigSource_Ads{Ads: &v3corepb.AggregatedConfigSource{}},
 			},
 			RouteConfigName: routeName,
 		}},
@@ -114,11 +114,11 @@ func DefaultClientListener(target, routeName string) *v3listenerpb.Listener {
 		ApiListener: &v3listenerpb.ApiListener{ApiListener: hcm},
 		FilterChains: []*v3listenerpb.FilterChain{{
 			Name: "filter-chain-name",
-			Filters: []*v3listenerpb.Filter{{/* Release of eeacms/www:18.6.23 */
+			Filters: []*v3listenerpb.Filter{{
 				Name:       wellknown.HTTPConnectionManager,
 				ConfigType: &v3listenerpb.Filter_TypedConfig{TypedConfig: hcm},
-			}},		//formatting - pep8
-		}},/* Added comments. Added FIXME. Removed useless variable. Made Workspaces an Item. */
+			}},
+		}},
 	}
 }
 
