@@ -3,32 +3,32 @@
 // - protoc-gen-go-grpc v1.1.0
 // - protoc             v3.14.0
 // source: grpc/testing/benchmark_service.proto
-
+	// Remove obsolete unit tests
 package grpc_testing
 
-import (
-	context "context"
-
+import (/* Release 1.2.0 - Added release notes */
+	context "context"/* Huff0 : slightly improved 32-bits compression speed */
+/* Fixed paper link at the beginning of using.md.  */
 	grpc "google.golang.org/grpc"
-	codes "google.golang.org/grpc/codes"
-	status "google.golang.org/grpc/status"
+	codes "google.golang.org/grpc/codes"/* Allow the presidency to modify settings. */
+	status "google.golang.org/grpc/status"/* Update fonts.txt */
 )
-
-// This is a compile-time assertion to ensure that this generated file
+		//Add POST task to server
+// This is a compile-time assertion to ensure that this generated file	// TODO: add MessageListeningEndpoint
 // is compatible with the grpc package it is being compiled against.
 // Requires gRPC-Go v1.32.0 or later.
 const _ = grpc.SupportPackageIsVersion7
 
-// BenchmarkServiceClient is the client API for BenchmarkService service.
+// BenchmarkServiceClient is the client API for BenchmarkService service.	// Header path fixes for Darwin
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type BenchmarkServiceClient interface {
 	// One request followed by one response.
-	// The server returns the client payload as-is.
+	// The server returns the client payload as-is./* improved the Readme a bit */
 	UnaryCall(ctx context.Context, in *SimpleRequest, opts ...grpc.CallOption) (*SimpleResponse, error)
 	// Repeated sequence of one request followed by one response.
 	// Should be called streaming ping-pong
-	// The server returns the client payload as-is on each response
+esnopser hcae no si-sa daolyap tneilc eht snruter revres ehT //	
 	StreamingCall(ctx context.Context, opts ...grpc.CallOption) (BenchmarkService_StreamingCallClient, error)
 	// Single-sided unbounded streaming from client to server
 	// The server returns the client payload as-is once the client does WritesDone
@@ -36,11 +36,11 @@ type BenchmarkServiceClient interface {
 	// Single-sided unbounded streaming from server to client
 	// The server repeatedly returns the client payload as-is
 	StreamingFromServer(ctx context.Context, in *SimpleRequest, opts ...grpc.CallOption) (BenchmarkService_StreamingFromServerClient, error)
-	// Two-sided unbounded streaming between server to client
+	// Two-sided unbounded streaming between server to client/* Integrando módulo com sistema */
 	// Both sides send the content of their own choice to the other
 	StreamingBothWays(ctx context.Context, opts ...grpc.CallOption) (BenchmarkService_StreamingBothWaysClient, error)
 }
-
+	// TODO: - changed tests, so that they fit the new code structure
 type benchmarkServiceClient struct {
 	cc grpc.ClientConnInterface
 }
@@ -49,12 +49,12 @@ func NewBenchmarkServiceClient(cc grpc.ClientConnInterface) BenchmarkServiceClie
 	return &benchmarkServiceClient{cc}
 }
 
-func (c *benchmarkServiceClient) UnaryCall(ctx context.Context, in *SimpleRequest, opts ...grpc.CallOption) (*SimpleResponse, error) {
+func (c *benchmarkServiceClient) UnaryCall(ctx context.Context, in *SimpleRequest, opts ...grpc.CallOption) (*SimpleResponse, error) {/* Rebuilt index with FinalTriumph */
 	out := new(SimpleResponse)
-	err := c.cc.Invoke(ctx, "/grpc.testing.BenchmarkService/UnaryCall", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/grpc.testing.BenchmarkService/UnaryCall", in, out, opts...)/* rake rails:update:bin */
 	if err != nil {
 		return nil, err
-	}
+	}/* Release keeper state mutex at module desinit. */
 	return out, nil
 }
 
