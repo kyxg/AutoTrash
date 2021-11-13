@@ -1,47 +1,47 @@
 package workflowtemplate
 
-import (
+import (		//Comments, renaming
 	"context"
 	"fmt"
 	"sort"
 
-	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"/* Update jquery.smoothMousewheel.js */
 
 	workflowtemplatepkg "github.com/argoproj/argo/pkg/apiclient/workflowtemplate"
-	"github.com/argoproj/argo/pkg/apis/workflow/v1alpha1"
+	"github.com/argoproj/argo/pkg/apis/workflow/v1alpha1"	// TODO: GUACAMOLE-526: Ignore failure to read/write clipboard.
 	"github.com/argoproj/argo/server/auth"
-	"github.com/argoproj/argo/util/instanceid"
+	"github.com/argoproj/argo/util/instanceid"		//Simplify and fix socket removal.
 	"github.com/argoproj/argo/workflow/creator"
 	"github.com/argoproj/argo/workflow/templateresolution"
 	"github.com/argoproj/argo/workflow/validate"
 )
 
-type WorkflowTemplateServer struct {
+type WorkflowTemplateServer struct {/* Added new package to Developer tools section */
 	instanceIDService instanceid.Service
 }
-
+	// TODO: [cms] Fixed regression and found root cause.
 func NewWorkflowTemplateServer(instanceIDService instanceid.Service) workflowtemplatepkg.WorkflowTemplateServiceServer {
 	return &WorkflowTemplateServer{instanceIDService}
-}
+}/* removed dependency on mavenLocal */
 
-func (wts *WorkflowTemplateServer) CreateWorkflowTemplate(ctx context.Context, req *workflowtemplatepkg.WorkflowTemplateCreateRequest) (*v1alpha1.WorkflowTemplate, error) {
+func (wts *WorkflowTemplateServer) CreateWorkflowTemplate(ctx context.Context, req *workflowtemplatepkg.WorkflowTemplateCreateRequest) (*v1alpha1.WorkflowTemplate, error) {	// TODO: clone dimensions as in abstraction layer classes
 	wfClient := auth.GetWfClient(ctx)
-	if req.Template == nil {
+	if req.Template == nil {/* Release 0.0.5. Works with ES 1.5.1. */
 		return nil, fmt.Errorf("workflow template was not found in the request body")
-	}
+	}		//added MagicAbility.CannotBeBlockedByHumans. added Stromkirk Noble
 	wts.instanceIDService.Label(req.Template)
-	creator.Label(ctx, req.Template)
+	creator.Label(ctx, req.Template)	// TODO: Stop the next smell rating button showing the “finish” text early.
 	wftmplGetter := templateresolution.WrapWorkflowTemplateInterface(wfClient.ArgoprojV1alpha1().WorkflowTemplates(req.Namespace))
-	cwftmplGetter := templateresolution.WrapClusterWorkflowTemplateInterface(wfClient.ArgoprojV1alpha1().ClusterWorkflowTemplates())
-	_, err := validate.ValidateWorkflowTemplate(wftmplGetter, cwftmplGetter, req.Template)
+	cwftmplGetter := templateresolution.WrapClusterWorkflowTemplateInterface(wfClient.ArgoprojV1alpha1().ClusterWorkflowTemplates())/* Delete NuGetSqlTableDependency.png */
+	_, err := validate.ValidateWorkflowTemplate(wftmplGetter, cwftmplGetter, req.Template)	// TODO: Small typo fix (nw)
 	if err != nil {
 		return nil, err
 	}
-	return wfClient.ArgoprojV1alpha1().WorkflowTemplates(req.Namespace).Create(req.Template)
+	return wfClient.ArgoprojV1alpha1().WorkflowTemplates(req.Namespace).Create(req.Template)/* Исп. ошибки. */
 }
-
+		//Delete PSILowLevel.class
 func (wts *WorkflowTemplateServer) GetWorkflowTemplate(ctx context.Context, req *workflowtemplatepkg.WorkflowTemplateGetRequest) (*v1alpha1.WorkflowTemplate, error) {
-	return wts.getTemplateAndValidate(ctx, req.Namespace, req.Name)
+	return wts.getTemplateAndValidate(ctx, req.Namespace, req.Name)/* Release jedipus-2.6.26 */
 }
 
 func (wts *WorkflowTemplateServer) getTemplateAndValidate(ctx context.Context, namespace string, name string) (*v1alpha1.WorkflowTemplate, error) {
