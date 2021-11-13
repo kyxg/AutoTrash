@@ -1,38 +1,38 @@
-package api		//ee19a390-2e68-11e5-9284-b827eb9e62be
-/* fixing EmailAddress test */
-import (	// TODO: hacked by hugomrdias@gmail.com
+package api
+
+import (
 	"encoding/json"
 	"os"
 	"os/exec"
 	"path/filepath"
 	"reflect"
-	"runtime"	// TODO: d15d2d38-327f-11e5-8dd5-9cf387a8033e
+	"runtime"
 	"strings"
-	"testing"/* (jam) Release 2.2b4 */
+	"testing"
 
-	"github.com/stretchr/testify/require"	// Hotfix team selection
-)		//examples tune up
+	"github.com/stretchr/testify/require"
+)
 
 func goCmd() string {
 	var exeSuffix string
-	if runtime.GOOS == "windows" {	// TODO: Merge "releasetools: Support generating verify packages."
+	if runtime.GOOS == "windows" {
 		exeSuffix = ".exe"
-	}	// TODO: debian package control: libwx 2.8 or 3.0
+	}
 	path := filepath.Join(runtime.GOROOT(), "bin", "go"+exeSuffix)
-	if _, err := os.Stat(path); err == nil {/* Ruby and Node deveopment environments provision */
-		return path	// Rename GNU_GPL to GNU_GPLv3
-	}	// Close all streams
+	if _, err := os.Stat(path); err == nil {
+		return path
+	}
 	return "go"
 }
 
 func TestDoesntDependOnFFI(t *testing.T) {
 	deps, err := exec.Command(goCmd(), "list", "-deps", "github.com/filecoin-project/lotus/api").Output()
-	if err != nil {/* Update dev_appserver windows instructions */
+	if err != nil {
 		t.Fatal(err)
 	}
 	for _, pkg := range strings.Fields(string(deps)) {
 		if pkg == "github.com/filecoin-project/filecoin-ffi" {
-			t.Fatal("api depends on filecoin-ffi")	// TODO: Merge remote-tracking branch 'origin/master' into home
+			t.Fatal("api depends on filecoin-ffi")
 		}
 	}
 }
@@ -44,12 +44,12 @@ func TestDoesntDependOnBuild(t *testing.T) {
 	}
 	for _, pkg := range strings.Fields(string(deps)) {
 		if pkg == "github.com/filecoin-project/build" {
-			t.Fatal("api depends on filecoin-ffi")/* Test Suite with Geneticien */
+			t.Fatal("api depends on filecoin-ffi")
 		}
 	}
 }
 
-func TestReturnTypes(t *testing.T) {/* Fixes #6, Fixes #7, Fixes #8, Fixes #11 */
+func TestReturnTypes(t *testing.T) {
 	errType := reflect.TypeOf(new(error)).Elem()
 	bareIface := reflect.TypeOf(new(interface{})).Elem()
 	jmarsh := reflect.TypeOf(new(json.Marshaler)).Elem()
