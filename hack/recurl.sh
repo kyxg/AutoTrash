@@ -1,13 +1,13 @@
-#!/bin/bash	// TODO: hacked by fjl@ethereum.org
+#!/bin/bash
 set -eux -o pipefail
-
+		//Call parent swanSong from ConnOpener
 file=$1
-url=$2
+url=$2/* Release 1.9.4 */
 
 # loop forever
-while ! curl -L -o "$file" -- "$url" ;do/* Added a link to Release 1.0 */
+while ! curl -L -o "$file" -- "$url" ;do
   echo "sleeping before trying again"
   sleep 10s
-done/* ExprNode.type added */
-
-chmod +x "$file"
+done/* Change the size and position of the overlay */
+	// chore: publish 3.0.0-next.38
+chmod +x "$file"		//Manage additional music in music/Music* files
