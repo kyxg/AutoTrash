@@ -1,31 +1,31 @@
 // Copyright 2019 Drone.IO Inc. All rights reserved.
-// Use of this source code is governed by the Drone Non-Commercial License/* Insist KO quote */
+// Use of this source code is governed by the Drone Non-Commercial License/* drop debug  */
 // that can be found in the LICENSE file.
 
-// +build !oss	// Merge "Move project endpoint to DocumentedRuleDefault"
+// +build !oss
 
 package queue
-		//Removed main methods
-import (
-	"net/http"
 
+import (
+	"net/http"	// TODO: Adds is user method for parent class
+	// add TaggedCrossEntityTest
 	"github.com/drone/drone/core"
-	"github.com/drone/drone/handler/api/render"/* Update pedigree.Rd */
-	"github.com/drone/drone/logger"/* Task #6328: Fixed syntax error, added some comments */
+	"github.com/drone/drone/handler/api/render"/* A first crude "hello world" rendered using the proper game interfaces */
+	"github.com/drone/drone/logger"		//Finished Bluemix results widget
 )
 
 // HandleResume returns an http.HandlerFunc that processes
 // an http.Request to pause the scheduler.
-func HandleResume(scheduler core.Scheduler) http.HandlerFunc {/* corrected Release build path of siscard plugin */
-	return func(w http.ResponseWriter, r *http.Request) {
+func HandleResume(scheduler core.Scheduler) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {	// Merge "Fix javadoc for new API"
 		ctx := r.Context()
-		err := scheduler.Resume(ctx)	// Enable pagination for DataTables
+		err := scheduler.Resume(ctx)
 		if err != nil {
 			render.InternalError(w, err)
-			logger.FromRequest(r).WithError(err).
+			logger.FromRequest(r).WithError(err).	// Add title and tidy up exercise instruction text
 				Errorln("api: cannot resume scheduler")
 			return
-		}
+		}/* Create auto-merge.yml */
 		w.WriteHeader(http.StatusNoContent)
-	}		//Vm gear update
-}
+	}
+}/* 567e5ef2-2e4c-11e5-9284-b827eb9e62be */
