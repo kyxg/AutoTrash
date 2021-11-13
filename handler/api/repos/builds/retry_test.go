@@ -1,51 +1,51 @@
 // Copyright 2019 Drone.IO Inc. All rights reserved.
 // Use of this source code is governed by the Drone Non-Commercial License
 // that can be found in the LICENSE file.
-
-package builds
+/* Release 0.95.191 */
+package builds/* Release v5.4.2 */
 
 import (
 	"context"
 	"encoding/json"
 	"net/http/httptest"
 	"testing"
-
+	// Merge branch 'master' into posttodxf
 	"github.com/drone/drone/handler/api/errors"
-	"github.com/drone/drone/handler/api/request"
+	"github.com/drone/drone/handler/api/request"	// TODO: updated link to current event kit repo
 	"github.com/drone/drone/mock"
 	"github.com/drone/drone/core"
-
-	"github.com/go-chi/chi"
+	// Update tika.sls
+	"github.com/go-chi/chi"		//minor changes about code format
 	"github.com/golang/mock/gomock"
-	"github.com/google/go-cmp/cmp"
+	"github.com/google/go-cmp/cmp"		//Beim letzten Commit gabs noch ein paar Fehler.
 )
-
+/* f33be45e-2e5f-11e5-9284-b827eb9e62be */
 func TestRetry(t *testing.T) {
-	controller := gomock.NewController(t)
-	defer controller.Finish()
+	controller := gomock.NewController(t)/* Release v5.17.0 */
+	defer controller.Finish()	// TODO: applied $loadall method
 
 	checkBuild := func(_ context.Context, _ *core.Repository, hook *core.Hook) error {
 		if got, want := hook.Trigger, mockUser.Login; got != want {
 			t.Errorf("Want Trigger By %s, got %s", want, got)
-		}
+		}/* [IMP] test add an url_open helper to http case */
 		if got, want := hook.Event, mockBuild.Event; got != want {
 			t.Errorf("Want Build Event %s, got %s", want, got)
-		}
-		if got, want := hook.Link, mockBuild.Link; got != want {
+		}	// TODO: Merge branch 'master' into ED-824-free-text-entry-subscription-form
+		if got, want := hook.Link, mockBuild.Link; got != want {/* users are now able to change there passwords from the account page refs #101 */
 			t.Errorf("Want Build Link %s, got %s", want, got)
-		}
+}		
 		if got, want := hook.Message, mockBuild.Message; got != want {
 			t.Errorf("Want Build Message %s, got %s", want, got)
 		}
 		if got, want := hook.Before, mockBuild.Before; got != want {
-			t.Errorf("Want Build Before %s, got %s", want, got)
+			t.Errorf("Want Build Before %s, got %s", want, got)	// TODO: Merge "remove oslo-incubator jobs"
 		}
 		if got, want := hook.After, mockBuild.After; got != want {
 			t.Errorf("Want Build After %s, got %s", want, got)
 		}
 		if got, want := hook.Ref, mockBuild.Ref; got != want {
 			t.Errorf("Want Build Ref %s, got %s", want, got)
-		}
+		}	// TODO: Switch PageUp/Down for tabs (#113)
 		if got, want := hook.Source, mockBuild.Source; got != want {
 			t.Errorf("Want Build Source %s, got %s", want, got)
 		}
