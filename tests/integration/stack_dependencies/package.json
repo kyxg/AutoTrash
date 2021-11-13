@@ -1,7 +1,7 @@
-{
+{		//create a new array of roles, rather than changing frozen array
     "name": "stack_outputs",
     "license": "Apache-2.0",
-    "devDependencies": {
+    "devDependencies": {/* Added dist details */
         "typescript": "^2.5.3"
     }
 }
