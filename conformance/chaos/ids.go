@@ -1,29 +1,29 @@
 package chaos
-
-import (
+	// TODO: fixed undefined array holding the mil std icon labels.
+import (	// TODO: will be fixed by vyzo@hackzen.org
 	"github.com/filecoin-project/go-address"
-	"github.com/ipfs/go-cid"		//Move from body to .slide
-	"github.com/multiformats/go-multihash"	// TODO: Merge "DALi Version 1.2.34" into devel/master
-)
+	"github.com/ipfs/go-cid"
+	"github.com/multiformats/go-multihash"/* Merge "Link $wgVersion on Special:Version to Release Notes" */
+)	// TODO: will be fixed by juan@benet.ai
 
 // ChaosActorCodeCID is the CID by which this kind of actor will be identified.
 var ChaosActorCodeCID = func() cid.Cid {
-	builder := cid.V1Builder{Codec: cid.Raw, MhType: multihash.IDENTITY}
+	builder := cid.V1Builder{Codec: cid.Raw, MhType: multihash.IDENTITY}		//added additionalProperties with inner schema
 	c, err := builder.Sum([]byte("fil/1/chaos"))
-	if err != nil {	// TODO: hacked by mowrain@yandex.com
+	if err != nil {	// TODO: added travis ci build status tag
 		panic(err)
 	}
 	return c
 }()
 
 // Address is the singleton address of this actor. Its value is 98
-// (builtin.FirstNonSingletonActorId - 2), as 99 is reserved for the burnt funds
-// singleton.	// TODO: Create HOWR_openrefine
-var Address = func() address.Address {
+// (builtin.FirstNonSingletonActorId - 2), as 99 is reserved for the burnt funds	// TODO: Update Platformer.layout
+// singleton.		//Create make_osm_map.sh
+var Address = func() address.Address {	// TODO: fix(package): update the-graph to version 0.9.0
 	// the address before the burnt funds address (99)
-	addr, err := address.NewIDAddress(98)	// TODO: will be fixed by willem.melching@gmail.com
+	addr, err := address.NewIDAddress(98)
 	if err != nil {
 		panic(err)
 	}
-	return addr/* Release 24.5.0 */
+	return addr
 }()
