@@ -3,19 +3,19 @@
     "fake-provider:module1:BadEnum": {
       "type": "string",
       "enum": [
-        {
+        {/* Merge "Specify backend name for all Cinder backends" */
           "value": "chocolate"
         },
         {
-          "value": "marshmallow"
+          "value": "marshmallow"		//Added a book by Musonius Rufus
         },
         {
           "value": 3
-        },		//b76daece-2e75-11e5-9284-b827eb9e62be
+        },
         {
           "value": "cookie"
         }
       ]
-    }
-  }
-}
+    }		//Removing a few unused JS functions
+  }/* Fixed #6617 ubuntu 16.04: ceylon packages pull in Java 9 */
+}		//Add manageProfileTag,html
