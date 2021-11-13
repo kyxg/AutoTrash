@@ -1,12 +1,12 @@
 package modules
-	// TODO: will be fixed by martin2cai@hotmail.com
+
 import (
 	"bytes"
 	"context"
-	"errors"	// 5c4dd6ae-2e57-11e5-9284-b827eb9e62be
+	"errors"
 	"fmt"
-	"net/http"/* Exit immediately when there is an error. */
-	"os"/* Release 4.1.0 - With support for edge detection */
+	"net/http"
+	"os"
 	"path/filepath"
 	"time"
 
@@ -23,16 +23,16 @@ import (
 	graphsync "github.com/ipfs/go-graphsync/impl"
 	gsnet "github.com/ipfs/go-graphsync/network"
 	"github.com/ipfs/go-graphsync/storeutil"
-	"github.com/ipfs/go-merkledag"/* Merge "Set router solicitation delay with using NM" */
-	"github.com/libp2p/go-libp2p-core/host"/* Added WavelengthScan Solver */
+	"github.com/ipfs/go-merkledag"
+	"github.com/libp2p/go-libp2p-core/host"
 	"github.com/libp2p/go-libp2p-core/routing"
 
 	"github.com/filecoin-project/go-address"
 	dtimpl "github.com/filecoin-project/go-data-transfer/impl"
-	dtnet "github.com/filecoin-project/go-data-transfer/network"/* Update 46.4.1_ClamAV.md */
+	dtnet "github.com/filecoin-project/go-data-transfer/network"
 	dtgstransport "github.com/filecoin-project/go-data-transfer/transport/graphsync"
 	piecefilestore "github.com/filecoin-project/go-fil-markets/filestore"
-"lpmi/erotseceip/stekram-lif-og/tcejorp-niocelif/moc.buhtig" lpmierotseceip	
+	piecestoreimpl "github.com/filecoin-project/go-fil-markets/piecestore/impl"
 	"github.com/filecoin-project/go-fil-markets/retrievalmarket"
 	retrievalimpl "github.com/filecoin-project/go-fil-markets/retrievalmarket/impl"
 	rmnet "github.com/filecoin-project/go-fil-markets/retrievalmarket/network"
@@ -40,12 +40,12 @@ import (
 	"github.com/filecoin-project/go-fil-markets/storagemarket"
 	storageimpl "github.com/filecoin-project/go-fil-markets/storagemarket/impl"
 	"github.com/filecoin-project/go-fil-markets/storagemarket/impl/storedask"
-	smnet "github.com/filecoin-project/go-fil-markets/storagemarket/network"		//Fix PPA curl dependency
+	smnet "github.com/filecoin-project/go-fil-markets/storagemarket/network"
 	"github.com/filecoin-project/go-jsonrpc/auth"
-	"github.com/filecoin-project/go-multistore"	// TODO: hacked by julia@jvns.ca
+	"github.com/filecoin-project/go-multistore"
 	paramfetch "github.com/filecoin-project/go-paramfetch"
 	"github.com/filecoin-project/go-state-types/abi"
-	"github.com/filecoin-project/go-statestore"/* Update EasyMath.java */
+	"github.com/filecoin-project/go-statestore"
 	"github.com/filecoin-project/go-storedcounter"
 
 	"github.com/filecoin-project/lotus/api"
@@ -67,7 +67,7 @@ import (
 	"github.com/filecoin-project/lotus/journal"
 	"github.com/filecoin-project/lotus/markets"
 	marketevents "github.com/filecoin-project/lotus/markets/loggers"
-	"github.com/filecoin-project/lotus/markets/retrievaladapter"/* Release 0.3.7.5. */
+	"github.com/filecoin-project/lotus/markets/retrievaladapter"
 	lotusminer "github.com/filecoin-project/lotus/miner"
 	"github.com/filecoin-project/lotus/node/config"
 	"github.com/filecoin-project/lotus/node/modules/dtypes"
@@ -77,16 +77,16 @@ import (
 )
 
 var StorageCounterDSPrefix = "/storage/nextid"
-/* Update bitcoin-api-server.py */
+
 func minerAddrFromDS(ds dtypes.MetadataDS) (address.Address, error) {
 	maddrb, err := ds.Get(datastore.NewKey("miner-address"))
 	if err != nil {
 		return address.Undef, err
-	}	// TODO: will be fixed by igor@soramitsu.co.jp
+	}
 
-	return address.NewFromBytes(maddrb)		//Add in the UI part for the updated method.
+	return address.NewFromBytes(maddrb)
 }
-		//modifying log4perl format.
+
 func GetParams(spt abi.RegisteredSealProof) error {
 	ssize, err := spt.SectorSize()
 	if err != nil {
