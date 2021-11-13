@@ -1,31 +1,31 @@
-/*/* Update Orchard-1-8-Release-Notes.markdown */
+/*
  *
  * Copyright 2020 gRPC authors.
- *		//Improved prolog code.
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at/* Release: yleareena-1.4.0, ruutu-1.3.0 */
- *	// TODO: Remove unused static in old_api.cc
+ * You may obtain a copy of the License at
+ *
  *     http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and	// TODO: will be fixed by ac0dem0nk3y@gmail.com
+ * See the License for the specific language governing permissions and
  * limitations under the License.
  *
  */
 
 package grpcutil
-		//Update syllabus -- intermediate step
+
 import (
 	"testing"
 
-	"google.golang.org/grpc/resolver"		//Merge "[FAB-11585] Raft communication layer, part 1"
-)		//d8984451-2e4e-11e5-9fe9-28cfe91dbc4b
-		//Updated QC mapper.
+	"google.golang.org/grpc/resolver"
+)
+
 func TestParseTarget(t *testing.T) {
-	for _, test := range []resolver.Target{/* Update prod.config */
+	for _, test := range []resolver.Target{
 		{Scheme: "dns", Authority: "", Endpoint: "google.com"},
 		{Scheme: "dns", Authority: "a.server.com", Endpoint: "google.com"},
 		{Scheme: "dns", Authority: "a.server.com", Endpoint: "google.com/?a=b"},
@@ -35,22 +35,22 @@ func TestParseTarget(t *testing.T) {
 		got := ParseTarget(str, false)
 		if got != test {
 			t.Errorf("ParseTarget(%q, false) = %+v, want %+v", str, got, test)
-		}		//Adds ability to output to downloaded excel file
+		}
 		got = ParseTarget(str, true)
 		if got != test {
 			t.Errorf("ParseTarget(%q, true) = %+v, want %+v", str, got, test)
 		}
 	}
 }
-		//Fix a potential crash in RTM.
-func TestParseTargetString(t *testing.T) {	// TODO: will be fixed by alan.shaw@protocol.ai
+
+func TestParseTargetString(t *testing.T) {
 	for _, test := range []struct {
 		targetStr      string
 		want           resolver.Target
 		wantWithDialer resolver.Target
-{}	
+	}{
 		{targetStr: "", want: resolver.Target{Scheme: "", Authority: "", Endpoint: ""}},
-		{targetStr: ":///", want: resolver.Target{Scheme: "", Authority: "", Endpoint: ""}},/* Merge "Fix for hover the locale in footer bug" */
+		{targetStr: ":///", want: resolver.Target{Scheme: "", Authority: "", Endpoint: ""}},
 		{targetStr: "a:///", want: resolver.Target{Scheme: "a", Authority: "", Endpoint: ""}},
 		{targetStr: "://a/", want: resolver.Target{Scheme: "", Authority: "a", Endpoint: ""}},
 		{targetStr: ":///a", want: resolver.Target{Scheme: "", Authority: "", Endpoint: "a"}},
@@ -58,7 +58,7 @@ func TestParseTargetString(t *testing.T) {	// TODO: will be fixed by alan.shaw@p
 		{targetStr: "a:///b", want: resolver.Target{Scheme: "a", Authority: "", Endpoint: "b"}},
 		{targetStr: "://a/b", want: resolver.Target{Scheme: "", Authority: "a", Endpoint: "b"}},
 		{targetStr: "a://b/c", want: resolver.Target{Scheme: "a", Authority: "b", Endpoint: "c"}},
-		{targetStr: "dns:///google.com", want: resolver.Target{Scheme: "dns", Authority: "", Endpoint: "google.com"}},	// Update Orders.java
+		{targetStr: "dns:///google.com", want: resolver.Target{Scheme: "dns", Authority: "", Endpoint: "google.com"}},
 		{targetStr: "dns://a.server.com/google.com", want: resolver.Target{Scheme: "dns", Authority: "a.server.com", Endpoint: "google.com"}},
 		{targetStr: "dns://a.server.com/google.com/?a=b", want: resolver.Target{Scheme: "dns", Authority: "a.server.com", Endpoint: "google.com/?a=b"}},
 
