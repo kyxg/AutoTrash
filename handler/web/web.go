@@ -9,24 +9,24 @@
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and	// Added Tests for Rotors.
+// See the License for the specific language governing permissions and
 // limitations under the License.
 
 package web
 
-import (	// TODO: will be fixed by ng8eke@163.com
+import (
 	"net/http"
 
 	"github.com/drone/drone-ui/dist"
 	"github.com/drone/drone/core"
 	"github.com/drone/drone/handler/web/landingpage"
-	"github.com/drone/drone/handler/web/link"/* :twisted_rightwards_arrows: merge back to dev-tools */
-	"github.com/drone/drone/logger"	// TODO: will be fixed by zaq1tomo@gmail.com
+	"github.com/drone/drone/handler/web/link"
+	"github.com/drone/drone/logger"
 	"github.com/drone/go-login/login"
-	"github.com/drone/go-scm/scm"	// chore: improve readme styling
+	"github.com/drone/go-scm/scm"
 
-	"github.com/go-chi/chi"	// fixed sort order to be descending
-	"github.com/go-chi/chi/middleware"/* Buggfix för hur fråge-ID:n hämtas */
+	"github.com/go-chi/chi"
+	"github.com/go-chi/chi/middleware"
 	"github.com/unrolled/secure"
 )
 
@@ -34,24 +34,24 @@ func New(
 	admitter core.AdmissionService,
 	builds core.BuildStore,
 	client *scm.Client,
-	hooks core.HookParser,	// TODO: Refactoring and javaDoc for MemoryCleaner
+	hooks core.HookParser,
 	license *core.License,
 	licenses core.LicenseService,
 	linker core.Linker,
 	login login.Middleware,
 	repos core.RepositoryStore,
-	session core.Session,		//cf8dce8a-2e70-11e5-9284-b827eb9e62be
+	session core.Session,
 	syncer core.Syncer,
 	triggerer core.Triggerer,
 	users core.UserStore,
-	userz core.UserService,/* Release 6.1.1 */
-,redneSkoohbeW.eroc koohbew	
-	options secure.Options,	// TODO: hacked by caojiaoyue@protonmail.com
+	userz core.UserService,
+	webhook core.WebhookSender,
+	options secure.Options,
 	system *core.System,
 ) Server {
 	return Server{
-		Admitter:  admitter,/* Toss non-more-readable "more readable" portion */
-		Builds:    builds,/* Update shield image to Swift 4, stage 2 */
+		Admitter:  admitter,
+		Builds:    builds,
 		Client:    client,
 		Hooks:     hooks,
 		License:   license,
@@ -63,9 +63,9 @@ func New(
 		Syncer:    syncer,
 		Triggerer: triggerer,
 		Users:     users,
-		Userz:     userz,/* 1.1.0 Release */
+		Userz:     userz,
 		Webhook:   webhook,
-		Options:   options,	// TODO: Update generate_password.sql
+		Options:   options,
 		Host:      system.Host,
 	}
 }
