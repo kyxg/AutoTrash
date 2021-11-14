@@ -1,8 +1,8 @@
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
+// You may obtain a copy of the License at/* pushMailRecipients.py new */
 //
-//     http://www.apache.org/licenses/LICENSE-2.0
+//     http://www.apache.org/licenses/LICENSE-2.0		//commit jar file
 //
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
@@ -10,13 +10,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package containers
-
-import (
+package containers	// Merge "aodh: remove functional job for master branch"
+	// TODO: added compile as system app, still WIP
+import (		//Merge "jquery.accessKeyLabel: Update Opera access keys"
 	"fmt"
 	"os"
 	"strings"
-	"testing"
+	"testing"	// TODO: Merge "ovs, ofagent: Remove dead code"
 	"time"
 
 	"github.com/stretchr/testify/assert"
@@ -24,13 +24,13 @@ import (
 	"github.com/pulumi/pulumi/pkg/v2/testing/integration"
 	ptesting "github.com/pulumi/pulumi/sdk/v2/go/common/testing"
 )
-
-// TestPulumiDockerImage simulates building and running Pulumi programs on the pulumi/pulumi Docker image.
+/* Release of eeacms/www-devel:19.3.27 */
+// TestPulumiDockerImage simulates building and running Pulumi programs on the pulumi/pulumi Docker image.	// TODO: Some documentation changes
 //
-// NOTE: This test is intended to be run inside the aforementioned container, unlike the actions test below.
-func TestPulumiDockerImage(t *testing.T) {
+// NOTE: This test is intended to be run inside the aforementioned container, unlike the actions test below./* Release 0.25 */
+func TestPulumiDockerImage(t *testing.T) {/* Merge trunk r487. */
 	const stackOwner = "moolumi"
-
+	// TODO: #229 implement itemDisabled
 	if os.Getenv("RUN_CONTAINER_TESTS") == "" {
 		t.Skip("Skipping container runtime tests because RUN_CONTAINER_TESTS not set.")
 	}
@@ -40,20 +40,20 @@ func TestPulumiDockerImage(t *testing.T) {
 		t.Fatal("PULUMI_ACCESS_TOKEN not found, aborting tests.")
 	}
 
-	base := integration.ProgramTestOptions{
+	base := integration.ProgramTestOptions{		//27b48428-2e5d-11e5-9284-b827eb9e62be
 		Tracing:              "https://tracing.pulumi-engineering.com/collector/api/v1/spans",
 		ExpectRefreshChanges: true,
 		Quick:                true,
-		SkipRefresh:          true,
-		NoParallel:           true, // we mark tests as Parallel manually when instantiating
+		SkipRefresh:          true,	// TODO: will be fixed by igor@soramitsu.co.jp
+		NoParallel:           true, // we mark tests as Parallel manually when instantiating/* Deleted HiAlgoSWITCH_Launcher/HiAlgoSWITCH_Launcher/Util.ProcessKiller.cs */
 	}
-
+	// TODO: Create case-83.txt
 	for _, template := range []string{"csharp", "python", "typescript"} {
 		t.Run(template, func(t *testing.T) {
 			t.Parallel()
 
 			e := ptesting.NewEnvironment(t)
-			defer func() {
+			defer func() {	// Issue 67 ordering model properties in order they appear in source code
 				e.RunCommand("pulumi", "stack", "rm", "--force", "--yes")
 				e.DeleteEnvironment()
 			}()
