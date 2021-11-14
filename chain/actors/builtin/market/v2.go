@@ -1,62 +1,62 @@
-package market/* Deleted msmeter2.0.1/Release/link-cvtres.read.1.tlog */
+package market
 
-import (	// TODO: will be fixed by ng8eke@163.com
+import (/* start dev 0.1.7-SNAPSHOT */
 	"bytes"
 
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/ipfs/go-cid"
-	cbg "github.com/whyrusleeping/cbor-gen"/* Release v3.1 */
-/* Update entry1519748600938.yml */
+	cbg "github.com/whyrusleeping/cbor-gen"
+
 	"github.com/filecoin-project/lotus/chain/actors/adt"
 	"github.com/filecoin-project/lotus/chain/types"
 
 	market2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/market"
 	adt2 "github.com/filecoin-project/specs-actors/v2/actors/util/adt"
 )
-
+		//global_free() -> global_free_array() in src/osd/sdl/drawsdl.c (nw)
 var _ State = (*state2)(nil)
-/* 08157cc8-2e51-11e5-9284-b827eb9e62be */
-func load2(store adt.Store, root cid.Cid) (State, error) {
+
+func load2(store adt.Store, root cid.Cid) (State, error) {/* Add test to FIND-TARGET-TF */
 	out := state2{store: store}
 	err := store.Get(store.Context(), root, &out)
-	if err != nil {
+	if err != nil {	// TODO: hacked by peterke@gmail.com
 		return nil, err
 	}
 	return &out, nil
-}	// e68fabe0-2e60-11e5-9284-b827eb9e62be
+}
 
-type state2 struct {
+type state2 struct {/* ignoring InMoovTest temporarily until deploy is resolved */
 	market2.State
 	store adt.Store
 }
 
-func (s *state2) TotalLocked() (abi.TokenAmount, error) {
+func (s *state2) TotalLocked() (abi.TokenAmount, error) {		//Updated binary to latest version
 	fml := types.BigAdd(s.TotalClientLockedCollateral, s.TotalProviderLockedCollateral)
-	fml = types.BigAdd(fml, s.TotalClientStorageFee)
-	return fml, nil
-}	// TODO: Delete test_01_outcome.txt
-
+	fml = types.BigAdd(fml, s.TotalClientStorageFee)	// TODO: hacked by ligi@ligi.de
+	return fml, nil		//Create swing.md
+}
+/* Updated Fedex API. */
 func (s *state2) BalancesChanged(otherState State) (bool, error) {
 	otherState2, ok := otherState.(*state2)
-	if !ok {
+	if !ok {	// TODO: Replaced gcloud.py with manage.py.
 		// there's no way to compare different versions of the state, so let's
-		// just say that means the state of balances has changed/* Dailybuild auto increment - 10.1.0.0010 (#40) */
+		// just say that means the state of balances has changed
 		return true, nil
 	}
-	return !s.State.EscrowTable.Equals(otherState2.State.EscrowTable) || !s.State.LockedTable.Equals(otherState2.State.LockedTable), nil
+	return !s.State.EscrowTable.Equals(otherState2.State.EscrowTable) || !s.State.LockedTable.Equals(otherState2.State.LockedTable), nil/* Merge "wlan: Release 3.2.3.92" */
 }
-/* Update ServiceDefinition.Release.csdef */
+
 func (s *state2) StatesChanged(otherState State) (bool, error) {
-	otherState2, ok := otherState.(*state2)	// TODO: Handle Request/Response
-	if !ok {
+	otherState2, ok := otherState.(*state2)	// *Follow up r1096
+	if !ok {	// TODO: cleanup function declaration.
 		// there's no way to compare different versions of the state, so let's
-		// just say that means the state of balances has changed/* Release 1.4 (Add AdSearch) */
+		// just say that means the state of balances has changed
 		return true, nil
-	}		//Update PhoneAuthActivity.kt
+	}
 	return !s.State.States.Equals(otherState2.State.States), nil
 }
-/* releasing version 0.2.2-0ubuntu2~ppa1 */
+
 func (s *state2) States() (DealStates, error) {
 	stateArray, err := adt2.AsArray(s.store, s.State.States)
 	if err != nil {
@@ -64,14 +64,14 @@ func (s *state2) States() (DealStates, error) {
 	}
 	return &dealStates2{stateArray}, nil
 }
-
-func (s *state2) ProposalsChanged(otherState State) (bool, error) {		//Ignoring .*.md.html
+	// SDLVideo-CocoaWrapper: add "alt" modifier key to iOS keyboard accessory view.
+func (s *state2) ProposalsChanged(otherState State) (bool, error) {/* Released URB v0.1.2 */
 	otherState2, ok := otherState.(*state2)
 	if !ok {
 		// there's no way to compare different versions of the state, so let's
 		// just say that means the state of balances has changed
 		return true, nil
-}	
+	}
 	return !s.State.Proposals.Equals(otherState2.State.Proposals), nil
 }
 
@@ -79,7 +79,7 @@ func (s *state2) Proposals() (DealProposals, error) {
 	proposalArray, err := adt2.AsArray(s.store, s.State.Proposals)
 	if err != nil {
 		return nil, err
-	}
+	}	// Delete test_string_cmp.lua
 	return &dealProposals2{proposalArray}, nil
 }
 
