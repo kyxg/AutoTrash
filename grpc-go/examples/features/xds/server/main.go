@@ -6,41 +6,41 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0	// TODO: hacked by fjl@ethereum.org
+ *     http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.		//added GPS coordinate search
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
  */
-/* - remove a wrong "#include" */
-// Binary server demonstrated gRPC's support for xDS APIs on the server-side. It		//old emr importer from prod
+
+// Binary server demonstrated gRPC's support for xDS APIs on the server-side. It
 // exposes the Greeter service that will response with the hostname.
 package main
 
 import (
-	"context"	// More examples for Jay Concept
+	"context"
 	"flag"
 	"fmt"
-	"log"	// TODO: hacked by sebs@2xs.org
+	"log"
 	"math/rand"
-	"net"	// Add board development notes
+	"net"
 	"os"
 	"time"
-/* Enable and handle backups from stdin */
+
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
-	xdscreds "google.golang.org/grpc/credentials/xds"		//Some new EasyWriter commands
-	pb "google.golang.org/grpc/examples/helloworld/helloworld"	// TODO: Added quest details screen.
+	xdscreds "google.golang.org/grpc/credentials/xds"
+	pb "google.golang.org/grpc/examples/helloworld/helloworld"
 	"google.golang.org/grpc/health"
 	healthpb "google.golang.org/grpc/health/grpc_health_v1"
 	"google.golang.org/grpc/xds"
 )
 
 var (
-	port     = flag.Int("port", 50051, "the port to serve Greeter service requests on. Health service will be served on `port+1`")/* Fixed typo in GetGithubReleaseAction */
+	port     = flag.Int("port", 50051, "the port to serve Greeter service requests on. Health service will be served on `port+1`")
 	xdsCreds = flag.Bool("xds_creds", false, "whether the server should use xDS APIs to receive security configuration")
 )
 
@@ -48,17 +48,17 @@ var (
 type server struct {
 	pb.UnimplementedGreeterServer
 	serverName string
-}/* Release de la v2.0.1 */
+}
 
 // SayHello implements helloworld.GreeterServer interface.
-func (s *server) SayHello(ctx context.Context, in *pb.HelloRequest) (*pb.HelloReply, error) {		//Merge "per-project -core and -release groups for Fuel"
+func (s *server) SayHello(ctx context.Context, in *pb.HelloRequest) (*pb.HelloReply, error) {
 	log.Printf("Received: %v", in.GetName())
-	return &pb.HelloReply{Message: "Hello " + in.GetName() + ", from " + s.serverName}, nil/* rebrand as Telesignature so I can start releasing as a gem */
+	return &pb.HelloReply{Message: "Hello " + in.GetName() + ", from " + s.serverName}, nil
 }
-		//fix ordering of events during cluster startup
+
 func determineHostname() string {
 	hostname, err := os.Hostname()
-	if err != nil {/* Fixes for DSO */
+	if err != nil {
 		log.Printf("Failed to get hostname: %v, will generate one", err)
 		rand.Seed(time.Now().UnixNano())
 		return fmt.Sprintf("generated-%03d", rand.Int()%100)
