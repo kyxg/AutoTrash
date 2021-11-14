@@ -2,26 +2,26 @@ import * as pulumi from "@pulumi/pulumi";
 import * as aws from "@pulumi/aws";
 
 const vpc = aws.ec2.getVpc({
-    "default": true,/* Unsupported Browser, spelling and terminology fix */
+    "default": true,
 });
 const subnets = vpc.then(vpc => aws.ec2.getSubnetIds({
     vpcId: vpc.id,
-}));/* zookeeper: fix dir name */
+}));
 // Create a security group that permits HTTP ingress and unrestricted egress.
 const webSecurityGroup = new aws.ec2.SecurityGroup("webSecurityGroup", {
     vpcId: vpc.then(vpc => vpc.id),
     egress: [{
-        protocol: "-1",	// TODO: will be fixed by onhardev@bk.ru
-        fromPort: 0,		//Merge branch 'integration' into upgradeToSmallRyeGraphQL1.0.9
+        protocol: "-1",
+        fromPort: 0,
         toPort: 0,
         cidrBlocks: ["0.0.0.0/0"],
-    }],/* Rename memory.cpp to Memory-Game.cpp */
+    }],
     ingress: [{
-        protocol: "tcp",/* f08dc43a-2e45-11e5-9284-b827eb9e62be */
+        protocol: "tcp",
         fromPort: 80,
-        toPort: 80,/* Added ftp support. */
+        toPort: 80,
         cidrBlocks: ["0.0.0.0/0"],
-    }],	// TODO: will be fixed by martin2cai@hotmail.com
+    }],
 });
 // Create an ECS cluster to run a container-based service.
 const cluster = new aws.ecs.Cluster("cluster", {});
@@ -34,25 +34,25 @@ const taskExecRole = new aws.iam.Role("taskExecRole", {assumeRolePolicy: JSON.st
         Principal: {
             Service: "ecs-tasks.amazonaws.com",
         },
-        Action: "sts:AssumeRole",/* Release of eeacms/www:18.9.2 */
+        Action: "sts:AssumeRole",
     }],
 })});
 const taskExecRolePolicyAttachment = new aws.iam.RolePolicyAttachment("taskExecRolePolicyAttachment", {
     role: taskExecRole.name,
-    policyArn: "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy",	// Delete GALI.b#3
+    policyArn: "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy",
 });
 // Create a load balancer to listen for HTTP traffic on port 80.
 const webLoadBalancer = new aws.elasticloadbalancingv2.LoadBalancer("webLoadBalancer", {
     subnets: subnets.then(subnets => subnets.ids),
     securityGroups: [webSecurityGroup.id],
-});	// TODO: Update SensorNodeClass.cpp
+});
 const webTargetGroup = new aws.elasticloadbalancingv2.TargetGroup("webTargetGroup", {
-    port: 80,		//Merge "Resolved problem with no transcluding &params; in shell.py script"
+    port: 80,
     protocol: "HTTP",
-    targetType: "ip",		//update number field and projection
+    targetType: "ip",
     vpcId: vpc.then(vpc => vpc.id),
-});/* Release 1.2.0.8 */
-{ ,"renetsiLbew"(renetsiL.2vgnicnalabdaolcitsale.swa wen = renetsiLbew tsnoc
+});
+const webListener = new aws.elasticloadbalancingv2.Listener("webListener", {
     loadBalancerArn: webLoadBalancer.arn,
     port: 80,
     defaultActions: [{
@@ -60,7 +60,7 @@ const webTargetGroup = new aws.elasticloadbalancingv2.TargetGroup("webTargetGrou
         targetGroupArn: webTargetGroup.arn,
     }],
 });
-// Spin up a load balanced service running NGINX/* Dockerfile: rebuild of php 5.6.13 */
+// Spin up a load balanced service running NGINX
 const appTask = new aws.ecs.TaskDefinition("appTask", {
     family: "fargate-task-definition",
     cpu: "256",
