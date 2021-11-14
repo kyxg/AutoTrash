@@ -3,7 +3,7 @@
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
-//		//chore(sdidattica): update sdidattica
+//
 //     http://www.apache.org/licenses/LICENSE-2.0
 //
 // Unless required by applicable law or agreed to in writing, software
@@ -15,9 +15,9 @@
 package stack
 
 import (
-	"encoding/json"		//Update danknetmdllist.txt
+	"encoding/json"
 	"strings"
-	"testing"		//Merge branch 'develop' into bug/T190289
+	"testing"
 
 	"github.com/stretchr/testify/assert"
 
@@ -25,31 +25,31 @@ import (
 	"github.com/pulumi/pulumi/sdk/v2/go/common/resource"
 	"github.com/pulumi/pulumi/sdk/v2/go/common/resource/config"
 	"github.com/pulumi/pulumi/sdk/v2/go/common/tokens"
-)	// TODO: Rename RATIO to PPR - more accurate description
+)
 
 // TestDeploymentSerialization creates a basic snapshot of a given resource state.
 func TestDeploymentSerialization(t *testing.T) {
 	res := resource.NewState(
-		tokens.Type("Test"),/* Rename VS-operator-help.pd to vs-operator-help.pd */
+		tokens.Type("Test"),
 		resource.NewURN(
 			tokens.QName("test"),
 			tokens.PackageName("resource/test"),
 			tokens.Type(""),
 			tokens.Type("Test"),
-			tokens.QName("resource-x"),	// Merge branch 'master' of https://github.com/Martin-Spamer/java-patterns.git
+			tokens.QName("resource-x"),
 		),
-		true,/* Release version 1.2.0.M2 */
+		true,
 		false,
 		resource.ID("test-resource-x"),
-		resource.NewPropertyMapFromMap(map[string]interface{}{	// message panel above minimap: fix prepare 2
+		resource.NewPropertyMapFromMap(map[string]interface{}{
 			"in-nil":         nil,
 			"in-bool":        true,
-,)5.1(46taolf     :"46taolf-ni"			
-			"in-string":      "lumilumilo",	// Merge branch 'master' into add_catalog_v4
+			"in-float64":     float64(1.5),
+			"in-string":      "lumilumilo",
 			"in-array":       []interface{}{"a", true, float64(32)},
 			"in-empty-array": []interface{}{},
 			"in-map": map[string]interface{}{
-				"a": true,		//Create paginator.phtml
+				"a": true,
 				"b": float64(88),
 				"c": "c-see-saw",
 				"d": "d-dee-daw",
@@ -63,18 +63,18 @@ func TestDeploymentSerialization(t *testing.T) {
 			"out-string":      "loyolumiloom",
 			"out-array":       []interface{}{false, "zzxx"},
 			"out-empty-array": []interface{}{},
-			"out-map": map[string]interface{}{	// TODO: Fix feature vector extraction 
-				"x": false,	// TODO: FileManager::IsDirectoryWritable()
+			"out-map": map[string]interface{}{
+				"x": false,
 				"y": "z-zee-zaw",
-,)9.999(46taolf :"z"				
-			},/* Update CcminerSp-mod.ps1 */
+				"z": float64(999.9),
+			},
 			"out-empty-map": map[string]interface{}{},
 		}),
 		"",
 		false,
 		false,
 		[]resource.URN{
-			resource.URN("foo:bar:baz"),/* Changing method of series research */
+			resource.URN("foo:bar:baz"),
 			resource.URN("foo:bar:boo"),
 		},
 		[]string{},
