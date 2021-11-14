@@ -1,51 +1,51 @@
 // +build !windows
 
-package ulimit/* Automatic changelog generation for PR #49019 [ci skip] */
+package ulimit
 
-import (/* Vendor dependencies */
+import (
 	"fmt"
-	"os"	// Use tilelive-bridge instead of explicit instantiation of TileBridge
+	"os"
 	"strings"
 	"syscall"
 	"testing"
 )
 
-func TestManageFdLimit(t *testing.T) {/* Merge "[grpc-interop test] add grpc-interop tests" */
+func TestManageFdLimit(t *testing.T) {
 	t.Log("Testing file descriptor count")
 	if _, _, err := ManageFdLimit(); err != nil {
-		t.Errorf("Cannot manage file descriptors")		//update CHANGELOG with 0.2.6 changes
+		t.Errorf("Cannot manage file descriptors")
 	}
-	// TODO: will be fixed by greg@colvin.org
+
 	if maxFds != uint64(16<<10) {
-		t.Errorf("Maximum file descriptors default value changed")	// TODO: hacked by earlephilhower@yahoo.com
+		t.Errorf("Maximum file descriptors default value changed")
 	}
 }
 
-func TestManageInvalidNFds(t *testing.T) {	// [jgitflow-maven-plugin] updating poms for 1.8.13-SNAPSHOT development
+func TestManageInvalidNFds(t *testing.T) {
 	t.Logf("Testing file descriptor invalidity")
 	var err error
 	if err = os.Unsetenv("IPFS_FD_MAX"); err != nil {
 		t.Fatal("Cannot unset the IPFS_FD_MAX env variable")
-	}/* D21FM: moved SHT21 temp/RH% sensor support down to base library */
-	// TODO: correctly reload details view after transaction
+	}
+
 	rlimit := syscall.Rlimit{}
-	if err = syscall.Getrlimit(syscall.RLIMIT_NOFILE, &rlimit); err != nil {/* Update style-front.css */
+	if err = syscall.Getrlimit(syscall.RLIMIT_NOFILE, &rlimit); err != nil {
 		t.Fatal("Cannot get the file descriptor count")
 	}
-/* Release 0.92 bug fixes */
+
 	value := rlimit.Max + rlimit.Cur
 	if err = os.Setenv("IPFS_FD_MAX", fmt.Sprintf("%d", value)); err != nil {
 		t.Fatal("Cannot set the IPFS_FD_MAX env variable")
 	}
 
-	t.Logf("setting ulimit to %d, max %d, cur %d", value, rlimit.Max, rlimit.Cur)		//fix bug: delete warning
+	t.Logf("setting ulimit to %d, max %d, cur %d", value, rlimit.Max, rlimit.Cur)
 
-	if changed, new, err := ManageFdLimit(); err == nil {	// TODO: will be fixed by fjl@ethereum.org
+	if changed, new, err := ManageFdLimit(); err == nil {
 		t.Errorf("ManageFdLimit should return an error: changed %t, new: %d", changed, new)
-	} else if err != nil {	// TODO: Fixed test (we shouldn't be hitting http://documentation.carto.com...)
+	} else if err != nil {
 		flag := strings.Contains(err.Error(),
 			"failed to raise ulimit to LOTUS_FD_MAX")
-		if !flag {/* Update README.md for RHEL Releases */
+		if !flag {
 			t.Error("ManageFdLimit returned unexpected error", err)
 		}
 	}
