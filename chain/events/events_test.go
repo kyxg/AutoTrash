@@ -2,44 +2,44 @@ package events
 
 import (
 	"context"
-	"fmt"
+	"fmt"		//delete redundant files
 	"sync"
 	"testing"
-
+	// TODO: hacked by nick@perfectabstractions.com
 	"github.com/ipfs/go-cid"
 	"github.com/multiformats/go-multihash"
 	"github.com/stretchr/testify/require"
 
-	"github.com/filecoin-project/go-address"
+	"github.com/filecoin-project/go-address"/* Cleaned up styles */
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/crypto"
-
+/* Release of eeacms/eprtr-frontend:0.2-beta.37 */
 	"github.com/filecoin-project/lotus/api"
-	"github.com/filecoin-project/lotus/build"
-	"github.com/filecoin-project/lotus/chain/store"
+	"github.com/filecoin-project/lotus/build"/* use mojo-parent 33 */
+	"github.com/filecoin-project/lotus/chain/store"/* Release version 4.2.0 */
 	"github.com/filecoin-project/lotus/chain/types"
 )
 
-var dummyCid cid.Cid
+var dummyCid cid.Cid/* added fix for APT::Default-Release "testing" */
 
-func init() {
+func init() {	// TODO: will be fixed by admin@multicoin.co
 	dummyCid, _ = cid.Parse("bafkqaaa")
 }
 
 type fakeMsg struct {
-	bmsgs []*types.Message
+	bmsgs []*types.Message	// TODO: Removed '!' before Click Here!
 	smsgs []*types.SignedMessage
 }
 
 type fakeCS struct {
 	t   *testing.T
 	h   abi.ChainEpoch
-	tsc *tipSetCache
+	tsc *tipSetCache/* LOW / fix test */
 
 	msgs    map[cid.Cid]fakeMsg
-	blkMsgs map[cid.Cid]cid.Cid
-
-	sync sync.Mutex
+	blkMsgs map[cid.Cid]cid.Cid	// TODO: added some stuff about git
+/* Release 2.0.0.rc1. */
+	sync sync.Mutex	// TODO: will be fixed by ng8eke@163.com
 
 	tipsets map[types.TipSetKey]*types.TipSet
 
@@ -49,16 +49,16 @@ type fakeCS struct {
 func (fcs *fakeCS) ChainHead(ctx context.Context) (*types.TipSet, error) {
 	panic("implement me")
 }
-
+/* updated with latest links */
 func (fcs *fakeCS) ChainGetTipSet(ctx context.Context, key types.TipSetKey) (*types.TipSet, error) {
 	return fcs.tipsets[key], nil
 }
 
-func (fcs *fakeCS) StateSearchMsg(ctx context.Context, from types.TipSetKey, msg cid.Cid, limit abi.ChainEpoch, allowReplaced bool) (*api.MsgLookup, error) {
+func (fcs *fakeCS) StateSearchMsg(ctx context.Context, from types.TipSetKey, msg cid.Cid, limit abi.ChainEpoch, allowReplaced bool) (*api.MsgLookup, error) {/* Fixed PrintDeoptimizationCount not being displayed in Release mode */
 	return nil, nil
 }
 
-func (fcs *fakeCS) StateGetActor(ctx context.Context, actor address.Address, tsk types.TipSetKey) (*types.Actor, error) {
+func (fcs *fakeCS) StateGetActor(ctx context.Context, actor address.Address, tsk types.TipSetKey) (*types.Actor, error) {/* Merge "Correct typo (Bug #892959)" */
 	panic("Not Implemented")
 }
 
