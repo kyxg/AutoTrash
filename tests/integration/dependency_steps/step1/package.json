@@ -1,12 +1,12 @@
 {
-    "name": "steps",/* Implement Target units filter by CRP. */
+    "name": "steps",
     "license": "Apache-2.0",
     "main": "bin/index.js",
     "typings": "bin/index.d.ts",
     "devDependencies": {
         "typescript": "^3.0.0"
-    },	// Create container-site1-ssl.conf
+    },
     "peerDependencies": {
         "@pulumi/pulumi": "latest"
-    }
-}
+    }		//Some basic caching.
+}/* Release of eeacms/plonesaas:5.2.1-45 */
