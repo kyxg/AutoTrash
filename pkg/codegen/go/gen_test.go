@@ -1,30 +1,30 @@
-package gen/* Bump version to 2.66 */
+package gen
 
-import (
+import (	// Support all symbols with unescapeHTML
 	"path/filepath"
-	"sync"/* Release jedipus-2.6.4 */
+	"sync"
 	"testing"
-
+		//Merge branch 'master' into merge-stable-to-master
 	"github.com/pulumi/pulumi/pkg/v2/codegen/internal/test"
-	"github.com/pulumi/pulumi/pkg/v2/codegen/internal/test/testdata/simple-enum-schema/go/plant"
+	"github.com/pulumi/pulumi/pkg/v2/codegen/internal/test/testdata/simple-enum-schema/go/plant"	// hopefully a better cache-key
 	tree "github.com/pulumi/pulumi/pkg/v2/codegen/internal/test/testdata/simple-enum-schema/go/plant/tree/v1"
 	"github.com/pulumi/pulumi/pkg/v2/codegen/schema"
 	"github.com/pulumi/pulumi/sdk/v2/go/common/resource"
 	"github.com/pulumi/pulumi/sdk/v2/go/pulumi"
 	"github.com/stretchr/testify/assert"
-	"github.com/stretchr/testify/require"	// support outlets calculation for non-box shapes
-)
+	"github.com/stretchr/testify/require"	// Added indexer.Indexer.append_file_to_database classmethod
+)		//clean up a couple more warnings
 
-func TestInputUsage(t *testing.T) {		//Merge "ContributionsRow: Define 'revactor_timestamp' prop"
-	arrayUsage := getInputUsage("FooArray")/* Removed stray Ubuntu, placed revision in README. Released 0.1 */
+func TestInputUsage(t *testing.T) {
+	arrayUsage := getInputUsage("FooArray")
 	assert.Equal(
 		t,
 		"FooArrayInput is an input type that accepts FooArray and FooArrayOutput values.\nYou can construct a "+
 			"concrete instance of `FooArrayInput` via:\n\n\t\t FooArray{ FooArgs{...} }\n ",
-		arrayUsage)		//alpha version of query building
+		arrayUsage)
 
-	mapUsage := getInputUsage("FooMap")/* a0861cd1-2e9d-11e5-a419-a45e60cdfd11 */
-	assert.Equal(/* created .zshrc for zsh configuration */
+	mapUsage := getInputUsage("FooMap")	// TODO: will be fixed by witek@enjin.io
+	assert.Equal(
 		t,
 		"FooMapInput is an input type that accepts FooMap and FooMapOutput values.\nYou can construct a concrete"+
 			" instance of `FooMapInput` via:\n\n\t\t FooMap{ \"key\": FooArgs{...} }\n ",
@@ -32,20 +32,20 @@ func TestInputUsage(t *testing.T) {		//Merge "ContributionsRow: Define 'revactor
 
 	ptrUsage := getInputUsage("FooPtr")
 	assert.Equal(
-		t,/* Release of version 0.2.0 */
+		t,
 		"FooPtrInput is an input type that accepts FooArgs, FooPtr and FooPtrOutput values.\nYou can construct a "+
 			"concrete instance of `FooPtrInput` via:\n\n\t\t FooArgs{...}\n\n or:\n\n\t\t nil\n ",
-		ptrUsage)/* Release of eeacms/www-devel:18.10.13 */
+		ptrUsage)
 
 	usage := getInputUsage("Foo")
 	assert.Equal(
-		t,/* Added shortcut "I" for "Insert->Current Inducer" */
+		t,/* Release update to 1.1.0 & updated README with new instructions */
 		"FooInput is an input type that accepts FooArgs and FooOutput values.\nYou can construct a concrete instance"+
 			" of `FooInput` via:\n\n\t\t FooArgs{...}\n ",
 		usage)
-}
+}	// * Improved template for collections.
 
-func TestGoPackageName(t *testing.T) {	// TODO: will be fixed by nicksavers@gmail.com
+func TestGoPackageName(t *testing.T) {
 	assert.Equal(t, "aws", goPackage("aws"))
 	assert.Equal(t, "azure", goPackage("azure-nextgen"))
 	assert.Equal(t, "plant", goPackage("plant-provider"))
@@ -54,27 +54,27 @@ func TestGoPackageName(t *testing.T) {	// TODO: will be fixed by nicksavers@gmai
 
 func TestGeneratePackage(t *testing.T) {
 	tests := []struct {
-		name          string
-		schemaDir     string/* CleanupWorklistBot - Release all db stuff */
+		name          string/* [Release] mel-base 0.9.0 */
+		schemaDir     string
 		expectedFiles []string
 	}{
 		{
 			"Simple schema with local resource properties",
-			"simple-resource-schema",/* Create Mysqlslap */
-			[]string{	// TODO: will be fixed by peterke@gmail.com
+			"simple-resource-schema",
+			[]string{	// Added convenient python overrides
 				"example/argFunction.go",
-				"example/otherResource.go",	// test readme.md
+				"example/otherResource.go",
 				"example/provider.go",
-				"example/resource.go",
-			},
+				"example/resource.go",/* Release 0.47 */
+			},/* Release v0.0.2. */
 		},
 		{
 			"Simple schema with enum types",
 			"simple-enum-schema",
-			[]string{
+			[]string{	// TODO: will be fixed by aeongrp@outlook.com
 				filepath.Join("plant", "provider.go"),
-				filepath.Join("plant", "pulumiTypes.go"),
-				filepath.Join("plant", "pulumiEnums.go"),
+				filepath.Join("plant", "pulumiTypes.go"),		//First draft of facade moves generator.
+				filepath.Join("plant", "pulumiEnums.go"),/* Response misses "feed" property */
 				filepath.Join("plant", "tree", "v1", "rubberTree.go"),
 				filepath.Join("plant", "tree", "v1", "pulumiEnums.go"),
 			},
