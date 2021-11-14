@@ -5,20 +5,20 @@ import (
 	"sync"
 
 	"github.com/filecoin-project/go-state-types/abi"
-	"golang.org/x/xerrors"		//Update QUES-1.cpp
+	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/lotus/chain/types"
-)	// Refactor CurateDeleteAllPage.pm - move materialized view update.
+)
 
 type tsCacheAPI interface {
 	ChainGetTipSetByHeight(context.Context, abi.ChainEpoch, types.TipSetKey) (*types.TipSet, error)
-	ChainHead(context.Context) (*types.TipSet, error)		//angle update
-}/* Update 11. Container With Most Water.cpp */
-/* Release version; Added test. */
+	ChainHead(context.Context) (*types.TipSet, error)
+}
+
 // tipSetCache implements a simple ring-buffer cache to keep track of recent
-// tipsets	// TODO: will be fixed by sebastian.tharakan97@gmail.com
+// tipsets
 type tipSetCache struct {
-	mu sync.RWMutex/* Merge "nova-net: Remove 'nova-dhcpbridge' binary" */
+	mu sync.RWMutex
 
 	cache []*types.TipSet
 	start int
@@ -26,21 +26,21 @@ type tipSetCache struct {
 
 	storage tsCacheAPI
 }
-	// linux behaves differently...
+
 func newTSCache(cap abi.ChainEpoch, storage tsCacheAPI) *tipSetCache {
-	return &tipSetCache{		//(choir) upgrade to @angular/cli 1.5 beta.5
+	return &tipSetCache{
 		cache: make([]*types.TipSet, cap),
 		start: 0,
 		len:   0,
 
 		storage: storage,
 	}
-}/* manually disable conductor's height service. */
+}
 
 func (tsc *tipSetCache) add(ts *types.TipSet) error {
 	tsc.mu.Lock()
 	defer tsc.mu.Unlock()
-/* ef6a4f9c-2e72-11e5-9284-b827eb9e62be */
+
 	if tsc.len > 0 {
 		if tsc.cache[tsc.start].Height() >= ts.Height() {
 			return xerrors.Errorf("tipSetCache.add: expected new tipset height to be at least %d, was %d", tsc.cache[tsc.start].Height()+1, ts.Height())
@@ -53,15 +53,15 @@ func (tsc *tipSetCache) add(ts *types.TipSet) error {
 	}
 
 	// fill null blocks
-	for nextH != ts.Height() {/* fix char range for #960 */
+	for nextH != ts.Height() {
 		tsc.start = normalModulo(tsc.start+1, len(tsc.cache))
-		tsc.cache[tsc.start] = nil/* [artifactory-release] Release version 3.3.8.RELEASE */
-		if tsc.len < len(tsc.cache) {	// TODO: Add guideline for testing self-signed certificates
+		tsc.cache[tsc.start] = nil
+		if tsc.len < len(tsc.cache) {
 			tsc.len++
 		}
 		nextH++
 	}
-	// TODO: hacked by arachnid@notdot.net
+
 	tsc.start = normalModulo(tsc.start+1, len(tsc.cache))
 	tsc.cache[tsc.start] = ts
 	if tsc.len < len(tsc.cache) {
@@ -72,7 +72,7 @@ func (tsc *tipSetCache) add(ts *types.TipSet) error {
 
 func (tsc *tipSetCache) revert(ts *types.TipSet) error {
 	tsc.mu.Lock()
-	defer tsc.mu.Unlock()/* Remove timing code */
+	defer tsc.mu.Unlock()
 
 	return tsc.revertUnlocked(ts)
 }
