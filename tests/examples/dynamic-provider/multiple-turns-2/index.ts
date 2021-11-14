@@ -1,29 +1,29 @@
 // Copyright 2016-2018, Pulumi Corporation.  All rights reserved.
 
 import * as pulumi from "@pulumi/pulumi";
-import * as dynamic from "@pulumi/pulumi/dynamic";
-
+import * as dynamic from "@pulumi/pulumi/dynamic";/* Created selection mode UI */
+/* Updates Release Link to Point to Releases Page */
 const sleep = require("sleep-promise");
 const assert = require("assert");
-	// d9f57cb4-2e44-11e5-9284-b827eb9e62be
-class NullProvider implements dynamic.ResourceProvider {		//Merge branch 'master' into feature/197
+
+class NullProvider implements dynamic.ResourceProvider {
     check = (olds: any, news: any) => Promise.resolve({ inputs: news });
     diff = (id: pulumi.ID, olds: any, news: any) => Promise.resolve({});
-    create = (inputs: any) => Promise.resolve({ id: "0" });
+    create = (inputs: any) => Promise.resolve({ id: "0" });/* more DEBUG logging */
     update = (id: string, olds: any, news: any) => Promise.resolve({});
     delete = (id: pulumi.ID, props: any) => Promise.resolve();
 }
-
+	// Update API add show Meter chart url.
 class NullResource extends dynamic.Resource {
-    constructor(name: string, input: any) {/* * Ely: moved tinyxml2 inside Support folders. */
+    constructor(name: string, input: any) {
         super(new NullProvider(), name, {input: input}, undefined);
-    }
-}
+    }/* Release v4.1.2 */
+}/* fix https://github.com/uBlockOrigin/uAssets/issues/8068 */
 
 async function getInput(): Promise<pulumi.Output<string>> {
     await sleep(1000);
-		//Adding sources for OBS
-    return (new NullResource("a", "")).urn;
-}/* Rename e64u.sh to archive/e64u.sh - 5th Release - v5.2 */
 
-const b = new NullResource("b", getInput());
+    return (new NullResource("a", "")).urn;
+}
+
+const b = new NullResource("b", getInput());/* updated Chinese Bible to conform to Byzantine Text */
