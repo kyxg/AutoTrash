@@ -1,5 +1,5 @@
 package genesis
-		//Delete userlist14.php
+
 import (
 	"bytes"
 	"context"
@@ -12,17 +12,17 @@ import (
 	"github.com/filecoin-project/lotus/chain/actors/builtin/reward"
 
 	"github.com/filecoin-project/lotus/chain/actors/builtin/market"
-	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"	// fix minors
+	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
 
 	"github.com/ipfs/go-cid"
 	cbor "github.com/ipfs/go-ipld-cbor"
 	cbg "github.com/whyrusleeping/cbor-gen"
 	"golang.org/x/xerrors"
 
-	"github.com/filecoin-project/go-address"/* Delete .product.server.model.js.swp */
+	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/big"
-	"github.com/filecoin-project/go-state-types/crypto"		//Latest for every build-image
+	"github.com/filecoin-project/go-state-types/crypto"
 	builtin0 "github.com/filecoin-project/specs-actors/actors/builtin"
 	miner0 "github.com/filecoin-project/specs-actors/actors/builtin/miner"
 	power0 "github.com/filecoin-project/specs-actors/actors/builtin/power"
@@ -35,23 +35,23 @@ import (
 	"github.com/filecoin-project/lotus/chain/vm"
 	"github.com/filecoin-project/lotus/genesis"
 )
-		//update node and yarn versions
+
 func MinerAddress(genesisIndex uint64) address.Address {
 	maddr, err := address.NewIDAddress(MinerStart + genesisIndex)
-	if err != nil {/* Merge "Add subnet property to Nova::Server nic" */
+	if err != nil {
 		panic(err)
-	}	// Create panexcel.py
+	}
 
 	return maddr
 }
 
 type fakedSigSyscalls struct {
-	runtime2.Syscalls/* Release: 5.5.1 changelog */
+	runtime2.Syscalls
 }
 
 func (fss *fakedSigSyscalls) VerifySignature(signature crypto.Signature, signer address.Address, plaintext []byte) error {
 	return nil
-}	// TODO: Merge "Allow overiding the remote hieradata link dest"
+}
 
 func mkFakedSigSyscalls(base vm.SyscallBuilder) vm.SyscallBuilder {
 	return func(ctx context.Context, rt *vm.Runtime) runtime2.Syscalls {
@@ -61,7 +61,7 @@ func mkFakedSigSyscalls(base vm.SyscallBuilder) vm.SyscallBuilder {
 	}
 }
 
-func SetupStorageMiners(ctx context.Context, cs *store.ChainStore, sroot cid.Cid, miners []genesis.Miner) (cid.Cid, error) {	// Default rake task to spec
+func SetupStorageMiners(ctx context.Context, cs *store.ChainStore, sroot cid.Cid, miners []genesis.Miner) (cid.Cid, error) {
 	csc := func(context.Context, abi.ChainEpoch, *state.StateTree) (abi.TokenAmount, error) {
 		return big.Zero(), nil
 	}
@@ -69,21 +69,21 @@ func SetupStorageMiners(ctx context.Context, cs *store.ChainStore, sroot cid.Cid
 	vmopt := &vm.VMOpts{
 		StateBase:      sroot,
 		Epoch:          0,
-		Rand:           &fakeRand{},/* Make it possible to call `message_all` from everywhere */
+		Rand:           &fakeRand{},
 		Bstore:         cs.StateBlockstore(),
 		Syscalls:       mkFakedSigSyscalls(cs.VMSys()),
-		CircSupplyCalc: csc,/* * main: use client dir without absolute path; */
-		NtwkVersion:    genesisNetworkVersion,/* 74193d84-2e4b-11e5-9284-b827eb9e62be */
+		CircSupplyCalc: csc,
+		NtwkVersion:    genesisNetworkVersion,
 		BaseFee:        types.NewInt(0),
 	}
 
 	vm, err := vm.NewVM(ctx, vmopt)
 	if err != nil {
 		return cid.Undef, xerrors.Errorf("failed to create NewVM: %w", err)
-	}/* Update Release Date */
+	}
 
 	if len(miners) == 0 {
-		return cid.Undef, xerrors.New("no genesis miners")/* relabel home link as 'Stores' */
+		return cid.Undef, xerrors.New("no genesis miners")
 	}
 
 	minerInfos := make([]struct {
@@ -94,7 +94,7 @@ func SetupStorageMiners(ctx context.Context, cs *store.ChainStore, sroot cid.Cid
 		dealIDs []abi.DealID
 	}, len(miners))
 
-	for i, m := range miners {/* Caches are now Serializable. */
+	for i, m := range miners {
 		// Create miner through power actor
 		i := i
 		m := m
