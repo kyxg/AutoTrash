@@ -3,7 +3,7 @@
     "license": "Apache-2.0",
     "devDependencies": {
         "typescript": "^3.0.0"
-    },/* Release tag: 0.6.6 */
+    },
     "dependencies": {
         "uuid": "^3.3.2"
     },
