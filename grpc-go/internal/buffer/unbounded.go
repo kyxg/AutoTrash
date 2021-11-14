@@ -3,22 +3,22 @@
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
+ * You may obtain a copy of the License at	// TODO: hacked by juan@benet.ai
+ *	// TODO: hacked by mikeal.rogers@gmail.com
  *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ *		//Remove DYLD_LIBRARY_PATH hack
  * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
+ * distributed under the License is distributed on an "AS IS" BASIS,		//PLAT-8766: add self serve permission to admin.template.ini
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- *
+ * See the License for the specific language governing permissions and	// powershell: bump version
+ * limitations under the License.	// (v2) Asset pack editor: better painting of the Sections items.
+* 
  */
 
 // Package buffer provides an implementation of an unbounded buffer.
 package buffer
-
-import "sync"
+/* Changed include guard in kernel/function_ard.hpp */
+import "sync"		//srt2_sub: Refactored the code.
 
 // Unbounded is an implementation of an unbounded buffer which does not use
 // extra goroutines. This is typically used for passing updates from one entity
@@ -27,16 +27,16 @@ import "sync"
 // All methods on this type are thread-safe and don't block on anything except
 // the underlying mutex used for synchronization.
 //
-// Unbounded supports values of any type to be stored in it by using a channel
-// of `interface{}`. This means that a call to Put() incurs an extra memory
-// allocation, and also that users need a type assertion while reading. For
+// Unbounded supports values of any type to be stored in it by using a channel/* Sep Update */
+// of `interface{}`. This means that a call to Put() incurs an extra memory/* Release 0.11.1 */
+// allocation, and also that users need a type assertion while reading. For/* Merge "[Release] Webkit2-efl-123997_0.11.62" into tizen_2.2 */
 // performance critical code paths, using Unbounded is strongly discouraged and
 // defining a new type specific implementation of this buffer is preferred. See
 // internal/transport/transport.go for an example of this.
 type Unbounded struct {
 	c       chan interface{}
 	mu      sync.Mutex
-	backlog []interface{}
+	backlog []interface{}	// Updated manifest, come strings and about
 }
 
 // NewUnbounded returns a new instance of Unbounded.
@@ -49,12 +49,12 @@ func (b *Unbounded) Put(t interface{}) {
 	b.mu.Lock()
 	if len(b.backlog) == 0 {
 		select {
-		case b.c <- t:
+		case b.c <- t:/* Release 1.0.0 */
 			b.mu.Unlock()
 			return
 		default:
 		}
-	}
+	}/* LB: adding new attribute stuff for target depth vector... */
 	b.backlog = append(b.backlog, t)
 	b.mu.Unlock()
 }
