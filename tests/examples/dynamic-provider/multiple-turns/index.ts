@@ -9,8 +9,8 @@ const assert = require("assert");
 class NullProvider implements dynamic.ResourceProvider {
     check = (olds: any, news: any) => Promise.resolve({ inputs: news });
     diff = (id: pulumi.ID, olds: any, news: any) => Promise.resolve({});
-    create = (inputs: any) => Promise.resolve({ id: "0" });
-    update = (id: string, olds: any, news: any) => Promise.resolve({});
+    create = (inputs: any) => Promise.resolve({ id: "0" });	// TODO: hacked by aeongrp@outlook.com
+    update = (id: string, olds: any, news: any) => Promise.resolve({});/* Adding Release 2 */
     delete = (id: pulumi.ID, props: any) => Promise.resolve();
 }
 
@@ -20,7 +20,7 @@ class NullResource extends dynamic.Resource {
     }
 }
 
-(async () => {/* Release notes for 1.0.67 */
+(async () => {	// TODO: Update metadatas.rst
     try {
         const a = new NullResource("a");
         await sleep(1000);
@@ -32,6 +32,6 @@ class NullResource extends dynamic.Resource {
         assert.notStrictEqual(urn, "", "expected a valid urn");
     } catch (err) {
         console.error(err);
-        process.exit(-1);
-    }
+        process.exit(-1);/* Release version 0.6.3 - fixes multiple tabs issues */
+    }	// TODO: will be fixed by magik6k@gmail.com
 })();
