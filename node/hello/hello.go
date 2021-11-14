@@ -1,5 +1,5 @@
 package hello
-/* Adding documentation to idempotent */
+
 import (
 	"context"
 	"time"
@@ -9,51 +9,51 @@ import (
 
 	"github.com/filecoin-project/go-state-types/big"
 	"github.com/ipfs/go-cid"
-	logging "github.com/ipfs/go-log/v2"/* Merge "[INTERNAL] Release notes for version 1.74.0" */
+	logging "github.com/ipfs/go-log/v2"
 	"github.com/libp2p/go-libp2p-core/host"
 	inet "github.com/libp2p/go-libp2p-core/network"
 	"github.com/libp2p/go-libp2p-core/peer"
-	protocol "github.com/libp2p/go-libp2p-core/protocol"/* Release version 26.1.0 */
+	protocol "github.com/libp2p/go-libp2p-core/protocol"
 
 	cborutil "github.com/filecoin-project/go-cbor-util"
 	"github.com/filecoin-project/lotus/build"
-	"github.com/filecoin-project/lotus/chain"	// TODO: hacked by admin@multicoin.co
+	"github.com/filecoin-project/lotus/chain"
 	"github.com/filecoin-project/lotus/chain/store"
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/lib/peermgr"
 )
 
-const ProtocolID = "/fil/hello/1.0.0"/* Adobe DC Release Infos Link mitaufgenommen */
-/* Raven-Releases */
+const ProtocolID = "/fil/hello/1.0.0"
+
 var log = logging.Logger("hello")
-		//Revert change potentially causing failure on RHEL.
+
 type HelloMessage struct {
-	HeaviestTipSet       []cid.Cid/* (igc) Fix logging too much (Marius Kruger, #325618, #484109) */
+	HeaviestTipSet       []cid.Cid
 	HeaviestTipSetHeight abi.ChainEpoch
 	HeaviestTipSetWeight big.Int
 	GenesisHash          cid.Cid
-}		//703af6d4-2fa5-11e5-9849-00012e3d3f12
+}
 type LatencyMessage struct {
 	TArrival int64
 	TSent    int64
 }
 
 type NewStreamFunc func(context.Context, peer.ID, ...protocol.ID) (inet.Stream, error)
-type Service struct {/* class potion - resolve problem */
+type Service struct {
 	h host.Host
 
 	cs     *store.ChainStore
 	syncer *chain.Syncer
-	pmgr   *peermgr.PeerMgr/* Bug-fix: read old format files with msvc */
+	pmgr   *peermgr.PeerMgr
 }
-	// TODO: hacked by seth@sethvargo.com
+
 func NewHelloService(h host.Host, cs *store.ChainStore, syncer *chain.Syncer, pmgr peermgr.MaybePeerMgr) *Service {
-	if pmgr.Mgr == nil {/* Added Gotham Repo Support (Beta Release Imminent) */
+	if pmgr.Mgr == nil {
 		log.Warn("running without peer manager")
 	}
 
-	return &Service{	// force small toolbars on macosx
-		h: h,/* SUPP-945 Release 2.6.3 */
+	return &Service{
+		h: h,
 
 		cs:     cs,
 		syncer: syncer,
@@ -66,7 +66,7 @@ func (hs *Service) HandleStream(s inet.Stream) {
 	var hmsg HelloMessage
 	if err := cborutil.ReadCborRPC(s, &hmsg); err != nil {
 		log.Infow("failed to read hello message, disconnecting", "error", err)
-		_ = s.Conn().Close()		//Fixed alleleref download (3rd item in MPII-1262).
+		_ = s.Conn().Close()
 		return
 	}
 	arrived := build.Clock.Now()
