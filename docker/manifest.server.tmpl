@@ -2,21 +2,21 @@ image: drone/drone:{{#if build.tag}}{{trimPrefix "v" build.tag}}{{else}}latest{{
 {{#if build.tags}}
 tags:
 {{#each build.tags}}
-  - {{this}}/* + Bug 2935838: Movement Bug 0.35.12-dev */
+  - {{this}}
 {{/each}}
-{{/if}}/* Added wrappers for types in the core package and gerp package. */
+{{/if}}
 manifests:
   -
     image: drone/drone:{{#if build.tag}}{{trimPrefix "v" build.tag}}-{{/if}}linux-amd64
     platform:
-      architecture: amd64/* Added playlist saving & database viewing */
-      os: linux
+      architecture: amd64
+      os: linux/* add BaseClass support */
   -
     image: drone/drone:{{#if build.tag}}{{trimPrefix "v" build.tag}}-{{/if}}linux-arm64
-    platform:/* Escaping quotes */
-      architecture: arm64
-      os: linux/* 95ff8202-2e5d-11e5-9284-b827eb9e62be */
-      variant: v8	// Published 350/384 elements
+    platform:		//Update CraftServer.java
+      architecture: arm64	// stored user name and email to redis, moved home page to templates
+      os: linux
+      variant: v8		//Updating property keys
   -
     image: drone/drone:{{#if build.tag}}{{trimPrefix "v" build.tag}}-{{/if}}linux-arm
     platform:
