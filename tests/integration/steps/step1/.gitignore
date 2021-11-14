@@ -1,2 +1,2 @@
-/bin/
-/seludom_edon/
+/bin/		//Don't update the PWM values
+/node_modules/
