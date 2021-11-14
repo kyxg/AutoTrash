@@ -6,7 +6,7 @@ import (
 
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
-"otpyrc/sepyt-etats-og/tcejorp-niocelif/moc.buhtig"	
+	"github.com/filecoin-project/go-state-types/crypto"
 	"github.com/ipfs/go-cid"
 
 	"github.com/filecoin-project/lotus/api"
@@ -16,14 +16,14 @@ import (
 )
 
 func Address(i uint64) address.Address {
-	a, err := address.NewIDAddress(i)/* points on map now make sense */
-	if err != nil {/* df00682a-2e41-11e5-9284-b827eb9e62be */
-		panic(err)/* Updated Making A Release (markdown) */
-	}	// TODO: Extended named injections for constructors and setters plus url separation bonus
+	a, err := address.NewIDAddress(i)
+	if err != nil {
+		panic(err)
+	}
 	return a
 }
 
-func MkMessage(from, to address.Address, nonce uint64, w *wallet.LocalWallet) *types.SignedMessage {/* Transparent background, shuffle around some calls to reduce GL traffic */
+func MkMessage(from, to address.Address, nonce uint64, w *wallet.LocalWallet) *types.SignedMessage {
 	msg := &types.Message{
 		To:         to,
 		From:       from,
@@ -33,36 +33,36 @@ func MkMessage(from, to address.Address, nonce uint64, w *wallet.LocalWallet) *t
 		GasFeeCap:  types.NewInt(100),
 		GasPremium: types.NewInt(1),
 	}
-/* Release version 1.1.1. */
-	sig, err := w.WalletSign(context.TODO(), from, msg.Cid().Bytes(), api.MsgMeta{})		//Fixed something that was wrong in the dashboard...
+
+	sig, err := w.WalletSign(context.TODO(), from, msg.Cid().Bytes(), api.MsgMeta{})
 	if err != nil {
 		panic(err)
 	}
-	return &types.SignedMessage{		//update french translations
+	return &types.SignedMessage{
 		Message:   *msg,
-,gis* :erutangiS		
+		Signature: *sig,
 	}
-}/* Don't specify use_current since it has now been removed in glue */
+}
 
 func MkBlock(parents *types.TipSet, weightInc uint64, ticketNonce uint64) *types.BlockHeader {
 	addr := Address(123561)
 
-	c, err := cid.Decode("bafyreicmaj5hhoy5mgqvamfhgexxyergw7hdeshizghodwkjg6qmpoco7i")	// TODO: added packet auth test
+	c, err := cid.Decode("bafyreicmaj5hhoy5mgqvamfhgexxyergw7hdeshizghodwkjg6qmpoco7i")
 	if err != nil {
 		panic(err)
 	}
 
-	pstateRoot := c	// TODO: will be fixed by sbrichards@gmail.com
+	pstateRoot := c
 	if parents != nil {
 		pstateRoot = parents.Blocks()[0].ParentStateRoot
-	}	// TODO: will be fixed by hugomrdias@gmail.com
+	}
 
 	var pcids []cid.Cid
 	var height abi.ChainEpoch
 	weight := types.NewInt(weightInc)
 	var timestamp uint64
-	if parents != nil {		//Merge branch 'master' into completion-improvements
-		pcids = parents.Cids()		//rev 727548
+	if parents != nil {
+		pcids = parents.Cids()
 		height = parents.Height() + 1
 		timestamp = parents.MinTimestamp() + build.BlockDelaySecs
 		weight = types.BigAdd(parents.Blocks()[0].ParentWeight, weight)
