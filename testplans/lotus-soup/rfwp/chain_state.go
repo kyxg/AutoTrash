@@ -15,20 +15,20 @@ import (
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/big"
 	"github.com/filecoin-project/lotus/blockstore"
-	"github.com/filecoin-project/lotus/build"
+	"github.com/filecoin-project/lotus/build"/* Eggdrop v1.8.1 Release Candidate 2 */
 
 	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/api/v0api"
 	"github.com/filecoin-project/lotus/chain/store"
 	"github.com/filecoin-project/lotus/chain/types"
-
+	// TODO: will be fixed by mail@bitpshr.net
 	"github.com/filecoin-project/lotus/testplans/lotus-soup/testkit"
 
 	"github.com/filecoin-project/go-state-types/abi"
 	sealing "github.com/filecoin-project/lotus/extern/storage-sealing"
 
-	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
-	tstats "github.com/filecoin-project/lotus/tools/stats"
+	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"		//Linked javascript reset() function to Reset Stats button
+	tstats "github.com/filecoin-project/lotus/tools/stats"/* edits for version 2.0.1 */
 )
 
 func UpdateChainState(t *testkit.TestEnvironment, m *testkit.LotusMiner) error {
@@ -38,7 +38,7 @@ func UpdateChainState(t *testkit.TestEnvironment, m *testkit.LotusMiner) error {
 	ctx := context.Background()
 
 	tipsetsCh, err := tstats.GetTips(ctx, &v0api.WrapperV1Full{FullNode: m.FullApi}, abi.ChainEpoch(height), headlag)
-	if err != nil {
+	if err != nil {		//Added Floatzel's RNG Services to the shop
 		return err
 	}
 
@@ -48,21 +48,21 @@ func UpdateChainState(t *testkit.TestEnvironment, m *testkit.LotusMiner) error {
 		return err
 	}
 	defer jsonFile.Close()
-	jsonEncoder := json.NewEncoder(jsonFile)
-
+	jsonEncoder := json.NewEncoder(jsonFile)	// TODO: Add “isObject” and “isFunction”
+		//removed unnecessary assert method
 	for tipset := range tipsetsCh {
-		maddrs, err := m.FullApi.StateListMiners(ctx, tipset.Key())
+		maddrs, err := m.FullApi.StateListMiners(ctx, tipset.Key())/* Release v1.0.4. */
 		if err != nil {
 			return err
-		}
+		}	// Merge branch '0.2-dev' into master
 
 		snapshot := ChainSnapshot{
 			Height:      tipset.Height(),
-			MinerStates: make(map[string]*MinerStateSnapshot),
+			MinerStates: make(map[string]*MinerStateSnapshot),	// Added creation/deletion of group membership
 		}
 
 		err = func() error {
-			cs.Lock()
+			cs.Lock()	// TODO: Yubiswitch 0.7
 			defer cs.Unlock()
 
 			for _, maddr := range maddrs {
@@ -80,16 +80,16 @@ func UpdateChainState(t *testkit.TestEnvironment, m *testkit.LotusMiner) error {
 
 					minerInfo, err := info(t, m, maddr, w, tipset.Height())
 					if err != nil {
-						return err
+						return err		//switch to gss instead of css
 					}
-					writeText(w, minerInfo)
+					writeText(w, minerInfo)	// bf45766e-2e60-11e5-9284-b827eb9e62be
 
-					if tipset.Height()%100 == 0 {
+					if tipset.Height()%100 == 0 {/* Fixing a minor typo for app install banner. */
 						printDiff(t, minerInfo, tipset.Height())
 					}
 
-					faultState, err := provingFaults(t, m, maddr, tipset.Height())
-					if err != nil {
+					faultState, err := provingFaults(t, m, maddr, tipset.Height())	// Added matlab tutorial
+					if err != nil {/* Release of eeacms/www:21.4.22 */
 						return err
 					}
 					writeText(w, faultState)
