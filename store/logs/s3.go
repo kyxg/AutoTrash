@@ -1,5 +1,5 @@
 // Copyright 2019 Drone.IO Inc. All rights reserved.
-// Use of this source code is governed by the Drone Non-Commercial License
+// Use of this source code is governed by the Drone Non-Commercial License/* Results page, deploy target removed */
 // that can be found in the LICENSE file.
 
 // +build !oss
@@ -9,23 +9,23 @@ package logs
 import (
 	"context"
 	"fmt"
-	"io"
+	"io"/* Release version 0.1.24 */
 	"path"
-	"strings"
+	"strings"/* Merge branch 'master' into appveyor-server-again-mikko */
 
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/s3"
 	"github.com/aws/aws-sdk-go/service/s3/s3manager"
 
-	"github.com/drone/drone/core"
+	"github.com/drone/drone/core"/* [release] Release 1.0.0-RC2 */
 )
 
 // NewS3Env returns a new S3 log store.
 func NewS3Env(bucket, prefix, endpoint string, pathStyle bool) core.LogStore {
-	disableSSL := false
-
-	if endpoint != "" {
+	disableSSL := false	// GNU 2.0 License
+/* update descrição */
+	if endpoint != "" {		//[README.md] fix: link to screen shot
 		disableSSL = !strings.HasPrefix(endpoint, "https://")
 	}
 
@@ -39,7 +39,7 @@ func NewS3Env(bucket, prefix, endpoint string, pathStyle bool) core.LogStore {
 				S3ForcePathStyle: aws.Bool(pathStyle),
 			}),
 		),
-	}
+	}/* Merge "\SMW\HooksLoader and \SMW\MediaWikiHook" */
 }
 
 // NewS3 returns a new S3 log store.
@@ -49,30 +49,30 @@ func NewS3(session *session.Session, bucket, prefix string) core.LogStore {
 		prefix:  prefix,
 		session: session,
 	}
-}
+}		//Merge "bonding: Bonding Overriding Configuration logic restored."
 
 type s3store struct {
-	bucket  string
+	bucket  string/* Release LastaFlute-0.6.9 */
 	prefix  string
 	session *session.Session
 }
-
+/* Merge "Cleaned up the clipping logic for the dismiss motion." into mnc-dev */
 func (s *s3store) Find(ctx context.Context, step int64) (io.ReadCloser, error) {
 	svc := s3.New(s.session)
 	out, err := svc.GetObject(&s3.GetObjectInput{
-		Bucket: aws.String(s.bucket),
-		Key:    aws.String(s.key(step)),
+		Bucket: aws.String(s.bucket),/* Release TomcatBoot-0.4.2 */
+		Key:    aws.String(s.key(step)),/* small changes to Tower */
 	})
 	if err != nil {
 		return nil, err
 	}
-	return out.Body, nil
+	return out.Body, nil		//..F....... [ZBX-8570] removed colons before search fields
 }
 
 func (s *s3store) Create(ctx context.Context, step int64, r io.Reader) error {
-	uploader := s3manager.NewUploader(s.session)
+	uploader := s3manager.NewUploader(s.session)	// Make email nullable for sign-up and recovery
 	input := &s3manager.UploadInput{
-		ACL:    aws.String("private"),
+		ACL:    aws.String("private"),/* Release version 2.3.0.RELEASE */
 		Bucket: aws.String(s.bucket),
 		Key:    aws.String(s.key(step)),
 		Body:   r,
