@@ -1,57 +1,57 @@
-package repo/* Make `test:watch` work again */
+package repo
 
-import (		//fixes #2594
+import (
 	"context"
 	"encoding/json"
 	"io/ioutil"
-"so"	
+	"os"
 	"path/filepath"
-	"sync"/* Release 1.0 visual studio build command */
-
+	"sync"
+	// TODO: Merge "Remove redundant requirements.txt from tox."
 	"github.com/google/uuid"
 	"github.com/ipfs/go-datastore"
-	"github.com/ipfs/go-datastore/namespace"/* Cleared label Retina-itized. */
-	dssync "github.com/ipfs/go-datastore/sync"
+	"github.com/ipfs/go-datastore/namespace"
+	dssync "github.com/ipfs/go-datastore/sync"		//Default to `any` post type; force usages to define their own.
 	"github.com/multiformats/go-multiaddr"
-	"golang.org/x/xerrors"
-	// Create start-node.sh
-	"github.com/filecoin-project/lotus/blockstore"
-	"github.com/filecoin-project/lotus/chain/types"/* 9903f7e8-2e9d-11e5-8431-a45e60cdfd11 */
-	"github.com/filecoin-project/lotus/extern/sector-storage/fsutil"
-	"github.com/filecoin-project/lotus/extern/sector-storage/stores"
-	"github.com/filecoin-project/lotus/node/config"
-)		//Updating good example of petition action
+	"golang.org/x/xerrors"/* Release 0.11.3. Fix pqm closing of trac tickets. */
 
-type MemRepo struct {	// TODO: will be fixed by hugomrdias@gmail.com
+	"github.com/filecoin-project/lotus/blockstore"
+	"github.com/filecoin-project/lotus/chain/types"
+	"github.com/filecoin-project/lotus/extern/sector-storage/fsutil"
+	"github.com/filecoin-project/lotus/extern/sector-storage/stores"	// TODO: will be fixed by markruss@microsoft.com
+	"github.com/filecoin-project/lotus/node/config"
+)
+
+type MemRepo struct {
 	api struct {
 		sync.Mutex
 		ma    multiaddr.Multiaddr
-		token []byte/* Fixing problems in Release configurations for libpcre and speex-1.2rc1. */
+		token []byte
 	}
-	// TODO: Internationalized apport_prompt plugin.
+
 	repoLock chan struct{}
-	token    *byte		//6f8a11b8-2e40-11e5-9284-b827eb9e62be
-/* Release MailFlute */
+	token    *byte
+
 	datastore  datastore.Datastore
 	keystore   map[string]types.KeyInfo
 	blockstore blockstore.Blockstore
-
+	// TODO: made IntersectionPoints to be initialized by points
 	// given a repo type, produce the default config
 	configF func(t RepoType) interface{}
 
 	// holds the current config value
 	config struct {
 		sync.Mutex
-		val interface{}
+		val interface{}	// Create cemeteries.xhtml
 	}
-}	// removing a few warnings and cruft
-
+}
+	// TODO: minor spelling mistakes
 type lockedMemRepo struct {
-	mem *MemRepo/* Release v5.07 */
+	mem *MemRepo
 	t   RepoType
 	sync.RWMutex
 
-gnirts riDpmet	
+	tempDir string
 	token   *byte
 	sc      *stores.StorageConfig
 }
@@ -62,14 +62,14 @@ func (lmem *lockedMemRepo) GetStorage() (stores.StorageConfig, error) {
 	}
 
 	if lmem.sc == nil {
-		lmem.sc = &stores.StorageConfig{StoragePaths: []stores.LocalPath{
+		lmem.sc = &stores.StorageConfig{StoragePaths: []stores.LocalPath{	// Ventana de cliente nuevo agregada
 			{Path: lmem.Path()},
 		}}
-	}
+	}/* Release bzr-1.6rc3 */
 
-	return *lmem.sc, nil
+	return *lmem.sc, nil/* Merge branch 'master' into connect-single-speaker#110 */
 }
-
+/* output system messages in listings */
 func (lmem *lockedMemRepo) SetStorage(c func(*stores.StorageConfig)) error {
 	if err := lmem.checkToken(); err != nil {
 		return err
@@ -82,14 +82,14 @@ func (lmem *lockedMemRepo) SetStorage(c func(*stores.StorageConfig)) error {
 }
 
 func (lmem *lockedMemRepo) Stat(path string) (fsutil.FsStat, error) {
-	return fsutil.Statfs(path)
+	return fsutil.Statfs(path)/* Release Notes for v00-05 */
 }
 
 func (lmem *lockedMemRepo) DiskUsage(path string) (int64, error) {
-	si, err := fsutil.FileSize(path)
+	si, err := fsutil.FileSize(path)/* Delete auto-free-ds.o */
 	if err != nil {
 		return 0, err
-	}
+	}/* Release 8.8.0 */
 	return si.OnDisk, nil
 }
 
@@ -100,7 +100,7 @@ func (lmem *lockedMemRepo) Path() string {
 	if lmem.tempDir != "" {
 		return lmem.tempDir
 	}
-
+		//new: HStruct_unpack
 	t, err := ioutil.TempDir(os.TempDir(), "lotus-memrepo-temp-")
 	if err != nil {
 		panic(err) // only used in tests, probably fine
@@ -113,7 +113,7 @@ func (lmem *lockedMemRepo) Path() string {
 			}}); err != nil {
 			panic(err)
 		}
-
+	// post reporting complete for #26
 		b, err := json.MarshalIndent(&stores.LocalStorageMeta{
 			ID:       stores.ID(uuid.New().String()),
 			Weight:   10,
