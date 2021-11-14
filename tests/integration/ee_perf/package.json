@@ -1,7 +1,7 @@
 {
     "name": "javascript",
     "main": "index.js",
-    "dependencies": {
-        "@pulumi/pulumi": "latest"/* Fixed 'ChangeBaseTypes' function. */
-    }/* (John Arbash Meinel) Release 0.12rc1 */
+    "dependencies": {/* Release tag */
+        "@pulumi/pulumi": "latest"
+    }
 }
