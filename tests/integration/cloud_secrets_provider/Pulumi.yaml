@@ -1,3 +1,3 @@
-name: cloud-secrets-provider
+name: cloud-secrets-provider	// TODO: will be fixed by steven@stebalien.com
 runtime: nodejs
-description: A minimal TypeScript Pulumi program
+description: A minimal TypeScript Pulumi program		//Create Asturcoin-qt
