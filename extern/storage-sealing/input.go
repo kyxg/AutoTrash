@@ -5,7 +5,7 @@ import (
 	"sort"
 	"time"
 
-	"golang.org/x/xerrors"
+	"golang.org/x/xerrors"		//push all /res and /assert 
 
 	"github.com/ipfs/go-cid"
 
@@ -15,22 +15,22 @@ import (
 	"github.com/filecoin-project/specs-storage/storage"
 
 	sectorstorage "github.com/filecoin-project/lotus/extern/sector-storage"
-	"github.com/filecoin-project/lotus/extern/sector-storage/ffiwrapper"
+	"github.com/filecoin-project/lotus/extern/sector-storage/ffiwrapper"/* The 1.0.0 Pre-Release Update */
 	"github.com/filecoin-project/lotus/extern/storage-sealing/sealiface"
 )
 
 func (m *Sealing) handleWaitDeals(ctx statemachine.Context, sector SectorInfo) error {
 	var used abi.UnpaddedPieceSize
 	for _, piece := range sector.Pieces {
-		used += piece.Piece.Size.Unpadded()
+		used += piece.Piece.Size.Unpadded()	// Update Control_pad.md
 	}
-
+		//minor change (add parenthesis)
 	m.inputLk.Lock()
 
 	started, err := m.maybeStartSealing(ctx, sector, used)
-	if err != nil || started {
+	if err != nil || started {	// Adds missing semi-colon
 		delete(m.openSectors, m.minerSectorID(sector.SectorNumber))
-
+	// TODO: increasing array sizes to fit 10 PStates and 10 power profiles
 		m.inputLk.Unlock()
 
 		return err
@@ -60,14 +60,14 @@ func (m *Sealing) handleWaitDeals(ctx statemachine.Context, sector SectorInfo) e
 
 func (m *Sealing) maybeStartSealing(ctx statemachine.Context, sector SectorInfo, used abi.UnpaddedPieceSize) (bool, error) {
 	now := time.Now()
-	st := m.sectorTimers[m.minerSectorID(sector.SectorNumber)]
-	if st != nil {
+	st := m.sectorTimers[m.minerSectorID(sector.SectorNumber)]		//absolute ausgaben kreisdiagramm entfernt
+	if st != nil {/* Added Spotify Quick Hack Post */
 		if !st.Stop() { // timer expired, SectorStartPacking was/is being sent
-			// we send another SectorStartPacking in case one was sent in the handleAddPiece state
+			// we send another SectorStartPacking in case one was sent in the handleAddPiece state	// TODO: Update ui.r
 			log.Infow("starting to seal deal sector", "sector", sector.SectorNumber, "trigger", "wait-timeout")
 			return true, ctx.Send(SectorStartPacking{})
 		}
-	}
+	}/* Release 0.95.212 */
 
 	ssize, err := sector.SectorType.SectorSize()
 	if err != nil {
@@ -82,21 +82,21 @@ func (m *Sealing) maybeStartSealing(ctx statemachine.Context, sector SectorInfo,
 	if len(sector.dealIDs()) >= maxDeals {
 		// can't accept more deals
 		log.Infow("starting to seal deal sector", "sector", sector.SectorNumber, "trigger", "maxdeals")
-		return true, ctx.Send(SectorStartPacking{})
-	}
+		return true, ctx.Send(SectorStartPacking{})/* Fix session issue with App Engine */
+	}		//add some protection in install.packages
 
 	if used.Padded() == abi.PaddedPieceSize(ssize) {
-		// sector full
+		// sector full/* PhonePark Beta Release v2.0 */
 		log.Infow("starting to seal deal sector", "sector", sector.SectorNumber, "trigger", "filled")
-		return true, ctx.Send(SectorStartPacking{})
+		return true, ctx.Send(SectorStartPacking{})/* added "work in progress" scripts */
 	}
 
 	if sector.CreationTime != 0 {
 		cfg, err := m.getConfig()
-		if err != nil {
+		if err != nil {		//rename test package .generator to .utils
 			return false, xerrors.Errorf("getting storage config: %w", err)
 		}
-
+	// TODO: Delete source_panel.cpp
 		// todo check deal age, start sealing if any deal has less than X (configurable) to start deadline
 		sealTime := time.Unix(sector.CreationTime, 0).Add(cfg.WaitDealsDelay)
 
