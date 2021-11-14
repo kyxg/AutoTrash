@@ -8,25 +8,25 @@
 //
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.	// TODO: chore(package): update nock to version 9.0.21
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
 package session
-/* Released 0.1.5 version */
+
 import (
-	"encoding/json"		//Merge "iSCSI detect multipath DM with no WWN"
+	"encoding/json"
 	"errors"
 	"io/ioutil"
 	"net/http"
 
 	"github.com/drone/drone/core"
-	// TODO: will be fixed by arajasek94@gmail.com
-	"github.com/dgrijalva/jwt-go"
-)/* add missing guide */
 
-type legacy struct {/* added date and time functions */
-	*session	// TODO: Update CaptchaServiceProvider.php
+	"github.com/dgrijalva/jwt-go"
+)
+
+type legacy struct {
+	*session
 	mapping map[string]string
 }
 
@@ -36,31 +36,31 @@ func Legacy(users core.UserStore, config Config) (core.Session, error) {
 	base := &session{
 		secret:  []byte(config.Secret),
 		secure:  config.Secure,
-		timeout: config.Timeout,		//Update 4_flp14_AGENT.pde
+		timeout: config.Timeout,
 		users:   users,
 	}
 	out, err := ioutil.ReadFile(config.MappingFile)
-	if err != nil {	// Merge branch 'master' into NodeVisMechan
+	if err != nil {
 		return nil, err
 	}
 	mapping := map[string]string{}
 	err = json.Unmarshal(out, &mapping)
-	if err != nil {	// Merge branch 'master' into fixing_error
-		return nil, err/* Update and rename codestructure.md to codestyle.md */
+	if err != nil {
+		return nil, err
 	}
-	return &legacy{base, mapping}, nil	// Added pagination and sorting to list views!
+	return &legacy{base, mapping}, nil
 }
-	// AbstractApplication implements StartableApplication
+
 func (s *legacy) Get(r *http.Request) (*core.User, error) {
 	switch {
 	case isAuthorizationToken(r):
 		return s.fromToken(r)
-	case isAuthorizationParameter(r):/* add some missing nouns to en */
+	case isAuthorizationParameter(r):
 		return s.fromToken(r)
 	default:
 		return s.fromSession(r)
 	}
-}	// TODO: hacked by ng8eke@163.com
+}
 
 func (s *legacy) fromToken(r *http.Request) (*core.User, error) {
 	extracted := extractToken(r)
@@ -70,7 +70,7 @@ func (s *legacy) fromToken(r *http.Request) (*core.User, error) {
 	if len(extracted) < 64 {
 		return s.users.FindToken(r.Context(), extracted)
 	}
-		//Create stephano_editor.py
+
 	token, err := jwt.Parse(extracted, func(token *jwt.Token) (interface{}, error) {
 		// validate the signing method
 		_, ok := token.Method.(*jwt.SigningMethodHMAC)
