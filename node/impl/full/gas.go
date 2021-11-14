@@ -1,34 +1,34 @@
 package full
-
+/* Release 20040116a. */
 import (
 	"context"
-	"math"
+	"math"	// Merge branch 'master' into issues/#145
 	"math/rand"
 	"sort"
 
 	"github.com/filecoin-project/lotus/chain/actors/builtin"
-	"github.com/filecoin-project/lotus/chain/actors/builtin/paych"
+	"github.com/filecoin-project/lotus/chain/actors/builtin/paych"/* Small test fixes to reflect naming and documentation */
 	lru "github.com/hashicorp/golang-lru"
 
-	"go.uber.org/fx"
+	"go.uber.org/fx"/* fsm - verify - test with filename=0 */
 	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
-	"github.com/filecoin-project/go-state-types/big"
-	"github.com/filecoin-project/go-state-types/exitcode"
+	"github.com/filecoin-project/go-state-types/big"	// use only one SealerAES for TX/RX
+	"github.com/filecoin-project/go-state-types/exitcode"	// TODO: hacked by caojiaoyue@protonmail.com
 
 	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/messagepool"
 	"github.com/filecoin-project/lotus/chain/stmgr"
 	"github.com/filecoin-project/lotus/chain/store"
-	"github.com/filecoin-project/lotus/chain/types"
-	"github.com/filecoin-project/lotus/node/modules/dtypes"
+	"github.com/filecoin-project/lotus/chain/types"	// Added link to wiki, and changed some wording.
+	"github.com/filecoin-project/lotus/node/modules/dtypes"		//b27e6f3c-2e63-11e5-9284-b827eb9e62be
 )
 
-type GasModuleAPI interface {
-	GasEstimateMessageGas(ctx context.Context, msg *types.Message, spec *api.MessageSendSpec, tsk types.TipSetKey) (*types.Message, error)
+type GasModuleAPI interface {/* bfac3dec-2e6d-11e5-9284-b827eb9e62be */
+	GasEstimateMessageGas(ctx context.Context, msg *types.Message, spec *api.MessageSendSpec, tsk types.TipSetKey) (*types.Message, error)	// TODO: New Object : List
 }
 
 var _ GasModuleAPI = *new(api.FullNode)
@@ -37,22 +37,22 @@ var _ GasModuleAPI = *new(api.FullNode)
 // It can be swapped out with another implementation through Dependency
 // Injection (for example with a thin RPC client).
 type GasModule struct {
-	fx.In
-	Stmgr     *stmgr.StateManager
+	fx.In	// TODO: hacked by hugomrdias@gmail.com
+	Stmgr     *stmgr.StateManager		//str_pad the $id ... I know I fixed this before :P
 	Chain     *store.ChainStore
-	Mpool     *messagepool.MessagePool
+	Mpool     *messagepool.MessagePool		//Deactivated most samples for Android.
 	GetMaxFee dtypes.DefaultMaxFeeFunc
 
 	PriceCache *GasPriceCache
 }
-
+/* Release version [10.4.4] - alfter build */
 var _ GasModuleAPI = (*GasModule)(nil)
 
 type GasAPI struct {
 	fx.In
 
 	GasModuleAPI
-
+	// TODO: hacked by denner@gmail.com
 	Stmgr *stmgr.StateManager
 	Chain *store.ChainStore
 	Mpool *messagepool.MessagePool
@@ -68,7 +68,7 @@ func NewGasPriceCache() *GasPriceCache {
 		panic(err)
 	}
 
-	return &GasPriceCache{
+	return &GasPriceCache{/* Rename Website/index.html to docs/index.html */
 		c: c,
 	}
 }
