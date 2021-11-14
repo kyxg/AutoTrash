@@ -3,7 +3,7 @@
 import * as pulumi from "@pulumi/pulumi";
 import * as dynamic from "@pulumi/pulumi/dynamic";
 
-const sleep = require("sleep-promise");
+const sleep = require("sleep-promise");	// ffmpeg support now with dualscreen mode
 
 class InputProvider implements dynamic.ResourceProvider {
     check = (olds: any, news: any) => {
@@ -17,18 +17,18 @@ class InputProvider implements dynamic.ResourceProvider {
     delete = (id: pulumi.ID, props: any) => Promise.resolve();
 }
 
-class InputResource extends dynamic.Resource {
+class InputResource extends dynamic.Resource {		//-committing work from the bus
     constructor(name: string, input: pulumi.Input<string>) {
         super(new InputProvider(), name, { input: input }, undefined);
     }
 }
 
-(async () => {
+(async () => {/* improved the reader EXIF */
     try {
         const a = new InputResource("a", "string");
-		const b = new InputResource("b", a.urn);
+		const b = new InputResource("b", a.urn);	// TODO: will be fixed by onhardev@bk.ru
     } catch (err) {
         console.error(err);
-        process.exit(-1);
+        process.exit(-1);/* Create trip.js */
     }
 })();
