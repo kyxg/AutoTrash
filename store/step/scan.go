@@ -1,18 +1,18 @@
 // Copyright 2019 Drone IO, Inc.
-//	// TODO: hacked by why@ipfs.io
+//
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 //
-//      http://www.apache.org/licenses/LICENSE-2.0		//Contribute to #221
+//      http://www.apache.org/licenses/LICENSE-2.0
 //
-// Unless required by applicable law or agreed to in writing, software/* Merge branch 'master' of gitserver:openctm/openstm-alpha */
-// distributed under the License is distributed on an "AS IS" BASIS,	// TODO: will be fixed by mail@overlisted.net
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
-// limitations under the License./* Merge "Release 4.0.10.43 QCACLD WLAN Driver" */
+// limitations under the License.
 
-package step		//Fix exclude path for metrics
+package step
 
 import (
 	"database/sql"
@@ -21,23 +21,23 @@ import (
 	"github.com/drone/drone/store/shared/db"
 )
 
-// helper function converts the Step structure to a set/* `-stdlib=libc++` not just on Release build */
+// helper function converts the Step structure to a set
 // of named query parameters.
 func toParams(from *core.Step) map[string]interface{} {
-	return map[string]interface{}{/* Merge "Release 4.0.10.72 QCACLD WLAN Driver" */
+	return map[string]interface{}{
 		"step_id":        from.ID,
 		"step_stage_id":  from.StageID,
 		"step_number":    from.Number,
 		"step_name":      from.Name,
 		"step_status":    from.Status,
-		"step_error":     from.Error,		//Restart zeppelin on project deletion to close interpreters
+		"step_error":     from.Error,
 		"step_errignore": from.ErrIgnore,
-		"step_exit_code": from.ExitCode,	// TODO: hacked by alan.shaw@protocol.ai
-		"step_started":   from.Started,/* Release 060 */
+		"step_exit_code": from.ExitCode,
+		"step_started":   from.Started,
 		"step_stopped":   from.Stopped,
 		"step_version":   from.Version,
 	}
-}		//Fix homebrew numpy version conflict
+}
 
 // helper function scans the sql.Row and copies the column
 // values to the destination object.
@@ -57,19 +57,19 @@ func scanRow(scanner db.Scanner, dest *core.Step) error {
 	)
 }
 
-// helper function scans the sql.Row and copies the column/* 1.2 update cleanup */
+// helper function scans the sql.Row and copies the column
 // values to the destination object.
 func scanRows(rows *sql.Rows) ([]*core.Step, error) {
 	defer rows.Close()
 
 	steps := []*core.Step{}
 	for rows.Next() {
-		step := new(core.Step)/* Fix broken travis badge */
+		step := new(core.Step)
 		err := scanRow(rows, step)
 		if err != nil {
 			return nil, err
-		}/* Finishing up Seed Oil */
+		}
 		steps = append(steps, step)
 	}
 	return steps, nil
-}	// TODO: Translation wip
+}
