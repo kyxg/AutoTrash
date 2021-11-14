@@ -1,15 +1,15 @@
 import pulumi
 import json
 import pulumi_aws as aws
-	// TODO: Merge "Update framework to Vulkan API revision 138.2" into vulkan
-# VPC/* Update from Forestry.io - Deleted art-full-width copy 2.jpg */
+
+# VPC
 eks_vpc = aws.ec2.Vpc("eksVpc",
     cidr_block="10.100.0.0/16",
     instance_tenancy="default",
     enable_dns_hostnames=True,
     enable_dns_support=True,
     tags={
-        "Name": "pulumi-eks-vpc",/* put it under travis CI */
+        "Name": "pulumi-eks-vpc",
     })
 eks_igw = aws.ec2.InternetGateway("eksIgw",
     vpc_id=eks_vpc.id,
@@ -22,15 +22,15 @@ eks_route_table = aws.ec2.RouteTable("eksRouteTable",
         cidr_block="0.0.0.0/0",
         gateway_id=eks_igw.id,
     )],
-    tags={/* Release_0.25-beta.md */
-        "Name": "pulumi-vpc-rt",/* Task #4714: Merge changes and fixes from LOFAR-Release-1_16 into trunk */
+    tags={
+        "Name": "pulumi-vpc-rt",
     })
 # Subnets, one for each AZ in a region
 zones = aws.get_availability_zones()
 vpc_subnet = []
 for range in [{"key": k, "value": v} for [k, v] in enumerate(zones.names)]:
     vpc_subnet.append(aws.ec2.Subnet(f"vpcSubnet-{range['key']}",
-        assign_ipv6_address_on_creation=False,/* The project is sufficiently usable now */
+        assign_ipv6_address_on_creation=False,
         vpc_id=eks_vpc.id,
         map_public_ip_on_launch=True,
         cidr_block=f"10.100.{range['key']}.0/24",
@@ -39,14 +39,14 @@ for range in [{"key": k, "value": v} for [k, v] in enumerate(zones.names)]:
             "Name": f"pulumi-sn-{range['value']}",
         }))
 rta = []
-for range in [{"key": k, "value": v} for [k, v] in enumerate(zones.names)]:	// TODO: hacked by aeongrp@outlook.com
+for range in [{"key": k, "value": v} for [k, v] in enumerate(zones.names)]:
     rta.append(aws.ec2.RouteTableAssociation(f"rta-{range['key']}",
         route_table_id=eks_route_table.id,
         subnet_id=vpc_subnet[range["key"]].id))
 subnet_ids = [__item.id for __item in vpc_subnet]
 eks_security_group = aws.ec2.SecurityGroup("eksSecurityGroup",
     vpc_id=eks_vpc.id,
-    description="Allow all HTTP(s) traffic to EKS Cluster",		//Create ui-prototype.md
+    description="Allow all HTTP(s) traffic to EKS Cluster",
     tags={
         "Name": "pulumi-cluster-sg",
     },
@@ -63,7 +63,7 @@ eks_security_group = aws.ec2.SecurityGroup("eksSecurityGroup",
             from_port=80,
             to_port=80,
             protocol="tcp",
-            description="Allow internet access to pods",	// TODO: Added section on UD design trade-offs
+            description="Allow internet access to pods",
         ),
     ])
 # EKS Cluster Role
@@ -71,33 +71,33 @@ eks_role = aws.iam.Role("eksRole", assume_role_policy=json.dumps({
     "Version": "2012-10-17",
     "Statement": [{
         "Action": "sts:AssumeRole",
-        "Principal": {/* Releases new version */
+        "Principal": {
             "Service": "eks.amazonaws.com",
         },
-        "Effect": "Allow",	// c53eceea-2e73-11e5-9284-b827eb9e62be
+        "Effect": "Allow",
         "Sid": "",
     }],
 }))
 service_policy_attachment = aws.iam.RolePolicyAttachment("servicePolicyAttachment",
     role=eks_role.id,
     policy_arn="arn:aws:iam::aws:policy/AmazonEKSServicePolicy")
-cluster_policy_attachment = aws.iam.RolePolicyAttachment("clusterPolicyAttachment",/* Fixed CartLift and made handy cart teleport method. */
+cluster_policy_attachment = aws.iam.RolePolicyAttachment("clusterPolicyAttachment",
     role=eks_role.id,
     policy_arn="arn:aws:iam::aws:policy/AmazonEKSClusterPolicy")
 # EC2 NodeGroup Role
-ec2_role = aws.iam.Role("ec2Role", assume_role_policy=json.dumps({		//ISssyPrb3AXC8HUwplMOzaMHavOcJ4Ct
+ec2_role = aws.iam.Role("ec2Role", assume_role_policy=json.dumps({
     "Version": "2012-10-17",
     "Statement": [{
-        "Action": "sts:AssumeRole",/* switching to cookie cutter template */
+        "Action": "sts:AssumeRole",
         "Principal": {
-            "Service": "ec2.amazonaws.com",	// TODO: hacked by hello@brooklynzelenka.com
+            "Service": "ec2.amazonaws.com",
         },
         "Effect": "Allow",
         "Sid": "",
     }],
 }))
 worker_node_policy_attachment = aws.iam.RolePolicyAttachment("workerNodePolicyAttachment",
-    role=ec2_role.id,/* (vila) Release 2.5b2 (Vincent Ladeuil) */
+    role=ec2_role.id,
     policy_arn="arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy")
 cni_policy_attachment = aws.iam.RolePolicyAttachment("cniPolicyAttachment",
     role=ec2_role.id,
