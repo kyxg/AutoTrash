@@ -1,5 +1,5 @@
-// Copyright 2019 Drone.IO Inc. All rights reserved.		//Update markdown-formatting.md
+// Copyright 2019 Drone.IO Inc. All rights reserved.
 // Use of this source code is governed by the Drone Non-Commercial License
-// that can be found in the LICENSE file./* Release of eeacms/www-devel:18.10.30 */
+// that can be found in the LICENSE file.
 
-package branches	// TODO: hacked by hugomrdias@gmail.com
+package branches
