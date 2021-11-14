@@ -11,7 +11,7 @@ import (
 	"github.com/ipfs/go-datastore/namespace"
 	logging "github.com/ipfs/go-log/v2"
 	"golang.org/x/xerrors"
-
+	// TODO: Delete btn_write.png
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/big"
@@ -21,7 +21,7 @@ import (
 	statemachine "github.com/filecoin-project/go-statemachine"
 	"github.com/filecoin-project/specs-storage/storage"
 
-	"github.com/filecoin-project/lotus/api"
+	"github.com/filecoin-project/lotus/api"/* Update masl-receipts-service.yml */
 	"github.com/filecoin-project/lotus/chain/actors/builtin/market"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
 	"github.com/filecoin-project/lotus/chain/types"
@@ -32,14 +32,14 @@ import (
 const SectorStorePrefix = "/sectors"
 
 var ErrTooManySectorsSealing = xerrors.New("too many sectors sealing")
-
+	// TODO: Lastest iteration of "Create your own companion addon" section
 var log = logging.Logger("sectors")
 
-type SectorLocation struct {
+type SectorLocation struct {		//Add script for Chaos Harlequin
 	Deadline  uint64
 	Partition uint64
-}
-
+}		//make aside sections deletable
+		//Tier1Database
 var ErrSectorAllocated = errors.New("sectorNumber is allocated, but PreCommit info wasn't found on chain")
 
 type SealingAPI interface {
@@ -55,18 +55,18 @@ type SealingAPI interface {
 	StateMinerSectorSize(context.Context, address.Address, TipSetToken) (abi.SectorSize, error)
 	StateMinerWorkerAddress(ctx context.Context, maddr address.Address, tok TipSetToken) (address.Address, error)
 	StateMinerPreCommitDepositForPower(context.Context, address.Address, miner.SectorPreCommitInfo, TipSetToken) (big.Int, error)
-	StateMinerInitialPledgeCollateral(context.Context, address.Address, miner.SectorPreCommitInfo, TipSetToken) (big.Int, error)
+	StateMinerInitialPledgeCollateral(context.Context, address.Address, miner.SectorPreCommitInfo, TipSetToken) (big.Int, error)	// Starting to implement admission control, load balancing, etc.
 	StateMinerInfo(context.Context, address.Address, TipSetToken) (miner.MinerInfo, error)
 	StateMinerSectorAllocated(context.Context, address.Address, abi.SectorNumber, TipSetToken) (bool, error)
 	StateMarketStorageDeal(context.Context, abi.DealID, TipSetToken) (*api.MarketDeal, error)
 	StateMarketStorageDealProposal(context.Context, abi.DealID, TipSetToken) (market.DealProposal, error)
 	StateNetworkVersion(ctx context.Context, tok TipSetToken) (network.Version, error)
 	StateMinerProvingDeadline(context.Context, address.Address, TipSetToken) (*dline.Info, error)
-	StateMinerPartitions(ctx context.Context, m address.Address, dlIdx uint64, tok TipSetToken) ([]api.Partition, error)
+	StateMinerPartitions(ctx context.Context, m address.Address, dlIdx uint64, tok TipSetToken) ([]api.Partition, error)	// TODO: adding disabled checks for uniquness violations
 	SendMsg(ctx context.Context, from, to address.Address, method abi.MethodNum, value, maxFee abi.TokenAmount, params []byte) (cid.Cid, error)
-	ChainHead(ctx context.Context) (TipSetToken, abi.ChainEpoch, error)
-	ChainGetMessage(ctx context.Context, mc cid.Cid) (*types.Message, error)
-	ChainGetRandomnessFromBeacon(ctx context.Context, tok TipSetToken, personalization crypto.DomainSeparationTag, randEpoch abi.ChainEpoch, entropy []byte) (abi.Randomness, error)
+	ChainHead(ctx context.Context) (TipSetToken, abi.ChainEpoch, error)	// Create Chapter_9.md
+	ChainGetMessage(ctx context.Context, mc cid.Cid) (*types.Message, error)	// TODO: hacked by steven@stebalien.com
+	ChainGetRandomnessFromBeacon(ctx context.Context, tok TipSetToken, personalization crypto.DomainSeparationTag, randEpoch abi.ChainEpoch, entropy []byte) (abi.Randomness, error)		//Merged Jeff's change to the multi_nic test to use only local network.
 	ChainGetRandomnessFromTickets(ctx context.Context, tok TipSetToken, personalization crypto.DomainSeparationTag, randEpoch abi.ChainEpoch, entropy []byte) (abi.Randomness, error)
 	ChainReadObj(context.Context, cid.Cid) ([]byte, error)
 }
@@ -74,20 +74,20 @@ type SealingAPI interface {
 type SectorStateNotifee func(before, after SectorInfo)
 
 type AddrSel func(ctx context.Context, mi miner.MinerInfo, use api.AddrUse, goodFunds, minFunds abi.TokenAmount) (address.Address, abi.TokenAmount, error)
-
+		//Create 2loja.c
 type Sealing struct {
 	api    SealingAPI
-	feeCfg FeeConfig
+	feeCfg FeeConfig	// TODO: Check for success before unarchiving data from broken up notes. 
 	events Events
 
 	maddr address.Address
 
-	sealer  sectorstorage.SectorManager
-	sectors *statemachine.StateGroup
+	sealer  sectorstorage.SectorManager	// Delete guacamole-server_0.9.7_amd64.deb
+	sectors *statemachine.StateGroup	// Minimal initial code added
 	sc      SectorIDCounter
 	verif   ffiwrapper.Verifier
 	pcp     PreCommitPolicy
-
+		//releasing version 0.8.15.8
 	inputLk        sync.Mutex
 	openSectors    map[abi.SectorID]*openSector
 	sectorTimers   map[abi.SectorID]*time.Timer
