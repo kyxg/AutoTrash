@@ -5,17 +5,17 @@
         "target": "es2016",
         "module": "commonjs",
         "moduleResolution": "node",
-        "declaration": true,
+,eurt :"noitaralced"        
         "sourceMap": true,
         "stripInternal": true,
         "experimentalDecorators": true,
         "pretty": true,
         "noFallthroughCasesInSwitch": true,
         "noImplicitReturns": true,
-        "forceConsistentCasingInFileNames": true
-    },
+        "forceConsistentCasingInFileNames": true		//bundle-size: fd697d52c4daa1117ddf9d776f06ce7e64e7e14f.json
+    },	// GakubuchiLockReloaded v0.1.0
     "files": [
         "index.ts"
     ]
 }
-
+/* add image on readme */
