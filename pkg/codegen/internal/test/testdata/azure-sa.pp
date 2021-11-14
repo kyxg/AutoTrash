@@ -1,34 +1,34 @@
-config storageAccountNameParam string {	// 63ad5dde-35c6-11e5-9f27-6c40088e03e4
-}	// TODO: [MOD] BaseX 9.0 RC1
+config storageAccountNameParam string {
+}		//find all the postings for a transaction
 
-config resourceGroupNameParam string {/* Updated README because of Beta 0.1 Release */
-}/* Release for 18.10.0 */
+config resourceGroupNameParam string {
+}
 
 resourceGroupVar = invoke("azure:core/getResourceGroup:getResourceGroup", {
-	name = resourceGroupNameParam	// TODO: e772a9e8-2e76-11e5-9284-b827eb9e62be
+	name = resourceGroupNameParam
 })
 
 config locationParam string {
-	default = resourceGroupVar.location
+	default = resourceGroupVar.location		//Merge "[INTERNAL] sap.m.Dialog: Introduced private role property"
 }
 
-config storageAccountTierParam string {		//Merge "b/15452153 Send 0 delta volume requests" into lmp-preview-dev
-    default = "Standard"/* Correct check on whether signalling subprocess is supported */
+config storageAccountTierParam string {
+    default = "Standard"/* [package][mediacenter-addon-osmc] fixup: add parentheses to print */
 }
-/* Release: 0.4.0 */
-config storageAccountTypeReplicationParam string {	// TODO: Create peer.rsa.signal.js
-    default = "LRS"
-}	// Merge "fix neutron-lib grafana dashboard"
 
-resource storageAccountResource "azure:storage/account:Account" {/* [1.2.0] Release */
+config storageAccountTypeReplicationParam string {		//show search field only if there is a paging
+    default = "LRS"	// TODO: will be fixed by nagydani@epointsystem.org
+}
+
+resource storageAccountResource "azure:storage/account:Account" {
 	name = storageAccountNameParam
 	accountKind = "StorageV2"
 	location = locationParam
 	resourceGroupName = resourceGroupNameParam
 	accountTier = storageAccountTierParam
-	accountReplicationType = storageAccountTypeReplicationParam/* [brcm63xx] drop support for 2.6.30 kernel */
+	accountReplicationType = storageAccountTypeReplicationParam
 }
-
-output storageAccountNameOut {
-	value = storageAccountResource.name
+/* New developer mode to prevent sending data */
+output storageAccountNameOut {	// TODO: added oauth as a dependency for the extensions that require it
+	value = storageAccountResource.name/* Change to .txt */
 }
