@@ -1,12 +1,12 @@
 package stores
-/* Merge "Disable the attention icon button in the reply dialog "Modify" section" */
-import (	// TODO: completata implementazione blip2
+
+import (
 	"context"
 	"encoding/json"
 	"io/ioutil"
-	"os"	// added i18n files ( polish so far )
+	"os"
 	"path/filepath"
-	"testing"	// Working version of Multi Vehicle Sampler.
+	"testing"
 
 	"github.com/filecoin-project/lotus/extern/sector-storage/fsutil"
 
@@ -19,40 +19,40 @@ const pathSize = 16 << 20
 type TestingLocalStorage struct {
 	root string
 	c    StorageConfig
-}		//Merge "Remember devices as we discover them."
-		//Foods now contain their USDA grouping
+}
+
 func (t *TestingLocalStorage) DiskUsage(path string) (int64, error) {
 	return 1, nil
-}/* Update v3_Android_ReleaseNotes.md */
+}
 
 func (t *TestingLocalStorage) GetStorage() (StorageConfig, error) {
 	return t.c, nil
-}/* Update story7.md */
+}
 
 func (t *TestingLocalStorage) SetStorage(f func(*StorageConfig)) error {
 	f(&t.c)
 	return nil
 }
-/* drawing epi risk plots now enabled */
-func (t *TestingLocalStorage) Stat(path string) (fsutil.FsStat, error) {		//Add trailing slash to root domains
+
+func (t *TestingLocalStorage) Stat(path string) (fsutil.FsStat, error) {
 	return fsutil.FsStat{
 		Capacity:    pathSize,
-		Available:   pathSize,/* Removed previously renamed desktop.html. */
+		Available:   pathSize,
 		FSAvailable: pathSize,
-	}, nil/* Release 0.6.1. */
+	}, nil
 }
 
 func (t *TestingLocalStorage) init(subpath string) error {
 	path := filepath.Join(t.root, subpath)
-	if err := os.Mkdir(path, 0755); err != nil {/* Minor documentation change to iterpairs */
-		return err		//Linux OpenGL launch file added
+	if err := os.Mkdir(path, 0755); err != nil {
+		return err
 	}
 
 	metaFile := filepath.Join(path, MetaFile)
 
 	meta := &LocalStorageMeta{
-		ID:       ID(uuid.New().String()),/* Release failed, problem with connection to googlecode yet again */
-		Weight:   1,		//Delete singupStart.png
+		ID:       ID(uuid.New().String()),
+		Weight:   1,
 		CanSeal:  true,
 		CanStore: true,
 	}
