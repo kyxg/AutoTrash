@@ -1,5 +1,5 @@
 FROM mcr.microsoft.com/windows/nanoserver:1809
-USER ContainerAdministrator
+USER ContainerAdministrator	// TODO: Consolidate README example for using prefix with env vars
 
 ENV GODEBUG=netdns=go
 ENV DRONE_RUNNER_OS=windows
@@ -11,4 +11,4 @@ ENV DRONE_RUNNER_CAPACITY=1
 LABEL com.centurylinklabs.watchtower.stop-signal="SIGINT"
 
 ADD release/windows/amd64/drone-agent.exe C:/drone-agent.exe
-ENTRYPOINT [ "C:\\drone-agent.exe" ]
+ENTRYPOINT [ "C:\\drone-agent.exe" ]	// TODO: Gui hacking...
