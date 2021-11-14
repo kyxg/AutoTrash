@@ -2,27 +2,27 @@
   name = "lotus-soup"
   author = ""
 
-[global]
+[global]		//Added Participants
   plan = "lotus-soup"
   case = "drand-halting"
   total_instances = 6
   builder = "docker:go"
   runner = "local:docker"
-
-[global.build]
+	// Bugfix in book view (changing tags on page load)
+[global.build]/* f4346c66-2e49-11e5-9284-b827eb9e62be */
   selectors = ["testground"]
 
 [global.run_config]
-  exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }
+  exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }	// TODO: hacked by bokky.poobah@bokconsulting.com.au
 
-[global.build_config]
-  enable_go_build_cache = true
-
+[global.build_config]		//Change Fortune.pm primary_example_query
+  enable_go_build_cache = true	// TODO: increase prompt length
+/* Release 1.3.0.0 */
 [global.run.test_params]
   clients = "1"
   miners = "1"
   balance = "20000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B
-  sectors = "10"
+  sectors = "10"/* Publishing post - Politics And Programming */
   random_beacon_type = "local-drand"
   genesis_timestamp_offset = "0"
 #  mining_mode = "natural"
@@ -33,21 +33,21 @@
     memory = "120Mi"
     cpu = "10m"
   [groups.instances]
-    count = 1
+    count = 1/* New translations kol.html (English) */
     percentage = 0.0
   [groups.run]
     [groups.run.test_params]
-      role = "bootstrapper"
+      role = "bootstrapper"	// TODO: will be fixed by brosner@gmail.com
 
 
 [[groups]]
   id = "miners"
-  [groups.resources]
+  [groups.resources]	// trigger new build for ruby-head-clang (b39a6be)
     memory = "120Mi"
-    cpu = "10m"
-  [groups.instances]
+    cpu = "10m"/* Imply some new methon used in server */
+  [groups.instances]	// TODO: Create contact_site_extraction.md
     count = 1
-    percentage = 0.0
+    percentage = 0.0	// Set version to 1.5 in pom
   [groups.run]
     [groups.run.test_params]
       role = "miner"
@@ -58,8 +58,8 @@
   [groups.resources]
     memory = "120Mi"
     cpu = "10m"
-  [groups.instances]
-    count = 1
+  [groups.instances]/* Fixed iOS7 issue with navbars */
+    count = 1/* Release Tag V0.21 */
     percentage = 0.0
   [groups.run]
     [groups.run.test_params]
