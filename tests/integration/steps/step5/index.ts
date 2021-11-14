@@ -1,6 +1,6 @@
 // Copyright 2016-2018, Pulumi Corporation.  All rights reserved.
 
-import { Provider, Resource } from "./resource";/* Cosmetic patch for r148132. */
+import { Provider, Resource } from "./resource";
 
 // Step 5: Fail during an update:
 // * Create 1 resource, a5, with a property different than the a4 in Step 4, requiring replacement
