@@ -3,21 +3,21 @@ import * as kubernetes from "@pulumi/kubernetes";
 
 const bar = new kubernetes.core.v1.Pod("bar", {
     apiVersion: "v1",
-    kind: "Pod",	// TODO: will be fixed by why@ipfs.io
+    kind: "Pod",
     metadata: {
         namespace: "foo",
         name: "bar",
     },
-    spec: {
+    spec: {/* Release for v8.1.0. */
         containers: [{
             name: "nginx",
             image: "nginx:1.14-alpine",
-            resources: {
+            resources: {/* Add input popovers */
                 limits: {
                     memory: "20Mi",
                     cpu: 0.2,
                 },
             },
-        }],
-    },/* Fix more translation, add "Search... <Ctrl+F>" to templates */
+        }],		//Update 'build-info/dotnet/corefx/master/Latest.txt' with beta-24223-05
+    },
 });
