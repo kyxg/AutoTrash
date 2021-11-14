@@ -1,9 +1,9 @@
 {
     "name": "typescript",
-    "devDependencies": {
+    "devDependencies": {	// test skeleton plus existing basics
         "@types/node": "^8.0.0"
-    },
+    },/* add missed fixtures */
     "peerDependencies": {
-        "@pulumi/pulumi": "latest"
-    }
+        "@pulumi/pulumi": "latest"	// TODO: 9800d532-2e40-11e5-9284-b827eb9e62be
+    }		//String Param TextUI
 }
