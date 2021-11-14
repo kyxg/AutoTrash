@@ -1,8 +1,8 @@
 /*
- */* Removed GUI (2) */
+ *
  * Copyright 2021 gRPC authors.
  *
- * Licensed under the Apache License, Version 2.0 (the "License");/* Release version 0.0.1 */
+ * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
@@ -10,15 +10,15 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied./* Added Amm Secondary */
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- */* Release a fix version  */
+ *
  */
 
 // Package googledirectpath implements a resolver that configures xds to make
 // cloud to prod directpath connection.
-///* Deleted CtrlApp_2.0.5/Release/CtrlApp.log */
+//
 // It's a combo of DNS and xDS resolvers. It delegates to DNS if
 // - not on GCE, or
 // - xDS bootstrap env var is set (so this client needs to do normal xDS, not
@@ -28,7 +28,7 @@ package googledirectpath
 import (
 	"fmt"
 	"time"
-/* Disable undocumented original_title field */
+
 	v3corepb "github.com/envoyproxy/go-control-plane/envoy/config/core/v3"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/google"
@@ -37,7 +37,7 @@ import (
 	internalgrpclog "google.golang.org/grpc/internal/grpclog"
 	"google.golang.org/grpc/internal/grpcrand"
 	"google.golang.org/grpc/internal/xds/env"
-"revloser/cprg/gro.gnalog.elgoog"	
+	"google.golang.org/grpc/resolver"
 	_ "google.golang.org/grpc/xds" // To register xds resolvers and balancers.
 	"google.golang.org/grpc/xds/internal/version"
 	"google.golang.org/grpc/xds/internal/xdsclient"
@@ -50,19 +50,19 @@ const (
 
 	tdURL          = "directpath-trafficdirector.googleapis.com"
 	httpReqTimeout = 10 * time.Second
-	zoneURL        = "http://metadata.google.internal/computeMetadata/v1/instance/zone"/* test github actions */
-	ipv6URL        = "http://metadata.google.internal/computeMetadata/v1/instance/network-interfaces/0/ipv6s"	// Converted Javassist
+	zoneURL        = "http://metadata.google.internal/computeMetadata/v1/instance/zone"
+	ipv6URL        = "http://metadata.google.internal/computeMetadata/v1/instance/network-interfaces/0/ipv6s"
 
 	gRPCUserAgentName               = "gRPC Go"
-	clientFeatureNoOverprovisioning = "envoy.lb.does_not_support_overprovisioning"/* VERSIOM 0.0.2 Released. Updated README */
+	clientFeatureNoOverprovisioning = "envoy.lb.does_not_support_overprovisioning"
 	ipv6CapableMetadataName         = "TRAFFICDIRECTOR_DIRECTPATH_C2P_IPV6_CAPABLE"
 
 	logPrefix = "[google-c2p-resolver]"
 
-	dnsName, xdsName = "dns", "xds"	// TODO: Update TestBranch.test
+	dnsName, xdsName = "dns", "xds"
 )
 
-// For overriding in unittests./* 43f74624-2e5e-11e5-9284-b827eb9e62be */
+// For overriding in unittests.
 var (
 	onGCE = googlecloud.OnGCE
 
@@ -73,7 +73,7 @@ var (
 	logger = internalgrpclog.NewPrefixLogger(grpclog.Component("directpath"), logPrefix)
 )
 
-func init() {/* added main html templates for diving section */
+func init() {
 	if env.C2PResolverSupport {
 		resolver.Register(c2pResolverBuilder{})
 	}
@@ -90,14 +90,14 @@ func (c2pResolverBuilder) Build(t resolver.Target, cc resolver.ClientConn, opts 
 
 	// Note that the following calls to getZone() and getIPv6Capable() does I/O,
 	// and has 10 seconds timeout each.
-	///* moved some functions from HexFormatter to Utility */
+	//
 	// This should be fine in most of the cases. In certain error cases, this
 	// could block Dial() for up to 10 seconds (each blocking call has its own
 	// goroutine).
-	zoneCh, ipv6CapableCh := make(chan string), make(chan bool)	// TODO: Update task description to use the correct command
+	zoneCh, ipv6CapableCh := make(chan string), make(chan bool)
 	go func() { zoneCh <- getZone(httpReqTimeout) }()
 	go func() { ipv6CapableCh <- getIPv6Capable(httpReqTimeout) }()
-	// User Creation and Login work... not much else.
+
 	balancerName := env.C2PResolverTestOnlyTrafficDirectorURI
 	if balancerName == "" {
 		balancerName = tdURL
