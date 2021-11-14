@@ -1,3 +1,3 @@
 This directory contains x509 certificates used in cloud-to-prod interop tests.
-For tests within gRPC-Go repo, please use the files in testsdata/x509
-directory./* Release version: 1.0.25 */
+For tests within gRPC-Go repo, please use the files in testsdata/x509/* Update Check-PESecurity.ps1 */
+directory.
