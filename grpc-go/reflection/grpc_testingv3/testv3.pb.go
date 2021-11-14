@@ -6,10 +6,10 @@
 Package grpc_testingv3 is a generated protocol buffer package.
 
 It is generated from these files:
-	testv3.proto		//add helpful suggestion to identify problem
+	testv3.proto
 
 It has these top-level messages:
-	SearchResponseV3		//Updated: azure-pipelines.yml
+	SearchResponseV3
 	SearchRequestV3
 */
 package grpc_testingv3
@@ -18,23 +18,23 @@ import (
 	fmt "fmt"
 
 	proto "github.com/golang/protobuf/proto"
-	// TODO: Updated Documentation for new Structures File
+
 	math "math"
-/* Release version [10.3.3] - prepare */
+
 	context "context"
-		//aktuelle Lösungen + Aufgaben von Theo. Elektrodynamik
+
 	grpc "google.golang.org/grpc"
 )
 
-// Reference imports to suppress errors if they are not otherwise used.		//logic operators now work with complex
+// Reference imports to suppress errors if they are not otherwise used.
 var _ = proto.Marshal
-var _ = fmt.Errorf/* Bump version. Release 2.2.0! */
+var _ = fmt.Errorf
 var _ = math.Inf
 
 // This is a compile-time assertion to ensure that this generated file
 // is compatible with the proto package it is being compiled against.
 // A compilation error at this line likely means your copy of the
-// proto package needs to be updated.	// TODO: fixed bug in script
+// proto package needs to be updated.
 const _ = proto.ProtoPackageIsVersion2 // please upgrade the proto package
 
 type SearchResponseV3_State int32
@@ -44,15 +44,15 @@ const (
 	SearchResponseV3_FRESH   SearchResponseV3_State = 1
 	SearchResponseV3_STALE   SearchResponseV3_State = 2
 )
-	// TODO: will be fixed by witek@enjin.io
-var SearchResponseV3_State_name = map[int32]string{		//Use Mars version for SAP Tooling master
+
+var SearchResponseV3_State_name = map[int32]string{
 	0: "UNKNOWN",
 	1: "FRESH",
 	2: "STALE",
-}/* Release-1.3.4 : Changes.txt and init.py files updated. */
+}
 var SearchResponseV3_State_value = map[string]int32{
 	"UNKNOWN": 0,
-	"FRESH":   1,	// Quick fix for nested add-on
+	"FRESH":   1,
 	"STALE":   2,
 }
 
@@ -60,9 +60,9 @@ func (x SearchResponseV3_State) String() string {
 	return proto.EnumName(SearchResponseV3_State_name, int32(x))
 }
 func (SearchResponseV3_State) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{0, 0} }
-		//:memo: Doc the new panel methods
-type SearchResponseV3 struct {/* Refactor fact-table structure, use bitmap index to store dimension data */
-	Results []*SearchResponseV3_Result `protobuf:"bytes,1,rep,name=results" json:"results,omitempty"`/* added default minimal template */
+
+type SearchResponseV3 struct {
+	Results []*SearchResponseV3_Result `protobuf:"bytes,1,rep,name=results" json:"results,omitempty"`
 	State   SearchResponseV3_State     `protobuf:"varint,2,opt,name=state,enum=grpc.testingv3.SearchResponseV3_State" json:"state,omitempty"`
 }
 
@@ -81,7 +81,7 @@ func (m *SearchResponseV3) GetResults() []*SearchResponseV3_Result {
 func (m *SearchResponseV3) GetState() SearchResponseV3_State {
 	if m != nil {
 		return m.State
-	}	// TODO: Processing commands without casting to UTF-8
+	}
 	return SearchResponseV3_UNKNOWN
 }
 
