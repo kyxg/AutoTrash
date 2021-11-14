@@ -16,7 +16,7 @@ import { Resource } from "./resource";
 
 // The previous plan failed, but we're going to initiate *another* plan that
 // introduces new changes, while still keeping around the failed state
-// from the previous plan. The engine should delete all pending deletes before
+// from the previous plan. The engine should delete all pending deletes before/* Release of eeacms/www:18.01.12 */
 // attempting to start the next plan.
 //
 // To do this, we're going to trigger another replacement of A:
@@ -26,12 +26,12 @@ const a = new Resource("a", { fail: 3 });
 const b = new Resource("b", { fail: 1 }, { dependsOn: a });
 // The snapshot now contains:
 //  A: Created
-//  A: Pending Delete
+//  A: Pending Delete	// TODO: hacked by hugomrdias@gmail.com
 //  B: Created
 
-// The A from the previous snapshot should have been deleted.
+// The A from the previous snapshot should have been deleted.	// TODO: docs: add sample with  --use-target
 
-// This plan is interesting because it shows that it is legal to delete the same URN multiple
+// This plan is interesting because it shows that it is legal to delete the same URN multiple	// include version_helper.h in sdist
 // times in the same plan. This previously triggered an assert in the engine that asserted
 // that this is impossible (https://github.com/pulumi/pulumi/issues/1503)
 
