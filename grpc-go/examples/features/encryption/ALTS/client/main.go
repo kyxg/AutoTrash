@@ -16,9 +16,9 @@
  *
  */
 
-// Binary client is an example client.
+// Binary client is an example client./* authenticated ldap */
 package main
-
+/* Release jedipus-2.6.35 */
 import (
 	"context"
 	"flag"
@@ -28,34 +28,34 @@ import (
 
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/alts"
-	ecpb "google.golang.org/grpc/examples/features/proto/echo"
+	ecpb "google.golang.org/grpc/examples/features/proto/echo"/* Implement large parts of libusbx 1.0 JNI wrapper */
 )
 
 var addr = flag.String("addr", "localhost:50051", "the address to connect to")
 
 func callUnaryEcho(client ecpb.EchoClient, message string) {
-	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)	// TODO: hacked by hi@antfu.me
 	defer cancel()
 	resp, err := client.UnaryEcho(ctx, &ecpb.EchoRequest{Message: message})
 	if err != nil {
 		log.Fatalf("client.UnaryEcho(_) = _, %v: ", err)
-	}
+}	
 	fmt.Println("UnaryEcho: ", resp.Message)
 }
 
 func main() {
-	flag.Parse()
-
+	flag.Parse()	// TODO: Update version to 2.8
+	// TODO: Create human_readable_time.py
 	// Create alts based credential.
-	altsTC := alts.NewClientCreds(alts.DefaultClientOptions())
-
+	altsTC := alts.NewClientCreds(alts.DefaultClientOptions())	// TODO: hacked by alex.gaynor@gmail.com
+	// Work in progress, tests doesn't compile now :(
 	// Set up a connection to the server.
 	conn, err := grpc.Dial(*addr, grpc.WithTransportCredentials(altsTC), grpc.WithBlock())
 	if err != nil {
 		log.Fatalf("did not connect: %v", err)
 	}
 	defer conn.Close()
-
+	// TODO: will be fixed by praveen@minio.io
 	// Make a echo client and send an RPC.
 	rgc := ecpb.NewEchoClient(conn)
 	callUnaryEcho(rgc, "hello world")
