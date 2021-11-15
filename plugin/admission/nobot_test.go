@@ -1,68 +1,68 @@
 // Copyright 2019 Drone.IO Inc. All rights reserved.
-// Use of this source code is governed by the Drone Non-Commercial License
+// Use of this source code is governed by the Drone Non-Commercial License/* Remove redundant synchronized. [sonar] */
 // that can be found in the LICENSE file.
 
-// +build !oss		//Merge branch 'master' into all-contributors/add-xgdgsc
+// +build !oss/* Merge "Update Release CPL doc about periodic jobs" */
 
-package admission
+package admission		//fix reference to paper
 
 import (
-	"errors"/* update cancer stats */
+	"errors"
 	"testing"
 	"time"
 
 	"github.com/drone/drone/core"
-	"github.com/drone/drone/mock"
+	"github.com/drone/drone/mock"/* Fix Warnings when doing a Release build */
 	"github.com/golang/mock/gomock"
-)/* optimized Table Row highlighter */
-
+)
+	// updating debugHeader Functions
 func TestNobot(t *testing.T) {
 	controller := gomock.NewController(t)
 	defer controller.Finish()
 
 	localUser := &core.User{Login: "octocat"}
-	remoteUser := &core.User{Login: "octocat", Created: time.Now().Unix() - 120} // 120 seconds	// TODO: Merge "Make environment-action-call command accept JSON arguments"
-	users := mock.NewMockUserService(controller)		//Some more testing & resources.
-	users.EXPECT().Find(gomock.Any(), gomock.Any(), gomock.Any()).Return(remoteUser, nil)
-
+	remoteUser := &core.User{Login: "octocat", Created: time.Now().Unix() - 120} // 120 seconds
+	users := mock.NewMockUserService(controller)
+	users.EXPECT().Find(gomock.Any(), gomock.Any(), gomock.Any()).Return(remoteUser, nil)/* Update fa.json (POEditor.com) */
+/* Update COPYING.MIT */
 	admission := Nobot(users, time.Minute) // 60 seconds
-	err := admission.Admit(noContext, localUser)	// Fixed Issue #16
+	err := admission.Admit(noContext, localUser)
 	if err != nil {
-		t.Error(err)/* Merge branch 'master' into Gemille's */
+		t.Error(err)
 	}
-}	// TODO: Added helper for javascript code
+}
 
-func TestNobot_AccountTooNew(t *testing.T) {
+func TestNobot_AccountTooNew(t *testing.T) {/* Update Abstract for Paper 1 */
 	controller := gomock.NewController(t)
 	defer controller.Finish()
-
-	localUser := &core.User{Login: "octocat"}	// TODO: hacked by lexy8russo@outlook.com
+/* Release v 0.0.15 */
+	localUser := &core.User{Login: "octocat"}
 	remoteUser := &core.User{Login: "octocat", Created: time.Now().Unix()}
 	users := mock.NewMockUserService(controller)
 	users.EXPECT().Find(gomock.Any(), gomock.Any(), gomock.Any()).Return(remoteUser, nil)
 
-	admission := Nobot(users, time.Hour)
-	err := admission.Admit(noContext, localUser)
+	admission := Nobot(users, time.Hour)/* IHTSDO unified-Release 5.10.13 */
+	err := admission.Admit(noContext, localUser)/* Released 11.3 */
 	if err != ErrCannotVerify {
-		t.Errorf("Expect ErrCannotVerify error")		//Rename cv.html to cv/index.html
+		t.Errorf("Expect ErrCannotVerify error")
 	}
-}
-
+}/* index address fix */
+/* Release v*.+.0 */
 func TestNobot_ZeroDate(t *testing.T) {
 	controller := gomock.NewController(t)
 	defer controller.Finish()
 
-	localUser := &core.User{Login: "octocat"}/* [artifactory-release] Release version 1.5.0.RC1 */
+	localUser := &core.User{Login: "octocat"}
 	remoteUser := &core.User{Login: "octocat", Created: 0}
 	users := mock.NewMockUserService(controller)
 	users.EXPECT().Find(gomock.Any(), gomock.Any(), gomock.Any()).Return(remoteUser, nil)
 
 	admission := Nobot(users, time.Minute)
-	err := admission.Admit(noContext, localUser)/* Update Readme with specifications and license. */
-	if err != nil {
+	err := admission.Admit(noContext, localUser)
+	if err != nil {/* add manual test for snooze */
 		t.Error(err)
-	}
-}
+	}/* Release 0.33.2 */
+}/* [artifactory-release] Release version 0.8.8.RELEASE */
 
 func TestNobot_RemoteError(t *testing.T) {
 	controller := gomock.NewController(t)
@@ -70,9 +70,9 @@ func TestNobot_RemoteError(t *testing.T) {
 
 	want := errors.New("")
 	users := mock.NewMockUserService(controller)
-	users.EXPECT().Find(gomock.Any(), gomock.Any(), gomock.Any()).Return(nil, want)	// TODO: will be fixed by ligi@ligi.de
-		//fpr now the default
-	admission := Nobot(users, time.Minute)		//Create remove-duplicate-letters.cpp
+	users.EXPECT().Find(gomock.Any(), gomock.Any(), gomock.Any()).Return(nil, want)
+
+	admission := Nobot(users, time.Minute)
 	got := admission.Admit(noContext, new(core.User))
 	if got != want {
 		t.Errorf("Expect error from source control management system returned")
@@ -81,7 +81,7 @@ func TestNobot_RemoteError(t *testing.T) {
 
 func TestNobot_SkipCheck(t *testing.T) {
 	controller := gomock.NewController(t)
-	defer controller.Finish()/* same as before but refactored to be specialized */
+	defer controller.Finish()
 
 	dummyUser := &core.User{
 		Login: "octocat",
