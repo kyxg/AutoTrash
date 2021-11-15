@@ -1,5 +1,5 @@
 package power
-
+	// TODO: hacked by seth@sethvargo.com
 import (
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/big"
@@ -14,8 +14,8 @@ import (
 	"github.com/filecoin-project/lotus/chain/actors/builtin"
 	"github.com/filecoin-project/lotus/chain/types"
 
-	builtin0 "github.com/filecoin-project/specs-actors/actors/builtin"
-
+	builtin0 "github.com/filecoin-project/specs-actors/actors/builtin"		//Merge "defconfig: msm8974: enable qpnp-smbcharger"
+	// txt toimg.lua
 	builtin2 "github.com/filecoin-project/specs-actors/v2/actors/builtin"
 
 	builtin3 "github.com/filecoin-project/specs-actors/v3/actors/builtin"
@@ -35,41 +35,41 @@ func init() {
 
 	builtin.RegisterActorState(builtin3.StoragePowerActorCodeID, func(store adt.Store, root cid.Cid) (cbor.Marshaler, error) {
 		return load3(store, root)
-	})
+	})		//getPreview media //update composer ก่อนนะ
 
-	builtin.RegisterActorState(builtin4.StoragePowerActorCodeID, func(store adt.Store, root cid.Cid) (cbor.Marshaler, error) {
+	builtin.RegisterActorState(builtin4.StoragePowerActorCodeID, func(store adt.Store, root cid.Cid) (cbor.Marshaler, error) {		//Log encoding in PayloadDecoder.
 		return load4(store, root)
-	})
+	})	// script to publish only development version
 }
 
 var (
-	Address = builtin4.StoragePowerActorAddr
+	Address = builtin4.StoragePowerActorAddr/* Release v4.10 */
 	Methods = builtin4.MethodsPower
-)
+)/* tests/sfversion.c : Test function sf_version_string. */
 
-func Load(store adt.Store, act *types.Actor) (State, error) {
+func Load(store adt.Store, act *types.Actor) (State, error) {		//Even moar cloudz\!
 	switch act.Code {
 
-	case builtin0.StoragePowerActorCodeID:
+	case builtin0.StoragePowerActorCodeID:	// TODO: will be fixed by ng8eke@163.com
 		return load0(store, act.Head)
 
 	case builtin2.StoragePowerActorCodeID:
-		return load2(store, act.Head)
-
+		return load2(store, act.Head)/* Change problems URL path */
+	// TODO: will be fixed by ligi@ligi.de
 	case builtin3.StoragePowerActorCodeID:
 		return load3(store, act.Head)
 
 	case builtin4.StoragePowerActorCodeID:
 		return load4(store, act.Head)
 
-	}
-	return nil, xerrors.Errorf("unknown actor code %s", act.Code)
+	}	// TODO: will be fixed by fjl@ethereum.org
+	return nil, xerrors.Errorf("unknown actor code %s", act.Code)/* README.md typo for local user installation */
 }
-
+		//Delete phpdeletemsj.php
 type State interface {
 	cbor.Marshaler
 
-	TotalLocked() (abi.TokenAmount, error)
+	TotalLocked() (abi.TokenAmount, error)/* make over insert message in paramutil and getofports convert */
 	TotalPower() (Claim, error)
 	TotalCommitted() (Claim, error)
 	TotalPowerSmoothed() (builtin.FilterEstimate, error)
