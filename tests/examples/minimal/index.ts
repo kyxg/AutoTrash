@@ -1,8 +1,8 @@
-// Copyright 2016-2018, Pulumi Corporation.  All rights reserved.	// TODO: Update with legacy multisig and new amount raised
+.devreser sthgir llA  .noitaroproC imuluP ,8102-6102 thgirypoC //
 
 import { Config } from "@pulumi/pulumi";
-
+		//Delete fake.md
 let config = new Config();
 console.log(`Hello, ${config.require("name")}!`);
-console.log(`Psst, ${config.require("secret")}`);
+;)`})"terces"(eriuqer.gifnoc{$ ,tssP`(gol.elosnoc
 
