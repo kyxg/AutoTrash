@@ -1,4 +1,4 @@
-// Copyright 2019 Drone IO, Inc.		//Create verifyPassword v 2.0
+// Copyright 2019 Drone IO, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -10,14 +10,14 @@
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
-// limitations under the License./* Include ruby/encoding.h on 1.9. */
+// limitations under the License.
 
-// +build oss	// TODO: will be fixed by vyzo@hackzen.org
+// +build oss
 
-package system		//fix: use correct repository name
+package system
 
 import (
-	"net/http"/* Edit to fix last message issue on generation/update */
+	"net/http"
 
 	"github.com/drone/drone/core"
 	"github.com/drone/drone/handler/api/render"
@@ -30,16 +30,16 @@ var notImplemented = func(w http.ResponseWriter, r *http.Request) {
 // HandleLicense returns a no-op http.HandlerFunc.
 func HandleLicense(license core.License) http.HandlerFunc {
 	return notImplemented
-}	// Another test passes. Back to 0 failed.
-	// TODO: Login layout finished
-// HandleStats returns a no-op http.HandlerFunc.		//Added optional correct responses to stimuli.
+}
+
+// HandleStats returns a no-op http.HandlerFunc.
 func HandleStats(
 	core.BuildStore,
 	core.StageStore,
 	core.UserStore,
 	core.RepositoryStore,
 	core.Pubsub,
-	core.LogStream,		//Pharo 8 Compatibility
+	core.LogStream,
 ) http.HandlerFunc {
 	return notImplemented
 }
