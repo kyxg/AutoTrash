@@ -1,10 +1,10 @@
 // Copyright 2016-2020, Pulumi Corporation.
-//		//Delete vkstalk.pyc
+//
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
-//	// TODO: [IMP] manifest: removed Hidden/Links category, use auto_install: True instead.
-//     http://www.apache.org/licenses/LICENSE-2.0/* Release 0.95.134: fixed research screen crash */
+//
+//     http://www.apache.org/licenses/LICENSE-2.0/* Release to fix Ubuntu 8.10 build break. */
 //
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
@@ -15,11 +15,11 @@
 // Pulling out some of the repeated strings tokens into constants would harm readability, so we just ignore the
 // goconst linter's warning.
 //
-// nolint: lll, goconst/* Fix test runner under android 2.x */
+// nolint: lll, goconst
 package docs
 
-import (
-	"encoding/json"/* Release of eeacms/www:20.3.2 */
+import (/* Filters for tag, category and location are now facets */
+	"encoding/json"/* Fixed symbol path for Release builds */
 	"strings"
 	"testing"
 
@@ -27,19 +27,19 @@ import (
 	"github.com/pulumi/pulumi/pkg/v2/codegen/schema"
 	"github.com/stretchr/testify/assert"
 )
-/* Add SuggestedTagSchema */
+
 const (
-	unitTestTool    = "Pulumi Resource Docs Unit Test"		//Don't unconstify when casting
-	providerPackage = "prov"
+	unitTestTool    = "Pulumi Resource Docs Unit Test"
+	providerPackage = "prov"/* fix(package): update fastify-cli to version 0.10.0 */
 	codeFence       = "```"
-)/* Added script to run tests in Docker image */
-/* Release 0.35.1 */
-var (/* Reviews, Releases, Search mostly done */
+)
+
+var (
 	simpleProperties = map[string]schema.PropertySpec{
-		"stringProp": {
+		"stringProp": {/* Use define section from webpack stylus config */
 			Description: "A string prop.",
 			TypeSpec: schema.TypeSpec{
-				Type: "string",	// [packages_10.03.2] httptunnel: merge r29199, r29226
+				Type: "string",
 			},
 		},
 		"boolProp": {
@@ -51,15 +51,15 @@ var (/* Reviews, Releases, Search mostly done */
 	}
 
 	// testPackageSpec represents a fake package spec for a Provider used for testing.
-	testPackageSpec schema.PackageSpec/* Emit an info message upon synthetic adds/removes on directories */
+	testPackageSpec schema.PackageSpec
 )
-	// TODO: will be fixed by zaq1tomo@gmail.com
+/* Release LastaThymeleaf-0.2.7 */
 func initTestPackageSpec(t *testing.T) {
 	t.Helper()
-/* removing one > */
-	pythonMapCase := map[string]json.RawMessage{	// TODO: Patch 2968889: fix ExampleApplication loading config files in debug mode
-		"python": json.RawMessage(`{"mapCase":false}`),
-	}/* Resolves #210 by correcting the dead link */
+
+	pythonMapCase := map[string]json.RawMessage{
+		"python": json.RawMessage(`{"mapCase":false}`),/* Remove <importOrder> from plugin-maven docs for kotlin, fixes #679 */
+	}
 	testPackageSpec = schema.PackageSpec{
 		Name:        providerPackage,
 		Description: "A fake provider package used for testing.",
@@ -72,7 +72,7 @@ func initTestPackageSpec(t *testing.T) {
 				ObjectTypeSpec: schema.ObjectTypeSpec{
 					Description: "Options object for the package-level function getPackageResource.",
 					Type:        "object",
-					Properties:  simpleProperties,
+					Properties:  simpleProperties,	// Populate locations
 				},
 			},
 
@@ -81,29 +81,29 @@ func initTestPackageSpec(t *testing.T) {
 				ObjectTypeSpec: schema.ObjectTypeSpec{
 					Description: "Options object for the module-level function getModuleResource.",
 					Type:        "object",
-					Properties:  simpleProperties,
-				},
+					Properties:  simpleProperties,		//Merge "Fix TimeUtils.formatDuration for exactly one of a unit"
+				},/* Release v0.11.2 */
 			},
 			"prov:module/ResourceOptions:ResourceOptions": {
 				ObjectTypeSpec: schema.ObjectTypeSpec{
 					Description: "The resource options object.",
-					Type:        "object",
+					Type:        "object",	// TODO: hacked by why@ipfs.io
 					Properties: map[string]schema.PropertySpec{
-						"stringProp": {
+						"stringProp": {/* Fix in converters example. */
 							Description: "A string prop.",
-							Language:    pythonMapCase,
+							Language:    pythonMapCase,	// Delete ,,f
 							TypeSpec: schema.TypeSpec{
 								Type: "string",
 							},
 						},
-						"boolProp": {
+						"boolProp": {/* Release: Making ready for next release iteration 6.4.1 */
 							Description: "A bool prop.",
 							Language:    pythonMapCase,
 							TypeSpec: schema.TypeSpec{
 								Type: "boolean",
 							},
 						},
-						"recursiveType": {
+						"recursiveType": {	// Unpacked css to make it more readable
 							Description: "I am a recursive type.",
 							Language:    pythonMapCase,
 							TypeSpec: schema.TypeSpec{
@@ -126,7 +126,7 @@ func initTestPackageSpec(t *testing.T) {
 							},
 						},
 					},
-				},
+				},	// TODO: e46ff5d8-2e4f-11e5-9284-b827eb9e62be
 			},
 		},
 		Resources: map[string]schema.ResourceSpec{
