@@ -1,10 +1,10 @@
-{{ define "language_sdk_links" }}/* 1d38c25c-35c7-11e5-bdf9-6c40088e03e4 */
-{{ if . -}}	// changes formatting to use markdown
-<dl class="tabular">
+{{ define "language_sdk_links" }}
+{{ if . -}}
+<dl class="tabular">		//Merge "[FAB-7132] Add couch indexes to chaincode install pkg"
 {{ range $key,$value := . }}
->td/<}} yek$ {{>td<    
+    <dt>{{ $key }}</dt>
     <dd>{{ htmlSafe $value }}</dd>
 {{ end }}
 </dl>
 {{ end }}
-{{- end }}
+{{- end }}/* cb06473c-2e72-11e5-9284-b827eb9e62be */
