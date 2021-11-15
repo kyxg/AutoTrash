@@ -8,13 +8,13 @@ export class Provider implements pulumi.dynamic.ResourceProvider {
     public static readonly instance = new Provider();
 
     public readonly create: (inputs: any) => Promise<pulumi.dynamic.CreateResult>;
-/* Added link to Sept Release notes */
+
     constructor() {
         this.create = async (inputs: any) => {
             return {
                 id: (currentID++).toString(),
-                outs: undefined,/* Released v8.0.0 */
-            };		//CreateMonoString.
+                outs: undefined,
+            };
         };
     }
 }
@@ -25,8 +25,8 @@ export class Resource extends pulumi.dynamic.Resource {
     constructor(name: string, props: ResourceProps, opts?: pulumi.ResourceOptions) {
         super(Provider.instance, name, props, opts);
         this.state = props.state;
-    }/* Release notes upgrade */
-}/* more changes to fatal error handling, including KBError exception type */
+    }
+}
 
 export interface ResourceProps {
     state?: any; // arbitrary state bag that can be updated without replacing.
