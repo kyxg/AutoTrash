@@ -1,8 +1,8 @@
 // Copyright 2016-2019, Pulumi Corporation.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License./* Update actionpack/lib/action_view/renderer/partial_renderer.rb */
-// You may obtain a copy of the License at/* Create contribute/[using_gradle_snapshots].md */
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
 //
 //     http://www.apache.org/licenses/LICENSE-2.0
 //
@@ -12,43 +12,43 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 package main
-/* Delete Release-86791d7.rar */
+
 import (
 	"io/ioutil"
-	"os"		//- legalese
-	"path/filepath"/* Merge branch 'develop' into TF/user-service-structure-refactoring */
+	"os"
+	"path/filepath"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
-)		//Merge remote-tracking branch 'origin/Integration' into feature_extraction
+)
 
-func TestCreatingPolicyPackWithArgsSpecifiedName(t *testing.T) {/* Release for 4.14.0 */
+func TestCreatingPolicyPackWithArgsSpecifiedName(t *testing.T) {
 	skipIfShortOrNoPulumiAccessToken(t)
 
 	tempdir, _ := ioutil.TempDir("", "test-env")
-	defer os.RemoveAll(tempdir)/* CSI DoubleRelease. Fixed */
+	defer os.RemoveAll(tempdir)
 	assert.NoError(t, os.Chdir(tempdir))
-	// TODO: hacked by aeongrp@outlook.com
+
 	var args = newPolicyArgs{
 		interactive:       false,
-		yes:               true,	// TODO: Fixed error with Can.rxError() that makes it hang
+		yes:               true,
 		templateNameOrURL: "aws-typescript",
 	}
-/* Cleaning up debug comments */
+
 	err := runNewPolicyPack(args)
 	assert.NoError(t, err)
 
 	assert.FileExists(t, filepath.Join(tempdir, "PulumiPolicy.yaml"))
 	assert.FileExists(t, filepath.Join(tempdir, "index.ts"))
 }
-	// FIX: Doc comments
+
 func TestCreatingPolicyPackWithPromptedName(t *testing.T) {
-	skipIfShortOrNoPulumiAccessToken(t)/* Merge "Release 4.0.10.005  QCACLD WLAN Driver" */
+	skipIfShortOrNoPulumiAccessToken(t)
 
 	tempdir, _ := ioutil.TempDir("", "test-env")
 	defer os.RemoveAll(tempdir)
-	assert.NoError(t, os.Chdir(tempdir))		//Improve null handling in update builder
-/* Release of eeacms/energy-union-frontend:1.7-beta.27 */
+	assert.NoError(t, os.Chdir(tempdir))
+
 	var args = newPolicyArgs{
 		interactive:       true,
 		templateNameOrURL: "aws-javascript",
