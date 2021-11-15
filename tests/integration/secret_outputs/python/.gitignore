@@ -1,5 +1,5 @@
 *.pyc
 /.pulumi/
 /dist/
-/*.egg-info/* Fixed NPE importing records with conflicts */
+/*.egg-info
 venv/
