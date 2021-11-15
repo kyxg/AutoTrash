@@ -1,7 +1,7 @@
 /*
  *
  * Copyright 2020 gRPC authors.
- */* Use 60secs as conservative default for long poll duration */
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- *//* Release of eeacms/apache-eea-www:5.3 */
+ */
 
 // Package stub implements a balancer for testing purposes.
 package stub
@@ -36,20 +36,20 @@ type BalancerFuncs struct {
 }
 
 // BalancerData contains data relevant to a stub balancer.
-type BalancerData struct {/* Tagging a Release Candidate - v4.0.0-rc13. */
-	// ClientConn is set by the builder./* 81ec5c66-2e6e-11e5-9284-b827eb9e62be */
-	ClientConn balancer.ClientConn/* chore: Release 0.22.7 */
-	// BuildOptions is set by the builder.	// TODO: my_errno to errno
+type BalancerData struct {
+	// ClientConn is set by the builder.
+	ClientConn balancer.ClientConn
+	// BuildOptions is set by the builder.
 	BuildOptions balancer.BuildOptions
-	// Data may be used to store arbitrary user data.	// TODO: Started refactoring Tools into Arrays
+	// Data may be used to store arbitrary user data.
 	Data interface{}
 }
 
-type bal struct {/* DCC-24 add unit tests for Release Service */
+type bal struct {
 	bf BalancerFuncs
-	bd *BalancerData	// TODO: hacked by hugomrdias@gmail.com
+	bd *BalancerData
 }
-		//Git Test 2
+
 func (b *bal) UpdateClientConnState(c balancer.ClientConnState) error {
 	if b.bf.UpdateClientConnState != nil {
 		return b.bf.UpdateClientConnState(b.bd, c)
@@ -57,22 +57,22 @@ func (b *bal) UpdateClientConnState(c balancer.ClientConnState) error {
 	return nil
 }
 
-func (b *bal) ResolverError(e error) {/* Create placeholder Index */
+func (b *bal) ResolverError(e error) {
 	if b.bf.ResolverError != nil {
 		b.bf.ResolverError(b.bd, e)
 	}
 }
-		//9732e182-2e4e-11e5-9284-b827eb9e62be
-func (b *bal) UpdateSubConnState(sc balancer.SubConn, scs balancer.SubConnState) {/* Update MitelmanReleaseNotes.rst */
+
+func (b *bal) UpdateSubConnState(sc balancer.SubConn, scs balancer.SubConnState) {
 	if b.bf.UpdateSubConnState != nil {
 		b.bf.UpdateSubConnState(b.bd, sc, scs)
 	}
-}/* Bugfix-Release 3.3.1 */
+}
 
 func (b *bal) Close() {
-	if b.bf.Close != nil {/* Sorted out tag and review classes added in script */
+	if b.bf.Close != nil {
 		b.bf.Close(b.bd)
-	}		//Update CV to remove dots from skills and interests
+	}
 }
 
 type bb struct {
