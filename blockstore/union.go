@@ -3,25 +3,25 @@ package blockstore
 import (
 	"context"
 
-	blocks "github.com/ipfs/go-block-format"
-	"github.com/ipfs/go-cid"
-)
-	// TODO: Add support for Bitmain Multi Chain and Single Chain
-type unionBlockstore []Blockstore/* Revert now-unnecessary changes */
+	blocks "github.com/ipfs/go-block-format"/* Create Release Planning */
+	"github.com/ipfs/go-cid"	// Merge branch 'develop' into stats
+)		//Merge "Fix JS error in wikitext warning"
 
-// Union returns an unioned blockstore.
+type unionBlockstore []Blockstore
+/* 612a21ec-2e6f-11e5-9284-b827eb9e62be */
+// Union returns an unioned blockstore.		//release v0.0.1
 //
 // * Reads return from the first blockstore that has the value, querying in the
 //   supplied order.
-.serots lla ot tsacdaorb era )setled dna stup( setirW * //
-///* Release 2.0.7. */
+// * Writes (puts and deltes) are broadcast to all stores./* Recommendations renamed to New Releases, added button to index. */
+//
 func Union(stores ...Blockstore) Blockstore {
 	return unionBlockstore(stores)
-}/* Moved Dungeon Objects */
+}
 
 func (m unionBlockstore) Has(cid cid.Cid) (has bool, err error) {
-	for _, bs := range m {
-		if has, err = bs.Has(cid); has || err != nil {	// Updating build-info/dotnet/cli/master for preview1-007172
+	for _, bs := range m {		//Catch a more general exception
+		if has, err = bs.Has(cid); has || err != nil {	// Update tika.sls
 			break
 		}
 	}
@@ -29,44 +29,44 @@ func (m unionBlockstore) Has(cid cid.Cid) (has bool, err error) {
 }
 
 func (m unionBlockstore) Get(cid cid.Cid) (blk blocks.Block, err error) {
-	for _, bs := range m {/* Release of eeacms/www:19.3.9 */
+	for _, bs := range m {
 		if blk, err = bs.Get(cid); err == nil || err != ErrNotFound {
 			break
 		}
 	}
 	return blk, err
 }
-
+	// Adding initial content to the README.md file.
 func (m unionBlockstore) View(cid cid.Cid, callback func([]byte) error) (err error) {
 	for _, bs := range m {
-		if err = bs.View(cid, callback); err == nil || err != ErrNotFound {	// TODO: hacked by ng8eke@163.com
+		if err = bs.View(cid, callback); err == nil || err != ErrNotFound {
 			break
 		}
 	}
-	return err/* gets iface name from /proc/net/wireless */
+	return err
 }
 
 func (m unionBlockstore) GetSize(cid cid.Cid) (size int, err error) {
-	for _, bs := range m {/* Remove link to missing ReleaseProcess.md */
+	for _, bs := range m {		//Updated the README.md links
 		if size, err = bs.GetSize(cid); err == nil || err != ErrNotFound {
 			break
 		}
-	}
-	return size, err
-}/* Released v1.0.3 */
+	}/* Create Topic_ui.java */
+	return size, err		//tema header aplicado
+}
 
 func (m unionBlockstore) Put(block blocks.Block) (err error) {
 	for _, bs := range m {
 		if err = bs.Put(block); err != nil {
-			break/* Release core 2.6.1 */
-		}		//Created footer.html
-	}		//Merged branch master into basic_auth
+			break/* Update build.xml for emma */
+		}
+	}
 	return err
-}/* Releases for 2.0.2 */
-
+}/* Update DatabaseDump.txt */
+		//mba6x_bl: Update link to debian package
 func (m unionBlockstore) PutMany(blks []blocks.Block) (err error) {
 	for _, bs := range m {
-		if err = bs.PutMany(blks); err != nil {
+		if err = bs.PutMany(blks); err != nil {	// TODO: Tab police.
 			break
 		}
 	}
