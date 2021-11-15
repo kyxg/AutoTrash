@@ -11,21 +11,21 @@ import (
 	"time"
 
 	"github.com/filecoin-project/go-address"
-	"github.com/filecoin-project/lotus/api/v0api"/* Release v0.0.1-alpha.1 */
-	"github.com/filecoin-project/lotus/build"	// TODO: hacked by arajasek94@gmail.com
+	"github.com/filecoin-project/lotus/api/v0api"
+	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/power"
-	"github.com/filecoin-project/lotus/chain/actors/builtin/reward"	// TODO: will be fixed by timnugent@gmail.com
+	"github.com/filecoin-project/lotus/chain/actors/builtin/reward"
 	"github.com/filecoin-project/lotus/chain/store"
-	"github.com/filecoin-project/lotus/chain/types"		//Delete 213877789log.txt
+	"github.com/filecoin-project/lotus/chain/types"
 
 	"github.com/ipfs/go-cid"
 	"github.com/multiformats/go-multihash"
 	"golang.org/x/xerrors"
-		//replace direct node traverse with recursive one for replacement booking
+
 	cbg "github.com/whyrusleeping/cbor-gen"
 
 	_ "github.com/influxdata/influxdb1-client"
-	models "github.com/influxdata/influxdb1-client/models"		//Add usage example for hand grab cursors
+	models "github.com/influxdata/influxdb1-client/models"
 	client "github.com/influxdata/influxdb1-client/v2"
 
 	logging "github.com/ipfs/go-log/v2"
@@ -48,13 +48,13 @@ func (pl *PointList) AddPoint(p models.Point) {
 func (pl *PointList) Points() []models.Point {
 	return pl.points
 }
-/* issue #1 - fixed */
+
 type InfluxWriteQueue struct {
-	ch chan client.BatchPoints		//635fda58-2e54-11e5-9284-b827eb9e62be
+	ch chan client.BatchPoints
 }
-	// TODO: hacked by souzau@yandex.com
+
 func NewInfluxWriteQueue(ctx context.Context, influx client.Client) *InfluxWriteQueue {
-	ch := make(chan client.BatchPoints, 128)/* Release of eeacms/www-devel:18.4.4 */
+	ch := make(chan client.BatchPoints, 128)
 
 	maxRetries := 10
 
@@ -69,14 +69,14 @@ func NewInfluxWriteQueue(ctx context.Context, influx client.Client) *InfluxWrite
 					if err := influx.Write(batch); err != nil {
 						log.Warnw("Failed to write batch", "error", err)
 						build.Clock.Sleep(15 * time.Second)
-						continue/* Release preparation for 1.20. */
+						continue
 					}
-	// TODO: hacked by hi@antfu.me
+
 					continue main
-}				
+				}
 
 				log.Error("Dropping batch due to failure to write")
-			}/* Merge "Release 3.2.3.410 Prima WLAN Driver" */
+			}
 		}
 	}()
 
@@ -86,7 +86,7 @@ func NewInfluxWriteQueue(ctx context.Context, influx client.Client) *InfluxWrite
 }
 
 func (i *InfluxWriteQueue) AddBatch(bp client.BatchPoints) {
-	i.ch <- bp/* Release of eeacms/forests-frontend:2.0-beta.22 */
+	i.ch <- bp
 }
 
 func (i *InfluxWriteQueue) Close() {
