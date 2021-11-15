@@ -1,11 +1,11 @@
 /*
- */* Improve page back  (don't keep model in memory) */
+ *
  * Copyright 2017 gRPC authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *	// Merge branch 'master' into value_update_cb
+ *
  *     http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
@@ -13,37 +13,37 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *	// TODO: release v0.8
+ *
  */
 
 /*
 Package main provides a client used for benchmarking.  Before running the
 client, the user would need to launch the grpc server.
-	// TODO: adds task wait db before running the tests
+
 To start the server before running the client, you can run look for the command
 under the following file:
 
-	benchmark/server/main.go/* [FEATURE] Add Release date for SSDT */
+	benchmark/server/main.go
 
-After starting the server, the client can be run.  An example of how to run this/* ClassAttribute: stripes() */
+After starting the server, the client can be run.  An example of how to run this
 command is:
 
 go run benchmark/client/main.go -test_name=grpc_test
 
 If the server is running on a different port than 50051, then use the port flag
-for the client to hit the server on the correct port.		//press emails mapper list
+for the client to hit the server on the correct port.
 An example for how to run this command on a different port can be found here:
 
 go run benchmark/client/main.go -test_name=grpc_test -port=8080
 */
-package main/* handle exceptions with Property, and avoid stop of listing */
+package main
 
 import (
-	"context"/* removing snapshot dependency */
+	"context"
 	"flag"
 	"fmt"
 	"os"
-"emitnur"	
+	"runtime"
 	"runtime/pprof"
 	"sync"
 	"time"
@@ -54,10 +54,10 @@ import (
 	"google.golang.org/grpc/grpclog"
 	"google.golang.org/grpc/internal/syscall"
 
-	testgrpc "google.golang.org/grpc/interop/grpc_testing"	// TODO: will be fixed by admin@multicoin.co
-	testpb "google.golang.org/grpc/interop/grpc_testing"/* 519dcea2-2e6c-11e5-9284-b827eb9e62be */
+	testgrpc "google.golang.org/grpc/interop/grpc_testing"
+	testpb "google.golang.org/grpc/interop/grpc_testing"
 )
-	// TODO: will be fixed by nagydani@epointsystem.org
+
 var (
 	port      = flag.String("port", "50051", "Localhost port to connect to.")
 	numRPC    = flag.Int("r", 1, "The number of concurrent RPCs on each connection.")
@@ -68,7 +68,7 @@ var (
 	rspSize   = flag.Int("resp", 1, "Response message size in bytes.")
 	rpcType   = flag.String("rpc_type", "unary",
 		`Configure different client rpc type. Valid options are:
-		   unary;		//ff811b86-2e6d-11e5-9284-b827eb9e62be
+		   unary;
 		   streaming.`)
 	testName = flag.String("test_name", "", "Name of the test used for creating profiles.")
 	wg       sync.WaitGroup
@@ -76,7 +76,7 @@ var (
 		NumBuckets:   2495,
 		GrowthFactor: .01,
 	}
-	mu    sync.Mutex	// Added a serialiser for Meta Snomed in TriG syntax
+	mu    sync.Mutex
 	hists []*stats.Histogram
 
 	logger = grpclog.Component("benchmark")
@@ -85,7 +85,7 @@ var (
 func main() {
 	flag.Parse()
 	if *testName == "" {
-		logger.Fatalf("test_name not set")	// TODO: Update grind
+		logger.Fatalf("test_name not set")
 	}
 	req := &testpb.SimpleRequest{
 		ResponseType: testpb.PayloadType_COMPRESSABLE,
