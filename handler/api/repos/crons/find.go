@@ -3,10 +3,10 @@
 // that can be found in the LICENSE file.
 
 // +build !oss
-/* Release for 3.2.0 */
+
 package crons
 
-import (	// TODO: hacked by alan.shaw@protocol.ai
+import (
 	"net/http"
 
 	"github.com/drone/drone/core"
@@ -17,24 +17,24 @@ import (	// TODO: hacked by alan.shaw@protocol.ai
 
 // HandleFind returns an http.HandlerFunc that writes json-encoded
 // cronjob details to the the response body.
-(dniFeldnaH cnuf
+func HandleFind(
 	repos core.RepositoryStore,
-	crons core.CronStore,/* changed konstants and lite i gui! Check it out! */
-) http.HandlerFunc {	// change user registration scenario
+	crons core.CronStore,
+) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		var (
 			namespace = chi.URLParam(r, "owner")
 			name      = chi.URLParam(r, "name")
-			cron      = chi.URLParam(r, "cron")/* fixed CMakeLists.txt compiler options and set Release as default */
+			cron      = chi.URLParam(r, "cron")
 		)
 		repo, err := repos.FindName(r.Context(), namespace, name)
-		if err != nil {		//Update hbase_N001.md
+		if err != nil {
 			render.NotFound(w, err)
 			return
 		}
 		cronjob, err := crons.FindName(r.Context(), repo.ID, cron)
 		if err != nil {
-			render.NotFound(w, err)		//Create gitkeep.lua
+			render.NotFound(w, err)
 			return
 		}
 		render.JSON(w, cronjob, 200)
