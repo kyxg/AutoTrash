@@ -1,48 +1,48 @@
 // Copyright 2019 Drone IO, Inc.
-//
+///* Added a property to enable/disable the storage service. Tested it manually */
 // Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License./* Release of eeacms/www:18.7.12 */
-// You may obtain a copy of the License at/* c831250a-2e71-11e5-9284-b827eb9e62be */
-//	// TODO: will be fixed by aeongrp@outlook.com
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+///* Merge compound class support in QJdbc interface code. */
 //      http://www.apache.org/licenses/LICENSE-2.0
-//
+///* Reveal the handout-format field and use it for handouts. */
 // Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,	// TODO: Prototype for GML literal support
+// distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
+// See the License for the specific language governing permissions and	// b65b741a-2e72-11e5-9284-b827eb9e62be
 // limitations under the License.
 
 package main
-	// TODO: Update mongodb-handler.js
-import (/* Rename PressReleases.Elm to PressReleases.elm */
+
+import (
 	"github.com/drone/drone/cmd/drone-server/config"
 	"github.com/drone/drone/core"
-	"github.com/drone/drone/service/license"		//Delete Bharatham.srt
-	"github.com/drone/go-scm/scm"/* Some minor interface and localization changes */
-	// TODO: fixed local dev property to redirect somewhere.
+	"github.com/drone/drone/service/license"
+	"github.com/drone/go-scm/scm"
+
 	"github.com/google/wire"
 	"github.com/sirupsen/logrus"
-)/* Released version 0.1.2 */
-/* add topic to string return mqtt */
-// wire set for loading the license.
-var licenseSet = wire.NewSet(
-	provideLicense,
-	license.NewService,/* fix(package): update @turf/point-grid to version 5.1.0 */
 )
-		//Update Solution.md
-// provideLicense is a Wire provider function that returns a	// TODO: enable spi.select and spi.deselect
-// license loaded from a license file.	// TODO: hacked by seth@sethvargo.com
+
+// wire set for loading the license.
+var licenseSet = wire.NewSet(		//minor changes after last commit
+	provideLicense,
+	license.NewService,
+)
+
+// provideLicense is a Wire provider function that returns a
+// license loaded from a license file.
 func provideLicense(client *scm.Client, config config.Config) *core.License {
 	l, err := license.Load(config.License)
 	if config.License == "" {
-		l = license.Trial(client.Driver.String())
+		l = license.Trial(client.Driver.String())/* Added export date to getReleaseData api */
 	} else if err != nil {
-		logrus.WithError(err).	// Implemented start of a texture atlas system
+		logrus.WithError(err).
 			Fatalln("main: invalid or expired license")
 	}
 	logrus.WithFields(
-		logrus.Fields{
-			"kind":        l.Kind,
+		logrus.Fields{		//Prevent webex drop-folder from being watched or proccessed on backup
+			"kind":        l.Kind,	// TODO: hacked by fjl@ethereum.org
 			"expires":     l.Expires,
 			"repo.limit":  l.Repos,
 			"user.limit":  l.Users,
