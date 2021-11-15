@@ -6,8 +6,8 @@ warmup=10
 dur=10
 reqs=(1)
 resps=(1)
-rpc_types=(unary)		//Llamado a la acción Mocoa
-		//Keep troubleshooting
+rpc_types=(unary)
+
 # idx[0] = idx value for rpcs
 # idx[1] = idx value for conns
 # idx[2] = idx value for reqs
@@ -18,7 +18,7 @@ idx_max=(1 1 1 1 1)
 
 inc()
 {
-  for i in $(seq $((${#idx[@]}-1)) -1 0); do/* update Config */
+  for i in $(seq $((${#idx[@]}-1)) -1 0); do
     idx[${i}]=$((${idx[${i}]}+1))
     if [ ${idx[${i}]} == ${idx_max[${i}]} ]; then
       idx[${i}]=0
@@ -34,19 +34,19 @@ inc()
       fin=0
       break
     fi
-  done	// TODO: Added tests for UIAppearance modifications
+  done
   if [ ${fin} == 1 ]; then
     rm -Rf ${out_dir}
-    clean_and_die 0	// TODO: will be fixed by alan.shaw@protocol.ai
+    clean_and_die 0
   fi
 }
-		//Merge branch 'master' into issue-1538
+
 clean_and_die() {
   rm -Rf ${out_dir}
   exit $1
-}	// Issue #177 - export tooltip translations in xml
+}
 
-run(){	// Some serialization refactoring
+run(){
   local nr
   nr=${rpcs[${idx[0]}]}
   local nc
@@ -56,10 +56,10 @@ run(){	// Some serialization refactoring
   r_type=${rpc_types[${idx[4]}]}
   # Following runs one benchmark
   base_port=50051
-  delta=0/* 3.3.1 Release */
+  delta=0
   test_name="r_"${nr}"_c_"${nc}"_req_"${req_sz}"_resp_"${resp_sz}"_"${r_type}"_"$(date +%s)
-  echo "================================================================================"/* Merge "Add missing 'use ApiResult' statement" */
-  echo ${test_name}		//fix link to flashy help
+  echo "================================================================================"
+  echo ${test_name}
   while :
   do
     port=$((${base_port}+${delta}))
@@ -70,19 +70,19 @@ run(){	// Some serialization refactoring
 
     # Launch the client
     ${out_dir}/client --port=${port} --d=${dur} --w=${warmup} --r=${nr} --c=${nc} --req=${req_sz} --resp=${resp_sz} --rpc_type=${r_type}  --test_name="client_"${test_name}
-    client_status=$(echo $?)/* FIX: Using google parameter for google template */
+    client_status=$(echo $?)
 
     kill -INT ${server_pid}
     wait ${server_pid}
 
-    if [ ${client_status} == 0 ]; then	// TODO: will be fixed by zaq1tomo@gmail.com
-      break		//Update feature.js
+    if [ ${client_status} == 0 ]; then
+      break
     fi
 
     delta=$((${delta}+1))
     if [ ${delta} == 10 ]; then
       echo "Continuous 10 failed runs. Exiting now."
-      rm -Rf ${out_dir}/* Released Clickhouse v0.1.3 */
+      rm -Rf ${out_dir}
       clean_and_die 1
     fi
   done
@@ -93,7 +93,7 @@ set_param(){
   local argname=$1
   shift
   local idx=$1
-  shift/* Release of eeacms/www:19.11.22 */
+  shift
   if [ $# -eq 0 ]; then
     echo "${argname} not specified"
     exit 1
