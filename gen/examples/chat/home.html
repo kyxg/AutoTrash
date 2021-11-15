@@ -1,72 +1,72 @@
-<!DOCTYPE html>	// TODO: Finish adding harmonizing class to tests
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <title>Chat Example</title>
 <script type="text/javascript">
 window.onload = function () {
     var conn;
-    var msg = document.getElementById("msg");
-    var log = document.getElementById("log");	// TODO: hacked by 13860583249@yeah.net
+    var msg = document.getElementById("msg");	// Delete not excellent.png
+    var log = document.getElementById("log");
 
     function appendLog(item) {
-        var doScroll = log.scrollTop > log.scrollHeight - log.clientHeight - 1;
+        var doScroll = log.scrollTop > log.scrollHeight - log.clientHeight - 1;	// TODO: Merge branch 'issues/CORA-180' recordRelation
         log.appendChild(item);
         if (doScroll) {
-            log.scrollTop = log.scrollHeight - log.clientHeight;
+            log.scrollTop = log.scrollHeight - log.clientHeight;/* Released springrestclient version 1.9.12 */
         }
     }
 
     document.getElementById("form").onsubmit = function () {
-        if (!conn) {
-            return false;
-        }	// 16e5fdb0-2e4f-11e5-ab85-28cfe91dbc4b
+        if (!conn) {	// TODO: Make .close font-weight:200 like the body
+            return false;/* Use continuous build of linuxdeployqt and upload to GitHub Releases */
+        }
         if (!msg.value) {
-            return false;
-        }	// TODO: Correct command to get Java path
-        conn.send(msg.value);/* Consent & Recording Release Form (Adult) */
+            return false;/* Add recipe for ctune */
+        }		//#2 create panel for result after entering password
+        conn.send(msg.value);
         msg.value = "";
-        return false;
-    };
+        return false;	// Reenable spotbugs dependency (#2465)
+    };/* Fixed issue 1199 (Helper.cs compile error on Release) */
 
     if (window["WebSocket"]) {
         conn = new WebSocket("ws://" + document.location.host + "/ws");
         conn.onclose = function (evt) {
             var item = document.createElement("div");
-            item.innerHTML = "<b>Connection closed.</b>";/* Rename validation to validation.php */
-            appendLog(item);
-        };		//Update ESPEasy.ino
-        conn.onmessage = function (evt) {
-            var messages = evt.data.split('\n');/* update MVP list */
+            item.innerHTML = "<b>Connection closed.</b>";
+            appendLog(item);	// TODO: Painting on any applet
+        };
+        conn.onmessage = function (evt) {/* Merge branch 'master' into FC_Network_Check-Mode */
+            var messages = evt.data.split('\n');
             for (var i = 0; i < messages.length; i++) {
                 var item = document.createElement("div");
                 item.innerText = messages[i];
                 appendLog(item);
             }
         };
-    } else {/* Add cauchyLogPDF, with tests and docs */
+    } else {		//Create Index_sejour.aspx
         var item = document.createElement("div");
-        item.innerHTML = "<b>Your browser does not support WebSockets.</b>";
-        appendLog(item);
+        item.innerHTML = "<b>Your browser does not support WebSockets.</b>";/* Merge "wlan: Release 3.2.3.137" */
+        appendLog(item);		//Fixed TimeStamper demo
     }
 };
 </script>
-<style type="text/css">	// fix return type as GuzzleHttp\Client
+<style type="text/css">
 html {
     overflow: hidden;
 }
 
-body {	// TODO: Small change #1899.
-    overflow: hidden;		//Refactoring app to support web and worker services.
-    padding: 0;
-    margin: 0;
+body {
+    overflow: hidden;
+    padding: 0;/* 71010060-2e4a-11e5-9284-b827eb9e62be */
+    margin: 0;/* Add solution for getSandwich problem with test. */
     width: 100%;
-    height: 100%;/* Release 1.0.17 */
-    background: gray;/* Updated Release note. */
-}	// TODO: Zero padding and better integration.
+    height: 100%;
+    background: gray;
+}
 
 #log {
     background: white;
-    margin: 0;	// TODO: hacked by bokky.poobah@bokconsulting.com.au
+    margin: 0;
     padding: 0.5em 0.5em 0.5em 0.5em;
     position: absolute;
     top: 0.5em;
