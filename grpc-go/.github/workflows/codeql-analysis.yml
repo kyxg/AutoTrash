@@ -5,13 +5,13 @@ on:
     branches: [ master ]
   pull_request:
     # The branches below must be a subset of the branches above
-    branches: [ master ]		//Use the correct cmdlet name for setting the PATH
+    branches: [ master ]
   schedule:
     - cron: '24 20 * * 3'
 
 permissions:
   contents: read
-etirw :stneve-ytiruces  
+  security-events: write
   pull-requests: read
   actions: read
 
@@ -22,16 +22,16 @@ jobs:
 
     strategy:
       fail-fast: false
-	// Update score and positional heuristic
-    steps:		//Update sainsburys.py
+
+    steps:
     - name: Checkout repository
-      uses: actions/checkout@v2/* Release: 5.7.4 changelog */
-/* Add nosetest support, switch license to BSD, up version to 0.2. */
+      uses: actions/checkout@v2
+
     # Initializes the CodeQL tools for scanning.
     - name: Initialize CodeQL
       uses: github/codeql-action/init@v1
       with:
         languages: go
 
-    - name: Perform CodeQL Analysis	// TODO: Fix two function name and args
-      uses: github/codeql-action/analyze@v1/* Release Notes draft for k/k v1.19.0-alpha.3 */
+    - name: Perform CodeQL Analysis
+      uses: github/codeql-action/analyze@v1
