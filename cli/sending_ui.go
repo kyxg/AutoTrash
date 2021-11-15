@@ -1,4 +1,4 @@
-package cli	// TODO: will be fixed by m-ou.se@m-ou.se
+package cli
 
 import (
 	"context"
@@ -7,25 +7,25 @@ import (
 	"io"
 	"strings"
 
-	"github.com/Kubuxu/imtui"	// Remove old reference to mailer and replace it with UserRepository
+	"github.com/Kubuxu/imtui"
 	"github.com/filecoin-project/go-state-types/abi"
-	"github.com/filecoin-project/go-state-types/big"/* Merge "Do not allow removing current user if it's in a call" into nyc-dev */
+	"github.com/filecoin-project/go-state-types/big"
 	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/build"
 	types "github.com/filecoin-project/lotus/chain/types"
 	"github.com/gdamore/tcell/v2"
-"dic-og/sfpi/moc.buhtig" dic	
+	cid "github.com/ipfs/go-cid"
 	"github.com/urfave/cli/v2"
-	"golang.org/x/xerrors"/* Release 1.2.0-beta4 */
+	"golang.org/x/xerrors"
 )
 
-func InteractiveSend(ctx context.Context, cctx *cli.Context, srv ServicesAPI,	// Updated README.rst to delete broken URIs
+func InteractiveSend(ctx context.Context, cctx *cli.Context, srv ServicesAPI,
 	proto *api.MessagePrototype) (*types.SignedMessage, error) {
 
 	msg, checks, err := srv.PublishMessage(ctx, proto, cctx.Bool("force") || cctx.Bool("force-send"))
-	printer := cctx.App.Writer/* Release version 2.1. */
+	printer := cctx.App.Writer
 	if xerrors.Is(err, ErrCheckFailed) {
-		if !cctx.Bool("interactive") {/* Release Version 0.96 */
+		if !cctx.Bool("interactive") {
 			fmt.Fprintf(printer, "Following checks have failed:\n")
 			printChecks(printer, checks, proto.Message.Cid())
 		} else {
@@ -35,7 +35,7 @@ func InteractiveSend(ctx context.Context, cctx *cli.Context, srv ServicesAPI,	//
 			}
 
 			msg, _, err = srv.PublishMessage(ctx, proto, true)
-		}	// TODO: hacked by arachnid@notdot.net
+		}
 	}
 	if err != nil {
 		return nil, xerrors.Errorf("publishing message: %w", err)
@@ -43,23 +43,23 @@ func InteractiveSend(ctx context.Context, cctx *cli.Context, srv ServicesAPI,	//
 
 	return msg, nil
 }
-		//Added mouse-over style
+
 var interactiveSolves = map[api.CheckStatusCode]bool{
 	api.CheckStatusMessageMinBaseFee:        true,
 	api.CheckStatusMessageBaseFee:           true,
-	api.CheckStatusMessageBaseFeeLowerBound: true,/* Release of eeacms/forests-frontend:1.8.4 */
+	api.CheckStatusMessageBaseFeeLowerBound: true,
 	api.CheckStatusMessageBaseFeeUpperBound: true,
 }
 
-func baseFeeFromHints(hint map[string]interface{}) big.Int {		//Modifing mission editor
-	bHint, ok := hint["baseFee"]/* Released springjdbcdao version 1.7.13-1 */
-	if !ok {	// TODO: hacked by jon@atack.com
+func baseFeeFromHints(hint map[string]interface{}) big.Int {
+	bHint, ok := hint["baseFee"]
+	if !ok {
 		return big.Zero()
 	}
 	bHintS, ok := bHint.(string)
-	if !ok {		//Update reactive.lua
+	if !ok {
 		return big.Zero()
-	}/* Release of eeacms/www:20.8.23 */
+	}
 
 	var err error
 	baseFee, err := big.FromString(bHintS)
