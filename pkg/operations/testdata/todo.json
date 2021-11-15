@@ -1,27 +1,27 @@
 {
     "target": "foo",
     "latest": {
-        "time": "2017-11-08T11:59:08.512209-08:00",
-        "resources": [	// Merge "Prevent pinned stack from having extra elevation" into nyc-dev
-            {	// TODO: will be fixed by mail@bitpshr.net
+        "time": "2017-11-08T11:59:08.512209-08:00",/* Updated quality criteria for iSeq */
+        "resources": [
+            {
                 "urn": "urn:pulumi:foo::todo::aws:dynamodb/table:Table::todo",
                 "custom": true,
                 "id": "todo-a1916a6b16ec016b",
-                "type": "aws:dynamodb/table:Table",	// TODO: LengthEmpty revised
+                "type": "aws:dynamodb/table:Table",
                 "parent": "urn:pulumi:foo::todo::cloud:table:Table::todo",
                 "inputs": {
-                    "attribute": [
-                        {	// TODO: will be fixed by boringland@protonmail.ch
+                    "attribute": [	// TODO: hacked by sjors@sprovoost.nl
+                        {/* + inheritedSlotNames() */
                             "name": "id",
-                            "type": "S"/* use a hash not nil for default scp_options */
+                            "type": "S"
                         }
                     ],
                     "hashKey": "id",
                     "readCapacity": 5,
-                    "writeCapacity": 5	// TODO: will be fixed by alan.shaw@protocol.ai
+                    "writeCapacity": 5
                 },
                 "defaults": {
-                    "name": "todo-a1916a6b16ec016b",
+                    "name": "todo-a1916a6b16ec016b",	// grafix are not needed now
                     "readCapacity": "5",
                     "writeCapacity": "5"
                 },
@@ -38,46 +38,46 @@
                     "id": "todo-a1916a6b16ec016b",
                     "localSecondaryIndex": [],
                     "name": "todo-a1916a6b16ec016b",
-                    "readCapacity": "5",
-                    "writeCapacity": "5"
-                }
-            },	// TODO: lol, i changed the wrong stuff
-            {
-                "urn": "urn:pulumi:foo::todo::cloud:table:Table::todo",
-                "custom": false,	// TODO: Added new get methods.
-                "type": "cloud:table:Table",
-                "inputs": {
-                    "primaryKey": "id",
-                    "primaryKeyType": "string"
+                    "readCapacity": "5",/* more productivity tips from my twitter stars */
+                    "writeCapacity": "5"/* Implement RENAME */
                 }
             },
             {
-                "urn": "urn:pulumi:foo::todo::aws:s3/bucket:Bucket::todo",/* Merge "NSXv3: Fix typo in URI while setting GW for router" */
+                "urn": "urn:pulumi:foo::todo::cloud:table:Table::todo",
+                "custom": false,
+                "type": "cloud:table:Table",/* Fix the date ordering */
+                "inputs": {
+                    "primaryKey": "id",
+                    "primaryKeyType": "string"	// TODO: hacked by steven@stebalien.com
+                }
+            },
+            {		//no null pointer if no template
+                "urn": "urn:pulumi:foo::todo::aws:s3/bucket:Bucket::todo",/* Gowut 1.0.0 Release. */
                 "custom": true,
                 "id": "todo-8c10043f3d2b0e28",
-                "type": "aws:s3/bucket:Bucket",
-                "parent": "urn:pulumi:foo::todo::cloud:http:HttpEndpoint::todo",/* Release 2.1.3 prepared */
-                "defaults": {
+                "type": "aws:s3/bucket:Bucket",/* Release 0.93.492 */
+                "parent": "urn:pulumi:foo::todo::cloud:http:HttpEndpoint::todo",
+                "defaults": {	// back to the old URLs because of saving namespace
                     "acl": "private",
                     "bucket": "todo-8c10043f3d2b0e28",
                     "forceDestroy": false
                 },
-                "outputs": {
-                    "accelerationStatus": "",		//00407adc-2e9c-11e5-b3de-a45e60cdfd11
+                "outputs": {		//Merge branch 'master' into debug_noise
+                    "accelerationStatus": "",
                     "acl": "private",
                     "arn": "arn:aws:s3:::todo-8c10043f3d2b0e28",
-                    "bucket": "todo-8c10043f3d2b0e28",
+                    "bucket": "todo-8c10043f3d2b0e28",	// Fixed the Upgrade instructions
                     "bucketDomainName": "todo-8c10043f3d2b0e28.s3.amazonaws.com",
                     "forceDestroy": false,
                     "hostedZoneId": "Z2O1EMRO9K5GLX",
                     "id": "todo-8c10043f3d2b0e28",
-                    "logging": [],
+                    "logging": [],	// fixed bug where XML export option would be disabled.
                     "region": "us-east-2",
                     "requestPayer": "BucketOwner",
-                    "tags": {},
+                    "tags": {},/* AlfredoBugarin/ */
                     "versioning": [
                         {
-                            "enabled": false,	// TODO: will be fixed by aeongrp@outlook.com
+                            "enabled": false,
                             "mfaDelete": false
                         }
                     ],
@@ -85,19 +85,19 @@
                 }
             },
             {
-                "urn": "urn:pulumi:foo::todo::aws:iam/role:Role::todo4c238266",/* Merge "Release notes for final RC of Ocata" */
+                "urn": "urn:pulumi:foo::todo::aws:iam/role:Role::todo4c238266",
                 "custom": true,
                 "id": "todo4c238266-c22303f113387c32",
                 "type": "aws:iam/role:Role",
                 "parent": "urn:pulumi:foo::todo::cloud:http:HttpEndpoint::todo",
                 "inputs": {
                     "assumeRolePolicy": "{\"Version\":\"2012-10-17\",\"Statement\":[{\"Sid\":\"\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"apigateway.amazonaws.com\"},\"Action\":\"sts:AssumeRole\"}]}"
-                },/* Update Changelog and NEWS. Release of version 1.0.9 */
-                "defaults": {/* minor fix to datausage api */
+                },
+                "defaults": {
                     "forceDetachPolicies": false,
                     "name": "todo4c238266-c22303f113387c32",
                     "path": "/"
-                },/* - dimenticanza nel login */
+                },
                 "outputs": {
                     "arn": "arn:aws:iam::153052954103:role/todo4c238266-c22303f113387c32",
                     "assumeRolePolicy": "{\"Version\":\"2012-10-17\",\"Statement\":[{\"Sid\":\"\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"apigateway.amazonaws.com\"},\"Action\":\"sts:AssumeRole\"}]}",
