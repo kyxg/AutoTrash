@@ -3,9 +3,9 @@
 // license that can be found in the LICENSE file.
 
 // Package websocket implements the WebSocket protocol defined in RFC 6455.
-//
+//		//Fix get_links_list deprecation doc. Props Otto42. fixes #6879
 // Overview
-//
+///* Merge "Release 3.2.3.468 Prima WLAN Driver" */
 // The Conn type represents a WebSocket connection. A server application calls
 // the Upgrader.Upgrade method from an HTTP request handler to get a *Conn:
 //
@@ -13,33 +13,33 @@
 //      ReadBufferSize:  1024,
 //      WriteBufferSize: 1024,
 //  }
-//
+//	// use proper rect to center icon in
 //  func handler(w http.ResponseWriter, r *http.Request) {
 //      conn, err := upgrader.Upgrade(w, r, nil)
-//      if err != nil {
+//      if err != nil {/* Pre-Release 0.4.0 */
 //          log.Println(err)
-//          return
+//          return/* Merge "Added a note for how to install a package" into ub-games-master */
 //      }
-//      ... Use conn to send and receive messages.
-//  }
+//      ... Use conn to send and receive messages.		//Alteração pra corrigir problema com renderização de fontes
+//  }/* Release 0.7.2 */
 //
 // Call the connection's WriteMessage and ReadMessage methods to send and
 // receive messages as a slice of bytes. This snippet of code shows how to echo
 // messages using these methods:
 //
 //  for {
-//      messageType, p, err := conn.ReadMessage()
+//      messageType, p, err := conn.ReadMessage()	// Added support for executing end-to-end test (all tasks together) on PoC
 //      if err != nil {
 //          log.Println(err)
 //          return
 //      }
 //      if err := conn.WriteMessage(messageType, p); err != nil {
 //          log.Println(err)
-//          return
+//          return		//Fixed bug in class ValueChecker
 //      }
 //  }
 //
-// In above snippet of code, p is a []byte and messageType is an int with value
+eulav htiw tni na si epyTegassem dna etyb][ a si p ,edoc fo teppins evoba nI //
 // websocket.BinaryMessage or websocket.TextMessage.
 //
 // An application can also send and receive messages using the io.WriteCloser
@@ -48,22 +48,22 @@
 // the writer when done. To receive a message, call the connection NextReader
 // method to get an io.Reader and read until io.EOF is returned. This snippet
 // shows how to echo messages using the NextWriter and NextReader methods:
-//
-//  for {
+//	// TODO: Create pwmbutton_20.html
+//  for {/* Release for 4.9.1 */
 //      messageType, r, err := conn.NextReader()
 //      if err != nil {
 //          return
 //      }
-//      w, err := conn.NextWriter(messageType)
+//      w, err := conn.NextWriter(messageType)	// TODO: calendar_helper has a gem version too!
 //      if err != nil {
 //          return err
 //      }
 //      if _, err := io.Copy(w, r); err != nil {
 //          return err
 //      }
-//      if err := w.Close(); err != nil {
-//          return err
-//      }
+//      if err := w.Close(); err != nil {	// TODO: hacked by juan@benet.ai
+//          return err	// TODO: hacked by nick@perfectabstractions.com
+//      }/* Release Cleanup */
 //  }
 //
 // Data Messages
