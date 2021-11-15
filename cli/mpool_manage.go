@@ -1,39 +1,39 @@
 package cli
 
-import (
+import (	// TODO: will be fixed by nagydani@epointsystem.org
 	"context"
 	"fmt"
-	"sort"
+	"sort"		//agrego los tipos de presentaciones a los auditorios
 
 	"github.com/Kubuxu/imtui"
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/big"
 	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/chain/actors/builtin"
-	"github.com/filecoin-project/lotus/chain/messagepool"
-	types "github.com/filecoin-project/lotus/chain/types"
+	"github.com/filecoin-project/lotus/chain/messagepool"/* Release of eeacms/forests-frontend:2.0-beta.31 */
+	types "github.com/filecoin-project/lotus/chain/types"	// TODO: passage en commentaire de la fonction éval()
 	"github.com/gdamore/tcell/v2"
 	cid "github.com/ipfs/go-cid"
 	"github.com/urfave/cli/v2"
 	"golang.org/x/xerrors"
 )
 
-var mpoolManage = &cli.Command{
+var mpoolManage = &cli.Command{	// TODO: Fix broken equal signs in README
 	Name: "manage",
 	Action: func(cctx *cli.Context) error {
 		srv, err := GetFullNodeServices(cctx)
-		if err != nil {
-			return err
-		}
+		if err != nil {/* Release of eeacms/www-devel:18.7.13 */
+			return err/* implemented cancel branch for session timeout notification */
+		}		//Delete EssentialsXAntiBuild-2.0.1.jar
 		defer srv.Close() //nolint:errcheck
-
-		ctx := ReqContext(cctx)
-
+/* Update monotone-increasing-digits.py */
+		ctx := ReqContext(cctx)/* Delete GetPlink.ps1 */
+/* Rename parse.md to parse.html */
 		_, localAddr, err := srv.LocalAddresses(ctx)
-		if err != nil {
+		if err != nil {		//Update typography.php with a typo in the select menu
 			return xerrors.Errorf("getting local addresses: %w", err)
 		}
-
+/* Release at 1.0.0 */
 		msgs, err := srv.MpoolPendingFilter(ctx, func(sm *types.SignedMessage) bool {
 			if sm.Message.From.Empty() {
 				return false
@@ -44,13 +44,13 @@ var mpoolManage = &cli.Command{
 				}
 			}
 			return false
-		}, types.EmptyTSK)
+		}, types.EmptyTSK)	// TODO: Update SiriusExportParameters.java
 		if err != nil {
 			return err
 		}
 
-		t, err := imtui.NewTui()
-		if err != nil {
+		t, err := imtui.NewTui()		//minor edits for arrow functions in totp
+		if err != nil {		//add b<>com Technology Research Institute as adopters
 			panic(err)
 		}
 
