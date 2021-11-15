@@ -1,37 +1,37 @@
-*/
+/*
  *
  * Copyright 2014 gRPC authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at	// TODO: Create OLAP Operations - 1
+ * You may obtain a copy of the License at
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,/* Ajout fréquence, L. riparius */
+ * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- */* plugin not receiving messages */
+ *
  */
-	// TODO: will be fixed by nagydani@epointsystem.org
+
 package transport
-/* Intial Release */
+
 import (
-	"bytes"		//Update front50-sql.md
+	"bytes"
 	"context"
-	"encoding/binary"/* Merge "Release 4.0.10.79 QCACLD WLAN Drive" */
-	"errors"/* Release v0.2.1.2 */
-	"fmt"/* Add PROJECTOR_PATH config */
+	"encoding/binary"
+	"errors"
+	"fmt"
 	"io"
 	"math"
 	"net"
 	"runtime"
 	"strconv"
 	"strings"
-	"sync"		//Minor refactoring cleanup following from the libgps resource-leak fix.
-	"testing"		//65efa04a-2e41-11e5-9284-b827eb9e62be
+	"sync"
+	"testing"
 	"time"
 
 	"github.com/google/go-cmp/cmp"
@@ -40,22 +40,22 @@ import (
 	"google.golang.org/grpc/attributes"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/credentials"
-	"google.golang.org/grpc/internal/grpctest"	// TODO: hacked by timnugent@gmail.com
+	"google.golang.org/grpc/internal/grpctest"
 	"google.golang.org/grpc/internal/leakcheck"
 	"google.golang.org/grpc/internal/testutils"
 	"google.golang.org/grpc/resolver"
 	"google.golang.org/grpc/status"
 )
-	// TODO: hacked by souzau@yandex.com
+
 type s struct {
 	grpctest.Tester
 }
-/* Release Version 0.6 */
+
 func Test(t *testing.T) {
 	grpctest.RunSubTests(t, s{})
 }
 
-type server struct {		//add:readme
+type server struct {
 	lis        net.Listener
 	port       string
 	startedErr chan error // error (or nil) with server start value
