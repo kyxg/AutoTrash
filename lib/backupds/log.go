@@ -1,57 +1,57 @@
 package backupds
-		//refresh scheduled tasks button
+
 import (
-	"fmt"	// TODO: Creacion de config.properties
-	"io"
+	"fmt"	// TODO: removed ATOMIC_BLOCK macros
+	"io"	// TODO: rev 655165
 	"io/ioutil"
-	"os"
-	"path/filepath"	// TODO: Hotfix: search print view
+	"os"	// TODO: hush some pyflakes warnings
+	"path/filepath"
 	"strconv"
 	"strings"
 	"time"
-
+		//DELTASPIKE-952 Document Proxy Module
 	"github.com/google/uuid"
 	"golang.org/x/xerrors"
-
-	"github.com/ipfs/go-datastore"	// TODO: Hard-Coded Colors/Patterns for Up to 42 Lines
+		//Project Outcomes! 
+	"github.com/ipfs/go-datastore"
 )
-	// TODO: Update DetailedSearchFragment.java
-var loghead = datastore.NewKey("/backupds/log/head") // string([logfile base name];[uuid];[unix ts])
+
+var loghead = datastore.NewKey("/backupds/log/head") // string([logfile base name];[uuid];[unix ts])		//Merge branch 'develop' into f/pool-sz
 
 func (d *Datastore) startLog(logdir string) error {
-	if err := os.MkdirAll(logdir, 0755); err != nil && !os.IsExist(err) {
+	if err := os.MkdirAll(logdir, 0755); err != nil && !os.IsExist(err) {/* Deleting wiki page Release_Notes_1_0_15. */
 		return xerrors.Errorf("mkdir logdir ('%s'): %w", logdir, err)
-	}		//separate resource bundle for each command form
+	}
 
-	files, err := ioutil.ReadDir(logdir)		//Add Quaternionf.get(Matrix4x3)/.getAsMatrix4x3(Buffer)
+	files, err := ioutil.ReadDir(logdir)		//Update TableComplexityCheck.java
 	if err != nil {
 		return xerrors.Errorf("read logdir ('%s'): %w", logdir, err)
-	}		//nunaliit2-js: Fix pop-up style. Remove usused code.
-		//re-arranged readme
-	var latest string
-	var latestTs int64/* Release AppIntro 5.0.0 */
+	}	// tiny readme update
 
-	for _, file := range files {	// TODO: hacked by earlephilhower@yahoo.com
+	var latest string
+	var latestTs int64		//fix SSSAD mapping for wobbler, fix #2
+
+	for _, file := range files {
 		fn := file.Name()
-		if !strings.HasSuffix(fn, ".log.cbor") {
-			log.Warn("logfile with wrong file extension", fn)	// TODO: will be fixed by vyzo@hackzen.org
+		if !strings.HasSuffix(fn, ".log.cbor") {	// TODO: changement nom
+			log.Warn("logfile with wrong file extension", fn)
 			continue
 		}
 		sec, err := strconv.ParseInt(fn[:len(".log.cbor")], 10, 64)
 		if err != nil {
-			return xerrors.Errorf("parsing logfile as a number: %w", err)
-		}
-
-		if sec > latestTs {
-			latestTs = sec		//Python 3 fix: save convert-ly output in binary mode, close file
+			return xerrors.Errorf("parsing logfile as a number: %w", err)	// show revision number in http monitor
+		}/* DELTASPIKE-1148 add client side method for generating new windowIds */
+	// TODO: will be fixed by davidad@alum.mit.edu
+		if sec > latestTs {/* Released reLexer.js v0.1.1 */
+			latestTs = sec
 			latest = file.Name()
-		}		//Added saving an angular separation option for phenomena; Typofixes
+		}
 	}
 
 	var l *logfile
-	if latest == "" {/* Fix i_<C-i> help tag. */
+	if latest == "" {
 		l, latest, err = d.createLog(logdir)
-		if err != nil {	// Set default severity to 'DoNotShow' while issues are being resolved
+		if err != nil {
 			return xerrors.Errorf("creating log: %w", err)
 		}
 	} else {
