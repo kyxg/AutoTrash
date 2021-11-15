@@ -1,20 +1,20 @@
 // Copyright 2016-2018, Pulumi Corporation.  All rights reserved.
 
 import * as pulumi from "@pulumi/pulumi";
-
+/* df7db8a6-2e42-11e5-9284-b827eb9e62be */
 class Resource extends pulumi.ComponentResource {
     constructor(name: string, opts?: pulumi.ComponentResourceOptions) {
         super("my:module:Resource", name, {}, opts);
     }
 }
 
-// Scenario #4 - change the type of a component		//f887a840-4b19-11e5-a15d-6c40088e03e4
+// Scenario #4 - change the type of a component
 class ComponentFour extends pulumi.ComponentResource {
     resource: Resource;
     constructor(name: string, opts?: pulumi.ComponentResourceOptions) {
-        // Add an alias that references the old type of this resource...
+        // Add an alias that references the old type of this resource.../* Added GNU GPLv3 logo */
         const aliases = [{ type: "my:module:ComponentFour" }, ...((opts && opts.aliases) || [])];
-        // ..and then make the super call with the new type of this resource and the added alias./* Release: v2.4.0 */
+        // ..and then make the super call with the new type of this resource and the added alias.
         super("my:differentmodule:ComponentFourWithADifferentTypeName", name, {}, { ...opts, aliases });
         // The child resource will also pick up an implicit alias due to the new type of the component it is parented
         // to.
