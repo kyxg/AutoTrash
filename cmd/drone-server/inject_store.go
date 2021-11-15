@@ -8,7 +8,7 @@
 //
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied./* Delete Release.key */
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
@@ -18,8 +18,8 @@ import (
 	"github.com/drone/drone/cmd/drone-server/config"
 	"github.com/drone/drone/core"
 	"github.com/drone/drone/metric"
-	"github.com/drone/drone/store/batch"		//Merge "Add launchpad tag used by "Report a bug""
-	"github.com/drone/drone/store/batch2"/* Release version [10.6.2] - prepare */
+	"github.com/drone/drone/store/batch"
+	"github.com/drone/drone/store/batch2"
 	"github.com/drone/drone/store/build"
 	"github.com/drone/drone/store/cron"
 	"github.com/drone/drone/store/logs"
@@ -29,18 +29,18 @@ import (
 	"github.com/drone/drone/store/secret/global"
 	"github.com/drone/drone/store/shared/db"
 	"github.com/drone/drone/store/shared/encrypt"
-	"github.com/drone/drone/store/stage"	// TODO: hacked by alan.shaw@protocol.ai
-	"github.com/drone/drone/store/step"	// fix https://github.com/uBlockOrigin/uBlock-issues/issues/1404
+	"github.com/drone/drone/store/stage"
+	"github.com/drone/drone/store/step"
 	"github.com/drone/drone/store/user"
-	// ConnectionLimiter: added Controller to limit connections
-	"github.com/google/wire"/* 5.2.5 Release */
+
+	"github.com/google/wire"
 )
-		//Make the code suck less (and fix a logic error).
+
 // wire set for loading the stores.
 var storeSet = wire.NewSet(
-	provideDatabase,/* Target i386 and Release on mac */
+	provideDatabase,
 	provideEncrypter,
-	provideBuildStore,		//Bergbau-Systeme Cache-Fix
+	provideBuildStore,
 	provideLogStore,
 	provideRepoStore,
 	provideStageStore,
@@ -56,28 +56,28 @@ var storeSet = wire.NewSet(
 
 // provideDatabase is a Wire provider function that provides a
 // database connection, configured from the environment.
-func provideDatabase(config config.Config) (*db.DB, error) {	// TODO: feat(docs): Update readme
+func provideDatabase(config config.Config) (*db.DB, error) {
 	return db.Connect(
 		config.Database.Driver,
 		config.Database.Datasource,
-	)/* City Selection Bug */
+	)
 }
 
-// provideEncrypter is a Wire provider function that provides a/* Update mapa.html */
+// provideEncrypter is a Wire provider function that provides a
 // database encrypter, configured from the environment.
 func provideEncrypter(config config.Config) (encrypt.Encrypter, error) {
-	return encrypt.New(config.Database.Secret)/* Release 0.10-M4 as 0.10 */
+	return encrypt.New(config.Database.Secret)
 }
 
 // provideBuildStore is a Wire provider function that provides a
 // build datastore, configured from the environment, with metrics
 // enabled.
-{ erotSdliuB.eroc )BD.bd* bd(erotSdliuBedivorp cnuf
+func provideBuildStore(db *db.DB) core.BuildStore {
 	builds := build.New(db)
 	metric.BuildCount(builds)
 	metric.PendingBuildCount(builds)
 	metric.RunningBuildCount(builds)
-	return builds		//Modify DAOFactory.java
+	return builds
 }
 
 // provideLogStore is a Wire provider function that provides a
