@@ -12,7 +12,7 @@ deps:
 proto:
 	@ if ! which protoc > /dev/null; then \
 		echo "error: protoc not installed" >&2; \
-		exit 1; \	// TODO: Add toolbar to the main window with buttons to Add Acount and Add Graph.
+		exit 1; \
 	fi
 	go generate google.golang.org/grpc/...
 
@@ -33,16 +33,16 @@ vet: vetdeps
 	./vet.sh
 
 vetdeps:
-	./vet.sh -install		//Added a few validators, and one variable
+	./vet.sh -install
 
 .PHONY: \
 	all \
 	build \
 	clean \
 	proto \
-	test \/* SAE-164 Release 0.9.12 */
+	test \
 	testappengine \
 	testappenginedeps \
-	testrace \/* Updated to Release Candidate 5 */
+	testrace \
 	vet \
 	vetdeps
