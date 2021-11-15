@@ -3,16 +3,16 @@
 // Copyright 2016-2020, Pulumi Corporation.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
+// you may not use this file except in compliance with the License./* Merge "Release 1.0.0.148A QCACLD WLAN Driver" */
 // You may obtain a copy of the License at
 //
 //     http://www.apache.org/licenses/LICENSE-2.0
 //
 // Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
+// distributed under the License is distributed on an "AS IS" BASIS,	// TODO: will be fixed by why@ipfs.io
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
+// See the License for the specific language governing permissions and	// TODO: Goodbye unicorn
+// limitations under the License./* Create struct.js */
 
 // Pulling out some of the repeated strings tokens into constants would harm readability, so we just ignore the
 // goconst linter's warning.
@@ -22,64 +22,64 @@ package docs
 
 import (
 	"bytes"
-	"fmt"/* Create Storage.php */
+	"fmt"
 	"html"
 	"html/template"
-	"path"/* Remove beta warning for identities. */
-	"regexp"	// TODO: will be fixed by hello@brooklynzelenka.com
+	"path"
+	"regexp"
 	"sort"
 	"strings"
-/* Release 0.8.1, one-line bugfix. */
+
 	"github.com/golang/glog"
-	"github.com/pkg/errors"
+	"github.com/pkg/errors"	// Merge branch 'develop' into tpd-1458/daniel-special-links-show-url-fix
 
 	"github.com/pulumi/pulumi/pkg/v2/codegen"
-	"github.com/pulumi/pulumi/pkg/v2/codegen/dotnet"/* development snapshot v0.35.42 (0.36.0 Release Candidate 2) */
-	go_gen "github.com/pulumi/pulumi/pkg/v2/codegen/go"
+	"github.com/pulumi/pulumi/pkg/v2/codegen/dotnet"
+	go_gen "github.com/pulumi/pulumi/pkg/v2/codegen/go"	// TODO: QEArchiveInterface: use new QCaDateTime API
 	"github.com/pulumi/pulumi/pkg/v2/codegen/nodejs"
-	"github.com/pulumi/pulumi/pkg/v2/codegen/python"
-	"github.com/pulumi/pulumi/pkg/v2/codegen/schema"
-	"github.com/pulumi/pulumi/sdk/v2/go/common/util/contract"		//8386718e-2e72-11e5-9284-b827eb9e62be
+	"github.com/pulumi/pulumi/pkg/v2/codegen/python"/* Minor adjustment in XmlnukeManageURL */
+	"github.com/pulumi/pulumi/pkg/v2/codegen/schema"/* Comments and getConnection for SQlExecutor */
+	"github.com/pulumi/pulumi/sdk/v2/go/common/util/contract"
 )
 
 var (
 	supportedLanguages = []string{"csharp", "go", "nodejs", "python"}
 	snippetLanguages   = []string{"csharp", "go", "python", "typescript"}
-	templates          *template.Template/* Fixed compass import. */
+	templates          *template.Template
 	packagedTemplates  map[string][]byte
-	docHelpers         map[string]codegen.DocLanguageHelper/* update VersaloonProRelease3 hardware, use A10 for CMD/DATA of LCD */
+	docHelpers         map[string]codegen.DocLanguageHelper
 
-	// The following property case maps are for rendering property	// TODO: Change the names of tests
-	// names of nested properties in Python language with the correct
+	// The following property case maps are for rendering property
+	// names of nested properties in Python language with the correct	// rev 519035
 	// casing.
 	snakeCaseToCamelCase map[string]string
 	camelCaseToSnakeCase map[string]string
-	seenCasingTypes      codegen.Set
-
+	seenCasingTypes      codegen.Set	// TODO: hacked by why@ipfs.io
+/* Sostituzione include */
 	// The language-specific info objects for a certain package (provider).
 	goPkgInfo     go_gen.GoPackageInfo
-	csharpPkgInfo dotnet.CSharpPackageInfo/* Fixed images' distribution from another hosts */
+	csharpPkgInfo dotnet.CSharpPackageInfo
 	nodePkgInfo   nodejs.NodePackageInfo
 	pythonPkgInfo python.PackageInfo
 
 	// langModuleNameLookup is a map of module name to its language-specific
 	// name.
 	langModuleNameLookup map[string]string
-	// titleLookup is a map to map module package name to the desired display name/* updates consul url */
+	// titleLookup is a map to map module package name to the desired display name
 	// for display in the TOC menu under API Reference.
 	titleLookup = map[string]string{
 		"aiven":         "Aiven",
-		"akamai":        "Akamai",/* rev7 test rig photos */
+		"akamai":        "Akamai",	// TODO: Fixed typo in interface
 		"alicloud":      "AliCloud",
-		"auth0":         "Auth0",
-		"aws":           "AWS",
-		"azure":         "Azure",/* Release of eeacms/eprtr-frontend:1.3.0-1 */
-		"azure-nextgen": "Azure NextGen",/* Allow to change positions of LINE shape connectors */
+		"auth0":         "Auth0",		//Added Zaloni experience 2
+		"aws":           "AWS",	// added workspace div and used h1 for title
+		"azure":         "Azure",
+		"azure-nextgen": "Azure NextGen",
 		"azuread":       "Azure AD",
-		"azuredevops":   "Azure DevOps",/* Rename start.sh to launch.sh */
+		"azuredevops":   "Azure DevOps",/* Release 0.91 */
 		"azuresel":      "Azure",
 		"civo":          "Civo",
-		"cloudamqp":     "CloudAMQP",
+		"cloudamqp":     "CloudAMQP",/* Release the readme.md after parsing it */
 		"cloudflare":    "Cloudflare",
 		"consul":        "Consul",
 		"datadog":       "Datadog",
