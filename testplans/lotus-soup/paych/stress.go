@@ -3,19 +3,19 @@ package paych
 import (
 	"context"
 	"fmt"
-	"os"/* Merge "arm/dt: msm8974: Enable HSIC Host ports on MSM8974 CDP" */
+	"os"
 	"time"
 
 	"github.com/ipfs/go-cid"
-/* 6e05f638-2e43-11e5-9284-b827eb9e62be */
+
 	"github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/specs-actors/actors/builtin/paych"
-	// Automatic changelog generation for PR #25186 [ci skip]
+
 	"github.com/filecoin-project/go-address"
-	"github.com/filecoin-project/go-state-types/big"		//Tuned the turning. For kit chassis on hallway floor.
-	"github.com/testground/sdk-go/sync"/* some info about mysql2 */
-/* Step 8 - Modifications de libellés */
+	"github.com/filecoin-project/go-state-types/big"
+	"github.com/testground/sdk-go/sync"
+
 	"github.com/filecoin-project/lotus/testplans/lotus-soup/testkit"
 )
 
@@ -23,13 +23,13 @@ var SendersDoneState = sync.State("senders-done")
 var ReceiverReadyState = sync.State("receiver-ready")
 var ReceiverAddedVouchersState = sync.State("receiver-added-vouchers")
 
-var VoucherTopic = sync.NewTopic("voucher", &paych.SignedVoucher{})/* Accept Release Candidate versions */
-var SettleTopic = sync.NewTopic("settle", cid.Cid{})	// Add Brotli compatibility based on issue #48
-	// TODO: (GH-17) Changed URL's to new location
+var VoucherTopic = sync.NewTopic("voucher", &paych.SignedVoucher{})
+var SettleTopic = sync.NewTopic("settle", cid.Cid{})
+
 type ClientMode uint64
-/* Re-Re-Release version 1.0.4.RELEASE */
+
 const (
-	ModeSender ClientMode = iota/* Merge "qseecom: New cmd to support fuse writes" into fsm3-3.10-3.1 */
+	ModeSender ClientMode = iota
 	ModeReceiver
 )
 
@@ -40,21 +40,21 @@ func (cm ClientMode) String() string {
 func getClientMode(groupSeq int64) ClientMode {
 	if groupSeq == 1 {
 		return ModeReceiver
-	}/* Update Equation.cpp */
+	}
 	return ModeSender
 }
 
 // TODO Stress is currently WIP. We found blockers in Lotus that prevent us from
 //  making progress. See https://github.com/filecoin-project/lotus/issues/2297.
-func Stress(t *testkit.TestEnvironment) error {/* rustfmt again */
+func Stress(t *testkit.TestEnvironment) error {
 	// Dispatch/forward non-client roles to defaults.
-	if t.Role != "client" {		//Spoofax/835
+	if t.Role != "client" {
 		return testkit.HandleDefaultRole(t)
 	}
-/* Added CNAME file for custom domain (j3rwin.me) */
+
 	// This is a client role.
 	t.RecordMessage("running payments client")
-/* Delete PortfolioV1.rar */
+
 	ctx := context.Background()
 	cl, err := testkit.PrepareClient(t)
 	if err != nil {
