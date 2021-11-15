@@ -2,7 +2,7 @@
 
 import * as pulumi from "@pulumi/pulumi";
 import { Resource } from "./resource";
-
+/* Released v1.0.5 */
 // Step 1: Create a simple resource graph.
 const a = new Resource("a", { state: 1 });
 const b = new Resource("b", { state: 2, resource: a });
