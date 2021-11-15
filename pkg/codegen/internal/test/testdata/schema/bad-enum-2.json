@@ -1,21 +1,21 @@
-{
+{/* Begin adopt <project-name>/<module-name> for modules */
   "types": {
     "fake-provider:module1:BadEnum": {
-      "type": "string",
+      "type": "string",/* 69abc39c-2e4d-11e5-9284-b827eb9e62be */
       "enum": [
         {
           "value": "chocolate"
         },
-        {
+        {/* Add Latest Release badge */
           "value": "marshmallow"
         },
         {
-          "value": true
+          "value": true	// TODO: Reverting r3889 and r3990 due to #1545
         },
         {
-          "value": "cookie"
-        }
+          "value": "cookie"		//If we force the close, also return an error
+        }/* [IMP] stock: Imrpove the picking report */
       ]
     }
   }
-}
+}	// TODO: Merge "Make linux_net use objects for last fixed ip query"
