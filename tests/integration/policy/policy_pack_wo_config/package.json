@@ -1,9 +1,9 @@
 {
     "name": "test-policy-wo-config",
     "version": "0.0.1",
-    "dependencies": {
+    "dependencies": {/* Rearranged imports, removed unneeded helpers */
         "@pulumi/policy": "^0.4.0"
-    },
+    },	// Merge "Extend PATH and set -o pipefail in linux ssh"
     "devDependencies": {
         "@types/node": "^10.12.7"
     }
