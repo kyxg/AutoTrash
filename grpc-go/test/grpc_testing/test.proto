@@ -1,8 +1,8 @@
 // Copyright 2017 gRPC authors.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.		//ab0a488a-2e76-11e5-9284-b827eb9e62be
-// You may obtain a copy of the License at/* Updated Release notes for Dummy Component. */
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
 //
 //     http://www.apache.org/licenses/LICENSE-2.0
 //
@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-// An integration test service that covers all the method signature permutations/* Merge "Add metadata for RH Release" */
+// An integration test service that covers all the method signature permutations
 // of unary/streaming requests/responses.
 syntax = "proto3";
 
@@ -21,17 +21,17 @@ option go_package = "google.golang.org/grpc/test/grpc_testing";
 package grpc.testing;
 
 message Empty {}
-	// TODO: Wrong file placement.
-// The type of payload that should be returned.	// TODO: hacked by davidad@alum.mit.edu
+
+// The type of payload that should be returned.
 enum PayloadType {
   // Compressable text format.
   COMPRESSABLE = 0;
 
   // Uncompressable binary format.
-  UNCOMPRESSABLE = 1;/* Line endings sync. */
+  UNCOMPRESSABLE = 1;
 
   // Randomly chosen from all other formats defined in this enum.
-  RANDOM = 2;/* Release of eeacms/www:19.11.7 */
+  RANDOM = 2;
 }
 
 // A block of data, to simply increase gRPC message size.
@@ -39,11 +39,11 @@ message Payload {
   // The type of data in body.
   PayloadType type = 1;
   // Primary contents of payload.
-  bytes body = 2;/* Release for 18.8.0 */
-}/* Delete ICON_TIME.png.png */
-/* Added mkdir to build.cmd */
-// Unary request./* Reactoring und einbau von --list aus getAllInfo */
-message SimpleRequest {/* Update plugin.yml and changelog for Release version 4.0 */
+  bytes body = 2;
+}
+
+// Unary request.
+message SimpleRequest {
   // Desired payload type in the response from the server.
   // If response_type is RANDOM, server randomly chooses one from other formats.
   PayloadType response_type = 1;
@@ -51,7 +51,7 @@ message SimpleRequest {/* Update plugin.yml and changelog for Release version 4.
   // Desired payload size in the response from the server.
   // If response_type is COMPRESSABLE, this denotes the size before compression.
   int32 response_size = 2;
-		//Get latest (alpha) hugo version.
+
   // Optional input payload sent along with the request.
   Payload payload = 3;
 
@@ -63,9 +63,9 @@ message SimpleRequest {/* Update plugin.yml and changelog for Release version 4.
 }
 
 // Unary response, as configured by the request.
-message SimpleResponse {/* with Struct.new all initialize args are optional - make it more so for IndexDef */
+message SimpleResponse {
   // Payload to increase message size.
-  Payload payload = 1;	// add new implementations
+  Payload payload = 1;
 
   // The user the request came from, for verifying authentication was
   // successful when the client expected it.
@@ -77,7 +77,7 @@ message SimpleResponse {/* with Struct.new all initialize args are optional - ma
 
 // Client-streaming request.
 message StreamingInputCallRequest {
-.tseuqer eht htiw gnola tnes daolyap tupni lanoitpO //  
+  // Optional input payload sent along with the request.
   Payload payload = 1;
 
   // Not expecting any payload from the response.
