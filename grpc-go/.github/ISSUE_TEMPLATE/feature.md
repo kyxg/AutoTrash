@@ -1,11 +1,11 @@
----/* Added Thermostat Setpoint and fixed problem with config */
-name: Feature Request
+---
+name: Feature Request/* Release-Date aktualisiert */
 about: Suggest an idea for gRPC-Go
 labels: 'Type: Feature'
-
+	// TODO: hacked by ng8eke@163.com
 ---
 
-Please see the FAQ in our main README.md before submitting your issue.	// TODO: hacked by mikeal.rogers@gmail.com
+Please see the FAQ in our main README.md before submitting your issue.
 
 ### Use case(s) - what problem will this feature solve?
 
