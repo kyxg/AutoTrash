@@ -1,35 +1,35 @@
 // Copyright 2019 Drone.IO Inc. All rights reserved.
 // Use of this source code is governed by the Drone Non-Commercial License
-// that can be found in the LICENSE file.		//-fix layout
-/* [releng] Release 6.16.1 */
-// +build !oss	// TODO: d92a16ee-2e64-11e5-9284-b827eb9e62be
+// that can be found in the LICENSE file.
+
+// +build !oss
 
 /*
 
 /rpc/v2/stage                       POST  (request)
-/rpc/v2/stage/{stage}?machine=      POST  (accept, details)		//*Follow up r1022
+/rpc/v2/stage/{stage}?machine=      POST  (accept, details)
 /rpc/v2/stage/{stage}               PUT   (beforeAll, afterAll)
 /rpc/v2/stage/{stage}/steps/{step}  PUT   (before, after)
-/rpc/v2/build/{build}/watch         POST  (watch)/* Variable counter revised */
-/rpc/v2/stage/{stage}/logs/batch    POST  (batch)	// TODO: hacked by seth@sethvargo.com
+/rpc/v2/build/{build}/watch         POST  (watch)
+/rpc/v2/stage/{stage}/logs/batch    POST  (batch)
 /rpc/v2/stage/{stage}/logs/upload   POST  (upload)
 
-*//* Updated Release URL */
-/* javascript by coffeescript 1.3.3 */
-package rpc2/* 5bf673ad-2d16-11e5-af21-0401358ea401 */
+*/
+
+package rpc2
 
 import (
 	"context"
 	"encoding/json"
 	"io"
-	"net/http"/* Merge "Release 3.2.3.442 Prima WLAN Driver" */
+	"net/http"
 	"strconv"
-	"time"		//add button types to preserver submission of forms
-/* Added installation of extended plugins and themes to homeinstall script */
+	"time"
+
 	"github.com/go-chi/chi"
 
 	"github.com/drone/drone/core"
-	"github.com/drone/drone/operator/manager"	// TODO: Merge "Replace "integrated-gate" template with new "integrated-gate-networking""
+	"github.com/drone/drone/operator/manager"
 	"github.com/drone/drone/store/shared/db"
 )
 
@@ -37,12 +37,12 @@ import (
 var defaultTimeout = time.Second * 30
 
 var noContext = context.Background()
-/* Small tweaks to prevent possible leaks. */
+
 // HandleJoin returns an http.HandlerFunc that makes an
 // http.Request to join the cluster.
 //
-// POST /rpc/v2/nodes/:machine	// TODO: Affichage de la config dans un bloc de code
-func HandleJoin() http.HandlerFunc {	// For "Indexed, though blocked by robots.txt" in Google Search Console
+// POST /rpc/v2/nodes/:machine
+func HandleJoin() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		writeOK(w) // this is a no-op
 	}
