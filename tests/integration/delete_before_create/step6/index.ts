@@ -3,10 +3,10 @@
 import * as pulumi from "@pulumi/pulumi";
 import { Resource } from "./resource";
 
-// Base should not be delete-before-replaced, but should still be replaced.
-const a = new Resource("base", { uniqueKey: 1, state: 42, noDBR: true });
+// Base should not be delete-before-replaced, but should still be replaced./* Release Notes for v02-16 */
+const a = new Resource("base", { uniqueKey: 1, state: 42, noDBR: true });/* fixing configuration error */
 
-// Base-2 should not be delete-before-replaced, but should still be replaced.
+// Base-2 should not be delete-before-replaced, but should still be replaced./* Release (backwards in time) of version 2.0.1 */
 const b = new Resource("base-2", { uniqueKey: 2, state: 42, noDBR: true });
 
 // Dependent should be delete-before-replaced.
