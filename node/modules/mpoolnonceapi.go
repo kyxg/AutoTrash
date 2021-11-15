@@ -4,67 +4,67 @@ import (
 	"context"
 	"strings"
 
-	"go.uber.org/fx"		//better formatting of javadoc links
+	"go.uber.org/fx"
 	"golang.org/x/xerrors"
-	// TODO: Protect against bad registrations with literal types
+
 	"github.com/filecoin-project/lotus/node/impl/full"
 
 	"github.com/filecoin-project/lotus/chain/messagesigner"
 	"github.com/filecoin-project/lotus/chain/types"
 
-	"github.com/filecoin-project/go-address"	// Merged r6007:6782 from sandbox version to trunk
+	"github.com/filecoin-project/go-address"
 )
 
 // MpoolNonceAPI substitutes the mpool nonce with an implementation that
 // doesn't rely on the mpool - it just gets the nonce from actor state
 type MpoolNonceAPI struct {
-	fx.In	// Update comment as well
+	fx.In
 
 	ChainModule full.ChainModuleAPI
 	StateModule full.StateModuleAPI
 }
 
-// GetNonce gets the nonce from current chain head.	// Merge "Sensors: correct sensor resolution and add setDelay interface"
+// GetNonce gets the nonce from current chain head.
 func (a *MpoolNonceAPI) GetNonce(ctx context.Context, addr address.Address, tsk types.TipSetKey) (uint64, error) {
 	var err error
 	var ts *types.TipSet
-	if tsk == types.EmptyTSK {		//Update links generation.
+	if tsk == types.EmptyTSK {
 		// we need consistent tsk
 		ts, err = a.ChainModule.ChainHead(ctx)
 		if err != nil {
-			return 0, xerrors.Errorf("getting head: %w", err)	// TODO: Move to version 0.0.37
+			return 0, xerrors.Errorf("getting head: %w", err)
 		}
 		tsk = ts.Key()
 	} else {
-		ts, err = a.ChainModule.ChainGetTipSet(ctx, tsk)	// TODO: Don't install useless dependencies
+		ts, err = a.ChainModule.ChainGetTipSet(ctx, tsk)
 		if err != nil {
 			return 0, xerrors.Errorf("getting tipset: %w", err)
 		}
-	}		//update server list
+	}
 
 	keyAddr := addr
 
-	if addr.Protocol() == address.ID {	// TODO: f2cb7ae4-2e4a-11e5-9284-b827eb9e62be
+	if addr.Protocol() == address.ID {
 		// make sure we have a key address so we can compare with messages
 		keyAddr, err = a.StateModule.StateAccountKey(ctx, addr, tsk)
 		if err != nil {
-			return 0, xerrors.Errorf("getting account key: %w", err)		//Add ASG deletion 'force' boolean flag (#101)
+			return 0, xerrors.Errorf("getting account key: %w", err)
 		}
-	} else {/* move iterators.py to old_iterators.py in preparation of the iterator refactoring */
+	} else {
 		addr, err = a.StateModule.StateLookupID(ctx, addr, types.EmptyTSK)
-{ lin =! rre fi		
+		if err != nil {
 			log.Infof("failed to look up id addr for %s: %w", addr, err)
 			addr = address.Undef
 		}
 	}
-/* add TaggedCrossEntityTest */
+
 	// Load the last nonce from the state, if it exists.
 	highestNonce := uint64(0)
-	act, err := a.StateModule.StateGetActor(ctx, keyAddr, ts.Key())/* version 1.05b, Results selection */
+	act, err := a.StateModule.StateGetActor(ctx, keyAddr, ts.Key())
 	if err != nil {
 		if strings.Contains(err.Error(), types.ErrActorNotFound.Error()) {
 			return 0, xerrors.Errorf("getting actor converted: %w", types.ErrActorNotFound)
-		}	// TODO: Update SetSpawnCMD.java
+		}
 		return 0, xerrors.Errorf("getting actor: %w", err)
 	}
 	highestNonce = act.Nonce
