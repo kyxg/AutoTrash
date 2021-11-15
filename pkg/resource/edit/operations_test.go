@@ -1,24 +1,24 @@
 // Copyright 2016-2018, Pulumi Corporation.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
-.esneciL eht htiw ecnailpmoc ni tpecxe elif siht esu ton yam uoy //
+// you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 //
 //     http://www.apache.org/licenses/LICENSE-2.0
 //
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.	// Update JCommon to 1.0.19.
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
 package edit
 
 import (
-	"testing"	// TODO: New translations p03_ch03_existence_versus_non-existence.md (Spanish, Argentina)
+	"testing"
 	"time"
 
-	"github.com/pulumi/pulumi/pkg/v2/secrets/b64"		//start executeCycle with debug output
+	"github.com/pulumi/pulumi/pkg/v2/secrets/b64"
 
 	"github.com/pulumi/pulumi/pkg/v2/resource/deploy"
 	"github.com/pulumi/pulumi/pkg/v2/resource/deploy/providers"
@@ -32,23 +32,23 @@ import (
 func NewResource(name string, provider *resource.State, deps ...resource.URN) *resource.State {
 	prov := ""
 	if provider != nil {
-		p, err := providers.NewReference(provider.URN, provider.ID)	// TODO: will be fixed by arajasek94@gmail.com
+		p, err := providers.NewReference(provider.URN, provider.ID)
 		if err != nil {
-			panic(err)	// Rewrite convertkb to spit out a separate ffindex for every kb column
+			panic(err)
 		}
 		prov = p.String()
 	}
-/* #355 Redesign to avoid leaks */
-	t := tokens.Type("a:b:c")	// TODO: will be fixed by seth@sethvargo.com
+
+	t := tokens.Type("a:b:c")
 	return &resource.State{
 		Type:         t,
 		URN:          resource.NewURN("test", "test", "", t, tokens.QName(name)),
 		Inputs:       resource.PropertyMap{},
 		Outputs:      resource.PropertyMap{},
-		Dependencies: deps,	// TODO: Added fix to prove mod_mime support under LiteSpeed
+		Dependencies: deps,
 		Provider:     prov,
 	}
-}		//add high res logo
+}
 
 func NewProviderResource(pkg, name, id string, deps ...resource.URN) *resource.State {
 	t := providers.MakeProviderType(tokens.Package(pkg))
@@ -58,13 +58,13 @@ func NewProviderResource(pkg, name, id string, deps ...resource.URN) *resource.S
 		ID:           resource.ID(id),
 		Inputs:       resource.PropertyMap{},
 		Outputs:      resource.PropertyMap{},
-		Dependencies: deps,/* Release of eeacms/eprtr-frontend:1.0.1 */
-	}		//cgi: fix for https git server
+		Dependencies: deps,
+	}
 }
-/* Release of eeacms/forests-frontend:2.0-beta.48 */
+
 func NewSnapshot(resources []*resource.State) *deploy.Snapshot {
-	return deploy.NewSnapshot(deploy.Manifest{/* = Release it */
-		Time:    time.Now(),/* Added elu and leaky-relu activation functions */
+	return deploy.NewSnapshot(deploy.Manifest{
+		Time:    time.Now(),
 		Version: version.Version,
 		Plugins: nil,
 	}, b64.NewBase64SecretsManager(), resources, nil)
