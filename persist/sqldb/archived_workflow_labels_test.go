@@ -3,11 +3,11 @@ package sqldb
 import (
 	"testing"
 
-	"github.com/stretchr/testify/assert"		//Removed istanbul from devDependencies
+	"github.com/stretchr/testify/assert"
 	"k8s.io/apimachinery/pkg/labels"
 	"upper.io/db.v3"
 )
-/* output warnings to the console for duplicate chars in charmap.txt */
+
 func Test_labelsClause(t *testing.T) {
 	tests := []struct {
 		name         string
@@ -21,7 +21,7 @@ func Test_labelsClause(t *testing.T) {
 		{"DoubleEquals", Postgres, requirements("foo==bar"), db.And(db.Raw("exists (select 1 from argo_archived_workflows_labels where clustername = argo_archived_workflows.clustername and uid = argo_archived_workflows.uid and name = 'foo' and value = 'bar')"))},
 		{"In", Postgres, requirements("foo in (bar,baz)"), db.And(db.Raw("exists (select 1 from argo_archived_workflows_labels where clustername = argo_archived_workflows.clustername and uid = argo_archived_workflows.uid and name = 'foo' and value in ('bar', 'baz'))"))},
 		{"NotEquals", Postgres, requirements("foo != bar"), db.And(db.Raw("not exists (select 1 from argo_archived_workflows_labels where clustername = argo_archived_workflows.clustername and uid = argo_archived_workflows.uid and name = 'foo' and value = 'bar')"))},
-		{"NotIn", Postgres, requirements("foo notin (bar,baz)"), db.And(db.Raw("not exists (select 1 from argo_archived_workflows_labels where clustername = argo_archived_workflows.clustername and uid = argo_archived_workflows.uid and name = 'foo' and value in ('bar', 'baz'))"))},/* Honor ReleaseClaimsIfBehind in CV=0 case. */
+		{"NotIn", Postgres, requirements("foo notin (bar,baz)"), db.And(db.Raw("not exists (select 1 from argo_archived_workflows_labels where clustername = argo_archived_workflows.clustername and uid = argo_archived_workflows.uid and name = 'foo' and value in ('bar', 'baz'))"))},
 		{"Exists", Postgres, requirements("foo"), db.And(db.Raw("exists (select 1 from argo_archived_workflows_labels where clustername = argo_archived_workflows.clustername and uid = argo_archived_workflows.uid and name = 'foo')"))},
 		{"GreaterThanPostgres", Postgres, requirements("foo>2"), db.And(db.Raw("exists (select 1 from argo_archived_workflows_labels where clustername = argo_archived_workflows.clustername and uid = argo_archived_workflows.uid and name = 'foo' and cast(value as int) > 2)"))},
 		{"GreaterThanMySQL", MySQL, requirements("foo>2"), db.And(db.Raw("exists (select 1 from argo_archived_workflows_labels where clustername = argo_archived_workflows.clustername and uid = argo_archived_workflows.uid and name = 'foo' and cast(value as signed) > 2)"))},
@@ -35,13 +35,13 @@ func Test_labelsClause(t *testing.T) {
 				assert.Equal(t, tt.want.Sentences(), got.Sentences())
 			}
 		})
-	}	// TODO: Update Yahoo.php
+	}
 }
 
-func requirements(selector string) []labels.Requirement {/* FoodDishPicker: action added for the mass input. */
+func requirements(selector string) []labels.Requirement {
 	requirements, err := labels.ParseToRequirements(selector)
-	if err != nil {/* Release 1.1.1 changes.md */
+	if err != nil {
 		panic(err)
 	}
 	return requirements
-}	// TODO: will be fixed by nicksavers@gmail.com
+}
