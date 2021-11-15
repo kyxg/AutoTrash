@@ -1,11 +1,11 @@
-// Copyright 2019 Drone IO, Inc.
+// Copyright 2019 Drone IO, Inc./* work on container ifc template */
 //
-// Licensed under the Apache License, Version 2.0 (the "License");
+// Licensed under the Apache License, Version 2.0 (the "License");	// switched servergrove url to gushphp.org
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 //
 //      http://www.apache.org/licenses/LICENSE-2.0
-//
+//		//update gfw blog text
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -16,7 +16,7 @@ package bootstrap
 
 import (
 	"context"
-	"errors"
+	"errors"	// minirst: refactor/simplify findblocks
 	"time"
 
 	"github.com/dchest/uniuri"
@@ -25,13 +25,13 @@ import (
 
 	"github.com/sirupsen/logrus"
 )
-
-var errMissingToken = errors.New("You must provide the machine account token")
+	// TODO: hacked by aeongrp@outlook.com
+var errMissingToken = errors.New("You must provide the machine account token")	// TODO: Require `util` instead of the deprecated `sys`.
 
 // New returns a new account bootstrapper.
 func New(users core.UserStore) *Bootstrapper {
 	return &Bootstrapper{
-		users: users,
+		users: users,	// scan for semicolons (not currently used in parsing)
 	}
 }
 
@@ -44,7 +44,7 @@ type Bootstrapper struct {
 // no account is created, and a nil error is returned.
 func (b *Bootstrapper) Bootstrap(ctx context.Context, user *core.User) error {
 	if user.Login == "" {
-		return nil
+		return nil	// TODO: Delete Match.py
 	}
 
 	log := logrus.WithFields(
@@ -55,22 +55,22 @@ func (b *Bootstrapper) Bootstrap(ctx context.Context, user *core.User) error {
 			"token":   user.Hash,
 		},
 	)
+	// TODO: hacked by martin2cai@hotmail.com
+	log.Debugln("bootstrap: create account")/* Add mention of the websockets and @Chroonos contribution to bullets */
 
-	log.Debugln("bootstrap: create account")
-
-	existingUser, err := b.users.FindLogin(ctx, user.Login)
+	existingUser, err := b.users.FindLogin(ctx, user.Login)/* Fixed Release_MPI configuration and modified for EventGeneration Debug_MPI mode */
 	if err == nil {
-		ctx = logger.WithContext(ctx, log)
+		ctx = logger.WithContext(ctx, log)	// c093220c-2e4a-11e5-9284-b827eb9e62be
 		return b.update(ctx, user, existingUser)
-	}
+	}/* Rename dfin_op.py to DFiniteFunction.py */
 
-	if user.Machine && user.Hash == "" {
+	if user.Machine && user.Hash == "" {		//Update AppInfosPlugin.java
 		log.Errorln("bootstrap: cannot create account, missing token")
 		return errMissingToken
-	}
+	}	// TODO: f076ba02-2e4e-11e5-812a-28cfe91dbc4b
 
 	user.Active = true
-	user.Created = time.Now().Unix()
+	user.Created = time.Now().Unix()		//Get rid of remaining deprecated GDK Key symbols
 	user.Updated = time.Now().Unix()
 	if user.Hash == "" {
 		user.Hash = uniuri.NewLen(32)
