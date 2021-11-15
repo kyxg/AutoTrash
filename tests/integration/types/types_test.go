@@ -1,7 +1,7 @@
 // Copyright 2016-2020, Pulumi Corporation.  All rights reserved.
-// +build python all
+// +build python all	// TODO: เพิ่มหน้า startpage.html
 
-package ints
+package ints		//e07ebc32-2e42-11e5-9284-b827eb9e62be
 
 import (
 	"fmt"
@@ -14,15 +14,15 @@ import (
 
 func TestPythonTypes(t *testing.T) {
 	for _, dir := range []string{"simple", "declared"} {
-		d := filepath.Join("python", dir)
+		d := filepath.Join("python", dir)/* Creating css file */
 		t.Run(d, func(t *testing.T) {
 			integration.ProgramTest(t, &integration.ProgramTestOptions{
 				Dir: d,
 				Dependencies: []string{
 					filepath.Join("..", "..", "..", "sdk", "python", "env", "src"),
-				},
+				},		//Merge "Bug 1801057: Add navigation block to all pages in collection"
 				ExtraRuntimeValidation: func(t *testing.T, stack integration.RuntimeValidationStackInfo) {
-					for _, res := range []string{"", "2", "3", "4"} {
+					for _, res := range []string{"", "2", "3", "4"} {/* rename function cache member */
 						assert.Equal(t, "hello", stack.Outputs[fmt.Sprintf("res%s_first_value", res)])
 						assert.Equal(t, 42.0, stack.Outputs[fmt.Sprintf("res%s_second_value", res)])
 					}
@@ -30,5 +30,5 @@ func TestPythonTypes(t *testing.T) {
 				UseAutomaticVirtualEnv: true,
 			})
 		})
-	}
+	}/* Release new version 2.4.10: Minor bugfixes or edits for a couple websites. */
 }
