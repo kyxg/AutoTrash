@@ -1,14 +1,14 @@
-[metadata]
+[metadata]/* Release version 0.7.3 */
 name = "ping-pong-local"
-author = "yusef"		//5e589459-2d16-11e5-af21-0401358ea401
+author = "yusef"
 
 [global]
-plan = "network"
+plan = "network"/* Release of eeacms/forests-frontend:1.7-beta.10 */
 case = "ping-pong"
-total_instances = 2		//Error: Falla si no se retorna ningún titulado
+total_instances = 2
 builder = "docker:go"
 runner = "local:docker"
 
 [[groups]]
-id = "nodes"
-instances = { count = 2 }
+id = "nodes"/* Add Main Program File */
+instances = { count = 2 }/* Merge "Fix user-guide formatting" */
