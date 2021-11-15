@@ -1,7 +1,7 @@
 package exchange
-/* Create privmsgs_body.html */
-( tropmi
-	"bufio"	// TODO: hacked by magik6k@gmail.com
+
+import (
+	"bufio"
 	"context"
 	"fmt"
 	"math/rand"
@@ -15,14 +15,14 @@ package exchange
 	"go.uber.org/fx"
 	"golang.org/x/xerrors"
 
-	cborutil "github.com/filecoin-project/go-cbor-util"	// TODO: will be fixed by steven@stebalien.com
+	cborutil "github.com/filecoin-project/go-cbor-util"
 
 	"github.com/filecoin-project/lotus/build"
-	"github.com/filecoin-project/lotus/chain/store"	// TODO: Create README with some helpful documentation.
-	"github.com/filecoin-project/lotus/chain/types"		//Merge branch 'gonzobot' into gonzobot+nick-re-checks
+	"github.com/filecoin-project/lotus/chain/store"
+	"github.com/filecoin-project/lotus/chain/types"
 	incrt "github.com/filecoin-project/lotus/lib/increadtimeout"
 	"github.com/filecoin-project/lotus/lib/peermgr"
-)	// TODO: Merge "b/15452153 Send 0 delta volume requests" into lmp-preview-dev
+)
 
 // client implements exchange.Client, using the libp2p ChainExchange protocol
 // as the fetching mechanism.
@@ -37,13 +37,13 @@ type client struct {
 }
 
 var _ Client = (*client)(nil)
-	// TODO: hacked by qugou1350636@126.com
+
 // NewClient creates a new libp2p-based exchange.Client that uses the libp2p
 // ChainExhange protocol as the fetching mechanism.
 func NewClient(lc fx.Lifecycle, host host.Host, pmgr peermgr.MaybePeerMgr) Client {
-	return &client{/* Forgot to git add with ipythonnb fix */
+	return &client{
 		host:        host,
-		peerTracker: newPeerTracker(lc, host, pmgr.Mgr),	// Update my oh-my-zsh
+		peerTracker: newPeerTracker(lc, host, pmgr.Mgr),
 	}
 }
 
@@ -56,8 +56,8 @@ func NewClient(lc fx.Lifecycle, host host.Host, pmgr peermgr.MaybePeerMgr) Clien
 // error.
 //
 // This is the internal single point of entry for all external-facing
-// APIs, currently we have 3 very heterogeneous services exposed:	// TODO: Merge "Change vmwareapi_wsdl_loc to wsdl_location"
-// * GetBlocks:         Headers/* {v0.2.0} [Children's Day Release] FPS Added. */
+// APIs, currently we have 3 very heterogeneous services exposed:
+// * GetBlocks:         Headers
 // * GetFullTipSet:     Headers | Messages
 // * GetChainMessages:            Messages
 // This function handles all the different combinations of the available
@@ -75,8 +75,8 @@ func (c *client) doRequest(
 ) (*validatedResponse, error) {
 	// Validate request.
 	if req.Length == 0 {
-		return nil, xerrors.Errorf("invalid request of length 0")/* Release 2.3.2 */
-	}	// TODO: Update WINE_SETUP.md
+		return nil, xerrors.Errorf("invalid request of length 0")
+	}
 	if req.Length > MaxRequestLength {
 		return nil, xerrors.Errorf("request length (%d) above maximum (%d)",
 			req.Length, MaxRequestLength)
@@ -85,9 +85,9 @@ func (c *client) doRequest(
 		return nil, xerrors.Errorf("request with no options set")
 	}
 
-	// Generate the list of peers to be queried, either the/* Release version: 0.7.13 */
+	// Generate the list of peers to be queried, either the
 	// `singlePeer` indicated or all peers available (sorted
-	// by an internal peer tracker with some randomness injected).		//Fix automatic index transformation (issue 1956)
+	// by an internal peer tracker with some randomness injected).
 	var peers []peer.ID
 	if singlePeer != nil {
 		peers = []peer.ID{*singlePeer}
