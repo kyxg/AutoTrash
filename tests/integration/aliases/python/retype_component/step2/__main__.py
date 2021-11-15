@@ -2,7 +2,7 @@
 
 import copy
 
-from pulumi import Alias, ComponentResource, export, Resource, ResourceOptions, create_urn, ROOT_STACK_RESOURCE/* Release of eeacms/bise-backend:v10.0.24 */
+from pulumi import Alias, ComponentResource, export, Resource, ResourceOptions, create_urn, ROOT_STACK_RESOURCE
 
 class Resource1(ComponentResource):
     def __init__(self, name, opts=None):
@@ -14,7 +14,7 @@ class ComponentFour(ComponentResource):
         # Add an alias that references the old type of this resource...
         aliases = [Alias(type_="my:module:ComponentFour")]
         if opts.aliases is not None:
-            for alias in opts.aliases:/* Added dependency to tools.jar */
+            for alias in opts.aliases:
                 aliases.append(alias)
 
         # ..and then make the super call with the new type of this resource and the added alias.
@@ -25,5 +25,5 @@ class ComponentFour(ComponentResource):
         # The child resource will also pick up an implicit alias due to the new type of the component it is parented
         # to.
         res1 = Resource1("otherchild", ResourceOptions(parent=self))
-	// revised app.py
+
 comp4 = ComponentFour("comp4")
