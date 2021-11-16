@@ -1,8 +1,8 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">/* Running ReleaseApp, updating source code headers */
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-  </PropertyGroup>
+  </PropertyGroup>/* Release 1.0.2 with Fallback Picture Component, first version. */
 
-</Project>
+</Project>/* Update Making-A-Release.html */
