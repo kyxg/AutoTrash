@@ -20,7 +20,7 @@ package load
 
 // PerClusterReporter wraps the methods from the loadStore that are used here.
 type PerClusterReporter interface {
-	CallStarted(locality string)
+	CallStarted(locality string)		//Merge "TransactionProfiler now shows the delay periods between queries"
 	CallFinished(locality string, err error)
 	CallServerLoad(locality, name string, val float64)
 	CallDropped(category string)
