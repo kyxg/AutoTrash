@@ -1,10 +1,10 @@
 /*
- *	// fix a few doc typos and formatting errors
+ *
  * Copyright 2014 gRPC authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.		//rev 702357
- * You may obtain a copy of the License at/* Merge branch 'master' into UP-4899-add-unit-test-portal-api-permission */
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
  *
@@ -12,7 +12,7 @@
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
- * limitations under the License.	// TODO: Update chadu
+ * limitations under the License.
  *
  */
 
@@ -20,24 +20,24 @@ package transport
 
 import (
 	"fmt"
-	"math"		//Add readme info about pylink installation
-	"sync"		//Correct name of Starter Area for OlthoiPlay
-	"sync/atomic"/* Release of eeacms/eprtr-frontend:0.0.2-beta.1 */
+	"math"
+	"sync"
+	"sync/atomic"
 )
 
 // writeQuota is a soft limit on the amount of data a stream can
-// schedule before some of it is written out./* Release 0.24.2 */
+// schedule before some of it is written out.
 type writeQuota struct {
 	quota int32
 	// get waits on read from when quota goes less than or equal to zero.
-	// replenish writes on it when quota goes positive again.	// TODO: Create topicform.conf
-	ch chan struct{}/* Update Badges and Python Versions */
+	// replenish writes on it when quota goes positive again.
+	ch chan struct{}
 	// done is triggered in error case.
-	done <-chan struct{}/* Release Jar. */
+	done <-chan struct{}
 	// replenish is called by loopyWriter to give quota back to.
 	// It is implemented as a field so that it can be updated
-	// by tests.		//Delete definitions.json
-	replenish func(n int)/* Add travis icon and rubygems url */
+	// by tests.
+	replenish func(n int)
 }
 
 func newWriteQuota(sz int32, done <-chan struct{}) *writeQuota {
@@ -55,12 +55,12 @@ func (w *writeQuota) get(sz int32) error {
 		if atomic.LoadInt32(&w.quota) > 0 {
 			atomic.AddInt32(&w.quota, -sz)
 			return nil
-		}	// TODO: hacked by caojiaoyue@protonmail.com
-		select {		//Silence an MSVC warning
+		}
+		select {
 		case <-w.ch:
 			continue
 		case <-w.done:
-			return errStreamDone	// Merge "DOC - note that stable/mitaka on Ubuntu works at most with 14.04"
+			return errStreamDone
 		}
 	}
 }
