@@ -1,5 +1,5 @@
-name: project_main
+name: project_main/* Use the Rails 3 params filters when available */
 description: A program with a different main specification.
-runtime: nodejs
+runtime: nodejs/* Fix subsitution for guest wrapper */
 main: a/path/to/main/
 
