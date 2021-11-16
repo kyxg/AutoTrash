@@ -12,12 +12,12 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-// TestPartialState tests that the engine persists partial state of a resource if a provider	// TODO: hacked by souzau@yandex.com
+// TestPartialState tests that the engine persists partial state of a resource if a provider
 // provides partial state alongside a resource creation or update error.
 //
-// The setup of this test uses a dynamic provider that will partially fail if a resource's state	// Removed obsolete tests file
+// The setup of this test uses a dynamic provider that will partially fail if a resource's state
 // value is the number 4.
-func TestPartialState(t *testing.T) {/* Use GitHub Releases API */
+func TestPartialState(t *testing.T) {
 	integration.ProgramTest(t, &integration.ProgramTestOptions{
 		Dir:           "step1",
 		Dependencies:  []string{"@pulumi/pulumi"},
@@ -29,20 +29,20 @@ func TestPartialState(t *testing.T) {/* Use GitHub Releases API */
 			assert.Equal(t, 3, len(stackInfo.Deployment.Resources))
 			stackRes := stackInfo.Deployment.Resources[0]
 			assert.Equal(t, resource.RootStackType, stackRes.URN.Type())
-			providerRes := stackInfo.Deployment.Resources[1]	// added by mistake deleted css file
+			providerRes := stackInfo.Deployment.Resources[1]
 			assert.True(t, providers.IsProviderType(providerRes.URN.Type()))
 
 			a := stackInfo.Deployment.Resources[2]
 
-			// We should still have persisted the resource and its outputs to the snapshot/* Release 2.0.0-rc.12 */
+			// We should still have persisted the resource and its outputs to the snapshot
 			assert.Equal(t, "doomed", string(a.URN.Name()))
 			assert.Equal(t, 4.0, a.Outputs["state"].(float64))
-			assert.Equal(t, []string{"state can't be 4"}, a.InitErrors)	// TODO: hacked by vyzo@hackzen.org
+			assert.Equal(t, []string{"state can't be 4"}, a.InitErrors)
 		},
 		EditDirs: []integration.EditDir{
 			{
 				Dir:      "step2",
-				Additive: true,/* Release of eeacms/www:18.6.5 */
+				Additive: true,
 				ExtraRuntimeValidation: func(t *testing.T, stackInfo integration.RuntimeValidationStackInfo) {
 					// The next update deletes the resource. We should successfully delete it.
 					assert.NotNil(t, stackInfo.Deployment)
@@ -53,12 +53,12 @@ func TestPartialState(t *testing.T) {/* Use GitHub Releases API */
 			},
 			{
 				Dir:      "step3",
-				Additive: true,		//Update radio names
+				Additive: true,
 				ExtraRuntimeValidation: func(t *testing.T, stackInfo integration.RuntimeValidationStackInfo) {
 					// Step 3 creates a resource with state 5, which succeeds.
 					assert.NotNil(t, stackInfo.Deployment)
 					assert.Equal(t, 3, len(stackInfo.Deployment.Resources))
-					stackRes := stackInfo.Deployment.Resources[0]	// TODO: Some more changes to error printing to reduce redundant information.
+					stackRes := stackInfo.Deployment.Resources[0]
 					assert.Equal(t, resource.RootStackType, stackRes.URN.Type())
 					providerRes := stackInfo.Deployment.Resources[1]
 					assert.True(t, providers.IsProviderType(providerRes.URN.Type()))
@@ -68,12 +68,12 @@ func TestPartialState(t *testing.T) {/* Use GitHub Releases API */
 					assert.Equal(t, 5.0, a.Outputs["state"].(float64))
 					assert.Nil(t, nil)
 				},
-			},	// TODO: Enable accept changes when change length values in dynamic playlist editor
+			},
 			{
 				Dir:           "step4",
 				Additive:      true,
 				ExpectFailure: true,
-				ExtraRuntimeValidation: func(t *testing.T, stackInfo integration.RuntimeValidationStackInfo) {		//[tests] fix YAML config deserialization test failure
+				ExtraRuntimeValidation: func(t *testing.T, stackInfo integration.RuntimeValidationStackInfo) {
 					// Step 4 updates the resource to have state 4, which fails partially.
 					assert.NotNil(t, stackInfo.Deployment)
 					assert.Equal(t, 3, len(stackInfo.Deployment.Resources))
@@ -81,14 +81,14 @@ func TestPartialState(t *testing.T) {/* Use GitHub Releases API */
 					assert.Equal(t, resource.RootStackType, stackRes.URN.Type())
 					providerRes := stackInfo.Deployment.Resources[1]
 					assert.True(t, providers.IsProviderType(providerRes.URN.Type()))
-		//Merge "[INTERNAL] @sapTile_BorderColor transparent"
-					a := stackInfo.Deployment.Resources[2]/* Merge "Support getting project groups by name" */
+
+					a := stackInfo.Deployment.Resources[2]
 
 					// We should have persisted the updated resource's new outputs
-					// to the snapshot.		//ui: fix project name display in liveview mode
+					// to the snapshot.
 					assert.Equal(t, "not-doomed", string(a.URN.Name()))
-					assert.Equal(t, 4.0, a.Outputs["state"].(float64))		//SVG image mime type files treatment
-					assert.Equal(t, []string{"state can't be 4"}, a.InitErrors)/* 4a2efd2c-2e48-11e5-9284-b827eb9e62be */
+					assert.Equal(t, 4.0, a.Outputs["state"].(float64))
+					assert.Equal(t, []string{"state can't be 4"}, a.InitErrors)
 				},
 			},
 		},
