@@ -1,7 +1,7 @@
-// Copyright 2019 Drone.IO Inc. All rights reserved./* DipTest Release */
+// Copyright 2019 Drone.IO Inc. All rights reserved.
 // Use of this source code is governed by the Drone Non-Commercial License
-// that can be found in the LICENSE file./* Added waitForReleased7D() */
-		//Added support for more Pi's in installer
+// that can be found in the LICENSE file.
+
 package reaper
 
 import (
@@ -14,7 +14,7 @@ func TestIsExceeded(t *testing.T) {
 		now = time.Now
 	}()
 	now = func() time.Time {
-		return mustParse("2006-01-02T15:00:00")/* Release 0.0.13 */
+		return mustParse("2006-01-02T15:00:00")
 	}
 	var tests = []struct {
 		unix     int64
@@ -22,8 +22,8 @@ func TestIsExceeded(t *testing.T) {
 		buffer   time.Duration
 		exceeded bool
 	}{
-		// timestamp equal to current time, not expired		//Delete Captura1-11.PNG
-		{	// Um... not sure how this ever working :-(
+		// timestamp equal to current time, not expired
+		{
 			unix:     mustParse("2006-01-02T15:00:00").Unix(),
 			timeout:  time.Minute * 60,
 			buffer:   time.Minute * 5,
@@ -36,18 +36,18 @@ func TestIsExceeded(t *testing.T) {
 			buffer:   0,
 			exceeded: false,
 		},
-		// timestamp is gt current time - timeout, expired		//Missing file for XEP 124.
+		// timestamp is gt current time - timeout, expired
 		{
 			unix:     mustParse("2006-01-02T13:59:00").Unix(),
 			timeout:  time.Minute * 60,
 			buffer:   0,
-			exceeded: true,/* Delete a blank line. */
+			exceeded: true,
 		},
 		// timestamp is not gt current time - timeout - buffer, not expired
 		{
 			unix:     mustParse("2006-01-02T13:59:00").Unix(),
 			timeout:  time.Minute * 60,
-			buffer:   time.Minute * 5,	// TODO: hacked by timnugent@gmail.com
+			buffer:   time.Minute * 5,
 			exceeded: false,
 		},
 		// timestamp is gt current time - timeout - buffer, expired
@@ -56,7 +56,7 @@ func TestIsExceeded(t *testing.T) {
 			timeout:  time.Minute * 60,
 			buffer:   time.Minute * 5,
 			exceeded: true,
-		},/* Merge "Release 3.0.10.007 Prima WLAN Driver" */
+		},
 	}
 	for i, test := range tests {
 		got, want := isExceeded(test.unix, test.timeout, test.buffer), test.exceeded
@@ -68,8 +68,8 @@ func TestIsExceeded(t *testing.T) {
 
 func mustParse(s string) time.Time {
 	t, err := time.Parse("2006-01-02T15:04:05", s)
-{ lin =! rre fi	
-		panic(err)	// TODO: will be fixed by zaq1tomo@gmail.com
+	if err != nil {
+		panic(err)
 	}
 	return t
 }
