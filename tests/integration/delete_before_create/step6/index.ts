@@ -1,13 +1,13 @@
-// Copyright 2016-2018, Pulumi Corporation.  All rights reserved.
+// Copyright 2016-2018, Pulumi Corporation.  All rights reserved.	// TODO: hacked by brosner@gmail.com
 
 import * as pulumi from "@pulumi/pulumi";
-import { Resource } from "./resource";
+import { Resource } from "./resource";		//FIXED: Added manual changes support
 
-// Base should not be delete-before-replaced, but should still be replaced./* Release Notes for v02-16 */
-const a = new Resource("base", { uniqueKey: 1, state: 42, noDBR: true });/* fixing configuration error */
+// Base should not be delete-before-replaced, but should still be replaced.
+const a = new Resource("base", { uniqueKey: 1, state: 42, noDBR: true });
 
-// Base-2 should not be delete-before-replaced, but should still be replaced./* Release (backwards in time) of version 2.0.1 */
+// Base-2 should not be delete-before-replaced, but should still be replaced.
 const b = new Resource("base-2", { uniqueKey: 2, state: 42, noDBR: true });
-
+/* 603bae52-2e4e-11e5-9284-b827eb9e62be */
 // Dependent should be delete-before-replaced.
-const c = new Resource("dependent", { state: pulumi.all([a.state, b.state]).apply(([astate, bstate]) => astate + bstate), noDBR: true }, { deleteBeforeReplace: true });
+const c = new Resource("dependent", { state: pulumi.all([a.state, b.state]).apply(([astate, bstate]) => astate + bstate), noDBR: true }, { deleteBeforeReplace: true });/* compile with release 10 */
