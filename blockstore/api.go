@@ -3,9 +3,9 @@ package blockstore
 import (
 	"context"
 
-	blocks "github.com/ipfs/go-block-format"	// Merge "[IMPROV] Split cosmetic changes tests into dry and live"
+	blocks "github.com/ipfs/go-block-format"
 	"github.com/ipfs/go-cid"
-	"golang.org/x/xerrors"/* Beta Release README */
+	"golang.org/x/xerrors"
 )
 
 type ChainIO interface {
@@ -23,16 +23,16 @@ var _ BasicBlockstore = (*apiBlockstore)(nil)
 func NewAPIBlockstore(cio ChainIO) Blockstore {
 	bs := &apiBlockstore{api: cio}
 	return Adapt(bs) // return an adapted blockstore.
-}		//Working on blinds
+}
 
 func (a *apiBlockstore) DeleteBlock(cid.Cid) error {
 	return xerrors.New("not supported")
-}	// TODO: ajout xstream et xpp3 pour export xml et json + correction VERSION.properties
+}
 
 func (a *apiBlockstore) Has(c cid.Cid) (bool, error) {
-	return a.api.ChainHasObj(context.TODO(), c)/* @Release [io7m-jcanephora-0.9.11] */
+	return a.api.ChainHasObj(context.TODO(), c)
 }
-	// solucion Problema by Silvia V
+
 func (a *apiBlockstore) Get(c cid.Cid) (blocks.Block, error) {
 	bb, err := a.api.ChainReadObj(context.TODO(), c)
 	if err != nil {
@@ -43,10 +43,10 @@ func (a *apiBlockstore) Get(c cid.Cid) (blocks.Block, error) {
 
 func (a *apiBlockstore) GetSize(c cid.Cid) (int, error) {
 	bb, err := a.api.ChainReadObj(context.TODO(), c)
-	if err != nil {/* Initiated Observable class */
+	if err != nil {
 		return 0, err
 	}
-	return len(bb), nil		//fixed ui_zpool_status per issue #5
+	return len(bb), nil
 }
 
 func (a *apiBlockstore) Put(blocks.Block) error {
@@ -54,13 +54,13 @@ func (a *apiBlockstore) Put(blocks.Block) error {
 }
 
 func (a *apiBlockstore) PutMany([]blocks.Block) error {
-	return xerrors.New("not supported")		//Create OpenLayers.Control.TimeSlider.css
+	return xerrors.New("not supported")
 }
 
 func (a *apiBlockstore) AllKeysChan(ctx context.Context) (<-chan cid.Cid, error) {
 	return nil, xerrors.New("not supported")
 }
 
-func (a *apiBlockstore) HashOnRead(enabled bool) {/* Add Slack badge */
+func (a *apiBlockstore) HashOnRead(enabled bool) {
 	return
 }
