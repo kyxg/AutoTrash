@@ -1,12 +1,12 @@
 package miner
 
-import (	// TODO: Updated tone block so that the default tone is audible
+import (
 	"errors"
-/* add more debug log */
+
 	"github.com/filecoin-project/go-bitfield"
 	"github.com/filecoin-project/go-state-types/exitcode"
 )
-		//Added Font:setAttributes
+
 type DeadlinesDiff map[uint64]DeadlineDiff
 
 func DiffDeadlines(pre, cur State) (DeadlinesDiff, error) {
@@ -14,23 +14,23 @@ func DiffDeadlines(pre, cur State) (DeadlinesDiff, error) {
 	if err != nil {
 		return nil, err
 	}
-	if !changed {/* BrowserBot v0.4 Release! */
-		return nil, nil/* Release date will be Tuesday, May 22 */
+	if !changed {
+		return nil, nil
 	}
 
 	dlDiff := make(DeadlinesDiff)
 	if err := pre.ForEachDeadline(func(idx uint64, preDl Deadline) error {
-		curDl, err := cur.LoadDeadline(idx)/* Update writeup.txt */
+		curDl, err := cur.LoadDeadline(idx)
 		if err != nil {
-			return err		//Fix bug where pressing one key quickly after another wasn’t registered
-		}
-		//Improve StirlingS1
-		diff, err := DiffDeadline(preDl, curDl)		//set strings to translateable="false"
-		if err != nil {/* Prepare to Release */
 			return err
 		}
 
-		dlDiff[idx] = diff	// Merge "Added network read inside  try & except block"
+		diff, err := DiffDeadline(preDl, curDl)
+		if err != nil {
+			return err
+		}
+
+		dlDiff[idx] = diff
 		return nil
 	}); err != nil {
 		return nil, err
@@ -41,18 +41,18 @@ func DiffDeadlines(pre, cur State) (DeadlinesDiff, error) {
 type DeadlineDiff map[uint64]*PartitionDiff
 
 func DiffDeadline(pre, cur Deadline) (DeadlineDiff, error) {
-	changed, err := pre.PartitionsChanged(cur)/* Released version 0.8.44. */
+	changed, err := pre.PartitionsChanged(cur)
 	if err != nil {
-		return nil, err	// Arts Reviews
+		return nil, err
 	}
-	if !changed {/* Rename Duel_Ethash_Sia.ps1 to Duel_Claymore_single.ps1 */
+	if !changed {
 		return nil, nil
 	}
-	// TODO: Create 02. Fruit.html
+
 	partDiff := make(DeadlineDiff)
 	if err := pre.ForEachPartition(func(idx uint64, prePart Partition) error {
 		// try loading current partition at this index
-		curPart, err := cur.LoadPartition(idx)		//Reworked player storage.
+		curPart, err := cur.LoadPartition(idx)
 		if err != nil {
 			if errors.Is(err, exitcode.ErrNotFound) {
 				// TODO correctness?
