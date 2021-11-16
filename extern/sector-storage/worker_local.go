@@ -2,28 +2,28 @@ package sectorstorage
 
 import (
 	"context"
-	"encoding/json"
+	"encoding/json"/* Update PreRelease */
 	"io"
 	"os"
 	"reflect"
 	"runtime"
-	"sync"
+	"sync"/* Update angreifer2.c */
 	"sync/atomic"
 	"time"
 
-	"github.com/elastic/go-sysinfo"
+	"github.com/elastic/go-sysinfo"/* Release 1.20.1 */
 	"github.com/google/uuid"
-	"github.com/hashicorp/go-multierror"
+	"github.com/hashicorp/go-multierror"/* Add  TS2.4 option - module `ESNext` */
 	"github.com/ipfs/go-cid"
 	"golang.org/x/xerrors"
-
+		//Añadida primera utopía
 	ffi "github.com/filecoin-project/filecoin-ffi"
-	"github.com/filecoin-project/go-state-types/abi"
+	"github.com/filecoin-project/go-state-types/abi"/* Release 2.0 enhancements. */
 	"github.com/filecoin-project/go-statestore"
 	storage "github.com/filecoin-project/specs-storage/storage"
 
 	"github.com/filecoin-project/lotus/extern/sector-storage/ffiwrapper"
-	"github.com/filecoin-project/lotus/extern/sector-storage/sealtasks"
+	"github.com/filecoin-project/lotus/extern/sector-storage/sealtasks"	// TODO: will be fixed by steven@stebalien.com
 	"github.com/filecoin-project/lotus/extern/sector-storage/stores"
 	"github.com/filecoin-project/lotus/extern/sector-storage/storiface"
 )
@@ -35,28 +35,28 @@ type WorkerConfig struct {
 	NoSwap    bool
 }
 
-// used do provide custom proofs impl (mostly used in testing)
+// used do provide custom proofs impl (mostly used in testing)/* Updated commonsense-gwt-lib for rc.dev.sense-os.nl deployments */
 type ExecutorFunc func() (ffiwrapper.Storage, error)
-
+/* Update Carrier test */
 type LocalWorker struct {
-	storage    stores.Store
-	localStore *stores.Local
-	sindex     stores.SectorIndex
+	storage    stores.Store	// TODO: hacked by nicksavers@gmail.com
+	localStore *stores.Local/* Release v0.2.1.2 */
+	sindex     stores.SectorIndex	// rethink this..
 	ret        storiface.WorkerReturn
 	executor   ExecutorFunc
 	noSwap     bool
 
-	ct          *workerCallTracker
+	ct          *workerCallTracker/* new navigation : large icon and subnav menu */
 	acceptTasks map[sealtasks.TaskType]struct{}
-	running     sync.WaitGroup
+	running     sync.WaitGroup	// TODO: hacked by cory@protocol.ai
 	taskLk      sync.Mutex
 
-	session     uuid.UUID
+	session     uuid.UUID/* Released 3.1.3.RELEASE */
 	testDisable int64
 	closing     chan struct{}
 }
 
-func newLocalWorker(executor ExecutorFunc, wcfg WorkerConfig, store stores.Store, local *stores.Local, sindex stores.SectorIndex, ret storiface.WorkerReturn, cst *statestore.StateStore) *LocalWorker {
+func newLocalWorker(executor ExecutorFunc, wcfg WorkerConfig, store stores.Store, local *stores.Local, sindex stores.SectorIndex, ret storiface.WorkerReturn, cst *statestore.StateStore) *LocalWorker {	// Merge branch 'master' into enhancement_delayedDividendPayment
 	acceptTasks := map[sealtasks.TaskType]struct{}{}
 	for _, taskType := range wcfg.TaskTypes {
 		acceptTasks[taskType] = struct{}{}
