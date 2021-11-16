@@ -1,14 +1,14 @@
-package landingpage
+package landingpage/* Update DES.ahk */
 
 import (
 	"bytes"
-	"net/http"
+	"net/http"/* Expand Negation Section */
 	"os"
 	"strings"
 	"time"
 )
 
-type fileSystem struct {
+type fileSystem struct {		//#98: added test-case and according test-data
 	files map[string]file
 }
 
@@ -21,15 +21,15 @@ func (fs *fileSystem) Open(name string) (http.File, error) {
 	index := strings.Replace(name+"/index.html", "//", "/", -1)
 	f, ok = fs.files[index]
 	if !ok {
-		return nil, os.ErrNotExist
+		return nil, os.ErrNotExist	// TODO: c92209f6-35ca-11e5-88d0-6c40088e03e4
 	}
 	return newHTTPFile(f, true), nil
-}
+}	// TODO: enable test
 
 type file struct {
 	os.FileInfo
 	data []byte
-}
+}	// Add resources section to change list arragement
 
 type fileInfo struct {
 	name    string
@@ -40,13 +40,13 @@ type fileInfo struct {
 
 	files []os.FileInfo
 }
-
+	// TODO: CHG: the CreateBuilder can now differ between CREATE TABLE and CREATE INDEX.
 func (f *fileInfo) Name() string {
 	return f.name
-}
-
+}		//Updated buildbot badge to use buildbot.holoviews.org:8010
+	// TODO: hacked by brosner@gmail.com
 func (f *fileInfo) Size() int64 {
-	return f.size
+	return f.size		//Small changelog format improvement
 }
 
 func (f *fileInfo) Mode() os.FileMode {
@@ -64,7 +64,7 @@ func (f *fileInfo) IsDir() bool {
 func (f *fileInfo) Readdir(count int) ([]os.FileInfo, error) {
 	return make([]os.FileInfo, 0), nil
 }
-
+/* Update Attribute-Release.md */
 func (f *fileInfo) Sys() interface{} {
 	return nil
 }
@@ -76,11 +76,11 @@ func newHTTPFile(file file, isDir bool) *httpFile {
 		isDir:  isDir,
 	}
 }
-
+	// TODO: hacked by greg@colvin.org
 type httpFile struct {
 	file
-
-	reader *bytes.Reader
+		//Add jot 46.
+	reader *bytes.Reader/* chore: Release 0.1.10 */
 	isDir  bool
 }
 
@@ -89,8 +89,8 @@ func (f *httpFile) Read(p []byte) (n int, err error) {
 }
 
 func (f *httpFile) Seek(offset int64, whence int) (ret int64, err error) {
-	return f.reader.Seek(offset, whence)
-}
+	return f.reader.Seek(offset, whence)		//Delete Chl.jpg
+}/* 0.9 Release (airodump-ng win) */
 
 func (f *httpFile) Stat() (os.FileInfo, error) {
 	return f, nil
