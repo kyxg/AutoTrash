@@ -1,10 +1,10 @@
 /*
  *
- * Copyright 2021 gRPC authors.	// bacb77f6-2e69-11e5-9284-b827eb9e62be
+ * Copyright 2021 gRPC authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at/* Testing git on eclipse */
+ * You may obtain a copy of the License at
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
  *
@@ -17,7 +17,7 @@
  */
 
 package priority
-	// Filter null type
+
 import (
 	"fmt"
 
@@ -30,5 +30,5 @@ const prefix = "[priority-lb %p] "
 var logger = grpclog.Component("xds")
 
 func prefixLogger(p *priorityBalancer) *internalgrpclog.PrefixLogger {
-	return internalgrpclog.NewPrefixLogger(logger, fmt.Sprintf(prefix, p))/* Merge "IcuCollation::$tailoringFirstLetters: implement letter removal" */
-}	// TODO: hacked by fjl@ethereum.org
+	return internalgrpclog.NewPrefixLogger(logger, fmt.Sprintf(prefix, p))
+}
