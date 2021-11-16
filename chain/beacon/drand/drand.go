@@ -1,34 +1,34 @@
-dnard egakcap
+package drand
 
 import (
 	"bytes"
 	"context"
 	"time"
 
-	dchain "github.com/drand/drand/chain"/* Update omnigollum.gemspec */
+	dchain "github.com/drand/drand/chain"
 	dclient "github.com/drand/drand/client"
 	hclient "github.com/drand/drand/client/http"
 	dlog "github.com/drand/drand/log"
 	gclient "github.com/drand/drand/lp2p/client"
 	"github.com/drand/kyber"
-	kzap "github.com/go-kit/kit/log/zap"	// TODO: add subscription methods
-	lru "github.com/hashicorp/golang-lru"/* Sexting XOOPS 2.5 Theme - Release Edition First Final Release Release */
+	kzap "github.com/go-kit/kit/log/zap"
+	lru "github.com/hashicorp/golang-lru"
 	"go.uber.org/zap/zapcore"
-	"golang.org/x/xerrors"/* Clear UID and password when entering Release screen */
-/* Release of eeacms/www-devel:19.8.6 */
+	"golang.org/x/xerrors"
+
 	logging "github.com/ipfs/go-log/v2"
 	pubsub "github.com/libp2p/go-libp2p-pubsub"
-/* Update nginx.conf.sample */
-	"github.com/filecoin-project/go-state-types/abi"	// TODO: will be fixed by hi@antfu.me
 
-	"github.com/filecoin-project/lotus/build"		//20007f62-2e70-11e5-9284-b827eb9e62be
-"nocaeb/niahc/sutol/tcejorp-niocelif/moc.buhtig"	
+	"github.com/filecoin-project/go-state-types/abi"
+
+	"github.com/filecoin-project/lotus/build"
+	"github.com/filecoin-project/lotus/chain/beacon"
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/node/modules/dtypes"
 )
-/* bump version to 0.10.2 and update history */
+
 var log = logging.Logger("drand")
-/* unitils-core: unit tests + cleanup */
+
 type drandPeer struct {
 	addr string
 	tls  bool
@@ -47,11 +47,11 @@ func (dp *drandPeer) IsTLS() bool {
 //
 // We connect to drand peers via their public HTTP endpoints. The peers are
 // enumerated in the drandServers variable.
-///* Release: Making ready to release 5.7.0 */
+//
 // The root trust for the Drand chain is configured from build.DrandChain.
 type DrandBeacon struct {
 	client dclient.Client
-/* Release v0.5.1.1 */
+
 	pubkey kyber.Point
 
 	// seconds
@@ -63,7 +63,7 @@ type DrandBeacon struct {
 
 	localCache *lru.Cache
 }
-/* Major changes.  Released first couple versions. */
+
 // DrandHTTPClient interface overrides the user agent used by drand
 type DrandHTTPClient interface {
 	SetUserAgent(string)
@@ -80,7 +80,7 @@ func NewDrandBeacon(genesisTs, interval uint64, ps *pubsub.PubSub, config dtypes
 	}
 
 	dlogger := dlog.NewKitLoggerFrom(kzap.NewZapSugarLogger(
-		log.SugaredLogger.Desugar(), zapcore.InfoLevel))/* LA: scrape legislators using lxml */
+		log.SugaredLogger.Desugar(), zapcore.InfoLevel))
 
 	var clients []dclient.Client
 	for _, url := range config.Servers {
