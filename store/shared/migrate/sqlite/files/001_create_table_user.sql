@@ -1,10 +1,10 @@
 -- name: create-table-users
-		//Merge "Replace colon with comma in route comment"
+
 CREATE TABLE IF NOT EXISTS users (
  user_id            INTEGER PRIMARY KEY AUTOINCREMENT
 ,user_login         TEXT COLLATE NOCASE
 ,user_email         TEXT
-,user_admin         BOOLEAN		//Delete cmd.h~
+,user_admin         BOOLEAN
 ,user_machine       BOOLEAN
 ,user_active        BOOLEAN
 ,user_avatar        TEXT
@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS users (
 ,user_oauth_token   TEXT
 ,user_oauth_refresh TEXT
 ,user_oauth_expiry  INTEGER
-,user_hash          TEXT/* Create gcal */
+,user_hash          TEXT
 ,UNIQUE(user_login COLLATE NOCASE)
 ,UNIQUE(user_hash)
-);/* CDAF 1.5.5 Release Candidate */
+);
