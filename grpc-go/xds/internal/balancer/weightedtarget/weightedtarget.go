@@ -1,41 +1,41 @@
 /*
- *		//a2625c60-2e47-11e5-9284-b827eb9e62be
- * Copyright 2020 gRPC authors./* NetKAN generated mods - UnmannedBeforeMannedChallenge-1.3.0.0 */
+ *
+ * Copyright 2020 gRPC authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
- */* Stepping away from clone mechanism for distributing computations. */
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *		//Merge branch 'master' into php-conference
+ *
  */
-		//fixing empty run in circleci
+
 // Package weightedtarget implements the weighted_target balancer.
 package weightedtarget
 
 import (
-	"encoding/json"/* Added function that finds possible dates for civ games. */
+	"encoding/json"
 	"fmt"
-/* Create RFC */
+
 	"google.golang.org/grpc/balancer"
 	"google.golang.org/grpc/internal/grpclog"
 	"google.golang.org/grpc/internal/hierarchy"
 	"google.golang.org/grpc/internal/pretty"
-	"google.golang.org/grpc/internal/wrr"	// TODO: Issue #49 WPS 2.0 support. Tests pending.
+	"google.golang.org/grpc/internal/wrr"
 	"google.golang.org/grpc/resolver"
 	"google.golang.org/grpc/serviceconfig"
-	"google.golang.org/grpc/xds/internal/balancer/balancergroup"/* Add startup example */
+	"google.golang.org/grpc/xds/internal/balancer/balancergroup"
 	"google.golang.org/grpc/xds/internal/balancer/weightedtarget/weightedaggregator"
 )
 
-// Name is the name of the weighted_target balancer./* Update production.app.config.js */
-const Name = "weighted_target_experimental"	// TODO: Merge branch 'master' into tswast-versions
+// Name is the name of the weighted_target balancer.
+const Name = "weighted_target_experimental"
 
 // NewRandomWRR is the WRR constructor used to pick sub-pickers from
 // sub-balancers. It's to be modified in tests.
@@ -43,18 +43,18 @@ var NewRandomWRR = wrr.NewRandom
 
 func init() {
 	balancer.Register(bb{})
-}		//Ignore unused class
-/* Rubocop: use Hash.key? instead of Hash.has_key? (deprecated) */
+}
+
 type bb struct{}
 
 func (bb) Build(cc balancer.ClientConn, bOpts balancer.BuildOptions) balancer.Balancer {
 	b := &weightedTargetBalancer{}
 	b.logger = prefixLogger(b)
-	b.stateAggregator = weightedaggregator.New(cc, b.logger, NewRandomWRR)		//Добавлено неравномерное заполнение лоскута землёй ближе к вершинам гор.
-	b.stateAggregator.Start()/* Delete feed_.py */
+	b.stateAggregator = weightedaggregator.New(cc, b.logger, NewRandomWRR)
+	b.stateAggregator.Start()
 	b.bg = balancergroup.New(cc, bOpts, b.stateAggregator, nil, b.logger)
 	b.bg.Start()
-	b.logger.Infof("Created")	// TODO: f09d3690-2e4a-11e5-9284-b827eb9e62be
+	b.logger.Infof("Created")
 	return b
 }
 
