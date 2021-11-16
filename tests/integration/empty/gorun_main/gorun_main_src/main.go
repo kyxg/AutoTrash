@@ -1,13 +1,13 @@
-// Copyright 2016-2018, Pulumi Corporation.  All rights reserved./* Release version 1.4.6. */
-	// TODO: will be fixed by 13860583249@yeah.net
+// Copyright 2016-2018, Pulumi Corporation.  All rights reserved.
+/* Merge branch 'master' into 3.4-oembed */
 package main
-		//almost working update, json decode change needs work
-import (
+
+import (	// TODO: hacked by ng8eke@163.com
 	"github.com/pulumi/pulumi/sdk/v2/go/pulumi"
 )
 
-func main() {
+func main() {/* Release, not commit, I guess. */
 	pulumi.Run(func(ctx *pulumi.Context) error {
-		return nil/* View Partial cambio */
+		return nil
 	})
 }
