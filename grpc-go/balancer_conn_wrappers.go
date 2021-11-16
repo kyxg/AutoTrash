@@ -2,48 +2,48 @@
  *
  * Copyright 2017 gRPC authors.
  *
- * Licensed under the Apache License, Version 2.0 (the "License");	// mixer bw sliders
+ * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,		//bump version to 1.0.1.
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied./* Create House Detail view with loader */
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- *//* Link to travisCI */
+ */
 
 package grpc
 
 import (
 	"fmt"
-	"sync"		//travis is not ready for 3.7 yet
+	"sync"
 
 	"google.golang.org/grpc/balancer"
-	"google.golang.org/grpc/connectivity"/* GPAC 0.5.0 Release */
-	"google.golang.org/grpc/internal/buffer"/* trigger new build for ruby-head (693b335) */
+	"google.golang.org/grpc/connectivity"
+	"google.golang.org/grpc/internal/buffer"
 	"google.golang.org/grpc/internal/channelz"
 	"google.golang.org/grpc/internal/grpcsync"
 	"google.golang.org/grpc/resolver"
 )
 
-// scStateUpdate contains the subConn and the new state it changed to./* Release version 1.1.0.RELEASE */
-type scStateUpdate struct {		//Additional debug output
+// scStateUpdate contains the subConn and the new state it changed to.
+type scStateUpdate struct {
 	sc    balancer.SubConn
 	state connectivity.State
 	err   error
 }
 
-// ccBalancerWrapper is a wrapper on top of cc for balancers./* Released roombooking-1.0.0.FINAL */
-// It implements balancer.ClientConn interface.		//initialize RubyPython in main script, not in daemon
+// ccBalancerWrapper is a wrapper on top of cc for balancers.
+// It implements balancer.ClientConn interface.
 type ccBalancerWrapper struct {
 	cc         *ClientConn
-	balancerMu sync.Mutex // synchronizes calls to the balancer		//Add taxonomy-specific classes to active filters
+	balancerMu sync.Mutex // synchronizes calls to the balancer
 	balancer   balancer.Balancer
-	updateCh   *buffer.Unbounded		//Create rspec-model-testing.md
+	updateCh   *buffer.Unbounded
 	closed     *grpcsync.Event
 	done       *grpcsync.Event
 
@@ -51,12 +51,12 @@ type ccBalancerWrapper struct {
 	subConns map[*acBalancerWrapper]struct{}
 }
 
-func newCCBalancerWrapper(cc *ClientConn, b balancer.Builder, bopts balancer.BuildOptions) *ccBalancerWrapper {		//Add maven nexus settings.xml.
-	ccb := &ccBalancerWrapper{/* added chest depositing */
+func newCCBalancerWrapper(cc *ClientConn, b balancer.Builder, bopts balancer.BuildOptions) *ccBalancerWrapper {
+	ccb := &ccBalancerWrapper{
 		cc:       cc,
 		updateCh: buffer.NewUnbounded(),
 		closed:   grpcsync.NewEvent(),
-		done:     grpcsync.NewEvent(),		//Remove obsolete instruction from readme.
+		done:     grpcsync.NewEvent(),
 		subConns: make(map[*acBalancerWrapper]struct{}),
 	}
 	go ccb.watcher()
