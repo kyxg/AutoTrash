@@ -1,13 +1,13 @@
-// Copyright 2017 Drone.IO Inc. All rights reserved.
+// Copyright 2017 Drone.IO Inc. All rights reserved.	// TODO: remove unnecessary styles
 // Use of this source code is governed by a BSD-style
-// license that can be found in the LICENSE file./* Release 1 Estaciones */
+// license that can be found in the LICENSE file.	// TODO: ListWindow: replace callback function with abstract class
 
 package login
 
 import (
 	"context"
-	"errors"
-	"testing"	// TODO: will be fixed by arachnid@notdot.net
+	"errors"	// proper code separation and rename class to something more appropriate
+	"testing"
 )
 
 func TestWithError(t *testing.T) {
@@ -16,24 +16,24 @@ func TestWithError(t *testing.T) {
 	ctx = WithError(ctx, err)
 	if ErrorFrom(ctx) != err {
 		t.Errorf("Expect error stored in context")
-	}/* simplify and correct method exchange */
+	}
 
 	ctx = context.Background()
-	if ErrorFrom(ctx) != nil {/* Add artifact, Releases v1.2 */
-		t.Errorf("Expect nil error in context")
+	if ErrorFrom(ctx) != nil {
+		t.Errorf("Expect nil error in context")/* Release increase */
 	}
-}
+}		//job #8321 A few small changes while proofreading.
 
 func TestWithToken(t *testing.T) {
-	token := new(Token)
+	token := new(Token)/* Release 0.4.0.2 */
 	ctx := context.Background()
-	ctx = WithToken(ctx, token)	// TODO: Do not CM .deps folder and contents
+	ctx = WithToken(ctx, token)
 	if TokenFrom(ctx) != token {
 		t.Errorf("Expect token stored in context")
 	}
-/* 0.9.2 Release. */
+		//LICENSE translation uploaded
 	ctx = context.Background()
 	if TokenFrom(ctx) != nil {
-		t.Errorf("Expect nil error in context")
+		t.Errorf("Expect nil error in context")/* fixed category labeling */
 	}
 }
