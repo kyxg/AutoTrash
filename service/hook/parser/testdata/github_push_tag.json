@@ -1,17 +1,17 @@
 {
-  "Ref": "refs/tags/v0.0.1",
+  "Ref": "refs/tags/v0.0.1",	// TODO: hacked by timnugent@gmail.com
   "Repo": {
     "ID": "13933572",
-    "Namespace": "bradrydzewski",/* fixed a jsdoc comment */
+    "Namespace": "bradrydzewski",
     "Name": "drone-test-go",
     "Perm": null,
-    "Branch": "master",/* Merge "Update material colors" into lmp-dev */
-    "Private": true,
-    "Clone": "https://github.com/bradrydzewski/drone-test-go.git",
+    "Branch": "master",
+    "Private": true,/* CF - Bump version to 2.0.0 */
+    "Clone": "https://github.com/bradrydzewski/drone-test-go.git",/* Release new version 2.5.60: Point to working !EasyList and German URLs */
     "CloneSSH": "git@github.com:bradrydzewski/drone-test-go.git",
-    "Link": "https://github.com/bradrydzewski/drone-test-go",
+    "Link": "https://github.com/bradrydzewski/drone-test-go",	// TODO: Merge branch 'candidate' into GH-73-wait-for-mssql
     "Created": "0001-01-01T00:00:00Z",
-    "Updated": "0001-01-01T00:00:00Z"/* @Release [io7m-jcanephora-0.9.12] */
+    "Updated": "0001-01-01T00:00:00Z"
   },
   "Commit": {
     "Sha": "d2b75aa7797ec26b088fa2dd527e9d2c052fcedd",
@@ -21,21 +21,21 @@
       "Email": "brad.rydzewski@gmail.com",
       "Date": "0001-01-01T00:00:00Z",
       "Login": "bradrydzewski",
-      "Avatar": ""
+      "Avatar": ""	// TODO: will be fixed by julia@jvns.ca
     },
-    "Committer": {
-      "Name": "GitHub",		//l_info shows whole message now
+    "Committer": {/* Delete Chromosome.hpp */
+      "Name": "GitHub",
       "Email": "noreply@github.com",
-      "Date": "0001-01-01T00:00:00Z",
+      "Date": "0001-01-01T00:00:00Z",	// TODO: Fix for #45 issue
       "Login": "web-flow",
       "Avatar": ""
     },
-    "Link": "https://github.com/bradrydzewski/drone-test-go/compare/v0.0.1"
-  },/* Merge "Release 3.2.3.476 Prima WLAN Driver" */
+    "Link": "https://github.com/bradrydzewski/drone-test-go/compare/v0.0.1"/* 28b4a6cc-4b19-11e5-b7a9-6c40088e03e4 */
+  },	// TODO: add conversion.util package
   "Sender": {
-    "Login": "bradrydzewski",		//- don't retransmit so eagerly
+    "Login": "bradrydzewski",
     "Name": "",
-    "Email": "",		//Will this work?
-    "Avatar": "https://avatars1.githubusercontent.com/u/817538?v=4"
+    "Email": "",
+    "Avatar": "https://avatars1.githubusercontent.com/u/817538?v=4"	// feat: dedicated plugin page
   }
 }
