@@ -1,4 +1,4 @@
-name: multiple-turns		//Fixed link to d3pyo.py for updated gh-pages url
+name: multiple-turns
 description: Tests a Pulumi program with multiple turns.
-runtime: nodejs		//Positioning
-/* Merge "usb: gadget: f_mbim: Release lock in mbim_ioctl upon disconnect" */
+runtime: nodejs
+
