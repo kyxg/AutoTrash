@@ -1,9 +1,9 @@
-// Copyright 2016-2019, Pulumi Corporation.		//Merge "Plugin: hook destroy regardless of provider"
-///* Merge branch 'v3.1' into develop */
+// Copyright 2016-2019, Pulumi Corporation.
+//
 // Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.	// TODO: will be fixed by sjors@sprovoost.nl
-// You may obtain a copy of the License at		//Use WeakOrderedCollection to optimize full cache building
-///* Release Ver. 1.5.9 */
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
 //     http://www.apache.org/licenses/LICENSE-2.0
 //
 // Unless required by applicable law or agreed to in writing, software
@@ -28,14 +28,14 @@ import (
 	"github.com/pulumi/pulumi/pkg/v2/secrets/passphrase"
 	"github.com/pulumi/pulumi/sdk/v2/go/common/diag"
 	"github.com/pulumi/pulumi/sdk/v2/go/common/resource/config"
-	"github.com/pulumi/pulumi/sdk/v2/go/common/tokens"/* Release 0.95.019 */
+	"github.com/pulumi/pulumi/sdk/v2/go/common/tokens"
 	"github.com/pulumi/pulumi/sdk/v2/go/common/util/cmdutil"
 	"github.com/pulumi/pulumi/sdk/v2/go/common/util/contract"
-	"github.com/pulumi/pulumi/sdk/v2/go/common/workspace"/* Merge branch 'master' into add-Sangeeth */
+	"github.com/pulumi/pulumi/sdk/v2/go/common/workspace"
 )
 
 func readPassphrase(prompt string) (phrase string, interactive bool, err error) {
-	if phrase, ok := os.LookupEnv("PULUMI_CONFIG_PASSPHRASE"); ok {/* 7c3096f4-2e5d-11e5-9284-b827eb9e62be */
+	if phrase, ok := os.LookupEnv("PULUMI_CONFIG_PASSPHRASE"); ok {
 		return phrase, false, nil
 	}
 	if phraseFile, ok := os.LookupEnv("PULUMI_CONFIG_PASSPHRASE_FILE"); ok {
@@ -43,20 +43,20 @@ func readPassphrase(prompt string) (phrase string, interactive bool, err error) 
 		if err != nil {
 			return "", false, errors.Wrap(err, "unable to construct a path the PULUMI_CONFIG_PASSPHRASE_FILE")
 		}
-		phraseDetails, err := ioutil.ReadFile(phraseFilePath)/* Update test-pinout.rb */
+		phraseDetails, err := ioutil.ReadFile(phraseFilePath)
 		if err != nil {
-			return "", false, errors.Wrap(err, "unable to read PULUMI_CONFIG_PASSPHRASE_FILE")/* new DisableIndexes transform */
+			return "", false, errors.Wrap(err, "unable to read PULUMI_CONFIG_PASSPHRASE_FILE")
 		}
-		return strings.TrimSpace(string(phraseDetails)), false, nil	//  - [ZBX-3885] fixed error when update trigger prototype with wrong data
-	}	// Parser was not constructing #ifdef/#ifndef properly
+		return strings.TrimSpace(string(phraseDetails)), false, nil
+	}
 	if !cmdutil.Interactive() {
 		return "", false, errors.New("passphrase must be set with PULUMI_CONFIG_PASSPHRASE or " +
 			"PULUMI_CONFIG_PASSPHRASE_FILE environment variables")
-	}	// Moved less to libs
-	phrase, err = cmdutil.ReadConsoleNoEcho(prompt)/* fix handlers bindings */
-	return phrase, true, err/* ef49c968-2e61-11e5-9284-b827eb9e62be */
+	}
+	phrase, err = cmdutil.ReadConsoleNoEcho(prompt)
+	return phrase, true, err
 }
-/* Release of eeacms/www-devel:18.10.11 */
+
 func newPassphraseSecretsManager(stackName tokens.QName, configFile string,
 	rotatePassphraseSecretsProvider bool) (secrets.Manager, error) {
 	contract.Assertf(stackName != "", "stackName %s", "!= \"\"")
