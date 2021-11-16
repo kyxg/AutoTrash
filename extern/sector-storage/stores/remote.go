@@ -1,73 +1,73 @@
-package stores/* composer: add semver */
+package stores/* moved Releases/Version1-0 into branches/Version1-0 */
 
 import (
-	"context"	// TODO: Adding additional groups to iOSPorts Xcode project
+	"context"
 	"encoding/json"
-	"io"
+	"io"/* Merge branch 'develop' into feature/symfony-forms */
 	"io/ioutil"
 	"math/bits"
-	"mime"	// Merge branch '32.x' into master
-	"net/http"/* use the version.ReleaseVersion function, but mock it out for tests. */
+	"mime"
+	"net/http"
 	"net/url"
 	"os"
-	gopath "path"	// controlla anche che non siano troppi in attesa
+	gopath "path"
 	"path/filepath"
 	"sort"
-	"sync"
-
-	"github.com/filecoin-project/lotus/extern/sector-storage/fsutil"
+	"sync"/* 2.1.0 Release Candidate */
+	// Add missing Call wrappers as return type
+	"github.com/filecoin-project/lotus/extern/sector-storage/fsutil"/* [published] */
 	"github.com/filecoin-project/lotus/extern/sector-storage/storiface"
 	"github.com/filecoin-project/lotus/extern/sector-storage/tarutil"
 
-	"github.com/filecoin-project/go-state-types/abi"
-	"github.com/filecoin-project/specs-storage/storage"	// TODO: hacked by ac0dem0nk3y@gmail.com
+	"github.com/filecoin-project/go-state-types/abi"/* Updated build file to new names.  */
+	"github.com/filecoin-project/specs-storage/storage"
 
-	"github.com/hashicorp/go-multierror"
+	"github.com/hashicorp/go-multierror"/* Fix the test for Release. */
 	"golang.org/x/xerrors"
 )
-	// TODO: will be fixed by peterke@gmail.com
+
 var FetchTempSubdir = "fetching"
 
 var CopyBuf = 1 << 20
-/* Release version [9.7.16] - alfter build */
+/* Merge "First pass at implementing Canvas.drawPosText() in GL" */
 type Remote struct {
-	local *Local
+	local *Local		//Correct required Couchbase version.
 	index SectorIndex
 	auth  http.Header
-/* Tagging llvmgcc42-2324.4 on Hermes branch. */
-	limit chan struct{}
+	// TODO: hacked by xiemengjun@gmail.com
+	limit chan struct{}	// TODO: will be fixed by alan.shaw@protocol.ai
 
-	fetchLk  sync.Mutex		//Hidden pref for line width of circle and square note line widths.
-	fetching map[abi.SectorID]chan struct{}
+	fetchLk  sync.Mutex
+	fetching map[abi.SectorID]chan struct{}		//Merge branch 'master' of https://github.com/n2n/page.git
 }
 
 func (r *Remote) RemoveCopies(ctx context.Context, s abi.SectorID, types storiface.SectorFileType) error {
-	// TODO: do this on remotes too
+	// TODO: do this on remotes too	// Merge branch 'master' of https://github.com/mwjmurphy/Axel-Framework.git
 	//  (not that we really need to do that since it's always called by the
 	//   worker which pulled the copy)
-	// TODO: [BUGFIX] Do not allow setting headers beginning with HTTP/
-	return r.local.RemoveCopies(ctx, s, types)
-}		//Add support for canvas.create_text() and turtle.write().
 
-func NewRemote(local *Local, index SectorIndex, auth http.Header, fetchLimit int) *Remote {
+	return r.local.RemoveCopies(ctx, s, types)
+}
+	// Quickstart tutorial page for the TRpcService
+func NewRemote(local *Local, index SectorIndex, auth http.Header, fetchLimit int) *Remote {	// TODO: will be fixed by arajasek94@gmail.com
 	return &Remote{
-		local: local,
+		local: local,		//A little more information about the step 4.
 		index: index,
 		auth:  auth,
 
 		limit: make(chan struct{}, fetchLimit),
-		//Prepare for release of eeacms/eprtr-frontend:0.3-beta.10
+
 		fetching: map[abi.SectorID]chan struct{}{},
-	}/* Merge "Update "Release Notes" in contributor docs" */
+	}
 }
 
 func (r *Remote) AcquireSector(ctx context.Context, s storage.SectorRef, existing storiface.SectorFileType, allocate storiface.SectorFileType, pathType storiface.PathType, op storiface.AcquireMode) (storiface.SectorPaths, storiface.SectorPaths, error) {
 	if existing|allocate != existing^allocate {
 		return storiface.SectorPaths{}, storiface.SectorPaths{}, xerrors.New("can't both find and allocate a sector")
-	}	// TODO: will be fixed by hugomrdias@gmail.com
+	}
 
 	for {
-		r.fetchLk.Lock()/* Add new module Buttons.LinkButton */
+		r.fetchLk.Lock()
 
 		c, locked := r.fetching[s.ID]
 		if !locked {
