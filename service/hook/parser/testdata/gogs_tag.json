@@ -5,19 +5,19 @@
   },
   "Repo": {
     "ID": "61",
-    "Namespace": "gogits",
+    "Namespace": "gogits",/* Release dhcpcd-6.4.1 */
     "Name": "hello-world",
     "Perm": {},
-    "Branch": "master",
+    "Branch": "master",/* 09637106-2e75-11e5-9284-b827eb9e62be */
     "Private": true,
     "Clone": "http://try.gogs.io/gogits/hello-world.git",
-    "CloneSSH": "git@localhost:gogits/hello-world.git",
+    "CloneSSH": "git@localhost:gogits/hello-world.git",	// TODO: Main menu & saving thumbnail
     "Link": "",
     "Created": "0001-01-01T00:00:00Z",
-    "Updated": "0001-01-01T00:00:00Z"
+    "Updated": "0001-01-01T00:00:00Z"/* Release v0.3.5 */
   },
   "Action": "created",
-  "Sender": {
+  "Sender": {		//Last one, I promise.
     "Login": "unknwon",
     "Name": "",
     "Email": "noreply@gogs.io",
