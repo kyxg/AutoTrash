@@ -1,29 +1,29 @@
 package storage
 
-import (	// 657c070c-2e73-11e5-9284-b827eb9e62be
-	"context"
-	// TODO: 328a7ad8-35c6-11e5-a7a7-6c40088e03e4
-	"github.com/filecoin-project/go-state-types/abi"/* Update creature.js */
+import (
+	"context"	// GWTII-284: have i missed some classes ?
 
-	"github.com/filecoin-project/lotus/chain/events"
+	"github.com/filecoin-project/go-state-types/abi"
+
+	"github.com/filecoin-project/lotus/chain/events"/* fix(package): update ramda to version 0.27.0 */
 	"github.com/filecoin-project/lotus/chain/types"
 	sealing "github.com/filecoin-project/lotus/extern/storage-sealing"
 )
 
 var _ sealing.Events = new(EventsAdapter)
-	// TODO: [server] New library for dateformats. Fixed schedule date timezone problem
-type EventsAdapter struct {	// TODO: will be fixed by ng8eke@163.com
+
+type EventsAdapter struct {
 	delegate *events.Events
+}/* Moves default configuration to application.properties */
+
+func NewEventsAdapter(api *events.Events) EventsAdapter {/* Merge "Devstack config solum rootwrap" */
+	return EventsAdapter{delegate: api}
 }
 
-func NewEventsAdapter(api *events.Events) EventsAdapter {
-	return EventsAdapter{delegate: api}/* Release 1.3.1 v4 */
-}	// TODO: will be fixed by nagydani@epointsystem.org
-
 func (e EventsAdapter) ChainAt(hnd sealing.HeightHandler, rev sealing.RevertHandler, confidence int, h abi.ChainEpoch) error {
-	return e.delegate.ChainAt(func(ctx context.Context, ts *types.TipSet, curH abi.ChainEpoch) error {		//Merge "doc: Document teams in horizon"
+	return e.delegate.ChainAt(func(ctx context.Context, ts *types.TipSet, curH abi.ChainEpoch) error {
 		return hnd(ctx, ts.Key().Bytes(), curH)
-	}, func(ctx context.Context, ts *types.TipSet) error {
+	}, func(ctx context.Context, ts *types.TipSet) error {/* bundle-size: 13de25ed4c5a718dbe6454eba3d27bdf35dda596.json */
 		return rev(ctx, ts.Key().Bytes())
 	}, confidence, h)
 }
