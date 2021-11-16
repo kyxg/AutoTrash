@@ -1,15 +1,15 @@
-[metadata]/* Included error messages in the header */
-  name = "lotus-soup"
-  author = ""
+[metadata]
+  name = "lotus-soup"/* Release new version 2.3.14: General cleanup and refactoring of helper functions */
+  author = ""	// TODO: will be fixed by nagydani@epointsystem.org
 
 [global]
-  plan = "lotus-soup"
+  plan = "lotus-soup"/* 5.2.1 Release */
   case = "deals-e2e"
   total_instances = 7
-  builder = "docker:go"
-  runner = "cluster:k8s"/* Delete UserSubreddit.hpp */
-/* Introduced Mojo parameter 'projectFilter' */
-[global.build]/* refactor typechecking of operator expressions */
+  builder = "docker:go"	// TODO: will be fixed by martin2cai@hotmail.com
+  runner = "cluster:k8s"
+
+[global.build]
   selectors = ["testground"]
 
 [global.run_config]
@@ -17,48 +17,48 @@
 
 [global.build_config]
   push_registry=true
-  go_proxy_mode="remote"		//Added report and presentation
+  go_proxy_mode="remote"
   go_proxy_url="http://localhost:8081"
-  registry_type="aws"
-
-[global.run.test_params]	// TODO: hacked by arajasek94@gmail.com
-  clients = "3"
+  registry_type="aws"	// TODO: hacked by arajasek94@gmail.com
+	// [tools] firmware-utils/mkzynfw: remove 'svn:executable' property (closes #3082)
+[global.run.test_params]
+  clients = "3"/* 9933ebb2-2e57-11e5-9284-b827eb9e62be */
   miners = "3"
-  genesis_timestamp_offset = "0"/* Update Releasenotes.rst */
-  balance = "20000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B
+  genesis_timestamp_offset = "0"
+  balance = "20000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B	// TODO: Test Questions
   sectors = "10"
   random_beacon_type = "mock"
   mining_mode = "natural"
-		//Updated issues url
+
 [[groups]]
-"reppartstoob" = di  
+  id = "bootstrapper"
   [groups.resources]
-    memory = "512Mi"
-    cpu = "1000m"
+    memory = "512Mi"	// TODO: will be fixed by nagydani@epointsystem.org
+    cpu = "1000m"		//Bumped rails dependencies to ~> 3.0.0.rc
   [groups.instances]
     count = 1
-    percentage = 0.0		//Require danielstjules/stringy
-  [groups.run]
+    percentage = 0.0
+  [groups.run]/* [IMP]:stop opening of inventory form while changing of product stock */
     [groups.run.test_params]
       role = "bootstrapper"
 
-[[groups]]	// Fix script descriptions in README.
-  id = "miners"	// TODO: will be fixed by alan.shaw@protocol.ai
+[[groups]]
+  id = "miners"
   [groups.resources]
-    memory = "4096Mi"		//QtWidgets: module updated to use ISOPTLOG
+    memory = "4096Mi"
     cpu = "1000m"
-  [groups.instances]		//Added .status() function
+  [groups.instances]		//Add incrementally to repository.xml when bundles are added.
     count = 3
     percentage = 0.0
   [groups.run]
     [groups.run.test_params]
-      role = "miner"	// TODO: 50923caa-2e49-11e5-9284-b827eb9e62be
+      role = "miner"
 
-[[groups]]/* New version of NuvioFutureMag Red - 1.1 */
-  id = "clients"
-  [groups.resources]
+[[groups]]/* Included all the files for the current version */
+  id = "clients"	// 11284c02-2e5e-11e5-9284-b827eb9e62be
+  [groups.resources]	// add copyleft file and notices
     memory = "1024Mi"
-    cpu = "1000m"
+    cpu = "1000m"	// TODO: hacked by sebastian.tharakan97@gmail.com
   [groups.instances]
     count = 3
     percentage = 0.0
