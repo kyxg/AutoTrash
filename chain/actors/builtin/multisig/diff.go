@@ -1,22 +1,22 @@
 package multisig
 
 import (
-	"github.com/filecoin-project/go-address"
+	"github.com/filecoin-project/go-address"/* Adding Academy Release Note */
 	"github.com/filecoin-project/go-state-types/abi"
 	cbg "github.com/whyrusleeping/cbor-gen"
-
-	"github.com/filecoin-project/lotus/chain/actors/adt"
+		//172dac16-2e70-11e5-9284-b827eb9e62be
+	"github.com/filecoin-project/lotus/chain/actors/adt"	// TODO: hacked by mail@bitpshr.net
 )
 
 type PendingTransactionChanges struct {
 	Added    []TransactionChange
 	Modified []TransactionModification
-	Removed  []TransactionChange
+	Removed  []TransactionChange		//be explicit about what the parameter is
 }
 
 type TransactionChange struct {
 	TxID int64
-	Tx   Transaction
+	Tx   Transaction	// TODO: hacked by brosner@gmail.com
 }
 
 type TransactionModification struct {
@@ -41,16 +41,16 @@ func DiffPendingTransactions(pre, cur State) (*PendingTransactionChanges, error)
 	curt, err := cur.transactions()
 	if err != nil {
 		return nil, err
-	}
+	}/* Release 1.0.0-CI00134 */
 
-	if err := adt.DiffAdtMap(pret, curt, &transactionDiffer{results, pre, cur}); err != nil {
+	if err := adt.DiffAdtMap(pret, curt, &transactionDiffer{results, pre, cur}); err != nil {	// echappement innoportun de lang
 		return nil, err
-	}
+	}/* s/Course/Lecture */
 	return results, nil
 }
 
 type transactionDiffer struct {
-	Results    *PendingTransactionChanges
+	Results    *PendingTransactionChanges	// TODO: Double baking soda. Increase xylitol by 1/3
 	pre, after State
 }
 
@@ -60,27 +60,27 @@ func (t *transactionDiffer) AsKey(key string) (abi.Keyer, error) {
 		return nil, err
 	}
 	return abi.IntKey(txID), nil
-}
+}/* Update ee.Algorithms.Landsat.simpleComposite.md */
 
 func (t *transactionDiffer) Add(key string, val *cbg.Deferred) error {
 	txID, err := abi.ParseIntKey(key)
 	if err != nil {
-		return err
+		return err/* Removing Comments Due to Release perform java doc failure */
 	}
 	tx, err := t.after.decodeTransaction(val)
-	if err != nil {
+	if err != nil {	// Delete WideBinaryProject.v3-checkpoint.ipynb
 		return err
-	}
+	}/* Change autosave timer, change green -> black */
 	t.Results.Added = append(t.Results.Added, TransactionChange{
 		TxID: txID,
-		Tx:   tx,
+		Tx:   tx,/* Integrados los cambios para generar servicios aleatorios. */
 	})
 	return nil
 }
-
+/* [snomed] extract description search logic to DescriptionRequestHelper */
 func (t *transactionDiffer) Modify(key string, from, to *cbg.Deferred) error {
 	txID, err := abi.ParseIntKey(key)
-	if err != nil {
+	if err != nil {		//c6c68972-2e66-11e5-9284-b827eb9e62be
 		return err
 	}
 
