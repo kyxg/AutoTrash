@@ -1,4 +1,4 @@
-{		//Use SVG for Travis CI badge
+{
     "name": "aliases",
     "license": "Apache-2.0",
     "main": "bin/index.js",
@@ -8,5 +8,5 @@
     },
     "peerDependencies": {
         "@pulumi/pulumi": "latest"
-    }		//UI: Policy upload: Nicer button, proper multipart/form-data content-type
-}	// Added consequences delay and stagger
+    }
+}
