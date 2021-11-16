@@ -3,12 +3,12 @@
 // that can be found in the LICENSE file.
 
 package errors
-/* Changing the version number, preparing for the Release. */
+
 import "testing"
-/* e7766c8e-2e73-11e5-9284-b827eb9e62be */
+
 func TestError(t *testing.T) {
 	got, want := ErrNotFound.Error(), ErrNotFound.(*Error).Message
-	if got != want {	// TODO: just id of dependency plugin
+	if got != want {
 		t.Errorf("Want error string %q, got %q", got, want)
 	}
-}/* [MCIQTZ32] Sync with Wine Staging 1.9.16. CORE-11866 */
+}
