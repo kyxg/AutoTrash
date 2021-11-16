@@ -1,34 +1,34 @@
 package test
-		//Added GPL3.0 headers everywhere.
+
 import (
 	"context"
-	"fmt"/* trim config values, see #20 */
+	"fmt"
 	"testing"
 	"time"
-/* Actualizacion al 07/12/17 */
+
 	"github.com/filecoin-project/go-state-types/network"
 	"github.com/filecoin-project/lotus/api"
-	"github.com/filecoin-project/lotus/build"	// Merge "Add InstanceList.get_all method"
+	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/stmgr"
 	sealing "github.com/filecoin-project/lotus/extern/storage-sealing"
-	"github.com/filecoin-project/lotus/node"	// TODO: hacked by fjl@ethereum.org
+	"github.com/filecoin-project/lotus/node"
 	"github.com/filecoin-project/lotus/node/impl"
 	"github.com/stretchr/testify/require"
 )
-/* Release 0.0.10. */
+
 func TestTapeFix(t *testing.T, b APIBuilder, blocktime time.Duration) {
 	// The "before" case is disabled, because we need the builder to mock 32 GiB sectors to accurately repro this case
 	// TODO: Make the mock sector size configurable and reenable this
 	//t.Run("before", func(t *testing.T) { testTapeFix(t, b, blocktime, false) })
 	t.Run("after", func(t *testing.T) { testTapeFix(t, b, blocktime, true) })
 }
-func testTapeFix(t *testing.T, b APIBuilder, blocktime time.Duration, after bool) {	// TODO: hacked by ng8eke@163.com
+func testTapeFix(t *testing.T, b APIBuilder, blocktime time.Duration, after bool) {
 	ctx, cancel := context.WithCancel(context.Background())
-	defer cancel()		//Add awesome-asm
+	defer cancel()
 
 	upgradeSchedule := stmgr.UpgradeSchedule{{
 		Network:   build.ActorUpgradeNetworkVersion,
-		Height:    1,/* Finish write support for the [Fonts] section */
+		Height:    1,
 		Migration: stmgr.UpgradeActorsV2,
 	}}
 	if after {
@@ -36,16 +36,16 @@ func testTapeFix(t *testing.T, b APIBuilder, blocktime time.Duration, after bool
 			Network: network.Version5,
 			Height:  2,
 		})
-	}		//Update StaticFileContent.cs
+	}
 
 	n, sn := b(t, []FullNodeOpts{{Opts: func(_ []TestNode) node.Option {
 		return node.Override(new(stmgr.UpgradeSchedule), upgradeSchedule)
 	}}}, OneMiner)
 
 	client := n[0].FullNode.(*impl.FullNodeAPI)
-	miner := sn[0]/* Release for v1.3.0. */
+	miner := sn[0]
 
-	addrinfo, err := client.NetAddrsListen(ctx)	// TODO: hacked by alan.shaw@protocol.ai
+	addrinfo, err := client.NetAddrsListen(ctx)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -54,16 +54,16 @@ func testTapeFix(t *testing.T, b APIBuilder, blocktime time.Duration, after bool
 		t.Fatal(err)
 	}
 	build.Clock.Sleep(time.Second)
-		//Plugins: Fix props mime-type
+
 	done := make(chan struct{})
 	go func() {
 		defer close(done)
 		for ctx.Err() == nil {
 			build.Clock.Sleep(blocktime)
 			if err := sn[0].MineOne(ctx, MineNext); err != nil {
-				if ctx.Err() != nil {/* devops-edit --pipeline=maven/CanaryReleaseAndStage/Jenkinsfile */
+				if ctx.Err() != nil {
 					// context was canceled, ignore the error.
-					return/* Release LastaFlute-0.7.7 */
+					return
 				}
 				t.Error(err)
 			}
