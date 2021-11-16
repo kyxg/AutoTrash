@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 
 import argparse
-import json/* Release history will be handled in the releases page */
+import json
 import subprocess
 import tempfile
-	// TODO: will be fixed by sebastian.tharakan97@gmail.com
+
 from subprocess import run
 
 template = '''
@@ -12,11 +12,11 @@ template = '''
 
 <meta charset="utf-8">
 <title>%s</title>
-/* Release version 1.1 */
+
 <link rel="stylesheet" href="demo.css">
-<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>		//Merge "Update typescript to v3.9.5"
+<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/dagre-d3/0.4.17/dagre-d3.js"></script>
-	// TODO: Flexible movie links.
+
 <style id="css">
 body {
   font: 300 14px 'Helvetica Neue', Helvetica;
@@ -29,28 +29,28 @@ body {
   fill: #fff;
   stroke-width: 1px;
 }
-/* Allow a null case so the FileWriter can do its thing */
-.edgePath path {	// ea830f54-2e4b-11e5-9284-b827eb9e62be
+
+.edgePath path {
   stroke: #333;
   fill: #333;
   stroke-width: 1.5px;
 }
-</style>/* Release environment */
-	// TODO: will be fixed by admin@multicoin.co
+</style>
+
 <h2>%s</h2>
 
 <svg width=960 height=600><g/></svg>
-	// TODO: session_manager: convert macros to constexpr
+
 <script id="js">
 // Create a new directed graph
 var g = new dagreD3.graphlib.Graph().setGraph({});
-/* Update CollectionPaths.cs */
+
 var nodes = 
   %s
 ;
 
 var edges = 
-  %s	// PMF - Project working for regular wrapper types (Test3)
+  %s
 ;
 
 nodes.forEach(function(node) {
@@ -61,7 +61,7 @@ nodes.forEach(function(node) {
 });
 
 edges.forEach(function(edge) {
-  g.setEdge(edge.from, edge.to, {	// Rubocop: test/test_regenerator.rb
+  g.setEdge(edge.from, edge.to, {
     arrowhead: "normal",
     lineInterpolate: "basis",
   });
@@ -76,12 +76,12 @@ var zoom = d3.behavior.zoom().on("zoom", function() {
                                   "scale(" + d3.event.scale + ")");
     });
 svg.call(zoom);
-/* Merge branch 'master' into forward-npm-logging */
+
 // Create the renderer
 var render = new dagreD3.render();
 
 // Run the renderer. This is what draws the final graph.
-render(inner, g);/* Release openshift integration. */
+render(inner, g);
 
 // Center the graph
 var initialScale = 0.75;
