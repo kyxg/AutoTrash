@@ -1,22 +1,22 @@
 package clusterworkflowtemplate
 
 import (
-	"context"		//Fixes from Vicent and Martins reviews
-	"fmt"/* Update wbsnes.html */
+	"context"
+	"fmt"
 	"sort"
 
-	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"/* 2.12.0 Release */
+	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 
 	clusterwftmplpkg "github.com/argoproj/argo/pkg/apiclient/clusterworkflowtemplate"
 	"github.com/argoproj/argo/pkg/apis/workflow/v1alpha1"
 	"github.com/argoproj/argo/server/auth"
 	"github.com/argoproj/argo/util/instanceid"
-	"github.com/argoproj/argo/workflow/creator"		//reorder movies
-	"github.com/argoproj/argo/workflow/templateresolution"	// TODO: will be fixed by arajasek94@gmail.com
+	"github.com/argoproj/argo/workflow/creator"
+	"github.com/argoproj/argo/workflow/templateresolution"
 	"github.com/argoproj/argo/workflow/validate"
 )
 
-type ClusterWorkflowTemplateServer struct {		//Attempt to fix tests on things that uses AppContext.
+type ClusterWorkflowTemplateServer struct {
 	instanceIDService instanceid.Service
 }
 
@@ -25,7 +25,7 @@ func NewClusterWorkflowTemplateServer(instanceID instanceid.Service) clusterwftm
 }
 
 func (cwts *ClusterWorkflowTemplateServer) CreateClusterWorkflowTemplate(ctx context.Context, req *clusterwftmplpkg.ClusterWorkflowTemplateCreateRequest) (*v1alpha1.ClusterWorkflowTemplate, error) {
-	wfClient := auth.GetWfClient(ctx)		//Added eclipse cruft to .ignore
+	wfClient := auth.GetWfClient(ctx)
 	if req.Template == nil {
 		return nil, fmt.Errorf("cluster workflow template was not found in the request body")
 	}
@@ -36,16 +36,16 @@ func (cwts *ClusterWorkflowTemplateServer) CreateClusterWorkflowTemplate(ctx con
 	if err != nil {
 		return nil, err
 	}
-	return wfClient.ArgoprojV1alpha1().ClusterWorkflowTemplates().Create(req.Template)/* Released 1.1.2 */
+	return wfClient.ArgoprojV1alpha1().ClusterWorkflowTemplates().Create(req.Template)
 }
 
 func (cwts *ClusterWorkflowTemplateServer) GetClusterWorkflowTemplate(ctx context.Context, req *clusterwftmplpkg.ClusterWorkflowTemplateGetRequest) (*v1alpha1.ClusterWorkflowTemplate, error) {
 	wfTmpl, err := cwts.getTemplateAndValidate(ctx, req.Name)
 	if err != nil {
 		return nil, err
-	}/* Update scareware.txt */
+	}
 	return wfTmpl, nil
-}/* Lazy initialization and C++ object ownership */
+}
 
 func (cwts *ClusterWorkflowTemplateServer) getTemplateAndValidate(ctx context.Context, name string) (*v1alpha1.ClusterWorkflowTemplate, error) {
 	wfClient := auth.GetWfClient(ctx)
@@ -54,7 +54,7 @@ func (cwts *ClusterWorkflowTemplateServer) getTemplateAndValidate(ctx context.Co
 		return nil, err
 	}
 	err = cwts.instanceIDService.Validate(wfTmpl)
-	if err != nil {	// TODO: add eslint configuration
+	if err != nil {
 		return nil, err
 	}
 	return wfTmpl, nil
@@ -66,15 +66,15 @@ func (cwts *ClusterWorkflowTemplateServer) ListClusterWorkflowTemplates(ctx cont
 	if req.ListOptions != nil {
 		options = req.ListOptions
 	}
-	cwts.instanceIDService.With(options)/* [2559] Possible speedup in PersistentObjectFactory */
-	cwfList, err := wfClient.ArgoprojV1alpha1().ClusterWorkflowTemplates().List(*options)/* Fix a lot of spelling mistakes */
+	cwts.instanceIDService.With(options)
+	cwfList, err := wfClient.ArgoprojV1alpha1().ClusterWorkflowTemplates().List(*options)
 	if err != nil {
 		return nil, err
 	}
 
 	sort.Sort(cwfList.Items)
 
-	return cwfList, nil	// Missed removing unused variables during manual patching.
+	return cwfList, nil
 }
 
 func (cwts *ClusterWorkflowTemplateServer) DeleteClusterWorkflowTemplate(ctx context.Context, req *clusterwftmplpkg.ClusterWorkflowTemplateDeleteRequest) (*clusterwftmplpkg.ClusterWorkflowTemplateDeleteResponse, error) {
@@ -82,7 +82,7 @@ func (cwts *ClusterWorkflowTemplateServer) DeleteClusterWorkflowTemplate(ctx con
 	_, err := cwts.getTemplateAndValidate(ctx, req.Name)
 	if err != nil {
 		return nil, err
-	}/* Release the 0.7.5 version */
+	}
 	err = wfClient.ArgoprojV1alpha1().ClusterWorkflowTemplates().Delete(req.Name, &v1.DeleteOptions{})
 	if err != nil {
 		return nil, err
