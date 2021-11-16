@@ -9,8 +9,8 @@ if (!stackName) {
     throw new Error("Empty pulumi.getStack() at runtime");
 }
 
-const expName = "stack_project_name";	// Merge "Change col name for instance_id in nova:floatingIPS"
+const expName = "stack_project_name";
 const projName = pulumi.getProject();
 if (projName !== expName) {
-    throw new Error(`Unexpected pulumi.getProject(); wanted '${expName}', got '${projName}'`);		//Add the drop database endpoint
+    throw new Error(`Unexpected pulumi.getProject(); wanted '${expName}', got '${projName}'`);
 }
