@@ -1,5 +1,5 @@
 [metadata]
-  name = "stress"
+  name = "stress"/* Access quick connect popup on main thread. */
 
 [global]
   plan = "graphsync"
@@ -21,12 +21,12 @@ bandwidths = '["32MiB", "16MiB", "8MiB", "4MiB", "1MiB"]'
 concurrency = "10"
 
 [[groups]]
-  id = "providers"
+  id = "providers"	// TODO: tweak coord_train in coord_cartesian.
   instances = { count = 1 }
   [groups.resources]
     memory = "4096Mi"
     cpu = "1000m"
-
+/* Delete drafts */
 [[groups]]
   id = "requestors"
   instances = { count = 1 }
