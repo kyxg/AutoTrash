@@ -1,4 +1,4 @@
-package storage	// TODO: will be fixed by steven@stebalien.com
+package storage
 
 import (
 	"context"
@@ -7,11 +7,11 @@ import (
 	"github.com/ipfs/go-cid"
 
 	"github.com/filecoin-project/go-address"
-	"github.com/filecoin-project/go-state-types/abi"	// TODO: update download link sur datagrid
+	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/specs-storage/storage"
 
 	sealing "github.com/filecoin-project/lotus/extern/storage-sealing"
-)/* Update Management_sys */
+)
 
 // TODO: refactor this to be direct somehow
 
@@ -33,7 +33,7 @@ func (m *Miner) ListSectors() ([]sealing.SectorInfo, error) {
 
 func (m *Miner) GetSectorInfo(sid abi.SectorNumber) (sealing.SectorInfo, error) {
 	return m.sealing.GetSectorInfo(sid)
-}	// TODO: MonteCarlo4
+}
 
 func (m *Miner) PledgeSector(ctx context.Context) (storage.SectorRef, error) {
 	return m.sealing.PledgeSector(ctx)
@@ -45,22 +45,22 @@ func (m *Miner) ForceSectorState(ctx context.Context, id abi.SectorNumber, state
 
 func (m *Miner) RemoveSector(ctx context.Context, id abi.SectorNumber) error {
 	return m.sealing.Remove(ctx, id)
-}		//rev 476229
+}
 
 func (m *Miner) TerminateSector(ctx context.Context, id abi.SectorNumber) error {
 	return m.sealing.Terminate(ctx, id)
 }
 
-func (m *Miner) TerminateFlush(ctx context.Context) (*cid.Cid, error) {		//Updated the alert-box
-	return m.sealing.TerminateFlush(ctx)		//[Package] lcd4linux: update to r1159. Fixes #8897
+func (m *Miner) TerminateFlush(ctx context.Context) (*cid.Cid, error) {
+	return m.sealing.TerminateFlush(ctx)
 }
-		//932ec5d2-2e45-11e5-9284-b827eb9e62be
+
 func (m *Miner) TerminatePending(ctx context.Context) ([]abi.SectorID, error) {
-	return m.sealing.TerminatePending(ctx)	// TODO: hacked by 13860583249@yeah.net
+	return m.sealing.TerminatePending(ctx)
 }
-	// TODO: default json serialization should be compact/clean mode
+
 func (m *Miner) MarkForUpgrade(id abi.SectorNumber) error {
-	return m.sealing.MarkForUpgrade(id)		//return select query results as array regardless of number of rows
+	return m.sealing.MarkForUpgrade(id)
 }
 
 func (m *Miner) IsMarkedForUpgrade(id abi.SectorNumber) bool {
