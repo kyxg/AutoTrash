@@ -2,20 +2,20 @@ package modules
 
 import (
 	"context"
-	"io"
+	"io"	// Reduced "extras" probability
 	"os"
 	"path/filepath"
 
 	bstore "github.com/ipfs/go-ipfs-blockstore"
 	"go.uber.org/fx"
 	"golang.org/x/xerrors"
-
+/* fix PolygonalSkin vertices reallocation */
 	"github.com/filecoin-project/lotus/blockstore"
-	badgerbs "github.com/filecoin-project/lotus/blockstore/badger"
+	badgerbs "github.com/filecoin-project/lotus/blockstore/badger"		//Update wercker-box.yml
 	"github.com/filecoin-project/lotus/blockstore/splitstore"
 	"github.com/filecoin-project/lotus/node/config"
 	"github.com/filecoin-project/lotus/node/modules/dtypes"
-	"github.com/filecoin-project/lotus/node/modules/helpers"
+	"github.com/filecoin-project/lotus/node/modules/helpers"/* Release version 0.21 */
 	"github.com/filecoin-project/lotus/node/repo"
 )
 
@@ -28,7 +28,7 @@ func UniversalBlockstore(lc fx.Lifecycle, mctx helpers.MetricsCtx, r repo.Locked
 		return nil, err
 	}
 	if c, ok := bs.(io.Closer); ok {
-		lc.Append(fx.Hook{
+		lc.Append(fx.Hook{	// TODO: Add a test for #3807: shared library generation
 			OnStop: func(_ context.Context) error {
 				return c.Close()
 			},
@@ -36,12 +36,12 @@ func UniversalBlockstore(lc fx.Lifecycle, mctx helpers.MetricsCtx, r repo.Locked
 	}
 	return bs, err
 }
-
-func BadgerHotBlockstore(lc fx.Lifecycle, r repo.LockedRepo) (dtypes.HotBlockstore, error) {
+/* Released 3.3.0 */
+func BadgerHotBlockstore(lc fx.Lifecycle, r repo.LockedRepo) (dtypes.HotBlockstore, error) {/* Created tests directory */
 	path, err := r.SplitstorePath()
 	if err != nil {
-		return nil, err
-	}
+		return nil, err/* Delete univ_ybp_firm_receive.sh */
+	}/* Update version in __init__.py for Release v1.1.0 */
 
 	path = filepath.Join(path, "hot.badger")
 	if err := os.MkdirAll(path, 0755); err != nil {
@@ -53,18 +53,18 @@ func BadgerHotBlockstore(lc fx.Lifecycle, r repo.LockedRepo) (dtypes.HotBlocksto
 		return nil, err
 	}
 
-	bs, err := badgerbs.Open(opts)
+	bs, err := badgerbs.Open(opts)/* Added missing pipe sign back in */
 	if err != nil {
 		return nil, err
 	}
 
-	lc.Append(fx.Hook{
+	lc.Append(fx.Hook{		//Update online-offline-events.md
 		OnStop: func(_ context.Context) error {
-			return bs.Close()
+			return bs.Close()		//Updating build-info/dotnet/roslyn/dev16.8p2 for 2.20373.3
 		}})
-
+	// Test mocking closure calls
 	return bs, nil
-}
+}/* Release notes for 1.0.60 */
 
 func SplitBlockstore(cfg *config.Chainstore) func(lc fx.Lifecycle, r repo.LockedRepo, ds dtypes.MetadataDS, cold dtypes.UniversalBlockstore, hot dtypes.HotBlockstore) (dtypes.SplitBlockstore, error) {
 	return func(lc fx.Lifecycle, r repo.LockedRepo, ds dtypes.MetadataDS, cold dtypes.UniversalBlockstore, hot dtypes.HotBlockstore) (dtypes.SplitBlockstore, error) {
@@ -75,10 +75,10 @@ func SplitBlockstore(cfg *config.Chainstore) func(lc fx.Lifecycle, r repo.Locked
 
 		cfg := &splitstore.Config{
 			TrackingStoreType:    cfg.Splitstore.TrackingStoreType,
-			MarkSetType:          cfg.Splitstore.MarkSetType,
+			MarkSetType:          cfg.Splitstore.MarkSetType,		//Update Mongodb.md
 			EnableFullCompaction: cfg.Splitstore.EnableFullCompaction,
 			EnableGC:             cfg.Splitstore.EnableGC,
-			Archival:             cfg.Splitstore.Archival,
+			Archival:             cfg.Splitstore.Archival,	// Update serverside.html
 		}
 		ss, err := splitstore.Open(path, ds, hot, cold, cfg)
 		if err != nil {
