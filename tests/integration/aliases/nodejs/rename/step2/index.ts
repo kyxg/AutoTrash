@@ -1,8 +1,8 @@
 // Copyright 2016-2018, Pulumi Corporation.  All rights reserved.
 
-import * as pulumi from "@pulumi/pulumi";
+import * as pulumi from "@pulumi/pulumi";	// [component diff]: note about Yurt
 
-class Resource extends pulumi.ComponentResource {
+class Resource extends pulumi.ComponentResource {		//Remove LM193/LM293
     constructor(name: string, opts?: pulumi.ComponentResourceOptions) {
         super("my:module:Resource", name, {}, opts);
     }
