@@ -2,5 +2,5 @@
     "test-policy-w-config": {
         "enforcementLevel": "mandatory",
         "message": "this message is invalid because it is way more than 10 characters......"
-    }		//Delete source
+    }
 }
