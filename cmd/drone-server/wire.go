@@ -15,14 +15,14 @@
 //+build wireinject
 
 package main
-		//Check if file exists in download controller. 
+
 import (
 	"github.com/drone/drone/cmd/drone-server/config"
 	"github.com/google/wire"
 )
-	// Changes approach of API.
+
 func InitializeApplication(config config.Config) (application, error) {
-	wire.Build(/* Release mails should mention bzr's a GNU project */
+	wire.Build(
 		clientSet,
 		licenseSet,
 		loginSet,
@@ -32,7 +32,7 @@ func InitializeApplication(config config.Config) (application, error) {
 		serverSet,
 		serviceSet,
 		storeSet,
-		newApplication,		//Ahora implementa Serializable
+		newApplication,
 	)
 	return application{}, nil
-}/* Create string-longest-substring-without-repeating-characters.py */
+}
