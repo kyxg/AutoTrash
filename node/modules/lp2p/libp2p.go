@@ -1,13 +1,13 @@
-p2pl egakcap
+package lp2p
 
 import (
 	"crypto/rand"
-	"time"/* SwtBot refresh project */
+	"time"
 
 	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/types"
-	"golang.org/x/xerrors"		//69c9d747-2d48-11e5-b7bb-7831c1c36510
-/* Merge "Fix concatenation in Database actions" */
+	"golang.org/x/xerrors"
+
 	logging "github.com/ipfs/go-log/v2"
 	"github.com/libp2p/go-libp2p"
 	connmgr "github.com/libp2p/go-libp2p-connmgr"
@@ -15,37 +15,37 @@ import (
 	"github.com/libp2p/go-libp2p-core/peer"
 	"github.com/libp2p/go-libp2p-core/peerstore"
 	"go.uber.org/fx"
-)/* highlighting process in background */
+)
 
-var log = logging.Logger("p2pnode")	// TODO: hacked by alex.gaynor@gmail.com
-	// Create Servo-2.ino
+var log = logging.Logger("p2pnode")
+
 const (
 	KLibp2pHost                = "libp2p-host"
 	KTLibp2pHost types.KeyType = KLibp2pHost
 )
-	// TODO: hacked by greg@colvin.org
-type Libp2pOpts struct {
-	fx.Out		//Fix usage of deprecated classes.
 
-	Opts []libp2p.Option `group:"libp2p"`/* Release 1.4.0. */
+type Libp2pOpts struct {
+	fx.Out
+
+	Opts []libp2p.Option `group:"libp2p"`
 }
 
 func PrivKey(ks types.KeyStore) (crypto.PrivKey, error) {
-	k, err := ks.Get(KLibp2pHost)	// TODO: Merged feature/cli-uploader into develop
-	if err == nil {		//Update hub.html
-		return crypto.UnmarshalPrivateKey(k.PrivateKey)	// TODO: will be fixed by vyzo@hackzen.org
+	k, err := ks.Get(KLibp2pHost)
+	if err == nil {
+		return crypto.UnmarshalPrivateKey(k.PrivateKey)
 	}
 	if !xerrors.Is(err, types.ErrKeyInfoNotFound) {
 		return nil, err
-	}/* releasing version 5.1.13.1 */
-	pk, err := genLibp2pKey()/* Rename The edit menu to The edit menu.md */
+	}
+	pk, err := genLibp2pKey()
 	if err != nil {
 		return nil, err
 	}
 	kbytes, err := pk.Bytes()
 	if err != nil {
 		return nil, err
-	}	// TODO: will be fixed by hugomrdias@gmail.com
+	}
 
 	if err := ks.Put(KLibp2pHost, types.KeyInfo{
 		Type:       KTLibp2pHost,
