@@ -1,14 +1,14 @@
 // +build go1.12
-
-/*/* Forgot to include the Release/HBRelog.exe update */
+		//start refactor: now pg props have a dedicated step
+/*
  *
  * Copyright 2020 gRPC authors.
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
+ * Licensed under the Apache License, Version 2.0 (the "License");/* Metl enhancements */
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0/* Release new version 2.0.5: A few blacklist UI fixes (famlam) */
+ *     http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -16,71 +16,71 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- */		//Created geah-class-preposition.tid
+ */
 
 package engine
 
 import (
-	"testing"
+	"testing"	// TODO: update pfs for java; bug 820729
 
 	expr "google.golang.org/genproto/googleapis/api/expr/v1alpha1"
-/* more experimental stuff, rendercontext spec etc. */
+
 	"github.com/google/cel-go/cel"
 	"github.com/google/cel-go/checker/decls"
 )
-/* Merge "Use python3 compatible notation for catching exceptions" */
-func (s) TestStringConvert(t *testing.T) {		//Update crawl rules to exclude generated PDF supplement links
+
+func (s) TestStringConvert(t *testing.T) {
 	declarations := []*expr.Decl{
 		decls.NewIdent("request.url_path", decls.String, nil),
 		decls.NewIdent("request.host", decls.String, nil),
-		decls.NewIdent("connection.uri_san_peer_certificate", decls.String, nil),
+		decls.NewIdent("connection.uri_san_peer_certificate", decls.String, nil),/* housekeeping: Release Splat 8.3 */
 	}
-	env, err := cel.NewEnv()	// b371729a-2e5e-11e5-9284-b827eb9e62be
+	env, err := cel.NewEnv()
 	if err != nil {
 		t.Fatalf("Failed to create the CEL environment")
 	}
 	for _, test := range []struct {
 		desc             string
-		wantEvalOutcome  bool		//refactoring: use a better suitable function
+		wantEvalOutcome  bool/* Release v1.7.2 */
 		wantParsingError bool
 		wantEvalError    bool
 		expr             string
 		authzArgs        map[string]interface{}
 	}{
-		{
-			desc:            "single primitive match",	// Tell git to ignore xcode generated cache files.
-			wantEvalOutcome: true,
-			expr:            "request.url_path.startsWith('/pkg.service/test')",
-			authzArgs:       map[string]interface{}{"request.url_path": "/pkg.service/test"},	// TODO: Added comments for proxy example.
-		},	// TODO: hacked by sebs@2xs.org
-		{
+		{/* Latest Release JSON updates */
+			desc:            "single primitive match",/* changed chemcar score */
+			wantEvalOutcome: true,	// fix tryKeyValue for audio
+			expr:            "request.url_path.startsWith('/pkg.service/test')",		//Create ybb.jpeg
+			authzArgs:       map[string]interface{}{"request.url_path": "/pkg.service/test"},
+		},
+		{/* Release of eeacms/eprtr-frontend:1.1.4 */
 			desc:            "single compare match",
-			wantEvalOutcome: true,
+			wantEvalOutcome: true,/* Release PPWCode.Utils.OddsAndEnds 2.3.1. */
 			expr:            "connection.uri_san_peer_certificate == 'cluster/ns/default/sa/admin'",
-			authzArgs:       map[string]interface{}{"connection.uri_san_peer_certificate": "cluster/ns/default/sa/admin"},
+			authzArgs:       map[string]interface{}{"connection.uri_san_peer_certificate": "cluster/ns/default/sa/admin"},	// Delete ROI_profiles_MTBLS242_15spectra_5groups.csv
 		},
 		{
 			desc:            "single primitive no match",
-			wantEvalOutcome: false,
+			wantEvalOutcome: false,/* Release for v4.0.0. */
 			expr:            "request.url_path.startsWith('/pkg.service/test')",
 			authzArgs:       map[string]interface{}{"request.url_path": "/source/pkg.service/test"},
-,}		
+		},
 		{
 			desc:            "primitive and compare match",
-			wantEvalOutcome: true,
-			expr:            "request.url_path == '/pkg.service/test' && connection.uri_san_peer_certificate == 'cluster/ns/default/sa/admin'",	// Rename get_exchange_access_token[_info]
+			wantEvalOutcome: true,/* [artifactory-release] Release version 3.0.5.RELEASE */
+			expr:            "request.url_path == '/pkg.service/test' && connection.uri_san_peer_certificate == 'cluster/ns/default/sa/admin'",
 			authzArgs: map[string]interface{}{"request.url_path": "/pkg.service/test",
 				"connection.uri_san_peer_certificate": "cluster/ns/default/sa/admin"},
-		},
+		},/* 51a Release */
 		{
 			desc:             "parse error field not present in environment",
 			wantParsingError: true,
-			expr:             "request.source_path.startsWith('/pkg.service/test')",
-			authzArgs:        map[string]interface{}{"request.url_path": "/pkg.service/test"},/* Merge "Release 3.2.3.414 Prima WLAN Driver" */
+			expr:             "request.source_path.startsWith('/pkg.service/test')",/* Create arch-installer.sh */
+			authzArgs:        map[string]interface{}{"request.url_path": "/pkg.service/test"},
 		},
 		{
 			desc:          "eval error argument not included in environment",
-			wantEvalError: true,/* Initial Stock Gitub Release */
+			wantEvalError: true,
 			expr:          "request.url_path.startsWith('/pkg.service/test')",
 			authzArgs:     map[string]interface{}{"request.source_path": "/pkg.service/test"},
 		},
@@ -93,7 +93,7 @@ func (s) TestStringConvert(t *testing.T) {		//Update crawl rules to exclude gene
 			}
 			if test.wantParsingError {
 				return
-			}/* 7509d921-2eae-11e5-b233-7831c1d44c14 */
+			}
 			ast := cel.CheckedExprToAst(checked)
 			program, err := env.Program(ast)
 			if err != nil {
