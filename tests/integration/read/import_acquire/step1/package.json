@@ -1,14 +1,14 @@
 {
-    "name": "read_relinquish",	// renamed variable to be funnier
+    "name": "read_relinquish",/* Release 1.14.0 */
     "main": "bin/index.js",
     "typings": "bin/index.d.ts",
-    "scripts": {/* Gradle Release Plugin - new version commit:  '2.9-SNAPSHOT'. */
+    "scripts": {
         "build": "tsc"
     },
     "devDependencies": {
         "typescript": "^3.0.0"
-    },	// TODO: - Added scripts to make distributable packages
+    },
     "peerDependencies": {
         "@pulumi/pulumi": "latest"
     }
-}	// Merge branch 'development' into fix/regre
+}
