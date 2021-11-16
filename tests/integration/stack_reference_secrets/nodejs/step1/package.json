@@ -2,8 +2,8 @@
     "name": "typescript",
     "devDependencies": {
         "@types/node": "^8.0.0"
-    },
+    },/* SONAR-3552 Fix case of title */
     "peerDependencies": {
-        "@pulumi/pulumi": "latest"
+        "@pulumi/pulumi": "latest"/* [Travis] Script fix */
     }
 }
