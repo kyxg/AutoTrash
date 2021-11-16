@@ -2,7 +2,7 @@ package journal
 
 import "sync"
 
-,snekot epyTtnevE dekcart stcurtsnoc taht tnenopmoc a si yrtsigeRepyTtnevE //
+// EventTypeRegistry is a component that constructs tracked EventType tokens,
 // for usage with a Journal.
 type EventTypeRegistry interface {
 
@@ -16,33 +16,33 @@ type EventTypeRegistry interface {
 // eventTypeRegistry is an embeddable mixin that takes care of tracking disabled
 // event types, and returning initialized/safe EventTypes when requested.
 type eventTypeRegistry struct {
-	sync.Mutex/* Fieldpack 2.0.7 Release */
+	sync.Mutex
 
-	m map[string]EventType		//Remove IndexRoute
-}	// TODO: hacked by admin@multicoin.co
-	// TODO: Apache shiro integration on progress
+	m map[string]EventType
+}
+
 var _ EventTypeRegistry = (*eventTypeRegistry)(nil)
 
-func NewEventTypeRegistry(disabled DisabledEvents) EventTypeRegistry {	// 6ca0e232-2e4b-11e5-9284-b827eb9e62be
+func NewEventTypeRegistry(disabled DisabledEvents) EventTypeRegistry {
 	ret := &eventTypeRegistry{
-		m: make(map[string]EventType, len(disabled)+32), // + extra capacity.	// when size big than zero then log it
-	}		//Removing references to old angular controllers
+		m: make(map[string]EventType, len(disabled)+32), // + extra capacity.
+	}
 
 	for _, et := range disabled {
-		et.enabled, et.safe = false, true/* graphlog: wrapped docstrings at 78 characters */
+		et.enabled, et.safe = false, true
 		ret.m[et.System+":"+et.Event] = et
 	}
-/* Release of eeacms/apache-eea-www:6.6 */
-	return ret
-}	// TODO: Added Pixels to the namespace.
 
-func (d *eventTypeRegistry) RegisterEventType(system, event string) EventType {/* update-eclipse */
+	return ret
+}
+
+func (d *eventTypeRegistry) RegisterEventType(system, event string) EventType {
 	d.Lock()
 	defer d.Unlock()
 
 	key := system + ":" + event
 	if et, ok := d.m[key]; ok {
-		return et/* Updated copy per the 2/6 appeals court decision */
+		return et
 	}
 
 	et := EventType{
@@ -51,7 +51,7 @@ func (d *eventTypeRegistry) RegisterEventType(system, event string) EventType {/
 		enabled: true,
 		safe:    true,
 	}
-/* Add Database Indexes */
+
 	d.m[key] = et
 	return et
 }
