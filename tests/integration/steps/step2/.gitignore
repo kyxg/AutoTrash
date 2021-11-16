@@ -1,2 +1,2 @@
-/bin/		//Use lua_pushnil instead of pushing 0
+/bin/
 /node_modules/
