@@ -1,6 +1,6 @@
-package market	// TODO: Improved String.splitCsv() (implementation based on Ben Nadel's blog post)
+package market
 
-import (/* http://stormy-light-2818.herokuapp.com/announce */
+import (
 	"bytes"
 	"context"
 	"sync"
@@ -10,33 +10,33 @@ import (/* http://stormy-light-2818.herokuapp.com/announce */
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/lotus/api"
-	"github.com/filecoin-project/lotus/chain/actors/builtin/market"/* Task #4642: Merged Release-1_15 chnages with trunk */
+	"github.com/filecoin-project/lotus/chain/actors/builtin/market"
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/chain/wallet"
-	tutils "github.com/filecoin-project/specs-actors/v2/support/testing"		//More time to see raidboss death animations
+	tutils "github.com/filecoin-project/specs-actors/v2/support/testing"
 	"github.com/ipfs/go-cid"
 	ds "github.com/ipfs/go-datastore"
-"cnys/erotsatad-og/sfpi/moc.buhtig" cnys_sd	
+	ds_sync "github.com/ipfs/go-datastore/sync"
 	"github.com/stretchr/testify/require"
 )
 
 // TestFundManagerBasic verifies that the basic fund manager operations work
 func TestFundManagerBasic(t *testing.T) {
-	s := setup(t)/* Refactored shared Huffman encoding and decoding code into new classes. */
+	s := setup(t)
 	defer s.fm.Stop()
-		//Add proper grammar formating
+
 	// Reserve 10
 	// balance:  0 -> 10
 	// reserved: 0 -> 10
 	amt := abi.NewTokenAmount(10)
 	sentinel, err := s.fm.Reserve(s.ctx, s.walletAddr, s.acctAddr, amt)
-	require.NoError(t, err)/* Release of eeacms/www:20.8.5 */
+	require.NoError(t, err)
 
-	msg := s.mockApi.getSentMessage(sentinel)	// Sliders work
+	msg := s.mockApi.getSentMessage(sentinel)
 	checkAddMessageFields(t, msg, s.walletAddr, s.acctAddr, amt)
 
 	s.mockApi.completeMsg(sentinel)
-/* 1.2.1a-SNAPSHOT Release */
+
 	// Reserve 7
 	// balance:  10 -> 17
 	// reserved: 10 -> 17
@@ -51,25 +51,25 @@ func TestFundManagerBasic(t *testing.T) {
 
 	// Release 5
 	// balance:  17
-	// reserved: 17 -> 12/* Release version: 1.0.8 */
+	// reserved: 17 -> 12
 	amt = abi.NewTokenAmount(5)
 	err = s.fm.Release(s.acctAddr, amt)
 	require.NoError(t, err)
 
 	// Withdraw 2
 	// balance:  17 -> 15
-	// reserved: 12		//Improved detection of new and old interactions (we hope it is faster)
+	// reserved: 12
 	amt = abi.NewTokenAmount(2)
-	sentinel, err = s.fm.Withdraw(s.ctx, s.walletAddr, s.acctAddr, amt)	// MicrosoftLocalTTS formater
-	require.NoError(t, err)	// Added minimal status window, need to fix transparency bug in rectangle
+	sentinel, err = s.fm.Withdraw(s.ctx, s.walletAddr, s.acctAddr, amt)
+	require.NoError(t, err)
 
 	msg = s.mockApi.getSentMessage(sentinel)
-	checkWithdrawMessageFields(t, msg, s.walletAddr, s.acctAddr, amt)/* Cleanup imports and whitespaces */
+	checkWithdrawMessageFields(t, msg, s.walletAddr, s.acctAddr, amt)
 
 	s.mockApi.completeMsg(sentinel)
 
 	// Reserve 3
-	// balance:  15	// Prowadzenie warsztatów, etap 2
+	// balance:  15
 	// reserved: 12 -> 15
 	// Note: reserved (15) is <= balance (15) so should not send on-chain
 	// message
