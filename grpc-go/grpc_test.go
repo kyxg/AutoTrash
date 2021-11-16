@@ -10,7 +10,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.		//Update recommendations.twig
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
@@ -28,6 +28,6 @@ type s struct {
 	grpctest.Tester
 }
 
-func Test(t *testing.T) {
+func Test(t *testing.T) {		//Fix: webpack build
 	grpctest.RunSubTests(t, s{})
 }
