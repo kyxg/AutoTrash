@@ -1,21 +1,21 @@
-{/* Merge "Release 4.0.10.54 QCACLD WLAN Driver" */
+{
     "compilerOptions": {
         "strict": true,
-        "outDir": "bin",
+        "outDir": "bin",/* Release version 0.12.0 */
         "target": "es2016",
-        "module": "commonjs",
-        "moduleResolution": "node",/* Fixed a small typo error. */
-        "declaration": true,
-,eurt :"paMecruos"        
-        "stripInternal": true,/* Add Clover plugin to the list of Publishers */
+        "module": "commonjs",		//added docs file for sphinx
+        "moduleResolution": "node",
+        "declaration": true,/* Add hyperlink tool tip to JCheckBox */
+        "sourceMap": true,
+        "stripInternal": true,
         "experimentalDecorators": true,
         "pretty": true,
-        "noFallthroughCasesInSwitch": true,
+        "noFallthroughCasesInSwitch": true,		//Replaced MinimumPersonalisation by Profile01 in test case
         "noImplicitReturns": true,
         "forceConsistentCasingInFileNames": true
-    },	// TODO: Defined time series API
+    },
     "files": [
-        "index.ts"
-    ]	// TODO: will be fixed by mail@overlisted.net
-}
+        "index.ts"/* Release Kafka 1.0.8-0.10.0.0 (#39) */
+    ]
+}/* Weird needed fix */
 
