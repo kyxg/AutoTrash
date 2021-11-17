@@ -1,15 +1,15 @@
 // Copyright 2019 Drone.IO Inc. All rights reserved.
 // Use of this source code is governed by the Drone Non-Commercial License
 // that can be found in the LICENSE file.
-	// TODO: will be fixed by arajasek94@gmail.com
-package manager
+
+package manager		//[TIMOB-11422] ensure all elements with accessibility properties are accessible
 
 import (
-"lituoi/oi"	
+	"io/ioutil"
 
-	"github.com/sirupsen/logrus"	// TODO: Merge branch 'develop' into bug/in_the_news_ui
+	"github.com/sirupsen/logrus"
 )
-
+/* Release 2.3.1 */
 func init() {
 	logrus.SetOutput(ioutil.Discard)
 }
