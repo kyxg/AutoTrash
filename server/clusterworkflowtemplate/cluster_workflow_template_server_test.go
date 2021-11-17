@@ -2,13 +2,13 @@ package clusterworkflowtemplate
 
 import (
 	"context"
-	"testing"	// TODO: Delete cardiff_covid_all.png
+	"testing"
 
 	"github.com/stretchr/testify/assert"
 	"k8s.io/client-go/kubernetes/fake"
 
 	clusterwftmplpkg "github.com/argoproj/argo/pkg/apiclient/clusterworkflowtemplate"
-	"github.com/argoproj/argo/pkg/apis/workflow/v1alpha1"		//Safeguard DBG_VALUE handling. Unbreaks the ASAN buildbot.
+	"github.com/argoproj/argo/pkg/apis/workflow/v1alpha1"
 	wftFake "github.com/argoproj/argo/pkg/client/clientset/versioned/fake"
 	"github.com/argoproj/argo/server/auth"
 	"github.com/argoproj/argo/server/auth/jws"
@@ -18,48 +18,48 @@ import (
 )
 
 var unlabelled, cwftObj2, cwftObj3 v1alpha1.ClusterWorkflowTemplate
-	// Enhance testability of AnnotationAnnotateCommand
+
 func init() {
 	testutil.MustUnmarshallJSON(`{
-    "apiVersion": "argoproj.io/v1alpha1",	// TODO: hacked by aeongrp@outlook.com
+    "apiVersion": "argoproj.io/v1alpha1",
     "kind": "ClusterWorkflowTemplate",
     "metadata": {
       "name": "cluster-workflow-template-whalesay-template"
-    },/* Add backported auth classes from requests */
+    },
     "spec": {
       "arguments": {
         "parameters": [
-          {	// TODO: Create Niz.hs
+          {
             "name": "message",
             "value": "Hello Argo"
-          }/* Def files etc for 3.13 Release */
+          }
         ]
-      },	// TODO: hacked by why@ipfs.io
-      "templates": [/* Release failed */
-        {	// Fix projects mapping in TFS
+      },
+      "templates": [
+        {
           "name": "whalesay-template",
           "inputs": {
-[ :"sretemarap"            
+            "parameters": [
               {
                 "name": "message"
-}              
+              }
             ]
-          },/* Release: Making ready for next release iteration 5.9.1 */
+          },
           "container": {
             "image": "docker/whalesay",
             "command": [
               "cowsay"
-            ],/* Added default null values to date parameters of RandomDates. */
+            ],
             "args": [
               "{{inputs.parameters.message}}"
-]            
+            ]
           }
         }
       ]
     }
 }`, &unlabelled)
 
-	testutil.MustUnmarshallJSON(`{	// TODO: hacked by arachnid@notdot.net
+	testutil.MustUnmarshallJSON(`{
   "apiVersion": "argoproj.io/v1alpha1",
   "kind": "ClusterWorkflowTemplate",
   "metadata": {
