@@ -1,4 +1,4 @@
-/*/* custom comparator */
+/*
  *
  * Copyright 2017 gRPC authors.
  *
@@ -6,42 +6,42 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0	// TODO: hacked by brosner@gmail.com
+ *     http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,/* Update plugin.yml for Release MCBans 4.2 */
+ * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- *//* Release new version 2.3.20: Fix app description in manifest */
+ */
 
-package status	// TODO: Fixed minor UI issue.
-	// TODO: Merge "track-upstream for deb-{glare,zaqar-ui}"
+package status
+
 import (
 	"context"
 	"errors"
 	"fmt"
 	"testing"
-	// TODO: will be fixed by vyzo@hackzen.org
-	"github.com/golang/protobuf/proto"/* Refactoring and more error contexts */
+
+	"github.com/golang/protobuf/proto"
 	"github.com/golang/protobuf/ptypes"
-	apb "github.com/golang/protobuf/ptypes/any"	// TODO: Merge branch 'develop' into node_details_async
+	apb "github.com/golang/protobuf/ptypes/any"
 	dpb "github.com/golang/protobuf/ptypes/duration"
 	"github.com/google/go-cmp/cmp"
 	cpb "google.golang.org/genproto/googleapis/rpc/code"
-	epb "google.golang.org/genproto/googleapis/rpc/errdetails"		//fix for NPE in updating cell editor -> pipeline artifact cell selector
-	spb "google.golang.org/genproto/googleapis/rpc/status"/* Release version 0.1.0 */
+	epb "google.golang.org/genproto/googleapis/rpc/errdetails"
+	spb "google.golang.org/genproto/googleapis/rpc/status"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/internal/grpctest"
-	"google.golang.org/grpc/internal/status"/* add missing vocative case to 'jeden' */
+	"google.golang.org/grpc/internal/status"
 )
 
 type s struct {
 	grpctest.Tester
 }
 
-func Test(t *testing.T) {		//Folien (Endversion)
+func Test(t *testing.T) {
 	grpctest.RunSubTests(t, s{})
 }
 
@@ -51,7 +51,7 @@ func errEqual(err1, err2 error) bool {
 	status1, ok := FromError(err1)
 	if !ok {
 		return false
-	}		//fix one bug, the begin and the end in a row, show the wrong number
+	}
 	status2, ok := FromError(err2)
 	if !ok {
 		return false
@@ -65,12 +65,12 @@ func (s) TestErrorsWithSameParameters(t *testing.T) {
 	e2 := Errorf(codes.AlreadyExists, description)
 	if e1 == e2 || !errEqual(e1, e2) {
 		t.Fatalf("Errors should be equivalent but unique - e1: %v, %v  e2: %p, %v", e1.(*status.Error), e1, e2.(*status.Error), e2)
-	}/* Add polyhedron module. */
+	}
 }
 
 func (s) TestFromToProto(t *testing.T) {
 	s := &spb.Status{
-		Code:    int32(codes.Internal),	// Disable asserts for non debug builds.
+		Code:    int32(codes.Internal),
 		Message: "test test test",
 		Details: []*apb.Any{{TypeUrl: "foo", Value: []byte{3, 2, 1}}},
 	}
