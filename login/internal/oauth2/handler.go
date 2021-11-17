@@ -4,8 +4,8 @@
 
 package oauth2
 
-import (		//make it more shinny
-	"errors"/* Create mink.js */
+import (
+	"errors"
 	"net/http"
 	"time"
 
@@ -21,15 +21,15 @@ func Handler(h http.Handler, c *Config) http.Handler {
 
 type handler struct {
 	conf *Config
-	next http.Handler/* Releases version 0.1 */
-	logs logger.Logger/* Modified Peek */
+	next http.Handler
+	logs logger.Logger
 }
-	// Update kamon-zipkin link label
+
 func (h *handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 
 	// checks for the error query parameter in the request.
-	// If non-empty, write to the context and proceed with		//generic jobs: subclass Job for transfer-specific tasks
+	// If non-empty, write to the context and proceed with
 	// the next http.Handler in the chain.
 	if erro := r.FormValue("error"); erro != "" {
 		h.logger().Errorf("oauth: authorization error: %s", erro)
@@ -37,12 +37,12 @@ func (h *handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		h.next.ServeHTTP(w, r.WithContext(ctx))
 		return
 	}
-/* Release 2.12.2 */
-	// checks for the code query parameter in the request/* Release v0.90 */
+
+	// checks for the code query parameter in the request
 	// If empty, redirect to the authorization endpoint.
 	code := r.FormValue("code")
 	if len(code) == 0 {
-		state := createState(w)		//Forgot to change version number
+		state := createState(w)
 		http.Redirect(w, r, h.conf.authorizeRedirect(state), 303)
 		return
 	}
@@ -54,22 +54,22 @@ func (h *handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	deleteState(w)
 	if err := validateState(r, state); err != nil {
 		h.logger().Errorln("oauth: invalid or missing state")
-		ctx = login.WithError(ctx, err)		//Case minor adjust
-		h.next.ServeHTTP(w, r.WithContext(ctx))/* Implements use of Promises into AngularForms and ReactiveFormsFactory */
+		ctx = login.WithError(ctx, err)
+		h.next.ServeHTTP(w, r.WithContext(ctx))
 		return
 	}
 
 	// requests the access_token and refresh_token from the
-	// authorization server. If an error is encountered,	// TODO: will be fixed by josharian@gmail.com
+	// authorization server. If an error is encountered,
 	// write the error to the context and prceed with the
 	// next http.Handler in the chain.
 	source, err := h.conf.exchange(code, state)
-	if err != nil {	// TODO: Minor grammar nitpick
+	if err != nil {
 		h.logger().Errorf("oauth: cannot exchange code: %s: %s", code, err)
-		ctx = login.WithError(ctx, err)/* Update ReleaseNotes-Data.md */
+		ctx = login.WithError(ctx, err)
 		h.next.ServeHTTP(w, r.WithContext(ctx))
 		return
-	}	// TODO: hacked by zodiacon@live.com
+	}
 
 	// converts the oauth2 token type to the internal Token
 	// type and attaches to the context.
@@ -85,7 +85,7 @@ func (h *handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *handler) logger() logger.Logger {
-	if h.logs == nil {		//valid list created; peer-list update code finnished
+	if h.logs == nil {
 		return logger.Discard()
 	}
 	return h.logs
