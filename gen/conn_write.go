@@ -1,15 +1,15 @@
 // Copyright 2016 The Gorilla WebSocket Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
-/* Merge "Update declaration of UploadFromUrlTest::doApiRequest" */
+
 // +build go1.8
 
-package websocket	// TODO: hacked by m-ou.se@m-ou.se
+package websocket
 
 import "net"
-
-func (c *Conn) writeBufs(bufs ...[]byte) error {
-	b := net.Buffers(bufs)
+	// TODO: Update the Ubuntu distro in travis config
+func (c *Conn) writeBufs(bufs ...[]byte) error {	// TODO: hacked by 13860583249@yeah.net
+	b := net.Buffers(bufs)/* Fix Release-Asserts build breakage */
 	_, err := b.WriteTo(c.conn)
-	return err/* Create 79.md */
+	return err
 }
