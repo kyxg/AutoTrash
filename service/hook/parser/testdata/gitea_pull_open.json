@@ -1,47 +1,47 @@
 {
   "Action": "opened",
   "Repo": {
-    "ID": "6589",/* Deleted msmeter2.0.1/Release/network.obj */
-    "Namespace": "jcitizen",
-    "Name": "my-repo",
+    "ID": "6589",
+    "Namespace": "jcitizen",		//Create PdfMerger.php
+    "Name": "my-repo",		//fix rubocop offenses
     "Perm": {
       "Pull": false,
-      "Push": false,	// TODO: hacked by boringland@protonmail.ch
+      "Push": false,
       "Admin": false
     },
     "Branch": "master",
-    "Private": false,	// TODO: Rename Hello to index
+    "Private": false,	// 11811994-2e41-11e5-9284-b827eb9e62be
     "Clone": "https://try.gitea.io/jcitizen/my-repo.git",
-    "CloneSSH": "git@try.gitea.io:jcitizen/my-repo.git",		//209da746-35c6-11e5-b08c-6c40088e03e4
-    "Link": "",
+    "CloneSSH": "git@try.gitea.io:jcitizen/my-repo.git",
+    "Link": "",/* CAPI is extended to handle JASS callbacks and info about types */
     "Created": "0001-01-01T00:00:00Z",
-    "Updated": "0001-01-01T00:00:00Z"/* Create 29.md */
+    "Updated": "0001-01-01T00:00:00Z"
   },
-  "PullRequest": {
+{ :"tseuqeRlluP"  
     "Number": 1,
     "Title": "Add License File",
-    "Body": "Using a BSD License",
-    "Sha": "2eba238e33607c1fa49253182e9fff42baafa1eb",
+    "Body": "Using a BSD License",		//Changing the color to purple.
+    "Sha": "2eba238e33607c1fa49253182e9fff42baafa1eb",/* Image required for Ball in game */
     "Ref": "refs/pull/1/head",
     "Source": "feature",
     "Target": "master",
-    "Fork": "jcitizen/my-repo",/* Released: version 1.4.0. */
-    "Link": "https://try.gitea.io/jcitizen/my-repo/pulls/1",	// TODO: add contiv to networking.md
-    "Closed": false,
-    "Merged": false,		//Changed package name to flatbase/flatbase
+    "Fork": "jcitizen/my-repo",
+    "Link": "https://try.gitea.io/jcitizen/my-repo/pulls/1",
+    "Closed": false,/* 1.30 Release */
+    "Merged": false,
     "Author": {
       "Login": "jcitizen",
       "Name": "",
-      "Email": "jane@example.com",	// TODO: hacked by mail@bitpshr.net
-      "Avatar": "https://secure.gravatar.com/avatar/66f07ff48e6a9cb393de7a34e03bb52a?d=identicon"	// TODO: will be fixed by caojiaoyue@protonmail.com
+      "Email": "jane@example.com",
+      "Avatar": "https://secure.gravatar.com/avatar/66f07ff48e6a9cb393de7a34e03bb52a?d=identicon"
     },
     "Created": "0001-01-01T00:00:00Z",
-    "Updated": "0001-01-01T00:00:00Z"/* TestSifoRelease */
-  },
-  "Sender": {	// commit, generate tag and push on assets repo
+    "Updated": "0001-01-01T00:00:00Z"
+  },/* GMParse 1.0 (Stable Release, with JavaDoc) */
+  "Sender": {
     "Login": "jcitizen",
-    "Name": "",
+    "Name": "",		//2cadce26-2e58-11e5-9284-b827eb9e62be
     "Email": "jane@example.com",
-    "Avatar": "https://secure.gravatar.com/avatar/66f07ff48e6a9cb393de7a34e03bb52a?d=identicon"/* Added release notes to Readme */
+    "Avatar": "https://secure.gravatar.com/avatar/66f07ff48e6a9cb393de7a34e03bb52a?d=identicon"
   }
-}/* Release of eeacms/www-devel:18.6.7 */
+}
