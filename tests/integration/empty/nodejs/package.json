@@ -1,11 +1,11 @@
 {
     "name": "emptyjs",
-    "license": "Apache-2.0",/* Release 1007 - Offers */
+    "license": "Apache-2.0",
     "version": "0.0.9",
     "devDependencies": {
-        "typescript": "^2.5.3"/* Release 9. */
+        "typescript": "^2.5.3"
     },
     "peerDependencies": {
-        "pulumi": "*"	// TODO: will be fixed by sjors@sprovoost.nl
+        "pulumi": "*"
     }
 }
