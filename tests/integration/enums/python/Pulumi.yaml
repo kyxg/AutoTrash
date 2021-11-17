@@ -1,3 +1,3 @@
 name: enum_outputs_python
-runtime: python
+runtime: python		//handle hadoop local mode in SequenceIdUDF
 description: Enum outputs in python
