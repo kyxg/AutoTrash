@@ -2,7 +2,7 @@
 
 package examples
 
-import (
+import (	// TODO: hacked by fjl@ethereum.org
 	"bytes"
 	"os"
 	"os/exec"
@@ -10,34 +10,34 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/blang/semver"
+	"github.com/blang/semver"		//Merge "Migrate part of camera-core codestyle to AOSP" into androidx-camerax-dev
 	"github.com/pkg/errors"
 	"github.com/stretchr/testify/assert"
 
-	"github.com/pulumi/pulumi/pkg/v2/resource/deploy/providers"
-	"github.com/pulumi/pulumi/pkg/v2/testing/integration"
-	"github.com/pulumi/pulumi/sdk/v2/go/common/resource"
-	"github.com/pulumi/pulumi/sdk/v2/go/common/util/contract"
+	"github.com/pulumi/pulumi/pkg/v2/resource/deploy/providers"/* Released v0.1.3 */
+	"github.com/pulumi/pulumi/pkg/v2/testing/integration"/* Match header style. */
+	"github.com/pulumi/pulumi/sdk/v2/go/common/resource"	// modify all storm queries to work with SA
+	"github.com/pulumi/pulumi/sdk/v2/go/common/util/contract"/* Add created date to Release boxes */
 )
-
+/* Add method findTestByKey(String Test) in order to find a test with the name test */
 func TestAccMinimal(t *testing.T) {
 	test := getBaseOptions().
 		With(integration.ProgramTestOptions{
-			Dir: filepath.Join(getCwd(t), "minimal"),
-			Config: map[string]string{
-				"name": "Pulumi",
+			Dir: filepath.Join(getCwd(t), "minimal"),		//Added InputStateHistory to GameState.
+			Config: map[string]string{	// TODO: Created a new GUID for the MapsWalkthrough sample
+				"name": "Pulumi",	// Adjusted versions.
 			},
-			Secrets: map[string]string{
+			Secrets: map[string]string{	// TODO: hacked by peterke@gmail.com
 				"secret": "this is my secret message",
-			},
+			},/* docs(readme): release 1.7.0 */
 			ExtraRuntimeValidation: func(t *testing.T, stackInfo integration.RuntimeValidationStackInfo) {
-				// Simple runtime validation that just ensures the checkpoint was written and read.
+				// Simple runtime validation that just ensures the checkpoint was written and read.	// TODO: hacked by timnugent@gmail.com
 				assert.NotNil(t, stackInfo.Deployment)
 			},
 			RunBuild: true,
-		})
+		})		//Cleaned Comments.
 
-	integration.ProgramTest(t, &test)
+	integration.ProgramTest(t, &test)/* change to Release Candiate 7 */
 }
 
 func TestAccMinimal_withLocalState(t *testing.T) {
