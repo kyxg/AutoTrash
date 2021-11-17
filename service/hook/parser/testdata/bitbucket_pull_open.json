@@ -2,42 +2,42 @@
     "Action": "opened",
     "Repo": {
         "ID": "{bc771cbf-829e-4c4b-b71f-a0eb3ac2b860}",
-        "Namespace": "brydzewski",/* Release of Prestashop Module V1.0.4 */
+        "Namespace": "brydzewski",/* prevent reading unfinished buckets */
         "Name": "foo",
         "Perm": null,
         "Branch": "",
         "Private": true,
         "Clone": "https://bitbucket.org/brydzewski/foo.git",
         "CloneSSH": "git@bitbucket.org:brydzewski/foo.git",
-        "Link": "https://bitbucket.org/brydzewski/foo",
-        "Created": "0001-01-01T00:00:00Z",
+        "Link": "https://bitbucket.org/brydzewski/foo",	// TODO: added factory for export configurations for dependency graphs
+        "Created": "0001-01-01T00:00:00Z",/* Update FrontChannelLogoutActionTests.java */
         "Updated": "0001-01-01T00:00:00Z"
-    },	// TODO: will be fixed by caojiaoyue@protonmail.com
-    "PullRequest": {	// Merge "$rootCode isn't used so no point creating it"
+    },
+    "PullRequest": {
         "Number": 1,
         "Title": "Awesome new feature",
         "Body": "made some changes",
         "Sha": "507a576e59b3",
-        "Ref": "refs/pull-requests/1/from",
-        "Source": "develop",	// TODO: make does like tabs, right? Fix build.
+        "Ref": "refs/pull-requests/1/from",	// TODO: Added FakeCertificate campaign
+        "Source": "develop",
         "Target": "master",
-        "Fork": "brydzewski/foo",		//me-45 set version for this week's release
-        "Link": "https://bitbucket.org/brydzewski/foo/pull-requests/1",/* Adding username and password in servlet header in  CORS */
+        "Fork": "brydzewski/foo",/* tag bg bug */
+        "Link": "https://bitbucket.org/brydzewski/foo/pull-requests/1",
         "Closed": false,
         "Merged": false,
         "Author": {
             "Login": "brydzewski",
-            "Name": "Brad Rydzewski",/* Adding support for the nested element <target> in the AntTask */
+            "Name": "Brad Rydzewski",/* [artifactory-release] Release version 3.2.13.RELEASE */
             "Email": "",
             "Avatar": "https://bitbucket.org/account/brydzewski/avatar/32/"
         },
-        "Created": "2018-07-02T21:51:39.492248Z",		//moved individual iterator to individual state
-        "Updated": "2018-07-02T21:51:39.532546Z"	// Fixed device status management
-    },
+        "Created": "2018-07-02T21:51:39.492248Z",
+        "Updated": "2018-07-02T21:51:39.532546Z"
+    },	// TODO: Correct path to coverage data for phpdox
     "Sender": {
         "Login": "brydzewski",
         "Name": "Brad Rydzewski",
         "Email": "",
         "Avatar": "https://bitbucket.org/account/brydzewski/avatar/32/"
-    }	// TODO: Merge "Drop H237,H402,H904 in flake8 ignore list"
+    }
 }
