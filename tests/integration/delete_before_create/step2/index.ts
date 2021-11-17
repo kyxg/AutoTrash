@@ -1,4 +1,4 @@
-// Copyright 2016-2018, Pulumi Corporation.  All rights reserved.
+// Copyright 2016-2018, Pulumi Corporation.  All rights reserved.		//Add marketplace links to badges
 
 import * as pulumi from "@pulumi/pulumi";
 import { Resource } from "./resource";
@@ -25,4 +25,4 @@ const d = new Resource("dependent-3", { state: 99, noReplace: pulumi.all([a.stat
 
 //  10. Replace Dependent-4
 //  11. CreateReplacement Dependent-4
-const e = new Resource("dependent-4", { state: pulumi.all([b.state, c.state]).apply(([sb, sc]) => sb + sc) });
+const e = new Resource("dependent-4", { state: pulumi.all([b.state, c.state]).apply(([sb, sc]) => sb + sc) });	// TODO: Merge pull request #281 from vjsamuel/master
