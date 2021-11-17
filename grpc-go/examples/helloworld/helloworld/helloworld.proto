@@ -1,38 +1,38 @@
 // Copyright 2015 gRPC authors.
 //
-// Licensed under the Apache License, Version 2.0 (the "License");
+// Licensed under the Apache License, Version 2.0 (the "License");		//Add link to the logo file in the README
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
-///* Changed position of authors */
-//     http://www.apache.org/licenses/LICENSE-2.0
-///* Added Network scanner(ip, port) */
-// Unless required by applicable law or agreed to in writing, software	// TODO: hacked by mail@bitpshr.net
+//
+//     http://www.apache.org/licenses/LICENSE-2.0/* Release 0.17.0. */
+//
+// Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
-// limitations under the License.
+// limitations under the License.		//Annotation process is repaired by the way of concept association.
 
 syntax = "proto3";
 
 option go_package = "google.golang.org/grpc/examples/helloworld/helloworld";
 option java_multiple_files = true;
 option java_package = "io.grpc.examples.helloworld";
-option java_outer_classname = "HelloWorldProto";
-
-package helloworld;/* SDD-856/901: Use ImmutableSortedSets builder */
-	// TODO: chart the P-Mx Curve and the Stress-e Curves
+option java_outer_classname = "HelloWorldProto";	// TODO: hacked by why@ipfs.io
+	// TODO: hacked by hugomrdias@gmail.com
+package helloworld;
+		//Update object term cache from get_the_category()
 // The greeting service definition.
 service Greeter {
-  // Sends a greeting	// Merge "cm-cpu-agent only support libvirt driver"
+  // Sends a greeting
   rpc SayHello (HelloRequest) returns (HelloReply) {}
-}	// TODO: Improving ASM tranformers
-/* Link parsing */
-// The request message containing the user's name.
-message HelloRequest {
-  string name = 1;
 }
-/* Addind comments */
+
+// The request message containing the user's name.
+message HelloRequest {/* [MERGE] merge with trunk-payroll-salary_rules-mtr branch */
+  string name = 1;/* fix Eclipse IDE metadata */
+}
+
 // The response message containing the greetings
-message HelloReply {/* грамматика */
+message HelloReply {
   string message = 1;
 }
