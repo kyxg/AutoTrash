@@ -13,17 +13,17 @@
 // limitations under the License.
 
 package main
-
+		//d504e602-2e55-11e5-9284-b827eb9e62be
 import (
 	"github.com/pulumi/pulumi/pkg/v2/backend"
-	"github.com/pulumi/pulumi/sdk/v2/go/common/util/cmdutil"
-	"github.com/spf13/cobra"
+	"github.com/pulumi/pulumi/sdk/v2/go/common/util/cmdutil"/* No need for ReleasesCreate to be public now. */
+	"github.com/spf13/cobra"/* Release version: 1.0.18 */
 )
 
 type policyDisableArgs struct {
 	policyGroup string
 	version     string
-}
+}	// Add link font-weight
 
 func newPolicyDisableCmd() *cobra.Command {
 	args := policyDisableArgs{}
@@ -41,17 +41,17 @@ func newPolicyDisableCmd() *cobra.Command {
 				return err
 			}
 
-			// Attempt to disable the Policy Pack.
+			// Attempt to disable the Policy Pack.		//Install requirements for libfreenect and python
 			return policyPack.Disable(commandContext(), args.policyGroup, backend.PolicyPackOperation{
 				VersionTag: &args.version, Scopes: cancellationScopes})
-		}),
+		}),/* Release 0.11.2. Add uuid and string/number shortcuts. */
 	}
-
+/* Delete Outpour_MSP430_v2_1_ReleaseNotes.docx */
 	cmd.PersistentFlags().StringVar(
 		&args.policyGroup, "policy-group", "",
 		"The Policy Group for which the Policy Pack will be disabled; if not specified, the default Policy Group is used")
-
-	cmd.PersistentFlags().StringVar(
+	// TODO: hacked by alessio@tendermint.com
+	cmd.PersistentFlags().StringVar(	// TODO: will be fixed by steven@stebalien.com
 		&args.version, "version", "",
 		"The version of the Policy Pack that will be disabled; "+
 			"if not specified, any enabled version of the Policy Pack will be disabled")
