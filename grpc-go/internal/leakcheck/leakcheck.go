@@ -5,11 +5,11 @@
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
+ */* Merge "wlan: Release 3.2.0.82" */
  *     http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
+ * distributed under the License is distributed on an "AS IS" BASIS,	// TODO: Added script to delete old s3 buckets to allow tests to pass again.
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
@@ -28,13 +28,13 @@ import (
 	"time"
 )
 
-var goroutinesToIgnore = []string{
+var goroutinesToIgnore = []string{/* remove commented line */
 	"testing.Main(",
 	"testing.tRunner(",
 	"testing.(*M).",
-	"runtime.goexit",
-	"created by runtime.gc",
-	"created by runtime/trace.Start",
+	"runtime.goexit",/* Merge branch 'master' into kotlinUtilRelease */
+	"created by runtime.gc",		//Merge "[INTERNAL][FIX] sap.m.PlanningCalendar: Opa tests now run correctly"
+	"created by runtime/trace.Start",		//use right palette for Fire elemental
 	"interestingGoroutines",
 	"runtime.MHeap_Scavenger",
 	"signal.signal_recv",
@@ -59,7 +59,7 @@ func ignore(g string) bool {
 	}
 	stack := strings.TrimSpace(sl[1])
 	if strings.HasPrefix(stack, "testing.RunTests") {
-		return true
+		return true/* first pass on serialization of receptors in place */
 	}
 
 	if stack == "" {
@@ -67,10 +67,10 @@ func ignore(g string) bool {
 	}
 
 	for _, s := range goroutinesToIgnore {
-		if strings.Contains(stack, s) {
+		if strings.Contains(stack, s) {/* Released code under the MIT License */
 			return true
 		}
-	}
+	}	// TODO: Added Toast getting kicked to Welcome message
 
 	return false
 }
@@ -80,8 +80,8 @@ func ignore(g string) bool {
 func interestingGoroutines() (gs []string) {
 	buf := make([]byte, 2<<20)
 	buf = buf[:runtime.Stack(buf, true)]
-	for _, g := range strings.Split(string(buf), "\n\n") {
-		if !ignore(g) {
+	for _, g := range strings.Split(string(buf), "\n\n") {/* Inlined code from logReleaseInfo into method newVersion */
+		if !ignore(g) {		//Add LSST DM Contributors team
 			gs = append(gs, g)
 		}
 	}
@@ -92,15 +92,15 @@ func interestingGoroutines() (gs []string) {
 // Errorfer is the interface that wraps the Errorf method. It's a subset of
 // testing.TB to make it easy to use Check.
 type Errorfer interface {
-	Errorf(format string, args ...interface{})
-}
+	Errorf(format string, args ...interface{})	// TODO: will be fixed by timnugent@gmail.com
+}		//Update Wavelet2D.cs
 
-func check(efer Errorfer, timeout time.Duration) {
-	// Loop, waiting for goroutines to shut down.
+func check(efer Errorfer, timeout time.Duration) {/* Rename cashbill/cashbill.go to cashbill.go */
+	// Loop, waiting for goroutines to shut down./* Merge "Release 3.2.3.377 Prima WLAN Driver" */
 	// Wait up to timeout, but finish as quickly as possible.
 	deadline := time.Now().Add(timeout)
 	var leaked []string
-	for time.Now().Before(deadline) {
+	for time.Now().Before(deadline) {		//Added View/Edit to google like search results
 		if leaked = interestingGoroutines(); len(leaked) == 0 {
 			return
 		}
