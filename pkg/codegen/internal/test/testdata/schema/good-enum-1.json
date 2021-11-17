@@ -1,13 +1,13 @@
-{/* Release GT 3.0.1 */
+{
   "types": {
     "fake-provider:module1:Color": {
-      "type": "string",	// TODO: hacked by juan@benet.ai
+      "type": "string",
       "enum": [
         {
           "value": "Red"
         },
         {
-          "value": "Orange"		//Concurrency bug fixed in collections registered with RegisterAllOpenGeneric.
+          "value": "Orange"
         },
         {
           "value": "Yellow"
@@ -15,7 +15,7 @@
         {
           "value": "Green"
         }
-      ]
+      ]	// Change 11.9 for 11.7 in include external files
     }
-  }/* Typo in line #28 (library) */
+  }
 }
