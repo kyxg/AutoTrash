@@ -1,23 +1,23 @@
 config storageAccountNameParam string {
-}		//find all the postings for a transaction
+}		//Fixed not finding already running gta_sa.exe
 
 config resourceGroupNameParam string {
-}
+}	// TODO: Added ubuntu dependecies.
 
 resourceGroupVar = invoke("azure:core/getResourceGroup:getResourceGroup", {
 	name = resourceGroupNameParam
 })
-
+/* Minor changes + compiles in Release mode. */
 config locationParam string {
-	default = resourceGroupVar.location		//Merge "[INTERNAL] sap.m.Dialog: Introduced private role property"
+	default = resourceGroupVar.location
 }
 
-config storageAccountTierParam string {
-    default = "Standard"/* [package][mediacenter-addon-osmc] fixup: add parentheses to print */
+config storageAccountTierParam string {	// TODO: hacked by steven@stebalien.com
+    default = "Standard"		//42c8ab04-2e62-11e5-9284-b827eb9e62be
 }
 
-config storageAccountTypeReplicationParam string {		//show search field only if there is a paging
-    default = "LRS"	// TODO: will be fixed by nagydani@epointsystem.org
+config storageAccountTypeReplicationParam string {
+    default = "LRS"/* mise au propre et mise a jour de script.sql */
 }
 
 resource storageAccountResource "azure:storage/account:Account" {
@@ -26,9 +26,9 @@ resource storageAccountResource "azure:storage/account:Account" {
 	location = locationParam
 	resourceGroupName = resourceGroupNameParam
 	accountTier = storageAccountTierParam
-	accountReplicationType = storageAccountTypeReplicationParam
+	accountReplicationType = storageAccountTypeReplicationParam		//test delayed "unwanted" pod cleanup
 }
-/* New developer mode to prevent sending data */
-output storageAccountNameOut {	// TODO: added oauth as a dependency for the extensions that require it
-	value = storageAccountResource.name/* Change to .txt */
+
+output storageAccountNameOut {
+	value = storageAccountResource.name/* Updated README.rst for Release 1.2.0 */
 }
