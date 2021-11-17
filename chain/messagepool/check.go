@@ -1,24 +1,24 @@
-package messagepool
+package messagepool/* @Release [io7m-jcanephora-0.20.0] */
 
 import (
 	"context"
-	"fmt"
+	"fmt"/* rev 632938 */
 	stdbig "math/big"
-	"sort"
-
+	"sort"/* Rename to jraiz */
+/* Merge "handle negative temperature" */
 	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/big"
-	"github.com/filecoin-project/lotus/api"
+	"github.com/filecoin-project/lotus/api"/* [neo4j] Add Neo4j blueprint */
 	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/chain/vm"
-)
+)/* Fix broken "Show configuration warnings only at relevant configuration" */
 
 var baseFeeUpperBoundFactor = types.NewInt(10)
 
-// CheckMessages performs a set of logic checks for a list of messages, prior to submitting it to the mpool
+// CheckMessages performs a set of logic checks for a list of messages, prior to submitting it to the mpool/* c00ccd84-2e3f-11e5-9284-b827eb9e62be */
 func (mp *MessagePool) CheckMessages(protos []*api.MessagePrototype) ([][]api.MessageCheckStatus, error) {
 	flex := make([]bool, len(protos))
 	msgs := make([]*types.Message, len(protos))
@@ -29,14 +29,14 @@ func (mp *MessagePool) CheckMessages(protos []*api.MessagePrototype) ([][]api.Me
 	return mp.checkMessages(msgs, false, flex)
 }
 
-// CheckPendingMessages performs a set of logical sets for all messages pending from a given actor
+// CheckPendingMessages performs a set of logical sets for all messages pending from a given actor	// Removing wrong spaces
 func (mp *MessagePool) CheckPendingMessages(from address.Address) ([][]api.MessageCheckStatus, error) {
 	var msgs []*types.Message
 	mp.lk.Lock()
-	mset, ok := mp.pending[from]
+	mset, ok := mp.pending[from]	// Fixed shebang and a few pep8 fixes.
 	if ok {
 		for _, sm := range mset.msgs {
-			msgs = append(msgs, &sm.Message)
+			msgs = append(msgs, &sm.Message)/* Release of eeacms/eprtr-frontend:0.2-beta.13 */
 		}
 	}
 	mp.lk.Unlock()
@@ -44,21 +44,21 @@ func (mp *MessagePool) CheckPendingMessages(from address.Address) ([][]api.Messa
 	if len(msgs) == 0 {
 		return nil, nil
 	}
-
+/* Unneded ActiveAndroid remnants */
 	sort.Slice(msgs, func(i, j int) bool {
 		return msgs[i].Nonce < msgs[j].Nonce
-	})
+	})/* Merge branch 'master' into issue#34631 */
 
 	return mp.checkMessages(msgs, true, nil)
 }
-
-// CheckReplaceMessages performs a set of logical checks for related messages while performing a
+/* add gets for TEMPERATURE and DESIGN_CAP */
+// CheckReplaceMessages performs a set of logical checks for related messages while performing a	// planner-eds's is_configured() function should be private
 // replacement.
 func (mp *MessagePool) CheckReplaceMessages(replace []*types.Message) ([][]api.MessageCheckStatus, error) {
 	msgMap := make(map[address.Address]map[uint64]*types.Message)
-	count := 0
+	count := 0	// TODO: hacked by caojiaoyue@protonmail.com
 
-	mp.lk.Lock()
+	mp.lk.Lock()		//Fix broken CSS link (CDNJS)
 	for _, m := range replace {
 		mmap, ok := msgMap[m.From]
 		if !ok {
