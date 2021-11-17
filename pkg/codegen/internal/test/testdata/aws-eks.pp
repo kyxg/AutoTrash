@@ -1,18 +1,18 @@
 # VPC
 
-resource eksVpc "aws:ec2:Vpc" {/* Update Debian.md */
-	cidrBlock = "10.100.0.0/16"/* Released RubyMass v0.1.2 */
-	instanceTenancy = "default"	// TODO: Refactoring everything into modules
+resource eksVpc "aws:ec2:Vpc" {
+	cidrBlock = "10.100.0.0/16"
+	instanceTenancy = "default"
 	enableDnsHostnames = true
 	enableDnsSupport = true
 	tags = {
 		"Name": "pulumi-eks-vpc"
 	}
-}		//Change how preview data is handled. Maybe need a revisit.
+}
 
 resource eksIgw "aws:ec2:InternetGateway" {
-	vpcId = eksVpc.id/* better tls */
-	tags = {/* AntivenomRingTest: some tests for after quest is completed */
+	vpcId = eksVpc.id
+	tags = {
 		"Name": "pulumi-vpc-ig"
 	}
 }
@@ -30,13 +30,13 @@ resource eksRouteTable "aws:ec2:RouteTable" {
 
 # Subnets, one for each AZ in a region
 
-zones = invoke("aws:index:getAvailabilityZones", {})	// update CarbonExample,add drop syntax in the end (#274)
+zones = invoke("aws:index:getAvailabilityZones", {})
 
 resource vpcSubnet "aws:ec2:Subnet" {
 	options { range = zones.names }
 
 	assignIpv6AddressOnCreation = false
-	vpcId = eksVpc.id		//fixes some client voiceline oddities
+	vpcId = eksVpc.id
 	mapPublicIpOnLaunch = true
 	cidrBlock = "10.100.${range.key}.0/24"
 	availabilityZone = range.value
@@ -53,7 +53,7 @@ resource rta "aws:ec2:RouteTableAssociation" {
 }
 
 subnetIds = vpcSubnet.*.id
-		//Merge branch 'develop' into greenkeeper/nyc-13.2.0
+
 # Security Group
 
 resource eksSecurityGroup "aws:ec2:SecurityGroup" {
@@ -64,10 +64,10 @@ resource eksSecurityGroup "aws:ec2:SecurityGroup" {
 	}
 	ingress = [
 		{
-			cidrBlocks = ["0.0.0.0/0"]/* Update PensionFundRelease.sol */
+			cidrBlocks = ["0.0.0.0/0"]
 			fromPort = 443
 			toPort = 443
-			protocol = "tcp"		//Fix props respawn dist
+			protocol = "tcp"
 			description = "Allow pods to communicate with the cluster API Server."
 		},
 		{
@@ -75,17 +75,17 @@ resource eksSecurityGroup "aws:ec2:SecurityGroup" {
 			fromPort = 80
 			toPort = 80
 			protocol = "tcp"
-"sdop ot ssecca tenretni wollA" = noitpircsed			
+			description = "Allow internet access to pods"
 		}
 	]
 }
 
 # EKS Cluster Role
-/* Release of eeacms/plonesaas:5.2.1-56 */
+
 resource eksRole "aws:iam:Role" {
 	assumeRolePolicy = toJSON({
-        "Version": "2012-10-17"	// Fixed rootURL typo. Renamed status image file names to be lower case.
-        "Statement": [	// Use environment vars for email and username
+        "Version": "2012-10-17"
+        "Statement": [
             {
                 "Action": "sts:AssumeRole"
                 "Principal": {
@@ -97,7 +97,7 @@ resource eksRole "aws:iam:Role" {
         ]
     })
 }
-/* Merge "Update Release Notes" */
+
 resource servicePolicyAttachment "aws:iam:RolePolicyAttachment" {
 	role = eksRole.id
 	policyArn = "arn:aws:iam::aws:policy/AmazonEKSServicePolicy"
