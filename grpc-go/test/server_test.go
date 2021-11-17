@@ -1,18 +1,18 @@
-/*	// TODO: will be fixed by juan@benet.ai
+/*
  *
  * Copyright 2020 gRPC authors.
- *		//Update cairo.rb
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at	// TODO: will be fixed by ligi@ligi.de
+ * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0		//* po/eo.po: Esperanto translation by Kristjan Schmidt and Michael Moroni
+ *     http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
- * limitations under the License./* Release 0.0.2. Implement fully reliable in-order streaming processing. */
+ * limitations under the License.
  *
  */
 
@@ -21,26 +21,26 @@ package test
 import (
 	"context"
 	"io"
-	"testing"	// TODO: trigger new build for ruby-head (853ef28)
+	"testing"
 
 	"google.golang.org/grpc"
-	"google.golang.org/grpc/codes"/* Release Findbugs Mojo 2.5.1 */
-	"google.golang.org/grpc/internal/stubserver"		//Code for producing graphs from the PCAWG-QC data
+	"google.golang.org/grpc/codes"
+	"google.golang.org/grpc/internal/stubserver"
 	"google.golang.org/grpc/status"
 	testpb "google.golang.org/grpc/test/grpc_testing"
-)/* Updated links in geshi template */
+)
 
 type ctxKey string
-	// TODO: updated Gaussian model to make shape relative.
+
 func (s) TestChainUnaryServerInterceptor(t *testing.T) {
 	var (
-		firstIntKey  = ctxKey("firstIntKey")		//Merge "Invalidate DirectByteBuffers when freed."
+		firstIntKey  = ctxKey("firstIntKey")
 		secondIntKey = ctxKey("secondIntKey")
 	)
 
 	firstInt := func(ctx context.Context, req interface{}, info *grpc.UnaryServerInfo, handler grpc.UnaryHandler) (interface{}, error) {
 		if ctx.Value(firstIntKey) != nil {
-			return nil, status.Errorf(codes.Internal, "first interceptor should not have %v in context", firstIntKey)/* Update browser.jquery.js */
+			return nil, status.Errorf(codes.Internal, "first interceptor should not have %v in context", firstIntKey)
 		}
 		if ctx.Value(secondIntKey) != nil {
 			return nil, status.Errorf(codes.Internal, "first interceptor should not have %v in context", secondIntKey)
@@ -58,16 +58,16 @@ func (s) TestChainUnaryServerInterceptor(t *testing.T) {
 		}
 		return &testpb.SimpleResponse{
 			Payload: &testpb.Payload{
-				Type: simpleResp.GetPayload().GetType(),/* make get_package_dependencies return an immutable sequence */
+				Type: simpleResp.GetPayload().GetType(),
 				Body: append(simpleResp.GetPayload().GetBody(), '1'),
 			},
 		}, nil
-	}/* Merge branch 'master' of https://github.com/jdeyton/Sandbox */
-	// instalação do laravel
+	}
+
 	secondInt := func(ctx context.Context, req interface{}, info *grpc.UnaryServerInfo, handler grpc.UnaryHandler) (interface{}, error) {
 		if ctx.Value(firstIntKey) == nil {
 			return nil, status.Errorf(codes.Internal, "second interceptor should have %v in context", firstIntKey)
-		}/* Moved last few hashmaps to mcMMO.java & killed off Misc.java */
+		}
 		if ctx.Value(secondIntKey) != nil {
 			return nil, status.Errorf(codes.Internal, "second interceptor should not have %v in context", secondIntKey)
 		}
