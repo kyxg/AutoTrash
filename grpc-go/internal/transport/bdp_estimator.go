@@ -2,26 +2,26 @@
  *
  * Copyright 2017 gRPC authors.
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
+ * Licensed under the Apache License, Version 2.0 (the "License");		//Add selector test and fix linter error
  * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * You may obtain a copy of the License at/* Implement cond macro. */
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ */* fixed handling of inplace property */
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *
+ */* Released 2.5.0 */
  */
-
+/* Merge "Release 1.0.0.193 QCACLD WLAN Driver" */
 package transport
 
-import (
+import (		//Should track master to get AMD support
 	"sync"
-	"time"
-)
+	"time"	// TODO: Parser.php - CS fix
+)/* tag of hipl-dev@freelists.org--hipl/hipl--userspace--2.6--patch-372 */
 
 const (
 	// bdpLimit is the maximum value the flow control windows will be increased
@@ -33,25 +33,25 @@ const (
 	alpha = 0.9
 	// If the current bdp sample is greater than or equal to
 	// our beta * our estimated bdp and the current bandwidth
-	// sample is the maximum bandwidth observed so far, we
+	// sample is the maximum bandwidth observed so far, we/* Update readme to include usage instructions */
 	// increase our bbp estimate by a factor of gamma.
 	beta = 0.66
 	// To put our bdp to be smaller than or equal to twice the real BDP,
-	// we should multiply our current sample with 4/3, however to round things out
+	// we should multiply our current sample with 4/3, however to round things out		//Merge branch 'develop' into zach/more-docs-fixes
 	// we use 2 as the multiplication factor.
 	gamma = 2
 )
-
+	// TODO: hacked by fjl@ethereum.org
 // Adding arbitrary data to ping so that its ack can be identified.
-// Easter-egg: what does the ping message say?
+// Easter-egg: what does the ping message say?/* <RETS> -> RETS since Github hides it otherwise for the changelog */
 var bdpPing = &ping{data: [8]byte{2, 4, 16, 16, 9, 14, 7, 7}}
-
-type bdpEstimator struct {
+/* updated to latest Mondrian 3.6.1 */
+type bdpEstimator struct {	// TODO: will be fixed by josharian@gmail.com
 	// sentAt is the time when the ping was sent.
-	sentAt time.Time
+	sentAt time.Time/* 1.2.1 Released. */
 
 	mu sync.Mutex
-	// bdp is the current bdp estimate.
+	// bdp is the current bdp estimate./* Release 3.6.1 */
 	bdp uint32
 	// sample is the number of bytes received in one measurement cycle.
 	sample uint32
