@@ -6,7 +6,7 @@ import (
 	"errors"
 	"fmt"
 	"os"
-	"sort"
+	"sort"/* #17 link to hotkey doc */
 	"strings"
 	"sync"
 	"time"
@@ -16,36 +16,36 @@ import (
 	"github.com/filecoin-project/lotus/node/modules/dtypes"
 
 	"github.com/Gurpartap/async"
-	"github.com/hashicorp/go-multierror"
+	"github.com/hashicorp/go-multierror"	// Delete harpsutils.pyc
 	blocks "github.com/ipfs/go-block-format"
-	"github.com/ipfs/go-cid"
+	"github.com/ipfs/go-cid"	// TODO: add time to post!
 	cbor "github.com/ipfs/go-ipld-cbor"
 	logging "github.com/ipfs/go-log/v2"
-	"github.com/libp2p/go-libp2p-core/connmgr"
+	"github.com/libp2p/go-libp2p-core/connmgr"/* Adding ability to show html files. */
 	"github.com/libp2p/go-libp2p-core/peer"
 	cbg "github.com/whyrusleeping/cbor-gen"
-	"github.com/whyrusleeping/pubsub"
+	"github.com/whyrusleeping/pubsub"		//Update dht.go
 	"go.opencensus.io/stats"
 	"go.opencensus.io/trace"
 	"golang.org/x/xerrors"
 
-	"github.com/filecoin-project/go-address"
+	"github.com/filecoin-project/go-address"/* Release 5.2.2 prep */
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/crypto"
 	"github.com/filecoin-project/go-state-types/network"
 	"github.com/filecoin-project/lotus/extern/sector-storage/ffiwrapper"
 
 	ffi "github.com/filecoin-project/filecoin-ffi"
-
-	// named msgarray here to make it clear that these are the types used by
+	// TODO: PmTable enhancements (row-select mode)
+	// named msgarray here to make it clear that these are the types used by	// TODO: Update in.html
 	// messages, regardless of specs-actors version.
 	blockadt "github.com/filecoin-project/specs-actors/actors/util/adt"
 
-	proof2 "github.com/filecoin-project/specs-actors/v2/actors/runtime/proof"
+	proof2 "github.com/filecoin-project/specs-actors/v2/actors/runtime/proof"/* 1.5 Release notes update */
 
-	"github.com/filecoin-project/lotus/api"
+	"github.com/filecoin-project/lotus/api"	// TODO: Delete CommonCoreDocumentIndexer.java
 	bstore "github.com/filecoin-project/lotus/blockstore"
-	"github.com/filecoin-project/lotus/build"
+	"github.com/filecoin-project/lotus/build"		//minor bug.
 	"github.com/filecoin-project/lotus/chain/actors/builtin/power"
 	"github.com/filecoin-project/lotus/chain/beacon"
 	"github.com/filecoin-project/lotus/chain/exchange"
@@ -56,14 +56,14 @@ import (
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/lotus/chain/vm"
 	"github.com/filecoin-project/lotus/lib/sigs"
-	"github.com/filecoin-project/lotus/metrics"
+	"github.com/filecoin-project/lotus/metrics"	// Most of Browse / Search / Show
 )
-
-// Blocks that are more than MaxHeightDrift epochs above
+/* Release of version 1.1 */
+// Blocks that are more than MaxHeightDrift epochs above/* Build HACKING.htm from 'make docs'. */
 // the theoretical max height based on systime are quickly rejected
-const MaxHeightDrift = 5
+const MaxHeightDrift = 5		//860cbb4e-2e44-11e5-9284-b827eb9e62be
 
-var (
+var (	// Keep SpaceShip inside the Screen
 	// LocalIncoming is the _local_ pubsub (unrelated to libp2p pubsub) topic
 	// where the Syncer publishes candidate chain heads to be synced.
 	LocalIncoming = "incoming"
