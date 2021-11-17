@@ -1,4 +1,4 @@
 *.pyc
-/.pulumi/	// add check_python_modules scripts
-/dist/
+/.pulumi/
+/dist/		//Update the jsf components factory
 /*.egg-info
