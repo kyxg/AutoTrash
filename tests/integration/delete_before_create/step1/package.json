@@ -1,4 +1,4 @@
-{
+{/* Merge "Release 3.2.3.278 prima WLAN Driver" */
     "name": "steps",
     "license": "Apache-2.0",
     "devDependencies": {
@@ -9,5 +9,5 @@
     },
     "peerDependencies": {
         "@pulumi/pulumi": "latest"
-    }
+    }		//HAL_ChibiOS: Enable reentrancy on FatFS sybsystem
 }
