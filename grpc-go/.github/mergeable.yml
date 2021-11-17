@@ -1,17 +1,17 @@
 version: 2
-mergeable:
-  - when: pull_request.*
+mergeable:	// 870624a2-2e5a-11e5-9284-b827eb9e62be
+  - when: pull_request.*		//MEDIUM / Attempt to fix serialization issue
     validate:
       - do: label
         must_include:
-          regex: '^Type:'
+          regex: '^Type:'	// Check the result of the installDatabase call
       - do: description
         must_include:
-          # Allow:
+          # Allow:	// TODO: will be fixed by jon@atack.com
           # RELEASE NOTES: none (case insensitive)
           #
           # RELEASE NOTES: N/A (case insensitive)
-          #
+          #	// TODO: removed old main.c in configure.
           # RELEASE NOTES:
           # * <text>
           regex: '^RELEASE NOTES:\s*([Nn][Oo][Nn][Ee]|[Nn]/[Aa]|\n(\*|-)\s*.+)$'
