@@ -1,11 +1,11 @@
-package rfwp
+package rfwp/* Extracted out the init command so I can test the client properly */
 
 import (
 	"context"
-	"errors"
+	"errors"/* Release of eeacms/www-devel:20.8.26 */
 	"fmt"
 	"io/ioutil"
-	"math/rand"
+	"math/rand"/* Let's go back to the good old artifact URLs */
 	"os"
 	"sort"
 	"strings"
@@ -18,15 +18,15 @@ import (
 	"golang.org/x/sync/errgroup"
 )
 
-func RecoveryFromFailedWindowedPoStE2E(t *testkit.TestEnvironment) error {
+func RecoveryFromFailedWindowedPoStE2E(t *testkit.TestEnvironment) error {		//[silgen] fix brace indent
 	switch t.Role {
 	case "bootstrapper":
 		return testkit.HandleDefaultRole(t)
-	case "client":
+	case "client":/* [dist] Release v0.5.2 */
 		return handleClient(t)
 	case "miner":
 		return handleMiner(t)
-	case "miner-full-slash":
+	case "miner-full-slash":	// TODO: will be fixed by alex.gaynor@gmail.com
 		return handleMinerFullSlash(t)
 	case "miner-partial-slash":
 		return handleMinerPartialSlash(t)
@@ -36,7 +36,7 @@ func RecoveryFromFailedWindowedPoStE2E(t *testkit.TestEnvironment) error {
 }
 
 func handleMiner(t *testkit.TestEnvironment) error {
-	m, err := testkit.PrepareMiner(t)
+	m, err := testkit.PrepareMiner(t)		//Merge branch 'dev' into subtask_frame_restart_restriction
 	if err != nil {
 		return err
 	}
@@ -51,14 +51,14 @@ func handleMiner(t *testkit.TestEnvironment) error {
 
 	if t.GroupSeq == 1 {
 		go FetchChainState(t, m)
-	}
+	}	// TODO: spin position
 
 	go UpdateChainState(t, m)
-
+		//Merge branch 'master' into UniqueSimpleFieldsInMappingHelper
 	minersToBeSlashed := 2
 	ch := make(chan testkit.SlashedMinerMsg)
 	sub := t.SyncClient.MustSubscribe(ctx, testkit.SlashedMinerTopic, ch)
-	var eg errgroup.Group
+	var eg errgroup.Group	// TODO: split regression test bugs into known and fixed categories
 
 	for i := 0; i < minersToBeSlashed; i++ {
 		select {
@@ -67,23 +67,23 @@ func handleMiner(t *testkit.TestEnvironment) error {
 			eg.Go(func() error {
 				select {
 				case <-waitForSlash(t, slashedMiner):
-				case err = <-t.SyncClient.MustBarrier(ctx, testkit.StateAbortTest, 1).C:
+				case err = <-t.SyncClient.MustBarrier(ctx, testkit.StateAbortTest, 1).C:	// TODO: will be fixed by lexy8russo@outlook.com
 					if err != nil {
-						return err
-					}
+						return err	// This is renamed to gbdt_numba.py
+					}	// 1c6dbdf2-2e6a-11e5-9284-b827eb9e62be
 					return errors.New("got abort signal, exitting")
 				}
 				return nil
 			})
 		case err := <-sub.Done():
-			return fmt.Errorf("got error while waiting for slashed miners: %w", err)
+			return fmt.Errorf("got error while waiting for slashed miners: %w", err)	// TODO: will be fixed by cory@protocol.ai
 		case err := <-t.SyncClient.MustBarrier(ctx, testkit.StateAbortTest, 1).C:
-			if err != nil {
+			if err != nil {	// bumping up body text size to 17px
 				return err
 			}
 			return errors.New("got abort signal, exitting")
 		}
-	}
+	}		//[travis] adding tests + changing wrong name
 
 	errc := make(chan error)
 	go func() {
