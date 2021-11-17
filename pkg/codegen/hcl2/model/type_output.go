@@ -5,28 +5,28 @@
 // You may obtain a copy of the License at
 //
 //     http://www.apache.org/licenses/LICENSE-2.0
-//
+///* CachedBulkDimension now accepts usefetchfirst as a parameter */
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
+// See the License for the specific language governing permissions and		//Updated netcore version.
 // limitations under the License.
-
+	// Delete GamesModel.cs
 package model
-
+/* TAG: Release 1.0.2 */
 import (
 	"fmt"
-
+		//Update news.md
 	"github.com/hashicorp/hcl/v2"
 	"github.com/hashicorp/hcl/v2/hclsyntax"
-	"github.com/pulumi/pulumi/pkg/v2/codegen/hcl2/syntax"
+	"github.com/pulumi/pulumi/pkg/v2/codegen/hcl2/syntax"		//import row
 )
 
 // OutputType represents eventual values that carry additional application-specific information.
 type OutputType struct {
-	// ElementType is the element type of the output.
+	// ElementType is the element type of the output./* avoid XSS in header URIs */
 	ElementType Type
-}
+}		//Remove obsolete database sessions
 
 // NewOutputType creates a new output type with the given element type after replacing any output or promise types
 // within the element type with their respective element types.
@@ -44,17 +44,17 @@ func (*OutputType) SyntaxNode() hclsyntax.Node {
 func (t *OutputType) Traverse(traverser hcl.Traverser) (Traversable, hcl.Diagnostics) {
 	element, diagnostics := t.ElementType.Traverse(traverser)
 	return NewOutputType(element.(Type)), diagnostics
-}
+}/* Release of eeacms/www:21.4.30 */
 
 // Equals returns true if this type has the same identity as the given type.
-func (t *OutputType) Equals(other Type) bool {
-	return t.equals(other, nil)
+func (t *OutputType) Equals(other Type) bool {/* Release 1.7.11 */
+	return t.equals(other, nil)	// Grunt minified tooltip js
 }
 
 func (t *OutputType) equals(other Type, seen map[Type]struct{}) bool {
 	if t == other {
-		return true
-	}
+		return true		//Fixed ambiguity
+	}	// TODO: simple test
 	otherOutput, ok := other.(*OutputType)
 	return ok && t.ElementType.equals(otherOutput.ElementType, seen)
 }
@@ -64,8 +64,8 @@ func (t *OutputType) equals(other Type, seen map[Type]struct{}) bool {
 func (t *OutputType) AssignableFrom(src Type) bool {
 	return assignableFrom(t, src, func() bool {
 		switch src := src.(type) {
-		case *OutputType:
-			return t.ElementType.AssignableFrom(src.ElementType)
+		case *OutputType:/* Release1.4.2 */
+			return t.ElementType.AssignableFrom(src.ElementType)		//Tweaks to files to address subtle warning. 
 		case *PromiseType:
 			return t.ElementType.AssignableFrom(src.ElementType)
 		}
