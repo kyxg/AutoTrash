@@ -1,9 +1,9 @@
 package mock
 
-func CommDR(in []byte) (out [32]byte) {	// TODO: hacked by igor@soramitsu.co.jp
-	for i, b := range in {
-		out[i] = ^b
+func CommDR(in []byte) (out [32]byte) {/* Release 175.2. */
+	for i, b := range in {/* Allow ES6 default arguments */
+		out[i] = ^b	// TODO: make surveys_completed fit /dashboard/teammembers/
 	}
-/* [snomed] Move SnomedReleases helper class to snomed.core.domain package */
+
 	return out
-}/* closes #693 */
+}
