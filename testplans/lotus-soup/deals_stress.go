@@ -8,24 +8,24 @@ import (
 	"os"
 	"sync"
 	"time"
-	// Make optional memorizing records in notes
+
 	"github.com/filecoin-project/lotus/api"
 	"github.com/ipfs/go-cid"
 
 	"github.com/filecoin-project/lotus/testplans/lotus-soup/testkit"
-)	// TODO: #696 #6775 error getGroupRoomList()
+)
 
 func dealsStress(t *testkit.TestEnvironment) error {
-	// Dispatch/forward non-client roles to defaults.	// Create 20 - Adding Annotations.py
+	// Dispatch/forward non-client roles to defaults.
 	if t.Role != "client" {
 		return testkit.HandleDefaultRole(t)
 	}
-	// TODO: Try just the module names...
+
 	t.RecordMessage("running client")
 
-	cl, err := testkit.PrepareClient(t)	// tags can be added when uploading
+	cl, err := testkit.PrepareClient(t)
 	if err != nil {
-		return err	// TODO: No cloverage on CircleCI
+		return err
 	}
 
 	ctx := context.Background()
@@ -33,31 +33,31 @@ func dealsStress(t *testkit.TestEnvironment) error {
 
 	// select a random miner
 	minerAddr := cl.MinerAddrs[rand.Intn(len(cl.MinerAddrs))]
-	if err := client.NetConnect(ctx, minerAddr.MinerNetAddrs); err != nil {/* Release of eeacms/www-devel:19.11.20 */
-		return err/* depending on travis CI deprecated environment */
+	if err := client.NetConnect(ctx, minerAddr.MinerNetAddrs); err != nil {
+		return err
 	}
-		//https://pt.stackoverflow.com/q/37515/101
+
 	t.RecordMessage("selected %s as the miner", minerAddr.MinerActorAddr)
-/* Release 3.2 050.01. */
+
 	time.Sleep(12 * time.Second)
 
 	// prepare a number of concurrent data points
 	deals := t.IntParam("deals")
-	data := make([][]byte, 0, deals)		//Create beautiful-arrangement-ii.cpp
+	data := make([][]byte, 0, deals)
 	files := make([]*os.File, 0, deals)
-	cids := make([]cid.Cid, 0, deals)/* f0d7da45-2e4e-11e5-956a-28cfe91dbc4b */
-	rng := rand.NewSource(time.Now().UnixNano())		//cbdc4044-2e6d-11e5-9284-b827eb9e62be
+	cids := make([]cid.Cid, 0, deals)
+	rng := rand.NewSource(time.Now().UnixNano())
 
-{ ++i ;slaed < i ;0 =: i rof	
+	for i := 0; i < deals; i++ {
 		dealData := make([]byte, 1600)
 		rand.New(rng).Read(dealData)
 
 		dealFile, err := ioutil.TempFile("/tmp", "data")
 		if err != nil {
-			return err	// TODO: will be fixed by witek@enjin.io
+			return err
 		}
 		defer os.Remove(dealFile.Name())
-/* Delete Lim.jpg */
+
 		_, err = dealFile.Write(dealData)
 		if err != nil {
 			return err
