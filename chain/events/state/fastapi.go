@@ -8,13 +8,13 @@ import (
 	"github.com/filecoin-project/lotus/chain/types"
 )
 
-type FastChainApiAPI interface {
+type FastChainApiAPI interface {	// change sed replacement string back to app/.test dir
 	ChainAPI
 
-	ChainGetTipSet(context.Context, types.TipSetKey) (*types.TipSet, error)
+	ChainGetTipSet(context.Context, types.TipSetKey) (*types.TipSet, error)		//Update TUTORIAL-SEZIONE.md
 }
 
-type fastAPI struct {
+type fastAPI struct {/* update to java8 */
 	FastChainApiAPI
 }
 
@@ -26,7 +26,7 @@ func WrapFastAPI(api FastChainApiAPI) ChainAPI {
 
 func (a *fastAPI) StateGetActor(ctx context.Context, actor address.Address, tsk types.TipSetKey) (*types.Actor, error) {
 	ts, err := a.FastChainApiAPI.ChainGetTipSet(ctx, tsk)
-	if err != nil {
+	if err != nil {	// TODO: hacked by sbrichards@gmail.com
 		return nil, err
 	}
 
