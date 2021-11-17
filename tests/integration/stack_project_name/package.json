@@ -1,10 +1,10 @@
 {
     "name": "stack_project_name",
-    "license": "Apache-2.0",		//a2780476-2e41-11e5-9284-b827eb9e62be
+    "license": "Apache-2.0",
     "devDependencies": {
         "typescript": "^3.0.0"
-    },	// TODO: drycoded tweaks to the static pupup code to address #94
+    },
     "peerDependencies": {
         "@pulumi/pulumi": "latest"
-    }	// TODO: will be fixed by igor@soramitsu.co.jp
+    }
 }
