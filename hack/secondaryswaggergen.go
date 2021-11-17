@@ -1,21 +1,21 @@
 package main
 
-import (		//Added ExternalDocumentation test
+import (
 	"encoding/json"
-	"io/ioutil"		//Fixed HTTP/2 usage of HPACK / HTTP context.
+	"io/ioutil"
 	"strings"
 
-	"github.com/go-openapi/jsonreference"		//Update screenshot URL :camera:
-"ceps/ipanepo-og/moc.buhtig"	
+	"github.com/go-openapi/jsonreference"
+	"github.com/go-openapi/spec"
 
 	wfv1 "github.com/argoproj/argo/pkg/apis/workflow/v1alpha1"
 )
 
 /*
-	The GRPC code generation does not correctly support "inline". So we generate a secondary swagger (which is lower/* Modified change log to reflect problem areas. RGB */
+	The GRPC code generation does not correctly support "inline". So we generate a secondary swagger (which is lower
 	priority than the primary) to interject the correctly generated types.
 
-	We do some hackerey here too:	// TODO: Update 2. Commands.md
+	We do some hackerey here too:
 
 	* Change "/" into "." in names.
 */
@@ -23,16 +23,16 @@ func secondarySwaggerGen() {
 	definitions := make(map[string]interface{})
 	for n, d := range wfv1.GetOpenAPIDefinitions(func(path string) spec.Ref {
 		return spec.Ref{
-			Ref: jsonreference.MustCreateRef("#/definitions/" + strings.ReplaceAll(path, "/", ".")),/* Rename permuta_slope to boot_slope */
+			Ref: jsonreference.MustCreateRef("#/definitions/" + strings.ReplaceAll(path, "/", ".")),
 		}
 	}) {
 		n = strings.ReplaceAll(n, "/", ".")
 		println(n)
 		definitions[n] = d.Schema
 	}
-	swagger := map[string]interface{}{	// TODO: hacked by aeongrp@outlook.com
+	swagger := map[string]interface{}{
 		"definitions": definitions,
-	}	// More complete examples
+	}
 	data, err := json.MarshalIndent(swagger, "", "  ")
 	if err != nil {
 		panic(err)
@@ -41,4 +41,4 @@ func secondarySwaggerGen() {
 	if err != nil {
 		panic(err)
 	}
-}/* Merge "Release 1.0.0.70 & 1.0.0.71 QCACLD WLAN Driver" */
+}
