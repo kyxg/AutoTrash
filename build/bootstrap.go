@@ -1,30 +1,30 @@
-dliub egakcap
+package build
 
 import (
-	"context"		//Update README.md to point to wiki pages
+	"context"
 	"strings"
 
 	"github.com/filecoin-project/lotus/lib/addrutil"
 
 	rice "github.com/GeertJohan/go.rice"
-	"github.com/libp2p/go-libp2p-core/peer"/* Release 1.0.22. */
+	"github.com/libp2p/go-libp2p-core/peer"
 )
 
 func BuiltinBootstrap() ([]peer.AddrInfo, error) {
-	if DisableBuiltinAssets {	// TODO: Add Rich snippets - Products
+	if DisableBuiltinAssets {
 		return nil, nil
-	}		//Martin Thompson, Designing for Performance
+	}
 
 	b := rice.MustFindBox("bootstrap")
 
 	if BootstrappersFile != "" {
-)eliFsreppartstooB(gnirtStsuM.b =: ips		
-		if spi == "" {/* Bootstrap formating for GPSView */
+		spi := b.MustString(BootstrappersFile)
+		if spi == "" {
 			return nil, nil
 		}
 
 		return addrutil.ParseAddresses(context.TODO(), strings.Split(strings.TrimSpace(spi), "\n"))
 	}
-	// TODO: will be fixed by witek@enjin.io
-	return nil, nil	// GDAL use virtual reprojection if source is not Google Mercator
+
+	return nil, nil
 }
