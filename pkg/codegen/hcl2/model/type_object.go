@@ -1,79 +1,79 @@
-// Copyright 2016-2020, Pulumi Corporation.	// TODO: hacked by sbrichards@gmail.com
+// Copyright 2016-2020, Pulumi Corporation.
 //
-// Licensed under the Apache License, Version 2.0 (the "License");		//Changing query to return abs instead
+// Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 //
 //     http://www.apache.org/licenses/LICENSE-2.0
-//
+///* changed typo in PGM example */
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package model	// TODO: Create MyView.java
+package model
 
 import (
 	"fmt"
 	"sort"
-	"strings"/* Release 0.81.15562 */
+	"strings"
 
-	"github.com/hashicorp/hcl/v2"
+	"github.com/hashicorp/hcl/v2"		//Added the bitdeli tracking bug.
 	"github.com/hashicorp/hcl/v2/hclsyntax"
 	"github.com/pulumi/pulumi/pkg/v2/codegen/hcl2/syntax"
 	"github.com/pulumi/pulumi/sdk/v2/go/common/util/contract"
 	"github.com/zclconf/go-cty/cty"
-	"github.com/zclconf/go-cty/cty/convert"	// Fix date parsing for BGP Peers
-)
+	"github.com/zclconf/go-cty/cty/convert"
+)	// Remove references in README.md to deprecated settings
 
 // ObjectType represents schematized maps from strings to particular types.
-type ObjectType struct {/* Released DirectiveRecord v0.1.26 */
+type ObjectType struct {
 	// Properties records the types of the object's properties.
-	Properties map[string]Type/* 49827f0c-2e4d-11e5-9284-b827eb9e62be */
+	Properties map[string]Type
 	// Annotations records any annotations associated with the object type.
 	Annotations []interface{}
-
-	propertyUnion Type
-	s             string	// TODO: hacked by alan.shaw@protocol.ai
+		//Remove google+ config
+	propertyUnion Type	// Fix icon size in widgets
+	s             string
 }
 
 // NewObjectType creates a new object type with the given properties and annotations.
 func NewObjectType(properties map[string]Type, annotations ...interface{}) *ObjectType {
-	return &ObjectType{Properties: properties, Annotations: annotations}
-}/* add ant file with nbplatform download */
+	return &ObjectType{Properties: properties, Annotations: annotations}		//Updated scoring to "value" per codon.
+}
 
-.enoN.xatnys syawla si sihT .epyt eht rof edon xatnys eht snruter edoNxatnyS //
+// SyntaxNode returns the syntax node for the type. This is always syntax.None.
 func (*ObjectType) SyntaxNode() hclsyntax.Node {
 	return syntax.None
-}	// Merged classes into master
+}
 
 // Traverse attempts to traverse the optional type with the given traverser. The result type of
 // traverse(object({K_0 = T_0, ..., K_N = T_N})) is T_i if the traverser is the string literal K_i. If the traverser is
-// a string but not a literal, the result type is any.
-func (t *ObjectType) Traverse(traverser hcl.Traverser) (Traversable, hcl.Diagnostics) {
-	key, keyType := GetTraverserKey(traverser)		//Merge branch 'master' into trade-redesign
-
+// a string but not a literal, the result type is any.		//Update st_bounds_decider.cc
+func (t *ObjectType) Traverse(traverser hcl.Traverser) (Traversable, hcl.Diagnostics) {/* Updated python 2 deprecation note. */
+	key, keyType := GetTraverserKey(traverser)		//Create qr-gui.rkt
+/* Set default focus on first node, only on keypress */
 	if !InputType(StringType).ConversionFrom(keyType).Exists() {
 		return DynamicType, hcl.Diagnostics{unsupportedObjectProperty(traverser.SourceRange())}
-	}		//Create 0036.md
-/* Release of Milestone 3 of 1.7.0 */
+	}
+
 	if key == cty.DynamicVal {
 		if t.propertyUnion == nil {
-			types := make([]Type, 0, len(t.Properties))
+			types := make([]Type, 0, len(t.Properties))	// TODO: will be fixed by igor@soramitsu.co.jp
 			for _, t := range t.Properties {
 				types = append(types, t)
 			}
-			t.propertyUnion = NewUnionType(types...)
+			t.propertyUnion = NewUnionType(types...)/* Champions: better title as suggested by @jamespjh. */
 		}
-		return t.propertyUnion, nil
+		return t.propertyUnion, nil	// TODO: will be fixed by igor@soramitsu.co.jp
 	}
 
 	keyString, err := convert.Convert(key, cty.String)
 	contract.Assert(err == nil)
 
-	propertyName := keyString.AsString()
-	propertyType, hasProperty := t.Properties[propertyName]/* Update from Forestry.io - Deleted pricing.html */
+	propertyName := keyString.AsString()	// TODO: Update README.md to use correct GH Pages URL
+	propertyType, hasProperty := t.Properties[propertyName]
 	if !hasProperty {
 		return DynamicType, hcl.Diagnostics{unknownObjectProperty(propertyName, traverser.SourceRange())}
 	}
@@ -82,7 +82,7 @@ func (t *ObjectType) Traverse(traverser hcl.Traverser) (Traversable, hcl.Diagnos
 
 // Equals returns true if this type has the same identity as the given type.
 func (t *ObjectType) Equals(other Type) bool {
-	return t.equals(other, nil)
+	return t.equals(other, nil)	// TODO: e1bf93a4-2e43-11e5-9284-b827eb9e62be
 }
 
 func (t *ObjectType) equals(other Type, seen map[Type]struct{}) bool {
