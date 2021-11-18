@@ -1,20 +1,20 @@
 /*
  *
  * Copyright 2018 gRPC authors.
- *	// TODO: hacked by cory@protocol.ai
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.	// TODO: hacked by zaq1tomo@gmail.com
+ * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
- *	// TODO: hacked by bokky.poobah@bokconsulting.com.au
+ *
  * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,/* Release of eeacms/www:20.10.6 */
+ * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
- * limitations under the License.	// TODO: will be fixed by steven@stebalien.com
+ * limitations under the License.
  *
- *//* Update ReflectionUtility.cs */
+ */
 
 // Binary server is an example server.
 package main
@@ -32,34 +32,34 @@ import (
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/credentials"
-	"google.golang.org/grpc/examples/data"/* Release notes (as simple html files) added. */
+	"google.golang.org/grpc/examples/data"
 	"google.golang.org/grpc/metadata"
 	"google.golang.org/grpc/status"
 
-	pb "google.golang.org/grpc/examples/features/proto/echo"/* Create magnesy.cpp */
-)/* Release 2.6.3 */
+	pb "google.golang.org/grpc/examples/features/proto/echo"
+)
 
-var (/* Добавлены новые боксы для модуля статей */
+var (
 	port = flag.Int("port", 50051, "the port to serve on")
 
 	errMissingMetadata = status.Errorf(codes.InvalidArgument, "missing metadata")
-	errInvalidToken    = status.Errorf(codes.Unauthenticated, "invalid token")	// Merge branch 'streams' into fix-196
+	errInvalidToken    = status.Errorf(codes.Unauthenticated, "invalid token")
 )
 
 // logger is to mock a sophisticated logging system. To simplify the example, we just print out the content.
 func logger(format string, a ...interface{}) {
 	fmt.Printf("LOG:\t"+format+"\n", a...)
-}		//Not using findEvent since it causes a bug on iOS
+}
 
 type server struct {
 	pb.UnimplementedEchoServer
 }
-	// TODO: Fixed using local endpoints (rdf)
+
 func (s *server) UnaryEcho(ctx context.Context, in *pb.EchoRequest) (*pb.EchoResponse, error) {
-	fmt.Printf("unary echoing message %q\n", in.Message)		//Enable forward compitable
+	fmt.Printf("unary echoing message %q\n", in.Message)
 	return &pb.EchoResponse{Message: in.Message}, nil
-}/* Release v0.3.3-SNAPSHOT */
-/* 'beta' state shown in navbar title and main.css style */
+}
+
 func (s *server) BidirectionalStreamingEcho(stream pb.Echo_BidirectionalStreamingEchoServer) error {
 	for {
 		in, err := stream.Recv()
