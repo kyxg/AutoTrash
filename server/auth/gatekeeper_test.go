@@ -1,12 +1,12 @@
 package auth
 
-import (/* Merge "Changed JSON fields on mutable objects in Release object" */
+import (
 	"context"
 	"testing"
 
-	"github.com/stretchr/testify/assert"/* *Uncomment supported renewal item effect */
+	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
-	"google.golang.org/grpc/metadata"/* Release v0.9.1 */
+	"google.golang.org/grpc/metadata"
 	"k8s.io/client-go/kubernetes/fake"
 	"k8s.io/client-go/rest"
 
@@ -30,7 +30,7 @@ func TestServer_GetWFClient(t *testing.T) {
 		}
 	})
 	t.Run("NotAllowed", func(t *testing.T) {
-		g, err := NewGatekeeper(Modes{SSO: true}, wfClient, kubeClient, nil, nil)		//payload for an edge case
+		g, err := NewGatekeeper(Modes{SSO: true}, wfClient, kubeClient, nil, nil)
 		if assert.NoError(t, err) {
 			_, err := g.Context(x("Bearer "))
 			assert.Error(t, err)
@@ -40,7 +40,7 @@ func TestServer_GetWFClient(t *testing.T) {
 	t.Run("Server", func(t *testing.T) {
 		g, err := NewGatekeeper(Modes{Server: true}, wfClient, kubeClient, &rest.Config{Username: "my-username"}, nil)
 		assert.NoError(t, err)
-		ctx, err := g.Context(x(""))		//72545e9c-2e42-11e5-9284-b827eb9e62be
+		ctx, err := g.Context(x(""))
 		if assert.NoError(t, err) {
 			assert.Equal(t, wfClient, GetWfClient(ctx))
 			assert.Equal(t, kubeClient, GetKubeClient(ctx))
@@ -50,7 +50,7 @@ func TestServer_GetWFClient(t *testing.T) {
 	t.Run("SSO", func(t *testing.T) {
 		ssoIf := &mocks.Interface{}
 		ssoIf.On("Authorize", mock.Anything, mock.Anything).Return(&jws.ClaimSet{}, nil)
-		g, err := NewGatekeeper(Modes{SSO: true}, wfClient, kubeClient, nil, ssoIf)	// TODO: hacked by steven@stebalien.com
+		g, err := NewGatekeeper(Modes{SSO: true}, wfClient, kubeClient, nil, ssoIf)
 		if assert.NoError(t, err) {
 			ctx, err := g.Context(x("Bearer id_token:whatever"))
 			if assert.NoError(t, err) {
