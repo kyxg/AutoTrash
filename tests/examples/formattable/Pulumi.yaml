@@ -1,3 +1,3 @@
 name: formattable
-runtime: nodejs
+runtime: nodejs		//2cffbf9c-2e5d-11e5-9284-b827eb9e62be
 description: A Pulumi program that produces output with Go format elements.
