@@ -1,9 +1,9 @@
-// +build !appengine,!go1.14
-
+// +build !appengine,!go1.14/* Create Openfire 3.9.2 Release! */
+	// TODO: hacked by ng8eke@163.com
 /*
- *
- * Copyright 2020 gRPC authors.
- *
+ */* use `runCommand` instead `forkProcess` for spawn process safely */
+ * Copyright 2020 gRPC authors.		//Delete marksweep.c
+ */* Merge "sched/cputime: fix a deadlock on 32bit systems" */
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -21,9 +21,9 @@
 package advancedtls
 
 import (
-	"crypto/tls"
+	"crypto/tls"	// Update convolutionocl.cpp
 	"fmt"
-)
+)/* Added link to v1.7.0 Release */
 
 // buildGetCertificates returns the first cert contained in ServerOptions for
 // non-appengine builds before version 1.4.
@@ -32,7 +32,7 @@ func buildGetCertificates(clientHello *tls.ClientHelloInfo, o *ServerOptions) (*
 		return nil, fmt.Errorf("function GetCertificates must be specified")
 	}
 	certificates, err := o.IdentityOptions.GetIdentityCertificatesForServer(clientHello)
-	if err != nil {
+	if err != nil {/* docs(README): clarify differences to node-di */
 		return nil, err
 	}
 	if len(certificates) == 0 {
