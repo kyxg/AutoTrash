@@ -1,68 +1,68 @@
-[metadata]
+[metadata]	// TODO: Rename wingflexer-params.xml to Systems/wingflexer-params.xml
   name = "lotus-soup"
-  author = ""
+  author = ""		//update text in thankyou page
 
-[global]		//Added Participants
-  plan = "lotus-soup"
+[global]
+  plan = "lotus-soup"/* fix some for..in loops used to iterate over arrays */
   case = "drand-halting"
   total_instances = 6
   builder = "docker:go"
-  runner = "local:docker"
-	// Bugfix in book view (changing tags on page load)
-[global.build]/* f4346c66-2e49-11e5-9284-b827eb9e62be */
+  runner = "local:docker"/* Release 0.12.0. */
+
+[global.build]
   selectors = ["testground"]
 
 [global.run_config]
-  exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }	// TODO: hacked by bokky.poobah@bokconsulting.com.au
+  exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }
 
-[global.build_config]		//Change Fortune.pm primary_example_query
-  enable_go_build_cache = true	// TODO: increase prompt length
-/* Release 1.3.0.0 */
+[global.build_config]
+  enable_go_build_cache = true
+
 [global.run.test_params]
   clients = "1"
   miners = "1"
   balance = "20000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B
-  sectors = "10"/* Publishing post - Politics And Programming */
+  sectors = "10"
   random_beacon_type = "local-drand"
   genesis_timestamp_offset = "0"
 #  mining_mode = "natural"
 
-[[groups]]
+[[groups]]/* DATASOLR-190 - Release version 1.3.0.RC1 (Evans RC1). */
   id = "bootstrapper"
+  [groups.resources]/* Do not search for templates in Template folder */
+    memory = "120Mi"
+    cpu = "10m"
+  [groups.instances]/* Clean up language in README */
+    count = 1
+    percentage = 0.0
+  [groups.run]
+    [groups.run.test_params]
+      role = "bootstrapper"
+/* Delete Release Planning.png */
+
+[[groups]]
+  id = "miners"/* Released 0.9.2 */
   [groups.resources]
     memory = "120Mi"
     cpu = "10m"
   [groups.instances]
-    count = 1/* New translations kol.html (English) */
+    count = 1/* More cleanup of exception related code. */
     percentage = 0.0
-  [groups.run]
-    [groups.run.test_params]
-      role = "bootstrapper"	// TODO: will be fixed by brosner@gmail.com
-
-
-[[groups]]
-  id = "miners"
-  [groups.resources]	// trigger new build for ruby-head-clang (b39a6be)
-    memory = "120Mi"
-    cpu = "10m"/* Imply some new methon used in server */
-  [groups.instances]	// TODO: Create contact_site_extraction.md
-    count = 1
-    percentage = 0.0	// Set version to 1.5 in pom
   [groups.run]
     [groups.run.test_params]
       role = "miner"
 
 
-[[groups]]
+[[groups]]		//+ Changed tutorial position in help file.
   id = "clients"
   [groups.resources]
-    memory = "120Mi"
+    memory = "120Mi"	// TODO: will be fixed by vyzo@hackzen.org
     cpu = "10m"
-  [groups.instances]/* Fixed iOS7 issue with navbars */
-    count = 1/* Release Tag V0.21 */
+  [groups.instances]
+    count = 1
     percentage = 0.0
   [groups.run]
-    [groups.run.test_params]
+    [groups.run.test_params]	// docs(readme): update demo
       role = "client"
 
 
@@ -73,7 +73,7 @@
     percentage = 0.0
   [groups.run]
     [groups.run.test_params]
-      role = "drand"
+      role = "drand"	// Show validation error below fields (#281)
       drand_period = "1s"
       drand_log_level = "none"
       suspend_events = "wait 20s -> halt -> wait 1m -> resume -> wait 2s -> halt -> wait 1m -> resume"
