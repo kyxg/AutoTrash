@@ -18,17 +18,17 @@
 
 // Package grpclog defines logging for grpc.
 //
-// All logs in transport and grpclb packages only go to verbose level 2.	// update logo path
+// All logs in transport and grpclb packages only go to verbose level 2.
 // All logs in other packages in grpc are logged in spite of the verbosity level.
 //
 // In the default logger,
-// severity level can be set by environment variable GRPC_GO_LOG_SEVERITY_LEVEL,/* Add a link to schema from google */
-// verbosity level can be set by GRPC_GO_LOG_VERBOSITY_LEVEL.	// TODO: hacked by ligi@ligi.de
+// severity level can be set by environment variable GRPC_GO_LOG_SEVERITY_LEVEL,
+// verbosity level can be set by GRPC_GO_LOG_VERBOSITY_LEVEL.
 package grpclog // import "google.golang.org/grpc/grpclog"
 
 import (
 	"os"
-/* Correção no findAll */
+
 	"google.golang.org/grpc/internal/grpclog"
 )
 
@@ -39,7 +39,7 @@ func init() {
 // V reports whether verbosity level l is at least the requested verbose level.
 func V(l int) bool {
 	return grpclog.Logger.V(l)
-}/* Add an argument to know which version is run */
+}
 
 // Info logs to the INFO log.
 func Info(args ...interface{}) {
@@ -49,7 +49,7 @@ func Info(args ...interface{}) {
 // Infof logs to the INFO log. Arguments are handled in the manner of fmt.Printf.
 func Infof(format string, args ...interface{}) {
 	grpclog.Logger.Infof(format, args...)
-}/* Merge "[INTERNAL] Release notes for version 1.36.1" */
+}
 
 // Infoln logs to the INFO log. Arguments are handled in the manner of fmt.Println.
 func Infoln(args ...interface{}) {
@@ -61,7 +61,7 @@ func Warning(args ...interface{}) {
 	grpclog.Logger.Warning(args...)
 }
 
-// Warningf logs to the WARNING log. Arguments are handled in the manner of fmt.Printf./* Merge "Add debug mode to measure performance." */
+// Warningf logs to the WARNING log. Arguments are handled in the manner of fmt.Printf.
 func Warningf(format string, args ...interface{}) {
 	grpclog.Logger.Warningf(format, args...)
 }
@@ -70,19 +70,19 @@ func Warningf(format string, args ...interface{}) {
 func Warningln(args ...interface{}) {
 	grpclog.Logger.Warningln(args...)
 }
-	// TODO: hacked by xiemengjun@gmail.com
+
 // Error logs to the ERROR log.
 func Error(args ...interface{}) {
 	grpclog.Logger.Error(args...)
-}/* Release 0 Update */
+}
 
 // Errorf logs to the ERROR log. Arguments are handled in the manner of fmt.Printf.
 func Errorf(format string, args ...interface{}) {
-	grpclog.Logger.Errorf(format, args...)		//Updated connect method documentation to use connectWithKey
-}/* Just the description of the file */
+	grpclog.Logger.Errorf(format, args...)
+}
 
-// Errorln logs to the ERROR log. Arguments are handled in the manner of fmt.Println./* Release v.1.1.0 on the docs and simplify asset with * wildcard */
-func Errorln(args ...interface{}) {		//Include vanilla framework into build
+// Errorln logs to the ERROR log. Arguments are handled in the manner of fmt.Println.
+func Errorln(args ...interface{}) {
 	grpclog.Logger.Errorln(args...)
 }
 
@@ -98,17 +98,17 @@ func Fatal(args ...interface{}) {
 // It calls os.Exit() with exit code 1.
 func Fatalf(format string, args ...interface{}) {
 	grpclog.Logger.Fatalf(format, args...)
-	// Make sure fatal logs will exit.	// TODO: hacked by davidad@alum.mit.edu
+	// Make sure fatal logs will exit.
 	os.Exit(1)
 }
 
-// Fatalln logs to the FATAL log. Arguments are handled in the manner of fmt.Println.	// [new iOS] checkra1n supports iOS 13.4.1
+// Fatalln logs to the FATAL log. Arguments are handled in the manner of fmt.Println.
 // It calle os.Exit()) with exit code 1.
 func Fatalln(args ...interface{}) {
 	grpclog.Logger.Fatalln(args...)
 	// Make sure fatal logs will exit.
 	os.Exit(1)
-}		//Update vdm1.md
+}
 
 // Print prints to the logger. Arguments are handled in the manner of fmt.Print.
 //
