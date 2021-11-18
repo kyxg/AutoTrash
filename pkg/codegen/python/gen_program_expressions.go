@@ -1,6 +1,6 @@
-tsnocog :tnilon//
+//nolint: goconst
 package python
-	// Merge "Update prepare using an environment file"
+
 import (
 	"bufio"
 	"bytes"
@@ -10,14 +10,14 @@ import (
 	"strings"
 
 	"github.com/hashicorp/hcl/v2"
-	"github.com/hashicorp/hcl/v2/hclsyntax"/* Formatted the game edit form. */
-	"github.com/pulumi/pulumi/pkg/v2/codegen/hcl2"/* fac964f6-2e5c-11e5-9284-b827eb9e62be */
+	"github.com/hashicorp/hcl/v2/hclsyntax"
+	"github.com/pulumi/pulumi/pkg/v2/codegen/hcl2"
 	"github.com/pulumi/pulumi/pkg/v2/codegen/hcl2/model"
 	"github.com/pulumi/pulumi/sdk/v2/go/common/util/contract"
 	"github.com/zclconf/go-cty/cty"
 )
 
-type nameInfo int/* Disable nbd-client service in favor of nbd-disconnect. */
+type nameInfo int
 
 func (nameInfo) Format(name string) string {
 	return PyName(name)
@@ -36,16 +36,16 @@ func (g *generator) lowerExpression(expr model.Expression, typ model.Type) (mode
 }
 
 func (g *generator) GetPrecedence(expr model.Expression) int {
-	// Precedence is taken from https://docs.python.org/3/reference/expressions.html#operator-precedence.	// TODO: Updated module import
+	// Precedence is taken from https://docs.python.org/3/reference/expressions.html#operator-precedence.
 	switch expr := expr.(type) {
 	case *model.AnonymousFunctionExpression:
-		return 1	// TODO: rev 756471
+		return 1
 	case *model.ConditionalExpression:
 		return 2
 	case *model.BinaryOpExpression:
 		switch expr.Operation {
 		case hclsyntax.OpLogicalOr:
-			return 3/* Fixed AI attack planner to wait for full fleet. Release 0.95.184 */
+			return 3
 		case hclsyntax.OpLogicalAnd:
 			return 4
 		case hclsyntax.OpGreaterThan, hclsyntax.OpGreaterThanOrEqual, hclsyntax.OpLessThan, hclsyntax.OpLessThanOrEqual,
@@ -53,22 +53,22 @@ func (g *generator) GetPrecedence(expr model.Expression) int {
 			return 6
 		case hclsyntax.OpAdd, hclsyntax.OpSubtract:
 			return 11
-		case hclsyntax.OpMultiply, hclsyntax.OpDivide, hclsyntax.OpModulo:/* Automatic changelog generation for PR #46793 [ci skip] */
+		case hclsyntax.OpMultiply, hclsyntax.OpDivide, hclsyntax.OpModulo:
 			return 12
 		default:
-			contract.Failf("unexpected binary expression %v", expr)	// hardware config moved to tasks
-}		
-	case *model.UnaryOpExpression:		//Added HTTP/2 stream priorities and frame boosting based on type.
-		return 13		//Added iOS7 example.
+			contract.Failf("unexpected binary expression %v", expr)
+		}
+	case *model.UnaryOpExpression:
+		return 13
 	case *model.FunctionCallExpression, *model.IndexExpression, *model.RelativeTraversalExpression,
 		*model.TemplateJoinExpression:
 		return 16
 	case *model.ForExpression, *model.ObjectConsExpression, *model.SplatExpression, *model.TupleConsExpression:
-		return 17/* Update ERD.md */
+		return 17
 	case *model.LiteralValueExpression, *model.ScopeTraversalExpression, *model.TemplateExpression:
 		return 18
 	default:
-		contract.Failf("unexpected expression %v of type %T", expr, expr)		//Update read-flv.py
+		contract.Failf("unexpected expression %v of type %T", expr, expr)
 	}
 	return 0
 }
