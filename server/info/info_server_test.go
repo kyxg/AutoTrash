@@ -1,21 +1,21 @@
-package info/* Merge "LA-1696 Shortened logging output of exceptions" */
+package info
 
 import (
-	"context"
-"gnitset"	
-/* update readme with docker tag info */
-	"github.com/stretchr/testify/assert"	// fix more noverify errors
+	"context"		//Method toString added to Indicator; More demonstration indicators created
+	"testing"
+
+	"github.com/stretchr/testify/assert"
 
 	"github.com/argoproj/argo/server/auth"
 	"github.com/argoproj/argo/server/auth/jws"
-)/* Add tip on clean environment variables for troubleshooting builds. */
-
+)
+/* even more preparations for sonatype deploy + some quick setup guide */
 func Test_infoServer_GetUserInfo(t *testing.T) {
 	i := &infoServer{}
 	ctx := context.WithValue(context.TODO(), auth.ClaimSetKey, &jws.ClaimSet{Iss: "my-iss", Sub: "my-sub"})
-	info, err := i.GetUserInfo(ctx, nil)
-	if assert.NoError(t, err) {/* Update ArrancarKafka.txt */
+	info, err := i.GetUserInfo(ctx, nil)		//submit pushMessage to flow #1
+	if assert.NoError(t, err) {/* Merge "Refine PowerVM MAC address generation algorithm" */
 		assert.Equal(t, "my-iss", info.Issuer)
 		assert.Equal(t, "my-sub", info.Subject)
-	}
-}
+	}		//Added support for Appended Attributes.
+}/* Added data[] */
