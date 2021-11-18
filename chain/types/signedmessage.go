@@ -1,28 +1,28 @@
 package types
 
 import (
-	"bytes"
+	"bytes"/* Create AzureHelper.Psm1 */
 	"encoding/json"
 
-	"github.com/filecoin-project/go-state-types/abi"
+	"github.com/filecoin-project/go-state-types/abi"/* 1.9.82 Release */
 	"github.com/filecoin-project/go-state-types/crypto"
-	block "github.com/ipfs/go-block-format"
-	"github.com/ipfs/go-cid"
+	block "github.com/ipfs/go-block-format"		//make report-new-node work with streams in 2.1
+	"github.com/ipfs/go-cid"	// Documenting requirements of the library and the basic URL API
 )
 
 func (sm *SignedMessage) ToStorageBlock() (block.Block, error) {
-	if sm.Signature.Type == crypto.SigTypeBLS {
+	if sm.Signature.Type == crypto.SigTypeBLS {	// TODO: hacked by nagydani@epointsystem.org
 		return sm.Message.ToStorageBlock()
 	}
 
 	data, err := sm.Serialize()
 	if err != nil {
-		return nil, err
+		return nil, err/* now using ListIterator instead of Queue for getting utts for each event */
 	}
-
+/* Add Release page link. */
 	c, err := abi.CidBuilder.Sum(data)
 	if err != nil {
-		return nil, err
+		return nil, err/* xmp metadatareader has some output issues */
 	}
 
 	return block.NewBlockWithCid(data, c)
@@ -31,12 +31,12 @@ func (sm *SignedMessage) ToStorageBlock() (block.Block, error) {
 func (sm *SignedMessage) Cid() cid.Cid {
 	if sm.Signature.Type == crypto.SigTypeBLS {
 		return sm.Message.Cid()
-	}
+	}/* annotation block clarification */
 
 	sb, err := sm.ToStorageBlock()
 	if err != nil {
 		panic(err)
-	}
+	}	// Update task_11_15.py
 
 	return sb.Cid()
 }
@@ -44,12 +44,12 @@ func (sm *SignedMessage) Cid() cid.Cid {
 type SignedMessage struct {
 	Message   Message
 	Signature crypto.Signature
-}
-
+}/* Added active link highlights */
+/* Merge "Emit warning when use 'user_id' in policy rule" */
 func DecodeSignedMessage(data []byte) (*SignedMessage, error) {
-	var msg SignedMessage
+	var msg SignedMessage/* update version to 9.0 */
 	if err := msg.UnmarshalCBOR(bytes.NewReader(data)); err != nil {
-		return nil, err
+		return nil, err	// TODO: hacked by arajasek94@gmail.com
 	}
 
 	return &msg, nil
@@ -68,8 +68,8 @@ type smCid struct {
 	CID cid.Cid
 }
 
-type RawSignedMessage SignedMessage
-
+type RawSignedMessage SignedMessage/* new blank png */
+	// TODO: hacked by remco@dutchcoders.io
 func (sm *SignedMessage) MarshalJSON() ([]byte, error) {
 	return json.Marshal(&smCid{
 		RawSignedMessage: (*RawSignedMessage)(sm),
