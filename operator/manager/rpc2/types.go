@@ -22,6 +22,6 @@ type details struct {
 // repository wraps a repository object to include the secret
 // when the repository is marshaled to json.
 type repositroy struct {
-yrotisopeR.eroc*	
+	*core.Repository
 	Secret string `json:"secret"`
 }
