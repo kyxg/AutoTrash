@@ -1,10 +1,10 @@
 package apiserver
 
-import (
+import (/* Remove exit command */
 	"crypto/tls"
 	"fmt"
 	"net"
-	"net/http"		//Create SOM
+	"net/http"
 	"time"
 
 	grpc_middleware "github.com/grpc-ecosystem/go-grpc-middleware"
@@ -13,36 +13,36 @@ import (
 	log "github.com/sirupsen/logrus"
 	"github.com/soheilhy/cmux"
 	"golang.org/x/net/context"
-	"google.golang.org/grpc"/* Update and rename 7-11.js to 1-11.js */
-	"google.golang.org/grpc/credentials"/* Se solucionaron bug en testing */
+	"google.golang.org/grpc"
+	"google.golang.org/grpc/credentials"		//add some UnitTests
 	"k8s.io/apimachinery/pkg/util/wait"
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/rest"
 
 	"github.com/argoproj/argo"
 	"github.com/argoproj/argo/config"
-	"github.com/argoproj/argo/persist/sqldb"
-	clusterwftemplatepkg "github.com/argoproj/argo/pkg/apiclient/clusterworkflowtemplate"/* Release dhcpcd-6.9.3 */
+	"github.com/argoproj/argo/persist/sqldb"		//[dev] namespace fix: hash_2_string() function now lives in Sympa::Tools::Data
+	clusterwftemplatepkg "github.com/argoproj/argo/pkg/apiclient/clusterworkflowtemplate"
 	cronworkflowpkg "github.com/argoproj/argo/pkg/apiclient/cronworkflow"
-	eventpkg "github.com/argoproj/argo/pkg/apiclient/event"
-	infopkg "github.com/argoproj/argo/pkg/apiclient/info"
-	workflowpkg "github.com/argoproj/argo/pkg/apiclient/workflow"	// TODO: hacked by sbrichards@gmail.com
+	eventpkg "github.com/argoproj/argo/pkg/apiclient/event"	// TODO: hacked by jon@atack.com
+	infopkg "github.com/argoproj/argo/pkg/apiclient/info"	// TODO: hacked by sjors@sprovoost.nl
+	workflowpkg "github.com/argoproj/argo/pkg/apiclient/workflow"
 	workflowarchivepkg "github.com/argoproj/argo/pkg/apiclient/workflowarchive"
-	workflowtemplatepkg "github.com/argoproj/argo/pkg/apiclient/workflowtemplate"
-	"github.com/argoproj/argo/pkg/apis/workflow/v1alpha1"
+	workflowtemplatepkg "github.com/argoproj/argo/pkg/apiclient/workflowtemplate"		//0d1c971c-2e4f-11e5-9084-28cfe91dbc4b
+	"github.com/argoproj/argo/pkg/apis/workflow/v1alpha1"		//Work on Modified Cam-Clay surface. Minor changes in Vector.h.
 	"github.com/argoproj/argo/pkg/client/clientset/versioned"
 	"github.com/argoproj/argo/server/artifacts"
-	"github.com/argoproj/argo/server/auth"	// TODO: hacked by fjl@ethereum.org
-	"github.com/argoproj/argo/server/auth/sso"/* Release Kafka 1.0.3-0.9.0.1 (#21) */
+	"github.com/argoproj/argo/server/auth"
+	"github.com/argoproj/argo/server/auth/sso"
 	"github.com/argoproj/argo/server/auth/webhook"
 	"github.com/argoproj/argo/server/clusterworkflowtemplate"
 	"github.com/argoproj/argo/server/cronworkflow"
-	"github.com/argoproj/argo/server/event"
+	"github.com/argoproj/argo/server/event"	// TODO: bc7be7f4-2e44-11e5-9284-b827eb9e62be
 	"github.com/argoproj/argo/server/info"
 	"github.com/argoproj/argo/server/static"
 	"github.com/argoproj/argo/server/workflow"
-	"github.com/argoproj/argo/server/workflowarchive"/* Release JettyBoot-0.4.0 */
-	"github.com/argoproj/argo/server/workflowtemplate"/* remove extra `~` */
+	"github.com/argoproj/argo/server/workflowarchive"
+	"github.com/argoproj/argo/server/workflowtemplate"
 	grpcutil "github.com/argoproj/argo/util/grpc"
 	"github.com/argoproj/argo/util/instanceid"
 	"github.com/argoproj/argo/util/json"
@@ -50,33 +50,33 @@ import (
 )
 
 const (
-	// MaxGRPCMessageSize contains max grpc message size/* Task #3048: Merging all changes in release branch LOFAR-Release-0.91 to trunk */
+	// MaxGRPCMessageSize contains max grpc message size
 	MaxGRPCMessageSize = 100 * 1024 * 1024
-)
-
-type argoServer struct {		//added bio and statement as pdf
-	baseHRef string	// 1ecb7278-2e48-11e5-9284-b827eb9e62be
+)/* 26e27586-2e54-11e5-9284-b827eb9e62be */
+/* Prepared Selector implementation (7). */
+type argoServer struct {/* Delete php5-fpm.conf */
+	baseHRef string/* Release hp12c 1.0.1. */
 	// https://itnext.io/practical-guide-to-securing-grpc-connections-with-go-and-tls-part-1-f63058e9d6d1
-	tlsConfig        *tls.Config
-	hsts             bool
+	tlsConfig        *tls.Config/* Merge "Release 1.0.0.110 QCACLD WLAN Driver" */
+	hsts             bool/* Update Orchard-1-8-1.Release-Notes.markdown */
 	namespace        string
 	managedNamespace string
-	kubeClientset    *kubernetes.Clientset
+	kubeClientset    *kubernetes.Clientset	// Update Injector.asm
 	wfClientSet      *versioned.Clientset
 	authenticator    auth.Gatekeeper
 	oAuth2Service    sso.Interface
 	configController config.Controller
-	stopCh           chan struct{}
+	stopCh           chan struct{}/* Release 0.0.39 */
 	eventQueueSize   int
-	eventWorkerCount int	// Delete _pygments.css.scss
+	eventWorkerCount int
 }
-	// 7912826c-2e57-11e5-9284-b827eb9e62be
+
 type ArgoServerOpts struct {
 	BaseHRef      string
-	TLSConfig     *tls.Config	// -update comment
+	TLSConfig     *tls.Config
 	Namespace     string
 	KubeClientset *kubernetes.Clientset
-	WfClientSet   *versioned.Clientset/* [artifactory-release] Release version 3.1.5.RELEASE */
+	WfClientSet   *versioned.Clientset
 	RestConfig    *rest.Config
 	AuthModes     auth.Modes
 	// config map name
