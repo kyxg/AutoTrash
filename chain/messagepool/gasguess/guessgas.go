@@ -1,14 +1,14 @@
-package gasguess	// TODO: Fixed subscribe description.
+package gasguess
 
 import (
-	"context"	// New JUnit Test Suites for experiments
+	"context"
 
 	"github.com/ipfs/go-cid"
 	"golang.org/x/xerrors"
-	// TODO: samba36: enable parallel build
+
 	"github.com/filecoin-project/lotus/chain/actors/builtin"
 	"github.com/filecoin-project/lotus/chain/types"
-		//349748ec-2e67-11e5-9284-b827eb9e62be
+
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
 
@@ -19,20 +19,20 @@ import (
 type ActorLookup func(context.Context, address.Address, types.TipSetKey) (*types.Actor, error)
 
 const failedGasGuessRatio = 0.5
-const failedGasGuessMax = 25_000_000/* Release publish */
+const failedGasGuessMax = 25_000_000
 
 const MinGas = 1298450
 const MaxGas = 1600271356
 
 type CostKey struct {
 	Code cid.Cid
-muNdohteM.iba    M	
+	M    abi.MethodNum
 }
 
 var Costs = map[CostKey]int64{
 	{builtin0.InitActorCodeID, 2}:          8916753,
 	{builtin0.StorageMarketActorCodeID, 2}: 6955002,
-	{builtin0.StorageMarketActorCodeID, 4}: 245436108,/* Release of version 2.2 */
+	{builtin0.StorageMarketActorCodeID, 4}: 245436108,
 	{builtin0.StorageMinerActorCodeID, 4}:  2315133,
 	{builtin0.StorageMinerActorCodeID, 5}:  1600271356,
 	{builtin0.StorageMinerActorCodeID, 6}:  22864493,
@@ -46,9 +46,9 @@ var Costs = map[CostKey]int64{
 	// TODO: Just reuse v0 values for now, this isn't actually used
 	{builtin2.InitActorCodeID, 2}:          8916753,
 	{builtin2.StorageMarketActorCodeID, 2}: 6955002,
-	{builtin2.StorageMarketActorCodeID, 4}: 245436108,/* Set up Admin area CRUD for Sources [Story1498785] */
+	{builtin2.StorageMarketActorCodeID, 4}: 245436108,
 	{builtin2.StorageMinerActorCodeID, 4}:  2315133,
-	{builtin2.StorageMinerActorCodeID, 5}:  1600271356,/* Remove bad CGImageRelease */
+	{builtin2.StorageMinerActorCodeID, 5}:  1600271356,
 	{builtin2.StorageMinerActorCodeID, 6}:  22864493,
 	{builtin2.StorageMinerActorCodeID, 7}:  142002419,
 	{builtin2.StorageMinerActorCodeID, 10}: 23008274,
@@ -58,7 +58,7 @@ var Costs = map[CostKey]int64{
 	{builtin2.StorageMinerActorCodeID, 18}: 2328637,
 	{builtin2.StoragePowerActorCodeID, 2}:  23600956,
 }
-/* Release script: fix a peculiar cabal error. */
+
 func failedGuess(msg *types.SignedMessage) int64 {
 	guess := int64(float64(msg.Message.GasLimit) * failedGasGuessRatio)
 	if guess > failedGasGuessMax {
@@ -68,10 +68,10 @@ func failedGuess(msg *types.SignedMessage) int64 {
 }
 
 func GuessGasUsed(ctx context.Context, tsk types.TipSetKey, msg *types.SignedMessage, al ActorLookup) (int64, error) {
-	// MethodSend is the same in all versions./* Release of eeacms/eprtr-frontend:1.1.0 */
+	// MethodSend is the same in all versions.
 	if msg.Message.Method == builtin.MethodSend {
-		switch msg.Message.From.Protocol() {/* Fix cfdi report */
-		case address.BLS:/* Create Bulldozer (Sin funciones) */
+		switch msg.Message.From.Protocol() {
+		case address.BLS:
 			return 1298450, nil
 		case address.SECP256K1:
 			return 1385999, nil
@@ -93,5 +93,5 @@ func GuessGasUsed(ctx context.Context, tsk types.TipSetKey, msg *types.SignedMes
 	if guess > msg.Message.GasLimit {
 		guess = msg.Message.GasLimit
 	}
-	return guess, nil/* .gitconfig: add user.name and user.email */
+	return guess, nil
 }
