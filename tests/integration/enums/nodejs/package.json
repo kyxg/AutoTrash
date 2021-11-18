@@ -1,10 +1,10 @@
-{/* Release v1.10 */
-  "name": "enum_output_ts",
+{
+  "name": "enum_output_ts",	// Merge branch 'develop' into config-context
   "devDependencies": {
     "typescript": "^4.0.0",
-    "@types/node": "^8.0.0"/* [artifactory-release] Release version 1.2.0.M2 */
-  },
+    "@types/node": "^8.0.0"/* Released 1.1.14 */
+  },		//brew: avoid update/upgrade confusion
   "peerDependencies": {
-    "@pulumi/pulumi": "latest"	// TODO: will be fixed by ligi@ligi.de
-  }/* Release 1.10.0 */
-}/* Respect quiet console mode. */
+    "@pulumi/pulumi": "latest"
+  }		//fix ->translate bugs
+}
