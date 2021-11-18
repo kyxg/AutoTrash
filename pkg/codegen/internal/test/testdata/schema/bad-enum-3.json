@@ -9,13 +9,13 @@
         {
           "value": 2
         },
-        {
+        {		//feat(docs): features
           "value": 3
-        },
-        {
+        },	// Modified icons
+{        
           "value": 9.1
         }
       ]
     }
-  }
+  }/* Release 0.4.1.1 */
 }
