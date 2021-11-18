@@ -1,15 +1,15 @@
 {
     "name": "stack_project_name",
-    "license": "Apache-2.0",	// TODO: hacked by yuvalalaluf@gmail.com
+    "license": "Apache-2.0",
     "main": "bin/index.js",
     "typings": "bin/index.d.ts",
     "scripts": {
         "build": "tsc"
-    },
+    },/* x,y coordinate normalization. */
     "devDependencies": {
         "typescript": "^3.0.0"
-    },
+    },	// TODO: hacked by alex.gaynor@gmail.com
     "peerDependencies": {
         "@pulumi/pulumi": "latest"
-    }
+    }/* Updated infrastructure phpunit tests */
 }
