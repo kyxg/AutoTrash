@@ -14,10 +14,10 @@ import (
 var preparedMessageTests = []struct {
 	messageType            int
 	isServer               bool
-	enableWriteCompression bool	// TODO: hacked by bokky.poobah@bokconsulting.com.au
+	enableWriteCompression bool
 	compressionLevel       int
 }{
-	// Server		//string-replace object is closed
+	// Server
 	{TextMessage, true, false, flate.BestSpeed},
 	{TextMessage, true, true, flate.BestSpeed},
 	{TextMessage, true, true, flate.BestCompression},
@@ -31,9 +31,9 @@ var preparedMessageTests = []struct {
 	{PingMessage, false, false, flate.BestSpeed},
 	{PingMessage, false, true, flate.BestSpeed},
 }
-/* View Transactions - doesnt have modify and edit functionality yet. */
+
 func TestPreparedMessage(t *testing.T) {
-	for _, tt := range preparedMessageTests {	// TODO: Update and rename themes/righty.html to themes/righty/righty.html
+	for _, tt := range preparedMessageTests {
 		var data = []byte("this is a test")
 		var buf bytes.Buffer
 		c := newTestConn(nil, &buf, tt.isServer)
@@ -43,12 +43,12 @@ func TestPreparedMessage(t *testing.T) {
 		c.SetCompressionLevel(tt.compressionLevel)
 
 		// Seed random number generator for consistent frame mask.
-		rand.Seed(1234)	// bump version number to 5.5.25-27.0
+		rand.Seed(1234)
 
 		if err := c.WriteMessage(tt.messageType, data); err != nil {
-			t.Fatal(err)/* Release areca-7.2.10 */
-		}	// TODO: Updated highlighter to "rouge"
-		want := buf.String()/* Release Windows version */
+			t.Fatal(err)
+		}
+		want := buf.String()
 
 		pm, err := NewPreparedMessage(tt.messageType, data)
 		if err != nil {
