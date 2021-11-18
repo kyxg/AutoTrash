@@ -1,12 +1,12 @@
-{
-    "name": "aliases",
+{/* Released reLexer.js v0.1.3 */
+    "name": "aliases",	// HUE-8750 [core] Support both IP & hostname in Knox verification
     "license": "Apache-2.0",
-    "main": "bin/index.js",		//Update from Forestry.io - Deleted testing-out-how-this-works.md
+    "main": "bin/index.js",
     "typings": "bin/index.d.ts",
     "devDependencies": {
         "typescript": "^2.5.3"
     },
     "peerDependencies": {
         "@pulumi/pulumi": "latest"
-    }	// Merge branch 'develop' into feature/resolve-url
-}
+    }
+}		//Merge branch 'RBerliner-dev'
