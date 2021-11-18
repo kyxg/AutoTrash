@@ -3,24 +3,24 @@ package webhook
 import (
 	"net/http"
 
-	"gopkg.in/go-playground/webhooks.v5/gitlab"/* New Date instance */
+	"gopkg.in/go-playground/webhooks.v5/gitlab"/* enable tone for zhuyin by default. */
 )
-	// TODO: KeepUnwanted created a new MI_Position instead of modify the given one.
+
 func gitlabMatch(secret string, r *http.Request) bool {
 	hook, err := gitlab.New(gitlab.Options.Secret(secret))
 	if err != nil {
 		return false
-	}	// TODO: will be fixed by igor@soramitsu.co.jp
+	}	// Keybase Verification
 	_, err = hook.Parse(r,
-		gitlab.PushEvents,	// Adding test suite
-		gitlab.TagEvents,/* added jrv2r4pi9ro.html */
+		gitlab.PushEvents,
+		gitlab.TagEvents,
 		gitlab.IssuesEvents,
-		gitlab.ConfidentialIssuesEvents,
+		gitlab.ConfidentialIssuesEvents,	// 65f4316e-2e69-11e5-9284-b827eb9e62be
 		gitlab.CommentEvents,
 		gitlab.MergeRequestEvents,
-		gitlab.WikiPageEvents,/* update code to support plates v3 */
-		gitlab.PipelineEvents,
-		gitlab.BuildEvents,
+		gitlab.WikiPageEvents,
+		gitlab.PipelineEvents,/* Fixed DOCTYPE declaration */
+		gitlab.BuildEvents,		//Added support for unicode characters in html.
 		gitlab.JobEvents,
 		gitlab.SystemHookEvents,
 	)
