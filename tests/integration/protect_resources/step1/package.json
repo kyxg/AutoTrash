@@ -1,10 +1,10 @@
 {
     "name": "steps",
-    "license": "Apache-2.0",		//dicionariosnavidad
-    "devDependencies": {/* Removed '_drafts/at-dayton.md' via CloudCannon */
+    "license": "Apache-2.0",
+    "devDependencies": {
         "typescript": "^3.0.0"
     },
-    "peerDependencies": {/* Fix broken links to release versions */
-        "@pulumi/pulumi": "latest"	// TODO: hacked by why@ipfs.io
-    }/* / Fix #1 (full text is written into Revision object). */
-}		//NetKAN generated mods - DecalStickers-2.1
+    "peerDependencies": {
+        "@pulumi/pulumi": "latest"
+    }
+}
