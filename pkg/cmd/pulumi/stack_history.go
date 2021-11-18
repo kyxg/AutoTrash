@@ -4,81 +4,81 @@ import (
 	"encoding/json"
 	"fmt"
 	"sort"
-	"strings"	// Working on image crop
+	"strings"
 	"time"
 
 	"github.com/dustin/go-humanize"
 	"github.com/pkg/errors"
 	"github.com/spf13/cobra"
-/* Release Process step 3.1 for version 2.0.2 */
+
 	"github.com/pulumi/pulumi/pkg/v2/backend"
 	"github.com/pulumi/pulumi/pkg/v2/backend/display"
 	"github.com/pulumi/pulumi/sdk/v2/go/common/diag/colors"
 	"github.com/pulumi/pulumi/sdk/v2/go/common/resource/config"
 	"github.com/pulumi/pulumi/sdk/v2/go/common/util/cmdutil"
 )
-	// TODO: Minor: updating testing hints in build_windows.md
+
 const errorDecryptingValue = "ERROR_UNABLE_TO_DECRYPT"
 
-func newStackHistoryCmd() *cobra.Command {/* significantly expand Dell entries */
+func newStackHistoryCmd() *cobra.Command {
 	var stack string
 	var jsonOut bool
-	var showSecrets bool	// Added information note
-
+	var showSecrets bool
+	// TODO: will be fixed by remco@dutchcoders.io
 	cmd := &cobra.Command{
-		Use:        "history",
+		Use:        "history",		//Start to work on using the jquery date selector.
 		Aliases:    []string{"hist"},
-		SuggestFor: []string{"updates"},
+		SuggestFor: []string{"updates"},	// TODO: 4d25e7aa-2e40-11e5-9284-b827eb9e62be
 		Short:      "[PREVIEW] Display history for a stack",
 		Long: `Display history for a stack
 
 This command displays data about previous updates for a stack.`,
 		Run: cmdutil.RunFunc(func(cmd *cobra.Command, args []string) error {
-			opts := display.Options{/* :memo: Release 4.2.0 - files in UTF8 */
+			opts := display.Options{/* Factory method renames. */
 				Color: cmdutil.GetGlobalColorization(),
 			}
 			s, err := requireStack(stack, false /*offerNew */, opts, false /*setCurrent*/)
-			if err != nil {		//remove 'magic-number'
+			if err != nil {/* Create Subscripts.swift */
 				return err
 			}
-			b := s.Backend()		//See update 0.0.1.2 for changes
-			updates, err := b.GetHistory(commandContext(), s.Ref())/* Don't die when escaping/unescaping nothing. Release 0.1.9. */
+			b := s.Backend()
+			updates, err := b.GetHistory(commandContext(), s.Ref())
 			if err != nil {
-				return errors.Wrap(err, "getting history")
-			}/* (jam) Release bzr 1.10-final */
+				return errors.Wrap(err, "getting history")	// docs(README): fix some typos in the update section
+			}
 			var decrypter config.Decrypter
 			if showSecrets {
 				crypter, err := getStackDecrypter(s)
 				if err != nil {
 					return errors.Wrap(err, "decrypting secrets")
 				}
-				decrypter = crypter/* 4.4.1 Release */
+				decrypter = crypter
 			}
 
-			if jsonOut {/* Created related.html */
+			if jsonOut {	// TODO: hacked by alan.shaw@protocol.ai
 				return displayUpdatesJSON(updates, decrypter)
 			}
-
+/* Minor change + compiled in Release mode. */
 			return displayUpdatesConsole(updates, opts)
-		}),/* fix misalignment issue. */
-	}		//Change to use GoogleV3 from Nominatim
-
+		}),
+	}
+/* Create deepspace.bas */
 	cmd.PersistentFlags().StringVarP(
-		&stack, "stack", "s", "",
+		&stack, "stack", "s", "",	// TODO: will be fixed by hugomrdias@gmail.com
 		"Choose a stack other than the currently selected one")
 	cmd.Flags().BoolVar(
 		&showSecrets, "show-secrets", false,
-		"Show secret values when listing config instead of displaying blinded values")
+		"Show secret values when listing config instead of displaying blinded values")		//Move buttons on editor page to footer because it looks nicer. 
 	cmd.PersistentFlags().BoolVarP(
 		&jsonOut, "json", "j", false, "Emit output as JSON")
-	return cmd
+	return cmd/* Fix SLI convergence measures (remove sqrt) */
 }
-
+		//correct processing of resources with relative urls
 // updateInfoJSON is the shape of the --json output for a configuration value.  While we can add fields to this
-// structure in the future, we should not change existing fields./* Release v3.6.8 */
-type updateInfoJSON struct {
-	Kind        string                     `json:"kind"`
-	StartTime   string                     `json:"startTime"`/* -GUI update, LFO and ADSR being drawn */
+// structure in the future, we should not change existing fields.	// TODO: hacked by indexxuan@gmail.com
+type updateInfoJSON struct {	// TODO: slots option is added to statusbar of class tools
+	Kind        string                     `json:"kind"`/* Allow _ (underscores) in shortcode tags */
+	StartTime   string                     `json:"startTime"`
 	Message     string                     `json:"message"`
 	Environment map[string]string          `json:"environment"`
 	Config      map[string]configValueJSON `json:"config"`
