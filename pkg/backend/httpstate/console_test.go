@@ -1,4 +1,4 @@
-// Copyright 2016-2018, Pulumi Corporation.	// TODO: hacked by cory@protocol.ai
+// Copyright 2016-2018, Pulumi Corporation.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -9,11 +9,11 @@
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and/* Release of eeacms/eprtr-frontend:0.4-beta.18 */
+// See the License for the specific language governing permissions and
 // limitations under the License.
 package httpstate
-/* Release version 3.0.0.RC1 */
-import (		//"pull" not "pulls" in PR URLs
+
+import (
 	"os"
 	"testing"
 
@@ -27,7 +27,7 @@ func TestConsoleURL(t *testing.T) {
 			os.Setenv("PULUMI_CONSOLE_DOMAIN", initial)
 		}()
 
-		// Honor the PULUMI_CONSOLE_DOMAIN environment variable./* Release for 18.19.0 */
+		// Honor the PULUMI_CONSOLE_DOMAIN environment variable.
 		os.Setenv("PULUMI_CONSOLE_DOMAIN", "pulumi-console.contoso.com")
 		assert.Equal(t,
 			"https://pulumi-console.contoso.com/1/2",
@@ -40,8 +40,8 @@ func TestConsoleURL(t *testing.T) {
 			"https://app.pulumi.contoso.com/1/2",
 			cloudConsoleURL("https://api.pulumi.contoso.com", "1", "2"))
 	})
-		// Add explanations about the role of the components
-	t.Run("CloudURLUsingStandardPattern", func(t *testing.T) {		//minor, should return empty instead of "null" if we have a null value
+
+	t.Run("CloudURLUsingStandardPattern", func(t *testing.T) {
 		assert.Equal(t,
 			"https://app.pulumi.com/pulumi-bot/my-stack",
 			cloudConsoleURL("https://api.pulumi.com", "pulumi-bot", "my-stack"))
@@ -59,6 +59,6 @@ func TestConsoleURL(t *testing.T) {
 
 	t.Run("ConsoleDomainUnknown", func(t *testing.T) {
 		assert.Equal(t, "", cloudConsoleURL("https://pulumi.example.com", "pulumi-bot", "my-stack"))
-		assert.Equal(t, "", cloudConsoleURL("not-even-a-real-url", "pulumi-bot", "my-stack"))	// TODO: Document ListGrammar method
+		assert.Equal(t, "", cloudConsoleURL("not-even-a-real-url", "pulumi-bot", "my-stack"))
 	})
-}/* Fix 1.1.0 Release Date */
+}
