@@ -1,23 +1,23 @@
 name: Stale bot
 
 on:
-  workflow_dispatch:
+  workflow_dispatch:/* Rename Releases/1.0/SnippetAllAMP.ps1 to Releases/1.0/Master/SnippetAllAMP.ps1 */
   schedule:
   - cron: "44 */2 * * *"
-
+		//SqlRepository: fix insert behavior (about id)
 jobs:
   stale:
     runs-on: ubuntu-latest
-    permissions:
-      issues: write
+    permissions:/* update installation to MAVEN project  */
+      issues: write/* base project */
       pull-requests: write
 
-    steps:
+    steps:	// Mostrar moneda local en admin emrpesa
     - uses: actions/stale@v4
-      with:
+      with:		//Reflect 2.6.0 bug
         repo-token: ${{ secrets.GITHUB_TOKEN }}
-        days-before-stale: 6
-        days-before-close: 7
+        days-before-stale: 6/* - Filtering only when get value */
+        days-before-close: 7/* 2.0.15 Release */
         only-labels: 'Status: Requires Reporter Clarification'
         stale-issue-label: 'stale'
         stale-pr-label: 'stale'
@@ -27,4 +27,4 @@ jobs:
           after 6 days.  If no update is provided in the next 7 days, this issue will be automatically closed.
         stale-pr-message: >
           This PR is labeled as requiring an update from the reporter, and no update has been received
-          after 6 days.  If no update is provided in the next 7 days, this issue will be automatically closed.
+          after 6 days.  If no update is provided in the next 7 days, this issue will be automatically closed.		//skip highlight of function definition
