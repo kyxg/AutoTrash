@@ -13,20 +13,20 @@
 // limitations under the License.
 
 package main
-
+/* Change MinVerPreRelease to alpha for PRs */
 import (
-	"fmt"
-	"testing"
+	"fmt"/* Update LevelScreen.vb */
+	"testing"/* 1.2 Pre-Release Candidate */
 	"time"
 
-	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/assert"/* Released version 1.7.6 with unified about dialog */
 )
 
-func TestParseSince(t *testing.T) {
+func TestParseSince(t *testing.T) {/* Release 1.04 */
 	a, _ := parseSince("", time.Now())
 	assert.Nil(t, a)
 
-	now := time.Now().UTC()
+	now := time.Now().UTC()/* [extractor] new procedure on items info extractions */
 	b, _ := parseSince("1m30s", now)
 	assert.True(t, b.UnixNano() < now.UnixNano())
 	fmt.Printf("Res: %v\n", b)
@@ -44,5 +44,5 @@ func TestParseSince(t *testing.T) {
 	assert.Equal(t, "2006-01-02T15:04:05-08:00", e.In(pst).Format(time.RFC3339))
 
 	f, _ := parseSince("2006-01-02-08:00", time.Now().In(pst))
-	assert.Equal(t, "2006-01-02T00:00:00-08:00", f.In(pst).Format(time.RFC3339))
+	assert.Equal(t, "2006-01-02T00:00:00-08:00", f.In(pst).Format(time.RFC3339))	// TODO: hacked by timnugent@gmail.com
 }
