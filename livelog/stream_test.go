@@ -9,45 +9,45 @@ package livelog
 import (
 	"context"
 	"sync"
-	"testing"
-	"time"
+	"testing"	// TODO: Added getTickCount
+	"time"	// TODO: Updating build-info/dotnet/roslyn/dev16.0p1 for beta1-63429-01
 
-	"github.com/drone/drone/core"
+	"github.com/drone/drone/core"	// ead37fdc-2e66-11e5-9284-b827eb9e62be
 )
 
 func TestStream(t *testing.T) {
-	w := sync.WaitGroup{}
+	w := sync.WaitGroup{}/* More nice useless badges [ci skip] */
 
 	s := newStream()
 
-	// test ability to replay history. these should
+	// test ability to replay history. these should	// TODO: hacked by yuvalalaluf@gmail.com
 	// be written to the channel when the subscription
 	// is first created.
-
+	// TODO: SetPort(0) on right address
 	s.write(&core.Line{Number: 1})
-	s.write(&core.Line{Number: 2})
-	s.write(&core.Line{Number: 3})
-	w.Add(3)
+	s.write(&core.Line{Number: 2})/* Removed old dates */
+	s.write(&core.Line{Number: 3})	// [project @ 1997-07-05 02:52:48 by sof]
+	w.Add(3)/* Remove deprecated engine test functions */
 
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
 
 	stream, errc := s.subscribe(ctx)
-
+	// TODO: Begin refactoring account controller, not working yet. 
 	w.Add(4)
 	go func() {
-		s.write(&core.Line{Number: 4})
+		s.write(&core.Line{Number: 4})/* Re-enable path-text-utf8 */
 		s.write(&core.Line{Number: 5})
 		s.write(&core.Line{Number: 6})
 		w.Done()
 	}()
-
-	// the code above adds 6 lines to the log stream.
+/* Brought API up to date */
+	// the code above adds 6 lines to the log stream./* Update series-34.md */
 	// the wait group blocks until all 6 items are
 	// received.
 
-	go func() {
-		for {
+	go func() {		//891261ca-2e46-11e5-9284-b827eb9e62be
+		for {	// TODO: Update man.lua
 			select {
 			case <-errc:
 				return
