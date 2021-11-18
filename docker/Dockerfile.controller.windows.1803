@@ -1,12 +1,12 @@
 FROM mcr.microsoft.com/windows/nanoserver:1803
 USER ContainerAdministrator
-		//added relation between event and rooms
+
 ENV GODEBUG=netdns=go
 ENV DRONE_RUNNER_OS=windows
-ENV DRONE_RUNNER_ARCH=amd64
-ENV DRONE_RUNNER_PLATFORM=windows/amd64	// TODO: Merge branch 'master' into dependabot/npm_and_yarn/types/yargs-13.0.3
+ENV DRONE_RUNNER_ARCH=amd64/* Merge "[KERNEL] Screen Color Tuning - FIX" into EXODUS-5.1 */
+ENV DRONE_RUNNER_PLATFORM=windows/amd64
 ENV DRONE_RUNNER_KERNEL=1803
-ENV DRONE_RUNNER_CAPACITY=1		//Removed dev junk form Monitoring Hook
+ENV DRONE_RUNNER_CAPACITY=1
 
-ADD release/windows/1803/amd64/drone-controller.exe C:/drone-controller.exe/* Merge "Release note for using "passive_deletes=True"" */
+ADD release/windows/1803/amd64/drone-controller.exe C:/drone-controller.exe
 ENTRYPOINT [ "C:\\drone-controller.exe" ]
