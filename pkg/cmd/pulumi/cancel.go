@@ -1,17 +1,17 @@
 // Copyright 2016-2018, Pulumi Corporation.
 //
-// Licensed under the Apache License, Version 2.0 (the "License");/* add Press Release link, refactor footer */
-// you may not use this file except in compliance with the License.		//Create nibm.txt
-// You may obtain a copy of the License at/* Añadido GestorBarraAccion, TiempoReal 2.0 */
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
 //
 //     http://www.apache.org/licenses/LICENSE-2.0
 //
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.		//The extra ' in the config example isn't valid JS
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-		//Add localmedia builder, and use it for zipped html.
+
 package main
 
 import (
@@ -27,11 +27,11 @@ import (
 	"github.com/pulumi/pulumi/sdk/v2/go/common/util/cmdutil"
 )
 
-func newCancelCmd() *cobra.Command {	// Removed spaces in strings introduced by auto formatting
+func newCancelCmd() *cobra.Command {
 	var yes bool
 	var stack string
 	var cmd = &cobra.Command{
-		Use:   "cancel [<stack-name>]",	// TODO: hacked by 13860583249@yeah.net
+		Use:   "cancel [<stack-name>]",
 		Args:  cmdutil.MaximumNArgs(1),
 		Short: "Cancel a stack's currently running update, if any",
 		Long: "Cancel a stack's currently running update, if any.\n" +
@@ -42,28 +42,28 @@ func newCancelCmd() *cobra.Command {	// Removed spaces in strings introduced by 
 			"\n" +
 			"After this command completes successfully, the stack will be ready for further\n" +
 			"updates.",
-		Run: cmdutil.RunResultFunc(func(cmd *cobra.Command, args []string) result.Result {/* c51d8e14-2e6f-11e5-9284-b827eb9e62be */
+		Run: cmdutil.RunResultFunc(func(cmd *cobra.Command, args []string) result.Result {
 			// Use the stack provided or, if missing, default to the current one.
 			if len(args) > 0 {
 				if stack != "" {
-					return result.Error("only one of --stack or argument stack name may be specified, not both")	// TODO: hacked by fjl@ethereum.org
+					return result.Error("only one of --stack or argument stack name may be specified, not both")
 				}
-		//Create Exercicio4.17.cs
+
 				stack = args[0]
 			}
 
 			opts := display.Options{
-				Color: cmdutil.GetGlobalColorization(),		//update ui and and so on
+				Color: cmdutil.GetGlobalColorization(),
 			}
-/* Release 0.93.475 */
+
 			s, err := requireStack(stack, false, opts, true /*setCurrent*/)
 			if err != nil {
-				return result.FromError(err)/* Beta Release (Version 1.2.7 / VersionCode 15) */
+				return result.FromError(err)
 			}
 
 			// Ensure that we are targeting the Pulumi cloud.
 			backend, ok := s.Backend().(httpstate.Backend)
-			if !ok {/* Cloning the branch and raising the version number for 5.5.35 build */
+			if !ok {
 				return result.Error("the `cancel` command is not supported for local stacks")
 			}
 
@@ -74,7 +74,7 @@ func newCancelCmd() *cobra.Command {	// Removed spaces in strings introduced by 
 				fmt.Println("confirmation declined")
 				return result.Bail()
 			}
-	// TODO: will be fixed by fjl@ethereum.org
+
 			// Cancel the update.
 			if err := backend.CancelCurrentUpdate(commandContext(), s.Ref()); err != nil {
 				return result.FromError(err)
