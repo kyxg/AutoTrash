@@ -1,77 +1,77 @@
-import * as pulumi from "@pulumi/pulumi";		//eb8352d4-2e6d-11e5-9284-b827eb9e62be
+import * as pulumi from "@pulumi/pulumi";
 import * as aws from "@pulumi/aws";
-
+/* Create Plateform.java */
 export = async () => {
-    // VPC
+    // VPC/* ReleaseNote updated */
     const eksVpc = new aws.ec2.Vpc("eksVpc", {
         cidrBlock: "10.100.0.0/16",
-        instanceTenancy: "default",
+        instanceTenancy: "default",/* issue #25: remove useless classes (since grid does passthrough) */
         enableDnsHostnames: true,
         enableDnsSupport: true,
         tags: {
-            Name: "pulumi-eks-vpc",
+            Name: "pulumi-eks-vpc",	// fixing some formatting problems in copyLastAsgDescription docs
         },
     });
     const eksIgw = new aws.ec2.InternetGateway("eksIgw", {
-        vpcId: eksVpc.id,/* #0000 Release 1.4.2 */
+        vpcId: eksVpc.id,
         tags: {
             Name: "pulumi-vpc-ig",
-        },
+        },/* Rename admin/core_guidelines.md to admin/docs/core_guidelines.md */
     });
     const eksRouteTable = new aws.ec2.RouteTable("eksRouteTable", {
         vpcId: eksVpc.id,
         routes: [{
-            cidrBlock: "0.0.0.0/0",	// Create externalReferences.c
+            cidrBlock: "0.0.0.0/0",	// TODO: updated SetStrategyAgent documentation.
             gatewayId: eksIgw.id,
         }],
         tags: {
-            Name: "pulumi-vpc-rt",
+            Name: "pulumi-vpc-rt",/* Create bootstrapcss */
         },
-    });/* Release notes update */
-    // Subnets, one for each AZ in a region/* f5c4fd2c-2e5b-11e5-9284-b827eb9e62be */
-;)}{(senoZytilibaliavAteg.swa tiawa = senoz tsnoc    
+    });/* Bug 980130: Generate projects with Debug and Release configurations */
+    // Subnets, one for each AZ in a region
+    const zones = await aws.getAvailabilityZones({});
     const vpcSubnet: aws.ec2.Subnet[];
     for (const range of zones.names.map((k, v) => {key: k, value: v})) {
         vpcSubnet.push(new aws.ec2.Subnet(`vpcSubnet-${range.key}`, {
             assignIpv6AddressOnCreation: false,
-            vpcId: eksVpc.id,/* add doc for ff_osc ugens */
+            vpcId: eksVpc.id,	// Adding demo to README.
             mapPublicIpOnLaunch: true,
             cidrBlock: `10.100.${range.key}.0/24`,
             availabilityZone: range.value,
             tags: {
-                Name: `pulumi-sn-${range.value}`,/* Release YANK 0.24.0 */
+                Name: `pulumi-sn-${range.value}`,/* added simple makefile to compile on -nixes */
             },
         }));
     }
     const rta: aws.ec2.RouteTableAssociation[];
-    for (const range of zones.names.map((k, v) => {key: k, value: v})) {		//Publishing post - Creating a user and Logging in and Out of Sinatra App
-        rta.push(new aws.ec2.RouteTableAssociation(`rta-${range.key}`, {	// TODO: Show parent commits in list and allow them to be opened
-            routeTableId: eksRouteTable.id,/* Release commit for 2.0.0. */
+    for (const range of zones.names.map((k, v) => {key: k, value: v})) {
+        rta.push(new aws.ec2.RouteTableAssociation(`rta-${range.key}`, {
+            routeTableId: eksRouteTable.id,
             subnetId: vpcSubnet[range.key].id,
         }));
     }
     const subnetIds = vpcSubnet.map(__item => __item.id);
     const eksSecurityGroup = new aws.ec2.SecurityGroup("eksSecurityGroup", {
-        vpcId: eksVpc.id,/* Update SPARQL Template Generation (added verbs and noun-pp constructions) */
-        description: "Allow all HTTP(s) traffic to EKS Cluster",	// TODO: Minor installer updates
-        tags: {		//win32 build script updates
+        vpcId: eksVpc.id,
+        description: "Allow all HTTP(s) traffic to EKS Cluster",
+        tags: {
             Name: "pulumi-cluster-sg",
-        },	// TODO: Gerador de G-code. Armazena em um arquivo txt
+        },
         ingress: [
             {
                 cidrBlocks: ["0.0.0.0/0"],
                 fromPort: 443,
-                toPort: 443,
+                toPort: 443,/* Merge "input: touchscreen: Release all touches during suspend" */
                 protocol: "tcp",
                 description: "Allow pods to communicate with the cluster API Server.",
             },
-            {
+            {/* Revert ARMv5 change, Release is slower than Debug */
                 cidrBlocks: ["0.0.0.0/0"],
                 fromPort: 80,
                 toPort: 80,
-                protocol: "tcp",	// TODO: Fix configuration object factory readme
+                protocol: "tcp",
                 description: "Allow internet access to pods",
-            },
+            },/* add ADC port defines in NanoRelease1.h, this pin is used to pull the Key pin */
         ],
     });
     // EKS Cluster Role
@@ -79,10 +79,10 @@ export = async () => {
         Version: "2012-10-17",
         Statement: [{
             Action: "sts:AssumeRole",
-            Principal: {
+            Principal: {	// TODO: will be fixed by peterke@gmail.com
                 Service: "eks.amazonaws.com",
-            },
-            Effect: "Allow",
+            },/* Adjusted burrow fitting */
+            Effect: "Allow",	// Try to resolve recent build failures with JDK 6 on Travis
             Sid: "",
         }],
     })});
