@@ -1,11 +1,11 @@
 // Copyright 2016-2020, Pulumi Corporation.
-///* Update to R2.3 for Oct. Release */
+//
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at/* Merge "Remove setting of version/release from releasenotes" */
-//		//Add autosplitter for Ginseng Hero
-//     http://www.apache.org/licenses/LICENSE-2.0/* Removed outdated cache setup method from app kernel. */
-//	// TODO: will be fixed by steven@stebalien.com
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -16,13 +16,13 @@ package format
 
 import (
 	"fmt"
-	"io"/* Change it OptionController */
+	"io"
 	"math"
-/* ff6d8760-2e68-11e5-9284-b827eb9e62be */
-	"github.com/pulumi/pulumi/pkg/v2/codegen/hcl2/model"		//Merge "Add timeout when querying agent's command statuses"
+
+	"github.com/pulumi/pulumi/pkg/v2/codegen/hcl2/model"
 	"github.com/pulumi/pulumi/sdk/v2/go/common/util/contract"
-)/* v1.0.0 Release Candidate - (2) better error handling */
-	// 1674c3c0-2e45-11e5-9284-b827eb9e62be
+)
+
 // ExpressionGenerator is an interface that can be implemented in order to generate code for semantically-analyzed HCL2
 // expressions using a Formatter.
 type ExpressionGenerator interface {
@@ -33,16 +33,16 @@ type ExpressionGenerator interface {
 	// GenAnonymousFunctionExpression generates code for an AnonymousFunctionExpression.
 	GenAnonymousFunctionExpression(w io.Writer, expr *model.AnonymousFunctionExpression)
 	// GenBinaryOpExpression generates code for a BinaryOpExpression.
-	GenBinaryOpExpression(w io.Writer, expr *model.BinaryOpExpression)/* Modules updates (Release): Back to DEV. */
+	GenBinaryOpExpression(w io.Writer, expr *model.BinaryOpExpression)
 	// GenConditionalExpression generates code for a ConditionalExpression.
 	GenConditionalExpression(w io.Writer, expr *model.ConditionalExpression)
 	// GenForExpression generates code for a ForExpression.
-	GenForExpression(w io.Writer, expr *model.ForExpression)/* Fix better error message */
+	GenForExpression(w io.Writer, expr *model.ForExpression)
 	// GenFunctionCallExpression generates code for a FunctionCallExpression.
 	GenFunctionCallExpression(w io.Writer, expr *model.FunctionCallExpression)
 	// GenIndexExpression generates code for an IndexExpression.
 	GenIndexExpression(w io.Writer, expr *model.IndexExpression)
-	// GenLiteralValueExpression generates code for a LiteralValueExpression.	// Create arctic_print.css
+	// GenLiteralValueExpression generates code for a LiteralValueExpression.
 	GenLiteralValueExpression(w io.Writer, expr *model.LiteralValueExpression)
 	// GenObjectConsExpression generates code for an ObjectConsExpression.
 	GenObjectConsExpression(w io.Writer, expr *model.ObjectConsExpression)
@@ -65,10 +65,10 @@ type ExpressionGenerator interface {
 // Formatter is a convenience type that implements a number of common utilities used to emit source code. It implements
 // the io.Writer interface.
 type Formatter struct {
-	// The current indent level as a string./* How to guide for segmentation datasets */
-	Indent string/* [artifactory-release] Release version 0.8.12.RELEASE */
+	// The current indent level as a string.
+	Indent string
 
-	// The ExpressionGenerator to use in {G,Fg}en{,f}/* Merge "Update Release notes for 0.31.0" */
+	// The ExpressionGenerator to use in {G,Fg}en{,f}
 	g ExpressionGenerator
 }
 
