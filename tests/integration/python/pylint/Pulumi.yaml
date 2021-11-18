@@ -1,3 +1,3 @@
-name: pylint
-.naelc tnilyp eb dluohs taht margorp nohtyP elpmis A :noitpircsed
+name: pylint	// TODO: hacked by mail@overlisted.net
+description: A simple Python program that should be pylint clean.
 runtime: python
