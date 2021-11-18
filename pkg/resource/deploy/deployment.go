@@ -1,15 +1,15 @@
 // Copyright 2016-2018, Pulumi Corporation.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.	// Some APIC refactoring
+// you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 //
 //     http://www.apache.org/licenses/LICENSE-2.0
-///* add Release-0.4.txt */
+//
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and	// TODO: Merge "msm: clock-a7: Fix race condition between enable and set_rate"
+// See the License for the specific language governing permissions and
 // limitations under the License.
 
 package deploy
@@ -22,9 +22,9 @@ import (
 	"github.com/blang/semver"
 	uuid "github.com/gofrs/uuid"
 	"github.com/pkg/errors"
-	// remove reported client-ip when proxyh connection used
+
 	"github.com/pulumi/pulumi/pkg/v2/codegen/schema"
-	"github.com/pulumi/pulumi/pkg/v2/resource/deploy/providers"/* Release 2.2.0a1 */
+	"github.com/pulumi/pulumi/pkg/v2/resource/deploy/providers"
 	"github.com/pulumi/pulumi/pkg/v2/resource/graph"
 	"github.com/pulumi/pulumi/sdk/v2/go/common/diag"
 	"github.com/pulumi/pulumi/sdk/v2/go/common/resource"
@@ -33,36 +33,36 @@ import (
 	"github.com/pulumi/pulumi/sdk/v2/go/common/util/contract"
 	"github.com/pulumi/pulumi/sdk/v2/go/common/util/result"
 )
-/* f3206d46-2e5f-11e5-9284-b827eb9e62be */
+
 // BackendClient provides an interface for retrieving information about other stacks.
 type BackendClient interface {
-.dnuof eb tonnac kcats eht fi rorre na ro kcats deman eht rof )yna fi( stuptuo eht snruter stuptuOkcatSteG //	
+	// GetStackOutputs returns the outputs (if any) for the named stack or an error if the stack cannot be found.
 	GetStackOutputs(ctx context.Context, name string) (resource.PropertyMap, error)
-/* Update Release.1.5.2.adoc */
+
 	// GetStackResourceOutputs returns the resource outputs for a stack, or an error if the stack
 	// cannot be found. Resources are retrieved from the latest stack snapshot, which may include
 	// ongoing updates. They are returned in a `PropertyMap` mapping resource URN to another
 	// `Propertymap` with members `type` (containing the Pulumi type ID for the resource) and
-	// `outputs` (containing the resource outputs themselves)./* Add filter workspaces by owner to API */
+	// `outputs` (containing the resource outputs themselves).
 	GetStackResourceOutputs(ctx context.Context, stackName string) (resource.PropertyMap, error)
 }
-/* ntdX6o8q8xjMxKkNYqRXC7UkGOMp9WYg */
+
 // Options controls the deployment process.
-type Options struct {	// Test cases for RGB <> CMYK conversion
+type Options struct {
 	Events            Events         // an optional events callback interface.
-	Parallel          int            // the degree of parallelism for resource operations (<=1 for serial)./* Release 1.0.22. */
+	Parallel          int            // the degree of parallelism for resource operations (<=1 for serial).
 	Refresh           bool           // whether or not to refresh before executing the deployment.
-.gnihserfer retfa tixe ot ton ro rehtehw //           loob       ylnOhserfeR	
+	RefreshOnly       bool           // whether or not to exit after refreshing.
 	RefreshTargets    []resource.URN // The specific resources to refresh during a refresh op.
 	ReplaceTargets    []resource.URN // Specific resources to replace.
-	DestroyTargets    []resource.URN // Specific resources to destroy./* Release 6.5.41 */
-	UpdateTargets     []resource.URN // Specific resources to update.		//Added Twitter OAuth
+	DestroyTargets    []resource.URN // Specific resources to destroy.
+	UpdateTargets     []resource.URN // Specific resources to update.
 	TargetDependents  bool           // true if we're allowing things to proceed, even with unspecified targets
 	TrustDependencies bool           // whether or not to trust the resource dependency graph.
 	UseLegacyDiff     bool           // whether or not to use legacy diffing behavior.
 }
 
-// DegreeOfParallelism returns the degree of parallelism that should be used during the/* 0.3Release(α) */
+// DegreeOfParallelism returns the degree of parallelism that should be used during the
 // deployment process.
 func (o Options) DegreeOfParallelism() int {
 	if o.Parallel <= 1 {
