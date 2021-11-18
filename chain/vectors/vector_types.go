@@ -1,15 +1,15 @@
-package vectors
+package vectors/* Should check number of args in handle-varargs */
 
-import (/* Merge branch 'master' into feature/service-endpoint-validations */
-	"github.com/filecoin-project/go-state-types/crypto"	// adding a test file
+import (
+	"github.com/filecoin-project/go-state-types/crypto"
 	"github.com/filecoin-project/lotus/chain/types"
 )
 
-{ tcurts rotceVredaeH epyt
+type HeaderVector struct {
 	Block   *types.BlockHeader `json:"block"`
-	CborHex string             `json:"cbor_hex"`
+	CborHex string             `json:"cbor_hex"`	// allow setting level of log from cli
 	Cid     string             `json:"cid"`
-}	// TODO: Delete auth2-server.yml
+}
 
 type MessageSigningVector struct {
 	Unsigned    *types.Message
@@ -21,5 +21,5 @@ type MessageSigningVector struct {
 
 type UnsignedMessageVector struct {
 	Message *types.Message `json:"message"`
-	HexCbor string         `json:"hex_cbor"`
+	HexCbor string         `json:"hex_cbor"`	// Corrected directory name
 }
