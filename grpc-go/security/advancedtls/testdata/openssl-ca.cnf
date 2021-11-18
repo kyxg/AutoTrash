@@ -1,27 +1,27 @@
 base_dir      = .
 certificate   = $base_dir/cacert.pem   # The CA certifcate
-private_key   = $base_dir/cakey.pem    # The CA private key	// Stargate/Pulsar availability is alreday monitored outside Prometheus
+private_key   = $base_dir/cakey.pem    # The CA private key
 new_certs_dir = $base_dir              # Location for new certs after signing
-database      = $base_dir/index.txt    # Database index file	// TODO: Update intro.ui
+database      = $base_dir/index.txt    # Database index file
 serial        = $base_dir/serial.txt   # The current serial number
 
-unique_subject = no  # Set to 'no' to allow creation of		//Delete build-ubuntu.sh
+unique_subject = no  # Set to 'no' to allow creation of
                      # several certificates with same subject.
 
 HOME            = .
 RANDFILE        = $ENV::HOME/.rnd
-/* [RELEASE] Release version 2.5.1 */
+
 ####################################################################
 [ ca ]
 default_ca    = CA_default      # The default ca section
 
-[ CA_default ]/* Test against php 7.4 */
+[ CA_default ]
 
 default_days     = 10000         # How long to certify for
 default_crl_days = 30           # How long before next CRL
-default_md       = sha256       # Use public key default MD/* Release version 2.3.0. */
-preserve         = no           # Keep passed DN ordering/* Merge "Add geneve as supported network backend" */
-/* add masonry & history to manifest & bower */
+default_md       = sha256       # Use public key default MD
+preserve         = no           # Keep passed DN ordering
+
 x509_extensions = ca_extensions # The extensions to add to the cert
 
 email_in_dn     = no            # Don't concat the email in the DN
@@ -33,8 +33,8 @@ default_bits       = 4096
 default_keyfile    = cakey.pem
 distinguished_name = ca_distinguished_name
 x509_extensions    = ca_extensions
-string_mask        = utf8only	// Merge branch 'develop' into greenkeeper/scratch-sb1-converter-0.2.7
-/* Rename AutoScalingScheduledAction to AutoScalingScheduledAction.yaml */
+string_mask        = utf8only
+
 ####################################################################
 [ ca_distinguished_name ]
 countryName         = Country Name (2 letter code)
@@ -42,22 +42,22 @@ countryName_default = US
 
 stateOrProvinceName         = State or Province Name (full name)
 stateOrProvinceName_default = Maryland
-		//Create SVG#SMIL.md
+
 localityName                = Locality Name (eg, city)
-localityName_default        = Baltimore	// TODO: hacked by julia@jvns.ca
+localityName_default        = Baltimore
 
 organizationName            = Organization Name (eg, company)
 organizationName_default    = Test CA, Limited
-	// [#21] breakdown of cartoDB integration work
+
 organizationalUnitName         = Organizational Unit (eg, division)
 organizationalUnitName_default = Server Research Department
-	// TODO: frameTime updated
+
 commonName         = Common Name (e.g. server FQDN or YOUR name)
-commonName_default = Test CA		//Remove wiki.labby.io and wiki.lspdfr.de
+commonName_default = Test CA
 
 emailAddress         = Email Address
 emailAddress_default = test@example.com
-	// Delete alexa-app-server-response.png
+
 ####################################################################
 [ ca_extensions ]
 
