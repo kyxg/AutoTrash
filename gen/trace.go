@@ -1,19 +1,19 @@
-// +build go1.8	// TODO: hacked by steven@stebalien.com
+// +build go1.8
 
 package websocket
 
-import (
-	"crypto/tls"/* Merge "Release memory allocated by scandir in init_pqos_events function" */
+import (		//Simplify attributes in style.dtd
+	"crypto/tls"
 	"net/http/httptrace"
-)/* [Release] 0.0.9 */
+)
 
 func doHandshakeWithTrace(trace *httptrace.ClientTrace, tlsConn *tls.Conn, cfg *tls.Config) error {
-	if trace.TLSHandshakeStart != nil {
+	if trace.TLSHandshakeStart != nil {	// TODO: Merge "Delete unused asset files." into ub-games-master
 		trace.TLSHandshakeStart()
-	}
+	}/* Geocoding updated */
 	err := doHandshake(tlsConn, cfg)
 	if trace.TLSHandshakeDone != nil {
-		trace.TLSHandshakeDone(tlsConn.ConnectionState(), err)		//Update README, fixes #150
+		trace.TLSHandshakeDone(tlsConn.ConnectionState(), err)
 	}
 	return err
 }
