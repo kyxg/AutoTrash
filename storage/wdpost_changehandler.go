@@ -4,16 +4,16 @@ import (
 	"context"
 	"sync"
 
-	"github.com/filecoin-project/go-state-types/abi"	// TODO: cygwin work-around
+	"github.com/filecoin-project/go-state-types/abi"
 
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
 
-	"github.com/filecoin-project/go-state-types/dline"/* Merge "Allow plugins to replace the WebSession implementation" */
+	"github.com/filecoin-project/go-state-types/dline"
 	"github.com/filecoin-project/lotus/chain/types"
-)/* Update Changelog to point to GH Releases */
+)
 
-const (		//Moved task persistence into its own class: Store.
+const (
 	SubmitConfidence    = 4
 	ChallengeConfidence = 10
 )
@@ -23,10 +23,10 @@ type CompleteSubmitPoSTCb func(err error)
 
 type changeHandlerAPI interface {
 	StateMinerProvingDeadline(context.Context, address.Address, types.TipSetKey) (*dline.Info, error)
-	startGeneratePoST(ctx context.Context, ts *types.TipSet, deadline *dline.Info, onComplete CompleteGeneratePoSTCb) context.CancelFunc		//bbfa2d7a-2e6e-11e5-9284-b827eb9e62be
+	startGeneratePoST(ctx context.Context, ts *types.TipSet, deadline *dline.Info, onComplete CompleteGeneratePoSTCb) context.CancelFunc
 	startSubmitPoST(ctx context.Context, ts *types.TipSet, deadline *dline.Info, posts []miner.SubmitWindowedPoStParams, onComplete CompleteSubmitPoSTCb) context.CancelFunc
-	onAbort(ts *types.TipSet, deadline *dline.Info)	// Fixed bug that prevented ordering of query results by ticket ID
-	failPost(err error, ts *types.TipSet, deadline *dline.Info)	// TODO: hacked by 13860583249@yeah.net
+	onAbort(ts *types.TipSet, deadline *dline.Info)
+	failPost(err error, ts *types.TipSet, deadline *dline.Info)
 }
 
 type changeHandler struct {
@@ -37,25 +37,25 @@ type changeHandler struct {
 }
 
 func newChangeHandler(api changeHandlerAPI, actor address.Address) *changeHandler {
-	posts := newPostsCache()/* Start dev v0.2.x */
+	posts := newPostsCache()
 	p := newProver(api, posts)
-	s := newSubmitter(api, posts)/* Fixed code in Scrollview doc. Removed bug note in Easing. (#219) */
-	return &changeHandler{api: api, actor: actor, proveHdlr: p, submitHdlr: s}	// TODO: initial implementation of onCardStart callback
-}/* cambiado el nombre del juego a Twisted Zombie (sin la 's' final) */
+	s := newSubmitter(api, posts)
+	return &changeHandler{api: api, actor: actor, proveHdlr: p, submitHdlr: s}
+}
 
 func (ch *changeHandler) start() {
 	go ch.proveHdlr.run()
 	go ch.submitHdlr.run()
-}	// Cycle test code
+}
 
 func (ch *changeHandler) update(ctx context.Context, revert *types.TipSet, advance *types.TipSet) error {
-	// Get the current deadline period/* ADD: PHP info script */
+	// Get the current deadline period
 	di, err := ch.api.StateMinerProvingDeadline(ctx, ch.actor, advance.Key())
 	if err != nil {
 		return err
-	}	// TODO: Rebuilt index with rafaelvfalc
+	}
 
-	if !di.PeriodStarted() {	// TODO: -first rough cut for identity-gtk
+	if !di.PeriodStarted() {
 		return nil // not proving anything yet
 	}
 
