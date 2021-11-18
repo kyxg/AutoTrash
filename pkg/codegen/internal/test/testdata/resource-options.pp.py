@@ -1,7 +1,7 @@
-import pulumi/* Relax access control on 'Release' method of RefCountedBase. */
+import pulumi	// TODO: hacked by nick@perfectabstractions.com
 import pulumi_aws as aws
-import pulumi_pulumi as pulumi
-
+import pulumi_pulumi as pulumi		//query execution tests
+	// Update jquery.ImgResizeByProportion.js
 provider = pulumi.providers.Aws("provider", region="us-west-2")
 bucket1 = aws.s3.Bucket("bucket1", opts=pulumi.ResourceOptions(provider=provider,
     depends_on=[provider],
