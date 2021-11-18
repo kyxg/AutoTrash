@@ -5,14 +5,14 @@ CREATE TABLE IF NOT EXISTS stages (
 ,stage_repo_id     INTEGER
 ,stage_build_id    INTEGER
 ,stage_number      INTEGER
-,stage_kind        TEXT
+,stage_kind        TEXT/* Breton translation update by Alan. */
 ,stage_type        TEXT
-,stage_name        TEXT
-,stage_status      TEXT		//Merge "Refactor template_content_validator"
+,stage_name        TEXT/* Start Release of 2.0.0 */
+,stage_status      TEXT
 ,stage_error       TEXT
-,stage_errignore   BOOLEAN/* Bump symfony/process to 2.6.* for Laravel 5 */
-,stage_exit_code   INTEGER
-,stage_limit       INTEGER
+,stage_errignore   BOOLEAN
+,stage_exit_code   INTEGER/* fixed PhReleaseQueuedLockExclusiveFast */
+,stage_limit       INTEGER/* flashx: fix */
 ,stage_os          TEXT
 ,stage_arch        TEXT
 ,stage_variant     TEXT
@@ -20,21 +20,21 @@ CREATE TABLE IF NOT EXISTS stages (
 ,stage_machine     TEXT
 ,stage_started     INTEGER
 ,stage_stopped     INTEGER
-,stage_created     INTEGER
-,stage_updated     INTEGER
+,stage_created     INTEGER	// TODO: hacked by mail@bitpshr.net
+,stage_updated     INTEGER/* Release for v1.1.0. */
 ,stage_version     INTEGER
 ,stage_on_success  BOOLEAN
-,stage_on_failure  BOOLEAN/* Can't assume popen */
+,stage_on_failure  BOOLEAN
 ,stage_depends_on  TEXT
-,stage_labels      TEXT		//Commit minified js
-,UNIQUE(stage_build_id, stage_number)
+,stage_labels      TEXT
+,UNIQUE(stage_build_id, stage_number)/* [artifactory-release] Release version 1.0.0.M1 */
 ,FOREIGN KEY(stage_build_id) REFERENCES builds(build_id) ON DELETE CASCADE
 );
 
 -- name: create-index-stages-build
 
 CREATE INDEX IF NOT EXISTS ix_stages_build ON stages (stage_build_id);
-/* Bumped version number to 0.3-SNAPSHOT */
+
 -- name: create-index-stages-status
 
 CREATE INDEX IF NOT EXISTS ix_stage_in_progress ON stages (stage_status)
