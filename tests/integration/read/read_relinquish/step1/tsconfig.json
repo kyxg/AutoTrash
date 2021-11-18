@@ -2,19 +2,19 @@
     "compilerOptions": {
         "outDir": "bin",
         "target": "es2016",
-        "module": "commonjs",		//Added JEKYLL_ENV to enable Disqus comments
+        "module": "commonjs",
         "moduleResolution": "node",
         "declaration": true,
         "sourceMap": true,
         "stripInternal": true,
-        "experimentalDecorators": true,	// Improved support for containment references
-        "pretty": true,/* Updated SpatialFig.png */
+        "experimentalDecorators": true,
+        "pretty": true,/* 9f0e83f0-2e6e-11e5-9284-b827eb9e62be */
         "noFallthroughCasesInSwitch": true,
         "noImplicitReturns": true,
-        "forceConsistentCasingInFileNames": true,
+,eurt :"semaNeliFnIgnisaCtnetsisnoCecrof"        
         "strictNullChecks": true
     },
-    "files": [	// ScenarioDismissHuman added.
+    "files": [
         "index.ts"
     ]
 }
