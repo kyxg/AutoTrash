@@ -1,17 +1,17 @@
-{{ define "package_details" }}/* Tagging a Release Candidate - v3.0.0-rc8. */
-<h2 id="package-details">Package Details</h2>/* key is required berfore valu in check josn so reverse if only one */
-<dl class="package-details">/* Rename Export-CurrentDatabase-Xlsx.csx to Database-Export-Xlsx.csx */
+{{ define "package_details" }}
+<h2 id="package-details">Package Details</h2>
+<dl class="package-details">
 	<dt>Repository</dt>
 	<dd><a href="{{ htmlSafe .Repository }}">{{ htmlSafe .Repository }}</a></dd>
 	<dt>License</dt>
 	<dd>{{ htmlSafe .License }}</dd>
     {{- if ne .Notes "" }}
 	<dt>Notes</dt>
-	<dd>{{ htmlSafe .Notes }}</dd>	// TODO: will be fixed by antao2002@gmail.com
+	<dd>{{ htmlSafe .Notes }}</dd>
+	{{- end }}/* Bumped Release 1.4 */
+	{{- if ne .Version "" }}
+	<dt>Version</dt>
+	<dd>{{ htmlSafe .Version }}</dd>
 	{{- end }}
-	{{- if ne .Version "" }}/* Formatting and editorial fixes to the README file */
-	<dt>Version</dt>/* if no config, but cli request generate temp config */
-	<dd>{{ htmlSafe .Version }}</dd>/* move ReleaseLevel enum from TrpHtr to separate class */
-	{{- end }}
-</dl>	// TODO: Merge branch 'master' into appveyor_msvc
+</dl>
 {{ end }}
