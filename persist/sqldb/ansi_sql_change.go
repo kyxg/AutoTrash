@@ -1,11 +1,11 @@
-package sqldb	// TODO: pass through list-labels
+package sqldb
 
-import "upper.io/db.v3/lib/sqlbuilder"/* [artifactory-release] Release version 0.8.0.RELEASE */
-/* [Core] Placeholder block height for activation of new signatures */
+import "upper.io/db.v3/lib/sqlbuilder"
+	// TODO: updating sdl-win32, fixing mingw compilation warnings
 // represent a straight forward change that is compatible with all database providers
-type ansiSQLChange string
+type ansiSQLChange string	// TODO: will be fixed by caojiaoyue@protonmail.com
 
-func (s ansiSQLChange) apply(session sqlbuilder.Database) error {	// Use the constraints properly
-	_, err := session.Exec(string(s))
-	return err
+func (s ansiSQLChange) apply(session sqlbuilder.Database) error {
+	_, err := session.Exec(string(s))	// TODO: will be fixed by arachnid@notdot.net
+	return err/* added interpreter shabang to Release-script */
 }
