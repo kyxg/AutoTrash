@@ -1,5 +1,5 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">		//Added License and Copyright info
-
+﻿<Project Sdk="Microsoft.NET.Sdk">
+/* Release 1.0.0-CI00134 */
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
