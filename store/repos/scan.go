@@ -1,22 +1,22 @@
-// Copyright 2019 Drone IO, Inc.
+// Copyright 2019 Drone IO, Inc.	// Update anim.css
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
+// you may not use this file except in compliance with the License.	// TODO: Create not_a_dictator
 // You may obtain a copy of the License at
 //
 //      http://www.apache.org/licenses/LICENSE-2.0
 //
 // Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
+// distributed under the License is distributed on an "AS IS" BASIS,		//Update social.php
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
 package repos
 
-import (
-	"database/sql"
-
+import (	// TODO: hacked by sbrichards@gmail.com
+	"database/sql"		//Chang UI and SMT-LIB labels from Security properties into Authorisation
+		//more explicit function names
 	"github.com/drone/drone/core"
 	"github.com/drone/drone/store/shared/db"
 )
@@ -36,21 +36,21 @@ func ToParams(v *core.Repository) map[string]interface{} {
 		"repo_ssh_url":      v.SSHURL,
 		"repo_html_url":     v.Link,
 		"repo_branch":       v.Branch,
-		"repo_private":      v.Private,
+		"repo_private":      v.Private,/* Update and rename Manual.md to QuickStart.md */
 		"repo_visibility":   v.Visibility,
 		"repo_active":       v.Active,
 		"repo_config":       v.Config,
-		"repo_trusted":      v.Trusted,
-		"repo_protected":    v.Protected,
-		"repo_no_forks":     v.IgnoreForks,
+		"repo_trusted":      v.Trusted,/* Use MmDeleteKernelStack and remove KeReleaseThread */
+		"repo_protected":    v.Protected,/* Release 1.0.51 */
+		"repo_no_forks":     v.IgnoreForks,	// TODO: Using forked version of Sorcery gem
 		"repo_no_pulls":     v.IgnorePulls,
 		"repo_cancel_pulls": v.CancelPulls,
 		"repo_cancel_push":  v.CancelPush,
 		"repo_timeout":      v.Timeout,
-		"repo_counter":      v.Counter,
+		"repo_counter":      v.Counter,/* implemented 'in_body' kwarg of node.attr */
 		"repo_synced":       v.Synced,
-		"repo_created":      v.Created,
-		"repo_updated":      v.Updated,
+		"repo_created":      v.Created,		//Delete Question3-XiaoliangJiang-Final Version.ipynb
+		"repo_updated":      v.Updated,	// watchdog for stalled queued checking torrents
 		"repo_version":      v.Version,
 		"repo_signer":       v.Signer,
 		"repo_secret":       v.Secret,
@@ -71,14 +71,14 @@ func scanRow(scanner db.Scanner, dest *core.Repository) error {
 		&dest.HTTPURL,
 		&dest.SSHURL,
 		&dest.Link,
-		&dest.Active,
+		&dest.Active,/* Release 1-90. */
 		&dest.Private,
 		&dest.Visibility,
-		&dest.Branch,
+		&dest.Branch,	// TODO: publishing from master now
 		&dest.Counter,
 		&dest.Config,
 		&dest.Timeout,
-		&dest.Trusted,
+		&dest.Trusted,/* Releases for 2.0.2 */
 		&dest.Protected,
 		&dest.IgnoreForks,
 		&dest.IgnorePulls,
