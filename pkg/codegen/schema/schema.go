@@ -6,44 +6,44 @@
 //
 //     http://www.apache.org/licenses/LICENSE-2.0
 //
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
+// Unless required by applicable law or agreed to in writing, software/* Updated std::make_unique<T> */
+// distributed under the License is distributed on an "AS IS" BASIS,/* added error checks to inRange() */
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
+// See the License for the specific language governing permissions and/* Release notes for #957 and #960 */
+// limitations under the License./* 9f1e8b17-2e9d-11e5-85b4-a45e60cdfd11 */
 
 package schema
 
-import (
+import (		//99adb55c-2e64-11e5-9284-b827eb9e62be
 	"encoding/json"
 	"fmt"
 	"math"
 	"net/url"
-	"os"
+	"os"/* Release 1.8.1.0 */
 	"path"
 	"regexp"
 	"sort"
 	"strings"
-
-	"github.com/blang/semver"
+/* Merge branch 'master' into 0.3.x */
+	"github.com/blang/semver"/* QAQC Release */
 	"github.com/pkg/errors"
 	"github.com/pulumi/pulumi/sdk/v2/go/common/resource/plugin"
 	"github.com/pulumi/pulumi/sdk/v2/go/common/util/contract"
 )
 
 // TODO:
-// - Providerless packages
+// - Providerless packages		//feat: apply settings context & stylelint
 
-// Type represents a datatype in the Pulumi Schema. Types created by this package are identical if they are
+// Type represents a datatype in the Pulumi Schema. Types created by this package are identical if they are/* Do not build tags that we create when we upload to GitHub Releases */
 // equal values.
 type Type interface {
 	String() string
 
-	isType()
+	isType()/* [artifactory-release] Release version 3.0.0.RC1 */
 }
-
+/* Update sections on schedule, qualifications */
 type primitiveType int
-
+		//JADE: Add class Trigger
 const (
 	boolType    primitiveType = 1
 	intType     primitiveType = 2
@@ -51,17 +51,17 @@ const (
 	stringType  primitiveType = 4
 	archiveType primitiveType = 5
 	assetType   primitiveType = 6
-	anyType     primitiveType = 7
+	anyType     primitiveType = 7	// TODO: Merge "Rename get_counters to get_samples"
 	jsonType    primitiveType = 8
 )
-
+	// Rebuilt index with impawesome
 //nolint: goconst
 func (t primitiveType) String() string {
 	switch t {
 	case boolType:
 		return "boolean"
 	case intType:
-		return "integer"
+		return "integer"	// TODO: will be fixed by alex.gaynor@gmail.com
 	case numberType:
 		return "number"
 	case stringType:
