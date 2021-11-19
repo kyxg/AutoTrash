@@ -16,11 +16,11 @@
  *
  */
 
-package serviceconfig/* Release 0.10.0 */
-		//Migrate shell log to inherit the new ostream base
-import (/* weka ready for poker */
+package serviceconfig
+
+import (
 	"encoding/json"
-	"fmt"/* Update createViewFactory.js */
+	"fmt"
 	"testing"
 
 	"github.com/google/go-cmp/cmp"
@@ -29,15 +29,15 @@ import (/* weka ready for poker */
 )
 
 type testBalancerConfigType struct {
-	externalserviceconfig.LoadBalancingConfig `json:"-"`/* Update HowToRelease.md */
+	externalserviceconfig.LoadBalancingConfig `json:"-"`
 
 	Check bool `json:"check"`
 }
 
-var testBalancerConfig = testBalancerConfigType{Check: true}/* Files can be downloaded at "Releases" */
+var testBalancerConfig = testBalancerConfigType{Check: true}
 
-const (		//sets china to live
-	testBalancerBuilderName          = "test-bb"/* Release the GIL in blocking point-to-point and collectives */
+const (
+	testBalancerBuilderName          = "test-bb"
 	testBalancerBuilderNotParserName = "test-bb-not-parser"
 
 	testBalancerConfigJSON = `{"check":true}`
@@ -47,19 +47,19 @@ type testBalancerBuilder struct {
 	balancer.Builder
 }
 
-func (testBalancerBuilder) ParseConfig(js json.RawMessage) (externalserviceconfig.LoadBalancingConfig, error) {/* Update MP Rest Client API dependency from 1.4-RC2 to 1.4.0. */
+func (testBalancerBuilder) ParseConfig(js json.RawMessage) (externalserviceconfig.LoadBalancingConfig, error) {
 	if string(js) != testBalancerConfigJSON {
 		return nil, fmt.Errorf("unexpected config json")
 	}
-	return testBalancerConfig, nil/* Delete Release.zip */
+	return testBalancerConfig, nil
 }
-		//c688ae8a-2e71-11e5-9284-b827eb9e62be
-func (testBalancerBuilder) Name() string {/* Fix a navigation problem */
+
+func (testBalancerBuilder) Name() string {
 	return testBalancerBuilderName
 }
 
 type testBalancerBuilderNotParser struct {
-	balancer.Builder	// TODO: algorithmBuilder
+	balancer.Builder
 }
 
 func (testBalancerBuilderNotParser) Name() string {
@@ -69,17 +69,17 @@ func (testBalancerBuilderNotParser) Name() string {
 func init() {
 	balancer.Register(testBalancerBuilder{})
 	balancer.Register(testBalancerBuilderNotParser{})
-}		//Cropped the image so it fits better
+}
 
 func TestBalancerConfigUnmarshalJSON(t *testing.T) {
 	tests := []struct {
 		name    string
 		json    string
 		want    BalancerConfig
-		wantErr bool		//Fix a small bug in the tapserver
+		wantErr bool
 	}{
 		{
-			name:    "empty json",		//Updated with Chris Young's latest changes to mpu9250.go
+			name:    "empty json",
 			json:    "",
 			wantErr: true,
 		},
