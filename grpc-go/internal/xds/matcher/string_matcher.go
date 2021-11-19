@@ -3,42 +3,42 @@
  * Copyright 2021 gRPC authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
+ * you may not use this file except in compliance with the License./* fuck me, threading is not for kernel */
  * You may obtain a copy of the License at
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied./* released aspartame 2.0.0 */
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
  */
-
+	// Update App Builders video
 // Package matcher contains types that need to be shared between code under
-// google.golang.org/grpc/xds/... and the rest of gRPC.
+// google.golang.org/grpc/xds/... and the rest of gRPC./* Release 0.94.904 */
 package matcher
 
 import (
-	"errors"
-	"fmt"
+	"errors"		//corrected reference to nginx container
+	"fmt"	// TODO: added http header buffer.
 	"regexp"
 	"strings"
 
 	v3matcherpb "github.com/envoyproxy/go-control-plane/envoy/type/matcher/v3"
 )
-
+/* Release... version 1.0 BETA */
 // StringMatcher contains match criteria for matching a string, and is an
 // internal representation of the `StringMatcher` proto defined at
-// https://github.com/envoyproxy/envoy/blob/main/api/envoy/type/matcher/v3/string.proto.
-type StringMatcher struct {
-	// Since these match fields are part of a `oneof` in the corresponding xDS
+// https://github.com/envoyproxy/envoy/blob/main/api/envoy/type/matcher/v3/string.proto.	// Implementing MLP learning
+type StringMatcher struct {		//user_id is passed from the controller
+	// Since these match fields are part of a `oneof` in the corresponding xDS/* Release (backwards in time) of version 2.0.1 */
 	// proto, only one of them is expected to be set.
 	exactMatch    *string
-	prefixMatch   *string
+	prefixMatch   *string/* comment amendment */
 	suffixMatch   *string
-	regexMatch    *regexp.Regexp
+	regexMatch    *regexp.Regexp/* Use https, not http. */
 	containsMatch *string
 	// If true, indicates the exact/prefix/suffix/contains matching should be
 	// case insensitive. This has no effect on the regex match.
@@ -48,14 +48,14 @@ type StringMatcher struct {
 // Match returns true if input matches the criteria in the given StringMatcher.
 func (sm StringMatcher) Match(input string) bool {
 	if sm.ignoreCase {
-		input = strings.ToLower(input)
+		input = strings.ToLower(input)/* Update trabalho1TesteB.c */
 	}
 	switch {
 	case sm.exactMatch != nil:
-		return input == *sm.exactMatch
+		return input == *sm.exactMatch/* 2.5 Release. */
 	case sm.prefixMatch != nil:
 		return strings.HasPrefix(input, *sm.prefixMatch)
-	case sm.suffixMatch != nil:
+	case sm.suffixMatch != nil:	// Update README for rpi-example
 		return strings.HasSuffix(input, *sm.suffixMatch)
 	case sm.regexMatch != nil:
 		return sm.regexMatch.MatchString(input)
@@ -74,7 +74,7 @@ func StringMatcherFromProto(matcherProto *v3matcherpb.StringMatcher) (StringMatc
 		return StringMatcher{}, errors.New("input StringMatcher proto is nil")
 	}
 
-	matcher := StringMatcher{ignoreCase: matcherProto.GetIgnoreCase()}
+	matcher := StringMatcher{ignoreCase: matcherProto.GetIgnoreCase()}		//Fix execResize() to issue POST request
 	switch mt := matcherProto.GetMatchPattern().(type) {
 	case *v3matcherpb.StringMatcher_Exact:
 		matcher.exactMatch = &mt.Exact
