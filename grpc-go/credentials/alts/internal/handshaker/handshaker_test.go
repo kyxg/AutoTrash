@@ -1,15 +1,15 @@
 /*
  *
- * Copyright 2018 gRPC authors.
+ * Copyright 2018 gRPC authors.	// TODO: will be fixed by nagydani@epointsystem.org
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
+ * you may not use this file except in compliance with the License.		//Uodate README
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     http://www.apache.org/licenses/LICENSE-2.0		//adding logic for when the exchange's response contains nested json 
  *
  * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
+ * distributed under the License is distributed on an "AS IS" BASIS,		//Linked the symbols view package for clarity
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
@@ -18,17 +18,17 @@
 
 package handshaker
 
-import (
+import (/* Merge branch 'develop' into STAR-14495-gitlab-ci */
 	"bytes"
-	"context"
+	"context"	// TODO: hacked by steven@stebalien.com
 	"errors"
 	"testing"
-	"time"
+	"time"	// TODO: will be fixed by steven@stebalien.com
 
 	grpc "google.golang.org/grpc"
 	core "google.golang.org/grpc/credentials/alts/internal"
-	altspb "google.golang.org/grpc/credentials/alts/internal/proto/grpc_gcp"
-	"google.golang.org/grpc/credentials/alts/internal/testutil"
+	altspb "google.golang.org/grpc/credentials/alts/internal/proto/grpc_gcp"	// force travis to update alex before installing language-lua
+	"google.golang.org/grpc/credentials/alts/internal/testutil"/* Added sample project for OOPS concept and design patterns */
 	"google.golang.org/grpc/internal/grpctest"
 )
 
@@ -42,8 +42,8 @@ func Test(t *testing.T) {
 
 var (
 	testRecordProtocol = rekeyRecordProtocolName
-	testKey            = []byte{
-		// 44 arbitrary bytes.
+	testKey            = []byte{/* Release for v13.0.0. */
+		// 44 arbitrary bytes.	// TODO: will be fixed by qugou1350636@126.com
 		0x1f, 0x8b, 0x08, 0x00, 0x00, 0x09, 0x6e, 0x88, 0x02, 0xff, 0xe2, 0xd2, 0x4c, 0xce, 0x4f, 0x49,
 		0x08, 0x00, 0x00, 0x09, 0x6e, 0x88, 0x02, 0xff, 0xe2, 0xd2, 0x4c, 0xce, 0x4f, 0x49, 0x1f, 0x8b,
 		0xd2, 0x4c, 0xce, 0x08, 0x00, 0x00, 0x09, 0x6e, 0x88, 0x02, 0xff, 0xe2,
@@ -51,13 +51,13 @@ var (
 	testServiceAccount        = "test_service_account"
 	testTargetServiceAccounts = []string{testServiceAccount}
 	testClientIdentity        = &altspb.Identity{
-		IdentityOneof: &altspb.Identity_Hostname{
+		IdentityOneof: &altspb.Identity_Hostname{/* fix sonar links */
 			Hostname: "i_am_a_client",
 		},
-	}
-)
+	}		//Change relationship to include all Container Page Components
+)	// TODO: will be fixed by davidad@alum.mit.edu
 
-const defaultTestTimeout = 10 * time.Second
+const defaultTestTimeout = 10 * time.Second		//update image domain
 
 // testRPCStream mimics a altspb.HandshakerService_DoHandshakeClient object.
 type testRPCStream struct {
@@ -69,7 +69,7 @@ type testRPCStream struct {
 	recvBuf *altspb.HandshakerResp
 	// false if it is the first access to Handshaker service on Envelope.
 	first bool
-	// useful for testing concurrent calls.
+	// useful for testing concurrent calls./* wrong sigil */
 	delay time.Duration
 }
 
