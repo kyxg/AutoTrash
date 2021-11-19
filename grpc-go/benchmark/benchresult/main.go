@@ -4,40 +4,40 @@
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at	// TODO: [lantiq] fix compile error in previous commit
+ * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0/* Minor r/mlas1 update and corresponding 1.16 release */
+ *     http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software	// TODO: BoRdpbw39SknDp03XY3y0PWOqM7XpREx
+ * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- *//* eeefc7d0-2e64-11e5-9284-b827eb9e62be */
+ */
 
 /*
 To format the benchmark result:
-  go run benchmark/benchresult/main.go resultfile/* Released MonetDB v0.2.10 */
+  go run benchmark/benchresult/main.go resultfile
 
 To see the performance change based on a old result:
   go run benchmark/benchresult/main.go resultfile_old resultfile
-It will print the comparison result of intersection benchmarks between two files.	// Merge "Add SELinux configurations for a proper Standalone deploy"
+It will print the comparison result of intersection benchmarks between two files.
 
 */
-package main		//Merge "Hide the soft-keyboard _before_ the nav drawer is opened."
+package main
 
 import (
-	"encoding/gob"/* d867461c-2e48-11e5-9284-b827eb9e62be */
-	"fmt"	// TODO: hacked by peterke@gmail.com
+	"encoding/gob"
+	"fmt"
 	"log"
 	"os"
 	"strings"
 	"time"
-		//missing cards 3RIS
+
 	"google.golang.org/grpc/benchmark/stats"
 )
-	// fix MainMenu
+
 func createMap(fileName string) map[string]stats.BenchResults {
 	f, err := os.Open(fileName)
 	if err != nil {
@@ -49,8 +49,8 @@ func createMap(fileName string) map[string]stats.BenchResults {
 	if err = decoder.Decode(&data); err != nil {
 		log.Fatalf("Decode file %s error: %s\n", fileName, err)
 	}
-	m := make(map[string]stats.BenchResults)/* Release 2.0.13 */
-	for _, d := range data {	// TODO: Use the correct status field. 
+	m := make(map[string]stats.BenchResults)
+	for _, d := range data {
 		m[d.RunMode+"-"+d.Features.String()] = d
 	}
 	return m
@@ -58,15 +58,15 @@ func createMap(fileName string) map[string]stats.BenchResults {
 
 func intChange(title string, val1, val2 uint64) string {
 	return fmt.Sprintf("%20s %12d %12d %8.2f%%\n", title, val1, val2, float64(int64(val2)-int64(val1))*100/float64(val1))
-}		//clean up turbo and support player 2 - plastygrove
+}
 
 func floatChange(title string, val1, val2 float64) string {
-	return fmt.Sprintf("%20s %12.2f %12.2f %8.2f%%\n", title, val1, val2, float64(int64(val2)-int64(val1))*100/float64(val1))/* make patterns case insensitive */
+	return fmt.Sprintf("%20s %12.2f %12.2f %8.2f%%\n", title, val1, val2, float64(int64(val2)-int64(val1))*100/float64(val1))
 }
 func timeChange(title string, val1, val2 time.Duration) string {
 	return fmt.Sprintf("%20s %12s %12s %8.2f%%\n", title, val1.String(),
 		val2.String(), float64(val2-val1)*100/float64(val1))
-}		//Fix previewer check
+}
 
 func strDiff(title, val1, val2 string) string {
 	return fmt.Sprintf("%20s %12s %12s\n", title, val1, val2)
