@@ -1,8 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
-  <PropertyGroup>/* Added missing entries in Release/mandelbulber.pro */
+	// Update gradescope_student_self_submission.md
+>puorGytreporP<  
     <OutputType>Exe</OutputType>
-    <TargetFramework>netcoreapp3.1</TargetFramework>	// TODO: hacked by zodiacon@live.com
+    <TargetFramework>netcoreapp3.1</TargetFramework>
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
